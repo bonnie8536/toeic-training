@@ -73,7 +73,7 @@
   if (mode === 'review' && DATA[partParam]) startReview(partParam);
   else if (partParam && DATA[partParam]) {
     // 相容程度檢測報告的深連結:直接開一輪隨機練習
-    startQuiz(partParam, partParam === '5' ? 10 : 2, getParam('cat') || 'all');
+    startQuiz([{ p: partParam, n: partParam === '5' ? 10 : 2, cat: getParam('cat') || 'all' }]);
   } else renderHome();
 
   /* ================= 首頁 ================= */
@@ -82,46 +82,47 @@
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '題庫刷題')));
 
-    /* 隨機練習 */
-    const partSel = h('select', { class: 'cfg-select' },
-      ['5', '6', '7'].map(p => h('option', { value: p }, DATA[p].title)));
-    const sizeSel = h('select', { class: 'cfg-select' });
+    /* 隨機練習:三個 Part 各一列(勾選+數量),可同時勾多個混合出題 */
     const cats = [...new Set(DATA['5'].items.map(q => q.category))];
-    const catSel = h('select', { class: 'cfg-select' },
-      h('option', { value: 'all' }, '全部考點'),
-      cats.map(c => h('option', { value: c }, c)));
     const initCat = getParam('cat');
-    if (initCat && cats.includes(initCat)) catSel.value = initCat;
 
-    const customInput = h('input', {
-      class: 'cfg-select', type: 'number', min: '1', style: 'width:92px;display:none',
-      placeholder: '數量',
-    });
     function sizeLabel(p, n) {
       if (p === '5') return n + ' 題';
       return n + ' 組(' + (p === '6' ? n * 4 + ' 題' : '約 ' + n * 4 + '-' + n * 5 + ' 題') + ')';
     }
-    function refreshSizes() {
-      const p = partSel.value;
-      sizeSel.innerHTML = '';
-      DATA[p].sizes.forEach(n => sizeSel.append(h('option', { value: n }, sizeLabel(p, n))));
-      sizeSel.append(h('option', { value: 'custom' }, '自訂數量…'));
-      catSel.style.display = p === '5' ? '' : 'none';
-      customInput.style.display = 'none';
-      customInput.max = String(p === '5' ? DATA['5'].items.length : DATA[p].items.length);
-    }
-    partSel.addEventListener('change', refreshSizes);
-    sizeSel.addEventListener('change', () => {
-      customInput.style.display = sizeSel.value === 'custom' ? '' : 'none';
-      if (sizeSel.value === 'custom') customInput.focus();
-    });
-    refreshSizes();
 
-    function chosenSize() {
-      const p = partSel.value;
-      const max = p === '5' ? DATA['5'].items.length : DATA[p].items.length;
-      if (sizeSel.value !== 'custom') return Number(sizeSel.value);
-      const n = Math.floor(Number(customInput.value));
+    const rows = ['5', '6', '7'].map(p => {
+      const cb = h('input', { type: 'checkbox' });
+      if (p === '5') cb.checked = true;
+      const sizeSel = h('select', { class: 'cfg-select' });
+      DATA[p].sizes.forEach(n => sizeSel.append(h('option', { value: n }, sizeLabel(p, n))));
+      sizeSel.append(h('option', { value: 'custom' }, '自訂…'));
+      if (p === '5') sizeSel.value = '10';
+      const customInput = h('input', { class: 'cfg-select', type: 'number', min: '1', style: 'width:84px;display:none', placeholder: '數量' });
+      sizeSel.addEventListener('change', () => {
+        cb.checked = true;
+        customInput.style.display = sizeSel.value === 'custom' ? '' : 'none';
+        if (sizeSel.value === 'custom') customInput.focus();
+      });
+      customInput.addEventListener('input', () => { cb.checked = true; });
+      let catSel = null;
+      if (p === '5') {
+        catSel = h('select', { class: 'cfg-select' },
+          h('option', { value: 'all' }, '全部考點'),
+          cats.map(c => h('option', { value: c }, c)));
+        if (initCat && cats.includes(initCat)) catSel.value = initCat;
+        catSel.addEventListener('change', () => { cb.checked = true; });
+      }
+      const row = h('div', { class: 'cfg-part-row' },
+        h('label', { class: 'cfg-part-check' }, cb, h('span', null, DATA[p].title)),
+        sizeSel, customInput, catSel);
+      return { p, cb, sizeSel, customInput, catSel, row };
+    });
+
+    function rowSize(r) {
+      const max = DATA[r.p].items.length;
+      if (r.sizeSel.value !== 'custom') return Number(r.sizeSel.value);
+      const n = Math.floor(Number(r.customInput.value));
       if (!n || n < 1) return null;
       return Math.min(n, max);
     }
@@ -133,15 +134,21 @@
     root.append(h('div', { class: 'practice-panels' },
       h('div', { class: 'practice-panel' },
         h('h2', null, '隨機練習'),
-        h('p', null, '共 ' + (s5.total + s6.total + s7.total) + ' 題' +
+        h('p', null, '勾選要練的題型,可以同時勾好幾個。共 ' + (s5.total + s6.total + s7.total) + ' 題' +
           (totalAnswered ? ' · 已作答 ' + totalAnswered + ' 題 · 正確率 ' + Math.round(totalCorrect / totalAnswered * 100) + '%' : '')),
-        h('div', { class: 'cfg-row' }, partSel, sizeSel, customInput, catSel),
+        h('div', { class: 'cfg-rows' }, rows.map(r => r.row)),
         h('button', {
           class: 'btn primary', style: 'margin-top:14px',
           onclick: () => {
-            const n = chosenSize();
-            if (!n) { customInput.focus(); return; }
-            startQuiz(partSel.value, n, partSel.value === '5' ? catSel.value : 'all');
+            const config = [];
+            for (const r of rows) {
+              if (!r.cb.checked) continue;
+              const n = rowSize(r);
+              if (n === null) { r.customInput.focus(); return; }
+              config.push({ p: r.p, n, cat: r.p === '5' && r.catSel ? r.catSel.value : 'all' });
+            }
+            if (!config.length) return;
+            startQuiz(config);
           },
         }, '開始練習')),
       h('div', { class: 'practice-panel' },
@@ -211,46 +218,49 @@
     return nav;
   }
 
-  /* ================= 隨機練習 ================= */
-  function startQuiz(p, n, cat) {
-    const d = DATA[p];
-    document.title = d.title + ' 隨機練習|多益閱讀訓練室';
-    const list = pickPool(p, n, cat);
-    if (!list.length) {
+  /* ================= 隨機練習(config=[{p,n,cat}],可混合多個 Part) ================= */
+  function startQuiz(config) {
+    document.title = '隨機練習|多益閱讀訓練室';
+    const units = [];   // {p, item}:p5 的 item=題目,p6/7 的 item=題組
+    config.forEach(c => pickPool(c.p, c.n, c.cat).forEach(item => units.push({ p: c.p, item })));
+    if (!units.length) {
       root.innerHTML = '';
-      root.append(topBar(d.title), h('div', { class: 'q-block' }, '這個範圍沒有題目。'));
+      root.append(topBar('隨機練習'), h('div', { class: 'q-block' }, '這個範圍沒有題目。'),
+        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
       return;
     }
-    const session = { answers: {} };   // p5: {qIdx:{c,ok}}; p6/7: {setIdx:{qKey:{c,ok}}}
-    const okFlags = [];                // 每單元結果(全對=true)
+    const sub = config.map(c =>
+      'Part ' + c.p + ' × ' + c.n + ' ' + DATA[c.p].unit + (c.cat && c.cat !== 'all' ? '(' + c.cat + ')' : '')).join(' · ');
+    const session = { answers: {} };   // p5 單元:{c,ok};p6/7 單元:{qKey:{c,ok}}
+    const okFlags = [];
     let cur = 0;
     draw();
 
     function draw() {
       root.innerHTML = '';
-      const sub = cat && cat !== 'all' ? '考點:' + cat : '隨機 ' + list.length + ' ' + d.unit;
-      root.append(topBar(d.title + ' 隨機練習', sub));
-      root.append(sessionDots(list, cur, okFlags));
-
-      if (p === '5') drawP5();
+      root.append(topBar('隨機練習', sub));
+      root.append(sessionDots(units, cur, okFlags));
+      if (units[cur].p === '5') drawP5();
       else drawSet();
     }
 
     function finishBtnRow(canNext, isLast) {
+      const nextWord = isLast ? '' : DATA[units[cur + 1].p].unit;
       return h('div', { class: 'drill-nav-btns' },
         canNext
           ? h('button', {
               class: 'btn primary',
               onclick: () => { if (isLast) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
-            }, isLast ? '看本輪成績' : '下一' + d.unit + ' →')
-          : h('span', { class: 'result-note', style: 'align-self:center' }, '作答後才能前往下一' + d.unit));
+            }, isLast ? '看本輪成績' : '下一' + nextWord + ' →')
+          : h('span', { class: 'result-note', style: 'align-self:center' }, '作答後才能繼續'));
     }
 
     function drawP5() {
-      const q = list[cur];
+      const q = units[cur].item;
       const rec = session.answers[cur];
       root.append(h('div', { class: 'q-block' },
         h('div', { class: 'meta', style: 'display:flex;gap:8px;margin-bottom:10px' },
+          h('span', { class: 'badge cat' }, 'Part 5'),
           h('span', { class: 'badge cat' }, q.category),
           h('span', { class: 'badge ' + (q.difficulty === '基礎' ? 'level-basic' : q.difficulty === '進階' ? 'level-adv' : 'level-mid') }, q.difficulty)),
         h('div', { class: 'q-text', style: 'font-size:17px' }, h('span', { class: 'q-no' }, (cur + 1) + '.'), q.question),
@@ -258,15 +268,16 @@
           const ok = oi === q.answer;
           session.answers[cur] = { c: oi, ok };
           okFlags[cur] = ok;
-          saveRec(p, q.id, oi, ok);
+          saveRec('5', q.id, oi, ok);
           draw();
         }),
         explainBox(q, rec, rec ? '句意:' + q.translation : null)));
-      root.append(finishBtnRow(!!rec, cur === list.length - 1));
+      root.append(finishBtnRow(!!rec, cur === units.length - 1));
     }
 
     function drawSet() {
-      const set = list[cur];
+      const p = units[cur].p;
+      const set = units[cur].item;
       const sess = session.answers[cur] = session.answers[cur] || {};
       const layout = h('div', { class: 'set-layout' });
 
@@ -290,6 +301,7 @@
       layout.append(h('div', null, passCol));
 
       const qCol = h('div', null);
+      qCol.append(h('div', { style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, DATA[p].title)));
       set.questions.forEach((q, qi) => {
         const id = qid(set, q, qi);
         const rec = sess[id];
@@ -310,22 +322,22 @@
       });
       layout.append(qCol);
       root.append(layout);
-      root.append(finishBtnRow(complete, cur === list.length - 1));
+      root.append(finishBtnRow(complete, cur === units.length - 1));
     }
 
     function summary() {
       root.innerHTML = '';
-      root.append(topBar(d.title + ' 隨機練習'));
+      root.append(topBar('隨機練習', sub));
       let qTotal = 0, qCorrect = 0;
-      if (p === '5') {
-        qTotal = list.length;
-        qCorrect = Object.values(session.answers).filter(r => r.ok).length;
-      } else {
-        list.forEach((set, si) => {
-          const sess = session.answers[si] || {};
-          set.questions.forEach((q, qi) => { qTotal++; if ((sess[qid(set, q, qi)] || {}).ok) qCorrect++; });
-        });
-      }
+      units.forEach((u, i) => {
+        if (u.p === '5') {
+          qTotal++;
+          if ((session.answers[i] || {}).ok) qCorrect++;
+        } else {
+          const sess = session.answers[i] || {};
+          u.item.questions.forEach((q, qi) => { qTotal++; if ((sess[qid(u.item, q, qi)] || {}).ok) qCorrect++; });
+        }
+      });
       const wrongN = qTotal - qCorrect;
       root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
         h('h2', null, '本輪成績:' + qCorrect + ' / ' + qTotal + ' 題'),
@@ -333,8 +345,8 @@
           ? '答錯的 ' + wrongN + ' 題已收進錯題本,建議明天回來複習一次。'
           : '全對!換個題型或提高題數再練一輪吧。')));
       root.append(h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', onclick: () => startQuiz(p, n, cat) }, '再練一輪'),
-        wrongN ? h('button', { class: 'btn', onclick: () => startReview(p) }, '複習錯題') : null,
+        h('button', { class: 'btn primary', onclick: () => startQuiz(config) }, '再練一輪'),
+        wrongN && config.length === 1 ? h('button', { class: 'btn', onclick: () => startReview(config[0].p) }, '複習錯題') : null,
         h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
       window.scrollTo(0, 0);
     }

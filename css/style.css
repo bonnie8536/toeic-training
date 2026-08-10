@@ -496,6 +496,14 @@ button { font-family: var(--font); cursor: pointer; }
 .practice-panel h2 { font-size: 20px; margin: 10px 0 4px; }
 .practice-panel p { font-size: 14px; color: var(--ink-light); margin-bottom: 4px; }
 .cfg-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.cfg-rows { display: grid; gap: 8px; margin-top: 12px; }
+.cfg-part-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.cfg-part-check {
+  display: flex; gap: 7px; align-items: center;
+  font-size: 14.5px; cursor: pointer;
+  width: 150px; flex: none;
+}
+.cfg-part-check input { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
 .cfg-select {
   font-family: var(--font);
   font-size: 14.5px;
@@ -885,6 +893,26 @@ table.cat-table td.num { white-space: nowrap; }
 
 .next-steps { border: 1px solid var(--line); border-left: 3px solid var(--primary); border-radius: var(--radius); padding: 16px 20px; margin: 14px 0 30px; font-size: 14.5px; }
 .next-steps li { margin: 4px 0 4px 20px; }
+
+/* 能力分析:錯題分類列 */
+.wrong-cat-row {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%;
+  border: none; border-top: 1px solid var(--line);
+  background: none;
+  padding: 9px 4px;
+  font-size: 14.5px; color: var(--ink);
+  text-align: left;
+}
+.wrong-cat-row:hover { background: var(--bg-soft); }
+.wrong-cat-row b { color: var(--bad); font-size: 13.5px; }
+.wrong-cat-list { padding: 2px 4px 10px; }
+.wrong-cat-item {
+  font-size: 13.5px; color: var(--ink-light);
+  padding: 4px 0 4px 14px;
+  border-left: 2px solid var(--line);
+  margin: 4px 0;
+}
 
 @media print {
   .topbar, .drill-nav-btns, .no-print, footer { display: none !important; }

@@ -14,6 +14,7 @@
   }
 
   const KEYS = { read: 'writing_read', s: 'writing_s', b: 'writing_b', e: 'writing_e', y: 'writing_y' };
+  const OUTLINE_TARGETS = [{ min: 30, max: 50 }, { min: 60, max: 90 }, { min: 70, max: 100 }, { min: 30, max: 50 }];
 
   /* ---------- 單元路徑(課與練習交錯,循序漸進) ---------- */
   function unitsOf(lv) {
@@ -263,17 +264,28 @@
     return a;
   }
 
-  /* ---------- 共用:寫作輸入(自動儲存) ---------- */
-  function writeArea(storeKey, id, field, placeholder, minH) {
+  /* ---------- 共用:寫作輸入(自動儲存;target={min,max} 顯示建議字數) ---------- */
+  function writeArea(storeKey, id, field, placeholder, minH, target) {
     const map = store.get(storeKey, {});
     const saved = (map[id] || {})[field] || '';
-    const counter = h('span', { class: 'wc' }, saved ? wordCount(saved) + ' 字' : '');
+    const counter = h('span', { class: 'wc' });
     const savedNote = h('span', { class: 'wc', style: 'color:var(--ok)' });
     const ta = h('textarea', { class: 'write-area', placeholder: placeholder || '', style: minH ? 'min-height:' + minH + 'px' : '' });
     ta.value = saved;
+    function updateCount() {
+      const n = wordCount(ta.value);
+      if (target) {
+        counter.textContent = n + ' / 建議 ' + target.min + '–' + target.max + ' 字';
+        counter.style.color = (n >= target.min && n <= target.max) ? 'var(--ok)' : '';
+        counter.style.fontWeight = (n >= target.min && n <= target.max) ? '700' : '';
+      } else {
+        counter.textContent = n ? n + ' 字' : '';
+      }
+    }
+    updateCount();
     let timer = null;
     ta.addEventListener('input', () => {
-      counter.textContent = wordCount(ta.value) + ' 字';
+      updateCount();
       savedNote.textContent = '';
       clearTimeout(timer);
       timer = setTimeout(saveNow, 900);
@@ -351,8 +363,8 @@
   /* ---------- 論述 ---------- */
   function essayBlock(e, title) {
     const outlineAreas = e.outline.map((o, oi) =>
-      writeArea(KEYS.y, e.id, 'p' + oi, o.hint, 58));
-    const mainWa = writeArea(KEYS.y, e.id, 'text', '把四格內容整理成完整短文(也可以直接在這裡寫)', 210);
+      writeArea(KEYS.y, e.id, 'p' + oi, '寫在這裡', 74, OUTLINE_TARGETS[oi]));
+    const mainWa = writeArea(KEYS.y, e.id, 'text', '把四格內容整理成完整短文(也可以直接在這裡寫)', 210, { min: 200, max: 300 });
     const mergeBtn = h('button', {
       class: 'btn', type: 'button', style: 'margin:10px 0',
       onclick: () => {
@@ -374,7 +386,10 @@
       h('div', { class: 'kw-row' }, '可用轉折語:', e.transitions.map(t => h('span', { class: 'kw-chip' }, t))),
       h('div', { class: 'outline-grid' },
         e.outline.map((o, oi) => h('div', { class: 'outline-cell' },
-          h('b', null, o.label), outlineAreas[oi].ta, outlineAreas[oi].bar))),
+          h('b', null, o.label,
+            h('span', { class: 'outline-target' }, '建議 ' + OUTLINE_TARGETS[oi].min + '–' + OUTLINE_TARGETS[oi].max + ' 字')),
+          h('p', { class: 'outline-hint' }, o.hint),
+          outlineAreas[oi].ta, outlineAreas[oi].bar))),
       mergeBtn, mainWa.ta, mainWa.bar, rBtn, rBody);
   }
 })();

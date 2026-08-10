@@ -894,6 +894,24 @@ table.cat-table td.num { white-space: nowrap; }
 .next-steps { border: 1px solid var(--line); border-left: 3px solid var(--primary); border-radius: var(--radius); padding: 16px 20px; margin: 14px 0 30px; font-size: 14.5px; }
 .next-steps li { margin: 4px 0 4px 20px; }
 
+/* 能力分析:級距刻度尺與長條圖 */
+.band-scale { position: relative; margin: 26px 8px 34px; height: 40px; }
+.bs-track {
+  position: absolute; left: 0; right: 0; top: 14px; height: 10px;
+  border-radius: 5px; background: var(--bg-soft); border: 1px solid var(--line);
+}
+.bs-seg { position: absolute; top: 14px; height: 12px; margin-top: -1px; border-radius: 6px; background: var(--primary); }
+.bs-label {
+  position: absolute; top: -10px; transform: translateX(-50%);
+  font-size: 14px; font-weight: 700; color: var(--primary-dark); white-space: nowrap;
+}
+.bs-tick { position: absolute; top: 28px; transform: translateX(-50%); font-size: 11.5px; color: var(--ink-light); }
+.bar-line .track i.ok { background: var(--ok); }
+.bar-go { font-size: 13px; flex: none; width: 34px; }
+.cat-bars { margin-top: 6px; }
+.cat-bars .bar-line { margin-bottom: 10px; }
+.cat-bars .lb { width: 150px; font-size: 13.5px; }
+
 /* 能力分析:錯題分類列 */
 .wrong-cat-row {
   display: flex; justify-content: space-between; align-items: center;

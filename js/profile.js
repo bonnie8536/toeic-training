@@ -75,6 +75,7 @@
           return;
         }
         menu.append(h('div', { class: 'pm-head' }, CLOUD.user.email));
+        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'analysis.html'; } }, '能力分析'));
         if (CLOUD.isTeacher) {
           menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'admin.html'; } }, '教師後台'));
         }
@@ -199,6 +200,9 @@
           onclick: () => switchTo(pr.id),
         }, pr.name, cur && pr.id === cur.id ? ' ✓' : ''));
       });
+      if (cur) {
+        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'analysis.html'; } }, '能力分析'));
+      }
       menu.append(h('div', { class: 'pm-sep' }));
       menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; showGate(true); } }, '＋ 新增學生'));
       if (cur) {

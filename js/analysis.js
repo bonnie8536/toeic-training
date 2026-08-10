@@ -125,6 +125,31 @@
     return { vocab, vocabTotal, readQ, wDone, wTotal };
   }
 
+  /* ---------- 圖表小工具 ---------- */
+  function bar(label, ratio, valText, colorClass, extra) {
+    return h('div', { class: 'bar-line' },
+      h('span', { class: 'lb' }, label),
+      h('div', { class: 'track' }, h('i', { class: colorClass || '', style: 'width:' + Math.round(ratio * 100) + '%' })),
+      h('span', { class: 'val' }, valText),
+      extra || null);
+  }
+
+  /* 級距刻度尺(300–990) */
+  function bandScale(band) {
+    const MIN = 300, MAX = 990;
+    let lo, hi;
+    if (band.endsWith('+')) { lo = Number(band.slice(0, -1)); hi = MAX; }
+    else { const m = band.split('–'); lo = Number(m[0]); hi = Number(m[1]); }
+    const pct = v => ((v - MIN) / (MAX - MIN) * 100).toFixed(1) + '%';
+    const scale = h('div', { class: 'band-scale' },
+      h('div', { class: 'bs-track' }),
+      h('div', { class: 'bs-seg', style: 'left:' + pct(lo) + ';width:' + ((hi - lo) / (MAX - MIN) * 100).toFixed(1) + '%' }),
+      h('div', { class: 'bs-label', style: 'left:' + pct((lo + hi) / 2) }, band));
+    [300, 500, 700, 900, 990].forEach(v =>
+      scale.append(h('span', { class: 'bs-tick', style: 'left:' + pct(v) }, String(v))));
+    return scale;
+  }
+
   /* ---------- 畫面 ---------- */
   const rec = collect();
   const p = window.PROFILE && PROFILE.current();
@@ -147,40 +172,43 @@
   const aA0 = rec.diff['進階'].t >= 4 ? acc(rec.diff['進階']) : null;
   const overall = rec.correct / rec.total;
   const est = bandEstimate(aB0 === null ? 1 : aB0, aM0 === null ? overall : aM0, aA0 === null ? overall : aA0, overall);
+  const accCls = r => r < 0.4 ? 'weak' : r < 0.6 ? 'mid' : '';
   root.append(h('div', { class: 'report-head' },
     h('div', { class: 'who' }, '依據:' + rec.sources.join('、')),
-    h('h2', null, '預測級距 ' + est.band),
-    h('div', { class: 'band-line' },
-      h('div', { class: 'item' }, h('b', null, Math.round(overall * 100) + '%'), h('span', null, '整體正確率(' + rec.total + ' 題)')),
-      aB0 !== null ? h('div', { class: 'item' }, h('b', null, Math.round(aB0 * 100) + '%'), h('span', null, '基礎題')) : null,
-      aM0 !== null ? h('div', { class: 'item' }, h('b', null, Math.round(aM0 * 100) + '%'), h('span', null, '中級題')) : null,
-      aA0 !== null ? h('div', { class: 'item' }, h('b', null, Math.round(aA0 * 100) + '%'), h('span', null, '進階題')) : null,
+    h('h2', null, '預測級距(閱讀)'),
+    bandScale(est.band),
+    h('div', { style: 'margin-top:18px' },
+      bar('整體正確率', overall, Math.round(overall * 100) + '% · ' + rec.total + ' 題', accCls(overall)),
+      aB0 !== null ? bar('基礎題', aB0, Math.round(aB0 * 100) + '%', accCls(aB0)) : null,
+      aM0 !== null ? bar('中級題', aM0, Math.round(aM0 * 100) + '%', accCls(aM0)) : null,
+      aA0 !== null ? bar('進階題', aA0, Math.round(aA0 * 100) + '%', accCls(aA0)) : null,
       ['5', '6', '7'].map(pp => rec.parts[pp] && rec.parts[pp].n
-        ? h('div', { class: 'item' }, h('b', null, Math.round(rec.parts[pp].ok / rec.parts[pp].n * 100) + '%'), h('span', null, 'Part ' + pp + '(' + rec.parts[pp].n + ' 題)'))
+        ? bar('Part ' + pp, rec.parts[pp].ok / rec.parts[pp].n,
+            Math.round(rec.parts[pp].ok / rec.parts[pp].n * 100) + '% · ' + rec.parts[pp].n + ' 題',
+            accCls(rec.parts[pp].ok / rec.parts[pp].n))
         : null)),
     h('div', { class: 'band-note' }, est.advice + ' 級距由練習紀錄推估、刻意放寬,與正式成績可能有明顯落差;累計越多題越準。')));
 
-  /* 2. 強弱項 */
+  /* 2. 強弱項(長條圖,弱→強) */
   const catRows = Object.entries(rec.cats).filter(([, c]) => c.t >= 3)
     .sort((a, b) => a[1].c / a[1].t - b[1].c / b[1].t);
   root.append(h('div', { class: 'exercise-head' }, h('h2', null, '考點強弱項')));
   if (!catRows.length) {
     root.append(h('p', { class: 'result-note' }, '單一考點的紀錄還太少(每類至少 3 題才列入)。'));
   } else {
-    const table = h('table', { class: 'cat-table' },
-      h('tr', null, h('th', null, '考點'), h('th', null, '答對'), h('th', null, '判定'), h('th', { class: 'no-print' }, '')));
+    const wrap = h('div', { class: 'cat-bars' });
     catRows.forEach(([cat, c]) => {
       const a = c.c / c.t;
-      const cls = a >= 0.8 ? 'good' : a >= 0.4 ? 'mid' : 'weak';
-      const label = a >= 0.8 ? '穩固' : a >= 0.4 ? '部分掌握' : '待加強';
+      const cls = a >= 0.8 ? 'ok' : a >= 0.4 ? 'mid' : 'weak';
       const link = c.go ? 'practice.html?part=' + c.go.part + (c.go.cat ? '&cat=' + encodeURIComponent(c.go.cat) : '') : null;
-      table.append(h('tr', null,
-        h('td', null, cat),
-        h('td', { class: 'num' }, c.c + ' / ' + c.t),
-        h('td', null, h('span', { class: 'verdict-pill ' + cls }, label)),
-        h('td', { class: 'no-print' }, cls !== 'good' && link ? h('a', { href: link, style: 'font-size:13px' }, '去練 →') : '')));
+      wrap.append(bar(cat, a, c.c + '/' + c.t, cls,
+        cls !== 'ok' && link ? h('a', { class: 'bar-go', href: link }, '去練') : h('span', { class: 'bar-go', style: 'visibility:hidden' }, '去練')));
     });
-    root.append(table);
+    root.append(wrap,
+      h('p', { class: 'result-note', style: 'margin-top:8px' },
+        h('span', { class: 'verdict-pill weak' }, '紅'), ' 低於 40% ',
+        h('span', { class: 'verdict-pill mid' }, '橘'), ' 40–79% ',
+        h('span', { class: 'verdict-pill good' }, '綠'), ' 80% 以上'));
   }
 
   /* 3. 錯題分類 */
@@ -208,13 +236,18 @@
     });
   }
 
-  /* 4. 學習量 */
+  /* 4. 學習量(進度條) */
   const v = volume();
   root.append(h('div', { class: 'exercise-head' }, h('h2', null, '學習量')));
   const diagN = ((store.get('diag', null) || {}).done && diagItems.length) ? diagItems.length : 0;
-  root.append(h('div', { class: 'band-line', style: 'margin:6px 0 40px' },
-    h('div', { class: 'item' }, h('b', null, String(rec.total - diagN)), h('span', null, '刷題已作答')),
-    h('div', { class: 'item' }, h('b', null, v.vocab + '/' + v.vocabTotal), h('span', null, '互動單字')),
-    h('div', { class: 'item' }, h('b', null, String(v.readQ)), h('span', null, '文章題已作答')),
-    h('div', { class: 'item' }, h('b', null, v.wDone + '/' + v.wTotal), h('span', null, '寫作單元'))));
+  const drillN = rec.total - diagN;
+  const drillTotal = (TOEIC.part5 || []).length
+    + (TOEIC.part6 || []).reduce((n, s) => n + s.questions.length, 0)
+    + (TOEIC.part7 || []).reduce((n, s) => n + s.questions.length, 0);
+  const readQTotal = (TOEIC.articles || []).reduce((n, a) => n + a.questions.length, 0);
+  root.append(h('div', { style: 'margin:6px 0 40px' },
+    bar('刷題', drillTotal ? drillN / drillTotal : 0, drillN + '/' + drillTotal),
+    bar('互動單字', v.vocabTotal ? v.vocab / v.vocabTotal : 0, v.vocab + '/' + v.vocabTotal),
+    bar('文章題', readQTotal ? v.readQ / readQTotal : 0, v.readQ + '/' + readQTotal),
+    bar('寫作單元', v.wTotal ? v.wDone / v.wTotal : 0, v.wDone + '/' + v.wTotal)));
 })();

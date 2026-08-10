@@ -1,0 +1,441 @@
+{
+  "title": "Level 1 句子力",
+  "subtitle": "寫出完整正確的句子",
+  "lessons": [
+    {
+      "id": "w1-lesson-1",
+      "title": "英文句子的骨架：先把主詞和動詞放好",
+      "intro": "很多人寫英文句子會卡住，不是因為單字不夠，而是因為沒有先想清楚「誰」「做什麼」。中文可以說「明天開會」，聽的人自己會補上主詞；英文不行，少了主詞或動詞，那串字就不算句子，閱卷老師會直接視為錯誤。這一堂先把英文句子的骨架拆開來看：五大句型當中，寫作最常用到的是 SVO（主詞＋動詞＋受詞）和 SVC（主詞＋be 動詞＋補語）。只要這兩種寫穩，你就能把八成的商業情境寫成正確的句子。骨架站得住，之後要加形容詞、加片語、加連接詞都不會塌。",
+      "points": [
+        {
+          "tip": "每個英文句子至少要有「主詞＋動詞」。動筆前先問自己兩個問題：誰？做了什麼？把答案依序寫下來，就是一個合格的句子。",
+          "example": "The team will meet tomorrow.",
+          "exampleZh": "小組明天要開會。"
+        },
+        {
+          "tip": "SVO：主詞＋動詞＋受詞。動作有對象時，受詞緊跟在動詞後面，中間不要插入別的字（不要寫成 sent to the client the invoice）。",
+          "example": "Ms. Lin sent the invoice.",
+          "exampleZh": "林小姐寄了發票。"
+        },
+        {
+          "tip": "SVC：主詞＋be 動詞＋補語。be 動詞（am／is／are／was／were）後面接名詞說明「是什麼」，接形容詞說明「怎麼樣」。",
+          "example": "Mr. Wang is our sales manager. The new office is quiet.",
+          "exampleZh": "王先生是我們的業務經理。新辦公室很安靜。"
+        },
+        {
+          "tip": "動詞後面接兩個受詞時（給某人某物），順序是先「人」後「物」；如果想把「物」寫在前面，後面要補上 to 或 for。",
+          "example": "The company gave every employee a free lunch. The company gave a free lunch to every employee.",
+          "exampleZh": "公司給每位員工一份免費午餐。（兩種寫法意思相同）"
+        },
+        {
+          "tip": "一個句子只能有一個主要動詞。be 動詞和一般動詞不能黏在一起，這是台灣考生最常見的錯誤之一。",
+          "example": "I agree with your plan.",
+          "exampleZh": "我同意你的計畫。（不可寫成 I am agree with your plan.）"
+        },
+        {
+          "tip": "找不到主詞的時候，用 It 或 There 開頭。說天氣、時間、距離用 It；要表達「有～」用 There is（單數）／There are（複數）。",
+          "example": "There are twenty people in the meeting room. It is very hot today.",
+          "exampleZh": "會議室裡有二十個人。今天很熱。"
+        }
+      ]
+    },
+    {
+      "id": "w1-lesson-2",
+      "title": "把句子加長：形容詞、副詞、介系詞片語各站各的位置",
+      "intro": "骨架寫穩之後，句子還是太短、太像小學生作文，這時候要學的是「加東西」。英文加東西有規矩：形容詞站在名詞前面，副詞看種類決定位置，介系詞片語緊貼著它要說明的那個名詞。很多人寫錯不是單字錯，而是位置放錯，例如把介系詞片語硬塞在主詞和動詞中間，整句就變得很難讀。這一堂把常見修飾語的位置一次講清楚，你只要照著擺，句子加長之後仍然乾淨好懂。記得一個原則：修飾語要盡量靠近它修飾的對象。",
+      "points": [
+        {
+          "tip": "形容詞放在名詞前面，不要放後面。有兩個形容詞時，先寫大小或新舊（large／new），再寫用途或材質（coffee／paper）。",
+          "example": "The company bought a new coffee machine.",
+          "exampleZh": "公司買了一台新的咖啡機。"
+        },
+        {
+          "tip": "頻率副詞（always／usually／often／never）放在一般動詞前面、be 動詞後面。先照這個位置寫，考試時就不會出錯。",
+          "example": "She always checks the price list. He is always on time.",
+          "exampleZh": "她總是核對價目表。他總是準時。"
+        },
+        {
+          "tip": "程度副詞（very／quite／really／too）放在它要加強的形容詞前面，不要放到句尾。",
+          "example": "The service at that hotel was very helpful.",
+          "exampleZh": "那家飯店的服務非常周到。"
+        },
+        {
+          "tip": "介系詞片語如果是用來說明某個名詞，就緊跟在那個名詞後面，不可以插進主詞和動詞中間。",
+          "example": "The file on my desk is the old version.",
+          "exampleZh": "我桌上那份檔案是舊版。"
+        },
+        {
+          "tip": "地點和時間片語通常放在句尾，順序是「先地點、後時間」。中文習慣先講時間，寫英文時要記得換過來。",
+          "example": "We met the supplier at the hotel on Friday.",
+          "exampleZh": "我們星期五在飯店見了供應商。"
+        },
+        {
+          "tip": "時間介系詞三選一：at 接時刻，on 接日期或星期，in 接月份、年份或季節。這是多益寫作最容易被扣分的小地方。",
+          "example": "The meeting starts at ten on Monday. We will move to the new office in May.",
+          "exampleZh": "會議星期一十點開始。我們五月會搬到新辦公室。"
+        }
+      ]
+    },
+    {
+      "id": "w1-lesson-3",
+      "title": "把兩個想法接起來：連接詞和關係代名詞",
+      "intro": "寫作要進步，下一步是把短句合併。一直寫「We got your order. We will ship it. The factory is busy.」讀起來像便條紙，不像職場信件。英文合併句子先學兩條最好用的路：一是用連接詞（and／but／so／because／although）把兩個完整句子接起來，二是用關係代名詞（who／which）把說明塞進名詞後面。這一堂特別要注意兩個台灣人常犯的錯：中文的「雖然……但是……」在英文只能留一個連接詞；還有逗號不能單獨連接兩個句子。學會這一堂，你的句子就會從便條紙升級成商業書信。",
+      "points": [
+        {
+          "tip": "and（並列）、but（轉折）、so（結果）連接兩個完整句子時，連接詞前面要加逗號。前後都必須是「主詞＋動詞」的完整句。",
+          "example": "I sent the file, but the customer did not receive it.",
+          "exampleZh": "我寄了檔案，但是客戶沒有收到。"
+        },
+        {
+          "tip": "because 用來說原因，後面一定要接完整句子（主詞＋動詞），不能只接一個名詞。只接名詞要改用 because of。",
+          "example": "We changed the date because the manager was away.",
+          "exampleZh": "我們改了日期，因為經理不在。"
+        },
+        {
+          "tip": "although 表示「雖然」。中文的「雖然……但是……」要兩個字，英文只能留一個；用了 although 就不可以再用 but。放句首時，子句結束要加逗號。",
+          "example": "Although the price is higher, the quality is much better.",
+          "exampleZh": "雖然價格比較高，品質卻好很多。"
+        },
+        {
+          "tip": "who 用來說明「人」，緊接在那個人後面，等於把兩句話疊在一起。",
+          "example": "The engineer who fixed our printer works for a local company.",
+          "exampleZh": "修好我們印表機的那位工程師在一家本地公司上班。"
+        },
+        {
+          "tip": "which 用來說明「事物」，同樣緊跟在那個名詞後面。人用 who、物用 which，先分清楚再下筆。",
+          "example": "We booked a hotel which is near the train station.",
+          "exampleZh": "我們訂了一家靠近火車站的飯店。"
+        },
+        {
+          "tip": "逗號不能單獨連接兩個完整句子。要嘛加上連接詞，要嘛改成句號分成兩句，兩者選一。",
+          "example": "The price is high, but we still bought it.",
+          "exampleZh": "價格很高，但我們還是買了。（不可寫成 The price is high, we still bought it.）"
+        }
+      ]
+    }
+  ],
+  "scramble": [
+    {
+      "id": "w1-s-01",
+      "zh": "王先生核准了我們新的差旅費用規定。",
+      "words": ["Mr.", "Wang", "approved", "our", "new", "travel", "expense", "policy."],
+      "answer": "Mr. Wang approved our new travel expense policy.",
+      "note": "最基本的 SVO：主詞在前、動詞在中、受詞在後，形容詞 new 要放在名詞組前面。"
+    },
+    {
+      "id": "w1-s-02",
+      "zh": "林小姐把合約寄給我們最大的客戶。",
+      "words": ["Ms.", "Lin", "sent", "the", "contract", "to", "our", "biggest", "customer."],
+      "answer": "Ms. Lin sent the contract to our biggest customer.",
+      "note": "先寫寄出去的「物」，再用 to 帶出收件的「人」。"
+    },
+    {
+      "id": "w1-s-03",
+      "zh": "這家飯店提供免費無線網路給所有房客。",
+      "words": ["The", "hotel", "provides", "free", "wireless", "internet", "to", "all", "guests."],
+      "answer": "The hotel provides free wireless internet to all guests.",
+      "note": "provide 的受詞是提供的東西，對象要用 to 接在後面。"
+    },
+    {
+      "id": "w1-s-04",
+      "zh": "我們的新辦公室離火車站很近。",
+      "words": ["Our", "new", "office", "is", "very", "close", "to", "the", "train", "station."],
+      "answer": "Our new office is very close to the train station.",
+      "note": "SVC 句型：be 動詞後面接形容詞當補語，very 要放在形容詞前面。"
+    },
+    {
+      "id": "w1-s-05",
+      "zh": "許多客戶喜歡這台平板電腦的大螢幕。",
+      "words": ["Many", "customers", "like", "the", "large", "screen", "of", "this", "tablet", "computer."],
+      "answer": "Many customers like the large screen of this tablet computer.",
+      "note": "of 片語說明「誰的螢幕」，要緊跟在 screen 後面。"
+    },
+    {
+      "id": "w1-s-06",
+      "zh": "公司在十二月給每位員工一筆獎金。",
+      "words": ["The", "company", "gave", "every", "employee", "a", "bonus", "in", "December."],
+      "answer": "The company gave every employee a bonus in December.",
+      "note": "give 後面接兩個受詞時，順序是先「人」後「物」；時間片語放句尾。"
+    },
+    {
+      "id": "w1-s-07",
+      "zh": "陳小姐請她的助理去訂一間會議室。",
+      "words": ["Ms.", "Chen", "asked", "her", "assistant", "to", "book", "a", "meeting", "room."],
+      "answer": "Ms. Chen asked her assistant to book a meeting room.",
+      "note": "ask someone to do something：受詞後面接 to＋原形動詞。"
+    },
+    {
+      "id": "w1-s-08",
+      "zh": "貴公司的名稱不在這份名單上。",
+      "words": ["The", "name", "of", "your", "company", "is", "not", "on", "the", "list."],
+      "answer": "The name of your company is not on the list.",
+      "note": "of your company 說明是誰的名稱，要緊跟在 name 後面；主要動詞 is 要等整組主詞寫完才出現。"
+    },
+    {
+      "id": "w1-s-09",
+      "zh": "三樓有兩間會議室。",
+      "words": ["There", "are", "two", "meeting", "rooms", "on", "the", "third", "floor."],
+      "answer": "There are two meeting rooms on the third floor.",
+      "note": "要說「有～」用 There are，後面接複數名詞 rooms；地點片語放在句尾。"
+    },
+    {
+      "id": "w1-s-10",
+      "zh": "我們的配送服務比當地郵局快很多。",
+      "words": ["Our", "delivery", "service", "is", "much", "faster", "than", "the", "local", "post", "office."],
+      "answer": "Our delivery service is much faster than the local post office.",
+      "note": "比較級用 much 加強，位置在 faster 前面，than 後面接被比較的對象。"
+    },
+    {
+      "id": "w1-s-11",
+      "zh": "我們的會計總是核對月報表裡的每一個數字。",
+      "words": ["Our", "accountant", "always", "checks", "every", "number", "in", "the", "monthly", "report."],
+      "answer": "Our accountant always checks every number in the monthly report.",
+      "note": "頻率副詞 always 放在一般動詞前面，主詞第三人稱單數時動詞要加 s。"
+    },
+    {
+      "id": "w1-s-12",
+      "zh": "我們的新業務辦公室五月開幕。",
+      "words": ["Our", "new", "sales", "office", "will", "open", "in", "May."],
+      "answer": "Our new sales office will open in May.",
+      "note": "月份前面用 in；還沒發生的事用 will，後面接原形動詞 open。"
+    },
+    {
+      "id": "w1-s-13",
+      "zh": "這兩台印表機的總價偏高。",
+      "words": ["The", "total", "price", "of", "the", "two", "printers", "is", "quite", "high."],
+      "answer": "The total price of the two printers is quite high.",
+      "note": "of the two printers 說明是什麼東西的總價，緊跟在 price 後面；quite 放在形容詞 high 前面。"
+    },
+    {
+      "id": "w1-s-14",
+      "zh": "台北辦公室來的那位經理會說三種語言。",
+      "words": ["The", "manager", "from", "the", "Taipei", "office", "speaks", "three", "languages."],
+      "answer": "The manager from the Taipei office speaks three languages.",
+      "note": "from 片語緊跟在 manager 後面，說明是哪一位經理；主要動詞 speaks 要等整組主詞寫完才出現。"
+    },
+    {
+      "id": "w1-s-15",
+      "zh": "我核對過報告，但是數字有錯。",
+      "words": ["I", "checked", "the", "report,", "but", "the", "numbers", "were", "wrong."],
+      "answer": "I checked the report, but the numbers were wrong.",
+      "note": "but 連接兩個完整句子，逗號放在 but 前面。"
+    },
+    {
+      "id": "w1-s-16",
+      "zh": "我們改了開會時間，因為有兩位主管不在。",
+      "words": ["We", "changed", "the", "meeting", "time", "because", "two", "managers", "were", "away."],
+      "answer": "We changed the meeting time because two managers were away.",
+      "note": "because 後面要接完整句子；沒有逗號時，原因子句放在主要子句後面。"
+    },
+    {
+      "id": "w1-s-17",
+      "zh": "雖然價格比較高，這台機器好用很多。",
+      "words": ["Although", "the", "price", "is", "higher,", "the", "machine", "works", "much", "better."],
+      "answer": "Although the price is higher, the machine works much better.",
+      "note": "Although 子句放句首時後面要加逗號，而且不可以再用 but。"
+    },
+    {
+      "id": "w1-s-18",
+      "zh": "修好我們印表機的那位工程師把帳單寄給我們。",
+      "words": ["The", "engineer", "who", "fixed", "our", "printer", "sent", "us", "the", "bill."],
+      "answer": "The engineer who fixed our printer sent us the bill.",
+      "note": "who 代替前面的人 engineer，關係子句結束後才接主要動詞 sent。"
+    },
+    {
+      "id": "w1-s-19",
+      "zh": "飯店給了我們一間面向花園的房間。",
+      "words": ["The", "hotel", "gave", "us", "a", "room", "which", "faces", "the", "garden."],
+      "answer": "The hotel gave us a room which faces the garden.",
+      "note": "which 用來說明事物 room，關係子句緊跟在該名詞後面。"
+    },
+    {
+      "id": "w1-s-20",
+      "zh": "林小姐印好表格，她的助理把表格送去給客戶。",
+      "words": ["Ms.", "Lin", "printed", "the", "forms,", "and", "her", "assistant", "delivered", "them", "to", "the", "customer."],
+      "answer": "Ms. Lin printed the forms, and her assistant delivered them to the customer.",
+      "note": "and 連接兩個完整句子時前面加逗號；代名詞 them 指前面的 forms，所以先後順序不能對調。"
+    }
+  ],
+  "build": [
+    {
+      "id": "w1-b-01",
+      "scenario": "你今天到新公司報到，要在小組會議上用一到兩句話介紹自己：你在業務部工作，下週開始加入這個專案小組。",
+      "keywords": ["work", "team"],
+      "models": [
+        "I work in the sales department.",
+        "I work in the sales department, and I will join your project team next week."
+      ],
+      "checkpoints": [
+        "句子有沒有主詞？（英文的 I 不能省略）",
+        "動詞有沒有跟主詞一致？（I work／He works）",
+        "部門前面的介系詞有沒有用 in？",
+        "句子最後有沒有加句點？"
+      ]
+    },
+    {
+      "id": "w1-b-02",
+      "scenario": "原訂星期三上午十點的部門會議要改到星期五下午兩點，你要寫一句話通知同事。",
+      "keywords": ["change", "meeting"],
+      "models": [
+        "We changed the meeting to Friday afternoon.",
+        "We changed the department meeting from Wednesday to Friday at two in the afternoon."
+      ],
+      "checkpoints": [
+        "時間介系詞有沒有選對？（at 接時刻、on 接星期）",
+        "有沒有寫清楚是哪一場會議，讓同事看得懂？",
+        "一個句子裡是不是只有一個主要動詞？",
+        "動詞時態前後一致嗎？（已經改好用過去式）"
+      ]
+    },
+    {
+      "id": "w1-b-03",
+      "scenario": "客戶下了五十台印表機的訂單，你要回信確認已收到訂單，並說明星期五出貨。",
+      "keywords": ["order", "confirm"],
+      "models": [
+        "We confirm your order for fifty printers.",
+        "We confirm your order for fifty printers, and we will ship them on Friday."
+      ],
+      "checkpoints": [
+        "主詞 We 後面的動詞有沒有多加 s？（We confirm，不是 We confirms）",
+        "數量後面的名詞有沒有變複數？（fifty printers）",
+        "and 連接兩個完整句子時，前面有沒有加逗號？",
+        "還沒發生的出貨動作有沒有用 will？"
+      ]
+    },
+    {
+      "id": "w1-b-04",
+      "scenario": "你手上有一份二十頁的資料要在三點開會前印好，想請隔壁同事幫忙。",
+      "keywords": ["print", "help"],
+      "models": [
+        "Could you help me print this file?",
+        "Could you help me print this twenty-page file before the meeting at three?"
+      ],
+      "checkpoints": [
+        "疑問句最後有沒有加問號？",
+        "Could you 後面有沒有接原形動詞？",
+        "help me 後面的動詞有沒有用原形？（help me print）",
+        "有沒有寫出時間或份數，讓對方知道急不急？"
+      ]
+    },
+    {
+      "id": "w1-b-05",
+      "scenario": "客戶打電話問門市營業時間：星期一到星期五，早上九點到晚上六點。",
+      "keywords": ["open", "hour"],
+      "models": [
+        "Our store is open from nine to six.",
+        "Our business hours are from nine in the morning to six in the evening, Monday to Friday."
+      ],
+      "checkpoints": [
+        "be 動詞有沒有跟主詞一致？（store is／hours are）",
+        "open 是形容詞，前面有沒有 be 動詞？",
+        "from ... to ... 有沒有成對出現？",
+        "有沒有寫清楚是上午還是下午？"
+      ]
+    },
+    {
+      "id": "w1-b-06",
+      "scenario": "你三月十號要到台中出差三天，寫一句話向飯店訂一間單人房。",
+      "keywords": ["book", "night"],
+      "models": [
+        "I want to book a single room for three nights.",
+        "I would like to book a single room for three nights from March 10."
+      ],
+      "checkpoints": [
+        "want／would like 後面有沒有接 to＋原形動詞？",
+        "數量後面的名詞有沒有變複數？（three nights）",
+        "日期前面的介系詞有沒有用對？（on March 10／from March 10）",
+        "有沒有寫清楚房型和天數？"
+      ]
+    },
+    {
+      "id": "w1-b-07",
+      "scenario": "工廠缺料，客戶的貨要晚一週才能出，你要說明原因並給出新的出貨日五月十二號。",
+      "keywords": ["delay", "ship"],
+      "models": [
+        "Your order will be one week late.",
+        "We are sorry for the delay, and we will ship your order on May 12 because the factory is waiting for materials."
+      ],
+      "checkpoints": [
+        "有沒有先說結果、再用 because 說原因？",
+        "because 後面有沒有接完整句子（主詞＋動詞）？",
+        "未來的出貨動作有沒有用 will ship？",
+        "兩個完整句子之間有沒有用逗號加連接詞連起來？"
+      ]
+    },
+    {
+      "id": "w1-b-08",
+      "scenario": "公司六月十五號在圓山飯店舉辦新產品發表會，你要寫一句話邀請往來客戶參加。",
+      "keywords": ["invite", "event"],
+      "models": [
+        "We invite you to our new product event.",
+        "We would like to invite you to our new product event at the Grand Hotel on June 15."
+      ],
+      "checkpoints": [
+        "invite 後面的代名詞有沒有用受格 you？",
+        "invite someone to something 的 to 有沒有寫出來？",
+        "地點和時間的順序對嗎？（先地點 at，後時間 on）",
+        "句子有沒有主詞和主要動詞？"
+      ]
+    },
+    {
+      "id": "w1-b-09",
+      "scenario": "客戶收到的耳機有問題，要求退貨退款，你要回信說明七天內可退貨，退款會匯到原帳戶。",
+      "keywords": ["return", "refund"],
+      "models": [
+        "You can return the headphones to our store.",
+        "You can return the headphones within seven days, and we will send the refund to your account."
+      ],
+      "checkpoints": [
+        "can 後面有沒有接原形動詞？",
+        "return 在你的句子裡是動詞還是名詞，位置放對了嗎？",
+        "兩個完整句子之間有沒有用逗號＋and？",
+        "有沒有寫出期限，讓客戶知道要在什麼時候之前處理？"
+      ]
+    },
+    {
+      "id": "w1-b-10",
+      "scenario": "主管問你負責的網站改版進度：設計已經完成，測試還要三天，報告星期五交。",
+      "keywords": ["finish", "report"],
+      "models": [
+        "We finished the design last week.",
+        "We finished the design, but the test will take three more days, so I will send the report on Friday."
+      ],
+      "checkpoints": [
+        "已經完成的事情有沒有用過去式？",
+        "還沒完成的事情有沒有用 will？",
+        "but、so 前面有沒有加逗號？",
+        "有沒有出現兩個主要動詞卻沒有連接詞的句子？"
+      ]
+    },
+    {
+      "id": "w1-b-11",
+      "scenario": "供應商通知明年紙張價格要漲百分之十，你要禮貌回覆公司無法接受，希望維持原價。",
+      "keywords": ["price", "accept"],
+      "models": [
+        "We cannot accept the new price.",
+        "Although we understand your situation, we cannot accept the new price this year."
+      ],
+      "checkpoints": [
+        "Although 放句首時，子句結束有沒有加逗號？",
+        "有沒有同時用了 Although 和 but？（英文只能留一個）",
+        "cannot 後面有沒有接原形動詞？",
+        "語氣會不會太直接，需要加 I am afraid 這類緩衝說法？"
+      ]
+    },
+    {
+      "id": "w1-b-12",
+      "scenario": "餐廳把客戶訂的餐點送錯了，你要代表店家道歉，並提供下次消費九折的補償。",
+      "keywords": ["apologize", "offer"],
+      "models": [
+        "We apologize for the wrong order.",
+        "We apologize for the wrong order, and we would like to offer you a ten percent discount on your next visit."
+      ],
+      "checkpoints": [
+        "apologize for 的介系詞有沒有寫對？",
+        "offer someone something 的順序對嗎？（先人後物）",
+        "兩個完整句子之間有沒有用逗號＋and 連接？",
+        "有沒有寫清楚補償內容和可以使用的時機？"
+      ]
+    }
+  ]
+}

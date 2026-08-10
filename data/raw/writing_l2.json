@@ -1,0 +1,301 @@
+{
+  "title": "Level 2 Email 力",
+  "subtitle": "寫出得體的商用回信",
+  "lessons": [
+    {
+      "id": "w2-lesson-1",
+      "title": "商用 email 的固定格式",
+      "intro": "商用 email 不是作文，它有一套幾乎不會變的骨架：主旨、稱呼、開頭句、內文、結尾句、署名。好消息是，這六個位置有八成的字是可以背下來直接用的。你只要把「這封信要講什麼」放進中間那一段，其他部分照句庫填就好。先把格式練成反射動作，之後寫任何信都只剩下想內容的力氣。",
+      "points": [
+        {
+          "tip": "主旨（Subject）要讓對方不用打開就知道是什麼事。寫「事件＋編號或日期」，控制在 8 個英文單字以內，不要寫 Hello 或 Question 這種空話。",
+          "example": "Subject: Question about order #A5512\nSubject: Meeting time for the March 9 demo\nSubject: Damaged item in order #B7734",
+          "exampleZh": "主旨：關於訂單 #A5512 的問題\n主旨：3 月 9 日產品示範的會議時間\n主旨：訂單 #B7734 的商品破損"
+        },
+        {
+          "tip": "稱呼（Greeting）三選一：知道姓名用 Dear + Mr./Ms. + 姓（不要接名字）；不知道對方是誰用 Dear Sir or Madam 或 To whom it may concern；熟識的同事用 Hi + 名。三種寫法後面都要加逗號，然後換行空一行再寫內文。",
+          "example": "Dear Ms. Chen,\nDear Sir or Madam,\nHi Ian,",
+          "exampleZh": "陳女士您好，\n敬啟者（不知道收件人是誰時用），\n嗨，Ian，"
+        },
+        {
+          "tip": "開頭句（Opening）第一句就要說「我為什麼寫這封信」。回信時先謝對方，主動寫信時先講事由。開頭句庫背五句就夠用一輩子。",
+          "example": "Thank you for your email about our store hours.\nThank you for your interest in the KX-200 printer.\nThank you for telling us about order #B7734.\nI am writing about the workshop on May 8.\nI am writing to ask about the delivery date.",
+          "exampleZh": "感謝您來信詢問我們的營業時間。\n感謝您對 KX-200 印表機感興趣。\n感謝您告知訂單 #B7734 的狀況。\n我來信是關於 5 月 8 日的工作坊。\n我來信是想詢問交貨日期。"
+        },
+        {
+          "tip": "內文（Body）一件事一段，一段不要超過三行。對方問了幾件事，你就分幾段，或直接用短短的條列。不要把三件事塞在同一個長句裡，對方會漏看。",
+          "example": "Yes, we are open on Saturday, from 10:00 a.m. to 6:00 p.m.\n\nFor parking, there is a public parking lot behind our building.\n\nThe demo takes about 45 minutes, plus 15 minutes for questions.",
+          "exampleZh": "是的，我們週六營業，時間是上午 10 點到下午 6 點。\n\n關於停車，我們大樓後方有一個公共停車場。\n\n產品示範大約需要 45 分鐘，另外加 15 分鐘問答。"
+        },
+        {
+          "tip": "結尾句（Closing）要放兩件事：先給對方一個下一步，再用一句客氣話收尾。結尾句庫也是五句打天下，回信最常用 Please let me know 和 I look forward to your reply。",
+          "example": "Please let me know if you need any other information.\nIf you have any other questions, please call me at 02-2345-6789.\nI look forward to your reply.\nI look forward to seeing you next week.\nThank you again for your patience.",
+          "exampleZh": "如果您還需要其他資訊，請告訴我。\n如果您還有其他問題，請撥 02-2345-6789 與我聯絡。\n期待您的回覆。\n期待下週與您見面。\n再次感謝您的耐心等候。"
+        },
+        {
+          "tip": "署名（Signature）三行：結尾敬語＋逗號、你的名字、職稱與公司。對外一律用 Best regards（最安全）；很正式又知道對方姓名時，可用 Yours sincerely。給熟同事可以只留名字。切記敬語後面是逗號，不是句點。",
+          "example": "Best regards,\nAmy Lin\nCustomer Service, Brightstar Home",
+          "exampleZh": "敬祝順心，\n林艾咪\n客服部，Brightstar Home"
+        }
+      ]
+    },
+    {
+      "id": "w2-lesson-2",
+      "title": "回覆的套路：三步驟不漏答",
+      "intro": "回信最容易被扣分的地方不是文法，而是「漏答」。對方問了三件事，你只回了兩件，再漂亮的英文也沒用。商用回信永遠是同一個三步驟：感謝來信 → 逐項回應對方的每一個問題 → 說明下一步行動。把這三步當成三個抽屜，寫之前先把對方的問題塞進第二個抽屜，一個都不要留在信裡。",
+      "points": [
+        {
+          "tip": "動筆前先做一件事：把來信讀一遍，用手指數對方問了幾個問題（通常藏在問號、Could you、Please tell me、Also、One more thing 後面）。數出來是 3 個，你的回信就必須出現 3 個答案。",
+          "example": "Are you open on Saturday? (1) Is there any parking near the building? (2)",
+          "exampleZh": "你們週六營業嗎？（第 1 題）大樓附近有停車的地方嗎？（第 2 題）"
+        },
+        {
+          "tip": "第一步：感謝來信。回信的第一句不要直接回答問題，先用一句感謝把語氣墊高，再進入正題。客訴信也一樣，先謝對方願意告訴你。",
+          "example": "Thank you for your email about order #A5512.\nThank you for telling us about the problem.",
+          "exampleZh": "感謝您來信詢問訂單 #A5512。\n感謝您告訴我們這個問題。"
+        },
+        {
+          "tip": "第二步：逐項回應。答案要放在句子最前面，先給 Yes / No / 數字 / 日期，再解釋原因。新手最常犯的錯是先鋪陳三行才講結論，對方讀到一半就失去耐心。",
+          "example": "Yes, we have the KX-200 in stock. We can ship it within two working days.\nNo, we cannot deliver on Sunday, but we can deliver early on Monday morning.",
+          "exampleZh": "是的，KX-200 有現貨。我們可以在兩個工作天內出貨。\n很抱歉週日無法配送，但我們可以在週一一早送達。"
+        },
+        {
+          "tip": "順序照對方的順序走。對方先問 A 再問 B，你就先答 A 再答 B，並用 First / Second / Also / For the parking 這類小提示帶路，讓對方一眼對得起來。",
+          "example": "First, the price includes a one-year warranty.\n\nSecond, we are happy to offer schools a 10% discount.\n\nAlso, we can send you a quotation today.",
+          "exampleZh": "第一，價格包含一年保固。\n\n第二，我們很樂意提供學校 9 折優惠。\n\n另外，我們今天就可以寄報價單給您。"
+        },
+        {
+          "tip": "遇到當下答不出來的問題，不要跳過。寫出「我會去查＋我什麼時候回覆」，這比裝作沒看到專業一百倍。",
+          "example": "I do not have the final price yet. I will check with our factory and reply by Friday.",
+          "exampleZh": "我目前還沒有最終價格。我會與工廠確認，並在週五前回覆您。"
+        },
+        {
+          "tip": "第三步：說明下一步行動。一定要寫清楚「誰、做什麼、什麼時候」，不要只寫 We will handle it。沒有時間點的承諾，對方會再寫一封信來問。",
+          "example": "I will send the tracking number by email tomorrow afternoon.\nOnce you confirm the time, I will send a meeting link to your team.\nPlease reply before 3:00 p.m. today, and I will change your delivery.",
+          "exampleZh": "我明天下午會用 email 寄追蹤號碼給您。\n您確認時間後，我會把會議連結寄給您的團隊。\n請於今天下午 3 點前回覆，我就會為您更改配送方式。"
+        }
+      ]
+    },
+    {
+      "id": "w2-lesson-3",
+      "title": "禮貌與語氣：讓句子軟下來",
+      "intro": "同樣一句話，用 can 和用 could，讀起來差很多。商用英文的禮貌不靠華麗的字，靠的是幾個固定的軟化工具：would、could、I would appreciate、please，加上壞消息的說法。這一課給你一組替換表，把你腦中直接翻譯出來的硬句子，換成對方看了不會不舒服的版本。",
+      "points": [
+        {
+          "tip": "請求對方做事，把 can 換成 could，want 換成 would like。這是最快、最有效的一招，改一個字就從命令變成請求。",
+          "example": "Can you send the report? → Could you send the report?\nI want a refund. → I would like a refund.\nI want to visit your office. → I would like to visit your office.",
+          "exampleZh": "你可以寄報告嗎？→ 能否請您寄報告給我？\n我要退款。→ 我想申請退款。\n我要去你們辦公室。→ 我想拜訪貴公司。"
+        },
+        {
+          "tip": "需要對方幫一個比較大的忙時，用 I would appreciate it if you could + 原形動詞。這句話很正式也很好用，注意 it 不能省略。",
+          "example": "I would appreciate it if you could reply by Wednesday.\nI would appreciate it if a car could pick me up at the station.",
+          "exampleZh": "如果您能在週三前回覆，我會很感謝。\n如果能安排車輛到車站接我，我會很感謝。"
+        },
+        {
+          "tip": "please 放在句首或動詞前，語氣才對。不要只寫 Please reply.（太硬），改成 Please let me know / Please feel free to 這種完整句。另外，一封信裡有兩到三個 please 就夠了，每一句都放 please 反而顯得囉唆。",
+          "example": "Please let me know if you need any other information.\nPlease feel free to call me at any time.\nPlease reply before 3:00 p.m. today.",
+          "exampleZh": "如果您還需要其他資訊，請告訴我。\n歡迎隨時打電話給我。\n請於今天下午 3 點前回覆。"
+        },
+        {
+          "tip": "要拒絕或告知壞消息，用 I am afraid 或 Unfortunately 開頭，而且一定要接一個替代方案。只講不行、不給路，是商用信的大忌。",
+          "example": "I am afraid the room is fully booked on Friday. Would Monday morning work for you?\nUnfortunately, we cannot deliver on Sunday, but we can deliver on Monday before 10:00 a.m.",
+          "exampleZh": "很抱歉，週五的會議室已經全部訂滿了。週一早上您方便嗎？\n很抱歉我們週日無法配送，但可以在週一上午 10 點前送達。"
+        },
+        {
+          "tip": "道歉要用完整句，不要只寫 Sorry!。對外標準說法是 I am sorry for... 和 We apologize for the inconvenience.。道歉之後馬上接你要怎麼處理，不要停在道歉。",
+          "example": "I am very sorry for the trouble.\nWe apologize for the inconvenience.\nI am sorry that our workshop did not meet your expectations. We have already replaced the cable.",
+          "exampleZh": "非常抱歉造成您的困擾。\n我們為造成的不便致歉。\n很抱歉我們的工作坊沒有達到您的期待。我們已經更換了那條線材。"
+        },
+        {
+          "tip": "生氣的時候更要冷靜。收到客訴不要辯解、不要說 It is not our fault。先承認對方看到的事實，再說明處理方式。用 You are right that... 這種句型，能立刻降溫。",
+          "example": "You are right that the glasses were not packed well. We will refund the two broken glasses.\nWe agree that one person at the desk was not enough.",
+          "exampleZh": "您說得對，那些玻璃杯確實沒有包好。我們會為兩個破損的杯子退款。\n我們同意，報到櫃檯只安排一個人確實不夠。"
+        }
+      ]
+    }
+  ],
+  "emails": [
+    {
+      "id": "w2-e-01",
+      "incoming": {
+        "from": "Daniel Wu <daniel.wu@mailbox.com.tw>",
+        "subject": "Question about your store hours",
+        "body": "Hello,\n\nI found your shop online, and I would like to visit this weekend. Before I come, I have two questions.\n\nFirst, are you open on Saturday? Your website only shows the hours from Monday to Friday.\n\nSecond, is there any parking near the building? I will drive with my family, so I need to know where to park.\n\nThank you for your help. I look forward to your reply.\n\nBest regards,\nDaniel Wu"
+      },
+      "tasksZh": [
+        "回答週六是否營業，並寫出正確的營業時間",
+        "回答大樓附近有沒有可以停車的地方",
+        "指定動作：在信末留下一個可以直接聯絡的電話號碼"
+      ],
+      "checklist": [
+        "有沒有寫稱呼（Dear Mr. Wu,）和結尾署名？",
+        "來信的兩個問題都回答了嗎？",
+        "答案有沒有放在句子最前面（先 Yes/No，再解釋）？",
+        "有沒有留下電話號碼，讓對方可以直接聯絡？",
+        "語氣禮貌嗎？有沒有用到 please 或 look forward to？"
+      ],
+      "model": "Dear Mr. Wu,\n\nThank you for your email about our store hours.\n\nYes, we are open on Saturday, from 10:00 a.m. to 6:00 p.m. We are sorry that our website only lists the weekday hours. We will update it this week.\n\nFor parking, there is a public parking lot behind our building, on Green Road. It is about a two-minute walk from our front door.\n\nIf you have any other questions, please call me at 02-2345-6789.\n\nWe look forward to seeing you and your family this weekend.\n\nBest regards,\nAmy Lin\nCustomer Service, Brightstar Home",
+      "modelNotes": "第 1 句 Thank you for your email about our store hours 是第二課的第一步「感謝來信」，同時用開頭句庫的 Thank you for your email about...。\n\n第 2 段回答第一個任務：先給 Yes，再給時間，最後補一句網站會更新，這是加分的細節。\n\n第 3 段回答第二個任務，用 For parking 當路標，讓對方一眼看到這段在講停車。\n\n第 4 段完成指定動作（留電話），用了結尾句庫的 If you have any other questions, please call me at...。\n\n最後用 We look forward to seeing you 收尾，署名三行：Best regards, ／名字／職稱與公司。"
+    },
+    {
+      "id": "w2-e-02",
+      "incoming": {
+        "from": "Karen Shen <k.shen@hopewell-school.com.tw>",
+        "subject": "Two questions about the KX-200 printer",
+        "body": "Dear Sales Team,\n\nOur office is planning to buy a new printer, and the KX-200 on your website looks right for us.\n\nBefore we place the order, could you answer two questions? First, do you have the KX-200 in stock now? We need it by the end of this month. Second, does the price include a warranty? If yes, how long is it?\n\nPlease also tell me if you offer a discount for schools.\n\nThank you.\n\nKaren Shen\nOffice Manager, Hopewell Language School"
+      },
+      "tasksZh": [
+        "回答目前是否有現貨，並說明大約多久可以出貨",
+        "回答價格是否含保固，以及保固多久",
+        "回答學校是否有折扣",
+        "指定動作：主動提醒對方最晚要在哪一天下單，才趕得上月底收到"
+      ],
+      "checklist": [
+        "格式完整嗎（稱呼、開頭句、結尾句、署名四樣都有）？",
+        "來信的三個問題都回答了嗎？有沒有漏掉學校折扣？",
+        "有沒有主動寫出最晚下單日期？",
+        "每一件事有沒有分段，還是全部擠在一段裡？",
+        "有沒有避免使用命令口氣（例如把 You must order 換成 please place your order）？"
+      ],
+      "model": "Dear Ms. Shen,\n\nThank you for your interest in the KX-200 printer.\n\nYes, we have the KX-200 in stock, and we can ship it within two working days.\n\nThe price includes a one-year warranty. It covers all repairs and parts, but not damage caused by water.\n\nWe are also happy to offer schools a 10% discount. The regular price is NT$9,000, so your price would be NT$8,100.\n\nTo receive the printer before the end of this month, please place your order by June 25. I have attached our quotation for your review.\n\nPlease let me know if you need any other information.\n\nBest regards,\nPeter Kao\nSales Department, Rialto Office Supply",
+      "modelNotes": "開頭用 Thank you for your interest in...，這是「對方在問產品」時比 Thank you for your email 更貼切的一句。\n\n三個任務各自一段，順序完全照來信的順序：現貨 → 保固 → 學校折扣。現貨那段先給 Yes，折扣那段直接把折扣後的價格算給對方，省去對方再問一次。\n\n第 5 段完成指定動作，用 To receive... please place your order by June 25 把時間點講死，這就是第二課的「下一步行動」。\n\n結尾用句庫的 Please let me know if you need any other information，語氣客氣但不囉唆。"
+    },
+    {
+      "id": "w2-e-03",
+      "incoming": {
+        "from": "Monica Tsai <monica.tsai@greenfield.com.tw>",
+        "subject": "Order #A5512 - shipping question",
+        "body": "Hi,\n\nI placed order #A5512 last Thursday, but I have not received any shipping notice yet.\n\nCould you check when my order will be sent out? I need the items before next Monday for a company event.\n\nAlso, I chose the standard delivery. Can I change it to express delivery now? If there is an extra fee, please tell me how much it is.\n\nThank you very much.\n\nMonica Tsai"
+      },
+      "tasksZh": [
+        "告知訂單何時出貨、大約何時送達，並讓對方安心趕得上活動",
+        "回答能否改成快遞，以及要加多少費用",
+        "指定動作：說明對方之後要怎麼查詢配送狀態（例如何時會收到追蹤號碼）"
+      ],
+      "checklist": [
+        "有沒有在開頭先感謝來信，並提到訂單編號？",
+        "出貨時間和送達時間都寫清楚了嗎？",
+        "改快遞的答案有沒有附上金額？",
+        "有沒有告訴對方之後怎麼查進度？",
+        "有沒有一個明確的時間點，讓對方知道要在什麼時候前回覆？"
+      ],
+      "model": "Dear Ms. Tsai,\n\nThank you for your email about order #A5512.\n\nI checked your order today. All the items are ready, and they will leave our warehouse tomorrow afternoon. You should receive them by Friday, so they will arrive before your event.\n\nYes, you can still change to express delivery. The extra fee is NT$150. If you would like this service, please reply before 3:00 p.m. today, and I will update your order.\n\nOnce your order is shipped, we will send you a tracking number by email. You can then check the delivery status on our website.\n\nPlease let me know if you have any other questions.\n\nBest regards,\nJack Hsu\nOrder Support, Marlow Trading",
+      "modelNotes": "開頭句庫：Thank you for your email about + 訂單編號，讓對方一眼確認你查的是同一張單。\n\n第 2 段回答第一個任務，除了出貨日還多寫一句 so they will arrive before your event，直接回應對方的擔心，這叫「答到對方真正在意的點」。\n\n第 3 段回答第二個任務：先 Yes，再給金額，最後加上截止時間 please reply before 3:00 p.m. today，這是第二課說的「下一步要有時間點」。\n\n第 4 段完成指定動作，用 Once your order is shipped, we will... 說明追蹤方式。\n\n結尾用句庫收尾，署名三行齊全。"
+    },
+    {
+      "id": "w2-e-04",
+      "incoming": {
+        "from": "Rebecca Lo <rebecca.lo@visionmedia.com.tw>",
+        "subject": "Request for a product demo",
+        "body": "Dear Mr. Chen,\n\nI met you at the trade show last week, and I am interested in your new booking system.\n\nMy team would like to see a demo before we make a decision. Could we arrange a meeting in the week of March 9? Any afternoon works better for us.\n\nAlso, could you tell me how long the demo usually takes? We need to book a meeting room.\n\nOne more thing: is it possible to join online? Two of my colleagues work in Taichung.\n\nThank you.\n\nRebecca Lo"
+      },
+      "tasksZh": [
+        "指定動作：提出兩個可行的時段（要寫出星期、日期與時間，且都在對方指定的下午）",
+        "告知產品示範大約需要多久，方便對方訂會議室",
+        "回答台中的同事能不能線上參加",
+        "說明對方確認時間後，你接下來會做什麼"
+      ],
+      "checklist": [
+        "有沒有提出兩個具體時段（不是只寫 next week）？",
+        "來信的三個問題都回應了嗎？",
+        "時間長度有沒有寫清楚，讓對方知道會議室要訂多久？",
+        "有沒有說明下一步（誰、做什麼、什麼時候）？",
+        "語氣有沒有用 would / could 軟化，而不是直接命令對方選時間？"
+      ],
+      "model": "Dear Ms. Lo,\n\nThank you for your email, and it was a pleasure to meet you at the trade show.\n\nWe would be happy to show you our booking system. Would either of these times work for your team?\n\n- Tuesday, March 10, 2:00 p.m.\n- Thursday, March 12, 3:00 p.m.\n\nThe demo takes about 45 minutes, plus 15 minutes for questions, so please book the room for one hour.\n\nYour colleagues in Taichung can also join online. Once you confirm the time, I will send a meeting link to everyone on your list.\n\nI look forward to your reply.\n\nBest regards,\nDavid Chen\nSales Manager, Orbit Systems",
+      "modelNotes": "開頭先感謝並提一句展場見面，讓信有溫度，但只用一行，不拖戲。\n\n指定動作用條列處理：Would either of these times work for your team? 是提時段最常用的問法，比 Please choose a time 客氣得多。兩個時段都放在對方指定的下午，代表你有讀懂來信。\n\n第 3 段回答時間長度，並順手接一句 so please book the room for one hour，直接解決對方訂會議室的需求。\n\n第 4 段先回答線上參加，再用 Once you confirm the time, I will send a meeting link 說明下一步，同一段把「回答」和「行動」接起來。\n\n結尾句庫用 I look forward to your reply，因為這封信在等對方回覆。"
+    },
+    {
+      "id": "w2-e-05",
+      "incoming": {
+        "from": "Ian Fang <ian.fang@company.com.tw>",
+        "subject": "Help with the sales report?",
+        "body": "Hi,\n\nI am working on the sales report for the March meeting, and I need some help from your team.\n\nCould you send me the numbers for the north area, from January to March? A simple table is fine.\n\nI also need a short note about why sales dropped in February. Two or three lines will be enough.\n\nThe manager wants the full report by Friday morning, so could you send me your part by Wednesday? Let me know if that is too soon.\n\nThanks a lot.\n\nIan"
+      },
+      "tasksZh": [
+        "回應是否能提供北區一到三月的數字，並說明會用什麼形式給",
+        "回應二月下滑原因的說明，並說明你會怎麼確認",
+        "回覆能不能在週三前交件，並給出明確的時間",
+        "指定動作：反問一個你需要對方確認的細節（例如表格要不要含退貨數字）"
+      ],
+      "checklist": [
+        "對象是熟同事，稱呼有沒有用 Hi + 名字，語氣不要過度僵硬？",
+        "三個請求都回應了嗎？",
+        "有沒有給出明確的交件時間（不是只說 soon）？",
+        "有沒有提出一個反問，讓對方確認格式或內容？",
+        "有沒有避免只回一句 OK, no problem 就結束？"
+      ],
+      "model": "Hi Ian,\n\nThanks for your email. I am glad to help with the sales report.\n\nI can send you the north area numbers for January to March. I will put them in a simple table, as you asked.\n\nI will also write a short note about February. The main reason was the long holiday, but I will check with the shops first, so the note is correct.\n\nWednesday is fine. I will send everything to you by Wednesday noon, and you will still have a full day before Friday.\n\nOne question: would you like the table to include returns, or only sales? Please let me know, and I will prepare it that way.\n\nBest regards,\nSandy",
+      "modelNotes": "收件人是熟同事，所以稱呼用 Hi Ian,，開頭用 Thanks（不是 Thank you），語氣放鬆但仍然完整。\n\n三個任務各一段，順序照來信：數字 → 二月原因 → 交件時間。第二段沒有直接下結論，而是寫 I will check with the shops first，這比亂猜原因專業。\n\n第 4 段回答期限時多寫一句 you will still have a full day before Friday，讓對方安心。\n\n第 5 段是指定動作的反問，用 would you like...? 而不是 Do you want...?，這是第三課的軟化技巧。結尾 Please let me know 收在句庫裡。\n\n對內信署名可以只留名字，不必附職稱。"
+    },
+    {
+      "id": "w2-e-06",
+      "incoming": {
+        "from": "Laura Kim <laura.kim@headoffice.com.tw>",
+        "subject": "Your trip to Kaohsiung next month",
+        "body": "Dear Sandy,\n\nYou will visit our Kaohsiung factory from April 6 to April 8, and I am helping with the plan.\n\nFirst, would you like a hotel near the factory or near the train station? The hotel near the factory is quieter, but there are fewer restaurants.\n\nSecond, do you need a car to pick you up at the station on April 6? Please tell me your arrival time.\n\nFinally, please send me your training plan before March 30.\n\nThank you.\n\nLaura"
+      },
+      "tasksZh": [
+        "選一間飯店並說明選擇的理由",
+        "回答是否需要接送，若需要，要附上抵達車站的日期與時間",
+        "回覆訓練計畫會在哪一天寄出",
+        "指定動作：主動詢問一項你需要事先知道的資訊（例如受訓人數）"
+      ],
+      "checklist": [
+        "三個項目都回覆了嗎（飯店、接送、訓練計畫）？",
+        "選飯店有沒有給理由，還是只寫 the second one？",
+        "需要接送的話，有沒有寫出明確的抵達時間？",
+        "有沒有主動問一個問題，而不是被動等對方安排？",
+        "請對方幫忙時，有沒有用 could 或 I would appreciate it if...？"
+      ],
+      "model": "Dear Laura,\n\nThank you for helping me with the trip. Here are my answers.\n\nFor the hotel, I would prefer the one near the train station. I plan to meet a client downtown on the evening of April 7, so a central location will be easier for me.\n\nYes, I would appreciate it if a car could pick me up. My train arrives at Kaohsiung Station at 10:20 a.m. on April 6.\n\nI will send you my training plan by March 27, so you will have time to print the handouts.\n\nCould you also tell me how many people will join the training? I need to know the number before I copy the materials.\n\nBest regards,\nSandy Wu",
+      "modelNotes": "開頭 Thank you for helping me with the trip 先謝人，再用 Here are my answers 預告下面會逐項回答，讀者馬上知道結構。\n\n第 2 段選飯店並給理由（要見客戶），這是「回答＋原因」的標準寫法，比只寫 the station one 有說服力。\n\n第 3 段用第三課的 I would appreciate it if a car could pick me up，是請人幫忙最禮貌的句型；後面立刻補上車次抵達時間，對方不必再問一次。\n\n第 4 段把交件日提前到 3 月 27 日並說明理由，主動又體貼。\n\n第 5 段完成指定動作，用 Could you also tell me...? 反問人數。結尾直接署名，因為是公司內部信。"
+    },
+    {
+      "id": "w2-e-07",
+      "incoming": {
+        "from": "Michelle Ho <michelle.ho@mailbox.com.tw>",
+        "subject": "Damaged order and missing item - Order #B7734",
+        "body": "To whom it may concern,\n\nI received order #B7734 this morning, and I am not happy with it.\n\nTwo of the six glasses were broken. The box looked fine outside, but there was no paper inside to protect them.\n\nWorse, the gift card I paid for was not in the box at all. I ordered it for my mother's birthday this Sunday.\n\nI would like a refund for the broken glasses, and I want to know what you will do about the gift card.\n\nPlease reply today.\n\nMichelle Ho"
+      },
+      "tasksZh": [
+        "先道歉，並回應破損玻璃杯的處理方式（退款金額與到帳時間）",
+        "回應少寄的禮物卡，提出趕得上週日生日的解決方式",
+        "說明破損商品要不要寄回",
+        "指定動作：留下一個可以立即聯絡到你的方式，並在信中避免任何推卸責任的說法"
+      ],
+      "checklist": [
+        "有沒有在前三句就道歉，而不是先解釋公司流程？",
+        "有沒有避免辯解（例如 It is not our fault、宅配弄壞的）？",
+        "退款金額與到帳時間都寫出來了嗎？",
+        "禮物卡的解決方式有沒有對到「週日生日」這個期限？",
+        "有沒有留下電話或其他可以立即聯絡的方式？"
+      ],
+      "model": "Dear Ms. Ho,\n\nThank you for telling us about order #B7734, and I am very sorry for the trouble.\n\nYou are right that the glasses were not packed well. We will refund the two broken glasses, NT$760 in total. The money will return to your credit card within five working days.\n\nAbout the gift card, we made a mistake when we packed your box. We have already sent a new card by express delivery this afternoon, so it should reach you on Friday, before your mother's birthday.\n\nYou do not need to return the broken glasses. Please throw them away safely.\n\nIf anything is still wrong, please call me at 02-8765-4321.\n\nBest regards,\nKevin Yang\nCustomer Service, Willow Gifts",
+      "modelNotes": "開頭同時做兩件事：Thank you for telling us about... 是感謝來信，I am very sorry for the trouble 是第三課的道歉句庫，先降溫再處理。\n\n第 2 段用 You are right that... 承認事實，完全不辯解，接著給退款金額與到帳天數，把「處理方式」講到可以驗收。\n\n第 3 段用 About the gift card 當路標，坦承 we made a mistake，並用 so it should reach you on Friday, before your mother's birthday 直接對上對方最在意的期限。\n\n第 4 段主動說明破損品不用寄回，這是客訴信的加分題：替對方省麻煩。\n\n第 5 段完成指定動作，留下電話。全信沒有出現任何推給宅配或工廠的句子。"
+    },
+    {
+      "id": "w2-e-08",
+      "incoming": {
+        "from": "Grace Tung <grace.tung@sunrisebank.com.tw>",
+        "subject": "Problems at our company workshop on May 8",
+        "body": "Dear Mr. Lai,\n\nI am writing about the workshop your company ran for our staff on May 8.\n\nTwo things went wrong. The sound system stopped working twice, so the people at the back could not hear the speaker for about twenty minutes.\n\nAlso, check-in was very slow. Only one staff member was at the desk, and our guests waited in line for almost half an hour.\n\nWe have booked two more workshops with you in July. Before we continue, I need to know how you will fix these problems, and whether you can offer us anything for the trouble.\n\nGrace Tung"
+      },
+      "tasksZh": [
+        "道歉，並說明音響出問題的原因與已經做的改善",
+        "說明七月場次的報到流程會怎麼改（要具體到人數或做法）",
+        "回應補償要求，提出一個明確的方案",
+        "指定動作：邀請對方在七月場次前開一次確認會議，並提出你方便的時間"
+      ],
+      "checklist": [
+        "格式完整嗎（稱呼、開頭道歉、分段、結尾、署名）？",
+        "兩個問題都各自回應了嗎，還是只回了比較好處理的那一個？",
+        "改善做法有沒有具體（例如幾個人、提前多久檢查），而不是只寫 we will do better？",
+        "補償方案有沒有寫出明確內容，而不是 we will discuss it？",
+        "有沒有提出具體的會議時間，而不是只說 let's meet sometime？"
+      ],
+      "model": "Dear Ms. Tung,\n\nThank you for your message, and I am sorry that our workshop did not meet your expectations on May 8.\n\nWe checked the sound system the next day. One cable was old and loose, and it has now been replaced. From July, our team will also test all equipment one hour before each event.\n\nFor check-in, we agree that one person at the desk was not enough. We will send three staff members and add a second desk, so your guests should wait no more than five minutes.\n\nFor the trouble we caused, we would like to offer a 15% discount on both July workshops.\n\nCould we meet online next week to go through the plan? I am free on Tuesday or Wednesday afternoon.\n\nBest regards,\nSimon Lai\nEvent Director, Blue Harbor Training",
+      "modelNotes": "開頭用 Thank you for your message + I am sorry that... did not meet your expectations，道歉但不卑微，也沒有找藉口。\n\n第 2 段回應音響：先講查了什麼（找出原因）、已經做了什麼（換線）、以後怎麼防（提前一小時測試設備）。三層都寫出來，對方才會相信不會再發生。\n\n第 3 段用 For check-in 當路標，先用 we agree that... 承認事實，再給具體數字：三個人、兩個櫃檯、等候不超過五分鐘。客訴回信最忌諱空話，數字就是誠意。\n\n第 4 段回應補償，直接寫 15% 折扣，不拖延也不模糊。\n\n第 5 段完成指定動作，用 Could we meet online next week...? 提出會議，並附上兩個可行時段，把主導權交回對方手上。"
+    }
+  ]
+}

@@ -191,6 +191,50 @@ else:
     warnings.append('diagnostic.json 尚未生成(程度檢測頁會顯示未載入)')
     n_diag = 0
 
+# ---------- 寫作區 ----------
+writing = {}
+for lv in ['l1', 'l2', 'l3']:
+    wpath = os.path.join(RAW, f'writing_{lv}.json')
+    if not os.path.exists(wpath):
+        warnings.append(f'writing_{lv}.json 尚未生成')
+        continue
+    try:
+        wd = read_json(wpath)
+    except Exception as e:
+        errors.append(f'writing_{lv}.json: JSON 解析失敗 — {e}')
+        continue
+    w = f'writing {lv}'
+    need(wd, ['title', 'lessons'], w)
+    for les in wd.get('lessons', []):
+        need(les, ['id', 'title', 'intro', 'points'], f"{w} {les.get('id','?')}")
+        for pt in les.get('points', []):
+            need(pt, ['tip', 'example', 'exampleZh'], f"{w} {les.get('id','?')} point")
+    if lv == 'l1':
+        for s in wd.get('scramble', []):
+            ws = f"{w} {s.get('id','?')}"
+            if need(s, ['id', 'zh', 'words', 'answer', 'note'], ws):
+                if ' '.join(s['words']) != s['answer']:
+                    errors.append(f'{ws}: words 拼接與 answer 不一致')
+        for b in wd.get('build', []):
+            need(b, ['id', 'scenario', 'keywords', 'models', 'checkpoints'], f"{w} {b.get('id','?')}")
+        if len(wd.get('scramble', [])) < 20: warnings.append(f'{w}: 重組題僅 {len(wd.get("scramble", []))}')
+        if len(wd.get('build', [])) < 12: warnings.append(f'{w}: 造句題僅 {len(wd.get("build", []))}')
+    if lv == 'l2':
+        for e_ in wd.get('emails', []):
+            we = f"{w} {e_.get('id','?')}"
+            if need(e_, ['id', 'incoming', 'tasksZh', 'checklist', 'model', 'modelNotes'], we):
+                need(e_['incoming'], ['from', 'subject', 'body'], we + ' incoming')
+        if len(wd.get('emails', [])) < 8: warnings.append(f'{w}: email 任務僅 {len(wd.get("emails", []))}')
+    if lv == 'l3':
+        for e_ in wd.get('essays', []):
+            we = f"{w} {e_.get('id','?')}"
+            if need(e_, ['id', 'question', 'questionZh', 'outline', 'transitions', 'model', 'modelNotes'], we):
+                if len(e_['outline']) != 4:
+                    errors.append(f'{we}: outline 需 4 格,實得 {len(e_["outline"])}')
+        if len(wd.get('essays', [])) < 6: warnings.append(f'{w}: 論述題僅 {len(wd.get("essays", []))}')
+    scan_simplified(wd, w)
+    writing[lv] = wd
+
 # ---------- id 重複 ----------
 for kind, items in [('part5', p5), ('part6', p6), ('part7', p7), ('articles', arts)]:
     ids = [x.get('id') for x in items]
@@ -229,4 +273,6 @@ write_js('part7.js', 'part7', p7)
 write_js('articles.js', 'articles', arts)
 if diag is not None:
     write_js('diagnostic.js', 'diagnostic', diag)
+if writing:
+    write_js('writing.js', 'writing', writing)
 print('完成。')

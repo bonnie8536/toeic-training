@@ -1,0 +1,320 @@
+{
+  "title": "Level 3 論述力",
+  "subtitle": "把想法寫成有說服力的短文",
+  "lessons": [
+    {
+      "id": "w3-lesson-1",
+      "title": "意見文的房子結構",
+      "intro": "意見文就像一棟房子：地基是你的立場，兩根柱子是兩個理由，屋頂是結論。多益寫作第八題給你 30 分鐘，官方建議至少寫 300 字；但對新手來說，先把 230 到 280 字寫得結構清楚，分數會比亂寫 400 字高很多，之後再慢慢加長。這堂課把整篇文章切成四段，告訴你每段幾句話、每句話負責做什麼，照著格子填就不會卡在空白畫面前面。",
+      "points": [
+        {
+          "tip": "先決定四段：第一段立場（2 到 3 句）、第二段理由一（4 到 5 句）、第三段理由二（4 到 5 句）、第四段結論（2 句）。加起來大約 12 到 16 句、230 到 280 字。四段的第一句先寫好，中間再補內容，文章就不會走偏。",
+          "example": "Paragraph 1: I agree that companies should let staff work from home two days a week.\nParagraph 2: First of all, working from home saves travel time.\nParagraph 3: In addition, people can finish quiet work at home.\nParagraph 4: In conclusion, I agree with this plan.",
+          "exampleZh": "第一段：我同意公司應該讓員工每週在家工作兩天。\n第二段：首先，在家工作省下通勤時間。\n第三段：此外，需要安靜的工作在家比較做得完。\n第四段：總結來說，我同意這個做法。"
+        },
+        {
+          "tip": "第一段只做三件事：用自己的話把題目重講一次、明確表態（agree / disagree / prefer A）、順便預告兩個理由。千萬不要在第一段就舉例子，例子留給中間兩段。表態句一定要出現 I agree、I disagree 或 I prefer，閱卷者要一眼看到你的立場。",
+          "example": "I agree that a company should hire a person with work experience. Experience saves training time, and it also brings useful ideas from real customers.",
+          "exampleZh": "我同意公司應該錄用有工作經驗的人。經驗可以省下訓練時間，也能帶來來自真實客戶的實用想法。"
+        },
+        {
+          "tip": "一段只放一個理由。很多人把兩個理由塞進同一段，結果每個理由都只寫一句，看起來很單薄。判斷方法：如果這一段出現第二個「First / Second / 另一個原因是」，就代表該切段了。",
+          "example": "Weak: Working from home saves time, and it is also quieter, and workers feel happier.\nBetter: First of all, working from home saves a lot of travel time. In big cities, many workers spend more than an hour on a bus every morning.",
+          "exampleZh": "較弱：在家工作省時間，也比較安靜，員工也比較開心。\n較好：首先，在家工作省下大量通勤時間。在大城市，很多上班族每天早上要花超過一小時在公車上。"
+        },
+        {
+          "tip": "結論段只做兩件事：換句話重講立場、把兩個理由用一句話收起來。不要在結論丟出新理由，也不要寫「我的文章結束了」這種空話。用 In conclusion 或 To sum up 開頭最安全。",
+          "example": "In conclusion, I agree with this idea because it saves travel time and gives people quiet hours for important work.",
+          "exampleZh": "總結來說，我同意這個想法，因為它省下通勤時間，也給了大家安靜處理重要工作的時段。"
+        },
+        {
+          "tip": "動筆前先花 3 分鐘寫四行大綱，用中文或關鍵字都可以：立場、理由一、理由二、例子是誰。有了大綱，寫的時候只要把句子填進去，不會寫到一半才發現理由二想不出來。剩下的時間分配是：寫 22 分鐘、檢查 5 分鐘。",
+          "example": "Outline: agree / reason 1 = save travel time (Alan, trading company) / reason 2 = quiet work (accountant, monthly bill check) / conclusion = agree again",
+          "exampleZh": "大綱：同意／理由一＝省通勤時間（Alan，貿易公司）／理由二＝安靜工作（會計，月結對帳）／結論＝再次同意。"
+        },
+        {
+          "tip": "句子寫短一點更安全。新手寫長句最容易出現動詞錯誤和連接詞誤用。一句話 12 到 18 個英文單字最好，講完一個意思就句號。真的想寫長句，用 because、so、but 這三個最熟的連接詞就好。",
+          "example": "Risky: Because the office is very noisy and the phone always rings which makes people cannot focus on their report that is important.\nSafe: The office is very noisy. The phone rings all day, so people cannot focus on an important report.",
+          "exampleZh": "危險：因為辦公室很吵而且電話一直響這讓大家沒辦法專心在他們重要的報告上。\n安全：辦公室很吵。電話整天響，所以大家沒辦法專心寫重要的報告。"
+        }
+      ]
+    },
+    {
+      "id": "w3-lesson-2",
+      "title": "段落怎麼長大",
+      "intro": "很多人四段都寫出來了，分數還是上不去，原因通常是段落太瘦：一個理由只有一句話。閱卷者要看的是「你有沒有把理由撐開」。撐開的公式很固定：主題句→解釋→具體例子→小結。這堂課帶你把一句話的想法，長成一段 4 到 5 句、有畫面的內容。",
+      "points": [
+        {
+          "tip": "主題句放段首，一句話講完這段的理由，前面加轉折語（First of all / In addition）。主題句不要舉例、不要解釋，就是乾淨的一句主張。寫完主題句先問自己：這句話能不能單獨成立？可以的話就往下寫。",
+          "example": "In addition, a home office helps people finish work that needs quiet.",
+          "exampleZh": "此外，在家辦公有助於大家完成需要安靜的工作。"
+        },
+        {
+          "tip": "第二句是解釋句，回答「為什麼會這樣」。最常用的寫法是描述現況造成的問題：In a busy office, ... / When staff have to ... 。解釋句是把抽象的理由變成讀者想像得到的情況。",
+          "example": "In a busy office, the phone rings all day and coworkers stop by the desk to ask questions.",
+          "exampleZh": "在忙碌的辦公室裡，電話整天響，同事還會走到座位旁邊問問題。"
+        },
+        {
+          "tip": "第三句起是例子句，用 For example 開頭，句子裡要有「誰＋做了什麼＋結果如何」。三個元素缺一個，例子就會變成第二個解釋句，撐不起段落。人名用虛構的英文名字最快，不必是真人。",
+          "example": "For example, Alan works at a trading company in Taipei. He stays home on Tuesday and Thursday, and he now sends his weekly report before five o'clock.",
+          "exampleZh": "舉例來說，Alan 在台北一家貿易公司上班。他星期二和星期四在家工作，現在都能在五點前送出週報。"
+        },
+        {
+          "tip": "例子要具體：加天數、金額、部門、地點、數量任何一個都可以。具體的細節不會被扣分，反而讓閱卷者相信你真的想過。注意數字要合理，不必是真的。",
+          "example": "An accountant in our office finishes the monthly bill check in three hours at home, but the same job takes a whole day at her desk.",
+          "exampleZh": "我們辦公室的一位會計在家三小時就能做完月結對帳，同樣的工作在座位上要花一整天。"
+        },
+        {
+          "tip": "段落最後補一句小結，把例子拉回主題句，常用 Because of this / That is why / As a result 開頭。這一句是分數關鍵：它證明你的例子是為了支持理由，不是隨便講故事。",
+          "example": "Because of this, quiet hours at home can be more useful than a full day in the office.",
+          "exampleZh": "正因如此，在家的安靜時段可能比在辦公室待一整天更有用。"
+        },
+        {
+          "tip": "檢查標準：一段至少 4 句。如果只寫得出 2 句，代表你少了例子。這時不要硬擠形容詞，回去問自己「這件事發生在誰身上？結果怎麼樣？」把答案寫成兩句話，段落自然就滿了。",
+          "example": "Only 2 sentences: Working from home saves time. It is good for workers.\nAfter adding an example: Working from home saves time. Many workers spend an hour on the bus every morning. For example, Alan uses that hour to answer emails. Because of this, he finishes his report on time.",
+          "exampleZh": "只有兩句：在家工作省時間，對員工很好。\n加了例子之後：在家工作省時間。很多上班族每天早上花一小時在公車上。舉例來說，Alan 把那一小時拿來回信。因此他都能準時交報告。"
+        }
+      ]
+    },
+    {
+      "id": "w3-lesson-3",
+      "title": "轉折語與加分句型",
+      "intro": "轉折語是文章的路標，讓閱卷者知道你要轉彎了。多益寫作評分很看重 organization（組織），而轉折語就是最便宜的加分工具：背五組、每篇用四到六個，文章立刻看起來有章法。這堂課只教考場上真的用得到的幾組，最後再給你兩類讓文章變成熟的句型：讓步句型和加分句型。",
+      "points": [
+        {
+          "tip": "順序類（開理由段用）：First of all（首先）、Second（第二）、In addition（此外）、Also（另外）。規則很簡單：理由一用 First of all，理由二用 In addition。這兩個放在句首，後面加逗號。不要用 Firstly、Secondly、Thirdly 一路排到底，兩段的文章用兩個就夠。",
+          "example": "First of all, working from home saves a lot of travel time.\nIn addition, staff can focus on work that needs quiet.",
+          "exampleZh": "首先，在家工作省下大量通勤時間。\n此外，員工能專心處理需要安靜的工作。"
+        },
+        {
+          "tip": "舉例類（開例子句用）：For example / For instance（舉例來說，後面接完整句子）、such as（例如，後面只接名詞，不接句子）。最常見的錯誤是 such as 後面接一整句，記住 such as 後面只放東西的名字。",
+          "example": "For example, Ms. Lin sent her first quotation on the second day.\nSome jobs, such as engineering, need special training.",
+          "exampleZh": "舉例來說，林小姐第二天就送出了她的第一份報價單。\n有些工作，例如工程，需要特別的訓練。"
+        },
+        {
+          "tip": "對比類（轉彎用）：However（然而，句首加逗號）、On the other hand（另一方面）、Of course ...（當然……，用來承認對方有理）。However 不能像中文的「但是」一樣接在逗號後面，它前面要句號，後面要逗號。",
+          "example": "Wrong: The plan saves money, however it takes time.\nRight: The plan saves money. However, it takes time.",
+          "exampleZh": "錯：這個方案省錢，然而要花時間。（however 不能接在逗號後）\n對：這個方案省錢。然而，它要花時間。"
+        },
+        {
+          "tip": "因果與收尾類：Because of this（因此）、As a result（結果）、That is why（這就是為什麼）用在段落小結；In conclusion（總結來說）、To sum up（綜合以上）用在最後一段開頭。結論段開頭一定要有這種訊號詞，讓閱卷者知道你收尾了。",
+          "example": "As a result, the number of complaint emails dropped.\nIn conclusion, I prefer the train because the stations are close to my customers.",
+          "exampleZh": "結果，客訴信件的數量下降了。\n總結來說，我偏好搭火車，因為車站離我的客戶很近。"
+        },
+        {
+          "tip": "讓步句型（第三段結尾或第四段前放一句，分數會明顯不一樣）：It is true that ..., but ...（的確……，但是……）、Although ..., ...（雖然……，……）。先承認反方有道理，再把話拉回自己這邊，文章就不會顯得只會講一面。注意 Although 開頭的句子後面不能再接 but。",
+          "example": "It is true that some jobs need face-to-face meetings, but two days at home is not the whole week.\nAlthough a large company pays more, I still prefer a small team.",
+          "exampleZh": "的確有些工作需要面對面開會，但每週在家兩天並不是整個星期。\n雖然大公司薪水比較高，我還是偏好小團隊。"
+        },
+        {
+          "tip": "加分句型三組，一篇用一到兩個就好：not only ... but also ...（不只……也……）、The main reason is that ...（主要原因是……）、This is important because ...（這很重要，因為……）。這幾個句型結構固定、不容易寫錯，適合在主題句或結論句放一個。",
+          "example": "The main reason is that experienced staff need less training.\nA small company not only teaches many skills but also gives quick answers.",
+          "exampleZh": "主要原因是有經驗的員工需要比較少的訓練。\n小公司不只能學到很多技能，也能得到快速的答覆。"
+        }
+      ]
+    }
+  ],
+  "essays": [
+    {
+      "id": "w3-e-01",
+      "question": "Do you agree or disagree with the following statement? Companies should allow their employees to work from home two days a week. Use specific reasons and examples to support your opinion.",
+      "questionZh": "你同意或不同意以下敘述？公司應該允許員工每週在家工作兩天。請用具體的理由和例子支持你的意見。",
+      "outline": [
+        {
+          "label": "立場",
+          "hint": "2 到 3 句。先用自己的話把題目重講一次（不要整句照抄），再明確寫出 I agree that ... 或 I disagree that ...，最後一句預告兩個理由的方向（省時間、能專心）。這段不要舉例。"
+        },
+        {
+          "label": "理由一",
+          "hint": "4 到 5 句。主題句用 First of all 開頭，寫「在家工作省下通勤時間」。第二句解釋大城市通勤要一小時以上。第三、四句用 For example 舉一個上班族（自訂英文名字＋公司類型），寫他把省下的時間拿來做什麼。最後一句用 Because of this 小結，寫出結果。"
+        },
+        {
+          "label": "理由二",
+          "hint": "5 到 6 句（含段末讓步）。主題句用 In addition 開頭，寫「在家比較能完成需要安靜的工作」。解釋辦公室電話多、同事會來打斷。用 For example 舉一個具體工作（報告、對帳），加上時數對比。段末放一句讓步：It is true that some jobs need face-to-face meetings, but ..."
+        },
+        {
+          "label": "結論",
+          "hint": "2 句。用 In conclusion 開頭，換句話重申同意的立場，並把兩個理由用一句話收起來（省通勤時間＋有安靜時段）。不要加新理由。"
+        }
+      ],
+      "transitions": [
+        "First of all",
+        "In addition",
+        "For example",
+        "Because of this",
+        "It is true that ..., but ...",
+        "In conclusion"
+      ],
+      "model": "I agree that companies should allow their employees to work from home two days a week. This kind of plan saves time and money, and it also helps people do better work.\n\nFirst of all, working from home saves a lot of travel time. In big cities, many workers spend more than an hour on a bus or a train every morning. For example, Alan works at a trading company in Taipei. Since his manager started a two-day home office plan, he uses the extra hour to answer emails and to prepare his weekly report. Because of this, his reports are now clearer and always on time.\n\nIn addition, a home office helps people finish work that needs quiet. In a busy office, the phone rings all day and coworkers stop by the desk to ask questions. It is hard to write a long report or check a large order list under these conditions. An accountant in our company finishes the monthly bill check in three hours at home, but the same job takes a whole day at her desk. It is true that some jobs need face-to-face meetings, but two days at home is not the whole week. Staff can still meet on the other three days.\n\nIn conclusion, I agree with this idea, because it saves travel time and gives people quiet hours for their most important work. A two-day home office plan is good for the staff and good for the company.",
+      "modelNotes": "第一段（立場）：第一句把題目改寫成自己的句子並直接表態 I agree that ...，第二句預告兩個方向「省時間」和「工作品質更好」，沒有舉任何例子，乾淨俐落。\n第二段（理由一）：First of all 開頭的主題句只講一件事——省通勤時間；接著用 In big cities, many workers spend more than an hour ... 解釋為什麼；For example 帶出虛構人物 Alan，寫清楚他是誰、做了什麼；最後用 Because of this 小結，把結果（報告更清楚、準時）拉回主題句。亮點句型是 Since his manager started ...（自從……）。\n第三段（理由二）：In addition 換到第二個理由，用「電話整天響、同事來打斷」把辦公室的干擾寫成畫面，再用三小時對比一整天的具體數字。段末放讓步句型 It is true that ..., but ...，先承認需要面對面開會，再把話拉回自己的立場，這是本篇最加分的一句。\n第四段（結論）：In conclusion 開頭，換句話重申立場，並把兩個理由壓縮成一句話收尾，全段兩句、不加新資訊。"
+    },
+    {
+      "id": "w3-e-02",
+      "question": "Some people prefer to take the train for business trips inside their own country, while others prefer to fly. Which do you prefer? Use specific reasons and examples to support your choice.",
+      "questionZh": "有些人在國內出差時偏好搭火車，有些人偏好搭飛機。你偏好哪一種？請用具體的理由和例子支持你的選擇。",
+      "outline": [
+        {
+          "label": "立場",
+          "hint": "2 到 3 句。偏好題不要寫「兩個都好」，一定要選一邊：I prefer to travel by train / by plane。第二句預告兩個理由（例如：好安排、路上還能工作）。"
+        },
+        {
+          "label": "理由一",
+          "hint": "4 到 5 句。用 To begin with 或 First of all 開頭寫第一個理由（車站在市中心、不必提早報到）。解釋搭飛機要提前兩小時、還要轉計程車。用 For example 寫一次出差經驗：去哪個城市、走幾分鐘到客戶公司、有沒有準時。"
+        },
+        {
+          "label": "理由二",
+          "hint": "4 到 5 句。用 In addition 開頭寫第二個理由（座位可以工作）。解釋桌子、訊號、筆電空間，並和飛機比較（起降要關手機、座位窄）。最後一句用 Because of this 小結。"
+        },
+        {
+          "label": "結論",
+          "hint": "3 到 4 句。先用 Of course 承認飛機在長途或出國時比較快，再用 However 把話拉回自己這邊，最後用 In conclusion 重申選擇並帶回兩個理由。讓步和結論寫在同一段就好。"
+        }
+      ],
+      "transitions": [
+        "To begin with",
+        "In addition",
+        "For example",
+        "Because of this",
+        "Of course",
+        "However",
+        "In conclusion"
+      ],
+      "model": "For business trips inside my own country, I prefer to travel by train. A train trip is easier to plan, and it also lets me keep working on the way.\n\nTo begin with, train stations are usually in the center of the city. When I fly, I must arrive at the airport at least two hours early, check my bag, and then take a taxi from the airport to the customer's office. That taxi ride alone can take forty minutes. For example, last month I visited a customer in Taichung. I took the train, walked ten minutes to his office, and was still five minutes early for the meeting.\n\nIn addition, a train seat is a good place to work. The seat is wide, there is a small table, and the signal is stable, so I can read a sales report or answer emails. On a plane, I have to turn off my phone during takeoff and landing, and the seat is often too small for a laptop. Because of this, a three-hour train trip is often more useful to me than a one-hour flight.\n\nOf course, flying is faster for long trips. If I have to visit a factory in another country, a plane is the only choice. However, for a meeting two or three hundred kilometers away, the total travel time is almost the same. In conclusion, I prefer the train for business travel, because the stations are close to my customers and I can keep working during the trip.",
+      "modelNotes": "第一段（立場）：直接選邊 I prefer to travel by train，不含糊；第二句用 and 把兩個理由（好安排、路上能工作）預告出來，讀者一開始就知道文章要往哪走。\n第二段（理由一）：To begin with 開頭，主題句寫「車站在市中心」。接著用 When I fly, I must ... 描述搭飛機的三個步驟，形成對比；For example 帶出上個月去台中的實際經驗，用「走十分鐘」「早到五分鐘」這種具體細節讓例子有畫面。\n第三段（理由二）：In addition 換理由，先寫火車座位的三個優點（寬、有小桌、訊號穩），再用 On a plane, ... 做對照。段末 Because of this 把例子拉回主題句，並用「三小時火車勝過一小時飛機」形成記憶點。\n第四段（讓步＋結論）：Of course 承認飛機在長途和出國時比較快，再用 However 轉回自己的立場，這是偏好題最重要的成熟度指標；最後一句 In conclusion 重申選擇，並把兩個理由各用一個子句收尾。讓步和結論合在同一段，全篇維持四段。"
+    },
+    {
+      "id": "w3-e-03",
+      "question": "Many companies now hold their meetings online instead of in a meeting room. What are the advantages and disadvantages of online meetings? Use specific reasons and examples to support your answer.",
+      "questionZh": "現在許多公司改用線上會議，而不在會議室開會。線上會議有哪些優點和缺點？請用具體的理由和例子支持你的回答。",
+      "outline": [
+        {
+          "label": "立場",
+          "hint": "2 到 3 句。優缺點題不必選邊，但要有整體看法：先說線上會議已經很普遍，再用一句話定調「有明顯好處，但也有不能忽略的問題」。這句就是你的立場句。"
+        },
+        {
+          "label": "理由一",
+          "hint": "4 到 5 句（寫優點）。主題句用 The biggest advantage is that ... 寫省時間和省成本。解釋不必買機票、訂飯店、借會議室。用一個具體情境（例如高雄的業務和日本客戶開會）說明時間怎麼被省下來。"
+        },
+        {
+          "label": "理由二",
+          "hint": "4 到 5 句（寫缺點）。主題句用 However, there are clear disadvantages. 接著用 First / Second 列兩個缺點：看不到表情、有人關鏡頭分心。再加一個具體例子（某次會議一小時沒人發言）和技術問題。"
+        },
+        {
+          "label": "結論",
+          "hint": "3 句，建議和結論寫在同一段。先用 Because of these points 給一個折衷建議：短會議線上開、重要談判面對面；再用 In conclusion 收尾。優缺點題的結論寫建議比只重述更有力。"
+        }
+      ],
+      "transitions": [
+        "The biggest advantage is that",
+        "For example",
+        "However",
+        "First",
+        "Second",
+        "Because of these points",
+        "In conclusion"
+      ],
+      "model": "Online meetings have become normal in many offices. In my opinion, they bring real benefits, but they also create some problems that managers should not ignore.\n\nThe biggest advantage is that online meetings save time and money. Staff do not have to fly to another city or drive across town, so the company pays less for tickets and hotels. For example, a sales team in Kaohsiung can talk with a customer in Japan at ten in the morning and still finish the daily report before lunch. It is also easier to find a time that works for everyone, because nobody needs to book a meeting room.\n\nHowever, there are clear disadvantages. First, it is hard to read faces on a small screen, so people cannot tell whether a customer is really happy with the price. Second, some staff turn off the camera and check email during the meeting. When my department moved the weekly meeting online, three people said nothing for a whole hour. Technical problems also waste time, since a weak signal can stop the discussion for several minutes.\n\nBecause of these points, I believe companies should use online meetings for short updates and keep face-to-face meetings for important talks, such as a new contract or a serious complaint. In conclusion, online meetings are cheap and quick, but they cannot fully replace a real meeting room. The best plan is to use both, depending on the purpose of the meeting.",
+      "modelNotes": "第一段（立場）：優缺點題不需要選邊，但仍要表態。第一句交代現況，第二句用 they bring real benefits, but they also create some problems 一次交代文章的兩半，等於預告後面一段寫優點、一段寫缺點。\n第二段（優點）：The biggest advantage is that ... 是優缺點題最好用的主題句型。先寫省錢省時，再解釋省在哪裡（機票、飯店），最後用 For example 舉高雄業務和日本客戶的情境，時間點寫得很具體。\n第三段（缺點）：However 是全篇轉彎的地方。用 First / Second 把兩個缺點排整齊，中間插入自己部門的真實感例子（三個人一小時沒說話），比空講「效率不好」有力得多。\n第四段（建議＋結論）：Because of these points 把前面兩段的討論收成一個可執行的建議：短會線上、重要談判面對面，這是優缺點題拿高分的關鍵；接著 In conclusion 用一句對比句收尾（便宜快速，但不能完全取代），最後給出 use both 的立場，不留模糊。建議和結論同段，全篇維持四段。"
+    },
+    {
+      "id": "w3-e-04",
+      "question": "Do you agree or disagree with the following statement? When a company hires new staff, work experience is more important than a college degree. Use specific reasons and examples to support your opinion.",
+      "questionZh": "你同意或不同意以下敘述？公司在錄用新人時，工作經驗比大學學歷更重要。請用具體的理由和例子支持你的意見。",
+      "outline": [
+        {
+          "label": "立場",
+          "hint": "2 到 3 句。明確寫 I agree that ... 或 I disagree that ...，把題目的關鍵字 work experience 和 degree 都放進去。第二句預告兩個理由（省訓練時間、能預防問題）。"
+        },
+        {
+          "label": "理由一",
+          "hint": "5 到 6 句。主題句用 First of all 寫「有經驗的人可以馬上上手」。解釋新人要花幾週學系統、產品和規矩，還會佔用同事的時間。用一個具體人物（自訂姓氏＋職稱）舉例：第幾天就送出報價單、主管不必逐封檢查。"
+        },
+        {
+          "label": "理由二",
+          "hint": "4 到 5 句。主題句用 In addition 寫「有經驗的人知道哪裡會出錯」。解釋他們見過出貨延遲、訂單寫錯、客戶抱怨。用 For example 對比有經驗的採購和新人的做法差異。"
+        },
+        {
+          "label": "結論",
+          "hint": "共 3 句，讓步和結論寫在同一段。先放一句讓步（It is true that a degree shows ...），承認學歷代表學習能力，再用 However 拉回；最後 In conclusion 重申立場並收合兩個理由。"
+        }
+      ],
+      "transitions": [
+        "First of all",
+        "During that time",
+        "In addition",
+        "For example",
+        "It is true that ..., but ...",
+        "However",
+        "In conclusion"
+      ],
+      "model": "I agree that work experience is more important than a college degree when a company hires new staff. Experience saves training time, and it also helps a company avoid expensive mistakes.\n\nFirst of all, a person with experience can start work almost at once. A new worker with only a degree needs several weeks to learn the computer system, the products, and the rules of the office. During that time, other staff must stop their own work to help. For example, when my company hired Ms. Lin as a sales assistant, she had already worked in the same industry for three years. She sent her first quotation on the second day, and her manager did not have to check every email.\n\nIn addition, experienced staff know what can go wrong. They have seen late shipments, wrong orders, and angry customers, so they check the important points before a problem appears. An experienced buyer always calls the factory one week before the delivery date. A new employee may simply trust the schedule and then lose an important client.\n\nIt is true that a degree shows that a person can study hard and learn new things, and some jobs need special knowledge from school. However, most office skills are learned at work, not in a classroom. In conclusion, I agree that experience should come first, because experienced workers need less training and can stop problems before they cost the company money.",
+      "modelNotes": "第一段（立場）：第一句把題目的兩個關鍵字 work experience 和 college degree 都寫進去，立場明確；第二句用 saves training time 和 avoid expensive mistakes 預告兩個理由。\n第二段（理由一）：First of all 主題句寫「馬上能上手」。解釋句列出新人要學的三件事（系統、產品、規矩），再用 During that time 這個時間轉折帶出隱藏成本——同事要停下自己的工作。For example 的人物 Ms. Lin 有年資、有動作（第二天送報價單）、有結果（主管不必逐封檢查），三要素齊全。\n第三段（理由二）：In addition 換理由，主題句寫「知道哪裡會出錯」。接著用 late shipments, wrong orders, and angry customers 三個名詞排比把抽象變具體，最後用「有經驗的採購 vs 新人」的對比收尾。\n第四段（讓步＋結論）：It is true that ..., and ... However, ... 是完整的讓步結構，先給對方兩分（學歷代表學習能力、有些工作需要專業知識），再用 However 收回主導權；最後一句 In conclusion 重申立場，用 because 一次帶回兩個理由，並以 cost the company money 呼應第一段的 expensive mistakes。讓步和結論同段，全篇維持四段。"
+    },
+    {
+      "id": "w3-e-05",
+      "question": "Some people would rather work for a large, well-known company. Others would rather work for a small company with only a few employees. Which would you prefer? Use specific reasons and examples to support your choice.",
+      "questionZh": "有些人寧可在知名的大公司上班，有些人寧可在只有幾名員工的小公司上班。你會偏好哪一種？請用具體的理由和例子支持你的選擇。",
+      "outline": [
+        {
+          "label": "立場",
+          "hint": "2 到 3 句。用 I would prefer to work for a small company / a large company 明確選邊。第二句預告兩個理由（例如：學得多、努力被看見）。不要寫「看情況」。"
+        },
+        {
+          "label": "理由一",
+          "hint": "5 到 6 句。主題句用 To begin with 寫「小公司一個人要做很多種工作」。解釋大公司分工細、新人可能一年只做一件事。用 For example 舉一個親友的例子：進了幾人的公司、兩年學會哪三件事，並和大公司的朋友做對比。"
+        },
+        {
+          "label": "理由二",
+          "hint": "4 到 5 句。主題句用 In addition 寫「老闆看得到你的表現、決策快」。解釋加薪、升遷、換供應商的速度差別，寫出「午餐時就能問到答案 vs 等三週跨部門回覆」的對比。"
+        },
+        {
+          "label": "結論",
+          "hint": "共 3 句，讓步和結論寫在同一段。先用 Of course 承認大公司薪水高、福利好、履歷好看，再用 In conclusion 重申自己的選擇，說明自己更在意什麼（學技能、快回覆）。"
+        }
+      ],
+      "transitions": [
+        "To begin with",
+        "In addition",
+        "For example",
+        "Of course",
+        "In conclusion"
+      ],
+      "model": "If I could choose, I would prefer to work for a small company. A small team gives me more chances to learn, and my work is much easier to see.\n\nTo begin with, staff in a small company do many kinds of jobs. In a large company, a new employee may only check invoices all day for a whole year. In a small office, the same person may write emails to customers, plan a small event, and help with the company website. For example, my cousin joined a design company with only eight people. In two years she learned to meet clients, control a budget, and manage a printing schedule. Her friend at a large company still writes the same report every month.\n\nIn addition, in a small company the manager knows every worker. When I do a good job, the boss sees it directly, so a raise or a new title can come quickly. Decisions are also faster. If I want to try a new supplier, I can ask my manager at lunch instead of waiting three weeks for an answer from another department.\n\nOf course, a large company usually offers a higher salary and better benefits, and the name looks good on a resume. These points are important for people who want a very stable life. In conclusion, I would still choose a small company, because I care more about learning many skills and getting quick answers than about a famous name on my business card.",
+      "modelNotes": "第一段（立場）：If I could choose, I would prefer ... 是偏好題安全又漂亮的開場句型。第二句用 more chances to learn 和 easier to see 預告兩個理由。\n第二段（理由一）：To begin with 主題句寫「小公司一人多工」。用 In a large company ... / In a small office ... 兩句直接對比，畫面立刻出來。For example 的表姊例子有數字（八個人、兩年）、有三個動作（見客戶、控預算、管印刷排程），最後用大公司朋友的對照句收尾，比自己下結論更有力。\n第三段（理由二）：In addition 換理由，寫「主管看得見、決策快」。亮點是最後一句的具體對比：午餐時問主管 vs 等三週跨部門回覆——同一件事的兩種速度。\n第四段（讓步＋結論）：Of course 承認大公司的薪水、福利和履歷加分，並指出這些對某些人很重要，展現你看得懂另一邊的理由；最後一句 I would still choose ... 的 still 呼應前面的讓步，並用 care more about A than about B 的比較句型把價值取捨講清楚。讓步和結論同段，全篇維持四段。"
+    },
+    {
+      "id": "w3-e-06",
+      "question": "Some companies offer free training classes to their employees after working hours. What are the advantages and disadvantages of this policy? Use specific reasons and examples to support your answer.",
+      "questionZh": "有些公司在下班後提供免費的教育訓練課程給員工。這項政策有哪些優點和缺點？請用具體的理由和例子支持你的回答。",
+      "outline": [
+        {
+          "label": "立場",
+          "hint": "2 到 3 句。先用一句話說明這個政策是什麼，再用 In my view 定調：對公司和員工都有好處，但也有代價。這句就是全篇的方向。"
+        },
+        {
+          "label": "理由一",
+          "hint": "5 到 6 句（寫優點）。主題句用 The main advantage is that ... 寫「員工免費提升技能」。舉兩個具體課程（試算表、電話英文），說明技能提升會帶來什麼結果。用一個公司內部的例子加上時間和成果（三個月後客訴變少）。"
+        },
+        {
+          "label": "理由二",
+          "hint": "4 到 5 句（寫缺點）。主題句用 On the other hand 寫「課程佔用下班時間」。解釋員工已經工作八九小時、還要煮飯或照顧小孩。指出如果主管點名，課程就變成沒有加班費的加班，有人會人到心不到。"
+        },
+        {
+          "label": "結論",
+          "hint": "3 到 4 句，建議和結論寫在同一段。先用 For this reason 給建議（開放參加但不強制、每月安排一次在上班時間），再用 In conclusion 把優缺點各用一句收起來，並強調要尊重員工的私人時間。"
+        }
+      ],
+      "transitions": [
+        "The main advantage is that",
+        "For example",
+        "As a result",
+        "On the other hand",
+        "In fact",
+        "For this reason",
+        "In conclusion"
+      ],
+      "model": "Some companies offer free training classes to their employees after working hours. In my view, this policy helps both sides, but it also has a cost that managers should think about.\n\nThe main advantage is that workers improve their skills without paying for a course. An office clerk can learn to use a spreadsheet properly, and a sales assistant can practice English for phone calls. Better skills mean fewer mistakes and faster work. For example, last year my company opened a two-hour class on customer service every Wednesday. After three months, the number of complaint emails dropped, and staff felt more confident on the phone. As a result, several good employees decided to stay with the company.\n\nOn the other hand, classes after work take personal time. Many staff already work eight or nine hours, and they still need to cook dinner or take care of their children. In fact, if the manager checks who comes, the class quickly starts to feel like extra work without pay. Some workers may join, sit quietly, and learn nothing at all.\n\nFor this reason, I think a company should keep these classes open to everyone but never require them. Holding one class during working hours each month is another good idea. In conclusion, free training classes after work are useful, because they raise skills and keep good staff. However, companies must respect the private time of their employees, or the classes will lose their value.",
+      "modelNotes": "第一段（立場）：第一句改寫題目，第二句用 In my view, this policy helps both sides, but it also has a cost 一次定調優點和缺點，並用 managers should think about 暗示最後會給建議。\n第二段（優點）：The main advantage is that ... 是主題句型。接著舉兩個很具體的課程（試算表、電話英文），再用 Better skills mean fewer mistakes 把技能連到公司利益。For example 的例子有頻率（每週三）、時數（兩小時）、期間（三個月）和成果（客訴變少），最後用 As a result 再往前推一層：留住好員工。\n第三段（缺點）：On the other hand 是全篇轉彎的訊號。先寫員工下班後的真實負擔（煮飯、顧小孩），再用 In fact 加強語氣指出「主管點名」會讓免費課變成沒錢的加班，最後一句寫人到心不到的狀況，收得很實在。\n第四段（建議＋結論）：For this reason 帶出兩個具體做法：開放但不強制、每月一次改在上班時間，優缺點題有建議，組織分數會更高；接著 In conclusion 先用 because 收優點，再用 However 收缺點，最後以 or the classes will lose their value 這個帶條件的警語結尾，比平鋪直敘的重述更有力量。建議和結論同段，全篇維持四段。"
+    }
+  ]
+}

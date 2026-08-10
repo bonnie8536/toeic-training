@@ -1,0 +1,182 @@
+[
+  {
+    "id": "l1-01",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic candid documentary photograph of a man in a light blue dress shirt standing at a large office copy machine. He is pressing a button on the control panel with his right hand, and a small stack of white paper sits in the output tray. A quiet open-plan office with desks is blurred in the background. Natural daylight from a window on the left, shallow depth of field, no text or logos anywhere.",
+    "photoAlt": "辦公室影印區，一名穿淺藍襯衫的男子站在影印機前按操作面板，出紙匣有一疊白紙，背景是無人的辦公桌區。",
+    "options": [
+      "A man is pouring a cup of coffee.",
+      "A man is fixing the machine.",
+      "A man is making copies.",
+      "Some men are cleaning the office."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：照片中男子正在操作影印機、出紙匣已有印好的紙，make copies 就是「影印」，動作與主詞都吻合。\n(A) 陷阱＝發音相近詞：copy 與 coffee 開頭音節相似，但畫面裡沒有咖啡壺或杯子。\n(B) 陷阱＝物件在但動作錯：影印機確實在畫面中，可是他是在按按鈕使用機器，不是在維修 (fixing)。\n(D) 陷阱＝主詞數量錯：畫面只有一個人，Some men 是複數，而且沒有人在打掃。",
+    "transcriptZh": "(A) 一名男子正在倒一杯咖啡。\n(B) 一名男子正在修理機器。\n(C) 一名男子正在影印。\n(D) 幾名男子正在打掃辦公室。"
+  },
+  {
+    "id": "l1-02",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic candid documentary photograph of a female restaurant server in a dark apron pouring water from a metal pitcher into a glass on a wooden table. The table is set with clean white plates and folded napkins. The dining room around her is empty, with no customers seated. Warm natural light through tall windows, candid documentary style, shallow depth of field, no text or logos.",
+    "photoAlt": "餐廳內場，女服務生穿深色圍裙，正用金屬水壺把水倒進桌上的玻璃杯；木桌上有白盤與餐巾，四周座位無客人。",
+    "options": [
+      "A woman is pouring a drink.",
+      "A woman is washing some dishes.",
+      "Some customers are ordering food.",
+      "The table is being wiped down."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：她正把水從水壺倒進杯子，pour a drink 是最能涵蓋畫面的說法，主詞與動作都對。\n(B) 陷阱＝物件在但動作錯：桌上確實有盤子 (dishes)，但沒有人在洗。\n(C) 陷阱＝畫面無此人物：餐廳裡沒有客人，也就不可能有人在點餐。\n(D) 陷阱＝動作錯：桌子在畫面中，但沒有人在擦桌子，被動語態的動作並未發生。",
+    "transcriptZh": "(A) 一名女子正在倒飲料。\n(B) 一名女子正在洗碗盤。\n(C) 幾位客人正在點餐。\n(D) 桌子正被擦拭。"
+  },
+  {
+    "id": "l1-03",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic candid documentary photograph of a warehouse worker in a safety vest lifting a cardboard box onto a waist-high stack of identical boxes on a wooden pallet. An empty forklift is parked several meters behind him with no driver. Tall metal shelving lines the background. Overhead industrial lighting mixed with daylight from a loading door, candid documentary style, no text or logos on the boxes.",
+    "photoAlt": "倉庫內，穿反光背心的工人正把紙箱疊上棧板上的箱堆；後方停著一台無人駕駛的堆高機，兩側是高架金屬層架。",
+    "options": [
+      "The boxes are being unpacked.",
+      "A man is driving a forklift.",
+      "Some shelves are being taken apart.",
+      "A man is stacking boxes."
+    ],
+    "answer": 3,
+    "explanation": "正解 (D)：他正把箱子往上疊，stack boxes 是這個畫面最標準的說法。\n(A) 陷阱＝動作方向相反：箱子是被疊起來、不是被拆開，而且沒有人在開箱。\n(B) 陷阱＝物件在但動作錯：堆高機確實停在後方，但駕駛座上沒有人。\n(C) 陷阱＝物件在但動作錯：層架在畫面中，卻沒有人在拆解它們。",
+    "transcriptZh": "(A) 那些箱子正被拆開。\n(B) 一名男子正在開堆高機。\n(C) 一些層架正被拆解。\n(D) 一名男子正在堆疊箱子。"
+  },
+  {
+    "id": "l1-04",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic candid documentary photograph of about six commuters standing behind the yellow safety line on a train station platform, most looking down the empty track. Some hold bags or phones. No train is at the platform. A ticket machine is visible far in the background with nobody using it. Overcast natural daylight under a metal canopy, candid documentary style, no text or logos.",
+    "photoAlt": "火車站月台，約六名通勤者站在黃線後方等車，多數望向空的軌道；月台上沒有列車，遠處售票機前無人。",
+    "options": [
+      "Some people are buying tickets.",
+      "Some people are waiting on the platform.",
+      "A train is being repaired.",
+      "The platform is empty."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：一群人站在月台等車，wait on the platform 精準描述整體狀態。\n(A) 陷阱＝物件在但動作錯：遠處確實有售票機，但沒有人在買票。\n(C) 陷阱＝畫面無此物：月台上根本沒有列車，更談不上維修。\n(D) 陷阱＝狀態相反：月台上明明有一群人，empty 與畫面相牴觸。",
+    "transcriptZh": "(A) 有些人正在買車票。\n(B) 有些人正在月台上等車。\n(C) 一列火車正在維修。\n(D) 月台上空無一人。"
+  },
+  {
+    "id": "l1-05",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic documentary photograph of an empty corporate meeting room. Ten identical black office chairs are neatly arranged around a long oval wooden table. A blank whiteboard hangs on the side wall and a projector screen is rolled up. No people are in the room. Soft natural light through floor-to-ceiling windows, candid documentary style, no text or logos.",
+    "photoAlt": "空無一人的會議室，十張黑色辦公椅整齊排在長橢圓木桌四周，側牆有空白白板與收起的投影布幕。",
+    "options": [
+      "Chairs have been arranged around a table.",
+      "A meeting is going on.",
+      "Some people are taking notes.",
+      "The chairs are being stacked in a corner."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：房內無人，只能描述物品的狀態。現在完成被動 have been arranged 正好表示「椅子已被排好」的結果狀態。\n(B) 陷阱＝畫面無人：沒有人在場，會議不可能正在進行。\n(C) 陷阱＝畫面無人：同理，沒有人可以做記筆記的動作。\n(D) 陷阱＝動作錯：椅子在畫面中，但它們是排好在桌邊，不是被疊到角落，而且無人在搬。",
+    "transcriptZh": "(A) 椅子已被排在桌子四周。\n(B) 一場會議正在進行。\n(C) 有些人正在做筆記。\n(D) 椅子正被疊放到角落。"
+  },
+  {
+    "id": "l1-06",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic candid documentary photograph of a shopkeeper in an apron sweeping the sidewalk with a long broom in front of a small storefront early in the morning. The shop's glass window is clean and its door is closed. The street beyond is quiet with no pedestrians and no moving cars. Soft morning light, candid documentary style, shallow depth of field, no text or logos on the storefront.",
+    "photoAlt": "清晨街邊，穿圍裙的店家拿長掃把在店門口人行道掃地；店面玻璃乾淨、門關著，街上沒有行人。",
+    "options": [
+      "A man is washing a window.",
+      "Some people are crossing the street.",
+      "A man is unlocking a door.",
+      "A man is sweeping the sidewalk."
+    ],
+    "answer": 3,
+    "explanation": "正解 (D)：他手持掃把在人行道上掃地，動作與地點都相符。\n(A) 陷阱＝物件在但動作錯：店面玻璃窗確實在畫面中，但他手上拿的是掃把，不是在擦窗。\n(B) 陷阱＝畫面無此人物：街上沒有行人，也沒有人在過馬路。\n(C) 陷阱＝物件在但動作錯：門就在旁邊，但他沒有在開鎖。",
+    "transcriptZh": "(A) 一名男子正在擦窗戶。\n(B) 有些人正在過馬路。\n(C) 一名男子正在開門鎖。\n(D) 一名男子正在掃人行道。"
+  },
+  {
+    "id": "l1-07",
+    "difficulty": "中級",
+    "photoPrompt": "A photorealistic candid documentary photograph of a female grocery store employee placing apples onto a wooden produce display, with oranges and bananas already stacked beside them. The display is full. The checkout counter is far in the background and no one is standing at it. Bright even store lighting mixed with daylight, candid documentary style, no text or logos on any packaging.",
+    "photoAlt": "超市生鮮區，女店員正把蘋果擺上木製陳列架，旁邊已堆滿柳橙與香蕉；遠處收銀台前沒有人排隊。",
+    "options": [
+      "A shopper is paying at the register.",
+      "A woman is arranging fruit on a display.",
+      "Some customers are waiting in line.",
+      "The shelves have been cleared off."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：她正把水果一顆顆擺上陳列架，arrange 是 Part 1 描述「擺放整理」的高頻動詞。\n(A) 陷阱＝物件在但動作錯：收銀台在遠景，但沒有人在結帳。\n(C) 陷阱＝畫面無此人物：畫面裡只有店員一人，沒有顧客，自然也沒有人在排隊。\n(D) 陷阱＝狀態相反：陳列架是滿的，cleared off（被清空）與畫面相反。",
+    "transcriptZh": "(A) 一位顧客正在收銀台付款。\n(B) 一名女子正在陳列架上擺放水果。\n(C) 有些顧客正在排隊等候。\n(D) 架子已被清空。"
+  },
+  {
+    "id": "l1-08",
+    "difficulty": "中級",
+    "photoPrompt": "A photorealistic candid documentary photograph of an airline check-in counter where a uniformed agent hands a small plain white card across the counter to a traveler. The traveler's black suitcase stands upright on the floor beside her, not on the scale. An empty baggage cart is parked to the side. Bright airport terminal with natural light from high windows, candid documentary style, no readable text or logos.",
+    "photoAlt": "機場報到櫃台，穿制服的地勤把登機證遞給旅客；旅客的黑色行李箱直立放在地上（不在磅秤上），旁邊停著一台空的行李推車。",
+    "options": [
+      "A suitcase is being weighed on a scale.",
+      "Some luggage is being loaded onto a cart.",
+      "An agent is handing over a document.",
+      "The travelers are walking through a doorway."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：地勤把登機證遞給旅客，hand over a document 是 Part 1 慣用的概括說法（登機證＝一種文件）。\n(A) 陷阱＝物件在但動作錯：行李箱確實在畫面中，但它直立在地上、沒有放上磅秤，被動進行式的動作並未發生。\n(B) 陷阱＝物件在但動作錯：推車確實在旁邊，可是它是空的，沒有人在裝行李。\n(D) 陷阱＝動作錯：旅客站在櫃台前，不是在穿過門口。",
+    "transcriptZh": "(A) 一個行李箱正在磅秤上秤重。\n(B) 有些行李正被裝上推車。\n(C) 一名地勤人員正在遞交一份文件。\n(D) 旅客們正走過一道門。"
+  },
+  {
+    "id": "l1-09",
+    "difficulty": "中級",
+    "photoPrompt": "A photorealistic documentary photograph of about twelve bicycles parked side by side in a neat row in a metal bike rack outside a brick office building. No people are visible anywhere in the frame. A few of the bikes have baskets on the front. Late afternoon natural light casting long shadows on the pavement, candid documentary style, no text or logos.",
+    "photoAlt": "紅磚辦公大樓外的停車架，約十二台腳踏車並排整齊停放，部分前方有籃子；畫面中沒有任何人。",
+    "options": [
+      "Some people are riding bicycles.",
+      "The bicycles are being repaired.",
+      "A man is locking his bike to a rack.",
+      "Bicycles have been parked in a row."
+    ],
+    "answer": 3,
+    "explanation": "正解 (D)：畫面無人，只能描述物品狀態；have been parked in a row 準確表達「已被排成一列停好」。\n(A) 陷阱＝畫面無人：腳踏車是停著的，沒有人在騎。\n(B) 陷阱＝物件在但動作錯：腳踏車在畫面中，但沒有人在修理，被動進行式的動作並未發生。\n(C) 陷阱＝畫面無人：停車架 (rack) 確實存在，但沒有男子在上鎖，屬於「物件對、人物不存在」的典型誘答。",
+    "transcriptZh": "(A) 有些人正在騎腳踏車。\n(B) 那些腳踏車正被修理。\n(C) 一名男子正把腳踏車鎖在停車架上。\n(D) 腳踏車已排成一列停放。"
+  },
+  {
+    "id": "l1-10",
+    "difficulty": "中級",
+    "photoPrompt": "A photorealistic candid documentary photograph of a hotel porter in a vest lifting a large suitcase into the open rear doors of a white shuttle van parked at a hotel entrance. Two more suitcases wait on the curb beside him. The van's back doors are wide open. No guests are in the frame and no reception desk is visible. Bright natural daylight, candid documentary style, no text or logos on the van.",
+    "photoAlt": "飯店門口，穿背心的行李員正把大行李箱搬進白色接駁廂型車的後車廂；車後門大開，路邊還有兩件行李待搬，畫面中沒有房客。",
+    "options": [
+      "A man is putting luggage into a vehicle.",
+      "A car is being washed.",
+      "Some guests are checking in at a front desk.",
+      "The back doors of the van have been shut."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：他正把行李搬進車內，put luggage into a vehicle 用最通用的字涵蓋 suitcase 與 van，是 Part 1 常見的概括答案。\n(B) 陷阱＝物件在但動作錯：車輛在畫面中，但沒有人在洗車。\n(C) 陷阱＝畫面無此場景：這裡是飯店門口的車道，看不到櫃台，也沒有房客。\n(D) 陷阱＝狀態相反：後車門是敞開的，shut（已關上）與畫面牴觸。",
+    "transcriptZh": "(A) 一名男子正把行李放進車裡。\n(B) 一輛車正被清洗。\n(C) 有些房客正在櫃台辦理入住。\n(D) 廂型車的後門已經關上。"
+  },
+  {
+    "id": "l1-11",
+    "difficulty": "進階",
+    "photoPrompt": "A photorealistic candid documentary photograph of a maintenance worker in a hard hat standing on the top steps of a freestanding A-frame stepladder, reaching up to work on a ceiling light fixture in a bright indoor hallway. The stepladder stands open on the floor, not leaning on anything. An open toolbox sits on the floor nearby with tools spread around it. No staircase is visible. Natural light from a window at the end of the hallway, candid documentary style, no text or logos.",
+    "photoAlt": "室內走廊，戴安全帽的維修人員站在打開的 A 字梯上方，伸手處理天花板燈具；梯子自立於地面未靠牆，地上有打開的工具箱與散落的工具。",
+    "options": [
+      "Some workers are climbing a staircase.",
+      "A man is working at the top of a ladder.",
+      "A ladder is leaning against the wall.",
+      "The tools have been put away in a box."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：他站在梯子頂端處理天花板燈具，at the top of a ladder 同時交代了位置與動作。\n(A) 陷阱＝情境聯想加主詞數量錯：ladder 與 staircase 同屬「往上爬」的聯想，climbing 聽起來也合理，但畫面裡只有一個人，而且沒有樓梯。\n(C) 陷阱＝物件在但狀態錯：梯子確實在畫面中，可是它是自立張開的 A 字梯，不是靠在牆上。這是本題最容易被騙的選項。\n(D) 陷阱＝狀態相反：工具散落在地、工具箱是打開的，put away（已收好）與畫面相反。",
+    "transcriptZh": "(A) 有些工人正在爬樓梯。\n(B) 一名男子正在梯子頂端工作。\n(C) 一把梯子靠在牆上。\n(D) 工具已被收進箱子裡。"
+  },
+  {
+    "id": "l1-12",
+    "difficulty": "進階",
+    "photoPrompt": "A photorealistic documentary photograph of a small harbor where several fishing boats are moored side by side along a concrete dock, thick ropes tied to metal posts. The boats are still in the water with no one aboard. In the far background a stationary port crane stands over stacked shipping containers, its hook hanging empty. Calm water, overcast natural daylight, candid documentary style, no text or logos.",
+    "photoAlt": "小港口碼頭，數艘漁船以粗纜繩繫在岸邊鐵樁上，船上無人；遠景有一台靜止的港口吊車，掛鉤空著，下方堆著貨櫃。",
+    "options": [
+      "The boats are sailing out to sea.",
+      "A crane is lifting a boat out of the water.",
+      "Some boats are tied up at the dock.",
+      "People are fishing off the pier."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：船以纜繩繫在碼頭邊，tied up at the dock 是描述停泊狀態的標準說法。\n(A) 陷阱＝動作錯：船以纜繩繫在鐵樁上、靜止在平靜的水面，並沒有駛離碼頭出海。\n(B) 陷阱＝物件在但動作錯：吊車確實在遠景，但它是靜止的、掛鉤空著，並未吊起任何船隻，這是本題的主要陷阱。\n(D) 陷阱＝畫面無人：碼頭上沒有人，自然也沒有人在釣魚。",
+    "transcriptZh": "(A) 那些船正出海航行。\n(B) 一台吊車正把一艘船吊出水面。\n(C) 有些船繫泊在碼頭邊。\n(D) 有人正在碼頭邊釣魚。"
+  }
+]

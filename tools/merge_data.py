@@ -235,6 +235,43 @@ for lv in ['l1', 'l2', 'l3']:
     scan_simplified(wd, w)
     writing[lv] = wd
 
+# ---------- 聽力 ----------
+listening = {}
+lp1 = load_kind('listening_p1.json', 'listening p1')
+for q in lp1:
+    w = f"listening {q.get('id','?')}"
+    if need(q, ['id','difficulty','photoPrompt','photoAlt','options','explanation','transcriptZh'], w):
+        check_options(q, w)
+lp2 = load_kind('listening_p2_b*.json', 'listening p2')
+for q in lp2:
+    w = f"listening {q.get('id','?')}"
+    if need(q, ['id','difficulty','category','accent','question','options','explanation','transcriptZh'], w):
+        if not isinstance(q.get('options'), list) or len(q['options']) != 3:
+            errors.append(f'{w}: P2 options 需為 3 個')
+        if not isinstance(q.get('answer'), int) or not (0 <= q['answer'] <= 2):
+            errors.append(f'{w}: answer 需為 0-2')
+lp3 = load_kind('listening_p3_b*.json', 'listening p3')
+for s in lp3:
+    w = f"listening {s.get('id','?')}"
+    if need(s, ['id','difficulty','title','dialogue','questions','transcriptZh'], w):
+        for turn in s['dialogue']:
+            if turn.get('s') not in ('M', 'W'):
+                errors.append(f'{w}: dialogue s 需為 M/W')
+        for qi, q in enumerate(s['questions']):
+            need(q, ['q','options','explanation'], f'{w} Q{qi+1}')
+            check_options(q, f'{w} Q{qi+1}')
+lp4 = load_kind('listening_p4_b*.json', 'listening p4')
+for s in lp4:
+    w = f"listening {s.get('id','?')}"
+    if need(s, ['id','difficulty','type','speaker','talk','questions','transcriptZh'], w):
+        for qi, q in enumerate(s['questions']):
+            need(q, ['q','options','explanation'], f'{w} Q{qi+1}')
+            check_options(q, f'{w} Q{qi+1}')
+for kind_name, items_ in [('listening', lp1 + lp2 + lp3 + lp4)]:
+    scan_simplified(items_, kind_name)
+if lp1 or lp2 or lp3 or lp4:
+    listening = {'p1': lp1, 'p2': lp2, 'p3': lp3, 'p4': lp4}
+
 # ---------- id 重複 ----------
 for kind, items in [('part5', p5), ('part6', p6), ('part7', p7), ('articles', arts)]:
     ids = [x.get('id') for x in items]
@@ -275,4 +312,6 @@ if diag is not None:
     write_js('diagnostic.js', 'diagnostic', diag)
 if writing:
     write_js('writing.js', 'writing', writing)
+if listening:
+    write_js('listening.js', 'listening', listening)
 print('完成。')

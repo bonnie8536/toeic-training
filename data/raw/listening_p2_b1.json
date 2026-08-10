@@ -1,0 +1,377 @@
+[
+  {
+    "id": "l2-01",
+    "difficulty": "基礎",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "Where's the training session being held?",
+    "options": [
+      "In conference room B.",
+      "Yes, twice a week.",
+      "He's a great trainer."
+    ],
+    "answer": 0,
+    "explanation": "(A) 正解：Where 問地點，直接回答會議室名稱。\n(B) Where 開頭的 WH 問句不能用 Yes 回答，twice a week 回答的是頻率。\n(C) 重複 train- 字根（training／trainer）的誘答，回答的是「人」而不是「地點」。",
+    "transcriptZh": "問：訓練課程在哪裡舉行？\n(A) 在 B 會議室。\n(B) 是的，一週兩次。\n(C) 他是很棒的訓練講師。"
+  },
+  {
+    "id": "l2-02",
+    "difficulty": "基礎",
+    "category": "Yes/No問句",
+    "accent": "GB",
+    "question": "Did you send the invoice to Mr. Feldman?",
+    "options": [
+      "He has a really deep voice.",
+      "I'll do it this afternoon.",
+      "Yes, he's a new client."
+    ],
+    "answer": 1,
+    "explanation": "(B) 正解：間接回應，沒有說 Yes／No，而是用「下午會處理」暗示還沒寄出。\n(A) invoice／voice 相似音誘答，講的是聲音，完全沒回答有沒有寄。\n(C) Yes 之後接的內容答非所問，只重複了人名相關資訊。",
+    "transcriptZh": "問：你把發票寄給 Feldman 先生了嗎？\n(A) 他的聲音很低沉。\n(B) 我下午會處理。\n(C) 是的，他是新客戶。"
+  },
+  {
+    "id": "l2-03",
+    "difficulty": "中級",
+    "category": "附加/否定問句",
+    "accent": "AU",
+    "question": "You've already met our new manager, haven't you?",
+    "options": [
+      "The meeting room's upstairs.",
+      "Yes, I managed to fix it.",
+      "Actually, not yet."
+    ],
+    "answer": 2,
+    "explanation": "(C) 正解：附加問句只是確認，照事實回答即可，not yet 表示還沒見過。\n(A) met／meeting 相似音誘答，回答的是地點。\n(B) manager／managed 相似音誘答，Yes 之後的內容與問題無關。",
+    "transcriptZh": "問：你已經見過我們的新主管了吧？\n(A) 會議室在樓上。\n(B) 是的，我設法修好了。\n(C) 其實還沒。"
+  },
+  {
+    "id": "l2-04",
+    "difficulty": "中級",
+    "category": "選擇問句",
+    "accent": "US",
+    "question": "Would you rather take the train or drive to the plant?",
+    "options": [
+      "Whichever gets us there faster.",
+      "The train was late again.",
+      "The plants need watering."
+    ],
+    "answer": 0,
+    "explanation": "(A) 正解：選擇問句可以回「哪個都行」，Whichever… 是標準答法。\n(B) 重複 train，但講的是過去誤點，答非所問。\n(C) plant 一字多義（工廠／植物）的誘答，語意完全無關。",
+    "transcriptZh": "問：你比較想搭火車還是開車去工廠？\n(A) 哪個比較快就哪個。\n(B) 火車又誤點了。\n(C) 植物該澆水了。"
+  },
+  {
+    "id": "l2-05",
+    "difficulty": "基礎",
+    "category": "陳述句",
+    "accent": "GB",
+    "question": "This printer keeps jamming.",
+    "options": [
+      "About two hundred copies.",
+      "Let me call maintenance.",
+      "Yes, I printed it yesterday."
+    ],
+    "answer": 1,
+    "explanation": "(B) 正解：對方陳述問題，最自然的回應是提出處理方式。\n(A) 回答數量，與「印表機卡紙」無關。\n(C) printer／printed 相似音，而且時態錯位，陳述句一般也不會用 Yes 回應。",
+    "transcriptZh": "問：這台印表機一直卡紙。\n(A) 大約兩百份。\n(B) 我來叫維修人員。\n(C) 是的，我昨天印的。"
+  },
+  {
+    "id": "l2-06",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "AU",
+    "question": "Who's covering the front desk while Diane's away?",
+    "options": [
+      "It's a nice cover.",
+      "She's away until Friday.",
+      "Didn't you get the schedule I posted?"
+    ],
+    "answer": 2,
+    "explanation": "(C) 正解：間接回應，用反問把對方導向班表，等於「答案寫在班表上」。\n(A) cover 一字多義的相似音誘答（代班／封面）。\n(B) 重複 away，但回答的是「多久」而不是「誰」。",
+    "transcriptZh": "問：Diane 不在的時候誰顧櫃檯？\n(A) 那個封面很好看。\n(B) 她要到星期五才回來。\n(C) 你沒看到我貼的班表嗎？"
+  },
+  {
+    "id": "l2-07",
+    "difficulty": "中級",
+    "category": "Yes/No問句",
+    "accent": "US",
+    "question": "Are these boxes ready to be shipped?",
+    "options": [
+      "Yes, on the top shelf.",
+      "The labels haven't been printed yet.",
+      "He shipped it last Monday."
+    ],
+    "answer": 1,
+    "explanation": "(B) 正解：間接回應，標籤還沒印＝還沒準備好，等於否定但沒說 No。\n(A) Yes 之後接地點，答非所問。\n(C) 重複 ship，而且時態是過去式，與「現在是否備妥」無關。",
+    "transcriptZh": "問：這些箱子可以出貨了嗎？\n(A) 是的，在最上層架子上。\n(B) 標籤還沒印好。\n(C) 他上星期一寄出的。"
+  },
+  {
+    "id": "l2-08",
+    "difficulty": "基礎",
+    "category": "WH問句",
+    "accent": "GB",
+    "question": "Which floor is the human resources office on?",
+    "options": [
+      "The fourth, I think.",
+      "Yes, they're hiring.",
+      "For about six years."
+    ],
+    "answer": 0,
+    "explanation": "(A) 正解：直接回答樓層。\n(B) WH 問句不能用 Yes 回答，hiring 只是被 human resources 誘導出的聯想。\n(C) 回答期間長度，是 How long 的答案。",
+    "transcriptZh": "問：人資辦公室在幾樓？\n(A) 我想是四樓。\n(B) 是的，他們正在徵人。\n(C) 大約六年。"
+  },
+  {
+    "id": "l2-09",
+    "difficulty": "基礎",
+    "category": "WH問句",
+    "accent": "AU",
+    "question": "When does the shuttle leave for the airport?",
+    "options": [
+      "From gate three.",
+      "Every twenty minutes.",
+      "Yes, I've packed already."
+    ],
+    "answer": 1,
+    "explanation": "(B) 正解：問發車時間，用「每二十分鐘一班」回答很自然。\n(A) 回答地點，是 Where 的答案。\n(C) WH 問句不能用 Yes，內容也只是機場的情境聯想。",
+    "transcriptZh": "問：往機場的接駁車什麼時候發車？\n(A) 從三號門。\n(B) 每二十分鐘一班。\n(C) 是的，我已經打包好了。"
+  },
+  {
+    "id": "l2-10",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "How did the client meeting go?",
+    "options": [
+      "By taxi.",
+      "Better than we expected.",
+      "She's meeting him at two."
+    ],
+    "answer": 1,
+    "explanation": "(B) 正解：How did … go 問的是結果好壞，回答「比預期好」正確對應。\n(A) 把 How 誤解成交通方式的典型陷阱。\n(C) 重複 meeting，但回答時間，而且時態錯位（會議已經結束）。",
+    "transcriptZh": "問：跟客戶的會議進行得如何？\n(A) 搭計程車。\n(B) 比我們預期的好。\n(C) 她兩點跟他碰面。"
+  },
+  {
+    "id": "l2-11",
+    "difficulty": "進階",
+    "category": "選擇問句",
+    "accent": "GB",
+    "question": "Should I book the large hall or the small one?",
+    "options": [
+      "How many people are coming?",
+      "Yes, I booked it online.",
+      "The book's on my desk."
+    ],
+    "answer": 0,
+    "explanation": "(A) 正解：間接回應，用反問取得決定所需資訊，是進階題常見的答法。\n(B) 選擇問句不能用 Yes，而且時態錯位（還沒訂）。\n(C) book 當動詞（預訂）與名詞（書）的相似音誘答。",
+    "transcriptZh": "問：我該訂大禮堂還是小的那間？\n(A) 有多少人要來？\n(B) 是的，我在網路上訂了。\n(C) 那本書在我桌上。"
+  },
+  {
+    "id": "l2-12",
+    "difficulty": "基礎",
+    "category": "Yes/No問句",
+    "accent": "AU",
+    "question": "Can you give me a hand with these chairs?",
+    "options": [
+      "They're in the storage room.",
+      "Sure, give me a second.",
+      "No, my hands are clean."
+    ],
+    "answer": 1,
+    "explanation": "(B) 正解：give me a hand 是「幫忙」，Sure 是最自然的答應方式。\n(A) 回答位置，沒有回應請求。\n(C) 重複 hand 的字面誘答，把片語當字面意思解讀。",
+    "transcriptZh": "問：可以幫我搬這些椅子嗎？\n(A) 它們在儲藏室。\n(B) 好啊，等我一下。\n(C) 不用，我的手很乾淨。"
+  },
+  {
+    "id": "l2-13",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "Why was the shipment delayed?",
+    "options": [
+      "It arrived on Tuesday.",
+      "To the warehouse on Fifth.",
+      "Because of a storm at the port."
+    ],
+    "answer": 2,
+    "explanation": "(C) 正解：Why 問原因，Because of… 直接對應。\n(A) 回答時間，是 When 的答案。\n(B) 回答目的地，是 Where 的答案。",
+    "transcriptZh": "問：貨為什麼延遲了？\n(A) 星期二到的。\n(B) 送到第五街的倉庫。\n(C) 因為港口有暴風雨。"
+  },
+  {
+    "id": "l2-14",
+    "difficulty": "中級",
+    "category": "附加/否定問句",
+    "accent": "GB",
+    "question": "You're joining us for lunch, aren't you?",
+    "options": [
+      "It was delicious, thanks.",
+      "The menu's on the counter.",
+      "I've got a conference call at noon."
+    ],
+    "answer": 2,
+    "explanation": "(C) 正解：間接回應，中午有電話會議＝婉拒，等於 No 但沒明說。\n(A) 時態錯位，午餐還沒吃就說好吃。\n(B) 用 lunch→menu 的情境聯想誘答。",
+    "transcriptZh": "問：你會跟我們一起吃午餐吧？\n(A) 很好吃，謝謝。\n(B) 菜單在櫃檯上。\n(C) 我中午有電話會議。"
+  },
+  {
+    "id": "l2-15",
+    "difficulty": "進階",
+    "category": "陳述句",
+    "accent": "AU",
+    "question": "I thought Ms. Okada was presenting today.",
+    "options": [
+      "She's presenting the sales figures.",
+      "They switched the order around.",
+      "It was a lovely present."
+    ],
+    "answer": 1,
+    "explanation": "(B) 正解：間接回應，說明順序被調換，解釋了為何與對方預期不同。\n(A) 重複 presenting，但沒有回應對方的疑惑。\n(C) present／presenting 相似音誘答，語意完全無關。",
+    "transcriptZh": "問：我還以為今天是 Okada 小姐報告。\n(A) 她要報告銷售數字。\n(B) 他們把順序調換了。\n(C) 那是很棒的禮物。"
+  },
+  {
+    "id": "l2-16",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "What time should we start the interview?",
+    "options": [
+      "As soon as Mr. Reyes gets here.",
+      "In the small meeting room.",
+      "Three candidates, I think."
+    ],
+    "answer": 0,
+    "explanation": "(A) 正解：間接回應，不給鐘點，改用條件（等某人到）說明時間。\n(B) 回答地點，是 Where 的答案。\n(C) 回答人數，是 How many 的答案。",
+    "transcriptZh": "問：面試我們幾點開始？\n(A) Reyes 先生一到就開始。\n(B) 在小會議室。\n(C) 我想是三位應徵者。"
+  },
+  {
+    "id": "l2-17",
+    "difficulty": "中級",
+    "category": "Yes/No問句",
+    "accent": "GB",
+    "question": "Have you had a chance to review the budget?",
+    "options": [
+      "Yes, it's a great view.",
+      "The accounting department.",
+      "I only got it this morning."
+    ],
+    "answer": 2,
+    "explanation": "(C) 正解：間接回應，今天早上才拿到＝還沒看完。\n(A) review／view 相似音誘答，Yes 之後的內容不合理。\n(B) 用 budget→accounting 的情境聯想誘答。",
+    "transcriptZh": "問：你有時間看預算了嗎？\n(A) 有，景觀很棒。\n(B) 會計部門。\n(C) 我今天早上才拿到。"
+  },
+  {
+    "id": "l2-18",
+    "difficulty": "中級",
+    "category": "附加/否定問句",
+    "accent": "AU",
+    "question": "Didn't we order more toner last month?",
+    "options": [
+      "Yes, but we went through it fast.",
+      "The order form's online.",
+      "No, the tone was fine."
+    ],
+    "answer": 0,
+    "explanation": "(A) 正解：否定問句照事實回答，Yes 表示有訂，but 補充「很快就用完了」。\n(B) 重複 order，但回答的是表單在哪裡。\n(C) toner／tone 相似音誘答。",
+    "transcriptZh": "問：我們上個月不是有多訂碳粉嗎？\n(A) 有，可是我們很快就用完了。\n(B) 訂購單在網路上。\n(C) 不會，語氣沒問題。"
+  },
+  {
+    "id": "l2-19",
+    "difficulty": "進階",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "Who should I talk to about reimbursement for the trip?",
+    "options": [
+      "It was a great trip, thanks.",
+      "Payroll handles those now.",
+      "About nine hundred dollars."
+    ],
+    "answer": 1,
+    "explanation": "(B) 正解：間接回應，用部門名稱代替人名回答「該找誰」。\n(A) 重複 trip，完全沒回應問題。\n(C) 回答金額，是 How much 的答案。",
+    "transcriptZh": "問：出差費用核銷我該找誰？\n(A) 那趟出差很棒，謝謝。\n(B) 現在是薪資部門在處理。\n(C) 大約九百美元。"
+  },
+  {
+    "id": "l2-20",
+    "difficulty": "中級",
+    "category": "選擇問句",
+    "accent": "GB",
+    "question": "Do you want the report by email, or should I print a copy?",
+    "options": [
+      "Yes, it's a long report.",
+      "It's on the copier.",
+      "Whichever's easier for you."
+    ],
+    "answer": 2,
+    "explanation": "(C) 正解：選擇問句可以回「都可以」，把決定權交還對方。\n(A) 選擇問句不能用 Yes 回答，還重複了 report。\n(B) copy／copier 相似音誘答。",
+    "transcriptZh": "問：報告你要用電子郵件寄，還是我印一份給你？\n(A) 是的，那份報告很長。\n(B) 在影印機上。\n(C) 你方便就好。"
+  },
+  {
+    "id": "l2-21",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "AU",
+    "question": "How much do these folders cost?",
+    "options": [
+      "There's a price list by the door.",
+      "About two hours.",
+      "In the supply closet."
+    ],
+    "answer": 0,
+    "explanation": "(A) 正解：間接回應，不直接報價，改指向價目表。\n(B) 回答時間長度，是 How long 的答案。\n(C) 回答地點，是 Where 的答案。",
+    "transcriptZh": "問：這些資料夾多少錢？\n(A) 門邊有價目表。\n(B) 大約兩小時。\n(C) 在文具櫃裡。"
+  },
+  {
+    "id": "l2-22",
+    "difficulty": "進階",
+    "category": "Yes/No問句",
+    "accent": "US",
+    "question": "Is Mr. Bauer still working on the design?",
+    "options": [
+      "He turned it in on Friday.",
+      "Yes, he works downtown.",
+      "It's a nice sign."
+    ],
+    "answer": 0,
+    "explanation": "(A) 正解：間接回應，週五已交件＝沒有還在做，等於 No。\n(B) 重複 work，但講的是工作地點，答非所問。\n(C) design／sign 相似音誘答。",
+    "transcriptZh": "問：Bauer 先生還在做那個設計嗎？\n(A) 他星期五就交了。\n(B) 是的，他在市中心上班。\n(C) 那個招牌很好看。"
+  },
+  {
+    "id": "l2-23",
+    "difficulty": "基礎",
+    "category": "Yes/No問句",
+    "accent": "GB",
+    "question": "Does the office close at six?",
+    "options": [
+      "It's quite close to the station.",
+      "Yes, except on Fridays.",
+      "A corner office, actually."
+    ],
+    "answer": 1,
+    "explanation": "(B) 正解：先用 Yes 回答，再補充例外情況，是很典型的自然回應。\n(A) close 當動詞（關閉）與形容詞（靠近）的相似音誘答。\n(C) 重複 office，但回答的是辦公室型態。",
+    "transcriptZh": "問：辦公室六點關嗎？\n(A) 它離車站蠻近的。\n(B) 是的，星期五除外。\n(C) 其實是間角落辦公室。"
+  },
+  {
+    "id": "l2-24",
+    "difficulty": "基礎",
+    "category": "WH問句",
+    "accent": "AU",
+    "question": "Where can I find the employee handbook?",
+    "options": [
+      "Yes, all new staff get one.",
+      "She's a new employee.",
+      "I'll email you a copy."
+    ],
+    "answer": 2,
+    "explanation": "(C) 正解：間接回應，直接寄檔案給你，比講位置更實際。\n(A) WH 問句不能用 Yes 回答。\n(B) 重複 employee，但回答的是人的身分。",
+    "transcriptZh": "問：員工手冊要去哪裡拿？\n(A) 是的，新進人員都會拿到一本。\n(B) 她是新進員工。\n(C) 我寄一份給你。"
+  },
+  {
+    "id": "l2-25",
+    "difficulty": "進階",
+    "category": "附加/否定問句",
+    "accent": "US",
+    "question": "Weren't you supposed to lead the workshop this week?",
+    "options": [
+      "It got moved to next month.",
+      "Yes, the tools are in the shop.",
+      "About fifteen participants."
+    ],
+    "answer": 0,
+    "explanation": "(A) 正解：間接回應，活動改到下個月＝這週不用帶，等於解釋了否定的原因。\n(B) workshop／shop 相似音誘答，Yes 之後的內容不合理。\n(C) 回答人數，是 How many 的答案。",
+    "transcriptZh": "問：這週不是應該由你帶工作坊嗎？\n(A) 改到下個月了。\n(B) 是的，工具在店裡。\n(C) 大約十五位參加者。"
+  }
+]

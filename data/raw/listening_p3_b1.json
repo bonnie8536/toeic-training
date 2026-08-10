@@ -1,0 +1,277 @@
+[
+  {
+    "id": "l3-11",
+    "difficulty": "基礎",
+    "title": "辦公室印表機報修",
+    "dialogue": [
+      { "s": "W", "text": "Hi, this is Dana from the sales team on the fourth floor. Our printer's giving us trouble again." },
+      { "s": "M", "text": "The big one next to the copy room?" },
+      { "s": "W", "text": "That's the one. It keeps jamming, and now there's a message on the screen about the paper tray." },
+      { "s": "M", "text": "Did you try pulling the tray out and reloading the paper?" },
+      { "s": "W", "text": "Twice. Same message. And it's making a strange noise when it starts up." },
+      { "s": "M", "text": "Well, that sounds like more than a paper jam. I'll have to send a technician over." },
+      { "s": "W", "text": "How soon? We've got a client meeting at two, and I need forty copies of a report before then." },
+      { "s": "M", "text": "Hmm. Our technician's at another building this morning. He won't be back until around one." },
+      { "s": "W", "text": "That's cutting it close." },
+      { "s": "M", "text": "Actually, why don't you use the printer on the third floor? It's the same model, so your settings will work." },
+      { "s": "W", "text": "Good idea. Could you put in the repair request while I go down there?" },
+      { "s": "M", "text": "Sure, I'll enter it now. You'll get an email with the ticket number." }
+    ],
+    "questions": [
+      {
+        "q": "What problem does the woman report?",
+        "options": [
+          "A computer will not turn on.",
+          "A printer keeps jamming.",
+          "A meeting room is double-booked.",
+          "A delivery has not arrived."
+        ],
+        "answer": 1,
+        "explanation": "女子第三句說 It keeps jamming, and now there's a message on the screen about the paper tray（一直卡紙，螢幕還跳出紙匣訊息），故選印表機一直卡紙。第一句只提到 printer's giving us trouble，尚未點名問題，真正的定位句在第三句。"
+      },
+      {
+        "q": "Why is the woman concerned about the time?",
+        "options": [
+          "She has to leave the office early.",
+          "The technician is on vacation.",
+          "The building closes at one o'clock.",
+          "She needs copies for a two o'clock meeting."
+        ],
+        "answer": 3,
+        "explanation": "女子問 How soon? 之後緊接著說 We've got a client meeting at two, and I need forty copies of a report before then（兩點有客戶會議，之前要四十份報告），這是她急的原因。男子說技術人員一點才回來，是造成時間緊的另一方，不是她擔心的內容本身。"
+      },
+      {
+        "q": "What does the man suggest the woman do?",
+        "options": [
+          "Use a printer on another floor.",
+          "Call the manufacturer.",
+          "Cancel the client meeting.",
+          "Buy paper from the supply room."
+        ],
+        "answer": 0,
+        "explanation": "男子倒數第三句說 why don't you use the printer on the third floor?（何不先用三樓那台），why don't you 是典型的建議句型，答案就在這句。後面 It's the same model 是補充理由。"
+      }
+    ],
+    "transcriptZh": "女：你好，我是四樓業務部的 Dana。我們的印表機又出狀況了。\n男：是影印室旁邊那台大的嗎？\n女：就是那台。它一直卡紙，現在螢幕上還跳出紙匣的訊息。\n男：你有把紙匣拉出來、重新放紙嗎？\n女：試了兩次，還是同樣的訊息。而且開機的時候會發出怪聲。\n男：嗯，這聽起來不只是卡紙。我得派技術人員過去。\n女：多快能來？我們兩點有客戶會議，在那之前我需要四十份報告。\n男：這個嘛，我們的技術人員今天早上在另一棟大樓，大概一點才會回來。\n女：那時間就很趕了。\n男：其實，你要不要先用三樓的印表機？機型一樣，你的設定可以直接沿用。\n女：好主意。我下去印的時候，可以麻煩你先幫我報修嗎？\n男：沒問題，我現在就登記。你會收到一封有維修單號的電子郵件。"
+  },
+  {
+    "id": "l3-12",
+    "difficulty": "中級",
+    "title": "預算會議改期協調",
+    "dialogue": [
+      { "s": "M", "text": "Karen, do you have a second? It's about Thursday's budget meeting." },
+      { "s": "W", "text": "Sure, what's up?" },
+      { "s": "M", "text": "I just found out our director has to fly to Osaka Wednesday night. He won't be back until Friday afternoon." },
+      { "s": "W", "text": "So he'd miss the whole thing. Can't we just go ahead without him?" },
+      { "s": "M", "text": "I'd rather not. He's the one who signs off on the numbers." },
+      { "s": "W", "text": "All right, then let's move it. How about Monday morning?" },
+      { "s": "M", "text": "Monday's tough. That's when the quarterly reports are due." },
+      { "s": "W", "text": "Then Tuesday at ten. That works for me." },
+      { "s": "M", "text": "Same here. But the big conference room is used for training on Tuesdays." },
+      { "s": "W", "text": "We can take the small one on the second floor. There'll only be six of us." },
+      { "s": "M", "text": "Fine with me. Could you send out a new invitation this afternoon and attach the updated spreadsheet?" },
+      { "s": "W", "text": "Will do. Some people still haven't seen the latest version anyway." }
+    ],
+    "questions": [
+      {
+        "q": "Why does the man want to change the meeting?",
+        "options": [
+          "The conference room is being repainted.",
+          "The budget numbers are not ready.",
+          "The director will be away on a trip.",
+          "Several team members are sick."
+        ],
+        "answer": 2,
+        "explanation": "男子第二句說 our director has to fly to Osaka Wednesday night. He won't be back until Friday afternoon（總監週三晚上要飛大阪，週五下午才回來），女子接著說 So he'd miss the whole thing，確認就是總監出差。會議室的問題出現在後半段，是新時段才衍生的，不是改期原因。"
+      },
+      {
+        "q": "What problem does the man mention about Monday?",
+        "options": [
+          "Quarterly reports are due that day.",
+          "He will be out of the office.",
+          "The room is used for training.",
+          "The director works from home."
+        ],
+        "answer": 0,
+        "explanation": "女子提議 How about Monday morning? 男子回 Monday's tough. That's when the quarterly reports are due（季報那天要交）。選項 C 的教育訓練是「週二」大會議室的狀況，屬時間錯置的干擾選項。"
+      },
+      {
+        "q": "What does the man ask the woman to include?",
+        "options": [
+          "A list of attendees",
+          "A parking pass",
+          "A phone number",
+          "An updated spreadsheet"
+        ],
+        "answer": 3,
+        "explanation": "男子最後一句 Could you send out a new invitation this afternoon and attach the updated spreadsheet?（下午發新的會議邀請，並附上更新後的試算表），attach 後面接的就是答案。"
+      }
+    ],
+    "transcriptZh": "男：Karen，有空講一下嗎？是關於週四的預算會議。\n女：可以啊，怎麼了？\n男：我剛得知我們總監週三晚上要飛大阪，週五下午才會回來。\n女：那他整場都會錯過。我們不能直接開嗎？\n男：我不太想。數字最後是他簽核的。\n女：好吧，那就改期。週一早上如何？\n男：週一很難，那天季報要交。\n女：那週二十點吧，我可以。\n男：我也可以。不過大會議室週二都拿來做教育訓練。\n女：那就用二樓那間小的，我們只有六個人。\n男：我沒問題。可以請你今天下午發新的會議邀請，並附上更新後的試算表嗎？\n女：沒問題。反正還有些人沒看過最新版。"
+  },
+  {
+    "id": "l3-13",
+    "difficulty": "基礎",
+    "title": "新進員工詢問報帳流程",
+    "dialogue": [
+      { "s": "M", "text": "Excuse me, are you Ms. Patel from accounting?" },
+      { "s": "W", "text": "I am. And you must be the new hire in marketing." },
+      { "s": "M", "text": "That's right, I started Monday. I took a client to lunch yesterday, and I'm not sure how to get my money back." },
+      { "s": "W", "text": "No problem. Did you keep the receipt?" },
+      { "s": "M", "text": "I've got it right here." },
+      { "s": "W", "text": "Good. First, scan it and upload it to the expense system. It's the icon on your desktop called ExpenseTrack." },
+      { "s": "M", "text": "Do I need my manager to approve it?" },
+      { "s": "W", "text": "Anything over fifty dollars, yes. Under that, it goes straight through." },
+      { "s": "M", "text": "This one was seventy-two." },
+      { "s": "W", "text": "Then send it to your manager after you upload it. She'll get an automatic notification." },
+      { "s": "M", "text": "How long before I see the money?" },
+      { "s": "W", "text": "We pay out every other Friday. If you submit today, it'll be in your account on the twentieth." }
+    ],
+    "questions": [
+      {
+        "q": "What are the speakers mainly discussing?",
+        "options": [
+          "How to get paid back for a business expense",
+          "How to book a meeting room",
+          "Where to take a client for lunch",
+          "When a new employee will start"
+        ],
+        "answer": 0,
+        "explanation": "男子第二句就點題：I took a client to lunch yesterday, and I'm not sure how to get my money back（不知道怎麼把錢請回來），之後全段都在講上傳收據、主管核准、撥款時間，主旨即報帳流程。午餐與到職日只是背景資訊。"
+      },
+      {
+        "q": "Why does the man need his manager's approval?",
+        "options": [
+          "He is still in his first month.",
+          "He paid with a company card.",
+          "The amount is over fifty dollars.",
+          "He lost the original receipt."
+        ],
+        "answer": 2,
+        "explanation": "女子說 Anything over fifty dollars, yes（超過五十美元就要核准），男子接著說 This one was seventy-two（這筆是七十二），兩句合起來才是答案。只聽到 fifty 或 seventy-two 其中一句都不夠。"
+      },
+      {
+        "q": "What will the man most likely do next?",
+        "options": [
+          "Meet with his manager in person",
+          "Upload the receipt to the system",
+          "Call the restaurant for a copy",
+          "Fill out a paper form"
+        ],
+        "answer": 1,
+        "explanation": "女子指示的第一步是 First, scan it and upload it to the expense system，而且男子說收據 I've got it right here（就在手上），所以下一步是掃描上傳。送交主管是 after you upload it 之後的事，順序在後。"
+      }
+    ],
+    "transcriptZh": "男：不好意思，請問您是會計部的 Patel 小姐嗎？\n女：是我。你應該就是行銷部新來的同事吧。\n男：對，我週一報到的。我昨天帶客戶去吃午餐，不太確定要怎麼把錢請回來。\n女：沒問題。收據有留著嗎？\n男：就在我手上。\n女：很好。第一步，把收據掃描後上傳到費用系統，就是你桌面上那個叫 ExpenseTrack 的圖示。\n男：需要我主管核准嗎？\n女：超過五十美元就需要。五十以下會直接過。\n男：這筆是七十二。\n女：那你上傳完之後送交給主管，系統會自動通知她。\n男：大概多久會拿到錢？\n女：我們每兩週的星期五撥款一次。你今天送出的話，二十號就會入帳。"
+  },
+  {
+    "id": "l3-14",
+    "difficulty": "中級",
+    "title": "餐廳訂位變更",
+    "dialogue": [
+      { "s": "M", "text": "Good morning. I'd like to change a reservation for tonight." },
+      { "s": "W", "text": "Of course. Could I have the name, please?" },
+      { "s": "M", "text": "It's under Brian Hollis. Six people at seven o'clock." },
+      { "s": "W", "text": "I see it here. What would you like to change?" },
+      { "s": "M", "text": "Two more people are coming, so we'll need a table for eight. And could we push it back to seven thirty?" },
+      { "s": "W", "text": "Let me check. Seven thirty is fine, but I don't have a window table for eight at that hour. I could put you in the back room." },
+      { "s": "M", "text": "Is it quiet back there? We're celebrating a retirement, so a few people want to make speeches." },
+      { "s": "W", "text": "It's the quietest part of the restaurant, actually. It's a private room, though, so there's a minimum charge of three hundred dollars." },
+      { "s": "M", "text": "With eight of us ordering dinner, we'll pass that easily." },
+      { "s": "W", "text": "Then I'll put you down for the back room at seven thirty. Oh, would you like me to order a cake?" },
+      { "s": "M", "text": "Yes, please. Chocolate. And could you have them write \"Congratulations, Wendy\" on it?" },
+      { "s": "W", "text": "I'll take care of it. See you tonight, Mr. Hollis." }
+    ],
+    "questions": [
+      {
+        "q": "Why is the man calling?",
+        "options": [
+          "To complain about a meal",
+          "To ask about a menu",
+          "To apply for a job",
+          "To change a reservation"
+        ],
+        "answer": 3,
+        "explanation": "男子開場就說 I'd like to change a reservation for tonight（想更改今晚的訂位），後面改人數、改時間都在呼應這個目的。"
+      },
+      {
+        "q": "What does the woman say about the back room?",
+        "options": [
+          "It is closed for repairs.",
+          "It has a minimum charge.",
+          "It seats only six people.",
+          "It costs nothing extra."
+        ],
+        "answer": 1,
+        "explanation": "女子說 It's a private room, though, so there's a minimum charge of three hundred dollars（是包廂，有三百美元的低消）。她同時說那裡最安靜，但選項沒有這一項；只有低消是被明確提到的條件。"
+      },
+      {
+        "q": "What will the woman most likely do?",
+        "options": [
+          "Move the party to a window table",
+          "Send a confirmation by mail",
+          "Order a cake with a message",
+          "Call the man back tomorrow"
+        ],
+        "answer": 2,
+        "explanation": "女子問 would you like me to order a cake?，男子回 Yes, please. Chocolate，還要求寫上 Congratulations, Wendy，女子最後說 I'll take care of it，所以她會去訂一個有字樣的蛋糕。靠窗座位那時段沒有八人桌，已被排除。"
+      }
+    ],
+    "transcriptZh": "男：早安，我想更改今晚的訂位。\n女：好的，請問訂位大名？\n男：登記的是 Brian Hollis，六位，七點。\n女：我看到了。您想更改哪個部分呢？\n男：又多了兩個人要來，所以需要八人桌。另外可以往後改到七點半嗎？\n女：我查一下。七點半沒問題，但那個時段沒有八人的靠窗座位。我可以安排您在後面那間。\n男：後面那間安靜嗎？我們是要慶祝退休，會有幾個人想致詞。\n女：那其實是餐廳裡最安靜的地方。不過那是包廂，所以有三百美元的低消。\n男：八個人吃晚餐，這金額很輕鬆就過了。\n女：那我幫您登記七點半、後面那間包廂。對了，需要我幫您訂蛋糕嗎？\n男：好，麻煩了，巧克力口味。可以請他們寫上「Congratulations, Wendy」嗎？\n女：我來處理。Hollis 先生，今晚見。"
+  },
+  {
+    "id": "l3-15",
+    "difficulty": "進階",
+    "title": "出差行程確認",
+    "dialogue": [
+      { "s": "W", "text": "Mark, I've got your Chicago trip all set. Do you want to go through it now?" },
+      { "s": "M", "text": "Please. I've been meaning to ask about the flights." },
+      { "s": "W", "text": "You leave Tuesday at six fifteen in the morning and land a little after eight." },
+      { "s": "M", "text": "Six fifteen? So I'd be walking out my door at four." },
+      { "s": "W", "text": "Sorry about that. The next one doesn't get in until eleven, and your first meeting starts at ten." },
+      { "s": "M", "text": "All right, no way around it. What about the hotel?" },
+      { "s": "W", "text": "The Lakeside Inn, three nights. It's a ten-minute walk from the client's office, so you won't need a car." },
+      { "s": "M", "text": "Good, I hate driving downtown. And coming back?" },
+      { "s": "W", "text": "Friday at four in the afternoon. That leaves the morning open for the factory tour." },
+      { "s": "M", "text": "Oh, the tour got moved to Thursday. So Friday morning's free now." },
+      { "s": "W", "text": "Then let me see what's available earlier. There'd be a change fee, though. About eighty dollars." },
+      { "s": "M", "text": "Go ahead. I just have to be home by seven for my daughter's game." }
+    ],
+    "questions": [
+      {
+        "q": "What are the speakers mainly discussing?",
+        "options": [
+          "A change in a client contract",
+          "Arrangements for a business trip",
+          "A new office location",
+          "A training program for staff"
+        ],
+        "answer": 1,
+        "explanation": "女子開場說 I've got your Chicago trip all set. Do you want to go through it now?（芝加哥出差都安排好了，要不要現在核對），接著逐項談班機、飯店、回程，主旨是出差行程安排。"
+      },
+      {
+        "q": "Why did the woman book the early morning flight?",
+        "options": [
+          "It was the cheapest option.",
+          "The hotel allows early check-in.",
+          "The man asked for a window seat.",
+          "A later flight would arrive after a meeting begins."
+        ],
+        "answer": 3,
+        "explanation": "女子說 The next one doesn't get in until eleven, and your first meeting starts at ten（下一班十一點才到，但第一場會議十點開始），所以只能訂早班機。這題要把兩個時間對起來才選得出來。"
+      },
+      {
+        "q": "What will the woman most likely do next?",
+        "options": [
+          "Look for an earlier return flight",
+          "Reserve a rental car",
+          "Cancel the hotel booking",
+          "Reschedule the factory tour"
+        ],
+        "answer": 0,
+        "explanation": "男子說 the tour got moved to Thursday. So Friday morning's free now，女子隨即回 let me see what's available earlier（我看看有沒有更早的），男子又說 Go ahead，可見她會去查更早的回程班機。工廠參觀是「已經被改期」，不是她要去改。"
+      }
+    ],
+    "transcriptZh": "女：Mark，你的芝加哥出差都安排好了。要現在核對一下嗎？\n男：好啊，我一直想問班機的事。\n女：你星期二早上六點十五分起飛，八點多一點降落。\n男：六點十五分？那我四點就得出門了。\n女：抱歉。下一班要十一點才到，可是你第一場會議十點就開始。\n男：好吧，那也沒辦法。飯店呢？\n女：Lakeside Inn，住三晚。走路到客戶辦公室十分鐘，所以你不用租車。\n男：太好了，我很討厭在市中心開車。那回程呢？\n女：星期五下午四點。早上剛好可以去參觀工廠。\n男：喔，那個參觀改到星期四了。所以星期五早上現在空著。\n女：那我看看有沒有更早的班機。不過會有改票費，大概八十美元。\n男：改吧。我只要七點前到家，趕上我女兒的比賽就好。"
+  }
+]

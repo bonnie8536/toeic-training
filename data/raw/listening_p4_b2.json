@@ -1,0 +1,217 @@
+[
+  {
+    "id": "l4-21",
+    "difficulty": "基礎",
+    "type": "導覽介紹",
+    "speaker": "M",
+    "talk": "Good morning, everyone, and welcome to the Brightway Furniture factory. I'm Daniel, and I'll be your guide today. Before we start, please put on the safety glasses you got at the front desk. You'll need to wear them the whole time we're on the factory floor.\nOur tour takes about an hour. We'll begin in the wood shop, then move to the painting area, and finish in the packing room. Oh, and one more thing — please don't take photos inside the building. Company rules. If you have questions, just ask me as we go. All right, let's head this way.",
+    "questions": [
+      {
+        "q": "Where most likely are the listeners?",
+        "options": [
+          "At a train station",
+          "At a furniture factory",
+          "At a hardware store",
+          "At an art museum"
+        ],
+        "answer": 1,
+        "explanation": "定位在第一句 welcome to the Brightway Furniture factory,說話者自我介紹是今天的導覽員,可知聽者人在家具工廠。後面提到 wood shop（木工區）、painting area（上漆區）、packing room（包裝區）也都是工廠內部區域,可再次確認。"
+      },
+      {
+        "q": "What does the speaker ask the listeners to do?",
+        "options": [
+          "Sign a form at the front desk",
+          "Leave their bags in a locker",
+          "Stay together in one group",
+          "Put on safety glasses"
+        ],
+        "answer": 3,
+        "explanation": "定位在 please put on the safety glasses you got at the front desk,並補充 You'll need to wear them the whole time we're on the floor。front desk 只是拿護目鏡的地點,不是要簽文件,選項 A 是把地點細節挪去做陷阱。"
+      },
+      {
+        "q": "Where will the group go first?",
+        "options": [
+          "To the wood shop",
+          "To the painting area",
+          "To the packing room",
+          "To the front desk"
+        ],
+        "answer": 0,
+        "explanation": "定位在 We'll begin in the wood shop, then move to the painting area, and finish in the packing room。begin 對應第一站,then 與 finish 分別是第二、三站,B 與 C 都是順序陷阱。"
+      }
+    ],
+    "transcriptZh": "早安,各位,歡迎來到 Brightway 家具工廠。我是 Daniel,今天由我為大家導覽。開始之前,請戴上各位在櫃檯拿到的護目鏡。只要人在廠區裡,全程都要戴著。\n這次參觀大約一小時。我們會先從木工區開始,接著到上漆區,最後在包裝區結束。喔,還有一件事——廠房內請不要拍照,這是公司規定。有問題的話,一邊走一邊問我就可以。好,我們往這邊走。"
+  },
+  {
+    "id": "l4-22",
+    "difficulty": "基礎",
+    "type": "廣播廣告",
+    "speaker": "F",
+    "talk": "Are you looking for a new place to work out? Well, good news! City Fit is opening its third location next Monday, right across from Central Station. We've got brand-new equipment, a swimming pool, and more than thirty classes a week.\nAnd here's the best part — if you sign up during our first week, you'll get three months free. That's right, three months. No sign-up fee, either. Once we open, we'll be here from six in the morning to eleven at night, seven days a week. Want to look around before you join? Call 555-0182 to book a free tour, or check our website for class times.",
+    "questions": [
+      {
+        "q": "What is being advertised?",
+        "options": [
+          "A train service",
+          "Swimming lessons",
+          "A fitness center",
+          "A shopping mall"
+        ],
+        "answer": 2,
+        "explanation": "定位在開頭兩句 Are you looking for a new place to work out? 與 City Fit is opening its third location next Monday。work out 是健身,加上後面的 machines、swimming pool、classes,可知廣告的是健身房。Central Station 只是位置參考,不是廣告主體。"
+      },
+      {
+        "q": "What will people get if they join during the first week?",
+        "options": [
+          "Three months at no cost",
+          "A free swimsuit",
+          "A lower price for a whole year",
+          "A private trainer"
+        ],
+        "answer": 0,
+        "explanation": "定位在 if you sign up during our first week, you'll get three months free,並用 That's right, three months 重述一次。緊接著的 No sign-up fee 是另一項優惠,不等於長期折扣,C 是把兩個優惠混在一起的陷阱。"
+      },
+      {
+        "q": "Why should listeners call the number?",
+        "options": [
+          "To ask about parking",
+          "To order a class schedule",
+          "To report a problem",
+          "To set up a free tour"
+        ],
+        "answer": 3,
+        "explanation": "定位在最後一句 Call 555-0182 to book a free tour, or check our website for class times。課表是要上網站查、不是打電話索取,B 把兩個管道對調了。"
+      }
+    ],
+    "transcriptZh": "你正在找新的健身地點嗎?好消息!City Fit 第三家分店下週一開幕,就在中央車站對面。我們有全新的器材、一座游泳池,還有每週三十堂以上的課程。\n最棒的來了——開幕第一週入會,就送三個月免費,沒錯,三個月,而且免入會費。開幕後每天早上六點營業到晚上十一點,一週七天。想先來看看場地嗎?預約免費參觀請撥 555-0182,或上我們的網站查課表。"
+  },
+  {
+    "id": "l4-23",
+    "difficulty": "中級",
+    "type": "人事宣布",
+    "speaker": "F",
+    "talk": "Hi everyone, thanks for coming in early. I know it's a busy week, so I'll keep this short. Starting next month, we're making a few changes to our benefits.\nFirst, the company will cover the full cost of your health plan — right now you pay about twenty percent, so this should help. Second, we're adding two extra days of paid leave each year. And we're also starting a program that pays back part of your tuition if you take job-related courses. You'll get an email later today with all the details. Please read it carefully, and send your questions to Human Resources by Friday.",
+    "questions": [
+      {
+        "q": "What is the speaker mainly announcing?",
+        "options": [
+          "A change in office hours",
+          "A new training course",
+          "The opening of a branch office",
+          "Changes to employee benefits"
+        ],
+        "answer": 3,
+        "explanation": "定位在 Starting next month, we're making a few changes to our benefits,後面用 First / Second / also 列出三項福利調整。學費補助只是其中一項,不能當成整段主旨,B 是以偏概全的陷阱。"
+      },
+      {
+        "q": "What will the company pay for starting next month?",
+        "options": [
+          "Travel to and from work",
+          "The full cost of health plans",
+          "Lunch in the cafeteria",
+          "New office computers"
+        ],
+        "answer": 1,
+        "explanation": "定位在 the company will cover the full cost of your health plan — right now you pay about twenty percent。cover the full cost 就是全額負擔;twenty percent 是員工目前的自付比例,不是公司只出兩成。"
+      },
+      {
+        "q": "What are the listeners asked to do by Friday?",
+        "options": [
+          "Choose a new plan online",
+          "Meet with their managers",
+          "Send questions to Human Resources",
+          "Turn in a leave request"
+        ],
+        "answer": 2,
+        "explanation": "定位在最後一句 send your questions to Human Resources by Friday。今天會收到的 email 是要仔細閱讀,不是上網選方案;paid leave 只是福利內容之一,不是本週要辦的手續。"
+      }
+    ],
+    "transcriptZh": "大家早,謝謝各位提早進來。我知道這週很忙,所以我長話短說。從下個月開始,我們的福利會有幾項調整。\n第一,醫療保險的費用將由公司全額負擔——目前各位大約要自付兩成,這應該會有幫助。第二,每年增加兩天有薪假。另外,我們也要開辦一個方案:只要去上跟工作相關的課程,公司會補助部分學費。今天稍晚各位會收到一封電子郵件,裡面有完整說明。請仔細閱讀,有問題請在週五前寄給人力資源部。"
+  },
+  {
+    "id": "l4-24",
+    "difficulty": "中級",
+    "type": "車站廣播",
+    "speaker": "M",
+    "talk": "Attention, passengers. May I have your attention, please. The nine-fifteen express to Riverton is running about twenty-five minutes late because of track repairs near Green Hill. We're sorry for the delay.\nAlso, please note that this train will now leave from Platform 6, not Platform 3. So if you're waiting downstairs, please take the stairs or the elevator up to Platform 6 now. Passengers with seats in cars one through four — those cars will stop at the far end of the platform. If you're going to Riverton and you miss this train, the next one leaves at ten-forty. Thank you.",
+    "questions": [
+      {
+        "q": "What is the announcement mainly about?",
+        "options": [
+          "A delay and a platform change",
+          "A rise in ticket prices",
+          "The opening of a new station",
+          "A change in station staff"
+        ],
+        "answer": 0,
+        "explanation": "定位在兩個重點句:running about twenty-five minutes late 與 this train will now leave from Platform 6, not Platform 3。整段就是誤點加月台更動兩件事,其餘選項廣播中完全沒提到。"
+      },
+      {
+        "q": "Why is the train late?",
+        "options": [
+          "Bad weather",
+          "A power failure",
+          "Work on the tracks",
+          "A staff shortage"
+        ],
+        "answer": 2,
+        "explanation": "定位在 because of track repairs near Green Hill。repairs 就是維修工程,對應 work on the tracks。Green Hill 是維修地點,不是列車終點,聽的時候別被地名帶走。"
+      },
+      {
+        "q": "What should waiting passengers do now?",
+        "options": [
+          "Buy a new ticket",
+          "Go up to Platform 6",
+          "Wait for the ten-forty train",
+          "Check in at the ticket office"
+        ],
+        "answer": 1,
+        "explanation": "定位在 if you're waiting downstairs, please take the stairs or the elevator up to Platform 6 now。ten-forty 那班是「沒趕上這班車」才要搭的下一班,不是現在的動作,C 是條件句陷阱。"
+      }
+    ],
+    "transcriptZh": "各位旅客請注意,請注意聽廣播。九點十五分開往 Riverton 的快車,因為 Green Hill 附近進行軌道維修,大約會誤點二十五分鐘,造成不便敬請見諒。\n另外請注意,本班列車改由第六月台發車,不是第三月台。如果您正在樓下候車,請現在走樓梯或搭電梯上到第六月台。座位在第一到第四節車廂的旅客,這幾節車廂會停在月台最尾端。如果您要前往 Riverton 卻沒趕上這班車,下一班是十點四十分發車。謝謝。"
+  },
+  {
+    "id": "l4-25",
+    "difficulty": "進階",
+    "type": "研討會開場",
+    "speaker": "F",
+    "talk": "Good morning, and welcome to the annual Regional Sales Conference. Before we get started, a couple of quick notes.\nWe had to move this morning's opening talk — Ms. Ruiz's flight was canceled last night, so she'll speak by video at two instead. In her place, our own Mark Feng will talk about the new customer app. Lunch is at noon in the room next door, and please wear your name tag; the staff will check it at the door. One last thing — the afternoon workshops fill up fast, so sign up at the front desk during the morning break, not after lunch.",
+    "questions": [
+      {
+        "q": "What is the speaker mainly doing?",
+        "options": [
+          "Introducing a new product",
+          "Going over the schedule for the day",
+          "Thanking a group of sponsors",
+          "Reporting last year's sales"
+        ],
+        "answer": 1,
+        "explanation": "定位在 Before we get started, a couple of quick notes,之後全部都在交代當天的議程與提醒（換講者、午餐時間地點、名牌、報名工作坊）。new customer app 只是代打講者的講題,不是這段話本身的目的,A 是把細節誤當主旨。"
+      },
+      {
+        "q": "What problem does the speaker mention?",
+        "options": [
+          "Lunch will be served late",
+          "Some name tags are missing",
+          "A meeting room has been closed",
+          "A speaker cannot be here this morning"
+        ],
+        "answer": 3,
+        "explanation": "定位在 Ms. Ruiz's flight was canceled last night, so she'll speak by video at two instead。班機取消代表她人到不了現場,只能改成下午視訊,這是本段唯一提到的問題。午餐照常十二點、名牌只是要求配戴,都沒有出狀況。"
+      },
+      {
+        "q": "Why does the speaker tell the listeners to go to the front desk during the morning break?",
+        "options": [
+          "The workshops may be full later",
+          "The desk closes after lunch",
+          "New name tags will be handed out",
+          "Lunch tickets are sold there"
+        ],
+        "answer": 0,
+        "explanation": "定位在 the afternoon workshops fill up fast, so sign up at the front desk during the morning break, not after lunch。fill up fast 是「很快額滿」,所以要趁上午的休息時間先報名;說話者沒說服務台會關,B 是自行推測的陷阱。"
+      }
+    ],
+    "transcriptZh": "早安,歡迎參加年度區域銷售大會。開始之前,有幾件事要快速說明。\n今天早上的開場演講必須調整——Ruiz 女士的班機昨晚取消了,所以她改在下午兩點以視訊方式演講。改由我們公司的 Mark Feng 為大家介紹新的顧客 App。午餐十二點在隔壁那間會議室,另外請配戴名牌,工作人員會在門口查驗。最後一件事——下午的工作坊很快就會額滿,所以請在上午的休息時間到服務台報名,不要等到午餐後。"
+  }
+]

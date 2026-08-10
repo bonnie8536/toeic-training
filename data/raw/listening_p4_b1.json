@@ -1,0 +1,217 @@
+[
+  {
+    "id": "l4-11",
+    "difficulty": "基礎",
+    "type": "電話留言",
+    "speaker": "F",
+    "talk": "Hi, this is Karen calling from Bright Smile Dental. I'm calling about your cleaning appointment this Thursday at two o'clock. Unfortunately, Dr. Lin has to be out of the office that afternoon, so we need to move your visit. We do have an opening on Friday morning at nine, or next Monday at four. Whichever one works better for you is fine with us. Just give us a call back at 555-0182 and let us know. Oh, and one more thing, please remember to bring your insurance card this time. We couldn't find a copy in your file. Thanks a lot, and sorry for the trouble.",
+    "questions": [
+      {
+        "q": "Why is the speaker calling?",
+        "options": [
+          "To confirm a payment",
+          "To change an appointment time",
+          "To recommend a new dentist",
+          "To report a delivery problem"
+        ],
+        "answer": 1,
+        "explanation": "開頭第二句說 I'm calling about your cleaning appointment this Thursday，接著 so we need to move your visit（我們得更動您的看診時間），主旨就是改約。move your visit 是改期的口語說法，不會出現 reschedule 這個字，要靠語意判斷。選項 A、C、D 在獨白中都沒有依據。"
+      },
+      {
+        "q": "Why is the change necessary?",
+        "options": [
+          "The office will be closed for repairs",
+          "The listener asked for a later date",
+          "A machine is broken",
+          "The dentist will be away that afternoon"
+        ],
+        "answer": 3,
+        "explanation": "定位在 Unfortunately, Dr. Lin has to be out of the office that afternoon 這句。out of the office 就是「不在診所、外出」，對應選項 be away。診所並未說要整修或有機器故障，也不是聽者自己要求延期，所以其餘三個選項都排除。"
+      },
+      {
+        "q": "What does the speaker ask the listener to do?",
+        "options": [
+          "Call the office back",
+          "Fill out a form online",
+          "Pay a cancellation fee",
+          "Arrive thirty minutes early"
+        ],
+        "answer": 0,
+        "explanation": "後段 Just give us a call back at 555-0182 and let us know 直接指出下一步是回電告知要選哪個時段。留言最後雖然提到 bring your insurance card，但那是看診當天才要做的事，不是現在被要求的動作；線上填表、取消費、提早到都沒提到。"
+      }
+    ],
+    "transcriptZh": "您好，我是亮潔牙醫診所的凱倫。我打來是想跟您談這週四下午兩點的洗牙預約。很不巧，林醫師那天下午必須外出，所以我們得幫您改個時間。我們週五早上九點還有空檔，或者下週一下午四點也可以。哪一個時段對您比較方便都沒問題。麻煩您回電 555-0182 告訴我們一聲。喔，還有一件事，這次請記得帶保險卡來，我們在您的資料裡找不到影本。非常謝謝您，也很抱歉造成不便。"
+  },
+  {
+    "id": "l4-12",
+    "difficulty": "基礎",
+    "type": "機場廣播",
+    "speaker": "M",
+    "talk": "Good afternoon, everyone. This is an announcement for passengers on Pacific Air flight 226 to Vancouver. We've had a gate change, so please listen carefully. Your flight will now leave from Gate C14, not Gate B7. That's Gate C-one-four. It's about a ten-minute walk, so please head over now. The good news is the flight is still on time, and we'll start boarding in about twenty minutes. If you need help getting there, our staff by the escalator will be happy to walk you over. Once again, Pacific Air 226 to Vancouver now departs from Gate C14. Thank you.",
+    "questions": [
+      {
+        "q": "Where most likely are the listeners?",
+        "options": [
+          "At a train station",
+          "At a hotel front desk",
+          "At an airport",
+          "On a tour bus"
+        ],
+        "answer": 2,
+        "explanation": "場景題看關鍵字群：passengers on Pacific Air flight 226、gate、boarding、escalator 全部指向機場航廈。火車站不會用 gate 加 flight 的組合，飯店櫃檯與遊覽車更不會有登機程序。"
+      },
+      {
+        "q": "What information does the speaker mainly give?",
+        "options": [
+          "A gate has been changed",
+          "A flight has been canceled",
+          "A flight will be delayed",
+          "Some seats have been changed"
+        ],
+        "answer": 0,
+        "explanation": "定位在 We've had a gate change 與 Your flight will now leave from Gate C14, not Gate B7。廣播還特別說 the flight is still on time，等於直接排除延誤與取消；座位更動則完全沒提到。這裡的陷阱是聽到 change 就聯想成班機異動，要聽清楚改的是登機門。"
+      },
+      {
+        "q": "What will happen in about twenty minutes?",
+        "options": [
+          "The plane will land",
+          "A meal will be served",
+          "Tickets will go on sale",
+          "Boarding will begin"
+        ],
+        "answer": 3,
+        "explanation": "定位在 we'll start boarding in about twenty minutes。twenty minutes 這個數字只出現一次，前面的 ten-minute walk 講的是走到新登機門要花的時間，兩個數字容易混淆，要聽後面接的動作是 walk 還是 boarding。"
+      }
+    ],
+    "transcriptZh": "各位旅客午安。這裡為搭乘太平洋航空 226 號班機前往溫哥華的旅客廣播。我們的登機門有異動，請仔細聆聽。您的班機現在改由 C14 登機門起飛，不是 B7 登機門，再說一次是 C14 登機門。步行過去大約要十分鐘，請現在就前往。好消息是班機仍然準點，我們大約二十分鐘後開始登機。如果您需要協助前往，手扶梯旁的地勤人員很樂意帶您過去。再重複一次，太平洋航空 226 號班機飛往溫哥華，現在改從 C14 登機門起飛。謝謝各位。"
+  },
+  {
+    "id": "l4-13",
+    "difficulty": "中級",
+    "type": "會議摘錄",
+    "speaker": "F",
+    "talk": "Okay, let's get started. I want to go over how we did last quarter. Overall, sales were up about eight percent, which is better than we expected. Our online store did really well. That's where most of the growth came from. But our two shops downtown were pretty flat, and honestly, foot traffic there keeps dropping. So here's what I'd like to do. Starting next month, we'll move part of the store budget into online ads and see what happens. Mark's putting together the numbers now, and he'll walk us through them at Friday's meeting. Any questions before we move on?",
+    "questions": [
+      {
+        "q": "What is the speaker mainly discussing?",
+        "options": [
+          "A new company policy",
+          "Sales results from the past quarter",
+          "A change in office hours",
+          "Plans for a store opening"
+        ],
+        "answer": 1,
+        "explanation": "開場 I want to go over how we did last quarter 就點出主旨，接著 sales were up about eight percent 具體講業績。go over 是「檢視、逐項說明」的口語用法。後段雖然提到預算調整，但那是根據業績做的後續決定，不是整段的主題。"
+      },
+      {
+        "q": "What does the speaker say about the downtown shops?",
+        "options": [
+          "They will close next month",
+          "They had the highest sales",
+          "Their sales did not grow",
+          "They are hiring more staff"
+        ],
+        "answer": 2,
+        "explanation": "定位在 But our two shops downtown were pretty flat。flat 在商業語境指業績持平、沒有成長，後面 foot traffic there keeps dropping（來客數持續下滑）再次佐證。業績最好的是 our online store，不是這兩家店；獨白也沒說要關店或增聘人手。"
+      },
+      {
+        "q": "What does the speaker plan to do next month?",
+        "options": [
+          "Spend more money on online advertising",
+          "Open a second online store",
+          "Lower prices at the downtown shops",
+          "Hire an outside consultant"
+        ],
+        "answer": 0,
+        "explanation": "定位在 Starting next month, we'll move part of the store budget into online ads。move A into B 指把預算從實體店挪去投線上廣告，等於增加網路廣告支出。獨白只說調整既有預算的用途，沒有要再開一家網路商店，也沒提降價或找外部顧問。"
+      }
+    ],
+    "transcriptZh": "好，我們開始吧。我想先看一下上一季的表現。整體來說，銷售額成長了大約百分之八，比我們預期的還好。我們的網路商店表現非常好，大部分的成長都來自那裡。但市中心那兩家店幾乎持平，老實說，那邊的來客數還在一直往下掉。所以我想這樣做：從下個月開始，我們會把一部分門市預算移到網路廣告上，看看效果如何。馬克正在整理數據，他會在週五的會議上帶大家看過一遍。在我們進到下一個議題之前，有人有問題嗎？"
+  },
+  {
+    "id": "l4-14",
+    "difficulty": "中級",
+    "type": "商店廣播",
+    "speaker": "M",
+    "talk": "Attention shoppers, and welcome to Greenfield Market. We're celebrating our tenth anniversary this weekend, so we've got some great deals for you today. All fresh fruit and vegetables are thirty percent off until closing. And if you spend fifty dollars or more, you'll get a free reusable shopping bag at the register, while supplies last, of course. One more thing: our bakery is giving out free samples of our new lemon cake near the front entrance. Stop by and try a piece. If you can't find something, just ask any of our staff in green shirts. Thanks for shopping with us.",
+    "questions": [
+      {
+        "q": "What is the store celebrating?",
+        "options": [
+          "The opening of a new branch",
+          "A holiday weekend",
+          "An award for customer service",
+          "Ten years in business"
+        ],
+        "answer": 3,
+        "explanation": "定位在 We're celebrating our tenth anniversary this weekend。tenth anniversary 就是開店滿十年，對應 ten years in business。this weekend 只是說明活動期間，不代表在慶祝連假；獨白也沒提到分店開幕或得獎。"
+      },
+      {
+        "q": "What items are being sold at a discount?",
+        "options": [
+          "Bakery products",
+          "Fruit and vegetables",
+          "Shopping bags",
+          "Cleaning supplies"
+        ],
+        "answer": 1,
+        "explanation": "定位在 All fresh fruit and vegetables are thirty percent off until closing。烘焙區是免費試吃 lemon cake，不是打折；購物袋是滿額贈品，本身不販售。這題的干擾就在於三個選項都在獨白裡出現過，但只有生鮮蔬果是 off（折扣）。"
+      },
+      {
+        "q": "What does the speaker suggest about the free bags?",
+        "options": [
+          "They can be ordered online",
+          "They come in several colors",
+          "A limited number is available",
+          "They cost five dollars each"
+        ],
+        "answer": 2,
+        "explanation": "推論題，關鍵在 while supplies last 這個片語，意思是「送完為止」，暗示數量有限。獨白說 you'll get a free reusable shopping bag，既然是 free，就不會是五美元一個；顏色與線上訂購都沒提到。"
+      }
+    ],
+    "transcriptZh": "各位顧客請注意，歡迎光臨綠田超市。這個週末我們正在慶祝開店十週年，所以今天為大家準備了很多好康優惠。所有生鮮蔬果一律七折，優惠到打烊為止。另外，只要消費滿五十元，就可以在結帳櫃檯領取一個免費的環保購物袋，當然是送完為止。還有一件事，我們的烘焙區正在前門入口附近免費試吃新推出的檸檬蛋糕，歡迎過來嚐一塊。如果您找不到想買的東西，儘管詢問任何一位穿綠色制服的店員。謝謝您的光臨。"
+  },
+  {
+    "id": "l4-15",
+    "difficulty": "進階",
+    "type": "語音信箱",
+    "speaker": "M",
+    "talk": "Hi Ms. Doyle, this is Tony from Ridgeway Plumbing, returning your call about the leak under your kitchen sink. So, I took a look at the photos you sent, and it looks like the pipe joint is worn out. Replacing it should run about a hundred and forty dollars, parts and labor. That said, I won't know for sure until I'm there. If the cabinet floor is damaged too, that's a separate job. I could come by Wednesday morning, but I'd need someone home to let me in. Just give me a call back at 555-0173 and let me know either way, because my next opening after that isn't until the following week. Thanks.",
+    "questions": [
+      {
+        "q": "Why is the speaker calling?",
+        "options": [
+          "To give a price for a repair",
+          "To confirm that a payment was received",
+          "To apologize for arriving late",
+          "To ask for directions to a house"
+        ],
+        "answer": 0,
+        "explanation": "定位在 returning your call about the leak 加上 Replacing it should run about a hundred and forty dollars, parts and labor。這裡的 run 是口語的「花費、要價」，parts and labor 指零件與工錢，整通留言的核心就是報價。他人還沒到現場，所以不是道歉遲到，也沒有提到款項或問路。"
+      },
+      {
+        "q": "How did the speaker learn about the problem?",
+        "options": [
+          "He visited the listener's home",
+          "He spoke with a neighbor",
+          "He looked at photos the listener sent",
+          "He read a report from another worker"
+        ],
+        "answer": 2,
+        "explanation": "定位在 I took a look at the photos you sent。緊接著他說 I won't know for sure until I'm there，明確表示自己還沒到過現場，所以第一個選項錯。鄰居與其他工人的報告都沒有出現在獨白中。"
+      },
+      {
+        "q": "Why does the speaker mention the following week?",
+        "options": [
+          "To explain when a part will arrive",
+          "To encourage the listener to reply soon",
+          "To suggest that prices will rise",
+          "To describe when he will be on vacation"
+        ],
+        "answer": 1,
+        "explanation": "推論題，定位在最後 Just give me a call back... and let me know either way, because my next opening after that isn't until the following week。他先要求回電，再用 because 說明理由：錯過週三，下一個有空的時段要等到下週。言下之意是希望對方盡快答覆，而不是在講零件到貨、漲價或休假。"
+      }
+    ],
+    "transcriptZh": "您好，道爾女士，我是里奇威水電行的湯尼，回覆您關於廚房水槽下方漏水的來電。我看了您傳過來的照片，看起來是水管接頭已經磨損了。換掉接頭大概要一百四十元左右，含零件和工錢。不過話說回來，我要到現場才能確定。如果櫥櫃底板也泡壞了，那就是另外一項工程了。我週三早上可以過去一趟，但需要有人在家幫我開門。不管方不方便，都麻煩您回電 555-0173 告訴我一聲，因為錯過那天，我下一個有空的時段就要等到下星期了。謝謝。"
+  }
+]

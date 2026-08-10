@@ -767,6 +767,22 @@ button { font-family: var(--font); cursor: pointer; }
 .tr-en { white-space: pre-line; line-height: 1.8; }
 .tr-zh { white-space: pre-line; line-height: 1.9; color: #57606a; font-size: 13.5px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
 
+/* 英語耳 */
+.dict-diff { margin: 8px 0 4px; line-height: 2; }
+.dict-word { display: inline-block; margin: 0 3px; padding: 1px 6px; border-radius: 4px; font-size: 15px; }
+.dict-word.hit { background: var(--ok-tint); color: var(--ok); }
+.dict-word.miss { background: var(--bad-tint); color: var(--bad); font-weight: 700; }
+.pair-row { display: flex; gap: 14px; margin-top: 10px; }
+.pair-btn {
+  flex: 1;
+  border: 1.5px solid var(--line); border-radius: 10px;
+  background: #fff; padding: 16px 10px;
+  font-size: 19px; font-weight: 700; color: var(--ink);
+}
+.pair-btn:hover { border-color: var(--primary); background: var(--primary-tint); }
+.pair-btn.correct { border-color: var(--ok); background: var(--ok-tint); color: var(--ok); }
+.pair-btn.wrong { border-color: var(--bad); background: var(--bad-tint); color: var(--bad); }
+
 /* ---------------- 頁尾 ---------------- */
 footer {
   border-top: 1px solid var(--line);

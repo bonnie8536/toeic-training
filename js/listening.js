@@ -1,43 +1,37 @@
-/* 聽力訓練:四大題型。
-   - 作答前每題音檔最多播 2 次(模擬考試),答完可無限重聽。
-   - P1/P2 選項只有音檔沒有文字(考完才顯示逐字稿);P3/P4 題目與選項照真實考試印在畫面上。
-   - 紀錄存 listen_p1~p4(雲端同步);抽題優先抽沒做過的。 */
+/* 聽力刷題引擎(掛在題庫刷題頁使用):
+   window.LISTEN = { PARTS, partStats, startQuiz(rootEl, config), startReview(rootEl, p) }
+   - config = [{p:'1'|'2'|'3'|'4', n}] 可混合;作答前每題限播 2 次,答後解鎖+逐字稿。
+   - 紀錄存 listen_p1~p4(雲端同步)。 */
 (function () {
-  const root = $('#listening-root');
   const L = (window.TOEIC && TOEIC.listening) || null;
-
-  if (!L || !L.p2 || !L.p2.length) {
-    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' },
-      '聽力題庫尚未載入(請執行 tools/merge_data.py 與 tools/gen_audio.py)。'));
-    return;
-  }
+  if (!L || !L.p2 || !L.p2.length) { window.LISTEN = null; return; }
 
   const PARTS = {
-    '1': { title: 'Part 1 照片描述', unit: '題', items: L.p1, sizes: [4, 8, 12], desc: '看照片,聽四句描述,選最符合的。選項只有聲音沒有文字。' },
-    '2': { title: 'Part 2 應答', unit: '題', items: L.p2, sizes: [5, 10, 25], desc: '聽一個問句和三個回應,選最合適的。' },
-    '3': { title: 'Part 3 簡短對話', unit: '組', items: L.p3, sizes: [2, 3, 5], desc: '聽兩人對話,回答畫面上的三個問題。' },
-    '4': { title: 'Part 4 簡短獨白', unit: '組', items: L.p4, sizes: [2, 3, 5], desc: '聽一段獨白(留言/廣播/宣布),回答三個問題。' },
+    '1': { title: 'Part 1 照片描述', unit: '題', items: L.p1, sizes: [4, 8, 12] },
+    '2': { title: 'Part 2 應答', unit: '題', items: L.p2, sizes: [5, 10, 25] },
+    '3': { title: 'Part 3 簡短對話', unit: '組', items: L.p3, sizes: [1, 2, 3, 5] },
+    '4': { title: 'Part 4 簡短獨白', unit: '組', items: L.p4, sizes: [1, 2, 3, 5] },
   };
   const KEY = p => 'listen_p' + p;
   const qid = (set, qi) => set.id + ':' + qi;
 
   function partStats(p) {
     const st = store.get(KEY(p), {});
-    let total = 0, answered = 0, correct = 0;
+    let total = 0, answered = 0, correct = 0, wrong = 0;
     if (p === '1' || p === '2') {
       total = PARTS[p].items.length;
       PARTS[p].items.forEach(q => {
         const r = st[q.id];
-        if (r) { answered++; if (r.ok) correct++; }
+        if (r) { answered++; r.ok ? correct++ : wrong++; }
       });
     } else {
       PARTS[p].items.forEach(set => set.questions.forEach((q, qi) => {
         total++;
         const r = st[qid(set, qi)];
-        if (r) { answered++; if (r.ok) correct++; }
+        if (r) { answered++; r.ok ? correct++ : wrong++; }
       }));
     }
-    return { total, answered, correct };
+    return { total, answered, correct, wrong };
   }
 
   function shuffle(arr) {
@@ -49,7 +43,7 @@
     return a;
   }
 
-  function pickPool(p, n) {
+  function pickPool(p, n, wrongOnly) {
     const st = store.get(KEY(p), {});
     const fresh = [], wrong = [], done = [];
     PARTS[p].items.forEach(x => {
@@ -63,6 +57,7 @@
         else done.push(x);
       }
     });
+    if (wrongOnly) return shuffle(wrong);
     return [...shuffle(fresh), ...shuffle(wrong), ...shuffle(done)].slice(0, n);
   }
 
@@ -72,7 +67,6 @@
     store.set(KEY(p), st);
   }
 
-  /* ---------- 音檔播放器:作答前限 2 次 ---------- */
   function makePlayer(id, state) {
     state.plays = state.plays || 0;
     const audio = new Audio('audio/' + id + '.mp3');
@@ -89,56 +83,29 @@
       if (!state.done && state.plays >= 2) return;
       state.plays++;
       audio.currentTime = 0;
-      audio.play().catch(() => { label.textContent = '音檔載入失敗(audio/' + id + '.mp3)'; });
+      audio.play().catch(() => { label.textContent = '音檔載入失敗'; });
       refresh();
     });
-    audio.addEventListener('error', () => { label.textContent = '找不到音檔 audio/' + id + '.mp3'; btn.disabled = true; });
+    audio.addEventListener('error', () => { label.textContent = '找不到音檔'; btn.disabled = true; });
     refresh();
-    return { el: h('div', { class: 'player' }, btn, label), refresh, stop: () => { audio.pause(); } };
+    return { el: h('div', { class: 'player' }, btn, label), refresh, stop: () => audio.pause() };
   }
 
-  /* ---------- 路由 ---------- */
-  const partParam = getParam('part');
-  if (partParam && PARTS[partParam]) startSession(partParam, Number(getParam('n')) || PARTS[partParam].sizes[1]);
-  else renderHome();
-
-  /* ================= 首頁 ================= */
-  function renderHome() {
-    document.title = '聽力訓練|多益閱讀訓練室';
-    root.append(h('div', { class: 'page-head' },
-      h('h1', null, '聽力訓練'),
-      h('p', null, '作答前每題最多播 2 次,答完可以重複聽、看逐字稿。')));
-    const cards = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });
-    for (const p of ['1', '2', '3', '4']) {
-      const d = PARTS[p];
-      const s = partStats(p);
-      const pct = s.total ? Math.round(s.answered / s.total * 100) : 0;
-      const sel = h('select', { class: 'cfg-select' },
-        d.sizes.map(n => h('option', { value: n }, n + ' ' + d.unit)));
-      cards.append(h('div', { class: 'part-card' },
-        h('div', { class: 'p-label' }, 'PART ' + p),
-        h('h3', null, d.title.replace(/^Part \d /, '')),
-        h('p', null, d.desc),
-        h('div', { class: 'p-stats' }, '已作答 ' + s.answered + '/' + s.total +
-          (s.answered ? ' · 正確率 ' + Math.round(s.correct / s.answered * 100) + '%' : '')),
-        h('div', { class: 'bar' }, h('i', { style: 'width:' + pct + '%' })),
-        h('div', { class: 'cfg-row' }, sel,
-          h('button', { class: 'btn primary', onclick: () => startSession(p, Number(sel.value)) }, '開始'))));
-    }
-    root.append(cards);
-  }
-
-  /* ================= 練習場 ================= */
-  function startSession(p, n) {
-    const d = PARTS[p];
-    document.title = d.title + '|多益閱讀訓練室';
-    const units = pickPool(p, n);
+  /* ================= 混合聽力練習 ================= */
+  function startQuiz(root, config, opts) {
+    opts = opts || {};
+    const units = [];
+    config.forEach(c => pickPool(c.p, c.n, opts.wrongOnly).forEach(item => units.push({ p: c.p, item })));
+    if (opts.wrongOnly) config.forEach(() => {});
     if (!units.length) {
       root.innerHTML = '';
-      root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '沒有題目。'),
-        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: 'listening.html' }, '回聽力')));
+      root.append(h('div', { class: 'q-block', style: 'margin-top:20px' }, opts.wrongOnly ? '目前沒有聽力錯題。' : '沒有題目。'),
+        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
       return;
     }
+    const sub = opts.wrongOnly
+      ? '錯題複習 · ' + units.length + ' 單元'
+      : config.map(c => 'Part ' + c.p + ' × ' + c.n + ' ' + PARTS[c.p].unit).join(' · ');
     const sess = units.map(() => ({ done: false, answers: {}, plays: 0 }));
     const okFlags = [];
     let cur = 0;
@@ -149,8 +116,8 @@
       if (player) player.stop();
       root.innerHTML = '';
       root.append(h('div', { class: 'drill-top' },
-        h('h1', null, d.title, ' ', h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' }, '隨機 ' + units.length + ' ' + d.unit)),
-        h('a', { href: 'listening.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回聽力')));
+        h('h1', null, '聽力練習 ', h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' }, sub)),
+        h('a', { href: 'practice.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回題庫')));
       const nav = h('div', { class: 'q-nav' });
       units.forEach((x, i) => {
         let cls = i === cur ? 'cur' : '';
@@ -159,14 +126,12 @@
         nav.append(h('button', { class: cls.trim(), disabled: '' }, String(i + 1)));
       });
       root.append(nav);
-
       const u = units[cur];
       const state = sess[cur];
-      player = makePlayer(u.id, state);
-
-      if (p === '1') drawP1(u, state);
-      else if (p === '2') drawP2(u, state);
-      else drawSet(u, state);
+      player = makePlayer(u.item.id, state);
+      if (u.p === '1') drawP1(u.item, state);
+      else if (u.p === '2') drawP2(u.item, state);
+      else drawSet(u.p, u.item, state);
     }
 
     function nextRow(canNext) {
@@ -176,11 +141,10 @@
           ? h('button', {
               class: 'btn primary',
               onclick: () => { if (isLast) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
-            }, isLast ? '看本輪成績' : '下一' + d.unit + ' →')
+            }, isLast ? '看本輪成績' : '下一' + PARTS[units[cur + 1] ? units[cur + 1].p : units[cur].p].unit + ' →')
           : h('span', { class: 'result-note', style: 'align-self:center' }, '聽音檔作答後才能繼續'));
     }
 
-    /* 字母選項鈕(選項內容只有聲音) */
     function letterButtons(count, rec, answer, onPick) {
       const row = h('div', { class: 'letter-row' });
       for (let i = 0; i < count; i++) {
@@ -189,49 +153,9 @@
           if (i === answer) cls += ' correct';
           else if (i === rec.c) cls += ' wrong';
         }
-        row.append(h('button', {
-          class: cls, disabled: rec ? '' : null,
-          onclick: () => onPick(i),
-        }, LETTERS[i]));
+        row.append(h('button', { class: cls, disabled: rec ? '' : null, onclick: () => onPick(i) }, LETTERS[i]));
       }
       return row;
-    }
-
-    function drawP1(q, state) {
-      const rec = state.done ? state.answers : null;
-      const img = h('img', {
-        src: 'img/listening/' + q.id + '.jpg', alt: '聽力照片',
-        onerror: e => e.target.replaceWith(h('div', { class: 'photo-missing' }, '照片準備中')),
-      });
-      root.append(h('div', { class: 'q-block' },
-        h('div', { class: 'listen-photo' }, img),
-        player.el,
-        h('div', { class: 'q-text', style: 'margin-top:10px' }, '選出最符合照片的描述:'),
-        letterButtons(4, rec, q.answer, oi => {
-          state.done = true;
-          state.answers = { c: oi, ok: oi === q.answer };
-          okFlags[cur] = state.answers.ok;
-          saveRec(p, q.id, oi, state.answers.ok);
-          draw();
-        }),
-        rec ? reveal(q, rec, q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n')) : null));
-      root.append(nextRow(state.done));
-    }
-
-    function drawP2(q, state) {
-      const rec = state.done ? state.answers : null;
-      root.append(h('div', { class: 'q-block' },
-        player.el,
-        h('div', { class: 'q-text', style: 'margin-top:10px' }, '選出最合適的回應:'),
-        letterButtons(3, rec, q.answer, oi => {
-          state.done = true;
-          state.answers = { c: oi, ok: oi === q.answer };
-          okFlags[cur] = state.answers.ok;
-          saveRec(p, q.id, oi, state.answers.ok);
-          draw();
-        }),
-        rec ? reveal(q, rec, q.question + '\n' + q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n')) : null));
-      root.append(nextRow(state.done));
     }
 
     function reveal(q, rec, transcript) {
@@ -246,8 +170,48 @@
           h('div', { class: 'tr-zh' }, q.transcriptZh)));
     }
 
-    function drawSet(set, state) {
+    function drawP1(q, state) {
+      const rec = state.done ? state.answers : null;
+      const img = h('img', {
+        src: 'img/listening/' + q.id + '.jpg', alt: '聽力照片',
+        onerror: e => e.target.replaceWith(h('div', { class: 'photo-missing' }, '照片準備中')),
+      });
+      root.append(h('div', { class: 'q-block' },
+        h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 1 照片描述')),
+        h('div', { class: 'listen-photo' }, img),
+        player.el,
+        h('div', { class: 'q-text', style: 'margin-top:10px' }, '選出最符合照片的描述:'),
+        letterButtons(4, rec, q.answer, oi => {
+          state.done = true;
+          state.answers = { c: oi, ok: oi === q.answer };
+          okFlags[cur] = state.answers.ok;
+          saveRec('1', q.id, oi, state.answers.ok);
+          draw();
+        }),
+        rec ? reveal(q, rec, q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n')) : null));
+      root.append(nextRow(state.done));
+    }
+
+    function drawP2(q, state) {
+      const rec = state.done ? state.answers : null;
+      root.append(h('div', { class: 'q-block' },
+        h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 2 應答')),
+        player.el,
+        h('div', { class: 'q-text', style: 'margin-top:10px' }, '選出最合適的回應:'),
+        letterButtons(3, rec, q.answer, oi => {
+          state.done = true;
+          state.answers = { c: oi, ok: oi === q.answer };
+          okFlags[cur] = state.answers.ok;
+          saveRec('2', q.id, oi, state.answers.ok);
+          draw();
+        }),
+        rec ? reveal(q, rec, q.question + '\n' + q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n')) : null));
+      root.append(nextRow(state.done));
+    }
+
+    function drawSet(p, set, state) {
       const block = h('div', { class: 'q-block' });
+      block.append(h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, PARTS[p].title)));
       block.append(player.el);
       const complete = set.questions.every((q, qi) => state.answers[qi] !== undefined);
       set.questions.forEach((q, qi) => {
@@ -301,22 +265,26 @@
       root.innerHTML = '';
       let qTotal = 0, qCorrect = 0;
       units.forEach((u, i) => {
-        if (p === '1' || p === '2') {
+        if (u.p === '1' || u.p === '2') {
           qTotal++;
           if (sess[i].answers.ok) qCorrect++;
         } else {
-          u.questions.forEach((q, qi) => { qTotal++; if (sess[i].answers[qi] === q.answer) qCorrect++; });
+          u.item.questions.forEach((q, qi) => { qTotal++; if (sess[i].answers[qi] === q.answer) qCorrect++; });
         }
       });
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-        h('h2', null, '本輪成績:' + qCorrect + ' / ' + qTotal + ' 題'),
-        h('div', { class: 'band-note' }, qTotal - qCorrect
-          ? '答錯的題目會被優先抽到,改天再練一輪。'
-          : '全對!換個題型再來。')));
+        h('h2', null, '聽力本輪成績:' + qCorrect + ' / ' + qTotal + ' 題'),
+        h('div', { class: 'band-note' }, qTotal - qCorrect ? '答錯的題目已收進聽力錯題。' : '全對!')));
       root.append(h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', onclick: () => startSession(p, n) }, '再練一輪'),
-        h('a', { class: 'btn', href: 'listening.html' }, '回聽力')));
+        opts.wrongOnly ? null : h('button', { class: 'btn primary', onclick: () => startQuiz(root, config) }, '再練一輪'),
+        h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
       window.scrollTo(0, 0);
     }
   }
+
+  function startReview(root, p) {
+    startQuiz(root, [{ p, n: 999 }], { wrongOnly: true });
+  }
+
+  window.LISTEN = { PARTS, partStats, startQuiz, startReview };
 })();

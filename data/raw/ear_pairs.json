@@ -1,0 +1,162 @@
+[
+  {
+    "id": "mp-01",
+    "audioText": "Could you make two copies for the client?",
+    "options": ["copies", "coffees"],
+    "answer": 0,
+    "note": "copies 第二個子音是 p，雙唇緊閉再爆開；coffees 的 f 是上齒輕咬下唇的摩擦音，氣流一直漏出來。",
+    "zh": "你可以幫客戶影印兩份嗎？"
+  },
+  {
+    "id": "mp-02",
+    "audioText": "I usually work downtown when the weather's nice.",
+    "options": ["walk", "work"],
+    "answer": 1,
+    "note": "walk 的母音圓唇而長，字尾沒有捲舌；work 的母音是捲舌的中央母音（接近「ㄦ」），一發出來就聽得到舌頭往後縮。",
+    "zh": "天氣好的時候我通常在市區上班。"
+  },
+  {
+    "id": "mp-03",
+    "audioText": "We'll need fourteen chairs for tomorrow's training session.",
+    "options": ["fourteen", "forty"],
+    "answer": 0,
+    "note": "最可靠的線索是字尾：fourteen 一定聽得到 n，-teen 也拉得比較長；forty 沒有 n，第二音節短促。重音別太依賴——fourteen 後面接名詞時，重音常會往前移到 four。",
+    "zh": "明天的訓練課程我們需要十四張椅子。"
+  },
+  {
+    "id": "mp-04",
+    "audioText": "Can you move the stuff into the back room?",
+    "options": ["staff", "stuff"],
+    "answer": 1,
+    "note": "staff 的母音嘴形扁而開、音較長；stuff 的母音短又放鬆，發音位置比較靠中間。",
+    "zh": "你可以把那些東西搬到後面的房間嗎？"
+  },
+  {
+    "id": "mp-05",
+    "audioText": "I left the letter by the back door yesterday.",
+    "options": ["letter", "ladder"],
+    "answer": 0,
+    "note": "美式口語裡兩者中間的 t、d 都會弱化成快速的閃音，真正的線索是母音：letter 是短而扁的 e 音，ladder 的嘴形更開更寬。",
+    "zh": "我昨天把那封信放在後門旁邊。"
+  },
+  {
+    "id": "mp-06",
+    "audioText": "They're planning the launch for next Friday afternoon.",
+    "options": ["lunch", "launch"],
+    "answer": 1,
+    "note": "lunch 的母音短促放鬆；launch 的母音圓、下巴放低而且拖得比較長。",
+    "zh": "他們正在規劃下週五下午的發表會。"
+  },
+  {
+    "id": "mp-07",
+    "audioText": "Please correct these forms before the meeting starts.",
+    "options": ["collect", "correct"],
+    "answer": 1,
+    "note": "collect 的 l 要把舌尖抵住上齒齦；correct 的 r 舌頭懸空捲起、不碰上顎，聽起來比較含。",
+    "zh": "請在會議開始前把這些表格改好。"
+  },
+  {
+    "id": "mp-08",
+    "audioText": "Could you send me the contact details before Monday?",
+    "options": ["contract", "contact"],
+    "answer": 1,
+    "note": "兩字重音都在第一音節，差別在第二音節：contract 的 t 後面多了一個 r（唸成 trakt）；contact 只有單純的 t 接 a。",
+    "zh": "你可以在星期一前把聯絡資料寄給我嗎？"
+  },
+  {
+    "id": "mp-09",
+    "audioText": "They announced the prize at the end of the presentation.",
+    "options": ["price", "prize"],
+    "answer": 1,
+    "note": "price 字尾是清音 s，母音較短；prize 字尾是帶聲帶振動的 z，前面的母音也會拉長。",
+    "zh": "他們在簡報最後宣布了獎項。"
+  },
+  {
+    "id": "mp-10",
+    "audioText": "Could you print the sign before Friday morning?",
+    "options": ["print", "paint"],
+    "answer": 0,
+    "note": "print 的 p 後面緊接 r，母音是短的 i；paint 沒有 r，母音是滑動的雙母音（ㄟ）。",
+    "zh": "你可以在星期五早上前把招牌印好嗎？"
+  },
+  {
+    "id": "mp-11",
+    "audioText": "We had some trouble with the new firm last month.",
+    "options": ["form", "firm"],
+    "answer": 1,
+    "note": "form 的母音嘴形要噘圓；firm 的母音是放鬆的中央音，嘴形自然、舌頭往後捲。",
+    "zh": "我們上個月跟那家新公司出了一些狀況。"
+  },
+  {
+    "id": "mp-12",
+    "audioText": "I need a suit for the conference next week.",
+    "options": ["suit", "suite"],
+    "answer": 0,
+    "note": "suit 是 s 直接接長母音 u；suite 唸起來像 sweet，s 後面多了一個 w 的滑音再接長 i。",
+    "zh": "下週的研討會我需要一套西裝。"
+  },
+  {
+    "id": "mp-13",
+    "audioText": "They did extensive research before entering the local market.",
+    "options": ["expensive", "extensive"],
+    "answer": 1,
+    "note": "expensive 第二音節是 pen，p 是雙唇爆破音；extensive 是 ten，前面還卡了一段 ks 的擠壓音。",
+    "zh": "他們在進入當地市場前做了廣泛的研究。"
+  },
+  {
+    "id": "mp-14",
+    "audioText": "There's no assistant available in the office today.",
+    "options": ["assistant", "assistance"],
+    "answer": 0,
+    "note": "assistant 字尾收在 t，聲音戛然而止；assistance 字尾是 s 摩擦音，氣流會拉出一小段。",
+    "zh": "今天辦公室裡沒有助理可以幫忙。"
+  },
+  {
+    "id": "mp-15",
+    "audioText": "She mentioned the apartment again when we spoke yesterday.",
+    "options": ["apartment", "appointment"],
+    "answer": 0,
+    "note": "apartment 重音落在 -part，中間有捲舌的 r；appointment 重音落在 -point，中間是雙母音（ㄛㄧ），沒有 r。",
+    "zh": "我們昨天講話時她又提到那間公寓。"
+  },
+  {
+    "id": "mp-16",
+    "audioText": "We need to update the personnel records this week.",
+    "options": ["personnel", "personal"],
+    "answer": 0,
+    "note": "personnel 重音在最後一個音節，尾音又響又長；personal 重音在第一音節，後兩個音節都輕輕帶過。",
+    "zh": "我們這週要更新人事資料。"
+  },
+  {
+    "id": "mp-17",
+    "audioText": "They gave us three tickets for Saturday's show.",
+    "options": ["three", "free"],
+    "answer": 0,
+    "note": "three 開頭是舌尖輕觸上排牙齒送氣；free 開頭是上排牙齒咬住下唇送氣，嘴形完全不同。",
+    "zh": "他們給了我們三張週六表演的票。"
+  },
+  {
+    "id": "mp-18",
+    "audioText": "Don't forget to buy some soup on your way home.",
+    "options": ["soap", "soup"],
+    "answer": 1,
+    "note": "soap 的母音是會滑動的雙母音（ㄡ）；soup 是單一長母音，嘴唇從頭到尾噘圓不動。",
+    "zh": "回家路上別忘了買一些湯。"
+  },
+  {
+    "id": "mp-19",
+    "audioText": "Please leave the cart near the front entrance.",
+    "options": ["card", "cart"],
+    "answer": 1,
+    "note": "card 字尾是濁音 d，前面的母音拉得比較長；cart 字尾是清音 t，母音較短、收得很乾脆。",
+    "zh": "請把推車放在正門入口附近。"
+  },
+  {
+    "id": "mp-20",
+    "audioText": "I got your text right after the meeting ended.",
+    "options": ["text", "test"],
+    "answer": 0,
+    "note": "text 字尾是 k、s、t 三個子音連在一起，中間有一個卡住的 k 音；test 只有 s 和 t。",
+    "zh": "會議一結束我就收到你的訊息了。"
+  }
+]

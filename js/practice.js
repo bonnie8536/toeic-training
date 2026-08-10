@@ -163,7 +163,50 @@
               s.wrong
                 ? h('button', { class: 'btn', onclick: () => startReview(p) }, '複習')
                 : h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題'));
-          })))));
+          }),
+          window.LISTEN ? ['1', '2', '3', '4'].map(p => {
+            const s = LISTEN.partStats(p);
+            return h('div', { class: 'review-row' },
+              h('span', null, '聽力 ' + LISTEN.PARTS[p].title),
+              h('b', { style: s.wrong ? 'color:var(--bad)' : 'color:var(--ok)' }, s.wrong + ' 題'),
+              s.wrong
+                ? h('button', { class: 'btn', onclick: () => { root.innerHTML = ''; LISTEN.startReview(root, p); window.scrollTo(0, 0); } }, '複習')
+                : h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題'));
+          }) : null))));
+
+    /* 聽力隨機練習面板 */
+    if (window.LISTEN) {
+      const lrows = ['1', '2', '3', '4'].map(p => {
+        const d = LISTEN.PARTS[p];
+        const cb = h('input', { type: 'checkbox' });
+        if (p === '2') cb.checked = true;
+        const sel = h('select', { class: 'cfg-select' },
+          d.sizes.map(n => h('option', { value: n }, n + ' ' + d.unit)));
+        if (p === '2') sel.value = '10';
+        sel.addEventListener('change', () => { cb.checked = true; });
+        const s = LISTEN.partStats(p);
+        const row = h('div', { class: 'cfg-part-row' },
+          h('label', { class: 'cfg-part-check' }, cb, h('span', null, d.title)),
+          sel,
+          h('span', { style: 'font-size:12.5px;color:var(--ink-light)' },
+            '已作答 ' + s.answered + '/' + s.total + (s.answered ? ' · ' + Math.round(s.correct / s.answered * 100) + '%' : '')));
+        return { p, cb, sel, row };
+      });
+      root.append(h('div', { class: 'practice-panel', style: 'margin-bottom:50px' },
+        h('h2', null, '聽力隨機練習'),
+        h('p', null, '作答前每題最多播 2 次,答完可重聽、看逐字稿。'),
+        h('div', { class: 'cfg-rows' }, lrows.map(r => r.row)),
+        h('button', {
+          class: 'btn primary', style: 'margin-top:14px',
+          onclick: () => {
+            const config = lrows.filter(r => r.cb.checked).map(r => ({ p: r.p, n: Number(r.sel.value) }));
+            if (!config.length) return;
+            root.innerHTML = '';
+            LISTEN.startQuiz(root, config);
+            window.scrollTo(0, 0);
+          },
+        }, '開始聽力練習')));
+    }
   }
 
   /* ================= 共用:選項與解析 ================= */

@@ -272,6 +272,29 @@ for kind_name, items_ in [('listening', lp1 + lp2 + lp3 + lp4)]:
 if lp1 or lp2 or lp3 or lp4:
     listening = {'p1': lp1, 'p2': lp2, 'p3': lp3, 'p4': lp4}
 
+# ---------- 英語耳 ----------
+ear = {}
+ed = load_kind('ear_dictation.json', 'ear dictation')
+for q in ed:
+    w = f"ear {q.get('id','?')}"
+    need(q, ['id','level','text','zh','note'], w)
+ep = load_kind('ear_pairs.json', 'ear pairs')
+for q in ep:
+    w = f"ear {q.get('id','?')}"
+    if need(q, ['id','audioText','options','note','zh'], w):
+        if len(q.get('options', [])) != 2:
+            errors.append(f'{w}: options 需為 2 個')
+        if not isinstance(q.get('answer'), int) or q['answer'] not in (0, 1):
+            errors.append(f'{w}: answer 需為 0|1')
+en_ = load_kind('ear_numbers.json', 'ear numbers')
+for q in en_:
+    w = f"ear {q.get('id','?')}"
+    if need(q, ['id','audioText','question','options','note','zh'], w):
+        check_options(q, w)
+if ed or ep or en_:
+    scan_simplified({'d': ed, 'p': ep, 'n': en_}, 'ear')
+    ear = {'dictation': ed, 'pairs': ep, 'numbers': en_}
+
 # ---------- id 重複 ----------
 for kind, items in [('part5', p5), ('part6', p6), ('part7', p7), ('articles', arts)]:
     ids = [x.get('id') for x in items]
@@ -314,4 +337,6 @@ if writing:
     write_js('writing.js', 'writing', writing)
 if listening:
     write_js('listening.js', 'listening', listening)
+if ear:
+    write_js('ear.js', 'ear', ear)
 print('完成。')

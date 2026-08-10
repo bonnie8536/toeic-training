@@ -80,8 +80,7 @@
   function renderHome() {
     document.title = '題庫刷題|多益閱讀訓練室';
     root.append(h('div', { class: 'page-head' },
-      h('h1', null, '題庫刷題'),
-      h('p', null, '選好題型與題數,系統隨機出題(優先抽你沒做過的)。答錯的題目會自動收進錯題本。')));
+      h('h1', null, '題庫刷題')));
 
     /* 隨機練習 */
     const partSel = h('select', { class: 'cfg-select' },
@@ -133,10 +132,9 @@
 
     root.append(h('div', { class: 'practice-panels' },
       h('div', { class: 'practice-panel' },
-        h('span', { class: 'tag' }, 'PRACTICE'),
         h('h2', null, '隨機練習'),
-        h('p', null, '題庫共 ' + (s5.total + s6.total + s7.total) + ' 題' +
-          (totalAnswered ? ';你已累計作答 ' + totalAnswered + ' 題,正確率 ' + Math.round(totalCorrect / totalAnswered * 100) + '%' : '') + '。'),
+        h('p', null, '共 ' + (s5.total + s6.total + s7.total) + ' 題' +
+          (totalAnswered ? ' · 已作答 ' + totalAnswered + ' 題 · 正確率 ' + Math.round(totalCorrect / totalAnswered * 100) + '%' : '')),
         h('div', { class: 'cfg-row' }, partSel, sizeSel, customInput, catSel),
         h('button', {
           class: 'btn primary', style: 'margin-top:14px',
@@ -147,9 +145,8 @@
           },
         }, '開始練習')),
       h('div', { class: 'practice-panel' },
-        h('span', { class: 'tag' }, 'REVIEW'),
         h('h2', null, '錯題本'),
-        h('p', null, '答錯的題目都在這裡。重新作答、答對了就移出。'),
+        h('p', null, '重新答對就移出。'),
         h('div', { class: 'review-rows' },
           ['5', '6', '7'].map(p => {
             const s = partStats(p);

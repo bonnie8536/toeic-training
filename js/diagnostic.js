@@ -39,14 +39,10 @@
     const p = window.PROFILE && PROFILE.current();
     root.append(
       h('div', { class: 'page-head' },
-        h('h1', null, '程度檢測'),
-        h('p', null, p ? p.name + ',先花 20 分鐘讓我們知道你的起點在哪。' : '先花 20 分鐘找出你的起點。')),
+        h('h1', null, '程度檢測')),
       h('div', { class: 'diag-intro' },
-        h('h2', null, '這份檢測會告訴你什麼'),
-        h('ul', null,
-          h('li', null, '共 28 題:20 題單句填空(涵蓋 12 個文法與字彙考點)+ 1 篇段落填空 + 1 篇閱讀理解,難度從基礎到進階分層。'),
-          h('li', null, '作答過程不會顯示對錯——這不是練習,是定位。'),
-          h('li', null, '交卷後你會拿到一份報告:估計程度、哪些概念已經穩固、哪些還不會、每一題錯在哪個迷思,以及建議先從哪裡開始刷題。'),
+        h('ul', { style: 'margin-top:0' },
+          h('li', null, '28 題,約 20 分鐘。作答中不顯示對錯,交卷後有報告。'),
           h('li', null, '可以往回改答案;中途離開,進度會保留。')),
         h('button', {
           class: 'btn primary', style: 'font-size:16px;padding:10px 26px',

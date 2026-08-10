@@ -29,8 +29,7 @@
     let levelFilter = '全部';
 
     const head = h('div', { class: 'page-head' },
-      h('h1', null, '閱讀訓練'),
-      h('p', null, '從你的級別開始:點文章裡的虛線單字挑戰填空,讀完做題目練習抓重點。'));
+      h('h1', null, '閱讀訓練'));
     const chips = h('div', { class: 'drill-filters', style: 'margin:14px 0 4px' });
     const listWrap = h('div', { class: 'article-list' });
     root.append(head, chips, listWrap);
@@ -115,7 +114,7 @@
     const biBtn = h('button', { class: 'btn', onclick: toggleBilingual }, '對照翻譯');
     const toolbar = h('div', { class: 'reader-toolbar' },
       biBtn,
-      h('span', { class: 'toolbar-note' }, '虛線單字可點擊挑戰填空;完成的字再點會顯示中文。'),
+      h('span', { class: 'toolbar-note' }, '虛線單字可以點'),
       progressEl);
 
     const bodyEl = h('div', { class: 'article-body' });
@@ -324,9 +323,7 @@
     let answers = store.get(key, {});
 
     wrap.append(h('div', { class: 'exercise-head' },
-      h('span', { class: 'ex-no' }, '練習'),
-      h('h2', null, '抓重點'),
-      h('span', { class: 'en' }, 'Reading Comprehension')));
+      h('h2', null, '抓重點')));
 
     const list = h('div', null);
     wrap.append(list);

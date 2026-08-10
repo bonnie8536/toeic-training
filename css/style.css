@@ -616,22 +616,57 @@ button { font-family: var(--font); cursor: pointer; }
 .result-note { font-size: 14px; color: var(--ink-light); margin: 8px 0 18px; }
 
 /* ---------------- 寫作練習 ---------------- */
-.w-subhead { font-size: 16.5px; margin: 22px 0 12px; padding-left: 10px; border-left: 3px solid var(--primary); }
-.lesson-card { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; margin-bottom: 10px; overflow: hidden; }
-.lesson-head {
-  display: flex; align-items: center; gap: 10px;
-  width: 100%; border: none; background: #fff;
-  padding: 13px 18px; font-size: 15.5px; font-weight: 700; color: var(--ink);
-  text-align: left;
+/* 單元路徑 */
+.unit-list { margin: 18px 0 30px; display: grid; gap: 8px; }
+.unit-row {
+  display: flex; align-items: center; gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  padding: 11px 16px;
+  color: var(--ink);
+  font-size: 15px;
 }
-.lesson-head:hover { background: var(--bg-soft); }
-.lesson-arrow { margin-left: auto; color: var(--ink-light); font-weight: 400; }
-.lesson-body { padding: 4px 20px 16px; border-top: 1px solid var(--line); }
-.lesson-intro { color: var(--ink-light); font-size: 14px; margin: 10px 0 12px; }
-.lesson-point { border-left: 3px solid var(--primary-tint); padding: 4px 0 4px 14px; margin-bottom: 12px; }
-.lp-tip { font-size: 14.5px; font-weight: 700; }
-.lp-ex { font-size: 15px; margin-top: 2px; }
-.lp-zh { font-size: 13px; color: var(--ink-light); }
+.unit-row:hover { text-decoration: none; border-color: var(--primary); }
+.unit-row.done { background: var(--bg-soft); }
+.unit-num {
+  width: 28px; height: 28px; flex: none;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--ink-light); font-weight: 700;
+}
+.unit-num.ok { background: var(--ok); border-color: var(--ok); color: #fff; }
+.unit-title { display: flex; flex-direction: column; min-width: 0; }
+.unit-sub {
+  font-size: 12.5px; color: var(--ink-light); font-weight: 400;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 460px;
+}
+.unit-head { margin: 26px 0 18px; }
+.unit-back { font-size: 13.5px; }
+.unit-block { padding: 26px 30px; }
+.unit-title-lg { font-size: 20px; margin-bottom: 12px; }
+
+/* 技巧課(整頁寬鬆排版) */
+.lesson-view {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 30px 34px;
+}
+.lesson-title { font-size: 22px; margin-bottom: 10px; }
+.lesson-intro { color: var(--ink-light); font-size: 15px; line-height: 1.85; margin-bottom: 24px; }
+.lesson-point { margin-bottom: 26px; }
+.lp-num { font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--primary); margin-bottom: 4px; }
+.lp-tip { font-size: 16px; font-weight: 700; line-height: 1.7; margin-bottom: 10px; }
+.lp-ex-box {
+  border-left: 3px solid var(--primary);
+  background: var(--bg-soft);
+  border-radius: 0 8px 8px 0;
+  padding: 13px 18px;
+}
+.lp-ex { font-size: 16px; line-height: 1.7; }
+.lp-zh { font-size: 13.5px; color: var(--ink-light); margin-top: 4px; }
 
 .assembly {
   min-height: 44px;

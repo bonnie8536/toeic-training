@@ -167,8 +167,8 @@
 
     function makeWordSpan(surface, entry, idx) {
       const st = state[idx];
-      const shown = st && st.t ? st.t : surface;          // 已填→顯示學生填的內容
-      const span = h('span', { class: 'vw' + (st ? ' done' : '') }, shown);
+      // 本文永遠顯示原文英文;學生填的內容只出現在點開的內容卡裡
+      const span = h('span', { class: 'vw' + (st ? ' done' : '') }, surface);
       span.addEventListener('click', e => {
         e.stopPropagation();
         if (popTarget === span) { closePop(); return; }   // 再點同一個字=收起卡片
@@ -275,7 +275,7 @@
         popCleanup = null;
         span.classList.remove('gap');
         span.classList.add('done');
-        span.textContent = val;
+        span.textContent = surface;   // 本文恢復原文英文,填的內容存在卡片裡
         showTranslationPop(span, surface, entry, idx, '已填入!');
       }
     }

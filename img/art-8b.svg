@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="Airline loyalty program economics">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <!-- 飛機 -->
+  <g transform="rotate(-6 300 110)">
+    <ellipse cx="300" cy="110" rx="120" ry="26" fill="#fff" stroke="#404040" stroke-width="4"/>
+    <path d="M404 104 q26 4 34 10 q-12 8 -38 6 z" fill="#0b72c4"/>
+    <path d="M280 102 l-56 -40 h26 l50 36 z" fill="#0b72c4"/>
+    <path d="M286 122 l-40 34 h22 l38 -30 z" fill="#0b72c4"/>
+    <circle cx="266" cy="104" r="6" fill="#9db8cc"/><circle cx="294" cy="103" r="6" fill="#9db8cc"/><circle cx="322" cy="103" r="6" fill="#9db8cc"/>
+  </g>
+  <!-- 航跡變成上升曲線 -->
+  <path d="M180 200 q140 30 260 6 q140 -28 220 -96" fill="none" stroke="#3a8a4d" stroke-width="6" stroke-dasharray="4 10" stroke-linecap="round"/>
+  <path d="M640 96 l24 8 l-16 20 z" fill="#3a8a4d"/>
+  <!-- 會員卡 -->
+  <rect x="150" y="196" width="150" height="88" rx="10" fill="#0b72c4"/>
+  <rect x="150" y="220" width="150" height="16" fill="#095d9f"/>
+  <rect x="164" y="248" width="70" height="9" rx="4" fill="#9fd0f5"/>
+  <rect x="164" y="264" width="46" height="9" rx="4" fill="#9fd0f5"/>
+  <circle cx="272" cy="258" r="14" fill="#ffd964"/>
+  <!-- 金幣堆 -->
+  <ellipse cx="520" cy="262" rx="34" ry="10" fill="#e8890c"/>
+  <ellipse cx="520" cy="248" rx="34" ry="10" fill="#ffd964"/>
+  <ellipse cx="520" cy="234" rx="34" ry="10" fill="#e8890c"/>
+  <ellipse cx="600" cy="266" rx="28" ry="9" fill="#ffd964"/>
+  <ellipse cx="600" cy="254" rx="28" ry="9" fill="#e8890c"/>
+  <text x="520" y="228" font-family="Arial" font-size="22" font-weight="bold" fill="#b05e0a" text-anchor="middle">$</text>
+</svg>

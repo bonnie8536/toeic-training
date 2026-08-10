@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A nervous employee on a first business trip">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="238" width="800" height="62" fill="#dde7ee"/>
+  <!-- 高鐵 -->
+  <path d="M120 150 h360 q60 0 84 40 l-12 12 h-432 z" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <rect x="150" y="166" width="46" height="22" rx="6" fill="#9fd0f5"/>
+  <rect x="216" y="166" width="46" height="22" rx="6" fill="#9fd0f5"/>
+  <rect x="282" y="166" width="46" height="22" rx="6" fill="#9fd0f5"/>
+  <rect x="348" y="166" width="46" height="22" rx="6" fill="#9fd0f5"/>
+  <rect x="120" y="196" width="424" height="10" fill="#0b72c4"/>
+  <line x1="90" y1="216" x2="560 " y2="216" stroke="#9db8cc" stroke-width="4" stroke-dasharray="20 14"/>
+  <!-- 人與行李 -->
+  <circle cx="640" cy="130" r="20" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M620 182 q20 -24 40 0 l-4 56 h-32 z" fill="#0b72c4"/>
+  <rect x="676" y="180" width="52" height="64" rx="8" fill="#e8890c"/>
+  <rect x="692" y="166" width="20" height="14" rx="4" fill="none" stroke="#404040" stroke-width="4"/>
+  <circle cx="688" cy="252" r="7" fill="#404040"/><circle cx="716" cy="252" r="7" fill="#404040"/>
+  <!-- 緊張線 -->
+  <path d="M600 96 l-8 -14 M616 90 l-4 -16 M584 104 l-12 -10" stroke="#e8890c" stroke-width="4" stroke-linecap="round"/>
+  <!-- 車票 -->
+  <rect x="586" y="196" width="44" height="26" rx="4" fill="#ffd964" stroke="#404040" stroke-width="3" transform="rotate(-8 608 209)"/>
+</svg>

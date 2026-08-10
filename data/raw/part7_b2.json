@@ -1,0 +1,302 @@
+[
+  {
+    "id": "p7-b2-1",
+    "format": "single",
+    "passages": [
+      {
+        "type": "memo",
+        "label": "",
+        "content": "MEMORANDUM\n\nTo: All Marketing Department Staff\nFrom: Diane Whitcombe, Director of Operations\nDate: March 12\nSubject: Transition to the Vantage Expense Portal\n\nBeginning April 1, all travel and entertainment expenses must be submitted through the Vantage Expense Portal. The paper reimbursement forms we have used for the past decade will no longer be accepted after March 31.\n\nThe change follows a review conducted last fall, which found that our department waited an average of five weeks for reimbursement, nearly twice as long as the company standard. Vantage allows receipts to be photographed and uploaded directly from a mobile phone, and most claims are approved within four business days.\n\nEach of you will receive login credentials by internal mail this Friday. Please note that these credentials expire if they are not activated within ten days, and reissuing them requires a written request to the IT service desk.\n\nTwo training sessions will be held in Conference Room B on March 20 and March 22, both from 2:00 to 3:30 P.M. Attendance is optional but strongly encouraged, particularly for staff who travel frequently. Anyone unable to attend may consult the illustrated guide posted on the company intranet.\n\nQuestions about the portal itself should be directed to me. Questions about a claim that is already in progress should go to Ravi Patel in Accounting."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the main purpose of the memo?",
+        "options": [
+          "To explain why a departmental review was postponed",
+          "To introduce a new system for submitting expenses",
+          "To request feedback on a mobile phone application",
+          "To announce the appointment of an accounting manager"
+        ],
+        "answer": 1,
+        "explanation": "定位：主旨列「Transition to the Vantage Expense Portal」與第一段第一句「Beginning April 1, all travel and entertainment expenses must be submitted through the Vantage Expense Portal」，全篇在宣布報帳方式改用新系統，故 (B) 正確。(A) 檢討是這項改變的背景原因，文中並未說檢討被延後。(C) 文中提到可用手機拍照上傳收據，但沒有徵求任何意見。(D) 全文未提及任何人事任用。"
+      },
+      {
+        "q": "According to the memo, what will happen if an employee does not activate the login credentials promptly?",
+        "options": [
+          "The employee's claims will be rejected by Accounting.",
+          "The employee will be charged an administrative fee.",
+          "The employee must attend both training sessions.",
+          "The employee will have to submit a written request to the IT service desk."
+        ],
+        "answer": 3,
+        "explanation": "定位：第三段「these credentials expire if they are not activated within ten days, and reissuing them requires a written request to the IT service desk」，十天內未啟用即失效，補發須以書面向資訊服務台提出，故 (D) 正確。(A) 會計部的 Ravi Patel 負責的是「處理中的申請案」，與帳密無關。(B) 全文未提任何費用或罰款。(C) 訓練課程明寫 attendance is optional，並非補發帳密的條件。"
+      },
+      {
+        "q": "What is NOT mentioned about the training sessions?",
+        "options": [
+          "The name of the person who will lead them",
+          "The room in which they will be held",
+          "The dates on which they will take place",
+          "Whether employees are required to attend"
+        ],
+        "answer": 0,
+        "explanation": "定位：第四段交代了地點（Conference Room B，對應 B）、日期（March 20 與 March 22，對應 C）與出席規定（Attendance is optional but strongly encouraged，對應 D）。全文從頭到尾沒有指出由誰主講，故 (A) 為未提及的資訊。"
+      },
+      {
+        "q": "The word \"conducted\" in paragraph 2, line 1, is closest in meaning to",
+        "options": [
+          "guided",
+          "behaved",
+          "carried out",
+          "transported"
+        ],
+        "answer": 2,
+        "explanation": "定位：第二段第一句「The change follows a review conducted last fall」。此處 conduct 指「進行、執行」一項檢討，與 carried out 同義，故 (C) 正確。(A) guided 對應 conduct「帶領參觀、指揮樂團」的另一義。(B) behaved 對應 conduct oneself「行為舉止」。(D) transported 混淆 conduct「傳導熱或電」之義，皆不符此處語境。"
+      }
+    ],
+    "translation": [
+      "備忘錄\n\n收件人：行銷部全體同仁\n寄件人：黛安．惠康，營運總監\n日期：3 月 12 日\n主旨：改用 Vantage 費用申報系統\n\n自 4 月 1 日起，所有差旅與交際費用一律須透過 Vantage 費用申報系統提出。過去十年沿用的紙本核銷單，3 月 31 日之後將不再受理。\n\n這項改變源自去年秋天的一次檢討。檢討發現本部門平均要等五週才能拿到核銷款項，幾乎是公司標準的兩倍。Vantage 可以直接用手機拍照上傳收據，多數申請案在四個工作天內就會核准。\n\n各位本週五會透過內部郵件收到登入帳號密碼。請注意，帳密若在十天內未啟用就會失效，要重新核發必須以書面向資訊服務台提出。\n\n教育訓練將在 B 會議室舉行兩場，時間為 3 月 20 日與 3 月 22 日，兩場都是下午 2 點到 3 點 30 分。是否參加自由決定，但強烈建議出席，經常出差的同仁尤其如此。無法出席者可參閱公司內部網站上的圖解說明。\n\n關於系統本身的問題請直接找我。已經送出、正在處理中的申請案，請洽會計部的拉維．帕特爾。"
+    ]
+  },
+  {
+    "id": "p7-b2-2",
+    "format": "single",
+    "passages": [
+      {
+        "type": "web page",
+        "label": "",
+        "content": "www.meridianfleetcare.com/plans\n\nHOME | SERVICES | PLANS | LOCATIONS | CONTACT\n\nMeridian Fleet Care: Maintenance Plans for Business Vehicles\n\nFor more than twenty years, Meridian Fleet Care has kept delivery vans, service trucks, and company cars on the road for businesses throughout the region. Whatever the size of your fleet, we have a plan that fits.\n\nESSENTIAL - $39 per vehicle each month\nTwo scheduled inspections a year, oil and filter changes, and tire rotation. Best suited to fleets of fewer than ten vehicles.\n\nPROFESSIONAL - $65 per vehicle each month\nEverything in the Essential plan, plus brake servicing, battery replacement, and a 15 percent discount on all parts. Roadside assistance is included within 50 kilometers of any Meridian branch.\n\nENTERPRISE - Custom pricing\nDesigned for fleets of thirty vehicles or more. Includes servicing performed at your own premises, a dedicated account manager, and replacement vehicles during extended repairs.\n\nEvery plan includes free towing to the nearest Meridian branch. Customers who enroll before June 30 will have the one-time registration fee of $120 waived.\n\nTo arrange a consultation, call 555-0147 or complete the form on our Contact page. Consultations last about forty-five minutes and carry no obligation."
+      }
+    ],
+    "questions": [
+      {
+        "q": "For whom is the web page most likely intended?",
+        "options": [
+          "Drivers applying for a personal car loan",
+          "Companies that operate several vehicles",
+          "Mechanics seeking employment at a garage",
+          "Residents looking to rent parking space"
+        ],
+        "answer": 1,
+        "explanation": "定位：標題「Maintenance Plans for Business Vehicles」與第一段「has kept delivery vans, service trucks, and company cars on the road for businesses throughout the region」，訴求對象是擁有多輛營業用車的企業，故 (B) 正確。(A) 網頁販售的是保養方案，與貸款無關。(C) 全文沒有任何徵才訊息。(D) 提供的是保養與拖吊服務，不是車位出租。"
+      },
+      {
+        "q": "What is included in the Professional plan but not in the Essential plan?",
+        "options": [
+          "Oil and filter changes",
+          "Free towing to a branch",
+          "A reduction in the cost of parts",
+          "Regularly scheduled inspections"
+        ],
+        "answer": 2,
+        "explanation": "定位：專業方案段「Everything in the Essential plan, plus brake servicing, battery replacement, and a 15 percent discount on all parts」，零件折扣是基本方案所沒有的，故 (C) 正確。(A) 更換機油與濾芯明列在基本方案內。(B) 免費拖吊是「Every plan includes」，兩種方案都有。(D) 每年兩次定期檢查同樣屬於基本方案。"
+      },
+      {
+        "q": "What is suggested about the Enterprise plan?",
+        "options": [
+          "Vehicles do not have to be brought to a Meridian branch.",
+          "It requires a minimum commitment of two years.",
+          "It is offered only in selected cities.",
+          "It costs $65 per vehicle each month."
+        ],
+        "answer": 0,
+        "explanation": "定位：企業方案段「Includes servicing performed at your own premises」，保養可在客戶自己的場地進行，因此車輛不必開到據點，故 (A) 正確。(B) 全文未提任何最短合約期限。(C) 未提地區限制。(D) 每車每月 65 美元是專業方案的價格，企業方案寫的是 Custom pricing。"
+      },
+      {
+        "q": "What benefit is offered to customers who sign up before June 30?",
+        "options": [
+          "A free replacement vehicle for one month",
+          "An expanded roadside assistance area",
+          "An extended consultation with an account manager",
+          "The removal of a one-time charge"
+        ],
+        "answer": 3,
+        "explanation": "定位：倒數第二段「Customers who enroll before June 30 will have the one-time registration fee of $120 waived」，免除的是一次性註冊費，故 (D) 正確。(A) 代步車屬企業方案的固定內容，與加入日期無關。(B) 50 公里的道路救援範圍未提會因此擴大。(C) 諮詢時間固定約四十五分鐘，文中未提可延長。"
+      }
+    ],
+    "translation": [
+      "www.meridianfleetcare.com/plans\n\n首頁 | 服務項目 | 方案 | 服務據點 | 聯絡我們\n\n美利迪安車隊保養：企業車輛保養方案\n\n二十多年來，美利迪安車隊保養一直為本地區各行各業維持送貨廂型車、工程車與公務車的正常運作。無論您的車隊規模多大，我們都有合適的方案。\n\n基本方案：每車每月 39 美元\n每年兩次定期檢查、更換機油與濾芯，以及輪胎調位。最適合車輛數少於十輛的車隊。\n\n專業方案：每車每月 65 美元\n包含基本方案的所有項目，另加煞車保養、電瓶更換，以及所有零件八五折優惠。在任一美利迪安據點方圓 50 公里內提供道路救援。\n\n企業方案：價格另議\n專為三十輛以上的車隊設計。包含到府保養、專屬客戶經理，以及維修時間較長期間的代步車。\n\n所有方案皆含免費拖吊至最近的美利迪安據點。6 月 30 日前加入的客戶，可免繳 120 美元的一次性註冊費。\n\n欲安排諮詢，請撥 555-0147 或填寫「聯絡我們」頁面上的表單。諮詢約需四十五分鐘，且不含任何購買義務。"
+    ]
+  },
+  {
+    "id": "p7-b2-3",
+    "format": "single",
+    "passages": [
+      {
+        "type": "schedule",
+        "label": "",
+        "content": "BRIDGEWATER LOGISTICS\nSite Visit Itinerary\nVisitor: Ms. Amara Osei, Regional Auditor\nTuesday, September 9\n\n8:15 A.M. Arrival at the Northgate Distribution Center. Ms. Osei will be met at the visitor entrance by Facilities Manager Tomas Rivera, who will issue her a security badge for the day.\n\n8:30-9:45 A.M. Walk-through of the sorting floor and the cold storage wing. Protective footwear will be provided. Photography is not permitted anywhere in cold storage.\n\n10:00-11:15 A.M. Review of second-quarter shipping records with Lena Kowalski, Records Supervisor (Room 2C).\n\n11:30 A.M.-12:30 P.M. Lunch with the senior management team in the staff cafeteria.\n\n12:45-2:00 P.M. Interviews with four shift leaders. Each interview will last fifteen minutes; the remaining time is reserved for follow-up questions.\n\n2:15-3:00 P.M. Closing discussion with Branch Director Neil Ashford. Ms. Osei will present her preliminary observations, and a written report will follow within three weeks.\n\nNote: The loading bay will be operating at full capacity on the day of the visit. Ms. Osei is asked to park in Lot C rather than the visitor lot, which will be occupied by delivery vehicles."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What will Mr. Rivera give Ms. Osei?",
+        "options": [
+          "A printed copy of the day's schedule",
+          "A set of second-quarter shipping records",
+          "An identification badge",
+          "A permit for the visitor parking lot"
+        ],
+        "answer": 2,
+        "explanation": "定位：8:15 A.M. 條目「Ms. Osei will be met at the visitor entrance by Facilities Manager Tomas Rivera, who will issue her a security badge for the day」，故 (C) 正確。(A) 行程表即本文件本身，文中未說 Rivera 會交付。(B) 出貨紀錄是 10:00 起與 Kowalski 一同查閱的資料。(D) 文末只要求她停在 C 停車場，並未提及核發停車證。"
+      },
+      {
+        "q": "What is NOT included in Ms. Osei's schedule?",
+        "options": [
+          "A meal with company executives",
+          "A walk through a storage area",
+          "Conversations with employees who supervise shifts",
+          "A visit to a second company location"
+        ],
+        "answer": 3,
+        "explanation": "定位：11:30 條目為與高階管理團隊共進午餐（對應 A）；8:30 條目為參觀分揀樓層與冷藏區（對應 B）；12:45 條目為與四位班長面談（對應 C）。整份行程自始至終都在 Northgate 配送中心一地進行，並未安排前往第二個據點，故 (D) 未包含。"
+      },
+      {
+        "q": "In the entry for 12:45 P.M., the word \"reserved\" is closest in meaning to",
+        "options": [
+          "set aside",
+          "booked ahead of time",
+          "expressed with doubt",
+          "quiet and shy"
+        ],
+        "answer": 0,
+        "explanation": "定位：12:45 條目「the remaining time is reserved for follow-up questions」，指把剩餘時間「保留、預留」給追問，與 set aside 同義，故 (A) 正確。(B) booked ahead of time 是 reserve a table/room「事先預訂」的另一義，此處時段並非向誰預訂。(C) 對應 reservation「保留意見、疑慮」。(D) 對應形容人 reserved「內斂寡言」，皆不符語境。"
+      },
+      {
+        "q": "Why is Ms. Osei asked to use Lot C?",
+        "options": [
+          "It is reserved for senior management on Tuesdays.",
+          "Another group of vehicles will be using the visitor lot.",
+          "It is the only lot with covered parking spaces.",
+          "The visitor lot is temporarily closed for resurfacing."
+        ],
+        "answer": 1,
+        "explanation": "定位：文末 Note「Ms. Osei is asked to park in Lot C rather than the visitor lot, which will be occupied by delivery vehicles」，訪客停車場當天會被送貨車輛占用，故 (B) 正確。(A) 文中未提 C 停車場保留給主管。(C) 未提有無遮蔽車位。(D) 訪客停車場並非因整修關閉，而是另作他用。"
+      }
+    ],
+    "translation": [
+      "布里吉沃特物流\n實地查訪行程表\n來訪者：阿瑪拉．奧塞女士，區域稽核\n9 月 9 日星期二\n\n上午 8:15 抵達北門配送中心。奧塞女士將在訪客入口由設施經理托瑪斯．里維拉接待，並由他核發當日安全識別證。\n\n上午 8:30 至 9:45 走訪分揀樓層與冷藏區。現場提供防護鞋。冷藏區內一律禁止攝影。\n\n上午 10:00 至 11:15 與紀錄主管莉娜．科瓦爾斯基（2C 室）一同查閱第二季出貨紀錄。\n\n上午 11:30 至下午 12:30 於員工餐廳與高階管理團隊共進午餐。\n\n下午 12:45 至 2:00 與四位班長進行面談。每場面談各進行十五分鐘，其餘時間保留給後續追問。\n\n下午 2:15 至 3:00 與分公司總監尼爾．艾希佛進行總結討論。奧塞女士將提出初步觀察，書面報告則於三週內送出。\n\n附註：查訪當日裝卸區將滿載運作。請奧塞女士停放於 C 停車場，不要使用訪客停車場，該處當天將由送貨車輛使用。"
+    ]
+  },
+  {
+    "id": "p7-b2-4",
+    "format": "single",
+    "passages": [
+      {
+        "type": "email",
+        "label": "",
+        "content": "To: Priya Ranganathan <p.ranganathan@calderwoodinteriors.com>\nFrom: Marcus Deng <m.deng@quillfeatherpaper.com>\nDate: November 4\nSubject: Order QF-88214\n\nDear Ms. Ranganathan,\n\nThank you for your order of 3,000 sheets of Heritage Linen cardstock in ivory, which you placed with us on October 28.\n\nI am writing with an update that I hope will not inconvenience you. Our ivory stock ran out more quickly than expected after a large order from a stationery chain, and the next production run will not be finished until November 19. Shipping after that date would mean delivery around November 24, about two weeks later than the date we originally quoted.\n\nI would like to offer you two alternatives. First, we can ship 3,000 sheets of Heritage Linen in a shade called antique cream, which is very close to ivory and is available immediately. I have sent samples of both shades to your office, and they should arrive Thursday. Second, if the ivory is essential, we can send 1,200 sheets from our reserve stock on Friday and forward the remainder once production resumes, at no additional shipping cost.\n\nPlease let me know your preference by Monday, November 10. If I have not heard from you by then, I will hold the order until the new stock arrives rather than substitute a color without your approval.\n\nI apologize for the inconvenience and appreciate your patience.\n\nSincerely,\n\nMarcus Deng\nAccount Manager, Quillfeather Paper Company"
+      }
+    ],
+    "questions": [
+      {
+        "q": "Why did Mr. Deng write the e-mail?",
+        "options": [
+          "To confirm that a shipment has been delivered",
+          "To request payment for an overdue invoice",
+          "To advertise a new line of cardstock",
+          "To explain a problem with an order and propose options"
+        ],
+        "answer": 3,
+        "explanation": "定位：第二段「I am writing with an update... Our ivory stock ran out more quickly than expected」與第三段「I would like to offer you two alternatives」，全信在說明訂單出狀況並提出兩種替代做法，故 (D) 正確。(A) 貨尚未出，談不上確認送達。(B) 全信未提付款或逾期帳款。(C) 提到另一色號是替代方案，不是推銷新產品線。"
+      },
+      {
+        "q": "What caused the shortage of the ivory cardstock?",
+        "options": [
+          "A delay at the company's printing facility",
+          "An unexpectedly large purchase by another customer",
+          "Damage to the company's main warehouse",
+          "A shortage of raw materials from a supplier"
+        ],
+        "answer": 1,
+        "explanation": "定位：第二段「Our ivory stock ran out more quickly than expected after a large order from a stationery chain」，缺貨導因於某文具連鎖的大量訂單，故 (B) 正確。(A) 生產本身並未延誤，只是下一批要到 11 月 19 日才完成。(C)(D) 信中完全未提倉庫受損或原料短缺。"
+      },
+      {
+        "q": "What does Mr. Deng indicate that Ms. Ranganathan will receive on Thursday?",
+        "options": [
+          "1,200 sheets of ivory cardstock",
+          "An invoice for the full order",
+          "Examples of two paper shades",
+          "A revised delivery schedule"
+        ],
+        "answer": 2,
+        "explanation": "定位：第三段「I have sent samples of both shades to your office, and they should arrive Thursday」，週四送達的是兩種色號的樣張，故 (C) 正確。(A) 1,200 張象牙白屬第二個方案，且是週五出貨。(B) 信中未提發票。(D) 未提會另寄修訂後的送貨時程表。"
+      },
+      {
+        "q": "What will Mr. Deng do if he does not receive a reply by November 10?",
+        "options": [
+          "He will wait until the ivory cardstock is produced.",
+          "He will ship the antique cream cardstock.",
+          "He will cancel the order and issue a refund.",
+          "He will telephone Ms. Ranganathan's office."
+        ],
+        "answer": 0,
+        "explanation": "定位：第四段「If I have not heard from you by then, I will hold the order until the new stock arrives rather than substitute a color without your approval」，未獲回覆就保留訂單、等新貨到，故 (A) 正確。(B) 恰好相反，他明說不會未經同意就換色。(C) 未提取消訂單或退款。(D) 他要求對方在 11 月 10 日前回覆，並未說會主動致電。"
+      }
+    ],
+    "translation": [
+      "收件人：普莉雅．蘭加納坦 <p.ranganathan@calderwoodinteriors.com>\n寄件人：馬可仕．鄧 <m.deng@quillfeatherpaper.com>\n日期：11 月 4 日\n主旨：訂單 QF-88214\n\n蘭加納坦女士您好：\n\n感謝您於 10 月 28 日向本公司訂購 3,000 張象牙白的 Heritage Linen 卡紙。\n\n這封信是要向您說明最新狀況，希望不會造成您的不便。某文具連鎖下了一筆大量訂單之後，我們的象牙白庫存比預期更快耗盡，下一批生產要到 11 月 19 日才會完成。若在那之後才出貨，送達時間大約落在 11 月 24 日，比原先報給您的日期晚了約兩週。\n\n我想提供您兩個替代方案。第一，我們可以改出 3,000 張名為「古典米白」的 Heritage Linen，此色與象牙白相當接近，且現貨即可出貨。我已將兩種色號的樣張寄到貴公司，預計週四送達。第二，若您非用象牙白不可，我們可以在週五先從備用庫存寄出 1,200 張，其餘等生產恢復後再補寄，且不加收運費。\n\n請於 11 月 10 日星期一前告知您的選擇。若屆時仍未收到您的回覆，我會先保留訂單、等新貨到齊，而不會未經您同意就擅自更換顏色。\n\n造成不便，敬請見諒，也感謝您的耐心。\n\n敬上\n\n馬可仕．鄧\n羽翎紙業公司　客戶經理"
+    ]
+  },
+  {
+    "id": "p7-b2-5",
+    "format": "single",
+    "passages": [
+      {
+        "type": "text message chain",
+        "label": "",
+        "content": "Kirsten Dahl (9:52 A.M.)\nMorning, Owen. I'm at the Fairmount Convention Center. Our booth panels arrived fine, but the crate with the display monitors isn't here.\n\nOwen Beckley (9:55 A.M.)\nThat is not what I wanted to hear. The courier confirmed delivery yesterday at 4 P.M.\n\nKirsten Dahl (9:58 A.M.)\nThe loading dock supervisor says three crates came in under our company name. I have only been able to find two.\n\nOwen Beckley (10:02 A.M.)\nCan you check the holding area on level B? They sometimes keep oversized items down there.\n\nKirsten Dahl (10:11 A.M.)\nFound it. It was labeled with the wrong booth number, 214 instead of 241.\n\nOwen Beckley (10:13 A.M.)\nThat is a relief. Can you get it upstairs on your own?\n\nKirsten Dahl (10:15 A.M.)\nNot a chance. It weighs about 80 kilos.\n\nOwen Beckley (10:18 A.M.)\nUnderstood. I will call the center's operations desk and arrange for a cart and two staff members. Give me twenty minutes.\n\nKirsten Dahl (10:20 A.M.)\nThanks. In the meantime I will start assembling the shelving. Doors open at 1 P.M., so we still have time.\n\nOwen Beckley (10:22 A.M.)\nGood. And please ask the supervisor to correct the label before we ship everything back on Sunday."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What problem does Ms. Dahl report?",
+        "options": [
+          "A booth has been assigned to another company.",
+          "Some equipment cannot be located.",
+          "A delivery arrived a day later than promised.",
+          "Several display panels were damaged in transit."
+        ],
+        "answer": 1,
+        "explanation": "定位：9:52 A.M. Dahl 寫道「the crate with the display monitors isn't here」，裝顯示器的木箱不見蹤影，故 (B) 正確。(A) 攤位號碼標錯是後來查出的原因，並非攤位被分配給別家公司。(C) 快遞公司確認前一天下午四點已送達，貨並未遲到。(D) 全文未提任何物品損壞，面板還特別說 arrived fine。"
+      },
+      {
+        "q": "Why does Mr. Beckley suggest looking on level B?",
+        "options": [
+          "The operations desk is located there.",
+          "Booth 214 is set up on that level.",
+          "Unusually large items are sometimes stored there.",
+          "The courier company keeps an office there."
+        ],
+        "answer": 2,
+        "explanation": "定位：10:02 A.M.「Can you check the holding area on level B? They sometimes keep oversized items down there」，B 層的暫存區有時會擺放超大件物品，故 (C) 正確。(A) 營運櫃檯的位置文中未交代。(B) 214 只是誤標的攤位號碼，與樓層無關。(D) 未提快遞公司在會場設有辦公室。"
+      },
+      {
+        "q": "At 10:15 A.M., what does Ms. Dahl most likely mean when she writes, \"Not a chance\"?",
+        "options": [
+          "She doubts the shelving will be finished before the doors open.",
+          "She is unwilling to speak to the loading dock supervisor.",
+          "She believes the booth number will not be corrected.",
+          "She cannot move the crate without assistance."
+        ],
+        "answer": 3,
+        "explanation": "定位：10:13 A.M. Beckley 問「Can you get it upstairs on your own?」，Dahl 於 10:15 回「Not a chance」並隨即補上「It weighs about 80 kilos」，意即箱子太重、她一個人搬不動，故 (D) 正確。(A) 她在 10:20 說「we still have time」，對進度並不悲觀。(B) 她並未表示不願找主管，10:22 Beckley 還請她去找主管更正標籤。(C) 標籤更正出現在最後一則訊息，與此句無關。"
+      },
+      {
+        "q": "What does Mr. Beckley ask Ms. Dahl to do?",
+        "options": [
+          "Have a label corrected",
+          "Postpone assembling the shelving",
+          "Contact the courier company directly",
+          "Reserve a cart from the operations desk"
+        ],
+        "answer": 0,
+        "explanation": "定位：10:22 A.M.「please ask the supervisor to correct the label before we ship everything back on Sunday」，故 (A) 正確。(B) 組裝層架是她自己提出的，Beckley 回 Good，並未要她延後。(C) 全文無人提到要聯絡快遞公司。(D) 推車與兩名人手是 Beckley 自己要打電話給營運櫃檯安排，不是交代她去做。"
+      }
+    ],
+    "translation": [
+      "克絲汀．達爾（上午 9:52）\n早安，歐文。我人在費爾蒙會展中心。我們的攤位隔板都到了，但裝顯示器的那個木箱不在這裡。\n\n歐文．貝克里（上午 9:55）\n這可不是我想聽到的消息。快遞公司確認昨天下午四點已經送達。\n\n克絲汀．達爾（上午 9:58）\n裝卸區主管說掛我們公司名下的一共進了三箱。可是我只找到兩箱。\n\n歐文．貝克里（上午 10:02）\n你可以去 B 層的暫存區看看嗎？超大件的東西他們有時候會放在下面那裡。\n\n克絲汀．達爾（上午 10:11）\n找到了。標籤上的攤位號碼寫錯了，寫成 214，正確是 241。\n\n歐文．貝克里（上午 10:13）\n那我就放心了。你自己搬得上樓嗎？\n\n克絲汀．達爾（上午 10:15）\n不可能。這箱大概有 80 公斤。\n\n歐文．貝克里（上午 10:18）\n了解。我打電話給會場的營運櫃檯，安排一台推車和兩名人手。給我二十分鐘。\n\n克絲汀．達爾（上午 10:20）\n謝了。這段時間我先開始組裝層架。下午一點才開放入場，時間還夠。\n\n歐文．貝克里（上午 10:22）\n好。另外請你請那位主管把標籤更正，免得週日我們要把東西寄回時又出問題。"
+    ]
+  }
+]

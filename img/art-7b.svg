@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A vending machine growing lettuce">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="238" width="800" height="62" fill="#dde7ee"/>
+  <!-- 販賣機 -->
+  <rect x="320" y="50" width="180" height="192" rx="12" fill="#0b72c4"/>
+  <rect x="338" y="68" width="104" height="130" rx="6" fill="#9fd0f5"/>
+  <!-- 生菜層架 -->
+  <rect x="338" y="106" width="104" height="4" fill="#fff"/>
+  <rect x="338" y="148" width="104" height="4" fill="#fff"/>
+  <path d="M352 100 q8 -18 20 0 q-10 8 -20 0 M384 100 q8 -18 20 0 q-10 8 -20 0 M416 98 q6 -14 16 0 q-8 8 -16 0" fill="#3a8a4d"/>
+  <path d="M352 142 q8 -18 20 0 q-10 8 -20 0 M384 142 q8 -18 20 0 q-10 8 -20 0 M416 140 q6 -14 16 0 q-8 8 -16 0" fill="#4c9e60"/>
+  <path d="M352 188 q8 -18 20 0 q-10 8 -20 0 M384 188 q8 -18 20 0 q-10 8 -20 0" fill="#3a8a4d"/>
+  <!-- 出貨口與按鈕 -->
+  <rect x="452" y="80" width="34" height="8" rx="4" fill="#ffd964"/>
+  <rect x="452" y="100" width="34" height="8" rx="4" fill="#ffd964"/>
+  <rect x="452" y="120" width="34" height="8" rx="4" fill="#e8890c"/>
+  <rect x="352" y="208" width="76" height="22" rx="4" fill="#095d9f"/>
+  <!-- 光 -->
+  <path d="M300 70 l-24 -18 M300 120 l-28 0 M300 170 l-24 14" stroke="#ffd964" stroke-width="5" stroke-linecap="round"/>
+  <!-- 上班族拿沙拉 -->
+  <circle cx="590 " cy="150" r="20" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M570 202 q20 -24 40 0 l-4 36 h-32 z" fill="#404040"/>
+  <path d="M556 186 a16 12 0 0 0 32 0 z" fill="#fff" stroke="#3a8a4d" stroke-width="3"/>
+  <path d="M562 182 q6 -10 12 0 q-6 5 -12 0" fill="#4c9e60"/>
+</svg>

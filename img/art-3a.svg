@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A robot at a hotel reception desk">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="240" width="800" height="60" fill="#dde7ee"/>
+  <!-- 招牌 -->
+  <rect x="310" y="30" width="180" height="52" rx="10" fill="#0b72c4"/>
+  <rect x="330" y="48" width="100" height="9" rx="4" fill="#fff"/>
+  <rect x="330" y="63" width="60" height="7" rx="3" fill="#9fd0f5"/>
+  <circle cx="462" cy="56" r="12" fill="#ffd964"/>
+  <!-- 櫃台 -->
+  <rect x="180" y="176" width="440" height="26" rx="9" fill="#0b72c4"/>
+  <rect x="200" y="202" width="400" height="66" fill="#095d9f"/>
+  <!-- 機器人 -->
+  <rect x="352" y="104" width="96" height="74" rx="18" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <circle cx="382" cy="134" r="9" fill="#0b72c4"/>
+  <circle cx="418" cy="134" r="9" fill="#0b72c4"/>
+  <path d="M384 156 q16 12 32 0" fill="none" stroke="#404040" stroke-width="4" stroke-linecap="round"/>
+  <line x1="400" y1="104" x2="400" y2="86" stroke="#404040" stroke-width="4"/>
+  <circle cx="400" cy="80" r="7" fill="#e8890c"/>
+  <!-- 服務鈴 -->
+  <path d="M256 176 a20 20 0 0 1 40 0 z" fill="#ffd964" stroke="#404040" stroke-width="3"/>
+  <rect x="248" y="176" width="56" height="7" rx="3" fill="#404040"/>
+  <circle cx="276" cy="150" r="5" fill="#404040"/>
+  <!-- 房卡 -->
+  <rect x="520" y="160" width="64" height="18" rx="4" fill="#ffd964" stroke="#404040" stroke-width="3" transform="rotate(-8 552 169)"/>
+  <!-- 行李箱 -->
+  <rect x="656" y="170" width="70" height="94" rx="10" fill="#e8890c"/>
+  <rect x="656" y="204" width="70" height="10" fill="#c97507"/>
+  <rect x="678" y="150" width="26" height="20" rx="6" fill="none" stroke="#404040" stroke-width="5"/>
+  <circle cx="672" cy="272" r="9" fill="#404040"/>
+  <circle cx="710" cy="272" r="9" fill="#404040"/>
+  <!-- 盆栽 -->
+  <path d="M104 190 q-22 -30 4 -52 q6 30 -4 52" fill="#3a8a4d"/>
+  <path d="M116 190 q26 -26 6 -58 q-20 26 -6 58" fill="#4c9e60"/>
+  <path d="M88 190 h52 l-8 50 h-36 z" fill="#0b72c4"/>
+</svg>

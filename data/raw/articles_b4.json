@@ -1,0 +1,336 @@
+[
+  {
+    "id": "art-4a",
+    "title": "The New Coffee Machine",
+    "titleZh": "辦公室的新咖啡機",
+    "category": "職場",
+    "level": "初級 (TOEIC 400-550)",
+    "readTime": 3,
+    "illustrationIdea": "Office workers stand around a shiny new coffee machine in a break room, all looking puzzled, while a young intern points at a small instruction sheet taped to the back of it.",
+    "paragraphs": [
+      {
+        "en": "Last Monday, a big box [[arrived]] at Kingfield Design. The box held a shiny new coffee [[machine]]. The old one broke in June, and everyone missed it. Mr. Lin is the boss, and he [[ordered]] this one online.",
+        "zh": "上週一，一個大箱子送到了金菲設計公司。箱子裡是一台亮晶晶的新咖啡機。舊的那台六月壞掉了，大家都很想念它。林先生是老闆，這台是他在網路上訂的。"
+      },
+      {
+        "en": "But the machine had ten buttons and a small screen. Nobody in the office knew how to use it. Anna pressed a button, and the machine made a loud noise. Then it stopped and showed a red light. Everyone looked [[confused]].",
+        "zh": "但這台機器有十個按鈕和一個小螢幕。辦公室裡沒有人知道怎麼用。安娜按了一個鈕，機器發出很大的聲響。接著它就停了，還亮起紅燈。大家都一臉困惑。"
+      },
+      {
+        "en": "David looked for the [[manual]], but it was not in the box. So he called the [[customer]] service line for help. The [[agent]] asked him for the number on the [[receipt]]. Only Mr. Lin had that paper, and he was in Taipei.",
+        "zh": "大衛去找說明書，可是箱子裡沒有。於是他打了客服專線求助。客服人員向他要收據上的號碼。只有林先生有那張紙，而他人在台北。"
+      },
+      {
+        "en": "For two days, nobody in the office drank any coffee. People walked to a small shop across the street. The line was long, and the coffee was not cheap. Some workers started to [[complain]] about the new machine.",
+        "zh": "有兩天，辦公室裡沒有人喝到咖啡。大家走到對街的一家小店買。隊伍很長，咖啡也不便宜。有些同事開始抱怨這台新機器。"
+      },
+      {
+        "en": "Then a new [[intern]] came to work on Wednesday morning. Her name was Mia. She looked at the machine and turned it around. A small piece of paper was taped on the back of the machine. It was the [[instructions]] page from the box. Mia read it and pressed two buttons.",
+        "zh": "後來，週三早上來了一位新實習生。她叫米雅。她看了看機器，把它轉過來。機器背面貼著一張小紙條。那就是箱子裡附的使用說明。米雅讀完後按了兩個鈕。"
+      },
+      {
+        "en": "Soon the whole room smelled like fresh, hot coffee. Everyone was happy, and Anna gave Mia a big smile. Now Mia teaches every new [[employee]] the same simple rule. Always look at the back of the machine first.",
+        "zh": "很快地，整個房間都是新鮮熱咖啡的香味。大家都很開心，安娜還給了米雅一個大大的微笑。現在米雅會教每一位新員工同一個簡單的道理。先看看機器的背面。"
+      }
+    ],
+    "vocab": [
+      {
+        "word": "arrived",
+        "base": "arrive",
+        "pos": "v.",
+        "hint": "to get to a place at the end of a trip",
+        "zh": "抵達；送達"
+      },
+      {
+        "word": "machine",
+        "base": "machine",
+        "pos": "n.",
+        "hint": "a tool with moving parts that does a job by using power",
+        "zh": "機器"
+      },
+      {
+        "word": "ordered",
+        "base": "order",
+        "pos": "v.",
+        "hint": "to ask a shop or a company to send you goods",
+        "zh": "訂購"
+      },
+      {
+        "word": "confused",
+        "base": "confused",
+        "pos": "adj.",
+        "hint": "not able to understand something clearly",
+        "zh": "困惑的"
+      },
+      {
+        "word": "manual",
+        "base": "manual",
+        "pos": "n.",
+        "hint": "a small book that tells you how to use a thing",
+        "zh": "說明書；使用手冊"
+      },
+      {
+        "word": "customer",
+        "base": "customer",
+        "pos": "n.",
+        "hint": "a person who buys goods or services from a shop",
+        "zh": "顧客"
+      },
+      {
+        "word": "agent",
+        "base": "agent",
+        "pos": "n.",
+        "hint": "a person whose job is to help buyers or do business for them",
+        "zh": "服務人員；代理人"
+      },
+      {
+        "word": "receipt",
+        "base": "receipt",
+        "pos": "n.",
+        "hint": "a small piece of paper that shows you paid for something",
+        "zh": "收據"
+      },
+      {
+        "word": "complain",
+        "base": "complain",
+        "pos": "v.",
+        "hint": "to say that you are not happy about something",
+        "zh": "抱怨"
+      },
+      {
+        "word": "intern",
+        "base": "intern",
+        "pos": "n.",
+        "hint": "a young person who works at a company for a short time to learn",
+        "zh": "實習生"
+      },
+      {
+        "word": "instructions",
+        "base": "instruction",
+        "pos": "n.",
+        "hint": "words that tell you how to do something step by step",
+        "zh": "使用說明"
+      },
+      {
+        "word": "employee",
+        "base": "employee",
+        "pos": "n.",
+        "hint": "a person who works for a company and gets paid",
+        "zh": "員工"
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is this story mainly about?",
+        "options": [
+          "A boss who buys coffee for his workers every day.",
+          "An office that could not use its new coffee machine.",
+          "A coffee shop that opens next to an office.",
+          "A worker who breaks an old coffee machine."
+        ],
+        "answer": 1,
+        "explanation": "主旨題。第一段新機器送到，第二到第四段大家都不會用，第五段實習生才解決問題，全文主線就是「辦公室用不了新咖啡機」。選項一、三、四只是文中的小細節或文中沒提到的內容。"
+      },
+      {
+        "q": "Why could David not get help on the phone?",
+        "options": [
+          "He did not have the number on the receipt.",
+          "The customer service line was closed that day.",
+          "He could not find the phone number.",
+          "Mr. Lin told him to stop calling."
+        ],
+        "answer": 0,
+        "explanation": "細節題。定位第三段第三、四句：客服人員要收據上的號碼，但那張紙只有人在台北的林先生有，所以大衛拿不到協助。"
+      },
+      {
+        "q": "What can we guess about Mia?",
+        "options": [
+          "She has used the same machine at home.",
+          "She is a good friend of Mr. Lin.",
+          "She looks at a problem carefully.",
+          "She does not like to drink coffee."
+        ],
+        "answer": 2,
+        "explanation": "推論題。定位第五段：她先看機器、再把機器轉過來，才發現背面的紙，可見她觀察得很仔細。文中從未說她用過同款機器，也沒提到她和老闆的關係。"
+      },
+      {
+        "q": "Where was the instructions page?",
+        "options": [
+          "In a small box on the table.",
+          "On Mr. Lin's desk in Taipei.",
+          "Inside the coffee machine.",
+          "Taped on the back of the machine."
+        ],
+        "answer": 3,
+        "explanation": "細節題。定位第五段第四、五句：一張小紙條貼在機器背面，那就是使用說明。第六段也再次提醒「先看機器的背面」。"
+      }
+    ]
+  },
+  {
+    "id": "art-4b",
+    "title": "The Lost Package",
+    "titleZh": "寄錯地方的包裹",
+    "category": "物流客服",
+    "level": "初級 (TOEIC 400-550)",
+    "readTime": 3,
+    "illustrationIdea": "A young woman on a scooter holds a brown parcel at the gate of an old house, while a smiling elderly man waves at her from the doorway.",
+    "paragraphs": [
+      {
+        "en": "Lily works at a small flower shop in Chiayi. Last month she bought a new camera online. The [[website]] said the [[package]] would come in three days. She was very excited about it. The camera was a birthday gift for her father.",
+        "zh": "莉莉在嘉義一家小花店上班。上個月她在網路上買了一台新相機。網站說包裹三天內會送到。她非常期待。這台相機是要送給爸爸的生日禮物。"
+      },
+      {
+        "en": "Three days later, the [[delivery]] app said \"Done.\" But Lily did not have the box. She asked her boss and the other workers. Nobody saw a box that day. She felt worried, because her father's birthday was Sunday.",
+        "zh": "三天後，送貨的 App 上顯示「已完成」。可是莉莉根本沒收到箱子。她問了老闆，也問了同事。那天沒有人看到箱子。她很擔心，因為爸爸的生日就在星期天。"
+      },
+      {
+        "en": "Lily called the [[customer]] service center right away. Sam from the service center checked the [[tracking number]]. He said the [[driver]] left the box at 25 Green Road. But Lily lives at 25 Green Street. One word on the [[label]] was wrong.",
+        "zh": "莉莉馬上打電話到客服中心。客服中心的山姆查了追蹤號碼。他說司機把箱子放在格林路 25 號。可是莉莉住的是格林街 25 號。標籤上有一個字寫錯了。"
+      },
+      {
+        "en": "Sam said sorry many times and offered a [[refund]]. But Lily wanted the camera, not the money. So she rode her bike to Green Road after work. An old man opened the door and smiled at her. \"Are you looking for a brown box?\" he asked.",
+        "zh": "山姆道歉了好幾次，還說可以退款。但莉莉要的是相機，不是錢。所以她下班後騎車到格林路。一位老先生開了門，對她笑了笑。他問：「妳是不是在找一個咖啡色的箱子？」"
+      },
+      {
+        "en": "The old man was Mr. Wu, and he lived alone. He put the box in his kitchen for two days. He did not open it, because the name was not his. Mr. Wu wanted to [[return]] the box, but he was too shy.",
+        "zh": "這位老先生姓吳，一個人住。他把箱子放在廚房兩天。他沒有打開，因為上面的名字不是他的。吳先生本來想把箱子還回去，可是他太害羞了。"
+      },
+      {
+        "en": "Lily got her camera, and her father loved his gift. She also sent a [[complaint]] to the [[company]] about the wrong [[address]]. Now the app asks the driver to take a photo. Lily still visits Mr. Wu with flowers every month.",
+        "zh": "莉莉拿到了相機，爸爸也很喜歡這份禮物。她還向公司提出客訴，說地址寫錯了。現在那個 App 會要求司機拍照。莉莉每個月還是會帶花去看吳先生。"
+      }
+    ],
+    "vocab": [
+      {
+        "word": "website",
+        "base": "website",
+        "pos": "n.",
+        "hint": "a place on the internet where a company shows its goods or news",
+        "zh": "網站"
+      },
+      {
+        "word": "package",
+        "base": "package",
+        "pos": "n.",
+        "hint": "a thing put in a box or paper and sent to someone",
+        "zh": "包裹"
+      },
+      {
+        "word": "delivery",
+        "base": "delivery",
+        "pos": "n.",
+        "hint": "the act of bringing goods to a person's home or office",
+        "zh": "送貨"
+      },
+      {
+        "word": "customer",
+        "base": "customer",
+        "pos": "n.",
+        "hint": "a person who buys goods or services from a shop",
+        "zh": "顧客"
+      },
+      {
+        "word": "tracking number",
+        "base": "tracking number",
+        "pos": "phr.",
+        "hint": "a code that lets you see where a sent box is now",
+        "zh": "追蹤號碼"
+      },
+      {
+        "word": "driver",
+        "base": "driver",
+        "pos": "n.",
+        "hint": "a person whose job is to take a car or a truck from place to place",
+        "zh": "司機"
+      },
+      {
+        "word": "label",
+        "base": "label",
+        "pos": "n.",
+        "hint": "a small piece of paper on a box that shows a name and a place",
+        "zh": "標籤"
+      },
+      {
+        "word": "refund",
+        "base": "refund",
+        "pos": "n.",
+        "hint": "money given back to you when you do not keep what you bought",
+        "zh": "退款"
+      },
+      {
+        "word": "return",
+        "base": "return",
+        "pos": "v.",
+        "hint": "to give or send a thing back to the person who owns it",
+        "zh": "歸還；退回"
+      },
+      {
+        "word": "complaint",
+        "base": "complaint",
+        "pos": "n.",
+        "hint": "words that say you are not happy about a service or a product",
+        "zh": "客訴；申訴"
+      },
+      {
+        "word": "company",
+        "base": "company",
+        "pos": "n.",
+        "hint": "a group of people who work together to sell goods or services",
+        "zh": "公司"
+      },
+      {
+        "word": "address",
+        "base": "address",
+        "pos": "n.",
+        "hint": "the words and numbers that show where a house or an office is",
+        "zh": "地址"
+      }
+    ],
+    "questions": [
+      {
+        "q": "Why did the box go to the wrong place?",
+        "options": [
+          "Lily wrote her own name in the wrong way.",
+          "The address on the label had one wrong word.",
+          "The driver was new and got lost in Chiayi.",
+          "Mr. Wu took the box from Lily's door."
+        ],
+        "answer": 1,
+        "explanation": "細節題。定位第三段第三到五句：司機把箱子送到「格林路」25 號，但莉莉住在「格林街」25 號，標籤上只有一個字寫錯。"
+      },
+      {
+        "q": "What is the story mainly about?",
+        "options": [
+          "A woman who buys a camera for herself.",
+          "A shop that stops selling cameras online.",
+          "A box that goes to the wrong house.",
+          "An old man who lives alone in Chiayi."
+        ],
+        "answer": 2,
+        "explanation": "主旨題。從第二段包裹不見、第三段查出地址錯誤，到第四、五段在別人家找到箱子，全文都圍繞著「包裹被送到錯的房子」。其他選項都只是故事裡的一個小片段。"
+      },
+      {
+        "q": "What can we learn about Mr. Wu?",
+        "options": [
+          "He is an honest person.",
+          "He often takes other people's boxes.",
+          "He works for the delivery company.",
+          "He does not like flowers at all."
+        ],
+        "answer": 0,
+        "explanation": "推論題。定位第五段：箱子上的名字不是他的，他就沒有打開，還想把箱子還回去，可以推論他很誠實。第六段莉莉每月帶花去看他，也說明他不討厭花。"
+      },
+      {
+        "q": "Why did Lily say no to the refund?",
+        "options": [
+          "The money was too little for her.",
+          "Her boss told her to wait one week.",
+          "She did not believe Sam at all.",
+          "She still wanted the camera for her father."
+        ],
+        "answer": 3,
+        "explanation": "細節題。定位第四段第一、二句：山姆說可以退款，但莉莉要的是相機不是錢；再對照第一段，相機是要送爸爸的生日禮物。"
+      }
+    ]
+  }
+]

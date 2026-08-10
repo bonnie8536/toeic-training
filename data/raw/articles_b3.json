@@ -1,0 +1,474 @@
+[
+ {
+  "id": "art-3a",
+  "title": "The Hotel Where Robots Check You In",
+  "titleZh": "機器人幫你辦入住的飯店",
+  "category": "科技",
+  "level": "中高級 (TOEIC 650-800)",
+  "readTime": 4,
+  "illustrationIdea": "A sleek hotel lobby late at night: a small white check-in robot faces a tired traveler with a suitcase, while a uniformed human clerk steps out from a side door to help.",
+  "paragraphs": [
+   {
+    "en": "When the Meridian Bay Hotel opened in Kaohsiung four years ago, its front desk was staffed entirely by machines. Guests who had reserved [[in advance]] were greeted by a waist-high robot named Pico, which scanned their passports, confirmed their [[itinerary]], and printed a key card in under ninety seconds. The owner, Daniel Hsu, promised reporters that [[automation]] would cut labor costs by forty percent.",
+    "zh": "四年前梅里迪安灣飯店在高雄開幕時，櫃檯完全由機器負責。事先訂房的旅客會由一台及腰高、名叫 Pico 的機器人迎接，它會掃描護照、確認行程，並在九十秒內印出房卡。老闆丹尼爾·許向記者保證，自動化能把人事成本壓低四成。"
+   },
+   {
+    "en": "The early numbers were excellent. In the first year, [[quarterly]] [[revenue]] rose steadily and [[occupancy]] stayed above ninety percent through a slow winter. Travel writers praised the fresh idea, a regional tourism board gave the hotel an innovation award, and Hsu began drafting plans to [[implement]] the same system at two more locations.",
+    "zh": "早期的數字非常亮眼。第一年裡，季營收穩定成長，住房率即使在淡季的冬天仍維持在九成以上。旅遊寫手大讚這個新鮮的點子，區域觀光單位頒給這家飯店創新獎，許先生也開始草擬計畫，準備在另外兩個據點導入同一套系統。"
+   },
+   {
+    "en": "Then the [[complaints]] began. A consultant whose flight landed at two in the morning discovered that Pico could not process a late arrival, and he spent the night in the lobby. Another guest demanded a [[refund]] after the system [[billed]] her twice for one room; the robot simply repeated its standard apology. Worst of all, when a water pipe burst on the fourth floor, there was nobody in the lobby to direct forty guests standing in the corridor in bathrobes.",
+    "zh": "接著客訴開始湧現。一位顧問的班機凌晨兩點才落地，卻發現 Pico 無法處理深夜入住，只好在大廳坐了一夜。另一位房客被系統為同一間房重複計費，要求退款，機器人卻只是反覆播放制式的道歉。最糟的是，四樓水管爆裂時，大廳裡沒有任何人能指揮四十位穿著浴袍站在走廊上的旅客。"
+   },
+   {
+    "en": "Hsu read six months of customer [[feedback]] and reached an uncomfortable conclusion. Guests liked the speed of the machines for routine transactions, but they wanted a person available the moment something went wrong. The hotel had [[complied]] with every [[specification]] in its contract with the robotics [[supplier]], yet satisfaction scores kept falling. \"Efficiency is not hospitality,\" Hsu admitted at an industry conference.",
+    "zh": "許先生看完六個月的顧客意見回饋，得到一個令他不安的結論。旅客喜歡機器處理例行交易的速度，但只要出了狀況，他們希望當下就有人可以求助。飯店完全遵守了與機器人供應商合約中的每一項規格，滿意度分數卻持續下滑。「效率不等於款待。」他在一場業界研討會上坦承。"
+   },
+   {
+    "en": "His solution was a compromise. Meridian Bay [[negotiated]] a revised agreement that extended the [[warranty]] on the machines while reducing the number of units from twelve to five. Hsu then hired four experienced clerks and gave them an unusual instruction: handle nothing routine. Their single [[duty]] was to manage exceptions—the delayed flights, the disputed charges, the burst pipes.",
+    "zh": "他的解方是一種折衷。梅里迪安灣重新談成一份修訂協議，延長機器的保固期，同時把機台數量從十二台減到五台。接著許先生聘了四名資深櫃檯人員，並給了他們一個不尋常的指示：例行工作一律不要做。他們唯一的職責就是處理例外——誤點的班機、有爭議的帳款、爆裂的水管。"
+   },
+   {
+    "en": "Two years later, the arrangement is still working. Robots still complete roughly eighty percent of check-ins, and [[payroll]] remains lower than at [[comparable]] properties, but guest satisfaction has reached its highest level since opening. Hsu now advises other operators to treat technology as a way of removing [[repetitive]] work rather than removing people. \"The robot buys you time,\" he says. \"How you spend that time is still a human decision.\"",
+    "zh": "兩年過去，這套安排仍運作良好。機器人仍完成約八成的入住手續，薪資支出也低於同級飯店，但住客滿意度已達開幕以來的最高點。許先生現在會建議同業，把科技當成移除重複性工作的方法，而不是移除人力的方法。「機器人幫你買到時間，」他說，「這些時間要花在哪裡，仍然是人的決定。」"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "in advance",
+    "base": "in advance",
+    "pos": "phr.",
+    "hint": "before the time when something happens",
+    "zh": "事先；預先"
+   },
+   {
+    "word": "itinerary",
+    "base": "itinerary",
+    "pos": "n.",
+    "hint": "a plan showing the places and times for a journey",
+    "zh": "行程表"
+   },
+   {
+    "word": "automation",
+    "base": "automation",
+    "pos": "n.",
+    "hint": "the use of machines to do work that people once did by hand",
+    "zh": "自動化"
+   },
+   {
+    "word": "quarterly",
+    "base": "quarterly",
+    "pos": "adj.",
+    "hint": "happening once every three months",
+    "zh": "每季的"
+   },
+   {
+    "word": "revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the money a business takes in from selling goods or services",
+    "zh": "營收；收入"
+   },
+   {
+    "word": "occupancy",
+    "base": "occupancy",
+    "pos": "n.",
+    "hint": "the share of rooms or seats that are being used",
+    "zh": "住房率；使用率"
+   },
+   {
+    "word": "implement",
+    "base": "implement",
+    "pos": "v.",
+    "hint": "to put a plan or system into practice",
+    "zh": "實施；導入"
+   },
+   {
+    "word": "complaints",
+    "base": "complaint",
+    "pos": "n.",
+    "hint": "expressions of dissatisfaction about a product or service",
+    "zh": "抱怨；客訴"
+   },
+   {
+    "word": "refund",
+    "base": "refund",
+    "pos": "n.",
+    "hint": "money returned to a customer who was charged wrongly or gave goods back",
+    "zh": "退款"
+   },
+   {
+    "word": "billed",
+    "base": "bill",
+    "pos": "v.",
+    "hint": "charged a customer an amount for goods or services",
+    "zh": "開帳單；計費"
+   },
+   {
+    "word": "feedback",
+    "base": "feedback",
+    "pos": "n.",
+    "hint": "comments about how well a product or service is working",
+    "zh": "意見回饋"
+   },
+   {
+    "word": "complied",
+    "base": "comply",
+    "pos": "v.",
+    "hint": "acted in agreement with a rule, order, or standard",
+    "zh": "遵守；符合"
+   },
+   {
+    "word": "specification",
+    "base": "specification",
+    "pos": "n.",
+    "hint": "a detailed statement of exactly what must be built or delivered",
+    "zh": "規格；規範"
+   },
+   {
+    "word": "supplier",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "a business that provides goods or parts to another company",
+    "zh": "供應商"
+   },
+   {
+    "word": "negotiated",
+    "base": "negotiate",
+    "pos": "v.",
+    "hint": "discussed terms with another party in order to reach an agreement",
+    "zh": "談判；協商"
+   },
+   {
+    "word": "warranty",
+    "base": "warranty",
+    "pos": "n.",
+    "hint": "a written promise to repair or replace something within a set period",
+    "zh": "保固"
+   },
+   {
+    "word": "duty",
+    "base": "duty",
+    "pos": "n.",
+    "hint": "something a person is required to do as part of a job",
+    "zh": "職責"
+   },
+   {
+    "word": "payroll",
+    "base": "payroll",
+    "pos": "n.",
+    "hint": "the total amount of money a company pays its employees",
+    "zh": "薪資支出；薪資名冊"
+   },
+   {
+    "word": "comparable",
+    "base": "comparable",
+    "pos": "adj.",
+    "hint": "similar enough to be judged against each other",
+    "zh": "同級的；可相比的"
+   },
+   {
+    "word": "repetitive",
+    "base": "repetitive",
+    "pos": "adj.",
+    "hint": "done over and over again in the same way",
+    "zh": "重複性的；一再重複的"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main point of the article?",
+    "options": [
+     "Robots have turned out to be too expensive for most hotels to keep running.",
+     "The Meridian Bay Hotel abandoned its robots after losing money for two years.",
+     "Automation works best when people are kept on hand to deal with exceptions.",
+     "Hotel guests generally prefer human staff to machines at every stage of a stay."
+    ],
+    "answer": 2,
+    "explanation": "定位:第五、六段。飯店沒有放棄機器人，而是減少機台並聘人專門處理例外狀況，最後滿意度創新高;第六段許先生總結「科技用來移除繁瑣工作，而不是移除人力」。A 錯在文中從未說機器人太貴，第六段反而指出薪資支出仍低於同級飯店;B 錯在飯店並未放棄機器人(仍完成八成入住)，全文也沒提到虧損;D 過度概括，第四段明說旅客喜歡機器處理例行交易的速度。"
+   },
+   {
+    "q": "According to the article, what happened to the hotel's business during its first year?",
+    "options": [
+     "Quarterly revenue rose steadily and occupancy stayed above ninety percent.",
+     "Revenue fell even though occupancy remained unusually high.",
+     "The hotel won an award but failed to fill its rooms in winter.",
+     "Occupancy dropped sharply as soon as the slow winter season began."
+    ],
+    "answer": 0,
+    "explanation": "定位:第二段第二句。原文為「季營收穩定成長，住房率即使在淡季的冬天仍維持在九成以上」，與 A 完全對應。B 說營收下滑，與「穩定成長」相反;C 的前半(獲頒創新獎)雖屬實，但後半「冬天房間住不滿」與原文相反;D 說淡季一開始住房率就大跌，同樣與原文相反。"
+   },
+   {
+    "q": "What can be inferred about the four clerks Hsu hired?",
+    "options": [
+     "They were mainly trained to repair and maintain the robots.",
+     "They completely replaced the robots at the front desk.",
+     "They were assigned to work only during the night shift.",
+     "Their value came from handling situations the machines could not."
+    ],
+    "answer": 3,
+    "explanation": "定位:第五段。原文指示他們「例行工作一律不要做」，唯一職責是處理例外(誤點班機、爭議帳款、爆裂水管)，這些正是第三段機器人搞砸的情況，故可推論其價值在於處理機器無法處理的狀況。A 錯在原文說許先生聘的是資深櫃檯人員，全文未提到他們負責維修或保養機器;第六段說機器人仍完成八成入住，可排除 B;文中雖以深夜入住為例，但從未說這四人只上夜班，故 C 也不成立。"
+   },
+   {
+    "q": "In paragraph 4, the remark \"Efficiency is not hospitality\" is closest in meaning to which of the following?",
+    "options": [
+     "Speed of service is the single most important part of running a hotel.",
+     "Taking good care of guests involves more than doing things quickly.",
+     "Hotels should stop measuring how long the check-in process takes.",
+     "Machines are usually more polite to guests than human employees are."
+    ],
+    "answer": 1,
+    "explanation": "定位:第四段。這句話緊接在「飯店符合每一項規格，滿意度卻持續下滑」之後，用來對比「快」與「照顧好客人」的差別，故 B 最貼近。A 與句意相反;C、D 文中皆未提及。"
+   },
+   {
+    "q": "Which of the following is NOT mentioned as a problem at the hotel?",
+    "options": [
+     "A guest was charged twice for the same room.",
+     "A traveler arriving in the middle of the night could not be checked in.",
+     "A burst pipe left guests in the corridor with no one to help them.",
+     "The robots broke down so often that repairs became a daily task."
+    ],
+    "answer": 3,
+    "explanation": "定位:第三段。文中列出的三個問題分別是重複計費、深夜入住無法處理、水管爆裂無人指揮，對應選項 A、B、C。機器故障頻繁需天天維修全文未提，故 D 為未提及者。"
+   }
+  ]
+ },
+ {
+  "id": "art-3b",
+  "title": "The Office Plant Consultant",
+  "titleZh": "辦公室植物顧問",
+  "category": "職場",
+  "level": "中高級 (TOEIC 650-800)",
+  "readTime": 4,
+  "illustrationIdea": "A bright open-plan office full of potted plants, where a woman in practical work clothes inspects the leaves of a large plant with a clipboard while colleagues type at desks behind her.",
+  "paragraphs": [
+   {
+    "en": "Claire Whitfield never intended to build a career around indoor plants. For eleven years she managed [[facilities]] at Larkin & Doyle, a mid-sized accounting firm, where one of her smallest tasks was ordering the plants for the reception area. Every few months the plants died, the firm ordered replacements, and nobody questioned the [[expense]].",
+    "zh": "克萊兒·惠特菲爾德從沒打算靠室內盆栽建立事業。她在中型會計事務所拉金與道爾負責設施管理長達十一年，其中最不起眼的工作之一，就是幫接待區訂購盆栽。每隔幾個月盆栽就會枯死，事務所再訂一批新的，沒有人質疑過這筆開銷。"
+   },
+   {
+    "en": "The turning point arrived during a 2019 [[renovation]]. After the firm moved to an open floor plan, employees [[complained]] that the new space felt cold and noisy. Working with a tight [[budget]], Whitfield lined the walkways with sixty potted plants instead of [[installing]] costly sound-absorbing panels. Three months later, an internal [[survey]] showed that satisfaction with the workspace had climbed sharply.",
+    "zh": "轉折出現在 2019 年的一次翻修。事務所改成開放式辦公空間後，員工抱怨新空間感覺冷冰冰又吵雜。在預算吃緊的情況下，惠特菲爾德沒有安裝昂貴的吸音板，而是沿著走道擺了六十盆植物。三個月後，一份內部問卷顯示員工對辦公環境的滿意度明顯上升。"
+   },
+   {
+    "en": "Word spread. Two client companies asked whether she could do the same for them, and she started taking weekend [[assignments]]. She learned quickly that the job was [[maintenance]], not decoration: a plant that does well next to a bright window will be dead within a month in a meeting room with no windows. She recorded light, humidity and air flow, and tracked which types of plants survived where.",
+    "zh": "消息傳了開來。兩家客戶公司問她能不能也幫他們做，她因此開始接週末的案子。她很快就明白，這份工作是養護而不是佈置：在明亮窗邊長得好的植物，放進沒有窗戶的會議室不到一個月就會枯死。她記錄光線、濕度與空氣流動，也追蹤哪些種類的植物在哪種環境活得下來。"
+   },
+   {
+    "en": "In 2021 she [[resigned]] and founded Verdant Works. Rather than selling plants, she charges a monthly [[fee]]. Under her standard [[contract]], Verdant Works owns every plant on site and replaces anything that dies at no extra cost. The model appealed immediately to office managers who were tired of unpredictable bills; the [[inventory]], and the risk attached to it, belongs to her.",
+    "zh": "2021 年她辭職，創立了 Verdant Works。她不賣植物，而是收月費。依照她的標準合約，場地上的每一株植物都屬於 Verdant Works，枯死的部分免費更換。這套模式立刻打動了那些受夠帳單忽高忽低的辦公室主管；庫存以及隨之而來的風險，都由她承擔。"
+   },
+   {
+    "en": "The business grew faster than she expected. Last year Verdant Works served ninety-four offices and reported [[annual]] sales of just over thirty million NT dollars. Whitfield now employs eleven [[technicians]] who follow fixed routes each week, and she has started talking to property developers who want plant care written into their [[leases]] before a building even opens.",
+    "zh": "生意成長得比她預期的快。去年 Verdant Works 服務九十四間辦公室，年營業額略高於三千萬新台幣。惠特菲爾德現在聘了十一位技術人員，每週按固定路線出勤，她也開始接觸建商，因為有些建商希望在大樓落成之前，就把植物養護寫進租約裡。"
+   },
+   {
+    "en": "Not every deal works out. A [[logistics]] company [[terminated]] its agreement after six months, arguing that soil and insects were unacceptable beside its packaging line. Whitfield accepted the argument and now turns down sites where the risk is obvious. \"Refusing work was the hardest lesson,\" she says. \"One bad installation costs you three [[referrals]].\"",
+    "zh": "並不是每筆生意都順利。一家物流公司在六個月後終止合約，理由是包裝線旁不能有土壤和昆蟲。惠特菲爾德接受這個說法，現在只要風險明顯的場地她一律不接。「拒絕生意是最難學的一課，」她說，「一次失敗的安裝，會讓你少掉三個轉介。」"
+   },
+   {
+    "en": "Her advice to anyone hoping to invent a similar job is straightforward. Find a [[recurring]] cost that everyone has stopped noticing, measure what it actually delivers, then offer to take responsibility for the result. \"Nobody ever wanted to buy plants,\" she says. \"They wanted to stop thinking about them.\"",
+    "zh": "對於想自己創造類似工作的人，她的建議很直白。找出一筆大家早已習以為常、卻仍持續發生的支出，衡量它實際換來什麼，然後提議由你來為結果負責。「從來沒有人想買植物，」她說，「他們想的是不必再操心這件事。」"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "facilities",
+    "base": "facility",
+    "pos": "n.",
+    "hint": "the buildings, rooms and equipment an organization uses",
+    "zh": "設施"
+   },
+   {
+    "word": "expense",
+    "base": "expense",
+    "pos": "n.",
+    "hint": "money that has to be paid out for something",
+    "zh": "開銷；費用"
+   },
+   {
+    "word": "renovation",
+    "base": "renovation",
+    "pos": "n.",
+    "hint": "work done to repair and modernize a building",
+    "zh": "翻修"
+   },
+   {
+    "word": "complained",
+    "base": "complain",
+    "pos": "v.",
+    "hint": "said that something was unsatisfactory",
+    "zh": "抱怨"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "the amount of money set aside for a particular purpose",
+    "zh": "預算"
+   },
+   {
+    "word": "installing",
+    "base": "install",
+    "pos": "v.",
+    "hint": "putting equipment in place so that it is ready to use",
+    "zh": "安裝"
+   },
+   {
+    "word": "survey",
+    "base": "survey",
+    "pos": "n.",
+    "hint": "a set of questions used to gather opinions from a group",
+    "zh": "問卷調查"
+   },
+   {
+    "word": "assignments",
+    "base": "assignment",
+    "pos": "n.",
+    "hint": "pieces of work that someone is given to do",
+    "zh": "任務；案子"
+   },
+   {
+    "word": "maintenance",
+    "base": "maintenance",
+    "pos": "n.",
+    "hint": "the regular care needed to keep something in good condition",
+    "zh": "養護；維護"
+   },
+   {
+    "word": "resigned",
+    "base": "resign",
+    "pos": "v.",
+    "hint": "gave up a job of one's own accord",
+    "zh": "辭職"
+   },
+   {
+    "word": "fee",
+    "base": "fee",
+    "pos": "n.",
+    "hint": "an amount of money charged for a service",
+    "zh": "費用"
+   },
+   {
+    "word": "contract",
+    "base": "contract",
+    "pos": "n.",
+    "hint": "a formal written agreement that both sides must follow",
+    "zh": "合約"
+   },
+   {
+    "word": "inventory",
+    "base": "inventory",
+    "pos": "n.",
+    "hint": "the stock of goods that a business holds",
+    "zh": "庫存"
+   },
+   {
+    "word": "annual",
+    "base": "annual",
+    "pos": "adj.",
+    "hint": "happening once each year",
+    "zh": "年度的"
+   },
+   {
+    "word": "technicians",
+    "base": "technician",
+    "pos": "n.",
+    "hint": "workers trained to look after equipment or practical tasks",
+    "zh": "技術人員"
+   },
+   {
+    "word": "leases",
+    "base": "lease",
+    "pos": "n.",
+    "hint": "written agreements allowing someone to rent property for a fixed period",
+    "zh": "租約"
+   },
+   {
+    "word": "logistics",
+    "base": "logistics",
+    "pos": "n.",
+    "hint": "the organizing of transport, storage and delivery of goods",
+    "zh": "物流"
+   },
+   {
+    "word": "terminated",
+    "base": "terminate",
+    "pos": "v.",
+    "hint": "brought an agreement to an official end",
+    "zh": "終止"
+   },
+   {
+    "word": "referrals",
+    "base": "referral",
+    "pos": "n.",
+    "hint": "customers sent to a business by someone who was happy with it",
+    "zh": "轉介"
+   },
+   {
+    "word": "recurring",
+    "base": "recurring",
+    "pos": "adj.",
+    "hint": "coming back again and again at regular intervals",
+    "zh": "反覆發生的"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the article mainly about?",
+    "options": [
+     "How a minor office task grew into an independent business.",
+     "Why indoor plants improve air quality in modern office buildings.",
+     "How accounting firms reduce their costs during a renovation.",
+     "Why office workers around the world dislike open floor plans."
+    ],
+    "answer": 0,
+    "explanation": "定位:全文結構。第一段的「訂購蕨類」只是她最不起眼的雜務，第二段是轉折，第四、五段寫她辭職創業並擴張，主軸是一份雜務變成一門生意。B、C、D 都只是文中的細節或背景，撐不起全文。"
+   },
+   {
+    "q": "What did Whitfield do during the 2019 renovation?",
+    "options": [
+     "She installed expensive sound-absorbing panels along the main walkways.",
+     "She hired outside consultants to redesign the whole office.",
+     "She used potted plants instead of buying sound-absorbing panels.",
+     "She surveyed the employees before the move to the new space."
+    ],
+    "answer": 2,
+    "explanation": "定位:第二段第三句。原文為「沒有安裝昂貴的吸音板，而是沿著走道擺了六十盆植物」，故 C 正確。A 與原文相反;問卷是搬遷三個月「之後」才做的，故 D 錯;外聘顧問文中未提。"
+   },
+   {
+    "q": "Why does Verdant Works charge a monthly fee instead of selling the plants to clients?",
+    "options": [
+     "Because most offices cannot afford to buy large plants all at once.",
+     "Because clients want steady costs and prefer someone else to carry the risk.",
+     "Because building rules require companies to rent their office plants.",
+     "Because monthly billing is cheaper for Verdant Works to manage."
+    ],
+    "answer": 1,
+    "explanation": "定位:第四段。原文說這套模式打動了「受夠帳單忽高忽低」的辦公室主管，而且庫存與隨之而來的風險都由她承擔，可推論客戶要的是可預期的成本，並希望由別人承擔風險。A(辦公室買不起大型植物)與 C(法規要求租用辦公室植物)文中完全沒提;D 把理由說成她自己收費作業比較省事，但原文給的理由來自客戶端的需求。"
+   },
+   {
+    "q": "In the final paragraph, the word \"straightforward\" most nearly means",
+    "options": [
+     "hard for beginners to follow.",
+     "surprisingly costly to put into practice.",
+     "widely ignored by other companies.",
+     "simple and easy to understand."
+    ],
+    "answer": 3,
+    "explanation": "定位:第七段。這個字後面接的建議是「找出一筆持續發生的支出、衡量它實際換來什麼、為結果負責」，三個步驟講得清楚直接，故 D 最貼近。A(對新手來說很難跟著做)與這個字的意思正好相反;B(執行起來意外昂貴)與字義無關;C 說「其他公司普遍忽略」講的是採用情形，而非這個字用來形容建議本身的性質。"
+   },
+   {
+    "q": "Which of the following is NOT true of Verdant Works?",
+    "options": [
+     "It sells its plants to clients for a single one-time price.",
+     "It replaces plants that die without charging clients extra.",
+     "It provides service to more than ninety office locations.",
+     "It now turns down sites where the risk is clearly too high."
+    ],
+    "answer": 0,
+    "explanation": "定位:第四段第二句「她不賣植物，而是收月費」，故 A 不正確。B 見第四段(枯死免費更換)，C 見第五段(九十四間辦公室)，D 見第六段(風險明顯的場地一律不接)。"
+   }
+  ]
+ }
+]

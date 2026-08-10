@@ -1,0 +1,241 @@
+[
+  {
+    "id": "art-8a",
+    "title": "Why a Retailer Abandoned Self-Checkout",
+    "titleZh": "一家零售商為何撤掉自助結帳",
+    "category": "商業",
+    "level": "高級 (TOEIC 800+)",
+    "readTime": 6,
+    "illustrationIdea": "A grocery store front end after closing: a row of dark, unplugged self-checkout kiosks pushed against one wall while a single lit lane with a human cashier serves a short line of shoppers.",
+    "paragraphs": [
+      {
+        "en": "When Halbrook Markets installed self-checkout lanes across its 140 stores in 2019, the [[procurement]] team presented the decision as simple math. Over five years, each terminal cost less than the cashier it replaced. What the spreadsheet could not capture, and what chief operating officer Dana Restrepo would spend the next four years learning, was everything that happened after a customer touched the screen.",
+        "zh": "二○一九年，霍布魯克超市在旗下一百四十家門市裝設自助結帳通道時，採購團隊把這個決定講得像是算好的數學題：五年攤下來，一台機器比它取代的一名收銀員便宜。試算表抓不到的部分，也是營運長丹娜·雷斯特雷波接下來四年才慢慢學會的事，是顧客碰到螢幕之後發生的一切。"
+      },
+      {
+        "en": "The savings arrived on schedule. Front-end labor hours fell by nearly a third, and [[turnover]] among part-time cashiers, long an ongoing expense, quietly solved itself as vacant positions went unfilled. For two years the [[quarterly]] figures read like a case study in successful [[automation]]. Then the loss numbers came in.",
+        "zh": "省下來的錢確實準時出現。結帳區的工時掉了將近三分之一，兼職收銀員的人力流動長年是筆持續支出，如今空缺不再補人，問題就這樣悄悄自己解決了。有兩年時間，季報數字讀起來就像自動化成功的教科書案例。接著，損耗數字送上來了。"
+      },
+      {
+        "en": "Losses of [[inventory]] to theft, mistakes, and damaged goods had climbed from 1.4 percent of sales to 3.1. Some of it was deliberate: shoppers scanning organic avocados as regular ones, a habit common enough that security staff had a nickname for it. Most of it was honest confusion. Customers [[unfamiliar with]] the interface skipped items, double-scanned others, and walked away from half-full carts when a machine froze. Each additional percentage point of loss consumed roughly what two cashiers had cost.",
+        "zh": "因偷竊、失誤與商品損壞而流失的存貨，占銷售額的比例已從百分之一點四爬到百分之三點一。其中一部分是刻意的：把有機酪梨當成一般酪梨掃過去，這種手法常見到保全人員還幫它取了綽號。但大多數其實是誠實的手忙腳亂。不熟悉操作介面的顧客會漏掃商品、把另一些重複掃兩次，機器一卡住就丟下裝了一半的推車走人。損耗每多一個百分點，吃掉的金額大約就等於兩名收銀員的成本。"
+      },
+      {
+        "en": "The company could absorb losses on that scale; a thinner [[profit margin]] alone might have been tolerable. The more troubling signal came from customer research. Shoppers who used self-checkout described feeling constantly [[monitored]], watched by ceiling cameras, interrupted by weight-sensor alerts, occasionally asked by an attendant to reopen a bag. 'Without intending to, we had rebuilt the last ninety seconds of the visit around [[suspicion]],' Restrepo told a retail conference. Repeat-visit rates in that group fell four points.",
+        "zh": "這種規模的損失公司還吸收得了，單看利潤率變薄，或許也就忍了。真正令人不安的訊號來自顧客調查。使用自助結帳的顧客形容自己一直被監看：天花板上的攝影機盯著，重量感測器動不動跳出警示，偶爾還被服務人員要求把袋子重新打開。「我們並非有意，卻把整趟購物的最後九十秒重新設計成一場猜疑，」雷斯特雷波在一場零售業研討會上說。這群顧客的回購率掉了四個百分點。"
+      },
+      {
+        "en": "Competitors read similar data and reached opposite conclusions. Two national chains expanded their installations, betting that shoppers would [[tolerate]] the inconvenience in exchange for lower prices. Halbrook, whose [[positioning]] had always rested on service rather than [[discount]], decided that identical technology carries different costs depending on what a store is actually selling. For a warehouse store competing on price, a checkout with no human contact is [[consistent with]] the brand. For a neighborhood grocer charging a premium, it [[weakens]] the very thing the premium buys.",
+        "zh": "同業看著類似的數據，卻得出相反的結論。兩家全國連鎖反而加碼擴裝，賭的是顧客願意忍受不便，換取更低的價格。霍布魯克的品牌定位一向建立在服務而非折扣上，因此判斷：同一套技術，會因為一家店實際在賣什麼，而背負完全不同的成本。對一家靠價格競爭的量販店來說，全程沒有店員接觸的結帳與品牌調性是一致的；對一家收取溢價的社區型超市而言，它反而削弱了顧客花這筆溢價所買的東西。"
+      },
+      {
+        "en": "In early 2024 Halbrook pulled self-checkout from ninety-one stores, [[retaining]] it only at urban sites where shoppers bought only a few items and speed genuinely mattered. Cashiers were rehired at wages eight percent above the previous level, described internally not as a [[compromise]] but as an [[investment]] in [[retention]]. Executives expected the added [[overhead]] to show up as a hit to [[operating income]].",
+        "zh": "二○二四年初，霍布魯克把九十一家門市的自助結帳撤掉，只在顧客單次只買幾樣、速度真的重要的都會據點保留。收銀員以高於原本薪資水準百分之八的待遇回聘，對內的說法不是妥協，而是對留才的投資。高層原本預期，這筆多出來的營運成本會直接反映成營業利益的下滑。"
+      },
+      {
+        "en": "It did, for two quarters. By the third, those losses had fallen below two percent, the average amount each customer spent in the converted stores had risen six percent, and the higher labor cost was more than [[offset]] by what the company stopped losing elsewhere. Restrepo declines to [[exaggerate]] the lesson. 'This was never a judgment on the technology,' she said. 'It was a reminder that a cost we can measure will always feel more real than a cost we cannot.'",
+        "zh": "確實如此，持續了兩季。到第三季，損耗回落到百分之二以下，改回人工結帳的門市平均每位顧客的消費金額上升百分之六，而變高的人事支出，已被公司不再損失掉的那些錢抵銷有餘。雷斯特雷波不願把這個教訓講得太滿。「這從來就不是對這項技術的評判，」她說，「它只是提醒我們：量得出來的成本，永遠會比量不出來的成本更像真的。」"
+      }
+    ],
+    "vocab": [
+      { "word": "procurement", "base": "procurement", "pos": "n.", "hint": "the business function responsible for buying the goods and services an organization needs", "zh": "採購（部門／作業）" },
+      { "word": "turnover", "base": "turnover", "pos": "n.", "hint": "the rate at which employees leave a company and have to be replaced", "zh": "人員流動率；離職率" },
+      { "word": "quarterly", "base": "quarterly", "pos": "adj.", "hint": "happening or reported once every three months", "zh": "每季的" },
+      { "word": "automation", "base": "automation", "pos": "n.", "hint": "the use of machines and software to do work previously done by people", "zh": "自動化" },
+      { "word": "inventory", "base": "inventory", "pos": "n.", "hint": "the stock of goods a business holds for sale", "zh": "存貨；庫存" },
+      { "word": "unfamiliar with", "base": "unfamiliar with", "pos": "phr.", "hint": "not knowing, or having little experience of, something", "zh": "不熟悉……" },
+      { "word": "profit margin", "base": "profit margin", "pos": "n.", "hint": "the share of sales that is left as profit once costs are paid", "zh": "利潤率；毛利" },
+      { "word": "monitored", "base": "monitor", "pos": "v.", "hint": "watched or checked closely over a period of time", "zh": "受到監看；被監控" },
+      { "word": "suspicion", "base": "suspicion", "pos": "n.", "hint": "a feeling that someone may have done wrong, held without proof", "zh": "猜疑；懷疑" },
+      { "word": "tolerate", "base": "tolerate", "pos": "v.", "hint": "to accept something unpleasant without complaining or stopping it", "zh": "忍受；容許" },
+      { "word": "positioning", "base": "positioning", "pos": "n.", "hint": "how a company wants customers to see its brand compared with rivals", "zh": "（品牌）定位" },
+      { "word": "discount", "base": "discount", "pos": "n.", "hint": "a reduction from the usual selling price", "zh": "折扣；降價" },
+      { "word": "consistent with", "base": "consistent with", "pos": "phr.", "hint": "matching or fitting something else rather than contradicting it", "zh": "與……一致；相符" },
+      { "word": "weakens", "base": "weaken", "pos": "v.", "hint": "makes something less strong or less effective, often little by little", "zh": "削弱；動搖" },
+      { "word": "retaining", "base": "retain", "pos": "v.", "hint": "keeping something rather than removing or giving it up", "zh": "保留" },
+      { "word": "compromise", "base": "compromise", "pos": "n.", "hint": "something given up so that a dispute can be settled or pressure reduced", "zh": "妥協；讓步" },
+      { "word": "investment", "base": "investment", "pos": "n.", "hint": "money put in now in the hope of a return later", "zh": "投資" },
+      { "word": "retention", "base": "retention", "pos": "n.", "hint": "keeping employees or customers so that they do not leave", "zh": "留才；留住顧客" },
+      { "word": "overhead", "base": "overhead", "pos": "n.", "hint": "the ongoing running costs of a business that are not tied to one product", "zh": "營運成本；經常性支出" },
+      { "word": "operating income", "base": "operating income", "pos": "n.", "hint": "the profit a company earns from its core business before tax and financing costs", "zh": "營業利益" },
+      { "word": "offset", "base": "offset", "pos": "v.", "hint": "to balance out a gain or loss with an equal amount in the opposite direction", "zh": "抵銷" },
+      { "word": "exaggerate", "base": "exaggerate", "pos": "v.", "hint": "to describe something as bigger or more important than it really is", "zh": "誇大" }
+    ],
+    "questions": [
+      {
+        "q": "What is the central argument of the article?",
+        "options": [
+          "Self-checkout technology is unreliable and should be avoided by every retailer.",
+          "The true cost of an automation decision can lie in effects that the original financial model never measured.",
+          "Grocery chains should raise cashier wages in order to reduce staff turnover.",
+          "Customer surveys are a more accurate forecasting tool than five-year cost projections."
+        ],
+        "answer": 1,
+        "explanation": "主旨題。第一段末句點出「試算表抓不到的部分」，第七段結尾雷斯特雷波再次收束到「量得出來的成本，永遠會比量不出來的成本更像真的」，前後呼應的正是這個論點。選項 A 與 D 都被第五、七段明確否定（技術本身無罪、公司仍看重財務數字），選項 C 只是文中的手段之一，不是全文主張。"
+      },
+      {
+        "q": "What happened to Halbrook's rate of inventory loss after self-checkout was installed?",
+        "options": [
+          "It stayed flat for two years and then dropped sharply.",
+          "It fell from 3.1 percent of sales to 1.4 percent.",
+          "It declined by four percentage points.",
+          "It rose from 1.4 percent of sales to 3.1 percent."
+        ],
+        "answer": 3,
+        "explanation": "細節題。定位在第三段首句：損耗「已從百分之一點四爬到百分之三點一」，方向是上升。選項 B 把數字方向顛倒；選項 C 的「四個百分點」出自第四段的回購率，不是損耗。"
+      },
+      {
+        "q": "What can be inferred about why two national chains expanded self-checkout while Halbrook removed it?",
+        "options": [
+          "Their customers were paying mainly for low prices rather than for service.",
+          "They had bought more reliable equipment from a different supplier.",
+          "Their inventory loss rates were unaffected because they employed more security staff.",
+          "They operated only in urban areas where shoppers bought fewer items."
+        ],
+        "answer": 0,
+        "explanation": "推論題。第五段以量販店與社區超市對比：靠價格競爭的店家，冷淡的結帳出口與品牌一致；收取溢價、靠服務的店家則會被它動搖。由此可推得這兩家連鎖的顧客買的是價格而非服務。其餘選項文中皆無依據，選項 D 的都會據點是霍布魯克自己保留機器的條件（第六段）。"
+      },
+      {
+        "q": "How did Halbrook describe the decision to rehire cashiers at higher wages?",
+        "options": [
+          "As a temporary measure until better machines became available",
+          "As a compromise forced on the company by a labor union",
+          "As an investment intended to improve retention",
+          "As a way of removing overhead from operating income"
+        ],
+        "answer": 2,
+        "explanation": "細節題。定位在第六段：對內的說法「不是妥協，而是對留才的投資」。選項 B 正好是文中被否定的說法；選項 D 與同段「多出來的營運成本會反映成營業利益下滑」的敘述相反。"
+      },
+      {
+        "q": "What does Restrepo's closing remark imply about corporate decision-making?",
+        "options": [
+          "Companies rarely have access to accurate cost data of any kind.",
+          "Technology decisions should be made by operations staff instead of finance teams.",
+          "Managers tend to give more weight to costs that can be measured than to those that cannot.",
+          "Costs that can be measured are usually larger than costs that cannot."
+        ],
+        "answer": 2,
+        "explanation": "推論題。定位在第七段末句「量得出來的成本，永遠會比量不出來的成本更像真的」，重點在於「感覺更真實」，也就是決策時給予的權重不同，而非金額大小（故選項 D 誤讀）。選項 A、B 在文中都找不到根據。"
+      }
+    ]
+  },
+  {
+    "id": "art-8b",
+    "title": "The Economics of Airline Loyalty",
+    "titleZh": "航空里程的經濟學",
+    "category": "商業",
+    "level": "高級 (TOEIC 800+)",
+    "readTime": 6,
+    "illustrationIdea": "A split scene: on the left a half-empty airliner cabin, on the right a bank vault stacked with credit cards, joined by a stream of glowing mile symbols flowing from the plane into the vault.",
+    "paragraphs": [
+      {
+        "en": "When Meridian Pacific Airways needed to raise 3.8 billion dollars in the spring of 2020, it did not offer its aircraft as [[security]]. Jets, the airline's [[treasurer]] told a doubtful board, were worth whatever the second-hand market said they were worth on any given Tuesday. What the airline offered instead had no physical existence at all: AeroClub, its frequent-flyer program. Lenders took the deal, and at a lower [[interest rate]] than the fleet would have received.",
+        "zh": "二○二○年春天，子午太平洋航空需要籌措三十八億美元，卻沒有拿飛機去做擔保。這家航空公司的財務主管對半信半疑的董事會說，飛機值多少錢，取決於二手市場在某個星期二怎麼開價。他們拿出來擔保的東西根本沒有實體：常客計畫「AeroClub」。放款方接受了，而且利率比拿整支機隊去談還低。"
+      },
+      {
+        "en": "The arrangement looks strange until the [[underlying]] cash flows are laid out. Meridian Pacific does not chiefly make money by flying loyal passengers. It makes money by manufacturing miles and selling them, almost entirely to banks. The bank that issues a credit card [[in partnership with]] the airline buys miles [[in bulk]], at roughly 1.5 cents each, and hands them to cardholders as [[incentives]] to spend. The extra cost to the airline of creating one more mile is close to zero; the cost of [[redeeming]] one is deferred, uncertain, and often never incurred.",
+        "zh": "這樣的安排乍看奇怪，直到你把底下的現金流攤開來看。子午太平洋主要的獲利來源，並不是載運忠實旅客，而是製造里程再把它賣掉，買家幾乎全是銀行。與這家航空公司合作發卡的銀行，以每點約一點五美分的價格整批買進里程，再發給持卡人，當成刺激消費的誘因。對航空公司來說，多生產一點里程的額外成本幾乎是零；而兌換一點里程的成本則是遞延的、不確定的，而且往往根本不會發生。"
+      },
+      {
+        "en": "In the last full year before travel collapsed, AeroClub produced 4.1 billion dollars of [[revenue]] at an [[operating margin]] above fifty percent. The flying operation, moving eighty million passengers, earned four percent. Analysts who valued the two businesses separately reached an uncomfortable conclusion: the loyalty [[subsidiary]] was worth more than the airline that owned it. 'We are a payments company,' one executive said privately, 'with a very expensive marketing department that happens to own planes.'",
+        "zh": "在旅遊市場崩盤前的最後一個完整年度，AeroClub 創造了四十一億美元營收，營業利益率超過五成。至於載運八千萬名旅客的飛行本業，利益率只有百分之四。把兩塊業務分開評價的分析師，得出一個令人尷尬的結論：這家忠誠度子公司，比擁有它的航空公司還值錢。「我們是一家支付公司，」一位高層私下說，「附設了一個貴得離譜的行銷部門，而這個部門剛好擁有一批飛機。」"
+      },
+      {
+        "en": "Every mile issued and not yet used is also a [[liability]] on the [[balance sheet]], and here the accounting gets complicated. Airlines estimate the share of miles that will never be claimed, a figure the industry calls breakage, and record that portion as income. Set the estimate too high and [[regulators]] ask questions; set it too low and reported [[earnings]] suffer. Quietly cutting the value of miles, so that a seat that once cost 25,000 points now costs 40,000, shrinks the liability overnight without any [[disclosure]] most passengers will read.",
+        "zh": "每一點已經發出、卻還沒被使用的里程，同時也是資產負債表上的一筆負債，而會計處理到這裡就變得複雜了。航空公司會估算有多少比例的里程永遠不會被兌換，業界稱為「breakage」，並把那部分認列為收入。估得太高，主管機關會來問；估得太低，帳面盈餘就難看。悄悄調降里程的價值——原本兩萬五千點就能換的座位，現在要四萬點——負債一夜之間縮水，而且不必發布任何多數旅客會去讀的揭露。"
+      },
+      {
+        "en": "That is the [[trade-off]] at the center of the business. Each cut makes this quarter's numbers look better while weakening the asset that made the loan possible. Miles work as security only for as long as members believe they are worth [[accumulating]], and Meridian Pacific's own research found that [[perceived]] value, not actual redemption behavior, drove card spending. The program could therefore be pushed hard for years before the damage showed up anywhere a finance committee would notice.",
+        "zh": "這正是這門生意核心處的取捨。每一次調降都讓本季數字更好看，同時也在削弱當初讓那筆貸款成立的資產。里程之所以能當擔保，前提是會員仍相信它值得累積；而子午太平洋自己的研究發現，帶動刷卡消費的是里程「被認為」有多少價值，而不是實際兌換行為。也就是說，這個計畫可以被壓榨好幾年，傷害才會浮現到財務委員會看得見的地方。"
+      },
+      {
+        "en": "One international rival tested that limit. It raised the [[threshold]] for elite status by sixty percent in a single year, reasoning that its highest-spending members had nowhere else to go. Bookings held. Card applications fell nineteen percent within eight months, the issuing bank reopened its contract, and the carrier protected the revenue it could see while giving up the far more [[profitable]] revenue it had never learned to defend.",
+        "zh": "一家國際同業試過這條界線。它在一年之內把菁英會員的門檻拉高六成，理由是消費最高的那群會員無處可去。訂位確實沒掉。但八個月內辦卡申請減少一成九，發卡銀行要求重啟合約談判；這家航空公司最後守住了它看得見的營收，卻放掉了那筆利潤高得多、卻從來沒學會防守的營收。"
+      },
+      {
+        "en": "Meridian Pacific repaid its loan early. AeroClub now files separate financial statements: a subsidiary in name, a bank in practice. Its treasurer keeps one chart on her office wall. It does not track passengers carried or on-time departures. It tracks the average number of days a mile sits unused before somebody finally spends it.",
+        "zh": "子午太平洋提前還清了那筆貸款。AeroClub 如今單獨編製財務報表：名義上是子公司，實質上是一家銀行。它的財務主管辦公室牆上只掛著一張圖表，追蹤的不是載客人次，也不是準點率，而是一點里程從發出到終於被花掉之前，平均閒置了多少天。"
+      }
+    ],
+    "vocab": [
+      { "word": "security", "base": "security", "pos": "n.", "hint": "something valuable promised to a lender, which the lender can take if the loan is not repaid", "zh": "擔保品；抵押品" },
+      { "word": "treasurer", "base": "treasurer", "pos": "n.", "hint": "the officer in a company responsible for managing its cash, funding, and debt", "zh": "財務主管；資金調度主管" },
+      { "word": "interest rate", "base": "interest rate", "pos": "n.", "hint": "the percentage a lender charges for the use of borrowed money", "zh": "利率" },
+      { "word": "underlying", "base": "underlying", "pos": "adj.", "hint": "forming the real basis of something, though not immediately obvious", "zh": "底層的；根本的" },
+      { "word": "in partnership with", "base": "in partnership with", "pos": "phr.", "hint": "working together with another company on a shared product or service", "zh": "與……合作（推出）" },
+      { "word": "in bulk", "base": "in bulk", "pos": "phr.", "hint": "in large quantities at one time, usually at a lower price per unit", "zh": "整批地；大量地" },
+      { "word": "incentives", "base": "incentive", "pos": "n.", "hint": "rewards offered in order to encourage a particular behavior", "zh": "誘因；獎勵" },
+      { "word": "redeeming", "base": "redeem", "pos": "v.", "hint": "exchanging points or a voucher for goods, services, or cash", "zh": "兌換" },
+      { "word": "revenue", "base": "revenue", "pos": "n.", "hint": "the total money a business takes in from sales before expenses", "zh": "營收" },
+      { "word": "operating margin", "base": "operating margin", "pos": "n.", "hint": "core business profit expressed as a percentage of sales", "zh": "營業利益率" },
+      { "word": "subsidiary", "base": "subsidiary", "pos": "n.", "hint": "a company controlled by another, larger company", "zh": "子公司" },
+      { "word": "liability", "base": "liability", "pos": "n.", "hint": "a debt or obligation a company owes and must eventually settle", "zh": "負債" },
+      { "word": "balance sheet", "base": "balance sheet", "pos": "n.", "hint": "a financial report showing what a company owns and what it owes", "zh": "資產負債表" },
+      { "word": "regulators", "base": "regulator", "pos": "n.", "hint": "official bodies with power to supervise an industry and set rules for it", "zh": "主管機關" },
+      { "word": "earnings", "base": "earnings", "pos": "n.", "hint": "the profit a company reports for a given period", "zh": "盈餘；獲利" },
+      { "word": "disclosure", "base": "disclosure", "pos": "n.", "hint": "the act of making information public, especially when the law requires it", "zh": "揭露；公告" },
+      { "word": "trade-off", "base": "trade-off", "pos": "n.", "hint": "a situation in which gaining one thing means giving up another", "zh": "取捨" },
+      { "word": "accumulating", "base": "accumulate", "pos": "v.", "hint": "building up a growing quantity of something over time", "zh": "累積" },
+      { "word": "perceived", "base": "perceive", "pos": "adj.", "hint": "believed by people to be a certain way, whether or not it truly is", "zh": "（被）認知的；主觀認定的" },
+      { "word": "threshold", "base": "threshold", "pos": "n.", "hint": "the level that must be reached before something takes effect", "zh": "門檻" },
+      { "word": "profitable", "base": "profitable", "pos": "adj.", "hint": "bringing in a good amount of money after costs are paid", "zh": "獲利高的；有賺頭的" }
+    ],
+    "questions": [
+      {
+        "q": "What is the main idea of the article?",
+        "options": [
+          "Airlines should stop issuing frequent-flyer miles because they create dangerous debt.",
+          "Loyalty programs were the only part of the airline industry to survive the 2020 downturn.",
+          "Banks, rather than airlines, now decide how frequent-flyer miles are priced.",
+          "An airline's loyalty program can be a more profitable and more valuable business than flying itself."
+        ],
+        "answer": 3,
+        "explanation": "主旨題。全文由第一段的擔保事件切入，第三段點明忠誠度子公司比航空公司本身值錢，第七段以「名義上是子公司，實質上是一家銀行」收尾。選項 A、B 文中皆未主張；選項 C 誇大銀行角色，文中銀行只是里程的買方。"
+      },
+      {
+        "q": "According to the treasurer, what was the problem with using aircraft as security for the loan?",
+        "options": [
+          "Their value depended on an unpredictable second-hand market.",
+          "They had already been promised to another lender.",
+          "They were losing value because of new environmental rules.",
+          "Regulations did not allow them to be used this way during a downturn."
+        ],
+        "answer": 0,
+        "explanation": "細節題。定位在第一段第二句：飛機值多少錢「取決於二手市場在某個星期二怎麼開價」，強調的是估值不穩定。其餘三個原因文中都沒有提到。"
+      },
+      {
+        "q": "How does AeroClub earn most of its money?",
+        "options": [
+          "By charging members an annual fee to stay in the program",
+          "By selling unsold seats to loyalty members at a discount",
+          "By selling miles in bulk to a partner bank",
+          "By investing the cash members keep in their accounts"
+        ],
+        "answer": 2,
+        "explanation": "細節題。定位在第二段：航空公司靠「製造里程再把它賣掉，買家幾乎全是銀行」，與航空公司合作發卡的銀行以每點約一點五美分整批買進。其餘選項在文中都沒有出現。"
+      },
+      {
+        "q": "What can be inferred about why cutting the value of miles appeals to airline executives in the short term?",
+        "options": [
+          "It persuades members to redeem their miles more quickly.",
+          "It cuts a balance-sheet obligation and lifts reported profit without an announcement customers will notice.",
+          "It lets the airline raise ticket prices without approval from regulators.",
+          "It transfers the cost of the program to the partner bank."
+        ],
+        "answer": 1,
+        "explanation": "推論題。由第四段末句（調降價值讓負債一夜縮水、且不必發布多數旅客會讀的揭露）與第五段首二句（每次調降都讓本季數字更好看）合併推得。選項 A 與文意相反，調降價值只會降低兌換誘因；選項 C、D 文中無據。"
+      },
+      {
+        "q": "What lesson does the international rival's experience suggest?",
+        "options": [
+          "Damage to a loyalty program may show up in card revenue long before it shows up in ticket sales.",
+          "Raising elite status thresholds always reduces passenger bookings.",
+          "Banks cancel partner card contracts whenever an airline changes its rules.",
+          "Elite members are the least profitable segment of an airline's customer base."
+        ],
+        "answer": 0,
+        "explanation": "推論題。定位在第六段：拉高門檻後「訂位確實沒掉」，但八個月內辦卡申請掉了一成九、銀行要求重談合約，最後「守住了看得見的營收，卻放掉利潤高得多的營收」。選項 B 正好被「訂位沒掉」否定；選項 C 過度概括（銀行是重啟談判而非解約）；選項 D 與第五、六段所述的高消費會員價值相反。"
+      }
+    ]
+  }
+]

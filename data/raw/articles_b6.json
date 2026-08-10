@@ -1,0 +1,219 @@
+[
+  {
+    "id": "art-6a",
+    "title": "The Pop-Up Bookstore",
+    "titleZh": "只開九十天的書店",
+    "category": "行銷",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "A long line of shoppers curls around a street corner outside a tiny bookshop, and each person is holding a brown-paper parcel.",
+    "paragraphs": [
+      {
+        "en": "Last spring, a small shop opened on a quiet street in Taipei. It sold only books. A sign in the window said, \"Open for 90 days.\" The owner was Miriam Kao, a [[former]] magazine editor. She had saved money for six years to test one idea. Nobody in the neighborhood expected a crowd.",
+        "zh": "去年春天，台北一條安靜的街上開了一家小店。店裡只賣書。窗上的牌子寫著：「只開九十天」。老闆高蜜莉以前是雜誌編輯。她存了六年的錢，只為了試一個想法。附近的人都沒想到這裡會有人潮。"
+      },
+      {
+        "en": "Miriam did not sign a long [[lease]]. She [[rented]] the space for three months only. Shops like hers are called pop-up stores. Many [[retail]] brands use them to test a new market without a big risk. If sales are weak, the [[loss]] stays small. If sales are strong, the company [[gains]] useful data.",
+        "zh": "蜜莉沒有簽長期租約。她只把店面租了三個月。像她這樣的店叫做快閃店。很多零售品牌用快閃店測試新市場，風險不大。如果賣得不好，損失有限。如果賣得好，公司就能得到有用的資料。"
+      },
+      {
+        "en": "Her plan was simple but bold. The shop never [[stocked]] bestsellers. Staff wrapped every book in brown paper. On the front, they wrote three short hints about the story. Customers paid 400 dollars and picked a book blind. The title stayed secret until they got home.",
+        "zh": "她的做法簡單卻大膽。店裡從來不進暢銷書。店員把每一本書都用牛皮紙包起來。在紙的正面，他們寫下三個和故事有關的短提示。客人付四百元，盲選一本書。書名要等回到家才會揭曉。"
+      },
+      {
+        "en": "At first, business was very slow. Then a college student posted photos online. Her short video reached 200,000 people in two days. By the weekend, a [[queue]] stretched around the corner. Strangers online shared photos of their wrapped books. In the end, [[word of mouth]] worked better than paid ads.",
+        "zh": "一開始生意很冷清。後來一位大學生把照片貼上網。她的短片兩天內就有二十萬人看到。到了週末，隊伍已經排到街角。網路上素不相識的人紛紛分享自己包好的書的照片。最後，口碑的效果勝過付費廣告。"
+      },
+      {
+        "en": "The closing date also pushed sales up. Shoppers knew the shop had a [[deadline]]. Nobody wanted to miss the last week. Every month, [[demand]] rose again. In the final weeks, [[revenue]] doubled, and Miriam hired two extra [[staff]] members. She also kept the shop open until ten at night.",
+        "zh": "結束日期也把買氣往上推。客人知道這家店有期限。沒有人想錯過最後一週。每個月的需求都再往上升。最後幾週營收翻倍，蜜莉還多請了兩名店員。她也把營業時間延到晚上十點。"
+      },
+      {
+        "en": "On day 90, she locked the door as promised. Several customers begged her to stay. She refused, and then she smiled. \"A pop-up must end,\" she said. \"That is why people come.\" Next spring, she plans to [[launch]] the same shop in Tainan. This time, she will keep the same rule.",
+        "zh": "第九十天，她照約定把門鎖上。好幾位客人求她繼續開。她拒絕了，然後笑了笑。她說：「快閃店本來就要結束，這正是大家會來的原因。」明年春天，她打算在台南再開一次同樣的店。這一次，她會維持一樣的規矩。"
+      }
+    ],
+    "vocab": [
+      { "word": "former", "base": "former", "pos": "adj.", "hint": "coming before the present one in time or in a job", "zh": "以前的、前任的" },
+      { "word": "lease", "base": "lease", "pos": "n.", "hint": "a written agreement that lets you use a building for a fixed period, in return for payment", "zh": "租約" },
+      { "word": "rented", "base": "rent", "pos": "v.", "hint": "to pay money regularly so that you can use a room, house, or machine", "zh": "承租" },
+      { "word": "retail", "base": "retail", "pos": "adj.", "hint": "connected with selling goods directly to ordinary shoppers", "zh": "零售的" },
+      { "word": "loss", "base": "loss", "pos": "n.", "hint": "money that a business spends but does not earn back", "zh": "虧損" },
+      { "word": "gains", "base": "gain", "pos": "v.", "hint": "to get something useful that you did not have before", "zh": "獲得" },
+      { "word": "stocked", "base": "stock", "pos": "v.", "hint": "to keep goods in a shop so that customers can buy them", "zh": "進貨、備有" },
+      { "word": "queue", "base": "queue", "pos": "n.", "hint": "a line of people waiting for their turn", "zh": "排隊的隊伍" },
+      { "word": "word of mouth", "base": "word of mouth", "pos": "phr.", "hint": "the passing of news from one person to another in ordinary talk", "zh": "口碑、口耳相傳" },
+      { "word": "deadline", "base": "deadline", "pos": "n.", "hint": "the latest time by which something must be finished", "zh": "期限" },
+      { "word": "demand", "base": "demand", "pos": "n.", "hint": "the wish of many buyers to have a product or a service", "zh": "需求" },
+      { "word": "revenue", "base": "revenue", "pos": "n.", "hint": "the money a business takes in from selling things", "zh": "營收" },
+      { "word": "staff", "base": "staff", "pos": "n.", "hint": "the group of people who work for one company", "zh": "員工" },
+      { "word": "launch", "base": "launch", "pos": "v.", "hint": "to start something new, such as a shop or a product", "zh": "推出、開辦" }
+    ],
+    "questions": [
+      {
+        "q": "What is the main idea of the article?",
+        "options": [
+          "A bookstore did well because it was odd, secret, and open for only 90 days.",
+          "Bookstores in Taipei are closing because of online shopping.",
+          "Brown paper is the cheapest way to protect old books.",
+          "Most pop-up stores lose money in their first month."
+        ],
+        "answer": 0,
+        "explanation": "全文主軸是「只開九十天＋盲選包書」讓小書店爆紅，第三段講神秘包裝，第五段講期限帶動買氣，第六段老闆自己說「快閃店本來就要結束」。B、C、D 都只是枝節或文中沒說的推測。"
+      },
+      {
+        "q": "How long did the shop stay open?",
+        "options": [
+          "Six years",
+          "Two days",
+          "Ninety days",
+          "One year"
+        ],
+        "answer": 2,
+        "explanation": "細節題。第一段窗上的牌子寫著「Open for 90 days」，第六段也提到「On day 90, she locked the door」。六年是她存錢的時間，兩天是影片擴散的時間。"
+      },
+      {
+        "q": "Why did customers not know which book they were buying?",
+        "options": [
+          "The staff refused to talk to customers.",
+          "Each book was wrapped, with only three hints on the outside.",
+          "The titles were printed in a foreign language.",
+          "The lights inside the shop were too dark."
+        ],
+        "answer": 1,
+        "explanation": "細節題。第三段說店員用牛皮紙把每本書包起來，正面只寫三個關於故事的短提示，客人要回到家才知道書名。"
+      },
+      {
+        "q": "Why did Miriam most likely refuse to stay open after day 90?",
+        "options": [
+          "She could no longer pay her staff.",
+          "The landlord sold the building to a bank.",
+          "She had to move to Tainan that same week.",
+          "She believed the time limit was the main attraction."
+        ],
+        "answer": 3,
+        "explanation": "推論題。第五段說期限讓客人怕錯過而衝買氣，第六段她說「快閃店本來就要結束，這正是大家會來的原因」，可推知她認為期限本身就是賣點。其餘選項文中都沒有根據。"
+      },
+      {
+        "q": "According to the article, what first brought crowds to the shop?",
+        "options": [
+          "A student's photos and video shared online",
+          "A large newspaper advertisement",
+          "A discount of fifty percent",
+          "A visit from a famous author"
+        ],
+        "answer": 0,
+        "explanation": "細節題。第四段說一位大學生把照片貼上網，短片兩天內有二十萬人看到，週末就開始排隊；同段最後點明是口碑而非付費廣告。"
+      }
+    ]
+  },
+  {
+    "id": "art-6b",
+    "title": "Paid to Sleep",
+    "titleZh": "睡午覺也算工時",
+    "category": "職場",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "A dim office storage room turned into a nap space, with soft chairs, thick curtains, and a small clock showing twenty-five minutes.",
+    "paragraphs": [
+      {
+        "en": "Kenji Sato runs a small software firm in Kaohsiung. His team of forty people builds apps for banks. A few years ago, he noticed the same problem every afternoon. After lunch, the office went quiet and slow. Typing stopped, and tired eyes stared at screens. He tried stronger coffee, but nothing changed.",
+        "zh": "佐藤健二在高雄經營一家小型軟體公司。他的四十人團隊替銀行開發應用程式。幾年前，他每天下午都看到同一個問題。午餐過後，辦公室變得又安靜又遲鈍。打字聲停了，疲倦的眼睛盯著螢幕。他換了更濃的咖啡，情況卻沒有改變。"
+      },
+      {
+        "en": "In 2023, Kenji tried a strange [[experiment]]. He turned a storage room into a sleep room. He bought six soft chairs and thick curtains. Then he made a short [[announcement]] to the whole company. Staff could nap for 25 minutes each day. The nap counted as paid working time.",
+        "zh": "二○二三年，健二做了一個奇怪的實驗。他把一間儲藏室改成睡眠室。他買了六張軟椅和厚窗簾。接著他向全公司做了一個簡短的宣布。員工每天可以午睡二十五分鐘。這段午睡算在有薪工時裡。"
+      },
+      {
+        "en": "At first, almost nobody used the room. Many workers felt [[guilty]] about sleeping in the middle of the workday. Nobody wanted to be the first. One [[manager]] worried that her team would look lazy. So Kenji napped first, with the door open. Within a month, the room was full every afternoon.",
+        "zh": "一開始幾乎沒有人用那個房間。很多員工覺得上班時間睡覺很心虛。沒有人想當第一個。有位主管擔心自己的組會被看成偷懶。於是健二第一個去睡，而且門開著。一個月內，那個房間每天下午都滿了。"
+      },
+      {
+        "en": "The results surprised him. Staff [[absences]] dropped by about a third. Error reports from clients also fell. In a staff [[survey]], most people reported better [[focus]] after lunch. Kenji still tracked [[productivity]] every week, because he needed proof. Output per person rose about eight percent.",
+        "zh": "結果讓他很意外。員工的缺勤天數少了大約三分之一。客戶回報的程式錯誤也變少。在一份員工問卷裡，多數人表示午後更容易專注。健二仍然每週追蹤生產力，因為他需要證據。每人的產出提高了大約百分之八。"
+      },
+      {
+        "en": "Not everything went smoothly. Two workers slept for an hour and missed their [[deadlines]]. Kenji chose not to [[punish]] them. Instead, he wrote a clear [[policy]] for everyone. Naps end after 25 minutes, and a soft alarm rings in the room.",
+        "zh": "並不是每件事都順利。有兩名員工睡了一小時，錯過了自己的交件期限。健二選擇不處罰他們。他改為替所有人寫下清楚的規定。午睡到二十五分鐘結束，房間裡會響起輕柔的鬧鈴。"
+      },
+      {
+        "en": "Other firms now ask Kenji for advice. He gives the same answer every time. A sleep room alone cannot fix a bad company [[culture]]. It works only when the company also builds [[trust]]. \"Rest is not a [[benefit]],\" he says. \"It is basic [[maintenance]], like a service for a machine.\" Kenji plans to open a second sleep room next year.",
+        "zh": "現在有其他公司來向健二請教。他每次都給同樣的答案。光是一間睡眠室，救不了糟糕的公司文化。只有公司同時建立信任，它才會有效。他說：「休息不是福利，而是基本保養，就像機器要定期維修。」健二打算明年再開第二間睡眠室。"
+      }
+    ],
+    "vocab": [
+      { "word": "experiment", "base": "experiment", "pos": "n.", "hint": "a careful test done to find out whether an idea works", "zh": "實驗" },
+      { "word": "announcement", "base": "announcement", "pos": "n.", "hint": "a public statement that gives people new information", "zh": "宣布、公告" },
+      { "word": "guilty", "base": "guilty", "pos": "adj.", "hint": "feeling bad because you think you have done something wrong", "zh": "心虛的、內疚的" },
+      { "word": "manager", "base": "manager", "pos": "n.", "hint": "a person who leads a team and makes decisions at work", "zh": "主管" },
+      { "word": "absences", "base": "absence", "pos": "n.", "hint": "days when a worker is not at the workplace", "zh": "缺勤" },
+      { "word": "survey", "base": "survey", "pos": "n.", "hint": "a set of questions given to many people in order to collect their opinions", "zh": "問卷調查" },
+      { "word": "focus", "base": "focus", "pos": "n.", "hint": "the ability to keep your attention on one task", "zh": "專注力" },
+      { "word": "productivity", "base": "productivity", "pos": "n.", "hint": "how much useful work is done in a set period of time", "zh": "生產力" },
+      { "word": "deadlines", "base": "deadline", "pos": "n.", "hint": "fixed times by which work must be handed in", "zh": "交件期限" },
+      { "word": "punish", "base": "punish", "pos": "v.", "hint": "to make someone suffer because they have broken a rule", "zh": "處罰" },
+      { "word": "policy", "base": "policy", "pos": "n.", "hint": "an official rule or plan that a company follows", "zh": "政策、規定" },
+      { "word": "culture", "base": "culture", "pos": "n.", "hint": "the shared habits and beliefs of the people in a company", "zh": "文化、企業文化" },
+      { "word": "trust", "base": "trust", "pos": "n.", "hint": "the belief that other people will act fairly and keep their promises", "zh": "信任" },
+      { "word": "benefit", "base": "benefit", "pos": "n.", "hint": "an extra reward given to workers besides their pay", "zh": "福利" },
+      { "word": "maintenance", "base": "maintenance", "pos": "n.", "hint": "regular care that keeps something working well", "zh": "保養、維護" }
+    ],
+    "questions": [
+      {
+        "q": "What is the article mainly about?",
+        "options": [
+          "How to design a quiet storage room for a small firm",
+          "A new law that gives office workers paid rest time",
+          "Why banks need better apps for their customers",
+          "A company test that turned afternoon naps into paid work time"
+        ],
+        "answer": 3,
+        "explanation": "主旨題。第二段說健二把儲藏室改成睡眠室、午睡算有薪工時，第四段講成效，第六段講條件，全篇都圍繞這個實驗。A、B、C 都只是背景或文中沒提到的內容。"
+      },
+      {
+        "q": "Why did staff avoid the sleep room at first?",
+        "options": [
+          "The room had no chairs or curtains.",
+          "They felt bad about sleeping during work hours.",
+          "Kenji charged a small fee for each nap.",
+          "The room was still used for client meetings."
+        ],
+        "answer": 1,
+        "explanation": "細節題。第三段說很多員工覺得上班時間睡覺很心虛，也沒有人想當第一個，還有主管怕組員被看成偷懶。第二段已寫明椅子和窗簾都買好了。"
+      },
+      {
+        "q": "What happened to staff absences after the experiment?",
+        "options": [
+          "They stayed exactly the same.",
+          "They rose slightly.",
+          "They fell by about a third.",
+          "They were never counted."
+        ],
+        "answer": 2,
+        "explanation": "細節題。第四段第二句明確指出缺勤天數少了大約三分之一，同段還提到客戶回報的錯誤變少、每人產出增加約百分之八。"
+      },
+      {
+        "q": "Why did Kenji take the first nap himself, with the door open?",
+        "options": [
+          "To show his staff that the new rule was real and safe to use",
+          "To prove that he was more tired than everyone else",
+          "To test whether the six chairs were comfortable",
+          "To stop two workers from missing their deadlines"
+        ],
+        "answer": 0,
+        "explanation": "推論題。第三段說沒人敢當第一個、主管怕被當成偷懶，接著「於是健二第一個去睡，而且門開著」，一個月後房間就滿了，可推知他是在示範這條規定可以放心用。"
+      },
+      {
+        "q": "What does Kenji tell other companies that ask him for advice?",
+        "options": [
+          "Naps should replace all coffee breaks.",
+          "Sleep rooms only work in large companies.",
+          "Workers who sleep too long should lose part of their pay.",
+          "A sleep room will fail if there is no trust at work."
+        ],
+        "answer": 3,
+        "explanation": "推論題。第六段說光有睡眠室救不了有毒的職場文化，只有帶著信任一起做才會有效。第五段也顯示他不處罰睡過頭的員工，所以 C 不對。"
+      }
+    ]
+  }
+]

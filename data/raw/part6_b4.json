@@ -1,0 +1,212 @@
+[
+  {
+    "id": "p6-b4-1",
+    "passageType": "email",
+    "title": "Changes to Your Online Account Portal",
+    "passage": "To: Valued Customers\nFrom: Daniel Okafor, Customer Relations Manager\nSubject: Changes to Your Online Account Portal\nDate: 14 March\n\nDear Customer,\n\nBeginning on 1 April, Halcyon Utilities will {{1}} a redesigned online account portal. The new system lets you view your billing history, submit meter readings, and update your contact details in one place. {{2}} Your existing user name and password will continue to work, so no action is required on your part.\n\nPlease note that the portal will be {{3}} unavailable from 10:00 P.M. on 31 March until 6:00 A.M. the next morning. We apologize for any {{4}} this may cause.\n\nSincerely,\n\nDaniel Okafor\nCustomer Relations Manager, Halcyon Utilities",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["launching", "launch", "launched", "to launch"],
+        "answer": 1,
+        "explanation": "考助動詞 will 之後的動詞形式。will 後面一律接原形動詞，故 (B) launch 正確。(A) launching 是動名詞／現在分詞，若要使用須寫成 will be launching；(C) launched 是過去式或過去分詞，will 後不可接；(D) to launch 是不定詞，也不能直接接在助動詞之後。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Please visit one of our branch offices to register for a new account.",
+          "The current portal will remain in use for the rest of the year.",
+          "All of your account information will be transferred to the new portal automatically.",
+          "We are still searching for a software vendor to build the portal."
+        ],
+        "answer": 2,
+        "explanation": "空格前介紹新入口網站的功能，空格後說「您現有的使用者名稱與密碼仍可繼續使用，因此您無須採取任何動作」。(C) 說明帳戶資料會自動轉移，正好是「無須採取任何動作」的原因，前後呼應。(A) 要顧客親自到分公司重新註冊，與「無須採取任何動作」直接矛盾；(B) 說舊入口網站今年會繼續使用，與 4 月 1 日改用新系統矛盾；(D) 說仍在找開發廠商，與信中已公告上線日期矛盾。"
+      },
+      {
+        "num": 3,
+        "type": "字彙",
+        "options": ["temporarily", "permanently", "frequently", "recently"],
+        "answer": 0,
+        "explanation": "考副詞語意。空格後明確寫出停用時段是 3 月 31 日晚間 10 點到隔天清晨 6 點，屬於短時間中斷，故用 (A) temporarily（暫時地）。(B) permanently（永久地）與有明確結束時間互相矛盾；(C) frequently（經常地）指反覆發生，但文中只提到一次維護；(D) recently（最近）指過去時間，與 will be 的未來時態不合。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["inconvenient", "inconveniently", "inconvenienced", "inconvenience"],
+        "answer": 3,
+        "explanation": "考詞性。空格前有介系詞 for 與限定詞 any，需要名詞當受詞，故選 (D) inconvenience（不便）。(A) inconvenient 是形容詞；(B) inconveniently 是副詞；(C) inconvenienced 是動詞的過去式／過去分詞，三者皆不能接在 any 之後當 for 的受詞。"
+      }
+    ],
+    "translation": "收件者：親愛的顧客\n寄件者：Daniel Okafor，客戶關係經理\n主旨：您的線上帳戶入口網站異動\n日期：3 月 14 日\n\n親愛的顧客您好：\n\n自 4 月 1 日起，Halcyon 公用事業公司將推出重新設計的線上帳戶入口網站。新系統讓您在同一個地方查詢帳單紀錄、回報水電錶度數並更新聯絡資料。您所有的帳戶資料都會自動轉移到新的入口網站。您現有的使用者名稱與密碼仍可繼續使用，因此您無須採取任何動作。\n\n請注意，本入口網站將於 3 月 31 日晚間 10 點至隔日清晨 6 點暫時無法使用。造成任何不便，我們深感抱歉。\n\n敬祝 順安\n\nDaniel Okafor\nHalcyon 公用事業公司 客戶關係經理"
+  },
+  {
+    "id": "p6-b4-2",
+    "passageType": "memo",
+    "title": "Revised Travel Expense Policy",
+    "passage": "MEMORANDUM\n\nTo: All Department Managers\nFrom: Priya Raghavan, Director of Finance\nSubject: Revised Travel Expense Policy\nDate: 9 June\n\nEffective 1 July, all travel expense claims must be submitted through the Vantage Expense System rather than on paper forms. Claims {{1}} more than thirty days after a trip ends will not be reimbursed. {{2}} Receipts should be photographed and uploaded directly to the system; originals no longer need to be sent to the Finance Department.\n\nManagers are asked to {{3}} the new procedure with their teams before the end of the month. If you have questions about the policy, please direct {{4}} to Ms. Alvarez at extension 244.\n\nP. Raghavan\nFinance Department",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["submitting", "submit", "submitted", "submission"],
+        "answer": 2,
+        "explanation": "考分詞修飾。空格修飾主詞 Claims，而費用申請是「被」提交的，屬被動關係，故用過去分詞 (C) submitted 形成簡化關係子句（＝Claims that are submitted more than thirty days...）。(A) submitting 是現在分詞，表主動，語意不合；(B) submit 是限定動詞，但句中已有主要動詞 will not be reimbursed，不能再出現第二個限定動詞；(D) submission 是名詞，不能直接接在名詞 Claims 之後。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "The system will send an automatic reminder as each deadline approaches.",
+          "Paper forms may still be collected from the reception desk.",
+          "The Finance Department will move to the fourth floor in August.",
+          "Employees are encouraged to book their own flights whenever possible."
+        ],
+        "answer": 0,
+        "explanation": "空格前提到「行程結束逾三十天提出的申請不予核銷」的期限規定，空格後轉而說明收據要上傳到系統。(A) 同時承接前句的「期限」與後句的「系統」，銜接最自然。(B) 說櫃台仍可索取紙本表單，與第一句「不再使用紙本表單」矛盾；(C) 財務部搬遷與費用核銷流程無關；(D) 訂機票的方式與費用核銷的規定無關。"
+      },
+      {
+        "num": 3,
+        "type": "字彙",
+        "options": ["postpone", "approve", "translate", "review"],
+        "answer": 3,
+        "explanation": "考動詞語意。備忘錄要求主管在月底前和團隊一起「檢視、說明」新流程，(D) review 與 with their teams 搭配自然。(A) postpone（延後）與政策已定於 7 月 1 日生效矛盾；(B) approve（核准）不合理，政策由財務部發布，並非由各部門主管核准；(C) translate（翻譯）與情境無關。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["it", "them", "their", "themselves"],
+        "answer": 1,
+        "explanation": "考代名詞。空格代替前面出現的 questions（複數），並且當動詞 direct 的受詞，故用複數受格 (B) them。(A) it 是單數，與 questions 不一致；(C) their 是所有格，後面必須接名詞，不能單獨當受詞；(D) themselves 是反身代名詞，須與主詞同指，但本句主詞是 you，用法錯誤。"
+      }
+    ],
+    "translation": "備忘錄\n\n受文者：各部門主管\n發文者：Priya Raghavan，財務總監\n主旨：差旅費用核銷政策修訂\n日期：6 月 9 日\n\n自 7 月 1 日起，所有差旅費用核銷一律須透過 Vantage 費用系統提出，不再使用紙本表單。行程結束超過三十天後才提出的申請將不予核銷。系統會在每個期限接近時自動發送提醒。收據請拍照後直接上傳至系統，正本不必再送交財務部。\n\n請各主管於本月底前與所屬團隊一同檢視新流程。若對本政策有疑問，請洽 Alvarez 女士，分機 244。\n\nP. Raghavan\n財務部"
+  },
+  {
+    "id": "p6-b4-3",
+    "passageType": "instructions",
+    "title": "How to Return or Exchange an Item",
+    "passage": "Returns and Exchanges | Meridian Home Goods\n\nThank you for shopping with us. If an item does not meet your expectations, you may return or exchange it within sixty days of delivery.\n\nTo begin, sign in to your account and select the order {{1}} contains the item you wish to send back. Choose a reason from the drop-down menu, then print the prepaid shipping label that appears on the screen. {{2}} Pack the item in its original box and attach the label to the outside.\n\nRefunds are processed within five business days of the item's {{3}} at our warehouse. Exchanges may take slightly {{4}} because the replacement item must be reserved before it can ship.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["what", "who", "whose", "that"],
+        "answer": 3,
+        "explanation": "考關係代名詞。空格引導形容詞子句修飾先行詞 the order（事物），且在子句中擔任主詞，故用 (D) that。(A) what 本身已含先行詞，不能再接在名詞之後；(B) who 只能指人；(C) whose 是所有格關係代名詞，後面必須接名詞，但空格後直接接動詞 contains。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Most orders are delivered within three to five business days.",
+          "Gift cards may be redeemed at any of our retail locations.",
+          "If you do not have a printer, you may request a QR code instead.",
+          "Items purchased on sale are eligible for store credit only."
+        ],
+        "answer": 2,
+        "explanation": "空格前一句要顧客「列印」預付運費標籤，空格後一句要顧客包裝並「貼上標籤」。(C) 針對沒有印表機的情況提供替代做法，緊扣前句的列印動作，也不打斷後續步驟。(A) 談出貨天數，屬於購買而非退貨流程；(B) 禮品卡的兌換與退貨步驟無關；(D) 突然插入特價商品只能退購物金的規定，屬於政策說明而非操作步驟，會切斷「列印標籤→包裝貼標」的流程連貫。"
+      },
+      {
+        "num": 3,
+        "type": "字彙",
+        "options": ["arrival", "departure", "purchase", "reminder"],
+        "answer": 0,
+        "explanation": "考名詞語意。退款是在商品送達倉庫之後五個工作天內處理，故用 (A) arrival（抵達）。(B) departure（離開）方向相反，語意不通；(C) purchase（購買）發生在退貨之前，且不會發生在 our warehouse；(D) reminder（提醒）與 at our warehouse 無法搭配。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["long", "longer", "longest", "lengthy"],
+        "answer": 1,
+        "explanation": "考比較級。副詞 slightly 用來修飾比較級，表示程度上的些微差距，且句意是換貨比退款「多花一點時間」，故用 (B) longer。(A) long 是原級，take slightly long 不符合英文慣用法，也缺少與退款相比的比較意味；(C) longest 是最高級，句中沒有三者以上的比較範圍，也缺少 the；(D) lengthy 是形容詞，只能修飾名詞（如 a lengthy process），不能接在 take 之後表示花費時間。"
+      }
+    ],
+    "translation": "退換貨說明｜Meridian 居家用品\n\n感謝您的惠顧。若商品不符合您的期待，您可於送達後六十天內辦理退貨或換貨。\n\n首先，請登入您的帳戶，選擇包含欲退回商品的那筆訂單。從下拉選單中選擇原因，接著列印畫面上出現的預付運費標籤。若您沒有印表機，也可以改為索取 QR code。請將商品裝回原本的包裝盒，並將標籤貼在外箱上。\n\n退款將於商品送達本公司倉庫後五個工作天內處理完成。換貨所需時間可能稍長，因為替換商品必須先預留才能出貨。"
+  },
+  {
+    "id": "p6-b4-4",
+    "passageType": "letter",
+    "title": "Letter of Thanks for Riverside Cleanup Support",
+    "passage": "Brightwater Community Foundation\n88 Larkspur Avenue, Kingsport\n\n12 October\n\nMs. Helena Voss\nVice President, Cormorant Textiles\n41 Bellweather Street, Kingsport\n\nDear Ms. Voss,\n\nOn behalf of everyone at the Brightwater Community Foundation, I would like to thank you for the {{1}} support your company provided for last month's Riverside Cleanup. Thanks to the volunteers and equipment that Cormorant Textiles contributed, we removed more than four tons of trash from the riverbank. {{2}}\n\n{{3}} the success of this year's event, we plan to hold the cleanup again next spring, and we very much hope that your employees will join us. I have enclosed a short report that {{4}} the results of the project in more detail.\n\nWith appreciation,\n\nMarcus Deel\nExecutive Director",
+    "questions": [
+      {
+        "num": 1,
+        "type": "字彙",
+        "options": ["generous", "punctual", "cautious", "temporary"],
+        "answer": 0,
+        "explanation": "考形容詞語意。這是一封感謝信，感謝對方提供志工與設備，(A) generous（慷慨的）與 support 搭配最自然，也呼應後文的實際貢獻。(B) punctual（準時的）用來形容人或抵達時間，不修飾 support；(C) cautious（謹慎的）與致謝語氣不合；(D) temporary（暫時的）帶有保留、有限的意味，不適合用於感謝對方的支持。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Unfortunately, heavy rain forced us to cancel the event.",
+          "We are still looking for a company willing to sponsor the cleanup.",
+          "The riverbank will remain closed to the public indefinitely.",
+          "Residents have already commented on how much cleaner the walking path looks."
+        ],
+        "answer": 3,
+        "explanation": "空格前描述活動成果（清出四噸以上廢棄物），空格後的段落則展望明年再次舉辦。(D) 延續成果並補充正面回饋，語氣與段落發展一致。(A) 說活動因大雨取消，與活動已順利完成並產出成果矛盾；(B) 說仍在尋找贊助企業，與正在向贊助者致謝矛盾；(C) 說河岸將無限期封閉，與清理成功的正面語氣相衝突。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["Despite", "Given", "Whereas", "In case"],
+        "answer": 1,
+        "explanation": "考連接用語的詞性與邏輯。空格後接名詞片語 the success of this year's event，且與主句「明年春天再辦一次」構成因果關係，故用介系詞片語 (B) Given（有鑑於）。(A) Despite 雖可接名詞片語，但表讓步，與「因為成功所以再辦」的邏輯相反；(C) Whereas 與 (D) In case 都是連接詞，後面必須接完整子句，不能直接接名詞片語。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["describe", "describing", "describes", "to describe"],
+        "answer": 2,
+        "explanation": "考主詞動詞一致。關係代名詞 that 的先行詞是 a short report（單數），子句動詞須用第三人稱單數現在式，故選 (C) describes。(A) describe 用於複數主詞或原形；(B) describing 是分詞，但 that 引導的子句需要限定動詞；(D) to describe 是不定詞，不能當關係子句的主要動詞。"
+      }
+    ],
+    "translation": "Brightwater 社區基金會\nKingsport 市 Larkspur 大道 88 號\n\n10 月 12 日\n\nHelena Voss 女士\nCormorant 紡織公司 副總經理\nKingsport 市 Bellweather 街 41 號\n\n敬愛的 Voss 女士：\n\n謹代表 Brightwater 社區基金會全體同仁，感謝貴公司對上個月河濱清理活動的慷慨支持。多虧 Cormorant 紡織公司提供的志工與設備，我們從河岸清出超過四噸的廢棄物。附近居民已經表示，那條步道看起來乾淨許多。\n\n有鑑於今年活動的成功，我們計畫明年春天再次舉辦這項清理活動，也非常希望貴公司同仁能再度參與。隨函附上一份簡短報告，更詳細說明本次計畫的成果。\n\n謹致謝忱\n\nMarcus Deel\n執行長"
+  },
+  {
+    "id": "p6-b4-5",
+    "passageType": "advertisement",
+    "title": "Copperline Kitchenware Fifteenth Anniversary Sale",
+    "passage": "COPPERLINE KITCHENWARE\nFifteenth Anniversary Sale | 3-17 November\n\nFor fifteen years, Copperline Kitchenware has supplied home cooks and professional chefs with cookware built to last. To celebrate, we are {{1}} every item in our showroom and on our website by at least 25 percent for two weeks only.\n\nShoppers who spend $150 or more will also receive a free set of bamboo utensils. {{2}} Members of the Copperline Club earn double points on all purchases made {{3}} the sale.\n\nVisit us at 400 Whitfield Road, or shop online at www.copperlinekitchen.com. Quantities are {{4}}, so please come early for the best selection.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "字彙",
+        "options": ["donating", "inspecting", "discounting", "expanding"],
+        "answer": 2,
+        "explanation": "考動詞語意。空格後的 by at least 25 percent 指降價幅度，整篇又是週年慶特賣廣告，故用 (C) discounting（打折、降價）。(A) donating（捐贈）與販售商品的情境矛盾；(B) inspecting（檢查）與百分比降幅無關；(D) expanding（擴大）用於規模或版圖，不能形容商品降價。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Our showroom will be closed for renovation throughout November.",
+          "This gift is limited to one per customer while supplies last.",
+          "Bamboo utensils are no longer part of our product line.",
+          "Online orders placed before September qualify for free delivery."
+        ],
+        "answer": 1,
+        "explanation": "空格前說明消費滿 150 美元可獲贈竹製餐具組，(B) 緊接著補充這份贈品的領取限制，主題連貫。(A) 說展示間 11 月整月因整修關閉，與 11 月 3 日至 17 日在展示間特賣矛盾；(C) 說竹製餐具已停售，與前一句的贈品直接衝突；(D) 提到九月前下單才免運，與本次 11 月的活動時間不符。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["while", "since", "among", "during"],
+        "answer": 3,
+        "explanation": "考介系詞與連接詞的區別。空格後接名詞片語 the sale，需要介系詞，且語意是「在特賣期間」，故選 (D) during。(A) while 是連接詞，後面必須接子句；(B) since 表「自從某時間點以來」，須搭配完成式並指起點，與本句現在式的 earn 不合；(C) among 用於三者以上的群體之中，語意不通。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["limited", "limit", "limiting", "limitation"],
+        "answer": 0,
+        "explanation": "考詞性與句型。空格接在 be 動詞 are 之後，需要形容詞（分詞形容詞）當主詞補語，(A) limited（有限的）正確，也與後句「請提早前來以獲得最佳選擇」呼應。(B) limit 是原形動詞或單數名詞，與複數主詞 Quantities 皆不搭配；(C) limiting 表「造成限制的」，語意不合；(D) limitation 是名詞，說「數量是限制」不通。"
+      }
+    ],
+    "translation": "COPPERLINE 廚具\n十五週年慶特賣｜11 月 3 日至 17 日\n\n十五年來，Copperline 廚具持續為居家料理者與專業廚師提供耐用的鍋具。為了慶祝週年，我們將展示間與網站上的所有商品降價至少 25%，為期僅兩週。\n\n消費滿 150 美元的顧客還可獲贈竹製餐具組一份。此贈品每位顧客限領一份，送完為止。Copperline 俱樂部會員於特賣期間的所有消費均可獲得雙倍點數。\n\n歡迎蒞臨 Whitfield 路 400 號門市，或上網選購：www.copperlinekitchen.com。數量有限，敬請提早前來選購。"
+  }
+]

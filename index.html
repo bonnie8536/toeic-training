@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多益閱讀訓練室|TOEIC Reading Room</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">TOEIC</span>多益閱讀訓練室</a>
+    <nav class="topnav">
+      <a href="index.html" class="active">首頁</a>
+      <a href="diagnostic.html">程度檢測</a>
+      <a href="reading.html">閱讀訓練</a>
+      <a href="practice.html">題庫刷題</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>先讀懂文章,再把題目刷熟。</h1>
+    <p class="sub">給多益考生的閱讀訓練工具:文章裡的高頻單字用填空方式練、看不懂再看英文提示,搭配 Part 5、6、7 題庫逐題解析。</p>
+    <div class="stats">
+      <div class="stat"><b id="stat-articles">—</b><span>訓練文章</span></div>
+      <div class="stat"><b id="stat-vocab">—</b><span>互動單字</span></div>
+      <div class="stat"><b id="stat-questions">—</b><span>刷題題數</span></div>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <div class="module-cards">
+    <a class="module-card" href="diagnostic.html">
+      <span class="tag">START HERE</span>
+      <h2>程度檢測</h2>
+      <p>28 題鑑別卷,20 分鐘。交卷後產生報告:你的估計程度、哪些考點已經會、哪些還不會、建議從哪裡開始練。</p>
+      <div class="go">先測程度 →</div>
+    </a>
+    <a class="module-card" href="reading.html">
+      <span class="tag">READING</span>
+      <h2>閱讀訓練</h2>
+      <p>有趣的商業情境文章,內嵌多益高頻單字。點單字挑戰填空、切換英中對照翻譯,讀完做抓重點題組。</p>
+      <div class="go">開始閱讀 →</div>
+    </a>
+    <a class="module-card" href="practice.html">
+      <span class="tag">PRACTICE</span>
+      <h2>題庫刷題</h2>
+      <p>依多益閱讀 Part 5、6、7 題型出題,每大題 100 題以上。逐題即時解析,自動記錄進度與錯題。</p>
+      <div class="go">開始刷題 →</div>
+    </a>
+  </div>
+
+  <div class="howto">
+    <h2>單字是這樣練的</h2>
+    <p class="lead">文章裡有虛線的單字都可以點。不是點了就給答案——要自己想、自己拼出來,才記得住。</p>
+    <div class="howto-steps">
+      <div class="howto-step">
+        <span class="n">1</span>
+        <b>點一下,單字變成空格</b>
+        <span>忘記這個字?點它,原位置變成空格,填空小卡會浮在字的上方。</span>
+        <div class="demo">The company will <span class="vw gap">implement</span> a new policy.</div>
+      </div>
+      <div class="howto-step">
+        <span class="n">2</span>
+        <b>提示分兩層,自己拼出來</b>
+        <span>先看英英釋義;還是不會,再看中文意思——但單字要自己拼進去才算完成。</span>
+        <div class="demo"><b style="color:var(--hint-orange);font-size:12px;letter-spacing:1px">HINT</b> to start using a plan or system officially<br><b style="color:var(--primary-dark);font-size:12px;letter-spacing:1px">中文意思</b> 實施;執行</div>
+      </div>
+      <div class="howto-step">
+        <span class="n">3</span>
+        <b>填過的字,再點就給翻譯</b>
+        <span>完成過的單字會標黃。之後再點,直接顯示中文意思和原形,當成自己的單字卡。</span>
+        <div class="demo">The company will <span class="vw done">implement</span> a new policy.</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">多益閱讀訓練室 · 純前端教材工具,進度只儲存在你自己的裝置上。</div>
+</footer>
+
+<script src="js/cloud-config.js"></script>
+<script src="data/articles.js"></script>
+<script src="data/part5.js"></script>
+<script src="data/part6.js"></script>
+<script src="data/part7.js"></script>
+<script src="js/common.js"></script>
+<script src="js/cloud.js"></script>
+<script src="js/profile.js"></script>
+<script>
+(function () {
+  const t = window.TOEIC || {};
+  const articles = t.articles || [];
+  let vocab = 0;
+  articles.forEach(a => a.paragraphs.forEach(p => { vocab += (p.en.match(/\[\[/g) || []).length; }));
+  let qs = (t.part5 || []).length;
+  (t.part6 || []).forEach(s => qs += s.questions.length);
+  (t.part7 || []).forEach(s => qs += s.questions.length);
+  document.getElementById('stat-articles').textContent = articles.length || '—';
+  document.getElementById('stat-vocab').textContent = vocab || '—';
+  document.getElementById('stat-questions').textContent = qs || '—';
+})();
+</script>
+</body>
+</html>

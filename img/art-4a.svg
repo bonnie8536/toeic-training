@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A confusing new office coffee machine">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="238" width="800" height="62" fill="#dde7ee"/>
+  <!-- 咖啡機 -->
+  <rect x="330" y="60" width="150" height="180" rx="12" fill="#404040"/>
+  <rect x="348" y="78" width="114" height="40" rx="6" fill="#9fd0f5"/>
+  <circle cx="366" cy="140" r="8" fill="#ffd964"/>
+  <circle cx="394" cy="140" r="8" fill="#e8890c"/>
+  <circle cx="422" cy="140" r="8" fill="#3a8a4d"/>
+  <circle cx="450" cy="140" r="8" fill="#c94040"/>
+  <rect x="378" y="162" width="54" height="10" rx="4" fill="#767f88"/>
+  <rect x="386" y="196" width="40" height="30" rx="4" fill="#fff"/>
+  <!-- 問號 -->
+  <text x="530" y="110" font-family="Arial" font-size="56" font-weight="bold" fill="#0b72c4">?</text>
+  <text x="256" y="140" font-family="Arial" font-size="40" font-weight="bold" fill="#e8890c">?</text>
+  <!-- 兩位員工 -->
+  <circle cx="220" cy="170" r="20" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M200 222 q20 -24 40 0 l-4 40 h-32 z" fill="#0b72c4"/>
+  <circle cx="580" cy="170" r="20" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M560 222 q20 -24 40 0 l-4 40 h-32 z" fill="#e8890c"/>
+  <!-- 說明書 -->
+  <rect x="620" y="196" width="60" height="44" rx="4" fill="#fff" stroke="#404040" stroke-width="3"/>
+  <line x1="630" y1="210" x2="670" y2="210" stroke="#9db8cc" stroke-width="4"/>
+  <line x1="630" y1="222" x2="662" y2="222" stroke="#dde7ee" stroke-width="4"/>
+</svg>

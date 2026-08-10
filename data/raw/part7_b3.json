@@ -1,0 +1,302 @@
+[
+  {
+    "id": "p7-b3-1",
+    "format": "single",
+    "passages": [
+      {
+        "type": "letter",
+        "label": "",
+        "content": "Trellborg Office Supplies\n44 Kingsway Road, Lansdale, OH 44112\n\nMarch 14\n\nMs. Daniela Requena\nOperations Manager\nCavendish Marketing Group\n1820 Pinehurst Avenue, Suite 300\nLansdale, OH 44115\n\nDear Ms. Requena,\n\nI am writing to inform you of an adjustment to our wholesale pricing that will take effect on May 1. Rising costs in raw materials and freight have made it necessary to raise the unit price of our printer paper, filing supplies, and packaging materials by an average of six percent. Prices for office furniture and technology accessories will remain unchanged.\n\nBecause Cavendish Marketing Group has ordered from us continuously since 2016, your account qualifies for our Preferred Partner program. Under that program, the increase applied to your orders will be capped at three percent, and you will continue to receive complimentary next-day delivery on any order above $250.\n\nI recognize that a change of this kind requires planning on your side. If you wish to place a large order at the current rates, we can hold existing prices for any purchase order we receive before April 25. Our warehouse can also arrange several smaller shipments so that you do not have to store an entire quarter's supplies at once.\n\nAn updated catalog with the revised figures is enclosed. If you have questions about specific items, please contact your account representative, Mr. Owen Baptiste, at 555-0142 or obaptiste@trellborgsupplies.com.\n\nThank you for your continued business.\n\nSincerely,\n\nMarguerite Vandeleur\nDirector of Sales"
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the main purpose of the letter?",
+        "options": [
+          "To announce an upcoming change in prices",
+          "To apologize for a delayed shipment",
+          "To introduce a newly hired account representative",
+          "To request payment of an overdue invoice"
+        ],
+        "answer": 0,
+        "explanation": "定位：第一段第一句「I am writing to inform you of an adjustment to our wholesale pricing that will take effect on May 1.」直接說明來信目的是告知價格調整。(B) 全文未提及任何延遲出貨或致歉。(C) 第四段雖提到客戶專員 Owen Baptiste，但只是提供聯絡窗口，並未說他是新到職人員。(D) 信中討論的是未來訂單的價格，完全沒有提到逾期未付款項。"
+      },
+      {
+        "q": "What is indicated about Cavendish Marketing Group?",
+        "options": [
+          "It has recently opened a second office.",
+          "It orders only office furniture from Trellborg.",
+          "It will face a smaller increase than other customers.",
+          "It has asked to change its delivery schedule."
+        ],
+        "answer": 2,
+        "explanation": "定位：第一段說一般漲幅平均為 six percent，第二段則說該公司因符合 Preferred Partner 資格，「the increase applied to your orders will be capped at three percent」，可推知其漲幅低於一般客戶。(A) 信中只提到自 2016 年起持續訂貨，未提及新設辦公室。(B) 第一段列出的漲價品項是用紙、檔案用品與包裝材料，並未說該公司只買家具。(D) 分批出貨是賣方主動提供的選項，並非買方提出的要求。"
+      },
+      {
+        "q": "What is NOT mentioned as something Ms. Requena can do?",
+        "options": [
+          "Submit a purchase order at the current prices",
+          "Receive her supplies in several separate deliveries",
+          "Contact a representative about individual products",
+          "Return unused merchandise for a refund"
+        ],
+        "answer": 3,
+        "explanation": "定位：第三段提到 4 月 25 日前下單可維持現價（對應 A）與倉庫可安排分批小量出貨（對應 B）；第四段提到可聯絡客戶專員詢問特定品項（對應 C）。全文從未提及退回未使用商品或退款，故 (D) 為未提及的選項。"
+      },
+      {
+        "q": "The word \"hold\" in paragraph 3, line 3, is closest in meaning to",
+        "options": [
+          "grab",
+          "maintain",
+          "delay",
+          "contain"
+        ],
+        "answer": 1,
+        "explanation": "定位：第三段「we can hold existing prices for any purchase order we receive before April 25」中的 hold 指「維持、保留（現行價格）」，故 maintain 最接近。(A) grab 是用手抓住，與價格不搭。(C) delay 是延後，句意是價格不變而非延後漲價的時程。(D) contain 是容納或抑制，語意不合。"
+      }
+    ],
+    "translation": [
+      "特雷爾堡辦公用品\n俄亥俄州蘭斯代爾市金斯威路44號 44112\n\n3月14日\n\n丹妮耶拉・雷奎納女士\n營運經理\n卡文迪西行銷集團\n俄亥俄州蘭斯代爾市松赫斯特大道1820號300室 44115\n\n親愛的雷奎納女士：\n\n謹此通知您，本公司的批發價格將自5月1日起調整。原物料與運費成本上漲，使我們不得不將印表機用紙、檔案用品與包裝材料的單價平均調高百分之六。辦公家具與科技配件的價格則維持不變。\n\n由於卡文迪西行銷集團自2016年起持續向本公司訂貨，貴公司的帳戶符合本公司「優先合作夥伴」方案的資格。在該方案下，貴公司訂單的漲幅上限為百分之三，且金額超過250美元的訂單仍可享免費隔日到貨。\n\n我理解這樣的變動需要貴公司預作規劃。若您希望以現行價格下大筆訂單，凡我們在4月25日前收到的採購單，都可以維持現行價格。本公司倉庫也可以安排分批出貨，讓貴公司不必一次存放整季的用品。\n\n隨函附上載有新價格的目錄。若您對特定品項有疑問，請聯絡您的客戶專員歐文・巴普提斯特先生，電話555-0142，或來信 obaptiste@trellborgsupplies.com。\n\n感謝您長期以來的惠顧。\n\n謹啟\n\n瑪格麗特・范德勒\n業務總監"
+    ]
+  },
+  {
+    "id": "p7-b3-2",
+    "format": "single",
+    "passages": [
+      {
+        "type": "advertisement",
+        "label": "",
+        "content": "THE FILBERT WORKS\nFlexible Meeting and Event Space in Downtown Ashgrove\nOpening September 6\n\nTired of squeezing your quarterly review into a hotel lobby? The Filbert Works has turned a 1920s textile mill into four bright, soundproof rooms designed for teams of every size.\n\nOUR SPACES\n- The Loom (seats 8) ........ $35 per hour\n- The Spindle (seats 20) .... $60 per hour\n- The Dye House (seats 45) .. $95 per hour\n- The Rooftop Terrace (standing reception, up to 120) .. $150 per hour\n\nEvery booking, whatever the room, includes high-speed wireless internet, a wall-mounted display with wireless screen sharing, filtered water and coffee service, and a full whiteboard wall. On-site parking is available separately at $8 per vehicle per day.\n\nCATERING\nOur neighbors at Ferrand & Daughters Bakery supply breakfast trays ($9 per person) and boxed lunches ($16 per person). Catering orders must be placed at least 48 hours before your event.\n\nOPENING OFFER\nReserve any space before August 31 and receive 25 percent off your first three bookings. Simply mention code MILL25 when you reserve.\n\nRooms may be viewed in person Monday through Friday, 9:00 A.M. to 4:00 P.M. No appointment is necessary.\n\nBookings: filbertworks.com/reserve\nQuestions: Ms. Priya Chandrasekhar, 555-0176\nAddress: 210 Carding Street, Ashgrove"
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is being advertised?",
+        "options": [
+          "A bakery that delivers to local offices",
+          "A venue available for rent",
+          "A parking facility in the downtown area",
+          "A firm that renovates historic buildings"
+        ],
+        "answer": 1,
+        "explanation": "定位：標題下方副標「Flexible Meeting and Event Space in Downtown Ashgrove」以及 OUR SPACES 區塊列出各空間的每小時費率，說明這是出租的場地。(A) Ferrand & Daughters Bakery 只是提供外燴的鄰居商家，不是廣告主體。(C) 停車位只是附加服務，每日8美元。(D) 廣告提到建物由1920年代紡織廠改建，但賣的是場地租用，不是改建服務。"
+      },
+      {
+        "q": "What is included in the hourly rate for every room?",
+        "options": [
+          "Access to a wireless internet connection",
+          "A parking space for each guest",
+          "Breakfast for all attendees",
+          "The services of an on-site technician"
+        ],
+        "answer": 0,
+        "explanation": "定位：第三段「Every booking, whatever the room, includes high-speed wireless internet...」明確指出無線網路包含在內。(B) 同段最後一句說停車須另外付費，每車每日8美元。(C) CATERING 段落顯示早餐餐盤每人9美元，需另外訂購。(D) 廣告只提到壁掛顯示器與無線投影設備，未提供現場技術人員。"
+      },
+      {
+        "q": "According to the advertisement, how can a customer obtain a discount?",
+        "options": [
+          "By booking more than three rooms at the same time",
+          "By paying the entire amount in advance",
+          "By ordering catering along with the reservation",
+          "By referring to a code when making a reservation"
+        ],
+        "answer": 3,
+        "explanation": "定位：OPENING OFFER 段落「Simply mention code MILL25 when you reserve.」說明訂位時報上代碼即可享折扣。(A) 優惠是「前三次訂位」打折，不是一次訂三間房間。(B) 廣告完全未提到預付全額。(C) 外燴與折扣無關，只規定須於48小時前訂購。"
+      },
+      {
+        "q": "What is stated about catering orders?",
+        "options": [
+          "They are prepared in the building's own kitchen.",
+          "They are offered only to groups of 20 or more.",
+          "They must be arranged at least two days ahead.",
+          "They are complimentary for rooftop events."
+        ],
+        "answer": 2,
+        "explanation": "定位：CATERING 段落「Catering orders must be placed at least 48 hours before your event.」48小時即兩天。(A) 餐點由隔壁的 Ferrand & Daughters Bakery 供應，不是場地自有廚房。(B) 廣告未設人數門檻，只列出每人單價。(D) 屋頂露台每小時150美元，餐飲仍須另外付費，並未免費。"
+      }
+    ],
+    "translation": [
+      "菲爾伯特工坊\n阿什格羅夫市中心的彈性會議與活動空間\n9月6日開幕\n\n還在把季度檢討會擠在飯店大廳裡開嗎？菲爾伯特工坊已將一座1920年代的紡織廠改造成四間明亮、具隔音效果的空間，適合各種規模的團隊。\n\n我們的空間\n－織機廳（可坐8人）........每小時35美元\n－紡錘廳（可坐20人）......每小時60美元\n－染坊廳（可坐45人）......每小時95美元\n－屋頂露台（站立式酒會，最多120人）..每小時150美元\n\n無論租用哪一間，每筆訂位都包含高速無線網路、可無線投影的壁掛顯示器、過濾飲水與咖啡服務，以及一整面白板牆。館內停車須另行付費，每車每日8美元。\n\n餐飲服務\n本館鄰居費朗父女烘焙坊提供早餐餐盤（每人9美元）與餐盒（每人16美元）。餐飲訂單須於活動前至少48小時提出。\n\n開幕優惠\n8月31日前訂位，前三次租用可享七五折。訂位時報上代碼 MILL25 即可。\n\n週一至週五上午9時至下午4時可現場看場地，無須預約。\n\n訂位：filbertworks.com/reserve\n洽詢：普里雅・錢德拉塞卡女士，555-0176\n地址：阿什格羅夫市卡丁街210號"
+    ]
+  },
+  {
+    "id": "p7-b3-3",
+    "format": "single",
+    "passages": [
+      {
+        "type": "notice",
+        "label": "",
+        "content": "NOTICE TO ALL TENANTS\nBellweather Tower - Level B2 Garage Resurfacing\nPosted: October 3\n\nBeginning Monday, October 20, contractors from Ridgeline Paving will resurface the concrete deck on Level B2 of the parking garage. The work is expected to take nine business days and should be complete by Thursday, October 30.\n\nWHAT THIS MEANS FOR YOU\nLevel B2 will be closed for the entire duration of the project. Any vehicle left on that level after 6:00 P.M. on Friday, October 17 will be towed at the owner's expense. Tenants who normally park on B2 have been assigned temporary spaces on Level B1 and in the surface lot behind the loading dock. Replacement parking tags must be collected from the management office on the ground floor between October 13 and October 17. There is no charge for the temporary assignment.\n\nLevels B1 and B3 will remain open throughout. However, the freight elevator will be reserved for contractor use from 7:00 A.M. to 3:00 P.M. each weekday, so tenants planning deliveries of furniture or equipment should schedule them outside those hours.\n\nPlease also note that a strong smell from the new surface may be noticeable in stairwell C during the first three days of work. Tenants whose offices are adjacent to that stairwell are encouraged to keep hallway doors closed.\n\nQuestions may be directed to the building superintendent, Mr. Hollis Nakagawa, at extension 4180.\n\nWe appreciate your patience."
+      }
+    ],
+    "questions": [
+      {
+        "q": "Why was the notice written?",
+        "options": [
+          "To announce a change in the building's office hours",
+          "To request volunteers for a tenant committee",
+          "To inform tenants about upcoming construction work",
+          "To explain a new fee for using the garage"
+        ],
+        "answer": 2,
+        "explanation": "定位：標題「Level B2 Garage Resurfacing」與第一段「contractors from Ridgeline Paving will resurface the concrete deck on Level B2」說明公告目的是告知即將進行的施工。(A) 公告提到的時段是貨梯使用時間與領取停車證的期間，與辦公時間無關。(B) 全文未招募任何志工。(D) 第二段最後一句明說臨時車位不收費。"
+      },
+      {
+        "q": "What are tenants who usually park on Level B2 instructed to do?",
+        "options": [
+          "Register their license plate numbers on a website",
+          "Pick up a new parking tag at the management office",
+          "Park on the street until the end of October",
+          "Submit a request for a refund of parking charges"
+        ],
+        "answer": 1,
+        "explanation": "定位：第二段「Replacement parking tags must be collected from the management office on the ground floor between October 13 and October 17.」(A) 公告未提到任何線上登記。(C) 替代車位在 B1 與裝卸區後方的平面停車場，不是路邊。(D) 臨時車位免費，也沒有提到退費程序。"
+      },
+      {
+        "q": "What is indicated about the freight elevator?",
+        "options": [
+          "It will be unavailable to tenants during certain hours.",
+          "It will be replaced as part of the project.",
+          "It can be reserved by calling extension 4180.",
+          "It will operate only on weekends."
+        ],
+        "answer": 0,
+        "explanation": "定位：第三段「the freight elevator will be reserved for contractor use from 7:00 A.M. to 3:00 P.M. each weekday」，表示平日該時段承租戶無法使用。(B) 施工項目是 B2 層混凝土地坪重鋪，不含更換電梯。(C) 分機4180是向大樓管理員 Nakagawa 先生提問用的，不是預約電梯。(D) 公告是說平日特定時段保留給承包商，並非只在週末運作。"
+      },
+      {
+        "q": "What is NOT mentioned in the notice?",
+        "options": [
+          "The date on which the work is expected to end",
+          "A smell that may be noticeable in one area",
+          "A person tenants can contact with questions",
+          "The total cost of the resurfacing project"
+        ],
+        "answer": 3,
+        "explanation": "定位：第一段提到預計10月30日完工（對應 A）；第四段提到 stairwell C 可能聞到新地坪的刺鼻氣味（對應 B）；倒數第二段提供 Hollis Nakagawa 先生與分機4180（對應 C）。全文從未提及工程總金額，故 (D) 為未提及者。"
+      }
+    ],
+    "translation": [
+      "全體承租戶公告\n貝爾威瑟大樓－地下二樓停車場地坪重鋪工程\n公告日期：10月3日\n\n自10月20日（星期一）起，瑞吉林鋪面工程公司將重鋪停車場地下二樓的混凝土地坪。工程預計需時九個工作天，應可於10月30日（星期四）前完工。\n\n這對您有何影響\n地下二樓在工程期間將全面封閉。10月17日（星期五）下午6時後仍停放於該樓層的車輛，將由車主自費拖吊。原本停放於地下二樓的承租戶，已改配至地下一樓及裝卸區後方的平面停車場。替換用的停車證須於10月13日至10月17日間至一樓管理室領取。臨時車位不另收費。\n\n地下一樓與地下三樓全程照常開放。惟貨梯於平日上午7時至下午3時保留給承包商使用，因此有家具或設備要送達的承租戶，請將時間安排在上述時段之外。\n\n另請注意，施工前三天，C 樓梯間可能會聞到新地坪的刺鼻氣味。辦公室鄰近該樓梯間的承租戶，建議將走廊門保持關閉。\n\n如有疑問，請洽大樓管理員霍利斯・中川先生，分機4180。\n\n感謝您的耐心配合。"
+    ]
+  },
+  {
+    "id": "p7-b3-4",
+    "format": "single",
+    "passages": [
+      {
+        "type": "article",
+        "label": "",
+        "content": "Regional Grocers Rethink the Midday Rush\nBy Tomasz Wieczorek, Meridian Business Weekly\n\nWhen Cabot & Vine Markets opened its ninth store in Northfield last spring, the chain did something unusual: it built a kitchen twice the size the standard layout called for and cut the packaged-snack aisle in half. Nine months on, the gamble looks well judged. Prepared foods now account for 28 percent of the Northfield store's revenue, roughly double the figure at the company's older locations.\n\nThe shift reflects a broader change in how mid-sized grocers compete. Unable to match the prices of the national chains, regional operators have turned to freshly made meals, which carry higher margins and cannot easily be ordered from a warehouse across the country. \"A shopper who comes in for a hot lunch usually leaves with produce too,\" said Ines Delacroix, the company's vice president of merchandising. \"The kitchen is a doorway.\"\n\nNot every experiment has succeeded. Two competitors in the same region expanded their prepared-food counters last year and quietly scaled them back after finding that staffing costs were higher than the additional sales. Analysts note that prepared foods require cooks rather than the workers who stock shelves, and that hiring in that category remains difficult across the industry.\n\nCabot & Vine plans to renovate three additional stores by next fall. The company has also begun training cashiers to work partial shifts in the kitchen, a practice Ms. Delacroix says eases the pressure at lunchtime without hiring more staff."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the article mainly about?",
+        "options": [
+          "A shortage of packaged goods at regional stores",
+          "The opening of a new national supermarket chain",
+          "A recent law affecting food preparation",
+          "A strategy some grocery stores use to compete"
+        ],
+        "answer": 3,
+        "explanation": "定位：第二段第一、二句「The shift reflects a broader change in how mid-sized grocers compete. Unable to match the prices of the national chains, regional operators have turned to freshly made meals」點出全文主軸是中型超市以現做餐點作為競爭策略。(A) 包裝零食走道縮減是店家自己的決定，不是缺貨。(B) Cabot & Vine 是區域型業者，文中的全國連鎖是競爭對手，且未提到新連鎖開幕。(C) 全文未提及任何法規。"
+      },
+      {
+        "q": "What is suggested about the Northfield store?",
+        "options": [
+          "It is the company's smallest location.",
+          "It will be renovated again next fall.",
+          "It earns more from prepared meals than older stores do.",
+          "It was converted from a restaurant."
+        ],
+        "answer": 2,
+        "explanation": "定位：第一段最後一句「Prepared foods now account for 28 percent of the Northfield store's revenue, roughly double the figure at the company's older locations.」(A) 文中只說廚房是標準規劃的兩倍大，未比較店面總面積。(B) 最後一段說要改裝的是「three additional stores」，即另外三家店，不含 Northfield。(D) 該店是新開的第九家分店，並非由餐廳改建。"
+      },
+      {
+        "q": "What problem did other grocers in the region experience?",
+        "options": [
+          "Their suppliers raised the price of produce.",
+          "The cost of staffing exceeded the sales generated.",
+          "Customers complained about long checkout lines.",
+          "Their online ordering systems failed repeatedly."
+        ],
+        "answer": 1,
+        "explanation": "定位：第三段「Two competitors ... scaled them back after finding that staffing costs were higher than the additional sales.」(A) 文中未提到供應商調漲生鮮價格。(C) 結帳排隊問題未被提及；最後一段提到的午餐時段壓力指的是人力吃緊，且是 Cabot & Vine 的做法。(D) 第二段只說現做餐點無法遠距訂購，並非線上系統故障。"
+      },
+      {
+        "q": "The word \"carry\" in paragraph 2, line 3, is closest in meaning to",
+        "options": [
+          "provide",
+          "transport",
+          "endure",
+          "approve"
+        ],
+        "answer": 0,
+        "explanation": "定位：第二段「freshly made meals, which carry higher margins」中的 carry 意為「帶來、具有（較高利潤）」，故 provide 最接近。(B) transport 是實體運送，主詞為餐點時語意不通。(C) endure 是忍受、持續承受，與利潤搭配不合。(D) approve 是核准，語意完全不同。"
+      }
+    ],
+    "translation": [
+      "區域型超市重新思考午間人潮\n托馬斯・維切雷克撰，《子午線商業週刊》\n\n去年春天卡博與凡恩超市在北原鎮開設第九家分店時，做了一件不尋常的事：廚房蓋成標準格局的兩倍大，包裝零食走道則縮減一半。九個月過去，這場豪賭看來下得精準。現做熟食如今佔北原店營收的百分之二十八，約為該公司舊有分店的兩倍。\n\n這樣的轉向反映出中型超市競爭方式的整體改變。由於無法在價格上與全國連鎖抗衡，區域型業者轉而發展現做餐點——利潤較高，而且不容易靠橫跨全國的倉庫遠距訂購取代。「進來吃頓熱午餐的客人，通常也會順手帶走生鮮，」該公司商品部副總裁伊內絲・德拉克魯瓦說，「廚房就是一道門。」\n\n並非每次嘗試都成功。同區的兩家競爭對手去年擴大了熟食櫃檯，後來發現人事成本超過所增加的營收，便悄悄縮回原狀。分析師指出，熟食需要的是廚師而非理貨員，而整個產業在這個職類的招募始終不易。\n\n卡博與凡恩計畫在明年秋天前再改裝三家分店。公司也已開始訓練收銀人員到廚房支援部分班次，德拉克魯瓦女士表示，這種做法能在不增加人力編制的情況下，紓解午餐時段的壓力。"
+    ]
+  },
+  {
+    "id": "p7-b3-5",
+    "format": "single",
+    "passages": [
+      {
+        "type": "invoice",
+        "label": "",
+        "content": "GRANTHAM & PELL EQUIPMENT SERVICES\n17 Rowan Industrial Park, Dunmore, PA 18512\n\nINVOICE #GP-40218\nInvoice date: June 12\nPayment due: July 12\n\nBILL TO:\nMs. Yuki Ashworth, Facilities Coordinator\nProspect Ridge Dental Group\n88 Larkspur Boulevard, Dunmore, PA 18510\n\nService date: June 9        Technician: R. Okonjo\n\nDESCRIPTION                                QTY      AMOUNT\nAnnual inspection, dental air compressor    1      $180.00\nReplacement air filter (part #AC-77)        2       $64.00\nLabor, compressor belt replacement       1.5 hr    $135.00\nEmergency service surcharge                 1       $95.00\n                                     Subtotal      $474.00\n                                     Tax (6%)       $28.44\n                                     TOTAL         $502.44\n\nNOTES\nThe emergency surcharge applies because this visit was requested outside the scheduled maintenance window. Clients enrolled in our Silver or Gold service plans are exempt from the surcharge; your practice is currently enrolled in the Basic plan.\n\nThe compressor belt installed on June 9 carries a twelve-month parts-and-labor warranty. Air filters are treated as supplies and are not covered by any warranty.\n\nDuring the inspection, the technician noted rust on the water separator. We recommend replacing this part within six months. A written quotation can be prepared at no cost.\n\nPayment may be made by check or bank transfer. A late fee of 1.5 percent of the outstanding balance is added each month after the due date. Questions about this invoice should be directed to billing@granthampell.com."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is suggested about Prospect Ridge Dental Group?",
+        "options": [
+          "It requested service outside the regular maintenance schedule.",
+          "It has recently hired a new facilities coordinator.",
+          "It purchased its compressor from another company.",
+          "It still owes money from a previous service visit."
+        ],
+        "answer": 0,
+        "explanation": "定位：NOTES 第一段「The emergency surcharge applies because this visit was requested outside the scheduled maintenance window.」而帳單上確實列有95美元的緊急服務附加費，可推知該診所是在既定保養時段之外要求服務。(B) 帳單只寫出 Ashworth 女士的職稱，未說她是新任。(C) 壓縮機的購買來源未被提及。(D) 這張帳單是6月9日單次服務的費用，沒有提到任何前期欠款。"
+      },
+      {
+        "q": "According to the notes, what is NOT covered by a warranty?",
+        "options": [
+          "The compressor belt",
+          "Labor to repair the belt during the next twelve months",
+          "Belt parts needed for a repair in December",
+          "The air filters"
+        ],
+        "answer": 3,
+        "explanation": "定位：NOTES 第二段「The compressor belt installed on June 9 carries a twelve-month parts-and-labor warranty. Air filters are treated as supplies and are not covered by any warranty.」保固內容是「零件與工資」、期間十二個月，故 (A) 皮帶本身、(B) 十二個月內的維修工資、(C) 12月維修所需的皮帶零件，三者皆在保固範圍內。(D) 空氣濾網屬耗材，明文不在任何保固內，故為正解。"
+      },
+      {
+        "q": "What does Grantham & Pell recommend?",
+        "options": [
+          "Upgrading to a larger compressor",
+          "Scheduling a second inspection next month",
+          "Replacing a rusted part within six months",
+          "Purchasing filters in larger quantities"
+        ],
+        "answer": 2,
+        "explanation": "定位：NOTES 第三段「the technician noted rust on the water separator. We recommend replacing this part within six months.」(A) 建議的是更換水分分離器這個零件，不是換更大的壓縮機。(B) 下次檢查是年度檢查，文中未提議下個月再檢查一次。(D) 濾網雖屬耗材，但帳單並未建議大量採購。"
+      },
+      {
+        "q": "What is stated about payment?",
+        "options": [
+          "It must be made in cash at the service address.",
+          "An additional charge is added each month after the due date.",
+          "A discount is available to clients who pay early.",
+          "It may be divided into three monthly installments."
+        ],
+        "answer": 1,
+        "explanation": "定位：NOTES 最後一段「A late fee of 1.5 percent of the outstanding balance is added each month after the due date.」(A) 同段第一句說可用支票或銀行轉帳，並非現場付現。(C) 全文未提到任何提前付款的折扣；免費的是報價單，不是折扣。(D) 分期付款方案未被提及。"
+      }
+    ],
+    "translation": [
+      "格蘭瑟姆與佩爾設備服務公司\n賓州鄧莫爾市羅文工業園區17號 18512\n\n發票號碼 #GP-40218\n開立日期：6月12日\n付款期限：7月12日\n\n收費對象：\n設施協調員 由紀・艾希沃斯女士\n展望嶺牙醫聯合診所\n賓州鄧莫爾市飛燕草大道88號 18510\n\n服務日期：6月9日        技師：R. 歐孔喬\n\n項目說明                                數量      金額\n年度檢查，牙科用空氣壓縮機               1      180.00美元\n更換空氣濾網（零件編號 #AC-77）          2       64.00美元\n工資，壓縮機皮帶更換                   1.5小時   135.00美元\n緊急服務附加費                          1       95.00美元\n                                    小計      474.00美元\n                                    稅（6%）    28.44美元\n                                    總計      502.44美元\n\n附註\n本次出勤之所以收取緊急附加費，是因為該次到府服務是在既定保養時段之外提出的。加入本公司銀級或金級服務方案的客戶可免收此項費用；貴診所目前加入的是基本方案。\n\n6月9日安裝的壓縮機皮帶享有十二個月的零件與工資保固。空氣濾網視為耗材，不在任何保固範圍內。\n\n檢查過程中，技師發現水分分離器有生鏽情形。我們建議在六個月內更換該零件。本公司可免費提供書面報價。\n\n付款方式可採支票或銀行轉帳。逾期後，未付餘額每月加收百分之一點五的滯納金。關於本發票的疑問，請寄至 billing@granthampell.com。"
+    ]
+  }
+]

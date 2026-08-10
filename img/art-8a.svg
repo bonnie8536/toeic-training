@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A supermarket removing self-checkout kiosks">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="238" width="800" height="62" fill="#dde7ee"/>
+  <!-- 自助結帳機(被劃掉) -->
+  <rect x="180" y="90" width="130" height="148" rx="10" fill="#9db8cc"/>
+  <rect x="196" y="106" width="98" height="60" rx="6" fill="#dde7ee"/>
+  <rect x="196" y="180" width="98" height="16" rx="4" fill="#767f88"/>
+  <circle cx="245" cy="150" r="40" fill="none" stroke="#c94040" stroke-width="8"/>
+  <line x1="217" y1="122" x2="273" y2="178" stroke="#c94040" stroke-width="8"/>
+  <!-- 人工櫃台 -->
+  <rect x="430" y="150" width="240" height="20" rx="8" fill="#0b72c4"/>
+  <rect x="450" y="170" width="200" height="68" fill="#095d9f"/>
+  <circle cx="520" cy="106" r="20" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M500 150 q20 -22 40 0 z" fill="#e8890c"/>
+  <path d="M508 100 q12 8 24 0" stroke="#404040" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- 收銀機與購物袋 -->
+  <rect x="590" y="118 " width="52" height="32" rx="4" fill="#404040"/>
+  <rect x="600" y="126" width="32" height="10" rx="3" fill="#9fd0f5"/>
+  <path d="M700 190 h56 l-8 48 h-40 z" fill="#ffd964" stroke="#e8890c" stroke-width="3"/>
+  <path d="M712 190 a16 12 0 0 1 32 0" fill="none" stroke="#e8890c" stroke-width="4"/>
+  <path d="M120 210 q10 -18 24 0 q-12 10 -24 0" fill="#3a8a4d"/>
+</svg>

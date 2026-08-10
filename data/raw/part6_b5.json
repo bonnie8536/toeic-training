@@ -1,0 +1,212 @@
+[
+  {
+    "id": "p6-b5-1",
+    "passageType": "notice",
+    "title": "2026 Harborline Charity Fun Run",
+    "passage": "NOTICE: 2026 Harborline Charity Fun Run\n\nHarborline Logistics is pleased to announce that our annual Charity Fun Run will be held on Saturday, 12 September, at Westbrook Park. All employees and their family members are {{1}} to take part. Participants may choose either the three-kilometre walk or the eight-kilometre run. {{2}} Registration closes on 28 August, and late entries cannot be {{3}}. Every participant will receive a T-shirt and a refreshment voucher on the morning of the event, and all proceeds will go to the Westbrook Children's Hospital. {{4}} you have questions about transport to the park, please contact the Employee Services desk on extension 240.\n\nEmployee Services Committee\nHarborline Logistics",
+    "questions": [
+      {
+        "num": 1,
+        "type": "字彙",
+        "options": ["responsible", "convenient", "welcome", "grateful"],
+        "answer": 2,
+        "explanation": "空格前是 be 動詞 are，後面接不定詞 to take part，要選能構成「be + 形容詞 + to V」且語意為「歡迎參加」的字。be welcome to do something 是固定用法，正好符合公告邀請全體同仁參加的語氣。responsible 必須接 for，且意為「負責」；convenient 用來形容事物或時間，不能用來形容人；grateful 雖然可接不定詞，但意思是「感激」，與公告發出邀請的語意不合。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Tickets for the awards dinner are still available at the front desk.",
+          "To sign up, complete the entry form on the company intranet.",
+          "Last year's event had to be cancelled because of heavy rain.",
+          "The park is closed to the public on weekends throughout September."
+        ],
+        "answer": 1,
+        "explanation": "空格前一句說明參加者可在兩種賽程中二選一，空格後一句是「報名於 8 月 28 日截止，逾期恕不受理」。中間需要一句交代「要怎麼報名」，選項 B 說明到公司內部網站填寫報名表，正好把「選擇賽程」與「報名期限」串起來。選項 A 講的是頒獎晚宴的票，屬於另一個活動；選項 C 提到去年因大雨取消，與報名流程無關，語氣也與宣傳公告不符；選項 D 說公園九月的週末不對外開放，與活動辦在 9 月 12 日星期六直接矛盾。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["accepted", "accepting", "acceptance", "accept"],
+        "answer": 0,
+        "explanation": "空格接在 cannot be 之後，主詞 late entries（逾期報名）是動作的承受者，必須用被動語態 be + 過去分詞，故選 accepted。accepting 是現在分詞，會構成主動的進行式，語意變成「逾期報名無法接受別人」，不合邏輯；acceptance 是名詞，接在 be 後語意不通；accept 是原形動詞，不能直接放在 be 之後。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["Whether", "Unless", "Despite", "Should"],
+        "answer": 3,
+        "explanation": "主要子句 please contact... 是祈使句，空格要帶出條件子句。Should you have questions 是 If you should have questions 的倒裝寫法，是商業公告與書信常見的正式表達。Whether 引導的是「是否」子句，與祈使句搭配語意不通；Unless（除非）會把條件反過來，變成「除非有疑問，否則才聯絡」，邏輯錯誤；Despite 是介系詞，後面只能接名詞，不能接「主詞＋動詞」。"
+      }
+    ],
+    "translation": "公告：2026 年 Harborline 慈善路跑\n\nHarborline 物流很高興宣布，本公司一年一度的慈善路跑將於 9 月 12 日星期六在 Westbrook 公園舉行。歡迎全體同仁及其家屬參加。參加者可選擇三公里健走或八公里路跑。欲報名者，請填寫公司內部網站上的報名表。報名於 8 月 28 日截止，逾期報名恕不受理。每位參加者將於活動當天早上領取一件 T 恤與一張餐飲兌換券，所有收益將全數捐給 Westbrook 兒童醫院。若您對前往公園的交通有任何疑問，請撥分機 240 與員工服務櫃檯聯繫。\n\n員工服務委員會\nHarborline 物流"
+  },
+  {
+    "id": "p6-b5-2",
+    "passageType": "email",
+    "title": "Osaka Site Visit Arrangements",
+    "passage": "To: Daniel Ortega, Product Engineering\nFrom: Priya Raman, Travel Coordinator\nSubject: Osaka site visit, 17-21 March\nDate: 3 March\n\nDear Daniel,\n\nI have {{1}} your travel arrangements for your upcoming visit to the Osaka branch. Your flight leaves from Terminal 2 at 8:40 A.M. on 17 March, and your return flight lands at 9:15 P.M. on 21 March. A driver {{2}} name is Kenji Sato will meet you in the arrivals hall and take you to the Kitahama Garden Hotel. {{3}} Please note that receipts for meals must be submitted {{4}} two weeks of your return; the finance office will not process late claims. If the itinerary looks correct, simply reply to this message and I will issue the tickets.\n\nBest regards,\nPriya",
+    "questions": [
+      {
+        "num": 1,
+        "type": "字彙",
+        "options": ["resolved", "achieved", "persuaded", "finalized"],
+        "answer": 3,
+        "explanation": "受詞是 travel arrangements，需要「敲定、確認完成」之意的動詞，finalize 與 arrangements、plans、details 是標準搭配，也符合後文「行程無誤就回信，我來開票」的語境。resolve 的受詞通常是問題或爭議；achieve 的受詞是目標或成果，不與 arrangements 搭配；persuade 的受詞必須是人。"
+      },
+      {
+        "num": 2,
+        "type": "文法",
+        "options": ["who", "which", "whose", "whom"],
+        "answer": 2,
+        "explanation": "空格後緊接 name is Mr. Sato，說明的是「司機的名字」，屬於所有格關係，必須用關係代名詞所有格 whose。who 是主格、whom 是受格，兩者後面都不能直接接名詞再加動詞；which 用於事物，且同樣不表所有格。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "We are still waiting for the branch manager to approve the trip.",
+          "The hotel is a ten-minute walk from the branch office, so you will not need ground transport during the week.",
+          "Please arrange your own accommodation once you arrive in Osaka.",
+          "Unfortunately, no flights were available on the dates you requested."
+        ],
+        "answer": 1,
+        "explanation": "空格前一句提到司機會送他到北濱花園飯店，選項 B 接著補充飯店與分公司只距十分鐘路程、因此這一週不必另外安排地面交通，緊扣前句的飯店資訊，是唯一自然的銜接。選項 A 說還在等分公司主管核准出差，與信件開頭「我已敲定行程」矛盾；選項 C 要收件者自行訂住宿，與飯店已訂妥矛盾；選項 D 說沒有可用班機，與前面已明確列出去回程時間互相牴觸。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["within", "during", "among", "throughout"],
+        "answer": 0,
+        "explanation": "within two weeks of your return 意為「返國後兩週內」，within 表示在某期限之內完成，是說明報帳期限的固定用法。during 後面須接一段特定期間（如 during the trip），不能說 during two weeks of...；among 用於三者以上之中；throughout 強調「整段期間自始至終」，與「在期限內送出」的語意不合。"
+      }
+    ],
+    "translation": "收件者：Daniel Ortega，產品工程部\n寄件者：Priya Raman，差旅協調專員\n主旨：3 月 17 至 21 日大阪據點出差\n日期：3 月 3 日\n\nDaniel 您好：\n\n我已經敲定您即將前往大阪分公司的差旅安排。您的班機於 3 月 17 日上午 8 點 40 分自第二航廈起飛，回程班機則於 3 月 21 日晚上 9 點 15 分抵達。一位名叫佐藤健二的司機會在入境大廳接您，並送您到北濱花園飯店。飯店距離分公司步行只需十分鐘，因此您這一週不需要另外安排地面交通。請注意，餐費收據必須在您返國後兩週內送出；財務部不會受理逾期的請款。若行程確認無誤，直接回覆這封信即可，我會著手開票。\n\n祝好\nPriya"
+  },
+  {
+    "id": "p6-b5-3",
+    "passageType": "article",
+    "title": "Cold Storage Operators Rethink Their Networks",
+    "passage": "Cold Storage Operators Rethink Their Networks\n\nDemand for temperature-controlled warehousing has risen sharply over the past three years, and operators across the region are expanding {{1}}. Rather than building a few large facilities near the major ports, several firms are now opening smaller sites on the edge of residential districts. {{2}} Analysts at Verrick Consulting report that the change has already {{3}} delivery times for online grocery orders by an average of four hours. Costs remain a concern, since land in urban areas is far more expensive than land outside the city. {{4}} that pressure, most operators expect the trend to continue for the rest of the decade.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["aggression", "aggressiveness", "aggressive", "aggressively"],
+        "answer": 3,
+        "explanation": "空格用來修飾動詞片語 are expanding，必須用副詞 aggressively（積極地）。aggression 與 aggressiveness 都是名詞，放在這裡會被讀成 expand 的受詞，語意變成「擴大侵略行為」，與擴張據點的文意不合；aggressive 是形容詞，只能修飾名詞，不能修飾動詞。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "The aim is to hold inventory within a short drive of the customers who order it.",
+          "Port authorities have consequently lowered their handling charges.",
+          "Most of these operators began as family-owned trucking companies.",
+          "Frozen food must be kept at eighteen degrees below zero."
+        ],
+        "answer": 0,
+        "explanation": "空格前說明業者改在住宅區周邊開設小型據點，空格後引用分析師的話，指配送時間平均縮短四小時。選項 A 點出這麼做的目的是把庫存放在離下單顧客車程很短的地方，既解釋前句的做法，也讓後句的成效有了因果依據。選項 B 說港務單位因此調降裝卸費，前文推不出這個結論；選項 C 談業者的家族貨運出身，與段落論述無關；選項 D 只是冷凍溫度的常識，未承接前後文。"
+      },
+      {
+        "num": 3,
+        "type": "字彙",
+        "options": ["declined", "shortened", "delayed", "postponed"],
+        "answer": 1,
+        "explanation": "受詞是 delivery times，後面又接 by an average of four hours，需要一個及物且能與「時間長度」搭配的動詞。shorten 表「縮短」，語意與句構皆合。decline 表「下降」時是不及物動詞，後面不能接 delivery times 當受詞，作及物動詞時意為「婉拒」，語意也不合；delay 與 postpone 意為延後，與「配送變快」的正面成效相反，且 postpone 的受詞通常是活動而非時間長度。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["Although", "Nevertheless", "Despite", "However"],
+        "answer": 2,
+        "explanation": "空格後是名詞片語 that pressure，必須用介系詞 Despite（儘管）。Although 是從屬連接詞，後面要接「主詞＋動詞」的子句；Nevertheless 與 However 是連接副詞，通常獨立使用並以逗號隔開，不能直接帶名詞片語。"
+      }
+    ],
+    "translation": "冷鏈倉儲業者重新思考據點布局\n\n過去三年，恆溫倉儲的需求急遽上升，區域內的業者也正積極擴張。幾家公司不再只在主要港口附近興建少數大型設施，而是改在住宅區周邊開設規模較小的據點。其用意是把庫存放在距離下單顧客車程很短的範圍內。Verrick 顧問公司的分析師指出，這項轉變已使線上生鮮訂單的配送時間平均縮短了四小時。成本仍是隱憂，因為市區的土地遠比郊區昂貴。儘管有這樣的壓力，多數業者仍預期這股趨勢會延續到本十年結束。"
+  },
+  {
+    "id": "p6-b5-4",
+    "passageType": "memo",
+    "title": "Expense Reporting System Upgrade",
+    "passage": "MEMORANDUM\n\nTo: All Department Heads\nFrom: Nadia Kwan, Director of Information Technology\nSubject: Expense reporting system upgrade\nDate: 14 October\n\nThe expense reporting system will be upgraded over the weekend of 25-26 October. The system will therefore be {{1}} unavailable, and staff will be unable to submit or approve claims. {{2}} Once the upgrade is finished, users will find a redesigned dashboard and a mobile application {{3}} allows receipts to be photographed and uploaded on the spot. Please remind your teams to file any outstanding October claims before 5:00 P.M. on 24 October. Claims that are still in draft form {{4}} the maintenance window begins may have to be entered again.\n\nNadia Kwan\nInformation Technology Department",
+    "questions": [
+      {
+        "num": 1,
+        "type": "字彙",
+        "options": ["eventually", "temporarily", "rarely", "previously"],
+        "answer": 1,
+        "explanation": "系統只在 10 月 25 至 26 日這個週末停機，升級完成後即恢復，故用 temporarily（暫時地）。eventually 表「最終」，會暗示系統要到最後才停用，與已排定的時程不符；rarely 表頻率極低，與整個週末停機、期間一律無法使用的安排矛盾；previously 指過去，與尚未發生的升級作業在時間上衝突。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "All claims filed in September have already been reimbursed.",
+          "The current system will remain in use until the end of the fiscal year.",
+          "Please contact the payroll office if your bank details have changed.",
+          "The work has been scheduled for a weekend so that disruption to daily operations is kept to a minimum."
+        ],
+        "answer": 3,
+        "explanation": "空格前說明停機期間無法送出或審核請款單，空格後轉而介紹升級完成後的新功能。選項 D 說明把作業排在週末是為了把對日常營運的干擾降到最低，既回應前句造成的不便，也讓語氣自然轉向正面。選項 A 談九月請款已撥付，與升級無關；選項 B 說現行系統會沿用到會計年度結束，與整份備忘錄的升級安排矛盾；選項 C 要同仁聯絡薪資部門更新帳戶資料，屬於另一件事。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["what", "it", "that", "whose"],
+        "answer": 2,
+        "explanation": "空格引導修飾先行詞 a mobile application 的關係子句，且在子句中擔任主詞，先行詞為事物，故用 that。what 本身已含先行詞，不能用在已有先行詞的關係子句；whose 表所有格，後面必須接名詞；it 是代名詞，會造成兩個句子之間缺少連接詞的錯誤。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["when", "during", "prior to", "in advance of"],
+        "answer": 0,
+        "explanation": "空格後是完整子句 the maintenance window begins（主詞＋動詞），必須用從屬連接詞 when。during、prior to、in advance of 都是介系詞或介系詞片語，後面只能接名詞或動名詞，不能接子句。"
+      }
+    ],
+    "translation": "備忘錄\n\n收件者：各部門主管\n寄件者：Nadia Kwan，資訊科技部主任\n主旨：費用申報系統升級\n日期：10 月 14 日\n\n費用申報系統將於 10 月 25 日至 26 日這個週末進行升級。因此系統將暫時無法使用，同仁將無法送出或審核請款單。這項作業安排在週末，是為了把對日常營運的干擾降到最低。升級完成後，使用者會看到重新設計的儀表板，以及一款可以當場拍照上傳收據的行動應用程式。請提醒您的團隊，在 10 月 24 日下午 5 點前送出十月份尚未申報的請款單。維護時段開始時仍停留在草稿狀態的請款單，可能必須重新輸入。\n\nNadia Kwan\n資訊科技部"
+  },
+  {
+    "id": "p6-b5-5",
+    "passageType": "letter",
+    "title": "Partnership Proposal to the Halden Institute",
+    "passage": "Brightpath Learning Solutions\n42 Kelvin Road, Rosedale\n\n8 November\n\nDr. Amara Okonkwo\nThe Halden Institute\n\nDear Dr. Okonkwo,\n\nI am writing to propose a partnership between Brightpath Learning Solutions and the Halden Institute. Over the past five years, our company {{1}} online training courses for more than two hundred corporate clients. The platform currently supports fifteen languages and hosts about forty thousand active learners each month. {{2}} We are convinced that pairing your research with our delivery platform would benefit both organizations {{3}}. As a first step, I would like to arrange a short meeting {{4}} your convenience so that we can discuss possible course topics and a revenue-sharing model. I look forward to hearing from you.\n\nSincerely,\n\nMarisol Vega\nDirector of Partnerships",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["develops", "is developing", "has developed", "will develop"],
+        "answer": 2,
+        "explanation": "句首的 Over the past five years 表示從過去持續累積到現在的一段期間，必須搭配現在完成式 has developed。develops 是單純現在式，用於習慣或恆常事實，無法表達五年來的累積成果；is developing 強調此刻正在進行的動作；will develop 指未來，與 over the past five years 在時間上矛盾。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Our head office relocated to Fairview Business Park last spring.",
+          "Unfortunately, we no longer offer courses in the manufacturing sector.",
+          "Enrolment figures have fallen steadily since our platform was launched.",
+          "The Halden Institute, meanwhile, is widely respected for its research on workplace safety."
+        ],
+        "answer": 3,
+        "explanation": "空格前介紹自家公司的課程實績與平台規模，空格後說「把貴院的研究與本公司平台結合」。選項 D 先點出 Halden 研究院在職場安全研究上的聲譽，補上合作對象的長處，後句的 pairing your research with our platform 才有兩邊可以配對，銜接最完整。選項 A 談自家總部搬遷，與提案無關；選項 B 說不再提供製造業課程，反而削弱自己的賣點；選項 C 說招生人數持續下滑，與前一句「每月約四萬名活躍學員」自相矛盾。"
+      },
+      {
+        "num": 3,
+        "type": "字彙",
+        "options": ["considerably", "narrowly", "reluctantly", "formerly"],
+        "answer": 0,
+        "explanation": "空格是修飾 would benefit 的副詞，合作提案要凸顯效益之大，故用 considerably（相當可觀地）。narrowly 表「勉強、些微」，語氣消極，不符提案目的；reluctantly 表「不情願地」，與 benefit 搭配不合邏輯；formerly 指「從前」，與談論未來合作的語境相反。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["in", "at", "on", "by"],
+        "answer": 1,
+        "explanation": "at your convenience 是「在您方便的時候」的固定介系詞搭配，商業書信邀約會面時常用。in、on、by 都無法與 convenience 構成這個慣用語，其中 by your convenience 更沒有這種說法。"
+      }
+    ],
+    "translation": "Brightpath 學習方案公司\nRosedale 區 Kelvin 路 42 號\n\n11 月 8 日\n\nAmara Okonkwo 博士\nHalden 研究院\n\nOkonkwo 博士您好：\n\n我寫這封信是想提議 Brightpath 學習方案公司與 Halden 研究院合作。過去五年來，本公司已為兩百多家企業客戶開發線上培訓課程。目前平台支援十五種語言，每月約有四萬名活躍學員。而 Halden 研究院在職場安全研究方面素負盛名。我們深信，把貴院的研究與本公司的教學平台結合，將為雙方帶來相當可觀的效益。第一步，我希望能在您方便的時候安排一次簡短會面，討論可能的課程主題與分潤方式。期待您的回覆。\n\n謹啟\n\nMarisol Vega\n合作發展部主任"
+  }
+]

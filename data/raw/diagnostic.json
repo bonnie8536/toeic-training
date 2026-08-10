@@ -1,0 +1,345 @@
+{
+  "p5": [
+    {
+      "id": "d5-01",
+      "category": "詞性變化",
+      "difficulty": "基礎",
+      "skill": "答對代表能從冠詞與前置修飾語判斷空格是名詞位置,不被同字根的動詞、形容詞、副詞干擾。",
+      "question": "All visitors to the Larkfield plant must present a valid photo ------- at the reception desk.",
+      "options": ["identify", "identification", "identifiable", "identifiably"],
+      "answer": 1,
+      "translation": "所有進入 Larkfield 廠區的訪客,都必須在接待櫃台出示附照片的有效身分證件。",
+      "explanation": "present 後面缺受詞,而 a valid photo 是「冠詞＋形容詞＋名詞修飾語」,後面必須接名詞當中心語,故選 identification。選 identify 的人以為原形動詞可以直接當受詞;選 identifiable 的人把形容詞當名詞用,沒發現 valid、photo 已經是修飾語、還缺被修飾的對象;選 identifiably 的人看到 -ly 就當萬用選項,忽略副詞不能當受詞。"
+    },
+    {
+      "id": "d5-02",
+      "category": "詞性變化",
+      "difficulty": "中級",
+      "skill": "答對代表能辨認「the ＋ 空格 ＋ of」是名詞位置,並在同一字根的四個詞形中選出抽象名詞。",
+      "question": "Clients have repeatedly praised the design team for the ------- of its packaging concepts.",
+      "options": ["create", "creatively", "creative", "creativity"],
+      "answer": 3,
+      "translation": "客戶一再稱讚設計團隊在包裝概念上的創意。",
+      "explanation": "the ------- of 的結構中,空格夾在定冠詞與 of 片語之間,只能是名詞,故選 creativity。選 create 的人沒注意到動詞不能接在 the 後面;選 creatively 的人把副詞放進名詞位置,誤以為 praised 附近就要用副詞;選 creative 的人把形容詞當名詞用,忘了 the ＋ 形容詞要泛指一整群人時才成立,這裡指的是抽象特質。"
+    },
+    {
+      "id": "d5-03",
+      "category": "動詞時態與語態",
+      "difficulty": "基礎",
+      "skill": "答對代表能以句中明確的過去時間點決定動詞時態,並知道現在完成式不與過去時間點連用。",
+      "question": "The replacement parts ------- at our Springfield service center last Thursday, one day ahead of schedule.",
+      "options": ["arrive", "will arrive", "arrived", "have arrived"],
+      "answer": 2,
+      "translation": "替換零件上週四抵達我們 Springfield 的服務中心,比預定時間早一天。",
+      "explanation": "last Thursday 是明確的過去時間點,主要動詞必須用過去簡單式 arrived。選 arrive 的人整句只看主詞是複數就選原形,忽略時間副詞;選 will arrive 的人被 ahead of schedule 誤導成「還沒發生」;選 have arrived 的人不知道現在完成式不能和 last Thursday 這種明確過去時間並用。"
+    },
+    {
+      "id": "d5-04",
+      "category": "動詞時態與語態",
+      "difficulty": "進階",
+      "skill": "答對代表掌握 request/suggest/recommend 等要求類動詞後 that 子句一律用原形動詞的假設語氣規則。",
+      "question": "The board of directors requested that the finance department ------- a revised budget before the next quarterly meeting.",
+      "options": ["prepare", "prepares", "prepared", "will prepare"],
+      "answer": 0,
+      "translation": "董事會要求財務部門在下次季會前提出修正後的預算。",
+      "explanation": "request that 引導的子句屬假設語氣,should 省略後只留原形動詞,故選 prepare。選 prepares 的人機械地做主詞動詞一致,沒察覺這是原形而非現在式;選 prepared 的人用主要子句 requested 的過去式做時態呼應,但假設語氣子句不受時態一致規範;選 will prepare 的人把「尚未執行的事」直接寫成未來式,忽略這種子句本身不表時間。"
+    },
+    {
+      "id": "d5-05",
+      "category": "主謂一致",
+      "difficulty": "中級",
+      "skill": "答對代表能剝除介系詞片語與分詞修飾語,找出真正的主詞核心來決定動詞單複數。",
+      "question": "The list of suppliers approved by the purchasing committee ------- to be updated every six months.",
+      "options": ["need", "needs", "are needed", "needing"],
+      "answer": 1,
+      "translation": "採購委員會核可的供應商名單每六個月需要更新一次。",
+      "explanation": "主詞核心是單數的 The list,of suppliers 與 approved by the purchasing committee 都只是修飾語,故用 needs。選 need 的人被離動詞最近的複數名詞 suppliers 帶偏;選 are needed 的人先錯在動詞用了複數形,再者 be needed to do 意思是「為了做某事而被需要」,與句意「名單需要更新」不同;選 needing 的人忘記句子還缺一個主要動詞,分詞無法單獨擔任述語。"
+    },
+    {
+      "id": "d5-06",
+      "category": "代名詞",
+      "difficulty": "基礎",
+      "skill": "答對代表能分辨主格、受格、所有格代名詞與反身代名詞的功能,並認出加強語氣用法。",
+      "question": "Ms. Ferrara reviewed all of the travel receipts ------- because her assistant was away on leave.",
+      "options": ["she", "her", "herself", "hers"],
+      "answer": 2,
+      "translation": "由於助理請假不在,Ferrara 女士親自審核了所有的差旅收據。",
+      "explanation": "句子的主詞與受詞都已齊備,空格是強調「親自」的反身代名詞 herself。選 she 的人在已有主詞的句子裡又塞一個主格;選 her 的人沒注意 reviewed 的受詞是 all of the travel receipts,不需要第二個受詞;選 hers 的人把所有格代名詞當成強調語,但 hers 代表「她的東西」,語意上會變成收據以外的另一批物品。"
+    },
+    {
+      "id": "d5-07",
+      "category": "介系詞",
+      "difficulty": "基礎",
+      "skill": "答對代表能依「兩個時間點＋and」的結構選出 between,並區分表期間與表範圍的介系詞。",
+      "question": "The training room on the second floor is available ------- 9:00 A.M. and 1:00 P.M. on weekdays.",
+      "options": ["between", "among", "during", "throughout"],
+      "answer": 0,
+      "translation": "二樓的訓練教室在平日上午 9 點到下午 1 點之間開放使用。",
+      "explanation": "between A and B 是兩點之間的固定結構,故選 between。選 among 的人只記得「在…之中」的中文,忽略 among 用於三者以上且不與 and 配對;選 during 的人知道它表期間,卻沒發現 during 後面只能接單一名詞、無法接 A and B 的對稱結構;選 throughout 同樣只接單一名詞,而且強調「整段期間持續」,和指定起訖時間的語意不合。"
+    },
+    {
+      "id": "d5-08",
+      "category": "介系詞",
+      "difficulty": "中級",
+      "skill": "答對代表記得 be subject to 這個商業文件高頻搭配,不用中文語感亂配介系詞。",
+      "question": "All prices listed in the spring catalog are subject ------- change without prior notice.",
+      "options": ["for", "of", "with", "to"],
+      "answer": 3,
+      "translation": "春季型錄上所列的價格皆可能變動,恕不另行通知。",
+      "explanation": "be subject to 是「可能有…、須受…規範」的固定搭配,故選 to。選 for 的人套用 be responsible for 之類的印象,把 for 當成萬用介系詞;選 of 的人以為 subject 在此是名詞「主題」,才會想接 of;選 with 的人被 comply with、deal with 這類搭配影響,忽略 subject 只搭 to。"
+    },
+    {
+      "id": "d5-09",
+      "category": "連接詞vs介系詞",
+      "difficulty": "中級",
+      "skill": "答對代表能先看空格後面是名詞片語還是完整子句,再決定要用介系詞、連接詞還是副詞。",
+      "question": "------- the delay in shipping, Marwick Interiors completed the store renovation on schedule.",
+      "options": ["Despite", "Although", "However", "Regardless"],
+      "answer": 0,
+      "translation": "儘管出貨延遲,Marwick Interiors 仍如期完成了店面翻修。",
+      "explanation": "空格後是名詞片語 the delay in shipping,沒有主詞動詞,只有介系詞能引導,故選 Despite。選 Although 的人只憑「雖然」的中文語意選字,沒察覺它是連接詞、後面必須帶完整子句;選 However 的人把轉折副詞當連接詞用,However 要用逗號或分號銜接前後兩句,不能直接引導片語;選 Regardless 的人漏掉 of,regardless 要寫成 regardless of 才是介系詞片語,單獨一個字不能接名詞。"
+    },
+    {
+      "id": "d5-10",
+      "category": "連接詞vs介系詞",
+      "difficulty": "進階",
+      "skill": "答對代表能辨認條件連接詞與因果介系詞片語的差異,不被相近的中文語意混淆。",
+      "question": "The supplier will extend the payment deadline ------- the revised order form is submitted by Friday.",
+      "options": ["owing to", "in case of", "provided that", "as a result of"],
+      "answer": 2,
+      "translation": "只要修改後的訂購單在週五前送出,供應商就會延長付款期限。",
+      "explanation": "空格後是完整子句,而且前後是條件關係,provided that 表「只要、倘若」,故為正解。選 owing to 的人只看到兩件事有先後關係就選因果,忽略它是介系詞片語、後面只能接名詞;選 as a result of 犯同樣的詞類錯誤,而且因果方向相反;選 in case of 的人記得 in case 可接子句,卻沒注意加了 of 之後同樣只能接名詞。"
+    },
+    {
+      "id": "d5-11",
+      "category": "關係詞",
+      "difficulty": "中級",
+      "skill": "答對代表能看關係子句裡缺的是主詞、受詞還是限定詞,據此選出正確的關係代名詞格位。",
+      "question": "Employees ------- travel expenses exceed the monthly limit must attach a written explanation to the claim form.",
+      "options": ["who", "whose", "whom", "which"],
+      "answer": 1,
+      "translation": "差旅費用超出每月上限的員工,必須在申請表上附上書面說明。",
+      "explanation": "空格後的 travel expenses 沒有任何限定詞,關係子句缺的是所有格,故選 whose。選 who 的人只憑先行詞是人就選 who,沒發現 exceed 的主詞已經是 travel expenses;選 whom 的人格位判斷錯誤,子句裡並沒有缺受詞;選 which 的人把先行詞看成後面的 expenses,忽略關係詞緊接的先行詞是 Employees。"
+    },
+    {
+      "id": "d5-12",
+      "category": "關係詞",
+      "difficulty": "進階",
+      "skill": "答對代表掌握複合關係代名詞一詞兩用的特性,能同時滿足前面介系詞與後面子句的需求。",
+      "question": "The productivity bonus will be awarded to ------- submits the most practical cost-saving idea.",
+      "options": ["whomever", "whichever", "whose", "whoever"],
+      "answer": 3,
+      "translation": "生產力獎金將頒給提出最實用省錢構想的人。",
+      "explanation": "空格既是介系詞 to 的受詞,也是動詞 submits 的主詞,複合關係代名詞的格位由後面的子句決定,故選 whoever。選 whomever 的人一看到前面有介系詞就選受格,忽略後面缺的是主詞;選 whichever 的人沒注意獎金是頒給人而非物品或選項;選 whose 的人把所有格放進缺主詞的位置,後面也沒有可被修飾的名詞。"
+    },
+    {
+      "id": "d5-13",
+      "category": "分詞",
+      "difficulty": "中級",
+      "skill": "答對代表能判斷分詞構句與主要子句主詞之間是主動還是被動關係,選出正確的分詞形式。",
+      "question": "------- in the industrial park next to the airport, the new distribution center offers easy access for delivery trucks.",
+      "options": ["Locating", "Located", "To locate", "Location"],
+      "answer": 1,
+      "translation": "新的配送中心位於機場旁的工業區,貨車進出十分方便。",
+      "explanation": "主詞 the new distribution center 是「被設置於」某處,分詞構句要用過去分詞 Located。選 Locating 的人沒判斷主被動,誤以為逗號前一律用現在分詞;選 To locate 的人把不定詞當開頭萬用選項,語意會變成「為了設置」,與後半句不通;選 Location 的人以為名詞可以直接放在逗號前當獨立成分,忽略句子已有主詞。"
+    },
+    {
+      "id": "d5-14",
+      "category": "不定詞與動名詞",
+      "difficulty": "基礎",
+      "skill": "答對代表記得 agree、plan、decide 這類動詞後面固定接不定詞,不接動名詞。",
+      "question": "The department head agreed ------- the submission deadline by one week.",
+      "options": ["extend", "extending", "to extend", "extended"],
+      "answer": 2,
+      "translation": "部門主管同意把繳交期限延後一週。",
+      "explanation": "agree 後面固定接不定詞,故選 to extend。選 extend 的人漏掉 to,把它當成助動詞後的原形動詞;選 extending 的人以為所有動詞後面都能接動名詞,沒有分辨 agree 屬於接不定詞的那一類;選 extended 的人把過去分詞當成第二個動詞,句中沒有被動或完成結構可以支撐這個形式。"
+    },
+    {
+      "id": "d5-15",
+      "category": "比較級",
+      "difficulty": "中級",
+      "skill": "答對代表知道比較級要用 much、far 這類程度副詞加強,而非修飾原級的 very、so、too。",
+      "question": "Sales in the second quarter were ------- higher than those in the first, largely because of the summer promotion.",
+      "options": ["very", "too", "so", "much"],
+      "answer": 3,
+      "translation": "第二季的銷售額比第一季高出許多,主要是因為夏季促銷活動。",
+      "explanation": "higher 是比較級,前面要用 much、far 這類可修飾比較級的副詞,故選 much。選 very 的人把修飾原級的加強詞套到比較級上;選 too 的人忽略 too 帶有「太過以致於不行」的負面語意,也不與 than 連用;選 so 的人同樣只能修飾原級,而且通常要搭配 that 子句。"
+    },
+    {
+      "id": "d5-16",
+      "category": "字彙辨析",
+      "difficulty": "基礎",
+      "skill": "答對代表能依上下文因果關係選出語意正確的常用動詞,不只憑字首相似度猜答案。",
+      "question": "Because his flight was canceled, Mr. Reyes had to ------- his appointment with the client in Lisbon.",
+      "options": ["reschedule", "recall", "remind", "replace"],
+      "answer": 0,
+      "translation": "由於班機取消,Reyes 先生必須把與里斯本客戶的會面改期。",
+      "explanation": "班機取消導致原訂時間無法出席,要做的是改期,故選 reschedule。選 recall 的人只抓到 re- 字首,recall 是回想或召回產品,不能用於約會;選 remind 的人忽略 remind 必須接人再接 of 或 to,句中受詞是 appointment,用法不成立;選 replace 的人語意上把會面整個換掉,而句意只是換時間。"
+    },
+    {
+      "id": "d5-17",
+      "category": "字彙辨析",
+      "difficulty": "中級",
+      "skill": "答對代表能分辨 re- 開頭常見形容詞的語意差異,並掌握 be responsible for 的搭配。",
+      "question": "Mr. Alvarez was ------- for the delay because he had approved the original shipping route.",
+      "options": ["reliable", "reasonable", "responsible", "remarkable"],
+      "answer": 2,
+      "translation": "由於當初的運送路線是 Alvarez 先生核准的,這次延誤應由他負責。",
+      "explanation": "because 子句說明他核准了路線,因此他要「負責」,be responsible for 是固定搭配,故選 responsible。選 reliable 的人只看到 re- 開頭,reliable 形容人可靠,不與 for 搭配表歸責;選 reasonable 的人把「合理的」硬套進來,語意與承擔責任無關;選 remarkable 的人選了一個純評價形容詞,而且 remarkable 是稱讚語,與延誤的負面語境衝突。"
+    },
+    {
+      "id": "d5-18",
+      "category": "字彙辨析",
+      "difficulty": "進階",
+      "skill": "答對代表能區分 economic 與 economical 這組易混形容詞,選出表示「省錢的」那一個。",
+      "question": "Switching to the shuttle service has proved highly ------- for staff who used to pay for parking downtown.",
+      "options": ["economic", "economical", "considerable", "profitable"],
+      "answer": 1,
+      "translation": "對過去要在市中心付停車費的員工來說,改搭接駁車證實相當省錢。",
+      "explanation": "句意是員工省下停車費,economical 指「節省開銷的」,故為正解。選 economic 的人把兩個字混為一談,economic 指「經濟層面的、與景氣有關的」,用來形容個人省錢並不通;選 considerable 的人記得它是「相當大的」,但這裡需要的是說明好處的性質而非數量;選 profitable 的人把「省錢」與「獲利」畫上等號,profitable 用於事業或投資帶來利潤,不用於個人支出減少。"
+    },
+    {
+      "id": "d5-19",
+      "category": "片語動詞",
+      "difficulty": "基礎",
+      "skill": "答對代表記得 fill out a form 這個表單相關的高頻片語動詞,不與其他 out 片語混用。",
+      "question": "Please ------- out the enclosed form in black ink and return it with your payment by September 30.",
+      "options": ["put", "take", "hand", "fill"],
+      "answer": 3,
+      "translation": "請以黑筆填妥隨函附上的表格,並於 9 月 30 日前連同款項寄回。",
+      "explanation": "fill out a form 是「填寫表格」的固定片語,且 in black ink(以黑筆)只可能搭配填寫的動作,故選 fill。選 take 的人想到 take out「取出」——文法上可以先取出再寄回,但取出用不到黑筆,而且寄回一張沒填的空白表格也失去這句話的目的;選 hand 的人想到 hand out「分發」,但後文是自己填完寄回,不是發給別人;選 put 的人想到 put out「熄滅/對外發布」,受詞不會是表格。"
+    },
+    {
+      "id": "d5-20",
+      "category": "片語動詞",
+      "difficulty": "中級",
+      "skill": "答對代表能依 until 子句判斷事件只是延後而非取消,選出語意相符的片語動詞。",
+      "question": "The launch of the mobile banking app has been ------- off until the security review is complete.",
+      "options": ["put", "taken", "called", "turned"],
+      "answer": 0,
+      "translation": "行動銀行應用程式的上線已延後至安全性審查完成之後。",
+      "explanation": "put off 是「延期」,和 until the security review is complete 完全相符,故選 put。選 taken 的人想到 take off「起飛、脫下」,語意不合;選 called 的人記得 call off 是「取消」,但取消之後就不會再有 until 之後才進行的安排,語意自相矛盾;選 turned 的人想到 turn off「關掉」,受詞應是電器或開關,不能用於一項上線計畫。"
+    }
+  ],
+  "p6": {
+    "id": "d6",
+    "passageType": "memo",
+    "title": "New Expense Reporting System",
+    "passage": "To: All Regional Sales Staff\nFrom: Daniel Okonkwo, Operations Manager\nDate: March 12\nSubject: New Expense Reporting System\n\nBeginning on April 1, all travel expenses {{1}} through the new online portal rather than on paper forms. The portal allows you to upload photographs of your receipts directly from a mobile phone, so there is no longer any need to mail original documents to headquarters.\n\nPlease note that claims submitted after the tenth of each month will be processed in the {{2}} payment cycle. {{3}} Anyone who is unable to attend may request a recording from the training team.\n\nThe help desk, {{4}} handles all portal-related problems, can be reached at extension 4120.",
+    "translation": "致:全體區域業務同仁\n寄件人:營運經理 Daniel Okonkwo\n日期:3 月 12 日\n主旨:新版費用申報系統\n\n自 4 月 1 日起,所有差旅費用都必須透過新的線上系統申報,不再使用紙本表單。這套系統可以讓各位直接用手機上傳收據照片,因此不必再把正本文件寄回總公司。\n\n請注意,每月十日之後才送出的申請,將併入下一期的付款週期處理。3 月 25 日下午 2 點將舉辦一場新系統的簡短教育訓練。無法出席者可以向訓練小組索取錄影檔。\n\n負責處理所有系統相關問題的服務窗口,分機為 4120。",
+    "questions": [
+      {
+        "num": 1,
+        "category": "上下文文法",
+        "difficulty": "中級",
+        "skill": "答對代表能從段落裡的未來時間點與規定語氣,判斷空格需要的是含義務的被動結構。",
+        "options": ["were submitted", "are submitting", "must be submitted", "to submit"],
+        "answer": 2,
+        "explanation": "句首 Beginning on April 1 指出這是 4 月 1 日之後的新規定,主詞 all travel expenses 是被申報的對象,因此要用「情態動詞＋被動」的 must be submitted。選 were submitted 的人被動語態判斷正確,卻用了過去式,與尚未開始的新制度矛盾;選 are submitting 的人主被動顛倒,費用本身不會自己申報;選 to submit 的人忘了這是主要子句,還缺一個限定動詞。"
+      },
+      {
+        "num": 2,
+        "category": "字彙",
+        "difficulty": "中級",
+        "skill": "答對代表能依前後文的時間邏輯,在幾個常見的時間形容詞中選出指向「下一期」的那一個。",
+        "options": ["following", "previous", "recent", "current"],
+        "answer": 0,
+        "explanation": "十日之後才送件會來不及趕上這一期,只能併入下一期,the following payment cycle 正好表達「接下來的那一期」。選 previous 的人方向相反,已經過去的週期不可能再處理新單;選 recent 的人用了只能指向過去的字,而且 recent 通常不與單一未來週期連用;選 current 的人沒讀出「錯過期限」的因果,若還能進本期就沒有提醒的必要。"
+      },
+      {
+        "num": 3,
+        "category": "句子插入",
+        "difficulty": "進階",
+        "skill": "答對代表能利用後一句的代稱與關鍵詞回推空格該補的內容,而不是只看語意是否通順。",
+        "options": [
+          "The paper claim form has been revised and is now available at reception.",
+          "A short training session on the new portal will be held on March 25 at 2:00 P.M.",
+          "Original receipts must still be mailed to headquarters at the end of each week.",
+          "The help desk will be closed for system maintenance throughout March."
+        ],
+        "answer": 1,
+        "explanation": "空格後一句提到「無法出席者可索取錄影檔」,attend 與 recording 都需要先有一場活動被提及,因此要補上教育訓練的公告。選第一個選項的人沒注意全文重點是改用線上系統,再推廣紙本表單自相矛盾;選第三個選項的人直接違反第一段「不必再寄正本文件」的說明;選第四個選項雖然也提到日期,但服務窗口停止服務與後一句的「出席」「錄影檔」毫無關聯,而且與最後一段請大家打分機求助的內容衝突。"
+      },
+      {
+        "num": 4,
+        "category": "上下文文法",
+        "difficulty": "中級",
+        "skill": "答對代表能判斷逗號後的補充說明子句要用非限定關係代名詞,並依先行詞是人或物選字。",
+        "options": ["that", "who", "where", "which"],
+        "answer": 3,
+        "explanation": "The help desk 後面有逗號,是補充說明的非限定關係子句,先行詞是事物,故用 which。選 that 的人忽略 that 不能引導逗號後的非限定子句;選 who 的人把 help desk 當成人,但它指的是一個服務窗口而非某位員工;選 where 的人只想到「地點」的聯想,然而空格後的 handles 缺的是主詞,關係副詞無法填補主詞位置。"
+      }
+    ]
+  },
+  "p7": {
+    "id": "d7",
+    "passages": [
+      {
+        "type": "article",
+        "label": "",
+        "content": "Brightwater Appliances Opens Service Center in Colby\n\nCOLBY (June 15) — Brightwater Appliances will open a customer service center on Maple Street next month, the company announced on Tuesday. The center will handle repairs and warranty claims for households across the northern region, work that until now has been sent to the company's main plant in Ridgeport, more than two hundred kilometers away.\n\nAccording to regional director Alicia Menard, customers currently wait an average of three weeks for a repaired appliance to be returned. \"Once the Colby center is running, we expect that figure to drop to five working days,\" she said. The company will also introduce a pickup service for customers who live more than thirty kilometers from the center.\n\nThe new facility will employ forty technicians, thirty of whom have been hired locally. Training began in May at the Ridgeport plant and will continue until the center opens on July 20.\n\nBrightwater has faced growing competition from online retailers that offer lower prices but limited after-sales support. Ms. Menard said the company had chosen to compete on service rather than on price. \"Our customers tell us that what matters most is how quickly a problem is fixed,\" she noted.\n\nThe center is scheduled to be open Monday through Saturday, and appointments may be booked by telephone or through the company's website."
+      }
+    ],
+    "translation": [
+      "Brightwater 家電於 Colby 設立服務中心\n\nCOLBY(6 月 15 日)——Brightwater 家電週二宣布,將於下個月在 Maple 街設立客戶服務中心。該中心將負責北部地區家庭的維修與保固申請;這些工作到目前為止都必須送到公司位於 Ridgeport 的主要廠區,距離超過兩百公里。\n\n區域總監 Alicia Menard 表示,顧客目前平均要等三週才能拿回修好的家電。她說:「Colby 中心開始運作後,我們預期這個數字會降到五個工作天。」公司也將為住家距離服務中心三十公里以上的顧客提供到府收件服務。\n\n新據點將聘用四十名技術人員,其中三十人在當地招募。訓練已於 5 月在 Ridgeport 廠區展開,並將持續到中心於 7 月 20 日開幕為止。\n\nBrightwater 面臨網路零售商日益激烈的競爭;這些業者售價較低,但售後服務有限。Menard 女士表示,公司選擇以服務而非價格來競爭。她指出:「顧客告訴我們,他們最在意的是問題多快能解決。」\n\n服務中心預定週一至週六營業,可透過電話或公司網站預約。"
+    ],
+    "questions": [
+      {
+        "q": "What is the article mainly about?",
+        "category": "主旨題",
+        "difficulty": "基礎",
+        "skill": "答對代表能從標題與第一段的核心事件歸納全篇主旨,不被段落中的枝節資訊帶走。",
+        "options": [
+          "The opening of a new repair facility",
+          "A reduction in the price of home appliances",
+          "The closing of a manufacturing plant",
+          "A merger between two appliance companies"
+        ],
+        "answer": 0,
+        "explanation": "標題與第一段就點出新服務中心即將開幕,後續各段分別交代服務範圍、人力與開幕日期,主旨即為新維修據點的設立。選價格調降的人抓到第四段的 lower prices,但那是形容競爭對手而非本公司;選工廠關閉的人誤讀 Ridgeport 廠區,文中只說維修工作改由新中心承接,廠區仍在進行訓練;選合併的人把 competition 想成企業整併,全文沒有任何併購訊息。"
+      },
+      {
+        "q": "According to Ms. Menard, how long do customers currently wait for a repaired appliance?",
+        "category": "細節題",
+        "difficulty": "中級",
+        "skill": "答對代表能鎖定題目中的關鍵限定詞 currently,在多個數字之中挑出對應現況的那一個。",
+        "options": [
+          "Five working days",
+          "Two weeks",
+          "Thirty days",
+          "About three weeks"
+        ],
+        "answer": 3,
+        "explanation": "第二段明白寫出顧客目前平均要等三週。選五個工作天的人把 Once the Colby center is running 之後的預期目標當成現況;選兩週的人憑印象猜測,文中並未出現這個數字;選三十天的人把第二段的三十公里距離誤讀成時間。"
+      },
+      {
+        "q": "What is suggested about Brightwater's online competitors?",
+        "category": "推論題",
+        "difficulty": "進階",
+        "skill": "答對代表能把文中一句對比敘述轉換成合理推論,並排除文章未提及或張冠李戴的說法。",
+        "options": [
+          "They have recently opened service centers in Colby.",
+          "They charge more than Brightwater does for repairs.",
+          "They provide customers with less help after a purchase.",
+          "They employ more technicians than Brightwater does."
+        ],
+        "answer": 2,
+        "explanation": "第四段說競爭對手 offer lower prices but limited after-sales support,可直接推論其售後協助較少。選第一個選項的人把主詞張冠李戴,在 Colby 設點的是 Brightwater;選第二個選項的人看到價格比較就反向推論,文中只說對手售價較低,且未提及對手的維修收費;選第四個選項的人把第三段四十名技術人員的數字套到競爭對手身上,文中並未提供對手的人力資訊。"
+      },
+      {
+        "q": "In paragraph 2, the word \"figure\" is closest in meaning to",
+        "category": "同義詞題",
+        "difficulty": "中級",
+        "skill": "答對代表能用上下文決定多義字在該句的實際意思,而不是套用自己最熟悉的那個字義。",
+        "options": [
+          "shape",
+          "number",
+          "person",
+          "drawing"
+        ],
+        "answer": 1,
+        "explanation": "that figure 回指前一句的「平均三週」,而且後面接 drop to five working days,顯然指的是一個數字。選 shape 的人只想到 figure 指身形輪廓的用法;選 person 的人聯想到 public figure「知名人物」,但句中的 that figure 前面沒有任何人被提及;選 drawing 的人想到報告裡標示插圖的 figure,然而這篇文章並沒有圖表,而且數字才能 drop。"
+      }
+    ]
+  }
+}

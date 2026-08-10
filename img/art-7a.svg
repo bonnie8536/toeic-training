@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A quiet hotel floor">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="238" width="800" height="62" fill="#dde7ee"/>
+  <!-- 走廊 -->
+  <rect x="140" y="70" width="520" height="168" fill="#fff" stroke="#dde7ee" stroke-width="3"/>
+  <rect x="180" y="100" width="90" height="138" fill="#0b72c4"/>
+  <circle cx="256" cy="172" r="6" fill="#ffd964"/>
+  <rect x="360" y="100" width="90" height="138" fill="#0b72c4"/>
+  <circle cx="436" cy="172" r="6" fill="#ffd964"/>
+  <rect x="540" y="100" width="90" height="138" fill="#0b72c4"/>
+  <circle cx="616" cy="172" r="6" fill="#ffd964"/>
+  <!-- 門牌 -->
+  <rect x="202" y="112" width="46" height="14" rx="4" fill="#fff" opacity=".85"/>
+  <rect x="382" y="112" width="46" height="14" rx="4" fill="#fff" opacity=".85"/>
+  <rect x="562" y="112" width="46" height="14" rx="4" fill="#fff" opacity=".85"/>
+  <!-- 噓 標誌 -->
+  <circle cx="400" cy="52" r="30" fill="#ffd964" stroke="#e8890c" stroke-width="4"/>
+  <path d="M392 44 q8 -8 12 2 q4 10 -2 16 M408 60 l10 4" stroke="#404040" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- 拖鞋與月亮 -->
+  <ellipse cx="310" cy="252" rx="22" ry="9" fill="#e8890c"/>
+  <ellipse cx="352" cy="252" rx="22" ry="9" fill="#e8890c"/>
+  <path d="M700 100 a26 26 0 1 0 18 44 a20 20 0 0 1 -18 -44" fill="#0b72c4"/>
+</svg>

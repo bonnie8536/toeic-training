@@ -1,0 +1,184 @@
+[
+  {
+    "id": "art-5a",
+    "title": "The Lunch Special",
+    "titleZh": "午間特餐",
+    "category": "餐飲",
+    "level": "初級 (TOEIC 400-550)",
+    "readTime": 2,
+    "illustrationIdea": "A small noodle shop at noon with a chalkboard sign that says Lunch Special, office workers picking up numbered trays at the counter.",
+    "paragraphs": [
+      {
+        "en": "Mr. Lin owns a small restaurant near a [[busy]] office building. Last year, business was slow. Only a few [[customers]] came for lunch. Mr. Lin was [[worried]]. He asked his daughter Amy for help.",
+        "zh": "林先生在一棟繁忙的辦公大樓旁邊開了一家小餐館。去年生意很差，只有少數幾位顧客來吃午餐。林先生很擔心，他找女兒 Amy 幫忙。"
+      },
+      {
+        "en": "Amy talked to the office workers. They said they had only forty minutes for lunch. They did not want to wait in line. The [[price]] was important too. Many of them wanted a simple meal.",
+        "zh": "Amy 去跟大樓裡的上班族聊。他們說午休只有四十分鐘，不想排隊等。價格也很重要。他們多半只想吃一頓簡單的飯。"
+      },
+      {
+        "en": "So Amy made a new plan. She called it the Lunch Special. Every day, the shop [[offers]] one main dish, one soup, and one drink. There is no long [[menu]]. Amy also changed the kitchen [[schedule]]. The cooks [[prepare]] most of the food before noon.",
+        "zh": "於是 Amy 想出一個新做法，她把它叫做「午間特餐」。店裡每天只出一道主菜、一碗湯和一杯飲料，沒有長長的菜單。Amy 也調整了廚房的排班時程，廚師在中午前就先把大部分的菜準備好。"
+      },
+      {
+        "en": "Now the food comes in five minutes. People [[order]] at the door and pay right away. Then they get a [[receipt]] with a number. When the number is called, the food is ready. Nobody waits for a long time.",
+        "zh": "現在餐點五分鐘就上桌。客人在門口點餐，當場付錢，然後拿到一張有號碼的收據。叫到號碼時，餐點就做好了。沒有人要等很久。"
+      },
+      {
+        "en": "The Lunch Special is now very [[popular]]. Many workers come three or four times a week. Some teams even call first and [[book]] a table. Mr. Lin is happy again. He says one good idea can save a small shop.",
+        "zh": "午間特餐現在很受歡迎。很多上班族一週來三、四次，有些團隊還會先打電話訂位。林先生又開心了起來。他說，一個好點子就能救活一家小店。"
+      }
+    ],
+    "vocab": [
+      { "word": "busy", "base": "busy", "pos": "adj.", "hint": "having a lot of people or work; not free", "zh": "繁忙的" },
+      { "word": "customers", "base": "customer", "pos": "n.", "hint": "a person who buys goods or food at a shop", "zh": "顧客" },
+      { "word": "worried", "base": "worried", "pos": "adj.", "hint": "feeling bad because you think something may go wrong", "zh": "擔心的" },
+      { "word": "price", "base": "price", "pos": "n.", "hint": "the money you must pay for something", "zh": "價格" },
+      { "word": "offers", "base": "offer", "pos": "v.", "hint": "to give people the chance to buy or use something", "zh": "提供" },
+      { "word": "menu", "base": "menu", "pos": "n.", "hint": "a list of food that a place can cook for you", "zh": "菜單" },
+      { "word": "schedule", "base": "schedule", "pos": "n.", "hint": "a plan that shows when things will happen", "zh": "時程；排班表" },
+      { "word": "prepare", "base": "prepare", "pos": "v.", "hint": "to get something ready before it is used", "zh": "準備" },
+      { "word": "order", "base": "order", "pos": "v.", "hint": "to ask for food or goods that you want to buy", "zh": "點餐；訂購" },
+      { "word": "receipt", "base": "receipt", "pos": "n.", "hint": "a small paper that shows what you paid for", "zh": "收據" },
+      { "word": "popular", "base": "popular", "pos": "adj.", "hint": "liked by many people", "zh": "受歡迎的" },
+      { "word": "book", "base": "book", "pos": "v.", "hint": "to keep a seat or a table for a later time", "zh": "預訂" }
+    ],
+    "questions": [
+      {
+        "q": "What is the article mainly about?",
+        "options": [
+          "How a small shop used one lunch plan to get more customers.",
+          "Why office workers do not like to eat out.",
+          "How to cook soup and rice at home.",
+          "Why a big restaurant closed last year."
+        ],
+        "answer": 0,
+        "explanation": "全文主線是林先生生意變差（第一段）→ Amy 推出午間特餐（第三段）→ 客人變多（第五段），講的是一家小店靠一套午餐留住顧客。"
+      },
+      {
+        "q": "How much time do the office workers have for lunch?",
+        "options": [
+          "Twenty minutes.",
+          "Thirty minutes.",
+          "Forty minutes.",
+          "One hour."
+        ],
+        "answer": 2,
+        "explanation": "第二段第二句明說他們午休只有四十分鐘（only forty minutes for lunch）。"
+      },
+      {
+        "q": "What do people get after they pay at the door?",
+        "options": [
+          "A free drink.",
+          "A receipt with a number.",
+          "A new menu.",
+          "A seat by the window."
+        ],
+        "answer": 1,
+        "explanation": "第四段第三句寫付錢後會拿到一張有號碼的收據（a receipt with a number）。"
+      },
+      {
+        "q": "Why can the food come so fast now?",
+        "options": [
+          "Because the shop hired ten new cooks.",
+          "Because customers cook the food themselves.",
+          "Because the shop only sells drinks.",
+          "Because the shop makes only one kind of meal each day."
+        ],
+        "answer": 3,
+        "explanation": "第三段說每天只供應一道主菜、一碗湯、一杯飲料，而且廚師中午前就備好料；由此可推論出餐快是因為每天只做一套餐點。"
+      }
+    ]
+  },
+  {
+    "id": "art-5b",
+    "title": "My First Business Trip",
+    "titleZh": "我的第一次出差",
+    "category": "差旅",
+    "level": "初級 (TOEIC 400-550)",
+    "readTime": 2,
+    "illustrationIdea": "A young man in a suit sits at an airport gate with a laptop bag, looking up at a board that shows his flight is delayed.",
+    "paragraphs": [
+      {
+        "en": "Kevin joined Sunrise Trading three months ago. Last month, his boss gave him big news. Kevin had to fly to Osaka for a [[meeting]]. It was his first [[business trip]]. He felt happy and [[nervous]] at the same time.",
+        "zh": "Kevin 三個月前進了晨光貿易。上個月，主管給了他一個大消息。他要飛去大阪開會。這是他第一次出差，他既開心又緊張。"
+      },
+      {
+        "en": "He packed his bag two days early. He put his laptop, papers, and a clean shirt inside. His boss gave him one job. He had to meet a [[client]], Mr. Sato. Kevin read the [[report]] on the plane again and again.",
+        "zh": "他提早兩天就把行李收好，把筆電、文件和一件乾淨的襯衫放進去。主管只交給他一項任務，就是去見一位姓佐藤的客戶。Kevin 在飛機上把報告看了一遍又一遍。"
+      },
+      {
+        "en": "Then a small [[problem]] came. His [[flight]] was [[delayed]] for two hours. Kevin was afraid. He would be late for the meeting. He sent an email to Mr. Sato right away.",
+        "zh": "後來出了一個小問題。他的班機延誤了兩個小時。Kevin 很害怕，因為他會來不及開會。他馬上寄了一封電子郵件給佐藤先生。"
+      },
+      {
+        "en": "Mr. Sato answered in ten minutes. He said the new time was fine. Kevin felt better. When he [[arrived]], Mr. Sato was waiting at the hotel. They talked about prices and [[delivery]] dates for an hour.",
+        "zh": "佐藤先生十分鐘內就回信，說改時間沒問題。Kevin 這才鬆了一口氣。他抵達時，佐藤先生已經在飯店等他。兩人談了一個小時的價格和交貨日期。"
+      },
+      {
+        "en": "The meeting went well. Mr. Sato agreed to [[sign]] a small [[contract]] first. On the plane home, Kevin wrote some notes. He learned an important lesson. Bad news is fine if you share it early.",
+        "zh": "會議很順利。佐藤先生同意先簽一份小額合約。回程的飛機上，Kevin 寫下一些筆記。他學到很重要的一課。壞消息不可怕，只要你早點說出來。"
+      }
+    ],
+    "vocab": [
+      { "word": "meeting", "base": "meeting", "pos": "n.", "hint": "a time when people come together to talk about work", "zh": "會議" },
+      { "word": "business trip", "base": "business trip", "pos": "phr.", "hint": "travel to another city or country for your job", "zh": "出差" },
+      { "word": "nervous", "base": "nervous", "pos": "adj.", "hint": "feeling afraid about something that will happen soon", "zh": "緊張的" },
+      { "word": "client", "base": "client", "pos": "n.", "hint": "a company or person who pays you for your work", "zh": "客戶" },
+      { "word": "report", "base": "report", "pos": "n.", "hint": "a paper that tells people facts about something", "zh": "報告" },
+      { "word": "problem", "base": "problem", "pos": "n.", "hint": "something bad that makes things hard to do", "zh": "問題" },
+      { "word": "flight", "base": "flight", "pos": "n.", "hint": "a trip in a plane from one city to another", "zh": "班機" },
+      { "word": "delayed", "base": "delay", "pos": "v.", "hint": "to make something start or happen later than planned", "zh": "延誤" },
+      { "word": "arrived", "base": "arrive", "pos": "v.", "hint": "to get to a place at the end of a trip", "zh": "抵達" },
+      { "word": "delivery", "base": "delivery", "pos": "n.", "hint": "the act of taking goods to the person who bought them", "zh": "交貨；送貨" },
+      { "word": "sign", "base": "sign", "pos": "v.", "hint": "to write your name on a paper to show that you agree", "zh": "簽署" },
+      { "word": "contract", "base": "contract", "pos": "n.", "hint": "a paper with rules that two sides agree to follow", "zh": "合約" }
+    ],
+    "questions": [
+      {
+        "q": "What is the story mainly about?",
+        "options": [
+          "A worker who lost his job in Osaka.",
+          "A new worker's first trip for his company.",
+          "How to buy a cheap plane ticket.",
+          "A boss who never travels for work."
+        ],
+        "answer": 1,
+        "explanation": "第一段點出 Kevin 進公司三個月就要出差，後面四段都在寫這趟出差的經過，主旨是新人第一次為公司出差。"
+      },
+      {
+        "q": "Why was Kevin afraid before the meeting?",
+        "options": [
+          "He lost his bag at the airport.",
+          "He forgot the report at the office.",
+          "His plane was two hours late.",
+          "Mr. Sato did not answer his email."
+        ],
+        "answer": 2,
+        "explanation": "第三段寫他的班機延誤了兩個小時（delayed for two hours），他怕會來不及開會。"
+      },
+      {
+        "q": "What did Mr. Sato agree to do?",
+        "options": [
+          "Pay for Kevin's hotel.",
+          "Fly to Taiwan next week.",
+          "Give Kevin a new job.",
+          "Sign a small contract first."
+        ],
+        "answer": 3,
+        "explanation": "第五段第二句寫佐藤先生同意先簽一份小額合約（sign a small contract first）。"
+      },
+      {
+        "q": "What can we learn from Kevin's story?",
+        "options": [
+          "Telling people about a problem early can help.",
+          "Workers should never travel alone.",
+          "Emails are slower than phone calls.",
+          "A first business trip is always a bad idea."
+        ],
+        "answer": 0,
+        "explanation": "第三段他一發現延誤就馬上寄信，第四段客戶十分鐘內就同意改時間，第五段他寫下心得「壞消息不可怕，只要早點說出來」，可推論出早點告知問題有幫助。"
+      }
+    ]
+  }
+]

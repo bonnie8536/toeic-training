@@ -1,0 +1,212 @@
+[
+  {
+    "id": "p6-b2-1",
+    "passageType": "email",
+    "title": "Temporary Relocation During Renovation",
+    "passage": "To: All Staff\nFrom: Marcus Delaney, Facilities Manager\nSubject: Temporary Relocation During Renovation\nDate: March 14\n\nDear team,\n\nBeginning Monday, April 6, the entire third floor will undergo a complete renovation. During this period, all marketing and finance personnel {{1}} to the temporary workspace on the second floor. {{2}} Please pack your personal belongings into the labeled boxes by Friday afternoon. Anything left unpacked will be moved by the contractor, {{3}} may result in damage to fragile items. We expect the work to be completed by mid-June, at which point everyone will return to their original desks.\n\nThank you for your {{4}} during this transition.\n\nMarcus Delaney\nFacilities Manager, Hollingsworth Group",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["relocating", "have relocated", "will be relocated", "to relocate"],
+        "answer": 2,
+        "explanation": "考動詞語態與時態。主詞 personnel（人員）是被公司安排搬遷的對象，且時間點是 4 月 6 日起的未來事件，故用未來被動 will be relocated。(A) relocating 是現在分詞，前面沒有 be 動詞，整句會缺少主要動詞；(B) have relocated 是主動完成式，語意變成人員自己已經搬完，與 Beginning Monday, April 6 的未來時間互相矛盾；(D) to relocate 是不定詞，同樣無法充當句子的主要動詞。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Desks, telephones, and network connections will already be in place when you arrive.",
+          "The renovation was postponed twice because of budget concerns.",
+          "Please submit your reimbursement request to the accounting department.",
+          "Visitors must sign in at the security counter on the ground floor."
+        ],
+        "answer": 0,
+        "explanation": "空格前說明同仁將移到二樓臨時辦公區，空格後只要求打包「個人」物品，中間需要一句交代臨時辦公區的設備狀況。(A) 指出桌椅、電話與網路都已備妥，正好解釋為何員工只需帶個人物品，前後銜接最順。(B) 談整修曾兩度延期，與後文六月完工的時程無關且徒增混亂；(C) 報帳事宜與搬遷主題無關；(D) 訪客登記規定與收件者（全體內部同仁）的行動指示對不上。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["it", "what", "that", "which"],
+        "answer": 3,
+        "explanation": "考關係代名詞。逗號後為非限定關係子句，先行詞是前面「箱子將由承包商代為搬運」這整件事，只有 which 可以指涉整個子句。(C) that 不能用於逗號後的非限定子句；(B) what 本身已含先行詞，不能再接在既有子句之後；(A) it 是代名詞不是連接詞，會造成兩個子句沒有連接詞的錯誤。"
+      },
+      {
+        "num": 4,
+        "type": "字彙",
+        "options": ["occupation", "cooperation", "reservation", "expectation"],
+        "answer": 1,
+        "explanation": "考名詞字彙。Thank you for your cooperation（感謝配合）是商業書信收尾的固定說法，呼應前文要求同仁配合打包與搬遷。(A) occupation 指職業或佔用；(C) reservation 指預約或保留意見；(D) expectation 指期待，三者都無法表達「請求並感謝對方配合」的語意。"
+      }
+    ],
+    "translation": "收件者：全體同仁\n寄件者：Marcus Delaney，設施部經理\n主旨：施工期間臨時搬遷\n日期：3 月 14 日\n\n各位同仁：\n\n自 4 月 6 日星期一起，整層三樓將進行全面整修。在此期間，行銷部與財務部全體同仁將移至二樓的臨時辦公區。辦公桌、電話與網路線路在各位抵達時都已配置完成。請於本週五下午前，將個人物品裝入貼有標籤的箱子。未打包的物品將由承包商代為搬運，這可能導致易碎物品受損。我們預計工程將於六月中旬完工，屆時所有人都會回到原本的座位。\n\n感謝各位在這段過渡期間的配合。\n\nMarcus Delaney\nHollingsworth Group 設施部經理"
+  },
+  {
+    "id": "p6-b2-2",
+    "passageType": "article",
+    "title": "Callister Freight Opens Northern Hub",
+    "passage": "Callister Freight Opens Northern Hub\n\nRIVERTON (June 3) — Callister Freight Solutions opened its new distribution center on Harlow Road last week. The facility is expected {{1}} the company's shipping capacity in the northern region by nearly forty percent. It employs 180 people, most of {{2}} were hired locally. {{3}} According to chief operating officer Denise Aguilar, the system will allow same-day processing for orders received before 2:00 P.M. Retailers in the area have welcomed the news. \"Faster delivery gives us a real {{4}} over online sellers,\" said Peter Nkosi, who owns a hardware store in nearby Fenwick.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["increasing", "to increase", "increase", "increased"],
+        "answer": 1,
+        "explanation": "考 be expected 的固定句型。be expected to + 原形動詞，表示「預期將會…」，故選 to increase。(A) increasing、(C) increase、(D) increased 直接接在 is expected 之後都不成立：be expected 之後必須以不定詞 to V 帶出預期的動作，沒有 be expected V-ing／原形／過去分詞的用法。"
+      },
+      {
+        "num": 2,
+        "type": "文法",
+        "options": ["them", "which", "who", "whom"],
+        "answer": 3,
+        "explanation": "考介系詞後的關係代名詞。most of 之後需要受格關係代名詞來連接前後子句，先行詞 180 people 是人，故用 whom。(A) them 是一般代名詞，兩個子句會缺少連接詞而變成逗號謬誤；(B) which 用來指事物，不指人；(C) who 是主格，不能放在介系詞 of 之後。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "The site also houses a fully automated sorting line.",
+          "Several residents objected to the project at a public hearing.",
+          "The company plans to sell its older warehouse in Fenwick.",
+          "Fuel prices have risen sharply over the past six months."
+        ],
+        "answer": 0,
+        "explanation": "空格後出現定冠詞的 the system（這套系統），代表前文必須先交代這套系統是什麼。(A) 說明廠區設有一條全自動分揀線，正是後句 the system 的指涉來源，也順著前文的產能與人力介紹往下推進。(B) 居民抗議、(C) 出售舊倉庫、(D) 油價上漲都沒有提供 the system 的指涉對象，也與「提升運能、加快配送」的文章主軸脫節。"
+      },
+      {
+        "num": 4,
+        "type": "字彙",
+        "options": ["profit", "progress", "advantage", "achievement"],
+        "answer": 2,
+        "explanation": "考名詞字彙與搭配。advantage over 是固定搭配，指「勝過某對象的優勢」，符合零售商認為到貨更快因而勝過網路賣家的語意。(A) profit 指利潤、(B) progress 指進展、(D) achievement 指成就，三者都不與介系詞 over 搭配，語意上也無法表達「相較於競爭者的優勢」。"
+      }
+    ],
+    "translation": "Callister 貨運開設北部轉運中心\n\n里弗頓（6 月 3 日）——Callister 貨運解決方案公司上週在 Harlow 路啟用新的物流配送中心。該設施預計可將公司在北部地區的運能提升近四成。中心雇用 180 名員工，其中多數為在地招募。廠區內另設有一條全自動分揀線。營運長 Denise Aguilar 表示，這套系統將可讓下午 2 點前收到的訂單當日處理完畢。當地零售商對此消息表示歡迎。「更快的配送讓我們相較於網路賣家有了實質優勢，」在鄰近 Fenwick 經營五金行的 Peter Nkosi 說。"
+  },
+  {
+    "id": "p6-b2-3",
+    "passageType": "instructions",
+    "title": "BrewMaster 300 Quick Start Guide",
+    "passage": "BrewMaster 300 — Quick Start Guide\n\nThank you for purchasing the BrewMaster 300 coffee system. Before using the machine for the first time, rinse the water tank thoroughly and {{1}} it to the maximum line. Place the unit on a flat, dry surface at least ten centimeters from any wall. {{2}} Once the indicator light turns green, insert a capsule and press the brew button. The machine automatically enters standby mode {{3}} it has not been used for fifteen minutes. If the light flashes red, the tank is {{4}} and must be refilled before brewing can continue.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["filling", "to fill", "fills", "fill"],
+        "answer": 3,
+        "explanation": "考祈使句的對等連接。連接詞 and 前後必須是對等結構，前面是原形動詞的祈使句 rinse，故空格也要用原形動詞 fill。(A) filling 是動名詞或現在分詞、(B) to fill 是不定詞、(C) fills 是第三人稱單數，都與 rinse 不對等，會破壞平行結構。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "The warranty covers parts and labor for twenty-four months.",
+          "Used capsules may be recycled at any authorized collection point.",
+          "Then plug in the power cord and allow the machine to preheat for two minutes.",
+          "Return the appliance to the retailer if the packaging appears damaged."
+        ],
+        "answer": 2,
+        "explanation": "前句交代擺放位置，後句以 Once the indicator light turns green 起頭，代表中間必須有「通電並預熱」這一步，指示燈才可能轉綠。(C) 補上插電與預熱兩分鐘，正好填補步驟斷層。(A) 保固期、(B) 膠囊回收、(D) 包裝破損退貨都不屬於首次設定的操作流程，也無法解釋指示燈為何會亮綠燈。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["whether", "if", "despite", "unless"],
+        "answer": 1,
+        "explanation": "考連接詞。空格後是完整子句，語意為「若十五分鐘未使用就進入待機」，屬條件關係，故用 if。(D) unless 意為「除非」，與後面否定的 has not been used 併用會造成雙重否定、語意矛盾；(C) despite 是介系詞，後面不可接子句；(A) whether 表「是否」，用於名詞子句，不表條件。"
+      },
+      {
+        "num": 4,
+        "type": "字彙",
+        "options": ["empty", "vacant", "blank", "open"],
+        "answer": 0,
+        "explanation": "考形容詞字彙。水箱裡沒有水、需要加水，用 empty 描述容器裡空無一物。(B) vacant 用於無人使用的房間、座位或職缺；(C) blank 指未填寫的表格或空白畫面；(D) open 指容器蓋子開著、未關閉的狀態，三者都不用來說明容器缺少液體。"
+      }
+    ],
+    "translation": "BrewMaster 300 — 快速入門指南\n\n感謝您購買 BrewMaster 300 咖啡機。首次使用前，請徹底沖洗水箱，並將水注至最高水位線。請將機器放置在平坦乾燥的檯面上，並與牆面保持至少十公分的距離。接著插上電源線，讓機器預熱約兩分鐘。待指示燈轉為綠色後，放入膠囊並按下沖煮鍵。若十五分鐘內未使用，機器會自動進入待機模式。若指示燈閃紅燈，表示水箱已空，必須加水後才能繼續沖煮。"
+  },
+  {
+    "id": "p6-b2-4",
+    "passageType": "notice",
+    "title": "Annual Elevator Inspection",
+    "passage": "NOTICE TO ALL RESIDENTS\nAnnual Elevator Inspection\n\nPlease be advised that the elevators in both towers will be inspected on Thursday, September 18, from 8:00 A.M. until approximately 4:00 P.M. Elevator A will be serviced first, {{1}} Elevator B remains available for general use. {{2}} Residents who need help moving large items should contact the front desk in {{3}}, as additional staff will be on hand throughout the day. We apologize for any inconvenience this may {{4}} and thank you for your understanding. Normal service will resume on Friday morning.\n\nRosalind Whitcomb\nBuilding Manager, Camden Court Apartments",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["while", "during", "in spite of", "as well as"],
+        "answer": 0,
+        "explanation": "考連接詞與介系詞的區別。空格後 Elevator B remains available for general use 是完整子句，必須用連接詞連接，while 可表「同時、與此同時」，語意與文法都成立。(B) during、(C) in spite of、(D) as well as 都是介系詞或介系詞片語，後面只能接名詞或動名詞，不能直接接子句。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Rent payments are due on the first day of each month.",
+          "At no point will both elevators be out of service at the same time.",
+          "The lobby floor will be repainted later this autumn.",
+          "Pets are not permitted in the common areas of either tower."
+        ],
+        "answer": 1,
+        "explanation": "前句說明先檢修 A 梯、B 梯照常使用，後句則請需要搬運大型物品的住戶事先聯繫櫃檯。(B) 保證兩部電梯不會同時停用，既承接前句的分批施工邏輯，也讓住戶知道當天仍有電梯可搭，才有後句安排搬運的可能。(A) 房租繳納、(C) 大廳地板重新粉刷、(D) 寵物規定都與電梯檢修無關，插入後前後文會斷裂。"
+      },
+      {
+        "num": 3,
+        "type": "字彙",
+        "options": ["progress", "order", "advance", "addition"],
+        "answer": 2,
+        "explanation": "考介系詞片語。in advance 意為「事先、提前」，符合請住戶提前與櫃檯聯繫、以便安排人力的語意。(A) in progress 指「進行中」，用來描述狀態而非聯繫時機；(B) in order 單獨使用時指「秩序良好、狀況正常」，需接 to 或 for 才表目的，此處語意不合；(D) in addition 意為「此外」，是承接語氣的副詞片語，接在 contact the front desk 之後不成句意。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["causing", "caused", "be caused", "cause"],
+        "answer": 3,
+        "explanation": "考助動詞後的動詞形式。情態助動詞 may 之後必須接原形動詞，且此處 this（指這次檢修）是造成不便的一方，屬主動語態，故選 cause。(A) causing 是現在分詞、(B) caused 是過去式或過去分詞，都不能直接接在 may 之後；(C) be caused 雖然形式上可接在 may 後，但本句 this 是動作發出者、any inconvenience 是受詞，改成被動會使句子缺少受詞而不成立。"
+      }
+    ],
+    "translation": "全體住戶公告\n年度電梯檢修\n\n謹此通知，兩棟大樓的電梯將於 9 月 18 日星期四上午 8 時至下午 4 時左右進行檢修。A 梯將先行檢修，此時 B 梯仍可正常使用。兩部電梯絕不會同時停止運轉。需要協助搬運大型物品的住戶，請事先與服務櫃檯聯繫，當日將有額外人力於現場支援。造成不便之處敬請見諒，並感謝您的體諒。正常服務將於週五上午恢復。\n\nRosalind Whitcomb\nCamden Court 公寓大樓管理員"
+  },
+  {
+    "id": "p6-b2-5",
+    "passageType": "memo",
+    "title": "Quarterly Expense Reports",
+    "passage": "MEMORANDUM\n\nTo: Sales Department\nFrom: Yolanda Prescott, Director of Sales\nDate: October 2\nRe: Quarterly Expense Reports\n\nAs of this month, all travel expenses {{1}} through the new Vertex portal rather than on paper forms. Receipts should be uploaded within seven days of your return. Claims filed after that deadline will not be reimbursed {{2}} a department head approves an exception in writing. {{3}} If you have not yet activated your account, please do so before Friday. Training sessions will be held on Tuesday and Wednesday for anyone who would like a hands-on {{4}} of the system before the quarter closes.\n\nYolanda Prescott\nDirector of Sales",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["must submit", "are submitting", "must be submitted", "to be submitted"],
+        "answer": 2,
+        "explanation": "考語態。主詞 all travel expenses（差旅費用）是被提交的對象，需用被動語態，並保留 must 表規定，故選 must be submitted。(A) must submit 是主動，語意會變成費用自己提交；(B) are submitting 同樣是主動，語態錯誤且進行式不適合表達制度規定；(D) to be submitted 是不定詞，用了之後整句缺少主要動詞。"
+      },
+      {
+        "num": 2,
+        "type": "文法",
+        "options": ["unless", "whereas", "in case", "provided that"],
+        "answer": 0,
+        "explanation": "考連接詞的語意關係。前半句說逾期申請不予核銷，空格後說部門主管書面核准例外，兩者是「除非…否則不…」的關係，故用 unless。(B) whereas 表前後對比，語意不合；(C) in case 表「以防萬一」，用於預防性動作；(D) provided that 表「只要…就」，會使句意變成「只要主管核准就不予核銷」，與原意完全相反。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "Sales targets for the fourth quarter will be announced next month.",
+          "Company credit cards will be reissued in January.",
+          "The annual sales conference will take place in Bergstrom.",
+          "The finance team will no longer accept printed receipts of any kind."
+        ],
+        "answer": 3,
+        "explanation": "空格前說明報帳改走線上平台、不再使用紙本表單並規定上傳期限，空格後要求尚未啟用帳號者盡快啟用。(D) 明確指出財務部不再收任何紙本收據，既延續前文全面數位化的脈絡，也讓後句「請先啟用帳號」有了必要性。(A) 第四季業績目標、(B) 信用卡換發、(C) 年度業務大會都與報帳流程改為線上無關，插入後無法連接前後文。"
+      },
+      {
+        "num": 4,
+        "type": "字彙",
+        "options": ["declaration", "demonstration", "dedication", "description"],
+        "answer": 1,
+        "explanation": "考名詞字彙。hands-on demonstration 指「實際動手操作的示範」，與前文舉辦教育訓練、讓同仁在季末前熟悉系統的語意相符。(A) declaration 指宣告或申報；(C) dedication 指奉獻或落成儀式；(D) description 指文字說明，與 hands-on（實際操作）互相牴觸，也不是訓練課程提供的內容形式。"
+      }
+    ],
+    "translation": "內部通知\n\n收件者：業務部\n寄件者：Yolanda Prescott，業務總監\n日期：10 月 2 日\n主旨：季度費用報帳\n\n自本月起，所有差旅費用必須透過新的 Vertex 系統平台申請，不再使用紙本表單。收據應於返回後七日內上傳。逾期提出的申請將不予核銷，除非部門主管以書面核准例外處理。財務部將不再接受任何形式的紙本收據。若您尚未啟用帳號，請於本週五前完成。週二與週三將舉辦教育訓練，供希望在本季結束前實際操作系統的同仁參加。\n\nYolanda Prescott\n業務總監"
+  }
+]

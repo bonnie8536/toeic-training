@@ -1,0 +1,212 @@
+[
+  {
+    "id": "p6-b1-1",
+    "passageType": "email",
+    "title": "Fourth-Floor Renovation Schedule",
+    "passage": "To: All Staff\nFrom: Marcus Delaney, Facilities Manager\nSubject: Fourth-Floor Renovation Schedule\nDate: March 12\n\nDear Colleagues,\n\nBeginning Monday, March 23, the fourth floor {{1}} extensive renovation work. Crews will replace the worn carpeting and upgrade the overhead lighting. Throughout this period, staff normally based on that floor will be temporarily {{2}} to workstations on the second floor.\n\nThe project is scheduled for completion by April 10. {{3}} Until then, please store personal belongings in the lockers near the east stairs.\n\nEmployees {{4}} require assistance moving equipment should contact the facilities desk at extension 220.\n\nMarcus Delaney\nFacilities Management, Brighton Mercer Group",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["underwent", "has undergone", "will undergo", "had undergone"],
+        "answer": 2,
+        "explanation": "考動詞時態。句首時間副詞 Beginning Monday, March 23 指向尚未發生的起始時點，全篇也以 will replace、will be relocated 等未來式呼應，故須選 will undergo。underwent 為過去簡單式、has undergone 為現在完成式、had undergone 為過去完成式，三者都把整修講成已發生的事，與「自 3 月 23 日起」的未來語境衝突。"
+      },
+      {
+        "num": 2,
+        "type": "字彙",
+        "options": ["reduced", "reminded", "recovered", "relocated"],
+        "answer": 3,
+        "explanation": "考字彙。空格後接 to workstations on the second floor，需要一個能表達「調動到另一個地點」的動詞，relocate（遷移、調換位置）最符合施工期間人員暫時移地辦公的語境。reduce 是減少數量、remind 是提醒（須接人，再接 of 或 to do）、recover 是復原或痊癒，三者都無法與 be ... to a place 的結構及語意搭配。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "Unfortunately, the project has been postponed indefinitely.",
+          "We will send an update as soon as the floor reopens.",
+          "The second floor will be closed to all employees during March.",
+          "Please submit your travel reimbursement forms to the accounting team."
+        ],
+        "answer": 1,
+        "explanation": "考前後文銜接。空格前一句說明工程預計 4 月 10 日前完工，空格後以 Until then（在那之前）開頭，代表中間必須先出現一個「之後會有後續動作」的參照點，選項 B 承諾樓層重新開放時會再發出通知，正好提供 then 所指的時間點。選項 A 說專案無限期延後，與前句明確的完工日期矛盾；選項 C 說二樓三月全面關閉，與前段安排同仁暫遷二樓辦公直接抵觸；選項 D 談差旅核銷表單，與整封信的整修主題無關。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["who", "whose", "whom", "which"],
+        "answer": 0,
+        "explanation": "考關係代名詞。先行詞 Employees 是人，且在關係子句中擔任動詞 require 的主詞，故須用主格 who。whose 是所有格，後面必須緊接名詞；whom 是受格，不能充當子句主詞；which 只能指事物，不能指人。"
+      }
+    ],
+    "translation": "收件者：全體同仁\n寄件者：設施部經理 Marcus Delaney\n主旨：四樓整修時程\n日期：3 月 12 日\n\n各位同仁：\n\n自 3 月 23 日（星期一）起，四樓將進行大規模整修工程。施工人員會更換磨損的地毯，並升級天花板照明。在此期間，平時於該樓層辦公的同仁將暫時調至二樓的工作區。\n\n本工程預計於 4 月 10 日前完工。待四樓重新開放，我們會再另行通知。在此之前，請將個人物品存放於東側樓梯旁的置物櫃。\n\n需要協助搬運設備的同仁，請撥分機 220 與設施部櫃檯聯繫。\n\nMarcus Delaney\nBrighton Mercer 集團 設施管理部"
+  },
+  {
+    "id": "p6-b1-2",
+    "passageType": "memo",
+    "title": "Revised Expense Reimbursement Procedure",
+    "passage": "MEMORANDUM\n\nTO: Regional Sales Team\nFROM: Priya Raghunathan, Director of Finance\nDATE: September 5\nRE: Revised Expense Reimbursement Procedure\n\nEffective October 1, all travel expenses must be submitted through our new online portal, ExpenseTrack. Paper forms {{1}} after that date. To be reimbursed, staff must upload a digital copy of each receipt within ten business days of returning from a trip.\n\nClaims submitted without supporting documentation will be {{2}} unprocessed. {{3}}\n\nA training session covering the portal will be held on September 18 in Conference Room B {{4}} employees can practice using the system. Please reserve a seat by replying to this memo.\n\nPriya Raghunathan\nFinance Department",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["will not accept", "will not be accepted", "have not accepted", "are not accepting"],
+        "answer": 1,
+        "explanation": "考語態與時態。主詞 Paper forms 是「被受理」的對象而非執行者，須用被動語態；after that date 指 10 月 1 日之後的未來，故選 will not be accepted。will not accept、have not accepted、are not accepting 三者皆為主動語態，語意會變成「紙本表單不受理別人」，主客顛倒且不合邏輯。"
+      },
+      {
+        "num": 2,
+        "type": "字彙",
+        "options": ["returned", "refunded", "reserved", "reversed"],
+        "answer": 0,
+        "explanation": "考字彙。空格後的 unprocessed（未處理的）說明申請單被原封退回，returned unprocessed 是核銷流程中的固定說法。refund 指退還款項，主詞應是錢而非申請單；reserve 指保留或預訂；reverse 指撤銷或反轉方向，三者都無法與 unprocessed 這個補語搭配。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "The finance department will move to the third floor next quarter.",
+          "Paper submissions remain the preferred method for most employees.",
+          "Please therefore confirm that every receipt is clear before uploading it.",
+          "Reimbursements are issued to clients rather than to employees."
+        ],
+        "answer": 2,
+        "explanation": "考前後文銜接。空格前一句指出缺少佐證文件的申請會被退回不予處理，空格後段落轉入教育訓練資訊，因此空格需要一句承接前句後果、提醒同仁事先自我檢查的話。選項 C 以 therefore 明確扣住前句的因果關係，且 receipt 也呼應前文的收據上傳規定。選項 A 談部門搬遷，與核銷主題無關；選項 B 說紙本仍是多數人偏好的方式，與第一段「10 月 1 日起不再受理紙本」直接矛盾；選項 D 說核銷對象是客戶，與本備忘錄發給業務同仁的前提抵觸。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["in order to", "such as", "as well as", "so that"],
+        "answer": 3,
+        "explanation": "考連接詞。空格後 employees can practice using the system 是含主詞與限定動詞的完整子句，且表達舉辦訓練的目的，須用連接詞 so that。in order to 後面只能接原形動詞；such as 與 as well as 都是後接名詞或名詞片語的用法，皆無法引導完整子句。"
+      }
+    ],
+    "translation": "備忘錄\n\n致：區域業務團隊\n發文者：財務部主管 Priya Raghunathan\n日期：9 月 5 日\n主旨：差旅費核銷流程修訂\n\n自 10 月 1 日起，所有差旅費用一律須透過本公司新的線上系統 ExpenseTrack 送出。該日之後將不再受理紙本表單。同仁須於出差返回後十個工作天內上傳每張收據的電子檔，方可辦理核銷。\n\n未附佐證文件的申請將原件退回，不予處理。因此，上傳前請先確認每張收據都清晰可辨。\n\n系統操作說明會將於 9 月 18 日在 B 會議室舉行，讓同仁能實際演練操作。請回覆本備忘錄以保留座位。\n\nPriya Raghunathan\n財務部"
+  },
+  {
+    "id": "p6-b1-3",
+    "passageType": "notice",
+    "title": "Scheduled Resurfacing of the Parking Garage",
+    "passage": "NOTICE TO ALL TENANTS\nHarborview Business Center\n\nScheduled Resurfacing of the Underground Parking Garage\n\nThe underground parking garage will be closed from Friday, June 14, at 6:00 P.M. until Monday, June 17, at 7:00 A.M. Vehicles left in the garage during this period {{1}} at the owner's expense.\n\n{{2}} the weekend, tenants may park free of charge in the municipal lot on Wexler Street. {{3}} Access to the elevator lobby from Wexler Street will remain open at all hours.\n\nWe regret any {{4}} this closure may cause and thank you for your cooperation.\n\nHarborview Property Management",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["will be towed", "will tow", "are towing", "have towed"],
+        "answer": 0,
+        "explanation": "考語態。主詞 Vehicles 是「被拖吊」的對象，須用被動語態；封閉期間屬於未來時間，故選 will be towed，其後的 at the owner's expense 也印證車主是承受方。will tow、are towing、have towed 都是主動語態，語意會變成車輛去拖吊別的東西，不合常理。"
+      },
+      {
+        "num": 2,
+        "type": "文法",
+        "options": ["While", "Although", "Throughout", "Between"],
+        "answer": 2,
+        "explanation": "考介系詞與連接詞的分辨。空格後 the weekend 是名詞片語而非子句，因此需要介系詞；Throughout the weekend 表示「整個週末期間」，與前段週五傍晚至週一清晨的封閉時段完全吻合。While 與 Although 都是連接詞，後面必須接完整子句；Between 須以 between A and B 的形式出現，單接一個名詞不合語法。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "The municipal lot charges a flat rate of $12 per day.",
+          "Bicycles may be stored in the racks near the loading dock.",
+          "Resurfacing is expected to take approximately three weeks.",
+          "Simply show your building pass to the attendant at the gate."
+        ],
+        "answer": 3,
+        "explanation": "考前後文銜接。空格前一句告知租戶週末可免費停放於 Wexler 街的市立停車場，空格後接著說明從 Wexler 街進入電梯門廳的通道全天開放，兩句都圍繞「如何使用替代停車地點」。選項 D 補充進場方式，向管理員出示大樓通行證，銜接最自然。選項 A 說該停車場每日收費 12 美元，與前句 free of charge 矛盾；選項 B 談自行車停放，與汽車停車安排無關；選項 C 說工程約需三週，與公告明訂的週末封閉期抵觸。"
+      },
+      {
+        "num": 4,
+        "type": "字彙",
+        "options": ["disagreement", "inconvenience", "misunderstanding", "reluctance"],
+        "answer": 1,
+        "explanation": "考字彙。We regret any inconvenience ... may cause 是公告與客服文件的固定表達，指設施封閉「造成的不便」。disagreement 指意見不合、misunderstanding 指誤解、reluctance 指不情願，三者都是人與人之間的態度或認知問題，並非停車場封閉所會造成的結果，語意不合。"
+      }
+    ],
+    "translation": "全體租戶公告\nHarborview 商務中心\n\n地下停車場路面重鋪工程\n\n地下停車場將自 6 月 14 日（星期五）下午 6 時起封閉，至 6 月 17 日（星期一）上午 7 時止。此期間仍留置於停車場內的車輛將予以拖吊，費用由車主自付。\n\n整個週末期間，租戶可免費停放於 Wexler 街的市立停車場。入場時只需向閘口管理員出示大樓通行證即可。由 Wexler 街進入電梯門廳的通道則全天開放。\n\n本次封閉造成的不便，敬請見諒，並感謝您的配合。\n\nHarborview 物業管理處"
+  },
+  {
+    "id": "p6-b1-4",
+    "passageType": "advertisement",
+    "title": "Meridian Workspace Now Open",
+    "passage": "MERIDIAN WORKSPACE\nNow Open in the Calder District\n\nLooking for a professional address without the cost of a long lease? Meridian Workspace offers private offices, shared desks, and fully {{1}} meeting rooms in the heart of the Calder District.\n\nMembers enjoy high-speed internet, unlimited coffee, and access to our rooftop terrace. Our reception team {{2}} packages and greets your visitors during business hours.\n\n{{3}} Rates start at $220 per month for a shared desk, and no deposit is required.\n\nVisit meridianworkspace.example to book a tour, or call 555-0146 {{4}} speak with a membership adviser.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "字彙",
+        "options": ["occupied", "refunded", "insured", "equipped"],
+        "answer": 3,
+        "explanation": "考字彙。fully equipped 是固定搭配，指「設備齊全的」會議室，與整段列舉服務內容、強調賣點的廣告語境一致。occupied 指被占用，在招租廣告中反而是負面訊息；refunded 指已退款，主詞應為款項；insured 指已投保，與 fully 搭配時談的是保險範圍，並非此處要凸顯的空間配備。"
+      },
+      {
+        "num": 2,
+        "type": "文法",
+        "options": ["accept", "accepts", "accepting", "to accept"],
+        "answer": 1,
+        "explanation": "考主詞與動詞的一致。主詞 Our reception team 是集合名詞，在美式商業英文中視為單數，且與後面以 and 對等連接的 greets 形成平行結構，故須用第三人稱單數 accepts。accept 為原形，不符主詞單數；accepting 與 to accept 都是非限定形式，若填入則整句缺少主要動詞。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "Best of all, membership requires no long-term commitment.",
+          "All members must sign a minimum two-year agreement.",
+          "Our Calder District location will close for renovation in August.",
+          "Meeting rooms are available only to corporate clients."
+        ],
+        "answer": 0,
+        "explanation": "考前後文銜接。廣告開頭以「不必負擔長期租約成本」設定訴求，空格後緊接著談每月 220 美元起且免押金的條件，因此空格需要一句總結彈性與低門檻的話。選項 A 以 Best of all 收攏前面所有優點，並點出無需長期綁約，同時呼應開頭與後句。選項 B 要求最少簽約兩年，與開頭訴求正面衝突；選項 C 說八月要整修停業，與 Now Open 的招攬目的矛盾；選項 D 說會議室僅限企業客戶，與前段列出的會員福利抵觸。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["for", "so", "to", "that"],
+        "answer": 2,
+        "explanation": "考不定詞表目的。call 555-0146 to speak with a membership adviser 用不定詞說明來電目的，且與同句前半 Visit ... to book a tour 構成平行結構。for 後面須接名詞或動名詞；so 表目的時須寫成 so that 並接完整子句；that 用於引導名詞子句或關係子句，三者都不能直接接原形動詞 speak。"
+      }
+    ],
+    "translation": "MERIDIAN WORKSPACE\nCalder 區新據點正式開幕\n\n想要一個專業的辦公地址，又不想負擔長期租約的成本嗎？Meridian Workspace 在 Calder 區的核心地段提供獨立辦公室、共用桌位，以及設備齊全的會議室。\n\n會員可享高速網路、無限量咖啡，並可使用頂樓露臺。營業時間內，我們的櫃檯團隊會代收包裹並接待您的訪客。\n\n最棒的是，入會無須長期綁約。共用桌位每月 220 美元起，且免收押金。\n\n請至 meridianworkspace.example 預約參觀，或撥打 555-0146 與會員顧問洽談。"
+  },
+  {
+    "id": "p6-b1-5",
+    "passageType": "letter",
+    "title": "Warranty Service Appointment",
+    "passage": "Kestrel Home Appliances\n48 Fenwick Road, Ashcombe\n\nNovember 3\n\nMs. Dana Okonjo\n17 Larkspur Lane\nAshcombe\n\nDear Ms. Okonjo,\n\nThank you for contacting us about the dishwasher you {{1}} from our Ashcombe showroom in June. Our records confirm that the unit is still covered by its two-year warranty.\n\nA technician will visit your home on Thursday, November 12, between 9:00 A.M. and noon to {{2}} the drainage problem you described. {{3}} There will be no charge for either the visit or any parts required.\n\nIf this date is inconvenient, please call our service line by Friday so that an alternative appointment {{4}}.\n\nSincerely,\n\nElliot Sung\nCustomer Care Manager",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["purchase", "purchased", "are purchasing", "will purchase"],
+        "answer": 1,
+        "explanation": "考動詞時態。in June 是明確的過去時間點，而信件日期為 11 月 3 日，購買行為早已完成，故須用過去簡單式 purchased。purchase 為現在式，表習慣或事實；are purchasing 為現在進行式，指此刻正在進行；will purchase 為未來式，三者都與 in June 這個過去時間標記衝突。"
+      },
+      {
+        "num": 2,
+        "type": "字彙",
+        "options": ["indicate", "estimate", "originate", "investigate"],
+        "answer": 3,
+        "explanation": "考字彙。技師到府的目的是查明客戶所描述的排水故障原因，investigate 指調查、檢查，與受詞 problem 搭配自然，也符合保固維修的流程。indicate 指指出或顯示，主詞通常是數據或跡象；estimate 指估算數量或費用；originate 指起源，是不及物用法，三者都無法承接「派技師處理排水問題」的語意。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "Unfortunately, the warranty on this model expired last year.",
+          "Please have your original receipt ready, as a service fee applies.",
+          "Please ensure that someone over the age of eighteen is present.",
+          "Our showroom will be closed for inventory on that day."
+        ],
+        "answer": 2,
+        "explanation": "考前後文銜接。空格前一句排定技師於 11 月 12 日上午到府的時段，空格後說明到府與零件皆不收費，因此空格最適合放入到府服務的配合事項。選項 C 要求屆時須有年滿十八歲者在場，直接對應前句的到府時間區間，是登門服務的標準提醒。選項 A 說保固去年到期，與第一段確認仍在兩年保固內矛盾；選項 B 說須支付服務費，與後句 no charge 直接抵觸；選項 D 談展示中心當日盤點休息，與到府維修無關，也不影響客戶。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["can be arranged", "can arrange", "arranging", "to arrange"],
+        "answer": 0,
+        "explanation": "考語態。so that 子句的主詞 an alternative appointment 是「被安排」的對象，須用被動語態 can be arranged。can arrange 是主動語態，語意變成預約時段自己去安排別的事，不合邏輯；arranging 與 to arrange 都是非限定形式，填入後 so that 子句便缺少限定動詞，句構不完整。"
+      }
+    ],
+    "translation": "Kestrel 家電\nAshcombe 市 Fenwick 路 48 號\n\n11 月 3 日\n\nDana Okonjo 女士\nAshcombe 市 Larkspur 巷 17 號\n\nOkonjo 女士 您好：\n\n感謝您就 6 月於本公司 Ashcombe 展示中心所購買的洗碗機與我們聯繫。經查，該機仍在兩年保固期內。\n\n技師將於 11 月 12 日（星期四）上午 9 時至中午之間到府，查明您所描述的排水問題。屆時請確保有年滿十八歲的人員在場。到府服務與所需零件均不另行收費。\n\n若該日期不便，請於星期五前致電本公司服務專線，以便另行安排時段。\n\n敬祝 商安\n\n客戶服務部經理 Elliot Sung 敬上"
+  }
+]

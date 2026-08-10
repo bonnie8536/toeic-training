@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A calendar showing a four-day workweek">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="238" width="800" height="62" fill="#dde7ee"/>
+  <!-- 月曆 -->
+  <rect x="180" y="46" width="440" height="210" rx="14" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <rect x="180" y="46" width="440" height="52" rx="14" fill="#0b72c4"/>
+  <rect x="180" y="84" width="440" height="14" fill="#0b72c4"/>
+  <circle cx="250" cy="46" r="10" fill="#eef3f7" stroke="#404040" stroke-width="4"/>
+  <circle cx="550" cy="46" r="10" fill="#eef3f7" stroke="#404040" stroke-width="4"/>
+  <!-- 週一到週四:工作 -->
+  <rect x="210" y="120" width="66" height="56" rx="8" fill="#e9f4fc" stroke="#0b72c4" stroke-width="3"/>
+  <rect x="288" y="120" width="66" height="56" rx="8" fill="#e9f4fc" stroke="#0b72c4" stroke-width="3"/>
+  <rect x="366" y="120" width="66" height="56" rx="8" fill="#e9f4fc" stroke="#0b72c4" stroke-width="3"/>
+  <rect x="444" y="120" width="66" height="56" rx="8" fill="#e9f4fc" stroke="#0b72c4" stroke-width="3"/>
+  <!-- 週五:放假 -->
+  <rect x="522" y="120" width="66" height="56" rx="8" fill="#ffd964" stroke="#e8890c" stroke-width="3"/>
+  <path d="M540 148 l10 12 l20 -24" fill="none" stroke="#e8890c" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 打勾 -->
+  <path d="M228 148 l10 12 l20 -24 M306 148 l10 12 l20 -24 M384 148 l10 12 l20 -24 M462 148 l10 12 l20 -24" fill="none" stroke="#0b72c4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="210" y="196" width="378" height="12" rx="6" fill="#dde7ee"/>
+  <rect x="210" y="220" width="240" height="12" rx="6" fill="#dde7ee"/>
+  <!-- 植栽 -->
+  <path d="M92 214 q-24 -34 6 -58 q4 34 -6 58" fill="#3a8a4d"/>
+  <path d="M104 214 q30 -28 8 -66 q-22 28 -8 66" fill="#4c9e60"/>
+  <path d="M78 258 h48 l-8 34 h-32 z" fill="#e8890c"/>
+  <!-- 鬧鐘 -->
+  <circle cx="690" cy="212" r="40" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <line x1="690" y1="212" x2="690" y2="186" stroke="#404040" stroke-width="5" stroke-linecap="round"/>
+  <line x1="690" y1="212" x2="710" y2="222" stroke="#404040" stroke-width="5" stroke-linecap="round"/>
+  <line x1="662" y1="178" x2="650" y2="166" stroke="#404040" stroke-width="6" stroke-linecap="round"/>
+  <line x1="718" y1="178" x2="730" y2="166" stroke="#404040" stroke-width="6" stroke-linecap="round"/>
+</svg>

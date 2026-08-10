@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="An airplane taking off with hearts trailing behind">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <!-- 雲 -->
+  <g fill="#fff">
+    <ellipse cx="150" cy="80" rx="58" ry="20"/><ellipse cx="190" cy="66" rx="40" ry="16"/>
+    <ellipse cx="640" cy="60" rx="66" ry="22"/><ellipse cx="690" cy="46" rx="42" ry="16"/>
+    <ellipse cx="360" cy="250" rx="80" ry="24"/><ellipse cx="420" cy="238" rx="52" ry="18"/>
+  </g>
+  <!-- 飛機 -->
+  <g transform="rotate(-8 430 160)">
+    <ellipse cx="430" cy="160" rx="150" ry="34" fill="#fff" stroke="#404040" stroke-width="4"/>
+    <path d="M560 152 q34 4 44 12 q-14 10 -48 8 z" fill="#0b72c4"/>
+    <path d="M400 150 l-70 -52 h32 l64 46 z" fill="#0b72c4"/>
+    <path d="M408 176 l-52 44 h28 l50 -38 z" fill="#0b72c4"/>
+    <circle cx="356" cy="152" r="7" fill="#9db8cc"/><circle cx="390" cy="150" r="7" fill="#9db8cc"/>
+    <circle cx="424" cy="150" r="7" fill="#9db8cc"/><circle cx="458" cy="151" r="7" fill="#9db8cc"/>
+    <path d="M296 156 q-20 4 -28 10 q10 8 32 4" fill="#e8890c"/>
+  </g>
+  <!-- 航跡+愛心 -->
+  <path d="M120 230 q80 -10 150 -34" fill="none" stroke="#9db8cc" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round"/>
+  <path d="M96 236 c-8 -12 8 -22 14 -10 c6 -12 22 -2 14 10 c-6 8 -14 12 -14 12 s-8 -4 -14 -12z" fill="#c94040"/>
+  <path d="M160 196 c-6 -9 6 -16 10 -7 c4 -9 16 -2 10 7 c-4 6 -10 9 -10 9 s-6 -3 -10 -9z" fill="#e8890c"/>
+  <!-- 時鐘 -->
+  <circle cx="682" cy="216" r="44" fill="#ffd964" stroke="#404040" stroke-width="4"/>
+  <line x1="682" y1="216" x2="682" y2="188" stroke="#404040" stroke-width="5" stroke-linecap="round"/>
+  <line x1="682" y1="216" x2="702" y2="228" stroke="#404040" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="682" cy="216" r="5" fill="#404040"/>
+</svg>

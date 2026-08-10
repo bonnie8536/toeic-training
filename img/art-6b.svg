@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="An office nap pod experiment">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="238" width="800" height="62" fill="#dde7ee"/>
+  <!-- 午睡艙 -->
+  <path d="M220 238 q-10 -110 90 -120 h180 q80 6 90 120 z" fill="#0b72c4"/>
+  <path d="M250 238 q-4 -84 70 -92 h160 q60 6 68 92 z" fill="#9fd0f5"/>
+  <!-- 睡覺的人 -->
+  <circle cx="360" cy="196" r="22" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M382 214 q70 -22 120 6 l0 18 h-120 z" fill="#e8890c"/>
+  <path d="M348 190 q6 6 12 0 M368 190 q6 6 12 0" stroke="#404040" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- ZZZ -->
+  <text x="470" y="120" font-family="Arial" font-size="34" font-weight="bold" fill="#0b72c4">Z</text>
+  <text x="504" y="96" font-family="Arial" font-size="26" font-weight="bold" fill="#e8890c">z</text>
+  <text x="528" y="78" font-family="Arial" font-size="20" font-weight="bold" fill="#767f88">z</text>
+  <!-- 時鐘與錢幣 -->
+  <circle cx="150" cy="130" r="34" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <line x1="150" y1="130" x2="150" y2="110" stroke="#404040" stroke-width="4" stroke-linecap="round"/>
+  <line x1="150" y1="130" x2="164" y2="138" stroke="#404040" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="670" cy="130" r="30" fill="#ffd964" stroke="#e8890c" stroke-width="4"/>
+  <text x="670" y="141" font-family="Arial" font-size="30" font-weight="bold" fill="#b05e0a" text-anchor="middle">$</text>
+</svg>

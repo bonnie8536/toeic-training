@@ -1,0 +1,252 @@
+[
+  {
+    "id": "p5-b3-01",
+    "difficulty": "基礎",
+    "category": "關係詞",
+    "question": "Employees ------- wish to enroll in the Marlowe Group leadership workshop should complete the online form by March 15.",
+    "options": ["who", "whom", "whose", "which"],
+    "answer": 0,
+    "translation": "想報名馬洛集團領導力工作坊的員工，應於三月十五日前填妥線上表格。",
+    "explanation": "考點：關係代名詞的格與先行詞。空格後緊接動詞 wish，關係子句缺少主詞，且先行詞 Employees 是人，故須用主格關係代名詞 (A) who。(B) whom 為受格，只用在關係子句缺受詞時。(C) whose 為所有格，後面必須接名詞。(D) which 的先行詞須為事物，不能指人。"
+  },
+  {
+    "id": "p5-b3-02",
+    "difficulty": "中級",
+    "category": "關係詞",
+    "question": "Delta Ridge Consulting is seeking a project manager ------- experience includes at least five years in the renewable energy sector.",
+    "options": ["who", "whose", "which", "whom"],
+    "answer": 1,
+    "translation": "德瑞奇顧問公司正在尋找一位資歷包含至少五年再生能源產業經驗的專案經理。",
+    "explanation": "考點：所有格關係代名詞。空格後為名詞 experience，且該名詞是關係子句的主詞，語意為「這位經理的經驗」，須用所有格 (B) whose。(A) who 為主格，後面應直接接動詞而非名詞。(C) which 的先行詞須為事物，且主格用法後面也應接動詞。(D) whom 為受格，不能後接名詞表所有關係。"
+  },
+  {
+    "id": "p5-b3-03",
+    "difficulty": "中級",
+    "category": "關係詞",
+    "question": "The auditorium ------- Ashcombe Holdings will hold its annual shareholders' meeting was renovated over the summer.",
+    "options": ["which", "where", "that", "what"],
+    "answer": 1,
+    "translation": "阿什康控股將舉行年度股東大會的禮堂在夏季期間已整修完畢。",
+    "explanation": "考點：關係副詞。空格後的子句 Ashcombe Holdings will hold its annual shareholders' meeting 主詞與受詞俱全，結構完整，缺的是表地點的修飾語，故用關係副詞 (B) where。(A) which 與 (C) that 都是關係代名詞，必須在子句中擔任主詞或受詞，但此處並無空缺。(D) what 本身已含先行詞，不可用來修飾前面的名詞。"
+  },
+  {
+    "id": "p5-b3-04",
+    "difficulty": "進階",
+    "category": "關係詞",
+    "question": "Harborline Logistics operates twelve distribution centers, three of ------- are located in Southeast Asia.",
+    "options": ["that", "them", "which", "those"],
+    "answer": 2,
+    "translation": "海港線物流經營十二座配送中心，其中三座位於東南亞。",
+    "explanation": "考點：「數量詞＋of＋關係代名詞」的補述用法。逗號後需要一個能連接兩個子句的關係代名詞，先行詞 distribution centers 為事物，故選 (C) which。(A) that 不可用於逗號後的補述用法，也不可置於介系詞 of 之後。(B) them 是一般代名詞，沒有連接功能，會造成兩個子句用逗號硬接的錯誤。(D) those 為指示代名詞，同樣不具連接子句的功能。"
+  },
+  {
+    "id": "p5-b3-05",
+    "difficulty": "進階",
+    "category": "關係詞",
+    "question": "------- impressed the hiring panel at Verity Analytics most was the candidate's ability to explain complex data in plain language.",
+    "options": ["That", "Which", "It", "What"],
+    "answer": 3,
+    "translation": "最讓維睿分析徵才小組印象深刻的，是這位應徵者能用淺白語言說明複雜數據的能力。",
+    "explanation": "考點：複合關係代名詞 what 引導名詞子句。空格要引導一個當全句主詞的名詞子句，且該子句本身缺少主詞，只有兼含先行詞的 (D) What（等於 the thing that）能同時滿足這兩項條件。(A) That 引導名詞子句時，子句結構必須完整，此處卻缺主詞。(B) Which 須有前面的先行詞可指涉，置於句首並無此條件。(C) It 是代名詞，放在此處會使全句出現兩個並列動詞而結構破碎。"
+  },
+  {
+    "id": "p5-b3-06",
+    "difficulty": "基礎",
+    "category": "分詞",
+    "question": "Passengers waiting at Gate 14 were ------- to learn that their Northwind Air flight had been delayed for a third time.",
+    "options": ["annoying", "annoyed", "annoy", "annoyance"],
+    "answer": 1,
+    "translation": "在十四號登機門等候的旅客得知他們的北風航空班機第三度延誤時，感到相當惱火。",
+    "explanation": "考點：情緒動詞的現在分詞與過去分詞。主詞 Passengers 是人，是感受情緒的一方，須用過去分詞 (B) annoyed 表示「感到惱火的」。(A) annoying 表示「令人惱火的」，用來修飾造成情緒的事物。(C) annoy 是動詞原形，不能接在 be 動詞後當補語。(D) annoyance 是名詞，語意上人不等於「惱怒」這件事，也不與後面的不定詞搭配。"
+  },
+  {
+    "id": "p5-b3-07",
+    "difficulty": "基礎",
+    "category": "分詞",
+    "question": "At Pinehurst Office Solutions, invoices ------- after the 25th of the month are processed in the following billing cycle.",
+    "options": ["submitted", "submitting", "submit", "to submit"],
+    "answer": 0,
+    "translation": "在派恩赫斯特辦公用品公司，每月二十五日之後提交的請款單會於下一個帳務週期處理。",
+    "explanation": "考點：分詞片語簡化關係子句。invoices 與 submit 之間是被動關係（請款單被提交），故用過去分詞 (A) submitted，等同 which are submitted。(B) submitting 為現在分詞表主動，會變成「請款單提交某物」，語意不合。(C) submit 是動詞原形，句中已有主要動詞 are processed，不能再出現未經連接的第二個動詞。(D) to submit 表示目的或未來，無法用來說明已經提交的請款單。"
+  },
+  {
+    "id": "p5-b3-08",
+    "difficulty": "中級",
+    "category": "分詞",
+    "question": "Any Kessler Semiconductor employee ------- to relocate to the Osaka branch must notify Human Resources by the end of this quarter.",
+    "options": ["wishes", "wish", "wished", "wishing"],
+    "answer": 3,
+    "translation": "凱斯勒半導體任何希望調往大阪分公司的員工，須於本季結束前通知人力資源部。",
+    "explanation": "考點：現在分詞簡化主動語態的關係子句。employee 與 wish 是主動關係，而句子的主要動詞是 must notify，故空格須用現在分詞 (D) wishing，等同 who wishes。(A) wishes 與 (B) wish 都是限定動詞，會使句中出現兩個沒有連接詞的動詞。(C) wished 若視為過去式，同樣造成兩個限定動詞並存；若視為過去分詞則表被動，但員工是主動希望調職，不會「被希望」。"
+  },
+  {
+    "id": "p5-b3-09",
+    "difficulty": "進階",
+    "category": "分詞",
+    "question": "------- the merger paperwork three weeks ahead of schedule, the legal team at Brantley & Voss was granted an extra day of paid leave.",
+    "options": ["Complete", "Completed", "Having completed", "To have completed"],
+    "answer": 2,
+    "translation": "由於提前三週完成併購文件，布蘭特利與沃斯公司的法務團隊獲得一天額外的有薪假。",
+    "explanation": "考點：分詞構句的語態與時序。主要子句的主詞 the legal team 是完成文件的一方，且該動作發生在獲得假期之前，故用完成式現在分詞 (C) Having completed。(A) Complete 是原形動詞或形容詞，無法引導分詞構句。(B) Completed 為過去分詞表被動，會誤指法務團隊「被完成」。(D) To have completed 是完成式不定詞，用於表達目的或未實現的動作，與此處的因果時序不符。"
+  },
+  {
+    "id": "p5-b3-10",
+    "difficulty": "中級",
+    "category": "分詞",
+    "question": "------- the current shortage of imported wood, Bexley Furniture has postponed the launch of its spring collection.",
+    "options": ["Given", "Giving", "Give", "To give"],
+    "answer": 0,
+    "translation": "考量到目前進口木材短缺的情形，貝克斯利家具已延後春季系列的上市時間。",
+    "explanation": "考點：過去分詞轉作介系詞的慣用語 given（考慮到、鑑於）。空格後接名詞片語，須用具介系詞功能的 (A) Given。(B) Giving 為現在分詞，其邏輯主詞會是 Bexley Furniture，但公司並非「給予短缺」，語意不通。(C) Give 是原形動詞，會被讀成祈使句，無法與後面的完整子句連接。(D) To give 表目的，語意上延後上市並不是為了「給予短缺」。"
+  },
+  {
+    "id": "p5-b3-11",
+    "difficulty": "基礎",
+    "category": "不定詞與動名詞",
+    "question": "To cut printing costs, Kellerman & Associates recommends ------- internal documents electronically whenever possible.",
+    "options": ["to circulate", "circulating", "circulate", "circulated"],
+    "answer": 1,
+    "translation": "為節省印刷成本，凱勒曼聯合事務所建議內部文件盡可能以電子方式傳閱。",
+    "explanation": "考點：特定動詞後接動名詞。recommend 若直接接一個動作當受詞，須用動名詞，故選 (B) circulating。(A) to circulate 是不定詞，recommend 不接不定詞當受詞。(C) circulate 是原形動詞，不能直接當另一個動詞的受詞。(D) circulated 為過去式或過去分詞，此處既非被動修飾語，也無法擔任受詞。"
+  },
+  {
+    "id": "p5-b3-12",
+    "difficulty": "中級",
+    "category": "不定詞與動名詞",
+    "question": "The regional director of Solano Beverages says she looks forward to ------- the new distribution partners at next month's trade fair.",
+    "options": ["meet", "be met", "have met", "meeting"],
+    "answer": 3,
+    "translation": "索拉諾飲料的區域總監表示，她很期待在下個月的貿易展上與新的經銷夥伴會面。",
+    "explanation": "考點：look forward to 中的 to 是介系詞而非不定詞符號。介系詞後須接動名詞，故選 (D) meeting。(A) meet 是原形動詞，誤把 to 當成不定詞的符號。(B) be met 除了型態不符外，語意上總監是主動與夥伴會面，並非被會面。(C) have met 同樣是原形的完成式，不能接在介系詞之後。"
+  },
+  {
+    "id": "p5-b3-13",
+    "difficulty": "中級",
+    "category": "不定詞與動名詞",
+    "question": "Ashford Medical Supplies requires every warehouse supervisor ------- a safety checklist at the start of each shift.",
+    "options": ["completing", "completed", "to complete", "completion"],
+    "answer": 2,
+    "translation": "阿什福德醫療用品公司要求每位倉儲主管在每個班次開始時填寫一份安全檢查表。",
+    "explanation": "考點：require 的句型「require + 受詞 + to V」。空格前已有受詞 every warehouse supervisor，其後必須接不定詞，故選 (C) to complete。(A) completing 為動名詞或現在分詞，require 沒有「require + 受詞 + V-ing」的用法。(B) completed 為過去分詞表被動，但主管是主動填寫檢查表的一方。(D) completion 是名詞，與前面的受詞直接並列且缺少介系詞，結構不成立。"
+  },
+  {
+    "id": "p5-b3-14",
+    "difficulty": "中級",
+    "category": "不定詞與動名詞",
+    "question": "------- accurate records of all client communications is a basic requirement for every account manager at Vantage Insurance.",
+    "options": ["Keep", "Kept", "To keeping", "Keeping"],
+    "answer": 3,
+    "translation": "保存所有客戶往來的正確紀錄，是萬泰保險每位客戶經理的基本要求。",
+    "explanation": "考點：動名詞當句子主詞。空格要引導一個擔任全句主詞的成分，而且後面還帶受詞 accurate records，故用動名詞 (D) Keeping。(A) Keep 是原形動詞，置於句首會被讀成祈使句，與後面的 is 衝突。(B) Kept 是過去分詞表被動，無法再後接受詞。(C) To keeping 把不定詞符號與動名詞混用，型態本身即錯誤。"
+  },
+  {
+    "id": "p5-b3-15",
+    "difficulty": "進階",
+    "category": "不定詞與動名詞",
+    "question": "The IT department at Trellis Software apologized for ------- the maintenance window to all staff before taking the servers offline.",
+    "options": ["not announcing", "not to announce", "not announced", "to not announce"],
+    "answer": 0,
+    "translation": "特里利斯軟體的資訊部門為未在伺服器離線前向全體員工公告維護時段一事致歉。",
+    "explanation": "考點：介系詞後的動名詞及其否定形式。apologize for 的 for 是介系詞，後面須接動名詞，而動名詞的否定是把 not 直接放在動名詞之前，故選 (A) not announcing。(B) not to announce 是不定詞，不能接在介系詞之後。(C) not announced 是過去分詞，此處需要的是名詞性成分而非被動修飾語。(D) to not announce 除了同樣不能接在介系詞後，這種分裂不定詞的寫法在正式商業英文中也不適用。"
+  },
+  {
+    "id": "p5-b3-16",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Tenants at Ridgeway Apartments must give the management office at least 30 days' ------- before terminating a lease.",
+    "options": ["notice", "attention", "permission", "announcement"],
+    "answer": 0,
+    "translation": "瑞奇威公寓的房客在終止租約前，須至少提前三十天通知管理室。",
+    "explanation": "考點：與期間搭配的固定用法 give ... notice（預先告知）。「30 days' notice」是租賃契約的標準說法，故選 (A) notice。(B) attention 指注意力，不能用天數來修飾。(C) permission 指准許，方向相反（應是管理室給房客），且無法表達「提前告知」。(D) announcement 指對外公告，不與 give ... days' 這個結構搭配。"
+  },
+  {
+    "id": "p5-b3-17",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Because of a scheduling -------, this week's product training at Optima Devices has been moved to Conference Room B.",
+    "options": ["connection", "contrast", "conflict", "crash"],
+    "answer": 2,
+    "translation": "由於時段安排衝突，歐蒂瑪儀器本週的產品訓練已改至 B 會議室舉行。",
+    "explanation": "考點：與 scheduling 搭配的名詞。表示「同一時段被重複安排」的固定說法是 scheduling conflict，故選 (C) conflict。(A) connection 指關聯或連結，無法表達同一時段被重複安排的問題。(B) contrast 指對比、差異，與時間重疊無關。(D) crash 指撞毀或系統當機，不用於形容行程安排。"
+  },
+  {
+    "id": "p5-b3-18",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "All visitors to Halcyon Biotech must ------- at the security desk in the main lobby before entering the laboratory area.",
+    "options": ["enroll", "subscribe", "apply", "register"],
+    "answer": 3,
+    "translation": "所有到訪海爾西恩生技的訪客，進入實驗區之前都必須在大廳的警衛櫃台登記。",
+    "explanation": "考點：表示「登記報到」的動詞。訪客在櫃台留下資料完成報到應用 (D) register。(A) enroll 指註冊入學或加入課程、方案。(B) subscribe 指訂閱刊物或服務，且通常與 to 連用。(C) apply 指提出申請，須搭配 for 或 to，語意是爭取資格而非現場報到。"
+  },
+  {
+    "id": "p5-b3-19",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Sundale Bakery has decided to ------- its delivery service to three neighboring towns beginning in September.",
+    "options": ["enlarge", "expand", "lengthen", "widen"],
+    "answer": 1,
+    "translation": "桑戴爾烘焙坊已決定自九月起將外送服務擴展至鄰近三個城鎮。",
+    "explanation": "考點：表示「擴大營運範圍」的動詞。服務涵蓋區域向外延伸應用 (B) expand。(A) enlarge 多指把物體或影像放大，不用於服務範圍。(C) lengthen 指使長度或時間變長，與涵蓋區域無關。(D) widen 指使寬度變寬，或用於 widen the gap 之類的抽象差距，不與 service 搭配。"
+  },
+  {
+    "id": "p5-b3-20",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Under the terms of the warranty, Fairview Appliances will ------- any defective part free of charge within the first two years.",
+    "options": ["recover", "restore", "replace", "return"],
+    "answer": 2,
+    "translation": "根據保固條款，費爾維家電將於前兩年內免費更換任何瑕疵零件。",
+    "explanation": "考點：表示「以新品替換舊品」的動詞。把故障零件換成新的應用 (C) replace，其受詞正是被換掉的舊零件。(A) recover 指取回失物或從損失中復原，並非提供新零件。(B) restore 指修復原狀，與更換新品的語意不同。(D) return 指退回、歸還，方向是消費者把商品送回，與廠商提供零件的語意相反。"
+  },
+  {
+    "id": "p5-b3-21",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The finance department at Cormont Industries has asked all managers to keep travel expenses ------- with the limits set out in the employee handbook.",
+    "options": ["consistent", "constant", "continuous", "considerate"],
+    "answer": 0,
+    "translation": "科蒙特工業的財務部已要求所有主管，使差旅支出符合員工手冊所訂的額度上限。",
+    "explanation": "考點：形容詞與介系詞的搭配 be consistent with（與……一致、符合）。空格後有 with，句意為支出須符合規定，故選 (A) consistent。(B) constant 指固定不變的，語意上並非要求金額永遠不動。(C) continuous 指不間斷的，用於時間或動作的連續性。(D) considerate 指體貼他人的，只能用來形容人。"
+  },
+  {
+    "id": "p5-b3-22",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The main ballroom at Bristol Park Convention Center can ------- up to 1,200 guests for a seated banquet.",
+    "options": ["contain", "include", "accommodate", "involve"],
+    "answer": 2,
+    "translation": "布里斯托園區會議中心的主宴會廳，最多可容納一千兩百位賓客舉辦坐席式宴會。",
+    "explanation": "考點：表示場地「可容納人數」的動詞。空間能收納多少人應用 (C) accommodate。(A) contain 多指容器內裝有的物質或成分，不用於場地容納賓客。(B) include 指整體之中所包含的組成部分，語意不合。(D) involve 指牽涉、使某人參與某事，與空間容量無關。"
+  },
+  {
+    "id": "p5-b3-23",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Lumina Streaming subscribers who cancel within the 14-day trial period are ------- to a full refund of their first monthly payment.",
+    "options": ["qualified", "entitled", "eligible", "permitted"],
+    "answer": 1,
+    "translation": "在十四天試用期內取消的璐米納串流訂戶，有權獲得首月費用的全額退款。",
+    "explanation": "考點：形容詞與介系詞的搭配。表示「有權獲得某物」的固定說法是 be entitled to，故選 (B) entitled。(A) qualified 表示具備資格時搭配 for，且偏重能力或條件面。(C) eligible 語意雖近，但慣用搭配是 be eligible for a refund，不接 to。(D) permitted 後面若接 to，須接原形動詞（permitted to cancel），不能直接接名詞。"
+  },
+  {
+    "id": "p5-b3-24",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Guests are kindly asked to ------- from using mobile phones once the performance begins in the Aldridge Concert Hall.",
+    "options": ["restrain", "retain", "remain", "refrain"],
+    "answer": 3,
+    "translation": "演出於奧德里奇音樂廳開始之後，敬請來賓避免使用行動電話。",
+    "explanation": "考點：與 from 搭配的動詞片語 refrain from（克制、避免做某事）。主詞自行忍住不做某事應用 (D) refrain。(A) restrain 指出手約束他人或壓抑情緒，須有受詞，如 restrain oneself from。(B) retain 指保留、留住，為及物動詞且不與 from 連用。(C) remain 指維持某種狀態，後面接形容詞或表地點的片語，如 remain seated，不與 from 連用。"
+  },
+  {
+    "id": "p5-b3-25",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Ferngate Bank's latest report indicates that consumer confidence has begun to ------- after three consecutive quarters of decline.",
+    "options": ["restore", "resume", "recover", "reduce"],
+    "answer": 2,
+    "translation": "芬蓋特銀行的最新報告顯示，在連續三季下滑之後，消費者信心已開始回升。",
+    "explanation": "考點：描述指標由跌轉升的動詞。after three consecutive quarters of decline 點出先前持續下滑，語意需要「回升、好轉」，且空格後沒有受詞，須用可作不及物的 (C) recover。(A) restore 指使某物恢復原狀，為及物動詞，必須有受詞，如 restore confidence。(B) resume 指中斷後繼續進行，用於會議、服務等活動，信心並非被中斷的活動。(D) reduce 指減少，方向與回升相反，且一般也需要受詞。"
+  }
+]

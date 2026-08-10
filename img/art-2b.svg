@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A museum at night with moon and stars">
+  <rect width="800" height="300" fill="#1e3a5c"/>
+  <rect x="0" y="252" width="800" height="48" fill="#162c47"/>
+  <!-- 月亮星星 -->
+  <circle cx="668" cy="72" r="34" fill="#ffd964"/>
+  <circle cx="654" cy="62" r="9" fill="#f2c94c" opacity=".55"/>
+  <circle cx="680" cy="84" r="6" fill="#f2c94c" opacity=".55"/>
+  <g fill="#fff">
+    <circle cx="120" cy="60" r="4"/><circle cx="220" cy="36" r="3"/><circle cx="320" cy="70" r="3.5"/>
+    <circle cx="540" cy="40" r="3"/><circle cx="760" cy="120" r="3.5"/><circle cx="60" cy="140" r="3"/>
+  </g>
+  <!-- 美術館 -->
+  <rect x="200" y="120" width="400" height="132" fill="#f5f7f9"/>
+  <path d="M180 120 h440 l-30 -44 h-380 z" fill="#dde7ee"/>
+  <path d="M400 76 l190 44 h-380 z" fill="#eef3f7"/>
+  <!-- 柱子 -->
+  <rect x="228" y="136" width="30" height="116" fill="#dde7ee"/>
+  <rect x="306" y="136" width="30" height="116" fill="#dde7ee"/>
+  <rect x="384" y="136" width="30" height="116" fill="#dde7ee"/>
+  <rect x="462" y="136" width="30" height="116" fill="#dde7ee"/>
+  <rect x="540" y="136" width="30" height="116" fill="#dde7ee"/>
+  <!-- 亮燈的門 -->
+  <rect x="384" y="180" width="30" height="72" fill="#ffd964"/>
+  <!-- 布條 -->
+  <rect x="256" y="150" width="120" height="54" rx="6" fill="#e8890c" transform="rotate(-4 316 177)"/>
+  <rect x="424" y="150" width="120" height="54" rx="6" fill="#0b72c4" transform="rotate(4 484 177)"/>
+  <rect x="272" y="166" width="88" height="8" rx="4" fill="#fff" transform="rotate(-4 316 170)"/>
+  <rect x="440" y="166" width="88" height="8" rx="4" fill="#fff" transform="rotate(4 484 170)"/>
+  <rect x="272" y="182" width="60" height="8" rx="4" fill="#ffd964" transform="rotate(-4 302 186)"/>
+  <rect x="440" y="182" width="60" height="8" rx="4" fill="#ffd964" transform="rotate(4 470 186)"/>
+  <!-- 路燈 -->
+  <line x1="120" y1="252" x2="120" y2="150" stroke="#404040" stroke-width="6"/>
+  <circle cx="120" cy="142" r="12" fill="#ffd964"/>
+  <line x1="700" y1="252" x2="700" y2="150" stroke="#404040" stroke-width="6"/>
+  <circle cx="700" cy="142" r="12" fill="#ffd964"/>
+</svg>

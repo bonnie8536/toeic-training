@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A consultant watering plants in an office">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="240" width="800" height="60" fill="#dde7ee"/>
+  <!-- 窗 -->
+  <rect x="80" y="40" width="150" height="110" rx="8" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <line x1="155" y1="40" x2="155" y2="150" stroke="#404040" stroke-width="4"/>
+  <line x1="80" y1="95" x2="230" y2="95" stroke="#404040" stroke-width="4"/>
+  <circle cx="200" cy="66" r="14" fill="#ffd964"/>
+  <!-- 辦公桌+螢幕 -->
+  <rect x="500" y="170" width="230" height="14" rx="6" fill="#0b72c4"/>
+  <line x1="520" y1="184" x2="512" y2="264" stroke="#404040" stroke-width="6"/>
+  <line x1="710" y1="184" x2="718" y2="264" stroke="#404040" stroke-width="6"/>
+  <rect x="560" y="106" width="100" height="64" rx="6" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <rect x="600" y="170" width="20" height="0" fill="#404040"/>
+  <rect x="572" y="120" width="76" height="8" rx="4" fill="#9db8cc"/>
+  <rect x="572" y="136" width="52" height="8" rx="4" fill="#dde7ee"/>
+  <!-- 桌上小盆栽 -->
+  <path d="M690 148 q-12 -18 2 -30 q4 18 -2 30" fill="#3a8a4d"/>
+  <path d="M678 170 h28 l-5 14 h-18 z" fill="#e8890c"/>
+  <line x1="692" y1="148" x2="692" y2="170" stroke="#3a8a4d" stroke-width="4"/>
+  <!-- 大盆栽 -->
+  <path d="M300 190 q-34 -48 8 -84 q8 48 -8 84" fill="#3a8a4d"/>
+  <path d="M318 190 q40 -40 10 -94 q-32 40 -10 94" fill="#4c9e60"/>
+  <path d="M330 190 q30 -22 44 -58 q10 40 -28 62" fill="#3a8a4d"/>
+  <path d="M282 190 h72 l-10 60 h-52 z" fill="#0b72c4"/>
+  <!-- 人+澆水壺 -->
+  <circle cx="452" cy="120" r="22" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M430 176 q22 -26 44 0 l-4 66 h-36 z" fill="#e8890c"/>
+  <line x1="436" y1="170" x2="404" y2="150" stroke="#404040" stroke-width="6" stroke-linecap="round"/>
+  <path d="M368 138 h34 v24 h-34 z M368 144 l-20 -12 v30 l20 -8" fill="#0b72c4"/>
+  <path d="M352 168 q-4 10 0 14 M362 168 q-4 10 0 14" fill="none" stroke="#0b72c4" stroke-width="3" stroke-linecap="round"/>
+  <line x1="440" y1="242" x2="436" y2="266" stroke="#404040" stroke-width="7" stroke-linecap="round"/>
+  <line x1="462" y1="242" x2="466" y2="266" stroke="#404040" stroke-width="7" stroke-linecap="round"/>
+</svg>

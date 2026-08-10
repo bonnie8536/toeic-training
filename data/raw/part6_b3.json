@@ -1,0 +1,212 @@
+[
+  {
+    "id": "p6-b3-1",
+    "passageType": "letter",
+    "title": "Reply to a Customer Complaint about a Damaged Lamp",
+    "passage": "Brightwell Home Goods\n418 Marlow Street, Kingsford\n\nOctober 14\n\nDear Ms. Halloran,\n\nThank you for writing to us about the table lamp you {{1}} last Tuesday. We are very sorry that the item reached you in damaged condition.\n\nAfter examining the photographs you sent, our shipping department concluded that the carton was crushed during transit. {{2}} A replacement lamp has therefore been sent at no additional charge and should arrive within three business days.\n\nWe have also added a store credit of twenty-five dollars to your account as a gesture of {{3}}. If the new lamp arrives in anything less than perfect condition, please call our customer care line {{4}}.\n\nSincerely,\n\nDaniel Okonjo\nCustomer Relations Manager",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["receive", "received", "have received", "were receiving"],
+        "answer": 1,
+        "explanation": "考動詞時態。句中有明確的過去時間點 last Tuesday，必須用過去簡單式 received。(A) receive 是現在式，無法搭配過去時間點；(C) have received 為現在完成式，英文文法規定現在完成式不可與 last Tuesday 這類明確過去時間副詞並用；(D) were receiving 為過去進行式，「收到貨品」是瞬間完成的動作，不用進行式描述。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Unfortunately, our warehouse no longer stocks this model.",
+          "We recommend that you assemble the lamp before using it.",
+          "Your membership account will expire at the end of this month.",
+          "This means the fault lies with our carrier rather than with you."
+        ],
+        "answer": 3,
+        "explanation": "考前後文銜接。前一句說運務部門判定紙箱是在運送途中被壓壞，後一句用 therefore 表示「因此已免費寄出替換品」。正解點明責任在貨運業者而非顧客，正好把「調查結果」與「免費更換」串成因果鏈，也解釋了為何不向顧客收費。(A) 說倉庫已無此型號，與後句「替換品已寄出」直接矛盾；(B) 談組裝步驟，與本段的責任歸屬主題無關；(C) 會員到期與這封客訴回覆信毫無關聯。"
+      },
+      {
+        "num": 3,
+        "type": "字彙",
+        "options": ["goodwill", "attention", "agreement", "confidence"],
+        "answer": 0,
+        "explanation": "考固定搭配與語意。as a gesture of goodwill 意為「以表達善意／誠意」，是商業書信中致贈補償時的慣用說法，符合贈送購物金安撫顧客的語境。(B) attention 指注意力，a gesture of attention 不成立；(C) agreement 指同意、協議，本句並非雙方達成協議；(D) confidence 指信心，公司送購物金不是在表達自己的信心。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["immediate", "immediacy", "immediately", "more immediate"],
+        "answer": 2,
+        "explanation": "考詞性判斷。空格位於完整子句 please call our customer care line 之後，用來修飾動詞 call，必須使用副詞 immediately。(A) immediate 是形容詞，不能用來修飾動詞；(B) immediacy 是名詞，同樣不能修飾動詞，放在此處也無法與前面的受詞形成合理結構；(D) more immediate 是形容詞的比較級，詞性一樣不對，句中也沒有任何比較對象。"
+      }
+    ],
+    "translation": "布萊特威爾居家用品\n馬洛街418號，金斯福德\n\n10月14日\n\n親愛的哈洛倫女士：\n\n感謝您來信告知上週二收到的檯燈一事。對於商品送達時已有損壞，我們深感抱歉。\n\n檢視您寄來的照片後，我們的運務部門判定，紙箱是在運送途中被壓壞的。這表示責任在於我們的貨運業者，而不在您。因此我們已免費寄出一盞替換檯燈，預計三個工作天內送達。\n\n我們也在您的帳戶中加入二十五美元的購物金，以表達我們的誠意。若新檯燈送達時狀況仍有任何不完美之處，請立即撥打我們的客服專線。\n\n謹啟\n\n丹尼爾．歐孔喬\n客戶關係經理"
+  },
+  {
+    "id": "p6-b3-2",
+    "passageType": "email",
+    "title": "Internal Announcement: Third-Floor Print Room",
+    "passage": "To: All Marketing Staff\nFrom: Priya Raghunathan, Director of Operations\nSubject: Third-floor print room\nDate: September 3\n\nBeginning Monday, September 15, the print room on the third floor {{1}} to the east wing of the second floor. The move is part of a plan to convert the current space into two small meeting rooms.\n\nWhile the equipment is being moved, only one copier will be in service. {{2}} Large print jobs should therefore be {{3}} to our outside vendor through the online ordering portal.\n\nFacilities staff will post signs directing everyone to the new location. Please contact my assistant, Marcus Vell, {{4}} you need help finding it.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["relocates", "has relocated", "will be relocated", "was relocating"],
+        "answer": 2,
+        "explanation": "考時態與語態。主詞 the print room 是「被搬遷」的對象，須用被動語態；句首 Beginning Monday, September 15 指向未來的時間，故答案為未來被動 will be relocated。(A) relocates 是現在式主動；(B) has relocated 是現在完成式主動，時態與語態都不合；(D) was relocating 是過去進行式主動，與未來時間點衝突。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Wait times are expected to be considerably longer than usual.",
+          "All of our copiers will be replaced with newer models next year.",
+          "The print room has been closed to staff since June.",
+          "Employees may use the machine free of charge after business hours."
+        ],
+        "answer": 0,
+        "explanation": "考前後文銜接。前一句說搬運期間只剩一台影印機可用，後一句用 therefore 要求大量列印改交外部廠商。正解「等候時間預計會比平常久上許多」既是「只剩一台」的必然結果，也是後句改用外包的理由，前後邏輯完整。(B) 談明年更換機器，與這次搬遷造成的不便無關；(C) 說影印室六月起就已關閉，與公告中「九月十五日才搬遷、目前仍在使用」矛盾；(D) 免費使用與段落要傳達的產能不足無關，也無法引出 therefore。"
+      },
+      {
+        "num": 3,
+        "type": "字彙",
+        "options": ["collected", "advertised", "postponed", "submitted"],
+        "answer": 3,
+        "explanation": "考動詞語意與搭配。submit A to B 意為「把 A 送交給 B」，符合「把大量列印工作送交外部廠商處理」的語境，也與後面的 through the online ordering portal（透過線上訂單系統遞交）呼應。(A) collected 是收取、領回，方向相反；(B) advertised 指刊登廣告，語意不通；(C) postponed 指延後，與 to our outside vendor 無法搭配。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["unless", "if", "despite", "so that"],
+        "answer": 1,
+        "explanation": "考連接詞。空格後方是完整子句 you need help finding it，需要連接詞引導；語意是「如果需要協助尋找，請聯繫我的助理」，屬於條件關係，故用 if。(A) unless 意為「除非」，語意相反；(C) despite 是介系詞，後面只能接名詞或動名詞，不能接子句；(D) so that 表目的，「請聯繫助理以便你需要協助」語意不通。"
+      }
+    ],
+    "translation": "收件者：全體行銷部同仁\n寄件者：普莉亞．拉古納坦，營運總監\n主旨：三樓影印室\n日期：9月3日\n\n自9月15日星期一起，三樓的影印室將遷至二樓東側。這次搬遷是整體規劃的一部分，目的是把現有空間改建成兩間小型會議室。\n\n設備搬運期間，只有一台影印機可以使用。等候時間預計會比平常久上許多。因此，大量的列印工作請透過線上訂單系統送交我們的外部廠商處理。\n\n總務人員會張貼指示牌，引導大家前往新地點。若您需要協助尋找，請與我的助理馬可仕．維爾聯繫。"
+  },
+  {
+    "id": "p6-b3-3",
+    "passageType": "advertisement",
+    "title": "Job Advertisement: Logistics Coordinator",
+    "passage": "KESTREL FREIGHT SOLUTIONS\nNow Hiring: Logistics Coordinator\n\nKestrel Freight Solutions is looking for a full-time logistics coordinator at our Riverton distribution center. The person selected will schedule outbound shipments, monitor carrier performance, and {{1}} daily reports for the operations manager.\n\nApplicants should have at least three years of experience in a warehouse or transportation setting. Familiarity with inventory management software is {{2}}, but candidates without it will still be considered.\n\n{{3}} Those who are willing to work an occasional weekend shift will be given priority.\n\nTo apply, send a resume and a short cover letter to careers@kestrelfreight.com {{4}} October 30. Interviews will begin the following week.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["prepare", "preparing", "to prepare", "prepared"],
+        "answer": 0,
+        "explanation": "考對等結構。助動詞 will 之後由 and 連接三個並列的動作 schedule、monitor 與空格，三者必須維持相同的原形動詞形式，故選 prepare。(B) preparing 為現在分詞、(C) to prepare 為不定詞、(D) prepared 為過去式／過去分詞，都無法與前兩個原形動詞形成對等結構。"
+      },
+      {
+        "num": 2,
+        "type": "字彙",
+        "options": ["essential", "confidential", "preferred", "temporary"],
+        "answer": 2,
+        "explanation": "考語意判斷。轉折連接詞 but 後面說「不具備這項能力的應徵者仍會列入考量」，可知熟悉庫存軟體只是加分條件而非門檻，故用 preferred（尤佳、優先考量）。(A) essential 意為「必要的」，與後半句直接矛盾；(B) confidential 指機密的，語意不通；(D) temporary 指暫時的，無法用來描述應徵條件。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "Our company was founded more than sixty years ago in Riverton.",
+          "The position follows a rotating schedule of four ten-hour days.",
+          "The distribution center will be closed for renovations throughout November.",
+          "Salary information will not be provided to applicants at any stage."
+        ],
+        "answer": 1,
+        "explanation": "考前後文銜接。空格後一句提到「願意配合偶爾週末班者優先錄用」，主題是工作班表；正解先交代本職務採輪班制、每週四天、每天十小時，讓後句對週末班的要求有前提可依附，整段自成「工時制度—班別偏好」的完整說明。(A) 公司創立歷史與班表無關，接不上後句；(C) 十一月整月停工與廣告中「面試將於次週（即十一月初）開始」矛盾，也接不上後句的班表主題；(D) 徵才廣告聲明全程不談薪資不合常理，也與後句的週末班主題無關。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["until", "since", "by", "during"],
+        "answer": 2,
+        "explanation": "考介系詞。by + 時間點表示「最晚在某時間之前完成」，符合投遞履歷的截止期限。(A) until 表示動作或狀態「持續到」某時點，但 send 是瞬間動作，不能用 until；(B) since 表示自某時點起算，須搭配完成式；(D) during 後面必須接一段期間（如 during October），不能接 October 30 這樣的特定日期。"
+      }
+    ],
+    "translation": "科斯特爾貨運解決方案\n誠徵：物流協調專員\n\n科斯特爾貨運解決方案正在為河頓配送中心徵求一名全職物流協調專員。獲選者將負責安排出貨排程、追蹤承運商的表現，並為營運經理製作每日報表。\n\n應徵者須具備至少三年倉儲或運輸相關領域的工作經驗。熟悉庫存管理軟體者尤佳，但不具備此項經驗的應徵者仍會列入考量。\n\n本職務採輪班制，每週工作四天，每天十小時。願意配合偶爾週末班者將優先錄用。\n\n應徵請於10月30日前將履歷與簡短的求職信寄至 careers@kestrelfreight.com。面試將於次週展開。"
+  },
+  {
+    "id": "p6-b3-4",
+    "passageType": "notice",
+    "title": "Notice of Annual Elevator Inspection",
+    "passage": "NOTICE TO ALL TENANTS\nAnnual Elevator Inspection\n\nThe two passenger elevators in Ambleside Business Tower will undergo their annual safety inspection on Saturday, October 18, from 7:00 A.M. to 4:00 P.M. Elevator A will be serviced first, while Elevator B {{1}} in operation. The technicians will switch to Elevator B after their lunch break.\n\nTenants who plan to move furniture or equipment that day should use the freight elevator at the rear of the lobby. {{2}}\n\nWe appreciate your {{3}} while this required work is completed. Questions may be {{4}} to the building management office at extension 220.\n\nAmbleside Property Services",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["remain", "remains", "remaining", "to remain"],
+        "answer": 1,
+        "explanation": "考主詞與動詞的一致性。while 引導的子句主詞 Elevator B 是第三人稱單數，描述的又是同一時間內持續的狀態，故須用現在式單數動詞 remains。(A) remain 是原形，不符第三人稱單數；(C) remaining 是現在分詞、(D) to remain 是不定詞，兩者都是非限定形式，會使 while 子句缺少主要動詞。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "The lobby floor will be repainted the following weekend.",
+          "Both passenger elevators will be out of service for the entire month.",
+          "Moving furniture into the building is not permitted on any day.",
+          "Access to that elevator requires a key card, which may be borrowed from the front desk."
+        ],
+        "answer": 3,
+        "explanation": "考前後文銜接。前一句要求當天有搬運需求的租戶改用大廳後方的貨梯，正解緊接著補充使用該貨梯的實際做法（需門禁卡、可向櫃檯借用），資訊承接自然，也符合公告「告知替代方案」的功能。(A) 大廳粉刷與電梯使用無關，且時間點另在下週末；(B) 說兩部客梯整月停用，與公告中僅十月十八日一天檢修、且輪流檢修矛盾；(C) 說任何日子都禁止搬運家具，與前一句允許改用貨梯直接衝突。"
+      },
+      {
+        "num": 3,
+        "type": "字彙",
+        "options": ["patience", "attendance", "permission", "estimate"],
+        "answer": 0,
+        "explanation": "考語意與慣用搭配。We appreciate your patience 是公告造成不便時的標準用語，意為「感謝您的耐心配合」，與後面的 while this required work is completed 語境相符。(B) attendance 指出席，本公告並未要求租戶出席任何活動；(C) permission 指許可，管理方不需向租戶取得許可；(D) estimate 指估價單，與致歉語境完全不合。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["direct", "directing", "direction", "directed"],
+        "answer": 3,
+        "explanation": "考語態。助動詞加 be 動詞的 may be 之後必須接過去分詞才能構成被動語態；主詞 Questions 是被「轉達」的對象，故用 directed。(A) direct 是原形動詞，不能直接接在 be 之後；(B) directing 為現在分詞，會變成主動語意，等於「問題正在指引某物」；(C) direction 是名詞，questions may be direction 語意不通，單複數也不一致。"
+      }
+    ],
+    "translation": "全體租戶公告\n年度電梯檢修\n\n安柏賽商業大樓的兩部客用電梯，將於10月18日星期六上午7時至下午4時進行年度安全檢查。電梯A會先進行檢修，此時電梯B維持運轉。技師午休後再換至電梯B。\n\n當天若有搬運家具或設備需求的租戶，請改用大廳後方的貨梯。使用該貨梯需要門禁卡，可向服務櫃檯借用。\n\n這項必要作業進行期間，感謝您的耐心配合。如有疑問，請洽大樓管理室，分機220。\n\n安柏賽物業服務"
+  },
+  {
+    "id": "p6-b3-5",
+    "passageType": "article",
+    "title": "Verano Textiles Opens Second Plant",
+    "passage": "Verano Textiles Opens Second Plant\nby Marisol Okafor, Business Weekly\n\nMARBURY — Verano Textiles announced on Tuesday that it has opened a second manufacturing plant just outside Marbury. The 40,000-square-meter facility {{1}} by a local construction firm and now employs about 180 people, most of whom were hired from the surrounding area.\n\nCompany president Elena Corriveau said the expansion was prompted by growing European demand for recycled fabrics. {{2}} The Marbury plant will produce those fabrics exclusively, while the original factory in Denton continues to make traditional cotton goods.\n\nConstruction took slightly more than two years and cost an {{3}} 90 million dollars. Verano expects the new plant to reach full {{4}} by the middle of next year.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["building", "was built", "has built", "to build"],
+        "answer": 1,
+        "explanation": "考語態與時態。廠房是「被」當地營造公司興建的，須用被動語態；興建已於過去完成，且與 and 之後的 now employs 形成「過去建造、現在雇用」的對比，故用過去式被動 was built。(A) building 與 (D) to build 都是非限定形式，無法擔任主要動詞，句子會缺少述語；(C) has built 是主動完成式，語意會變成「廠房蓋了某樣東西」，主詞與動作不合。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "The company has no plans to hire additional staff this year.",
+          "Marbury's population has declined steadily over the past decade.",
+          "Orders for those materials have doubled over the past three years.",
+          "Ms. Corriveau will step down as president at the end of December."
+        ],
+        "answer": 2,
+        "explanation": "考前後文銜接。前一句指出擴廠是因應歐洲對再生布料日益增加的需求，正解以具體數據（近三年訂單成長一倍）佐證這項說法，後一句再說新廠將專門生產這類布料，三句構成「原因—佐證—因應」的完整脈絡；正解中的 those materials 也正好回指前句的 recycled fabrics。(A) 說今年沒有增聘人力的計畫，既無法佐證前句的需求成長，也與整篇擴廠、在地大量招募的基調相牴觸；(B) 人口減少與擴廠理由無關，且與大量在地招募的敘述不合；(D) 總裁請辭在全文中毫無依據，也打斷了段落主題。"
+      },
+      {
+        "num": 3,
+        "type": "字彙",
+        "options": ["estimated", "expired", "occasional", "extended"],
+        "answer": 0,
+        "explanation": "考慣用搭配。an estimated + 金額或數量是新聞報導中的固定用法，意為「估計約⋯⋯」，符合記者概述造價的語氣。(B) expired 指已過期的，無法修飾金額；(C) occasional 指偶爾發生的，與一次性的工程造價不合；(D) extended 指延長的，多用來修飾期間或期限，不能用來表示估算金額。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["produce", "produced", "productive", "production"],
+        "answer": 3,
+        "explanation": "考詞性判斷。形容詞 full 之後必須接名詞，reach full production 意為「達到滿載生產」，是產業報導的常見搭配。(A) produce 作動詞不能接在形容詞後，作名詞時意為「農產品」，語意不合；(B) produced 是過去分詞，不能當 reach 的受詞；(C) productive 是形容詞，兩個形容詞無法在此並列成為受詞。"
+      }
+    ],
+    "translation": "維拉諾紡織開設第二座廠房\n《商業週刊》記者 瑪莉索．歐卡佛 報導\n\n馬布里訊——維拉諾紡織於週二宣布，已在馬布里近郊開設第二座製造廠。這座四萬平方公尺的廠房由當地一家營造公司興建，目前雇用約180名員工，其中大多數來自周邊地區。\n\n公司總裁艾蓮娜．柯瑞沃表示，這次擴廠是因應歐洲對再生布料日益增加的需求。過去三年來，這類材料的訂單已成長一倍。馬布里廠將專門生產這類布料，丹頓的原廠則繼續生產傳統棉製品。\n\n工程歷時兩年多，造價估計約9,000萬美元。維拉諾預期新廠將於明年年中達到滿載生產。"
+  }
+]

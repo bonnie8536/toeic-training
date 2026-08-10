@@ -1,0 +1,252 @@
+[
+  {
+    "id": "p5-b1-01",
+    "difficulty": "基礎",
+    "category": "詞性變化",
+    "question": "Please submit all travel expense reports to the accounting department at Northgate Media for ------- by the last day of the month.",
+    "options": ["approve", "approval", "approved", "approves"],
+    "answer": 1,
+    "translation": "請於當月最後一天前,將所有差旅費用報告送交 Northgate Media 會計部門核准。",
+    "explanation": "考點:介系詞後須接名詞。for 是介系詞,後面要接名詞當受詞,(B) approval「核准」為名詞,結構與語意皆正確。(A) approve 是動詞原形,不能直接放在介系詞之後。(C) approved 是過去式或過去分詞,同樣不能當介系詞的受詞。(D) approves 是第三人稱單數動詞,句中已有動詞 submit,不需要第二個動詞。"
+  },
+  {
+    "id": "p5-b1-02",
+    "difficulty": "基礎",
+    "category": "詞性變化",
+    "question": "Third-quarter sales at Halbrook Ceramics were ------- higher than the figures management had projected.",
+    "options": ["consider", "considerable", "considerably", "consideration"],
+    "answer": 2,
+    "translation": "Halbrook Ceramics 第三季的業績遠高於管理階層先前預估的數字。",
+    "explanation": "考點:副詞修飾形容詞比較級。空格後是形容詞比較級 higher,前面須用副詞修飾,(C) considerably「相當地」正確。(A) consider 是動詞,be 動詞後不能再接原形動詞。(B) considerable 是形容詞,形容詞不能修飾形容詞。(D) consideration 是名詞,放在 be 動詞後會成為主詞補語,無法與 higher 並存。"
+  },
+  {
+    "id": "p5-b1-03",
+    "difficulty": "中級",
+    "category": "詞性變化",
+    "question": "Ms. Alvarez received a letter of appreciation for her ------- handling of a difficult customer complaint at Ridgeway Bank.",
+    "options": ["profession", "professionally", "professionalism", "professional"],
+    "answer": 3,
+    "translation": "Alvarez 女士因專業處理 Ridgeway 銀行一件棘手的客訴案件而收到一封感謝函。",
+    "explanation": "考點:形容詞修飾名詞。所有格 her 與名詞 handling 之間需要形容詞,(D) professional「專業的」正確。(A) profession 是名詞「職業」,兩個名詞直接並列語意不通。(B) professionally 是副詞,不能修飾名詞。(C) professionalism 是抽象名詞「專業素養」,同樣無法修飾 handling。"
+  },
+  {
+    "id": "p5-b1-04",
+    "difficulty": "中級",
+    "category": "詞性變化",
+    "question": "Applicants for the warehouse supervisor position at Cormont Staffing must provide ------- of their previous employment before the second interview.",
+    "options": ["verification", "verify", "verifiable", "verifiably"],
+    "answer": 0,
+    "translation": "應徵 Cormont Staffing 倉儲主管職位者,須於第二次面試前提供前一份工作的任職證明。",
+    "explanation": "考點:及物動詞後須接名詞當受詞。provide 後面需要名詞,(A) verification「證明文件、查核」正確,並與介系詞 of 自然搭配。(B) verify 是動詞,provide 後不能再接原形動詞。(C) verifiable 是形容詞,無法單獨當受詞。(D) verifiably 是副詞,更不能當受詞。"
+  },
+  {
+    "id": "p5-b1-05",
+    "difficulty": "中級",
+    "category": "詞性變化",
+    "question": "The consultant's recommendations proved ------- useful once Pellham Group and its competitor began merger negotiations.",
+    "options": ["extreme", "extremity", "extremely", "extremes"],
+    "answer": 2,
+    "translation": "Pellham Group 與競爭對手展開併購談判後,這位顧問的建議證明極為有用。",
+    "explanation": "考點:副詞修飾形容詞。空格後是形容詞 useful,須用副詞修飾,(C) extremely「極為」正確。(A) extreme 是形容詞,形容詞不能修飾形容詞。(B) extremity 是名詞,意為「極端、末端」,與句意不合。(D) extremes 是名詞複數,同樣會與後面的 useful 產生詞性衝突。"
+  },
+  {
+    "id": "p5-b1-06",
+    "difficulty": "進階",
+    "category": "詞性變化",
+    "question": "Delton Textiles has become increasingly ------- on overseas suppliers for its raw cotton.",
+    "options": ["rely", "reliance", "reliably", "reliant"],
+    "answer": 3,
+    "translation": "Delton Textiles 對海外原棉供應商的依賴日益加深。",
+    "explanation": "考點:連綴動詞 become 後接形容詞。become 為連綴動詞,後面接形容詞當主詞補語,(D) reliant「依賴的」正確,並與 on 搭配成 be reliant on。(A) rely 是動詞原形,become 後不能接原形動詞。(B) reliance 是名詞,become 後接此抽象名詞語意不通,且該位置受副詞 increasingly 修飾,只能放形容詞。(C) reliably 是副詞,不能當主詞補語。"
+  },
+  {
+    "id": "p5-b1-07",
+    "difficulty": "進階",
+    "category": "詞性變化",
+    "question": "Because the two vendor proposals were nearly -------, the evaluation committee at Braemar Industries asked both companies for a more detailed cost breakdown.",
+    "options": ["identify", "identity", "identically", "identical"],
+    "answer": 3,
+    "translation": "由於兩家供應商的提案幾乎一模一樣,Braemar Industries 的評選委員會要求雙方提供更詳細的成本明細。",
+    "explanation": "考點:be 動詞後接形容詞當主詞補語。were 之後需要形容詞,(D) identical「完全相同的」正確,且可被副詞 nearly 修飾。(A) identify 是動詞,be 動詞後不能接原形動詞。(B) identity 是名詞「身分」,與 nearly 及句意皆不相容。(C) identically 是副詞,副詞不能單獨當 be 動詞的補語。"
+  },
+  {
+    "id": "p5-b1-08",
+    "difficulty": "進階",
+    "category": "詞性變化",
+    "question": "The plant manager at Calder Chemical reminded the staff that ------- with the revised emission standards is mandatory.",
+    "options": ["compliance", "comply", "compliant", "compliantly"],
+    "answer": 0,
+    "translation": "Calder Chemical 的廠長提醒員工,遵守修訂後的排放標準是強制規定。",
+    "explanation": "考點:名詞子句中缺少主詞。that 子句的動詞是 is,前面缺少主詞,須用名詞,(A) compliance「遵守」正確,並與 with 搭配成 compliance with。(B) comply 是動詞,而子句中已有動詞 is。(C) compliant 是形容詞,不能當主詞。(D) compliantly 是副詞,同樣不能當主詞。"
+  },
+  {
+    "id": "p5-b1-09",
+    "difficulty": "基礎",
+    "category": "動詞時態與語態",
+    "question": "The annual shareholders' meeting of Tamarack Financial ------- at the Crestwood Convention Center on March 12.",
+    "options": ["will hold", "is holding", "will be held", "has held"],
+    "answer": 2,
+    "translation": "Tamarack Financial 的年度股東大會將於 3 月 12 日在 Crestwood 會議中心舉行。",
+    "explanation": "考點:語態與時態。主詞 meeting 是被舉行的對象,且 on March 12 指未來的時間點,故用未來式被動 (C) will be held。(A) will hold 是主動語態,語意會變成「會議舉辦某物」。(B) is holding 同樣是主動語態,語態錯誤。(D) has held 既是主動語態又是現在完成式,與未來時間點衝突。"
+  },
+  {
+    "id": "p5-b1-10",
+    "difficulty": "基礎",
+    "category": "動詞時態與語態",
+    "question": "Mr. Okafor ------- as head of customer relations at Bayfield Insurance since the Portland branch opened in 2019.",
+    "options": ["serves", "has served", "served", "will serve"],
+    "answer": 1,
+    "translation": "自 2019 年波特蘭分公司成立以來,Okafor 先生便一直擔任 Bayfield 保險的客戶關係部主管。",
+    "explanation": "考點:since 引導的起始時間須搭配現在完成式。since 2019 表示動作從過去持續到現在,(B) has served 正確。(A) serves 是現在簡單式,無法表達從過去累積至今的期間。(C) served 是過去簡單式,表示動作已結束,與 since 不相容。(D) will serve 是未來式,與過去的起始點矛盾。"
+  },
+  {
+    "id": "p5-b1-11",
+    "difficulty": "中級",
+    "category": "動詞時態與語態",
+    "question": "All defective units ------- to Lumen Home Electronics last week for inspection under the two-year warranty.",
+    "options": ["returned", "have returned", "are returning", "were returned"],
+    "answer": 3,
+    "translation": "所有瑕疵品已於上週退回 Lumen Home Electronics,依兩年保固進行檢驗。",
+    "explanation": "考點:過去式被動語態。主詞 units 是被退回的對象,且 last week 為明確的過去時間,故用 (D) were returned。(A) returned 是主動語態,語意變成瑕疵品自己退回,不合理。(B) have returned 除了語態錯誤,現在完成式也不能與 last week 並用。(C) are returning 是現在進行式主動,時態與語態皆錯。"
+  },
+  {
+    "id": "p5-b1-12",
+    "difficulty": "中級",
+    "category": "動詞時態與語態",
+    "question": "Ms. Whitfield ------- a software training session for new hires at Sandhurst Publishing when the fire alarm suddenly sounded.",
+    "options": ["was conducting", "conducts", "has conducted", "will conduct"],
+    "answer": 0,
+    "translation": "當火警警報突然響起時,Whitfield 女士正在 Sandhurst Publishing 為新進員工進行軟體教育訓練。",
+    "explanation": "考點:過去進行式被過去簡單式打斷。when 子句用過去式 sounded,表示某個持續中的動作被突發事件打斷,主句須用過去進行式,(A) was conducting 正確。(B) conducts 是現在簡單式,與過去時間不符。(C) has conducted 是現在完成式,不能與明確的過去事件並用。(D) will conduct 是未來式,與 sounded 的時間矛盾。"
+  },
+  {
+    "id": "p5-b1-13",
+    "difficulty": "中級",
+    "category": "動詞時態與語態",
+    "question": "Please be advised that the elevator on the east side of Merrion Office Tower ------- and will not be available until Thursday afternoon.",
+    "options": ["is being serviced", "services", "is servicing", "has serviced"],
+    "answer": 0,
+    "translation": "謹此通知,Merrion 辦公大樓東側電梯正在進行保養,至週四下午前無法使用。",
+    "explanation": "考點:現在進行式被動語態。電梯是被保養的對象,且動作正在進行中,故用 (A) is being serviced。(B) services 是主動的現在簡單式,語意變成電梯替別的東西做保養。(C) is servicing 是主動進行式,語態錯誤。(D) has serviced 是主動的現在完成式,語態與語意皆不合。"
+  },
+  {
+    "id": "p5-b1-14",
+    "difficulty": "進階",
+    "category": "動詞時態與語態",
+    "question": "If the shipment ------- on time, Vandel Freight would not have had to compensate the client for the delay.",
+    "options": ["arrives", "had arrived", "arrived", "would arrive"],
+    "answer": 1,
+    "translation": "如果那批貨準時抵達,Vandel Freight 就不必為延誤賠償客戶了。",
+    "explanation": "考點:與過去事實相反的假設語氣。主句是 would not have had to,屬第三類條件句,if 子句須用過去完成式,(B) had arrived 正確。(A) arrives 是現在簡單式,用於未來可能成立的條件句。(C) arrived 是過去簡單式,對應的是與現在事實相反的假設,與主句形式不符。(D) would arrive 不能出現在表示假設的 if 子句中。"
+  },
+  {
+    "id": "p5-b1-15",
+    "difficulty": "進階",
+    "category": "動詞時態與語態",
+    "question": "By next April, Harrowgate Foods ------- its regional distribution center for ten years.",
+    "options": ["operates", "will have operated", "had operated", "has operated"],
+    "answer": 1,
+    "translation": "到明年四月,Harrowgate Foods 經營其區域配送中心就滿十年了。",
+    "explanation": "考點:未來完成式。By next April 是未來的時間基準點,搭配 for ten years 表示到那時為止已累積十年,須用 (B) will have operated。(A) operates 是現在簡單式,無法表達累積到未來某時點。(C) had operated 是過去完成式,基準點落在過去。(D) has operated 是現在完成式,累積到現在為止,與 next April 衝突。"
+  },
+  {
+    "id": "p5-b1-16",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Novara Kitchenware advises customers to ------- the original receipt, since it is required for any repair covered by the warranty.",
+    "options": ["retain", "remind", "remain", "replace"],
+    "answer": 0,
+    "translation": "Novara Kitchenware 建議顧客保留原始收據,因為保固期內的任何維修都需要憑此辦理。",
+    "explanation": "考點:形近字辨析。句意是要顧客「保留」原始收據,(A) retain 正確。(B) remind「提醒」的受詞必須是人,且要搭配 of 或 that 子句。(C) remain「維持、留下」是不及物動詞,後面不能直接接受詞。(D) replace「更換、取代」指以新的換掉舊的,收據無法更換,與後半句「憑原始收據辦理維修」矛盾。"
+  },
+  {
+    "id": "p5-b1-17",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Guests staying at Lakemont Suites may ------- the rooftop fitness center free of charge at any time during their stay.",
+    "options": ["approach", "attend", "access", "arrive"],
+    "answer": 2,
+    "translation": "入住 Lakemont Suites 的房客於住宿期間可隨時免費使用頂樓健身中心。",
+    "explanation": "考點:語意與用法辨析。句意是免費「使用」頂樓健身中心,(C) access 當動詞可直接接受詞,語意正確。(A) approach「接近、走近」只表示靠近,不含使用之意。(B) attend「出席」的受詞應是會議或活動,而非設施。(D) arrive 是不及物動詞,須加 at 才能接地點,且語意為「抵達」。"
+  },
+  {
+    "id": "p5-b1-18",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Tickets for the Ashford Home Expo must be purchased in -------, as none will be sold at the door.",
+    "options": ["advance", "ahead", "front", "forward"],
+    "answer": 0,
+    "translation": "Ashford 家居展的門票必須事先購買,現場不售票。",
+    "explanation": "考點:固定片語。in advance 意為「事先、預先」,(A) advance 正確。(B) ahead 須用 ahead of 或單獨當副詞,沒有 in ahead 的用法。(C) front 只有 in front of「在…前面」的搭配,指位置而非時間。(D) forward 沒有 in forward 這種搭配。"
+  },
+  {
+    "id": "p5-b1-19",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Because of unexpectedly strong demand, Greenhill Organics was unable to ------- all of its December orders on schedule.",
+    "options": ["achieve", "fulfill", "accomplish", "perform"],
+    "answer": 1,
+    "translation": "由於需求意外暢旺,Greenhill Organics 無法如期完成所有十二月的訂單。",
+    "explanation": "考點:動詞與名詞的搭配。fulfill an order 是「履行、出貨完成訂單」的固定搭配,(B) fulfill 正確。(A) achieve 的受詞多為 goal、target 等成果,不與 order 搭配。(C) accomplish 的受詞多為 task、mission。(D) perform 的受詞多為 task 或表演性質的行為,與出貨語意不合。"
+  },
+  {
+    "id": "p5-b1-20",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The service agreement with Kestrel IT Solutions will be automatically ------- for another year unless either party gives thirty days' notice.",
+    "options": ["restored", "revised", "replaced", "renewed"],
+    "answer": 3,
+    "translation": "與 Kestrel IT Solutions 簽訂的服務合約將自動續約一年,除非任一方提前三十天通知終止。",
+    "explanation": "考點:語意辨析。合約的「續約、展延」用 renew,(D) renewed 正確,與 for another year 相呼應。(A) restored 指恢復原狀,但合約並未中斷或受損。(B) revised 指修訂內容,與延長效期的語意不同。(C) replaced 指以另一份取代,與自動延續原合約互相矛盾。"
+  },
+  {
+    "id": "p5-b1-21",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "At Marlowe Design, the layout proposed by Ms. Duarte was clearly ------- to the other two versions because it required no additional staffing.",
+    "options": ["advanced", "senior", "superior", "exceptional"],
+    "answer": 2,
+    "translation": "在 Marlowe Design,Duarte 女士提出的版面配置明顯優於另外兩個版本,因為它不需要增加人力。",
+    "explanation": "考點:形容詞與介系詞的搭配。be superior to 意為「優於」,(C) superior 正確。(A) advanced「先進的」不與 to 搭配引出比較對象。(B) senior 雖可接 to,但用於指人的年資或職級,不能形容設計方案。(D) exceptional「傑出的」後面不接 to,無法帶出比較對象。"
+  },
+  {
+    "id": "p5-b1-22",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "All visitors to Terravest Laboratories must ------- with the security procedures posted at the main entrance.",
+    "options": ["comply", "obey", "follow", "observe"],
+    "answer": 0,
+    "translation": "所有進入 Terravest 實驗室的訪客都必須遵守張貼在大門口的安全程序。",
+    "explanation": "考點:動詞與介系詞的搭配。空格後有 with,四個選項中只有 comply 需搭配 with 使用,(A) comply 正確。(B) obey 是及物動詞,直接接受詞,不加 with。(C) follow 同樣是及物動詞,後面不接 with。(D) observe 作「遵守」解時也是及物動詞,不能加 with。"
+  },
+  {
+    "id": "p5-b1-23",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "When the keynote speaker's flight was delayed, the organizers of the Summit Marketing Forum had to ------- the afternoon schedule.",
+    "options": ["reassure", "reassemble", "rearrange", "reimburse"],
+    "answer": 2,
+    "translation": "由於主講人的班機延誤,Summit 行銷論壇的主辦單位只好重新安排下午的議程。",
+    "explanation": "考點:形近字辨析。句意是重新調整下午的議程,(C) rearrange「重新安排」正確。(A) reassure「安撫、使安心」的受詞應為人。(B) reassemble「重新組裝、重新集合」用於零件或人群,不用於時程。(D) reimburse「償還費用」的受詞為人或款項,語意不合。"
+  },
+  {
+    "id": "p5-b1-24",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Sales representatives at Halverson Motors become ------- for a quarterly bonus once they exceed their assigned target.",
+    "options": ["capable", "eligible", "available", "applicable"],
+    "answer": 1,
+    "translation": "Halverson Motors 的業務代表只要超過分配的業績目標,就有資格領取季度獎金。",
+    "explanation": "考點:形容詞的搭配與語意。be eligible for 意為「有資格獲得」,(B) eligible 正確。(A) capable 須搭配 of,且指「有能力做某事」,與資格無關。(C) available 指人有空或物品可取得,說人 available for a bonus 語意不通。(D) applicable「適用的」主詞須為規定、條款等事物,不能是人。"
+  },
+  {
+    "id": "p5-b1-25",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Ellingham Consulting's revenue growth last year was ------- largely to its early expansion into the healthcare sector.",
+    "options": ["contributed", "distributed", "subscribed", "attributed"],
+    "answer": 3,
+    "translation": "Ellingham Consulting 去年的營收成長,主要歸因於該公司提早跨足醫療保健領域。",
+    "explanation": "考點:被動用法與介系詞搭配。be attributed to 意為「被歸因於」,(D) attributed 正確。(A) contributed 的正確用法是主動的 contribute to「促成」,不能寫成 be contributed to。(B) distributed 意為「分配、分送」,be distributed to 是分送給某人,語意不合。(C) subscribed 用於 subscribe to「訂閱、贊同」,為主動語態且語意不符。"
+  }
+]

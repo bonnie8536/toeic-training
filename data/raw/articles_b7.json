@@ -1,0 +1,219 @@
+[
+  {
+    "id": "art-7a",
+    "title": "The Quiet Hotel Floor",
+    "titleZh": "飯店的安靜樓層",
+    "category": "旅宿",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "A dim hotel corridor at night with a small sign reading 'quiet floor', soft-soled staff shoes on the carpet, and one door closing gently on a slow hinge.",
+    "paragraphs": [
+      {
+        "en": "The Merrow Hotel stands beside a busy train station in Taipei. For years, guests wrote the same [[complaint]] online. The walls were thin. Guests shut doors hard at midnight. Suitcase wheels rolled past every room early each morning. The manager, Ivy Kao, read every [[review]]. She could not [[afford]] new walls. The owners also refused to [[renovate]] the old building. So Ivy tried something much cheaper.",
+        "zh": "梅羅飯店就在台北一座繁忙的火車站旁邊。多年來，房客在網路上寫下同樣的抱怨。牆壁很薄。半夜有人用力甩門。每天一大早，行李箱的輪子就從每個房間門口滾過。經理高艾薇每一則評價都看。她沒有能力換新牆。業主也不肯翻修這棟舊樓。於是艾薇試了一個便宜得多的辦法。"
+      },
+      {
+        "en": "In March, she turned the eighth floor into a quiet floor. The rules were simple. Nobody may take phone calls in the hallway. Group [[check-ins]] stop after ten at night. The [[housekeeping]] team skips the floor before noon. The [[staff]] wear soft shoes there. Every door got a device that closes it slowly. Each device cost about NT$900. The whole [[budget]] stayed under NT$200,000.",
+        "zh": "三月，她把八樓改成安靜樓層。規則很簡單。走廊上不能講電話。晚上十點後不接受團體入住手續。房務團隊中午前不整理這一層。這裡的員工穿軟底鞋。每扇門都裝上緩慢關門的裝置。一個裝置大約九百元。整筆預算控制在二十萬元以內。"
+      },
+      {
+        "en": "Ivy then [[charged]] twelve percent more for these rooms. Her boss said nobody would pay extra for silence. He was wrong. Business travelers [[booked]] the eighth floor first. Many of them landed on late flights. They wanted sleep, not a nice view. In eight weeks, that floor had the highest [[occupancy]] in the hotel.",
+        "zh": "接著艾薇把這些房間的房價調高一成二。她的主管說，沒有人會為了安靜多付錢。他錯了。商務旅客最先訂走八樓。他們很多人搭晚班飛機抵達。他們要的是睡眠，不是好風景。八週內，那一層的住房率是全飯店最高。"
+      },
+      {
+        "en": "Then a new problem appeared. Families with small children felt they were not welcome. Some parents left angry [[feedback]] on travel sites. One father wrote that the hotel now served adults only. Ivy did not [[ignore]] him. She turned the third floor into a family floor. It has thicker mats and a small play corner.",
+        "zh": "後來出現新的問題。帶小孩的家庭覺得自己不受歡迎。有些家長在旅遊網站留下生氣的回饋。一位父親寫道，這家飯店現在只服務大人。艾薇沒有忽視他。她把三樓改成親子樓層。那裡有較厚的地墊和一個小遊戲角。"
+      },
+      {
+        "en": "The two floors now protect each other. Loud guests go down. Quiet guests go up. Complaints about noise fell by half in six months. The front desk no longer has to move unhappy guests at midnight.",
+        "zh": "兩個樓層現在互相保護。吵鬧的房客往下住。安靜的房客往上住。半年內，噪音的抱怨少了一半。櫃檯也不必再在半夜幫人換房。"
+      },
+      {
+        "en": "Ivy still calls the project a small [[experiment]]. She bought no new windows and no new walls. She changed rules, shoes, and door parts. Three other [[branches]] are copying her plan this year. Her advice to them is short. Sell silence before you sell the view.",
+        "zh": "艾薇仍然說這只是一個小實驗。她沒有買新窗戶，也沒有砌新牆。她改的是規則、鞋子和門上的裝置。今年還有三家分店照著她的做法走。她給他們的建議很短。先賣安靜，再賣景觀。"
+      }
+    ],
+    "vocab": [
+      { "word": "complaint", "base": "complaint", "pos": "n.", "hint": "a statement that shows you are not happy about a product or service", "zh": "抱怨；客訴" },
+      { "word": "review", "base": "review", "pos": "n.", "hint": "a written opinion about a hotel or product posted online for others", "zh": "評價；評論" },
+      { "word": "afford", "base": "afford", "pos": "v.", "hint": "to have enough money to pay for something", "zh": "負擔得起" },
+      { "word": "renovate", "base": "renovate", "pos": "v.", "hint": "to repair and improve an old building so it looks new again", "zh": "翻修；整修" },
+      { "word": "check-ins", "base": "check-in", "pos": "n.", "hint": "the act of registering at the front desk when you arrive at a hotel", "zh": "入住手續" },
+      { "word": "housekeeping", "base": "housekeeping", "pos": "n.", "hint": "the hotel department that cleans guest rooms", "zh": "房務" },
+      { "word": "staff", "base": "staff", "pos": "n.", "hint": "the group of people who work for a company", "zh": "員工" },
+      { "word": "budget", "base": "budget", "pos": "n.", "hint": "the amount of money planned for a project", "zh": "預算" },
+      { "word": "charged", "base": "charge", "pos": "v.", "hint": "to ask a customer to pay a certain price", "zh": "收費" },
+      { "word": "booked", "base": "book", "pos": "v.", "hint": "to reserve a room or a seat in advance", "zh": "預訂" },
+      { "word": "occupancy", "base": "occupancy", "pos": "n.", "hint": "the share of hotel rooms that are filled by guests", "zh": "住房率" },
+      { "word": "feedback", "base": "feedback", "pos": "n.", "hint": "comments about how good or bad a service is", "zh": "回饋意見" },
+      { "word": "ignore", "base": "ignore", "pos": "v.", "hint": "to pay no attention to a person or a message on purpose", "zh": "忽視" },
+      { "word": "experiment", "base": "experiment", "pos": "n.", "hint": "a test done to find out whether a new idea works", "zh": "實驗" },
+      { "word": "branches", "base": "branch", "pos": "n.", "hint": "a shop or office of the same company in another location", "zh": "分店；分公司" }
+    ],
+    "questions": [
+      {
+        "q": "What is the article mainly about?",
+        "options": [
+          "A hotel that rebuilt its walls to block street noise",
+          "A cheap plan that turned quiet into a selling point for a hotel",
+          "A new city law about noise in Taipei hotels",
+          "A manager who left her job for a quieter hotel chain"
+        ],
+        "answer": 1,
+        "explanation": "主旨題。第一段是噪音客訴，第二段是低成本規則，第六段結尾「先賣安靜，再賣景觀」，全文主軸是用便宜做法把安靜變成賣點。選項一提到重砌牆壁，第一段已寫明她沒錢換新牆。"
+      },
+      {
+        "q": "How did the hotel stop doors from slamming?",
+        "options": [
+          "It took the doors off the eighth floor",
+          "It asked every guest to close doors by hand",
+          "It hired extra night staff to watch the hallway",
+          "It put a slow-closing device on every door"
+        ],
+        "answer": 3,
+        "explanation": "細節題。定位第二段「Every door got a device that closes it slowly. Each device cost about NT$900.」，處理甩門的方法是加裝緩慢關門的裝置。"
+      },
+      {
+        "q": "What happened to the price of the quiet-floor rooms?",
+        "options": [
+          "It went up by twelve percent",
+          "It went down by twelve percent",
+          "It stayed exactly the same",
+          "It changed only on weekends"
+        ],
+        "answer": 0,
+        "explanation": "細節題。定位第三段第一句「Ivy then charged twelve percent more for these rooms.」，房價是往上調一成二。"
+      },
+      {
+        "q": "Why did Ivy open a family floor on the third floor?",
+        "options": [
+          "Because children asked her for a play corner",
+          "Because the eighth floor was fully booked every night",
+          "Because parents felt pushed out by the quiet rules",
+          "Because the owners finally ordered a full renovation"
+        ],
+        "answer": 2,
+        "explanation": "推論題。定位第四段：帶小孩的家庭覺得不受歡迎、家長留下生氣的回饋、有人說飯店只服務大人，因此可推論親子樓層是為了安撫被安靜規則排擠的家庭客。"
+      },
+      {
+        "q": "What can we infer about the three other branches?",
+        "options": [
+          "They believe the same idea can work in their own hotels",
+          "They plan to close their family floors this year",
+          "They have much larger budgets than the Merrow Hotel",
+          "They now charge lower prices than before"
+        ],
+        "answer": 0,
+        "explanation": "推論題。定位第六段「Three other branches are copying her plan this year.」，願意照抄代表他們認為這套做法在自己的飯店同樣行得通；文中沒有提到其他分店的預算或降價。"
+      }
+    ]
+  },
+  {
+    "id": "art-7b",
+    "title": "The Vending Machine Farm",
+    "titleZh": "販賣機裡的農場",
+    "category": "科技",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "A fridge-sized vending machine glowing with pink light in an office lobby, filled with rows of lettuce, while a worker in a shirt opens the glass door and picks fresh leaves.",
+    "paragraphs": [
+      {
+        "en": "Alan Su worked [[night shifts]] at a software company in Neihu. At nine o'clock, the office fridge was always empty. Nearby stores sold only rice boxes and cold noodles. Alan just wanted a salad. He almost never found one. That small problem later became his company.",
+        "zh": "蘇亞倫在內湖一家軟體公司上夜班。九點的時候，辦公室冰箱總是空的。附近的店只賣便當和涼麵。亞倫只是想吃一份沙拉。他幾乎找不到。這個小問題後來變成他的公司。"
+      },
+      {
+        "en": "In 2023, he built a strange machine with two friends. They named their small company Sprout Box. The machine looks like a tall fridge with glass doors. Inside, pink lights shine on rows of lettuce. The seeds grow in water for about four weeks. Then customers open the door and [[harvest]] the leaves themselves. Each machine holds ninety plants.",
+        "zh": "二〇二三年，他和兩位朋友做出一台奇怪的機器。他們把這家小公司取名為 Sprout Box。這台機器看起來像一台裝了玻璃門的高冰箱。裡面有粉紅色燈光照著一排排的生菜。種子在水裡長大約四週。然後顧客打開門，自己採收葉子。每台機器可以種九十株。"
+      },
+      {
+        "en": "The team [[installed]] the first box in an office tower in Xinyi. Normal salad [[suppliers]] must [[deliver]] fresh leaves twice a day. Sprout Box delivers nothing at all. A bag of lettuce costs NT$120. Workers laughed at the machine on day one. By week three, it sold out before lunch. On rainy days, the [[demand]] doubled.",
+        "zh": "團隊把第一台機器裝在信義區的一棟辦公大樓。一般的沙拉供應商每天要送兩次新鮮葉菜。Sprout Box 完全不必送貨。一包生菜賣一百二十元。第一天，上班族都在笑這台機器。到了第三週，它中午前就賣完了。下雨天的需求還會加倍。"
+      },
+      {
+        "en": "Then Alan noticed something odd. His best [[clients]] were not hungry workers. They were office managers. One manager explained the real reason. The machine helped her company [[recruit]] young engineers. It looked modern in every office photo. Fresh food was the story, not the salad.",
+        "zh": "後來亞倫發現一件奇怪的事。他最好的客戶不是肚子餓的上班族。而是各公司的辦公室主管。一位主管說出了真正的原因。這台機器幫她的公司招募年輕工程師。在每一張辦公室照片裡，它看起來都很新潮。新鮮食物才是賣點，沙拉本身不是。"
+      },
+      {
+        "en": "So the team changed the business model. They stopped selling bags of lettuce alone. Companies now [[lease]] a machine for a monthly [[subscription]]. The fee covers seeds, [[maintenance]], and repairs. Most firms pay from their employee benefits budget. Alan [[negotiated]] his first ten contracts in a single month.",
+        "zh": "於是團隊改了商業模式。他們不再只賣一包包的生菜。公司行號現在以月付訂閱的方式租用機器。費用包含種子、維護和維修。多數企業從員工福利預算支付。亞倫在一個月內談成前十份合約。"
+      },
+      {
+        "en": "Sprout Box runs 240 machines in Taiwan today. The company became [[profitable]] last spring. Alan wants to [[expand]] into hospitals and hotels next year. He still eats a salad at nine o'clock. These days, he no longer has to look for one.",
+        "zh": "今天 Sprout Box 在台灣有兩百四十台機器。公司去年春天開始獲利。亞倫想在明年擴張到醫院和飯店。他仍然在九點吃沙拉。只是現在，他不必再到處找了。"
+      }
+    ],
+    "vocab": [
+      { "word": "night shifts", "base": "night shift", "pos": "n.", "hint": "a work period that runs during the night", "zh": "夜班" },
+      { "word": "harvest", "base": "harvest", "pos": "v.", "hint": "to pick or gather crops when they are ready to eat", "zh": "採收" },
+      { "word": "installed", "base": "install", "pos": "v.", "hint": "to put a machine in place so that it is ready to use", "zh": "安裝" },
+      { "word": "suppliers", "base": "supplier", "pos": "n.", "hint": "companies that provide goods to shops or restaurants", "zh": "供應商" },
+      { "word": "deliver", "base": "deliver", "pos": "v.", "hint": "to bring goods to a person or a place", "zh": "配送；送貨" },
+      { "word": "demand", "base": "demand", "pos": "n.", "hint": "the wish of customers to buy a certain product", "zh": "需求" },
+      { "word": "clients", "base": "client", "pos": "n.", "hint": "people or firms that pay for a service", "zh": "客戶" },
+      { "word": "recruit", "base": "recruit", "pos": "v.", "hint": "to find and hire new workers for a company", "zh": "招募" },
+      { "word": "lease", "base": "lease", "pos": "v.", "hint": "to pay a regular fee for the right to use equipment or space", "zh": "租用" },
+      { "word": "subscription", "base": "subscription", "pos": "n.", "hint": "a regular payment made to keep using a service", "zh": "訂閱制費用" },
+      { "word": "maintenance", "base": "maintenance", "pos": "n.", "hint": "the work of keeping equipment in good condition", "zh": "維護保養" },
+      { "word": "negotiated", "base": "negotiate", "pos": "v.", "hint": "to discuss terms with someone until both sides agree", "zh": "洽談；談成" },
+      { "word": "profitable", "base": "profitable", "pos": "adj.", "hint": "earning more money than it costs to run", "zh": "有獲利的" },
+      { "word": "expand", "base": "expand", "pos": "v.", "hint": "to grow into new places or new markets", "zh": "擴張" }
+    ],
+    "questions": [
+      {
+        "q": "What is the main point of the article?",
+        "options": [
+          "Office workers in Taipei like rice boxes more than salad",
+          "Growing lettuce at home costs less than buying it",
+          "A startup found its real market after it launched a salad machine",
+          "Vending machines are replacing office kitchens all over Taiwan"
+        ],
+        "answer": 2,
+        "explanation": "主旨題。全文從第一段的個人困擾，到第三段賣生菜，再到第四、五段發現真正的買家是各公司的辦公室主管並改成租賃模式，重點是這家新創找到了真正的市場。"
+      },
+      {
+        "q": "How do customers get lettuce from the machine?",
+        "options": [
+          "They pick the leaves themselves",
+          "A worker delivers the leaves twice a day",
+          "They order the leaves through an app",
+          "The office manager hands out bags to everyone"
+        ],
+        "answer": 0,
+        "explanation": "細節題。定位第二段「Then customers open the door and harvest the leaves themselves.」，是顧客自己開門採收。第三段的每日兩次配送指的是一般供應商，不是這台機器。"
+      },
+      {
+        "q": "What does the monthly fee cover?",
+        "options": [
+          "Free coffee for all the staff",
+          "Daily delivery from a salad supplier",
+          "A discount on the office rent",
+          "Seeds, maintenance, and repairs"
+        ],
+        "answer": 3,
+        "explanation": "細節題。定位第五段「The fee covers seeds, maintenance, and repairs.」，月費涵蓋種子、維護與維修三項。"
+      },
+      {
+        "q": "Why did office managers want the machines?",
+        "options": [
+          "Because lettuce was cheaper than lunch boxes",
+          "Because the machines made the office look attractive to job seekers",
+          "Because workers kept complaining about the empty fridge",
+          "Because the law required fresh food in every office"
+        ],
+        "answer": 1,
+        "explanation": "推論題。定位第四段：機器幫公司招募年輕工程師、在辦公室照片裡看起來很新潮，可推論主管看中的是對求職者的吸引力，而不是沙拉本身。"
+      },
+      {
+        "q": "What does the last paragraph suggest about Sprout Box?",
+        "options": [
+          "It will stop selling lettuce next year",
+          "It has run out of money",
+          "It plans to move its farms abroad",
+          "It is steady enough to enter new markets"
+        ],
+        "answer": 3,
+        "explanation": "推論題。定位第六段：已有兩百四十台機器、去年春天開始獲利、明年想擴張到醫院和飯店，可推論公司體質穩定到足以進入新市場。"
+      }
+    ]
+  }
+]

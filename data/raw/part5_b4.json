@@ -1,0 +1,252 @@
+[
+  {
+    "id": "p5-b4-01",
+    "difficulty": "基礎",
+    "category": "主謂一致",
+    "question": "At Ashcombe Manufacturing, the list of approved vendors ------- updated at the beginning of each fiscal quarter.",
+    "options": ["are", "were", "have been", "is"],
+    "answer": 3,
+    "translation": "在 Ashcombe Manufacturing,核准供應商名單會於每個會計季度初更新。",
+    "explanation": "考點:主詞與動詞的單複數一致。句子真正的主詞是單數的 the list,of approved vendors 只是後位修飾片語,不影響動詞形式;名單是「被更新」,故需被動,(D) is 正確。(A) are 為複數動詞,與單數主詞 list 不合。(B) were 同樣是複數,且過去式與 at the beginning of each fiscal quarter 所描述的例行動作不符。(C) have been 也是複數形式,若要合乎主詞應寫成 has been。"
+  },
+  {
+    "id": "p5-b4-02",
+    "difficulty": "中級",
+    "category": "主謂一致",
+    "question": "Neither the department supervisors nor the operations director at Trellis Media ------- available to attend Thursday's budget meeting.",
+    "options": ["are", "were", "is", "being"],
+    "answer": 2,
+    "translation": "Trellis Media 的部門主管與營運總監都無法出席週四的預算會議。",
+    "explanation": "考點:neither A nor B 的主謂一致。此結構採「就近原則」,動詞與最靠近的主詞一致;最近的主詞 the operations director 為單數,且陳述目前狀況用現在式,故 (C) is 正確。(A) are 是複數動詞,誤把前面的 supervisors 當成主詞。(B) were 既是複數又是過去式,與週四這項尚未發生的安排不合。(D) being 為分詞,不能單獨充當句子的主要動詞。"
+  },
+  {
+    "id": "p5-b4-03",
+    "difficulty": "中級",
+    "category": "主謂一致",
+    "question": "Each of the new interns at Harborline Logistics ------- guidance from a designated mentor during the first week of training.",
+    "options": ["receives", "receive", "have received", "receiving"],
+    "answer": 0,
+    "translation": "Harborline Logistics 的每位新進實習生在受訓第一週都會獲得指定導師的指導。",
+    "explanation": "考點:each of + 複數名詞的主謂一致。此結構的主詞核心是 Each,視為單數,現在式動詞須加 -s,故 (A) receives 正確。(B) receive 是複數動詞形式,誤把 interns 當主詞。(C) have received 為複數的現在完成式,主詞單數時應作 has received。(D) receiving 是分詞,沒有助動詞就不能當主要動詞。"
+  },
+  {
+    "id": "p5-b4-04",
+    "difficulty": "進階",
+    "category": "主謂一致",
+    "question": "A revised set of safety procedures ------- distributed to all warehouse employees at Bramley Distribution before the new shift system takes effect.",
+    "options": ["have been", "has been", "were", "are"],
+    "answer": 1,
+    "translation": "在新輪班制度生效前,一套修訂後的安全作業程序已發送給 Bramley Distribution 的所有倉庫員工。",
+    "explanation": "考點:set of + 複數名詞的主謂一致與被動語態。主詞核心是單數的 a revised set,of safety procedures 僅為修飾語;搭配過去分詞 distributed 構成被動,且動作須在 takes effect 之前完成,用現在完成式最恰當,故 (B) has been 正確。(A) have been 是複數形式。(C) were 為複數,且過去式與後半句的現在式 takes 時態不搭。(D) are 同樣是複數動詞,與單數主詞不合。"
+  },
+  {
+    "id": "p5-b4-05",
+    "difficulty": "進階",
+    "category": "主謂一致",
+    "question": "Not only the catering costs but also the venue fees ------- risen sharply since Vantage Consulting moved its annual conference to Lisbon.",
+    "options": ["has", "having", "was", "have"],
+    "answer": 3,
+    "translation": "自從 Vantage Consulting 將年度會議移師里斯本後,不僅餐飲成本上漲,連場地費用也大幅攀升。",
+    "explanation": "考點:not only A but also B 的主謂一致。此結構同樣依「就近原則」,動詞配合較近的主詞 the venue fees(複數);又因 since 引導的時間點須搭配現在完成式,故 (D) have 正確,構成 have risen。(A) has 為單數動詞。(B) having 是分詞,不能當主要動詞。(C) was 不僅是單數,rise 為不及物動詞,也無法用 was risen 這種被動形式。"
+  },
+  {
+    "id": "p5-b4-06",
+    "difficulty": "基礎",
+    "category": "比較級",
+    "question": "The renovated conference room on the fifth floor is ------- than the space Delcrest Media rented last year.",
+    "options": ["spacious", "most spacious", "more spacious", "spaciously"],
+    "answer": 2,
+    "translation": "五樓整修後的會議室比 Delcrest Media 去年承租的空間更寬敞。",
+    "explanation": "考點:比較級的構成。句中出現 than,前面必須是比較級;spacious 屬於以 -ous 結尾的形容詞,比較級須用 more 構成而非加 -er,故 (C) more spacious 正確。(A) spacious 是原級,不能與 than 連用。(B) most spacious 為最高級,須搭配 the 與比較範圍,不與 than 並用。(D) spaciously 是副詞,不能當 be 動詞後的主詞補語。"
+  },
+  {
+    "id": "p5-b4-07",
+    "difficulty": "中級",
+    "category": "比較級",
+    "question": "Of the three shipping options that Ferrolane Freight offers, express air delivery is by far the ------- costly.",
+    "options": ["most", "more", "very", "much"],
+    "answer": 0,
+    "translation": "在 Ferrolane Freight 提供的三種運送方式中,空運快遞的費用遠遠最高。",
+    "explanation": "考點:最高級與 by far 的搭配。三者以上互相比較,且前有 the 與強調用語 by far,須用最高級,故 (A) most 正確,the most costly 表示三種方式中最貴。(B) more 是比較級,通常用於兩者之間並搭配 than。(C) very 雖可修飾原級形容詞,但放在 the 之後無法構成最高級語意。(D) much 用來修飾比較級或不可數名詞,不能修飾原級形容詞 costly。"
+  },
+  {
+    "id": "p5-b4-08",
+    "difficulty": "中級",
+    "category": "比較級",
+    "question": "Quarterly sales at the Willowbrook outlet were ------- higher than the regional average, largely thanks to the new loyalty program.",
+    "options": ["very", "so", "too", "far"],
+    "answer": 3,
+    "translation": "Willowbrook 門市的季度業績遠高於區域平均,主要歸功於新的會員回饋方案。",
+    "explanation": "考點:修飾比較級的副詞。higher 為比較級,前面須用 far、much、considerably 等副詞加強語氣,故 (D) far 正確。(A) very 只能修飾原級形容詞(如 very high),不能修飾比較級。(B) so 用於 so + 原級 + that 的結構。(C) too 表示「過於」,同樣只能接原級形容詞。"
+  },
+  {
+    "id": "p5-b4-09",
+    "difficulty": "進階",
+    "category": "比較級",
+    "question": "The ------- the assembly line runs, the fewer defects the inspectors at Norwyn Appliances record.",
+    "options": ["slow", "slower", "slowly", "slowest"],
+    "answer": 1,
+    "translation": "生產線運轉得愈慢,Norwyn Appliances 的檢驗人員記錄到的瑕疵就愈少。",
+    "explanation": "考點:the + 比較級, the + 比較級 的對稱句型。後半句已出現 the fewer defects,前半句同樣必須使用比較級,故 (B) slower 正確。(A) slow 為原級,無法構成此句型。(C) slowly 雖然詞性可修飾動詞 runs,但仍是原級,未變成比較級。(D) slowest 為最高級,不能用於這個對稱結構。"
+  },
+  {
+    "id": "p5-b4-10",
+    "difficulty": "基礎",
+    "category": "片語動詞",
+    "question": "Please ------- out the attached registration form in blue or black ink and return it to the front desk before your appointment at the Marlow Wellness Center.",
+    "options": ["take", "hand", "fill", "put"],
+    "answer": 2,
+    "translation": "請以藍筆或黑筆填寫隨附的報到表格,並在您於 Marlow Wellness Center 看診前交回櫃檯。",
+    "explanation": "考點:片語動詞 fill out(填寫表格)。受詞是 registration form,且句中 in blue or black ink(以藍筆或黑筆)只可能搭配「填寫」的動作,故 (C) fill 正確。(A) take out「取出」——文法上可以先取出再交回,但「用藍黑筆取出表格」語意不成立。(B) hand out 意為「分發」,是發給別人,與自己填完交回櫃檯矛盾。(D) put out 常指「熄滅、對外發布」,不與表格搭配。"
+  },
+  {
+    "id": "p5-b4-11",
+    "difficulty": "中級",
+    "category": "片語動詞",
+    "question": "Although the salary was generous, Mr. Okafor decided to turn ------- the offer from Brightpath Analytics because the position required relocating overseas.",
+    "options": ["down", "over", "in", "up"],
+    "answer": 0,
+    "translation": "儘管薪資優渥,Okafor 先生仍決定婉拒 Brightpath Analytics 的錄取通知,因為這份工作必須外派。",
+    "explanation": "考點:片語動詞 turn down(拒絕)。句首 Although the salary was generous 形成轉折,語意應為「拒絕這份工作機會」,故 (A) down 正確。(B) turn over 意為「移交、翻轉」。(C) turn in 意為「繳交」。(D) turn up 指「出現」或「調大音量」,語意皆不合。"
+  },
+  {
+    "id": "p5-b4-12",
+    "difficulty": "中級",
+    "category": "片語動詞",
+    "question": "The maintenance team will ------- out a full inspection of the ventilation system before Kestrel Tower reopens to tenants.",
+    "options": ["hold", "bring", "take", "carry"],
+    "answer": 3,
+    "translation": "在 Kestrel Tower 重新開放給租戶之前,維修團隊將對通風系統進行一次全面檢查。",
+    "explanation": "考點:片語動詞 carry out(執行、進行)。受詞為 a full inspection,「執行檢查」的道地說法是 carry out an inspection,故 (D) carry 正確。(A) hold out 意為「支撐、堅持」,hold 本身則多與 meeting、event 搭配。(B) bring out 意為「推出、使顯現」。(C) take out 意為「取出、外帶」,均無法表示執行檢查。"
+  },
+  {
+    "id": "p5-b4-13",
+    "difficulty": "進階",
+    "category": "片語動詞",
+    "question": "The design department at Solvane Cosmetics was asked to ------- up with three alternative packaging concepts before Friday's client presentation.",
+    "options": ["catch", "come", "keep", "make"],
+    "answer": 1,
+    "translation": "Solvane Cosmetics 的設計部門被要求在週五客戶簡報前提出三個替代包裝方案。",
+    "explanation": "考點:片語動詞 come up with(想出、提出構想)。設計部門被要求提出三個包裝方案,故 (B) come 正確。(A) catch up with 意為「趕上」。(C) keep up with 意為「跟上速度或進度」。(D) make up with 意為「與某人和好」,三者語意都不符合提出構想。"
+  },
+  {
+    "id": "p5-b4-14",
+    "difficulty": "基礎",
+    "category": "片語動詞",
+    "question": "Delegates should ------- in their completed evaluation forms at the registration desk before leaving the Riverton Trade Expo.",
+    "options": ["give", "bring", "hand", "take"],
+    "answer": 2,
+    "translation": "與會代表離開 Riverton 商展前,應在報到櫃檯繳交填妥的意見回饋表。",
+    "explanation": "考點:片語動詞 hand in(繳交文件)。與會者須在櫃檯交回填妥的表格,故 (C) hand 正確。(A) give in 意為「屈服、讓步」。(B) bring in 意為「引進、帶來收益」。(D) take in 意為「理解、收容」,都無法表示繳交文件。"
+  },
+  {
+    "id": "p5-b4-15",
+    "difficulty": "進階",
+    "category": "片語動詞",
+    "question": "Because the supplier repeatedly failed to ------- through on its delivery commitments, Gladstone Furnishings terminated the contract.",
+    "options": ["follow", "get", "run", "see"],
+    "answer": 0,
+    "translation": "由於供應商一再未能履行交貨承諾,Gladstone Furnishings 終止了合約。",
+    "explanation": "考點:片語動詞 follow through on(切實履行、貫徹承諾)。供應商未履行交貨承諾才導致終止合約,故 (A) follow 正確。(B) get through 意為「完成、接通電話」,不與 on + 承諾搭配。(C) run through 意為「快速演練、耗盡」。(D) see through 指「看穿」或「支持到底」,受詞直接接在後面,不用 on。"
+  },
+  {
+    "id": "p5-b4-16",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "All salary information held by the Pemberton Group is strictly ------- and must never be shared outside the human resources department.",
+    "options": ["considerate", "consecutive", "conventional", "confidential"],
+    "answer": 3,
+    "translation": "Pemberton Group 保有的所有薪資資訊皆屬機密,絕不可外流至人力資源部門以外。",
+    "explanation": "考點:形近形容詞的語意辨析。後半句說明不得對外分享,可知薪資資訊是「機密的」,故 (D) confidential 正確。(A) considerate 意為「體貼的」,用來形容人。(B) consecutive 意為「連續的」,多修飾時間或次數。(C) conventional 意為「傳統的、慣例的」,三者都與保密無關。"
+  },
+  {
+    "id": "p5-b4-17",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "The Arbor Crest Hotel runs an airport shuttle that is ------- to all guests at no additional charge.",
+    "options": ["capable", "available", "possible", "acceptable"],
+    "answer": 1,
+    "translation": "Arbor Crest Hotel 提供機場接駁車,所有房客皆可免費搭乘。",
+    "explanation": "考點:形容詞語意與搭配。available to somebody 表示「可供某人使用」,接駁車免費供房客使用,故 (B) available 正確。(A) capable 須用 be capable of + 名詞或動名詞,主詞通常為人或機構。(C) possible 不能用 be possible to guests 的形式描述服務提供對象。(D) acceptable 意為「可接受的」,acceptable to somebody 指某人願意接受某項提議或條件,無法表達「可供房客搭乘使用」。"
+  },
+  {
+    "id": "p5-b4-18",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Mr. Devlin has proved to be an exceptionally ------- supplier; not one of his shipments has arrived late in the past five years.",
+    "options": ["reluctant", "relevant", "reliable", "remarkable"],
+    "answer": 2,
+    "translation": "Devlin 先生證明自己是極為可靠的供應商;五年來他的貨物沒有一批延遲送達。",
+    "explanation": "考點:形近形容詞的語意辨析。分號後說明五年來沒有一批貨延遲,正是「值得信賴、表現穩定」的證據,故 (C) reliable 正確。(A) reluctant 意為「不情願的」。(B) relevant 意為「相關的」,須說明與什麼相關。(D) remarkable 意為「非凡的、引人注目的」,強調程度突出,無法對應「準時、不出錯」這項穩定性描述。"
+  },
+  {
+    "id": "p5-b4-19",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Applicants who ------- the required certification before September 30 will be invited to a second interview at Coastline Engineering.",
+    "options": ["obtain", "attend", "retain", "contain"],
+    "answer": 0,
+    "translation": "在九月三十日前取得規定證照的申請者,將獲邀參加 Coastline Engineering 的第二輪面試。",
+    "explanation": "考點:形近動詞的語意辨析。申請者必須在期限前「取得」規定證照才能進入第二輪面試,故 (A) obtain 正確。(B) attend 意為「參加、出席」,受詞應是課程或會議而非證照。(C) retain 指「保留已擁有的事物」,但申請者尚未取得該證照。(D) contain 意為「包含」,主詞須是容器或文件。"
+  },
+  {
+    "id": "p5-b4-20",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The new layout of the packing area has made order fulfillment considerably more -------, cutting average handling time at the Quillon warehouse by six minutes.",
+    "options": ["sufficient", "efficient", "proficient", "deficient"],
+    "answer": 1,
+    "translation": "包裝區的新配置讓訂單處理效率大幅提升,使 Quillon 倉庫的平均處理時間縮短了六分鐘。",
+    "explanation": "考點:字尾相近的形容詞辨析。後半句說明平均處理時間縮短六分鐘,顯示流程變得「有效率」,故 (B) efficient 正確。(A) sufficient 意為「足夠的」,指數量而非效率。(C) proficient 意為「精通的」,用來形容人的技能。(D) deficient 意為「不足的、有缺陷的」,語意與句意相反。"
+  },
+  {
+    "id": "p5-b4-21",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The Larkspur Convention Hall can ------- up to 400 guests when the seating is arranged in theater style.",
+    "options": ["anticipate", "appreciate", "associate", "accommodate"],
+    "answer": 3,
+    "translation": "採劇院式座位安排時,Larkspur 會議廳最多可容納四百位賓客。",
+    "explanation": "考點:形近動詞的語意辨析。主詞是會議廳,受詞是人數,語意為「容納」,故 (D) accommodate 正確。(A) anticipate 意為「預期」,主詞須是人或組織。(B) appreciate 意為「感謝、賞識」。(C) associate 意為「聯想、與……有關聯」,通常搭配 with,三者都不能表示空間容量。"
+  },
+  {
+    "id": "p5-b4-22",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Customers who are not completely satisfied with their purchase may request a full ------- from Tidebrook Outdoors within 30 days.",
+    "options": ["reward", "revenue", "refund", "receipt"],
+    "answer": 2,
+    "translation": "對商品不完全滿意的顧客,可於三十天內向 Tidebrook Outdoors 要求全額退款。",
+    "explanation": "考點:商業名詞的語意辨析。顧客不滿意時要求的是「全額退款」,a full refund 為固定搭配,故 (C) refund 正確。(A) reward 意為「獎賞、報酬」。(B) revenue 指公司的「營收」,不會由顧客索取。(D) receipt 是「收據」,顧客要的是退錢而非收據。"
+  },
+  {
+    "id": "p5-b4-23",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "All contractors must ------- with the site's safety regulations before they are permitted to operate heavy machinery at Harlow Ridge.",
+    "options": ["comply", "apply", "imply", "reply"],
+    "answer": 0,
+    "translation": "所有承包商必須遵守工地安全規範,才獲准在 Harlow Ridge 操作重型機具。",
+    "explanation": "考點:動詞與介系詞的搭配及語意辨析。comply with 意為「遵守(規定)」,承包商須遵守工地安全規範,故 (A) comply 正確。(B) apply 搭配 for 表「申請」、搭配 to 表「適用於」,介系詞與語意都不合。(C) imply 意為「暗示」,是及物動詞,不接 with。(D) reply 搭配 to,受詞應為訊息或人。"
+  },
+  {
+    "id": "p5-b4-24",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "The board has not reached a final decision, so the schedule circulated yesterday is merely ------- and may change once funding is confirmed.",
+    "options": ["temporary", "tentative", "typical", "technical"],
+    "answer": 1,
+    "translation": "董事會尚未做出最終決定,因此昨天發出的時程表僅為暫定,待經費確認後仍可能變動。",
+    "explanation": "考點:形近形容詞的語意辨析。前句指出尚未做成最終決定,且時程仍可能變動,可知該時程只是「暫定、未定案」,故 (B) tentative 正確。(A) temporary 強調「短期存在、之後會被取代」,指的是持續時間而非是否定案。(C) typical 意為「典型的、一般的」,無法表達尚未定案。(D) technical 意為「技術性的」,語意皆不相干。"
+  },
+  {
+    "id": "p5-b4-25",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Ms. Renard received a generous bonus in ------- of her role in securing the Meridian account for Caldwell & Pace.",
+    "options": ["reception", "recruitment", "recognition", "recommendation"],
+    "answer": 2,
+    "translation": "Renard 女士因促成 Caldwell & Pace 拿下 Meridian 這個客戶而獲得豐厚獎金。",
+    "explanation": "考點:名詞語意辨析與固定用法。in recognition of 意為「為表彰、肯定某人的貢獻」,正好對應因促成合作案而獲得獎金,故 (C) recognition 正確。(A) reception 指「接待、招待會」。(B) recruitment 意為「招募、徵才」,與表彰貢獻無關。(D) recommendation 意為「推薦」,雖有 on the recommendation of 的用法,但語意是「經某人推薦」,與表彰功勞不同。"
+  }
+]

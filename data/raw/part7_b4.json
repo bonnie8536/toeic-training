@@ -1,0 +1,336 @@
+[
+  {
+    "id": "p7-b4-1",
+    "format": "single",
+    "passages": [
+      {
+        "type": "email",
+        "label": "",
+        "content": "To: t.abernathy@crestwoodinteriors.com\nFrom: n.ferreira@vantagepointsupply.com\nDate: 3 March\nSubject: Order 48219 — revised delivery date\n\nDear Mr. Abernathy,\n\nI am writing about the eighteen adjustable desk frames that Crestwood Interiors ordered on 20 February. The order was scheduled to reach your Fairview warehouse this Thursday, but I am afraid that we will not be able to meet that date.\n\nThe frames are manufactured at our plant in Bellhaven, where a boiler failure halted the painting line for six days. Production resumed on Monday, and the backlog is being cleared in the order in which requests were received. Your shipment is now expected to leave the plant on 11 March and to arrive on 14 March.\n\nBecause the delay is entirely ours, I have arranged for the freight charge of $260 to be removed from your invoice. I have also asked our warehouse team to set aside six frames from the stock we keep for showroom displays. These are identical to the ones you ordered apart from a slightly darker finish, and I can have them sent to you tomorrow at no cost if you need something on site before the fourteenth.\n\nPlease let me know by Friday whether you would like the showroom units. If I do not hear from you, I will assume that you prefer to wait for the full shipment.\n\nI apologize for the inconvenience and appreciate your patience.\n\nSincerely,\n\nNadia Ferreira\nClient Services\nVantage Point Supply"
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the purpose of the e-mail?",
+        "options": [
+          "To confirm that a payment has been received",
+          "To explain why a shipment will arrive late",
+          "To request additional details about an order",
+          "To announce a change in manufacturing procedures"
+        ],
+        "answer": 1,
+        "explanation": "定位:第一段第二句「The order was scheduled to reach your Fairview warehouse this Thursday, but I am afraid that we will not be able to meet that date.」全文接著說明延誤原因與補償,故主旨是解釋出貨延遲。(A)錯:信中只提到把運費從發票扣除,未提及收到任何款項。(C)錯:Ferreira 是提供資訊的一方,並未向對方索取訂單細節。(D)錯:鍋爐故障是突發事件,並非製程改變的公告。"
+      },
+      {
+        "q": "What caused the problem at the Bellhaven plant?",
+        "options": [
+          "A shortage of raw materials",
+          "A shipment that was sent to the wrong address",
+          "A piece of equipment that stopped working",
+          "A larger than expected number of orders"
+        ],
+        "answer": 2,
+        "explanation": "定位:第二段第一句「a boiler failure halted the painting line for six days」,鍋爐故障即設備停止運作。(A)錯:全文未提到原料短缺。(B)錯:貨物並未送錯地址,而是尚未出廠。(D)錯:第二段確實提到 backlog(積壓),但那是停工六天造成的結果,不是原因。"
+      },
+      {
+        "q": "What is NOT mentioned in the e-mail?",
+        "options": [
+          "The date on which the order was placed",
+          "The cost of shipping the order",
+          "The city where the frames are manufactured",
+          "The total price of the eighteen desk frames"
+        ],
+        "answer": 3,
+        "explanation": "定位:採刪去法。(A)見第一段「ordered on 20 February」。(B)見第三段「the freight charge of $260」。(C)見第二段「our plant in Bellhaven」。只有十八組桌架的總價全文從未出現,故(D)為未提及者。"
+      },
+      {
+        "q": "The word \"meet\" in paragraph 1 is closest in meaning to",
+        "options": [
+          "keep to",
+          "greet",
+          "discover",
+          "join"
+        ],
+        "answer": 0,
+        "explanation": "定位:第一段「we will not be able to meet that date」。此處 meet 搭配 date/deadline,意為「遵守、如期達成」,故 keep to 最貼近。(B)greet 是「問候」,用於人不用於日期。(C)discover 是「發現」,語意不合。(D)join 是「加入」,與期限無關。"
+      }
+    ],
+    "translation": [
+      "收件者:t.abernathy@crestwoodinteriors.com\n寄件者:n.ferreira@vantagepointsupply.com\n日期:3月3日\n主旨:訂單 48219 — 修訂後的送達日期\n\n親愛的 Abernathy 先生:\n\n我來信是關於 Crestwood Interiors 於 2 月 20 日訂購的十八組可調式桌架。這筆訂單原訂本週四送達貴公司的 Fairview 倉庫,但恐怕我們無法如期達成。\n\n這些桌架在我們位於 Bellhaven 的廠區製造,該廠的鍋爐故障使塗裝線停擺了六天。生產已於週一恢復,積壓的訂單正依收件先後順序陸續消化。您的貨現在預計 3 月 11 日出廠,3 月 14 日送達。\n\n由於延誤完全是我方責任,我已安排將 260 美元的運費從您的發票中扣除。我也請倉儲團隊從展示間備品中保留了六組桌架。除了表面顏色略深之外,這些桌架與您訂購的完全相同;若您在 14 日之前需要現場先有貨可用,我可以明天免費寄出。\n\n請於週五前告知您是否需要這批展示間的桌架。若未收到您的回覆,我將視為您希望等待完整出貨。\n\n造成不便,敬請見諒,並感謝您的耐心。\n\n敬上\n\nNadia Ferreira\n客戶服務部\nVantage Point Supply"
+    ]
+  },
+  {
+    "id": "p7-b4-2",
+    "format": "single",
+    "passages": [
+      {
+        "type": "text message chain",
+        "label": "",
+        "content": "Priya Raghavan (9:42 A.M.)\nMorning, both. I've just reached the convention center. The booth panels are here, but the crate with the display screens hasn't turned up.\n\nDominic Hale (9:47 A.M.)\nThat's not good. The carrier promised everything would be unloaded by eight.\n\nPriya Raghavan (9:51 A.M.)\nI spoke to the loading dock supervisor. He says a second truck is still on the road and should reach us around eleven.\n\nMarta Oyelaran (9:58 A.M.)\nI can rearrange my morning if that helps. I'm not due at the client lunch until one.\n\nDominic Hale (10:03 A.M.)\nMarta, could you go straight to the hall instead of the office? Priya shouldn't be assembling the frame on her own.\n\nMarta Oyelaran (10:07 A.M.)\nOn my way. Priya, I have a box of the printed brochures in my car — shall I bring those in as well?\n\nPriya Raghavan (10:11 A.M.)\nYes, please. One box will be plenty for the first day.\n\nDominic Hale (10:15 A.M.)\nI'll chase the carrier again. If those screens aren't here by noon, we'll have to think about renting.\n\nMarta Oyelaran (10:19 A.M.)\nLet's hope it doesn't come to that. See you both shortly."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What are the writers mainly discussing?",
+        "options": [
+          "A change to a client's lunch reservation",
+          "A missing part of a delivery",
+          "The design of a new company brochure",
+          "A complaint received from a convention center"
+        ],
+        "answer": 1,
+        "explanation": "定位:9:42 Raghavan 表示「the crate with the display screens hasn't turned up」,後續訊息全繞著這批未送達的螢幕與應變安排展開。(A)錯:午餐約會只在 9:58 被順帶提到,用來說明 Oyelaran 上午有空。(C)錯:手冊只是要順便帶進會場的物品,不是討論主題。(D)錯:對話中沒有任何來自會展中心的抱怨;三人不滿的對象是未依約卸貨的貨運業者。"
+      },
+      {
+        "q": "What does Ms. Oyelaran offer to bring to the hall?",
+        "options": [
+          "A set of display screens",
+          "A crate of booth panels",
+          "A list of clients",
+          "Some printed materials"
+        ],
+        "answer": 3,
+        "explanation": "定位:10:07 Oyelaran 寫道「I have a box of the printed brochures in my car — shall I bring those in as well?」,即印刷品。(A)錯:螢幕在第二輛卡車上,不在她手上。(B)錯:展板已經送到會場了。(C)錯:全篇未提到任何客戶名單。"
+      },
+      {
+        "q": "At 10:15 A.M., what does Mr. Hale most likely mean when he writes, \"we'll have to think about renting\"?",
+        "options": [
+          "He may need to obtain display screens from another source",
+          "He believes the booth space is too small",
+          "He wants to lease a larger delivery vehicle",
+          "He plans to look for a different storage facility"
+        ],
+        "answer": 0,
+        "explanation": "定位:該句緊接在「If those screens aren't here by noon」之後,條件句指向的缺件就是展示螢幕,因此 renting 指改用租借方式取得螢幕。(B)錯:攤位大小從未被討論。(C)錯:卡車是貨運業者的事,他們不需要自己租車。(D)錯:全篇沒有倉儲需求的線索。"
+      },
+      {
+        "q": "What is suggested about Ms. Oyelaran?",
+        "options": [
+          "She has already spoken with the carrier",
+          "She designed the booth panels herself",
+          "She is free until an appointment later in the day",
+          "She has worked at the company longer than Mr. Hale"
+        ],
+        "answer": 2,
+        "explanation": "定位:9:58 她說「I can rearrange my morning if that helps. I'm not due at the client lunch until one.」可推知她在下午一點之前有空。(A)錯:與貨運業者聯絡的是 Raghavan(問了裝卸區主管)與 Hale(說要再去催)。(B)錯:沒有任何人提及展板是誰設計的。(D)錯:對話中沒有任何資歷或職級的比較。"
+      }
+    ],
+    "translation": [
+      "Priya Raghavan(上午 9:42)\n兩位早。我剛到會展中心。展板已經到了,但裝展示螢幕的木箱沒出現。\n\nDominic Hale(上午 9:47)\n這下麻煩了。貨運業者保證八點前全部卸完的。\n\nPriya Raghavan(上午 9:51)\n我問過裝卸區的主管。他說第二輛卡車還在路上,大概十一點左右會到。\n\nMarta Oyelaran(上午 9:58)\n有需要的話我可以調整上午的行程。我到一點才要去和客戶吃午餐。\n\nDominic Hale(上午 10:03)\nMarta,你可以直接去會場、不用進辦公室嗎?不該讓 Priya 一個人組框架。\n\nMarta Oyelaran(上午 10:07)\n我出發了。Priya,我車上有一箱印好的手冊,要不要一起帶進去?\n\nPriya Raghavan(上午 10:11)\n麻煩你了。第一天一箱就很夠了。\n\nDominic Hale(上午 10:15)\n我再去催貨運業者。如果那些螢幕中午還沒到,我們就得考慮用租的了。\n\nMarta Oyelaran(上午 10:19)\n希望不至於走到那一步。待會見。"
+    ]
+  },
+  {
+    "id": "p7-b4-3",
+    "format": "single",
+    "passages": [
+      {
+        "type": "notice",
+        "label": "",
+        "content": "NOTICE TO ALL TENANTS\nKingsway Business Center — Elevator Modernization\nPosted: 5 June\n\nBeginning Monday, 22 June, the building's three passenger elevators will be modernized one at a time. The work has been scheduled in response to the tenant survey conducted last fall, in which waiting times were the most frequently raised concern.\n\nEach elevator will be out of service for approximately four weeks. Car 1 will be taken out of service first, followed by Car 2 in late July and Car 3 in late August. The two remaining cars will operate normally throughout, although tenants on the upper floors should expect longer waits between 8:30 and 9:30 A.M.\n\nThe service elevator at the rear of the lobby will be available to all tenants for the duration of the project. Please note that it does not stop on the third floor. Tenants expecting large deliveries are asked to reserve the service elevator through the management office at least two business days in advance.\n\nNoise from drilling will be limited to weekdays between 9:00 A.M. and 4:00 P.M. No work will be carried out on weekends.\n\nDetailed floor-by-floor schedules will be posted in the lobby and sent by e-mail at the start of each phase. Questions may be directed to Owen Brackley, Building Manager, at extension 4120 or obrackley@kingswaycenter.com.\n\nWe thank you for your cooperation."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the purpose of the notice?",
+        "options": [
+          "To describe work that will affect a building's facilities",
+          "To announce an increase in monthly rent",
+          "To invite tenants to complete a survey",
+          "To introduce a newly appointed building manager"
+        ],
+        "answer": 0,
+        "explanation": "定位:第一段第一句「the building's three passenger elevators will be modernized one at a time」,全文說明施工期程與對租戶的影響。(B)錯:通知完全沒有提到租金或任何費用。(C)錯:第一段的問卷是去年秋天已完成的,不是邀請填寫。(D)錯:Brackley 只是文末列出的聯絡窗口,並未被介紹為新任人員。"
+      },
+      {
+        "q": "According to the notice, why was the project scheduled?",
+        "options": [
+          "A city inspection required it",
+          "A new tenant requested it",
+          "Tenants had complained about delays",
+          "All of the elevators had stopped working"
+        ],
+        "answer": 2,
+        "explanation": "定位:第一段第二句「in response to the tenant survey conducted last fall, in which waiting times were the most frequently raised concern」,等候時間過長即租戶反映的問題。(A)錯:全文未提及市政府或任何檢查。(B)錯:沒有任何新租戶被提到。(D)錯:第二段說施工期間仍有兩台正常運轉,表示電梯目前可用,只是速度不理想。"
+      },
+      {
+        "q": "What are tenants asked to do when they expect a large delivery?",
+        "options": [
+          "Notify the tenants on the third floor",
+          "Contact the management office in advance",
+          "Avoid the hours between 8:30 and 9:30 A.M.",
+          "Use the rear entrance of the building"
+        ],
+        "answer": 1,
+        "explanation": "定位:第三段最後一句「Tenants expecting large deliveries are asked to reserve the service elevator through the management office at least two business days in advance.」(A)錯:三樓只是貨梯不停靠的樓層,與通知其他租戶無關。(C)錯:8:30 至 9:30 是提醒高樓層租戶等候較久的時段,並非送貨限制。(D)錯:文中提到的是大廳後方的貨梯,不是建築物後門。"
+      },
+      {
+        "q": "What is NOT stated about the modernization project?",
+        "options": [
+          "When drilling noise will occur",
+          "How long each elevator will be unavailable",
+          "How tenants will receive further information",
+          "How much the project will cost"
+        ],
+        "answer": 3,
+        "explanation": "定位:採刪去法。(A)見第四段「weekdays between 9:00 A.M. and 4:00 P.M.」。(B)見第二段「out of service for approximately four weeks」。(C)見第五段「posted in the lobby and sent by e-mail」。工程費用全文從未提及,故(D)為未陳述者。"
+      }
+    ],
+    "translation": [
+      "全體租戶通知\nKingsway 商務中心 — 電梯更新工程\n公告日期:6 月 5 日\n\n自 6 月 22 日(星期一)起,本大樓三部載客電梯將逐一進行更新。此項工程是依據去年秋季租戶問卷的結果安排的,問卷中被提及次數最多的問題即為等候時間。\n\n每部電梯停用時間約四週。第 1 號梯最先施工,第 2 號梯於 7 月下旬接續,第 3 號梯則於 8 月下旬進行。施工期間其餘兩部電梯照常運轉,惟高樓層租戶在上午 8:30 至 9:30 之間應預期等候時間較長。\n\n工程期間,大廳後方的貨梯開放全體租戶使用。請注意,該梯不停靠三樓。預期有大批貨物送達的租戶,請至少於兩個工作天前透過管理室預約貨梯。\n\n鑽孔噪音將限於平日上午 9:00 至下午 4:00,週末不施工。\n\n各樓層的詳細施工時程將於每階段開始時張貼於大廳並以電子郵件寄送。如有疑問,請洽大樓管理員 Owen Brackley,分機 4120,或來信 obrackley@kingswaycenter.com。\n\n感謝您的配合。"
+    ]
+  },
+  {
+    "id": "p7-b4-4",
+    "format": "double",
+    "passages": [
+      {
+        "type": "email",
+        "label": "E-mail 1",
+        "content": "To: inquiries@lumenfieldtraining.com\nFrom: h.castellanos@brightwaterfoods.com\nDate: 8 January\nSubject: Workshops for supervisory staff\n\nHello,\n\nI am the human resources manager at Brightwater Foods, a regional distributor with processing sites in Ardmore and Selby. I was given your details by a colleague who attended your negotiation workshop last year.\n\nWe are planning a development program for thirty-two newly promoted supervisors. Most of them have never managed a team before, and the areas we would most like to address are giving feedback, handling scheduling conflicts and running short daily meetings.\n\nTwo things make our situation a little awkward. First, our supervisors work rotating shifts, so we cannot release more than half of them at any one time. Second, our Selby site has no room large enough for a group of that size; the Ardmore site does.\n\nCould you tell me which of your programs would suit us, what a session would cost, and how far in advance we would need to book? We would like to begin in March if at all possible.\n\nThank you,\n\nHelena Castellanos\nHuman Resources Manager\nBrightwater Foods"
+      },
+      {
+        "type": "email",
+        "label": "E-mail 2",
+        "content": "To: h.castellanos@brightwaterfoods.com\nFrom: r.okonjo@lumenfieldtraining.com\nDate: 9 January\nSubject: RE: Workshops for supervisory staff\n\nDear Ms. Castellanos,\n\nThank you for getting in touch. Our First-Line Leadership program covers all three of the topics you listed, and it is the one we recommend for supervisors in their first year.\n\nThe program runs as two full days, normally two weeks apart. Given the shift pattern you describe, I would suggest running each of those days twice, so that no more than sixteen people are away from the floor at once. We can deliver everything at your Ardmore site, which spares you the cost of hiring a venue.\n\nOur fee is $2,400 per delivered day for groups of up to twenty participants. Running each of the two days twice therefore comes to four delivered days. Materials and workbooks are included; travel is charged separately at a flat $180 per visit.\n\nMarch is realistic, though our calendar fills quickly after the new year. If you can confirm by 25 January, I can hold the last week of March for you.\n\nI would be glad to arrange a call to go through the outline in more detail.\n\nBest regards,\n\nRachel Okonjo\nProgram Director\nLumenfield Training"
+      }
+    ],
+    "questions": [
+      {
+        "q": "Why did Ms. Castellanos write the first e-mail?",
+        "options": [
+          "To inquire about training for a group of employees",
+          "To complain about a workshop she attended",
+          "To confirm a booking made by a colleague",
+          "To request a copy of a workbook"
+        ],
+        "answer": 0,
+        "explanation": "定位:第一封信第四段「Could you tell me which of your programs would suit us, what a session would cost, and how far in advance we would need to book?」,三個問題都指向課程洽詢。(B)錯:參加談判課程的是她的同事,而且信中並無抱怨。(C)錯:同事只是介紹管道,沒有任何既有預約。(D)錯:教材是第二封信提到的內容,她並未索取。"
+      },
+      {
+        "q": "What does Ms. Castellanos indicate about the supervisors?",
+        "options": [
+          "They all work at the same site",
+          "They have asked for a pay increase",
+          "Most have no previous management experience",
+          "They attended a negotiation workshop last year"
+        ],
+        "answer": 2,
+        "explanation": "定位:第一封信第二段「Most of them have never managed a team before」。(A)錯:公司有 Ardmore 與 Selby 兩個廠區,且輪班安排顯示人員分散。(B)錯:全文未提及薪資。(D)錯:去年參加談判課程的是推薦這家顧問公司的那位同事,不是這批主管。"
+      },
+      {
+        "q": "Why does Ms. Okonjo suggest running each day of the program twice?",
+        "options": [
+          "Because the material cannot be covered in a single day",
+          "Because two trainers are required for large groups",
+          "Because her March calendar is nearly full",
+          "Because only half of the supervisors can be away at one time"
+        ],
+        "answer": 3,
+        "explanation": "定位:需整合兩封信。第一封信第三段「our supervisors work rotating shifts, so we cannot release more than half of them at any one time」,第二封信第二段呼應「so that no more than sixteen people are away from the floor at once」(32 人的一半)。(A)錯:課程本來就設計成兩整天,重複開班是為了人數而非內容量。(B)錯:全文沒有提到講師人數。(C)錯:行事曆將滿是催促儘早確認的理由,與重複開班無關。"
+      },
+      {
+        "q": "Why will the sessions be held at the Ardmore site?",
+        "options": [
+          "It is closer to Lumenfield Training's offices",
+          "It has a room large enough for the group",
+          "It has recently been renovated",
+          "Rooms there can be hired at a lower price"
+        ],
+        "answer": 1,
+        "explanation": "定位:需整合兩封信。第一封信第三段「our Selby site has no room large enough for a group of that size; the Ardmore site does」,第二封信第二段則據此表示「We can deliver everything at your Ardmore site」。(A)錯:兩封信都沒有提到顧問公司的所在位置。(C)錯:全文未提及任何整修。(D)錯:第二封信說在自家廠區上課可以省下租場地的費用,而非場地租金較便宜。"
+      },
+      {
+        "q": "According to the second e-mail, what must Brightwater Foods do to secure dates in March?",
+        "options": [
+          "Confirm the booking by 25 January",
+          "Pay a deposit of $180",
+          "Provide a list of all participants",
+          "Sign a two-year agreement"
+        ],
+        "answer": 0,
+        "explanation": "定位:第二封信第四段「If you can confirm by 25 January, I can hold the last week of March for you.」(B)錯:180 美元是每趟差旅的固定費用,不是訂金。(C)錯:名單從未被要求。(D)錯:信中沒有任何長期合約的條件。"
+      }
+    ],
+    "translation": [
+      "收件者:inquiries@lumenfieldtraining.com\n寄件者:h.castellanos@brightwaterfoods.com\n日期:1 月 8 日\n主旨:主管階層的培訓課程\n\n您好:\n\n我是 Brightwater Foods 的人力資源經理,本公司是區域型食品經銷商,在 Ardmore 與 Selby 設有加工廠。是一位去年參加過貴公司談判課程的同事把您的聯絡方式給我的。\n\n我們正在為三十二位新升任的主管規劃一套培訓計畫。他們大多從未帶過團隊,我們最希望處理的面向是給予回饋、處理班表衝突,以及主持簡短的每日會議。\n\n有兩件事讓我們的情況有點棘手。第一,我們的主管採輪班制,因此任何時候都不能同時抽離超過一半的人。第二,Selby 廠沒有容納得下這種規模團體的場地,Ardmore 廠則有。\n\n能否請您告知哪一項課程適合我們、單場費用多少,以及需要提前多久預約?若情況允許,我們希望三月開始。\n\n謝謝您。\n\nHelena Castellanos\n人力資源經理\nBrightwater Foods",
+      "收件者:h.castellanos@brightwaterfoods.com\n寄件者:r.okonjo@lumenfieldtraining.com\n日期:1 月 9 日\n主旨:回覆:主管階層的培訓課程\n\n親愛的 Castellanos 女士:\n\n感謝您的來信。我們的「基層領導」課程涵蓋您列出的三個主題,也是我們最推薦給任職第一年主管的課程。\n\n這套課程為兩個整天,通常相隔兩週。考量您所描述的輪班型態,我建議每一天各開兩梯次,如此同一時間離開現場的人不會超過十六位。所有課程都可以在貴公司 Ardmore 廠進行,替您省下租借場地的費用。\n\n我們的收費為每個授課日 2,400 美元,適用於二十人以內的班級。兩天各開兩梯次,合計為四個授課日。教材與學員手冊已包含在內;差旅費另計,每趟固定 180 美元。\n\n三月是可行的,不過我們的行事曆在年後很快就會排滿。若您能於 1 月 25 日前確認,我可以為您保留三月最後一週。\n\n我很樂意安排一次通話,詳細說明課程大綱。\n\n敬上\n\nRachel Okonjo\n課程總監\nLumenfield Training"
+    ]
+  },
+  {
+    "id": "p7-b4-5",
+    "format": "double",
+    "passages": [
+      {
+        "type": "advertisement",
+        "label": "Advertisement",
+        "content": "THORNBURY WORKWEAR\nDurable uniforms for cafés, hotels and restaurants\n\nOur garments are built for long shifts and frequent washing. All of our garments are stocked in sizes XS through 3XL.\n\nClassic apron (item A-12) — $18 each\nChef's jacket, long sleeve (item C-30) — $46 each\nService shirt, unisex (item S-07) — $29 each\nNon-slip work shoes (item F-55) — $72 per pair\n\nVOLUME DISCOUNT\nOrders of 25 items or more receive 10% off the merchandise total.\n\nLOGO PRINTING\n$6 per garment, minimum order of ten garments. A one-time set-up fee of $50 applies to each new logo.\n\nDELIVERY\nStandard delivery within five business days. Free on merchandise totals over $600; otherwise $35.\n\nSPRING PROMOTION\nQuote code SPRING14 before 30 April and we will waive the printing set-up fee.\n\nThornbury Workwear\n41 Halloway Road, Denton\nTel: 555-0148 | orders@thornburyworkwear.com"
+      },
+      {
+        "type": "order form",
+        "label": "Order Form",
+        "content": "THORNBURY WORKWEAR — ORDER FORM\n\nCustomer: Ridgemont Coffee House\nContact: Julian Mbeki, Operations Manager\nAddress: 208 Pinecrest Way, Denton\nDate of order: 12 April\nPromotion code: SPRING14\n\nItem / Code / Quantity / Unit price / Line total\nClassic apron / A-12 / 14 / $18 / $252\nService shirt, unisex / S-07 / 12 / $29 / $348\nNon-slip work shoes / F-55 / 4 / $72 / $288\n\nMerchandise subtotal: $888.00\nVolume discount (10%): -$88.80\nLogo printing, 12 garments at $6: $72.00\nPrinting set-up fee: waived\nDelivery: free\nTOTAL DUE: $871.20\n\nCustomer notes: Please print our logo on the service shirts only — the aprons should be left plain. We would like delivery before 24 April, as our second location opens that weekend."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is indicated about delivery in the advertisement?",
+        "options": [
+          "It takes at least ten business days",
+          "It is provided at no charge on larger orders",
+          "It is available only within Denton",
+          "It costs $50 regardless of the order size"
+        ],
+        "answer": 1,
+        "explanation": "定位:廣告 DELIVERY 欄「Free on merchandise totals over $600; otherwise $35.」商品金額超過 600 美元即免運。(A)錯:廣告寫的是五個工作天內送達。(C)錯:廣告未對配送區域設限,Denton 只是廠商地址。(D)錯:50 美元是商標印製的一次性製版費,不是運費;運費為 35 美元。"
+      },
+      {
+        "q": "Why did Ridgemont Coffee House receive a discount on the merchandise total?",
+        "options": [
+          "Because it is a returning customer",
+          "Because it ordered items in three different categories",
+          "Because it ordered more than the minimum number of items",
+          "Because it paid before the invoice was due"
+        ],
+        "answer": 2,
+        "explanation": "定位:需整合兩份文件。廣告 VOLUME DISCOUNT 欄規定「Orders of 25 items or more receive 10% off」,訂購單上 14 + 12 + 4 = 30 件,達到門檻,故有 10% 折扣。(A)錯:兩份文件都沒有提到過去的交易紀錄。(B)錯:折扣依件數計算,與品項種類無關。(D)錯:訂購單上沒有任何付款日期或條件。"
+      },
+      {
+        "q": "What benefit did the promotion code provide to the customer?",
+        "options": [
+          "A reduction in the price of each pair of shoes",
+          "Free logo printing on every garment",
+          "An additional ten percent off the total",
+          "The removal of a one-time charge"
+        ],
+        "answer": 3,
+        "explanation": "定位:需整合兩份文件。廣告 SPRING PROMOTION 欄說明報上 SPRING14 可免除商標印製的 set-up fee,而 LOGO PRINTING 欄註明該費用為一次性的 50 美元;訂購單上「Printing set-up fee: waived」正是這項優惠。(A)錯:鞋子仍以每雙 72 美元計價。(B)錯:訂購單仍支付 12 件、每件 6 美元的印製費 72 美元。(C)錯:10% 是件數達標的數量折扣,與促銷代碼無關。"
+      },
+      {
+        "q": "What information is NOT included on the order form?",
+        "options": [
+          "A method of payment",
+          "The customer's street address",
+          "The quantity of each item ordered",
+          "The date the order was placed"
+        ],
+        "answer": 0,
+        "explanation": "定位:採刪去法。(B)見「Address: 208 Pinecrest Way, Denton」。(C)見品項表的 Quantity 欄。(D)見「Date of order: 12 April」。付款方式在訂購單上完全沒有出現,故(A)為未包含者。"
+      },
+      {
+        "q": "What does Mr. Mbeki indicate about his business?",
+        "options": [
+          "It has changed its supplier of work shoes",
+          "It will open a new branch later in the month",
+          "It employs fewer than ten people",
+          "It has moved its offices to Halloway Road"
+        ],
+        "answer": 1,
+        "explanation": "定位:訂購單最後的 Customer notes「We would like delivery before 24 April, as our second location opens that weekend.」第二家分店即將開幕。(A)錯:文件未提及任何前一家供應商。(C)錯:訂購件數(含 12 件襯衫)反而暗示員工不只十人,且商標印製最低訂量為十件。(D)錯:Halloway Road 是 Thornbury Workwear 的地址,顧客地址為 Pinecrest Way。"
+      }
+    ],
+    "translation": [
+      "THORNBURY 工作服\n專為咖啡館、旅館與餐廳打造的耐用制服\n\n我們的服飾專為長工時與頻繁清洗而設計,我們所有的服飾皆備有 XS 到 3XL 尺碼。\n\n經典圍裙(品號 A-12)— 每件 18 美元\n長袖廚師服(品號 C-30)— 每件 46 美元\n中性服務生襯衫(品號 S-07)— 每件 29 美元\n防滑工作鞋(品號 F-55)— 每雙 72 美元\n\n數量折扣\n訂購 25 件以上,商品總額享 9 折。\n\n商標印製\n每件 6 美元,最低訂量十件。每個新商標另收一次性製版費 50 美元。\n\n配送\n標準配送五個工作天內送達。商品總額超過 600 美元免運費,未達則收取 35 美元。\n\n春季優惠\n4 月 30 日前報上代碼 SPRING14,即可免除印製製版費。\n\nThornbury 工作服\nDenton 市 Halloway 路 41 號\n電話:555-0148 | orders@thornburyworkwear.com",
+      "THORNBURY 工作服 — 訂購單\n\n客戶:Ridgemont 咖啡館\n聯絡人:Julian Mbeki,營運經理\n地址:Denton 市 Pinecrest 路 208 號\n訂購日期:4 月 12 日\n優惠代碼:SPRING14\n\n品項 / 品號 / 數量 / 單價 / 小計\n經典圍裙 / A-12 / 14 / 18 美元 / 252 美元\n中性服務生襯衫 / S-07 / 12 / 29 美元 / 348 美元\n防滑工作鞋 / F-55 / 4 / 72 美元 / 288 美元\n\n商品小計:888.00 美元\n數量折扣(10%):-88.80 美元\n商標印製,12 件每件 6 美元:72.00 美元\n印製製版費:免收\n運費:免費\n應付總額:871.20 美元\n\n客戶備註:請只在服務生襯衫上印上我們的商標,圍裙維持素面。希望能在 4 月 24 日前送達,因為我們的第二家門市將於該週末開幕。"
+    ]
+  }
+]

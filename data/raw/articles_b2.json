@@ -1,0 +1,457 @@
+[
+ {
+  "id": "art-2a",
+  "title": "Turning Delays into Loyalty",
+  "titleZh": "把延誤變成忠誠度",
+  "category": "旅遊",
+  "level": "中高級 (TOEIC 650-800)",
+  "readTime": 4,
+  "illustrationIdea": "A crowded airport gate at night where a smiling agent holding a tablet hands meal vouchers to waiting passengers under a departure board full of delayed flights.",
+  "paragraphs": [
+   {
+    "en": "When Maribel Ortega became operations director at Coastal Wing Airways, a regional carrier serving twelve small airports, she inherited a problem that no advertising campaign could hide. On-time performance had fallen to sixty-one percent, satisfaction scores were the worst in the region, and requests for a [[refund]] were arriving faster than the finance team could process them. Two travel agencies had already stopped selling the airline's tickets.",
+    "zh": "當瑪莉貝爾．奧特嘉接任海岸之翼航空的營運總監時，這家服務十二座小型機場的區域型航空公司留給她一個再多廣告也遮不住的問題。準點率已跌到百分之六十一，滿意度分數是全區最低，退款申請湧進來的速度比財務部門處理的速度還快。已經有兩家旅行社停止販售該公司的機票。"
+   },
+   {
+    "en": "Her first idea was to eliminate the delays themselves, but a [[quarterly]] review of the airline's delay reports told her something uncomfortable. Only a small share of [[disruptions]] could be traced to aircraft [[maintenance]]; most came from weather and air traffic congestion, factors entirely beyond her control. Rather than promise on-time departures she could not deliver, Ortega decided to change what happened during the wait. \"We cannot always control the schedule,\" she told her staff, \"but we can control the experience.\"",
+    "zh": "她最初的想法是直接消滅延誤，但一份季度誤點報告的檢討告訴她一個不太舒服的事實。只有一小部分的中斷可以歸因於機務維修，多數來自天候與航管壅塞，完全不是她能左右的因素。與其承諾自己做不到的準點，奧特嘉決定改變等待期間發生的事。她告訴員工：「我們不見得能控制班表，但我們能控制體驗。」"
+   },
+   {
+    "en": "The program she [[implemented]] looked simple, but it was carefully designed. Gate agents received tablets displaying each traveler's complete [[itinerary]], allowing them to rebook connecting flights before passengers even reached the counter. Anyone delayed more than ninety minutes automatically received a meal [[voucher]], with no complaint form required. Members of the frequent flyer club were notified by text message [[in advance]] whenever a departure looked uncertain.",
+    "zh": "她所推行的方案看起來簡單，其實經過仔細設計。登機門人員獲配平板電腦，上面顯示每位旅客的完整行程，讓他們在乘客走到櫃檯前就先改好轉機班次。延誤超過九十分鐘的旅客一律自動拿到餐飲兌換券，不必填任何申訴表。只要某班機的起飛時間看來不確定，常客俱樂部的會員就會事先收到簡訊通知。"
+   },
+   {
+    "en": "Convincing the executive board proved harder than designing the plan. The vouchers alone were [[estimated]] to cost two million dollars a year, and several directors insisted the money belonged in marketing. Ortega [[negotiated]] a compromise: a six-month trial at three airports, measured against a control group. If repeat bookings did not rise, she agreed to [[terminate]] the program without further debate.",
+    "zh": "說服董事會比設計方案更難。光是兌換券一年就估計要花掉兩百萬美元，好幾位董事堅持這筆錢應該用在行銷上。奧特嘉談成一個折衷方案：先在三座機場試辦六個月，並與對照組比較成效。如果回頭訂位沒有增加，她同意直接終止這個方案，不再爭辯。"
+   },
+   {
+    "en": "The outcome surprised everyone. Delays did not decrease at all, yet written complaints fell by forty percent, and passengers at the trial airports were nearly twice as likely to book again within six months. One woman stuck overnight in Redmont wrote that a gate agent had reserved her a hotel room before she thought to ask. [[Revenue]] from returning customers comfortably exceeded the cost of the vouchers.",
+    "zh": "結果讓所有人意外。延誤一點也沒有減少，書面申訴卻下降了四成，而試辦機場的旅客在六個月內再次訂位的機率幾乎是原本的兩倍。一位在雷德蒙特滯留過夜的女士寫信表示，她還沒開口，登機門人員就已經替她訂好旅館房間。回流客帶來的營收，輕鬆超過了兌換券的成本。"
+   },
+   {
+    "en": "Legal review delayed the nationwide launch for two months, because the airline had to [[comply]] with federal rules on passenger [[compensation]]. By the following spring, however, Coastal Wing had [[expanded]] the policy to every route and published a written service [[guarantee]] on its website.",
+    "zh": "法務審查讓全國推行延後了兩個月，因為航空公司必須遵守聯邦對旅客賠償的相關規定。不過到了隔年春天，海岸之翼已經把這項政策擴大到所有航線，並在官網上公布了書面的服務保證。"
+   },
+   {
+    "en": "Competitors dismissed the idea at first as expensive charity; two have since [[adopted]] similar measures. Analysts now point to Coastal Wing as evidence that an airline's [[reputation]] depends less on a perfect record than on how it behaves when something goes wrong.",
+    "zh": "同業起初把這個做法貶為昂貴的慈善，後來卻有兩家採用了類似措施。分析師現在把海岸之翼當成一個證據：航空公司的名聲，靠的不是完美的紀錄，而是出事時的處理方式。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "refund",
+    "base": "refund",
+    "pos": "n.",
+    "hint": "money paid back to a buyer when a purchase or service is unsatisfactory",
+    "zh": "退款"
+   },
+   {
+    "word": "quarterly",
+    "base": "quarterly",
+    "pos": "adj.",
+    "hint": "happening once every three months",
+    "zh": "每季的"
+   },
+   {
+    "word": "disruptions",
+    "base": "disruption",
+    "pos": "n.",
+    "hint": "events that interrupt the normal course of an activity",
+    "zh": "中斷;擾亂"
+   },
+   {
+    "word": "maintenance",
+    "base": "maintenance",
+    "pos": "n.",
+    "hint": "the work of keeping machines or buildings in good working condition",
+    "zh": "維修;保養"
+   },
+   {
+    "word": "implemented",
+    "base": "implement",
+    "pos": "v.",
+    "hint": "put a plan or system into action",
+    "zh": "實施;執行"
+   },
+   {
+    "word": "itinerary",
+    "base": "itinerary",
+    "pos": "n.",
+    "hint": "a detailed plan of a journey, listing times and places",
+    "zh": "行程表"
+   },
+   {
+    "word": "voucher",
+    "base": "voucher",
+    "pos": "n.",
+    "hint": "a printed slip that can be exchanged for goods or a service",
+    "zh": "兌換券;抵用券"
+   },
+   {
+    "word": "in advance",
+    "base": "in advance",
+    "pos": "phr.",
+    "hint": "before something happens; ahead of time",
+    "zh": "事先;預先"
+   },
+   {
+    "word": "estimated",
+    "base": "estimate",
+    "pos": "v.",
+    "hint": "calculated approximately, without exact figures",
+    "zh": "估計"
+   },
+   {
+    "word": "negotiated",
+    "base": "negotiate",
+    "pos": "v.",
+    "hint": "discussed something formally in order to reach an agreement",
+    "zh": "協商;談判"
+   },
+   {
+    "word": "terminate",
+    "base": "terminate",
+    "pos": "v.",
+    "hint": "to bring something to an end",
+    "zh": "終止;結束"
+   },
+   {
+    "word": "Revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the money a business earns from its sales or services",
+    "zh": "營收;收益"
+   },
+   {
+    "word": "comply",
+    "base": "comply",
+    "pos": "v.",
+    "hint": "to act in accordance with a rule, law or request",
+    "zh": "遵守;順從"
+   },
+   {
+    "word": "compensation",
+    "base": "compensation",
+    "pos": "n.",
+    "hint": "payment given to someone for loss, injury or inconvenience",
+    "zh": "賠償;補償"
+   },
+   {
+    "word": "expanded",
+    "base": "expand",
+    "pos": "v.",
+    "hint": "made something larger or applied it to a wider area",
+    "zh": "擴大;擴展"
+   },
+   {
+    "word": "guarantee",
+    "base": "guarantee",
+    "pos": "n.",
+    "hint": "a formal promise about the quality of a product or service",
+    "zh": "保證"
+   },
+   {
+    "word": "adopted",
+    "base": "adopt",
+    "pos": "v.",
+    "hint": "began to use a method or idea created by someone else",
+    "zh": "採用;採納"
+   },
+   {
+    "word": "reputation",
+    "base": "reputation",
+    "pos": "n.",
+    "hint": "the general opinion that people hold about a person or an organization",
+    "zh": "名聲;聲譽"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main idea of the article?",
+    "options": [
+     "An airline improved its punctuality by rebuilding its maintenance department.",
+     "An airline earned customer loyalty by changing how it treats passengers during delays.",
+     "An airline cut costs by ending its relationship with travel agencies.",
+     "An airline lost market share after refusing to pay compensation."
+    ],
+    "answer": 1,
+    "explanation": "定位:全篇。第二段奧特嘉決定「改變等待期間發生的事」，第五段延誤沒有減少但回頭訂位上升，最後一段分析師的結論也指向出事後的處理方式決定忠誠度，故選B。選項A錯在第五段明說延誤「一點也沒有減少」;C與第一段相反(是旅行社停售機票，不是航空公司主動終止合作，也不是為了省錢);D錯在第六段寫的是航空公司遵守賠償規定，並未拒付。"
+   },
+   {
+    "q": "According to the article, what did passengers delayed more than ninety minutes receive automatically?",
+    "options": [
+     "A full refund of the ticket price",
+     "A free hotel room close to the airport",
+     "A voucher for a meal",
+     "An upgrade on their next flight"
+    ],
+    "answer": 2,
+    "explanation": "定位:第三段「Anyone delayed more than ninety minutes automatically received a meal voucher」。旅館房間出現在第五段，但那是個別人員的臨機處理，不是自動提供的;退款與升等文中未提及。"
+   },
+   {
+    "q": "What can be inferred about Ortega's approach to the delay problem?",
+    "options": [
+     "She believed most delays could be removed with better scheduling software.",
+     "She thought written complaints were an unreliable measure of service quality.",
+     "She expected the board to approve her plan without discussion.",
+     "She accepted that some causes of delay were outside the company's control."
+    ],
+    "answer": 3,
+    "explanation": "定位:第二段「most came from weather and air traffic congestion, factors entirely beyond her control」，加上她「與其承諾做不到的準點」的選擇，可推論她接受部分延誤成因無法消除，故選D。選項A與同段內容相反，且文中未提排班軟體;B文中沒有依據，第五段反而把申訴件數當成主要成效指標;C與第四段「說服董事會比設計方案更難」矛盾。"
+   },
+   {
+    "q": "In the fourth paragraph, the phrase \"negotiated a compromise\" is closest in meaning to",
+    "options": [
+     "reached an agreement in which each side gave up something",
+     "cancelled a contract that had become too expensive",
+     "delayed a decision until the following year",
+     "persuaded the board to pay for the whole plan"
+    ],
+    "answer": 0,
+    "explanation": "定位:第四段。董事會想把錢用在行銷、奧特嘉想推行方案，最後變成「只試辦六個月、只在三座機場，失敗就終止」，雙方各退一步，故選A。選項B錯在被終止的是方案本身、而且是「試辦失敗才終止」，文中沒有取消任何合約;C錯在她是立刻開始試辦，不是把決定往後拖;D與「several directors insisted the money belonged in marketing」不符，董事會並未同意全額買單。"
+   },
+   {
+    "q": "Which of the following is NOT mentioned as part of the new program?",
+    "options": [
+     "Text alerts sent to frequent flyers before uncertain departures",
+     "Tablets that show gate agents a traveler's full itinerary",
+     "Cash payments transferred directly into passengers' bank accounts",
+     "Automatic meal vouchers for long delays"
+    ],
+    "answer": 2,
+    "explanation": "定位:第三段列出三項措施(平板顯示行程、自動餐券、事先簡訊通知)。現金直接匯入帳戶全文未出現;第六段只提到必須遵守聯邦的旅客賠償規定，並未說明賠償形式。"
+   }
+  ]
+ },
+ {
+  "id": "art-2b",
+  "title": "Midnight at the Museum",
+  "titleZh": "美術館的午夜時光",
+  "category": "行銷",
+  "level": "中高級 (TOEIC 650-800)",
+  "readTime": 4,
+  "illustrationIdea": "A brightly lit art gallery late at night, filled with young visitors holding coffee cups while a jazz band plays beside a sculpture, and a queue stretching out the glass doors into the dark street.",
+  "paragraphs": [
+   {
+    "en": "The Halvorsen Museum of Fine Art had an unusual problem: nearly everyone in the city admired it, and hardly anyone visited it. Weekday [[attendance]] had been [[declining]] for six consecutive years, and the average visitor was fifty-eight years old. When Nadia Fournier was hired as marketing manager, the director gave her one instruction and very little else — attract a younger audience without lowering the ticket price.",
+    "zh": "哈佛森美術館有個罕見的問題:全城幾乎人人都推崇它，卻幾乎沒有人去。平日參觀人數已經連續六年下滑，參觀者的平均年齡是五十八歲。娜迪雅．傅尼耶受聘為行銷經理時，館長只給了她一項指示，其他什麼也沒給——在不調降票價的前提下，把年輕觀眾拉進來。"
+   },
+   {
+    "en": "Fournier began by listening. A short online [[survey]] of two thousand residents under thirty-five produced [[feedback]] she had not [[anticipated]]. The barrier was neither the price nor a lack of interest in art; it was the clock. Most respondents finished work after six, by which time the galleries had closed, and they reserved their weekends for family and rest.",
+    "zh": "傅尼耶從傾聽開始。一份針對兩千名三十五歲以下居民的線上問卷，得到的回饋出乎她的預料。障礙既不是票價，也不是對藝術沒興趣，而是時間。多數受訪者下班已經超過六點，那時展間早就關了，而週末他們留給家人和休息。"
+   },
+   {
+    "en": "Her [[initiative]], known internally as Project After Hours, was to keep three galleries open from ten at night until two in the morning on the last Friday of each month. In March the museum [[launched]] the first event, advertised to the public as Midnight at the Museum, with a jazz band in the sculpture hall, a coffee bar, and short tours led by graduate students instead of the museum's regular guides.",
+    "zh": "她的計畫在館內代號為「下班後行動」，做法是每個月最後一個星期五，把三個展間從晚上十點開放到凌晨兩點。美術館在三月推出首場活動，對外的名稱是「美術館的午夜時光」，在雕塑展間安排爵士樂團、設了咖啡吧，導覽則交給研究生而不是館內原本的導覽人員。"
+   },
+   {
+    "en": "The obstacles were practical rather than artistic. Security staff had to be paid [[overtime]], written approval had to be obtained from the insurance company, and the [[budget]] the board approved covered barely half the projected cost. Fournier closed the gap by securing [[sponsorship]] from a local bookstore chain, and she [[recruited]] eleven volunteers from a nearby design college. A retired staff member was put [[in charge of]] training them.",
+    "zh": "障礙是務實面的，而不是藝術面的。館方必須支付保全人員加班費，必須取得保險公司的書面同意，而董事會核准的預算只勉強夠付一半的估計成本。傅尼耶靠著談成一家在地連鎖書店的贊助補上缺口，又從附近一所設計學院招募了十一名志工。訓練工作則交給一位退休的館員負責。"
+   },
+   {
+    "en": "The first Midnight at the Museum drew nine hundred and forty visitors, more than three times what the staff had predicted and close to the building's legal [[capacity]]. The queue reached the end of the block before eleven. [[Merchandise]] sales in the gift shop that single night matched a normal week's total, and the coffee bar ran out of pastries by midnight.",
+    "zh": "首場「美術館的午夜時光」吸引了九百四十名觀眾，是館方預估人數的三倍多，逼近建築物的法定容納上限。不到十一點，隊伍就排到了街廓盡頭。禮品店那一晚的商品銷售額，抵得上平常一整週的總額，咖啡吧的糕點在午夜前就賣光了。"
+   },
+   {
+    "en": "Not everything went smoothly. Two paintings had to be relocated after visitors crowded too closely, and several long-time members complained that the museum was turning into a nightclub. Fournier responded by [[promoting]] the late openings only through social media and campus newsletters, leaving the daytime program and its regular audience untouched.",
+    "zh": "並非一切都順利。有兩幅畫作因為觀眾靠得太近而必須移位，幾位資深會員也抱怨美術館快要變成夜店了。傅尼耶的回應是:夜間開放只透過社群媒體與校園電子報宣傳，白天的節目和它原有的觀眾則完全不動。"
+   },
+   {
+    "en": "[[Subsequent]] months confirmed the pattern. By December the museum had [[extended]] the event to twice a month and reported that ticket [[revenue]] from visitors under thirty-five had risen sixty-two percent. The [[venue]] had not changed at all; only the hours had. \"We did not need a new building,\" Fournier told a trade magazine. \"We needed a new clock.\"",
+    "zh": "接下來幾個月證實了這個趨勢。到了十二月，美術館已經把活動延長為每月兩次，並公布三十五歲以下觀眾的票房收入成長了百分之六十二。場地一點也沒有改變，改變的只有時間。傅尼耶對一家業界雜誌說:「我們需要的不是新館舍，而是一個新的時鐘。」"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "attendance",
+    "base": "attendance",
+    "pos": "n.",
+    "hint": "the number of people who come to an event or a place",
+    "zh": "出席人數;參觀人數"
+   },
+   {
+    "word": "declining",
+    "base": "decline",
+    "pos": "v.",
+    "hint": "becoming smaller in number or weaker over a period of time",
+    "zh": "下滑;減少"
+   },
+   {
+    "word": "survey",
+    "base": "survey",
+    "pos": "n.",
+    "hint": "a set of questions asked to many people in order to collect opinions",
+    "zh": "問卷調查"
+   },
+   {
+    "word": "feedback",
+    "base": "feedback",
+    "pos": "n.",
+    "hint": "comments telling you how good or useful something is",
+    "zh": "回饋意見"
+   },
+   {
+    "word": "anticipated",
+    "base": "anticipate",
+    "pos": "v.",
+    "hint": "expected something to happen before it actually did",
+    "zh": "預料;預期"
+   },
+   {
+    "word": "initiative",
+    "base": "initiative",
+    "pos": "n.",
+    "hint": "a new plan started in order to solve a problem or improve a situation",
+    "zh": "新計畫;方案"
+   },
+   {
+    "word": "launched",
+    "base": "launch",
+    "pos": "v.",
+    "hint": "started something new, such as a product or an event, for the first time",
+    "zh": "推出;啟動"
+   },
+   {
+    "word": "overtime",
+    "base": "overtime",
+    "pos": "n.",
+    "hint": "extra hours worked beyond the normal schedule, usually paid at a higher rate",
+    "zh": "加班;加班費"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "the amount of money available for a particular purpose",
+    "zh": "預算"
+   },
+   {
+    "word": "sponsorship",
+    "base": "sponsorship",
+    "pos": "n.",
+    "hint": "financial support given to an event in exchange for publicity",
+    "zh": "贊助"
+   },
+   {
+    "word": "recruited",
+    "base": "recruit",
+    "pos": "v.",
+    "hint": "found and brought new people into an organization",
+    "zh": "招募"
+   },
+   {
+    "word": "in charge of",
+    "base": "in charge of",
+    "pos": "phr.",
+    "hint": "responsible for controlling or managing something",
+    "zh": "負責;主管"
+   },
+   {
+    "word": "capacity",
+    "base": "capacity",
+    "pos": "n.",
+    "hint": "the largest number of people or things that a space can hold",
+    "zh": "容納量;容量"
+   },
+   {
+    "word": "Merchandise",
+    "base": "merchandise",
+    "pos": "n.",
+    "hint": "goods that are offered for sale in a shop",
+    "zh": "商品"
+   },
+   {
+    "word": "promoting",
+    "base": "promote",
+    "pos": "v.",
+    "hint": "advertising something in order to make it better known",
+    "zh": "宣傳;推廣"
+   },
+   {
+    "word": "Subsequent",
+    "base": "subsequent",
+    "pos": "adj.",
+    "hint": "coming after something else in time",
+    "zh": "後續的;接下來的"
+   },
+   {
+    "word": "extended",
+    "base": "extend",
+    "pos": "v.",
+    "hint": "made something continue for a longer time or apply more widely",
+    "zh": "延長;擴大"
+   },
+   {
+    "word": "revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the money an organization earns from its sales or services",
+    "zh": "收入;營收"
+   },
+   {
+    "word": "venue",
+    "base": "venue",
+    "pos": "n.",
+    "hint": "the place where an event or a performance is held",
+    "zh": "場地;會場"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the article mainly about?",
+    "options": [
+     "A museum that raised its ticket price to pay for a renovation.",
+     "A museum that replaced its regular guides with graduate students.",
+     "A museum that attracted younger visitors by changing its opening hours.",
+     "A museum that moved to a larger building to increase attendance."
+    ],
+    "answer": 2,
+    "explanation": "定位:全篇。第一段設定「吸引年輕觀眾但不降票價」的任務，第三段推出夜間開放，最後一段「The venue had not changed at all; only the hours had」直接點題，故選C。選項A與第一段「不調降票價」的前提相反，且全文未提整修;B過度推論，研究生只負責夜間場的簡短導覽，館內原本的導覽人員並未被取代;D與最後一段「我們需要的不是新館舍」相反。"
+   },
+   {
+    "q": "According to the survey, why did younger residents stay away from the museum?",
+    "options": [
+     "The opening hours did not fit their working schedules.",
+     "The admission fee was more than they could afford.",
+     "They found the exhibitions hard to understand.",
+     "The museum was too far from public transport."
+    ],
+    "answer": 0,
+    "explanation": "定位:第二段「The barrier was neither the price nor a lack of interest in art; it was the clock」，並說明多數人六點後才下班、展間已關。B、C正是文中明確排除的兩項;D未提及。"
+   },
+   {
+    "q": "In the fourth paragraph, the phrase \"closed the gap\" refers to",
+    "options": [
+     "settling an argument between the board and the staff",
+     "shortening the queue waiting outside the building",
+     "reducing the number of galleries opened at night",
+     "finding the extra money the project still needed"
+    ],
+    "answer": 3,
+    "explanation": "定位:第四段。前一句說董事會核准的預算「只勉強夠付一半的估計成本」，接著她取得書店連鎖的贊助，故 gap 指的是資金缺口，選D。選項A錯在董事會與館員之間並無爭執，只是預算不足;B的排隊人潮出現在第五段，時間點在活動當晚，與此無關;C與第三段「開放三個展間」不符，她並未縮減夜間開放的規模。"
+   },
+   {
+    "q": "What can be inferred from Fournier's decision to advertise the late openings only on social media and campus newsletters?",
+    "options": [
+     "The museum had no money left for printed advertisements.",
+     "She wanted to reach new visitors without upsetting long-time members.",
+     "The board had forbidden any further spending on marketing.",
+     "Older members had asked to be removed from the mailing list."
+    ],
+    "answer": 1,
+    "explanation": "定位:第六段。這個決定緊接在資深會員抱怨之後，句尾又說「白天的節目和它原有的觀眾則完全不動」，可推論用意是鎖定年輕客群又不驚動老會員，故選B。選項A與第四段不符，資金缺口已靠書店贊助補上;C、D文中都沒有提到，董事會並未禁止行銷支出，老會員也沒有要求退訂名單。"
+   },
+   {
+    "q": "Which of the following is NOT mentioned as a difficulty the project faced?",
+    "options": [
+     "A shortage of parking spaces for late-night visitors",
+     "Extra payments owed to security staff",
+     "Complaints from some existing members",
+     "A budget that covered only part of the cost"
+    ],
+    "answer": 0,
+    "explanation": "定位:第四段(加班費、保險同意、預算不足)與第六段(畫作移位、資深會員抱怨)。停車位不足全文從未提及，故選A。"
+   }
+  ]
+ }
+]

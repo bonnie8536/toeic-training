@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A pop-up bookstore with a queue">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="238" width="800" height="62" fill="#dde7ee"/>
+  <!-- 貨櫃書店 -->
+  <rect x="240" y="90" width="320" height="148" rx="8" fill="#0b72c4"/>
+  <rect x="240" y="90" width="320" height="16" fill="#095d9f"/>
+  <rect x="270" y="124" width="120" height="86" rx="6" fill="#9fd0f5"/>
+  <rect x="420" y="124" width="70" height="114" rx="4" fill="#095d9f"/>
+  <rect x="430" y="134" width="50" height="70" rx="4" fill="#ffd964"/>
+  <!-- 窗內書 -->
+  <rect x="282" y="176" width="16" height="30" fill="#e8890c"/>
+  <rect x="302" y="170" width="16" height="36" fill="#fff"/>
+  <rect x="322" y="180" width="16" height="26" fill="#3a8a4d"/>
+  <rect x="342" y="172" width="16" height="34" fill="#c94040"/>
+  <!-- 旗幟 -->
+  <path d="M560 90 l0 -34 l46 12 l-46 12" fill="#e8890c"/>
+  <!-- 排隊人潮 -->
+  <g>
+    <circle cx="620" cy="180" r="14" fill="#fff" stroke="#404040" stroke-width="3.5"/>
+    <path d="M606 218 q14 -18 28 0 l-3 20 h-22 z" fill="#3a8a4d"/>
+    <circle cx="672" cy="184" r="14" fill="#fff" stroke="#404040" stroke-width="3.5"/>
+    <path d="M658 222 q14 -18 28 0 l-3 16 h-22 z" fill="#e8890c"/>
+    <circle cx="724" cy="180" r="14" fill="#fff" stroke="#404040" stroke-width="3.5"/>
+    <path d="M710 218 q14 -18 28 0 l-3 20 h-22 z" fill="#404040"/>
+  </g>
+  <!-- 倒數牌 -->
+  <rect x="130" y="150" width="84 " height="60" rx="8" fill="#fff" stroke="#404040" stroke-width="3.5"/>
+  <rect x="142" y="162" width="60" height="12" rx="6" fill="#c94040"/>
+  <rect x="142" y="184" width="42" height="9" rx="4" fill="#9db8cc"/>
+  <line x1="150" y1="210" x2="150" y2="240" stroke="#404040" stroke-width="5"/>
+  <line x1="196" y1="210" x2="196" y2="240" stroke="#404040" stroke-width="5"/>
+</svg>

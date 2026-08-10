@@ -1,0 +1,252 @@
+[
+  {
+    "id": "p5-b2-01",
+    "difficulty": "基礎",
+    "category": "介系詞",
+    "question": "All visitors to Halbrook Manufacturing must sign in ------- the front desk before entering the production area.",
+    "options": ["to", "into", "at", "on"],
+    "answer": 2,
+    "translation": "所有到訪 Halbrook 製造公司的訪客,進入生產區之前都必須在服務櫃檯登記。",
+    "explanation": "考點:表示地點的介系詞。sign in 指在某個定點辦理登記,搭配表示「在某一點」的 at,故 (C) at 正確。(A) to 表方向或移動的終點,不能用來說明登記發生的地點。(B) into 強調進入內部,與登記動作的語意不合。(D) on 表接觸物體表面,而 front desk 在此是登記地點,不是平面。"
+  },
+  {
+    "id": "p5-b2-02",
+    "difficulty": "基礎",
+    "category": "介系詞",
+    "question": "Delridge Consulting was founded ------- 1998 by two former structural engineers.",
+    "options": ["in", "on", "at", "since"],
+    "answer": 0,
+    "translation": "Delridge 顧問公司由兩位前結構工程師於 1998 年創立。",
+    "explanation": "考點:時間介系詞與年份的搭配。年份前面用 in,故 (A) in 正確。(B) on 用於特定日期或星期,如 on May 3。(C) at 用於鐘點或時刻,如 at 9:00。(D) since 表「自…以來」,必須搭配完成式,與過去式 was founded 不能並用。"
+  },
+  {
+    "id": "p5-b2-03",
+    "difficulty": "中級",
+    "category": "介系詞",
+    "question": "The revised parking regulations at Kingsway Tower will remain in effect ------- further notice.",
+    "options": ["by", "until", "since", "for"],
+    "answer": 1,
+    "translation": "Kingsway 大樓修訂後的停車規定將持續生效,直到另行通知為止。",
+    "explanation": "考點:表示持續到某時間點的介系詞,以及固定用法 until further notice(在另行通知之前)。(B) until 正確,用於狀態一直延續到某個時間點。(A) by 表「最遲在某時間之前完成」,搭配的是一次性動作,與 remain in effect 這種持續狀態不合。(C) since 表起點且須搭配完成式。(D) for 後面須接一段時間長度,如 for two weeks,不能接 further notice。"
+  },
+  {
+    "id": "p5-b2-04",
+    "difficulty": "基礎",
+    "category": "介系詞",
+    "question": "Ms. Alvara has been in charge ------- the customer loyalty program since she joined Marlowe Retail.",
+    "options": ["for", "with", "to", "of"],
+    "answer": 3,
+    "translation": "Alvara 女士自從進入 Marlowe 零售公司後,就一直負責顧客忠誠方案。",
+    "explanation": "考點:固定搭配 in charge of(負責、掌管)。(D) of 正確。(A) for 不與 in charge 連用;若要表「為某事負責」,英文是 be responsible for。(B) with 不構成此片語。(C) to 表方向或對象,亦不與 in charge 搭配。"
+  },
+  {
+    "id": "p5-b2-05",
+    "difficulty": "中級",
+    "category": "介系詞",
+    "question": "Mr. Tanaka will accept the industry design award ------- behalf of the entire product team.",
+    "options": ["on", "by", "to", "for"],
+    "answer": 0,
+    "translation": "田中先生將代表整個產品團隊領取這座業界設計獎。",
+    "explanation": "考點:固定片語 on behalf of(代表某人或某單位)。(A) on 正確。(B) by 表動作的執行者或方式,不與 behalf 搭配。(C) to 表方向或對象。(D) for 雖可單獨表「為了」,但 behalf 前面的固定介系詞是 on,for behalf of 並非正確用法。"
+  },
+  {
+    "id": "p5-b2-06",
+    "difficulty": "進階",
+    "category": "介系詞",
+    "question": "------- the terms of the lease, Brightwater Café is responsible for all interior repairs.",
+    "options": ["Among", "Into", "Beside", "Under"],
+    "answer": 3,
+    "translation": "依照租約條款,Brightwater 咖啡館必須負責所有室內修繕。",
+    "explanation": "考點:表示「依照、根據」規定或條款的介系詞。under the terms of(依照…的條款)為商用固定用法,故 (D) Under 正確。(A) Among 表「在三者以上之中」,不能表依據。(B) Into 表進入某空間或狀態。(C) Beside 表「在…旁邊」,是位置關係,語意不合。"
+  },
+  {
+    "id": "p5-b2-07",
+    "difficulty": "進階",
+    "category": "介系詞",
+    "question": "A full refund will be issued ------- receipt of the returned merchandise.",
+    "options": ["along", "toward", "upon", "against"],
+    "answer": 2,
+    "translation": "退回的商品一經收到,即會全額退款。",
+    "explanation": "考點:表示「一…就…」的介系詞。upon/on 加名詞表某事發生後隨即進行,upon receipt of 是商用書信的固定說法,故 (C) upon 正確。(A) along 表沿著某條線或路徑。(B) toward 表朝向某方向或某時間點接近。(D) against 表對抗、違反或倚靠,語意皆不合。"
+  },
+  {
+    "id": "p5-b2-08",
+    "difficulty": "基礎",
+    "category": "連接詞vs介系詞",
+    "question": "------- the heavy snow, all delivery trucks left the Ridgeway warehouse on schedule.",
+    "options": ["Although", "However", "Whereas", "Despite"],
+    "answer": 3,
+    "translation": "儘管大雪,所有貨車仍依原定時間離開 Ridgeway 倉庫。",
+    "explanation": "考點:讓步語意時,介系詞與連接詞的區辨。空格後 the heavy snow 是名詞片語,必須用介系詞,故 (D) Despite 正確。(A) Although 與 (C) Whereas 都是從屬連接詞,後面必須接主詞加動詞的完整子句。(B) However 是副詞,須以分號或句號分隔前後兩個子句,不能直接帶名詞片語。"
+  },
+  {
+    "id": "p5-b2-09",
+    "difficulty": "中級",
+    "category": "連接詞vs介系詞",
+    "question": "Kestrel Logistics upgraded its tracking system ------- customers had complained about delayed delivery notifications.",
+    "options": ["because of", "due to", "because", "owing to"],
+    "answer": 2,
+    "translation": "由於顧客抱怨到貨通知延遲,Kestrel 物流升級了貨況追蹤系統。",
+    "explanation": "考點:表原因時,連接詞與介系詞片語的區辨。空格後 customers had complained... 是完整子句,必須用從屬連接詞,故 (C) because 正確。(A) because of、(B) due to、(D) owing to 三者都是介系詞片語,後面只能接名詞或動名詞,例如 because of customer complaints。"
+  },
+  {
+    "id": "p5-b2-10",
+    "difficulty": "中級",
+    "category": "連接詞vs介系詞",
+    "question": "The employee cafeteria will be closed for deep cleaning ------- the lunch hour this Friday.",
+    "options": ["while", "during", "when", "as"],
+    "answer": 1,
+    "translation": "本週五午餐時段,員工餐廳將暫停開放以進行深度清潔。",
+    "explanation": "考點:表時間時,介系詞與連接詞的區辨。空格後 the lunch hour 是名詞片語,必須用介系詞,故 (B) during 正確。(A) while、(C) when、(D) as 都是從屬連接詞,後面必須接主詞加動詞的子句,例如 while the cafeteria is being cleaned。"
+  },
+  {
+    "id": "p5-b2-11",
+    "difficulty": "中級",
+    "category": "連接詞vs介系詞",
+    "question": "------- the finance manager approves the revised budget, the design team can begin ordering materials.",
+    "options": ["Despite", "During", "Once", "Instead of"],
+    "answer": 2,
+    "translation": "財務經理一核准修訂後的預算,設計團隊就可以開始訂購材料。",
+    "explanation": "考點:連接詞與介系詞的區辨,並判斷語意關係。空格後是完整子句,且前後為「一旦…就…」的時間先後關係,故 (C) Once 正確。(A) Despite 與 (D) Instead of 是介系詞片語,後面只能接名詞。(B) During 也是介系詞,不能引導子句,且語意為同時發生,與核准後才能訂購的先後關係不符。"
+  },
+  {
+    "id": "p5-b2-12",
+    "difficulty": "進階",
+    "category": "連接詞vs介系詞",
+    "question": "The Larkspur Hotel renovation was completed on time ------- several unexpected delays in material deliveries.",
+    "options": ["even though", "nevertheless", "whereas", "in spite of"],
+    "answer": 3,
+    "translation": "儘管材料到貨數度意外延誤,Larkspur 飯店的翻修工程仍如期完工。",
+    "explanation": "考點:讓步語意加上後接名詞片語的結構判斷。several unexpected delays 是名詞片語,必須用介系詞片語,故 (D) in spite of 正確。(A) even though 是從屬連接詞,後面須接子句。(B) nevertheless 是副詞,用來連接兩個獨立子句,不能直接帶名詞片語。(C) whereas 是表前後對比的連接詞,後面同樣須接子句。"
+  },
+  {
+    "id": "p5-b2-13",
+    "difficulty": "進階",
+    "category": "連接詞vs介系詞",
+    "question": "Staff members in the claims division may work remotely ------- they notify their supervisors at least one day in advance.",
+    "options": ["as long as", "in case of", "regardless of", "on account of"],
+    "answer": 0,
+    "translation": "理賠部門的員工只要至少提前一天告知主管,即可遠端工作。",
+    "explanation": "考點:條件連接詞與介系詞片語的區辨。空格後 they notify their supervisors 是完整子句,且語意為附帶條件,故 (A) as long as 正確,意為「只要」。(B) in case of、(C) regardless of、(D) on account of 三者皆為介系詞片語,後面只能接名詞,例如 in case of emergency。"
+  },
+  {
+    "id": "p5-b2-14",
+    "difficulty": "基礎",
+    "category": "代名詞",
+    "question": "Ms. Renshaw reviewed the supplier contract ------- before forwarding it to the legal department.",
+    "options": ["herself", "her", "hers", "she"],
+    "answer": 0,
+    "translation": "Renshaw 女士親自審閱了供應商合約,之後才轉交法務部門。",
+    "explanation": "考點:反身代名詞的強調用法。句中審閱動作的執行者就是主詞 Ms. Renshaw,用反身代名詞強調「親自」,故 (A) herself 正確。(B) her 是受格或所有格,放在此處無法修飾動作。(C) hers 是所有格代名詞,必須代替某個名詞,如 hers is the blue folder。(D) she 是主格,但句中已有主詞,不能重複。"
+  },
+  {
+    "id": "p5-b2-15",
+    "difficulty": "基礎",
+    "category": "代名詞",
+    "question": "All shift leaders should submit ------- attendance records to the human resources office by Friday.",
+    "options": ["theirs", "them", "their", "themselves"],
+    "answer": 2,
+    "translation": "所有輪班主管應在週五前將出勤紀錄送交人力資源部。",
+    "explanation": "考點:所有格形容詞的用法。空格後緊接名詞 attendance records,須用所有格形容詞修飾,故 (C) their 正確。(A) theirs 是所有格代名詞,本身已代替名詞,後面不能再接名詞。(B) them 是受格,不能修飾名詞。(D) themselves 是反身代名詞,只能作受詞或加強語氣。"
+  },
+  {
+    "id": "p5-b2-16",
+    "difficulty": "中級",
+    "category": "代名詞",
+    "question": "The ergonomic chairs delivered last week are far more comfortable than ------- we ordered for the Dayton office two years ago.",
+    "options": ["them", "that", "which", "those"],
+    "answer": 3,
+    "translation": "上週送到的人體工學椅,比兩年前為 Dayton 辦公室訂購的那批舒適得多。",
+    "explanation": "考點:比較句中代替前述名詞的指示代名詞。than 之後代替的是複數名詞 chairs,且後面帶有省略關係代名詞的修飾子句,故 (D) those 正確。(A) them 是受格代名詞,不能被後面的子句修飾。(B) that 只能代替單數或不可數名詞,與複數的 chairs 不一致。(C) which 是關係代名詞,不能單獨作為 than 之後的比較對象。"
+  },
+  {
+    "id": "p5-b2-17",
+    "difficulty": "中級",
+    "category": "代名詞",
+    "question": "The department heads agreed among ------- that the submission deadline should be extended by two weeks.",
+    "options": ["them", "their", "themselves", "theirs"],
+    "answer": 2,
+    "translation": "各部門主管彼此達成共識,認為送件期限應延後兩週。",
+    "explanation": "考點:介系詞後的反身代名詞。agree among themselves 表「彼此之間取得共識」,介系詞的受詞與主詞 The department heads 是同一群人,故須用反身代名詞,(C) themselves 正確。(A) them 會指涉主詞以外的其他人,語意不符。(B) their 是所有格形容詞,後面必須接名詞。(D) theirs 是所有格代名詞,語意上無所指。"
+  },
+  {
+    "id": "p5-b2-18",
+    "difficulty": "進階",
+    "category": "代名詞",
+    "question": "Of the three catering companies that submitted bids, ------- was able to accommodate the client's schedule.",
+    "options": ["neither", "none", "no one", "nothing"],
+    "answer": 1,
+    "translation": "在三家投標的外燴公司中,沒有一家能配合客戶的時程。",
+    "explanation": "考點:數量代名詞的指涉範圍。前面提到三家公司,三者以上的全體否定用 none,且可單獨作主詞,故 (B) none 正確。(A) neither 僅用於兩者之間的否定。(C) no one 專指人,不能代替公司行號,且不與 of the three... 的限定範圍搭配。(D) nothing 泛指事物,不用於從特定集合中挑選的對象。"
+  },
+  {
+    "id": "p5-b2-19",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Ms. Nakamura will ------- the monthly sales meeting while the regional director is on leave.",
+    "options": ["commit", "consist", "conduct", "contain"],
+    "answer": 2,
+    "translation": "區域總監休假期間,將由中村女士主持每月業務會議。",
+    "explanation": "考點:動詞語意辨析。conduct a meeting 表「主持、舉行會議」,故 (C) conduct 正確。(A) commit 表犯下過錯或作出承諾,常見用法為 commit to something。(B) consist 是不及物動詞,必須寫成 consist of,不能直接接受詞。(D) contain 表內含某物,受詞應為被包含的內容,而非會議本身。"
+  },
+  {
+    "id": "p5-b2-20",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The technician was unable to ------- the source of the network outage at the Aldergate branch.",
+    "options": ["notify", "identify", "clarify", "justify"],
+    "answer": 1,
+    "translation": "技術人員無法找出 Aldergate 分公司網路中斷的原因。",
+    "explanation": "考點:動詞語意辨析。找出故障來源用 identify(辨識、查出),故 (B) identify 正確。(A) notify 的受詞應為「人」,如 notify the manager,不能接抽象的來源。(C) clarify 表釐清說明不清之處,受詞多為條款或說法。(D) justify 表為某項決定辯護、證明其正當性,語意不合。"
+  },
+  {
+    "id": "p5-b2-21",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Bellweather Insurance offers a wide ------- of coverage options for small businesses.",
+    "options": ["range", "amount", "number", "degree"],
+    "answer": 0,
+    "translation": "Bellweather 保險公司為小型企業提供多樣的保障方案。",
+    "explanation": "考點:數量名詞的固定搭配。a wide range of 表「範圍廣泛、種類多樣的」,故 (A) range 正確。(B) amount 用於不可數名詞,且慣用 a large amount of。(C) number 須寫成 a large number of 再接複數可數名詞,不搭配 wide。(D) degree 表程度高低,不用於描述選項的多樣性。"
+  },
+  {
+    "id": "p5-b2-22",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The standard warranty does not ------- damage caused by improper installation.",
+    "options": ["protect", "cover", "insure", "guarantee"],
+    "answer": 1,
+    "translation": "標準保固不涵蓋因安裝不當所造成的損壞。",
+    "explanation": "考點:動詞語意辨析。保固「涵蓋」某項損害用 cover,故 (B) cover 正確。(A) protect 的受詞應為受保護的人或物,而非損害本身,如 protect the device。(C) insure 表投保,受詞為人或財產。(D) guarantee 表保證某項結果會發生,與「涵蓋損害」的語意相反。"
+  },
+  {
+    "id": "p5-b2-23",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "After ------- review of all forty applications, the hiring committee selected four candidates for interviews.",
+    "options": ["entire", "thorough", "whole", "total"],
+    "answer": 1,
+    "translation": "在徹底審閱全部四十份申請書後,招募委員會挑出四位候選人進入面試。",
+    "explanation": "考點:形容詞語意辨析。修飾 review 表「徹底、周詳」用 thorough,after thorough review of…(在徹底審閱…之後)是商用書信常見說法,故 (B) thorough 正確。(A) entire、(C) whole 與 (D) total 都表「全部的、整體的」,強調的是數量或範圍的完整,不能用來形容審查過程的仔細程度。"
+  },
+  {
+    "id": "p5-b2-24",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Mr. Delacroix has been ------- to the position of regional operations manager, effective September 1.",
+    "options": ["admitted", "adopted", "addressed", "appointed"],
+    "answer": 3,
+    "translation": "Delacroix 先生已獲任命為區域營運經理,自九月一日起生效。",
+    "explanation": "考點:動詞語意辨析與被動語態的搭配。be appointed to a position 表「被任命擔任某職位」,故 (D) appointed 正確。(A) admitted 表准許進入或承認某事。(B) adopted 表採用做法或收養。(C) addressed 表處理問題或向某人發言,三者皆不與 to the position 構成任命的語意。"
+  },
+  {
+    "id": "p5-b2-25",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Vandermeer Supply has agreed to ------- the shipping costs on all orders exceeding 500 units.",
+    "options": ["absorb", "consume", "occupy", "deliver"],
+    "answer": 0,
+    "translation": "凡數量超過五百件的訂單,Vandermeer 供應公司都同意自行吸收運費。",
+    "explanation": "考點:動詞與 cost 的商用搭配。absorb the cost 表「由自己吸收成本、不轉嫁給客戶」,故 (A) absorb 正確。(B) consume 表消耗資源或用掉存貨,受詞是被用掉的東西,不與 cost 搭配。(C) occupy 表佔用空間或時間,受詞多為場地、座位或時段。(D) deliver 表送達貨物或交出成果,受詞是被運送的物品,而非運費本身。"
+  }
+]

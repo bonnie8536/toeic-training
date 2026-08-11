@@ -14,6 +14,7 @@
   }
 
   const SECTIONS = {
+    s: { key: 'ear_s', title: '句子跟讀', items: E.dictation, desc: '聽一句 → 換你唸 → 再一次 → 中文確認。開口才算練到。', per: 5 },
     d: { key: 'ear_d', title: '句子聽寫', items: E.dictation, desc: '聽一句,打出整句。逐字比對,拼錯的字會標紅。', per: 5 },
     mp: { key: 'ear_mp', title: '相似音辨析', items: E.pairs, desc: '句子裡出現的是哪個字?靠耳朵分辨。', per: 10 },
     n: { key: 'ear_n', title: '數字與價格', items: E.numbers, desc: 'thirteen 還是 thirty?時間、金額、分機聽清楚。', per: 10 },
@@ -55,7 +56,18 @@
     store.set(SECTIONS[sec].key, st);
   }
 
-  /* 播放器:訓練用,不限次數但顯示次數 */
+  /* 播放器:訓練用,不限次數但顯示次數;可變速 */
+  function speedSelect(audios) {
+    const sel = h('select', { class: 'cfg-select speed-sel' },
+      [['0.75', '慢速 0.75x'], ['1', '正常 1x'], ['1.25', '快速 1.25x']].map(([v, t]) => {
+        const o = h('option', { value: v }, t);
+        if (v === '1') o.selected = true;
+        return o;
+      }));
+    sel.addEventListener('change', () => audios.forEach(a => { a.playbackRate = Number(sel.value); }));
+    return sel;
+  }
+
   function makePlayer(id) {
     const audio = new Audio('audio/' + id + '.mp3');
     let plays = 0;
@@ -71,7 +83,7 @@
       },
     }, '▶ 播放');
     audio.addEventListener('error', () => { label.textContent = '找不到音檔'; btn.disabled = true; });
-    return { el: h('div', { class: 'player' }, btn, label), stop: () => audio.pause(), plays: () => plays };
+    return { el: h('div', { class: 'player' }, btn, speedSelect([audio]), label), stop: () => audio.pause(), plays: () => plays };
   }
 
   const sec = getParam('sec');
@@ -123,10 +135,72 @@
         nav.append(h('button', { class: cls.trim(), disabled: '' }, String(i + 1)));
       });
       root.append(nav);
+      if (sec === 's') { player = null; drawShadow(list[cur]); return; }
       player = makePlayer(list[cur].id);
       if (sec === 'd') drawDictation(list[cur]);
       else if (sec === 'mp') drawPair(list[cur]);
       else drawNumber(list[cur]);
+    }
+
+    /* --- 句子跟讀:英文 → 換你唸 → 英文 → 換你唸 → 中文 --- */
+    function drawShadow(q) {
+      const en = new Audio('audio/' + q.id + '.mp3');
+      const zh = new Audio('audio/dz-' + q.id.slice(2) + '.mp3');
+      player = { stop: () => { en.pause(); zh.pause(); clearTimeout(timer); } };
+      let timer = null;
+      let running = false;
+      const stage = h('div', { class: 'shadow-stage' }, '按「開始」,聽完換你唸出來');
+      const result = h('div', null);
+      const startBtn = h('button', { class: 'btn primary player-btn', type: 'button', onclick: run }, '▶ 開始');
+      const block = h('div', { class: 'q-block' },
+        h('div', { class: 'meta', style: 'margin-bottom:8px' },
+          h('span', { class: 'badge cat' }, '跟讀'),
+          h('span', { class: 'badge ' + (q.level === '初級' ? 'level-basic' : q.level === '進階' ? 'level-high' : 'level-mid') }, q.level)),
+        stage,
+        h('div', { class: 'player', style: 'justify-content:center' }, startBtn, speedSelect([en, zh])),
+        result);
+      root.append(block, nextRow(false));
+
+      function pauseLen() {
+        return Math.max(2500, (en.duration || 3) * 1000 / (en.playbackRate || 1) + 800);
+      }
+      function setStage(text, pulse) {
+        stage.textContent = text;
+        stage.classList.toggle('pulse', !!pulse);
+      }
+      function run() {
+        if (running) return;
+        running = true;
+        startBtn.disabled = true;
+        const seq = [
+          () => { setStage('仔細聽…'); en.currentTime = 0; en.play(); en.onended = step; },
+          () => { setStage('換你唸!', true); timer = setTimeout(step, pauseLen()); },
+          () => { setStage('再聽一次…'); en.currentTime = 0; en.play(); en.onended = step; },
+          () => { setStage('再唸一次!', true); timer = setTimeout(step, pauseLen()); },
+          () => { setStage('中文確認'); zh.play(); zh.onended = step; },
+          finish,
+        ];
+        let i = 0;
+        function step() { const fn = seq[i++]; if (fn) fn(); }
+        step();
+      }
+      function finish() {
+        setStage('完成!');
+        results[cur] = true;
+        save('s', q.id, true);
+        startBtn.disabled = false;
+        startBtn.textContent = '▶ 再來一次';
+        running = false;
+        if (!result.children.length) {
+          result.append(
+            h('div', { class: 'transcript-box' },
+              h('b', null, '句子'),
+              h('div', { class: 'tr-en' }, q.text),
+              h('div', { class: 'tr-zh' }, q.zh + (q.note && q.note !== '無' ? '\n難點:' + q.note : ''))),
+            nextRow(true));
+        }
+      }
+      en.addEventListener('error', () => setStage('音檔載入失敗'));
     }
 
     function nextRow(canNext) {

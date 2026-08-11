@@ -1,0 +1,170 @@
+[
+  {
+    "id": "p6-b7-1",
+    "passageType": "letter",
+    "title": "Service Agreement Renewal Notice",
+    "passage": "Dear Ms. Fowler,\n\nOur records show that your equipment maintenance agreement with Brightline Services will expire on 30 September. We hope you will {{1}} the contract for another year.\n\nCustomers who sign before 15 September will receive a ten percent discount on all repair fees. {{2}} In addition, your monthly inspection visits will continue without interruption.\n\nTo confirm, please sign the {{3}} form and return it in the envelope we have provided. Our billing office will then send you an updated invoice.\n\nIf you have any questions about the terms, please call our service desk at 555-0182. We {{4}} your business over the past three years.\n\nSincerely,\n\nDaniel Ortega\nAccount Manager",
+    "questions": [
+      {
+        "num": 1,
+        "type": "字彙",
+        "options": ["restore", "reserve", "renew", "remind"],
+        "answer": 3,
+        "explanation": "「續約」的固定搭配是 renew the contract，renew 也常用於 renew a subscription（續訂）、renew a licence（換發執照）。restore 是把東西恢復原狀，reserve 是預訂座位或房間，remind 是提醒某人，三者都無法接 the contract 表示延長合約期限。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "The discount also applies to any replacement parts we install.",
+          "Our repair shop will be closed during the holiday week.",
+          "Please attach a copy of your business license to the form.",
+          "The model you ordered is no longer in production."
+        ],
+        "answer": 1,
+        "explanation": "空格前一句在講維修費用可享九折，空格後又用 In addition 補上另一項好處，可見中間這句應該仍在說明續約優惠。選項一說折扣也適用於更換的零件，和前句的費用主題直接相連。其餘三個選項分別談公休、營業執照與停產，都跳出了續約通知的主題。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["enclose", "enclosed", "enclosing", "encloses"],
+        "answer": 2,
+        "explanation": "空格夾在冠詞 the 和名詞 form 之間，要用具形容詞功能的分詞。表格是「被隨函附上的」，屬被動概念，因此用過去分詞 enclosed，the enclosed form 是商業書信的常見說法。enclose 與 encloses 是動詞原形和第三人稱單數，不能修飾名詞；enclosing 表主動附上，語意不合。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["will appreciate", "appreciating", "appreciate", "have appreciated"],
+        "answer": 4,
+        "explanation": "句尾的 over the past three years 指從過去某時延續到現在的一段期間，必須搭配現在完成式，故選 have appreciated。will appreciate 指未來才會發生，單純現在式 appreciate 無法涵蓋這三年，appreciating 是分詞，不能單獨當句子的動詞。"
+      }
+    ],
+    "translation": "親愛的 Fowler 女士：\n\n本公司紀錄顯示，您與 Brightline Services 簽訂的設備維護合約將於 9 月 30 日到期，我們希望您能續約一年。\n\n9 月 15 日前簽約的客戶，所有維修費用可享九折優惠。此折扣也適用於我們更換的任何零件。此外，您每月的巡檢服務將不會中斷。\n\n如欲確認，請在隨函附上的表格簽名，並以我們提供的信封寄回。屆時本公司帳務部門會再寄給您一份更新後的發票。\n\n若您對合約條款有任何疑問，請撥打服務專線 555-0182。這三年來承蒙惠顧，我們深表感謝。\n\n此致\n\nDaniel Ortega\n客戶經理"
+  },
+  {
+    "id": "p6-b7-2",
+    "passageType": "advertisement",
+    "title": "Improve Your Business Writing Online",
+    "passage": "Improve Your Business Writing Online\n\nDo you spend hours writing e-mails that nobody answers? Westport Learning now offers a six-week online course {{1}} for busy office workers. The lessons are short, practical, and available at any hour of the day.\n\nEach week you watch one video lesson and complete one writing task. A trainer reviews your work and replies {{2}} two business days. {{3}}\n\nThe fee is $120 per person, and groups of five or more receive a special {{4}}. Visit www.westportlearning.com to try a free sample lesson before you decide.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["design", "designed", "to design", "designing"],
+        "answer": 2,
+        "explanation": "句子已經有主要動詞 offers，空格處只能用分詞片語來修飾前面的 course。課程是「被設計」出來的，所以用過去分詞 designed，designed for 表示專為某對象設計。design 是原形動詞，會造成一句兩個動詞；to design 表目的，語意不通；designing 表主動設計，課程本身不會去設計別人。"
+      },
+      {
+        "num": 2,
+        "type": "文法",
+        "options": ["among", "during", "until", "within"],
+        "answer": 4,
+        "explanation": "within 後面接一段長度時間，表示「在……之內」，within two business days 就是兩個工作天內。during 後面要接特定期間的名詞，如 during the meeting，不能接 two business days 這種長度；until 強調動作持續到某個時間點；among 用於三者以上之間，都不符合期限的語意。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "Printed textbooks must be returned to the front desk.",
+          "The office will move to a new address in June.",
+          "You can also join a live question-and-answer session every Friday.",
+          "Applicants should bring two forms of identification."
+        ],
+        "answer": 3,
+        "explanation": "空格前一段在說明每週的上課方式與講師回覆，空格後才轉入費用，因此這裡適合再補一項課程提供的服務。選項三提到每週五的線上問答時段，正好延續學習支援的內容，also 也呼應前面已列的項目。其他選項談紙本教科書歸還、辦公室搬遷與應徵證件，與線上課程廣告無關。"
+      },
+      {
+        "num": 4,
+        "type": "字彙",
+        "options": ["discount", "direction", "decision", "delivery"],
+        "answer": 1,
+        "explanation": "前句剛提到每人 120 美元的費用，五人以上團報自然是給「折扣」，discount 與價格主題相呼應，a special discount 也是廣告常見說法。direction 是方向或指示，decision 是決定，delivery 是遞送，都無法說明團報的好處。"
+      }
+    ],
+    "translation": "線上提升你的商務寫作力\n\n你是否花好幾個小時寫電子郵件，卻沒有人回覆？Westport Learning 現在推出一門為期六週的線上課程，專為忙碌的上班族設計。課程單元簡短、實用，而且一天當中任何時段都能上。\n\n每週你會看一支教學影片，並完成一項寫作作業。講師會批改你的作業，並在兩個工作天內回覆。你也可以參加每週五的線上問答時段。\n\n費用為每人 120 美元，五人以上團報可享特別折扣。請上 www.westportlearning.com 試看免費的試聽單元，再決定是否報名。"
+  },
+  {
+    "id": "p6-b7-3",
+    "passageType": "email",
+    "title": "Interview Invitation",
+    "passage": "To: Karen Liu <k.liu@mailnet.com>\nFrom: Marcus Webb <m.webb@holbrookgroup.com>\nDate: 14 October\nSubject: Interview Invitation\n\nDear Ms. Liu,\n\nThank you for applying for the position of marketing assistant at Holbrook Group. After reviewing your application, we would like {{1}} you for an interview at our head office on Tuesday, 21 October, at 10:00 A.M.\n\nThe interview will {{2}} about forty minutes. You will speak with two managers from the marketing team, who will ask about the projects listed on your application. {{3}}\n\nPlease reply to this message by Friday to confirm the time. If that morning is not {{4}} for you, we are happy to arrange another date.\n\nBest regards,\n\nMarcus Webb\nHuman Resources",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["to meet", "meeting", "met", "meets"],
+        "answer": 1,
+        "explanation": "would like 後面固定接不定詞 to + 原形動詞，would like to meet you 表示「我們想與您見面」。meeting 是動名詞或現在分詞，met 是過去式或過去分詞，meets 是第三人稱單數，都不能直接放在 would like 之後。"
+      },
+      {
+        "num": 2,
+        "type": "字彙",
+        "options": ["stay", "hold", "last", "remain"],
+        "answer": 3,
+        "explanation": "要表達某項活動「持續多久」用 last，last about forty minutes 是標準說法。stay 指人或物停留在某個地點，remain 指維持某種狀態，hold 是及物動詞，意思是舉行或握住，後面接時間長度都不通順。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "Your order has been shipped to the address below.",
+          "The training room is being repainted this week.",
+          "We are sorry that the position has already been filled.",
+          "Please bring a copy of your portfolio with you."
+        ],
+        "answer": 4,
+        "explanation": "空格前說明主管會詢問應徵資料上列出的專案，空格後請對方回覆確認時間，中間適合放一句面試前的準備提醒。選項四請對方攜帶作品集，正好承接前面提到的專案。選項三說職缺已補實，與整封邀請面試的信直接矛盾；出貨通知與教室粉刷則與主題無關。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["conveniently", "convenient", "convenience", "conveniences"],
+        "answer": 2,
+        "explanation": "空格前是 be 動詞 is（否定形 is not），後面要接形容詞當主詞補語，故選 convenient。conveniently 是副詞，不能當補語；convenience 與 conveniences 是名詞，若使用會變成「那個早上不是方便」這種語意錯誤的句子。"
+      }
+    ],
+    "translation": "收件者：Karen Liu <k.liu@mailnet.com>\n寄件者：Marcus Webb <m.webb@holbrookgroup.com>\n日期：10 月 14 日\n主旨：面試邀請\n\n親愛的 Liu 女士：\n\n感謝您應徵 Holbrook Group 行銷助理一職。在審閱您的應徵資料後，我們想邀請您於 10 月 21 日星期二上午 10 點到總公司面試。\n\n面試約需四十分鐘。您將與行銷團隊的兩位主管會談，他們會詢問您在應徵資料中所列的專案。請隨身攜帶一份您的作品集。\n\n請於星期五前回覆本信確認時間。若當天上午對您不方便，我們也很樂意另約時間。\n\n敬祝順心\n\nMarcus Webb\n人力資源部"
+  },
+  {
+    "id": "p6-b7-4",
+    "passageType": "instructions",
+    "title": "Registering Company Equipment",
+    "passage": "Notice to All Staff: Equipment Registration\n\nEvery laptop, tablet, and projector must be registered before it {{1}} out of the building. This rule helps the office track company property and keeps our insurance records accurate.\n\nTo register a device, log in to the staff portal and open the \"Equipment\" page. Enter the serial number, which is printed on the back of each item. {{2}} A confirmation e-mail will arrive within one hour.\n\nPlease return all borrowed equipment {{3}} Friday afternoon. Any item kept longer than two weeks requires {{4}} approval from your department head.\n\nIf you have trouble with the portal, call the facilities office at extension 245.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["takes", "taking", "take", "is taken"],
+        "answer": 4,
+        "explanation": "主詞 it 指前面的設備，設備是「被人帶出」大樓，必須用被動語態 is taken。此外 before 引導的時間副詞子句要以現在式代替未來式，所以不用 will be taken。takes 與 take 是主動語態，taking 缺少 be 動詞，都不成立。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Payment can be made by credit card or bank transfer.",
+          "Then choose the date on which you plan to return the item.",
+          "The cafeteria will offer a new lunch menu on Monday.",
+          "All visitors must wear a badge in the parking area."
+        ],
+        "answer": 2,
+        "explanation": "空格前兩句依序說明登入網站、輸入序號，空格後說確認信會寄達，中間應該是登記流程的下一個步驟。選項二用 Then 承接，要求選擇預計歸還日期，順序與語氣都吻合。付款方式、餐廳菜單與訪客識別證都不屬於設備登記的操作步驟。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["by", "until", "since", "from"],
+        "answer": 1,
+        "explanation": "表示某動作必須「在某時間點之前完成」用 by，by Friday afternoon 即星期五下午前歸還。until 強調動作一直持續到那個時間，會變成「一直歸還到星期五」；since 接過去時間點並搭配完成式；from 表示起點，皆不符合期限的語意。"
+      },
+      {
+        "num": 4,
+        "type": "字彙",
+        "options": ["available", "accurate", "additional", "automatic"],
+        "answer": 3,
+        "explanation": "借用超過兩週屬於例外情況，需要「額外的」核准，additional approval 最符合語意，也與前面的一般登記流程形成對比。available 是可取得的，accurate 是精確的，automatic 是自動的，都無法說明主管核准是多出來的要求。"
+      }
+    ],
+    "translation": "全體同仁公告：設備登記\n\n所有筆記型電腦、平板與投影機在攜出大樓前，都必須先完成登記。這項規定有助於辦公室掌握公司財產，也能讓我們的保險紀錄保持正確。\n\n登記設備時，請登入員工入口網站並開啟「設備」頁面，輸入印在每項物品背面的序號。接著選擇你預計歸還該物品的日期。確認信會在一小時內寄達。\n\n所有借出的設備請於星期五下午前歸還。借用超過兩週的物品，須另外取得所屬部門主管的核准。\n\n如果使用入口網站時遇到問題，請撥分機 245 聯絡總務室。"
+  }
+]

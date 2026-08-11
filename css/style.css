@@ -768,6 +768,22 @@ button { font-family: var(--font); cursor: pointer; }
 .tr-zh { white-space: pre-line; line-height: 1.9; color: #57606a; font-size: 13.5px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
 
 /* 英語耳 */
+.speed-sel { padding: 5px 8px; font-size: 12.5px; }
+.shadow-stage {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 34px 10px;
+  color: var(--ink);
+  background: var(--bg-soft);
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+.shadow-stage.pulse { color: var(--hint-orange); animation: pulse 1s infinite; }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .55; }
+}
 .dict-diff { margin: 8px 0 4px; line-height: 2; }
 .dict-word { display: inline-block; margin: 0 3px; padding: 1px 6px; border-radius: 4px; font-size: 15px; }
 .dict-word.hit { background: var(--ok-tint); color: var(--ok); }

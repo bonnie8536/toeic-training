@@ -88,6 +88,9 @@ async def main():
         jobs.append((q['id'] + '.mp3', [(q['audioText'], VOICES['US']['M' if int(q['id'][3:]) % 2 else 'F'])]))
     for q in load('ear_numbers.json'):
         jobs.append((q['id'] + '.mp3', [(q['audioText'], VOICES['US2']['F' if int(q['id'][2:]) % 2 else 'M'])]))
+    # 跟讀用:聽寫句的中文翻譯音檔(台灣腔) d-01 → dz-01
+    for q in load('ear_dictation.json'):
+        jobs.append(('dz-' + q['id'][2:] + '.mp3', [(q['zh'], 'zh-TW-HsiaoChenNeural')]))
 
     print('共', len(jobs), '個音檔', flush=True)
     sem = asyncio.Semaphore(5)

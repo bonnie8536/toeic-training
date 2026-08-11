@@ -70,6 +70,13 @@
   function makePlayer(id, state) {
     state.plays = state.plays || 0;
     const audio = new Audio('audio/' + id + '.mp3');
+    const speedSel = h('select', { class: 'cfg-select speed-sel' },
+      [['0.75', '慢速 0.75x'], ['1', '正常 1x'], ['1.25', '快速 1.25x']].map(([v, t]) => {
+        const o = h('option', { value: v }, t);
+        if (v === '1') o.selected = true;
+        return o;
+      }));
+    speedSel.addEventListener('change', () => { audio.playbackRate = Number(speedSel.value); });
     const label = h('span', { class: 'player-note' });
     const btn = h('button', { class: 'btn primary player-btn', type: 'button' }, '▶ 播放');
     function refresh() {
@@ -88,7 +95,7 @@
     });
     audio.addEventListener('error', () => { label.textContent = '找不到音檔'; btn.disabled = true; });
     refresh();
-    return { el: h('div', { class: 'player' }, btn, label), refresh, stop: () => audio.pause() };
+    return { el: h('div', { class: 'player' }, btn, speedSel, label), refresh, stop: () => audio.pause() };
   }
 
   /* ================= 混合聽力練習 ================= */

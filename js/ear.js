@@ -1,4 +1,4 @@
-/* 英語耳:三種耳朵訓練,全部自動對答。
+/* 聽力訓練(耳朵基本功):全部自動對答。
    ①句子聽寫:聽音檔打出整句,逐字比對標色。
    ②相似音辨析:句中辨認 coffee/copy 這類易混字。
    ③數字與價格:thirteen/thirty、時間、金額的辨聽。
@@ -9,7 +9,7 @@
 
   if (!E || !E.dictation || !E.dictation.length) {
     root.append(h('div', { class: 'q-block', style: 'margin-top:30px' },
-      '英語耳教材尚未載入(內容生成中,稍後再來)。'));
+      '聽力訓練教材尚未載入(內容生成中,稍後再來)。'));
     return;
   }
 
@@ -92,9 +92,9 @@
 
   /* ================= 首頁 ================= */
   function renderHome() {
-    document.title = '英語耳|多益閱讀訓練室';
+    document.title = '聽力訓練|多益閱讀訓練室';
     root.append(h('div', { class: 'page-head' },
-      h('h1', null, '英語耳'),
+      h('h1', null, '聽力訓練'),
       h('p', null, '把耳朵磨利的基本功。可以重複聽,答錯的會優先再出現。')));
     root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
       Object.entries(SECTIONS).map(([k, d]) => {
@@ -114,7 +114,7 @@
   /* ================= 一輪練習 ================= */
   function startRound(sec) {
     const d = SECTIONS[sec];
-    document.title = d.title + '|英語耳';
+    document.title = d.title + '|聽力訓練';
     const list = pick(sec, d.per);
     const results = [];
     let cur = 0;
@@ -126,7 +126,7 @@
       root.innerHTML = '';
       root.append(h('div', { class: 'drill-top' },
         h('h1', null, d.title),
-        h('a', { href: 'listening.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回英語耳')));
+        h('a', { href: 'listening.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回聽力訓練')));
       const nav = h('div', { class: 'q-nav' });
       list.forEach((x, i) => {
         let cls = i === cur ? 'cur' : '';
@@ -343,7 +343,7 @@
         h('div', { class: 'band-note' }, ok === list.length ? '全對!耳朵越來越利了。' : '答錯的下一輪會優先出現。')));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', onclick: () => startRound(sec) }, '再來一輪'),
-        h('a', { class: 'btn', href: 'listening.html' }, '回英語耳')));
+        h('a', { class: 'btn', href: 'listening.html' }, '回聽力訓練')));
       window.scrollTo(0, 0);
     }
   }

@@ -1,0 +1,170 @@
+[
+  {
+    "id": "p6-b6-1",
+    "passageType": "email",
+    "title": "Apology for Shipping Delay (Order MS-4820)",
+    "passage": "To: Daniel Whitcomb <d.whitcomb@brightpath-retail.com>\nFrom: Carla Nunes <c.nunes@meridiansupply.com>\nDate: 14 October\nSubject: Order MS-4820\n\nDear Mr. Whitcomb,\n\nI am writing to apologize for the delay in {{1}} your order MS-4820. The office chairs you ordered were scheduled to leave our warehouse last Friday, but a problem with our supplier in Taichung has held up production. {{2}} We now expect the chairs to reach your Riverside office on 22 October.\n\nBecause the delay was our fault, we have removed the shipping charge from your invoice and applied a ten percent discount to your next order. If the new date is not {{3}}, please call me directly and I {{4}} a partial shipment instead.\n\nSincerely,\nCarla Nunes\nCustomer Accounts, Meridian Supply",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["ship", "shipped", "shipping", "to ship"],
+        "answer": 2,
+        "explanation": "空格前面是介系詞 in（the delay in ...），介系詞後面只能接名詞或動名詞，因此選 C shipping。delay in doing something（延遲做某事）是商業書信的固定說法。選項 A ship 是原形動詞，不能直接放在介系詞之後；選項 B shipped 是過去式或過去分詞，若要表達被動也得寫成 being shipped，單獨放在 in 後面不合語法；選項 D to ship 是不定詞，不定詞不能當介系詞的受詞。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "The parts we were waiting for finally arrived yesterday.",
+          "Your account balance must be settled before we can process the order.",
+          "We are pleased to confirm that your order was delivered on schedule.",
+          "Please return the damaged chairs in their original packaging."
+        ],
+        "answer": 0,
+        "explanation": "空格前一句說台中供應商出狀況、生產進度受阻，空格後一句卻已經給出新的到貨日（10 月 22 日）。中間需要一句交代事情已有進展，句意才接得上，選項 A 說等待的零件昨天終於到貨，正好把「卡關」與「重新給出交期」串起來。選項 B 要求先結清帳款才能處理訂單，與這封道歉信的語氣及後文主動補償的做法矛盾；選項 C 說訂單已如期送達，與全信的延遲主題直接衝突；選項 D 要求退回受損的椅子，但信中從未提到商品損壞。"
+      },
+      {
+        "num": 3,
+        "type": "字彙",
+        "options": ["available", "reliable", "affordable", "acceptable"],
+        "answer": 3,
+        "explanation": "空格所在的 If the new date is not ___ 後面接 please call me directly，語意是「若這個新日期您無法接受，請直接來電」。acceptable（可接受的）用來評價對方是否同意某項安排，最貼合語境。選項 A available 指「有空的、可取得的」，用來描述人員或商品，不用來評價日期是否被同意；選項 B reliable 指「可靠的」，通常形容人、設備或資料來源；選項 C affordable 指「負擔得起的」，只用在價格上。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["arranged", "will arrange", "have arranged", "arranging"],
+        "answer": 1,
+        "explanation": "整句是 If 引導的條件句，主要子句 please call me directly and I ___ 說的是「若您來電，我方之後會怎麼處理」，屬於尚未發生的安排，要用未來式 will arrange，故選 B。選項 A arranged 是過去式，但分批出貨還沒安排；選項 C have arranged 是現在完成式，表示動作已完成，與「先來電、我再處理」的先後順序不合；選項 D arranging 是現在分詞，前面沒有助動詞，無法單獨當句子的動詞。"
+      }
+    ],
+    "translation": "收件者：Daniel Whitcomb <d.whitcomb@brightpath-retail.com>\n寄件者：Carla Nunes <c.nunes@meridiansupply.com>\n日期：10 月 14 日\n主旨：訂單 MS-4820\n\nWhitcomb 先生您好：\n\n來信是為了訂單 MS-4820 出貨延誤一事向您致歉。您訂購的辦公椅原訂上週五自本公司倉庫出貨，但我們台中的供應商發生問題，導致生產進度受阻。我們等待的零件昨天終於送達。目前預計這批椅子會在 10 月 22 日送抵貴公司 Riverside 辦公室。\n\n由於這次延誤是我方的疏失，我們已將運費自您的帳單中扣除，並在您下次訂購時提供九折優惠。若這個新日期您無法接受，請直接來電給我，我會改以分批出貨的方式處理。\n\n謹此\nCarla Nunes\nMeridian Supply 客戶帳務部"
+  },
+  {
+    "id": "p6-b6-2",
+    "passageType": "notice",
+    "title": "Notice to All Staff: Parking Lot Repairs",
+    "passage": "NOTICE TO ALL STAFF: Parking Lot Repairs\n\nThe main parking lot behind Building C {{1}} from 3 March through 20 March while the surface is repaired and new lines are painted. During this period, staff who normally park there should use the visitor lot on Cedar Street, which will be open to employees at no {{2}}. {{3}} Anyone who arrives after 8:30 A.M. may find the visitor lot full, so please allow extra travel time. Vehicles left in the closed area will be removed at the owner's expense. We apologize for the inconvenience and thank you for your {{4}} while the work is finished.\n\nFacilities Management",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["closing", "will be closed", "has closed", "to close"],
+        "answer": 1,
+        "explanation": "主詞 The main parking lot 是「被關閉」的對象，動作由施工單位執行，因此要用被動語態；而 from 3 March through 20 March 指向尚未到來的期間，時態要用未來式，故選 B will be closed。選項 A closing 是現在分詞，前面沒有 be 動詞，整句會缺少完整的動詞；選項 C has closed 是主動的現在完成式，語意變成停車場自己把別的東西關掉，且與未來的時間不合；選項 D to close 是不定詞，不能當句子的主要動詞。"
+      },
+      {
+        "num": 2,
+        "type": "字彙",
+        "options": ["price", "value", "rate", "charge"],
+        "answer": 3,
+        "explanation": "at no charge 是「免費」的固定用法，用來說明訪客停車場開放員工免費停放，故選 D。選項 A price 指商品的售價，不與 at no 搭配；選項 B value 指價值，at no value 不成立；選項 C rate 指費率，常見說法是 at a special rate（以特惠費率），但沒有 at no rate 的用法。"
+      },
+      {
+        "num": 3,
+        "type": "句子插入",
+        "options": [
+          "Spaces there are limited and are given out on a first-come, first-served basis.",
+          "The new lines will make it easier to find a space behind Building C.",
+          "All company vehicles must be returned to the garage by 6:00 P.M.",
+          "The repair work was finished ahead of schedule last spring."
+        ],
+        "answer": 0,
+        "explanation": "空格前說員工可改停 Cedar Street 的訪客停車場且免費，空格後說「8 點 30 分之後抵達的人可能會發現停車場已滿，請預留較多通勤時間」。中間需要一句說明車位數量有限、先到先停，後面「會停滿」才有依據，選項 A 正好提供這個資訊。選項 B 說新的停車格線會讓 C 棟後方更好停車，講的是完工之後的事，接不上「訪客停車場會滿」；選項 C 談公務車幾點前要開回車庫，與員工停車無關；選項 D 說維修去年春天就提前完工，與本次三月才要施工的內容矛盾。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["patience", "patient", "patiently", "patients"],
+        "answer": 0,
+        "explanation": "空格前面是所有格 your，後面必須接名詞，thank you for your patience 是公告結尾感謝對方耐心配合的固定說法，故選 A。選項 B patient 當形容詞是「有耐心的」，放在所有格之後語意不通；選項 C patiently 是副詞，不能當介系詞 for 的受詞；選項 D patients 是「病患」的複數，與辦公大樓停車的情境無關。"
+      }
+    ],
+    "translation": "全體同仁公告：停車場整修\n\nC 棟後方的主停車場將自 3 月 3 日起至 3 月 20 日止封閉，期間將進行路面整修並重新繪製停車格線。這段期間平常停放於此的同仁請改停 Cedar Street 的訪客停車場，該場地將開放員工免費使用。該處車位有限，採先到先停的方式。上午 8 點 30 分之後抵達的同仁可能會發現訪客停車場已停滿，請預留較充裕的通勤時間。停放在封閉區域內的車輛將移置他處，費用由車主自行負擔。造成不便敬請見諒，也感謝各位在施工期間的耐心配合。\n\n總務管理部"
+  },
+  {
+    "id": "p6-b6-3",
+    "passageType": "article",
+    "title": "Kestrel Foods Named Supplier of the Year",
+    "passage": "Kestrel Foods Named Supplier of the Year\n\nRIVERTON (16 May) - Kestrel Foods, a family-run bakery based in Riverton, {{1}} the Regional Supplier of the Year award at a ceremony held on Thursday evening. The prize is given each year to the company that shows the greatest improvement in service quality. {{2}} Judges praised Kestrel for cutting its average delivery time from three days to one while keeping prices steady.\n\nMarisol Reyes, {{3}} founded the bakery in 1998, said the honor belongs to her entire staff of forty-two. The company plans to open a second plant in Duxford next year, a move that is {{4}} to create about sixty new jobs.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["receives", "is receiving", "will receive", "received"],
+        "answer": 3,
+        "explanation": "句尾的 at a ceremony held on Thursday evening 指出頒獎典禮已於上週四晚上舉行，後文的 Judges praised 也是過去式，整段敘述都是已發生的事，因此動詞要用過去式 received，故選 D。選項 A receives 是現在簡單式，用於習慣或不變的事實；選項 B is receiving 是現在進行式，表示此刻正在發生；選項 C will receive 是未來式，與典禮已經結束的事實矛盾。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Tickets for the ceremony are still on sale at the town hall.",
+          "Kestrel Foods will close its Riverton shop at the end of the month.",
+          "More than ninety companies from the region were considered this year.",
+          "The bakery has not yet decided whether to enter the contest."
+        ],
+        "answer": 2,
+        "explanation": "空格前一句說明這個獎項每年頒給服務品質成長幅度最大的公司，空格後一句轉到評審讚許 Kestrel 縮短配送時間。中間插入「今年全區有九十多家公司列入評選」先交代競爭規模，再帶到評審的評語，銜接最自然，故選 C。選項 A 說典禮的票仍在市政廳販售，但典禮已於週四結束；選項 B 說公司月底要收掉 Riverton 的門市，與全文得獎並增設廠房的走向相反；選項 D 說這家烘焙坊還沒決定要不要報名參賽，與「已經得獎」直接矛盾。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["she", "who", "which", "whose"],
+        "answer": 1,
+        "explanation": "兩個逗號之間的 ___ founded the bakery in 1998 是插在主詞 Reyes 之後的補述用法關係子句，子句裡缺少主詞，而先行詞 Reyes 是人，因此要用主格關係代名詞 who，故選 B。選項 A she 是一般代名詞，兩個句子之間沒有連接詞會造成句構錯誤；選項 C which 只能指事物；選項 D whose 是所有格關係代名詞，後面必須接名詞而不是動詞。"
+      },
+      {
+        "num": 4,
+        "type": "字彙",
+        "options": ["arranged", "prepared", "expected", "decided"],
+        "answer": 2,
+        "explanation": "be expected to + 原形動詞是「預計會、可望」，用來說明增設廠房將帶來的預期效益，語意最合，故選 C。選項 A arranged 意為「安排」，主詞通常是會議或行程；選項 B prepared 意為「準備好的」，主詞多為人或設備；選項 D decided 沒有 be decided to do 的用法，要表達決定應寫成 has decided to。"
+      }
+    ],
+    "translation": "Kestrel Foods 獲選年度最佳供應商\n\nRiverton（5 月 16 日訊）位於 Riverton 的家族經營烘焙坊 Kestrel Foods，於週四晚間舉行的頒獎典禮上獲得區域年度最佳供應商獎。這個獎項每年頒發給服務品質進步幅度最大的公司。今年全區共有九十多家公司列入評選。評審讚許 Kestrel 在價格維持不變的情況下，將平均配送時間由三天縮短為一天。\n\n1998 年創辦這家烘焙坊的 Marisol Reyes 表示，這份榮譽屬於全體四十二位員工。公司計畫明年在 Duxford 增設第二座廠房，預計此舉將創造約六十個新職缺。"
+  },
+  {
+    "id": "p6-b6-4",
+    "passageType": "memo",
+    "title": "Memo: New Energy-Saving Measures",
+    "passage": "MEMORANDUM\n\nTo: All Department Heads\nFrom: Priya Raman, Operations Director\nDate: 5 June\nSubject: New energy-saving measures\n\nStarting 1 July, the company will introduce several measures {{1}} to lower our electricity costs at the Fairview site. Air conditioning will be set to 26 degrees on every floor, and lights in meeting rooms {{2}} off automatically after ten minutes with no one in the room. Staff are asked to shut down their computers overnight instead of {{3}} them in sleep mode. The building manager will report our monthly savings to each department. {{4}} Please share this notice with your teams before the end of the week and send any questions to the facilities desk on extension 118.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "字彙",
+        "options": ["designed", "informed", "reduced", "replaced"],
+        "answer": 0,
+        "explanation": "measures designed to + 原形動詞是「為了某目的而訂定的措施」，是公告與備忘錄常見的說法，語意上正好帶出後面的 to lower our electricity costs，故選 A。選項 B informed 意為「被通知」，措施本身不會被通知；選項 C reduced 意為「被減少的」，與後面「以降低電費」的說明語意重複且不通順；選項 D replaced 意為「被取代」，與公司即將推行新措施的語境相反。"
+      },
+      {
+        "num": 2,
+        "type": "文法",
+        "options": ["switching", "will switch", "have switched", "to switch"],
+        "answer": 1,
+        "explanation": "and 連接的前半句是 Air conditioning will be set ...，後半句講的同樣是 7 月 1 日起才實施的規定，需要一個有時態的完整動詞與前面對稱，故選 B will switch。選項 A switching 是現在分詞，前面沒有助動詞，子句會缺少動詞；選項 C have switched 是現在完成式，表示動作已經發生，與尚未上路的新規定不合；選項 D to switch 是不定詞，不能當子句的主要動詞。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["leave", "left", "to leave", "leaving"],
+        "answer": 3,
+        "explanation": "instead of 是介系詞片語，of 後面必須接名詞或動名詞，因此選 D leaving。選項 A leave 是原形動詞、選項 B left 是過去式或過去分詞、選項 C to leave 是不定詞，三者都不能直接放在 instead of 之後。"
+      },
+      {
+        "num": 4,
+        "type": "句子插入",
+        "options": [
+          "The Fairview site will be closed for repairs throughout July.",
+          "The new cafeteria menu will take effect on the same date.",
+          "A short guide on other ways to save power is attached to this memo.",
+          "Please submit your travel receipts by the last day of the month."
+        ],
+        "answer": 2,
+        "explanation": "空格前一句說大樓管理員每月會把節省的用電情形回報給各部門，空格後一句要求各主管在本週結束前把通知轉達給團隊。中間插入「另附一份其他省電做法的簡要指南」，說明要轉達的內容還包含附件，銜接最自然，故選 C。選項 A 說 Fairview 據點七月整月因維修關閉，與 7 月 1 日起在該據點實施節能措施直接矛盾；選項 B 談員工餐廳新菜單，與節能主題無關；選項 D 要求月底前繳交出差收據，同樣離題。"
+      }
+    ],
+    "translation": "備忘錄\n\n收件者：各部門主管\n寄件者：營運總監 Priya Raman\n日期：6 月 5 日\n主旨：新的節能措施\n\n自 7 月 1 日起，公司將推行數項措施，以降低 Fairview 據點的電費支出。各樓層空調將設定為 26 度，會議室的照明在無人使用滿十分鐘後會自動熄滅。也請同仁下班後將電腦關機，而不要讓電腦停留在睡眠模式。大樓管理員每月會將節省的用電情形回報給各部門。本備忘錄另附上一份其他省電做法的簡要指南。請於本週結束前將本通知轉達給您的團隊，如有疑問請撥分機 118 洽總務櫃檯。"
+  }
+]

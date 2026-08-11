@@ -1,0 +1,259 @@
+[
+  {
+    "id": "p7-b8-1",
+    "format": "single",
+    "passages": [
+      {
+        "type": "memo",
+        "label": "Internal Memo",
+        "content": "MEMORANDUM\n\nTO: All staff, Marketing and Sales Divisions\nFROM: Karen Whitfield, Office Services Manager\nDATE: March 4\nSUBJECT: Temporary move to the fifth floor\n\nWork on the fourth-floor windows will begin on Monday, March 16. The crew needs the whole area clear, so everyone on that floor will move upstairs to the fifth floor while the project is under way.\n\nThe work is expected to run from March 16 to March 27. During those two weeks you will sit in the open area next to the fifth-floor meeting rooms. Desks have already been set up there, and each one has a power outlet and a network cable. Please bring your laptop, your headset, and any files you use every day. Do not bring extra monitors, plants, or other equipment from your desk. There is simply no room for them.\n\nYour telephone extension will follow you automatically, so clients who call your usual number will still reach you. Mail will be delivered to the fifth-floor reception desk instead of to your regular tray. Parking arrangements are not affected.\n\nEmpty boxes will be left beside the printers on the afternoon of Thursday, March 12. Please label each box with your name and pack your files before you leave on Friday, March 13. The cleaning crew will carry the boxes upstairs over the weekend.\n\nIf your team has already booked a fifth-floor meeting room for those two weeks, please contact me first. Two of the rooms will be used as work space.\n\nThank you for your patience.\n\nKaren Whitfield, extension 2140"
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the main purpose of the memo?",
+        "options": [
+          "To describe a temporary change in work space",
+          "To announce the opening of a new branch office",
+          "To ask for volunteers to join a project team",
+          "To introduce a new parking policy"
+        ],
+        "answer": 0,
+        "explanation": "定位第一、二段：窗戶工程期間四樓人員暫時搬到五樓，全篇都在說明這兩週的座位與相關安排，故選 (A)。(B) 沒有提到開設分公司；(C) 沒有招募志願者；(D) 第四段明說停車安排「not affected」，不是新政策。"
+      },
+      {
+        "q": "The word \"run\" in paragraph 2, line 1, is closest in meaning to",
+        "options": [
+          "operate",
+          "continue",
+          "hurry",
+          "control"
+        ],
+        "answer": 1,
+        "explanation": "定位第二段首句 The work is expected to run from March 16 to March 27，run 接一段起訖日期，指工程「持續、延續」，故選 (B) continue。run 另有「營運」(operate)、「管理」(control) 之意，但此處後面接的是時間區間，不是公司或機器，因此 (A)(D) 不合；(C) hurry 與句意無關。"
+      },
+      {
+        "q": "What are employees instructed NOT to do?",
+        "options": [
+          "Pack their files by Friday",
+          "Write their names on the boxes",
+          "Contact Ms. Whitfield about room bookings",
+          "Bring extra monitors to the new area"
+        ],
+        "answer": 3,
+        "explanation": "NOT 題須逐項核對。(A)(B) 見第五段 pack your files before you leave on Friday, March 13 與 label each box with your name，都是被要求要做的事；(C) 見第六段 please contact me first。只有 (D) 是被禁止的：第二段 Do not bring extra monitors, plants, or other equipment，故選 (D)。"
+      },
+      {
+        "q": "What is indicated about telephone calls during the project?",
+        "options": [
+          "They will be answered by the reception desk",
+          "They must be returned within one business day",
+          "They will still reach staff at the usual numbers",
+          "They will be limited to the fifth floor"
+        ],
+        "answer": 2,
+        "explanation": "定位第四段：Your telephone extension will follow you automatically, so clients who call your usual number will still reach you，分機會跟著人走，客戶打原號碼仍可接通，故選 (C)。(A) 接待櫃檯負責的是郵件不是電話；(B)(D) 文中均未提及。"
+      }
+    ],
+    "translation": [
+      "備忘錄\n\n致：行銷部與業務部全體同仁\n發自：Karen Whitfield，總務服務經理\n日期：3 月 4 日\n主旨：暫時遷至五樓\n\n四樓窗戶工程將於 3 月 16 日（星期一）開工。施工人員需要整個區域淨空，因此在工程進行期間，該樓層所有同仁都將往上搬到五樓。\n\n工程預計從 3 月 16 日持續到 3 月 27 日。這兩週期間，各位會坐在五樓會議室旁的開放區域。那裡的辦公桌已經架設完成，每張桌子都有電源插座和網路線。請帶著自己的筆電、耳機，以及每天會用到的檔案。請勿把多餘的螢幕、盆栽或桌上其他設備帶過去，那裡實在沒有空間放。\n\n您的電話分機會自動轉移，因此客戶撥打原本的號碼仍然找得到您。郵件會改送到五樓接待櫃檯，不再送到原本的收件盤。停車安排不受影響。\n\n3 月 12 日（星期四）下午會在影印機旁放置空紙箱。請在每個箱子上寫上姓名，並在 3 月 13 日（星期五）下班前把檔案裝箱。清潔人員會在週末把箱子搬上樓。\n\n如果貴團隊已經預約了那兩週的五樓會議室，請先與我聯絡，其中兩間會議室將充當辦公空間。\n\n感謝各位配合。\n\nKaren Whitfield，分機 2140"
+    ]
+  },
+  {
+    "id": "p7-b8-2",
+    "format": "single",
+    "passages": [
+      {
+        "type": "invoice",
+        "label": "Invoice",
+        "content": "GREENFIELD OFFICE SUPPLY\n118 Harbor Road, Tacoma, WA 98402\nPhone (253) 555-0147 | orders@greenfieldsupply.com\n\nINVOICE NO.: GF-40219\nInvoice date: May 8\nOrder date: May 2\nPurchase order: PO-7734\n\nBILL TO:\nNadia Ferreira, Office Coordinator\nHalloran Design Group\n620 Wicker Street, Suite 300\nTacoma, WA 98405\n\nITEM      DESCRIPTION                    QTY    UNIT PRICE    AMOUNT\nA-220     Desk chair, grey fabric          6      $148.00     $888.00\nB-115     Filing cabinet, three drawer     2      $210.00     $420.00\nC-303     Whiteboard, 120 cm               4       $62.00     $248.00\nD-009     Marker set, eight colors        10        $9.50      $95.00\n\n                                       Subtotal              $1,651.00\n                                       Volume discount (5%)     -$82.55\n                                       Delivery                   $0.00\n                                       TOTAL DUE             $1,568.45\n\nNOTES\nA volume discount of 5 percent is applied to any order of twenty items or more. Delivery is free on all orders with a subtotal above $1,500. Payment is due within 30 days of the invoice date.\n\nThe whiteboards were not in stock on May 2. They were sent from our Seattle warehouse on May 7 and should arrive by May 12. All other items on this invoice were delivered on May 5.\n\nDamaged or unwanted goods may be returned within 14 days of delivery. Please call our service desk for a return number before you send anything back. Goods that arrive without a return number cannot be credited."
+      }
+    ],
+    "questions": [
+      {
+        "q": "Why was Halloran Design Group not charged for delivery?",
+        "options": [
+          "It is located in the same city as the store",
+          "It paid the invoice before the due date",
+          "It has a yearly service agreement",
+          "Its order came to more than a set amount"
+        ],
+        "answer": 3,
+        "explanation": "定位 NOTES 第一段：Delivery is free on all orders with a subtotal above $1,500，而本單小計 $1,651.00 已超過門檻，故選 (D)。(A) 雖然雙方都在 Tacoma，但免運條件寫的是金額不是地點；(B) 發票才剛開立，未提早付款；(C) 全篇未提服務合約。二十件以上打折是折扣的條件，不是免運的條件，勿混用。"
+      },
+      {
+        "q": "What is indicated about the whiteboards?",
+        "options": [
+          "They were sent after the other items",
+          "They were the most expensive item ordered",
+          "They were returned to the supplier",
+          "They were ordered by telephone"
+        ],
+        "answer": 0,
+        "explanation": "定位 NOTES 第二段：白板 5 月 2 日缺貨，5 月 7 日才從西雅圖倉庫寄出，其他品項 5 月 5 日就已送達，故選 (A)。(B) 單價最高的是 $210 的檔案櫃；(C) 是出貨不是退貨；(D) 訂購方式未提及。"
+      },
+      {
+        "q": "What information is NOT included on the invoice?",
+        "options": [
+          "A purchase order number",
+          "A deadline for payment",
+          "The name of the delivery driver",
+          "The date the order was placed"
+        ],
+        "answer": 2,
+        "explanation": "NOT 題逐項核對。(A) 表頭 Purchase order: PO-7734；(B) NOTES 第一段 Payment is due within 30 days；(D) 表頭 Order date: May 2。全篇沒有出現送貨司機姓名，故選 (C)。"
+      },
+      {
+        "q": "According to the invoice, what must a customer do before returning an item?",
+        "options": [
+          "Pay the full amount of the invoice",
+          "Obtain a number from the service desk",
+          "Send an email to the sales office",
+          "Wait for 14 days after delivery"
+        ],
+        "answer": 1,
+        "explanation": "定位 NOTES 最後一段：Please call our service desk for a return number before you send anything back，故選 (B)。(D) 是把「14 天內可退」誤讀成「要等 14 天」；(A)(C) 文中未要求。"
+      }
+    ],
+    "translation": [
+      "GREENFIELD 辦公用品\nHarbor 路 118 號，Tacoma, WA 98402\n電話 (253) 555-0147｜orders@greenfieldsupply.com\n\n發票號碼：GF-40219\n開立日期：5 月 8 日\n訂購日期：5 月 2 日\n採購單號：PO-7734\n\n帳單寄送：\nNadia Ferreira，辦公室協調專員\nHalloran 設計集團\nWicker 街 620 號 300 室\nTacoma, WA 98405\n\n品號　　說明　　　　　　　　　數量　　單價　　　金額\nA-220　辦公椅，灰色布面　　　　6　　$148.00　$888.00\nB-115　三層檔案櫃　　　　　　　2　　$210.00　$420.00\nC-303　白板，120 公分　　　　　4　　 $62.00　$248.00\nD-009　麥克筆組，八色　　　　 10　　　$9.50　 $95.00\n\n　　　　小計　　　　　　　$1,651.00\n　　　　數量折扣（5%）　　 -$82.55\n　　　　運費　　　　　　　　　$0.00\n　　　　應付總額　　　　　$1,568.45\n\n備註\n單筆訂購滿二十件（含）以上，享 5% 數量折扣。訂單小計超過 $1,500 者免運費。貨款請於發票開立日起 30 天內支付。\n\n白板於 5 月 2 日缺貨，已於 5 月 7 日自本公司西雅圖倉庫寄出，預計 5 月 12 日前送達。本發票其餘品項均已於 5 月 5 日送達。\n\n商品如有損壞或不需要，可於送達後 14 天內退回。寄回前請先致電本公司服務台索取退貨編號。未附退貨編號的商品恕無法辦理退款。"
+    ]
+  },
+  {
+    "id": "p7-b8-3",
+    "format": "single",
+    "passages": [
+      {
+        "type": "text_message",
+        "label": "Text Message Chain",
+        "content": "Priya Raman [9:12 A.M.]\nGood morning. The van with our trade show booth just pulled up at the loading dock, but the driver says he only has four crates. We sent five.\n\nOwen Castellano [9:15 A.M.]\nFour? Can you read me the numbers on the crates?\n\nPriya Raman [9:19 A.M.]\nCrates 1, 2, 3 and 5. Number 4 is the one missing, and that is the crate with the banner stand, the two display tables, and the carpet.\n\nOwen Castellano [9:21 A.M.]\nThat is the whole front of the booth. I will call the warehouse right now.\n\nMarisol Duffy [9:26 A.M.]\nI am already at the hall with the lighting team. Setup closes at 6:00 P.M. and the safety inspection is tomorrow at 8:00 A.M. We can put up the shelves and the screens in the meantime.\n\nOwen Castellano [9:38 A.M.]\nGood news. The warehouse found crate 4 on the wrong shelf. They can put it on the afternoon van, which should reach the hall around 4:30.\n\nMarisol Duffy [9:40 A.M.]\nThat leaves us ninety minutes. Tight, but fine. Priya, could you ask the hall office whether we may stay past six if we need to?\n\nPriya Raman [9:42 A.M.]\nI will walk over and ask. I am also going to print a fresh packing list so this does not happen again.\n\nOwen Castellano [9:44 A.M.]\nThank you. One more thing: the display tables come apart for shipping, and the tools for putting them back together are in crate 2. Do not let the driver take crate 2 away.\n\nPriya Raman [9:45 A.M.]\nNo risk of that. He left ten minutes ago and everything he brought is inside."
+      }
+    ],
+    "questions": [
+      {
+        "q": "Where most likely is Ms. Duffy at 9:26 A.M.?",
+        "options": [
+          "At the company warehouse",
+          "At an exhibition hall",
+          "At the loading dock",
+          "At a print shop"
+        ],
+        "answer": 1,
+        "explanation": "定位 9:26 A.M.：I am already at the hall with the lighting team，加上她提到 setup closes at 6:00 P.M.、safety inspection，可知她人在展場，故選 (B)。(A) 倉庫是 Owen 打電話聯絡的地方；(C) 卸貨碼頭是 Priya 收貨的位置；(D) 列印裝箱清單是 Priya 之後要做的事，且她沒說要去印刷店。"
+      },
+      {
+        "q": "At 9:40 A.M., what does Ms. Duffy most likely mean when she writes, \"Tight, but fine\"?",
+        "options": [
+          "She believes the remaining time will be just enough",
+          "She thinks the crate is too heavy to move",
+          "She wants the booth built in a smaller space",
+          "She is worried about the cost of the second van"
+        ],
+        "answer": 0,
+        "explanation": "定位 9:40 A.M.：前一句 That leaves us ninety minutes，指貨 4:30 到、6:00 收工，只剩九十分鐘；tight 在此形容時間很趕但還來得及，故選 (A)。(B)(C)(D) 都把 tight 誤解成重量、空間或費用。"
+      },
+      {
+        "q": "What does Ms. Raman agree to do?",
+        "options": [
+          "Return crate 2 to the warehouse",
+          "Drive to the warehouse herself",
+          "Ask about extending the setup time",
+          "Move the safety inspection to a later hour"
+        ],
+        "answer": 2,
+        "explanation": "定位 9:40 A.M. Marisol 請 Priya 問展場辦公室能否超過六點，9:42 A.M. Priya 回 I will walk over and ask，故選 (C)。(A) 9:44 A.M. Owen 交代的正是「不要讓司機把 2 號箱載走」；(B) 是 Owen 打電話給倉庫；(D) 檢查時間無人提議更動。"
+      },
+      {
+        "q": "What is NOT in the crate that is missing?",
+        "options": [
+          "A banner stand",
+          "Display tables",
+          "A carpet",
+          "Tools"
+        ],
+        "answer": 3,
+        "explanation": "NOT 題定位 9:19 A.M.：4 號箱裝的是 the banner stand, the two display tables, and the carpet，故 (A)(B)(C) 都在裡面。9:44 A.M. Owen 說工具在 crate 2，因此 (D) 不在失蹤的箱子裡。"
+      }
+    ],
+    "translation": [
+      "Priya Raman【上午 9:12】\n早安。載我們展場攤位的貨車剛停到卸貨碼頭，可是司機說他只有四個木箱，我們明明寄了五個。\n\nOwen Castellano【上午 9:15】\n四個？你可以把箱子上的編號念給我聽嗎？\n\nPriya Raman【上午 9:19】\n1、2、3 和 5 號。少的是 4 號，那箱裝的是旗幟架、兩張展示桌和地毯。\n\nOwen Castellano【上午 9:21】\n那等於整個攤位正面都沒到。我現在就打去倉庫。\n\nMarisol Duffy【上午 9:26】\n我已經和燈光組在展館了。佈展六點收，安全檢查是明天早上八點。這段時間我們可以先把層架和螢幕架起來。\n\nOwen Castellano【上午 9:38】\n好消息。倉庫在錯誤的架位上找到 4 號箱，可以排下午那班車，大約四點半會到展館。\n\nMarisol Duffy【上午 9:40】\n那我們只剩九十分鐘。很趕，但還行。Priya，你可以去問展館辦公室，需要的話能不能超過六點嗎？\n\nPriya Raman【上午 9:42】\n我走過去問。我也會重印一份裝箱清單，免得再出這種事。\n\nOwen Castellano【上午 9:44】\n謝謝。還有一件事：展示桌是拆開來運的，把它們組回去的工具在 2 號箱，千萬別讓司機把 2 號箱載走。\n\nPriya Raman【上午 9:45】\n不會的。他十分鐘前就走了，他載來的東西全都在裡面。"
+    ]
+  },
+  {
+    "id": "p7-b8-4",
+    "format": "double",
+    "passages": [
+      {
+        "type": "advertisement",
+        "label": "Advertisement",
+        "content": "BRIGHTPATH LOGISTICS\nNow hiring: Warehouse Operations Coordinator\n\nBrightpath Logistics moves goods for more than four hundred retail clients across the Pacific Northwest. We are filling this position at three of our sites: Eugene, Bend, and Medford. The Bend site runs a night shift only; the other two sites operate during the day.\n\nDuties\n- Plan the daily shipping schedule and assign drivers\n- Keep records of every delivery, return, and damaged item\n- Prepare a monthly report for the site manager\n- Train seasonal staff during the busy autumn season\n\nRequirements\n- At least four years of experience in a warehouse or a shipping company\n- Experience with inventory software\n- A valid license to drive a forklift\n- Willingness to work an occasional Saturday\n\nTo apply, send a resume and a cover letter to careers@brightpathlog.com by June 30. In your letter, please tell us which site you prefer and when you could start. Applicants invited to an interview will also be asked to complete a short practical test at the site. We do not accept applications by mail."
+      },
+      {
+        "type": "email",
+        "label": "E-mail",
+        "content": "To: careers@brightpathlog.com\nFrom: d.okafor@mailbridge.net\nDate: June 19\nSubject: Warehouse Operations Coordinator\n\nDear Hiring Manager,\n\nI saw your advertisement in last week's Willamette Business Weekly and would like to apply for the coordinator position.\n\nFor the past five years I have worked at Correa Distribution in Salem, where I plan routes for twelve drivers and handle all of the paperwork for returns. Last year I moved our records from paper files into Stockline, an inventory program, and I then trained six seasonal workers to use it in under three weeks.\n\nI would prefer your Bend site, as my family is moving to that area in August. I understand that the hours there are not the usual office hours, and that suits me well. Working an occasional Saturday is no problem either.\n\nI should mention one thing. My forklift test is scheduled for July 8. I have finished the training course and my instructor expects no difficulty. I could start work on August 3.\n\nMy resume is attached. Thank you for your time.\n\nSincerely,\nDaniel Okafor"
+      }
+    ],
+    "questions": [
+      {
+        "q": "According to the advertisement, what is one duty of the position?",
+        "options": [
+          "Meeting with retail clients",
+          "Repairing warehouse equipment",
+          "Interviewing new drivers",
+          "Writing a report every month"
+        ],
+        "answer": 3,
+        "explanation": "定位廣告 Duties 第三項：Prepare a monthly report for the site manager，故選 (D)。(A) 公司雖有四百多家零售客戶，但職務中沒有拜訪客戶；(B) 設備維修未提及；(C) 職務是 assign drivers（派工）與 train seasonal staff，不是面試司機。"
+      },
+      {
+        "q": "In the advertisement, the word \"Keep\" in the list of duties is closest in meaning to",
+        "options": [
+          "hold",
+          "maintain",
+          "protect",
+          "delay"
+        ],
+        "answer": 1,
+        "explanation": "定位廣告 Duties 第二項 Keep records of every delivery, return, and damaged item。keep records 是「建立並持續更新紀錄」，故選 (B) maintain。keep 也有「保留、保護、拖住」等義，但此處受詞是 records，(A)(C)(D) 都無法搭配成自然的英文。"
+      },
+      {
+        "q": "How did Mr. Okafor learn about the opening?",
+        "options": [
+          "From a business publication",
+          "From a former coworker",
+          "From the company's website",
+          "From a job fair in Salem"
+        ],
+        "answer": 0,
+        "explanation": "定位電子郵件第一段：I saw your advertisement in last week's Willamette Business Weekly，Weekly 是一份商業週刊，故選 (A)。(B)(C)(D) 信中皆未提及。"
+      },
+      {
+        "q": "What requirement of the position has Mr. Okafor not yet met?",
+        "options": [
+          "The minimum number of years of experience",
+          "Experience with inventory software",
+          "A license to operate a forklift",
+          "Willingness to work on some Saturdays"
+        ],
+        "answer": 2,
+        "explanation": "整合兩篇。廣告 Requirements 列出四項條件；信中第二段五年年資符合第一項，導入庫存軟體 Stockline 符合第二項，第三段 Working an occasional Saturday is no problem 符合第四項。只有堆高機執照尚未取得（第四段 My forklift test is scheduled for July 8），故選 (C)。"
+      },
+      {
+        "q": "What is suggested about the site Mr. Okafor prefers?",
+        "options": [
+          "It operates at night",
+          "It is the newest of the three sites",
+          "It handles only returned goods",
+          "It is the site closest to Salem"
+        ],
+        "answer": 0,
+        "explanation": "整合兩篇。信中第三段他選 Bend；廣告第一段說 The Bend site runs a night shift only，故選 (A)，也呼應他說「那裡的工時不是一般辦公時間，正合我意」。(B)(C)(D) 兩篇均未提供這些資訊。"
+      }
+    ],
+    "translation": [
+      "BRIGHTPATH 物流\n誠徵：倉儲營運協調專員\n\nBrightpath 物流為太平洋西北地區四百多家零售客戶運送貨物。本次於三個據點徵才：Eugene、Bend 與 Medford。Bend 據點只有夜班，另外兩個據點為日間營運。\n\n工作內容\n－ 規劃每日出貨排程並派任司機\n－ 建檔管理每一筆送貨、退貨與破損品紀錄\n－ 每月為據點主管製作報表\n－ 秋季旺季期間訓練季節性人員\n\n應徵條件\n－ 具倉儲或運輸公司四年以上經驗\n－ 具庫存管理軟體使用經驗\n－ 持有有效的堆高機駕駛執照\n－ 願意偶爾於週六上班\n\n有意應徵者請於 6 月 30 日前將履歷與求職信寄至 careers@brightpathlog.com。請在信中告知您偏好的據點與可到職時間。獲邀面試者另需在該據點完成一項簡短的實作測驗。本公司不受理紙本郵寄的應徵資料。",
+      "收件者：careers@brightpathlog.com\n寄件者：d.okafor@mailbridge.net\n日期：6 月 19 日\n主旨：倉儲營運協調專員\n\n敬啟者：\n\n我在上週的《Willamette 商業週刊》上看到貴公司的徵才廣告，希望應徵協調專員一職。\n\n過去五年我任職於 Salem 的 Correa 配送公司，負責為十二位司機規劃路線，並處理所有退貨文件。去年我把公司的紙本紀錄全面轉入庫存管理軟體 Stockline，並在三週內訓練六名季節性人員上手使用。\n\n我偏好貴公司的 Bend 據點，因為我的家人八月要搬到那一帶。我已得知該據點的工時並非一般辦公時間，這對我來說反而合適。偶爾週六上班也沒有問題。\n\n有一件事需要說明：我的堆高機考照日期排在 7 月 8 日。訓練課程我已修畢，教練認為應該不會有問題。我最快可於 8 月 3 日到職。\n\n履歷如附件，感謝您撥冗閱讀。\n\n此致\nDaniel Okafor 敬上"
+    ]
+  }
+]

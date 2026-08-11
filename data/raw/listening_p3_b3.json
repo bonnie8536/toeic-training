@@ -1,0 +1,277 @@
+[
+  {
+    "id": "l3-31",
+    "difficulty": "基礎",
+    "title": "視訊會議的連線狀況",
+    "dialogue": [
+      { "s": "M", "text": "Karen, can you hear me? I think something's wrong with my microphone." },
+      { "s": "W", "text": "I can hear you fine, but your video is frozen. It stopped about a minute ago." },
+      { "s": "M", "text": "Sorry about that. Let me turn my camera off and back on." },
+      { "s": "W", "text": "Try that. Are you on the office network today, or are you at home?" },
+      { "s": "M", "text": "I'm working from home. The connection's been slow all morning." },
+      { "s": "W", "text": "That's probably it. Why don't you close the other programs you have open? That usually helps." },
+      { "s": "M", "text": "Okay, I just closed my email and the file I was reading. How is it now?" },
+      { "s": "W", "text": "Much better. I can see you clearly." },
+      { "s": "M", "text": "Good. So should we wait for Mr. Okada? He hasn't joined yet." },
+      { "s": "W", "text": "He sent me a message. He's still on a call with a client, so he'll be about ten minutes late." },
+      { "s": "M", "text": "Then let's start with the budget and leave the schedule until he's here." },
+      { "s": "W", "text": "Sounds good. I'll take notes and send them to everyone afterward." }
+    ],
+    "questions": [
+      {
+        "q": "What is the problem at the beginning of the conversation?",
+        "options": [
+          "The woman cannot find the meeting link",
+          "The meeting room is being used by another team",
+          "The man has not prepared his materials",
+          "The man's video is not working properly"
+        ],
+        "answer": 3,
+        "explanation": "定位在前兩句：男子說 something's wrong with my microphone（我的麥克風好像有問題）,女子回 I can hear you fine, but your video is frozen（我聽得很清楚,但你的畫面卡住了）。聲音其實沒問題,真正出狀況的是畫面,選 (D)。(A) 兩人已經在同一個會議中,沒有找不到連結的問題;(B) 全程沒有提到會議室;(C) 男子只關掉正在看的檔案,不是沒準備資料。"
+      },
+      {
+        "q": "What does the woman suggest the man do?",
+        "options": [
+          "Close the other programs he is using",
+          "Restart his computer",
+          "Come into the office",
+          "Call the technical support desk"
+        ],
+        "answer": 0,
+        "explanation": "定位在女子第三次發言：Why don't you close the other programs you have open?（要不要把你開著的其他程式關掉?）Why don't you 是提出建議的常見句型,選 (A)。(B) 男子只重開了相機,沒有重開電腦;(C) 女子只是問他今天在不在辦公室,沒有叫他進公司;(D) 對話中沒有提到技術支援。"
+      },
+      {
+        "q": "What will the speakers most likely do next?",
+        "options": [
+          "End the meeting early",
+          "Talk about the budget",
+          "Wait until Mr. Okada joins",
+          "Send an email to a client"
+        ],
+        "answer": 1,
+        "explanation": "定位在男子最後一句：let's start with the budget and leave the schedule until he's here（我們先從預算開始,行程表等他來再談）,女子回 Sounds good（好啊）。兩人已經談定下一步先討論預算,選 (B)。(C) 正好相反,他們決定不等 Mr. Okada;(A) 沒有要提早結束;(D) 打電話給客戶的是 Mr. Okada,不是這兩人要做的事。"
+      }
+    ],
+    "transcriptZh": "男：Karen,聽得到我說話嗎?我的麥克風好像有問題。\n女：我聽得很清楚,但你的畫面卡住了,大概一分鐘前就不動了。\n男：不好意思。我把相機關掉再打開看看。\n女：試試看。你今天是用公司的網路,還是在家?\n男：我今天在家工作,網路一整個早上都很慢。\n女：那大概就是原因了。要不要把你開著的其他程式關掉?通常會有幫助。\n男：好,我剛把信箱和正在看的檔案關掉了。現在呢?\n女：好多了,我可以清楚看到你。\n男：太好了。那我們要等 Okada 先生嗎?他還沒進來。\n女：他傳訊息給我了,他還在跟客戶通電話,大概會晚十分鐘。\n男：那我們先從預算開始,行程表等他來再談。\n女：好啊。我來做紀錄,結束後再寄給大家。"
+  },
+  {
+    "id": "l3-32",
+    "difficulty": "基礎",
+    "title": "飯店櫃檯的房型調整",
+    "dialogue": [
+      { "s": "M", "text": "Good afternoon. I have a reservation under Patrick Hale, three nights." },
+      { "s": "W", "text": "Welcome, Mr. Hale. Let me find it. Yes, here it is. A standard room with one large bed, checking out Friday." },
+      { "s": "M", "text": "That's right. Is there any chance of a room on a higher floor? Last time I stayed here, the street noise kept me awake." },
+      { "s": "W", "text": "Let me see what we have. Actually, we had a cancellation this morning, so I can move you to the fifteenth floor. That room is larger and it has a desk by the window." },
+      { "s": "M", "text": "That sounds great. Is there an extra charge for it?" },
+      { "s": "W", "text": "Normally it's forty dollars more per night, but you're in our rewards program, so I won't charge you anything." },
+      { "s": "M", "text": "Wonderful, thank you. And what time does breakfast start?" },
+      { "s": "W", "text": "Six thirty to ten, in the restaurant on the second floor. Your rate includes breakfast for one person." },
+      { "s": "M", "text": "Good to know. Is the fitness center open in the evening?" },
+      { "s": "W", "text": "It's open twenty-four hours. You just need your key card to get in." },
+      { "s": "M", "text": "Perfect. Oh, one more thing. Could I have a late checkout on Friday?" },
+      { "s": "W", "text": "I can't promise it now, but call the front desk Thursday night and we'll do our best." }
+    ],
+    "questions": [
+      {
+        "q": "Why does the man ask about a different room?",
+        "options": [
+          "He wants to be closer to the elevator",
+          "He was bothered by noise during an earlier stay",
+          "His room is not ready yet",
+          "He needs space to hold a meeting"
+        ],
+        "answer": 1,
+        "explanation": "定位在男子第二次發言：Last time I stayed here, the street noise kept me awake（上次我住這裡,街上的噪音吵得我睡不著）。他想換到高樓層是因為之前被噪音影響,選 (B)。(A) 完全沒提電梯;(C) 女子沒說房間還沒整理好,反而馬上就能安排;(D) 他是來住宿的,沒有提到開會。"
+      },
+      {
+        "q": "What does the woman say about the cost of the new room?",
+        "options": [
+          "It will be forty dollars each night",
+          "It will be added to the final bill",
+          "The man will not have to pay extra",
+          "The man's company will pay for it"
+        ],
+        "answer": 2,
+        "explanation": "定位在女子第三次發言：Normally it's forty dollars more per night, but you're in our rewards program, so I won't charge you anything（平常一晚要多收四十元,但您是會員,所以我不收費）。關鍵在 but 之後的轉折,選 (C)。(A) 是原價,不是實際要付的金額,屬於典型的數字陷阱;(B) 女子明說不收費;(D) 沒有提到公司付款。"
+      },
+      {
+        "q": "What does the woman suggest the man do on Thursday night?",
+        "options": [
+          "Contact the front desk",
+          "Return his key card",
+          "Order breakfast in advance",
+          "Visit the fitness center"
+        ],
+        "answer": 0,
+        "explanation": "定位在最後一句：call the front desk Thursday night and we'll do our best（星期四晚上打給櫃檯,我們會盡量安排）。這是針對延遲退房的建議,選 (A)。(B) 房卡是用來進健身房的,不是要退還;(C) 早餐已含在房價中,不需要預訂;(D) 健身房二十四小時開放,和星期四晚上無關。"
+      }
+    ],
+    "transcriptZh": "男：午安,我有訂房,名字是 Patrick Hale,住三晚。\n女：Hale 先生您好,我查一下。有了,標準房、一張大床,星期五退房。\n男：沒錯。請問有可能換到高一點的樓層嗎?上次我住這裡,街上的噪音吵得我睡不著。\n女：我看看還有什麼房。剛好今天早上有人取消,我可以幫您換到十五樓。那間比較大,窗邊還有書桌。\n男：聽起來很好。需要另外加錢嗎?\n女：平常一晚要多收四十元,不過您是我們會員方案的客人,所以我不另外收費。\n男：太好了,謝謝。那早餐幾點開始?\n女：六點半到十點,在二樓的餐廳。您的房價含一位早餐。\n男：知道了。健身房晚上有開嗎?\n女：二十四小時開放,只要用房卡就能進去。\n男：太好了。喔,還有一件事,星期五可以延遲退房嗎?\n女：我現在沒辦法保證,但您星期四晚上打給櫃檯,我們會盡量安排。"
+  },
+  {
+    "id": "l3-33",
+    "difficulty": "中級",
+    "title": "辦公用品供應商比價",
+    "dialogue": [
+      { "s": "W", "text": "Sam, did you finish comparing the two office supply companies? The purchase order has to go out Friday." },
+      { "s": "M", "text": "Almost. I have quotes from both. Weston Office Direct is cheaper on paper and folders, but delivery takes about a week." },
+      { "s": "W", "text": "A week? We usually run out of printer paper before that." },
+      { "s": "M", "text": "That's what worries me too. The other one, Nakamura Supply, is about eight percent more expensive, but they deliver in two days and there's no minimum order." },
+      { "s": "W", "text": "Eight percent isn't nothing. What do we spend in a month, roughly?" },
+      { "s": "M", "text": "Around twelve hundred dollars. So we'd be paying about a hundred more each month." },
+      { "s": "W", "text": "That's less than I expected. And with Weston we'd have to keep more in the storage room, which is already full." },
+      { "s": "M", "text": "True. And Nakamura gives us a discount if we sign for a full year." },
+      { "s": "W", "text": "How much of a discount?" },
+      { "s": "M", "text": "Five percent off every order. That makes the difference between the two almost nothing." },
+      { "s": "W", "text": "Then let's go with Nakamura. Could you write it up and send it to me before lunch? I'll take it to Ms. Bennett for approval." },
+      { "s": "M", "text": "Sure. I'll put both quotes in the same file so she can see the numbers side by side." }
+    ],
+    "questions": [
+      {
+        "q": "What are the speakers mainly discussing?",
+        "options": [
+          "Moving into a larger storage room",
+          "Limiting how much each department orders",
+          "Choosing a company to buy office supplies from",
+          "Setting the price of a new product"
+        ],
+        "answer": 2,
+        "explanation": "定位在女子開頭：did you finish comparing the two office supply companies?（你把兩家辦公用品公司比較完了嗎?）之後兩人一路討論價格、到貨時間與折扣,最後決定選 Nakamura。整段主題就是挑供應商,選 (C)。(A) 倉庫太滿只是其中一個考量,不是主題;(B) 沒有討論限制各部門的訂購;(D) 他們是買方,不是在訂價。"
+      },
+      {
+        "q": "What is the main disadvantage of Weston Office Direct?",
+        "options": [
+          "It charges more than the other company",
+          "Its deliveries take too long",
+          "It requires a large minimum order",
+          "It does not sell printer paper"
+        ],
+        "answer": 1,
+        "explanation": "定位在男子第一次發言：Weston Office Direct is cheaper on paper and folders, but delivery takes about a week（Weston 的紙和資料夾比較便宜,但到貨要一星期）,女子隨即說公司常在那之前就把影印紙用完。缺點在於出貨太慢,選 (B)。(A) 恰好相反,Weston 比較便宜;(C) 沒有最低訂購量的是 Nakamura,選項把兩家的資訊對調;(D) Weston 有賣紙,只是送得慢。"
+      },
+      {
+        "q": "What will the man most likely do next?",
+        "options": [
+          "Telephone Ms. Bennett",
+          "Visit the supplier's office",
+          "Order more printer paper",
+          "Prepare a document for the woman"
+        ],
+        "answer": 3,
+        "explanation": "定位在最後兩句：女子說 Could you write it up and send it to me before lunch?（可以寫好在午餐前寄給我嗎?）男子答應並說會把兩份報價放在同一個檔案裡。他接下來要做的是整理文件,選 (D)。(A) 拿去給 Bennett 女士的是女子,不是他;(B) 沒有提到要拜訪供應商;(C) 影印紙只是舉例說明用量,不是他下一步的動作。"
+      }
+    ],
+    "transcriptZh": "女：Sam,你把那兩家辦公用品公司比較完了嗎?採購單星期五就要送出去。\n男：快好了。兩家的報價我都拿到了。Weston Office Direct 的紙和資料夾比較便宜,但到貨大概要一星期。\n女：一星期?我們通常在那之前影印紙就用完了。\n男：我也是擔心這點。另一家 Nakamura Supply 大約貴百分之八,但兩天到貨,而且沒有最低訂購量。\n女：百分之八也不算少。我們一個月大概花多少?\n男：一千二百元左右,所以一個月大概多付一百元。\n女：比我想的少。而且如果選 Weston,我們得在倉庫多囤一些,可是倉庫已經滿了。\n男：對。而且如果簽一整年,Nakamura 會給折扣。\n女：折多少?\n男：每一筆訂單都打九五折,這樣兩家的差距幾乎就沒了。\n女：那就選 Nakamura。你可以寫好在午餐前寄給我嗎?我拿去給 Bennett 女士核准。\n男：沒問題。我會把兩份報價放在同一個檔案裡,讓她可以並排看數字。"
+  },
+  {
+    "id": "l3-34",
+    "difficulty": "中級",
+    "title": "健身房會員方案諮詢",
+    "dialogue": [
+      { "s": "W", "text": "Hi. I walk past your gym on my way to work every day, so I thought I'd come in and ask about joining." },
+      { "s": "M", "text": "Happy to help. Are you thinking about a monthly plan or a yearly one?" },
+      { "s": "W", "text": "I'm not sure yet. What's the difference?" },
+      { "s": "M", "text": "The monthly plan is fifty dollars and you can stop any time. The yearly plan works out to forty a month, but you pay six months up front." },
+      { "s": "W", "text": "I see. What does that include?" },
+      { "s": "M", "text": "Both plans give you everything on the main floor — the machines, the weights, and the pool. Group classes are ten dollars each unless you add the class package." },
+      { "s": "W", "text": "How much is the package?" },
+      { "s": "M", "text": "Fifteen dollars more a month, and then classes are free. If you take two or more a month, it pays for itself." },
+      { "s": "W", "text": "That's useful. I'd probably come early, before eight in the morning. Is it crowded then?" },
+      { "s": "M", "text": "Between six and seven it's busy, mostly people coming before work. After seven thirty it's pretty quiet." },
+      { "s": "W", "text": "Good. Could I try the gym once before I decide?" },
+      { "s": "M", "text": "Of course. Bring a photo ID and we'll give you a free day pass. You can use it any day this week." }
+    ],
+    "questions": [
+      {
+        "q": "Why is the woman at the gym?",
+        "options": [
+          "To ask about becoming a member",
+          "To return a piece of equipment",
+          "To sign up for a morning class",
+          "To meet a friend for exercise"
+        ],
+        "answer": 0,
+        "explanation": "定位在女子第一句：I thought I'd come in and ask about joining（我想說進來問問入會的事）,後面整段都在問方案、費用與人潮。她的目的是了解會員方案,選 (A)。(B) 沒有提到歸還器材;(C) 課程只是她順口問到的一部分,她還沒報名;(D) 沒有提到朋友。"
+      },
+      {
+        "q": "What does the man say about the class package?",
+        "options": [
+          "It is free for yearly members",
+          "It is only available in the morning",
+          "It includes the use of the pool",
+          "It costs fifteen dollars a month"
+        ],
+        "answer": 3,
+        "explanation": "定位在男子第三次發言：Fifteen dollars more a month, and then classes are free（一個月多十五元,課程就免費）。加購課程方案本身一個月要十五元,選 (D)。(A) 免費的是課程,不是方案本身,而且和年約無關;(B) 沒有說課程只在早上;(C) 游泳池兩種方案都含,不是課程方案的內容,屬於資訊錯置的誘答。"
+      },
+      {
+        "q": "What does the man imply about the early morning?",
+        "options": [
+          "The pool is closed at that time",
+          "No classes are offered before eight",
+          "The gym is crowded for about an hour",
+          "There are no staff members on duty"
+        ],
+        "answer": 2,
+        "explanation": "定位在男子第四次發言：Between six and seven it's busy... After seven thirty it's pretty quiet（六點到七點很多人……七點半以後就滿安靜的）。可以推知早上只有一小段時間人多,選 (C)。(A) 完全沒說泳池關閉;(B) 男子沒有說早上不開課;(D) 沒有提到人手,而且他還說可以拿一日體驗券來用。"
+      }
+    ],
+    "transcriptZh": "女：你好,我每天上班都會經過你們健身房,所以想進來問問入會的事。\n男：很樂意為您說明。您考慮月繳方案還是年繳方案?\n女：我還不確定,兩種差在哪裡?\n男：月繳方案一個月五十元,隨時可以停。年繳方案平均一個月四十元,但要先付六個月。\n女：了解。方案包含哪些?\n男：兩種方案主樓層的設施都能用,包括器材、重量訓練區和游泳池。團體課程一堂十元,除非您加購課程方案。\n女：課程方案多少錢?\n男：一個月多十五元,課程就免費。一個月上兩堂以上就回本了。\n女：這蠻實用的。我大概會早上八點前來,那時候人多嗎?\n男：六點到七點很多人,大多是上班前來運動的。七點半以後就滿安靜的。\n女：那好。我可以先來體驗一次再決定嗎?\n男：當然。帶有照片的證件來,我們會給您一張免費體驗券,這禮拜任何一天都能用。"
+  },
+  {
+    "id": "l3-35",
+    "difficulty": "進階",
+    "title": "季度報告的分工安排",
+    "dialogue": [
+      { "s": "W", "text": "Do you have a minute? I'd like to settle who does what on the quarterly report." },
+      { "s": "M", "text": "Now is fine. The deadline is the twelfth, isn't it?" },
+      { "s": "W", "text": "The eighteenth for the final version, but Ms. Alvarez wants a draft by the twelfth so she can go over it before the board meeting." },
+      { "s": "M", "text": "So really we have a week and a half. Last quarter I did the sales figures and you wrote the summary." },
+      { "s": "W", "text": "I was thinking we could switch this time. I can handle the new tracking system on my own now, and you write faster than I do." },
+      { "s": "M", "text": "That makes sense, though the summary always takes longer. If I'm writing it, I'd need the figures by the seventh at the latest." },
+      { "s": "W", "text": "I can manage that. The system pulls most of it for me now. What takes time is the numbers for each region, since two offices still send theirs by email." },
+      { "s": "M", "text": "Could we ask them to enter the numbers directly? That would save you a day." },
+      { "s": "W", "text": "I've asked twice. Their manager says they'll switch after the software update in October." },
+      { "s": "M", "text": "Fine, we'll live with it this quarter. One thing though — please point out anything unusual when you send me the figures. Last time I found a large return in the March numbers after I'd already written half the summary." },
+      { "s": "W", "text": "I'll mark those in a separate note. And could you keep the summary under four pages? Ms. Alvarez cut two pages from the last one." },
+      { "s": "M", "text": "Understood. I'll keep it short and put the details in an attachment." }
+    ],
+    "questions": [
+      {
+        "q": "What are the speakers mainly discussing?",
+        "options": [
+          "A change to the date of a board meeting",
+          "A problem with a software update",
+          "How to divide the work on a report",
+          "Hiring staff for a regional office"
+        ],
+        "answer": 2,
+        "explanation": "定位在女子第一句：I'd like to settle who does what on the quarterly report（我想把季報告誰做哪部分講定）,之後兩人交換了數字與摘要的分工並約定交件時間。主題是分工,選 (C)。(A) 董事會只是交件時間的參考點,日期沒有更動;(B) 軟體更新只被提到一次,用來說明兩個辦公室何時改用系統;(D) 完全沒有談到徵人。"
+      },
+      {
+        "q": "What does Ms. Alvarez want to receive by the twelfth?",
+        "options": [
+          "The final version of the report",
+          "A list of the regional offices",
+          "The results of the software update",
+          "A draft she can look over"
+        ],
+        "answer": 3,
+        "explanation": "定位在女子第二次發言：The eighteenth for the final version, but Ms. Alvarez wants a draft by the twelfth（十八號是定稿,但 Alvarez 女士要在十二號前拿到初稿）。十二號要的是初稿,選 (D)。(A) 是十八號才要的,兩個日期刻意放在同一句形成陷阱;(B) 各地區的數字是女子自己整理的資料,不是要交給她的東西;(C) 軟體更新要到十月,和這個期限無關。"
+      },
+      {
+        "q": "Why does the man mention the March numbers?",
+        "options": [
+          "To explain why he wants to be told about unusual figures",
+          "To show that sales have gone up",
+          "To ask for a correction to an earlier report",
+          "To suggest changing to a different system"
+        ],
+        "answer": 0,
+        "explanation": "定位在男子最後第二次發言：please point out anything unusual when you send me the figures. Last time I found a large return in the March numbers after I'd already written half the summary（給我數字時請標出異常的部分,上次我摘要寫到一半才發現三月有一筆大額退貨）。他提三月的數字是為了說明前一句的要求,選 (A)。(B) 大額退貨不是業績成長;(C) 他沒有要求更正舊報告,只希望這次先被提醒;(D) 換系統的討論是關於兩個辦公室用電子郵件送資料,不是他提三月數字的用意。"
+      }
+    ],
+    "transcriptZh": "女：你現在有空嗎?我想把季報告誰做哪一部分講定。\n男：現在可以。截止日是十二號吧?\n女：定稿是十八號,但 Alvarez 女士希望十二號前拿到初稿,這樣她能在董事會之前先看過。\n男：所以其實只有一個半星期。上一季是我做業績數字,你寫摘要。\n女：我在想這次我們換一下。新的追蹤系統我現在自己就能處理,而且你寫得比我快。\n男：有道理,不過摘要一向比較花時間。如果由我寫,我最晚七號要拿到數字。\n女：這我做得到。現在大部分資料系統會自動抓。比較花時間的是各地區的數字,因為還有兩個辦公室是用電子郵件寄過來。\n男：可以請他們直接輸入系統嗎?這樣你可以省一天。\n女：我問過兩次了。他們主管說十月軟體更新之後才會改。\n男：好吧,這一季就先這樣。不過有一件事,你把數字寄給我的時候,請把異常的地方標出來。上次我摘要都寫一半了,才發現三月有一筆大額退貨。\n女：我會另外寫一張註記標起來。還有,摘要可以控制在四頁以內嗎?上一份 Alvarez 女士刪掉了兩頁。\n男：了解。我會寫短一點,細節放在附件裡。"
+  }
+]

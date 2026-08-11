@@ -932,6 +932,381 @@ TOEIC.listening = {
    "answer": 0,
    "explanation": "正解 (A)：What time 問時間，「九點半」直接對應。\n(B) 回答地點，屬於 Where。\n(C) thirteen 與正解裡的 thirty 是多益經典相似音陷阱，但它回答的是人數。",
    "transcriptZh": "問：工作坊幾點開始？\n(A) 九點半。\n(B) 在大廳。\n(C) 大約十三個人。"
+  },
+  {
+   "id": "l2-51",
+   "difficulty": "基礎",
+   "category": "WH問句",
+   "accent": "US",
+   "question": "How do I get to the loading dock from here?",
+   "options": [
+    "It closes at five.",
+    "Go through the double doors and turn right.",
+    "The truck's already been loaded."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：How do I get to... 是問路線，「穿過那道雙開門後右轉」直接給出指引。\n(A) 回答的是關閉時間，屬於 When 的答案。\n(C) 用 loaded 呼應 loading dock 的同源字誘答，講的卻是貨車已經裝好，並沒有指路。",
+   "transcriptZh": "問：請問從這裡怎麼去卸貨區？\n(A) 它五點關。\n(B) 穿過那道雙開門後右轉。\n(C) 貨車已經裝好了。"
+  },
+  {
+   "id": "l2-52",
+   "difficulty": "基礎",
+   "category": "Yes/No問句",
+   "accent": "GB",
+   "question": "Are you free to talk for a minute?",
+   "options": [
+    "Sure, come on in.",
+    "It's about a ten-minute walk.",
+    "Yes, the first month is free."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：對方問「有空聊一下嗎」，用 Sure 答應再補上「進來吧」，是最自然的回應。\n(B) 抓住 minute 這個字做文章，答的卻是走路要幾分鐘。\n(C) 重複 free，但這裡是「免費」的意思，不是「有空」，屬於一字多義陷阱。",
+   "transcriptZh": "問：你現在有空聊一下嗎？\n(A) 當然，進來吧。\n(B) 走路大概十分鐘。\n(C) 對，第一個月免費。"
+  },
+  {
+   "id": "l2-53",
+   "difficulty": "中級",
+   "category": "附加/否定問句",
+   "accent": "AU",
+   "question": "You're taking the early flight tomorrow, aren't you?",
+   "options": [
+    "It was a smooth flight, thanks.",
+    "About two hours by train.",
+    "I switched to the afternoon one."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：間接回應。不說 No，而是講「我改成下午那班了」，等於否定了對方的預設。\n(A) 重複 flight，卻用過去式講上一趟飛行順不順，時態與內容都錯位。\n(B) 「搭火車大約兩小時」回答的是交通時間，與問句無關。",
+   "transcriptZh": "問：你明天搭早班飛機吧？\n(A) 那趟飛行很平穩，謝謝。\n(B) 搭火車大約兩小時。\n(C) 我改成下午那班了。"
+  },
+  {
+   "id": "l2-54",
+   "difficulty": "基礎",
+   "category": "WH問句",
+   "accent": "US",
+   "question": "What did you think of the new logo?",
+   "options": [
+    "The colors are a bit dark for me.",
+    "On the second floor.",
+    "I'll think it over."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：What did you think of...? 是問感想，「顏色對我來說有點暗」給出具體評價。\n(B) 回答的是地點，屬於 Where 的答案。\n(C) 重複 think，但 think it over 是「再考慮看看」，並沒有講出任何評價。",
+   "transcriptZh": "問：你覺得新的標誌怎麼樣？\n(A) 顏色對我來說有點暗。\n(B) 在二樓。\n(C) 我再考慮看看。"
+  },
+  {
+   "id": "l2-55",
+   "difficulty": "中級",
+   "category": "選擇問句",
+   "accent": "GB",
+   "question": "Should I revise the report, or would you rather do it yourself?",
+   "options": [
+    "Yes, that's the final version.",
+    "Please go ahead. I'm out of time.",
+    "The printer's just down the hall."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：選擇問句要挑一邊，「你來吧，我沒時間了」選定前者並補上理由。\n(A) 選擇問句不能用 Yes 回答，這是最常見的陷阱。\n(C) 由 report 聯想到印表機，講的卻是印表機在哪裡，答非所問。",
+   "transcriptZh": "問：報告要我來改，還是你想自己改？\n(A) 對，那是最終版。\n(B) 你來吧，我沒時間了。\n(C) 印表機就在走廊那頭。"
+  },
+  {
+   "id": "l2-56",
+   "difficulty": "中級",
+   "category": "陳述句回應",
+   "accent": "AU",
+   "question": "The coffee machine in the break room is broken again.",
+   "options": [
+    "Two sugars, please.",
+    "I usually take my break at ten.",
+    "Didn't we just have it fixed last month?"
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：間接回應。用反問「我們上個月不是才修過嗎」表達驚訝，是聽到壞消息時最自然的接話。\n(A) 由 coffee 聯想到加幾匙糖，屬於關鍵字聯想陷阱。\n(B) 拿 break room 的 break 做文章，講的是自己幾點休息，與機器壞掉無關。",
+   "transcriptZh": "陳述：茶水間的咖啡機又壞了。\n(A) 請加兩匙糖。\n(B) 我通常十點休息。\n(C) 我們上個月不是才修過嗎？"
+  },
+  {
+   "id": "l2-57",
+   "difficulty": "中級",
+   "category": "WH問句",
+   "accent": "US",
+   "question": "Who's picking up the visitors from the airport?",
+   "options": [
+    "Terminal two, I think.",
+    "It's on the schedule by the door.",
+    "Yes, they visited last spring."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：間接回應。不直接講人名，而是說「門邊的班表上有寫」，把答案指向資料來源，是 Part 2 高頻的正解型態。\n(A) 「第二航廈」被 airport 帶著走，回答的是 Where。\n(C) 用 visited 呼應 visitors，而且 Who 開頭的問句不能用 Yes 回答。",
+   "transcriptZh": "問：誰要去機場接那幾位訪客？\n(A) 我想是第二航廈。\n(B) 門邊的班表上有寫。\n(C) 對，他們去年春天來過。"
+  },
+  {
+   "id": "l2-58",
+   "difficulty": "基礎",
+   "category": "Yes/No問句",
+   "accent": "GB",
+   "question": "Did anyone call while I was out?",
+   "options": [
+    "Yes, your dentist's office.",
+    "I'll be out all morning.",
+    "I called the bank earlier."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：用 Yes 回應後直接說出來電者是「你的牙醫診所」，資訊完整。\n(B) 重複 out，講的卻是自己整個早上不在，與有沒有人來電無關。\n(C) 重複 call，但講的是自己打電話出去，不是有沒有人打進來。",
+   "transcriptZh": "問：我不在的時候有人打電話來嗎？\n(A) 有，你的牙醫診所。\n(B) 我整個早上都不在。\n(C) 我剛才打電話給銀行。"
+  },
+  {
+   "id": "l2-59",
+   "difficulty": "進階",
+   "category": "附加/否定問句",
+   "accent": "AU",
+   "question": "Wasn't Ms. Novak supposed to sign the contract by Friday?",
+   "options": [
+    "She signed the visitor log on her way in.",
+    "In the top drawer.",
+    "She's out until next week."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：間接回應。回答「她下週才回來」，等於說明合約為什麼還沒簽，沒有 Yes／No 也是完整的回應。\n(A) 重複 signed，卻把簽名的對象換成訪客登記簿，是關鍵字重複陷阱。\n(B) 「在最上層抽屜」回答的是東西放哪裡，與問句不符。",
+   "transcriptZh": "問：Novak 小姐不是應該在週五前把合約簽好嗎？\n(A) 她進來的時候簽了訪客登記簿。\n(B) 在最上層抽屜。\n(C) 她下週才會回來。"
+  },
+  {
+   "id": "l2-60",
+   "difficulty": "中級",
+   "category": "WH問句",
+   "accent": "US",
+   "question": "Where should I put the samples the client sent?",
+   "options": [
+    "They sent them last Tuesday.",
+    "Yes, go ahead.",
+    "Anywhere on the back counter is fine."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：Where 問地點，「放後面檯面上哪裡都行」雖然講得寬鬆，仍確實指出了位置。\n(A) 重複 sent，答的是寄出時間，屬於 When。\n(B) Where 開頭的問句不能用 Yes 回答，這是格式上的錯誤。",
+   "transcriptZh": "問：客戶寄來的樣品我該放哪裡？\n(A) 他們上週二寄的。\n(B) 好啊，你去吧。\n(C) 放後面檯面上哪裡都行。"
+  },
+  {
+   "id": "l2-61",
+   "difficulty": "中級",
+   "category": "Yes/No問句",
+   "accent": "GB",
+   "question": "Do you know when the warranty on the copier runs out?",
+   "options": [
+    "There should be a date on the receipt.",
+    "It copies both sides now.",
+    "No, I don't need a new one."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：間接回應。不直接講到期日，而是指出「收據上應該有日期」，把對方導向查得到答案的地方。\n(B) 用 copies 呼應 copier，講的是雙面列印功能，與保固無關。\n(C) 雖然以 No 開頭，接的卻是「我不需要新的」，沒有回答保固何時到期。",
+   "transcriptZh": "問：你知道影印機的保固什麼時候到期嗎？\n(A) 收據上應該有日期。\n(B) 它現在可以雙面印了。\n(C) 不用，我不需要新的。"
+  },
+  {
+   "id": "l2-62",
+   "difficulty": "基礎",
+   "category": "選擇問句",
+   "accent": "AU",
+   "question": "Do you want to meet in my office or in the conference room?",
+   "options": [
+    "Yes, at two o'clock.",
+    "The conference room. There's more space.",
+    "She's meeting a client at noon."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：選擇問句要挑其中一項，「會議室，那裡空間比較大」選定並補上理由。\n(A) 選擇問句不能用 Yes 回答。\n(C) 重複 meeting，但講的是別人中午要見客戶，與在哪裡談事情無關。",
+   "transcriptZh": "問：你想在我辦公室談，還是去會議室？\n(A) 對，兩點。\n(B) 會議室吧，那裡空間比較大。\n(C) 她中午要見一位客戶。"
+  },
+  {
+   "id": "l2-63",
+   "difficulty": "進階",
+   "category": "WH問句",
+   "accent": "US",
+   "question": "How come the front entrance is blocked off this morning?",
+   "options": [
+    "They're repairing the sidewalk out front.",
+    "It opens at seven, I think.",
+    "No, I came in through the side door."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：How come 等於 Why，「他們在修前面的人行道」直接說明原因。\n(B) 被 entrance 帶著走，回答的是開門時間，屬於 When。\n(C) Why／How come 的問句不能用 No 回答，而且講的是自己怎麼進來的。",
+   "transcriptZh": "問：今天早上前門怎麼會封起來？\n(A) 他們在修前面的人行道。\n(B) 我想是七點開。\n(C) 不，我從側門進來的。"
+  },
+  {
+   "id": "l2-64",
+   "difficulty": "中級",
+   "category": "陳述句回應",
+   "accent": "GB",
+   "question": "I can't find the file you emailed me yesterday.",
+   "options": [
+    "About twenty pages.",
+    "Yes, I filed those already.",
+    "Want me to send it again?"
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：對方說找不到檔案，回「要我再寄一次嗎」是最直接的解決方式。\n(A) 「大約二十頁」回答的是篇幅，對方並沒有問長度。\n(B) 用 filed 呼應 file，卻是「歸檔」這個動詞，屬於同形異義陷阱。",
+   "transcriptZh": "陳述：我找不到你昨天寄給我的檔案。\n(A) 大約二十頁。\n(B) 對，我已經把那些歸檔了。\n(C) 要我再寄一次嗎？"
+  },
+  {
+   "id": "l2-65",
+   "difficulty": "中級",
+   "category": "WH問句",
+   "accent": "AU",
+   "question": "How many people signed up for the company picnic?",
+   "options": [
+    "It's on the twelfth.",
+    "Fewer than we expected.",
+    "They signed the form this morning."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：How many 問人數，「比我們預期的少」雖然沒給確切數字，仍是對數量的合理回答。\n(A) 回答的是日期，屬於 When 的答案。\n(C) 重複 signed，講的是簽表格的時間，沒有回答人數。",
+   "transcriptZh": "問：有多少人報名公司野餐？\n(A) 是十二號。\n(B) 比我們預期的少。\n(C) 他們今天早上簽了表格。"
+  },
+  {
+   "id": "l2-66",
+   "difficulty": "進階",
+   "category": "Yes/No問句",
+   "accent": "US",
+   "question": "Could you cover my shift on Saturday?",
+   "options": [
+    "Please put the cover back on the box.",
+    "The forecast for Saturday looks good.",
+    "Let me check with my family first."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：間接回應。被請求代班時回「我先問一下家人」，表示還不能答應，是很自然的保留式回答。\n(A) 重複 cover，但用的是「蓋子」的意思，屬於一字多義陷阱。\n(B) 重複 Saturday，講的卻是天氣預報，與代班無關。",
+   "transcriptZh": "問：星期六你可以幫我代班嗎？\n(A) 請把蓋子蓋回箱子上。\n(B) 星期六的天氣預報看起來不錯。\n(C) 我先問一下家人。"
+  },
+  {
+   "id": "l2-67",
+   "difficulty": "基礎",
+   "category": "WH問句",
+   "accent": "GB",
+   "question": "When does the new branch open?",
+   "options": [
+    "Sometime in March.",
+    "On Maple Street.",
+    "Yes, I've been there."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：When 問時間，「三月的某個時候」直接回答。\n(B) 「在楓樹街上」是地點，屬於 Where 的答案。\n(C) When 開頭的問句不能用 Yes 回答。",
+   "transcriptZh": "問：新分店什麼時候開幕？\n(A) 三月的某個時候。\n(B) 在楓樹街上。\n(C) 對，我去過那裡。"
+  },
+  {
+   "id": "l2-68",
+   "difficulty": "中級",
+   "category": "附加/否定問句",
+   "accent": "AU",
+   "question": "You haven't seen my badge anywhere, have you?",
+   "options": [
+    "They're printing new badges on Friday.",
+    "Check the front desk. Someone turned one in.",
+    "I saw that movie last night."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：間接回應。不說有沒有看到，而是要對方去櫃檯問，因為「有人撿到一個交上去了」，實質上解決了問題。\n(A) 重複 badge，講的是週五要印新的識別證，完全沒有回應「有沒有看到」。\n(C) 重複 saw，但看的是電影，是同一個動詞換受詞的陷阱。",
+   "transcriptZh": "問：你該不會有看到我的識別證吧？\n(A) 他們星期五要印新的識別證。\n(B) 去櫃檯問問，有人撿到一個交上去了。\n(C) 我昨晚看了那部電影。"
+  },
+  {
+   "id": "l2-69",
+   "difficulty": "中級",
+   "category": "WH問句",
+   "accent": "US",
+   "question": "What's the fastest way to the train station from the hotel?",
+   "options": [
+    "The train leaves at eight.",
+    "The hotel runs a shuttle every hour.",
+    "Two nights, please."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：問最快的方式，「飯店每小時有接駁車」提供了具體交通方式，回答合理。\n(A) 重複 train，答的是發車時間，屬於 When。\n(C) 由 hotel 聯想到訂房，「兩晚，麻煩了」是辦入住時才會說的話。",
+   "transcriptZh": "問：從飯店到火車站最快的方式是什麼？\n(A) 火車八點開。\n(B) 飯店每小時有接駁車。\n(C) 兩晚，麻煩了。"
+  },
+  {
+   "id": "l2-70",
+   "difficulty": "進階",
+   "category": "選擇問句",
+   "accent": "GB",
+   "question": "Are we paying for the catering out of the marketing budget or the events budget?",
+   "options": [
+    "Yes, the food was excellent.",
+    "They catered our office party last year.",
+    "Neither. The client's covering it."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：選擇問句的高階解法是兩個都不選，「都不是，客戶會出這筆錢」正是 Part 2 常考的 Neither 型回答。\n(A) 選擇問句不能用 Yes 回答，內容也只是在稱讚餐點。\n(B) 重複 catered，講的是去年的事，時態與問題錯位。",
+   "transcriptZh": "問：外燴的費用是從行銷預算出，還是從活動預算出？\n(A) 對，那些餐點很棒。\n(B) 去年公司聚餐是他們辦的外燴。\n(C) 都不是，客戶會出這筆錢。"
+  },
+  {
+   "id": "l2-71",
+   "difficulty": "基礎",
+   "category": "Yes/No問句",
+   "accent": "AU",
+   "question": "Is there a fee for parking here?",
+   "options": [
+    "Only after six o'clock.",
+    "It's a lovely park, isn't it?",
+    "I paid her on Friday."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：沒有直接說 Yes，但「只有六點以後才要」已經把收不收費講清楚了。\n(B) 用 park 與 parking 的相似音誘答，講的卻是公園很美。\n(C) 用 paid 呼應 fee，但付錢的對象是某個人，與停車費無關。",
+   "transcriptZh": "問：這裡停車要收費嗎？\n(A) 只有六點以後才要。\n(B) 這公園很美，對吧？\n(C) 我星期五付錢給她了。"
+  },
+  {
+   "id": "l2-72",
+   "difficulty": "基礎",
+   "category": "陳述句回應",
+   "accent": "US",
+   "question": "I'm heading out to lunch.",
+   "options": [
+    "Could you bring me back a sandwich?",
+    "Yes, the meeting went well.",
+    "It was a long lunch."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：同事說要出去吃午餐，順口請對方幫忙帶一份三明治，是最自然的接話。\n(B) 回答的是會議狀況，與對方要出門吃飯無關。\n(C) 重複 lunch，卻用過去式講「那頓午餐吃很久」，時態與情境都錯位。",
+   "transcriptZh": "陳述：我要出去吃午餐了。\n(A) 可以幫我帶個三明治回來嗎？\n(B) 對，會議進行得很順利。\n(C) 那頓午餐吃很久。"
+  },
+  {
+   "id": "l2-73",
+   "difficulty": "中級",
+   "category": "WH問句",
+   "accent": "GB",
+   "question": "Which key opens the supply cabinet?",
+   "options": [
+    "About thirty dollars.",
+    "Yes, I locked it last night.",
+    "The small silver one."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：Which 要求從幾樣東西裡挑一個，「那把銀色的小鑰匙」明確指認。\n(A) 「大約三十美元」回答的是價錢，屬於 How much。\n(B) Which 開頭的問句不能用 Yes 回答，內容講的也是鎖門，不是哪一把鑰匙。",
+   "transcriptZh": "問：哪一把鑰匙可以開文具櫃？\n(A) 大約三十美元。\n(B) 對，我昨晚鎖了。\n(C) 那把銀色的小鑰匙。"
+  },
+  {
+   "id": "l2-74",
+   "difficulty": "中級",
+   "category": "附加/否定問句",
+   "accent": "AU",
+   "question": "The staff directory's been updated, hasn't it?",
+   "options": [
+    "Yes, we hired three people last month.",
+    "I'm still waiting on two departments.",
+    "My computer updates itself overnight."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：間接回應。「我還在等兩個部門給資料」等於說明還沒更新完，比直接說 No 更接近真實對話。\n(A) 由 staff 聯想到招募，講的是上個月錄取幾個人，沒有回答通訊錄更新了沒。\n(C) 重複 update，但主詞換成自己的電腦，與員工通訊錄無關。",
+   "transcriptZh": "問：員工通訊錄已經更新了吧？\n(A) 對，我們上個月錄取了三個人。\n(B) 我還在等兩個部門給資料。\n(C) 我的電腦會在半夜自己更新。"
+  },
+  {
+   "id": "l2-75",
+   "difficulty": "進階",
+   "category": "Yes/No問句",
+   "accent": "US",
+   "question": "Do you think we'll get approval before the end of the month?",
+   "options": [
+    "That depends on the finance team.",
+    "Yes, I approved the design.",
+    "At the end of the hallway."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：間接回應。「要看財務部的動作」沒有給 Yes／No，卻點出了關鍵變數，是進階題常見的正解型態。\n(B) 重複 approve，但講的是自己核准了設計，主詞與時態都不對。\n(C) 用 end 這個字誘答，答的卻是走廊盡頭這個位置。",
+   "transcriptZh": "問：你覺得我們這個月底前會拿到核准嗎？\n(A) 要看財務部的動作。\n(B) 對，我核准了那個設計。\n(C) 在走廊盡頭。"
   }
  ],
  "p3": [
@@ -1844,6 +2219,461 @@ TOEIC.listening = {
     }
    ],
    "transcriptZh": "男：Sofia，產品發表會的人數統計出來了，有一百八十人確認出席。 女：一百八十？我們訂的場地是一百五十人的。 男：我知道，所以我先來找你。 女：嗯。飯店二樓有一間比較大的，不過我猜會比較貴。 男：我已經問過了。要多六百塊，而且他們星期五前要答覆。 女：六百。比我原本想花的多，不過把人擋在外面更難看。 男：我也是這麼想。還有餐飲那邊，他們也是照一百五十人準備的。 女：對，那邊也要打電話。好，就換大的那間，我去跟 Duval 先生報備。 男：你覺得他會答應嗎？ 女：他去年春天批准過類似的變更，應該會。我今天下午找他談。 男：好。你那邊有消息，我就跟飯店確認，順便改餐飲的訂單。 女：還有，拿到新的平面圖就寄給我，我想看展示桌要擺在哪裡。"
+  },
+  {
+   "id": "l3-31",
+   "difficulty": "基礎",
+   "title": "視訊會議的連線狀況",
+   "dialogue": [
+    {
+     "s": "M",
+     "text": "Karen, can you hear me? I think something's wrong with my microphone."
+    },
+    {
+     "s": "W",
+     "text": "I can hear you fine, but your video is frozen. It stopped about a minute ago."
+    },
+    {
+     "s": "M",
+     "text": "Sorry about that. Let me turn my camera off and back on."
+    },
+    {
+     "s": "W",
+     "text": "Try that. Are you on the office network today, or are you at home?"
+    },
+    {
+     "s": "M",
+     "text": "I'm working from home. The connection's been slow all morning."
+    },
+    {
+     "s": "W",
+     "text": "That's probably it. Why don't you close the other programs you have open? That usually helps."
+    },
+    {
+     "s": "M",
+     "text": "Okay, I just closed my email and the file I was reading. How is it now?"
+    },
+    {
+     "s": "W",
+     "text": "Much better. I can see you clearly."
+    },
+    {
+     "s": "M",
+     "text": "Good. So should we wait for Mr. Okada? He hasn't joined yet."
+    },
+    {
+     "s": "W",
+     "text": "He sent me a message. He's still on a call with a client, so he'll be about ten minutes late."
+    },
+    {
+     "s": "M",
+     "text": "Then let's start with the budget and leave the schedule until he's here."
+    },
+    {
+     "s": "W",
+     "text": "Sounds good. I'll take notes and send them to everyone afterward."
+    }
+   ],
+   "questions": [
+    {
+     "q": "What is the problem at the beginning of the conversation?",
+     "options": [
+      "The woman cannot find the meeting link",
+      "The meeting room is being used by another team",
+      "The man has not prepared his materials",
+      "The man's video is not working properly"
+     ],
+     "answer": 3,
+     "explanation": "定位在前兩句：男子說 something's wrong with my microphone（我的麥克風好像有問題）,女子回 I can hear you fine, but your video is frozen（我聽得很清楚,但你的畫面卡住了）。聲音其實沒問題,真正出狀況的是畫面,選 (D)。(A) 兩人已經在同一個會議中,沒有找不到連結的問題;(B) 全程沒有提到會議室;(C) 男子只關掉正在看的檔案,不是沒準備資料。"
+    },
+    {
+     "q": "What does the woman suggest the man do?",
+     "options": [
+      "Close the other programs he is using",
+      "Restart his computer",
+      "Come into the office",
+      "Call the technical support desk"
+     ],
+     "answer": 0,
+     "explanation": "定位在女子第三次發言：Why don't you close the other programs you have open?（要不要把你開著的其他程式關掉?）Why don't you 是提出建議的常見句型,選 (A)。(B) 男子只重開了相機,沒有重開電腦;(C) 女子只是問他今天在不在辦公室,沒有叫他進公司;(D) 對話中沒有提到技術支援。"
+    },
+    {
+     "q": "What will the speakers most likely do next?",
+     "options": [
+      "End the meeting early",
+      "Talk about the budget",
+      "Wait until Mr. Okada joins",
+      "Send an email to a client"
+     ],
+     "answer": 1,
+     "explanation": "定位在男子最後一句：let's start with the budget and leave the schedule until he's here（我們先從預算開始,行程表等他來再談）,女子回 Sounds good（好啊）。兩人已經談定下一步先討論預算,選 (B)。(C) 正好相反,他們決定不等 Mr. Okada;(A) 沒有要提早結束;(D) 打電話給客戶的是 Mr. Okada,不是這兩人要做的事。"
+    }
+   ],
+   "transcriptZh": "男：Karen,聽得到我說話嗎?我的麥克風好像有問題。\n女：我聽得很清楚,但你的畫面卡住了,大概一分鐘前就不動了。\n男：不好意思。我把相機關掉再打開看看。\n女：試試看。你今天是用公司的網路,還是在家?\n男：我今天在家工作,網路一整個早上都很慢。\n女：那大概就是原因了。要不要把你開著的其他程式關掉?通常會有幫助。\n男：好,我剛把信箱和正在看的檔案關掉了。現在呢?\n女：好多了,我可以清楚看到你。\n男：太好了。那我們要等 Okada 先生嗎?他還沒進來。\n女：他傳訊息給我了,他還在跟客戶通電話,大概會晚十分鐘。\n男：那我們先從預算開始,行程表等他來再談。\n女：好啊。我來做紀錄,結束後再寄給大家。"
+  },
+  {
+   "id": "l3-32",
+   "difficulty": "基礎",
+   "title": "飯店櫃檯的房型調整",
+   "dialogue": [
+    {
+     "s": "M",
+     "text": "Good afternoon. I have a reservation under Patrick Hale, three nights."
+    },
+    {
+     "s": "W",
+     "text": "Welcome, Mr. Hale. Let me find it. Yes, here it is. A standard room with one large bed, checking out Friday."
+    },
+    {
+     "s": "M",
+     "text": "That's right. Is there any chance of a room on a higher floor? Last time I stayed here, the street noise kept me awake."
+    },
+    {
+     "s": "W",
+     "text": "Let me see what we have. Actually, we had a cancellation this morning, so I can move you to the fifteenth floor. That room is larger and it has a desk by the window."
+    },
+    {
+     "s": "M",
+     "text": "That sounds great. Is there an extra charge for it?"
+    },
+    {
+     "s": "W",
+     "text": "Normally it's forty dollars more per night, but you're in our rewards program, so I won't charge you anything."
+    },
+    {
+     "s": "M",
+     "text": "Wonderful, thank you. And what time does breakfast start?"
+    },
+    {
+     "s": "W",
+     "text": "Six thirty to ten, in the restaurant on the second floor. Your rate includes breakfast for one person."
+    },
+    {
+     "s": "M",
+     "text": "Good to know. Is the fitness center open in the evening?"
+    },
+    {
+     "s": "W",
+     "text": "It's open twenty-four hours. You just need your key card to get in."
+    },
+    {
+     "s": "M",
+     "text": "Perfect. Oh, one more thing. Could I have a late checkout on Friday?"
+    },
+    {
+     "s": "W",
+     "text": "I can't promise it now, but call the front desk Thursday night and we'll do our best."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why does the man ask about a different room?",
+     "options": [
+      "He wants to be closer to the elevator",
+      "He was bothered by noise during an earlier stay",
+      "His room is not ready yet",
+      "He needs space to hold a meeting"
+     ],
+     "answer": 1,
+     "explanation": "定位在男子第二次發言：Last time I stayed here, the street noise kept me awake（上次我住這裡,街上的噪音吵得我睡不著）。他想換到高樓層是因為之前被噪音影響,選 (B)。(A) 完全沒提電梯;(C) 女子沒說房間還沒整理好,反而馬上就能安排;(D) 他是來住宿的,沒有提到開會。"
+    },
+    {
+     "q": "What does the woman say about the cost of the new room?",
+     "options": [
+      "It will be forty dollars each night",
+      "It will be added to the final bill",
+      "The man will not have to pay extra",
+      "The man's company will pay for it"
+     ],
+     "answer": 2,
+     "explanation": "定位在女子第三次發言：Normally it's forty dollars more per night, but you're in our rewards program, so I won't charge you anything（平常一晚要多收四十元,但您是會員,所以我不收費）。關鍵在 but 之後的轉折,選 (C)。(A) 是原價,不是實際要付的金額,屬於典型的數字陷阱;(B) 女子明說不收費;(D) 沒有提到公司付款。"
+    },
+    {
+     "q": "What does the woman suggest the man do on Thursday night?",
+     "options": [
+      "Contact the front desk",
+      "Return his key card",
+      "Order breakfast in advance",
+      "Visit the fitness center"
+     ],
+     "answer": 0,
+     "explanation": "定位在最後一句：call the front desk Thursday night and we'll do our best（星期四晚上打給櫃檯,我們會盡量安排）。這是針對延遲退房的建議,選 (A)。(B) 房卡是用來進健身房的,不是要退還;(C) 早餐已含在房價中,不需要預訂;(D) 健身房二十四小時開放,和星期四晚上無關。"
+    }
+   ],
+   "transcriptZh": "男：午安,我有訂房,名字是 Patrick Hale,住三晚。\n女：Hale 先生您好,我查一下。有了,標準房、一張大床,星期五退房。\n男：沒錯。請問有可能換到高一點的樓層嗎?上次我住這裡,街上的噪音吵得我睡不著。\n女：我看看還有什麼房。剛好今天早上有人取消,我可以幫您換到十五樓。那間比較大,窗邊還有書桌。\n男：聽起來很好。需要另外加錢嗎?\n女：平常一晚要多收四十元,不過您是我們會員方案的客人,所以我不另外收費。\n男：太好了,謝謝。那早餐幾點開始?\n女：六點半到十點,在二樓的餐廳。您的房價含一位早餐。\n男：知道了。健身房晚上有開嗎?\n女：二十四小時開放,只要用房卡就能進去。\n男：太好了。喔,還有一件事,星期五可以延遲退房嗎?\n女：我現在沒辦法保證,但您星期四晚上打給櫃檯,我們會盡量安排。"
+  },
+  {
+   "id": "l3-33",
+   "difficulty": "中級",
+   "title": "辦公用品供應商比價",
+   "dialogue": [
+    {
+     "s": "W",
+     "text": "Sam, did you finish comparing the two office supply companies? The purchase order has to go out Friday."
+    },
+    {
+     "s": "M",
+     "text": "Almost. I have quotes from both. Weston Office Direct is cheaper on paper and folders, but delivery takes about a week."
+    },
+    {
+     "s": "W",
+     "text": "A week? We usually run out of printer paper before that."
+    },
+    {
+     "s": "M",
+     "text": "That's what worries me too. The other one, Nakamura Supply, is about eight percent more expensive, but they deliver in two days and there's no minimum order."
+    },
+    {
+     "s": "W",
+     "text": "Eight percent isn't nothing. What do we spend in a month, roughly?"
+    },
+    {
+     "s": "M",
+     "text": "Around twelve hundred dollars. So we'd be paying about a hundred more each month."
+    },
+    {
+     "s": "W",
+     "text": "That's less than I expected. And with Weston we'd have to keep more in the storage room, which is already full."
+    },
+    {
+     "s": "M",
+     "text": "True. And Nakamura gives us a discount if we sign for a full year."
+    },
+    {
+     "s": "W",
+     "text": "How much of a discount?"
+    },
+    {
+     "s": "M",
+     "text": "Five percent off every order. That makes the difference between the two almost nothing."
+    },
+    {
+     "s": "W",
+     "text": "Then let's go with Nakamura. Could you write it up and send it to me before lunch? I'll take it to Ms. Bennett for approval."
+    },
+    {
+     "s": "M",
+     "text": "Sure. I'll put both quotes in the same file so she can see the numbers side by side."
+    }
+   ],
+   "questions": [
+    {
+     "q": "What are the speakers mainly discussing?",
+     "options": [
+      "Moving into a larger storage room",
+      "Limiting how much each department orders",
+      "Choosing a company to buy office supplies from",
+      "Setting the price of a new product"
+     ],
+     "answer": 2,
+     "explanation": "定位在女子開頭：did you finish comparing the two office supply companies?（你把兩家辦公用品公司比較完了嗎?）之後兩人一路討論價格、到貨時間與折扣,最後決定選 Nakamura。整段主題就是挑供應商,選 (C)。(A) 倉庫太滿只是其中一個考量,不是主題;(B) 沒有討論限制各部門的訂購;(D) 他們是買方,不是在訂價。"
+    },
+    {
+     "q": "What is the main disadvantage of Weston Office Direct?",
+     "options": [
+      "It charges more than the other company",
+      "Its deliveries take too long",
+      "It requires a large minimum order",
+      "It does not sell printer paper"
+     ],
+     "answer": 1,
+     "explanation": "定位在男子第一次發言：Weston Office Direct is cheaper on paper and folders, but delivery takes about a week（Weston 的紙和資料夾比較便宜,但到貨要一星期）,女子隨即說公司常在那之前就把影印紙用完。缺點在於出貨太慢,選 (B)。(A) 恰好相反,Weston 比較便宜;(C) 沒有最低訂購量的是 Nakamura,選項把兩家的資訊對調;(D) Weston 有賣紙,只是送得慢。"
+    },
+    {
+     "q": "What will the man most likely do next?",
+     "options": [
+      "Telephone Ms. Bennett",
+      "Visit the supplier's office",
+      "Order more printer paper",
+      "Prepare a document for the woman"
+     ],
+     "answer": 3,
+     "explanation": "定位在最後兩句：女子說 Could you write it up and send it to me before lunch?（可以寫好在午餐前寄給我嗎?）男子答應並說會把兩份報價放在同一個檔案裡。他接下來要做的是整理文件,選 (D)。(A) 拿去給 Bennett 女士的是女子,不是他;(B) 沒有提到要拜訪供應商;(C) 影印紙只是舉例說明用量,不是他下一步的動作。"
+    }
+   ],
+   "transcriptZh": "女：Sam,你把那兩家辦公用品公司比較完了嗎?採購單星期五就要送出去。\n男：快好了。兩家的報價我都拿到了。Weston Office Direct 的紙和資料夾比較便宜,但到貨大概要一星期。\n女：一星期?我們通常在那之前影印紙就用完了。\n男：我也是擔心這點。另一家 Nakamura Supply 大約貴百分之八,但兩天到貨,而且沒有最低訂購量。\n女：百分之八也不算少。我們一個月大概花多少?\n男：一千二百元左右,所以一個月大概多付一百元。\n女：比我想的少。而且如果選 Weston,我們得在倉庫多囤一些,可是倉庫已經滿了。\n男：對。而且如果簽一整年,Nakamura 會給折扣。\n女：折多少?\n男：每一筆訂單都打九五折,這樣兩家的差距幾乎就沒了。\n女：那就選 Nakamura。你可以寫好在午餐前寄給我嗎?我拿去給 Bennett 女士核准。\n男：沒問題。我會把兩份報價放在同一個檔案裡,讓她可以並排看數字。"
+  },
+  {
+   "id": "l3-34",
+   "difficulty": "中級",
+   "title": "健身房會員方案諮詢",
+   "dialogue": [
+    {
+     "s": "W",
+     "text": "Hi. I walk past your gym on my way to work every day, so I thought I'd come in and ask about joining."
+    },
+    {
+     "s": "M",
+     "text": "Happy to help. Are you thinking about a monthly plan or a yearly one?"
+    },
+    {
+     "s": "W",
+     "text": "I'm not sure yet. What's the difference?"
+    },
+    {
+     "s": "M",
+     "text": "The monthly plan is fifty dollars and you can stop any time. The yearly plan works out to forty a month, but you pay six months up front."
+    },
+    {
+     "s": "W",
+     "text": "I see. What does that include?"
+    },
+    {
+     "s": "M",
+     "text": "Both plans give you everything on the main floor — the machines, the weights, and the pool. Group classes are ten dollars each unless you add the class package."
+    },
+    {
+     "s": "W",
+     "text": "How much is the package?"
+    },
+    {
+     "s": "M",
+     "text": "Fifteen dollars more a month, and then classes are free. If you take two or more a month, it pays for itself."
+    },
+    {
+     "s": "W",
+     "text": "That's useful. I'd probably come early, before eight in the morning. Is it crowded then?"
+    },
+    {
+     "s": "M",
+     "text": "Between six and seven it's busy, mostly people coming before work. After seven thirty it's pretty quiet."
+    },
+    {
+     "s": "W",
+     "text": "Good. Could I try the gym once before I decide?"
+    },
+    {
+     "s": "M",
+     "text": "Of course. Bring a photo ID and we'll give you a free day pass. You can use it any day this week."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why is the woman at the gym?",
+     "options": [
+      "To ask about becoming a member",
+      "To return a piece of equipment",
+      "To sign up for a morning class",
+      "To meet a friend for exercise"
+     ],
+     "answer": 0,
+     "explanation": "定位在女子第一句：I thought I'd come in and ask about joining（我想說進來問問入會的事）,後面整段都在問方案、費用與人潮。她的目的是了解會員方案,選 (A)。(B) 沒有提到歸還器材;(C) 課程只是她順口問到的一部分,她還沒報名;(D) 沒有提到朋友。"
+    },
+    {
+     "q": "What does the man say about the class package?",
+     "options": [
+      "It is free for yearly members",
+      "It is only available in the morning",
+      "It includes the use of the pool",
+      "It costs fifteen dollars a month"
+     ],
+     "answer": 3,
+     "explanation": "定位在男子第三次發言：Fifteen dollars more a month, and then classes are free（一個月多十五元,課程就免費）。加購課程方案本身一個月要十五元,選 (D)。(A) 免費的是課程,不是方案本身,而且和年約無關;(B) 沒有說課程只在早上;(C) 游泳池兩種方案都含,不是課程方案的內容,屬於資訊錯置的誘答。"
+    },
+    {
+     "q": "What does the man imply about the early morning?",
+     "options": [
+      "The pool is closed at that time",
+      "No classes are offered before eight",
+      "The gym is crowded for about an hour",
+      "There are no staff members on duty"
+     ],
+     "answer": 2,
+     "explanation": "定位在男子第四次發言：Between six and seven it's busy... After seven thirty it's pretty quiet（六點到七點很多人……七點半以後就滿安靜的）。可以推知早上只有一小段時間人多,選 (C)。(A) 完全沒說泳池關閉;(B) 男子沒有說早上不開課;(D) 沒有提到人手,而且他還說可以拿一日體驗券來用。"
+    }
+   ],
+   "transcriptZh": "女：你好,我每天上班都會經過你們健身房,所以想進來問問入會的事。\n男：很樂意為您說明。您考慮月繳方案還是年繳方案?\n女：我還不確定,兩種差在哪裡?\n男：月繳方案一個月五十元,隨時可以停。年繳方案平均一個月四十元,但要先付六個月。\n女：了解。方案包含哪些?\n男：兩種方案主樓層的設施都能用,包括器材、重量訓練區和游泳池。團體課程一堂十元,除非您加購課程方案。\n女：課程方案多少錢?\n男：一個月多十五元,課程就免費。一個月上兩堂以上就回本了。\n女：這蠻實用的。我大概會早上八點前來,那時候人多嗎?\n男：六點到七點很多人,大多是上班前來運動的。七點半以後就滿安靜的。\n女：那好。我可以先來體驗一次再決定嗎?\n男：當然。帶有照片的證件來,我們會給您一張免費體驗券,這禮拜任何一天都能用。"
+  },
+  {
+   "id": "l3-35",
+   "difficulty": "進階",
+   "title": "季度報告的分工安排",
+   "dialogue": [
+    {
+     "s": "W",
+     "text": "Do you have a minute? I'd like to settle who does what on the quarterly report."
+    },
+    {
+     "s": "M",
+     "text": "Now is fine. The deadline is the twelfth, isn't it?"
+    },
+    {
+     "s": "W",
+     "text": "The eighteenth for the final version, but Ms. Alvarez wants a draft by the twelfth so she can go over it before the board meeting."
+    },
+    {
+     "s": "M",
+     "text": "So really we have a week and a half. Last quarter I did the sales figures and you wrote the summary."
+    },
+    {
+     "s": "W",
+     "text": "I was thinking we could switch this time. I can handle the new tracking system on my own now, and you write faster than I do."
+    },
+    {
+     "s": "M",
+     "text": "That makes sense, though the summary always takes longer. If I'm writing it, I'd need the figures by the seventh at the latest."
+    },
+    {
+     "s": "W",
+     "text": "I can manage that. The system pulls most of it for me now. What takes time is the numbers for each region, since two offices still send theirs by email."
+    },
+    {
+     "s": "M",
+     "text": "Could we ask them to enter the numbers directly? That would save you a day."
+    },
+    {
+     "s": "W",
+     "text": "I've asked twice. Their manager says they'll switch after the software update in October."
+    },
+    {
+     "s": "M",
+     "text": "Fine, we'll live with it this quarter. One thing though — please point out anything unusual when you send me the figures. Last time I found a large return in the March numbers after I'd already written half the summary."
+    },
+    {
+     "s": "W",
+     "text": "I'll mark those in a separate note. And could you keep the summary under four pages? Ms. Alvarez cut two pages from the last one."
+    },
+    {
+     "s": "M",
+     "text": "Understood. I'll keep it short and put the details in an attachment."
+    }
+   ],
+   "questions": [
+    {
+     "q": "What are the speakers mainly discussing?",
+     "options": [
+      "A change to the date of a board meeting",
+      "A problem with a software update",
+      "How to divide the work on a report",
+      "Hiring staff for a regional office"
+     ],
+     "answer": 2,
+     "explanation": "定位在女子第一句：I'd like to settle who does what on the quarterly report（我想把季報告誰做哪部分講定）,之後兩人交換了數字與摘要的分工並約定交件時間。主題是分工,選 (C)。(A) 董事會只是交件時間的參考點,日期沒有更動;(B) 軟體更新只被提到一次,用來說明兩個辦公室何時改用系統;(D) 完全沒有談到徵人。"
+    },
+    {
+     "q": "What does Ms. Alvarez want to receive by the twelfth?",
+     "options": [
+      "The final version of the report",
+      "A list of the regional offices",
+      "The results of the software update",
+      "A draft she can look over"
+     ],
+     "answer": 3,
+     "explanation": "定位在女子第二次發言：The eighteenth for the final version, but Ms. Alvarez wants a draft by the twelfth（十八號是定稿,但 Alvarez 女士要在十二號前拿到初稿）。十二號要的是初稿,選 (D)。(A) 是十八號才要的,兩個日期刻意放在同一句形成陷阱;(B) 各地區的數字是女子自己整理的資料,不是要交給她的東西;(C) 軟體更新要到十月,和這個期限無關。"
+    },
+    {
+     "q": "Why does the man mention the March numbers?",
+     "options": [
+      "To explain why he wants to be told about unusual figures",
+      "To show that sales have gone up",
+      "To ask for a correction to an earlier report",
+      "To suggest changing to a different system"
+     ],
+     "answer": 0,
+     "explanation": "定位在男子最後第二次發言：please point out anything unusual when you send me the figures. Last time I found a large return in the March numbers after I'd already written half the summary（給我數字時請標出異常的部分,上次我摘要寫到一半才發現三月有一筆大額退貨）。他提三月的數字是為了說明前一句的要求,選 (A)。(B) 大額退貨不是業績成長;(C) 他沒有要求更正舊報告,只希望這次先被提醒;(D) 換系統的討論是關於兩個辦公室用電子郵件送資料,不是他提三月數字的用意。"
+    }
+   ],
+   "transcriptZh": "女：你現在有空嗎?我想把季報告誰做哪一部分講定。\n男：現在可以。截止日是十二號吧?\n女：定稿是十八號,但 Alvarez 女士希望十二號前拿到初稿,這樣她能在董事會之前先看過。\n男：所以其實只有一個半星期。上一季是我做業績數字,你寫摘要。\n女：我在想這次我們換一下。新的追蹤系統我現在自己就能處理,而且你寫得比我快。\n男：有道理,不過摘要一向比較花時間。如果由我寫,我最晚七號要拿到數字。\n女：這我做得到。現在大部分資料系統會自動抓。比較花時間的是各地區的數字,因為還有兩個辦公室是用電子郵件寄過來。\n男：可以請他們直接輸入系統嗎?這樣你可以省一天。\n女：我問過兩次了。他們主管說十月軟體更新之後才會改。\n男：好吧,這一季就先這樣。不過有一件事,你把數字寄給我的時候,請把異常的地方標出來。上次我摘要都寫一半了,才發現三月有一筆大額退貨。\n女：我會另外寫一張註記標起來。還有,摘要可以控制在四頁以內嗎?上一份 Alvarez 女士刪掉了兩頁。\n男：了解。我會寫短一點,細節放在附件裡。"
   }
  ],
  "p4": [
@@ -2276,6 +3106,221 @@ TOEIC.listening = {
     }
    ],
    "transcriptZh": "早安,歡迎參加年度區域銷售大會。開始之前,有幾件事要快速說明。\n今天早上的開場演講必須調整——Ruiz 女士的班機昨晚取消了,所以她改在下午兩點以視訊方式演講。改由我們公司的 Mark Feng 為大家介紹新的顧客 App。午餐十二點在隔壁那間會議室,另外請配戴名牌,工作人員會在門口查驗。最後一件事——下午的工作坊很快就會額滿,所以請在上午的休息時間到服務台報名,不要等到午餐後。"
+  },
+  {
+   "id": "l4-31",
+   "difficulty": "基礎",
+   "type": "博物館導覽",
+   "speaker": "F",
+   "talk": "Hello, and thanks for picking up an audio guide here at the Riverside Art Museum. I'm Karen, and I'll walk you through our main hall.\nRight now you're standing in front of the museum's most famous painting — the one with the blue boats. It was given to us by a local family about fifty years ago.\nWhen you're ready, press two on your device to hear about the next piece. Please keep your bag in front of you as you move around, since the rooms get pretty crowded on weekends. And don't worry about bringing the guide back to this floor — just drop it off at the gift shop before you leave.",
+   "questions": [
+    {
+     "q": "Where most likely are the listeners?",
+     "options": [
+      "At a public library",
+      "At a train station",
+      "At an art museum",
+      "At a bookstore"
+     ],
+     "answer": 2,
+     "explanation": "定位在第一句 thanks for picking up an audio guide here at the Riverside Art Museum,說話者接著說 I'll walk you through our main hall,可知聽者人在美術館。後面提到 painting、gift shop 也都是館內元素。選項 D 的 bookstore 是被 gift shop 誘導的陷阱。"
+    },
+    {
+     "q": "What does the speaker say about the painting?",
+     "options": [
+      "It was finished last year.",
+      "It came from a local family.",
+      "It will be moved next month.",
+      "It is the museum's newest piece."
+     ],
+     "answer": 1,
+     "explanation": "定位在 It was given to us by a local family about fifty years ago。given to us by 就是「由某人贈送」,對應 came from a local family。about fifty years ago 說的是入館時間,不是完成時間,選項 A 與 D 都在偷換這個時間點。"
+    },
+    {
+     "q": "What are the listeners asked to do before leaving?",
+     "options": [
+      "Pay a small fee",
+      "Sign a visitor book",
+      "Come back to the main hall",
+      "Leave the device at the gift shop"
+     ],
+     "answer": 3,
+     "explanation": "定位在最後一句 don't worry about bringing the guide back to this floor — just drop it off at the gift shop before you leave。drop it off 就是歸還。說話者明講「不必回這層樓」,所以選項 C 正好講反,是最常被選走的誘答。"
+    }
+   ],
+   "transcriptZh": "哈囉,謝謝你在 Riverside 美術館拿了一台語音導覽。我是 Karen,接下來由我帶你走一趟主展廳。\n你現在站的位置,前面就是本館最有名的那幅畫——畫著藍色小船的那一幅。這幅畫大約五十年前由一個在地家族贈送給我們。\n準備好之後,按機器上的 2,就會播下一件作品的介紹。走動的時候請把包包背在身前,週末展間人比較多。還有,導覽機不用特地拿回這一層——離館前放在禮品店就可以了。"
+  },
+  {
+   "id": "l4-32",
+   "difficulty": "基礎",
+   "type": "機場廣播",
+   "speaker": "M",
+   "talk": "Good evening, everyone. This is a boarding announcement for Skyline Air flight 402 to Vancouver. We'll start boarding in about ten minutes at gate 14. And that's a change — this flight was listed at gate 12 earlier, so please make sure you're in the right place.\nWe'll begin with passengers who need extra time, then business class, and then rows twenty and higher. Please have your boarding pass and photo ID ready when you come up.\nOne quick note about bags. The overhead bins on tonight's plane are a little smaller than usual, so if your bag doesn't fit, we'll check it at the door for you at no charge.",
+   "questions": [
+    {
+     "q": "What change does the speaker announce?",
+     "options": [
+      "The gate has been changed.",
+      "The flight has been canceled.",
+      "The plane will arrive early.",
+      "A different plane will be used."
+     ],
+     "answer": 0,
+     "explanation": "定位在 that's a change — this flight was listed at gate 12 earlier,現在改在 gate 14。廣播只講登機門更動,沒有提到取消或提早抵達;選項 D 雖然後面提到 tonight's plane,但那是在講行李架大小,不是換飛機。"
+    },
+    {
+     "q": "Who will board the plane first?",
+     "options": [
+      "Business class passengers",
+      "Passengers seated in row twenty",
+      "Members of the flight crew",
+      "Passengers who need extra time"
+     ],
+     "answer": 3,
+     "explanation": "定位在 We'll begin with passengers who need extra time, then business class, and then rows twenty and higher。begin with 標示第一順位,then 之後的兩個族群都是後面才登機,選項 A 與 B 是順序陷阱。"
+    },
+    {
+     "q": "What does the speaker say about carry-on bags?",
+     "options": [
+      "They must be weighed at the counter.",
+      "Oversized ones can be checked for free.",
+      "Only one bag per passenger is allowed.",
+      "They should be placed under the seat."
+     ],
+     "answer": 1,
+     "explanation": "定位在 if your bag doesn't fit, we'll check it at the door for you at no charge。at no charge 就是免費,對應 for free。廣播沒提秤重、件數限制或放座位底下,選項 A、C、D 都是常見的機場情境聯想,不是本篇內容。"
+    }
+   ],
+   "transcriptZh": "各位晚安。這是 Skyline 航空 402 班機飛往溫哥華的登機廣播。我們大約十分鐘後在 14 號登機門開始登機。這裡有更動——先前顯示的是 12 號門,所以請確認你站對地方了。\n我們會先請需要多一點時間的旅客登機,接著是商務艙,然後是第二十排以後的旅客。輪到你的時候,請先把登機證和有照片的證件拿在手上。\n另外提醒行李。今晚這架飛機的置物架比平常小一些,如果你的行李放不進去,我們會在登機門幫你託運,不另外收費。"
+  },
+  {
+   "id": "l4-33",
+   "difficulty": "中級",
+   "type": "公司宣布",
+   "speaker": "F",
+   "talk": "Hi, everyone. Before you head out, I've got one more thing. As most of you know, the company turns twenty next month, and we're having a party to celebrate. It's on Friday the fifteenth at the Harbor Hotel, starting at six.\nNow, here's what I need from you. We have to tell the hotel by Wednesday how many people are coming, so please answer my email by Tuesday at the latest. And yes, you're welcome to bring one guest.\nOh, and one more thing. We're putting together a short video with old office photos. If you have any, send them to Maria in marketing, not to me. Thanks, everyone.",
+   "questions": [
+    {
+     "q": "What is the main purpose of the announcement?",
+     "options": [
+      "To introduce a new manager",
+      "To give details about a company party",
+      "To announce a change in office hours",
+      "To review last year's sales results"
+     ],
+     "answer": 1,
+     "explanation": "定位在 the company turns twenty next month, and we're having a party to celebrate,接著整段都在講日期、地點、回覆期限與影片素材,全部圍繞這場慶祝活動。開場的 Before you head out 只是提醒大家先別走,不是在講上班時間,選項 C 是誤抓關鍵字。"
+    },
+    {
+     "q": "What are the listeners asked to do by Tuesday?",
+     "options": [
+      "Book a room at the hotel",
+      "Pay for their guest's meal",
+      "Reply to an email",
+      "Call the marketing department"
+     ],
+     "answer": 2,
+     "explanation": "定位在 please answer my email by Tuesday at the latest。注意兩個時間點:Wednesday 是公司要回報飯店人數的期限,Tuesday 才是員工要回信的期限,選項排列刻意讓人把兩者搞混。at the latest 表示「最晚」。"
+    },
+    {
+     "q": "What does the speaker ask listeners to send to Maria?",
+     "options": [
+      "Old office photos",
+      "A list of guests",
+      "A short video",
+      "Their travel receipts"
+     ],
+     "answer": 0,
+     "explanation": "定位在 We're putting together a short video with old office photos. If you have any, send them to Maria。要寄的是照片,影片是公司要做出來的成品,選項 C 把成品當成要寄的東西。說話者還特別說 not to me,提醒收件人不是她本人。"
+    }
+   ],
+   "transcriptZh": "大家好,先別急著走,我還有一件事。應該多數人都知道,公司下個月滿二十週年,我們會辦一場慶祝派對。時間是十五號星期五,地點在 Harbor 飯店,六點開始。\n接下來是需要各位配合的部分。我們星期三之前要告訴飯店總共幾個人,所以請你最晚星期二回我的信。另外,可以帶一位親友一起來。\n喔,還有一件事。我們正在做一支短片,會用到以前辦公室的照片。手上有照片的話,請寄給行銷部的 Maria,不要寄給我。謝謝大家。"
+  },
+  {
+   "id": "l4-34",
+   "difficulty": "中級",
+   "type": "廣播報導",
+   "speaker": "M",
+   "talk": "And now for your morning weather and traffic. It's cloudy and cool out there right now, but the rain should move in around noon and last through the evening. So grab an umbrella before you head out the door. Tomorrow looks a lot better — sunny, and warmer than today.\nOn the roads, crews are still working on the Fifth Street bridge, and it's down to one lane. That's about a twenty-minute delay right now. If you can, take Park Avenue instead.\nFor bus riders, no delays to report this morning, though the number nine is running a few extra buses all week.",
+   "questions": [
+    {
+     "q": "What does the speaker say about today's weather?",
+     "options": [
+      "It will stay dry all day.",
+      "Strong winds are expected.",
+      "It will be sunny and warm.",
+      "Rain will start around midday."
+     ],
+     "answer": 3,
+     "explanation": "定位在 the rain should move in around noon and last through the evening。move in 在氣象用語裡是「雨帶移入」,noon 對應 midday。選項 C 描述的是 Tomorrow looks a lot better — sunny 講的明天,是時間點陷阱。"
+    },
+    {
+     "q": "What is causing the delay on Fifth Street?",
+     "options": [
+      "Construction work",
+      "A traffic accident",
+      "A public event",
+      "A broken traffic light"
+     ],
+     "answer": 0,
+     "explanation": "定位在 crews are still working on the Fifth Street bridge, and it's down to one lane。crews are working 就是施工,down to one lane 說明只剩一線道,所以車速慢。報導沒提事故或號誌故障。"
+    },
+    {
+     "q": "What does the speaker suggest that drivers do?",
+     "options": [
+      "Take the number nine bus",
+      "Leave home earlier than usual",
+      "Use a different road",
+      "Avoid driving downtown today"
+     ],
+     "answer": 2,
+     "explanation": "定位在 If you can, take Park Avenue instead。instead 表示改走另一條路,對應 Use a different road。number nine 那句是講公車加開班次,對象是 bus riders 不是開車的人,選項 A 是把不同族群的資訊混在一起。"
+    }
+   ],
+   "transcriptZh": "接下來是今天早上的天氣和路況。現在外頭多雲、有點涼,不過雨大概中午前後會進來,一路下到晚上。出門前記得帶把傘。明天會好很多——出太陽,也比今天暖。\n路況方面,第五街橋上還在施工,目前只剩一個車道。現在開到那裡大概要卡二十分鐘。可以的話,改走 Park 大道。\n搭公車的乘客,今天早上沒有延誤,不過九號公車這一整週都會加開幾班車。"
+  },
+  {
+   "id": "l4-35",
+   "difficulty": "進階",
+   "type": "產品發表",
+   "speaker": "F",
+   "talk": "Good afternoon, and thanks for coming out on such a rainy day. I'm Elena Ruiz, head of product here at Nova Home. In a few minutes my coworker Tom will bring out the machine itself, but first, let me tell you why we built it.\nTwo years ago we asked our customers what they liked least about their coffee makers. Almost everyone said the same thing — cleaning them. So that's the part we focused on. Everything you'll see this afternoon came out of those conversations.\nWe won't be taking any orders today; the store version ships in October. But please do stay for the tasting once Tom is finished.",
+   "questions": [
+    {
+     "q": "According to the speaker, what led to the design of the product?",
+     "options": [
+      "A competitor's new machine",
+      "Comments from customers",
+      "A change in safety rules",
+      "A request from a large store"
+     ],
+     "answer": 1,
+     "explanation": "定位在 we asked our customers what they liked least about their coffee makers,再加上 Everything you'll see this afternoon came out of those conversations。those conversations 回指的就是與顧客的訪談,所以產品設計來自顧客意見。整段沒有提到同業、法規或通路商。"
+    },
+    {
+     "q": "What will Tom most likely do next?",
+     "options": [
+      "Answer questions from reporters",
+      "Hand out free samples",
+      "Explain the price",
+      "Show how the product works"
+     ],
+     "answer": 3,
+     "explanation": "定位在 In a few minutes my coworker Tom will bring out the machine itself,以及後面 once Tom is finished。bring out the machine 加上聽眾要等他做完才能試喝,可推出他負責實機示範。試喝是 Tom 結束「之後」的活動,選項 B 是順序陷阱。"
+    },
+    {
+     "q": "What does the speaker say listeners cannot do today?",
+     "options": [
+      "Buy the machine",
+      "Taste the coffee",
+      "Meet the product team",
+      "See the new machine"
+     ],
+     "answer": 0,
+     "explanation": "定位在 We won't be taking any orders today; the store version ships in October。won't be taking orders 就是今天不接單,市售版要等十月才出貨,所以現場買不到。試喝反而是有的（do stay for the tasting）,選項 B 正好講反。"
+    }
+   ],
+   "transcriptZh": "午安,今天下雨還特地過來,謝謝各位。我是 Elena Ruiz,Nova Home 的產品負責人。再過幾分鐘,我同事 Tom 會把機器推出來,不過在那之前,我想先說說我們為什麼做這台。\n兩年前,我們問顧客:你對現在的咖啡機哪一點最不滿意?幾乎每個人的答案都一樣——清洗。所以我們就從這裡下手。各位今天下午看到的一切,都是從那些對話裡長出來的。\n今天我們不接訂單,市售版本十月出貨。不過 Tom 講完之後有試喝,請各位務必留下來。"
   }
  ]
 };

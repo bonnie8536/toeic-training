@@ -1,0 +1,217 @@
+[
+  {
+    "id": "l4-31",
+    "difficulty": "基礎",
+    "type": "博物館導覽",
+    "speaker": "F",
+    "talk": "Hello, and thanks for picking up an audio guide here at the Riverside Art Museum. I'm Karen, and I'll walk you through our main hall.\nRight now you're standing in front of the museum's most famous painting — the one with the blue boats. It was given to us by a local family about fifty years ago.\nWhen you're ready, press two on your device to hear about the next piece. Please keep your bag in front of you as you move around, since the rooms get pretty crowded on weekends. And don't worry about bringing the guide back to this floor — just drop it off at the gift shop before you leave.",
+    "questions": [
+      {
+        "q": "Where most likely are the listeners?",
+        "options": [
+          "At a public library",
+          "At a train station",
+          "At an art museum",
+          "At a bookstore"
+        ],
+        "answer": 2,
+        "explanation": "定位在第一句 thanks for picking up an audio guide here at the Riverside Art Museum,說話者接著說 I'll walk you through our main hall,可知聽者人在美術館。後面提到 painting、gift shop 也都是館內元素。選項 D 的 bookstore 是被 gift shop 誘導的陷阱。"
+      },
+      {
+        "q": "What does the speaker say about the painting?",
+        "options": [
+          "It was finished last year.",
+          "It came from a local family.",
+          "It will be moved next month.",
+          "It is the museum's newest piece."
+        ],
+        "answer": 1,
+        "explanation": "定位在 It was given to us by a local family about fifty years ago。given to us by 就是「由某人贈送」,對應 came from a local family。about fifty years ago 說的是入館時間,不是完成時間,選項 A 與 D 都在偷換這個時間點。"
+      },
+      {
+        "q": "What are the listeners asked to do before leaving?",
+        "options": [
+          "Pay a small fee",
+          "Sign a visitor book",
+          "Come back to the main hall",
+          "Leave the device at the gift shop"
+        ],
+        "answer": 3,
+        "explanation": "定位在最後一句 don't worry about bringing the guide back to this floor — just drop it off at the gift shop before you leave。drop it off 就是歸還。說話者明講「不必回這層樓」,所以選項 C 正好講反,是最常被選走的誘答。"
+      }
+    ],
+    "transcriptZh": "哈囉,謝謝你在 Riverside 美術館拿了一台語音導覽。我是 Karen,接下來由我帶你走一趟主展廳。\n你現在站的位置,前面就是本館最有名的那幅畫——畫著藍色小船的那一幅。這幅畫大約五十年前由一個在地家族贈送給我們。\n準備好之後,按機器上的 2,就會播下一件作品的介紹。走動的時候請把包包背在身前,週末展間人比較多。還有,導覽機不用特地拿回這一層——離館前放在禮品店就可以了。"
+  },
+  {
+    "id": "l4-32",
+    "difficulty": "基礎",
+    "type": "機場廣播",
+    "speaker": "M",
+    "talk": "Good evening, everyone. This is a boarding announcement for Skyline Air flight 402 to Vancouver. We'll start boarding in about ten minutes at gate 14. And that's a change — this flight was listed at gate 12 earlier, so please make sure you're in the right place.\nWe'll begin with passengers who need extra time, then business class, and then rows twenty and higher. Please have your boarding pass and photo ID ready when you come up.\nOne quick note about bags. The overhead bins on tonight's plane are a little smaller than usual, so if your bag doesn't fit, we'll check it at the door for you at no charge.",
+    "questions": [
+      {
+        "q": "What change does the speaker announce?",
+        "options": [
+          "The gate has been changed.",
+          "The flight has been canceled.",
+          "The plane will arrive early.",
+          "A different plane will be used."
+        ],
+        "answer": 0,
+        "explanation": "定位在 that's a change — this flight was listed at gate 12 earlier,現在改在 gate 14。廣播只講登機門更動,沒有提到取消或提早抵達;選項 D 雖然後面提到 tonight's plane,但那是在講行李架大小,不是換飛機。"
+      },
+      {
+        "q": "Who will board the plane first?",
+        "options": [
+          "Business class passengers",
+          "Passengers seated in row twenty",
+          "Members of the flight crew",
+          "Passengers who need extra time"
+        ],
+        "answer": 3,
+        "explanation": "定位在 We'll begin with passengers who need extra time, then business class, and then rows twenty and higher。begin with 標示第一順位,then 之後的兩個族群都是後面才登機,選項 A 與 B 是順序陷阱。"
+      },
+      {
+        "q": "What does the speaker say about carry-on bags?",
+        "options": [
+          "They must be weighed at the counter.",
+          "Oversized ones can be checked for free.",
+          "Only one bag per passenger is allowed.",
+          "They should be placed under the seat."
+        ],
+        "answer": 1,
+        "explanation": "定位在 if your bag doesn't fit, we'll check it at the door for you at no charge。at no charge 就是免費,對應 for free。廣播沒提秤重、件數限制或放座位底下,選項 A、C、D 都是常見的機場情境聯想,不是本篇內容。"
+      }
+    ],
+    "transcriptZh": "各位晚安。這是 Skyline 航空 402 班機飛往溫哥華的登機廣播。我們大約十分鐘後在 14 號登機門開始登機。這裡有更動——先前顯示的是 12 號門,所以請確認你站對地方了。\n我們會先請需要多一點時間的旅客登機,接著是商務艙,然後是第二十排以後的旅客。輪到你的時候,請先把登機證和有照片的證件拿在手上。\n另外提醒行李。今晚這架飛機的置物架比平常小一些,如果你的行李放不進去,我們會在登機門幫你託運,不另外收費。"
+  },
+  {
+    "id": "l4-33",
+    "difficulty": "中級",
+    "type": "公司宣布",
+    "speaker": "F",
+    "talk": "Hi, everyone. Before you head out, I've got one more thing. As most of you know, the company turns twenty next month, and we're having a party to celebrate. It's on Friday the fifteenth at the Harbor Hotel, starting at six.\nNow, here's what I need from you. We have to tell the hotel by Wednesday how many people are coming, so please answer my email by Tuesday at the latest. And yes, you're welcome to bring one guest.\nOh, and one more thing. We're putting together a short video with old office photos. If you have any, send them to Maria in marketing, not to me. Thanks, everyone.",
+    "questions": [
+      {
+        "q": "What is the main purpose of the announcement?",
+        "options": [
+          "To introduce a new manager",
+          "To give details about a company party",
+          "To announce a change in office hours",
+          "To review last year's sales results"
+        ],
+        "answer": 1,
+        "explanation": "定位在 the company turns twenty next month, and we're having a party to celebrate,接著整段都在講日期、地點、回覆期限與影片素材,全部圍繞這場慶祝活動。開場的 Before you head out 只是提醒大家先別走,不是在講上班時間,選項 C 是誤抓關鍵字。"
+      },
+      {
+        "q": "What are the listeners asked to do by Tuesday?",
+        "options": [
+          "Book a room at the hotel",
+          "Pay for their guest's meal",
+          "Reply to an email",
+          "Call the marketing department"
+        ],
+        "answer": 2,
+        "explanation": "定位在 please answer my email by Tuesday at the latest。注意兩個時間點:Wednesday 是公司要回報飯店人數的期限,Tuesday 才是員工要回信的期限,選項排列刻意讓人把兩者搞混。at the latest 表示「最晚」。"
+      },
+      {
+        "q": "What does the speaker ask listeners to send to Maria?",
+        "options": [
+          "Old office photos",
+          "A list of guests",
+          "A short video",
+          "Their travel receipts"
+        ],
+        "answer": 0,
+        "explanation": "定位在 We're putting together a short video with old office photos. If you have any, send them to Maria。要寄的是照片,影片是公司要做出來的成品,選項 C 把成品當成要寄的東西。說話者還特別說 not to me,提醒收件人不是她本人。"
+      }
+    ],
+    "transcriptZh": "大家好,先別急著走,我還有一件事。應該多數人都知道,公司下個月滿二十週年,我們會辦一場慶祝派對。時間是十五號星期五,地點在 Harbor 飯店,六點開始。\n接下來是需要各位配合的部分。我們星期三之前要告訴飯店總共幾個人,所以請你最晚星期二回我的信。另外,可以帶一位親友一起來。\n喔,還有一件事。我們正在做一支短片,會用到以前辦公室的照片。手上有照片的話,請寄給行銷部的 Maria,不要寄給我。謝謝大家。"
+  },
+  {
+    "id": "l4-34",
+    "difficulty": "中級",
+    "type": "廣播報導",
+    "speaker": "M",
+    "talk": "And now for your morning weather and traffic. It's cloudy and cool out there right now, but the rain should move in around noon and last through the evening. So grab an umbrella before you head out the door. Tomorrow looks a lot better — sunny, and warmer than today.\nOn the roads, crews are still working on the Fifth Street bridge, and it's down to one lane. That's about a twenty-minute delay right now. If you can, take Park Avenue instead.\nFor bus riders, no delays to report this morning, though the number nine is running a few extra buses all week.",
+    "questions": [
+      {
+        "q": "What does the speaker say about today's weather?",
+        "options": [
+          "It will stay dry all day.",
+          "Strong winds are expected.",
+          "It will be sunny and warm.",
+          "Rain will start around midday."
+        ],
+        "answer": 3,
+        "explanation": "定位在 the rain should move in around noon and last through the evening。move in 在氣象用語裡是「雨帶移入」,noon 對應 midday。選項 C 描述的是 Tomorrow looks a lot better — sunny 講的明天,是時間點陷阱。"
+      },
+      {
+        "q": "What is causing the delay on Fifth Street?",
+        "options": [
+          "Construction work",
+          "A traffic accident",
+          "A public event",
+          "A broken traffic light"
+        ],
+        "answer": 0,
+        "explanation": "定位在 crews are still working on the Fifth Street bridge, and it's down to one lane。crews are working 就是施工,down to one lane 說明只剩一線道,所以車速慢。報導沒提事故或號誌故障。"
+      },
+      {
+        "q": "What does the speaker suggest that drivers do?",
+        "options": [
+          "Take the number nine bus",
+          "Leave home earlier than usual",
+          "Use a different road",
+          "Avoid driving downtown today"
+        ],
+        "answer": 2,
+        "explanation": "定位在 If you can, take Park Avenue instead。instead 表示改走另一條路,對應 Use a different road。number nine 那句是講公車加開班次,對象是 bus riders 不是開車的人,選項 A 是把不同族群的資訊混在一起。"
+      }
+    ],
+    "transcriptZh": "接下來是今天早上的天氣和路況。現在外頭多雲、有點涼,不過雨大概中午前後會進來,一路下到晚上。出門前記得帶把傘。明天會好很多——出太陽,也比今天暖。\n路況方面,第五街橋上還在施工,目前只剩一個車道。現在開到那裡大概要卡二十分鐘。可以的話,改走 Park 大道。\n搭公車的乘客,今天早上沒有延誤,不過九號公車這一整週都會加開幾班車。"
+  },
+  {
+    "id": "l4-35",
+    "difficulty": "進階",
+    "type": "產品發表",
+    "speaker": "F",
+    "talk": "Good afternoon, and thanks for coming out on such a rainy day. I'm Elena Ruiz, head of product here at Nova Home. In a few minutes my coworker Tom will bring out the machine itself, but first, let me tell you why we built it.\nTwo years ago we asked our customers what they liked least about their coffee makers. Almost everyone said the same thing — cleaning them. So that's the part we focused on. Everything you'll see this afternoon came out of those conversations.\nWe won't be taking any orders today; the store version ships in October. But please do stay for the tasting once Tom is finished.",
+    "questions": [
+      {
+        "q": "According to the speaker, what led to the design of the product?",
+        "options": [
+          "A competitor's new machine",
+          "Comments from customers",
+          "A change in safety rules",
+          "A request from a large store"
+        ],
+        "answer": 1,
+        "explanation": "定位在 we asked our customers what they liked least about their coffee makers,再加上 Everything you'll see this afternoon came out of those conversations。those conversations 回指的就是與顧客的訪談,所以產品設計來自顧客意見。整段沒有提到同業、法規或通路商。"
+      },
+      {
+        "q": "What will Tom most likely do next?",
+        "options": [
+          "Answer questions from reporters",
+          "Hand out free samples",
+          "Explain the price",
+          "Show how the product works"
+        ],
+        "answer": 3,
+        "explanation": "定位在 In a few minutes my coworker Tom will bring out the machine itself,以及後面 once Tom is finished。bring out the machine 加上聽眾要等他做完才能試喝,可推出他負責實機示範。試喝是 Tom 結束「之後」的活動,選項 B 是順序陷阱。"
+      },
+      {
+        "q": "What does the speaker say listeners cannot do today?",
+        "options": [
+          "Buy the machine",
+          "Taste the coffee",
+          "Meet the product team",
+          "See the new machine"
+        ],
+        "answer": 0,
+        "explanation": "定位在 We won't be taking any orders today; the store version ships in October。won't be taking orders 就是今天不接單,市售版要等十月才出貨,所以現場買不到。試喝反而是有的（do stay for the tasting）,選項 B 正好講反。"
+      }
+    ],
+    "transcriptZh": "午安,今天下雨還特地過來,謝謝各位。我是 Elena Ruiz,Nova Home 的產品負責人。再過幾分鐘,我同事 Tom 會把機器推出來,不過在那之前,我想先說說我們為什麼做這台。\n兩年前,我們問顧客:你對現在的咖啡機哪一點最不滿意?幾乎每個人的答案都一樣——清洗。所以我們就從這裡下手。各位今天下午看到的一切,都是從那些對話裡長出來的。\n今天我們不接訂單,市售版本十月出貨。不過 Tom 講完之後有試喝,請各位務必留下來。"
+  }
+]

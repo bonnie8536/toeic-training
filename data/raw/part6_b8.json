@@ -1,0 +1,170 @@
+[
+  {
+    "id": "p6-b8-1",
+    "passageType": "memo",
+    "title": "New Travel Expense Procedure",
+    "passage": "MEMO\n\nTo: All Department Managers\nFrom: Daniel Whitfield, Finance Director\nDate: 3 March\nSubject: New Travel Expense Procedure\n\nBeginning 1 April, all travel expenses must be submitted through our online system instead of on paper forms. Employees who travel on company business should upload their receipts within ten days of {{1}} to the office. {{2}} Claims that arrive after the ten-day limit may not be paid in the same quarter. The finance team has prepared a short guide {{3}} explains every step of the new procedure, and copies will be sent to each department this week. If you have trouble setting up your account, please call the help desk, and a member of staff will {{4}} you through the login process.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["returns", "returning", "returned", "to return"],
+        "answer": 1,
+        "explanation": "空格前面是介系詞 of（within ten days of...），介系詞後面要接動名詞才能表達「做某個動作之後」，所以選 returning，整句意思是「出差回到公司後十天內上傳收據」。returns 是第三人稱單數的動詞形式，介系詞後面不能接有時態的動詞；returned 是過去式或過去分詞，同樣不能當介系詞的受詞；to return 是不定詞，介系詞 of 後面不接不定詞。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "Paper claim forms will still be available at the front desk.",
+          "Our Denver branch will move to a larger office in May.",
+          "Please remember that the staff picnic has been moved to June.",
+          "Hotel bills and airline tickets should be scanned as separate files."
+        ],
+        "answer": 3,
+        "explanation": "空格前一句要求員工在十天內上傳收據，空格後一句說明逾期送達的申請可能無法在同一季核撥。中間需要一句補充上傳時的具體做法，選項 D 說住宿帳單與機票要分開掃描成不同檔案，正好承接「上傳收據」並提供操作細節。選項 A 說紙本表單仍放在櫃檯，與備忘錄開頭「改用線上系統、不再使用紙本」直接矛盾；選項 B 講丹佛分公司搬遷，與差旅費用流程無關；選項 C 提到員工野餐改期，屬於完全不同的主題。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["which", "who", "whose", "what"],
+        "answer": 0,
+        "explanation": "空格要引導一個修飾前面名詞 guide 的形容詞子句，而且在子句裡要當主詞，先行詞是事物，因此用關係代名詞 which。who 只能指人，但先行詞是「指南」這份文件；whose 是所有格，後面必須接名詞，這裡卻直接接動詞 explains；what 本身已含先行詞，前面不能再有 guide。"
+      },
+      {
+        "num": 4,
+        "type": "字彙",
+        "options": ["send", "hold", "walk", "carry"],
+        "answer": 2,
+        "explanation": "空格後面是 you through the login process，需要一個能構成「帶著某人一步步完成某件事」語意的動詞。walk somebody through something 是商務往來中的固定說法，指專人帶著對方逐步操作。send 是寄送，沒有 send somebody through a process 的用法；hold 是握住、持有，語意不通；carry 是搬運實體物品，用在流程上不合理。"
+      }
+    ],
+    "translation": "備忘錄\n\n收件者：各部門主管\n寄件者：財務長 Daniel Whitfield\n日期：3 月 3 日\n主旨：新版差旅費用申請程序\n\n自 4 月 1 日起，所有差旅費用都必須透過我們的線上系統提出申請，不再使用紙本表單。因公出差的員工，應於返回公司後十天內上傳收據。住宿帳單與機票請掃描成個別檔案。超過十天期限才送達的申請，可能無法在同一季核撥。財務部已製作一份簡短指南，說明新程序的每個步驟，本週會發送到各部門。若您在設定帳號時遇到困難，請致電服務台，將由專人帶您一步步完成登入程序。"
+  },
+  {
+    "id": "p6-b8-2",
+    "passageType": "notice",
+    "title": "Riverside Community Garden Day",
+    "passage": "NOTICE\n\nRiverside Community Garden Day\n\nThe Riverside Neighborhood Association invites all residents to join our annual Garden Day on Sunday, 14 June. Volunteers will meet at the main gate at nine o'clock to plant flowers and repair the wooden benches along the walking path. Tools and gloves will be {{1}} free of charge, so there is no need to bring your own. {{2}} Younger children are welcome, but they must stay with a parent at all times. A light lunch will be available in the picnic area at noon, and cold drinks {{3}} throughout the afternoon. Residents who wish to help should sign up at the community office {{4}} Friday, 5 June.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "字彙",
+        "options": ["returned", "collected", "provided", "repaired"],
+        "answer": 2,
+        "explanation": "空格前是 will be，後面接 free of charge，需要一個過去分詞構成被動語態，語意是「免費提供」。provided 表示工具與手套由主辦單位準備，也和後半句「不需要自己帶」互相呼應。returned 是歸還，公告從未提到居民已經拿到工具；collected 是收取、回收，與「免費」的語意衝突；repaired 是修理，說工具免費修理與上下文無關。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "The work is suitable for anyone over the age of twelve.",
+          "The garden will be closed to the public for the whole of June.",
+          "Membership fees for the association will rise next year.",
+          "The new parking lot behind the library opened last week."
+        ],
+        "answer": 0,
+        "explanation": "空格後一句說「年紀較小的孩童也歡迎，但必須全程由家長陪同」，用了 Younger 這個比較級，代表前面必須先出現一個年齡基準。選項 A 說這項工作適合十二歲以上的民眾，正好提供了那個基準，前後才接得起來。選項 B 說花園六月整月不開放，與活動辦在 6 月 14 日直接矛盾；選項 C 談明年會費調漲，與當天活動無關；選項 D 說圖書館後方停車場啟用，同樣離題。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["serving", "will serve", "have served", "will be served"],
+        "answer": 3,
+        "explanation": "主詞 cold drinks 是「被供應」的一方，而且活動還沒舉行，所以要用未來式的被動語態 will be served。serving 是現在分詞，不能單獨當句子的主要動詞；will serve 是主動語態，會變成「冷飲招待別人」，不合邏輯；have served 是現在完成式主動，時態與語態都不對。"
+      },
+      {
+        "num": 4,
+        "type": "文法",
+        "options": ["until", "by", "since", "along"],
+        "answer": 1,
+        "explanation": "空格後面接的是報名截止日 Friday, 5 June，句意是「必須在 6 月 5 日之前完成報名」，表示動作要在某期限前完成，介系詞用 by。until 強調動作持續到某個時間點才停止，用在 sign up 這種一次完成的動作不合；since 用於現在完成式，表示從過去某時起持續至今；along 是「沿著」，不能接日期。"
+      }
+    ],
+    "translation": "公告\n\n河濱社區園藝日\n\n河濱社區發展協會誠摯邀請全體居民參加 6 月 14 日（星期日）的年度園藝日。志工當天上午九點於大門集合，一起種花並修整步道旁的木椅。工具與手套將免費提供，不需自行攜帶。這項工作適合十二歲以上的民眾參加。年紀較小的孩童同樣歡迎，但必須全程由家長陪同。中午在野餐區備有簡便午餐，下午也會全程供應冷飲。有意協助的居民請於 6 月 5 日（星期五）前至社區辦公室報名。"
+  },
+  {
+    "id": "p6-b8-3",
+    "passageType": "email",
+    "title": "Invitation to Complete a Customer Survey",
+    "passage": "To: Marcus Delaney, m.delaney@brightpath.com\nFrom: Customer Care Team, care@northgateappliances.com\nDate: 18 October\nSubject: A few minutes of your time\n\nDear Mr. Delaney,\n\nThank you for buying a Northgate dishwasher last month. We would like to invite you to complete a short survey about your experience. The survey has twelve questions and takes about five minutes {{1}}. {{2}} Your answers will be kept private and will be used only to improve our products and service. The survey link, along with a set of simple instructions, {{3}} at the bottom of this message. As a thank-you, all customers who take part will {{4}} a coupon worth ten dollars off their next order.\n\nSincerely,\n\nHelena Ford\nCustomer Care Manager",
+    "questions": [
+      {
+        "num": 1,
+        "type": "文法",
+        "options": ["to complete", "completing", "completed", "completion"],
+        "answer": 0,
+        "explanation": "takes about five minutes 後面要說明「花五分鐘做什麼」，英文用不定詞來補充這個動作，所以選 to complete，整句是「這份問卷大約五分鐘就能填完」。completing 是動名詞，放在名詞 minutes 後面缺少連接；completed 是過去式或過去分詞，前面沒有助動詞或 be 動詞可搭配；completion 是名詞，前面必須加介系詞（如 for）才接得上。"
+      },
+      {
+        "num": 2,
+        "type": "句子插入",
+        "options": [
+          "There is also a space at the end for any comments you wish to add.",
+          "Your dishwasher will be delivered on Friday afternoon.",
+          "Unfortunately, the model you ordered is no longer made.",
+          "Our stores will be closed for the public holiday next week."
+        ],
+        "answer": 0,
+        "explanation": "空格前一句說明問卷共十二題、約五分鐘可完成，空格後一句談答案會保密。中間補上一句繼續描述問卷本身最順，選項 A 提到問卷最後留有填寫意見的欄位，正好延續前一句的問卷內容。選項 B 說洗碗機週五下午送達，但信件開頭已寫顧客上個月就買了；選項 C 說訂購的型號已停產，與邀請填問卷的目的毫無關聯；選項 D 說門市因假日休息，離題。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["appear", "appears", "appearing", "to appear"],
+        "answer": 1,
+        "explanation": "句子的主詞是 The survey link（單數），中間的 along with a set of simple instructions 只是插入的附加說明，不會把主詞變成複數，所以動詞要用第三人稱單數 appears。這是多益常考的「主詞與動詞被插入語隔開」題型。appear 是原形，與單數主詞不一致；appearing 是分詞，不能單獨當主要動詞；to appear 是不定詞，整句會變成沒有主要動詞。"
+      },
+      {
+        "num": 4,
+        "type": "字彙",
+        "options": ["remind", "reserve", "remove", "receive"],
+        "answer": 3,
+        "explanation": "空格後面是 a coupon，需要一個表示「拿到、獲得」的及物動詞，receive 正好說明參加問卷的顧客可以得到折價券。remind 是提醒，用法為 remind somebody of something，受詞必須是人；reserve 是預訂，折價券是回饋而非預訂項目；remove 是移除，語意正好相反。"
+      }
+    ],
+    "translation": "收件者：Marcus Delaney，m.delaney@brightpath.com\n寄件者：客戶服務團隊，care@northgateappliances.com\n日期：10 月 18 日\n主旨：耽誤您幾分鐘\n\n親愛的 Delaney 先生：\n\n感謝您上個月選購 Northgate 洗碗機。我們想邀請您填寫一份簡短問卷，分享您的使用經驗。問卷共十二題，大約五分鐘即可完成。問卷最後也留有欄位，供您填寫任何想補充的意見。您的回答將予以保密，且僅用於改善我們的產品與服務。問卷連結與簡單的填答說明，都放在這封信的最下方。為表達謝意，每位參與填答的顧客都將獲得一張折價券，下次訂購可折抵十美元。\n\n敬祝 順心\n\n客戶服務經理\nHelena Ford"
+  },
+  {
+    "id": "p6-b8-4",
+    "passageType": "article",
+    "title": "Greenfield Grocers Opens Third Store",
+    "passage": "Greenfield Grocers Opens Third Store\n\nGREENFIELD (5 May) — Greenfield Grocers will open its third store on Camden Road next Monday, the company said on Tuesday. The new store is twice as large as the original location downtown and will employ about forty local residents. {{1}} Manager Rosa Iversen said the site was chosen because many customers had asked for a branch closer to the north side of the city. {{2}}, the store will offer a wider selection of fresh bread and locally grown vegetables. Ms. Iversen is confident that the Camden Road branch will be just as {{3}} as the other two. Local business owners hope the store will {{4}} more shoppers to the area.",
+    "questions": [
+      {
+        "num": 1,
+        "type": "句子插入",
+        "options": [
+          "The downtown store will close at the end of the month.",
+          "The company has no plans to hire more workers this year.",
+          "Cooking classes at the store must be booked two weeks in advance.",
+          "Most of the new employees have already begun training downtown."
+        ],
+        "answer": 3,
+        "explanation": "空格前一句提到新分店會雇用約四十名當地居民，空格後開始由店經理說明選址原因。中間插入一句延續「新進員工」這個話題最自然，選項 D 說多數新員工已在市中心分店展開訓練，正好承接前一句。選項 A 說市中心分店月底歇業，與文中把它當成現有分店拿來比較大小的敘述矛盾；選項 B 說公司今年不打算增聘人力，與「雇用四十人」直接衝突；選項 C 講烹飪課要提前預約，文章從未提到烹飪課。"
+      },
+      {
+        "num": 2,
+        "type": "文法",
+        "options": ["Even so", "In addition", "Otherwise", "By contrast"],
+        "answer": 1,
+        "explanation": "空格前一句說明選址是因為顧客希望有離北區更近的分店，空格後一句再補充新店會提供更多種類的麵包與在地蔬菜，兩句都在陳述新分店的優點，屬於補充關係，因此用 In addition。Even so 表示「即使如此」的讓步轉折；Otherwise 表示「否則」，用於假設情況；By contrast 用來對比兩件相反的事，但這裡前後語意一致，沒有對比可言。"
+      },
+      {
+        "num": 3,
+        "type": "文法",
+        "options": ["succeed", "success", "successful", "successfully"],
+        "answer": 2,
+        "explanation": "空格夾在 will be just as ... as 的同級比較結構中間，而且位置是 be 動詞後的主詞補語，必須用形容詞 successful，意思是「和另外兩家一樣成功」。succeed 是動詞，前面已經有 be 動詞，不能再放；success 是名詞，as ... as 之間不會單獨放名詞；successfully 是副詞，不能當 be 動詞的補語。"
+      },
+      {
+        "num": 4,
+        "type": "字彙",
+        "options": ["afford", "attract", "arrange", "assign"],
+        "answer": 1,
+        "explanation": "空格後面是 more shoppers to the area，需要一個表示「吸引人潮前來」的動詞，attract 正好符合當地商家的期待。afford 是負擔得起，受詞通常是費用或商品；arrange 是安排，受詞多為活動或行程；assign 是分派任務或人員，都與吸引顧客上門的語意不合。"
+      }
+    ],
+    "translation": "Greenfield 超市開設第三家分店\n\n【Greenfield 訊，5 月 5 日】Greenfield 超市於週二宣布，將於下週一在 Camden 路開設第三家分店。新店面積是市中心創始店的兩倍，並將雇用約四十名當地居民。多數新進員工已在市中心分店展開訓練。店經理 Rosa Iversen 表示，之所以選在這個地點，是因為許多顧客希望能有一家離市區北側更近的分店。此外，新店也會提供種類更多的新鮮麵包與在地蔬菜。Iversen 女士有信心，Camden 路分店會和另外兩家一樣成功。當地商家則期待這家店能為周邊帶來更多人潮。"
+  }
+]

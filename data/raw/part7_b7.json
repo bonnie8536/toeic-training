@@ -1,0 +1,259 @@
+[
+  {
+    "id": "p7-b7-1",
+    "format": "single",
+    "passages": [
+      {
+        "type": "notice",
+        "label": "",
+        "content": "NOTICE TO ALL TENANTS\nRiverbend Business Center — Building Management Office\nPosted: March 3\n\nStarting Monday, March 16, the two elevators in the north lobby will be taken out of service for a scheduled upgrade. The work is expected to last three weeks. During this period, tenants and their visitors should use the south lobby elevators, which will run on an extended schedule from 6:00 a.m. to 10:00 p.m.\n\nBecause the south lobby is likely to be crowded between 8:30 and 9:30 a.m., we encourage staff on floors two through four to take the stairs whenever possible. Delivery workers carrying heavy items should contact the front desk at extension 210, and a staff member will open the service elevator at the rear of the building for them.\n\nThe upgrade will not affect water, heating, or internet service. However, the north lobby will be closed while the new equipment is being installed, so the mail room will move temporarily to Room 118, next to the tenant lounge.\n\nWe understand that this project will cause some inconvenience, and we thank you for your patience. Tenants who want to know more may attend a short information session on Thursday, March 12, at 5:30 p.m. in the third-floor conference room. Written questions can also be sent to management@riverbendcenter.com."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the main purpose of the notice?",
+        "options": [
+          "To announce a change in rental prices",
+          "To inform tenants about temporary building conditions",
+          "To invite tenants to apply for parking spaces",
+          "To report the results of a completed repair"
+        ],
+        "answer": 1,
+        "explanation": "定位:第一段「the two elevators in the north lobby will be taken out of service for a scheduled upgrade」,以及後文改用南側電梯、收發室暫時搬遷等說明,可知全文在告知施工期間的臨時狀況。(A)錯:全文未提任何租金或費用。(C)錯:停車位申請未出現。(D)錯:工程是三月十六日才要開始,並非已完成的維修結果。"
+      },
+      {
+        "q": "In the notice, the word \"scheduled\" in paragraph 1 is closest in meaning to",
+        "options": [
+          "planned",
+          "canceled",
+          "approved",
+          "repeated"
+        ],
+        "answer": 0,
+        "explanation": "定位:第一段「the two elevators in the north lobby will be taken out of service for a scheduled upgrade」。此處 scheduled 指這項工程是事先排定、計畫好的,故選 planned。(B)錯:工程並未取消,而是即將展開。(C)錯:文中沒有提到是否經過核准。(D)錯:也沒有重複施工之意。"
+      },
+      {
+        "q": "What are delivery workers with heavy items asked to do?",
+        "options": [
+          "Use the stairs in the north lobby",
+          "Make deliveries before 8:30 a.m.",
+          "Contact the front desk for help",
+          "Leave packages in Room 118"
+        ],
+        "answer": 2,
+        "explanation": "定位:第二段「Delivery workers carrying heavy items should contact the front desk at extension 210」,之後才會有人為他們開啟後方貨梯。(A)錯:走樓梯是給二至四樓員工的建議。(B)錯:八點半到九點半只是人潮擁擠的時段,並非送貨規定。(D)錯:一一八室是暫時的收發室位置,不是放置包裹的指示。"
+      },
+      {
+        "q": "What is NOT mentioned in the notice?",
+        "options": [
+          "How long the project will last",
+          "Where the mail room will be located",
+          "When tenants can ask about the work",
+          "How much the new equipment costs"
+        ],
+        "answer": 3,
+        "explanation": "定位:(A) 見第一段「expected to last three weeks」;(B) 見第三段「the mail room will move temporarily to Room 118」;(C) 見第四段三月十二日的說明會。全文完全沒有出現任何金額,故 (D) 為未提及者。"
+      }
+    ],
+    "translation": [
+      "全體租戶公告\n河灣商務中心 — 大樓管理室\n公告日期:三月三日\n\n自三月十六日（星期一）起,北側大廳的兩部電梯將停止使用,進行預定的設備更新工程,預計為期三週。這段期間,租戶與訪客請改用南側大廳的電梯;該側電梯將延長運行時間,自上午六點至晚間十點。\n\n由於南側大廳在上午八點半至九點半之間可能相當擁擠,我們建議二樓至四樓的員工盡量走樓梯。搬運重物的送貨人員請撥分機 210 聯絡櫃檯,將有專人為您開啟大樓後方的貨梯。\n\n本次工程不會影響供水、暖氣或網路服務。惟施工期間北側大廳將封閉,收發室因此暫時移至一一八室,位置在租戶休息室隔壁。\n\n我們明白這項工程會造成一些不便,感謝各位的耐心配合。想進一步了解的租戶,可於三月十二日（星期四）下午五點半到三樓會議室參加簡短的說明會。也歡迎將書面問題寄至 management@riverbendcenter.com。"
+    ]
+  },
+  {
+    "id": "p7-b7-2",
+    "format": "single",
+    "passages": [
+      {
+        "type": "article",
+        "label": "",
+        "content": "BUSINESS WEEKLY | Regional Report\nMay 9\n\nSmall Food Shops Find New Life in Delivery Partnerships\nBy Gordon Sayre\n\nFor years, the owners of small food shops in the Milbrook district said the same thing: they could not compete with the large supermarkets that opened along the highway. Sales fell season after season, and three shops closed last year alone.\n\nThat picture began to change in January, when eleven shop owners formed a group called Milbrook Fresh. Instead of each store hiring its own drivers, the members share a single delivery service. Customers place orders through one website and receive their goods within two hours. The stores split the cost of the drivers and of the software behind the site.\n\n\"We were spending far too much on advertising that reached no one,\" said Carmen Vargas, who owns a shop on Miller Street. \"Now that money goes to the drivers, and our regular customers order twice as often.\"\n\nThe results have not been the same for everyone. Two members report that their weekend sales have doubled, while others say the change has been small. Still, none of the eleven shops has left the group. Ms. Vargas believes the main benefit is not the orders themselves but the information: the shared website shows which products sell quickly, so the owners can order new stock more carefully.\n\nA similar group is now being formed by bakery owners in the neighboring Weston district."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the article mainly about?",
+        "options": [
+          "A city plan to limit new supermarkets",
+          "A grocery chain that opened a new branch",
+          "A website that compares food prices",
+          "A group of shops that began working together"
+        ],
+        "answer": 3,
+        "explanation": "定位:第二段「eleven shop owners formed a group called Milbrook Fresh」,後文都在說明這些店家如何共用司機、網站與資訊,故主旨是小店聯合經營。(A)錯:文中沒有任何市政限制超市的計畫。(B)錯:超市是競爭對手,並非新開分店的主角。(C)錯:網站是用來下單與看銷售資訊,不是比價。"
+      },
+      {
+        "q": "The word \"picture\" in paragraph 2 of the article is closest in meaning to",
+        "options": [
+          "situation",
+          "photograph",
+          "drawing",
+          "memory"
+        ],
+        "answer": 0,
+        "explanation": "定位:第二段首句「That picture began to change in January」。這裡的 picture 承接第一段所描述的經營困境,指整體「情況、局面」,故選 situation。(B)(C) 是 picture 的字面義,文中沒有任何影像或圖畫。(D) 文意並非回憶。"
+      },
+      {
+        "q": "According to Ms. Vargas, what is the greatest benefit of the group?",
+        "options": [
+          "Lower rent for shop owners",
+          "Knowing which goods sell well",
+          "Cheaper advertising in local newspapers",
+          "Faster delivery than the supermarkets offer"
+        ],
+        "answer": 1,
+        "explanation": "定位:第四段末「the main benefit is not the orders themselves but the information: the shared website shows which products sell quickly」。(A)錯:租金完全未提。(C)錯:她說的是把原本的廣告費改花在司機身上,不是廣告變便宜。(D)錯:兩小時送達是服務內容,但她明言最大好處在資訊而非訂單。"
+      },
+      {
+        "q": "What is suggested about the bakery owners in Weston?",
+        "options": [
+          "They have hired drivers from Milbrook Fresh.",
+          "They sell their goods in food shops.",
+          "They are planning a similar arrangement.",
+          "They have opened stores along the highway."
+        ],
+        "answer": 2,
+        "explanation": "定位:最後一句「A similar group is now being formed by bakery owners in the neighboring Weston district」,可推知他們正要仿效同樣的合作方式。(A)錯:文中只說團體性質相似,未提共用同一批司機。(B)(D) 文中皆無根據。"
+      }
+    ],
+    "translation": [
+      "商業週刊｜區域報導\n五月九日\n\n小型食品店靠外送合作重獲生機\n戈登・塞爾 撰\n\n多年來,米爾布魯克區小型食品店的老闆都說著同樣的話:他們拚不過公路旁陸續開幕的大型超市。營業額一季比一季下滑,光是去年就有三家店收攤。\n\n這個局面自一月起開始改變。當時十一位店主組成了名為「米爾布魯克鮮食」的團體。成員不再各自僱用司機,而是共用一套外送服務。顧客在同一個網站下單,兩小時內就能收到商品;司機的費用與網站軟體的費用,則由各店分攤。\n\n「我們以前花太多錢做廣告,卻沒有觸及任何人,」在米勒街開店的卡門・巴爾加斯說。「現在那筆錢用在司機身上,老顧客下單的次數變成兩倍。」\n\n成效並非人人相同。兩家成員店表示週末業績翻倍,其他店則說變化不大。不過十一家店至今沒有一家退出。巴爾加斯女士認為,最大的好處不在訂單本身,而在資訊:共用網站會顯示哪些商品賣得快,老闆因此能更精準地叫貨。\n\n鄰近的威斯頓區,現在也有麵包店老闆正在籌組類似的團體。"
+    ]
+  },
+  {
+    "id": "p7-b7-3",
+    "format": "single",
+    "passages": [
+      {
+        "type": "webpage",
+        "label": "",
+        "content": "www.cedarlinetools.com/rentals\n\nHOME  |  RENTALS  |  REPAIRS  |  STORE HOURS  |  CONTACT\n\nCedarline Tool Rental — How It Works\n\nStep 1: Choose your equipment.\nOur catalog lists more than 400 items, from small hand tools to large floor cleaning machines. Daily, weekly, and monthly rates appear on each item page. The weekly rate is the best value for any job that lasts longer than four days.\n\nStep 2: Reserve online.\nSelect a pickup date and a store location. A reservation holds your item for 24 hours after the pickup time you choose. We do not ask for a deposit on orders under $200, but a valid driver's license must be shown at the counter.\n\nStep 3: Pick up and go.\nBring your reservation number to the rental desk. Our staff will show you how to operate the equipment and answer any questions. Safety equipment such as gloves and eye protection is included at no extra charge with all power tools.\n\nStep 4: Return.\nEquipment must be returned to the same store by 6:00 p.m. on the due date. A late return is charged as one additional day. Please clean the equipment before you bring it back; a fee of $25 applies to items that arrive covered in paint or dirt.\n\nNot sure what you need? Call 555-0148 or use the chat button at the bottom of this page."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the purpose of the webpage?",
+        "options": [
+          "To announce new store hours",
+          "To advertise a sale on used tools",
+          "To explain how a rental service works",
+          "To compare prices at several stores"
+        ],
+        "answer": 2,
+        "explanation": "定位:標題「Cedarline Tool Rental — How It Works」加上 Step 1 至 Step 4 的四個步驟,整頁都在說明租借流程。(A)錯:營業時間只是上方選單的連結名稱,本頁未說明。(B)錯:全文租借的是設備,沒有販售二手工具。(D)錯:比較的是日租、週租、月租,而非不同店家的價格。"
+      },
+      {
+        "q": "What does the webpage recommend for a longer job?",
+        "options": [
+          "Reserving more than one item",
+          "Choosing the weekly rate",
+          "Picking up equipment early in the day",
+          "Paying a deposit in advance"
+        ],
+        "answer": 1,
+        "explanation": "定位:Step 1 末句「The weekly rate is the best value for any job that lasts longer than four days」。(A)(C) 文中沒有這類建議。(D)錯:兩百美元以下的訂單不需押金,更沒有預先付押金的建議。"
+      },
+      {
+        "q": "What is NOT mentioned as something customers must do?",
+        "options": [
+          "Buy safety equipment before using power tools",
+          "Clean the equipment before returning it",
+          "Return the equipment to the store where it was picked up",
+          "Give a reservation number at the rental desk"
+        ],
+        "answer": 0,
+        "explanation": "定位:(B) 見 Step 4「Please clean the equipment before you bring it back」;(C) 見「returned to the same store」;(D) 見 Step 3「Bring your reservation number to the rental desk」。Step 3 明說手套與護目鏡等安全裝備隨電動工具免費附上,顧客不必自行購買,故選 (A)。"
+      },
+      {
+        "q": "The word \"holds\" in Step 2 is closest in meaning to",
+        "options": [
+          "carries",
+          "contains",
+          "lifts",
+          "keeps"
+        ],
+        "answer": 3,
+        "explanation": "定位:Step 2「A reservation holds your item for 24 hours after the pickup time you choose」。此處指預約會把商品「保留」給顧客二十四小時,故選 keeps。(A)(C) 是搬運、抬起的字面義。(B) 指容器裝有某物,與保留無關。"
+      }
+    ],
+    "translation": [
+      "www.cedarlinetools.com/rentals\n\n首頁 | 租借 | 維修 | 營業時間 | 聯絡我們\n\n雪松工具租借 — 租借流程\n\n步驟一:挑選設備。\n我們的型錄收錄超過四百項商品,從小型手工具到大型地板清潔機都有。每項商品頁面均標示日租、週租與月租價格。工程若需時超過四天,以週租最划算。\n\n步驟二:線上預約。\n請選擇取件日期與門市地點。預約成立後,商品會自您選定的取件時間起為您保留二十四小時。訂單金額未滿兩百美元不需支付押金,但取件時必須在櫃檯出示有效駕照。\n\n步驟三:取件出發。\n請攜帶預約編號至租借櫃檯。門市人員會示範設備的操作方式,並回答您的問題。租借電動工具時,手套、護目鏡等安全裝備一律免費提供。\n\n步驟四:歸還。\n設備必須於到期日下午六點前歸還至同一家門市。逾期歸還將加收一日租金。歸還前請先清潔設備;沾滿油漆或泥土的商品將酌收二十五美元清潔費。\n\n不確定該租哪一項?請撥 555-0148,或使用本頁下方的線上客服按鈕。"
+    ]
+  },
+  {
+    "id": "p7-b7-4",
+    "format": "double",
+    "passages": [
+      {
+        "type": "schedule",
+        "label": "Program",
+        "content": "QUINTANA SUPPLY CO.\nStore Managers Meeting — Program\nFriday, October 17 | Fairlane Conference Center, Room B\n\n9:00-9:30 a.m.   Coffee and check-in (Main Hall)\n9:30-10:15 a.m.   Opening remarks — Teresa Molina, Vice President of Operations\n10:30-11:45 a.m.   Workshop A: Reducing shipping delays — Noor Bakshi\n12:00-1:00 p.m.   Lunch (Garden Room)\n1:15-2:30 p.m.   Workshop B: Training seasonal staff — Hana Ito\n2:45-4:00 p.m.   Store manager discussion groups\n4:15 p.m.   Closing summary and service awards\n\nPlease note:\n- Both workshops are repeated on Saturday morning for managers who cannot attend on Friday.\n- Parking is free in the east lot. Show your staff badge at the gate.\n- Handouts will be posted on the company website one week after the meeting. Printed copies will not be available.\n- Tell the front desk by October 10 if you need a vegetarian meal."
+      },
+      {
+        "type": "email",
+        "label": "E-mail",
+        "content": "To: events@quintanasupply.com\nFrom: m.feld@quintanasupply.com\nDate: October 13\nSubject: Questions about Friday's program\n\nHello,\n\nI manage the Bridgeport store and plan to attend the meeting this Friday. I have three questions before I confirm my travel.\n\nFirst, I must visit a supplier on Friday morning and will not reach the center until noon. Will I still be able to hear the session on shipping delays, or should I come the following morning instead?\n\nSecond, two members of my sales staff would like to join the afternoon discussion groups. They are not managers, so I want to be sure they are welcome before I ask them to make the trip.\n\nThird, I will be driving a company van rather than my own car. Will my badge be accepted at the gate for a vehicle of that size, or do I need a separate pass?\n\nOne last note: I do not eat meat, and I know I am writing after the date given in the program. If it is too late to change the order, I am happy to bring my own lunch.\n\nThank you,\nMarta Feld\nStore Manager, Bridgeport"
+      }
+    ],
+    "questions": [
+      {
+        "q": "Why did Ms. Feld write the e-mail?",
+        "options": [
+          "To confirm that a workshop has been canceled",
+          "To ask about arrangements for an upcoming meeting",
+          "To recommend a speaker for a training session",
+          "To report a problem with a delivery"
+        ],
+        "answer": 1,
+        "explanation": "定位:郵件第一段「I plan to attend the meeting this Friday. I have three questions before I confirm my travel.」,之後三段分別問時間、參加資格與停車,故目的是詢問與會安排。(A)錯:工作坊照常舉行。(C)錯:她沒有推薦講者。(D)錯:出貨延誤是工作坊主題,不是她要申訴的問題。"
+      },
+      {
+        "q": "According to the program, what will NOT take place on Friday afternoon?",
+        "options": [
+          "A discussion among store managers",
+          "A workshop on training staff",
+          "The presentation of awards",
+          "The opening remarks"
+        ],
+        "answer": 3,
+        "explanation": "定位:日程表顯示工作坊 B 在下午 1:15、分組討論在下午 2:45、頒獎在下午 4:15,皆屬下午;開場致詞排在上午 9:30,故選 (D)。"
+      },
+      {
+        "q": "Who will lead the session Ms. Feld is concerned about missing?",
+        "options": [
+          "Teresa Molina",
+          "Hana Ito",
+          "Noor Bakshi",
+          "Marta Feld"
+        ],
+        "answer": 2,
+        "explanation": "整合題:郵件第二段說她中午才到,擔心錯過「the session on shipping delays」;對照日程表上午 10:30-11:45 的「Workshop A: Reducing shipping delays」,主講人是 Noor Bakshi。(A) 負責開場致詞。(B) 主講下午的季節性人員訓練。(D) 是寫信人本人。"
+      },
+      {
+        "q": "What will Ms. Feld most likely have to do on Friday?",
+        "options": [
+          "Bring her own lunch",
+          "Attend the meeting on Saturday as well",
+          "Park in a lot outside the center",
+          "Pay a fee for two guests"
+        ],
+        "answer": 0,
+        "explanation": "整合題:日程表註記要求十月十日前告知素食需求,而郵件日期是十月十三日,已超過期限;她自己也寫「If it is too late to change the order, I am happy to bring my own lunch.」故最可能自備午餐。(B)錯:星期六出席只是她提出的另一個選項,兩場工作坊當天都會重辦,無須兩天都到。(C)(D) 文中皆無根據。"
+      },
+      {
+        "q": "What does Ms. Feld ask about her vehicle?",
+        "options": [
+          "Where she may unload boxes",
+          "Whether the company will pay for fuel",
+          "How long she may leave it at the center",
+          "Whether her badge will be enough to enter the lot"
+        ],
+        "answer": 3,
+        "explanation": "定位:郵件第四段「Will my badge be accepted at the gate for a vehicle of that size, or do I need a separate pass?」,對應日程表註記「Show your staff badge at the gate.」。(A)(B)(C) 郵件中都沒有提到。"
+      }
+    ],
+    "translation": [
+      "昆塔納供應公司\n門市經理會議 — 議程\n十月十七日（星期五）| 費爾蓮會議中心 B 室\n\n上午 9:00-9:30   咖啡與報到（大廳）\n上午 9:30-10:15   開場致詞 — 營運副總 泰瑞莎・莫利納\n上午 10:30-11:45   工作坊 A:減少出貨延誤 — 努爾・巴克希\n中午 12:00-下午 1:00   午餐（花園廳）\n下午 1:15-2:30   工作坊 B:季節性人員的訓練 — 漢娜・伊藤\n下午 2:45-4:00   門市經理分組討論\n下午 4:15   總結與服務獎頒發\n\n請注意:\n- 兩場工作坊將於星期六上午再辦一次,供星期五無法出席的經理參加。\n- 東側停車場免費停車,請於閘門出示員工識別證。\n- 講義將於會議結束一週後上傳公司網站,現場不提供紙本。\n- 需要素食餐點者,請於十月十日前告知服務台。",
+      "收件者:events@quintanasupply.com\n寄件者:m.feld@quintanasupply.com\n日期:十月十三日\n主旨:關於星期五議程的幾個問題\n\n您好:\n\n我負責布里奇波特門市,預計出席本週五的會議。在確認行程之前,有三個問題想請教。\n\n第一,我星期五上午必須拜訪一家供應商,中午才能抵達會場。我還來得及聽出貨延誤那一場嗎?還是改到隔天早上出席比較好?\n\n第二,我門市有兩位銷售同仁想參加下午的分組討論。他們並不是經理,所以在請他們跑這一趟之前,我想先確認他們是否也能參加。\n\n第三,我這次開的是公司廂型車,不是自用車。這種車型在閘門出示識別證即可通行嗎?還是需要另外申請通行證?\n\n最後補充一點:我不吃肉,也知道自己是在議程所訂日期之後才來信。若已來不及更改餐點,我自備午餐也沒問題。\n\n謝謝您。\n\n瑪塔・費爾德\n布里奇波特門市經理"
+    ]
+  }
+]

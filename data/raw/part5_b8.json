@@ -1,0 +1,252 @@
+[
+  {
+    "id": "p5-b8-01",
+    "difficulty": "基礎",
+    "category": "主謂一致",
+    "question": "The safety instructions printed in the employee handbook ------- that all visitors must sign in at the front desk before entering the plant.",
+    "options": ["states", "state", "stating", "to state"],
+    "answer": 1,
+    "translation": "員工手冊上印的安全須知規定,所有訪客進入廠區前都必須在櫃檯登記。",
+    "explanation": "考點:主詞與動詞的單複數一致。句子的主詞是複數的 The safety instructions,printed in the employee handbook 只是過去分詞片語作後位修飾,不會改變主詞;敘述長期規定用現在式,故 (B) state 正確。(A) states 是單數動詞,誤把最靠近空格的 handbook 當成主詞。(C) stating 是現在分詞,前面沒有 be 動詞就不能當主要動詞,整句會變成沒有述語的片段。(D) to state 是不定詞,同樣無法擔任句子的主要動詞。"
+  },
+  {
+    "id": "p5-b8-02",
+    "difficulty": "中級",
+    "category": "主謂一致",
+    "question": "Either the branch manager or the two assistant supervisors ------- responsible for locking the storeroom at the end of each shift.",
+    "options": ["is", "was", "being", "are"],
+    "answer": 3,
+    "translation": "每個班次結束時,由分店經理或兩位副主管負責鎖上庫房。",
+    "explanation": "考點:either A or B 的主謂一致。此結構採就近原則,動詞要和最靠近的主詞一致;最近的主詞 the two assistant supervisors 是複數,且描述例行職責用現在式,故 (D) are 正確。(A) is 是單數動詞,只有在前後兩個主詞順序對調、單數擺在後面時才適用。(B) was 既是單數又是過去式,與每個班次的固定職責不合。(C) being 是分詞,沒有助動詞就不能單獨當主要動詞。"
+  },
+  {
+    "id": "p5-b8-03",
+    "difficulty": "中級",
+    "category": "主謂一致",
+    "question": "The number of applications for the warehouse position ------- sharply since Dunmore Freight raised its starting wage.",
+    "options": ["has risen", "have risen", "are rising", "rise"],
+    "answer": 0,
+    "translation": "自從 Dunmore Freight 調高起薪後,倉儲職缺的應徵件數大幅增加。",
+    "explanation": "考點:the number of 的主謂一致與時態。the number of + 複數名詞意為「…的數量」,主詞核心是單數的 number(a number of 才等於 many,視為複數);句中 since + 過去事件,主要子句要用現在完成式,故 (A) has risen 正確。(B) have risen 時態正確但用了複數動詞,誤把 applications 當主詞。(C) are rising 除了是複數形,現在進行式也無法搭配 since 所要求的完成式。(D) rise 是複數現在式,既不合主詞也表達不出從過去持續到現在的變化。"
+  },
+  {
+    "id": "p5-b8-04",
+    "difficulty": "進階",
+    "category": "主謂一致",
+    "question": "Neither of the two floor plans submitted by the architects ------- the budget that headquarters approved in March.",
+    "options": ["exceed", "have exceeded", "exceeds", "exceeding"],
+    "answer": 2,
+    "translation": "建築師提交的兩份樓層平面圖,都沒有超出總公司三月核准的預算。",
+    "explanation": "考點:neither of 的主謂一致。主詞核心是代名詞 Neither,即使後面接複數名詞,正式書面用法仍視為單數,現在式動詞須加 -s,故 (C) exceeds 正確;submitted by the architects 是修飾用的分詞片語,不影響動詞。(A) exceed 是複數動詞,誤把 plans 當主詞。(B) have exceeded 同樣是複數形,若要合乎單數主詞應寫成 has exceeded。(D) exceeding 是分詞,沒有助動詞就不能當主要動詞。"
+  },
+  {
+    "id": "p5-b8-05",
+    "difficulty": "基礎",
+    "category": "片語動詞",
+    "question": "Please ------- out the attached expense form and return it to the accounting office by Friday.",
+    "options": ["take", "hand", "put", "fill"],
+    "answer": 3,
+    "translation": "請填妥隨附的費用申請表,並於週五前送回會計室。",
+    "explanation": "考點:與 out 搭配的片語動詞。fill out a form 是「填寫表格」的固定說法,後面接 return it 也顯示表格要先填好再繳回,故 (D) fill 正確。(A) take out 是取出、外帶,與填表無關。(B) hand out 是分發,句中的表格是要員工填寫而不是發給別人。(C) put out 是撲滅或對外發布,語意不合。"
+  },
+  {
+    "id": "p5-b8-06",
+    "difficulty": "基礎",
+    "category": "片語動詞",
+    "question": "Ms. Okafor will ------- over the regional sales team while Mr. Reyes is on leave next month.",
+    "options": ["take", "hand", "get", "look"],
+    "answer": 0,
+    "translation": "下個月 Reyes 先生休假期間,Okafor 女士將接手區域業務團隊。",
+    "explanation": "考點:與 over 搭配的片語動詞。take over 是「接手、接管」,符合同事休假期間由他人代管團隊的情境,故 (A) take 正確。(B) hand over 是把職務交出去,方向與句意相反,句中是 Okafor 女士接下團隊而非交出。(C) get over 是克服困難或病後康復,受詞不會是團隊。(D) look over 是大致瀏覽、檢查,通常用於文件而非管理團隊。"
+  },
+  {
+    "id": "p5-b8-07",
+    "difficulty": "中級",
+    "category": "片語動詞",
+    "question": "The shift leader will ------- over the maintenance checklist with the new technicians before they start work on Monday.",
+    "options": ["turn", "carry", "go", "bring"],
+    "answer": 2,
+    "translation": "週一新進技術人員上工前,班長會和他們逐項核對維修檢查表。",
+    "explanation": "考點:與 over 搭配的片語動詞。go over 是「逐項檢視、仔細說明」,常與 with 某人連用,符合上工前帶著新人看過檢查表的情境,故 (C) go 正確。(A) turn over 是移交或翻面,句中並非把檢查表交給對方保管。(B) carry over 是把數量或事項延續到下一期,語意不合。(D) bring over 只是把東西帶過來,無法表達逐項說明。"
+  },
+  {
+    "id": "p5-b8-08",
+    "difficulty": "中級",
+    "category": "片語動詞",
+    "question": "Because sales slowed in the first quarter, the board decided to ------- back on overseas travel expenses.",
+    "options": ["turn", "cut", "fall", "put"],
+    "answer": 1,
+    "translation": "由於第一季銷售趨緩,董事會決定縮減海外出差的支出。",
+    "explanation": "考點:與 back on 搭配的片語動詞。cut back on 是「削減、縮減」某項支出或用量,與銷售趨緩的前提相呼應,故 (B) cut 正確。(A) turn back 是折返、掉頭,不與 on 搭配表示減少。(C) fall back on 是退而求其次去依靠某項資源,後面應接可依靠的人或方法,而非要縮減的支出。(D) put back 是放回原處或延後,無法表達減少金額。"
+  },
+  {
+    "id": "p5-b8-09",
+    "difficulty": "進階",
+    "category": "片語動詞",
+    "question": "Heavy rain forced the organizers to ------- off the outdoor food festival entirely, and everyone who had bought a ticket received a full refund.",
+    "options": ["put", "hold", "set", "call"],
+    "answer": 3,
+    "translation": "大雨迫使主辦單位完全取消戶外美食節,所有已購票的人都獲得全額退費。",
+    "explanation": "考點:與 off 搭配的片語動詞,並依上下文判斷「取消」或「延期」。call off 是取消,句中的 entirely 與全額退費說明活動不再舉行,故 (D) call 正確。(A) put off 是延期,若只是改期就會保留票券而不是全額退費,與後半句矛盾。(B) hold off 是暫緩行動、按兵不動,後面多接 on + 動作,不用來表示取消整場活動。(C) set off 是動身出發或引發某事,語意完全不合。"
+  },
+  {
+    "id": "p5-b8-10",
+    "difficulty": "進階",
+    "category": "片語動詞",
+    "question": "Sales representatives are expected to ------- up with every client within two business days of the first meeting.",
+    "options": ["follow", "catch", "keep", "come"],
+    "answer": 0,
+    "translation": "業務代表須在初次會面後兩個工作天內,主動與每位客戶後續聯繫。",
+    "explanation": "考點:與 up with 搭配的片語動詞。follow up with someone 是「後續追蹤聯繫」,正好對應初次會面後限期回聯客戶的規定,故 (A) follow 正確。(B) catch up with 是趕上進度或久違敘舊,與例行的限時聯繫不同。(C) keep up with 是跟上潮流或進度,受詞多為變化中的事物而非客戶。(D) come up with 是想出點子,後面接想法或方案,不能接人。"
+  },
+  {
+    "id": "p5-b8-11",
+    "difficulty": "基礎",
+    "category": "慣用搭配",
+    "question": "Rooms for the sales conference must be reserved at least three weeks ------- advance of the arrival date.",
+    "options": ["on", "by", "in", "for"],
+    "answer": 2,
+    "translation": "業務會議的住房必須在抵達日前至少三週預訂。",
+    "explanation": "考點:in advance of 的固定搭配。表示「事先、提前」只能用 in advance,若要接時間點則用 in advance of,故 (C) in 正確。(A) on 用於 on time、on schedule 等搭配,不與 advance 連用。(B) by 表示不晚於某期限,如 by Friday,後面接的是時間點而非 advance。(D) for 表示持續期間,如 for three weeks,放在 advance 前不成搭配。"
+  },
+  {
+    "id": "p5-b8-12",
+    "difficulty": "中級",
+    "category": "慣用搭配",
+    "question": "The printing vendor assured Ms. Sandoval that it could still ------- the deadline even after twenty pages were added to the catalog.",
+    "options": ["meet", "reach", "arrive", "catch"],
+    "answer": 0,
+    "translation": "印刷廠商向 Sandoval 女士保證,即使型錄多加了二十頁,仍能如期交件。",
+    "explanation": "考點:與 deadline 搭配的動詞。meet the deadline 是「趕上期限」的固定搭配,故 (A) meet 正確。(B) reach 雖有到達之意,但慣用搭配是 reach an agreement、reach a decision,不與 deadline 連用。(C) arrive 是不及物動詞,後面必須加 at 或 in,無法直接接受詞。(D) catch 用於 catch a train、catch a flight 等趕上交通工具的情境。"
+  },
+  {
+    "id": "p5-b8-13",
+    "difficulty": "中級",
+    "category": "慣用搭配",
+    "question": "All prices printed in the spring catalog are subject ------- change without prior notice.",
+    "options": ["for", "of", "in", "to"],
+    "answer": 3,
+    "translation": "春季型錄上所列的價格可能變動,恕不另行通知。",
+    "explanation": "考點:be subject to 的固定搭配。subject 作形容詞表示「可能會有…、須受…影響」時,後面固定接介系詞 to,再接名詞 change,故 (D) to 正確。要特別注意此處的 to 是介系詞,後面只能接名詞或動名詞,不是不定詞的 to。(A) for 常見於 apply for、responsible for,不與 subject 搭配。(B) of 出現在 the subject of the report(報告的主題),此時 subject 是名詞而非形容詞。(C) in 可說 a subject in school(學校科目),同樣是名詞用法,表達不出「可能變動」。"
+  },
+  {
+    "id": "p5-b8-14",
+    "difficulty": "中級",
+    "category": "慣用搭配",
+    "question": "Store managers should ------- an order through the supplier's online ordering system so that the warehouse receives it the same day.",
+    "options": ["make", "place", "take", "give"],
+    "answer": 1,
+    "translation": "分店經理應透過供應商的線上系統下訂單,倉庫才能在當天收到。",
+    "explanation": "考點:與 an order 搭配的動詞。place an order 是「下訂單」的固定用法,故 (B) place 正確。(A) make 常與 a decision、an appointment 搭配,不用於下單。(C) take an order 是店員「接受」客人的點餐或訂購,方向相反,句中的分店經理是採購方。(D) give an order 意為下達命令,與向供應商採購無關。"
+  },
+  {
+    "id": "p5-b8-15",
+    "difficulty": "進階",
+    "category": "慣用搭配",
+    "question": "The planning team will take the seasonal drop in demand ------- account when it sets next year's production targets.",
+    "options": ["in", "for", "into", "on"],
+    "answer": 2,
+    "translation": "規劃團隊在訂定明年產量目標時,會把需求的季節性下滑列入考量。",
+    "explanation": "考點:take ... into account 的固定搭配。表示「把某事列入考量」時,受詞放在 take 與 into account 之間,等同 take into consideration,故 (C) into 正確。(A) in 無法與 take、account 組成這個片語。(B) for 雖有 account for(說明原因、占比)的用法,但介系詞位置在 account 之後,不能填入空格。(D) on 出現在 on account of(由於),後面必須接原因,也不能拆開放進 take 的句型。"
+  },
+  {
+    "id": "p5-b8-16",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Guests are asked to ------- the front desk if they expect to arrive after 10 P.M., so that a key can be left for them.",
+    "options": ["notify", "announce", "mention", "remark"],
+    "answer": 0,
+    "translation": "若房客預計在晚上十點後抵達,請通知櫃檯,以便為他們留下鑰匙。",
+    "explanation": "考點:表示「通知」的動詞用法差異。notify 的受詞是被告知的人或單位,可直接說 notify the front desk,故 (A) notify 正確。(B) announce 的受詞是消息本身,要提到對象必須寫成 announce something to someone。(C) mention 的受詞是被提及的事情,不能直接接被告知的一方。(D) remark 是評論,語氣與通知不同,且要接 on 才能帶出評論對象。"
+  },
+  {
+    "id": "p5-b8-17",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "The new packing machine is much more ------- than the old model; it fills twice as many boxes per hour with the same number of workers.",
+    "options": ["effective", "efficient", "sufficient", "expensive"],
+    "answer": 1,
+    "translation": "新的包裝機比舊機型有效率得多,在人力相同的情況下每小時裝箱量多出一倍。",
+    "explanation": "考點:形容詞語意辨析。efficient 指投入相同資源卻能產出更多,正好對應「人力相同、產量加倍」,故 (B) efficient 正確。(A) effective 強調能達到預期效果,不涉及投入與產出的比例,句中比較的是效率而非有沒有效。(C) sufficient 指數量足夠,與速度快慢無關。(D) expensive 是昂貴,與後半句說明的產能無關。"
+  },
+  {
+    "id": "p5-b8-18",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "When the shop ran out of the paper the customer had requested, the clerk offered an ------- product of the same weight at no extra cost.",
+    "options": ["additional", "occasional", "original", "alternative"],
+    "answer": 3,
+    "translation": "客人指定的紙張缺貨時,店員便提供同磅數的替代產品,且不另外收費。",
+    "explanation": "考點:形容詞語意辨析。alternative 指「替代的」,呼應原本指定的紙張缺貨而改用他款,故 (D) alternative 正確。(A) additional 是額外增加的,但客人要的是取代缺貨品項而非多拿一份。(B) occasional 是偶爾發生的,不能用來形容產品種類。(C) original 是原本的,與缺貨後改提供他款的情境自相矛盾。"
+  },
+  {
+    "id": "p5-b8-19",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The Cedarcrest Hotel is ------- located within walking distance of both the convention center and the train station.",
+    "options": ["frequently", "previously", "conveniently", "recently"],
+    "answer": 2,
+    "translation": "Cedarcrest 飯店位置便利,步行即可抵達會議中心與火車站。",
+    "explanation": "考點:副詞語意辨析。conveniently located 是描述地點便利的常見說法,與步行可達兩處交通與會議地點的說明一致,故 (C) conveniently 正確。(A) frequently 修飾動作發生的頻率,飯店的位置不會時常發生。(B) previously 表示先前,會讓句意變成飯店已經搬離現址,與現況描述矛盾。(D) recently 指最近,多用於 was recently renovated 這類變動事件,而非長期不變的地理位置。"
+  },
+  {
+    "id": "p5-b8-20",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Ms. Tanabe was largely ------- for the sharp rise in online orders after her short video about the product was widely shared.",
+    "options": ["reliable", "responsible", "reasonable", "remarkable"],
+    "answer": 1,
+    "translation": "Tanabe 女士介紹該產品的短片被大量分享後,線上訂單大幅成長主要歸功於她。",
+    "explanation": "考點:字形相近的形容詞辨析。be responsible for 除了表示負責,也可表示「是造成某結果的原因」,符合訂單成長源自她的影片,故 (B) responsible 正確。(A) reliable 是可靠的,用來形容人或設備本身,不能接 for 帶出造成的結果。(C) reasonable 是合理的、價格公道的,語意不合。(D) remarkable 是出色的,同樣無法與 for 搭配表達因果。"
+  },
+  {
+    "id": "p5-b8-21",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Thursday's training session has been ------- to Room 305 because the usual meeting room is being repainted.",
+    "options": ["relocated", "replaced", "returned", "removed"],
+    "answer": 0,
+    "translation": "由於原本的會議室正在重新粉刷,週四的訓練課程已改至 305 室舉行。",
+    "explanation": "考點:字首相近的動詞辨析。relocate 是遷移到別的地點,後面接 to + 地點,正好說明課程換到 305 室,故 (A) relocated 正確。(B) replaced 是取代,主詞會是被取代的對象,且須說明由什麼取代,語意不合。(C) returned 是歸還或返回原處,但課程並非回到原地點。(D) removed 是移除、撤下,會讓句意變成課程取消,與後面另有教室的說明衝突。"
+  },
+  {
+    "id": "p5-b8-22",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Attendance at the fire safety workshop is ------- for all employees who work on the factory floor.",
+    "options": ["capable", "willing", "mandatory", "aware"],
+    "answer": 2,
+    "translation": "所有在廠區工作的員工都必須參加消防安全講習。",
+    "explanation": "考點:形容詞語意與主詞搭配。mandatory 指強制、規定必須,主詞可以是 attendance 這類事項,故 (C) mandatory 正確。(A) capable 的主詞須是人或組織,且後面要接 of。(B) willing 表示某人願意,主詞必須是人,不能用出席這件事當主詞。(D) aware 是知悉的,主詞同樣須為人且後面接 of。"
+  },
+  {
+    "id": "p5-b8-23",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Although both suppliers quoted similar prices, Ridgeway Parts won the contract because its delivery record was more -------.",
+    "options": ["constant", "continual", "continuous", "consistent"],
+    "answer": 3,
+    "translation": "雖然兩家供應商報價相近,但 Ridgeway Parts 因交貨紀錄較為穩定而拿下合約。",
+    "explanation": "考點:字形相近的形容詞辨析。consistent 指表現前後一致、穩定可預期,正是評價交貨紀錄可靠與否的用字,故 (D) consistent 正確。(A) constant 指數值或狀態維持不變,如 a constant temperature,不用來評價紀錄的可靠度。(B) continual 指同一件事反覆發生,多帶負面語氣,如 continual interruptions。(C) continuous 強調時間上毫不中斷,如 continuous operation,交貨本身是分批發生而非不間斷。"
+  },
+  {
+    "id": "p5-b8-24",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Shipping the containers by rail proved far more ------- than air freight, cutting Melbrook Trading's transport costs by nearly a third.",
+    "options": ["economic", "economical", "financial", "valuable"],
+    "answer": 1,
+    "translation": "以鐵路運送貨櫃證實比空運划算得多,讓 Melbrook Trading 的運輸成本降低近三分之一。",
+    "explanation": "考點:同字根形容詞的語意辨析。economical 是省錢、划算,呼應運輸成本降低近三分之一,故 (B) economical 正確。(A) economic 指「經濟層面的」,用於 economic growth、economic policy,不能用來說某種做法比較省錢。(C) financial 是財務的,修飾 report、statement 等文件,不用於比較兩種運送方式的花費高低。(D) valuable 強調本身有價值,與節省開支的重點不同。"
+  },
+  {
+    "id": "p5-b8-25",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Because several parts had been listed under the wrong item code, the invoice had to be ------- before the payment could be released.",
+    "options": ["collected", "connected", "corrected", "converted"],
+    "answer": 2,
+    "translation": "由於有幾項零件被登記在錯誤的品項代碼下,發票必須先更正才能放款。",
+    "explanation": "考點:字形相近的動詞辨析。correct 是更正錯誤,對應前半句品項代碼填錯的問題,故 (C) corrected 正確。(A) collected 是收取、領取,發票開錯的問題不會靠收回來解決,也無法說明付款為何卡住。(B) connected 是連接、接通,受詞多為線路或設備。(D) converted 是轉換格式或幣別,句中並未提到需要換算,錯的是代碼而非單位。"
+  }
+]

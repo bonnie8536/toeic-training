@@ -1,0 +1,252 @@
+[
+  {
+    "id": "p5-b6-01",
+    "difficulty": "基礎",
+    "category": "介系詞",
+    "question": "All employees must submit their travel expense reports ------- the end of each month.",
+    "options": ["until", "along", "by", "since"],
+    "answer": 2,
+    "translation": "所有員工都必須在每月月底前繳交出差費用報告。",
+    "explanation": "考點是表示「期限」的介系詞。submit 是一次完成的動作，搭配 by 表示「最遲在某時間點之前完成」，故選 by。until 用於持續的狀態或動作一直延續到某時間點（如 wait until noon），與一次性動作不合。since 表示「自從」，必須接過去的時間點並搭配完成式，此句為規定的期限，時態也不符。along 表示「沿著」，用於描述空間路線，不能接時間點。"
+  },
+  {
+    "id": "p5-b6-02",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "After ten years with the firm, Ms. Lin was ------- to branch manager last week.",
+    "options": ["promoted", "increased", "raised", "grown"],
+    "answer": 0,
+    "translation": "在公司服務十年後，林小姐上週升任分公司經理。",
+    "explanation": "考點是「升職」的正確用字。be promoted to + 職位 是固定用法，表示某人被拔擢到某個職務，故選 promoted。increase 指數量或程度的增加，受詞是數字、金額或比例，不能用在人事任命。raise 雖有「提高」之意，但受詞是薪資、價格、標準等事物，不能說某人被 raise 到某個職位。grow 指成長、種植，主詞是生物或事業規模，與職務調升無關。"
+  },
+  {
+    "id": "p5-b6-03",
+    "difficulty": "中級",
+    "category": "連接詞vs介系詞",
+    "question": "------- the heavy rain, the outdoor product launch was moved to the hotel ballroom.",
+    "options": ["Because", "Although", "Even though", "Because of"],
+    "answer": 3,
+    "translation": "由於大雨，戶外的新品發表會改到飯店宴會廳舉行。",
+    "explanation": "考點是連接詞與介系詞的分辨。空格後面是名詞片語 the heavy rain，沒有主詞和動詞，因此必須用介系詞片語 Because of。Because 是從屬連接詞，後面要接完整子句（如 Because it rained heavily）。Although 與 Even though 同樣是從屬連接詞，後面也必須接完整子句，而且兩者表示「雖然」，與此句的因果語意不符。"
+  },
+  {
+    "id": "p5-b6-04",
+    "difficulty": "基礎",
+    "category": "代名詞",
+    "question": "Mr. Sato reviewed the budget carefully before he sent ------- to the finance director.",
+    "options": ["them", "it", "its", "their"],
+    "answer": 1,
+    "translation": "佐藤先生仔細看過預算後，才把它送交財務主管。",
+    "explanation": "考點是代名詞的格與單複數。空格代替前面的單數名詞 the budget，並作為動詞 sent 的受詞，所以要用單數受格 it。them 是複數受格，與單數的 budget 不一致。its 和 their 都是所有格，後面必須再接名詞（如 its total），不能單獨當受詞使用。"
+  },
+  {
+    "id": "p5-b6-05",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The seminar fee does not ------- the cost of meals or transportation.",
+    "options": ["protect", "insure", "defend", "cover"],
+    "answer": 3,
+    "translation": "研討會費用不包含餐費與交通費。",
+    "explanation": "考點是費用語境中的動詞搭配。cover 用於費用時表示「涵蓋、包含某項支出」，故選 cover。protect 意為保護，通常寫成 protect A from/against B，受詞是被保護的人或物，不能接費用項目。insure 指為財產投保，主詞是投保方或保險公司，受詞是被保的標的，語意不合。defend 指防禦或替人辯護，與費用範圍無關。"
+  },
+  {
+    "id": "p5-b6-06",
+    "difficulty": "中級",
+    "category": "介系詞",
+    "question": "The new safety guidelines will take effect ------- January 3, following approval by the board.",
+    "options": ["on", "in", "at", "since"],
+    "answer": 0,
+    "translation": "新的安全規範經董事會核准後，將於一月三日起生效。",
+    "explanation": "考點是時間介系詞與時間單位的搭配。空格後是具體日期 January 3，日期前要用 on，故選 on。in 用於月份、年份或季節（in January、in 2025）。at 用於鐘點或特定時刻（at 3 P.M.）。since 表示「自從」，必須搭配完成式，而本句是未來式 will take effect，時態也不合。"
+  },
+  {
+    "id": "p5-b6-07",
+    "difficulty": "基礎",
+    "category": "連接詞vs介系詞",
+    "question": "------- the store opened last spring, sales have risen steadily each quarter.",
+    "options": ["During", "Despite", "Since", "For"],
+    "answer": 2,
+    "translation": "自從這家門市去年春天開幕以來，每一季的銷售額都穩定成長。",
+    "explanation": "考點是能否引導子句。空格後是完整子句 the store opened last spring，且主要子句用現在完成式 have risen，需要表示「自從」的從屬連接詞 Since。During 是介系詞，後面只能接名詞片語（during the spring）。Despite 也是介系詞，後接名詞片語，且語意為「儘管」，與句意不符。For 當介系詞時後面接一段時間長度（for two years）；縱使把 For 看成「因為」的對等連接詞，也只能放在主要子句之後（Sales have risen, for...），不能放句首引導原因子句。"
+  },
+  {
+    "id": "p5-b6-08",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Please ------- the attached invoice and let us know if any details are incorrect.",
+    "options": ["remind", "remove", "regard", "review"],
+    "answer": 3,
+    "translation": "請審閱附件的請款單，若有任何細節有誤，請告知我們。",
+    "explanation": "考點是動詞語意的辨析。後半句要求對方確認細節是否有誤，因此空格需要「審閱、細看」的動詞，選 review。remind 意為提醒，受詞必須是人（remind the client），不能接文件。remove 意為移除、拿掉，與檢查內容的語意相反。regard 意為「視為、看待」，須搭配 as（regard it as final），單獨接受詞語意不完整。"
+  },
+  {
+    "id": "p5-b6-09",
+    "difficulty": "中級",
+    "category": "代名詞",
+    "question": "Our current printer is much slower than ------- we used at the old office.",
+    "options": ["that", "the one", "it", "this"],
+    "answer": 1,
+    "translation": "我們現在這台印表機，比以前在舊辦公室用的那台慢很多。",
+    "explanation": "考點是比較句中代替名詞的代名詞。空格代替前面提過的單數可數名詞 printer，而且後面帶有省略關係代名詞的子句 we used，這種結構要用 the one。that 雖可代替單數名詞，但後面通常接介系詞片語（如 that of the old model），不接關係子句。it 指前文提過的同一件事物，本句比較的是另一台不同的印表機，且 it 不能被關係子句修飾。this 為指示代名詞，用於指眼前的事物，不用於這種比較結構。"
+  },
+  {
+    "id": "p5-b6-10",
+    "difficulty": "中級",
+    "category": "介系詞",
+    "question": "All shipments to overseas branches must be packed ------- accordance with the company's new guidelines.",
+    "options": ["on", "to", "in", "by"],
+    "answer": 2,
+    "translation": "所有寄往海外分公司的貨件，都必須依照公司的新規定包裝。",
+    "explanation": "考點是固定介系詞片語。in accordance with 意為「依照、遵照」，是不可拆解的固定用法，故選 in。on、to、by 都無法與 accordance 搭配成立；特別注意 by 雖可表示方式或依據（by law），但不能寫成 by accordance with。"
+  },
+  {
+    "id": "p5-b6-11",
+    "difficulty": "中級",
+    "category": "連接詞vs介系詞",
+    "question": "------- the software update was installed, several users reported slower loading times.",
+    "options": ["After", "Following", "Afterward", "Later"],
+    "answer": 0,
+    "translation": "軟體更新安裝之後，有幾位使用者反映載入速度變慢。",
+    "explanation": "考點是連接詞、介系詞與副詞的分辨。空格後是完整子句 the software update was installed，需要能引導子句的從屬連接詞 After。Following 是介系詞，後面只能接名詞片語（following the update）。Afterward 與 Later 都是副詞，只能修飾句子，不能連接兩個子句。"
+  },
+  {
+    "id": "p5-b6-12",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The hotel offers a ------- discount to guests who book more than five nights.",
+    "options": ["thick", "tight", "wide", "substantial"],
+    "answer": 3,
+    "translation": "這家飯店對訂房超過五晚的旅客提供大幅折扣。",
+    "explanation": "考點是形容詞與名詞的搭配。substantial discount 意為「幅度可觀的折扣」，是商務情境的常見搭配，故選 substantial。thick 指物體的厚度（a thick folder），不能形容折扣幅度。tight 的搭配對象是預算、時程、期限（a tight budget、a tight schedule），指緊縮、沒有餘裕，不用來形容折扣大小。wide 指寬度或範圍廣（a wide range of products），描述的是種類多寡而非折扣大小。"
+  },
+  {
+    "id": "p5-b6-13",
+    "difficulty": "基礎",
+    "category": "介系詞",
+    "question": "The department meeting has been moved ------- Tuesday to Thursday because of a scheduling conflict.",
+    "options": ["from", "since", "between", "until"],
+    "answer": 0,
+    "translation": "因為時間衝突，部門會議由星期二改到星期四。",
+    "explanation": "考點是成對出現的介系詞結構。句中已有 to Thursday，需要與之對應的起點介系詞，from A to B 表示「由 A 改成 B」，故選 from。since 表示「自從」，須搭配完成式且不與 to 形成對應。between 必須搭配 and（between Tuesday and Thursday），不能與 to 連用。until 表示動作持續到某時間點，無法與 to 構成起訖對應。"
+  },
+  {
+    "id": "p5-b6-14",
+    "difficulty": "中級",
+    "category": "代名詞",
+    "question": "Because the original supplier raised its prices, the purchasing team began looking for -------.",
+    "options": ["other", "the others", "another", "each other"],
+    "answer": 2,
+    "translation": "由於原本的供應商調漲價格，採購團隊開始尋找另一家。",
+    "explanation": "考點是不定代名詞的用法。空格要代替「另一家同類但不特定的供應商」，屬單數且不特定，用 another，故選 another。other 是形容詞，後面必須接複數名詞（other suppliers），不能單獨當受詞。the others 指「其餘的全部」，是特定且複數的概念，句中並未先界定一個供應商群體。each other 意為「彼此」，用於兩方互相的動作，與尋找新廠商的語意不合。"
+  },
+  {
+    "id": "p5-b6-15",
+    "difficulty": "進階",
+    "category": "連接詞vs介系詞",
+    "question": "------- the shipment arrives before noon, the crew will be able to finish unloading by the end of the day.",
+    "options": ["In case of", "Provided that", "Owing to", "As a result"],
+    "answer": 1,
+    "translation": "只要貨物在中午前送達，工班就能在今天結束前卸完貨。",
+    "explanation": "考點是條件語意加上能否引導子句。空格後是完整子句 the shipment arrives before noon，且前後為條件關係，須用連接詞片語 Provided that（假如、只要），故選之。In case of 與 Owing to 都是介系詞片語，後面只能接名詞（in case of rain、owing to the delay）。As a result 是副詞片語，表示結果，須加 of 才能接名詞，且無法連接兩個子句。"
+  },
+  {
+    "id": "p5-b6-16",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Sales of the new tablet have ------- expectations, and the factory has already added a second shift.",
+    "options": ["passed", "risen", "grown", "exceeded"],
+    "answer": 3,
+    "translation": "新款平板的銷售超出預期，工廠已經加開第二班。",
+    "explanation": "考點是動詞語意與及物性。exceed expectations 是固定搭配，意為「超出預期」，故選 exceeded。pass 指通過考試、經過地點或遞交物品，不用於超越預期值。rise 是不及物動詞，後面不能直接接受詞 expectations。grow 表示成長時同樣不及物，若當及物動詞則是「種植、拓展（事業）」，語意不合。"
+  },
+  {
+    "id": "p5-b6-17",
+    "difficulty": "中級",
+    "category": "介系詞",
+    "question": "The company distributed the annual training budget ------- the three regional offices based on staff size.",
+    "options": ["between", "among", "within", "throughout"],
+    "answer": 1,
+    "translation": "公司依各地人數，把年度訓練預算分配給三個區域辦公室。",
+    "explanation": "考點是分配對象數量所對應的介系詞。分配的對象是三個辦公室，屬三者以上，要用 among，故選 among。between 用於兩者之間的分配或關係（between the two teams）。within 表示「在某範圍之內」，強調界線而非分配動作（within the department）。throughout 表示遍及整個範圍，指散布各處，不用於在特定幾個對象之間分配。"
+  },
+  {
+    "id": "p5-b6-18",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Each appliance comes with a two-year ------- that includes free parts and labor.",
+    "options": ["warranty", "promise", "receipt", "permit"],
+    "answer": 0,
+    "translation": "每台家電都附有兩年保固，含免費零件與工資。",
+    "explanation": "考點是商務名詞的語意。空格指製造商對產品品質提供的書面保障，且有年限與涵蓋範圍，正是 warranty（保固），故選 warranty。promise 指口頭承諾，不是具法律效力的產品保障條款。receipt 是收據，只能證明購買行為，不含維修責任。permit 指許可證，是官方核發的准許文件，與產品保障無關。"
+  },
+  {
+    "id": "p5-b6-19",
+    "difficulty": "進階",
+    "category": "連接詞vs介系詞",
+    "question": "The renovation was completed on schedule ------- the delay in receiving the new flooring.",
+    "options": ["even though", "whereas", "despite", "nevertheless"],
+    "answer": 2,
+    "translation": "儘管新地板延遲送達，整修工程仍如期完工。",
+    "explanation": "考點是讓步語意的詞性選擇。空格後是名詞片語 the delay in receiving the new flooring，沒有主詞動詞，須用介系詞 despite，故選之。even though 是從屬連接詞，後面必須接完整子句（even though the flooring arrived late）。whereas 也是連接詞，用於對比兩個子句。nevertheless 是副詞，通常置於句首或以分號連接，不能直接引導名詞片語。"
+  },
+  {
+    "id": "p5-b6-20",
+    "difficulty": "進階",
+    "category": "代名詞",
+    "question": "------- of the applicants who were interviewed last week has been offered a position.",
+    "options": ["Both", "Few", "Several", "None"],
+    "answer": 3,
+    "translation": "上週面試的應徵者當中，沒有人獲得錄取。",
+    "explanation": "考點是不定代名詞與動詞單複數的一致。主要動詞是單數的 has been offered，四個選項中只有 None 可視為單數（none of + 複數名詞，動詞可用單數），故選 None。Both 指兩者都，恆為複數，須用 have。Few 意為「幾乎沒有幾個」，也是複數概念，須搭配 have。Several 意為好幾個，同樣為複數，與 has 不一致。"
+  },
+  {
+    "id": "p5-b6-21",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The hotel's location is especially ------- for travelers who need quick access to the airport.",
+    "options": ["comfortable", "convenient", "available", "capable"],
+    "answer": 1,
+    "translation": "這家飯店的地點對需要快速前往機場的旅客特別方便。",
+    "explanation": "考點是形容詞語意的辨析。句中強調地點帶來的便利，convenient 正是形容地點或時間便於使用，故選 convenient。comfortable 指身體上的舒適感（a comfortable chair），不用於形容交通便利。available 指可取得的、有空的，主詞須是可被取用的資源或人，說地點對旅客 available 語意不通。capable 意為有能力的，主詞須是人或設備，且須搭配 of。"
+  },
+  {
+    "id": "p5-b6-22",
+    "difficulty": "中級",
+    "category": "介系詞",
+    "question": "The training seminar has been postponed ------- further notice because the guest speaker is ill.",
+    "options": ["by", "for", "until", "from"],
+    "answer": 2,
+    "translation": "因為客座講者生病，訓練研討會延期至另行通知為止。",
+    "explanation": "考點是固定介系詞片語與時間概念。until further notice 意為「在另行通知之前」，until 表示狀態一直持續到某個時間點，正好對應延期這種持續狀態，故選 until。by 表示動作最遲完成的期限，與持續狀態不合。for 後面接一段時間長度（for two weeks），notice 不是時間長度。from 表示起點，與此處的「持續到」語意相反。"
+  },
+  {
+    "id": "p5-b6-23",
+    "difficulty": "進階",
+    "category": "連接詞vs介系詞",
+    "question": "Visitors may not enter the laboratory ------- accompanied by a staff member.",
+    "options": ["unless", "without", "except", "in case"],
+    "answer": 0,
+    "translation": "訪客除非有員工陪同，否則不得進入實驗室。",
+    "explanation": "考點是副詞子句的省略。unless 是連接詞，其後可省略與主要子句相同的主詞及 be 動詞，因此能直接接過去分詞 accompanied，還原後為 unless they are accompanied，故選 unless。without 是介系詞，後面必須接名詞或動名詞（without being accompanied）。except 當連接詞時須寫成 except when 或 except that，不能單獨引導分詞。in case 意為「以防萬一」，表預防性措施，與此處的准入條件語意不符。"
+  },
+  {
+    "id": "p5-b6-24",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Mr. Okafor was asked to ------- the monthly sales figures before the report is sent to headquarters.",
+    "options": ["observe", "notice", "watch", "verify"],
+    "answer": 3,
+    "translation": "在報告送交總公司之前，公司請歐卡佛先生核對每月的銷售數字。",
+    "explanation": "考點是動詞語意的精確度。送出報告前須確認數字是否正確，verify 意為「核對、查證正確性」，故選 verify。observe 指觀察現象或遵守規定，不含查證數據是否無誤的意思。notice 指偶然察覺到某事，是瞬間的感知，無法作為交辦的查核工作。watch 指持續注視或留意動態，受詞通常是動作或人，不用於核對數字。"
+  },
+  {
+    "id": "p5-b6-25",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "The plant has been operating at full ------- since March, producing nearly twice its usual output.",
+    "options": ["volume", "capacity", "amount", "degree"],
+    "answer": 1,
+    "translation": "這座工廠自三月起就以最大產能運轉，產量將近平時的兩倍。",
+    "explanation": "考點是固定搭配與名詞語意。at full capacity 意為「以最大產能運轉」，capacity 指產能或容納量的上限，故選 capacity。volume 指數量、體積或音量，不與 at full 搭配表示產能。amount 指總額、總量，須接 of 說明對象，且無 at full amount 的用法。degree 指程度或學位，程度用法多為 to a certain degree，不能寫成 at full degree。"
+  }
+]

@@ -1567,5 +1567,776 @@ TOEIC.part7 = [
    "佩爾沃斯與葛雷公司－差旅行程表\n出行人:區域營運部 英格麗・佐藤 女士\n製表:企業差旅櫃檯\n行程編號:PG-40718\n\n四月六日（星期一）\n07:40 自艾許康國際機場出發（VN 216 班機）\n09:55 抵達拉克斯珀市\n11:30 入住哈特菲爾套房飯店,貝克特街十二號\n14:00-17:00 參訪拉克斯珀配送中心（接待人:歐文・阿契貝）\n\n四月七日（星期二）\n09:00-12:00 供應商檢討會議,拉克斯珀配送中心\n13:30-15:00 對區域經理進行簡報,哈特菲爾套房飯店愛默生廳\n19:00 與拉克斯珀管理團隊晚宴,卡薩瓦燒烤餐廳\n\n四月八日（星期三）\n09:30-11:00 與阿契貝先生及財務同仁進行預算規劃會議\n15:15 自拉克斯珀市出發（VN 341 班機）\n17:20 抵達艾許康國際機場\n\n附註\n抵達時將有車輛至機場接您。房費由公司直接支付;除星期二晚宴外的餐費請以費用申請方式核銷。以本公司企業票價訂購的機票可免費更改一次,惟須於起飛前至少七十二小時通知差旅櫃檯。",
    "收件者:travel@pellworthgray.com\n寄件者:i.sato@pellworthgray.com\n日期:四月一日\n主旨:行程編號 PG-40718－兩項異動\n\n您好:\n\n行程表發出後有兩件事有了變化。\n\n第一,歐文・阿契貝詢問預算規劃會議能否改到星期二上午,因為他的財務團隊星期三要接受稽核。供應商願意改在星期三與我碰面,但只能約下午,這代表我得比原訂時間更晚離開拉克斯珀。我查到最近的一班是十八點零五分起飛。可否幫我確認這樣的更改是否仍在免費更改的期限內?\n\n第二,星期二的簡報出席人數已從十二人增加到約三十人,而目前預訂的會議室只能容納二十人。可否請您向飯店詢問一樓的金斯利廳當天下午是否有空?若無,我寧可把場地改到配送中心,那裡有一間大小合適的訓練教室。\n\n最後一點:由於我將在當地多待一個下午,請確認飯店不會向我收取延遲退房的費用。\n\n謝謝\n英格麗・佐藤"
   ]
+ },
+ {
+  "id": "p7-b6-1",
+  "format": "single",
+  "passages": [
+   {
+    "type": "email",
+    "label": "",
+    "content": "To: Harriet Kwan <h.kwan@lindmarkclinic.com>\nFrom: Owen Brasher <o.brasher@quillpressprinting.com>\nDate: June 4\nSubject: Order 44821\n\nDear Ms. Kwan,\n\nThank you for the order we received from Lindmark Clinic on Monday. Your 5,000 appointment cards are already being printed and will leave our shop on Tuesday, June 9, exactly as promised.\n\nI am writing about the other half of the order. The gray folders you chose are printed on a paper that our supplier has stopped producing, and we used the last of it two weeks ago. A replacement paper will not reach us before June 22, which is ten days after the date you asked for.\n\nThere are two ways forward. We can hold the folders until the new paper arrives, or we can print them this week on a slightly heavier white paper. The second choice costs us more, but we will not pass that difference on to you, and I have sent a sample of the white paper by courier so that you can see it before you decide.\n\nWhichever you choose, we will cover the delivery charge on the folders, since the delay is ours.\n\nCould you let me know by Friday afternoon? After that I cannot promise you a place on next week's schedule.\n\nBest regards,\n\nOwen Brasher\nAccount Manager, Quill Press Printing\n555-0178"
+   }
+  ],
+  "questions": [
+   {
+    "q": "Why did Mr. Brasher write the e-mail?",
+    "options": [
+     "To confirm that an entire order has been shipped",
+     "To explain a supply problem affecting part of an order",
+     "To request payment before printing begins",
+     "To recommend another printing company"
+    ],
+    "answer": 1,
+    "explanation": "定位:第二段第一句「I am writing about the other half of the order」,接著說明紙廠停產、庫存用完、替代用紙六月二十二日才到。(A)錯:只有預約卡如期出貨,資料夾尚未印製,並非整筆訂單已出貨。(C)錯:全文未提付款或請款。(D)錯:他請客戶在兩個方案中選一個,並未推薦別家廠商。"
+   },
+   {
+    "q": "What is indicated about the appointment cards?",
+    "options": [
+     "They will be printed on a heavier paper.",
+     "Their delivery has been moved to June 22.",
+     "Their price has been reduced.",
+     "They will be sent out on the original date."
+    ],
+    "answer": 3,
+    "explanation": "定位:第一段第二句「Your 5,000 appointment cards are already being printed and will leave our shop on Tuesday, June 9, exactly as promised」,as promised 表示仍照原訂日期。(A)錯:較厚的白紙是資料夾的替代方案。(B)錯:六月二十二日是替代用紙到貨日,與預約卡無關。(C)錯:全文只說不加價,沒有降價。"
+   },
+   {
+    "q": "What does Mr. Brasher NOT offer to do?",
+    "options": [
+     "Lower the price of the folders",
+     "Pay for the delivery of the folders",
+     "Print the folders this week on a different paper",
+     "Send Ms. Kwan a sample by courier"
+    ],
+    "answer": 0,
+    "explanation": "定位:第三段說第二個方案「costs us more, but we will not pass that difference on to you」,只是不加價,並未降價,故 (A) 是他沒有提供的。(B)在第四段「we will cover the delivery charge on the folders」。(C)在第三段「print them this week on a slightly heavier white paper」。(D)在第三段「I have sent a sample of the white paper by courier」。"
+   },
+   {
+    "q": "The word \"cover\" in paragraph 4, line 1, is closest in meaning to",
+    "options": [
+     "hide",
+     "include",
+     "pay for",
+     "protect"
+    ],
+    "answer": 2,
+    "explanation": "定位:第四段「we will cover the delivery charge on the folders, since the delay is ours」,受詞是 delivery charge(運費),後面又說延誤責任在己方,可知是由印刷廠負擔費用。(A)(D)是 cover 的字面義「遮蓋、保護」,與費用無關。(B)錯:此處不是把運費「包含」在報價內,而是由賣方吸收。"
+   }
+  ],
+  "translation": [
+   "收件者:哈莉葉・關 <h.kwan@lindmarkclinic.com>\n寄件者:歐文・布拉舍 <o.brasher@quillpressprinting.com>\n日期:六月四日\n主旨:第 44821 號訂單\n\n關女士您好:\n\n感謝林馬克診所週一交給本廠的訂單。您的五千張預約卡已在印製中,會如約於六月九日星期二出貨。\n\n我來信是要說明訂單另一半的狀況。您選的灰色資料夾所用的紙,供應商已經停產,本廠最後一批也在兩週前用完。替代用紙要到六月二十二日才會送達,比您指定的日期晚了十天。\n\n目前有兩種作法。一是把資料夾押後,等新紙到貨;二是本週就改用略厚的白紙印製。第二種作法本廠成本較高,但差額不會轉嫁給您,而且我已用快遞寄出白紙樣張,讓您決定前先看過實品。\n\n無論您選哪一種,資料夾的運費都由我們負擔,畢竟延誤是我們造成的。\n\n可否請您在週五下午前回覆?超過這個時間,我無法保證還排得進下週的產程。\n\n謹此\n奎爾印刷公司\n業務專員 歐文・布拉舍\n555-0178"
+  ]
+ },
+ {
+  "id": "p7-b6-2",
+  "format": "single",
+  "passages": [
+   {
+    "type": "text message",
+    "label": "",
+    "content": "Priya Sandhu (8:52 A.M.)\nMarcus, the copier on the third floor is showing an error code again. E-24, the same one as last month.\n\nMarcus Ide (8:55 A.M.)\nSorry to hear that. Is the service log still in the cabinet next to the machine?\n\nPriya Sandhu (8:57 A.M.)\nIt's here. The technician wrote that she replaced the roller on May 6 and that the part has a six-month warranty.\n\nMarcus Ide (9:01 A.M.)\nGood. Then the repair is still covered and we will not be billed for it. I'll call Fenwick Office Systems as soon as they open at nine thirty.\n\nPriya Sandhu (9:03 A.M.)\nThanks. One thing, though. The audit team is due on Thursday, and they need about four hundred pages copied on Wednesday afternoon.\n\nMarcus Ide (9:06 A.M.)\nUnderstood. I'll ask Fenwick for a Tuesday visit and explain why we need one. If they cannot come before Thursday, use the machine in the mailroom.\n\nPriya Sandhu (9:08 A.M.)\nThat one holds only a single paper tray, so someone has to stand there and refill it. But for four hundred pages it will do.\n\nMarcus Ide (9:10 A.M.)\nLet's keep it as a backup. I'll write to you the moment Fenwick gives me a time."
+   }
+  ],
+  "questions": [
+   {
+    "q": "Why does Ms. Sandhu write to Mr. Ide?",
+    "options": [
+     "To ask where a service log is kept",
+     "To order supplies for a copier",
+     "To report a problem with a machine",
+     "To arrange a meeting with an audit team"
+    ],
+    "answer": 2,
+    "explanation": "定位:上午八時五十二分第一則「the copier on the third floor is showing an error code again」,通報影印機再度出現故障代碼。(A)錯:問維修紀錄本在哪的是艾德先生,不是她。(B)錯:全文未提訂購耗材。(D)錯:稽核小組只是她說明急迫性的原因,並非要安排會面。"
+   },
+   {
+    "q": "The word \"due\" at 9:03 A.M. is closest in meaning to",
+    "options": [
+     "expected",
+     "owed",
+     "delayed",
+     "required"
+    ],
+    "answer": 0,
+    "explanation": "定位:上午九時三分「The audit team is due on Thursday」,主詞是一群人加上時間點,意思是預定於週四抵達。(B)錯:due 作「應付的」時搭配款項,例如 payment is due。(C)錯:due 沒有「延誤」的意思,而且延誤的是維修不是稽核小組。(D)錯:要求四百頁影印的是稽核小組本身,不是 due 這個字的意思。"
+   },
+   {
+    "q": "What does Mr. Ide say he will do?",
+    "options": [
+     "Replace the roller himself",
+     "Buy a new copier for the third floor",
+     "Move the audit to a later week",
+     "Ask the service company to come on Tuesday"
+    ],
+    "answer": 3,
+    "explanation": "定位:上午九時六分「I'll ask Fenwick for a Tuesday visit and explain why we need one」,Fenwick Office Systems 即上午九時一分提到的維修公司。(A)錯:滾輪是技師五月六日換的。(B)錯:兩人只談維修與備用機,未提採購。(C)錯:稽核時間是既定的,他反而是配合稽核提前叫修。"
+   },
+   {
+    "q": "At 9:08 A.M., what does Ms. Sandhu most likely mean when she writes, \"it will do\"?",
+    "options": [
+     "She will operate the copier herself.",
+     "The mailroom machine will be good enough for the job.",
+     "The copying should be sent to an outside shop.",
+     "The paper tray needs to be replaced."
+    ],
+    "answer": 1,
+    "explanation": "定位:上午九時八分她先指出收發室那台只有一個紙匣、得有人顧著補紙,再用 But 轉折說「for four hundred pages it will do」,表示以這次四百頁的量而言堪用。(A)錯:她說的是要有人補紙,並未表明由自己操作。(C)錯:全文沒有外送影印店的選項。(D)錯:紙匣少是機器本身的規格,不是待修的故障。"
+   }
+  ],
+  "translation": [
+   "普莉雅・桑杜（上午八時五十二分）\n馬可斯,三樓那台影印機又跳錯誤代碼了。E-24,跟上個月同一個。\n\n馬可斯・艾德（上午八時五十五分）\n真是麻煩。維修紀錄本還放在機器旁邊那個櫃子裡嗎?\n\n普莉雅・桑杜（上午八時五十七分）\n在我手上。技師寫說她五月六日換過滾輪,而且那個零件有六個月保固。\n\n馬可斯・艾德（上午九時一分）\n那就好。這樣維修還在保固範圍內,不會跟我們收費。芬威克辦公設備九點半一開門我就打電話過去。\n\n普莉雅・桑杜（上午九時三分）\n謝謝。不過有件事,稽核小組週四就要來,他們星期三下午要影印大約四百頁。\n\n馬可斯・艾德（上午九時六分）\n了解。我會請芬威克排星期二來,並說明我們為什麼需要提前。如果他們週四前排不出人,就先用收發室那台。\n\n普莉雅・桑杜（上午九時八分）\n那台只有一個紙匣,得有人站在旁邊補紙。不過四百頁的話還算堪用。\n\n馬可斯・艾德（上午九時十分）\n就先當備案。芬威克一給我時間我馬上通知妳。"
+  ]
+ },
+ {
+  "id": "p7-b6-3",
+  "format": "single",
+  "passages": [
+   {
+    "type": "advertisement",
+    "label": "",
+    "content": "GREENHOLT UNIFORM SERVICE\nClean uniforms, delivered. No machines to buy, no laundry to run.\n\nFor more than twenty years, Greenholt has supplied and cleaned work clothing for restaurants, garages, clinics, and hotels across the Marlow Valley. Tell us how many staff you have and how often you would like a delivery. We do the rest.\n\nWHAT YOU GET\n- A free visit to measure your staff at your workplace, usually within three working days of your call\n- Pickup and delivery once or twice a week by our own drivers\n- Repairs at no extra cost, including buttons, pockets, and small tears\n- A spare set for every employee, so that nobody is ever left without a clean uniform\n- Monthly billing, with a single invoice covering all of your locations\n\nPRICES\nStandard cotton shirts and pants start at $6.40 per employee each week. Chef coats and safety jackets are priced separately, since the cost depends on the fabric.\n\nPLEASE NOTE\nWe do not sell uniforms. Every garment remains the property of Greenholt and must be returned to us when an employee leaves your company.\n\nTRY US\nNew customers who sign a twelve-month agreement before September 30 pay half price for the first four weeks. Mention code VALLEY24 when you call.\n\nGreenholt Uniform Service\nUnit 9, Denton Trade Park\n555-0193 | greenholtuniform.com\nOffice hours: Monday to Friday, 7:00 A.M. to 5:00 P.M."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What kind of business is Greenholt?",
+    "options": [
+     "A company that manufactures cotton fabric",
+     "A company that supplies and cleans work clothing",
+     "A store that sells laundry machines",
+     "An agency that finds staff for restaurants"
+    ],
+    "answer": 1,
+    "explanation": "定位:第二段「Greenholt has supplied and cleaned work clothing for restaurants, garages, clinics, and hotels」,加上標題「Clean uniforms, delivered」。(A)錯:布料只出現在報價說明,公司並非織布廠。(C)錯:副標題「No machines to buy」正是說客戶不必買洗衣機。(D)錯:餐廳等是客戶類型,不是它替人找員工。"
+   },
+   {
+    "q": "What is NOT mentioned as part of Greenholt's service?",
+    "options": [
+     "Repairs at no extra cost",
+     "A spare set of clothing for each employee",
+     "Training for the customer's own laundry staff",
+     "One invoice for a customer with several locations"
+    ],
+    "answer": 2,
+    "explanation": "定位:WHAT YOU GET 五點逐一比對。(A)在第三點「Repairs at no extra cost」。(B)在第四點「A spare set for every employee」。(D)在第五點「a single invoice covering all of your locations」。(C)未出現在廣告任何段落,客戶不需自行洗衣,自然也沒有洗衣人員訓練。"
+   },
+   {
+    "q": "What is stated about the uniforms?",
+    "options": [
+     "They belong to Greenholt and must be given back.",
+     "They are all made from the same fabric.",
+     "They must be paid for before the first delivery.",
+     "Employees are measured at the Denton Trade Park office."
+    ],
+    "answer": 0,
+    "explanation": "定位:PLEASE NOTE「Every garment remains the property of Greenholt and must be returned to us when an employee leaves」。(B)錯:PRICES 段說廚師服等的價格視布料而定,可見布料不只一種。(C)錯:公告寫明不販售制服,採月結帳單。(D)錯:量身是到客戶的工作場所,不是到公司門市。"
+   },
+   {
+    "q": "How can a new customer receive the special offer?",
+    "options": [
+     "By ordering uniforms for more than twenty employees",
+     "By paying twelve months of fees in advance",
+     "By visiting the Denton Trade Park office on a Saturday",
+     "By signing a one-year agreement before September 30"
+    ],
+    "answer": 3,
+    "explanation": "定位:TRY US「New customers who sign a twelve-month agreement before September 30 pay half price for the first four weeks」,twelve-month 即一年。(A)錯:優惠條件與人數無關。(B)錯:簽的是十二個月的合約,不是預繳十二個月費用。(C)錯:辦公時間是週一至週五,週六並不營業。"
+   }
+  ],
+  "translation": [
+   "格林霍特制服服務\n乾淨制服,送到您手上。不必買設備,也不必自己洗。\n\n二十多年來,格林霍特為馬洛谷地一帶的餐廳、汽車修理廠、診所與旅館提供工作服並負責清洗。只要告訴我們您有多少員工、希望多久送一次,其餘的交給我們。\n\n服務內容\n－ 到府免費量身,通常在您來電後三個工作天內完成\n－ 由本公司司機每週一次或兩次收送\n－ 免費修補,含鈕扣、口袋與小破損\n－ 每位員工都配備一套備用制服,不會有人沒有乾淨衣服可穿\n－ 按月結帳,所有據點合開一張帳單\n\n價格\n標準棉質上衣與長褲,每位員工每週六・四美元起。廚師服與安全外套另行報價,費用視布料而定。\n\n請注意\n本公司不販售制服。所有衣物均為格林霍特所有,員工離職時必須歸還。\n\n歡迎試用\n新客戶於九月三十日前簽訂十二個月合約,前四週半價。來電時請提供代碼 VALLEY24。\n\n格林霍特制服服務\n丹頓工業園區 9 號廠房\n555-0193 | greenholtuniform.com\n辦公時間:週一至週五上午七時至下午五時"
+  ]
+ },
+ {
+  "id": "p7-b6-4",
+  "format": "double",
+  "passages": [
+   {
+    "type": "invoice",
+    "label": "Quotation",
+    "content": "MERIDIAN CONTRACT FURNISHINGS\n1140 Alder Way, Sudbury\nQUOTATION No. Q-7719\n\nPrepared for: Talia Okafor, Office Manager, Bexley Analytics\nDate: August 3\nThis quotation is valid for thirty days from the date shown above.\n\nItem — Quantity — Unit price — Total\nAdjustable desk, 140 cm, wood top — 24 — $415 — $9,960\nTask chair, model TR-5 — 24 — $228 — $5,472\nTwo-drawer file cabinet — 12 — $140 — $1,680\nMeeting table, seats eight — 2 — $690 — $1,380\n\nSubtotal: $18,492\nDelivery: $0\nTotal: $18,492\n\nTERMS\n1. Delivery within the Sudbury area is free on orders above $10,000.\n2. Assembly is not included. Our crews will put together any item for $18 per desk or table and $9 per chair.\n3. Orders of twenty or more chairs of the same model receive a five percent reduction, which has already been taken off the price above.\n4. Lead time is four weeks from the day we receive a signed copy of this quotation together with a deposit of thirty percent.\n5. Items may be returned within fourteen days of delivery if they have not been opened.\n\nQuestions? Call Devin Marsh at 555-0166."
+   },
+   {
+    "type": "email",
+    "label": "E-mail",
+    "content": "To: Devin Marsh <d.marsh@meridiancf.com>\nFrom: Talia Okafor <t.okafor@bexleyanalytics.com>\nDate: August 7\nSubject: Quotation Q-7719\n\nDear Mr. Marsh,\n\nThank you for the quotation, which our director approved this morning with two changes.\n\nFirst, we would like six more of the same task chairs, for a total of thirty. Two people are joining the analysis team this fall, and I would rather order the extra chairs now than pay for a second delivery later. Please confirm that the reduction described in your third term still applies at the larger quantity.\n\nSecond, please remove the file cabinets. All of our records are being scanned this month, so we no longer need them.\n\nWe would also like your crews to put the desks and the meeting tables together for us. Nobody here has the time to do it. Please add that cost to the revised total.\n\nOne more point, about timing. Our lease on the new floor begins on September 8, and I would like the furniture in place before the end of that week. If I return the signed quotation on August 11, does that leave us enough time?\n\nKind regards,\n\nTalia Okafor\nOffice Manager, Bexley Analytics"
+   }
+  ],
+  "questions": [
+   {
+    "q": "According to the quotation, what condition applies to returned items?",
+    "options": [
+     "They must be sent back within thirty days.",
+     "They must be collected by a Meridian crew.",
+     "They may be returned only after they have been assembled.",
+     "They must still be in their packaging."
+    ],
+    "answer": 3,
+    "explanation": "定位:報價單條款第五點「Items may be returned within fourteen days of delivery if they have not been opened」,未拆封即仍在原包裝內。(A)錯:三十天是報價單本身的有效期,不是退貨期限,退貨期限是十四天。(B)錯:條款未規定退貨由誰運送。(C)錯:條件正好相反,已組裝或拆封的商品不得退貨。"
+   },
+   {
+    "q": "Why did Ms. Okafor write the e-mail?",
+    "options": [
+     "To request changes to a quotation",
+     "To complain about a late delivery",
+     "To cancel an order for office furniture",
+     "To ask for a copy of an invoice"
+    ],
+    "answer": 0,
+    "explanation": "定位:電子郵件第一段「our director approved this morning with two changes」,後面各段分別提出加訂椅子、刪除檔案櫃、加購組裝與詢問交期。(B)錯:家具還沒開始生產,談不上延遲。(C)錯:她是修改內容,並非取消訂單。(D)錯:她要的是修改後的總價,不是索取帳單副本。"
+   },
+   {
+    "q": "In the e-mail, the word \"leave\" in paragraph 5 is closest in meaning to",
+    "options": [
+     "depart from",
+     "forget",
+     "give",
+     "delay"
+    ],
+    "answer": 2,
+    "explanation": "定位:電子郵件第五段最後一句「does that leave us enough time?」,受詞是 us 與 enough time,問的是這樣是否還來得及,即「留給我們足夠的時間」。(A)錯:leave 作「離開」時後面接地點,不接雙受詞。(B)(D)錯:兩者都不是 leave 的字義,句中也沒有忘記或延後的語意。"
+   },
+   {
+    "q": "How much will the assembly work requested by Ms. Okafor add to the order?",
+    "options": [
+     "$432",
+     "$468",
+     "$504",
+     "$738"
+    ],
+    "answer": 1,
+    "explanation": "定位:須整合兩篇。電子郵件第四段說要請師傅組裝「the desks and the meeting tables」;報價單品項顯示書桌 24 張、會議桌 2 張,共 26 件,而條款第二點規定桌類每件 18 美元,26 × 18 = 468。(A)錯:432 只算了 24 張書桌。(C)錯:504 是把件數誤算為 28。(D)錯:738 是多加了三十張椅子的組裝費 270 美元,但她並未要求組裝椅子。"
+   },
+   {
+    "q": "If Ms. Okafor returns the signed quotation on August 11, when will the furniture most likely be delivered?",
+    "options": [
+     "On August 25",
+     "On September 1",
+     "On September 8",
+     "On September 15"
+    ],
+    "answer": 2,
+    "explanation": "定位:須整合兩篇。報價單條款第四點寫明交期為收到簽署文件與訂金後四週;電子郵件第五段說她八月十一日寄回,八月十一日加四週即九月八日。(A)錯:八月二十五日只過了兩週。(B)錯:九月一日只過了三週。(D)錯:郵件只說希望九月八日那一週結束前家具就定位,並未提到九月十五日,依四週交期算出的也是九月八日。"
+   }
+  ],
+  "translation": [
+   "梅里迪安辦公家具公司\n蘇德柏里市阿德路 1140 號\n報價單編號 Q-7719\n\n報價對象:貝斯利分析公司 辦公室主任 塔莉亞・奧卡佛\n日期:八月三日\n本報價單自上列日期起三十天內有效。\n\n品項 — 數量 — 單價 — 小計\n可調式辦公桌,140 公分,木質桌面 — 24 — 415 美元 — 9,960 美元\n辦公椅,TR-5 型 — 24 — 228 美元 — 5,472 美元\n雙抽屜檔案櫃 — 12 — 140 美元 — 1,680 美元\n八人座會議桌 — 2 — 690 美元 — 1,380 美元\n\n小計:18,492 美元\n運費:0 美元\n總計:18,492 美元\n\n條款\n1. 訂單金額逾一萬美元者,蘇德柏里市區內免運費。\n2. 不含組裝。本公司師傅可代為組裝,桌類每件 18 美元,椅子每張 9 美元。\n3. 同型號椅子訂購二十張以上者享九五折,上表價格已扣除此折扣。\n4. 交期為本公司收到簽署之報價單與三成訂金當日起算四週。\n5. 商品送達後十四天內,未拆封者可辦理退貨。\n\n如有疑問,請電洽戴文・馬許,555-0166。",
+   "收件者:戴文・馬許 <d.marsh@meridiancf.com>\n寄件者:塔莉亞・奧卡佛 <t.okafor@bexleyanalytics.com>\n日期:八月七日\n主旨:報價單 Q-7719\n\n馬許先生您好:\n\n感謝您的報價單,我們主管今天早上已核准,但有兩處要調整。\n\n第一,同型號的辦公椅想再加訂六張,合計三十張。分析團隊秋天會有兩位新同事報到,與其之後再付一次運費,不如現在一次訂足。請確認貴公司條款第三點的折扣在加量後仍然適用。\n\n第二,請刪除檔案櫃。本公司所有紙本資料這個月都會掃描建檔,已經用不到了。\n\n另外,想請貴公司師傅代為組裝辦公桌與會議桌,我們這邊實在沒有人手。請把這筆費用加進修正後的總價。\n\n還有一點關於時間。新樓層的租約自九月八日起算,我希望家具能在那一週結束前全部就定位。若我在八月十一日把簽好的報價單寄回,時間還來得及嗎?\n\n謹此\n貝斯利分析公司\n辦公室主任 塔莉亞・奧卡佛"
+  ]
+ },
+ {
+  "id": "p7-b7-1",
+  "format": "single",
+  "passages": [
+   {
+    "type": "notice",
+    "label": "",
+    "content": "NOTICE TO ALL TENANTS\nRiverbend Business Center — Building Management Office\nPosted: March 3\n\nStarting Monday, March 16, the two elevators in the north lobby will be taken out of service for a scheduled upgrade. The work is expected to last three weeks. During this period, tenants and their visitors should use the south lobby elevators, which will run on an extended schedule from 6:00 a.m. to 10:00 p.m.\n\nBecause the south lobby is likely to be crowded between 8:30 and 9:30 a.m., we encourage staff on floors two through four to take the stairs whenever possible. Delivery workers carrying heavy items should contact the front desk at extension 210, and a staff member will open the service elevator at the rear of the building for them.\n\nThe upgrade will not affect water, heating, or internet service. However, the north lobby will be closed while the new equipment is being installed, so the mail room will move temporarily to Room 118, next to the tenant lounge.\n\nWe understand that this project will cause some inconvenience, and we thank you for your patience. Tenants who want to know more may attend a short information session on Thursday, March 12, at 5:30 p.m. in the third-floor conference room. Written questions can also be sent to management@riverbendcenter.com."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main purpose of the notice?",
+    "options": [
+     "To announce a change in rental prices",
+     "To inform tenants about temporary building conditions",
+     "To invite tenants to apply for parking spaces",
+     "To report the results of a completed repair"
+    ],
+    "answer": 1,
+    "explanation": "定位:第一段「the two elevators in the north lobby will be taken out of service for a scheduled upgrade」,以及後文改用南側電梯、收發室暫時搬遷等說明,可知全文在告知施工期間的臨時狀況。(A)錯:全文未提任何租金或費用。(C)錯:停車位申請未出現。(D)錯:工程是三月十六日才要開始,並非已完成的維修結果。"
+   },
+   {
+    "q": "In the notice, the word \"scheduled\" in paragraph 1 is closest in meaning to",
+    "options": [
+     "planned",
+     "canceled",
+     "approved",
+     "repeated"
+    ],
+    "answer": 0,
+    "explanation": "定位:第一段「the two elevators in the north lobby will be taken out of service for a scheduled upgrade」。此處 scheduled 指這項工程是事先排定、計畫好的,故選 planned。(B)錯:工程並未取消,而是即將展開。(C)錯:文中沒有提到是否經過核准。(D)錯:也沒有重複施工之意。"
+   },
+   {
+    "q": "What are delivery workers with heavy items asked to do?",
+    "options": [
+     "Use the stairs in the north lobby",
+     "Make deliveries before 8:30 a.m.",
+     "Contact the front desk for help",
+     "Leave packages in Room 118"
+    ],
+    "answer": 2,
+    "explanation": "定位:第二段「Delivery workers carrying heavy items should contact the front desk at extension 210」,之後才會有人為他們開啟後方貨梯。(A)錯:走樓梯是給二至四樓員工的建議。(B)錯:八點半到九點半只是人潮擁擠的時段,並非送貨規定。(D)錯:一一八室是暫時的收發室位置,不是放置包裹的指示。"
+   },
+   {
+    "q": "What is NOT mentioned in the notice?",
+    "options": [
+     "How long the project will last",
+     "Where the mail room will be located",
+     "When tenants can ask about the work",
+     "How much the new equipment costs"
+    ],
+    "answer": 3,
+    "explanation": "定位:(A) 見第一段「expected to last three weeks」;(B) 見第三段「the mail room will move temporarily to Room 118」;(C) 見第四段三月十二日的說明會。全文完全沒有出現任何金額,故 (D) 為未提及者。"
+   }
+  ],
+  "translation": [
+   "全體租戶公告\n河灣商務中心 — 大樓管理室\n公告日期:三月三日\n\n自三月十六日（星期一）起,北側大廳的兩部電梯將停止使用,進行預定的設備更新工程,預計為期三週。這段期間,租戶與訪客請改用南側大廳的電梯;該側電梯將延長運行時間,自上午六點至晚間十點。\n\n由於南側大廳在上午八點半至九點半之間可能相當擁擠,我們建議二樓至四樓的員工盡量走樓梯。搬運重物的送貨人員請撥分機 210 聯絡櫃檯,將有專人為您開啟大樓後方的貨梯。\n\n本次工程不會影響供水、暖氣或網路服務。惟施工期間北側大廳將封閉,收發室因此暫時移至一一八室,位置在租戶休息室隔壁。\n\n我們明白這項工程會造成一些不便,感謝各位的耐心配合。想進一步了解的租戶,可於三月十二日（星期四）下午五點半到三樓會議室參加簡短的說明會。也歡迎將書面問題寄至 management@riverbendcenter.com。"
+  ]
+ },
+ {
+  "id": "p7-b7-2",
+  "format": "single",
+  "passages": [
+   {
+    "type": "article",
+    "label": "",
+    "content": "BUSINESS WEEKLY | Regional Report\nMay 9\n\nSmall Food Shops Find New Life in Delivery Partnerships\nBy Gordon Sayre\n\nFor years, the owners of small food shops in the Milbrook district said the same thing: they could not compete with the large supermarkets that opened along the highway. Sales fell season after season, and three shops closed last year alone.\n\nThat picture began to change in January, when eleven shop owners formed a group called Milbrook Fresh. Instead of each store hiring its own drivers, the members share a single delivery service. Customers place orders through one website and receive their goods within two hours. The stores split the cost of the drivers and of the software behind the site.\n\n\"We were spending far too much on advertising that reached no one,\" said Carmen Vargas, who owns a shop on Miller Street. \"Now that money goes to the drivers, and our regular customers order twice as often.\"\n\nThe results have not been the same for everyone. Two members report that their weekend sales have doubled, while others say the change has been small. Still, none of the eleven shops has left the group. Ms. Vargas believes the main benefit is not the orders themselves but the information: the shared website shows which products sell quickly, so the owners can order new stock more carefully.\n\nA similar group is now being formed by bakery owners in the neighboring Weston district."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the article mainly about?",
+    "options": [
+     "A city plan to limit new supermarkets",
+     "A grocery chain that opened a new branch",
+     "A website that compares food prices",
+     "A group of shops that began working together"
+    ],
+    "answer": 3,
+    "explanation": "定位:第二段「eleven shop owners formed a group called Milbrook Fresh」,後文都在說明這些店家如何共用司機、網站與資訊,故主旨是小店聯合經營。(A)錯:文中沒有任何市政限制超市的計畫。(B)錯:超市是競爭對手,並非新開分店的主角。(C)錯:網站是用來下單與看銷售資訊,不是比價。"
+   },
+   {
+    "q": "The word \"picture\" in paragraph 2 of the article is closest in meaning to",
+    "options": [
+     "situation",
+     "photograph",
+     "drawing",
+     "memory"
+    ],
+    "answer": 0,
+    "explanation": "定位:第二段首句「That picture began to change in January」。這裡的 picture 承接第一段所描述的經營困境,指整體「情況、局面」,故選 situation。(B)(C) 是 picture 的字面義,文中沒有任何影像或圖畫。(D) 文意並非回憶。"
+   },
+   {
+    "q": "According to Ms. Vargas, what is the greatest benefit of the group?",
+    "options": [
+     "Lower rent for shop owners",
+     "Knowing which goods sell well",
+     "Cheaper advertising in local newspapers",
+     "Faster delivery than the supermarkets offer"
+    ],
+    "answer": 1,
+    "explanation": "定位:第四段末「the main benefit is not the orders themselves but the information: the shared website shows which products sell quickly」。(A)錯:租金完全未提。(C)錯:她說的是把原本的廣告費改花在司機身上,不是廣告變便宜。(D)錯:兩小時送達是服務內容,但她明言最大好處在資訊而非訂單。"
+   },
+   {
+    "q": "What is suggested about the bakery owners in Weston?",
+    "options": [
+     "They have hired drivers from Milbrook Fresh.",
+     "They sell their goods in food shops.",
+     "They are planning a similar arrangement.",
+     "They have opened stores along the highway."
+    ],
+    "answer": 2,
+    "explanation": "定位:最後一句「A similar group is now being formed by bakery owners in the neighboring Weston district」,可推知他們正要仿效同樣的合作方式。(A)錯:文中只說團體性質相似,未提共用同一批司機。(B)(D) 文中皆無根據。"
+   }
+  ],
+  "translation": [
+   "商業週刊｜區域報導\n五月九日\n\n小型食品店靠外送合作重獲生機\n戈登・塞爾 撰\n\n多年來,米爾布魯克區小型食品店的老闆都說著同樣的話:他們拚不過公路旁陸續開幕的大型超市。營業額一季比一季下滑,光是去年就有三家店收攤。\n\n這個局面自一月起開始改變。當時十一位店主組成了名為「米爾布魯克鮮食」的團體。成員不再各自僱用司機,而是共用一套外送服務。顧客在同一個網站下單,兩小時內就能收到商品;司機的費用與網站軟體的費用,則由各店分攤。\n\n「我們以前花太多錢做廣告,卻沒有觸及任何人,」在米勒街開店的卡門・巴爾加斯說。「現在那筆錢用在司機身上,老顧客下單的次數變成兩倍。」\n\n成效並非人人相同。兩家成員店表示週末業績翻倍,其他店則說變化不大。不過十一家店至今沒有一家退出。巴爾加斯女士認為,最大的好處不在訂單本身,而在資訊:共用網站會顯示哪些商品賣得快,老闆因此能更精準地叫貨。\n\n鄰近的威斯頓區,現在也有麵包店老闆正在籌組類似的團體。"
+  ]
+ },
+ {
+  "id": "p7-b7-3",
+  "format": "single",
+  "passages": [
+   {
+    "type": "webpage",
+    "label": "",
+    "content": "www.cedarlinetools.com/rentals\n\nHOME  |  RENTALS  |  REPAIRS  |  STORE HOURS  |  CONTACT\n\nCedarline Tool Rental — How It Works\n\nStep 1: Choose your equipment.\nOur catalog lists more than 400 items, from small hand tools to large floor cleaning machines. Daily, weekly, and monthly rates appear on each item page. The weekly rate is the best value for any job that lasts longer than four days.\n\nStep 2: Reserve online.\nSelect a pickup date and a store location. A reservation holds your item for 24 hours after the pickup time you choose. We do not ask for a deposit on orders under $200, but a valid driver's license must be shown at the counter.\n\nStep 3: Pick up and go.\nBring your reservation number to the rental desk. Our staff will show you how to operate the equipment and answer any questions. Safety equipment such as gloves and eye protection is included at no extra charge with all power tools.\n\nStep 4: Return.\nEquipment must be returned to the same store by 6:00 p.m. on the due date. A late return is charged as one additional day. Please clean the equipment before you bring it back; a fee of $25 applies to items that arrive covered in paint or dirt.\n\nNot sure what you need? Call 555-0148 or use the chat button at the bottom of this page."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the purpose of the webpage?",
+    "options": [
+     "To announce new store hours",
+     "To advertise a sale on used tools",
+     "To explain how a rental service works",
+     "To compare prices at several stores"
+    ],
+    "answer": 2,
+    "explanation": "定位:標題「Cedarline Tool Rental — How It Works」加上 Step 1 至 Step 4 的四個步驟,整頁都在說明租借流程。(A)錯:營業時間只是上方選單的連結名稱,本頁未說明。(B)錯:全文租借的是設備,沒有販售二手工具。(D)錯:比較的是日租、週租、月租,而非不同店家的價格。"
+   },
+   {
+    "q": "What does the webpage recommend for a longer job?",
+    "options": [
+     "Reserving more than one item",
+     "Choosing the weekly rate",
+     "Picking up equipment early in the day",
+     "Paying a deposit in advance"
+    ],
+    "answer": 1,
+    "explanation": "定位:Step 1 末句「The weekly rate is the best value for any job that lasts longer than four days」。(A)(C) 文中沒有這類建議。(D)錯:兩百美元以下的訂單不需押金,更沒有預先付押金的建議。"
+   },
+   {
+    "q": "What is NOT mentioned as something customers must do?",
+    "options": [
+     "Buy safety equipment before using power tools",
+     "Clean the equipment before returning it",
+     "Return the equipment to the store where it was picked up",
+     "Give a reservation number at the rental desk"
+    ],
+    "answer": 0,
+    "explanation": "定位:(B) 見 Step 4「Please clean the equipment before you bring it back」;(C) 見「returned to the same store」;(D) 見 Step 3「Bring your reservation number to the rental desk」。Step 3 明說手套與護目鏡等安全裝備隨電動工具免費附上,顧客不必自行購買,故選 (A)。"
+   },
+   {
+    "q": "The word \"holds\" in Step 2 is closest in meaning to",
+    "options": [
+     "carries",
+     "contains",
+     "lifts",
+     "keeps"
+    ],
+    "answer": 3,
+    "explanation": "定位:Step 2「A reservation holds your item for 24 hours after the pickup time you choose」。此處指預約會把商品「保留」給顧客二十四小時,故選 keeps。(A)(C) 是搬運、抬起的字面義。(B) 指容器裝有某物,與保留無關。"
+   }
+  ],
+  "translation": [
+   "www.cedarlinetools.com/rentals\n\n首頁 | 租借 | 維修 | 營業時間 | 聯絡我們\n\n雪松工具租借 — 租借流程\n\n步驟一:挑選設備。\n我們的型錄收錄超過四百項商品,從小型手工具到大型地板清潔機都有。每項商品頁面均標示日租、週租與月租價格。工程若需時超過四天,以週租最划算。\n\n步驟二:線上預約。\n請選擇取件日期與門市地點。預約成立後,商品會自您選定的取件時間起為您保留二十四小時。訂單金額未滿兩百美元不需支付押金,但取件時必須在櫃檯出示有效駕照。\n\n步驟三:取件出發。\n請攜帶預約編號至租借櫃檯。門市人員會示範設備的操作方式,並回答您的問題。租借電動工具時,手套、護目鏡等安全裝備一律免費提供。\n\n步驟四:歸還。\n設備必須於到期日下午六點前歸還至同一家門市。逾期歸還將加收一日租金。歸還前請先清潔設備;沾滿油漆或泥土的商品將酌收二十五美元清潔費。\n\n不確定該租哪一項?請撥 555-0148,或使用本頁下方的線上客服按鈕。"
+  ]
+ },
+ {
+  "id": "p7-b7-4",
+  "format": "double",
+  "passages": [
+   {
+    "type": "schedule",
+    "label": "Program",
+    "content": "QUINTANA SUPPLY CO.\nStore Managers Meeting — Program\nFriday, October 17 | Fairlane Conference Center, Room B\n\n9:00-9:30 a.m.   Coffee and check-in (Main Hall)\n9:30-10:15 a.m.   Opening remarks — Teresa Molina, Vice President of Operations\n10:30-11:45 a.m.   Workshop A: Reducing shipping delays — Noor Bakshi\n12:00-1:00 p.m.   Lunch (Garden Room)\n1:15-2:30 p.m.   Workshop B: Training seasonal staff — Hana Ito\n2:45-4:00 p.m.   Store manager discussion groups\n4:15 p.m.   Closing summary and service awards\n\nPlease note:\n- Both workshops are repeated on Saturday morning for managers who cannot attend on Friday.\n- Parking is free in the east lot. Show your staff badge at the gate.\n- Handouts will be posted on the company website one week after the meeting. Printed copies will not be available.\n- Tell the front desk by October 10 if you need a vegetarian meal."
+   },
+   {
+    "type": "email",
+    "label": "E-mail",
+    "content": "To: events@quintanasupply.com\nFrom: m.feld@quintanasupply.com\nDate: October 13\nSubject: Questions about Friday's program\n\nHello,\n\nI manage the Bridgeport store and plan to attend the meeting this Friday. I have three questions before I confirm my travel.\n\nFirst, I must visit a supplier on Friday morning and will not reach the center until noon. Will I still be able to hear the session on shipping delays, or should I come the following morning instead?\n\nSecond, two members of my sales staff would like to join the afternoon discussion groups. They are not managers, so I want to be sure they are welcome before I ask them to make the trip.\n\nThird, I will be driving a company van rather than my own car. Will my badge be accepted at the gate for a vehicle of that size, or do I need a separate pass?\n\nOne last note: I do not eat meat, and I know I am writing after the date given in the program. If it is too late to change the order, I am happy to bring my own lunch.\n\nThank you,\nMarta Feld\nStore Manager, Bridgeport"
+   }
+  ],
+  "questions": [
+   {
+    "q": "Why did Ms. Feld write the e-mail?",
+    "options": [
+     "To confirm that a workshop has been canceled",
+     "To ask about arrangements for an upcoming meeting",
+     "To recommend a speaker for a training session",
+     "To report a problem with a delivery"
+    ],
+    "answer": 1,
+    "explanation": "定位:郵件第一段「I plan to attend the meeting this Friday. I have three questions before I confirm my travel.」,之後三段分別問時間、參加資格與停車,故目的是詢問與會安排。(A)錯:工作坊照常舉行。(C)錯:她沒有推薦講者。(D)錯:出貨延誤是工作坊主題,不是她要申訴的問題。"
+   },
+   {
+    "q": "According to the program, what will NOT take place on Friday afternoon?",
+    "options": [
+     "A discussion among store managers",
+     "A workshop on training staff",
+     "The presentation of awards",
+     "The opening remarks"
+    ],
+    "answer": 3,
+    "explanation": "定位:日程表顯示工作坊 B 在下午 1:15、分組討論在下午 2:45、頒獎在下午 4:15,皆屬下午;開場致詞排在上午 9:30,故選 (D)。"
+   },
+   {
+    "q": "Who will lead the session Ms. Feld is concerned about missing?",
+    "options": [
+     "Teresa Molina",
+     "Hana Ito",
+     "Noor Bakshi",
+     "Marta Feld"
+    ],
+    "answer": 2,
+    "explanation": "整合題:郵件第二段說她中午才到,擔心錯過「the session on shipping delays」;對照日程表上午 10:30-11:45 的「Workshop A: Reducing shipping delays」,主講人是 Noor Bakshi。(A) 負責開場致詞。(B) 主講下午的季節性人員訓練。(D) 是寫信人本人。"
+   },
+   {
+    "q": "What will Ms. Feld most likely have to do on Friday?",
+    "options": [
+     "Bring her own lunch",
+     "Attend the meeting on Saturday as well",
+     "Park in a lot outside the center",
+     "Pay a fee for two guests"
+    ],
+    "answer": 0,
+    "explanation": "整合題:日程表註記要求十月十日前告知素食需求,而郵件日期是十月十三日,已超過期限;她自己也寫「If it is too late to change the order, I am happy to bring my own lunch.」故最可能自備午餐。(B)錯:星期六出席只是她提出的另一個選項,兩場工作坊當天都會重辦,無須兩天都到。(C)(D) 文中皆無根據。"
+   },
+   {
+    "q": "What does Ms. Feld ask about her vehicle?",
+    "options": [
+     "Where she may unload boxes",
+     "Whether the company will pay for fuel",
+     "How long she may leave it at the center",
+     "Whether her badge will be enough to enter the lot"
+    ],
+    "answer": 3,
+    "explanation": "定位:郵件第四段「Will my badge be accepted at the gate for a vehicle of that size, or do I need a separate pass?」,對應日程表註記「Show your staff badge at the gate.」。(A)(B)(C) 郵件中都沒有提到。"
+   }
+  ],
+  "translation": [
+   "昆塔納供應公司\n門市經理會議 — 議程\n十月十七日（星期五）| 費爾蓮會議中心 B 室\n\n上午 9:00-9:30   咖啡與報到（大廳）\n上午 9:30-10:15   開場致詞 — 營運副總 泰瑞莎・莫利納\n上午 10:30-11:45   工作坊 A:減少出貨延誤 — 努爾・巴克希\n中午 12:00-下午 1:00   午餐（花園廳）\n下午 1:15-2:30   工作坊 B:季節性人員的訓練 — 漢娜・伊藤\n下午 2:45-4:00   門市經理分組討論\n下午 4:15   總結與服務獎頒發\n\n請注意:\n- 兩場工作坊將於星期六上午再辦一次,供星期五無法出席的經理參加。\n- 東側停車場免費停車,請於閘門出示員工識別證。\n- 講義將於會議結束一週後上傳公司網站,現場不提供紙本。\n- 需要素食餐點者,請於十月十日前告知服務台。",
+   "收件者:events@quintanasupply.com\n寄件者:m.feld@quintanasupply.com\n日期:十月十三日\n主旨:關於星期五議程的幾個問題\n\n您好:\n\n我負責布里奇波特門市,預計出席本週五的會議。在確認行程之前,有三個問題想請教。\n\n第一,我星期五上午必須拜訪一家供應商,中午才能抵達會場。我還來得及聽出貨延誤那一場嗎?還是改到隔天早上出席比較好?\n\n第二,我門市有兩位銷售同仁想參加下午的分組討論。他們並不是經理,所以在請他們跑這一趟之前,我想先確認他們是否也能參加。\n\n第三,我這次開的是公司廂型車,不是自用車。這種車型在閘門出示識別證即可通行嗎?還是需要另外申請通行證?\n\n最後補充一點:我不吃肉,也知道自己是在議程所訂日期之後才來信。若已來不及更改餐點,我自備午餐也沒問題。\n\n謝謝您。\n\n瑪塔・費爾德\n布里奇波特門市經理"
+  ]
+ },
+ {
+  "id": "p7-b8-1",
+  "format": "single",
+  "passages": [
+   {
+    "type": "memo",
+    "label": "Internal Memo",
+    "content": "MEMORANDUM\n\nTO: All staff, Marketing and Sales Divisions\nFROM: Karen Whitfield, Office Services Manager\nDATE: March 4\nSUBJECT: Temporary move to the fifth floor\n\nWork on the fourth-floor windows will begin on Monday, March 16. The crew needs the whole area clear, so everyone on that floor will move upstairs to the fifth floor while the project is under way.\n\nThe work is expected to run from March 16 to March 27. During those two weeks you will sit in the open area next to the fifth-floor meeting rooms. Desks have already been set up there, and each one has a power outlet and a network cable. Please bring your laptop, your headset, and any files you use every day. Do not bring extra monitors, plants, or other equipment from your desk. There is simply no room for them.\n\nYour telephone extension will follow you automatically, so clients who call your usual number will still reach you. Mail will be delivered to the fifth-floor reception desk instead of to your regular tray. Parking arrangements are not affected.\n\nEmpty boxes will be left beside the printers on the afternoon of Thursday, March 12. Please label each box with your name and pack your files before you leave on Friday, March 13. The cleaning crew will carry the boxes upstairs over the weekend.\n\nIf your team has already booked a fifth-floor meeting room for those two weeks, please contact me first. Two of the rooms will be used as work space.\n\nThank you for your patience.\n\nKaren Whitfield, extension 2140"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main purpose of the memo?",
+    "options": [
+     "To describe a temporary change in work space",
+     "To announce the opening of a new branch office",
+     "To ask for volunteers to join a project team",
+     "To introduce a new parking policy"
+    ],
+    "answer": 0,
+    "explanation": "定位第一、二段：窗戶工程期間四樓人員暫時搬到五樓，全篇都在說明這兩週的座位與相關安排，故選 (A)。(B) 沒有提到開設分公司；(C) 沒有招募志願者；(D) 第四段明說停車安排「not affected」，不是新政策。"
+   },
+   {
+    "q": "The word \"run\" in paragraph 2, line 1, is closest in meaning to",
+    "options": [
+     "operate",
+     "continue",
+     "hurry",
+     "control"
+    ],
+    "answer": 1,
+    "explanation": "定位第二段首句 The work is expected to run from March 16 to March 27，run 接一段起訖日期，指工程「持續、延續」，故選 (B) continue。run 另有「營運」(operate)、「管理」(control) 之意，但此處後面接的是時間區間，不是公司或機器，因此 (A)(D) 不合；(C) hurry 與句意無關。"
+   },
+   {
+    "q": "What are employees instructed NOT to do?",
+    "options": [
+     "Pack their files by Friday",
+     "Write their names on the boxes",
+     "Contact Ms. Whitfield about room bookings",
+     "Bring extra monitors to the new area"
+    ],
+    "answer": 3,
+    "explanation": "NOT 題須逐項核對。(A)(B) 見第五段 pack your files before you leave on Friday, March 13 與 label each box with your name，都是被要求要做的事；(C) 見第六段 please contact me first。只有 (D) 是被禁止的：第二段 Do not bring extra monitors, plants, or other equipment，故選 (D)。"
+   },
+   {
+    "q": "What is indicated about telephone calls during the project?",
+    "options": [
+     "They will be answered by the reception desk",
+     "They must be returned within one business day",
+     "They will still reach staff at the usual numbers",
+     "They will be limited to the fifth floor"
+    ],
+    "answer": 2,
+    "explanation": "定位第四段：Your telephone extension will follow you automatically, so clients who call your usual number will still reach you，分機會跟著人走，客戶打原號碼仍可接通，故選 (C)。(A) 接待櫃檯負責的是郵件不是電話；(B)(D) 文中均未提及。"
+   }
+  ],
+  "translation": [
+   "備忘錄\n\n致：行銷部與業務部全體同仁\n發自：Karen Whitfield，總務服務經理\n日期：3 月 4 日\n主旨：暫時遷至五樓\n\n四樓窗戶工程將於 3 月 16 日（星期一）開工。施工人員需要整個區域淨空，因此在工程進行期間，該樓層所有同仁都將往上搬到五樓。\n\n工程預計從 3 月 16 日持續到 3 月 27 日。這兩週期間，各位會坐在五樓會議室旁的開放區域。那裡的辦公桌已經架設完成，每張桌子都有電源插座和網路線。請帶著自己的筆電、耳機，以及每天會用到的檔案。請勿把多餘的螢幕、盆栽或桌上其他設備帶過去，那裡實在沒有空間放。\n\n您的電話分機會自動轉移，因此客戶撥打原本的號碼仍然找得到您。郵件會改送到五樓接待櫃檯，不再送到原本的收件盤。停車安排不受影響。\n\n3 月 12 日（星期四）下午會在影印機旁放置空紙箱。請在每個箱子上寫上姓名，並在 3 月 13 日（星期五）下班前把檔案裝箱。清潔人員會在週末把箱子搬上樓。\n\n如果貴團隊已經預約了那兩週的五樓會議室，請先與我聯絡，其中兩間會議室將充當辦公空間。\n\n感謝各位配合。\n\nKaren Whitfield，分機 2140"
+  ]
+ },
+ {
+  "id": "p7-b8-2",
+  "format": "single",
+  "passages": [
+   {
+    "type": "invoice",
+    "label": "Invoice",
+    "content": "GREENFIELD OFFICE SUPPLY\n118 Harbor Road, Tacoma, WA 98402\nPhone (253) 555-0147 | orders@greenfieldsupply.com\n\nINVOICE NO.: GF-40219\nInvoice date: May 8\nOrder date: May 2\nPurchase order: PO-7734\n\nBILL TO:\nNadia Ferreira, Office Coordinator\nHalloran Design Group\n620 Wicker Street, Suite 300\nTacoma, WA 98405\n\nITEM      DESCRIPTION                    QTY    UNIT PRICE    AMOUNT\nA-220     Desk chair, grey fabric          6      $148.00     $888.00\nB-115     Filing cabinet, three drawer     2      $210.00     $420.00\nC-303     Whiteboard, 120 cm               4       $62.00     $248.00\nD-009     Marker set, eight colors        10        $9.50      $95.00\n\n                                       Subtotal              $1,651.00\n                                       Volume discount (5%)     -$82.55\n                                       Delivery                   $0.00\n                                       TOTAL DUE             $1,568.45\n\nNOTES\nA volume discount of 5 percent is applied to any order of twenty items or more. Delivery is free on all orders with a subtotal above $1,500. Payment is due within 30 days of the invoice date.\n\nThe whiteboards were not in stock on May 2. They were sent from our Seattle warehouse on May 7 and should arrive by May 12. All other items on this invoice were delivered on May 5.\n\nDamaged or unwanted goods may be returned within 14 days of delivery. Please call our service desk for a return number before you send anything back. Goods that arrive without a return number cannot be credited."
+   }
+  ],
+  "questions": [
+   {
+    "q": "Why was Halloran Design Group not charged for delivery?",
+    "options": [
+     "It is located in the same city as the store",
+     "It paid the invoice before the due date",
+     "It has a yearly service agreement",
+     "Its order came to more than a set amount"
+    ],
+    "answer": 3,
+    "explanation": "定位 NOTES 第一段：Delivery is free on all orders with a subtotal above $1,500，而本單小計 $1,651.00 已超過門檻，故選 (D)。(A) 雖然雙方都在 Tacoma，但免運條件寫的是金額不是地點；(B) 發票才剛開立，未提早付款；(C) 全篇未提服務合約。二十件以上打折是折扣的條件，不是免運的條件，勿混用。"
+   },
+   {
+    "q": "What is indicated about the whiteboards?",
+    "options": [
+     "They were sent after the other items",
+     "They were the most expensive item ordered",
+     "They were returned to the supplier",
+     "They were ordered by telephone"
+    ],
+    "answer": 0,
+    "explanation": "定位 NOTES 第二段：白板 5 月 2 日缺貨，5 月 7 日才從西雅圖倉庫寄出，其他品項 5 月 5 日就已送達，故選 (A)。(B) 單價最高的是 $210 的檔案櫃；(C) 是出貨不是退貨；(D) 訂購方式未提及。"
+   },
+   {
+    "q": "What information is NOT included on the invoice?",
+    "options": [
+     "A purchase order number",
+     "A deadline for payment",
+     "The name of the delivery driver",
+     "The date the order was placed"
+    ],
+    "answer": 2,
+    "explanation": "NOT 題逐項核對。(A) 表頭 Purchase order: PO-7734；(B) NOTES 第一段 Payment is due within 30 days；(D) 表頭 Order date: May 2。全篇沒有出現送貨司機姓名，故選 (C)。"
+   },
+   {
+    "q": "According to the invoice, what must a customer do before returning an item?",
+    "options": [
+     "Pay the full amount of the invoice",
+     "Obtain a number from the service desk",
+     "Send an email to the sales office",
+     "Wait for 14 days after delivery"
+    ],
+    "answer": 1,
+    "explanation": "定位 NOTES 最後一段：Please call our service desk for a return number before you send anything back，故選 (B)。(D) 是把「14 天內可退」誤讀成「要等 14 天」；(A)(C) 文中未要求。"
+   }
+  ],
+  "translation": [
+   "GREENFIELD 辦公用品\nHarbor 路 118 號，Tacoma, WA 98402\n電話 (253) 555-0147｜orders@greenfieldsupply.com\n\n發票號碼：GF-40219\n開立日期：5 月 8 日\n訂購日期：5 月 2 日\n採購單號：PO-7734\n\n帳單寄送：\nNadia Ferreira，辦公室協調專員\nHalloran 設計集團\nWicker 街 620 號 300 室\nTacoma, WA 98405\n\n品號　　說明　　　　　　　　　數量　　單價　　　金額\nA-220　辦公椅，灰色布面　　　　6　　$148.00　$888.00\nB-115　三層檔案櫃　　　　　　　2　　$210.00　$420.00\nC-303　白板，120 公分　　　　　4　　 $62.00　$248.00\nD-009　麥克筆組，八色　　　　 10　　　$9.50　 $95.00\n\n　　　　小計　　　　　　　$1,651.00\n　　　　數量折扣（5%）　　 -$82.55\n　　　　運費　　　　　　　　　$0.00\n　　　　應付總額　　　　　$1,568.45\n\n備註\n單筆訂購滿二十件（含）以上，享 5% 數量折扣。訂單小計超過 $1,500 者免運費。貨款請於發票開立日起 30 天內支付。\n\n白板於 5 月 2 日缺貨，已於 5 月 7 日自本公司西雅圖倉庫寄出，預計 5 月 12 日前送達。本發票其餘品項均已於 5 月 5 日送達。\n\n商品如有損壞或不需要，可於送達後 14 天內退回。寄回前請先致電本公司服務台索取退貨編號。未附退貨編號的商品恕無法辦理退款。"
+  ]
+ },
+ {
+  "id": "p7-b8-3",
+  "format": "single",
+  "passages": [
+   {
+    "type": "text_message",
+    "label": "Text Message Chain",
+    "content": "Priya Raman [9:12 A.M.]\nGood morning. The van with our trade show booth just pulled up at the loading dock, but the driver says he only has four crates. We sent five.\n\nOwen Castellano [9:15 A.M.]\nFour? Can you read me the numbers on the crates?\n\nPriya Raman [9:19 A.M.]\nCrates 1, 2, 3 and 5. Number 4 is the one missing, and that is the crate with the banner stand, the two display tables, and the carpet.\n\nOwen Castellano [9:21 A.M.]\nThat is the whole front of the booth. I will call the warehouse right now.\n\nMarisol Duffy [9:26 A.M.]\nI am already at the hall with the lighting team. Setup closes at 6:00 P.M. and the safety inspection is tomorrow at 8:00 A.M. We can put up the shelves and the screens in the meantime.\n\nOwen Castellano [9:38 A.M.]\nGood news. The warehouse found crate 4 on the wrong shelf. They can put it on the afternoon van, which should reach the hall around 4:30.\n\nMarisol Duffy [9:40 A.M.]\nThat leaves us ninety minutes. Tight, but fine. Priya, could you ask the hall office whether we may stay past six if we need to?\n\nPriya Raman [9:42 A.M.]\nI will walk over and ask. I am also going to print a fresh packing list so this does not happen again.\n\nOwen Castellano [9:44 A.M.]\nThank you. One more thing: the display tables come apart for shipping, and the tools for putting them back together are in crate 2. Do not let the driver take crate 2 away.\n\nPriya Raman [9:45 A.M.]\nNo risk of that. He left ten minutes ago and everything he brought is inside."
+   }
+  ],
+  "questions": [
+   {
+    "q": "Where most likely is Ms. Duffy at 9:26 A.M.?",
+    "options": [
+     "At the company warehouse",
+     "At an exhibition hall",
+     "At the loading dock",
+     "At a print shop"
+    ],
+    "answer": 1,
+    "explanation": "定位 9:26 A.M.：I am already at the hall with the lighting team，加上她提到 setup closes at 6:00 P.M.、safety inspection，可知她人在展場，故選 (B)。(A) 倉庫是 Owen 打電話聯絡的地方；(C) 卸貨碼頭是 Priya 收貨的位置；(D) 列印裝箱清單是 Priya 之後要做的事，且她沒說要去印刷店。"
+   },
+   {
+    "q": "At 9:40 A.M., what does Ms. Duffy most likely mean when she writes, \"Tight, but fine\"?",
+    "options": [
+     "She believes the remaining time will be just enough",
+     "She thinks the crate is too heavy to move",
+     "She wants the booth built in a smaller space",
+     "She is worried about the cost of the second van"
+    ],
+    "answer": 0,
+    "explanation": "定位 9:40 A.M.：前一句 That leaves us ninety minutes，指貨 4:30 到、6:00 收工，只剩九十分鐘；tight 在此形容時間很趕但還來得及，故選 (A)。(B)(C)(D) 都把 tight 誤解成重量、空間或費用。"
+   },
+   {
+    "q": "What does Ms. Raman agree to do?",
+    "options": [
+     "Return crate 2 to the warehouse",
+     "Drive to the warehouse herself",
+     "Ask about extending the setup time",
+     "Move the safety inspection to a later hour"
+    ],
+    "answer": 2,
+    "explanation": "定位 9:40 A.M. Marisol 請 Priya 問展場辦公室能否超過六點，9:42 A.M. Priya 回 I will walk over and ask，故選 (C)。(A) 9:44 A.M. Owen 交代的正是「不要讓司機把 2 號箱載走」；(B) 是 Owen 打電話給倉庫；(D) 檢查時間無人提議更動。"
+   },
+   {
+    "q": "What is NOT in the crate that is missing?",
+    "options": [
+     "A banner stand",
+     "Display tables",
+     "A carpet",
+     "Tools"
+    ],
+    "answer": 3,
+    "explanation": "NOT 題定位 9:19 A.M.：4 號箱裝的是 the banner stand, the two display tables, and the carpet，故 (A)(B)(C) 都在裡面。9:44 A.M. Owen 說工具在 crate 2，因此 (D) 不在失蹤的箱子裡。"
+   }
+  ],
+  "translation": [
+   "Priya Raman【上午 9:12】\n早安。載我們展場攤位的貨車剛停到卸貨碼頭，可是司機說他只有四個木箱，我們明明寄了五個。\n\nOwen Castellano【上午 9:15】\n四個？你可以把箱子上的編號念給我聽嗎？\n\nPriya Raman【上午 9:19】\n1、2、3 和 5 號。少的是 4 號，那箱裝的是旗幟架、兩張展示桌和地毯。\n\nOwen Castellano【上午 9:21】\n那等於整個攤位正面都沒到。我現在就打去倉庫。\n\nMarisol Duffy【上午 9:26】\n我已經和燈光組在展館了。佈展六點收，安全檢查是明天早上八點。這段時間我們可以先把層架和螢幕架起來。\n\nOwen Castellano【上午 9:38】\n好消息。倉庫在錯誤的架位上找到 4 號箱，可以排下午那班車，大約四點半會到展館。\n\nMarisol Duffy【上午 9:40】\n那我們只剩九十分鐘。很趕，但還行。Priya，你可以去問展館辦公室，需要的話能不能超過六點嗎？\n\nPriya Raman【上午 9:42】\n我走過去問。我也會重印一份裝箱清單，免得再出這種事。\n\nOwen Castellano【上午 9:44】\n謝謝。還有一件事：展示桌是拆開來運的，把它們組回去的工具在 2 號箱，千萬別讓司機把 2 號箱載走。\n\nPriya Raman【上午 9:45】\n不會的。他十分鐘前就走了，他載來的東西全都在裡面。"
+  ]
+ },
+ {
+  "id": "p7-b8-4",
+  "format": "double",
+  "passages": [
+   {
+    "type": "advertisement",
+    "label": "Advertisement",
+    "content": "BRIGHTPATH LOGISTICS\nNow hiring: Warehouse Operations Coordinator\n\nBrightpath Logistics moves goods for more than four hundred retail clients across the Pacific Northwest. We are filling this position at three of our sites: Eugene, Bend, and Medford. The Bend site runs a night shift only; the other two sites operate during the day.\n\nDuties\n- Plan the daily shipping schedule and assign drivers\n- Keep records of every delivery, return, and damaged item\n- Prepare a monthly report for the site manager\n- Train seasonal staff during the busy autumn season\n\nRequirements\n- At least four years of experience in a warehouse or a shipping company\n- Experience with inventory software\n- A valid license to drive a forklift\n- Willingness to work an occasional Saturday\n\nTo apply, send a resume and a cover letter to careers@brightpathlog.com by June 30. In your letter, please tell us which site you prefer and when you could start. Applicants invited to an interview will also be asked to complete a short practical test at the site. We do not accept applications by mail."
+   },
+   {
+    "type": "email",
+    "label": "E-mail",
+    "content": "To: careers@brightpathlog.com\nFrom: d.okafor@mailbridge.net\nDate: June 19\nSubject: Warehouse Operations Coordinator\n\nDear Hiring Manager,\n\nI saw your advertisement in last week's Willamette Business Weekly and would like to apply for the coordinator position.\n\nFor the past five years I have worked at Correa Distribution in Salem, where I plan routes for twelve drivers and handle all of the paperwork for returns. Last year I moved our records from paper files into Stockline, an inventory program, and I then trained six seasonal workers to use it in under three weeks.\n\nI would prefer your Bend site, as my family is moving to that area in August. I understand that the hours there are not the usual office hours, and that suits me well. Working an occasional Saturday is no problem either.\n\nI should mention one thing. My forklift test is scheduled for July 8. I have finished the training course and my instructor expects no difficulty. I could start work on August 3.\n\nMy resume is attached. Thank you for your time.\n\nSincerely,\nDaniel Okafor"
+   }
+  ],
+  "questions": [
+   {
+    "q": "According to the advertisement, what is one duty of the position?",
+    "options": [
+     "Meeting with retail clients",
+     "Repairing warehouse equipment",
+     "Interviewing new drivers",
+     "Writing a report every month"
+    ],
+    "answer": 3,
+    "explanation": "定位廣告 Duties 第三項：Prepare a monthly report for the site manager，故選 (D)。(A) 公司雖有四百多家零售客戶，但職務中沒有拜訪客戶；(B) 設備維修未提及；(C) 職務是 assign drivers（派工）與 train seasonal staff，不是面試司機。"
+   },
+   {
+    "q": "In the advertisement, the word \"Keep\" in the list of duties is closest in meaning to",
+    "options": [
+     "hold",
+     "maintain",
+     "protect",
+     "delay"
+    ],
+    "answer": 1,
+    "explanation": "定位廣告 Duties 第二項 Keep records of every delivery, return, and damaged item。keep records 是「建立並持續更新紀錄」，故選 (B) maintain。keep 也有「保留、保護、拖住」等義，但此處受詞是 records，(A)(C)(D) 都無法搭配成自然的英文。"
+   },
+   {
+    "q": "How did Mr. Okafor learn about the opening?",
+    "options": [
+     "From a business publication",
+     "From a former coworker",
+     "From the company's website",
+     "From a job fair in Salem"
+    ],
+    "answer": 0,
+    "explanation": "定位電子郵件第一段：I saw your advertisement in last week's Willamette Business Weekly，Weekly 是一份商業週刊，故選 (A)。(B)(C)(D) 信中皆未提及。"
+   },
+   {
+    "q": "What requirement of the position has Mr. Okafor not yet met?",
+    "options": [
+     "The minimum number of years of experience",
+     "Experience with inventory software",
+     "A license to operate a forklift",
+     "Willingness to work on some Saturdays"
+    ],
+    "answer": 2,
+    "explanation": "整合兩篇。廣告 Requirements 列出四項條件；信中第二段五年年資符合第一項，導入庫存軟體 Stockline 符合第二項，第三段 Working an occasional Saturday is no problem 符合第四項。只有堆高機執照尚未取得（第四段 My forklift test is scheduled for July 8），故選 (C)。"
+   },
+   {
+    "q": "What is suggested about the site Mr. Okafor prefers?",
+    "options": [
+     "It operates at night",
+     "It is the newest of the three sites",
+     "It handles only returned goods",
+     "It is the site closest to Salem"
+    ],
+    "answer": 0,
+    "explanation": "整合兩篇。信中第三段他選 Bend；廣告第一段說 The Bend site runs a night shift only，故選 (A)，也呼應他說「那裡的工時不是一般辦公時間，正合我意」。(B)(C)(D) 兩篇均未提供這些資訊。"
+   }
+  ],
+  "translation": [
+   "BRIGHTPATH 物流\n誠徵：倉儲營運協調專員\n\nBrightpath 物流為太平洋西北地區四百多家零售客戶運送貨物。本次於三個據點徵才：Eugene、Bend 與 Medford。Bend 據點只有夜班，另外兩個據點為日間營運。\n\n工作內容\n－ 規劃每日出貨排程並派任司機\n－ 建檔管理每一筆送貨、退貨與破損品紀錄\n－ 每月為據點主管製作報表\n－ 秋季旺季期間訓練季節性人員\n\n應徵條件\n－ 具倉儲或運輸公司四年以上經驗\n－ 具庫存管理軟體使用經驗\n－ 持有有效的堆高機駕駛執照\n－ 願意偶爾於週六上班\n\n有意應徵者請於 6 月 30 日前將履歷與求職信寄至 careers@brightpathlog.com。請在信中告知您偏好的據點與可到職時間。獲邀面試者另需在該據點完成一項簡短的實作測驗。本公司不受理紙本郵寄的應徵資料。",
+   "收件者：careers@brightpathlog.com\n寄件者：d.okafor@mailbridge.net\n日期：6 月 19 日\n主旨：倉儲營運協調專員\n\n敬啟者：\n\n我在上週的《Willamette 商業週刊》上看到貴公司的徵才廣告，希望應徵協調專員一職。\n\n過去五年我任職於 Salem 的 Correa 配送公司，負責為十二位司機規劃路線，並處理所有退貨文件。去年我把公司的紙本紀錄全面轉入庫存管理軟體 Stockline，並在三週內訓練六名季節性人員上手使用。\n\n我偏好貴公司的 Bend 據點，因為我的家人八月要搬到那一帶。我已得知該據點的工時並非一般辦公時間，這對我來說反而合適。偶爾週六上班也沒有問題。\n\n有一件事需要說明：我的堆高機考照日期排在 7 月 8 日。訓練課程我已修畢，教練認為應該不會有問題。我最快可於 8 月 3 日到職。\n\n履歷如附件，感謝您撥冗閱讀。\n\n此致\nDaniel Okafor 敬上"
+  ]
  }
 ];

@@ -1,0 +1,377 @@
+[
+  {
+    "id": "l2-51",
+    "difficulty": "基礎",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "How do I get to the loading dock from here?",
+    "options": [
+      "It closes at five.",
+      "Go through the double doors and turn right.",
+      "The truck's already been loaded."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：How do I get to... 是問路線，「穿過那道雙開門後右轉」直接給出指引。\n(A) 回答的是關閉時間，屬於 When 的答案。\n(C) 用 loaded 呼應 loading dock 的同源字誘答，講的卻是貨車已經裝好，並沒有指路。",
+    "transcriptZh": "問：請問從這裡怎麼去卸貨區？\n(A) 它五點關。\n(B) 穿過那道雙開門後右轉。\n(C) 貨車已經裝好了。"
+  },
+  {
+    "id": "l2-52",
+    "difficulty": "基礎",
+    "category": "Yes/No問句",
+    "accent": "GB",
+    "question": "Are you free to talk for a minute?",
+    "options": [
+      "Sure, come on in.",
+      "It's about a ten-minute walk.",
+      "Yes, the first month is free."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：對方問「有空聊一下嗎」，用 Sure 答應再補上「進來吧」，是最自然的回應。\n(B) 抓住 minute 這個字做文章，答的卻是走路要幾分鐘。\n(C) 重複 free，但這裡是「免費」的意思，不是「有空」，屬於一字多義陷阱。",
+    "transcriptZh": "問：你現在有空聊一下嗎？\n(A) 當然，進來吧。\n(B) 走路大概十分鐘。\n(C) 對，第一個月免費。"
+  },
+  {
+    "id": "l2-53",
+    "difficulty": "中級",
+    "category": "附加/否定問句",
+    "accent": "AU",
+    "question": "You're taking the early flight tomorrow, aren't you?",
+    "options": [
+      "It was a smooth flight, thanks.",
+      "About two hours by train.",
+      "I switched to the afternoon one."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：間接回應。不說 No，而是講「我改成下午那班了」，等於否定了對方的預設。\n(A) 重複 flight，卻用過去式講上一趟飛行順不順，時態與內容都錯位。\n(B) 「搭火車大約兩小時」回答的是交通時間，與問句無關。",
+    "transcriptZh": "問：你明天搭早班飛機吧？\n(A) 那趟飛行很平穩，謝謝。\n(B) 搭火車大約兩小時。\n(C) 我改成下午那班了。"
+  },
+  {
+    "id": "l2-54",
+    "difficulty": "基礎",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "What did you think of the new logo?",
+    "options": [
+      "The colors are a bit dark for me.",
+      "On the second floor.",
+      "I'll think it over."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：What did you think of...? 是問感想，「顏色對我來說有點暗」給出具體評價。\n(B) 回答的是地點，屬於 Where 的答案。\n(C) 重複 think，但 think it over 是「再考慮看看」，並沒有講出任何評價。",
+    "transcriptZh": "問：你覺得新的標誌怎麼樣？\n(A) 顏色對我來說有點暗。\n(B) 在二樓。\n(C) 我再考慮看看。"
+  },
+  {
+    "id": "l2-55",
+    "difficulty": "中級",
+    "category": "選擇問句",
+    "accent": "GB",
+    "question": "Should I revise the report, or would you rather do it yourself?",
+    "options": [
+      "Yes, that's the final version.",
+      "Please go ahead. I'm out of time.",
+      "The printer's just down the hall."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：選擇問句要挑一邊，「你來吧，我沒時間了」選定前者並補上理由。\n(A) 選擇問句不能用 Yes 回答，這是最常見的陷阱。\n(C) 由 report 聯想到印表機，講的卻是印表機在哪裡，答非所問。",
+    "transcriptZh": "問：報告要我來改，還是你想自己改？\n(A) 對，那是最終版。\n(B) 你來吧，我沒時間了。\n(C) 印表機就在走廊那頭。"
+  },
+  {
+    "id": "l2-56",
+    "difficulty": "中級",
+    "category": "陳述句回應",
+    "accent": "AU",
+    "question": "The coffee machine in the break room is broken again.",
+    "options": [
+      "Two sugars, please.",
+      "I usually take my break at ten.",
+      "Didn't we just have it fixed last month?"
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：間接回應。用反問「我們上個月不是才修過嗎」表達驚訝，是聽到壞消息時最自然的接話。\n(A) 由 coffee 聯想到加幾匙糖，屬於關鍵字聯想陷阱。\n(B) 拿 break room 的 break 做文章，講的是自己幾點休息，與機器壞掉無關。",
+    "transcriptZh": "陳述：茶水間的咖啡機又壞了。\n(A) 請加兩匙糖。\n(B) 我通常十點休息。\n(C) 我們上個月不是才修過嗎？"
+  },
+  {
+    "id": "l2-57",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "Who's picking up the visitors from the airport?",
+    "options": [
+      "Terminal two, I think.",
+      "It's on the schedule by the door.",
+      "Yes, they visited last spring."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：間接回應。不直接講人名，而是說「門邊的班表上有寫」，把答案指向資料來源，是 Part 2 高頻的正解型態。\n(A) 「第二航廈」被 airport 帶著走，回答的是 Where。\n(C) 用 visited 呼應 visitors，而且 Who 開頭的問句不能用 Yes 回答。",
+    "transcriptZh": "問：誰要去機場接那幾位訪客？\n(A) 我想是第二航廈。\n(B) 門邊的班表上有寫。\n(C) 對，他們去年春天來過。"
+  },
+  {
+    "id": "l2-58",
+    "difficulty": "基礎",
+    "category": "Yes/No問句",
+    "accent": "GB",
+    "question": "Did anyone call while I was out?",
+    "options": [
+      "Yes, your dentist's office.",
+      "I'll be out all morning.",
+      "I called the bank earlier."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：用 Yes 回應後直接說出來電者是「你的牙醫診所」，資訊完整。\n(B) 重複 out，講的卻是自己整個早上不在，與有沒有人來電無關。\n(C) 重複 call，但講的是自己打電話出去，不是有沒有人打進來。",
+    "transcriptZh": "問：我不在的時候有人打電話來嗎？\n(A) 有，你的牙醫診所。\n(B) 我整個早上都不在。\n(C) 我剛才打電話給銀行。"
+  },
+  {
+    "id": "l2-59",
+    "difficulty": "進階",
+    "category": "附加/否定問句",
+    "accent": "AU",
+    "question": "Wasn't Ms. Novak supposed to sign the contract by Friday?",
+    "options": [
+      "She signed the visitor log on her way in.",
+      "In the top drawer.",
+      "She's out until next week."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：間接回應。回答「她下週才回來」，等於說明合約為什麼還沒簽，沒有 Yes／No 也是完整的回應。\n(A) 重複 signed，卻把簽名的對象換成訪客登記簿，是關鍵字重複陷阱。\n(B) 「在最上層抽屜」回答的是東西放哪裡，與問句不符。",
+    "transcriptZh": "問：Novak 小姐不是應該在週五前把合約簽好嗎？\n(A) 她進來的時候簽了訪客登記簿。\n(B) 在最上層抽屜。\n(C) 她下週才會回來。"
+  },
+  {
+    "id": "l2-60",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "Where should I put the samples the client sent?",
+    "options": [
+      "They sent them last Tuesday.",
+      "Yes, go ahead.",
+      "Anywhere on the back counter is fine."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：Where 問地點，「放後面檯面上哪裡都行」雖然講得寬鬆，仍確實指出了位置。\n(A) 重複 sent，答的是寄出時間，屬於 When。\n(B) Where 開頭的問句不能用 Yes 回答，這是格式上的錯誤。",
+    "transcriptZh": "問：客戶寄來的樣品我該放哪裡？\n(A) 他們上週二寄的。\n(B) 好啊，你去吧。\n(C) 放後面檯面上哪裡都行。"
+  },
+  {
+    "id": "l2-61",
+    "difficulty": "中級",
+    "category": "Yes/No問句",
+    "accent": "GB",
+    "question": "Do you know when the warranty on the copier runs out?",
+    "options": [
+      "There should be a date on the receipt.",
+      "It copies both sides now.",
+      "No, I don't need a new one."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：間接回應。不直接講到期日，而是指出「收據上應該有日期」，把對方導向查得到答案的地方。\n(B) 用 copies 呼應 copier，講的是雙面列印功能，與保固無關。\n(C) 雖然以 No 開頭，接的卻是「我不需要新的」，沒有回答保固何時到期。",
+    "transcriptZh": "問：你知道影印機的保固什麼時候到期嗎？\n(A) 收據上應該有日期。\n(B) 它現在可以雙面印了。\n(C) 不用，我不需要新的。"
+  },
+  {
+    "id": "l2-62",
+    "difficulty": "基礎",
+    "category": "選擇問句",
+    "accent": "AU",
+    "question": "Do you want to meet in my office or in the conference room?",
+    "options": [
+      "Yes, at two o'clock.",
+      "The conference room. There's more space.",
+      "She's meeting a client at noon."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：選擇問句要挑其中一項，「會議室，那裡空間比較大」選定並補上理由。\n(A) 選擇問句不能用 Yes 回答。\n(C) 重複 meeting，但講的是別人中午要見客戶，與在哪裡談事情無關。",
+    "transcriptZh": "問：你想在我辦公室談，還是去會議室？\n(A) 對，兩點。\n(B) 會議室吧，那裡空間比較大。\n(C) 她中午要見一位客戶。"
+  },
+  {
+    "id": "l2-63",
+    "difficulty": "進階",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "How come the front entrance is blocked off this morning?",
+    "options": [
+      "They're repairing the sidewalk out front.",
+      "It opens at seven, I think.",
+      "No, I came in through the side door."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：How come 等於 Why，「他們在修前面的人行道」直接說明原因。\n(B) 被 entrance 帶著走，回答的是開門時間，屬於 When。\n(C) Why／How come 的問句不能用 No 回答，而且講的是自己怎麼進來的。",
+    "transcriptZh": "問：今天早上前門怎麼會封起來？\n(A) 他們在修前面的人行道。\n(B) 我想是七點開。\n(C) 不，我從側門進來的。"
+  },
+  {
+    "id": "l2-64",
+    "difficulty": "中級",
+    "category": "陳述句回應",
+    "accent": "GB",
+    "question": "I can't find the file you emailed me yesterday.",
+    "options": [
+      "About twenty pages.",
+      "Yes, I filed those already.",
+      "Want me to send it again?"
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：對方說找不到檔案，回「要我再寄一次嗎」是最直接的解決方式。\n(A) 「大約二十頁」回答的是篇幅，對方並沒有問長度。\n(B) 用 filed 呼應 file，卻是「歸檔」這個動詞，屬於同形異義陷阱。",
+    "transcriptZh": "陳述：我找不到你昨天寄給我的檔案。\n(A) 大約二十頁。\n(B) 對，我已經把那些歸檔了。\n(C) 要我再寄一次嗎？"
+  },
+  {
+    "id": "l2-65",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "AU",
+    "question": "How many people signed up for the company picnic?",
+    "options": [
+      "It's on the twelfth.",
+      "Fewer than we expected.",
+      "They signed the form this morning."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：How many 問人數，「比我們預期的少」雖然沒給確切數字，仍是對數量的合理回答。\n(A) 回答的是日期，屬於 When 的答案。\n(C) 重複 signed，講的是簽表格的時間，沒有回答人數。",
+    "transcriptZh": "問：有多少人報名公司野餐？\n(A) 是十二號。\n(B) 比我們預期的少。\n(C) 他們今天早上簽了表格。"
+  },
+  {
+    "id": "l2-66",
+    "difficulty": "進階",
+    "category": "Yes/No問句",
+    "accent": "US",
+    "question": "Could you cover my shift on Saturday?",
+    "options": [
+      "Please put the cover back on the box.",
+      "The forecast for Saturday looks good.",
+      "Let me check with my family first."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：間接回應。被請求代班時回「我先問一下家人」，表示還不能答應，是很自然的保留式回答。\n(A) 重複 cover，但用的是「蓋子」的意思，屬於一字多義陷阱。\n(B) 重複 Saturday，講的卻是天氣預報，與代班無關。",
+    "transcriptZh": "問：星期六你可以幫我代班嗎？\n(A) 請把蓋子蓋回箱子上。\n(B) 星期六的天氣預報看起來不錯。\n(C) 我先問一下家人。"
+  },
+  {
+    "id": "l2-67",
+    "difficulty": "基礎",
+    "category": "WH問句",
+    "accent": "GB",
+    "question": "When does the new branch open?",
+    "options": [
+      "Sometime in March.",
+      "On Maple Street.",
+      "Yes, I've been there."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：When 問時間，「三月的某個時候」直接回答。\n(B) 「在楓樹街上」是地點，屬於 Where 的答案。\n(C) When 開頭的問句不能用 Yes 回答。",
+    "transcriptZh": "問：新分店什麼時候開幕？\n(A) 三月的某個時候。\n(B) 在楓樹街上。\n(C) 對，我去過那裡。"
+  },
+  {
+    "id": "l2-68",
+    "difficulty": "中級",
+    "category": "附加/否定問句",
+    "accent": "AU",
+    "question": "You haven't seen my badge anywhere, have you?",
+    "options": [
+      "They're printing new badges on Friday.",
+      "Check the front desk. Someone turned one in.",
+      "I saw that movie last night."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：間接回應。不說有沒有看到，而是要對方去櫃檯問，因為「有人撿到一個交上去了」，實質上解決了問題。\n(A) 重複 badge，講的是週五要印新的識別證，完全沒有回應「有沒有看到」。\n(C) 重複 saw，但看的是電影，是同一個動詞換受詞的陷阱。",
+    "transcriptZh": "問：你該不會有看到我的識別證吧？\n(A) 他們星期五要印新的識別證。\n(B) 去櫃檯問問，有人撿到一個交上去了。\n(C) 我昨晚看了那部電影。"
+  },
+  {
+    "id": "l2-69",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "What's the fastest way to the train station from the hotel?",
+    "options": [
+      "The train leaves at eight.",
+      "The hotel runs a shuttle every hour.",
+      "Two nights, please."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：問最快的方式，「飯店每小時有接駁車」提供了具體交通方式，回答合理。\n(A) 重複 train，答的是發車時間，屬於 When。\n(C) 由 hotel 聯想到訂房，「兩晚，麻煩了」是辦入住時才會說的話。",
+    "transcriptZh": "問：從飯店到火車站最快的方式是什麼？\n(A) 火車八點開。\n(B) 飯店每小時有接駁車。\n(C) 兩晚，麻煩了。"
+  },
+  {
+    "id": "l2-70",
+    "difficulty": "進階",
+    "category": "選擇問句",
+    "accent": "GB",
+    "question": "Are we paying for the catering out of the marketing budget or the events budget?",
+    "options": [
+      "Yes, the food was excellent.",
+      "They catered our office party last year.",
+      "Neither. The client's covering it."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：選擇問句的高階解法是兩個都不選，「都不是，客戶會出這筆錢」正是 Part 2 常考的 Neither 型回答。\n(A) 選擇問句不能用 Yes 回答，內容也只是在稱讚餐點。\n(B) 重複 catered，講的是去年的事，時態與問題錯位。",
+    "transcriptZh": "問：外燴的費用是從行銷預算出，還是從活動預算出？\n(A) 對，那些餐點很棒。\n(B) 去年公司聚餐是他們辦的外燴。\n(C) 都不是，客戶會出這筆錢。"
+  },
+  {
+    "id": "l2-71",
+    "difficulty": "基礎",
+    "category": "Yes/No問句",
+    "accent": "AU",
+    "question": "Is there a fee for parking here?",
+    "options": [
+      "Only after six o'clock.",
+      "It's a lovely park, isn't it?",
+      "I paid her on Friday."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：沒有直接說 Yes，但「只有六點以後才要」已經把收不收費講清楚了。\n(B) 用 park 與 parking 的相似音誘答，講的卻是公園很美。\n(C) 用 paid 呼應 fee，但付錢的對象是某個人，與停車費無關。",
+    "transcriptZh": "問：這裡停車要收費嗎？\n(A) 只有六點以後才要。\n(B) 這公園很美，對吧？\n(C) 我星期五付錢給她了。"
+  },
+  {
+    "id": "l2-72",
+    "difficulty": "基礎",
+    "category": "陳述句回應",
+    "accent": "US",
+    "question": "I'm heading out to lunch.",
+    "options": [
+      "Could you bring me back a sandwich?",
+      "Yes, the meeting went well.",
+      "It was a long lunch."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：同事說要出去吃午餐，順口請對方幫忙帶一份三明治，是最自然的接話。\n(B) 回答的是會議狀況，與對方要出門吃飯無關。\n(C) 重複 lunch，卻用過去式講「那頓午餐吃很久」，時態與情境都錯位。",
+    "transcriptZh": "陳述：我要出去吃午餐了。\n(A) 可以幫我帶個三明治回來嗎？\n(B) 對，會議進行得很順利。\n(C) 那頓午餐吃很久。"
+  },
+  {
+    "id": "l2-73",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "GB",
+    "question": "Which key opens the supply cabinet?",
+    "options": [
+      "About thirty dollars.",
+      "Yes, I locked it last night.",
+      "The small silver one."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：Which 要求從幾樣東西裡挑一個，「那把銀色的小鑰匙」明確指認。\n(A) 「大約三十美元」回答的是價錢，屬於 How much。\n(B) Which 開頭的問句不能用 Yes 回答，內容講的也是鎖門，不是哪一把鑰匙。",
+    "transcriptZh": "問：哪一把鑰匙可以開文具櫃？\n(A) 大約三十美元。\n(B) 對，我昨晚鎖了。\n(C) 那把銀色的小鑰匙。"
+  },
+  {
+    "id": "l2-74",
+    "difficulty": "中級",
+    "category": "附加/否定問句",
+    "accent": "AU",
+    "question": "The staff directory's been updated, hasn't it?",
+    "options": [
+      "Yes, we hired three people last month.",
+      "I'm still waiting on two departments.",
+      "My computer updates itself overnight."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：間接回應。「我還在等兩個部門給資料」等於說明還沒更新完，比直接說 No 更接近真實對話。\n(A) 由 staff 聯想到招募，講的是上個月錄取幾個人，沒有回答通訊錄更新了沒。\n(C) 重複 update，但主詞換成自己的電腦，與員工通訊錄無關。",
+    "transcriptZh": "問：員工通訊錄已經更新了吧？\n(A) 對，我們上個月錄取了三個人。\n(B) 我還在等兩個部門給資料。\n(C) 我的電腦會在半夜自己更新。"
+  },
+  {
+    "id": "l2-75",
+    "difficulty": "進階",
+    "category": "Yes/No問句",
+    "accent": "US",
+    "question": "Do you think we'll get approval before the end of the month?",
+    "options": [
+      "That depends on the finance team.",
+      "Yes, I approved the design.",
+      "At the end of the hallway."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：間接回應。「要看財務部的動作」沒有給 Yes／No，卻點出了關鍵變數，是進階題常見的正解型態。\n(B) 重複 approve，但講的是自己核准了設計，主詞與時態都不對。\n(C) 用 end 這個字誘答，答的卻是走廊盡頭這個位置。",
+    "transcriptZh": "問：你覺得我們這個月底前會拿到核准嗎？\n(A) 要看財務部的動作。\n(B) 對，我核准了那個設計。\n(C) 在走廊盡頭。"
+  }
+]

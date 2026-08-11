@@ -1,0 +1,252 @@
+[
+  {
+    "id": "p5-b5-01",
+    "difficulty": "基礎",
+    "category": "詞性變化",
+    "question": "Staff members at the Kelmore Hotel front desk answer guests' questions -------, even during the busiest check-in hours.",
+    "options": ["prompt", "promptness", "promptly", "prompted"],
+    "answer": 2,
+    "translation": "Kelmore Hotel 櫃檯人員總能迅速回答房客的問題,即使在入住尖峰時段也一樣。",
+    "explanation": "考點:副詞修飾動詞。空格修飾前面的動詞 answer,說明「回答的方式」,須用副詞,故 (C) promptly 正確。(A) prompt 是形容詞或動詞,不能用來修飾動詞。(B) promptness 為名詞,句中已有受詞 questions,再放一個名詞不合結構。(D) prompted 是過去式或過去分詞,句子已有主要動詞 answer,不需要再加一個動詞。"
+  },
+  {
+    "id": "p5-b5-02",
+    "difficulty": "基礎",
+    "category": "詞性變化",
+    "question": "All visitors must present a valid form of ------- at the security desk before entering the Fairmount Research Center.",
+    "options": ["identification", "identifiable", "identify", "identified"],
+    "answer": 0,
+    "translation": "所有訪客進入 Fairmount Research Center 前,都必須在警衛櫃檯出示有效的身分證明文件。",
+    "explanation": "考點:介系詞後接名詞。a valid form of 之後必須接名詞,identification(身分證明)正是名詞形式,故 (A) identification 正確。(B) identifiable 是形容詞,意為「可辨識的」。(C) identify 是動詞原形。(D) identified 為過去式或過去分詞,三者都不能當介系詞 of 的受詞。"
+  },
+  {
+    "id": "p5-b5-03",
+    "difficulty": "中級",
+    "category": "詞性變化",
+    "question": "The new packaging machine has proved highly -------, increasing output at the Trentwood plant by nearly one third.",
+    "options": ["produce", "production", "productively", "productive"],
+    "answer": 3,
+    "translation": "新的包裝機器證實生產力極高,讓 Trentwood 廠的產量增加了將近三分之一。",
+    "explanation": "考點:連綴動詞後接形容詞。prove 在此當連綴動詞,後面須接形容詞作主詞補語,副詞 highly 則是用來修飾該形容詞,故 (D) productive 正確。(A) produce 是動詞,前面已有 has proved,不能再放動詞。(B) production 為名詞,說機器「是生產」語意不通。(C) productively 是副詞,不能擺在主詞補語的位置。"
+  },
+  {
+    "id": "p5-b5-04",
+    "difficulty": "中級",
+    "category": "詞性變化",
+    "question": "The ------- of the new payroll system took longer than the IT department at Halverson Foods had expected.",
+    "options": ["install", "installation", "installed", "installing"],
+    "answer": 1,
+    "translation": "新薪資系統的安裝時間比 Halverson Foods 資訊部門原先預期的還久。",
+    "explanation": "考點:冠詞之後的名詞形。空格前有定冠詞 The、後有介系詞 of,這個位置是全句主詞的核心,必須用名詞,故 (B) installation 正確。(A) install 是動詞原形。(C) installed 為過去式或過去分詞。(D) installing 雖是動名詞,但英文要把「安裝」名詞化時慣用 installation,不會寫成 the installing of。"
+  },
+  {
+    "id": "p5-b5-05",
+    "difficulty": "中級",
+    "category": "詞性變化",
+    "question": "The instructions in the user manual are ------- clear, so most customers set up the device without calling the Brightvale support line.",
+    "options": ["reason", "reasoned", "reasonable", "reasonably"],
+    "answer": 3,
+    "translation": "使用手冊裡的說明相當清楚,因此多數顧客不必打 Brightvale 客服專線就能完成裝機。",
+    "explanation": "考點:副詞修飾形容詞。空格後方是形容詞 clear,前面須用副詞加以修飾,故 (D) reasonably 正確,reasonably clear 意為「相當清楚」。(A) reason 是名詞或動詞。(B) reasoned 為過去分詞。(C) reasonable 是形容詞,兩個形容詞不能直接並列填在同一個補語位置。"
+  },
+  {
+    "id": "p5-b5-06",
+    "difficulty": "進階",
+    "category": "詞性變化",
+    "question": "All ------- for the assistant editor position at Ashgrove Publishing should submit a cover letter and two references by March 8.",
+    "options": ["applicants", "applications", "applying", "applied"],
+    "answer": 0,
+    "translation": "所有應徵 Ashgrove Publishing 助理編輯職缺的人,都應於三月八日前繳交一封求職信與兩份推薦人資料。",
+    "explanation": "考點:人物名詞與事物名詞的區別。空格是後面動詞 submit 的主詞,會繳交文件的必須是人,故 (A) applicants(申請人)正確。(B) applications 指「申請書」,申請書本身不會去繳交求職信。(C) applying 是動名詞或現在分詞,前面加 All 無法構成主詞。(D) applied 為過去式或過去分詞,也不能當主詞。"
+  },
+  {
+    "id": "p5-b5-07",
+    "difficulty": "進階",
+    "category": "詞性變化",
+    "question": "The results of the customer survey were highly -------, so Lindmark Retail decided to expand the loyalty program to all of its branches.",
+    "options": ["encourage", "encouragement", "encouraging", "encouraged"],
+    "answer": 2,
+    "translation": "顧客問卷的結果非常正面,因此 Lindmark Retail 決定將會員回饋方案推行到所有分店。",
+    "explanation": "考點:-ing 與 -ed 形容詞的區別。主詞是 The results,調查結果是「令人振奮」的來源,須用 -ing 形容詞,故 (C) encouraging 正確。(A) encourage 是動詞原形,不能接在 be 動詞之後。(B) encouragement 為名詞,were encouragement 結構與語意都不通。(D) encouraged 用來描述人的感受(如 The staff were encouraged),不能形容調查結果本身。"
+  },
+  {
+    "id": "p5-b5-08",
+    "difficulty": "基礎",
+    "category": "動詞時態與語態",
+    "question": "The monthly sales figures at Pelham Supply ------- by the regional manager before they are sent to the head office.",
+    "options": ["review", "are reviewed", "reviewing", "have reviewed"],
+    "answer": 1,
+    "translation": "Pelham Supply 的每月業績數字會先經區域經理審閱,才送交總公司。",
+    "explanation": "考點:被動語態。主詞 the monthly sales figures 是「被審閱」的對象,且 before 子句用現在式 are sent,可知全句在描述例行流程,故 (B) are reviewed 正確。(A) review 是主動語態,語意變成數字去審閱別人。(C) reviewing 是分詞,不能單獨當主要動詞。(D) have reviewed 為主動的現在完成式,同樣與被動語意不合。"
+  },
+  {
+    "id": "p5-b5-09",
+    "difficulty": "基礎",
+    "category": "動詞時態與語態",
+    "question": "Rowan Textiles ------- its spring catalog to retail partners next month.",
+    "options": ["released", "has released", "releasing", "will release"],
+    "answer": 3,
+    "translation": "Rowan Textiles 下個月將向零售通路夥伴推出春季型錄。",
+    "explanation": "考點:未來式。句尾 next month 明確指向未來的時間,故 (D) will release 正確。(A) released 是過去式,與未來時間矛盾。(B) has released 為現在完成式,表示動作已經完成。(C) releasing 是分詞,沒有助動詞就不能當主要動詞。"
+  },
+  {
+    "id": "p5-b5-10",
+    "difficulty": "中級",
+    "category": "動詞時態與語態",
+    "question": "Since Delmar Beverages opened its second bottling line in March, production ------- by more than 40 percent.",
+    "options": ["has increased", "increases", "is increasing", "had increased"],
+    "answer": 0,
+    "translation": "自從 Delmar Beverages 在三月啟用第二條裝瓶線後,產量已增加逾四成。",
+    "explanation": "考點:since 與現在完成式的搭配。since 子句點出動作的起點,主要子句須用現在完成式表達從過去累積到現在的結果,故 (A) has increased 正確。(B) increases 是現在簡單式,用於習慣或事實,無法呈現至今的累積變化。(C) is increasing 強調此刻正在進行。(D) had increased 為過去完成式,必須另有一個過去時間點當基準。"
+  },
+  {
+    "id": "p5-b5-11",
+    "difficulty": "中級",
+    "category": "動詞時態與語態",
+    "question": "The technicians will begin testing the new elevator as soon as the last tenant ------- the Wexford Tower lobby.",
+    "options": ["will leave", "is leaving", "leaves", "left"],
+    "answer": 2,
+    "translation": "等最後一位租戶離開 Wexford Tower 大廳,技術人員就會開始測試新電梯。",
+    "explanation": "考點:時間副詞子句以現在式代替未來式。as soon as 引導時間副詞子句,即使指的是未來的事,子句仍須用現在式,故 (C) leaves 正確。(A) will leave 不可用於時間副詞子句。(B) is leaving 表示正在進行的動作,與「一……就……」的語意不合。(D) left 是過去式,與主要子句的 will begin 時序矛盾。"
+  },
+  {
+    "id": "p5-b5-12",
+    "difficulty": "中級",
+    "category": "動詞時態與語態",
+    "question": "Since the recall was announced last week, more than 2,000 units ------- to Stanwick Appliances for inspection.",
+    "options": ["returned", "are returning", "had returned", "have been returned"],
+    "answer": 3,
+    "translation": "自上週宣布召回以來,已有超過兩千台產品被送回 Stanwick Appliances 檢驗。",
+    "explanation": "考點:現在完成式的被動語態。since 子句設定了起點,主詞 units 是「被送回」的對象,須用 have been + 過去分詞,故 (D) have been returned 正確。(A) returned 是主動的過去式,語意變成產品自己回去。(B) are returning 為主動的現在進行式。(C) had returned 既是主動、又是過去完成式,與 since 所要求的現在完成語意不符。"
+  },
+  {
+    "id": "p5-b5-13",
+    "difficulty": "進階",
+    "category": "動詞時態與語態",
+    "question": "By the time the auditors arrived at the Ellery Group's riverside office, the accounting staff ------- every invoice from the previous quarter.",
+    "options": ["organizes", "had organized", "was organizing", "has organized"],
+    "answer": 1,
+    "translation": "稽核人員抵達 Ellery Group 河濱辦公室時,會計人員已整理好上一季的每一張發票。",
+    "explanation": "考點:過去完成式。by the time 子句用過去式 arrived,而整理發票的動作發生在稽核人員抵達「之前」,須用過去完成式表示更早完成,故 (B) had organized 正確。(A) organizes 是現在式,與過去的時間點不合。(C) was organizing 表示當時正在進行,無法表達已全部完成。(D) has organized 為現在完成式,不能與明確的過去時間點並用。"
+  },
+  {
+    "id": "p5-b5-14",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "The Sandhurst Hotel offers a complimentary breakfast to guests who ------- a room on the executive floor.",
+    "options": ["arrange", "order", "reserve", "apply"],
+    "answer": 2,
+    "translation": "Sandhurst Hotel 為訂了行政樓層客房的房客提供免費早餐。",
+    "explanation": "考點:動詞與受詞的搭配。訂房的固定說法是 reserve a room,故 (C) reserve 正確。(A) arrange 意為「安排」,受詞多為會議、行程或交通。(B) order 指訂購商品或點餐,不用於客房。(D) apply 表「申請」時須接 for,而且申請的對象也不會是飯店房間。"
+  },
+  {
+    "id": "p5-b5-15",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Please ------- the attached invoice from Grantham Printing and let us know whether the amounts are correct.",
+    "options": ["review", "respond", "remain", "remind"],
+    "answer": 0,
+    "translation": "請查看隨附的 Grantham Printing 發票,並告知我們金額是否正確。",
+    "explanation": "考點:動詞語意與句型。空格後直接接受詞 the attached invoice,語意是請對方「查看確認」,故 (A) review 正確。(B) respond 是不及物動詞,須寫成 respond to。(C) remain 意為「保持、留下」,同樣不能直接接受詞。(D) remind 的受詞必須是人,例如 remind us of the deadline。"
+  },
+  {
+    "id": "p5-b5-16",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "The coffee machine in the Vireo Design staff lounge is easy to -------: users simply press the green button twice.",
+    "options": ["repair", "operate", "produce", "instruct"],
+    "answer": 1,
+    "translation": "Vireo Design 員工休息室的咖啡機很容易操作:只要按兩下綠色按鈕即可。",
+    "explanation": "考點:動詞語意辨析。冒號後說明「只要按兩下綠色按鈕」,講的是使用機器的方式,故 (B) operate 正確。(A) repair 意為「修理」,與按鈕啟動的說明無關。(C) produce 意為「生產」,主詞應是工廠或公司。(D) instruct 意為「指示、教導」,受詞須是人。"
+  },
+  {
+    "id": "p5-b5-17",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Ferndale Motors will ------- production at its oldest plant until demand for the model recovers.",
+    "options": ["prevent", "preserve", "postpone", "suspend"],
+    "answer": 3,
+    "translation": "Ferndale Motors 將暫停最舊廠區的生產,直到該車款的需求回升為止。",
+    "explanation": "考點:動詞與受詞的搭配及語意。until demand recovers 表示需求回升後就會恢復,可知目前是「暫停」生產,suspend production 為固定搭配,故 (D) suspend 正確。(A) prevent 意為「防止」,語意是不讓某事發生。(B) preserve 意為「保存、維護」。(C) postpone 意為「延期」,受詞須是有預定時間的活動,不用於持續運作中的生產作業。"
+  },
+  {
+    "id": "p5-b5-18",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The warranty on Ridgefield Home Products appliances does not ------- damage caused by improper use.",
+    "options": ["cover", "contain", "protect", "include"],
+    "answer": 0,
+    "translation": "Ridgefield Home Products 家電的保固不涵蓋因使用不當造成的損壞。",
+    "explanation": "考點:保固條款的慣用動詞。保固「涵蓋、理賠」某項損壞的說法是 cover,故 (A) cover 正確。(B) contain 意為「內含」,主詞須是容器或文件本身。(C) protect 的受詞是被保護的人或物,不會是 damage(損壞)。(D) include 用來說明清單或組合中含有哪些項目,無法表達保固是否負責賠償。"
+  },
+  {
+    "id": "p5-b5-19",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Ms. Okonkwo's proposal received final ------- from the planning committee at Bexley Foods last Friday.",
+    "options": ["approach", "approval", "appointment", "appearance"],
+    "answer": 1,
+    "translation": "Okonkwo 女士的提案上週五獲得 Bexley Foods 規劃委員會的最終核准。",
+    "explanation": "考點:形近名詞的語意辨析。提案送交規劃委員會後取得的是「核准」,故 (B) approval 正確。(A) approach 意為「方法、途徑」。(C) appointment 意為「約定、任命」。(D) appearance 意為「外觀、露面」,三者都無法表示委員會同意了這項提案。"
+  },
+  {
+    "id": "p5-b5-20",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Please make sure that the shipping address on the order form is -------; otherwise the package may be returned to our warehouse.",
+    "options": ["sincere", "frequent", "accurate", "efficient"],
+    "answer": 2,
+    "translation": "請確認訂購單上的收件地址正確無誤,否則包裹可能被退回本公司倉庫。",
+    "explanation": "考點:形容詞語意辨析。分號後說明地址若有問題包裹會被退回倉庫,可知地址必須「正確無誤」,故 (C) accurate 正確。(A) sincere 意為「誠懇的」,用來形容人或態度。(B) frequent 意為「頻繁的」,講的是次數。(D) efficient 意為「有效率的」,形容流程或人員,都不能用來說地址是否正確。"
+  },
+  {
+    "id": "p5-b5-21",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Attendance at Friday's safety briefing is ------- for all warehouse staff at Harrowgate Logistics; no exceptions will be made.",
+    "options": ["flexible", "optional", "temporary", "mandatory"],
+    "answer": 3,
+    "translation": "Harrowgate Logistics 所有倉庫人員都必須出席週五的安全宣導,不接受任何例外。",
+    "explanation": "考點:形容詞語意辨析。分號後強調「不會有例外」,表示全體倉庫人員都得出席,故 (D) mandatory 正確。(A) flexible 意為「有彈性的」,與不容例外相反。(B) optional 意為「可自由選擇的」,同樣與強制出席矛盾。(C) temporary 意為「暫時的」,說的是持續期間,與是否強制無關。"
+  },
+  {
+    "id": "p5-b5-22",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Because the two departments share a single budget, the directors at Calderon Group meet monthly to ------- their spending plans.",
+    "options": ["coordinate", "combine", "compete", "cooperate"],
+    "answer": 0,
+    "translation": "由於兩個部門共用同一筆預算,Calderon Group 的主管每月開會協調各自的支出計畫。",
+    "explanation": "考點:動詞語意與句型。兩個部門共用一筆預算,主管每月開會是為了讓各自的支出計畫「相互配合」,故 (A) coordinate 正確。(B) combine 意為「合併為一」,但兩部門仍各有計畫,並非併成一份。(C) compete 意為「競爭」,與共同協調的語意相反。(D) cooperate 是不及物動詞,須寫成 cooperate with somebody,不能直接接 their spending plans。"
+  },
+  {
+    "id": "p5-b5-23",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Mr. Sandoval's report was so ------- that the committee finished reading it in less than twenty minutes.",
+    "options": ["extensive", "persuasive", "concise", "detailed"],
+    "answer": 2,
+    "translation": "Sandoval 先生的報告十分簡潔,委員會不到二十分鐘就讀完了。",
+    "explanation": "考點:形容詞語意辨析。委員會不到二十分鐘就把整份報告讀完,可見報告寫得「簡潔扼要」,故 (C) concise 正確。(A) extensive 意為「大量的、廣泛的」,篇幅龐大反而讀不快。(B) persuasive 意為「有說服力的」,說的是內容的說服力,與讀完所需的時間無關。(D) detailed 意為「詳盡的」,同樣暗示篇幅長,與句意矛盾。"
+  },
+  {
+    "id": "p5-b5-24",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Sales of the new Marlowe Technologies tablet have been -------, exceeding the company's own forecast by 20 percent.",
+    "options": ["moderate", "exceptional", "occasional", "reasonable"],
+    "answer": 1,
+    "translation": "Marlowe Technologies 新款平板的銷售表現極為出色,比公司自訂的預測高出兩成。",
+    "explanation": "考點:形容詞語意辨析。逗號後說明銷量超出公司自己的預測達兩成,屬於「非常突出」的表現,故 (B) exceptional 正確。(A) moderate 意為「中等的、適度的」,與超乎預期矛盾。(C) occasional 意為「偶爾的」,形容次數而非銷售表現。(D) reasonable 意為「合理的、還算可以的」,程度不足以對應超出預測兩成。"
+  },
+  {
+    "id": "p5-b5-25",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Ms. Fontaine's presentation was praised for its -------, which allowed even first-time clients to follow the technical details.",
+    "options": ["accuracy", "patience", "confidence", "clarity"],
+    "answer": 3,
+    "translation": "Fontaine 女士的簡報因清楚易懂而備受讚賞,連初次接觸的客戶都能跟上技術細節。",
+    "explanation": "考點:名詞語意辨析。關係子句說明連第一次接觸的客戶都跟得上技術細節,可見受稱讚的是簡報「清楚易懂」,故 (D) clarity 正確。(A) accuracy 意為「準確度」,內容正確不代表外行人聽得懂。(B) patience 意為「耐心」,是人的特質,不是簡報本身的優點。(C) confidence 意為「自信」,同樣形容講者的態度,無法解釋客戶為何能理解內容。"
+  }
+]

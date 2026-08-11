@@ -1,0 +1,259 @@
+[
+  {
+    "id": "p7-b6-1",
+    "format": "single",
+    "passages": [
+      {
+        "type": "email",
+        "label": "",
+        "content": "To: Harriet Kwan <h.kwan@lindmarkclinic.com>\nFrom: Owen Brasher <o.brasher@quillpressprinting.com>\nDate: June 4\nSubject: Order 44821\n\nDear Ms. Kwan,\n\nThank you for the order we received from Lindmark Clinic on Monday. Your 5,000 appointment cards are already being printed and will leave our shop on Tuesday, June 9, exactly as promised.\n\nI am writing about the other half of the order. The gray folders you chose are printed on a paper that our supplier has stopped producing, and we used the last of it two weeks ago. A replacement paper will not reach us before June 22, which is ten days after the date you asked for.\n\nThere are two ways forward. We can hold the folders until the new paper arrives, or we can print them this week on a slightly heavier white paper. The second choice costs us more, but we will not pass that difference on to you, and I have sent a sample of the white paper by courier so that you can see it before you decide.\n\nWhichever you choose, we will cover the delivery charge on the folders, since the delay is ours.\n\nCould you let me know by Friday afternoon? After that I cannot promise you a place on next week's schedule.\n\nBest regards,\n\nOwen Brasher\nAccount Manager, Quill Press Printing\n555-0178"
+      }
+    ],
+    "questions": [
+      {
+        "q": "Why did Mr. Brasher write the e-mail?",
+        "options": [
+          "To confirm that an entire order has been shipped",
+          "To explain a supply problem affecting part of an order",
+          "To request payment before printing begins",
+          "To recommend another printing company"
+        ],
+        "answer": 1,
+        "explanation": "定位:第二段第一句「I am writing about the other half of the order」,接著說明紙廠停產、庫存用完、替代用紙六月二十二日才到。(A)錯:只有預約卡如期出貨,資料夾尚未印製,並非整筆訂單已出貨。(C)錯:全文未提付款或請款。(D)錯:他請客戶在兩個方案中選一個,並未推薦別家廠商。"
+      },
+      {
+        "q": "What is indicated about the appointment cards?",
+        "options": [
+          "They will be printed on a heavier paper.",
+          "Their delivery has been moved to June 22.",
+          "Their price has been reduced.",
+          "They will be sent out on the original date."
+        ],
+        "answer": 3,
+        "explanation": "定位:第一段第二句「Your 5,000 appointment cards are already being printed and will leave our shop on Tuesday, June 9, exactly as promised」,as promised 表示仍照原訂日期。(A)錯:較厚的白紙是資料夾的替代方案。(B)錯:六月二十二日是替代用紙到貨日,與預約卡無關。(C)錯:全文只說不加價,沒有降價。"
+      },
+      {
+        "q": "What does Mr. Brasher NOT offer to do?",
+        "options": [
+          "Lower the price of the folders",
+          "Pay for the delivery of the folders",
+          "Print the folders this week on a different paper",
+          "Send Ms. Kwan a sample by courier"
+        ],
+        "answer": 0,
+        "explanation": "定位:第三段說第二個方案「costs us more, but we will not pass that difference on to you」,只是不加價,並未降價,故 (A) 是他沒有提供的。(B)在第四段「we will cover the delivery charge on the folders」。(C)在第三段「print them this week on a slightly heavier white paper」。(D)在第三段「I have sent a sample of the white paper by courier」。"
+      },
+      {
+        "q": "The word \"cover\" in paragraph 4, line 1, is closest in meaning to",
+        "options": [
+          "hide",
+          "include",
+          "pay for",
+          "protect"
+        ],
+        "answer": 2,
+        "explanation": "定位:第四段「we will cover the delivery charge on the folders, since the delay is ours」,受詞是 delivery charge(運費),後面又說延誤責任在己方,可知是由印刷廠負擔費用。(A)(D)是 cover 的字面義「遮蓋、保護」,與費用無關。(B)錯:此處不是把運費「包含」在報價內,而是由賣方吸收。"
+      }
+    ],
+    "translation": [
+      "收件者:哈莉葉・關 <h.kwan@lindmarkclinic.com>\n寄件者:歐文・布拉舍 <o.brasher@quillpressprinting.com>\n日期:六月四日\n主旨:第 44821 號訂單\n\n關女士您好:\n\n感謝林馬克診所週一交給本廠的訂單。您的五千張預約卡已在印製中,會如約於六月九日星期二出貨。\n\n我來信是要說明訂單另一半的狀況。您選的灰色資料夾所用的紙,供應商已經停產,本廠最後一批也在兩週前用完。替代用紙要到六月二十二日才會送達,比您指定的日期晚了十天。\n\n目前有兩種作法。一是把資料夾押後,等新紙到貨;二是本週就改用略厚的白紙印製。第二種作法本廠成本較高,但差額不會轉嫁給您,而且我已用快遞寄出白紙樣張,讓您決定前先看過實品。\n\n無論您選哪一種,資料夾的運費都由我們負擔,畢竟延誤是我們造成的。\n\n可否請您在週五下午前回覆?超過這個時間,我無法保證還排得進下週的產程。\n\n謹此\n奎爾印刷公司\n業務專員 歐文・布拉舍\n555-0178"
+    ]
+  },
+  {
+    "id": "p7-b6-2",
+    "format": "single",
+    "passages": [
+      {
+        "type": "text message",
+        "label": "",
+        "content": "Priya Sandhu (8:52 A.M.)\nMarcus, the copier on the third floor is showing an error code again. E-24, the same one as last month.\n\nMarcus Ide (8:55 A.M.)\nSorry to hear that. Is the service log still in the cabinet next to the machine?\n\nPriya Sandhu (8:57 A.M.)\nIt's here. The technician wrote that she replaced the roller on May 6 and that the part has a six-month warranty.\n\nMarcus Ide (9:01 A.M.)\nGood. Then the repair is still covered and we will not be billed for it. I'll call Fenwick Office Systems as soon as they open at nine thirty.\n\nPriya Sandhu (9:03 A.M.)\nThanks. One thing, though. The audit team is due on Thursday, and they need about four hundred pages copied on Wednesday afternoon.\n\nMarcus Ide (9:06 A.M.)\nUnderstood. I'll ask Fenwick for a Tuesday visit and explain why we need one. If they cannot come before Thursday, use the machine in the mailroom.\n\nPriya Sandhu (9:08 A.M.)\nThat one holds only a single paper tray, so someone has to stand there and refill it. But for four hundred pages it will do.\n\nMarcus Ide (9:10 A.M.)\nLet's keep it as a backup. I'll write to you the moment Fenwick gives me a time."
+      }
+    ],
+    "questions": [
+      {
+        "q": "Why does Ms. Sandhu write to Mr. Ide?",
+        "options": [
+          "To ask where a service log is kept",
+          "To order supplies for a copier",
+          "To report a problem with a machine",
+          "To arrange a meeting with an audit team"
+        ],
+        "answer": 2,
+        "explanation": "定位:上午八時五十二分第一則「the copier on the third floor is showing an error code again」,通報影印機再度出現故障代碼。(A)錯:問維修紀錄本在哪的是艾德先生,不是她。(B)錯:全文未提訂購耗材。(D)錯:稽核小組只是她說明急迫性的原因,並非要安排會面。"
+      },
+      {
+        "q": "The word \"due\" at 9:03 A.M. is closest in meaning to",
+        "options": [
+          "expected",
+          "owed",
+          "delayed",
+          "required"
+        ],
+        "answer": 0,
+        "explanation": "定位:上午九時三分「The audit team is due on Thursday」,主詞是一群人加上時間點,意思是預定於週四抵達。(B)錯:due 作「應付的」時搭配款項,例如 payment is due。(C)錯:due 沒有「延誤」的意思,而且延誤的是維修不是稽核小組。(D)錯:要求四百頁影印的是稽核小組本身,不是 due 這個字的意思。"
+      },
+      {
+        "q": "What does Mr. Ide say he will do?",
+        "options": [
+          "Replace the roller himself",
+          "Buy a new copier for the third floor",
+          "Move the audit to a later week",
+          "Ask the service company to come on Tuesday"
+        ],
+        "answer": 3,
+        "explanation": "定位:上午九時六分「I'll ask Fenwick for a Tuesday visit and explain why we need one」,Fenwick Office Systems 即上午九時一分提到的維修公司。(A)錯:滾輪是技師五月六日換的。(B)錯:兩人只談維修與備用機,未提採購。(C)錯:稽核時間是既定的,他反而是配合稽核提前叫修。"
+      },
+      {
+        "q": "At 9:08 A.M., what does Ms. Sandhu most likely mean when she writes, \"it will do\"?",
+        "options": [
+          "She will operate the copier herself.",
+          "The mailroom machine will be good enough for the job.",
+          "The copying should be sent to an outside shop.",
+          "The paper tray needs to be replaced."
+        ],
+        "answer": 1,
+        "explanation": "定位:上午九時八分她先指出收發室那台只有一個紙匣、得有人顧著補紙,再用 But 轉折說「for four hundred pages it will do」,表示以這次四百頁的量而言堪用。(A)錯:她說的是要有人補紙,並未表明由自己操作。(C)錯:全文沒有外送影印店的選項。(D)錯:紙匣少是機器本身的規格,不是待修的故障。"
+      }
+    ],
+    "translation": [
+      "普莉雅・桑杜（上午八時五十二分）\n馬可斯,三樓那台影印機又跳錯誤代碼了。E-24,跟上個月同一個。\n\n馬可斯・艾德（上午八時五十五分）\n真是麻煩。維修紀錄本還放在機器旁邊那個櫃子裡嗎?\n\n普莉雅・桑杜（上午八時五十七分）\n在我手上。技師寫說她五月六日換過滾輪,而且那個零件有六個月保固。\n\n馬可斯・艾德（上午九時一分）\n那就好。這樣維修還在保固範圍內,不會跟我們收費。芬威克辦公設備九點半一開門我就打電話過去。\n\n普莉雅・桑杜（上午九時三分）\n謝謝。不過有件事,稽核小組週四就要來,他們星期三下午要影印大約四百頁。\n\n馬可斯・艾德（上午九時六分）\n了解。我會請芬威克排星期二來,並說明我們為什麼需要提前。如果他們週四前排不出人,就先用收發室那台。\n\n普莉雅・桑杜（上午九時八分）\n那台只有一個紙匣,得有人站在旁邊補紙。不過四百頁的話還算堪用。\n\n馬可斯・艾德（上午九時十分）\n就先當備案。芬威克一給我時間我馬上通知妳。"
+    ]
+  },
+  {
+    "id": "p7-b6-3",
+    "format": "single",
+    "passages": [
+      {
+        "type": "advertisement",
+        "label": "",
+        "content": "GREENHOLT UNIFORM SERVICE\nClean uniforms, delivered. No machines to buy, no laundry to run.\n\nFor more than twenty years, Greenholt has supplied and cleaned work clothing for restaurants, garages, clinics, and hotels across the Marlow Valley. Tell us how many staff you have and how often you would like a delivery. We do the rest.\n\nWHAT YOU GET\n- A free visit to measure your staff at your workplace, usually within three working days of your call\n- Pickup and delivery once or twice a week by our own drivers\n- Repairs at no extra cost, including buttons, pockets, and small tears\n- A spare set for every employee, so that nobody is ever left without a clean uniform\n- Monthly billing, with a single invoice covering all of your locations\n\nPRICES\nStandard cotton shirts and pants start at $6.40 per employee each week. Chef coats and safety jackets are priced separately, since the cost depends on the fabric.\n\nPLEASE NOTE\nWe do not sell uniforms. Every garment remains the property of Greenholt and must be returned to us when an employee leaves your company.\n\nTRY US\nNew customers who sign a twelve-month agreement before September 30 pay half price for the first four weeks. Mention code VALLEY24 when you call.\n\nGreenholt Uniform Service\nUnit 9, Denton Trade Park\n555-0193 | greenholtuniform.com\nOffice hours: Monday to Friday, 7:00 A.M. to 5:00 P.M."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What kind of business is Greenholt?",
+        "options": [
+          "A company that manufactures cotton fabric",
+          "A company that supplies and cleans work clothing",
+          "A store that sells laundry machines",
+          "An agency that finds staff for restaurants"
+        ],
+        "answer": 1,
+        "explanation": "定位:第二段「Greenholt has supplied and cleaned work clothing for restaurants, garages, clinics, and hotels」,加上標題「Clean uniforms, delivered」。(A)錯:布料只出現在報價說明,公司並非織布廠。(C)錯:副標題「No machines to buy」正是說客戶不必買洗衣機。(D)錯:餐廳等是客戶類型,不是它替人找員工。"
+      },
+      {
+        "q": "What is NOT mentioned as part of Greenholt's service?",
+        "options": [
+          "Repairs at no extra cost",
+          "A spare set of clothing for each employee",
+          "Training for the customer's own laundry staff",
+          "One invoice for a customer with several locations"
+        ],
+        "answer": 2,
+        "explanation": "定位:WHAT YOU GET 五點逐一比對。(A)在第三點「Repairs at no extra cost」。(B)在第四點「A spare set for every employee」。(D)在第五點「a single invoice covering all of your locations」。(C)未出現在廣告任何段落,客戶不需自行洗衣,自然也沒有洗衣人員訓練。"
+      },
+      {
+        "q": "What is stated about the uniforms?",
+        "options": [
+          "They belong to Greenholt and must be given back.",
+          "They are all made from the same fabric.",
+          "They must be paid for before the first delivery.",
+          "Employees are measured at the Denton Trade Park office."
+        ],
+        "answer": 0,
+        "explanation": "定位:PLEASE NOTE「Every garment remains the property of Greenholt and must be returned to us when an employee leaves」。(B)錯:PRICES 段說廚師服等的價格視布料而定,可見布料不只一種。(C)錯:公告寫明不販售制服,採月結帳單。(D)錯:量身是到客戶的工作場所,不是到公司門市。"
+      },
+      {
+        "q": "How can a new customer receive the special offer?",
+        "options": [
+          "By ordering uniforms for more than twenty employees",
+          "By paying twelve months of fees in advance",
+          "By visiting the Denton Trade Park office on a Saturday",
+          "By signing a one-year agreement before September 30"
+        ],
+        "answer": 3,
+        "explanation": "定位:TRY US「New customers who sign a twelve-month agreement before September 30 pay half price for the first four weeks」,twelve-month 即一年。(A)錯:優惠條件與人數無關。(B)錯:簽的是十二個月的合約,不是預繳十二個月費用。(C)錯:辦公時間是週一至週五,週六並不營業。"
+      }
+    ],
+    "translation": [
+      "格林霍特制服服務\n乾淨制服,送到您手上。不必買設備,也不必自己洗。\n\n二十多年來,格林霍特為馬洛谷地一帶的餐廳、汽車修理廠、診所與旅館提供工作服並負責清洗。只要告訴我們您有多少員工、希望多久送一次,其餘的交給我們。\n\n服務內容\n－ 到府免費量身,通常在您來電後三個工作天內完成\n－ 由本公司司機每週一次或兩次收送\n－ 免費修補,含鈕扣、口袋與小破損\n－ 每位員工都配備一套備用制服,不會有人沒有乾淨衣服可穿\n－ 按月結帳,所有據點合開一張帳單\n\n價格\n標準棉質上衣與長褲,每位員工每週六・四美元起。廚師服與安全外套另行報價,費用視布料而定。\n\n請注意\n本公司不販售制服。所有衣物均為格林霍特所有,員工離職時必須歸還。\n\n歡迎試用\n新客戶於九月三十日前簽訂十二個月合約,前四週半價。來電時請提供代碼 VALLEY24。\n\n格林霍特制服服務\n丹頓工業園區 9 號廠房\n555-0193 | greenholtuniform.com\n辦公時間:週一至週五上午七時至下午五時"
+    ]
+  },
+  {
+    "id": "p7-b6-4",
+    "format": "double",
+    "passages": [
+      {
+        "type": "invoice",
+        "label": "Quotation",
+        "content": "MERIDIAN CONTRACT FURNISHINGS\n1140 Alder Way, Sudbury\nQUOTATION No. Q-7719\n\nPrepared for: Talia Okafor, Office Manager, Bexley Analytics\nDate: August 3\nThis quotation is valid for thirty days from the date shown above.\n\nItem — Quantity — Unit price — Total\nAdjustable desk, 140 cm, wood top — 24 — $415 — $9,960\nTask chair, model TR-5 — 24 — $228 — $5,472\nTwo-drawer file cabinet — 12 — $140 — $1,680\nMeeting table, seats eight — 2 — $690 — $1,380\n\nSubtotal: $18,492\nDelivery: $0\nTotal: $18,492\n\nTERMS\n1. Delivery within the Sudbury area is free on orders above $10,000.\n2. Assembly is not included. Our crews will put together any item for $18 per desk or table and $9 per chair.\n3. Orders of twenty or more chairs of the same model receive a five percent reduction, which has already been taken off the price above.\n4. Lead time is four weeks from the day we receive a signed copy of this quotation together with a deposit of thirty percent.\n5. Items may be returned within fourteen days of delivery if they have not been opened.\n\nQuestions? Call Devin Marsh at 555-0166."
+      },
+      {
+        "type": "email",
+        "label": "E-mail",
+        "content": "To: Devin Marsh <d.marsh@meridiancf.com>\nFrom: Talia Okafor <t.okafor@bexleyanalytics.com>\nDate: August 7\nSubject: Quotation Q-7719\n\nDear Mr. Marsh,\n\nThank you for the quotation, which our director approved this morning with two changes.\n\nFirst, we would like six more of the same task chairs, for a total of thirty. Two people are joining the analysis team this fall, and I would rather order the extra chairs now than pay for a second delivery later. Please confirm that the reduction described in your third term still applies at the larger quantity.\n\nSecond, please remove the file cabinets. All of our records are being scanned this month, so we no longer need them.\n\nWe would also like your crews to put the desks and the meeting tables together for us. Nobody here has the time to do it. Please add that cost to the revised total.\n\nOne more point, about timing. Our lease on the new floor begins on September 8, and I would like the furniture in place before the end of that week. If I return the signed quotation on August 11, does that leave us enough time?\n\nKind regards,\n\nTalia Okafor\nOffice Manager, Bexley Analytics"
+      }
+    ],
+    "questions": [
+      {
+        "q": "According to the quotation, what condition applies to returned items?",
+        "options": [
+          "They must be sent back within thirty days.",
+          "They must be collected by a Meridian crew.",
+          "They may be returned only after they have been assembled.",
+          "They must still be in their packaging."
+        ],
+        "answer": 3,
+        "explanation": "定位:報價單條款第五點「Items may be returned within fourteen days of delivery if they have not been opened」,未拆封即仍在原包裝內。(A)錯:三十天是報價單本身的有效期,不是退貨期限,退貨期限是十四天。(B)錯:條款未規定退貨由誰運送。(C)錯:條件正好相反,已組裝或拆封的商品不得退貨。"
+      },
+      {
+        "q": "Why did Ms. Okafor write the e-mail?",
+        "options": [
+          "To request changes to a quotation",
+          "To complain about a late delivery",
+          "To cancel an order for office furniture",
+          "To ask for a copy of an invoice"
+        ],
+        "answer": 0,
+        "explanation": "定位:電子郵件第一段「our director approved this morning with two changes」,後面各段分別提出加訂椅子、刪除檔案櫃、加購組裝與詢問交期。(B)錯:家具還沒開始生產,談不上延遲。(C)錯:她是修改內容,並非取消訂單。(D)錯:她要的是修改後的總價,不是索取帳單副本。"
+      },
+      {
+        "q": "In the e-mail, the word \"leave\" in paragraph 5 is closest in meaning to",
+        "options": [
+          "depart from",
+          "forget",
+          "give",
+          "delay"
+        ],
+        "answer": 2,
+        "explanation": "定位:電子郵件第五段最後一句「does that leave us enough time?」,受詞是 us 與 enough time,問的是這樣是否還來得及,即「留給我們足夠的時間」。(A)錯:leave 作「離開」時後面接地點,不接雙受詞。(B)(D)錯:兩者都不是 leave 的字義,句中也沒有忘記或延後的語意。"
+      },
+      {
+        "q": "How much will the assembly work requested by Ms. Okafor add to the order?",
+        "options": [
+          "$432",
+          "$468",
+          "$504",
+          "$738"
+        ],
+        "answer": 1,
+        "explanation": "定位:須整合兩篇。電子郵件第四段說要請師傅組裝「the desks and the meeting tables」;報價單品項顯示書桌 24 張、會議桌 2 張,共 26 件,而條款第二點規定桌類每件 18 美元,26 × 18 = 468。(A)錯:432 只算了 24 張書桌。(C)錯:504 是把件數誤算為 28。(D)錯:738 是多加了三十張椅子的組裝費 270 美元,但她並未要求組裝椅子。"
+      },
+      {
+        "q": "If Ms. Okafor returns the signed quotation on August 11, when will the furniture most likely be delivered?",
+        "options": [
+          "On August 25",
+          "On September 1",
+          "On September 8",
+          "On September 15"
+        ],
+        "answer": 2,
+        "explanation": "定位:須整合兩篇。報價單條款第四點寫明交期為收到簽署文件與訂金後四週;電子郵件第五段說她八月十一日寄回,八月十一日加四週即九月八日。(A)錯:八月二十五日只過了兩週。(B)錯:九月一日只過了三週。(D)錯:郵件只說希望九月八日那一週結束前家具就定位,並未提到九月十五日,依四週交期算出的也是九月八日。"
+      }
+    ],
+    "translation": [
+      "梅里迪安辦公家具公司\n蘇德柏里市阿德路 1140 號\n報價單編號 Q-7719\n\n報價對象:貝斯利分析公司 辦公室主任 塔莉亞・奧卡佛\n日期:八月三日\n本報價單自上列日期起三十天內有效。\n\n品項 — 數量 — 單價 — 小計\n可調式辦公桌,140 公分,木質桌面 — 24 — 415 美元 — 9,960 美元\n辦公椅,TR-5 型 — 24 — 228 美元 — 5,472 美元\n雙抽屜檔案櫃 — 12 — 140 美元 — 1,680 美元\n八人座會議桌 — 2 — 690 美元 — 1,380 美元\n\n小計:18,492 美元\n運費:0 美元\n總計:18,492 美元\n\n條款\n1. 訂單金額逾一萬美元者,蘇德柏里市區內免運費。\n2. 不含組裝。本公司師傅可代為組裝,桌類每件 18 美元,椅子每張 9 美元。\n3. 同型號椅子訂購二十張以上者享九五折,上表價格已扣除此折扣。\n4. 交期為本公司收到簽署之報價單與三成訂金當日起算四週。\n5. 商品送達後十四天內,未拆封者可辦理退貨。\n\n如有疑問,請電洽戴文・馬許,555-0166。",
+      "收件者:戴文・馬許 <d.marsh@meridiancf.com>\n寄件者:塔莉亞・奧卡佛 <t.okafor@bexleyanalytics.com>\n日期:八月七日\n主旨:報價單 Q-7719\n\n馬許先生您好:\n\n感謝您的報價單,我們主管今天早上已核准,但有兩處要調整。\n\n第一,同型號的辦公椅想再加訂六張,合計三十張。分析團隊秋天會有兩位新同事報到,與其之後再付一次運費,不如現在一次訂足。請確認貴公司條款第三點的折扣在加量後仍然適用。\n\n第二,請刪除檔案櫃。本公司所有紙本資料這個月都會掃描建檔,已經用不到了。\n\n另外,想請貴公司師傅代為組裝辦公桌與會議桌,我們這邊實在沒有人手。請把這筆費用加進修正後的總價。\n\n還有一點關於時間。新樓層的租約自九月八日起算,我希望家具能在那一週結束前全部就定位。若我在八月十一日把簽好的報價單寄回,時間還來得及嗎?\n\n謹此\n貝斯利分析公司\n辦公室主任 塔莉亞・奧卡佛"
+    ]
+  }
+]

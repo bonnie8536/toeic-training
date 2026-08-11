@@ -1,0 +1,222 @@
+[
+  {
+    "id": "art-11a",
+    "title": "The Company That Answers in One Hour",
+    "titleZh": "一小時內一定回信的公司",
+    "category": "客服",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "A small customer-service team at desks in a bright office, with a large wall clock showing one hour and a screen full of incoming emails.",
+    "paragraphs": [
+      {
+        "en": "Lin Chia-wei was tired of waiting. Every time she sent a question to a software company, the answer took three days. So when she started her own [[firm]], Brightline Support, she made a [[promise]]. Every [[customer]] email would get a real answer within one hour. Her friends told her the plan was crazy.",
+        "zh": "林佳薇早就受夠了等待。以前她寫信問軟體公司問題，回覆總要拖上三天。所以自己開公司「明線客服」時，她許下一個承諾：每一封客戶來信，一小時內一定得到真人回覆。朋友都說這個計畫太瘋狂。"
+      },
+      {
+        "en": "At first, the plan was hard to keep. Brightline had only six [[staff]] members. On busy days, more than eighty emails arrived. The team worked late, and mistakes began to appear. One angry client received the wrong answer twice. Lin saw that speed alone was not enough.",
+        "zh": "一開始，這個計畫很難守住。明線只有六名員工。忙的時候，一天湧進八十多封信。團隊加班到深夜，錯誤也跟著出現。有位生氣的客戶連續兩次收到錯誤答案。林佳薇明白，光有速度並不夠。"
+      },
+      {
+        "en": "So Lin changed the whole system. She [[sorted]] every message into three groups. Easy questions got a ready answer from a short list. The [[complicated]] ones went to a trained agent. The hardest cases went straight to Lin herself. This single step cut the average waiting time by half.",
+        "zh": "於是她把整套流程改掉。她把每封訊息分成三類。簡單的問題，直接從現成答案清單中回覆。比較複雜的，交給受過訓練的專員。最棘手的案子，直接送到她本人手上。光是這一步，就把平均等待時間砍掉一半。"
+      },
+      {
+        "en": "She also fixed the work [[schedule]]. The staff now worked in three [[shifts]], so someone was always online. New workers got two weeks of [[training]] before they touched a real email. Lin asked everyone to write down each common problem. The notes slowly grew into a useful guide.",
+        "zh": "她也調整了工作排班。員工分成三班輪值，隨時都有人在線上。新人要先受兩週訓練，才能碰到真正的客戶信件。林佳薇要求大家把每個常見問題記下來。這些筆記慢慢累積成一份好用的指南。"
+      },
+      {
+        "en": "The results surprised everyone. Within a year, [[complaints]] dropped by sixty percent. Many [[loyal]] customers started to [[recommend]] Brightline to their friends. Sales rose, and the company [[hired]] twelve more people. One client said the quick answers made her feel respected.",
+        "zh": "結果出乎所有人意料。一年之內，客訴減少了六成。許多忠實客戶開始把明線推薦給朋友。業績上升，公司又多聘了十二個人。有位客戶說，快速的回應讓她覺得被尊重。"
+      },
+      {
+        "en": "Lin says the real secret is not speed. It is being [[honest]]. If her team cannot solve a problem in one hour, they still write back. They explain the [[delay]] and give a clear [[deadline]]. Customers can accept a slow repair, she says. They can never accept silence.",
+        "zh": "林佳薇說，真正的關鍵不是速度，而是誠實。如果團隊一小時內解決不了問題，他們還是會回信。他們會說明延遲的原因，並給出明確的期限。她說，客戶可以接受修得慢，但永遠無法接受沉默。"
+      }
+    ],
+    "vocab": [
+      { "word": "firm", "base": "firm", "pos": "n.", "hint": "a business organization, usually small or medium in size", "zh": "公司；商行" },
+      { "word": "promise", "base": "promise", "pos": "n.", "hint": "a clear statement that you will surely do something", "zh": "承諾" },
+      { "word": "customer", "base": "customer", "pos": "n.", "hint": "a person who buys goods or services from a shop or company", "zh": "顧客；客戶" },
+      { "word": "staff", "base": "staff", "pos": "n.", "hint": "all the people who work for one company or office", "zh": "員工；全體職員" },
+      { "word": "sorted", "base": "sort", "pos": "v.", "hint": "arranged things into groups by type", "zh": "分類；歸類" },
+      { "word": "complicated", "base": "complicated", "pos": "adj.", "hint": "having many parts and not easy to deal with", "zh": "複雜的" },
+      { "word": "schedule", "base": "schedule", "pos": "n.", "hint": "a plan that shows the times when things will happen", "zh": "時間表；排班表" },
+      { "word": "shifts", "base": "shift", "pos": "n.", "hint": "fixed periods of working time in a day, such as morning or night", "zh": "輪班；班次" },
+      { "word": "training", "base": "training", "pos": "n.", "hint": "the process of teaching people the skills they need for a job", "zh": "訓練" },
+      { "word": "complaints", "base": "complaint", "pos": "n.", "hint": "statements saying that you are not happy with a product or service", "zh": "抱怨；客訴" },
+      { "word": "loyal", "base": "loyal", "pos": "adj.", "hint": "always staying with the same company, brand or person", "zh": "忠實的" },
+      { "word": "recommend", "base": "recommend", "pos": "v.", "hint": "tell someone that something is good and worth trying", "zh": "推薦" },
+      { "word": "hired", "base": "hire", "pos": "v.", "hint": "gave someone a job in a company", "zh": "僱用" },
+      { "word": "honest", "base": "honest", "pos": "adj.", "hint": "telling the truth and not hiding facts", "zh": "誠實的" },
+      { "word": "delay", "base": "delay", "pos": "n.", "hint": "a situation in which something happens later than planned", "zh": "延遲" },
+      { "word": "deadline", "base": "deadline", "pos": "n.", "hint": "the latest time by which a task must be finished", "zh": "截止期限" }
+    ],
+    "questions": [
+      {
+        "q": "What is the main idea of the article?",
+        "options": [
+          "A software company lost most of its customers last year.",
+          "A company kept a fast-answer promise by changing the way it works.",
+          "Most customers care only about low prices.",
+          "Email is no longer a useful way to contact a company."
+        ],
+        "answer": 1,
+        "explanation": "全文主線：林佳薇承諾一小時回覆（第一段），中間遇到困難後改流程、改排班、加訓練（第三、四段），最後看到成效（第五段）。所以主旨是「一家公司靠改變做法守住快速回覆的承諾」。其他選項只是細節或文中沒提到的說法。"
+      },
+      {
+        "q": "Why did Lin start Brightline Support with a one-hour promise?",
+        "options": [
+          "She wanted to sell software to large companies.",
+          "She wanted to hire twelve new workers.",
+          "Her friends asked her to open a service center.",
+          "She had waited three days for replies from other companies."
+        ],
+        "answer": 3,
+        "explanation": "定位第一段：「Every time she sent a question to a software company, the answer took three days.」她自己受夠了等三天，才立下一小時的承諾。選項 B 的十二人是第五段的結果，不是原因。"
+      },
+      {
+        "q": "How did Lin handle different kinds of messages?",
+        "options": [
+          "She put messages into three groups by difficulty.",
+          "She asked customers to call instead of writing.",
+          "She answered every message herself.",
+          "She stopped replying to difficult questions."
+        ],
+        "answer": 0,
+        "explanation": "定位第三段：「She sorted every message into three groups.」簡單的用現成答案、複雜的給專員、最難的才給她本人。所以是依難度分成三類，不是全部自己回。"
+      },
+      {
+        "q": "What happened within one year of the changes?",
+        "options": [
+          "The company closed two offices.",
+          "The staff worked fewer shifts.",
+          "Complaints dropped by sixty percent.",
+          "Sales stayed at the same level."
+        ],
+        "answer": 2,
+        "explanation": "定位第五段：「Within a year, complaints dropped by sixty percent.」同段還提到 Sales rose（業績上升），所以選項 D 錯；輪班是三班制（第四段），文中沒說變少。"
+      },
+      {
+        "q": "What can be inferred about Lin's view of good service?",
+        "options": [
+          "Customers should always receive a discount when service is slow.",
+          "Only large firms can promise fast service.",
+          "A company should never admit a mistake.",
+          "Telling customers about a delay matters as much as being fast."
+        ],
+        "answer": 3,
+        "explanation": "定位最後一段：解決不了也要回信，說明延遲原因並給明確期限；「Customers can accept a slow repair... They can never accept silence.」可推論她認為「讓客戶知道狀況」和速度一樣重要。折扣、公司規模文中都沒提。"
+      }
+    ]
+  },
+  {
+    "id": "art-11b",
+    "title": "Renting Clothes for Work",
+    "titleZh": "租來的上班服",
+    "category": "商業",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "A young office worker opening a delivery box of neatly folded work clothes beside a half-empty closet.",
+    "paragraphs": [
+      {
+        "en": "Kao Mei-ling had a closet full of [[suits]]. She wore each one only a few times a year. Most of them just sat there and collected dust. Last winter a friend told her about Wardrobe Nine. The company rents office clothes by the month. Mei-ling signed up the same night.",
+        "zh": "高美玲的衣櫃裡塞滿了套裝。每一套，她一年只穿幾次。大部分就掛在那裡積灰塵。去年冬天，一位朋友跟她提起「衣櫥九號」。這家公司以月為單位出租上班服。美玲當晚就報名了。"
+      },
+      {
+        "en": "The idea is simple. A member pays a monthly [[fee]] and chooses four pieces online. The company [[delivers]] them in a box two days later. When the member is finished, she sends the box back. Wardrobe Nine cleans everything and passes it to the next person. Nobody has to buy anything.",
+        "zh": "做法很單純。會員每月付一筆費用，在線上挑四件。公司兩天後把衣服裝箱送到。穿完之後，會員再把箱子寄回。衣櫥九號洗好整理，接著送給下一位。誰都不必買。"
+      },
+      {
+        "en": "The [[founder]], Peter Yang, once worked at a clothing [[factory]]. He saw how many [[items]] were made and never sold. He also noticed a change among younger workers. They wanted variety at work, but their [[budgets]] were small. Renting looked like a fair answer for both sides.",
+        "zh": "創辦人楊柏森以前在成衣工廠上班。他看過太多品項做出來卻賣不掉。他也注意到年輕上班族的轉變。他們想在工作場合有變化，預算卻不多。租借看起來對雙方都公平。"
+      },
+      {
+        "en": "The [[service]] grew fast, but the road was not smooth. Cleaning costs were higher than expected. A few members returned [[damaged]] clothes with missing buttons. Others kept the same jacket for months. Yang wrote clear rules and added a small late [[charge]].",
+        "zh": "這項服務成長得很快，路卻不平坦。清洗成本比預期高。少數會員寄回的衣服有損壞，鈕扣也掉了。也有人同一件外套一放就是好幾個月。楊柏森寫下明確規則，並加收一筆小額逾期費。"
+      },
+      {
+        "en": "Today Wardrobe Nine has about nine thousand [[members]]. Many are young office workers in their first job. Others travel often and need a neat, [[professional]] look. One woman wore a rented dress to three [[interviews]] last spring. She got the job and still rents her work clothes today.",
+        "zh": "如今衣櫥九號大約有九千名會員。很多是剛進職場的年輕上班族。也有人經常出差，需要乾淨專業的樣子。去年春天，有位女生穿著租來的洋裝去了三場面試。她拿到工作，到現在還是租衣服上班。"
+      },
+      {
+        "en": "Not everyone likes the idea. Some people say [[borrowed]] clothes never fit perfectly. Others do not enjoy wearing what a stranger wore. Yang understands these [[concerns]] and offers free changes. Still, he believes the market will keep growing. In his view, people want to use clothes, not [[own]] them.",
+        "zh": "也不是每個人都喜歡這個做法。有些人說借來的衣服永遠穿不合身。也有人不喜歡穿陌生人穿過的東西。楊柏森理解這些疑慮，提供免費修改。但他相信市場會繼續成長。在他看來，大家想要的是「用」衣服，而不是「擁有」衣服。"
+      }
+    ],
+    "vocab": [
+      { "word": "suits", "base": "suit", "pos": "n.", "hint": "sets of matching jacket and trousers worn to an office", "zh": "西裝；套裝" },
+      { "word": "fee", "base": "fee", "pos": "n.", "hint": "money that you pay for a service or for joining something", "zh": "費用" },
+      { "word": "delivers", "base": "deliver", "pos": "v.", "hint": "brings goods to a place for the person who ordered them", "zh": "遞送；配送" },
+      { "word": "founder", "base": "founder", "pos": "n.", "hint": "the person who started a company or an organization", "zh": "創辦人" },
+      { "word": "factory", "base": "factory", "pos": "n.", "hint": "a large building where goods are made by machines", "zh": "工廠" },
+      { "word": "items", "base": "item", "pos": "n.", "hint": "single things in a list or in a group of goods", "zh": "品項；物品" },
+      { "word": "budgets", "base": "budget", "pos": "n.", "hint": "amounts of money that people plan to spend", "zh": "預算" },
+      { "word": "service", "base": "service", "pos": "n.", "hint": "work that a company does for the people who pay it", "zh": "服務" },
+      { "word": "damaged", "base": "damage", "pos": "adj.", "hint": "harmed or broken in some way", "zh": "損壞的" },
+      { "word": "charge", "base": "charge", "pos": "n.", "hint": "an amount of money asked for a product or a service", "zh": "收費；費用" },
+      { "word": "members", "base": "member", "pos": "n.", "hint": "people who have joined a club or a paid plan", "zh": "會員" },
+      { "word": "professional", "base": "professional", "pos": "adj.", "hint": "suitable for serious work; showing skill and good manners", "zh": "專業的" },
+      { "word": "interviews", "base": "interview", "pos": "n.", "hint": "meetings where a company asks questions to a person who wants a job", "zh": "面試" },
+      { "word": "borrowed", "base": "borrow", "pos": "adj.", "hint": "taken from someone else for a short time and then returned", "zh": "借來的" },
+      { "word": "concerns", "base": "concern", "pos": "n.", "hint": "worries about something that might go wrong", "zh": "疑慮；擔憂" },
+      { "word": "own", "base": "own", "pos": "v.", "hint": "have something as your property", "zh": "擁有" }
+    ],
+    "questions": [
+      {
+        "q": "What is the article mainly about?",
+        "options": [
+          "A clothing factory that closed last year.",
+          "A company that lets people rent work clothes.",
+          "How to clean office suits at home.",
+          "Why young workers change jobs so often."
+        ],
+        "answer": 1,
+        "explanation": "全文圍繞「衣櫥九號」這家出租上班服的公司：第一、二段介紹做法，第三段講由來，第四段講困難，第五、六段講成長與反對聲音。工廠只在第三段被提到一次，不是主題。"
+      },
+      {
+        "q": "How does Wardrobe Nine work?",
+        "options": [
+          "Members pay each month and receive four pieces in a box.",
+          "Members buy the clothes at a lower price.",
+          "Members must return the clothes within one day.",
+          "Members clean the clothes before sending them back."
+        ],
+        "answer": 0,
+        "explanation": "定位第二段：「A member pays a monthly fee and chooses four pieces online. The company delivers them in a box two days later.」同段最後也說 Wardrobe Nine 負責清洗，所以選項 D 錯；文中沒有一天內歸還的規定。"
+      },
+      {
+        "q": "What problem did the company meet as it grew?",
+        "options": [
+          "It could not find enough young members.",
+          "Its clothes looked too old-fashioned.",
+          "The factory stopped making new items.",
+          "Cleaning cost more than the company expected."
+        ],
+        "answer": 3,
+        "explanation": "定位第四段：「Cleaning costs were higher than expected.」同段還提到衣服被弄壞、有人久久不還。會員人數其實有九千名（第五段），所以選項 A 錯。"
+      },
+      {
+        "q": "Why did Peter Yang think renting was a good business?",
+        "options": [
+          "He wanted to sell his own factory.",
+          "He believed people would stop wearing suits.",
+          "He saw unsold clothes and workers with small budgets.",
+          "He wanted young workers to spend more money."
+        ],
+        "answer": 2,
+        "explanation": "定位第三段：他在工廠看到大量做出來卻賣不掉的品項，又看到年輕上班族「wanted variety at work, but their budgets were small」，兩邊的問題租借都能解決，所以他說 a fair answer for both sides。"
+      },
+      {
+        "q": "What can be inferred about the people who dislike the service?",
+        "options": [
+          "They care about fit and about wearing another person's clothes.",
+          "They think the monthly fee is too low.",
+          "They prefer to rent clothes from a foreign company.",
+          "They believe office workers should not wear suits."
+        ],
+        "answer": 0,
+        "explanation": "定位最後一段：反對的人說借來的衣服 never fit perfectly，也不喜歡穿陌生人穿過的東西。可推論他們在意的是合身度和衛生感受。費用太低、外國公司文中都沒提到。"
+      }
+    ]
+  }
+]

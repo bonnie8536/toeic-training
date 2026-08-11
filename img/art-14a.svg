@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="Employee turnover cost analysis">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <!-- 旋轉門概念:進出箭頭 -->
+  <circle cx="200" cy="150" r="92" fill="none" stroke="#9db8cc" stroke-width="8"/>
+  <path d="M200 58 a92 92 0 0 1 80 46" fill="none" stroke="#0b72c4" stroke-width="8" stroke-linecap="round"/>
+  <path d="M272 92 l16 22 l-28 6 z" fill="#0b72c4"/>
+  <path d="M200 242 a92 92 0 0 1 -80 -46" fill="none" stroke="#c94040" stroke-width="8" stroke-linecap="round"/>
+  <path d="M128 208 l-16 -22 l28 -6 z" fill="#c94040"/>
+  <circle cx="200" cy="128" r="20" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M180 176 q20 -22 40 0 l-3 20 h-34 z" fill="#404040"/>
+  <!-- 成本堆疊柱 -->
+  <rect x="400" y="200" width="60" height="60" fill="#9fd0f5"/>
+  <rect x="400" y="160" width="60" height="40" fill="#0b72c4"/>
+  <rect x="480" y="170" width="60" height="90" fill="#ffd964"/>
+  <rect x="480" y="120" width="60" height="50" fill="#e8890c"/>
+  <rect x="560" y="140" width="60" height="120" fill="#f0b3b3"/>
+  <rect x="560" y="70" width="60" height="70" fill="#c94040"/>
+  <line x1="380" y1="260" x2="660" y2="260" stroke="#404040" stroke-width="4"/>
+  <!-- 錢幣 -->
+  <ellipse cx="710" cy="240" rx="30" ry="10" fill="#e8890c"/>
+  <ellipse cx="710" cy="226" rx="30" ry="10" fill="#ffd964"/>
+  <ellipse cx="710" cy="212" rx="30" ry="10" fill="#e8890c"/>
+  <text x="710" y="196" font-family="Arial" font-size="24" font-weight="bold" fill="#b05e0a" text-anchor="middle">$</text>
+</svg>

@@ -1,0 +1,182 @@
+[
+  {
+    "id": "art-10a",
+    "title": "The Rainy Day Discount",
+    "titleZh": "雨天折扣",
+    "category": "餐飲",
+    "level": "初級 (TOEIC 400-550)",
+    "readTime": 2,
+    "illustrationIdea": "A small noodle shop on a rainy street, with a rainy-day discount poster in the front window and smiling customers shaking their wet umbrellas.",
+    "paragraphs": [
+      {
+        "en": "Ms. Kuo owns a small noodle shop in Taipei. The shop is called Green Bowl. On sunny days, many [[customers]] come in. But on rainy days, the shop is almost empty. Ms. Kuo was worried about her [[business]].",
+        "zh": "郭小姐在台北開了一家小麵店，店名叫「綠碗」。天氣好的時候，很多顧客會上門。但是一到下雨天，店裡幾乎沒有人。郭小姐很擔心自己的生意。"
+      },
+      {
+        "en": "One morning, a [[staff]] member had an idea. Her name was Vicky. She wanted to [[offer]] a [[discount]] on rainy days. Ms. Kuo was not sure at first. She did not want to lose money. But she decided to try it for one month.",
+        "zh": "有一天早上，一位員工想到一個點子。她叫 Vicky。她想在下雨天提供折扣。郭小姐一開始不太確定，她不想賠錢。但她決定先試一個月看看。"
+      },
+      {
+        "en": "Vicky made a [[poster]] for the front window. It said twenty percent off on rainy days. She also put the news online. Soon many people knew about the discount.",
+        "zh": "Vicky 做了一張海報貼在店門口的櫥窗上。上面寫著雨天打八折。她也把這個消息放到網路上。很快地，很多人都知道了這個折扣。"
+      },
+      {
+        "en": "The next rainy week was very busy. Students came after class. Office workers came for lunch. People said the hot soup was perfect for a wet day. The kitchen got many [[orders]] at once. In the end, [[sales]] went up by forty percent.",
+        "zh": "接下來下雨的那一週非常忙。學生下課後跑來吃，上班族中午也來吃午餐。大家說熱湯很適合濕答答的天氣。廚房一下子接到很多訂單。最後，銷售額成長了四成。"
+      },
+      {
+        "en": "Ms. Kuo also [[noticed]] something else. Many new guests became [[regular]] customers. They came back on sunny days too. Now the shop makes more [[profit]] every month. Ms. Kuo says rainy days are now good days.",
+        "zh": "郭小姐還注意到另一件事。很多新客人變成了常客，他們晴天也會回來。現在店裡每個月賺到更多利潤。郭小姐說，現在下雨天反而是好日子。"
+      }
+    ],
+    "vocab": [
+      { "word": "customers", "base": "customer", "pos": "n.", "hint": "people who buy food or goods from a shop", "zh": "顧客" },
+      { "word": "business", "base": "business", "pos": "n.", "hint": "the job of selling goods or a service for money", "zh": "生意；公司" },
+      { "word": "staff", "base": "staff", "pos": "n.", "hint": "all the people who have a job in one company", "zh": "員工；全體職員" },
+      { "word": "offer", "base": "offer", "pos": "v.", "hint": "to tell someone you are ready to give something", "zh": "提供" },
+      { "word": "discount", "base": "discount", "pos": "n.", "hint": "money taken off the normal price", "zh": "折扣" },
+      { "word": "poster", "base": "poster", "pos": "n.", "hint": "a large piece of paper with words or pictures on it", "zh": "海報" },
+      { "word": "orders", "base": "order", "pos": "n.", "hint": "requests for food or goods that a shop must fill", "zh": "訂單；點餐" },
+      { "word": "sales", "base": "sale", "pos": "n.", "hint": "the total money a company gets from its customers", "zh": "銷售額" },
+      { "word": "noticed", "base": "notice", "pos": "v.", "hint": "saw or understood something new", "zh": "注意到" },
+      { "word": "regular", "base": "regular", "pos": "adj.", "hint": "coming back again and again", "zh": "固定的；常來的" },
+      { "word": "profit", "base": "profit", "pos": "n.", "hint": "the money left after all costs are paid", "zh": "利潤" }
+    ],
+    "questions": [
+      {
+        "q": "What is the article mainly about?",
+        "options": [
+          "A small idea brought more customers to a shop.",
+          "Rain is bad for every shop in Taipei.",
+          "Ms. Kuo wanted to sell her noodle shop.",
+          "Vicky opened a new shop near Green Bowl."
+        ],
+        "answer": 0,
+        "explanation": "主旨題。全文從第二段的點子講到第五段的結果，重點是一個小折扣點子救了生意。"
+      },
+      {
+        "q": "What did Vicky make for the front window?",
+        "options": [
+          "A new menu",
+          "A raincoat",
+          "A poster",
+          "A photo of Ms. Kuo"
+        ],
+        "answer": 2,
+        "explanation": "細節題。第三段第一句：Vicky made a poster for the front window."
+      },
+      {
+        "q": "Why was Ms. Kuo not sure about the idea at first?",
+        "options": [
+          "She did not like rainy days.",
+          "She was afraid of losing money.",
+          "She wanted to close the shop.",
+          "She wanted to raise the price."
+        ],
+        "answer": 1,
+        "explanation": "細節題。第二段：He did not want to lose money."
+      },
+      {
+        "q": "What will Ms. Kuo probably do next month?",
+        "options": [
+          "Close the shop on rainy days.",
+          "Ask Vicky to leave the shop.",
+          "Stop selling hot soup.",
+          "Keep the rainy day discount."
+        ],
+        "answer": 3,
+        "explanation": "推論題。第二段她只打算先試一個月，第四、五段訂單和利潤都變好，可以推出她會繼續這個雨天折扣。"
+      }
+    ]
+  },
+  {
+    "id": "art-10b",
+    "title": "My Desk Neighbor",
+    "titleZh": "我的鄰座同事",
+    "category": "職場",
+    "level": "初級 (TOEIC 400-550)",
+    "readTime": 2,
+    "illustrationIdea": "Two office workers at neighboring desks late at night, checking a printed report together under one desk lamp.",
+    "paragraphs": [
+      {
+        "en": "I work at a travel company in Taichung. Last year, a new [[co-worker]] sat next to me. His name is Andy. Andy is friendly, but he talks very loudly. He was on the phone all day.",
+        "zh": "我在台中一家旅行社上班。去年，一位新同事坐到我旁邊。他叫 Andy。Andy 人很友善，但是講話很大聲。他一整天都在講電話。"
+      },
+      {
+        "en": "At first, I was not happy at all. I could not [[focus]] on my work. Andy also ate snacks loudly at his desk. One day, I asked my [[manager]] for a new seat. She told me the office had no space.",
+        "zh": "一開始，我一點也不開心。我沒辦法專心工作。Andy 在座位上吃零食也吃得很大聲。有一天，我去找主管換位子。她跟我說辦公室沒有空位了。"
+      },
+      {
+        "en": "Then something happened in March. I made a big [[mistake]] in a [[report]]. I put the wrong numbers in the [[budget]] table. Our [[client]] would read the file the next morning. The [[deadline]] was only ten hours away.",
+        "zh": "後來，三月發生了一件事。我在一份報告裡出了大錯。我把預算表的數字打錯了。客戶隔天早上就會看到那份檔案。距離截止時間只剩十個小時。"
+      },
+      {
+        "en": "Andy heard me and turned around. He stayed late and checked every page with me. We found all the wrong numbers by nine o'clock. He never told anyone about my problem. Before he left, he just smiled at me.",
+        "zh": "Andy 聽到了，轉過頭來。他留下來加班，陪我一頁一頁檢查。我們在九點以前找出所有錯的數字。他從來沒有跟任何人提起我的問題。離開前，他只是對我笑了一下。"
+      },
+      {
+        "en": "Now we work on the same [[project]] every week. We share one [[schedule]] and help each other. Our [[team]] leader says we are a great pair. I still hear Andy's loud voice all day. But now the noise makes me smile.",
+        "zh": "現在我們每週一起做同一個專案。我們共用一份行程表，互相幫忙。我們的組長說我們是很好的搭檔。我還是整天聽到 Andy 的大嗓門。但現在這個聲音會讓我笑出來。"
+      }
+    ],
+    "vocab": [
+      { "word": "co-worker", "base": "co-worker", "pos": "n.", "hint": "a person who has a job at the same company as you", "zh": "同事" },
+      { "word": "focus", "base": "focus", "pos": "v.", "hint": "to give all your mind to one thing", "zh": "專心；專注" },
+      { "word": "manager", "base": "manager", "pos": "n.", "hint": "the person who leads a team at a company", "zh": "主管；經理" },
+      { "word": "mistake", "base": "mistake", "pos": "n.", "hint": "something done in a wrong way", "zh": "錯誤" },
+      { "word": "report", "base": "report", "pos": "n.", "hint": "a written paper that gives facts about a job", "zh": "報告" },
+      { "word": "budget", "base": "budget", "pos": "n.", "hint": "a plan for the money a company will use", "zh": "預算" },
+      { "word": "client", "base": "client", "pos": "n.", "hint": "a person or company that pays you for a service", "zh": "客戶" },
+      { "word": "deadline", "base": "deadline", "pos": "n.", "hint": "the last time when a job must be finished", "zh": "截止期限" },
+      { "word": "project", "base": "project", "pos": "n.", "hint": "a planned piece of work with a goal and an end date", "zh": "專案" },
+      { "word": "schedule", "base": "schedule", "pos": "n.", "hint": "a plan that shows when things will happen", "zh": "行程表；時程" },
+      { "word": "team", "base": "team", "pos": "n.", "hint": "a group of people who do a job together", "zh": "團隊" }
+    ],
+    "questions": [
+      {
+        "q": "Why was the writer unhappy at first?",
+        "options": [
+          "Andy was often late for work.",
+          "Andy talked and ate loudly.",
+          "Andy took the writer's lunch.",
+          "Andy sat too far away."
+        ],
+        "answer": 1,
+        "explanation": "細節題。第一段說 Andy 講話很大聲，第二段說他還在座位上吃很吵的零食。"
+      },
+      {
+        "q": "What was wrong with the report?",
+        "options": [
+          "It was too short.",
+          "It had no title.",
+          "It went to the wrong client.",
+          "The numbers in the budget table were wrong."
+        ],
+        "answer": 3,
+        "explanation": "細節題。第三段：I put the wrong numbers in the budget table."
+      },
+      {
+        "q": "What can we learn about Andy?",
+        "options": [
+          "He is kind and helps his co-workers.",
+          "He likes to make trouble for others.",
+          "He does not care about his job.",
+          "He wants the writer's seat."
+        ],
+        "answer": 0,
+        "explanation": "推論題。第四段他留下來加班幫忙檢查，而且沒有跟別人說，可以推出他為人熱心又體貼。"
+      },
+      {
+        "q": "What is the article mainly about?",
+        "options": [
+          "How to write a good report.",
+          "Why an office needs a quiet room.",
+          "How a noisy neighbor became a good partner.",
+          "Why the writer changed jobs."
+        ],
+        "answer": 2,
+        "explanation": "主旨題。全文從第一、二段的不合，寫到第四、五段變成好搭檔，重點是這個轉變。"
+      }
+    ]
+  }
+]

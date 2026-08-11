@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="Customer service replying within one hour">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="246" width="800" height="54" fill="#dde7ee"/>
+  <!-- 大時鐘:一小時 -->
+  <circle cx="180" cy="150" r="78" fill="#fff" stroke="#404040" stroke-width="6"/>
+  <path d="M180 150 L180 88 A62 62 0 0 1 234 180 Z" fill="#e9f4fc"/>
+  <line x1="180" y1="150" x2="180" y2="92" stroke="#404040" stroke-width="6" stroke-linecap="round"/>
+  <line x1="180" y1="150" x2="228" y2="176" stroke="#0b72c4" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="180" cy="150" r="7" fill="#404040"/>
+  <!-- 耳機客服 -->
+  <circle cx="440" cy="128" r="26" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M412 126 a28 28 0 0 1 56 0" fill="none" stroke="#0b72c4" stroke-width="6"/>
+  <rect x="404" y="122" width="14" height="22" rx="6" fill="#0b72c4"/>
+  <rect x="462" y="122" width="14" height="22" rx="6" fill="#0b72c4"/>
+  <path d="M462 144 q10 14 -6 20" fill="none" stroke="#0b72c4" stroke-width="4"/>
+  <path d="M410 196 q30 -30 60 0 l-6 50 h-48 z" fill="#e8890c"/>
+  <!-- 訊息泡泡 -->
+  <path d="M560 78 h180 a10 10 0 0 1 10 10 v56 a10 10 0 0 1 -10 10 h-140 l-26 22 v-22 h-14 a10 10 0 0 1 -10 -10 v-56 a10 10 0 0 1 10 -10z" fill="#0b72c4"/>
+  <rect x="580" y="100" width="120" height="9" rx="4" fill="#fff"/>
+  <rect x="580" y="118" width="86" height="9" rx="4" fill="#9fd0f5"/>
+  <!-- 打勾 -->
+  <circle cx="690" cy="200" r="34" fill="#e8f4ea" stroke="#3a8a4d" stroke-width="4"/>
+  <path d="M672 200 l12 14 l24 -28" fill="none" stroke="#3a8a4d" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

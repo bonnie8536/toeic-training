@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A person entering the wrong meeting room">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="242" width="800" height="58" fill="#dde7ee"/>
+  <!-- 兩扇門 -->
+  <rect x="120" y="70" width="120" height="172" fill="#0b72c4"/>
+  <circle cx="222" cy="160" r="6" fill="#ffd964"/>
+  <rect x="140" y="88" width="80" height="20" rx="4" fill="#fff" opacity=".9"/>
+  <rect x="300" y="70" width="120" height="172" fill="#095d9f"/>
+  <circle cx="402" cy="160" r="6" fill="#ffd964"/>
+  <rect x="320" y="88" width="80" height="20" rx="4" fill="#fff" opacity=".9"/>
+  <!-- 走進去的人(在右門) -->
+  <circle cx="470" cy="140" r="20" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M450 190 q20 -22 40 0 l-5 52 h-30 z" fill="#e8890c"/>
+  <text x="512" y="120" font-family="Arial" font-size="42" font-weight="bold" fill="#c94040">?</text>
+  <!-- 會議桌人影 -->
+  <ellipse cx="660" cy="200" rx="110" ry="26" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <circle cx="600" cy="160" r="16" fill="#fff" stroke="#404040" stroke-width="3.5"/>
+  <path d="M586 196 q14 -16 28 0 z" fill="#0b72c4"/>
+  <circle cx="660" cy="150" r="16" fill="#fff" stroke="#404040" stroke-width="3.5"/>
+  <path d="M646 186 q14 -16 28 0 z" fill="#3a8a4d"/>
+  <circle cx="720" cy="160" r="16" fill="#fff" stroke="#404040" stroke-width="3.5"/>
+  <path d="M706 196 q14 -16 28 0 z" fill="#404040"/>
+</svg>

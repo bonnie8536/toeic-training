@@ -1,0 +1,238 @@
+[
+  {
+    "id": "art-13a",
+    "title": "Why the Cheapest Supplier Was Not the Cheapest",
+    "titleZh": "最低報價的供應商，為什麼反而最貴",
+    "category": "商業",
+    "level": "中高級 (TOEIC 650-800)",
+    "readTime": 4,
+    "illustrationIdea": "A purchasing manager alone in an office at night, two columns of numbers glowing on his monitor, a slightly bent steel tool handle lying on the desk beside a stack of shipping documents.",
+    "paragraphs": [
+      {
+        "en": "Kettleby Tools had been buying steel handles from the same [[supplier]] for nineteen years when the price of metal jumped and the purchasing department was told to find savings. Three companies submitted [[bids]]. The lowest, from a firm called Vessel Metals, came in eighteen percent below the others. Ray Okafor, who had run purchasing for two years, signed the [[contract]] the following week and was praised for it at the [[quarterly]] meeting.",
+        "zh": "凱托比工具向同一家供應商採購鋼製把手已經十九年，直到金屬價格大漲，採購部門被要求想辦法省錢。三家公司送來報價，其中最低的一家叫維瑟金屬，比其他兩家便宜了百分之十八。管採購兩年的雷．奧卡佛隔週就簽了約，還在季會上因此受到表揚。"
+      },
+      {
+        "en": "The first [[shipment]] arrived four days late, which nobody noticed. The second came nine days late. By the third, the assembly plant had quietly learned to plan around a company that never quite met a [[deadline]]. Workers put in [[overtime]] on Saturdays to keep production from slipping, and because that money came out of the plant's [[budget]] rather than Ray's, the two figures sat in separate reports for almost a year.",
+        "zh": "第一批貨晚了四天到，沒人注意到。第二批晚了九天。到了第三批，組裝廠已經默默學會替一家從來沒真正準時過的公司預留緩衝。工人週六加班趕工，才沒讓生產進度往後拖；而這筆錢出自工廠的預算、不是雷的預算，兩個數字就這樣分別待在不同的報表裡將近一年。"
+      },
+      {
+        "en": "Then came the [[quality]] problems. About one handle in twenty arrived slightly bent, which meant every piece had to be checked by hand before it went onto a tool. Vessel Metals never argued about returns; it issued a [[refund]] each time and sent [[replacement]] parts without complaint. The replacements, however, took three weeks to cross the border, and during those weeks unfinished products filled the [[warehouse]] instead of moving out to buyers.",
+        "zh": "接著是品質問題。大約每二十支把手就有一支微微彎曲，這代表每一支在裝上工具之前都得用手檢查過。維瑟金屬從不為退貨爭執，每次都退款，也照樣補寄替換零件。只是那些替換件要花三週才過得了邊境，這幾週裡，未完成的產品堆滿倉庫，出不到買家手上。"
+      },
+      {
+        "en": "The damage that mattered most appeared far from the factory. A hardware chain that accounted for a fifth of annual [[revenue]] received two late [[deliveries]] in a row and canceled its spring order without discussion. [[Complaints]] about bent handles reached the service desk, and [[warranty]] claims rose for the first time in six years. Reputation, Ray later admitted, had never appeared anywhere in his comparison.",
+        "zh": "真正要命的損害發生在離工廠很遠的地方。一家佔年營收五分之一的五金連鎖，連續兩次收到遲交的貨，二話不說取消了春季訂單。把手彎曲的客訴進到客服櫃檯，保固申請也六年來第一次上升。雷後來承認，他當初做的那份比較表裡，從頭到尾沒有「商譽」這一欄。"
+      },
+      {
+        "en": "In February he spent a weekend on a different set of numbers, adding the overtime, the [[inspection]] hours, the [[freight]] on returned parts, and the order that never came back. The cheap offer had saved the company about 240,000 dollars in two years. Everything it had set in motion cost roughly 1.1 million.",
+        "zh": "二月，他花了一個週末算另一組數字，把加班費、檢驗工時、退貨的運費，還有那張再也沒回來的訂單全都加進去。當初那個便宜的報價，兩年下來替公司省了大約二十四萬美元。而它一路引發的其他一切，花掉大約一百一十萬。"
+      },
+      {
+        "en": "Kettleby now scores every offer on four things instead of one: price, on-time delivery record, defect rate, and what other buyers say when someone calls them. Brantwood Metal, the original supplier, was hired back at a price four percent above its old one, and Ray [[negotiated]] a penalty that applies for every week a shipment arrives late.",
+        "zh": "現在凱托比評一份報價不再只看一件事，而是看四件：價格、準時交貨紀錄、不良率，還有打電話問其他買家會聽到什麼。原本的供應商布蘭伍德金屬被請了回來，價格比舊約高百分之四；雷還談成一條罰則：貨每晚一週，就罰供應商一筆錢。"
+      },
+      {
+        "en": "Ray keeps the old file in his desk and shows it to everyone who joins his department. The figure on a quotation, he tells them, is a price. What the company actually pays is settled over the next two years, by people in other buildings, in [[expenses]] that arrive under other names.",
+        "zh": "雷把那份舊檔案收在抽屜裡，部門每來一個新人他就拿出來給對方看。他說，報價單上的那個數字只是價格；公司真正付出多少，是接下來兩年由其他大樓裡的人決定的，以各種不同名目的支出出現。"
+      }
+    ],
+    "vocab": [
+      {"word": "supplier", "base": "supplier", "pos": "n.", "hint": "a business that regularly provides goods or materials to another company", "zh": "供應商"},
+      {"word": "bids", "base": "bid", "pos": "n.", "hint": "formal prices offered by companies hoping to win a job or an order", "zh": "投標報價"},
+      {"word": "contract", "base": "contract", "pos": "n.", "hint": "a written legal agreement covering work, goods, or payment", "zh": "合約"},
+      {"word": "quarterly", "base": "quarterly", "pos": "adj.", "hint": "happening once every three months", "zh": "每季的"},
+      {"word": "shipment", "base": "shipment", "pos": "n.", "hint": "a load of goods sent together from one place to another", "zh": "一批貨、出貨"},
+      {"word": "deadline", "base": "deadline", "pos": "n.", "hint": "the latest time by which something must be finished", "zh": "期限"},
+      {"word": "overtime", "base": "overtime", "pos": "n.", "hint": "extra hours worked beyond the normal schedule, usually at higher pay", "zh": "加班"},
+      {"word": "budget", "base": "budget", "pos": "n.", "hint": "a plan for how much money may be spent in a given period", "zh": "預算"},
+      {"word": "quality", "base": "quality", "pos": "n.", "hint": "how good or bad something is when measured against what buyers expect", "zh": "品質"},
+      {"word": "refund", "base": "refund", "pos": "n.", "hint": "money given back to a buyer when goods are returned or a service fails", "zh": "退款"},
+      {"word": "replacement", "base": "replacement", "pos": "n.", "hint": "a new part sent to take the place of one that is broken or wrong", "zh": "替換件"},
+      {"word": "warehouse", "base": "warehouse", "pos": "n.", "hint": "a large building where goods are kept before being sold or sent out", "zh": "倉庫"},
+      {"word": "revenue", "base": "revenue", "pos": "n.", "hint": "the total money a business takes in from what it sells", "zh": "營收"},
+      {"word": "deliveries", "base": "delivery", "pos": "n.", "hint": "acts of bringing goods to the buyer's location", "zh": "交貨、送貨"},
+      {"word": "Complaints", "base": "complaint", "pos": "n.", "hint": "statements that a customer is not satisfied with a product or service", "zh": "客訴、抱怨"},
+      {"word": "warranty", "base": "warranty", "pos": "n.", "hint": "a written promise to repair or exchange a product within a set period", "zh": "保固"},
+      {"word": "inspection", "base": "inspection", "pos": "n.", "hint": "the act of looking at something carefully to find faults", "zh": "檢驗"},
+      {"word": "freight", "base": "freight", "pos": "n.", "hint": "goods carried in large amounts by truck, ship, or plane, or the cost of carrying them", "zh": "貨運、運費"},
+      {"word": "negotiated", "base": "negotiate", "pos": "v.", "hint": "discussed terms formally in order to reach an agreement", "zh": "談成、協商"},
+      {"word": "expenses", "base": "expense", "pos": "n.", "hint": "sums of money a business must pay out in order to operate", "zh": "支出、費用"}
+    ],
+    "questions": [
+      {
+        "q": "What is the main point of the article?",
+        "options": [
+          "A low price from a supplier hid much larger costs that appeared elsewhere in the company.",
+          "Buying metal parts from abroad is always more expensive than buying them locally.",
+          "Factories should store more spare parts so that late shipments cause no trouble.",
+          "Purchasing departments should be combined with production departments."
+        ],
+        "answer": 0,
+        "explanation": "主旨題。第五段的總帳（省二十四萬、代價一百一十萬）與最後一段「報價單上的數字只是價格」共同收束全文：低價本身沒錯，錯在其他部門承擔的隱藏成本沒被算進去。B、C、D 都只是文中細節或文章沒說過的推廣。"
+      },
+      {
+        "q": "Why did the extra weekend labor cost go unnoticed for so long?",
+        "options": [
+          "The plant manager decided not to report it to anyone.",
+          "Workers were not actually paid for the hours they worked.",
+          "It was recorded in the plant's budget rather than in Ray's.",
+          "It was much smaller than the savings on the steel handles."
+        ],
+        "answer": 2,
+        "explanation": "細節題。定位在第二段末：加班費出自工廠的預算而不是雷的預算，兩個數字分別待在不同報表裡將近一年，所以沒人把它們連在一起看。"
+      },
+      {
+        "q": "What did the hardware chain do after receiving two late deliveries?",
+        "options": [
+          "It asked Kettleby Tools for a larger discount.",
+          "It canceled its spring order without discussion.",
+          "It began inspecting every handle by hand.",
+          "It filed a warranty claim for the bent handles."
+        ],
+        "answer": 1,
+        "explanation": "細節題。定位在第四段第二句：佔年營收五分之一的五金連鎖連續兩次收到遲交的貨，直接取消春季訂單。C 是凱托比自己廠內的做法（第三段），D 是消費者端的保固申請。"
+      },
+      {
+        "q": "What can be inferred about Vessel Metals from the article?",
+        "options": [
+          "It refused to take responsibility for the parts that were bent.",
+          "It charged higher freight costs than any other supplier.",
+          "Its factory was closer to Kettleby Tools than Brantwood Metal was.",
+          "It cooperated readily on returns but was slow to put problems right."
+        ],
+        "answer": 3,
+        "explanation": "推論題。第三段寫維瑟金屬「從不為退貨爭執，每次都退款，也二話不說補寄」，態度是配合的；但補寄要三週才到，凱托比因此卡貨。兩件事合起來可推得「態度好、速度慢」。A 與原文直接矛盾。"
+      },
+      {
+        "q": "What did Kettleby change about the way it chooses a supplier?",
+        "options": [
+          "It now requires the assembly plant to approve every contract it signs.",
+          "It now scores an offer on delivery record and defect rate as well as price.",
+          "It now buys steel handles only from suppliers based inside the country.",
+          "It now accepts the lowest bid only after a trial order has been shipped."
+        ],
+        "answer": 1,
+        "explanation": "細節題。定位在第六段：凱托比現在評一份報價看四件事——價格、準時交貨紀錄、不良率，以及打電話問其他買家會聽到什麼。A、C、D 三種做法文中都沒有提到。"
+      }
+    ]
+  },
+  {
+    "id": "art-13b",
+    "title": "The Store That Trains Its Competitors",
+    "titleZh": "那家訓練同業的連鎖店",
+    "category": "商業",
+    "level": "中高級 (TOEIC 650-800)",
+    "readTime": 4,
+    "illustrationIdea": "A Saturday morning classroom above a bakery-supply store: thirty adults at folding tables taking notes while the owner writes bread costs on a whiteboard, sacks of flour stacked along the back wall.",
+    "paragraphs": [
+      {
+        "en": "Nadia Ostrander owns eleven stores that sell flour, ovens, and packaging to bakeries across three states. Every spring she opens a classroom above her Dover Street [[branch]] and teaches thirty strangers, free of charge, how to run a small bakery: how to price a loaf, how to read a [[lease]], how to pass a health check. Most of them mean to open shops of their own. Her [[competitors]] call the program the strangest thing in the industry.",
+        "zh": "娜迪雅．奧斯川德擁有十一家店，把麵粉、烤箱和包材賣給三個州的烘焙坊。每年春天，她在多佛街分店樓上開一間教室，免費教三十個素不相識的人怎麼經營一家小麵包店：怎麼替一條吐司訂價、怎麼看懂租約、怎麼通過衛生檢查。這些人多半打算開自己的店。同業說，這個計畫是業界最怪的一件事。"
+      },
+      {
+        "en": "The course, known as Saturday School, runs for six [[sessions]]. Two are taught by Nadia herself; the rest by her store managers, an accountant she pays by the hour, and a former [[inspector]] who explains which [[licenses]] a new shop must hold before it can sell anything. About thirty people [[enroll]] each year, and roughly a third of them open a business.",
+        "zh": "這門課大家都叫它「週六學校」，一共六堂。其中兩堂由娜迪雅親自上，其餘交給她的店長、一位按時計酬的會計，還有一位前稽查員，講解一家新店開賣之前得先辦哪些執照。每年大約三十人報名，最後大約三分之一真的開了店。"
+      },
+      {
+        "en": "What her competitors see as generosity, Nadia treats as a calculation. A bakery that opens needs an oven, mixing machines, and forty kilograms of flour a week for as long as it stays open. A single [[account]] like that is worth more over five years than the whole school costs. Around seven out of ten graduates who open shops buy their [[supplies]] from her, at ordinary [[wholesale]] prices, with no special [[discount]] attached.",
+        "zh": "同業眼中的慷慨，娜迪雅當成一筆帳來算。一家開起來的麵包店需要烤箱、攪拌機，而且只要還在營業，每週就得進四十公斤麵粉。這樣一個客戶五年下來的價值，超過整間學校的成本。開店的學員裡大約十個有七個向她進貨，而且是照一般批發價，沒有任何特別折扣。"
+      },
+      {
+        "en": "The second return took her longer to notice. Four of her eleven store managers first walked in as students, and so did most of the [[staff]] who now handle telephone orders. Someone who has spent six weekends learning the trade knows what a caller means by wet dough. Saturday School has become the cheapest way she has ever found to [[recruit]], costing far less per person than the [[advertising]] she once ran in trade magazines.",
+        "zh": "第二種回報她花了比較久才看出來。十一位店長裡有四位當初是以學員身分走進來的，現在負責接電話訂單的人也多半如此。花過六個週末學這一行的人，一聽就知道電話那頭說「麵團偏濕」是什麼意思。週六學校成了她找人最便宜的管道，平均一個人的成本遠低於她過去在同業雜誌上的廣告花費。"
+      },
+      {
+        "en": "The [[strategy]] was tested three years ago, when a national [[chain]] opened a warehouse twenty minutes away and priced its flour below hers, accepting a thinner [[profit]] to win the region. Nadia lost a few customers that year, mostly larger ones, but the small bakeries stayed. Several owners said the same thing in different words: they would not leave the company that taught them to survive their first winter over eight cents a kilogram.",
+        "zh": "這套做法在三年前受到考驗。一家全國連鎖在二十分鐘車程外開了倉庫，麵粉價格壓在她之下，寧可少賺也要拿下這一區。娜迪雅第一年流失了幾個客戶，多半是規模比較大的那種，但小麵包店留了下來。好幾位老闆用不同的說法講了同一件事：教會他們撐過第一個冬天的那家公司，他們不會為了一公斤八分錢就換掉。"
+      },
+      {
+        "en": "None of this makes the school a sure thing. A quarter of the graduates who open shops close within two years, and Nadia writes off what they owe. One former student now runs a supply business of her own forty miles north, taking [[orders]] that would otherwise be Nadia's. Nadia still invites her to speak to every new class, which the staff find hard to explain.",
+        "zh": "這些都不表示這間學校穩賺。開店的學員裡有四分之一撐不過兩年就收掉，欠的貨款娜迪雅直接認賠。有一位以前的學生，現在在北邊四十英里外自己開了同樣的供應生意，接走本來會是娜迪雅的訂單。娜迪雅照樣每年請她回來對新班級演講，店裡的員工不太知道該怎麼解釋這件事。"
+      },
+      {
+        "en": "Her own explanation is short. A supply business does not grow by taking [[clients]] from the store down the road; it grows when more bakeries exist. Teaching people to open them is, in her view, her cheapest [[investment]], one that happens to be paid back by people who are, on paper, her rivals.",
+        "zh": "她自己的解釋很短：供應生意不是靠搶走隔壁那條街的客戶長大的，是烘焙坊變多才長大的。教人開店，在她看來是她能做的最便宜的投資，只不過還錢的人，名義上都是她的競爭對手。"
+      }
+    ],
+    "vocab": [
+      {"word": "branch", "base": "branch", "pos": "n.", "hint": "a single local shop or office that is one part of a larger company", "zh": "分店、分公司"},
+      {"word": "lease", "base": "lease", "pos": "n.", "hint": "a legal agreement to rent a building or vehicle for a fixed period", "zh": "租約"},
+      {"word": "competitors", "base": "competitor", "pos": "n.", "hint": "other businesses trying to sell to the same buyers", "zh": "同業、對手"},
+      {"word": "sessions", "base": "session", "pos": "n.", "hint": "periods of time set aside for classes, meetings, or other activities", "zh": "堂、場次"},
+      {"word": "inspector", "base": "inspector", "pos": "n.", "hint": "an official whose job is to visit places and check that rules are followed", "zh": "稽查員"},
+      {"word": "licenses", "base": "license", "pos": "n.", "hint": "official papers that allow a person or business to do something legally", "zh": "執照"},
+      {"word": "enroll", "base": "enroll", "pos": "v.", "hint": "to sign up officially as a member of a class or program", "zh": "報名、註冊"},
+      {"word": "account", "base": "account", "pos": "n.", "hint": "a regular business customer, or the buying arrangement a firm has with one", "zh": "客戶、往來戶頭"},
+      {"word": "supplies", "base": "supply", "pos": "n.", "hint": "materials and goods that a business needs in order to operate", "zh": "物料、貨品"},
+      {"word": "wholesale", "base": "wholesale", "pos": "adj.", "hint": "relating to selling goods in large amounts to shops rather than to the public", "zh": "批發的"},
+      {"word": "discount", "base": "discount", "pos": "n.", "hint": "an amount taken off the normal price", "zh": "折扣"},
+      {"word": "staff", "base": "staff", "pos": "n.", "hint": "the group of people employed by an organization", "zh": "員工"},
+      {"word": "recruit", "base": "recruit", "pos": "v.", "hint": "to find and take on new workers", "zh": "招募"},
+      {"word": "advertising", "base": "advertising", "pos": "n.", "hint": "paid messages used to make products or services known to the public", "zh": "廣告"},
+      {"word": "strategy", "base": "strategy", "pos": "n.", "hint": "a long-term plan for reaching an important business goal", "zh": "策略"},
+      {"word": "chain", "base": "chain", "pos": "n.", "hint": "a group of shops or restaurants owned by the same company", "zh": "連鎖企業"},
+      {"word": "profit", "base": "profit", "pos": "n.", "hint": "the money a business keeps after all its costs are paid", "zh": "利潤"},
+      {"word": "orders", "base": "order", "pos": "n.", "hint": "requests from customers for goods to be sent to them", "zh": "訂單"},
+      {"word": "clients", "base": "client", "pos": "n.", "hint": "people or companies that pay a business for its goods or services", "zh": "客戶"},
+      {"word": "investment", "base": "investment", "pos": "n.", "hint": "money or effort put into something now in the hope of a return later", "zh": "投資"}
+    ],
+    "questions": [
+      {
+        "q": "What is the main idea of the article?",
+        "options": [
+          "Small bakeries rarely survive unless someone gives them free training.",
+          "Nadia's free course creates future customers and workers, which is why it makes business sense.",
+          "National chains cannot compete with local supply stores on price.",
+          "Teaching competitors is a mistake that most store owners come to regret."
+        ],
+        "answer": 1,
+        "explanation": "主旨題。第三段（開店的學員成為批發客戶）與第四段（學員成為員工來源）說明課程的算盤，第七段收尾「烘焙坊變多，供應生意才長大」。A、C、D 都超出文章說過的範圍，D 更與第六、七段的立場相反。"
+      },
+      {
+        "q": "Who teaches most of the Saturday School classes?",
+        "options": [
+          "Nadia Ostrander, who runs all six sessions herself.",
+          "Volunteers sent by the local bakers' association.",
+          "Owners of the competing supply stores nearby.",
+          "Her store managers, a paid accountant, and a former inspector."
+        ],
+        "answer": 3,
+        "explanation": "細節題。定位在第二段：六堂課裡娜迪雅只親自上兩堂，其餘由店長、按時計酬的會計，以及一位退休稽查員負責。"
+      },
+      {
+        "q": "What happened when the national chain opened nearby and sold flour more cheaply?",
+        "options": [
+          "Most of the small bakeries kept buying from Nadia.",
+          "Nadia lowered her wholesale prices to match the chain.",
+          "Saturday School had to be suspended for a year.",
+          "Half of Nadia's store managers left for the new company."
+        ],
+        "answer": 0,
+        "explanation": "細節題。定位在第五段：第一年流失的多半是規模較大的客戶，小麵包店留了下來，理由是不願意為了一公斤八分錢離開教過他們的公司。"
+      },
+      {
+        "q": "Why does Nadia most likely keep inviting a former student who now competes with her?",
+        "options": [
+          "The woman pays a fee for the chance to speak to the class.",
+          "No one else is available to teach that part of the course.",
+          "She believes that more bakeries opening helps her more than one rival hurts her.",
+          "The woman's business sells goods that Ostrander does not carry."
+        ],
+        "answer": 2,
+        "explanation": "推論題。第六段擺出「同業講師」這個矛盾，第七段給出解釋：生意是靠烘焙坊變多才長大的。把兩段合起來看，可推得她算的是整體市場，而不是單一對手的得失。A、B、D 文中都沒有依據。"
+      },
+      {
+        "q": "What happens when a bakery started by a graduate closes down?",
+        "options": [
+          "Nadia takes back the oven and the mixing machines she supplied.",
+          "Nadia asks the owner to repay the cost of the six-week course.",
+          "Nadia gives up the money the failed business still owes her.",
+          "Nadia offers the owner a job at the Dover Street branch."
+        ],
+        "answer": 2,
+        "explanation": "細節題。定位在第六段：開店的學員有四分之一撐不過兩年，欠下的貨款娜迪雅直接認賠。B 與第一段「免費上課」矛盾，A 與 D 文中都沒有依據。"
+      }
+    ]
+  }
+]

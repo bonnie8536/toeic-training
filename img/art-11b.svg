@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="Renting work clothes from a rack">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="248" width="800" height="52" fill="#dde7ee"/>
+  <!-- 吊衣桿 -->
+  <line x1="140" y1="80" x2="660" y2="80" stroke="#404040" stroke-width="7"/>
+  <line x1="180" y1="80" x2="180" y2="250" stroke="#9db8cc" stroke-width="6"/>
+  <line x1="620" y1="80" x2="620" y2="250" stroke="#9db8cc" stroke-width="6"/>
+  <!-- 掛的衣服 -->
+  <g>
+    <path d="M232 96 l30 -14 l30 14 l-10 96 h-40 z" fill="#0b72c4"/>
+    <path d="M244 82 a18 12 0 0 1 36 0" fill="none" stroke="#404040" stroke-width="3"/>
+    <path d="M312 96 l30 -14 l30 14 l-10 96 h-40 z" fill="#e8890c"/>
+    <path d="M324 82 a18 12 0 0 1 36 0" fill="none" stroke="#404040" stroke-width="3"/>
+    <path d="M392 96 l30 -14 l30 14 l-10 96 h-40 z" fill="#fff" stroke="#404040" stroke-width="3"/>
+    <path d="M404 82 a18 12 0 0 1 36 0" fill="none" stroke="#404040" stroke-width="3"/>
+    <path d="M472 96 l30 -14 l30 14 l-10 96 h-40 z" fill="#3a8a4d"/>
+    <path d="M484 82 a18 12 0 0 1 36 0" fill="none" stroke="#404040" stroke-width="3"/>
+    <path d="M552 96 l30 -14 l30 14 l-10 96 h-40 z" fill="#9db8cc"/>
+    <path d="M564 82 a18 12 0 0 1 36 0" fill="none" stroke="#404040" stroke-width="3"/>
+  </g>
+  <!-- 循環箭頭 -->
+  <path d="M700 150 a44 44 0 1 0 -20 -36" fill="none" stroke="#0b72c4" stroke-width="7"/>
+  <path d="M676 100 l6 26 l24 -12 z" fill="#0b72c4"/>
+</svg>

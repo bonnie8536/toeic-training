@@ -1,0 +1,221 @@
+[
+  {
+    "id": "art-12a",
+    "title": "The Office With No Fixed Seats",
+    "titleZh": "沒有固定座位的辦公室",
+    "category": "職場",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "An open-plan office early in the morning: a designer stands holding a laptop and scans a row of identical empty desks with no name tags, while a manager sits at a shared long table next to junior staff.",
+    "paragraphs": [
+      {
+        "en": "Kestrel Design employs forty people in Taipei. Last spring, the company removed every name tag from its desks. Nobody would have a fixed seat anymore. Staff could sit wherever they liked each morning. The office manager, Ruby Chen, called it a simple [[experiment]]. Most of her [[colleagues]] called it a terrible idea.",
+        "zh": "Kestrel Design 在台北有四十名員工。去年春天，公司把桌上所有的名牌都拿掉了。從此沒有人擁有固定座位。每天早上，員工想坐哪裡就坐哪裡。辦公室主任陳如冰把這件事說成一次簡單的實驗。她的同事大多認為這是個很糟的主意。"
+      },
+      {
+        "en": "The reason was money. Kestrel paid a high [[rent]] for its office floor, yet half the desks stood empty. Many designers worked from home on Mondays and Fridays. Ruby wanted to cut the office space by a third. The savings would pay for new [[equipment]] and a bigger training [[budget]].",
+        "zh": "原因是錢。Kestrel 為這層樓付出很高的租金，但有一半的桌子每天都空著。不少設計師週一和週五在家工作。如冰想把辦公空間縮減三分之一。省下來的錢可以拿去買新設備，也能撐起更多的教育訓練預算。"
+      },
+      {
+        "en": "The first month was messy. Some people arrived at seven just to claim a favorite seat. One senior designer hid his monitor in a cabinet every night. Teams that used to sit together were now spread across the room. [[Complaints]] reached Ruby almost daily. She began to think the plan had failed.",
+        "zh": "第一個月很混亂。有人七點就到，只為了搶到喜歡的位子。一位資深設計師每天晚上把自己的螢幕藏進櫃子裡。原本坐在一起的團隊，現在散落在辦公室各處。抱怨幾乎天天送到如冰面前。她開始覺得這個計畫已經失敗了。"
+      },
+      {
+        "en": "Then something unexpected happened. Because seats kept changing, staff met people they had never spoken to. The marketing team ended up beside the [[accounting]] department. A question that once took three emails was answered in a minute. Victor Lai, a junior designer, overheard a [[customer]] call by chance. The next day he rewrote a confusing order form.",
+        "zh": "接著，意外的事發生了。因為座位一直在換，員工遇到了從沒說過話的人。行銷團隊最後坐到了會計部門旁邊。過去要來回三封信才問得清楚的問題，現在一分鐘就有答案。資淺設計師賴維克偶然聽到一通客戶來電。隔天他就把一份讓人看不懂的訂購單改寫了。"
+      },
+      {
+        "en": "Ruby noticed another benefit that was less obvious. Managers no longer sat behind closed doors. They shared the same long tables as everyone else. Junior staff felt safer about raising problems early. The [[annual]] staff [[survey]] showed a clear rise in [[satisfaction]].",
+        "zh": "如冰還注意到另一個比較不明顯的好處。主管不再坐在關起門的辦公室裡。他們和所有人共用同樣的長桌。資淺的員工比較敢在問題還小的時候就講出來。年度員工問卷調查顯示，滿意度明顯上升。"
+      },
+      {
+        "en": "Not everyone was [[convinced]]. Three employees said they could not [[concentrate]] without a fixed desk. Kestrel's answer was practical. It built six quiet rooms that anyone could [[reserve]] [[in advance]]. A year later the firm signed a smaller [[lease]] and saved two million NT dollars. Ruby still keeps the old name tags in her drawer.",
+        "zh": "並不是每個人都被說服。三名員工表示，沒有固定座位他們無法專心。Kestrel 的處理方式很務實：蓋了六間安靜的小房間，任何人都可以事先預約。一年後，公司簽下坪數較小的租約，省下兩百萬台幣。如冰到現在還把舊名牌收在抽屜裡。"
+      }
+    ],
+    "vocab": [
+      { "word": "experiment", "base": "experiment", "pos": "n.", "hint": "a test done to find out whether an idea really works", "zh": "實驗；試驗" },
+      { "word": "colleagues", "base": "colleague", "pos": "n.", "hint": "people you work with at the same company", "zh": "同事" },
+      { "word": "rent", "base": "rent", "pos": "n.", "hint": "money paid regularly to use a building you do not own", "zh": "租金" },
+      { "word": "equipment", "base": "equipment", "pos": "n.", "hint": "the tools and machines needed for a particular job", "zh": "設備；器材" },
+      { "word": "budget", "base": "budget", "pos": "n.", "hint": "a plan for how much money can be spent", "zh": "預算" },
+      { "word": "Complaints", "base": "complaint", "pos": "n.", "hint": "statements that something is wrong or not good enough", "zh": "抱怨；投訴" },
+      { "word": "accounting", "base": "accounting", "pos": "n.", "hint": "the work of keeping records of money coming in and going out", "zh": "會計" },
+      { "word": "customer", "base": "customer", "pos": "n.", "hint": "a person who buys goods or services from a business", "zh": "顧客；客戶" },
+      { "word": "annual", "base": "annual", "pos": "adj.", "hint": "happening once every year", "zh": "年度的；每年的" },
+      { "word": "survey", "base": "survey", "pos": "n.", "hint": "a set of questions given to many people to collect opinions", "zh": "問卷調查" },
+      { "word": "satisfaction", "base": "satisfaction", "pos": "n.", "hint": "the good feeling you get when something meets your needs", "zh": "滿意；滿意度" },
+      { "word": "convinced", "base": "convince", "pos": "adj.", "hint": "made to believe that something is true or right", "zh": "被說服的；信服的" },
+      { "word": "concentrate", "base": "concentrate", "pos": "v.", "hint": "to give all your attention to one thing", "zh": "專心；專注" },
+      { "word": "reserve", "base": "reserve", "pos": "v.", "hint": "to arrange to keep something for your own use later", "zh": "預約；預留" },
+      { "word": "in advance", "base": "in advance", "pos": "phr.", "hint": "before a planned time or event", "zh": "事先；提前" },
+      { "word": "lease", "base": "lease", "pos": "n.", "hint": "a legal contract to use a building or car for a fixed period", "zh": "租約" }
+    ],
+    "questions": [
+      {
+        "q": "What is the main idea of the article?",
+        "options": [
+          "Kestrel Design moved its whole office to a cheaper city.",
+          "Removing fixed seats saved money and improved communication at Kestrel Design.",
+          "Most designers at Kestrel Design now work from home full time.",
+          "Companies should never change how a design team is seated."
+        ],
+        "answer": 1,
+        "explanation": "全文從第二段的省租金動機，走到第四、五段的跨部門溝通與滿意度上升，最後第六段以縮小租約收尾。主線就是「取消固定座位帶來省錢與溝通兩個結果」。選項 A、C 文中沒有；選項 D 與結局相反。"
+      },
+      {
+        "q": "Why did Ruby Chen want to remove the fixed seats?",
+        "options": [
+          "Employees had asked for more comfortable chairs.",
+          "The building owner refused to renew the contract.",
+          "The company paid high rent for desks that were often empty.",
+          "The marketing team needed a room of its own."
+        ],
+        "answer": 2,
+        "explanation": "定位第二段第一、二句：「The reason was money. Kestrel paid a high rent for its floor, yet half the desks stood empty.」動機是租金高但桌子空著。其他三個選項都是文中沒提到的原因。"
+      },
+      {
+        "q": "What happened during the first month of the change?",
+        "options": [
+          "Employees rushed in early for good seats, and one designer hid his monitor.",
+          "Nobody came into the office at all.",
+          "Complaints stopped after the first week.",
+          "Ruby put the name tags back on the desks."
+        ],
+        "answer": 0,
+        "explanation": "定位第三段：有人七點就到搶位子，資深設計師每晚把螢幕藏進櫃子。同段還說抱怨「almost daily」，所以選項 C 錯；名牌到最後仍收在抽屜裡（第六段），選項 D 錯。"
+      },
+      {
+        "q": "What does Victor Lai's story suggest about the new seating?",
+        "options": [
+          "Junior designers should be moved into the sales department.",
+          "Order forms are usually written by the accounting staff.",
+          "Listening to customer calls is against company rules.",
+          "Sitting near other teams can bring useful information."
+        ],
+        "answer": 3,
+        "explanation": "推論題。第四段說他「overheard a customer call by chance」，隔天就改寫了難懂的訂購單；重點在於換座位讓他接觸到平常聽不到的資訊。文中沒有任何調部門或違規的說法。"
+      },
+      {
+        "q": "What can be inferred from the six quiet rooms?",
+        "options": [
+          "The rooms were paid for out of the training budget.",
+          "The company solved the complaint instead of giving up the plan.",
+          "The rooms were built only for managers.",
+          "Fixed desks turned out to work better after all."
+        ],
+        "answer": 1,
+        "explanation": "推論題。第六段先寫三名員工無法專心，接著說公司的做法「practical」，蓋了可預約的安靜房間，然後仍簽下更小的租約。可見公司是解決問題而非放棄計畫。文中說房間是「anyone could reserve」，選項 C 錯。"
+      }
+    ]
+  },
+  {
+    "id": "art-12b",
+    "title": "Selling Ugly Vegetables",
+    "titleZh": "把醜蔬菜賣成熱銷商品",
+    "category": "零售",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "A cardboard box on a wooden kitchen table filled with bent carrots, a two-legged radish and a curved pumpkin, with a printed card on the open lid telling the story of each vegetable.",
+    "paragraphs": [
+      {
+        "en": "Every year farmers throw away tons of good food. The reason has nothing to do with taste. A carrot with two legs tastes like a straight one, but shoppers walk past it. Supermarkets [[reject]] vegetables that look odd. In central Taiwan, a farmer named Lin Ching-yu lost about a fifth of her [[harvest]] this way.",
+        "zh": "每年都有幾噸好好的食物被農民丟掉。原因跟味道一點關係也沒有。長成兩條腿的紅蘿蔔，吃起來和直的一樣，但消費者就是走過去不看它。超市會退掉外形怪的蔬菜。在台灣中部，一位叫林靜妤的農民，就這樣損失了大約五分之一的收成。"
+      },
+      {
+        "en": "In 2023 Lin met a young marketer called Ethan Ko. He offered a simple idea: sell the rejected vegetables online in boxes. Lin was doubtful. Her family had farmed the same land for three [[generations]] and had never sold direct to [[customers]]. Even so, she agreed to try fifty boxes.",
+        "zh": "二○二三年，靜妤認識了一位年輕的行銷人柯以森。他提出一個很簡單的想法：把被退掉的蔬菜裝箱，放到網路上賣。靜妤心裡存疑。她家在同一塊地上種了三代，從來沒有直接賣給消費者過。即使如此，她還是答應先試五十箱。"
+      },
+      {
+        "en": "The first boxes sold badly. The photos showed muddy vegetables on a grey table. The [[label]] read \"second-class produce,\" which sounded almost like a [[warning]]. Ethan changed the whole [[approach]]. He renamed the box \"The Ugly Harvest\" and printed a short story on the lid.",
+        "zh": "頭幾箱賣得很差。照片裡是一堆沾著泥巴的蔬菜，擺在灰色的桌上。標籤上寫著「次級農產品」，聽起來幾乎像是一種警告。以森把整個做法翻掉重來。他把箱子改名叫「醜收成」，並在盒蓋上印了一則短短的故事。"
+      },
+      {
+        "en": "The story explained why each vegetable had been turned down. One tomato was too small. One pumpkin had grown a strange curve. Ethan also set the price thirty percent below the [[retail]] price of normal produce. Orders rose within two weeks. Customers began posting photos of the strangest vegetables they received.",
+        "zh": "故事寫的是每一樣蔬菜被退掉的理由。有顆番茄太小。有顆南瓜長出奇怪的弧度。以森還把價格訂在一般農產品零售價的七折。兩週之內，訂單就上來了。買家開始把收到的最怪蔬菜拍照上網。"
+      },
+      {
+        "en": "By 2025 the box had four thousand [[subscribers]]. Lin now sells almost her entire [[crop]]. Three nearby farms have become [[suppliers]] too, and a hotel kitchen buys the leftovers for soup. Her [[profit]] from each field has risen by eighteen percent.",
+        "zh": "到了二○二五年，這款箱子已經有四千名訂戶。靜妤現在幾乎把整批作物都賣得出去。附近三家農場也成了供應商，還有一間飯店的廚房會收剩下的部分拿去煮湯。她每塊田的利潤上升了百分之十八。"
+      },
+      {
+        "en": "Ethan says the lesson has little to do with vegetables. Shoppers were never really against odd shapes. They were against the feeling of buying something of poor quality. Once the box explained the reason honestly, the ugly carrot became the [[attraction]]. Several large chains now [[stock]] similar products, and [[demand]] is still growing.",
+        "zh": "以森說，這件事真正的教訓其實跟蔬菜關係不大。消費者從來就不是排斥奇怪的外形。他們排斥的是「買到次級品」的感覺。當箱子誠實地把來龍去脈說清楚，醜紅蘿蔔反而成了賣點。現在好幾家大型連鎖通路也開始進類似的商品，需求還在成長。"
+      }
+    ],
+    "vocab": [
+      { "word": "reject", "base": "reject", "pos": "v.", "hint": "to refuse to accept or take something", "zh": "拒收；退貨" },
+      { "word": "harvest", "base": "harvest", "pos": "n.", "hint": "the amount of food gathered from the fields in one season", "zh": "收成；收穫量" },
+      { "word": "generations", "base": "generation", "pos": "n.", "hint": "all the people in a family who are at about the same stage of life", "zh": "世代；一代人" },
+      { "word": "customers", "base": "customer", "pos": "n.", "hint": "people who buy goods or services from a business", "zh": "顧客；消費者" },
+      { "word": "label", "base": "label", "pos": "n.", "hint": "a small piece of paper on a product that gives information about it", "zh": "標籤" },
+      { "word": "warning", "base": "warning", "pos": "n.", "hint": "a message that tells you danger or trouble may come", "zh": "警告" },
+      { "word": "approach", "base": "approach", "pos": "n.", "hint": "a way of dealing with a problem or doing a job", "zh": "做法；方式" },
+      { "word": "retail", "base": "retail", "pos": "adj.", "hint": "relating to selling goods in shops to the public", "zh": "零售的" },
+      { "word": "subscribers", "base": "subscriber", "pos": "n.", "hint": "people who pay regularly to keep receiving a product or service", "zh": "訂戶" },
+      { "word": "crop", "base": "crop", "pos": "n.", "hint": "a plant such as rice or corn that a farmer grows to sell", "zh": "作物；農作物" },
+      { "word": "suppliers", "base": "supplier", "pos": "n.", "hint": "companies that provide goods to a business", "zh": "供應商" },
+      { "word": "profit", "base": "profit", "pos": "n.", "hint": "the money left after all costs have been paid", "zh": "利潤" },
+      { "word": "attraction", "base": "attraction", "pos": "n.", "hint": "the quality that makes people want something", "zh": "吸引力；賣點" },
+      { "word": "stock", "base": "stock", "pos": "v.", "hint": "to keep goods in a shop so they can be sold", "zh": "進貨；備有存貨" },
+      { "word": "demand", "base": "demand", "pos": "n.", "hint": "the amount of a product that people want to buy", "zh": "需求" }
+    ],
+    "questions": [
+      {
+        "q": "What is the article mainly about?",
+        "options": [
+          "How supermarkets choose which farms to work with.",
+          "Why some vegetables taste better than others.",
+          "How a farm turned rejected vegetables into a popular product.",
+          "Why online shopping is cheaper than shopping in stores."
+        ],
+        "answer": 2,
+        "explanation": "文章從第一段的「被退掉的蔬菜」開始，經過改名、改價、改故事，到第五段的四千訂戶與利潤成長。主線是「被退貨的蔬菜怎麼變成熱銷商品」。味道在第一段就被排除，選項 B 錯。"
+      },
+      {
+        "q": "Why did supermarkets refuse Lin's vegetables?",
+        "options": [
+          "Because the vegetables did not look normal.",
+          "Because the vegetables arrived too late.",
+          "Because Lin asked for too high a price.",
+          "Because the vegetables tasted bad."
+        ],
+        "answer": 0,
+        "explanation": "定位第一段：「Supermarkets reject vegetables that look odd.」同段第二句已明說「The reason has nothing to do with taste」，所以選項 D 錯；價格與時間文中都沒提到。"
+      },
+      {
+        "q": "What did Ethan change after the first boxes sold badly?",
+        "options": [
+          "He raised the price of each box.",
+          "He stopped selling the boxes online.",
+          "He asked Lin to grow different vegetables.",
+          "He renamed the box and added a story about each vegetable."
+        ],
+        "answer": 3,
+        "explanation": "定位第三段最後兩句與第四段第一句：他把箱子改名為「The Ugly Harvest」，在盒蓋印上故事，說明每樣蔬菜被退的理由。價格是往下調三成（第四段），選項 A 錯。"
+      },
+      {
+        "q": "What can be inferred about the first label, \"second-class produce\"?",
+        "options": [
+          "It was printed in the wrong language.",
+          "It made buyers feel they were getting poor goods.",
+          "It broke a government rule about food labels.",
+          "It was too small for shoppers to read."
+        ],
+        "answer": 1,
+        "explanation": "推論題。第三段說那個標籤「sounded almost like a warning」，第六段又點明消費者排斥的是「the feeling of buying something of poor quality」。兩處合起來指向「讓人覺得買到差的東西」。法規與字體大小文中都沒提。"
+      },
+      {
+        "q": "Which result of the new box is mentioned in the article?",
+        "options": [
+          "Nearby farms began supplying vegetables as well.",
+          "Lin stopped farming and worked in marketing.",
+          "Supermarkets agreed to pay Lin a higher price.",
+          "The hotel kitchen opened its own vegetable farm."
+        ],
+        "answer": 0,
+        "explanation": "定位第五段：「Three nearby farms have become suppliers too.」飯店廚房只是收剩下的部分煮湯，沒有自己開農場；靜妤仍在務農，且超市付款一事文中未提。"
+      }
+    ]
+  }
+]

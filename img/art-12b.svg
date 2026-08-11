@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A box of imperfect vegetables">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="246" width="800" height="54" fill="#dde7ee"/>
+  <!-- 紙箱 -->
+  <path d="M250 130 h300 l-24 116 h-252 z" fill="#e8890c"/>
+  <path d="M250 130 h300 l20 -34 h-340 z" fill="#c97507"/>
+  <!-- 蔬菜(歪歪的) -->
+  <ellipse cx="330" cy="118" rx="34" ry="26" fill="#c94040" transform="rotate(-12 330 118)"/>
+  <path d="M330 92 q6 -14 18 -14" fill="none" stroke="#3a8a4d" stroke-width="5"/>
+  <path d="M400 122 q-16 -34 12 -48 q22 20 6 48" fill="#4c9e60"/>
+  <ellipse cx="470" cy="116" rx="30" ry="22" fill="#ffd964" transform="rotate(10 470 116)"/>
+  <path d="M508 128 q-10 -30 14 -42 q16 20 2 42" fill="#3a8a4d"/>
+  <ellipse cx="286" cy="122" rx="24" ry="18" fill="#e8890c" transform="rotate(-20 286 122)"/>
+  <!-- 標價牌 -->
+  <rect x="600" y="140" width="118" height="80" rx="8" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <rect x="620" y="162" width="60" height="12" rx="6" fill="#3a8a4d"/>
+  <rect x="620" y="184" width="78" height="8" rx="4" fill="#9db8cc"/>
+  <line x1="612" y1="220" x2="606" y2="252" stroke="#404040" stroke-width="5"/>
+  <line x1="706" y1="220" x2="712" y2="252" stroke="#404040" stroke-width="5"/>
+  <!-- 愛心 -->
+  <path d="M140 150 c-14 -20 14 -38 24 -18 c10 -20 38 -2 24 18 c-10 14 -24 22 -24 22 s-14 -8 -24 -22z" fill="#c94040"/>
+</svg>

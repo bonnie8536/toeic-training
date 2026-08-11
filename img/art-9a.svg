@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A handwritten sign outside a small shop">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="240" width="800" height="60" fill="#dde7ee"/>
+  <!-- 店面 -->
+  <rect x="120" y="60" width="330" height="180" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M104 60 h362 l-20 -30 h-322 z" fill="#0b72c4"/>
+  <rect x="150" y="100" width="130" height="100" rx="4" fill="#9fd0f5"/>
+  <rect x="320" y="120" width="80" height="120" fill="#095d9f"/>
+  <circle cx="332" cy="182" r="5" fill="#ffd964"/>
+  <!-- 手寫立牌 -->
+  <rect x="510" y="120" width="160" height="110" rx="6" fill="#fff" stroke="#404040" stroke-width="4" transform="rotate(-4 590 175)"/>
+  <rect x="530" y="145" width="110" height="10" rx="5" fill="#e8890c" transform="rotate(-4 585 150)"/>
+  <rect x="530" y="167" width="122" height="7" rx="3" fill="#767f88" transform="rotate(-4 591 170)"/>
+  <rect x="530" y="183" width="96" height="7" rx="3" fill="#767f88" transform="rotate(-4 578 186)"/>
+  <rect x="530" y="203" width="60" height="12" rx="6" fill="#c94040" transform="rotate(-4 560 209)"/>
+  <line x1="530" y1="232" x2="516" y2="266" stroke="#404040" stroke-width="6"/>
+  <line x1="646" y1="228" x2="660" y2="264" stroke="#404040" stroke-width="6"/>
+  <!-- 客人 -->
+  <circle cx="716" cy="168" r="18" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M698 216 q18 -22 36 0 l-4 44 h-28 z" fill="#3a8a4d"/>
+</svg>

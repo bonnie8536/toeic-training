@@ -1,0 +1,188 @@
+[
+  {
+    "id": "art-9a",
+    "title": "The Sign That Saved the Shop",
+    "titleZh": "救回一間小店的招牌",
+    "category": "零售",
+    "level": "初級 (TOEIC 400-550)",
+    "readTime": 3,
+    "illustrationIdea": "A small flower shop beside a train station, with a large black handwritten board outside and two people stopping to read it.",
+    "paragraphs": [
+      {
+        "en": "Mr. Lin [[owned]] a small flower shop in Tainan. It stood next to a [[busy]] train station. Ten years ago, people came every day. But last spring, the shop was almost empty. Mr. Lin looked at his [[sales]] [[report]] and felt sad.",
+        "zh": "林先生在台南開了一間小花店。花店就在忙碌的火車站旁邊。十年前，每天都有客人上門。但去年春天，店裡幾乎沒有人。林先生看著他的銷售報表，心情很低落。"
+      },
+      {
+        "en": "His daughter Amy had an idea. She was a college student. The old [[sign]] outside was small and dirty. Amy said, \"People walk by too fast.\" She bought a big black board. Then she wrote a short line on it [[by hand]].",
+        "zh": "他的女兒艾咪想到一個辦法。她是個大學生。外面那塊舊招牌又小又髒。艾咪說：「大家走得太快了。」她買了一塊大黑板。然後她用手寫上一句短短的話。"
+      },
+      {
+        "en": "The line was simple. It said, \"Buy one flower for a stranger today.\" Some people stopped and smiled. A young man bought a rose for the bus driver. A woman [[ordered]] ten flowers for her [[office]]. The shop was busy again by noon.",
+        "zh": "那句話很簡單。上面寫著：「今天為一個陌生人買一朵花。」有些人停下腳步，露出微笑。一個年輕男子買了一朵玫瑰送給公車司機。一位女士為她的辦公室訂了十朵花。中午之前，店裡又忙了起來。"
+      },
+      {
+        "en": "Mr. Lin changed the [[message]] every week. Each line was short and warm. [[Customers]] took photos of the board. They [[shared]] the photos online. Soon new people came from other cities. Some of them waited outside before nine.",
+        "zh": "林先生每週都換上新的訊息。每一句都簡短又溫暖。客人們拍下黑板的照片。他們把照片分享到網路上。很快就有人從其他城市過來。有些人不到九點就在門外等候。"
+      },
+      {
+        "en": "Now the shop [[delivers]] flowers to hotels and banks. Mr. Lin still writes the sign by hand. He never uses a printer. \"A machine can print,\" he says. \"But a machine cannot say hello.\"",
+        "zh": "現在這家店會把花送到飯店和銀行。林先生還是親手寫招牌。他從來不用印表機。「機器會印字，」他說。「但機器不會打招呼。」"
+      }
+    ],
+    "vocab": [
+      { "word": "owned", "base": "own", "pos": "v.", "hint": "to have something as your property", "zh": "擁有；經營" },
+      { "word": "busy", "base": "busy", "pos": "adj.", "hint": "full of people or work; not free", "zh": "忙碌的；熱鬧的" },
+      { "word": "sales", "base": "sales", "pos": "n.", "hint": "money a shop gets from people who buy things", "zh": "銷售額；業績" },
+      { "word": "report", "base": "report", "pos": "n.", "hint": "a paper that gives facts about something", "zh": "報表；報告" },
+      { "word": "sign", "base": "sign", "pos": "n.", "hint": "a board with words that tells people something", "zh": "招牌；標示" },
+      { "word": "by hand", "base": "by hand", "pos": "phr.", "hint": "done by a person, not by a machine", "zh": "用手工；親手" },
+      { "word": "ordered", "base": "order", "pos": "v.", "hint": "asked a shop to give or send you goods", "zh": "訂購" },
+      { "word": "office", "base": "office", "pos": "n.", "hint": "a room where people do business work", "zh": "辦公室" },
+      { "word": "message", "base": "message", "pos": "n.", "hint": "a short piece of writing for other people", "zh": "訊息" },
+      { "word": "Customers", "base": "customer", "pos": "n.", "hint": "people who buy things from a shop", "zh": "顧客" },
+      { "word": "shared", "base": "share", "pos": "v.", "hint": "let other people see or use something", "zh": "分享" },
+      { "word": "delivers", "base": "deliver", "pos": "v.", "hint": "takes goods to the place people want them", "zh": "運送；配送" }
+    ],
+    "questions": [
+      {
+        "q": "What is the main idea of the article?",
+        "options": [
+          "The train station brought many people to the shop.",
+          "Amy wanted to open her own flower shop.",
+          "A simple sign written by hand helped a small shop.",
+          "Flowers are cheaper in Tainan than in other cities."
+        ],
+        "answer": 2,
+        "explanation": "全文從第二段艾咪寫下手寫招牌開始，到第三、四段生意變好，都在說一塊手寫招牌救了小店，故選第三項。"
+      },
+      {
+        "q": "What did Amy write on the board?",
+        "options": [
+          "Buy one flower for a stranger today.",
+          "We are open every day until nine.",
+          "All flowers are half price this week.",
+          "We deliver to hotels and banks."
+        ],
+        "answer": 0,
+        "explanation": "第三段第二句直接引用招牌上的句子「Buy one flower for a stranger today.」，故選第一項。"
+      },
+      {
+        "q": "How did people in other cities hear about the shop?",
+        "options": [
+          "Mr. Lin called them on the phone.",
+          "The bus driver told them.",
+          "Amy sent them letters.",
+          "Customers shared photos of the board online."
+        ],
+        "answer": 3,
+        "explanation": "第四段說顧客拍照並把照片分享到網路上，接著才有其他城市的人來，故選第四項。"
+      },
+      {
+        "q": "Why does Mr. Lin still write the sign by hand?",
+        "options": [
+          "Because a printer costs too much money.",
+          "Because he thinks writing by hand feels warm.",
+          "Because Amy is too busy to help him.",
+          "Because he cannot read very well."
+        ],
+        "answer": 1,
+        "explanation": "第五段最後他說機器會印字卻不會打招呼，可推論他認為手寫比較有人情味，故選第二項。"
+      }
+    ]
+  },
+  {
+    "id": "art-9b",
+    "title": "The Wrong Meeting Room",
+    "titleZh": "走錯的那間會議室",
+    "category": "職場",
+    "level": "初級 (TOEIC 400-550)",
+    "readTime": 3,
+    "illustrationIdea": "A nervous young man in a shirt standing at an open meeting room door while ten seated coworkers turn to look at him.",
+    "paragraphs": [
+      {
+        "en": "Kevin started his first [[job]] at Sunrise Foods last May. On his second day, his [[boss]] sent him to Room 502. Kevin was nervous and walked very fast. On the fifth floor, he got out and turned left. Then he opened the door of Room 520.",
+        "zh": "凱文去年五月在陽光食品開始了他的第一份工作。上班第二天，他的主管要他去 502 會議室。凱文很緊張，走得很快。他在五樓走出電梯後往左轉。然後他推開了 520 會議室的門。"
+      },
+      {
+        "en": "Ten people sat around a long table. They all turned and looked at him. A woman smiled and pointed at an empty chair. Kevin sat down and said nothing. The [[meeting]] was about a new fruit drink.",
+        "zh": "十個人圍著一張長桌坐著。他們全都轉過頭來看他。一位女士微笑著指了指空位。凱文坐下來，什麼也沒說。這場會議在談一款新的果汁飲料。"
+      },
+      {
+        "en": "The team had a problem. Their new [[product]] did not sell well. A [[manager]] asked, \"Does anyone have an idea?\" Kevin looked at the small bottle on the table. He said, \"The [[package]] is hard to open. My grandmother could not open it.\"",
+        "zh": "這個團隊遇到了問題。他們的新產品賣得不好。一位經理問：「有人有想法嗎？」凱文看著桌上的小瓶子。他說：「這個包裝很難打開。我奶奶就打不開。」"
+      },
+      {
+        "en": "The room became very quiet. Then everyone started to talk at the same time. The manager wrote Kevin's [[suggestion]] on the board. After the meeting, she asked for his name. Kevin told her about his [[mistake]]. She laughed and said, \"Please come again next week.\"",
+        "zh": "會議室頓時安靜下來。接著所有人同時開口說話。經理把凱文的建議寫在白板上。散會後，她問了他的名字。凱文把自己走錯會議室的事告訴她。她笑著說：「下週請再來一次。」"
+      },
+      {
+        "en": "Two weeks later, Kevin's team joined the [[project]]. They [[tested]] a new bottle with older [[customers]]. The [[cost]] went up only a little. But orders grew by thirty percent.",
+        "zh": "兩週後，凱文的團隊也加入了這個專案。他們找年長顧客測試新瓶子。成本只增加了一點點。但訂單卻成長了三成。"
+      },
+      {
+        "en": "Kevin still tells this story to new workers. He always says the same thing. \"Ask a simple question,\" he tells them. \"A wrong room can still be the right one.\"",
+        "zh": "凱文到現在還會把這個故事說給新進同事聽。他每次都說同樣的話。「問一個簡單的問題，」他這樣告訴他們。「走錯的房間，也可能是對的房間。」"
+      }
+    ],
+    "vocab": [
+      { "word": "job", "base": "job", "pos": "n.", "hint": "the work a person does to earn money", "zh": "工作；職務" },
+      { "word": "boss", "base": "boss", "pos": "n.", "hint": "the person who is in charge of you at work", "zh": "上司；主管" },
+      { "word": "meeting", "base": "meeting", "pos": "n.", "hint": "a time when people come together to talk about work", "zh": "會議" },
+      { "word": "product", "base": "product", "pos": "n.", "hint": "something a company makes and sells", "zh": "產品" },
+      { "word": "manager", "base": "manager", "pos": "n.", "hint": "a person who leads a team in a company", "zh": "經理；主管" },
+      { "word": "package", "base": "package", "pos": "n.", "hint": "the box or bag that holds a thing you buy", "zh": "包裝；包裹" },
+      { "word": "suggestion", "base": "suggestion", "pos": "n.", "hint": "an idea that you tell other people about", "zh": "建議" },
+      { "word": "mistake", "base": "mistake", "pos": "n.", "hint": "something you do wrong by accident", "zh": "錯誤" },
+      { "word": "project", "base": "project", "pos": "n.", "hint": "a piece of work with a clear goal and a plan", "zh": "專案" },
+      { "word": "tested", "base": "test", "pos": "v.", "hint": "tried something to see if it works well", "zh": "測試" },
+      { "word": "customers", "base": "customer", "pos": "n.", "hint": "people who buy things from a company", "zh": "顧客" },
+      { "word": "cost", "base": "cost", "pos": "n.", "hint": "the money you must pay for something", "zh": "成本；費用" }
+    ],
+    "questions": [
+      {
+        "q": "What is the main idea of the story?",
+        "options": [
+          "Kevin was late for a meeting on his first day.",
+          "Kevin's mistake led to a good idea and new work.",
+          "Sunrise Foods needed to hire more young workers.",
+          "Fruit drinks sell better in summer than in winter."
+        ],
+        "answer": 1,
+        "explanation": "第一段凱文走錯會議室，第三、四段他的建議被採用，第五段兩個團隊合作，全文主軸就是一個錯誤帶出好結果，故選第二項。"
+      },
+      {
+        "q": "Why did Kevin walk into Room 520?",
+        "options": [
+          "His boss gave him the wrong room number.",
+          "He wanted to meet the manager there.",
+          "The elevator stopped on the wrong floor.",
+          "He was nervous and turned the wrong way."
+        ],
+        "answer": 3,
+        "explanation": "第一段說主管叫他去 502，但他很緊張、走得很快、出電梯往左轉，才走錯門，故選第四項。"
+      },
+      {
+        "q": "What problem did the team in Room 520 have?",
+        "options": [
+          "Their new drink did not sell well.",
+          "Their meeting room was too small.",
+          "Their manager was going to leave.",
+          "Their team had too many new workers."
+        ],
+        "answer": 0,
+        "explanation": "第三段第二句明說新產品賣得不好，故選第一項。"
+      },
+      {
+        "q": "Why did the manager ask for Kevin's name?",
+        "options": [
+          "She wanted to tell his boss about him.",
+          "She needed help to move the chairs.",
+          "She thought his idea was useful.",
+          "She knew his family very well."
+        ],
+        "answer": 2,
+        "explanation": "第四段她把凱文的建議寫在白板上，散會後才問名字，還請他下週再來，可推論她覺得這個建議有用，故選第三項。"
+      }
+    ]
+  }
+]

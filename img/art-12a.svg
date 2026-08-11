@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="An office with no fixed seats">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="248" width="800" height="52" fill="#dde7ee"/>
+  <!-- 三張共用長桌 -->
+  <rect x="70" y="150" width="200" height="14" rx="6" fill="#0b72c4"/>
+  <line x1="96" y1="164" x2="90" y2="234" stroke="#404040" stroke-width="6"/>
+  <line x1="244" y1="164" x2="250" y2="234" stroke="#404040" stroke-width="6"/>
+  <rect x="300" y="150" width="200" height="14" rx="6" fill="#0b72c4"/>
+  <line x1="326" y1="164" x2="320" y2="234" stroke="#404040" stroke-width="6"/>
+  <line x1="474" y1="164" x2="480" y2="234" stroke="#404040" stroke-width="6"/>
+  <rect x="530" y="150" width="200" height="14" rx="6" fill="#0b72c4"/>
+  <line x1="556" y1="164" x2="550" y2="234" stroke="#404040" stroke-width="6"/>
+  <line x1="704" y1="164" x2="710" y2="234" stroke="#404040" stroke-width="6"/>
+  <!-- 背包與筆電(隨處落座) -->
+  <rect x="120" y="120" width="70" height="30" rx="4" fill="#9db8cc"/>
+  <rect x="128" y="112" width="54" height="10" rx="4" fill="#767f88"/>
+  <rect x="352" y="118" width="60" height="32" rx="6" fill="#e8890c"/>
+  <path d="M362 118 a16 12 0 0 1 32 0" fill="none" stroke="#404040" stroke-width="4"/>
+  <rect x="580" y="120" width="70" height="30" rx="4" fill="#3a8a4d"/>
+  <!-- 移動的人 -->
+  <circle cx="264" cy="96" r="18" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M246 142 q18 -20 36 0 l-4 8 h-28 z" fill="#0b72c4"/>
+  <!-- 移動箭頭 -->
+  <path d="M300 70 h180" stroke="#0b72c4" stroke-width="5" stroke-dasharray="10 10" stroke-linecap="round"/>
+  <path d="M480 62 l24 8 l-24 8 z" fill="#0b72c4"/>
+</svg>

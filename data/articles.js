@@ -463,6 +463,2101 @@ TOEIC.articles = [
   ]
  },
  {
+  "id": "art-10a",
+  "title": "The Rainy Day Discount",
+  "titleZh": "雨天折扣",
+  "category": "餐飲",
+  "level": "初級 (TOEIC 400-550)",
+  "readTime": 2,
+  "illustrationIdea": "A small noodle shop on a rainy street, with a rainy-day discount poster in the front window and smiling customers shaking their wet umbrellas.",
+  "paragraphs": [
+   {
+    "en": "Ms. Kuo owns a small noodle shop in Taipei. The shop is called Green Bowl. On sunny days, many [[customers]] come in. But on rainy days, the shop is almost empty. Ms. Kuo was worried about her [[business]].",
+    "zh": "郭小姐在台北開了一家小麵店，店名叫「綠碗」。天氣好的時候，很多顧客會上門。但是一到下雨天，店裡幾乎沒有人。郭小姐很擔心自己的生意。"
+   },
+   {
+    "en": "One morning, a [[staff]] member had an idea. Her name was Vicky. She wanted to [[offer]] a [[discount]] on rainy days. Ms. Kuo was not sure at first. She did not want to lose money. But she decided to try it for one month.",
+    "zh": "有一天早上，一位員工想到一個點子。她叫 Vicky。她想在下雨天提供折扣。郭小姐一開始不太確定，她不想賠錢。但她決定先試一個月看看。"
+   },
+   {
+    "en": "Vicky made a [[poster]] for the front window. It said twenty percent off on rainy days. She also put the news online. Soon many people knew about the discount.",
+    "zh": "Vicky 做了一張海報貼在店門口的櫥窗上。上面寫著雨天打八折。她也把這個消息放到網路上。很快地，很多人都知道了這個折扣。"
+   },
+   {
+    "en": "The next rainy week was very busy. Students came after class. Office workers came for lunch. People said the hot soup was perfect for a wet day. The kitchen got many [[orders]] at once. In the end, [[sales]] went up by forty percent.",
+    "zh": "接下來下雨的那一週非常忙。學生下課後跑來吃，上班族中午也來吃午餐。大家說熱湯很適合濕答答的天氣。廚房一下子接到很多訂單。最後，銷售額成長了四成。"
+   },
+   {
+    "en": "Ms. Kuo also [[noticed]] something else. Many new guests became [[regular]] customers. They came back on sunny days too. Now the shop makes more [[profit]] every month. Ms. Kuo says rainy days are now good days.",
+    "zh": "郭小姐還注意到另一件事。很多新客人變成了常客，他們晴天也會回來。現在店裡每個月賺到更多利潤。郭小姐說，現在下雨天反而是好日子。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "customers",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "people who buy food or goods from a shop",
+    "zh": "顧客"
+   },
+   {
+    "word": "business",
+    "base": "business",
+    "pos": "n.",
+    "hint": "the job of selling goods or a service for money",
+    "zh": "生意；公司"
+   },
+   {
+    "word": "staff",
+    "base": "staff",
+    "pos": "n.",
+    "hint": "all the people who have a job in one company",
+    "zh": "員工；全體職員"
+   },
+   {
+    "word": "offer",
+    "base": "offer",
+    "pos": "v.",
+    "hint": "to tell someone you are ready to give something",
+    "zh": "提供"
+   },
+   {
+    "word": "discount",
+    "base": "discount",
+    "pos": "n.",
+    "hint": "money taken off the normal price",
+    "zh": "折扣"
+   },
+   {
+    "word": "poster",
+    "base": "poster",
+    "pos": "n.",
+    "hint": "a large piece of paper with words or pictures on it",
+    "zh": "海報"
+   },
+   {
+    "word": "orders",
+    "base": "order",
+    "pos": "n.",
+    "hint": "requests for food or goods that a shop must fill",
+    "zh": "訂單；點餐"
+   },
+   {
+    "word": "sales",
+    "base": "sale",
+    "pos": "n.",
+    "hint": "the total money a company gets from its customers",
+    "zh": "銷售額"
+   },
+   {
+    "word": "noticed",
+    "base": "notice",
+    "pos": "v.",
+    "hint": "saw or understood something new",
+    "zh": "注意到"
+   },
+   {
+    "word": "regular",
+    "base": "regular",
+    "pos": "adj.",
+    "hint": "coming back again and again",
+    "zh": "固定的；常來的"
+   },
+   {
+    "word": "profit",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "the money left after all costs are paid",
+    "zh": "利潤"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the article mainly about?",
+    "options": [
+     "A small idea brought more customers to a shop.",
+     "Rain is bad for every shop in Taipei.",
+     "Ms. Kuo wanted to sell her noodle shop.",
+     "Vicky opened a new shop near Green Bowl."
+    ],
+    "answer": 0,
+    "explanation": "主旨題。全文從第二段的點子講到第五段的結果，重點是一個小折扣點子救了生意。"
+   },
+   {
+    "q": "What did Vicky make for the front window?",
+    "options": [
+     "A new menu",
+     "A raincoat",
+     "A poster",
+     "A photo of Ms. Kuo"
+    ],
+    "answer": 2,
+    "explanation": "細節題。第三段第一句：Vicky made a poster for the front window."
+   },
+   {
+    "q": "Why was Ms. Kuo not sure about the idea at first?",
+    "options": [
+     "She did not like rainy days.",
+     "She was afraid of losing money.",
+     "She wanted to close the shop.",
+     "She wanted to raise the price."
+    ],
+    "answer": 1,
+    "explanation": "細節題。第二段：He did not want to lose money."
+   },
+   {
+    "q": "What will Ms. Kuo probably do next month?",
+    "options": [
+     "Close the shop on rainy days.",
+     "Ask Vicky to leave the shop.",
+     "Stop selling hot soup.",
+     "Keep the rainy day discount."
+    ],
+    "answer": 3,
+    "explanation": "推論題。第二段她只打算先試一個月，第四、五段訂單和利潤都變好，可以推出她會繼續這個雨天折扣。"
+   }
+  ]
+ },
+ {
+  "id": "art-10b",
+  "title": "My Desk Neighbor",
+  "titleZh": "我的鄰座同事",
+  "category": "職場",
+  "level": "初級 (TOEIC 400-550)",
+  "readTime": 2,
+  "illustrationIdea": "Two office workers at neighboring desks late at night, checking a printed report together under one desk lamp.",
+  "paragraphs": [
+   {
+    "en": "I work at a travel company in Taichung. Last year, a new [[co-worker]] sat next to me. His name is Andy. Andy is friendly, but he talks very loudly. He was on the phone all day.",
+    "zh": "我在台中一家旅行社上班。去年，一位新同事坐到我旁邊。他叫 Andy。Andy 人很友善，但是講話很大聲。他一整天都在講電話。"
+   },
+   {
+    "en": "At first, I was not happy at all. I could not [[focus]] on my work. Andy also ate snacks loudly at his desk. One day, I asked my [[manager]] for a new seat. She told me the office had no space.",
+    "zh": "一開始，我一點也不開心。我沒辦法專心工作。Andy 在座位上吃零食也吃得很大聲。有一天，我去找主管換位子。她跟我說辦公室沒有空位了。"
+   },
+   {
+    "en": "Then something happened in March. I made a big [[mistake]] in a [[report]]. I put the wrong numbers in the [[budget]] table. Our [[client]] would read the file the next morning. The [[deadline]] was only ten hours away.",
+    "zh": "後來，三月發生了一件事。我在一份報告裡出了大錯。我把預算表的數字打錯了。客戶隔天早上就會看到那份檔案。距離截止時間只剩十個小時。"
+   },
+   {
+    "en": "Andy heard me and turned around. He stayed late and checked every page with me. We found all the wrong numbers by nine o'clock. He never told anyone about my problem. Before he left, he just smiled at me.",
+    "zh": "Andy 聽到了，轉過頭來。他留下來加班，陪我一頁一頁檢查。我們在九點以前找出所有錯的數字。他從來沒有跟任何人提起我的問題。離開前，他只是對我笑了一下。"
+   },
+   {
+    "en": "Now we work on the same [[project]] every week. We share one [[schedule]] and help each other. Our [[team]] leader says we are a great pair. I still hear Andy's loud voice all day. But now the noise makes me smile.",
+    "zh": "現在我們每週一起做同一個專案。我們共用一份行程表，互相幫忙。我們的組長說我們是很好的搭檔。我還是整天聽到 Andy 的大嗓門。但現在這個聲音會讓我笑出來。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "co-worker",
+    "base": "co-worker",
+    "pos": "n.",
+    "hint": "a person who has a job at the same company as you",
+    "zh": "同事"
+   },
+   {
+    "word": "focus",
+    "base": "focus",
+    "pos": "v.",
+    "hint": "to give all your mind to one thing",
+    "zh": "專心；專注"
+   },
+   {
+    "word": "manager",
+    "base": "manager",
+    "pos": "n.",
+    "hint": "the person who leads a team at a company",
+    "zh": "主管；經理"
+   },
+   {
+    "word": "mistake",
+    "base": "mistake",
+    "pos": "n.",
+    "hint": "something done in a wrong way",
+    "zh": "錯誤"
+   },
+   {
+    "word": "report",
+    "base": "report",
+    "pos": "n.",
+    "hint": "a written paper that gives facts about a job",
+    "zh": "報告"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "a plan for the money a company will use",
+    "zh": "預算"
+   },
+   {
+    "word": "client",
+    "base": "client",
+    "pos": "n.",
+    "hint": "a person or company that pays you for a service",
+    "zh": "客戶"
+   },
+   {
+    "word": "deadline",
+    "base": "deadline",
+    "pos": "n.",
+    "hint": "the last time when a job must be finished",
+    "zh": "截止期限"
+   },
+   {
+    "word": "project",
+    "base": "project",
+    "pos": "n.",
+    "hint": "a planned piece of work with a goal and an end date",
+    "zh": "專案"
+   },
+   {
+    "word": "schedule",
+    "base": "schedule",
+    "pos": "n.",
+    "hint": "a plan that shows when things will happen",
+    "zh": "行程表；時程"
+   },
+   {
+    "word": "team",
+    "base": "team",
+    "pos": "n.",
+    "hint": "a group of people who do a job together",
+    "zh": "團隊"
+   }
+  ],
+  "questions": [
+   {
+    "q": "Why was the writer unhappy at first?",
+    "options": [
+     "Andy was often late for work.",
+     "Andy talked and ate loudly.",
+     "Andy took the writer's lunch.",
+     "Andy sat too far away."
+    ],
+    "answer": 1,
+    "explanation": "細節題。第一段說 Andy 講話很大聲，第二段說他還在座位上吃很吵的零食。"
+   },
+   {
+    "q": "What was wrong with the report?",
+    "options": [
+     "It was too short.",
+     "It had no title.",
+     "It went to the wrong client.",
+     "The numbers in the budget table were wrong."
+    ],
+    "answer": 3,
+    "explanation": "細節題。第三段：I put the wrong numbers in the budget table."
+   },
+   {
+    "q": "What can we learn about Andy?",
+    "options": [
+     "He is kind and helps his co-workers.",
+     "He likes to make trouble for others.",
+     "He does not care about his job.",
+     "He wants the writer's seat."
+    ],
+    "answer": 0,
+    "explanation": "推論題。第四段他留下來加班幫忙檢查，而且沒有跟別人說，可以推出他為人熱心又體貼。"
+   },
+   {
+    "q": "What is the article mainly about?",
+    "options": [
+     "How to write a good report.",
+     "Why an office needs a quiet room.",
+     "How a noisy neighbor became a good partner.",
+     "Why the writer changed jobs."
+    ],
+    "answer": 2,
+    "explanation": "主旨題。全文從第一、二段的不合，寫到第四、五段變成好搭檔，重點是這個轉變。"
+   }
+  ]
+ },
+ {
+  "id": "art-11a",
+  "title": "The Company That Answers in One Hour",
+  "titleZh": "一小時內一定回信的公司",
+  "category": "客服",
+  "level": "中級 (TOEIC 550-650)",
+  "readTime": 3,
+  "illustrationIdea": "A small customer-service team at desks in a bright office, with a large wall clock showing one hour and a screen full of incoming emails.",
+  "paragraphs": [
+   {
+    "en": "Lin Chia-wei was tired of waiting. Every time she sent a question to a software company, the answer took three days. So when she started her own [[firm]], Brightline Support, she made a [[promise]]. Every [[customer]] email would get a real answer within one hour. Her friends told her the plan was crazy.",
+    "zh": "林佳薇早就受夠了等待。以前她寫信問軟體公司問題，回覆總要拖上三天。所以自己開公司「明線客服」時，她許下一個承諾：每一封客戶來信，一小時內一定得到真人回覆。朋友都說這個計畫太瘋狂。"
+   },
+   {
+    "en": "At first, the plan was hard to keep. Brightline had only six [[staff]] members. On busy days, more than eighty emails arrived. The team worked late, and mistakes began to appear. One angry client received the wrong answer twice. Lin saw that speed alone was not enough.",
+    "zh": "一開始，這個計畫很難守住。明線只有六名員工。忙的時候，一天湧進八十多封信。團隊加班到深夜，錯誤也跟著出現。有位生氣的客戶連續兩次收到錯誤答案。林佳薇明白，光有速度並不夠。"
+   },
+   {
+    "en": "So Lin changed the whole system. She [[sorted]] every message into three groups. Easy questions got a ready answer from a short list. The [[complicated]] ones went to a trained agent. The hardest cases went straight to Lin herself. This single step cut the average waiting time by half.",
+    "zh": "於是她把整套流程改掉。她把每封訊息分成三類。簡單的問題，直接從現成答案清單中回覆。比較複雜的，交給受過訓練的專員。最棘手的案子，直接送到她本人手上。光是這一步，就把平均等待時間砍掉一半。"
+   },
+   {
+    "en": "She also fixed the work [[schedule]]. The staff now worked in three [[shifts]], so someone was always online. New workers got two weeks of [[training]] before they touched a real email. Lin asked everyone to write down each common problem. The notes slowly grew into a useful guide.",
+    "zh": "她也調整了工作排班。員工分成三班輪值，隨時都有人在線上。新人要先受兩週訓練，才能碰到真正的客戶信件。林佳薇要求大家把每個常見問題記下來。這些筆記慢慢累積成一份好用的指南。"
+   },
+   {
+    "en": "The results surprised everyone. Within a year, [[complaints]] dropped by sixty percent. Many [[loyal]] customers started to [[recommend]] Brightline to their friends. Sales rose, and the company [[hired]] twelve more people. One client said the quick answers made her feel respected.",
+    "zh": "結果出乎所有人意料。一年之內，客訴減少了六成。許多忠實客戶開始把明線推薦給朋友。業績上升，公司又多聘了十二個人。有位客戶說，快速的回應讓她覺得被尊重。"
+   },
+   {
+    "en": "Lin says the real secret is not speed. It is being [[honest]]. If her team cannot solve a problem in one hour, they still write back. They explain the [[delay]] and give a clear [[deadline]]. Customers can accept a slow repair, she says. They can never accept silence.",
+    "zh": "林佳薇說，真正的關鍵不是速度，而是誠實。如果團隊一小時內解決不了問題，他們還是會回信。他們會說明延遲的原因，並給出明確的期限。她說，客戶可以接受修得慢，但永遠無法接受沉默。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "firm",
+    "base": "firm",
+    "pos": "n.",
+    "hint": "a business organization, usually small or medium in size",
+    "zh": "公司；商行"
+   },
+   {
+    "word": "promise",
+    "base": "promise",
+    "pos": "n.",
+    "hint": "a clear statement that you will surely do something",
+    "zh": "承諾"
+   },
+   {
+    "word": "customer",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "a person who buys goods or services from a shop or company",
+    "zh": "顧客；客戶"
+   },
+   {
+    "word": "staff",
+    "base": "staff",
+    "pos": "n.",
+    "hint": "all the people who work for one company or office",
+    "zh": "員工；全體職員"
+   },
+   {
+    "word": "sorted",
+    "base": "sort",
+    "pos": "v.",
+    "hint": "arranged things into groups by type",
+    "zh": "分類；歸類"
+   },
+   {
+    "word": "complicated",
+    "base": "complicated",
+    "pos": "adj.",
+    "hint": "having many parts and not easy to deal with",
+    "zh": "複雜的"
+   },
+   {
+    "word": "schedule",
+    "base": "schedule",
+    "pos": "n.",
+    "hint": "a plan that shows the times when things will happen",
+    "zh": "時間表；排班表"
+   },
+   {
+    "word": "shifts",
+    "base": "shift",
+    "pos": "n.",
+    "hint": "fixed periods of working time in a day, such as morning or night",
+    "zh": "輪班；班次"
+   },
+   {
+    "word": "training",
+    "base": "training",
+    "pos": "n.",
+    "hint": "the process of teaching people the skills they need for a job",
+    "zh": "訓練"
+   },
+   {
+    "word": "complaints",
+    "base": "complaint",
+    "pos": "n.",
+    "hint": "statements saying that you are not happy with a product or service",
+    "zh": "抱怨；客訴"
+   },
+   {
+    "word": "loyal",
+    "base": "loyal",
+    "pos": "adj.",
+    "hint": "always staying with the same company, brand or person",
+    "zh": "忠實的"
+   },
+   {
+    "word": "recommend",
+    "base": "recommend",
+    "pos": "v.",
+    "hint": "tell someone that something is good and worth trying",
+    "zh": "推薦"
+   },
+   {
+    "word": "hired",
+    "base": "hire",
+    "pos": "v.",
+    "hint": "gave someone a job in a company",
+    "zh": "僱用"
+   },
+   {
+    "word": "honest",
+    "base": "honest",
+    "pos": "adj.",
+    "hint": "telling the truth and not hiding facts",
+    "zh": "誠實的"
+   },
+   {
+    "word": "delay",
+    "base": "delay",
+    "pos": "n.",
+    "hint": "a situation in which something happens later than planned",
+    "zh": "延遲"
+   },
+   {
+    "word": "deadline",
+    "base": "deadline",
+    "pos": "n.",
+    "hint": "the latest time by which a task must be finished",
+    "zh": "截止期限"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main idea of the article?",
+    "options": [
+     "A software company lost most of its customers last year.",
+     "A company kept a fast-answer promise by changing the way it works.",
+     "Most customers care only about low prices.",
+     "Email is no longer a useful way to contact a company."
+    ],
+    "answer": 1,
+    "explanation": "全文主線：林佳薇承諾一小時回覆（第一段），中間遇到困難後改流程、改排班、加訓練（第三、四段），最後看到成效（第五段）。所以主旨是「一家公司靠改變做法守住快速回覆的承諾」。其他選項只是細節或文中沒提到的說法。"
+   },
+   {
+    "q": "Why did Lin start Brightline Support with a one-hour promise?",
+    "options": [
+     "She wanted to sell software to large companies.",
+     "She wanted to hire twelve new workers.",
+     "Her friends asked her to open a service center.",
+     "She had waited three days for replies from other companies."
+    ],
+    "answer": 3,
+    "explanation": "定位第一段：「Every time she sent a question to a software company, the answer took three days.」她自己受夠了等三天，才立下一小時的承諾。選項 B 的十二人是第五段的結果，不是原因。"
+   },
+   {
+    "q": "How did Lin handle different kinds of messages?",
+    "options": [
+     "She put messages into three groups by difficulty.",
+     "She asked customers to call instead of writing.",
+     "She answered every message herself.",
+     "She stopped replying to difficult questions."
+    ],
+    "answer": 0,
+    "explanation": "定位第三段：「She sorted every message into three groups.」簡單的用現成答案、複雜的給專員、最難的才給她本人。所以是依難度分成三類，不是全部自己回。"
+   },
+   {
+    "q": "What happened within one year of the changes?",
+    "options": [
+     "The company closed two offices.",
+     "The staff worked fewer shifts.",
+     "Complaints dropped by sixty percent.",
+     "Sales stayed at the same level."
+    ],
+    "answer": 2,
+    "explanation": "定位第五段：「Within a year, complaints dropped by sixty percent.」同段還提到 Sales rose（業績上升），所以選項 D 錯；輪班是三班制（第四段），文中沒說變少。"
+   },
+   {
+    "q": "What can be inferred about Lin's view of good service?",
+    "options": [
+     "Customers should always receive a discount when service is slow.",
+     "Only large firms can promise fast service.",
+     "A company should never admit a mistake.",
+     "Telling customers about a delay matters as much as being fast."
+    ],
+    "answer": 3,
+    "explanation": "定位最後一段：解決不了也要回信，說明延遲原因並給明確期限；「Customers can accept a slow repair... They can never accept silence.」可推論她認為「讓客戶知道狀況」和速度一樣重要。折扣、公司規模文中都沒提。"
+   }
+  ]
+ },
+ {
+  "id": "art-11b",
+  "title": "Renting Clothes for Work",
+  "titleZh": "租來的上班服",
+  "category": "商業",
+  "level": "中級 (TOEIC 550-650)",
+  "readTime": 3,
+  "illustrationIdea": "A young office worker opening a delivery box of neatly folded work clothes beside a half-empty closet.",
+  "paragraphs": [
+   {
+    "en": "Kao Mei-ling had a closet full of [[suits]]. She wore each one only a few times a year. Most of them just sat there and collected dust. Last winter a friend told her about Wardrobe Nine. The company rents office clothes by the month. Mei-ling signed up the same night.",
+    "zh": "高美玲的衣櫃裡塞滿了套裝。每一套，她一年只穿幾次。大部分就掛在那裡積灰塵。去年冬天，一位朋友跟她提起「衣櫥九號」。這家公司以月為單位出租上班服。美玲當晚就報名了。"
+   },
+   {
+    "en": "The idea is simple. A member pays a monthly [[fee]] and chooses four pieces online. The company [[delivers]] them in a box two days later. When the member is finished, she sends the box back. Wardrobe Nine cleans everything and passes it to the next person. Nobody has to buy anything.",
+    "zh": "做法很單純。會員每月付一筆費用，在線上挑四件。公司兩天後把衣服裝箱送到。穿完之後，會員再把箱子寄回。衣櫥九號洗好整理，接著送給下一位。誰都不必買。"
+   },
+   {
+    "en": "The [[founder]], Peter Yang, once worked at a clothing [[factory]]. He saw how many [[items]] were made and never sold. He also noticed a change among younger workers. They wanted variety at work, but their [[budgets]] were small. Renting looked like a fair answer for both sides.",
+    "zh": "創辦人楊柏森以前在成衣工廠上班。他看過太多品項做出來卻賣不掉。他也注意到年輕上班族的轉變。他們想在工作場合有變化，預算卻不多。租借看起來對雙方都公平。"
+   },
+   {
+    "en": "The [[service]] grew fast, but the road was not smooth. Cleaning costs were higher than expected. A few members returned [[damaged]] clothes with missing buttons. Others kept the same jacket for months. Yang wrote clear rules and added a small late [[charge]].",
+    "zh": "這項服務成長得很快，路卻不平坦。清洗成本比預期高。少數會員寄回的衣服有損壞，鈕扣也掉了。也有人同一件外套一放就是好幾個月。楊柏森寫下明確規則，並加收一筆小額逾期費。"
+   },
+   {
+    "en": "Today Wardrobe Nine has about nine thousand [[members]]. Many are young office workers in their first job. Others travel often and need a neat, [[professional]] look. One woman wore a rented dress to three [[interviews]] last spring. She got the job and still rents her work clothes today.",
+    "zh": "如今衣櫥九號大約有九千名會員。很多是剛進職場的年輕上班族。也有人經常出差，需要乾淨專業的樣子。去年春天，有位女生穿著租來的洋裝去了三場面試。她拿到工作，到現在還是租衣服上班。"
+   },
+   {
+    "en": "Not everyone likes the idea. Some people say [[borrowed]] clothes never fit perfectly. Others do not enjoy wearing what a stranger wore. Yang understands these [[concerns]] and offers free changes. Still, he believes the market will keep growing. In his view, people want to use clothes, not [[own]] them.",
+    "zh": "也不是每個人都喜歡這個做法。有些人說借來的衣服永遠穿不合身。也有人不喜歡穿陌生人穿過的東西。楊柏森理解這些疑慮，提供免費修改。但他相信市場會繼續成長。在他看來，大家想要的是「用」衣服，而不是「擁有」衣服。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "suits",
+    "base": "suit",
+    "pos": "n.",
+    "hint": "sets of matching jacket and trousers worn to an office",
+    "zh": "西裝；套裝"
+   },
+   {
+    "word": "fee",
+    "base": "fee",
+    "pos": "n.",
+    "hint": "money that you pay for a service or for joining something",
+    "zh": "費用"
+   },
+   {
+    "word": "delivers",
+    "base": "deliver",
+    "pos": "v.",
+    "hint": "brings goods to a place for the person who ordered them",
+    "zh": "遞送；配送"
+   },
+   {
+    "word": "founder",
+    "base": "founder",
+    "pos": "n.",
+    "hint": "the person who started a company or an organization",
+    "zh": "創辦人"
+   },
+   {
+    "word": "factory",
+    "base": "factory",
+    "pos": "n.",
+    "hint": "a large building where goods are made by machines",
+    "zh": "工廠"
+   },
+   {
+    "word": "items",
+    "base": "item",
+    "pos": "n.",
+    "hint": "single things in a list or in a group of goods",
+    "zh": "品項；物品"
+   },
+   {
+    "word": "budgets",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "amounts of money that people plan to spend",
+    "zh": "預算"
+   },
+   {
+    "word": "service",
+    "base": "service",
+    "pos": "n.",
+    "hint": "work that a company does for the people who pay it",
+    "zh": "服務"
+   },
+   {
+    "word": "damaged",
+    "base": "damage",
+    "pos": "adj.",
+    "hint": "harmed or broken in some way",
+    "zh": "損壞的"
+   },
+   {
+    "word": "charge",
+    "base": "charge",
+    "pos": "n.",
+    "hint": "an amount of money asked for a product or a service",
+    "zh": "收費；費用"
+   },
+   {
+    "word": "members",
+    "base": "member",
+    "pos": "n.",
+    "hint": "people who have joined a club or a paid plan",
+    "zh": "會員"
+   },
+   {
+    "word": "professional",
+    "base": "professional",
+    "pos": "adj.",
+    "hint": "suitable for serious work; showing skill and good manners",
+    "zh": "專業的"
+   },
+   {
+    "word": "interviews",
+    "base": "interview",
+    "pos": "n.",
+    "hint": "meetings where a company asks questions to a person who wants a job",
+    "zh": "面試"
+   },
+   {
+    "word": "borrowed",
+    "base": "borrow",
+    "pos": "adj.",
+    "hint": "taken from someone else for a short time and then returned",
+    "zh": "借來的"
+   },
+   {
+    "word": "concerns",
+    "base": "concern",
+    "pos": "n.",
+    "hint": "worries about something that might go wrong",
+    "zh": "疑慮；擔憂"
+   },
+   {
+    "word": "own",
+    "base": "own",
+    "pos": "v.",
+    "hint": "have something as your property",
+    "zh": "擁有"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the article mainly about?",
+    "options": [
+     "A clothing factory that closed last year.",
+     "A company that lets people rent work clothes.",
+     "How to clean office suits at home.",
+     "Why young workers change jobs so often."
+    ],
+    "answer": 1,
+    "explanation": "全文圍繞「衣櫥九號」這家出租上班服的公司：第一、二段介紹做法，第三段講由來，第四段講困難，第五、六段講成長與反對聲音。工廠只在第三段被提到一次，不是主題。"
+   },
+   {
+    "q": "How does Wardrobe Nine work?",
+    "options": [
+     "Members pay each month and receive four pieces in a box.",
+     "Members buy the clothes at a lower price.",
+     "Members must return the clothes within one day.",
+     "Members clean the clothes before sending them back."
+    ],
+    "answer": 0,
+    "explanation": "定位第二段：「A member pays a monthly fee and chooses four pieces online. The company delivers them in a box two days later.」同段最後也說 Wardrobe Nine 負責清洗，所以選項 D 錯；文中沒有一天內歸還的規定。"
+   },
+   {
+    "q": "What problem did the company meet as it grew?",
+    "options": [
+     "It could not find enough young members.",
+     "Its clothes looked too old-fashioned.",
+     "The factory stopped making new items.",
+     "Cleaning cost more than the company expected."
+    ],
+    "answer": 3,
+    "explanation": "定位第四段：「Cleaning costs were higher than expected.」同段還提到衣服被弄壞、有人久久不還。會員人數其實有九千名（第五段），所以選項 A 錯。"
+   },
+   {
+    "q": "Why did Peter Yang think renting was a good business?",
+    "options": [
+     "He wanted to sell his own factory.",
+     "He believed people would stop wearing suits.",
+     "He saw unsold clothes and workers with small budgets.",
+     "He wanted young workers to spend more money."
+    ],
+    "answer": 2,
+    "explanation": "定位第三段：他在工廠看到大量做出來卻賣不掉的品項，又看到年輕上班族「wanted variety at work, but their budgets were small」，兩邊的問題租借都能解決，所以他說 a fair answer for both sides。"
+   },
+   {
+    "q": "What can be inferred about the people who dislike the service?",
+    "options": [
+     "They care about fit and about wearing another person's clothes.",
+     "They think the monthly fee is too low.",
+     "They prefer to rent clothes from a foreign company.",
+     "They believe office workers should not wear suits."
+    ],
+    "answer": 0,
+    "explanation": "定位最後一段：反對的人說借來的衣服 never fit perfectly，也不喜歡穿陌生人穿過的東西。可推論他們在意的是合身度和衛生感受。費用太低、外國公司文中都沒提到。"
+   }
+  ]
+ },
+ {
+  "id": "art-12a",
+  "title": "The Office With No Fixed Seats",
+  "titleZh": "沒有固定座位的辦公室",
+  "category": "職場",
+  "level": "中級 (TOEIC 550-650)",
+  "readTime": 3,
+  "illustrationIdea": "An open-plan office early in the morning: a designer stands holding a laptop and scans a row of identical empty desks with no name tags, while a manager sits at a shared long table next to junior staff.",
+  "paragraphs": [
+   {
+    "en": "Kestrel Design employs forty people in Taipei. Last spring, the company removed every name tag from its desks. Nobody would have a fixed seat anymore. Staff could sit wherever they liked each morning. The office manager, Ruby Chen, called it a simple [[experiment]]. Most of her [[colleagues]] called it a terrible idea.",
+    "zh": "Kestrel Design 在台北有四十名員工。去年春天，公司把桌上所有的名牌都拿掉了。從此沒有人擁有固定座位。每天早上，員工想坐哪裡就坐哪裡。辦公室主任陳如冰把這件事說成一次簡單的實驗。她的同事大多認為這是個很糟的主意。"
+   },
+   {
+    "en": "The reason was money. Kestrel paid a high [[rent]] for its office floor, yet half the desks stood empty. Many designers worked from home on Mondays and Fridays. Ruby wanted to cut the office space by a third. The savings would pay for new [[equipment]] and a bigger training [[budget]].",
+    "zh": "原因是錢。Kestrel 為這層樓付出很高的租金，但有一半的桌子每天都空著。不少設計師週一和週五在家工作。如冰想把辦公空間縮減三分之一。省下來的錢可以拿去買新設備，也能撐起更多的教育訓練預算。"
+   },
+   {
+    "en": "The first month was messy. Some people arrived at seven just to claim a favorite seat. One senior designer hid his monitor in a cabinet every night. Teams that used to sit together were now spread across the room. [[Complaints]] reached Ruby almost daily. She began to think the plan had failed.",
+    "zh": "第一個月很混亂。有人七點就到，只為了搶到喜歡的位子。一位資深設計師每天晚上把自己的螢幕藏進櫃子裡。原本坐在一起的團隊，現在散落在辦公室各處。抱怨幾乎天天送到如冰面前。她開始覺得這個計畫已經失敗了。"
+   },
+   {
+    "en": "Then something unexpected happened. Because seats kept changing, staff met people they had never spoken to. The marketing team ended up beside the [[accounting]] department. A question that once took three emails was answered in a minute. Victor Lai, a junior designer, overheard a [[customer]] call by chance. The next day he rewrote a confusing order form.",
+    "zh": "接著，意外的事發生了。因為座位一直在換，員工遇到了從沒說過話的人。行銷團隊最後坐到了會計部門旁邊。過去要來回三封信才問得清楚的問題，現在一分鐘就有答案。資淺設計師賴維克偶然聽到一通客戶來電。隔天他就把一份讓人看不懂的訂購單改寫了。"
+   },
+   {
+    "en": "Ruby noticed another benefit that was less obvious. Managers no longer sat behind closed doors. They shared the same long tables as everyone else. Junior staff felt safer about raising problems early. The [[annual]] staff [[survey]] showed a clear rise in [[satisfaction]].",
+    "zh": "如冰還注意到另一個比較不明顯的好處。主管不再坐在關起門的辦公室裡。他們和所有人共用同樣的長桌。資淺的員工比較敢在問題還小的時候就講出來。年度員工問卷調查顯示，滿意度明顯上升。"
+   },
+   {
+    "en": "Not everyone was [[convinced]]. Three employees said they could not [[concentrate]] without a fixed desk. Kestrel's answer was practical. It built six quiet rooms that anyone could [[reserve]] [[in advance]]. A year later the firm signed a smaller [[lease]] and saved two million NT dollars. Ruby still keeps the old name tags in her drawer.",
+    "zh": "並不是每個人都被說服。三名員工表示，沒有固定座位他們無法專心。Kestrel 的處理方式很務實：蓋了六間安靜的小房間，任何人都可以事先預約。一年後，公司簽下坪數較小的租約，省下兩百萬台幣。如冰到現在還把舊名牌收在抽屜裡。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "experiment",
+    "base": "experiment",
+    "pos": "n.",
+    "hint": "a test done to find out whether an idea really works",
+    "zh": "實驗；試驗"
+   },
+   {
+    "word": "colleagues",
+    "base": "colleague",
+    "pos": "n.",
+    "hint": "people you work with at the same company",
+    "zh": "同事"
+   },
+   {
+    "word": "rent",
+    "base": "rent",
+    "pos": "n.",
+    "hint": "money paid regularly to use a building you do not own",
+    "zh": "租金"
+   },
+   {
+    "word": "equipment",
+    "base": "equipment",
+    "pos": "n.",
+    "hint": "the tools and machines needed for a particular job",
+    "zh": "設備；器材"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "a plan for how much money can be spent",
+    "zh": "預算"
+   },
+   {
+    "word": "Complaints",
+    "base": "complaint",
+    "pos": "n.",
+    "hint": "statements that something is wrong or not good enough",
+    "zh": "抱怨；投訴"
+   },
+   {
+    "word": "accounting",
+    "base": "accounting",
+    "pos": "n.",
+    "hint": "the work of keeping records of money coming in and going out",
+    "zh": "會計"
+   },
+   {
+    "word": "customer",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "a person who buys goods or services from a business",
+    "zh": "顧客；客戶"
+   },
+   {
+    "word": "annual",
+    "base": "annual",
+    "pos": "adj.",
+    "hint": "happening once every year",
+    "zh": "年度的；每年的"
+   },
+   {
+    "word": "survey",
+    "base": "survey",
+    "pos": "n.",
+    "hint": "a set of questions given to many people to collect opinions",
+    "zh": "問卷調查"
+   },
+   {
+    "word": "satisfaction",
+    "base": "satisfaction",
+    "pos": "n.",
+    "hint": "the good feeling you get when something meets your needs",
+    "zh": "滿意；滿意度"
+   },
+   {
+    "word": "convinced",
+    "base": "convince",
+    "pos": "adj.",
+    "hint": "made to believe that something is true or right",
+    "zh": "被說服的；信服的"
+   },
+   {
+    "word": "concentrate",
+    "base": "concentrate",
+    "pos": "v.",
+    "hint": "to give all your attention to one thing",
+    "zh": "專心；專注"
+   },
+   {
+    "word": "reserve",
+    "base": "reserve",
+    "pos": "v.",
+    "hint": "to arrange to keep something for your own use later",
+    "zh": "預約；預留"
+   },
+   {
+    "word": "in advance",
+    "base": "in advance",
+    "pos": "phr.",
+    "hint": "before a planned time or event",
+    "zh": "事先；提前"
+   },
+   {
+    "word": "lease",
+    "base": "lease",
+    "pos": "n.",
+    "hint": "a legal contract to use a building or car for a fixed period",
+    "zh": "租約"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main idea of the article?",
+    "options": [
+     "Kestrel Design moved its whole office to a cheaper city.",
+     "Removing fixed seats saved money and improved communication at Kestrel Design.",
+     "Most designers at Kestrel Design now work from home full time.",
+     "Companies should never change how a design team is seated."
+    ],
+    "answer": 1,
+    "explanation": "全文從第二段的省租金動機，走到第四、五段的跨部門溝通與滿意度上升，最後第六段以縮小租約收尾。主線就是「取消固定座位帶來省錢與溝通兩個結果」。選項 A、C 文中沒有；選項 D 與結局相反。"
+   },
+   {
+    "q": "Why did Ruby Chen want to remove the fixed seats?",
+    "options": [
+     "Employees had asked for more comfortable chairs.",
+     "The building owner refused to renew the contract.",
+     "The company paid high rent for desks that were often empty.",
+     "The marketing team needed a room of its own."
+    ],
+    "answer": 2,
+    "explanation": "定位第二段第一、二句：「The reason was money. Kestrel paid a high rent for its floor, yet half the desks stood empty.」動機是租金高但桌子空著。其他三個選項都是文中沒提到的原因。"
+   },
+   {
+    "q": "What happened during the first month of the change?",
+    "options": [
+     "Employees rushed in early for good seats, and one designer hid his monitor.",
+     "Nobody came into the office at all.",
+     "Complaints stopped after the first week.",
+     "Ruby put the name tags back on the desks."
+    ],
+    "answer": 0,
+    "explanation": "定位第三段：有人七點就到搶位子，資深設計師每晚把螢幕藏進櫃子。同段還說抱怨「almost daily」，所以選項 C 錯；名牌到最後仍收在抽屜裡（第六段），選項 D 錯。"
+   },
+   {
+    "q": "What does Victor Lai's story suggest about the new seating?",
+    "options": [
+     "Junior designers should be moved into the sales department.",
+     "Order forms are usually written by the accounting staff.",
+     "Listening to customer calls is against company rules.",
+     "Sitting near other teams can bring useful information."
+    ],
+    "answer": 3,
+    "explanation": "推論題。第四段說他「overheard a customer call by chance」，隔天就改寫了難懂的訂購單；重點在於換座位讓他接觸到平常聽不到的資訊。文中沒有任何調部門或違規的說法。"
+   },
+   {
+    "q": "What can be inferred from the six quiet rooms?",
+    "options": [
+     "The rooms were paid for out of the training budget.",
+     "The company solved the complaint instead of giving up the plan.",
+     "The rooms were built only for managers.",
+     "Fixed desks turned out to work better after all."
+    ],
+    "answer": 1,
+    "explanation": "推論題。第六段先寫三名員工無法專心，接著說公司的做法「practical」，蓋了可預約的安靜房間，然後仍簽下更小的租約。可見公司是解決問題而非放棄計畫。文中說房間是「anyone could reserve」，選項 C 錯。"
+   }
+  ]
+ },
+ {
+  "id": "art-12b",
+  "title": "Selling Ugly Vegetables",
+  "titleZh": "把醜蔬菜賣成熱銷商品",
+  "category": "零售",
+  "level": "中級 (TOEIC 550-650)",
+  "readTime": 3,
+  "illustrationIdea": "A cardboard box on a wooden kitchen table filled with bent carrots, a two-legged radish and a curved pumpkin, with a printed card on the open lid telling the story of each vegetable.",
+  "paragraphs": [
+   {
+    "en": "Every year farmers throw away tons of good food. The reason has nothing to do with taste. A carrot with two legs tastes like a straight one, but shoppers walk past it. Supermarkets [[reject]] vegetables that look odd. In central Taiwan, a farmer named Lin Ching-yu lost about a fifth of her [[harvest]] this way.",
+    "zh": "每年都有幾噸好好的食物被農民丟掉。原因跟味道一點關係也沒有。長成兩條腿的紅蘿蔔，吃起來和直的一樣，但消費者就是走過去不看它。超市會退掉外形怪的蔬菜。在台灣中部，一位叫林靜妤的農民，就這樣損失了大約五分之一的收成。"
+   },
+   {
+    "en": "In 2023 Lin met a young marketer called Ethan Ko. He offered a simple idea: sell the rejected vegetables online in boxes. Lin was doubtful. Her family had farmed the same land for three [[generations]] and had never sold direct to [[customers]]. Even so, she agreed to try fifty boxes.",
+    "zh": "二○二三年，靜妤認識了一位年輕的行銷人柯以森。他提出一個很簡單的想法：把被退掉的蔬菜裝箱，放到網路上賣。靜妤心裡存疑。她家在同一塊地上種了三代，從來沒有直接賣給消費者過。即使如此，她還是答應先試五十箱。"
+   },
+   {
+    "en": "The first boxes sold badly. The photos showed muddy vegetables on a grey table. The [[label]] read \"second-class produce,\" which sounded almost like a [[warning]]. Ethan changed the whole [[approach]]. He renamed the box \"The Ugly Harvest\" and printed a short story on the lid.",
+    "zh": "頭幾箱賣得很差。照片裡是一堆沾著泥巴的蔬菜，擺在灰色的桌上。標籤上寫著「次級農產品」，聽起來幾乎像是一種警告。以森把整個做法翻掉重來。他把箱子改名叫「醜收成」，並在盒蓋上印了一則短短的故事。"
+   },
+   {
+    "en": "The story explained why each vegetable had been turned down. One tomato was too small. One pumpkin had grown a strange curve. Ethan also set the price thirty percent below the [[retail]] price of normal produce. Orders rose within two weeks. Customers began posting photos of the strangest vegetables they received.",
+    "zh": "故事寫的是每一樣蔬菜被退掉的理由。有顆番茄太小。有顆南瓜長出奇怪的弧度。以森還把價格訂在一般農產品零售價的七折。兩週之內，訂單就上來了。買家開始把收到的最怪蔬菜拍照上網。"
+   },
+   {
+    "en": "By 2025 the box had four thousand [[subscribers]]. Lin now sells almost her entire [[crop]]. Three nearby farms have become [[suppliers]] too, and a hotel kitchen buys the leftovers for soup. Her [[profit]] from each field has risen by eighteen percent.",
+    "zh": "到了二○二五年，這款箱子已經有四千名訂戶。靜妤現在幾乎把整批作物都賣得出去。附近三家農場也成了供應商，還有一間飯店的廚房會收剩下的部分拿去煮湯。她每塊田的利潤上升了百分之十八。"
+   },
+   {
+    "en": "Ethan says the lesson has little to do with vegetables. Shoppers were never really against odd shapes. They were against the feeling of buying something of poor quality. Once the box explained the reason honestly, the ugly carrot became the [[attraction]]. Several large chains now [[stock]] similar products, and [[demand]] is still growing.",
+    "zh": "以森說，這件事真正的教訓其實跟蔬菜關係不大。消費者從來就不是排斥奇怪的外形。他們排斥的是「買到次級品」的感覺。當箱子誠實地把來龍去脈說清楚，醜紅蘿蔔反而成了賣點。現在好幾家大型連鎖通路也開始進類似的商品，需求還在成長。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "reject",
+    "base": "reject",
+    "pos": "v.",
+    "hint": "to refuse to accept or take something",
+    "zh": "拒收；退貨"
+   },
+   {
+    "word": "harvest",
+    "base": "harvest",
+    "pos": "n.",
+    "hint": "the amount of food gathered from the fields in one season",
+    "zh": "收成；收穫量"
+   },
+   {
+    "word": "generations",
+    "base": "generation",
+    "pos": "n.",
+    "hint": "all the people in a family who are at about the same stage of life",
+    "zh": "世代；一代人"
+   },
+   {
+    "word": "customers",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "people who buy goods or services from a business",
+    "zh": "顧客；消費者"
+   },
+   {
+    "word": "label",
+    "base": "label",
+    "pos": "n.",
+    "hint": "a small piece of paper on a product that gives information about it",
+    "zh": "標籤"
+   },
+   {
+    "word": "warning",
+    "base": "warning",
+    "pos": "n.",
+    "hint": "a message that tells you danger or trouble may come",
+    "zh": "警告"
+   },
+   {
+    "word": "approach",
+    "base": "approach",
+    "pos": "n.",
+    "hint": "a way of dealing with a problem or doing a job",
+    "zh": "做法；方式"
+   },
+   {
+    "word": "retail",
+    "base": "retail",
+    "pos": "adj.",
+    "hint": "relating to selling goods in shops to the public",
+    "zh": "零售的"
+   },
+   {
+    "word": "subscribers",
+    "base": "subscriber",
+    "pos": "n.",
+    "hint": "people who pay regularly to keep receiving a product or service",
+    "zh": "訂戶"
+   },
+   {
+    "word": "crop",
+    "base": "crop",
+    "pos": "n.",
+    "hint": "a plant such as rice or corn that a farmer grows to sell",
+    "zh": "作物；農作物"
+   },
+   {
+    "word": "suppliers",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "companies that provide goods to a business",
+    "zh": "供應商"
+   },
+   {
+    "word": "profit",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "the money left after all costs have been paid",
+    "zh": "利潤"
+   },
+   {
+    "word": "attraction",
+    "base": "attraction",
+    "pos": "n.",
+    "hint": "the quality that makes people want something",
+    "zh": "吸引力；賣點"
+   },
+   {
+    "word": "stock",
+    "base": "stock",
+    "pos": "v.",
+    "hint": "to keep goods in a shop so they can be sold",
+    "zh": "進貨；備有存貨"
+   },
+   {
+    "word": "demand",
+    "base": "demand",
+    "pos": "n.",
+    "hint": "the amount of a product that people want to buy",
+    "zh": "需求"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the article mainly about?",
+    "options": [
+     "How supermarkets choose which farms to work with.",
+     "Why some vegetables taste better than others.",
+     "How a farm turned rejected vegetables into a popular product.",
+     "Why online shopping is cheaper than shopping in stores."
+    ],
+    "answer": 2,
+    "explanation": "文章從第一段的「被退掉的蔬菜」開始，經過改名、改價、改故事，到第五段的四千訂戶與利潤成長。主線是「被退貨的蔬菜怎麼變成熱銷商品」。味道在第一段就被排除，選項 B 錯。"
+   },
+   {
+    "q": "Why did supermarkets refuse Lin's vegetables?",
+    "options": [
+     "Because the vegetables did not look normal.",
+     "Because the vegetables arrived too late.",
+     "Because Lin asked for too high a price.",
+     "Because the vegetables tasted bad."
+    ],
+    "answer": 0,
+    "explanation": "定位第一段：「Supermarkets reject vegetables that look odd.」同段第二句已明說「The reason has nothing to do with taste」，所以選項 D 錯；價格與時間文中都沒提到。"
+   },
+   {
+    "q": "What did Ethan change after the first boxes sold badly?",
+    "options": [
+     "He raised the price of each box.",
+     "He stopped selling the boxes online.",
+     "He asked Lin to grow different vegetables.",
+     "He renamed the box and added a story about each vegetable."
+    ],
+    "answer": 3,
+    "explanation": "定位第三段最後兩句與第四段第一句：他把箱子改名為「The Ugly Harvest」，在盒蓋印上故事，說明每樣蔬菜被退的理由。價格是往下調三成（第四段），選項 A 錯。"
+   },
+   {
+    "q": "What can be inferred about the first label, \"second-class produce\"?",
+    "options": [
+     "It was printed in the wrong language.",
+     "It made buyers feel they were getting poor goods.",
+     "It broke a government rule about food labels.",
+     "It was too small for shoppers to read."
+    ],
+    "answer": 1,
+    "explanation": "推論題。第三段說那個標籤「sounded almost like a warning」，第六段又點明消費者排斥的是「the feeling of buying something of poor quality」。兩處合起來指向「讓人覺得買到差的東西」。法規與字體大小文中都沒提。"
+   },
+   {
+    "q": "Which result of the new box is mentioned in the article?",
+    "options": [
+     "Nearby farms began supplying vegetables as well.",
+     "Lin stopped farming and worked in marketing.",
+     "Supermarkets agreed to pay Lin a higher price.",
+     "The hotel kitchen opened its own vegetable farm."
+    ],
+    "answer": 0,
+    "explanation": "定位第五段：「Three nearby farms have become suppliers too.」飯店廚房只是收剩下的部分煮湯，沒有自己開農場；靜妤仍在務農，且超市付款一事文中未提。"
+   }
+  ]
+ },
+ {
+  "id": "art-13a",
+  "title": "Why the Cheapest Supplier Was Not the Cheapest",
+  "titleZh": "最低報價的供應商，為什麼反而最貴",
+  "category": "商業",
+  "level": "中高級 (TOEIC 650-800)",
+  "readTime": 4,
+  "illustrationIdea": "A purchasing manager alone in an office at night, two columns of numbers glowing on his monitor, a slightly bent steel tool handle lying on the desk beside a stack of shipping documents.",
+  "paragraphs": [
+   {
+    "en": "Kettleby Tools had been buying steel handles from the same [[supplier]] for nineteen years when the price of metal jumped and the purchasing department was told to find savings. Three companies submitted [[bids]]. The lowest, from a firm called Vessel Metals, came in eighteen percent below the others. Ray Okafor, who had run purchasing for two years, signed the [[contract]] the following week and was praised for it at the [[quarterly]] meeting.",
+    "zh": "凱托比工具向同一家供應商採購鋼製把手已經十九年，直到金屬價格大漲，採購部門被要求想辦法省錢。三家公司送來報價，其中最低的一家叫維瑟金屬，比其他兩家便宜了百分之十八。管採購兩年的雷．奧卡佛隔週就簽了約，還在季會上因此受到表揚。"
+   },
+   {
+    "en": "The first [[shipment]] arrived four days late, which nobody noticed. The second came nine days late. By the third, the assembly plant had quietly learned to plan around a company that never quite met a [[deadline]]. Workers put in [[overtime]] on Saturdays to keep production from slipping, and because that money came out of the plant's [[budget]] rather than Ray's, the two figures sat in separate reports for almost a year.",
+    "zh": "第一批貨晚了四天到，沒人注意到。第二批晚了九天。到了第三批，組裝廠已經默默學會替一家從來沒真正準時過的公司預留緩衝。工人週六加班趕工，才沒讓生產進度往後拖；而這筆錢出自工廠的預算、不是雷的預算，兩個數字就這樣分別待在不同的報表裡將近一年。"
+   },
+   {
+    "en": "Then came the [[quality]] problems. About one handle in twenty arrived slightly bent, which meant every piece had to be checked by hand before it went onto a tool. Vessel Metals never argued about returns; it issued a [[refund]] each time and sent [[replacement]] parts without complaint. The replacements, however, took three weeks to cross the border, and during those weeks unfinished products filled the [[warehouse]] instead of moving out to buyers.",
+    "zh": "接著是品質問題。大約每二十支把手就有一支微微彎曲，這代表每一支在裝上工具之前都得用手檢查過。維瑟金屬從不為退貨爭執，每次都退款，也照樣補寄替換零件。只是那些替換件要花三週才過得了邊境，這幾週裡，未完成的產品堆滿倉庫，出不到買家手上。"
+   },
+   {
+    "en": "The damage that mattered most appeared far from the factory. A hardware chain that accounted for a fifth of annual [[revenue]] received two late [[deliveries]] in a row and canceled its spring order without discussion. [[Complaints]] about bent handles reached the service desk, and [[warranty]] claims rose for the first time in six years. Reputation, Ray later admitted, had never appeared anywhere in his comparison.",
+    "zh": "真正要命的損害發生在離工廠很遠的地方。一家佔年營收五分之一的五金連鎖，連續兩次收到遲交的貨，二話不說取消了春季訂單。把手彎曲的客訴進到客服櫃檯，保固申請也六年來第一次上升。雷後來承認，他當初做的那份比較表裡，從頭到尾沒有「商譽」這一欄。"
+   },
+   {
+    "en": "In February he spent a weekend on a different set of numbers, adding the overtime, the [[inspection]] hours, the [[freight]] on returned parts, and the order that never came back. The cheap offer had saved the company about 240,000 dollars in two years. Everything it had set in motion cost roughly 1.1 million.",
+    "zh": "二月，他花了一個週末算另一組數字，把加班費、檢驗工時、退貨的運費，還有那張再也沒回來的訂單全都加進去。當初那個便宜的報價，兩年下來替公司省了大約二十四萬美元。而它一路引發的其他一切，花掉大約一百一十萬。"
+   },
+   {
+    "en": "Kettleby now scores every offer on four things instead of one: price, on-time delivery record, defect rate, and what other buyers say when someone calls them. Brantwood Metal, the original supplier, was hired back at a price four percent above its old one, and Ray [[negotiated]] a penalty that applies for every week a shipment arrives late.",
+    "zh": "現在凱托比評一份報價不再只看一件事，而是看四件：價格、準時交貨紀錄、不良率，還有打電話問其他買家會聽到什麼。原本的供應商布蘭伍德金屬被請了回來，價格比舊約高百分之四；雷還談成一條罰則：貨每晚一週，就罰供應商一筆錢。"
+   },
+   {
+    "en": "Ray keeps the old file in his desk and shows it to everyone who joins his department. The figure on a quotation, he tells them, is a price. What the company actually pays is settled over the next two years, by people in other buildings, in [[expenses]] that arrive under other names.",
+    "zh": "雷把那份舊檔案收在抽屜裡，部門每來一個新人他就拿出來給對方看。他說，報價單上的那個數字只是價格；公司真正付出多少，是接下來兩年由其他大樓裡的人決定的，以各種不同名目的支出出現。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "supplier",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "a business that regularly provides goods or materials to another company",
+    "zh": "供應商"
+   },
+   {
+    "word": "bids",
+    "base": "bid",
+    "pos": "n.",
+    "hint": "formal prices offered by companies hoping to win a job or an order",
+    "zh": "投標報價"
+   },
+   {
+    "word": "contract",
+    "base": "contract",
+    "pos": "n.",
+    "hint": "a written legal agreement covering work, goods, or payment",
+    "zh": "合約"
+   },
+   {
+    "word": "quarterly",
+    "base": "quarterly",
+    "pos": "adj.",
+    "hint": "happening once every three months",
+    "zh": "每季的"
+   },
+   {
+    "word": "shipment",
+    "base": "shipment",
+    "pos": "n.",
+    "hint": "a load of goods sent together from one place to another",
+    "zh": "一批貨、出貨"
+   },
+   {
+    "word": "deadline",
+    "base": "deadline",
+    "pos": "n.",
+    "hint": "the latest time by which something must be finished",
+    "zh": "期限"
+   },
+   {
+    "word": "overtime",
+    "base": "overtime",
+    "pos": "n.",
+    "hint": "extra hours worked beyond the normal schedule, usually at higher pay",
+    "zh": "加班"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "a plan for how much money may be spent in a given period",
+    "zh": "預算"
+   },
+   {
+    "word": "quality",
+    "base": "quality",
+    "pos": "n.",
+    "hint": "how good or bad something is when measured against what buyers expect",
+    "zh": "品質"
+   },
+   {
+    "word": "refund",
+    "base": "refund",
+    "pos": "n.",
+    "hint": "money given back to a buyer when goods are returned or a service fails",
+    "zh": "退款"
+   },
+   {
+    "word": "replacement",
+    "base": "replacement",
+    "pos": "n.",
+    "hint": "a new part sent to take the place of one that is broken or wrong",
+    "zh": "替換件"
+   },
+   {
+    "word": "warehouse",
+    "base": "warehouse",
+    "pos": "n.",
+    "hint": "a large building where goods are kept before being sold or sent out",
+    "zh": "倉庫"
+   },
+   {
+    "word": "revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the total money a business takes in from what it sells",
+    "zh": "營收"
+   },
+   {
+    "word": "deliveries",
+    "base": "delivery",
+    "pos": "n.",
+    "hint": "acts of bringing goods to the buyer's location",
+    "zh": "交貨、送貨"
+   },
+   {
+    "word": "Complaints",
+    "base": "complaint",
+    "pos": "n.",
+    "hint": "statements that a customer is not satisfied with a product or service",
+    "zh": "客訴、抱怨"
+   },
+   {
+    "word": "warranty",
+    "base": "warranty",
+    "pos": "n.",
+    "hint": "a written promise to repair or exchange a product within a set period",
+    "zh": "保固"
+   },
+   {
+    "word": "inspection",
+    "base": "inspection",
+    "pos": "n.",
+    "hint": "the act of looking at something carefully to find faults",
+    "zh": "檢驗"
+   },
+   {
+    "word": "freight",
+    "base": "freight",
+    "pos": "n.",
+    "hint": "goods carried in large amounts by truck, ship, or plane, or the cost of carrying them",
+    "zh": "貨運、運費"
+   },
+   {
+    "word": "negotiated",
+    "base": "negotiate",
+    "pos": "v.",
+    "hint": "discussed terms formally in order to reach an agreement",
+    "zh": "談成、協商"
+   },
+   {
+    "word": "expenses",
+    "base": "expense",
+    "pos": "n.",
+    "hint": "sums of money a business must pay out in order to operate",
+    "zh": "支出、費用"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main point of the article?",
+    "options": [
+     "A low price from a supplier hid much larger costs that appeared elsewhere in the company.",
+     "Buying metal parts from abroad is always more expensive than buying them locally.",
+     "Factories should store more spare parts so that late shipments cause no trouble.",
+     "Purchasing departments should be combined with production departments."
+    ],
+    "answer": 0,
+    "explanation": "主旨題。第五段的總帳（省二十四萬、代價一百一十萬）與最後一段「報價單上的數字只是價格」共同收束全文：低價本身沒錯，錯在其他部門承擔的隱藏成本沒被算進去。B、C、D 都只是文中細節或文章沒說過的推廣。"
+   },
+   {
+    "q": "Why did the extra weekend labor cost go unnoticed for so long?",
+    "options": [
+     "The plant manager decided not to report it to anyone.",
+     "Workers were not actually paid for the hours they worked.",
+     "It was recorded in the plant's budget rather than in Ray's.",
+     "It was much smaller than the savings on the steel handles."
+    ],
+    "answer": 2,
+    "explanation": "細節題。定位在第二段末：加班費出自工廠的預算而不是雷的預算，兩個數字分別待在不同報表裡將近一年，所以沒人把它們連在一起看。"
+   },
+   {
+    "q": "What did the hardware chain do after receiving two late deliveries?",
+    "options": [
+     "It asked Kettleby Tools for a larger discount.",
+     "It canceled its spring order without discussion.",
+     "It began inspecting every handle by hand.",
+     "It filed a warranty claim for the bent handles."
+    ],
+    "answer": 1,
+    "explanation": "細節題。定位在第四段第二句：佔年營收五分之一的五金連鎖連續兩次收到遲交的貨，直接取消春季訂單。C 是凱托比自己廠內的做法（第三段），D 是消費者端的保固申請。"
+   },
+   {
+    "q": "What can be inferred about Vessel Metals from the article?",
+    "options": [
+     "It refused to take responsibility for the parts that were bent.",
+     "It charged higher freight costs than any other supplier.",
+     "Its factory was closer to Kettleby Tools than Brantwood Metal was.",
+     "It cooperated readily on returns but was slow to put problems right."
+    ],
+    "answer": 3,
+    "explanation": "推論題。第三段寫維瑟金屬「從不為退貨爭執，每次都退款，也二話不說補寄」，態度是配合的；但補寄要三週才到，凱托比因此卡貨。兩件事合起來可推得「態度好、速度慢」。A 與原文直接矛盾。"
+   },
+   {
+    "q": "What did Kettleby change about the way it chooses a supplier?",
+    "options": [
+     "It now requires the assembly plant to approve every contract it signs.",
+     "It now scores an offer on delivery record and defect rate as well as price.",
+     "It now buys steel handles only from suppliers based inside the country.",
+     "It now accepts the lowest bid only after a trial order has been shipped."
+    ],
+    "answer": 1,
+    "explanation": "細節題。定位在第六段：凱托比現在評一份報價看四件事——價格、準時交貨紀錄、不良率，以及打電話問其他買家會聽到什麼。A、C、D 三種做法文中都沒有提到。"
+   }
+  ]
+ },
+ {
+  "id": "art-13b",
+  "title": "The Store That Trains Its Competitors",
+  "titleZh": "那家訓練同業的連鎖店",
+  "category": "商業",
+  "level": "中高級 (TOEIC 650-800)",
+  "readTime": 4,
+  "illustrationIdea": "A Saturday morning classroom above a bakery-supply store: thirty adults at folding tables taking notes while the owner writes bread costs on a whiteboard, sacks of flour stacked along the back wall.",
+  "paragraphs": [
+   {
+    "en": "Nadia Ostrander owns eleven stores that sell flour, ovens, and packaging to bakeries across three states. Every spring she opens a classroom above her Dover Street [[branch]] and teaches thirty strangers, free of charge, how to run a small bakery: how to price a loaf, how to read a [[lease]], how to pass a health check. Most of them mean to open shops of their own. Her [[competitors]] call the program the strangest thing in the industry.",
+    "zh": "娜迪雅．奧斯川德擁有十一家店，把麵粉、烤箱和包材賣給三個州的烘焙坊。每年春天，她在多佛街分店樓上開一間教室，免費教三十個素不相識的人怎麼經營一家小麵包店：怎麼替一條吐司訂價、怎麼看懂租約、怎麼通過衛生檢查。這些人多半打算開自己的店。同業說，這個計畫是業界最怪的一件事。"
+   },
+   {
+    "en": "The course, known as Saturday School, runs for six [[sessions]]. Two are taught by Nadia herself; the rest by her store managers, an accountant she pays by the hour, and a former [[inspector]] who explains which [[licenses]] a new shop must hold before it can sell anything. About thirty people [[enroll]] each year, and roughly a third of them open a business.",
+    "zh": "這門課大家都叫它「週六學校」，一共六堂。其中兩堂由娜迪雅親自上，其餘交給她的店長、一位按時計酬的會計，還有一位前稽查員，講解一家新店開賣之前得先辦哪些執照。每年大約三十人報名，最後大約三分之一真的開了店。"
+   },
+   {
+    "en": "What her competitors see as generosity, Nadia treats as a calculation. A bakery that opens needs an oven, mixing machines, and forty kilograms of flour a week for as long as it stays open. A single [[account]] like that is worth more over five years than the whole school costs. Around seven out of ten graduates who open shops buy their [[supplies]] from her, at ordinary [[wholesale]] prices, with no special [[discount]] attached.",
+    "zh": "同業眼中的慷慨，娜迪雅當成一筆帳來算。一家開起來的麵包店需要烤箱、攪拌機，而且只要還在營業，每週就得進四十公斤麵粉。這樣一個客戶五年下來的價值，超過整間學校的成本。開店的學員裡大約十個有七個向她進貨，而且是照一般批發價，沒有任何特別折扣。"
+   },
+   {
+    "en": "The second return took her longer to notice. Four of her eleven store managers first walked in as students, and so did most of the [[staff]] who now handle telephone orders. Someone who has spent six weekends learning the trade knows what a caller means by wet dough. Saturday School has become the cheapest way she has ever found to [[recruit]], costing far less per person than the [[advertising]] she once ran in trade magazines.",
+    "zh": "第二種回報她花了比較久才看出來。十一位店長裡有四位當初是以學員身分走進來的，現在負責接電話訂單的人也多半如此。花過六個週末學這一行的人，一聽就知道電話那頭說「麵團偏濕」是什麼意思。週六學校成了她找人最便宜的管道，平均一個人的成本遠低於她過去在同業雜誌上的廣告花費。"
+   },
+   {
+    "en": "The [[strategy]] was tested three years ago, when a national [[chain]] opened a warehouse twenty minutes away and priced its flour below hers, accepting a thinner [[profit]] to win the region. Nadia lost a few customers that year, mostly larger ones, but the small bakeries stayed. Several owners said the same thing in different words: they would not leave the company that taught them to survive their first winter over eight cents a kilogram.",
+    "zh": "這套做法在三年前受到考驗。一家全國連鎖在二十分鐘車程外開了倉庫，麵粉價格壓在她之下，寧可少賺也要拿下這一區。娜迪雅第一年流失了幾個客戶，多半是規模比較大的那種，但小麵包店留了下來。好幾位老闆用不同的說法講了同一件事：教會他們撐過第一個冬天的那家公司，他們不會為了一公斤八分錢就換掉。"
+   },
+   {
+    "en": "None of this makes the school a sure thing. A quarter of the graduates who open shops close within two years, and Nadia writes off what they owe. One former student now runs a supply business of her own forty miles north, taking [[orders]] that would otherwise be Nadia's. Nadia still invites her to speak to every new class, which the staff find hard to explain.",
+    "zh": "這些都不表示這間學校穩賺。開店的學員裡有四分之一撐不過兩年就收掉，欠的貨款娜迪雅直接認賠。有一位以前的學生，現在在北邊四十英里外自己開了同樣的供應生意，接走本來會是娜迪雅的訂單。娜迪雅照樣每年請她回來對新班級演講，店裡的員工不太知道該怎麼解釋這件事。"
+   },
+   {
+    "en": "Her own explanation is short. A supply business does not grow by taking [[clients]] from the store down the road; it grows when more bakeries exist. Teaching people to open them is, in her view, her cheapest [[investment]], one that happens to be paid back by people who are, on paper, her rivals.",
+    "zh": "她自己的解釋很短：供應生意不是靠搶走隔壁那條街的客戶長大的，是烘焙坊變多才長大的。教人開店，在她看來是她能做的最便宜的投資，只不過還錢的人，名義上都是她的競爭對手。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "branch",
+    "base": "branch",
+    "pos": "n.",
+    "hint": "a single local shop or office that is one part of a larger company",
+    "zh": "分店、分公司"
+   },
+   {
+    "word": "lease",
+    "base": "lease",
+    "pos": "n.",
+    "hint": "a legal agreement to rent a building or vehicle for a fixed period",
+    "zh": "租約"
+   },
+   {
+    "word": "competitors",
+    "base": "competitor",
+    "pos": "n.",
+    "hint": "other businesses trying to sell to the same buyers",
+    "zh": "同業、對手"
+   },
+   {
+    "word": "sessions",
+    "base": "session",
+    "pos": "n.",
+    "hint": "periods of time set aside for classes, meetings, or other activities",
+    "zh": "堂、場次"
+   },
+   {
+    "word": "inspector",
+    "base": "inspector",
+    "pos": "n.",
+    "hint": "an official whose job is to visit places and check that rules are followed",
+    "zh": "稽查員"
+   },
+   {
+    "word": "licenses",
+    "base": "license",
+    "pos": "n.",
+    "hint": "official papers that allow a person or business to do something legally",
+    "zh": "執照"
+   },
+   {
+    "word": "enroll",
+    "base": "enroll",
+    "pos": "v.",
+    "hint": "to sign up officially as a member of a class or program",
+    "zh": "報名、註冊"
+   },
+   {
+    "word": "account",
+    "base": "account",
+    "pos": "n.",
+    "hint": "a regular business customer, or the buying arrangement a firm has with one",
+    "zh": "客戶、往來戶頭"
+   },
+   {
+    "word": "supplies",
+    "base": "supply",
+    "pos": "n.",
+    "hint": "materials and goods that a business needs in order to operate",
+    "zh": "物料、貨品"
+   },
+   {
+    "word": "wholesale",
+    "base": "wholesale",
+    "pos": "adj.",
+    "hint": "relating to selling goods in large amounts to shops rather than to the public",
+    "zh": "批發的"
+   },
+   {
+    "word": "discount",
+    "base": "discount",
+    "pos": "n.",
+    "hint": "an amount taken off the normal price",
+    "zh": "折扣"
+   },
+   {
+    "word": "staff",
+    "base": "staff",
+    "pos": "n.",
+    "hint": "the group of people employed by an organization",
+    "zh": "員工"
+   },
+   {
+    "word": "recruit",
+    "base": "recruit",
+    "pos": "v.",
+    "hint": "to find and take on new workers",
+    "zh": "招募"
+   },
+   {
+    "word": "advertising",
+    "base": "advertising",
+    "pos": "n.",
+    "hint": "paid messages used to make products or services known to the public",
+    "zh": "廣告"
+   },
+   {
+    "word": "strategy",
+    "base": "strategy",
+    "pos": "n.",
+    "hint": "a long-term plan for reaching an important business goal",
+    "zh": "策略"
+   },
+   {
+    "word": "chain",
+    "base": "chain",
+    "pos": "n.",
+    "hint": "a group of shops or restaurants owned by the same company",
+    "zh": "連鎖企業"
+   },
+   {
+    "word": "profit",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "the money a business keeps after all its costs are paid",
+    "zh": "利潤"
+   },
+   {
+    "word": "orders",
+    "base": "order",
+    "pos": "n.",
+    "hint": "requests from customers for goods to be sent to them",
+    "zh": "訂單"
+   },
+   {
+    "word": "clients",
+    "base": "client",
+    "pos": "n.",
+    "hint": "people or companies that pay a business for its goods or services",
+    "zh": "客戶"
+   },
+   {
+    "word": "investment",
+    "base": "investment",
+    "pos": "n.",
+    "hint": "money or effort put into something now in the hope of a return later",
+    "zh": "投資"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main idea of the article?",
+    "options": [
+     "Small bakeries rarely survive unless someone gives them free training.",
+     "Nadia's free course creates future customers and workers, which is why it makes business sense.",
+     "National chains cannot compete with local supply stores on price.",
+     "Teaching competitors is a mistake that most store owners come to regret."
+    ],
+    "answer": 1,
+    "explanation": "主旨題。第三段（開店的學員成為批發客戶）與第四段（學員成為員工來源）說明課程的算盤，第七段收尾「烘焙坊變多，供應生意才長大」。A、C、D 都超出文章說過的範圍，D 更與第六、七段的立場相反。"
+   },
+   {
+    "q": "Who teaches most of the Saturday School classes?",
+    "options": [
+     "Nadia Ostrander, who runs all six sessions herself.",
+     "Volunteers sent by the local bakers' association.",
+     "Owners of the competing supply stores nearby.",
+     "Her store managers, a paid accountant, and a former inspector."
+    ],
+    "answer": 3,
+    "explanation": "細節題。定位在第二段：六堂課裡娜迪雅只親自上兩堂，其餘由店長、按時計酬的會計，以及一位退休稽查員負責。"
+   },
+   {
+    "q": "What happened when the national chain opened nearby and sold flour more cheaply?",
+    "options": [
+     "Most of the small bakeries kept buying from Nadia.",
+     "Nadia lowered her wholesale prices to match the chain.",
+     "Saturday School had to be suspended for a year.",
+     "Half of Nadia's store managers left for the new company."
+    ],
+    "answer": 0,
+    "explanation": "細節題。定位在第五段：第一年流失的多半是規模較大的客戶，小麵包店留了下來，理由是不願意為了一公斤八分錢離開教過他們的公司。"
+   },
+   {
+    "q": "Why does Nadia most likely keep inviting a former student who now competes with her?",
+    "options": [
+     "The woman pays a fee for the chance to speak to the class.",
+     "No one else is available to teach that part of the course.",
+     "She believes that more bakeries opening helps her more than one rival hurts her.",
+     "The woman's business sells goods that Ostrander does not carry."
+    ],
+    "answer": 2,
+    "explanation": "推論題。第六段擺出「同業講師」這個矛盾，第七段給出解釋：生意是靠烘焙坊變多才長大的。把兩段合起來看，可推得她算的是整體市場，而不是單一對手的得失。A、B、D 文中都沒有依據。"
+   },
+   {
+    "q": "What happens when a bakery started by a graduate closes down?",
+    "options": [
+     "Nadia takes back the oven and the mixing machines she supplied.",
+     "Nadia asks the owner to repay the cost of the six-week course.",
+     "Nadia gives up the money the failed business still owes her.",
+     "Nadia offers the owner a job at the Dover Street branch."
+    ],
+    "answer": 2,
+    "explanation": "細節題。定位在第六段：開店的學員有四分之一撐不過兩年，欠下的貨款娜迪雅直接認賠。B 與第一段「免費上課」矛盾，A 與 D 文中都沒有依據。"
+   }
+  ]
+ },
+ {
+  "id": "art-14a",
+  "title": "The Real Cost of Employee Turnover",
+  "titleZh": "員工流動率的真實成本",
+  "category": "職場",
+  "level": "高級 (TOEIC 800+)",
+  "readTime": 6,
+  "illustrationIdea": "An HR manager stands at a whiteboard where one small labelled box marked 'recruiting ads' sits above a much larger iceberg of hidden costs, while warehouse workers move pallets in the background.",
+  "paragraphs": [
+   {
+    "en": "When Harper Lin took over human resources at Vellmore Logistics, she inherited a problem nobody wanted to name. The warehouse division lost nearly a third of its staff every year, yet the annual [[budget]] recorded that loss as a single modest line: recruitment advertising. Harper suspected the real figure was hiding elsewhere. For three months she traced every [[expense]] that one departure set in motion. The total she carried into the board meeting was nine times what management had assumed.",
+    "zh": "當 Harper Lin 接下 Vellmore Logistics 的人資主管一職時，她也接手了一個沒人願意講明的問題。倉儲部門每年流失將近三分之一的員工，但年度預算卻只把這筆損失記成一行不起眼的項目：徵才廣告費。Harper 懷疑真正的數字藏在別的地方。她花了三個月，把一名員工離職所連帶引發的每一筆支出都追查出來。她帶進董事會的總額，是管理層原本估計的九倍。"
+   },
+   {
+    "en": "The visible costs came first. Posting a [[vacancy]], screening [[applicants]], and running interviews ate manager hours that nobody ever billed to a department. Agency fees for licensed forklift operators reached twelve percent of a first-year [[salary]]. Then came paperwork, uniforms, and the safety training every newcomer finished before touching a machine. Together these reached about four thousand dollars per [[hire]] — uncomfortable, but not shocking. The second half of the report was the part that silenced the room.",
+    "zh": "看得見的成本最先浮現。刊登職缺、篩選應徵者、安排面試，吃掉了主管大量工時，而這些時間從來沒被算進任何部門的帳上。透過仲介找有證照的堆高機操作員，仲介費高達第一年薪水的一成二。接著是文件作業、制服，以及每位新人碰到機器前必須完成的安全訓練。這些加起來，每雇用一人約四千美元——讓人不舒服，但還不到驚人的地步。真正讓會議室安靜下來的，是報告的後半部。"
+   },
+   {
+    "en": "While a position sits empty, the work does not pause. The remaining staff absorb the extra [[shifts]], and [[overtime]] pay climbs with them. Harper found that the night crew worked nine additional hours a week during vacancies, all at a premium rate, and [[productivity]] fell anyway. Tired workers packed more orders incorrectly, and every wrong shipment meant freight charges and apologies. One regional [[client]] cancelled a [[contract]] worth six hundred thousand dollars after three late deliveries.",
+    "zh": "職缺空著的時候，工作並不會跟著停下。留下來的人得吸收多出來的班次，加班費也跟著往上爬。Harper 發現，缺人期間夜班人員平均每週多做九小時，而且全是加成計費；生產力卻還是下滑。疲勞的員工包錯更多訂單，每一次出貨錯誤都意味著運費支出與道歉。一家區域客戶在三次延遲交貨後，取消了一紙價值六十萬美元的合約。"
+   },
+   {
+    "en": "Then there is the slow climb of the [[replacement]]. A new forklift operator needed eleven weeks to match the output of the person who left; a shift [[supervisor]] needed seven months. Throughout that stretch the company pays a full [[wage]] for partial performance, and no accounting column exists for the difference. Harper described it to the board as paying the full price for a truck that could only be driven half loaded.",
+    "zh": "接著是接替者緩慢爬升的那段期間。新的堆高機操作員需要十一週才能追上離職者的產出，輪班主管則要七個月。這段期間公司付的是全額工資，換來的卻是部分產能，而會計科目裡根本沒有這一欄。Harper 向董事會形容：這等於用全額價錢買一輛卡車，卻只能載半車貨。"
+   },
+   {
+    "en": "The effect on those who stay may be the costliest item of all. [[Morale]] drops as familiar faces disappear, workloads grow, and every [[resignation]] quietly invites [[colleagues]] to weigh their own options. Two supervisors admitted they had started returning recruiters' calls only after watching their best packers leave. Departures, in short, lead to more departures, until a division that once trained newcomers has nobody experienced enough to teach them.",
+    "zh": "對留下來的人造成的影響，或許才是最貴的一項。熟面孔一個個消失，士氣下滑、工作量變重，而每一次辭職都在無聲地邀請同事評估自己的去留。兩位主管坦承，是在看著手下最好的包裝員離開之後，他們才開始回獵才顧問的電話。換句話說，離職會製造更多離職，直到一個曾經有能力訓練新人的部門，再也找不到夠資深的人來教。"
+   },
+   {
+    "en": "Why do companies tolerate such an expensive habit? Harper's answer was structural. The cost of [[turnover]] is scattered across the organization, and no single manager owns the total. Agency fees sit in human resources, overtime sits in operations, lost accounts sit in sales, and the training burden falls on whoever stands nearest. Turnover therefore looks cheap to everyone and expensive to nobody.",
+    "zh": "公司為什麼容忍這種昂貴的習慣？Harper 的答案是結構性的。人員流動的成本被打散在整個組織裡，沒有任何一位主管扛得起這個總數。仲介費掛在人資、加班費掛在營運、丟掉的客戶算在業務、訓練負擔則落在離得最近的人身上。人員流動因此對每個人來說都很便宜，對誰都不算貴。"
+   },
+   {
+    "en": "What Harper proposed was nothing dramatic: schedules published three weeks ahead, a modest [[bonus]] at the twelve-month mark, permission for supervisors to approve shift swaps without calling headquarters, and exit interviews run by an outsider. The package cost two hundred thousand dollars a year. Eighteen months later, warehouse departures had fallen from thirty-four percent to nineteen, [[retention]] among second-year staff had nearly doubled, and the division's operating [[margin]] had risen a full point.",
+    "zh": "Harper 提出的做法一點也不華麗：班表提前三週公布、滿一年發一筆小額獎金、主管可自行核准換班不必請示總部、離職面談由外部人員來做。整包措施一年約花二十萬美元。十八個月後，倉儲部門的離職比例從三成四降到一成九，第二年員工的留任率幾乎翻倍，部門的營業利潤率也上升了一個百分點。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "a plan showing how much money a company may spend and on what",
+    "zh": "預算"
+   },
+   {
+    "word": "expense",
+    "base": "expense",
+    "pos": "n.",
+    "hint": "money that has to be paid out for goods, services or business activity",
+    "zh": "支出、費用"
+   },
+   {
+    "word": "vacancy",
+    "base": "vacancy",
+    "pos": "n.",
+    "hint": "a job position that is open and waiting to be filled",
+    "zh": "職缺"
+   },
+   {
+    "word": "applicants",
+    "base": "applicant",
+    "pos": "n.",
+    "hint": "people who formally ask to be given a job or a place",
+    "zh": "應徵者"
+   },
+   {
+    "word": "salary",
+    "base": "salary",
+    "pos": "n.",
+    "hint": "fixed money paid to an employee, usually counted by the month or the year",
+    "zh": "薪水"
+   },
+   {
+    "word": "hire",
+    "base": "hire",
+    "pos": "n.",
+    "hint": "the act of taking a worker onto the staff, or the worker newly taken on",
+    "zh": "雇用（一名新員工）"
+   },
+   {
+    "word": "shifts",
+    "base": "shift",
+    "pos": "n.",
+    "hint": "a fixed block of working hours, such as nights or weekends",
+    "zh": "班次、輪班"
+   },
+   {
+    "word": "overtime",
+    "base": "overtime",
+    "pos": "n.",
+    "hint": "extra hours worked beyond the normal schedule, usually paid at a higher rate",
+    "zh": "加班（費）"
+   },
+   {
+    "word": "productivity",
+    "base": "productivity",
+    "pos": "n.",
+    "hint": "the amount of useful work or goods finished in a given time",
+    "zh": "生產力"
+   },
+   {
+    "word": "client",
+    "base": "client",
+    "pos": "n.",
+    "hint": "a company or person that pays another business for services",
+    "zh": "客戶"
+   },
+   {
+    "word": "contract",
+    "base": "contract",
+    "pos": "n.",
+    "hint": "a written legal agreement between two sides",
+    "zh": "合約"
+   },
+   {
+    "word": "replacement",
+    "base": "replacement",
+    "pos": "n.",
+    "hint": "a person or thing that takes the position of another",
+    "zh": "接替者、替代品"
+   },
+   {
+    "word": "supervisor",
+    "base": "supervisor",
+    "pos": "n.",
+    "hint": "a person who directs and checks the work of a team",
+    "zh": "主管、督導"
+   },
+   {
+    "word": "wage",
+    "base": "wage",
+    "pos": "n.",
+    "hint": "money paid to a worker, often counted by the hour or the week",
+    "zh": "工資"
+   },
+   {
+    "word": "Morale",
+    "base": "morale",
+    "pos": "n.",
+    "hint": "the level of confidence and willingness felt by a group of people",
+    "zh": "士氣"
+   },
+   {
+    "word": "resignation",
+    "base": "resignation",
+    "pos": "n.",
+    "hint": "the act of formally leaving a job by one's own choice",
+    "zh": "辭職"
+   },
+   {
+    "word": "colleagues",
+    "base": "colleague",
+    "pos": "n.",
+    "hint": "people who work at the same company as you",
+    "zh": "同事"
+   },
+   {
+    "word": "turnover",
+    "base": "turnover",
+    "pos": "n.",
+    "hint": "the rate at which workers leave a company and must be replaced",
+    "zh": "人員流動率"
+   },
+   {
+    "word": "bonus",
+    "base": "bonus",
+    "pos": "n.",
+    "hint": "extra money given in addition to normal pay",
+    "zh": "獎金"
+   },
+   {
+    "word": "retention",
+    "base": "retention",
+    "pos": "n.",
+    "hint": "the ability of a company to keep its staff or customers over time",
+    "zh": "留任率、留存"
+   },
+   {
+    "word": "margin",
+    "base": "margin",
+    "pos": "n.",
+    "hint": "the gap between what something costs a company and what it earns from it",
+    "zh": "利潤率"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main point of the article?",
+    "options": [
+     "Employment agencies charge fees that most companies cannot afford.",
+     "Warehouse positions are harder to fill than office positions.",
+     "Most of what staff departures cost a company is never recorded as a cost of turnover.",
+     "Exit interviews are the only reliable way to measure satisfaction at work."
+    ],
+    "answer": 2,
+    "explanation": "第一段點出帳上只有「徵才廣告費」一行，實際總額卻是九倍；第六段解釋成本被打散到各部門。全文主線就是「真實成本從未以流動成本的名義被記錄」。"
+   },
+   {
+    "q": "According to Harper's findings, what happened while positions were left unfilled?",
+    "options": [
+     "The night crew worked about nine extra hours a week at a higher rate.",
+     "Managers cut the number of night shifts in order to save money.",
+     "The company borrowed workers from another division.",
+     "Customers agreed to accept later delivery dates."
+    ],
+    "answer": 0,
+    "explanation": "定位第三段：缺人期間夜班人員每週多做九小時，且全部按加成費率計算。其他選項文中都沒有提到。"
+   },
+   {
+    "q": "Harper's comparison to a truck that can only be driven half loaded suggests that",
+    "options": [
+     "the company's vehicles were too old for heavy work.",
+     "new workers should be given smaller machines at first.",
+     "safety training programs are usually far too short.",
+     "full pay is being spent on output that is still incomplete."
+    ],
+    "answer": 3,
+    "explanation": "推論題，定位第四段：公司付全額工資，但新人只交出部分產能，比喻的重點在「付全價、卻只得到一半的效果」。"
+   },
+   {
+    "q": "What can be inferred about why managers rarely act on this cost?",
+    "options": [
+     "Company law forbids recording such losses in the accounts.",
+     "No department sees the whole figure, so the problem never looks urgent.",
+     "Most managers believe workers cannot be persuaded to stay.",
+     "Boards refuse to approve any spending on staff benefits."
+    ],
+    "answer": 1,
+    "explanation": "推論題，定位第六段：費用分散在人資、營運、業務與訓練之中，沒有人扛總數，因此「對每個人都很便宜」，自然不會有人動手處理。"
+   },
+   {
+    "q": "What does the outcome of Harper's plan suggest?",
+    "options": [
+     "Fairly cheap changes to working conditions can return more than they cost.",
+     "Raising wages is the only way to keep warehouse staff.",
+     "Companies should change supervisors every eighteen months.",
+     "Operating results depend mainly on advertising spending."
+    ],
+    "answer": 0,
+    "explanation": "推論題，定位第七段：一年二十萬美元的樸素措施，換來離職率減半與利潤率上升一個百分點，可推知投入不高的條件改善其實划算。"
+   }
+  ]
+ },
+ {
+  "id": "art-14b",
+  "title": "Why Subscription Boxes Keep Failing",
+  "titleZh": "訂閱制電商為何總是難以獲利",
+  "category": "商業",
+  "level": "高級 (TOEIC 800+)",
+  "readTime": 5,
+  "illustrationIdea": "A founder sits on the floor of a half-empty warehouse surrounded by unshipped gift boxes, holding a single bag of coffee beans and looking at a wall chart where the subscriber line drops month by month.",
+  "paragraphs": [
+   {
+    "en": "In its first spring, Harvest Crate looked unstoppable. Nadia Reyes had left a marketing job to mail monthly boxes of unusual food — chili honey, seaweed crackers, single-origin chocolate — to anyone curious enough to sign up. Within eight months she had eleven thousand [[subscribers]] and two [[investors]] willing to pay for a larger [[warehouse]]. Within three years the company was closed. The explanation had been sitting in the numbers since the very first month.",
+    "zh": "在創業的第一個春天，Harvest Crate 看起來勢不可擋。Nadia Reyes 辭掉行銷工作，每月寄出裝滿新奇食品的箱子——辣味蜂蜜、海苔脆餅、單一產區巧克力——寄給任何一個好奇到願意訂閱的人。八個月內，她累積了一萬一千名訂閱者，還有兩位投資人願意出錢換更大的倉庫。三年之內，公司卻收了。答案其實從第一個月起就躺在數字裡。"
+   },
+   {
+    "en": "Every subscription business starts with the same arithmetic. Harvest Crate gave fifty percent off the opening box, and each new member cost about thirty-eight dollars in [[advertising]] to attract. Add that [[discount]], the goods inside, and the [[shipping]], and the first box lost roughly twenty dollars. Nothing was wrong with that by itself. The company simply had to hold on to the customer for five months before it saw any [[profit]].",
+    "zh": "每一門訂閱生意都從同一道算術開始。Harvest Crate 首箱打五折，而每吸引一名新會員，廣告成本約三十八美元。再加上折扣、箱內商品與運費，第一箱大約虧二十美元。這件事本身沒有問題，只是公司必須把這位客戶留住五個月，才開始看得到任何利潤。"
+   },
+   {
+    "en": "Most customers did not stay that long. Half had [[cancelled]] by the fourth month. Nadia had built a discovery box, and discovery has a short life: the first jar of unfamiliar jam is a delight, the fifth is a problem on the shelf. The subscriptions that survive tend to sell what people were going to buy anyway — coffee, razor blades, pet food, contact lenses — because a [[loyal]] customer stops paying only when the need itself stops.",
+    "zh": "多數客戶沒撐那麼久。到第四個月，已有一半的人取消。Nadia 做的是「探索型」箱子，而新鮮感的壽命很短：第一罐沒吃過的果醬是驚喜，第五罐就成了櫃子上的難題。活得下來的訂閱制，通常賣的是人們本來就會買的東西——咖啡、刮鬍刀片、寵物食品、隱形眼鏡——因為忠實客戶只有在需求本身消失時才會停止付錢。"
+   },
+   {
+    "en": "The second trap was the calendar. Boxes are planned six to ten weeks ahead, so [[inventory]] must be bought before anyone knows how many members will remain, and [[demand]] can be estimated but never known. Nadia's [[forecast]] for one December assumed fourteen thousand boxes; she sent nine thousand. The surplus sat in storage until the dates on the jars ran out. Order too little instead, and substitutions begin — and substitutions produce complaints.",
+    "zh": "第二個陷阱是時間表。箱子必須提前六到十週規劃，因此庫存得在沒人知道會剩下多少會員之前就先買進，而需求只能估計、無法確知。Nadia 某年十二月的預測是一萬四千箱，實際只寄出九千箱，多出來的貨躺在倉儲裡，直到罐子上的有效期限過去。反過來訂太少，就得改用替代品；而替代品換來的是客訴。"
+   },
+   {
+    "en": "Then there is weight. Eight jars and tins travel heavily, and postage plus [[packaging]] consumed twenty-two percent of Harvest Crate's [[revenue]]. Nadia tried to [[negotiate]] better rates with carriers, though the volume needed for a real reduction was still far away. Worse, her [[suppliers]] had given samples away gladly while the box worked as free promotion; once she wanted steady quantities, they quoted ordinary [[wholesale]] prices.",
+    "zh": "再來是重量。八個玻璃罐和鐵罐運起來很沉，郵資加上包裝材料吃掉了 Harvest Crate 兩成二的營收。Nadia 試著和物流業者協商更好的費率，但要換到真正的折讓，需要的出貨量還遠遠不夠。更糟的是，當這個箱子還算免費宣傳時，供應商都樂意免費提供樣品；一旦她要穩定的數量，對方報的就是一般批發價。"
+   },
+   {
+    "en": "The models that last look duller. They carry one line of goods rather than a surprise, they set a [[retail]] price high enough to absorb [[delivery]], and they often own what they sell instead of passing along someone else's brand. A coffee company that roasts its own beans keeps the maker's share as well as the seller's; [[competitors]] who merely assemble other people's products are left with whatever is still on the table after everyone has been paid.",
+    "zh": "撐得久的模式看起來反而無趣得多。它們只做一條產品線而不是驚喜包，訂的零售價高到足以吸收配送成本，而且賣的往往是自家的東西，而不是轉手別人的品牌。自己烘豆的咖啡商，同時賺到製造端與銷售端的那一份；而只是把別人的商品組裝成箱的競爭對手，只能拿到所有人分完之後桌上剩下的部分。"
+   },
+   {
+    "en": "Nadia's second company sells one thing — her own roasted coffee, sent every three weeks, cancel whenever you like. No theme, no mystery, no surprise. The [[launch]] cost a few thousand dollars, and the business turned profitable in fourteen months with a fifth of the customers she once had. The box, she says now, was never the product. The habit was, and habits are built on what people already want, arriving before they run out.",
+    "zh": "Nadia 的第二家公司只賣一樣東西——她自己烘的咖啡，每三週寄一次，隨時可以取消。沒有主題、沒有懸念、沒有驚喜。這次上市只花了幾千美元，卻在十四個月內轉為獲利，客戶數只有當年的五分之一。她現在說，箱子從來就不是產品，習慣才是；而習慣建立在人們本來就想要、而且會在用完之前準時送到的東西上。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "subscribers",
+    "base": "subscriber",
+    "pos": "n.",
+    "hint": "people who pay regularly to keep receiving a product or service",
+    "zh": "訂閱者"
+   },
+   {
+    "word": "investors",
+    "base": "investor",
+    "pos": "n.",
+    "hint": "people who put money into a business hoping to get more back later",
+    "zh": "投資人"
+   },
+   {
+    "word": "warehouse",
+    "base": "warehouse",
+    "pos": "n.",
+    "hint": "a large building where goods are kept before being sold or sent out",
+    "zh": "倉庫"
+   },
+   {
+    "word": "advertising",
+    "base": "advertising",
+    "pos": "n.",
+    "hint": "paid messages used to make the public aware of a product",
+    "zh": "廣告宣傳"
+   },
+   {
+    "word": "discount",
+    "base": "discount",
+    "pos": "n.",
+    "hint": "an amount taken off the usual price",
+    "zh": "折扣"
+   },
+   {
+    "word": "shipping",
+    "base": "shipping",
+    "pos": "n.",
+    "hint": "the work and cost of sending goods to the buyer",
+    "zh": "運送（費）"
+   },
+   {
+    "word": "profit",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "the money left over once all costs have been paid",
+    "zh": "利潤"
+   },
+   {
+    "word": "cancelled",
+    "base": "cancel",
+    "pos": "v.",
+    "hint": "to end an arrangement so that it no longer continues",
+    "zh": "取消"
+   },
+   {
+    "word": "loyal",
+    "base": "loyal",
+    "pos": "adj.",
+    "hint": "continuing to support the same company or brand over a long period",
+    "zh": "忠實的"
+   },
+   {
+    "word": "inventory",
+    "base": "inventory",
+    "pos": "n.",
+    "hint": "the goods a company is holding in stock",
+    "zh": "庫存"
+   },
+   {
+    "word": "demand",
+    "base": "demand",
+    "pos": "n.",
+    "hint": "the amount of a product that buyers want at a given time",
+    "zh": "需求"
+   },
+   {
+    "word": "forecast",
+    "base": "forecast",
+    "pos": "n.",
+    "hint": "a statement of what a company expects to happen in the future",
+    "zh": "預測"
+   },
+   {
+    "word": "packaging",
+    "base": "packaging",
+    "pos": "n.",
+    "hint": "the boxes and materials used to hold and protect goods being sent",
+    "zh": "包裝材料"
+   },
+   {
+    "word": "revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the total money a business takes in from what it sells",
+    "zh": "營收"
+   },
+   {
+    "word": "negotiate",
+    "base": "negotiate",
+    "pos": "v.",
+    "hint": "to discuss terms with another side in order to reach an agreement",
+    "zh": "協商"
+   },
+   {
+    "word": "suppliers",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "companies that provide goods or materials to another business",
+    "zh": "供應商"
+   },
+   {
+    "word": "wholesale",
+    "base": "wholesale",
+    "pos": "adj.",
+    "hint": "relating to selling goods in large amounts to shops rather than to the public",
+    "zh": "批發的"
+   },
+   {
+    "word": "retail",
+    "base": "retail",
+    "pos": "adj.",
+    "hint": "relating to selling goods directly to ordinary buyers",
+    "zh": "零售的"
+   },
+   {
+    "word": "delivery",
+    "base": "delivery",
+    "pos": "n.",
+    "hint": "the act of bringing goods to the address of the buyer",
+    "zh": "配送"
+   },
+   {
+    "word": "competitors",
+    "base": "competitor",
+    "pos": "n.",
+    "hint": "other companies trying to win the same customers",
+    "zh": "競爭對手"
+   },
+   {
+    "word": "launch",
+    "base": "launch",
+    "pos": "n.",
+    "hint": "the start of a new product or business in the market",
+    "zh": "推出、上市"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What does the article identify as the central problem with boxes like Harvest Crate?",
+    "options": [
+     "Customers dislike receiving food through the post.",
+     "The cost of winning a member is repaid only after several months, and most members leave first.",
+     "Investors refuse to put money into this kind of company.",
+     "Food products are too heavy to be sold online at all."
+    ],
+    "answer": 1,
+    "explanation": "定位第二、三段：首箱虧約二十美元，要留住客戶五個月才開始獲利，但到第四個月已有一半取消。主旨即在這個時間差。"
+   },
+   {
+    "q": "How much of Harvest Crate's revenue went to postage and packaging?",
+    "options": [
+     "Twelve percent",
+     "Fifty percent",
+     "Thirty-eight percent",
+     "Twenty-two percent"
+    ],
+    "answer": 3,
+    "explanation": "細節題，定位第五段明寫二成二。五十％是首箱折扣、三十八美元是廣告獲客成本，屬於干擾選項。"
+   },
+   {
+    "q": "What changed in Harvest Crate's relationship with its suppliers as the company grew?",
+    "options": [
+     "They stopped treating the box as free promotion and began charging normal prices.",
+     "They asked for a share of the monthly membership fees.",
+     "They refused to work with food companies of any kind.",
+     "They moved their goods to a competing box instead."
+    ],
+    "answer": 0,
+    "explanation": "定位第五段：箱子還算免費宣傳時供應商樂意送樣品，等到她需要穩定數量，對方就報一般批發價。"
+   },
+   {
+    "q": "Why does the writer mention coffee, razor blades and pet food?",
+    "options": [
+     "They are cheaper to send than jars of jam.",
+     "They were the products Harvest Crate refused to carry.",
+     "They are bought again and again out of need, so members have little reason to stop.",
+     "They can be produced without any suppliers."
+    ],
+    "answer": 2,
+    "explanation": "推論題，定位第三段：這些例子是用來對比「探索型」箱子，說明補貨型商品的需求持續，客戶不會因為新鮮感消失而取消。"
+   },
+   {
+    "q": "What does the closing idea — that the box was never the product — suggest?",
+    "options": [
+     "Buyers care more about package design than about the goods inside.",
+     "A successful service depends on careful selection and surprise.",
+     "A company should offer as many product lines as it can manage.",
+     "A subscription works when it supplies something the buyer would keep purchasing anyway."
+    ],
+    "answer": 3,
+    "explanation": "推論題，定位第七段並呼應第三段：第二家公司只賣自家咖啡、定期補貨，說明真正撐住訂閱的是既有需求所形成的習慣，而非開箱的驚喜。"
+   }
+  ]
+ },
+ {
   "id": "art-2a",
   "title": "Turning Delays into Loyalty",
   "titleZh": "把延誤變成忠誠度",
@@ -3325,6 +5420,336 @@ TOEIC.articles = [
     ],
     "answer": 0,
     "explanation": "推論題。定位在第六段：拉高門檻後「訂位確實沒掉」，但八個月內辦卡申請掉了一成九、銀行要求重談合約，最後「守住了看得見的營收，卻放掉利潤高得多的營收」。選項 B 正好被「訂位沒掉」否定；選項 C 過度概括（銀行是重啟談判而非解約）；選項 D 與第五、六段所述的高消費會員價值相反。"
+   }
+  ]
+ },
+ {
+  "id": "art-9a",
+  "title": "The Sign That Saved the Shop",
+  "titleZh": "救回一間小店的招牌",
+  "category": "零售",
+  "level": "初級 (TOEIC 400-550)",
+  "readTime": 3,
+  "illustrationIdea": "A small flower shop beside a train station, with a large black handwritten board outside and two people stopping to read it.",
+  "paragraphs": [
+   {
+    "en": "Mr. Lin [[owned]] a small flower shop in Tainan. It stood next to a [[busy]] train station. Ten years ago, people came every day. But last spring, the shop was almost empty. Mr. Lin looked at his [[sales]] [[report]] and felt sad.",
+    "zh": "林先生在台南開了一間小花店。花店就在忙碌的火車站旁邊。十年前，每天都有客人上門。但去年春天，店裡幾乎沒有人。林先生看著他的銷售報表，心情很低落。"
+   },
+   {
+    "en": "His daughter Amy had an idea. She was a college student. The old [[sign]] outside was small and dirty. Amy said, \"People walk by too fast.\" She bought a big black board. Then she wrote a short line on it [[by hand]].",
+    "zh": "他的女兒艾咪想到一個辦法。她是個大學生。外面那塊舊招牌又小又髒。艾咪說：「大家走得太快了。」她買了一塊大黑板。然後她用手寫上一句短短的話。"
+   },
+   {
+    "en": "The line was simple. It said, \"Buy one flower for a stranger today.\" Some people stopped and smiled. A young man bought a rose for the bus driver. A woman [[ordered]] ten flowers for her [[office]]. The shop was busy again by noon.",
+    "zh": "那句話很簡單。上面寫著：「今天為一個陌生人買一朵花。」有些人停下腳步，露出微笑。一個年輕男子買了一朵玫瑰送給公車司機。一位女士為她的辦公室訂了十朵花。中午之前，店裡又忙了起來。"
+   },
+   {
+    "en": "Mr. Lin changed the [[message]] every week. Each line was short and warm. [[Customers]] took photos of the board. They [[shared]] the photos online. Soon new people came from other cities. Some of them waited outside before nine.",
+    "zh": "林先生每週都換上新的訊息。每一句都簡短又溫暖。客人們拍下黑板的照片。他們把照片分享到網路上。很快就有人從其他城市過來。有些人不到九點就在門外等候。"
+   },
+   {
+    "en": "Now the shop [[delivers]] flowers to hotels and banks. Mr. Lin still writes the sign by hand. He never uses a printer. \"A machine can print,\" he says. \"But a machine cannot say hello.\"",
+    "zh": "現在這家店會把花送到飯店和銀行。林先生還是親手寫招牌。他從來不用印表機。「機器會印字，」他說。「但機器不會打招呼。」"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "owned",
+    "base": "own",
+    "pos": "v.",
+    "hint": "to have something as your property",
+    "zh": "擁有；經營"
+   },
+   {
+    "word": "busy",
+    "base": "busy",
+    "pos": "adj.",
+    "hint": "full of people or work; not free",
+    "zh": "忙碌的；熱鬧的"
+   },
+   {
+    "word": "sales",
+    "base": "sales",
+    "pos": "n.",
+    "hint": "money a shop gets from people who buy things",
+    "zh": "銷售額；業績"
+   },
+   {
+    "word": "report",
+    "base": "report",
+    "pos": "n.",
+    "hint": "a paper that gives facts about something",
+    "zh": "報表；報告"
+   },
+   {
+    "word": "sign",
+    "base": "sign",
+    "pos": "n.",
+    "hint": "a board with words that tells people something",
+    "zh": "招牌；標示"
+   },
+   {
+    "word": "by hand",
+    "base": "by hand",
+    "pos": "phr.",
+    "hint": "done by a person, not by a machine",
+    "zh": "用手工；親手"
+   },
+   {
+    "word": "ordered",
+    "base": "order",
+    "pos": "v.",
+    "hint": "asked a shop to give or send you goods",
+    "zh": "訂購"
+   },
+   {
+    "word": "office",
+    "base": "office",
+    "pos": "n.",
+    "hint": "a room where people do business work",
+    "zh": "辦公室"
+   },
+   {
+    "word": "message",
+    "base": "message",
+    "pos": "n.",
+    "hint": "a short piece of writing for other people",
+    "zh": "訊息"
+   },
+   {
+    "word": "Customers",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "people who buy things from a shop",
+    "zh": "顧客"
+   },
+   {
+    "word": "shared",
+    "base": "share",
+    "pos": "v.",
+    "hint": "let other people see or use something",
+    "zh": "分享"
+   },
+   {
+    "word": "delivers",
+    "base": "deliver",
+    "pos": "v.",
+    "hint": "takes goods to the place people want them",
+    "zh": "運送；配送"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main idea of the article?",
+    "options": [
+     "The train station brought many people to the shop.",
+     "Amy wanted to open her own flower shop.",
+     "A simple sign written by hand helped a small shop.",
+     "Flowers are cheaper in Tainan than in other cities."
+    ],
+    "answer": 2,
+    "explanation": "全文從第二段艾咪寫下手寫招牌開始，到第三、四段生意變好，都在說一塊手寫招牌救了小店，故選第三項。"
+   },
+   {
+    "q": "What did Amy write on the board?",
+    "options": [
+     "Buy one flower for a stranger today.",
+     "We are open every day until nine.",
+     "All flowers are half price this week.",
+     "We deliver to hotels and banks."
+    ],
+    "answer": 0,
+    "explanation": "第三段第二句直接引用招牌上的句子「Buy one flower for a stranger today.」，故選第一項。"
+   },
+   {
+    "q": "How did people in other cities hear about the shop?",
+    "options": [
+     "Mr. Lin called them on the phone.",
+     "The bus driver told them.",
+     "Amy sent them letters.",
+     "Customers shared photos of the board online."
+    ],
+    "answer": 3,
+    "explanation": "第四段說顧客拍照並把照片分享到網路上，接著才有其他城市的人來，故選第四項。"
+   },
+   {
+    "q": "Why does Mr. Lin still write the sign by hand?",
+    "options": [
+     "Because a printer costs too much money.",
+     "Because he thinks writing by hand feels warm.",
+     "Because Amy is too busy to help him.",
+     "Because he cannot read very well."
+    ],
+    "answer": 1,
+    "explanation": "第五段最後他說機器會印字卻不會打招呼，可推論他認為手寫比較有人情味，故選第二項。"
+   }
+  ]
+ },
+ {
+  "id": "art-9b",
+  "title": "The Wrong Meeting Room",
+  "titleZh": "走錯的那間會議室",
+  "category": "職場",
+  "level": "初級 (TOEIC 400-550)",
+  "readTime": 3,
+  "illustrationIdea": "A nervous young man in a shirt standing at an open meeting room door while ten seated coworkers turn to look at him.",
+  "paragraphs": [
+   {
+    "en": "Kevin started his first [[job]] at Sunrise Foods last May. On his second day, his [[boss]] sent him to Room 502. Kevin was nervous and walked very fast. On the fifth floor, he got out and turned left. Then he opened the door of Room 520.",
+    "zh": "凱文去年五月在陽光食品開始了他的第一份工作。上班第二天，他的主管要他去 502 會議室。凱文很緊張，走得很快。他在五樓走出電梯後往左轉。然後他推開了 520 會議室的門。"
+   },
+   {
+    "en": "Ten people sat around a long table. They all turned and looked at him. A woman smiled and pointed at an empty chair. Kevin sat down and said nothing. The [[meeting]] was about a new fruit drink.",
+    "zh": "十個人圍著一張長桌坐著。他們全都轉過頭來看他。一位女士微笑著指了指空位。凱文坐下來，什麼也沒說。這場會議在談一款新的果汁飲料。"
+   },
+   {
+    "en": "The team had a problem. Their new [[product]] did not sell well. A [[manager]] asked, \"Does anyone have an idea?\" Kevin looked at the small bottle on the table. He said, \"The [[package]] is hard to open. My grandmother could not open it.\"",
+    "zh": "這個團隊遇到了問題。他們的新產品賣得不好。一位經理問：「有人有想法嗎？」凱文看著桌上的小瓶子。他說：「這個包裝很難打開。我奶奶就打不開。」"
+   },
+   {
+    "en": "The room became very quiet. Then everyone started to talk at the same time. The manager wrote Kevin's [[suggestion]] on the board. After the meeting, she asked for his name. Kevin told her about his [[mistake]]. She laughed and said, \"Please come again next week.\"",
+    "zh": "會議室頓時安靜下來。接著所有人同時開口說話。經理把凱文的建議寫在白板上。散會後，她問了他的名字。凱文把自己走錯會議室的事告訴她。她笑著說：「下週請再來一次。」"
+   },
+   {
+    "en": "Two weeks later, Kevin's team joined the [[project]]. They [[tested]] a new bottle with older [[customers]]. The [[cost]] went up only a little. But orders grew by thirty percent.",
+    "zh": "兩週後，凱文的團隊也加入了這個專案。他們找年長顧客測試新瓶子。成本只增加了一點點。但訂單卻成長了三成。"
+   },
+   {
+    "en": "Kevin still tells this story to new workers. He always says the same thing. \"Ask a simple question,\" he tells them. \"A wrong room can still be the right one.\"",
+    "zh": "凱文到現在還會把這個故事說給新進同事聽。他每次都說同樣的話。「問一個簡單的問題，」他這樣告訴他們。「走錯的房間，也可能是對的房間。」"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "job",
+    "base": "job",
+    "pos": "n.",
+    "hint": "the work a person does to earn money",
+    "zh": "工作；職務"
+   },
+   {
+    "word": "boss",
+    "base": "boss",
+    "pos": "n.",
+    "hint": "the person who is in charge of you at work",
+    "zh": "上司；主管"
+   },
+   {
+    "word": "meeting",
+    "base": "meeting",
+    "pos": "n.",
+    "hint": "a time when people come together to talk about work",
+    "zh": "會議"
+   },
+   {
+    "word": "product",
+    "base": "product",
+    "pos": "n.",
+    "hint": "something a company makes and sells",
+    "zh": "產品"
+   },
+   {
+    "word": "manager",
+    "base": "manager",
+    "pos": "n.",
+    "hint": "a person who leads a team in a company",
+    "zh": "經理；主管"
+   },
+   {
+    "word": "package",
+    "base": "package",
+    "pos": "n.",
+    "hint": "the box or bag that holds a thing you buy",
+    "zh": "包裝；包裹"
+   },
+   {
+    "word": "suggestion",
+    "base": "suggestion",
+    "pos": "n.",
+    "hint": "an idea that you tell other people about",
+    "zh": "建議"
+   },
+   {
+    "word": "mistake",
+    "base": "mistake",
+    "pos": "n.",
+    "hint": "something you do wrong by accident",
+    "zh": "錯誤"
+   },
+   {
+    "word": "project",
+    "base": "project",
+    "pos": "n.",
+    "hint": "a piece of work with a clear goal and a plan",
+    "zh": "專案"
+   },
+   {
+    "word": "tested",
+    "base": "test",
+    "pos": "v.",
+    "hint": "tried something to see if it works well",
+    "zh": "測試"
+   },
+   {
+    "word": "customers",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "people who buy things from a company",
+    "zh": "顧客"
+   },
+   {
+    "word": "cost",
+    "base": "cost",
+    "pos": "n.",
+    "hint": "the money you must pay for something",
+    "zh": "成本；費用"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main idea of the story?",
+    "options": [
+     "Kevin was late for a meeting on his first day.",
+     "Kevin's mistake led to a good idea and new work.",
+     "Sunrise Foods needed to hire more young workers.",
+     "Fruit drinks sell better in summer than in winter."
+    ],
+    "answer": 1,
+    "explanation": "第一段凱文走錯會議室，第三、四段他的建議被採用，第五段兩個團隊合作，全文主軸就是一個錯誤帶出好結果，故選第二項。"
+   },
+   {
+    "q": "Why did Kevin walk into Room 520?",
+    "options": [
+     "His boss gave him the wrong room number.",
+     "He wanted to meet the manager there.",
+     "The elevator stopped on the wrong floor.",
+     "He was nervous and turned the wrong way."
+    ],
+    "answer": 3,
+    "explanation": "第一段說主管叫他去 502，但他很緊張、走得很快、出電梯往左轉，才走錯門，故選第四項。"
+   },
+   {
+    "q": "What problem did the team in Room 520 have?",
+    "options": [
+     "Their new drink did not sell well.",
+     "Their meeting room was too small.",
+     "Their manager was going to leave.",
+     "Their team had too many new workers."
+    ],
+    "answer": 0,
+    "explanation": "第三段第二句明說新產品賣得不好，故選第一項。"
+   },
+   {
+    "q": "Why did the manager ask for Kevin's name?",
+    "options": [
+     "She wanted to tell his boss about him.",
+     "She needed help to move the chairs.",
+     "She thought his idea was useful.",
+     "She knew his family very well."
+    ],
+    "answer": 2,
+    "explanation": "第四段她把凱文的建議寫在白板上，散會後才問名字，還請他下週再來，可推論她覺得這個建議有用，故選第三項。"
    }
   ]
  }

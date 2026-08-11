@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="Two colleagues at neighbouring desks">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="246" width="800" height="54" fill="#dde7ee"/>
+  <!-- 兩張桌 -->
+  <rect x="80" y="180" width="280" height="16" rx="6" fill="#0b72c4"/>
+  <line x1="110" y1="196" x2="104" y2="262" stroke="#404040" stroke-width="6"/>
+  <line x1="330" y1="196" x2="336" y2="262" stroke="#404040" stroke-width="6"/>
+  <rect x="440" y="180" width="280" height="16" rx="6" fill="#0b72c4"/>
+  <line x1="470" y1="196" x2="464" y2="262" stroke="#404040" stroke-width="6"/>
+  <line x1="690" y1="196" x2="696" y2="262" stroke="#404040" stroke-width="6"/>
+  <!-- 中間隔板 -->
+  <rect x="386" y="110" width="28" height="140" rx="6" fill="#9db8cc"/>
+  <!-- 兩位同事 -->
+  <circle cx="220" cy="112" r="22" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M198 166 q22 -24 44 0 l-4 14 h-36 z" fill="#e8890c"/>
+  <rect x="150" y="128" width="86" height="52" rx="5" fill="#fff" stroke="#404040" stroke-width="3.5"/>
+  <circle cx="580" cy="112" r="22" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M558 166 q22 -24 44 0 l-4 14 h-36 z" fill="#3a8a4d"/>
+  <rect x="564" y="128" width="86" height="52" rx="5" fill="#fff" stroke="#404040" stroke-width="3.5"/>
+  <!-- 遞出的咖啡杯 -->
+  <path d="M392 96 q8 -14 0 -24" fill="none" stroke="#767f88" stroke-width="4" stroke-linecap="round"/>
+  <rect x="378" y="98" width="44" height="26" rx="5" fill="#fff" stroke="#404040" stroke-width="3"/>
+  <path d="M422 104 q12 4 0 12" fill="none" stroke="#404040" stroke-width="3"/>
+</svg>

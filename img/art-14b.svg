@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="Subscription box business decline">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="250" width="800" height="50" fill="#dde7ee"/>
+  <!-- 訂閱箱 -->
+  <path d="M110 140 h180 l-14 110 h-152 z" fill="#e8890c"/>
+  <path d="M110 140 h180 l14 -28 h-208 z" fill="#c97507"/>
+  <rect x="186" y="112" width="30" height="138" fill="#ffd964" opacity=".8"/>
+  <path d="M200 112 q-26 -26 -4 -34 q16 6 4 34 M200 112 q26 -26 4 -34 q-16 6 -4 34" fill="#c94040"/>
+  <!-- 遞減柱狀 -->
+  <rect x="380" y="110" width="46" height="140" fill="#0b72c4"/>
+  <rect x="444" y="140" width="46" height="110" fill="#0b72c4" opacity=".8"/>
+  <rect x="508" y="172" width="46" height="78" fill="#0b72c4" opacity=".6"/>
+  <rect x="572" y="200" width="46" height="50" fill="#0b72c4" opacity=".45"/>
+  <rect x="636" y="222" width="46" height="28" fill="#0b72c4" opacity=".3"/>
+  <line x1="360" y1="250" x2="710" y2="250" stroke="#404040" stroke-width="4"/>
+  <!-- 下滑箭頭 -->
+  <path d="M392 88 q140 30 296 118" fill="none" stroke="#c94040" stroke-width="6" stroke-linecap="round"/>
+  <path d="M688 206 l14 22 l-26 4 z" fill="#c94040"/>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A rainy day discount sign at a shop">
+  <rect width="800" height="300" fill="#dce6ee"/>
+  <rect x="0" y="244" width="800" height="56" fill="#c8d6e0"/>
+  <!-- 雨 -->
+  <g stroke="#9db8cc" stroke-width="3" stroke-linecap="round">
+    <line x1="80" y1="20" x2="66" y2="60"/><line x1="160" y1="10" x2="146" y2="50"/>
+    <line x1="240" y1="30" x2="226" y2="70"/><line x1="600" y1="16" x2="586" y2="56"/>
+    <line x1="680" y1="34" x2="666" y2="74"/><line x1="750" y1="12" x2="736" y2="52"/>
+    <line x1="120" y1="90" x2="106" y2="130"/><line x1="700" y1="100" x2="686" y2="140"/>
+  </g>
+  <!-- 雨棚與店 -->
+  <rect x="220" y="120" width="360" height="124" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M200 120 h400 l-24 -34 h-352 z" fill="#c94040"/>
+  <rect x="250" y="150" width="140" height="94" rx="4" fill="#9fd0f5"/>
+  <rect x="430" y="150" width="120" height="94" rx="4" fill="#e9f4fc"/>
+  <!-- 折扣牌 -->
+  <rect x="452" y="168" width="80" height="58" rx="6" fill="#ffd964" stroke="#e8890c" stroke-width="3"/>
+  <rect x="466" y="184" width="52" height="9" rx="4" fill="#b05e0a"/>
+  <rect x="466" y="200" width="36" height="9" rx="4" fill="#b05e0a"/>
+  <!-- 撐傘的人 -->
+  <path d="M624 150 a46 46 0 0 1 92 0 z" fill="#0b72c4"/>
+  <line x1="670" y1="150" x2="670" y2="206" stroke="#404040" stroke-width="4"/>
+  <circle cx="670" cy="212" r="16" fill="#fff" stroke="#404040" stroke-width="3.5"/>
+  <path d="M654 254 q16 -18 32 0 l-2 22 h-28 z" fill="#3a8a4d"/>
+</svg>

@@ -25,7 +25,7 @@
 
   /* ============ 文章列表 ============ */
   function renderList() {
-    document.title = '閱讀訓練|多益閱讀訓練室';
+    document.title = '閱讀訓練|刷刷英文';
     let levelFilter = '全部';
 
     const head = h('div', { class: 'page-head' },
@@ -85,7 +85,7 @@
 
   /* ============ 閱讀器 ============ */
   function renderReader(a) {
-    document.title = a.title + '|多益閱讀訓練室';
+    document.title = a.title + '|刷刷英文';
     const vocabMap = {};
     (a.vocab || []).forEach(v => { vocabMap[v.word.toLowerCase()] = v; });
     /* state = {idx: {t: 學生填的內容}};不批改對錯,填了就算完成,之後可修改 */

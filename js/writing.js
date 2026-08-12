@@ -66,7 +66,7 @@
 
   /* ================= 首頁 ================= */
   function renderHome() {
-    document.title = '寫作練習|多益閱讀訓練室';
+    document.title = '寫作練習|刷刷英文';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '寫作練習'),
       h('p', null, '一個單元一小步,寫的內容會保存,老師看得到。')));
@@ -94,7 +94,7 @@
   function renderMap(lv) {
     const L = W[lv];
     const units = unitsOf(lv);
-    document.title = L.title + '|多益閱讀訓練室';
+    document.title = L.title + '|刷刷英文';
     const done = units.filter(unitDone).length;
     const firstTodo = units.findIndex(u => !unitDone(u));
 

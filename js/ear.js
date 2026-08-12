@@ -92,7 +92,7 @@
 
   /* ================= 首頁 ================= */
   function renderHome() {
-    document.title = '聽力訓練|多益閱讀訓練室';
+    document.title = '聽力訓練|刷刷英文';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '聽力訓練'),
       h('p', null, '把耳朵磨利的基本功。可以重複聽,答錯的會優先再出現。')));

@@ -78,7 +78,7 @@
 
   /* ================= 首頁 ================= */
   function renderHome() {
-    document.title = '題庫刷題|多益閱讀訓練室';
+    document.title = '題庫刷題|刷刷英文';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '題庫刷題')));
 
@@ -263,7 +263,7 @@
 
   /* ================= 隨機練習(config=[{p,n,cat}],可混合多個 Part) ================= */
   function startQuiz(config) {
-    document.title = '隨機練習|多益閱讀訓練室';
+    document.title = '隨機練習|刷刷英文';
     const units = [];   // {p, item}:p5 的 item=題目,p6/7 的 item=題組
     config.forEach(c => pickPool(c.p, c.n, c.cat).forEach(item => units.push({ p: c.p, item })));
     if (!units.length) {
@@ -398,7 +398,7 @@
   /* ================= 錯題本 ================= */
   function startReview(p) {
     const d = DATA[p];
-    document.title = d.title + ' 錯題本|多益閱讀訓練室';
+    document.title = d.title + ' 錯題本|刷刷英文';
     const st = store.get(KEY(p), {});
     let units;                    // p5: 題;p6/7: {set, wrongKeys}
     if (p === '5') {

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bonnie8536.github.io/toeic-training/sitemap.xml
+Sitemap: https://www.shuashualanguage.com/sitemap.xml

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A paper bag and a plastic bag on a scale">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="252" width="800" height="48" fill="#dde7ee"/>
+  <!-- 天秤 -->
+  <line x1="400" y1="70" x2="400" y2="252" stroke="#404040" stroke-width="8"/>
+  <line x1="200" y1="98" x2="600" y2="98" stroke="#404040" stroke-width="7"/>
+  <circle cx="400" cy="88" r="12" fill="#0b72c4"/>
+  <line x1="200" y1="98" x2="170" y2="170" stroke="#9db8cc" stroke-width="4"/>
+  <line x1="200" y1="98" x2="230" y2="170" stroke="#9db8cc" stroke-width="4"/>
+  <line x1="600" y1="98" x2="570" y2="170" stroke="#9db8cc" stroke-width="4"/>
+  <line x1="600" y1="98" x2="630" y2="170" stroke="#9db8cc" stroke-width="4"/>
+  <!-- 紙袋 -->
+  <path d="M150 170 h100 l-10 80 h-80 z" fill="#e8890c"/>
+  <path d="M170 170 a18 14 0 0 1 60 0" fill="none" stroke="#c97507" stroke-width="5"/>
+  <!-- 塑膠袋 -->
+  <path d="M556 178 q-14 -20 8 -24 l6 -12 h30 l6 12 q22 4 8 24 l-4 66 h-50 z" fill="#9fd0f5"/>
+  <path d="M576 142 q6 8 14 0" stroke="#0b72c4" stroke-width="4" fill="none"/>
+  <!-- 葉子 -->
+  <path d="M96 120 q-16 -26 8 -40 q10 22 -8 40" fill="#3a8a4d"/>
+  <path d="M690 120 q16 -26 -8 -40 q-10 22 8 40" fill="#3a8a4d"/>
+</svg>

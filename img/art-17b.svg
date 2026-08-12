@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="Immune system shield training">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <!-- 盾牌 -->
+  <path d="M400 50 l110 34 v70 q0 74 -110 106 q-110 -32 -110 -106 v-70 z" fill="#0b72c4"/>
+  <path d="M400 70 l88 27 v60 q0 60 -88 86 q-88 -26 -88 -86 v-60 z" fill="#e9f4fc"/>
+  <path d="M358 160 l28 30 l58 -62" fill="none" stroke="#3a8a4d" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 病原(被擋在外) -->
+  <g>
+    <circle cx="170" cy="110" r="22" fill="#c94040"/>
+    <g stroke="#c94040" stroke-width="5" stroke-linecap="round">
+      <line x1="170" y1="78" x2="170" y2="64"/><line x1="170" y1="142" x2="170" y2="156"/>
+      <line x1="138" y1="110" x2="124" y2="110"/><line x1="202" y1="110" x2="216" y2="110"/>
+      <line x1="148" y1="88" x2="138" y2="78"/><line x1="192" y1="132" x2="202" y2="142"/>
+    </g>
+  </g>
+  <g opacity=".7">
+    <circle cx="130" cy="220" r="16" fill="#e8890c"/>
+    <g stroke="#e8890c" stroke-width="4" stroke-linecap="round">
+      <line x1="130" y1="196" x2="130" y2="186"/><line x1="130" y1="244" x2="130" y2="254"/>
+      <line x1="106" y1="220" x2="96" y2="220"/><line x1="154" y1="220" x2="164" y2="220"/>
+    </g>
+  </g>
+  <!-- 記憶筆記 -->
+  <rect x="580" y="100" width="130" height="100" rx="8" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <rect x="600" y="122" width="70" height="9" rx="4" fill="#c94040"/>
+  <rect x="600" y="142" width="90" height="8" rx="4" fill="#dde7ee"/>
+  <rect x="600" y="160" width="80" height="8" rx="4" fill="#dde7ee"/>
+  <path d="M600 182 l8 8 l14 -16" fill="none" stroke="#3a8a4d" stroke-width="4" stroke-linecap="round"/>
+</svg>

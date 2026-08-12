@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="City street with new trees lowering the heat">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="240" width="800" height="60" fill="#dde7ee"/>
+  <!-- 大樓 -->
+  <rect x="80" y="70" width="110" height="170" fill="#c8d6e0"/>
+  <rect x="220" y="50" width="90" height="190" fill="#b7c8d4"/>
+  <rect x="620" y="90" width="110" height="150" fill="#c8d6e0"/>
+  <!-- 行道樹 x3 -->
+  <g>
+    <rect x="366" y="180" width="14" height="62" fill="#8a5a2b"/>
+    <circle cx="373" cy="150" r="44" fill="#3a8a4d"/>
+    <circle cx="346" cy="168" r="26" fill="#4c9e60"/>
+    <circle cx="402" cy="166" r="28" fill="#4c9e60"/>
+  </g>
+  <g>
+    <rect x="490" y="192" width="12" height="50" fill="#8a5a2b"/>
+    <circle cx="496" cy="168" r="34" fill="#3a8a4d"/>
+    <circle cx="518" cy="182" r="20" fill="#4c9e60"/>
+  </g>
+  <g>
+    <rect x="560" y="200" width="10" height="42" fill="#8a5a2b"/>
+    <circle cx="565" cy="184" r="26" fill="#4c9e60"/>
+  </g>
+  <!-- 太陽與降溫 -->
+  <circle cx="120" cy="46" r="24" fill="#ffd964"/>
+  <g stroke="#ffd964" stroke-width="5" stroke-linecap="round">
+    <line x1="120" y1="8" x2="120" y2="18"/><line x1="158" y1="46" x2="168" y2="46"/>
+    <line x1="146" y1="20" x2="153" y2="13"/><line x1="146" y1="72" x2="153" y2="79"/>
+  </g>
+  <!-- 樹蔭下的人 -->
+  <circle cx="373" cy="212" r="12" fill="#fff" stroke="#404040" stroke-width="3.5"/>
+  <path d="M361 238 q12 -14 24 0 l-2 12 h-20 z" fill="#0b72c4"/>
+  <!-- 溫度計下降 -->
+  <rect x="740" y="120" width="14" height="90" rx="7" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <circle cx="747" cy="222" r="16" fill="#3a8a4d"/>
+  <rect x="742" y="170" width="10" height="46" fill="#3a8a4d"/>
+</svg>

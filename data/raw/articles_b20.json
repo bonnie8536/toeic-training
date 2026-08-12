@@ -1,0 +1,240 @@
+[
+  {
+    "id": "art-20a",
+    "title": "The Global Chip Shortage, Explained",
+    "titleZh": "全球晶片荒是怎麼回事",
+    "category": "科技",
+    "level": "高級 (TOEIC 800+)",
+    "readTime": 6,
+    "illustrationIdea": "A world map where a single small factory building in one region is connected by thin lines to empty car showrooms, idle assembly lines and waiting shoppers on other continents.",
+    "paragraphs": [
+      {
+        "en": "Very few shoppers have ever held a computer chip, yet a [[shortage]] of them can empty a car showroom. Chips are small pieces of [[semiconductor]] material that store and process information, and they sit inside phones, hospital equipment and, increasingly, cars. When supply falls behind [[demand]], the effects appear far from the plants that make them: delivery dates slip, and prices rise for goods that seem unrelated to electronics.",
+        "zh": "很少有消費者真的摸過一片電腦晶片，但晶片一缺貨，車商的展示間就可能空掉。晶片是一小片負責儲存與處理資訊的半導體材料，它藏在手機、醫院設備裡，也愈來愈多地裝進汽車裡。當供給跟不上需求，影響會出現在離製造工廠很遠的地方：交車日期一延再延，價格上漲的商品看起來甚至和電子產品毫無關係。"
+      },
+      {
+        "en": "Part of the explanation is how much the car has changed. A modern vehicle is a network of small computers managing brakes, sensors, screens and engine settings, each needing its own [[components]]. Carmakers, though, are not the most attractive customers for a chip [[manufacturer]]. The chips a car needs are often older, cheaper designs, and the [[profit]] on them is thin next to those built for phones. When [[capacity]] is tight, the cheaper order waits.",
+        "zh": "部分原因在於汽車本身的變化有多大。今天的車子是一整組小電腦，管著煞車、感測器、螢幕與引擎設定，每一項功能都需要自己的零組件。不過，對晶片製造商而言，車廠並不是最有吸引力的客戶。汽車用的晶片多半是比較舊、比較便宜的設計，利潤和手機用的晶片相比很薄。產能吃緊時，便宜的訂單就得排隊等。"
+      },
+      {
+        "en": "Supply cannot simply stretch to meet demand, because chipmaking is slow in a way most industries are not. A single [[facility]] costs billions of dollars and takes years to plan, build and test. The work then passes through hundreds of steps in rooms cleaner than a hospital operating room, and one batch takes months to finish. A company that raises [[production]] today is answering demand several years from now.",
+        "zh": "供給沒辦法說擴就擴，因為做晶片的速度慢得不像一般產業。一座廠要價數十億美元，從規劃、興建到測試都得花上好幾年。製程還要走過數百道步驟，房間比醫院手術室還乾淨，一批貨從投料到完成要好幾個月。今天才提高產量的公司，回應的其實是好幾年後的需求。"
+      },
+      {
+        "en": "The second weakness is concentration: only a handful of firms can make the most advanced chips, and much of the world's output sits in a few regions of East Asia. Efficient as that is, it leaves the [[supply chain]] [[vulnerable]] to a single point of failure. An earthquake, a drought that cuts the water such plants need, or a new export rule can halt output thousands of businesses depend on, and the [[disruption]] is felt in showrooms worldwide.",
+        "zh": "第二個弱點是集中：有能力做最先進晶片的公司只有少數幾家，而全球產出有很大一部分集中在東亞的幾個地區。這樣的安排效率極高，卻也讓整條供應鏈暴露在單點失效的風險裡。一場地震、一次讓廠區缺水的乾旱，或一項新的出口規定，都可能中斷成千上萬家不相干企業所仰賴的產出，而這種斷鏈會在世界各地的展示間被感受到。"
+      },
+      {
+        "en": "Ordering habits turned a tight market into a crisis. For decades, [[efficiency]] has meant keeping [[inventory]] low and having parts arrive just before they are needed, which works beautifully until deliveries stop. During the pandemic, carmakers expected sales to collapse and canceled orders while home electronics buyers ordered more than ever, so chip lines were reassigned. When car sales recovered sooner than [[forecast]], the companies that had left the queue rejoined at the back, and nervous buyers began ordering double, which made the [[backlog]] look worse still.",
+        "zh": "下單習慣把緊繃的市場推成危機。幾十年來，效率的定義就是庫存壓到最低、零件在需要的前一刻才到貨——這套做法漂亮得很，直到送貨停了為止。疫情期間，車廠預期銷量會崩而取消訂單，家用電子產品的買家卻買得比以往都多，晶片產線因此被重新分配。等到車市復甦得比預測還快，離開隊伍的公司只能重新排到最後面；心慌的買家又開始下兩倍的量，讓積壓的訂單看起來更嚇人。"
+      },
+      {
+        "en": "For ordinary people the [[consequences]] arrived as waiting and higher prices. A new car took months rather than weeks, and some arrived with features removed. Workers on [[assembly]] lines lost shifts while finished cars stood in parking lots waiting for one missing part. Hospitals and small firms competed for the same limited supply with far less bargaining power.",
+        "zh": "對一般人來說，後果就是等待與漲價。買一台新車要等好幾個月而不是幾週，有些車交車時還少了幾項配備。組裝線上的工人被減班，完工的車卻停在停車場，只為了等一個缺的零件。醫院與小公司搶的是同一批有限的供給，議價能力卻小得多。"
+      },
+      {
+        "en": "Governments answered with [[subsidies]] to attract chip plants onto their own soil; large buyers began holding [[reserves]] and approving a second [[supplier]] for critical parts. None of this is free. Spare capacity is idle capacity in a normal year, warehouse stock is money doing nothing, and a new plant needs engineers who take years to train. A system tuned only for the lowest cost stays efficient right up to the moment it breaks, and someone eventually pays for the buffer that was removed.",
+        "zh": "各國政府的回應是用補貼把晶片廠拉到自己的土地上；大型買家則開始備庫存，並為關鍵零件核准第二家供應商。這些都不是免費的。多備的產能在平常年份就是閒置的產能，躺在倉庫裡的存貨是沒在動的錢，新廠還需要工程師，而工程師要花好幾年才培養得出來。一個只為最低成本而調校的系統，會一路有效率到它斷掉的那一刻，而被拿掉的緩衝，最後總得有人買單。"
+      }
+    ],
+    "vocab": [
+      {"word": "shortage", "base": "shortage", "pos": "n.", "hint": "a situation in which there is not enough of something that people need", "zh": "短缺"},
+      {"word": "semiconductor", "base": "semiconductor", "pos": "n.", "hint": "a material used to make the tiny electronic parts inside phones and computers", "zh": "半導體"},
+      {"word": "demand", "base": "demand", "pos": "n.", "hint": "the amount of a product that buyers want at a given time", "zh": "需求"},
+      {"word": "components", "base": "component", "pos": "n.", "hint": "the separate parts that together make up a machine or a system", "zh": "零組件"},
+      {"word": "manufacturer", "base": "manufacturer", "pos": "n.", "hint": "a company that produces goods in large amounts, usually in factories", "zh": "製造商"},
+      {"word": "profit", "base": "profit", "pos": "n.", "hint": "the money left after all costs have been taken away from what a business earns", "zh": "利潤"},
+      {"word": "capacity", "base": "capacity", "pos": "n.", "hint": "the largest amount a factory or system is able to make or hold", "zh": "產能"},
+      {"word": "facility", "base": "facility", "pos": "n.", "hint": "a building or site set up for one particular kind of work", "zh": "廠房、設施"},
+      {"word": "production", "base": "production", "pos": "n.", "hint": "the process of making goods, or the quantity that is made", "zh": "生產、產量"},
+      {"word": "supply chain", "base": "supply chain", "pos": "n.", "hint": "the whole set of firms and steps that move a product from raw material to buyer", "zh": "供應鏈"},
+      {"word": "vulnerable", "base": "vulnerable", "pos": "adj.", "hint": "easily harmed or badly affected by damage or sudden events", "zh": "脆弱的、易受衝擊的"},
+      {"word": "disruption", "base": "disruption", "pos": "n.", "hint": "a sudden break in the normal flow of an activity or a service", "zh": "中斷、擾亂"},
+      {"word": "efficiency", "base": "efficiency", "pos": "n.", "hint": "the ability to work or produce with little waste of time or money", "zh": "效率"},
+      {"word": "inventory", "base": "inventory", "pos": "n.", "hint": "the goods and materials a business keeps in store", "zh": "庫存"},
+      {"word": "forecast", "base": "forecast", "pos": "n.", "hint": "a statement of what is expected to happen, based on present information", "zh": "預測"},
+      {"word": "backlog", "base": "backlog", "pos": "n.", "hint": "a pile of orders or work that has built up and is still waiting", "zh": "積壓的訂單"},
+      {"word": "consequences", "base": "consequence", "pos": "n.", "hint": "results that follow from an earlier action or event", "zh": "後果"},
+      {"word": "assembly", "base": "assembly", "pos": "n.", "hint": "the act of putting parts together to build a finished product", "zh": "組裝"},
+      {"word": "subsidies", "base": "subsidy", "pos": "n.", "hint": "money paid by a government to support an industry or lower a price", "zh": "補貼"},
+      {"word": "reserves", "base": "reserve", "pos": "n.", "hint": "an amount kept back so that it can be used when needed later", "zh": "儲備、存量"},
+      {"word": "supplier", "base": "supplier", "pos": "n.", "hint": "a business that provides goods or parts to another business", "zh": "供應商"}
+    ],
+    "questions": [
+      {
+        "q": "What is the main point of the article?",
+        "options": [
+          "Cars have now become too complicated for most ordinary drivers to repair themselves.",
+          "Governments should stop paying money to attract electronics companies to their countries.",
+          "Chip supply is slow, concentrated and run with no buffer, so problems spread.",
+          "Phone makers are largely responsible for the difficulties that carmakers now face."
+        ],
+        "answer": 2,
+        "explanation": "全文三個主軸：第三段講建廠與製程慢、第四段講產能集中、第五段講低庫存下單習慣，第七段收束為「只追求最低成本的系統很脆弱」。選項三把這三點合起來說。"
+      },
+      {
+        "q": "According to the article, why do carmakers' orders often wait when capacity is tight?",
+        "options": [
+          "The chips they buy are older, cheaper designs that earn a thinner profit.",
+          "Carmakers usually refuse to sign any supply contracts more than a year ahead.",
+          "Car chips have to be made in completely separate factories from phone chips.",
+          "Carmakers order far larger quantities each year than the phone companies do."
+        ],
+        "answer": 0,
+        "explanation": "定位第二段：汽車用的多半是較舊、較便宜的設計，利潤比手機晶片薄，所以產能緊時便宜的訂單排在後面。"
+      },
+      {
+        "q": "Why can a chip factory not respond quickly to a rise in demand?",
+        "options": [
+          "Skilled workers refuse to move to the regions where new plants are built.",
+          "Governments limit how many chips each plant is allowed to sell abroad.",
+          "The machines inside must be replaced after every single batch of chips.",
+          "A plant takes years to build and a batch takes months to finish."
+        ],
+        "answer": 3,
+        "explanation": "定位第三段：一座廠從規劃到出貨要好幾年，製程數百道步驟、一批貨要好幾個月，所以今天的決定回應的是幾年後的需求。"
+      },
+      {
+        "q": "What can be inferred about the practice of keeping inventory low?",
+        "options": [
+          "It is the main reason that chips have become so expensive to design.",
+          "It saves money in steady times but leaves no protection when deliveries stop.",
+          "It was invented by carmakers during the pandemic and quickly copied elsewhere.",
+          "It works only for companies that make electronic goods for ordinary shoppers."
+        ],
+        "answer": 1,
+        "explanation": "推論題，定位第五段：低庫存＋剛好到貨「漂亮得很，直到送貨停了為止」，可推知它在平穩時期省錢，一旦斷貨就毫無緩衝。"
+      },
+      {
+        "q": "What does the writer suggest about spare capacity and holding reserves?",
+        "options": [
+          "They remove any need for governments to offer support to the industry.",
+          "They are useful only for companies that sell directly to ordinary shoppers.",
+          "They will make any future shortage impossible, whatever else may happen.",
+          "They buy safety at a cost carried even in quiet years."
+        ],
+        "answer": 3,
+        "explanation": "推論題，定位第七段：多備的產能在平常年份就是閒置產能、倉庫存貨是「沒在動的錢」，可推知安全是有代價的，且平安無事時照樣要付。"
+      }
+    ]
+  },
+  {
+    "id": "art-20b",
+    "title": "Aging Societies and the Future of Work",
+    "titleZh": "高齡化社會與工作的未來",
+    "category": "社會",
+    "level": "高級 (TOEIC 800+)",
+    "readTime": 6,
+    "illustrationIdea": "A busy office and care home shown side by side, where workers of clearly different ages share the same tasks while a robot arm handles boxes in the background.",
+    "paragraphs": [
+      {
+        "en": "In a growing number of countries, people are living longer while fewer children are being born. The result is a [[population]] whose average age keeps rising, and it is not a worry for government planners alone. Because most of what a society consumes must be produced by the people currently working, an aging country quietly changes who does the work, what work there is, and how long a career lasts.",
+        "zh": "在愈來愈多國家，人們活得更久，出生的孩子卻更少。結果是人口的平均年齡持續往上，而這不只是政府規劃者要煩惱的事。因為一個社會消費的東西，大多得由當下正在工作的人生產出來，人口老化其實悄悄改變了誰在工作、有哪些工作，以及一份職業生涯會延續多久。"
+      },
+      {
+        "en": "The basic arithmetic is uncomfortable. Public [[pensions]] and health care are paid for largely out of the [[contributions]] and taxes of people in employment, so when the share of the [[workforce]] falls while the number drawing a pension grows, the same [[budget]] must stretch further. Governments face three unwelcome choices: collect more, promise less, or persuade more people to keep working.",
+        "zh": "基本算術並不好看。公共年金與健康照護主要靠在職者的保費與稅收支應，所以當勞動人口的比重下降、領年金的人卻變多，同一筆預算就得撐得更遠。政府面對的是三個都不討喜的選項：多收一點、少承諾一點，或設法讓更多人繼續工作。"
+      },
+      {
+        "en": "Worker [[shortages]] do not appear evenly. They concentrate in [[sectors]] that are hard to automate and hard to [[recruit]] for: nursing and elder care, construction, farming, transport and hospitality. Aging sharpens the squeeze, because an older society needs more care workers at exactly the moment when fewer young people enter the [[labor market]]. Employers raise [[wages]] and still cannot fill the [[vacancies]].",
+        "zh": "缺工並不是平均分布的。它集中在難以自動化、也難以招募的產業：護理與長照、營建、農業、運輸與餐旅。老化讓這個壓力更緊，因為社會愈老、需要的照顧人力愈多，偏偏此時進入勞動市場的年輕人卻愈少。雇主調高薪資，職缺還是補不滿。"
+      },
+      {
+        "en": "One response is to lengthen working life. Several countries have raised the age at which a state pension begins, and firms now offer part-time contracts, [[flexible]] hours or a gradual exit instead of a single [[retirement]] date. The policy is fair only up to a point. An accountant may happily work into her late sixties; a nurse, or a roofer whose body has taken decades of strain, may have no such choice, so a uniform rule pushes the heaviest burden onto the most physical jobs.",
+        "zh": "一個回應方式是拉長工作年限。若干國家已調高開始請領年金的年齡，企業也提供部分工時、彈性工時，或以漸進式退場取代單一的退休日期。但這套政策只在一定範圍內公平。會計師也許樂意做到六十好幾；一名護理師，或身體已被數十年勞動磨過的屋頂工人，可能沒有這種選擇——一體適用的規定，會把最重的負擔推給最耗體力的工作。"
+      },
+      {
+        "en": "Two other answers attract most attention. [[Automation]] can take over repetitive tasks in warehouses, factories and offices, but it is costly to install and still weak at the personal, unpredictable work that caring for older people demands. [[Immigration]] fills gaps quickly, yet it is politically contested, and because many countries are aging at once, they increasingly compete for the same [[skilled]] workers rather than drawing on an endless pool.",
+        "zh": "另外兩個答案吸走了最多注意力。自動化能接手倉儲、工廠與辦公室裡的重複性工作，但建置成本高，而且對於照顧長者這種講究人際、又難以預測的工作仍然很不擅長。移民能較快補上缺口，卻在政治上爭議不小；而且因為許多國家同時在老化，各國愈來愈是在搶同一批技術人力，而不是從一個取之不盡的池子裡撈人。"
+      },
+      {
+        "en": "Employers face a quieter problem: experience walking out the door. When long-serving staff retire, they take with them knowledge that was never written down — which [[supplier]] is reliable, why a rule exists, how to calm a difficult customer. Companies that handle this well pair older and younger [[colleagues]], pay for [[retraining]] at any age, and drop the old assumption that training someone in their fifties is money wasted. If a career can run for fifty years, that assumption never made much sense.",
+        "zh": "雇主還面對一個比較安靜的問題：經驗正走出大門。資深員工退休時，帶走的是從沒被寫下來的知識——哪一家供應商靠得住、某條規定為什麼會存在、怎麼安撫難搞的客戶。處理得好的公司，會讓資深與年輕的同事配對、在任何年齡都願意付錢做再訓練，並丟掉那個老觀念：訓練五十幾歲的人是浪費錢。如果一份職業生涯現在可以長達五十年，這個觀念從來就站不住腳。"
+      },
+      {
+        "en": "For anyone starting out today, the practical lesson is straightforward. Working lives will probably be longer and less straight, with more changes of [[occupation]] and more returns to study in the middle of a career. [[Demand]] should grow fastest in health, care, and the services and devices that help people live independently at home. The public argument about pensions and hours is not really about age; it is about who is asked to pay for a change that every country can already see coming.",
+        "zh": "對今天剛起步的人來說，實際的啟示相當清楚。工作生涯多半會更長、也更不筆直，中途換職業、回頭進修的次數都會變多。需求成長最快的，很可能是健康、照護，以及那些幫助人們在家中自主生活的服務與裝置。而關於年金與工時的公共爭論，其實不是在吵年齡，而是在吵：面對一場每個國家都已經看得見的變化，該由誰來付這筆帳。"
+      }
+    ],
+    "vocab": [
+      {"word": "population", "base": "population", "pos": "n.", "hint": "all the people living in a country or an area", "zh": "人口"},
+      {"word": "pensions", "base": "pension", "pos": "n.", "hint": "regular money paid to someone who has stopped working because of age", "zh": "年金、退休金"},
+      {"word": "contributions", "base": "contribution", "pos": "n.", "hint": "regular payments made into a public or company fund", "zh": "提撥、保費"},
+      {"word": "workforce", "base": "workforce", "pos": "n.", "hint": "all the people available to do paid jobs in a country or a company", "zh": "勞動人口、員工總體"},
+      {"word": "budget", "base": "budget", "pos": "n.", "hint": "a plan showing how much money is available and how it will be used", "zh": "預算"},
+      {"word": "shortages", "base": "shortage", "pos": "n.", "hint": "situations in which there are not enough people or supplies for what is needed", "zh": "短缺、缺工"},
+      {"word": "sectors", "base": "sector", "pos": "n.", "hint": "separate parts of an economy, such as farming or banking", "zh": "產業部門"},
+      {"word": "recruit", "base": "recruit", "pos": "v.", "hint": "to find and take on new people for jobs", "zh": "招募"},
+      {"word": "labor market", "base": "labor market", "pos": "n.", "hint": "the overall supply of workers and the jobs open to them", "zh": "勞動市場"},
+      {"word": "wages", "base": "wage", "pos": "n.", "hint": "money paid to someone for the work done, often counted by the hour", "zh": "工資、薪資"},
+      {"word": "vacancies", "base": "vacancy", "pos": "n.", "hint": "job positions that nobody fills at present", "zh": "職缺"},
+      {"word": "flexible", "base": "flexible", "pos": "adj.", "hint": "able to change easily to fit new conditions or needs", "zh": "彈性的"},
+      {"word": "retirement", "base": "retirement", "pos": "n.", "hint": "the point at which a person stops working for good, usually because of age", "zh": "退休"},
+      {"word": "Automation", "base": "automation", "pos": "n.", "hint": "the use of machines and software to do work once done by people", "zh": "自動化"},
+      {"word": "Immigration", "base": "immigration", "pos": "n.", "hint": "the movement of people into a country in order to live and work there", "zh": "移民（移入）"},
+      {"word": "skilled", "base": "skilled", "pos": "adj.", "hint": "having the training and ability needed for a particular kind of work", "zh": "有技術的、熟練的"},
+      {"word": "supplier", "base": "supplier", "pos": "n.", "hint": "a firm that sells goods or parts to another company", "zh": "供應商"},
+      {"word": "colleagues", "base": "colleague", "pos": "n.", "hint": "the people you work together with at the same place", "zh": "同事"},
+      {"word": "retraining", "base": "retraining", "pos": "n.", "hint": "learning new job abilities in order to move into different work", "zh": "再訓練、轉職訓練"},
+      {"word": "occupation", "base": "occupation", "pos": "n.", "hint": "the kind of paid work a person does", "zh": "職業"},
+      {"word": "Demand", "base": "demand", "pos": "n.", "hint": "the wish or need for a product or service among many people", "zh": "需求"}
+    ],
+    "questions": [
+      {
+        "q": "What is the main idea of the article?",
+        "options": [
+          "Older workers are generally far more productive than the younger ones they help train.",
+          "An older population reshapes who works, which jobs go unfilled and how long careers last.",
+          "Most countries have already found a way to fund their public pension systems.",
+          "Machines will soon replace nearly all of the work involved in caring for older people."
+        ],
+        "answer": 1,
+        "explanation": "第一段就把主軸講明：老化改變了誰在工作、有哪些工作、生涯多長；第二到第七段分別展開財政、缺工、政策回應與個人啟示。"
+      },
+      {
+        "q": "According to the article, why does an older population put pressure on public budgets?",
+        "options": [
+          "Older people are charged much higher prices for their own health care.",
+          "Companies stop paying taxes once most of their own staff grow older.",
+          "Governments are required by law to raise every pension payment each year.",
+          "Pensions and health care are funded mainly by taxes on current workers."
+        ],
+        "answer": 3,
+        "explanation": "定位第二段：年金與健康照護主要靠在職者的保費與稅收支應，在職比重下降、領取者增加，同一筆預算就得撐得更遠。"
+      },
+      {
+        "q": "Which kinds of work does the article say feel shortages most?",
+        "options": [
+          "Elder care, construction, farming and transport.",
+          "Banking, insurance, accounting and company law.",
+          "Advertising, publishing, graphic design and film.",
+          "Research, teaching, translation and the arts."
+        ],
+        "answer": 0,
+        "explanation": "定位第三段：缺工集中在難以自動化、也難以招募的產業，文中列出護理與長照、營建、農業、運輸與餐旅。"
+      },
+      {
+        "q": "What does the comparison between an accountant and a nurse or roofer suggest?",
+        "options": [
+          "Office workers should be made to retire earlier than manual workers.",
+          "Physical jobs pay better in the final years of a career.",
+          "A single retirement age falls much harder on physically demanding work.",
+          "Most people prefer to keep working after the state pension begins."
+        ],
+        "answer": 2,
+        "explanation": "推論題，定位第四段：會計師可能樂意做到六十幾歲，護理師或屋頂工人卻「可能沒有這種選擇」，因此一體適用的規定把最重負擔推給體力工作。"
+      },
+      {
+        "q": "What can be inferred about using immigration to fill labor gaps?",
+        "options": [
+          "As many countries age together, the workers they need become harder to attract.",
+          "It costs far more than installing new machines across every single affected industry.",
+          "It removes the need for any retraining programs for workers back at home.",
+          "Countries that accept newcomers no longer need to fund any public pension systems."
+        ],
+        "answer": 0,
+        "explanation": "推論題，定位第五段：許多國家同時老化，各國「在搶同一批技術人力，而不是從取之不盡的池子裡撈人」，可推知人力愈來愈難爭取。"
+      }
+    ]
+  }
+]

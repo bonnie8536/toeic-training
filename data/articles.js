@@ -2558,6 +2558,2087 @@ TOEIC.articles = [
   ]
  },
  {
+  "id": "art-15a",
+  "title": "Why Do We Yawn?",
+  "titleZh": "我們為什麼會打哈欠？",
+  "category": "科普",
+  "level": "初級 (TOEIC 400-550)",
+  "readTime": 3,
+  "illustrationIdea": "A classroom where one student yawns and three classmates start yawning too, with a small thought bubble showing a warm brain cooling down.",
+  "paragraphs": [
+   {
+    "en": "Everyone [[yawns]]. Babies do it, and old people do it too. Even dogs and cats do it. Most of us yawn many times a day. But why do we yawn? Scientists have asked this question for many years. They still do not fully agree.",
+    "zh": "每個人都會打哈欠。嬰兒會，老人也會。連狗和貓都會。我們大多數人一天要打好幾次哈欠。但我們為什麼會打哈欠呢？科學家研究這個問題很多年了。他們到現在還沒有完全一致的看法。"
+   },
+   {
+    "en": "For a long time, people thought a yawn brought in more [[oxygen]]. The idea sounded simple. A tired body needs more air, so the mouth opens wide. But this old idea is now less popular. People still yawn when they have [[plenty of]] air.",
+    "zh": "很長一段時間裡，人們認為打哈欠是為了吸進更多氧氣。這個說法聽起來很簡單。身體累了需要更多空氣，所以嘴巴才會張大。但這個舊說法現在比較少人支持。因為就算空氣充足，人還是會打哈欠。"
+   },
+   {
+    "en": "Today many scientists like a different idea. A yawn may help [[cool]] the brain. Our brain works best at the right [[temperature]]. When it gets too warm, we may yawn. The long, deep breath pulls in colder air. This may bring the brain back to normal.",
+    "zh": "現在很多科學家比較喜歡另一個說法。打哈欠可能有助於大腦降溫。我們的大腦在溫度適當時運作得最好。當大腦太熱時，我們可能就會打哈欠。那一口又長又深的呼吸，會吸進比較冷的空氣。這可能讓大腦回到正常狀態。"
+   },
+   {
+    "en": "Yawning is also [[catching]]. You see one person yawn, and soon you yawn too. Even reading about yawns can make you yawn. Some scientists think this is a social [[habit]]. It may help a group stay [[alert]] at the same time. It may also show that we feel close to others.",
+    "zh": "打哈欠也會傳染。你看到一個人打哈欠，很快自己也跟著打。連讀到打哈欠的文字，都可能讓你跟著打起來。有些科學家認為這是一種社會習慣。它可能幫助一群人在同一時間保持清醒。它也可能顯示我們和對方關係親近。"
+   },
+   {
+    "en": "So a yawn is not always a [[sign]] of a [[boring]] class. It may mean that your brain is tired or too warm. Think of it as a quiet message from your body. Next time you yawn in a meeting, do not feel [[embarrassed]]. Your brain may just be doing its job.",
+    "zh": "所以打哈欠不一定代表這堂課很無聊。它可能表示你的大腦累了，或是溫度太高。你可以把它想成身體發出的一個小訊息。下次在會議中打哈欠，別覺得尷尬。你的大腦可能只是在做它該做的事。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "yawns",
+    "base": "yawn",
+    "pos": "v.",
+    "hint": "to open the mouth wide and take a deep breath when tired",
+    "zh": "打哈欠"
+   },
+   {
+    "word": "oxygen",
+    "base": "oxygen",
+    "pos": "n.",
+    "hint": "the gas in the air that people and animals need to stay alive",
+    "zh": "氧氣"
+   },
+   {
+    "word": "plenty of",
+    "base": "plenty of",
+    "pos": "phr.",
+    "hint": "more than enough of something",
+    "zh": "充足的；很多的"
+   },
+   {
+    "word": "cool",
+    "base": "cool",
+    "pos": "v.",
+    "hint": "to make something less hot",
+    "zh": "使降溫；冷卻"
+   },
+   {
+    "word": "temperature",
+    "base": "temperature",
+    "pos": "n.",
+    "hint": "how hot or cold something is",
+    "zh": "溫度"
+   },
+   {
+    "word": "catching",
+    "base": "catching",
+    "pos": "adj.",
+    "hint": "easily passed from one person to another",
+    "zh": "會傳染的；有感染力的"
+   },
+   {
+    "word": "habit",
+    "base": "habit",
+    "pos": "n.",
+    "hint": "something a person does often and almost without thinking",
+    "zh": "習慣"
+   },
+   {
+    "word": "alert",
+    "base": "alert",
+    "pos": "adj.",
+    "hint": "awake and quick to notice things",
+    "zh": "警覺的；清醒的"
+   },
+   {
+    "word": "sign",
+    "base": "sign",
+    "pos": "n.",
+    "hint": "something that shows what is true or what is happening",
+    "zh": "跡象；徵兆"
+   },
+   {
+    "word": "boring",
+    "base": "boring",
+    "pos": "adj.",
+    "hint": "not interesting at all",
+    "zh": "無聊的"
+   },
+   {
+    "word": "embarrassed",
+    "base": "embarrassed",
+    "pos": "adj.",
+    "hint": "feeling shy or uncomfortable in front of other people",
+    "zh": "尷尬的；難為情的"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main idea of the article?",
+    "options": [
+     "Yawning is a health problem that needs a doctor.",
+     "Scientists are still not sure why people yawn.",
+     "Only very tired people yawn.",
+     "People yawn because the room is too cold."
+    ],
+    "answer": 1,
+    "explanation": "第一段最後說科學家還沒有一致看法，後面幾段列出不同說法，全文重點就是「原因仍未確定」。"
+   },
+   {
+    "q": "For a long time, what did people think a yawn did?",
+    "options": [
+     "It brought more oxygen into the body.",
+     "It made the brain grow bigger.",
+     "It helped people sleep at night.",
+     "It showed that a person was healthy."
+    ],
+    "answer": 0,
+    "explanation": "第二段第一句提到，長期以來人們認為打哈欠是為了吸進更多氧氣。"
+   },
+   {
+    "q": "What do many scientists think today?",
+    "options": [
+     "A yawn makes the voice louder.",
+     "A yawn cleans the mouth.",
+     "A yawn may help cool the brain.",
+     "A yawn makes a person feel hungry."
+    ],
+    "answer": 2,
+    "explanation": "第三段說現在很多科學家認為打哈欠可能幫大腦降溫。"
+   },
+   {
+    "q": "Your friend yawns, and you yawn right after. What does the article suggest about this?",
+    "options": [
+     "You are getting sick.",
+     "You do not like your friend.",
+     "You need to eat something.",
+     "A yawn can pass from one person to another."
+    ],
+    "answer": 3,
+    "explanation": "第四段說打哈欠會傳染，看到別人打，自己很快也會跟著打。"
+   }
+  ]
+ },
+ {
+  "id": "art-15b",
+  "title": "Paper Bag or Plastic Bag?",
+  "titleZh": "紙袋還是塑膠袋？",
+  "category": "環境",
+  "level": "初級 (TOEIC 400-550)",
+  "readTime": 3,
+  "illustrationIdea": "A shopper at a checkout counter holding a paper bag in one hand and a plastic bag in the other, with a reusable cloth bag hanging on one shoulder.",
+  "paragraphs": [
+   {
+    "en": "At the store, a clerk often asks a simple question. Paper bag or [[plastic]] bag? Many people pick paper. They believe paper is better for the [[environment]]. But the real answer is not so simple.",
+    "zh": "在商店結帳時，店員常會問一個簡單的問題。要紙袋還是塑膠袋？很多人會選紙袋。他們相信紙袋對環境比較好。但真正的答案沒有那麼單純。"
+   },
+   {
+    "en": "Plastic bags are cheap and light. Stores like them, and [[shoppers]] like them too. But plastic does not [[break down]] easily. A bag can stay in nature for a very long time. Some end up in rivers and the sea. Sea animals may eat them [[by mistake]].",
+    "zh": "塑膠袋便宜又輕。商店喜歡用，顧客也喜歡用。但塑膠不容易分解。一個袋子可以在自然環境裡留存非常久。有些最後流進河川和海裡。海洋動物可能會誤食。"
+   },
+   {
+    "en": "Paper bags have costs too. Most start as trees, so [[forests]] must be cut. Making paper also uses a lot of water and [[energy]]. Paper bags are heavy, so trucks burn more [[fuel]]. In short, a paper bag also does some [[harm]].",
+    "zh": "紙袋也有它的代價。大部分的紙袋來自樹木，所以必須砍伐森林。造紙也要用掉大量的水和能源。紙袋比較重，貨車運送時會燒掉更多燃料。簡單說，紙袋一樣會造成一些傷害。"
+   },
+   {
+    "en": "So which bag wins? It [[depends on]] many things. Paper breaks down faster and is easier to [[recycle]]. Making plastic uses less water and less power. Each bag is better in some ways and worse in others.",
+    "zh": "那到底哪一種袋子贏？這要看很多條件。紙分解得比較快，也比較容易回收。塑膠在製造時用掉的水和能源比較少。兩種袋子都是有些地方比較好、有些地方比較差。"
+   },
+   {
+    "en": "Many [[experts]] give the same advice. The best bag is the one you already have. A cloth bag helps only if you use it many times. So keep one in your bag or your car. The real problem is not paper or plastic. It is taking a new bag every single time.",
+    "zh": "很多專家給的建議都一樣。最好的袋子就是你已經有的那一個。布袋要用很多次才真的有幫助。所以在包包或車上放一個吧。真正的問題不是紙袋還是塑膠袋。而是每一次都拿一個新袋子。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "plastic",
+    "base": "plastic",
+    "pos": "n.",
+    "hint": "a light man-made material used for bags, bottles and toys",
+    "zh": "塑膠"
+   },
+   {
+    "word": "environment",
+    "base": "environment",
+    "pos": "n.",
+    "hint": "the natural world of air, water, land and living things",
+    "zh": "環境"
+   },
+   {
+    "word": "shoppers",
+    "base": "shopper",
+    "pos": "n.",
+    "hint": "people who buy things at a store",
+    "zh": "購物者；顧客"
+   },
+   {
+    "word": "break down",
+    "base": "break down",
+    "pos": "phr. v.",
+    "hint": "to slowly turn into very small parts and disappear in nature",
+    "zh": "分解"
+   },
+   {
+    "word": "by mistake",
+    "base": "by mistake",
+    "pos": "phr.",
+    "hint": "without meaning to do it",
+    "zh": "不小心地；誤"
+   },
+   {
+    "word": "forests",
+    "base": "forest",
+    "pos": "n.",
+    "hint": "a large area of land covered with many trees",
+    "zh": "森林"
+   },
+   {
+    "word": "energy",
+    "base": "energy",
+    "pos": "n.",
+    "hint": "the power that machines and factories need to work",
+    "zh": "能源"
+   },
+   {
+    "word": "fuel",
+    "base": "fuel",
+    "pos": "n.",
+    "hint": "oil, gas or coal that is burned to make power",
+    "zh": "燃料"
+   },
+   {
+    "word": "harm",
+    "base": "harm",
+    "pos": "n.",
+    "hint": "damage done to a person, an animal or a place",
+    "zh": "傷害；害處"
+   },
+   {
+    "word": "depends on",
+    "base": "depend on",
+    "pos": "phr. v.",
+    "hint": "to be decided by something else",
+    "zh": "取決於"
+   },
+   {
+    "word": "recycle",
+    "base": "recycle",
+    "pos": "v.",
+    "hint": "to treat used paper, glass or metal so it can be used again",
+    "zh": "回收再利用"
+   },
+   {
+    "word": "experts",
+    "base": "expert",
+    "pos": "n.",
+    "hint": "people who know a lot about one subject",
+    "zh": "專家"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main point of the article?",
+    "options": [
+     "Paper bags are always better than plastic bags.",
+     "Both paper bags and plastic bags have costs.",
+     "Stores should stop giving out any bags.",
+     "Plastic bags cause no problems at all."
+    ],
+    "answer": 1,
+    "explanation": "第一段最後說答案沒那麼單純，第二段與第三段分別說明塑膠袋和紙袋各自的代價。"
+   },
+   {
+    "q": "Why are plastic bags a problem in nature?",
+    "options": [
+     "They cost stores too much money.",
+     "They are too heavy to carry home.",
+     "They stay in the environment for a very long time.",
+     "They are very hard to open."
+    ],
+    "answer": 2,
+    "explanation": "第二段提到塑膠不容易分解，袋子會在自然環境裡留存非常久。"
+   },
+   {
+    "q": "According to the article, what is one cost of paper bags?",
+    "options": [
+     "Making them uses a lot of water and energy.",
+     "They break easily in the rain.",
+     "They cannot hold any food.",
+     "They are made from sea animals."
+    ],
+    "answer": 0,
+    "explanation": "第三段說造紙要用掉大量的水和能源，而且紙袋較重會多燒燃料。"
+   },
+   {
+    "q": "What would the writer most likely tell a shopper to do?",
+    "options": [
+     "Always ask for a paper bag.",
+     "Always ask for a plastic bag.",
+     "Buy a new cloth bag every week.",
+     "Bring a bag you already have and use it again."
+    ],
+    "answer": 3,
+    "explanation": "第五段說最好的袋子是你已經有的那一個，重點在重複使用。"
+   }
+  ]
+ },
+ {
+  "id": "art-16a",
+  "title": "Electric Scooters Take Over the Sidewalk",
+  "titleZh": "電動滑板車佔領人行道",
+  "category": "時事",
+  "level": "中級 (TOEIC 550-650)",
+  "readTime": 3,
+  "illustrationIdea": "A busy city sidewalk where several shared electric scooters lie parked across the walkway while a person pushing a stroller tries to squeeze past.",
+  "paragraphs": [
+   {
+    "en": "In many cities today, shared electric [[scooters]] are everywhere. People [[unlock]] them with a phone [[app]]. They ride to work, to class, or to the train station. Then they simply leave the scooter on the street. For many riders, this is faster and cheaper than a taxi. It also feels a little like a game.",
+    "zh": "在今天的許多城市裡，共享電動滑板車隨處可見。人們用手機應用程式解鎖車輛。他們騎去上班、上課，或前往火車站。到了目的地，就直接把車停在路邊離開。對很多騎乘者來說，這比搭計程車更快、也更便宜。過程還帶著一點玩樂的感覺。"
+   },
+   {
+    "en": "The idea behind these services is simple. Cities are [[crowded]], and short trips waste time. Buses and trains cannot reach every corner. A scooter can cover that last part of the trip. Companies place the [[vehicles]] near stations and busy streets. Riders pay by the minute, so the price feels small.",
+    "zh": "這類服務背後的想法其實很單純。城市擁擠，短程移動特別浪費時間。公車和火車無法抵達每個角落。滑板車正好補上最後那一小段路。業者把車輛放在車站和熱鬧的街道旁。費用按分鐘計算，所以價格感覺不高。"
+   },
+   {
+    "en": "But this [[convenience]] has a cost. Scooters are often parked in the middle of the [[sidewalk]]. They block doorways, ramps, and bus stops. Older people and wheelchair users suffer the most. Some riders also move too fast among walkers. [[Accidents]] worry doctors and city [[officials]] alike.",
+    "zh": "但這份便利是有代價的。滑板車常常被停在人行道正中央。它們擋住門口、無障礙坡道和公車站。年長者和輪椅使用者受到的影響最大。有些騎乘者還在行人之間高速穿梭。事故讓醫師和市政官員同樣感到憂心。"
+   },
+   {
+    "en": "City governments are now trying to respond. Some paint parking boxes on the ground. Others [[require]] companies to remove badly parked scooters quickly. A few cities [[ban]] riding on the sidewalk completely. Speed limits and helmet rules are common too. Companies that ignore the rules can lose their [[permit]].",
+    "zh": "各地政府正試著做出回應。有些在地面畫出停車格。有些則要求業者盡快移走亂停的車輛。少數城市完全禁止在人行道上騎乘。速限和安全帽規定也很常見。不守規定的業者可能會失去營運許可。"
+   },
+   {
+    "en": "[[Supporters]] say the debate points at the wrong target. Streets were designed mainly for cars. Walkers and small vehicles share whatever space is left. If cities built more safe [[lanes]], scooters would fit better. In that view, the sidewalk fight is only one sign of a bigger issue.",
+    "zh": "支持者認為，這場爭論指錯了對象。街道本來就主要是為汽車設計的。行人和小型車輛只能共用剩下的空間。如果城市多蓋一些安全車道，滑板車就能各就各位。從這個角度看，人行道之爭只是更大問題的一個跡象。"
+   },
+   {
+    "en": "For readers, the lesson goes beyond scooters. New [[technology]] often arrives faster than public rules. People enjoy the [[benefits]] first and argue about the costs later. The same story appears with delivery robots and drones. How a city handles scooters today may show how it handles tomorrow's surprises. A small vehicle can raise very large questions.",
+    "zh": "對讀者而言，這件事的意義不只在滑板車。新科技出現的速度，往往快過公共規範。人們先享受好處，之後才爭論代價。外送機器人和無人機也在上演同樣的劇情。一座城市今天如何處理滑板車，或許就看得出它明天如何面對新的意外。小小的車輛，也能引出很大的問題。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "scooters",
+    "base": "scooter",
+    "pos": "n.",
+    "hint": "a small two-wheeled machine that a person stands on and rides",
+    "zh": "滑板車"
+   },
+   {
+    "word": "unlock",
+    "base": "unlock",
+    "pos": "v.",
+    "hint": "to open something so that it can be used, often with a key or code",
+    "zh": "解鎖"
+   },
+   {
+    "word": "app",
+    "base": "app",
+    "pos": "n.",
+    "hint": "a small program that runs on a phone or tablet",
+    "zh": "應用程式"
+   },
+   {
+    "word": "crowded",
+    "base": "crowded",
+    "pos": "adj.",
+    "hint": "full of too many people or things in one place",
+    "zh": "擁擠的"
+   },
+   {
+    "word": "vehicles",
+    "base": "vehicle",
+    "pos": "n.",
+    "hint": "a machine such as a car or bus that carries people or goods",
+    "zh": "車輛"
+   },
+   {
+    "word": "convenience",
+    "base": "convenience",
+    "pos": "n.",
+    "hint": "the quality of being easy to use and saving time or effort",
+    "zh": "便利"
+   },
+   {
+    "word": "sidewalk",
+    "base": "sidewalk",
+    "pos": "n.",
+    "hint": "the paved part at the edge of a road, made for people on foot",
+    "zh": "人行道"
+   },
+   {
+    "word": "Accidents",
+    "base": "accident",
+    "pos": "n.",
+    "hint": "an event in which someone is hurt or something is damaged by chance",
+    "zh": "事故"
+   },
+   {
+    "word": "officials",
+    "base": "official",
+    "pos": "n.",
+    "hint": "a person with a position of duty in a government or a large organization",
+    "zh": "官員"
+   },
+   {
+    "word": "require",
+    "base": "require",
+    "pos": "v.",
+    "hint": "to say that someone must do something",
+    "zh": "要求"
+   },
+   {
+    "word": "ban",
+    "base": "ban",
+    "pos": "v.",
+    "hint": "to say by law that something must not be done",
+    "zh": "禁止"
+   },
+   {
+    "word": "permit",
+    "base": "permit",
+    "pos": "n.",
+    "hint": "a paper from a government that lets a person or company do something",
+    "zh": "許可證"
+   },
+   {
+    "word": "Supporters",
+    "base": "supporter",
+    "pos": "n.",
+    "hint": "a person who agrees with an idea and speaks for it",
+    "zh": "支持者"
+   },
+   {
+    "word": "lanes",
+    "base": "lane",
+    "pos": "n.",
+    "hint": "a narrow marked part of a road for one line of traffic",
+    "zh": "車道"
+   },
+   {
+    "word": "technology",
+    "base": "technology",
+    "pos": "n.",
+    "hint": "new machines and methods based on science",
+    "zh": "科技"
+   },
+   {
+    "word": "benefits",
+    "base": "benefit",
+    "pos": "n.",
+    "hint": "good results or advantages that come from something",
+    "zh": "好處"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main point of the article?",
+    "options": [
+     "Shared scooters have already been banned in most cities.",
+     "Shared scooters are cheaper than every other form of transport.",
+     "Shared scooters are useful, but they create new problems for cities.",
+     "Shared scooters work best for very long journeys."
+    ],
+    "answer": 2,
+    "explanation": "全文從第一段的便利談到第三段的人行道問題與第四段的管理措施，重點在「好用但帶來新麻煩」。"
+   },
+   {
+    "q": "According to the article, why do companies place scooters near stations?",
+    "options": [
+     "To help riders finish the last part of a trip.",
+     "To keep the sidewalk clear for walkers.",
+     "To replace buses and trains completely.",
+     "To make riders pay one fixed daily price."
+    ],
+    "answer": 0,
+    "explanation": "第二段說公車和火車無法抵達每個角落，滑板車補上最後一小段路。"
+   },
+   {
+    "q": "Which group does the article say suffers most from badly parked scooters?",
+    "options": [
+     "Taxi drivers",
+     "Scooter company workers",
+     "Train passengers",
+     "Older people and wheelchair users"
+    ],
+    "answer": 3,
+    "explanation": "第三段明確指出年長者和輪椅使用者受到的影響最大。"
+   },
+   {
+    "q": "What can happen to a company that ignores city rules?",
+    "options": [
+     "It must buy more scooters.",
+     "It may lose its permit.",
+     "It must lower all of its prices.",
+     "It has to build new bus stops."
+    ],
+    "answer": 1,
+    "explanation": "第四段最後一句提到不守規定的業者可能失去營運許可。"
+   },
+   {
+    "q": "What does the writer suggest in the last paragraph?",
+    "options": [
+     "Cities should stop testing any new technology.",
+     "Delivery robots will never appear on city streets.",
+     "A city's scooter rules can hint at how it will meet future changes.",
+     "Scooters will disappear once buses become faster."
+    ],
+    "answer": 2,
+    "explanation": "推論題。第六段說新科技出現得比規則快，並以外送機器人、無人機類比，暗示今天的處理方式預示未來。"
+   }
+  ]
+ },
+ {
+  "id": "art-16b",
+  "title": "What Sleep Does for the Brain",
+  "titleZh": "睡眠為大腦做的事",
+  "category": "健康",
+  "level": "中級 (TOEIC 550-650)",
+  "readTime": 3,
+  "illustrationIdea": "A person sleeping peacefully at night while a soft glow inside the head suggests the brain quietly sorting and cleaning memories.",
+  "paragraphs": [
+   {
+    "en": "Everyone knows that sleep feels good. Fewer people know how busy the [[brain]] stays at night. Sleep is not simply a long pause. While the body [[rests]], the brain keeps working hard. It sorts, stores, and cleans. Feeling fresh in the morning is only one part of the reward.",
+    "zh": "每個人都知道睡覺很舒服。比較少人知道，大腦在夜裡有多忙。睡眠並不只是一段長長的停頓。身體休息的時候，大腦仍然努力工作。它負責整理、儲存與清理。早上覺得神清氣爽，只是其中一項回報。"
+   },
+   {
+    "en": "[[Memory]] is the clearest example. During the day, the brain collects a flood of new [[information]]. At night, it decides what to keep. Important lessons move into longer [[storage]]. Useless details slowly fade away. That is one reason why a student who sleeps well often [[remembers]] more.",
+    "zh": "記憶是最清楚的例子。白天，大腦會收進大量新資訊。到了夜裡，它決定哪些要留下。重要的內容會被移入較長期的儲存區。沒有用的細節則慢慢淡去。這也是為什麼睡得好的學生，往往記得比較多。"
+   },
+   {
+    "en": "Sleep also works something like a night cleaning crew. Brain cells stay active all day and leave [[waste]] behind. Many researchers think rest helps the body clear that waste away. The exact steps are still being studied. So the cleaning idea is a useful picture, not a final answer. Still, quiet hours seem to be when the brain [[repairs]] itself.",
+    "zh": "睡眠也有點像夜間的清潔班。腦細胞整天活躍，會留下廢物。許多研究者認為，休息讓身體比較有機會把這些廢物清掉。確切的過程仍在研究之中。所以「清潔」是個好用的比喻，還不是最後的答案。不過，安靜的時段似乎正是大腦修復自己的時候。"
+   },
+   {
+    "en": "The effects reach far beyond memory. Short nights leave people slow, moody, and forgetful. [[Attention]] drops, and small [[mistakes]] become common. Tired drivers react more slowly on the road. Long periods of poor sleep are also [[linked]] with weight gain and a weaker [[immune]] system. In other words, the cost is not only tiredness.",
+    "zh": "影響遠遠不只記憶。睡不夠會讓人反應慢、情緒差，又健忘。注意力下降，小錯誤也跟著變多。疲倦的駕駛在路上反應更慢。長期睡眠不足還與體重增加、免疫系統變弱有關。換句話說，代價不只是想睡而已。"
+   },
+   {
+    "en": "So why do many people still cut their sleep short? Modern life offers plenty of reasons. Screens, night [[shifts]], and long study hours push bedtime later. Bright light tells the brain that the day is not over. One more message or one more video pushes rest back again. Then a morning [[alarm]] cuts the night short at the other end.",
+    "zh": "那麼，為什麼還是很多人把睡眠時間削短？現代生活提供了不少理由。螢幕、夜間輪班和長時間讀書，都把就寢時間往後推。明亮的光線會告訴大腦，白天還沒結束。再一則訊息、再一支影片，又把休息往後拖一次。到了早上，鬧鐘再從另一頭把夜晚切短。"
+   },
+   {
+    "en": "The good news is that habits can change. A regular bedtime helps the brain expect rest. A dark, quiet room [[improves]] the [[quality]] of sleep. Less screen time before bed is also worth trying. Sleep is not wasted time. It is quiet work that the brain cannot skip.",
+    "zh": "好消息是，習慣是可以改變的。固定的就寢時間，能讓大腦預期休息。昏暗安靜的房間能改善睡眠品質。睡前少看螢幕也值得一試。睡眠不是浪費掉的時間。它是大腦無法略過的安靜工作。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "brain",
+    "base": "brain",
+    "pos": "n.",
+    "hint": "the organ inside the head that thinks and controls the body",
+    "zh": "大腦"
+   },
+   {
+    "word": "rests",
+    "base": "rest",
+    "pos": "v.",
+    "hint": "to stop activity for a while in order to get energy back",
+    "zh": "休息"
+   },
+   {
+    "word": "Memory",
+    "base": "memory",
+    "pos": "n.",
+    "hint": "the ability of the mind to store facts and events for later use",
+    "zh": "記憶力"
+   },
+   {
+    "word": "information",
+    "base": "information",
+    "pos": "n.",
+    "hint": "facts or details about a person, an event, or a subject",
+    "zh": "資訊"
+   },
+   {
+    "word": "storage",
+    "base": "storage",
+    "pos": "n.",
+    "hint": "the act of keeping something in a place until it is needed",
+    "zh": "儲存"
+   },
+   {
+    "word": "remembers",
+    "base": "remember",
+    "pos": "v.",
+    "hint": "to still be able to think of something from an earlier time",
+    "zh": "記得"
+   },
+   {
+    "word": "waste",
+    "base": "waste",
+    "pos": "n.",
+    "hint": "material that is left over and no longer useful",
+    "zh": "廢物"
+   },
+   {
+    "word": "repairs",
+    "base": "repair",
+    "pos": "v.",
+    "hint": "to fix something that is damaged or worn out",
+    "zh": "修復"
+   },
+   {
+    "word": "Attention",
+    "base": "attention",
+    "pos": "n.",
+    "hint": "the act of watching or listening with care",
+    "zh": "注意力"
+   },
+   {
+    "word": "mistakes",
+    "base": "mistake",
+    "pos": "n.",
+    "hint": "an action or answer that is not correct",
+    "zh": "錯誤"
+   },
+   {
+    "word": "linked",
+    "base": "link",
+    "pos": "v.",
+    "hint": "to show a connection between two things",
+    "zh": "使有關聯"
+   },
+   {
+    "word": "immune",
+    "base": "immune",
+    "pos": "adj.",
+    "hint": "related to the body's natural defense against disease",
+    "zh": "免疫的"
+   },
+   {
+    "word": "shifts",
+    "base": "shift",
+    "pos": "n.",
+    "hint": "a fixed period of working hours during a day",
+    "zh": "輪班"
+   },
+   {
+    "word": "alarm",
+    "base": "alarm",
+    "pos": "n.",
+    "hint": "a device or sound that wakes a person at a set time",
+    "zh": "鬧鐘"
+   },
+   {
+    "word": "improves",
+    "base": "improve",
+    "pos": "v.",
+    "hint": "to make something better than it was before",
+    "zh": "改善"
+   },
+   {
+    "word": "quality",
+    "base": "quality",
+    "pos": "n.",
+    "hint": "how good or bad something is",
+    "zh": "品質"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main idea of the article?",
+    "options": [
+     "Sleep is mainly a way to save energy for the next day.",
+     "Sleep is active work that keeps the brain and body healthy.",
+     "Most people today sleep far more than they need.",
+     "Memory works just as well after a very short night."
+    ],
+    "answer": 1,
+    "explanation": "第一段與第三段都說明睡覺時大腦仍在整理、儲存與修復，全文圍繞這個主旨。"
+   },
+   {
+    "q": "According to the article, what does the brain do with new information at night?",
+    "options": [
+     "It sends all of it to other people.",
+     "It deletes everything from the day.",
+     "It stops receiving any information at all.",
+     "It keeps the important parts and lets useless details fade."
+    ],
+    "answer": 3,
+    "explanation": "第二段說重要內容移入較長期儲存，沒用的細節慢慢淡去。"
+   },
+   {
+    "q": "What does the article compare sleep to?",
+    "options": [
+     "A night cleaning crew",
+     "A busy classroom",
+     "A long journey",
+     "A sports match"
+    ],
+    "answer": 0,
+    "explanation": "第三段第一句直接把睡眠比作夜間的清潔班。"
+   },
+   {
+    "q": "Which of the following does the article name as a reason for short sleep?",
+    "options": [
+     "Noisy neighbors",
+     "Cold weather",
+     "Screens and night shifts",
+     "Long holidays"
+    ],
+    "answer": 2,
+    "explanation": "第五段列出螢幕、夜間輪班和長時間讀書，把就寢時間往後推。"
+   },
+   {
+    "q": "What can we infer from the last paragraph?",
+    "options": [
+     "Sleep habits are fixed and cannot be changed.",
+     "Only doctors are able to solve sleep problems.",
+     "A bright bedroom is better for deep sleep.",
+     "Small daily choices can affect how well someone sleeps."
+    ],
+    "answer": 3,
+    "explanation": "推論題。第六段舉出固定就寢時間、昏暗房間、睡前少看螢幕，說明小習慣會影響睡眠。"
+   }
+  ]
+ },
+ {
+  "id": "art-17a",
+  "title": "Food Delivery Is Changing Restaurants",
+  "titleZh": "外送如何改變餐廳",
+  "category": "時事",
+  "level": "中級 (TOEIC 550-650)",
+  "readTime": 3,
+  "illustrationIdea": "A busy restaurant kitchen at night: cooks pack takeaway bags while a delivery rider waits at the back door, checking a phone.",
+  "paragraphs": [
+   {
+    "en": "Open an app, tap a few times, and dinner arrives at your door. Food [[delivery]] apps are now part of daily life in many cities. For diners, ordering a meal has never been easier. For restaurant owners, the change runs much deeper. Delivery is more than a new way to sell food. Behind the counter, it is changing the whole business.",
+    "zh": "打開 App，點幾下，晚餐就送到你家門口。在許多城市，外送 App 已經是日常生活的一部分。對消費者來說，訂一頓飯從來沒這麼容易過。對餐廳老闆而言，這個改變的影響要深得多。外送不只是一種賣餐的新方式。在櫃檯後面，整個生意的樣貌都在改變。"
+   },
+   {
+    "en": "The [[platforms]] that link diners and restaurants charge a [[fee]] on every order. Many owners say the fee is high. A busy night on an app can still leave thin [[profits]]. Some shops raise their online prices to cover the cost. Others accept smaller [[margins]] and hope to reach new [[customers]].",
+    "zh": "連結消費者與餐廳的平台，每一筆訂單都會收取費用。許多老闆都說這筆費用偏高。在 App 上忙碌一整晚，利潤仍然可能很薄。有些店家調高線上售價，用來吸收成本。有些則接受較低的利潤，希望換來新客人。"
+   },
+   {
+    "en": "Delivery also changes the kitchen. Food must [[survive]] a ride inside a bag. A [[dish]] that turns cold or soft travels badly. Fried food is a common problem. So some [[menus]] are shorter than before. A few restaurants now run two lists: one for the [[dining room]], and one for the app.",
+    "zh": "外送也改變了廚房。食物必須撐過提袋裡的那段路程。會變冷或變軟的菜色，運送起來就不理想。炸物就是常見的難題。因此有些菜單比以前更短。少數餐廳現在準備兩份清單：一份給內用區，一份給 App。"
+   },
+   {
+    "en": "A newer idea goes further. Some companies open small kitchens with no tables and no waiters. These ghost kitchens cook only for apps. The [[rent]] is lower, and the [[staff]] stays small. Some chefs enjoy the low cost. Others feel that a restaurant without guests loses something important.",
+    "zh": "還有一種更新的做法走得更遠。有些業者開設沒有桌子、也沒有服務生的小廚房。這類幽靈廚房只為 App 做菜。租金比較低，人手也少。有些廚師很喜歡這種低成本的模式。也有人覺得，沒有客人的餐廳失去了重要的東西。"
+   },
+   {
+    "en": "Delivery [[riders]] are another part of the story. They work in heavy traffic, in rain, and under time pressure. Their [[income]] often [[depends on]] the number of orders they finish. During busy hours, a few minutes can decide their pay. Restaurants rarely control this part of the service, yet customers often blame the shop.",
+    "zh": "外送員是這個故事的另一部分。他們在壅塞的車陣中、在雨裡、在時間壓力下工作。他們的收入常常取決於完成多少單。在尖峰時段，幾分鐘就可能決定他們拿多少錢。餐廳幾乎無法控制這一段服務，客人卻常常怪到店家頭上。"
+   },
+   {
+    "en": "So what does this mean for you? Delivery is [[convenient]], and it will not go away. Still, your favorite shop may earn less from an app order than from your visit. Ordering by phone, or eating in, usually helps the owner more. Small choices like these help neighborhood restaurants stay open.",
+    "zh": "那麼，這一切對你有什麼意義？外送很方便，而且不會消失。不過，你最愛的那家店，從 App 訂單賺到的，可能比你親自光顧時還少。打電話訂餐，或是直接內用，通常對老闆幫助更大。這些小小的選擇，能幫助巷口的餐廳繼續開下去。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "delivery",
+    "base": "delivery",
+    "pos": "n.",
+    "hint": "the act of bringing goods to a home or an office",
+    "zh": "外送；遞送"
+   },
+   {
+    "word": "platforms",
+    "base": "platform",
+    "pos": "n.",
+    "hint": "an online service that connects different groups of users",
+    "zh": "平台"
+   },
+   {
+    "word": "fee",
+    "base": "fee",
+    "pos": "n.",
+    "hint": "money charged for a service",
+    "zh": "費用；手續費"
+   },
+   {
+    "word": "profits",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "money left after all costs are paid",
+    "zh": "利潤"
+   },
+   {
+    "word": "margins",
+    "base": "margin",
+    "pos": "n.",
+    "hint": "the gap between what something costs and what it sells for",
+    "zh": "利潤空間；價差"
+   },
+   {
+    "word": "customers",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "a person who buys goods or services",
+    "zh": "顧客"
+   },
+   {
+    "word": "survive",
+    "base": "survive",
+    "pos": "v.",
+    "hint": "continue to exist without serious harm",
+    "zh": "撐過；存活"
+   },
+   {
+    "word": "dish",
+    "base": "dish",
+    "pos": "n.",
+    "hint": "food prepared in a certain way as part of a meal",
+    "zh": "菜色；一道菜"
+   },
+   {
+    "word": "menus",
+    "base": "menu",
+    "pos": "n.",
+    "hint": "a list of the food that a place offers",
+    "zh": "菜單"
+   },
+   {
+    "word": "dining room",
+    "base": "dining room",
+    "pos": "n.",
+    "hint": "a space in a home or a shop where people sit and eat",
+    "zh": "內用區；餐廳用餐空間"
+   },
+   {
+    "word": "rent",
+    "base": "rent",
+    "pos": "n.",
+    "hint": "money paid regularly for the use of a building or a space",
+    "zh": "租金"
+   },
+   {
+    "word": "staff",
+    "base": "staff",
+    "pos": "n.",
+    "hint": "all the people who work for a business",
+    "zh": "員工；人手"
+   },
+   {
+    "word": "riders",
+    "base": "rider",
+    "pos": "n.",
+    "hint": "a person who travels by bike or motorcycle to carry things",
+    "zh": "外送員；騎士"
+   },
+   {
+    "word": "income",
+    "base": "income",
+    "pos": "n.",
+    "hint": "money that a person receives for work",
+    "zh": "收入"
+   },
+   {
+    "word": "depends on",
+    "base": "depend on",
+    "pos": "phr. v.",
+    "hint": "be decided or controlled by something else",
+    "zh": "取決於"
+   },
+   {
+    "word": "convenient",
+    "base": "convenient",
+    "pos": "adj.",
+    "hint": "easy to use and saving time or effort",
+    "zh": "方便的"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main idea of the article?",
+    "options": [
+     "Delivery apps are changing how restaurants earn money and how they cook.",
+     "Delivery apps will soon replace every traditional restaurant.",
+     "Most restaurant owners refuse to join delivery platforms.",
+     "Delivery riders earn far more than restaurant owners do."
+    ],
+    "answer": 0,
+    "explanation": "第一段最後兩句已點出主旨（外送不只是新的賣餐方式，而是在改變整個生意），後面各段分別談費用、菜單、幽靈廚房與外送員，都在支持這一點。"
+   },
+   {
+    "q": "Why are some menus shorter than before?",
+    "options": [
+     "Because customers complain about long menus.",
+     "Because a short menu lowers the platform fee.",
+     "Because platforms decide what each shop may sell.",
+     "Because some dishes do not travel well inside a bag."
+    ],
+    "answer": 3,
+    "explanation": "第三段說食物必須撐過提袋裡的路程，會變冷或變軟的菜色運送效果不好，所以菜單變短。"
+   },
+   {
+    "q": "According to the article, what is true about ghost kitchens?",
+    "options": [
+     "They offer a large dining room for guests.",
+     "They hire more waiters than normal restaurants.",
+     "They have no tables and cook only for apps.",
+     "They charge customers no delivery fee."
+    ],
+    "answer": 2,
+    "explanation": "第四段直接描述：沒有桌子、沒有服務生，只為 App 做菜，租金低、人手少。"
+   },
+   {
+    "q": "What can we infer about ordering directly from a restaurant?",
+    "options": [
+     "It is always cheaper for the customer.",
+     "It leaves the shop with more of the money you pay.",
+     "It always takes longer than app delivery.",
+     "It is not allowed in most cities."
+    ],
+    "answer": 1,
+    "explanation": "第二段提到平台每筆訂單都抽費用，末段又說直接打電話或內用「對老闆幫助更大」，兩者合起來可推論店家實際留下的錢比較多。"
+   },
+   {
+    "q": "What does the article say about delivery riders?",
+    "options": [
+     "Their income often depends on how many orders they finish.",
+     "Restaurants set the pay for each of their trips.",
+     "They work only when the weather is good.",
+     "They also cook the food in ghost kitchens."
+    ],
+    "answer": 0,
+    "explanation": "第五段明說外送員的收入常取決於完成的訂單數，且他們在車陣與雨中工作，餐廳幾乎無法控制這段服務。"
+   }
+  ]
+ },
+ {
+  "id": "art-17b",
+  "title": "How Vaccines Train Your Body",
+  "titleZh": "疫苗如何訓練你的身體",
+  "category": "健康",
+  "level": "中級 (TOEIC 550-650)",
+  "readTime": 3,
+  "illustrationIdea": "A friendly cross-section of the human body as a training camp, where cartoon immune cells study a wanted poster of a germ.",
+  "paragraphs": [
+   {
+    "en": "Your body already has a defense team. It is called the [[immune system]]. When a [[germ]] gets inside, the team fights back. It also remembers the attacker. The next time, the response is much faster. That memory can last for years. This is the simple idea behind [[vaccines]].",
+    "zh": "你的身體本來就有一支防衛部隊，它叫做免疫系統。當病原體進入身體，這支部隊會反擊。它也會記住入侵者。下一次，反應就會快得多。這份記憶可以維持很多年。疫苗背後的道理，就是這麼簡單。"
+   },
+   {
+    "en": "A vaccine works by showing the body a safe [[sample]]. The sample may come from a [[virus]] or from [[bacteria]]. It does not give a healthy person the disease itself. Some vaccines use a weak or dead form of the germ. Others use only one small piece of its outer surface. To the body, that piece still looks like a threat.",
+    "zh": "疫苗的做法，是先讓身體看見一份安全的樣本。這份樣本可能來自病毒，也可能來自細菌。它不會讓健康的人得到那個疾病。有些疫苗使用減弱或已死的病原體。有些只取病原體外層的一小塊。對身體來說，那一小塊看起來仍然像是威脅。"
+   },
+   {
+    "en": "Then the training starts. Certain [[cells]] learn the shape of the invader. They make [[antibodies]], tiny tools that [[stick to]] that shape. Other cells become memory cells and stay for a long time. If the real germ arrives later, the body already knows the answer.",
+    "zh": "接著，訓練就開始了。某些細胞會學習入侵者的外形。它們製造抗體，那是一種能黏附在那個外形上的微小工具。另一些細胞會變成記憶細胞，長期留在體內。等真正的病原體之後找上門，身體早就知道該怎麼應付。"
+   },
+   {
+    "en": "This training explains a common experience. After a shot, some people feel [[mild]] [[side effects]]. A sore arm or a low [[fever]] is normal. Those signs show that the body is busy learning. In most cases, the feeling fades within a day or two. People who feel worried can always ask a doctor.",
+    "zh": "這套訓練也解釋了一個常見的經驗。打完針之後，有些人會出現輕微的副作用。手臂痠痛或是輕微發燒都很常見。這些反應代表身體正忙著學習。多數情況下，這種感覺一兩天內就會退去。真的不放心的人，隨時可以問醫生。"
+   },
+   {
+    "en": "Some vaccines need more than one [[dose]]. The second shot acts like a review lesson. The [[protection]] can also weaken as years pass. That is why certain vaccines are repeated later in life. The timing is not random, and doctors follow careful plans.",
+    "zh": "有些疫苗需要不只一劑。第二針的作用，就像是一堂複習課。保護力也會隨著年月慢慢減弱。這就是為什麼某些疫苗要在往後的人生中再打一次。接種的時間點並不是隨便決定的，醫生會依照審慎的規劃。"
+   },
+   {
+    "en": "Vaccines protect groups, not only individuals. When most people in a [[community]] are protected, a germ finds fewer places to [[spread]]. Newborn babies and very sick patients often cannot be vaccinated. They depend on the people around them. This kind of protection is easy to miss, yet it matters a lot.",
+    "zh": "疫苗保護的不只是個人，還有群體。當一個社群裡多數人都有保護力，病原體能傳播的空間就變少了。剛出生的嬰兒和病重的患者，往往沒辦法接種。他們仰賴周圍的人。這種保護很容易被忽略，卻非常重要。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "immune system",
+    "base": "immune system",
+    "pos": "n.",
+    "hint": "the parts of the body that work together to fight illness",
+    "zh": "免疫系統"
+   },
+   {
+    "word": "germ",
+    "base": "germ",
+    "pos": "n.",
+    "hint": "a very small living thing that can cause illness",
+    "zh": "病原體；病菌"
+   },
+   {
+    "word": "vaccines",
+    "base": "vaccine",
+    "pos": "n.",
+    "hint": "a medical product that prepares the body against a certain disease",
+    "zh": "疫苗"
+   },
+   {
+    "word": "sample",
+    "base": "sample",
+    "pos": "n.",
+    "hint": "a small part taken to show what the whole is like",
+    "zh": "樣本"
+   },
+   {
+    "word": "virus",
+    "base": "virus",
+    "pos": "n.",
+    "hint": "a very tiny thing that copies itself inside living cells and can cause disease",
+    "zh": "病毒"
+   },
+   {
+    "word": "bacteria",
+    "base": "bacteria",
+    "pos": "n.",
+    "hint": "very small living things, some of which cause illness",
+    "zh": "細菌"
+   },
+   {
+    "word": "cells",
+    "base": "cell",
+    "pos": "n.",
+    "hint": "the smallest working unit of a living body",
+    "zh": "細胞"
+   },
+   {
+    "word": "antibodies",
+    "base": "antibody",
+    "pos": "n.",
+    "hint": "a substance made by the body to attack a certain germ",
+    "zh": "抗體"
+   },
+   {
+    "word": "stick to",
+    "base": "stick to",
+    "pos": "phr. v.",
+    "hint": "become firmly joined onto the surface of something",
+    "zh": "黏附於"
+   },
+   {
+    "word": "mild",
+    "base": "mild",
+    "pos": "adj.",
+    "hint": "not strong or serious",
+    "zh": "輕微的"
+   },
+   {
+    "word": "side effects",
+    "base": "side effect",
+    "pos": "n.",
+    "hint": "an extra and often unwanted result of taking a medicine",
+    "zh": "副作用"
+   },
+   {
+    "word": "fever",
+    "base": "fever",
+    "pos": "n.",
+    "hint": "a body temperature that is higher than normal",
+    "zh": "發燒"
+   },
+   {
+    "word": "dose",
+    "base": "dose",
+    "pos": "n.",
+    "hint": "one measured amount of medicine taken at one time",
+    "zh": "劑量；一劑"
+   },
+   {
+    "word": "protection",
+    "base": "protection",
+    "pos": "n.",
+    "hint": "the state of being kept safe from harm",
+    "zh": "保護力"
+   },
+   {
+    "word": "community",
+    "base": "community",
+    "pos": "n.",
+    "hint": "a group of people living in the same area",
+    "zh": "社群；社區"
+   },
+   {
+    "word": "spread",
+    "base": "spread",
+    "pos": "v.",
+    "hint": "move into a wider area or reach more people",
+    "zh": "傳播；散布"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the article mainly about?",
+    "options": [
+     "Why some people should avoid all kinds of medicine.",
+     "How vaccines teach the body to recognize a germ.",
+     "How medicine is produced inside large factories.",
+     "Why a fever is always dangerous for adults."
+    ],
+    "answer": 1,
+    "explanation": "第一段結尾點題（疫苗背後的道理就是身體會記住入侵者），後面各段依序說明樣本、訓練、副作用、劑量與群體保護。"
+   },
+   {
+    "q": "What does a vaccine give the body?",
+    "options": [
+     "A safe sample, such as a weak form or a small piece of a germ.",
+     "A strong living germ that causes serious illness.",
+     "A set of antibodies collected from animals.",
+     "A medicine that kills every germ in the body."
+    ],
+    "answer": 0,
+    "explanation": "第二段說疫苗讓身體看見一份安全的樣本，可能是減弱或已死的形式，也可能只是外層的一小塊。"
+   },
+   {
+    "q": "According to the article, what do memory cells do?",
+    "options": [
+     "They remove antibodies from the blood.",
+     "They cause a fever after every shot.",
+     "They stay in the body for a long time.",
+     "They change the shape of the invader."
+    ],
+    "answer": 2,
+    "explanation": "第三段說一部分細胞會變成記憶細胞，長期留在體內，讓身體之後認得病原體。"
+   },
+   {
+    "q": "What does a sore arm after a shot most likely mean?",
+    "options": [
+     "The vaccine has failed completely.",
+     "The person has caught the disease.",
+     "The dose given was far too large.",
+     "The body is responding and learning."
+    ],
+    "answer": 3,
+    "explanation": "第四段說這類輕微反應代表身體正忙著學習，而且通常一兩天就消失，可推論不是失敗或生病。"
+   },
+   {
+    "q": "Why does the article mention newborn babies and very sick patients?",
+    "options": [
+     "They always receive the strongest vaccines available.",
+     "They often cannot be vaccinated, so they rely on others.",
+     "They never get sick from common germs.",
+     "They must take one dose every single year."
+    ],
+    "answer": 1,
+    "explanation": "最後一段用他們說明群體保護：當社群裡多數人有保護力，無法接種的人就靠周圍的人得到保護。"
+   }
+  ]
+ },
+ {
+  "id": "art-18a",
+  "title": "AI Tools Arrive in the Office",
+  "titleZh": "AI 工具進入辦公室",
+  "category": "科技",
+  "level": "中高級 (TOEIC 650-800)",
+  "readTime": 5,
+  "illustrationIdea": "A busy open-plan office where several employees work at screens showing an AI chat panel beside a half-finished email, while a manager reviews a printed draft with a red pen.",
+  "paragraphs": [
+   {
+    "en": "Walk into almost any modern office and you will find someone typing instructions into an [[artificial intelligence]] tool. In a short time, these programs have moved from technology news into ordinary working life. Employees use them to [[draft]] emails, [[summarize]] long reports, translate messages for overseas clients, and turn rough notes into slides. What was recently treated as an experiment has quietly become part of the daily [[routine]].",
+    "zh": "走進現在幾乎任何一間辦公室，都會看到有人正在對著人工智慧工具下指令。短短一段時間內，這類程式已經從科技新聞走進了平常的工作日常。員工用它來草擬電子郵件、把冗長的報告整理成摘要、替海外客戶翻譯訊息，或把零散的筆記變成簡報。不久前還被當成實驗的東西，如今已悄悄成為每天例行工作的一部分。"
+   },
+   {
+    "en": "The change has not affected every job equally. Tasks built on repeated writing and searching have shifted the most. [[Customer service]] teams let AI prepare a first reply, which a person then checks and sends. Marketing staff [[generate]] several versions of a headline in seconds. Accountants and lawyers search enormous documents for a single [[clause]]. In each case the tool does not make the decision; it removes the slow work that comes before it.",
+    "zh": "這個轉變並沒有平均落在每一種工作上。以重複性書寫和查找為主的任務，受到的影響最大。客服團隊讓 AI 先擬出第一版回覆，再由真人檢查後寄出。行銷人員幾秒內就能產出好幾個標題版本。會計師與律師則用它在龐大的文件裡找出某一條條款。這些例子裡，工具並沒有替人做決定，它拿掉的是決定之前那段緩慢的作業。"
+   },
+   {
+    "en": "Managers who welcome the technology usually talk about where effort should go. If a task that took an hour now takes ten minutes, the argument goes, the difference can go into work a machine cannot do: understanding a difficult client, training a new [[colleague]], or deciding what the company should do next. Some employers also hope AI will lower the [[barrier]] for staff working in a second language, since a rough draft is easier to correct than a blank page.",
+    "zh": "支持這項技術的主管，通常會從力氣該花在哪裡談起。他們的說法是：原本要花一小時的工作，如果現在十分鐘就能完成，多出來的部分就能挪去做機器做不到的事，像是理解一位難搞的客戶、帶新同事上手，或思考公司下一步該怎麼走。也有雇主期待 AI 能降低第二語言工作者的門檻，因為修改一份粗糙的初稿，總比面對一張空白的紙容易。"
+   },
+   {
+    "en": "The worries are just as practical. The most common one concerns [[employment]]: if a machine can produce an acceptable draft, companies may need fewer people to produce drafts. History offers mixed comfort. Earlier office technologies, including [[spreadsheets]] and email, removed some jobs while creating others nobody had imagined. Which pattern AI follows remains unclear, and that [[uncertainty]] is itself a source of stress.",
+    "zh": "擔憂同樣很實際。最常見的一項與就業有關：如果機器就能生出可用的初稿，公司需要的產稿人力可能就變少了。歷史給的安慰半好半壞。早年的辦公室技術，例如試算表和電子郵件，一邊淘汰了某些職務，一邊也創造出當時沒人想得到的工作。AI 會走哪一條路目前還看不清楚，而這份不確定性本身就是壓力來源。"
+   },
+   {
+    "en": "A second concern is [[accuracy]]. These systems produce [[fluent]] language, and fluent language sounds confident even when it is wrong. A summary may leave out the one condition that mattered; an invented figure may look perfectly reasonable. Because mistakes arrive in polished sentences, they are easy to miss. Many firms handling [[contracts]], medical records or financial statements now require a named person to check anything a machine writes.",
+    "zh": "第二個疑慮是準確度。這類系統寫出來的句子很流暢，而流暢的語言即使內容有誤，聽起來仍然很有把握。一份摘要可能漏掉最關鍵的那個條件；一個憑空生成的數字，看起來也可能非常合理。因為錯誤是包在漂亮的句子裡送到眼前，很容易被忽略過去。許多處理合約、病歷或財務報表的公司，如今都要求由指定的人負責檢查機器寫出的任何內容。"
+   },
+   {
+    "en": "[[Privacy]] raises further questions. Text typed into an outside service leaves the company network, so many employers [[forbid]] staff from pasting customer data or unreleased product plans into public tools. Written [[policies]], once rare, have spread quickly: some organizations approve a short list of tools, while others require training before access is granted.",
+    "zh": "隱私帶出更多問題。輸入外部服務的文字會離開公司網路，因此不少雇主禁止員工把客戶資料或尚未發表的產品計畫貼進公開工具。書面規範以前很少見，現在擴散得很快：有些組織只核准一份簡短的工具清單，有些則要求先受訓才開放使用。"
+   },
+   {
+    "en": "For most employees, the sensible approach is neither to panic nor to ignore what is happening. The workers who benefit are usually those who learn what the tool does well, stay responsible for the final result, and can explain why they accepted or rejected a suggestion. The skill in demand, in other words, is not typing instructions into a box. It is [[judgment]], and judgment has not been [[automated]].",
+    "zh": "對多數上班族來說，比較合理的態度既不是恐慌，也不是假裝沒這回事。真正受惠的人，通常是那些搞清楚工具擅長什麼、對最終成果負責，並且說得出自己為什麼採用或否決某個建議的人。換句話說，市場要的能力不是把指令打進對話框，而是判斷力，而判斷力還沒有被自動化。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "artificial intelligence",
+    "base": "artificial intelligence",
+    "pos": "n.",
+    "hint": "computer systems that can do tasks which normally need human thinking",
+    "zh": "人工智慧"
+   },
+   {
+    "word": "draft",
+    "base": "draft",
+    "pos": "v.",
+    "hint": "to write a first version of a letter or document",
+    "zh": "草擬"
+   },
+   {
+    "word": "summarize",
+    "base": "summarize",
+    "pos": "v.",
+    "hint": "to give the main points of something in a short form",
+    "zh": "摘要;概述"
+   },
+   {
+    "word": "routine",
+    "base": "routine",
+    "pos": "n.",
+    "hint": "the usual set of things a person does regularly",
+    "zh": "例行事務"
+   },
+   {
+    "word": "Customer service",
+    "base": "customer service",
+    "pos": "n.",
+    "hint": "the part of a company that helps buyers with questions and problems",
+    "zh": "客服"
+   },
+   {
+    "word": "generate",
+    "base": "generate",
+    "pos": "v.",
+    "hint": "to produce or create something",
+    "zh": "產生;製作"
+   },
+   {
+    "word": "clause",
+    "base": "clause",
+    "pos": "n.",
+    "hint": "a separate section or condition in a legal agreement",
+    "zh": "條款"
+   },
+   {
+    "word": "colleague",
+    "base": "colleague",
+    "pos": "n.",
+    "hint": "a person you work with",
+    "zh": "同事"
+   },
+   {
+    "word": "barrier",
+    "base": "barrier",
+    "pos": "n.",
+    "hint": "something that makes progress or entry difficult",
+    "zh": "障礙;門檻"
+   },
+   {
+    "word": "employment",
+    "base": "employment",
+    "pos": "n.",
+    "hint": "the state of having paid work",
+    "zh": "就業"
+   },
+   {
+    "word": "spreadsheets",
+    "base": "spreadsheet",
+    "pos": "n.",
+    "hint": "a computer program that arranges numbers in rows and columns for calculation",
+    "zh": "試算表"
+   },
+   {
+    "word": "uncertainty",
+    "base": "uncertainty",
+    "pos": "n.",
+    "hint": "a situation in which something is not known or decided",
+    "zh": "不確定性"
+   },
+   {
+    "word": "accuracy",
+    "base": "accuracy",
+    "pos": "n.",
+    "hint": "the quality of being correct and free from mistakes",
+    "zh": "準確度"
+   },
+   {
+    "word": "fluent",
+    "base": "fluent",
+    "pos": "adj.",
+    "hint": "able to use language smoothly and easily",
+    "zh": "流暢的"
+   },
+   {
+    "word": "contracts",
+    "base": "contract",
+    "pos": "n.",
+    "hint": "a written legal agreement between two sides",
+    "zh": "合約"
+   },
+   {
+    "word": "Privacy",
+    "base": "privacy",
+    "pos": "n.",
+    "hint": "the right to keep personal information away from other people",
+    "zh": "隱私"
+   },
+   {
+    "word": "forbid",
+    "base": "forbid",
+    "pos": "v.",
+    "hint": "to order someone not to do something",
+    "zh": "禁止"
+   },
+   {
+    "word": "policies",
+    "base": "policy",
+    "pos": "n.",
+    "hint": "an official rule or plan that an organization follows",
+    "zh": "政策;規定"
+   },
+   {
+    "word": "judgment",
+    "base": "judgment",
+    "pos": "n.",
+    "hint": "the ability to make good decisions after thinking carefully",
+    "zh": "判斷力"
+   },
+   {
+    "word": "automated",
+    "base": "automate",
+    "pos": "v.",
+    "hint": "to make a process work by machine instead of by a person",
+    "zh": "自動化"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the article mainly about?",
+    "options": [
+     "How AI tools are changing office work, and what workers hope and fear about them",
+     "Why most companies have decided to ban AI tools completely",
+     "A step-by-step guide to writing instructions for AI tools",
+     "The history of office equipment from the typewriter to the printer"
+    ],
+    "answer": 0,
+    "explanation": "主旨題。全文從第一段的現象（AI 工具進入日常工作）開始，接著談哪些工作改變、期待（第三段）與擔憂（第四至六段），最後給讀者建議，主軸就是職場改變與正反看法。"
+   },
+   {
+    "q": "According to the article, which kind of task has been affected the most?",
+    "options": [
+     "Tasks that require moving heavy equipment",
+     "Tasks that only senior managers are allowed to do",
+     "Tasks that must be finished outside the office",
+     "Tasks built on repeated writing and searching"
+    ],
+    "answer": 3,
+    "explanation": "細節題。第二段第二句明確寫著 Tasks built on repeated writing and searching have shifted the most，後面客服、行銷、會計與律師的例子都屬於這一類。"
+   },
+   {
+    "q": "Why do many employers forbid staff from pasting customer data into public AI tools?",
+    "options": [
+     "Because the tools charge extra money for long text",
+     "Because customers prefer replies written by hand",
+     "Because the text leaves the company's own network",
+     "Because the tools are unable to read numbers"
+    ],
+    "answer": 2,
+    "explanation": "細節題。第六段第二句說明原因：輸入外部服務的文字會離開公司網路（Text typed into an outside service leaves the company network），所以雇主才會設下限制。"
+   },
+   {
+    "q": "What does the article suggest about mistakes made by AI tools?",
+    "options": [
+     "They can slip past readers because the writing sounds confident",
+     "They are easy to notice because the writing is poor",
+     "They appear only in medical documents",
+     "They are corrected automatically by the same tool"
+    ],
+    "answer": 0,
+    "explanation": "推論題。第五段說流暢的語言即使內容錯誤也聽起來很有把握，而且錯誤是「包在漂亮的句子裡」（arrive in polished sentences），因此容易被讀者忽略，這正是要求人工複查的原因。"
+   },
+   {
+    "q": "What does the writer imply about which workers will do well in the future?",
+    "options": [
+     "Those who can type instructions the fastest",
+     "Those who can judge results and take responsibility for them",
+     "Those who avoid using any new technology at work",
+     "Those who work for the largest companies"
+    ],
+    "answer": 1,
+    "explanation": "推論題。最後一段指出受惠者是「了解工具擅長什麼、對成果負責、能說明採用或否決理由」的人，並收在 It is judgment，暗示未來的價值來自判斷與負責，而非操作速度。"
+   }
+  ]
+ },
+ {
+  "id": "art-18b",
+  "title": "The Trouble with Microplastics",
+  "titleZh": "微塑膠的難題",
+  "category": "環境",
+  "level": "中高級 (TOEIC 650-800)",
+  "readTime": 5,
+  "illustrationIdea": "A split scene showing a plastic bottle breaking apart on a beach on one side and, on the other, a close-up of tiny colored plastic pieces mixed with sand and sea water.",
+  "paragraphs": [
+   {
+    "en": "[[Microplastics]] are plastic pieces smaller than a grain of rice, and some are invisible without a [[microscope]]. Scientists have reported finding them in ocean water, farm soil, rainfall, and the stomachs of fish and seabirds. Two questions follow. Where does all this material come from, and why is it so hard to clean up?",
+    "zh": "微塑膠是比一粒米還小的塑膠碎片，有些小到不用顯微鏡根本看不見。科學家陸續在海水、農地土壤、雨水，以及魚和海鳥的胃裡發現它們。接著自然會出現兩個問題：這些東西究竟從哪裡來？為什麼這麼難清乾淨？"
+   },
+   {
+    "en": "Most microplastics are not manufactured at that size. They begin as ordinary objects such as bottles, [[packaging]], fishing nets and plastic bags that escape collection and end up outdoors. Sunlight, heat and the constant movement of wind and waves make the material [[brittle]], and it slowly breaks into smaller and smaller pieces. Almost none of the plastic itself disappears in this process; the [[fragments]] simply become harder to see.",
+    "zh": "大部分的微塑膠一開始並不是被製造成這種尺寸。它們原本是瓶子、包裝材、漁網和塑膠袋這類日常物品，因為沒有被收走而流落到戶外。陽光、高溫，加上風浪不停的拉扯，讓材質變得脆化，慢慢裂成越來越小的碎片。在這個過程裡，塑膠本身幾乎沒有真正消失，只是這些碎片變得更難被看見。"
+   },
+   {
+    "en": "Other sources are closer to home. Car [[tires]] shed tiny [[particles]] onto the road every time a vehicle brakes or turns, and rain washes them into drains. Clothes made from [[synthetic]] [[fibers]] release threads in the washing machine, and no treatment plant catches every one of them. Paint, dust and worn-out household goods add more. Because these releases are small and continuous, they attract far less attention than a bag caught in a tree.",
+    "zh": "另一些來源離生活更近。車輛每次煞車或轉彎，輪胎都會在路面上磨下極細的顆粒，再被雨水沖進排水溝。合成纖維做的衣服在洗衣機裡會掉出細絲，而沒有一座污水處理廠攔得下全部。油漆、灰塵和用壞的家用品也持續累加。因為這些排放又小又不間斷，得到的關注遠比掛在樹上的一個塑膠袋還少。"
+   },
+   {
+    "en": "Removing them is where the trouble begins. A floating bottle can be picked up; a particle the width of a hair cannot. Any [[filter]] fine enough to trap microplastics would also trap [[plankton]], the tiny drifting creatures that ocean food chains depend on. Meanwhile the particles are everywhere at once: suspended in water, buried in [[sediment]], and blown through the air, so there is no single place to send cleaning equipment.",
+    "zh": "真正麻煩的是要怎麼清除。漂在水面的瓶子可以撿起來，但一顆只有頭髮寬度的顆粒沒辦法。任何細到能攔住微塑膠的濾網，也會一併攔下浮游生物，也就是海洋食物鏈賴以維生的那些漂浮小生物。同時，這些顆粒同時存在於各處：懸浮在水中、埋在沉積物裡、隨空氣飄散，因此根本沒有一個定點可以派清理設備過去。"
+   },
+   {
+    "en": "Time does not solve the problem either. Plastic was designed to be [[durable]], which is exactly why it is useful for pipes, medical equipment and food packaging. That same quality means it [[resists]] the [[bacteria]] and weather that break down wood or paper, so it stays in the environment for a very long time. What changes is the size of the pieces, not the amount of material.",
+    "zh": "時間也解決不了問題。塑膠當初就是被設計成耐用的材料，這正是水管、醫療器材和食品包裝愛用它的原因。同樣的特性，讓它能抵抗那些會分解木頭或紙張的細菌與天候，因此可以在環境裡留存非常久。改變的只是碎片的大小，不是材料的總量。"
+   },
+   {
+    "en": "Health effects remain an open question. Microplastics have been detected in food and drinking water, and researchers are studying what happens when the human body [[absorbs]] them, but firm conclusions are still missing. Scientists are careful here: finding a substance is not the same as showing that it causes harm. That honest [[caution]] is sometimes reported as good news, which it is not.",
+    "zh": "對健康的影響目前仍是未定之數。食物和飲用水中都已經檢出微塑膠，研究者也在了解人體吸收之後會發生什麼事，但還沒有明確的結論。科學家在這裡措辭謹慎：檢驗得到某種物質，並不等於證明它會造成傷害。這種誠實的保留，有時會被當成好消息報導，但它的意思並不是這樣。"
+   },
+   {
+    "en": "Because collection is so difficult, most experts focus on the source. Reducing [[unnecessary]] packaging, improving waste collection so less plastic escapes in the first place, designing products that shed fewer particles, and upgrading water treatment all attack the problem before it spreads. None of this is dramatic, and none of it produces a clean ocean next year. But with a material this small and this [[persistent]], preventing the mess is far more realistic than gathering it up afterwards.",
+    "zh": "正因為清除太困難，多數專家把重點放在源頭。減少不必要的包裝、改善廢棄物收運讓塑膠一開始就別外流、設計掉屑更少的產品，以及升級水處理設施，都是在問題擴散之前先攔下來。這些做法都不戲劇化，也沒有一項能讓海洋明年就變乾淨。但面對一種這麼細小又這麼難消失的材料，防止它散出去，遠比事後去收拾來得實際。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "Microplastics",
+    "base": "microplastic",
+    "pos": "n.",
+    "hint": "extremely small bits of man-made material found in water, soil and air",
+    "zh": "微塑膠"
+   },
+   {
+    "word": "microscope",
+    "base": "microscope",
+    "pos": "n.",
+    "hint": "an instrument that makes very small objects look much larger",
+    "zh": "顯微鏡"
+   },
+   {
+    "word": "packaging",
+    "base": "packaging",
+    "pos": "n.",
+    "hint": "the boxes, bags and wrapping used to hold and protect goods",
+    "zh": "包裝材"
+   },
+   {
+    "word": "brittle",
+    "base": "brittle",
+    "pos": "adj.",
+    "hint": "hard but easily broken or cracked",
+    "zh": "脆的;易碎的"
+   },
+   {
+    "word": "fragments",
+    "base": "fragment",
+    "pos": "n.",
+    "hint": "small parts broken off something larger",
+    "zh": "碎片"
+   },
+   {
+    "word": "tires",
+    "base": "tire",
+    "pos": "n.",
+    "hint": "the rubber rings around the wheels of a vehicle",
+    "zh": "輪胎"
+   },
+   {
+    "word": "particles",
+    "base": "particle",
+    "pos": "n.",
+    "hint": "extremely small bits of matter",
+    "zh": "顆粒"
+   },
+   {
+    "word": "synthetic",
+    "base": "synthetic",
+    "pos": "adj.",
+    "hint": "made by a chemical process rather than coming from nature",
+    "zh": "合成的"
+   },
+   {
+    "word": "fibers",
+    "base": "fiber",
+    "pos": "n.",
+    "hint": "thin threads used to make cloth or rope",
+    "zh": "纖維"
+   },
+   {
+    "word": "filter",
+    "base": "filter",
+    "pos": "n.",
+    "hint": "a device that separates unwanted material out of a liquid or gas",
+    "zh": "濾網;過濾器"
+   },
+   {
+    "word": "plankton",
+    "base": "plankton",
+    "pos": "n.",
+    "hint": "very small living things that float in the sea and are eaten by larger animals",
+    "zh": "浮游生物"
+   },
+   {
+    "word": "sediment",
+    "base": "sediment",
+    "pos": "n.",
+    "hint": "material that settles at the bottom of a river, lake or ocean",
+    "zh": "沉積物"
+   },
+   {
+    "word": "durable",
+    "base": "durable",
+    "pos": "adj.",
+    "hint": "able to last a long time without being damaged",
+    "zh": "耐用的"
+   },
+   {
+    "word": "resists",
+    "base": "resist",
+    "pos": "v.",
+    "hint": "to not be damaged or affected by something",
+    "zh": "抵抗"
+   },
+   {
+    "word": "bacteria",
+    "base": "bacteria",
+    "pos": "n.",
+    "hint": "extremely small living things that can cause decay or illness",
+    "zh": "細菌"
+   },
+   {
+    "word": "absorbs",
+    "base": "absorb",
+    "pos": "v.",
+    "hint": "to take in a liquid or substance through a surface",
+    "zh": "吸收"
+   },
+   {
+    "word": "caution",
+    "base": "caution",
+    "pos": "n.",
+    "hint": "care taken to avoid mistakes or danger",
+    "zh": "謹慎;保留"
+   },
+   {
+    "word": "unnecessary",
+    "base": "unnecessary",
+    "pos": "adj.",
+    "hint": "not needed",
+    "zh": "不必要的"
+   },
+   {
+    "word": "persistent",
+    "base": "persistent",
+    "pos": "adj.",
+    "hint": "continuing to exist or last for a long time",
+    "zh": "難以消失的;持久的"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main point of the article?",
+    "options": [
+     "Microplastics come mainly from medical equipment",
+     "Microplastics come from many everyday sources and are extremely difficult to remove",
+     "Cleaning machines have already solved most of the ocean problem",
+     "Plastic breaks down into natural material soon after it reaches the sea"
+    ],
+    "answer": 1,
+    "explanation": "主旨題。第一段最後提出兩個問題（來源與清除），第二、三段回答來源，第四、五段解釋為何難以清除，全文正是圍繞這兩點。"
+   },
+   {
+    "q": "According to the article, where do most microplastics come from?",
+    "options": [
+     "Larger plastic objects that break apart outdoors",
+     "Factories that deliberately produce plastic at that size",
+     "Dust blown from volcanoes into the ocean",
+     "Paper packaging left out in the rain"
+    ],
+    "answer": 0,
+    "explanation": "細節題。第二段開頭說 Most microplastics are not manufactured at that size，並說明它們原本是瓶子、漁網、塑膠袋等物品，在戶外被陽光與風浪打碎。"
+   },
+   {
+    "q": "Why is filtering microplastics out of the ocean a problem?",
+    "options": [
+     "Filters stop working in cold water",
+     "Filters are banned in most parts of the ocean",
+     "A filter fine enough would also trap tiny living things",
+     "Filters make the plastic pieces grow larger"
+    ],
+    "answer": 2,
+    "explanation": "細節題。第四段指出，細到能攔住微塑膠的濾網也會攔下浮游生物，而那正是海洋食物鏈依賴的小生物。"
+   },
+   {
+    "q": "What can be inferred about plastic being durable?",
+    "options": [
+     "It is a fault that manufacturers are removing from every product",
+     "It makes plastic unsuitable for pipes and medical equipment",
+     "It allows plastic to turn into soil within a few seasons",
+     "It is useful in products but becomes a problem once plastic escapes"
+    ],
+    "answer": 3,
+    "explanation": "推論題。第五段說耐用正是水管、醫療器材、食品包裝愛用塑膠的原因，但同樣的特性讓它能抵抗細菌與天候而長期留在環境中，可推得同一項優點在戶外變成麻煩。"
+   },
+   {
+    "q": "What does the writer suggest about the health effects of microplastics?",
+    "options": [
+     "Research has already proved that they are completely safe",
+     "The evidence is not complete, and that uncertainty should not be read as good news",
+     "They make everyone who eats fish become ill",
+     "Scientists have decided to stop studying the question"
+    ],
+    "answer": 1,
+    "explanation": "推論題。第六段說結論尚未明確，並指出「檢出物質不等於證明有害」，最後一句更點明這種謹慎有時被誤讀成好消息，暗示讀者不該把不確定當成安全保證。"
+   }
+  ]
+ },
+ {
+  "id": "art-19a",
+  "title": "Why Cities Are Planting More Trees",
+  "titleZh": "城市為什麼開始猛種樹",
+  "category": "環境",
+  "level": "中高級 (TOEIC 650-800)",
+  "readTime": 5,
+  "illustrationIdea": "A hot city street split down the middle: bare concrete and parked cars on one side, a shaded row of leafy street trees with people walking comfortably on the other.",
+  "paragraphs": [
+   {
+    "en": "Walk through a big city on a hot afternoon and you feel it at once: the streets are hotter than the fields and hills outside town. Concrete, asphalt and glass [[absorb]] heat all day and [[release]] it slowly at night. Scientists call the difference the heat island effect, and as summers get hotter, many [[urban]] governments are turning back to an old, simple answer: planting trees.",
+    "zh": "在炎熱的午後走進大城市，你馬上就會感覺到：街道比城外的田野與山丘熱得多。混凝土、柏油與玻璃整天吸收熱，到了晚上再慢慢釋放出來。科學家把這個溫差稱為熱島效應；隨著夏天愈來愈熱，許多都市政府開始回頭尋找一個老而簡單的答案，也就是種樹。"
+   },
+   {
+    "en": "Trees cool a street in two ways. The first is easy to see. A wide roof of leaves keeps sunlight off the ground, and the [[shade]] under a healthy tree feels far cooler than the pavement a few steps away. The second way is invisible. Leaves give off water, and as that water turns into vapor it takes heat with it, the same reason [[evaporation]] cools your skin after you sweat. Air moving through a line of trees is therefore cooler than the [[surrounding]] air.",
+    "zh": "樹木用兩種方式為街道降溫。第一種很容易看見：一層寬闊的樹葉擋住直射的陽光，健康樹木底下的樹蔭，可能比幾步之外的路面涼快許多。第二種則看不見。葉子會把水分散到空氣中，水變成水蒸氣時會帶走熱量，這也是流汗後蒸發會讓皮膚感覺涼的原因。因此，穿過一整排樹木的空氣，會比周圍的空氣涼一些。"
+   },
+   {
+    "en": "The benefits do not stop at temperature. Leaves [[trap]] dust and other tiny [[particles]], so a street lined with trees often has cleaner air. Roots and soil hold rainwater that would otherwise rush into the drains, which helps [[reduce]] [[flooding]] during heavy storms. Birds and insects that cannot live on bare concrete find [[habitat]] in the branches, bringing a little wildlife back.",
+    "zh": "好處不只在溫度。葉片會攔住灰塵與其他細小的微粒，因此有樹的街道空氣往往比較乾淨。樹根與土壤留住原本會直接沖進排水溝的雨水，有助於在暴雨時減少淹水。無法在光禿水泥地生存的鳥類與昆蟲，也在枝條間找到棲地，讓一點野生生命回到城市裡。"
+   },
+   {
+    "en": "There is also a quieter effect, felt by people rather than measured on a thermometer. Ask city [[residents]] why they like a tree-lined street and few mention temperature; they talk about noise, about light, about feeling less [[stress]] on the way home. Hospitals and schools have long tried to give people a view of something green, because attention is easier to [[recover]] when concrete is not the only thing in sight.",
+    "zh": "還有一種比較安靜的效果，它顯現在人的感受裡，而不是溫度計上。問問城市居民為什麼喜歡有樹的街道，很少有人會提到溫度；他們談的是噪音、是光線、是回家路上比較沒有壓力。醫院和學校長久以來都設法讓人看得到綠色的東西，因為當視野裡不是只有水泥時，注意力比較容易恢復。"
+   },
+   {
+    "en": "None of this is free. Planting a young tree is the cheap part; keeping it alive is not. New trees need water through their first summers, and a tree that dies in year two is money thrown away. Branches must be cut back before they reach power lines. City [[budgets]] therefore have to cover years of [[maintenance]], not just one cheerful planting day.",
+    "zh": "這些都不是免費的。種下一棵小樹是便宜的部分，讓它活下來才不是。新種的樹在頭幾個夏天需要澆水，而第二年就死掉的樹等於把錢丟掉。枝條長到電線之前必須修剪。因此，市府預算要負擔的是好幾年的維護，而不只是一天熱鬧的植樹活動。"
+   },
+   {
+    "en": "Choosing the wrong tree can also cause [[damage]]. Roots spreading under a narrow sidewalk will lift the stones and invade old water pipes, and a tree dropping heavy fruit over a parking area makes enemies quickly. Planners now tend to mix many [[species]] on purpose, since a single disease or insect can wipe out an entire street if every tree on it is the same.",
+    "zh": "選錯樹種同樣會造成損害。在狹窄人行道底下擴張的樹根會頂起地磚、鑽進老舊水管；把沉重果實掉在停車格上的樹，很快就會樹敵。現在的規劃者傾向刻意混種多種物種，因為只要整條街的樹都一樣，一種病害或蟲害就可能讓它們全數消失。"
+   },
+   {
+    "en": "Trees are also unevenly shared. In many cities, richer [[neighborhoods]] have more shade, while the hottest and barest streets are often home to the people who can least afford air conditioning. That is why tree planting is now discussed as a question of fairness as well as climate, and why a tree planted this year, though it will give little shade for years, is worth the wait.",
+    "zh": "樹木的分布也不平均。在許多城市裡，較富裕的社區樹蔭更多，而最熱、最光禿的街道，往往住著最負擔不起冷氣的人。這就是為什麼種樹如今被視為公平問題，而不只是氣候問題；也是為什麼今年種下的樹，即使好幾年內都提供不了多少樹蔭，仍然值得等待。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "absorb",
+    "base": "absorb",
+    "pos": "v.",
+    "hint": "to take in heat, light or liquid",
+    "zh": "吸收"
+   },
+   {
+    "word": "release",
+    "base": "release",
+    "pos": "v.",
+    "hint": "to let something go out into the air or into a space",
+    "zh": "釋放"
+   },
+   {
+    "word": "urban",
+    "base": "urban",
+    "pos": "adj.",
+    "hint": "relating to a city or town rather than the countryside",
+    "zh": "都市的"
+   },
+   {
+    "word": "shade",
+    "base": "shade",
+    "pos": "n.",
+    "hint": "an area kept out of direct sunlight by something above it",
+    "zh": "樹蔭；陰涼處"
+   },
+   {
+    "word": "evaporation",
+    "base": "evaporation",
+    "pos": "n.",
+    "hint": "the process in which a liquid slowly turns into gas",
+    "zh": "蒸發"
+   },
+   {
+    "word": "surrounding",
+    "base": "surrounding",
+    "pos": "adj.",
+    "hint": "being all around a place or thing",
+    "zh": "周圍的"
+   },
+   {
+    "word": "trap",
+    "base": "trap",
+    "pos": "v.",
+    "hint": "to catch and hold something so that it cannot get away",
+    "zh": "攔住；困住"
+   },
+   {
+    "word": "particles",
+    "base": "particle",
+    "pos": "n.",
+    "hint": "extremely small pieces of a substance",
+    "zh": "微粒；顆粒"
+   },
+   {
+    "word": "reduce",
+    "base": "reduce",
+    "pos": "v.",
+    "hint": "to make something smaller in amount or degree",
+    "zh": "減少"
+   },
+   {
+    "word": "flooding",
+    "base": "flooding",
+    "pos": "n.",
+    "hint": "a situation in which water covers land that is usually dry",
+    "zh": "淹水"
+   },
+   {
+    "word": "habitat",
+    "base": "habitat",
+    "pos": "n.",
+    "hint": "the natural home of an animal or plant",
+    "zh": "棲地"
+   },
+   {
+    "word": "residents",
+    "base": "resident",
+    "pos": "n.",
+    "hint": "people who live in a particular place",
+    "zh": "居民"
+   },
+   {
+    "word": "stress",
+    "base": "stress",
+    "pos": "n.",
+    "hint": "the worried feeling caused by pressure or difficulty",
+    "zh": "壓力"
+   },
+   {
+    "word": "recover",
+    "base": "recover",
+    "pos": "v.",
+    "hint": "to return to a normal condition after difficulty or illness",
+    "zh": "恢復"
+   },
+   {
+    "word": "budgets",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "plans showing how much money is available to spend",
+    "zh": "預算"
+   },
+   {
+    "word": "maintenance",
+    "base": "maintenance",
+    "pos": "n.",
+    "hint": "the work of keeping something in good condition",
+    "zh": "維護"
+   },
+   {
+    "word": "damage",
+    "base": "damage",
+    "pos": "n.",
+    "hint": "harm that makes something less useful or less valuable",
+    "zh": "損害"
+   },
+   {
+    "word": "species",
+    "base": "species",
+    "pos": "n.",
+    "hint": "a group of animals or plants of the same kind",
+    "zh": "物種"
+   },
+   {
+    "word": "neighborhoods",
+    "base": "neighborhood",
+    "pos": "n.",
+    "hint": "areas of a city or town where people live",
+    "zh": "社區"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main idea of the article?",
+    "options": [
+     "Cities should replace air conditioning with trees.",
+     "Trees grow faster in cities than in the countryside.",
+     "Cities are planting trees because trees cool streets and improve daily life, although the work is long and costly.",
+     "Most city trees die because planners always choose the wrong species."
+    ],
+    "answer": 2,
+    "explanation": "主旨題。第一段點出熱島與種樹，中間段落談降溫、空氣、心理效益，第五、六段談成本與選種，第七段談公平，C 完整涵蓋全文走向。"
+   },
+   {
+    "q": "According to the article, how do leaves help cool the air around them?",
+    "options": [
+     "Water from the leaves turns into vapor and carries heat away.",
+     "Leaves push hot air upward into the sky.",
+     "Leaves store rainwater inside the trunk overnight.",
+     "Leaves reflect heat back down onto the pavement."
+    ],
+    "answer": 0,
+    "explanation": "細節題。第二段說明第二種降溫方式：葉子散出水分，水變成水蒸氣時帶走熱量。"
+   },
+   {
+    "q": "Why do planners now put several different kinds of trees on the same street?",
+    "options": [
+     "Because mixed trees grow faster than a single kind.",
+     "Because residents prefer streets with many colors.",
+     "Because different trees need much less water.",
+     "Because one disease or insect could destroy a whole street of identical trees."
+    ],
+    "answer": 3,
+    "explanation": "細節題。第六段最後一句：若整條街的樹都相同，一種病害或蟲害就可能讓它們全數消失。"
+   },
+   {
+    "q": "What does the article suggest about a city that pays for planting but not for the years that follow?",
+    "options": [
+     "It will still enjoy exactly the same benefits.",
+     "It risks losing many young trees and wasting the money it has already spent.",
+     "It will be forced to plant fewer species.",
+     "It will get cleaner air but hotter streets."
+    ],
+    "answer": 1,
+    "explanation": "推論題。第五段說新樹頭幾個夏天需要澆水、第二年死掉等於把錢丟掉，且預算要涵蓋數年維護；由此可推論只付種植費的城市會白花錢。"
+   },
+   {
+    "q": "Why is tree planting now discussed as a question of fairness?",
+    "options": [
+     "Because the hottest and barest streets are often home to people who can least afford air conditioning.",
+     "Because every neighborhood is required by law to plant the same number of trees.",
+     "Because trees are shared property in most cities.",
+     "Because richer neighborhoods pay higher taxes for public parks."
+    ],
+    "answer": 0,
+    "explanation": "細節題。第七段指出較富裕社區樹蔭較多，最熱最光禿的街道往往住著最負擔不起冷氣的人。"
+   }
+  ]
+ },
+ {
+  "id": "art-19b",
+  "title": "Coffee and Your Brain",
+  "titleZh": "咖啡在你腦中做了什麼",
+  "category": "科普",
+  "level": "中高級 (TOEIC 650-800)",
+  "readTime": 4,
+  "illustrationIdea": "A person at a desk holding a coffee cup, with a simple cutaway drawing of the brain beside them showing a sleepy signal being blocked before it lands.",
+  "paragraphs": [
+   {
+    "en": "For millions of people the working day does not truly begin until the first cup of coffee. Tea, energy drinks and even some soft drinks belong to the same family: they all contain [[caffeine]], one of the most widely used drugs in the world. Most of us know that it makes us feel awake. Far fewer of us know what it is actually doing inside the brain.",
+    "zh": "對數以百萬計的人來說，工作日要等到第一杯咖啡才真正開始。茶、能量飲料，甚至某些汽水都屬於同一個家族：它們都含有咖啡因，是全世界使用最廣的藥物之一。多數人知道它讓我們清醒，卻很少人知道它在大腦裡實際上做了什麼。"
+   },
+   {
+    "en": "Here is the surprising part: caffeine does not give you energy. While you are awake, your brain slowly [[builds up]] a natural [[chemical]] that makes you feel sleepy. The longer you stay up, the more of it collects, and the heavier your eyelids become. Caffeine happens to have a similar shape, so it can sit in the places where that sleepy [[signal]] normally lands, and [[block]] the message before it arrives.",
+    "zh": "令人意外的是：咖啡因並不會給你能量。人在清醒的時候，大腦會慢慢累積一種讓人想睡的天然化學物質；醒著愈久，累積得愈多，眼皮也愈重。咖啡因的形狀剛好類似，因此能占住那個想睡訊號原本要停靠的位置，在訊息送達之前把它擋下來。"
+   },
+   {
+    "en": "The tiredness itself, however, is still there. Caffeine only [[delays]] the news. When the caffeine finally [[wears off]], all the sleep pressure that has built up in the meantime arrives at once, which is why an afternoon crash can feel worse than plain tiredness. Coffee borrows [[alertness]] from later in the day; it does not create it.",
+    "zh": "然而疲倦本身還在。咖啡因只是延後了這個消息。等到咖啡因的作用消退，這段期間累積起來的睡眠壓力會一次湧上來，這也是下午那波疲倦感有時比單純想睡更難受的原因。咖啡是向當天稍晚的自己借來清醒，而不是製造清醒。"
+   },
+   {
+    "en": "That explains the average case, but not why one cup [[affects]] two people so differently. A large part of the answer is the liver, which [[breaks down]] caffeine at a speed that differs widely from person to person, partly because of the [[genes]] we inherit. Some people clear it quickly and sleep soundly after an evening espresso. Others process it slowly, and a single afternoon [[dose]] leaves them staring at the ceiling at midnight, wondering why they feel so [[anxious]].",
+    "zh": "這解釋了一般情況，卻沒解釋為什麼同一杯咖啡對兩個人的影響差這麼多。答案有很大一部分在肝臟：它分解咖啡因的速度因人而異，一部分來自我們遺傳到的基因。有些人代謝得快，晚上喝完濃縮咖啡照樣睡得沉；有些人代謝得慢，下午的一份劑量就足以讓他們半夜盯著天花板，納悶自己為什麼這麼焦慮。"
+   },
+   {
+    "en": "Body size, smoking and pregnancy also change the picture, and so does [[habit]]. Drink coffee every morning and the brain adjusts, adding more of the landing places that caffeine blocks. That is [[tolerance]]: the same cup does less than it used to. It is also why people who suddenly stop often get a [[headache]] and a low mood for a few days, until the brain settles again.",
+    "zh": "體型、抽菸與懷孕也會改變情況，習慣同樣會。每天早上喝咖啡，大腦會自行調整，增加咖啡因所阻擋的那些停靠位置。這就是耐受性：同一杯咖啡的效果不如從前。這也是為什麼突然戒掉的人常會頭痛、心情低落好幾天，直到大腦重新穩定下來。"
+   },
+   {
+    "en": "So what does all this mean for the ordinary drinker? For most healthy adults, [[moderate]] amounts appear to be perfectly fine, and many people drink coffee for its taste and its social role rather than for its effects. Timing, however, matters more than people expect, because caffeine stays in the body for hours; a cup after lunch is still working at bedtime for anyone who is especially [[sensitive]] to it.",
+    "zh": "那麼這一切對一般的咖啡飲用者代表什麼？對多數健康的成年人來說，適量似乎完全沒問題，而且許多人喝咖啡是為了味道與社交，而不是為了提神效果。不過時間點比一般人以為的更重要，因為咖啡因會在體內停留好幾個小時；對特別敏感的人而言，午餐後那一杯到了睡覺時間仍在作用。"
+   },
+   {
+    "en": "The one thing coffee cannot do is [[replace]] sleep. It can keep tiredness out of the way for a few hours, help you [[concentrate]] through a dull meeting, and make a cold morning better. But the bill always arrives, and the only way to pay it is to go to bed.",
+    "zh": "咖啡唯一做不到的，就是取代睡眠。它可以把疲倦擋在一邊幾個小時、幫你在無聊的會議裡專注、讓寒冷的早晨好過一點。但帳單終究會來，而唯一的付款方式就是去睡覺。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "caffeine",
+    "base": "caffeine",
+    "pos": "n.",
+    "hint": "the substance in coffee and tea that makes people feel more awake",
+    "zh": "咖啡因"
+   },
+   {
+    "word": "builds up",
+    "base": "build up",
+    "pos": "phr.v.",
+    "hint": "to increase slowly in amount over a period of time",
+    "zh": "逐漸累積"
+   },
+   {
+    "word": "chemical",
+    "base": "chemical",
+    "pos": "n.",
+    "hint": "a substance produced by or used in a natural or scientific process",
+    "zh": "化學物質"
+   },
+   {
+    "word": "signal",
+    "base": "signal",
+    "pos": "n.",
+    "hint": "a message sent from one part of the body to another to make something happen",
+    "zh": "訊號"
+   },
+   {
+    "word": "block",
+    "base": "block",
+    "pos": "v.",
+    "hint": "to stop something from passing or from happening",
+    "zh": "阻擋"
+   },
+   {
+    "word": "delays",
+    "base": "delay",
+    "pos": "v.",
+    "hint": "to make something happen later than planned",
+    "zh": "延後"
+   },
+   {
+    "word": "wears off",
+    "base": "wear off",
+    "pos": "phr.v.",
+    "hint": "to become gradually weaker and finally disappear",
+    "zh": "（藥效）消退"
+   },
+   {
+    "word": "alertness",
+    "base": "alertness",
+    "pos": "n.",
+    "hint": "the state of being awake and quick to notice things",
+    "zh": "清醒度；警醒"
+   },
+   {
+    "word": "affects",
+    "base": "affect",
+    "pos": "v.",
+    "hint": "to produce a change in someone or something",
+    "zh": "影響"
+   },
+   {
+    "word": "breaks down",
+    "base": "break down",
+    "pos": "phr.v.",
+    "hint": "to separate a substance into smaller and simpler parts",
+    "zh": "分解"
+   },
+   {
+    "word": "genes",
+    "base": "gene",
+    "pos": "n.",
+    "hint": "the parts of a cell that pass features from parents to children",
+    "zh": "基因"
+   },
+   {
+    "word": "dose",
+    "base": "dose",
+    "pos": "n.",
+    "hint": "a measured amount of a drug or substance taken at one time",
+    "zh": "劑量"
+   },
+   {
+    "word": "anxious",
+    "base": "anxious",
+    "pos": "adj.",
+    "hint": "feeling worried and nervous",
+    "zh": "焦慮的"
+   },
+   {
+    "word": "habit",
+    "base": "habit",
+    "pos": "n.",
+    "hint": "something a person does regularly, often without thinking",
+    "zh": "習慣"
+   },
+   {
+    "word": "tolerance",
+    "base": "tolerance",
+    "pos": "n.",
+    "hint": "a weaker reaction to a substance after using it for a long time",
+    "zh": "耐受性"
+   },
+   {
+    "word": "headache",
+    "base": "headache",
+    "pos": "n.",
+    "hint": "a pain felt inside the head",
+    "zh": "頭痛"
+   },
+   {
+    "word": "moderate",
+    "base": "moderate",
+    "pos": "adj.",
+    "hint": "neither too large nor too small in amount",
+    "zh": "適量的"
+   },
+   {
+    "word": "sensitive",
+    "base": "sensitive",
+    "pos": "adj.",
+    "hint": "easily and strongly influenced by something",
+    "zh": "敏感的"
+   },
+   {
+    "word": "replace",
+    "base": "replace",
+    "pos": "v.",
+    "hint": "to take the place of something else",
+    "zh": "取代"
+   },
+   {
+    "word": "concentrate",
+    "base": "concentrate",
+    "pos": "v.",
+    "hint": "to give all your attention to one thing",
+    "zh": "專注"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main point of the article?",
+    "options": [
+     "Coffee is the healthiest drink available to most adults.",
+     "Caffeine works by blocking a sleepy signal in the brain, and its effects differ from person to person.",
+     "People should never drink anything containing caffeine after lunch.",
+     "Energy drinks are far more powerful than coffee."
+    ],
+    "answer": 1,
+    "explanation": "主旨題。第二段說明咖啡因擋住想睡訊號的機制，第四、五段說明個別差異的原因，B 同時涵蓋這兩條主線。"
+   },
+   {
+    "q": "According to the article, what happens when caffeine wears off?",
+    "options": [
+     "The brain stops producing the sleepy chemical.",
+     "The drinker feels hungry instead of tired.",
+     "The effect slowly changes into a feeling of calm.",
+     "The tiredness that built up in the meantime arrives all at once."
+    ],
+    "answer": 3,
+    "explanation": "細節題。第三段：咖啡因只是延後消息，作用消退時累積的睡眠壓力會一次湧上來。"
+   },
+   {
+    "q": "Why does the same cup of coffee do less for a daily drinker than it once did?",
+    "options": [
+     "The brain adds more of the landing places that caffeine blocks.",
+     "The liver stops breaking caffeine down completely.",
+     "Coffee loses its strength when it is drunk every day.",
+     "The body turns caffeine into a totally different chemical."
+    ],
+    "answer": 0,
+    "explanation": "細節題。第五段解釋耐受性：大腦會增加咖啡因所阻擋的停靠位置，所以同一杯的效果變小。"
+   },
+   {
+    "q": "A person who still cannot fall asleep after drinking coffee at lunchtime is most likely someone who",
+    "options": [
+     "drinks far more coffee than the average person",
+     "produces very little of the sleepy chemical",
+     "breaks caffeine down slowly",
+     "has never tasted coffee before"
+    ],
+    "answer": 2,
+    "explanation": "推論題。第四段提到代謝慢的人下午一份劑量就會半夜睡不著，第六段又說咖啡因會在體內停留數小時；合起來可推得 C。"
+   },
+   {
+    "q": "What does the writer mean by saying that the bill always arrives?",
+    "options": [
+     "Coffee has become more expensive in most cities.",
+     "Caffeine damages the brain over many years.",
+     "Regular drinkers eventually stop enjoying the taste.",
+     "The sleep a person misses has to be paid back sooner or later."
+    ],
+    "answer": 3,
+    "explanation": "推論題。最後一段說咖啡不能取代睡眠、唯一的付款方式是去睡覺，呼應第三段「向稍晚的自己借清醒」的比喻。"
+   }
+  ]
+ },
+ {
   "id": "art-2a",
   "title": "Turning Delays into Loyalty",
   "titleZh": "把延誤變成忠誠度",
@@ -3009,6 +5090,496 @@ TOEIC.articles = [
     ],
     "answer": 0,
     "explanation": "定位:第四段(加班費、保險同意、預算不足)與第六段(畫作移位、資深會員抱怨)。停車位不足全文從未提及，故選A。"
+   }
+  ]
+ },
+ {
+  "id": "art-20a",
+  "title": "The Global Chip Shortage, Explained",
+  "titleZh": "全球晶片荒是怎麼回事",
+  "category": "科技",
+  "level": "高級 (TOEIC 800+)",
+  "readTime": 6,
+  "illustrationIdea": "A world map where a single small factory building in one region is connected by thin lines to empty car showrooms, idle assembly lines and waiting shoppers on other continents.",
+  "paragraphs": [
+   {
+    "en": "Very few shoppers have ever held a computer chip, yet a [[shortage]] of them can empty a car showroom. Chips are small pieces of [[semiconductor]] material that store and process information, and they sit inside phones, hospital equipment and, increasingly, cars. When supply falls behind [[demand]], the effects appear far from the plants that make them: delivery dates slip, and prices rise for goods that seem unrelated to electronics.",
+    "zh": "很少有消費者真的摸過一片電腦晶片，但晶片一缺貨，車商的展示間就可能空掉。晶片是一小片負責儲存與處理資訊的半導體材料，它藏在手機、醫院設備裡，也愈來愈多地裝進汽車裡。當供給跟不上需求，影響會出現在離製造工廠很遠的地方：交車日期一延再延，價格上漲的商品看起來甚至和電子產品毫無關係。"
+   },
+   {
+    "en": "Part of the explanation is how much the car has changed. A modern vehicle is a network of small computers managing brakes, sensors, screens and engine settings, each needing its own [[components]]. Carmakers, though, are not the most attractive customers for a chip [[manufacturer]]. The chips a car needs are often older, cheaper designs, and the [[profit]] on them is thin next to those built for phones. When [[capacity]] is tight, the cheaper order waits.",
+    "zh": "部分原因在於汽車本身的變化有多大。今天的車子是一整組小電腦，管著煞車、感測器、螢幕與引擎設定，每一項功能都需要自己的零組件。不過，對晶片製造商而言，車廠並不是最有吸引力的客戶。汽車用的晶片多半是比較舊、比較便宜的設計，利潤和手機用的晶片相比很薄。產能吃緊時，便宜的訂單就得排隊等。"
+   },
+   {
+    "en": "Supply cannot simply stretch to meet demand, because chipmaking is slow in a way most industries are not. A single [[facility]] costs billions of dollars and takes years to plan, build and test. The work then passes through hundreds of steps in rooms cleaner than a hospital operating room, and one batch takes months to finish. A company that raises [[production]] today is answering demand several years from now.",
+    "zh": "供給沒辦法說擴就擴，因為做晶片的速度慢得不像一般產業。一座廠要價數十億美元，從規劃、興建到測試都得花上好幾年。製程還要走過數百道步驟，房間比醫院手術室還乾淨，一批貨從投料到完成要好幾個月。今天才提高產量的公司，回應的其實是好幾年後的需求。"
+   },
+   {
+    "en": "The second weakness is concentration: only a handful of firms can make the most advanced chips, and much of the world's output sits in a few regions of East Asia. Efficient as that is, it leaves the [[supply chain]] [[vulnerable]] to a single point of failure. An earthquake, a drought that cuts the water such plants need, or a new export rule can halt output thousands of businesses depend on, and the [[disruption]] is felt in showrooms worldwide.",
+    "zh": "第二個弱點是集中：有能力做最先進晶片的公司只有少數幾家，而全球產出有很大一部分集中在東亞的幾個地區。這樣的安排效率極高，卻也讓整條供應鏈暴露在單點失效的風險裡。一場地震、一次讓廠區缺水的乾旱，或一項新的出口規定，都可能中斷成千上萬家不相干企業所仰賴的產出，而這種斷鏈會在世界各地的展示間被感受到。"
+   },
+   {
+    "en": "Ordering habits turned a tight market into a crisis. For decades, [[efficiency]] has meant keeping [[inventory]] low and having parts arrive just before they are needed, which works beautifully until deliveries stop. During the pandemic, carmakers expected sales to collapse and canceled orders while home electronics buyers ordered more than ever, so chip lines were reassigned. When car sales recovered sooner than [[forecast]], the companies that had left the queue rejoined at the back, and nervous buyers began ordering double, which made the [[backlog]] look worse still.",
+    "zh": "下單習慣把緊繃的市場推成危機。幾十年來，效率的定義就是庫存壓到最低、零件在需要的前一刻才到貨——這套做法漂亮得很，直到送貨停了為止。疫情期間，車廠預期銷量會崩而取消訂單，家用電子產品的買家卻買得比以往都多，晶片產線因此被重新分配。等到車市復甦得比預測還快，離開隊伍的公司只能重新排到最後面；心慌的買家又開始下兩倍的量，讓積壓的訂單看起來更嚇人。"
+   },
+   {
+    "en": "For ordinary people the [[consequences]] arrived as waiting and higher prices. A new car took months rather than weeks, and some arrived with features removed. Workers on [[assembly]] lines lost shifts while finished cars stood in parking lots waiting for one missing part. Hospitals and small firms competed for the same limited supply with far less bargaining power.",
+    "zh": "對一般人來說，後果就是等待與漲價。買一台新車要等好幾個月而不是幾週，有些車交車時還少了幾項配備。組裝線上的工人被減班，完工的車卻停在停車場，只為了等一個缺的零件。醫院與小公司搶的是同一批有限的供給，議價能力卻小得多。"
+   },
+   {
+    "en": "Governments answered with [[subsidies]] to attract chip plants onto their own soil; large buyers began holding [[reserves]] and approving a second [[supplier]] for critical parts. None of this is free. Spare capacity is idle capacity in a normal year, warehouse stock is money doing nothing, and a new plant needs engineers who take years to train. A system tuned only for the lowest cost stays efficient right up to the moment it breaks, and someone eventually pays for the buffer that was removed.",
+    "zh": "各國政府的回應是用補貼把晶片廠拉到自己的土地上；大型買家則開始備庫存，並為關鍵零件核准第二家供應商。這些都不是免費的。多備的產能在平常年份就是閒置的產能，躺在倉庫裡的存貨是沒在動的錢，新廠還需要工程師，而工程師要花好幾年才培養得出來。一個只為最低成本而調校的系統，會一路有效率到它斷掉的那一刻，而被拿掉的緩衝，最後總得有人買單。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "shortage",
+    "base": "shortage",
+    "pos": "n.",
+    "hint": "a situation in which there is not enough of something that people need",
+    "zh": "短缺"
+   },
+   {
+    "word": "semiconductor",
+    "base": "semiconductor",
+    "pos": "n.",
+    "hint": "a material used to make the tiny electronic parts inside phones and computers",
+    "zh": "半導體"
+   },
+   {
+    "word": "demand",
+    "base": "demand",
+    "pos": "n.",
+    "hint": "the amount of a product that buyers want at a given time",
+    "zh": "需求"
+   },
+   {
+    "word": "components",
+    "base": "component",
+    "pos": "n.",
+    "hint": "the separate parts that together make up a machine or a system",
+    "zh": "零組件"
+   },
+   {
+    "word": "manufacturer",
+    "base": "manufacturer",
+    "pos": "n.",
+    "hint": "a company that produces goods in large amounts, usually in factories",
+    "zh": "製造商"
+   },
+   {
+    "word": "profit",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "the money left after all costs have been taken away from what a business earns",
+    "zh": "利潤"
+   },
+   {
+    "word": "capacity",
+    "base": "capacity",
+    "pos": "n.",
+    "hint": "the largest amount a factory or system is able to make or hold",
+    "zh": "產能"
+   },
+   {
+    "word": "facility",
+    "base": "facility",
+    "pos": "n.",
+    "hint": "a building or site set up for one particular kind of work",
+    "zh": "廠房、設施"
+   },
+   {
+    "word": "production",
+    "base": "production",
+    "pos": "n.",
+    "hint": "the process of making goods, or the quantity that is made",
+    "zh": "生產、產量"
+   },
+   {
+    "word": "supply chain",
+    "base": "supply chain",
+    "pos": "n.",
+    "hint": "the whole set of firms and steps that move a product from raw material to buyer",
+    "zh": "供應鏈"
+   },
+   {
+    "word": "vulnerable",
+    "base": "vulnerable",
+    "pos": "adj.",
+    "hint": "easily harmed or badly affected by damage or sudden events",
+    "zh": "脆弱的、易受衝擊的"
+   },
+   {
+    "word": "disruption",
+    "base": "disruption",
+    "pos": "n.",
+    "hint": "a sudden break in the normal flow of an activity or a service",
+    "zh": "中斷、擾亂"
+   },
+   {
+    "word": "efficiency",
+    "base": "efficiency",
+    "pos": "n.",
+    "hint": "the ability to work or produce with little waste of time or money",
+    "zh": "效率"
+   },
+   {
+    "word": "inventory",
+    "base": "inventory",
+    "pos": "n.",
+    "hint": "the goods and materials a business keeps in store",
+    "zh": "庫存"
+   },
+   {
+    "word": "forecast",
+    "base": "forecast",
+    "pos": "n.",
+    "hint": "a statement of what is expected to happen, based on present information",
+    "zh": "預測"
+   },
+   {
+    "word": "backlog",
+    "base": "backlog",
+    "pos": "n.",
+    "hint": "a pile of orders or work that has built up and is still waiting",
+    "zh": "積壓的訂單"
+   },
+   {
+    "word": "consequences",
+    "base": "consequence",
+    "pos": "n.",
+    "hint": "results that follow from an earlier action or event",
+    "zh": "後果"
+   },
+   {
+    "word": "assembly",
+    "base": "assembly",
+    "pos": "n.",
+    "hint": "the act of putting parts together to build a finished product",
+    "zh": "組裝"
+   },
+   {
+    "word": "subsidies",
+    "base": "subsidy",
+    "pos": "n.",
+    "hint": "money paid by a government to support an industry or lower a price",
+    "zh": "補貼"
+   },
+   {
+    "word": "reserves",
+    "base": "reserve",
+    "pos": "n.",
+    "hint": "an amount kept back so that it can be used when needed later",
+    "zh": "儲備、存量"
+   },
+   {
+    "word": "supplier",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "a business that provides goods or parts to another business",
+    "zh": "供應商"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main point of the article?",
+    "options": [
+     "Cars have now become too complicated for most ordinary drivers to repair themselves.",
+     "Governments should stop paying money to attract electronics companies to their countries.",
+     "Chip supply is slow, concentrated and run with no buffer, so problems spread.",
+     "Phone makers are largely responsible for the difficulties that carmakers now face."
+    ],
+    "answer": 2,
+    "explanation": "全文三個主軸：第三段講建廠與製程慢、第四段講產能集中、第五段講低庫存下單習慣，第七段收束為「只追求最低成本的系統很脆弱」。選項三把這三點合起來說。"
+   },
+   {
+    "q": "According to the article, why do carmakers' orders often wait when capacity is tight?",
+    "options": [
+     "The chips they buy are older, cheaper designs that earn a thinner profit.",
+     "Carmakers usually refuse to sign any supply contracts more than a year ahead.",
+     "Car chips have to be made in completely separate factories from phone chips.",
+     "Carmakers order far larger quantities each year than the phone companies do."
+    ],
+    "answer": 0,
+    "explanation": "定位第二段：汽車用的多半是較舊、較便宜的設計，利潤比手機晶片薄，所以產能緊時便宜的訂單排在後面。"
+   },
+   {
+    "q": "Why can a chip factory not respond quickly to a rise in demand?",
+    "options": [
+     "Skilled workers refuse to move to the regions where new plants are built.",
+     "Governments limit how many chips each plant is allowed to sell abroad.",
+     "The machines inside must be replaced after every single batch of chips.",
+     "A plant takes years to build and a batch takes months to finish."
+    ],
+    "answer": 3,
+    "explanation": "定位第三段：一座廠從規劃到出貨要好幾年，製程數百道步驟、一批貨要好幾個月，所以今天的決定回應的是幾年後的需求。"
+   },
+   {
+    "q": "What can be inferred about the practice of keeping inventory low?",
+    "options": [
+     "It is the main reason that chips have become so expensive to design.",
+     "It saves money in steady times but leaves no protection when deliveries stop.",
+     "It was invented by carmakers during the pandemic and quickly copied elsewhere.",
+     "It works only for companies that make electronic goods for ordinary shoppers."
+    ],
+    "answer": 1,
+    "explanation": "推論題，定位第五段：低庫存＋剛好到貨「漂亮得很，直到送貨停了為止」，可推知它在平穩時期省錢，一旦斷貨就毫無緩衝。"
+   },
+   {
+    "q": "What does the writer suggest about spare capacity and holding reserves?",
+    "options": [
+     "They remove any need for governments to offer support to the industry.",
+     "They are useful only for companies that sell directly to ordinary shoppers.",
+     "They will make any future shortage impossible, whatever else may happen.",
+     "They buy safety at a cost carried even in quiet years."
+    ],
+    "answer": 3,
+    "explanation": "推論題，定位第七段：多備的產能在平常年份就是閒置產能、倉庫存貨是「沒在動的錢」，可推知安全是有代價的，且平安無事時照樣要付。"
+   }
+  ]
+ },
+ {
+  "id": "art-20b",
+  "title": "Aging Societies and the Future of Work",
+  "titleZh": "高齡化社會與工作的未來",
+  "category": "社會",
+  "level": "高級 (TOEIC 800+)",
+  "readTime": 6,
+  "illustrationIdea": "A busy office and care home shown side by side, where workers of clearly different ages share the same tasks while a robot arm handles boxes in the background.",
+  "paragraphs": [
+   {
+    "en": "In a growing number of countries, people are living longer while fewer children are being born. The result is a [[population]] whose average age keeps rising, and it is not a worry for government planners alone. Because most of what a society consumes must be produced by the people currently working, an aging country quietly changes who does the work, what work there is, and how long a career lasts.",
+    "zh": "在愈來愈多國家，人們活得更久，出生的孩子卻更少。結果是人口的平均年齡持續往上，而這不只是政府規劃者要煩惱的事。因為一個社會消費的東西，大多得由當下正在工作的人生產出來，人口老化其實悄悄改變了誰在工作、有哪些工作，以及一份職業生涯會延續多久。"
+   },
+   {
+    "en": "The basic arithmetic is uncomfortable. Public [[pensions]] and health care are paid for largely out of the [[contributions]] and taxes of people in employment, so when the share of the [[workforce]] falls while the number drawing a pension grows, the same [[budget]] must stretch further. Governments face three unwelcome choices: collect more, promise less, or persuade more people to keep working.",
+    "zh": "基本算術並不好看。公共年金與健康照護主要靠在職者的保費與稅收支應，所以當勞動人口的比重下降、領年金的人卻變多，同一筆預算就得撐得更遠。政府面對的是三個都不討喜的選項：多收一點、少承諾一點，或設法讓更多人繼續工作。"
+   },
+   {
+    "en": "Worker [[shortages]] do not appear evenly. They concentrate in [[sectors]] that are hard to automate and hard to [[recruit]] for: nursing and elder care, construction, farming, transport and hospitality. Aging sharpens the squeeze, because an older society needs more care workers at exactly the moment when fewer young people enter the [[labor market]]. Employers raise [[wages]] and still cannot fill the [[vacancies]].",
+    "zh": "缺工並不是平均分布的。它集中在難以自動化、也難以招募的產業：護理與長照、營建、農業、運輸與餐旅。老化讓這個壓力更緊，因為社會愈老、需要的照顧人力愈多，偏偏此時進入勞動市場的年輕人卻愈少。雇主調高薪資，職缺還是補不滿。"
+   },
+   {
+    "en": "One response is to lengthen working life. Several countries have raised the age at which a state pension begins, and firms now offer part-time contracts, [[flexible]] hours or a gradual exit instead of a single [[retirement]] date. The policy is fair only up to a point. An accountant may happily work into her late sixties; a nurse, or a roofer whose body has taken decades of strain, may have no such choice, so a uniform rule pushes the heaviest burden onto the most physical jobs.",
+    "zh": "一個回應方式是拉長工作年限。若干國家已調高開始請領年金的年齡，企業也提供部分工時、彈性工時，或以漸進式退場取代單一的退休日期。但這套政策只在一定範圍內公平。會計師也許樂意做到六十好幾；一名護理師，或身體已被數十年勞動磨過的屋頂工人，可能沒有這種選擇——一體適用的規定，會把最重的負擔推給最耗體力的工作。"
+   },
+   {
+    "en": "Two other answers attract most attention. [[Automation]] can take over repetitive tasks in warehouses, factories and offices, but it is costly to install and still weak at the personal, unpredictable work that caring for older people demands. [[Immigration]] fills gaps quickly, yet it is politically contested, and because many countries are aging at once, they increasingly compete for the same [[skilled]] workers rather than drawing on an endless pool.",
+    "zh": "另外兩個答案吸走了最多注意力。自動化能接手倉儲、工廠與辦公室裡的重複性工作，但建置成本高，而且對於照顧長者這種講究人際、又難以預測的工作仍然很不擅長。移民能較快補上缺口，卻在政治上爭議不小；而且因為許多國家同時在老化，各國愈來愈是在搶同一批技術人力，而不是從一個取之不盡的池子裡撈人。"
+   },
+   {
+    "en": "Employers face a quieter problem: experience walking out the door. When long-serving staff retire, they take with them knowledge that was never written down — which [[supplier]] is reliable, why a rule exists, how to calm a difficult customer. Companies that handle this well pair older and younger [[colleagues]], pay for [[retraining]] at any age, and drop the old assumption that training someone in their fifties is money wasted. If a career can run for fifty years, that assumption never made much sense.",
+    "zh": "雇主還面對一個比較安靜的問題：經驗正走出大門。資深員工退休時，帶走的是從沒被寫下來的知識——哪一家供應商靠得住、某條規定為什麼會存在、怎麼安撫難搞的客戶。處理得好的公司，會讓資深與年輕的同事配對、在任何年齡都願意付錢做再訓練，並丟掉那個老觀念：訓練五十幾歲的人是浪費錢。如果一份職業生涯現在可以長達五十年，這個觀念從來就站不住腳。"
+   },
+   {
+    "en": "For anyone starting out today, the practical lesson is straightforward. Working lives will probably be longer and less straight, with more changes of [[occupation]] and more returns to study in the middle of a career. [[Demand]] should grow fastest in health, care, and the services and devices that help people live independently at home. The public argument about pensions and hours is not really about age; it is about who is asked to pay for a change that every country can already see coming.",
+    "zh": "對今天剛起步的人來說，實際的啟示相當清楚。工作生涯多半會更長、也更不筆直，中途換職業、回頭進修的次數都會變多。需求成長最快的，很可能是健康、照護，以及那些幫助人們在家中自主生活的服務與裝置。而關於年金與工時的公共爭論，其實不是在吵年齡，而是在吵：面對一場每個國家都已經看得見的變化，該由誰來付這筆帳。"
+   }
+  ],
+  "vocab": [
+   {
+    "word": "population",
+    "base": "population",
+    "pos": "n.",
+    "hint": "all the people living in a country or an area",
+    "zh": "人口"
+   },
+   {
+    "word": "pensions",
+    "base": "pension",
+    "pos": "n.",
+    "hint": "regular money paid to someone who has stopped working because of age",
+    "zh": "年金、退休金"
+   },
+   {
+    "word": "contributions",
+    "base": "contribution",
+    "pos": "n.",
+    "hint": "regular payments made into a public or company fund",
+    "zh": "提撥、保費"
+   },
+   {
+    "word": "workforce",
+    "base": "workforce",
+    "pos": "n.",
+    "hint": "all the people available to do paid jobs in a country or a company",
+    "zh": "勞動人口、員工總體"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "a plan showing how much money is available and how it will be used",
+    "zh": "預算"
+   },
+   {
+    "word": "shortages",
+    "base": "shortage",
+    "pos": "n.",
+    "hint": "situations in which there are not enough people or supplies for what is needed",
+    "zh": "短缺、缺工"
+   },
+   {
+    "word": "sectors",
+    "base": "sector",
+    "pos": "n.",
+    "hint": "separate parts of an economy, such as farming or banking",
+    "zh": "產業部門"
+   },
+   {
+    "word": "recruit",
+    "base": "recruit",
+    "pos": "v.",
+    "hint": "to find and take on new people for jobs",
+    "zh": "招募"
+   },
+   {
+    "word": "labor market",
+    "base": "labor market",
+    "pos": "n.",
+    "hint": "the overall supply of workers and the jobs open to them",
+    "zh": "勞動市場"
+   },
+   {
+    "word": "wages",
+    "base": "wage",
+    "pos": "n.",
+    "hint": "money paid to someone for the work done, often counted by the hour",
+    "zh": "工資、薪資"
+   },
+   {
+    "word": "vacancies",
+    "base": "vacancy",
+    "pos": "n.",
+    "hint": "job positions that nobody fills at present",
+    "zh": "職缺"
+   },
+   {
+    "word": "flexible",
+    "base": "flexible",
+    "pos": "adj.",
+    "hint": "able to change easily to fit new conditions or needs",
+    "zh": "彈性的"
+   },
+   {
+    "word": "retirement",
+    "base": "retirement",
+    "pos": "n.",
+    "hint": "the point at which a person stops working for good, usually because of age",
+    "zh": "退休"
+   },
+   {
+    "word": "Automation",
+    "base": "automation",
+    "pos": "n.",
+    "hint": "the use of machines and software to do work once done by people",
+    "zh": "自動化"
+   },
+   {
+    "word": "Immigration",
+    "base": "immigration",
+    "pos": "n.",
+    "hint": "the movement of people into a country in order to live and work there",
+    "zh": "移民（移入）"
+   },
+   {
+    "word": "skilled",
+    "base": "skilled",
+    "pos": "adj.",
+    "hint": "having the training and ability needed for a particular kind of work",
+    "zh": "有技術的、熟練的"
+   },
+   {
+    "word": "supplier",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "a firm that sells goods or parts to another company",
+    "zh": "供應商"
+   },
+   {
+    "word": "colleagues",
+    "base": "colleague",
+    "pos": "n.",
+    "hint": "the people you work together with at the same place",
+    "zh": "同事"
+   },
+   {
+    "word": "retraining",
+    "base": "retraining",
+    "pos": "n.",
+    "hint": "learning new job abilities in order to move into different work",
+    "zh": "再訓練、轉職訓練"
+   },
+   {
+    "word": "occupation",
+    "base": "occupation",
+    "pos": "n.",
+    "hint": "the kind of paid work a person does",
+    "zh": "職業"
+   },
+   {
+    "word": "Demand",
+    "base": "demand",
+    "pos": "n.",
+    "hint": "the wish or need for a product or service among many people",
+    "zh": "需求"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main idea of the article?",
+    "options": [
+     "Older workers are generally far more productive than the younger ones they help train.",
+     "An older population reshapes who works, which jobs go unfilled and how long careers last.",
+     "Most countries have already found a way to fund their public pension systems.",
+     "Machines will soon replace nearly all of the work involved in caring for older people."
+    ],
+    "answer": 1,
+    "explanation": "第一段就把主軸講明：老化改變了誰在工作、有哪些工作、生涯多長；第二到第七段分別展開財政、缺工、政策回應與個人啟示。"
+   },
+   {
+    "q": "According to the article, why does an older population put pressure on public budgets?",
+    "options": [
+     "Older people are charged much higher prices for their own health care.",
+     "Companies stop paying taxes once most of their own staff grow older.",
+     "Governments are required by law to raise every pension payment each year.",
+     "Pensions and health care are funded mainly by taxes on current workers."
+    ],
+    "answer": 3,
+    "explanation": "定位第二段：年金與健康照護主要靠在職者的保費與稅收支應，在職比重下降、領取者增加，同一筆預算就得撐得更遠。"
+   },
+   {
+    "q": "Which kinds of work does the article say feel shortages most?",
+    "options": [
+     "Elder care, construction, farming and transport.",
+     "Banking, insurance, accounting and company law.",
+     "Advertising, publishing, graphic design and film.",
+     "Research, teaching, translation and the arts."
+    ],
+    "answer": 0,
+    "explanation": "定位第三段：缺工集中在難以自動化、也難以招募的產業，文中列出護理與長照、營建、農業、運輸與餐旅。"
+   },
+   {
+    "q": "What does the comparison between an accountant and a nurse or roofer suggest?",
+    "options": [
+     "Office workers should be made to retire earlier than manual workers.",
+     "Physical jobs pay better in the final years of a career.",
+     "A single retirement age falls much harder on physically demanding work.",
+     "Most people prefer to keep working after the state pension begins."
+    ],
+    "answer": 2,
+    "explanation": "推論題，定位第四段：會計師可能樂意做到六十幾歲，護理師或屋頂工人卻「可能沒有這種選擇」，因此一體適用的規定把最重負擔推給體力工作。"
+   },
+   {
+    "q": "What can be inferred about using immigration to fill labor gaps?",
+    "options": [
+     "As many countries age together, the workers they need become harder to attract.",
+     "It costs far more than installing new machines across every single affected industry.",
+     "It removes the need for any retraining programs for workers back at home.",
+     "Countries that accept newcomers no longer need to fund any public pension systems."
+    ],
+    "answer": 0,
+    "explanation": "推論題，定位第五段：許多國家同時老化，各國「在搶同一批技術人力，而不是從取之不盡的池子裡撈人」，可推知人力愈來愈難爭取。"
    }
   ]
  },

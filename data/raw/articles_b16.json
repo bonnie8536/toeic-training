@@ -1,0 +1,222 @@
+[
+  {
+    "id": "art-16a",
+    "title": "Electric Scooters Take Over the Sidewalk",
+    "titleZh": "電動滑板車佔領人行道",
+    "category": "時事",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "A busy city sidewalk where several shared electric scooters lie parked across the walkway while a person pushing a stroller tries to squeeze past.",
+    "paragraphs": [
+      {
+        "en": "In many cities today, shared electric [[scooters]] are everywhere. People [[unlock]] them with a phone [[app]]. They ride to work, to class, or to the train station. Then they simply leave the scooter on the street. For many riders, this is faster and cheaper than a taxi. It also feels a little like a game.",
+        "zh": "在今天的許多城市裡，共享電動滑板車隨處可見。人們用手機應用程式解鎖車輛。他們騎去上班、上課，或前往火車站。到了目的地，就直接把車停在路邊離開。對很多騎乘者來說，這比搭計程車更快、也更便宜。過程還帶著一點玩樂的感覺。"
+      },
+      {
+        "en": "The idea behind these services is simple. Cities are [[crowded]], and short trips waste time. Buses and trains cannot reach every corner. A scooter can cover that last part of the trip. Companies place the [[vehicles]] near stations and busy streets. Riders pay by the minute, so the price feels small.",
+        "zh": "這類服務背後的想法其實很單純。城市擁擠，短程移動特別浪費時間。公車和火車無法抵達每個角落。滑板車正好補上最後那一小段路。業者把車輛放在車站和熱鬧的街道旁。費用按分鐘計算，所以價格感覺不高。"
+      },
+      {
+        "en": "But this [[convenience]] has a cost. Scooters are often parked in the middle of the [[sidewalk]]. They block doorways, ramps, and bus stops. Older people and wheelchair users suffer the most. Some riders also move too fast among walkers. [[Accidents]] worry doctors and city [[officials]] alike.",
+        "zh": "但這份便利是有代價的。滑板車常常被停在人行道正中央。它們擋住門口、無障礙坡道和公車站。年長者和輪椅使用者受到的影響最大。有些騎乘者還在行人之間高速穿梭。事故讓醫師和市政官員同樣感到憂心。"
+      },
+      {
+        "en": "City governments are now trying to respond. Some paint parking boxes on the ground. Others [[require]] companies to remove badly parked scooters quickly. A few cities [[ban]] riding on the sidewalk completely. Speed limits and helmet rules are common too. Companies that ignore the rules can lose their [[permit]].",
+        "zh": "各地政府正試著做出回應。有些在地面畫出停車格。有些則要求業者盡快移走亂停的車輛。少數城市完全禁止在人行道上騎乘。速限和安全帽規定也很常見。不守規定的業者可能會失去營運許可。"
+      },
+      {
+        "en": "[[Supporters]] say the debate points at the wrong target. Streets were designed mainly for cars. Walkers and small vehicles share whatever space is left. If cities built more safe [[lanes]], scooters would fit better. In that view, the sidewalk fight is only one sign of a bigger issue.",
+        "zh": "支持者認為，這場爭論指錯了對象。街道本來就主要是為汽車設計的。行人和小型車輛只能共用剩下的空間。如果城市多蓋一些安全車道，滑板車就能各就各位。從這個角度看，人行道之爭只是更大問題的一個跡象。"
+      },
+      {
+        "en": "For readers, the lesson goes beyond scooters. New [[technology]] often arrives faster than public rules. People enjoy the [[benefits]] first and argue about the costs later. The same story appears with delivery robots and drones. How a city handles scooters today may show how it handles tomorrow's surprises. A small vehicle can raise very large questions.",
+        "zh": "對讀者而言，這件事的意義不只在滑板車。新科技出現的速度，往往快過公共規範。人們先享受好處，之後才爭論代價。外送機器人和無人機也在上演同樣的劇情。一座城市今天如何處理滑板車，或許就看得出它明天如何面對新的意外。小小的車輛，也能引出很大的問題。"
+      }
+    ],
+    "vocab": [
+      { "word": "scooters", "base": "scooter", "pos": "n.", "hint": "a small two-wheeled machine that a person stands on and rides", "zh": "滑板車" },
+      { "word": "unlock", "base": "unlock", "pos": "v.", "hint": "to open something so that it can be used, often with a key or code", "zh": "解鎖" },
+      { "word": "app", "base": "app", "pos": "n.", "hint": "a small program that runs on a phone or tablet", "zh": "應用程式" },
+      { "word": "crowded", "base": "crowded", "pos": "adj.", "hint": "full of too many people or things in one place", "zh": "擁擠的" },
+      { "word": "vehicles", "base": "vehicle", "pos": "n.", "hint": "a machine such as a car or bus that carries people or goods", "zh": "車輛" },
+      { "word": "convenience", "base": "convenience", "pos": "n.", "hint": "the quality of being easy to use and saving time or effort", "zh": "便利" },
+      { "word": "sidewalk", "base": "sidewalk", "pos": "n.", "hint": "the paved part at the edge of a road, made for people on foot", "zh": "人行道" },
+      { "word": "Accidents", "base": "accident", "pos": "n.", "hint": "an event in which someone is hurt or something is damaged by chance", "zh": "事故" },
+      { "word": "officials", "base": "official", "pos": "n.", "hint": "a person with a position of duty in a government or a large organization", "zh": "官員" },
+      { "word": "require", "base": "require", "pos": "v.", "hint": "to say that someone must do something", "zh": "要求" },
+      { "word": "ban", "base": "ban", "pos": "v.", "hint": "to say by law that something must not be done", "zh": "禁止" },
+      { "word": "permit", "base": "permit", "pos": "n.", "hint": "a paper from a government that lets a person or company do something", "zh": "許可證" },
+      { "word": "Supporters", "base": "supporter", "pos": "n.", "hint": "a person who agrees with an idea and speaks for it", "zh": "支持者" },
+      { "word": "lanes", "base": "lane", "pos": "n.", "hint": "a narrow marked part of a road for one line of traffic", "zh": "車道" },
+      { "word": "technology", "base": "technology", "pos": "n.", "hint": "new machines and methods based on science", "zh": "科技" },
+      { "word": "benefits", "base": "benefit", "pos": "n.", "hint": "good results or advantages that come from something", "zh": "好處" }
+    ],
+    "questions": [
+      {
+        "q": "What is the main point of the article?",
+        "options": [
+          "Shared scooters have already been banned in most cities.",
+          "Shared scooters are cheaper than every other form of transport.",
+          "Shared scooters are useful, but they create new problems for cities.",
+          "Shared scooters work best for very long journeys."
+        ],
+        "answer": 2,
+        "explanation": "全文從第一段的便利談到第三段的人行道問題與第四段的管理措施，重點在「好用但帶來新麻煩」。"
+      },
+      {
+        "q": "According to the article, why do companies place scooters near stations?",
+        "options": [
+          "To help riders finish the last part of a trip.",
+          "To keep the sidewalk clear for walkers.",
+          "To replace buses and trains completely.",
+          "To make riders pay one fixed daily price."
+        ],
+        "answer": 0,
+        "explanation": "第二段說公車和火車無法抵達每個角落，滑板車補上最後一小段路。"
+      },
+      {
+        "q": "Which group does the article say suffers most from badly parked scooters?",
+        "options": [
+          "Taxi drivers",
+          "Scooter company workers",
+          "Train passengers",
+          "Older people and wheelchair users"
+        ],
+        "answer": 3,
+        "explanation": "第三段明確指出年長者和輪椅使用者受到的影響最大。"
+      },
+      {
+        "q": "What can happen to a company that ignores city rules?",
+        "options": [
+          "It must buy more scooters.",
+          "It may lose its permit.",
+          "It must lower all of its prices.",
+          "It has to build new bus stops."
+        ],
+        "answer": 1,
+        "explanation": "第四段最後一句提到不守規定的業者可能失去營運許可。"
+      },
+      {
+        "q": "What does the writer suggest in the last paragraph?",
+        "options": [
+          "Cities should stop testing any new technology.",
+          "Delivery robots will never appear on city streets.",
+          "A city's scooter rules can hint at how it will meet future changes.",
+          "Scooters will disappear once buses become faster."
+        ],
+        "answer": 2,
+        "explanation": "推論題。第六段說新科技出現得比規則快，並以外送機器人、無人機類比，暗示今天的處理方式預示未來。"
+      }
+    ]
+  },
+  {
+    "id": "art-16b",
+    "title": "What Sleep Does for the Brain",
+    "titleZh": "睡眠為大腦做的事",
+    "category": "健康",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "A person sleeping peacefully at night while a soft glow inside the head suggests the brain quietly sorting and cleaning memories.",
+    "paragraphs": [
+      {
+        "en": "Everyone knows that sleep feels good. Fewer people know how busy the [[brain]] stays at night. Sleep is not simply a long pause. While the body [[rests]], the brain keeps working hard. It sorts, stores, and cleans. Feeling fresh in the morning is only one part of the reward.",
+        "zh": "每個人都知道睡覺很舒服。比較少人知道，大腦在夜裡有多忙。睡眠並不只是一段長長的停頓。身體休息的時候，大腦仍然努力工作。它負責整理、儲存與清理。早上覺得神清氣爽，只是其中一項回報。"
+      },
+      {
+        "en": "[[Memory]] is the clearest example. During the day, the brain collects a flood of new [[information]]. At night, it decides what to keep. Important lessons move into longer [[storage]]. Useless details slowly fade away. That is one reason why a student who sleeps well often [[remembers]] more.",
+        "zh": "記憶是最清楚的例子。白天，大腦會收進大量新資訊。到了夜裡，它決定哪些要留下。重要的內容會被移入較長期的儲存區。沒有用的細節則慢慢淡去。這也是為什麼睡得好的學生，往往記得比較多。"
+      },
+      {
+        "en": "Sleep also works something like a night cleaning crew. Brain cells stay active all day and leave [[waste]] behind. Many researchers think rest helps the body clear that waste away. The exact steps are still being studied. So the cleaning idea is a useful picture, not a final answer. Still, quiet hours seem to be when the brain [[repairs]] itself.",
+        "zh": "睡眠也有點像夜間的清潔班。腦細胞整天活躍，會留下廢物。許多研究者認為，休息讓身體比較有機會把這些廢物清掉。確切的過程仍在研究之中。所以「清潔」是個好用的比喻，還不是最後的答案。不過，安靜的時段似乎正是大腦修復自己的時候。"
+      },
+      {
+        "en": "The effects reach far beyond memory. Short nights leave people slow, moody, and forgetful. [[Attention]] drops, and small [[mistakes]] become common. Tired drivers react more slowly on the road. Long periods of poor sleep are also [[linked]] with weight gain and a weaker [[immune]] system. In other words, the cost is not only tiredness.",
+        "zh": "影響遠遠不只記憶。睡不夠會讓人反應慢、情緒差，又健忘。注意力下降，小錯誤也跟著變多。疲倦的駕駛在路上反應更慢。長期睡眠不足還與體重增加、免疫系統變弱有關。換句話說，代價不只是想睡而已。"
+      },
+      {
+        "en": "So why do many people still cut their sleep short? Modern life offers plenty of reasons. Screens, night [[shifts]], and long study hours push bedtime later. Bright light tells the brain that the day is not over. One more message or one more video pushes rest back again. Then a morning [[alarm]] cuts the night short at the other end.",
+        "zh": "那麼，為什麼還是很多人把睡眠時間削短？現代生活提供了不少理由。螢幕、夜間輪班和長時間讀書，都把就寢時間往後推。明亮的光線會告訴大腦，白天還沒結束。再一則訊息、再一支影片，又把休息往後拖一次。到了早上，鬧鐘再從另一頭把夜晚切短。"
+      },
+      {
+        "en": "The good news is that habits can change. A regular bedtime helps the brain expect rest. A dark, quiet room [[improves]] the [[quality]] of sleep. Less screen time before bed is also worth trying. Sleep is not wasted time. It is quiet work that the brain cannot skip.",
+        "zh": "好消息是，習慣是可以改變的。固定的就寢時間，能讓大腦預期休息。昏暗安靜的房間能改善睡眠品質。睡前少看螢幕也值得一試。睡眠不是浪費掉的時間。它是大腦無法略過的安靜工作。"
+      }
+    ],
+    "vocab": [
+      { "word": "brain", "base": "brain", "pos": "n.", "hint": "the organ inside the head that thinks and controls the body", "zh": "大腦" },
+      { "word": "rests", "base": "rest", "pos": "v.", "hint": "to stop activity for a while in order to get energy back", "zh": "休息" },
+      { "word": "Memory", "base": "memory", "pos": "n.", "hint": "the ability of the mind to store facts and events for later use", "zh": "記憶力" },
+      { "word": "information", "base": "information", "pos": "n.", "hint": "facts or details about a person, an event, or a subject", "zh": "資訊" },
+      { "word": "storage", "base": "storage", "pos": "n.", "hint": "the act of keeping something in a place until it is needed", "zh": "儲存" },
+      { "word": "remembers", "base": "remember", "pos": "v.", "hint": "to still be able to think of something from an earlier time", "zh": "記得" },
+      { "word": "waste", "base": "waste", "pos": "n.", "hint": "material that is left over and no longer useful", "zh": "廢物" },
+      { "word": "repairs", "base": "repair", "pos": "v.", "hint": "to fix something that is damaged or worn out", "zh": "修復" },
+      { "word": "Attention", "base": "attention", "pos": "n.", "hint": "the act of watching or listening with care", "zh": "注意力" },
+      { "word": "mistakes", "base": "mistake", "pos": "n.", "hint": "an action or answer that is not correct", "zh": "錯誤" },
+      { "word": "linked", "base": "link", "pos": "v.", "hint": "to show a connection between two things", "zh": "使有關聯" },
+      { "word": "immune", "base": "immune", "pos": "adj.", "hint": "related to the body's natural defense against disease", "zh": "免疫的" },
+      { "word": "shifts", "base": "shift", "pos": "n.", "hint": "a fixed period of working hours during a day", "zh": "輪班" },
+      { "word": "alarm", "base": "alarm", "pos": "n.", "hint": "a device or sound that wakes a person at a set time", "zh": "鬧鐘" },
+      { "word": "improves", "base": "improve", "pos": "v.", "hint": "to make something better than it was before", "zh": "改善" },
+      { "word": "quality", "base": "quality", "pos": "n.", "hint": "how good or bad something is", "zh": "品質" }
+    ],
+    "questions": [
+      {
+        "q": "What is the main idea of the article?",
+        "options": [
+          "Sleep is mainly a way to save energy for the next day.",
+          "Sleep is active work that keeps the brain and body healthy.",
+          "Most people today sleep far more than they need.",
+          "Memory works just as well after a very short night."
+        ],
+        "answer": 1,
+        "explanation": "第一段與第三段都說明睡覺時大腦仍在整理、儲存與修復，全文圍繞這個主旨。"
+      },
+      {
+        "q": "According to the article, what does the brain do with new information at night?",
+        "options": [
+          "It sends all of it to other people.",
+          "It deletes everything from the day.",
+          "It stops receiving any information at all.",
+          "It keeps the important parts and lets useless details fade."
+        ],
+        "answer": 3,
+        "explanation": "第二段說重要內容移入較長期儲存，沒用的細節慢慢淡去。"
+      },
+      {
+        "q": "What does the article compare sleep to?",
+        "options": [
+          "A night cleaning crew",
+          "A busy classroom",
+          "A long journey",
+          "A sports match"
+        ],
+        "answer": 0,
+        "explanation": "第三段第一句直接把睡眠比作夜間的清潔班。"
+      },
+      {
+        "q": "Which of the following does the article name as a reason for short sleep?",
+        "options": [
+          "Noisy neighbors",
+          "Cold weather",
+          "Screens and night shifts",
+          "Long holidays"
+        ],
+        "answer": 2,
+        "explanation": "第五段列出螢幕、夜間輪班和長時間讀書，把就寢時間往後推。"
+      },
+      {
+        "q": "What can we infer from the last paragraph?",
+        "options": [
+          "Sleep habits are fixed and cannot be changed.",
+          "Only doctors are able to solve sleep problems.",
+          "A bright bedroom is better for deep sleep.",
+          "Small daily choices can affect how well someone sleeps."
+        ],
+        "answer": 3,
+        "explanation": "推論題。第六段舉出固定就寢時間、昏暗房間、睡前少看螢幕，說明小習慣會影響睡眠。"
+      }
+    ]
+  }
+]

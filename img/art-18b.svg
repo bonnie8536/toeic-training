@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="Microplastics in the ocean under a magnifier">
+  <rect width="800" height="300" fill="#dce9f2"/>
+  <!-- 海 -->
+  <path d="M0 150 q100 -24 200 0 t200 0 t200 0 t200 0 v150 h-800 z" fill="#0b72c4"/>
+  <path d="M0 170 q100 -20 200 0 t200 0 t200 0 t200 0" fill="none" stroke="#095d9f" stroke-width="5"/>
+  <!-- 瓶子碎裂 -->
+  <path d="M120 110 q-10 -16 6 -20 l4 -10 h22 l4 10 q16 4 6 20 l-3 34 h-36 z" fill="#9fd0f5" opacity=".9"/>
+  <path d="M196 96 l14 10 M226 92 l-10 14 M212 120 l12 6" stroke="#9fd0f5" stroke-width="5" stroke-linecap="round"/>
+  <!-- 放大鏡 -->
+  <circle cx="480" cy="180" r="74" fill="#e9f4fc" stroke="#404040" stroke-width="8"/>
+  <line x1="534" y1="234" x2="600" y2="292" stroke="#404040" stroke-width="14" stroke-linecap="round"/>
+  <!-- 鏡中微塑膠 -->
+  <g fill="#c94040"><circle cx="452" cy="164" r="6"/><circle cx="500" cy="150" r="5"/><circle cx="516" cy="196" r="7"/></g>
+  <g fill="#e8890c"><rect x="466" y="196" width="12" height="12" rx="2" transform="rotate(18 472 202)"/><rect x="440" y="200" width="10" height="10" rx="2"/></g>
+  <g fill="#ffd964"><circle cx="488" cy="176" r="4"/><circle cx="462" cy="140" r="4"/></g>
+  <!-- 魚 -->
+  <path d="M660 210 q24 -16 48 0 q-24 16 -48 0 z M708 210 l16 -12 v24 z" fill="#ffd964"/>
+  <circle cx="674" cy="206" r="3" fill="#404040"/>
+</svg>

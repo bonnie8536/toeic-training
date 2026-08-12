@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A sleeping person with brain recharging">
+  <rect width="800" height="300" fill="#1e3a5c"/>
+  <rect x="0" y="252" width="800" height="48" fill="#162c47"/>
+  <!-- 月與星 -->
+  <path d="M660 60 a30 30 0 1 0 22 52 a24 24 0 0 1 -22 -52" fill="#ffd964"/>
+  <circle cx="120" cy="60" r="4" fill="#fff"/><circle cx="240" cy="40" r="3" fill="#fff"/><circle cx="560" cy="50" r="3.5" fill="#fff"/>
+  <!-- 床與人 -->
+  <rect x="200" y="180" width="400" height="54" rx="12" fill="#4a6a8c"/>
+  <rect x="200" y="150" width="90" height="44" rx="10" fill="#e9f4fc"/>
+  <circle cx="262" cy="160" r="24" fill="#fff"/>
+  <path d="M250 156 q6 6 12 0 M268 156 q6 6 12 0" stroke="#404040" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M290 168 q120 -26 310 0 l0 40 h-310 z" fill="#0b72c4"/>
+  <!-- 充電腦 -->
+  <path d="M420 92 q-24 4 -24 26 q0 10 8 16 q-2 16 14 18 q6 10 20 8 q10 8 22 2 q16 4 22 -8 q14 -2 14 -16 q10 -8 6 -20 q0 -18 -20 -22 q-8 -12 -24 -8 q-14 -8 -24 2 q-10 -2 -14 2z" fill="#9fd0f5" opacity=".9"/>
+  <path d="M436 118 h14 l-6 12 h16 l-24 26 l6 -18 h-14 z" fill="#e8890c"/>
+  <!-- zzz -->
+  <text x="320" y="110" font-family="Arial" font-size="30" font-weight="bold" fill="#9fd0f5">z</text>
+  <text x="348" y="88" font-family="Arial" font-size="24" font-weight="bold" fill="#7fa8c9">z</text>
+</svg>

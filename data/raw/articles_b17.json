@@ -1,0 +1,222 @@
+[
+  {
+    "id": "art-17a",
+    "title": "Food Delivery Is Changing Restaurants",
+    "titleZh": "外送如何改變餐廳",
+    "category": "時事",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "A busy restaurant kitchen at night: cooks pack takeaway bags while a delivery rider waits at the back door, checking a phone.",
+    "paragraphs": [
+      {
+        "en": "Open an app, tap a few times, and dinner arrives at your door. Food [[delivery]] apps are now part of daily life in many cities. For diners, ordering a meal has never been easier. For restaurant owners, the change runs much deeper. Delivery is more than a new way to sell food. Behind the counter, it is changing the whole business.",
+        "zh": "打開 App，點幾下，晚餐就送到你家門口。在許多城市，外送 App 已經是日常生活的一部分。對消費者來說，訂一頓飯從來沒這麼容易過。對餐廳老闆而言，這個改變的影響要深得多。外送不只是一種賣餐的新方式。在櫃檯後面，整個生意的樣貌都在改變。"
+      },
+      {
+        "en": "The [[platforms]] that link diners and restaurants charge a [[fee]] on every order. Many owners say the fee is high. A busy night on an app can still leave thin [[profits]]. Some shops raise their online prices to cover the cost. Others accept smaller [[margins]] and hope to reach new [[customers]].",
+        "zh": "連結消費者與餐廳的平台，每一筆訂單都會收取費用。許多老闆都說這筆費用偏高。在 App 上忙碌一整晚，利潤仍然可能很薄。有些店家調高線上售價，用來吸收成本。有些則接受較低的利潤，希望換來新客人。"
+      },
+      {
+        "en": "Delivery also changes the kitchen. Food must [[survive]] a ride inside a bag. A [[dish]] that turns cold or soft travels badly. Fried food is a common problem. So some [[menus]] are shorter than before. A few restaurants now run two lists: one for the [[dining room]], and one for the app.",
+        "zh": "外送也改變了廚房。食物必須撐過提袋裡的那段路程。會變冷或變軟的菜色，運送起來就不理想。炸物就是常見的難題。因此有些菜單比以前更短。少數餐廳現在準備兩份清單：一份給內用區，一份給 App。"
+      },
+      {
+        "en": "A newer idea goes further. Some companies open small kitchens with no tables and no waiters. These ghost kitchens cook only for apps. The [[rent]] is lower, and the [[staff]] stays small. Some chefs enjoy the low cost. Others feel that a restaurant without guests loses something important.",
+        "zh": "還有一種更新的做法走得更遠。有些業者開設沒有桌子、也沒有服務生的小廚房。這類幽靈廚房只為 App 做菜。租金比較低，人手也少。有些廚師很喜歡這種低成本的模式。也有人覺得，沒有客人的餐廳失去了重要的東西。"
+      },
+      {
+        "en": "Delivery [[riders]] are another part of the story. They work in heavy traffic, in rain, and under time pressure. Their [[income]] often [[depends on]] the number of orders they finish. During busy hours, a few minutes can decide their pay. Restaurants rarely control this part of the service, yet customers often blame the shop.",
+        "zh": "外送員是這個故事的另一部分。他們在壅塞的車陣中、在雨裡、在時間壓力下工作。他們的收入常常取決於完成多少單。在尖峰時段，幾分鐘就可能決定他們拿多少錢。餐廳幾乎無法控制這一段服務，客人卻常常怪到店家頭上。"
+      },
+      {
+        "en": "So what does this mean for you? Delivery is [[convenient]], and it will not go away. Still, your favorite shop may earn less from an app order than from your visit. Ordering by phone, or eating in, usually helps the owner more. Small choices like these help neighborhood restaurants stay open.",
+        "zh": "那麼，這一切對你有什麼意義？外送很方便，而且不會消失。不過，你最愛的那家店，從 App 訂單賺到的，可能比你親自光顧時還少。打電話訂餐，或是直接內用，通常對老闆幫助更大。這些小小的選擇，能幫助巷口的餐廳繼續開下去。"
+      }
+    ],
+    "vocab": [
+      { "word": "delivery", "base": "delivery", "pos": "n.", "hint": "the act of bringing goods to a home or an office", "zh": "外送；遞送" },
+      { "word": "platforms", "base": "platform", "pos": "n.", "hint": "an online service that connects different groups of users", "zh": "平台" },
+      { "word": "fee", "base": "fee", "pos": "n.", "hint": "money charged for a service", "zh": "費用；手續費" },
+      { "word": "profits", "base": "profit", "pos": "n.", "hint": "money left after all costs are paid", "zh": "利潤" },
+      { "word": "margins", "base": "margin", "pos": "n.", "hint": "the gap between what something costs and what it sells for", "zh": "利潤空間；價差" },
+      { "word": "customers", "base": "customer", "pos": "n.", "hint": "a person who buys goods or services", "zh": "顧客" },
+      { "word": "survive", "base": "survive", "pos": "v.", "hint": "continue to exist without serious harm", "zh": "撐過；存活" },
+      { "word": "dish", "base": "dish", "pos": "n.", "hint": "food prepared in a certain way as part of a meal", "zh": "菜色；一道菜" },
+      { "word": "menus", "base": "menu", "pos": "n.", "hint": "a list of the food that a place offers", "zh": "菜單" },
+      { "word": "dining room", "base": "dining room", "pos": "n.", "hint": "a space in a home or a shop where people sit and eat", "zh": "內用區；餐廳用餐空間" },
+      { "word": "rent", "base": "rent", "pos": "n.", "hint": "money paid regularly for the use of a building or a space", "zh": "租金" },
+      { "word": "staff", "base": "staff", "pos": "n.", "hint": "all the people who work for a business", "zh": "員工；人手" },
+      { "word": "riders", "base": "rider", "pos": "n.", "hint": "a person who travels by bike or motorcycle to carry things", "zh": "外送員；騎士" },
+      { "word": "income", "base": "income", "pos": "n.", "hint": "money that a person receives for work", "zh": "收入" },
+      { "word": "depends on", "base": "depend on", "pos": "phr. v.", "hint": "be decided or controlled by something else", "zh": "取決於" },
+      { "word": "convenient", "base": "convenient", "pos": "adj.", "hint": "easy to use and saving time or effort", "zh": "方便的" }
+    ],
+    "questions": [
+      {
+        "q": "What is the main idea of the article?",
+        "options": [
+          "Delivery apps are changing how restaurants earn money and how they cook.",
+          "Delivery apps will soon replace every traditional restaurant.",
+          "Most restaurant owners refuse to join delivery platforms.",
+          "Delivery riders earn far more than restaurant owners do."
+        ],
+        "answer": 0,
+        "explanation": "第一段最後兩句已點出主旨（外送不只是新的賣餐方式，而是在改變整個生意），後面各段分別談費用、菜單、幽靈廚房與外送員，都在支持這一點。"
+      },
+      {
+        "q": "Why are some menus shorter than before?",
+        "options": [
+          "Because customers complain about long menus.",
+          "Because a short menu lowers the platform fee.",
+          "Because platforms decide what each shop may sell.",
+          "Because some dishes do not travel well inside a bag."
+        ],
+        "answer": 3,
+        "explanation": "第三段說食物必須撐過提袋裡的路程，會變冷或變軟的菜色運送效果不好，所以菜單變短。"
+      },
+      {
+        "q": "According to the article, what is true about ghost kitchens?",
+        "options": [
+          "They offer a large dining room for guests.",
+          "They hire more waiters than normal restaurants.",
+          "They have no tables and cook only for apps.",
+          "They charge customers no delivery fee."
+        ],
+        "answer": 2,
+        "explanation": "第四段直接描述：沒有桌子、沒有服務生，只為 App 做菜，租金低、人手少。"
+      },
+      {
+        "q": "What can we infer about ordering directly from a restaurant?",
+        "options": [
+          "It is always cheaper for the customer.",
+          "It leaves the shop with more of the money you pay.",
+          "It always takes longer than app delivery.",
+          "It is not allowed in most cities."
+        ],
+        "answer": 1,
+        "explanation": "第二段提到平台每筆訂單都抽費用，末段又說直接打電話或內用「對老闆幫助更大」，兩者合起來可推論店家實際留下的錢比較多。"
+      },
+      {
+        "q": "What does the article say about delivery riders?",
+        "options": [
+          "Their income often depends on how many orders they finish.",
+          "Restaurants set the pay for each of their trips.",
+          "They work only when the weather is good.",
+          "They also cook the food in ghost kitchens."
+        ],
+        "answer": 0,
+        "explanation": "第五段明說外送員的收入常取決於完成的訂單數，且他們在車陣與雨中工作，餐廳幾乎無法控制這段服務。"
+      }
+    ]
+  },
+  {
+    "id": "art-17b",
+    "title": "How Vaccines Train Your Body",
+    "titleZh": "疫苗如何訓練你的身體",
+    "category": "健康",
+    "level": "中級 (TOEIC 550-650)",
+    "readTime": 3,
+    "illustrationIdea": "A friendly cross-section of the human body as a training camp, where cartoon immune cells study a wanted poster of a germ.",
+    "paragraphs": [
+      {
+        "en": "Your body already has a defense team. It is called the [[immune system]]. When a [[germ]] gets inside, the team fights back. It also remembers the attacker. The next time, the response is much faster. That memory can last for years. This is the simple idea behind [[vaccines]].",
+        "zh": "你的身體本來就有一支防衛部隊，它叫做免疫系統。當病原體進入身體，這支部隊會反擊。它也會記住入侵者。下一次，反應就會快得多。這份記憶可以維持很多年。疫苗背後的道理，就是這麼簡單。"
+      },
+      {
+        "en": "A vaccine works by showing the body a safe [[sample]]. The sample may come from a [[virus]] or from [[bacteria]]. It does not give a healthy person the disease itself. Some vaccines use a weak or dead form of the germ. Others use only one small piece of its outer surface. To the body, that piece still looks like a threat.",
+        "zh": "疫苗的做法，是先讓身體看見一份安全的樣本。這份樣本可能來自病毒，也可能來自細菌。它不會讓健康的人得到那個疾病。有些疫苗使用減弱或已死的病原體。有些只取病原體外層的一小塊。對身體來說，那一小塊看起來仍然像是威脅。"
+      },
+      {
+        "en": "Then the training starts. Certain [[cells]] learn the shape of the invader. They make [[antibodies]], tiny tools that [[stick to]] that shape. Other cells become memory cells and stay for a long time. If the real germ arrives later, the body already knows the answer.",
+        "zh": "接著，訓練就開始了。某些細胞會學習入侵者的外形。它們製造抗體，那是一種能黏附在那個外形上的微小工具。另一些細胞會變成記憶細胞，長期留在體內。等真正的病原體之後找上門，身體早就知道該怎麼應付。"
+      },
+      {
+        "en": "This training explains a common experience. After a shot, some people feel [[mild]] [[side effects]]. A sore arm or a low [[fever]] is normal. Those signs show that the body is busy learning. In most cases, the feeling fades within a day or two. People who feel worried can always ask a doctor.",
+        "zh": "這套訓練也解釋了一個常見的經驗。打完針之後，有些人會出現輕微的副作用。手臂痠痛或是輕微發燒都很常見。這些反應代表身體正忙著學習。多數情況下，這種感覺一兩天內就會退去。真的不放心的人，隨時可以問醫生。"
+      },
+      {
+        "en": "Some vaccines need more than one [[dose]]. The second shot acts like a review lesson. The [[protection]] can also weaken as years pass. That is why certain vaccines are repeated later in life. The timing is not random, and doctors follow careful plans.",
+        "zh": "有些疫苗需要不只一劑。第二針的作用，就像是一堂複習課。保護力也會隨著年月慢慢減弱。這就是為什麼某些疫苗要在往後的人生中再打一次。接種的時間點並不是隨便決定的，醫生會依照審慎的規劃。"
+      },
+      {
+        "en": "Vaccines protect groups, not only individuals. When most people in a [[community]] are protected, a germ finds fewer places to [[spread]]. Newborn babies and very sick patients often cannot be vaccinated. They depend on the people around them. This kind of protection is easy to miss, yet it matters a lot.",
+        "zh": "疫苗保護的不只是個人，還有群體。當一個社群裡多數人都有保護力，病原體能傳播的空間就變少了。剛出生的嬰兒和病重的患者，往往沒辦法接種。他們仰賴周圍的人。這種保護很容易被忽略，卻非常重要。"
+      }
+    ],
+    "vocab": [
+      { "word": "immune system", "base": "immune system", "pos": "n.", "hint": "the parts of the body that work together to fight illness", "zh": "免疫系統" },
+      { "word": "germ", "base": "germ", "pos": "n.", "hint": "a very small living thing that can cause illness", "zh": "病原體；病菌" },
+      { "word": "vaccines", "base": "vaccine", "pos": "n.", "hint": "a medical product that prepares the body against a certain disease", "zh": "疫苗" },
+      { "word": "sample", "base": "sample", "pos": "n.", "hint": "a small part taken to show what the whole is like", "zh": "樣本" },
+      { "word": "virus", "base": "virus", "pos": "n.", "hint": "a very tiny thing that copies itself inside living cells and can cause disease", "zh": "病毒" },
+      { "word": "bacteria", "base": "bacteria", "pos": "n.", "hint": "very small living things, some of which cause illness", "zh": "細菌" },
+      { "word": "cells", "base": "cell", "pos": "n.", "hint": "the smallest working unit of a living body", "zh": "細胞" },
+      { "word": "antibodies", "base": "antibody", "pos": "n.", "hint": "a substance made by the body to attack a certain germ", "zh": "抗體" },
+      { "word": "stick to", "base": "stick to", "pos": "phr. v.", "hint": "become firmly joined onto the surface of something", "zh": "黏附於" },
+      { "word": "mild", "base": "mild", "pos": "adj.", "hint": "not strong or serious", "zh": "輕微的" },
+      { "word": "side effects", "base": "side effect", "pos": "n.", "hint": "an extra and often unwanted result of taking a medicine", "zh": "副作用" },
+      { "word": "fever", "base": "fever", "pos": "n.", "hint": "a body temperature that is higher than normal", "zh": "發燒" },
+      { "word": "dose", "base": "dose", "pos": "n.", "hint": "one measured amount of medicine taken at one time", "zh": "劑量；一劑" },
+      { "word": "protection", "base": "protection", "pos": "n.", "hint": "the state of being kept safe from harm", "zh": "保護力" },
+      { "word": "community", "base": "community", "pos": "n.", "hint": "a group of people living in the same area", "zh": "社群；社區" },
+      { "word": "spread", "base": "spread", "pos": "v.", "hint": "move into a wider area or reach more people", "zh": "傳播；散布" }
+    ],
+    "questions": [
+      {
+        "q": "What is the article mainly about?",
+        "options": [
+          "Why some people should avoid all kinds of medicine.",
+          "How vaccines teach the body to recognize a germ.",
+          "How medicine is produced inside large factories.",
+          "Why a fever is always dangerous for adults."
+        ],
+        "answer": 1,
+        "explanation": "第一段結尾點題（疫苗背後的道理就是身體會記住入侵者），後面各段依序說明樣本、訓練、副作用、劑量與群體保護。"
+      },
+      {
+        "q": "What does a vaccine give the body?",
+        "options": [
+          "A safe sample, such as a weak form or a small piece of a germ.",
+          "A strong living germ that causes serious illness.",
+          "A set of antibodies collected from animals.",
+          "A medicine that kills every germ in the body."
+        ],
+        "answer": 0,
+        "explanation": "第二段說疫苗讓身體看見一份安全的樣本，可能是減弱或已死的形式，也可能只是外層的一小塊。"
+      },
+      {
+        "q": "According to the article, what do memory cells do?",
+        "options": [
+          "They remove antibodies from the blood.",
+          "They cause a fever after every shot.",
+          "They stay in the body for a long time.",
+          "They change the shape of the invader."
+        ],
+        "answer": 2,
+        "explanation": "第三段說一部分細胞會變成記憶細胞，長期留在體內，讓身體之後認得病原體。"
+      },
+      {
+        "q": "What does a sore arm after a shot most likely mean?",
+        "options": [
+          "The vaccine has failed completely.",
+          "The person has caught the disease.",
+          "The dose given was far too large.",
+          "The body is responding and learning."
+        ],
+        "answer": 3,
+        "explanation": "第四段說這類輕微反應代表身體正忙著學習，而且通常一兩天就消失，可推論不是失敗或生病。"
+      },
+      {
+        "q": "Why does the article mention newborn babies and very sick patients?",
+        "options": [
+          "They always receive the strongest vaccines available.",
+          "They often cannot be vaccinated, so they rely on others.",
+          "They never get sick from common germs.",
+          "They must take one dose every single year."
+        ],
+        "answer": 1,
+        "explanation": "最後一段用他們說明群體保護：當社群裡多數人有保護力，無法接種的人就靠周圍的人得到保護。"
+      }
+    ]
+  }
+]

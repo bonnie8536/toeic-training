@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A computer chip at the center of global supply chains">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <!-- 晶片 -->
+  <rect x="330" y="100" width="140" height="140" rx="10" fill="#404040"/>
+  <rect x="358" y="128" width="84" height="84" rx="6" fill="#0b72c4"/>
+  <rect x="376" y="146" width="48" height="48" rx="4" fill="#9fd0f5"/>
+  <g stroke="#404040" stroke-width="6" stroke-linecap="round">
+    <line x1="352" y1="100" x2="352" y2="76"/><line x1="384" y1="100" x2="384" y2="76"/><line x1="416" y1="100" x2="416" y2="76"/><line x1="448" y1="100" x2="448" y2="76"/>
+    <line x1="352" y1="240" x2="352" y2="264"/><line x1="384" y1="240" x2="384" y2="264"/><line x1="416" y1="240" x2="416" y2="264"/><line x1="448" y1="240" x2="448" y2="264"/>
+    <line x1="330" y1="124" x2="306" y2="124"/><line x1="330" y1="156" x2="306" y2="156"/><line x1="330" y1="188" x2="306" y2="188"/><line x1="330" y1="220" x2="306" y2="220"/>
+    <line x1="470" y1="124" x2="494" y2="124"/><line x1="470" y1="156" x2="494" y2="156"/><line x1="470" y1="188" x2="494" y2="188"/><line x1="470" y1="220" x2="494" y2="220"/>
+  </g>
+  <!-- 依賴它的產品 -->
+  <rect x="110" y="90" width="90" height="56" rx="8" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <rect x="146" y="146" width="18" height="8" fill="#404040"/>
+  <rect x="120" y="180" width="56" height="86" rx="10" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <rect x="136" y="252" width="24" height="5" rx="2" fill="#9db8cc"/>
+  <path d="M600 120 q40 0 56 24 l40 0 q20 2 20 20 l0 12 q0 14 -18 14 l-120 0 q-16 0 -16 -16 l0 -38 q0 -16 18 -16 z" fill="#e8890c"/>
+  <circle cx="606" cy="196" r="14" fill="#404040"/><circle cx="678" cy="196" r="14" fill="#404040"/>
+  <!-- 斷鏈警示 -->
+  <path d="M240 60 l14 26 h-28 z" fill="#ffd964" stroke="#e8890c" stroke-width="3"/>
+  <line x1="240" y1="70" x2="240" y2="78" stroke="#404040" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="240" cy="83" r="1.8" fill="#404040"/>
+</svg>

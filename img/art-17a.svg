@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="A food delivery rider and a restaurant">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="242" width="800" height="58" fill="#dde7ee"/>
+  <!-- 餐廳 -->
+  <rect x="90" y="90" width="220" height="152" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M74 90 h252 l-18 -30 h-216 z" fill="#c94040"/>
+  <rect x="120" y="130" width="80" height="70" rx="4" fill="#9fd0f5"/>
+  <rect x="230" y="130" width="56" height="112" fill="#095d9f"/>
+  <circle cx="240" cy="190" r="5" fill="#ffd964"/>
+  <!-- 機車外送員 -->
+  <circle cx="520" cy="180" r="26" fill="#404040"/>
+  <circle cx="640" cy="180" r="26" fill="#404040"/>
+  <circle cx="520" cy="180" r="10" fill="#dde7ee"/>
+  <circle cx="640" cy="180" r="10" fill="#dde7ee"/>
+  <path d="M500 180 q20 -50 80 -40 l30 -20 h28 l-10 34 q26 8 32 26" fill="none" stroke="#0b72c4" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="612" cy="96" r="16" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M600 118 q14 -12 28 0 l-4 30 h-22 z" fill="#e8890c"/>
+  <!-- 外送箱 -->
+  <rect x="662" y="120" width="52" height="46" rx="8" fill="#3a8a4d"/>
+  <!-- 速度線 -->
+  <line x1="420" y1="150" x2="470" y2="150" stroke="#9db8cc" stroke-width="5" stroke-linecap="round"/>
+  <line x1="400" y1="176" x2="460" y2="176" stroke="#9db8cc" stroke-width="5" stroke-linecap="round"/>
+  <line x1="420" y1="202" x2="466" y2="202" stroke="#9db8cc" stroke-width="5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="Coffee and the brain">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="250" width="800" height="50" fill="#dde7ee"/>
+  <!-- 咖啡杯 -->
+  <path d="M180 130 h150 v70 a60 60 0 0 1 -150 0 z" fill="#fff" stroke="#404040" stroke-width="5"/>
+  <path d="M330 145 q42 6 0 44" fill="none" stroke="#404040" stroke-width="5"/>
+  <ellipse cx="255" cy="130" rx="75" ry="14" fill="#8a5a2b"/>
+  <path d="M225 108 q7 -14 0 -26 M255 106 q7 -14 0 -26 M285 108 q7 -14 0 -26" stroke="#767f88" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- 腦 -->
+  <path d="M520 90 q-36 6 -36 38 q0 14 12 24 q-4 24 22 27 q8 16 30 12 q16 12 34 3 q24 6 32 -12 q22 -3 22 -24 q14 -12 8 -30 q0 -26 -30 -32 q-12 -18 -36 -12 q-20 -12 -36 3 q-14 -3 -22 3z" fill="#f0b3b3"/>
+  <path d="M560 100 q-10 40 8 80 M600 96 q10 44 -4 86 M534 130 q40 -12 100 0 M540 166 q36 12 84 0" stroke="#c94040" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- 電流符號 -->
+  <path d="M470 70 h12 l-5 10 h13 l-20 22 l5 -15 h-11 z" fill="#e8890c"/>
+  <path d="M690 150 h11 l-5 9 h12 l-18 20 l4 -13 h-10 z" fill="#e8890c"/>
+  <path d="M640 60 h10 l-4 8 h11 l-17 19 l4 -12 h-9 z" fill="#ffd964"/>
+  <!-- 連結箭頭 -->
+  <path d="M350 180 q60 -30 120 -30" fill="none" stroke="#0b72c4" stroke-width="6" stroke-dasharray="2 12" stroke-linecap="round"/>
+  <path d="M466 142 l18 4 l-12 14 z" fill="#0b72c4"/>
+</svg>

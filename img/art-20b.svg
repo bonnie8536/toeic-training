@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" role="img" aria-label="Workers of different generations side by side">
+  <rect width="800" height="300" fill="#eef3f7"/>
+  <rect x="0" y="248" width="800" height="52" fill="#dde7ee"/>
+  <!-- 年輕與資深工作者並肩 -->
+  <circle cx="250" cy="120" r="26" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M224 186 q26 -28 52 0 l-5 62 h-42 z" fill="#0b72c4"/>
+  <circle cx="400" cy="118" r="26" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M382 104 q18 -10 36 0" stroke="#9db8cc" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M374 184 q26 -28 52 0 l-5 64 h-42 z" fill="#3a8a4d"/>
+  <circle cx="550" cy="120" r="26" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <path d="M530 102 q20 -12 40 0" stroke="#dde7ee" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M524 186 q26 -28 52 0 l-5 62 h-42 z" fill="#e8890c"/>
+  <!-- 柺杖換筆電:資深者拿筆電 -->
+  <rect x="588" y="170" width="52" height="34" rx="4" fill="#404040"/>
+  <rect x="592" y="174" width="44" height="22" rx="2" fill="#9fd0f5"/>
+  <!-- 人口金字塔倒轉示意 -->
+  <g>
+    <rect x="96" y="90" width="70" height="16" fill="#0b72c4"/>
+    <rect x="106" y="110" width="50" height="16" fill="#0b72c4" opacity=".75"/>
+    <rect x="116" y="130" width="30" height="16" fill="#0b72c4" opacity=".5"/>
+  </g>
+  <!-- 時鐘 -->
+  <circle cx="700" cy="90" r="34" fill="#fff" stroke="#404040" stroke-width="4"/>
+  <line x1="700" y1="90" x2="700" y2="68" stroke="#404040" stroke-width="4" stroke-linecap="round"/>
+  <line x1="700" y1="90" x2="716" y2="98" stroke="#404040" stroke-width="4" stroke-linecap="round"/>
+</svg>

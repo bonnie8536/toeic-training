@@ -1,0 +1,321 @@
+[
+  {
+    "id": "art-15a",
+    "title": "Why Do We Yawn?",
+    "titleZh": "我們為什麼會打哈欠？",
+    "category": "科普",
+    "level": "初級 (TOEIC 400-550)",
+    "readTime": 3,
+    "illustrationIdea": "A classroom where one student yawns and three classmates start yawning too, with a small thought bubble showing a warm brain cooling down.",
+    "paragraphs": [
+      {
+        "en": "Everyone [[yawns]]. Babies do it, and old people do it too. Even dogs and cats do it. Most of us yawn many times a day. But why do we yawn? Scientists have asked this question for many years. They still do not fully agree.",
+        "zh": "每個人都會打哈欠。嬰兒會，老人也會。連狗和貓都會。我們大多數人一天要打好幾次哈欠。但我們為什麼會打哈欠呢？科學家研究這個問題很多年了。他們到現在還沒有完全一致的看法。"
+      },
+      {
+        "en": "For a long time, people thought a yawn brought in more [[oxygen]]. The idea sounded simple. A tired body needs more air, so the mouth opens wide. But this old idea is now less popular. People still yawn when they have [[plenty of]] air.",
+        "zh": "很長一段時間裡，人們認為打哈欠是為了吸進更多氧氣。這個說法聽起來很簡單。身體累了需要更多空氣，所以嘴巴才會張大。但這個舊說法現在比較少人支持。因為就算空氣充足，人還是會打哈欠。"
+      },
+      {
+        "en": "Today many scientists like a different idea. A yawn may help [[cool]] the brain. Our brain works best at the right [[temperature]]. When it gets too warm, we may yawn. The long, deep breath pulls in colder air. This may bring the brain back to normal.",
+        "zh": "現在很多科學家比較喜歡另一個說法。打哈欠可能有助於大腦降溫。我們的大腦在溫度適當時運作得最好。當大腦太熱時，我們可能就會打哈欠。那一口又長又深的呼吸，會吸進比較冷的空氣。這可能讓大腦回到正常狀態。"
+      },
+      {
+        "en": "Yawning is also [[catching]]. You see one person yawn, and soon you yawn too. Even reading about yawns can make you yawn. Some scientists think this is a social [[habit]]. It may help a group stay [[alert]] at the same time. It may also show that we feel close to others.",
+        "zh": "打哈欠也會傳染。你看到一個人打哈欠，很快自己也跟著打。連讀到打哈欠的文字，都可能讓你跟著打起來。有些科學家認為這是一種社會習慣。它可能幫助一群人在同一時間保持清醒。它也可能顯示我們和對方關係親近。"
+      },
+      {
+        "en": "So a yawn is not always a [[sign]] of a [[boring]] class. It may mean that your brain is tired or too warm. Think of it as a quiet message from your body. Next time you yawn in a meeting, do not feel [[embarrassed]]. Your brain may just be doing its job.",
+        "zh": "所以打哈欠不一定代表這堂課很無聊。它可能表示你的大腦累了，或是溫度太高。你可以把它想成身體發出的一個小訊息。下次在會議中打哈欠，別覺得尷尬。你的大腦可能只是在做它該做的事。"
+      }
+    ],
+    "vocab": [
+      {
+        "word": "yawns",
+        "base": "yawn",
+        "pos": "v.",
+        "hint": "to open the mouth wide and take a deep breath when tired",
+        "zh": "打哈欠"
+      },
+      {
+        "word": "oxygen",
+        "base": "oxygen",
+        "pos": "n.",
+        "hint": "the gas in the air that people and animals need to stay alive",
+        "zh": "氧氣"
+      },
+      {
+        "word": "plenty of",
+        "base": "plenty of",
+        "pos": "phr.",
+        "hint": "more than enough of something",
+        "zh": "充足的；很多的"
+      },
+      {
+        "word": "cool",
+        "base": "cool",
+        "pos": "v.",
+        "hint": "to make something less hot",
+        "zh": "使降溫；冷卻"
+      },
+      {
+        "word": "temperature",
+        "base": "temperature",
+        "pos": "n.",
+        "hint": "how hot or cold something is",
+        "zh": "溫度"
+      },
+      {
+        "word": "catching",
+        "base": "catching",
+        "pos": "adj.",
+        "hint": "easily passed from one person to another",
+        "zh": "會傳染的；有感染力的"
+      },
+      {
+        "word": "habit",
+        "base": "habit",
+        "pos": "n.",
+        "hint": "something a person does often and almost without thinking",
+        "zh": "習慣"
+      },
+      {
+        "word": "alert",
+        "base": "alert",
+        "pos": "adj.",
+        "hint": "awake and quick to notice things",
+        "zh": "警覺的；清醒的"
+      },
+      {
+        "word": "sign",
+        "base": "sign",
+        "pos": "n.",
+        "hint": "something that shows what is true or what is happening",
+        "zh": "跡象；徵兆"
+      },
+      {
+        "word": "boring",
+        "base": "boring",
+        "pos": "adj.",
+        "hint": "not interesting at all",
+        "zh": "無聊的"
+      },
+      {
+        "word": "embarrassed",
+        "base": "embarrassed",
+        "pos": "adj.",
+        "hint": "feeling shy or uncomfortable in front of other people",
+        "zh": "尷尬的；難為情的"
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the main idea of the article?",
+        "options": [
+          "Yawning is a health problem that needs a doctor.",
+          "Scientists are still not sure why people yawn.",
+          "Only very tired people yawn.",
+          "People yawn because the room is too cold."
+        ],
+        "answer": 1,
+        "explanation": "第一段最後說科學家還沒有一致看法，後面幾段列出不同說法，全文重點就是「原因仍未確定」。"
+      },
+      {
+        "q": "For a long time, what did people think a yawn did?",
+        "options": [
+          "It brought more oxygen into the body.",
+          "It made the brain grow bigger.",
+          "It helped people sleep at night.",
+          "It showed that a person was healthy."
+        ],
+        "answer": 0,
+        "explanation": "第二段第一句提到，長期以來人們認為打哈欠是為了吸進更多氧氣。"
+      },
+      {
+        "q": "What do many scientists think today?",
+        "options": [
+          "A yawn makes the voice louder.",
+          "A yawn cleans the mouth.",
+          "A yawn may help cool the brain.",
+          "A yawn makes a person feel hungry."
+        ],
+        "answer": 2,
+        "explanation": "第三段說現在很多科學家認為打哈欠可能幫大腦降溫。"
+      },
+      {
+        "q": "Your friend yawns, and you yawn right after. What does the article suggest about this?",
+        "options": [
+          "You are getting sick.",
+          "You do not like your friend.",
+          "You need to eat something.",
+          "A yawn can pass from one person to another."
+        ],
+        "answer": 3,
+        "explanation": "第四段說打哈欠會傳染，看到別人打，自己很快也會跟著打。"
+      }
+    ]
+  },
+  {
+    "id": "art-15b",
+    "title": "Paper Bag or Plastic Bag?",
+    "titleZh": "紙袋還是塑膠袋？",
+    "category": "環境",
+    "level": "初級 (TOEIC 400-550)",
+    "readTime": 3,
+    "illustrationIdea": "A shopper at a checkout counter holding a paper bag in one hand and a plastic bag in the other, with a reusable cloth bag hanging on one shoulder.",
+    "paragraphs": [
+      {
+        "en": "At the store, a clerk often asks a simple question. Paper bag or [[plastic]] bag? Many people pick paper. They believe paper is better for the [[environment]]. But the real answer is not so simple.",
+        "zh": "在商店結帳時，店員常會問一個簡單的問題。要紙袋還是塑膠袋？很多人會選紙袋。他們相信紙袋對環境比較好。但真正的答案沒有那麼單純。"
+      },
+      {
+        "en": "Plastic bags are cheap and light. Stores like them, and [[shoppers]] like them too. But plastic does not [[break down]] easily. A bag can stay in nature for a very long time. Some end up in rivers and the sea. Sea animals may eat them [[by mistake]].",
+        "zh": "塑膠袋便宜又輕。商店喜歡用，顧客也喜歡用。但塑膠不容易分解。一個袋子可以在自然環境裡留存非常久。有些最後流進河川和海裡。海洋動物可能會誤食。"
+      },
+      {
+        "en": "Paper bags have costs too. Most start as trees, so [[forests]] must be cut. Making paper also uses a lot of water and [[energy]]. Paper bags are heavy, so trucks burn more [[fuel]]. In short, a paper bag also does some [[harm]].",
+        "zh": "紙袋也有它的代價。大部分的紙袋來自樹木，所以必須砍伐森林。造紙也要用掉大量的水和能源。紙袋比較重，貨車運送時會燒掉更多燃料。簡單說，紙袋一樣會造成一些傷害。"
+      },
+      {
+        "en": "So which bag wins? It [[depends on]] many things. Paper breaks down faster and is easier to [[recycle]]. Making plastic uses less water and less power. Each bag is better in some ways and worse in others.",
+        "zh": "那到底哪一種袋子贏？這要看很多條件。紙分解得比較快，也比較容易回收。塑膠在製造時用掉的水和能源比較少。兩種袋子都是有些地方比較好、有些地方比較差。"
+      },
+      {
+        "en": "Many [[experts]] give the same advice. The best bag is the one you already have. A cloth bag helps only if you use it many times. So keep one in your bag or your car. The real problem is not paper or plastic. It is taking a new bag every single time.",
+        "zh": "很多專家給的建議都一樣。最好的袋子就是你已經有的那一個。布袋要用很多次才真的有幫助。所以在包包或車上放一個吧。真正的問題不是紙袋還是塑膠袋。而是每一次都拿一個新袋子。"
+      }
+    ],
+    "vocab": [
+      {
+        "word": "plastic",
+        "base": "plastic",
+        "pos": "n.",
+        "hint": "a light man-made material used for bags, bottles and toys",
+        "zh": "塑膠"
+      },
+      {
+        "word": "environment",
+        "base": "environment",
+        "pos": "n.",
+        "hint": "the natural world of air, water, land and living things",
+        "zh": "環境"
+      },
+      {
+        "word": "shoppers",
+        "base": "shopper",
+        "pos": "n.",
+        "hint": "people who buy things at a store",
+        "zh": "購物者；顧客"
+      },
+      {
+        "word": "break down",
+        "base": "break down",
+        "pos": "phr. v.",
+        "hint": "to slowly turn into very small parts and disappear in nature",
+        "zh": "分解"
+      },
+      {
+        "word": "by mistake",
+        "base": "by mistake",
+        "pos": "phr.",
+        "hint": "without meaning to do it",
+        "zh": "不小心地；誤"
+      },
+      {
+        "word": "forests",
+        "base": "forest",
+        "pos": "n.",
+        "hint": "a large area of land covered with many trees",
+        "zh": "森林"
+      },
+      {
+        "word": "energy",
+        "base": "energy",
+        "pos": "n.",
+        "hint": "the power that machines and factories need to work",
+        "zh": "能源"
+      },
+      {
+        "word": "fuel",
+        "base": "fuel",
+        "pos": "n.",
+        "hint": "oil, gas or coal that is burned to make power",
+        "zh": "燃料"
+      },
+      {
+        "word": "harm",
+        "base": "harm",
+        "pos": "n.",
+        "hint": "damage done to a person, an animal or a place",
+        "zh": "傷害；害處"
+      },
+      {
+        "word": "depends on",
+        "base": "depend on",
+        "pos": "phr. v.",
+        "hint": "to be decided by something else",
+        "zh": "取決於"
+      },
+      {
+        "word": "recycle",
+        "base": "recycle",
+        "pos": "v.",
+        "hint": "to treat used paper, glass or metal so it can be used again",
+        "zh": "回收再利用"
+      },
+      {
+        "word": "experts",
+        "base": "expert",
+        "pos": "n.",
+        "hint": "people who know a lot about one subject",
+        "zh": "專家"
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the main point of the article?",
+        "options": [
+          "Paper bags are always better than plastic bags.",
+          "Both paper bags and plastic bags have costs.",
+          "Stores should stop giving out any bags.",
+          "Plastic bags cause no problems at all."
+        ],
+        "answer": 1,
+        "explanation": "第一段最後說答案沒那麼單純，第二段與第三段分別說明塑膠袋和紙袋各自的代價。"
+      },
+      {
+        "q": "Why are plastic bags a problem in nature?",
+        "options": [
+          "They cost stores too much money.",
+          "They are too heavy to carry home.",
+          "They stay in the environment for a very long time.",
+          "They are very hard to open."
+        ],
+        "answer": 2,
+        "explanation": "第二段提到塑膠不容易分解，袋子會在自然環境裡留存非常久。"
+      },
+      {
+        "q": "According to the article, what is one cost of paper bags?",
+        "options": [
+          "Making them uses a lot of water and energy.",
+          "They break easily in the rain.",
+          "They cannot hold any food.",
+          "They are made from sea animals."
+        ],
+        "answer": 0,
+        "explanation": "第三段說造紙要用掉大量的水和能源，而且紙袋較重會多燒燃料。"
+      },
+      {
+        "q": "What would the writer most likely tell a shopper to do?",
+        "options": [
+          "Always ask for a paper bag.",
+          "Always ask for a plastic bag.",
+          "Buy a new cloth bag every week.",
+          "Bring a bag you already have and use it again."
+        ],
+        "answer": 3,
+        "explanation": "第五段說最好的袋子是你已經有的那一個，重點在重複使用。"
+      }
+    ]
+  }
+]

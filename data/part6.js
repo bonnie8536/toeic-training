@@ -286,6 +286,234 @@ TOEIC.part6 = [
   "translation": "Kestrel 家電\nAshcombe 市 Fenwick 路 48 號\n\n11 月 3 日\n\nDana Okonjo 女士\nAshcombe 市 Larkspur 巷 17 號\n\nOkonjo 女士 您好：\n\n感謝您就 6 月於本公司 Ashcombe 展示中心所購買的洗碗機與我們聯繫。經查，該機仍在兩年保固期內。\n\n技師將於 11 月 12 日（星期四）上午 9 時至中午之間到府，查明您所描述的排水問題。屆時請確保有年滿十八歲的人員在場。到府服務與所需零件均不另行收費。\n\n若該日期不便，請於星期五前致電本公司服務專線，以便另行安排時段。\n\n敬祝 商安\n\n客戶服務部經理 Elliot Sung 敬上"
  },
  {
+  "id": "p6-b10-1",
+  "passageType": "letter",
+  "title": "Change to Monthly Membership Rates",
+  "passage": "Fernbrook Fitness Center\n88 Ridgeway Avenue\n\n15 September\n\nDear Ms. Alvarez,\n\nThank you for your three years of membership at Fernbrook Fitness Center. We are writing to let you know that monthly membership rates {{1}} on 1 November. The standard plan will rise from $42 to $47 per month.\n\nThis is our first price change since 2022. {{2}} Over the summer we replaced all of the treadmills, added a second locker room, and extended our weekend hours.\n\nMembers who renew before 25 October may keep the current rate for another twelve months. To do so, please return the enclosed form with your {{3}}. {{4}} you have any questions, feel free to call the front desk.\n\nSincerely,\nMarcus Delaney\nMembership Manager",
+  "questions": [
+   {
+    "num": 1,
+    "type": "文法",
+    "options": [
+     "will increase",
+     "increased",
+     "have increased",
+     "increasing"
+    ],
+    "answer": 0,
+    "explanation": "空格所在的句子提到 on 1 November，而信件開頭寫 We are writing to let you know，表示這是尚未發生、即將生效的調整，動詞要用未來式 will increase。increased 是過去式，與未來的日期互相矛盾；have increased 是現在完成式，意思變成「已經漲過了」，同樣和 1 November 這個未來時間點衝突；increasing 是現在分詞，前面沒有 be 動詞，不能單獨當句子的主要動詞。"
+   },
+   {
+    "num": 2,
+    "type": "句子插入",
+    "options": [
+     "Personal training sessions must be booked at least one day ahead.",
+     "Our second branch on Grant Street closed last winter.",
+     "Please bring a photo ID on your first visit.",
+     "The extra income will go directly into new equipment and services for members."
+    ],
+    "answer": 3,
+    "explanation": "空格前一句說這是 2022 年以來第一次調價，空格後一句則列出夏天換跑步機、增設更衣室、延長週末營業時間。中間需要一句把「調價」和「這些改善」連起來，選項 D 說多出來的收入會直接投入新設備與會員服務，正好扮演這個橋樑。選項 A 講私人教練課要提前一天預約，和調價或設備更新都無關；選項 B 說分店去年冬天結束營業，與整封信「持續投資、值得續約」的語氣相反；選項 C 是給新會員的到店提醒，但收件人已是三年的老會員。"
+   },
+   {
+    "num": 3,
+    "type": "字彙",
+    "options": [
+     "reminder",
+     "signature",
+     "notice",
+     "location"
+    ],
+    "answer": 1,
+    "explanation": "這句要會員把隨信附上的表格寄回，表格要生效必須有本人簽名，signature（簽名）符合 return the form with your signature 的用法。reminder 是提醒通知，那是健身房寄給會員的東西，不是會員填在表格上的；notice 是通知或告示，同樣是健身房發出的文件，不會由會員附在表格上寄回；location 是地點，和表格要補上什麼完全無關。"
+   },
+   {
+    "num": 4,
+    "type": "文法",
+    "options": [
+     "Despite",
+     "Whether",
+     "Even",
+     "If"
+    ],
+    "answer": 3,
+    "explanation": "空格後面接的是完整子句 you have any questions，後面再接祈使句 feel free to call，形成「如果……就……」的條件句，要用連接詞 If。Despite 是介系詞，後面只能接名詞或動名詞，不能直接接主詞加動詞；Whether 表示「是否」，放在這裡語意不通；Even 是副詞，本身不能連接兩個子句，要寫成 even if 才行。"
+   }
+  ],
+  "translation": "芬布魯克健身中心\n瑞奇威大道 88 號\n\n9 月 15 日\n\n親愛的艾爾瓦雷茲女士：\n\n感謝您三年來在芬布魯克健身中心的會員支持。我們寫這封信是要通知您，每月會費將於 11 月 1 日調漲。標準方案將從每月 42 美元調升為 47 美元。\n\n這是我們自 2022 年以來第一次調整價格。多出來的收入會直接投入新設備與會員服務。今年夏天我們汰換了所有跑步機、增設第二間更衣室，並延長了週末的營業時間。\n\n在 10 月 25 日前續約的會員，可以再以現行費率使用十二個月。若要續約，請將隨信附上的表格簽名後寄回。如有任何疑問，歡迎致電櫃檯。\n\n謹啟\n會員部經理\n馬可斯・德蘭尼"
+ },
+ {
+  "id": "p6-b10-2",
+  "passageType": "advertisement",
+  "title": "Second Chapter Books Opens on Maple Street",
+  "passage": "Second Chapter Books - Now Open on Maple Street\n\nAfter two years of planning, Second Chapter Books has finally opened on Maple Street. Our shelves hold more than 20,000 used titles, from cookbooks and travel guides to children's picture books, and almost {{1}} is priced under $8.\n\nLooking for a book we do not have? Our staff will add it to our request list and call you as soon as a copy {{2}}.\n\nVisit us during our opening weekend, 4 and 5 April. Shoppers who spend $20 or more receive a free canvas tote bag. {{3}}\n\nWe also buy books. Bring in the ones you no longer read, and we will make you a fair {{4}} the same day.\n\n41 Maple Street. Open daily, 10 A.M. to 7 P.M.",
+  "questions": [
+   {
+    "num": 1,
+    "type": "文法",
+    "options": [
+     "every",
+     "each",
+     "everything",
+     "all of"
+    ],
+    "answer": 2,
+    "explanation": "空格要當 is priced under $8 的主詞，需要一個可以單獨使用的代名詞，everything 正好符合，almost everything is priced under $8 意思是「幾乎每一本的定價都在八美元以下」。every 和 each 都是限定詞，後面一定要再接名詞才能組成主詞；all of 後面必須接名詞或代名詞（例如 all of them），不能直接接動詞。"
+   },
+   {
+    "num": 2,
+    "type": "文法",
+    "options": [
+     "will arrive",
+     "arrives",
+     "arriving",
+     "to arrive"
+    ],
+    "answer": 1,
+    "explanation": "as soon as 引導的是表示時間的副詞子句，這類子句就算講的是未來的事，也要用現在式代替未來式，因此填 arrives。will arrive 犯了在時間副詞子句裡使用未來式的錯誤；arriving 和 to arrive 都不是有時態的動詞，無法當子句的主要動詞。"
+   },
+   {
+    "num": 3,
+    "type": "句子插入",
+    "options": [
+     "Our online store will close at the end of the month.",
+     "All sales of new textbooks are final.",
+     "Parking permits are issued to residents only.",
+     "Local author Gina Ruiz will sign books at the shop on Saturday afternoon."
+    ],
+    "answer": 3,
+    "explanation": "空格前一句在講開幕週末消費滿額送帆布袋，這一段的主題就是開幕活動，選項 D 再補上一項開幕活動（在地作家週六下午簽書），和前後文的宣傳語氣一致。選項 A 提到網路商店月底結束，本文從頭到尾沒有網路商店，而且「要收掉」和開幕廣告互相牴觸；選項 B 說新教科書售出不退，但這家店賣的是二手書，前後矛盾；選項 C 講停車證只發給居民，屬於社區公告，不會出現在書店廣告裡。"
+   },
+   {
+    "num": 4,
+    "type": "字彙",
+    "options": [
+     "receipt",
+     "offer",
+     "order",
+     "amount"
+    ],
+    "answer": 1,
+    "explanation": "這一段說歡迎顧客把不看的書拿來賣，店家當天就會給價，make you a fair offer 是「開一個公道的價錢給你」的固定說法，offer 指出價。receipt 是收據，收書時給的是報價而不是收據；order 是訂單，用在下單購買的情境；amount 是金額數字本身，不能和 make 搭配成 make you an amount。"
+   }
+  ],
+  "translation": "二章書屋 —— 楓樹街新店開幕\n\n經過兩年籌備，二章書屋終於在楓樹街開幕了。我們的書架上有超過兩萬本二手書，從食譜、旅遊指南到兒童繪本都有，而且幾乎每一本的定價都在 8 美元以下。\n\n想找的書店裡沒有嗎？我們的店員會把它列入待調書單，一有書進來就通知您。\n\n歡迎在 4 月 4 日與 5 日的開幕週末來逛逛。消費滿 20 美元即贈帆布袋一只。在地作家吉娜・魯伊茲也會在週六下午到店簽書。\n\n我們同時收書。把您不再閱讀的書帶來，我們當天就給您一個公道的價錢。\n\n楓樹街 41 號，每日上午 10 點至晚間 7 點營業。"
+ },
+ {
+  "id": "p6-b10-3",
+  "passageType": "email",
+  "title": "Before You Leave for the Willowbank Workshop",
+  "passage": "To: All Workshop Participants\nFrom: Rachel Ibarra, Training Coordinator\nDate: 12 May\nSubject: Before You Leave for the Willowbank Workshop\n\nDear Participants,\n\nOur two-day workshop at the Willowbank Conference Center begins next Monday at 9 A.M. The company bus will leave the main gate at 7:15 A.M., so please arrive by 7:00. {{1}}\n\nRooms have already been booked, and each of you {{2}} a single room with a desk. Bring comfortable clothes, a notebook, and the reading packet I sent last week.\n\nMeals are included, but the center cannot {{3}} changes to the meal list after Friday. If you need a vegetarian meal, please tell me before then.\n\nPlease confirm that you have received this message, {{4}} I can finish the final list.\n\nRachel",
+  "questions": [
+   {
+    "num": 1,
+    "type": "句子插入",
+    "options": [
+     "The workshop has been postponed until the autumn.",
+     "Train tickets can be bought at the station office.",
+     "Copies of last year's program are kept in the file room.",
+     "Anyone who arrives after the bus has left will need to travel to the center on their own."
+    ],
+    "answer": 3,
+    "explanation": "空格前一句說交通車七點十五分發車、請七點前抵達，空格這句要延續交通這件事。選項 D 說車子開走之後才到的人得自己想辦法前往會場，正好強調準時的重要，語意銜接自然。選項 A 說研習延到秋天，和信件開頭「下週一開始」直接矛盾；選項 B 提到火車票在車站購買，但本文安排的是公司交通車，沒有搭火車的規劃；選項 C 講去年的議程放在檔案室，和行前提醒無關。"
+   },
+   {
+    "num": 2,
+    "type": "文法",
+    "options": [
+     "will have",
+     "have",
+     "having",
+     "to have"
+    ],
+    "answer": 0,
+    "explanation": "主詞 each of you 由 each 決定，屬於單數，而且住宿是研習期間才會發生的事，要用未來式 will have。have 是複數動詞形式，和單數主詞 each of you 不一致（單數要用 has）；having 是動名詞或現在分詞，不能當主要動詞；to have 是不定詞，同樣無法單獨當句子的動詞。"
+   },
+   {
+    "num": 3,
+    "type": "字彙",
+    "options": [
+     "attend",
+     "afford",
+     "accept",
+     "admit"
+    ],
+    "answer": 2,
+    "explanation": "這句說星期五之後主辦單位就不再受理餐點名單的更動，accept changes 是「接受、受理更動」的常見用法。attend 是出席（會議、課程），不能拿來接 changes；afford 是負擔得起費用，語意不合；admit 是承認錯誤或准許進入，和更改名單無關。"
+   },
+   {
+    "num": 4,
+    "type": "文法",
+    "options": [
+     "so that",
+     "in case",
+     "even if",
+     "as though"
+    ],
+    "answer": 0,
+    "explanation": "前半句請大家回覆確認，後半句說明這麼做的目的是要把最後名單整理好，兩者是「為了……」的目的關係，用 so that。in case 表示「以防萬一」，會變成「以防我能完成名單」，不合邏輯；even if 表示「即使」，是讓步關係，與這裡的目的關係不符；as though 表示「彷彿」，用來描述樣態，放在這裡完全不通。"
+   }
+  ],
+  "translation": "收件者：全體研習學員\n寄件者：訓練專員 瑞秋・伊巴拉\n日期：5 月 12 日\n主旨：前往威洛班克研習營之前\n\n各位學員好：\n\n我們為期兩天的研習營將於下週一上午 9 點在威洛班克會議中心開始。公司交通車會在上午 7 點 15 分從大門發車，請於 7 點前抵達。車子開走之後才到的人，就必須自行前往會場。\n\n住宿已經訂好，每位學員都會有一間附書桌的單人房。請帶著輕便的衣物、筆記本，以及我上週寄給大家的閱讀資料。\n\n餐點都已包含在內，但會議中心在星期五之後不再受理餐點名單的更動。若您需要素食，請在那之前告訴我。\n\n請回覆確認您已收到這封信，我才能把最後的名單整理好。\n\n瑞秋"
+ },
+ {
+  "id": "p6-b10-4",
+  "passageType": "instructions",
+  "title": "How to Reserve a Meeting Room",
+  "passage": "How to Reserve a Meeting Room\n\nDelmar Landscaping now books all meeting rooms through the company intranet. Paper sign-up sheets outside each room {{1}} on 30 June.\n\n1. Log in to the intranet and click \"Rooms\" at the top of the page.\n2. Choose a date, then select a room from the list of {{2}} spaces. Rooms already taken appear in gray.\n3. Enter the start time, the end time, and the number of people attending.\n4. Click \"Confirm.\" A message will be sent to your work address within a few minutes. {{3}}\n\nIf your plans change, please cancel the booking right away so another team can use the room. Rooms {{4}} for more than three hours must be approved by a manager. Contact Alan Petrov with any questions.",
+  "questions": [
+   {
+    "num": 1,
+    "type": "文法",
+    "options": [
+     "removing",
+     "will be removed",
+     "have removed",
+     "will remove"
+    ],
+    "answer": 1,
+    "explanation": "主詞是 paper sign-up sheets（紙本登記表），紙本不會自己撤掉，而是被公司撤掉，所以要用被動語態；加上 30 June 是未來的日期，答案是未來被動 will be removed。removing 不是有時態的動詞；have removed 是主動的現在完成式，語態和時間都不對；will remove 是未來主動，會變成登記表要去撤掉別的東西，主詞和動作對不上。"
+   },
+   {
+    "num": 2,
+    "type": "字彙",
+    "options": [
+     "available",
+     "capable",
+     "possible",
+     "prepared"
+    ],
+    "answer": 0,
+    "explanation": "這一步是要從清單裡挑一間還沒被借走的會議室，available 指「可使用、還空著的」，available spaces 是描述空間能否使用的標準說法，下一句 Rooms already taken appear in grey 也呼應這個對比。capable 用來說人或設備有能力做某事，不能形容空間能不能預約；possible 指事情有可能發生，不能直接修飾 spaces；prepared 是「已準備好的」，強調的是布置完成，而不是有沒有被預約。"
+   },
+   {
+    "num": 3,
+    "type": "句子插入",
+    "options": [
+     "The intranet will be unavailable for the rest of the year.",
+     "Company vehicles must be returned with a full tank.",
+     "Printed sign-up sheets are still the fastest way to book a room.",
+     "If it does not arrive, check that your address is correct in your profile."
+    ],
+    "answer": 3,
+    "explanation": "空格前一句說按下確認後，幾分鐘內會收到寄至公司信箱的通知信。選項 D 接著處理「萬一沒收到」的情況，請使用者回頭檢查個人資料裡的信箱是否正確，是操作說明常見的後續提醒。選項 A 說內部網站今年剩下的時間都無法使用，等於整份說明作廢，前後矛盾；選項 B 講公司車要加滿油再還，和訂會議室無關；選項 C 說紙本登記表仍是最快的方式，與第一段「6 月 30 日起撤除紙本」直接衝突。"
+   },
+   {
+    "num": 4,
+    "type": "文法",
+    "options": [
+     "booking",
+     "to book",
+     "booked",
+     "book"
+    ],
+    "answer": 2,
+    "explanation": "這句的主要動詞是後面的 must be approved，空格只需要一個修飾主詞 Rooms 的成分。會議室是「被預約」的一方，用過去分詞 booked 形成 Rooms booked for more than three hours（借用超過三小時的會議室），相當於省略了 which are 的關係子句。booking 是現在分詞，會變成會議室主動去預約別人；to book 是不定詞，放在名詞後面表示「要拿來做某事」，語意不通；book 是原形動詞，會讓整句出現兩個主要動詞。"
+   }
+  ],
+  "translation": "會議室預約方式\n\n德爾瑪園藝公司現在一律透過公司內部網站預約會議室。各會議室門口的紙本登記表將於 6 月 30 日撤除。\n\n1. 登入內部網站，點選頁面上方的「Rooms」。\n2. 選擇日期，再從可預約的空間清單中挑選一間會議室。已被借走的會議室會顯示為灰色。\n3. 輸入開始時間、結束時間以及出席人數。\n4. 點選「Confirm」。幾分鐘內系統會寄一封通知信到您的公司信箱。如果沒有收到，請檢查個人資料裡的信箱是否正確。\n\n若行程有變，請盡快取消預約，好讓其他團隊可以使用該會議室。借用超過三小時的會議室，另需經主管核准。有任何問題請洽艾倫・佩卓夫。"
+ },
+ {
   "id": "p6-b2-1",
   "passageType": "email",
   "title": "Temporary Relocation During Renovation",
@@ -2108,5 +2336,233 @@ TOEIC.part6 = [
    }
   ],
   "translation": "Greenfield 超市開設第三家分店\n\n【Greenfield 訊，5 月 5 日】Greenfield 超市於週二宣布，將於下週一在 Camden 路開設第三家分店。新店面積是市中心創始店的兩倍，並將雇用約四十名當地居民。多數新進員工已在市中心分店展開訓練。店經理 Rosa Iversen 表示，之所以選在這個地點，是因為許多顧客希望能有一家離市區北側更近的分店。此外，新店也會提供種類更多的新鮮麵包與在地蔬菜。Iversen 女士有信心，Camden 路分店會和另外兩家一樣成功。當地商家則期待這家店能為周邊帶來更多人潮。"
+ },
+ {
+  "id": "p6-b9-1",
+  "passageType": "email",
+  "title": "Appointment Reminder from Brightleaf Dental Clinic",
+  "passage": "To: Karen Ortiz\nFrom: Nina Delgado, Brightleaf Dental Clinic\nDate: 14 May\nSubject: Your Appointment on 21 May\n\nDear Ms. Ortiz,\n\nThis message is a reminder that your cleaning appointment with Dr. Reyes is {{1}} for Thursday, 21 May, at 3:00 P.M. Please arrive about ten minutes early so that our front desk staff can update your insurance record. {{2}} If you need to change the date, please call us at least twenty-four hours in advance; we charge a small fee for visits {{3}} less than one day ahead. Parking is available behind the building, and the side entrance {{4}} open until six o'clock every weekday.\n\nWe look forward to seeing you.\n\nNina Delgado\nOffice Coordinator",
+  "questions": [
+   {
+    "num": 1,
+    "type": "字彙",
+    "options": [
+     "repeated",
+     "delivered",
+     "scheduled",
+     "measured"
+    ],
+    "answer": 2,
+    "explanation": "be scheduled for 加時間是預約通知的固定說法，表示「安排在某個時間」，整句是「您與 Reyes 醫師的洗牙預約安排在 5 月 21 日星期四下午三點」。repeated 是「重複」，用在重播訊息或重做動作；delivered 是「遞送」，主詞應該是包裹或商品；measured 是「測量」，和預約時間搭不起來。"
+   },
+   {
+    "num": 2,
+    "type": "句子插入",
+    "options": [
+     "Please bring your insurance card and a photo ID with you.",
+     "Our clinic will be closed for the whole month of August.",
+     "Dr. Reyes will retire at the end of next year.",
+     "The new waiting room chairs should arrive next week."
+    ],
+    "answer": 0,
+    "explanation": "空格前一句請病人提早十分鐘到，好讓櫃檯更新保險資料；空格後一句轉到改期的規定。中間需要一句延續櫃檯作業的具體交代，選項 A 請病人帶保險卡和附照片的證件，正好就是更新資料時要用的東西。選項 B 說診所整個八月休診，本信只談 5 月 21 日這一次預約，前後文沒有任何支撐；選項 C 講醫師明年退休，與提早到診無關；選項 D 講候診室新椅子下週送到，是診所內部採購，病人不必據此行動。"
+   },
+   {
+    "num": 3,
+    "type": "文法",
+    "options": [
+     "to cancel",
+     "canceling",
+     "cancel",
+     "canceled"
+    ],
+    "answer": 3,
+    "explanation": "空格要修飾前面的名詞 visits，而預約是「被取消」的，屬於被動關係，所以用過去分詞 canceled，等於省略了關係代名詞的 visits that are canceled，全句是「提前不到一天取消的預約會收取少額費用」。to cancel 是不定詞，放在這裡會變成「用來取消的預約」，語意不通；canceling 是現在分詞，表示主動，會變成預約自己去取消別的東西；cancel 是原形動詞，句中已經有主要動詞 charge，不能再放一個沒有連接詞的動詞。"
+   },
+   {
+    "num": 4,
+    "type": "文法",
+    "options": [
+     "remains",
+     "remain",
+     "remaining",
+     "to remain"
+    ],
+    "answer": 0,
+    "explanation": "and 連接兩個對等子句，後半句的主詞是單數的 the side entrance，需要一個有時態的單數動詞，所以選 remains，意思是「側門每個平日開到六點」。remain 是原形動詞，主詞為第三人稱單數時不能直接使用；remaining 是分詞，本身不能單獨當子句的主要動詞；to remain 是不定詞，同樣不能當主要動詞。"
+   }
+  ],
+  "translation": "收件人：Karen Ortiz\n寄件人：Nina Delgado，Brightleaf 牙醫診所\n日期：5 月 14 日\n主旨：您 5 月 21 日的預約\n\nOrtiz 女士您好：\n\n謹此提醒您，您與 Reyes 醫師的洗牙預約安排在 5 月 21 日星期四下午三點。請提早約十分鐘抵達，讓櫃檯人員更新您的保險資料。請攜帶您的保險卡與附照片的證件。如需更改日期，請至少提前二十四小時來電；提前不到一天取消的預約，我們會收取少額費用。大樓後方設有停車位，側門每個平日開到六點。\n\n期待見到您。\n\nNina Delgado\n辦公室協調專員"
+ },
+ {
+  "id": "p6-b9-2",
+  "passageType": "notice",
+  "title": "Pool Closed for Water Change",
+  "passage": "NOTICE TO ALL MEMBERS\n\nThe indoor swimming pool will be closed from Monday, 8 June, through Wednesday, 10 June, while the water is changed and the tile floor is cleaned. This work is done twice a year to keep the pool safe for everyone. {{1}} Members who have booked swimming lessons on those three days will be contacted by phone, and their classes will be {{2}} to the following week at no extra cost. The gym and the running track will stay open, so members can still use {{3}} while the pool is empty. We apologize for the inconvenience and thank you for your patience {{4}} this short closure.\n\nRidgeway Community Center Staff",
+  "questions": [
+   {
+    "num": 1,
+    "type": "句子插入",
+    "options": [
+     "The center's photography club will meet in Room 2 on Tuesday.",
+     "Fresh water needs nearly two days to reach the right temperature.",
+     "Swimming lessons for children will no longer be offered.",
+     "Please return your locker key to the front desk when you leave."
+    ],
+    "answer": 1,
+    "explanation": "空格前一句說明換水與清洗地磚每年做兩次，目的是維持泳池安全；空格後一句開始交代課程要怎麼處理。中間適合補一句解釋「為什麼要關三天」，選項 B 說新換的水需要將近兩天才能達到適當水溫，正好說明停用天數的來由。選項 A 講攝影社週二在 2 號教室開會，是活動中心的另一則消息，和換水停用沒有關係；選項 C 說不再開設兒童游泳課，與後面課程順延且不加收費用的說法直接矛盾；選項 D 要會員交回置物櫃鑰匙，和換水沒有因果關係。"
+   },
+   {
+    "num": 2,
+    "type": "字彙",
+    "options": [
+     "repaired",
+     "collected",
+     "reduced",
+     "moved"
+    ],
+    "answer": 3,
+    "explanation": "這句說已報名課程的會員會接到電話通知，課程 be moved to the following week 順延到下一週，move 加 to 是課程或會議改期最常用的說法。repaired 是「修理」，受詞應該是設備而不是課程；collected 是「收取」，用在收費或收件；reduced 是「減少」，後面通常接數量或價格，不能接時間點。"
+   },
+   {
+    "num": 3,
+    "type": "文法",
+    "options": [
+     "they",
+     "them",
+     "their",
+     "theirs"
+    ],
+    "answer": 1,
+    "explanation": "空格是動詞 use 的受詞，指前面提到的 the gym and the running track，受詞要用受格代名詞 them，全句是「健身房與跑道照常開放，泳池放空期間會員仍可使用」。they 是主格，只能當主詞；their 是所有格，後面必須再接名詞；theirs 是所有格代名詞，意思是「他們的東西」，語意不合。"
+   },
+   {
+    "num": 4,
+    "type": "文法",
+    "options": [
+     "while",
+     "because",
+     "during",
+     "although"
+    ],
+    "answer": 2,
+    "explanation": "空格後面接的是名詞片語 this short closure，沒有主詞也沒有動詞，所以要用介系詞 during，意思是「在這段短暫停用期間」。while、because、although 都是連接詞，後面必須接完整的子句，不能直接接名詞片語。"
+   }
+  ],
+  "translation": "全體會員公告\n\n室內游泳池將於 6 月 8 日星期一至 6 月 10 日星期三停止開放，期間將更換池水並清洗地磚。這項作業每年進行兩次，以維持泳池的安全。新換的水需要將近兩天才能達到適當水溫。已報名這三天游泳課程的會員，我們會以電話聯繫，課程將順延至下一週，不另收費。健身房與跑道照常開放，泳池放空期間會員仍可使用。造成不便敬請見諒，也感謝您在這段短暫停用期間的耐心配合。\n\nRidgeway 社區活動中心 敬啟"
+ },
+ {
+  "id": "p6-b9-3",
+  "passageType": "article",
+  "title": "Stone Oven Bakery to Open a Second Shop on Market Street",
+  "passage": "HILLSDALE (25 September) - Stone Oven Bakery plans to open a second shop on Market Street in November. The new store will be in a building {{1}} last spring by the Hillsdale Property Group. Owner Daniel Ferraro started the business nine years ago with one used oven and two employees. {{2}} The second shop will sell the same bread and cakes as the original store, along with sandwiches made with vegetables from farms {{3}} thirty kilometers of the town. Mr. Ferraro said that he had looked at more than ten locations before choosing Market Street, which is close to the train station. The original store will {{4}} its hours in December and will stay open until nine o'clock on Fridays.",
+  "questions": [
+   {
+    "num": 1,
+    "type": "文法",
+    "options": [
+     "renovates",
+     "renovating",
+     "to renovate",
+     "renovated"
+    ],
+    "answer": 3,
+    "explanation": "空格修飾前面的 a building，而建築物是「被整修」的，後面又有 by 帶出施工單位，是被動關係，所以用過去分詞 renovated，等於 a building that was renovated last spring。renovates 是有時態的動詞，這個句子已經有主要動詞 will be，不能再加一個；renovating 是現在分詞，表示主動，會變成建築物自己去整修別的東西；to renovate 是不定詞，會解讀成「等著整修的建築物」，和 last spring 這個過去時間點以及 by 帶出的施工單位互相衝突。"
+   },
+   {
+    "num": 2,
+    "type": "句子插入",
+    "options": [
+     "The Hillsdale Property Group owns several buildings on Market Street.",
+     "Today the bakery employs more than thirty people and supplies bread to a dozen local restaurants.",
+     "Most of the bakery's ovens were sold to a factory in another city.",
+     "Mr. Ferraro studied engineering before he moved to Hillsdale."
+    ],
+    "answer": 1,
+    "explanation": "空格前一句把時間拉回九年前開店的起點，只有一台二手烤箱和兩名員工；空格後一句轉到第二家店要賣什麼。中間需要一句說明這家店後來做到多大規模，選項 B 說如今員工超過三十人、還供應麵包給十多家在地餐廳，正好與「一台烤箱、兩名員工」形成對照，也交代了為什麼開得起第二家店。選項 A 講房產集團在市場街還有好幾棟樓，話題轉到房東身上，接不上這家店的發展；選項 C 說烤箱多半賣給別的城市的工廠，與擴店的敘述矛盾；選項 D 提到店主過去念工程，只是背景細節，前後兩句都接不上。"
+   },
+   {
+    "num": 3,
+    "type": "文法",
+    "options": [
+     "beyond",
+     "along",
+     "within",
+     "among"
+    ],
+    "answer": 2,
+    "explanation": "within 加距離再加 of 加地點是固定用法，表示「距離某地多遠以內」，整句是「三明治用的蔬菜來自距離鎮上三十公里以內的農場」，也呼應在地取材的主題。beyond 是「在……之外」，會變成三十公里以外，與強調在地採購的語氣相反；along 是「沿著」，後面要接道路或河流這類線狀的地方；among 是「在……之中」，後面要接三者以上的群體，不能接距離。"
+   },
+   {
+    "num": 4,
+    "type": "字彙",
+    "options": [
+     "attend",
+     "prevent",
+     "remove",
+     "extend"
+    ],
+    "answer": 3,
+    "explanation": "空格後面是 its hours，extend one's hours 是「延長營業時間」的標準說法，和後半句「週五營業到九點」正好互相呼應。attend 是「出席」，受詞是會議或活動；prevent 是「防止」，受詞是不希望發生的事；remove 是「移除」，用在把東西拿走，三者都無法和營業時間搭配。"
+   }
+  ],
+  "translation": "HILLSDALE（9 月 25 日）- Stone Oven 麵包店計劃十一月在市場街開設第二家店。新店將設在一棟由 Hillsdale 房產集團今年春天整修完成的建築內。店主 Daniel Ferraro 九年前以一台二手烤箱和兩名員工創立這家店。如今這家麵包店員工超過三十人，並供應麵包給十多家在地餐廳。第二家店將販售與原店相同的麵包與蛋糕，另外還有以距離鎮上三十公里以內農場的蔬菜製作的三明治。Ferraro 先生說，他看過十多個地點才選定市場街，因為這裡離火車站很近。原店將於十二月延長營業時間，週五營業到晚上九點。"
+ },
+ {
+  "id": "p6-b9-4",
+  "passageType": "memo",
+  "title": "New Recycling Rules on Every Floor",
+  "passage": "MEMO\n\nTo: All Staff\nFrom: Priya Raman, Building Services Manager\nDate: 2 November\nSubject: New Recycling Rules on Every Floor\n\nStarting next Monday, each floor will have three separate bins: one for paper, one for cans and bottles, and one for food waste. The small bins under individual desks {{1}} removed on Friday afternoon, so please empty them before you leave. {{2}} Staff are asked to break down cardboard boxes {{3}} placing them in the paper bin, because flat boxes take up much less space. Our cleaning company will {{4}} the bins twice a day. If your team handles printed material that contains customer names, please continue to use the locked bin for confidential paper next to the copy room.",
+  "questions": [
+   {
+    "num": 1,
+    "type": "文法",
+    "options": [
+     "will remove",
+     "will be",
+     "are removing",
+     "have removed"
+    ],
+    "answer": 1,
+    "explanation": "主詞 the small bins 是被撤走的一方，空格後面已經有過去分詞 removed，需要一個 be 動詞把句子組成被動語態，而且動作發生在未來的星期五，所以選 will be。will remove、are removing、have removed 都是主動語態，接在 removed 前面會出現兩個動詞相疊，文法上不成立，語意上也變成垃圾桶自己去移走別的東西。"
+   },
+   {
+    "num": 2,
+    "type": "句子插入",
+    "options": [
+     "The company will buy a new coffee machine for each floor.",
+     "Desk bins will be put back in their original places in December.",
+     "Anything left in a desk bin after that time will be thrown away.",
+     "Please contact the technology department if your computer needs repair."
+    ],
+    "answer": 2,
+    "explanation": "空格前一句說桌下的小垃圾桶星期五下午會被撤走，請同仁先清空；空格後一句改談紙箱要壓平。中間需要一句把「沒清空會怎樣」講完，選項 C 說屆時留在桌邊垃圾桶裡的東西一律當作垃圾處理，正好是前一句要求的後果，也讓同仁知道為什麼非動手不可。選項 A 講公司要買咖啡機，與回收規定無關；選項 B 說桌邊垃圾桶十二月會放回原位，與這份備忘錄要撤除小垃圾桶的整體方向矛盾；選項 D 是電腦報修的資訊，屬於另一個部門的事。"
+   },
+   {
+    "num": 3,
+    "type": "文法",
+    "options": [
+     "until",
+     "since",
+     "while",
+     "before"
+    ],
+    "answer": 3,
+    "explanation": "兩個動作有先後順序，要先把紙箱壓平，再放進紙類回收桶，所以用 before 接動名詞 placing，全句是「請在放入紙類桶之前先把紙箱壓平」。until 表示「直到某個時間點為止」，會變成一路壓到放進去，語意不通；since 表示「自從」或「既然」，與這裡的先後動作無關；while 表示兩件事同時進行，但壓平和放入不可能同時，也接不上後面「壓平比較省空間」的理由。"
+   },
+   {
+    "num": 4,
+    "type": "字彙",
+    "options": [
+     "empty",
+     "invite",
+     "produce",
+     "reserve"
+    ],
+    "answer": 0,
+    "explanation": "空格的受詞是 the bins，這三個分類桶固定放在樓層裡，清潔公司做的是把桶內的東西清空，empty the bins twice a day 就是每天清空兩次。invite 是「邀請」，受詞必須是人；produce 是「生產」，受詞是產品；reserve 是「預訂」，受詞是座位或房間，三者都不能用在清理垃圾桶。"
+   }
+  ],
+  "translation": "備忘錄\n\n致：全體同仁\n發文：Priya Raman，大樓事務經理\n日期：11 月 2 日\n主旨：各樓層回收新規定\n\n自下週一起，每個樓層將設置三個分類桶：紙類一個、鐵鋁罐與瓶罐一個、廚餘一個。各人桌下的小垃圾桶將於星期五下午撤除，請在下班前先清空。屆時留在桌邊垃圾桶裡的東西一律當作垃圾處理。請同仁在把紙箱放入紙類桶之前先壓平，因為壓平後占的空間少得多。清潔公司每天會清空這些桶子兩次。若貴部門處理的印刷資料含有客戶姓名，請繼續使用影印室旁上鎖的機密文件回收桶。"
  }
 ];

@@ -1307,6 +1307,381 @@ TOEIC.listening = {
    "answer": 0,
    "explanation": "正解 (A)：間接回應。「要看財務部的動作」沒有給 Yes／No，卻點出了關鍵變數，是進階題常見的正解型態。\n(B) 重複 approve，但講的是自己核准了設計，主詞與時態都不對。\n(C) 用 end 這個字誘答，答的卻是走廊盡頭這個位置。",
    "transcriptZh": "問：你覺得我們這個月底前會拿到核准嗎？\n(A) 要看財務部的動作。\n(B) 對，我核准了那個設計。\n(C) 在走廊盡頭。"
+  },
+  {
+   "id": "l2-76",
+   "difficulty": "基礎",
+   "category": "WH問句",
+   "accent": "US",
+   "question": "What time does the animal clinic open on Saturdays?",
+   "options": [
+    "The one on Fifth Street.",
+    "For about an hour.",
+    "Nine, same as weekdays."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：What time 問的是開門時刻，「九點，跟平日一樣」直接給出時間。\n(A) 講的是哪一家分店，回答的是 Which，不是時間。\n(B) 「大約一小時」是 How long 的答案，時間長度不等於時刻。",
+   "transcriptZh": "問：動物醫院星期六幾點開門？\n(A) 第五街那一家。\n(B) 大約一小時。\n(C) 九點，跟平日一樣。"
+  },
+  {
+   "id": "l2-77",
+   "difficulty": "基礎",
+   "category": "Yes/No問句",
+   "accent": "GB",
+   "question": "Do you fix flat tires here?",
+   "options": [
+    "Sure, it only takes a few minutes.",
+    "Yes, I'm pretty tired too.",
+    "The parking lot is around back."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：問店家有沒有補胎服務，用 Sure 答應再補上所需時間，是最自然的口語回應。\n(B) 用 tired 和 tires 的相似音誘答，講的卻是自己很累。\n(C) 「停車場在後面」回答的是地點，屬於 Where 的答案。",
+   "transcriptZh": "問：你們這裡有補胎嗎？\n(A) 當然，只要幾分鐘。\n(B) 對，我也很累。\n(C) 停車場在後面。"
+  },
+  {
+   "id": "l2-78",
+   "difficulty": "中級",
+   "category": "附加/否定問句",
+   "accent": "AU",
+   "question": "You've already watered the plants out front, haven't you?",
+   "options": [
+    "The water bill's due Friday.",
+    "They're beautiful plants.",
+    "I was just heading out to do that."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：間接回應。不直接說 No，而是說「我正要出去弄」，等於表示還沒澆。\n(A) 重複 water，講的是水費帳單，與有沒有澆水無關。\n(B) 重複 plants，只是稱讚植物漂亮，沒有回答問題。",
+   "transcriptZh": "問：你已經幫前面那些植物澆過水了吧？\n(A) 水費帳單星期五要繳。\n(B) 那些植物很漂亮。\n(C) 我正要出去弄。"
+  },
+  {
+   "id": "l2-79",
+   "difficulty": "中級",
+   "category": "WH問句",
+   "accent": "US",
+   "question": "Why is the print job taking so long?",
+   "options": [
+    "The copy room's on the second floor.",
+    "One of the machines keeps jamming.",
+    "I printed it out this morning."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：Why 問延誤的原因，「有一台機器一直卡紙」正好說明原因。\n(A) 「影印室在二樓」回答的是地點，屬於 Where 的答案。\n(C) 重複 print，卻用過去式說自己早上印好了，與現在還在跑的印件對不上。",
+   "transcriptZh": "問：這批印件怎麼跑這麼久？\n(A) 影印室在二樓。\n(B) 有一台機器一直卡紙。\n(C) 我今天早上印好了。"
+  },
+  {
+   "id": "l2-80",
+   "difficulty": "進階",
+   "category": "選擇問句",
+   "accent": "GB",
+   "question": "Should we load the boxes first, or the furniture?",
+   "options": [
+    "We moved in last spring.",
+    "The driver usually decides that.",
+    "There's more furniture in the garage."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：選擇問句不一定要二選一，「通常是司機決定」把決定權推給別人，是常見的間接回應。\n(A) 用過去式講自己春天搬進來，與現在的搬運順序無關。\n(C) 重複 furniture，只補充車庫裡還有家具，沒有回答先搬哪一樣。",
+   "transcriptZh": "問：我們先搬箱子還是先搬家具？\n(A) 我們去年春天搬進來的。\n(B) 通常是司機決定的。\n(C) 車庫裡還有家具。"
+  },
+  {
+   "id": "l2-81",
+   "difficulty": "基礎",
+   "category": "陳述句回應",
+   "accent": "AU",
+   "question": "This shirt still has a stain on the collar.",
+   "options": [
+    "I'll run it through again.",
+    "She stayed until closing.",
+    "Cotton, I think."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：對方指出領口還有污漬，「我再洗一次」是直接處理問題的回應。\n(B) 用 stayed 和 stain 的相似音誘答，講的是她待到打烊。\n(C) 「應該是棉的」回答的是材質，並沒有處理污漬。",
+   "transcriptZh": "陳述：這件襯衫領口還有污漬。\n(A) 我再洗一次。\n(B) 她待到打烊才走。\n(C) 應該是棉的。"
+  },
+  {
+   "id": "l2-82",
+   "difficulty": "中級",
+   "category": "WH問句",
+   "accent": "US",
+   "question": "How many students signed up for the guitar class?",
+   "options": [
+    "Sign-ups don't close until Friday.",
+    "Every Tuesday evening.",
+    "He teaches piano, actually."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：間接回應。報名到星期五才截止，等於表示現在還給不出確切人數。\n(B) 「每週二晚上」回答的是上課時間，屬於 When 的答案。\n(C) 把 guitar 換成 piano 混淆，講的是教什麼樂器，不是人數。",
+   "transcriptZh": "問：吉他班報名的學生有多少人？\n(A) 報名到星期五才截止。\n(B) 每週二晚上。\n(C) 他其實是教鋼琴的。"
+  },
+  {
+   "id": "l2-83",
+   "difficulty": "基礎",
+   "category": "Yes/No問句",
+   "accent": "GB",
+   "question": "Do you take credit cards at the booth?",
+   "options": [
+    "It's a card for her birthday.",
+    "Yes, I booked it.",
+    "Cash only, I'm afraid."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：問攤位收不收信用卡，「只收現金」等於回答 No，是自然的口語說法。\n(A) 重複 card，但指的是生日卡片，屬於一字多義陷阱。\n(B) 用 booked 和 booth 的相似音誘答，內容與付款方式無關。",
+   "transcriptZh": "問：你們攤位收信用卡嗎？\n(A) 那是要送她的生日卡。\n(B) 對，我訂好了。\n(C) 不好意思，只收現金。"
+  },
+  {
+   "id": "l2-84",
+   "difficulty": "中級",
+   "category": "附加/否定問句",
+   "accent": "AU",
+   "question": "Weren't the new shelves supposed to arrive today?",
+   "options": [
+    "Yes, I put them on the shelf.",
+    "The supplier pushed the delivery back to Thursday.",
+    "It arrived in good condition."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：否定問句在確認貨是不是今天到，「供應商把出貨延到星期四」說明沒到並給了新日期。\n(A) 重複 shelf，講的是自己把東西放上架，與到貨無關。\n(C) 重複 arrive，卻用過去式說貨況良好，時態與事實都對不上。",
+   "transcriptZh": "問：新的層架不是今天要到嗎？\n(A) 對，我把它們放上架了。\n(B) 供應商把出貨延到星期四了。\n(C) 送到的時候狀況很好。"
+  },
+  {
+   "id": "l2-85",
+   "difficulty": "基礎",
+   "category": "WH問句",
+   "accent": "US",
+   "question": "Where should I deliver these flowers?",
+   "options": [
+    "They're mostly roses.",
+    "There's an address on the card.",
+    "She really liked them."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：Where 問送花地點，「卡片上有寫地址」把地點指向卡片，回應成立。\n(A) 回答的是花的種類，屬於 What 的答案。\n(C) 「她很喜歡」講的是收花人的反應，沒有回答送到哪裡。",
+   "transcriptZh": "問：這些花要送到哪裡？\n(A) 大部分是玫瑰。\n(B) 卡片上有寫地址。\n(C) 她很喜歡。"
+  },
+  {
+   "id": "l2-86",
+   "difficulty": "中級",
+   "category": "選擇問句",
+   "accent": "GB",
+   "question": "Do you want the cake boxed, or on a tray?",
+   "options": [
+    "Whichever one's easier to carry.",
+    "It's a chocolate one.",
+    "The box is by the door."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：選擇問句可以回「都行」，「哪個好拿就用哪個」把選擇交還給店家。\n(B) 回答的是口味，屬於 What 的答案。\n(C) 重複 box，講的是盒子放在門邊，沒有做出選擇。",
+   "transcriptZh": "問：蛋糕要幫你裝盒還是放托盤？\n(A) 哪個好拿就用哪個。\n(B) 是巧克力口味的。\n(C) 盒子在門邊。"
+  },
+  {
+   "id": "l2-87",
+   "difficulty": "中級",
+   "category": "Yes/No問句",
+   "accent": "AU",
+   "question": "Is insurance included in the rental price?",
+   "options": [
+    "It's an extra fifteen dollars a day.",
+    "Yes, I rented one last month.",
+    "Sure, I'll include a map with that."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：間接回應。保險要「另外每天十五元」，等於表示租金裡沒有含。\n(B) 重複 rent，用過去式講上個月租過，答非所問。\n(C) 重複 include，卻改講附一張地圖，與保費無關。",
+   "transcriptZh": "問：租金有含保險嗎？\n(A) 保險要另外算，一天十五元。\n(B) 對，我上個月租過一台。\n(C) 好啊，我幫你附一張地圖。"
+  },
+  {
+   "id": "l2-88",
+   "difficulty": "進階",
+   "category": "WH問句",
+   "accent": "US",
+   "question": "How much will it cost to fix the roof?",
+   "options": [
+    "Right after the rain stops.",
+    "We fixed the front steps last spring.",
+    "I'd have to get up there and look first."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：間接回應。「我得先上去看看」表示還沒辦法報價，是很自然的口語說法。\n(A) 「雨一停就開始」回答的是時間，屬於 When 的答案。\n(B) 重複 fix，卻用過去式講春天修過前面的階梯，與屋頂的費用無關。",
+   "transcriptZh": "問：修屋頂要多少錢？\n(A) 雨一停就開始。\n(B) 我們春天修過前面的階梯。\n(C) 我得先上去看看。"
+  },
+  {
+   "id": "l2-89",
+   "difficulty": "中級",
+   "category": "陳述句回應",
+   "accent": "GB",
+   "question": "One of the studio lights won't turn on.",
+   "options": [
+    "It's a bright room, isn't it?",
+    "Did you check if it's plugged in?",
+    "It's my turn to lock up tonight."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：對方說燈打不開，用反問「插頭插好了嗎」提供排除方向，是常見的以問回問。\n(A) 順著 light 講房間很亮，沒有處理故障。\n(C) 重複 turn，但 my turn 是「輪到我」，屬於一字多義陷阱。",
+   "transcriptZh": "陳述：攝影棚有一盞燈打不開。\n(A) 這間很亮，對吧？\n(B) 你確認過插頭有插好嗎？\n(C) 今晚輪到我鎖門。"
+  },
+  {
+   "id": "l2-90",
+   "difficulty": "基礎",
+   "category": "WH問句",
+   "accent": "AU",
+   "question": "Who's teaching the morning class this week?",
+   "options": [
+    "At six thirty.",
+    "In studio two.",
+    "Marcus is filling in for Dana."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：Who 問的是誰上課，「Marcus 代 Dana 的班」直接點出人。\n(A) 「六點半」回答的是時間，屬於 When 的答案。\n(B) 「在二號教室」回答的是地點，屬於 Where 的答案。",
+   "transcriptZh": "問：這週早上的課是誰教？\n(A) 六點半。\n(B) 在二號教室。\n(C) Marcus 代 Dana 的班。"
+  },
+  {
+   "id": "l2-91",
+   "difficulty": "進階",
+   "category": "附加/否定問句",
+   "accent": "US",
+   "question": "You didn't throw out that box of used books, did you?",
+   "options": [
+    "You'd have to ask Teresa.",
+    "Yes, I've read most of them.",
+    "The store closes at seven."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：間接回應。自己不清楚那箱書的去向，把問題轉給 Teresa。\n(B) 順著 books 講自己讀過大半，與那箱書的去向無關。\n(C) 「書店七點打烊」回答的是營業時間，答非所問。",
+   "transcriptZh": "問：你該不會把那箱二手書丟掉了吧？\n(A) 這你得問 Teresa。\n(B) 對，我大部分都讀過了。\n(C) 書店七點打烊。"
+  },
+  {
+   "id": "l2-92",
+   "difficulty": "基礎",
+   "category": "Yes/No問句",
+   "accent": "GB",
+   "question": "Can you pick up the package before five?",
+   "options": [
+    "It was packed very carefully.",
+    "Sure, I'll go right after lunch.",
+    "Yes, five boxes."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：Can you...? 是請託，用 Sure 答應並說明時間，回應成立。\n(A) 重複 pack，講的是包裝很仔細，不是能不能去取件。\n(C) 重複 five，把時間點聽成數量，屬於同字誘答。",
+   "transcriptZh": "問：你可以在五點前去取那個包裹嗎？\n(A) 包得很仔細。\n(B) 好，我午餐後就去。\n(C) 對，五箱。"
+  },
+  {
+   "id": "l2-93",
+   "difficulty": "中級",
+   "category": "WH問句",
+   "accent": "AU",
+   "question": "When are the new trees being delivered?",
+   "options": [
+    "Three of them, I think.",
+    "Not until the road work's done.",
+    "They delivered it to the wrong address."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：間接回應。沒給日期，但說明到貨時間要看道路施工什麼時候結束。\n(A) 「應該三棵吧」回答的是數量，屬於 How many 的答案。\n(C) 重複 deliver，卻用過去式講送錯地址，時態與內容都錯位。",
+   "transcriptZh": "問：新的樹什麼時候會送來？\n(A) 應該三棵吧。\n(B) 要等道路施工結束才行。\n(C) 他們送錯地址了。"
+  },
+  {
+   "id": "l2-94",
+   "difficulty": "中級",
+   "category": "選擇問句",
+   "accent": "US",
+   "question": "Would you rather have the sign made of wood or metal?",
+   "options": [
+    "I signed it this morning.",
+    "Yes, please.",
+    "Whichever one lasts longer outdoors."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：用「哪個在戶外撐得久就用哪個」設條件，取代直接二選一。\n(A) 用 signed 和 sign 的相似音誘答，講的是自己早上簽了名。\n(B) 選擇問句不能用 Yes 回答，這是最常見的陷阱。",
+   "transcriptZh": "問：招牌你想要木頭的還是金屬的？\n(A) 我早上簽過了。\n(B) 好，麻煩你。\n(C) 哪個在戶外撐得久就用哪個。"
+  },
+  {
+   "id": "l2-95",
+   "difficulty": "基礎",
+   "category": "WH問句",
+   "accent": "GB",
+   "question": "How much do you charge for a bath and trim?",
+   "options": [
+    "About an hour and a half.",
+    "Yes, we're open till six.",
+    "Forty dollars for a dog that size."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：How much 問價格，「這種體型的狗四十元」直接給出金額。\n(A) 「大概一個半小時」是 How long 的答案。\n(B) 「我們開到六點」回答的是營業時間，與收費無關。",
+   "transcriptZh": "問：洗澡加修毛要多少錢？\n(A) 大概一個半小時。\n(B) 對，我們開到六點。\n(C) 這種體型的狗是四十元。"
+  },
+  {
+   "id": "l2-96",
+   "difficulty": "中級",
+   "category": "Yes/No問句",
+   "accent": "AU",
+   "question": "Is the pool still closed for cleaning?",
+   "options": [
+    "They reopened it this morning.",
+    "The cleaning crew comes on Tuesdays.",
+    "No, I don't swim much."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：間接回應。「今天早上重新開放了」等於回答 No，而且補上了時間點。\n(B) 重複 cleaning，講的是清潔人員星期二來，沒有回答現在能不能用。\n(C) 用 No 開頭看似合理，接的卻是自己不常游泳，前後接不起來。",
+   "transcriptZh": "問：泳池還在清洗、不開放嗎？\n(A) 今天早上重新開放了。\n(B) 清潔人員星期二會來。\n(C) 不，我不常游泳。"
+  },
+  {
+   "id": "l2-97",
+   "difficulty": "進階",
+   "category": "陳述句回應",
+   "accent": "US",
+   "question": "We're expecting about forty more guests than we planned.",
+   "options": [
+    "The guest list is on my desk.",
+    "Then we'll need to open the second room.",
+    "They planned it for June."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：對方說賓客比預估多四十位，「那就得把第二間廳打開」提出對應做法。\n(A) 重複 guest，只說名單在桌上，沒有回應人數變多的問題。\n(C) 重複 plan，卻用過去式講日期訂在六月，與場地安排無關。",
+   "transcriptZh": "陳述：來的賓客會比我們原本估的多四十位左右。\n(A) 賓客名單在我桌上。\n(B) 那就得把第二間廳打開了。\n(C) 他們訂的是六月。"
+  },
+  {
+   "id": "l2-98",
+   "difficulty": "中級",
+   "category": "WH問句",
+   "accent": "GB",
+   "question": "What's holding up the order for the dining tables?",
+   "options": [
+    "In the back of the shop.",
+    "I'll hold the door for you.",
+    "The factory's waiting for more wood."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：What's holding up...? 問的是卡在哪個環節，「工廠在等木料」說明了原因。\n(A) 「在店後面」回答的是地點，屬於 Where 的答案。\n(B) 重複 hold，但 hold the door 是幫忙擋門，屬於一字多義陷阱。",
+   "transcriptZh": "問：餐桌那筆訂單是卡在哪裡？\n(A) 在店後面。\n(B) 我幫你擋著門。\n(C) 工廠在等木料。"
+  },
+  {
+   "id": "l2-99",
+   "difficulty": "中級",
+   "category": "附加/否定問句",
+   "accent": "AU",
+   "question": "The van's due for a service next month, isn't it?",
+   "options": [
+    "Actually, we just had it done.",
+    "It's a very good service, thanks.",
+    "Right next to the garage."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：間接回應。用 Actually 修正對方的預設，說車子剛保養完，等於否定「下個月才到期」。\n(B) 重複 service，卻變成稱讚服務好，屬於一字多義誘答。\n(C) 重複 next，把時間詞聽成位置詞，答的是地點。",
+   "transcriptZh": "問：那台廂型車下個月要保養了吧？\n(A) 其實我們剛做完。\n(B) 這個服務很好，謝謝。\n(C) 就在修車廠旁邊。"
+  },
+  {
+   "id": "l2-100",
+   "difficulty": "進階",
+   "category": "Yes/No問句",
+   "accent": "US",
+   "question": "Do you have any more of these in the back?",
+   "options": [
+    "What's on the shelf is all we have.",
+    "Yes, I'll be right back.",
+    "They're two for ten dollars."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：間接回應。「架上有的就是全部」等於告訴客人倉庫裡沒有存貨了。\n(B) 重複 back，但 be right back 是「馬上回來」，與倉庫無關。\n(C) 「兩個十元」回答的是價格，屬於 How much 的答案。",
+   "transcriptZh": "問：這個後面還有貨嗎？\n(A) 架上有的就是全部了。\n(B) 好，我馬上回來。\n(C) 兩個十元。"
   }
  ],
  "p3": [
@@ -2674,6 +3049,461 @@ TOEIC.listening = {
     }
    ],
    "transcriptZh": "女：你現在有空嗎?我想把季報告誰做哪一部分講定。\n男：現在可以。截止日是十二號吧?\n女：定稿是十八號,但 Alvarez 女士希望十二號前拿到初稿,這樣她能在董事會之前先看過。\n男：所以其實只有一個半星期。上一季是我做業績數字,你寫摘要。\n女：我在想這次我們換一下。新的追蹤系統我現在自己就能處理,而且你寫得比我快。\n男：有道理,不過摘要一向比較花時間。如果由我寫,我最晚七號要拿到數字。\n女：這我做得到。現在大部分資料系統會自動抓。比較花時間的是各地區的數字,因為還有兩個辦公室是用電子郵件寄過來。\n男：可以請他們直接輸入系統嗎?這樣你可以省一天。\n女：我問過兩次了。他們主管說十月軟體更新之後才會改。\n男：好吧,這一季就先這樣。不過有一件事,你把數字寄給我的時候,請把異常的地方標出來。上次我摘要都寫一半了,才發現三月有一筆大額退貨。\n女：我會另外寫一張註記標起來。還有,摘要可以控制在四頁以內嗎?上一份 Alvarez 女士刪掉了兩頁。\n男：了解。我會寫短一點,細節放在附件裡。"
+  },
+  {
+   "id": "l3-41",
+   "difficulty": "基礎",
+   "title": "寵物美容預約改期",
+   "dialogue": [
+    {
+     "s": "W",
+     "text": "Hi, I'm calling about my dog's grooming appointment this Friday at ten. The name's Diane Hollis."
+    },
+    {
+     "s": "M",
+     "text": "Let me pull that up. Yes, Pepper, the brown one, Friday morning at ten. What can I do for you?"
+    },
+    {
+     "s": "W",
+     "text": "Something came up at work, so I can't make it Friday. Do you have anything on Saturday?"
+    },
+    {
+     "s": "M",
+     "text": "Saturday's pretty full, I'm afraid. I've only got one opening, at four in the afternoon."
+    },
+    {
+     "s": "W",
+     "text": "Four's a little late for us. What about Sunday morning?"
+    },
+    {
+     "s": "M",
+     "text": "We're closed on Sundays. But Monday morning is wide open, if that works."
+    },
+    {
+     "s": "W",
+     "text": "Monday at ten would be great, actually. I'm off that day."
+    },
+    {
+     "s": "M",
+     "text": "Perfect, I'll move him to Monday. Oh, and one more thing — we'll need a copy of his health record before the visit."
+    },
+    {
+     "s": "W",
+     "text": "I sent that in last year, didn't I?"
+    },
+    {
+     "s": "M",
+     "text": "You did, but it expired last month. You can email it to us, or just bring it with you on Monday."
+    },
+    {
+     "s": "W",
+     "text": "I'll email it tonight. Should I bring his brush again?"
+    },
+    {
+     "s": "M",
+     "text": "No need. We have everything here."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why is the woman calling?",
+     "options": [
+      "To ask about the price of a service",
+      "To complain about a recent visit",
+      "To find out the store's business hours",
+      "To change the date of an appointment"
+     ],
+     "answer": 3,
+     "explanation": "定位在女子第二次發言：Something came up at work, so I can't make it Friday. Do you have anything on Saturday?（我工作臨時有事,禮拜五沒辦法過去,禮拜六還有位子嗎?）她整通電話的目的就是把原訂週五的預約換到別天,選 (D)。(A) 全程沒有談到價錢;(B) 沒有任何抱怨,反而是她自己有事;(C) 男子雖然提到週日公休,但那是回答她的提問,不是她打電話的目的。"
+    },
+    {
+     "q": "What does the man say about Saturday?",
+     "options": [
+      "The shop will be closed that day",
+      "Only one afternoon appointment is available",
+      "Another staff member will be on duty",
+      "Prices are higher on weekends"
+     ],
+     "answer": 1,
+     "explanation": "定位在男子第二次發言：Saturday's pretty full... I've only got one opening, at four in the afternoon.（禮拜六很滿,只剩下午四點一個時段。）只剩下午一個時段,選 (B)。(A) 公休的是週日 Sundays,不是週六,這是最常見的誤答;(C) 沒有提到換人服務;(D) 沒有提到週末加價。"
+    },
+    {
+     "q": "What will the woman most likely do tonight?",
+     "options": [
+      "Send a document by email",
+      "Pick up her dog from the shop",
+      "Buy a new brush",
+      "Call the shop again"
+     ],
+     "answer": 0,
+     "explanation": "定位在對話後段：男子說 You can email it to us, or just bring it with you on Monday（您可以用電子郵件寄給我們,或禮拜一直接帶過來）,女子回 I'll email it tonight（我今天晚上寄）。她選了寄電子郵件,選 (A)。(B) 狗狗還沒送去美容;(C) 男子說 No need（不用）,店裡都有;(D) 事情已經在這通電話裡談定,不需要再打。"
+    }
+   ],
+   "transcriptZh": "女：您好,我想問一下這禮拜五早上十點我家狗狗的美容預約,我叫 Diane Hollis。\n男：我查一下。有的,Pepper,棕色那隻,禮拜五早上十點。有什麼需要幫忙的嗎?\n女：我工作臨時有事,禮拜五沒辦法過去。禮拜六還有位子嗎?\n男：禮拜六很滿,只剩下午四點一個時段。\n女：四點對我們來說有點晚。禮拜天早上呢?\n男：我們禮拜天公休。不過禮拜一早上都還空著,可以的話。\n女：禮拜一十點其實很好,那天我休假。\n男：好,我把牠改到禮拜一。對了,還有一件事,來之前要麻煩您給我們一份牠的健康紀錄影本。\n女：我去年不是有給過嗎?\n男：有,但上個月到期了。您可以用電子郵件寄給我們,或禮拜一直接帶過來。\n女：我今天晚上寄。要再帶牠的梳子嗎?\n男：不用,我們這邊都有。"
+  },
+  {
+   "id": "l3-42",
+   "difficulty": "中級",
+   "title": "茶水間咖啡機故障報修",
+   "dialogue": [
+    {
+     "s": "M",
+     "text": "Rachel, do you know what's going on with the coffee machine in the break room? It's leaking water all over the counter."
+    },
+    {
+     "s": "W",
+     "text": "Again? It did that back in March. I thought the technician had fixed it."
+    },
+    {
+     "s": "M",
+     "text": "Apparently not. There's water all over the floor under it, and the light on the front keeps flashing red."
+    },
+    {
+     "s": "W",
+     "text": "Okay, don't use it. Could you unplug it and put a sign on it so nobody touches it?"
+    },
+    {
+     "s": "M",
+     "text": "Already done. Do we call the same company as last time?"
+    },
+    {
+     "s": "W",
+     "text": "We do, but let me check something first. The machine's only two years old, so it might still be under warranty."
+    },
+    {
+     "s": "M",
+     "text": "That'd save us a few hundred dollars. Where would the paperwork be?"
+    },
+    {
+     "s": "W",
+     "text": "Purchasing keeps all of that. I'll email Diego and ask him to look up the invoice."
+    },
+    {
+     "s": "M",
+     "text": "In the meantime, what do people do for coffee? There are about forty of us on this floor."
+    },
+    {
+     "s": "W",
+     "text": "There's a shop across the street. I'll ask if we can set up an account for this week and charge it to the department budget."
+    },
+    {
+     "s": "M",
+     "text": "People will be happy about that. Should I let everyone know?"
+    },
+    {
+     "s": "W",
+     "text": "Yes, please. Send a short note to the floor, and mention the machine will be out for at least a few days."
+    }
+   ],
+   "questions": [
+    {
+     "q": "What problem are the speakers discussing?",
+     "options": [
+      "A delivery has not arrived",
+      "A room is too small for the staff",
+      "A machine is not working properly",
+      "A bill was paid twice"
+     ],
+     "answer": 2,
+     "explanation": "定位在第一句：It's leaking water all over the counter（水漏得整個檯面都是）,加上 the light on the front keeps flashing red（前面那個燈一直閃紅色）。咖啡機故障漏水就是全篇的問題,選 (C)。(A) 沒有提到任何送貨;(B) 只提到這層樓約四十人,不是空間太小;(D) 提到發票是為了查保固,不是重複付款。"
+    },
+    {
+     "q": "What does the woman want to check first?",
+     "options": [
+      "Whether the machine is still covered by a warranty",
+      "Whether a cheaper model is available",
+      "How many people work on the floor",
+      "When the repair company opens"
+     ],
+     "answer": 0,
+     "explanation": "定位在女子第三次發言：let me check something first. The machine's only two years old, so it might still be under warranty.（我想先確認一件事,這台機器才買兩年,搞不好還在保固期內。）under warranty 是「保固期內」,選 (A)。(B) 沒有要換新機;(C) 四十人是男子提到的喝咖啡人數,不是她要查的事;(D) 她確定會找同一家公司,但要查的不是營業時間。"
+    },
+    {
+     "q": "What does the woman ask the man to do at the end of the conversation?",
+     "options": [
+      "Call the repair company himself",
+      "Send a message to everyone on the floor",
+      "Look for the invoice in the files",
+      "Move the machine to another room"
+     ],
+     "answer": 1,
+     "explanation": "定位在最後兩句：男子問 Should I let everyone know?（要我通知一下嗎?）女子回 Yes, please. Send a short note to the floor（好,麻煩你寄個簡短的訊息給整層樓的同事）,選 (B)。(A) 打給維修公司要等保固確認後才處理,不是現在交辦給他;(C) 找發票是請 Diego 做的;(D) 只請他拔插頭貼告示,沒有要搬機器。"
+    }
+   ],
+   "transcriptZh": "男：Rachel,妳知道茶水間那台咖啡機怎麼了嗎?水漏得整個檯面都是。\n女：又來?三月的時候就這樣過。我以為那位技師已經修好了。\n男：看來沒有。現在機器下面地上都是水,前面那個燈還一直閃紅色。\n女：好,先別用。可以麻煩你把插頭拔掉,再貼張告示,不要讓人去碰它嗎?\n男：已經弄好了。要找上次那家公司嗎?\n女：要,不過我想先確認一件事。這台機器才買兩年,搞不好還在保固期內。\n男：那就可以省下好幾百塊。文件會在哪裡?\n女：採購那邊都有留。我寄信給 Diego,請他把發票調出來。\n男：那這段期間大家咖啡怎麼辦?我們這層樓大概有四十個人。\n女：對面有家店。我去問問看這禮拜能不能開個帳,費用掛在部門預算。\n男：大家會很開心。要我通知一下嗎?\n女：好,麻煩你寄個簡短的訊息給整層樓的同事,順便說機器至少會停用幾天。"
+  },
+  {
+   "id": "l3-43",
+   "difficulty": "進階",
+   "title": "農夫市集攤位申請",
+   "dialogue": [
+    {
+     "s": "W",
+     "text": "Hello, I'd like to ask about renting a booth at the Saturday farmers market. I make jam and honey."
+    },
+    {
+     "s": "M",
+     "text": "Sure. We take applications online — the form's on our website under the vendor tab. But I should tell you the spring season is already full."
+    },
+    {
+     "s": "W",
+     "text": "Oh, that's disappointing. When does the next round open?"
+    },
+    {
+     "s": "M",
+     "text": "Applications for the summer season open on the first of April, and they usually fill up within two weeks."
+    },
+    {
+     "s": "W",
+     "text": "I'll write that down. What does a booth cost?"
+    },
+    {
+     "s": "M",
+     "text": "Forty dollars a day if you sign up week by week, or four hundred for the whole twelve-week season. Most people take the season rate."
+    },
+    {
+     "s": "W",
+     "text": "The season rate makes more sense. Is the table included?"
+    },
+    {
+     "s": "M",
+     "text": "We provide the table and one chair. You bring your own tent, and it has to be white — that's a rule from the city, not from us."
+    },
+    {
+     "s": "W",
+     "text": "Good to know. Anything else I should send with the form?"
+    },
+    {
+     "s": "M",
+     "text": "A copy of your food permit, and a couple of photos of your products. Without the permit we can't even review the application."
+    },
+    {
+     "s": "W",
+     "text": "I've got the permit already. Do you let people share a booth? A friend of mine sells bread."
+    },
+    {
+     "s": "M",
+     "text": "We do, but you each need your own permit, and only one of you applies. Put both names on the same form."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why is the woman calling?",
+     "options": [
+      "To confirm a delivery of supplies",
+      "To ask about renting space at a market",
+      "To report a problem with an order",
+      "To sign up for a cooking class"
+     ],
+     "answer": 1,
+     "explanation": "定位在第一句：I'd like to ask about renting a booth at the Saturday farmers market（我想請問週六農夫市集攤位租借的事）。booth 就是攤位,rent a booth 等於 rent space,選 (B)。(A) 她要送的是申請表和照片,不是進貨;(C) 全程沒有訂單問題;(D) 她是想去擺攤賣果醬和蜂蜜,不是去上課。"
+    },
+    {
+     "q": "What does the man say about the tent?",
+     "options": [
+      "It is provided at no extra cost",
+      "It must be set up the night before",
+      "It can be rented for forty dollars a day",
+      "Its color is set by a city rule"
+     ],
+     "answer": 3,
+     "explanation": "定位在男子第四次發言：You bring your own tent, and it has to be white — that's a rule from the city（帳篷要自己帶,而且必須是白色的,這是市政府的規定）,選 (D)。(A) 免費提供的是桌子和椅子,帳篷要自備,這是最容易混淆的一組;(B) 沒有提到前一晚搭設;(C) 四十元是「一天的攤位費」,不是帳篷租金,數字誘答。"
+    },
+    {
+     "q": "What does the man say about the food permit?",
+     "options": [
+      "It can be sent in after the season begins",
+      "It is issued by the market office",
+      "An application will not be reviewed without it",
+      "Two vendors are allowed to share one"
+     ],
+     "answer": 2,
+     "explanation": "定位在男子第五次發言：Without the permit we can't even review the application.（沒有許可證我們連審都沒辦法審。）can't even review 表示許可證是受理申請的前提,選 (C)。(A) 正好相反,要隨表格一起送;(B) 沒有說是市集辦公室核發;(D) 男子明確說 you each need your own permit（你們各自都要有自己的許可證）,可以共用的是攤位不是許可證。"
+    }
+   ],
+   "transcriptZh": "女：您好,我想請問週六農夫市集攤位租借的事。我做果醬和蜂蜜。\n男：好的。我們的申請都在網路上,表格在網站的攤商那一區。不過我得先跟您說,春季檔期已經滿了。\n女：喔,真可惜。下一輪什麼時候開放?\n男：夏季檔期的申請四月一日開放,通常兩個禮拜內就會額滿。\n女：我記下來。攤位費用怎麼算?\n男：一週一週報名的話一天四十元,整季十二週一次付則是四百元。多數人選整季的價格。\n女：整季比較划算。桌子有含嗎?\n男：我們提供一張桌子和一張椅子。帳篷要自己帶,而且必須是白色的,這是市政府的規定,不是我們訂的。\n女：了解。表格還要附上什麼嗎?\n男：食品許可證影本,還有幾張產品照片。沒有許可證我們連審都沒辦法審。\n女：許可證我已經有了。可以兩個人合租一個攤位嗎?我朋友是賣麵包的。\n男：可以,但你們各自都要有自己的許可證,而且只由其中一人提出申請,表格上寫兩個人的名字。"
+  },
+  {
+   "id": "l3-44",
+   "difficulty": "中級",
+   "title": "搬家公司電話估價",
+   "dialogue": [
+    {
+     "s": "M",
+     "text": "Hi, I'm moving my office at the end of next month and I'd like to get an estimate."
+    },
+    {
+     "s": "W",
+     "text": "Happy to help. Is this a home move or a business move?"
+    },
+    {
+     "s": "M",
+     "text": "A business. It's a small design studio — eight desks, some shelves, and about twenty boxes of files."
+    },
+    {
+     "s": "W",
+     "text": "And how far are you going?"
+    },
+    {
+     "s": "M",
+     "text": "Only about two miles. We're moving from Weller Street to the new building on Park Row."
+    },
+    {
+     "s": "W",
+     "text": "That's not far at all. Are there elevators at both ends?"
+    },
+    {
+     "s": "M",
+     "text": "There's one at the new place. The building we're in now doesn't have one, and we're on the third floor."
+    },
+    {
+     "s": "W",
+     "text": "That changes the price, I'm afraid. Stairs mean an extra hourly charge, because we'd have to send more workers."
+    },
+    {
+     "s": "M",
+     "text": "How much are we talking about?"
+    },
+    {
+     "s": "W",
+     "text": "I can't give you a firm number over the phone. Someone should come and look at the space, and we do that free of charge."
+    },
+    {
+     "s": "M",
+     "text": "Could someone come this week? I need the numbers before Friday's board meeting."
+    },
+    {
+     "s": "W",
+     "text": "Thursday morning is open. And if you decide to pack the boxes yourselves, that'll bring the total down quite a bit."
+    }
+   ],
+   "questions": [
+    {
+     "q": "What kind of business does the man work for?",
+     "options": [
+      "A design studio",
+      "A print shop",
+      "A furniture store",
+      "A law office"
+     ],
+     "answer": 0,
+     "explanation": "定位在男子第二次發言：It's a small design studio — eight desks, some shelves, and about twenty boxes of files.（是一間小型設計工作室,八張辦公桌、一些層架,還有大概二十箱檔案。）選 (A)。(C) desks 和 shelves 是他們要搬的家具,不代表他們賣家具,這是常見的字面誤答;(B)(D) 對話中都沒有出現。"
+    },
+    {
+     "q": "Why does the woman say the price may go up?",
+     "options": [
+      "The move takes place at the end of the month",
+      "The distance is longer than usual",
+      "There is no elevator in the current building",
+      "The company has too many boxes"
+     ],
+     "answer": 2,
+     "explanation": "定位在男子第四次發言與女子的回應：The building we're in now doesn't have one, and we're on the third floor（我們現在這棟沒有電梯,而且在三樓）→ That changes the price... Stairs mean an extra hourly charge（那價格就會不一樣了,走樓梯要另外按小時計費）,選 (C)。(A) 月底搬家只是時間,不影響報價;(B) 女子聽到兩英里還說 That's not far at all（那不遠）;(D) 二十箱不多,而且自己打包反而更便宜。"
+    },
+    {
+     "q": "What will most likely happen on Thursday?",
+     "options": [
+      "The man will attend a board meeting",
+      "The move will begin",
+      "The man will pack the boxes",
+      "A worker will visit the man's office"
+     ],
+     "answer": 3,
+     "explanation": "定位在女子最後兩次發言：Someone should come and look at the space（應該要派人去現場看過空間）→ Thursday morning is open（禮拜四早上有空）。所以週四是現場勘查,選 (D)。(A) 董事會是週五;(B) 搬家是下個月底;(C) 自己打包只是「如果決定」的省錢選項,沒有說在週四做。"
+    }
+   ],
+   "transcriptZh": "男：您好,我下個月底要搬辦公室,想請你們估個價。\n女：很樂意為您服務。請問是住家搬遷還是公司搬遷?\n男：公司。是一間小型設計工作室,八張辦公桌、一些層架,還有大概二十箱檔案。\n女：搬多遠呢?\n男：大概兩英里而已,從 Weller 街搬到 Park Row 的新大樓。\n女：那不遠。兩邊都有電梯嗎?\n男：新的地方有。我們現在這棟沒有電梯,而且在三樓。\n女：那價格就會不一樣了。走樓梯要多派人手,會另外按小時計費。\n男：大概是多少?\n女：電話裡沒辦法給您確切的數字。應該要派人去現場看過空間,這部分我們不收費。\n男：這禮拜可以過來嗎?我禮拜五董事會之前需要數字。\n女：禮拜四早上有空。另外,如果箱子你們自己打包,總金額可以省下不少。"
+  },
+  {
+   "id": "l3-45",
+   "difficulty": "基礎",
+   "title": "員工旅遊地點討論",
+   "dialogue": [
+    {
+     "s": "W",
+     "text": "Tom, did you look at the results of the staff trip survey?"
+    },
+    {
+     "s": "M",
+     "text": "I did. The beach hotel came in first, and the mountain resort was right behind it."
+    },
+    {
+     "s": "W",
+     "text": "How close was it?"
+    },
+    {
+     "s": "M",
+     "text": "Thirty-one people picked the beach, twenty-eight picked the mountains. Only nine chose the city tour."
+    },
+    {
+     "s": "W",
+     "text": "So it's basically a tie between the first two. What's the price difference?"
+    },
+    {
+     "s": "M",
+     "text": "The beach hotel is about twenty dollars more per person, but breakfast is included, and the mountain place charges extra for it."
+    },
+    {
+     "s": "W",
+     "text": "Then the beach is actually cheaper once you add that up."
+    },
+    {
+     "s": "M",
+     "text": "That's what I thought. The one problem is the drive. It's four hours by bus, and the mountains are only two."
+    },
+    {
+     "s": "W",
+     "text": "Four hours is long, but it's a Friday. We could leave at noon and still get there before dinner."
+    },
+    {
+     "s": "M",
+     "text": "True. Should I go ahead and ask the beach hotel to hold thirty rooms?"
+    },
+    {
+     "s": "W",
+     "text": "Please do, but don't pay the deposit yet. Ms. Alvarado has to approve the budget first, and she's back on Wednesday."
+    },
+    {
+     "s": "M",
+     "text": "I'll email her the numbers so she can look at them before then."
+    }
+   ],
+   "questions": [
+    {
+     "q": "What are the speakers mainly discussing?",
+     "options": [
+      "A change to the company's work hours",
+      "Where to take a company trip",
+      "A new hotel opening near the office",
+      "How to prepare a sales report"
+     ],
+     "answer": 1,
+     "explanation": "定位在第一句：did you look at the results of the staff trip survey?（員工旅遊的問卷結果你看了嗎?）之後全篇都在比較海邊飯店和山上度假村,選 (B)。(A) 沒有提到上班時間;(C) 飯店是旅遊地點,不是新開幕;(D) numbers 指的是費用數字,不是業務報告。"
+    },
+    {
+     "q": "Why does the woman think the beach hotel costs less?",
+     "options": [
+      "Breakfast is included in the room price",
+      "The bus ride is shorter",
+      "It offers a discount for large groups",
+      "Fewer people chose it"
+     ],
+     "answer": 0,
+     "explanation": "定位在男子第三次發言與女子的回應：breakfast is included, and the mountain place charges extra for it（含早餐,山上那間早餐要另外付錢）→ the beach is actually cheaper once you add that up（這樣算下來海邊反而比較便宜）,選 (A)。(B) 車程較短的是山上,只要兩小時;(C) 沒有提到團體折扣;(D) 選海邊的人反而比較多。"
+    },
+    {
+     "q": "What does the woman ask the man not to do yet?",
+     "options": [
+      "Send an email to Ms. Alvarado",
+      "Cancel the mountain resort",
+      "Make a payment to hold the rooms",
+      "Tell the staff about the results"
+     ],
+     "answer": 2,
+     "explanation": "定位在女子最後一次發言：Please do, but don't pay the deposit yet.（麻煩你,但先不要付訂金。）deposit 是訂金,選 (C)。(A) 寄信給 Alvarado 女士正是男子最後說要做的事;(B) 沒有提到要取消什麼;(D) 沒有交代要公布結果。"
+    }
+   ],
+   "transcriptZh": "女：Tom,員工旅遊的問卷結果你看了嗎?\n男：看了。海邊飯店排第一,山上的度假村緊追在後。\n女：差多少?\n男：三十一個人選海邊,二十八個人選山上,只有九個人選市區導覽。\n女：所以前兩名幾乎打平。價差呢?\n男：海邊飯店每個人大概貴二十元,但含早餐,山上那間早餐要另外付錢。\n女：這樣算下來海邊反而比較便宜。\n男：我也是這樣想。唯一的問題是車程,坐遊覽車要四個小時,山上只要兩個小時。\n女：四個小時是久了點,不過那天是禮拜五。我們中午出發,晚餐前還是到得了。\n男：也對。那我先請海邊飯店保留三十間房?\n女：麻煩你,但先不要付訂金。預算要 Alvarado 女士核准,她禮拜三才回來。\n男：我先把數字寄給她,讓她在那之前可以先看。"
   }
  ],
  "p4": [
@@ -3321,6 +4151,221 @@ TOEIC.listening = {
     }
    ],
    "transcriptZh": "午安,今天下雨還特地過來,謝謝各位。我是 Elena Ruiz,Nova Home 的產品負責人。再過幾分鐘,我同事 Tom 會把機器推出來,不過在那之前,我想先說說我們為什麼做這台。\n兩年前,我們問顧客:你對現在的咖啡機哪一點最不滿意?幾乎每個人的答案都一樣——清洗。所以我們就從這裡下手。各位今天下午看到的一切,都是從那些對話裡長出來的。\n今天我們不接訂單,市售版本十月出貨。不過 Tom 講完之後有試喝,請各位務必留下來。"
+  },
+  {
+   "id": "l4-41",
+   "difficulty": "基礎",
+   "type": "館內廣播",
+   "speaker": "F",
+   "talk": "Attention, library visitors. We'll be closing in twenty minutes, so please bring anything you want to borrow up to the front desk now.\nIf you're in one of the study rooms upstairs, don't forget to take your things with you — we can't hold items overnight.\nOne more thing. We're opening late tomorrow, because the whole staff has computer training in the morning. So the doors won't open until one in the afternoon. If you need to return a book before that, just use the drop box by the side entrance. It's open all day.\nThanks, everyone, and we'll see you tomorrow.",
+   "questions": [
+    {
+     "q": "Why will the library open late tomorrow?",
+     "options": [
+      "The staff will attend a training session.",
+      "A holiday is coming up.",
+      "The building is being repaired.",
+      "A book sale is being set up."
+     ],
+     "answer": 0,
+     "explanation": "定位在 We're opening late tomorrow, because the whole staff has computer training in the morning。because 後面接的就是原因,computer training 對應選項 A 的 attend a training session。選項 C 的整修全篇沒提,是靠「公家單位常閉館維修」的印象亂猜。"
+    },
+    {
+     "q": "What time will the library open tomorrow?",
+     "options": [
+      "At nine in the morning",
+      "At noon",
+      "At one in the afternoon",
+      "At five in the evening"
+     ],
+     "answer": 2,
+     "explanation": "定位在 the doors won't open until one in the afternoon。won't ... until 就是「要到一點才開」,對應選項 C。廣播開頭的 twenty minutes 是閉館倒數,不是開門時間;nine 這個數字原文根本沒出現,只是用圖書館常識設的誘答。"
+    },
+    {
+     "q": "What does the speaker say about the drop box?",
+     "options": [
+      "It is next to the front desk.",
+      "It will be moved next week.",
+      "It is only for magazines.",
+      "It can be used at any time."
+     ],
+     "answer": 3,
+     "explanation": "定位在 just use the drop box by the side entrance. It's open all day。all day 就是全天都能用,對應選項 D。原文說還書箱在側門 (side entrance) 旁邊,選項 A 把地點換成前面櫃檯,聽到 front desk 就選會中招——那個字出現在第一段的還書指示裡。"
+    }
+   ],
+   "transcriptZh": "各位讀者請注意,本館再二十分鐘就要閉館了,想借的書請現在拿到前面櫃檯來。\n如果你人在樓上的自習室,離開時別忘了把東西帶走,我們沒辦法幫忙保管過夜。\n還有一件事。明天早上全館同仁要上電腦教育訓練,所以會晚一點開門,要到下午一點才開放。如果你在那之前要還書,可以用側門旁邊的還書箱,那個箱子全天都能用。\n謝謝大家,明天見。"
+  },
+  {
+   "id": "l4-42",
+   "difficulty": "基礎",
+   "type": "課程說明",
+   "speaker": "M",
+   "talk": "Good evening, everybody, and welcome to your first class here at the Corner Kitchen. I'm Daniel, and I'll be teaching this six-week course.\nTonight we're keeping it simple — we're making soup and fresh bread. Everything you need is already on your table, so you don't have to bring your own tools to class.\nBefore we start, please tie back long hair and wash your hands at the sink in the back. And take a look at the sheet in front of you. It lists what's in tonight's dishes, so if you can't eat something, tell me now and I'll switch it out for you.",
+   "questions": [
+    {
+     "q": "What will the listeners make tonight?",
+     "options": [
+      "Cakes and cookies",
+      "Salad and juice",
+      "Noodles and sauce",
+      "Soup and bread"
+     ],
+     "answer": 3,
+     "explanation": "定位在 Tonight we're keeping it simple — we're making soup and fresh bread。making 後面接的兩樣東西就是答案,對應選項 D。其他三個選項都是烹飪課常見的品項,但原文一個都沒提到。"
+    },
+    {
+     "q": "What does the speaker say about the tools?",
+     "options": [
+      "They can be bought at the front.",
+      "They have already been set out.",
+      "They must be returned tonight.",
+      "They will be shared in pairs."
+     ],
+     "answer": 1,
+     "explanation": "定位在 Everything you need is already on your table, so you don't have to bring your own tools to class。already on your table 就是已經擺好在桌上,對應選項 B 的 set out。選項 A 把 don't have to bring 誤聽成「要另外買」。"
+    },
+    {
+     "q": "Why does the speaker mention the sheet?",
+     "options": [
+      "To point out what is in the food",
+      "To collect payment",
+      "To show the class schedule",
+      "To ask for feedback"
+     ],
+     "answer": 0,
+     "explanation": "定位在 take a look at the sheet in front of you. It lists what's in tonight's dishes, so if you can't eat something, tell me now。提那張單子是要讓學員確認食材,對應選項 A。這是「為何提及」的意圖題,線索在 so 之後的目的句,不在 sheet 這個字本身;講者提過 six-week course,但那張單子跟課表無關,選項 C 是把兩件事湊在一起。"
+    }
+   ],
+   "transcriptZh": "各位晚安,歡迎來到 Corner Kitchen 上第一堂課。我是 Daniel,這六週的課都由我來帶。\n今天晚上我們先做簡單的——煮湯,還有現做的麵包。需要的東西都已經放在你的桌上了,所以不用自己帶工具來。\n開始之前,頭髮長的請先綁起來,然後到後面的水槽洗手。另外,看一下你面前那張單子,上面寫了今晚兩道菜的材料。如果有你不能吃的東西,現在跟我說,我幫你換掉。"
+  },
+  {
+   "id": "l4-43",
+   "difficulty": "中級",
+   "type": "交通通知",
+   "speaker": "F",
+   "talk": "This is a service announcement for riders on the number eight bus. Starting Monday, we'll be taking a different route through the downtown area, because the city is repairing Market Street.\nSo instead of turning at Market, we'll go straight down Pine and come back to the regular route at the train station. That means the stop in front of the post office won't be in service for about three weeks. If that's your stop, the closest one is on Pine, right by the bank.\nWe're sorry for the trouble. The change doesn't affect our times, so buses should still reach the station on schedule.",
+   "questions": [
+    {
+     "q": "Why is the bus route changing?",
+     "options": [
+      "A parade will be held.",
+      "Road work is being done.",
+      "A new stop is being added.",
+      "The bus company is moving."
+     ],
+     "answer": 1,
+     "explanation": "定位在 because the city is repairing Market Street。repairing a street 就是道路施工,對應選項 B 的 Road work。選項 C 的「加新站」把後面的「取消一站」聽反了。"
+    },
+    {
+     "q": "Which stop will be closed?",
+     "options": [
+      "The stop at the train station",
+      "The stop on Pine Street",
+      "The stop near the bank",
+      "The stop by the post office"
+     ],
+     "answer": 3,
+     "explanation": "定位在 the stop in front of the post office won't be in service for about three weeks。won't be in service 就是停止停靠,對應選項 D。train station 是接回原路線的地方,Pine 街和銀行是替代站,三個地名都在原文出現過,是典型的同場景誘答。"
+    },
+    {
+     "q": "According to the speaker, what will stay the same?",
+     "options": [
+      "Ticket prices",
+      "How often buses run",
+      "The times buses reach the station",
+      "The number of stops on the route"
+     ],
+     "answer": 2,
+     "explanation": "定位在最後一句 The change doesn't affect our times, so buses should still reach the station on schedule。doesn't affect our times 加上 on schedule,不變的就是抵達時間,對應選項 C。選項 D 剛好相反——郵局那站停用三個星期,停靠站數是有變的;票價和班次密度全篇沒提。"
+    }
+   ],
+   "transcriptZh": "這是給搭乘八號公車乘客的服務通知。從下週一開始,我們在市中心這一段會改走別的路線,因為市政府要整修 Market 街。\n所以我們不會在 Market 街轉彎,而是直接沿著 Pine 街走,到火車站再接回原本的路線。也就是說,郵局前面那一站大概三個星期不會停靠。如果你平常在那站上下車,最近的一站在 Pine 街,就在銀行旁邊。\n造成不便,我們很抱歉。這次改道不會影響時間,公車還是會照原本的時刻抵達火車站。"
+  },
+  {
+   "id": "l4-44",
+   "difficulty": "中級",
+   "type": "會議說明",
+   "speaker": "M",
+   "talk": "Before we finish today's meeting, I want to go over the health checks the company is offering next month.\nA team of nurses will be here on the fourth and fifth, and they'll set up in the training room on the second floor. The check takes about half an hour, and it's free for everyone on staff.\nHere's the part people always miss — you have to sign up online by this Friday. We can't add names after that, since the nurses bring supplies based on our numbers.\nOne more note. Don't eat anything for eight hours before your visit, so most people sign up for a morning time.",
+   "questions": [
+    {
+     "q": "What must the listeners do by Friday?",
+     "options": [
+      "Pay a small fee",
+      "Choose a doctor",
+      "Register on a website",
+      "Send in a paper form"
+     ],
+     "answer": 2,
+     "explanation": "定位在 you have to sign up online by this Friday。sign up online 就是線上登記,對應選項 C。後一句 We can't add names after that 再次確認這是截止日。選項 A 與原文 it's free 直接衝突,選項 D 的紙本表格則是把 online 聽反。"
+    },
+    {
+     "q": "Where will the health checks take place?",
+     "options": [
+      "In a room on the second floor",
+      "At a nearby clinic",
+      "In the company cafeteria",
+      "In the front lobby"
+     ],
+     "answer": 0,
+     "explanation": "定位在 they'll set up in the training room on the second floor。地點講得很明確,對應選項 A。選項 B 是靠「健檢要去診所」的常識亂猜,原文說的是護理人員到公司來 (will be here)。"
+    },
+    {
+     "q": "Why do most people choose a morning appointment?",
+     "options": [
+      "The nurses leave early.",
+      "They cannot eat before the check.",
+      "The room is busy in the afternoon.",
+      "Parking is easier in the morning."
+     ],
+     "answer": 1,
+     "explanation": "定位在 Don't eat anything for eight hours before your visit, so most people sign up for a morning time。so 之前是原因:檢查前八小時不能進食,挑早上的時段比較好安排,對應選項 B。這題要把因果兩句串起來,不是單句聽寫。"
+    }
+   ],
+   "transcriptZh": "在今天的會議結束之前,我想說明一下公司下個月要辦的健康檢查。\n會有一組護理人員在四號和五號到公司來,地點在二樓的教育訓練室。整個檢查大概半小時,全體同仁都免費。\n這裡有個大家常常漏掉的部分——你必須在這個星期五之前上網登記。過了就沒辦法再加名單了,因為護理人員要照我們報的人數帶器材過來。\n還有一點。檢查前八小時不能吃東西,所以大部分的人都會挑早上的時段。"
+  },
+  {
+   "id": "l4-45",
+   "difficulty": "進階",
+   "type": "參觀導覽",
+   "speaker": "F",
+   "talk": "Morning, everyone, and welcome to Hillside Farm. I'm Paula, and I'll be showing you around for the next two hours.\nWe'll start at the barn, then walk out to the fields, and finish at the shop, where you can taste the cheese we make here.\nNow, I should mention — the path past the barn gets muddy after rain, and it rained pretty hard last night. If you'd rather not deal with that, there's a longer way around on the main road, and I'll point it out when we get there.\nOh, and the goats will come right up to you. They're friendly, but please don't feed them anything from your bag.",
+   "questions": [
+    {
+     "q": "Where will the tour end?",
+     "options": [
+      "At the barn",
+      "At the farm shop",
+      "In the fields",
+      "At the parking area"
+     ],
+     "answer": 1,
+     "explanation": "定位在 We'll start at the barn, then walk out to the fields, and finish at the shop。finish at 標示的就是結束地點,對應選項 B。barn 是起點、fields 是中途,順序聽混就會選錯。"
+    },
+    {
+     "q": "Why does the speaker mention last night's rain?",
+     "options": [
+      "To warn that one path may be hard to walk on",
+      "To explain why a field is closed",
+      "To suggest bringing an umbrella",
+      "To say the tour will be shorter"
+     ],
+     "answer": 0,
+     "explanation": "定位在 the path past the barn gets muddy after rain, and it rained pretty hard last night,接著她給出 a longer way around 這個替代路線。提下雨是要提醒那條小路現在不好走,對應選項 A。這是意圖題,線索在前後兩句的關係;單抓 rain 這個字反而會被選項 C 的雨傘拐走,而且雨是昨晚下的,現在沒在下。"
+    },
+    {
+     "q": "What does the speaker ask the listeners not to do?",
+     "options": [
+      "Touch the goats",
+      "Take photos in the barn",
+      "Leave the group",
+      "Give food to the animals"
+     ],
+     "answer": 3,
+     "explanation": "定位在最後一句 They're friendly, but please don't feed them anything from your bag。don't feed 就是不要餵食,對應選項 D。前半句說山羊很親人、會自己靠過來,所以選項 A 的「不要碰」與語氣正好相反。"
+    }
+   ],
+   "transcriptZh": "各位早安,歡迎來到 Hillside 農場。我是 Paula,接下來兩個小時由我帶大家參觀。\n我們先從穀倉開始,接著走到田裡,最後在農場商店結束,你們可以在那邊試吃我們自己做的起司。\n這邊我要先提醒一下——穀倉後面那條小路下過雨會很泥濘,昨天晚上雨下得滿大的。如果你不想走那條,還有一條比較遠的路可以繞過去,走大馬路,等一下到了我會指給大家看。\n喔對了,山羊會直接靠過來。牠們很親人,不過請不要拿包包裡的東西餵牠們。"
   }
  ]
 };

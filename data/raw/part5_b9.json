@@ -1,0 +1,252 @@
+[
+  {
+    "id": "p5-b9-01",
+    "difficulty": "基礎",
+    "category": "詞性變化",
+    "question": "Dr. Merrick examines every pet ------- before recommending any course of treatment.",
+    "options": ["care", "careful", "carefully", "caring"],
+    "answer": 2,
+    "translation": "梅瑞克醫師在建議任何療程之前,都會仔細檢查每一隻寵物。",
+    "explanation": "考點:副詞修飾動詞。examines 已有受詞 every pet,句子結構完整,空格是用來說明檢查「怎麼做」,必須用副詞,故 (C) carefully 正確。(A) care 是名詞或動詞,放在受詞後面會形成兩個名詞並列卻沒有連接詞。(B) careful 是形容詞,只能修飾名詞,不能修飾動詞 examines。(D) caring 是現在分詞或形容詞,意為「有愛心的」,只能修飾名詞,無法說明 examines 的方式。"
+  },
+  {
+    "id": "p5-b9-02",
+    "difficulty": "基礎",
+    "category": "詞性變化",
+    "question": "Riverbend Cycles offers free ------- of any bicycle bought in the store.",
+    "options": ["assembly", "assemble", "assembled", "assembles"],
+    "answer": 0,
+    "translation": "河灣自行車行為店內購買的任何自行車提供免費組裝。",
+    "explanation": "考點:形容詞之後、介系詞 of 之前需要名詞。offers 的受詞位置要放名詞,前面由形容詞 free 修飾,後面再由 of 片語補充說明,故 (A) assembly 正確。(B) assemble 是原形動詞,一個子句不能同時有 offers 和 assemble 兩個主要動詞。(C) assembled 是過去分詞,不能單獨當 offers 的受詞。(D) assembles 是第三人稱單數動詞,同樣不能放在受詞的位置。"
+  },
+  {
+    "id": "p5-b9-03",
+    "difficulty": "中級",
+    "category": "詞性變化",
+    "question": "Oakvale Landscaping's new watering schedule has proven ------- effective during the driest weeks of summer.",
+    "options": ["remark", "remarked", "remarkable", "remarkably"],
+    "answer": 3,
+    "translation": "橡谷園藝的新灌溉排程在夏季最乾燥的幾週裡證實成效卓著。",
+    "explanation": "考點:副詞修飾形容詞。prove 後面接主詞補語 effective(形容詞),空格要說明「有效到什麼程度」,修飾形容詞只能用副詞,故 (D) remarkably 正確。(A) remark 是名詞或動詞,放在此處會與 effective 形成無法解釋的並列。(B) remarked 是過去式或過去分詞,句中已有述語 has proven。(C) remarkable 是形容詞,兩個形容詞要一起修飾同一對象需以逗號或連接詞隔開,且句意是「非常有效」而非「既顯著又有效」。"
+  },
+  {
+    "id": "p5-b9-04",
+    "difficulty": "中級",
+    "category": "詞性變化",
+    "question": "Orders placed at Fairholm Print Shop before noon are handled with impressive -------, so most customers receive their posters the same day.",
+    "options": ["efficiency", "efficient", "efficiently", "efficiencies"],
+    "answer": 0,
+    "translation": "中午前送到費爾洪印刷行的訂單處理得極有效率,因此多數客戶當天就能拿到海報。",
+    "explanation": "考點:介系詞後接名詞,且形容詞 impressive 需要修飾名詞。with + 形容詞 + 抽象名詞 是表達「以…的方式」的常見結構,故 (A) efficiency 正確。(B) efficient 是形容詞,介系詞 with 後面不能直接接形容詞。(C) efficiently 是副詞,同樣不能當介系詞的受詞。(D) efficiencies 雖是名詞,但此處 efficiency 指抽象的效率,屬不可數用法;加 s 的複數形指多項具體的節約措施,與 impressive 的搭配不合。"
+  },
+  {
+    "id": "p5-b9-05",
+    "difficulty": "中級",
+    "category": "詞性變化",
+    "question": "The front desk at Cranford Music School keeps a ------- record of which practice rooms have been booked.",
+    "options": ["detail", "detailed", "details", "detailing"],
+    "answer": 1,
+    "translation": "克蘭福音樂學校的櫃檯保有一份詳細紀錄,載明哪些琴房已被預約。",
+    "explanation": "考點:冠詞與名詞之間需要形容詞。a ------- record 的空格夾在冠詞 a 和名詞 record 中間,只能填形容詞;detailed 是由過去分詞轉成的形容詞,意為「詳細的」,故 (B) 正確。(A) detail 是名詞,detail record 並非既有的複合名詞搭配。(C) details 是複數名詞,更不可能出現在 a 與單數名詞 record 之間。(D) detailing 是動名詞或現在分詞,表示「正在詳述的」,紀錄是被寫得詳細,語意不合。"
+  },
+  {
+    "id": "p5-b9-06",
+    "difficulty": "進階",
+    "category": "詞性變化",
+    "question": "Every complaint filed against Northpoint Movers is reviewed by a claims ------- before any refund is approved.",
+    "options": ["specially", "specialize", "specialized", "specialist"],
+    "answer": 3,
+    "translation": "每一件針對北角搬家公司提出的申訴,都會先由理賠專員覆核,才會核准退款。",
+    "explanation": "考點:複合名詞中表示「人」的名詞。by 後面需要名詞當受詞,a claims ------- 是「理賠+人員」的複合名詞結構;能覆核申訴並核准退款的是人,故用 (D) specialist。(A) specially 是副詞,不能當介系詞的受詞。(B) specialize 是動詞,前面有冠詞 a 更不可能。(C) specialized 是形容詞或過去分詞,填入後 a claims specialized 缺少核心名詞,by 的受詞不完整。"
+  },
+  {
+    "id": "p5-b9-07",
+    "difficulty": "進階",
+    "category": "詞性變化",
+    "question": "Sunbrook Laundry's ------- priced membership plan has attracted many office workers from nearby buildings.",
+    "options": ["reasonably", "reasonable", "reason", "reasoned"],
+    "answer": 0,
+    "translation": "陽溪洗衣店定價合理的會員方案,吸引了不少鄰近大樓的上班族。",
+    "explanation": "考點:副詞修飾分詞形容詞。priced 是修飾 membership plan 的過去分詞,空格要說明「價格訂得如何」,修飾分詞須用副詞,reasonably priced(定價合理的)也是固定說法,故 (A) 正確。(B) reasonable 是形容詞,只能修飾名詞,無法修飾 priced,兩個修飾語連用也缺少逗號或連接詞。(C) reason 是名詞,放在所有格與 priced 之間不成結構。(D) reasoned 是過去分詞,與 priced 並列同樣缺連接詞,語意上也無法解釋。"
+  },
+  {
+    "id": "p5-b9-08",
+    "difficulty": "基礎",
+    "category": "動詞時態與語態",
+    "question": "Ms. Adeyemi ------- fresh bread at the Saturday farmers market for more than ten years.",
+    "options": ["sells", "sold", "has sold", "is selling"],
+    "answer": 2,
+    "translation": "阿德耶米女士在週六農夫市集賣新鮮麵包已超過十年。",
+    "explanation": "考點:現在完成式與 for + 一段時間 的搭配。for more than ten years 表示動作從過去持續到現在並可能延續下去,須用現在完成式,故 (C) has sold 正確。(A) sells 是現在簡單式,只描述現在的習慣,無法涵蓋長達十年的持續期間。(B) sold 是過去式,會暗示這件事已經結束,且過去式需搭配明確的過去時間點。(D) is selling 是現在進行式,強調此刻正在進行的短暫動作,不能與這種長時間的期間副詞連用。"
+  },
+  {
+    "id": "p5-b9-09",
+    "difficulty": "基礎",
+    "category": "動詞時態與語態",
+    "question": "All bicycles left for repair ------- inspected by a mechanic before any work begins.",
+    "options": ["are", "is", "have", "being"],
+    "answer": 0,
+    "translation": "所有送修的自行車在開始維修前,都會先由技師檢查。",
+    "explanation": "考點:被動語態與主謂一致。主詞 All bicycles 是 inspect 的受事者,空格後為過去分詞 inspected,需要 be 動詞構成被動語態,且主詞為複數,故 (A) are 正確。(B) is 是單數動詞,與複數主詞不一致(left for repair 只是後位修飾的分詞片語,不影響主詞)。(C) have 會構成主動的完成式 have inspected,語意變成自行車去檢查別人,不合理。(D) being 是分詞,沒有助動詞就不能單獨當主要動詞,整句會缺少述語。"
+  },
+  {
+    "id": "p5-b9-10",
+    "difficulty": "中級",
+    "category": "動詞時態與語態",
+    "question": "By the time the craft fair opens on Saturday, Wrenfield Pottery ------- more than four hundred mugs for the event.",
+    "options": ["produced", "will have produced", "has produced", "will produce"],
+    "answer": 1,
+    "translation": "到週六手工藝市集開幕時,雷恩菲爾陶藝工作室將已為該活動做出超過四百個馬克杯。",
+    "explanation": "考點:未來完成式。By the time 引導的時間子句用現在式代替未來式,主要子句描述「到那個未來時間點為止已經完成」的事,須用未來完成式,故 (B) will have produced 正確。(A) produced 是過去式,與週六這個未來時間點衝突。(C) has produced 是現在完成式,計算的截止點是「現在」,無法涵蓋到週六為止的產量。(D) will produce 只表示未來會做,無法表達在該時間點之前已累積完成的數量。"
+  },
+  {
+    "id": "p5-b9-11",
+    "difficulty": "中級",
+    "category": "動詞時態與語態",
+    "question": "The main classroom at Kirkby Driving School ------- last month, so lessons were held in a rented space nearby.",
+    "options": ["renovated", "was renovating", "was renovated", "had renovated"],
+    "answer": 2,
+    "translation": "柯克比駕訓班的主教室上個月整修,因此課程改在附近租來的場地上課。",
+    "explanation": "考點:過去被動語態。主詞 The main classroom 是整修動作的受事者,事件又發生在明確的過去時間 last month,故用過去式被動 (C) was renovated。(A) renovated 是主動的過去式,會變成主教室自己去整修別的東西。(B) was renovating 是過去進行式,同樣是主動語態,把教室當成施動者。(D) had renovated 除了語態是主動之外,過去完成式須有另一個更早的過去時間點作對照,句中並無此需要。"
+  },
+  {
+    "id": "p5-b9-12",
+    "difficulty": "中級",
+    "category": "動詞時態與語態",
+    "question": "Drivers for Marberry Florists should call the shop as soon as they ------- the delivery address.",
+    "options": ["will reach", "reach", "reached", "will have reached"],
+    "answer": 1,
+    "translation": "馬伯里花店的司機一抵達送貨地址,就應該打電話回店裡。",
+    "explanation": "考點:時間副詞子句中以現在式代替未來式。as soon as 引導的時間子句即使指未來的事,動詞也要用現在簡單式,未來的意思由主要子句承擔,故 (B) reach 正確。(A) will reach 在時間子句中不可使用未來式。(C) reached 是過去式,與敘述未來例行做法的語境不符。(D) will have reached 同樣屬於未來式(完成式),在 as soon as 子句中不成立。"
+  },
+  {
+    "id": "p5-b9-13",
+    "difficulty": "進階",
+    "category": "動詞時態與語態",
+    "question": "Had the weather alert reached the campground an hour earlier, the staff ------- the tents before the storm arrived.",
+    "options": ["had secured", "will have secured", "would secure", "would have secured"],
+    "answer": 3,
+    "translation": "如果天氣警報早一小時傳到營地,工作人員就能在暴風雨來臨前把帳篷固定好。",
+    "explanation": "考點:與過去事實相反的假設語氣及其倒裝。Had + 主詞 + 過去分詞 是 If ... had + 過去分詞 省略 if 後的倒裝,表示與過去事實相反,主要子句必須用 would have + 過去分詞,故 (D) would have secured 正確。(A) had secured 是條件子句才用的過去完成式,不能放在主要子句。(B) will have secured 是未來完成式,與過去相反的假設無關。(C) would secure 用於與現在或未來事實相反的假設,時間層次與 Had ... reached 不搭。"
+  },
+  {
+    "id": "p5-b9-14",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Students who miss a piano lesson may ------- it within the same month at no extra cost.",
+    "options": ["remind", "reschedule", "remove", "replace"],
+    "answer": 1,
+    "translation": "錯過鋼琴課的學生可以在同一個月內改期補課,不需額外付費。",
+    "explanation": "考點:動詞語意辨析。受詞 it 指錯過的那堂課,句意是把課挪到別的時間上,reschedule 意為「重新安排時間、改期」,故 (B) 正確。(A) remind 意為「提醒」,受詞必須是人,不能提醒一堂課。(C) remove 意為「移除、拿走」,課程不會被拿走。(D) replace 意為「以別的東西取代」,焦點在換掉原本的事物,而不是把同一堂課移到別的時段。"
+  },
+  {
+    "id": "p5-b9-15",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Please keep your -------, as repaired shoes cannot be collected without it.",
+    "options": ["recipe", "reception", "receipt", "recipient"],
+    "answer": 2,
+    "translation": "請保留您的收據,沒有收據無法領取修好的鞋子。",
+    "explanation": "考點:形近字辨析。領件時要出示的是收據或取件單,故 (C) receipt 正確。(A) recipe 是「食譜」,與修鞋無關。(B) reception 指「接待處」或「歡迎會」,是地點或活動,不是可以保留在身上的憑證。(D) recipient 指「收受者、領取人」,是人而非單據,句末的 without it 也顯示空格應為物品。"
+  },
+  {
+    "id": "p5-b9-16",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "The organizer of the antique fair will ------- a booth number to each vendor on Friday morning.",
+    "options": ["assign", "attach", "apply", "admit"],
+    "answer": 0,
+    "translation": "古董市集的主辦人會在週五早上把攤位號碼分配給每位攤商。",
+    "explanation": "考點:動詞語意與 to 的搭配。assign A to B 意為「把 A 分配給 B」,符合主辦方把攤位號碼分派給各攤商的語意,故 (A) 正確。(B) attach 意為「附上、黏貼」實體物件,號碼是分配而非貼上。(C) apply 表示「申請」時要接 for,表示「塗抹、套用」時語意也不合。(D) admit 意為「承認」或「准許進入」,後面不接號碼這類受詞。"
+  },
+  {
+    "id": "p5-b9-17",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The veterinary clinic asks owners to ------- from feeding their pets for eight hours before an operation.",
+    "options": ["remain", "retain", "restrain", "refrain"],
+    "answer": 3,
+    "translation": "獸醫診所要求飼主在手術前八小時不要餵食寵物。",
+    "explanation": "考點:形近動詞與介系詞的搭配。refrain from + 動名詞 意為「克制不做某事」,正好對應手術前禁食的指示,故 (D) refrain 正確。(A) remain 意為「保持、仍然是」,後面接形容詞或名詞,不與 from 連用。(B) retain 意為「保留」,是及物動詞,直接接受詞。(C) restrain 意為「約束、制止(某人或某物)」,也是及物動詞,須寫成 restrain someone from,不能省略受詞。"
+  },
+  {
+    "id": "p5-b9-18",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "This warranty ------- only to sewing machines serviced by an authorized dealer.",
+    "options": ["attends", "belongs", "applies", "refers"],
+    "answer": 2,
+    "translation": "本保固僅適用於由授權經銷商保養的縫紉機。",
+    "explanation": "考點:動詞與 to 的搭配語意。apply to 意為「適用於」,是說明保固範圍的標準用語,故 (C) applies 正確。(A) attend to 意為「處理、照料」,主詞通常是人,保固本身不會去照料機器。(B) belong to 意為「屬於某人所有」,保固與縫紉機之間並非所有權關係。(D) refer to 意為「提到、指的是」,用於說明用語所指涉的對象,無法表示條款的適用範圍。"
+  },
+  {
+    "id": "p5-b9-19",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Please provide an accurate ------- of the number of boxes so that the crew can bring a truck of the right size.",
+    "options": ["estimate", "expense", "outline", "outcome"],
+    "answer": 0,
+    "translation": "請提供準確的箱數估計,好讓工班帶來大小合適的貨車。",
+    "explanation": "考點:名詞語意辨析。空格要表達事前概算的數量,estimate 指「估計值、估價」,故 (A) 正確。(B) expense 指「費用、開銷」,與箱子的數量無關。(C) outline 指「大綱、輪廓」,用於文件或計畫的架構,不用於數量。(D) outcome 指「結果」,是事情發生之後才有的,無法在搬運前先提供。"
+  },
+  {
+    "id": "p5-b9-20",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Because the cost of flour rose sharply this spring, the bakery had to ------- its prices for large cake orders.",
+    "options": ["admit", "adopt", "adjust", "advance"],
+    "answer": 2,
+    "translation": "由於今年春天麵粉成本大幅上漲,這家烘焙坊不得不調整大量蛋糕訂單的價格。",
+    "explanation": "考點:動詞語意辨析。因成本上升而更動既有價格,用 adjust(調整)最貼切,故 (C) 正確。(A) admit 意為「承認」或「准許進入」,不能拿來搭配 prices 表示改動價格。(B) adopt 意為「採用(新政策、新做法)」,若要使用須說 adopt new prices,直接接 its prices(既有價格)並不通。(D) advance 作動詞是「推進」或「預付」,不用於價格的調高或調低。"
+  },
+  {
+    "id": "p5-b9-21",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The office cleaning contract will be ------- automatically unless either party gives notice thirty days in advance.",
+    "options": ["repeated", "renewed", "returned", "reserved"],
+    "answer": 1,
+    "translation": "除非任一方提前三十天通知,否則這份辦公室清潔合約將自動續約。",
+    "explanation": "考點:合約用語的動詞辨析。renew 意為「續約、展期」,是合約效期自動延續的標準說法,故 (B) 正確。(A) repeated 意為「重複做某個動作」,不用於合約期限的延長。(C) returned 意為「歸還、退回」,與自動延續的語意相反。(D) reserved 意為「預訂、保留」,用於座位、房間或名額,不用於既有合約的效期。"
+  },
+  {
+    "id": "p5-b9-22",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Enrollment in the weekend cooking class is ------- to twelve students so that each one receives individual attention.",
+    "options": ["limited", "divided", "shortened", "narrowed"],
+    "answer": 0,
+    "translation": "週末烹飪課的招生名額限定十二人,好讓每位學生都能得到個別指導。",
+    "explanation": "考點:動詞與介系詞 to 的搭配。be limited to + 數量 意為「以…為上限」,是課程名額的固定說法,故 (A) 正確。(B) divided 意為「分開、劃分」,要說「分成幾組」須用 be divided into,搭配的介系詞不是 to。(C) shortened 意為「縮短長度或時間」,不能用於人數。(D) narrowed 意為「使變窄」或「縮小範圍」,常見說法是 narrow down the list,不用於名額上限。"
+  },
+  {
+    "id": "p5-b9-23",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Beckton Parking Garage is not ------- for personal items left inside parked vehicles.",
+    "options": ["capable", "reliable", "available", "liable"],
+    "answer": 3,
+    "translation": "貝克頓停車場對留在停放車輛內的個人物品不負賠償責任。",
+    "explanation": "考點:形容詞與介系詞 for 的搭配及語意。be liable for 意為「對…負(法律)責任」,是免責告示的標準用語,故 (D) liable 正確。(A) capable 意為「有能力的」,須接 of + 動名詞,搭配的介系詞就不對。(B) reliable 意為「可靠的」,用來形容人或設備值得信賴,無法表示責任歸屬。(C) available 意為「可取得的、有空的」,填入後語意不通。"
+  },
+  {
+    "id": "p5-b9-24",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "All residents are expected to ------- with the building's noise rules after nine o'clock in the evening.",
+    "options": ["consist", "comply", "confirm", "contribute"],
+    "answer": 1,
+    "translation": "所有住戶在晚上九點後都必須遵守大樓的噪音規定。",
+    "explanation": "考點:動詞與介系詞 with 的搭配。comply with 意為「遵守(規定、法令)」,故 (B) 正確。(A) consist 要接 of,意為「由…組成」,主詞必須是整體而非人。(C) confirm 是及物動詞,直接接受詞表示「確認」,不與 with 連用表達遵守。(D) contribute 要接 to,意為「貢獻於、促成」,介系詞與語意都不符。"
+  },
+  {
+    "id": "p5-b9-25",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Owing to a shortage of drivers, deliveries to the island cafe have been ------- until further notice.",
+    "options": ["subscribed", "suspected", "sustained", "suspended"],
+    "answer": 3,
+    "translation": "由於司機人手不足,前往島上咖啡館的配送暫停,直到另行通知。",
+    "explanation": "考點:形近動詞辨析。suspend 意為「暫停、中止」,be suspended until further notice(暫停至另行通知)是公告的固定說法,故 (D) suspended 正確。(A) subscribed 意為「訂閱」,須接 to 且主詞通常是人。(B) suspected 意為「懷疑」,配送不會被懷疑。(C) sustained 意為「維持、承受」,填入後變成配送照常進行,與司機不足的原因互相矛盾。"
+  }
+]

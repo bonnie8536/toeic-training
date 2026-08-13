@@ -1,0 +1,252 @@
+[
+  {
+    "id": "p5-b12-01",
+    "difficulty": "基礎",
+    "category": "主謂一致",
+    "question": "The owner of Thistledown Gardens, along with two part-time crew members, ------- the flower beds in front of the shop every Monday morning.",
+    "options": ["water", "watering", "have watered", "waters"],
+    "answer": 3,
+    "translation": "Thistledown Gardens 的老闆和兩位兼職工作人員每週一早上為店門口的花圃澆水。",
+    "explanation": "考點:along with 片語不影響主詞的單複數。句子的主詞核心是單數的 The owner,along with two part-time crew members 只是補充說明的插入片語,不會把主詞變成複數;句中 every Monday morning 表示固定習慣,要用現在式,故 (D) waters 正確。(A) water 是複數動詞,誤把 crew members 一起算進主詞。(B) watering 是現在分詞,前面沒有 be 動詞就不能當句子的主要動詞,整句會變成沒有述語的片段。(C) have watered 既是複數動詞,現在完成式也和 every Monday morning 這種習慣性頻率不合。"
+  },
+  {
+    "id": "p5-b12-02",
+    "difficulty": "中級",
+    "category": "主謂一致",
+    "question": "Attached to the estimate ------- photographs of the damaged fence that Mr. Halloran has asked us to replace.",
+    "options": ["is", "are", "was", "being"],
+    "answer": 1,
+    "translation": "隨估價單附上的是 Halloran 先生請我們更換的那段受損圍籬的照片。",
+    "explanation": "考點:補語提前的倒裝句,動詞仍要和真正的主詞一致。句首 Attached to the estimate 是被提到前面的補語,真正的主詞在動詞後面,也就是複數的 photographs,故 (B) are 正確。(A) is 是單數動詞,誤把最靠近空格的 estimate 當成主詞。(C) was 除了是單數之外,過去式也和現在完成式 has asked 所描述的目前狀況不搭。(D) being 是分詞,沒有助動詞就無法擔任句子的主要動詞。"
+  },
+  {
+    "id": "p5-b12-03",
+    "difficulty": "中級",
+    "category": "主謂一致",
+    "question": "Nearly half of the fabric ordered for the new window displays ------- arrived damaged, so Sunview Blinds will place a new order.",
+    "options": ["has", "have", "were", "are"],
+    "answer": 0,
+    "translation": "為新櫥窗陳列訂購的布料將近一半送達時就已受損,因此 Sunview Blinds 會重新下單。",
+    "explanation": "考點:half of 這類部分詞的單複數,由 of 後面的名詞決定。fabric(布料)是不可數名詞,視為單數,所以要用單數助動詞搭配過去分詞形成現在完成式,故 (A) has 正確。(B) have 是複數助動詞,只有在 of 後面接複數可數名詞時才適用。(C) were 與 (D) are 都是 be 動詞,但 arrive 是不及物動詞,沒有被動語態,寫成 were/are arrived 並不成立。"
+  },
+  {
+    "id": "p5-b12-04",
+    "difficulty": "進階",
+    "category": "主謂一致",
+    "question": "Ms. Kowalski is one of the few technicians at Cyclepoint who ------- able to service both electric and standard bicycles.",
+    "options": ["is", "has", "are", "being"],
+    "answer": 2,
+    "translation": "Kowalski 女士是 Cyclepoint 少數幾位電動與一般自行車都能維修的技師之一。",
+    "explanation": "考點:one of the + 複數名詞 + who 之後的動詞一致。關係代名詞 who 的先行詞是複數的 technicians,句意是「能同時維修兩種車的那幾位技師」,她只是其中之一,故動詞用複數的 (C) are。(A) is 誤把 one 當成先行詞;只有 the only one of 這種強調唯一的說法才會搭配單數動詞。(B) has 不能和形容詞 able 連用,要說 be able to 而不是 have able to。(D) being 是分詞,不能單獨當關係子句的動詞。"
+  },
+  {
+    "id": "p5-b12-05",
+    "difficulty": "基礎",
+    "category": "片語動詞",
+    "question": "New students at Claremont Music School are asked to ------- out a short form about their previous training.",
+    "options": ["fill", "take", "hand", "bring"],
+    "answer": 0,
+    "translation": "Claremont 音樂教室的新生要填一份關於過去學習經歷的簡短表格。",
+    "explanation": "考點:fill out(填寫表格)的固定用法,受詞是 form、questionnaire 這類表單。故 (A) fill 正確。(B) take out 是「拿出、外帶」,和填寫資料無關。(C) hand out 是「發放」,表格是要學生自己填,不是由學生分發。(D) bring out 是「推出(新產品)、把…拿出來」,語意不合。"
+  },
+  {
+    "id": "p5-b12-06",
+    "difficulty": "基礎",
+    "category": "片語動詞",
+    "question": "The moving truck ------- down on the highway, so Padgett Moving sent a second crew to finish the job.",
+    "options": ["fell", "broke", "cut", "turned"],
+    "answer": 1,
+    "translation": "搬家貨車在公路上拋錨,因此 Padgett Moving 另外派了一組人手去把工作做完。",
+    "explanation": "考點:break down(車輛或機器故障)。後半句說另外派人接手,可知車子壞了,故 (B) broke 正確。(A) fall down 指人跌倒或建築物倒塌,不用來說車子故障。(C) cut down 是「砍倒」或「削減」,後面要接被砍或被減少的對象。(D) turn down 是「拒絕」或「調低音量、溫度」,兩個意思都和公路上發生的狀況無關。"
+  },
+  {
+    "id": "p5-b12-07",
+    "difficulty": "中級",
+    "category": "片語動詞",
+    "question": "Because of the storm, the weekend sidewalk sale at Fenwick Toy Shop was ------- off until the following Saturday.",
+    "options": ["called", "taken", "put", "paid"],
+    "answer": 2,
+    "translation": "受暴風雨影響,Fenwick 玩具店的週末店外特賣延到下一個星期六舉行。",
+    "explanation": "考點:put off(延期)與 call off(取消)的差別。空格後面有 until the following Saturday,表示活動改到另一天照常舉行,故用 (C) put。(A) called off 是取消,取消的活動不會再給新日期,與 until 連用會前後矛盾。(B) take off 是「起飛、脫下、休假」。(D) pay off 是「還清欠款」或「(努力)獲得回報」,語意都不合。"
+  },
+  {
+    "id": "p5-b12-08",
+    "difficulty": "中級",
+    "category": "片語動詞",
+    "question": "Dr. Ibarra asked the receptionist to ------- the duplicate charge on Mrs. Renaldi's bill before the clinic closed.",
+    "options": ["come across", "take after", "get along", "look into"],
+    "answer": 3,
+    "translation": "Ibarra 醫師請櫃檯人員在診所打烊前查清楚 Renaldi 太太帳單上重複計費的問題。",
+    "explanation": "考點:look into(調查、查明)。帳單出現重複收費,需要有人主動查明原因,故 (D) 正確。(A) come across 是「偶然遇到、無意間發現」,強調碰巧,無法表達受人之託去查。(B) take after 是「長得像、性格像(某位長輩)」。(C) get along 是「相處融洽」,而且要與 with 連用,不能直接接受詞。"
+  },
+  {
+    "id": "p5-b12-09",
+    "difficulty": "中級",
+    "category": "片語動詞",
+    "question": "The jam booth at Riverbend Farmers Market ------- out of its most popular flavor before eleven o'clock.",
+    "options": ["gave", "ran", "fell", "went"],
+    "answer": 1,
+    "translation": "Riverbend 農夫市集的果醬攤位不到十一點就把最熱門的口味賣光了。",
+    "explanation": "考點:run out of(用完、賣完)。故 (B) ran 正確。(A) give out 指體力不支、機器不行了,或是「分發」,不與 of 搭配表示存貨售罄。(C) fall out 是「掉出來」或「與人鬧翻」。(D) go out 是「外出、熄滅」,常見的 go out of 只出現在 go out of business(歇業)這類固定說法,不能用來表示商品賣完。"
+  },
+  {
+    "id": "p5-b12-10",
+    "difficulty": "進階",
+    "category": "片語動詞",
+    "question": "Staff at Danforth Optical are expected to ------- up on every repair inquiry within one business day.",
+    "options": ["catch", "keep", "get", "follow"],
+    "answer": 3,
+    "translation": "Danforth 眼鏡行的員工必須在一個工作天內追蹤處理每一筆維修詢問。",
+    "explanation": "考點:follow up on(後續追蹤、跟進)。句中受詞是單筆的維修詢問,要在時限內回頭處理,故 (D) follow 正確。(A) catch up on 是「補做累積下來的事」,例如 catch up on paperwork,受詞是積壓的工作而非個別詢問。(B) keep up 要搭配的介系詞是 with(keep up with),不是 on。(C) get up 是「起床、站起來」,沒有 get up on 表示追蹤的用法。"
+  },
+  {
+    "id": "p5-b12-11",
+    "difficulty": "基礎",
+    "category": "慣用搭配",
+    "question": "Please ------- an appointment with Lockridge Sewing Center before bringing your machine in for its yearly service.",
+    "options": ["do", "take", "make", "give"],
+    "answer": 2,
+    "translation": "把機器送到 Lockridge 縫紉中心做年度保養前,請先預約。",
+    "explanation": "考點:make an appointment(預約)是固定搭配。故 (C) make 正確。(A) do 不與 appointment 搭配,常見的是 do business、do a favor。(B) take 的固定用法是 take a break、take a message,不用來表示主動預約。(D) give an appointment 是站在安排時段那一方的說法,本句要求的是顧客自己去預約,主詞角度不合。"
+  },
+  {
+    "id": "p5-b12-12",
+    "difficulty": "基礎",
+    "category": "慣用搭配",
+    "question": "Merribell Florist delivers within the city free ------- charge for any order over thirty dollars.",
+    "options": ["from", "of", "with", "for"],
+    "answer": 1,
+    "translation": "凡是三十元以上的訂單,Merribell 花店在市區內免費配送。",
+    "explanation": "考點:free of charge(免費)是固定片語。故 (B) of 正確。(A) free from 表示「沒有某種不好的東西」,例如 free from defects(無瑕疵),後面不接 charge。(C) with 與 (D) for 都無法和 charge 構成表示免費的說法;若要表達不另外收費,也可以說 at no charge,但介系詞同樣不是 with 或 for。"
+  },
+  {
+    "id": "p5-b12-13",
+    "difficulty": "中級",
+    "category": "慣用搭配",
+    "question": "All storage rates listed in the Millpond Self Storage brochure are subject ------- change at the start of each quarter.",
+    "options": ["to", "for", "with", "of"],
+    "answer": 0,
+    "translation": "Millpond 迷你倉手冊上列出的所有倉租費率,每季初都可能調整。",
+    "explanation": "考點:be subject to + 名詞,表示「可能受到…、須以…為準」,是價目表與合約的常見說法。故 (A) to 正確。(B) subject for 沒有這種搭配,for 之後通常接目的或對象。(C) 若要表達「隨…而改變」應寫成 change with the season 之類,但 subject 後面不接 with。(D) of 也不與 subject 形成此用法。"
+  },
+  {
+    "id": "p5-b12-14",
+    "difficulty": "中級",
+    "category": "慣用搭配",
+    "question": "Members can take ------- of the reduced rental rates on camping equipment at Aspenwood Outfitters during the off-season.",
+    "options": ["benefit", "profit", "favor", "advantage"],
+    "answer": 3,
+    "translation": "會員可以在淡季善加利用 Aspenwood 戶外用品店露營裝備的優惠租金。",
+    "explanation": "考點:take advantage of(善加利用、把握機會)是固定搭配。故 (D) advantage 正確。(A) benefit 的常見用法是 benefit from 或 be of benefit to,不會說 take benefit of。(B) profit 表示獲利時要用 profit from,而且語氣偏重金錢收益。(C) favor 的固定說法是 in favor of(贊成)或 do someone a favor(幫忙),都不能填入本句。"
+  },
+  {
+    "id": "p5-b12-15",
+    "difficulty": "進階",
+    "category": "慣用搭配",
+    "question": "------- accordance with store policy, items left at Sparkle Lane Cleaners for more than sixty days are donated to charity.",
+    "options": ["By", "Under", "In", "On"],
+    "answer": 2,
+    "translation": "依照店內規定,在 Sparkle Lane 洗衣店寄放超過六十天的物品會捐給慈善機構。",
+    "explanation": "考點:in accordance with(依照…規定)是固定片語,accordance 只與 in 搭配。故 (C) In 正確。(A) by 雖然可以表示依據,但常見的是 by law、by agreement,不接 accordance。(B) under 可以說 under store policy、under the terms of the contract,卻沒有 under accordance 的說法。(D) 英文中不存在 on accordance 這個組合。"
+  },
+  {
+    "id": "p5-b12-16",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Wilder Shoe Repair asks customers to keep the ------- so that they can show proof of payment when they pick up their shoes.",
+    "options": ["recipe", "receipt", "reception", "recipient"],
+    "answer": 1,
+    "translation": "Wilder 修鞋店請顧客保留收據,以便取鞋時出示付款證明。",
+    "explanation": "考點:形近字辨析。receipt 是付款後拿到的「收據」,正好可以作為付款證明,故 (B) 正確。(A) recipe 是「食譜」,與付款無關。(C) reception 是「櫃檯接待處」或「招待會」,是地點或活動,不是可以保留的憑證。(D) recipient 指「收受者、得獎人」,是人而不是單據。"
+  },
+  {
+    "id": "p5-b12-17",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Before choosing a contractor, Ms. Persaud compared written ------- from three roofing companies.",
+    "options": ["accounts", "expenses", "receipts", "estimates"],
+    "answer": 3,
+    "translation": "在選定承包商之前,Persaud 女士比較了三家屋頂工程公司的書面估價。",
+    "explanation": "考點:與費用相關的名詞辨析。estimate 是動工前提出的「估價單」,正好用來比價,故 (D) 正確。(A) account 是「帳戶、帳目」或「敘述」,不是報價文件。(B) expense 指已經支出的費用,施工還沒開始就不會有。(C) receipt 是付款後才拿到的收據,時間點也不對。"
+  },
+  {
+    "id": "p5-b12-18",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The new roasting machines are far more ------- than the old ones, using about a third less gas to produce the same amount of coffee.",
+    "options": ["efficient", "effective", "sufficient", "affordable"],
+    "answer": 0,
+    "translation": "新的烘豆機比舊機器有效率得多,產出同樣份量的咖啡只需要少約三分之一的瓦斯。",
+    "explanation": "考點:意思相近的形容詞辨析。efficient 指「有效率的」,強調用較少資源做到同樣的事,和句中少用三分之一瓦斯的說明完全對應,故 (A) 正確。(B) effective 是「有效的」,強調能達成預期效果,無法說明耗能減少。(C) sufficient 是「足夠的」,講的是數量夠不夠,不能用 more sufficient than 來比較機器性能。(D) affordable 是「價格負擔得起的」,說的是售價而不是耗用瓦斯的多寡。"
+  },
+  {
+    "id": "p5-b12-19",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Group lessons at Beacon Hill Swim School will be ------- if fewer than four students sign up by Friday.",
+    "options": ["refused", "canceled", "rejected", "denied"],
+    "answer": 1,
+    "translation": "如果到星期五報名人數不足四人,Beacon Hill 游泳學校的團體課就會停開。",
+    "explanation": "考點:表示「拒絕、取消」的動詞辨析。cancel 用於取消已經排定的課程、會議或行程,故 (B) 正確。(A) refuse 是拒絕別人的要求或邀請,受詞是提議而不是課程本身。(C) reject 是「退回、否決」不合格的提案或產品。(D) deny 是「否認」或「拒絕給予(權利、許可)」,例如 deny access,都不能用來說課程不開了。"
+  },
+  {
+    "id": "p5-b12-20",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Each guest on the Larchmont Tours coastal route receives a printed ------- listing the stops and the time allowed at each one.",
+    "options": ["inventory", "invoice", "interval", "itinerary"],
+    "answer": 3,
+    "translation": "參加 Larchmont 旅遊公司海岸線行程的每位旅客,都會拿到一份列出停靠點與各點停留時間的紙本行程表。",
+    "explanation": "考點:商務常見名詞辨析。itinerary 是列出地點與時間的「行程表」,和句中說明的內容一致,故 (D) 正確。(A) inventory 是「庫存清單」,列的是存貨數量。(B) invoice 是「請款單」,列的是金額。(C) interval 指兩個時間點之間的「間隔」,是一段時間長度,不是一份可以列印發放的文件。"
+  },
+  {
+    "id": "p5-b12-21",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The crew from Pinnacle Signs will ------- the finished sign to the brick wall with six large screws.",
+    "options": ["attach", "attain", "attend", "attempt"],
+    "answer": 0,
+    "translation": "Pinnacle 招牌公司的施工人員會用六根大螺絲把做好的招牌固定在磚牆上。",
+    "explanation": "考點:字首相同的動詞辨析。attach A to B 表示「把 A 固定或附在 B 上」,和空格後的 to the brick wall 相呼應,故 (A) 正確。(B) attain 是「達到(目標或標準)」,受詞是抽象的目標。(C) attend 是「出席、參加」,受詞是會議或活動。(D) attempt 是「試圖」,後面要接不定詞或所嘗試的事情,無法與 to the brick wall 形成合理句意。"
+  },
+  {
+    "id": "p5-b12-22",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Everyone using the tools at Ferris Woodworks must ------- to the safety rules posted beside the door.",
+    "options": ["obey", "comply", "adhere", "follow"],
+    "answer": 2,
+    "translation": "凡是使用 Ferris 木工坊工具的人,都必須遵守張貼在門邊的安全規定。",
+    "explanation": "考點:意思相近但介系詞搭配不同的動詞。空格後面是 to,四個選項中只有 adhere 以 adhere to 表示「遵守(規定、原則)」,故 (C) 正確。(A) obey 是及物動詞,直接說 obey the rules,不加 to。(B) comply 意思雖然相同,固定搭配卻是 comply with。(D) follow 同樣是及物動詞,要說 follow the rules。"
+  },
+  {
+    "id": "p5-b12-23",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Holloway Hardware received a ------- number of calls after the storm and brought in two extra staff members to answer the phones.",
+    "options": ["considerate", "considerable", "consistent", "conscious"],
+    "answer": 1,
+    "translation": "暴風雨過後 Holloway 五金行接到相當多的來電,於是多調了兩名人手接聽電話。",
+    "explanation": "考點:字根相同但意思不同的形容詞。considerable 是「相當多的、可觀的」,用來修飾 number、amount、increase 等表示數量的名詞,故 (B) 正確。(A) considerate 是「體貼的」,用來形容人的態度,例如 a considerate host。(C) consistent 是「前後一致的、穩定的」,強調不變動而非數量多。(D) conscious 是「有意識的、察覺到的」,常見於 be conscious of,無法修飾來電數量。"
+  },
+  {
+    "id": "p5-b12-24",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Customer addresses collected at Oakhaven Pet Grooming are kept ------- and are never shared with outside companies.",
+    "options": ["confident", "convenient", "confidential", "conventional"],
+    "answer": 2,
+    "translation": "Oakhaven 寵物美容所蒐集的顧客地址均予保密,絕不提供給外部公司。",
+    "explanation": "考點:拼法相近的形容詞辨析。confidential 是「機密的」,和後半句「絕不外流」相互呼應,故 (C) 正確。(A) confident 是「有自信的」,用來形容人,例如 a confident speaker。(B) convenient 是「方便的」,說的是使用上的便利。(D) conventional 是「傳統的、按慣例的」,和是否保密無關。"
+  },
+  {
+    "id": "p5-b12-25",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "To ------- that every online order is packed the same day, Castleton Bookshop hired two seasonal workers.",
+    "options": ["ensure", "assure", "insure", "secure"],
+    "answer": 0,
+    "translation": "為確保每筆網路訂單都能當天包裝出貨,Castleton 書店僱用了兩名季節性員工。",
+    "explanation": "考點:拼法相近的動詞辨析與受詞型態。ensure 後面可以直接接 that 子句,表示「確保某件事會發生」,故 (A) 正確。(B) assure 的受詞必須是人,要寫成 assure customers that…,不能像本句一樣直接接 that 子句。(C) insure 是「為…投保」,受詞是投保的財物。(D) secure 當動詞是「取得、確保拿到(合約、名額)」,受詞是具體的東西,沒有 secure that 子句的用法。"
+  }
+]

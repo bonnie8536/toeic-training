@@ -1,0 +1,277 @@
+[
+  {
+    "id": "l3-41",
+    "difficulty": "基礎",
+    "title": "寵物美容預約改期",
+    "dialogue": [
+      { "s": "W", "text": "Hi, I'm calling about my dog's grooming appointment this Friday at ten. The name's Diane Hollis." },
+      { "s": "M", "text": "Let me pull that up. Yes, Pepper, the brown one, Friday morning at ten. What can I do for you?" },
+      { "s": "W", "text": "Something came up at work, so I can't make it Friday. Do you have anything on Saturday?" },
+      { "s": "M", "text": "Saturday's pretty full, I'm afraid. I've only got one opening, at four in the afternoon." },
+      { "s": "W", "text": "Four's a little late for us. What about Sunday morning?" },
+      { "s": "M", "text": "We're closed on Sundays. But Monday morning is wide open, if that works." },
+      { "s": "W", "text": "Monday at ten would be great, actually. I'm off that day." },
+      { "s": "M", "text": "Perfect, I'll move him to Monday. Oh, and one more thing — we'll need a copy of his health record before the visit." },
+      { "s": "W", "text": "I sent that in last year, didn't I?" },
+      { "s": "M", "text": "You did, but it expired last month. You can email it to us, or just bring it with you on Monday." },
+      { "s": "W", "text": "I'll email it tonight. Should I bring his brush again?" },
+      { "s": "M", "text": "No need. We have everything here." }
+    ],
+    "questions": [
+      {
+        "q": "Why is the woman calling?",
+        "options": [
+          "To ask about the price of a service",
+          "To complain about a recent visit",
+          "To find out the store's business hours",
+          "To change the date of an appointment"
+        ],
+        "answer": 3,
+        "explanation": "定位在女子第二次發言：Something came up at work, so I can't make it Friday. Do you have anything on Saturday?（我工作臨時有事,禮拜五沒辦法過去,禮拜六還有位子嗎?）她整通電話的目的就是把原訂週五的預約換到別天,選 (D)。(A) 全程沒有談到價錢;(B) 沒有任何抱怨,反而是她自己有事;(C) 男子雖然提到週日公休,但那是回答她的提問,不是她打電話的目的。"
+      },
+      {
+        "q": "What does the man say about Saturday?",
+        "options": [
+          "The shop will be closed that day",
+          "Only one afternoon appointment is available",
+          "Another staff member will be on duty",
+          "Prices are higher on weekends"
+        ],
+        "answer": 1,
+        "explanation": "定位在男子第二次發言：Saturday's pretty full... I've only got one opening, at four in the afternoon.（禮拜六很滿,只剩下午四點一個時段。）只剩下午一個時段,選 (B)。(A) 公休的是週日 Sundays,不是週六,這是最常見的誤答;(C) 沒有提到換人服務;(D) 沒有提到週末加價。"
+      },
+      {
+        "q": "What will the woman most likely do tonight?",
+        "options": [
+          "Send a document by email",
+          "Pick up her dog from the shop",
+          "Buy a new brush",
+          "Call the shop again"
+        ],
+        "answer": 0,
+        "explanation": "定位在對話後段：男子說 You can email it to us, or just bring it with you on Monday（您可以用電子郵件寄給我們,或禮拜一直接帶過來）,女子回 I'll email it tonight（我今天晚上寄）。她選了寄電子郵件,選 (A)。(B) 狗狗還沒送去美容;(C) 男子說 No need（不用）,店裡都有;(D) 事情已經在這通電話裡談定,不需要再打。"
+      }
+    ],
+    "transcriptZh": "女：您好,我想問一下這禮拜五早上十點我家狗狗的美容預約,我叫 Diane Hollis。\n男：我查一下。有的,Pepper,棕色那隻,禮拜五早上十點。有什麼需要幫忙的嗎?\n女：我工作臨時有事,禮拜五沒辦法過去。禮拜六還有位子嗎?\n男：禮拜六很滿,只剩下午四點一個時段。\n女：四點對我們來說有點晚。禮拜天早上呢?\n男：我們禮拜天公休。不過禮拜一早上都還空著,可以的話。\n女：禮拜一十點其實很好,那天我休假。\n男：好,我把牠改到禮拜一。對了,還有一件事,來之前要麻煩您給我們一份牠的健康紀錄影本。\n女：我去年不是有給過嗎?\n男：有,但上個月到期了。您可以用電子郵件寄給我們,或禮拜一直接帶過來。\n女：我今天晚上寄。要再帶牠的梳子嗎?\n男：不用,我們這邊都有。"
+  },
+  {
+    "id": "l3-42",
+    "difficulty": "中級",
+    "title": "茶水間咖啡機故障報修",
+    "dialogue": [
+      { "s": "M", "text": "Rachel, do you know what's going on with the coffee machine in the break room? It's leaking water all over the counter." },
+      { "s": "W", "text": "Again? It did that back in March. I thought the technician had fixed it." },
+      { "s": "M", "text": "Apparently not. There's water all over the floor under it, and the light on the front keeps flashing red." },
+      { "s": "W", "text": "Okay, don't use it. Could you unplug it and put a sign on it so nobody touches it?" },
+      { "s": "M", "text": "Already done. Do we call the same company as last time?" },
+      { "s": "W", "text": "We do, but let me check something first. The machine's only two years old, so it might still be under warranty." },
+      { "s": "M", "text": "That'd save us a few hundred dollars. Where would the paperwork be?" },
+      { "s": "W", "text": "Purchasing keeps all of that. I'll email Diego and ask him to look up the invoice." },
+      { "s": "M", "text": "In the meantime, what do people do for coffee? There are about forty of us on this floor." },
+      { "s": "W", "text": "There's a shop across the street. I'll ask if we can set up an account for this week and charge it to the department budget." },
+      { "s": "M", "text": "People will be happy about that. Should I let everyone know?" },
+      { "s": "W", "text": "Yes, please. Send a short note to the floor, and mention the machine will be out for at least a few days." }
+    ],
+    "questions": [
+      {
+        "q": "What problem are the speakers discussing?",
+        "options": [
+          "A delivery has not arrived",
+          "A room is too small for the staff",
+          "A machine is not working properly",
+          "A bill was paid twice"
+        ],
+        "answer": 2,
+        "explanation": "定位在第一句：It's leaking water all over the counter（水漏得整個檯面都是）,加上 the light on the front keeps flashing red（前面那個燈一直閃紅色）。咖啡機故障漏水就是全篇的問題,選 (C)。(A) 沒有提到任何送貨;(B) 只提到這層樓約四十人,不是空間太小;(D) 提到發票是為了查保固,不是重複付款。"
+      },
+      {
+        "q": "What does the woman want to check first?",
+        "options": [
+          "Whether the machine is still covered by a warranty",
+          "Whether a cheaper model is available",
+          "How many people work on the floor",
+          "When the repair company opens"
+        ],
+        "answer": 0,
+        "explanation": "定位在女子第三次發言：let me check something first. The machine's only two years old, so it might still be under warranty.（我想先確認一件事,這台機器才買兩年,搞不好還在保固期內。）under warranty 是「保固期內」,選 (A)。(B) 沒有要換新機;(C) 四十人是男子提到的喝咖啡人數,不是她要查的事;(D) 她確定會找同一家公司,但要查的不是營業時間。"
+      },
+      {
+        "q": "What does the woman ask the man to do at the end of the conversation?",
+        "options": [
+          "Call the repair company himself",
+          "Send a message to everyone on the floor",
+          "Look for the invoice in the files",
+          "Move the machine to another room"
+        ],
+        "answer": 1,
+        "explanation": "定位在最後兩句：男子問 Should I let everyone know?（要我通知一下嗎?）女子回 Yes, please. Send a short note to the floor（好,麻煩你寄個簡短的訊息給整層樓的同事）,選 (B)。(A) 打給維修公司要等保固確認後才處理,不是現在交辦給他;(C) 找發票是請 Diego 做的;(D) 只請他拔插頭貼告示,沒有要搬機器。"
+      }
+    ],
+    "transcriptZh": "男：Rachel,妳知道茶水間那台咖啡機怎麼了嗎?水漏得整個檯面都是。\n女：又來?三月的時候就這樣過。我以為那位技師已經修好了。\n男：看來沒有。現在機器下面地上都是水,前面那個燈還一直閃紅色。\n女：好,先別用。可以麻煩你把插頭拔掉,再貼張告示,不要讓人去碰它嗎?\n男：已經弄好了。要找上次那家公司嗎?\n女：要,不過我想先確認一件事。這台機器才買兩年,搞不好還在保固期內。\n男：那就可以省下好幾百塊。文件會在哪裡?\n女：採購那邊都有留。我寄信給 Diego,請他把發票調出來。\n男：那這段期間大家咖啡怎麼辦?我們這層樓大概有四十個人。\n女：對面有家店。我去問問看這禮拜能不能開個帳,費用掛在部門預算。\n男：大家會很開心。要我通知一下嗎?\n女：好,麻煩你寄個簡短的訊息給整層樓的同事,順便說機器至少會停用幾天。"
+  },
+  {
+    "id": "l3-43",
+    "difficulty": "進階",
+    "title": "農夫市集攤位申請",
+    "dialogue": [
+      { "s": "W", "text": "Hello, I'd like to ask about renting a booth at the Saturday farmers market. I make jam and honey." },
+      { "s": "M", "text": "Sure. We take applications online — the form's on our website under the vendor tab. But I should tell you the spring season is already full." },
+      { "s": "W", "text": "Oh, that's disappointing. When does the next round open?" },
+      { "s": "M", "text": "Applications for the summer season open on the first of April, and they usually fill up within two weeks." },
+      { "s": "W", "text": "I'll write that down. What does a booth cost?" },
+      { "s": "M", "text": "Forty dollars a day if you sign up week by week, or four hundred for the whole twelve-week season. Most people take the season rate." },
+      { "s": "W", "text": "The season rate makes more sense. Is the table included?" },
+      { "s": "M", "text": "We provide the table and one chair. You bring your own tent, and it has to be white — that's a rule from the city, not from us." },
+      { "s": "W", "text": "Good to know. Anything else I should send with the form?" },
+      { "s": "M", "text": "A copy of your food permit, and a couple of photos of your products. Without the permit we can't even review the application." },
+      { "s": "W", "text": "I've got the permit already. Do you let people share a booth? A friend of mine sells bread." },
+      { "s": "M", "text": "We do, but you each need your own permit, and only one of you applies. Put both names on the same form." }
+    ],
+    "questions": [
+      {
+        "q": "Why is the woman calling?",
+        "options": [
+          "To confirm a delivery of supplies",
+          "To ask about renting space at a market",
+          "To report a problem with an order",
+          "To sign up for a cooking class"
+        ],
+        "answer": 1,
+        "explanation": "定位在第一句：I'd like to ask about renting a booth at the Saturday farmers market（我想請問週六農夫市集攤位租借的事）。booth 就是攤位,rent a booth 等於 rent space,選 (B)。(A) 她要送的是申請表和照片,不是進貨;(C) 全程沒有訂單問題;(D) 她是想去擺攤賣果醬和蜂蜜,不是去上課。"
+      },
+      {
+        "q": "What does the man say about the tent?",
+        "options": [
+          "It is provided at no extra cost",
+          "It must be set up the night before",
+          "It can be rented for forty dollars a day",
+          "Its color is set by a city rule"
+        ],
+        "answer": 3,
+        "explanation": "定位在男子第四次發言：You bring your own tent, and it has to be white — that's a rule from the city（帳篷要自己帶,而且必須是白色的,這是市政府的規定）,選 (D)。(A) 免費提供的是桌子和椅子,帳篷要自備,這是最容易混淆的一組;(B) 沒有提到前一晚搭設;(C) 四十元是「一天的攤位費」,不是帳篷租金,數字誘答。"
+      },
+      {
+        "q": "What does the man say about the food permit?",
+        "options": [
+          "It can be sent in after the season begins",
+          "It is issued by the market office",
+          "An application will not be reviewed without it",
+          "Two vendors are allowed to share one"
+        ],
+        "answer": 2,
+        "explanation": "定位在男子第五次發言：Without the permit we can't even review the application.（沒有許可證我們連審都沒辦法審。）can't even review 表示許可證是受理申請的前提,選 (C)。(A) 正好相反,要隨表格一起送;(B) 沒有說是市集辦公室核發;(D) 男子明確說 you each need your own permit（你們各自都要有自己的許可證）,可以共用的是攤位不是許可證。"
+      }
+    ],
+    "transcriptZh": "女：您好,我想請問週六農夫市集攤位租借的事。我做果醬和蜂蜜。\n男：好的。我們的申請都在網路上,表格在網站的攤商那一區。不過我得先跟您說,春季檔期已經滿了。\n女：喔,真可惜。下一輪什麼時候開放?\n男：夏季檔期的申請四月一日開放,通常兩個禮拜內就會額滿。\n女：我記下來。攤位費用怎麼算?\n男：一週一週報名的話一天四十元,整季十二週一次付則是四百元。多數人選整季的價格。\n女：整季比較划算。桌子有含嗎?\n男：我們提供一張桌子和一張椅子。帳篷要自己帶,而且必須是白色的,這是市政府的規定,不是我們訂的。\n女：了解。表格還要附上什麼嗎?\n男：食品許可證影本,還有幾張產品照片。沒有許可證我們連審都沒辦法審。\n女：許可證我已經有了。可以兩個人合租一個攤位嗎?我朋友是賣麵包的。\n男：可以,但你們各自都要有自己的許可證,而且只由其中一人提出申請,表格上寫兩個人的名字。"
+  },
+  {
+    "id": "l3-44",
+    "difficulty": "中級",
+    "title": "搬家公司電話估價",
+    "dialogue": [
+      { "s": "M", "text": "Hi, I'm moving my office at the end of next month and I'd like to get an estimate." },
+      { "s": "W", "text": "Happy to help. Is this a home move or a business move?" },
+      { "s": "M", "text": "A business. It's a small design studio — eight desks, some shelves, and about twenty boxes of files." },
+      { "s": "W", "text": "And how far are you going?" },
+      { "s": "M", "text": "Only about two miles. We're moving from Weller Street to the new building on Park Row." },
+      { "s": "W", "text": "That's not far at all. Are there elevators at both ends?" },
+      { "s": "M", "text": "There's one at the new place. The building we're in now doesn't have one, and we're on the third floor." },
+      { "s": "W", "text": "That changes the price, I'm afraid. Stairs mean an extra hourly charge, because we'd have to send more workers." },
+      { "s": "M", "text": "How much are we talking about?" },
+      { "s": "W", "text": "I can't give you a firm number over the phone. Someone should come and look at the space, and we do that free of charge." },
+      { "s": "M", "text": "Could someone come this week? I need the numbers before Friday's board meeting." },
+      { "s": "W", "text": "Thursday morning is open. And if you decide to pack the boxes yourselves, that'll bring the total down quite a bit." }
+    ],
+    "questions": [
+      {
+        "q": "What kind of business does the man work for?",
+        "options": [
+          "A design studio",
+          "A print shop",
+          "A furniture store",
+          "A law office"
+        ],
+        "answer": 0,
+        "explanation": "定位在男子第二次發言：It's a small design studio — eight desks, some shelves, and about twenty boxes of files.（是一間小型設計工作室,八張辦公桌、一些層架,還有大概二十箱檔案。）選 (A)。(C) desks 和 shelves 是他們要搬的家具,不代表他們賣家具,這是常見的字面誤答;(B)(D) 對話中都沒有出現。"
+      },
+      {
+        "q": "Why does the woman say the price may go up?",
+        "options": [
+          "The move takes place at the end of the month",
+          "The distance is longer than usual",
+          "There is no elevator in the current building",
+          "The company has too many boxes"
+        ],
+        "answer": 2,
+        "explanation": "定位在男子第四次發言與女子的回應：The building we're in now doesn't have one, and we're on the third floor（我們現在這棟沒有電梯,而且在三樓）→ That changes the price... Stairs mean an extra hourly charge（那價格就會不一樣了,走樓梯要另外按小時計費）,選 (C)。(A) 月底搬家只是時間,不影響報價;(B) 女子聽到兩英里還說 That's not far at all（那不遠）;(D) 二十箱不多,而且自己打包反而更便宜。"
+      },
+      {
+        "q": "What will most likely happen on Thursday?",
+        "options": [
+          "The man will attend a board meeting",
+          "The move will begin",
+          "The man will pack the boxes",
+          "A worker will visit the man's office"
+        ],
+        "answer": 3,
+        "explanation": "定位在女子最後兩次發言：Someone should come and look at the space（應該要派人去現場看過空間）→ Thursday morning is open（禮拜四早上有空）。所以週四是現場勘查,選 (D)。(A) 董事會是週五;(B) 搬家是下個月底;(C) 自己打包只是「如果決定」的省錢選項,沒有說在週四做。"
+      }
+    ],
+    "transcriptZh": "男：您好,我下個月底要搬辦公室,想請你們估個價。\n女：很樂意為您服務。請問是住家搬遷還是公司搬遷?\n男：公司。是一間小型設計工作室,八張辦公桌、一些層架,還有大概二十箱檔案。\n女：搬多遠呢?\n男：大概兩英里而已,從 Weller 街搬到 Park Row 的新大樓。\n女：那不遠。兩邊都有電梯嗎?\n男：新的地方有。我們現在這棟沒有電梯,而且在三樓。\n女：那價格就會不一樣了。走樓梯要多派人手,會另外按小時計費。\n男：大概是多少?\n女：電話裡沒辦法給您確切的數字。應該要派人去現場看過空間,這部分我們不收費。\n男：這禮拜可以過來嗎?我禮拜五董事會之前需要數字。\n女：禮拜四早上有空。另外,如果箱子你們自己打包,總金額可以省下不少。"
+  },
+  {
+    "id": "l3-45",
+    "difficulty": "基礎",
+    "title": "員工旅遊地點討論",
+    "dialogue": [
+      { "s": "W", "text": "Tom, did you look at the results of the staff trip survey?" },
+      { "s": "M", "text": "I did. The beach hotel came in first, and the mountain resort was right behind it." },
+      { "s": "W", "text": "How close was it?" },
+      { "s": "M", "text": "Thirty-one people picked the beach, twenty-eight picked the mountains. Only nine chose the city tour." },
+      { "s": "W", "text": "So it's basically a tie between the first two. What's the price difference?" },
+      { "s": "M", "text": "The beach hotel is about twenty dollars more per person, but breakfast is included, and the mountain place charges extra for it." },
+      { "s": "W", "text": "Then the beach is actually cheaper once you add that up." },
+      { "s": "M", "text": "That's what I thought. The one problem is the drive. It's four hours by bus, and the mountains are only two." },
+      { "s": "W", "text": "Four hours is long, but it's a Friday. We could leave at noon and still get there before dinner." },
+      { "s": "M", "text": "True. Should I go ahead and ask the beach hotel to hold thirty rooms?" },
+      { "s": "W", "text": "Please do, but don't pay the deposit yet. Ms. Alvarado has to approve the budget first, and she's back on Wednesday." },
+      { "s": "M", "text": "I'll email her the numbers so she can look at them before then." }
+    ],
+    "questions": [
+      {
+        "q": "What are the speakers mainly discussing?",
+        "options": [
+          "A change to the company's work hours",
+          "Where to take a company trip",
+          "A new hotel opening near the office",
+          "How to prepare a sales report"
+        ],
+        "answer": 1,
+        "explanation": "定位在第一句：did you look at the results of the staff trip survey?（員工旅遊的問卷結果你看了嗎?）之後全篇都在比較海邊飯店和山上度假村,選 (B)。(A) 沒有提到上班時間;(C) 飯店是旅遊地點,不是新開幕;(D) numbers 指的是費用數字,不是業務報告。"
+      },
+      {
+        "q": "Why does the woman think the beach hotel costs less?",
+        "options": [
+          "Breakfast is included in the room price",
+          "The bus ride is shorter",
+          "It offers a discount for large groups",
+          "Fewer people chose it"
+        ],
+        "answer": 0,
+        "explanation": "定位在男子第三次發言與女子的回應：breakfast is included, and the mountain place charges extra for it（含早餐,山上那間早餐要另外付錢）→ the beach is actually cheaper once you add that up（這樣算下來海邊反而比較便宜）,選 (A)。(B) 車程較短的是山上,只要兩小時;(C) 沒有提到團體折扣;(D) 選海邊的人反而比較多。"
+      },
+      {
+        "q": "What does the woman ask the man not to do yet?",
+        "options": [
+          "Send an email to Ms. Alvarado",
+          "Cancel the mountain resort",
+          "Make a payment to hold the rooms",
+          "Tell the staff about the results"
+        ],
+        "answer": 2,
+        "explanation": "定位在女子最後一次發言：Please do, but don't pay the deposit yet.（麻煩你,但先不要付訂金。）deposit 是訂金,選 (C)。(A) 寄信給 Alvarado 女士正是男子最後說要做的事;(B) 沒有提到要取消什麼;(D) 沒有交代要公布結果。"
+      }
+    ],
+    "transcriptZh": "女：Tom,員工旅遊的問卷結果你看了嗎?\n男：看了。海邊飯店排第一,山上的度假村緊追在後。\n女：差多少?\n男：三十一個人選海邊,二十八個人選山上,只有九個人選市區導覽。\n女：所以前兩名幾乎打平。價差呢?\n男：海邊飯店每個人大概貴二十元,但含早餐,山上那間早餐要另外付錢。\n女：這樣算下來海邊反而比較便宜。\n男：我也是這樣想。唯一的問題是車程,坐遊覽車要四個小時,山上只要兩個小時。\n女：四個小時是久了點,不過那天是禮拜五。我們中午出發,晚餐前還是到得了。\n男：也對。那我先請海邊飯店保留三十間房?\n女：麻煩你,但先不要付訂金。預算要 Alvarado 女士核准,她禮拜三才回來。\n男：我先把數字寄給她,讓她在那之前可以先看。"
+  }
+]

@@ -1,0 +1,252 @@
+[
+  {
+    "id": "p5-b10-01",
+    "difficulty": "基礎",
+    "category": "介系詞",
+    "question": "A new bicycle rack was installed ------- Two Rivers Cycles and the flower shop next door.",
+    "options": ["between", "among", "along", "across"],
+    "answer": 0,
+    "translation": "新的腳踏車架設在 Two Rivers Cycles 與隔壁花店之間。",
+    "explanation": "考點:表示「在兩者之間」的介系詞。空格後是 A and B 兩個並列地點,指位於兩個定點的中間要用 between,故 (A) 正確。(B) among 用於三者以上或一整群人事物之中,無法搭配只有兩個對象的 A and B。(C) along 表示「沿著」線狀物延伸,如 along the sidewalk,說不通兩點中間的位置。(D) across 表示「橫越」或「在…的對面」,同樣無法帶出兩個並列名詞的中間位置。"
+  },
+  {
+    "id": "p5-b10-02",
+    "difficulty": "基礎",
+    "category": "介系詞",
+    "question": "Sunhill Garden Nursery asks customers to return rented tools ------- 6:00 P.M., or an extra day's rental will be charged.",
+    "options": ["until", "since", "from", "by"],
+    "answer": 3,
+    "translation": "Sunhill Garden Nursery 要求顧客在下午六點前歸還租借的工具,否則會加收一天的租金。",
+    "explanation": "考點:期限介系詞 by 與持續介系詞 until 的區別。歸還工具是一次完成的動作,只要在該時間點之前做到即可,這種「最晚在…之前」要用 by,故 (D) 正確。(A) until 表示動作或狀態持續到某個時間點才停止,搭配 return 這類瞬間動作不合。(B) since 表示「自從」,後面要接過去的起點並搭配完成式。(C) from 表示起點,但句中談的是截止時間而不是開始時間。"
+  },
+  {
+    "id": "p5-b10-03",
+    "difficulty": "中級",
+    "category": "介系詞",
+    "question": "Bellhaven Music School offers lessons ------- the summer, although the building closes for one week in August.",
+    "options": ["along", "upon", "throughout", "toward"],
+    "answer": 2,
+    "translation": "Bellhaven Music School 整個夏天都有課程,不過校舍在八月會關閉一週。",
+    "explanation": "考點:表示「在整段期間之內」的介系詞。the summer 是一段時間,強調課程貫穿整個夏季要用 throughout,故 (C) 正確。(A) along 用於沿著具體的線狀物,不能接時間段。(B) upon 相當於 on,多接動作名詞表示「一…就…」,如 upon arrival。(D) toward 接時間時指「接近某個時間點」,如 toward the end of August,與整段期間的語意不同。"
+  },
+  {
+    "id": "p5-b10-04",
+    "difficulty": "中級",
+    "category": "介系詞",
+    "question": "Written estimates from Ambrose Moving Services must be signed ------- thirty days of the date they are issued.",
+    "options": ["among", "within", "onto", "against"],
+    "answer": 1,
+    "translation": "Ambrose Moving Services 開立的書面估價單,必須在開立日起三十天內簽回。",
+    "explanation": "考點:表示「在…期間之內」的介系詞。within 加上一段時間表示不超過該範圍,句中說估價單要在開立日起三十天內簽回,故 (B) 正確。(A) among 表示在群體之中,不能接時間長度。(C) onto 表示移動到某物的表面,與時間無關。(D) against 表示「對抗、靠著」,同樣不能接時間長度。"
+  },
+  {
+    "id": "p5-b10-05",
+    "difficulty": "進階",
+    "category": "介系詞",
+    "question": "The espresso machine at Marchetti Cafe is still ------- warranty, so the shop will not be charged for the repair.",
+    "options": ["beneath", "below", "within", "under"],
+    "answer": 3,
+    "translation": "Marchetti Cafe 的義式咖啡機仍在保固期內,因此這次維修不會向店家收費。",
+    "explanation": "考點:固定用法 under warranty(在保固期內)。表示「受某種規定或狀態涵蓋」時要用 under,類似說法還有 under construction、under review,故 (D) 正確。(A) beneath 與 (B) below 都只表示實際位置在下方,不能引申為「在保固範圍內」。(C) within 必須接明確的範圍名詞,例如 within the warranty period,直接接 warranty 不成立。"
+  },
+  {
+    "id": "p5-b10-06",
+    "difficulty": "進階",
+    "category": "介系詞",
+    "question": "------- its two full-time employees, Wickham Pet Grooming hires three part-time assistants for the weekend.",
+    "options": ["Beside", "Besides", "Except", "Among"],
+    "answer": 1,
+    "translation": "除了兩名全職員工之外,Wickham Pet Grooming 週末還會雇用三名兼職助理。",
+    "explanation": "考點:besides 與 beside 的區別。句意是「除了兩名全職員工之外,還另外雇用三名兼職人員」,表示「除…之外還有」要用 besides,故 (B) 正確。(A) Beside 少了 s,意思是「在…旁邊」,講的是位置。(C) Except 表示「除…之外(不包括在內)」,與後半句「還雇用」的語意相反,且置於句首多用 Except for。(D) Among 表示在群體之中,無法帶出額外增加的人力。"
+  },
+  {
+    "id": "p5-b10-07",
+    "difficulty": "基礎",
+    "category": "連接詞vs介系詞",
+    "question": "------- the heavy rain, most of the vendors at Millbank Farmers Market kept their booths open until noon.",
+    "options": ["Despite", "Although", "Even though", "While"],
+    "answer": 0,
+    "translation": "儘管下著大雨,Millbank Farmers Market 多數攤商仍營業到中午。",
+    "explanation": "考點:讓步語意中,介系詞與連接詞的選用。空格後是名詞片語 the heavy rain,沒有主詞與動詞,只能用介系詞,故 (A) Despite 正確。(B) Although、(C) Even though、(D) While 都是從屬連接詞,後面必須接完整子句,例如 Although it rained heavily。"
+  },
+  {
+    "id": "p5-b10-08",
+    "difficulty": "基礎",
+    "category": "連接詞vs介系詞",
+    "question": "Fairlane Dry Cleaners will be closed on Monday ------- the owner is attending a trade fair.",
+    "options": ["because of", "due to", "because", "owing to"],
+    "answer": 2,
+    "translation": "Fairlane Dry Cleaners 週一將暫停營業,因為老闆要去參加商展。",
+    "explanation": "考點:表示原因時,連接詞與介系詞的選用。空格後 the owner is attending a trade fair 是完整子句,必須用連接詞,故 (C) because 正確。(A) because of、(B) due to、(D) owing to 都是介系詞用法,後面只能接名詞或動名詞,例如 because of the trade fair。"
+  },
+  {
+    "id": "p5-b10-09",
+    "difficulty": "中級",
+    "category": "連接詞vs介系詞",
+    "question": "------- the printer was being repaired, Copperplate Print Works sent urgent jobs to a partner company.",
+    "options": ["During", "While", "Meanwhile", "In addition to"],
+    "answer": 1,
+    "translation": "印表機送修期間,Copperplate Print Works 把急件轉給合作廠商處理。",
+    "explanation": "考點:時間語意中,連接詞與介系詞的選用。空格後是完整子句 the printer was being repaired,要用連接詞 while 表示「當…的時候」,故 (B) 正確。(A) During 是介系詞,後面只能接名詞,如 during the repair。(C) Meanwhile 是副詞,只能銜接兩個獨立句子,無法引導子句。(D) In addition to 是介系詞片語,語意是「除…之外」,與時間關係不合。"
+  },
+  {
+    "id": "p5-b10-10",
+    "difficulty": "中級",
+    "category": "連接詞vs介系詞",
+    "question": "Deliveries from Colwyn Hardware were delayed last week ------- a shortage of drivers.",
+    "options": ["since", "because", "as", "owing to"],
+    "answer": 3,
+    "translation": "上週 Colwyn Hardware 的配送延誤,原因是司機人手不足。",
+    "explanation": "考點:原因語意中,介系詞片語的用法。空格後 a shortage of drivers 是名詞片語,只能用介系詞,故 (D) owing to 正確。(A) since、(B) because、(C) as 在表示原因時都是連接詞,後面必須接主詞加動詞,例如 because there was a shortage of drivers。"
+  },
+  {
+    "id": "p5-b10-11",
+    "difficulty": "中級",
+    "category": "連接詞vs介系詞",
+    "question": "Learners may use the practice area at Sunridge Driving School ------- an instructor is present.",
+    "options": ["as long as", "as well as", "in case of", "instead of"],
+    "answer": 0,
+    "translation": "只要有教練在場,學員就可以使用 Sunridge Driving School 的練習場地。",
+    "explanation": "考點:表示條件的連接詞。空格後是完整子句 an instructor is present,句意是「只要有教練在場就可以使用」,故 (A) as long as 正確。(B) as well as 意思是「以及」,用來連接對等的名詞或片語,不表示條件。(C) in case of 與 (D) instead of 都是介系詞片語,後面只能接名詞,而且語意分別是「萬一發生…」與「而不是…」,都不符合句意。"
+  },
+  {
+    "id": "p5-b10-12",
+    "difficulty": "進階",
+    "category": "連接詞vs介系詞",
+    "question": "------- the ferry schedule has been posted online, fewer passengers call Havenport Ferry Service for departure times.",
+    "options": ["Owing to", "As of", "Now that", "In case of"],
+    "answer": 2,
+    "translation": "既然渡輪班表已公告在網路上,打電話向 Havenport Ferry Service 詢問發船時間的乘客就變少了。",
+    "explanation": "考點:now that 當連接詞,表示「既然、由於現在…」。空格後是完整子句,語意是班表既然已經上網公告,來電詢問的乘客自然減少,故 (C) 正確。(A) Owing to 與 (D) In case of 都是介系詞片語,後面只能接名詞。(B) As of 也是介系詞,後面要接時間點,如 as of Monday,不能接子句。"
+  },
+  {
+    "id": "p5-b10-13",
+    "difficulty": "基礎",
+    "category": "代名詞",
+    "question": "Ms. Farrell, the owner of Rosewell Florist, prefers to greet each new customer ------- rather than have an assistant do it.",
+    "options": ["she", "her", "hers", "herself"],
+    "answer": 3,
+    "translation": "Rosewell Florist 的老闆 Farrell 女士偏好親自迎接每一位新顧客,而不是交給助理。",
+    "explanation": "考點:反身代名詞的強調用法。greet 的受詞已經是 each new customer,空格是用來強調「親自」,要用反身代名詞,故 (D) herself 正確。(A) she 是主格,句子已經有主詞 Ms. Farrell。(B) her 是受格或所有格,放在此處會多出一個受詞。(C) hers 是所有格代名詞,代替「她的某樣東西」,語意不通。"
+  },
+  {
+    "id": "p5-b10-14",
+    "difficulty": "中級",
+    "category": "代名詞",
+    "question": "Oakhaven Veterinary Clinic has two waiting areas: one for cats and ------- for dogs.",
+    "options": ["another", "other", "the other", "others"],
+    "answer": 2,
+    "translation": "Oakhaven Veterinary Clinic 有兩間候診室,一間給貓,另一間給狗。",
+    "explanation": "考點:總數為二時 one 與 the other 的搭配。候診室只有兩間,講完其中一間之後,剩下的那一間是特定的,要用 the other,故 (C) 正確。(A) another 指「另外一個(後面還有很多個)」,用於三個以上的情況。(B) other 是形容詞,後面必須接複數名詞,不能單獨當代名詞。(D) others 指「其他好幾個」,與只有兩間候診室的事實不符。"
+  },
+  {
+    "id": "p5-b10-15",
+    "difficulty": "中級",
+    "category": "代名詞",
+    "question": "Verdant Grounds Landscaping supplies its own tools, but customers must dispose of ------- own yard waste.",
+    "options": ["their", "theirs", "them", "they"],
+    "answer": 0,
+    "translation": "Verdant Grounds Landscaping 會自備工具,但庭院廢棄物必須由顧客自行處理。",
+    "explanation": "考點:所有格形容詞與 own 的搭配。own 前面一定要放所有格,而這裡指的是顧客自己的庭院廢棄物,故 (A) their 正確。(B) theirs 是所有格代名詞,本身已經包含名詞,後面不能再接 own yard waste。(C) them 是受格,不能用來修飾名詞。(D) they 是主格,同樣不能放在名詞前面當修飾語。"
+  },
+  {
+    "id": "p5-b10-16",
+    "difficulty": "進階",
+    "category": "代名詞",
+    "question": "The rates charged by Morrow Tree Service are lower than ------- of most companies in the area.",
+    "options": ["that", "them", "which", "those"],
+    "answer": 3,
+    "translation": "Morrow Tree Service 的收費比這一帶多數同業都低。",
+    "explanation": "考點:比較句中代替前面名詞的代名詞。被拿來比較的對象是複數的 the rates,為避免重複要用複數代名詞 those,再由 of most companies 加以限定,故 (D) 正確。(A) that 是單數形式,與複數的 rates 不一致。(B) them 雖然是複數,但受格代名詞後面不能再接 of 片語來限定。(C) which 是關係代名詞,必須有先行詞並引導出一個子句,不能單獨放在 than 之後代替前面的名詞。"
+  },
+  {
+    "id": "p5-b10-17",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Fenwick Tailors will ------- customers by text message as soon as their alterations are finished.",
+    "options": ["announce", "notify", "mention", "reply"],
+    "answer": 1,
+    "translation": "Fenwick Tailors 會在修改完成後立刻以簡訊通知顧客。",
+    "explanation": "考點:動詞後面直接接「人」的搭配。notify 可以直接接被通知的對象,notify somebody 就是「通知某人」,故 (B) 正確。(A) announce 的受詞是消息本身,要指出通知對象時必須寫成 announce something to somebody。(C) mention 的受詞也是事情,不能說 mention customers。(D) reply 是不及物動詞,要說 reply to customers。"
+  },
+  {
+    "id": "p5-b10-18",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Each camera repaired at Silverbrook Photo Studio comes with a six-month ------- covering parts and labor.",
+    "options": ["warranty", "receipt", "refund", "deposit"],
+    "answer": 0,
+    "translation": "每台在 Silverbrook Photo Studio 維修的相機都附六個月保固,涵蓋零件與工資。",
+    "explanation": "考點:商業情境常見名詞的辨義。covering parts and labor(涵蓋零件與工資)說明這是維修保固,故 (A) warranty 正確。(B) receipt 是購買憑證,不會有「六個月」的期限,也不涵蓋零件與工資。(C) refund 是退款,指一次付還的金額而非一段期間。(D) deposit 是訂金或押金,同樣無法用 covering parts and labor 來修飾。"
+  },
+  {
+    "id": "p5-b10-19",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The manager at Kirkwood Bakery agreed to ------- the delivery charge because the order arrived two days late.",
+    "options": ["reject", "waive", "refuse", "decline"],
+    "answer": 1,
+    "translation": "因為訂單晚了兩天才送到,Kirkwood Bakery 的經理同意免收運費。",
+    "explanation": "考點:與費用搭配的動詞。waive 指「(依規定)免收、放棄收取」,waive a fee 或 waive a charge 是商業書信常見用法,故 (B) 正確。(A) reject 指退回不合格的物品或否決提案,不用於自己收取的費用。(C) refuse 與 (D) decline 都是拒絕對方提出的要求或邀請,主詞若是收費的一方,寫成 refuse the charge 反而變成拒收自己該收的錢,語意不通。"
+  },
+  {
+    "id": "p5-b10-20",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Because the replacement heel was out of stock, Dunbar Shoe Repair had to ------- Mr. Osei's pickup appointment.",
+    "options": ["replace", "remind", "reschedule", "return"],
+    "answer": 2,
+    "translation": "由於替換的鞋跟缺貨,Dunbar Shoe Repair 只好更改 Osei 先生取件的時間。",
+    "explanation": "考點:與 appointment 搭配的動詞。零件缺貨導致原訂時間無法取件,另約時間就是 reschedule(改期),故 (C) 正確。(A) replace 是「更換」,替換的是物品或人員,不會用來替換一個約定時間。(B) remind 的受詞是人,要寫成 remind Mr. Osei of the appointment。(D) return 是歸還或返回,與更改約定時間無關。"
+  },
+  {
+    "id": "p5-b10-21",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Staff at Redfern Bookshop were asked to ------- the used books by subject so that customers can find them quickly.",
+    "options": ["attach", "admit", "attend", "arrange"],
+    "answer": 3,
+    "translation": "Redfern Bookshop 的員工被要求把二手書依主題排列,好讓顧客快速找到。",
+    "explanation": "考點:形近動詞的辨義。依主題把書歸位排好是 arrange(整理、排列),arrange something by 加分類方式是常見搭配,故 (D) 正確。(A) attach 是「附上、貼上」,受詞通常是文件或附件。(B) admit 是「承認」或「准許進入」。(C) attend 是「出席」,受詞是會議或活動,兩者都與整理書籍無關。"
+  },
+  {
+    "id": "p5-b10-22",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Customers who ------- their orders on the Halloway Coffee Company website before noon receive a small discount.",
+    "options": ["put", "place", "set", "give"],
+    "answer": 1,
+    "translation": "中午前在 Halloway Coffee Company 網站下單的顧客可享小額折扣。",
+    "explanation": "考點:order 的固定搭配動詞。「下訂單」的說法是 place an order,故 (B) 正確。(A) put 與 (C) set 都沒有這個搭配,put 只有在 put in an order 這個片語裡才成立,不能直接接 orders。(D) give an order 通常指「下達命令」,與網路訂購商品的語意不同。"
+  },
+  {
+    "id": "p5-b10-23",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The crew at Pinecrest Campground clears the trails ------- in the early morning, since the paths are empty at that hour.",
+    "options": ["hardly", "closely", "mainly", "rarely"],
+    "answer": 2,
+    "translation": "Pinecrest Campground 的工作人員主要在清晨清理步道,因為那個時段步道上沒有人。",
+    "explanation": "考點:副詞的語意辨析。後半句說明清晨步道上沒有人,是選在這個時段工作的理由,因此空格要表達「主要、大多」,故 (C) mainly 正確。(A) hardly 是「幾乎不」,(D) rarely 是「很少」,兩者都是否定語意,會和後面給的理由互相矛盾。(B) closely 是「仔細地、緊密地」,用來修飾 examine 或 work with 之類的動作,放在此處無法說明工作時段。"
+  },
+  {
+    "id": "p5-b10-24",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Tenants at Weybridge Self Storage were asked to ------- the storage units by the end of the month so that the floors could be repaired.",
+    "options": ["vacate", "evacuate", "relocate", "withdraw"],
+    "answer": 0,
+    "translation": "Weybridge Self Storage 的租戶被要求在月底前把倉儲空間清空,以便整修地板。",
+    "explanation": "考點:形近動詞的辨義。vacate 指「騰空、遷出」某個空間,vacate the unit 或 vacate the room 是租賃情境的標準說法,故 (A) 正確。(B) evacuate 指因危險而疏散人員,句中只是要整修地板,語氣過重且用法不同。(C) relocate 指整個搬遷到新地點,受詞通常是人或公司本身,而不是被騰空的空間。(D) withdraw 是「提領、撤回」,受詞是款項或申請。"
+  },
+  {
+    "id": "p5-b10-25",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "The new supplier's prices are ------- with those of the previous vendor, so Brookvale Cleaning Services will keep its current rates.",
+    "options": ["persistent", "insistent", "consistent", "resistant"],
+    "answer": 2,
+    "translation": "新供應商的價格與前一家廠商一致,因此 Brookvale Cleaning Services 將維持目前的收費。",
+    "explanation": "考點:字尾相近形容詞的辨義與介系詞搭配。be consistent with 指「與…一致、相符」,句中說新供應商的報價與前一家相符,所以收費不變,故 (C) 正確。(A) persistent 是「持續不斷的」,常用來形容問題或天氣。(B) insistent 是「堅持的」,用來形容人的態度。(D) resistant 是「抗…的」,而且要搭配 to,如 resistant to heat。"
+  }
+]

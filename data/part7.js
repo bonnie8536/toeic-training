@@ -301,6 +301,263 @@ TOEIC.part7 = [
   ]
  },
  {
+  "id": "p7-b10-1",
+  "format": "single",
+  "passages": [
+   {
+    "type": "notice",
+    "label": "Notice",
+    "content": "NOTICE TO ALL CUSTOMERS\n\nLarkspur Cleaners - 88 Milton Road\nPosted: April 2\n\nStarting Monday, April 13, we will change the way finished orders are returned to customers.\n\nA row of pickup lockers will be installed inside the front entrance. When your order is ready, we will send a text message with a four-digit code. Enter the code on the screen beside the lockers, and the door holding your clothes will open. The lockers can be used from 6:00 A.M. to 11:00 P.M., seven days a week, even at hours when the counter is closed. Any order left in a locker for more than five days will be moved back behind the counter.\n\nCustomers who prefer to collect their orders at the counter may of course continue to do so. Counter hours remain 8:00 A.M. to 7:00 P.M., Monday through Saturday.\n\nPlease note that the shop will close early, at 1:00 P.M., on Friday, April 10, so that the lockers can be installed. Any order promised for that afternoon will be held until Saturday morning at no extra charge.\n\nTo use the lockers, we must have a current mobile number for you. Stop by the counter before April 10 and ask a staff member to check the number we have on file. Customers who do not wish to receive text messages should say so at the same time, and we will keep returning their orders at the counter only.\n\nQuestions? Call 555-0139 and ask for Dana."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main purpose of the notice?",
+    "options": [
+     "To introduce a new member of the counter staff",
+     "To announce a permanent change in the shop's opening hours",
+     "To describe a new way of collecting finished orders",
+     "To apologize for a delay in a recent order"
+    ],
+    "answer": 2,
+    "explanation": "定位第一段：we will change the way finished orders are returned to customers，之後整篇都在說明取件櫃的用法，故選 (C)。(B) 是誘答：第四段只提 4 月 10 日當天提早打烊，第三段明說 Counter hours remain 8:00 A.M. to 7:00 P.M.，營業時間並未永久更動；(A)(D) 全文未提。"
+   },
+   {
+    "q": "The word \"current\" in paragraph 5, line 1, is closest in meaning to",
+    "options": [
+     "popular",
+     "up-to-date",
+     "personal",
+     "free"
+    ],
+    "answer": 1,
+    "explanation": "定位第五段首句 we must have a current mobile number for you，接著要顧客到櫃檯確認「檔案裡的號碼」是否正確，可知 current 指「仍在使用的、最新的」，故選 (B) up-to-date。current 另有「目前流行的」與名詞「水流、電流」之義，(A) popular 正是針對前者設計的誘答，但此處修飾的是手機號碼，語意不合；(C)(D) 與原句無關。"
+   },
+   {
+    "q": "What is NOT stated about the pickup lockers?",
+    "options": [
+     "They will be placed inside the front entrance.",
+     "They can be opened with a code.",
+     "They can be used before the counter opens.",
+     "They will take the place of the service counter."
+    ],
+    "answer": 3,
+    "explanation": "NOT 題採刪去法。(A)(B) 見第二段 installed inside the front entrance 與 Enter the code on the screen；(C) 由第二段 from 6:00 A.M. 與第三段 Counter hours remain 8:00 A.M. to 7:00 P.M. 相比可得，櫃檯開門前兩小時就能取件。只有 (D) 與原文相反：第三段說想在櫃檯取件的顧客 may of course continue to do so，櫃檯並未被取代，故選 (D)。"
+   },
+   {
+    "q": "What are customers who do not want text messages advised to do?",
+    "options": [
+     "Speak to a staff member at the counter",
+     "Send an e-mail to the shop",
+     "Use the lockers only in the evening",
+     "Pick up their orders within five days"
+    ],
+    "answer": 0,
+    "explanation": "定位第五段末句：Customers who do not wish to receive text messages should say so at the same time，而 at the same time 指的是同段前一句 Stop by the counter... and ask a staff member，故選 (A)。(D) 的五天期限見第二段，是取件櫃的規定，與簡訊無關；(B)(C) 未提及。"
+   }
+  ],
+  "translation": [
+   "顧客公告\n\nLarkspur 洗衣店－Milton 路 88 號\n張貼日期：4 月 2 日\n\n自 4 月 13 日（星期一）起，我們將改變完成訂單交還顧客的方式。\n\n店門入口內側將裝設一整排取件櫃。當您的衣物整理完成，我們會傳一則含四位數密碼的簡訊。請在取件櫃旁的螢幕輸入密碼，放置您衣物的櫃門就會打開。取件櫃每天上午 6 點至晚上 11 點皆可使用，一週七天，連櫃檯沒開的時段也能取件。放在櫃內超過五天的訂單，會被移回櫃檯後方。\n\n偏好在櫃檯取件的顧客當然可以照舊。櫃檯營業時間維持週一至週六上午 8 點至晚上 7 點。\n\n請注意，4 月 10 日（星期五）本店將於下午 1 點提早打烊，以便安裝取件櫃。原訂當天下午取件的訂單將保留至星期六早上，不另收費。\n\n要使用取件櫃，我們必須有您目前在用的手機號碼。請在 4 月 10 日前到櫃檯，請店員確認我們建檔的號碼。不希望收到簡訊的顧客請一併告知，我們會繼續只在櫃檯交還您的衣物。\n\n有疑問嗎？請撥 555-0139 找 Dana。"
+  ]
+ },
+ {
+  "id": "p7-b10-2",
+  "format": "single",
+  "passages": [
+   {
+    "type": "article",
+    "label": "Article",
+    "content": "Bellworth Weekly - Business Section\n\nGreen Ladder Gardens Adds Weekend Delivery\n\nBELLWORTH (May 6) - Green Ladder Gardens, the garden supply company on Route 9, will begin delivering plants and soil to homes on Saturdays and Sundays later this month.\n\nThe company has offered weekday delivery for nine years, but owner Marta Feld said most of her customers are not at home during the week. \"People buy a tree on Saturday morning, and then they have to wait until Tuesday for the truck,\" she said. \"By then the excitement is gone, and the tree is still sitting in a bucket in my shop.\"\n\nUnder the new plan, any order placed before noon will arrive the same day within the town, and the following day in the six towns nearby. The delivery fee has not changed, and delivery is still free on orders over $60.\n\nMs. Feld hired four drivers for the weekend shift and bought a second truck. She said the cost was easier to accept after the town council approved a plan to build about 300 houses east of the river. \"Every one of those houses will want a lawn,\" she said.\n\nNot everyone is pleased. Two smaller shops in the area say they cannot match the new weekend service and worry about losing customers during the busy spring season. Ms. Feld answered that her shop still sends work to local gardeners whenever a customer needs someone to do the planting."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the purpose of the article?",
+    "options": [
+     "To review a new gardening tool",
+     "To announce the opening of a second shop",
+     "To explain a change in town parking rules",
+     "To report on a service a local business is adding"
+    ],
+    "answer": 3,
+    "explanation": "定位標題 Green Ladder Gardens Adds Weekend Delivery 與第一段 will begin delivering plants and soil to homes on Saturdays and Sundays，全文說明一家在地園藝公司新增週末配送，故選 (D)。(B) 是誘答：第四段買的是第二輛卡車 a second truck，不是第二家店；(A)(C) 全文未提。"
+   },
+   {
+    "q": "According to Ms. Feld, what problem did weekday delivery cause?",
+    "options": [
+     "Drivers had to work very long hours.",
+     "Customers had to wait several days for their orders.",
+     "The trucks were often too small for large orders.",
+     "Plants were damaged on the way to customers."
+    ],
+    "answer": 1,
+    "explanation": "定位第二段引言：People buy a tree on Saturday morning, and then they have to wait until Tuesday for the truck，週六買、要等到週二才送到，故選 (B)。(A) 司機是第四段為週末班另聘的，並非抱怨工時；(C)(D) 未提及。"
+   },
+   {
+    "q": "The word \"match\" in paragraph 5 is closest in meaning to",
+    "options": [
+     "equal",
+     "connect",
+     "understand",
+     "reduce"
+    ],
+    "answer": 0,
+    "explanation": "定位第五段 two smaller shops... say they cannot match the new weekend service，兩家小店擔心客人流失，可知是「做不到同樣水準的週末服務」，故選 (A) equal。match 另有「使配對、相配」之義，(B) connect 即據此設計的誘答，但受詞是 the new weekend service，指的是比得上、水準相當，而非把兩者連起來；(C)(D) 語意不合。"
+   },
+   {
+    "q": "What does the article suggest about Bellworth?",
+    "options": [
+     "It has more gardeners than the towns nearby.",
+     "Its main road will be repaired this spring.",
+     "It has lost several shops in recent years.",
+     "Its population is likely to grow."
+    ],
+    "answer": 3,
+    "explanation": "推論題，定位第四段：the town council approved a plan to build about 300 houses east of the river，新建三百戶住宅意味人口將增加，Ms. Feld 也因此願意投資，故選 (D)。(C) 第五段的兩家小店只是擔心客源，並未歇業；(A)(B) 無依據。"
+   }
+  ],
+  "translation": [
+   "Bellworth 週報－商業版\n\nGreen Ladder 園藝新增週末配送\n\nBELLWORTH（5 月 6 日）－位於 9 號公路旁的園藝用品公司 Green Ladder Gardens，將於本月稍晚開始在週六與週日把植栽與土壤送到府。\n\n該公司提供平日配送已有九年，但老闆 Marta Feld 說，她多數的顧客平日並不在家。「客人星期六早上買了一棵樹，卻得等到星期二才等到貨車，」她說。「等到那時候，興頭早就過了，樹還泡在我店裡的水桶中。」\n\n依新做法，中午前下的訂單，鎮內當天送達，鄰近六個鄉鎮則隔天送達。運費並未調整，超過 60 美元的訂單仍免運。\n\nFeld 女士為週末班聘了四名司機，並添購第二輛卡車。她說，在鎮公所通過河東側興建約三百戶住宅的計畫後，這筆成本比較容易接受。「那三百戶人家，每一戶都會想要一片草坪，」她說。\n\n並非所有人都樂見其成。當地兩家較小的店家表示，他們做不到同樣水準的週末新服務，擔心在春季旺季流失顧客。Feld 女士回應說，只要顧客需要有人代為栽種，她的店仍會把工作轉介給在地的園丁。"
+  ]
+ },
+ {
+  "id": "p7-b10-3",
+  "format": "single",
+  "passages": [
+   {
+    "type": "webpage",
+    "label": "Web Page",
+    "content": "www.havenridgevet.com/visit\n\nHAVENRIDGE ANIMAL CLINIC\nHome | Our Team | Plan Your Visit | Fees | Contact\n\nPLAN YOUR VISIT\n\nHavenridge Animal Clinic has cared for pets in the Havenridge area since 1998. We treat dogs, cats, rabbits, and birds. We are not able to treat horses, cows, or other farm animals; for those, please call the Weston Large Animal Center at 555-0176.\n\nBooking\nRegular appointments can be booked on this page or by phone. Please arrive ten minutes early so that our staff can weigh your pet before the doctor sees it. If you have to cancel, let us know at least four hours ahead. A visit cancelled later than that is charged half the normal fee.\n\nHours\nMonday-Friday: 8:00 A.M. - 6:00 P.M.\nSaturday: 9:00 A.M. - 1:00 P.M.\nClosed Sunday\n\nEmergencies\nAn animal that has been hit by a car, cannot breathe easily, or has eaten something dangerous should be brought in at once. Do not book online. Call 555-0142 first so that a room is ready when you arrive. After 6:00 P.M. the same number reaches the doctor on duty at home.\n\nYour first visit\nPlease bring any records from your previous clinic. If your pet is nervous around other animals, tell us when you book and we will put you in the quiet room at the back of the building.\n\nPayment is due on the day of the visit. We accept cash and cards."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the purpose of the Web page?",
+    "options": [
+     "To announce longer hours at a clinic",
+     "To advertise a job at an animal hospital",
+     "To explain how to prepare for an appointment",
+     "To describe the training of the clinic's doctors"
+    ],
+    "answer": 2,
+    "explanation": "定位頁面標題 PLAN YOUR VISIT，以及 Booking、Emergencies、Your first visit 各段的指示（提早十分鐘到、取消要提前四小時、初診帶病歷），整頁都在教飼主如何準備就診，故選 (C)。(A) 只列出既有營業時間，並未宣布延長；(B)(D) 未提及。"
+   },
+   {
+    "q": "What does the clinic NOT do?",
+    "options": [
+     "Treat pet birds",
+     "Accept payment by card",
+     "Weigh animals before an examination",
+     "Care for farm animals"
+    ],
+    "answer": 3,
+    "explanation": "NOT 題採刪去法。(A) 第一段 We treat dogs, cats, rabbits, and birds；(B) 最後一句 We accept cash and cards；(C) Booking 段 our staff can weigh your pet before the doctor sees it。只有 (D) 與原文相反：第一段明說 We are not able to treat horses, cows, or other farm animals，並請飼主改打 Weston 中心，故選 (D)。"
+   },
+   {
+    "q": "What will happen if a customer cancels an appointment one hour before it begins?",
+    "options": [
+     "The visit will be moved to Saturday morning.",
+     "Part of the usual fee will still be charged.",
+     "The clinic will call the emergency number.",
+     "The customer will lose the use of the quiet room."
+    ],
+    "answer": 1,
+    "explanation": "定位 Booking 段：let us know at least four hours ahead. A visit cancelled later than that is charged half the normal fee。提前一小時已晚於四小時的規定，須付一半費用，故選 (B)。(A)(C)(D) 皆非取消的後果；quiet room 見 Your first visit 段，與取消無關。"
+   },
+   {
+    "q": "In the section \"Your first visit,\" the word \"records\" is closest in meaning to",
+    "options": [
+     "documents",
+     "recordings",
+     "achievements",
+     "measurements"
+    ],
+    "answer": 0,
+    "explanation": "定位 Your first visit 段首句 Please bring any records from your previous clinic，指的是前一家診所留下的病歷資料，故選 (A) documents。record 另有「錄音」與「（運動）紀錄」之義，(B) recordings 與 (C) achievements 即分別針對這兩義設計的誘答，但本句要飼主帶來的是紙本資料，兩者皆不合；(D) measurements 指量測數值，語意不合。"
+   }
+  ],
+  "translation": [
+   "www.havenridgevet.com/visit\n\nHAVENRIDGE 動物醫院\n首頁｜醫療團隊｜就診須知｜收費｜聯絡我們\n\n就診須知\n\nHavenridge 動物醫院自 1998 年起為 Havenridge 地區的寵物看診。我們看狗、貓、兔子與鳥類。我們無法診治馬、牛或其他農場動物；這類動物請致電 Weston 大動物中心 555-0176。\n\n預約\n一般門診可在本頁或以電話預約。請提早十分鐘到診，以便我們的人員在醫師看診前為您的寵物量體重。若需取消，請至少提前四小時告知。晚於此時限才取消者，將收取一半的門診費用。\n\n門診時間\n週一至週五：上午 8 點至下午 6 點\n週六：上午 9 點至下午 1 點\n週日休診\n\n急診\n遭車撞擊、呼吸困難，或誤食危險物品的動物，請立即送醫。請勿線上預約。請先撥 555-0142，我們才能在您抵達前備好診間。晚上 6 點以後，同一支電話會轉接到值班醫師家中。\n\n初次就診\n請攜帶前一家診所的任何病歷紀錄。若您的寵物在其他動物旁邊會緊張，請於預約時告知，我們會安排在建築後方的安靜診間。\n\n費用須於就診當天付清。本院收現金與信用卡。"
+  ]
+ },
+ {
+  "id": "p7-b10-4",
+  "format": "double",
+  "passages": [
+   {
+    "type": "schedule",
+    "label": "Class Schedule",
+    "content": "NORTHGATE COMMUNITY MUSIC SCHOOL\nAdult Evening Classes - Autumn Term (September 8 - November 14)\nEvery class meets once a week for ten weeks.\n\nGuitar for Beginners | Mondays, 6:30-8:00 P.M. | Room 2 | Oscar Lund | $180\nGroup Singing | Tuesdays, 7:00-8:30 P.M. | Main Hall | Priya Ramesh | $150\nPiano, Level 2 | Wednesdays, 6:00-7:30 P.M. | Room 5 | Oscar Lund | $210\nDrums for Beginners | Thursdays, 7:00-8:30 P.M. | Basement Studio | Ken Abara | $195\nGuitar for Beginners (second group) | Saturdays, 10:00-11:30 A.M. | Room 2 | Ken Abara | $180\n\nNotes\n* Each class is limited to twelve students. A class with fewer than five students will not be held.\n* Students may move to another group in the same subject during the first two weeks of the term. Write to the office; please do not simply attend the new class.\n* A student who leaves the school during the first four weeks receives half of the fee back. After that, no money is returned.\n* Instruments may be rented at the office for $25 per term."
+   },
+   {
+    "type": "email",
+    "label": "E-mail",
+    "content": "To: office@northgatemusic.org\nFrom: helen.duarte@mailcove.com\nDate: September 16\nSubject: My Monday class\n\nDear Ms. Okafor,\n\nI am writing about the beginners' guitar class I joined this term. I have been to both Monday sessions so far and I enjoy them very much, but my company has just moved me to an evening shift that starts at 6:00 P.M. on Mondays and Wednesdays. I will not be able to come at that hour for the rest of the term.\n\nI see from the term schedule that the same course is also offered on Saturday mornings. Could I move into that group instead? I understand that the fee is the same, so I hope there is nothing more to pay. If the Saturday group is already full, please tell me as soon as you can, because I may then have to leave the school and take the course again next spring.\n\nOne more thing: I rented a guitar from the office during the first week. May I keep it if I change groups?\n\nThank you for your help.\n\nHelen Duarte"
+   }
+  ],
+  "questions": [
+   {
+    "q": "Why did Ms. Duarte write the e-mail?",
+    "options": [
+     "To ask to be moved to a different group",
+     "To sign up for a course next spring",
+     "To complain about her teacher",
+     "To return a rented instrument"
+    ],
+    "answer": 0,
+    "explanation": "定位電子郵件第二段：Could I move into that group instead?，她因工作班表改變而想換到週六班，故選 (A)。(B) 是萬一週六班額滿才可能的做法，並非寫信目的；(C) 她說 I enjoy them very much；(D) 她問的是能否繼續留用租來的吉他，不是要歸還。"
+   },
+   {
+    "q": "According to the schedule, what must a student do to change groups?",
+    "options": [
+     "Pay a small extra fee",
+     "Speak to the teacher after class",
+     "Send a request to the office",
+     "Attend the new class for one week first"
+    ],
+    "answer": 2,
+    "explanation": "定位課表 Notes 第二點：Write to the office; please do not simply attend the new class，故選 (C)，(D) 正是這句明文禁止的做法。(A) Notes 只提樂器租金 $25，換班未提費用；(B) 未提及。"
+   },
+   {
+    "q": "Who will most likely be Ms. Duarte's teacher after the change?",
+    "options": [
+     "Oscar Lund",
+     "Ken Abara",
+     "Priya Ramesh",
+     "Ms. Okafor"
+    ],
+    "answer": 1,
+    "explanation": "整合題。電子郵件第二段說她想改到週六早上的同一門課；回到課表，Guitar for Beginners (second group) 排在 Saturdays, 10:00-11:30 A.M.，授課者為 Ken Abara，故選 (B)。(A) Oscar Lund 是她原本週一班的老師；(C) 教的是合唱課；(D) Ms. Okafor 是收信的辦公室人員。"
+   },
+   {
+    "q": "If Ms. Duarte leaves the school in September, how much money will she receive?",
+    "options": [
+     "$90",
+     "$105",
+     "$180",
+     "None"
+    ],
+    "answer": 0,
+    "explanation": "整合題。課表 Notes 第三點：前四週內退出可退還一半學費；課表顯示吉他入門學費 $180，一半即 $90，故選 (A)。學期自 9 月 8 日開始，九月份都落在前四週之內。(B) $105 是鋼琴課 $210 的一半，科目取錯；(C) $180 是全額；(D) 是第四週之後才適用的規定。"
+   },
+   {
+    "q": "In the e-mail, the word \"full\" in paragraph 2 is closest in meaning to",
+    "options": [
+     "complete",
+     "satisfied",
+     "filled",
+     "wide"
+    ],
+    "answer": 2,
+    "explanation": "定位郵件第二段 If the Saturday group is already full, please tell me as soon as you can，主詞是 group（班級），且課表 Notes 註明每班上限十二人，可知 full 指「人數已滿」，故選 (C) filled。full 另有「完整的」與「吃飽的」之義，(A) complete 與 (B) satisfied 分別針對這兩義設計，套回本句皆不通；(D) 語意不合。"
+   }
+  ],
+  "translation": [
+   "NORTHGATE 社區音樂教室\n成人夜間課程－秋季班（9 月 8 日至 11 月 14 日）\n每門課每週上一次，共十週。\n\n吉他入門｜週一 18:30-20:00｜2 教室｜Oscar Lund｜180 美元\n團體歌唱｜週二 19:00-20:30｜大廳｜Priya Ramesh｜150 美元\n鋼琴（第二級）｜週三 18:00-19:30｜5 教室｜Oscar Lund｜210 美元\n爵士鼓入門｜週四 19:00-20:30｜地下室琴房｜Ken Abara｜195 美元\n吉他入門（第二班）｜週六 10:00-11:30｜2 教室｜Ken Abara｜180 美元\n\n注意事項\n＊每班以十二人為限。人數少於五人的班級不開課。\n＊學員可在開學後前兩週內，改到同一科目的另一個班級。請寫信給辦公室；請勿逕自去上新的班級。\n＊於前四週內退出者，退還一半學費；之後恕不退費。\n＊樂器可在辦公室租借，每學期 25 美元。",
+   "收件者：office@northgatemusic.org\n寄件者：helen.duarte@mailcove.com\n日期：9 月 16 日\n主旨：我的週一課程\n\n親愛的 Okafor 女士：\n\n我想請教本學期我報名的吉他入門課。到目前為止兩次週一的課我都有上，也很喜歡，但公司剛把我調到晚班，週一與週三從晚上 6 點開始上班。本學期接下來的時間，我都無法在那個時段到課。\n\n我從課表上看到，同一門課週六早上也有開。我可以改到那一班嗎？我知道學費相同，所以應該不需要再補繳費用。如果週六班已經額滿，請盡快告訴我，因為那樣我可能只好退出，明年春天再重修這門課。\n\n還有一件事：我在第一週向辦公室租了一把吉他。若我換班，可以繼續留用嗎？\n\n感謝您的協助。\n\nHelen Duarte"
+  ]
+ },
+ {
   "id": "p7-b2-1",
   "format": "single",
   "passages": [
@@ -2337,6 +2594,263 @@ TOEIC.part7 = [
   "translation": [
    "BRIGHTPATH 物流\n誠徵：倉儲營運協調專員\n\nBrightpath 物流為太平洋西北地區四百多家零售客戶運送貨物。本次於三個據點徵才：Eugene、Bend 與 Medford。Bend 據點只有夜班，另外兩個據點為日間營運。\n\n工作內容\n－ 規劃每日出貨排程並派任司機\n－ 建檔管理每一筆送貨、退貨與破損品紀錄\n－ 每月為據點主管製作報表\n－ 秋季旺季期間訓練季節性人員\n\n應徵條件\n－ 具倉儲或運輸公司四年以上經驗\n－ 具庫存管理軟體使用經驗\n－ 持有有效的堆高機駕駛執照\n－ 願意偶爾於週六上班\n\n有意應徵者請於 6 月 30 日前將履歷與求職信寄至 careers@brightpathlog.com。請在信中告知您偏好的據點與可到職時間。獲邀面試者另需在該據點完成一項簡短的實作測驗。本公司不受理紙本郵寄的應徵資料。",
    "收件者：careers@brightpathlog.com\n寄件者：d.okafor@mailbridge.net\n日期：6 月 19 日\n主旨：倉儲營運協調專員\n\n敬啟者：\n\n我在上週的《Willamette 商業週刊》上看到貴公司的徵才廣告，希望應徵協調專員一職。\n\n過去五年我任職於 Salem 的 Correa 配送公司，負責為十二位司機規劃路線，並處理所有退貨文件。去年我把公司的紙本紀錄全面轉入庫存管理軟體 Stockline，並在三週內訓練六名季節性人員上手使用。\n\n我偏好貴公司的 Bend 據點，因為我的家人八月要搬到那一帶。我已得知該據點的工時並非一般辦公時間，這對我來說反而合適。偶爾週六上班也沒有問題。\n\n有一件事需要說明：我的堆高機考照日期排在 7 月 8 日。訓練課程我已修畢，教練認為應該不會有問題。我最快可於 8 月 3 日到職。\n\n履歷如附件，感謝您撥冗閱讀。\n\n此致\nDaniel Okafor 敬上"
+  ]
+ },
+ {
+  "id": "p7-b9-1",
+  "format": "single",
+  "passages": [
+   {
+    "type": "email",
+    "label": "E-mail",
+    "content": "To: s.doyle@brightmail.net\nFrom: v.ortega@maplestreetcycles.com\nDate: March 12\nSubject: Repair order #4417\n\nDear Ms. Doyle,\n\nThank you for bringing your touring bicycle to Maple Street Cycles last Thursday. Our technician has finished checking it, and I would like to explain what he found before we do any work.\n\nThe rear wheel is bent and cannot be repaired safely. A new wheel costs $118, plus $30 for labor. The brake cables are also worn and should be changed at the same time, which adds $24. Your bicycle is still under our two-year warranty, but the warranty applies only to the frame, so these parts are not included.\n\nWe have the brake cables in stock, but the wheel must be ordered from our supplier in Portland. It usually arrives within four business days. If you approve the full estimate today, we expect to have the bicycle ready by Wednesday, March 18.\n\nPlease note that our shop will be closed on Monday, March 16, while the floor is being replaced. Phone messages left that day will be returned on Tuesday morning.\n\nYou can approve the estimate by replying to this message or by calling me at 555-0164. If you would rather not replace the wheel, we will return the bicycle at no charge, since the inspection itself is free.\n\nSincerely,\n\nVictor Ortega\nService Manager, Maple Street Cycles"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the main purpose of the e-mail?",
+    "options": [
+     "To confirm that a new bicycle has arrived",
+     "To explain repair costs and request a decision",
+     "To apologize for a late delivery",
+     "To announce a change in warranty terms"
+    ],
+    "answer": 1,
+    "explanation": "目的題看信件前段與收尾動作。第一段說技師檢查完畢、要在動工前說明結果，第二段列出各項費用，最後一段請對方回信或來電 approve the estimate（同意估價），故選 (B)。(A) 這台車是客戶原有的旅行車、不是新車；(C) 信中沒有延遲或道歉；(D) 保固條款沒有變更，只是說明保固範圍只含車架。"
+   },
+   {
+    "q": "According to the e-mail, what is NOT something Ms. Doyle can do?",
+    "options": [
+     "Approve the estimate by e-mail",
+     "Reach Mr. Ortega by telephone",
+     "Get her bicycle back without paying anything",
+     "Borrow another bicycle while hers is repaired"
+    ],
+    "answer": 3,
+    "explanation": "NOT 題要逐項回原文刪去。最後一段 replying to this message 對應 (A)；calling me at 555-0164 對應 (B)；return the bicycle at no charge, since the inspection is free 對應 (C)。全信沒有提到出借代步車，故選 (D)。"
+   },
+   {
+    "q": "What will happen on March 16?",
+    "options": [
+     "Ms. Doyle's bicycle will be ready.",
+     "A new wheel will arrive from the supplier.",
+     "The shop will not be open for business.",
+     "The two-year warranty will end."
+    ],
+    "answer": 2,
+    "explanation": "定位第四段：our shop will be closed on Monday, March 16, while the floor is being replaced，故選 (C)。(A) 車子預計好的日子是 3 月 18 日（第三段）；(B) 輪圈約四個工作天到，信中未指定 3 月 16 日；(D) 保固是兩年期，沒有說在該日結束。"
+   },
+   {
+    "q": "The word \"returned\" in the sentence \"Phone messages left that day will be returned on Tuesday morning\" is closest in meaning to",
+    "options": [
+     "given back",
+     "answered",
+     "sent to another shop",
+     "repeated"
+    ],
+    "answer": 1,
+    "explanation": "該句主詞是 phone messages（電話留言），return a message／a call 指「回覆」，故選 (B) answered。(A) given back 是 return 最常見的「歸還」義，用在最後一段的 return the bicycle 才對，這裡的受詞是留言不是物品；(C)(D) 原文都沒有提到轉送或重複。"
+   }
+  ],
+  "translation": [
+   "收件者：s.doyle@brightmail.net\n寄件者：v.ortega@maplestreetcycles.com\n日期：3 月 12 日\n主旨：維修單 #4417\n\n親愛的 Doyle 女士：\n\n感謝您上週四把您的旅行車送到 Maple Street 自行車行。我們的技師已經檢查完畢，在動工之前，我想先向您說明他發現的狀況。\n\n後輪已經變形，無法安全修復。新輪組要價 118 美元，另加 30 美元工資。煞車線也已磨損，建議一併更換，費用再加 24 美元。您的自行車仍在我們的兩年保固期內，但保固僅適用於車架，因此上述零件不包含在內。\n\n煞車線我們有現貨，輪組則必須向波特蘭的供應商訂購，通常四個工作天內會到。若您今天同意這份完整估價，我們預計可在 3 月 18 日（星期三）前把車修好。\n\n另外要提醒您，本店 3 月 16 日（星期一）因更換地板而暫停營業。當天的電話留言，我們會在星期二上午回覆。\n\n您可以直接回覆這封信，或撥 555-0164 給我，以確認這份估價。若您不打算更換輪組，我們會免費把車還給您，因為檢查本身不收費。\n\n順頌時祺\n\nVictor Ortega\nMaple Street 自行車行 服務部經理"
+  ]
+ },
+ {
+  "id": "p7-b9-2",
+  "format": "single",
+  "passages": [
+   {
+    "type": "text message chain",
+    "label": "Text Message Chain",
+    "content": "Petra Sorensen (8:42 A.M.)\nHi Danny. Are you and Luis at the Kellerman job on Oak Street yet?\n\nDanny Fisk (8:44 A.M.)\nWe got here at eight, but the building manager still hasn't opened the loading dock. We're sitting in the truck.\n\nPetra Sorensen (8:46 A.M.)\nThat's the third time this month. Did you try the office number printed on the work order?\n\nDanny Fisk (8:47 A.M.)\nTwice. Nobody picks up. Luis is walking around to the front desk to see if someone there can let us in.\n\nPetra Sorensen (8:51 A.M.)\nAll right. If the dock is still closed at 9:15, start with the boxes in the hallway and carry them out through the side door. We can't lose the whole morning.\n\nDanny Fisk (8:53 A.M.)\nUnderstood. One more thing. The customer added two filing cabinets that were not on the list, and they are heavy. Should we ask her to pay for them now?\n\nPetra Sorensen (8:55 A.M.)\nTake them, but don't collect any money today. I'll put the extra items on the final invoice and e-mail it to her on Friday. Just take a photo of each cabinet before you load it.\n\nDanny Fisk (8:56 A.M.)\nWill do. Luis is waving at me. The dock is open now. We should still finish before two.\n\nPetra Sorensen (8:57 A.M.)\nGood. Send me a message when the truck is loaded."
+   }
+  ],
+  "questions": [
+   {
+    "q": "For what kind of business do the writers most likely work?",
+    "options": [
+     "A furniture store",
+     "An office supply company",
+     "A building management firm",
+     "A moving company"
+    ],
+    "answer": 3,
+    "explanation": "行業推論題要把線索加總：loading dock、boxes in the hallway、carry them out、load it、the truck is loaded，加上客戶臨時加了兩個檔案櫃要一起搬，這是搬家／搬運公司的作業，故選 (D)。(A)(B) 賣家具或辦公用品應該是送新品給客戶，不會把走廊上的箱子搬出來；(C) 大樓管理員是他們在等的人，不是他們自己。"
+   },
+   {
+    "q": "At 8:47 A.M., what does Mr. Fisk most likely mean when he writes, \"Twice\"?",
+    "options": [
+     "He has already called the office number two times.",
+     "He has visited the building on two other days.",
+     "Two workers are waiting outside the dock.",
+     "He needs two more hours to finish the job."
+    ],
+    "answer": 0,
+    "explanation": "意圖題一定要看上一則訊息。8:46 Sorensen 問 Did you try the office number printed on the work order?，Fisk 回 Twice.，接著補 Nobody picks up.，可見他已經打了兩次都沒人接，故選 (A)。(B)(C)(D) 都是把 twice 硬套在別的名詞上，前一句問的是打電話。"
+   },
+   {
+    "q": "What does Ms. Sorensen tell Mr. Fisk to do about the filing cabinets?",
+    "options": [
+     "Leave them for a later trip",
+     "Ask the customer to sign a new work order",
+     "Photograph them and load them onto the truck",
+     "Weigh them before loading them"
+    ],
+    "answer": 2,
+    "explanation": "定位 8:55 的訊息：Take them...Just take a photo of each cabinet before you load it，先拍照再搬上車，故選 (C)。(A) 她說 Take them（照搬）；(B) 原文只說之後開帳單，沒有要客戶簽新的工作單；(D) 重是 Fisk 的描述，但沒有人要求秤重。"
+   },
+   {
+    "q": "What does Ms. Sorensen say she will do on Friday?",
+    "options": [
+     "Send the customer a bill",
+     "Visit the Oak Street building",
+     "Speak with the building manager",
+     "Hire two more workers"
+    ],
+    "answer": 0,
+    "explanation": "定位 8:55：I'll put the extra items on the final invoice and e-mail it to her on Friday，invoice 就是帳單，故選 (A)。(B)(C) 她人不在現場，也沒說要去一趟或要找大樓管理員談；(D) 全篇沒有增派人手。"
+   }
+  ],
+  "translation": [
+   "Petra Sorensen（上午 8:42）\n嗨，Danny。你和 Luis 已經到 Oak 街的 Kellerman 那件案子了嗎？\n\nDanny Fisk（上午 8:44）\n我們八點就到了，但大樓管理員還沒把卸貨區打開。我們現在坐在車上等。\n\nPetra Sorensen（上午 8:46）\n這已經是這個月第三次了。工作單上印的辦公室電話你打過了嗎？\n\nDanny Fisk（上午 8:47）\n打了兩次，都沒人接。Luis 現在繞到前檯，看看那邊有沒有人可以放我們進去。\n\nPetra Sorensen（上午 8:51）\n好。如果 9:15 卸貨區還是關著，就先搬走廊上的箱子，從側門搬出去。我們不能整個早上都耗掉。\n\nDanny Fisk（上午 8:53）\n了解。還有一件事。客戶多加了兩個原本清單上沒有的檔案櫃，很重。要現在請她付這筆錢嗎？\n\nPetra Sorensen（上午 8:55）\n搬，但今天不要收錢。我會把追加的品項列在最後那張帳單上，星期五用電子郵件寄給她。你只要在搬上車前，把每個櫃子都拍張照就好。\n\nDanny Fisk（上午 8:56）\n沒問題。Luis 在對我揮手，卸貨區開了。我們應該還是能在兩點前完工。\n\nPetra Sorensen（上午 8:57）\n很好。車裝好之後傳個訊息給我。"
+  ]
+ },
+ {
+  "id": "p7-b9-3",
+  "format": "single",
+  "passages": [
+   {
+    "type": "advertisement",
+    "label": "Advertisement",
+    "content": "RIDGEWAY MUSIC STUDIO\nSpring term registration is now open\n\nFor eleven years, families in the Ridgeway area have trusted us with their children's first music lessons. Every teacher at our studio holds a degree in music and has taught for at least five years.\n\nWHAT WE OFFER\n- Private lessons in piano, guitar, violin, and drums, 30 or 45 minutes, once a week\n- Small group classes for children ages four to six (six students at most)\n- An evening singing class for adults, Thursdays at 7:00 P.M.\n- Free practice rooms for our students, open until 9:00 P.M. every day\n\nSpring term runs from April 6 to June 26. Private lessons cost $32 for 30 minutes and $45 for 45 minutes. A group class costs $210 for the whole term.\n\nSPECIAL OFFER\nRegister before March 20 and pay no registration fee, which is normally $40. Families who sign up two or more students receive 10 percent off every lesson for the entire term. This discount cannot be used together with any other offer.\n\nNot sure where to begin? Visit our open house on Saturday, March 14, from 10:00 A.M. to 2:00 P.M. Teachers will be there to answer your questions, and visitors may try any instrument in the building. No appointment is necessary, but seats for the 11:00 A.M. student concert must be reserved by telephone.\n\nRidgeway Music Studio | 42 Chapel Road | 555-0198 | www.ridgewaymusic.com"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is indicated about the teachers at the studio?",
+    "options": [
+     "They have each taught for five years or more.",
+     "They each teach more than one instrument.",
+     "They all studied at the same school.",
+     "They are hired for one term at a time."
+    ],
+    "answer": 0,
+    "explanation": "定位第二段最後一句：Every teacher...holds a degree in music and has taught for at least five years，at least five years 就是「五年以上」，故選 (A)。(B) 廣告只列出教的樂器種類，沒說每位老師都教多種；(C) 只說有音樂學位，沒說同一所學校；(D) 沒有提到聘期。"
+   },
+   {
+    "q": "What is NOT mentioned as available at the studio?",
+    "options": [
+     "Practice rooms that students may use at no cost",
+     "A singing class for adults",
+     "Classes for children under seven",
+     "Repairs for damaged instruments"
+    ],
+    "answer": 3,
+    "explanation": "NOT 題逐項對照 WHAT WE OFFER：Free practice rooms 對應 (A)；An evening singing class for adults 對應 (B)；group classes for children ages four to six（四到六歲，即七歲以下）對應 (C)。廣告只說參觀時可以試彈樂器，完全沒有修理服務，故選 (D)。"
+   },
+   {
+    "q": "The word \"runs\" in the sentence \"Spring term runs from April 6 to June 26\" is closest in meaning to",
+    "options": [
+     "controls",
+     "continues",
+     "hurries",
+     "prints"
+    ],
+    "answer": 1,
+    "explanation": "該句主詞是 Spring term（春季班期），後面接 from...to...（起訖日期），run 在這裡是「持續、進行」，故選 (B) continues。(A) run 確實有「經營、管理」的意思，但受詞要是公司或活動，這裡是期間本身；(C) 是 run「跑」的字面義；(D) run 也可指報紙「刊登」，與時間區間無關。"
+   },
+   {
+    "q": "According to the advertisement, what must a visitor do to attend the concert?",
+    "options": [
+     "Register for the spring term",
+     "Arrive before 10:00 A.M.",
+     "Reserve a seat by telephone",
+     "Pay a $40 fee"
+    ],
+    "answer": 2,
+    "explanation": "定位最後一段：No appointment is necessary, but seats for the 11:00 A.M. student concert must be reserved by telephone，故選 (C)。(A) 參觀日不需先報名；(B) 開放時間是上午十點到下午兩點，音樂會在十一點；(D) 40 美元是報名費，且 3 月 20 日前報名還可免收，與音樂會無關。"
+   }
+  ],
+  "translation": [
+   "RIDGEWAY 音樂教室\n春季班報名開始\n\n十一年來，Ridgeway 地區的家庭都把孩子的第一堂音樂課交給我們。本教室每位老師都具備音樂相關學位，且教學資歷至少五年。\n\n我們提供的課程\n－鋼琴、吉他、小提琴、爵士鼓個別課，每次 30 或 45 分鐘，每週一堂\n－四到六歲兒童小班課（每班最多六人）\n－成人晚間歌唱班，每週四晚上 7:00\n－本教室學生可免費使用練習室，每天開放至晚上 9:00\n\n春季班自 4 月 6 日起至 6 月 26 日止。個別課 30 分鐘 32 美元，45 分鐘 45 美元；小班課整期 210 美元。\n\n優惠方案\n3 月 20 日前報名，免收原價 40 美元的報名費。同一家庭報名兩人（含）以上，整期每堂課皆享九折。本優惠不得與其他優惠合併使用。\n\n不知道從哪裡開始嗎？歡迎參加 3 月 14 日（星期六）上午 10:00 至下午 2:00 的開放參觀日。當天老師都在場，可以回答您的問題，來賓也可以試奏館內任何一項樂器。參觀不需預約，但上午 11:00 學生音樂會的座位必須先來電預約。\n\nRidgeway 音樂教室｜Chapel 路 42 號｜555-0198｜www.ridgewaymusic.com"
+  ]
+ },
+ {
+  "id": "p7-b9-4",
+  "format": "double",
+  "passages": [
+   {
+    "type": "menu",
+    "label": "Catering Menu",
+    "content": "HARBORVIEW DELI - CATERING MENU\nFor groups of ten or more\n\nPACKAGE A - Morning Table   $9 per guest\nFresh fruit, three kinds of bread, butter and jam, coffee and tea\n\nPACKAGE B - Sandwich Lunch   $14 per guest\nFour kinds of sandwiches, green salad, potato chips, bottled water\n\nPACKAGE C - Hot Lunch   $19 per guest\nRoast chicken or baked fish, rice, two vegetable dishes, bread, iced tea\n\nPACKAGE D - Evening Table   $26 per guest\nSoup, roast beef or grilled vegetables, potatoes, salad, dessert of the day\n\nPLEASE NOTE\n- Orders must be placed at least four business days in advance.\n- Delivery is free within eight kilometers of our shop. Beyond that, we charge $1.50 for each additional kilometer.\n- Plates, cups, and napkins are included at no extra cost. Servers cost $22 an hour.\n- Tell us about food allergies when you order. We can prepare a meal without nuts or milk products for $2 more per guest.\n- Packages C and D are not available on Sundays, when our kitchen closes at noon.\n\nHarborview Deli | 15 Cobb Street | 555-0142 | orders@harborviewdeli.com"
+   },
+   {
+    "type": "email",
+    "label": "E-mail",
+    "content": "To: orders@harborviewdeli.com\nFrom: r.vidal@brookfieldanimalclinic.com\nDate: October 2\nSubject: Lunch for October 9\n\nHello,\n\nMy name is Rafael Vidal, and I am the office manager at Brookfield Animal Clinic on Grant Street. On Thursday, October 9, we are holding a training day for our own staff and for six visiting nurses. I would like to order lunch for twenty-two people.\n\nWe would prefer your hot package. The training runs until five o'clock, and I am afraid a light meal would not be enough. Two of the nurses cannot eat milk products, so those two meals should be prepared separately. Everyone else will have the regular menu.\n\nOur clinic is about twelve kilometers from your shop, so I understand that there may be an added charge for bringing the food to us. Please include it in the price you send me.\n\nWe do not need anyone to serve the meal, as our own staff will do that. We do need the food to arrive no later than 11:45 A.M., because the afternoon sessions begin at 12:30.\n\nCould you send me a written estimate by Monday? If the total is higher than our budget allows, we may choose the sandwich package instead.\n\nThank you,\n\nRafael Vidal\nOffice Manager, Brookfield Animal Clinic"
+   }
+  ],
+  "questions": [
+   {
+    "q": "According to the menu, what is NOT included in the price of a package?",
+    "options": [
+     "Cups",
+     "Plates",
+     "Napkins",
+     "Workers to serve the food"
+    ],
+    "answer": 3,
+    "explanation": "NOT 題定位菜單 PLEASE NOTE 第三點：Plates, cups, and napkins are included at no extra cost. Servers cost $22 an hour.，前半句直接刪掉 (A)(B)(C)，後半句說服務人員另計時薪，故選 (D)。"
+   },
+   {
+    "q": "Why did Mr. Vidal write the e-mail?",
+    "options": [
+     "To ask for a written price estimate",
+     "To change an order he placed earlier",
+     "To report a problem with a delivery",
+     "To ask about the shop's business hours"
+    ],
+    "answer": 0,
+    "explanation": "目的題看信末的請求句：Could you send me a written estimate by Monday?，前面各段都是在提供報價所需的條件（人數、餐點、距離、送達時間），故選 (A)。(B) 這是第一次下單，沒有舊訂單；(C) 尚未送餐；(D) 他問的是價格，不是營業時間。"
+   },
+   {
+    "q": "How much will each guest's meal most likely cost, before any added charges?",
+    "options": [
+     "$9",
+     "$14",
+     "$19",
+     "$26"
+    ],
+    "answer": 2,
+    "explanation": "跨篇整合題。電子郵件第二段說 We would prefer your hot package，回菜單找 PACKAGE C - Hot Lunch，價格是每人 19 美元，故選 (C)。(B) 14 美元是三明治餐，只有在超出預算時才會改選；(A)(D) 分別是早餐與晚餐方案。"
+   },
+   {
+    "q": "Why will the deli most likely add a delivery charge to Mr. Vidal's order?",
+    "options": [
+     "The order is for more than twenty guests.",
+     "The order was placed less than a week in advance.",
+     "The food must be carried in by servers.",
+     "The clinic is farther than eight kilometers from the shop."
+    ],
+    "answer": 3,
+    "explanation": "跨篇整合題。菜單註記第二點：八公里內免運，超過部分每公里加收 1.5 美元；電子郵件第三段說 Our clinic is about twelve kilometers from your shop，超出免費範圍，故選 (D)。(A) 人數多寡與運費無關，只有十人以上才接單；(B) 10 月 2 日下單、10 月 9 日用餐，符合至少四個工作天；(C) 他明說不需要服務人員。"
+   },
+   {
+    "q": "What will the deli most likely do for two of the guests?",
+    "options": [
+     "Give them a free dessert",
+     "Charge two dollars more for each of their meals",
+     "Deliver their food after 12:30",
+     "Serve them Package B instead"
+    ],
+    "answer": 1,
+    "explanation": "跨篇整合題。電子郵件第二段說有兩位護理師不能吃乳製品、餐點需另外準備；菜單註記第四點寫明 We can prepare a meal without nuts or milk products for $2 more per guest，故選 (B)。(A) 甜點屬於晚餐方案，且沒有免費一說；(C) 全部餐點都要在 11:45 前送達；(D) 三明治餐是整批可能改選的方案，不是只給這兩人。"
+   }
+  ],
+  "translation": [
+   "HARBORVIEW 熟食店－外燴菜單\n適用十人以上團體\n\nA 餐－早餐桌　每人 9 美元\n新鮮水果、三種麵包、奶油與果醬、咖啡與茶\n\nB 餐－三明治午餐　每人 14 美元\n四種三明治、生菜沙拉、洋芋片、瓶裝水\n\nC 餐－熱食午餐　每人 19 美元\n烤雞或烤魚、白飯、兩道蔬菜、麵包、冰紅茶\n\nD 餐－晚餐桌　每人 26 美元\n湯品、烤牛肉或炙烤蔬菜、馬鈴薯、沙拉、每日甜點\n\n注意事項\n－訂餐請至少提前四個工作天。\n－本店八公里範圍內免運費；超出部分每公里加收 1.5 美元。\n－盤子、杯子與餐巾紙皆已含在價格內，不另收費；服務人員則以每小時 22 美元計費。\n－訂餐時請告知食物過敏情形。我們可另行準備不含堅果或乳製品的餐點，每人加收 2 美元。\n－C 餐與 D 餐週日不供應，本店廚房週日中午即打烊。\n\nHarborview 熟食店｜Cobb 街 15 號｜555-0142｜orders@harborviewdeli.com",
+   "收件者：orders@harborviewdeli.com\n寄件者：r.vidal@brookfieldanimalclinic.com\n日期：10 月 2 日\n主旨：10 月 9 日的午餐\n\n您好：\n\n我是 Rafael Vidal，Grant 街上 Brookfield 動物診所的行政經理。10 月 9 日（星期四）我們要為自家員工與六位來訪的護理師舉辦教育訓練，想訂 22 人份的午餐。\n\n我們想選你們的熱食餐。訓練會進行到五點，我擔心太輕的餐點不夠吃。其中兩位護理師不能吃乳製品，這兩份餐請另外處理，其他人吃一般菜色即可。\n\n我們診所距離貴店大約十二公里，所以我知道送餐可能要另外加費用，請把這筆費用一併列進報價裡。\n\n我們不需要人員在現場服務，這部分由我們自己的同仁負責。但餐點務必在上午 11:45 前送達，因為下午的課程 12:30 就開始。\n\n可以請您在星期一前寄一份書面估價給我嗎？如果總金額超出我們的預算，我們可能會改選三明治餐。\n\n謝謝您。\n\nRafael Vidal\nBrookfield 動物診所 行政經理"
   ]
  }
 ];

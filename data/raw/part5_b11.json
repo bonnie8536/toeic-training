@@ -1,0 +1,252 @@
+[
+  {
+    "id": "p5-b11-01",
+    "difficulty": "基礎",
+    "category": "關係詞",
+    "question": "Riverton Cycles offers a free safety check to any customer ------- buys a road bike during the spring sale.",
+    "options": ["whom", "whose", "which", "who"],
+    "answer": 3,
+    "translation": "里弗頓自行車行為任何在春季特賣期間購買公路車的顧客提供一次免費安全檢查。",
+    "explanation": "考點:主格關係代名詞。空格後面直接接動詞 buys,可見關係子句缺的是主詞;先行詞 customer 是人,所以要用主格的 (D) who。(A) whom 是受格,只用在關係子句缺受詞時,例如 the customer whom we called。(B) whose 是所有格,後面必須接名詞(如 whose bike),但這裡後面是動詞。(C) which 的先行詞只能是事物,不能用來指人。"
+  },
+  {
+    "id": "p5-b11-02",
+    "difficulty": "基礎",
+    "category": "分詞",
+    "question": "All items ------- at the Bright Day Laundry counter before ten in the morning will be ready for pickup by five the same day.",
+    "options": ["dropping off", "dropped off", "drop off", "to drop off"],
+    "answer": 1,
+    "translation": "早上十點前送到晴日洗衣店櫃檯的衣物,當天下午五點前就可以取件。",
+    "explanation": "考點:過去分詞作後位修飾。items 與 drop off(送件)之間是被動關係——衣物是被顧客送來的;而且句子的主要動詞已經是 will be ready,空格不能再放一個主要動詞,因此要用過去分詞 (B) dropped off 修飾前面的 items。(A) dropping off 是現在分詞,表主動,會變成衣物自己去送件,語意不通。(C) drop off 是原形動詞,一個子句不能有兩個主要動詞。(D) to drop off 是不定詞,放在名詞後面會變成「用來送件的物品」,與句意不符。"
+  },
+  {
+    "id": "p5-b11-03",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "All new instructors at Sunny Note Music School must ------- a two-day training session before they teach their first class.",
+    "options": ["arrive", "assist", "attend", "appear"],
+    "answer": 2,
+    "translation": "晴音音樂教室所有新進老師在教第一堂課之前,都必須參加為期兩天的培訓課程。",
+    "explanation": "考點:動詞語意與用法辨析。attend 是及物動詞,意思是「出席、參加(課程、會議、活動)」,可以直接接 a two-day training session,故 (C) 正確。(A) arrive 是不及物動詞,要說 arrive at the session 才合文法,而且語意只是「抵達」。(B) assist 意思是「協助」,受詞通常是人,assist a session 不成立。(D) appear 意思是「出現、看起來」,同樣不能直接接 session 當受詞。"
+  },
+  {
+    "id": "p5-b11-04",
+    "difficulty": "基礎",
+    "category": "比較級",
+    "question": "Ms. Ruiz was pleased to find that her new folding table was ------- than the one she had used at last year's trade fair.",
+    "options": ["lighter", "light", "lightest", "most light"],
+    "answer": 0,
+    "translation": "魯伊斯小姐很滿意地發現,她的新折疊桌比去年參加商展時用的那張還要輕。",
+    "explanation": "考點:比較級的形式。句中有 than,表示兩者相比,空格必須用比較級;light 是單音節形容詞,比較級直接加 -er,故 (A) lighter 正確。(B) light 是原級,不能和 than 連用。(C) lightest 是最高級,通常搭配 the 並用於三者以上的比較,也不能接 than。(D) most light 形式錯誤,單音節形容詞不用 most 構成比較級或最高級。"
+  },
+  {
+    "id": "p5-b11-05",
+    "difficulty": "基礎",
+    "category": "不定詞與動名詞",
+    "question": "After a steady rise in enrollment, the cooking school has decided ------- a second classroom on the ground floor.",
+    "options": ["to add", "adding", "added", "add"],
+    "answer": 0,
+    "translation": "由於報名人數穩定成長,這間烹飪教室決定在一樓增設第二間教室。",
+    "explanation": "考點:decide 後面接不定詞。decide 屬於只能以不定詞當受詞的動詞(decide to do something),故 (A) to add 正確。(B) adding 是動名詞,decide 不接動名詞當受詞。(C) added 是過去式或過去分詞,放在 has decided 後面會讓句子多出一個動詞。(D) add 是原形動詞,decide 不是使役動詞或感官動詞,後面不能接原形。"
+  },
+  {
+    "id": "p5-b11-06",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "Before approving the poster job, Ms. Okafor asked the print shop for a written ------- of the total cost.",
+    "options": ["receipt", "balance", "account", "estimate"],
+    "answer": 3,
+    "translation": "在核准這批海報的印製之前,歐卡佛小姐向印刷廠索取一份總費用的書面估價。",
+    "explanation": "考點:商業名詞辨析。estimate 指「估價、報價」,是開工前先提出的費用預估,和 Before approving(核准之前)以及 of the total cost(總費用)完全吻合,故 (D) 正確。(A) receipt 是「收據」,付款之後才會拿到。(B) balance 指帳目上的「餘額、未付款項」。(C) account 指「帳戶、帳目」,不是費用預估。"
+  },
+  {
+    "id": "p5-b11-07",
+    "difficulty": "中級",
+    "category": "關係詞",
+    "question": "The room ------- the spare parts are stored must be kept locked whenever the garage is empty.",
+    "options": ["which", "where", "what", "when"],
+    "answer": 1,
+    "translation": "存放備用零件的那個房間,只要修車廠沒有人就必須上鎖。",
+    "explanation": "考點:關係副詞 where。先行詞 The room 是地點,而且後面 the spare parts are stored 結構完整,主詞和被動語態都齊全,不缺主詞也不缺受詞,因此要用關係副詞 (B) where,等於 in which。(A) which 是關係代名詞,後面的子句必須缺主詞或受詞,這裡並不缺。(C) what 本身等於 the thing that,不能有先行詞,前面已經出現 The room 就不能再用。(D) when 的先行詞必須是時間,room 是地點。"
+  },
+  {
+    "id": "p5-b11-08",
+    "difficulty": "基礎",
+    "category": "字彙辨析",
+    "question": "The community pool will be closed for two weeks while the cracked tiles around the edge are -------.",
+    "options": ["refunded", "reserved", "replaced", "reminded"],
+    "answer": 2,
+    "translation": "社區游泳池將關閉兩週,以便更換池邊龜裂的磁磚。",
+    "explanation": "考點:形近動詞的語意辨析。replace 意思是「更換、替換」,龜裂的磁磚需要被換掉,故 (C) replaced 正確。(A) refunded 是「退款」,受詞是金額,不能用在磁磚上。(B) reserved 是「預訂、保留」,多用於座位、房間或時段。(D) reminded 是「提醒」,受詞必須是人。"
+  },
+  {
+    "id": "p5-b11-09",
+    "difficulty": "中級",
+    "category": "分詞",
+    "question": "------- that the flower delivery would not arrive until noon, Mr. Delgado called every customer on the morning list.",
+    "options": ["Realized", "Realizing", "To realize", "Realize"],
+    "answer": 1,
+    "translation": "德爾加多先生發現這批花要中午才會送到,便逐一致電早上名單上的每位客戶。",
+    "explanation": "考點:分詞構句。逗號前的部分沒有主詞,必須用分詞;主要子句的主詞 Mr. Delgado 就是「發現」這個動作的執行者,兩者是主動關係,所以用現在分詞 (B) Realizing,還原後等於 Because he realized that...。(A) Realized 是過去分詞,表被動,但德爾加多先生並不是被發現。(C) To realize 是不定詞,表目的,會變成「為了發現送花會遲到而打電話」,因果顛倒。(D) Realize 是原形動詞,這裡既沒有主詞也不是祈使句,整句會失去結構。"
+  },
+  {
+    "id": "p5-b11-10",
+    "difficulty": "中級",
+    "category": "不定詞與動名詞",
+    "question": "The owner of the second-hand bookstore is looking forward to ------- a second branch near the train station.",
+    "options": ["open", "opened", "opens", "opening"],
+    "answer": 3,
+    "translation": "這家二手書店的老闆很期待在火車站附近開設第二家分店。",
+    "explanation": "考點:look forward to 的 to 是介系詞。look forward to 後面只能接名詞或動名詞,不能接原形動詞,故 (D) opening 正確。(A) open 是原形動詞,是把 to 誤當成不定詞記號才會選的答案。(B) opened 是過去式或過去分詞,介系詞後面同樣不能接。(C) opens 是第三人稱單數現在式,句子的主要動詞已經是 is looking,不能再多一個限定動詞。"
+  },
+  {
+    "id": "p5-b11-11",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Because of a sudden ------- of clean towels, the hair salon had to request an extra delivery on Friday afternoon.",
+    "options": ["shortage", "decrease", "limit", "waste"],
+    "answer": 0,
+    "translation": "由於乾淨毛巾突然短缺,這家美髮沙龍週五下午必須臨時多叫一次送貨。",
+    "explanation": "考點:名詞語意辨析。shortage 指「短缺、不足」,正好說明毛巾不夠用才必須臨時追加一次送貨,故 (A) 正確。(B) decrease 強調數量「下降」的過程,通常搭配 in(a decrease in sales),不用來說物資不夠用。(C) limit 指「限度、上限」,是人為設定的界線。(D) waste 指「浪費、廢棄物」,和毛巾不夠用剛好相反。"
+  },
+  {
+    "id": "p5-b11-12",
+    "difficulty": "中級",
+    "category": "關係詞",
+    "question": "Cedar Hill Movers hired a driver ------- license had been checked by the insurance office the week before.",
+    "options": ["who", "whom", "whose", "which"],
+    "answer": 2,
+    "translation": "杉丘搬家公司聘用了一位司機,他的駕照在前一週已經由保險公司查核過。",
+    "explanation": "考點:所有格關係代名詞。空格後面接的是名詞 license,而這張駕照屬於前面的 driver,兩者是所有關係,所以要用 (C) whose。(A) who 是主格,後面應該直接接動詞,不能接名詞。(B) whom 是受格,只用在關係子句缺受詞的時候。(D) which 的先行詞必須是事物,driver 是人。"
+  },
+  {
+    "id": "p5-b11-13",
+    "difficulty": "中級",
+    "category": "比較級",
+    "question": "Because the new refrigerators use far ------- electricity than the old ones, the corner grocery's monthly bill has dropped by nearly a third.",
+    "options": ["fewer", "few", "less", "least"],
+    "answer": 2,
+    "translation": "由於新冰箱的用電量遠低於舊機型,這家轉角雜貨店的月帳單少了將近三分之一。",
+    "explanation": "考點:less 與 fewer 的可數性區別。electricity 是不可數名詞,修飾不可數名詞要用 (C) less;句中的 far 是用來加強比較級的副詞,加上後面的 than,也證明空格必須是比較級。(A) fewer 只能修飾可數名詞複數,例如 fewer machines。(B) few 是原級,同樣只能修飾可數名詞,也不能和 than 連用。(D) least 是最高級,不能接 than。"
+  },
+  {
+    "id": "p5-b11-14",
+    "difficulty": "中級",
+    "category": "分詞",
+    "question": "The owners of the bakery were ------- by how quickly the new oven paid for itself.",
+    "options": ["surprising", "surprised", "surprise", "to surprise"],
+    "answer": 1,
+    "translation": "這間麵包店的老闆很驚訝,新烤箱這麼快就把成本賺了回來。",
+    "explanation": "考點:情緒動詞的分詞用法。surprise 的本意是「使人感到驚訝」,當主詞是人並且自己感到驚訝時,要用過去分詞當形容詞,故 (B) surprised 正確,後面再用 by 帶出原因。(A) surprising 是現在分詞,用來形容令人驚訝的事物,例如 a surprising result;用在人身上會變成「這兩位老闆很令人驚訝」,也無法和 by 搭配。(C) surprise 是原形動詞,were 後面不能再接原形。(D) to surprise 是不定詞,會變成「為了使人驚訝」,語意不通。"
+  },
+  {
+    "id": "p5-b11-15",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The gardening company's new route plan is much more -------, allowing each crew to finish three sites in a single morning.",
+    "options": ["sufficient", "confident", "dependent", "efficient"],
+    "answer": 3,
+    "translation": "這家園藝公司新的路線規劃效率高出許多,讓每個工班一個上午就能完成三個場地。",
+    "explanation": "考點:形近形容詞辨析。efficient 指「有效率的」,一個上午跑完三個場地正是效率提升,故 (D) 正確。(A) sufficient 指「足夠的」,講的是數量夠不夠,不是速度快不快。(B) confident 指「有信心的」,用來形容人,路線規劃不會有信心。(C) dependent 指「依賴的」,通常搭配 on,語意也不合。"
+  },
+  {
+    "id": "p5-b11-16",
+    "difficulty": "中級",
+    "category": "不定詞與動名詞",
+    "question": "The animal clinic requires every pet owner ------- a health record to the first appointment.",
+    "options": ["to bring", "bringing", "bring", "brought"],
+    "answer": 0,
+    "translation": "這家動物診所要求每位飼主初診時攜帶健康紀錄。",
+    "explanation": "考點:require 的句型。require 採「受詞＋不定詞」的結構(require someone to do something),故 (A) to bring 正確。(B) bringing 是動名詞,require 用在這個句型時不接動名詞。(C) bring 是原形動詞,require 不像 make、let 那樣是使役動詞,受詞後面不能接原形。(D) brought 是過去式或過去分詞,放在受詞後面會使句子多出一個動詞而結構錯亂。"
+  },
+  {
+    "id": "p5-b11-17",
+    "difficulty": "中級",
+    "category": "關係詞",
+    "question": "The workshop manager could not explain ------- had caused the paint to dry so unevenly on the last batch of chairs.",
+    "options": ["which", "what", "that", "whose"],
+    "answer": 1,
+    "translation": "工坊主管無法說明是什麼原因,讓上一批椅子的油漆乾得這麼不均勻。",
+    "explanation": "考點:名詞子句中的複合關係代名詞 what。explain 後面需要一個名詞子句當受詞,而空格同時要擔任該子句的主詞;前面沒有先行詞,因此要用本身含有先行詞的 (B) what(等於 the thing that)。(A) which 用在有明確選擇範圍或有先行詞的時候,本句都沒有。(C) that 引導名詞子句時,後面必須是結構完整的句子,但這裡子句缺主詞。(D) whose 是所有格,後面要接名詞,不能直接接動詞 had caused。"
+  },
+  {
+    "id": "p5-b11-18",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Every water heater installed by Halstead Plumbing comes with a two-year ------- that covers both parts and labor.",
+    "options": ["permit", "receipt", "warranty", "deposit"],
+    "answer": 2,
+    "translation": "凡是由霍斯泰德水電行安裝的熱水器,都附有兩年保固,零件與工資都涵蓋在內。",
+    "explanation": "考點:商業名詞辨析。warranty 指「保固」,說明廠商在一定期間內免費維修或更換,和 two-year 以及 covers both parts and labor 相符,故 (C) 正確。(A) permit 是「許可證」,由主管機關核發。(B) receipt 是「收據」,只證明款項已付。(D) deposit 是「訂金、押金」,指事先支付的部分金額。"
+  },
+  {
+    "id": "p5-b11-19",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The pharmacist asked her assistant to ------- the customer that the eye drops must be used twice a day.",
+    "options": ["remind", "mention", "announce", "suggest"],
+    "answer": 0,
+    "translation": "藥師請助理提醒這位顧客,這款眼藥水一天必須點兩次。",
+    "explanation": "考點:動詞句型與語意辨析。remind 可以直接接「人＋that 子句」(remind someone that ...),表示提醒某人某事,故 (A) 正確。(B) mention 不能以人當受詞,正確用法是 mention something to someone。(C) announce 同樣不接人當受詞,要說 announce something to someone,而且語意是公開宣布。(D) suggest 也不接人當受詞,且意思是「建議」,不是「提醒」。"
+  },
+  {
+    "id": "p5-b11-20",
+    "difficulty": "進階",
+    "category": "比較級",
+    "question": "------- the driver checks the tire pressure, the less fuel the delivery van uses on long routes.",
+    "options": ["More often", "The most often", "As often as", "The more often"],
+    "answer": 3,
+    "translation": "司機越常檢查胎壓,這輛送貨車跑長途時就越省油。",
+    "explanation": "考點:「the＋比較級, the＋比較級」句型。這個句型表示「越……就越……」,前後兩部分都必須以 the 加比較級開頭;後半句已經是 the less fuel,前半句就要用 (D) The more often。(A) More often 少了 the,破壞句型的對稱結構,無法和後半句連成一句。(B) The most often 是最高級,這個句型只用比較級。(C) As often as 是同等比較,語意變成「和……一樣頻繁」,無法與 the less fuel 搭配。"
+  },
+  {
+    "id": "p5-b11-21",
+    "difficulty": "進階",
+    "category": "分詞",
+    "question": "With a storm ------- toward the coast, the campground manager moved all of the rental tents into the storage shed.",
+    "options": ["moves", "moved", "moving", "to move"],
+    "answer": 2,
+    "translation": "由於一場風暴正朝海岸移動,露營區的管理員把所有出租帳篷都收進了倉庫。",
+    "explanation": "考點:「with＋受詞＋分詞」的附帶狀況結構。with 後面的 a storm 和 move 之間是主動關係——風暴自己在移動,而且是正在進行的狀態,所以要用現在分詞 (C) moving。(A) moves 是限定動詞,with 後面不能接一個完整子句。(B) moved 是過去分詞,表被動,會變成風暴「被移動」。(D) to move 是不定詞,這個結構不用不定詞來描述同時發生的狀況。"
+  },
+  {
+    "id": "p5-b11-22",
+    "difficulty": "進階",
+    "category": "關係詞",
+    "question": "The photography agency works with fourteen freelance photographers, most of ------- also teach evening classes at the community center.",
+    "options": ["whom", "them", "who", "which"],
+    "answer": 0,
+    "translation": "這家攝影經紀公司與十四位自由接案的攝影師合作,其中大多數人也在社區中心教晚間課程。",
+    "explanation": "考點:「數量詞＋of＋關係代名詞」的用法。逗號後面要接關係子句才能和主要子句連起來,而 of 是介系詞,後面必須用受格;先行詞 photographers 是人,故 (A) whom 正確。(B) them 是一般代名詞,沒有連接功能,兩個完整句子只靠逗號相接會造成錯誤的黏合句。(C) who 是主格,不能放在介系詞 of 的後面。(D) which 只能指事物,不能指人。"
+  },
+  {
+    "id": "p5-b11-23",
+    "difficulty": "進階",
+    "category": "不定詞與動名詞",
+    "question": "After ten years behind the counter of the hardware store, Mr. Novak is used to ------- with several customers at once.",
+    "options": ["deal", "be dealt", "have dealt", "dealing"],
+    "answer": 3,
+    "translation": "在五金行櫃檯站了十年,諾瓦克先生早已習慣同時應付好幾位顧客。",
+    "explanation": "考點:be used to 與 used to 的差別。be used to 裡的 to 是介系詞,意思是「習慣於」,後面要接動名詞,故 (D) dealing 正確。(A) deal 是原形動詞,只有 used to＋原形(過去經常)才這樣用,但句中的 is 已經排除這個可能。(B) be dealt 是原形的被動式,介系詞後不能接原形,而且應付顧客的人是諾瓦克先生,語意上該用主動。(C) have dealt 同樣是原形形式,不能放在介系詞後面。"
+  },
+  {
+    "id": "p5-b11-24",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Before signing for the delivery, Mr. Castillo asked to ------- each crate for cracks.",
+    "options": ["expect", "inspect", "respect", "suspect"],
+    "answer": 1,
+    "translation": "簽收這批貨之前,卡斯提洛先生要求逐箱檢查有沒有裂痕。",
+    "explanation": "考點:形近動詞辨析。inspect 意思是「檢查、查驗」,簽收前逐箱查看有無破損正是這個動作,而且常搭配 for 說明檢查的項目,故 (B) 正確。(A) expect 是「預期、期待」,受詞是事情或結果,不是實物檢查。(C) respect 是「尊重」,受詞多為人或規定。(D) suspect 是「懷疑」,後面接被懷疑的人或事,語意也不合。"
+  },
+  {
+    "id": "p5-b11-25",
+    "difficulty": "進階",
+    "category": "字彙辨析",
+    "question": "Sales at the shoe repair shop rose ------- after the owner began offering same-day service.",
+    "options": ["closely", "nearly", "sharply", "hardly"],
+    "answer": 2,
+    "translation": "這家修鞋店的老闆開始提供當日取件服務之後,業績大幅成長。",
+    "explanation": "考點:副詞語意辨析。sharply 修飾表示變化的動詞時,意思是「大幅地、急遽地」,正好說明業績明顯上升,故 (C) 正確。(A) closely 指「密切地、仔細地」,常搭配 watch、work,不能用來形容上升的幅度。(B) nearly 指「幾乎」,後面必須接被修飾的數量或狀態,例如 nearly doubled,不能單獨放在 rose 後面。(D) hardly 是否定副詞,意思是「幾乎不」,會變成業績幾乎沒有成長,和後面提供當日取件服務所帶來的正面效果互相矛盾。"
+  }
+]

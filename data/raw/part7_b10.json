@@ -1,0 +1,259 @@
+[
+  {
+    "id": "p7-b10-1",
+    "format": "single",
+    "passages": [
+      {
+        "type": "notice",
+        "label": "Notice",
+        "content": "NOTICE TO ALL CUSTOMERS\n\nLarkspur Cleaners - 88 Milton Road\nPosted: April 2\n\nStarting Monday, April 13, we will change the way finished orders are returned to customers.\n\nA row of pickup lockers will be installed inside the front entrance. When your order is ready, we will send a text message with a four-digit code. Enter the code on the screen beside the lockers, and the door holding your clothes will open. The lockers can be used from 6:00 A.M. to 11:00 P.M., seven days a week, even at hours when the counter is closed. Any order left in a locker for more than five days will be moved back behind the counter.\n\nCustomers who prefer to collect their orders at the counter may of course continue to do so. Counter hours remain 8:00 A.M. to 7:00 P.M., Monday through Saturday.\n\nPlease note that the shop will close early, at 1:00 P.M., on Friday, April 10, so that the lockers can be installed. Any order promised for that afternoon will be held until Saturday morning at no extra charge.\n\nTo use the lockers, we must have a current mobile number for you. Stop by the counter before April 10 and ask a staff member to check the number we have on file. Customers who do not wish to receive text messages should say so at the same time, and we will keep returning their orders at the counter only.\n\nQuestions? Call 555-0139 and ask for Dana."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the main purpose of the notice?",
+        "options": [
+          "To introduce a new member of the counter staff",
+          "To announce a permanent change in the shop's opening hours",
+          "To describe a new way of collecting finished orders",
+          "To apologize for a delay in a recent order"
+        ],
+        "answer": 2,
+        "explanation": "定位第一段：we will change the way finished orders are returned to customers，之後整篇都在說明取件櫃的用法，故選 (C)。(B) 是誘答：第四段只提 4 月 10 日當天提早打烊，第三段明說 Counter hours remain 8:00 A.M. to 7:00 P.M.，營業時間並未永久更動；(A)(D) 全文未提。"
+      },
+      {
+        "q": "The word \"current\" in paragraph 5, line 1, is closest in meaning to",
+        "options": [
+          "popular",
+          "up-to-date",
+          "personal",
+          "free"
+        ],
+        "answer": 1,
+        "explanation": "定位第五段首句 we must have a current mobile number for you，接著要顧客到櫃檯確認「檔案裡的號碼」是否正確，可知 current 指「仍在使用的、最新的」，故選 (B) up-to-date。current 另有「目前流行的」與名詞「水流、電流」之義，(A) popular 正是針對前者設計的誘答，但此處修飾的是手機號碼，語意不合；(C)(D) 與原句無關。"
+      },
+      {
+        "q": "What is NOT stated about the pickup lockers?",
+        "options": [
+          "They will be placed inside the front entrance.",
+          "They can be opened with a code.",
+          "They can be used before the counter opens.",
+          "They will take the place of the service counter."
+        ],
+        "answer": 3,
+        "explanation": "NOT 題採刪去法。(A)(B) 見第二段 installed inside the front entrance 與 Enter the code on the screen；(C) 由第二段 from 6:00 A.M. 與第三段 Counter hours remain 8:00 A.M. to 7:00 P.M. 相比可得，櫃檯開門前兩小時就能取件。只有 (D) 與原文相反：第三段說想在櫃檯取件的顧客 may of course continue to do so，櫃檯並未被取代，故選 (D)。"
+      },
+      {
+        "q": "What are customers who do not want text messages advised to do?",
+        "options": [
+          "Speak to a staff member at the counter",
+          "Send an e-mail to the shop",
+          "Use the lockers only in the evening",
+          "Pick up their orders within five days"
+        ],
+        "answer": 0,
+        "explanation": "定位第五段末句：Customers who do not wish to receive text messages should say so at the same time，而 at the same time 指的是同段前一句 Stop by the counter... and ask a staff member，故選 (A)。(D) 的五天期限見第二段，是取件櫃的規定，與簡訊無關；(B)(C) 未提及。"
+      }
+    ],
+    "translation": [
+      "顧客公告\n\nLarkspur 洗衣店－Milton 路 88 號\n張貼日期：4 月 2 日\n\n自 4 月 13 日（星期一）起，我們將改變完成訂單交還顧客的方式。\n\n店門入口內側將裝設一整排取件櫃。當您的衣物整理完成，我們會傳一則含四位數密碼的簡訊。請在取件櫃旁的螢幕輸入密碼，放置您衣物的櫃門就會打開。取件櫃每天上午 6 點至晚上 11 點皆可使用，一週七天，連櫃檯沒開的時段也能取件。放在櫃內超過五天的訂單，會被移回櫃檯後方。\n\n偏好在櫃檯取件的顧客當然可以照舊。櫃檯營業時間維持週一至週六上午 8 點至晚上 7 點。\n\n請注意，4 月 10 日（星期五）本店將於下午 1 點提早打烊，以便安裝取件櫃。原訂當天下午取件的訂單將保留至星期六早上，不另收費。\n\n要使用取件櫃，我們必須有您目前在用的手機號碼。請在 4 月 10 日前到櫃檯，請店員確認我們建檔的號碼。不希望收到簡訊的顧客請一併告知，我們會繼續只在櫃檯交還您的衣物。\n\n有疑問嗎？請撥 555-0139 找 Dana。"
+    ]
+  },
+  {
+    "id": "p7-b10-2",
+    "format": "single",
+    "passages": [
+      {
+        "type": "article",
+        "label": "Article",
+        "content": "Bellworth Weekly - Business Section\n\nGreen Ladder Gardens Adds Weekend Delivery\n\nBELLWORTH (May 6) - Green Ladder Gardens, the garden supply company on Route 9, will begin delivering plants and soil to homes on Saturdays and Sundays later this month.\n\nThe company has offered weekday delivery for nine years, but owner Marta Feld said most of her customers are not at home during the week. \"People buy a tree on Saturday morning, and then they have to wait until Tuesday for the truck,\" she said. \"By then the excitement is gone, and the tree is still sitting in a bucket in my shop.\"\n\nUnder the new plan, any order placed before noon will arrive the same day within the town, and the following day in the six towns nearby. The delivery fee has not changed, and delivery is still free on orders over $60.\n\nMs. Feld hired four drivers for the weekend shift and bought a second truck. She said the cost was easier to accept after the town council approved a plan to build about 300 houses east of the river. \"Every one of those houses will want a lawn,\" she said.\n\nNot everyone is pleased. Two smaller shops in the area say they cannot match the new weekend service and worry about losing customers during the busy spring season. Ms. Feld answered that her shop still sends work to local gardeners whenever a customer needs someone to do the planting."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the purpose of the article?",
+        "options": [
+          "To review a new gardening tool",
+          "To announce the opening of a second shop",
+          "To explain a change in town parking rules",
+          "To report on a service a local business is adding"
+        ],
+        "answer": 3,
+        "explanation": "定位標題 Green Ladder Gardens Adds Weekend Delivery 與第一段 will begin delivering plants and soil to homes on Saturdays and Sundays，全文說明一家在地園藝公司新增週末配送，故選 (D)。(B) 是誘答：第四段買的是第二輛卡車 a second truck，不是第二家店；(A)(C) 全文未提。"
+      },
+      {
+        "q": "According to Ms. Feld, what problem did weekday delivery cause?",
+        "options": [
+          "Drivers had to work very long hours.",
+          "Customers had to wait several days for their orders.",
+          "The trucks were often too small for large orders.",
+          "Plants were damaged on the way to customers."
+        ],
+        "answer": 1,
+        "explanation": "定位第二段引言：People buy a tree on Saturday morning, and then they have to wait until Tuesday for the truck，週六買、要等到週二才送到，故選 (B)。(A) 司機是第四段為週末班另聘的，並非抱怨工時；(C)(D) 未提及。"
+      },
+      {
+        "q": "The word \"match\" in paragraph 5 is closest in meaning to",
+        "options": [
+          "equal",
+          "connect",
+          "understand",
+          "reduce"
+        ],
+        "answer": 0,
+        "explanation": "定位第五段 two smaller shops... say they cannot match the new weekend service，兩家小店擔心客人流失，可知是「做不到同樣水準的週末服務」，故選 (A) equal。match 另有「使配對、相配」之義，(B) connect 即據此設計的誘答，但受詞是 the new weekend service，指的是比得上、水準相當，而非把兩者連起來；(C)(D) 語意不合。"
+      },
+      {
+        "q": "What does the article suggest about Bellworth?",
+        "options": [
+          "It has more gardeners than the towns nearby.",
+          "Its main road will be repaired this spring.",
+          "It has lost several shops in recent years.",
+          "Its population is likely to grow."
+        ],
+        "answer": 3,
+        "explanation": "推論題，定位第四段：the town council approved a plan to build about 300 houses east of the river，新建三百戶住宅意味人口將增加，Ms. Feld 也因此願意投資，故選 (D)。(C) 第五段的兩家小店只是擔心客源，並未歇業；(A)(B) 無依據。"
+      }
+    ],
+    "translation": [
+      "Bellworth 週報－商業版\n\nGreen Ladder 園藝新增週末配送\n\nBELLWORTH（5 月 6 日）－位於 9 號公路旁的園藝用品公司 Green Ladder Gardens，將於本月稍晚開始在週六與週日把植栽與土壤送到府。\n\n該公司提供平日配送已有九年，但老闆 Marta Feld 說，她多數的顧客平日並不在家。「客人星期六早上買了一棵樹，卻得等到星期二才等到貨車，」她說。「等到那時候，興頭早就過了，樹還泡在我店裡的水桶中。」\n\n依新做法，中午前下的訂單，鎮內當天送達，鄰近六個鄉鎮則隔天送達。運費並未調整，超過 60 美元的訂單仍免運。\n\nFeld 女士為週末班聘了四名司機，並添購第二輛卡車。她說，在鎮公所通過河東側興建約三百戶住宅的計畫後，這筆成本比較容易接受。「那三百戶人家，每一戶都會想要一片草坪，」她說。\n\n並非所有人都樂見其成。當地兩家較小的店家表示，他們做不到同樣水準的週末新服務，擔心在春季旺季流失顧客。Feld 女士回應說，只要顧客需要有人代為栽種，她的店仍會把工作轉介給在地的園丁。"
+    ]
+  },
+  {
+    "id": "p7-b10-3",
+    "format": "single",
+    "passages": [
+      {
+        "type": "webpage",
+        "label": "Web Page",
+        "content": "www.havenridgevet.com/visit\n\nHAVENRIDGE ANIMAL CLINIC\nHome | Our Team | Plan Your Visit | Fees | Contact\n\nPLAN YOUR VISIT\n\nHavenridge Animal Clinic has cared for pets in the Havenridge area since 1998. We treat dogs, cats, rabbits, and birds. We are not able to treat horses, cows, or other farm animals; for those, please call the Weston Large Animal Center at 555-0176.\n\nBooking\nRegular appointments can be booked on this page or by phone. Please arrive ten minutes early so that our staff can weigh your pet before the doctor sees it. If you have to cancel, let us know at least four hours ahead. A visit cancelled later than that is charged half the normal fee.\n\nHours\nMonday-Friday: 8:00 A.M. - 6:00 P.M.\nSaturday: 9:00 A.M. - 1:00 P.M.\nClosed Sunday\n\nEmergencies\nAn animal that has been hit by a car, cannot breathe easily, or has eaten something dangerous should be brought in at once. Do not book online. Call 555-0142 first so that a room is ready when you arrive. After 6:00 P.M. the same number reaches the doctor on duty at home.\n\nYour first visit\nPlease bring any records from your previous clinic. If your pet is nervous around other animals, tell us when you book and we will put you in the quiet room at the back of the building.\n\nPayment is due on the day of the visit. We accept cash and cards."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the purpose of the Web page?",
+        "options": [
+          "To announce longer hours at a clinic",
+          "To advertise a job at an animal hospital",
+          "To explain how to prepare for an appointment",
+          "To describe the training of the clinic's doctors"
+        ],
+        "answer": 2,
+        "explanation": "定位頁面標題 PLAN YOUR VISIT，以及 Booking、Emergencies、Your first visit 各段的指示（提早十分鐘到、取消要提前四小時、初診帶病歷），整頁都在教飼主如何準備就診，故選 (C)。(A) 只列出既有營業時間，並未宣布延長；(B)(D) 未提及。"
+      },
+      {
+        "q": "What does the clinic NOT do?",
+        "options": [
+          "Treat pet birds",
+          "Accept payment by card",
+          "Weigh animals before an examination",
+          "Care for farm animals"
+        ],
+        "answer": 3,
+        "explanation": "NOT 題採刪去法。(A) 第一段 We treat dogs, cats, rabbits, and birds；(B) 最後一句 We accept cash and cards；(C) Booking 段 our staff can weigh your pet before the doctor sees it。只有 (D) 與原文相反：第一段明說 We are not able to treat horses, cows, or other farm animals，並請飼主改打 Weston 中心，故選 (D)。"
+      },
+      {
+        "q": "What will happen if a customer cancels an appointment one hour before it begins?",
+        "options": [
+          "The visit will be moved to Saturday morning.",
+          "Part of the usual fee will still be charged.",
+          "The clinic will call the emergency number.",
+          "The customer will lose the use of the quiet room."
+        ],
+        "answer": 1,
+        "explanation": "定位 Booking 段：let us know at least four hours ahead. A visit cancelled later than that is charged half the normal fee。提前一小時已晚於四小時的規定，須付一半費用，故選 (B)。(A)(C)(D) 皆非取消的後果；quiet room 見 Your first visit 段，與取消無關。"
+      },
+      {
+        "q": "In the section \"Your first visit,\" the word \"records\" is closest in meaning to",
+        "options": [
+          "documents",
+          "recordings",
+          "achievements",
+          "measurements"
+        ],
+        "answer": 0,
+        "explanation": "定位 Your first visit 段首句 Please bring any records from your previous clinic，指的是前一家診所留下的病歷資料，故選 (A) documents。record 另有「錄音」與「（運動）紀錄」之義，(B) recordings 與 (C) achievements 即分別針對這兩義設計的誘答，但本句要飼主帶來的是紙本資料，兩者皆不合；(D) measurements 指量測數值，語意不合。"
+      }
+    ],
+    "translation": [
+      "www.havenridgevet.com/visit\n\nHAVENRIDGE 動物醫院\n首頁｜醫療團隊｜就診須知｜收費｜聯絡我們\n\n就診須知\n\nHavenridge 動物醫院自 1998 年起為 Havenridge 地區的寵物看診。我們看狗、貓、兔子與鳥類。我們無法診治馬、牛或其他農場動物；這類動物請致電 Weston 大動物中心 555-0176。\n\n預約\n一般門診可在本頁或以電話預約。請提早十分鐘到診，以便我們的人員在醫師看診前為您的寵物量體重。若需取消，請至少提前四小時告知。晚於此時限才取消者，將收取一半的門診費用。\n\n門診時間\n週一至週五：上午 8 點至下午 6 點\n週六：上午 9 點至下午 1 點\n週日休診\n\n急診\n遭車撞擊、呼吸困難，或誤食危險物品的動物，請立即送醫。請勿線上預約。請先撥 555-0142，我們才能在您抵達前備好診間。晚上 6 點以後，同一支電話會轉接到值班醫師家中。\n\n初次就診\n請攜帶前一家診所的任何病歷紀錄。若您的寵物在其他動物旁邊會緊張，請於預約時告知，我們會安排在建築後方的安靜診間。\n\n費用須於就診當天付清。本院收現金與信用卡。"
+    ]
+  },
+  {
+    "id": "p7-b10-4",
+    "format": "double",
+    "passages": [
+      {
+        "type": "schedule",
+        "label": "Class Schedule",
+        "content": "NORTHGATE COMMUNITY MUSIC SCHOOL\nAdult Evening Classes - Autumn Term (September 8 - November 14)\nEvery class meets once a week for ten weeks.\n\nGuitar for Beginners | Mondays, 6:30-8:00 P.M. | Room 2 | Oscar Lund | $180\nGroup Singing | Tuesdays, 7:00-8:30 P.M. | Main Hall | Priya Ramesh | $150\nPiano, Level 2 | Wednesdays, 6:00-7:30 P.M. | Room 5 | Oscar Lund | $210\nDrums for Beginners | Thursdays, 7:00-8:30 P.M. | Basement Studio | Ken Abara | $195\nGuitar for Beginners (second group) | Saturdays, 10:00-11:30 A.M. | Room 2 | Ken Abara | $180\n\nNotes\n* Each class is limited to twelve students. A class with fewer than five students will not be held.\n* Students may move to another group in the same subject during the first two weeks of the term. Write to the office; please do not simply attend the new class.\n* A student who leaves the school during the first four weeks receives half of the fee back. After that, no money is returned.\n* Instruments may be rented at the office for $25 per term."
+      },
+      {
+        "type": "email",
+        "label": "E-mail",
+        "content": "To: office@northgatemusic.org\nFrom: helen.duarte@mailcove.com\nDate: September 16\nSubject: My Monday class\n\nDear Ms. Okafor,\n\nI am writing about the beginners' guitar class I joined this term. I have been to both Monday sessions so far and I enjoy them very much, but my company has just moved me to an evening shift that starts at 6:00 P.M. on Mondays and Wednesdays. I will not be able to come at that hour for the rest of the term.\n\nI see from the term schedule that the same course is also offered on Saturday mornings. Could I move into that group instead? I understand that the fee is the same, so I hope there is nothing more to pay. If the Saturday group is already full, please tell me as soon as you can, because I may then have to leave the school and take the course again next spring.\n\nOne more thing: I rented a guitar from the office during the first week. May I keep it if I change groups?\n\nThank you for your help.\n\nHelen Duarte"
+      }
+    ],
+    "questions": [
+      {
+        "q": "Why did Ms. Duarte write the e-mail?",
+        "options": [
+          "To ask to be moved to a different group",
+          "To sign up for a course next spring",
+          "To complain about her teacher",
+          "To return a rented instrument"
+        ],
+        "answer": 0,
+        "explanation": "定位電子郵件第二段：Could I move into that group instead?，她因工作班表改變而想換到週六班，故選 (A)。(B) 是萬一週六班額滿才可能的做法，並非寫信目的；(C) 她說 I enjoy them very much；(D) 她問的是能否繼續留用租來的吉他，不是要歸還。"
+      },
+      {
+        "q": "According to the schedule, what must a student do to change groups?",
+        "options": [
+          "Pay a small extra fee",
+          "Speak to the teacher after class",
+          "Send a request to the office",
+          "Attend the new class for one week first"
+        ],
+        "answer": 2,
+        "explanation": "定位課表 Notes 第二點：Write to the office; please do not simply attend the new class，故選 (C)，(D) 正是這句明文禁止的做法。(A) Notes 只提樂器租金 $25，換班未提費用；(B) 未提及。"
+      },
+      {
+        "q": "Who will most likely be Ms. Duarte's teacher after the change?",
+        "options": [
+          "Oscar Lund",
+          "Ken Abara",
+          "Priya Ramesh",
+          "Ms. Okafor"
+        ],
+        "answer": 1,
+        "explanation": "整合題。電子郵件第二段說她想改到週六早上的同一門課；回到課表，Guitar for Beginners (second group) 排在 Saturdays, 10:00-11:30 A.M.，授課者為 Ken Abara，故選 (B)。(A) Oscar Lund 是她原本週一班的老師；(C) 教的是合唱課；(D) Ms. Okafor 是收信的辦公室人員。"
+      },
+      {
+        "q": "If Ms. Duarte leaves the school in September, how much money will she receive?",
+        "options": [
+          "$90",
+          "$105",
+          "$180",
+          "None"
+        ],
+        "answer": 0,
+        "explanation": "整合題。課表 Notes 第三點：前四週內退出可退還一半學費；課表顯示吉他入門學費 $180，一半即 $90，故選 (A)。學期自 9 月 8 日開始，九月份都落在前四週之內。(B) $105 是鋼琴課 $210 的一半，科目取錯；(C) $180 是全額；(D) 是第四週之後才適用的規定。"
+      },
+      {
+        "q": "In the e-mail, the word \"full\" in paragraph 2 is closest in meaning to",
+        "options": [
+          "complete",
+          "satisfied",
+          "filled",
+          "wide"
+        ],
+        "answer": 2,
+        "explanation": "定位郵件第二段 If the Saturday group is already full, please tell me as soon as you can，主詞是 group（班級），且課表 Notes 註明每班上限十二人，可知 full 指「人數已滿」，故選 (C) filled。full 另有「完整的」與「吃飽的」之義，(A) complete 與 (B) satisfied 分別針對這兩義設計，套回本句皆不通；(D) 語意不合。"
+      }
+    ],
+    "translation": [
+      "NORTHGATE 社區音樂教室\n成人夜間課程－秋季班（9 月 8 日至 11 月 14 日）\n每門課每週上一次，共十週。\n\n吉他入門｜週一 18:30-20:00｜2 教室｜Oscar Lund｜180 美元\n團體歌唱｜週二 19:00-20:30｜大廳｜Priya Ramesh｜150 美元\n鋼琴（第二級）｜週三 18:00-19:30｜5 教室｜Oscar Lund｜210 美元\n爵士鼓入門｜週四 19:00-20:30｜地下室琴房｜Ken Abara｜195 美元\n吉他入門（第二班）｜週六 10:00-11:30｜2 教室｜Ken Abara｜180 美元\n\n注意事項\n＊每班以十二人為限。人數少於五人的班級不開課。\n＊學員可在開學後前兩週內，改到同一科目的另一個班級。請寫信給辦公室；請勿逕自去上新的班級。\n＊於前四週內退出者，退還一半學費；之後恕不退費。\n＊樂器可在辦公室租借，每學期 25 美元。",
+      "收件者：office@northgatemusic.org\n寄件者：helen.duarte@mailcove.com\n日期：9 月 16 日\n主旨：我的週一課程\n\n親愛的 Okafor 女士：\n\n我想請教本學期我報名的吉他入門課。到目前為止兩次週一的課我都有上，也很喜歡，但公司剛把我調到晚班，週一與週三從晚上 6 點開始上班。本學期接下來的時間，我都無法在那個時段到課。\n\n我從課表上看到，同一門課週六早上也有開。我可以改到那一班嗎？我知道學費相同，所以應該不需要再補繳費用。如果週六班已經額滿，請盡快告訴我，因為那樣我可能只好退出，明年春天再重修這門課。\n\n還有一件事：我在第一週向辦公室租了一把吉他。若我換班，可以繼續留用嗎？\n\n感謝您的協助。\n\nHelen Duarte"
+    ]
+  }
+]

@@ -1,0 +1,259 @@
+[
+  {
+    "id": "p7-b9-1",
+    "format": "single",
+    "passages": [
+      {
+        "type": "email",
+        "label": "E-mail",
+        "content": "To: s.doyle@brightmail.net\nFrom: v.ortega@maplestreetcycles.com\nDate: March 12\nSubject: Repair order #4417\n\nDear Ms. Doyle,\n\nThank you for bringing your touring bicycle to Maple Street Cycles last Thursday. Our technician has finished checking it, and I would like to explain what he found before we do any work.\n\nThe rear wheel is bent and cannot be repaired safely. A new wheel costs $118, plus $30 for labor. The brake cables are also worn and should be changed at the same time, which adds $24. Your bicycle is still under our two-year warranty, but the warranty applies only to the frame, so these parts are not included.\n\nWe have the brake cables in stock, but the wheel must be ordered from our supplier in Portland. It usually arrives within four business days. If you approve the full estimate today, we expect to have the bicycle ready by Wednesday, March 18.\n\nPlease note that our shop will be closed on Monday, March 16, while the floor is being replaced. Phone messages left that day will be returned on Tuesday morning.\n\nYou can approve the estimate by replying to this message or by calling me at 555-0164. If you would rather not replace the wheel, we will return the bicycle at no charge, since the inspection itself is free.\n\nSincerely,\n\nVictor Ortega\nService Manager, Maple Street Cycles"
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the main purpose of the e-mail?",
+        "options": [
+          "To confirm that a new bicycle has arrived",
+          "To explain repair costs and request a decision",
+          "To apologize for a late delivery",
+          "To announce a change in warranty terms"
+        ],
+        "answer": 1,
+        "explanation": "目的題看信件前段與收尾動作。第一段說技師檢查完畢、要在動工前說明結果，第二段列出各項費用，最後一段請對方回信或來電 approve the estimate（同意估價），故選 (B)。(A) 這台車是客戶原有的旅行車、不是新車；(C) 信中沒有延遲或道歉；(D) 保固條款沒有變更，只是說明保固範圍只含車架。"
+      },
+      {
+        "q": "According to the e-mail, what is NOT something Ms. Doyle can do?",
+        "options": [
+          "Approve the estimate by e-mail",
+          "Reach Mr. Ortega by telephone",
+          "Get her bicycle back without paying anything",
+          "Borrow another bicycle while hers is repaired"
+        ],
+        "answer": 3,
+        "explanation": "NOT 題要逐項回原文刪去。最後一段 replying to this message 對應 (A)；calling me at 555-0164 對應 (B)；return the bicycle at no charge, since the inspection is free 對應 (C)。全信沒有提到出借代步車，故選 (D)。"
+      },
+      {
+        "q": "What will happen on March 16?",
+        "options": [
+          "Ms. Doyle's bicycle will be ready.",
+          "A new wheel will arrive from the supplier.",
+          "The shop will not be open for business.",
+          "The two-year warranty will end."
+        ],
+        "answer": 2,
+        "explanation": "定位第四段：our shop will be closed on Monday, March 16, while the floor is being replaced，故選 (C)。(A) 車子預計好的日子是 3 月 18 日（第三段）；(B) 輪圈約四個工作天到，信中未指定 3 月 16 日；(D) 保固是兩年期，沒有說在該日結束。"
+      },
+      {
+        "q": "The word \"returned\" in the sentence \"Phone messages left that day will be returned on Tuesday morning\" is closest in meaning to",
+        "options": [
+          "given back",
+          "answered",
+          "sent to another shop",
+          "repeated"
+        ],
+        "answer": 1,
+        "explanation": "該句主詞是 phone messages（電話留言），return a message／a call 指「回覆」，故選 (B) answered。(A) given back 是 return 最常見的「歸還」義，用在最後一段的 return the bicycle 才對，這裡的受詞是留言不是物品；(C)(D) 原文都沒有提到轉送或重複。"
+      }
+    ],
+    "translation": [
+      "收件者：s.doyle@brightmail.net\n寄件者：v.ortega@maplestreetcycles.com\n日期：3 月 12 日\n主旨：維修單 #4417\n\n親愛的 Doyle 女士：\n\n感謝您上週四把您的旅行車送到 Maple Street 自行車行。我們的技師已經檢查完畢，在動工之前，我想先向您說明他發現的狀況。\n\n後輪已經變形，無法安全修復。新輪組要價 118 美元，另加 30 美元工資。煞車線也已磨損，建議一併更換，費用再加 24 美元。您的自行車仍在我們的兩年保固期內，但保固僅適用於車架，因此上述零件不包含在內。\n\n煞車線我們有現貨，輪組則必須向波特蘭的供應商訂購，通常四個工作天內會到。若您今天同意這份完整估價，我們預計可在 3 月 18 日（星期三）前把車修好。\n\n另外要提醒您，本店 3 月 16 日（星期一）因更換地板而暫停營業。當天的電話留言，我們會在星期二上午回覆。\n\n您可以直接回覆這封信，或撥 555-0164 給我，以確認這份估價。若您不打算更換輪組，我們會免費把車還給您，因為檢查本身不收費。\n\n順頌時祺\n\nVictor Ortega\nMaple Street 自行車行 服務部經理"
+    ]
+  },
+  {
+    "id": "p7-b9-2",
+    "format": "single",
+    "passages": [
+      {
+        "type": "text message chain",
+        "label": "Text Message Chain",
+        "content": "Petra Sorensen (8:42 A.M.)\nHi Danny. Are you and Luis at the Kellerman job on Oak Street yet?\n\nDanny Fisk (8:44 A.M.)\nWe got here at eight, but the building manager still hasn't opened the loading dock. We're sitting in the truck.\n\nPetra Sorensen (8:46 A.M.)\nThat's the third time this month. Did you try the office number printed on the work order?\n\nDanny Fisk (8:47 A.M.)\nTwice. Nobody picks up. Luis is walking around to the front desk to see if someone there can let us in.\n\nPetra Sorensen (8:51 A.M.)\nAll right. If the dock is still closed at 9:15, start with the boxes in the hallway and carry them out through the side door. We can't lose the whole morning.\n\nDanny Fisk (8:53 A.M.)\nUnderstood. One more thing. The customer added two filing cabinets that were not on the list, and they are heavy. Should we ask her to pay for them now?\n\nPetra Sorensen (8:55 A.M.)\nTake them, but don't collect any money today. I'll put the extra items on the final invoice and e-mail it to her on Friday. Just take a photo of each cabinet before you load it.\n\nDanny Fisk (8:56 A.M.)\nWill do. Luis is waving at me. The dock is open now. We should still finish before two.\n\nPetra Sorensen (8:57 A.M.)\nGood. Send me a message when the truck is loaded."
+      }
+    ],
+    "questions": [
+      {
+        "q": "For what kind of business do the writers most likely work?",
+        "options": [
+          "A furniture store",
+          "An office supply company",
+          "A building management firm",
+          "A moving company"
+        ],
+        "answer": 3,
+        "explanation": "行業推論題要把線索加總：loading dock、boxes in the hallway、carry them out、load it、the truck is loaded，加上客戶臨時加了兩個檔案櫃要一起搬，這是搬家／搬運公司的作業，故選 (D)。(A)(B) 賣家具或辦公用品應該是送新品給客戶，不會把走廊上的箱子搬出來；(C) 大樓管理員是他們在等的人，不是他們自己。"
+      },
+      {
+        "q": "At 8:47 A.M., what does Mr. Fisk most likely mean when he writes, \"Twice\"?",
+        "options": [
+          "He has already called the office number two times.",
+          "He has visited the building on two other days.",
+          "Two workers are waiting outside the dock.",
+          "He needs two more hours to finish the job."
+        ],
+        "answer": 0,
+        "explanation": "意圖題一定要看上一則訊息。8:46 Sorensen 問 Did you try the office number printed on the work order?，Fisk 回 Twice.，接著補 Nobody picks up.，可見他已經打了兩次都沒人接，故選 (A)。(B)(C)(D) 都是把 twice 硬套在別的名詞上，前一句問的是打電話。"
+      },
+      {
+        "q": "What does Ms. Sorensen tell Mr. Fisk to do about the filing cabinets?",
+        "options": [
+          "Leave them for a later trip",
+          "Ask the customer to sign a new work order",
+          "Photograph them and load them onto the truck",
+          "Weigh them before loading them"
+        ],
+        "answer": 2,
+        "explanation": "定位 8:55 的訊息：Take them...Just take a photo of each cabinet before you load it，先拍照再搬上車，故選 (C)。(A) 她說 Take them（照搬）；(B) 原文只說之後開帳單，沒有要客戶簽新的工作單；(D) 重是 Fisk 的描述，但沒有人要求秤重。"
+      },
+      {
+        "q": "What does Ms. Sorensen say she will do on Friday?",
+        "options": [
+          "Send the customer a bill",
+          "Visit the Oak Street building",
+          "Speak with the building manager",
+          "Hire two more workers"
+        ],
+        "answer": 0,
+        "explanation": "定位 8:55：I'll put the extra items on the final invoice and e-mail it to her on Friday，invoice 就是帳單，故選 (A)。(B)(C) 她人不在現場，也沒說要去一趟或要找大樓管理員談；(D) 全篇沒有增派人手。"
+      }
+    ],
+    "translation": [
+      "Petra Sorensen（上午 8:42）\n嗨，Danny。你和 Luis 已經到 Oak 街的 Kellerman 那件案子了嗎？\n\nDanny Fisk（上午 8:44）\n我們八點就到了，但大樓管理員還沒把卸貨區打開。我們現在坐在車上等。\n\nPetra Sorensen（上午 8:46）\n這已經是這個月第三次了。工作單上印的辦公室電話你打過了嗎？\n\nDanny Fisk（上午 8:47）\n打了兩次，都沒人接。Luis 現在繞到前檯，看看那邊有沒有人可以放我們進去。\n\nPetra Sorensen（上午 8:51）\n好。如果 9:15 卸貨區還是關著，就先搬走廊上的箱子，從側門搬出去。我們不能整個早上都耗掉。\n\nDanny Fisk（上午 8:53）\n了解。還有一件事。客戶多加了兩個原本清單上沒有的檔案櫃，很重。要現在請她付這筆錢嗎？\n\nPetra Sorensen（上午 8:55）\n搬，但今天不要收錢。我會把追加的品項列在最後那張帳單上，星期五用電子郵件寄給她。你只要在搬上車前，把每個櫃子都拍張照就好。\n\nDanny Fisk（上午 8:56）\n沒問題。Luis 在對我揮手，卸貨區開了。我們應該還是能在兩點前完工。\n\nPetra Sorensen（上午 8:57）\n很好。車裝好之後傳個訊息給我。"
+    ]
+  },
+  {
+    "id": "p7-b9-3",
+    "format": "single",
+    "passages": [
+      {
+        "type": "advertisement",
+        "label": "Advertisement",
+        "content": "RIDGEWAY MUSIC STUDIO\nSpring term registration is now open\n\nFor eleven years, families in the Ridgeway area have trusted us with their children's first music lessons. Every teacher at our studio holds a degree in music and has taught for at least five years.\n\nWHAT WE OFFER\n- Private lessons in piano, guitar, violin, and drums, 30 or 45 minutes, once a week\n- Small group classes for children ages four to six (six students at most)\n- An evening singing class for adults, Thursdays at 7:00 P.M.\n- Free practice rooms for our students, open until 9:00 P.M. every day\n\nSpring term runs from April 6 to June 26. Private lessons cost $32 for 30 minutes and $45 for 45 minutes. A group class costs $210 for the whole term.\n\nSPECIAL OFFER\nRegister before March 20 and pay no registration fee, which is normally $40. Families who sign up two or more students receive 10 percent off every lesson for the entire term. This discount cannot be used together with any other offer.\n\nNot sure where to begin? Visit our open house on Saturday, March 14, from 10:00 A.M. to 2:00 P.M. Teachers will be there to answer your questions, and visitors may try any instrument in the building. No appointment is necessary, but seats for the 11:00 A.M. student concert must be reserved by telephone.\n\nRidgeway Music Studio | 42 Chapel Road | 555-0198 | www.ridgewaymusic.com"
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is indicated about the teachers at the studio?",
+        "options": [
+          "They have each taught for five years or more.",
+          "They each teach more than one instrument.",
+          "They all studied at the same school.",
+          "They are hired for one term at a time."
+        ],
+        "answer": 0,
+        "explanation": "定位第二段最後一句：Every teacher...holds a degree in music and has taught for at least five years，at least five years 就是「五年以上」，故選 (A)。(B) 廣告只列出教的樂器種類，沒說每位老師都教多種；(C) 只說有音樂學位，沒說同一所學校；(D) 沒有提到聘期。"
+      },
+      {
+        "q": "What is NOT mentioned as available at the studio?",
+        "options": [
+          "Practice rooms that students may use at no cost",
+          "A singing class for adults",
+          "Classes for children under seven",
+          "Repairs for damaged instruments"
+        ],
+        "answer": 3,
+        "explanation": "NOT 題逐項對照 WHAT WE OFFER：Free practice rooms 對應 (A)；An evening singing class for adults 對應 (B)；group classes for children ages four to six（四到六歲，即七歲以下）對應 (C)。廣告只說參觀時可以試彈樂器，完全沒有修理服務，故選 (D)。"
+      },
+      {
+        "q": "The word \"runs\" in the sentence \"Spring term runs from April 6 to June 26\" is closest in meaning to",
+        "options": [
+          "controls",
+          "continues",
+          "hurries",
+          "prints"
+        ],
+        "answer": 1,
+        "explanation": "該句主詞是 Spring term（春季班期），後面接 from...to...（起訖日期），run 在這裡是「持續、進行」，故選 (B) continues。(A) run 確實有「經營、管理」的意思，但受詞要是公司或活動，這裡是期間本身；(C) 是 run「跑」的字面義；(D) run 也可指報紙「刊登」，與時間區間無關。"
+      },
+      {
+        "q": "According to the advertisement, what must a visitor do to attend the concert?",
+        "options": [
+          "Register for the spring term",
+          "Arrive before 10:00 A.M.",
+          "Reserve a seat by telephone",
+          "Pay a $40 fee"
+        ],
+        "answer": 2,
+        "explanation": "定位最後一段：No appointment is necessary, but seats for the 11:00 A.M. student concert must be reserved by telephone，故選 (C)。(A) 參觀日不需先報名；(B) 開放時間是上午十點到下午兩點，音樂會在十一點；(D) 40 美元是報名費，且 3 月 20 日前報名還可免收，與音樂會無關。"
+      }
+    ],
+    "translation": [
+      "RIDGEWAY 音樂教室\n春季班報名開始\n\n十一年來，Ridgeway 地區的家庭都把孩子的第一堂音樂課交給我們。本教室每位老師都具備音樂相關學位，且教學資歷至少五年。\n\n我們提供的課程\n－鋼琴、吉他、小提琴、爵士鼓個別課，每次 30 或 45 分鐘，每週一堂\n－四到六歲兒童小班課（每班最多六人）\n－成人晚間歌唱班，每週四晚上 7:00\n－本教室學生可免費使用練習室，每天開放至晚上 9:00\n\n春季班自 4 月 6 日起至 6 月 26 日止。個別課 30 分鐘 32 美元，45 分鐘 45 美元；小班課整期 210 美元。\n\n優惠方案\n3 月 20 日前報名，免收原價 40 美元的報名費。同一家庭報名兩人（含）以上，整期每堂課皆享九折。本優惠不得與其他優惠合併使用。\n\n不知道從哪裡開始嗎？歡迎參加 3 月 14 日（星期六）上午 10:00 至下午 2:00 的開放參觀日。當天老師都在場，可以回答您的問題，來賓也可以試奏館內任何一項樂器。參觀不需預約，但上午 11:00 學生音樂會的座位必須先來電預約。\n\nRidgeway 音樂教室｜Chapel 路 42 號｜555-0198｜www.ridgewaymusic.com"
+    ]
+  },
+  {
+    "id": "p7-b9-4",
+    "format": "double",
+    "passages": [
+      {
+        "type": "menu",
+        "label": "Catering Menu",
+        "content": "HARBORVIEW DELI - CATERING MENU\nFor groups of ten or more\n\nPACKAGE A - Morning Table   $9 per guest\nFresh fruit, three kinds of bread, butter and jam, coffee and tea\n\nPACKAGE B - Sandwich Lunch   $14 per guest\nFour kinds of sandwiches, green salad, potato chips, bottled water\n\nPACKAGE C - Hot Lunch   $19 per guest\nRoast chicken or baked fish, rice, two vegetable dishes, bread, iced tea\n\nPACKAGE D - Evening Table   $26 per guest\nSoup, roast beef or grilled vegetables, potatoes, salad, dessert of the day\n\nPLEASE NOTE\n- Orders must be placed at least four business days in advance.\n- Delivery is free within eight kilometers of our shop. Beyond that, we charge $1.50 for each additional kilometer.\n- Plates, cups, and napkins are included at no extra cost. Servers cost $22 an hour.\n- Tell us about food allergies when you order. We can prepare a meal without nuts or milk products for $2 more per guest.\n- Packages C and D are not available on Sundays, when our kitchen closes at noon.\n\nHarborview Deli | 15 Cobb Street | 555-0142 | orders@harborviewdeli.com"
+      },
+      {
+        "type": "email",
+        "label": "E-mail",
+        "content": "To: orders@harborviewdeli.com\nFrom: r.vidal@brookfieldanimalclinic.com\nDate: October 2\nSubject: Lunch for October 9\n\nHello,\n\nMy name is Rafael Vidal, and I am the office manager at Brookfield Animal Clinic on Grant Street. On Thursday, October 9, we are holding a training day for our own staff and for six visiting nurses. I would like to order lunch for twenty-two people.\n\nWe would prefer your hot package. The training runs until five o'clock, and I am afraid a light meal would not be enough. Two of the nurses cannot eat milk products, so those two meals should be prepared separately. Everyone else will have the regular menu.\n\nOur clinic is about twelve kilometers from your shop, so I understand that there may be an added charge for bringing the food to us. Please include it in the price you send me.\n\nWe do not need anyone to serve the meal, as our own staff will do that. We do need the food to arrive no later than 11:45 A.M., because the afternoon sessions begin at 12:30.\n\nCould you send me a written estimate by Monday? If the total is higher than our budget allows, we may choose the sandwich package instead.\n\nThank you,\n\nRafael Vidal\nOffice Manager, Brookfield Animal Clinic"
+      }
+    ],
+    "questions": [
+      {
+        "q": "According to the menu, what is NOT included in the price of a package?",
+        "options": [
+          "Cups",
+          "Plates",
+          "Napkins",
+          "Workers to serve the food"
+        ],
+        "answer": 3,
+        "explanation": "NOT 題定位菜單 PLEASE NOTE 第三點：Plates, cups, and napkins are included at no extra cost. Servers cost $22 an hour.，前半句直接刪掉 (A)(B)(C)，後半句說服務人員另計時薪，故選 (D)。"
+      },
+      {
+        "q": "Why did Mr. Vidal write the e-mail?",
+        "options": [
+          "To ask for a written price estimate",
+          "To change an order he placed earlier",
+          "To report a problem with a delivery",
+          "To ask about the shop's business hours"
+        ],
+        "answer": 0,
+        "explanation": "目的題看信末的請求句：Could you send me a written estimate by Monday?，前面各段都是在提供報價所需的條件（人數、餐點、距離、送達時間），故選 (A)。(B) 這是第一次下單，沒有舊訂單；(C) 尚未送餐；(D) 他問的是價格，不是營業時間。"
+      },
+      {
+        "q": "How much will each guest's meal most likely cost, before any added charges?",
+        "options": [
+          "$9",
+          "$14",
+          "$19",
+          "$26"
+        ],
+        "answer": 2,
+        "explanation": "跨篇整合題。電子郵件第二段說 We would prefer your hot package，回菜單找 PACKAGE C - Hot Lunch，價格是每人 19 美元，故選 (C)。(B) 14 美元是三明治餐，只有在超出預算時才會改選；(A)(D) 分別是早餐與晚餐方案。"
+      },
+      {
+        "q": "Why will the deli most likely add a delivery charge to Mr. Vidal's order?",
+        "options": [
+          "The order is for more than twenty guests.",
+          "The order was placed less than a week in advance.",
+          "The food must be carried in by servers.",
+          "The clinic is farther than eight kilometers from the shop."
+        ],
+        "answer": 3,
+        "explanation": "跨篇整合題。菜單註記第二點：八公里內免運，超過部分每公里加收 1.5 美元；電子郵件第三段說 Our clinic is about twelve kilometers from your shop，超出免費範圍，故選 (D)。(A) 人數多寡與運費無關，只有十人以上才接單；(B) 10 月 2 日下單、10 月 9 日用餐，符合至少四個工作天；(C) 他明說不需要服務人員。"
+      },
+      {
+        "q": "What will the deli most likely do for two of the guests?",
+        "options": [
+          "Give them a free dessert",
+          "Charge two dollars more for each of their meals",
+          "Deliver their food after 12:30",
+          "Serve them Package B instead"
+        ],
+        "answer": 1,
+        "explanation": "跨篇整合題。電子郵件第二段說有兩位護理師不能吃乳製品、餐點需另外準備；菜單註記第四點寫明 We can prepare a meal without nuts or milk products for $2 more per guest，故選 (B)。(A) 甜點屬於晚餐方案，且沒有免費一說；(C) 全部餐點都要在 11:45 前送達；(D) 三明治餐是整批可能改選的方案，不是只給這兩人。"
+      }
+    ],
+    "translation": [
+      "HARBORVIEW 熟食店－外燴菜單\n適用十人以上團體\n\nA 餐－早餐桌　每人 9 美元\n新鮮水果、三種麵包、奶油與果醬、咖啡與茶\n\nB 餐－三明治午餐　每人 14 美元\n四種三明治、生菜沙拉、洋芋片、瓶裝水\n\nC 餐－熱食午餐　每人 19 美元\n烤雞或烤魚、白飯、兩道蔬菜、麵包、冰紅茶\n\nD 餐－晚餐桌　每人 26 美元\n湯品、烤牛肉或炙烤蔬菜、馬鈴薯、沙拉、每日甜點\n\n注意事項\n－訂餐請至少提前四個工作天。\n－本店八公里範圍內免運費；超出部分每公里加收 1.5 美元。\n－盤子、杯子與餐巾紙皆已含在價格內，不另收費；服務人員則以每小時 22 美元計費。\n－訂餐時請告知食物過敏情形。我們可另行準備不含堅果或乳製品的餐點，每人加收 2 美元。\n－C 餐與 D 餐週日不供應，本店廚房週日中午即打烊。\n\nHarborview 熟食店｜Cobb 街 15 號｜555-0142｜orders@harborviewdeli.com",
+      "收件者：orders@harborviewdeli.com\n寄件者：r.vidal@brookfieldanimalclinic.com\n日期：10 月 2 日\n主旨：10 月 9 日的午餐\n\n您好：\n\n我是 Rafael Vidal，Grant 街上 Brookfield 動物診所的行政經理。10 月 9 日（星期四）我們要為自家員工與六位來訪的護理師舉辦教育訓練，想訂 22 人份的午餐。\n\n我們想選你們的熱食餐。訓練會進行到五點，我擔心太輕的餐點不夠吃。其中兩位護理師不能吃乳製品，這兩份餐請另外處理，其他人吃一般菜色即可。\n\n我們診所距離貴店大約十二公里，所以我知道送餐可能要另外加費用，請把這筆費用一併列進報價裡。\n\n我們不需要人員在現場服務，這部分由我們自己的同仁負責。但餐點務必在上午 11:45 前送達，因為下午的課程 12:30 就開始。\n\n可以請您在星期一前寄一份書面估價給我嗎？如果總金額超出我們的預算，我們可能會改選三明治餐。\n\n謝謝您。\n\nRafael Vidal\nBrookfield 動物診所 行政經理"
+    ]
+  }
+]

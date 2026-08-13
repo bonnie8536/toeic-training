@@ -1,0 +1,377 @@
+[
+  {
+    "id": "l2-76",
+    "difficulty": "基礎",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "What time does the animal clinic open on Saturdays?",
+    "options": [
+      "The one on Fifth Street.",
+      "For about an hour.",
+      "Nine, same as weekdays."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：What time 問的是開門時刻，「九點，跟平日一樣」直接給出時間。\n(A) 講的是哪一家分店，回答的是 Which，不是時間。\n(B) 「大約一小時」是 How long 的答案，時間長度不等於時刻。",
+    "transcriptZh": "問：動物醫院星期六幾點開門？\n(A) 第五街那一家。\n(B) 大約一小時。\n(C) 九點，跟平日一樣。"
+  },
+  {
+    "id": "l2-77",
+    "difficulty": "基礎",
+    "category": "Yes/No問句",
+    "accent": "GB",
+    "question": "Do you fix flat tires here?",
+    "options": [
+      "Sure, it only takes a few minutes.",
+      "Yes, I'm pretty tired too.",
+      "The parking lot is around back."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：問店家有沒有補胎服務，用 Sure 答應再補上所需時間，是最自然的口語回應。\n(B) 用 tired 和 tires 的相似音誘答，講的卻是自己很累。\n(C) 「停車場在後面」回答的是地點，屬於 Where 的答案。",
+    "transcriptZh": "問：你們這裡有補胎嗎？\n(A) 當然，只要幾分鐘。\n(B) 對，我也很累。\n(C) 停車場在後面。"
+  },
+  {
+    "id": "l2-78",
+    "difficulty": "中級",
+    "category": "附加/否定問句",
+    "accent": "AU",
+    "question": "You've already watered the plants out front, haven't you?",
+    "options": [
+      "The water bill's due Friday.",
+      "They're beautiful plants.",
+      "I was just heading out to do that."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：間接回應。不直接說 No，而是說「我正要出去弄」，等於表示還沒澆。\n(A) 重複 water，講的是水費帳單，與有沒有澆水無關。\n(B) 重複 plants，只是稱讚植物漂亮，沒有回答問題。",
+    "transcriptZh": "問：你已經幫前面那些植物澆過水了吧？\n(A) 水費帳單星期五要繳。\n(B) 那些植物很漂亮。\n(C) 我正要出去弄。"
+  },
+  {
+    "id": "l2-79",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "Why is the print job taking so long?",
+    "options": [
+      "The copy room's on the second floor.",
+      "One of the machines keeps jamming.",
+      "I printed it out this morning."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：Why 問延誤的原因，「有一台機器一直卡紙」正好說明原因。\n(A) 「影印室在二樓」回答的是地點，屬於 Where 的答案。\n(C) 重複 print，卻用過去式說自己早上印好了，與現在還在跑的印件對不上。",
+    "transcriptZh": "問：這批印件怎麼跑這麼久？\n(A) 影印室在二樓。\n(B) 有一台機器一直卡紙。\n(C) 我今天早上印好了。"
+  },
+  {
+    "id": "l2-80",
+    "difficulty": "進階",
+    "category": "選擇問句",
+    "accent": "GB",
+    "question": "Should we load the boxes first, or the furniture?",
+    "options": [
+      "We moved in last spring.",
+      "The driver usually decides that.",
+      "There's more furniture in the garage."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：選擇問句不一定要二選一，「通常是司機決定」把決定權推給別人，是常見的間接回應。\n(A) 用過去式講自己春天搬進來，與現在的搬運順序無關。\n(C) 重複 furniture，只補充車庫裡還有家具，沒有回答先搬哪一樣。",
+    "transcriptZh": "問：我們先搬箱子還是先搬家具？\n(A) 我們去年春天搬進來的。\n(B) 通常是司機決定的。\n(C) 車庫裡還有家具。"
+  },
+  {
+    "id": "l2-81",
+    "difficulty": "基礎",
+    "category": "陳述句回應",
+    "accent": "AU",
+    "question": "This shirt still has a stain on the collar.",
+    "options": [
+      "I'll run it through again.",
+      "She stayed until closing.",
+      "Cotton, I think."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：對方指出領口還有污漬，「我再洗一次」是直接處理問題的回應。\n(B) 用 stayed 和 stain 的相似音誘答，講的是她待到打烊。\n(C) 「應該是棉的」回答的是材質，並沒有處理污漬。",
+    "transcriptZh": "陳述：這件襯衫領口還有污漬。\n(A) 我再洗一次。\n(B) 她待到打烊才走。\n(C) 應該是棉的。"
+  },
+  {
+    "id": "l2-82",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "How many students signed up for the guitar class?",
+    "options": [
+      "Sign-ups don't close until Friday.",
+      "Every Tuesday evening.",
+      "He teaches piano, actually."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：間接回應。報名到星期五才截止，等於表示現在還給不出確切人數。\n(B) 「每週二晚上」回答的是上課時間，屬於 When 的答案。\n(C) 把 guitar 換成 piano 混淆，講的是教什麼樂器，不是人數。",
+    "transcriptZh": "問：吉他班報名的學生有多少人？\n(A) 報名到星期五才截止。\n(B) 每週二晚上。\n(C) 他其實是教鋼琴的。"
+  },
+  {
+    "id": "l2-83",
+    "difficulty": "基礎",
+    "category": "Yes/No問句",
+    "accent": "GB",
+    "question": "Do you take credit cards at the booth?",
+    "options": [
+      "It's a card for her birthday.",
+      "Yes, I booked it.",
+      "Cash only, I'm afraid."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：問攤位收不收信用卡，「只收現金」等於回答 No，是自然的口語說法。\n(A) 重複 card，但指的是生日卡片，屬於一字多義陷阱。\n(B) 用 booked 和 booth 的相似音誘答，內容與付款方式無關。",
+    "transcriptZh": "問：你們攤位收信用卡嗎？\n(A) 那是要送她的生日卡。\n(B) 對，我訂好了。\n(C) 不好意思，只收現金。"
+  },
+  {
+    "id": "l2-84",
+    "difficulty": "中級",
+    "category": "附加/否定問句",
+    "accent": "AU",
+    "question": "Weren't the new shelves supposed to arrive today?",
+    "options": [
+      "Yes, I put them on the shelf.",
+      "The supplier pushed the delivery back to Thursday.",
+      "It arrived in good condition."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：否定問句在確認貨是不是今天到，「供應商把出貨延到星期四」說明沒到並給了新日期。\n(A) 重複 shelf，講的是自己把東西放上架，與到貨無關。\n(C) 重複 arrive，卻用過去式說貨況良好，時態與事實都對不上。",
+    "transcriptZh": "問：新的層架不是今天要到嗎？\n(A) 對，我把它們放上架了。\n(B) 供應商把出貨延到星期四了。\n(C) 送到的時候狀況很好。"
+  },
+  {
+    "id": "l2-85",
+    "difficulty": "基礎",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "Where should I deliver these flowers?",
+    "options": [
+      "They're mostly roses.",
+      "There's an address on the card.",
+      "She really liked them."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：Where 問送花地點，「卡片上有寫地址」把地點指向卡片，回應成立。\n(A) 回答的是花的種類，屬於 What 的答案。\n(C) 「她很喜歡」講的是收花人的反應，沒有回答送到哪裡。",
+    "transcriptZh": "問：這些花要送到哪裡？\n(A) 大部分是玫瑰。\n(B) 卡片上有寫地址。\n(C) 她很喜歡。"
+  },
+  {
+    "id": "l2-86",
+    "difficulty": "中級",
+    "category": "選擇問句",
+    "accent": "GB",
+    "question": "Do you want the cake boxed, or on a tray?",
+    "options": [
+      "Whichever one's easier to carry.",
+      "It's a chocolate one.",
+      "The box is by the door."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：選擇問句可以回「都行」，「哪個好拿就用哪個」把選擇交還給店家。\n(B) 回答的是口味，屬於 What 的答案。\n(C) 重複 box，講的是盒子放在門邊，沒有做出選擇。",
+    "transcriptZh": "問：蛋糕要幫你裝盒還是放托盤？\n(A) 哪個好拿就用哪個。\n(B) 是巧克力口味的。\n(C) 盒子在門邊。"
+  },
+  {
+    "id": "l2-87",
+    "difficulty": "中級",
+    "category": "Yes/No問句",
+    "accent": "AU",
+    "question": "Is insurance included in the rental price?",
+    "options": [
+      "It's an extra fifteen dollars a day.",
+      "Yes, I rented one last month.",
+      "Sure, I'll include a map with that."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：間接回應。保險要「另外每天十五元」，等於表示租金裡沒有含。\n(B) 重複 rent，用過去式講上個月租過，答非所問。\n(C) 重複 include，卻改講附一張地圖，與保費無關。",
+    "transcriptZh": "問：租金有含保險嗎？\n(A) 保險要另外算，一天十五元。\n(B) 對，我上個月租過一台。\n(C) 好啊，我幫你附一張地圖。"
+  },
+  {
+    "id": "l2-88",
+    "difficulty": "進階",
+    "category": "WH問句",
+    "accent": "US",
+    "question": "How much will it cost to fix the roof?",
+    "options": [
+      "Right after the rain stops.",
+      "We fixed the front steps last spring.",
+      "I'd have to get up there and look first."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：間接回應。「我得先上去看看」表示還沒辦法報價，是很自然的口語說法。\n(A) 「雨一停就開始」回答的是時間，屬於 When 的答案。\n(B) 重複 fix，卻用過去式講春天修過前面的階梯，與屋頂的費用無關。",
+    "transcriptZh": "問：修屋頂要多少錢？\n(A) 雨一停就開始。\n(B) 我們春天修過前面的階梯。\n(C) 我得先上去看看。"
+  },
+  {
+    "id": "l2-89",
+    "difficulty": "中級",
+    "category": "陳述句回應",
+    "accent": "GB",
+    "question": "One of the studio lights won't turn on.",
+    "options": [
+      "It's a bright room, isn't it?",
+      "Did you check if it's plugged in?",
+      "It's my turn to lock up tonight."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：對方說燈打不開，用反問「插頭插好了嗎」提供排除方向，是常見的以問回問。\n(A) 順著 light 講房間很亮，沒有處理故障。\n(C) 重複 turn，但 my turn 是「輪到我」，屬於一字多義陷阱。",
+    "transcriptZh": "陳述：攝影棚有一盞燈打不開。\n(A) 這間很亮，對吧？\n(B) 你確認過插頭有插好嗎？\n(C) 今晚輪到我鎖門。"
+  },
+  {
+    "id": "l2-90",
+    "difficulty": "基礎",
+    "category": "WH問句",
+    "accent": "AU",
+    "question": "Who's teaching the morning class this week?",
+    "options": [
+      "At six thirty.",
+      "In studio two.",
+      "Marcus is filling in for Dana."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：Who 問的是誰上課，「Marcus 代 Dana 的班」直接點出人。\n(A) 「六點半」回答的是時間，屬於 When 的答案。\n(B) 「在二號教室」回答的是地點，屬於 Where 的答案。",
+    "transcriptZh": "問：這週早上的課是誰教？\n(A) 六點半。\n(B) 在二號教室。\n(C) Marcus 代 Dana 的班。"
+  },
+  {
+    "id": "l2-91",
+    "difficulty": "進階",
+    "category": "附加/否定問句",
+    "accent": "US",
+    "question": "You didn't throw out that box of used books, did you?",
+    "options": [
+      "You'd have to ask Teresa.",
+      "Yes, I've read most of them.",
+      "The store closes at seven."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：間接回應。自己不清楚那箱書的去向，把問題轉給 Teresa。\n(B) 順著 books 講自己讀過大半，與那箱書的去向無關。\n(C) 「書店七點打烊」回答的是營業時間，答非所問。",
+    "transcriptZh": "問：你該不會把那箱二手書丟掉了吧？\n(A) 這你得問 Teresa。\n(B) 對，我大部分都讀過了。\n(C) 書店七點打烊。"
+  },
+  {
+    "id": "l2-92",
+    "difficulty": "基礎",
+    "category": "Yes/No問句",
+    "accent": "GB",
+    "question": "Can you pick up the package before five?",
+    "options": [
+      "It was packed very carefully.",
+      "Sure, I'll go right after lunch.",
+      "Yes, five boxes."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：Can you...? 是請託，用 Sure 答應並說明時間，回應成立。\n(A) 重複 pack，講的是包裝很仔細，不是能不能去取件。\n(C) 重複 five，把時間點聽成數量，屬於同字誘答。",
+    "transcriptZh": "問：你可以在五點前去取那個包裹嗎？\n(A) 包得很仔細。\n(B) 好，我午餐後就去。\n(C) 對，五箱。"
+  },
+  {
+    "id": "l2-93",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "AU",
+    "question": "When are the new trees being delivered?",
+    "options": [
+      "Three of them, I think.",
+      "Not until the road work's done.",
+      "They delivered it to the wrong address."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：間接回應。沒給日期，但說明到貨時間要看道路施工什麼時候結束。\n(A) 「應該三棵吧」回答的是數量，屬於 How many 的答案。\n(C) 重複 deliver，卻用過去式講送錯地址，時態與內容都錯位。",
+    "transcriptZh": "問：新的樹什麼時候會送來？\n(A) 應該三棵吧。\n(B) 要等道路施工結束才行。\n(C) 他們送錯地址了。"
+  },
+  {
+    "id": "l2-94",
+    "difficulty": "中級",
+    "category": "選擇問句",
+    "accent": "US",
+    "question": "Would you rather have the sign made of wood or metal?",
+    "options": [
+      "I signed it this morning.",
+      "Yes, please.",
+      "Whichever one lasts longer outdoors."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：用「哪個在戶外撐得久就用哪個」設條件，取代直接二選一。\n(A) 用 signed 和 sign 的相似音誘答，講的是自己早上簽了名。\n(B) 選擇問句不能用 Yes 回答，這是最常見的陷阱。",
+    "transcriptZh": "問：招牌你想要木頭的還是金屬的？\n(A) 我早上簽過了。\n(B) 好，麻煩你。\n(C) 哪個在戶外撐得久就用哪個。"
+  },
+  {
+    "id": "l2-95",
+    "difficulty": "基礎",
+    "category": "WH問句",
+    "accent": "GB",
+    "question": "How much do you charge for a bath and trim?",
+    "options": [
+      "About an hour and a half.",
+      "Yes, we're open till six.",
+      "Forty dollars for a dog that size."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：How much 問價格，「這種體型的狗四十元」直接給出金額。\n(A) 「大概一個半小時」是 How long 的答案。\n(B) 「我們開到六點」回答的是營業時間，與收費無關。",
+    "transcriptZh": "問：洗澡加修毛要多少錢？\n(A) 大概一個半小時。\n(B) 對，我們開到六點。\n(C) 這種體型的狗是四十元。"
+  },
+  {
+    "id": "l2-96",
+    "difficulty": "中級",
+    "category": "Yes/No問句",
+    "accent": "AU",
+    "question": "Is the pool still closed for cleaning?",
+    "options": [
+      "They reopened it this morning.",
+      "The cleaning crew comes on Tuesdays.",
+      "No, I don't swim much."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：間接回應。「今天早上重新開放了」等於回答 No，而且補上了時間點。\n(B) 重複 cleaning，講的是清潔人員星期二來，沒有回答現在能不能用。\n(C) 用 No 開頭看似合理，接的卻是自己不常游泳，前後接不起來。",
+    "transcriptZh": "問：泳池還在清洗、不開放嗎？\n(A) 今天早上重新開放了。\n(B) 清潔人員星期二會來。\n(C) 不，我不常游泳。"
+  },
+  {
+    "id": "l2-97",
+    "difficulty": "進階",
+    "category": "陳述句回應",
+    "accent": "US",
+    "question": "We're expecting about forty more guests than we planned.",
+    "options": [
+      "The guest list is on my desk.",
+      "Then we'll need to open the second room.",
+      "They planned it for June."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：對方說賓客比預估多四十位，「那就得把第二間廳打開」提出對應做法。\n(A) 重複 guest，只說名單在桌上，沒有回應人數變多的問題。\n(C) 重複 plan，卻用過去式講日期訂在六月，與場地安排無關。",
+    "transcriptZh": "陳述：來的賓客會比我們原本估的多四十位左右。\n(A) 賓客名單在我桌上。\n(B) 那就得把第二間廳打開了。\n(C) 他們訂的是六月。"
+  },
+  {
+    "id": "l2-98",
+    "difficulty": "中級",
+    "category": "WH問句",
+    "accent": "GB",
+    "question": "What's holding up the order for the dining tables?",
+    "options": [
+      "In the back of the shop.",
+      "I'll hold the door for you.",
+      "The factory's waiting for more wood."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：What's holding up...? 問的是卡在哪個環節，「工廠在等木料」說明了原因。\n(A) 「在店後面」回答的是地點，屬於 Where 的答案。\n(B) 重複 hold，但 hold the door 是幫忙擋門，屬於一字多義陷阱。",
+    "transcriptZh": "問：餐桌那筆訂單是卡在哪裡？\n(A) 在店後面。\n(B) 我幫你擋著門。\n(C) 工廠在等木料。"
+  },
+  {
+    "id": "l2-99",
+    "difficulty": "中級",
+    "category": "附加/否定問句",
+    "accent": "AU",
+    "question": "The van's due for a service next month, isn't it?",
+    "options": [
+      "Actually, we just had it done.",
+      "It's a very good service, thanks.",
+      "Right next to the garage."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：間接回應。用 Actually 修正對方的預設，說車子剛保養完，等於否定「下個月才到期」。\n(B) 重複 service，卻變成稱讚服務好，屬於一字多義誘答。\n(C) 重複 next，把時間詞聽成位置詞，答的是地點。",
+    "transcriptZh": "問：那台廂型車下個月要保養了吧？\n(A) 其實我們剛做完。\n(B) 這個服務很好，謝謝。\n(C) 就在修車廠旁邊。"
+  },
+  {
+    "id": "l2-100",
+    "difficulty": "進階",
+    "category": "Yes/No問句",
+    "accent": "US",
+    "question": "Do you have any more of these in the back?",
+    "options": [
+      "What's on the shelf is all we have.",
+      "Yes, I'll be right back.",
+      "They're two for ten dollars."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：間接回應。「架上有的就是全部」等於告訴客人倉庫裡沒有存貨了。\n(B) 重複 back，但 be right back 是「馬上回來」，與倉庫無關。\n(C) 「兩個十元」回答的是價格，屬於 How much 的答案。",
+    "transcriptZh": "問：這個後面還有貨嗎？\n(A) 架上有的就是全部了。\n(B) 好，我馬上回來。\n(C) 兩個十元。"
+  }
+]

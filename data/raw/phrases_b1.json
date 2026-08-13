@@ -1,0 +1,482 @@
+[
+  {
+    "id": "ph-101",
+    "phrase": "put on",
+    "zh": "穿上;戴上;舉辦(活動、展演)",
+    "group": "put 家族",
+    "type": "動詞片語",
+    "tip": "on=貼到身上或排上檔期,把東西「加上去」",
+    "example": "Please put on your safety helmet before entering the factory.",
+    "exampleZh": "進入工廠前請戴上安全帽。",
+    "quiz": {
+      "q": "Our company puts ___ a trade show in Taipei every autumn.",
+      "options": ["on", "off", "out", "away"],
+      "answer": 0,
+      "explanation": "put on=舉辦(展覽、活動),句中指公司每年秋天在台北辦展。put off=延後(要延的是已排定的特定活動);put out=熄滅/發布;put away=收好,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-102",
+    "phrase": "put off",
+    "zh": "延後;拖延",
+    "group": "put 家族",
+    "type": "動詞片語",
+    "tip": "off=離開原本的時間點,把事情推離現在",
+    "example": "We had to put off the product launch until next quarter.",
+    "exampleZh": "我們不得不把產品上市延到下一季。",
+    "quiz": {
+      "q": "The manager put ___ the interview because the candidate missed her flight.",
+      "options": ["on", "up", "off", "out"],
+      "answer": 2,
+      "explanation": "put off=延後,應徵者錯過班機所以面試往後挪。put on=穿上/舉辦;put up=張貼/搭建;put out=熄滅/發布,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-103",
+    "phrase": "put away",
+    "zh": "收好;歸位;收起來",
+    "group": "put 家族",
+    "type": "動詞片語",
+    "tip": "away=離開檯面,把用完的東西放回它原本該待的地方",
+    "example": "Please put away the samples after the client meeting ends.",
+    "exampleZh": "客戶會議結束後請把樣品收好。",
+    "quiz": {
+      "q": "Remember to put ___ the tools before you leave the workshop.",
+      "options": ["off", "away", "on", "forward"],
+      "answer": 1,
+      "explanation": "put away=收好歸位,離開工作間前把工具收回原處。put off=延後;put on=穿上/舉辦;put forward=提出(建議、方案),語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-104",
+    "phrase": "put out",
+    "zh": "熄滅;撲滅;發布(消息、聲明)",
+    "group": "put 家族",
+    "type": "動詞片語",
+    "tip": "把東西往外送出去——火送走就滅了,消息送出去就是發布",
+    "example": "Firefighters put out the warehouse blaze in less than an hour.",
+    "exampleZh": "消防員在一小時內撲滅了倉庫大火。",
+    "quiz": {
+      "q": "The company put ___ a press release to clarify the rumor.",
+      "options": ["off", "away", "up", "out"],
+      "answer": 3,
+      "explanation": "put out=發布(新聞稿、聲明),公司發稿澄清謠言。put off=延後;put away=收好;put up=張貼/搭建,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-105",
+    "phrase": "put up with",
+    "zh": "忍受;容忍",
+    "group": "put 家族",
+    "type": "動詞片語",
+    "tip": "撐住(up)並與它共處(with),就是忍下來",
+    "example": "Our staff had to put up with the broken air conditioner.",
+    "exampleZh": "我們的員工只能忍受壞掉的冷氣。",
+    "quiz": {
+      "q": "I can't put ___ with the constant noise from the construction site.",
+      "options": ["off", "away", "up", "out"],
+      "answer": 2,
+      "explanation": "put up with=忍受,受不了工地不停的噪音。put off=延後;put away=收好;put out=熄滅/發布,都無法接 with 表示忍耐。"
+    }
+  },
+  {
+    "id": "ph-106",
+    "phrase": "put together",
+    "zh": "組裝;彙整;擬出(方案、報告)",
+    "group": "put 家族",
+    "type": "動詞片語",
+    "tip": "把散落的零件或資料聚(together)成一份完整的東西",
+    "example": "It took us a week to put together the annual report.",
+    "exampleZh": "我們花了一週才彙整出年度報告。",
+    "quiz": {
+      "q": "She put ___ a detailed proposal for the client in two days.",
+      "options": ["together", "off", "away", "on"],
+      "answer": 0,
+      "explanation": "put together=彙整/擬出,兩天內做出一份完整提案。put off=延後;put away=收好;put on=穿上/舉辦(活動),語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-107",
+    "phrase": "put aside",
+    "zh": "擱置;暫時不管;存(錢)備用",
+    "group": "put 家族",
+    "type": "動詞片語",
+    "tip": "aside=挪到旁邊,不是丟掉,只是先放一邊",
+    "example": "She puts aside a little money for emergencies every month.",
+    "exampleZh": "她每個月存一點錢以備不時之需。",
+    "quiz": {
+      "q": "It's time to put ___ our differences and work as one team.",
+      "options": ["off", "out", "up", "aside"],
+      "answer": 3,
+      "explanation": "put aside=擱置(歧見),先把分歧放一邊一起做事。put off=延後(整件事往後挪);put out=熄滅/發布;put up=張貼/搭建,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-108",
+    "phrase": "put forward",
+    "zh": "提出(建議、方案、人選)",
+    "group": "put 家族",
+    "type": "動詞片語",
+    "tip": "forward=往前推,把想法推到大家面前讓人看見",
+    "example": "The team put forward a new plan to improve customer service.",
+    "exampleZh": "團隊提出了改善客服的新方案。",
+    "quiz": {
+      "q": "Several engineers put ___ ideas for cutting production costs.",
+      "options": ["off", "forward", "away", "up"],
+      "answer": 1,
+      "explanation": "put forward=提出(想法、方案),幾位工程師提出降低生產成本的點子。put off=延後;put away=收好;put up=張貼/搭建,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-109",
+    "phrase": "take off",
+    "zh": "起飛;脫下;(銷量)大幅成長",
+    "group": "take 家族",
+    "type": "動詞片語",
+    "tip": "off=離開地面或離開身體,飛機離地、衣服離身",
+    "example": "Our flight will take off from Terminal Two at nine.",
+    "exampleZh": "我們的班機九點從第二航廈起飛。",
+    "quiz": {
+      "q": "Sales of the new phone really took ___ after the ad campaign.",
+      "options": ["over", "on", "off", "up"],
+      "answer": 2,
+      "explanation": "take off=(銷量)一飛沖天,廣告後買氣大增。take over=接管;take on=承擔/僱用;take up=開始從事/佔用時間,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-110",
+    "phrase": "take over",
+    "zh": "接管;接手;併購",
+    "group": "take 家族",
+    "type": "動詞片語",
+    "tip": "over=從對方手上越過來,責任換人扛",
+    "example": "Ms. Lin will take over the department when the director retires.",
+    "exampleZh": "主任退休後,林小姐將接管這個部門。",
+    "quiz": {
+      "q": "A larger firm plans to take ___ our supplier next year.",
+      "options": ["off", "up", "after", "over"],
+      "answer": 3,
+      "explanation": "take over=併購/接管,一家更大的公司要吃下我們的供應商。take off=起飛/脫下;take up=開始從事;take after=長相或個性像長輩,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-111",
+    "phrase": "take on",
+    "zh": "承擔(工作、責任);僱用",
+    "group": "take 家族",
+    "type": "動詞片語",
+    "tip": "on=把事情或人放到自己肩上扛",
+    "example": "He agreed to take on two more projects this quarter.",
+    "exampleZh": "他答應這一季再多接兩個專案。",
+    "quiz": {
+      "q": "The factory will take ___ extra workers before the peak season.",
+      "options": ["on", "off", "over", "up"],
+      "answer": 0,
+      "explanation": "take on=僱用,工廠在旺季前要多請一批人手。take off=起飛/脫下;take over=接管;take up=開始從事/佔空間,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-112",
+    "phrase": "take out",
+    "zh": "取出;外帶;辦理(保險、貸款)",
+    "group": "take 家族",
+    "type": "動詞片語",
+    "tip": "out=從裡面拿到外面,東西、餐點甚至保單都能「取出來」",
+    "example": "The company took out insurance to cover the shipping risk.",
+    "exampleZh": "公司投保以涵蓋運送過程的風險。",
+    "quiz": {
+      "q": "Could you take ___ the documents from the cabinet before the audit?",
+      "options": ["off", "out", "over", "back"],
+      "answer": 1,
+      "explanation": "take out=取出,稽核前把文件從櫃子裡拿出來。take off=脫下/起飛;take over=接管;take back=收回/退貨,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-113",
+    "phrase": "take back",
+    "zh": "收回(說過的話);退回(商品)",
+    "group": "take 家族",
+    "type": "動詞片語",
+    "tip": "back=回到原處,說出的話或賣出的貨都收回去",
+    "example": "The store will take back any item within thirty days.",
+    "exampleZh": "這家店三十天內接受任何商品退貨。",
+    "quiz": {
+      "q": "I apologize and take ___ what I said at the meeting.",
+      "options": ["off", "over", "up", "back"],
+      "answer": 3,
+      "explanation": "take back=收回說過的話,道歉並收回會議上的發言。take off=起飛/脫下;take over=接管;take up=開始從事,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-114",
+    "phrase": "take up",
+    "zh": "開始從事(嗜好、工作);佔用(時間、空間)",
+    "group": "take 家族",
+    "type": "動詞片語",
+    "tip": "up=把東西拿起來開始做,或往上堆而佔掉位置",
+    "example": "These files take up too much space on the shared drive.",
+    "exampleZh": "這些檔案佔用共用硬碟太多空間。",
+    "quiz": {
+      "q": "After moving to Taichung, she took ___ yoga to relieve stress.",
+      "options": ["up", "on", "over", "off"],
+      "answer": 0,
+      "explanation": "take up=開始從事(某項嗜好),搬到台中後開始練瑜伽。take on=承擔工作/僱用;take over=接管;take off=起飛/脫下,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-115",
+    "phrase": "take down",
+    "zh": "拆下;取下;記下",
+    "group": "take 家族",
+    "type": "動詞片語",
+    "tip": "down=往下拿,把牆上的東西取下,或把話落到紙上",
+    "example": "Please take down the old posters before the new display arrives.",
+    "exampleZh": "新的陳列品送到前,請先把舊海報拆下來。",
+    "quiz": {
+      "q": "The assistant took ___ every detail of the client's request.",
+      "options": ["off", "over", "down", "up"],
+      "answer": 2,
+      "explanation": "take down=記下,助理把客戶要求的每個細節都記錄下來。take off=起飛/脫下;take over=接管;take up=開始從事/佔用,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-116",
+    "phrase": "take after",
+    "zh": "(長相或個性)像(長輩)",
+    "group": "take 家族",
+    "type": "動詞片語",
+    "tip": "after=跟在後面走,孩子沿著長輩的樣子長",
+    "example": "She takes after her father in both looks and personality.",
+    "exampleZh": "她的長相和個性都像她父親。",
+    "quiz": {
+      "q": "Everyone says the young manager takes ___ his grandfather.",
+      "options": ["over", "after", "on", "up"],
+      "answer": 1,
+      "explanation": "take after=長相或個性像長輩,大家都說這位年輕經理像他祖父。take over=接管;take on=承擔;take up=開始從事,都不能用來說「像某人」。"
+    }
+  },
+  {
+    "id": "ph-117",
+    "phrase": "look for",
+    "zh": "尋找;物色",
+    "group": "look 家族",
+    "type": "動詞片語",
+    "tip": "for=為了某個目標,眼睛朝那個目標找過去",
+    "example": "We are looking for a supplier who can deliver within a week.",
+    "exampleZh": "我們正在找能在一週內交貨的供應商。",
+    "quiz": {
+      "q": "He is looking ___ a part-time job near the campus.",
+      "options": ["for", "after", "over", "up"],
+      "answer": 0,
+      "explanation": "look for=尋找,他在找校園附近的兼職。look after=照顧;look over=把文件從頭掃過一遍;look up=查單字或資料,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-118",
+    "phrase": "look after",
+    "zh": "照顧;照料;看管",
+    "group": "look 家族",
+    "type": "動詞片語",
+    "tip": "after=眼睛跟在對方後面,隨時顧著",
+    "example": "Could you look after the front desk while I'm at the conference?",
+    "exampleZh": "我去開會時,可以幫忙顧一下櫃檯嗎?",
+    "quiz": {
+      "q": "A neighbor looks ___ their cat whenever they travel abroad.",
+      "options": ["for", "into", "up", "after"],
+      "answer": 3,
+      "explanation": "look after=照顧,他們出國時鄰居會幫忙照顧貓。look for=尋找;look into=調查;look up=查資料,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-119",
+    "phrase": "look into",
+    "zh": "調查;深入了解",
+    "group": "look 家族",
+    "type": "動詞片語",
+    "tip": "into=眼光鑽進事情內部,不只看表面",
+    "example": "Our team will look into the shipping delay right away.",
+    "exampleZh": "我們團隊會立刻調查出貨延誤的原因。",
+    "quiz": {
+      "q": "The bank promised to look ___ the customer's billing complaint.",
+      "options": ["out", "for", "into", "up"],
+      "answer": 2,
+      "explanation": "look into=調查,銀行承諾查明客戶的帳單申訴。look out=當心(提醒危險);look for=尋找;look up=查詢單字或資料,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-120",
+    "phrase": "look forward to",
+    "zh": "期待;盼望",
+    "group": "look 家族",
+    "type": "動詞片語",
+    "tip": "眼睛朝前方(forward)望向還沒到的那件事",
+    "example": "We look forward to working with your team next year.",
+    "exampleZh": "我們期待明年與貴團隊合作。",
+    "quiz": {
+      "q": "I'm looking ___ to your reply about the contract terms.",
+      "options": ["after", "forward", "into", "over"],
+      "answer": 1,
+      "explanation": "look forward to=期待,期待對方回覆合約條款。look after=照顧;look into=調查;look over=檢視,三者都不接 to 表示期待。"
+    }
+  },
+  {
+    "id": "ph-121",
+    "phrase": "look up",
+    "zh": "查詢(單字、資料);(情況)好轉",
+    "group": "look 家族",
+    "type": "動詞片語",
+    "tip": "up=把資料從書本或系統裡抬出來給你看",
+    "example": "Look up the client's address in the shared contact list.",
+    "exampleZh": "請到共用聯絡清單裡查客戶的地址。",
+    "quiz": {
+      "q": "If you don't know the term, look it ___ in the manual.",
+      "options": ["into", "after", "for", "up"],
+      "answer": 3,
+      "explanation": "look up=查詢,不懂的術語就翻手冊查;它可拆開,受詞是代名詞時必須說 look it up。look into=調查(事件);look after=照顧;look for=尋找(不見的東西),語意皆不通,而且三者都不可拆開,不能說 look it into。"
+    }
+  },
+  {
+    "id": "ph-122",
+    "phrase": "look over",
+    "zh": "檢視;快速看過一遍",
+    "group": "look 家族",
+    "type": "動詞片語",
+    "tip": "視線從頭到尾掃過(over)一遍,先求大致確認",
+    "example": "Please look over the contract before we sign it tomorrow.",
+    "exampleZh": "我們明天簽約前,請先看過這份合約。",
+    "quiz": {
+      "q": "The supervisor looked ___ my report and found two typos.",
+      "options": ["over", "after", "for", "forward"],
+      "answer": 0,
+      "explanation": "look over=檢視,主管看過報告後抓出兩個錯字。look after=照顧;look for=尋找;look forward (to)=期待,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-123",
+    "phrase": "look out",
+    "zh": "小心;當心;留意",
+    "group": "look 家族",
+    "type": "動詞片語",
+    "tip": "out=把注意力放到外面,盯著可能撞上來的危險",
+    "example": "Look out for hidden fees when you compare the two plans.",
+    "exampleZh": "比較這兩個方案時要當心隱藏費用。",
+    "quiz": {
+      "q": "Look ___! The forklift is coming around the corner.",
+      "options": ["into", "out", "after", "up"],
+      "answer": 1,
+      "explanation": "look out=小心,堆高機正要轉彎過來。look into=調查;look after=照顧;look up=查詢,都不能用來提醒危險。"
+    }
+  },
+  {
+    "id": "ph-124",
+    "phrase": "look through",
+    "zh": "翻閱;逐頁瀏覽",
+    "group": "look 家族",
+    "type": "動詞片語",
+    "tip": "through=從頭穿到尾,一頁一頁翻過去",
+    "example": "He looked through the whole catalog and marked three possible models.",
+    "exampleZh": "他翻完整本型錄,標出三個可能的機型。",
+    "quiz": {
+      "q": "She looked ___ the résumés and picked five candidates to interview.",
+      "options": ["after", "for", "through", "out"],
+      "answer": 2,
+      "explanation": "look through=逐份翻閱,她翻過履歷後挑出五位人選來面試。look after=照顧;look for=尋找;look out=當心,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-125",
+    "phrase": "get along with",
+    "zh": "與…相處融洽;合得來",
+    "group": "get 家族",
+    "type": "動詞片語",
+    "tip": "along=並肩往同方向走,關係順順地往前",
+    "example": "She gets along well with everyone in the sales department.",
+    "exampleZh": "她和業務部的每個人都相處得很好。",
+    "quiz": {
+      "q": "It takes time to get ___ with a new supervisor.",
+      "options": ["over", "through", "along", "ahead"],
+      "answer": 2,
+      "explanation": "get along with=與人相處,和新主管磨合需要時間。get over=克服;get through=完成/接通;get ahead=出人頭地,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-126",
+    "phrase": "get over",
+    "zh": "克服;從(疾病、打擊)恢復",
+    "group": "get 家族",
+    "type": "動詞片語",
+    "tip": "over=翻過一座山,難關被留在身後",
+    "example": "It took him a month to get over the flu.",
+    "exampleZh": "他花了一個月才從流感中康復。",
+    "quiz": {
+      "q": "Once you get ___ your fear of public speaking, presenting becomes easy.",
+      "options": ["over", "along", "through", "ahead"],
+      "answer": 0,
+      "explanation": "get over=克服(恐懼),克服上台恐懼後簡報就變輕鬆。get along=相處融洽;get through=做完工作/電話接通;get ahead=出人頭地,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-127",
+    "phrase": "get through",
+    "zh": "完成(大量工作);(電話)接通;度過(難關)",
+    "group": "get 家族",
+    "type": "動詞片語",
+    "tip": "through=從一頭穿到另一頭,穿出來就結束了",
+    "example": "I couldn't get through to their customer service all morning.",
+    "exampleZh": "我整個早上都打不通他們的客服電話。",
+    "quiz": {
+      "q": "We must get ___ this pile of invoices before Friday.",
+      "options": ["over", "along", "ahead", "through"],
+      "answer": 3,
+      "explanation": "get through=做完(一大疊工作),週五前要處理完這疊發票。get over=克服;get along=相處融洽;get ahead=出人頭地,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-128",
+    "phrase": "get back to",
+    "zh": "回覆(某人);回到(某件事)",
+    "group": "get 家族",
+    "type": "動詞片語",
+    "tip": "back=把回應送回去給對方,或把話題拉回原點",
+    "example": "I'll get back to you with the quotation by Thursday.",
+    "exampleZh": "我會在週四前把報價回覆給你。",
+    "quiz": {
+      "q": "Let me check the stock and get ___ to you this afternoon.",
+      "options": ["over", "back", "along", "through"],
+      "answer": 1,
+      "explanation": "get back to someone=稍後回覆對方,查完庫存下午回覆你。get over=克服;get along=相處融洽;get through=完成/接通,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-129",
+    "phrase": "get rid of",
+    "zh": "擺脫;丟掉;去除",
+    "group": "get 家族",
+    "type": "動詞片語",
+    "tip": "rid=使擺脫,get rid of 就是把礙事的東西從身邊清掉",
+    "example": "We should get rid of the outdated brochures in storage.",
+    "exampleZh": "我們應該把倉庫裡過期的文宣丟掉。",
+    "quiz": {
+      "q": "The new software helps us get ___ of most paper forms.",
+      "options": ["rid", "over", "through", "ahead"],
+      "answer": 0,
+      "explanation": "get rid of=去除/擺脫,新軟體讓多數紙本表單消失。get over=克服(疾病、難關),後面直接接受詞不接 of;get through=完成一大堆工作,也不接 of;get ahead of 雖然存在,但意思是「搶在…之前、領先」(get ahead of the competition),用來說消滅表單並不通。"
+    }
+  },
+  {
+    "id": "ph-130",
+    "phrase": "get ahead",
+    "zh": "領先;出人頭地;更上一層樓",
+    "group": "get 家族",
+    "type": "動詞片語",
+    "tip": "ahead=跑到別人前面,在職涯上往前站一步",
+    "example": "Learning a second language can help you get ahead at work.",
+    "exampleZh": "學第二外語有助於你在職場更上一層樓。",
+    "quiz": {
+      "q": "He works extra hours because he wants to get ___ in the company.",
+      "options": ["along", "over", "ahead", "through"],
+      "answer": 2,
+      "explanation": "get ahead=在公司裡往上爬,他加班是為了求升遷。get along=相處融洽;get over=克服;get through=完成/接通,語意皆不通。"
+    }
+  }
+]

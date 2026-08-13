@@ -1,0 +1,482 @@
+[
+  {
+    "id": "ph-401",
+    "phrase": "depend on",
+    "zh": "取決於;依賴",
+    "group": "on 家族",
+    "type": "動詞+介系詞",
+    "tip": "結果像掛在某件事上面,那件事一動,結果就跟著變",
+    "example": "The delivery date depends on when we receive your payment.",
+    "exampleZh": "交貨日期取決於我們何時收到您的款項。",
+    "quiz": {
+      "q": "Small suppliers often depend ___ a few major clients for most of their revenue.",
+      "options": ["on", "in", "to", "for"],
+      "answer": 0,
+      "explanation": "depend on=依賴/取決於,小型供應商大部分營收靠少數幾家大客戶。in 是 believe in(相信)的搭配;to 是 belong to(屬於);for 是 apply for(申請),接在 depend 後都不成立。"
+    }
+  },
+  {
+    "id": "ph-402",
+    "phrase": "apply for",
+    "zh": "申請(職位、簽證、補助)",
+    "group": "for 家族",
+    "type": "動詞+介系詞",
+    "tip": "for 指向你想拿到的那樣東西,申請就是朝它伸手",
+    "example": "Over three hundred people applied for the marketing manager position.",
+    "exampleZh": "超過三百人應徵這個行銷經理職位。",
+    "quiz": {
+      "q": "If you want the scholarship, you must apply ___ it before the end of May.",
+      "options": ["to", "on", "with", "for"],
+      "answer": 3,
+      "explanation": "apply for=申請某樣東西,獎學金就是想爭取的目標。apply to 後面接的是機構(apply to a university)或表示「適用於」;on 用在 depend on(取決於);with 用在 comply with(遵守),都不能接在 apply 後面。"
+    }
+  },
+  {
+    "id": "ph-403",
+    "phrase": "comply with",
+    "zh": "遵守(規定、法規)",
+    "group": "with 家族",
+    "type": "動詞+介系詞",
+    "tip": "with 是和規定站在同一邊,不唱反調",
+    "example": "All suppliers must comply with the new safety regulations by June.",
+    "exampleZh": "所有供應商必須在六月前遵守新的安全規定。",
+    "quiz": {
+      "q": "The factory was fined because it failed to comply ___ local environmental rules.",
+      "options": ["to", "in", "with", "for"],
+      "answer": 2,
+      "explanation": "comply with=遵守,工廠沒有遵守當地環保規定才被罰款。to 是 conform to(符合)的搭配;in 是 result in(導致);for 是 account for(說明),都不能接在 comply 後面。"
+    }
+  },
+  {
+    "id": "ph-404",
+    "phrase": "participate in",
+    "zh": "參與;參加",
+    "group": "in 家族",
+    "type": "動詞+介系詞",
+    "tip": "活動像一個圈子,人走進圈子裡才算參加",
+    "example": "All new employees participate in a two-day orientation program at headquarters.",
+    "exampleZh": "所有新進員工都會在總部參加為期兩天的職前訓練。",
+    "quiz": {
+      "q": "Only twelve of the invited managers participated ___ last week's leadership workshop.",
+      "options": ["on", "at", "for", "in"],
+      "answer": 3,
+      "explanation": "participate in=參與某項活動,受邀的經理中只有十二位參加了工作坊。on 是 focus on(專注)的搭配;at 是 arrive at(抵達);for 是 register for(報名),接在 participate 後都不通。"
+    }
+  },
+  {
+    "id": "ph-405",
+    "phrase": "contribute to",
+    "zh": "促成;導致;捐助",
+    "group": "to 家族",
+    "type": "動詞+介系詞",
+    "tip": "to 是一支箭頭,把力氣或錢送往某個目標",
+    "example": "Her research contributed to the company's fastest product launch ever.",
+    "exampleZh": "她的研究促成了公司史上最快的產品上市。",
+    "quiz": {
+      "q": "Heavy rain and poor signage both contributed ___ the delay at the port.",
+      "options": ["to", "for", "in", "with"],
+      "answer": 0,
+      "explanation": "contribute to=促成/造成某結果,大雨和標示不清共同造成港口延誤。for 是 account for(說明)的搭配;in 是 result in(導致);with 是 deal with(處理),都不能接在 contribute 後面。"
+    }
+  },
+  {
+    "id": "ph-406",
+    "phrase": "respond to",
+    "zh": "回覆;回應",
+    "group": "to 家族",
+    "type": "動詞+介系詞",
+    "tip": "回應是把話送回給對方,方向詞自然用 to",
+    "example": "Please respond to the client's email before you leave the office today.",
+    "exampleZh": "請在今天離開辦公室前回覆客戶的電子郵件。",
+    "quiz": {
+      "q": "The help desk usually responds ___ customer complaints within one business day.",
+      "options": ["to", "at", "on", "of"],
+      "answer": 0,
+      "explanation": "respond to=回應某人或某事,客服在一個工作天內回覆客訴。at 是 look at(看)的搭配;on 是 insist on(堅持);of 是 consist of(由…組成),都無法接在 respond 後面。"
+    }
+  },
+  {
+    "id": "ph-407",
+    "phrase": "deal with",
+    "zh": "處理;應付;和…往來",
+    "group": "with 家族",
+    "type": "動詞+介系詞",
+    "tip": "with 是面對面跟問題交手,而不是繞道躲開",
+    "example": "Our team deals with over two hundred service requests each week.",
+    "exampleZh": "我們團隊每週處理超過兩百件服務需求。",
+    "quiz": {
+      "q": "Ms. Lin was hired to deal ___ complaints from overseas distributors.",
+      "options": ["in", "for", "to", "with"],
+      "answer": 3,
+      "explanation": "deal with=處理,林小姐是被聘來處理海外經銷商的抱怨。deal in 指「經營某類商品」(deal in antiques),語意不合;for 用在 apply for(申請);to 用在 respond to(回應),都不能接在 deal 後面。"
+    }
+  },
+  {
+    "id": "ph-408",
+    "phrase": "account for",
+    "zh": "佔(比例);說明(原因或去向)",
+    "group": "for 家族",
+    "type": "動詞+介系詞",
+    "tip": "帳本上每一筆都要負責交代,佔多少、為什麼,都用 for",
+    "example": "Online orders account for nearly half of our annual revenue.",
+    "exampleZh": "線上訂單佔我們年營收將近一半。",
+    "quiz": {
+      "q": "The sales director could not account ___ the missing receipts from March.",
+      "options": ["of", "for", "on", "with"],
+      "answer": 1,
+      "explanation": "account for=說明原因或去向,業務總監無法交代三月缺少的收據。of 是 approve of(贊同)的搭配;on 是 depend on(取決於);with 是 comply with(遵守),都不能接在 account 後面。"
+    }
+  },
+  {
+    "id": "ph-409",
+    "phrase": "belong to",
+    "zh": "屬於;為…所有",
+    "group": "to 家族",
+    "type": "動詞+介系詞",
+    "tip": "所有權像箭頭指回主人,to 就指向那個擁有者",
+    "example": "The laptop on the front desk belongs to our new intern.",
+    "exampleZh": "櫃檯上那台筆電是我們新來的實習生的。",
+    "quiz": {
+      "q": "These patents belong ___ the parent company, not to the local branch.",
+      "options": ["with", "for", "in", "to"],
+      "answer": 3,
+      "explanation": "belong to=屬於某人或某單位,這些專利屬於母公司。belong with 另有「該和…擺在一起」的意思(These files belong with the others),講的是歸位而非所有權,句尾又有 not to the local branch 要對稱,所以只能填 to;for 是 apply for(申請);in 是 result in(導致),都不能接在 belong 後面。"
+    }
+  },
+  {
+    "id": "ph-410",
+    "phrase": "consist of",
+    "zh": "由…組成",
+    "group": "of 家族",
+    "type": "動詞+介系詞",
+    "tip": "of 是把整體拆開看內容物,像在讀成分表",
+    "example": "The training course consists of four online modules and one workshop.",
+    "exampleZh": "這門訓練課程由四個線上單元和一場工作坊組成。",
+    "quiz": {
+      "q": "The review panel consists ___ three managers and one outside consultant.",
+      "options": ["from", "with", "in", "of"],
+      "answer": 3,
+      "explanation": "consist of=由…組成,審查小組由三位主管與一位外部顧問構成。consist in 意思是「在於(本質)」,語意不合;from 用在 result from(起因於);with 用在 comply with(遵守),要表達「由…構成」則可改說 be made up of。"
+    }
+  },
+  {
+    "id": "ph-411",
+    "phrase": "result in",
+    "zh": "導致;造成(某結果)",
+    "group": "in 家族",
+    "type": "動詞+介系詞",
+    "tip": "in 後面裝的是結局,事情往前走進那個結果裡",
+    "example": "The software upgrade resulted in a sharp drop in support calls.",
+    "exampleZh": "這次軟體升級使客服來電量大幅下降。",
+    "quiz": {
+      "q": "Ignoring the maintenance schedule may result ___ costly equipment failures.",
+      "options": ["in", "from", "on", "to"],
+      "answer": 0,
+      "explanation": "result in=導致某結果,忽略保養排程可能造成昂貴的設備故障。result from 是「起因於」,後面要接原因,方向剛好相反;on 用在 focus on(專注);to 用在 lead to(導致),都不能接在 result 後面。"
+    }
+  },
+  {
+    "id": "ph-412",
+    "phrase": "result from",
+    "zh": "起因於;由…造成",
+    "group": "from 家族",
+    "type": "動詞+介系詞",
+    "tip": "from 指來源,箭頭往回走去找原因",
+    "example": "The shortage resulted from a strike at the shipping company.",
+    "exampleZh": "這次缺貨起因於貨運公司的罷工。",
+    "quiz": {
+      "q": "Most of the errors in the report resulted ___ outdated sales data.",
+      "options": ["in", "to", "from", "of"],
+      "answer": 2,
+      "explanation": "result from=起因於,報告裡的錯誤來自過時的銷售資料。result in 是「導致」,後面接的是結果而非原因;to 用在 contribute to(促成);of 用在 consist of(由…組成),都不能接在 result 後面。"
+    }
+  },
+  {
+    "id": "ph-413",
+    "phrase": "focus on",
+    "zh": "專注於;把重點放在",
+    "group": "on 家族",
+    "type": "動詞+介系詞",
+    "tip": "鏡頭對焦時焦點落在某一個點上,所以用 on",
+    "example": "This quarter we will focus on customers in Southeast Asia.",
+    "exampleZh": "這一季我們會把重點放在東南亞的客戶。",
+    "quiz": {
+      "q": "Please focus ___ the budget section first; the rest can wait until Friday.",
+      "options": ["on", "at", "in", "to"],
+      "answer": 0,
+      "explanation": "focus on=把注意力集中在某處,請先專心處理預算那一段。at 是 arrive at(抵達)的搭配;in 是 specialize in(專精);to 是 refer to(提及),都不能接在 focus 後面。"
+    }
+  },
+  {
+    "id": "ph-414",
+    "phrase": "insist on",
+    "zh": "堅持(要求);非要不可",
+    "group": "on 家族",
+    "type": "動詞+介系詞",
+    "tip": "把手用力壓在某個要求上,壓著不肯移開",
+    "example": "The client insisted on a written confirmation before the shipment left.",
+    "exampleZh": "客戶堅持出貨前要有書面確認。",
+    "quiz": {
+      "q": "Mr. Ito insists ___ reviewing every contract himself before signing.",
+      "options": ["in", "for", "on", "of"],
+      "answer": 2,
+      "explanation": "insist on=堅持某事,後面接名詞或 V-ing,伊藤先生堅持親自看過每份合約才簽。in 是 participate in(參與)的搭配;for 是 qualify for(符合資格);of 是 approve of(贊同),都不能接在 insist 後面。"
+    }
+  },
+  {
+    "id": "ph-415",
+    "phrase": "specialize in",
+    "zh": "專精於;專門從事",
+    "group": "in 家族",
+    "type": "動詞+介系詞",
+    "tip": "專長就是你長期待在裡面的那個領域",
+    "example": "The firm specializes in tax planning for small business owners.",
+    "exampleZh": "這家事務所專門為小型企業主做稅務規劃。",
+    "quiz": {
+      "q": "Dr. Ramos specializes ___ workplace safety training for factory staff.",
+      "options": ["in", "on", "at", "with"],
+      "answer": 0,
+      "explanation": "specialize in=專精於某個領域,拉莫斯博士專攻工廠員工的職場安全訓練。on 是 focus on(專注)的搭配;at 出現在 be good at(擅長)這類形容詞句型;with 是 deal with(處理),都不能接在 specialize 後面。"
+    }
+  },
+  {
+    "id": "ph-416",
+    "phrase": "benefit from",
+    "zh": "從…獲益;受惠於",
+    "group": "from 家族",
+    "type": "動詞+介系詞",
+    "tip": "好處是從某個來源流過來的,來源用 from",
+    "example": "Small local vendors benefit from the new online payment system.",
+    "exampleZh": "本地的小攤商從新的線上支付系統中獲益。",
+    "quiz": {
+      "q": "Employees who work night shifts will benefit ___ the revised overtime policy.",
+      "options": ["of", "from", "for", "to"],
+      "answer": 1,
+      "explanation": "benefit from=從…受惠,上夜班的員工會因為修訂後的加班辦法受益。of 是 consist of(由…組成)的搭配;for 是 qualify for(符合資格);to 是 respond to(回應),都不能接在 benefit 後面。"
+    }
+  },
+  {
+    "id": "ph-417",
+    "phrase": "refer to",
+    "zh": "提到;參閱;指稱",
+    "group": "to 家族",
+    "type": "動詞+介系詞",
+    "tip": "手指往那份資料一指,to 就是指過去的方向",
+    "example": "Please refer to page twelve for the full warranty terms.",
+    "exampleZh": "完整的保固條款請參閱第十二頁。",
+    "quiz": {
+      "q": "In her speech, the CEO referred ___ the merger only once.",
+      "options": ["at", "to", "on", "for"],
+      "answer": 1,
+      "explanation": "refer to=提及或參閱,執行長在演說中只提過併購一次。at 是 look at(看)的搭配;on 是 depend on(取決於);for 是 account for(說明),都不能接在 refer 後面。"
+    }
+  },
+  {
+    "id": "ph-418",
+    "phrase": "register for",
+    "zh": "報名;選修;註冊(課程、活動)",
+    "group": "for 家族",
+    "type": "動詞+介系詞",
+    "tip": "for 表示「為了參加那件事」才去登記",
+    "example": "You can register for the workshop through the company intranet.",
+    "exampleZh": "你可以透過公司內部網站報名這場工作坊。",
+    "quiz": {
+      "q": "Staff members who wish to attend must register ___ the seminar by Friday.",
+      "options": ["in", "with", "to", "for"],
+      "answer": 3,
+      "explanation": "register for=報名某項活動或課程,想參加的員工必須在週五前完成報名。register with 是「向某機構登記」(register with an agency),後面接的是單位不是活動;in 用在 participate in(參與);to 用在 refer to(參閱),都不能接在 register 後面。"
+    }
+  },
+  {
+    "id": "ph-419",
+    "phrase": "qualify for",
+    "zh": "符合…的資格;有資格獲得",
+    "group": "for 家族",
+    "type": "動詞+介系詞",
+    "tip": "for 指向那份資格或福利,你夠格才拿得到",
+    "example": "Part-time staff qualify for health insurance after six months of service.",
+    "exampleZh": "兼職員工在服務滿六個月後即可享有公司提供的健康保險。",
+    "quiz": {
+      "q": "Only orders over five thousand dollars qualify ___ free international shipping.",
+      "options": ["to", "as", "for", "of"],
+      "answer": 2,
+      "explanation": "qualify for=符合資格取得某項待遇,滿五千元的訂單才享有免費國際運送。qualify as 是「具備某種身分」(qualify as an engineer),後面接身分而非福利;to 用在 respond to(回應);of 用在 approve of(贊同),都不能接在 qualify 後面。"
+    }
+  },
+  {
+    "id": "ph-420",
+    "phrase": "approve of",
+    "zh": "贊同;認可(某人的做法)",
+    "group": "of 家族",
+    "type": "動詞+介系詞",
+    "tip": "of 帶出你心裡認可的那件事;公文上「核准」則不加 of,直接 approve",
+    "example": "The board did not approve of the proposed office relocation.",
+    "exampleZh": "董事會並不贊成這項辦公室搬遷提案。",
+    "quiz": {
+      "q": "Her parents never approved ___ her decision to start a business abroad.",
+      "options": ["of", "on", "with", "for"],
+      "answer": 0,
+      "explanation": "approve of=贊同某人的想法或做法,她父母始終不贊成她到國外創業。on 是 insist on(堅持)的搭配;with 是 comply with(遵守);for 是 apply for(申請),都不能接在 approve 後面。"
+    }
+  },
+  {
+    "id": "ph-421",
+    "phrase": "in charge of",
+    "zh": "負責;主管(某事務)",
+    "group": "in 家族",
+    "type": "慣用語",
+    "tip": "職責像畫好的一塊地,人站在那塊地裡面,事情就歸他管",
+    "example": "Ms. Alvarez is in charge of the Taipei distribution center.",
+    "exampleZh": "阿爾瓦雷斯女士負責台北的物流中心。",
+    "quiz": {
+      "q": "While the director is away, Kevin will be ___ charge of the design team.",
+      "options": ["on", "in", "at", "by"],
+      "answer": 1,
+      "explanation": "in charge of=負責,主任不在時由 Kevin 帶設計團隊。on 出現在 on duty(值班);at 出現在 at once(立刻);by 出現在 by means of(藉由),都無法構成「負責」的說法。"
+    }
+  },
+  {
+    "id": "ph-422",
+    "phrase": "in advance",
+    "zh": "事先;預先",
+    "group": "in 家族",
+    "type": "慣用語",
+    "tip": "advance 是往前走,把動作提前到事情發生之前",
+    "example": "Please book the conference room at least two days in advance.",
+    "exampleZh": "請至少提前兩天預約會議室。",
+    "quiz": {
+      "q": "Payment for the catering service must be made three days ___ advance.",
+      "options": ["on", "by", "in", "for"],
+      "answer": 2,
+      "explanation": "in advance=事先,外燴費用必須提前三天付清。on 出現在 on schedule(按進度);by 表示「不遲於某個時間點」(by Friday),後面要接時間點而非 advance;for 用在 for now(暫時),也沒有 for advance 的說法。"
+    }
+  },
+  {
+    "id": "ph-423",
+    "phrase": "on behalf of",
+    "zh": "代表;代替(某人或某單位)",
+    "group": "on 家族",
+    "type": "慣用語",
+    "tip": "站在對方的位置上發言,替他出面",
+    "example": "I am writing on behalf of our purchasing department in Taipei.",
+    "exampleZh": "我謹代表台北採購部門來函。",
+    "quiz": {
+      "q": "The vice president accepted the award ___ behalf of the whole research team.",
+      "options": ["at", "for", "with", "on"],
+      "answer": 3,
+      "explanation": "on behalf of=代表某人或某單位,副總代表整個研究團隊領獎。at 出現在 at least(至少);for 是 apply for(申請);with 是 deal with(處理),都無法構成「代表」的說法。"
+    }
+  },
+  {
+    "id": "ph-424",
+    "phrase": "out of stock",
+    "zh": "缺貨;沒有存貨",
+    "group": "out of 家族",
+    "type": "慣用語",
+    "tip": "貨已經走出倉庫了,架上空空如也",
+    "example": "The blue model is out of stock until the end of the month.",
+    "exampleZh": "藍色款到月底前都缺貨。",
+    "quiz": {
+      "q": "We are sorry, but that printer cartridge is currently ___ of stock.",
+      "options": ["off", "out", "away", "over"],
+      "answer": 1,
+      "explanation": "out of stock=缺貨,那款碳粉匣目前沒有庫存。off 出現在 day off(休假);away 出現在 put away(收好);over 出現在 take over(接手),都無法表示「沒有存貨」。"
+    }
+  },
+  {
+    "id": "ph-425",
+    "phrase": "on schedule",
+    "zh": "按進度;準時",
+    "group": "on 家族",
+    "type": "慣用語",
+    "tip": "進度表像一條軌道,事情走在線上就沒誤點",
+    "example": "Despite the storm, the construction project is still on schedule.",
+    "exampleZh": "儘管有暴風雨,這項工程仍照進度進行。",
+    "quiz": {
+      "q": "The renovation finished ___ schedule, so the store reopened last Monday.",
+      "options": ["at", "on", "in", "to"],
+      "answer": 1,
+      "explanation": "on schedule=按預定進度,整修如期完成,商店上週一重新開幕。at 出現在 at present(目前);in 出現在 in advance(事先);to 是 respond to(回應)的搭配,都不能接 schedule 表示「準時」。"
+    }
+  },
+  {
+    "id": "ph-426",
+    "phrase": "in stock",
+    "zh": "有現貨;有庫存",
+    "group": "in 家族",
+    "type": "慣用語",
+    "tip": "貨還在倉庫裡面,伸手就拿得到",
+    "example": "We have all three sizes in stock at the main warehouse.",
+    "exampleZh": "三種尺寸我們主倉庫都有現貨。",
+    "quiz": {
+      "q": "Please check whether the replacement filters are still ___ stock.",
+      "options": ["on", "in", "at", "by"],
+      "answer": 1,
+      "explanation": "in stock=有庫存,請確認替換濾芯是否還有現貨。on 出現在 on duty(值班);at 出現在 at work(在上班);by 出現在 by means of(藉由),都無法表示「有存貨」。"
+    }
+  },
+  {
+    "id": "ph-427",
+    "phrase": "on duty",
+    "zh": "值班中;執勤中",
+    "group": "on 家族",
+    "type": "慣用語",
+    "tip": "班表上輪到你的那一格,人正站在職務上",
+    "example": "Two security guards are on duty at the main entrance tonight.",
+    "exampleZh": "今晚大門有兩名警衛值班。",
+    "quiz": {
+      "q": "The nurse who was ___ duty last night recorded every patient's temperature.",
+      "options": ["in", "at", "on", "for"],
+      "answer": 2,
+      "explanation": "on duty=值班中,昨晚值班的護理師記錄了每位病人的體溫。in 出現在 in charge of(負責);at 出現在 at work(在工作中);for 是 register for(報名)的搭配,都無法表示「值勤」。"
+    }
+  },
+  {
+    "id": "ph-428",
+    "phrase": "by means of",
+    "zh": "藉由;透過(某種方法)",
+    "group": "by 家族",
+    "type": "慣用語",
+    "tip": "by 帶出工具或手段,means 本身就是「方法」",
+    "example": "Orders are confirmed by means of an automatic email reply.",
+    "exampleZh": "訂單是透過自動回覆郵件來確認的。",
+    "quiz": {
+      "q": "The samples were sent to the lab ___ means of a courier service.",
+      "options": ["by", "with", "in", "through"],
+      "answer": 0,
+      "explanation": "by means of=藉由某種方法,樣本是透過快遞送到實驗室的。with 表示「用某件工具」(with a knife),不能接 means of;in 出現在 in terms of(就…而言);through 雖然也有「透過」的意思,但英文沒有 through means of 這種說法。"
+    }
+  },
+  {
+    "id": "ph-429",
+    "phrase": "in terms of",
+    "zh": "就…而言;在…方面",
+    "group": "in 家族",
+    "type": "慣用語",
+    "tip": "terms 是先選好的一把尺,in 表示只在這把尺的範圍內比較",
+    "example": "In terms of cost, the local supplier is clearly the better choice.",
+    "exampleZh": "就成本而言,本地供應商顯然是比較好的選擇。",
+    "quiz": {
+      "q": "The two models are similar ___ terms of speed but differ in price.",
+      "options": ["on", "by", "in", "at"],
+      "answer": 2,
+      "explanation": "in terms of=就…而言,兩款機型速度相近但價格不同。on 出現在 on behalf of(代表);by 出現在 by means of(藉由);at 出現在 at least(至少),都不能接 terms of。"
+    }
+  },
+  {
+    "id": "ph-430",
+    "phrase": "as a result of",
+    "zh": "由於;因為(某個原因)",
+    "group": "as 家族",
+    "type": "慣用語",
+    "tip": "先講結果,再用 of 把手指回造成它的那件事",
+    "example": "As a result of the merger, two branches will be closed.",
+    "exampleZh": "由於這次合併,將有兩家分公司關閉。",
+    "quiz": {
+      "q": "The delivery was delayed as a result ___ heavy snow in the north.",
+      "options": ["from", "of", "by", "for"],
+      "answer": 1,
+      "explanation": "as a result of=由於,配送因為北部大雪而延誤。from 出現在 result from(起因於),那是動詞句型不能塞進 as a result ___;by 出現在 by means of(藉由);for 是 account for(說明)的搭配,都不能填入這個固定用法。"
+    }
+  }
+]

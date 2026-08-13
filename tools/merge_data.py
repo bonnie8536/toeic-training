@@ -295,6 +295,18 @@ if ed or ep or en_:
     scan_simplified({'d': ed, 'p': ep, 'n': en_}, 'ear')
     ear = {'dictation': ed, 'pairs': ep, 'numbers': en_}
 
+# ---------- 片語庫 ----------
+phrases = load_kind('phrases_b*.json', 'phrases')
+for p_ in phrases:
+    w = f"phrase {p_.get('id','?')}"
+    if need(p_, ['id','phrase','zh','type','tip','example','exampleZh','quiz'], w):
+        q = p_['quiz']
+        need(q, ['q','options','explanation'], w + ' quiz')
+        check_options(q, w + ' quiz')
+        if '___' not in q.get('q', ''):
+            errors.append(f'{w}: quiz.q 缺 ___ 空格')
+    scan_simplified(p_, w)
+
 # ---------- id 重複 ----------
 for kind, items in [('part5', p5), ('part6', p6), ('part7', p7), ('articles', arts)]:
     ids = [x.get('id') for x in items]
@@ -339,4 +351,6 @@ if listening:
     write_js('listening.js', 'listening', listening)
 if ear:
     write_js('ear.js', 'ear', ear)
+if phrases:
+    write_js('phrases.js', 'phrases', phrases)
 print('完成。')

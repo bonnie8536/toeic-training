@@ -1,0 +1,482 @@
+[
+  {
+    "id": "ph-201",
+    "phrase": "turn on",
+    "zh": "打開(電源、開關);開啟",
+    "group": "turn 家族",
+    "type": "動詞片語",
+    "tip": "on 是「接上去」的畫面:電流接上機器,機器就開始動。",
+    "example": "Remember to turn on the air conditioning before the guests arrive.",
+    "exampleZh": "記得在客人抵達前把冷氣打開。",
+    "quiz": {
+      "q": "Could you turn ___ the projector? The presentation starts in five minutes.",
+      "options": ["off", "in", "on", "over"],
+      "answer": 2,
+      "explanation": "turn on=打開電源,簡報要開始了所以要開投影機。turn off=關掉,方向相反;turn in=繳交、上床睡覺;turn over=翻面、移交,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-202",
+    "phrase": "turn off",
+    "zh": "關掉(電源、開關);讓人倒胃口",
+    "group": "turn 家族",
+    "type": "動詞片語",
+    "tip": "off 是「切開」的畫面:把電流從機器身上拿走。",
+    "example": "Please turn off the lights when you leave the office.",
+    "exampleZh": "離開辦公室時請把燈關掉。",
+    "quiz": {
+      "q": "For safety reasons, the engineer turned ___ the machine before starting the repair.",
+      "options": ["off", "up", "on", "into"],
+      "answer": 0,
+      "explanation": "turn off=關掉電源,維修前一定要先斷電。turn up=調大聲、現身;turn on=打開;turn into=變成(後面要接另一個東西),語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-203",
+    "phrase": "turn down",
+    "zh": "調小(音量、溫度);拒絕(提議、邀請)",
+    "group": "turn 家族",
+    "type": "動詞片語",
+    "tip": "旋鈕往下轉:音量往下、對方的提議也被往下壓回去。",
+    "example": "She turned down the job offer because of the long commute.",
+    "exampleZh": "她因為通勤太遠而拒絕了那份工作。",
+    "quiz": {
+      "q": "Please turn ___ the volume; the client is on the phone next door.",
+      "options": ["up", "in", "out", "down"],
+      "answer": 3,
+      "explanation": "turn down=調小音量,隔壁在講電話所以要小聲一點。turn up=調大聲,方向相反;turn in=繳交;turn out=結果是,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-204",
+    "phrase": "turn up",
+    "zh": "調大(音量、火力);出現、現身",
+    "group": "turn 家族",
+    "type": "動詞片語",
+    "tip": "旋鈕往上轉聲音變大;人從沒影子到冒出來,也是往上浮現。",
+    "example": "Only three people turned up for the training session yesterday.",
+    "exampleZh": "昨天只有三個人出席那場教育訓練。",
+    "quiz": {
+      "q": "Could you turn ___ the microphone? The people in the back can't hear.",
+      "options": ["off", "up", "in", "down"],
+      "answer": 1,
+      "explanation": "turn up=調大聲,後排聽不到所以要把麥克風開大。turn off=關掉;turn in=繳交;turn down=調小,和句意剛好相反。"
+    }
+  },
+  {
+    "id": "ph-205",
+    "phrase": "turn in",
+    "zh": "繳交(報告、文件);上繳",
+    "group": "turn 家族",
+    "type": "動詞片語",
+    "tip": "in 是「送進去」:把東西交進收件的那一端。",
+    "example": "All expense reports must be turned in by Friday afternoon.",
+    "exampleZh": "所有報帳單必須在週五下午前繳交。",
+    "quiz": {
+      "q": "Don't forget to turn ___ your application before the deadline.",
+      "options": ["in", "on", "up", "over"],
+      "answer": 0,
+      "explanation": "turn in=繳交,申請表要在截止前交出去。turn on=打開電源;turn up=出現、調大聲;turn over=翻面、移交(通常接權力或整個業務),語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-206",
+    "phrase": "turn into",
+    "zh": "變成;轉變為",
+    "group": "turn 家族",
+    "type": "動詞片語",
+    "tip": "into 是「走進另一個形體裡」:從 A 的樣子換上 B 的樣子。",
+    "example": "The small workshop turned into a company with two hundred employees.",
+    "exampleZh": "那間小工作室後來變成一家兩百人的公司。",
+    "quiz": {
+      "q": "What started as a short meeting turned ___ a three-hour discussion.",
+      "options": ["out", "up", "down", "into"],
+      "answer": 3,
+      "explanation": "turn into=變成,短會議最後變成三小時的討論。turn out 後面要接 to be 或子句,不直接接名詞;turn up=出現;turn down=拒絕,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-207",
+    "phrase": "turn out",
+    "zh": "結果是、後來證明是;出席、到場",
+    "group": "turn 家族",
+    "type": "動詞片語",
+    "tip": "事情發展到最後被翻出來的那一面,就是結果。",
+    "example": "The new packaging turned out to be more popular than we expected.",
+    "exampleZh": "結果新包裝比我們預期的還受歡迎。",
+    "quiz": {
+      "q": "The rumor about the merger turned ___ to be completely false.",
+      "options": ["in", "into", "out", "up"],
+      "answer": 2,
+      "explanation": "turn out to be=結果證明是,合併的傳聞最後被證實是假的。turn in=繳交;turn into 後面直接接名詞不能接 to be;turn up=出現,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-208",
+    "phrase": "go over",
+    "zh": "仔細檢查、核對;複習、再看一遍",
+    "group": "go 家族",
+    "type": "動詞片語",
+    "tip": "視線像掃描器一樣從文件上方整片掃過去,一行都不漏。",
+    "example": "Let's go over the contract once more before we sign it.",
+    "exampleZh": "簽約前我們再把合約看過一遍。",
+    "quiz": {
+      "q": "The accountant went ___ the figures again and found a small error.",
+      "options": ["on", "over", "up", "off"],
+      "answer": 1,
+      "explanation": "go over=逐項核對,會計師再算一次才抓到小錯。go on=繼續、發生;go up=上升;go off=(警鈴)響起、離開,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-209",
+    "phrase": "go through",
+    "zh": "經歷(困難);仔細審閱;(提案)通過",
+    "group": "go 家族",
+    "type": "動詞片語",
+    "tip": "through 是「穿過去」:不管是難關還是審核關卡,都要從這頭走到那頭。",
+    "example": "The company went through a difficult year after losing its main client.",
+    "exampleZh": "公司在失去主要客戶後度過了艱難的一年。",
+    "quiz": {
+      "q": "The proposal didn't go ___ because two board members voted against it.",
+      "options": ["through", "over", "up", "in"],
+      "answer": 0,
+      "explanation": "go through=(提案)通過,有兩位董事反對所以沒過關。go over 當「檢查」解時主詞是人;若要說提案「反應好不好」得寫成 go over well/badly,不能單獨用;go up=上升;go in=走進去,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-210",
+    "phrase": "go ahead",
+    "zh": "開始進行;請自便;(活動)照計畫舉行",
+    "group": "go 家族",
+    "type": "動詞片語",
+    "tip": "ahead 是「前方」:綠燈亮了,不用再等,直接往前走。",
+    "example": "The board approved the plan, so we can go ahead with production.",
+    "exampleZh": "董事會通過了計畫,所以我們可以開始生產。",
+    "quiz": {
+      "q": "Go ___ and start without me; I'll join the call in ten minutes.",
+      "options": ["over", "out", "ahead", "up"],
+      "answer": 2,
+      "explanation": "go ahead=你們先開始、請自便。go over=檢查、過去某處;go out=外出、(燈火)熄滅;go up=上升,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-211",
+    "phrase": "go out of business",
+    "zh": "倒閉;歇業",
+    "group": "go 家族",
+    "type": "動詞片語",
+    "tip": "走出「營業」這個狀態:門一關,生意就不再做了。",
+    "example": "The bookstore went out of business after thirty years downtown.",
+    "exampleZh": "那家書店在市區經營三十年後歇業了。",
+    "quiz": {
+      "q": "Many small factories went out of ___ during the economic downturn.",
+      "options": ["order", "service", "stock", "business"],
+      "answer": 3,
+      "explanation": "go out of business=倒閉,不景氣讓很多小工廠關門。out of order=(機器)故障;out of service=(設備、車輛)停止服務;out of stock=缺貨,主詞都不會是工廠本身。"
+    }
+  },
+  {
+    "id": "ph-212",
+    "phrase": "go up",
+    "zh": "上漲;上升;(建築)蓋起來",
+    "group": "go 家族",
+    "type": "動詞片語",
+    "tip": "數字像電梯一樣往上跑,價格、比例都適用。",
+    "example": "Shipping costs went up by fifteen percent in the second quarter.",
+    "exampleZh": "第二季的運費上漲了百分之十五。",
+    "quiz": {
+      "q": "Ticket prices went ___ from fifty to eighty dollars after the new tax.",
+      "options": ["up", "off", "out", "over"],
+      "answer": 0,
+      "explanation": "go up=上漲,票價從五十漲到八十。go off=(鬧鐘、警報)響起、爆炸;go out=外出、熄滅;go over=檢查,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-213",
+    "phrase": "come up with",
+    "zh": "想出(點子、辦法);提出(方案)",
+    "group": "come 家族",
+    "type": "動詞片語",
+    "tip": "想法從腦裡浮上來,再帶著它一起出來給大家看。",
+    "example": "The intern came up with a simple way to cut printing costs.",
+    "exampleZh": "那位實習生想出一個減少列印成本的簡單方法。",
+    "quiz": {
+      "q": "We need to come ___ with a new slogan before the campaign launches.",
+      "options": ["out", "up", "across", "along"],
+      "answer": 1,
+      "explanation": "come up with=想出(新點子),固定用 up 再接 with。come out=(產品)推出、(真相)公開;come across=偶然遇到;come along=一起來、有進展,這三個都不能接 with 表示「想出」。"
+    }
+  },
+  {
+    "id": "ph-214",
+    "phrase": "come across",
+    "zh": "偶然遇到、無意間發現;給人某種印象",
+    "group": "come 家族",
+    "type": "動詞片語",
+    "tip": "走著走著橫向撞見:不是特地去找的,是自己跑到眼前的。",
+    "example": "I came across an old client list while cleaning out the cabinet.",
+    "exampleZh": "我在整理櫃子時偶然翻到一份舊的客戶名單。",
+    "quiz": {
+      "q": "She came ___ some useful data while browsing the government website.",
+      "options": ["along", "back", "across", "up"],
+      "answer": 2,
+      "explanation": "come across=無意間發現,她本來不是要找這份資料。come along=一起來、進展順利;come back=回來;come up=(話題)被提出,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-215",
+    "phrase": "come back",
+    "zh": "回來;(記憶、流行)重新回來",
+    "group": "come 家族",
+    "type": "動詞片語",
+    "tip": "back 是「繞一圈回原點」:人、記憶、流行都可能再轉回來。",
+    "example": "Our manager will come back from Tokyo on Thursday morning.",
+    "exampleZh": "我們經理週四早上會從東京回來。",
+    "quiz": {
+      "q": "Vinyl records have come ___ into fashion among younger customers.",
+      "options": ["out", "along", "across", "back"],
+      "answer": 3,
+      "explanation": "come back into fashion=重新流行起來,黑膠曾經退流行又回來了。come out=推出、公開;come along=一起來;come across=偶然遇到,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-216",
+    "phrase": "come out",
+    "zh": "(產品)上市、推出;(真相、結果)公開",
+    "group": "come 家族",
+    "type": "動詞片語",
+    "tip": "從裡面走到外面讓大家看見:新品和真相都是這樣現身的。",
+    "example": "The updated version comes out at the end of March.",
+    "exampleZh": "更新版將在三月底推出。",
+    "quiz": {
+      "q": "Their new smartphone will come ___ in three colors next spring.",
+      "options": ["up", "out", "across", "back"],
+      "answer": 1,
+      "explanation": "come out=(產品)上市,明年春天推出三種顏色。come up=(話題)被提起、(事情)即將到來;come across=偶然遇到;come back=回來,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-217",
+    "phrase": "come along",
+    "zh": "一起來、跟著來;(進度)進展",
+    "group": "come 家族",
+    "type": "動詞片語",
+    "tip": "along 是「沿著路一起走」:人跟著來,事情也跟著往前走。",
+    "example": "The office renovation is coming along faster than we originally expected.",
+    "exampleZh": "辦公室裝修的進度比我們原先預期的快。",
+    "quiz": {
+      "q": "How is the new website coming ___? We need it ready by June.",
+      "options": ["along", "up", "out", "back"],
+      "answer": 0,
+      "explanation": "come along=進展如何,問的是做到什麼程度。come up=(話題)被提出、即將到來;come out=推出上市;come back=回來,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-218",
+    "phrase": "run out of",
+    "zh": "用完、耗盡(存貨、時間、金錢)",
+    "group": "run 家族",
+    "type": "動詞片語",
+    "tip": "存量像沙漏一樣流光,人就從「還有」的狀態跑了出來。",
+    "example": "We ran out of ink right before the report was due.",
+    "exampleZh": "報告快到期時我們的墨水剛好用完。",
+    "quiz": {
+      "q": "The café ran ___ of milk before the morning rush ended.",
+      "options": ["off", "over", "out", "into"],
+      "answer": 2,
+      "explanation": "run out of=用完,牛奶在早上尖峰結束前就沒了。run off=跑掉、印製;run over=輾過、(時間)超時;run into=撞上、遭遇,後面都不接 of。"
+    }
+  },
+  {
+    "id": "ph-219",
+    "phrase": "run into",
+    "zh": "偶然遇到(某人);遇上(問題、麻煩)",
+    "group": "run 家族",
+    "type": "動詞片語",
+    "tip": "走路直接撞上去:撞到人是巧遇,撞到事就是碰上麻煩。",
+    "example": "I ran into my former colleague at the airport last week.",
+    "exampleZh": "我上週在機場巧遇以前的同事。",
+    "quiz": {
+      "q": "The team ran ___ several technical problems during the system upgrade.",
+      "options": ["over", "into", "up", "out"],
+      "answer": 1,
+      "explanation": "run into=碰上(問題),升級過程中撞上好幾個技術狀況。run over=輾過、時間超過;run up=累積(帳款);run out=用完(後面要接 of),語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-220",
+    "phrase": "bring up",
+    "zh": "提起(話題、問題);扶養(小孩)",
+    "group": "bring 家族",
+    "type": "動詞片語",
+    "tip": "把桌面下的話題「拿上來」放到大家面前講。",
+    "example": "Nobody brought up the budget issue during this morning's meeting.",
+    "exampleZh": "今天早上的會議中沒有人提到預算的問題。",
+    "quiz": {
+      "q": "Please don't bring ___ that complaint in front of the client.",
+      "options": ["in", "up", "out", "down"],
+      "answer": 1,
+      "explanation": "bring up=把話題提出來講,在客戶面前不要提那件客訴。bring in=引進(人才)、帶來(收入);bring out=推出產品、凸顯特色;bring down=使下降、使垮台,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-221",
+    "phrase": "bring in",
+    "zh": "引進、請來(人才);帶來(收入)",
+    "group": "bring 家族",
+    "type": "動詞片語",
+    "tip": "in 是「帶進門」:人、錢、新做法都可以被帶進公司裡。",
+    "example": "The company brought in a consultant to redesign the workflow.",
+    "exampleZh": "公司請來一位顧問重新設計工作流程。",
+    "quiz": {
+      "q": "The new store brings ___ about two million dollars a year.",
+      "options": ["in", "out", "up", "over"],
+      "answer": 0,
+      "explanation": "bring in=帶來(收入),新店一年進帳約兩百萬。bring out=推出產品、凸顯;bring up=提起話題;bring over=把東西帶過來,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-222",
+    "phrase": "call off",
+    "zh": "取消(活動、計畫);中止",
+    "group": "call 家族",
+    "type": "動詞片語",
+    "tip": "off 是「劃掉」:已經排進行事曆的事,一筆把它槓掉。",
+    "example": "They called off the outdoor event because of the typhoon warning.",
+    "exampleZh": "因為颱風警報,他們取消了戶外活動。",
+    "quiz": {
+      "q": "The search was called ___ after the missing package was found.",
+      "options": ["out", "back", "off", "up"],
+      "answer": 2,
+      "explanation": "call off=中止,包裹找到了所以停止搜尋。call out=大聲叫喊、指出錯誤;call back=回電;call up=打電話給某人、徵召,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-223",
+    "phrase": "call back",
+    "zh": "回電;再打來",
+    "group": "call 家族",
+    "type": "動詞片語",
+    "tip": "把這通電話原路「送回去」給對方。",
+    "example": "She's in a meeting now, but she'll call you back this afternoon.",
+    "exampleZh": "她現在在開會,不過下午會回電給你。",
+    "quiz": {
+      "q": "I left him a message this morning; could you ask him to call me ___ when he returns to the office?",
+      "options": ["off", "up", "in", "back"],
+      "answer": 3,
+      "explanation": "call back=回電,請他回辦公室後回撥給我。call off=取消;call up=主動打電話給某人(不含「回撥」的意思);call in=打電話進公司請假、請人來處理,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-224",
+    "phrase": "set up",
+    "zh": "設立(公司、據點);架設、安裝;安排(會議)",
+    "group": "set 家族",
+    "type": "動詞片語",
+    "tip": "把零件一件件立起來:公司、機器、會議都是這樣搭出來的。",
+    "example": "It only takes ten minutes to set up the new printer.",
+    "exampleZh": "安裝新印表機只要十分鐘。",
+    "quiz": {
+      "q": "The company set ___ a branch office in Kaohsiung last year.",
+      "options": ["off", "up", "aside", "out"],
+      "answer": 1,
+      "explanation": "set up=設立(分公司)。set off=出發、引爆、觸動警報;set aside=撥出時間或金錢;set out=出發、著手進行(後面接 to+動詞),語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-225",
+    "phrase": "set aside",
+    "zh": "撥出(時間、金錢);擱置(先不處理)",
+    "group": "set 家族",
+    "type": "動詞片語",
+    "tip": "aside 是「挪到旁邊」:先分一份放旁邊留著,別人動不到。",
+    "example": "Please set aside an hour on Friday for the safety training.",
+    "exampleZh": "請在週五空出一小時參加安全訓練。",
+    "quiz": {
+      "q": "The firm sets ___ part of its profit for employee bonuses each year.",
+      "options": ["up", "off", "in", "aside"],
+      "answer": 3,
+      "explanation": "set aside=撥出(一部分款項)專門留給員工獎金。set up=設立;set off=出發、引爆;set in=(壞天氣或情況)開始並持續,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-226",
+    "phrase": "fill out",
+    "zh": "填寫(表格、問卷)",
+    "group": "其他高頻動詞片語",
+    "type": "動詞片語",
+    "tip": "把表格上的空格一格一格填到滿,整張表才算完成。",
+    "example": "All visitors must fill out a registration form at the front desk.",
+    "exampleZh": "所有訪客都必須在櫃台填寫登記表。",
+    "quiz": {
+      "q": "Applicants should fill ___ the online questionnaire by Sunday night.",
+      "options": ["out", "up", "down", "over"],
+      "answer": 0,
+      "explanation": "fill out=填寫(表格、問卷),整份填完才送出;英式英語常說 fill in,兩者都對。fill up=裝滿(油箱、杯子),對象是容器不是表格;fill down、fill over 都不是英文的固定搭配。"
+    }
+  },
+  {
+    "id": "ph-227",
+    "phrase": "hand in",
+    "zh": "繳交(作業、報告);遞出(辭呈)",
+    "group": "其他高頻動詞片語",
+    "type": "動詞片語",
+    "tip": "用手直接遞進去,交到收件的人手上。",
+    "example": "He handed in his resignation letter to the manager on Monday.",
+    "exampleZh": "他在週一把辭呈遞給經理。",
+    "quiz": {
+      "q": "Students must hand ___ their reports before leaving the classroom.",
+      "options": ["out", "down", "back", "in"],
+      "answer": 3,
+      "explanation": "hand in=繳交,學生要把報告交上去。hand out=分發(講義給大家),方向剛好相反;hand down=傳給下一代、宣判;hand back=把東西還回去,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-228",
+    "phrase": "carry out",
+    "zh": "執行(計畫、調查、檢查);實施",
+    "group": "其他高頻動詞片語",
+    "type": "動詞片語",
+    "tip": "把紙上的計畫「搬出去」變成實際動作,做到完成為止。",
+    "example": "The team carried out a survey of two hundred regular customers.",
+    "exampleZh": "團隊對兩百位常客進行了一項調查。",
+    "quiz": {
+      "q": "The maintenance staff will carry ___ a full inspection next Tuesday.",
+      "options": ["on", "out", "over", "off"],
+      "answer": 1,
+      "explanation": "carry out=執行(檢查),下週二要做一次全面檢查。carry on=繼續做原本在做的事;carry over=(數字、假期)結轉到下一期;carry off=順利完成困難的事、帶走,語意皆不通。"
+    }
+  },
+  {
+    "id": "ph-229",
+    "phrase": "find out",
+    "zh": "查明、打聽到(原本不知道的事)",
+    "group": "其他高頻動詞片語",
+    "type": "動詞片語",
+    "tip": "把藏起來的資訊挖出來,重點在最後「拿到答案」。",
+    "example": "We need to find out why the shipment was delayed.",
+    "exampleZh": "我們得查清楚出貨為什麼延誤。",
+    "quiz": {
+      "q": "Call the hotel to find ___ whether they still have rooms available.",
+      "options": ["out", "up", "in", "away"],
+      "answer": 0,
+      "explanation": "find out=打聽、問清楚,打電話去問才知道還有沒有空房。find up、find in、find away 都不是英文的固定搭配;要注意 look up 是去字典或資料庫查已經存在的資料,find out 則是問到自己原本不知道的事。"
+    }
+  },
+  {
+    "id": "ph-230",
+    "phrase": "figure out",
+    "zh": "想通、弄懂;算出(數字、原因)",
+    "group": "其他高頻動詞片語",
+    "type": "動詞片語",
+    "tip": "腦中模糊的形狀慢慢變清楚,答案自己浮出來。",
+    "example": "It took me an hour to figure out how the software works.",
+    "exampleZh": "我花了一小時才弄懂這個軟體怎麼用。",
+    "quiz": {
+      "q": "The accountant is trying to figure ___ where the extra charge came from.",
+      "options": ["in", "on", "out", "up"],
+      "answer": 2,
+      "explanation": "figure out=靠自己推敲想通,會計師要弄清楚多出來的費用是哪來的。figure in=把某項因素算進去(figure in the shipping cost);figure on=預計、打算(美式口語,figure on staying two nights);figure up 罕用,美式口語偶爾指把數字加總。另外要分辨 figure out 是自己想出來,find out 多半是向外打聽到。"
+    }
+  }
+]

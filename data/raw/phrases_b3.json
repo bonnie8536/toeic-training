@@ -1,0 +1,482 @@
+[
+  {
+    "id": "ph-301",
+    "phrase": "concerned about",
+    "zh": "擔心;關切",
+    "group": "about 家族",
+    "type": "形容詞+介系詞",
+    "tip": "about 是「繞著某件事打轉」,心思一直繞著它轉就是擔心。",
+    "example": "Many employees are concerned about the changes in the new overtime policy.",
+    "exampleZh": "許多員工對新的加班政策變動感到擔心。",
+    "quiz": {
+      "q": "Our clients are concerned ___ the long delay in the shipping schedule.",
+      "options": ["about", "for", "with", "of"],
+      "answer": 0,
+      "explanation": "concerned about=擔心某件事,客戶擔心的是出貨延誤。concerned for 多用在擔心某人的安危;be concerned with 是「與…有關、涉及」,主詞通常是報告或內容;concerned of 不成立。"
+    }
+  },
+  {
+    "id": "ph-302",
+    "phrase": "interested in",
+    "zh": "對…有興趣",
+    "group": "in 家族",
+    "type": "形容詞+介系詞",
+    "tip": "in 是人整個投入到某個領域「裡面」,興趣把你裝進去。",
+    "example": "Several buyers are interested in our new line of ergonomic office chairs.",
+    "exampleZh": "好幾位買家對我們新一系列的人體工學辦公椅有興趣。",
+    "quiz": {
+      "q": "If you are interested ___ joining the training program, please sign up online.",
+      "options": ["on", "for", "in", "to"],
+      "answer": 2,
+      "explanation": "interested in 後面接名詞或動名詞=對…有興趣。interested to 只接原形動詞且語氣是「很想知道」(interested to hear the result),接 joining 不通;on 常配 based;for 常配 responsible、eligible,都不與 interested 連用。"
+    }
+  },
+  {
+    "id": "ph-303",
+    "phrase": "responsible for",
+    "zh": "負責…;為…負責",
+    "group": "for 家族",
+    "type": "形容詞+介系詞",
+    "tip": "for 指向「要交代的事項」,責任像箭頭往那件工作指過去。",
+    "example": "Ms. Lin is responsible for training all the new sales representatives this month.",
+    "exampleZh": "林小姐這個月負責訓練所有新進的業務代表。",
+    "quiz": {
+      "q": "Who is responsible ___ checking the inventory before the store opens?",
+      "options": ["of", "for", "with", "to"],
+      "answer": 1,
+      "explanation": "responsible for=負責某項工作。responsible to 後面要接「向誰報告」(responsible to the manager),接動名詞不通;of 常配 aware、proud;with 常配 familiar、satisfied,都無法帶出負責的事項。"
+    }
+  },
+  {
+    "id": "ph-304",
+    "phrase": "familiar with",
+    "zh": "熟悉…;對…熟練",
+    "group": "with 家族",
+    "type": "形容詞+介系詞",
+    "tip": "with 是「隨身帶著」,熟到這套知識像帶在身上一樣。",
+    "example": "New interns should become familiar with the safety rules before Friday.",
+    "exampleZh": "新進實習生應該在星期五之前熟悉這些安全規則。",
+    "quiz": {
+      "q": "Are you familiar ___ the software we use for monthly expense reports?",
+      "options": ["to", "in", "of", "with"],
+      "answer": 3,
+      "explanation": "(人)be familiar with(事物)=熟悉某事物。be familiar to 要把主詞換成事物,表示「對某人而言很熟悉」(The name is familiar to me);in 常配 interested、involved;of 常配 aware,都不能表達「某人熟悉某事」。"
+    }
+  },
+  {
+    "id": "ph-305",
+    "phrase": "satisfied with",
+    "zh": "對…感到滿意",
+    "group": "with 家族",
+    "type": "形容詞+介系詞",
+    "tip": "with 是拿到手上的東西,滿意一定是「配著某個結果」來的。",
+    "example": "The client was satisfied with the revised design we submitted last Friday.",
+    "exampleZh": "客戶對我們上週五送出的修改版設計很滿意。",
+    "quiz": {
+      "q": "Most guests were satisfied ___ the service at the hotel restaurant.",
+      "options": ["for", "with", "about", "in"],
+      "answer": 1,
+      "explanation": "satisfied with=對某個結果或服務滿意,和 pleased with 同一組。for 常配 responsible、grateful;about 常配 concerned、worried;in 常配 interested、involved,這三個都不與 satisfied 連用。"
+    }
+  },
+  {
+    "id": "ph-306",
+    "phrase": "aware of",
+    "zh": "知道;察覺到;意識到",
+    "group": "of 家族",
+    "type": "形容詞+介系詞",
+    "tip": "of 把「知道的內容」貼到你的腦袋上,像貼一張標籤。",
+    "example": "Please be aware of the new deadline for submitting your travel receipts.",
+    "exampleZh": "請注意提交差旅收據的新期限。",
+    "quiz": {
+      "q": "The driver was not aware ___ the road closure until he reached the bridge.",
+      "options": ["of", "to", "with", "on"],
+      "answer": 0,
+      "explanation": "aware of=察覺到、知道某件事。to 常配 similar、related;with 常配 familiar、equipped;on 常配 based,都不能接在 aware 後面帶出「知道的內容」。"
+    }
+  },
+  {
+    "id": "ph-307",
+    "phrase": "eligible for",
+    "zh": "有資格獲得…;符合…資格",
+    "group": "for 家族",
+    "type": "形容詞+介系詞",
+    "tip": "for 指向你「換得到」的東西,資格是通往那項福利的箭頭。",
+    "example": "Full-time staff are eligible for the annual health checkup and dental care.",
+    "exampleZh": "全職員工有資格享有年度健康檢查與牙科照護。",
+    "quiz": {
+      "q": "Only members who joined before June are eligible ___ the special discount.",
+      "options": ["with", "of", "in", "for"],
+      "answer": 3,
+      "explanation": "eligible for=有資格取得某項福利。with 常配 familiar、satisfied;of 常配 aware、capable;in 常配 interested、involved,都無法表示「符合資格」。若後面接動作,則改用 eligible to apply 這種不定詞形式。"
+    }
+  },
+  {
+    "id": "ph-308",
+    "phrase": "available for",
+    "zh": "可供…使用;有空進行…",
+    "group": "for 家族",
+    "type": "形容詞+介系詞",
+    "tip": "for 指出「開放給什麼用途」,東西空在那裡等著那個用途。",
+    "example": "The conference room is available for client meetings after two o'clock.",
+    "exampleZh": "會議室兩點以後可供客戶會議使用。",
+    "quiz": {
+      "q": "Dr. Wang is available ___ a phone interview on Thursday morning.",
+      "options": ["of", "in", "for", "about"],
+      "answer": 2,
+      "explanation": "available for=可供某用途、有空進行某活動。另有 available to+人(對某些人開放),但這裡接的是活動,要用 for;of 常配 aware、full;in 常配 involved;about 常配 concerned。"
+    }
+  },
+  {
+    "id": "ph-309",
+    "phrase": "suitable for",
+    "zh": "適合…",
+    "group": "for 家族",
+    "type": "形容詞+介系詞",
+    "tip": "for 指出「適合的對象」,像鞋子對上腳一樣配得起來。",
+    "example": "This training video is suitable for both new hires and current employees.",
+    "exampleZh": "這支訓練影片適合新進人員與現職員工觀看。",
+    "quiz": {
+      "q": "The small meeting room is not suitable ___ a presentation to forty people.",
+      "options": ["for", "with", "to", "in"],
+      "answer": 0,
+      "explanation": "suitable for=適合某用途或某對象。with 常配 familiar、equipped;to 常配 similar、related;in 常配 involved、interested,都無法表達「適合」。"
+    }
+  },
+  {
+    "id": "ph-310",
+    "phrase": "similar to",
+    "zh": "與…相似",
+    "group": "to 家族",
+    "type": "形容詞+介系詞",
+    "tip": "to 是一支箭頭指向比較對象,相似一定要有另一邊。",
+    "example": "This year's sales figures are similar to those of the previous quarter.",
+    "exampleZh": "今年的銷售數字與上一季相近。",
+    "quiz": {
+      "q": "Her new job description is quite similar ___ the one she had in Taipei.",
+      "options": ["with", "to", "as", "from"],
+      "answer": 1,
+      "explanation": "similar to=與…相似,後面接被比較的對象。similar with 是中文思維造成的常見錯誤;as 要用在 the same as;from 是 different from 的搭配,表示不同。"
+    }
+  },
+  {
+    "id": "ph-311",
+    "phrase": "different from",
+    "zh": "與…不同",
+    "group": "from 家族",
+    "type": "形容詞+介系詞",
+    "tip": "from 是「從那邊分開」,差異就是分開後的距離。",
+    "example": "The final version is quite different from the draft we discussed yesterday.",
+    "exampleZh": "最終版本與我們昨天討論的草稿相當不同。",
+    "quiz": {
+      "q": "This coffee tastes completely different ___ what I ordered last time.",
+      "options": ["about", "of", "from", "with"],
+      "answer": 2,
+      "explanation": "different from=與…不同,是多益最標準的用法。about 常配 concerned;of 常配 aware、proud;with 常配 familiar、satisfied,都不與 different 連用;相反面要說 similar to。"
+    }
+  },
+  {
+    "id": "ph-312",
+    "phrase": "famous for",
+    "zh": "以…聞名",
+    "group": "for 家族",
+    "type": "形容詞+介系詞",
+    "tip": "for 帶出「因為什麼而出名」,後面放的是名聲的原因。",
+    "example": "The bakery is famous for its almond cookies and fresh milk bread.",
+    "exampleZh": "這家麵包店以杏仁餅乾和新鮮牛奶吐司聞名。",
+    "quiz": {
+      "q": "Kyoto is famous ___ its old temples and quiet stone gardens.",
+      "options": ["of", "with", "in", "for"],
+      "answer": 3,
+      "explanation": "famous for=以某項特色聞名,後面放出名的原因。若要說「對某群人而言有名」則用 famous to;of 常配 aware、proud;with 常配 familiar;in 常配 involved。"
+    }
+  },
+  {
+    "id": "ph-313",
+    "phrase": "proud of",
+    "zh": "以…為榮;為…感到驕傲",
+    "group": "of 家族",
+    "type": "形容詞+介系詞",
+    "tip": "of 把驕傲的來源掛在身上,像胸前那面獎牌。",
+    "example": "The manager is proud of how quickly the team solved the problem.",
+    "exampleZh": "經理對團隊這麼快解決問題感到驕傲。",
+    "quiz": {
+      "q": "My parents were very proud ___ me when I finished my first marathon.",
+      "options": ["for", "with", "about", "of"],
+      "answer": 3,
+      "explanation": "proud of=為某人或某事感到驕傲。for 常配 famous、responsible;with 常配 pleased、satisfied;about 常配 concerned,都無法接出「驕傲的來源」。"
+    }
+  },
+  {
+    "id": "ph-314",
+    "phrase": "capable of",
+    "zh": "有能力做…;能夠…",
+    "group": "of 家族",
+    "type": "形容詞+介系詞",
+    "tip": "of 後面裝的是你身上帶著的能力內容,而且固定接動名詞。",
+    "example": "The new printer is capable of handling large orders without overheating.",
+    "exampleZh": "這台新印表機能夠處理大量訂單而不會過熱。",
+    "quiz": {
+      "q": "She is capable ___ managing three projects at the same time.",
+      "options": ["to", "of", "in", "for"],
+      "answer": 1,
+      "explanation": "capable of+動名詞=有能力做某事。要接原形動詞必須換成 able to;in 常配 involved、interested;for 常配 responsible、eligible,都不與 capable 搭配。"
+    }
+  },
+  {
+    "id": "ph-315",
+    "phrase": "subject to",
+    "zh": "受制於…;可能有…變動;須經…",
+    "group": "to 家族",
+    "type": "形容詞+介系詞",
+    "tip": "to 是往下壓的方向,你被壓在某個規則或變動底下。",
+    "example": "All prices are subject to change without prior notice to our customers.",
+    "exampleZh": "所有價格可能未經事先通知客戶即有變動。",
+    "quiz": {
+      "q": "The schedule is subject ___ approval by the head office in Osaka.",
+      "options": ["to", "of", "for", "with"],
+      "answer": 0,
+      "explanation": "subject to=須經…核准、受制於…,後面接名詞或動名詞。of 常配 aware、proud;for 常配 responsible、eligible;with 常配 familiar,都無法表達「受某一方拘束」。"
+    }
+  },
+  {
+    "id": "ph-316",
+    "phrase": "grateful for",
+    "zh": "感謝…;對…心存感激",
+    "group": "for 家族",
+    "type": "形容詞+介系詞",
+    "tip": "for 帶出「感謝的事由」,感謝的對象是人時則改用 grateful to。",
+    "example": "We are grateful for your patience while the system was being upgraded.",
+    "exampleZh": "感謝您在系統升級期間耐心等候。",
+    "quiz": {
+      "q": "I am grateful ___ all the advice you gave me before the interview.",
+      "options": ["of", "about", "for", "with"],
+      "answer": 2,
+      "explanation": "grateful for+事情=為某件事感謝。grateful to+人 才是「感謝某個人」;of 常配 aware、proud;about 常配 concerned;with 常配 pleased、satisfied。"
+    }
+  },
+  {
+    "id": "ph-317",
+    "phrase": "committed to",
+    "zh": "致力於…;對…全心投入",
+    "group": "to 家族",
+    "type": "形容詞+介系詞",
+    "tip": "to 是投入的方向,這裡的 to 是介系詞,後面要接動名詞。",
+    "example": "Our company is committed to reducing packaging waste by next December.",
+    "exampleZh": "本公司致力於在明年十二月前減少包裝廢棄物。",
+    "quiz": {
+      "q": "The hotel is committed ___ providing quiet rooms for business travelers.",
+      "options": ["for", "to", "on", "with"],
+      "answer": 1,
+      "explanation": "committed to+動名詞=致力於做某事,這個 to 不是不定詞,所以不能接原形動詞。for 常配 responsible、eligible;on 常配 based;with 常配 equipped、familiar。"
+    }
+  },
+  {
+    "id": "ph-318",
+    "phrase": "dedicated to",
+    "zh": "專門用於…;致力於…",
+    "group": "to 家族",
+    "type": "形容詞+介系詞",
+    "tip": "和 committed to 是同一個 to,後面同樣接名詞或動名詞。",
+    "example": "This floor is dedicated to research and development for medical devices.",
+    "exampleZh": "這一層樓專門用於醫療器材的研發。",
+    "quiz": {
+      "q": "The volunteer group is dedicated ___ helping elderly residents with daily shopping.",
+      "options": ["for", "on", "in", "to"],
+      "answer": 3,
+      "explanation": "dedicated to+動名詞=致力於、專用於某事。for 常配 suitable、eligible;on 常配 based;in 常配 involved、interested,都不能接在 dedicated 後面。"
+    }
+  },
+  {
+    "id": "ph-319",
+    "phrase": "equipped with",
+    "zh": "配備有…;裝有…",
+    "group": "with 家族",
+    "type": "形容詞+介系詞",
+    "tip": "with 是「隨身帶著」,配備本來就是機器帶著的東西。",
+    "example": "Every meeting room is equipped with a projector and a video camera.",
+    "exampleZh": "每間會議室都配備投影機與視訊攝影機。",
+    "quiz": {
+      "q": "The delivery vans are equipped ___ GPS devices to track every route.",
+      "options": ["by", "of", "with", "for"],
+      "answer": 2,
+      "explanation": "equipped with=配備有某項設備。by 用來帶出被動語態的動作者(equipped by the supplier 指由誰安裝);of 常配 aware、full;for 常配 suitable,都不能帶出配備的內容。"
+    }
+  },
+  {
+    "id": "ph-320",
+    "phrase": "pleased with",
+    "zh": "對…感到滿意/高興",
+    "group": "with 家族",
+    "type": "形容詞+介系詞",
+    "tip": "和 satisfied with 同一組 with:結果拿到手裡,人才開心得起來。",
+    "example": "The director was pleased with the results of the customer survey.",
+    "exampleZh": "總監對顧客問卷的結果感到滿意。",
+    "quiz": {
+      "q": "Everyone was pleased ___ the new office layout after the renovation.",
+      "options": ["with", "for", "of", "in"],
+      "answer": 0,
+      "explanation": "pleased with=對某個結果感到滿意。pleased to 後面只接原形動詞(pleased to meet you);for 常配 grateful、famous;of 常配 proud;in 常配 interested。"
+    }
+  },
+  {
+    "id": "ph-321",
+    "phrase": "involved in",
+    "zh": "參與…;涉入…",
+    "group": "in 家族",
+    "type": "形容詞+介系詞",
+    "tip": "in 是人在事情「裡面」,參與就是整個泡在裡面。",
+    "example": "Three departments were involved in preparing the annual budget report.",
+    "exampleZh": "有三個部門參與編製年度預算報告。",
+    "quiz": {
+      "q": "He was involved ___ a minor traffic accident on his way to the airport.",
+      "options": ["on", "to", "for", "in"],
+      "answer": 3,
+      "explanation": "involved in=涉入、參與某事件。on 常配 based;to 常配 related、similar;for 常配 responsible;另有 involved with 偏向「與某人有牽扯」,用在單一事件並不自然。"
+    }
+  },
+  {
+    "id": "ph-322",
+    "phrase": "based on",
+    "zh": "根據…;以…為基礎",
+    "group": "on 家族",
+    "type": "形容詞+介系詞",
+    "tip": "on 是踩在上面,基礎就是腳下踩著的那塊地。",
+    "example": "The final decision was based on feedback from two hundred online users.",
+    "exampleZh": "最終決定是根據兩百位線上使用者的意見做出的。",
+    "quiz": {
+      "q": "The movie is based ___ a true story about a small fishing village.",
+      "options": ["on", "in", "of", "with"],
+      "answer": 0,
+      "explanation": "based on=以…為依據。based in 是「總部或據點設在某地」(a company based in Taipei);of 常配 aware、full;with 常配 equipped,語意都不通。"
+    }
+  },
+  {
+    "id": "ph-323",
+    "phrase": "related to",
+    "zh": "與…有關;和…有關聯",
+    "group": "to 家族",
+    "type": "形容詞+介系詞",
+    "tip": "to 是一條連線,relate 就是把兩件事拉起一條線。",
+    "example": "Please send all questions related to shipping directly to the logistics team.",
+    "exampleZh": "與出貨有關的問題請直接寄給物流團隊。",
+    "quiz": {
+      "q": "Most complaints this month were related ___ the slow response of customer service.",
+      "options": ["with", "on", "to", "for"],
+      "answer": 2,
+      "explanation": "related to=與…有關,relate 這個字族固定搭 to。with 常配 familiar、equipped;on 常配 based;for 常配 responsible、suitable,都不能表達「有關聯」。"
+    }
+  },
+  {
+    "id": "ph-324",
+    "phrase": "known for",
+    "zh": "以…著稱",
+    "group": "for 家族",
+    "type": "形容詞+介系詞",
+    "tip": "和 famous for 同一個 for,後面放「為人所知的原因」。",
+    "example": "The supplier is known for delivering orders on time during busy seasons.",
+    "exampleZh": "這家供應商以旺季也準時交貨著稱。",
+    "quiz": {
+      "q": "That neighborhood is known ___ its weekend night market and cheap noodles.",
+      "options": ["of", "for", "to", "in"],
+      "answer": 1,
+      "explanation": "known for=以某項特色著稱。known to+人 是「為某些人所知」;known as 則是「被稱為某種身分」;of 常配 aware;in 常配 involved,都不能帶出出名的原因。"
+    }
+  },
+  {
+    "id": "ph-325",
+    "phrase": "open to",
+    "zh": "願意接受…;對…開放",
+    "group": "to 家族",
+    "type": "形容詞+介系詞",
+    "tip": "門朝那個方向打開,to 後面就是歡迎進來的人或意見。",
+    "example": "The committee is open to suggestions about the new recycling program.",
+    "exampleZh": "委員會歡迎大家對新回收方案提出建議。",
+    "quiz": {
+      "q": "The exhibition is open ___ the public from Tuesday through Sunday.",
+      "options": ["to", "for", "with", "on"],
+      "answer": 0,
+      "explanation": "open to=對…開放、願意接受。open for 後面接的是用途或營業狀態(open for business、open for registration),接「人」不通;with 常配 familiar、equipped;on 常配 based,語意都不通。"
+    }
+  },
+  {
+    "id": "ph-326",
+    "phrase": "short of",
+    "zh": "缺少…;不足…",
+    "group": "of 家族",
+    "type": "形容詞+介系詞",
+    "tip": "of 帶出「少掉的那樣東西」,離目標還差一段距離。",
+    "example": "We are short of staff this weekend because two workers called in sick.",
+    "exampleZh": "這個週末我們人手不足,因為有兩位員工請病假。",
+    "quiz": {
+      "q": "The charity is still fifty thousand dollars short ___ its fundraising goal.",
+      "options": ["from", "to", "of", "in"],
+      "answer": 2,
+      "explanation": "short of=差…、不足…,後面接缺少的東西或還沒達到的目標。from 常配 different、absent;to 常配 similar、related;in 常配 involved;記住 short of cash(現金不足)就記得這個 of。"
+    }
+  },
+  {
+    "id": "ph-327",
+    "phrase": "full of",
+    "zh": "充滿…",
+    "group": "of 家族",
+    "type": "形容詞+介系詞",
+    "tip": "of 是容器裡裝的東西,說了「滿」就要說清楚裝什麼。",
+    "example": "The warehouse is full of boxes waiting to be shipped this afternoon.",
+    "exampleZh": "倉庫裡堆滿了等著今天下午出貨的箱子。",
+    "quiz": {
+      "q": "Her report was full ___ useful charts and clear examples.",
+      "options": ["with", "in", "by", "of"],
+      "answer": 3,
+      "explanation": "full of=充滿…。要用 with 必須換成 filled with(be filled with water);in 常配 interested、involved;by 用在被動語態的動作者,都不能接在 full 後面。"
+    }
+  },
+  {
+    "id": "ph-328",
+    "phrase": "free of charge",
+    "zh": "免費;不收費",
+    "group": "of 家族",
+    "type": "形容詞+介系詞",
+    "tip": "free of 是「擺脫掉…」,擺脫收費就是免費。",
+    "example": "Delivery is free of charge for orders over one thousand dollars.",
+    "exampleZh": "訂單滿一千元即免運費。",
+    "quiz": {
+      "q": "Guests can use the hotel gym free ___ charge during their stay.",
+      "options": ["from", "of", "for", "with"],
+      "answer": 1,
+      "explanation": "free of charge=免費,是固定用法。free from 指「免於某種危害」(free from danger);for 常配 suitable、eligible;with 常配 equipped,都不能組成「免費」。"
+    }
+  },
+  {
+    "id": "ph-329",
+    "phrase": "absent from",
+    "zh": "缺席…;未出席",
+    "group": "from 家族",
+    "type": "形容詞+介系詞",
+    "tip": "from 是「從那個場合離開」,人不在那裡就是缺席。",
+    "example": "Two board members were absent from the meeting due to a flight delay.",
+    "exampleZh": "兩位董事因班機延誤而缺席會議。",
+    "quiz": {
+      "q": "The student has been absent ___ class for three days in a row.",
+      "options": ["in", "of", "from", "to"],
+      "answer": 2,
+      "explanation": "absent from=缺席某個場合。in 常配 involved、interested;of 常配 aware、short;to 常配 similar、related;和 different from 一樣,from 都帶著「離開、不在其中」的意象。"
+    }
+  },
+  {
+    "id": "ph-330",
+    "phrase": "consistent with",
+    "zh": "與…一致;符合…",
+    "group": "with 家族",
+    "type": "形容詞+介系詞",
+    "tip": "with 是兩邊擺在一起看,對得起來就是一致。",
+    "example": "The test results are consistent with the data we collected last month.",
+    "exampleZh": "測試結果與我們上個月收集的資料一致。",
+    "quiz": {
+      "q": "His explanation was not consistent ___ the statement he gave to the police.",
+      "options": ["with", "to", "for", "in"],
+      "answer": 0,
+      "explanation": "consistent with=與另一份說法或資料相符。consistent in 是「在某方面始終如一」(consistent in quality),不能用來比對兩者;to 常配 similar、related;for 常配 responsible、suitable。"
+    }
+  }
+]

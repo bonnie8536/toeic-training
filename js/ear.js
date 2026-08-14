@@ -242,10 +242,15 @@
         if (checked) return;
         const ansWords = norm(q.text).split(' ');
         const gotWords = norm(input.value).split(' ').filter(Boolean);
-        /* 逐字比對(依位置;數字接受阿拉伯數字寫法) */
+        /* 字袋比對(不看順序;每個答案字在輸入裡出現過就算對,一字一消;數字接受阿拉伯數字寫法) */
         const NUM = { one:'1', two:'2', three:'3', four:'4', five:'5', six:'6', seven:'7', eight:'8', nine:'9', ten:'10' };
         const same = (a, b) => a === b || NUM[a] === b || NUM[b] === a;
-        const diff = ansWords.map((w, i) => ({ w, hit: gotWords[i] !== undefined && same(w, gotWords[i]) }));
+        const pool = gotWords.slice();
+        const diff = ansWords.map(w => {
+          const gi = pool.findIndex(g => same(w, g));
+          if (gi > -1) pool.splice(gi, 1);
+          return { w, hit: gi > -1 };
+        });
         const hits = diff.filter(x => x.hit).length;
         const perfect = hits === ansWords.length && gotWords.length === ansWords.length;
         checked = true;

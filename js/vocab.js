@@ -129,7 +129,7 @@
     document.title = '掉落消除|刷刷英文';
     root.innerHTML = '';
 
-    const BASE_SPEED = { slow: 20, normal: 30, fast: 44 }[speedKey];
+    const BASE_SPEED = { slow: 15, normal: 23, fast: 34 }[speedKey];
     const missPool = store.get('vgame_miss', {});
     let score = 0, lives = 3, combo = 0;
     let blocks = [];
@@ -189,7 +189,7 @@
       const maxX = Math.max(0, field.clientWidth - el.offsetWidth - 8);
       const x = 4 + Math.random() * maxX;
       el.style.left = x + 'px';
-      blocks.push({ el, answer: item.answer, zh: item.zh, y: -el.offsetHeight, speed: BASE_SPEED * (1 + Math.min(0.5, score / 400)) });
+      blocks.push({ el, answer: item.answer, zh: item.zh, y: -el.offsetHeight, speed: BASE_SPEED * (1 + Math.min(0.4, score / 500)) });
     }
 
     function loop(t) {

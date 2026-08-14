@@ -578,6 +578,35 @@ button { font-family: var(--font); cursor: pointer; }
   white-space: normal;
 }
 .passage-box + .passage-box { margin-top: 14px; }
+
+/* Part 7 結構化文件(表格/表單/簡訊/傳單) */
+.ps-blocks { white-space: normal; }
+.ps-blocks .ps-h { font-weight: 700; font-size: 16.5px; margin: 10px 0 4px; }
+.ps-advertisement .ps-h, .ps-notice .ps-h, .ps-flyer .ps-h, .ps-coupon-doc .ps-h { text-align: center; letter-spacing: .5px; }
+.ps-blocks .ps-sub { color: var(--ink-light); font-size: 13.5px; margin: 0 0 10px; }
+.ps-advertisement .ps-sub, .ps-flyer .ps-sub { text-align: center; }
+.ps-blocks .ps-p { margin: 8px 0; }
+.ps-blocks .ps-note { font-size: 12.5px; color: var(--ink-light); margin: 8px 0 2px; }
+.ps-blocks .ps-list { margin: 8px 0 8px 22px; padding: 0; }
+.ps-blocks .ps-list li { margin: 4px 0; }
+.ps-kv { margin: 10px 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; }
+.ps-kv-row { display: flex; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55; }
+.ps-kv-row:last-child { border-bottom: none; }
+.ps-kv-k { flex: 0 0 38%; background: var(--bg-soft); padding: 7px 11px; font-weight: 600; }
+.ps-kv-v { flex: 1; padding: 7px 11px; }
+.ps-table-wrap { overflow-x: auto; margin: 10px 0; }
+.ps-table { border-collapse: collapse; width: 100%; font-size: 13.5px; line-height: 1.5; background: #fff; }
+.ps-table th, .ps-table td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+.ps-table th { background: var(--bg-soft); font-weight: 700; }
+.ps-chat { display: flex; flex-direction: column; gap: 9px; margin: 10px 0; }
+.ps-msg { max-width: 86%; align-self: flex-start; }
+.ps-msg.right { align-self: flex-end; text-align: right; }
+.ps-msg-meta { font-size: 11.5px; color: var(--ink-light); margin-bottom: 2px; }
+.ps-msg-bubble { display: inline-block; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 12px; padding: 7px 12px; font-size: 14px; line-height: 1.55; text-align: left; }
+.ps-msg.right .ps-msg-bubble { background: var(--primary-tint); border-color: var(--primary); }
+.ps-coupon { border: 2px dashed var(--primary); border-radius: 8px; padding: 12px 16px; text-align: center; margin: 12px 0; }
+.ps-coupon-main { font-weight: 700; font-size: 15.5px; color: var(--primary-dark); }
+.ps-coupon-line { font-size: 12.5px; color: var(--ink-light); margin-top: 3px; }
 .passage-col .passage-box { position: static; max-height: none; }
 .passage-sticky-wrap { position: sticky; top: 76px; max-height: calc(100vh - 100px); overflow-y: auto; }
 .passage-sticky-wrap .passage-box { position: static; max-height: none; }

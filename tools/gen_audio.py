@@ -82,15 +82,20 @@ async def main():
         v = VOICES[acc]['M' if s.get('speaker', 'M') == 'M' else 'F']
         jobs.append((s['id'] + '.mp3', [(s['talk'].replace('\n', ' '), v)]))
     # 英語耳(檔案存在才生成)
-    for q in load('ear_dictation.json'):
+    for q in load('ear_dictation*.json'):
         jobs.append((q['id'] + '.mp3', [(q['text'], VOICES['US']['F' if int(q['id'][2:]) % 2 else 'M'])]))
-    for q in load('ear_pairs.json'):
+    for q in load('ear_pairs*.json'):
         jobs.append((q['id'] + '.mp3', [(q['audioText'], VOICES['US']['M' if int(q['id'][3:]) % 2 else 'F'])]))
-    for q in load('ear_numbers.json'):
+    for q in load('ear_numbers*.json'):
         jobs.append((q['id'] + '.mp3', [(q['audioText'], VOICES['US2']['F' if int(q['id'][2:]) % 2 else 'M'])]))
     # 跟讀用:聽寫句的中文翻譯音檔(台灣腔) d-01 → dz-01
-    for q in load('ear_dictation.json'):
+    for q in load('ear_dictation*.json'):
         jobs.append(('dz-' + q['id'][2:] + '.mp3', [(q['zh'], 'zh-TW-HsiaoChenNeural')]))
+    # 跟讀專用句庫:英文句(四腔輪替)+中文翻譯 s-01 → s-01.mp3 / dz-s-01.mp3
+    for i, q in enumerate(load('ear_shadow.json')):
+        acc = ACCENTS[i % 4]
+        jobs.append((q['id'] + '.mp3', [(q['text'], VOICES[acc]['F' if i % 2 else 'M'])]))
+        jobs.append(('dz-' + q['id'] + '.mp3', [(q['zh'], 'zh-TW-HsiaoChenNeural')]))
 
     print('共', len(jobs), '個音檔', flush=True)
     sem = asyncio.Semaphore(5)

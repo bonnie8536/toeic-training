@@ -538,17 +538,54 @@
   }
 
   function part7Passage(ps) {
-    return h('div', { class: 'passage-box' },
-      ps.label ? h('span', { class: 'p-label' }, ps.label + ' · ' + passTypeLabel(ps.type)) : h('span', { class: 'p-label' }, passTypeLabel(ps.type)),
-      h('div', null, ps.content));
+    const typeSlug = String(ps.type || '').toLowerCase().replace(/[^a-z]+/g, '-');
+    const box = h('div', { class: 'passage-box' + (ps.blocks ? ' ps-' + typeSlug : '') },
+      ps.label ? h('span', { class: 'p-label' }, ps.label + ' · ' + passTypeLabel(ps.type)) : h('span', { class: 'p-label' }, passTypeLabel(ps.type)));
+    box.append(ps.blocks ? renderBlocks(ps.blocks) : h('div', null, ps.content));
+    return box;
+  }
+
+  /* 結構化文件區塊(表格/表單/簡訊/傳單) */
+  function renderBlocks(blocks) {
+    const wrap = h('div', { class: 'ps-blocks' });
+    blocks.forEach(b => {
+      if (b.t === 'h') wrap.append(h('div', { class: 'ps-h' }, b.text));
+      else if (b.t === 'sub') wrap.append(h('div', { class: 'ps-sub' }, b.text));
+      else if (b.t === 'p') wrap.append(h('div', { class: 'ps-p' }, b.text));
+      else if (b.t === 'note') wrap.append(h('div', { class: 'ps-note' }, b.text));
+      else if (b.t === 'coupon') wrap.append(h('div', { class: 'ps-coupon' }, ...(b.lines || [b.text]).map((l, i) => h('div', i ? { class: 'ps-coupon-line' } : { class: 'ps-coupon-main' }, l))));
+      else if (b.t === 'list') wrap.append(h('ul', { class: 'ps-list' }, ...(b.items || []).map(it => h('li', null, it))));
+      else if (b.t === 'kv') {
+        wrap.append(h('div', { class: 'ps-kv' }, ...(b.items || []).map(it =>
+          h('div', { class: 'ps-kv-row' }, h('span', { class: 'ps-kv-k' }, it[0]), h('span', { class: 'ps-kv-v' }, it[1])))));
+      } else if (b.t === 'table') {
+        const tbl = h('table', { class: 'ps-table' });
+        (b.rows || []).forEach((row, ri) => {
+          tbl.append(h('tr', null, ...row.map(c => h(b.header !== false && ri === 0 ? 'th' : 'td', null, String(c)))));
+        });
+        wrap.append(h('div', { class: 'ps-table-wrap' }, tbl));
+      } else if (b.t === 'chat') {
+        const sides = {};
+        wrap.append(h('div', { class: 'ps-chat' }, ...(b.msgs || []).map(m => {
+          if (!(m.who in sides)) sides[m.who] = Object.keys(sides).length % 2 ? 'right' : '';
+          return h('div', { class: 'ps-msg ' + sides[m.who] },
+            h('div', { class: 'ps-msg-meta' }, m.who + (m.time ? ' · ' + m.time : '')),
+            h('div', { class: 'ps-msg-bubble' }, m.text));
+        })));
+      }
+    });
+    return wrap;
   }
 
   function passTypeLabel(t) {
     const map = {
       email: 'E-MAIL', memo: 'MEMO 備忘錄', notice: 'NOTICE 公告', advertisement: 'AD 廣告',
       letter: 'LETTER 信件', article: 'ARTICLE 文章', instructions: '使用說明',
-      'text message': '簡訊對話', 'text-message': '簡訊對話', webpage: '網頁', 'web page': '網頁',
-      schedule: '行程表', invoice: '發票/訂單', form: '表單',
+      'text message': '簡訊對話', 'text-message': '簡訊對話', 'text_message': '簡訊對話', 'text message chain': '簡訊對話',
+      webpage: '網頁', 'web page': '網頁',
+      schedule: '行程表', invoice: '發票/訂單', form: '表單', 'order form': '訂購單',
+      coupon: '優惠券', menu: '菜單', itinerary: '行程表', receipt: '收據', flyer: '傳單',
+      'sign-up form': '報名表', review: '評論', 'job advertisement': '徵才廣告',
     };
     return map[String(t || '').toLowerCase()] || String(t || '').toUpperCase();
   }

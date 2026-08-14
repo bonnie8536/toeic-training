@@ -14,7 +14,7 @@
   }
 
   const SECTIONS = {
-    s: { key: 'ear_s', title: '句子跟讀', items: E.dictation, desc: '聽一句 → 換你唸 → 再一次 → 中文確認。開口才算練到。', per: 5 },
+    s: { key: 'ear_s', title: '句子跟讀', items: E.shadow || E.dictation, desc: '聽一句 → 換你唸 → 再一次 → 中文確認。開口才算練到。', per: 5 },
     d: { key: 'ear_d', title: '句子聽寫', items: E.dictation, desc: '聽一句,打出整句。逐字比對,拼錯的字會標紅。', per: 5 },
     mp: { key: 'ear_mp', title: '相似音辨析', items: E.pairs, desc: '句子裡出現的是哪個字?靠耳朵分辨。', per: 10 },
     n: { key: 'ear_n', title: '數字與價格', items: E.numbers, desc: 'thirteen 還是 thirty?時間、金額、分機聽清楚。', per: 10 },
@@ -145,7 +145,7 @@
     /* --- 句子跟讀:英文 → 換你唸 → 英文 → 換你唸 → 中文 --- */
     function drawShadow(q) {
       const en = new Audio('audio/' + q.id + '.mp3');
-      const zh = new Audio('audio/dz-' + q.id.slice(2) + '.mp3');
+      const zh = new Audio('audio/dz-' + (q.id.charAt(0) === 's' ? q.id : q.id.slice(2)) + '.mp3');
       player = { stop: () => { en.pause(); zh.pause(); clearTimeout(timer); } };
       let timer = null;
       let running = false;
@@ -162,7 +162,8 @@
       root.append(block, nextRow(false));
 
       function pauseLen() {
-        return Math.max(2500, (en.duration || 3) * 1000 / (en.playbackRate || 1) + 800);
+        /* 開口複誦需要比原音更長的時間:1.6 倍音長再加緩衝 */
+        return Math.max(3500, (en.duration || 3) * 1600 / (en.playbackRate || 1) + 1200);
       }
       function setStage(text, pulse) {
         stage.textContent = text;

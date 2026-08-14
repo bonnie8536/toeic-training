@@ -90,18 +90,64 @@ for s in p6:
     scan_simplified(s, w)
 
 # ---------- Part 7 ----------
+BLOCK_KINDS = {'h', 'sub', 'p', 'note', 'coupon', 'list', 'kv', 'table', 'chat'}
+
+def check_blocks(blocks, w):
+    for bi, b in enumerate(blocks):
+        bw = f'{w} 區塊{bi+1}'
+        t = b.get('t')
+        if t not in BLOCK_KINDS:
+            errors.append(f'{bw}: 未知區塊類型 t={t!r}(可用:{sorted(BLOCK_KINDS)})')
+            continue
+        if t in ('h', 'sub', 'p', 'note') and not b.get('text'):
+            errors.append(f'{bw}({t}): 缺 text')
+        elif t == 'coupon' and not (b.get('lines') or b.get('text')):
+            errors.append(f'{bw}: coupon 缺 lines 或 text')
+        elif t == 'list' and not b.get('items'):
+            errors.append(f'{bw}: list 缺 items')
+        elif t == 'kv':
+            items = b.get('items', [])
+            if not items:
+                errors.append(f'{bw}: kv 缺 items')
+            elif not all(isinstance(it, list) and len(it) == 2 for it in items):
+                errors.append(f'{bw}: kv items 每項需為 [標籤, 值]')
+        elif t == 'table':
+            rows = b.get('rows', [])
+            if not rows:
+                errors.append(f'{bw}: table 缺 rows')
+            elif any(len(r) != len(rows[0]) for r in rows):
+                errors.append(f'{bw}: 表格各列欄數不一致')
+        elif t == 'chat':
+            msgs = b.get('msgs', [])
+            if not msgs:
+                errors.append(f'{bw}: chat 缺 msgs')
+            elif not all(m.get('who') and m.get('text') for m in msgs):
+                errors.append(f'{bw}: chat 每則需 who 與 text')
+
+P7_FORMATS = {'single': 1, 'double': 2, 'triple': 3}
 p7 = load_kind('part7_b*.json', 'part7')
 p7_qs = 0
+p7_blocks_sets = 0
 for s in p7:
     w = f"part7 {s.get('id','?')}"
     if need(s, ['id','format','passages','questions','translation'], w):
         np_, nt = len(s['passages']), len(s['translation'])
         if np_ != nt:
             errors.append(f'{w}: passages({np_}) 與 translation({nt}) 數量不符')
-        if s['format'] == 'double' and np_ != 2:
-            errors.append(f'{w}: double 需 2 篇,實得 {np_}')
+        if s['format'] not in P7_FORMATS:
+            errors.append(f"{w}: format 需為 single|double|triple,實得 {s['format']!r}")
+        elif np_ != P7_FORMATS[s['format']]:
+            errors.append(f"{w}: {s['format']} 需 {P7_FORMATS[s['format']]} 篇,實得 {np_}")
+        has_blocks = False
         for p_ in s['passages']:
-            need(p_, ['type','content'], f'{w} passage')
+            if not p_.get('type'):
+                errors.append(f'{w} passage: 缺 type')
+            if p_.get('blocks'):
+                has_blocks = True
+                check_blocks(p_['blocks'], f'{w} passage')
+            elif not p_.get('content'):
+                errors.append(f'{w} passage: 缺 content 或 blocks')
+        p7_blocks_sets += has_blocks
         for qi, q in enumerate(s['questions']):
             p7_qs += 1
             need(q, ['q','options','explanation'], f'{w} Q{qi+1}')
@@ -274,11 +320,11 @@ if lp1 or lp2 or lp3 or lp4:
 
 # ---------- 英語耳 ----------
 ear = {}
-ed = load_kind('ear_dictation.json', 'ear dictation')
+ed = load_kind('ear_dictation*.json', 'ear dictation')
 for q in ed:
     w = f"ear {q.get('id','?')}"
     need(q, ['id','level','text','zh','note'], w)
-ep = load_kind('ear_pairs.json', 'ear pairs')
+ep = load_kind('ear_pairs*.json', 'ear pairs')
 for q in ep:
     w = f"ear {q.get('id','?')}"
     if need(q, ['id','audioText','options','note','zh'], w):
@@ -286,14 +332,23 @@ for q in ep:
             errors.append(f'{w}: options 需為 2 個')
         if not isinstance(q.get('answer'), int) or q['answer'] not in (0, 1):
             errors.append(f'{w}: answer 需為 0|1')
-en_ = load_kind('ear_numbers.json', 'ear numbers')
+en_ = load_kind('ear_numbers*.json', 'ear numbers')
 for q in en_:
     w = f"ear {q.get('id','?')}"
     if need(q, ['id','audioText','question','options','note','zh'], w):
         check_options(q, w)
-if ed or ep or en_:
-    scan_simplified({'d': ed, 'p': ep, 'n': en_}, 'ear')
-    ear = {'dictation': ed, 'pairs': ep, 'numbers': en_}
+esh = load_kind('ear_shadow.json', 'ear shadow')
+for q in esh:
+    w = f"ear-shadow {q.get('id','?')}"
+    if need(q, ['id','level','text','zh','note'], w):
+        if not str(q.get('id','')).startswith('s-'):
+            errors.append(f'{w}: id 需以 s- 開頭(音檔命名規則)')
+        wc = len(q['text'].split())
+        if wc > 10:
+            errors.append(f'{w}: 句長 {wc} 字,跟讀句上限 10 字')
+if ed or ep or en_ or esh:
+    scan_simplified({'d': ed, 'p': ep, 'n': en_, 's': esh}, 'ear')
+    ear = {'dictation': ed, 'pairs': ep, 'numbers': en_, 'shadow': esh}
 
 # ---------- 片語庫 ----------
 phrases = load_kind('phrases_b*.json', 'phrases')
@@ -325,7 +380,7 @@ def write_js(fname, varname, data):
     print(f'  寫出 {fname}')
 
 print('=== 驗證結果 ===')
-print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題 | 文章: {len(arts)} 篇 {total_vocab} 個標記單字 | 檢測卷: {n_diag} 題')
+print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字 | 檢測卷: {n_diag} 題')
 print(f'Part 5 答案分布: {dict(sorted(dist5.items()))}')
 if errors:
     print(f'\n-- 硬錯誤 {len(errors)} 筆 --')

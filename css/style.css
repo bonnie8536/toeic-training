@@ -607,6 +607,14 @@ button { font-family: var(--font); cursor: pointer; }
 .ps-coupon { border: 2px dashed var(--primary); border-radius: 8px; padding: 12px 16px; text-align: center; margin: 12px 0; }
 .ps-coupon-main { font-weight: 700; font-size: 15.5px; color: var(--primary-dark); }
 .ps-coupon-line { font-size: 12.5px; color: var(--ink-light); margin-top: 3px; }
+
+/* 自訂題庫編輯 */
+.bank-word { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); padding: 7px 2px; font-size: 14.5px; }
+.bank-word-main { display: flex; align-items: center; gap: 10px; flex: 1; cursor: pointer; min-width: 0; }
+.bank-word-main b { flex: 0 0 auto; }
+.bank-word-zh { color: var(--ink-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bank-word-del { border: none; background: none; color: var(--ink-light); cursor: pointer; font-size: 14px; padding: 2px 8px; }
+.bank-word-del:hover { color: #c0392b; }
 .passage-col .passage-box { position: static; max-height: none; }
 .passage-sticky-wrap { position: sticky; top: 76px; max-height: calc(100vh - 100px); overflow-y: auto; }
 .passage-sticky-wrap .passage-box { position: static; max-height: none; }

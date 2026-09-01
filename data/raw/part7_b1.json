@@ -186,7 +186,53 @@
       {
         "type": "text message chain",
         "label": "",
-        "content": "Deirdre Nakamura (9:42 A.M.)\nMorning, Tomas. I'm at the convention centre. Our booth panels arrived, but the crate with the display monitors isn't here. Have you heard anything from the shipper?\n\nTomas Reyes (9:47 A.M.)\nThat's not good. Let me check the tracking. The panels and the monitors went out on separate trucks, so the second one may simply be running behind.\n\nTomas Reyes (9:58 A.M.)\nTracking says the second crate left the warehouse at 6:10 this morning and is out for delivery. There's no estimated arrival time, though.\n\nDeirdre Nakamura (10:03 A.M.)\nSetup access ends at 4:00 P.M. and the hall opens to visitors at nine tomorrow. I'd rather not gamble on this.\n\nTomas Reyes (10:09 A.M.)\nUnderstood. Halvorsen Rentals is three streets away and carries the same 55-inch screens. Want me to reserve two of them?\n\nDeirdre Nakamura (10:15 A.M.)\nLet's not put all our eggs in one basket. Book them, and if our crate turns up before noon I'll cancel the reservation.\n\nTomas Reyes (10:21 A.M.)\nDone. We can pick them up any time after 1:00 P.M., and they'll take them back at no charge if we return them unused today.\n\nDeirdre Nakamura (10:26 A.M.)\nPerfect. I'll keep unpacking the panels and let you know the moment the driver shows up."
+        "blocks": [
+          {
+            "t": "chat",
+            "msgs": [
+              {
+                "who": "Deirdre Nakamura",
+                "time": "9:42 A.M.",
+                "text": "Morning, Tomas. I'm at the convention centre. Our booth panels arrived, but the crate with the display monitors isn't here. Have you heard anything from the shipper?"
+              },
+              {
+                "who": "Tomas Reyes",
+                "time": "9:47 A.M.",
+                "text": "That's not good. Let me check the tracking. The panels and the monitors went out on separate trucks, so the second one may simply be running behind."
+              },
+              {
+                "who": "Tomas Reyes",
+                "time": "9:58 A.M.",
+                "text": "Tracking says the second crate left the warehouse at 6:10 this morning and is out for delivery. There's no estimated arrival time, though."
+              },
+              {
+                "who": "Deirdre Nakamura",
+                "time": "10:03 A.M.",
+                "text": "Setup access ends at 4:00 P.M. and the hall opens to visitors at nine tomorrow. I'd rather not gamble on this."
+              },
+              {
+                "who": "Tomas Reyes",
+                "time": "10:09 A.M.",
+                "text": "Understood. Halvorsen Rentals is three streets away and carries the same 55-inch screens. Want me to reserve two of them?"
+              },
+              {
+                "who": "Deirdre Nakamura",
+                "time": "10:15 A.M.",
+                "text": "Let's not put all our eggs in one basket. Book them, and if our crate turns up before noon I'll cancel the reservation."
+              },
+              {
+                "who": "Tomas Reyes",
+                "time": "10:21 A.M.",
+                "text": "Done. We can pick them up any time after 1:00 P.M., and they'll take them back at no charge if we return them unused today."
+              },
+              {
+                "who": "Deirdre Nakamura",
+                "time": "10:26 A.M.",
+                "text": "Perfect. I'll keep unpacking the panels and let you know the moment the driver shows up."
+              }
+            ]
+          }
+        ]
       }
     ],
     "questions": [

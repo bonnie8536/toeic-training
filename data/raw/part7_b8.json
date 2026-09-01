@@ -66,7 +66,139 @@
       {
         "type": "invoice",
         "label": "Invoice",
-        "content": "GREENFIELD OFFICE SUPPLY\n118 Harbor Road, Tacoma, WA 98402\nPhone (253) 555-0147 | orders@greenfieldsupply.com\n\nINVOICE NO.: GF-40219\nInvoice date: May 8\nOrder date: May 2\nPurchase order: PO-7734\n\nBILL TO:\nNadia Ferreira, Office Coordinator\nHalloran Design Group\n620 Wicker Street, Suite 300\nTacoma, WA 98405\n\nITEM      DESCRIPTION                    QTY    UNIT PRICE    AMOUNT\nA-220     Desk chair, grey fabric          6      $148.00     $888.00\nB-115     Filing cabinet, three drawer     2      $210.00     $420.00\nC-303     Whiteboard, 120 cm               4       $62.00     $248.00\nD-009     Marker set, eight colors        10        $9.50      $95.00\n\n                                       Subtotal              $1,651.00\n                                       Volume discount (5%)     -$82.55\n                                       Delivery                   $0.00\n                                       TOTAL DUE             $1,568.45\n\nNOTES\nA volume discount of 5 percent is applied to any order of twenty items or more. Delivery is free on all orders with a subtotal above $1,500. Payment is due within 30 days of the invoice date.\n\nThe whiteboards were not in stock on May 2. They were sent from our Seattle warehouse on May 7 and should arrive by May 12. All other items on this invoice were delivered on May 5.\n\nDamaged or unwanted goods may be returned within 14 days of delivery. Please call our service desk for a return number before you send anything back. Goods that arrive without a return number cannot be credited."
+        "blocks": [
+          {
+            "t": "h",
+            "text": "GREENFIELD OFFICE SUPPLY"
+          },
+          {
+            "t": "sub",
+            "text": "118 Harbor Road, Tacoma, WA 98402"
+          },
+          {
+            "t": "sub",
+            "text": "Phone (253) 555-0147 | orders@greenfieldsupply.com"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "INVOICE NO.",
+                "GF-40219"
+              ],
+              [
+                "Invoice date",
+                "May 8"
+              ],
+              [
+                "Order date",
+                "May 2"
+              ],
+              [
+                "Purchase order",
+                "PO-7734"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "BILL TO:"
+          },
+          {
+            "t": "p",
+            "text": "Nadia Ferreira, Office Coordinator"
+          },
+          {
+            "t": "p",
+            "text": "Halloran Design Group"
+          },
+          {
+            "t": "p",
+            "text": "620 Wicker Street, Suite 300"
+          },
+          {
+            "t": "p",
+            "text": "Tacoma, WA 98405"
+          },
+          {
+            "t": "table",
+            "header": true,
+            "rows": [
+              [
+                "ITEM",
+                "DESCRIPTION",
+                "QTY",
+                "UNIT PRICE",
+                "AMOUNT"
+              ],
+              [
+                "A-220",
+                "Desk chair, grey fabric",
+                "6",
+                "$148.00",
+                "$888.00"
+              ],
+              [
+                "B-115",
+                "Filing cabinet, three drawer",
+                "2",
+                "$210.00",
+                "$420.00"
+              ],
+              [
+                "C-303",
+                "Whiteboard, 120 cm",
+                "4",
+                "$62.00",
+                "$248.00"
+              ],
+              [
+                "D-009",
+                "Marker set, eight colors",
+                "10",
+                "$9.50",
+                "$95.00"
+              ]
+            ]
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "Subtotal",
+                "$1,651.00"
+              ],
+              [
+                "Volume discount (5%)",
+                "-$82.55"
+              ],
+              [
+                "Delivery",
+                "$0.00"
+              ],
+              [
+                "TOTAL DUE",
+                "$1,568.45"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "NOTES"
+          },
+          {
+            "t": "p",
+            "text": "A volume discount of 5 percent is applied to any order of twenty items or more. Delivery is free on all orders with a subtotal above $1,500. Payment is due within 30 days of the invoice date."
+          },
+          {
+            "t": "p",
+            "text": "The whiteboards were not in stock on May 2. They were sent from our Seattle warehouse on May 7 and should arrive by May 12. All other items on this invoice were delivered on May 5."
+          },
+          {
+            "t": "p",
+            "text": "Damaged or unwanted goods may be returned within 14 days of delivery. Please call our service desk for a return number before you send anything back. Goods that arrive without a return number cannot be credited."
+          }
+        ]
       }
     ],
     "questions": [
@@ -126,7 +258,63 @@
       {
         "type": "text_message",
         "label": "Text Message Chain",
-        "content": "Priya Raman [9:12 A.M.]\nGood morning. The van with our trade show booth just pulled up at the loading dock, but the driver says he only has four crates. We sent five.\n\nOwen Castellano [9:15 A.M.]\nFour? Can you read me the numbers on the crates?\n\nPriya Raman [9:19 A.M.]\nCrates 1, 2, 3 and 5. Number 4 is the one missing, and that is the crate with the banner stand, the two display tables, and the carpet.\n\nOwen Castellano [9:21 A.M.]\nThat is the whole front of the booth. I will call the warehouse right now.\n\nMarisol Duffy [9:26 A.M.]\nI am already at the hall with the lighting team. Setup closes at 6:00 P.M. and the safety inspection is tomorrow at 8:00 A.M. We can put up the shelves and the screens in the meantime.\n\nOwen Castellano [9:38 A.M.]\nGood news. The warehouse found crate 4 on the wrong shelf. They can put it on the afternoon van, which should reach the hall around 4:30.\n\nMarisol Duffy [9:40 A.M.]\nThat leaves us ninety minutes. Tight, but fine. Priya, could you ask the hall office whether we may stay past six if we need to?\n\nPriya Raman [9:42 A.M.]\nI will walk over and ask. I am also going to print a fresh packing list so this does not happen again.\n\nOwen Castellano [9:44 A.M.]\nThank you. One more thing: the display tables come apart for shipping, and the tools for putting them back together are in crate 2. Do not let the driver take crate 2 away.\n\nPriya Raman [9:45 A.M.]\nNo risk of that. He left ten minutes ago and everything he brought is inside."
+        "blocks": [
+          {
+            "t": "chat",
+            "msgs": [
+              {
+                "who": "Priya Raman",
+                "time": "9:12 A.M.",
+                "text": "Good morning. The van with our trade show booth just pulled up at the loading dock, but the driver says he only has four crates. We sent five."
+              },
+              {
+                "who": "Owen Castellano",
+                "time": "9:15 A.M.",
+                "text": "Four? Can you read me the numbers on the crates?"
+              },
+              {
+                "who": "Priya Raman",
+                "time": "9:19 A.M.",
+                "text": "Crates 1, 2, 3 and 5. Number 4 is the one missing, and that is the crate with the banner stand, the two display tables, and the carpet."
+              },
+              {
+                "who": "Owen Castellano",
+                "time": "9:21 A.M.",
+                "text": "That is the whole front of the booth. I will call the warehouse right now."
+              },
+              {
+                "who": "Marisol Duffy",
+                "time": "9:26 A.M.",
+                "text": "I am already at the hall with the lighting team. Setup closes at 6:00 P.M. and the safety inspection is tomorrow at 8:00 A.M. We can put up the shelves and the screens in the meantime."
+              },
+              {
+                "who": "Owen Castellano",
+                "time": "9:38 A.M.",
+                "text": "Good news. The warehouse found crate 4 on the wrong shelf. They can put it on the afternoon van, which should reach the hall around 4:30."
+              },
+              {
+                "who": "Marisol Duffy",
+                "time": "9:40 A.M.",
+                "text": "That leaves us ninety minutes. Tight, but fine. Priya, could you ask the hall office whether we may stay past six if we need to?"
+              },
+              {
+                "who": "Priya Raman",
+                "time": "9:42 A.M.",
+                "text": "I will walk over and ask. I am also going to print a fresh packing list so this does not happen again."
+              },
+              {
+                "who": "Owen Castellano",
+                "time": "9:44 A.M.",
+                "text": "Thank you. One more thing: the display tables come apart for shipping, and the tools for putting them back together are in crate 2. Do not let the driver take crate 2 away."
+              },
+              {
+                "who": "Priya Raman",
+                "time": "9:45 A.M.",
+                "text": "No risk of that. He left ten minutes ago and everything he brought is inside."
+              }
+            ]
+          }
+        ]
       }
     ],
     "questions": [

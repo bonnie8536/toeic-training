@@ -1,0 +1,282 @@
+[
+  {
+    "id": "d-61",
+    "level": "初級",
+    "text": "Their new office is just over there.",
+    "zh": "他們的新辦公室就在那邊。",
+    "note": "their 與 there 完全同音，只能靠句子位置判斷寫哪一個。"
+  },
+  {
+    "id": "d-62",
+    "level": "初級",
+    "text": "I can't hear you very well.",
+    "zh": "我聽不太清楚你講話。",
+    "note": "hear 與 here 同音，can't 的 t 幾乎不發音，容易誤聽成 can。"
+  },
+  {
+    "id": "d-63",
+    "level": "初級",
+    "text": "The price went up by fifteen percent.",
+    "zh": "價格漲了百分之十五。",
+    "note": "fifteen 重音在後、字尾多一個 n，fifty 重音在前，是最經典的數字陷阱。"
+  },
+  {
+    "id": "d-64",
+    "level": "初級",
+    "text": "She works at a travel agency.",
+    "zh": "她在旅行社上班。",
+    "note": "works at 連音，第三人稱 s 被黏進下一個字裡。"
+  },
+  {
+    "id": "d-65",
+    "level": "初級",
+    "text": "We need two more copies of this.",
+    "zh": "這個我們還需要兩份影本。",
+    "note": "two 與 too 同音，copies of 又連成一串，of 弱讀成 /əv/。"
+  },
+  {
+    "id": "d-66",
+    "level": "初級",
+    "text": "I'll wait for you at home.",
+    "zh": "我在家等你。",
+    "note": "for 弱讀成 /fər/，短到像不存在；wait 與 weight 同音。"
+  },
+  {
+    "id": "d-67",
+    "level": "初級",
+    "text": "Can you plug it in for me?",
+    "zh": "你可以幫我把插頭插上嗎？",
+    "note": "can 弱讀成 /kən/，plug it in 連成 /plʌ.gɪ.tɪn/。"
+  },
+  {
+    "id": "d-68",
+    "level": "初級",
+    "text": "The library opens at eight thirty.",
+    "zh": "圖書館八點半開門。",
+    "note": "opens at 連音成 /oʊ.pən.zæt/，thirty 的 t 在美式發音變成閃音，聽起來像 /ˈθɜr.di/。"
+  },
+  {
+    "id": "d-69",
+    "level": "初級",
+    "text": "She applied for the sales position.",
+    "zh": "她應徵了那個業務職位。",
+    "note": "applied for 連成一串，for 弱讀後幾乎聽不見。"
+  },
+  {
+    "id": "d-70",
+    "level": "初級",
+    "text": "Do you know the way back home?",
+    "zh": "你知道回家的路嗎？",
+    "note": "know 與 no 同音，Do you 口語常黏成 /dʒu/。"
+  },
+  {
+    "id": "d-71",
+    "level": "初級",
+    "text": "He's going to call them later.",
+    "zh": "他等一下會打給他們。",
+    "note": "going to 自然唸成 gonna，them 弱讀成 /əm/。"
+  },
+  {
+    "id": "d-72",
+    "level": "初級",
+    "text": "The tickets cost thirty dollars each.",
+    "zh": "門票每張三十元。",
+    "note": "tickets 的 /ts/ 和 dollars 的複數 s 都容易漏，cost thirty 兩字相撞，中間的 t 幾乎消失。"
+  },
+  {
+    "id": "d-73",
+    "level": "初級",
+    "text": "Please write down his email address.",
+    "zh": "請把他的電子郵件地址寫下來。",
+    "note": "write 與 right 同音，his 的 h 常脫落成 /ɪz/。"
+  },
+  {
+    "id": "d-74",
+    "level": "初級",
+    "text": "I'd like a cup of hot tea.",
+    "zh": "我想要一杯熱茶。",
+    "note": "cup of 連成 /kʌpə/，of 弱讀到幾乎消失。"
+  },
+  {
+    "id": "d-75",
+    "level": "中級",
+    "text": "Our two main suppliers raised prices again last quarter.",
+    "zh": "我們兩家主要供應商上一季又漲價了。",
+    "note": "suppliers 與 prices 連續兩個複數 s，語速一快就全糊在一起。"
+  },
+  {
+    "id": "d-76",
+    "level": "中級",
+    "text": "The weather report says it'll clear up tonight.",
+    "zh": "氣象報告說今晚會放晴。",
+    "note": "weather 與 whether 同音，it'll 短到聽起來像 it。"
+  },
+  {
+    "id": "d-77",
+    "level": "中級",
+    "text": "He's used to working on a tight schedule.",
+    "zh": "他習慣在時間很趕的情況下工作。",
+    "note": "used to 唸成 /juːstə/，d 音完全消失。"
+  },
+  {
+    "id": "d-78",
+    "level": "中級",
+    "text": "We ought to leave before the traffic gets bad.",
+    "zh": "我們應該在開始塞車前出發。",
+    "note": "ought to 唸成 /ɔːtə/，兩個 t 併成一個。"
+  },
+  {
+    "id": "d-79",
+    "level": "中級",
+    "text": "Most of our clients pay the invoice within thirty days.",
+    "zh": "我們大部分的客戶三十天內就會付款。",
+    "note": "Most of 連成 /moʊs.təv/，clients 的複數 s 藏在連音裡。"
+  },
+  {
+    "id": "d-80",
+    "level": "中級",
+    "text": "There are four seats left for the show.",
+    "zh": "這場表演還剩四個位子。",
+    "note": "four 與 for 同音，同一句又有 There，是同音字最密集的一句。"
+  },
+  {
+    "id": "d-81",
+    "level": "中級",
+    "text": "The boxes in the storage room haven't been opened yet.",
+    "zh": "儲藏室裡的箱子還沒打開。",
+    "note": "boxes 的複數唸 /ɪz/ 會多出一個音節，最容易整個漏掉。"
+  },
+  {
+    "id": "d-82",
+    "level": "中級",
+    "text": "The updated manual was printed and mailed last week.",
+    "zh": "更新版的手冊上週印好寄出了。",
+    "note": "三個 -ed 唸法不同：updated、printed 多一個音節 /ɪd/，mailed 只有 /d/，and 又弱讀成 /ən/。"
+  },
+  {
+    "id": "d-83",
+    "level": "中級",
+    "text": "Please make sure everyone signs the attendance sheet.",
+    "zh": "請確認每個人都簽了簽到表。",
+    "note": "signs the 的 /z/ 撞上 /ð/，第三人稱 s 幾乎聽不出來，最容易漏寫。"
+  },
+  {
+    "id": "d-84",
+    "level": "中級",
+    "text": "My sister and I are meeting for dinner.",
+    "zh": "我和我姊姊要一起吃晚餐。",
+    "note": "and 弱讀成 /ən/，are 也只剩下 /ər/ 一聲。"
+  },
+  {
+    "id": "d-85",
+    "level": "中級",
+    "text": "The new hires start on the first of March.",
+    "zh": "新進人員三月一號報到。",
+    "note": "first of 連成 /fɜːr.stəv/，hires 的複數 s 也容易漏。"
+  },
+  {
+    "id": "d-86",
+    "level": "中級",
+    "text": "This coat was on sale for half price.",
+    "zh": "這件外套當時特價打五折。",
+    "note": "sale 與 sail 同音，on sale for 整串連成一氣。"
+  },
+  {
+    "id": "d-87",
+    "level": "中級",
+    "text": "Sorry, I didn't quite catch what you just said.",
+    "zh": "抱歉，我沒聽清楚你剛剛說什麼。",
+    "note": "didn't 的 t 被吞掉，what you 黏成 /wɑtʃə/。"
+  },
+  {
+    "id": "d-88",
+    "level": "中級",
+    "text": "It's been raining on and off all week.",
+    "zh": "這禮拜斷斷續續一直在下雨。",
+    "note": "on and off 連成 /ɑ.nə.nɔf/，week 與 weak 同音。"
+  },
+  {
+    "id": "d-89",
+    "level": "進階",
+    "text": "Our team won the bid for the airport project last spring.",
+    "zh": "我們團隊去年春天標到了機場那個案子。",
+    "note": "won 與 one 同音，bid for 連音後 for 幾乎聽不到。"
+  },
+  {
+    "id": "d-90",
+    "level": "進階",
+    "text": "I'm not sure whether the weather will stay nice this weekend.",
+    "zh": "我不確定這個週末天氣會不會一直這麼好。",
+    "note": "whether 與 weather 出現在同一句，發音一模一樣，只能靠文法分辨。"
+  },
+  {
+    "id": "d-91",
+    "level": "進階",
+    "text": "Please remind him that his badge has to be renewed this month.",
+    "zh": "請提醒他，他的識別證這個月要換新的。",
+    "note": "him 與 his 的 h 都會脫落成 /ɪm/、/ɪz/，has to 唸成 /hæstə/。"
+  },
+  {
+    "id": "d-92",
+    "level": "進階",
+    "text": "I'm trying to cut down on coffee, but it isn't easy.",
+    "zh": "我想少喝點咖啡，但沒那麼容易。",
+    "note": "trying to 唸成 /traɪnə/，cut down on 三個字連成一串。"
+  },
+  {
+    "id": "d-93",
+    "level": "進階",
+    "text": "There were thirteen applicants, but only four of them showed up.",
+    "zh": "有十三位應徵者，但只有四位到場。",
+    "note": "thirteen 常被聽成 thirty，of them 弱讀成 /ə.vəm/。"
+  },
+  {
+    "id": "d-94",
+    "level": "進階",
+    "text": "The pharmacy on the corner stays open until eleven every night.",
+    "zh": "轉角那家藥局每天晚上開到十一點。",
+    "note": "stays open 連音把第三人稱 s 黏進 open，until 也弱讀成 /əntɪl/。"
+  },
+  {
+    "id": "d-95",
+    "level": "進階",
+    "text": "The figures in their report don't match the ones we sent them.",
+    "zh": "他們報告裡的數字跟我們寄過去的對不起來。",
+    "note": "their 與 there 同音，them 弱讀成 /əm/，don't 的 t 被吞掉。"
+  },
+  {
+    "id": "d-96",
+    "level": "進階",
+    "text": "It took us almost an hour to find a parking space downtown.",
+    "zh": "我們花了快一小時才在市區找到停車位。",
+    "note": "hour 的 h 不發音，an hour 黏成 /ə.naʊər/，took us 也連成 /tʊkəs/。"
+  },
+  {
+    "id": "d-97",
+    "level": "進階",
+    "text": "He can't attend the meeting, but his assistant can take notes.",
+    "zh": "他不能出席會議，但他的助理可以做會議紀錄。",
+    "note": "can't 的 t 常只剩喉塞音，要靠母音分辨：can't 是飽滿的 /æ/，後面的 can 弱讀成 /kən/。"
+  },
+  {
+    "id": "d-98",
+    "level": "進階",
+    "text": "The recipe calls for two cups of flour and one egg.",
+    "zh": "這個食譜要用兩杯麵粉和一顆蛋。",
+    "note": "flour 與 flower 同音，calls for、cups of 都連音，and 弱讀成 /ən/。"
+  },
+  {
+    "id": "d-99",
+    "level": "進階",
+    "text": "The warehouse ran out of stock before the promotion even started.",
+    "zh": "促銷活動還沒開始，倉庫的庫存就沒了。",
+    "note": "ran out of 連成 /ræ.naʊ.dəv/，of 弱讀到幾乎消失。"
+  },
+  {
+    "id": "d-100",
+    "level": "進階",
+    "text": "The hotel charged us for two nights instead of just one.",
+    "zh": "飯店跟我們收了兩晚的錢，而不是只收一晚。",
+    "note": "charged us 連音，for 與 of 都弱讀，two 和 one 兩個數字要聽準。"
+  }
+]

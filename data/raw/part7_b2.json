@@ -126,7 +126,62 @@
       {
         "type": "schedule",
         "label": "",
-        "content": "BRIDGEWATER LOGISTICS\nSite Visit Itinerary\nVisitor: Ms. Amara Osei, Regional Auditor\nTuesday, September 9\n\n8:15 A.M. Arrival at the Northgate Distribution Center. Ms. Osei will be met at the visitor entrance by Facilities Manager Tomas Rivera, who will issue her a security badge for the day.\n\n8:30-9:45 A.M. Walk-through of the sorting floor and the cold storage wing. Protective footwear will be provided. Photography is not permitted anywhere in cold storage.\n\n10:00-11:15 A.M. Review of second-quarter shipping records with Lena Kowalski, Records Supervisor (Room 2C).\n\n11:30 A.M.-12:30 P.M. Lunch with the senior management team in the staff cafeteria.\n\n12:45-2:00 P.M. Interviews with four shift leaders. Each interview will last fifteen minutes; the remaining time is reserved for follow-up questions.\n\n2:15-3:00 P.M. Closing discussion with Branch Director Neil Ashford. Ms. Osei will present her preliminary observations, and a written report will follow within three weeks.\n\nNote: The loading bay will be operating at full capacity on the day of the visit. Ms. Osei is asked to park in Lot C rather than the visitor lot, which will be occupied by delivery vehicles."
+        "blocks": [
+          {
+            "t": "h",
+            "text": "BRIDGEWATER LOGISTICS"
+          },
+          {
+            "t": "sub",
+            "text": "Site Visit Itinerary"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "Visitor",
+                "Ms. Amara Osei, Regional Auditor"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "Tuesday, September 9"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "8:15 A.M.",
+                "Arrival at the Northgate Distribution Center. Ms. Osei will be met at the visitor entrance by Facilities Manager Tomas Rivera, who will issue her a security badge for the day."
+              ],
+              [
+                "8:30-9:45 A.M.",
+                "Walk-through of the sorting floor and the cold storage wing. Protective footwear will be provided. Photography is not permitted anywhere in cold storage."
+              ],
+              [
+                "10:00-11:15 A.M.",
+                "Review of second-quarter shipping records with Lena Kowalski, Records Supervisor (Room 2C)."
+              ],
+              [
+                "11:30 A.M.-12:30 P.M.",
+                "Lunch with the senior management team in the staff cafeteria."
+              ],
+              [
+                "12:45-2:00 P.M.",
+                "Interviews with four shift leaders. Each interview will last fifteen minutes; the remaining time is reserved for follow-up questions."
+              ],
+              [
+                "2:15-3:00 P.M.",
+                "Closing discussion with Branch Director Neil Ashford. Ms. Osei will present her preliminary observations, and a written report will follow within three weeks."
+              ]
+            ]
+          },
+          {
+            "t": "note",
+            "text": "Note: The loading bay will be operating at full capacity on the day of the visit. Ms. Osei is asked to park in Lot C rather than the visitor lot, which will be occupied by delivery vehicles."
+          }
+        ]
       }
     ],
     "questions": [
@@ -246,7 +301,63 @@
       {
         "type": "text message chain",
         "label": "",
-        "content": "Kirsten Dahl (9:52 A.M.)\nMorning, Owen. I'm at the Fairmount Convention Center. Our booth panels arrived fine, but the crate with the display monitors isn't here.\n\nOwen Beckley (9:55 A.M.)\nThat is not what I wanted to hear. The courier confirmed delivery yesterday at 4 P.M.\n\nKirsten Dahl (9:58 A.M.)\nThe loading dock supervisor says three crates came in under our company name. I have only been able to find two.\n\nOwen Beckley (10:02 A.M.)\nCan you check the holding area on level B? They sometimes keep oversized items down there.\n\nKirsten Dahl (10:11 A.M.)\nFound it. It was labeled with the wrong booth number, 214 instead of 241.\n\nOwen Beckley (10:13 A.M.)\nThat is a relief. Can you get it upstairs on your own?\n\nKirsten Dahl (10:15 A.M.)\nNot a chance. It weighs about 80 kilos.\n\nOwen Beckley (10:18 A.M.)\nUnderstood. I will call the center's operations desk and arrange for a cart and two staff members. Give me twenty minutes.\n\nKirsten Dahl (10:20 A.M.)\nThanks. In the meantime I will start assembling the shelving. Doors open at 1 P.M., so we still have time.\n\nOwen Beckley (10:22 A.M.)\nGood. And please ask the supervisor to correct the label before we ship everything back on Sunday."
+        "blocks": [
+          {
+            "t": "chat",
+            "msgs": [
+              {
+                "who": "Kirsten Dahl",
+                "time": "9:52 A.M.",
+                "text": "Morning, Owen. I'm at the Fairmount Convention Center. Our booth panels arrived fine, but the crate with the display monitors isn't here."
+              },
+              {
+                "who": "Owen Beckley",
+                "time": "9:55 A.M.",
+                "text": "That is not what I wanted to hear. The courier confirmed delivery yesterday at 4 P.M."
+              },
+              {
+                "who": "Kirsten Dahl",
+                "time": "9:58 A.M.",
+                "text": "The loading dock supervisor says three crates came in under our company name. I have only been able to find two."
+              },
+              {
+                "who": "Owen Beckley",
+                "time": "10:02 A.M.",
+                "text": "Can you check the holding area on level B? They sometimes keep oversized items down there."
+              },
+              {
+                "who": "Kirsten Dahl",
+                "time": "10:11 A.M.",
+                "text": "Found it. It was labeled with the wrong booth number, 214 instead of 241."
+              },
+              {
+                "who": "Owen Beckley",
+                "time": "10:13 A.M.",
+                "text": "That is a relief. Can you get it upstairs on your own?"
+              },
+              {
+                "who": "Kirsten Dahl",
+                "time": "10:15 A.M.",
+                "text": "Not a chance. It weighs about 80 kilos."
+              },
+              {
+                "who": "Owen Beckley",
+                "time": "10:18 A.M.",
+                "text": "Understood. I will call the center's operations desk and arrange for a cart and two staff members. Give me twenty minutes."
+              },
+              {
+                "who": "Kirsten Dahl",
+                "time": "10:20 A.M.",
+                "text": "Thanks. In the meantime I will start assembling the shelving. Doors open at 1 P.M., so we still have time."
+              },
+              {
+                "who": "Owen Beckley",
+                "time": "10:22 A.M.",
+                "text": "Good. And please ask the supervisor to correct the label before we ship everything back on Sunday."
+              }
+            ]
+          }
+        ]
       }
     ],
     "questions": [

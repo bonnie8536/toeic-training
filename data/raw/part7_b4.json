@@ -66,7 +66,58 @@
       {
         "type": "text message chain",
         "label": "",
-        "content": "Priya Raghavan (9:42 A.M.)\nMorning, both. I've just reached the convention center. The booth panels are here, but the crate with the display screens hasn't turned up.\n\nDominic Hale (9:47 A.M.)\nThat's not good. The carrier promised everything would be unloaded by eight.\n\nPriya Raghavan (9:51 A.M.)\nI spoke to the loading dock supervisor. He says a second truck is still on the road and should reach us around eleven.\n\nMarta Oyelaran (9:58 A.M.)\nI can rearrange my morning if that helps. I'm not due at the client lunch until one.\n\nDominic Hale (10:03 A.M.)\nMarta, could you go straight to the hall instead of the office? Priya shouldn't be assembling the frame on her own.\n\nMarta Oyelaran (10:07 A.M.)\nOn my way. Priya, I have a box of the printed brochures in my car — shall I bring those in as well?\n\nPriya Raghavan (10:11 A.M.)\nYes, please. One box will be plenty for the first day.\n\nDominic Hale (10:15 A.M.)\nI'll chase the carrier again. If those screens aren't here by noon, we'll have to think about renting.\n\nMarta Oyelaran (10:19 A.M.)\nLet's hope it doesn't come to that. See you both shortly."
+        "blocks": [
+          {
+            "t": "chat",
+            "msgs": [
+              {
+                "who": "Priya Raghavan",
+                "time": "9:42 A.M.",
+                "text": "Morning, both. I've just reached the convention center. The booth panels are here, but the crate with the display screens hasn't turned up."
+              },
+              {
+                "who": "Dominic Hale",
+                "time": "9:47 A.M.",
+                "text": "That's not good. The carrier promised everything would be unloaded by eight."
+              },
+              {
+                "who": "Priya Raghavan",
+                "time": "9:51 A.M.",
+                "text": "I spoke to the loading dock supervisor. He says a second truck is still on the road and should reach us around eleven."
+              },
+              {
+                "who": "Marta Oyelaran",
+                "time": "9:58 A.M.",
+                "text": "I can rearrange my morning if that helps. I'm not due at the client lunch until one."
+              },
+              {
+                "who": "Dominic Hale",
+                "time": "10:03 A.M.",
+                "text": "Marta, could you go straight to the hall instead of the office? Priya shouldn't be assembling the frame on her own."
+              },
+              {
+                "who": "Marta Oyelaran",
+                "time": "10:07 A.M.",
+                "text": "On my way. Priya, I have a box of the printed brochures in my car — shall I bring those in as well?"
+              },
+              {
+                "who": "Priya Raghavan",
+                "time": "10:11 A.M.",
+                "text": "Yes, please. One box will be plenty for the first day."
+              },
+              {
+                "who": "Dominic Hale",
+                "time": "10:15 A.M.",
+                "text": "I'll chase the carrier again. If those screens aren't here by noon, we'll have to think about renting."
+              },
+              {
+                "who": "Marta Oyelaran",
+                "time": "10:19 A.M.",
+                "text": "Let's hope it doesn't come to that. See you both shortly."
+              }
+            ]
+          }
+        ]
       }
     ],
     "questions": [
@@ -268,7 +319,104 @@
       {
         "type": "order form",
         "label": "Order Form",
-        "content": "THORNBURY WORKWEAR — ORDER FORM\n\nCustomer: Ridgemont Coffee House\nContact: Julian Mbeki, Operations Manager\nAddress: 208 Pinecrest Way, Denton\nDate of order: 12 April\nPromotion code: SPRING14\n\nItem / Code / Quantity / Unit price / Line total\nClassic apron / A-12 / 14 / $18 / $252\nService shirt, unisex / S-07 / 12 / $29 / $348\nNon-slip work shoes / F-55 / 4 / $72 / $288\n\nMerchandise subtotal: $888.00\nVolume discount (10%): -$88.80\nLogo printing, 12 garments at $6: $72.00\nPrinting set-up fee: waived\nDelivery: free\nTOTAL DUE: $871.20\n\nCustomer notes: Please print our logo on the service shirts only — the aprons should be left plain. We would like delivery before 24 April, as our second location opens that weekend."
+        "blocks": [
+          {
+            "t": "h",
+            "text": "THORNBURY WORKWEAR — ORDER FORM"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "Customer",
+                "Ridgemont Coffee House"
+              ],
+              [
+                "Contact",
+                "Julian Mbeki, Operations Manager"
+              ],
+              [
+                "Address",
+                "208 Pinecrest Way, Denton"
+              ],
+              [
+                "Date of order",
+                "12 April"
+              ],
+              [
+                "Promotion code",
+                "SPRING14"
+              ]
+            ]
+          },
+          {
+            "t": "table",
+            "header": true,
+            "rows": [
+              [
+                "Item",
+                "Code",
+                "Quantity",
+                "Unit price",
+                "Line total"
+              ],
+              [
+                "Classic apron",
+                "A-12",
+                "14",
+                "$18",
+                "$252"
+              ],
+              [
+                "Service shirt, unisex",
+                "S-07",
+                "12",
+                "$29",
+                "$348"
+              ],
+              [
+                "Non-slip work shoes",
+                "F-55",
+                "4",
+                "$72",
+                "$288"
+              ]
+            ]
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "Merchandise subtotal",
+                "$888.00"
+              ],
+              [
+                "Volume discount (10%)",
+                "-$88.80"
+              ],
+              [
+                "Logo printing, 12 garments at $6",
+                "$72.00"
+              ],
+              [
+                "Printing set-up fee",
+                "waived"
+              ],
+              [
+                "Delivery",
+                "free"
+              ],
+              [
+                "TOTAL DUE",
+                "$871.20"
+              ]
+            ]
+          },
+          {
+            "t": "note",
+            "text": "Customer notes: Please print our logo on the service shirts only — the aprons should be left plain. We would like delivery before 24 April, as our second location opens that weekend."
+          }
+        ]
       }
     ],
     "questions": [

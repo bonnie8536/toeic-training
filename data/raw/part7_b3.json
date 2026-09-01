@@ -246,7 +246,130 @@
       {
         "type": "invoice",
         "label": "",
-        "content": "GRANTHAM & PELL EQUIPMENT SERVICES\n17 Rowan Industrial Park, Dunmore, PA 18512\n\nINVOICE #GP-40218\nInvoice date: June 12\nPayment due: July 12\n\nBILL TO:\nMs. Yuki Ashworth, Facilities Coordinator\nProspect Ridge Dental Group\n88 Larkspur Boulevard, Dunmore, PA 18510\n\nService date: June 9        Technician: R. Okonjo\n\nDESCRIPTION                                QTY      AMOUNT\nAnnual inspection, dental air compressor    1      $180.00\nReplacement air filter (part #AC-77)        2       $64.00\nLabor, compressor belt replacement       1.5 hr    $135.00\nEmergency service surcharge                 1       $95.00\n                                     Subtotal      $474.00\n                                     Tax (6%)       $28.44\n                                     TOTAL         $502.44\n\nNOTES\nThe emergency surcharge applies because this visit was requested outside the scheduled maintenance window. Clients enrolled in our Silver or Gold service plans are exempt from the surcharge; your practice is currently enrolled in the Basic plan.\n\nThe compressor belt installed on June 9 carries a twelve-month parts-and-labor warranty. Air filters are treated as supplies and are not covered by any warranty.\n\nDuring the inspection, the technician noted rust on the water separator. We recommend replacing this part within six months. A written quotation can be prepared at no cost.\n\nPayment may be made by check or bank transfer. A late fee of 1.5 percent of the outstanding balance is added each month after the due date. Questions about this invoice should be directed to billing@granthampell.com."
+        "blocks": [
+          {
+            "t": "h",
+            "text": "GRANTHAM & PELL EQUIPMENT SERVICES"
+          },
+          {
+            "t": "sub",
+            "text": "17 Rowan Industrial Park, Dunmore, PA 18512"
+          },
+          {
+            "t": "sub",
+            "text": "INVOICE #GP-40218"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "Invoice date",
+                "June 12"
+              ],
+              [
+                "Payment due",
+                "July 12"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "BILL TO:"
+          },
+          {
+            "t": "p",
+            "text": "Ms. Yuki Ashworth, Facilities Coordinator"
+          },
+          {
+            "t": "p",
+            "text": "Prospect Ridge Dental Group"
+          },
+          {
+            "t": "p",
+            "text": "88 Larkspur Boulevard, Dunmore, PA 18510"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "Service date",
+                "June 9"
+              ],
+              [
+                "Technician",
+                "R. Okonjo"
+              ]
+            ]
+          },
+          {
+            "t": "table",
+            "header": true,
+            "rows": [
+              [
+                "DESCRIPTION",
+                "QTY",
+                "AMOUNT"
+              ],
+              [
+                "Annual inspection, dental air compressor",
+                "1",
+                "$180.00"
+              ],
+              [
+                "Replacement air filter (part #AC-77)",
+                "2",
+                "$64.00"
+              ],
+              [
+                "Labor, compressor belt replacement",
+                "1.5 hr",
+                "$135.00"
+              ],
+              [
+                "Emergency service surcharge",
+                "1",
+                "$95.00"
+              ]
+            ]
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "Subtotal",
+                "$474.00"
+              ],
+              [
+                "Tax (6%)",
+                "$28.44"
+              ],
+              [
+                "TOTAL",
+                "$502.44"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "NOTES"
+          },
+          {
+            "t": "p",
+            "text": "The emergency surcharge applies because this visit was requested outside the scheduled maintenance window. Clients enrolled in our Silver or Gold service plans are exempt from the surcharge; your practice is currently enrolled in the Basic plan."
+          },
+          {
+            "t": "p",
+            "text": "The compressor belt installed on June 9 carries a twelve-month parts-and-labor warranty. Air filters are treated as supplies and are not covered by any warranty."
+          },
+          {
+            "t": "p",
+            "text": "During the inspection, the technician noted rust on the water separator. We recommend replacing this part within six months. A written quotation can be prepared at no cost."
+          },
+          {
+            "t": "p",
+            "text": "Payment may be made by check or bank transfer. A late fee of 1.5 percent of the outstanding balance is added each month after the due date. Questions about this invoice should be directed to billing@granthampell.com."
+          }
+        ]
       }
     ],
     "questions": [

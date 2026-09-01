@@ -187,7 +187,53 @@ TOEIC.part7 = [
    {
     "type": "text message chain",
     "label": "",
-    "content": "Deirdre Nakamura (9:42 A.M.)\nMorning, Tomas. I'm at the convention centre. Our booth panels arrived, but the crate with the display monitors isn't here. Have you heard anything from the shipper?\n\nTomas Reyes (9:47 A.M.)\nThat's not good. Let me check the tracking. The panels and the monitors went out on separate trucks, so the second one may simply be running behind.\n\nTomas Reyes (9:58 A.M.)\nTracking says the second crate left the warehouse at 6:10 this morning and is out for delivery. There's no estimated arrival time, though.\n\nDeirdre Nakamura (10:03 A.M.)\nSetup access ends at 4:00 P.M. and the hall opens to visitors at nine tomorrow. I'd rather not gamble on this.\n\nTomas Reyes (10:09 A.M.)\nUnderstood. Halvorsen Rentals is three streets away and carries the same 55-inch screens. Want me to reserve two of them?\n\nDeirdre Nakamura (10:15 A.M.)\nLet's not put all our eggs in one basket. Book them, and if our crate turns up before noon I'll cancel the reservation.\n\nTomas Reyes (10:21 A.M.)\nDone. We can pick them up any time after 1:00 P.M., and they'll take them back at no charge if we return them unused today.\n\nDeirdre Nakamura (10:26 A.M.)\nPerfect. I'll keep unpacking the panels and let you know the moment the driver shows up."
+    "blocks": [
+     {
+      "t": "chat",
+      "msgs": [
+       {
+        "who": "Deirdre Nakamura",
+        "time": "9:42 A.M.",
+        "text": "Morning, Tomas. I'm at the convention centre. Our booth panels arrived, but the crate with the display monitors isn't here. Have you heard anything from the shipper?"
+       },
+       {
+        "who": "Tomas Reyes",
+        "time": "9:47 A.M.",
+        "text": "That's not good. Let me check the tracking. The panels and the monitors went out on separate trucks, so the second one may simply be running behind."
+       },
+       {
+        "who": "Tomas Reyes",
+        "time": "9:58 A.M.",
+        "text": "Tracking says the second crate left the warehouse at 6:10 this morning and is out for delivery. There's no estimated arrival time, though."
+       },
+       {
+        "who": "Deirdre Nakamura",
+        "time": "10:03 A.M.",
+        "text": "Setup access ends at 4:00 P.M. and the hall opens to visitors at nine tomorrow. I'd rather not gamble on this."
+       },
+       {
+        "who": "Tomas Reyes",
+        "time": "10:09 A.M.",
+        "text": "Understood. Halvorsen Rentals is three streets away and carries the same 55-inch screens. Want me to reserve two of them?"
+       },
+       {
+        "who": "Deirdre Nakamura",
+        "time": "10:15 A.M.",
+        "text": "Let's not put all our eggs in one basket. Book them, and if our crate turns up before noon I'll cancel the reservation."
+       },
+       {
+        "who": "Tomas Reyes",
+        "time": "10:21 A.M.",
+        "text": "Done. We can pick them up any time after 1:00 P.M., and they'll take them back at no charge if we return them unused today."
+       },
+       {
+        "who": "Deirdre Nakamura",
+        "time": "10:26 A.M.",
+        "text": "Perfect. I'll keep unpacking the panels and let you know the moment the driver shows up."
+       }
+      ]
+     }
+    ]
    }
   ],
   "questions": [
@@ -487,7 +533,74 @@ TOEIC.part7 = [
    {
     "type": "schedule",
     "label": "Class Schedule",
-    "content": "NORTHGATE COMMUNITY MUSIC SCHOOL\nAdult Evening Classes - Autumn Term (September 8 - November 14)\nEvery class meets once a week for ten weeks.\n\nGuitar for Beginners | Mondays, 6:30-8:00 P.M. | Room 2 | Oscar Lund | $180\nGroup Singing | Tuesdays, 7:00-8:30 P.M. | Main Hall | Priya Ramesh | $150\nPiano, Level 2 | Wednesdays, 6:00-7:30 P.M. | Room 5 | Oscar Lund | $210\nDrums for Beginners | Thursdays, 7:00-8:30 P.M. | Basement Studio | Ken Abara | $195\nGuitar for Beginners (second group) | Saturdays, 10:00-11:30 A.M. | Room 2 | Ken Abara | $180\n\nNotes\n* Each class is limited to twelve students. A class with fewer than five students will not be held.\n* Students may move to another group in the same subject during the first two weeks of the term. Write to the office; please do not simply attend the new class.\n* A student who leaves the school during the first four weeks receives half of the fee back. After that, no money is returned.\n* Instruments may be rented at the office for $25 per term."
+    "blocks": [
+     {
+      "t": "h",
+      "text": "NORTHGATE COMMUNITY MUSIC SCHOOL"
+     },
+     {
+      "t": "sub",
+      "text": "Adult Evening Classes - Autumn Term (September 8 - November 14)"
+     },
+     {
+      "t": "p",
+      "text": "Every class meets once a week for ten weeks."
+     },
+     {
+      "t": "table",
+      "header": false,
+      "rows": [
+       [
+        "Guitar for Beginners",
+        "Mondays, 6:30-8:00 P.M.",
+        "Room 2",
+        "Oscar Lund",
+        "$180"
+       ],
+       [
+        "Group Singing",
+        "Tuesdays, 7:00-8:30 P.M.",
+        "Main Hall",
+        "Priya Ramesh",
+        "$150"
+       ],
+       [
+        "Piano, Level 2",
+        "Wednesdays, 6:00-7:30 P.M.",
+        "Room 5",
+        "Oscar Lund",
+        "$210"
+       ],
+       [
+        "Drums for Beginners",
+        "Thursdays, 7:00-8:30 P.M.",
+        "Basement Studio",
+        "Ken Abara",
+        "$195"
+       ],
+       [
+        "Guitar for Beginners (second group)",
+        "Saturdays, 10:00-11:30 A.M.",
+        "Room 2",
+        "Ken Abara",
+        "$180"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "Notes"
+     },
+     {
+      "t": "list",
+      "items": [
+       "Each class is limited to twelve students. A class with fewer than five students will not be held.",
+       "Students may move to another group in the same subject during the first two weeks of the term. Write to the office; please do not simply attend the new class.",
+       "A student who leaves the school during the first four weeks receives half of the fee back. After that, no money is returned.",
+       "Instruments may be rented at the office for $25 per term."
+      ]
+     }
+    ]
    },
    {
     "type": "email",
@@ -555,6 +668,1533 @@ TOEIC.part7 = [
   "translation": [
    "NORTHGATE 社區音樂教室\n成人夜間課程－秋季班（9 月 8 日至 11 月 14 日）\n每門課每週上一次，共十週。\n\n吉他入門｜週一 18:30-20:00｜2 教室｜Oscar Lund｜180 美元\n團體歌唱｜週二 19:00-20:30｜大廳｜Priya Ramesh｜150 美元\n鋼琴（第二級）｜週三 18:00-19:30｜5 教室｜Oscar Lund｜210 美元\n爵士鼓入門｜週四 19:00-20:30｜地下室琴房｜Ken Abara｜195 美元\n吉他入門（第二班）｜週六 10:00-11:30｜2 教室｜Ken Abara｜180 美元\n\n注意事項\n＊每班以十二人為限。人數少於五人的班級不開課。\n＊學員可在開學後前兩週內，改到同一科目的另一個班級。請寫信給辦公室；請勿逕自去上新的班級。\n＊於前四週內退出者，退還一半學費；之後恕不退費。\n＊樂器可在辦公室租借，每學期 25 美元。",
    "收件者：office@northgatemusic.org\n寄件者：helen.duarte@mailcove.com\n日期：9 月 16 日\n主旨：我的週一課程\n\n親愛的 Okafor 女士：\n\n我想請教本學期我報名的吉他入門課。到目前為止兩次週一的課我都有上，也很喜歡，但公司剛把我調到晚班，週一與週三從晚上 6 點開始上班。本學期接下來的時間，我都無法在那個時段到課。\n\n我從課表上看到，同一門課週六早上也有開。我可以改到那一班嗎？我知道學費相同，所以應該不需要再補繳費用。如果週六班已經額滿，請盡快告訴我，因為那樣我可能只好退出，明年春天再重修這門課。\n\n還有一件事：我在第一週向辦公室租了一把吉他。若我換班，可以繼續留用嗎？\n\n感謝您的協助。\n\nHelen Duarte"
+  ]
+ },
+ {
+  "id": "p7-b11-1",
+  "format": "single",
+  "passages": [
+   {
+    "type": "advertisement",
+    "label": "Advertisement",
+    "blocks": [
+     {
+      "t": "h",
+      "text": "MARLOWE STREET COFFEE"
+     },
+     {
+      "t": "sub",
+      "text": "Third Anniversary Week: Monday, October 5 through Sunday, October 11"
+     },
+     {
+      "t": "p",
+      "text": "Three years ago we opened a small shop with six tables and one coffee machine. Today, thanks to our neighbors, we roast our own beans in the back room and serve more than four hundred cups a day. To say thank you, we are offering something different every day next week."
+     },
+     {
+      "t": "list",
+      "items": [
+       "Monday through Friday, 7:00 A.M. to 10:00 A.M.: any hot drink is half price when you bring your own cup.",
+       "Wednesday: a free slice of banana bread with every sandwich.",
+       "Saturday at 2:00 P.M.: a free tour of the room where we roast our beans. Space is limited to fifteen people, so please sign up at the counter.",
+       "Sunday: all bags of beans are 20 percent off, and we will grind them for you at no charge."
+      ]
+     },
+     {
+      "t": "p",
+      "text": "We have also added eight seats upstairs and a second register at the counter, so the morning wait should be much shorter than it was last winter."
+     },
+     {
+      "t": "coupon",
+      "lines": [
+       "ONE FREE COFFEE WITH ANY BREAKFAST",
+       "Valid October 5 through October 11. One coupon per customer per day. It cannot be used together with the half-price cup offer."
+      ]
+     },
+     {
+      "t": "note",
+      "text": "*Marlowe Street Coffee, 12 Marlowe Street. Open 6:30 A.M. to 6:00 P.M. daily. Our beans are also sold at the Hillard Farmers Market on Saturday mornings."
+     }
+    ]
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is the purpose of the flyer?",
+    "options": [
+     "To announce that a shop is moving to a new street",
+     "To invite customers to apply for a job",
+     "To describe special offers during an anniversary week",
+     "To explain a change in the price of coffee beans"
+    ],
+    "answer": 2,
+    "explanation": "定位副標 Third Anniversary Week 與第一段末句 we are offering something different every day next week，之後的項目列表逐日說明優惠，故選 (C)。(D) 是誘答：週日確實有豆子八折，但那是限時優惠活動之一，不是宣布調價；(A)(B) 全文未提，傳單只在小字備註中寫出現址。"
+   },
+   {
+    "q": "What is true about the coupon?",
+    "options": [
+     "It cannot be used with the half-price cup offer.",
+     "It can be used only on Sunday.",
+     "It gives a discount on bags of beans.",
+     "It must be signed at the counter."
+    ],
+    "answer": 0,
+    "explanation": "定位優惠券小字：It cannot be used together with the half-price cup offer，故選 (A)。(B) 優惠券效期是 10 月 5 日至 11 日整週，週日限定的是豆子八折；(C) 折扣豆子的是週日優惠，不是這張券；(D) 要到櫃檯登記的是週六的參觀導覽名額，與優惠券無關。"
+   },
+   {
+    "q": "In the list of offers, the word \"limited\" is closest in meaning to",
+    "options": [
+     "reduced",
+     "restricted",
+     "counted",
+     "measured"
+    ],
+    "answer": 1,
+    "explanation": "定位項目列表第三點 Space is limited to fifteen people, so please sign up at the counter，指名額以十五人為上限，故選 (B) restricted。limit 另有「減少」之義（如 limit spending），(A) reduced 即據此設計的誘答，但本句後接 to fifteen people，是設定上限而非減少數量；(C) counted 與 (D) measured 語意不合。"
+   },
+   {
+    "q": "What is suggested about Marlowe Street Coffee?",
+    "options": [
+     "It will open a second shop next year.",
+     "It has changed its opening hours.",
+     "It sells its beans only at its own shop.",
+     "It has grown since it first opened."
+    ],
+    "answer": 3,
+    "explanation": "推論題。第一段說三年前開店時只有六張桌子與一台咖啡機，如今自己烘豆、一天賣出四百多杯；後面又說加了樓上八個座位與第二台收銀機，可知規模擴大，故選 (D)。(A) 第二台收銀機不等於第二家店；(B) 小字備註列出的營業時間並未提到更動；(C) 與備註相反，豆子也在 Hillard 農夫市集販售。"
+   }
+  ],
+  "translation": [
+   "MARLOWE STREET COFFEE（馬洛街咖啡）\n三週年慶週：10 月 5 日（週一）至 10 月 11 日（週日）\n\n三年前，我們開了一家只有六張桌子、一台咖啡機的小店。如今在街坊鄰居的支持下，我們在後面的房間自己烘豆，一天供應四百多杯。為了表達謝意，下週每一天都有不同的回饋：\n\n．週一至週五上午 7 點至 10 點：自備杯子，任何熱飲半價。\n．週三：點三明治即送一片香蕉蛋糕。\n．週六下午 2 點：免費參觀我們的烘豆室。名額以十五人為限，請到櫃檯報名。\n．週日：所有袋裝咖啡豆八折，並免費代客研磨。\n\n我們也在樓上加了八個座位、櫃檯增設第二台收銀機，早晨等候的時間會比去年冬天短很多。\n\n【優惠券】點任一份早餐，即送一杯咖啡\n效期 10 月 5 日至 10 月 11 日。每位顧客每日限用一張。不可與自備杯半價優惠併用。\n\n＊馬洛街咖啡，馬洛街 12 號，每日上午 6 點半至下午 6 點營業。我們的咖啡豆在週六早上的 Hillard 農夫市集也有販售。"
+  ]
+ },
+ {
+  "id": "p7-b11-2",
+  "format": "single",
+  "passages": [
+   {
+    "type": "order form",
+    "label": "Order Form",
+    "blocks": [
+     {
+      "t": "h",
+      "text": "CLEARWELL SPRINGS WATER SERVICE"
+     },
+     {
+      "t": "sub",
+      "text": "Order Form and Invoice | 26 Halstead Road, Winslow | 555-0188"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Order number",
+        "CW-30417"
+       ],
+       [
+        "Order date",
+        "April 14"
+       ],
+       [
+        "Customer",
+        "Prentice and Row Accounting"
+       ],
+       [
+        "Ordered by",
+        "Dario Amin, office manager"
+       ],
+       [
+        "Delivery address",
+        "Fourth floor, 51 Cordell Avenue"
+       ],
+       [
+        "Account manager",
+        "Lydia Fontaine"
+       ],
+       [
+        "Requested delivery",
+        "Tuesday, April 21, before 11:00 A.M."
+       ]
+      ]
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "Item",
+        "Quantity",
+        "Unit price",
+        "Subtotal"
+       ],
+       [
+        "Spring water, 19-liter bottle",
+        "12",
+        "$6.50",
+        "$78.00"
+       ],
+       [
+        "Deposit on new bottles",
+        "4",
+        "$5.00",
+        "$20.00"
+       ],
+       [
+        "Paper cups, box of 500",
+        "3",
+        "$14.00",
+        "$42.00"
+       ],
+       [
+        "Water cooler rental, monthly",
+        "2",
+        "$9.00",
+        "$18.00"
+       ],
+       [
+        "Goods total",
+        "",
+        "",
+        "$158.00"
+       ],
+       [
+        "Delivery",
+        "",
+        "",
+        "$0.00"
+       ],
+       [
+        "Total due",
+        "",
+        "",
+        "$158.00"
+       ]
+      ]
+     },
+     {
+      "t": "note",
+      "text": "*Delivery is free on orders of $100.00 or more. Below that amount, a charge of $12.00 is added. All prices include tax."
+     },
+     {
+      "t": "p",
+      "text": "Please check this form carefully. Any change must reach our office at least two working days before the requested delivery date; our office is open Monday through Friday only. On the morning of the delivery, leave the empty bottles outside your office door, or the driver will not be able to exchange them. Payment is due within thirty days of delivery."
+     }
+    ]
+   }
+  ],
+  "questions": [
+   {
+    "q": "What is suggested about the water bottles in this order?",
+    "options": [
+     "Only four of them will be added to the customer's supply.",
+     "They will arrive on a different day from the paper cups.",
+     "They must be washed before they are collected.",
+     "They are cheaper than they were last year."
+    ],
+    "answer": 0,
+    "explanation": "推論題，須整合表格與下方段落。表格中 Spring water 一列訂了 12 桶，但 Deposit on new bottles 只收 4 個押金；段落又說司機會回收門外的空桶來換桶，可知其中 8 桶是拿客戶原有的空桶交換，真正新增的只有 4 桶，故選 (A)。(B) 表單只有一個指定送達時間，所有品項同批送達；(C) 段落只要求把空桶放在門外，未提清洗；(D) 表單沒有去年的價格可資比較。"
+   },
+   {
+    "q": "What must the customer do on the morning of the delivery?",
+    "options": [
+     "Pay the driver in cash",
+     "Sign a new rental agreement",
+     "Leave the empty bottles outside the door",
+     "Move the water coolers away from the wall"
+    ],
+    "answer": 2,
+    "explanation": "定位表格下方段落：On the morning of the delivery, leave the empty bottles outside your office door，故選 (C)。(A) 同段說貨到後三十天內付款即可，並未要求付現；(B)(D) 全文未提。"
+   },
+   {
+    "q": "What is NOT part of the order?",
+    "options": [
+     "Boxes of paper cups",
+     "A charge for new bottles",
+     "The monthly rental of water coolers",
+     "The repair of a water cooler"
+    ],
+    "answer": 3,
+    "explanation": "NOT 題採刪去法，逐項回表格核對。(A) Paper cups, box of 500 共 3 箱；(B) Deposit on new bottles 4 個共 $20.00；(C) Water cooler rental, monthly 2 台共 $18.00。只有 (D) 維修服務未出現在任何一列，故選 (D)。"
+   },
+   {
+    "q": "By what date must Prentice and Row report a change to the order?",
+    "options": [
+     "April 14",
+     "April 17",
+     "April 19",
+     "April 20"
+    ],
+    "answer": 1,
+    "explanation": "整合題。表單上方 Requested delivery 為 4 月 21 日（星期二），段落規定改單須在送貨日前至少兩個工作天送達，且公司只在週一至週五上班。往前推：20 日（週一）只提前一個工作天，18、19 日是週末不計，因此第二個工作天是 4 月 17 日（星期五），故選 (B)。(D) 是只算一個工作天的誘答；(C) 4 月 19 日是週日，公司不上班；(A) 是下單日期。"
+   }
+  ],
+  "translation": [
+   "CLEARWELL SPRINGS 飲水服務（訂購單暨發票）｜Halstead 路 26 號，Winslow｜555-0188\n\n．訂單編號：CW-30417\n．訂購日期：4 月 14 日\n．客戶：Prentice and Row 會計事務所\n．訂購人：Dario Amin，辦公室經理\n．送貨地址：Cordell 大道 51 號四樓\n．客戶專員：Lydia Fontaine\n．指定送達：4 月 21 日（星期二）上午 11 點前\n\n品項／數量／單價／小計\n．礦泉水 19 公升桶裝／12／6.50 美元／78.00 美元\n．新桶押金／4／5.00 美元／20.00 美元\n．紙杯（500 入一箱）／3／14.00 美元／42.00 美元\n．飲水機租金（月）／2／9.00 美元／18.00 美元\n．商品合計：158.00 美元\n．運費：0.00 美元\n．應付總額：158.00 美元\n\n＊訂單滿 100.00 美元免運費；未達此金額者加收 12.00 美元。所有價格均已含稅。\n\n請仔細核對本表。任何更動須於指定送貨日前至少兩個工作天送達本公司；本公司僅週一至週五上班。送貨當天早上請將空桶放在辦公室門外，否則司機無法為您換桶。貨到三十天內付款。"
+  ]
+ },
+ {
+  "id": "p7-b11-3",
+  "format": "single",
+  "passages": [
+   {
+    "type": "schedule",
+    "label": "Ferry Timetable",
+    "blocks": [
+     {
+      "t": "h",
+      "text": "SABLEWOOD ISLAND FERRY"
+     },
+     {
+      "t": "sub",
+      "text": "Winter Timetable: November 1 through February 28"
+     },
+     {
+      "t": "p",
+      "text": "All trips leave from Corbin Harbor and carry passengers. Only the trips marked below can take cars, and drivers must reach the dock thirty minutes before the trip leaves."
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "Trip",
+        "Leaves Corbin Harbor",
+        "Arrives Sablewood",
+        "Notes"
+       ],
+       [
+        "F1",
+        "6:40 A.M.",
+        "7:25 A.M.",
+        "Cars accepted"
+       ],
+       [
+        "F2",
+        "8:15 A.M.",
+        "8:50 A.M.",
+        "Passengers only"
+       ],
+       [
+        "F3",
+        "10:30 A.M.",
+        "11:15 A.M.",
+        "Cars accepted; cafe open on board"
+       ],
+       [
+        "F4",
+        "1:00 P.M.",
+        "1:35 P.M.",
+        "Passengers only"
+       ],
+       [
+        "F5",
+        "3:45 P.M.",
+        "4:40 P.M.",
+        "Stops at Kelby Point on the way"
+       ],
+       [
+        "F6",
+        "6:20 P.M.",
+        "6:55 P.M.",
+        "Passengers only; no service on Sunday"
+       ]
+      ]
+     },
+     {
+      "t": "note",
+      "text": "*On public holidays the 6:20 P.M. trip does not run, and the 10:30 A.M. trip leaves at 11:00 A.M. instead. Tickets cost $2.00 less when they are bought on our Web site. Bicycles travel free of charge."
+     }
+    ]
+   }
+  ],
+  "questions": [
+   {
+    "q": "Which trip spends the most time on the water?",
+    "options": [
+     "F1",
+     "F3",
+     "F6",
+     "F5"
+    ],
+    "answer": 3,
+    "explanation": "須比對表格中出發與抵達兩欄。F5 從下午 3:45 開到 4:40，共 55 分鐘，因為備註欄寫 Stops at Kelby Point on the way，中途多停一站；(A) F1 與 (B) F3 各為 45 分鐘，(C) F6 只有 35 分鐘。故選 (D)。"
+   },
+   {
+    "q": "What are drivers bringing cars asked to do?",
+    "options": [
+     "Buy their tickets at the harbor office",
+     "Reach the dock half an hour early",
+     "Take only the first trip of the day",
+     "Telephone the ferry company one day in advance"
+    ],
+    "answer": 1,
+    "explanation": "定位表格上方說明：drivers must reach the dock thirty minutes before the trip leaves，thirty minutes 即 half an hour，故選 (B)。(C) 可載車的班次有 F1 與 F3 兩班，不限第一班；(A) 備註只說網路購票便宜 2 美元，並未規定購票地點；(D) 未提及。"
+   },
+   {
+    "q": "What is NOT stated about the ferry service?",
+    "options": [
+     "One trip makes a stop on the way.",
+     "Tickets are cheaper on the Web site.",
+     "Food and drink are sold on every trip.",
+     "One evening trip does not run on Sunday."
+    ],
+    "answer": 2,
+    "explanation": "NOT 題採刪去法。(A) F5 備註 Stops at Kelby Point on the way；(B) 小字備註 Tickets cost $2.00 less when they are bought on our Web site；(D) F6 備註 no service on Sunday。只有 (C) 過度推論：備註欄僅 F3 寫 cafe open on board，其他班次都沒有，故選 (C)。"
+   },
+   {
+    "q": "In the sentence \"Only the trips marked below can take cars,\" the word \"take\" is closest in meaning to",
+    "options": [
+     "accept",
+     "seize",
+     "choose",
+     "require"
+    ],
+    "answer": 0,
+    "explanation": "定位表格上方說明：Only the trips marked below can take cars，指這些班次可以載運汽車上船，故選 (A) accept；同句前一行的 carry passengers 也提供了平行線索。take 另有「奪取」（take by force）、「挑選」（take this one）、「需要／花費」（it takes two hours）等義，(B) seize、(C) choose、(D) require 即據此設計的誘答，但都不合本句「船班可載車」的語境。"
+   }
+  ],
+  "translation": [
+   "SABLEWOOD 島渡輪\n冬季時刻表：11 月 1 日至 2 月 28 日\n\n所有班次皆自 Corbin 碼頭出發並載客。只有下表註明者可載運汽車，駕駛人須於開船前三十分鐘抵達碼頭。\n\n班次／離開 Corbin 碼頭／抵達 Sablewood／備註\n．F1／上午 6:40／上午 7:25／可載車\n．F2／上午 8:15／上午 8:50／僅載客\n．F3／上午 10:30／上午 11:15／可載車；船上咖啡吧營業\n．F4／下午 1:00／下午 1:35／僅載客\n．F5／下午 3:45／下午 4:40／中途停靠 Kelby Point\n．F6／下午 6:20／下午 6:55／僅載客；週日停駛\n\n＊國定假日當天，下午 6:20 班次停駛，上午 10:30 班次改為 11:00 開航。網站購票每張便宜 2.00 美元。自行車免費上船。"
+  ]
+ },
+ {
+  "id": "p7-b11-4",
+  "format": "single",
+  "passages": [
+   {
+    "type": "text message chain",
+    "label": "Text Message Chain",
+    "blocks": [
+     {
+      "t": "chat",
+      "msgs": [
+       {
+        "who": "Miriam Nowak",
+        "time": "11:52 A.M.",
+        "text": "Bea, Jonah, I need help. My dentist just called. The only appointment left this month is today at 2:30, so I have to leave the front desk from about 2:00 to 4:00. Could either of you cover it?"
+       },
+       {
+        "who": "Jonah Adeyemi",
+        "time": "11:55 A.M.",
+        "text": "I have the budget meeting with Ms. Beaumont at 2:00. It usually takes an hour, sometimes longer."
+       },
+       {
+        "who": "Bea Cardoso",
+        "time": "11:57 A.M.",
+        "text": "My afternoon is wide open. What time do you need me at the desk?"
+       },
+       {
+        "who": "Miriam Nowak",
+        "time": "11:58 A.M.",
+        "text": "Ten to two would be perfect. Nothing about it is difficult. Just the phones, and one visitor who is coming in at 3:00 for an interview."
+       },
+       {
+        "who": "Bea Cardoso",
+        "time": "12:01 P.M.",
+        "text": "Which interview? I thought the design candidates were all coming on Thursday."
+       },
+       {
+        "who": "Miriam Nowak",
+        "time": "12:03 P.M.",
+        "text": "One of them asked to move to today. His name is Peter Vance. Sign him in, then call Jonah at extension 214."
+       },
+       {
+        "who": "Jonah Adeyemi",
+        "time": "12:05 P.M.",
+        "text": "I should be out of the meeting by three. If I am not, put him in the small meeting room with a glass of water and I will come down as soon as I can."
+       },
+       {
+        "who": "Bea Cardoso",
+        "time": "12:07 P.M.",
+        "text": "Understood. Is there a key for the front door at the desk? Last week it was locked when I came back from lunch and I had to wait outside."
+       },
+       {
+        "who": "Miriam Nowak",
+        "time": "12:09 P.M.",
+        "text": "The key is in the top drawer, on the blue tag. Please do not leave it on the desk when you step away."
+       },
+       {
+        "who": "Bea Cardoso",
+        "time": "12:11 P.M.",
+        "text": "Got it. I will bring my laptop and answer e-mail between calls."
+       },
+       {
+        "who": "Miriam Nowak",
+        "time": "12:12 P.M.",
+        "text": "Thank you both. I will be back before four and I owe you a coffee."
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "questions": [
+   {
+    "q": "Why did Ms. Nowak write to her colleagues?",
+    "options": [
+     "To change the time of a budget meeting",
+     "To report a problem with the front door",
+     "To ask someone to cover the front desk",
+     "To move an interview to Thursday"
+    ],
+    "answer": 2,
+    "explanation": "定位 11:52 A.M. 第一則：I have to leave the front desk from about 2:00 to 4:00. Could either of you cover it?，故選 (C)。(A) 預算會議是 Jonah 說明自己無法幫忙的理由，時間並未更動；(B) 大門上鎖是 Bea 後來另外提起的問題；(D) 面試是從週四改到今天，方向相反，且是應徵者提出的。"
+   },
+   {
+    "q": "At 11:57 A.M., what does Ms. Cardoso most likely mean when she writes, \"My afternoon is wide open\"?",
+    "options": [
+     "She will leave work earlier than usual.",
+     "She has no other duties and is able to help.",
+     "She would like someone to open the office windows.",
+     "She has not yet been given a desk of her own."
+    ],
+    "answer": 1,
+    "explanation": "意圖題。前一則 Jonah 說 2 點有會議、無法支援；Bea 接著說下午「大開」，並立刻追問 What time do you need me at the desk?，可知她的意思是下午沒有其他工作、可以代班，故選 (B)。(C) 是把 open 當「打開窗戶」的字面誘答；(A)(D) 對話中皆無依據，她反而是要多留下來顧櫃檯。"
+   },
+   {
+    "q": "What will Ms. Cardoso do if Mr. Adeyemi is still in his meeting when the visitor arrives?",
+    "options": [
+     "Ask the visitor to come back on Thursday",
+     "Telephone Ms. Nowak at the dentist",
+     "Hold the interview herself",
+     "Take the visitor to the small meeting room"
+    ],
+    "answer": 3,
+    "explanation": "定位 12:05 P.M. Jonah 的訊息：If I am not, put him in the small meeting room with a glass of water，故選 (D)。(A) 週四原本是面試日，但這位應徵者已改到今天；(B)(C) 對話中未提，Jonah 表示會盡快下樓。"
+   },
+   {
+    "q": "What is suggested about the key to the front door?",
+    "options": [
+     "It has caused a problem before.",
+     "It is kept at the security desk downstairs.",
+     "It also opens the small meeting room.",
+     "It must be returned to Ms. Nowak every evening."
+    ],
+    "answer": 0,
+    "explanation": "推論題。定位 12:07 P.M.：Last week it was locked when I came back from lunch and I had to wait outside，可知上週已因大門上鎖出過狀況，Miriam 也才提醒別把鑰匙留在桌上，故選 (A)。(B) 鑰匙放在櫃檯最上層抽屜、掛藍色吊牌；(C)(D) 對話中未提。"
+   }
+  ],
+  "translation": [
+   "Miriam Nowak（上午 11:52）：Bea、Jonah，我需要幫忙。牙醫剛打來，這個月只剩今天下午 2:30 有空檔，所以我大約 2 點到 4 點得離開櫃檯。你們兩位有人可以幫我代班嗎？\n\nJonah Adeyemi（上午 11:55）：我 2 點要跟 Beaumont 女士開預算會議，通常要一個小時，有時候更久。\n\nBea Cardoso（上午 11:57）：我下午整個都空著。你要我幾點到櫃檯？\n\nMiriam Nowak（上午 11:58）：一點五十最好。工作沒什麼難的，就是接電話，還有一位訪客 3 點要來面試。\n\nBea Cardoso（下午 12:01）：哪一場面試？我以為設計職缺的應徵者都排在星期四。\n\nMiriam Nowak（下午 12:03）：其中一位要求改到今天。他叫 Peter Vance。幫他登記後，打分機 214 找 Jonah。\n\nJonah Adeyemi（下午 12:05）：我三點前應該就開完會了。如果還沒開完，請先帶他到小會議室、倒杯水給他，我會盡快下去。\n\nBea Cardoso（下午 12:07）：了解。櫃檯有大門的鑰匙嗎？上禮拜我吃完午餐回來，門是鎖著的，只能在外面等。\n\nMiriam Nowak（下午 12:09）：鑰匙在最上層抽屜裡，掛著藍色吊牌。離開座位時請不要把它留在櫃檯上。\n\nBea Cardoso（下午 12:11）：知道了。我會帶筆電過去，接電話的空檔順便回信。\n\nMiriam Nowak（下午 12:12）：謝謝你們兩位。我四點前會回來，欠你們一杯咖啡。"
+  ]
+ },
+ {
+  "id": "p7-b12-1",
+  "format": "double",
+  "passages": [
+   {
+    "type": "menu",
+    "label": "Menu",
+    "blocks": [
+     {
+      "t": "h",
+      "text": "RIVERSTONE KITCHEN"
+     },
+     {
+      "t": "sub",
+      "text": "Dinner Menu | Tuesday through Sunday, 5:30 P.M. to 9:30 P.M."
+     },
+     {
+      "t": "sub",
+      "text": "STARTERS"
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "Dish",
+        "Price"
+       ],
+       [
+        "Roasted tomato soup",
+        "$7"
+       ],
+       [
+        "Garden salad with house dressing",
+        "$8"
+       ],
+       [
+        "Baked cheese bread",
+        "$6"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "MAIN DISHES"
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "Dish",
+        "Served with",
+        "Price"
+       ],
+       [
+        "Grilled steak",
+        "Roast potatoes and green beans",
+        "$28"
+       ],
+       [
+        "Lemon chicken",
+        "Rice and seasonal vegetables",
+        "$21"
+       ],
+       [
+        "Grilled fish",
+        "Rice and a small salad",
+        "$24"
+       ],
+       [
+        "Vegetable pasta",
+        "Garden vegetables and olive oil",
+        "$17"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "DESSERTS"
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "Dish",
+        "Price"
+       ],
+       [
+        "Apple cake with cream",
+        "$8"
+       ],
+       [
+        "Chocolate ice cream",
+        "$6"
+       ],
+       [
+        "Fruit plate",
+        "$7"
+       ]
+      ]
+     },
+     {
+      "t": "p",
+      "text": "EARLY EVENING OFFER: any starter and any main dish together for $25. Tuesday through Thursday only. Orders must be placed before 6:30 P.M."
+     },
+     {
+      "t": "note",
+      "text": "*Main dishes are served with fresh bread at no extra charge. A service charge of 10 percent is added for tables of six or more guests. The dining room stays open until 10:30 P.M., but the kitchen closes at 9:30 P.M."
+     }
+    ]
+   },
+   {
+    "type": "review",
+    "label": "Online Review",
+    "content": "RIVERSTONE KITCHEN\n40 Millbank Road, Fairgate\nReviewed by Gustavo Herrera | Posted 14 October\nRating: 4 out of 5\n\nI took my sister here on a Wednesday evening to celebrate her new job. We arrived just after six o'clock, which turned out to be a lucky choice, since we were still able to order the early evening offer. Between the two of us we saved ten dollars.\n\nShe started with the roasted tomato soup and I had the garden salad. She then chose the lemon chicken and said it was the best thing she had eaten all month. I had the grilled fish. It was cooked well, but the plate looked small to me for a dish listed at twenty-four dollars. The bread was excellent, and I was pleased to find that we were not charged anything extra for it.\n\nOur server, a young man named Theo, was warm without being slow. He noticed that my sister cannot eat butter and quietly asked the kitchen to change her vegetables. Nobody had to ask twice.\n\nMy one real complaint is the noise. The dining room has hard floors and a high ceiling, and by half past seven we were leaning across the table to hear each other. If you would like a quiet meal, come early.\n\nWe finished with the apple cake, which was warm and large enough for two. I will certainly go back, though next time I will ask for a table near the window."
+   }
+  ],
+  "questions": [
+   {
+    "q": "What does Mr. Herrera complain about?",
+    "options": [
+     "The behavior of the server",
+     "The time the food took to arrive",
+     "The small choice of desserts",
+     "The sound level in the dining room"
+    ],
+    "answer": 3,
+    "explanation": "定位句在評論第四段：「My one real complaint is the noise. The dining room has hard floors and a high ceiling.」他明確指出唯一真正的抱怨是噪音。第三段對服務生 Theo 評價正面，故 (A) 錯；上菜速度與甜點選擇皆未被批評。"
+   },
+   {
+    "q": "How much does the main dish that Mr. Herrera's sister ordered cost on the menu?",
+    "options": [
+     "$17",
+     "$21",
+     "$24",
+     "$28"
+    ],
+    "answer": 1,
+    "explanation": "跨文件整合題。評論第二段說「She then chose the lemon chicken」，再回到菜單 MAIN DISHES 表格查 Lemon chicken 的價格為 $21。$24 是他本人點的 grilled fish，屬混淆選項。"
+   },
+   {
+    "q": "How much did Mr. Herrera and his sister pay in total for their starters and main dishes?",
+    "options": [
+     "$25",
+     "$45",
+     "$50",
+     "$60"
+    ],
+    "answer": 2,
+    "explanation": "跨文件計算題。評論第一段說兩人趕上 early evening offer，第二段寫出各自點的前菜與主菜；菜單註明「any starter and any main dish together for $25」，兩人各一組即 $25 × 2 ＝ $50。$60 是照原價計算的金額（湯 $7＋檸檬雞 $21、沙拉 $8＋炭烤魚 $24），正好與評論說省下十美元相符；$45 只算兩道主菜原價，$25 則漏算了一個人。"
+   },
+   {
+    "q": "What is NOT mentioned in the review?",
+    "options": [
+     "The price of the dessert",
+     "The reason for the meal",
+     "The day of the week when the meal took place",
+     "The name of a server"
+    ],
+    "answer": 0,
+    "explanation": "NOT 題需逐項核對。服務生名字 Theo 見第三段；用餐理由「to celebrate her new job」見第一段；星期三見第一段。第五段只提到吃了 apple cake，並未寫出甜點價格，價格資訊只出現在菜單上，故選 (A)。"
+   },
+   {
+    "q": "The word \"warm\" in paragraph 3 of the review is closest in meaning to",
+    "options": [
+     "hot",
+     "careful",
+     "friendly",
+     "recent"
+    ],
+    "answer": 2,
+    "explanation": "字義題。原句「Our server ... was warm without being slow」描述的是人的態度，不是溫度，因此 warm 等於 friendly（親切的）。(A) hot 是字面義誘答。"
+   }
+  ],
+  "translation": [
+   "河石廚房 晚餐菜單（週二至週日 17:30-21:30）\n．前菜：烤番茄湯 $7；田園沙拉佐招牌醬 $8；焗烤起司麵包 $6\n．主菜：炭烤牛排（附烤馬鈴薯與四季豆）$28；檸檬雞（附飯與時蔬）$21；炭烤魚（附飯與小份沙拉）$24；蔬菜義大利麵（附田園蔬菜與橄欖油）$17\n．甜點：蘋果蛋糕佐鮮奶油 $8；巧克力冰淇淋 $6；水果盤 $7\n．早鳥優惠：任選一道前菜加一道主菜合計 $25，僅限週二至週四，且須在 18:30 前點餐\n．備註：主菜附新鮮麵包不另收費；六人以上桌加收一成服務費；用餐區開放至 22:30，但廚房 21:30 打烊",
+   "河石廚房\n地址：費爾蓋特米爾班克路 40 號\n評論者：古斯塔沃．埃雷拉｜10 月 14 日張貼\n評分：5 顆星中的 4 顆\n\n我週三晚上帶妹妹來這裡，慶祝她找到新工作。我們六點剛過就到了，事後證明是個幸運的選擇，因為還來得及點早鳥優惠，兩人加起來省了十美元。\n\n她先點了烤番茄湯，我點了田園沙拉。接著她點了檸檬雞，說那是她這個月吃過最好吃的東西。我則點了炭烤魚，火候掌握得不錯，但以菜單上二十四美元的價位來說，我覺得份量偏少。麵包倒是很棒，而且讓我高興的是完全沒有另外收費。\n\n服務我們的是一位叫 Theo 的年輕男生，態度親切又不拖泥帶水。他注意到我妹妹不能吃奶油，便悄悄請廚房替她換了配菜，完全不必開口講第二次。\n\n我唯一真正的抱怨是噪音。用餐區是硬質地板加挑高天花板，七點半一過，我們就得整個人往桌子中間靠才聽得見對方說話。想安靜吃飯的話，請早點來。\n\n最後我們吃了蘋果蛋糕，熱熱的，份量兩個人分都夠。我一定會再來，只是下次會指定靠窗的位子。"
+  ]
+ },
+ {
+  "id": "p7-b12-2",
+  "format": "double",
+  "passages": [
+   {
+    "type": "schedule",
+    "label": "Train Schedule",
+    "blocks": [
+     {
+      "t": "h",
+      "text": "ASHVALE RAIL"
+     },
+     {
+      "t": "sub",
+      "text": "Weekday Service | Ashvale Central to Portmere | Effective 1 September"
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "Train",
+        "Depart Ashvale",
+        "Arrive Portmere",
+        "Stops",
+        "Standard fare"
+       ],
+       [
+        "A102",
+        "06:15",
+        "07:40",
+        "Direct",
+        "$34"
+       ],
+       [
+        "A126",
+        "08:20",
+        "09:45",
+        "Direct",
+        "$34"
+       ],
+       [
+        "A140",
+        "09:30",
+        "11:30",
+        "Dorn, Barwick",
+        "$26"
+       ],
+       [
+        "A155",
+        "10:40",
+        "12:50",
+        "Dorn, Barwick, Millgate",
+        "$22"
+       ],
+       [
+        "A168",
+        "11:50",
+        "13:55",
+        "Dorn, Barwick",
+        "$26"
+       ],
+       [
+        "A180",
+        "12:15",
+        "13:40",
+        "Direct",
+        "$34"
+       ],
+       [
+        "A192",
+        "14:30",
+        "15:55",
+        "Direct",
+        "$34"
+       ]
+      ]
+     },
+     {
+      "t": "note",
+      "text": "*Direct trains make no stops between the two cities. Fares shown are for a standard seat booked in advance."
+     },
+     {
+      "t": "p",
+      "text": "CHANGING A BOOKING"
+     },
+     {
+      "t": "list",
+      "items": [
+       "Changes may be made on our website up to two hours before the train leaves.",
+       "A fee of $8 is charged for each change.",
+       "If the new train costs more, the difference must also be paid. If it costs less, the difference is not returned.",
+       "Tickets bought on the day of travel cannot be changed."
+      ]
+     }
+    ]
+   },
+   {
+    "type": "email",
+    "label": "E-mail",
+    "content": "To: bookings@ashvalerail.com\nFrom: m.otero@quillmail.com\nDate: 14 September\nSubject: Booking R-88204\n\nHello,\n\nI hold a ticket on the 08:20 service from Ashvale Central to Portmere this Friday, 18 September, booking number R-88204. My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train.\n\nI must be in Portmere by two o'clock, when I am giving a short talk at a client's office beside the station. The talk cannot be moved. I would therefore like the latest train that still brings me in with about an hour to spare. Looking at your timetable, only one service seems to fit. Please put me on it if a seat is free.\n\nI would rather not take a train that stops along the way, but I understand that I may have no choice on this occasion.\n\nTwo further questions. My original ticket cost thirty-four dollars. Am I right that nothing will be returned to me if the new fare is lower? Also, I bought the ticket on your website three weeks ago. Does that mean I can still make the change myself, or must your office do it for me?\n\nThank you for your help,\n\nMarcela Otero"
+   }
+  ],
+  "questions": [
+   {
+    "q": "Which train will Ms. Otero most likely take on 18 September?",
+    "options": [
+     "A140",
+     "A155",
+     "A168",
+     "A180"
+    ],
+    "answer": 1,
+    "explanation": "跨文件整合題。信中兩個條件：會議十點才結束（無法搭 09:30 的 A140），且必須在兩點的演講前約一小時抵達。查時刻表，A155 於 10:40 出發、12:50 抵達，餘裕一小時又十分，是唯一同時滿足兩者的班次；A168 抵達 13:55、A180 抵達 13:40，都不足「約一小時」的餘裕。信中「I would rather not take a train that stops along the way, but I understand that I may have no choice」也呼應 A155 為停站班次。"
+   },
+   {
+    "q": "Why does Ms. Otero want to change her booking?",
+    "options": [
+     "Her talk in Portmere has been cancelled",
+     "She has lost her original ticket",
+     "A meeting at work has been rescheduled",
+     "The train she booked is now full"
+    ],
+    "answer": 2,
+    "explanation": "定位句在信件第一段：「My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train.」原因是會議改期。"
+   },
+   {
+    "q": "How much extra will Ms. Otero have to pay for the change?",
+    "options": [
+     "$8",
+     "$12",
+     "$30",
+     "Nothing"
+    ],
+    "answer": 0,
+    "explanation": "跨文件整合題。她原票 $34，新班次 A155 為 $22。時刻表 CHANGING A BOOKING 規定每次更改收 $8，且「If it costs less, the difference is not returned」，因此差額 $12 不退，她只需付 $8 手續費。(B) $12 是不退還的差額；(C) $30 是誤把新票價 $22 與手續費相加；(D) Nothing 則是誤以為差額可折抵手續費。"
+   },
+   {
+    "q": "What is NOT stated about Ashvale Rail tickets?",
+    "options": [
+     "They can be changed on the company's website",
+     "A fee is charged each time they are changed",
+     "Those bought on the day of travel cannot be changed",
+     "They may be given to another passenger"
+    ],
+    "answer": 3,
+    "explanation": "NOT 題。(A)(B)(C) 分別對應 CHANGING A BOOKING 條列的第一、第二、第四點；轉讓給他人一事全文未提，故選 (D)。"
+   },
+   {
+    "q": "The word \"reach\" in paragraph 1 of the e-mail is closest in meaning to",
+    "options": [
+     "get to",
+     "contact",
+     "hold",
+     "call"
+    ],
+    "answer": 0,
+    "explanation": "字義題。原句「I can no longer reach the station in time」的受詞是地點（車站），故 reach 意為「抵達」＝ get to。(B) contact、(D) call 是 reach 用於「聯絡某人」時的意思，在此語境不成立。"
+   }
+  ],
+  "translation": [
+   "阿什維爾鐵路 平日班次｜阿什維爾中央站往波特米爾｜9 月 1 日起實施\n．A102：06:15 發車，07:40 抵達，直達，$34\n．A126：08:20 發車，09:45 抵達，直達，$34\n．A140：09:30 發車，11:30 抵達，停靠多恩、巴威克，$26\n．A155：10:40 發車，12:50 抵達，停靠多恩、巴威克、米爾蓋特，$22\n．A168：11:50 發車，13:55 抵達，停靠多恩、巴威克，$26\n．A180：12:15 發車，13:40 抵達，直達，$34\n．A192：14:30 發車，15:55 抵達，直達，$34\n．備註：直達車兩城之間不停站；表列票價為預訂之普通座位價格\n．更改訂位規定：可於發車前兩小時之前在官網辦理；每次更改收取 $8 手續費；新班次較貴須補差額，較便宜則差額不退；當日購買的車票不得更改",
+   "收件者：bookings@ashvalerail.com\n寄件者：m.otero@quillmail.com\n日期：9 月 14 日\n主旨：訂位編號 R-88204\n\n您好：\n\n我持有本週五（9 月 18 日）從阿什維爾中央站往波特米爾、08:20 那班車的車票，訂位編號 R-88204。我早上的會議被改期，十點以前不會結束，因此已來不及趕到車站搭那班車。\n\n我必須在兩點以前抵達波特米爾，屆時要在車站旁的客戶辦公室做一場簡短演講，這場演講無法更動。因此我想改搭仍能讓我提早約一小時抵達的最晚班次。我看過貴公司的時刻表，似乎只有一班符合，若還有空位請幫我改到那班。\n\n我其實不太想搭沿途停靠的班次，但我明白這次可能別無選擇。\n\n另有兩個問題。我原本的車票是三十四美元，若新票價較低，是否確實不會退還差額？另外，我是三週前在貴公司網站上購票的，這樣我是否仍可自行更改，還是必須由貴單位代為處理？\n\n感謝協助，\n\n瑪塞拉．歐特羅"
+  ]
+ },
+ {
+  "id": "p7-b12-3",
+  "format": "double",
+  "passages": [
+   {
+    "type": "invoice",
+    "label": "Invoice",
+    "blocks": [
+     {
+      "t": "h",
+      "text": "BELLAMY PLUMBING AND ELECTRIC"
+     },
+     {
+      "t": "sub",
+      "text": "26 Sandhill Road, Fairgate | 555-0193 | billing@bellamyservice.com"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Invoice number",
+        "BP-5512"
+       ],
+       [
+        "Invoice date",
+        "6 November"
+       ],
+       [
+        "Service date",
+        "Sunday, 2 November"
+       ],
+       [
+        "Customer",
+        "Ms. Farida Nasser, 9 Weaver Lane"
+       ],
+       [
+        "Technician",
+        "D. Okoye"
+       ],
+       [
+        "Payment due",
+        "6 December"
+       ]
+      ]
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "Description",
+        "Hours / Qty",
+        "Rate",
+        "Amount"
+       ],
+       [
+        "Labor, kitchen sink pipe repair",
+        "2.0 hr",
+        "$85.00",
+        "$170.00"
+       ],
+       [
+        "Replacement pipe section (part P-14)",
+        "1",
+        "$46.00",
+        "$46.00"
+       ],
+       [
+        "Labor, bathroom light switch",
+        "0.5 hr",
+        "$85.00",
+        "$42.50"
+       ],
+       [
+        "Weekend visit charge",
+        "1",
+        "$120.00",
+        "$120.00"
+       ],
+       [
+        "Small parts and materials",
+        "1",
+        "$18.00",
+        "$18.00"
+       ]
+      ]
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Subtotal",
+        "$396.50"
+       ],
+       [
+        "Tax (5%)",
+        "$19.83"
+       ],
+       [
+        "Total due",
+        "$416.33"
+       ]
+      ]
+     },
+     {
+      "t": "note",
+      "text": "*Labor is charged in half-hour blocks, and half an hour is the smallest amount charged. The weekend visit charge applies to any work carried out on a Saturday or Sunday. Labor is under warranty for six months from the service date; parts are covered by the maker's own warranty. Accounts not paid within thirty days are charged interest of 1.5 percent per month."
+     }
+    ]
+   },
+   {
+    "type": "email",
+    "label": "E-mail",
+    "content": "To: billing@bellamyservice.com\nFrom: f.nasser@quillmail.com\nDate: 10 November\nSubject: Invoice BP-5512\n\nDear Sir or Madam,\n\nThank you for sending Mr. Okoye out so quickly. The sink has given us no trouble since, and the new switch works well. Before I pay, however, I would like to raise one point about the bill.\n\nWhen I telephoned your office on Thursday, 30 October, I asked for the first weekday appointment you had. I was told that nobody was free until the following Thursday and that a technician could come on Sunday instead. I agreed to the Sunday visit, but the person I spoke with never told me that coming at the weekend would add a further charge to my total. Had I known, I would have waited. I would like that line taken off the bill.\n\nI have a second, smaller question. The bathroom job took Mr. Okoye about ten minutes, yet the bill shows half an hour of labor. Could you explain how the time is counted?\n\nI should also plan ahead. If the same pipe begins to leak again in March, will I have to pay for that work a second time?\n\nI will settle the rest of the invoice as soon as I hear from you.\n\nKind regards,\n\nFarida Nasser\n9 Weaver Lane"
+   }
+  ],
+  "questions": [
+   {
+    "q": "Why did Ms. Nasser write the e-mail?",
+    "options": [
+     "To question one of the charges on her bill",
+     "To report that a repair has already failed",
+     "To change the way she pays the company",
+     "To ask for a second visit from a technician"
+    ],
+    "answer": 0,
+    "explanation": "定位句在信件第一段末：「Before I pay, however, I would like to raise one point about the bill.」第二段接著要求刪掉某一項費用。她在第一段明說水槽與開關都沒問題，故 (B) 錯。"
+   },
+   {
+    "q": "How much is the charge that Ms. Nasser objects to?",
+    "options": [
+     "$18.00",
+     "$42.50",
+     "$46.00",
+     "$120.00"
+    ],
+    "answer": 3,
+    "explanation": "跨文件整合題。信件第二段只說週末到府「would add a further charge」並要求刪掉那一行，沒有寫出金額；必須回到發票明細才知該項為 Weekend visit charge $120.00。$42.50 是她另外提問的浴室工資，$46.00 是管件、$18.00 是零星材料，都不是她反對的項目。"
+   },
+   {
+    "q": "What is suggested about the charge for the bathroom light switch?",
+    "options": [
+     "It was added to the invoice by mistake",
+     "It follows the company's usual way of counting time",
+     "It includes the cost of a new switch",
+     "It will be removed when the invoice is corrected"
+    ],
+    "answer": 1,
+    "explanation": "跨文件推論題。信件第三段說該工作只花約十分鐘卻被記為半小時；發票下方備註寫明「Labor is charged in half-hour blocks, and half an hour is the smallest amount charged」，可知這是公司的計時方式，並非誤植。新開關的零件費另列在 Small parts and materials 一項，故 (C) 錯。"
+   },
+   {
+    "q": "What will most likely happen if the repaired pipe leaks again in March?",
+    "options": [
+     "Bellamy will do the work without charging for labor",
+     "Ms. Nasser will be charged the full hourly rate again",
+     "The maker of the pipe will send its own technician",
+     "A weekend visit charge will be added to the new bill"
+    ],
+    "answer": 0,
+    "explanation": "跨文件推論題。發票的服務日期為 11 月 2 日，備註寫「Labor is under warranty for six months from the service date」，六個月保固到隔年 5 月初，三月仍在期限內，因此工資免費。"
+   },
+   {
+    "q": "The word \"raise\" in paragraph 1 of the e-mail is closest in meaning to",
+    "options": [
+     "lift",
+     "increase",
+     "mention",
+     "collect"
+    ],
+    "answer": 2,
+    "explanation": "字義題。「raise one point about the bill」中的 raise 意為「提出（一個問題／看法）」＝ mention。(A) lift 與 (B) increase 都是 raise 的常見字面義誘答，但在此搭配 point 並不合理。"
+   }
+  ],
+  "translation": [
+   "貝拉米水電行\n地址：費爾蓋特桑德希爾路 26 號｜電話 555-0193｜billing@bellamyservice.com\n．發票號碼：BP-5512；發票日期：11 月 6 日；施工日期：11 月 2 日（週日）\n．客戶：法麗達．納塞爾女士，威弗巷 9 號；技師：D. 奧科耶；付款期限：12 月 6 日\n．明細：廚房水槽管線維修工資 2.0 小時，每小時 $85.00，計 $170.00；更換管件（料號 P-14）1 件 $46.00；浴室電燈開關工資 0.5 小時，每小時 $85.00，計 $42.50；週末到府費 1 次 $120.00；零星材料 1 式 $18.00\n．小計 $396.50；稅金（5%）$19.83；應付總額 $416.33\n．備註：工資以半小時為單位計費，最低以半小時起算；凡於週六或週日施作皆收取週末到府費；工資自施工日起保固六個月，零件則依製造商自身保固辦理；逾三十日未付款者，每月加收 1.5% 利息",
+   "收件者：billing@bellamyservice.com\n寄件者：f.nasser@quillmail.com\n日期：11 月 10 日\n主旨：發票 BP-5512\n\n敬啟者：\n\n感謝貴公司這麼快就派奧科耶先生前來。水槽自那之後都沒再出問題，新的開關也運作良好。不過在付款之前，我想針對帳單提出一點疑問。\n\n我在 10 月 30 日（週四）致電貴公司時，要求安排最近的平日時段。當時我被告知直到下週四都沒有人有空，可以改在週日前來。我同意了週日這個時間，但和我通話的人從未告訴我，週末到府會讓總額再多出一筆費用。早知如此，我寧可等。我希望這一項從帳單上刪除。\n\n我還有第二個比較小的問題。浴室那項工作，奧科耶先生大約只花了十分鐘，帳單上卻記為半小時工資。可以說明時間是如何計算的嗎？\n\n我也想先做打算：如果同一段管線在三月再度漏水，我是否得再付一次費用？\n\n收到回覆後，我會立即支付發票其餘款項。\n\n謹啟，\n\n法麗達．納塞爾\n威弗巷 9 號"
+  ]
+ },
+ {
+  "id": "p7-b12-4",
+  "format": "double",
+  "passages": [
+   {
+    "type": "form",
+    "label": "Membership Plan Comparison",
+    "blocks": [
+     {
+      "t": "h",
+      "text": "HALEWOOD ATHLETIC CLUB"
+     },
+     {
+      "t": "sub",
+      "text": "Membership Plans | Prices effective 1 February"
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "Feature",
+        "Basic",
+        "Active",
+        "Complete"
+       ],
+       [
+        "Monthly fee",
+        "$29",
+        "$45",
+        "$68"
+       ],
+       [
+        "Gym floor and machines",
+        "Yes",
+        "Yes",
+        "Yes"
+       ],
+       [
+        "Group classes each month",
+        "2",
+        "8",
+        "No limit"
+       ],
+       [
+        "Swimming pool",
+        "No",
+        "Yes",
+        "Yes"
+       ],
+       [
+        "Access hours",
+        "6 A.M. to 3 P.M.",
+        "6 A.M. to 8 P.M.",
+        "24 hours"
+       ],
+       [
+        "Guest passes each month",
+        "0",
+        "1",
+        "3"
+       ],
+       [
+        "Locker rental",
+        "$8 per month",
+        "$8 per month",
+        "Included"
+       ],
+       [
+        "Training session with a coach",
+        "$55 each",
+        "$48 each",
+        "Two free each month, then $40"
+       ]
+      ]
+     },
+     {
+      "t": "p",
+      "text": "HOW TO CHANGE YOUR PLAN"
+     },
+     {
+      "t": "list",
+      "items": [
+       "Write to members@halewoodclub.com or speak to the front desk.",
+       "A request that reaches us before the twentieth of the month takes effect on the first day of the following month.",
+       "Moving to a lower plan also requires thirty days' written notice.",
+       "Every plan runs for at least three months from the day you join."
+      ]
+     },
+     {
+      "t": "note",
+      "text": "*The joining fee of $40 is charged once only and is not charged again when a member changes plans. Guest passes cannot be saved for the following month."
+     }
+    ]
+   },
+   {
+    "type": "email",
+    "label": "E-mail",
+    "content": "To: members@halewoodclub.com\nFrom: y.balogun@quillmail.com\nDate: 12 June\nSubject: Changing my plan\n\nDear Ms. Bregman,\n\nI joined the club in March on the Active plan and have been coming three or four times a week, almost always early in the morning before work.\n\nTwo things have changed. My nephew is staying with me for the school year while his parents are away, and taking him to school has taken over my mornings, so I can no longer come here before work. The only time I am reliably free is late in the evening, rarely before nine o'clock, and I would much rather swim then than give it up. I have also begun training for a race in October, and my coach suggests two sessions a month with a trainer.\n\nCould you move me to the plan that lets me use the pool at that hour? I would like the change to start on the first of July, and I am writing well before the date given in your rules, so I hope that is possible.\n\nTwo questions. First, I now pay eight dollars a month for a locker. Will that still appear on my bill after the change? Second, my sister is visiting from abroad in August and would like to come with me twice in the same week. Will my new plan allow that?\n\nFinally, please confirm that I do not have to pay the joining fee a second time.\n\nThank you,\n\nYusuf Balogun"
+   }
+  ],
+  "questions": [
+   {
+    "q": "Which plan will Mr. Balogun most likely move to?",
+    "options": [
+     "He will stay on his present plan",
+     "Basic",
+     "Active",
+     "Complete"
+    ],
+    "answer": 3,
+    "explanation": "跨文件整合題。他晚上九點下班後才要游泳，比較表顯示 Active 只開放到 20:00，唯有 Complete 是 24 小時；他另提到每月要兩次教練課，Complete 正好含每月兩次免費課程。兩項條件都指向 Complete。"
+   },
+   {
+    "q": "How much more will Mr. Balogun pay each month after the change?",
+    "options": [
+     "$8",
+     "$15",
+     "$23",
+     "$68"
+    ],
+    "answer": 1,
+    "explanation": "跨文件計算題。他目前 Active 月費 $45，另付置物櫃 $8，合計 $53；Complete 月費 $68 且置物櫃已含在內。$68 − $53 ＝ $15。(C) $23 是只算月費差額、忘了扣掉置物櫃費用的誘答。"
+   },
+   {
+    "q": "What is indicated about the visit by Mr. Balogun's sister?",
+    "options": [
+     "She will have to buy a day ticket at the front desk",
+     "She may come only once during the month",
+     "His new plan will cover both of her visits",
+     "She must be added to his membership first"
+    ],
+    "answer": 2,
+    "explanation": "跨文件整合題。信件第四段說妹妹想在同一週來兩次；比較表 Guest passes each month 一列顯示 Complete 每月三張來賓券，兩次在額度之內，故不需另外購票。"
+   },
+   {
+    "q": "According to the comparison chart, what is NOT included in the Active plan?",
+    "options": [
+     "Use of the swimming pool",
+     "Free training sessions with a coach",
+     "Eight group classes each month",
+     "One guest pass each month"
+    ],
+    "answer": 1,
+    "explanation": "NOT 題。比較表 Active 欄位：游泳池 Yes、團體課程 8 堂、來賓券 1 張，均含在內；教練課則標示 $48 each，須另外付費，只有 Complete 才有每月兩次免費，故選 (B)。"
+   },
+   {
+    "q": "The word \"suggests\" in paragraph 2 of the e-mail is closest in meaning to",
+    "options": [
+     "orders",
+     "proves",
+     "doubts",
+     "recommends"
+    ],
+    "answer": 3,
+    "explanation": "字義題。「my coach suggests two sessions a month with a trainer」是教練提出的建議，故 suggests ＝ recommends。(A) orders 語氣過強，教練並非下令；(B)(C) 與語意不符。"
+   }
+  ],
+  "translation": [
+   "海爾伍德運動俱樂部 會員方案比較（2 月 1 日起適用價格）\n．月費：基本 $29／進階 $45／全享 $68\n．健身區與器材：三種方案皆可使用\n．每月團體課程：基本 2 堂／進階 8 堂／全享 無上限\n．游泳池：基本 不可／進階 可／全享 可\n．開放時段：基本 06:00-15:00／進階 06:00-20:00／全享 24 小時\n．每月來賓券：基本 0 張／進階 1 張／全享 3 張\n．置物櫃租金：基本、進階每月 $8／全享 已含\n．教練課程：基本每堂 $55／進階每堂 $48／全享 每月兩堂免費，之後每堂 $40\n．更改方案方式：來信 members@halewoodclub.com 或洽櫃檯；每月 20 日前提出者，自次月 1 日生效；降級另需提前三十天書面通知；各方案自入會日起至少須維持三個月\n．備註：$40 入會費僅收取一次，更改方案時不再收取；來賓券不得保留至次月",
+   "收件者：members@halewoodclub.com\n寄件者：y.balogun@quillmail.com\n日期：6 月 12 日\n主旨：更改我的方案\n\n親愛的布雷格曼女士：\n\n我三月入會，選的是進階方案，每週來三到四次，幾乎都是上班前的清晨時段。\n\n現在有兩件事變了。我姪子這學年住在我這裡，父母不在身邊由我照顧，早上送他上學占掉了我原本的時段，我已經沒辦法在上班前過來。我固定有空的時間只剩晚上，很少早於九點，比起就此放棄，我寧可改在那個時候游泳。另外我開始為十月的一場路跑受訓，教練建議我每月安排兩堂教練課。\n\n可以幫我改到那個時段仍能使用游泳池的方案嗎？我希望從七月一日起生效，而且我提出的時間遠早於貴會規定的日期，希望能夠辦到。\n\n另有兩個問題。第一，我目前每月支付八美元的置物櫃費用，更改方案後帳單上還會有這筆嗎？第二，我妹妹八月會從國外來訪，想在同一週跟我來兩次，新方案是否允許？\n\n最後，也請確認我不必再付第二次入會費。\n\n謝謝，\n\n尤瑟夫．巴洛貢"
+  ]
+ },
+ {
+  "id": "p7-b13-1",
+  "format": "triple",
+  "passages": [
+   {
+    "type": "webpage",
+    "label": "Web Page",
+    "blocks": [
+     {
+      "t": "h",
+      "text": "THE WEATHERBY INN"
+     },
+     {
+      "t": "sub",
+      "text": "www.weatherbyinn.com  |  Rooms and Rates  |  The Corner Room  |  Getting Here"
+     },
+     {
+      "t": "p",
+      "text": "The Weatherby Inn is a twenty-eight-room hotel on Sefton Road in Calderfield, a ten-minute walk from the harbor and twenty-five minutes by road from the airport. Every rate below includes breakfast in the Corner Room, our ground-floor cafe, which is open to guests from 7:00 to 9:30 A.M."
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "Room type",
+        "Sleeps",
+        "Rate per night",
+        "Also included"
+       ],
+       [
+        "Sefton Single",
+        "1",
+        "$104",
+        "Desk"
+       ],
+       [
+        "Courtyard Twin",
+        "2",
+        "$139",
+        "Desk, garden view"
+       ],
+       [
+        "Harbor View",
+        "2",
+        "$168",
+        "Balcony, airport pickup"
+       ],
+       [
+        "Loft Room",
+        "3",
+        "$210",
+        "Balcony, airport pickup, checkout at 2:00 P.M."
+       ]
+      ]
+     },
+     {
+      "t": "note",
+      "text": "*Each rate covers the room, not each guest. An extra bed costs $20 per night and can be added to the Loft Room only."
+     },
+     {
+      "t": "p",
+      "text": "Guests who stay three nights or more receive a $25 credit at the Corner Room. The credit is added to the room account on the day of arrival and cannot be exchanged for cash."
+     },
+     {
+      "t": "list",
+      "items": [
+       "Wireless internet in every room and in the lobby, free for guests",
+       "Bicycles at the front desk for guests to borrow, from 7:00 A.M. until dark",
+       "The Ardley Room, a meeting room for up to eight people, $45 for a half day",
+       "Airport pickup in our own car: included with Harbor View and Loft rooms, $26 each way for all other guests",
+       "Front desk open twenty-four hours a day; checkout by 11:00 A.M."
+      ]
+     }
+    ]
+   },
+   {
+    "type": "email",
+    "label": "E-mail",
+    "content": "To: c.restrepo@bellamyprint.com\nFrom: bookings@weatherbyinn.com\nDate: April 9\nSubject: Booking WB-2078\n\nDear Ms. Restrepo,\n\nThank you for booking with us directly. Your reservation is confirmed as shown below, and the room will be held for you until midnight on the day you arrive.\n\nArrival: Tuesday, April 14\nDeparture: Friday, April 17\nRoom: Courtyard Twin, one guest\nRate: $139 per night\nRoom total: $417\n\nOur driver can meet you at the airport if you send us your flight number at least one day ahead. Please note that this service is not part of the rate for the room you have chosen; the current price for it is on the Rooms and Rates page.\n\nBreakfast is included each morning. Anything else you use during your stay, such as the car, the cafe, or the meeting room, is added to your room account, and the whole account is paid at the front desk on the morning you leave.\n\nWe look forward to welcoming you to Calderfield.\n\nHugo Lindqvist\nBookings, The Weatherby Inn"
+   },
+   {
+    "type": "review",
+    "label": "Guest Review",
+    "content": "Guest reviews: The Weatherby Inn, Calderfield\nPosted April 20 by Camila Restrepo - 4 out of 5\n\nI come to Calderfield twice a year to see a printing client whose office is down by the harbor, and this was my first stay at the Weatherby. The inn's own driver was waiting at the airport with my name on a card, and on my last morning the same man drove me back in good time for an early flight. Both trips were added to my account, which the clerk had told me to expect.\n\nThe one thing that annoyed me was the bicycles. I had chosen this inn over a cheaper one near the station because the rooms page promised bicycles for guests, and I like to ride out along the water when the working day is over. The clerk explained, kindly enough, that the last two were sold in February and that nobody had taken the line off the site. It is a small thing, but it was the reason I booked.\n\nWhat I will remember, though, is the second evening. My client moved our meeting to a video call at eight o'clock, and my room was far too noisy for it because a wedding party had taken over the garden. The manager unlocked the meeting room off the lobby, brought me a pot of tea, and there was no charge for it. I have paid good money for far less at larger hotels.\n\nTwo notes for other travelers. Breakfast ends at half past nine, which is early for anyone who works late, and the garden rooms look onto a wall of flowers rather than the water, so read the room names carefully before you book."
+   }
+  ],
+  "questions": [
+   {
+    "q": "According to the Web page, what is NOT available at the Weatherby Inn?",
+    "options": [
+     "A cafe that serves breakfast",
+     "Internet service at no extra cost",
+     "A place where guests can leave their cars",
+     "A room that can be used for small meetings"
+    ],
+    "answer": 2,
+    "explanation": "NOT 題採刪去法。(A) 第一段寫 breakfast in the Corner Room, our ground-floor cafe；(B) 清單第一項 Wireless internet ... free for guests；(D) 清單第三項 The Ardley Room, a meeting room for up to eight people。整個網頁從房型表、住宿優惠到設施清單都沒提到停車，故選 (C)。"
+   },
+   {
+    "q": "In the review, the word \"charge\" in paragraph 3 is closest in meaning to",
+    "options": [
+     "responsibility",
+     "fee",
+     "attack",
+     "energy"
+    ],
+    "answer": 1,
+    "explanation": "定位評論第三段：The manager unlocked the meeting room off the lobby, brought me a pot of tea, and there was no charge for it。網頁列出該會議室 $45 for a half day，郵件也說會議室費用 is added to your room account，可見 charge 指「費用」，故選 (B) fee。charge 另有「職責（in charge of）」「攻擊」「電力」等義，(A)(C)(D) 即分別針對這三義設計的誘答，套回本句皆不通。"
+   },
+   {
+    "q": "How much did Ms. Restrepo most likely pay for her trips between the airport and the inn?",
+    "options": [
+     "Nothing",
+     "$20",
+     "$26",
+     "$52"
+    ],
+    "answer": 3,
+    "explanation": "三份文件整合題。第一步：郵件顯示她訂的是 Courtyard Twin，並註明接送 is not part of the rate for the room you have chosen。第二步：網頁清單寫 Airport pickup ... included with Harbor View and Loft rooms, $26 each way for all other guests，她的房型不含接送，單程 26 美元。第三步：評論第一段說司機在機場接她，最後一天早上又載她回機場，Both trips were added to my account，共兩趟，26 乘以 2 等於 52，故選 (D)。(A) 誤以為房價已含；(B) $20 是加床費用；(C) $26 只算了單程。"
+   },
+   {
+    "q": "What did the inn do for Ms. Restrepo on her second evening?",
+    "options": [
+     "It let her use a space that guests normally pay for.",
+     "It moved her to a room with a balcony.",
+     "It allowed her to check out at a later hour.",
+     "It returned the money she had paid for breakfast."
+    ],
+    "answer": 0,
+    "explanation": "整合題。評論第三段說經理打開大廳旁的會議室讓她開視訊會議，且 there was no charge for it；回到網頁清單，The Ardley Room ... $45 for a half day，郵件也說會議室費用會記入房帳，可見那是原本要收費的空間，故選 (A)。(B) 陽台屬於 Harbor View 與 Loft 房型，她住的是 Courtyard Twin，且評論未提換房；(C) 下午 2:00 退房是 Loft Room 的待遇；(D) 早餐本來就含在房價內，不存在退費。"
+   },
+   {
+    "q": "What does Ms. Restrepo indicate about the inn's Web page?",
+    "options": [
+     "It gives the wrong hours for breakfast.",
+     "It describes a service that is no longer offered.",
+     "It does not give the price of airport pickup.",
+     "It was rewritten shortly before her stay."
+    ],
+    "answer": 1,
+    "explanation": "整合題。評論第二段說她因為網頁上寫有自行車出借才選這家飯店，櫃檯卻告訴她 the last two were sold in February and ... nobody had taken the line off the site，也就是網頁還留著已停止的服務，故選 (B)。(A) 網頁寫早餐 7:00 至 9:30，評論說 Breakfast ends at half past nine，兩者一致；(C) 網頁清楚寫 $26 each way，郵件還請她上該頁查價；(D) 評論說的正好相反，那一行從二月起就沒人動過。"
+   }
+  ],
+  "translation": [
+   "THE WEATHERBY INN（飯店網頁）\nwww.weatherbyinn.com｜房型與房價｜Corner Room 餐廳｜交通資訊\n\nWeatherby Inn 是一間位於 Calderfield 市 Sefton 路的飯店，共二十八間客房，步行十分鐘可達港口，開車至機場約二十五分鐘。下列每一種房價都已含 Corner Room 的早餐；該餐廳位於一樓，供餐時間為上午 7:00 至 9:30。\n\n房型表重點：\n．Sefton Single（單人房）：可住 1 人，每晚 104 美元，附書桌\n．Courtyard Twin（庭園雙床房）：可住 2 人，每晚 139 美元，附書桌、花園景觀\n．Harbor View（港景房）：可住 2 人，每晚 168 美元，附陽台、機場接送\n．Loft Room（樓中樓房）：可住 3 人，每晚 210 美元，附陽台、機場接送、可延至下午 2:00 退房\n＊各房價以整間客房計算，不是按人數計價。加床每晚 20 美元，且只有 Loft Room 可以加床。\n\n住滿三晚（含）以上的旅客，可獲得 Corner Room 餐廳 25 美元的抵用額度。額度於入住當日記入房帳，不得兌換現金。\n\n．全館客房與大廳皆有無線網路，房客免費使用\n．櫃檯出借自行車供房客使用，上午 7:00 起至天黑\n．Ardley 室為最多容納八人的會議室，半天 45 美元\n．機場接送由本館車輛提供：Harbor View 與 Loft 房型已包含；其他房客單程 26 美元\n．櫃檯二十四小時服務；退房時間為上午 11:00 前",
+   "收件者：c.restrepo@bellamyprint.com\n寄件者：bookings@weatherbyinn.com\n日期：4 月 9 日\n主旨：訂房編號 WB-2078\n\n親愛的 Restrepo 女士：\n\n感謝您直接向本館訂房。您的訂房確認如下，客房將為您保留至入住當日午夜。\n\n入住：4 月 14 日（星期二）\n退房：4 月 17 日（星期五）\n房型：Courtyard Twin，一位住客\n房價：每晚 139 美元\n房費合計：417 美元\n\n若您至少提前一天告知班機號碼，本館司機可到機場接您。請注意，這項服務並未包含在您所選房型的房價中，目前的收費請見「房型與房價」頁面。\n\n每日早餐已含在房價內。住宿期間使用的其他項目，例如接送車、餐廳或會議室，都會記入您的房帳，並於您離開當天早上在櫃檯一併結清。\n\n期待在 Calderfield 迎接您的到來。\n\nHugo Lindqvist\nThe Weatherby Inn 訂房組",
+   "住客評論：Calderfield 的 The Weatherby Inn\n4 月 20 日由 Camila Restrepo 張貼－五顆星中的四顆\n\n我一年會到 Calderfield 兩次，去拜訪一位辦公室就在港邊的印刷業客戶，而這是我第一次住 Weatherby。飯店自己的司機拿著寫有我名字的牌子在機場等我，最後一天早上也是同一位司機載我回機場，讓我從容趕上一早的班機。兩趟車資都記在我的房帳上，這一點櫃檯人員事先就跟我說過了。\n\n唯一讓我不高興的是自行車。我之所以捨棄車站旁比較便宜的旅館而選這裡，就是因為房型頁面寫著提供房客自行車，而我喜歡在一天工作結束後沿著水邊騎車。櫃檯人員語氣很客氣地解釋，最後兩台在二月就賣掉了，只是一直沒有人把網頁上那一行拿掉。這件事不大，卻正是我訂房的理由。\n\n不過真正讓我記住的，是第二天晚上。客戶把會議改成晚上八點的視訊通話，而我房間太吵，因為花園被一場婚宴包下了。經理打開大廳旁的會議室讓我使用，還端來一壺茶，而且完全沒有收費。我在更大的飯店花過更多錢，得到的服務卻遠不如此。\n\n另外兩點提供其他旅客參考。早餐九點半就結束，對加班晚睡的人來說太早；還有，花園景觀的房間看出去是一整面花牆而不是水景，訂房前請把房型名稱看仔細。"
+  ]
+ },
+ {
+  "id": "p7-b13-2",
+  "format": "triple",
+  "passages": [
+   {
+    "type": "advertisement",
+    "label": "Advertisement",
+    "blocks": [
+     {
+      "t": "h",
+      "text": "BRIARWOOD SPRING COMMUNITY MARKET"
+     },
+     {
+      "t": "sub",
+      "text": "Sunday, May 24  ·  Dalton Green  ·  Free entry for shoppers"
+     },
+     {
+      "t": "p",
+      "text": "Forty-five stalls, live music, and food from eleven neighborhood kitchens. The market fills Dalton Green and the covered walkway beside the library."
+     },
+     {
+      "t": "list",
+      "items": [
+       "Stalls on the Green are open from 9:00 A.M. to 4:00 P.M.",
+       "Food stalls in the covered walkway serve from 9:00 A.M. to 6:00 P.M.",
+       "Craft table for children, 10:00 A.M. to 1:00 P.M., next to the stage",
+       "Music on the stage from 2:00 P.M.",
+       "Buses 6 and 19 stop at the library door; sellers may leave their vehicles in the Dalton Street lot"
+      ]
+     },
+     {
+      "t": "p",
+      "text": "Would you like a stall of your own? Application forms are at the library desk and at www.briarwoodmarket.org. Forms must reach us by May 2, and we write to every applicant during the week of May 4."
+     },
+     {
+      "t": "coupon",
+      "lines": [
+       "Two seats for the price of one - Briarwood Library film night",
+       "Bring this flyer to the library desk before June 30. One per household."
+      ]
+     },
+     {
+      "t": "note",
+      "text": "*Sellers may set up from 7:00 A.M. All vehicles must be off the Green by 8:30 A.M."
+     }
+    ]
+   },
+   {
+    "type": "form",
+    "label": "Stall Application Form",
+    "blocks": [
+     {
+      "t": "h",
+      "text": "BRIARWOOD SPRING COMMUNITY MARKET"
+     },
+     {
+      "t": "sub",
+      "text": "Stall Application - return to the library desk by May 2"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Seller",
+        "Yusra Halabi"
+       ],
+       [
+        "Business name",
+        "Olive Lane Kitchen"
+       ],
+       [
+        "Telephone",
+        "555-0193"
+       ],
+       [
+        "E-mail",
+        "yusra@olivelanekitchen.com"
+       ],
+       [
+        "Goods for sale",
+        "Hot sandwiches and salads, cooked on a small grill"
+       ],
+       [
+        "Table length",
+        "2 meters"
+       ],
+       [
+        "Power needed",
+        "Yes - one grill and one small refrigerator"
+       ],
+       [
+        "Own tent",
+        "No"
+       ],
+       [
+        "Hours you can attend",
+        "9:00 A.M. to 4:00 P.M."
+       ],
+       [
+        "Sold at a Briarwood market before",
+        "No"
+       ],
+       [
+        "Vehicle",
+        "Small van"
+       ]
+      ]
+     },
+     {
+      "t": "note",
+      "text": "*Stall fees for the day: 2 meters $35, 3 meters $45, 4 meters $60. Power is $15 for the day. Fees are collected at the market office on Dalton Street when you arrive, not with this form."
+     }
+    ]
+   },
+   {
+    "type": "email",
+    "label": "E-mail",
+    "content": "To: yusra@olivelanekitchen.com\nFrom: t.rahman@briarwoodmarket.org\nDate: May 7\nSubject: Your stall on May 24\n\nDear Ms. Halabi,\n\nThank you for your form. We are pleased to offer you a stall at the spring market, and yours will be one of the eleven kitchens taking part this year.\n\nBecause you will be cooking, you cannot be on the Green itself. You have stall 10 in the walkway beside the library, where the water tap and the power outlets are. Please look at the hours on the flyer once more before May 24: the part of the market you are in does not close when the Green does, and the form you sent me shows that you had the shorter day in mind.\n\nYou may drive onto the Green to unload from 7:00 A.M., but your van must be in the Dalton Street lot by the time printed at the foot of the flyer. Anyone still unloading after that hour holds up every seller behind them.\n\nI have marked your stall for power. One charge covers both the grill and the refrigerator, so the amount you owe is the table fee plus that single charge. Please bring it in cash on the day, since the market office keeps very little change.\n\nWe have no tents to lend. Your form says that you do not have one, so please bring something to keep the rain off: the roof over the walkway stops short of the last two stalls, and yours is one of them.\n\nTanvir Rahman\nMarket Coordinator, Briarwood Neighborhood Association"
+   }
+  ],
+  "questions": [
+   {
+    "q": "What information does the advertisement NOT give?",
+    "options": [
+     "How much a stall costs",
+     "Which buses stop near the market",
+     "When the music will start",
+     "Where application forms can be found"
+    ],
+    "answer": 0,
+    "explanation": "NOT 題採刪去法。(B) 清單最後一項寫 Buses 6 and 19 stop at the library door；(C) 清單第四項 Music on the stage from 2:00 P.M.；(D) 傳單倒數第二段說申請表在圖書館服務台與網站上都有。攤位費用只出現在報名表下方的小字（2 meters $35 等），傳單完全沒提，故選 (A)。"
+   },
+   {
+    "q": "In the e-mail, the word \"covers\" in paragraph 4 is closest in meaning to",
+    "options": [
+     "hides",
+     "protects",
+     "includes",
+     "reports"
+    ],
+    "answer": 2,
+    "explanation": "定位郵件第四段：One charge covers both the grill and the refrigerator, so the amount you owe is the table fee plus that single charge，意思是一筆電費就「涵蓋」了兩台設備，故選 (C) includes。cover 另有「遮住」「保護」「報導」等義，(A)(B)(D) 即針對這三義設計的誘答；報名表小字也寫 Power is $15 for the day，用電是按天計費而非按設備計費，可佐證此解。"
+   },
+   {
+    "q": "Why was Ms. Halabi given a stall in the walkway?",
+    "options": [
+     "Because she asked to be near the library",
+     "Because the Green was already full",
+     "Because she has sold at the market before",
+     "Because she will be preparing hot food"
+    ],
+    "answer": 3,
+    "explanation": "定位郵件第二段：Because you will be cooking, you cannot be on the Green itself. You have stall 10 in the walkway beside the library；報名表也顯示她賣的是 Hot sandwiches and salads, cooked on a small grill，故選 (D)。(A) 她在報名表上並未提出位置要求；(B) 郵件未提廣場攤位已滿；(C) 報名表 Sold at a Briarwood market before 一欄填的是 No。"
+   },
+   {
+    "q": "How much longer than she expected will Ms. Halabi's stall be open?",
+    "options": [
+     "One hour",
+     "Two hours",
+     "Three hours",
+     "Four hours"
+    ],
+    "answer": 1,
+    "explanation": "三份文件整合題。第一步：報名表 Hours you can attend 填的是 9:00 A.M. to 4:00 P.M.，可見她原本以為只到下午四點。第二步：郵件說她的攤位在圖書館旁的走廊，而且 the part of the market you are in does not close when the Green does。第三步：回到傳單，Food stalls in the covered walkway serve from 9:00 A.M. to 6:00 P.M.，收攤比她預期的晚兩小時，故選 (B)。(A)(C) 都對不上這兩個時間的差距；(D) 四小時是誤把 Sellers may set up from 7:00 A.M. 的進場時間當成營業起點（7:00 到 6:00 共十一小時，減去她填的七小時）。"
+   },
+   {
+    "q": "How much will Ms. Halabi most likely pay at the market office?",
+    "options": [
+     "$35",
+     "$45",
+     "$50",
+     "$65"
+    ],
+    "answer": 2,
+    "explanation": "整合題。報名表 Table length 填 2 meters，下方小字寫 2 meters $35，用電另計 $15；郵件第四段確認 I have marked your stall for power，且 One charge covers both the grill and the refrigerator，電費只算一筆。35 加 15 等於 50，故選 (C)。(A) 漏算電費；(B) $45 是 3 公尺攤位的費用；(D) $65 是把烤爐與小冰箱各算一次電費。"
+   }
+  ],
+  "translation": [
+   "BRIARWOOD 春季社區市集（傳單）\n5 月 24 日（星期日）·Dalton 廣場·購物民眾免費入場\n\n四十五個攤位、現場音樂表演，以及十一家社區廚房帶來的餐飲。市集範圍涵蓋 Dalton 廣場與圖書館旁的有頂走廊。\n\n．廣場上的攤位營業時間為上午 9:00 至下午 4:00\n．有頂走廊的餐飲攤位供餐時間為上午 9:00 至下午 6:00\n．兒童手作桌，上午 10:00 至下午 1:00，位於舞台旁\n．舞台現場音樂表演，下午 2:00 開始\n．6 號與 19 號公車停靠圖書館門口；攤商車輛可停放於 Dalton 街停車場\n\n想要有自己的攤位嗎？申請表可至圖書館服務台索取，或至 www.briarwoodmarket.org 下載。申請表必須在 5 月 2 日前送達，我們會在 5 月 4 日那一週回信給每一位申請人。\n\n【優惠券】Briarwood 圖書館電影之夜　買一張送一張\n請於 6 月 30 日前持本傳單至圖書館服務台使用。每戶限用一次。\n\n＊攤商可自上午 7:00 起進場布置。所有車輛必須在上午 8:30 前駛離廣場。",
+   "BRIARWOOD 春季社區市集\n攤位申請表－請於 5 月 2 日前送回圖書館服務台\n\n．攤商姓名：Yusra Halabi\n．商號名稱：Olive Lane Kitchen\n．電話：555-0193\n．電子郵件：yusra@olivelanekitchen.com\n．販售商品：熱三明治與沙拉，以小型烤爐現場烹調\n．攤位桌長：2 公尺\n．是否需要電力：是－一台烤爐與一台小冰箱\n．是否自備帳篷：否\n．可到場時段：上午 9:00 至下午 4:00\n．是否曾在 Briarwood 市集擺攤：否\n．車輛：小型廂型車\n\n＊當日攤位費用：2 公尺 35 美元、3 公尺 45 美元、4 公尺 60 美元；用電當日另計 15 美元。費用於到場時在 Dalton 街的市集辦公室繳交，不隨本表繳付。",
+   "收件者：yusra@olivelanekitchen.com\n寄件者：t.rahman@briarwoodmarket.org\n日期：5 月 7 日\n主旨：您 5 月 24 日的攤位\n\n親愛的 Halabi 女士：\n\n感謝您寄回申請表。很高興通知您，我們可以提供攤位給您，您也將是今年參與的十一家廚房之一。\n\n由於您需要現場烹調，無法安排在廣場上。您的位置是圖書館旁走廊的 10 號攤位，那裡有水龍頭與電源插座。請在 5 月 24 日之前再看一次傳單上的時間：您所在的這一區並不會跟著廣場一起收攤，而您寄來的表格顯示，您原本設想的是比較短的營業時間。\n\n您可以在上午 7:00 起把車開進廣場卸貨，但廂型車必須在傳單最下方所印的時間之前停到 Dalton 街停車場。超過那個時間還在卸貨的人，會耽誤到後面每一位攤商。\n\n我已經註記您的攤位需要用電。烤爐與小冰箱共計一筆電費，因此您要繳的金額就是桌位費加上那一筆電費。請當天備妥現金，因為市集辦公室能找的零錢很少。\n\n另外，我們沒有帳篷可以外借。您的表格上寫著沒有自備帳篷，所以請帶些能遮雨的東西：走廊的屋頂並未延伸到最後兩個攤位，而您的攤位正是其中之一。\n\nTanvir Rahman\nBriarwood 社區協會 市集主辦人"
   ]
  },
  {
@@ -684,7 +2324,62 @@ TOEIC.part7 = [
    {
     "type": "schedule",
     "label": "",
-    "content": "BRIDGEWATER LOGISTICS\nSite Visit Itinerary\nVisitor: Ms. Amara Osei, Regional Auditor\nTuesday, September 9\n\n8:15 A.M. Arrival at the Northgate Distribution Center. Ms. Osei will be met at the visitor entrance by Facilities Manager Tomas Rivera, who will issue her a security badge for the day.\n\n8:30-9:45 A.M. Walk-through of the sorting floor and the cold storage wing. Protective footwear will be provided. Photography is not permitted anywhere in cold storage.\n\n10:00-11:15 A.M. Review of second-quarter shipping records with Lena Kowalski, Records Supervisor (Room 2C).\n\n11:30 A.M.-12:30 P.M. Lunch with the senior management team in the staff cafeteria.\n\n12:45-2:00 P.M. Interviews with four shift leaders. Each interview will last fifteen minutes; the remaining time is reserved for follow-up questions.\n\n2:15-3:00 P.M. Closing discussion with Branch Director Neil Ashford. Ms. Osei will present her preliminary observations, and a written report will follow within three weeks.\n\nNote: The loading bay will be operating at full capacity on the day of the visit. Ms. Osei is asked to park in Lot C rather than the visitor lot, which will be occupied by delivery vehicles."
+    "blocks": [
+     {
+      "t": "h",
+      "text": "BRIDGEWATER LOGISTICS"
+     },
+     {
+      "t": "sub",
+      "text": "Site Visit Itinerary"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Visitor",
+        "Ms. Amara Osei, Regional Auditor"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "Tuesday, September 9"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "8:15 A.M.",
+        "Arrival at the Northgate Distribution Center. Ms. Osei will be met at the visitor entrance by Facilities Manager Tomas Rivera, who will issue her a security badge for the day."
+       ],
+       [
+        "8:30-9:45 A.M.",
+        "Walk-through of the sorting floor and the cold storage wing. Protective footwear will be provided. Photography is not permitted anywhere in cold storage."
+       ],
+       [
+        "10:00-11:15 A.M.",
+        "Review of second-quarter shipping records with Lena Kowalski, Records Supervisor (Room 2C)."
+       ],
+       [
+        "11:30 A.M.-12:30 P.M.",
+        "Lunch with the senior management team in the staff cafeteria."
+       ],
+       [
+        "12:45-2:00 P.M.",
+        "Interviews with four shift leaders. Each interview will last fifteen minutes; the remaining time is reserved for follow-up questions."
+       ],
+       [
+        "2:15-3:00 P.M.",
+        "Closing discussion with Branch Director Neil Ashford. Ms. Osei will present her preliminary observations, and a written report will follow within three weeks."
+       ]
+      ]
+     },
+     {
+      "t": "note",
+      "text": "Note: The loading bay will be operating at full capacity on the day of the visit. Ms. Osei is asked to park in Lot C rather than the visitor lot, which will be occupied by delivery vehicles."
+     }
+    ]
    }
   ],
   "questions": [
@@ -804,7 +2499,63 @@ TOEIC.part7 = [
    {
     "type": "text message chain",
     "label": "",
-    "content": "Kirsten Dahl (9:52 A.M.)\nMorning, Owen. I'm at the Fairmount Convention Center. Our booth panels arrived fine, but the crate with the display monitors isn't here.\n\nOwen Beckley (9:55 A.M.)\nThat is not what I wanted to hear. The courier confirmed delivery yesterday at 4 P.M.\n\nKirsten Dahl (9:58 A.M.)\nThe loading dock supervisor says three crates came in under our company name. I have only been able to find two.\n\nOwen Beckley (10:02 A.M.)\nCan you check the holding area on level B? They sometimes keep oversized items down there.\n\nKirsten Dahl (10:11 A.M.)\nFound it. It was labeled with the wrong booth number, 214 instead of 241.\n\nOwen Beckley (10:13 A.M.)\nThat is a relief. Can you get it upstairs on your own?\n\nKirsten Dahl (10:15 A.M.)\nNot a chance. It weighs about 80 kilos.\n\nOwen Beckley (10:18 A.M.)\nUnderstood. I will call the center's operations desk and arrange for a cart and two staff members. Give me twenty minutes.\n\nKirsten Dahl (10:20 A.M.)\nThanks. In the meantime I will start assembling the shelving. Doors open at 1 P.M., so we still have time.\n\nOwen Beckley (10:22 A.M.)\nGood. And please ask the supervisor to correct the label before we ship everything back on Sunday."
+    "blocks": [
+     {
+      "t": "chat",
+      "msgs": [
+       {
+        "who": "Kirsten Dahl",
+        "time": "9:52 A.M.",
+        "text": "Morning, Owen. I'm at the Fairmount Convention Center. Our booth panels arrived fine, but the crate with the display monitors isn't here."
+       },
+       {
+        "who": "Owen Beckley",
+        "time": "9:55 A.M.",
+        "text": "That is not what I wanted to hear. The courier confirmed delivery yesterday at 4 P.M."
+       },
+       {
+        "who": "Kirsten Dahl",
+        "time": "9:58 A.M.",
+        "text": "The loading dock supervisor says three crates came in under our company name. I have only been able to find two."
+       },
+       {
+        "who": "Owen Beckley",
+        "time": "10:02 A.M.",
+        "text": "Can you check the holding area on level B? They sometimes keep oversized items down there."
+       },
+       {
+        "who": "Kirsten Dahl",
+        "time": "10:11 A.M.",
+        "text": "Found it. It was labeled with the wrong booth number, 214 instead of 241."
+       },
+       {
+        "who": "Owen Beckley",
+        "time": "10:13 A.M.",
+        "text": "That is a relief. Can you get it upstairs on your own?"
+       },
+       {
+        "who": "Kirsten Dahl",
+        "time": "10:15 A.M.",
+        "text": "Not a chance. It weighs about 80 kilos."
+       },
+       {
+        "who": "Owen Beckley",
+        "time": "10:18 A.M.",
+        "text": "Understood. I will call the center's operations desk and arrange for a cart and two staff members. Give me twenty minutes."
+       },
+       {
+        "who": "Kirsten Dahl",
+        "time": "10:20 A.M.",
+        "text": "Thanks. In the meantime I will start assembling the shelving. Doors open at 1 P.M., so we still have time."
+       },
+       {
+        "who": "Owen Beckley",
+        "time": "10:22 A.M.",
+        "text": "Good. And please ask the supervisor to correct the label before we ship everything back on Sunday."
+       }
+      ]
+     }
+    ]
    }
   ],
   "questions": [
@@ -1104,7 +2855,130 @@ TOEIC.part7 = [
    {
     "type": "invoice",
     "label": "",
-    "content": "GRANTHAM & PELL EQUIPMENT SERVICES\n17 Rowan Industrial Park, Dunmore, PA 18512\n\nINVOICE #GP-40218\nInvoice date: June 12\nPayment due: July 12\n\nBILL TO:\nMs. Yuki Ashworth, Facilities Coordinator\nProspect Ridge Dental Group\n88 Larkspur Boulevard, Dunmore, PA 18510\n\nService date: June 9        Technician: R. Okonjo\n\nDESCRIPTION                                QTY      AMOUNT\nAnnual inspection, dental air compressor    1      $180.00\nReplacement air filter (part #AC-77)        2       $64.00\nLabor, compressor belt replacement       1.5 hr    $135.00\nEmergency service surcharge                 1       $95.00\n                                     Subtotal      $474.00\n                                     Tax (6%)       $28.44\n                                     TOTAL         $502.44\n\nNOTES\nThe emergency surcharge applies because this visit was requested outside the scheduled maintenance window. Clients enrolled in our Silver or Gold service plans are exempt from the surcharge; your practice is currently enrolled in the Basic plan.\n\nThe compressor belt installed on June 9 carries a twelve-month parts-and-labor warranty. Air filters are treated as supplies and are not covered by any warranty.\n\nDuring the inspection, the technician noted rust on the water separator. We recommend replacing this part within six months. A written quotation can be prepared at no cost.\n\nPayment may be made by check or bank transfer. A late fee of 1.5 percent of the outstanding balance is added each month after the due date. Questions about this invoice should be directed to billing@granthampell.com."
+    "blocks": [
+     {
+      "t": "h",
+      "text": "GRANTHAM & PELL EQUIPMENT SERVICES"
+     },
+     {
+      "t": "sub",
+      "text": "17 Rowan Industrial Park, Dunmore, PA 18512"
+     },
+     {
+      "t": "sub",
+      "text": "INVOICE #GP-40218"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Invoice date",
+        "June 12"
+       ],
+       [
+        "Payment due",
+        "July 12"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "BILL TO:"
+     },
+     {
+      "t": "p",
+      "text": "Ms. Yuki Ashworth, Facilities Coordinator"
+     },
+     {
+      "t": "p",
+      "text": "Prospect Ridge Dental Group"
+     },
+     {
+      "t": "p",
+      "text": "88 Larkspur Boulevard, Dunmore, PA 18510"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Service date",
+        "June 9"
+       ],
+       [
+        "Technician",
+        "R. Okonjo"
+       ]
+      ]
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "DESCRIPTION",
+        "QTY",
+        "AMOUNT"
+       ],
+       [
+        "Annual inspection, dental air compressor",
+        "1",
+        "$180.00"
+       ],
+       [
+        "Replacement air filter (part #AC-77)",
+        "2",
+        "$64.00"
+       ],
+       [
+        "Labor, compressor belt replacement",
+        "1.5 hr",
+        "$135.00"
+       ],
+       [
+        "Emergency service surcharge",
+        "1",
+        "$95.00"
+       ]
+      ]
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Subtotal",
+        "$474.00"
+       ],
+       [
+        "Tax (6%)",
+        "$28.44"
+       ],
+       [
+        "TOTAL",
+        "$502.44"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "NOTES"
+     },
+     {
+      "t": "p",
+      "text": "The emergency surcharge applies because this visit was requested outside the scheduled maintenance window. Clients enrolled in our Silver or Gold service plans are exempt from the surcharge; your practice is currently enrolled in the Basic plan."
+     },
+     {
+      "t": "p",
+      "text": "The compressor belt installed on June 9 carries a twelve-month parts-and-labor warranty. Air filters are treated as supplies and are not covered by any warranty."
+     },
+     {
+      "t": "p",
+      "text": "During the inspection, the technician noted rust on the water separator. We recommend replacing this part within six months. A written quotation can be prepared at no cost."
+     },
+     {
+      "t": "p",
+      "text": "Payment may be made by check or bank transfer. A late fee of 1.5 percent of the outstanding balance is added each month after the due date. Questions about this invoice should be directed to billing@granthampell.com."
+     }
+    ]
    }
   ],
   "questions": [
@@ -1224,7 +3098,58 @@ TOEIC.part7 = [
    {
     "type": "text message chain",
     "label": "",
-    "content": "Priya Raghavan (9:42 A.M.)\nMorning, both. I've just reached the convention center. The booth panels are here, but the crate with the display screens hasn't turned up.\n\nDominic Hale (9:47 A.M.)\nThat's not good. The carrier promised everything would be unloaded by eight.\n\nPriya Raghavan (9:51 A.M.)\nI spoke to the loading dock supervisor. He says a second truck is still on the road and should reach us around eleven.\n\nMarta Oyelaran (9:58 A.M.)\nI can rearrange my morning if that helps. I'm not due at the client lunch until one.\n\nDominic Hale (10:03 A.M.)\nMarta, could you go straight to the hall instead of the office? Priya shouldn't be assembling the frame on her own.\n\nMarta Oyelaran (10:07 A.M.)\nOn my way. Priya, I have a box of the printed brochures in my car — shall I bring those in as well?\n\nPriya Raghavan (10:11 A.M.)\nYes, please. One box will be plenty for the first day.\n\nDominic Hale (10:15 A.M.)\nI'll chase the carrier again. If those screens aren't here by noon, we'll have to think about renting.\n\nMarta Oyelaran (10:19 A.M.)\nLet's hope it doesn't come to that. See you both shortly."
+    "blocks": [
+     {
+      "t": "chat",
+      "msgs": [
+       {
+        "who": "Priya Raghavan",
+        "time": "9:42 A.M.",
+        "text": "Morning, both. I've just reached the convention center. The booth panels are here, but the crate with the display screens hasn't turned up."
+       },
+       {
+        "who": "Dominic Hale",
+        "time": "9:47 A.M.",
+        "text": "That's not good. The carrier promised everything would be unloaded by eight."
+       },
+       {
+        "who": "Priya Raghavan",
+        "time": "9:51 A.M.",
+        "text": "I spoke to the loading dock supervisor. He says a second truck is still on the road and should reach us around eleven."
+       },
+       {
+        "who": "Marta Oyelaran",
+        "time": "9:58 A.M.",
+        "text": "I can rearrange my morning if that helps. I'm not due at the client lunch until one."
+       },
+       {
+        "who": "Dominic Hale",
+        "time": "10:03 A.M.",
+        "text": "Marta, could you go straight to the hall instead of the office? Priya shouldn't be assembling the frame on her own."
+       },
+       {
+        "who": "Marta Oyelaran",
+        "time": "10:07 A.M.",
+        "text": "On my way. Priya, I have a box of the printed brochures in my car — shall I bring those in as well?"
+       },
+       {
+        "who": "Priya Raghavan",
+        "time": "10:11 A.M.",
+        "text": "Yes, please. One box will be plenty for the first day."
+       },
+       {
+        "who": "Dominic Hale",
+        "time": "10:15 A.M.",
+        "text": "I'll chase the carrier again. If those screens aren't here by noon, we'll have to think about renting."
+       },
+       {
+        "who": "Marta Oyelaran",
+        "time": "10:19 A.M.",
+        "text": "Let's hope it doesn't come to that. See you both shortly."
+       }
+      ]
+     }
+    ]
    }
   ],
   "questions": [
@@ -1426,7 +3351,104 @@ TOEIC.part7 = [
    {
     "type": "order form",
     "label": "Order Form",
-    "content": "THORNBURY WORKWEAR — ORDER FORM\n\nCustomer: Ridgemont Coffee House\nContact: Julian Mbeki, Operations Manager\nAddress: 208 Pinecrest Way, Denton\nDate of order: 12 April\nPromotion code: SPRING14\n\nItem / Code / Quantity / Unit price / Line total\nClassic apron / A-12 / 14 / $18 / $252\nService shirt, unisex / S-07 / 12 / $29 / $348\nNon-slip work shoes / F-55 / 4 / $72 / $288\n\nMerchandise subtotal: $888.00\nVolume discount (10%): -$88.80\nLogo printing, 12 garments at $6: $72.00\nPrinting set-up fee: waived\nDelivery: free\nTOTAL DUE: $871.20\n\nCustomer notes: Please print our logo on the service shirts only — the aprons should be left plain. We would like delivery before 24 April, as our second location opens that weekend."
+    "blocks": [
+     {
+      "t": "h",
+      "text": "THORNBURY WORKWEAR — ORDER FORM"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Customer",
+        "Ridgemont Coffee House"
+       ],
+       [
+        "Contact",
+        "Julian Mbeki, Operations Manager"
+       ],
+       [
+        "Address",
+        "208 Pinecrest Way, Denton"
+       ],
+       [
+        "Date of order",
+        "12 April"
+       ],
+       [
+        "Promotion code",
+        "SPRING14"
+       ]
+      ]
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "Item",
+        "Code",
+        "Quantity",
+        "Unit price",
+        "Line total"
+       ],
+       [
+        "Classic apron",
+        "A-12",
+        "14",
+        "$18",
+        "$252"
+       ],
+       [
+        "Service shirt, unisex",
+        "S-07",
+        "12",
+        "$29",
+        "$348"
+       ],
+       [
+        "Non-slip work shoes",
+        "F-55",
+        "4",
+        "$72",
+        "$288"
+       ]
+      ]
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Merchandise subtotal",
+        "$888.00"
+       ],
+       [
+        "Volume discount (10%)",
+        "-$88.80"
+       ],
+       [
+        "Logo printing, 12 garments at $6",
+        "$72.00"
+       ],
+       [
+        "Printing set-up fee",
+        "waived"
+       ],
+       [
+        "Delivery",
+        "free"
+       ],
+       [
+        "TOTAL DUE",
+        "$871.20"
+       ]
+      ]
+     },
+     {
+      "t": "note",
+      "text": "Customer notes: Please print our logo on the service shirts only — the aprons should be left plain. We would like delivery before 24 April, as our second location opens that weekend."
+     }
+    ]
    }
   ],
   "questions": [
@@ -1755,7 +3777,104 @@ TOEIC.part7 = [
    {
     "type": "itinerary",
     "label": "Itinerary",
-    "content": "PELLWORTH & GRAY — TRAVEL ITINERARY\nPrepared for: Ms. Ingrid Sato, Regional Operations\nPrepared by: Corporate Travel Desk\nTrip reference: PG-40718\n\nMonday, April 6\n07:40 Depart Ashcombe International (Flight VN 216)\n09:55 Arrive Larkspur City\n11:30 Check in, Hartfield Suites, 12 Beckett Row\n14:00-17:00 Site tour, Larkspur distribution center (host: Owen Achebe)\n\nTuesday, April 7\n09:00-12:00 Supplier review meetings, Larkspur distribution center\n13:30-15:00 Presentation to regional managers, Hartfield Suites, Emerson Room\n19:00 Dinner with the Larkspur management team, Cassava Grill\n\nWednesday, April 8\n09:30-11:00 Budget planning session with Mr. Achebe and the finance staff\n15:15 Depart Larkspur City (Flight VN 341)\n17:20 Arrive Ashcombe International\n\nNotes\nA car will collect you at the airport on arrival. Room charges are billed directly to the company; meals other than Tuesday's dinner should be submitted as expenses. Flights booked under our corporate fare may be changed once at no cost, provided the request reaches the travel desk at least seventy-two hours before departure."
+    "blocks": [
+     {
+      "t": "h",
+      "text": "PELLWORTH & GRAY — TRAVEL ITINERARY"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Prepared for",
+        "Ms. Ingrid Sato, Regional Operations"
+       ],
+       [
+        "Prepared by",
+        "Corporate Travel Desk"
+       ],
+       [
+        "Trip reference",
+        "PG-40718"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "Monday, April 6"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "07:40",
+        "Depart Ashcombe International (Flight VN 216)"
+       ],
+       [
+        "09:55",
+        "Arrive Larkspur City"
+       ],
+       [
+        "11:30",
+        "Check in, Hartfield Suites, 12 Beckett Row"
+       ],
+       [
+        "14:00-17:00",
+        "Site tour, Larkspur distribution center (host: Owen Achebe)"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "Tuesday, April 7"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "09:00-12:00",
+        "Supplier review meetings, Larkspur distribution center"
+       ],
+       [
+        "13:30-15:00",
+        "Presentation to regional managers, Hartfield Suites, Emerson Room"
+       ],
+       [
+        "19:00",
+        "Dinner with the Larkspur management team, Cassava Grill"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "Wednesday, April 8"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "09:30-11:00",
+        "Budget planning session with Mr. Achebe and the finance staff"
+       ],
+       [
+        "15:15",
+        "Depart Larkspur City (Flight VN 341)"
+       ],
+       [
+        "17:20",
+        "Arrive Ashcombe International"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "Notes"
+     },
+     {
+      "t": "note",
+      "text": "A car will collect you at the airport on arrival. Room charges are billed directly to the company; meals other than Tuesday's dinner should be submitted as expenses. Flights booked under our corporate fare may be changed once at no cost, provided the request reaches the travel desk at least seventy-two hours before departure."
+     }
+    ]
    },
    {
     "type": "email",
@@ -1892,7 +4011,53 @@ TOEIC.part7 = [
    {
     "type": "text message",
     "label": "",
-    "content": "Priya Sandhu (8:52 A.M.)\nMarcus, the copier on the third floor is showing an error code again. E-24, the same one as last month.\n\nMarcus Ide (8:55 A.M.)\nSorry to hear that. Is the service log still in the cabinet next to the machine?\n\nPriya Sandhu (8:57 A.M.)\nIt's here. The technician wrote that she replaced the roller on May 6 and that the part has a six-month warranty.\n\nMarcus Ide (9:01 A.M.)\nGood. Then the repair is still covered and we will not be billed for it. I'll call Fenwick Office Systems as soon as they open at nine thirty.\n\nPriya Sandhu (9:03 A.M.)\nThanks. One thing, though. The audit team is due on Thursday, and they need about four hundred pages copied on Wednesday afternoon.\n\nMarcus Ide (9:06 A.M.)\nUnderstood. I'll ask Fenwick for a Tuesday visit and explain why we need one. If they cannot come before Thursday, use the machine in the mailroom.\n\nPriya Sandhu (9:08 A.M.)\nThat one holds only a single paper tray, so someone has to stand there and refill it. But for four hundred pages it will do.\n\nMarcus Ide (9:10 A.M.)\nLet's keep it as a backup. I'll write to you the moment Fenwick gives me a time."
+    "blocks": [
+     {
+      "t": "chat",
+      "msgs": [
+       {
+        "who": "Priya Sandhu",
+        "time": "8:52 A.M.",
+        "text": "Marcus, the copier on the third floor is showing an error code again. E-24, the same one as last month."
+       },
+       {
+        "who": "Marcus Ide",
+        "time": "8:55 A.M.",
+        "text": "Sorry to hear that. Is the service log still in the cabinet next to the machine?"
+       },
+       {
+        "who": "Priya Sandhu",
+        "time": "8:57 A.M.",
+        "text": "It's here. The technician wrote that she replaced the roller on May 6 and that the part has a six-month warranty."
+       },
+       {
+        "who": "Marcus Ide",
+        "time": "9:01 A.M.",
+        "text": "Good. Then the repair is still covered and we will not be billed for it. I'll call Fenwick Office Systems as soon as they open at nine thirty."
+       },
+       {
+        "who": "Priya Sandhu",
+        "time": "9:03 A.M.",
+        "text": "Thanks. One thing, though. The audit team is due on Thursday, and they need about four hundred pages copied on Wednesday afternoon."
+       },
+       {
+        "who": "Marcus Ide",
+        "time": "9:06 A.M.",
+        "text": "Understood. I'll ask Fenwick for a Tuesday visit and explain why we need one. If they cannot come before Thursday, use the machine in the mailroom."
+       },
+       {
+        "who": "Priya Sandhu",
+        "time": "9:08 A.M.",
+        "text": "That one holds only a single paper tray, so someone has to stand there and refill it. But for four hundred pages it will do."
+       },
+       {
+        "who": "Marcus Ide",
+        "time": "9:10 A.M.",
+        "text": "Let's keep it as a backup. I'll write to you the moment Fenwick gives me a time."
+       }
+      ]
+     }
+    ]
    }
   ],
   "questions": [
@@ -2012,7 +4177,108 @@ TOEIC.part7 = [
    {
     "type": "invoice",
     "label": "Quotation",
-    "content": "MERIDIAN CONTRACT FURNISHINGS\n1140 Alder Way, Sudbury\nQUOTATION No. Q-7719\n\nPrepared for: Talia Okafor, Office Manager, Bexley Analytics\nDate: August 3\nThis quotation is valid for thirty days from the date shown above.\n\nItem — Quantity — Unit price — Total\nAdjustable desk, 140 cm, wood top — 24 — $415 — $9,960\nTask chair, model TR-5 — 24 — $228 — $5,472\nTwo-drawer file cabinet — 12 — $140 — $1,680\nMeeting table, seats eight — 2 — $690 — $1,380\n\nSubtotal: $18,492\nDelivery: $0\nTotal: $18,492\n\nTERMS\n1. Delivery within the Sudbury area is free on orders above $10,000.\n2. Assembly is not included. Our crews will put together any item for $18 per desk or table and $9 per chair.\n3. Orders of twenty or more chairs of the same model receive a five percent reduction, which has already been taken off the price above.\n4. Lead time is four weeks from the day we receive a signed copy of this quotation together with a deposit of thirty percent.\n5. Items may be returned within fourteen days of delivery if they have not been opened.\n\nQuestions? Call Devin Marsh at 555-0166."
+    "blocks": [
+     {
+      "t": "h",
+      "text": "MERIDIAN CONTRACT FURNISHINGS"
+     },
+     {
+      "t": "sub",
+      "text": "1140 Alder Way, Sudbury"
+     },
+     {
+      "t": "sub",
+      "text": "QUOTATION No. Q-7719"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Prepared for",
+        "Talia Okafor, Office Manager, Bexley Analytics"
+       ],
+       [
+        "Date",
+        "August 3"
+       ]
+      ]
+     },
+     {
+      "t": "p",
+      "text": "This quotation is valid for thirty days from the date shown above."
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "Item",
+        "Quantity",
+        "Unit price",
+        "Total"
+       ],
+       [
+        "Adjustable desk, 140 cm, wood top",
+        "24",
+        "$415",
+        "$9,960"
+       ],
+       [
+        "Task chair, model TR-5",
+        "24",
+        "$228",
+        "$5,472"
+       ],
+       [
+        "Two-drawer file cabinet",
+        "12",
+        "$140",
+        "$1,680"
+       ],
+       [
+        "Meeting table, seats eight",
+        "2",
+        "$690",
+        "$1,380"
+       ]
+      ]
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Subtotal",
+        "$18,492"
+       ],
+       [
+        "Delivery",
+        "$0"
+       ],
+       [
+        "Total",
+        "$18,492"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "TERMS"
+     },
+     {
+      "t": "list",
+      "items": [
+       "1. Delivery within the Sudbury area is free on orders above $10,000.",
+       "2. Assembly is not included. Our crews will put together any item for $18 per desk or table and $9 per chair.",
+       "3. Orders of twenty or more chairs of the same model receive a five percent reduction, which has already been taken off the price above.",
+       "4. Lead time is four weeks from the day we receive a signed copy of this quotation together with a deposit of thirty percent.",
+       "5. Items may be returned within fourteen days of delivery if they have not been opened."
+      ]
+     },
+     {
+      "t": "p",
+      "text": "Questions? Call Devin Marsh at 555-0166."
+     }
+    ]
    },
    {
     "type": "email",
@@ -2269,7 +4535,66 @@ TOEIC.part7 = [
    {
     "type": "schedule",
     "label": "Program",
-    "content": "QUINTANA SUPPLY CO.\nStore Managers Meeting — Program\nFriday, October 17 | Fairlane Conference Center, Room B\n\n9:00-9:30 a.m.   Coffee and check-in (Main Hall)\n9:30-10:15 a.m.   Opening remarks — Teresa Molina, Vice President of Operations\n10:30-11:45 a.m.   Workshop A: Reducing shipping delays — Noor Bakshi\n12:00-1:00 p.m.   Lunch (Garden Room)\n1:15-2:30 p.m.   Workshop B: Training seasonal staff — Hana Ito\n2:45-4:00 p.m.   Store manager discussion groups\n4:15 p.m.   Closing summary and service awards\n\nPlease note:\n- Both workshops are repeated on Saturday morning for managers who cannot attend on Friday.\n- Parking is free in the east lot. Show your staff badge at the gate.\n- Handouts will be posted on the company website one week after the meeting. Printed copies will not be available.\n- Tell the front desk by October 10 if you need a vegetarian meal."
+    "blocks": [
+     {
+      "t": "h",
+      "text": "QUINTANA SUPPLY CO."
+     },
+     {
+      "t": "sub",
+      "text": "Store Managers Meeting — Program"
+     },
+     {
+      "t": "sub",
+      "text": "Friday, October 17 | Fairlane Conference Center, Room B"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "9:00-9:30 a.m.",
+        "Coffee and check-in (Main Hall)"
+       ],
+       [
+        "9:30-10:15 a.m.",
+        "Opening remarks — Teresa Molina, Vice President of Operations"
+       ],
+       [
+        "10:30-11:45 a.m.",
+        "Workshop A: Reducing shipping delays — Noor Bakshi"
+       ],
+       [
+        "12:00-1:00 p.m.",
+        "Lunch (Garden Room)"
+       ],
+       [
+        "1:15-2:30 p.m.",
+        "Workshop B: Training seasonal staff — Hana Ito"
+       ],
+       [
+        "2:45-4:00 p.m.",
+        "Store manager discussion groups"
+       ],
+       [
+        "4:15 p.m.",
+        "Closing summary and service awards"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "Please note:"
+     },
+     {
+      "t": "list",
+      "items": [
+       "Both workshops are repeated on Saturday morning for managers who cannot attend on Friday.",
+       "Parking is free in the east lot. Show your staff badge at the gate.",
+       "Handouts will be posted on the company website one week after the meeting. Printed copies will not be available.",
+       "Tell the front desk by October 10 if you need a vegetarian meal."
+      ]
+     }
+    ]
    },
    {
     "type": "email",
@@ -2406,7 +4731,139 @@ TOEIC.part7 = [
    {
     "type": "invoice",
     "label": "Invoice",
-    "content": "GREENFIELD OFFICE SUPPLY\n118 Harbor Road, Tacoma, WA 98402\nPhone (253) 555-0147 | orders@greenfieldsupply.com\n\nINVOICE NO.: GF-40219\nInvoice date: May 8\nOrder date: May 2\nPurchase order: PO-7734\n\nBILL TO:\nNadia Ferreira, Office Coordinator\nHalloran Design Group\n620 Wicker Street, Suite 300\nTacoma, WA 98405\n\nITEM      DESCRIPTION                    QTY    UNIT PRICE    AMOUNT\nA-220     Desk chair, grey fabric          6      $148.00     $888.00\nB-115     Filing cabinet, three drawer     2      $210.00     $420.00\nC-303     Whiteboard, 120 cm               4       $62.00     $248.00\nD-009     Marker set, eight colors        10        $9.50      $95.00\n\n                                       Subtotal              $1,651.00\n                                       Volume discount (5%)     -$82.55\n                                       Delivery                   $0.00\n                                       TOTAL DUE             $1,568.45\n\nNOTES\nA volume discount of 5 percent is applied to any order of twenty items or more. Delivery is free on all orders with a subtotal above $1,500. Payment is due within 30 days of the invoice date.\n\nThe whiteboards were not in stock on May 2. They were sent from our Seattle warehouse on May 7 and should arrive by May 12. All other items on this invoice were delivered on May 5.\n\nDamaged or unwanted goods may be returned within 14 days of delivery. Please call our service desk for a return number before you send anything back. Goods that arrive without a return number cannot be credited."
+    "blocks": [
+     {
+      "t": "h",
+      "text": "GREENFIELD OFFICE SUPPLY"
+     },
+     {
+      "t": "sub",
+      "text": "118 Harbor Road, Tacoma, WA 98402"
+     },
+     {
+      "t": "sub",
+      "text": "Phone (253) 555-0147 | orders@greenfieldsupply.com"
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "INVOICE NO.",
+        "GF-40219"
+       ],
+       [
+        "Invoice date",
+        "May 8"
+       ],
+       [
+        "Order date",
+        "May 2"
+       ],
+       [
+        "Purchase order",
+        "PO-7734"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "BILL TO:"
+     },
+     {
+      "t": "p",
+      "text": "Nadia Ferreira, Office Coordinator"
+     },
+     {
+      "t": "p",
+      "text": "Halloran Design Group"
+     },
+     {
+      "t": "p",
+      "text": "620 Wicker Street, Suite 300"
+     },
+     {
+      "t": "p",
+      "text": "Tacoma, WA 98405"
+     },
+     {
+      "t": "table",
+      "header": true,
+      "rows": [
+       [
+        "ITEM",
+        "DESCRIPTION",
+        "QTY",
+        "UNIT PRICE",
+        "AMOUNT"
+       ],
+       [
+        "A-220",
+        "Desk chair, grey fabric",
+        "6",
+        "$148.00",
+        "$888.00"
+       ],
+       [
+        "B-115",
+        "Filing cabinet, three drawer",
+        "2",
+        "$210.00",
+        "$420.00"
+       ],
+       [
+        "C-303",
+        "Whiteboard, 120 cm",
+        "4",
+        "$62.00",
+        "$248.00"
+       ],
+       [
+        "D-009",
+        "Marker set, eight colors",
+        "10",
+        "$9.50",
+        "$95.00"
+       ]
+      ]
+     },
+     {
+      "t": "kv",
+      "items": [
+       [
+        "Subtotal",
+        "$1,651.00"
+       ],
+       [
+        "Volume discount (5%)",
+        "-$82.55"
+       ],
+       [
+        "Delivery",
+        "$0.00"
+       ],
+       [
+        "TOTAL DUE",
+        "$1,568.45"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "NOTES"
+     },
+     {
+      "t": "p",
+      "text": "A volume discount of 5 percent is applied to any order of twenty items or more. Delivery is free on all orders with a subtotal above $1,500. Payment is due within 30 days of the invoice date."
+     },
+     {
+      "t": "p",
+      "text": "The whiteboards were not in stock on May 2. They were sent from our Seattle warehouse on May 7 and should arrive by May 12. All other items on this invoice were delivered on May 5."
+     },
+     {
+      "t": "p",
+      "text": "Damaged or unwanted goods may be returned within 14 days of delivery. Please call our service desk for a return number before you send anything back. Goods that arrive without a return number cannot be credited."
+     }
+    ]
    }
   ],
   "questions": [
@@ -2466,7 +4923,63 @@ TOEIC.part7 = [
    {
     "type": "text_message",
     "label": "Text Message Chain",
-    "content": "Priya Raman [9:12 A.M.]\nGood morning. The van with our trade show booth just pulled up at the loading dock, but the driver says he only has four crates. We sent five.\n\nOwen Castellano [9:15 A.M.]\nFour? Can you read me the numbers on the crates?\n\nPriya Raman [9:19 A.M.]\nCrates 1, 2, 3 and 5. Number 4 is the one missing, and that is the crate with the banner stand, the two display tables, and the carpet.\n\nOwen Castellano [9:21 A.M.]\nThat is the whole front of the booth. I will call the warehouse right now.\n\nMarisol Duffy [9:26 A.M.]\nI am already at the hall with the lighting team. Setup closes at 6:00 P.M. and the safety inspection is tomorrow at 8:00 A.M. We can put up the shelves and the screens in the meantime.\n\nOwen Castellano [9:38 A.M.]\nGood news. The warehouse found crate 4 on the wrong shelf. They can put it on the afternoon van, which should reach the hall around 4:30.\n\nMarisol Duffy [9:40 A.M.]\nThat leaves us ninety minutes. Tight, but fine. Priya, could you ask the hall office whether we may stay past six if we need to?\n\nPriya Raman [9:42 A.M.]\nI will walk over and ask. I am also going to print a fresh packing list so this does not happen again.\n\nOwen Castellano [9:44 A.M.]\nThank you. One more thing: the display tables come apart for shipping, and the tools for putting them back together are in crate 2. Do not let the driver take crate 2 away.\n\nPriya Raman [9:45 A.M.]\nNo risk of that. He left ten minutes ago and everything he brought is inside."
+    "blocks": [
+     {
+      "t": "chat",
+      "msgs": [
+       {
+        "who": "Priya Raman",
+        "time": "9:12 A.M.",
+        "text": "Good morning. The van with our trade show booth just pulled up at the loading dock, but the driver says he only has four crates. We sent five."
+       },
+       {
+        "who": "Owen Castellano",
+        "time": "9:15 A.M.",
+        "text": "Four? Can you read me the numbers on the crates?"
+       },
+       {
+        "who": "Priya Raman",
+        "time": "9:19 A.M.",
+        "text": "Crates 1, 2, 3 and 5. Number 4 is the one missing, and that is the crate with the banner stand, the two display tables, and the carpet."
+       },
+       {
+        "who": "Owen Castellano",
+        "time": "9:21 A.M.",
+        "text": "That is the whole front of the booth. I will call the warehouse right now."
+       },
+       {
+        "who": "Marisol Duffy",
+        "time": "9:26 A.M.",
+        "text": "I am already at the hall with the lighting team. Setup closes at 6:00 P.M. and the safety inspection is tomorrow at 8:00 A.M. We can put up the shelves and the screens in the meantime."
+       },
+       {
+        "who": "Owen Castellano",
+        "time": "9:38 A.M.",
+        "text": "Good news. The warehouse found crate 4 on the wrong shelf. They can put it on the afternoon van, which should reach the hall around 4:30."
+       },
+       {
+        "who": "Marisol Duffy",
+        "time": "9:40 A.M.",
+        "text": "That leaves us ninety minutes. Tight, but fine. Priya, could you ask the hall office whether we may stay past six if we need to?"
+       },
+       {
+        "who": "Priya Raman",
+        "time": "9:42 A.M.",
+        "text": "I will walk over and ask. I am also going to print a fresh packing list so this does not happen again."
+       },
+       {
+        "who": "Owen Castellano",
+        "time": "9:44 A.M.",
+        "text": "Thank you. One more thing: the display tables come apart for shipping, and the tools for putting them back together are in crate 2. Do not let the driver take crate 2 away."
+       },
+       {
+        "who": "Priya Raman",
+        "time": "9:45 A.M.",
+        "text": "No risk of that. He left ten minutes ago and everything he brought is inside."
+       }
+      ]
+     }
+    ]
    }
   ],
   "questions": [
@@ -2663,7 +5176,58 @@ TOEIC.part7 = [
    {
     "type": "text message chain",
     "label": "Text Message Chain",
-    "content": "Petra Sorensen (8:42 A.M.)\nHi Danny. Are you and Luis at the Kellerman job on Oak Street yet?\n\nDanny Fisk (8:44 A.M.)\nWe got here at eight, but the building manager still hasn't opened the loading dock. We're sitting in the truck.\n\nPetra Sorensen (8:46 A.M.)\nThat's the third time this month. Did you try the office number printed on the work order?\n\nDanny Fisk (8:47 A.M.)\nTwice. Nobody picks up. Luis is walking around to the front desk to see if someone there can let us in.\n\nPetra Sorensen (8:51 A.M.)\nAll right. If the dock is still closed at 9:15, start with the boxes in the hallway and carry them out through the side door. We can't lose the whole morning.\n\nDanny Fisk (8:53 A.M.)\nUnderstood. One more thing. The customer added two filing cabinets that were not on the list, and they are heavy. Should we ask her to pay for them now?\n\nPetra Sorensen (8:55 A.M.)\nTake them, but don't collect any money today. I'll put the extra items on the final invoice and e-mail it to her on Friday. Just take a photo of each cabinet before you load it.\n\nDanny Fisk (8:56 A.M.)\nWill do. Luis is waving at me. The dock is open now. We should still finish before two.\n\nPetra Sorensen (8:57 A.M.)\nGood. Send me a message when the truck is loaded."
+    "blocks": [
+     {
+      "t": "chat",
+      "msgs": [
+       {
+        "who": "Petra Sorensen",
+        "time": "8:42 A.M.",
+        "text": "Hi Danny. Are you and Luis at the Kellerman job on Oak Street yet?"
+       },
+       {
+        "who": "Danny Fisk",
+        "time": "8:44 A.M.",
+        "text": "We got here at eight, but the building manager still hasn't opened the loading dock. We're sitting in the truck."
+       },
+       {
+        "who": "Petra Sorensen",
+        "time": "8:46 A.M.",
+        "text": "That's the third time this month. Did you try the office number printed on the work order?"
+       },
+       {
+        "who": "Danny Fisk",
+        "time": "8:47 A.M.",
+        "text": "Twice. Nobody picks up. Luis is walking around to the front desk to see if someone there can let us in."
+       },
+       {
+        "who": "Petra Sorensen",
+        "time": "8:51 A.M.",
+        "text": "All right. If the dock is still closed at 9:15, start with the boxes in the hallway and carry them out through the side door. We can't lose the whole morning."
+       },
+       {
+        "who": "Danny Fisk",
+        "time": "8:53 A.M.",
+        "text": "Understood. One more thing. The customer added two filing cabinets that were not on the list, and they are heavy. Should we ask her to pay for them now?"
+       },
+       {
+        "who": "Petra Sorensen",
+        "time": "8:55 A.M.",
+        "text": "Take them, but don't collect any money today. I'll put the extra items on the final invoice and e-mail it to her on Friday. Just take a photo of each cabinet before you load it."
+       },
+       {
+        "who": "Danny Fisk",
+        "time": "8:56 A.M.",
+        "text": "Will do. Luis is waving at me. The dock is open now. We should still finish before two."
+       },
+       {
+        "who": "Petra Sorensen",
+        "time": "8:57 A.M.",
+        "text": "Good. Send me a message when the truck is loaded."
+       }
+      ]
+     }
+    ]
    }
   ],
   "questions": [
@@ -2783,7 +5347,60 @@ TOEIC.part7 = [
    {
     "type": "menu",
     "label": "Catering Menu",
-    "content": "HARBORVIEW DELI - CATERING MENU\nFor groups of ten or more\n\nPACKAGE A - Morning Table   $9 per guest\nFresh fruit, three kinds of bread, butter and jam, coffee and tea\n\nPACKAGE B - Sandwich Lunch   $14 per guest\nFour kinds of sandwiches, green salad, potato chips, bottled water\n\nPACKAGE C - Hot Lunch   $19 per guest\nRoast chicken or baked fish, rice, two vegetable dishes, bread, iced tea\n\nPACKAGE D - Evening Table   $26 per guest\nSoup, roast beef or grilled vegetables, potatoes, salad, dessert of the day\n\nPLEASE NOTE\n- Orders must be placed at least four business days in advance.\n- Delivery is free within eight kilometers of our shop. Beyond that, we charge $1.50 for each additional kilometer.\n- Plates, cups, and napkins are included at no extra cost. Servers cost $22 an hour.\n- Tell us about food allergies when you order. We can prepare a meal without nuts or milk products for $2 more per guest.\n- Packages C and D are not available on Sundays, when our kitchen closes at noon.\n\nHarborview Deli | 15 Cobb Street | 555-0142 | orders@harborviewdeli.com"
+    "blocks": [
+     {
+      "t": "h",
+      "text": "HARBORVIEW DELI - CATERING MENU"
+     },
+     {
+      "t": "sub",
+      "text": "For groups of ten or more"
+     },
+     {
+      "t": "table",
+      "header": false,
+      "rows": [
+       [
+        "PACKAGE A - Morning Table",
+        "$9 per guest",
+        "Fresh fruit, three kinds of bread, butter and jam, coffee and tea"
+       ],
+       [
+        "PACKAGE B - Sandwich Lunch",
+        "$14 per guest",
+        "Four kinds of sandwiches, green salad, potato chips, bottled water"
+       ],
+       [
+        "PACKAGE C - Hot Lunch",
+        "$19 per guest",
+        "Roast chicken or baked fish, rice, two vegetable dishes, bread, iced tea"
+       ],
+       [
+        "PACKAGE D - Evening Table",
+        "$26 per guest",
+        "Soup, roast beef or grilled vegetables, potatoes, salad, dessert of the day"
+       ]
+      ]
+     },
+     {
+      "t": "sub",
+      "text": "PLEASE NOTE"
+     },
+     {
+      "t": "list",
+      "items": [
+       "Orders must be placed at least four business days in advance.",
+       "Delivery is free within eight kilometers of our shop. Beyond that, we charge $1.50 for each additional kilometer.",
+       "Plates, cups, and napkins are included at no extra cost. Servers cost $22 an hour.",
+       "Tell us about food allergies when you order. We can prepare a meal without nuts or milk products for $2 more per guest.",
+       "Packages C and D are not available on Sundays, when our kitchen closes at noon."
+      ]
+     },
+     {
+      "t": "note",
+      "text": "Harborview Deli | 15 Cobb Street | 555-0142 | orders@harborviewdeli.com"
+     }
+    ]
    },
    {
     "type": "email",

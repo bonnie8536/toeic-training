@@ -186,7 +186,74 @@
       {
         "type": "schedule",
         "label": "Class Schedule",
-        "content": "NORTHGATE COMMUNITY MUSIC SCHOOL\nAdult Evening Classes - Autumn Term (September 8 - November 14)\nEvery class meets once a week for ten weeks.\n\nGuitar for Beginners | Mondays, 6:30-8:00 P.M. | Room 2 | Oscar Lund | $180\nGroup Singing | Tuesdays, 7:00-8:30 P.M. | Main Hall | Priya Ramesh | $150\nPiano, Level 2 | Wednesdays, 6:00-7:30 P.M. | Room 5 | Oscar Lund | $210\nDrums for Beginners | Thursdays, 7:00-8:30 P.M. | Basement Studio | Ken Abara | $195\nGuitar for Beginners (second group) | Saturdays, 10:00-11:30 A.M. | Room 2 | Ken Abara | $180\n\nNotes\n* Each class is limited to twelve students. A class with fewer than five students will not be held.\n* Students may move to another group in the same subject during the first two weeks of the term. Write to the office; please do not simply attend the new class.\n* A student who leaves the school during the first four weeks receives half of the fee back. After that, no money is returned.\n* Instruments may be rented at the office for $25 per term."
+        "blocks": [
+          {
+            "t": "h",
+            "text": "NORTHGATE COMMUNITY MUSIC SCHOOL"
+          },
+          {
+            "t": "sub",
+            "text": "Adult Evening Classes - Autumn Term (September 8 - November 14)"
+          },
+          {
+            "t": "p",
+            "text": "Every class meets once a week for ten weeks."
+          },
+          {
+            "t": "table",
+            "header": false,
+            "rows": [
+              [
+                "Guitar for Beginners",
+                "Mondays, 6:30-8:00 P.M.",
+                "Room 2",
+                "Oscar Lund",
+                "$180"
+              ],
+              [
+                "Group Singing",
+                "Tuesdays, 7:00-8:30 P.M.",
+                "Main Hall",
+                "Priya Ramesh",
+                "$150"
+              ],
+              [
+                "Piano, Level 2",
+                "Wednesdays, 6:00-7:30 P.M.",
+                "Room 5",
+                "Oscar Lund",
+                "$210"
+              ],
+              [
+                "Drums for Beginners",
+                "Thursdays, 7:00-8:30 P.M.",
+                "Basement Studio",
+                "Ken Abara",
+                "$195"
+              ],
+              [
+                "Guitar for Beginners (second group)",
+                "Saturdays, 10:00-11:30 A.M.",
+                "Room 2",
+                "Ken Abara",
+                "$180"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "Notes"
+          },
+          {
+            "t": "list",
+            "items": [
+              "Each class is limited to twelve students. A class with fewer than five students will not be held.",
+              "Students may move to another group in the same subject during the first two weeks of the term. Write to the office; please do not simply attend the new class.",
+              "A student who leaves the school during the first four weeks receives half of the fee back. After that, no money is returned.",
+              "Instruments may be rented at the office for $25 per term."
+            ]
+          }
+        ]
       },
       {
         "type": "email",

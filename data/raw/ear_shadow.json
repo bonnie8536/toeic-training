@@ -1,0 +1,422 @@
+[
+  {
+    "id": "s-01",
+    "level": "初級",
+    "text": "I'd like a small coffee.",
+    "zh": "我要一杯小杯咖啡。",
+    "note": "I'd 的 d 幾乎聽不到,like a 連音成「lai-ka」。"
+  },
+  {
+    "id": "s-02",
+    "level": "初級",
+    "text": "Where are the eggs?",
+    "zh": "蛋放在哪裡?",
+    "note": "Where are 連讀,eggs 的尾音 z 要發出來。"
+  },
+  {
+    "id": "s-03",
+    "level": "初級",
+    "text": "Is the station far?",
+    "zh": "車站會很遠嗎?",
+    "note": "Is the 的 z 直接滑進 th,不要停頓。"
+  },
+  {
+    "id": "s-04",
+    "level": "初級",
+    "text": "Are you free on Friday?",
+    "zh": "你星期五有空嗎?",
+    "note": "Are you 弱讀黏成一個音「ər-yə」,you 不要唸滿。"
+  },
+  {
+    "id": "s-05",
+    "level": "初級",
+    "text": "Can I take a message?",
+    "zh": "需要我幫你留話嗎?",
+    "note": "Can I 連音成「ka-nai」,take a 連成「tei-ka」。"
+  },
+  {
+    "id": "s-06",
+    "level": "初級",
+    "text": "How was your weekend?",
+    "zh": "週末過得怎麼樣?",
+    "note": "was your 融合成「wa-zhər」,不是清楚的 z 再加 y。"
+  },
+  {
+    "id": "s-07",
+    "level": "初級",
+    "text": "I need to take tomorrow off.",
+    "zh": "我明天要請假。",
+    "note": "need to 的 d 被吃掉成「nee-tə」。"
+  },
+  {
+    "id": "s-08",
+    "level": "初級",
+    "text": "Thanks for your help.",
+    "zh": "謝謝你的幫忙。",
+    "note": "Thanks 的 th 咬舌,ks 尾音不要吞掉。"
+  },
+  {
+    "id": "s-09",
+    "level": "初級",
+    "text": "It's really cold today.",
+    "zh": "今天真的好冷。",
+    "note": "cold 的 d 收在舌尖,不用用力爆出來。"
+  },
+  {
+    "id": "s-10",
+    "level": "初級",
+    "text": "Can I pay by card?",
+    "zh": "可以刷卡嗎?",
+    "note": "card 的 r 要捲舌,尾音 d 收住不爆開。"
+  },
+  {
+    "id": "s-11",
+    "level": "初級",
+    "text": "No sugar in mine, please.",
+    "zh": "我的不要加糖,謝謝。",
+    "note": "sugar in 連音成「shu-gə-rin」。"
+  },
+  {
+    "id": "s-12",
+    "level": "初級",
+    "text": "Do you have smaller bags?",
+    "zh": "你們有小一點的袋子嗎?",
+    "note": "Do you 快讀成「d'you」,bags 尾音是 z 不是 s。"
+  },
+  {
+    "id": "s-13",
+    "level": "初級",
+    "text": "Which bus goes to the station?",
+    "zh": "哪一班公車有到車站?",
+    "note": "bus 的 s 和 goes 的 g 要分清,goes 尾音是 z;to 弱讀成「tə」。"
+  },
+  {
+    "id": "s-14",
+    "level": "初級",
+    "text": "Could we meet a bit later?",
+    "zh": "我們可以晚一點碰面嗎?",
+    "note": "meet a 連音成「mee-də」,later 的 t 也是同一個快閃音。"
+  },
+  {
+    "id": "s-15",
+    "level": "初級",
+    "text": "He's not at his desk.",
+    "zh": "他現在不在座位上。",
+    "note": "not at 連音成「no-dat」,his 的 h 常被吃掉。"
+  },
+  {
+    "id": "s-16",
+    "level": "初級",
+    "text": "You look tired this morning.",
+    "zh": "你今天早上看起來很累。",
+    "note": "look 的 k 收住不爆開,直接接 tired 的 t。"
+  },
+  {
+    "id": "s-17",
+    "level": "初級",
+    "text": "I'm not feeling well today.",
+    "zh": "我今天不太舒服。",
+    "note": "not feeling 的 t 幾乎不發,直接接 f。"
+  },
+  {
+    "id": "s-18",
+    "level": "初級",
+    "text": "Sorry, I'm a little late.",
+    "zh": "不好意思,我來晚了一點。",
+    "note": "little 的 tt 美式唸成快閃的 d 音。"
+  },
+  {
+    "id": "s-19",
+    "level": "初級",
+    "text": "It might rain this afternoon.",
+    "zh": "今天下午可能會下雨。",
+    "note": "might rain 的 t 被後面的 r 吃掉。"
+  },
+  {
+    "id": "s-20",
+    "level": "初級",
+    "text": "I'd like to return this.",
+    "zh": "我想退這個。",
+    "note": "like to 併成一個 t,唸「lai-t'」。"
+  },
+  {
+    "id": "s-21",
+    "level": "初級",
+    "text": "For here or to go?",
+    "zh": "內用還是外帶?",
+    "note": "here or 連音成「hee-rɔr」,to 弱讀。"
+  },
+  {
+    "id": "s-22",
+    "level": "初級",
+    "text": "How much is this one?",
+    "zh": "這個多少錢?",
+    "note": "much is 連音成「ma-chiz」。"
+  },
+  {
+    "id": "s-23",
+    "level": "初級",
+    "text": "Excuse me, where's the exit?",
+    "zh": "不好意思,出口在哪裡?",
+    "note": "where's the 兩個音黏在一起,exit 重音在前面。"
+  },
+  {
+    "id": "s-24",
+    "level": "初級",
+    "text": "See you at the meeting.",
+    "zh": "開會的時候見。",
+    "note": "at the 的 t 幾乎消失,meeting 的 t 唸成快閃音。"
+  },
+  {
+    "id": "s-25",
+    "level": "中級",
+    "text": "Could I get that with less ice?",
+    "zh": "那杯可以少冰嗎?",
+    "note": "Could I 連音成「ku-dai」,get 的 t 直接黏進 that 的 th。"
+  },
+  {
+    "id": "s-26",
+    "level": "中級",
+    "text": "I'd like a large coffee to go.",
+    "zh": "我要一杯大杯咖啡,外帶。",
+    "note": "large 的 ge 唸 dʒ,to go 弱讀成「tə-go」。"
+  },
+  {
+    "id": "s-27",
+    "level": "中級",
+    "text": "Do you know where the milk is?",
+    "zh": "你知道牛奶放在哪裡嗎?",
+    "note": "milk is 連音成「mil-kiz」,where the 不要斷開。"
+  },
+  {
+    "id": "s-28",
+    "level": "中級",
+    "text": "I think this one is on sale today.",
+    "zh": "我覺得這個今天在特價。",
+    "note": "think 的 th 無聲,one is 連音成「wa-niz」。"
+  },
+  {
+    "id": "s-29",
+    "level": "中級",
+    "text": "How long does it take by bus?",
+    "zh": "坐公車要多久?",
+    "note": "does it 連音成「da-zit」,take by 的 k 輕收。"
+  },
+  {
+    "id": "s-30",
+    "level": "中級",
+    "text": "Does this train stop at the airport?",
+    "zh": "這班車有停機場嗎?",
+    "note": "stop at 連音成「sto-pat」,at the 的 t 消失。"
+  },
+  {
+    "id": "s-31",
+    "level": "中級",
+    "text": "Is it okay if we start later?",
+    "zh": "我們可以晚一點開始嗎?",
+    "note": "Is it 連音成「i-zit」,okay if 連成「okay-yif」。"
+  },
+  {
+    "id": "s-32",
+    "level": "中級",
+    "text": "How about Thursday morning at ten instead?",
+    "zh": "改成星期四早上十點好嗎?",
+    "note": "How about 連音成「how-bout」,at ten 只留一個 t。"
+  },
+  {
+    "id": "s-33",
+    "level": "中級",
+    "text": "Could you ask her to call me?",
+    "zh": "可以請她回電給我嗎?",
+    "note": "Could you 併成「ku-jyu」,ask her 的 h 消失成「as-kər」。"
+  },
+  {
+    "id": "s-34",
+    "level": "中級",
+    "text": "Sorry, could you say that again?",
+    "zh": "不好意思,可以再說一次嗎?",
+    "note": "that again 連音成「tha-də-gain」,t 夾在兩個母音中間變快閃音。"
+  },
+  {
+    "id": "s-35",
+    "level": "中級",
+    "text": "Did you get my email this morning?",
+    "zh": "你今天早上有收到我的信嗎?",
+    "note": "Did you 併成「di-jyu」,get my 的 t 幾乎不發。"
+  },
+  {
+    "id": "s-36",
+    "level": "中級",
+    "text": "The coffee machine is broken again.",
+    "zh": "咖啡機又壞了。",
+    "note": "machine is 連讀,broken again 連成「broke-nə-gain」。"
+  },
+  {
+    "id": "s-37",
+    "level": "中級",
+    "text": "I won't be in the office tomorrow.",
+    "zh": "我明天不會進辦公室。",
+    "note": "won't be 的 t 直接省掉,in the 連讀。"
+  },
+  {
+    "id": "s-38",
+    "level": "中級",
+    "text": "I have a doctor's appointment on Monday.",
+    "zh": "我星期一要看醫生。",
+    "note": "doctor's appointment 連音,重音落在 point。"
+  },
+  {
+    "id": "s-39",
+    "level": "中級",
+    "text": "Thanks a lot for waiting for me.",
+    "zh": "真的很謝謝你等我。",
+    "note": "Thanks a 連音成「than-ksə」,兩個 for 都弱讀。"
+  },
+  {
+    "id": "s-40",
+    "level": "中級",
+    "text": "I'm sorry, I forgot to tell you.",
+    "zh": "抱歉,我忘記跟你說了。",
+    "note": "forgot to 只留一個 t,tell you 連音成「te-lyu」。"
+  },
+  {
+    "id": "s-41",
+    "level": "中級",
+    "text": "It looks like it's going to rain.",
+    "zh": "看起來快要下雨了。",
+    "note": "going to 口語唸成 gonna,like it's 連讀。"
+  },
+  {
+    "id": "s-42",
+    "level": "中級",
+    "text": "The weather has been really nice this week.",
+    "zh": "這禮拜天氣一直都很好。",
+    "note": "has been 弱讀成「həz-bin」。"
+  },
+  {
+    "id": "s-43",
+    "level": "中級",
+    "text": "Can I get a refund for this?",
+    "zh": "這個可以退款嗎?",
+    "note": "get a 連音成「ge-də」,for 弱讀成「fər」。"
+  },
+  {
+    "id": "s-44",
+    "level": "中級",
+    "text": "Do you want a bag for that?",
+    "zh": "需要幫你裝袋嗎?",
+    "note": "want a 口語連音成「wa-nə」。"
+  },
+  {
+    "id": "s-45",
+    "level": "中級",
+    "text": "I'll pay in cash this time.",
+    "zh": "這次我付現金。",
+    "note": "I'll 只剩一個很輕的 l,pay in 連讀。"
+  },
+  {
+    "id": "s-46",
+    "level": "中級",
+    "text": "Could we sit by the window?",
+    "zh": "我們可以坐窗邊嗎?",
+    "note": "sit by 的 t 收住不爆開,window 的 w 要圓唇。"
+  },
+  {
+    "id": "s-47",
+    "level": "進階",
+    "text": "Can I get one hot coffee and one iced coffee?",
+    "zh": "可以給我一杯熱咖啡、一杯冰咖啡嗎?",
+    "note": "hot 的 t 收住不爆開直接接 coffee 的 k,and 弱讀成「ən」。"
+  },
+  {
+    "id": "s-48",
+    "level": "進階",
+    "text": "Excuse me, do you have this in a larger size?",
+    "zh": "不好意思,這個有大一點的尺寸嗎?",
+    "note": "have this 的 v 接 th 很黏,size 尾音是 z。"
+  },
+  {
+    "id": "s-49",
+    "level": "進階",
+    "text": "Should I take the bus or is walking faster?",
+    "zh": "我該搭公車還是用走的比較快?",
+    "note": "Should I 連音成「shu-dai」,bus or 連成「ba-sɔr」。"
+  },
+  {
+    "id": "s-50",
+    "level": "進階",
+    "text": "Is it okay if I move our meeting to Friday?",
+    "zh": "我們的會議改到星期五可以嗎?",
+    "note": "okay if I 一路連讀,to 弱讀成「tə」。"
+  },
+  {
+    "id": "s-51",
+    "level": "進階",
+    "text": "I'm sorry, she's in a meeting until three o'clock.",
+    "zh": "不好意思,她開會到三點。",
+    "note": "she's in a 連成「shee-zi-nə」,three 的 th 要咬舌。"
+  },
+  {
+    "id": "s-52",
+    "level": "進階",
+    "text": "Could you tell him I called about the order?",
+    "zh": "可以幫我跟他說我打電話問訂單的事嗎?",
+    "note": "tell him 的 h 消失成「te-lim」,called about 連音。"
+  },
+  {
+    "id": "s-53",
+    "level": "進階",
+    "text": "Do you want to grab lunch after the meeting?",
+    "zh": "開完會要不要一起去吃午餐?",
+    "note": "want to 口語唸成 wanna,after the 弱讀帶過。"
+  },
+  {
+    "id": "s-54",
+    "level": "進階",
+    "text": "I'd like to take a few days off next week.",
+    "zh": "我下禮拜想請幾天假。",
+    "note": "take a 連音,days off 連成「dei-zɔf」。"
+  },
+  {
+    "id": "s-55",
+    "level": "進階",
+    "text": "Thanks for covering for me while I was away.",
+    "zh": "謝謝你在我不在的時候幫我代班。",
+    "note": "was away 連音成「wə-zə-way」,兩個 for 都弱讀。"
+  },
+  {
+    "id": "s-56",
+    "level": "進階",
+    "text": "I'm really sorry about the mistake in the report.",
+    "zh": "報告出錯真的很抱歉。",
+    "note": "sorry about 連音成「so-ryə-bout」,report 重音在後面。"
+  },
+  {
+    "id": "s-57",
+    "level": "進階",
+    "text": "They said it's going to snow again this weekend.",
+    "zh": "他們說這個週末又要下雪了。",
+    "note": "said it's 連音成「se-dits」,going to 唸成 gonna。"
+  },
+  {
+    "id": "s-58",
+    "level": "進階",
+    "text": "Can I exchange this if I still have the receipt?",
+    "zh": "如果收據還在,可以換貨嗎?",
+    "note": "exchange 的 x 發 ks 音,receipt 的 p 不發音。"
+  },
+  {
+    "id": "s-59",
+    "level": "進階",
+    "text": "Is the discount already included in this price?",
+    "zh": "這個價錢已經含折扣了嗎?",
+    "note": "discount already 連讀,included in 連成「inclu-di-din」。"
+  },
+  {
+    "id": "s-60",
+    "level": "進階",
+    "text": "How's everything going with the new project so far?",
+    "zh": "新專案目前進行得還順利嗎?",
+    "note": "with the 兩個 th 連著唸,project 當名詞重音在前。"
+  }
+]

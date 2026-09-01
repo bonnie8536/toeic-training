@@ -66,7 +66,58 @@
       {
         "type": "text message chain",
         "label": "Text Message Chain",
-        "content": "Petra Sorensen (8:42 A.M.)\nHi Danny. Are you and Luis at the Kellerman job on Oak Street yet?\n\nDanny Fisk (8:44 A.M.)\nWe got here at eight, but the building manager still hasn't opened the loading dock. We're sitting in the truck.\n\nPetra Sorensen (8:46 A.M.)\nThat's the third time this month. Did you try the office number printed on the work order?\n\nDanny Fisk (8:47 A.M.)\nTwice. Nobody picks up. Luis is walking around to the front desk to see if someone there can let us in.\n\nPetra Sorensen (8:51 A.M.)\nAll right. If the dock is still closed at 9:15, start with the boxes in the hallway and carry them out through the side door. We can't lose the whole morning.\n\nDanny Fisk (8:53 A.M.)\nUnderstood. One more thing. The customer added two filing cabinets that were not on the list, and they are heavy. Should we ask her to pay for them now?\n\nPetra Sorensen (8:55 A.M.)\nTake them, but don't collect any money today. I'll put the extra items on the final invoice and e-mail it to her on Friday. Just take a photo of each cabinet before you load it.\n\nDanny Fisk (8:56 A.M.)\nWill do. Luis is waving at me. The dock is open now. We should still finish before two.\n\nPetra Sorensen (8:57 A.M.)\nGood. Send me a message when the truck is loaded."
+        "blocks": [
+          {
+            "t": "chat",
+            "msgs": [
+              {
+                "who": "Petra Sorensen",
+                "time": "8:42 A.M.",
+                "text": "Hi Danny. Are you and Luis at the Kellerman job on Oak Street yet?"
+              },
+              {
+                "who": "Danny Fisk",
+                "time": "8:44 A.M.",
+                "text": "We got here at eight, but the building manager still hasn't opened the loading dock. We're sitting in the truck."
+              },
+              {
+                "who": "Petra Sorensen",
+                "time": "8:46 A.M.",
+                "text": "That's the third time this month. Did you try the office number printed on the work order?"
+              },
+              {
+                "who": "Danny Fisk",
+                "time": "8:47 A.M.",
+                "text": "Twice. Nobody picks up. Luis is walking around to the front desk to see if someone there can let us in."
+              },
+              {
+                "who": "Petra Sorensen",
+                "time": "8:51 A.M.",
+                "text": "All right. If the dock is still closed at 9:15, start with the boxes in the hallway and carry them out through the side door. We can't lose the whole morning."
+              },
+              {
+                "who": "Danny Fisk",
+                "time": "8:53 A.M.",
+                "text": "Understood. One more thing. The customer added two filing cabinets that were not on the list, and they are heavy. Should we ask her to pay for them now?"
+              },
+              {
+                "who": "Petra Sorensen",
+                "time": "8:55 A.M.",
+                "text": "Take them, but don't collect any money today. I'll put the extra items on the final invoice and e-mail it to her on Friday. Just take a photo of each cabinet before you load it."
+              },
+              {
+                "who": "Danny Fisk",
+                "time": "8:56 A.M.",
+                "text": "Will do. Luis is waving at me. The dock is open now. We should still finish before two."
+              },
+              {
+                "who": "Petra Sorensen",
+                "time": "8:57 A.M.",
+                "text": "Good. Send me a message when the truck is loaded."
+              }
+            ]
+          }
+        ]
       }
     ],
     "questions": [
@@ -186,7 +237,60 @@
       {
         "type": "menu",
         "label": "Catering Menu",
-        "content": "HARBORVIEW DELI - CATERING MENU\nFor groups of ten or more\n\nPACKAGE A - Morning Table   $9 per guest\nFresh fruit, three kinds of bread, butter and jam, coffee and tea\n\nPACKAGE B - Sandwich Lunch   $14 per guest\nFour kinds of sandwiches, green salad, potato chips, bottled water\n\nPACKAGE C - Hot Lunch   $19 per guest\nRoast chicken or baked fish, rice, two vegetable dishes, bread, iced tea\n\nPACKAGE D - Evening Table   $26 per guest\nSoup, roast beef or grilled vegetables, potatoes, salad, dessert of the day\n\nPLEASE NOTE\n- Orders must be placed at least four business days in advance.\n- Delivery is free within eight kilometers of our shop. Beyond that, we charge $1.50 for each additional kilometer.\n- Plates, cups, and napkins are included at no extra cost. Servers cost $22 an hour.\n- Tell us about food allergies when you order. We can prepare a meal without nuts or milk products for $2 more per guest.\n- Packages C and D are not available on Sundays, when our kitchen closes at noon.\n\nHarborview Deli | 15 Cobb Street | 555-0142 | orders@harborviewdeli.com"
+        "blocks": [
+          {
+            "t": "h",
+            "text": "HARBORVIEW DELI - CATERING MENU"
+          },
+          {
+            "t": "sub",
+            "text": "For groups of ten or more"
+          },
+          {
+            "t": "table",
+            "header": false,
+            "rows": [
+              [
+                "PACKAGE A - Morning Table",
+                "$9 per guest",
+                "Fresh fruit, three kinds of bread, butter and jam, coffee and tea"
+              ],
+              [
+                "PACKAGE B - Sandwich Lunch",
+                "$14 per guest",
+                "Four kinds of sandwiches, green salad, potato chips, bottled water"
+              ],
+              [
+                "PACKAGE C - Hot Lunch",
+                "$19 per guest",
+                "Roast chicken or baked fish, rice, two vegetable dishes, bread, iced tea"
+              ],
+              [
+                "PACKAGE D - Evening Table",
+                "$26 per guest",
+                "Soup, roast beef or grilled vegetables, potatoes, salad, dessert of the day"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "PLEASE NOTE"
+          },
+          {
+            "t": "list",
+            "items": [
+              "Orders must be placed at least four business days in advance.",
+              "Delivery is free within eight kilometers of our shop. Beyond that, we charge $1.50 for each additional kilometer.",
+              "Plates, cups, and napkins are included at no extra cost. Servers cost $22 an hour.",
+              "Tell us about food allergies when you order. We can prepare a meal without nuts or milk products for $2 more per guest.",
+              "Packages C and D are not available on Sundays, when our kitchen closes at noon."
+            ]
+          },
+          {
+            "t": "note",
+            "text": "Harborview Deli | 15 Cobb Street | 555-0142 | orders@harborviewdeli.com"
+          }
+        ]
       },
       {
         "type": "email",

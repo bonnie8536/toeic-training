@@ -88,8 +88,8 @@ async def main():
         jobs.append((q['id'] + '.mp3', [(q['audioText'], VOICES['US']['M' if int(q['id'][3:]) % 2 else 'F'])]))
     for q in load('ear_numbers*.json'):
         jobs.append((q['id'] + '.mp3', [(q['audioText'], VOICES['US2']['F' if int(q['id'][2:]) % 2 else 'M'])]))
-    # 跟讀用:聽寫句的中文翻譯音檔(台灣腔) d-01 → dz-01
-    for q in load('ear_dictation*.json'):
+    # 舊跟讀用:基礎聽寫句的中文翻譯音檔(台灣腔) d-01 → dz-01;新批聽寫不用(跟讀已改吃 s- 專用池)
+    for q in load('ear_dictation.json'):
         jobs.append(('dz-' + q['id'][2:] + '.mp3', [(q['zh'], 'zh-TW-HsiaoChenNeural')]))
     # 跟讀專用句庫:英文句(四腔輪替)+中文翻譯 s-01 → s-01.mp3 / dz-s-01.mp3
     for i, q in enumerate(load('ear_shadow.json')):

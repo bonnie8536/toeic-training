@@ -1,0 +1,232 @@
+[
+  {
+    "id": "p7-b13-1",
+    "format": "triple",
+    "passages": [
+      {
+        "type": "webpage",
+        "label": "Web Page",
+        "blocks": [
+          { "t": "h", "text": "THE WEATHERBY INN" },
+          { "t": "sub", "text": "www.weatherbyinn.com  |  Rooms and Rates  |  The Corner Room  |  Getting Here" },
+          { "t": "p", "text": "The Weatherby Inn is a twenty-eight-room hotel on Sefton Road in Calderfield, a ten-minute walk from the harbor and twenty-five minutes by road from the airport. Every rate below includes breakfast in the Corner Room, our ground-floor cafe, which is open to guests from 7:00 to 9:30 A.M." },
+          {
+            "t": "table",
+            "header": true,
+            "rows": [
+              ["Room type", "Sleeps", "Rate per night", "Also included"],
+              ["Sefton Single", "1", "$104", "Desk"],
+              ["Courtyard Twin", "2", "$139", "Desk, garden view"],
+              ["Harbor View", "2", "$168", "Balcony, airport pickup"],
+              ["Loft Room", "3", "$210", "Balcony, airport pickup, checkout at 2:00 P.M."]
+            ]
+          },
+          { "t": "note", "text": "*Each rate covers the room, not each guest. An extra bed costs $20 per night and can be added to the Loft Room only." },
+          { "t": "p", "text": "Guests who stay three nights or more receive a $25 credit at the Corner Room. The credit is added to the room account on the day of arrival and cannot be exchanged for cash." },
+          {
+            "t": "list",
+            "items": [
+              "Wireless internet in every room and in the lobby, free for guests",
+              "Bicycles at the front desk for guests to borrow, from 7:00 A.M. until dark",
+              "The Ardley Room, a meeting room for up to eight people, $45 for a half day",
+              "Airport pickup in our own car: included with Harbor View and Loft rooms, $26 each way for all other guests",
+              "Front desk open twenty-four hours a day; checkout by 11:00 A.M."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "email",
+        "label": "E-mail",
+        "content": "To: c.restrepo@bellamyprint.com\nFrom: bookings@weatherbyinn.com\nDate: April 9\nSubject: Booking WB-2078\n\nDear Ms. Restrepo,\n\nThank you for booking with us directly. Your reservation is confirmed as shown below, and the room will be held for you until midnight on the day you arrive.\n\nArrival: Tuesday, April 14\nDeparture: Friday, April 17\nRoom: Courtyard Twin, one guest\nRate: $139 per night\nRoom total: $417\n\nOur driver can meet you at the airport if you send us your flight number at least one day ahead. Please note that this service is not part of the rate for the room you have chosen; the current price for it is on the Rooms and Rates page.\n\nBreakfast is included each morning. Anything else you use during your stay, such as the car, the cafe, or the meeting room, is added to your room account, and the whole account is paid at the front desk on the morning you leave.\n\nWe look forward to welcoming you to Calderfield.\n\nHugo Lindqvist\nBookings, The Weatherby Inn"
+      },
+      {
+        "type": "review",
+        "label": "Guest Review",
+        "content": "Guest reviews: The Weatherby Inn, Calderfield\nPosted April 20 by Camila Restrepo - 4 out of 5\n\nI come to Calderfield twice a year to see a printing client whose office is down by the harbor, and this was my first stay at the Weatherby. The inn's own driver was waiting at the airport with my name on a card, and on my last morning the same man drove me back in good time for an early flight. Both trips were added to my account, which the clerk had told me to expect.\n\nThe one thing that annoyed me was the bicycles. I had chosen this inn over a cheaper one near the station because the rooms page promised bicycles for guests, and I like to ride out along the water when the working day is over. The clerk explained, kindly enough, that the last two were sold in February and that nobody had taken the line off the site. It is a small thing, but it was the reason I booked.\n\nWhat I will remember, though, is the second evening. My client moved our meeting to a video call at eight o'clock, and my room was far too noisy for it because a wedding party had taken over the garden. The manager unlocked the meeting room off the lobby, brought me a pot of tea, and there was no charge for it. I have paid good money for far less at larger hotels.\n\nTwo notes for other travelers. Breakfast ends at half past nine, which is early for anyone who works late, and the garden rooms look onto a wall of flowers rather than the water, so read the room names carefully before you book."
+      }
+    ],
+    "questions": [
+      {
+        "q": "According to the Web page, what is NOT available at the Weatherby Inn?",
+        "options": [
+          "A cafe that serves breakfast",
+          "Internet service at no extra cost",
+          "A place where guests can leave their cars",
+          "A room that can be used for small meetings"
+        ],
+        "answer": 2,
+        "explanation": "NOT 題採刪去法。(A) 第一段寫 breakfast in the Corner Room, our ground-floor cafe；(B) 清單第一項 Wireless internet ... free for guests；(D) 清單第三項 The Ardley Room, a meeting room for up to eight people。整個網頁從房型表、住宿優惠到設施清單都沒提到停車，故選 (C)。"
+      },
+      {
+        "q": "In the review, the word \"charge\" in paragraph 3 is closest in meaning to",
+        "options": [
+          "responsibility",
+          "fee",
+          "attack",
+          "energy"
+        ],
+        "answer": 1,
+        "explanation": "定位評論第三段：The manager unlocked the meeting room off the lobby, brought me a pot of tea, and there was no charge for it。網頁列出該會議室 $45 for a half day，郵件也說會議室費用 is added to your room account，可見 charge 指「費用」，故選 (B) fee。charge 另有「職責（in charge of）」「攻擊」「電力」等義，(A)(C)(D) 即分別針對這三義設計的誘答，套回本句皆不通。"
+      },
+      {
+        "q": "How much did Ms. Restrepo most likely pay for her trips between the airport and the inn?",
+        "options": [
+          "Nothing",
+          "$20",
+          "$26",
+          "$52"
+        ],
+        "answer": 3,
+        "explanation": "三份文件整合題。第一步：郵件顯示她訂的是 Courtyard Twin，並註明接送 is not part of the rate for the room you have chosen。第二步：網頁清單寫 Airport pickup ... included with Harbor View and Loft rooms, $26 each way for all other guests，她的房型不含接送，單程 26 美元。第三步：評論第一段說司機在機場接她，最後一天早上又載她回機場，Both trips were added to my account，共兩趟，26 乘以 2 等於 52，故選 (D)。(A) 誤以為房價已含；(B) $20 是加床費用；(C) $26 只算了單程。"
+      },
+      {
+        "q": "What did the inn do for Ms. Restrepo on her second evening?",
+        "options": [
+          "It let her use a space that guests normally pay for.",
+          "It moved her to a room with a balcony.",
+          "It allowed her to check out at a later hour.",
+          "It returned the money she had paid for breakfast."
+        ],
+        "answer": 0,
+        "explanation": "整合題。評論第三段說經理打開大廳旁的會議室讓她開視訊會議，且 there was no charge for it；回到網頁清單，The Ardley Room ... $45 for a half day，郵件也說會議室費用會記入房帳，可見那是原本要收費的空間，故選 (A)。(B) 陽台屬於 Harbor View 與 Loft 房型，她住的是 Courtyard Twin，且評論未提換房；(C) 下午 2:00 退房是 Loft Room 的待遇；(D) 早餐本來就含在房價內，不存在退費。"
+      },
+      {
+        "q": "What does Ms. Restrepo indicate about the inn's Web page?",
+        "options": [
+          "It gives the wrong hours for breakfast.",
+          "It describes a service that is no longer offered.",
+          "It does not give the price of airport pickup.",
+          "It was rewritten shortly before her stay."
+        ],
+        "answer": 1,
+        "explanation": "整合題。評論第二段說她因為網頁上寫有自行車出借才選這家飯店，櫃檯卻告訴她 the last two were sold in February and ... nobody had taken the line off the site，也就是網頁還留著已停止的服務，故選 (B)。(A) 網頁寫早餐 7:00 至 9:30，評論說 Breakfast ends at half past nine，兩者一致；(C) 網頁清楚寫 $26 each way，郵件還請她上該頁查價；(D) 評論說的正好相反，那一行從二月起就沒人動過。"
+      }
+    ],
+    "translation": [
+      "THE WEATHERBY INN（飯店網頁）\nwww.weatherbyinn.com｜房型與房價｜Corner Room 餐廳｜交通資訊\n\nWeatherby Inn 是一間位於 Calderfield 市 Sefton 路的飯店，共二十八間客房，步行十分鐘可達港口，開車至機場約二十五分鐘。下列每一種房價都已含 Corner Room 的早餐；該餐廳位於一樓，供餐時間為上午 7:00 至 9:30。\n\n房型表重點：\n．Sefton Single（單人房）：可住 1 人，每晚 104 美元，附書桌\n．Courtyard Twin（庭園雙床房）：可住 2 人，每晚 139 美元，附書桌、花園景觀\n．Harbor View（港景房）：可住 2 人，每晚 168 美元，附陽台、機場接送\n．Loft Room（樓中樓房）：可住 3 人，每晚 210 美元，附陽台、機場接送、可延至下午 2:00 退房\n＊各房價以整間客房計算，不是按人數計價。加床每晚 20 美元，且只有 Loft Room 可以加床。\n\n住滿三晚（含）以上的旅客，可獲得 Corner Room 餐廳 25 美元的抵用額度。額度於入住當日記入房帳，不得兌換現金。\n\n．全館客房與大廳皆有無線網路，房客免費使用\n．櫃檯出借自行車供房客使用，上午 7:00 起至天黑\n．Ardley 室為最多容納八人的會議室，半天 45 美元\n．機場接送由本館車輛提供：Harbor View 與 Loft 房型已包含；其他房客單程 26 美元\n．櫃檯二十四小時服務；退房時間為上午 11:00 前",
+      "收件者：c.restrepo@bellamyprint.com\n寄件者：bookings@weatherbyinn.com\n日期：4 月 9 日\n主旨：訂房編號 WB-2078\n\n親愛的 Restrepo 女士：\n\n感謝您直接向本館訂房。您的訂房確認如下，客房將為您保留至入住當日午夜。\n\n入住：4 月 14 日（星期二）\n退房：4 月 17 日（星期五）\n房型：Courtyard Twin，一位住客\n房價：每晚 139 美元\n房費合計：417 美元\n\n若您至少提前一天告知班機號碼，本館司機可到機場接您。請注意，這項服務並未包含在您所選房型的房價中，目前的收費請見「房型與房價」頁面。\n\n每日早餐已含在房價內。住宿期間使用的其他項目，例如接送車、餐廳或會議室，都會記入您的房帳，並於您離開當天早上在櫃檯一併結清。\n\n期待在 Calderfield 迎接您的到來。\n\nHugo Lindqvist\nThe Weatherby Inn 訂房組",
+      "住客評論：Calderfield 的 The Weatherby Inn\n4 月 20 日由 Camila Restrepo 張貼－五顆星中的四顆\n\n我一年會到 Calderfield 兩次，去拜訪一位辦公室就在港邊的印刷業客戶，而這是我第一次住 Weatherby。飯店自己的司機拿著寫有我名字的牌子在機場等我，最後一天早上也是同一位司機載我回機場，讓我從容趕上一早的班機。兩趟車資都記在我的房帳上，這一點櫃檯人員事先就跟我說過了。\n\n唯一讓我不高興的是自行車。我之所以捨棄車站旁比較便宜的旅館而選這裡，就是因為房型頁面寫著提供房客自行車，而我喜歡在一天工作結束後沿著水邊騎車。櫃檯人員語氣很客氣地解釋，最後兩台在二月就賣掉了，只是一直沒有人把網頁上那一行拿掉。這件事不大，卻正是我訂房的理由。\n\n不過真正讓我記住的，是第二天晚上。客戶把會議改成晚上八點的視訊通話，而我房間太吵，因為花園被一場婚宴包下了。經理打開大廳旁的會議室讓我使用，還端來一壺茶，而且完全沒有收費。我在更大的飯店花過更多錢，得到的服務卻遠不如此。\n\n另外兩點提供其他旅客參考。早餐九點半就結束，對加班晚睡的人來說太早；還有，花園景觀的房間看出去是一整面花牆而不是水景，訂房前請把房型名稱看仔細。"
+    ]
+  },
+  {
+    "id": "p7-b13-2",
+    "format": "triple",
+    "passages": [
+      {
+        "type": "advertisement",
+        "label": "Advertisement",
+        "blocks": [
+          { "t": "h", "text": "BRIARWOOD SPRING COMMUNITY MARKET" },
+          { "t": "sub", "text": "Sunday, May 24  ·  Dalton Green  ·  Free entry for shoppers" },
+          { "t": "p", "text": "Forty-five stalls, live music, and food from eleven neighborhood kitchens. The market fills Dalton Green and the covered walkway beside the library." },
+          {
+            "t": "list",
+            "items": [
+              "Stalls on the Green are open from 9:00 A.M. to 4:00 P.M.",
+              "Food stalls in the covered walkway serve from 9:00 A.M. to 6:00 P.M.",
+              "Craft table for children, 10:00 A.M. to 1:00 P.M., next to the stage",
+              "Music on the stage from 2:00 P.M.",
+              "Buses 6 and 19 stop at the library door; sellers may leave their vehicles in the Dalton Street lot"
+            ]
+          },
+          { "t": "p", "text": "Would you like a stall of your own? Application forms are at the library desk and at www.briarwoodmarket.org. Forms must reach us by May 2, and we write to every applicant during the week of May 4." },
+          { "t": "coupon", "lines": ["Two seats for the price of one - Briarwood Library film night", "Bring this flyer to the library desk before June 30. One per household."] },
+          { "t": "note", "text": "*Sellers may set up from 7:00 A.M. All vehicles must be off the Green by 8:30 A.M." }
+        ]
+      },
+      {
+        "type": "form",
+        "label": "Stall Application Form",
+        "blocks": [
+          { "t": "h", "text": "BRIARWOOD SPRING COMMUNITY MARKET" },
+          { "t": "sub", "text": "Stall Application - return to the library desk by May 2" },
+          {
+            "t": "kv",
+            "items": [
+              ["Seller", "Yusra Halabi"],
+              ["Business name", "Olive Lane Kitchen"],
+              ["Telephone", "555-0193"],
+              ["E-mail", "yusra@olivelanekitchen.com"],
+              ["Goods for sale", "Hot sandwiches and salads, cooked on a small grill"],
+              ["Table length", "2 meters"],
+              ["Power needed", "Yes - one grill and one small refrigerator"],
+              ["Own tent", "No"],
+              ["Hours you can attend", "9:00 A.M. to 4:00 P.M."],
+              ["Sold at a Briarwood market before", "No"],
+              ["Vehicle", "Small van"]
+            ]
+          },
+          { "t": "note", "text": "*Stall fees for the day: 2 meters $35, 3 meters $45, 4 meters $60. Power is $15 for the day. Fees are collected at the market office on Dalton Street when you arrive, not with this form." }
+        ]
+      },
+      {
+        "type": "email",
+        "label": "E-mail",
+        "content": "To: yusra@olivelanekitchen.com\nFrom: t.rahman@briarwoodmarket.org\nDate: May 7\nSubject: Your stall on May 24\n\nDear Ms. Halabi,\n\nThank you for your form. We are pleased to offer you a stall at the spring market, and yours will be one of the eleven kitchens taking part this year.\n\nBecause you will be cooking, you cannot be on the Green itself. You have stall 10 in the walkway beside the library, where the water tap and the power outlets are. Please look at the hours on the flyer once more before May 24: the part of the market you are in does not close when the Green does, and the form you sent me shows that you had the shorter day in mind.\n\nYou may drive onto the Green to unload from 7:00 A.M., but your van must be in the Dalton Street lot by the time printed at the foot of the flyer. Anyone still unloading after that hour holds up every seller behind them.\n\nI have marked your stall for power. One charge covers both the grill and the refrigerator, so the amount you owe is the table fee plus that single charge. Please bring it in cash on the day, since the market office keeps very little change.\n\nWe have no tents to lend. Your form says that you do not have one, so please bring something to keep the rain off: the roof over the walkway stops short of the last two stalls, and yours is one of them.\n\nTanvir Rahman\nMarket Coordinator, Briarwood Neighborhood Association"
+      }
+    ],
+    "questions": [
+      {
+        "q": "What information does the advertisement NOT give?",
+        "options": [
+          "How much a stall costs",
+          "Which buses stop near the market",
+          "When the music will start",
+          "Where application forms can be found"
+        ],
+        "answer": 0,
+        "explanation": "NOT 題採刪去法。(B) 清單最後一項寫 Buses 6 and 19 stop at the library door；(C) 清單第四項 Music on the stage from 2:00 P.M.；(D) 傳單倒數第二段說申請表在圖書館服務台與網站上都有。攤位費用只出現在報名表下方的小字（2 meters $35 等），傳單完全沒提，故選 (A)。"
+      },
+      {
+        "q": "In the e-mail, the word \"covers\" in paragraph 4 is closest in meaning to",
+        "options": [
+          "hides",
+          "protects",
+          "includes",
+          "reports"
+        ],
+        "answer": 2,
+        "explanation": "定位郵件第四段：One charge covers both the grill and the refrigerator, so the amount you owe is the table fee plus that single charge，意思是一筆電費就「涵蓋」了兩台設備，故選 (C) includes。cover 另有「遮住」「保護」「報導」等義，(A)(B)(D) 即針對這三義設計的誘答；報名表小字也寫 Power is $15 for the day，用電是按天計費而非按設備計費，可佐證此解。"
+      },
+      {
+        "q": "Why was Ms. Halabi given a stall in the walkway?",
+        "options": [
+          "Because she asked to be near the library",
+          "Because the Green was already full",
+          "Because she has sold at the market before",
+          "Because she will be preparing hot food"
+        ],
+        "answer": 3,
+        "explanation": "定位郵件第二段：Because you will be cooking, you cannot be on the Green itself. You have stall 10 in the walkway beside the library；報名表也顯示她賣的是 Hot sandwiches and salads, cooked on a small grill，故選 (D)。(A) 她在報名表上並未提出位置要求；(B) 郵件未提廣場攤位已滿；(C) 報名表 Sold at a Briarwood market before 一欄填的是 No。"
+      },
+      {
+        "q": "How much longer than she expected will Ms. Halabi's stall be open?",
+        "options": [
+          "One hour",
+          "Two hours",
+          "Three hours",
+          "Four hours"
+        ],
+        "answer": 1,
+        "explanation": "三份文件整合題。第一步：報名表 Hours you can attend 填的是 9:00 A.M. to 4:00 P.M.，可見她原本以為只到下午四點。第二步：郵件說她的攤位在圖書館旁的走廊，而且 the part of the market you are in does not close when the Green does。第三步：回到傳單，Food stalls in the covered walkway serve from 9:00 A.M. to 6:00 P.M.，收攤比她預期的晚兩小時，故選 (B)。(A)(C) 都對不上這兩個時間的差距；(D) 四小時是誤把 Sellers may set up from 7:00 A.M. 的進場時間當成營業起點（7:00 到 6:00 共十一小時，減去她填的七小時）。"
+      },
+      {
+        "q": "How much will Ms. Halabi most likely pay at the market office?",
+        "options": [
+          "$35",
+          "$45",
+          "$50",
+          "$65"
+        ],
+        "answer": 2,
+        "explanation": "整合題。報名表 Table length 填 2 meters，下方小字寫 2 meters $35，用電另計 $15；郵件第四段確認 I have marked your stall for power，且 One charge covers both the grill and the refrigerator，電費只算一筆。35 加 15 等於 50，故選 (C)。(A) 漏算電費；(B) $45 是 3 公尺攤位的費用；(D) $65 是把烤爐與小冰箱各算一次電費。"
+      }
+    ],
+    "translation": [
+      "BRIARWOOD 春季社區市集（傳單）\n5 月 24 日（星期日）·Dalton 廣場·購物民眾免費入場\n\n四十五個攤位、現場音樂表演，以及十一家社區廚房帶來的餐飲。市集範圍涵蓋 Dalton 廣場與圖書館旁的有頂走廊。\n\n．廣場上的攤位營業時間為上午 9:00 至下午 4:00\n．有頂走廊的餐飲攤位供餐時間為上午 9:00 至下午 6:00\n．兒童手作桌，上午 10:00 至下午 1:00，位於舞台旁\n．舞台現場音樂表演，下午 2:00 開始\n．6 號與 19 號公車停靠圖書館門口；攤商車輛可停放於 Dalton 街停車場\n\n想要有自己的攤位嗎？申請表可至圖書館服務台索取，或至 www.briarwoodmarket.org 下載。申請表必須在 5 月 2 日前送達，我們會在 5 月 4 日那一週回信給每一位申請人。\n\n【優惠券】Briarwood 圖書館電影之夜　買一張送一張\n請於 6 月 30 日前持本傳單至圖書館服務台使用。每戶限用一次。\n\n＊攤商可自上午 7:00 起進場布置。所有車輛必須在上午 8:30 前駛離廣場。",
+      "BRIARWOOD 春季社區市集\n攤位申請表－請於 5 月 2 日前送回圖書館服務台\n\n．攤商姓名：Yusra Halabi\n．商號名稱：Olive Lane Kitchen\n．電話：555-0193\n．電子郵件：yusra@olivelanekitchen.com\n．販售商品：熱三明治與沙拉，以小型烤爐現場烹調\n．攤位桌長：2 公尺\n．是否需要電力：是－一台烤爐與一台小冰箱\n．是否自備帳篷：否\n．可到場時段：上午 9:00 至下午 4:00\n．是否曾在 Briarwood 市集擺攤：否\n．車輛：小型廂型車\n\n＊當日攤位費用：2 公尺 35 美元、3 公尺 45 美元、4 公尺 60 美元；用電當日另計 15 美元。費用於到場時在 Dalton 街的市集辦公室繳交，不隨本表繳付。",
+      "收件者：yusra@olivelanekitchen.com\n寄件者：t.rahman@briarwoodmarket.org\n日期：5 月 7 日\n主旨：您 5 月 24 日的攤位\n\n親愛的 Halabi 女士：\n\n感謝您寄回申請表。很高興通知您，我們可以提供攤位給您，您也將是今年參與的十一家廚房之一。\n\n由於您需要現場烹調，無法安排在廣場上。您的位置是圖書館旁走廊的 10 號攤位，那裡有水龍頭與電源插座。請在 5 月 24 日之前再看一次傳單上的時間：您所在的這一區並不會跟著廣場一起收攤，而您寄來的表格顯示，您原本設想的是比較短的營業時間。\n\n您可以在上午 7:00 起把車開進廣場卸貨，但廂型車必須在傳單最下方所印的時間之前停到 Dalton 街停車場。超過那個時間還在卸貨的人，會耽誤到後面每一位攤商。\n\n我已經註記您的攤位需要用電。烤爐與小冰箱共計一筆電費，因此您要繳的金額就是桌位費加上那一筆電費。請當天備妥現金，因為市集辦公室能找的零錢很少。\n\n另外，我們沒有帳篷可以外借。您的表格上寫著沒有自備帳篷，所以請帶些能遮雨的東西：走廊的屋頂並未延伸到最後兩個攤位，而您的攤位正是其中之一。\n\nTanvir Rahman\nBriarwood 社區協會 市集主辦人"
+    ]
+  }
+]

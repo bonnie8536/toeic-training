@@ -588,6 +588,7 @@ button { font-family: var(--font); cursor: pointer; }
 .ps-blocks .ps-p { margin: 8px 0; }
 .ps-blocks .ps-note { font-size: 12.5px; color: var(--ink-light); margin: 8px 0 2px; }
 .ps-blocks .ps-list { margin: 8px 0 8px 22px; padding: 0; }
+.ps-blocks .ps-list.numbered { list-style: none; margin-left: 4px; }
 .ps-blocks .ps-list li { margin: 4px 0; }
 .ps-kv { margin: 10px 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; }
 .ps-kv-row { display: flex; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55; }

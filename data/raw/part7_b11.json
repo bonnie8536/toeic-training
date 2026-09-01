@@ -1,0 +1,310 @@
+[
+  {
+    "id": "p7-b11-1",
+    "format": "single",
+    "passages": [
+      {
+        "type": "advertisement",
+        "label": "Advertisement",
+        "blocks": [
+          { "t": "h", "text": "MARLOWE STREET COFFEE" },
+          { "t": "sub", "text": "Third Anniversary Week: Monday, October 5 through Sunday, October 11" },
+          { "t": "p", "text": "Three years ago we opened a small shop with six tables and one coffee machine. Today, thanks to our neighbors, we roast our own beans in the back room and serve more than four hundred cups a day. To say thank you, we are offering something different every day next week." },
+          { "t": "list", "items": [
+            "Monday through Friday, 7:00 A.M. to 10:00 A.M.: any hot drink is half price when you bring your own cup.",
+            "Wednesday: a free slice of banana bread with every sandwich.",
+            "Saturday at 2:00 P.M.: a free tour of the room where we roast our beans. Space is limited to fifteen people, so please sign up at the counter.",
+            "Sunday: all bags of beans are 20 percent off, and we will grind them for you at no charge."
+          ] },
+          { "t": "p", "text": "We have also added eight seats upstairs and a second register at the counter, so the morning wait should be much shorter than it was last winter." },
+          { "t": "coupon", "lines": [
+            "ONE FREE COFFEE WITH ANY BREAKFAST",
+            "Valid October 5 through October 11. One coupon per customer per day. It cannot be used together with the half-price cup offer."
+          ] },
+          { "t": "note", "text": "*Marlowe Street Coffee, 12 Marlowe Street. Open 6:30 A.M. to 6:00 P.M. daily. Our beans are also sold at the Hillard Farmers Market on Saturday mornings." }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is the purpose of the flyer?",
+        "options": [
+          "To announce that a shop is moving to a new street",
+          "To invite customers to apply for a job",
+          "To describe special offers during an anniversary week",
+          "To explain a change in the price of coffee beans"
+        ],
+        "answer": 2,
+        "explanation": "定位副標 Third Anniversary Week 與第一段末句 we are offering something different every day next week，之後的項目列表逐日說明優惠，故選 (C)。(D) 是誘答：週日確實有豆子八折，但那是限時優惠活動之一，不是宣布調價；(A)(B) 全文未提，傳單只在小字備註中寫出現址。"
+      },
+      {
+        "q": "What is true about the coupon?",
+        "options": [
+          "It cannot be used with the half-price cup offer.",
+          "It can be used only on Sunday.",
+          "It gives a discount on bags of beans.",
+          "It must be signed at the counter."
+        ],
+        "answer": 0,
+        "explanation": "定位優惠券小字：It cannot be used together with the half-price cup offer，故選 (A)。(B) 優惠券效期是 10 月 5 日至 11 日整週，週日限定的是豆子八折；(C) 折扣豆子的是週日優惠，不是這張券；(D) 要到櫃檯登記的是週六的參觀導覽名額，與優惠券無關。"
+      },
+      {
+        "q": "In the list of offers, the word \"limited\" is closest in meaning to",
+        "options": [
+          "reduced",
+          "restricted",
+          "counted",
+          "measured"
+        ],
+        "answer": 1,
+        "explanation": "定位項目列表第三點 Space is limited to fifteen people, so please sign up at the counter，指名額以十五人為上限，故選 (B) restricted。limit 另有「減少」之義（如 limit spending），(A) reduced 即據此設計的誘答，但本句後接 to fifteen people，是設定上限而非減少數量；(C) counted 與 (D) measured 語意不合。"
+      },
+      {
+        "q": "What is suggested about Marlowe Street Coffee?",
+        "options": [
+          "It will open a second shop next year.",
+          "It has changed its opening hours.",
+          "It sells its beans only at its own shop.",
+          "It has grown since it first opened."
+        ],
+        "answer": 3,
+        "explanation": "推論題。第一段說三年前開店時只有六張桌子與一台咖啡機，如今自己烘豆、一天賣出四百多杯；後面又說加了樓上八個座位與第二台收銀機，可知規模擴大，故選 (D)。(A) 第二台收銀機不等於第二家店；(B) 小字備註列出的營業時間並未提到更動；(C) 與備註相反，豆子也在 Hillard 農夫市集販售。"
+      }
+    ],
+    "translation": [
+      "MARLOWE STREET COFFEE（馬洛街咖啡）\n三週年慶週：10 月 5 日（週一）至 10 月 11 日（週日）\n\n三年前，我們開了一家只有六張桌子、一台咖啡機的小店。如今在街坊鄰居的支持下，我們在後面的房間自己烘豆，一天供應四百多杯。為了表達謝意，下週每一天都有不同的回饋：\n\n．週一至週五上午 7 點至 10 點：自備杯子，任何熱飲半價。\n．週三：點三明治即送一片香蕉蛋糕。\n．週六下午 2 點：免費參觀我們的烘豆室。名額以十五人為限，請到櫃檯報名。\n．週日：所有袋裝咖啡豆八折，並免費代客研磨。\n\n我們也在樓上加了八個座位、櫃檯增設第二台收銀機，早晨等候的時間會比去年冬天短很多。\n\n【優惠券】點任一份早餐，即送一杯咖啡\n效期 10 月 5 日至 10 月 11 日。每位顧客每日限用一張。不可與自備杯半價優惠併用。\n\n＊馬洛街咖啡，馬洛街 12 號，每日上午 6 點半至下午 6 點營業。我們的咖啡豆在週六早上的 Hillard 農夫市集也有販售。"
+    ]
+  },
+  {
+    "id": "p7-b11-2",
+    "format": "single",
+    "passages": [
+      {
+        "type": "order form",
+        "label": "Order Form",
+        "blocks": [
+          { "t": "h", "text": "CLEARWELL SPRINGS WATER SERVICE" },
+          { "t": "sub", "text": "Order Form and Invoice | 26 Halstead Road, Winslow | 555-0188" },
+          { "t": "kv", "items": [
+            ["Order number", "CW-30417"],
+            ["Order date", "April 14"],
+            ["Customer", "Prentice and Row Accounting"],
+            ["Ordered by", "Dario Amin, office manager"],
+            ["Delivery address", "Fourth floor, 51 Cordell Avenue"],
+            ["Account manager", "Lydia Fontaine"],
+            ["Requested delivery", "Tuesday, April 21, before 11:00 A.M."]
+          ] },
+          { "t": "table", "header": true, "rows": [
+            ["Item", "Quantity", "Unit price", "Subtotal"],
+            ["Spring water, 19-liter bottle", "12", "$6.50", "$78.00"],
+            ["Deposit on new bottles", "4", "$5.00", "$20.00"],
+            ["Paper cups, box of 500", "3", "$14.00", "$42.00"],
+            ["Water cooler rental, monthly", "2", "$9.00", "$18.00"],
+            ["Goods total", "", "", "$158.00"],
+            ["Delivery", "", "", "$0.00"],
+            ["Total due", "", "", "$158.00"]
+          ] },
+          { "t": "note", "text": "*Delivery is free on orders of $100.00 or more. Below that amount, a charge of $12.00 is added. All prices include tax." },
+          { "t": "p", "text": "Please check this form carefully. Any change must reach our office at least two working days before the requested delivery date; our office is open Monday through Friday only. On the morning of the delivery, leave the empty bottles outside your office door, or the driver will not be able to exchange them. Payment is due within thirty days of delivery." }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "q": "What is suggested about the water bottles in this order?",
+        "options": [
+          "Only four of them will be added to the customer's supply.",
+          "They will arrive on a different day from the paper cups.",
+          "They must be washed before they are collected.",
+          "They are cheaper than they were last year."
+        ],
+        "answer": 0,
+        "explanation": "推論題，須整合表格與下方段落。表格中 Spring water 一列訂了 12 桶，但 Deposit on new bottles 只收 4 個押金；段落又說司機會回收門外的空桶來換桶，可知其中 8 桶是拿客戶原有的空桶交換，真正新增的只有 4 桶，故選 (A)。(B) 表單只有一個指定送達時間，所有品項同批送達；(C) 段落只要求把空桶放在門外，未提清洗；(D) 表單沒有去年的價格可資比較。"
+      },
+      {
+        "q": "What must the customer do on the morning of the delivery?",
+        "options": [
+          "Pay the driver in cash",
+          "Sign a new rental agreement",
+          "Leave the empty bottles outside the door",
+          "Move the water coolers away from the wall"
+        ],
+        "answer": 2,
+        "explanation": "定位表格下方段落：On the morning of the delivery, leave the empty bottles outside your office door，故選 (C)。(A) 同段說貨到後三十天內付款即可，並未要求付現；(B)(D) 全文未提。"
+      },
+      {
+        "q": "What is NOT part of the order?",
+        "options": [
+          "Boxes of paper cups",
+          "A charge for new bottles",
+          "The monthly rental of water coolers",
+          "The repair of a water cooler"
+        ],
+        "answer": 3,
+        "explanation": "NOT 題採刪去法，逐項回表格核對。(A) Paper cups, box of 500 共 3 箱；(B) Deposit on new bottles 4 個共 $20.00；(C) Water cooler rental, monthly 2 台共 $18.00。只有 (D) 維修服務未出現在任何一列，故選 (D)。"
+      },
+      {
+        "q": "By what date must Prentice and Row report a change to the order?",
+        "options": [
+          "April 14",
+          "April 17",
+          "April 19",
+          "April 20"
+        ],
+        "answer": 1,
+        "explanation": "整合題。表單上方 Requested delivery 為 4 月 21 日（星期二），段落規定改單須在送貨日前至少兩個工作天送達，且公司只在週一至週五上班。往前推：20 日（週一）只提前一個工作天，18、19 日是週末不計，因此第二個工作天是 4 月 17 日（星期五），故選 (B)。(D) 是只算一個工作天的誘答；(C) 4 月 19 日是週日，公司不上班；(A) 是下單日期。"
+      }
+    ],
+    "translation": [
+      "CLEARWELL SPRINGS 飲水服務（訂購單暨發票）｜Halstead 路 26 號，Winslow｜555-0188\n\n．訂單編號：CW-30417\n．訂購日期：4 月 14 日\n．客戶：Prentice and Row 會計事務所\n．訂購人：Dario Amin，辦公室經理\n．送貨地址：Cordell 大道 51 號四樓\n．客戶專員：Lydia Fontaine\n．指定送達：4 月 21 日（星期二）上午 11 點前\n\n品項／數量／單價／小計\n．礦泉水 19 公升桶裝／12／6.50 美元／78.00 美元\n．新桶押金／4／5.00 美元／20.00 美元\n．紙杯（500 入一箱）／3／14.00 美元／42.00 美元\n．飲水機租金（月）／2／9.00 美元／18.00 美元\n．商品合計：158.00 美元\n．運費：0.00 美元\n．應付總額：158.00 美元\n\n＊訂單滿 100.00 美元免運費；未達此金額者加收 12.00 美元。所有價格均已含稅。\n\n請仔細核對本表。任何更動須於指定送貨日前至少兩個工作天送達本公司；本公司僅週一至週五上班。送貨當天早上請將空桶放在辦公室門外，否則司機無法為您換桶。貨到三十天內付款。"
+    ]
+  },
+  {
+    "id": "p7-b11-3",
+    "format": "single",
+    "passages": [
+      {
+        "type": "schedule",
+        "label": "Ferry Timetable",
+        "blocks": [
+          { "t": "h", "text": "SABLEWOOD ISLAND FERRY" },
+          { "t": "sub", "text": "Winter Timetable: November 1 through February 28" },
+          { "t": "p", "text": "All trips leave from Corbin Harbor and carry passengers. Only the trips marked below can take cars, and drivers must reach the dock thirty minutes before the trip leaves." },
+          { "t": "table", "header": true, "rows": [
+            ["Trip", "Leaves Corbin Harbor", "Arrives Sablewood", "Notes"],
+            ["F1", "6:40 A.M.", "7:25 A.M.", "Cars accepted"],
+            ["F2", "8:15 A.M.", "8:50 A.M.", "Passengers only"],
+            ["F3", "10:30 A.M.", "11:15 A.M.", "Cars accepted; cafe open on board"],
+            ["F4", "1:00 P.M.", "1:35 P.M.", "Passengers only"],
+            ["F5", "3:45 P.M.", "4:40 P.M.", "Stops at Kelby Point on the way"],
+            ["F6", "6:20 P.M.", "6:55 P.M.", "Passengers only; no service on Sunday"]
+          ] },
+          { "t": "note", "text": "*On public holidays the 6:20 P.M. trip does not run, and the 10:30 A.M. trip leaves at 11:00 A.M. instead. Tickets cost $2.00 less when they are bought on our Web site. Bicycles travel free of charge." }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "q": "Which trip spends the most time on the water?",
+        "options": [
+          "F1",
+          "F3",
+          "F6",
+          "F5"
+        ],
+        "answer": 3,
+        "explanation": "須比對表格中出發與抵達兩欄。F5 從下午 3:45 開到 4:40，共 55 分鐘，因為備註欄寫 Stops at Kelby Point on the way，中途多停一站；(A) F1 與 (B) F3 各為 45 分鐘，(C) F6 只有 35 分鐘。故選 (D)。"
+      },
+      {
+        "q": "What are drivers bringing cars asked to do?",
+        "options": [
+          "Buy their tickets at the harbor office",
+          "Reach the dock half an hour early",
+          "Take only the first trip of the day",
+          "Telephone the ferry company one day in advance"
+        ],
+        "answer": 1,
+        "explanation": "定位表格上方說明：drivers must reach the dock thirty minutes before the trip leaves，thirty minutes 即 half an hour，故選 (B)。(C) 可載車的班次有 F1 與 F3 兩班，不限第一班；(A) 備註只說網路購票便宜 2 美元，並未規定購票地點；(D) 未提及。"
+      },
+      {
+        "q": "What is NOT stated about the ferry service?",
+        "options": [
+          "One trip makes a stop on the way.",
+          "Tickets are cheaper on the Web site.",
+          "Food and drink are sold on every trip.",
+          "One evening trip does not run on Sunday."
+        ],
+        "answer": 2,
+        "explanation": "NOT 題採刪去法。(A) F5 備註 Stops at Kelby Point on the way；(B) 小字備註 Tickets cost $2.00 less when they are bought on our Web site；(D) F6 備註 no service on Sunday。只有 (C) 過度推論：備註欄僅 F3 寫 cafe open on board，其他班次都沒有，故選 (C)。"
+      },
+      {
+        "q": "In the sentence \"Only the trips marked below can take cars,\" the word \"take\" is closest in meaning to",
+        "options": [
+          "accept",
+          "seize",
+          "choose",
+          "require"
+        ],
+        "answer": 0,
+        "explanation": "定位表格上方說明：Only the trips marked below can take cars，指這些班次可以載運汽車上船，故選 (A) accept；同句前一行的 carry passengers 也提供了平行線索。take 另有「奪取」（take by force）、「挑選」（take this one）、「需要／花費」（it takes two hours）等義，(B) seize、(C) choose、(D) require 即據此設計的誘答，但都不合本句「船班可載車」的語境。"
+      }
+    ],
+    "translation": [
+      "SABLEWOOD 島渡輪\n冬季時刻表：11 月 1 日至 2 月 28 日\n\n所有班次皆自 Corbin 碼頭出發並載客。只有下表註明者可載運汽車，駕駛人須於開船前三十分鐘抵達碼頭。\n\n班次／離開 Corbin 碼頭／抵達 Sablewood／備註\n．F1／上午 6:40／上午 7:25／可載車\n．F2／上午 8:15／上午 8:50／僅載客\n．F3／上午 10:30／上午 11:15／可載車；船上咖啡吧營業\n．F4／下午 1:00／下午 1:35／僅載客\n．F5／下午 3:45／下午 4:40／中途停靠 Kelby Point\n．F6／下午 6:20／下午 6:55／僅載客；週日停駛\n\n＊國定假日當天，下午 6:20 班次停駛，上午 10:30 班次改為 11:00 開航。網站購票每張便宜 2.00 美元。自行車免費上船。"
+    ]
+  },
+  {
+    "id": "p7-b11-4",
+    "format": "single",
+    "passages": [
+      {
+        "type": "text message chain",
+        "label": "Text Message Chain",
+        "blocks": [
+          { "t": "chat", "msgs": [
+            { "who": "Miriam Nowak", "time": "11:52 A.M.", "text": "Bea, Jonah, I need help. My dentist just called. The only appointment left this month is today at 2:30, so I have to leave the front desk from about 2:00 to 4:00. Could either of you cover it?" },
+            { "who": "Jonah Adeyemi", "time": "11:55 A.M.", "text": "I have the budget meeting with Ms. Beaumont at 2:00. It usually takes an hour, sometimes longer." },
+            { "who": "Bea Cardoso", "time": "11:57 A.M.", "text": "My afternoon is wide open. What time do you need me at the desk?" },
+            { "who": "Miriam Nowak", "time": "11:58 A.M.", "text": "Ten to two would be perfect. Nothing about it is difficult. Just the phones, and one visitor who is coming in at 3:00 for an interview." },
+            { "who": "Bea Cardoso", "time": "12:01 P.M.", "text": "Which interview? I thought the design candidates were all coming on Thursday." },
+            { "who": "Miriam Nowak", "time": "12:03 P.M.", "text": "One of them asked to move to today. His name is Peter Vance. Sign him in, then call Jonah at extension 214." },
+            { "who": "Jonah Adeyemi", "time": "12:05 P.M.", "text": "I should be out of the meeting by three. If I am not, put him in the small meeting room with a glass of water and I will come down as soon as I can." },
+            { "who": "Bea Cardoso", "time": "12:07 P.M.", "text": "Understood. Is there a key for the front door at the desk? Last week it was locked when I came back from lunch and I had to wait outside." },
+            { "who": "Miriam Nowak", "time": "12:09 P.M.", "text": "The key is in the top drawer, on the blue tag. Please do not leave it on the desk when you step away." },
+            { "who": "Bea Cardoso", "time": "12:11 P.M.", "text": "Got it. I will bring my laptop and answer e-mail between calls." },
+            { "who": "Miriam Nowak", "time": "12:12 P.M.", "text": "Thank you both. I will be back before four and I owe you a coffee." }
+          ] }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "q": "Why did Ms. Nowak write to her colleagues?",
+        "options": [
+          "To change the time of a budget meeting",
+          "To report a problem with the front door",
+          "To ask someone to cover the front desk",
+          "To move an interview to Thursday"
+        ],
+        "answer": 2,
+        "explanation": "定位 11:52 A.M. 第一則：I have to leave the front desk from about 2:00 to 4:00. Could either of you cover it?，故選 (C)。(A) 預算會議是 Jonah 說明自己無法幫忙的理由，時間並未更動；(B) 大門上鎖是 Bea 後來另外提起的問題；(D) 面試是從週四改到今天，方向相反，且是應徵者提出的。"
+      },
+      {
+        "q": "At 11:57 A.M., what does Ms. Cardoso most likely mean when she writes, \"My afternoon is wide open\"?",
+        "options": [
+          "She will leave work earlier than usual.",
+          "She has no other duties and is able to help.",
+          "She would like someone to open the office windows.",
+          "She has not yet been given a desk of her own."
+        ],
+        "answer": 1,
+        "explanation": "意圖題。前一則 Jonah 說 2 點有會議、無法支援；Bea 接著說下午「大開」，並立刻追問 What time do you need me at the desk?，可知她的意思是下午沒有其他工作、可以代班，故選 (B)。(C) 是把 open 當「打開窗戶」的字面誘答；(A)(D) 對話中皆無依據，她反而是要多留下來顧櫃檯。"
+      },
+      {
+        "q": "What will Ms. Cardoso do if Mr. Adeyemi is still in his meeting when the visitor arrives?",
+        "options": [
+          "Ask the visitor to come back on Thursday",
+          "Telephone Ms. Nowak at the dentist",
+          "Hold the interview herself",
+          "Take the visitor to the small meeting room"
+        ],
+        "answer": 3,
+        "explanation": "定位 12:05 P.M. Jonah 的訊息：If I am not, put him in the small meeting room with a glass of water，故選 (D)。(A) 週四原本是面試日，但這位應徵者已改到今天；(B)(C) 對話中未提，Jonah 表示會盡快下樓。"
+      },
+      {
+        "q": "What is suggested about the key to the front door?",
+        "options": [
+          "It has caused a problem before.",
+          "It is kept at the security desk downstairs.",
+          "It also opens the small meeting room.",
+          "It must be returned to Ms. Nowak every evening."
+        ],
+        "answer": 0,
+        "explanation": "推論題。定位 12:07 P.M.：Last week it was locked when I came back from lunch and I had to wait outside，可知上週已因大門上鎖出過狀況，Miriam 也才提醒別把鑰匙留在桌上，故選 (A)。(B) 鑰匙放在櫃檯最上層抽屜、掛藍色吊牌；(C)(D) 對話中未提。"
+      }
+    ],
+    "translation": [
+      "Miriam Nowak（上午 11:52）：Bea、Jonah，我需要幫忙。牙醫剛打來，這個月只剩今天下午 2:30 有空檔，所以我大約 2 點到 4 點得離開櫃檯。你們兩位有人可以幫我代班嗎？\n\nJonah Adeyemi（上午 11:55）：我 2 點要跟 Beaumont 女士開預算會議，通常要一個小時，有時候更久。\n\nBea Cardoso（上午 11:57）：我下午整個都空著。你要我幾點到櫃檯？\n\nMiriam Nowak（上午 11:58）：一點五十最好。工作沒什麼難的，就是接電話，還有一位訪客 3 點要來面試。\n\nBea Cardoso（下午 12:01）：哪一場面試？我以為設計職缺的應徵者都排在星期四。\n\nMiriam Nowak（下午 12:03）：其中一位要求改到今天。他叫 Peter Vance。幫他登記後，打分機 214 找 Jonah。\n\nJonah Adeyemi（下午 12:05）：我三點前應該就開完會了。如果還沒開完，請先帶他到小會議室、倒杯水給他，我會盡快下去。\n\nBea Cardoso（下午 12:07）：了解。櫃檯有大門的鑰匙嗎？上禮拜我吃完午餐回來，門是鎖著的，只能在外面等。\n\nMiriam Nowak（下午 12:09）：鑰匙在最上層抽屜裡，掛著藍色吊牌。離開座位時請不要把它留在櫃檯上。\n\nBea Cardoso（下午 12:11）：知道了。我會帶筆電過去，接電話的空檔順便回信。\n\nMiriam Nowak（下午 12:12）：謝謝你們兩位。我四點前會回來，欠你們一杯咖啡。"
+    ]
+  }
+]

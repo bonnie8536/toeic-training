@@ -66,7 +66,53 @@
       {
         "type": "text message",
         "label": "",
-        "content": "Priya Sandhu (8:52 A.M.)\nMarcus, the copier on the third floor is showing an error code again. E-24, the same one as last month.\n\nMarcus Ide (8:55 A.M.)\nSorry to hear that. Is the service log still in the cabinet next to the machine?\n\nPriya Sandhu (8:57 A.M.)\nIt's here. The technician wrote that she replaced the roller on May 6 and that the part has a six-month warranty.\n\nMarcus Ide (9:01 A.M.)\nGood. Then the repair is still covered and we will not be billed for it. I'll call Fenwick Office Systems as soon as they open at nine thirty.\n\nPriya Sandhu (9:03 A.M.)\nThanks. One thing, though. The audit team is due on Thursday, and they need about four hundred pages copied on Wednesday afternoon.\n\nMarcus Ide (9:06 A.M.)\nUnderstood. I'll ask Fenwick for a Tuesday visit and explain why we need one. If they cannot come before Thursday, use the machine in the mailroom.\n\nPriya Sandhu (9:08 A.M.)\nThat one holds only a single paper tray, so someone has to stand there and refill it. But for four hundred pages it will do.\n\nMarcus Ide (9:10 A.M.)\nLet's keep it as a backup. I'll write to you the moment Fenwick gives me a time."
+        "blocks": [
+          {
+            "t": "chat",
+            "msgs": [
+              {
+                "who": "Priya Sandhu",
+                "time": "8:52 A.M.",
+                "text": "Marcus, the copier on the third floor is showing an error code again. E-24, the same one as last month."
+              },
+              {
+                "who": "Marcus Ide",
+                "time": "8:55 A.M.",
+                "text": "Sorry to hear that. Is the service log still in the cabinet next to the machine?"
+              },
+              {
+                "who": "Priya Sandhu",
+                "time": "8:57 A.M.",
+                "text": "It's here. The technician wrote that she replaced the roller on May 6 and that the part has a six-month warranty."
+              },
+              {
+                "who": "Marcus Ide",
+                "time": "9:01 A.M.",
+                "text": "Good. Then the repair is still covered and we will not be billed for it. I'll call Fenwick Office Systems as soon as they open at nine thirty."
+              },
+              {
+                "who": "Priya Sandhu",
+                "time": "9:03 A.M.",
+                "text": "Thanks. One thing, though. The audit team is due on Thursday, and they need about four hundred pages copied on Wednesday afternoon."
+              },
+              {
+                "who": "Marcus Ide",
+                "time": "9:06 A.M.",
+                "text": "Understood. I'll ask Fenwick for a Tuesday visit and explain why we need one. If they cannot come before Thursday, use the machine in the mailroom."
+              },
+              {
+                "who": "Priya Sandhu",
+                "time": "9:08 A.M.",
+                "text": "That one holds only a single paper tray, so someone has to stand there and refill it. But for four hundred pages it will do."
+              },
+              {
+                "who": "Marcus Ide",
+                "time": "9:10 A.M.",
+                "text": "Let's keep it as a backup. I'll write to you the moment Fenwick gives me a time."
+              }
+            ]
+          }
+        ]
       }
     ],
     "questions": [
@@ -186,7 +232,108 @@
       {
         "type": "invoice",
         "label": "Quotation",
-        "content": "MERIDIAN CONTRACT FURNISHINGS\n1140 Alder Way, Sudbury\nQUOTATION No. Q-7719\n\nPrepared for: Talia Okafor, Office Manager, Bexley Analytics\nDate: August 3\nThis quotation is valid for thirty days from the date shown above.\n\nItem — Quantity — Unit price — Total\nAdjustable desk, 140 cm, wood top — 24 — $415 — $9,960\nTask chair, model TR-5 — 24 — $228 — $5,472\nTwo-drawer file cabinet — 12 — $140 — $1,680\nMeeting table, seats eight — 2 — $690 — $1,380\n\nSubtotal: $18,492\nDelivery: $0\nTotal: $18,492\n\nTERMS\n1. Delivery within the Sudbury area is free on orders above $10,000.\n2. Assembly is not included. Our crews will put together any item for $18 per desk or table and $9 per chair.\n3. Orders of twenty or more chairs of the same model receive a five percent reduction, which has already been taken off the price above.\n4. Lead time is four weeks from the day we receive a signed copy of this quotation together with a deposit of thirty percent.\n5. Items may be returned within fourteen days of delivery if they have not been opened.\n\nQuestions? Call Devin Marsh at 555-0166."
+        "blocks": [
+          {
+            "t": "h",
+            "text": "MERIDIAN CONTRACT FURNISHINGS"
+          },
+          {
+            "t": "sub",
+            "text": "1140 Alder Way, Sudbury"
+          },
+          {
+            "t": "sub",
+            "text": "QUOTATION No. Q-7719"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "Prepared for",
+                "Talia Okafor, Office Manager, Bexley Analytics"
+              ],
+              [
+                "Date",
+                "August 3"
+              ]
+            ]
+          },
+          {
+            "t": "p",
+            "text": "This quotation is valid for thirty days from the date shown above."
+          },
+          {
+            "t": "table",
+            "header": true,
+            "rows": [
+              [
+                "Item",
+                "Quantity",
+                "Unit price",
+                "Total"
+              ],
+              [
+                "Adjustable desk, 140 cm, wood top",
+                "24",
+                "$415",
+                "$9,960"
+              ],
+              [
+                "Task chair, model TR-5",
+                "24",
+                "$228",
+                "$5,472"
+              ],
+              [
+                "Two-drawer file cabinet",
+                "12",
+                "$140",
+                "$1,680"
+              ],
+              [
+                "Meeting table, seats eight",
+                "2",
+                "$690",
+                "$1,380"
+              ]
+            ]
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "Subtotal",
+                "$18,492"
+              ],
+              [
+                "Delivery",
+                "$0"
+              ],
+              [
+                "Total",
+                "$18,492"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "TERMS"
+          },
+          {
+            "t": "list",
+            "items": [
+              "1. Delivery within the Sudbury area is free on orders above $10,000.",
+              "2. Assembly is not included. Our crews will put together any item for $18 per desk or table and $9 per chair.",
+              "3. Orders of twenty or more chairs of the same model receive a five percent reduction, which has already been taken off the price above.",
+              "4. Lead time is four weeks from the day we receive a signed copy of this quotation together with a deposit of thirty percent.",
+              "5. Items may be returned within fourteen days of delivery if they have not been opened."
+            ]
+          },
+          {
+            "t": "p",
+            "text": "Questions? Call Devin Marsh at 555-0166."
+          }
+        ]
       },
       {
         "type": "email",

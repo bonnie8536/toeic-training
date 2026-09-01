@@ -186,7 +186,66 @@
       {
         "type": "schedule",
         "label": "Program",
-        "content": "QUINTANA SUPPLY CO.\nStore Managers Meeting — Program\nFriday, October 17 | Fairlane Conference Center, Room B\n\n9:00-9:30 a.m.   Coffee and check-in (Main Hall)\n9:30-10:15 a.m.   Opening remarks — Teresa Molina, Vice President of Operations\n10:30-11:45 a.m.   Workshop A: Reducing shipping delays — Noor Bakshi\n12:00-1:00 p.m.   Lunch (Garden Room)\n1:15-2:30 p.m.   Workshop B: Training seasonal staff — Hana Ito\n2:45-4:00 p.m.   Store manager discussion groups\n4:15 p.m.   Closing summary and service awards\n\nPlease note:\n- Both workshops are repeated on Saturday morning for managers who cannot attend on Friday.\n- Parking is free in the east lot. Show your staff badge at the gate.\n- Handouts will be posted on the company website one week after the meeting. Printed copies will not be available.\n- Tell the front desk by October 10 if you need a vegetarian meal."
+        "blocks": [
+          {
+            "t": "h",
+            "text": "QUINTANA SUPPLY CO."
+          },
+          {
+            "t": "sub",
+            "text": "Store Managers Meeting — Program"
+          },
+          {
+            "t": "sub",
+            "text": "Friday, October 17 | Fairlane Conference Center, Room B"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "9:00-9:30 a.m.",
+                "Coffee and check-in (Main Hall)"
+              ],
+              [
+                "9:30-10:15 a.m.",
+                "Opening remarks — Teresa Molina, Vice President of Operations"
+              ],
+              [
+                "10:30-11:45 a.m.",
+                "Workshop A: Reducing shipping delays — Noor Bakshi"
+              ],
+              [
+                "12:00-1:00 p.m.",
+                "Lunch (Garden Room)"
+              ],
+              [
+                "1:15-2:30 p.m.",
+                "Workshop B: Training seasonal staff — Hana Ito"
+              ],
+              [
+                "2:45-4:00 p.m.",
+                "Store manager discussion groups"
+              ],
+              [
+                "4:15 p.m.",
+                "Closing summary and service awards"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "Please note:"
+          },
+          {
+            "t": "list",
+            "items": [
+              "Both workshops are repeated on Saturday morning for managers who cannot attend on Friday.",
+              "Parking is free in the east lot. Show your staff badge at the gate.",
+              "Handouts will be posted on the company website one week after the meeting. Printed copies will not be available.",
+              "Tell the front desk by October 10 if you need a vegetarian meal."
+            ]
+          }
+        ]
       },
       {
         "type": "email",

@@ -3,7 +3,12 @@
     "id": "n-01",
     "audioText": "That comes to thirteen fifty, please.",
     "question": "總金額是多少?",
-    "options": ["$13.15", "$30.50", "$13.50", "$30.15"],
+    "options": [
+      "$13.15",
+      "$30.50",
+      "$13.50",
+      "$30.15"
+    ],
     "answer": 2,
     "note": "thirteen 重音在後(-TEEN),thirty 重音在前(THIR-)。後半的 fifty 是分,唸法為「元+分」。",
     "zh": "總共是 13.50 元。"
@@ -12,7 +17,12 @@
     "id": "n-02",
     "audioText": "The shuttle leaves in fifteen minutes, so we'd better hurry.",
     "question": "接駁車幾分鐘後出發?",
-    "options": ["15 分鐘", "50 分鐘", "5 分鐘", "13 分鐘"],
+    "options": [
+      "15 分鐘",
+      "50 分鐘",
+      "5 分鐘",
+      "13 分鐘"
+    ],
     "answer": 0,
     "note": "fifteen 的 -TEEN 重讀且拉長,尾音有 /n/;fifty 重音在前,字尾是輕短的 /ti/。",
     "zh": "接駁車再十五分鐘就開了,我們最好快一點。"
@@ -21,7 +31,12 @@
     "id": "n-03",
     "audioText": "We've got fifty copies ready for the meeting.",
     "question": "準備了幾份資料?",
-    "options": ["15 份", "55 份", "40 份", "50 份"],
+    "options": [
+      "15 份",
+      "55 份",
+      "40 份",
+      "50 份"
+    ],
     "answer": 3,
     "note": "fifty 重音落在第一音節(FIF-ty),第二音節輕又快;fifteen 則是 fif-TEEN,後半明顯用力。",
     "zh": "我們準備好五十份資料要開會用。"
@@ -30,7 +45,12 @@
     "id": "n-04",
     "audioText": "There were about ninety people at the seminar.",
     "question": "研討會大約有多少人?",
-    "options": ["19 人", "90 人", "99 人", "80 人"],
+    "options": [
+      "19 人",
+      "90 人",
+      "99 人",
+      "80 人"
+    ],
     "answer": 1,
     "note": "ninety 重音在 NINE-ty,尾音收得快;nineteen 重音在後且尾音有清楚的 /n/。",
     "zh": "研討會大概有九十個人參加。"
@@ -39,8 +59,13 @@
     "id": "n-05",
     "audioText": "Our booth is number forty, right next to the entrance.",
     "question": "攤位號碼是幾號?",
-    "options": ["14 號", "44 號", "40 號", "4 號"],
-    "answer": 2,
+    "options": [
+      "40 號",
+      "44 號",
+      "14 號",
+      "4 號"
+    ],
+    "answer": 0,
     "note": "forty 重音在前(FOR-ty);fourteen 重音在後(four-TEEN)。兩字都以 for- 開頭,只能靠重音與尾音判斷。",
     "zh": "我們的攤位是四十號,就在入口旁邊。"
   },
@@ -48,8 +73,13 @@
     "id": "n-06",
     "audioText": "She's been with the company for seventeen years.",
     "question": "她在公司待了幾年?",
-    "options": ["17 年", "70 年", "7 年", "16 年"],
-    "answer": 0,
+    "options": [
+      "7 年",
+      "70 年",
+      "17 年",
+      "16 年"
+    ],
+    "answer": 2,
     "note": "seventeen 重音落在 -TEEN,整個字有三拍且尾音上揚;seventy 重音在 SEV-,尾音輕輕帶過。",
     "zh": "她在這家公司已經待了十七年。"
   },
@@ -57,8 +87,13 @@
     "id": "n-07",
     "audioText": "Let's meet at a quarter past nine in the lobby.",
     "question": "約幾點見面?",
-    "options": ["9:45", "8:45", "9:30", "9:15"],
-    "answer": 3,
+    "options": [
+      "9:45",
+      "9:15",
+      "9:30",
+      "8:45"
+    ],
+    "answer": 1,
     "note": "a quarter 是四分之一小時(15 分),past 表示「過」,所以是九點十五分;聽到 to 才是「差」。",
     "zh": "我們九點十五分在大廳碰面吧。"
   },
@@ -66,8 +101,13 @@
     "id": "n-08",
     "audioText": "The presentation starts at half past seven, right after breakfast.",
     "question": "簡報幾點開始?",
-    "options": ["6:30", "7:30", "7:15", "8:30"],
-    "answer": 1,
+    "options": [
+      "6:30",
+      "8:30",
+      "7:15",
+      "7:30"
+    ],
+    "answer": 3,
     "note": "half past seven 是「七點半」,past 後面的數字就是那個「點」;別因為 half 而誤算成六點半。",
     "zh": "簡報七點半開始,就在早餐後。"
   },
@@ -75,8 +115,13 @@
     "id": "n-09",
     "audioText": "I'll be there at a quarter to five, right after work.",
     "question": "說話者幾點會到?",
-    "options": ["4:45", "5:15", "5:45", "4:15"],
-    "answer": 0,
+    "options": [
+      "4:15",
+      "5:15",
+      "5:45",
+      "4:45"
+    ],
+    "answer": 3,
     "note": "quarter to five 是「差十五分五點」,即 4:45。關鍵在辨認輕讀的 to 還是 past。",
     "zh": "我下班後四點四十五分會到。"
   },
@@ -84,8 +129,13 @@
     "id": "n-10",
     "audioText": "The sandwich is two ninety-nine with the coupon.",
     "question": "三明治多少錢?",
-    "options": ["$2.90", "$2.09", "$2.99", "$299"],
-    "answer": 2,
+    "options": [
+      "$2.90",
+      "$2.99",
+      "$2.09",
+      "$299"
+    ],
+    "answer": 1,
     "note": "口語報價常省略 dollars 和 cents,two ninety-nine 就是 $2.99;前半是元、後半是分。",
     "zh": "用折價券的話,三明治是 2.99 元。"
   },
@@ -93,8 +143,13 @@
     "id": "n-11",
     "audioText": "It'll be a dollar fifty for the coffee refill.",
     "question": "續杯咖啡要多少錢?",
-    "options": ["$1.15", "$1.05", "$15.00", "$1.50"],
-    "answer": 3,
+    "options": [
+      "$1.50",
+      "$1.05",
+      "$15.00",
+      "$1.15"
+    ],
+    "answer": 0,
     "note": "a dollar fifty＝$1.50,fifty 重音在前;若聽到 fif-TEEN 就是 $1.15,差在重音位置。",
     "zh": "咖啡續杯要一塊五。"
   },
@@ -102,8 +157,13 @@
     "id": "n-12",
     "audioText": "They're on sale for nine ninety-five each.",
     "question": "每個特價多少?",
-    "options": ["$9.19", "$9.95", "$9.59", "$95.00"],
-    "answer": 1,
+    "options": [
+      "$9.19",
+      "$9.59",
+      "$9.95",
+      "$95.00"
+    ],
+    "answer": 2,
     "note": "nine 是元、ninety-five 是分,合起來 $9.95。ninety 重音在前,nineteen 重音在後,聽錯就變 $9.19。",
     "zh": "這些現在特價,每個 9.95 元。"
   },
@@ -111,8 +171,13 @@
     "id": "n-13",
     "audioText": "That'll be sixteen oh five, sir. Cash or card?",
     "question": "總金額是多少?",
-    "options": ["$16.05", "$60.50", "$16.50", "$60.05"],
-    "answer": 0,
+    "options": [
+      "$60.50",
+      "$16.05",
+      "$16.50",
+      "$60.05"
+    ],
+    "answer": 1,
     "note": "oh 代表數字 0,sixteen oh five＝$16.05;再加上 sixteen 重音在後、sixty 重音在前,兩層都要聽準。",
     "zh": "先生,總共是 16.05 元。要付現還是刷卡?"
   },
@@ -120,8 +185,13 @@
     "id": "n-14",
     "audioText": "The new contract takes effect on May twenty-first.",
     "question": "合約哪一天生效?",
-    "options": ["5 月 20 日", "5 月 31 日", "5 月 21 日", "5 月 22 日"],
-    "answer": 2,
+    "options": [
+      "5 月 20 日",
+      "5 月 31 日",
+      "5 月 22 日",
+      "5 月 21 日"
+    ],
+    "answer": 3,
     "note": "序數的尾音是關鍵:twenty-first 的 -first 要聽準,聽成 -second 就變成 22 日;若開頭是 THIR- 才是 thirty-first。",
     "zh": "新合約在五月二十一日生效。"
   },
@@ -129,8 +199,13 @@
     "id": "n-15",
     "audioText": "We're closed on the third of March for inventory.",
     "question": "哪一天休息盤點?",
-    "options": ["3 月 23 日", "5 月 3 日", "3 月 13 日", "3 月 3 日"],
-    "answer": 3,
+    "options": [
+      "3 月 23 日",
+      "5 月 3 日",
+      "3 月 3 日",
+      "3 月 13 日"
+    ],
+    "answer": 2,
     "note": "the third of March 是「三月三日」,日期在前、月份在後。third 短促,thirteenth 尾音多一段 -teenth 且明顯拉長。",
     "zh": "我們三月三日因為盤點休息一天。"
   },
@@ -138,8 +213,13 @@
     "id": "n-16",
     "audioText": "You can reach me at extension four one seven three.",
     "question": "分機號碼是幾號?",
-    "options": ["4137", "4173", "1473", "4713"],
-    "answer": 1,
+    "options": [
+      "4173",
+      "4137",
+      "1473",
+      "4713"
+    ],
+    "answer": 0,
     "note": "分機號碼逐位唸,依序記下即可;最容易在中間兩碼把 seven 和 three 的順序聽顛倒。",
     "zh": "你可以打分機四一七三找我。"
   },
@@ -147,8 +227,13 @@
     "id": "n-17",
     "audioText": "Just dial extension double two eight and ask for Ms. Lin.",
     "question": "分機是幾號?",
-    "options": ["282", "2228", "228", "822"],
-    "answer": 2,
+    "options": [
+      "228",
+      "2228",
+      "282",
+      "822"
+    ],
+    "answer": 0,
     "note": "double two 表示連續兩個 2,共三碼 228;漏聽 double 就只會記到一個 2。",
     "zh": "直接撥分機二二八,找林小姐。"
   },
@@ -156,8 +241,13 @@
     "id": "n-18",
     "audioText": "Sales went up by thirteen percent last quarter.",
     "question": "上一季業績成長多少?",
-    "options": ["13%", "30%", "3%", "33%"],
-    "answer": 0,
+    "options": [
+      "33%",
+      "30%",
+      "3%",
+      "13%"
+    ],
+    "answer": 3,
     "note": "thirteen 重音在 -TEEN 且尾音清楚;thirty 重音在 THIR-,後面的 -ty 幾乎一帶而過。",
     "zh": "上一季的業績成長了百分之十三。"
   },
@@ -165,8 +255,13 @@
     "id": "n-19",
     "audioText": "Passengers on flight BR eight one five, please proceed to gate twelve.",
     "question": "班機號碼是?",
-    "options": ["BR 850", "BR 185", "BR 851", "BR 815"],
-    "answer": 3,
+    "options": [
+      "BR 850",
+      "BR 185",
+      "BR 815",
+      "BR 851"
+    ],
+    "answer": 2,
     "note": "班機號碼逐位唸(eight-one-five),不要自動併成 eight fifteen;句尾的 gate twelve 是登機門,別和班機號混在一起。",
     "zh": "搭乘 BR 八一五班機的旅客,請前往十二號登機門。"
   },
@@ -174,7 +269,12 @@
     "id": "n-20",
     "audioText": "Your room is fourteen twelve, on the fourteenth floor.",
     "question": "房號是幾號?",
-    "options": ["1240", "1412", "4012", "1214"],
+    "options": [
+      "1240",
+      "1412",
+      "4012",
+      "1214"
+    ],
     "answer": 1,
     "note": "房號常拆成兩組唸(fourteen＋twelve)＝1412;fourteen 重音在後,聽成 forty 就會變成 4012。",
     "zh": "您的房間是一四一二號,在十四樓。"

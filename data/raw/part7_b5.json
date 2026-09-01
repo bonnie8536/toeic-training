@@ -263,7 +263,104 @@
       {
         "type": "itinerary",
         "label": "Itinerary",
-        "content": "PELLWORTH & GRAY — TRAVEL ITINERARY\nPrepared for: Ms. Ingrid Sato, Regional Operations\nPrepared by: Corporate Travel Desk\nTrip reference: PG-40718\n\nMonday, April 6\n07:40 Depart Ashcombe International (Flight VN 216)\n09:55 Arrive Larkspur City\n11:30 Check in, Hartfield Suites, 12 Beckett Row\n14:00-17:00 Site tour, Larkspur distribution center (host: Owen Achebe)\n\nTuesday, April 7\n09:00-12:00 Supplier review meetings, Larkspur distribution center\n13:30-15:00 Presentation to regional managers, Hartfield Suites, Emerson Room\n19:00 Dinner with the Larkspur management team, Cassava Grill\n\nWednesday, April 8\n09:30-11:00 Budget planning session with Mr. Achebe and the finance staff\n15:15 Depart Larkspur City (Flight VN 341)\n17:20 Arrive Ashcombe International\n\nNotes\nA car will collect you at the airport on arrival. Room charges are billed directly to the company; meals other than Tuesday's dinner should be submitted as expenses. Flights booked under our corporate fare may be changed once at no cost, provided the request reaches the travel desk at least seventy-two hours before departure."
+        "blocks": [
+          {
+            "t": "h",
+            "text": "PELLWORTH & GRAY — TRAVEL ITINERARY"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "Prepared for",
+                "Ms. Ingrid Sato, Regional Operations"
+              ],
+              [
+                "Prepared by",
+                "Corporate Travel Desk"
+              ],
+              [
+                "Trip reference",
+                "PG-40718"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "Monday, April 6"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "07:40",
+                "Depart Ashcombe International (Flight VN 216)"
+              ],
+              [
+                "09:55",
+                "Arrive Larkspur City"
+              ],
+              [
+                "11:30",
+                "Check in, Hartfield Suites, 12 Beckett Row"
+              ],
+              [
+                "14:00-17:00",
+                "Site tour, Larkspur distribution center (host: Owen Achebe)"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "Tuesday, April 7"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "09:00-12:00",
+                "Supplier review meetings, Larkspur distribution center"
+              ],
+              [
+                "13:30-15:00",
+                "Presentation to regional managers, Hartfield Suites, Emerson Room"
+              ],
+              [
+                "19:00",
+                "Dinner with the Larkspur management team, Cassava Grill"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "Wednesday, April 8"
+          },
+          {
+            "t": "kv",
+            "items": [
+              [
+                "09:30-11:00",
+                "Budget planning session with Mr. Achebe and the finance staff"
+              ],
+              [
+                "15:15",
+                "Depart Larkspur City (Flight VN 341)"
+              ],
+              [
+                "17:20",
+                "Arrive Ashcombe International"
+              ]
+            ]
+          },
+          {
+            "t": "sub",
+            "text": "Notes"
+          },
+          {
+            "t": "note",
+            "text": "A car will collect you at the airport on arrival. Room charges are billed directly to the company; meals other than Tuesday's dinner should be submitted as expenses. Flights booked under our corporate fare may be changed once at no cost, provided the request reaches the travel desk at least seventy-two hours before departure."
+          }
+        ]
       },
       {
         "type": "email",

@@ -554,7 +554,10 @@
       else if (b.t === 'p') wrap.append(h('div', { class: 'ps-p' }, b.text));
       else if (b.t === 'note') wrap.append(h('div', { class: 'ps-note' }, b.text));
       else if (b.t === 'coupon') wrap.append(h('div', { class: 'ps-coupon' }, ...(b.lines || [b.text]).map((l, i) => h('div', i ? { class: 'ps-coupon-line' } : { class: 'ps-coupon-main' }, l))));
-      else if (b.t === 'list') wrap.append(h('ul', { class: 'ps-list' }, ...(b.items || []).map(it => h('li', null, it))));
+      else if (b.t === 'list') {
+        const numbered = (b.items || []).every(it => /^\d+[.)]\s/.test(it));
+        wrap.append(h('ul', { class: 'ps-list' + (numbered ? ' numbered' : '') }, ...(b.items || []).map(it => h('li', null, it))));
+      }
       else if (b.t === 'kv') {
         wrap.append(h('div', { class: 'ps-kv' }, ...(b.items || []).map(it =>
           h('div', { class: 'ps-kv-row' }, h('span', { class: 'ps-kv-k' }, it[0]), h('span', { class: 'ps-kv-v' }, it[1])))));

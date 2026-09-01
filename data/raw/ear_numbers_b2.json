@@ -1,0 +1,182 @@
+[
+  {
+    "id": "n-21",
+    "audioText": "The jacket is thirty dollars, and everything is ten percent off today.",
+    "question": "這件外套實際要付多少錢?",
+    "options": ["$27", "$30", "$13", "$33"],
+    "answer": 0,
+    "note": "問的是折扣後的價格,不是聽到的原價。thirty 打九折是 27 元;若把 thirty 聽成 thirteen 就會記成 13 元,兩字差在重音(THIR-ty 對 thir-TEEN)。",
+    "zh": "這件外套三十元,今天全館打九折。"
+  },
+  {
+    "id": "n-22",
+    "audioText": "The books are fifteen dollars, plus a three-dollar delivery fee.",
+    "question": "總共要付多少錢?",
+    "options": ["$15", "$53", "$18", "$50"],
+    "answer": 2,
+    "note": "書錢加運費才是總額。fifteen 重音在後,聽成 fifty 就會算成 50 或 53 元。",
+    "zh": "書是十五元,另外加三元運費。"
+  },
+  {
+    "id": "n-23",
+    "audioText": "The nine o'clock briefing has been moved up half an hour.",
+    "question": "簡報改成幾點開始?",
+    "options": ["9:00", "9:30", "8:00", "8:30"],
+    "answer": 3,
+    "note": "moved up 是「提前」,不是延後,所以九點往前推半小時變成八點半;聽到 half 就往後加會變成 9:30。",
+    "zh": "九點的簡報提前了半小時。"
+  },
+  {
+    "id": "n-24",
+    "audioText": "The train leaves at a quarter to eight, and boarding starts ten minutes earlier.",
+    "question": "幾點開始上車?",
+    "options": ["7:45", "7:35", "8:10", "7:55"],
+    "answer": 1,
+    "note": "quarter to eight 是七點四十五分,但問的是提早十分鐘的上車時間,所以是 7:35;直接選 7:45 就是答到聽到的原時間。",
+    "zh": "火車七點四十五分開,提早十分鐘開始上車。"
+  },
+  {
+    "id": "n-25",
+    "audioText": "The workshop is on the twenty-ninth of June.",
+    "question": "工作坊在哪一天?",
+    "options": ["6 月 19 日", "6 月 9 日", "6 月 29 日", "9 月 29 日"],
+    "answer": 2,
+    "note": "twenty-ninth 和 nineteenth 尾音都是 -ninth,要靠前面的 twenty- 分辨;日期在前、月份在後,別把 29 和 June 的順序對調。",
+    "zh": "工作坊在六月二十九日。"
+  },
+  {
+    "id": "n-26",
+    "audioText": "The launch was postponed from the fourth to the fourteenth, so we have ten extra days.",
+    "question": "發表會現在改到哪一天?",
+    "options": ["14 日", "4 日", "24 日", "10 日"],
+    "answer": 0,
+    "note": "from A to B 的句型裡,B 才是新日期,聽反了就會答成原本的四號。fourth 短促,fourteenth 多了一段 -teen 且重音在後;句尾的 ten extra days 是多出來的天數,拿它去加會變成 24 日,直接當日期則會變成 10 日。",
+    "zh": "發表會從四號延到十四號,所以我們多了十天。"
+  },
+  {
+    "id": "n-27",
+    "audioText": "You can reach billing at extension five two seven — sorry, make that five two nine.",
+    "question": "帳務的分機是幾號?",
+    "options": ["527", "572", "529", "952"],
+    "answer": 2,
+    "note": "說話者中途更正號碼,sorry / make that 之後的才算數,記下第一次聽到的 527 就會答錯。另外兩個誘答是把末兩碼或整組順序聽顛倒。",
+    "zh": "帳務請撥分機五二七——抱歉,應該是五二九。"
+  },
+  {
+    "id": "n-28",
+    "audioText": "Ms. Chen's extension is eighteen eighty.",
+    "question": "陳小姐的分機是幾號?",
+    "options": ["8018", "1880", "1818", "8080"],
+    "answer": 1,
+    "note": "四碼分機常拆成兩組唸(eighteen＋eighty)＝1880。eighteen 重音在後、eighty 重音在前,把兩組順序或重音聽反就會變成 8018。",
+    "zh": "陳小姐的分機是一八八〇。"
+  },
+  {
+    "id": "n-29",
+    "audioText": "Flight CI one two oh six is delayed by twenty minutes.",
+    "question": "班機號碼是?",
+    "options": ["CI 1260", "CI 1026", "CI 2106", "CI 1206"],
+    "answer": 3,
+    "note": "班機號碼逐位唸,oh 是 0,所以是 1-2-0-6;句尾的 twenty minutes 是延誤時間,不要拿去湊班機號。",
+    "zh": "CI 一二〇六班機延誤二十分鐘。"
+  },
+  {
+    "id": "n-30",
+    "audioText": "The express train, number sixteen, departs from platform four.",
+    "question": "這班快車的車次是幾號?",
+    "options": ["16 號", "60 號", "4 號", "64 號"],
+    "answer": 0,
+    "note": "sixteen 重音在 -TEEN,sixty 重音在 SIX-;句中的 platform four 是月台號碼,問的是車次,別把兩個數字混在一起。",
+    "zh": "十六號快車從四號月台發車。"
+  },
+  {
+    "id": "n-31",
+    "audioText": "Training is held on the thirteenth floor, in room three oh nine.",
+    "question": "教育訓練在幾樓?",
+    "options": ["30 樓", "3 樓", "9 樓", "13 樓"],
+    "answer": 3,
+    "note": "thirteenth 重音在後,thirtieth 重音在前;問的是樓層不是房號,room three oh nine 的 3 和 9 都是干擾。",
+    "zh": "教育訓練在十三樓的三〇九室。"
+  },
+  {
+    "id": "n-32",
+    "audioText": "The key card says room eight nineteen, and breakfast is on the second floor.",
+    "question": "房號是幾號?",
+    "options": ["890", "189", "918", "819"],
+    "answer": 3,
+    "note": "房號拆成 eight＋nineteen＝819。nineteen 重音在後,聽成 ninety 就會變成 890;second floor 是早餐地點,與房號無關。",
+    "zh": "房卡上寫房號八一九,早餐在二樓。"
+  },
+  {
+    "id": "n-33",
+    "audioText": "Please order two dozen chairs for the conference room.",
+    "question": "總共要訂幾張椅子?",
+    "options": ["12 張", "20 張", "24 張", "2 張"],
+    "answer": 2,
+    "note": "a dozen 是 12,two dozen 要換算成 24;只記得聽到的 two 或只算一打都會少算,把 dozen 誤記成十則會算成 20 張。",
+    "zh": "會議室請訂兩打椅子。"
+  },
+  {
+    "id": "n-34",
+    "audioText": "A couple of trucks arrived this morning, and each one carried fifteen boxes.",
+    "question": "今天早上總共送來幾箱?",
+    "options": ["15 箱", "30 箱", "2 箱", "50 箱"],
+    "answer": 1,
+    "note": "a couple of 是兩台,每台十五箱要相乘成三十箱;直接答 15 是只聽到單台的數字,fifteen 聽成 fifty 則會變成 50。",
+    "zh": "今天早上來了兩台貨車,每台載十五箱。"
+  },
+  {
+    "id": "n-35",
+    "audioText": "Shipping used to cost twenty dollars, but it's gone up by seventy percent.",
+    "question": "現在的運費是多少?",
+    "options": ["$34", "$20", "$70", "$14"],
+    "answer": 0,
+    "note": "問的是漲價後的新運費。二十元漲七成,漲幅是 14 元,要加回原價才是 34 元;答 14 是只算了漲幅,答 20 是完全沒換算,答 70 則是把百分比的數字當成金額。seventy 重音在 SEV-,聽成 sev-en-TEEN 會整題算歪。",
+    "zh": "運費原本二十元,但已經漲了七成。"
+  },
+  {
+    "id": "n-36",
+    "audioText": "Ninety percent of the orders shipped on time, and the rest were late.",
+    "question": "有多少比例的訂單沒有準時出貨?",
+    "options": ["90%", "19%", "10%", "81%"],
+    "answer": 2,
+    "note": "聽到的 90% 是準時的部分,the rest 才是題目要的,必須換算成 10%。若把 ninety 聽成 nineteen,不管答沒換算的 19% 還是換算後的 81%,都錯在第一步。",
+    "zh": "九成的訂單準時出貨,其餘的都延誤了。"
+  },
+  {
+    "id": "n-37",
+    "audioText": "Your order number is B nine three oh six.",
+    "question": "訂單編號是?",
+    "options": ["B9360", "B9306", "B3906", "B9036"],
+    "answer": 1,
+    "note": "編號逐位聽:9-3-0-6,oh 就是 0。三個誘答都是把其中兩碼順序調換,聽的時候要跟著唸出順序才不會亂。",
+    "zh": "您的訂單編號是 B 九三〇六。"
+  },
+  {
+    "id": "n-38",
+    "audioText": "Please write down order number G thirteen oh six.",
+    "question": "訂單編號是?",
+    "options": ["G3006", "G1360", "G3016", "G1306"],
+    "answer": 3,
+    "note": "thirteen oh six 是 13＋0＋6＝1306。thirteen 重音在後,聽成 thirty 就會寫成 3006;oh 一定要記成 0 而不是漏掉。",
+    "zh": "請記一下訂單編號 G 一三〇六。"
+  },
+  {
+    "id": "n-39",
+    "audioText": "We're open from nine to six on weekdays, but on Saturdays we open at eleven and close at two.",
+    "question": "週六幾點打烊?",
+    "options": ["下午 2 點", "下午 6 點", "上午 11 點", "上午 9 點"],
+    "answer": 0,
+    "note": "but 之後才是週六的規則,前半的 nine to six 是平日營業時間;週六這句裡開店(eleven)和打烊(two)兩個數字都在,問的是打烊時間,答 11 點就是抓錯了那一個。",
+    "zh": "我們平日九點到六點營業,週六則是十一點開門、兩點打烊。"
+  },
+  {
+    "id": "n-40",
+    "audioText": "The store opens at ten a.m. and closes at seven p.m.",
+    "question": "這家店一天營業幾小時?",
+    "options": ["10 小時", "9 小時", "7 小時", "17 小時"],
+    "answer": 1,
+    "note": "問的是營業時數,要用打烊時間減開店時間(上午十點到晚上七點共九小時);直接答聽到的 10 或 7 都是沒做換算,把兩個數字相加則會變成 17。",
+    "zh": "這家店上午十點開門,晚上七點關門。"
+  }
+]

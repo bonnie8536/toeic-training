@@ -1,0 +1,386 @@
+[
+  {
+    "id": "p7-b12-1",
+    "format": "double",
+    "passages": [
+      {
+        "type": "menu",
+        "label": "Menu",
+        "blocks": [
+          { "t": "h", "text": "RIVERSTONE KITCHEN" },
+          { "t": "sub", "text": "Dinner Menu | Tuesday through Sunday, 5:30 P.M. to 9:30 P.M." },
+          { "t": "sub", "text": "STARTERS" },
+          {
+            "t": "table",
+            "header": true,
+            "rows": [
+              ["Dish", "Price"],
+              ["Roasted tomato soup", "$7"],
+              ["Garden salad with house dressing", "$8"],
+              ["Baked cheese bread", "$6"]
+            ]
+          },
+          { "t": "sub", "text": "MAIN DISHES" },
+          {
+            "t": "table",
+            "header": true,
+            "rows": [
+              ["Dish", "Served with", "Price"],
+              ["Grilled steak", "Roast potatoes and green beans", "$28"],
+              ["Lemon chicken", "Rice and seasonal vegetables", "$21"],
+              ["Grilled fish", "Rice and a small salad", "$24"],
+              ["Vegetable pasta", "Garden vegetables and olive oil", "$17"]
+            ]
+          },
+          { "t": "sub", "text": "DESSERTS" },
+          {
+            "t": "table",
+            "header": true,
+            "rows": [
+              ["Dish", "Price"],
+              ["Apple cake with cream", "$8"],
+              ["Chocolate ice cream", "$6"],
+              ["Fruit plate", "$7"]
+            ]
+          },
+          { "t": "p", "text": "EARLY EVENING OFFER: any starter and any main dish together for $25. Tuesday through Thursday only. Orders must be placed before 6:30 P.M." },
+          { "t": "note", "text": "*Main dishes are served with fresh bread at no extra charge. A service charge of 10 percent is added for tables of six or more guests. The dining room stays open until 10:30 P.M., but the kitchen closes at 9:30 P.M." }
+        ]
+      },
+      {
+        "type": "review",
+        "label": "Online Review",
+        "content": "RIVERSTONE KITCHEN\n40 Millbank Road, Fairgate\nReviewed by Gustavo Herrera | Posted 14 October\nRating: 4 out of 5\n\nI took my sister here on a Wednesday evening to celebrate her new job. We arrived just after six o'clock, which turned out to be a lucky choice, since we were still able to order the early evening offer. Between the two of us we saved ten dollars.\n\nShe started with the roasted tomato soup and I had the garden salad. She then chose the lemon chicken and said it was the best thing she had eaten all month. I had the grilled fish. It was cooked well, but the plate looked small to me for a dish listed at twenty-four dollars. The bread was excellent, and I was pleased to find that we were not charged anything extra for it.\n\nOur server, a young man named Theo, was warm without being slow. He noticed that my sister cannot eat butter and quietly asked the kitchen to change her vegetables. Nobody had to ask twice.\n\nMy one real complaint is the noise. The dining room has hard floors and a high ceiling, and by half past seven we were leaning across the table to hear each other. If you would like a quiet meal, come early.\n\nWe finished with the apple cake, which was warm and large enough for two. I will certainly go back, though next time I will ask for a table near the window."
+      }
+    ],
+    "questions": [
+      {
+        "q": "What does Mr. Herrera complain about?",
+        "options": [
+          "The behavior of the server",
+          "The time the food took to arrive",
+          "The small choice of desserts",
+          "The sound level in the dining room"
+        ],
+        "answer": 3,
+        "explanation": "定位句在評論第四段：「My one real complaint is the noise. The dining room has hard floors and a high ceiling.」他明確指出唯一真正的抱怨是噪音。第三段對服務生 Theo 評價正面，故 (A) 錯；上菜速度與甜點選擇皆未被批評。"
+      },
+      {
+        "q": "How much does the main dish that Mr. Herrera's sister ordered cost on the menu?",
+        "options": ["$17", "$21", "$24", "$28"],
+        "answer": 1,
+        "explanation": "跨文件整合題。評論第二段說「She then chose the lemon chicken」，再回到菜單 MAIN DISHES 表格查 Lemon chicken 的價格為 $21。$24 是他本人點的 grilled fish，屬混淆選項。"
+      },
+      {
+        "q": "How much did Mr. Herrera and his sister pay in total for their starters and main dishes?",
+        "options": ["$25", "$45", "$50", "$60"],
+        "answer": 2,
+        "explanation": "跨文件計算題。評論第一段說兩人趕上 early evening offer，第二段寫出各自點的前菜與主菜；菜單註明「any starter and any main dish together for $25」，兩人各一組即 $25 × 2 ＝ $50。$60 是照原價計算的金額（湯 $7＋檸檬雞 $21、沙拉 $8＋炭烤魚 $24），正好與評論說省下十美元相符；$45 只算兩道主菜原價，$25 則漏算了一個人。"
+      },
+      {
+        "q": "What is NOT mentioned in the review?",
+        "options": [
+          "The price of the dessert",
+          "The reason for the meal",
+          "The day of the week when the meal took place",
+          "The name of a server"
+        ],
+        "answer": 0,
+        "explanation": "NOT 題需逐項核對。服務生名字 Theo 見第三段；用餐理由「to celebrate her new job」見第一段；星期三見第一段。第五段只提到吃了 apple cake，並未寫出甜點價格，價格資訊只出現在菜單上，故選 (A)。"
+      },
+      {
+        "q": "The word \"warm\" in paragraph 3 of the review is closest in meaning to",
+        "options": ["hot", "careful", "friendly", "recent"],
+        "answer": 2,
+        "explanation": "字義題。原句「Our server ... was warm without being slow」描述的是人的態度，不是溫度，因此 warm 等於 friendly（親切的）。(A) hot 是字面義誘答。"
+      }
+    ],
+    "translation": [
+      "河石廚房 晚餐菜單（週二至週日 17:30-21:30）\n．前菜：烤番茄湯 $7；田園沙拉佐招牌醬 $8；焗烤起司麵包 $6\n．主菜：炭烤牛排（附烤馬鈴薯與四季豆）$28；檸檬雞（附飯與時蔬）$21；炭烤魚（附飯與小份沙拉）$24；蔬菜義大利麵（附田園蔬菜與橄欖油）$17\n．甜點：蘋果蛋糕佐鮮奶油 $8；巧克力冰淇淋 $6；水果盤 $7\n．早鳥優惠：任選一道前菜加一道主菜合計 $25，僅限週二至週四，且須在 18:30 前點餐\n．備註：主菜附新鮮麵包不另收費；六人以上桌加收一成服務費；用餐區開放至 22:30，但廚房 21:30 打烊",
+      "河石廚房\n地址：費爾蓋特米爾班克路 40 號\n評論者：古斯塔沃．埃雷拉｜10 月 14 日張貼\n評分：5 顆星中的 4 顆\n\n我週三晚上帶妹妹來這裡，慶祝她找到新工作。我們六點剛過就到了，事後證明是個幸運的選擇，因為還來得及點早鳥優惠，兩人加起來省了十美元。\n\n她先點了烤番茄湯，我點了田園沙拉。接著她點了檸檬雞，說那是她這個月吃過最好吃的東西。我則點了炭烤魚，火候掌握得不錯，但以菜單上二十四美元的價位來說，我覺得份量偏少。麵包倒是很棒，而且讓我高興的是完全沒有另外收費。\n\n服務我們的是一位叫 Theo 的年輕男生，態度親切又不拖泥帶水。他注意到我妹妹不能吃奶油，便悄悄請廚房替她換了配菜，完全不必開口講第二次。\n\n我唯一真正的抱怨是噪音。用餐區是硬質地板加挑高天花板，七點半一過，我們就得整個人往桌子中間靠才聽得見對方說話。想安靜吃飯的話，請早點來。\n\n最後我們吃了蘋果蛋糕，熱熱的，份量兩個人分都夠。我一定會再來，只是下次會指定靠窗的位子。"
+    ]
+  },
+  {
+    "id": "p7-b12-2",
+    "format": "double",
+    "passages": [
+      {
+        "type": "schedule",
+        "label": "Train Schedule",
+        "blocks": [
+          { "t": "h", "text": "ASHVALE RAIL" },
+          { "t": "sub", "text": "Weekday Service | Ashvale Central to Portmere | Effective 1 September" },
+          {
+            "t": "table",
+            "header": true,
+            "rows": [
+              ["Train", "Depart Ashvale", "Arrive Portmere", "Stops", "Standard fare"],
+              ["A102", "06:15", "07:40", "Direct", "$34"],
+              ["A126", "08:20", "09:45", "Direct", "$34"],
+              ["A140", "09:30", "11:30", "Dorn, Barwick", "$26"],
+              ["A155", "10:40", "12:50", "Dorn, Barwick, Millgate", "$22"],
+              ["A168", "11:50", "13:55", "Dorn, Barwick", "$26"],
+              ["A180", "12:15", "13:40", "Direct", "$34"],
+              ["A192", "14:30", "15:55", "Direct", "$34"]
+            ]
+          },
+          { "t": "note", "text": "*Direct trains make no stops between the two cities. Fares shown are for a standard seat booked in advance." },
+          { "t": "p", "text": "CHANGING A BOOKING" },
+          {
+            "t": "list",
+            "items": [
+              "Changes may be made on our website up to two hours before the train leaves.",
+              "A fee of $8 is charged for each change.",
+              "If the new train costs more, the difference must also be paid. If it costs less, the difference is not returned.",
+              "Tickets bought on the day of travel cannot be changed."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "email",
+        "label": "E-mail",
+        "content": "To: bookings@ashvalerail.com\nFrom: m.otero@quillmail.com\nDate: 14 September\nSubject: Booking R-88204\n\nHello,\n\nI hold a ticket on the 08:20 service from Ashvale Central to Portmere this Friday, 18 September, booking number R-88204. My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train.\n\nI must be in Portmere by two o'clock, when I am giving a short talk at a client's office beside the station. The talk cannot be moved. I would therefore like the latest train that still brings me in with about an hour to spare. Looking at your timetable, only one service seems to fit. Please put me on it if a seat is free.\n\nI would rather not take a train that stops along the way, but I understand that I may have no choice on this occasion.\n\nTwo further questions. My original ticket cost thirty-four dollars. Am I right that nothing will be returned to me if the new fare is lower? Also, I bought the ticket on your website three weeks ago. Does that mean I can still make the change myself, or must your office do it for me?\n\nThank you for your help,\n\nMarcela Otero"
+      }
+    ],
+    "questions": [
+      {
+        "q": "Which train will Ms. Otero most likely take on 18 September?",
+        "options": ["A140", "A155", "A168", "A180"],
+        "answer": 1,
+        "explanation": "跨文件整合題。信中兩個條件：會議十點才結束（無法搭 09:30 的 A140），且必須在兩點的演講前約一小時抵達。查時刻表，A155 於 10:40 出發、12:50 抵達，餘裕一小時又十分，是唯一同時滿足兩者的班次；A168 抵達 13:55、A180 抵達 13:40，都不足「約一小時」的餘裕。信中「I would rather not take a train that stops along the way, but I understand that I may have no choice」也呼應 A155 為停站班次。"
+      },
+      {
+        "q": "Why does Ms. Otero want to change her booking?",
+        "options": [
+          "Her talk in Portmere has been cancelled",
+          "She has lost her original ticket",
+          "A meeting at work has been rescheduled",
+          "The train she booked is now full"
+        ],
+        "answer": 2,
+        "explanation": "定位句在信件第一段：「My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train.」原因是會議改期。"
+      },
+      {
+        "q": "How much extra will Ms. Otero have to pay for the change?",
+        "options": ["$8", "$12", "$30", "Nothing"],
+        "answer": 0,
+        "explanation": "跨文件整合題。她原票 $34，新班次 A155 為 $22。時刻表 CHANGING A BOOKING 規定每次更改收 $8，且「If it costs less, the difference is not returned」，因此差額 $12 不退，她只需付 $8 手續費。(B) $12 是不退還的差額；(C) $30 是誤把新票價 $22 與手續費相加；(D) Nothing 則是誤以為差額可折抵手續費。"
+      },
+      {
+        "q": "What is NOT stated about Ashvale Rail tickets?",
+        "options": [
+          "They can be changed on the company's website",
+          "A fee is charged each time they are changed",
+          "Those bought on the day of travel cannot be changed",
+          "They may be given to another passenger"
+        ],
+        "answer": 3,
+        "explanation": "NOT 題。(A)(B)(C) 分別對應 CHANGING A BOOKING 條列的第一、第二、第四點；轉讓給他人一事全文未提，故選 (D)。"
+      },
+      {
+        "q": "The word \"reach\" in paragraph 1 of the e-mail is closest in meaning to",
+        "options": ["get to", "contact", "hold", "call"],
+        "answer": 0,
+        "explanation": "字義題。原句「I can no longer reach the station in time」的受詞是地點（車站），故 reach 意為「抵達」＝ get to。(B) contact、(D) call 是 reach 用於「聯絡某人」時的意思，在此語境不成立。"
+      }
+    ],
+    "translation": [
+      "阿什維爾鐵路 平日班次｜阿什維爾中央站往波特米爾｜9 月 1 日起實施\n．A102：06:15 發車，07:40 抵達，直達，$34\n．A126：08:20 發車，09:45 抵達，直達，$34\n．A140：09:30 發車，11:30 抵達，停靠多恩、巴威克，$26\n．A155：10:40 發車，12:50 抵達，停靠多恩、巴威克、米爾蓋特，$22\n．A168：11:50 發車，13:55 抵達，停靠多恩、巴威克，$26\n．A180：12:15 發車，13:40 抵達，直達，$34\n．A192：14:30 發車，15:55 抵達，直達，$34\n．備註：直達車兩城之間不停站；表列票價為預訂之普通座位價格\n．更改訂位規定：可於發車前兩小時之前在官網辦理；每次更改收取 $8 手續費；新班次較貴須補差額，較便宜則差額不退；當日購買的車票不得更改",
+      "收件者：bookings@ashvalerail.com\n寄件者：m.otero@quillmail.com\n日期：9 月 14 日\n主旨：訂位編號 R-88204\n\n您好：\n\n我持有本週五（9 月 18 日）從阿什維爾中央站往波特米爾、08:20 那班車的車票，訂位編號 R-88204。我早上的會議被改期，十點以前不會結束，因此已來不及趕到車站搭那班車。\n\n我必須在兩點以前抵達波特米爾，屆時要在車站旁的客戶辦公室做一場簡短演講，這場演講無法更動。因此我想改搭仍能讓我提早約一小時抵達的最晚班次。我看過貴公司的時刻表，似乎只有一班符合，若還有空位請幫我改到那班。\n\n我其實不太想搭沿途停靠的班次，但我明白這次可能別無選擇。\n\n另有兩個問題。我原本的車票是三十四美元，若新票價較低，是否確實不會退還差額？另外，我是三週前在貴公司網站上購票的，這樣我是否仍可自行更改，還是必須由貴單位代為處理？\n\n感謝協助，\n\n瑪塞拉．歐特羅"
+    ]
+  },
+  {
+    "id": "p7-b12-3",
+    "format": "double",
+    "passages": [
+      {
+        "type": "invoice",
+        "label": "Invoice",
+        "blocks": [
+          { "t": "h", "text": "BELLAMY PLUMBING AND ELECTRIC" },
+          { "t": "sub", "text": "26 Sandhill Road, Fairgate | 555-0193 | billing@bellamyservice.com" },
+          {
+            "t": "kv",
+            "items": [
+              ["Invoice number", "BP-5512"],
+              ["Invoice date", "6 November"],
+              ["Service date", "Sunday, 2 November"],
+              ["Customer", "Ms. Farida Nasser, 9 Weaver Lane"],
+              ["Technician", "D. Okoye"],
+              ["Payment due", "6 December"]
+            ]
+          },
+          {
+            "t": "table",
+            "header": true,
+            "rows": [
+              ["Description", "Hours / Qty", "Rate", "Amount"],
+              ["Labor, kitchen sink pipe repair", "2.0 hr", "$85.00", "$170.00"],
+              ["Replacement pipe section (part P-14)", "1", "$46.00", "$46.00"],
+              ["Labor, bathroom light switch", "0.5 hr", "$85.00", "$42.50"],
+              ["Weekend visit charge", "1", "$120.00", "$120.00"],
+              ["Small parts and materials", "1", "$18.00", "$18.00"]
+            ]
+          },
+          {
+            "t": "kv",
+            "items": [
+              ["Subtotal", "$396.50"],
+              ["Tax (5%)", "$19.83"],
+              ["Total due", "$416.33"]
+            ]
+          },
+          { "t": "note", "text": "*Labor is charged in half-hour blocks, and half an hour is the smallest amount charged. The weekend visit charge applies to any work carried out on a Saturday or Sunday. Labor is under warranty for six months from the service date; parts are covered by the maker's own warranty. Accounts not paid within thirty days are charged interest of 1.5 percent per month." }
+        ]
+      },
+      {
+        "type": "email",
+        "label": "E-mail",
+        "content": "To: billing@bellamyservice.com\nFrom: f.nasser@quillmail.com\nDate: 10 November\nSubject: Invoice BP-5512\n\nDear Sir or Madam,\n\nThank you for sending Mr. Okoye out so quickly. The sink has given us no trouble since, and the new switch works well. Before I pay, however, I would like to raise one point about the bill.\n\nWhen I telephoned your office on Thursday, 30 October, I asked for the first weekday appointment you had. I was told that nobody was free until the following Thursday and that a technician could come on Sunday instead. I agreed to the Sunday visit, but the person I spoke with never told me that coming at the weekend would add a further charge to my total. Had I known, I would have waited. I would like that line taken off the bill.\n\nI have a second, smaller question. The bathroom job took Mr. Okoye about ten minutes, yet the bill shows half an hour of labor. Could you explain how the time is counted?\n\nI should also plan ahead. If the same pipe begins to leak again in March, will I have to pay for that work a second time?\n\nI will settle the rest of the invoice as soon as I hear from you.\n\nKind regards,\n\nFarida Nasser\n9 Weaver Lane"
+      }
+    ],
+    "questions": [
+      {
+        "q": "Why did Ms. Nasser write the e-mail?",
+        "options": [
+          "To question one of the charges on her bill",
+          "To report that a repair has already failed",
+          "To change the way she pays the company",
+          "To ask for a second visit from a technician"
+        ],
+        "answer": 0,
+        "explanation": "定位句在信件第一段末：「Before I pay, however, I would like to raise one point about the bill.」第二段接著要求刪掉某一項費用。她在第一段明說水槽與開關都沒問題，故 (B) 錯。"
+      },
+      {
+        "q": "How much is the charge that Ms. Nasser objects to?",
+        "options": ["$18.00", "$42.50", "$46.00", "$120.00"],
+        "answer": 3,
+        "explanation": "跨文件整合題。信件第二段只說週末到府「would add a further charge」並要求刪掉那一行，沒有寫出金額；必須回到發票明細才知該項為 Weekend visit charge $120.00。$42.50 是她另外提問的浴室工資，$46.00 是管件、$18.00 是零星材料，都不是她反對的項目。"
+      },
+      {
+        "q": "What is suggested about the charge for the bathroom light switch?",
+        "options": [
+          "It was added to the invoice by mistake",
+          "It follows the company's usual way of counting time",
+          "It includes the cost of a new switch",
+          "It will be removed when the invoice is corrected"
+        ],
+        "answer": 1,
+        "explanation": "跨文件推論題。信件第三段說該工作只花約十分鐘卻被記為半小時；發票下方備註寫明「Labor is charged in half-hour blocks, and half an hour is the smallest amount charged」，可知這是公司的計時方式，並非誤植。新開關的零件費另列在 Small parts and materials 一項，故 (C) 錯。"
+      },
+      {
+        "q": "What will most likely happen if the repaired pipe leaks again in March?",
+        "options": [
+          "Bellamy will do the work without charging for labor",
+          "Ms. Nasser will be charged the full hourly rate again",
+          "The maker of the pipe will send its own technician",
+          "A weekend visit charge will be added to the new bill"
+        ],
+        "answer": 0,
+        "explanation": "跨文件推論題。發票的服務日期為 11 月 2 日，備註寫「Labor is under warranty for six months from the service date」，六個月保固到隔年 5 月初，三月仍在期限內，因此工資免費。"
+      },
+      {
+        "q": "The word \"raise\" in paragraph 1 of the e-mail is closest in meaning to",
+        "options": ["lift", "increase", "mention", "collect"],
+        "answer": 2,
+        "explanation": "字義題。「raise one point about the bill」中的 raise 意為「提出（一個問題／看法）」＝ mention。(A) lift 與 (B) increase 都是 raise 的常見字面義誘答，但在此搭配 point 並不合理。"
+      }
+    ],
+    "translation": [
+      "貝拉米水電行\n地址：費爾蓋特桑德希爾路 26 號｜電話 555-0193｜billing@bellamyservice.com\n．發票號碼：BP-5512；發票日期：11 月 6 日；施工日期：11 月 2 日（週日）\n．客戶：法麗達．納塞爾女士，威弗巷 9 號；技師：D. 奧科耶；付款期限：12 月 6 日\n．明細：廚房水槽管線維修工資 2.0 小時，每小時 $85.00，計 $170.00；更換管件（料號 P-14）1 件 $46.00；浴室電燈開關工資 0.5 小時，每小時 $85.00，計 $42.50；週末到府費 1 次 $120.00；零星材料 1 式 $18.00\n．小計 $396.50；稅金（5%）$19.83；應付總額 $416.33\n．備註：工資以半小時為單位計費，最低以半小時起算；凡於週六或週日施作皆收取週末到府費；工資自施工日起保固六個月，零件則依製造商自身保固辦理；逾三十日未付款者，每月加收 1.5% 利息",
+      "收件者：billing@bellamyservice.com\n寄件者：f.nasser@quillmail.com\n日期：11 月 10 日\n主旨：發票 BP-5512\n\n敬啟者：\n\n感謝貴公司這麼快就派奧科耶先生前來。水槽自那之後都沒再出問題，新的開關也運作良好。不過在付款之前，我想針對帳單提出一點疑問。\n\n我在 10 月 30 日（週四）致電貴公司時，要求安排最近的平日時段。當時我被告知直到下週四都沒有人有空，可以改在週日前來。我同意了週日這個時間，但和我通話的人從未告訴我，週末到府會讓總額再多出一筆費用。早知如此，我寧可等。我希望這一項從帳單上刪除。\n\n我還有第二個比較小的問題。浴室那項工作，奧科耶先生大約只花了十分鐘，帳單上卻記為半小時工資。可以說明時間是如何計算的嗎？\n\n我也想先做打算：如果同一段管線在三月再度漏水，我是否得再付一次費用？\n\n收到回覆後，我會立即支付發票其餘款項。\n\n謹啟，\n\n法麗達．納塞爾\n威弗巷 9 號"
+    ]
+  },
+  {
+    "id": "p7-b12-4",
+    "format": "double",
+    "passages": [
+      {
+        "type": "form",
+        "label": "Membership Plan Comparison",
+        "blocks": [
+          { "t": "h", "text": "HALEWOOD ATHLETIC CLUB" },
+          { "t": "sub", "text": "Membership Plans | Prices effective 1 February" },
+          {
+            "t": "table",
+            "header": true,
+            "rows": [
+              ["Feature", "Basic", "Active", "Complete"],
+              ["Monthly fee", "$29", "$45", "$68"],
+              ["Gym floor and machines", "Yes", "Yes", "Yes"],
+              ["Group classes each month", "2", "8", "No limit"],
+              ["Swimming pool", "No", "Yes", "Yes"],
+              ["Access hours", "6 A.M. to 3 P.M.", "6 A.M. to 8 P.M.", "24 hours"],
+              ["Guest passes each month", "0", "1", "3"],
+              ["Locker rental", "$8 per month", "$8 per month", "Included"],
+              ["Training session with a coach", "$55 each", "$48 each", "Two free each month, then $40"]
+            ]
+          },
+          { "t": "p", "text": "HOW TO CHANGE YOUR PLAN" },
+          {
+            "t": "list",
+            "items": [
+              "Write to members@halewoodclub.com or speak to the front desk.",
+              "A request that reaches us before the twentieth of the month takes effect on the first day of the following month.",
+              "Moving to a lower plan also requires thirty days' written notice.",
+              "Every plan runs for at least three months from the day you join."
+            ]
+          },
+          { "t": "note", "text": "*The joining fee of $40 is charged once only and is not charged again when a member changes plans. Guest passes cannot be saved for the following month." }
+        ]
+      },
+      {
+        "type": "email",
+        "label": "E-mail",
+        "content": "To: members@halewoodclub.com\nFrom: y.balogun@quillmail.com\nDate: 12 June\nSubject: Changing my plan\n\nDear Ms. Bregman,\n\nI joined the club in March on the Active plan and have been coming three or four times a week, almost always early in the morning before work.\n\nTwo things have changed. My nephew is staying with me for the school year while his parents are away, and taking him to school has taken over my mornings, so I can no longer come here before work. The only time I am reliably free is late in the evening, rarely before nine o'clock, and I would much rather swim then than give it up. I have also begun training for a race in October, and my coach suggests two sessions a month with a trainer.\n\nCould you move me to the plan that lets me use the pool at that hour? I would like the change to start on the first of July, and I am writing well before the date given in your rules, so I hope that is possible.\n\nTwo questions. First, I now pay eight dollars a month for a locker. Will that still appear on my bill after the change? Second, my sister is visiting from abroad in August and would like to come with me twice in the same week. Will my new plan allow that?\n\nFinally, please confirm that I do not have to pay the joining fee a second time.\n\nThank you,\n\nYusuf Balogun"
+      }
+    ],
+    "questions": [
+      {
+        "q": "Which plan will Mr. Balogun most likely move to?",
+        "options": ["He will stay on his present plan", "Basic", "Active", "Complete"],
+        "answer": 3,
+        "explanation": "跨文件整合題。他晚上九點下班後才要游泳，比較表顯示 Active 只開放到 20:00，唯有 Complete 是 24 小時；他另提到每月要兩次教練課，Complete 正好含每月兩次免費課程。兩項條件都指向 Complete。"
+      },
+      {
+        "q": "How much more will Mr. Balogun pay each month after the change?",
+        "options": ["$8", "$15", "$23", "$68"],
+        "answer": 1,
+        "explanation": "跨文件計算題。他目前 Active 月費 $45，另付置物櫃 $8，合計 $53；Complete 月費 $68 且置物櫃已含在內。$68 − $53 ＝ $15。(C) $23 是只算月費差額、忘了扣掉置物櫃費用的誘答。"
+      },
+      {
+        "q": "What is indicated about the visit by Mr. Balogun's sister?",
+        "options": [
+          "She will have to buy a day ticket at the front desk",
+          "She may come only once during the month",
+          "His new plan will cover both of her visits",
+          "She must be added to his membership first"
+        ],
+        "answer": 2,
+        "explanation": "跨文件整合題。信件第四段說妹妹想在同一週來兩次；比較表 Guest passes each month 一列顯示 Complete 每月三張來賓券，兩次在額度之內，故不需另外購票。"
+      },
+      {
+        "q": "According to the comparison chart, what is NOT included in the Active plan?",
+        "options": [
+          "Use of the swimming pool",
+          "Free training sessions with a coach",
+          "Eight group classes each month",
+          "One guest pass each month"
+        ],
+        "answer": 1,
+        "explanation": "NOT 題。比較表 Active 欄位：游泳池 Yes、團體課程 8 堂、來賓券 1 張，均含在內；教練課則標示 $48 each，須另外付費，只有 Complete 才有每月兩次免費，故選 (B)。"
+      },
+      {
+        "q": "The word \"suggests\" in paragraph 2 of the e-mail is closest in meaning to",
+        "options": ["orders", "proves", "doubts", "recommends"],
+        "answer": 3,
+        "explanation": "字義題。「my coach suggests two sessions a month with a trainer」是教練提出的建議，故 suggests ＝ recommends。(A) orders 語氣過強，教練並非下令；(B)(C) 與語意不符。"
+      }
+    ],
+    "translation": [
+      "海爾伍德運動俱樂部 會員方案比較（2 月 1 日起適用價格）\n．月費：基本 $29／進階 $45／全享 $68\n．健身區與器材：三種方案皆可使用\n．每月團體課程：基本 2 堂／進階 8 堂／全享 無上限\n．游泳池：基本 不可／進階 可／全享 可\n．開放時段：基本 06:00-15:00／進階 06:00-20:00／全享 24 小時\n．每月來賓券：基本 0 張／進階 1 張／全享 3 張\n．置物櫃租金：基本、進階每月 $8／全享 已含\n．教練課程：基本每堂 $55／進階每堂 $48／全享 每月兩堂免費，之後每堂 $40\n．更改方案方式：來信 members@halewoodclub.com 或洽櫃檯；每月 20 日前提出者，自次月 1 日生效；降級另需提前三十天書面通知；各方案自入會日起至少須維持三個月\n．備註：$40 入會費僅收取一次，更改方案時不再收取；來賓券不得保留至次月",
+      "收件者：members@halewoodclub.com\n寄件者：y.balogun@quillmail.com\n日期：6 月 12 日\n主旨：更改我的方案\n\n親愛的布雷格曼女士：\n\n我三月入會，選的是進階方案，每週來三到四次，幾乎都是上班前的清晨時段。\n\n現在有兩件事變了。我姪子這學年住在我這裡，父母不在身邊由我照顧，早上送他上學占掉了我原本的時段，我已經沒辦法在上班前過來。我固定有空的時間只剩晚上，很少早於九點，比起就此放棄，我寧可改在那個時候游泳。另外我開始為十月的一場路跑受訓，教練建議我每月安排兩堂教練課。\n\n可以幫我改到那個時段仍能使用游泳池的方案嗎？我希望從七月一日起生效，而且我提出的時間遠早於貴會規定的日期，希望能夠辦到。\n\n另有兩個問題。第一，我目前每月支付八美元的置物櫃費用，更改方案後帳單上還會有這筆嗎？第二，我妹妹八月會從國外來訪，想在同一週跟我來兩次，新方案是否允許？\n\n最後，也請確認我不必再付第二次入會費。\n\n謝謝，\n\n尤瑟夫．巴洛貢"
+    ]
+  }
+]

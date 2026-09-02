@@ -113,11 +113,19 @@
     const sub = opts.wrongOnly
       ? '錯題複習 · ' + units.length + ' 單元'
       : config.map(c => 'Part ' + c.p + ' × ' + c.n + ' ' + PARTS[c.p].unit).join(' · ');
+    /* 一般練習=交卷式(答完全部才對答案);錯題複習=即時對答(答對才移出) */
+    const instant = !!opts.wrongOnly;
     const sess = units.map(() => ({ done: false, answers: {}, plays: 0 }));
     const okFlags = [];
     let cur = 0;
     let player = null;
     draw();
+
+    function unitAnswered(i) {
+      const u = units[i];
+      if (u.p === '1' || u.p === '2') return sess[i].answers.c !== undefined;
+      return u.item.questions.every((q, qi) => sess[i].answers[qi] !== undefined);
+    }
 
     function draw() {
       if (player) player.stop();
@@ -130,7 +138,12 @@
         let cls = i === cur ? 'cur' : '';
         if (okFlags[i] === true) cls += ' ok';
         if (okFlags[i] === false) cls += ' ng';
-        nav.append(h('button', { class: cls.trim(), disabled: '' }, String(i + 1)));
+        if (!instant && unitAnswered(i) && okFlags[i] === undefined) cls += ' ans';
+        nav.append(h('button', {
+          class: cls.trim(),
+          disabled: instant ? '' : null,
+          onclick: instant ? null : () => { cur = i; draw(); window.scrollTo(0, 0); },
+        }, String(i + 1)));
       });
       root.append(nav);
       const u = units[cur];
@@ -143,6 +156,14 @@
 
     function nextRow(canNext) {
       const isLast = cur === units.length - 1;
+      if (!instant) {
+        return h('div', { class: 'drill-nav-btns' },
+          h('button', {
+            class: 'btn primary',
+            onclick: () => { if (isLast) submit(); else { cur++; draw(); window.scrollTo(0, 0); } },
+          }, isLast ? '交卷對答案' : '下一' + PARTS[units[cur + 1].p].unit + ' →'),
+          isLast ? null : h('button', { class: 'btn', onclick: submit }, '直接交卷'));
+      }
       return h('div', { class: 'drill-nav-btns' },
         canNext
           ? h('button', {
@@ -165,11 +186,23 @@
       return row;
     }
 
+    /* 交卷式:只選不對答,可改選 */
+    function letterPick(count, chosen, onPick) {
+      const row = h('div', { class: 'letter-row' });
+      for (let i = 0; i < count; i++) {
+        row.append(h('button', {
+          class: 'letter-big' + (chosen === i ? ' picked' : ''),
+          onclick: () => onPick(i),
+        }, LETTERS[i]));
+      }
+      return row;
+    }
+
     function reveal(q, rec, transcript) {
       return h('div', null,
         h('div', { class: 'explain' },
           h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-            rec.ok ? '答對了' : '答錯了,正確答案是 ' + LETTERS[q.answer]),
+            rec.ok ? '答對了' : (rec.c === -1 ? '未作答,正確答案是 ' : '答錯了,正確答案是 ') + LETTERS[q.answer]),
           h('div', null, q.explanation)),
         h('div', { class: 'transcript-box' },
           h('b', null, '逐字稿'),
@@ -188,14 +221,16 @@
         h('div', { class: 'listen-photo' }, img),
         player.el,
         h('div', { class: 'q-text', style: 'margin-top:10px' }, '選出最符合照片的描述:'),
-        letterButtons(4, rec, q.answer, oi => {
-          state.done = true;
-          state.answers = { c: oi, ok: oi === q.answer };
-          okFlags[cur] = state.answers.ok;
-          saveRec('1', q.id, oi, state.answers.ok);
-          draw();
-        }),
-        rec ? reveal(q, rec, q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n')) : null));
+        instant
+          ? letterButtons(4, rec, q.answer, oi => {
+              state.done = true;
+              state.answers = { c: oi, ok: oi === q.answer };
+              okFlags[cur] = state.answers.ok;
+              saveRec('1', q.id, oi, state.answers.ok);
+              draw();
+            })
+          : letterPick(4, state.answers.c, oi => { state.answers.c = oi; draw(); }),
+        instant && rec ? reveal(q, rec, q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n')) : null));
       root.append(nextRow(state.done));
     }
 
@@ -205,14 +240,16 @@
         h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 2 應答')),
         player.el,
         h('div', { class: 'q-text', style: 'margin-top:10px' }, '選出最合適的回應:'),
-        letterButtons(3, rec, q.answer, oi => {
-          state.done = true;
-          state.answers = { c: oi, ok: oi === q.answer };
-          okFlags[cur] = state.answers.ok;
-          saveRec('2', q.id, oi, state.answers.ok);
-          draw();
-        }),
-        rec ? reveal(q, rec, q.question + '\n' + q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n')) : null));
+        instant
+          ? letterButtons(3, rec, q.answer, oi => {
+              state.done = true;
+              state.answers = { c: oi, ok: oi === q.answer };
+              okFlags[cur] = state.answers.ok;
+              saveRec('2', q.id, oi, state.answers.ok);
+              draw();
+            })
+          : letterPick(3, state.answers.c, oi => { state.answers.c = oi; draw(); }),
+        instant && rec ? reveal(q, rec, q.question + '\n' + q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n')) : null));
       root.append(nextRow(state.done));
     }
 
@@ -227,20 +264,22 @@
         const opts = h('div', { class: 'opts', style: 'margin-top:6px' });
         q.options.forEach((opt, oi) => {
           let cls = 'opt';
-          if (done) {
+          if (instant && done) {
             if (oi === q.answer) cls += ' correct';
             else if (oi === chosen) cls += ' wrong';
             else cls += ' plain';
-          }
+          } else if (!instant && chosen === oi) cls += ' picked';
           opts.append(h('button', {
-            class: cls, disabled: done ? '' : null,
+            class: cls, disabled: instant && done ? '' : null,
             onclick: () => {
               state.answers[qi] = oi;
-              saveRec(p, qid(set, qi), oi, oi === q.answer);
-              const all = set.questions.every((x, xi) => state.answers[xi] !== undefined);
-              if (all) {
-                state.done = true;
-                okFlags[cur] = set.questions.every((x, xi) => state.answers[xi] === x.answer);
+              if (instant) {
+                saveRec(p, qid(set, qi), oi, oi === q.answer);
+                const all = set.questions.every((x, xi) => state.answers[xi] !== undefined);
+                if (all) {
+                  state.done = true;
+                  okFlags[cur] = set.questions.every((x, xi) => state.answers[xi] === x.answer);
+                }
               }
               draw();
             },
@@ -249,12 +288,12 @@
         block.append(h('div', { style: 'margin-top:14px' },
           h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), q.q),
           opts,
-          done ? h('div', { class: 'explain' },
+          instant && done ? h('div', { class: 'explain' },
             h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
               chosen === q.answer ? '答對了' : '答錯了,正確答案是 ' + LETTERS[q.answer]),
             h('div', null, q.explanation)) : null));
       });
-      if (complete) {
+      if (instant && complete) {
         const transcript = p === '3'
           ? set.dialogue.map(t => (t.s === 'M' ? '男:' : '女:') + t.text).join('\n')
           : set.talk;
@@ -265,6 +304,113 @@
       }
       root.append(block);
       root.append(nextRow(complete));
+    }
+
+    /* 交卷:統一批改(未作答算錯,不寫入錯題紀錄) */
+    function submit() {
+      const missing = units.filter((u, i) => !unitAnswered(i)).length;
+      if (missing && !confirm('還有 ' + missing + ' 個單元沒答完,確定要交卷嗎?未作答的算錯。')) return;
+      units.forEach((u, i) => {
+        const state = sess[i];
+        state.done = true;
+        if (u.p === '1' || u.p === '2') {
+          if (state.answers.c !== undefined) {
+            state.answers.ok = state.answers.c === u.item.answer;
+            saveRec(u.p, u.item.id, state.answers.c, state.answers.ok);
+          } else state.answers = { c: -1, ok: false };
+          okFlags[i] = state.answers.ok;
+        } else {
+          let allOk = true;
+          u.item.questions.forEach((q, qi) => {
+            const c = state.answers[qi];
+            if (c !== undefined) saveRec(u.p, qid(u.item, qi), c, c === q.answer);
+            if (c !== q.answer) allOk = false;
+          });
+          okFlags[i] = allOk;
+        }
+      });
+      review();
+    }
+
+    function review() {
+      if (player) player.stop();
+      root.innerHTML = '';
+      let qTotal = 0, qCorrect = 0;
+      units.forEach((u, i) => {
+        if (u.p === '1' || u.p === '2') {
+          qTotal++;
+          if (sess[i].answers.ok) qCorrect++;
+        } else {
+          u.item.questions.forEach((q, qi) => { qTotal++; if (sess[i].answers[qi] === q.answer) qCorrect++; });
+        }
+      });
+      const btns = () => h('div', { class: 'drill-nav-btns' },
+        h('button', { class: 'btn primary', onclick: () => startQuiz(root, config) }, '再練一輪'),
+        h('a', { class: 'btn', href: 'practice.html' }, '回題庫'));
+      root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
+        h('h2', null, '聽力本輪成績:' + qCorrect + ' / ' + qTotal + ' 題'),
+        h('div', { class: 'band-note' }, qTotal - qCorrect ? '答錯的題目已收進聽力錯題。往下逐題看解析,音檔可以重聽。' : '全對!')));
+      root.append(btns());
+
+      /* 逐題檢討(音檔解鎖重聽) */
+      units.forEach((u, i) => {
+        const state = sess[i];
+        const rp = makePlayer(u.item.id, state);
+        if (u.p === '1') {
+          const q = u.item;
+          root.append(h('div', { class: 'q-block', style: 'margin-top:18px' },
+            h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 1 照片描述')),
+            h('div', { class: 'listen-photo' }, h('img', {
+              src: 'img/listening/' + q.id + '.jpg', alt: '聽力照片',
+              onerror: e => e.target.replaceWith(h('div', { class: 'photo-missing' }, '照片準備中')),
+            })),
+            rp.el,
+            letterButtons(4, state.answers, q.answer, () => {}),
+            reveal(q, state.answers, q.options.map((o, oi) => LETTERS[oi] + '. ' + o).join('\n'))));
+        } else if (u.p === '2') {
+          const q = u.item;
+          root.append(h('div', { class: 'q-block', style: 'margin-top:18px' },
+            h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 2 應答')),
+            rp.el,
+            letterButtons(3, state.answers, q.answer, () => {}),
+            reveal(q, state.answers, q.question + '\n' + q.options.map((o, oi) => LETTERS[oi] + '. ' + o).join('\n'))));
+        } else {
+          const set = u.item;
+          const block = h('div', { class: 'q-block', style: 'margin-top:18px' },
+            h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, PARTS[u.p].title)),
+            rp.el);
+          set.questions.forEach((q, qi) => {
+            const chosen = state.answers[qi];
+            const rec = { c: chosen === undefined ? -1 : chosen, ok: chosen === q.answer };
+            const opts = h('div', { class: 'opts', style: 'margin-top:6px' });
+            q.options.forEach((opt, oi) => {
+              let cls = 'opt';
+              if (oi === q.answer) cls += ' correct';
+              else if (oi === rec.c) cls += ' wrong';
+              else cls += ' plain';
+              opts.append(h('button', { class: cls, disabled: '' },
+                h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
+            });
+            block.append(h('div', { style: 'margin-top:14px' },
+              h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), q.q),
+              opts,
+              h('div', { class: 'explain' },
+                h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
+                  rec.ok ? '答對了' : (rec.c === -1 ? '未作答,正確答案是 ' : '答錯了,正確答案是 ') + LETTERS[q.answer]),
+                h('div', null, q.explanation))));
+          });
+          const transcript = u.p === '3'
+            ? set.dialogue.map(t => (t.s === 'M' ? '男:' : '女:') + t.text).join('\n')
+            : set.talk;
+          block.append(h('div', { class: 'transcript-box' },
+            h('b', null, '逐字稿'),
+            h('div', { class: 'tr-en' }, transcript),
+            h('div', { class: 'tr-zh' }, set.transcriptZh)));
+          root.append(block);
+        }
+      });
+      root.append(btns());
+      window.scrollTo(0, 0);
     }
 
     function summary() {

@@ -232,10 +232,22 @@
     if (!rec) return null;
     const box = h('div', { class: 'explain' },
       h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-        rec.ok ? '答對了' : '答錯了,正確答案是 ' + LETTERS[q.answer]),
+        rec.ok ? '答對了' : (rec.c === -1 ? '未作答,正確答案是 ' : '答錯了,正確答案是 ') + LETTERS[q.answer]),
       h('div', null, q.explanation));
     if (extraTr) box.append(h('div', { class: 'tr' }, extraTr));
     return box;
+  }
+
+  /* 作答期間的選項(交卷式:只選不對答,可改選) */
+  function pickButtons(q, rec, onPick) {
+    const opts = h('div', { class: 'opts' });
+    q.options.forEach((opt, oi) => {
+      opts.append(h('button', {
+        class: 'opt' + (rec && rec.c === oi ? ' picked' : ''),
+        onclick: () => onPick(oi),
+      }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
+    });
+    return opts;
   }
 
   function saveRec(p, id, oi, ok) {
@@ -250,13 +262,18 @@
       h('a', { href: 'practice.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回題庫'));
   }
 
-  function sessionDots(list, cur, results) {
+  function sessionDots(list, cur, results, onJump, answered) {
     const nav = h('div', { class: 'q-nav' });
     list.forEach((x, i) => {
       let cls = i === cur ? 'cur' : '';
       if (results[i] === true) cls += ' ok';
       if (results[i] === false) cls += ' ng';
-      nav.append(h('button', { class: cls.trim(), disabled: '' }, String(i + 1)));
+      if (answered && answered(i) && results[i] === undefined) cls += ' ans';
+      nav.append(h('button', {
+        class: cls.trim(),
+        disabled: onJump ? null : '',
+        onclick: onJump ? () => onJump(i) : null,
+      }, String(i + 1)));
     });
     return nav;
   }
@@ -274,28 +291,35 @@
     }
     const sub = config.map(c =>
       'Part ' + c.p + ' × ' + c.n + ' ' + DATA[c.p].unit + (c.cat && c.cat !== 'all' ? '(' + c.cat + ')' : '')).join(' · ');
-    const session = { answers: {} };   // p5 單元:{c,ok};p6/7 單元:{qKey:{c,ok}}
+    /* 交卷式:作答期間只記選擇不對答,交卷後一次看成績+逐題檢討(她指定的流程) */
+    const session = { answers: {} };   // p5 單元:{c};p6/7 單元:{qKey:{c}};交卷後補 ok
     const okFlags = [];
     let cur = 0;
     draw();
 
+    function unitAnswered(i) {
+      const u = units[i];
+      if (u.p === '5') return !!session.answers[i];
+      const sess = session.answers[i] || {};
+      return u.item.questions.every((q, qi) => sess[qid(u.item, q, qi)]);
+    }
+
     function draw() {
       root.innerHTML = '';
       root.append(topBar('隨機練習', sub));
-      root.append(sessionDots(units, cur, okFlags));
+      root.append(sessionDots(units, cur, okFlags, i => { cur = i; draw(); window.scrollTo(0, 0); }, unitAnswered));
       if (units[cur].p === '5') drawP5();
       else drawSet();
     }
 
-    function finishBtnRow(canNext, isLast) {
-      const nextWord = isLast ? '' : DATA[units[cur + 1].p].unit;
+    function navRow() {
+      const isLast = cur === units.length - 1;
       return h('div', { class: 'drill-nav-btns' },
-        canNext
-          ? h('button', {
-              class: 'btn primary',
-              onclick: () => { if (isLast) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
-            }, isLast ? '看本輪成績' : '下一' + nextWord + ' →')
-          : h('span', { class: 'result-note', style: 'align-self:center' }, '作答後才能繼續'));
+        h('button', {
+          class: 'btn primary',
+          onclick: () => { if (isLast) submit(); else { cur++; draw(); window.scrollTo(0, 0); } },
+        }, isLast ? '交卷對答案' : '下一' + DATA[units[cur + 1].p].unit + ' →'),
+        isLast ? null : h('button', { class: 'btn', onclick: submit }, '直接交卷'));
     }
 
     function drawP5() {
@@ -307,15 +331,8 @@
           h('span', { class: 'badge cat' }, q.category),
           h('span', { class: 'badge ' + (q.difficulty === '基礎' ? 'level-basic' : q.difficulty === '進階' ? 'level-adv' : 'level-mid') }, q.difficulty)),
         h('div', { class: 'q-text', style: 'font-size:17px' }, h('span', { class: 'q-no' }, (cur + 1) + '.'), q.question),
-        optionButtons(q, rec, oi => {
-          const ok = oi === q.answer;
-          session.answers[cur] = { c: oi, ok };
-          okFlags[cur] = ok;
-          saveRec('5', q.id, oi, ok);
-          draw();
-        }),
-        explainBox(q, rec, rec ? '句意:' + q.translation : null)));
-      root.append(finishBtnRow(!!rec, cur === units.length - 1));
+        pickButtons(q, rec, oi => { session.answers[cur] = { c: oi }; draw(); })));
+      root.append(navRow());
     }
 
     function drawSet() {
@@ -325,72 +342,124 @@
       const layout = h('div', { class: 'set-layout' });
 
       const passCol = h('div', { class: 'passage-sticky-wrap' });
-      if (p === '6') passCol.append(part6Passage(set, sess));
+      if (p === '6') passCol.append(part6Passage(set, sess, false));
       else set.passages.forEach(ps => passCol.append(part7Passage(ps)));
-
-      const complete = set.questions.every((q, qi) => sess[qid(set, q, qi)]);
-      const trBtn = h('button', {
-        class: 'btn', style: 'margin-top:12px',
-        disabled: complete ? null : '',
-        onclick: () => {
-          trWrap.style.display = trWrap.style.display === 'none' ? '' : 'none';
-          trBtn.classList.toggle('on');
-        },
-      }, complete ? '顯示全文翻譯' : '作答完可看全文翻譯');
-      const trWrap = h('div', { class: 'set-translation', style: 'display:none' },
-        p === '6' ? set.translation : (set.translation || []).map((t, i) =>
-          h('div', null, set.passages[i] && set.passages[i].label ? h('b', null, '【' + set.passages[i].label + '】\n') : null, t, i < set.translation.length - 1 ? '\n\n' : '')));
-      passCol.append(trBtn, trWrap);
+      passCol.append(h('button', { class: 'btn', style: 'margin-top:12px', disabled: '' }, '交卷後可看全文翻譯'));
       layout.append(h('div', null, passCol));
 
       const qCol = h('div', null);
       qCol.append(h('div', { style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, DATA[p].title)));
       set.questions.forEach((q, qi) => {
         const id = qid(set, q, qi);
-        const rec = sess[id];
         const label = p === '6' ? '(' + q.num + ')' : 'Q' + (qi + 1);
         const text = p === '6' ? '選出最適合填入空格 (' + q.num + ') 的答案' : q.q;
         qCol.append(h('div', { class: 'q-block' },
-          p === '6' && q.type ? h('div', { style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, q.type)) : null,
           h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, label), text),
-          optionButtons(q, rec, oi => {
-            const ok = oi === q.answer;
-            sess[id] = { c: oi, ok };
-            saveRec(p, id, oi, ok);
-            const done = set.questions.every((x, xi) => sess[qid(set, x, xi)]);
-            if (done) okFlags[cur] = set.questions.every((x, xi) => sess[qid(set, x, xi)].ok);
-            draw();
-          }),
-          explainBox(q, rec)));
+          pickButtons(q, sess[id], oi => { sess[id] = { c: oi }; draw(); })));
       });
       layout.append(qCol);
       root.append(layout);
-      root.append(finishBtnRow(complete, cur === units.length - 1));
+      root.append(navRow());
     }
 
-    function summary() {
+    function submit() {
+      const missing = units.filter((u, i) => !unitAnswered(i)).length;
+      if (missing && !confirm('還有 ' + missing + ' 個單元沒答完,確定要交卷嗎?未作答的算錯。')) return;
+      /* 統一批改+寫入紀錄(只記有作答的) */
+      units.forEach((u, i) => {
+        if (u.p === '5') {
+          const rec = session.answers[i];
+          if (rec) {
+            rec.ok = rec.c === u.item.answer;
+            saveRec('5', u.item.id, rec.c, rec.ok);
+          } else session.answers[i] = { c: -1, ok: false };
+          okFlags[i] = session.answers[i].ok;
+        } else {
+          const sess = session.answers[i] = session.answers[i] || {};
+          let allOk = true;
+          u.item.questions.forEach((q, qi) => {
+            const id = qid(u.item, q, qi);
+            const rec = sess[id];
+            if (rec) {
+              rec.ok = rec.c === q.answer;
+              saveRec(u.p, id, rec.c, rec.ok);
+            } else sess[id] = { c: -1, ok: false };
+            if (!sess[id].ok) allOk = false;
+          });
+          okFlags[i] = allOk;
+        }
+      });
+      review();
+    }
+
+    function review() {
       root.innerHTML = '';
       root.append(topBar('隨機練習', sub));
       let qTotal = 0, qCorrect = 0;
       units.forEach((u, i) => {
         if (u.p === '5') {
           qTotal++;
-          if ((session.answers[i] || {}).ok) qCorrect++;
+          if (session.answers[i].ok) qCorrect++;
         } else {
-          const sess = session.answers[i] || {};
-          u.item.questions.forEach((q, qi) => { qTotal++; if ((sess[qid(u.item, q, qi)] || {}).ok) qCorrect++; });
+          u.item.questions.forEach((q, qi) => { qTotal++; if (session.answers[i][qid(u.item, q, qi)].ok) qCorrect++; });
         }
       });
       const wrongN = qTotal - qCorrect;
+      const btns = () => h('div', { class: 'drill-nav-btns' },
+        h('button', { class: 'btn primary', onclick: () => startQuiz(config) }, '再練一輪'),
+        wrongN && config.length === 1 ? h('button', { class: 'btn', onclick: () => startReview(config[0].p) }, '複習錯題') : null,
+        h('a', { class: 'btn', href: 'practice.html' }, '回題庫'));
       root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
         h('h2', null, '本輪成績:' + qCorrect + ' / ' + qTotal + ' 題'),
         h('div', { class: 'band-note' }, wrongN
-          ? '答錯的 ' + wrongN + ' 題已收進錯題本,建議明天回來複習一次。'
+          ? '答錯的 ' + wrongN + ' 題已收進錯題本。往下逐題看解析。'
           : '全對!換個題型或提高題數再練一輪吧。')));
-      root.append(h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', onclick: () => startQuiz(config) }, '再練一輪'),
-        wrongN && config.length === 1 ? h('button', { class: 'btn', onclick: () => startReview(config[0].p) }, '複習錯題') : null,
-        h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
+      root.append(btns());
+
+      /* 逐題檢討 */
+      units.forEach((u, i) => {
+        if (u.p === '5') {
+          const q = u.item;
+          const rec = session.answers[i];
+          root.append(h('div', { class: 'q-block', style: 'margin-top:18px' },
+            h('div', { class: 'meta', style: 'display:flex;gap:8px;margin-bottom:10px' },
+              h('span', { class: 'badge cat' }, 'Part 5'),
+              h('span', { class: 'badge cat' }, q.category)),
+            h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, (i + 1) + '.'), q.question),
+            optionButtons(q, rec, () => {}),
+            explainBox(q, rec, '句意:' + q.translation)));
+        } else {
+          const set = u.item;
+          const sess = session.answers[i];
+          const layout = h('div', { class: 'set-layout', style: 'margin-top:18px' });
+          const passCol = h('div', { class: 'passage-col' });
+          if (u.p === '6') passCol.append(part6Passage(set, sess, true));
+          else set.passages.forEach(ps => passCol.append(part7Passage(ps)));
+          const trWrap = h('div', { class: 'set-translation', style: 'display:none' },
+            u.p === '6' ? set.translation : (set.translation || []).map((t, ti) =>
+              h('div', null, set.passages[ti] && set.passages[ti].label ? h('b', null, '【' + set.passages[ti].label + '】\n') : null, t, ti < set.translation.length - 1 ? '\n\n' : '')));
+          const trBtn = h('button', {
+            class: 'btn', style: 'margin-top:12px',
+            onclick: () => { trWrap.style.display = trWrap.style.display === 'none' ? '' : 'none'; },
+          }, '顯示全文翻譯');
+          passCol.append(trBtn, trWrap);
+          layout.append(h('div', null, passCol));
+          const qCol = h('div', null);
+          qCol.append(h('div', { style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, DATA[u.p].title)));
+          set.questions.forEach((q, qi) => {
+            const id = qid(set, q, qi);
+            const label = u.p === '6' ? '(' + q.num + ')' : 'Q' + (qi + 1);
+            const text = u.p === '6' ? '空格 (' + q.num + ')' : q.q;
+            qCol.append(h('div', { class: 'q-block' },
+              h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, label), text),
+              optionButtons(q, sess[id], () => {}),
+              explainBox(q, sess[id])));
+          });
+          layout.append(qCol);
+          root.append(layout);
+        }
+      });
+      root.append(btns());
       window.scrollTo(0, 0);
     }
   }
@@ -517,7 +586,8 @@
   }
 
   /* ================= 文章渲染 ================= */
-  function part6Passage(set, sess) {
+  function part6Passage(set, sess, graded) {
+    if (graded === undefined) graded = true;
     const box = h('div', { class: 'passage-box' },
       h('span', { class: 'p-label' }, passTypeLabel(set.passageType)));
     const frag = document.createDocumentFragment();
@@ -527,8 +597,11 @@
       const num = Number(m[1]);
       const q = set.questions.find(x => x.num === num);
       const rec = q ? sess[qid(set, q, 0)] : null;
-      if (rec) {
+      if (rec && graded) {
         frag.append(h('span', { class: 'gap-mark answered', title: rec.ok ? '' : '(答錯,顯示正解)' }, q.options[q.answer]));
+      } else if (rec && rec.c !== undefined && rec.c > -1) {
+        /* 作答中:顯示自己選的,不透露對錯 */
+        frag.append(h('span', { class: 'gap-mark filled' }, q.options[rec.c]));
       } else {
         frag.append(h('span', { class: 'gap-mark' }, '(' + num + ') ______'));
       }

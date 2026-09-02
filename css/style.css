@@ -630,6 +630,13 @@ button { font-family: var(--font); cursor: pointer; }
   font-size: 13.5px;
 }
 .gap-mark.answered { background: var(--highlight); border-bottom-color: var(--highlight-deep); color: var(--ink); }
+.gap-mark.filled { background: var(--primary-tint); color: var(--primary-dark); }
+
+/* 交卷式作答:已選選項與答題進度點 */
+.opt.picked { border-color: var(--primary); background: var(--primary-tint); }
+.opt.picked .letter { background: var(--primary); color: #fff; }
+.letter-big.picked { border-color: var(--primary); background: var(--primary-tint); color: var(--primary-dark); }
+.q-nav button.ans { background: var(--primary-tint); border-color: var(--primary); color: var(--primary-dark); }
 
 .set-translation {
   margin: 6px 0 18px;

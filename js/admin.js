@@ -115,20 +115,30 @@
     }
   }
 
-  function noteSection(uid, tnote) {
+  function noteSection(uid, tnote, onNick) {
     const wrap = h('div', { style: 'margin-top:14px;border-top:1px solid var(--line);padding-top:12px' });
     const status = h('span', { class: 'player-note', style: 'margin-left:10px' });
     wrap.append(h('h3', { style: 'font-size:15.5px;margin-bottom:6px' }, '上課紀錄與備註', h('span', { style: 'font-size:12px;color:var(--ink-light);font-weight:400' }, '(只有教師帳號看得到)'), status));
 
-    /* 學生需求/長期備註 */
+    /* 暱稱+學生需求/長期備註 */
+    const nick = h('input', {
+      class: 'game-input', type: 'text', maxlength: '12',
+      placeholder: '暱稱(顯示在學生列表,方便認人)', style: 'max-width:260px;margin-bottom:8px',
+    });
+    nick.value = tnote.nick || '';
     const needs = h('textarea', { class: 'write-area', style: 'min-height:52px', placeholder: '學生需求或長期備註(目標分數、弱點、偏好的上課方式…)' });
     needs.value = tnote.needs || '';
-    wrap.append(needs,
+    wrap.append(nick, needs,
       h('div', { class: 'pop-btns', style: 'margin:6px 0 14px' },
         h('button', {
           class: 'btn', type: 'button',
-          onclick: () => { tnote.needs = needs.value.trim(); saveNote(uid, tnote, status); },
-        }, '儲存備註')));
+          onclick: () => {
+            tnote.nick = nick.value.trim();
+            tnote.needs = needs.value.trim();
+            saveNote(uid, tnote, status);
+            if (onNick) onNick(tnote.nick);
+          },
+        }, '儲存暱稱與備註')));
 
     /* 上課紀錄列表 */
     const logList = h('div', null);
@@ -196,22 +206,24 @@
     ids.forEach(uid => {
       const s = students[uid];
       const meta = s.keys['_meta'] || {};
-      const name = meta.name || meta.email || uid.slice(0, 8);
+      const tnote0 = myKeys['tnote_' + uid] || { needs: '', logs: [] };
+      const name = tnote0.nick || meta.name || meta.email || uid.slice(0, 8);
       const diag = diagSummary(s.keys);
       const d5 = drillStats(s.keys, 5), d6 = drillStats(s.keys, 6), d7 = drillStats(s.keys, 7);
       const vo = vocabStats(s.keys);
       const fmt = d => d.answered ? d.answered + ' 題 · ' + Math.round(d.correct / d.answered * 100) + '%' : '—';
 
+      const nameEl = h('b', null, name);
       const row = h('tr', { style: 'cursor:pointer' },
-        h('td', null, h('b', null, name), meta.email && meta.email !== name ? h('span', { style: 'color:var(--ink-light);font-size:12.5px' }, ' ' + meta.email) : null),
+        h('td', null, nameEl, meta.email && meta.email !== name ? h('span', { style: 'color:var(--ink-light);font-size:12.5px' }, ' ' + meta.email) : null),
         h('td', { class: 'num' }, (s.last || '').slice(0, 10) || '—'),
         h('td', { class: 'num' }, diag ? diag.score + '/' + diag.total + ' · ' + diag.band : '未檢測'),
         h('td', { class: 'num' }, fmt(d5)), h('td', { class: 'num' }, fmt(d6)), h('td', { class: 'num' }, fmt(d7)),
         h('td', { class: 'num' }, vo.done + '/' + vo.total));
 
-      const tnote = myKeys['tnote_' + uid] || { needs: '', logs: [] };
       const detailRow = h('tr', { style: 'display:none' },
-        h('td', { colspan: '7', style: 'background:var(--bg-soft)' }, detail(name, diag, d5, d6, d7), noteSection(uid, tnote)));
+        h('td', { colspan: '7', style: 'background:var(--bg-soft)' }, detail(name, diag, d5, d6, d7),
+          noteSection(uid, tnote0, n => { nameEl.textContent = n || meta.name || meta.email || uid.slice(0, 8); })));
       row.addEventListener('click', () => {
         detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
       });

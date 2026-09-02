@@ -2,161 +2,241 @@
   {
     "id": "mp-21",
     "audioText": "The cleaner noticed a stain on the seat.",
-    "options": ["sheet", "seat"],
+    "options": [
+      "sheet",
+      "seat"
+    ],
     "answer": 1,
     "note": "sheet 開頭的 sh 嘴唇會微微噘出、舌面抬高，氣流從一道寬縫送出，聲音比較厚；seat 開頭的 s 舌尖靠近上齒齦，出口窄，聲音又細又尖。",
-    "zh": "清潔人員注意到座位上有一塊汙漬。"
+    "zh": "清潔人員注意到座位上有一塊汙漬。",
+    "level": "初級"
   },
   {
     "id": "mp-22",
     "audioText": "They found the coat behind the counter.",
-    "options": ["coat", "code"],
+    "options": [
+      "coat",
+      "code"
+    ],
     "answer": 0,
     "note": "coat 字尾是清音 t，聲帶不振動，前面的母音收得短，尾巴常常只剩一個緊繃的停頓；code 字尾的 d 聲帶會振動，母音也因此拖長一點，收尾比較有份量。",
-    "zh": "他們在櫃檯後面找到那件外套。"
+    "zh": "他們在櫃檯後面找到那件外套。",
+    "level": "中級"
   },
   {
     "id": "mp-23",
     "audioText": "The new plan should be finished by March.",
-    "options": ["plan", "plant"],
+    "options": [
+      "plan",
+      "plant"
+    ],
     "answer": 0,
     "note": "plan 收在鼻音 n，舌尖抵住上齒齦、氣流從鼻子出去就結束；plant 在 n 之後還要多一個 t，舌尖再頂一次才鬆開，尾巴多出一個乾脆的收束。",
-    "zh": "新的計畫應該會在三月前完成。"
+    "zh": "新的計畫應該會在三月前完成。",
+    "level": "初級"
   },
   {
     "id": "mp-24",
     "audioText": "The magazine included two large photos of the desert.",
-    "options": ["dessert", "desert"],
+    "options": [
+      "dessert",
+      "desert"
+    ],
     "answer": 1,
     "note": "dessert 重音在第二音節，前面的 de 輕輕滑過，後半段又長又響；desert（沙漠）重音壓在第一音節，第二音節輕而短，整個字的重心明顯往前移。",
-    "zh": "那本雜誌收錄了兩張沙漠的大照片。"
+    "zh": "那本雜誌收錄了兩張沙漠的大照片。",
+    "level": "進階"
   },
   {
     "id": "mp-25",
     "audioText": "They asked for the photograph before Friday.",
-    "options": ["photograph", "photographer"],
+    "options": [
+      "photograph",
+      "photographer"
+    ],
     "answer": 0,
     "note": "photograph 重音在第一音節，三個音節長度差不多，字尾是 f 的摩擦音；photographer 重音移到第二音節 -tog，前後音節都被壓扁，尾巴多一個捲舌的 -er。",
-    "zh": "他們要求週五前提供那張照片。"
+    "zh": "他們要求週五前提供那張照片。",
+    "level": "進階"
   },
   {
     "id": "mp-26",
     "audioText": "He said he might slip on the way home.",
-    "options": ["sleep", "slip"],
+    "options": [
+      "sleep",
+      "slip"
+    ],
     "answer": 1,
     "note": "sleep 的母音長而緊，嘴角往兩側拉開、聲音拖得住；slip 的母音短又鬆，嘴形自然不用力，一下就過去，整個字明顯短一截。",
-    "zh": "他說他回家路上可能會滑倒。"
+    "zh": "他說他回家路上可能會滑倒。",
+    "level": "初級"
   },
   {
     "id": "mp-27",
     "audioText": "Her presentation mentioned the coast several times.",
-    "options": ["cost", "coast"],
+    "options": [
+      "cost",
+      "coast"
+    ],
     "answer": 1,
     "note": "cost 的母音是單一短音，下巴放低、一發完就接子音；coast 是會滑動的雙母音（ㄡ），嘴唇從張開滑到噘圓，長度多出一截。",
-    "zh": "她的簡報好幾次提到那片海岸。"
+    "zh": "她的簡報好幾次提到那片海岸。",
+    "level": "初級"
   },
   {
     "id": "mp-28",
     "audioText": "The buyer was impressed by the quality of the samples.",
-    "options": ["quality", "quantity"],
+    "options": [
+      "quality",
+      "quantity"
+    ],
     "answer": 0,
     "note": "quality 中間是 l，舌尖抵住上齒齦、聲音從舌頭兩側流出；quantity 中間先是鼻音 n，氣流從鼻腔跑掉，之後還卡一個 t 的小停頓。",
-    "zh": "買家對樣品的品質印象深刻。"
+    "zh": "買家對樣品的品質印象深刻。",
+    "level": "中級"
   },
   {
     "id": "mp-29",
     "audioText": "She explained the process at yesterday's meeting.",
-    "options": ["process", "progress"],
+    "options": [
+      "process",
+      "progress"
+    ],
     "answer": 0,
     "note": "process 第二音節是 s 的摩擦音，氣流細細地持續送出；progress 中間多一個 g，舌根要先抵住軟顎把氣流完全擋住，放開之後才接捲舌的 r，聽起來比較低沉厚實。",
-    "zh": "她在昨天的會議上說明了流程。"
+    "zh": "她在昨天的會議上說明了流程。",
+    "level": "中級"
   },
   {
     "id": "mp-30",
     "audioText": "The employer agreed to the new terms without any discussion.",
-    "options": ["employee", "employer"],
+    "options": [
+      "employee",
+      "employer"
+    ],
     "answer": 1,
     "note": "employee 重音在最後的 -ee，尾音又長又高，嘴角往兩側拉；employer 重音落在中間的 -ploy，尾巴只是一個輕輕的捲舌 -er，音高往下掉。",
-    "zh": "資方沒有任何討論就同意了新條件。"
+    "zh": "資方沒有任何討論就同意了新條件。",
+    "level": "進階"
   },
   {
     "id": "mp-31",
     "audioText": "She bought the equipment on Monday afternoon.",
-    "options": ["bought", "brought"],
+    "options": [
+      "bought",
+      "brought"
+    ],
     "answer": 0,
     "note": "bought 的 b 雙唇一爆開就直接滑進圓唇的長母音，中間沒有別的動作；brought 在 b 之後緊接一個 r，舌尖要往後捲、嘴唇先噘出來，母音因此被往後推，起音多出一段含糊的過渡。",
-    "zh": "她星期一下午買了那批設備。"
+    "zh": "她星期一下午買了那批設備。",
+    "level": "中級"
   },
   {
     "id": "mp-32",
     "audioText": "They stayed at a hostel near the train station.",
-    "options": ["hotel", "hostel"],
+    "options": [
+      "hotel",
+      "hostel"
+    ],
     "answer": 1,
     "note": "hotel 重音在第二音節 -tel，第一音節輕輕帶過；hostel 重音在第一音節，而且 t 前面多了一個 s 的摩擦音，唸起來比較擠、比較急。",
-    "zh": "他們住在火車站附近的一間青年旅舍。"
+    "zh": "他們住在火車站附近的一間青年旅舍。",
+    "level": "中級"
   },
   {
     "id": "mp-33",
     "audioText": "The driver put the baggage next to the elevator.",
-    "options": ["package", "baggage"],
+    "options": [
+      "package",
+      "baggage"
+    ],
     "answer": 1,
     "note": "package 開頭的 p 雙唇爆開但聲帶不振動，中間的 k 也清脆；baggage 開頭聲帶就跟著振動，中間是濁的 g，整個字聽起來比較低、比較悶。",
-    "zh": "司機把行李放在電梯旁邊。"
+    "zh": "司機把行李放在電梯旁邊。",
+    "level": "中級"
   },
   {
     "id": "mp-34",
     "audioText": "Their annual revenue reached three billion dollars last year.",
-    "options": ["billion", "million"],
+    "options": [
+      "billion",
+      "million"
+    ],
     "answer": 0,
     "note": "billion 開頭雙唇閉起把氣流完全擋住，再一次爆開；million 開頭雙唇同樣閉起，但氣流改從鼻腔出去，是一段可以延續的鼻音，沒有爆破的那一下。",
-    "zh": "他們去年的年營收達到三十億美元。"
+    "zh": "他們去年的年營收達到三十億美元。",
+    "level": "初級"
   },
   {
     "id": "mp-35",
     "audioText": "The vote was delayed until the end of the month.",
-    "options": ["boat", "vote"],
+    "options": [
+      "boat",
+      "vote"
+    ],
     "answer": 1,
     "note": "boat 開頭雙唇緊閉再爆開，是瞬間的一個動作；vote 開頭是上排牙齒輕咬下唇，聲帶一邊振動、氣流一邊從齒縫摩擦出來，可以拖長。",
-    "zh": "投票延後到月底。"
+    "zh": "投票延後到月底。",
+    "level": "初級"
   },
   {
     "id": "mp-36",
     "audioText": "He offered to wash the car before the weekend.",
-    "options": ["watch", "wash"],
+    "options": [
+      "watch",
+      "wash"
+    ],
     "answer": 1,
     "note": "watch 字尾的 tch 舌尖要先抵住上顎把氣流擋住再放開，聽得到一個 t 的起手；wash 字尾的 sh 沒有阻塞，氣流從頭到尾持續從嘴巴前端送出。",
-    "zh": "他說週末前可以幫忙洗車。"
+    "zh": "他說週末前可以幫忙洗車。",
+    "level": "初級"
   },
   {
     "id": "mp-37",
     "audioText": "Someone left a file on the corner of my desk.",
-    "options": ["file", "pile"],
+    "options": [
+      "file",
+      "pile"
+    ],
     "answer": 0,
     "note": "file 開頭上排牙齒輕咬下唇，氣流可以一直摩擦下去；pile 開頭雙唇先閉緊把氣憋住，再一次放掉，只有短短一瞬間。",
-    "zh": "有人把一份檔案留在我的桌角。"
+    "zh": "有人把一份檔案留在我的桌角。",
+    "level": "初級"
   },
   {
     "id": "mp-38",
     "audioText": "We're going to run out of pepper soon.",
-    "options": ["paper", "pepper"],
+    "options": [
+      "paper",
+      "pepper"
+    ],
     "answer": 1,
     "note": "paper 第一個母音是會滑動的雙母音（ㄟ），嘴形從開滑到扁，時間也長；pepper 是短促的 e，嘴形小、一下就收掉。",
-    "zh": "我們的胡椒快用完了。"
+    "zh": "我們的胡椒快用完了。",
+    "level": "初級"
   },
   {
     "id": "mp-39",
     "audioText": "The applicant arrived about twenty minutes early.",
-    "options": ["applicant", "appliance"],
+    "options": [
+      "applicant",
+      "appliance"
+    ],
     "answer": 0,
     "note": "applicant 重音在第一音節，pli 的母音是短的 i，字尾還有 k 和 t 兩個子音；appliance 重音在第二音節，-pli 唸成長的雙母音（ㄞ），沒有 k，尾巴用 s 的摩擦音拉出去。",
-    "zh": "那位應徵者早到了大概二十分鐘。"
+    "zh": "那位應徵者早到了大概二十分鐘。",
+    "level": "進階"
   },
   {
     "id": "mp-40",
     "audioText": "She received the award for the project last spring.",
-    "options": ["award", "reward"],
+    "options": [
+      "award",
+      "reward"
+    ],
     "answer": 0,
     "note": "award 開頭只是一個很輕的 ə，嘴巴幾乎不動就滑進 -ward；reward 開頭要先捲舌唸出 r，嘴唇也跟著微微噘起，起音比 award 厚得多。",
-    "zh": "她去年春天因為那個專案拿到那個獎。"
+    "zh": "她去年春天因為那個專案拿到那個獎。",
+    "level": "中級"
   }
 ]

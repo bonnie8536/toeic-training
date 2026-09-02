@@ -327,7 +327,7 @@ for q in ed:
 ep = load_kind('ear_pairs*.json', 'ear pairs')
 for q in ep:
     w = f"ear {q.get('id','?')}"
-    if need(q, ['id','audioText','options','note','zh'], w):
+    if need(q, ['id','audioText','options','note','zh','level'], w):
         if len(q.get('options', [])) != 2:
             errors.append(f'{w}: options 需為 2 個')
         if not isinstance(q.get('answer'), int) or q['answer'] not in (0, 1):
@@ -335,7 +335,7 @@ for q in ep:
 en_ = load_kind('ear_numbers*.json', 'ear numbers')
 for q in en_:
     w = f"ear {q.get('id','?')}"
-    if need(q, ['id','audioText','question','options','note','zh'], w):
+    if need(q, ['id','audioText','question','options','note','zh','level'], w):
         check_options(q, w)
 esh = load_kind('ear_shadow.json', 'ear shadow')
 for q in esh:

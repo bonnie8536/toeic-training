@@ -40,10 +40,11 @@
     return a;
   }
 
-  function pick(sec, n) {
+  function pick(sec, n, level) {
     const st = store.get(SECTIONS[sec].key, {});
     const fresh = [], wrong = [], done = [];
     SECTIONS[sec].items.forEach(q => {
+      if (level && level !== '全部' && q.level !== level) return;
       const r = st[q.id];
       (!r ? fresh : r.ok ? done : wrong).push(q);
     });
@@ -100,22 +101,33 @@
       Object.entries(SECTIONS).map(([k, d]) => {
         const s = stats(k);
         const pct = s.total ? Math.round(s.done / s.total * 100) : 0;
+        const counts = {};
+        d.items.forEach(q => { counts[q.level] = (counts[q.level] || 0) + 1; });
+        const lvSel = h('select', { class: 'cfg-select' },
+          [['全部', '混搭(全部)'], ['初級', '初級'], ['中級', '中級'], ['進階', '進階']]
+            .filter(([v]) => v === '全部' || counts[v])
+            .map(([v, t]) => h('option', { value: v }, t + (v !== '全部' ? '(' + counts[v] + ')' : ''))));
         return h('div', { class: 'part-card' },
           h('h3', null, d.title),
           h('p', null, d.desc),
           h('div', { class: 'p-stats' }, '完成 ' + s.done + '/' + s.total +
             (s.done ? ' · 一次答對率 ' + Math.round(s.ok / s.done * 100) + '%' : '')),
           h('div', { class: 'bar' }, h('i', { style: 'width:' + pct + '%' })),
-          h('div', { class: 'cfg-row' },
-            h('a', { class: 'btn primary', href: 'listening.html?sec=' + k }, '開始一輪(' + d.per + ' 題)')));
+          h('div', { class: 'cfg-row' }, lvSel,
+            h('a', {
+              class: 'btn primary', href: 'listening.html?sec=' + k,
+              onclick: e => { e.currentTarget.href = 'listening.html?sec=' + k + '&lv=' + encodeURIComponent(lvSel.value); },
+            }, '開始一輪(' + d.per + ' 題)')));
       })));
   }
 
   /* ================= 一輪練習 ================= */
   function startRound(sec) {
     const d = SECTIONS[sec];
+    const level = getParam('lv') || '全部';
     document.title = d.title + '|聽力訓練';
-    const list = pick(sec, d.per);
+    const list = pick(sec, d.per, level);
+    if (!list.length) { renderHome(); return; }
     const results = [];
     let cur = 0;
     let player = null;
@@ -125,7 +137,7 @@
       if (player) player.stop();
       root.innerHTML = '';
       root.append(h('div', { class: 'drill-top' },
-        h('h1', null, d.title),
+        h('h1', null, d.title, level !== '全部' ? h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' }, ' · ' + level) : null),
         h('a', { href: 'listening.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回聽力訓練')));
       const nav = h('div', { class: 'q-nav' });
       list.forEach((x, i) => {

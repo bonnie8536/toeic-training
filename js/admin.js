@@ -100,12 +100,87 @@
     return { done, total };
   }
 
+  /* ---------- 教師紀錄(存在教師自己的資料列,學生看不到) ---------- */
+  async function saveNote(uid, obj, statusEl) {
+    statusEl.textContent = '儲存中…';
+    try {
+      const res = await CLOUD.client.from('progress').upsert({
+        user_id: CLOUD.user.id, k: 'tnote_' + uid, v: obj, updated_at: new Date().toISOString(),
+      }, { onConflict: 'user_id,k' });
+      if (res.error) throw res.error;
+      statusEl.textContent = '已儲存';
+      setTimeout(() => { if (statusEl.textContent === '已儲存') statusEl.textContent = ''; }, 2500);
+    } catch (e) {
+      statusEl.textContent = '儲存失敗:' + e.message;
+    }
+  }
+
+  function noteSection(uid, tnote) {
+    const wrap = h('div', { style: 'margin-top:14px;border-top:1px solid var(--line);padding-top:12px' });
+    const status = h('span', { class: 'player-note', style: 'margin-left:10px' });
+    wrap.append(h('h3', { style: 'font-size:15.5px;margin-bottom:6px' }, '上課紀錄與備註', h('span', { style: 'font-size:12px;color:var(--ink-light);font-weight:400' }, '(只有教師帳號看得到)'), status));
+
+    /* 學生需求/長期備註 */
+    const needs = h('textarea', { class: 'write-area', style: 'min-height:52px', placeholder: '學生需求或長期備註(目標分數、弱點、偏好的上課方式…)' });
+    needs.value = tnote.needs || '';
+    wrap.append(needs,
+      h('div', { class: 'pop-btns', style: 'margin:6px 0 14px' },
+        h('button', {
+          class: 'btn', type: 'button',
+          onclick: () => { tnote.needs = needs.value.trim(); saveNote(uid, tnote, status); },
+        }, '儲存備註')));
+
+    /* 上課紀錄列表 */
+    const logList = h('div', null);
+    function drawLogs() {
+      logList.innerHTML = '';
+      (tnote.logs || []).slice().reverse().forEach(log => {
+        logList.append(h('div', { class: 'bank-word' },
+          h('div', { class: 'bank-word-main', style: 'cursor:default' },
+            h('b', { style: 'flex:0 0 auto' }, log.d),
+            h('span', { style: 'white-space:pre-line' }, log.text)),
+          h('button', {
+            class: 'bank-word-del', type: 'button', title: '刪除這筆紀錄',
+            onclick: () => {
+              if (!confirm('刪除 ' + log.d + ' 的紀錄?')) return;
+              tnote.logs = tnote.logs.filter(x => x !== log);
+              saveNote(uid, tnote, status);
+              drawLogs();
+            },
+          }, '✕')));
+      });
+    }
+    drawLogs();
+    wrap.append(logList);
+
+    /* 新增一筆 */
+    const dateInput = h('input', { class: 'cfg-select', type: 'date', style: 'padding:6px 8px' });
+    dateInput.value = new Date().toISOString().slice(0, 10);
+    const logInput = h('textarea', { class: 'write-area', style: 'min-height:52px', placeholder: '這次上了什麼、回家作業、下次要做什麼…' });
+    wrap.append(h('div', { style: 'margin-top:10px' }, dateInput, logInput,
+      h('div', { class: 'pop-btns', style: 'margin-top:6px' },
+        h('button', {
+          class: 'btn primary', type: 'button',
+          onclick: () => {
+            const text = logInput.value.trim();
+            if (!text) return;
+            (tnote.logs = tnote.logs || []).push({ d: dateInput.value, text });
+            tnote.logs.sort((a, b) => a.d.localeCompare(b.d));
+            logInput.value = '';
+            saveNote(uid, tnote, status);
+            drawLogs();
+          },
+        }, '新增上課紀錄'))));
+    return wrap;
+  }
+
   function render(students) {
     root.innerHTML = '';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '教師後台'),
-      h('p', null, '點任一列展開該學生的檢測報告摘要與錯題。資料為學生端最後同步的狀態。')));
+      h('p', null, '點任一列展開該學生的檢測報告摘要、錯題與上課紀錄。資料為學生端最後同步的狀態。')));
 
+    const myKeys = (students[CLOUD.user.id] || { keys: {} }).keys;
     const ids = Object.keys(students).filter(uid => uid !== CLOUD.user.id);
     if (!ids.length) {
       root.append(h('div', { class: 'q-block' }, '還沒有學生資料。學生第一次登入並開始作答後,這裡就會出現他們的進度。'));
@@ -134,8 +209,9 @@
         h('td', { class: 'num' }, fmt(d5)), h('td', { class: 'num' }, fmt(d6)), h('td', { class: 'num' }, fmt(d7)),
         h('td', { class: 'num' }, vo.done + '/' + vo.total));
 
+      const tnote = myKeys['tnote_' + uid] || { needs: '', logs: [] };
       const detailRow = h('tr', { style: 'display:none' },
-        h('td', { colspan: '7', style: 'background:var(--bg-soft)' }, detail(name, diag, d5, d6, d7)));
+        h('td', { colspan: '7', style: 'background:var(--bg-soft)' }, detail(name, diag, d5, d6, d7), noteSection(uid, tnote)));
       row.addEventListener('click', () => {
         detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
       });

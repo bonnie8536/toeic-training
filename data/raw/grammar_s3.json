@@ -1,0 +1,944 @@
+[
+  {
+    "id": "g3-01",
+    "title": "and、but、or:把兩件事接起來",
+    "goal": "學完你可以用 and、but、or 把兩個詞或兩個句子接成一句,不用一直講很短的句子。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文我們會說「我喜歡咖啡和茶」,不會拆成「我喜歡咖啡。我喜歡茶。」兩句話講。英文也一樣,要把兩邊接在一起的時候,中間會放一個專門負責「接」的字,這種字叫連接詞。最常用的三個是 and、but、or。"
+      },
+      {
+        "t": "ex",
+        "en": "I like coffee and tea.",
+        "zh": "我喜歡咖啡和茶。",
+        "focus": "and"
+      },
+      {
+        "t": "p",
+        "text": "and 是「而且、和」,兩邊講的是同一個方向的事。but 是「但是」,後面會轉彎,跟前面不太一樣。or 是「或者、還是」,兩邊挑一個。"
+      },
+      {
+        "t": "ex",
+        "en": "The room is small but clean.",
+        "zh": "這個房間很小,但是很乾淨。",
+        "focus": "but"
+      },
+      {
+        "t": "ex",
+        "en": "Do you want tea or coffee?",
+        "zh": "你要茶還是咖啡?",
+        "focus": "or"
+      },
+      {
+        "t": "table",
+        "header": ["連接詞", "意思", "例句"],
+        "rows": [
+          ["and", "而且、和", "I bought bread and milk."],
+          ["but", "但是", "The bag is old but useful."],
+          ["or", "或者、還是", "We can meet on Monday or Tuesday."]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "這三個字不只能接兩個詞,也能接兩個完整的句子。接句子的時候,後面那句的動詞一定要寫出來;主詞則看情況,如果兩件事是同一個人做的,主詞寫一次就好,像 I finished my work and went home."
+      },
+      {
+        "t": "ex",
+        "en": "She called me, but I was busy.",
+        "zh": "她打電話給我,但是我在忙。",
+        "focus": "but"
+      },
+      {
+        "t": "tip",
+        "text": "用 but 之前先確認前後真的有轉折,像 I like coffee but I like tea. 兩邊都是喜歡,聽的人等一個轉折卻等不到,這種時候用 and 就好。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I called him, ___ he didn't answer.",
+        "options": ["and", "but", "or", "too"],
+        "answer": 1,
+        "explanation": "打了電話卻沒接,前後是相反的,要用 but。and 是兩邊同方向,or 是二選一,too 不是連接詞。"
+      },
+      {
+        "q": "Would you like tea ___ coffee?",
+        "options": ["or", "and", "but", "with"],
+        "answer": 0,
+        "explanation": "問對方要哪一種,是二選一,用 or。用 and 會變成兩種都要,語意就不對了。"
+      },
+      {
+        "q": "She sent the report ___ the manager approved it.",
+        "options": ["but", "or", "and", "with"],
+        "answer": 2,
+        "explanation": "寄出報告、主管批准,兩件事一件接一件發生,並列陳述用 and 接起來就好。這裡沒有轉折的意思,不必用 but。"
+      },
+      {
+        "q": "This job pays well, ___ the hours are long.",
+        "options": ["and", "so", "or", "but"],
+        "answer": 3,
+        "explanation": "薪水好是好事,工時長是壞事,前後相反,要用 but。"
+      },
+      {
+        "q": "You can pay by cash ___ by credit card.",
+        "options": ["but", "or", "and", "so"],
+        "answer": 1,
+        "explanation": "付現或刷卡是兩種選擇,挑一種就好,用 or。"
+      }
+    ]
+  },
+  {
+    "id": "g3-02",
+    "title": "because 和 so:講原因和結果",
+    "goal": "學完你可以用 because 說原因、用 so 說結果,把「為什麼」和「所以怎麼樣」寫進同一句話。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "講事情的時候常常要交代為什麼。中文說「我待在家裡,因為我生病了」,英文的 because 就是「因為」,後面接的就是原因。"
+      },
+      {
+        "t": "ex",
+        "en": "I stayed home because I was sick.",
+        "zh": "我待在家裡,因為我生病了。",
+        "focus": "because"
+      },
+      {
+        "t": "p",
+        "text": "because 後面一定要接一個完整的句子,主詞和動詞都要有。只寫 because sick 是不行的,英文聽起來會斷掉。"
+      },
+      {
+        "t": "ex",
+        "en": "She was late because the bus broke down.",
+        "zh": "她遲到了,因為公車拋錨了。",
+        "focus": "because"
+      },
+      {
+        "t": "p",
+        "text": "so 剛好相反,它後面接的是結果。前面先講發生了什麼,so 後面講因此怎麼樣。"
+      },
+      {
+        "t": "ex",
+        "en": "The store was closed, so we went home.",
+        "zh": "那家店關了,所以我們就回家了。",
+        "focus": "so"
+      },
+      {
+        "t": "table",
+        "header": ["連接詞", "後面接什麼", "例句"],
+        "rows": [
+          ["because", "接原因", "I'm tired because I worked all day."],
+          ["so", "接結果", "I worked all day, so I'm tired."]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "I was hungry, so I bought a sandwich.",
+        "zh": "我肚子餓,所以買了一個三明治。",
+        "focus": "so"
+      },
+      {
+        "t": "tip",
+        "text": "中文的「因為…所以…」會兩個一起用,英文一句只能挑一個,寫成 Because I was sick, so I stayed home. 就多了一個字。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "We took a taxi ___ it was raining.",
+        "options": ["because", "so", "but", "and"],
+        "answer": 0,
+        "explanation": "下雨是搭計程車的原因,原因放在 because 後面。如果要用 so,順序得換成 It was raining, so we took a taxi."
+      },
+      {
+        "q": "He didn't study, ___ he failed the test.",
+        "options": ["because", "and", "but", "so"],
+        "answer": 3,
+        "explanation": "沒讀書在前、考不及格在後,後面是結果,用 so。用 because 會變成「他沒讀書,因為他考不及格」,前後顛倒。"
+      },
+      {
+        "q": "下面哪一句是對的?",
+        "options": [
+          "Because I was tired, so I went to bed early.",
+          "I went to bed early because tired.",
+          "I was tired, so I went to bed early.",
+          "I was tired because so I went to bed early."
+        ],
+        "answer": 2,
+        "explanation": "英文一句裡 because 和 so 只能留一個。第二個選項的 because 後面沒有主詞和動詞,也不完整。"
+      },
+      {
+        "q": "I like this restaurant ___ the food is fresh.",
+        "options": ["so", "or", "because", "but"],
+        "answer": 2,
+        "explanation": "食材新鮮是喜歡這家餐廳的原因,用 because 帶出原因。"
+      }
+    ]
+  },
+  {
+    "id": "g3-03",
+    "title": "when 和 if:講時間和條件",
+    "goal": "學完你可以用 when 說「…的時候」、用 if 說「如果…」,把兩件有關係的事放進一句話。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "有些事情要先講清楚是什麼時候發生的。中文說「我到家的時候會打給我媽」,「…的時候」把兩個動作綁在同一個時間點上,英文用 when。"
+      },
+      {
+        "t": "ex",
+        "en": "I call my mom when I get home.",
+        "zh": "我到家的時候會打給我媽。",
+        "focus": "when"
+      },
+      {
+        "t": "p",
+        "text": "if 是「如果」,講的是還沒發生、也不一定會發生的事。用 when 表示你認為那件事一定會發生,用 if 表示不確定。"
+      },
+      {
+        "t": "ex",
+        "en": "If it rains, we will stay home.",
+        "zh": "如果下雨,我們就待在家。",
+        "focus": "If"
+      },
+      {
+        "t": "p",
+        "text": "when 和 if 帶的那一句放前面或放後面都可以,意思一樣。放前面的時候中間要加逗號,放後面就不用。"
+      },
+      {
+        "t": "ex",
+        "en": "We will stay home if it rains.",
+        "zh": "如果下雨,我們就待在家。",
+        "focus": "if"
+      },
+      {
+        "t": "table",
+        "header": ["寫法", "例句"],
+        "rows": [
+          ["放前面,中間加逗號", "If you are free, call me."],
+          ["放後面,不用逗號", "Call me if you are free."]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "有一個地方很容易錯。就算講的是未來的事,when 和 if 帶的那一句還是用現在簡單式,不寫 will;要講未來的 will 留給另外一句。"
+      },
+      {
+        "t": "ex",
+        "en": "I will tell him when he comes back.",
+        "zh": "他回來的時候我會告訴他。",
+        "focus": "comes"
+      },
+      {
+        "t": "tip",
+        "text": "記成「when 和 if 那一句不放 will」,所以是 If it rains 而不是 If it will rain。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "___ it rains tomorrow, the outdoor event will be canceled.",
+        "options": ["So", "If", "But", "And"],
+        "answer": 1,
+        "explanation": "明天會不會下雨還不確定,這是條件,用 If 開頭,後面那句才放 will。"
+      },
+      {
+        "q": "I will send you the file ___ I get to the office.",
+        "options": ["so", "and", "when", "or"],
+        "answer": 2,
+        "explanation": "到辦公室是一個一定會到的時間點,用 when 表示「…的時候」。"
+      },
+      {
+        "q": "If the weather ___ nice tomorrow, we will go to the beach.",
+        "options": ["will be", "is", "be", "being"],
+        "answer": 1,
+        "explanation": "if 帶的那一句就算講未來也用現在簡單式,主詞是 the weather,所以用 is,不寫 will be。"
+      },
+      {
+        "q": "下面哪一句是對的?",
+        "options": [
+          "When I will finish my work, I will call you.",
+          "When I finishing my work, I call you.",
+          "When I finish my work, I calling you.",
+          "When I finish my work, I will call you."
+        ],
+        "answer": 3,
+        "explanation": "when 那一句用現在簡單式 finish,另外一句講未來才用 will call。finishing 和 calling 前面沒有 be 動詞,不能單獨當動詞用。"
+      },
+      {
+        "q": "Please call me when you ___ free this afternoon.",
+        "options": ["are", "will be", "is", "being"],
+        "answer": 0,
+        "explanation": "when 那一句不放 will,主詞是 you,be 動詞用 are。"
+      }
+    ]
+  },
+  {
+    "id": "g3-04",
+    "title": "不定詞:to+動詞,說出 want to go 這種句子",
+    "goal": "學完你可以在一句話裡放兩個動作,用 to 加原形動詞把第二個動作接上去。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文一句話裡可以塞好幾個動作,像「我想要去日本」就有「想要」和「去」。英文一個句子通常只留一個真正在動的動詞,第二個動作要在前面加 to,寫成 to go。這個「to + 原形動詞」的組合叫不定詞。"
+      },
+      {
+        "t": "ex",
+        "en": "I want to go to Japan.",
+        "zh": "我想要去日本。",
+        "focus": "to go"
+      },
+      {
+        "t": "p",
+        "text": "不定詞裡的動詞永遠是原形。不管主詞是誰、句子講的是現在還是過去,to 後面都不加 s、也不加 ed,該變的是前面那個動詞。"
+      },
+      {
+        "t": "ex",
+        "en": "She wants to buy a new car.",
+        "zh": "她想要買一台新車。",
+        "focus": "to buy"
+      },
+      {
+        "t": "ex",
+        "en": "They decided to leave early.",
+        "zh": "他們決定早點離開。",
+        "focus": "to leave"
+      },
+      {
+        "t": "table",
+        "header": ["動詞", "意思", "例句"],
+        "rows": [
+          ["want", "想要", "I want to see the manager."],
+          ["need", "需要", "We need to book a room."],
+          ["plan", "打算", "They plan to open a new store."],
+          ["decide", "決定", "She decided to take the job."],
+          ["hope", "希望", "I hope to hear from you soon."]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "不定詞還有另一個很好用的地方,就是說明「為了做什麼」,拿來回答為什麼去某個地方。"
+      },
+      {
+        "t": "ex",
+        "en": "I went to the bank to get some cash.",
+        "zh": "我去銀行領現金。",
+        "focus": "to get"
+      },
+      {
+        "t": "tip",
+        "text": "第一個動詞跟著主詞和時間變,第二個動詞乖乖待在 to 後面不動,像 He wanted to call you. 只有 wanted 變成過去式。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "She needs ___ the report before Friday.",
+        "options": ["finish", "to finish", "finishing", "finished"],
+        "answer": 1,
+        "explanation": "need 後面接不定詞,寫成 to finish。第二個動作不能光溜溜地放一個原形動詞在那裡。"
+      },
+      {
+        "q": "I want ___ a cup of coffee.",
+        "options": ["to drink", "drink", "drinks", "drinking"],
+        "answer": 0,
+        "explanation": "want 後面接不定詞 to drink。want drink 兩個動詞連在一起是台灣學生很常見的錯。"
+      },
+      {
+        "q": "He plans to ___ a new laptop next month.",
+        "options": ["buys", "bought", "buy", "buying"],
+        "answer": 2,
+        "explanation": "to 後面一定是原形動詞 buy,不會因為主詞是 he 就加 s,也不會因為句子講未來就變形。"
+      },
+      {
+        "q": "My manager decided ___ the meeting to Monday.",
+        "options": ["moving", "moves", "move", "to move"],
+        "answer": 3,
+        "explanation": "decide 後面接不定詞 to move。動詞前面沒有 to 也沒有主詞,句子會散掉。"
+      },
+      {
+        "q": "We went to the station ___ our friends.",
+        "options": ["meet", "meeting", "to meet", "met"],
+        "answer": 2,
+        "explanation": "這裡的不定詞在說明去車站的目的,是「為了接朋友」,用 to meet。"
+      }
+    ]
+  },
+  {
+    "id": "g3-05",
+    "title": "動名詞:V-ing 當名詞用",
+    "goal": "學完你可以把動作加 -ing 當成一個東西來講,說出 enjoy reading、like swimming 這類句子。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "「看書」是一個動作,可是在「我喜歡看書」這句裡,它比較像一個東西,是你喜歡的那個東西。英文要把動作當東西用的時候,會在動詞後面加 -ing,這樣的字叫動名詞。"
+      },
+      {
+        "t": "ex",
+        "en": "I enjoy reading.",
+        "zh": "我喜歡看書。",
+        "focus": "reading"
+      },
+      {
+        "t": "p",
+        "text": "動名詞和現在進行式的 V-ing 長得一模一樣,分辨方法是看前面有沒有 be 動詞。現在進行式一定有 am、is、are,動名詞前面沒有。"
+      },
+      {
+        "t": "ex",
+        "en": "She is reading now.",
+        "zh": "她現在正在看書。",
+        "focus": "is reading"
+      },
+      {
+        "t": "ex",
+        "en": "She likes reading.",
+        "zh": "她喜歡看書。",
+        "focus": "reading"
+      },
+      {
+        "t": "p",
+        "text": "有幾個動詞後面習慣接動名詞,不接不定詞,這幾個沒有道理可講,記起來就好。"
+      },
+      {
+        "t": "table",
+        "header": ["動詞", "例句"],
+        "rows": [
+          ["enjoy", "I enjoy cooking on weekends."],
+          ["finish", "He finished cleaning the kitchen."],
+          ["practice", "She practices speaking English every day."],
+          ["mind", "Would you mind waiting a few minutes?"],
+          ["avoid", "We avoid driving during rush hour."]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "動名詞也可以放在句子最前面當主詞。這時候它算一個東西,後面的動詞當成單數處理。"
+      },
+      {
+        "t": "ex",
+        "en": "Walking is good exercise.",
+        "zh": "走路是很好的運動。",
+        "focus": "Walking"
+      },
+      {
+        "t": "tip",
+        "text": "enjoy 後面只能接 -ing,寫成 enjoy to read 是很常見的錯,改成 enjoy reading 就對了。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I enjoy ___ to music after work.",
+        "options": ["listen", "to listen", "listening", "listened"],
+        "answer": 2,
+        "explanation": "enjoy 後面接動名詞 listening。enjoy to listen 是台灣學生很常寫錯的組合。"
+      },
+      {
+        "q": "He finished ___ the dishes ten minutes ago.",
+        "options": ["washing", "to wash", "wash", "washes"],
+        "answer": 0,
+        "explanation": "finish 後面接動名詞 washing。前面的 finished 已經負責過去式,後面不用再變。"
+      },
+      {
+        "q": "___ every morning keeps me healthy.",
+        "options": ["Run", "Runs", "To running", "Running"],
+        "answer": 3,
+        "explanation": "句子開頭要放一個東西當主詞,動作要變成動名詞 Running 才能站在這個位置。"
+      },
+      {
+        "q": "Would you mind ___ the window?",
+        "options": ["to close", "closing", "close", "closed"],
+        "answer": 1,
+        "explanation": "mind 後面接動名詞 closing,這是很常用的客氣說法。"
+      },
+      {
+        "q": "下面哪一句是對的?",
+        "options": [
+          "She is enjoy cooking.",
+          "She enjoys to cook.",
+          "She enjoys cooking.",
+          "She enjoy cooking."
+        ],
+        "answer": 2,
+        "explanation": "主詞 she 是第三人稱單數,動詞要用 enjoys,後面再接動名詞 cooking。第一個選項把 be 動詞和一般動詞放在一起了。"
+      },
+      {
+        "q": "We practice ___ English with our classmates every Friday.",
+        "options": ["to speak", "speak", "spoke", "speaking"],
+        "answer": 3,
+        "explanation": "practice 後面接動名詞 speaking。"
+      }
+    ]
+  },
+  {
+    "id": "g3-06",
+    "title": "助動詞:can、should、must",
+    "goal": "學完你可以用 can、should、must 說出「會、應該、一定要」,並知道它們後面的動詞都用原形。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文常在動詞前面加「會」「應該」「一定要」,幫這個動作補上一層意思。英文用 can、should、must 做同樣的事,它們是助動詞,自己不表示動作,只負責幫忙。"
+      },
+      {
+        "t": "ex",
+        "en": "I can swim.",
+        "zh": "我會游泳。",
+        "focus": "can"
+      },
+      {
+        "t": "p",
+        "text": "這三個字後面的動詞一律用原形。主詞是誰都不影響,不加 s 也不加 ed,所以是 He can 而不是 He cans,後面也是 He can go 而不是 He can goes。"
+      },
+      {
+        "t": "ex",
+        "en": "He can drive a truck.",
+        "zh": "他會開卡車。",
+        "focus": "can drive"
+      },
+      {
+        "t": "p",
+        "text": "can 是「會、可以」,should 是「應該」,語氣比較軟,拿來給建議。must 是「一定要」,語氣很強,常出現在規定上。"
+      },
+      {
+        "t": "ex",
+        "en": "You should take a break.",
+        "zh": "你應該休息一下。",
+        "focus": "should"
+      },
+      {
+        "t": "ex",
+        "en": "Visitors must wear a badge.",
+        "zh": "訪客一定要戴識別證。",
+        "focus": "must"
+      },
+      {
+        "t": "p",
+        "text": "要講「不」的時候,直接在這幾個字後面加 not 就好。要問人的時候,把它們搬到主詞前面。這兩件事都不必再叫 do 或 does 來幫忙。只有 must not 要特別小心,它的意思是「不可以」,是禁止對方做,不是「不用做」。"
+      },
+      {
+        "t": "table",
+        "header": ["肯定", "否定", "問句"],
+        "rows": [
+          ["I can swim.", "I cannot swim.(can't)", "Can you swim?"],
+          ["You should go.", "You should not go.(shouldn't)", "Should I go?"],
+          ["We must stay.", "We must not stay.(mustn't,不可以留下)", "Must we stay?"]
+        ]
+      },
+      {
+        "t": "tip",
+        "text": "這幾個字自己就是助動詞,問句和否定句不要再放一個 do 進去,Do you can swim? 是錯的。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "She ___ speak three languages.",
+        "options": ["cans", "can", "can to", "is can"],
+        "answer": 1,
+        "explanation": "can 不管主詞是誰都不加 s,後面也不加 to,直接接原形動詞 speak。"
+      },
+      {
+        "q": "You ___ see a doctor if the pain continues.",
+        "options": ["should to", "shoulds", "should", "are should"],
+        "answer": 2,
+        "explanation": "should 後面直接接原形動詞 see,中間不放 to,前面也不放 be 動詞。"
+      },
+      {
+        "q": "All employees ___ wear their ID cards in the building.",
+        "options": ["must to", "musts", "are must", "must"],
+        "answer": 3,
+        "explanation": "公司規定用 must,後面接原形動詞 wear,中間不加 to。"
+      },
+      {
+        "q": "下面哪一句是對的?",
+        "options": [
+          "Can you drive?",
+          "Do you can drive?",
+          "Can you to drive?",
+          "Do you can to drive?"
+        ],
+        "answer": 0,
+        "explanation": "can 本身就是助動詞,問句把 can 搬到主詞前面就好,不用再找 do 幫忙,後面也不加 to。"
+      },
+      {
+        "q": "He ___ come to the party because he is busy tonight.",
+        "options": ["doesn't can", "not can", "can't", "can not to"],
+        "answer": 2,
+        "explanation": "can 的否定是在後面加 not,縮寫成 can't,不會寫成 doesn't can。"
+      }
+    ]
+  },
+  {
+    "id": "g3-07",
+    "title": "頻率副詞:always 到 never",
+    "goal": "學完你可以說出一件事多常發生,而且知道 always、never 這些字該擺在句子的哪個位置。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "別人問你多久做一次某件事,中文會回「我總是搭公車」「我從來不喝酒」。英文有一組字專門負責這件事,叫頻率副詞,從幾乎每次到一次都沒有,各有各的字。"
+      },
+      {
+        "t": "table",
+        "header": ["頻率副詞", "大概多常", "中文"],
+        "rows": [
+          ["always", "幾乎每一次", "總是"],
+          ["usually", "大部分時候", "通常"],
+          ["often", "很多次", "常常"],
+          ["sometimes", "偶爾", "有時候"],
+          ["never", "一次都沒有", "從來不"]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "位置是台灣學生最容易出錯的地方,但規則很好記:碰到一般動詞,頻率副詞放在動詞前面。"
+      },
+      {
+        "t": "ex",
+        "en": "I always take the bus to work.",
+        "zh": "我上班總是搭公車。",
+        "focus": "always"
+      },
+      {
+        "t": "ex",
+        "en": "She never eats breakfast.",
+        "zh": "她從來不吃早餐。",
+        "focus": "never"
+      },
+      {
+        "t": "p",
+        "text": "碰到 be 動詞就反過來,頻率副詞要放在 am、is、are 後面。"
+      },
+      {
+        "t": "ex",
+        "en": "He is often late for meetings.",
+        "zh": "他開會常常遲到。",
+        "focus": "is often"
+      },
+      {
+        "t": "p",
+        "text": "還有一點要注意,never 這個字本身就有「不」的意思,句子裡不要再放一個 don't。"
+      },
+      {
+        "t": "ex",
+        "en": "I never drink coffee at night.",
+        "zh": "我晚上從來不喝咖啡。",
+        "focus": "never"
+      },
+      {
+        "t": "tip",
+        "text": "記成「一般動詞前面、be 動詞後面」,把 I usually walk. 和 I am usually busy. 兩句擺在一起念一次就分得出來。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "She ___ to the gym on Sunday mornings.",
+        "options": ["usually goes", "goes usually", "usually go", "go usually"],
+        "answer": 0,
+        "explanation": "頻率副詞放在一般動詞前面,主詞是 she,動詞要用 goes,所以是 usually goes。"
+      },
+      {
+        "q": "My manager is ___ in his office before eight.",
+        "options": ["always be", "always", "be always", "always is"],
+        "answer": 1,
+        "explanation": "句子已經有 be 動詞 is,頻率副詞就放在 is 後面,不必再放一個 be。"
+      },
+      {
+        "q": "I ___ eat fast food.",
+        "options": ["don't never", "never don't", "never", "am never"],
+        "answer": 2,
+        "explanation": "never 本身就是否定,再加 don't 等於講了兩次不。eat 是一般動詞,前面也不放 am。"
+      },
+      {
+        "q": "He ___ late for work.",
+        "options": ["is sometimes", "are sometimes", "does sometimes", "sometimes"],
+        "answer": 0,
+        "explanation": "late 是形容詞,句子需要 be 動詞,主詞 he 要配 is,頻率副詞再放在 is 後面,寫成 is sometimes late。"
+      },
+      {
+        "q": "下面哪一句是對的?",
+        "options": [
+          "She never late.",
+          "She isn't never late.",
+          "She never don't be late.",
+          "She is never late."
+        ],
+        "answer": 3,
+        "explanation": "有 be 動詞的時候頻率副詞放在後面,而且 never 已經是否定,不能再加 isn't 或 don't。第一個選項則是把 be 動詞整個漏掉了。"
+      }
+    ]
+  },
+  {
+    "id": "g3-08",
+    "title": "there is、there are:講「有」",
+    "goal": "學完你可以說出某個地方有什麼,並分得出什麼時候用 is、什麼時候用 are。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我辦公室附近有一家咖啡店」,真正的主角是那家咖啡店,「有」只是告訴你它存在。英文碰到這種「某個地方有某個東西」的句子,習慣用 There is 或 There are 開頭。這裡的 there 不是「那裡」的意思,只是句子的起頭。"
+      },
+      {
+        "t": "ex",
+        "en": "There is a coffee shop near my office.",
+        "zh": "我辦公室附近有一家咖啡店。",
+        "focus": "There is"
+      },
+      {
+        "t": "p",
+        "text": "後面的東西只有一個,用 There is;有兩個以上,用 There are。決定用哪一個的是後面那個東西,不是 there。講過去的事就換成 There was 和 There were。"
+      },
+      {
+        "t": "ex",
+        "en": "There are three people in the meeting room.",
+        "zh": "會議室裡有三個人。",
+        "focus": "There are"
+      },
+      {
+        "t": "table",
+        "header": ["情況", "寫法", "例句"],
+        "rows": [
+          ["現在,一個東西", "There is", "There is a problem with the printer."],
+          ["現在,兩個以上", "There are", "There are two problems."],
+          ["過去,一個東西", "There was", "There was a mistake in the report."],
+          ["過去,兩個以上", "There were", "There were many customers yesterday."]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "要說「沒有」,就在 is 或 are 後面加 not,常常縮寫成 isn't、aren't。"
+      },
+      {
+        "t": "ex",
+        "en": "There isn't any milk in the fridge.",
+        "zh": "冰箱裡沒有牛奶。",
+        "focus": "isn't"
+      },
+      {
+        "t": "p",
+        "text": "要問「有沒有」,把 is 或 are 搬到 there 前面就成了問句。"
+      },
+      {
+        "t": "ex",
+        "en": "Is there a bank near here?",
+        "zh": "這附近有銀行嗎?",
+        "focus": "Is there"
+      },
+      {
+        "t": "tip",
+        "text": "「我有一台車」是 I have a car,「某個地方有」才用 there is,兩種「有」不要混在一起用。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "___ a meeting room on the third floor.",
+        "options": ["There are", "There is", "There have", "It has"],
+        "answer": 1,
+        "explanation": "後面的 a meeting room 只有一間,用 There is。英文沒有 there have 這種說法。"
+      },
+      {
+        "q": "There ___ many customers in the store right now.",
+        "options": ["is", "are", "was", "has"],
+        "answer": 1,
+        "explanation": "many customers 是兩個以上,而且講的是現在,所以用 are。"
+      },
+      {
+        "q": "___ any tickets left for tonight?",
+        "options": ["There is", "There are", "Is there", "Are there"],
+        "answer": 3,
+        "explanation": "問句要把 are 搬到 there 前面,而且 tickets 是兩張以上,所以是 Are there。"
+      },
+      {
+        "q": "There ___ a mistake in yesterday's report.",
+        "options": ["was", "were", "have", "are"],
+        "answer": 0,
+        "explanation": "昨天的報告是過去的事,而且 a mistake 只有一個,用 was。"
+      },
+      {
+        "q": "下面哪一句是對的?",
+        "options": [
+          "There have two cars in the garage.",
+          "There is two cars in the garage.",
+          "There are two cars in the garage.",
+          "There two cars are in the garage."
+        ],
+        "answer": 2,
+        "explanation": "two cars 是兩台以上要用 are,而且 are 要緊接在 there 後面。"
+      }
+    ]
+  },
+  {
+    "id": "g3-09",
+    "title": "比較級:-er 和 more",
+    "goal": "學完你可以把兩個東西拿來比,說出「比較便宜」「比較貴」這種句子。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "買東西的時候常會把兩件放在一起比,中文說「這件比那件便宜」。英文要比較的時候,形容詞本身要變一下,後面再用 than 說出跟誰比。"
+      },
+      {
+        "t": "ex",
+        "en": "This shirt is cheaper than that one.",
+        "zh": "這件襯衫比那件便宜。",
+        "focus": "cheaper"
+      },
+      {
+        "t": "p",
+        "text": "怎麼變要看形容詞的長短。短的字像 tall、cheap、fast,直接在後面加 -er。長的字像 expensive、difficult,字本身不動,前面加 more。"
+      },
+      {
+        "t": "table",
+        "header": ["形容詞", "比較的寫法", "例句"],
+        "rows": [
+          ["tall", "taller", "He is taller than his brother."],
+          ["big", "bigger(最後一個字母要重複)", "My office is bigger than yours."],
+          ["easy", "easier(y 改成 i)", "This test is easier than the last one."],
+          ["expensive", "more expensive", "This hotel is more expensive than that one."],
+          ["difficult", "more difficult", "The second question is more difficult than the first."]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "有兩個字不照規則走,要另外背起來:good 變成 better,bad 變成 worse。"
+      },
+      {
+        "t": "ex",
+        "en": "The weather today is better than yesterday.",
+        "zh": "今天的天氣比昨天好。",
+        "focus": "better"
+      },
+      {
+        "t": "p",
+        "text": "如果對方已經知道你在跟什麼比,than 那一段可以不寫,句子還是通的。"
+      },
+      {
+        "t": "ex",
+        "en": "Do you have a bigger size?",
+        "zh": "有大一點的尺寸嗎?",
+        "focus": "bigger"
+      },
+      {
+        "t": "tip",
+        "text": "加了 -er 就不要再加 more,像 more cheaper 等於同一件事講了兩次,留一個就好。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "This box is ___ than that one.",
+        "options": ["heavy", "heavier", "more heavy", "heaviest"],
+        "answer": 1,
+        "explanation": "heavy 是短形容詞,y 改成 i 再加 -er 變成 heavier,不用 more。"
+      },
+      {
+        "q": "The new system is ___ than the old one.",
+        "options": ["more efficient", "efficienter", "most efficient", "more efficienter"],
+        "answer": 0,
+        "explanation": "efficient 是長形容詞,前面加 more,字本身不變。"
+      },
+      {
+        "q": "My new apartment is ___ than my old one.",
+        "options": ["bigger", "more big", "biger", "big"],
+        "answer": 0,
+        "explanation": "big 加 -er 的時候要重複最後一個字母,寫成 bigger。"
+      },
+      {
+        "q": "Today's traffic is ___ than yesterday's.",
+        "options": ["badder", "more bad", "worst", "worse"],
+        "answer": 3,
+        "explanation": "bad 不照規則,兩個相比要用 worse。worst 是三個以上比出來的最後一名。"
+      },
+      {
+        "q": "Her English is ___ than mine.",
+        "options": ["good", "better", "more good", "best"],
+        "answer": 1,
+        "explanation": "good 的比較寫法是 better,沒有 more good 這種用法。"
+      }
+    ]
+  },
+  {
+    "id": "g3-10",
+    "title": "最高級:-est 和 most",
+    "goal": "學完你可以在三個以上的東西裡挑出最厲害的那一個,並記得前面要加 the。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "上一個單元是兩個東西在比,這一個是三個以上放在一起,選出第一名。中文說「最便宜的那張票」,英文的形容詞再變一次,而且前面要加 the,因為第一名只有一個。"
+      },
+      {
+        "t": "ex",
+        "en": "This is the cheapest ticket.",
+        "zh": "這是最便宜的票。",
+        "focus": "the cheapest"
+      },
+      {
+        "t": "p",
+        "text": "變的規則跟上一個單元一樣,只是換一個字尾:短形容詞加 -est,長形容詞前面加 most。"
+      },
+      {
+        "t": "table",
+        "header": ["形容詞", "兩個相比", "三個以上"],
+        "rows": [
+          ["cheap", "cheaper", "the cheapest"],
+          ["big", "bigger", "the biggest"],
+          ["easy", "easier", "the easiest"],
+          ["expensive", "more expensive", "the most expensive"],
+          ["good", "better", "the best"],
+          ["bad", "worse", "the worst"]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "It was the most expensive meal of the trip.",
+        "zh": "那是這趟旅行最貴的一餐。",
+        "focus": "the most expensive"
+      },
+      {
+        "t": "p",
+        "text": "後面常常會再補一句說明範圍,像 in our company(在我們公司裡)、of the year(這一年裡),講清楚是在哪一群裡面最厲害。"
+      },
+      {
+        "t": "ex",
+        "en": "She is the best salesperson in our company.",
+        "zh": "她是我們公司最好的業務。",
+        "focus": "the best"
+      },
+      {
+        "t": "p",
+        "text": "分辨方法很簡單。句子裡有 than,就是兩個在比;看到 the 加上 -est 或 most,就是選出唯一的第一名。"
+      },
+      {
+        "t": "ex",
+        "en": "This road is longer than that one, but Highway 1 is the longest.",
+        "zh": "這條路比那條長,但一號公路最長。",
+        "focus": "the longest"
+      },
+      {
+        "t": "tip",
+        "text": "最高級前面的 the 最容易漏掉,說成 He is tallest boy 就少了一塊,補上 the 才完整。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "August is ___ month of the year here.",
+        "options": ["hotter", "hottest", "the most hot", "the hottest"],
+        "answer": 3,
+        "explanation": "一年十二個月裡選最熱的一個,用最高級,而且前面要有 the,寫成 the hottest。"
+      },
+      {
+        "q": "This is ___ restaurant in town.",
+        "options": ["the most expensive", "most expensive", "the expensivest", "more expensive"],
+        "answer": 0,
+        "explanation": "expensive 是長形容詞,最高級是 the most expensive,不會在字尾加 -est。"
+      },
+      {
+        "q": "He is ___ worker on the team.",
+        "options": ["the better", "best", "the best", "most good"],
+        "answer": 2,
+        "explanation": "整個團隊裡最好的一個,用 the best。good 的最高級不是 most good。"
+      },
+      {
+        "q": "Of the three plans, this one is ___.",
+        "options": ["cheaper", "most cheap", "cheapest than", "the cheapest"],
+        "answer": 3,
+        "explanation": "三個方案裡挑一個,用最高級 the cheapest。有 than 才是兩個相比,這裡不能寫 cheapest than。"
+      },
+      {
+        "q": "That was ___ day of my life.",
+        "options": ["worse", "the worst", "worstest", "the worse"],
+        "answer": 1,
+        "explanation": "bad 的最高級是 worst,前面要加 the。worse 是兩件事相比時用的。"
+      }
+    ]
+  }
+]

@@ -1,0 +1,944 @@
+[
+  {
+    "id": "g1-01",
+    "title": "名詞：人、事、物的名字",
+    "goal": "看到一個字能判斷它是不是名詞，也知道東西不只一個的時候後面要加 s。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "先想中文。你跟朋友聊天的時候會講到「媽媽」、「手機」、「咖啡」、「學校」，這些字都是在指某一個人、某一樣東西或某一個地方。英文把這一類字叫做名詞。名詞就是名字，人的名字、東西的名字、地方的名字都算。"
+      },
+      {
+        "t": "p",
+        "text": "指人的有 mother（媽媽）、teacher（老師）、friend（朋友）；指東西的有 book（書）、car（車）、phone（手機）；指地方的有 school（學校）、home（家）、Taipei（台北）。你不用一次記完，先抓一個感覺就好：前面可以加上「一個」、「這個」的字，通常就是名詞。"
+      },
+      {
+        "t": "ex",
+        "en": "My mother is a teacher.",
+        "zh": "我媽媽是老師。",
+        "focus": "mother"
+      },
+      {
+        "t": "ex",
+        "en": "I have a car.",
+        "zh": "我有一台車。",
+        "focus": "car"
+      },
+      {
+        "t": "p",
+        "text": "接下來是台灣學生最常漏掉的地方，就是數量。中文說「一本書」跟「三本書」，書這個字長得一模一樣，只有前面的數字不同。英文不是這樣，只要是兩個以上，名詞後面通常要加 s。"
+      },
+      {
+        "t": "table",
+        "header": ["一個", "兩個以上", "怎麼變"],
+        "rows": [
+          ["book（書）", "books", "後面直接加 s"],
+          ["bus（公車）", "buses", "字尾是 s、x、ch、sh 的，加 es"],
+          ["baby（寶寶）", "babies", "字尾是 y，而且 y 前面不是 a、e、i、o、u，就把 y 改成 ies"],
+          ["man（男人）", "men", "少數幾個字是整個換掉的，這種背起來就好"]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "I have two books.",
+        "zh": "我有兩本書。",
+        "focus": "books"
+      },
+      {
+        "t": "ex",
+        "en": "We see three buses.",
+        "zh": "我們看到三台公車。",
+        "focus": "buses"
+      },
+      {
+        "t": "tip",
+        "text": "寫完一句話回頭看數字，只要不是一個，名詞後面那個 s 就別忘了補上去。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "下面哪一個字是名詞（指人、事、物的名字）？",
+        "options": ["run", "teacher", "happy", "very"],
+        "answer": 1,
+        "explanation": "teacher 是老師，指的是一個人，所以是名詞。run 是跑這個動作，happy 是在講心情，very 是加強語氣用的，都不是在指某個人或某樣東西。"
+      },
+      {
+        "q": "「兩本書」的英文是 two ___。",
+        "options": ["books", "book", "bookes", "bookses"],
+        "answer": 0,
+        "explanation": "book 後面直接加 s 就是 books。中文的「書」不管幾本都長一樣，英文兩個以上一定要加 s，這是最容易漏掉的地方。bookes 和 bookses 都是多加的，沒有這種寫法。"
+      },
+      {
+        "q": "「三台公車」的英文是 three ___。",
+        "options": ["bus", "buss", "busies", "buses"],
+        "answer": 3,
+        "explanation": "bus 的字尾是 s，這種字要加 es 變成 buses。buss 是把字尾重複，busies 是把 y 結尾的規則亂套過來，而 bus 沒加 s 則是漏掉了數量。"
+      },
+      {
+        "q": "I have two ___.（原本的字是 baby）",
+        "options": ["babys", "babies", "babyes", "baby"],
+        "answer": 1,
+        "explanation": "baby 的字尾是 y，y 前面的 b 不是 a、e、i、o、u，所以把 y 改成 ies，寫成 babies。直接加 s 的 babys 很多人會寫，但拼法不對。"
+      },
+      {
+        "q": "下面哪一句沒有錯？",
+        "options": ["I have three book.", "I have three bookes.", "I have three books.", "I have three babys."],
+        "answer": 2,
+        "explanation": "three 是三個，後面的名詞一定要加 s，book 變成 books 就對了。第一句漏掉 s，第二句多加了 e，第四句的 baby 應該寫成 babies。"
+      }
+    ]
+  },
+  {
+    "id": "g1-02",
+    "title": "代名詞：不用一直重複名字的字",
+    "goal": "會用 I、you、he、she、it、we、they 代替前面提過的人或東西，也知道 me、him、her 什麼時候出現。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "你跟朋友說：「小明昨天很累，小明早上六點就起床。」講兩次小明很奇怪對不對？中文會改說「他早上六點就起床」。英文也一樣，用來代替名字的字叫做代名詞。"
+      },
+      {
+        "t": "ex",
+        "en": "Amy is my sister. She is a teacher.",
+        "zh": "Amy 是我姊姊。她是老師。",
+        "focus": "She"
+      },
+      {
+        "t": "p",
+        "text": "常用的代名詞有七個：I（我）、you（你、你們）、he（他）、she（她）、it（它，用在東西和動物）、we（我們）、they（他們、她們、它們）。中文的「你」跟「你們」是兩個詞，英文都用 you，不用特別分開。"
+      },
+      {
+        "t": "ex",
+        "en": "They are my friends.",
+        "zh": "他們是我的朋友。",
+        "focus": "They"
+      },
+      {
+        "t": "p",
+        "text": "同一個人在句子裡的位置不同，長相會跟著變。做動作的那一個用 I，動作落在誰身上就換成 me。像中文說「我喜歡他」跟「他喜歡我」，兩句都有「我」，可是英文寫出來不一樣。"
+      },
+      {
+        "t": "table",
+        "header": ["中文", "做動作的時候用", "動作落在他身上時用"],
+        "rows": [
+          ["我", "I", "me"],
+          ["你、你們", "you", "you"],
+          ["他", "he", "him"],
+          ["她", "she", "her"],
+          ["它", "it", "it"],
+          ["我們", "we", "us"],
+          ["他們", "they", "them"]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "I like him.",
+        "zh": "我喜歡他。",
+        "focus": "him"
+      },
+      {
+        "t": "ex",
+        "en": "He likes me.",
+        "zh": "他喜歡我。",
+        "focus": "me"
+      },
+      {
+        "t": "tip",
+        "text": "I 不管出現在句子的哪個位置都要大寫，寫成小寫的 i 是很常被抓到的錯。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Amy is my friend. ___ is very kind.",
+        "options": ["He", "It", "She", "They"],
+        "answer": 2,
+        "explanation": "Amy 是女生，要用 She。He 是男生用的，It 用在東西和動物，They 是兩個人以上。中文的「他」講出來不分男女，英文一定要分清楚。"
+      },
+      {
+        "q": "My parents are very kind. I love ___.",
+        "options": ["them", "they", "he", "she"],
+        "answer": 0,
+        "explanation": "愛這個動作落在 my parents 身上，要用 them。they 是他們自己做動作的時候才用，像 They love me.。這兩個搞混很常見。"
+      },
+      {
+        "q": "My brother and I are students. ___ are good students.",
+        "options": ["They", "You", "He", "We"],
+        "answer": 3,
+        "explanation": "「我哥哥和我」包含我自己在內，等於「我們」，所以用 We。They 是不包括自己的那群人，He 只有一個人，You 是在講對方。"
+      },
+      {
+        "q": "Tom is my classmate. I like ___.",
+        "options": ["he", "his", "him", "he's"],
+        "answer": 2,
+        "explanation": "喜歡這個動作落在 Tom 身上，要用 him。he 是他自己做動作時才用，his 是「他的」，he's 是 he is 縮起來的，放進去會變成一句話裡擠了兩個動作。"
+      },
+      {
+        "q": "___ is my father.",
+        "options": ["Him", "He", "Me", "His"],
+        "answer": 1,
+        "explanation": "這句在說「他是我爸爸」，他是做動作的那一個，用 He。Him 和 Me 是動作落在身上時才用的形式，放在句子最前面不對。"
+      }
+    ]
+  },
+  {
+    "id": "g1-03",
+    "title": "be 動詞：am、is、are",
+    "goal": "會用 am、is、are 說某人是什麼、某人怎麼樣，也看得懂 I'm、it's 這種縮寫。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我是學生」，那個「是」的位置，英文用 am、is、are 這三個字。它們其實是同一個字的三種長相，合起來叫 be 動詞。要用哪一個，看前面的主角是誰。"
+      },
+      {
+        "t": "table",
+        "header": ["前面的主角", "用哪一個", "例句"],
+        "rows": [
+          ["I", "am", "I am happy."],
+          ["he、she、it，或一個人、一樣東西", "is", "She is my sister."],
+          ["you、we、they，或兩個以上", "are", "They are my friends."]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "I am a student.",
+        "zh": "我是學生。",
+        "focus": "am"
+      },
+      {
+        "t": "ex",
+        "en": "My father is a doctor.",
+        "zh": "我爸爸是醫生。",
+        "focus": "is"
+      },
+      {
+        "t": "ex",
+        "en": "We are happy.",
+        "zh": "我們很開心。",
+        "focus": "are"
+      },
+      {
+        "t": "p",
+        "text": "有一個地方中文跟英文差很多。中文說「他很累」，整句沒有「是」，可是英文一定要放 be 動詞，要寫 He is tired.，不能只寫 He very tired.。只要句子在講某某人怎麼樣，中間那個 is 就不能省。"
+      },
+      {
+        "t": "ex",
+        "en": "He is tired.",
+        "zh": "他很累。",
+        "focus": "is"
+      },
+      {
+        "t": "p",
+        "text": "講話和寫訊息的時候，英文常常把兩個字黏在一起變短，中間放一個小撇號。意思完全一樣，只是比較口語。"
+      },
+      {
+        "t": "table",
+        "header": ["原本", "縮寫"],
+        "rows": [
+          ["I am", "I'm"],
+          ["it is", "it's"],
+          ["you are", "you're"],
+          ["she is", "she's"],
+          ["they are", "they're"]
+        ]
+      },
+      {
+        "t": "tip",
+        "text": "am、is、are 一句裡只會出現一個，寫成 I am is a student 這種兩個一起來的句子一定是錯的。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I ___ a student.",
+        "options": ["is", "are", "am", "be"],
+        "answer": 2,
+        "explanation": "I 後面固定配 am，這一組是死的，記起來就好。is 給他、她、它用，are 給你、我們、他們用，be 是它原本的樣子，現在這個階段還不會單獨放進句子裡。"
+      },
+      {
+        "q": "My mother ___ very busy.",
+        "options": ["are", "is", "am", "be"],
+        "answer": 1,
+        "explanation": "my mother 是一個人，等於 she，所以配 is。中文說「我媽媽很忙」中間沒有字，英文卻不能少掉 is。"
+      },
+      {
+        "q": "They ___ my friends.",
+        "options": ["is", "am", "be", "are"],
+        "answer": 3,
+        "explanation": "they 是兩個人以上，配 are。後面的 my friends 也是好幾個人，前後對得起來。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": ["He is very tall.", "He very tall.", "He are very tall.", "He am very tall."],
+        "answer": 0,
+        "explanation": "中文說「他很高」中間沒有字，英文一定要放 be 動詞，而且 he 要配 is。第二句就是照中文直接翻過來，少了 is，這是最常見的錯。"
+      },
+      {
+        "q": "It's 是哪兩個字縮起來的？",
+        "options": ["Its", "It was", "It is", "It are"],
+        "answer": 2,
+        "explanation": "It's 是 It is 縮起來的，那個小撇號代表被省略掉的 i。Its 沒有小撇號，意思是「它的」，跟縮寫是兩回事，這兩個最容易寫錯；it 是一樣東西，也不會配 are。"
+      }
+    ]
+  },
+  {
+    "id": "g1-04",
+    "title": "一般動詞：表示動作的字",
+    "goal": "會用 eat、go、like 這類表示動作的字造句，也知道主角是一個人的時候動詞要加 s。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我吃飯」、「他走路」、「她喜歡貓」，「吃」、「走」、「喜歡」都是動作。英文裡表示動作的字叫一般動詞，像 eat（吃）、go（去）、like（喜歡）、have（有）。它跟上一個單元的 be 動詞是不同的兩類字，現在這個階段，一句話裡放了 be 動詞就不會再放一般動詞。"
+      },
+      {
+        "t": "ex",
+        "en": "I eat rice.",
+        "zh": "我吃飯。",
+        "focus": "eat"
+      },
+      {
+        "t": "ex",
+        "en": "We go to school.",
+        "zh": "我們去學校。",
+        "focus": "go"
+      },
+      {
+        "t": "p",
+        "text": "再來是台灣學生最常被扣分的地方。當主角是「他」、「她」、「它」，或是某一個人的名字，也就是文法上說的第三人稱單數，動詞後面要加 s。中文完全沒有這回事，所以特別容易忘。"
+      },
+      {
+        "t": "table",
+        "header": ["主角", "動詞", "整句"],
+        "rows": [
+          ["I、you、we、they", "eat", "They eat rice."],
+          ["he、she、it、Amy", "eats", "Amy eats rice."]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "She likes cats.",
+        "zh": "她喜歡貓。",
+        "focus": "likes"
+      },
+      {
+        "t": "p",
+        "text": "加 s 的時候拼法有幾個小變化：go 變成 goes，do 變成 does，watch 變成 watches，study 變成 studies。規則跟名詞加 s 幾乎一樣，可以一起記。"
+      },
+      {
+        "t": "ex",
+        "en": "My brother goes to school.",
+        "zh": "我哥哥去上學。",
+        "focus": "goes"
+      },
+      {
+        "t": "ex",
+        "en": "My mother watches TV.",
+        "zh": "我媽媽看電視。",
+        "focus": "watches"
+      },
+      {
+        "t": "tip",
+        "text": "寫完句子先看主角是誰，只要是一個人或一樣東西，回頭把動詞的 s 補上去。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "She ___ coffee every day.",
+        "options": ["drink", "drinks", "drinking", "is drink"],
+        "answer": 1,
+        "explanation": "she 是第三人稱單數，動詞要加 s，所以是 drinks。is drink 把 be 動詞和一般動詞放在一起，一句話裡不能這樣擠兩個動詞，drinking 也不能單獨當動作用。"
+      },
+      {
+        "q": "They ___ to school by bus.",
+        "options": ["goes", "going", "go", "gos"],
+        "answer": 2,
+        "explanation": "they 是兩個人以上，動詞不加 s，直接用 go。goes 是他、她、它才用的，gos 這個拼法不存在，going 也不能單獨當動作用。"
+      },
+      {
+        "q": "My father ___ TV at night.",
+        "options": ["watches", "watchs", "watch", "watching"],
+        "answer": 0,
+        "explanation": "my father 等於 he，動詞要加 s；watch 的字尾是 ch，要加 es 變成 watches。watchs 是很多人會寫的拼法，但不對。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": ["He is like music.", "He like music.", "He liking music.", "He likes music."],
+        "answer": 3,
+        "explanation": "he 後面的動詞要加 s，寫成 likes。第一句同時放了 is 和 like 兩個動作，第二句漏掉 s，第三句的 liking 不能單獨用。"
+      },
+      {
+        "q": "I ___ my mother.",
+        "options": ["loves", "love", "loving", "am love"],
+        "answer": 1,
+        "explanation": "只有他、她、它和一個人的名字才加 s，I 不用，所以是 love。看到動詞就反射性加 s 是另一種很常見的錯。"
+      }
+    ]
+  },
+  {
+    "id": "g1-05",
+    "title": "形容詞：描述樣子的字",
+    "goal": "會用 big、new、happy 這類字說明人或東西的樣子，也知道它該放在名詞前面還是 be 動詞後面。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「漂亮的花」、「他很開心」，「漂亮」和「開心」都是在描述樣子。英文這種字叫形容詞，像 big（大的）、new（新的）、happy（開心的）、old（舊的）。"
+      },
+      {
+        "t": "p",
+        "text": "形容詞在英文只會出現在兩個位置。一個是放在名詞前面，中文的「的」不用翻出來，a big dog 就是「一隻大狗」。另一個是放在 be 動詞後面，The dog is big. 就是「這隻狗很大」。"
+      },
+      {
+        "t": "ex",
+        "en": "I have a big dog.",
+        "zh": "我有一隻大狗。",
+        "focus": "big"
+      },
+      {
+        "t": "ex",
+        "en": "My dog is big.",
+        "zh": "我的狗很大。",
+        "focus": "big"
+      },
+      {
+        "t": "table",
+        "header": ["位置", "例句", "中文"],
+        "rows": [
+          ["名詞前面", "a new car", "一台新車"],
+          ["be 動詞後面", "The car is new.", "這台車是新的。"]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "She is happy.",
+        "zh": "她很開心。",
+        "focus": "happy"
+      },
+      {
+        "t": "ex",
+        "en": "It is a happy family.",
+        "zh": "這是一個幸福的家庭。",
+        "focus": "happy"
+      },
+      {
+        "t": "p",
+        "text": "名詞碰到兩個以上要加 s，形容詞不用。two big dogs 裡面加 s 的是 dogs，big 永遠是 big，不會變成 bigs。"
+      },
+      {
+        "t": "tip",
+        "text": "形容詞不管數量多少都不加 s，會加 s 的只有名詞和第三人稱單數的動詞。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "She is a ___ girl.",
+        "options": ["happy", "happily", "happys", "happier"],
+        "answer": 0,
+        "explanation": "girl 是名詞，前面要放形容詞 happy。happily 是拿來講動作怎麼做的，happys 這種寫法不存在，happier 是拿兩個人比較的時候才用。"
+      },
+      {
+        "q": "The books are ___.",
+        "options": ["news", "newly", "new", "a new"],
+        "answer": 2,
+        "explanation": "be 動詞後面放形容詞 new 就完整了。books 雖然是兩本以上，但形容詞不會跟著加 s，所以 news 不對；a new 後面還少了一個名詞。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": ["I have two bigs dogs.", "I have two dogs big.", "I have two dog bigs.", "I have two big dogs."],
+        "answer": 3,
+        "explanation": "形容詞放在名詞前面而且不加 s，數量的 s 加在 dogs 上。中文說「兩隻大狗」，英文也是先講大再講狗。"
+      },
+      {
+        "q": "My room is ___.",
+        "options": ["smalls", "small", "a small", "smally"],
+        "answer": 1,
+        "explanation": "be 動詞後面直接放形容詞 small。形容詞不加 s，也沒有 smally 這個字，a small 後面還缺一個名詞。"
+      },
+      {
+        "q": "「一間乾淨的房間」的英文是哪一個？",
+        "options": ["a room clean", "a cleans room", "a clean room", "clean a room"],
+        "answer": 2,
+        "explanation": "形容詞要放在名詞前面，寫成 a clean room。中文的「的」在英文不用翻出來，形容詞也不加 s。"
+      }
+    ]
+  },
+  {
+    "id": "g1-06",
+    "title": "副詞：描述怎麼做的字",
+    "goal": "會用 slowly、well、very 說明動作做得怎麼樣，也分得出它跟形容詞的差別。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「他走得很慢」、「她唱得很好」，「慢」和「好」是在講動作做得怎麼樣。英文用副詞做這件事，像 slowly（慢慢地）、well（好）、quickly（很快地）。"
+      },
+      {
+        "t": "p",
+        "text": "形容詞和副詞最容易搞混。形容詞是在講人或東西長什麼樣子，She is slow. 是說她這個人動作慢；副詞是在講動作怎麼進行，She walks slowly. 是說她走路走得慢。看它旁邊接的是名詞還是動作，就分得出來。"
+      },
+      {
+        "t": "ex",
+        "en": "He walks slowly.",
+        "zh": "他走得很慢。",
+        "focus": "slowly"
+      },
+      {
+        "t": "ex",
+        "en": "She sings well.",
+        "zh": "她唱得很好。",
+        "focus": "well"
+      },
+      {
+        "t": "table",
+        "header": ["形容詞", "副詞"],
+        "rows": [
+          ["slow（慢的）", "slowly"],
+          ["quick（快的）", "quickly"],
+          ["happy（開心的）", "happily"],
+          ["good（好的）", "well，這個特別，不是 goodly"]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "多數副詞是形容詞後面加 ly 變出來的，good 是少數的例外，它的副詞是 well，要另外記起來。"
+      },
+      {
+        "t": "p",
+        "text": "very 也是副詞，但它不描述動作，它是放在形容詞或副詞前面加強語氣。中文的「我很喜歡它」不能直接翻成 I very like it.，要說 I like it very much.。"
+      },
+      {
+        "t": "ex",
+        "en": "She is very happy.",
+        "zh": "她非常開心。",
+        "focus": "very"
+      },
+      {
+        "t": "ex",
+        "en": "He runs very fast.",
+        "zh": "他跑得非常快。",
+        "focus": "very"
+      },
+      {
+        "t": "tip",
+        "text": "very 後面只能接形容詞或副詞，不能直接接動作，這是台灣學生最常犯的錯之一。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "He drives ___.",
+        "options": ["slow", "slowness", "a slow", "slowly"],
+        "answer": 3,
+        "explanation": "drives 是動作，要用副詞 slowly 來講他開得怎麼樣。slow 是形容詞，只能描述人或東西，不能拿來講動作。"
+      },
+      {
+        "q": "She sings ___.",
+        "options": ["good", "goodly", "well", "very good"],
+        "answer": 2,
+        "explanation": "唱得好不好是在講動作，要用副詞 well。good 是形容詞，sings good 和 sings very good 都是很常聽到的錯句，goodly 這個字則不存在。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": ["I very like this song.", "I like this song very much.", "I like very this song.", "I am very like this song."],
+        "answer": 1,
+        "explanation": "very 後面只能接形容詞或副詞，不能直接接 like 這個動作。中文的「我很喜歡這首歌」要說成 I like this song very much.。"
+      },
+      {
+        "q": "The baby is ___.",
+        "options": ["happy", "happily", "happyly", "happiness"],
+        "answer": 0,
+        "explanation": "be 動詞後面是在描述這個寶寶的樣子，要用形容詞 happy。happily 是講動作怎麼做的，happyly 拼法不存在，happiness 是「快樂」這樣東西的名字。"
+      },
+      {
+        "q": "My mother cooks ___.",
+        "options": ["quickly", "quick", "quickness", "a quick"],
+        "answer": 0,
+        "explanation": "cooks 是動作，要用副詞 quickly。quick 是形容詞，只能拿來描述人或東西，像 a quick lunch 這種用法。"
+      }
+    ]
+  },
+  {
+    "id": "g1-07",
+    "title": "冠詞：a、an、the 什麼時候用哪個",
+    "goal": "會判斷該用 a、an 還是 the，也知道什麼時候三個都不用。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我買了一本書」、「那本書很好看」，「一本」和「那本」都放在書前面。英文的 a、an、the 就是類似的東西，叫做冠詞，放在名詞前面。a 和 an 的感覺是「隨便一個」，the 的感覺是「就是那一個」。"
+      },
+      {
+        "t": "p",
+        "text": "a 和 an 意思一樣，差別只在後面那個字開頭的聲音。開頭是 a、e、i、o、u 這幾個母音的聲音就用 an，其他用 a。念一次就知道了，an apple 比 a apple 順口很多。"
+      },
+      {
+        "t": "ex",
+        "en": "I have a book.",
+        "zh": "我有一本書。",
+        "focus": "a book"
+      },
+      {
+        "t": "ex",
+        "en": "She eats an apple.",
+        "zh": "她吃一顆蘋果。",
+        "focus": "an apple"
+      },
+      {
+        "t": "table",
+        "header": ["用哪個", "什麼時候用", "例子"],
+        "rows": [
+          ["a", "後面的字開頭不是母音的聲音", "a car、a dog、a teacher"],
+          ["an", "後面的字開頭是母音的聲音", "an apple、an egg、an hour"],
+          ["the", "你跟對方都知道是哪一個", "the car、the book"]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "the 什麼時候出現？通常是第一次提到用 a，後面再講到同一個東西就換成 the，因為對方已經知道你在說哪一個了。"
+      },
+      {
+        "t": "ex",
+        "en": "I have a dog. The dog is black.",
+        "zh": "我有一隻狗。那隻狗是黑色的。",
+        "focus": "The dog"
+      },
+      {
+        "t": "p",
+        "text": "還有一種情況是三個都不用。像 water（水）、rice（飯）、coffee（咖啡）這種沒辦法一個一個數的東西，前面不加 a 或 an，直接寫出來就好。"
+      },
+      {
+        "t": "ex",
+        "en": "I drink water every day.",
+        "zh": "我每天喝水。",
+        "focus": "water"
+      },
+      {
+        "t": "tip",
+        "text": "an hour 的 h 不發音，聽起來是母音開頭，所以用 an，判斷的時候看聲音不是看字母。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I want ___ apple.",
+        "options": ["a", "an", "some", "many"],
+        "answer": 1,
+        "explanation": "apple 的開頭是 a 的音，屬於母音，所以用 an，用 a 唸起來會卡住。some 通常接不能數的東西或兩個以上，many 後面的名詞一定要加 s，寫 many apple 是錯的。"
+      },
+      {
+        "q": "She is ___ teacher.",
+        "options": ["an", "the", "a", "two"],
+        "answer": 2,
+        "explanation": "teacher 的開頭是 t 的音，不是母音，所以用 a。這句只是在說她的職業，不是特指哪一位老師，所以不用 the；two 後面要接兩個以上的名詞。"
+      },
+      {
+        "q": "I have a car. ___ car is red.",
+        "options": ["A", "An", "Some", "The"],
+        "answer": 3,
+        "explanation": "第一句已經提過這台車了，第二句再講同一台，你跟對方都知道是哪一台，所以用 The。第一次提到的時候才用 a。"
+      },
+      {
+        "q": "I drink ___ water every day.",
+        "options": ["不用冠詞", "a", "an", "the"],
+        "answer": 0,
+        "explanation": "water 沒辦法一個一個數，這種字前面不加 a 或 an，直接寫 drink water 就好。加了 the 會變成特指某一杯水，跟每天喝水的意思不一樣。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": ["She is a English teacher.", "She is an English teacher.", "She is English teacher.", "She is a English teachers."],
+        "answer": 1,
+        "explanation": "English 的開頭是 e 的音，是母音，所以用 an。第三句少了冠詞，第四句只有一個人卻用了 teachers。"
+      }
+    ]
+  },
+  {
+    "id": "g1-08",
+    "title": "介系詞：in、on、at 怎麼分",
+    "goal": "會用 in、on、at 說地點和時間，知道這三個字各自搭配什麼。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「在房間裡」、「在桌上」、「在門口」，同樣一個「在」，後面接的東西不一樣。英文用 in、on、at 三個字來分，這種字叫介系詞。in 是在某個空間裡面，on 是貼在表面上，at 是在某一個點。"
+      },
+      {
+        "t": "ex",
+        "en": "The cat is in the box.",
+        "zh": "貓在箱子裡。",
+        "focus": "in"
+      },
+      {
+        "t": "ex",
+        "en": "The book is on the table.",
+        "zh": "書在桌上。",
+        "focus": "on"
+      },
+      {
+        "t": "ex",
+        "en": "We meet at the bus stop.",
+        "zh": "我們在公車站碰面。",
+        "focus": "at"
+      },
+      {
+        "t": "table",
+        "header": ["字", "感覺", "例子"],
+        "rows": [
+          ["in", "在某個空間裡面", "in the room、in Taipei"],
+          ["on", "貼在某個表面上", "on the table、on the wall"],
+          ["at", "在某一個點", "at home、at the bus stop"]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "同樣這三個字也用在時間上，邏輯很像：範圍大的用 in，某一天用 on，某個時刻用 at。想成範圍由大到小就好記。"
+      },
+      {
+        "t": "ex",
+        "en": "I get up at seven.",
+        "zh": "我七點起床。",
+        "focus": "at"
+      },
+      {
+        "t": "ex",
+        "en": "We have class on Monday.",
+        "zh": "我們星期一有課。",
+        "focus": "on"
+      },
+      {
+        "t": "table",
+        "header": ["字", "用在什麼時間", "例子"],
+        "rows": [
+          ["in", "年、月、季節、早上下午", "in 2020、in May、in the morning"],
+          ["on", "星期幾、某一天", "on Monday、on May 5"],
+          ["at", "幾點鐘，還有 night", "at seven、at night"]
+        ]
+      },
+      {
+        "t": "tip",
+        "text": "早上是 in the morning，晚上卻是 at night，這個不合規則，直接背起來比較快。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "The keys are ___ the table.",
+        "options": ["in", "on", "at", "to"],
+        "answer": 1,
+        "explanation": "鑰匙是放在桌子的表面上，這種接觸到表面的情況用 on。寫 in the table 會變成在桌子的內部，意思就跑掉了。"
+      },
+      {
+        "q": "I live ___ Taipei.",
+        "options": ["at", "on", "in", "to"],
+        "answer": 2,
+        "explanation": "城市是一個範圍很大的空間，住在裡面用 in。at 是指某一個點，像 at the bus stop 那種小範圍。"
+      },
+      {
+        "q": "The class starts ___ nine.",
+        "options": ["at", "in", "on", "to"],
+        "answer": 0,
+        "explanation": "九點是一個時刻，用 at。in 用在年、月這種大範圍，on 用在某一天。"
+      },
+      {
+        "q": "My birthday is ___ May.",
+        "options": ["on", "at", "to", "in"],
+        "answer": 3,
+        "explanation": "只講到月份，範圍比較大，用 in。如果講到某月某日，像 on May 5，那就要換成 on。"
+      },
+      {
+        "q": "We have a test ___ Monday.",
+        "options": ["in", "at", "on", "to"],
+        "answer": 2,
+        "explanation": "星期幾是某一天，用 on。in 用在月份和年份，at 用在幾點鐘。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": ["I get up in seven.", "I get up on seven.", "I get up seven.", "I get up at seven."],
+        "answer": 3,
+        "explanation": "七點是一個時刻，要用 at seven。時間前面的介系詞不能省略，直接寫 get up seven 是照中文順序搬過來的錯句。"
+      }
+    ]
+  },
+  {
+    "id": "g1-09",
+    "title": "句子的骨架：主詞加動詞",
+    "goal": "會判斷一句英文完不完整，知道每一句話都要有主詞和動詞。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我吃飯」、「鳥飛」，一定會有「誰」跟「做什麼」。英文完全一樣。做動作的那個人或東西叫主詞，前面幾個單元我一直說的「主角」，正式名稱就是主詞；動作那個字就是動詞。一句完整的英文，這兩樣缺一不可。"
+      },
+      {
+        "t": "ex",
+        "en": "Birds fly.",
+        "zh": "鳥會飛。",
+        "focus": "Birds"
+      },
+      {
+        "t": "ex",
+        "en": "The baby cries every night.",
+        "zh": "寶寶每天晚上都哭。",
+        "focus": "cries"
+      },
+      {
+        "t": "p",
+        "text": "只有主詞沒有動詞不算句子。中文可以只說「很累」，對方聽得懂；英文不行，一定要寫 I am tired.，把主詞 I 跟動詞 am 都放進去。"
+      },
+      {
+        "t": "ex",
+        "en": "I am tired.",
+        "zh": "我很累。",
+        "focus": "am"
+      },
+      {
+        "t": "table",
+        "header": ["主詞（誰）", "動詞（做什麼）", "整句"],
+        "rows": [
+          ["Birds", "fly", "Birds fly."],
+          ["The baby", "cries", "The baby cries."],
+          ["I", "am", "I am tired."]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "主詞不一定只有一個字。my sister、the little dog 這種一小串字也可以當主詞，因為整串合起來就是在講「誰」。"
+      },
+      {
+        "t": "ex",
+        "en": "The little dog runs fast.",
+        "zh": "那隻小狗跑得很快。",
+        "focus": "The little dog"
+      },
+      {
+        "t": "p",
+        "text": "中文很常省略主詞，像「吃飯了嗎？」沒有講是誰。英文不能這樣省，一定要把人或東西寫出來。"
+      },
+      {
+        "t": "tip",
+        "text": "寫完一句話問自己兩件事，誰、做什麼，兩個都答得出來才算完整。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "下面哪一個是完整的句子？",
+        "options": ["The baby cries.", "Very happy.", "In the room.", "My mother and my father."],
+        "answer": 0,
+        "explanation": "The baby 是主詞，cries 是動詞，誰跟做什麼都有，所以完整。Very happy 少了主詞和 be 動詞，In the room 只講了地點，My mother and my father 只有主詞沒有動詞。"
+      },
+      {
+        "q": "___ runs fast.",
+        "options": ["Run", "Runs", "My brother", "Fast"],
+        "answer": 2,
+        "explanation": "空格在句子最前面，要放主詞，My brother 就是在講誰，後面的 runs 才是動詞。Run 和 Runs 都是動詞，放進去會變成一句話有兩個動詞。"
+      },
+      {
+        "q": "My father ___.",
+        "options": ["is tired", "tired", "very tired", "tiredly"],
+        "answer": 0,
+        "explanation": "這句少了動詞，要補上 be 動詞才完整，寫成 My father is tired.。中文說「我爸爸很累」不用「是」，英文一定要有 is。"
+      },
+      {
+        "q": "The little dog sleeps. 這句話的主詞是哪一部分？",
+        "options": ["sleeps", "little", "dog sleeps", "The little dog"],
+        "answer": 3,
+        "explanation": "主詞是在講「誰」，這裡是那隻小狗，整串 The little dog 都算。sleeps 是動詞，little 只是描述樣子的一個字。"
+      },
+      {
+        "q": "下面哪一句不完整？",
+        "options": ["She sings.", "Birds fly.", "The teacher is busy.", "Is very hot today."],
+        "answer": 3,
+        "explanation": "Is very hot today 少了主詞，要寫成 It is very hot today.。英文講天氣和時間習慣用 it 當主詞，不能像中文那樣省略。"
+      }
+    ]
+  },
+  {
+    "id": "g1-10",
+    "title": "加上受詞：主詞加動詞加受詞",
+    "goal": "會寫出 I like coffee 這種三段式的句子，知道受詞是動作影響到的那個人或東西。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我喜歡咖啡」，「我」是主詞，「喜歡」是動詞，「咖啡」是被喜歡的那樣東西。英文的順序一模一樣：I like coffee.。動詞後面那個被影響到的人或東西叫受詞。"
+      },
+      {
+        "t": "ex",
+        "en": "I like coffee.",
+        "zh": "我喜歡咖啡。",
+        "focus": "coffee"
+      },
+      {
+        "t": "ex",
+        "en": "She eats an apple.",
+        "zh": "她吃一顆蘋果。",
+        "focus": "an apple"
+      },
+      {
+        "t": "table",
+        "header": ["主詞", "動詞", "受詞", "中文"],
+        "rows": [
+          ["I", "like", "coffee", "我喜歡咖啡。"],
+          ["She", "eats", "an apple", "她吃一顆蘋果。"],
+          ["We", "watch", "TV", "我們看電視。"]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "不是每個動詞後面都要有受詞。像 run（跑）、sleep（睡覺）這種動作，本身就講得完，後面不用再接東西。要不要受詞是看動詞本身，多讀幾句就會有感覺。"
+      },
+      {
+        "t": "ex",
+        "en": "He runs every morning.",
+        "zh": "他每天早上跑步。",
+        "focus": "runs"
+      },
+      {
+        "t": "p",
+        "text": "如果受詞是人，而且用代名詞來講，要用第二個單元表格右邊那一排，也就是 me、him、her、us、them，這一排叫受格。不能寫 I love she.，要寫 I love her.。"
+      },
+      {
+        "t": "ex",
+        "en": "I love her.",
+        "zh": "我愛她。",
+        "focus": "her"
+      },
+      {
+        "t": "ex",
+        "en": "She helps me.",
+        "zh": "她幫我。",
+        "focus": "me"
+      },
+      {
+        "t": "tip",
+        "text": "中文可以說「咖啡我喜歡」，英文不能這樣調換，主詞在前、動詞在中間、受詞在後面，順序是固定的。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I like ___.",
+        "options": ["coffee", "drink", "eat", "very"],
+        "answer": 0,
+        "explanation": "like 後面要接被喜歡的東西，也就是受詞，coffee 是名詞可以放。drink 和 eat 都是動詞，句子裡已經有 like 了，不能再放一個動詞，中文說「我喜歡喝咖啡」直接翻成 I like drink coffee 就是這樣來的。very 是加強語氣的字，不能單獨當受詞。"
+      },
+      {
+        "q": "下面哪一句順序是對的？",
+        "options": ["Coffee I like.", "I coffee like.", "Like I coffee.", "I like coffee."],
+        "answer": 3,
+        "explanation": "英文固定是主詞、動詞、受詞的順序。中文可以說「咖啡我喜歡」把咖啡搬到最前面，英文不行。"
+      },
+      {
+        "q": "She helps ___.",
+        "options": ["I", "me", "my", "mine"],
+        "answer": 1,
+        "explanation": "幫忙這個動作落在我身上，受詞要用 me。I 是自己當主詞時才用，my 是「我的」後面還要接名詞，mine 是「我的東西」，這裡都不通。"
+      },
+      {
+        "q": "We watch ___ every night.",
+        "options": ["TV", "to TV", "on TV", "TV is"],
+        "answer": 0,
+        "explanation": "watch 後面直接接受詞就好，不用再加別的字。中文說「看電視」也是動作後面直接接東西，寫成 watch to TV 是多加的。"
+      },
+      {
+        "q": "My brother eats rice. 這句話的受詞是哪一個字？",
+        "options": ["My brother", "eats", "brother", "rice"],
+        "answer": 3,
+        "explanation": "受詞是動作影響到的那樣東西，被吃掉的是 rice。My brother 是主詞，eats 是動詞。"
+      },
+      {
+        "q": "He loves ___.",
+        "options": ["she", "her", "hers", "she is"],
+        "answer": 1,
+        "explanation": "動作落在她身上，要用受格 her。she 是她當主詞時才用的形式，寫成 He loves she. 是很常見的錯。"
+      }
+    ]
+  }
+]

@@ -350,6 +350,43 @@ if ed or ep or en_ or esh:
     scan_simplified({'d': ed, 'p': ep, 'n': en_, 's': esh}, 'ear')
     ear = {'dictation': ed, 'pairs': ep, 'numbers': en_, 'shadow': esh}
 
+# ---------- 文法基礎 ----------
+GX_KINDS = {'p', 'ex', 'table', 'tip'}
+gx = load_kind('grammar_s*.json', 'grammar')
+for u in gx:
+    w = f"grammar {u.get('id','?')}"
+    if need(u, ['id', 'title', 'goal', 'lesson', 'quiz'], w):
+        if not re.match(r'^g[1-4]-\d\d$', str(u['id'])):
+            errors.append(f'{w}: id 需為 g1-01 格式')
+        n_ex = 0
+        for bi, b in enumerate(u['lesson']):
+            bw = f'{w} 講解{bi+1}'
+            t = b.get('t')
+            if t not in GX_KINDS:
+                errors.append(f'{bw}: 未知類型 t={t!r}(可用:{sorted(GX_KINDS)})')
+            elif t in ('p', 'tip') and not b.get('text'):
+                errors.append(f'{bw}({t}): 缺 text')
+            elif t == 'ex':
+                n_ex += 1
+                if not (b.get('en') and b.get('zh')):
+                    errors.append(f'{bw}: ex 缺 en/zh')
+                elif b.get('focus') and b['focus'] not in b['en']:
+                    errors.append(f'{bw}: focus {b["focus"]!r} 不在 en 裡')
+            elif t == 'table':
+                hdr, rows = b.get('header', []), b.get('rows', [])
+                if not hdr or not rows:
+                    errors.append(f'{bw}: table 缺 header/rows')
+                elif any(len(r) != len(hdr) for r in rows):
+                    errors.append(f'{bw}: 表格欄數不一')
+        if n_ex < 2:
+            warnings.append(f'{w}: 例句僅 {n_ex} 個(預期至少 2)')
+        if not (3 <= len(u['quiz']) <= 8):
+            warnings.append(f'{w}: 題數 {len(u["quiz"])}(預期 4-6)')
+        for qi, q in enumerate(u['quiz']):
+            need(q, ['q', 'options', 'explanation'], f'{w} Q{qi+1}')
+            check_options(q, f'{w} Q{qi+1}')
+    scan_simplified(u, w)
+
 # ---------- 片語庫 ----------
 phrases = load_kind('phrases_b*.json', 'phrases')
 for p_ in phrases:
@@ -380,7 +417,7 @@ def write_js(fname, varname, data):
     print(f'  寫出 {fname}')
 
 print('=== 驗證結果 ===')
-print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字 | 檢測卷: {n_diag} 題')
+print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字 | 檢測卷: {n_diag} 題 | 文法: {len(gx)} 單元')
 print(f'Part 5 答案分布: {dict(sorted(dist5.items()))}')
 if errors:
     print(f'\n-- 硬錯誤 {len(errors)} 筆 --')
@@ -408,4 +445,6 @@ if ear:
     write_js('ear.js', 'ear', ear)
 if phrases:
     write_js('phrases.js', 'phrases', phrases)
+if gx:
+    write_js('grammar.js', 'grammar', gx)
 print('完成。')

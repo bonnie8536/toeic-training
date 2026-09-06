@@ -609,6 +609,20 @@ button { font-family: var(--font); cursor: pointer; }
 .ps-coupon-main { font-weight: 700; font-size: 15.5px; color: var(--primary-dark); }
 .ps-coupon-line { font-size: 12.5px; color: var(--ink-light); margin-top: 3px; }
 
+/* 文法基礎 */
+.gx-goal { font-size: 14.5px; color: var(--ink-light); margin: -6px 0 16px; }
+.gx-p { margin: 10px 0; line-height: 1.9; font-size: 15.5px; }
+.gx-ex { border: 1px solid var(--line); border-left: 3px solid var(--primary); border-radius: var(--radius); background: #fff; padding: 10px 16px; margin: 10px 0; }
+.gx-ex-en { font-size: 15.5px; }
+.gx-ex-zh { font-size: 13.5px; color: var(--ink-light); margin-top: 2px; }
+.gx-focus { background: var(--highlight); border-radius: 3px; padding: 0 2px; }
+.gx-table { border-collapse: collapse; margin: 12px 0; font-size: 14.5px; background: #fff; }
+.gx-table th, .gx-table td { border: 1px solid var(--line); padding: 6px 14px; text-align: left; }
+.gx-table th { background: var(--bg-soft); }
+.gx-tip { background: var(--bg-soft); border-radius: var(--radius); padding: 10px 14px; font-size: 14px; margin: 10px 0; line-height: 1.75; }
+.gx-tip b { margin-right: 4px; }
+.gx-unit-done { color: var(--ok); font-weight: 700; }
+
 /* 自訂題庫編輯 */
 .bank-word { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); padding: 7px 2px; font-size: 14.5px; }
 .bank-word-main { display: flex; align-items: center; gap: 10px; flex: 1; cursor: pointer; min-width: 0; }

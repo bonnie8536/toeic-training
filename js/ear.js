@@ -185,16 +185,35 @@
         if (running) return;
         running = true;
         startBtn.disabled = true;
+        /* 在使用者點擊的手勢內先解鎖中文音檔(否則稍後 zh.play() 會被瀏覽器自動播放限制擋下,卡在中文確認) */
+        if (!zh._unlocked) {
+          zh._unlocked = true;
+          zh.muted = true;
+          const up = zh.play();
+          if (up && up.then) up.then(() => { zh.pause(); zh.currentTime = 0; zh.muted = false; }).catch(() => { zh.muted = false; });
+          else zh.muted = false;
+        }
         const seq = [
-          () => { setStage('仔細聽…'); en.currentTime = 0; en.play(); en.onended = step; },
+          () => { setStage('仔細聽…'); playStage(en); },
           () => { setStage('換你唸!', true); timer = setTimeout(step, pauseLen()); },
-          () => { setStage('再聽一次…'); en.currentTime = 0; en.play(); en.onended = step; },
+          () => { setStage('再聽一次…'); playStage(en); },
           () => { setStage('再唸一次!', true); timer = setTimeout(step, pauseLen()); },
-          () => { setStage('中文確認'); zh.play(); zh.onended = step; },
+          () => { setStage('中文確認'); playStage(zh); },
           finish,
         ];
         let i = 0;
         function step() { const fn = seq[i++]; if (fn) fn(); }
+        /* 播完/播不了/逾時都往下走,任何情況不卡關 */
+        function playStage(a) {
+          let moved = false;
+          const go = () => { if (!moved) { moved = true; step(); } };
+          a.onended = go;
+          a.onerror = go;
+          try { a.currentTime = 0; } catch (e) { /* 尚未載入 */ }
+          const p = a.play();
+          if (p && p.catch) p.catch(() => { setStage('音檔播放失敗,直接往下'); timer = setTimeout(go, 800); });
+          timer = setTimeout(go, 20000);
+        }
         step();
       }
       function finish() {

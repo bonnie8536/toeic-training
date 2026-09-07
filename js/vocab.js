@@ -40,6 +40,12 @@
 
   const norm = s => String(s).toLowerCase().trim().replace(/\s+/g, ' ');
 
+  /* 中文答案的可接受寫法:「上傳;上載」「(使)滿意」這類拆成多個可接受變體 */
+  function zhVariants(zh) {
+    const list = String(zh).split(/[;;、,,/()()「」\s]+/).map(x => x.trim()).filter(x => x && /[一-鿿]/.test(x));
+    return list.length ? list : [String(zh).trim()];
+  }
+
   /* ---------- 自訂題庫 ---------- */
   function getBanks() { return store.get('vgame_banks', []); }
   function saveBanks(banks) { store.set('vgame_banks', banks); }
@@ -85,19 +91,26 @@
       [['word', '單字'], ['phrase', '片語']].concat(banks.map(b => ['bank:' + b.id, '題庫:' + b.name]))
         .map(([v, t]) => h('option', { value: v }, t)));
     modeSel.addEventListener('change', () => { levelSel.style.display = modeSel.value === 'word' ? '' : 'none'; });
+    const dirSel = h('select', { class: 'cfg-select' },
+      [['z2e', '中翻英(打英文)'], ['e2z', '英翻中(打中文)']].map(([v, t]) => h('option', { value: v }, t)));
 
-    const bestLine = ['最佳分數:單字 ' + (best['word'] || 0) + ' · 片語 ' + (best['phrase'] || 0)]
-      .concat(banks.filter(b => best['bank:' + b.id]).map(b => b.name + ' ' + best['bank:' + b.id]))
-      .join(' · ');
+    const modeNames = { word: '單字', phrase: '片語' };
+    banks.forEach(b => { modeNames['bank:' + b.id] = b.name; });
+    const bestParts = Object.entries(best).filter(([, v]) => v).map(([k, v]) => {
+      const e2z = k.endsWith(':e2z');
+      const nm = modeNames[e2z ? k.slice(0, -4) : k];
+      return nm ? nm + (e2z ? '(英翻中)' : '') + ' ' + v : null;
+    }).filter(Boolean);
+    const bestLine = '最佳分數:' + (bestParts.length ? bestParts.join(' · ') : '還沒有紀錄');
     root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
       h('div', { class: 'part-card' },
         h('h3', null, '掉落消除'),
-        h('p', null, '中文往下掉,打出英文消除它。看不出來就看字首和字數提示。漏接的字下一場會優先出現' + (missCount ? '(目前累積 ' + missCount + ' 個)' : '') + '。'),
+        h('p', null, '單字往下掉,打出對應的翻譯消除它。中翻英看字首提示,英翻中看字數提示。漏接的字下一場會優先出現' + (missCount ? '(目前累積 ' + missCount + ' 個)' : '') + '。'),
         h('div', { class: 'p-stats' }, bestLine),
-        h('div', { class: 'cfg-row' }, modeSel, levelSel, speedSel,
+        h('div', { class: 'cfg-row' }, modeSel, dirSel, levelSel, speedSel,
           h('button', {
             class: 'btn primary',
-            onclick: () => startGame(modeSel.value, levelSel.value, speedSel.value),
+            onclick: () => startGame(modeSel.value, levelSel.value, speedSel.value, dirSel.value),
           }, '開始遊戲')))));
 
     /* 我的題庫 */
@@ -117,7 +130,7 @@
           h('div', { class: 'cfg-row' },
             h('button', {
               class: 'btn primary', disabled: playable ? null : '',
-              onclick: () => startGame('bank:' + b.id, '全部', speedSel.value),
+              onclick: () => startGame('bank:' + b.id, '全部', speedSel.value, dirSel.value),
             }, '開始練習'),
             h('button', { class: 'btn', onclick: () => renderBankEdit(b.id) }, '編輯'),
             h('button', {
@@ -252,7 +265,8 @@
   }
 
   /* ================= 掉落遊戲 ================= */
-  function startGame(mode, levelName, speedKey) {
+  function startGame(mode, levelName, speedKey, dir) {
+    dir = dir === 'e2z' ? 'e2z' : 'z2e';
     let pool, bankName = '';
     if (mode.startsWith('bank:')) {
       const bank = getBanks().find(b => 'bank:' + b.id === mode);
@@ -283,7 +297,7 @@
     const input = h('input', {
       class: 'game-input', type: 'text',
       autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false',
-      placeholder: '打出英文按 Enter',
+      placeholder: dir === 'e2z' ? '打出中文意思按 Enter' : '打出英文按 Enter',
     });
     const pauseBtn = h('button', { class: 'btn', type: 'button', onclick: togglePause }, '暫停');
 
@@ -295,7 +309,8 @@
     root.append(
       h('div', { class: 'drill-top' },
         h('h1', null, '掉落消除 ', h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' },
-          bankName ? '題庫:' + bankName : mode === 'word' ? '單字' + (levelName !== '全部' ? ' · ' + levelName : '') : '片語')),
+          (bankName ? '題庫:' + bankName : mode === 'word' ? '單字' + (levelName !== '全部' ? ' · ' + levelName : '') : '片語') +
+          ' · ' + (dir === 'e2z' ? '英翻中' : '中翻英'))),
         h('a', { href: 'vocab.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回單字訓練')),
       h('div', { class: 'game-hud' },
         h('span', null, '分數 ', scoreEl), livesEl, pauseBtn),
@@ -321,9 +336,12 @@
       if (!item) return;
       recent.push(item.answer);
       if (recent.length > 10) recent.shift();
+      /* 中翻英:中文掉下來+字首提示;英翻中:英文掉下來+中文字數提示 */
+      const shown = dir === 'e2z' ? item.answer : item.zh;
+      const hintText = dir === 'e2z' ? '◯'.repeat(zhVariants(item.zh)[0].length) : hint(item.answer);
       const el = h('div', { class: 'fall-block' },
-        h('div', { class: 'fb-zh' }, item.zh),
-        h('div', { class: 'fb-hint' }, hint(item.answer)));
+        h('div', { class: 'fb-zh' }, shown),
+        h('div', { class: 'fb-hint' }, hintText));
       field.append(el);
       const maxX = Math.max(0, field.clientWidth - el.offsetWidth - 8);
       const x = 4 + Math.random() * maxX;
@@ -367,18 +385,24 @@
     }
 
     input.addEventListener('keydown', e => {
+      /* 中文輸入法選字中的 Enter 不算送出 */
+      if (e.isComposing || e.keyCode === 229) return;
       if (e.key !== 'Enter') return;
-      const val = norm(input.value);
+      const raw = input.value.trim();
+      const val = norm(raw);
       if (!val) return;
       /* 打中最低(最危險)的那一個 */
-      const hits = blocks.filter(b => norm(b.answer) === val).sort((a, b2) => b2.y - a.y);
+      const match = dir === 'e2z'
+        ? b => raw === String(b.zh).trim() || zhVariants(b.zh).indexOf(raw) > -1
+        : b => norm(b.answer) === val;
+      const hits = blocks.filter(match).sort((a, b2) => b2.y - a.y);
       if (hits.length) {
         const b = hits[0];
         blocks = blocks.filter(x => x !== b);
         b.el.classList.add('boom');
         setTimeout(() => b.el.remove(), 260);
         combo++;
-        score += b.answer.replace(/\s/g, '').length + (combo >= 5 ? 2 : 0);
+        score += (dir === 'e2z' ? raw.length * 2 : b.answer.replace(/\s/g, '').length) + (combo >= 5 ? 2 : 0);
         scoreEl.textContent = String(score);
         /* 打對過的字從漏接池移除 */
         if (missPool[b.answer]) {
@@ -414,7 +438,7 @@
       blocks.forEach(b => b.el.remove());
       blocks = [];
       input.disabled = true;
-      const bestKey = mode;
+      const bestKey = mode + (dir === 'e2z' ? ':e2z' : '');
       const best = store.get('vgame_best', {});
       const isBest = score > (best[bestKey] || 0);
       if (isBest) {
@@ -430,7 +454,7 @@
                 h('span', { class: 'miss-en' }, m.answer), h('span', null, m.zh))))
           : h('p', null, '一個都沒漏,太強了。'),
         h('div', { class: 'drill-nav-btns', style: 'justify-content:center' },
-          h('button', { class: 'btn primary', onclick: () => startGame(mode, levelName, speedKey) }, '再玩一次'),
+          h('button', { class: 'btn primary', onclick: () => startGame(mode, levelName, speedKey, dir) }, '再玩一次'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
       field.append(overlay);
     }

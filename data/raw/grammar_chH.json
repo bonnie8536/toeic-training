@@ -1,0 +1,2210 @@
+[
+  {
+    "id": "gh-01",
+    "title": "被動語態：東西被怎麼樣了，用 be 動詞加過去分詞",
+    "goal": "學完你會判斷主詞是動作的執行者還是被處理的對象，並寫出現在和過去的被動句。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "同一件事，中文有好幾種講法。你可以說「小美打破了那個杯子」，也可以說「那個杯子被小美打破了」，甚至只講「杯子破了」，完全不提是誰弄的。中文靠語序和「被」「是⋯的」這幾個字就能換角度，英文則是把動詞整組換掉，這種換角度的講法叫被動語態。"
+      },
+      {
+        "t": "p",
+        "text": "公式只有一條：be 動詞加過去分詞。講現在的習慣或現在的狀態就用 am、is、are，講過去發生的事就用 was、were。過去分詞就是你在現在完成式看過的那一格，規則動詞加 ed，不規則動詞得記，像 break 的過去分詞是 broken、write 是 written、send 是 sent。"
+      },
+      {
+        "t": "ex",
+        "en": "Two workers clean the swimming pool every morning.",
+        "zh": "兩位工作人員每天早上打掃游泳池。",
+        "focus": "clean"
+      },
+      {
+        "t": "ex",
+        "en": "The swimming pool is cleaned every morning.",
+        "zh": "游泳池每天早上都會清理。",
+        "focus": "is cleaned"
+      },
+      {
+        "t": "p",
+        "text": "換句的做法是：原本被動作的那個東西搬到句首當主詞，動詞換成 be 加過去分詞，本來的主詞如果還想提就丟到 by 後面，不想提就整句省略。上下兩句意思一樣，差別只在你想讓誰站在句首。另外，be 動詞要跟新的主詞一致，現在的時候單數配 is、複數配 are，過去的時候單數配 was、複數配 were，過去分詞本身不會再變。"
+      },
+      {
+        "t": "ex",
+        "en": "My bike was stolen in front of the library.",
+        "zh": "我的腳踏車在圖書館前面被偷了。",
+        "focus": "was stolen"
+      },
+      {
+        "t": "ex",
+        "en": "These photos were taken in Tainan last summer.",
+        "zh": "這些照片是去年夏天在台南拍的。",
+        "focus": "were taken"
+      },
+      {
+        "t": "table",
+        "header": [
+          "時間",
+          "主動",
+          "被動"
+        ],
+        "rows": [
+          [
+            "現在",
+            "She locks the front door.",
+            "The front door is locked."
+          ],
+          [
+            "現在",
+            "They wash the buses every night.",
+            "The buses are washed every night."
+          ],
+          [
+            "過去",
+            "The rain canceled the game.",
+            "The game was canceled."
+          ],
+          [
+            "過去",
+            "My aunt made these cookies.",
+            "These cookies were made by my aunt."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "要選主動還是被動，看主詞自己會不會做這件事就好。門不會自己鎖、照片不會自己拍，所以配被動；人會，所以配主動。真正麻煩的是中文很多句子沒有「被」字也是被動的意思，像「窗戶關起來了」「飯煮好了」，聽的人自然知道有人去做。英文沒有這種彈性，只要主詞不是執行者，就一定要寫成 be 加過去分詞。"
+      },
+      {
+        "t": "tip",
+        "text": "被動一定要有 be 動詞，只寫 The window closed yesterday 或 The report written yesterday 都不算被動句。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "All the windows ___ before the shop closes.",
+        "options": [
+          "lock",
+          "are locking",
+          "are locked",
+          "locking"
+        ],
+        "answer": 2,
+        "explanation": "窗戶是被鎖的，不會自己去鎖別的東西，所以用被動 are locked。are locking 是現在進行式的主動，變成窗戶正在鎖東西；lock 是主動；只放 locking 連 be 動詞都沒有，不成句。"
+      },
+      {
+        "q": "The contract ___ by both managers last Friday.",
+        "options": [
+          "was signed",
+          "signed",
+          "is signed",
+          "were signed"
+        ],
+        "answer": 0,
+        "explanation": "contract 是被簽的，而且 last Friday 是過去，主詞單數所以用 was signed。signed 是主動過去式，變成合約自己去簽名；is signed 時間不合；were 跟單數主詞不合。"
+      },
+      {
+        "q": "These shoes ___ in Vietnam.",
+        "options": [
+          "is made",
+          "are making",
+          "made",
+          "are made"
+        ],
+        "answer": 3,
+        "explanation": "shoes 是複數而且是被製造的，用 are 加過去分詞 made。is made 主詞單複數不合；are making 會變成鞋子在製造別的東西；只寫 made 少了 be 動詞，句子會變成鞋子自己去做了什麼。"
+      },
+      {
+        "q": "My wallet ___ on the bus this morning.",
+        "options": [
+          "stole",
+          "was stolen",
+          "was stole",
+          "is stolen"
+        ],
+        "answer": 1,
+        "explanation": "皮夾是被偷的，用被動；this morning 已經過去了，所以是 was stolen。was stole 是把過去式當成過去分詞用，這是很常見的錯，steal 的過去分詞是 stolen。"
+      },
+      {
+        "q": "The kitchen floor ___ every evening.",
+        "options": [
+          "clean",
+          "is cleaning",
+          "is cleaned",
+          "cleans"
+        ],
+        "answer": 2,
+        "explanation": "地板是被拖的，用被動 is cleaned。寫 cleans 會變成地板去打掃別人；is cleaning 是地板正在打掃東西，兩個都不合常理。"
+      },
+      {
+        "q": "Our teacher ___ the test papers at the end of class.",
+        "options": [
+          "was collected",
+          "collected",
+          "is collected",
+          "were collected"
+        ],
+        "answer": 1,
+        "explanation": "這一題主詞是老師，老師會自己收考卷，是動作的執行者，所以用主動 collected。被動的 was collected 會變成老師被收走。"
+      },
+      {
+        "q": "Who ___ this cake? It's really good.",
+        "options": [
+          "was made",
+          "is made",
+          "made by",
+          "made"
+        ],
+        "answer": 3,
+        "explanation": "問的是「誰做的」，who 就是那個執行者，所以用主動 made。was made 是蛋糕被做，主詞不對；made by 後面應該接人，接 this cake 不通。"
+      },
+      {
+        "q": "The tickets ___ two weeks ago, so we can't change them now.",
+        "options": [
+          "were booked",
+          "was booked",
+          "are booked",
+          "booked"
+        ],
+        "answer": 0,
+        "explanation": "票是被訂的，要用被動；two weeks ago 是過去，主詞 tickets 是複數，所以用 were booked。was 跟複數不合，are 時間不合，booked 是主動變成票自己去訂位。"
+      }
+    ]
+  },
+  {
+    "id": "gh-02",
+    "title": "被動語態：換時態只動 be 那一格，by 大多不用寫",
+    "goal": "學完你會把被動語態套進未來式、現在完成式和助動詞句，也知道什麼時候該寫 by。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "上一課你已經會 is cleaned 和 was cleaned。好消息是被動語態沒有第二條公式，不管要講未來、講完成，還是要配 can、should、must 這些助動詞，過去分詞那一格從頭到尾都不動，只有前面 be 的部分跟著時態換樣子。"
+      },
+      {
+        "t": "p",
+        "text": "未來是 will be 加過去分詞；現在完成式是 have been 或 has been 加過去分詞；助動詞後面本來就接原形動詞，而被動的原形就是 be 加過去分詞，所以寫成 must be 加過去分詞。你會發現 be 在這些句子裡有時候是 will be、有時候是 been，那只是 be 動詞自己在變，跟被動的規則無關。"
+      },
+      {
+        "t": "ex",
+        "en": "The results will be announced next Monday.",
+        "zh": "結果下星期一會公布。",
+        "focus": "will be announced"
+      },
+      {
+        "t": "ex",
+        "en": "The package has been delivered to the wrong address.",
+        "zh": "包裹被送到錯的地址了。",
+        "focus": "has been delivered"
+      },
+      {
+        "t": "ex",
+        "en": "This form must be signed by a parent.",
+        "zh": "這張表要由家長簽名。",
+        "focus": "must be signed"
+      },
+      {
+        "t": "table",
+        "header": [
+          "時態",
+          "主動",
+          "被動"
+        ],
+        "rows": [
+          [
+            "現在簡單式",
+            "They send the bills.",
+            "The bills are sent."
+          ],
+          [
+            "過去簡單式",
+            "They sent the bills.",
+            "The bills were sent."
+          ],
+          [
+            "未來",
+            "They will send the bills.",
+            "The bills will be sent."
+          ],
+          [
+            "現在完成式",
+            "They have sent the bills.",
+            "The bills have been sent."
+          ],
+          [
+            "助動詞",
+            "They must send the bills.",
+            "The bills must be sent."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "接下來講 by。中文說「聽說昨天停電了」不會特地講是誰弄的，英文的被動句也一樣，大概八成以上都不寫 by。原因有三種：不知道是誰做的、誰做的不重要、或者講了也是廢話，像小偷被抓了當然是警察抓的，寫 by the police 反而囉唆。"
+      },
+      {
+        "t": "ex",
+        "en": "My phone was repaired in two days.",
+        "zh": "我的手機兩天就修好了。",
+        "focus": "was repaired"
+      },
+      {
+        "t": "ex",
+        "en": "This song was written by a high school student.",
+        "zh": "這首歌是一個高中生寫的。",
+        "focus": "by a high school student"
+      },
+      {
+        "t": "tip",
+        "text": "by 後面放的是做這件事的人或東西，用什麼工具做要用 with，在哪裡做要用 in 或 at，別全部塞給 by。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "The old machines will ___ next month.",
+        "options": [
+          "replace",
+          "be replaced",
+          "be replacing",
+          "replaced"
+        ],
+        "answer": 1,
+        "explanation": "機器是被換掉的，will 後面接原形，被動的原形是 be 加過去分詞，所以是 will be replaced。replace 和 be replacing 都是主動，會變成機器去換掉別的東西；will replaced 把 will 跟過去式湊在一起，英文沒有這種寫法。"
+      },
+      {
+        "q": "My laptop has ___ three times this year.",
+        "options": [
+          "repaired",
+          "been repair",
+          "was repaired",
+          "been repaired"
+        ],
+        "answer": 3,
+        "explanation": "has 後面要接過去分詞，被動的話是 been 加過去分詞，所以是 has been repaired。has repaired 是主動，會變成筆電去修別的東西；been repair 少了過去分詞的變化；has was 這種兩個動詞湊在一起的寫法不存在。"
+      },
+      {
+        "q": "This gate must ___ at all times.",
+        "options": [
+          "be locked",
+          "lock",
+          "be locking",
+          "locked"
+        ],
+        "answer": 0,
+        "explanation": "must 後面接原形動詞，被動的原形就是 be locked。lock 是主動，變成大門去鎖別人；be locking 是進行的意思，跟這裡的規定語氣不合。"
+      },
+      {
+        "q": "Dinner ___ served in ten minutes.",
+        "options": [
+          "is going",
+          "will",
+          "will be",
+          "be"
+        ],
+        "answer": 2,
+        "explanation": "後面已經有過去分詞 served，前面需要 will be 才完整。只寫 will 少了 be；is going 少了 to；單獨一個 be 沒辦法當句子的動詞。"
+      },
+      {
+        "q": "This novel was written ___ a Japanese writer.",
+        "options": [
+          "with",
+          "from",
+          "in",
+          "by"
+        ],
+        "answer": 3,
+        "explanation": "要點出是誰寫的，用 by。with 是用什麼工具，寫成 written with a pen 才對；in 通常接地點或語言，像 written in Japanese。"
+      },
+      {
+        "q": "昨天晚上那家店被搶了，可是沒有人知道是誰做的。下面哪一句最自然？",
+        "options": [
+          "The store was robbed last night.",
+          "The store was robbed by someone last night.",
+          "The store was robbed by a person last night.",
+          "The store robbed last night."
+        ],
+        "answer": 0,
+        "explanation": "不知道是誰做的時候，英文就直接不寫 by，這正是被動語態好用的地方。by someone、by a person 等於什麼都沒說，母語者不會這樣寫；最後一句少了 be 動詞，變成店去搶別人。"
+      },
+      {
+        "q": "The report ___ yet, so please wait a little longer.",
+        "options": [
+          "hasn't finished",
+          "isn't finish",
+          "hasn't been finished",
+          "doesn't finish"
+        ],
+        "answer": 2,
+        "explanation": "yet 搭配現在完成式，而報告是被完成的，所以要用完成式的被動 hasn't been finished。hasn't finished 是主動，變成報告自己還沒做完別的事；isn't finish 是 be 動詞後面直接放原形動詞，不成句；doesn't finish 沒有配合 yet 該有的完成式。"
+      },
+      {
+        "q": "The bridge ___ two years ago, and people still use it today.",
+        "options": [
+          "has been built",
+          "was built",
+          "is built",
+          "was build"
+        ],
+        "answer": 1,
+        "explanation": "two years ago 是講死的過去時間，用過去被動 was built。有明確的過去時間點就不能用現在完成式，所以 has been built 不行；was build 少了過去分詞的變化。"
+      }
+    ]
+  },
+  {
+    "id": "gh-03",
+    "title": "關係代名詞：who、which、that,把說明接在名詞後面",
+    "goal": "學完你會用 who、which、that 把兩句話併成一句，替名詞加上一段說明。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文要形容一個人，會說「昨天打電話給你的那個男生」，說明的話全部塞在「男生」前面。英文剛好相反，名詞先出來，說明的話跟在後面，中間用一個字把兩邊接起來，這個字就叫關係代名詞。要記的只有三個：講人用 who，講東西、地方或事情用 which，兩種情況都能用的是 that。"
+      },
+      {
+        "t": "ex",
+        "en": "The boy who called you last night is my cousin.",
+        "zh": "昨天晚上打電話給你的那個男生是我表弟。",
+        "focus": "who"
+      },
+      {
+        "t": "ex",
+        "en": "I like the song which was playing in the coffee shop.",
+        "zh": "我喜歡剛剛在咖啡店放的那首歌。",
+        "focus": "which"
+      },
+      {
+        "t": "ex",
+        "en": "The bus that goes to the airport leaves every ten minutes.",
+        "zh": "開往機場的那班公車每十分鐘一班。",
+        "focus": "that"
+      },
+      {
+        "t": "table",
+        "header": [
+          "前面的名詞",
+          "接哪個字",
+          "例子"
+        ],
+        "rows": [
+          [
+            "人",
+            "who，也可以用 that",
+            "the man who lives next door"
+          ],
+          [
+            "東西、動物",
+            "which，也可以用 that",
+            "the dog which barks all night"
+          ],
+          [
+            "地方、事情",
+            "which，也可以用 that",
+            "the store which opened last week"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "學這個最大的好處是可以把兩句話併成一句。本來是 I met a girl. 加上 The girl speaks Japanese. 兩句都在講同一個人，第二句重複的 the girl 就換成 who，整句接到第一句後面。"
+      },
+      {
+        "t": "ex",
+        "en": "I met a girl who speaks Japanese.",
+        "zh": "我遇到一個會說日文的女生。",
+        "focus": "who speaks Japanese"
+      },
+      {
+        "t": "p",
+        "text": "接上去以後動詞要小心。who 和 which 代替的是前面那個名詞，所以後面的動詞要跟那個名詞一致。a girl 是單數，現在簡單式就得寫成 speaks；如果前面是複數，動詞就用原形。"
+      },
+      {
+        "t": "ex",
+        "en": "We have two neighbors that own three cats.",
+        "zh": "我們有兩戶鄰居養了三隻貓。",
+        "focus": "that own"
+      },
+      {
+        "t": "tip",
+        "text": "who 只給人用，看到 the book who 或 the bus who 這種寫法就知道一定錯了。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "The woman ___ answered the phone was very friendly.",
+        "options": [
+          "who",
+          "which",
+          "where",
+          "what"
+        ],
+        "answer": 0,
+        "explanation": "woman 是人，人用 who，換成 that 也可以。which 只能接在東西後面；where 是講地點的；what 不能接在名詞後面。"
+      },
+      {
+        "q": "This is the app ___ helps me remember new words.",
+        "options": [
+          "who",
+          "whose",
+          "which",
+          "when"
+        ],
+        "answer": 2,
+        "explanation": "app 是東西，用 which 或 that。who 只給人用；whose 是「誰的」，後面要馬上接名詞；when 是講時間的。"
+      },
+      {
+        "q": "We need a driver ___ can speak English.",
+        "options": [
+          "which",
+          "who",
+          "what",
+          "where"
+        ],
+        "answer": 1,
+        "explanation": "driver 是人，用 who 或 that。which 給東西用；what 不能接在名詞後面說明它。"
+      },
+      {
+        "q": "I threw away the milk ___ smelled strange.",
+        "options": [
+          "who",
+          "what",
+          "where",
+          "that"
+        ],
+        "answer": 3,
+        "explanation": "milk 是東西，用 that 或 which。who 只給人用；where 是地點；what 接不上前面的名詞。"
+      },
+      {
+        "q": "I have a friend who ___ in Japan.",
+        "options": [
+          "live",
+          "lives",
+          "living",
+          "are living"
+        ],
+        "answer": 1,
+        "explanation": "who 代替前面的 a friend，是單數第三人稱，現在簡單式的動詞要加 s，所以是 lives。living 沒有 be 動詞不成句；are 跟單數主詞不合。"
+      },
+      {
+        "q": "My brother has a phone ___ takes really good photos.",
+        "options": [
+          "and",
+          "who",
+          "it",
+          "that"
+        ],
+        "answer": 3,
+        "explanation": "phone 是東西，用 that 或 which 接說明。and 後面要接一個有自己主詞的完整句子，takes really good photos 沒有主詞；直接放 it 是把中文「它拍照很好」搬過來，英文接說明一定要用關係代名詞；who 只給人用。"
+      },
+      {
+        "q": "I know several people ___ in that hospital.",
+        "options": [
+          "who work",
+          "who works",
+          "which work",
+          "whose work"
+        ],
+        "answer": 0,
+        "explanation": "people 是人而且是複數，用 who 加原形動詞 work。who works 是把三單的 s 加在複數主詞上；which 給東西用；whose 後面接的名詞要屬於前面那個人，這裡意思不通。"
+      },
+      {
+        "q": "下面哪一句寫對了？",
+        "options": [
+          "I have a friend who she works in a bank.",
+          "The car who I bought is red.",
+          "The man who fixed my scooter is my uncle.",
+          "The cake which very sweet was too much for me."
+        ],
+        "answer": 2,
+        "explanation": "who 已經代替 the man 當主詞了，後面直接接動詞 fixed 就好。第一句多了一個 she；第二句車是東西不能用 who；第四句 which 後面少了動詞，形容詞前面要有 be 動詞。"
+      }
+    ]
+  },
+  {
+    "id": "gh-04",
+    "title": "關係代名詞當受詞可以省略：那本我買的書",
+    "goal": "學完你會分辨關係代名詞是當主詞還是當受詞，並知道哪一種可以整個省略。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「昨天寄到的那個包裹」跟「我昨天買的那本書」，句型看起來一模一樣，說明都放在名詞前面。可是換成英文，這兩句的差別很大。第一句裡面，包裹自己就是「寄到」這個動作的主詞；第二句裡面，書是「買」這個動作的受詞。只有當受詞的那個關係代名詞可以省略。"
+      },
+      {
+        "t": "p",
+        "text": "判斷方法是看關係代名詞後面缺什麼。後面直接接動詞，像 who called me，表示它自己就是那個動作的主詞，這種不能省，省了句子會缺主詞。後面接的是「主詞加動詞」，像 that I bought，表示它是後面那個動詞的受詞，這種可以整個拿掉。"
+      },
+      {
+        "t": "ex",
+        "en": "The book that I bought yesterday is really good.",
+        "zh": "我昨天買的那本書很好看。",
+        "focus": "that I bought"
+      },
+      {
+        "t": "ex",
+        "en": "The book I bought yesterday is really good.",
+        "zh": "我昨天買的那本書很好看。",
+        "focus": "I bought"
+      },
+      {
+        "t": "p",
+        "text": "上面兩句的意思完全一樣，第二句只是把 that 拿掉。日常講話十次有九次會省，所以你聽到 The movie we saw last night was boring 的時候，不要以為少了什麼字，那是最自然的說法。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "句子",
+          "關代後面是",
+          "能不能省"
+        ],
+        "rows": [
+          [
+            "the man who called me",
+            "直接接動詞 called",
+            "不能省"
+          ],
+          [
+            "the man I called",
+            "主詞 I 加動詞 called",
+            "可以省"
+          ],
+          [
+            "the email which arrived today",
+            "直接接動詞 arrived",
+            "不能省"
+          ],
+          [
+            "the email which I sent today",
+            "主詞 I 加動詞 sent",
+            "可以省"
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "The people we met at the party were very kind.",
+        "zh": "我們在派對上認識的那些人很親切。",
+        "focus": "we met"
+      },
+      {
+        "t": "p",
+        "text": "這裡有一個台灣學生很常犯的錯。中文「我買的那本書」翻過來的時候，很多人會忍不住把「它」留著，寫成 The book I bought it is good。that 或 which 本身就已經代表那個受詞了，後面不能再放一次 it 或 them。"
+      },
+      {
+        "t": "ex",
+        "en": "This is the restaurant that my sister recommended.",
+        "zh": "這就是我姊姊推薦的那家餐廳。",
+        "focus": "that my sister recommended"
+      },
+      {
+        "t": "tip",
+        "text": "省略只發生在當受詞的時候，後面直接接動詞的那個關係代名詞一拿掉，句子就會變成沒有主詞的半句話。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "下面哪一句的 that 可以省略？",
+        "options": [
+          "The bus that goes to the mall is late.",
+          "I have a friend that lives in Japan.",
+          "The man that answered the phone was polite.",
+          "The movie that we watched last night was boring."
+        ],
+        "answer": 3,
+        "explanation": "只有最後一句的 that 後面是「主詞 we 加動詞 watched」，that 是 watched 的受詞，可以省略。其他三句的 that 後面都直接接動詞，它自己就是主詞，拿掉就缺主詞了。"
+      },
+      {
+        "q": "The woman ___ we interviewed yesterday has ten years of experience.",
+        "options": [
+          "what",
+          "that",
+          "who has",
+          "it"
+        ],
+        "answer": 1,
+        "explanation": "空格後面是 we interviewed，主詞和動詞都在，缺的是受詞，所以填 that 或 who，也可以整個省略。what 不能接在名詞後面；who has 會多出一個動詞；it 沒辦法把兩句接起來。"
+      },
+      {
+        "q": "The email ___ this morning is still in my inbox.",
+        "options": [
+          "I sent it",
+          "which I sent it",
+          "that arrived",
+          "arrived"
+        ],
+        "answer": 2,
+        "explanation": "空格後面到句尾只剩 this morning，需要有人來當 arrived 的主詞，所以用 that arrived。前兩個選項都多了一個 it；只寫 arrived 會讓一個句子出現兩個動詞卻沒有東西接起來。"
+      },
+      {
+        "q": "下面哪一句是錯的？",
+        "options": [
+          "The keys I found them are on the table.",
+          "The keys I found are on the table.",
+          "The book that he wrote is famous.",
+          "The girl who won the prize is my cousin."
+        ],
+        "answer": 0,
+        "explanation": "省略掉的 that 已經是 found 的受詞了，後面再放 them 就重複了。這是把中文「我撿到它」直接搬過來造成的錯。"
+      },
+      {
+        "q": "The restaurant ___ we tried last week has already closed.",
+        "options": [
+          "which is",
+          "that",
+          "who",
+          "what"
+        ],
+        "answer": 1,
+        "explanation": "後面是 we tried，缺的是受詞，用 that 或 which 都行，省略也可以。which is 多了一個動詞；who 給人用；what 接不上前面的名詞。"
+      },
+      {
+        "q": "Everything ___ she said turned out to be true.",
+        "options": [
+          "who",
+          "what",
+          "that",
+          "it"
+        ],
+        "answer": 2,
+        "explanation": "接在 everything 這種字後面習慣用 that，而且它是 said 的受詞。what 本身就含有「所說的事」，前面不能再放名詞；who 給人用。"
+      },
+      {
+        "q": "下面哪一句少了字？",
+        "options": [
+          "The letter I received this morning was from the bank.",
+          "The letter came this morning was from the bank.",
+          "The letter that came this morning was from the bank.",
+          "The magazine I read on the train was boring."
+        ],
+        "answer": 1,
+        "explanation": "came 前面沒有主詞，一定要補 that 或 which 才成句，這種當主詞的關係代名詞不能省。其他三句省略的都是受詞，所以沒問題。"
+      },
+      {
+        "q": "The man ___ my father works with is coming to dinner.",
+        "options": [
+          "who is",
+          "which",
+          "what",
+          "that"
+        ],
+        "answer": 3,
+        "explanation": "後面的 my father works with 已經有主詞了，所以空格是受詞的位置，用 that 或 who 都可以，整個省略也通。who is 會多一個動詞；which 給東西用。"
+      }
+    ]
+  },
+  {
+    "id": "gh-05",
+    "title": "whose、where、when:誰的、在哪裡、什麼時候",
+    "goal": "學完你會用 whose 說明東西屬於誰，用 where 和 when 接地點和時間的說明。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "who 和 which 解決了「誰做了什麼」，可是中文還會說「車子被拖吊的那位先生」「我出生的那家醫院」「我們第一次見面的那一天」。這三種說明各有自己的接續字：whose 講「誰的」，where 講地點，when 講時間。它們的位置跟 who、which 一樣，都放在要說明的名詞後面。"
+      },
+      {
+        "t": "p",
+        "text": "whose 等於中文的「他的、她的、它的」。The man whose car is red 拆開來就是「那位先生，他的車是紅的」。因為 whose 是用來說某樣東西屬於誰，所以它後面一定馬上接一個名詞，不會單獨出現。"
+      },
+      {
+        "t": "ex",
+        "en": "I have a neighbor whose dog barks all night.",
+        "zh": "我有一個鄰居，他的狗整晚叫個不停。",
+        "focus": "whose dog"
+      },
+      {
+        "t": "ex",
+        "en": "The student whose phone rang looked embarrassed.",
+        "zh": "手機響的那個學生看起來很尷尬。",
+        "focus": "whose phone"
+      },
+      {
+        "t": "p",
+        "text": "where 接在地點名詞後面，代替「在那裡」；when 接在時間名詞後面，代替「在那時候」。中文說「我工作的那家店」，英文就是 the shop where I work，說明的話一樣往後放。"
+      },
+      {
+        "t": "ex",
+        "en": "This is the hospital where I was born.",
+        "zh": "這就是我出生的那家醫院。",
+        "focus": "where"
+      },
+      {
+        "t": "ex",
+        "en": "I still remember the day when we first met.",
+        "zh": "我還記得我們第一次見面的那一天。",
+        "focus": "when"
+      },
+      {
+        "t": "table",
+        "header": [
+          "要說明的內容",
+          "用哪個字",
+          "例子"
+        ],
+        "rows": [
+          [
+            "東西屬於誰",
+            "whose 加名詞",
+            "the writer whose books I love"
+          ],
+          [
+            "在什麼地方",
+            "where",
+            "the park where we play basketball"
+          ],
+          [
+            "在什麼時候",
+            "when",
+            "the year when she moved to Taipei"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "where 有一個容易踩到的陷阱：它後面接的句子必須是完整的，主詞和受詞都不缺。the city where I live 沒問題，因為 live 後面本來就不用接受詞；可是「我喜歡的那個城市」就不能寫成 the city where I like，因為 like 缺了受詞，那個受詞正是城市本身，所以要改用 that 或 which。判斷的關鍵不是中文有沒有「地方」的意思，而是後面那句話缺不缺東西。"
+      },
+      {
+        "t": "tip",
+        "text": "whose 跟 who's 發音一樣，可是 who's 是 who is 的縮寫，後面不能接名詞，寫錯了意思就整個跑掉。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I know a girl ___ father is a pilot.",
+        "options": [
+          "who",
+          "whose",
+          "which",
+          "who's"
+        ],
+        "answer": 1,
+        "explanation": "要說「她的爸爸」，用 whose 加名詞。who 後面要直接接動詞；who's 是 who is 的縮寫，後面接名詞不通。"
+      },
+      {
+        "q": "That's the café ___ we usually meet after class.",
+        "options": [
+          "where",
+          "which",
+          "who",
+          "when"
+        ],
+        "answer": 0,
+        "explanation": "café 是地點，而且後面的 we usually meet 是完整的句子，不缺受詞，所以用 where。which 要用在後面缺東西的時候；who 只給人用；when 只給時間用。"
+      },
+      {
+        "q": "Sunday is the day ___ I do my laundry.",
+        "options": [
+          "where",
+          "which",
+          "whose",
+          "when"
+        ],
+        "answer": 3,
+        "explanation": "the day 是時間，用 when。where 只給地點用；whose 後面要接名詞說明屬於誰。"
+      },
+      {
+        "q": "The woman ___ bag was stolen called the police.",
+        "options": [
+          "who",
+          "which",
+          "whose",
+          "that"
+        ],
+        "answer": 2,
+        "explanation": "要說「她的包包」，用 whose 加名詞 bag。who 和 that 後面要直接接動詞，這裡後面接的是名詞。"
+      },
+      {
+        "q": "This is the office ___ my mother works.",
+        "options": [
+          "which",
+          "that",
+          "who",
+          "where"
+        ],
+        "answer": 3,
+        "explanation": "office 是地點，後面 my mother works 已經完整，所以用 where。用 which 或 that 的話，後面必須缺東西，像 the office which she cleans；who 只給人用。"
+      },
+      {
+        "q": "The restaurant ___ my uncle opened last year is doing well.",
+        "options": [
+          "where",
+          "when",
+          "whose",
+          "that"
+        ],
+        "answer": 3,
+        "explanation": "後面的 my uncle opened 缺了受詞，開的正是這家餐廳，所以要用 that 或 which。雖然餐廳是地方，但 where 後面必須接完整的句子，這裡不能用。"
+      },
+      {
+        "q": "I met a man ___ brother is a famous chef.",
+        "options": [
+          "whose",
+          "who",
+          "that his",
+          "which"
+        ],
+        "answer": 0,
+        "explanation": "「他的哥哥」用 whose 加名詞。that his 是把中文的「他的」直接搬過來，英文沒有這種寫法；who 後面要接動詞。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "The house who we bought is small.",
+          "The house where we live is small.",
+          "The house when we bought is small.",
+          "The house whose we live is small."
+        ],
+        "answer": 1,
+        "explanation": "房子是地點，而且 we live 是完整的句子，用 where 剛好。第一句房子是東西不能用 who；第三句 when 只給時間用；第四句 whose 後面少了名詞。"
+      }
+    ]
+  },
+  {
+    "id": "gh-06",
+    "title": "名詞子句 that:把一整句話塞進另一句裡",
+    "goal": "學完你會用 that 把一整句話當成受詞放進句子裡，也知道 that 什麼時候可以省略。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我覺得他今天不會來」，「他今天不會來」整包話是「覺得」的內容。英文也可以這樣做，把一整句話塞進另一句當受詞，中間放一個 that 當標示。這種被塞進去的句子叫名詞子句，名字聽起來嚇人，其實就是「一整句話當一個名詞在用」。"
+      },
+      {
+        "t": "ex",
+        "en": "I think that this movie is too long.",
+        "zh": "我覺得這部電影太長了。",
+        "focus": "that this movie is too long"
+      },
+      {
+        "t": "p",
+        "text": "這裡的 that 沒有任何意思，也不用翻，它只是告訴聽的人「後面是我想的內容」。日常講話幾乎都會省略，寫作的時候留著比較清楚。省不省，意思完全一樣。"
+      },
+      {
+        "t": "ex",
+        "en": "I think this movie is too long.",
+        "zh": "我覺得這部電影太長了。",
+        "focus": "this movie is too long"
+      },
+      {
+        "t": "p",
+        "text": "會這樣用的動詞都跟「想、說、知道」有關：think、know、believe、hope、say、hear、agree。有一件事一定要記住，that 後面要放的是完整的句子，主詞和動詞一個都不能少。中文可以說「我覺得很好」，英文不能寫成 I think very good，得補上主詞和動詞，寫成 I think it is very good。"
+      },
+      {
+        "t": "ex",
+        "en": "She knows that the store closes at nine.",
+        "zh": "她知道那家店九點關門。",
+        "focus": "that the store closes"
+      },
+      {
+        "t": "ex",
+        "en": "I hope you feel better soon.",
+        "zh": "希望你早點好起來。",
+        "focus": "you feel better"
+      },
+      {
+        "t": "p",
+        "text": "另一個跟中文差很多的地方是否定的位置。中文說「我覺得他不會來」，否定放在後半段；英文習慣把否定往前搬到 think 上面，講 I don't think he will come。字面上變成「我不覺得他會來」，意思其實一樣，這是英文的講話習慣，考試和口語都以這種為主。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "中文",
+          "英文習慣的講法"
+        ],
+        "rows": [
+          [
+            "我覺得他不會來",
+            "I don't think he will come."
+          ],
+          [
+            "我覺得這樣行不通",
+            "I don't think this will work."
+          ],
+          [
+            "我猜他沒收到那封信",
+            "I don't think he got the email."
+          ]
+        ]
+      },
+      {
+        "t": "tip",
+        "text": "that 後面要接完整的句子，寫 I think that very expensive 少了主詞和動詞，補成 I think that it is very expensive 才通。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I think ___ the train is late again.",
+        "options": [
+          "what",
+          "which",
+          "that",
+          "who"
+        ],
+        "answer": 2,
+        "explanation": "後面是一整句完整的話，用 that 接，省略也可以。what、which、who 都是疑問或說明名詞用的字，接在 think 後面會變成在問問題。"
+      },
+      {
+        "q": "He believes that ___.",
+        "options": [
+          "a good idea",
+          "very interesting",
+          "to work hard",
+          "the plan will work"
+        ],
+        "answer": 3,
+        "explanation": "that 後面必須是完整的句子，只有 the plan will work 有主詞也有動詞。其他三個都只是片語，缺了主詞或動詞。"
+      },
+      {
+        "q": "下面哪一句是錯的？",
+        "options": [
+          "I know you are busy.",
+          "I know that busy.",
+          "She thinks the price is too high.",
+          "They believe that he is honest."
+        ],
+        "answer": 1,
+        "explanation": "that 後面只放了一個形容詞，主詞和動詞都不見了，要寫成 I know that you are busy。其他三句該有的主詞和動詞都在，that 有沒有寫出來都可以。"
+      },
+      {
+        "q": "「我覺得他不會答應」最自然的英文是？",
+        "options": [
+          "I don't think he will agree.",
+          "I think he will not agree.",
+          "I think not he will agree.",
+          "I don't think he will not agree."
+        ],
+        "answer": 0,
+        "explanation": "英文習慣把否定往前搬到 think 上面。第二句文法上通但很少人這樣講；第三句語序錯了；第四句兩邊都否定，意思整個相反。"
+      },
+      {
+        "q": "My parents don't know ___ I changed my job last month.",
+        "options": [
+          "what",
+          "who",
+          "which",
+          "that"
+        ],
+        "answer": 3,
+        "explanation": "後面是一句肯定的敘述，用 that 接。what、who、which 用在後面是疑問的時候，像 I don't know what he wants。"
+      },
+      {
+        "q": "I don't know ___ he lives.",
+        "options": [
+          "that",
+          "where",
+          "which",
+          "what"
+        ],
+        "answer": 1,
+        "explanation": "後面的內容是一個疑問「他住哪裡」，要用疑問詞 where，這是你在間接問句學過的。that 只用在後面接一句肯定敘述的時候。"
+      },
+      {
+        "q": "He said that he ___ too tired to join us.",
+        "options": [
+          "was",
+          "is being",
+          "be",
+          "are"
+        ],
+        "answer": 0,
+        "explanation": "主要動詞 said 是過去式，後面 that 子句裡的動詞通常跟著往回退一格用 was。is being 的意思是暫時表現得怎麼樣，跟這裡不合；be 不能單獨當動詞；are 跟主詞 he 不合。"
+      },
+      {
+        "q": "「我希望你來」有兩種講法，下面哪一個是錯的？",
+        "options": [
+          "I hope you can come.",
+          "I hope that you can come.",
+          "I hope you to come.",
+          "I want you to come."
+        ],
+        "answer": 2,
+        "explanation": "hope 後面接的是一整句話，不能用「hope 人 to 原形動詞」這個句型。要用「人加 to 加原形動詞」的是 want、ask、tell 這些字。"
+      }
+    ]
+  },
+  {
+    "id": "gh-07",
+    "title": "say 和 tell:轉述別人的話，動詞要退一格",
+    "goal": "學完你會分辨 say 和 tell 的用法，並把別人的話轉述成 He said that... 的形式。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文轉述別人的話很省事：他本來說「我明天有事」，你轉述就是「他說他明天有事」，動詞完全不用改。英文有兩件事要處理，一個是選 say 還是 tell，另一個是被轉述的動詞要往回退一格。"
+      },
+      {
+        "t": "p",
+        "text": "先看 say 和 tell。say 後面直接接說話的內容，不接聽話的人；真的要提聽話的人，中間得加 to，寫成 He said to me。tell 剛好相反，後面一定先接人，再接內容。所以 He said that the meeting was over 和 He told me that the meeting was over 都對，He told that the meeting was over 就少了人。"
+      },
+      {
+        "t": "ex",
+        "en": "He said that the meeting was canceled.",
+        "zh": "他說會議取消了。",
+        "focus": "said that"
+      },
+      {
+        "t": "ex",
+        "en": "He told me that the meeting was canceled.",
+        "zh": "他跟我說會議取消了。",
+        "focus": "told me"
+      },
+      {
+        "t": "p",
+        "text": "再看時態。原話是 I am tired，你現在轉述的時候用了過去式 said，被轉述的那句話也要跟著退一格，變成 he was tired。中文完全沒有這個動作，所以這是台灣學生最容易漏掉的地方。退格的邏輯很單純：現在式退成過去式，過去式退成 had 加過去分詞，will 退成 would，can 退成 could。"
+      },
+      {
+        "t": "ex",
+        "en": "She said that she was tired.",
+        "zh": "她說她很累。",
+        "focus": "was"
+      },
+      {
+        "t": "table",
+        "header": [
+          "原話",
+          "轉述後"
+        ],
+        "rows": [
+          [
+            "I am busy.",
+            "He said he was busy."
+          ],
+          [
+            "I like this song.",
+            "She said she liked that song."
+          ],
+          [
+            "I will call you.",
+            "He said he would call me."
+          ],
+          [
+            "I can help.",
+            "She said she could help."
+          ],
+          [
+            "I finished it.",
+            "He said he had finished it."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "人稱也要跟著換。原話裡的 I 變成 he 或 she，you 變成 me，因為說話的人和聽話的人都換位子了。這一點中文也一樣，所以比較不會錯，真正要盯緊的還是動詞。"
+      },
+      {
+        "t": "ex",
+        "en": "My boss told me that I could leave early.",
+        "zh": "我老闆跟我說我可以早點走。",
+        "focus": "told me"
+      },
+      {
+        "t": "tip",
+        "text": "tell 後面漏掉人是很常見的錯，看到 He told that 就知道少了 me、us 這類的字。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "She ___ me that the shop was closed on Mondays.",
+        "options": [
+          "told",
+          "said",
+          "spoke",
+          "talked"
+        ],
+        "answer": 0,
+        "explanation": "後面直接接了人 me，只有 tell 可以這樣用。said 要寫成 said to me；spoke 和 talked 後面要接 to 才能接人，而且不能直接接內容。"
+      },
+      {
+        "q": "He ___ that he would be a little late.",
+        "options": [
+          "told",
+          "said",
+          "told to",
+          "says"
+        ],
+        "answer": 1,
+        "explanation": "後面沒有接人，直接接內容，用 said。told 後面一定要先接人；told to 是把中文「跟我說」硬翻過來；says 是現在式，跟後面的 would 時態對不上。"
+      },
+      {
+        "q": "原話是 I am hungry. 轉述成 Tom said that he ___ hungry.",
+        "options": [
+          "is",
+          "has",
+          "was",
+          "were"
+        ],
+        "answer": 2,
+        "explanation": "said 是過去式，被轉述的動詞要退一格，am 退成 was。is 沒有退格；were 跟主詞 he 不合；has 意思不通。"
+      },
+      {
+        "q": "Mary told ___ that she liked the gift.",
+        "options": [
+          "that",
+          "to me",
+          "for me",
+          "me"
+        ],
+        "answer": 3,
+        "explanation": "tell 後面直接接人，不加 to 也不加 for。加 to 是 say 的用法，兩個字剛好相反。"
+      },
+      {
+        "q": "He said he ___ call me the next day.",
+        "options": [
+          "will",
+          "would",
+          "can",
+          "is going to"
+        ],
+        "answer": 1,
+        "explanation": "原話的 will 在轉述時要退成 would。will 沒有退格；can 意思變成「能夠」；is going to 是現在式，跟 said 對不上。"
+      },
+      {
+        "q": "原話是 I can help you. 轉述成 He said he ___ help me.",
+        "options": [
+          "could",
+          "can",
+          "will",
+          "should"
+        ],
+        "answer": 0,
+        "explanation": "can 退一格是 could。can 留在原地沒有配合前面的 said；will 和 should 都換掉了原話的意思。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "He said me the answer.",
+          "He told to me the answer.",
+          "He said to the answer.",
+          "He told me the answer."
+        ],
+        "answer": 3,
+        "explanation": "tell 後面先接人再接內容，所以 told me the answer 是對的。said 不能直接接人；told 後面不加 to；第三句把 to 放錯位置，變成沒有聽話的人。"
+      },
+      {
+        "q": "My sister always says that she ___ too busy to cook.",
+        "options": [
+          "was",
+          "were",
+          "is",
+          "had been"
+        ],
+        "answer": 2,
+        "explanation": "主要動詞 says 是現在式，後面就不用退格，直接用 is。退一格只發生在主要動詞是過去式的時候，這一題不需要。"
+      }
+    ]
+  },
+  {
+    "id": "gh-08",
+    "title": "第二型條件句：If I had more time,講跟現在事實相反的話",
+    "goal": "學完你會用 If 加過去簡單式配 would，講出跟現在事實相反的假設。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「如果我是你，我就先問清楚」，講這句話的時候你心裡很清楚自己不是對方，這是一個不會成真的假設。英文碰到這種跟現在事實相反的話，會把動詞故意往回退成過去式，用時態當記號提醒對方「這不是真的」。所以句子裡出現過去式，不代表在講過去的事，要看整句的意思。"
+      },
+      {
+        "t": "p",
+        "text": "公式是 If 加主詞加過去簡單式，另外半句是主詞加 would 加原形動詞。兩半的順序對調也可以，只是這時候中間就不用逗號了。"
+      },
+      {
+        "t": "ex",
+        "en": "If I were you, I would take the earlier bus.",
+        "zh": "如果我是你，我會搭早一點的公車。",
+        "focus": "were"
+      },
+      {
+        "t": "ex",
+        "en": "If I had more time, I would learn to play the guitar.",
+        "zh": "如果我時間多一點，我會去學吉他。",
+        "focus": "had"
+      },
+      {
+        "t": "p",
+        "text": "be 動詞在這個句型裡有個特別規定：不管主詞是誰都用 were，包括 I、he、she。If I was you 在考試裡算錯，把 If I were you 這五個字當成一組記起來最快。"
+      },
+      {
+        "t": "ex",
+        "en": "If she spoke French, she would get that job.",
+        "zh": "如果她會說法文，她就能拿到那份工作。",
+        "focus": "spoke"
+      },
+      {
+        "t": "p",
+        "text": "跟真的有可能發生的情況擺在一起比就很清楚了。明天會不會下雨是真的有可能的事，這種 if 後面用現在簡單式，另外半句配 will，這是你在 if 那一課學過的。跟事實相反的時候，兩邊各往回退一格：現在簡單式退成過去簡單式，will 退成 would。"
+      },
+      {
+        "t": "ex",
+        "en": "If it rains tomorrow, we will stay home.",
+        "zh": "如果明天下雨，我們就待在家。",
+        "focus": "rains"
+      },
+      {
+        "t": "table",
+        "header": [
+          "情況",
+          "if 那半句",
+          "另外半句"
+        ],
+        "rows": [
+          [
+            "真的有可能發生",
+            "現在簡單式 rains",
+            "will 加原形 will stay"
+          ],
+          [
+            "跟現在的事實相反",
+            "過去簡單式，be 動詞用 were",
+            "would 加原形 would stay"
+          ]
+        ]
+      },
+      {
+        "t": "tip",
+        "text": "if 那半句裡面不放 will 也不放 would，寫成 If I would have money 是很常見的錯。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "If I ___ a car, I would drive you to the airport.",
+        "options": [
+          "have",
+          "will have",
+          "am having",
+          "had"
+        ],
+        "answer": 3,
+        "explanation": "另外半句用了 would，表示這是跟現在事實相反的假設，if 那邊要用過去簡單式 had。will 和 would 都不能放在 if 那半句裡。"
+      },
+      {
+        "q": "If she were here, she ___ what to do.",
+        "options": [
+          "will know",
+          "knows",
+          "would know",
+          "knew"
+        ],
+        "answer": 2,
+        "explanation": "if 那邊用了 were，表示跟事實相反，另外半句要配 would 加原形動詞。will 是給真的有可能發生的情況用的；knew 是過去式，兩半都用過去式就沒有主要句子了。"
+      },
+      {
+        "q": "If I ___ you, I wouldn't say anything.",
+        "options": [
+          "were",
+          "was",
+          "am",
+          "be"
+        ],
+        "answer": 0,
+        "explanation": "跟事實相反的假設，be 動詞一律用 were，就算主詞是 I 也一樣。If I was you 在考試裡算錯；am 是現在式，跟後面的 wouldn't 不搭。"
+      },
+      {
+        "q": "If we had a bigger kitchen, we ___ more often.",
+        "options": [
+          "will cook",
+          "would cook",
+          "cooked",
+          "cook"
+        ],
+        "answer": 1,
+        "explanation": "if 那邊用了過去式 had，另外半句要用 would 加原形動詞。cooked 是過去式，會讓整句變成在講過去發生的事，跟假設的語氣不合。"
+      },
+      {
+        "q": "If it ___ tomorrow, we will cancel the picnic.",
+        "options": [
+          "rains",
+          "rained",
+          "would rain",
+          "will rain"
+        ],
+        "answer": 0,
+        "explanation": "明天下雨是真的有可能發生的事，這種情況 if 後面用現在簡單式，另外半句才用 will。if 那半句裡不放 will，也不需要退成過去式。"
+      },
+      {
+        "q": "I'm broke this month. If I ___ enough money, I would buy that camera.",
+        "options": [
+          "will have",
+          "have",
+          "had",
+          "would have"
+        ],
+        "answer": 2,
+        "explanation": "前面已經說沒錢了，所以這是跟現在事實相反的假設，用過去簡單式 had 配 would。have 是講真的有可能的情況，跟前一句矛盾。"
+      },
+      {
+        "q": "「如果你早點睡，你早上就不會這麼累」，這是在勸人，而且做得到。哪一句最合適？",
+        "options": [
+          "If you went to bed earlier, you wouldn't be so tired.",
+          "If you go to bed earlier, you won't be so tired.",
+          "If you would go to bed earlier, you don't be tired.",
+          "If you go to bed earlier, you wouldn't be tired."
+        ],
+        "answer": 1,
+        "explanation": "早點睡是做得到的事，用現在簡單式配 will。第一句用過去式配 would，會變成在說這件事不可能發生；第三句在 if 那半句放了 would；第四句兩半的時態沒有配好。"
+      },
+      {
+        "q": "If my brother ___ how to swim, he would come to the beach with us.",
+        "options": [
+          "knows",
+          "would know",
+          "will know",
+          "knew"
+        ],
+        "answer": 3,
+        "explanation": "另外半句是 would come，表示他其實不會游泳，跟現在事實相反，所以 if 那邊用過去簡單式 knew。knows 是講真的有可能發生的情況；would 和 will 都不能出現在 if 那半句。"
+      }
+    ]
+  },
+  {
+    "id": "gh-09",
+    "title": "第三型條件句：If I had known,講當初如果怎樣就好了",
+    "goal": "學完你會用 If 加 had 加過去分詞配 would have，講出跟過去事實相反的假設。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "上一課的假設講的是現在：我現在不是你、我現在沒時間。這一課要講的是「當初如果怎樣就好了」，事情已經過去，結果也定了，怎麼想都改不了。中文會說「早知道我就不去了」「如果那天沒下雨就好了」。英文的做法一樣，把時態再往回退一格。"
+      },
+      {
+        "t": "p",
+        "text": "公式是 If 加主詞加 had 加過去分詞，另外半句是主詞加 would have 加過去分詞。前半的 had 加過去分詞就是完成式再退一格；後半的 would 後面照樣接原形，只是那個原形變成 have 加過去分詞這一整組。"
+      },
+      {
+        "t": "ex",
+        "en": "If I had known about the traffic, I would have left earlier.",
+        "zh": "早知道會塞車，我就早點出門了。",
+        "focus": "had known"
+      },
+      {
+        "t": "ex",
+        "en": "If she had studied harder, she would have passed the test.",
+        "zh": "如果她當初認真一點，就會通過考試了。",
+        "focus": "would have passed"
+      },
+      {
+        "t": "p",
+        "text": "這個句型講的都是後悔或慶幸。事情已經結束了，句子只是在想像另一種結局，現實不會因此改變。所以你看到 If she had studied harder，就知道她當初沒有認真讀，而且考試已經考完了。"
+      },
+      {
+        "t": "ex",
+        "en": "If we had booked earlier, the tickets would have been cheaper.",
+        "zh": "如果我們早點訂，票就會便宜一些。",
+        "focus": "had booked"
+      },
+      {
+        "t": "p",
+        "text": "最常見的錯是把 would 寫進 if 那半句，變成 If I would have known。規則很死：if 那邊只能放 had 加過去分詞，would 一律待在另外半句，兩邊不會同時出現 would。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "講的是",
+          "if 那半句",
+          "另外半句"
+        ],
+        "rows": [
+          [
+            "真的有可能發生",
+            "現在簡單式",
+            "will 加原形"
+          ],
+          [
+            "跟現在的事實相反",
+            "過去簡單式，be 用 were",
+            "would 加原形"
+          ],
+          [
+            "跟過去的事實相反",
+            "had 加過去分詞",
+            "would have 加過去分詞"
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "If he hadn't helped me, I would have missed the train.",
+        "zh": "要不是他幫我，我就錯過那班車了。",
+        "focus": "hadn't helped"
+      },
+      {
+        "t": "tip",
+        "text": "縮寫要看清楚，另外半句的 I'd have gone 是 I would，if 那半句的 If I'd known 才是 I had。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "If I ___ about the party, I would have come.",
+        "options": [
+          "knew",
+          "had known",
+          "would know",
+          "know"
+        ],
+        "answer": 1,
+        "explanation": "派對已經結束了，是跟過去事實相反，if 那邊用 had 加過去分詞。knew 是講跟現在相反；would 不能出現在 if 那半句。"
+      },
+      {
+        "q": "If they had left earlier, they ___ the train.",
+        "options": [
+          "would catch",
+          "would catching",
+          "would have caught",
+          "had caught"
+        ],
+        "answer": 2,
+        "explanation": "if 那邊是 had left，屬於跟過去相反，另外半句要用 would have 加過去分詞。would catch 是跟現在相反的形式；would catching 沒有這種寫法。"
+      },
+      {
+        "q": "If you had told me, I ___ you.",
+        "options": [
+          "will help",
+          "helped",
+          "would help",
+          "would have helped"
+        ],
+        "answer": 3,
+        "explanation": "兩半都要講過去，had told 配 would have helped。would help 是講現在做得到的假設，跟前半的時態對不上。"
+      },
+      {
+        "q": "If she ___ harder, she would have won the game.",
+        "options": [
+          "had practiced",
+          "practiced",
+          "would practice",
+          "has practiced"
+        ],
+        "answer": 0,
+        "explanation": "比賽已經結束了，用 had 加過去分詞。practiced 只是過去式，配不上後面的 would have；has practiced 是現在完成式，講的是到現在為止的事。"
+      },
+      {
+        "q": "下面哪一句是錯的？",
+        "options": [
+          "If I had seen him, I would have said hello.",
+          "If we had known, we would have called you.",
+          "If I would have known, I would have called you.",
+          "If he had asked, I would have helped him."
+        ],
+        "answer": 2,
+        "explanation": "if 那半句不能放 would，要寫成 If I had known。這是台灣學生最常見的錯，因為中文的「早知道」聽起來像有「會」的意思。"
+      },
+      {
+        "q": "I'm short. If I ___ taller, I would join the basketball team.",
+        "options": [
+          "were",
+          "had been",
+          "would be",
+          "am"
+        ],
+        "answer": 0,
+        "explanation": "講的是現在的身高，屬於跟現在事實相反，用過去式的 were 配 would join。had been 是講過去的事，可是身高是現在的狀態。"
+      },
+      {
+        "q": "We missed the flight. If we ___ a taxi, we would have arrived on time.",
+        "options": [
+          "take",
+          "took",
+          "would take",
+          "had taken"
+        ],
+        "answer": 3,
+        "explanation": "前面說已經錯過班機了，事情發生完了，用 had taken 配 would have arrived。took 只是單純的過去式，配不上 would have。"
+      },
+      {
+        "q": "「早知道我就不去了」的英文是哪一句？",
+        "options": [
+          "If I know it earlier, I will not go.",
+          "If I had known, I wouldn't have gone.",
+          "If I knew, I wouldn't go.",
+          "If I would know, I wouldn't have gone."
+        ],
+        "answer": 1,
+        "explanation": "已經去過了才會後悔，所以用 had known 配 wouldn't have gone。第一句整句用現在式配 will，講的是還沒發生、有可能成真的事；第三句講的是現在的假設，等於「如果我現在知道，我就不會去」；第四句在 if 那半句放了 would。"
+      }
+    ]
+  },
+  {
+    "id": "gh-10",
+    "title": "wish:真希望⋯,講心裡明白做不到的事",
+    "goal": "學完你會用 wish 講現在做不到和過去來不及的兩種遺憾，也分得出跟 hope 的差別。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「真希望我會游泳」跟「真希望我當初有去」，兩句的「希望」是同一個詞，可是講的時間不一樣：一個是現在做不到，一個是過去沒做成。英文都用 wish，靠後面的時態分這兩種，邏輯跟前面兩課的條件句完全一樣，退一格就是在說「這不是事實」。"
+      },
+      {
+        "t": "p",
+        "text": "現在做不到的事，wish 後面用過去簡單式，be 動詞一樣用 were。I wish I had a bigger room 就是我現在的房間不夠大。"
+      },
+      {
+        "t": "ex",
+        "en": "I wish I had a bigger room.",
+        "zh": "真希望我的房間大一點。",
+        "focus": "had"
+      },
+      {
+        "t": "ex",
+        "en": "I wish I were taller.",
+        "zh": "真希望我長高一點。",
+        "focus": "were"
+      },
+      {
+        "t": "p",
+        "text": "過去沒做成、現在想起來後悔的事，wish 後面用 had 加過去分詞，跟第三型條件句同一招。I wish I had studied harder 就是當初沒認真讀，現在後悔。"
+      },
+      {
+        "t": "ex",
+        "en": "I wish I had studied harder in high school.",
+        "zh": "真希望我高中的時候有認真讀書。",
+        "focus": "had studied"
+      },
+      {
+        "t": "table",
+        "header": [
+          "想講的",
+          "wish 後面用",
+          "例子"
+        ],
+        "rows": [
+          [
+            "現在做不到",
+            "過去簡單式",
+            "I wish I spoke Japanese."
+          ],
+          [
+            "現在的狀態不滿意",
+            "were",
+            "I wish it were Friday."
+          ],
+          [
+            "過去的後悔",
+            "had 加過去分詞",
+            "I wish I had said sorry."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "wish 和 hope 中文都翻成「希望」，差別在有沒有可能實現。hope 講的是還有機會成真的事，後面用現在式或未來式就好，像 I hope you feel better；wish 講的是不可能或已經來不及的事，所以才要退一格。後面要接一整句話祝福別人的時候一定用 hope，用 wish 反而變成在說「這大概不會發生」。"
+      },
+      {
+        "t": "ex",
+        "en": "I hope you have a good weekend.",
+        "zh": "希望你週末愉快。",
+        "focus": "hope"
+      },
+      {
+        "t": "tip",
+        "text": "I wish I have more time 是很常見的錯，時態要退一格寫成 I wish I had more time。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I wish I ___ how to drive.",
+        "options": [
+          "know",
+          "will know",
+          "knew",
+          "have known"
+        ],
+        "answer": 2,
+        "explanation": "現在不會開車，是做不到的事，wish 後面用過去簡單式 knew。know 沒有退格；will know 是講未來，wish 不能配未來式。"
+      },
+      {
+        "q": "She wishes she ___ at the beach right now.",
+        "options": [
+          "is",
+          "were",
+          "will be",
+          "has been"
+        ],
+        "answer": 1,
+        "explanation": "她現在人不在海邊，跟事實相反，be 動詞用 were。right now 只是點出講的是現在的狀態，不代表可以用現在式。"
+      },
+      {
+        "q": "I wish I ___ that email yesterday.",
+        "options": [
+          "hadn't sent",
+          "didn't send",
+          "don't send",
+          "wouldn't send"
+        ],
+        "answer": 0,
+        "explanation": "信昨天已經寄出去了，是過去的後悔，用 had 加過去分詞的否定 hadn't sent。didn't send 只是在講過去沒做這件事，沒有後悔的意思。"
+      },
+      {
+        "q": "I ___ you get well soon.",
+        "options": [
+          "wish",
+          "wished",
+          "am wishing",
+          "hope"
+        ],
+        "answer": 3,
+        "explanation": "祝福別人早點好起來，是還有可能實現的事，用 hope 加現在式。用 wish 的話反而暗示這件事不會發生，而且後面的時態也不對。"
+      },
+      {
+        "q": "He wishes he ___ more free time on weekends.",
+        "options": [
+          "has",
+          "will have",
+          "is having",
+          "had"
+        ],
+        "answer": 3,
+        "explanation": "他現在沒有那麼多空閒時間，wish 後面退一格用 had。has 沒有退格，是台灣學生最常寫錯的地方。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "I wish you pass the exam tomorrow.",
+          "I hope you pass the exam tomorrow.",
+          "I hope I were rich.",
+          "I wish you will come to my party."
+        ],
+        "answer": 1,
+        "explanation": "明天考試還沒考，有機會考過，用 hope 加現在式。第一句和第四句該用 hope 卻用了 wish；第三句是明知不可能的假設，該用 wish 卻用了 hope。"
+      },
+      {
+        "q": "「我當初真該去學鋼琴」的英文是？",
+        "options": [
+          "I wish I learn the piano.",
+          "I wish I learned the piano now.",
+          "I wish I had learned the piano.",
+          "I hope I learned the piano."
+        ],
+        "answer": 2,
+        "explanation": "講的是過去沒去學、現在才後悔，wish 後面用 had 加過去分詞。第一句沒有退格；第二句把過去式配上 now，講的是現在做不到，跟「當初」對不上；hope 不能拿來講已經來不及的事。"
+      },
+      {
+        "q": "If I ___ a car, I would drive there. I really wish I ___ one.",
+        "options": [
+          "had, had",
+          "have, have",
+          "had, have",
+          "have, had"
+        ],
+        "answer": 0,
+        "explanation": "兩個空格都在講跟現在事實相反的事，if 那邊配 would 要用過去式 had，wish 後面也退一格用 had。這兩個句型的退格邏輯是同一套。"
+      }
+    ]
+  },
+  {
+    "id": "gh-11",
+    "title": "使役動詞：make、let、have,叫別人去做某件事",
+    "goal": "學完你會用 make、let、have 接人再接原形動詞，並知道中間為什麼不能加 to。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我媽叫我洗碗」「老師讓我們早點走」「我請人來修冷氣」，這三句的「叫、讓、請」在英文裡分別是 make、let、have。它們有一個共同的特別之處：後面先接人，再接原形動詞，中間不加 to。這一組動詞叫使役動詞，意思就是叫別人去做某件事。"
+      },
+      {
+        "t": "p",
+        "text": "三個字的語氣不一樣。make 是強迫，對方不想做也得做；let 是允許，對方本來就想做而你放行；have 比較中性，是交代或安排，最常用在請人來提供服務的時候。"
+      },
+      {
+        "t": "ex",
+        "en": "My mother makes me wash the dishes every night.",
+        "zh": "我媽每天晚上叫我洗碗。",
+        "focus": "makes me wash"
+      },
+      {
+        "t": "ex",
+        "en": "My parents don't let me stay out late.",
+        "zh": "我爸媽不讓我在外面待到很晚。",
+        "focus": "let me stay"
+      },
+      {
+        "t": "ex",
+        "en": "I had the technician fix the air conditioner.",
+        "zh": "我請師傅來修冷氣。",
+        "focus": "had the technician fix"
+      },
+      {
+        "t": "table",
+        "header": [
+          "動詞",
+          "語氣",
+          "句型"
+        ],
+        "rows": [
+          [
+            "make",
+            "強迫、害得對方",
+            "make 人 原形動詞"
+          ],
+          [
+            "let",
+            "允許、放行",
+            "let 人 原形動詞"
+          ],
+          [
+            "have",
+            "交代、安排",
+            "have 人 原形動詞"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "最容易錯的地方是多寫一個 to。你在不定詞那一課學過 want、ask、tell 這些字後面要接 to，像 My mother wants me to wash the dishes。使役動詞剛好相反，makes me to wash 是錯的。兩組長得很像，得分開記。"
+      },
+      {
+        "t": "ex",
+        "en": "The ending of the movie made me cry.",
+        "zh": "那部電影的結局讓我哭了。",
+        "focus": "made me cry"
+      },
+      {
+        "t": "table",
+        "header": [
+          "動詞",
+          "後面接",
+          "例子"
+        ],
+        "rows": [
+          [
+            "want",
+            "人 加 to 加原形",
+            "She wants me to help."
+          ],
+          [
+            "ask",
+            "人 加 to 加原形",
+            "She asked me to help."
+          ],
+          [
+            "make",
+            "人 加原形，不加 to",
+            "She made me help."
+          ],
+          [
+            "let",
+            "人 加原形，不加 to",
+            "She let me help."
+          ]
+        ]
+      },
+      {
+        "t": "tip",
+        "text": "let 沒有 letted 這種寫法，它的過去式跟原形一樣都是 let，要靠句子裡其他的字判斷時間。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "My boss made me ___ overtime again.",
+        "options": [
+          "work",
+          "to work",
+          "working",
+          "worked"
+        ],
+        "answer": 0,
+        "explanation": "make 後面接人再接原形動詞，中間不加 to，所以是 made me work。to work 是把 want 的句型套過來，這是最常見的錯。"
+      },
+      {
+        "q": "Please let me ___ you with those bags.",
+        "options": [
+          "to help",
+          "helping",
+          "helps",
+          "help"
+        ],
+        "answer": 3,
+        "explanation": "let 後面接人再接原形動詞 help。to help 多了 to；helping 和 helps 都不是原形。"
+      },
+      {
+        "q": "I'll have the waiter ___ us the menu.",
+        "options": [
+          "to bring",
+          "bring",
+          "brings",
+          "bringing"
+        ],
+        "answer": 1,
+        "explanation": "have 在這裡是請人做事的意思，後面接人再接原形動詞 bring，不加 to，也不加 s。"
+      },
+      {
+        "q": "She wants me ___ her with the report.",
+        "options": [
+          "help",
+          "helping",
+          "to help",
+          "helps"
+        ],
+        "answer": 2,
+        "explanation": "want 不是使役動詞，後面要用「人加 to 加原形動詞」。這一題剛好跟 make、let 相反，兩組要分清楚。"
+      },
+      {
+        "q": "My father won't let me ___ his motorcycle.",
+        "options": [
+          "to ride",
+          "ride",
+          "riding",
+          "rides"
+        ],
+        "answer": 1,
+        "explanation": "let 後面接原形動詞 ride。前面的 won't 已經處理掉否定和未來了，後面的動詞不需要再變。"
+      },
+      {
+        "q": "「我爸不准我熬夜」是哪一句？",
+        "options": [
+          "My dad makes me stay up late.",
+          "My dad lets me stay up late.",
+          "My dad doesn't let me stay up late.",
+          "My dad doesn't make me stay up late."
+        ],
+        "answer": 2,
+        "explanation": "不准就是不允許，用 doesn't let。第一句是逼我熬夜；第二句是允許我熬夜；第四句是沒有逼我熬夜，三個意思都不對。"
+      },
+      {
+        "q": "The teacher told us ___ quiet, and then she made us ___ the classroom.",
+        "options": [
+          "to be, clean",
+          "be, to clean",
+          "to be, to clean",
+          "be, clean"
+        ],
+        "answer": 0,
+        "explanation": "tell 後面要加 to，所以是 told us to be；make 後面不加 to，所以是 made us clean。這一題就是在考你分不分得出這兩組。"
+      },
+      {
+        "q": "下面哪一句是錯的？",
+        "options": [
+          "She let her son play outside.",
+          "They made him apologize.",
+          "I had my brother check the email.",
+          "My mom makes me to eat vegetables."
+        ],
+        "answer": 3,
+        "explanation": "make 後面的動詞不加 to，要寫成 makes me eat。前三句分別是 let、make、have 的正確用法，後面接的都是原形動詞。"
+      }
+    ]
+  },
+  {
+    "id": "gh-12",
+    "title": "感官動詞：see 和 hear 後面接原形還是 V-ing",
+    "goal": "學完你會用 see、hear 這類動詞接原形動詞或 V-ing，並知道兩者的意思差在哪裡。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我看到他走出去」跟「我看到他正在打電話」，靠「正在」兩個字區分現場的狀態。英文用 see、hear、watch、feel 這類跟五官有關的動詞時，靠後面接原形動詞還是 V-ing 來分，不必多加字。"
+      },
+      {
+        "t": "p",
+        "text": "接原形動詞，表示你看到或聽到的是整個過程，從頭到尾都在。接 V-ing，表示你看到或聽到的只是進行到一半的那個畫面，後來怎麼樣你不知道。"
+      },
+      {
+        "t": "ex",
+        "en": "I saw him leave the building.",
+        "zh": "我看到他走出那棟大樓。",
+        "focus": "saw him leave"
+      },
+      {
+        "t": "ex",
+        "en": "I saw him waiting at the bus stop.",
+        "zh": "我看到他在公車站等車。",
+        "focus": "saw him waiting"
+      },
+      {
+        "t": "p",
+        "text": "第一句是他走出去這整件事你都看到了；第二句是你經過的那一瞬間他還在等，他等到什麼時候你並不知道。中文要多加幾個字才講得出這個差別，英文只要換一下動詞的樣子。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "句型",
+          "意思",
+          "例子"
+        ],
+        "rows": [
+          [
+            "see 人 原形動詞",
+            "整件事從頭看到尾",
+            "I saw her get on the bus."
+          ],
+          [
+            "see 人 V-ing",
+            "只看到進行中的一段",
+            "I saw her getting on the bus."
+          ],
+          [
+            "hear 人 原形動詞",
+            "整段都聽到了",
+            "I heard him sing the whole song."
+          ],
+          [
+            "hear 人 V-ing",
+            "聽到正在進行的一段",
+            "I heard him singing in the shower."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "跟使役動詞一樣，感官動詞後面接原形動詞的時候不加 to。I saw him to leave 是錯的，這也是台灣學生很常被扣分的地方。兩組動詞可以一起記：讓別人做事的和用五官感覺到的，後面都不加 to。"
+      },
+      {
+        "t": "ex",
+        "en": "We heard someone knocking on the door.",
+        "zh": "我們聽到有人在敲門。",
+        "focus": "heard someone knocking"
+      },
+      {
+        "t": "ex",
+        "en": "She felt the ground shake during the earthquake.",
+        "zh": "地震的時候她感覺到地板搖了一下。",
+        "focus": "felt the ground shake"
+      },
+      {
+        "t": "tip",
+        "text": "很多情況兩種寫法都通，只有在要強調「整件事做完」或「剛好撞見一半」的時候，才非選其中一種不可。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I heard the baby ___ all night.",
+        "options": [
+          "cried",
+          "to cry",
+          "cries",
+          "crying"
+        ],
+        "answer": 3,
+        "explanation": "all night 表示那段時間一直在哭，強調進行中的狀態，用 crying。感官動詞後面只接原形動詞或 V-ing，不加 to，也不會用過去式 cried 或三單的 cries。"
+      },
+      {
+        "q": "We saw the plane ___ off and disappear into the clouds.",
+        "options": [
+          "take",
+          "to take",
+          "takes",
+          "taken"
+        ],
+        "answer": 0,
+        "explanation": "整個起飛的過程都看到了，用原形動詞 take。see 後面不加 to；taken 是過去分詞，這裡飛機是自己起飛，不是被起飛。"
+      },
+      {
+        "q": "She watched her son ___ the whole race from start to finish.",
+        "options": [
+          "running",
+          "to run",
+          "run",
+          "runs"
+        ],
+        "answer": 2,
+        "explanation": "from start to finish 表示整場都看完了，用原形動詞 run。running 只強調進行中的一段，跟後面那句話矛盾。"
+      },
+      {
+        "q": "When I walked past the classroom, I saw the teacher ___ on the board.",
+        "options": [
+          "write",
+          "writing",
+          "to write",
+          "wrote"
+        ],
+        "answer": 1,
+        "explanation": "走過去只是一瞬間，看到的是老師正在寫的那個畫面，用 writing 最自然。用 write 會變成從頭到尾看她寫完，跟 walked past 不合。"
+      },
+      {
+        "q": "Did you hear him ___ my name just now?",
+        "options": [
+          "call",
+          "to call",
+          "called",
+          "calls"
+        ],
+        "answer": 0,
+        "explanation": "叫一聲名字是一個完整又短的動作，用原形動詞 call。hear 後面不加 to，也不用過去式，時間已經由前面的 Did 表示了。"
+      },
+      {
+        "q": "下面哪一句是錯的？",
+        "options": [
+          "I saw her cross the street.",
+          "I saw her crossing the street.",
+          "I heard someone shouting outside.",
+          "I saw him to open the door."
+        ],
+        "answer": 3,
+        "explanation": "感官動詞後面接原形動詞時不加 to，要寫成 I saw him open the door。前兩句一個強調整個過程、一個強調進行中的畫面，兩句都對。"
+      },
+      {
+        "q": "My sister made me ___ the dishes while I heard her ___ on the phone.",
+        "options": [
+          "washing, talk",
+          "wash, talking",
+          "to wash, talking",
+          "wash, to talk"
+        ],
+        "answer": 1,
+        "explanation": "make 後面接原形動詞 wash；hear 這裡強調她一直在講電話的那段時間，用 talking。兩個空格都不加 to。"
+      },
+      {
+        "q": "「我剛剛經過的時候，看到他在等人」是哪一句？",
+        "options": [
+          "I saw him wait for someone.",
+          "I see him waiting for someone.",
+          "I saw him waiting for someone.",
+          "I saw him to wait for someone."
+        ],
+        "answer": 2,
+        "explanation": "經過的那一瞬間他正在等，用 saw 加 waiting。第一句的原形會變成你看著他等完全程；第二句用了現在式，跟「剛剛」不合；第四句多了 to。"
+      }
+    ]
+  },
+  {
+    "id": "gh-13",
+    "title": "it 開頭句型：It takes 和 It's important to",
+    "goal": "學完你會用 it 開頭把長長的主詞挪到句子後面，寫出 It takes 和 It is 加形容詞的句型。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文可以說「學一種樂器很難」，主詞「學一種樂器」擺在最前面完全沒問題。英文不喜歡句首拖著一長串，習慣先丟一個 it 佔住主詞的位子，再把真正的內容搬到後面去。這個 it 沒有意思，也不能翻成「它」，它只是個佔位子的字。"
+      },
+      {
+        "t": "p",
+        "text": "最常用的有兩個句型。一個是 It is 加形容詞加 to 加原形動詞，用來評論某件事怎麼樣；另一個是 It takes 加人加時間加 to 加原形動詞，用來講做某件事要花多久。"
+      },
+      {
+        "t": "ex",
+        "en": "It is hard to learn a musical instrument.",
+        "zh": "學一種樂器很難。",
+        "focus": "It is hard to learn"
+      },
+      {
+        "t": "ex",
+        "en": "It takes me thirty minutes to get to school.",
+        "zh": "我上學要花三十分鐘。",
+        "focus": "It takes me thirty minutes"
+      },
+      {
+        "t": "p",
+        "text": "想講「對某人來說」，就在 to 前面加上 for 和那個人，寫成 It is easy for him to fix computers。這個 for 不能省，也不能換成 of 或 to。"
+      },
+      {
+        "t": "ex",
+        "en": "It is important for students to get enough sleep.",
+        "zh": "學生睡飽很重要。",
+        "focus": "for students to get"
+      },
+      {
+        "t": "table",
+        "header": [
+          "中文",
+          "英文"
+        ],
+        "rows": [
+          [
+            "準時到很重要",
+            "It is important to be on time."
+          ],
+          [
+            "我花了兩個小時做完",
+            "It took me two hours to finish it."
+          ],
+          [
+            "對他來說開車很簡單",
+            "It is easy for him to drive."
+          ],
+          [
+            "要記住這些單字不容易",
+            "It is not easy to remember these words."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "It takes 這個句型的主詞永遠是 it，人要放在 takes 後面。中文說「我花了兩個小時」，很多人直接翻成 I take two hours，英文不習慣這樣講。如果真的想讓人當主詞，要換成 spend，寫成 I spent two hours on the report。"
+      },
+      {
+        "t": "ex",
+        "en": "It took us three days to paint the whole house.",
+        "zh": "我們花了三天把整間房子漆完。",
+        "focus": "It took us three days"
+      },
+      {
+        "t": "tip",
+        "text": "開頭的 it 不能省，寫成 Is important to arrive early 就變成一個沒有主詞的句子了。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "___ is dangerous to use your phone while riding a scooter.",
+        "options": [
+          "That",
+          "There",
+          "It",
+          "This"
+        ],
+        "answer": 2,
+        "explanation": "這種句型固定用 it 佔住主詞的位子。There is 是用來講「有某樣東西存在」；that 和 this 是指前面提過的特定事物，不能拿來當佔位子的字。"
+      },
+      {
+        "q": "It takes ___ about an hour to finish the homework.",
+        "options": [
+          "for me",
+          "me",
+          "to me",
+          "my"
+        ],
+        "answer": 1,
+        "explanation": "It takes 後面直接接人，不加 for 也不加 to。加 for 是 It is 加形容詞那個句型的用法，兩個要分開記。"
+      },
+      {
+        "q": "It is difficult ___ a new language after thirty.",
+        "options": [
+          "learn",
+          "learning",
+          "learned",
+          "to learn"
+        ],
+        "answer": 3,
+        "explanation": "It is 加形容詞後面接 to 加原形動詞。learning 是動名詞，要放在句首當主詞才對，像 Learning a new language is difficult。"
+      },
+      {
+        "q": "It ___ me two hours to clean the whole house yesterday.",
+        "options": [
+          "took",
+          "takes",
+          "take",
+          "taking"
+        ],
+        "answer": 0,
+        "explanation": "yesterday 是過去，用過去式 took。takes 是現在的習慣；take 沒有配合主詞 it 加 s；taking 前面少了 be 動詞。"
+      },
+      {
+        "q": "It is important ___ children to drink enough water.",
+        "options": [
+          "to",
+          "of",
+          "that",
+          "for"
+        ],
+        "answer": 3,
+        "explanation": "要點出「對誰來說」，用 for 加那個人，後面再接 to 加原形動詞。of 和 to 都不能用在這個位置。"
+      },
+      {
+        "q": "___ are many people waiting outside, so ___ is hard to find a seat.",
+        "options": [
+          "There, it",
+          "It, there",
+          "There, there",
+          "It, it"
+        ],
+        "answer": 0,
+        "explanation": "第一格是在講「有很多人」，用 There are；第二格是評論某件事難不難，用 It is。這兩個句型長得像，用途完全不同。"
+      },
+      {
+        "q": "「我花了三個小時寫報告」是哪一句？",
+        "options": [
+          "It took me three hours writing the report.",
+          "It took me three hours to write the report.",
+          "It spends me three hours to write the report.",
+          "I am taken three hours to write the report."
+        ],
+        "answer": 1,
+        "explanation": "It takes 後面接人、時間，再接 to 加原形動詞。第一句用了 writing，這個句型後面固定接 to 加原形；spend 的主詞必須是人，不能套進 It 開頭這個句型；第四句的被動用法不通。"
+      },
+      {
+        "q": "下面哪一句是錯的？",
+        "options": [
+          "Learning English takes time.",
+          "It takes time to learn English.",
+          "Is not easy to learn English.",
+          "It is not easy to learn English."
+        ],
+        "answer": 2,
+        "explanation": "英文的句子一定要有主詞，開頭的 It 不能省略。第一句是把動名詞直接當主詞，第二句和第四句是 it 開頭的句型，三種寫法都成立。"
+      }
+    ]
+  }
+]

@@ -11,10 +11,14 @@
   }
 
   const STAGES = {
-    '1': { name: '第一階 句子的零件', desc: '認識詞性,搭出第一個句子。' },
-    '2': { name: '第二階 把句子變化', desc: '時態、否定與疑問,說出不同時間的事。' },
-    '3': { name: '第三階 加長句子', desc: '連接與修飾,把兩個意思併成一句。' },
-    '4': { name: '第四階 接軌多益', desc: '被動、關係子句與詞性判斷,直通題庫 Part 5。' },
+    a: { name: '第一章 名詞、冠詞與代名詞', desc: '英文名詞的規矩:單複數、可不可數、a/an/the 怎麼選。' },
+    b: { name: '第二章 be 動詞與現在時態', desc: '從 am/is/are 到現在簡單與進行,講「現在」的各種說法。' },
+    c: { name: '第三章 過去與完成時態', desc: '過去簡單、過去進行、現在完成,把時間軸說清楚。' },
+    d: { name: '第四章 未來與助動詞', desc: 'will、be going to,加上 can/must/should 那一家人。' },
+    e: { name: '第五章 疑問、否定與祈使', desc: '各種問法與答法:附加問句、間接問句、我也是。' },
+    f: { name: '第六章 形容詞、副詞與比較', desc: '修飾的規矩:位置、-ed/-ing、比較級與 too/enough。' },
+    g: { name: '第七章 介系詞、連接詞與子句', desc: 'in/on/at、because/if,還有 to V 跟 V-ing 怎麼選。' },
+    h: { name: '第八章 進階句型', desc: '被動、關係子句、假設語氣,長句子的骨架。' },
   };
   const stageOf = u => u.id.charAt(1);
 
@@ -29,7 +33,7 @@
     const done = store.get('grammar_done', {});
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '文法基礎'),
-      h('p', null, '從零開始,一個單元講一件事,講完馬上練。照順序走,也可以挑著補。')));
+      h('p', null, '從零到高階的文法課。一個單元講一件事,講完馬上練;照順序走,也可以挑著補。')));
 
     Object.entries(STAGES).forEach(([sk, sd]) => {
       const list = UNITS.filter(u => stageOf(u) === sk);

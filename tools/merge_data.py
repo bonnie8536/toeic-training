@@ -352,12 +352,12 @@ if ed or ep or en_ or esh:
 
 # ---------- 文法基礎 ----------
 GX_KINDS = {'p', 'ex', 'table', 'tip'}
-gx = load_kind('grammar_s*.json', 'grammar')
+gx = load_kind('grammar_ch*.json', 'grammar')
 for u in gx:
     w = f"grammar {u.get('id','?')}"
     if need(u, ['id', 'title', 'goal', 'lesson', 'quiz'], w):
-        if not re.match(r'^g[1-4]-\d\d$', str(u['id'])):
-            errors.append(f'{w}: id 需為 g1-01 格式')
+        if not re.match(r'^g[a-h]-\d\d$', str(u['id'])):
+            errors.append(f'{w}: id 需為 ga-01 格式(g+章字母a-h+編號)')
         n_ex = 0
         for bi, b in enumerate(u['lesson']):
             bw = f'{w} 講解{bi+1}'
@@ -380,8 +380,8 @@ for u in gx:
                     errors.append(f'{bw}: 表格欄數不一')
         if n_ex < 2:
             warnings.append(f'{w}: 例句僅 {n_ex} 個(預期至少 2)')
-        if not (3 <= len(u['quiz']) <= 8):
-            warnings.append(f'{w}: 題數 {len(u["quiz"])}(預期 4-6)')
+        if not (6 <= len(u['quiz']) <= 12):
+            warnings.append(f'{w}: 題數 {len(u["quiz"])}(預期 8 上下)')
         for qi, q in enumerate(u['quiz']):
             need(q, ['q', 'options', 'explanation'], f'{w} Q{qi+1}')
             check_options(q, f'{w} Q{qi+1}')

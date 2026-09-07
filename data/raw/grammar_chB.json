@@ -1,0 +1,2016 @@
+[
+  {
+    "id": "gb-01",
+    "title": "am、is、are：三種長相怎麼跟主詞配對",
+    "goal": "會照著主詞挑出 am、is、are 裡面正確的那一個，也看得懂 I'm、he's 這種縮寫。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我是學生」、「他是老師」、「他們是我的朋友」，中間那個「是」從頭到尾都長一樣，換誰來講都不用改。英文不是這樣。英文的「是」有三種長相，am、is、are，要用哪一個得看前面的主詞是誰。這三個字其實是同一個字的三種樣子，合起來叫 be 動詞。第一次碰到會覺得很麻煩，但配對的規則只有三條：主詞是 I 就配 am，這一組是死的永遠不變；主詞是 he、she、it，或任何一個人、一樣東西，配 is；主詞是 you、we、they，或兩個以上的人或東西，配 are。特別留意 you，不管是講一個人的「你」還是一群人的「你們」，英文都配 are。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "主詞",
+          "配哪一個",
+          "例句"
+        ],
+        "rows": [
+          [
+            "I",
+            "am",
+            "I am hungry."
+          ],
+          [
+            "he、she、it",
+            "is",
+            "She is my teacher."
+          ],
+          [
+            "一個人或一樣東西",
+            "is",
+            "My dog is small."
+          ],
+          [
+            "you",
+            "are",
+            "You are late."
+          ],
+          [
+            "we、they",
+            "are",
+            "We are students."
+          ],
+          [
+            "兩個以上的人或東西",
+            "are",
+            "The books are new."
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "I am hungry.",
+        "zh": "我肚子餓。",
+        "focus": "am"
+      },
+      {
+        "t": "ex",
+        "en": "My dog is small.",
+        "zh": "我的狗很小隻。",
+        "focus": "is"
+      },
+      {
+        "t": "p",
+        "text": "be 動詞後面可以接三種東西，多看幾句就會有感覺。接名詞是在講身分，像 She is a nurse.（她是護士）；接一個描述樣子的字是在講她怎麼樣，像 She is tired.（她很累）；接一個地方，是在講人或東西在哪裡，像 She is at home.（她在家）。三種都很常用，而且中間的 be 動詞都一樣照主詞配。"
+      },
+      {
+        "t": "ex",
+        "en": "My parents are at home.",
+        "zh": "我爸媽在家。",
+        "focus": "are"
+      },
+      {
+        "t": "ex",
+        "en": "The books are new.",
+        "zh": "這些書是新的。",
+        "focus": "are"
+      },
+      {
+        "t": "p",
+        "text": "講話跟傳訊息的時候，主詞和 be 動詞常常黏成一個字，中間放一個小撇號，這叫縮寫。意思跟原本完全一樣，只是比較口語，讀得懂也寫得出來就夠了。要注意 it's 是 it is 縮起來的，跟「它的」那個 its 差一個小撇號，兩個常被寫混。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "原本",
+          "縮寫",
+          "例句"
+        ],
+        "rows": [
+          [
+            "I am",
+            "I'm",
+            "I'm ready."
+          ],
+          [
+            "you are",
+            "you're",
+            "You're right."
+          ],
+          [
+            "he is",
+            "he's",
+            "He's my brother."
+          ],
+          [
+            "she is",
+            "she's",
+            "She's busy."
+          ],
+          [
+            "it is",
+            "it's",
+            "It's cold today."
+          ],
+          [
+            "we are",
+            "we're",
+            "We're at school."
+          ],
+          [
+            "they are",
+            "they're",
+            "They're my friends."
+          ]
+        ]
+      },
+      {
+        "t": "tip",
+        "text": "中文說「他很累」中間沒有「是」，英文卻一定要補上 is，寫成 He very tired. 是照中文搬過去最常見的錯。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I ___ hungry now.",
+        "options": [
+          "is",
+          "am",
+          "are",
+          "be"
+        ],
+        "answer": 1,
+        "explanation": "主詞 I 固定配 am，這一組沒有例外，背起來就好。is 是給 he、she、it 和一個人一樣東西用的，are 是給 you、we、they 用的，be 是它最原本的樣子，這個階段還不會單獨放進句子。"
+      },
+      {
+        "q": "My mother ___ a nurse.",
+        "options": [
+          "are",
+          "am",
+          "is",
+          "be"
+        ],
+        "answer": 2,
+        "explanation": "my mother 是一個人，等於 she，所以配 is。are 要兩個以上的人才用，am 只配 I。中文說「我媽媽是護士」跟英文一樣有「是」，這句反而不容易漏掉 be 動詞。"
+      },
+      {
+        "q": "You ___ my best friend.",
+        "options": [
+          "are",
+          "am",
+          "is",
+          "be"
+        ],
+        "answer": 0,
+        "explanation": "you 不管是一個人還是一群人，都配 are。很多人看到「你」只有一個人就想用 is，但 you 這個字在英文永遠配 are。"
+      },
+      {
+        "q": "She's 是哪兩個字縮起來的？",
+        "options": [
+          "She are",
+          "She am",
+          "She is",
+          "Shes"
+        ],
+        "answer": 2,
+        "explanation": "She's 是 She is 縮起來的，小撇號就代表被省略掉的那個 i。she 是一個人，不會配 are，也不會配只給 I 用的 am；Shes 少了小撇號，英文沒有這種寫法。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "He very busy today.",
+          "He are very busy today.",
+          "He am very busy today.",
+          "He is very busy today."
+        ],
+        "answer": 3,
+        "explanation": "he 配 is，而且 busy 這種描述樣子的字前面一定要有 be 動詞，句子才完整。第一句照中文「他今天很忙」直接搬過去，把 is 整個漏掉了；are 是給兩個以上的人用的；am 只配 I。"
+      },
+      {
+        "q": "Tom and Mary ___ in the same class.",
+        "options": [
+          "are",
+          "is",
+          "am",
+          "be"
+        ],
+        "answer": 0,
+        "explanation": "Tom and Mary 是兩個人，配 are。很多人只看到最靠近的 Mary 就寫 is，但決定用哪一個的是整個主詞，兩個人加起來就要用 are。"
+      },
+      {
+        "q": "___ a nice day today.",
+        "options": [
+          "Its",
+          "It's",
+          "Is",
+          "It"
+        ],
+        "answer": 1,
+        "explanation": "It's 是 It is，主詞和 be 動詞都在裡面。Its 是「它的」，沒有小撇號，後面還要接名詞；只寫 Is 少了主詞；只寫 It 少了 be 動詞，兩種都不是完整的句子。"
+      },
+      {
+        "q": "下面哪一句沒有錯？",
+        "options": [
+          "My sister and I is students.",
+          "My sister and I am students.",
+          "My sister and I are students.",
+          "My sister and I are student."
+        ],
+        "answer": 2,
+        "explanation": "「我姊姊和我」是兩個人，配 are，而且兩個人是兩個學生，student 要加 s。is 只給一個人用；am 只配 I 自己一個人；最後一句 be 動詞對了，卻忘了名詞的 s。"
+      }
+    ]
+  },
+  {
+    "id": "gb-02",
+    "title": "be 動詞的否定與疑問：加 not 跟搬到前面",
+    "goal": "會把 am、is、are 的句子改成「不是」和「是不是」，也會用短句回答。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文要說「不」很省事，「我是醫生」中間塞一個字就變成「我不是醫生」。英文碰到 be 動詞的句子也一樣好處理，把 not 放在 am、is、are 後面就完成了，不用另外找別的字進來幫忙。順序是主詞、be 動詞、not，三個位置固定，不能寫成 I not am，也不能寫成 I no am。否定也常常縮寫，而且有兩種縮法，is not 可以縮成 isn't，are not 縮成 aren't，也可以改成把主詞跟 be 動詞黏起來寫成 she's not、they're not，意思一樣。只有 am not 比較特別，沒有 amn't 這種寫法，只能寫成 I'm not。"
+      },
+      {
+        "t": "ex",
+        "en": "I am not a doctor.",
+        "zh": "我不是醫生。",
+        "focus": "am not"
+      },
+      {
+        "t": "ex",
+        "en": "She is not at home.",
+        "zh": "她不在家。",
+        "focus": "is not"
+      },
+      {
+        "t": "table",
+        "header": [
+          "原本",
+          "常見的縮寫",
+          "例句"
+        ],
+        "rows": [
+          [
+            "I am not",
+            "I'm not（沒有 amn't）",
+            "I'm not busy."
+          ],
+          [
+            "he is not",
+            "he isn't 或 he's not",
+            "He isn't a student."
+          ],
+          [
+            "it is not",
+            "it isn't 或 it's not",
+            "It isn't cold today."
+          ],
+          [
+            "you are not",
+            "you aren't 或 you're not",
+            "You aren't late."
+          ],
+          [
+            "they are not",
+            "they aren't 或 they're not",
+            "They aren't at school."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "再來是問句。中文問人家只要在句尾加一個「嗎」，「你是學生」變成「你是學生嗎」，字的順序完全沒動。英文不能這樣，英文要把 be 動詞搬到主詞前面去，句尾再加問號。搬過去以後 be 動詞要大寫，因為它變成句子的第一個字了。"
+      },
+      {
+        "t": "ex",
+        "en": "Are you a student?",
+        "zh": "你是學生嗎？",
+        "focus": "Are you"
+      },
+      {
+        "t": "ex",
+        "en": "Is your brother at home?",
+        "zh": "你哥哥在家嗎？",
+        "focus": "Is your brother"
+      },
+      {
+        "t": "p",
+        "text": "回答不用把整句話再講一遍，英文習慣用短句：Yes 加主詞加 be 動詞，或是 No 加主詞加 be 動詞加 not。回答的時候主詞要換成 he、she、it、they 這種字，人家問 Is your brother at home? 你回答的時候要說 he，不用再講一次 my brother。還有一個小地方，Yes 的回答不能縮寫，只能說 Yes, I am.，不能說 Yes, I'm.。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "問句",
+          "肯定回答",
+          "否定回答"
+        ],
+        "rows": [
+          [
+            "Are you a student?",
+            "Yes, I am.",
+            "No, I'm not."
+          ],
+          [
+            "Is she your teacher?",
+            "Yes, she is.",
+            "No, she isn't."
+          ],
+          [
+            "Are they at home?",
+            "Yes, they are.",
+            "No, they aren't."
+          ],
+          [
+            "Is it cold today?",
+            "Yes, it is.",
+            "No, it isn't."
+          ]
+        ]
+      },
+      {
+        "t": "tip",
+        "text": "不管是加 not 還是搬到句首，動的都是同一個 be 動詞，一句話裡不會突然多出第二個 be 動詞。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "She ___ a nurse. She is a teacher.",
+        "options": [
+          "isn't",
+          "aren't",
+          "amn't",
+          "no is"
+        ],
+        "answer": 0,
+        "explanation": "she 是一個人，配 is，否定就是 isn't。aren't 是給兩個以上的人用的；amn't 這個寫法在英文不存在；no is 是把中文的「不」直接搬過來，英文用的是 not 而且要放在 be 動詞後面。"
+      },
+      {
+        "q": "___ you tired?",
+        "options": [
+          "Is",
+          "Am",
+          "Be",
+          "Are"
+        ],
+        "answer": 3,
+        "explanation": "you 配 are，問句就把 Are 搬到最前面。Is 是給一個人一樣東西用的，Am 只配 I，Be 是原本的樣子不能拿來開頭問問題。"
+      },
+      {
+        "q": "They ___ not in the classroom.",
+        "options": [
+          "is",
+          "am",
+          "are",
+          "be"
+        ],
+        "answer": 2,
+        "explanation": "they 是兩個以上的人，配 are，not 放在 are 後面。加了 not 也不會改變配對的規則，該用哪個 be 動詞還是看主詞。"
+      },
+      {
+        "q": "Is Tom your brother? 最自然的否定回答是？",
+        "options": [
+          "No, he not is.",
+          "No, he isn't.",
+          "No, he no is.",
+          "No, isn't he."
+        ],
+        "answer": 1,
+        "explanation": "問句用 Is 開頭，回答就用 isn't，而且 Tom 要換成 he。not 一定跟在 be 動詞後面，不能放前面；回答的時候主詞在前、be 動詞在後，不用像問句那樣顛倒。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "I amn't ready.",
+          "I not am ready.",
+          "I'm not ready.",
+          "I am no ready."
+        ],
+        "answer": 2,
+        "explanation": "am not 沒有 amn't 這種縮寫，只能寫成 I'm not。第二句把 not 放到 be 動詞前面，順序錯了；第四句用了 no，英文否定句用的是 not。"
+      },
+      {
+        "q": "___ your parents at home?",
+        "options": [
+          "Are",
+          "Is",
+          "Am",
+          "Be"
+        ],
+        "answer": 0,
+        "explanation": "your parents 是爸爸媽媽兩個人，配 are。看到 parents 後面有 s 就知道不只一個，這時候用 Is 是把主詞看成一個人了。"
+      },
+      {
+        "q": "Are you a student? 的肯定回答是？",
+        "options": [
+          "Yes, I'm.",
+          "Yes, I am.",
+          "Yes, I do.",
+          "Yes, am I."
+        ],
+        "answer": 1,
+        "explanation": "用 Are 問就用 am 回答，主詞換成 I。Yes 的回答不能縮寫成 Yes, I'm.，這是很多人會寫的錯；Yes, am I. 順序顛倒了，回答不用倒裝。"
+      },
+      {
+        "q": "「這些書不是新的。」哪一句對？",
+        "options": [
+          "The books isn't new.",
+          "The books not are new.",
+          "The books aren't news.",
+          "The books aren't new."
+        ],
+        "answer": 3,
+        "explanation": "the books 是兩本以上，配 are，否定是 aren't，後面接描述樣子的 new。第一句沒認出主詞不只一本；第二句 not 放錯位置；第三句把 new 加了 s，這種描述樣子的字不管東西有幾個都不加 s。"
+      }
+    ]
+  },
+  {
+    "id": "gb-03",
+    "title": "there is、there are：某個地方有什麼",
+    "goal": "會用 There is 和 There are 說某個地方有什麼東西，也分得出它跟 have 的差別。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文的「有」其實在做兩件不一樣的事。「我有一本書」的有，是說這本書屬於我；「桌上有一本書」的有，是說那個位置存在這樣東西，沒有在講它是誰的。中文用同一個字，英文分成兩套講法。屬於誰用 have，這個第一章學過；某個地方存在某樣東西，英文習慣用 There is 或 There are 開頭。這裡的 there 不是「那裡」的意思，它只是句子的起頭，中文翻的時候不用把它翻出來。"
+      },
+      {
+        "t": "ex",
+        "en": "There is a book on the table.",
+        "zh": "桌上有一本書。",
+        "focus": "There is"
+      },
+      {
+        "t": "p",
+        "text": "用 is 還是 are，看的是後面那樣東西有幾個，跟 there 沒有關係。只有一個用 There is，兩個以上用 There are。像 water、milk、rice 這種沒辦法一個一個數的東西，也是用 There is。"
+      },
+      {
+        "t": "ex",
+        "en": "There are three chairs in the room.",
+        "zh": "房間裡有三張椅子。",
+        "focus": "There are"
+      },
+      {
+        "t": "table",
+        "header": [
+          "後面那樣東西",
+          "怎麼寫",
+          "例句"
+        ],
+        "rows": [
+          [
+            "只有一個",
+            "There is",
+            "There is a dog in the park."
+          ],
+          [
+            "兩個以上",
+            "There are",
+            "There are two dogs in the park."
+          ],
+          [
+            "沒辦法數的東西",
+            "There is",
+            "There is milk in the fridge."
+          ],
+          [
+            "問句，一個",
+            "Is there",
+            "Is there a bank near here?"
+          ],
+          [
+            "問句，兩個以上",
+            "Are there",
+            "Are there any students in the room?"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "要說「沒有」，做法跟上一課完全一樣，在 is 或 are 後面加 not，口語幾乎都縮成 isn't、aren't。"
+      },
+      {
+        "t": "ex",
+        "en": "There isn't a bank near here.",
+        "zh": "這附近沒有銀行。",
+        "focus": "isn't"
+      },
+      {
+        "t": "p",
+        "text": "要問「有沒有」也一樣，把 is 或 are 搬到 there 前面就變成問句了。回答的時候主詞就用 there，說 Yes, there is. 或 No, there isn't.，不要換成 it。"
+      },
+      {
+        "t": "ex",
+        "en": "Are there any chairs in the room?",
+        "zh": "房間裡有椅子嗎？",
+        "focus": "Are there"
+      },
+      {
+        "t": "tip",
+        "text": "英文沒有 there have 這種說法，想講「某個地方有」的時候，動詞一定是 be 動詞不是 have。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "___ a cat under the chair.",
+        "options": [
+          "There are",
+          "There is",
+          "There have",
+          "It has"
+        ],
+        "answer": 1,
+        "explanation": "a cat 只有一隻，用 There is。There are 要後面兩個以上才用；英文沒有 there have 這種說法；It has 是在講某個東西擁有什麼，跟「椅子底下有一隻貓」的意思不一樣。"
+      },
+      {
+        "q": "There ___ many students in the classroom.",
+        "options": [
+          "is",
+          "have",
+          "has",
+          "are"
+        ],
+        "answer": 3,
+        "explanation": "many students 是很多學生，兩個以上要用 are。決定用 is 還是 are 的是後面那個名詞，不是前面的 there；have 和 has 都不能接在 there 後面。"
+      },
+      {
+        "q": "___ there any milk in the fridge?",
+        "options": [
+          "Is",
+          "Are",
+          "Have",
+          "Be"
+        ],
+        "answer": 0,
+        "explanation": "milk 沒辦法一個一個數，用 is，問句就把 Is 搬到 there 前面。Are 要後面是兩個以上的東西才用；Have 和 Be 都不能這樣開頭問。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "There have two windows in my room.",
+          "There is two windows in my room.",
+          "There are two windows in my room.",
+          "There two windows are in my room."
+        ],
+        "answer": 2,
+        "explanation": "two windows 是兩扇，用 are，而且 are 要緊接在 there 後面。第一句用了英文沒有的 there have；第二句沒有跟著後面的名詞改；第四句把 are 移到名詞後面，順序不對。"
+      },
+      {
+        "q": "There ___ a lot of water in the bottle.",
+        "options": [
+          "are",
+          "have",
+          "many",
+          "is"
+        ],
+        "answer": 3,
+        "explanation": "water 是沒辦法一個一個數的東西，用 is。are 要後面數得出兩個以上才用；have 不能接在 there 後面；many 是拿來接數得出來的東西，不能放在這個位置當動詞。"
+      },
+      {
+        "q": "「我有兩個哥哥。」哪一句對？",
+        "options": [
+          "There are two brothers.",
+          "I have two brothers.",
+          "There is two brothers of me.",
+          "I am two brothers."
+        ],
+        "answer": 1,
+        "explanation": "這句在講哥哥是我的，屬於誰要用 have。There are two brothers. 只是說某個地方有兩個哥哥，沒有講是誰的；第四句用 be 動詞會變成「我是兩個哥哥」，意思整個跑掉。"
+      },
+      {
+        "q": "「教室裡沒有學生。」哪一句對？",
+        "options": [
+          "There isn't any students in the classroom.",
+          "There haven't students in the classroom.",
+          "There aren't any students in the classroom.",
+          "There no students in the classroom."
+        ],
+        "answer": 2,
+        "explanation": "students 是兩個以上，用 aren't。第一句沒有跟著後面的名詞改成 aren't；第二句用了英文沒有的 there have；第四句只放了 no，句子裡少了 be 動詞。"
+      },
+      {
+        "q": "Is there a post office near here? 的否定回答是？",
+        "options": [
+          "No, it isn't.",
+          "No, there aren't.",
+          "No, there hasn't.",
+          "No, there isn't."
+        ],
+        "answer": 3,
+        "explanation": "問句用 Is there 開頭，回答就照樣用 there is 的否定，寫成 No, there isn't.。回答的時候不要把 there 換成 it；a post office 只有一間，也不會用 aren't。"
+      }
+    ]
+  },
+  {
+    "id": "gb-04",
+    "title": "現在簡單式：講習慣和一直都對的事",
+    "goal": "會用現在簡單式說出自己平常做的事，還有那些本來就成立的事實。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我每天七點吃早餐」，動詞「吃」不管講的是今天、每天還是明天，長相都一樣，是「每天」這兩個字在告訴你時間。英文的做法不一樣，英文的動詞自己會報時間。動詞最原本、在字典裡查得到的那個樣子，像 eat、go、work，大家習慣叫它動詞原形。拿動詞原形來講「平常就是這樣」的事，這種用法就叫現在簡單式。名字裡有「現在」，但它講的其實不是此刻正在做，而是一段長長的時間裡都成立的事。"
+      },
+      {
+        "t": "p",
+        "text": "會用到現在簡單式的場合有三種。第一種是你固定會做、一直重複在做的事，今天做、上禮拜做、下禮拜還會做。第二種是本來就是這樣、不會因為今天星期幾而改變的事實。第三種是長期不變的狀態，像你住在哪裡、在哪裡上班，這種一時之間不會改的事。"
+      },
+      {
+        "t": "ex",
+        "en": "I get up at seven every day.",
+        "zh": "我每天七點起床。",
+        "focus": "get up"
+      },
+      {
+        "t": "ex",
+        "en": "Fish live in water.",
+        "zh": "魚住在水裡。",
+        "focus": "live"
+      },
+      {
+        "t": "table",
+        "header": [
+          "用在什麼",
+          "例句",
+          "中文"
+        ],
+        "rows": [
+          [
+            "天天重複的習慣",
+            "I get up at seven every day.",
+            "我每天七點起床。"
+          ],
+          [
+            "本來就成立的事實",
+            "Fish live in water.",
+            "魚住在水裡。"
+          ],
+          [
+            "長期不變的狀態",
+            "My parents live in Tainan.",
+            "我爸媽住在台南。"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "這種句子裡常常會配一組講時間的說法，幫忙點出這是習慣，像 every day（每天）、every morning（每天早上）、on Sundays（每個星期天）、after school（放學後）。它們習慣放在句子最後面，不要照中文的順序塞在主詞和動詞中間。"
+      },
+      {
+        "t": "ex",
+        "en": "We play basketball after school.",
+        "zh": "我們放學後打籃球。",
+        "focus": "after school"
+      },
+      {
+        "t": "ex",
+        "en": "My father works on Sundays.",
+        "zh": "我爸爸星期天要上班。",
+        "focus": "on Sundays"
+      },
+      {
+        "t": "p",
+        "text": "有一個地方要特別小心。一般動詞的句子裡不會再放一個 be 動詞，寫成 I am go to school 是把兩個動詞擠在一起，這句話在英文是壞掉的。句子在講動作就只放一般動詞，句子在講身分、樣子、在哪裡才放 be 動詞，兩套各走各的。"
+      },
+      {
+        "t": "tip",
+        "text": "這一課的主詞先用 I、you、we、they，動詞維持原形就好，主詞換成 he、she、it 的時候動詞要改，下一課再處理。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I ___ to work by bus every day.",
+        "options": [
+          "going",
+          "am go",
+          "go",
+          "goes"
+        ],
+        "answer": 2,
+        "explanation": "主詞是 I，現在簡單式用動詞原形 go。going 前面沒有 be 動詞，不能單獨當動詞用；am go 把 be 動詞和一般動詞擠在一起；goes 是主詞為 he、she、it 的時候才用的。"
+      },
+      {
+        "q": "現在簡單式主要用來講什麼？",
+        "options": [
+          "此刻正在做到一半的事",
+          "平常的習慣和本來就成立的事實",
+          "昨天已經發生的事",
+          "明天才要做的事"
+        ],
+        "answer": 1,
+        "explanation": "現在簡單式管的是天天都這樣的習慣，還有不會改變的事實和長期的狀態。此刻正在做到一半的事有另外一種說法，後面的單元會教。"
+      },
+      {
+        "q": "「我們每天早上喝牛奶。」哪一句對？",
+        "options": [
+          "We are drink milk every morning.",
+          "We drinking milk every morning.",
+          "We every morning drink milk.",
+          "We drink milk every morning."
+        ],
+        "answer": 3,
+        "explanation": "現在簡單式用動詞原形 drink，主詞後面直接接動詞，講時間的 every morning 放句尾。第一句 be 動詞和一般動詞擠在一起；第二句的 drinking 前面少了 be 動詞；第三句照中文的順序把時間塞在主詞和動詞中間。"
+      },
+      {
+        "q": "Fish ___ in water.",
+        "options": [
+          "live",
+          "living",
+          "are live",
+          "lives"
+        ],
+        "answer": 0,
+        "explanation": "這句在講一件本來就成立的事實，用現在簡單式，而且 fish 這裡指的是所有的魚不只一條，動詞維持原形 live。living 前面沒有 be 動詞；are live 兩個動詞擠在一起；lives 是主詞只有一個的時候才用。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "They are play ball after school.",
+          "They playing ball after school.",
+          "They play ball after school.",
+          "They are ball after school."
+        ],
+        "answer": 2,
+        "explanation": "they 配動詞原形 play，時間放句尾，這樣就完整了。第一句 are 和 play 兩個動詞並排；第二句的 playing 前面少了 be 動詞；第四句只有 be 動詞卻沒有講出動作。"
+      },
+      {
+        "q": "下面哪一句「不是」在講習慣或事實？",
+        "options": [
+          "I am very tired today.",
+          "I go to school by bike.",
+          "They live in Tainan.",
+          "We have English class on Monday."
+        ],
+        "answer": 0,
+        "explanation": "「我今天很累」講的是今天這一天的狀態，明天可能就不累了，不算習慣也不算不變的事實。另外三句分別是天天的交通方式、長期住的地方、每個星期固定的課，都屬於現在簡單式在管的範圍。"
+      },
+      {
+        "q": "We ___ English every day.",
+        "options": [
+          "are study",
+          "study",
+          "are",
+          "studying"
+        ],
+        "answer": 1,
+        "explanation": "study 是一般動詞，主詞 we 後面直接接動詞原形就好。are study 是 be 動詞和一般動詞並排；只寫 are 句子裡就沒有動作了；studying 前面少了 be 動詞不能單獨用。"
+      },
+      {
+        "q": "「我每天讀英文。」哪一句最自然？",
+        "options": [
+          "I every day read English.",
+          "I read every day English.",
+          "Every day I English read.",
+          "I read English every day."
+        ],
+        "answer": 3,
+        "explanation": "英文的順序是主詞、動詞、受詞，講時間的說法放在最後面。前三句都是照中文的語序搬過去的，把 every day 卡在主詞和動詞中間，或是把動詞丟到句尾，英文都不會這樣說。"
+      }
+    ]
+  },
+  {
+    "id": "gb-05",
+    "title": "第三人稱單數：動詞什麼時候要加 s",
+    "goal": "會判斷主詞是不是第三人稱單數，也知道 s、es、ies 各用在哪一種字尾。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文不管主詞是誰，動詞都長一樣：我吃、你吃、他吃，「吃」從頭到尾沒變過。英文在現在簡單式有一條中文完全沒有的規矩，主詞只要是一個人或一樣東西，而且不是我也不是你，動詞後面就要加 s。這種主詞有個名字，叫第三人稱單數。「第三」是相對於「我」和「你」來說的，除了我和你以外的人事物都算第三；「單數」就是只有一個。"
+      },
+      {
+        "t": "p",
+        "text": "哪些主詞算？he、she、it 是最典型的三個。另外像 my mother、the dog、Tom、that book 這種一個人或一樣東西的名詞，也全部都算。反過來說，I 和 you 不算，兩個以上的 we、they、my parents、Tom and Mary 也不算，這些後面的動詞都維持原形。"
+      },
+      {
+        "t": "ex",
+        "en": "My sister works in a shop.",
+        "zh": "我姊姊在一家店裡工作。",
+        "focus": "works"
+      },
+      {
+        "t": "p",
+        "text": "加 s 的時候拼法有幾種變化。大部分的動詞直接加 s 就好；字尾是 s、x、ch、sh 的動詞後面直接接 s 會唸不出來，要改成加 es，字尾是 o 的也跟著記進這一組；字尾是 y 的要看 y 前面那個字母，如果是 a、e、i、o、u 其中一個就直接加 s，不是的話就把 y 改成 i 再加 es。另外 have 這個字很特別，整個換成 has。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "動詞字尾",
+          "怎麼改",
+          "例子"
+        ],
+        "rows": [
+          [
+            "一般情況",
+            "直接加 s",
+            "eat 變成 eats"
+          ],
+          [
+            "s、x、ch、sh、o",
+            "加 es",
+            "watch 變成 watches，go 變成 goes"
+          ],
+          [
+            "y 前面是 a e i o u",
+            "直接加 s",
+            "play 變成 plays"
+          ],
+          [
+            "y 前面不是這五個",
+            "去掉 y 加 ies",
+            "study 變成 studies"
+          ],
+          [
+            "have 要特別記",
+            "整個字換掉",
+            "have 變成 has"
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "He watches TV after dinner.",
+        "zh": "他晚餐後看電視。",
+        "focus": "watches"
+      },
+      {
+        "t": "ex",
+        "en": "She studies English every night.",
+        "zh": "她每天晚上讀英文。",
+        "focus": "studies"
+      },
+      {
+        "t": "ex",
+        "en": "My mother has two cars.",
+        "zh": "我媽媽有兩台車。",
+        "focus": "has"
+      },
+      {
+        "t": "p",
+        "text": "這裡要提醒一件很多人會混在一起的事。名詞加 s 跟動詞加 s 是兩回事。名詞加 s 是因為東西不只一個，動詞加 s 是因為主詞是一個人。一句話裡常常一個加一個不加，像 My brother likes dogs.，前面的 likes 是配主詞加的，後面的 dogs 是因為狗不只一隻，兩個 s 的理由完全不同。"
+      },
+      {
+        "t": "tip",
+        "text": "寫完句子先回頭看主詞，只要是一個、而且不是我也不是你，動詞的 s 就要補上去。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "My father ___ to work by car.",
+        "options": [
+          "drives",
+          "drive",
+          "driving",
+          "are drive"
+        ],
+        "answer": 0,
+        "explanation": "my father 是一個人，屬於第三人稱單數，動詞要加 s 變成 drives。drive 漏掉了 s，這是最常見的錯；driving 前面沒有 be 動詞；are drive 是兩個動詞擠在一起。"
+      },
+      {
+        "q": "She ___ her homework after dinner.",
+        "options": [
+          "do",
+          "dos",
+          "doing",
+          "does"
+        ],
+        "answer": 3,
+        "explanation": "do 的字尾是 o，要加 es 變成 does，不是直接加 s 的 dos。主詞 she 是第三人稱單數，動詞不能維持原本的 do；doing 前面少了 be 動詞。"
+      },
+      {
+        "q": "下面哪一個字的 s 加對了？",
+        "options": [
+          "studys",
+          "gos",
+          "watches",
+          "haves"
+        ],
+        "answer": 2,
+        "explanation": "watch 的字尾是 ch，加 es 變成 watches。study 的 y 前面是 d，不在 a e i o u 裡面，要去掉 y 加 ies 寫成 studies；go 的字尾是 o 要加 es 變成 goes；have 是特別的，要整個換成 has。"
+      },
+      {
+        "q": "The baby ___ a lot at night.",
+        "options": [
+          "cry",
+          "cries",
+          "crys",
+          "cryes"
+        ],
+        "answer": 1,
+        "explanation": "cry 的字尾是 y，y 前面是 r 不在那五個字母裡，所以去掉 y 加 ies 變成 cries。crys 是直接加 s 的錯誤拼法；cryes 加了 es 卻忘了把 y 改成 i；cry 沒加 s，主詞 the baby 是一個人不能這樣寫。"
+      },
+      {
+        "q": "哪一個主詞後面的動詞「不用」加 s？",
+        "options": [
+          "my brother",
+          "the cat",
+          "you and I",
+          "Mary"
+        ],
+        "answer": 2,
+        "explanation": "you and I 是兩個人，不算單數，動詞維持原形。my brother、the cat、Mary 都是一個人或一隻動物，而且不是我也不是你，屬於第三人稱單數，動詞要加 s。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "My brother like dogs.",
+          "My brother likes dog.",
+          "My brothers likes dogs.",
+          "My brother likes dogs."
+        ],
+        "answer": 3,
+        "explanation": "my brother 是一個人，動詞加 s 變成 likes；他喜歡的是狗這種動物，不只一隻，所以 dogs 也要加 s。第一句漏了動詞的 s；第二句漏了名詞的 s；第三句把 s 加到主詞上，變成好幾個哥哥，動詞反而不該加 s 了。"
+      },
+      {
+        "q": "Tom and his sister ___ to school by bike.",
+        "options": [
+          "goes",
+          "go",
+          "gos",
+          "going"
+        ],
+        "answer": 1,
+        "explanation": "Tom and his sister 是兩個人，不是單數，動詞維持原形 go。看到最靠近的 sister 就寫 goes 是很常見的錯，決定加不加 s 的是整個主詞。"
+      },
+      {
+        "q": "My mother ___ a new phone.",
+        "options": [
+          "has",
+          "haves",
+          "have",
+          "having"
+        ],
+        "answer": 0,
+        "explanation": "have 碰到第三人稱單數要整個換成 has，沒有 haves 這種拼法。my mother 是一個人，不能用原形的 have；having 前面少了 be 動詞。"
+      }
+    ]
+  },
+  {
+    "id": "gb-06",
+    "title": "現在簡單式的否定：don't 和 doesn't",
+    "goal": "會把現在簡單式的句子改成否定，也知道什麼時候用 don't、什麼時候用 doesn't。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文要說「不」很省事，「我吃肉」中間加一個字就變成「我不吃肉」。英文碰到一般動詞的句子沒辦法只塞一個 not 就了事，要先請一個幫手進來。這個幫手是 do，它自己不表示任何動作，只負責把句子變成否定或問句，這種專門幫忙的動詞叫做助動詞。想成 do 是一個工具，不是在講「做」這件事，就不會被它的意思絆住。"
+      },
+      {
+        "t": "p",
+        "text": "做法是主詞後面放 do not，再接動詞原形。講話的時候幾乎都會縮成 don't，寫的時候兩種都可以。"
+      },
+      {
+        "t": "ex",
+        "en": "I don't eat meat.",
+        "zh": "我不吃肉。",
+        "focus": "don't"
+      },
+      {
+        "t": "p",
+        "text": "主詞是第三人稱單數的時候，助動詞要換成 does not，縮寫是 doesn't。這裡有個很多人會踩的坑：加 s 的工作已經被 does 扛走了，後面那個動詞要變回原形，不能再加一次 s。一句話裡的 s 只出現一次，它跑到 does 身上去了。"
+      },
+      {
+        "t": "ex",
+        "en": "He doesn't work on Sunday.",
+        "zh": "他星期天不上班。",
+        "focus": "doesn't work"
+      },
+      {
+        "t": "table",
+        "header": [
+          "主詞",
+          "否定的寫法",
+          "例子"
+        ],
+        "rows": [
+          [
+            "I、you、we、they",
+            "don't 加動詞原形",
+            "We don't play games."
+          ],
+          [
+            "兩個以上的人或東西",
+            "don't 加動詞原形",
+            "My parents don't drink coffee."
+          ],
+          [
+            "he、she、it",
+            "doesn't 加動詞原形",
+            "She doesn't like fish."
+          ],
+          [
+            "一個人或一樣東西",
+            "doesn't 加動詞原形",
+            "My dog doesn't like water."
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "My dog doesn't like water.",
+        "zh": "我的狗不喜歡水。",
+        "focus": "doesn't like"
+      },
+      {
+        "t": "p",
+        "text": "be 動詞的句子不用找幫手，這一點上一課已經練過了，直接在 am、is、are 後面加 not 就好。兩套做法各走各的，一句話裡不會同時出現 is 和 don't。看看這兩句的差別就懂了：She isn't a teacher. 是在講她的身分，She doesn't teach English. 是在講她不做這個動作。"
+      },
+      {
+        "t": "ex",
+        "en": "She isn't a teacher.",
+        "zh": "她不是老師。",
+        "focus": "isn't"
+      },
+      {
+        "t": "tip",
+        "text": "看到 doesn't 就順手檢查後面那個動詞有沒有多一個 s，doesn't likes 是這一課最常見的錯。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "They ___ live in Taipei.",
+        "options": [
+          "don't",
+          "doesn't",
+          "not",
+          "aren't"
+        ],
+        "answer": 0,
+        "explanation": "主詞 they 是兩個以上的人，用 don't。doesn't 是給第三人稱單數的；live 是一般動詞，不能只加一個 not，也不能拿 be 動詞的 aren't 來否定。"
+      },
+      {
+        "q": "She ___ coffee.（她不喝咖啡）",
+        "options": [
+          "don't drinks",
+          "doesn't drinks",
+          "doesn't drink",
+          "not drink"
+        ],
+        "answer": 2,
+        "explanation": "主詞 she 用 doesn't，而且 doesn't 後面的動詞要回到原形 drink，不能再加一次 s。don't 沒有配合第三人稱單數；只放 not 少了助動詞。"
+      },
+      {
+        "q": "「我弟弟不吃早餐。」哪一句對？",
+        "options": [
+          "My brother don't eat breakfast.",
+          "My brother doesn't eats breakfast.",
+          "My brother not eat breakfast.",
+          "My brother doesn't eat breakfast."
+        ],
+        "answer": 3,
+        "explanation": "my brother 是一個人，要用 doesn't，後面接原形的 eat。第一句沒認出第三人稱單數；第二句在 doesn't 後面又加了一次 s；第三句少了助動詞，只放 not 是照中文搬過來的寫法。"
+      },
+      {
+        "q": "We ___ have class on Saturday.",
+        "options": [
+          "doesn't",
+          "isn't",
+          "don't",
+          "not"
+        ],
+        "answer": 2,
+        "explanation": "we 是兩個以上的人，用 don't。doesn't 是給一個人用的；have 是一般動詞，不能用 be 動詞的 isn't 否定；只寫 not 沒有助動詞撐著，句子不成立。"
+      },
+      {
+        "q": "下面哪一句沒有錯？",
+        "options": [
+          "They don't like rain.",
+          "He don't like rain.",
+          "She doesn't likes rain.",
+          "I am not like rain."
+        ],
+        "answer": 0,
+        "explanation": "they 配 don't，後面接動詞原形 like，完全正確。he 是一個人要用 doesn't；doesn't 後面不能接 likes；like 是一般動詞，不能用 am not 來否定。"
+      },
+      {
+        "q": "My parents ___ watch TV at night.",
+        "options": [
+          "doesn't",
+          "don't",
+          "isn't",
+          "aren't"
+        ],
+        "answer": 1,
+        "explanation": "my parents 是爸爸媽媽兩個人，用 don't。看到 parents 後面有 s 就知道不只一個，用 doesn't 是把主詞看成一個人了；watch 是一般動詞，不能用 be 動詞來否定。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "My sister isn't like fish.",
+          "My sister not like fish.",
+          "My sister don't likes fish.",
+          "My sister doesn't like fish."
+        ],
+        "answer": 3,
+        "explanation": "like 是一般動詞，要找助動詞幫忙，主詞是一個人所以用 doesn't，後面接原形 like。第一句用了 be 動詞的否定；第二句少了助動詞；第三句助動詞用錯而且動詞又加了 s。"
+      },
+      {
+        "q": "「他不是學生。」哪一句對？",
+        "options": [
+          "He doesn't a student.",
+          "He isn't a student.",
+          "He don't be a student.",
+          "He not is a student."
+        ],
+        "answer": 1,
+        "explanation": "這句在講身分，用的是 be 動詞，直接加 not 就好，寫成 He isn't a student.。doesn't 是給一般動詞用的，這句裡根本沒有動作；He don't be a student. 把 be 動詞塞在助動詞後面，等於兩套否定的做法混在一起；最後一句把 not 放到 be 動詞前面，順序錯了。"
+      }
+    ]
+  },
+  {
+    "id": "gb-07",
+    "title": "現在簡單式的問句：Do 和 Does 開頭",
+    "goal": "會把現在簡單式的句子改成可以用 yes 或 no 回答的問句，也會用短句回答。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文問問題常常只要在句尾加一個「嗎」，「你喜歡音樂」變成「你喜歡音樂嗎」，字的順序完全沒動。英文不能這樣。一般動詞的句子要問問題，得請上一課那個助動詞 do 出來，而且要把它搬到句子最前面。這種問句只能回答 yes 或 no，順序很固定，先助動詞，再主詞，再動詞原形，句尾加問號。主詞是 I、you、we、they，或是兩個以上的人的時候，句首放 Do，因為它變成句子的第一個字，D 要大寫。"
+      },
+      {
+        "t": "ex",
+        "en": "Do you like music?",
+        "zh": "你喜歡音樂嗎？",
+        "focus": "Do you"
+      },
+      {
+        "t": "p",
+        "text": "主詞是第三人稱單數的時候，句首改成 Does。跟否定句一模一樣，Does 已經把 s 扛走了，後面的動詞要維持原形，寫 Does she likes it? 就是多加了一次 s。"
+      },
+      {
+        "t": "ex",
+        "en": "Does your sister work here?",
+        "zh": "你姊姊在這裡工作嗎？",
+        "focus": "Does"
+      },
+      {
+        "t": "ex",
+        "en": "Does the store open at nine?",
+        "zh": "那家店九點開門嗎？",
+        "focus": "Does"
+      },
+      {
+        "t": "p",
+        "text": "回答不用把整句話再講一遍，用短句就好：Yes 加主詞加 do 或 does，No 加主詞加 don't 或 doesn't。回答的時候主詞要換成 he、she、they 這種字，人家問 Does your sister work here? 你回答的時候說 she 就好。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "問句",
+          "肯定回答",
+          "否定回答"
+        ],
+        "rows": [
+          [
+            "Do you like tea?",
+            "Yes, I do.",
+            "No, I don't."
+          ],
+          [
+            "Do they work here?",
+            "Yes, they do.",
+            "No, they don't."
+          ],
+          [
+            "Does he play ball?",
+            "Yes, he does.",
+            "No, he doesn't."
+          ],
+          [
+            "Does your mother drive?",
+            "Yes, she does.",
+            "No, she doesn't."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "be 動詞的問句不需要 do 幫忙，把 be 動詞自己搬到前面就好，這在前面練過了。所以 Are you busy? 是對的，Do you be busy? 是把兩套做法混在一起。判斷的方法很簡單，句子裡本來有一般動詞才叫 do 進來，句子裡本來是 be 動詞就搬 be 動詞。"
+      },
+      {
+        "t": "ex",
+        "en": "Are you busy today?",
+        "zh": "你今天忙嗎？",
+        "focus": "Are you"
+      },
+      {
+        "t": "tip",
+        "text": "Does 開頭的問句只要看到動詞後面有 s 就是錯的，Does she like it? 才對。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "___ they live near the park?",
+        "options": [
+          "Is",
+          "Does",
+          "Are",
+          "Do"
+        ],
+        "answer": 3,
+        "explanation": "live 是一般動詞，問句要叫 do 進來幫忙，主詞 they 是兩個以上所以用 Do。Is 和 Are 是 be 動詞，只用在本來就沒有一般動詞的句子；Does 是給第三人稱單數的。"
+      },
+      {
+        "q": "___ your father drive a bus?",
+        "options": [
+          "Do",
+          "Does",
+          "Is",
+          "Are"
+        ],
+        "answer": 1,
+        "explanation": "your father 是一個人，屬於第三人稱單數，問句用 Does，後面的動詞維持原形 drive。用 Do 是沒有認出主詞只有一個；drive 是一般動詞，不能用 be 動詞來問。"
+      },
+      {
+        "q": "「他喜歡狗嗎？」哪一句對？",
+        "options": [
+          "Does he likes dogs?",
+          "Do he like dogs?",
+          "Does he like dogs?",
+          "Is he like dogs?"
+        ],
+        "answer": 2,
+        "explanation": "he 用 Does 開頭，而且 Does 後面的動詞要回到原形 like。第一句在動詞上又加了一次 s；第二句沒有配合第三人稱單數；第四句把 be 動詞和一般動詞湊在一起。"
+      },
+      {
+        "q": "Do you go to school by bike? 最自然的肯定回答是？",
+        "options": [
+          "Yes, I do.",
+          "Yes, I go.",
+          "Yes, I am.",
+          "Yes, do I."
+        ],
+        "answer": 0,
+        "explanation": "用 Do 開頭問，就用 do 回答，主詞換成 I。Yes, I go. 文法上沒錯，但英文習慣用助動詞回答，不會把動詞再說一次；Yes, I am. 是回答 be 動詞問句用的；Yes, do I. 順序顛倒了。"
+      },
+      {
+        "q": "Does Mary like coffee? 的否定回答是？",
+        "options": [
+          "No, she don't.",
+          "No, she doesn't.",
+          "No, she isn't.",
+          "No, Mary not."
+        ],
+        "answer": 1,
+        "explanation": "問句用 Does，回答就用 doesn't，而且 Mary 要換成 she。like 是一般動詞，不能用 isn't 回答；最後一句少了助動詞，而且回答時不用再把名字講一遍。"
+      },
+      {
+        "q": "___ you a student?",
+        "options": [
+          "Do",
+          "Does",
+          "Are",
+          "Is"
+        ],
+        "answer": 2,
+        "explanation": "這句裡沒有一般動詞，是在問身分，用的是 be 動詞，把 Are 搬到最前面就好。Do 是給一般動詞用的，寫成 Do you a student? 整句就沒有動詞了；Is 不配 you。"
+      },
+      {
+        "q": "___ your brothers play baseball?",
+        "options": [
+          "Do",
+          "Does",
+          "Is",
+          "Are"
+        ],
+        "answer": 0,
+        "explanation": "your brothers 後面有 s，是兩個以上的人，用 Do。沒看到那個 s 就寫 Does，是把主詞當成一個人了；play 是一般動詞，句子不能用 Is 或 Are 來問。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "Does she has a car?",
+          "Do she have a car?",
+          "Is she have a car?",
+          "Does she have a car?"
+        ],
+        "answer": 3,
+        "explanation": "Does 已經扛走了 s，後面的 have 要維持原形。第一句把 have 改成了 has，等於加了兩次；第二句沒有配合第三人稱單數；第三句把 be 動詞和一般動詞擠在一起。"
+      }
+    ]
+  },
+  {
+    "id": "gb-08",
+    "title": "現在進行式：be 動詞加 V-ing 講正在做",
+    "goal": "會用 be 動詞加 V-ing 說出此刻正在發生的事，也拼得出 ing 的三種變化。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文要講「正在做」，在動詞前面加兩個字就好，「我吃飯」變成「我正在吃飯」，動詞本身沒有動。英文的做法是兩個零件一起上，先放 be 動詞 am、is、are，再把動詞加上 ing。這種用法叫現在進行式，加了 ing 的動詞常常寫成 V-ing，那個 V 就是動詞的意思。"
+      },
+      {
+        "t": "p",
+        "text": "兩個零件缺一不可，這是這一課最容易出錯的地方。只寫 I eating lunch 少了 be 動詞，只寫 I am eat lunch 少了 ing，兩種都不成句。前面那個 be 動詞還是照主詞配，I 配 am，he、she、it 和一個人一樣東西配 is，you、we、they 配 are，跟第一課完全一樣。"
+      },
+      {
+        "t": "ex",
+        "en": "I am eating lunch now.",
+        "zh": "我現在正在吃午餐。",
+        "focus": "am eating"
+      },
+      {
+        "t": "ex",
+        "en": "They are playing basketball outside.",
+        "zh": "他們正在外面打籃球。",
+        "focus": "are playing"
+      },
+      {
+        "t": "p",
+        "text": "ing 的拼法有三種情況。大部分直接加 ing；字尾是不發音的 e 要先把 e 去掉再加，像 make 變成 making；少數動詞要把最後一個字母寫兩次再加 ing，像 run 變成 running。什麼時候要寫兩次，看整個字裡面有幾個 a、e、i、o、u 就知道，只有一個，而且它後面只剩一個字母，才要寫兩次。eat 裡面有 e 和 a 兩個，wait 裡面有 a 和 i 兩個，這兩種都直接加 ing，不用重複。還有一個例外要一起記，字尾是 w、x、y 的不管前面有幾個母音都不重複，play 是 playing 不是 playying。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "動詞",
+          "怎麼改",
+          "變成"
+        ],
+        "rows": [
+          [
+            "eat",
+            "直接加 ing",
+            "eating"
+          ],
+          [
+            "study",
+            "直接加 ing",
+            "studying"
+          ],
+          [
+            "play",
+            "直接加 ing",
+            "playing"
+          ],
+          [
+            "make",
+            "去掉 e 再加 ing",
+            "making"
+          ],
+          [
+            "write",
+            "去掉 e 再加 ing",
+            "writing"
+          ],
+          [
+            "run",
+            "最後一個字母寫兩次",
+            "running"
+          ],
+          [
+            "sit",
+            "最後一個字母寫兩次",
+            "sitting"
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "She is making a cake.",
+        "zh": "她正在做蛋糕。",
+        "focus": "is making"
+      },
+      {
+        "t": "ex",
+        "en": "My brother is running in the park.",
+        "zh": "我哥哥正在公園裡跑步。",
+        "focus": "is running"
+      },
+      {
+        "t": "p",
+        "text": "什麼時候該用它？句子在講此刻手上正在做、等一下就會結束的事，就用現在進行式。另外看到 now、right now 這種字，或是句子開頭是 Look!、Listen! 這種要對方馬上看馬上聽的話，後面幾乎都是現在進行式。"
+      },
+      {
+        "t": "tip",
+        "text": "寫完先數零件，be 動詞一個、ing 一個，兩個都在才算完整的現在進行式。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Look! The baby ___.",
+        "options": [
+          "cry",
+          "is crying",
+          "crying",
+          "cries"
+        ],
+        "answer": 1,
+        "explanation": "Look 是要你現在看，講的是此刻正在發生的事，用現在進行式 is crying。cries 是天天都這樣的習慣；crying 前面少了 be 動詞；cry 既沒有配合主詞也沒有 ing。"
+      },
+      {
+        "q": "「他們正在看電視。」哪一句對？",
+        "options": [
+          "They watching TV.",
+          "They are watch TV.",
+          "They are watching TV.",
+          "They is watching TV."
+        ],
+        "answer": 2,
+        "explanation": "現在進行式要 be 動詞和 V-ing 兩個零件都在。第一句少了 be 動詞；第二句少了 ing；第四句的 they 是兩個以上的人，要配 are 不是 is。"
+      },
+      {
+        "q": "I ___ my homework right now.",
+        "options": [
+          "do",
+          "am do",
+          "doing",
+          "am doing"
+        ],
+        "answer": 3,
+        "explanation": "right now 是此刻，用現在進行式。主詞 I 配 am，動詞加 ing 變成 doing，湊起來是 am doing。只寫 do 是在講習慣；am do 少了 ing；doing 前面少了 be 動詞。"
+      },
+      {
+        "q": "下面哪一組 ing 全部拼對了？",
+        "options": [
+          "eating / making / running",
+          "eatting / making / running",
+          "eating / makeing / running",
+          "eating / makeing / runing"
+        ],
+        "answer": 0,
+        "explanation": "eat 裡面有兩個母音字母，直接加 ing；make 的字尾 e 不發音要去掉，不是 makeing；run 只有一個母音字母而且後面只剩一個 n，要寫兩次變成 running。eatting 多寫了一個 t，eat 不需要重複。"
+      },
+      {
+        "q": "The students ___ in the classroom now.",
+        "options": [
+          "is studying",
+          "are studying",
+          "are study",
+          "studying"
+        ],
+        "answer": 1,
+        "explanation": "the students 後面有 s，是兩個以上的人，配 are；study 直接加 ing 變成 studying。第一句的 be 動詞配錯了；第三句少了 ing；第四句少了 be 動詞。"
+      },
+      {
+        "q": "He ___ on the chair now.",
+        "options": [
+          "is siting",
+          "sitting",
+          "is sitting",
+          "are sitting"
+        ],
+        "answer": 2,
+        "explanation": "sit 只有一個母音字母 i，後面只剩一個 t，所以要寫兩次變成 sitting，前面再配 he 的 is。is siting 少寫了一個 t；只有 sitting 少了 be 動詞；he 不配 are。"
+      },
+      {
+        "q": "「我正在等公車。」哪一句對？",
+        "options": [
+          "I am waiting for the bus.",
+          "I waiting for the bus.",
+          "I am wait for the bus.",
+          "I am waitting for the bus."
+        ],
+        "answer": 0,
+        "explanation": "wait 裡面有 a 和 i 兩個母音字母，不用重複最後一個字母，直接加 ing 寫成 waiting，前面配 am。第一句少了 be 動詞；第三句少了 ing；第四句多寫了一個 t。"
+      },
+      {
+        "q": "She ___ a letter to her friend right now.",
+        "options": [
+          "writeing",
+          "is writeing",
+          "write",
+          "is writing"
+        ],
+        "answer": 3,
+        "explanation": "write 的字尾 e 不發音，加 ing 之前要去掉，寫成 writing，前面配 she 的 is。前兩個選項都留著那個 e；只寫 write 是在講習慣，跟 right now 不合。"
+      }
+    ]
+  },
+  {
+    "id": "gb-09",
+    "title": "現在簡單式跟現在進行式：習慣還是此刻正在",
+    "goal": "會判斷一句話該用現在簡單式還是現在進行式，也認得出句子裡的時間提示。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文靠加字來分這兩件事。「我每天喝咖啡」跟「我正在喝咖啡」，動詞「喝」從頭到尾沒變，是「每天」和「正在」在幫忙分。英文不是加字，英文是把動詞本身換掉：講天天都這樣的習慣，用現在簡單式，動詞維持原形或加 s；講此刻正在做的事，用現在進行式，換成 be 動詞加 V-ing。同一件事講起來會變成兩種樣子，意思也真的不一樣。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "句子在講什麼",
+          "用哪一種",
+          "例句"
+        ],
+        "rows": [
+          [
+            "天天重複的習慣",
+            "現在簡單式",
+            "I drink coffee every morning."
+          ],
+          [
+            "本來就成立的事實",
+            "現在簡單式",
+            "Cats like fish."
+          ],
+          [
+            "長期不變的狀態",
+            "現在簡單式",
+            "My father works in a bank."
+          ],
+          [
+            "此刻手上正在做",
+            "現在進行式",
+            "I am drinking coffee now."
+          ],
+          [
+            "這幾天暫時在做",
+            "現在進行式",
+            "My father is working at home this week."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "把兩句擺在一起念一次最有感覺。下面這兩句都在講咖啡，前面那句是說我每天早上都這樣，後面那句是說我此刻杯子拿在手上。"
+      },
+      {
+        "t": "ex",
+        "en": "I drink coffee every morning.",
+        "zh": "我每天早上喝咖啡。",
+        "focus": "drink"
+      },
+      {
+        "t": "ex",
+        "en": "I am drinking coffee now.",
+        "zh": "我現在正在喝咖啡。",
+        "focus": "am drinking"
+      },
+      {
+        "t": "ex",
+        "en": "My father works in a bank.",
+        "zh": "我爸爸在銀行上班。",
+        "focus": "works"
+      },
+      {
+        "t": "ex",
+        "en": "My father is working at home this week.",
+        "zh": "我爸爸這禮拜在家工作。",
+        "focus": "is working"
+      },
+      {
+        "t": "p",
+        "text": "句子裡的時間說法是很好用的線索。看到 every day、every morning、on Sundays、after school 這一類，講的是習慣，用現在簡單式；看到 now、right now，或是句子開頭有 Look!、Listen!，講的是此刻，用現在進行式。兩個提示不會同時出現，寫成 I am walking to school every day 就是把兩邊湊在一起了。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "看到這些字",
+          "該用哪一種"
+        ],
+        "rows": [
+          [
+            "every day、every morning",
+            "現在簡單式"
+          ],
+          [
+            "on Sundays、after school",
+            "現在簡單式"
+          ],
+          [
+            "now、right now",
+            "現在進行式"
+          ],
+          [
+            "Look!、Listen!",
+            "現在進行式"
+          ]
+        ]
+      },
+      {
+        "t": "tip",
+        "text": "兩種寫法都對，只是意思不同，下筆前先問自己講的是「天天都這樣」還是「此刻正在」。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I ___ TV every night.",
+        "options": [
+          "am watching",
+          "watch",
+          "watching",
+          "am watch"
+        ],
+        "answer": 1,
+        "explanation": "every night 是天天的習慣，用現在簡單式，主詞 I 配動詞原形 watch。am watching 講的是此刻正在看，跟 every night 不合；watching 前面少了 be 動詞；am watch 少了 ing。"
+      },
+      {
+        "q": "Listen! Someone ___ at the door.",
+        "options": [
+          "knocks",
+          "knock",
+          "is knocking",
+          "are knocking"
+        ],
+        "answer": 2,
+        "explanation": "Listen 是要你現在聽，講的是此刻正在發生的事，用現在進行式。someone 是一個人配 is，不是 are；knocks 和 knock 都是在講習慣，跟這個情境不合。"
+      },
+      {
+        "q": "My mother ___ dinner right now.",
+        "options": [
+          "is cooking",
+          "cooks",
+          "cook",
+          "cooking"
+        ],
+        "answer": 0,
+        "explanation": "right now 是此刻，用現在進行式，my mother 是一個人配 is，動詞加 ing 變成 cooking。cooks 是在講她每天煮飯的習慣；cook 沒有配合主詞；cooking 前面少了 be 動詞。"
+      },
+      {
+        "q": "Cats ___ fish.",
+        "options": [
+          "are liking",
+          "is liking",
+          "likes",
+          "like"
+        ],
+        "answer": 3,
+        "explanation": "這句在講一件本來就成立的事實，用現在簡單式，而且 cats 是兩隻以上，動詞維持原形 like。事實跟此刻在不在做沒有關係，不會用進行式；likes 是主詞只有一個的時候才用。"
+      },
+      {
+        "q": "下面哪一句在講此刻正在發生的事？",
+        "options": [
+          "She goes to work by bus.",
+          "She is talking on the phone.",
+          "She lives in Kaohsiung.",
+          "She has two cats."
+        ],
+        "answer": 1,
+        "explanation": "只有第二句用了 be 動詞加 V-ing，講的是她此刻正在講電話。另外三句分別是每天的交通方式、長期住的地方、她養的貓，全部都是現在簡單式在管的範圍。"
+      },
+      {
+        "q": "He ___ to school by bike every day.",
+        "options": [
+          "goes",
+          "is going",
+          "go",
+          "going"
+        ],
+        "answer": 0,
+        "explanation": "every day 是習慣，用現在簡單式，主詞 he 是第三人稱單數所以加 s 變成 goes。is going 是此刻正在往學校的路上，跟 every day 湊不起來；go 漏掉了 s；going 前面少了 be 動詞。"
+      },
+      {
+        "q": "「我姊姊在一家醫院工作。」哪一句最自然？",
+        "options": [
+          "My sister is working in a hospital.",
+          "My sister work in a hospital.",
+          "My sister works in a hospital.",
+          "My sister working in a hospital."
+        ],
+        "answer": 2,
+        "explanation": "在哪裡上班是長期不變的狀態，用現在簡單式，主詞是一個人所以動詞加 s。第一句會變成她此刻人在醫院裡做事，跟講職業不一樣；第二句漏掉 s；第四句少了 be 動詞。"
+      },
+      {
+        "q": "The train ___ at eight every morning.",
+        "options": [
+          "leaves",
+          "is leaving",
+          "leave",
+          "leaving"
+        ],
+        "answer": 0,
+        "explanation": "every morning 表示這是每天固定的時刻表，用現在簡單式，the train 是一樣東西所以動詞加 s。is leaving 是此刻正在開走；leave 漏掉了 s；leaving 前面少了 be 動詞。"
+      }
+    ]
+  },
+  {
+    "id": "gb-10",
+    "title": "狀態動詞：like、know、want 為什麼不加 ing",
+    "goal": "會認出哪些動詞習慣上不用現在進行式，碰到它們知道要改用現在簡單式。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "你會說「我正在跑步」，但你不會說「我正在喜歡他」，聽起來就是怪。原因是喜歡不是一個你做出來的動作，它是一種心裡的狀態，狀態本來就一直在那裡，沒有「正在進行」這回事。英文的感覺跟中文一樣。像 like、know、want 這種字講的不是動作而是狀態，這種動詞叫狀態動詞，它們習慣上不加 ing，就算此刻正在成立，也是用現在簡單式。"
+      },
+      {
+        "t": "p",
+        "text": "常見的狀態動詞可以分成三類。第一類是心裡想的，像 like、love、hate、want、need、know、understand、remember；第二類是感官接收到的，像 see、hear、smell、taste；第三類是擁有，像 have。這些字通通不用加 ing。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "哪一類",
+          "常見的字",
+          "例句"
+        ],
+        "rows": [
+          [
+            "心裡想的",
+            "like、love、want、need",
+            "I want a new bike."
+          ],
+          [
+            "心裡知道的",
+            "know、understand、remember",
+            "I know the answer."
+          ],
+          [
+            "感官接收的",
+            "see、hear、smell",
+            "I hear a dog outside."
+          ],
+          [
+            "擁有",
+            "have",
+            "She has two cats."
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "I know the answer.",
+        "zh": "我知道答案。",
+        "focus": "know"
+      },
+      {
+        "t": "ex",
+        "en": "She wants a new bike.",
+        "zh": "她想要一台新的腳踏車。",
+        "focus": "wants"
+      },
+      {
+        "t": "p",
+        "text": "把它跟真的在做的動作擺在一起就分得很清楚了。下面兩句主詞都是我，前面那句 read 是我手上真的在翻書這個動作，可以講「正在」；後面那句 like 是我心裡的狀態，不能講「正在」。"
+      },
+      {
+        "t": "ex",
+        "en": "I am reading a book.",
+        "zh": "我正在看一本書。",
+        "focus": "am reading"
+      },
+      {
+        "t": "ex",
+        "en": "I like this book.",
+        "zh": "我喜歡這本書。",
+        "focus": "like"
+      },
+      {
+        "t": "p",
+        "text": "have 這個字要多講一句。表示「擁有」的時候不加 ing，像 I have two brothers.，這時候它是狀態；但 have 也常跟別的字搭在一起表示真的在做的事，像 have lunch（吃午餐）、have a party（辦派對），這種用法就可以加 ing，說 We are having lunch now.。先知道有這個差別就好，看到 having 不用急著判它錯。"
+      },
+      {
+        "t": "tip",
+        "text": "想寫 am liking、am knowing、am wanting 的時候先停一下，把 ing 拿掉改成 like、know、want 幾乎都會對。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I ___ what you mean.",
+        "options": [
+          "am knowing",
+          "knowing",
+          "knows",
+          "know"
+        ],
+        "answer": 3,
+        "explanation": "know 是狀態動詞，不加 ing，主詞 I 用動詞原形 know。am knowing 是最常見的錯；knowing 前面少了 be 動詞；knows 是主詞為一個人的時候才用，I 不加 s。"
+      },
+      {
+        "q": "She ___ a cup of tea now.",
+        "options": [
+          "wants",
+          "is wanting",
+          "wanting",
+          "want"
+        ],
+        "answer": 0,
+        "explanation": "want 是狀態動詞，就算句子裡有 now 也不加 ing，主詞 she 是第三人稱單數所以用 wants。看到 now 就反射性寫成進行式，是這一課最容易掉進去的坑。"
+      },
+      {
+        "q": "下面哪一句是錯的？",
+        "options": [
+          "I am reading a book.",
+          "I am wanting a new phone.",
+          "I want a new phone.",
+          "I am waiting for you."
+        ],
+        "answer": 1,
+        "explanation": "want 是狀態動詞不加 ing，要寫成 I want a new phone.。read 和 wait 都是真的在做的動作，加 ing 沒有問題，注意 wait 和 want 只差一個字母，但用法完全不同。"
+      },
+      {
+        "q": "下面哪一個動詞習慣上不加 ing？",
+        "options": [
+          "know",
+          "run",
+          "eat",
+          "read"
+        ],
+        "answer": 0,
+        "explanation": "know 講的是心裡知道這件事，是一種狀態，不加 ing。run、eat、read 都是身體真的在做的動作，隨時可以講「正在」，所以 running、eating、reading 都很常見。"
+      },
+      {
+        "q": "My brother ___ two cars.",
+        "options": [
+          "is having",
+          "have",
+          "having",
+          "has"
+        ],
+        "answer": 3,
+        "explanation": "這裡的 have 是表示擁有，屬於狀態不加 ing，而且 my brother 是一個人，要換成 has。is having 用在吃飯開派對那種真的在做的事上；have 漏掉了第三人稱單數的變化。"
+      },
+      {
+        "q": "Look! He ___ a book.",
+        "options": [
+          "reads",
+          "read",
+          "is reading",
+          "is read"
+        ],
+        "answer": 2,
+        "explanation": "read 是真的在做的動作，Look 又提示此刻正在發生，所以用現在進行式 is reading。reads 是在講他天天看書的習慣；read 沒有配合主詞；is read 少了 ing。"
+      },
+      {
+        "q": "I ___ this song very much.",
+        "options": [
+          "am liking",
+          "like",
+          "liking",
+          "am like"
+        ],
+        "answer": 1,
+        "explanation": "like 是狀態動詞，不管什麼時候都不加 ing，主詞 I 用原形 like。am liking 是把中文的「正在喜歡」硬翻過去；liking 前面少了 be 動詞；am like 是 be 動詞和一般動詞擠在一起。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "We are having two cars.",
+          "We are knowing the answer.",
+          "We are having lunch now.",
+          "We are wanting more time."
+        ],
+        "answer": 2,
+        "explanation": "have lunch 是真的在做的事，可以用進行式，寫成 We are having lunch now.。第一句的 have 是擁有，要寫 We have two cars.；know 和 want 都是狀態動詞，也都不能加 ing。"
+      }
+    ]
+  },
+  {
+    "id": "gb-11",
+    "title": "頻率副詞：always 到 never 該擺在哪裡",
+    "goal": "會用 always、usually、never 這組字說一件事多常發生，也知道它們該放在句子的哪個位置。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "別人問你多久做一次某件事，中文會回「我總是搭公車」、「我從來不喝咖啡」，這些字都放在動作前面。英文有一組字專門負責這件事，從幾乎每一次到一次都沒有，各有各的字，這組字叫頻率副詞。它們最常跟現在簡單式一起出現，因為兩邊講的都是平常的習慣。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "頻率副詞",
+          "大概多常",
+          "中文"
+        ],
+        "rows": [
+          [
+            "always",
+            "幾乎每一次",
+            "總是"
+          ],
+          [
+            "usually",
+            "大部分時候",
+            "通常"
+          ],
+          [
+            "often",
+            "很多次",
+            "常常"
+          ],
+          [
+            "sometimes",
+            "偶爾",
+            "有時候"
+          ],
+          [
+            "never",
+            "一次都沒有",
+            "從來不"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "位置是台灣學生最容易寫錯的地方，但規則只有兩條。第一條，句子裡是一般動詞的時候，頻率副詞放在動詞前面，也就是夾在主詞和動詞中間。"
+      },
+      {
+        "t": "ex",
+        "en": "I always take the bus to work.",
+        "zh": "我上班總是搭公車。",
+        "focus": "always"
+      },
+      {
+        "t": "ex",
+        "en": "She never eats breakfast.",
+        "zh": "她從來不吃早餐。",
+        "focus": "never"
+      },
+      {
+        "t": "p",
+        "text": "第二條剛好相反，句子裡是 be 動詞的時候，頻率副詞放在 am、is、are 後面。記成「一般動詞前面、be 動詞後面」，把 I usually walk. 和 I am usually busy. 兩句擺在一起念一次就分得出來了。"
+      },
+      {
+        "t": "ex",
+        "en": "He is often late for school.",
+        "zh": "他上學常常遲到。",
+        "focus": "is often"
+      },
+      {
+        "t": "p",
+        "text": "還有兩點要注意。第一，never 這個字本身就有「不」的意思，句子裡不要再放一個 don't，寫成 I don't never drink coffee 等於把不講了兩次。第二，主詞是第三人稱單數的時候，動詞的 s 還是照加，頻率副詞不會把 s 擋掉，所以是 She never eats breakfast.，不是 She never eat breakfast.。"
+      },
+      {
+        "t": "ex",
+        "en": "I never drink coffee at night.",
+        "zh": "我晚上從來不喝咖啡。",
+        "focus": "never"
+      },
+      {
+        "t": "tip",
+        "text": "sometimes 比較自由，除了放在動詞前面，也可以放在整句話的最前面，其他幾個字就乖乖照規則擺。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "She ___ to the gym on Sunday morning.",
+        "options": [
+          "usually goes",
+          "goes usually",
+          "usually go",
+          "go usually"
+        ],
+        "answer": 0,
+        "explanation": "頻率副詞放在一般動詞前面，而且主詞 she 是第三人稱單數，動詞要加 s，所以是 usually goes。放在動詞後面順序不對；usually go 漏掉了動詞的 s。"
+      },
+      {
+        "q": "My father is ___ busy in the morning.",
+        "options": [
+          "always be",
+          "be always",
+          "always",
+          "always is"
+        ],
+        "answer": 2,
+        "explanation": "句子裡已經有 be 動詞 is，頻率副詞直接放在 is 後面就好。其他三個選項都多放了一個 be 動詞，一句話裡不會有兩個 be 動詞。"
+      },
+      {
+        "q": "I ___ eat fast food.",
+        "options": [
+          "don't never",
+          "never don't",
+          "am never",
+          "never"
+        ],
+        "answer": 3,
+        "explanation": "never 本身就是否定，直接放在動詞 eat 前面就夠了。再加一個 don't 等於講了兩次不；eat 是一般動詞，前面也不會放 am。"
+      },
+      {
+        "q": "He ___ late for work.",
+        "options": [
+          "are sometimes",
+          "is sometimes",
+          "sometimes",
+          "does sometimes"
+        ],
+        "answer": 1,
+        "explanation": "late 是描述狀態的字，句子需要 be 動詞，主詞 he 配 is，頻率副詞再放在 is 後面。are 配錯主詞；只放 sometimes 整句就沒有動詞了；does 是助動詞，只在否定和問句裡出現。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "She never late.",
+          "She isn't never late.",
+          "She never is late.",
+          "She is never late."
+        ],
+        "answer": 3,
+        "explanation": "有 be 動詞的時候，頻率副詞放在 be 動詞後面，寫成 She is never late.。第一句整個漏掉 be 動詞；第二句 never 已經是否定，不能再加 isn't；第三句把 never 放到 is 前面，位置反了。"
+      },
+      {
+        "q": "They ___ to the movies on Friday.",
+        "options": [
+          "often go",
+          "go often",
+          "often goes",
+          "are often go"
+        ],
+        "answer": 0,
+        "explanation": "頻率副詞放在一般動詞前面，主詞 they 是兩個以上的人，動詞維持原形，所以是 often go。go often 把頻率副詞擺到動詞後面，位置反了；often goes 多加了第三人稱單數的 s，they 不用加；are often go 多塞了一個 be 動詞，一般動詞的句子不需要它。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "She doesn't never drink tea.",
+          "She never drinks tea.",
+          "She never drink tea.",
+          "She isn't never drink tea."
+        ],
+        "answer": 1,
+        "explanation": "never 放在動詞前面，而且主詞 she 是第三人稱單數，動詞照樣加 s 變成 drinks。第一句和第四句都把否定講了兩次；第三句漏掉了動詞的 s，頻率副詞不會把 s 擋掉。"
+      },
+      {
+        "q": "「他晚上總是念書嗎？」哪一句對？",
+        "options": [
+          "Does always he study at night?",
+          "Always does he study at night?",
+          "Does he always studies at night?",
+          "Does he always study at night?"
+        ],
+        "answer": 3,
+        "explanation": "問句的順序是助動詞、主詞、頻率副詞、動詞原形。前兩句把 always 放到主詞前面，位置不對；第三句的 Does 已經扛走了 s，後面的動詞不能再加。"
+      }
+    ]
+  }
+]

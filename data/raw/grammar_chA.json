@@ -1,0 +1,2255 @@
+[
+  {
+    "id": "ga-01",
+    "title": "名詞與複數：一個跟很多個，英文長得不一樣",
+    "goal": "看到常見的名詞都能寫出它的複數，包括 s、es、ies 的拼法變化，還有 man 變 men 這類要背的不規則變化。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "先想中文。你說「我買了一本書」跟「我買了三本書」，「書」這個字從頭到尾長得一模一樣，數量全靠前面的「一本」「三本」在講。英文不是這樣。名詞就是人、東西、地方的名字，像 book（書）、teacher（老師）、city（城市）、Taipei（台北）都是名詞。英文的名詞只要不是一個，字本身通常就要跟著換樣子。只有一個的時候叫單數，兩個以上叫複數。這件事中文完全沒有，所以是台灣學生最常漏掉的地方。最基本的做法是名詞後面直接加 s，book 變 books，dog 變 dogs，teacher 變 teachers。但有幾種字尾直接加 s 會唸不出來，就要改成加 es。字尾是 s、x、ch、sh 的字都是這樣，bus 變 buses，box 變 boxes，watch 變 watches，dish 變 dishes。你唸唸看就懂了，加了 es 之後多出一個音節，嘴巴才轉得過來。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "字尾長什麼樣",
+          "怎麼變",
+          "例子"
+        ],
+        "rows": [
+          [
+            "一般的字",
+            "直接加 s",
+            "book 變 books、dog 變 dogs"
+          ],
+          [
+            "s、x、ch、sh 結尾",
+            "加 es",
+            "bus 變 buses、box 變 boxes、watch 變 watches"
+          ],
+          [
+            "y 前面不是 a、e、i、o、u",
+            "把 y 去掉改成 ies",
+            "city 變 cities、story 變 stories"
+          ],
+          [
+            "y 前面是 a、e、i、o、u",
+            "直接加 s",
+            "boy 變 boys、day 變 days"
+          ],
+          [
+            "f、fe 結尾",
+            "多半把 f 或 fe 改成 ves",
+            "knife 變 knives、leaf 變 leaves，但 roof 變 roofs"
+          ],
+          [
+            "o 結尾",
+            "多半加 es，少數加 s",
+            "tomato 變 tomatoes、potato 變 potatoes、photo 變 photos"
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "I have three books in my bag.",
+        "zh": "我書包裡有三本書。",
+        "focus": "books"
+      },
+      {
+        "t": "ex",
+        "en": "I need two boxes for these toys.",
+        "zh": "我需要兩個箱子裝這些玩具。",
+        "focus": "boxes"
+      },
+      {
+        "t": "p",
+        "text": "y 結尾的字要特別看清楚 y 前面那個字母。如果 y 前面不是 a、e、i、o、u，就把 y 去掉改成 ies，像 city 變 cities、baby 變 babies、story 變 stories。如果 y 前面剛好是這五個母音字母，那就乖乖加 s 就好，像 boy 變 boys、day 變 days、key 變 keys。很多人記成「看到 y 就改 ies」，結果把 boys 寫成 boies，就是漏看了前面那個字母。"
+      },
+      {
+        "t": "ex",
+        "en": "My sister reads three stories every night.",
+        "zh": "我姊姊每天晚上唸三個故事。",
+        "focus": "stories"
+      },
+      {
+        "t": "p",
+        "text": "再來是一批不照規則來的字，這些沒有道理可講，直接背起來比較快。man 變 men、woman 變 women、child 變 children、foot 變 feet、tooth 變 teeth、person 變 people、mouse 變 mice。要注意這些字換完之後就已經是複數了，後面不能再多加一個 s，寫成 mens、childrens 就變成加了兩次。還有幾個字更省事，單數複數長得一模一樣，像 fish、sheep、deer，前面加了數字也不用改。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "單數",
+          "複數",
+          "常見的錯誤寫法"
+        ],
+        "rows": [
+          [
+            "man（男人）",
+            "men",
+            "mans、mens"
+          ],
+          [
+            "woman（女人）",
+            "women",
+            "womans"
+          ],
+          [
+            "child（小孩）",
+            "children",
+            "childs、childrens"
+          ],
+          [
+            "foot（腳）",
+            "feet",
+            "foots"
+          ],
+          [
+            "tooth（牙齒）",
+            "teeth",
+            "tooths"
+          ],
+          [
+            "person（人）",
+            "people",
+            "peoples"
+          ],
+          [
+            "fish（魚）",
+            "fish",
+            "fishs"
+          ],
+          [
+            "sheep（綿羊）",
+            "sheep",
+            "sheeps"
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "A child has twenty teeth.",
+        "zh": "一個小孩有二十顆牙齒。",
+        "focus": "teeth"
+      },
+      {
+        "t": "tip",
+        "text": "寫完句子回頭看一眼數量，只要不是一個，名詞後面那個 s 或那個不規則變化就別忘了補上去。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "「五本書」的英文是 five ___。",
+        "options": [
+          "bookies",
+          "book",
+          "bookes",
+          "books"
+        ],
+        "answer": 3,
+        "explanation": "book 是一般的字，後面直接加 s 就是 books。中文的「書」不管幾本都長一樣，英文只要不是一個就一定要變複數，這是最容易漏掉的地方。bookes 多了一個 e，bookies 是硬把 ies 接上去，可是 ies 只用在 y 結尾的字，book 沒變則是根本沒處理數量。"
+      },
+      {
+        "q": "I need two ___ for my toys.（原本的字是 box）",
+        "options": [
+          "boxes",
+          "box",
+          "boxs",
+          "boxies"
+        ],
+        "answer": 0,
+        "explanation": "box 的字尾是 x，直接加 s 會唸不出來，要加 es 變成 boxes。boxs 是很多人直覺會寫的拼法，唸起來卡住就知道不對；boxies 把 y 結尾的規則套錯了；box 沒變複數，跟前面的 two 對不起來。"
+      },
+      {
+        "q": "My sister reads three ___ every night.（原本的字是 story）",
+        "options": [
+          "storys",
+          "storyes",
+          "stories",
+          "story"
+        ],
+        "answer": 2,
+        "explanation": "story 的字尾是 y，而且 y 前面的 r 不是母音，所以把 y 去掉改成 ies，寫作 stories。storys 是直接加 s 的錯誤拼法，storyes 把兩種規則混在一起，story 則沒有變複數。"
+      },
+      {
+        "q": "下面哪一個複數寫對了？",
+        "options": [
+          "boys",
+          "boyes",
+          "boies",
+          "boyies"
+        ],
+        "answer": 0,
+        "explanation": "boy 的 y 前面是 o，o 是母音，這種字直接加 s 就好，寫作 boys。把 y 改成 ies 的規則只適用在 y 前面不是母音的字，像 city 變成 cities，看到 y 就反射改 ies 是這一題要擋掉的錯。"
+      },
+      {
+        "q": "「兩個男人」的英文是 two ___。",
+        "options": [
+          "mans",
+          "men",
+          "mens",
+          "manes"
+        ],
+        "answer": 1,
+        "explanation": "man 的複數是 men，整個字換掉，換完就已經是複數了，後面不再加 s。mans 是把加 s 的規則硬套在不規則的字上，mens 是換完又多加一個 s，這兩個都是很常見的錯。"
+      },
+      {
+        "q": "下面哪一句沒有錯？",
+        "options": [
+          "I have three childs.",
+          "I have three children.",
+          "I have three childrens.",
+          "I have three childes."
+        ],
+        "answer": 1,
+        "explanation": "child 的複數是 children，這是要背的不規則變化。children 本身已經是複數，不能再加 s 變成 childrens；childs 和 childes 則是把一般規則硬套在不規則的字上。"
+      },
+      {
+        "q": "There are many ___ in the park.（公園裡有很多人。）",
+        "options": [
+          "people",
+          "peoples",
+          "person",
+          "man"
+        ],
+        "answer": 0,
+        "explanation": "person 的複數是 people，這個字本身就是複數，前面配 many 剛剛好，不用再加 s，所以 peoples 是錯的。person 和 man 都是單數，跟 many 對不起來，要講很多人可以用 people，man 則要先變成 men。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "I see two fishes and three sheeps.",
+          "I see two fish and three sheep.",
+          "I see two fish and three sheeps.",
+          "I see two fishs and three sheeps."
+        ],
+        "answer": 1,
+        "explanation": "fish 和 sheep 這兩個字單數複數長得一樣，前面就算加了數字也不用改。台灣學生看到 two、three 就反射加 s，這裡剛好要忍住不加。"
+      }
+    ]
+  },
+  {
+    "id": "ga-02",
+    "title": "可數與不可數：water 為什麼不能加 a",
+    "goal": "分得出可數名詞和不可數名詞，知道不可數名詞不能加 a 也不能加 s，要講數量的時候怎麼借容器和單位來數。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文有一整套量詞。一「本」書、一「杯」水、一「張」紙、一「條」麵包。你不會說「一水」，一定要說「一杯水」，因為水本身沒辦法一個一個數。英文其實也有這個概念，它把名詞分成兩類：可以指著數一二三的叫可數名詞，數不出來的叫不可數名詞。book、dog、apple、chair 都是可數名詞；water（水）、rice（米飯）、money（錢）、bread（麵包）都是不可數名詞。"
+      },
+      {
+        "t": "ex",
+        "en": "I have three books on my desk.",
+        "zh": "我桌上有三本書。",
+        "focus": "three books"
+      },
+      {
+        "t": "ex",
+        "en": "I drink water every morning.",
+        "zh": "我每天早上喝水。",
+        "focus": "water"
+      },
+      {
+        "t": "p",
+        "text": "不可數名詞有兩條規定要一起記。第一，前面不能加 a 或 an，寫 a water、a money 都是錯的。第二，後面不能加 s，寫 waters、rices、moneys 也是錯的。道理很單純：它本來就沒有「一個」的概念，自然也就沒有「很多個」這回事。可數名詞剛好相反，前面可以加 a，兩個以上要加 s。"
+      },
+      {
+        "t": "p",
+        "text": "那要是真的想講數量怎麼辦？中文借量詞，英文借容器或單位，中間用 of 把兩邊接起來。一杯水是 a glass of water，兩張紙是 two pieces of paper。這裡有一個關鍵：要加 s 的是前面那個容器或單位，後面的不可數名詞從頭到尾都不動。很多人會寫成 two piece of papers，剛好兩邊都弄反了。"
+      },
+      {
+        "t": "ex",
+        "en": "I want a glass of water.",
+        "zh": "我想要一杯水。",
+        "focus": "a glass of water"
+      },
+      {
+        "t": "table",
+        "header": [
+          "不可數名詞",
+          "借什麼單位來數",
+          "寫出來長這樣"
+        ],
+        "rows": [
+          [
+            "water（水）",
+            "glass（玻璃杯）",
+            "a glass of water、two glasses of water"
+          ],
+          [
+            "coffee（咖啡）",
+            "cup（杯子）",
+            "a cup of coffee、three cups of coffee"
+          ],
+          [
+            "rice（米飯）",
+            "bowl（碗）",
+            "a bowl of rice、two bowls of rice"
+          ],
+          [
+            "bread（麵包）",
+            "piece（一份、一塊）",
+            "a piece of bread、two pieces of bread"
+          ],
+          [
+            "paper（紙）",
+            "piece（一張）",
+            "a piece of paper、three pieces of paper"
+          ],
+          [
+            "advice（建議）",
+            "piece（一則）",
+            "a piece of advice、two pieces of advice"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "有幾個字特別容易踩雷，因為中文講起來明明就可以數。homework（功課）、information（消息）、advice（建議）、news（新聞）、furniture（家具）在英文裡全部都是不可數名詞，一律不加 s，前面也不加 a。中文說「三個建議」，英文要寫 three pieces of advice；中文說「一則消息」，英文要寫 a piece of information。"
+      },
+      {
+        "t": "ex",
+        "en": "My teacher gives me good advice.",
+        "zh": "我老師給我很好的建議。",
+        "focus": "advice"
+      },
+      {
+        "t": "tip",
+        "text": "news 這個字尾雖然有 s，它還是不可數名詞，講到它的時候當一件事情看，不要因為看到 s 就以為是複數。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I drink ___ every day.",
+        "options": [
+          "water",
+          "a water",
+          "waters",
+          "a waters"
+        ],
+        "answer": 0,
+        "explanation": "water 是不可數名詞，前面不加 a，後面也不加 s，直接寫 water 就好。中文說「喝水」前面也沒有量詞，這裡剛好一樣；a water 和 waters 都是把可數名詞的規則硬套上去。"
+      },
+      {
+        "q": "「一杯咖啡」的英文是哪一個？",
+        "options": [
+          "a coffee cup",
+          "one coffees",
+          "a cup coffee",
+          "a cup of coffee"
+        ],
+        "answer": 3,
+        "explanation": "不可數名詞要借容器來數，中間用 of 接起來，寫作 a cup of coffee。a cup coffee 少了 of；coffees 直接加 s 不對；a coffee cup 是在講杯子本身，也就是咖啡杯，不是一杯咖啡。"
+      },
+      {
+        "q": "My teacher gives me good ___.",
+        "options": [
+          "advices",
+          "advice",
+          "an advice",
+          "advicees"
+        ],
+        "answer": 1,
+        "explanation": "advice 是不可數名詞，不加 s 也不加 a。中文說「幾個建議」很自然，英文要講數量得寫成 two pieces of advice，直接寫 advices 是台灣學生非常常見的錯。"
+      },
+      {
+        "q": "下面哪一個是可數名詞？",
+        "options": [
+          "rice",
+          "chair",
+          "money",
+          "bread"
+        ],
+        "answer": 1,
+        "explanation": "chair（椅子）可以一張一張數，是可數名詞，能寫 a chair，也能寫 three chairs。rice、money、bread 都沒辦法直接數，要借單位，像 a bowl of rice、a piece of bread。"
+      },
+      {
+        "q": "I have two ___ of paper.",
+        "options": [
+          "piece",
+          "papers",
+          "paper",
+          "pieces"
+        ],
+        "answer": 3,
+        "explanation": "要加 s 的是前面的單位 piece，後面的 paper 不動，所以是 two pieces of paper。很多人會寫成 two piece of papers，剛好兩邊都弄反了。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "She buys three breads.",
+          "She buys three bread.",
+          "She buys three pieces of bread.",
+          "She buys a bread."
+        ],
+        "answer": 2,
+        "explanation": "bread 是不可數名詞，要數就借單位，寫成 three pieces of bread。breads 加了 s、a bread 加了 a，都是把可數名詞的規則套錯；three bread 有數字卻沒有單位，中間漏掉了 pieces of。"
+      },
+      {
+        "q": "下面哪一句沒有錯？",
+        "options": [
+          "There are two waters on the table.",
+          "There are two glass of water on the table.",
+          "There are two waters glass on the table.",
+          "There are two glasses of water on the table."
+        ],
+        "answer": 3,
+        "explanation": "water 不加 s，要數就借容器，而且加 s 的是容器 glass，所以寫成 two glasses of water。two waters 把不可數名詞當可數用；two glass of water 則是容器該加 s 卻沒加。"
+      },
+      {
+        "q": "下面哪一個字是不可數名詞？",
+        "options": [
+          "book",
+          "apple",
+          "information",
+          "student"
+        ],
+        "answer": 2,
+        "explanation": "information 是不可數名詞，不能寫 an information，也不能寫 informations，要講一則消息得說 a piece of information。apple、book、student 都可以一個一個數，前面能加 a，複數能加 s。"
+      }
+    ]
+  },
+  {
+    "id": "ga-03",
+    "title": "a 和 an：看發音不是看字母",
+    "goal": "會判斷該用 a 還是 an，知道判斷的依據是後面那個字的第一個聲音，而不是第一個字母。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「一本書」「一台車」「一顆蘋果」，那個「一」不管後面接什麼都長一樣。英文放在名詞前面表示「一個」的字叫做冠詞，有兩種寫法：a 和 an。這兩個意思完全一樣，差別只在唸起來順不順。規則是這樣：後面那個字的第一個聲音如果是母音，也就是 a、e、i、o、u 這五個字母發出來的聲音，就用 an；其他情況一律用 a。原因很單純，a apple 兩個母音黏在一起唸起來會卡住，中間插一個 n 就順了。"
+      },
+      {
+        "t": "ex",
+        "en": "She eats an apple every day.",
+        "zh": "她每天吃一顆蘋果。",
+        "focus": "an apple"
+      },
+      {
+        "t": "table",
+        "header": [
+          "用 a 的情況",
+          "用 an 的情況"
+        ],
+        "rows": [
+          [
+            "a car（c 的音不是母音）",
+            "an apple（a 的音是母音）"
+          ],
+          [
+            "a dog",
+            "an egg"
+          ],
+          [
+            "a teacher",
+            "an orange"
+          ],
+          [
+            "a student",
+            "an umbrella"
+          ],
+          [
+            "a big house",
+            "an old house"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "這一課真正的重點在這裡：判斷的依據是聲音，不是字母。有些字第一個字母是母音，可是唸起來根本不是母音的聲音；也有些字第一個字母不是 a、e、i、o、u，唸起來卻是母音開頭。碰到這種字要跟著耳朵走，不能只看眼睛。hour（小時）的 h 不發音，整個字唸起來是母音開頭，所以寫 an hour；honest（誠實的）也一樣，寫 an honest man。反過來 university 的 u 唸起來像「you」，開頭其實是 y 的音，所以寫 a university，不是 an university。"
+      },
+      {
+        "t": "ex",
+        "en": "I wait for an hour every day.",
+        "zh": "我每天等一個小時。",
+        "focus": "an hour"
+      },
+      {
+        "t": "ex",
+        "en": "My brother goes to a university in Taipei.",
+        "zh": "我哥哥在台北唸大學。",
+        "focus": "a university"
+      },
+      {
+        "t": "table",
+        "header": [
+          "這個字",
+          "第一個聲音是什麼",
+          "正確寫法"
+        ],
+        "rows": [
+          [
+            "hour",
+            "母音，h 不發音",
+            "an hour"
+          ],
+          [
+            "honest",
+            "母音，h 不發音",
+            "an honest man"
+          ],
+          [
+            "university",
+            "y 的音，不是母音",
+            "a university"
+          ],
+          [
+            "useful",
+            "y 的音，不是母音",
+            "a useful book"
+          ],
+          [
+            "uniform",
+            "y 的音，不是母音",
+            "a uniform"
+          ],
+          [
+            "umbrella",
+            "母音",
+            "an umbrella"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "還有一件事要先講清楚。a 和 an 的意思是「一個」，所以後面只能接單數的可數名詞。不能寫 a books，因為 books 是複數；也不能寫 a water，因為 water 是上一課講的不可數名詞。要接複數或不可數名詞的時候，得換別的字，這在後面幾課會慢慢講到。"
+      },
+      {
+        "t": "ex",
+        "en": "I put an egg in the box.",
+        "zh": "我把一顆蛋放進箱子裡。",
+        "focus": "an egg"
+      },
+      {
+        "t": "tip",
+        "text": "不確定該用哪一個的時候就唸出聲音，唸起來卡卡的那個通常就是用錯的。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "She has ___ old car.",
+        "options": [
+          "a",
+          "many",
+          "an",
+          "some"
+        ],
+        "answer": 2,
+        "explanation": "old 的第一個聲音是母音，所以用 an，寫成 a old 唸起來會卡住。many 後面要接可數名詞的複數，some 後面接複數或不可數名詞，這兩個都跟單數的 old car 對不起來。"
+      },
+      {
+        "q": "I wait for ___ hour every day.",
+        "options": [
+          "a",
+          "an",
+          "two",
+          "some"
+        ],
+        "answer": 1,
+        "explanation": "hour 的 h 不發音，整個字唸起來是母音開頭，所以用 an。很多人看到字母 h 就直覺寫 a，這一題就是要提醒你判斷靠的是聲音不是字母。two 後面要接複數，得寫成 two hours；some 也接不上單數的 hour。"
+      },
+      {
+        "q": "My brother goes to ___ university.",
+        "options": [
+          "a",
+          "two",
+          "an",
+          "many"
+        ],
+        "answer": 0,
+        "explanation": "university 的 u 唸起來是 y 的聲音，不是母音，所以用 a。這個字的第一個字母明明是母音，但規則看的是聲音，寫 an university 是很常見的錯。two 和 many 後面都要接複數名詞，跟單數的 university 對不起來。"
+      },
+      {
+        "q": "下面哪一個寫對了？",
+        "options": [
+          "an dog",
+          "an teacher",
+          "an car",
+          "an egg"
+        ],
+        "answer": 3,
+        "explanation": "egg 的第一個聲音是母音，配 an。dog、teacher、car 的開頭都不是母音的聲音，這三個要用 a。"
+      },
+      {
+        "q": "This is ___ useful book.",
+        "options": [
+          "an",
+          "a",
+          "some",
+          "many"
+        ],
+        "answer": 1,
+        "explanation": "useful 的 u 唸起來是 y 的聲音，不是母音，所以用 a。看到 u 就反射寫 an 是這一課最常出錯的地方；some 和 many 後面接的是複數或不可數名詞，跟單數的 book 對不起來。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "I eat a apple.",
+          "She is a honest girl.",
+          "He is an honest man.",
+          "We wait for a hour."
+        ],
+        "answer": 2,
+        "explanation": "honest 的 h 不發音，唸起來是母音開頭，要用 an。a apple 兩個母音黏在一起唸不順；honest 和 hour 都是不發 h 的字，所以第二句和第四句都用錯了。"
+      },
+      {
+        "q": "下面哪一句沒有錯？",
+        "options": [
+          "I want a water.",
+          "I want a rice.",
+          "I want a cup of coffee.",
+          "I want an information."
+        ],
+        "answer": 2,
+        "explanation": "a 和 an 後面只能接單數的可數名詞，water、rice、information 都是不可數名詞，前面不能加。要講一杯咖啡就借容器，寫成 a cup of coffee。"
+      },
+      {
+        "q": "下面哪一句的冠詞和單複數都對？",
+        "options": [
+          "She has a apples.",
+          "She has an apple.",
+          "She has an apples.",
+          "She has apple."
+        ],
+        "answer": 1,
+        "explanation": "an 後面接的是單數，所以 apple 不加 s；而 apple 的開頭是母音的聲音，所以用 an 不用 a。最後一句連冠詞都沒有，單數的可數名詞前面不能就這樣空著。"
+      }
+    ]
+  },
+  {
+    "id": "ga-04",
+    "title": "the：講到「那一個」的時候",
+    "goal": "知道 the 的意思是講的人和聽的人都清楚在講哪一個，會分辨什麼時候該用 a、什麼時候該換成 the。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我昨天買了一本書」，接著說「那本書很好看」。第一次講的時候對方還不知道是哪一本，所以說「一本」；第二次講的時候對方已經知道了，就改說「那本」。英文的 a 和 the 就是這個差別。a 的感覺是「隨便一個，你還不知道是哪個」，the 的感覺是「就是那一個，你我都清楚」。所以最常見的用法就是第一次提到用 a 或 an，之後再講到同一樣東西就換成 the。"
+      },
+      {
+        "t": "ex",
+        "en": "My friend has a cat. The cat sleeps all day.",
+        "zh": "我朋友有一隻貓。那隻貓整天都在睡。",
+        "focus": "The cat"
+      },
+      {
+        "t": "p",
+        "text": "不是只有講第二次才用 the。只要現場兩個人都知道你指的是哪一個，第一次講就可以直接用 the。你在教室裡跟同學說「把門關起來」，不用先說明是哪一扇門，因為大家都看得到只有那一扇。英文說 Please close the door. 就是這個道理。"
+      },
+      {
+        "t": "ex",
+        "en": "Please close the door.",
+        "zh": "請把門關起來。",
+        "focus": "the door"
+      },
+      {
+        "t": "p",
+        "text": "還有一種情況更直接：這世界上就只有那麼一個，不可能認錯，前面固定用 the。太陽是 the sun，月亮是 the moon，天空是 the sky，地球是 the earth。這幾個直接當成固定寫法記起來就好。"
+      },
+      {
+        "t": "ex",
+        "en": "The sun is very hot today.",
+        "zh": "今天太陽很曬。",
+        "focus": "The sun"
+      },
+      {
+        "t": "table",
+        "header": [
+          "什麼情況用 the",
+          "例子",
+          "為什麼"
+        ],
+        "rows": [
+          [
+            "第二次提到同一樣東西",
+            "I have a bike. The bike is old.",
+            "對方已經知道是哪一台"
+          ],
+          [
+            "現場雙方都清楚",
+            "Please open the window.",
+            "眼前就那一扇，不會認錯"
+          ],
+          [
+            "世界上只有一個",
+            "the sun、the moon",
+            "不可能指到別的"
+          ],
+          [
+            "後面接一串字把它限定住",
+            "the book on my desk",
+            "已經講清楚是哪一本了"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "最後那一種很好用。名詞後面接一串字，把它限定成某一個特定的東西，前面就要用 the。a book 是隨便一本書，the book on my desk 是我桌上那一本，講到這麼清楚了就不能再用 a。跟 a 很不一樣的一點是，the 後面單數、複數、不可數名詞都可以接。the book、the books、the water 全部成立，因為 the 只是在說「就是那個」，跟數量無關。a 就沒有這麼自由，它後面永遠只能放單數的可數名詞。"
+      },
+      {
+        "t": "ex",
+        "en": "The book on my desk is very old.",
+        "zh": "我桌上那本書很舊。",
+        "focus": "The book on my desk"
+      },
+      {
+        "t": "tip",
+        "text": "第一次提到就用 the，只有在對方也知道你指哪一個的時候才成立，不然對方心裡會冒出一句「哪一個？」。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I have a bike. ___ bike is very old.",
+        "options": [
+          "A",
+          "An",
+          "Some",
+          "The"
+        ],
+        "answer": 3,
+        "explanation": "第一句已經提過這台腳踏車，第二句再講同一台，你跟對方都知道是哪一台了，所以用 The。第一次提到才用 a；an 用在母音開頭的字前面；some 後面接複數或不可數名詞。"
+      },
+      {
+        "q": "Please close ___ window. It is cold.",
+        "options": [
+          "a",
+          "the",
+          "an",
+          "some"
+        ],
+        "answer": 1,
+        "explanation": "現場就那一扇窗，講的人和聽的人都知道是哪一扇，用 the。寫成 a window 會變成「隨便關一扇窗」，聽起來很奇怪。"
+      },
+      {
+        "q": "___ sun is very hot today.",
+        "options": [
+          "A",
+          "An",
+          "The",
+          "Some"
+        ],
+        "answer": 2,
+        "explanation": "太陽在這世界上只有一個，不可能認錯，前面固定用 The。這一類的字還有 the moon、the sky，直接當固定寫法記起來就好。"
+      },
+      {
+        "q": "___ book on my desk is very old.",
+        "options": [
+          "Some",
+          "A",
+          "An",
+          "The"
+        ],
+        "answer": 3,
+        "explanation": "後面的 on my desk 已經把是哪一本書指出來了，這時候前面要用 The。如果只說 a book，聽的人根本不知道是哪一本，也就不會再接一串字去限定它。"
+      },
+      {
+        "q": "你肚子餓，想吃一顆蘋果，對方還不知道你指的是哪一顆。下面哪一句最合適？",
+        "options": [
+          "I want an apple. I am hungry.",
+          "I want the apple. I am hungry.",
+          "I want apple. I am hungry.",
+          "I want a apple. I am hungry."
+        ],
+        "answer": 0,
+        "explanation": "肚子餓想吃顆蘋果，指的是隨便一顆，第一次提到用 an，因為 apple 是母音開頭。用 the apple 會變成特指某一顆，可是對方不知道是哪一顆；a apple 唸起來卡住；want apple 則是單數可數名詞前面空著。"
+      },
+      {
+        "q": "下面哪一句的 the 用得不對？",
+        "options": [
+          "The moon is very bright tonight.",
+          "Please pass me the salt.",
+          "I have a pen. The pen is blue.",
+          "I need the pen. Do you have one?"
+        ],
+        "answer": 3,
+        "explanation": "最後一句一邊說 the pen，好像雙方都知道是哪一支，一邊又問對方有沒有，前後矛盾，這裡應該說 I need a pen.。前三句分別是世界上只有一個、現場都看得到、第二次提到同一樣東西，都用得對。"
+      },
+      {
+        "q": "___ water in this glass is cold.",
+        "options": [
+          "The",
+          "A",
+          "An",
+          "Two"
+        ],
+        "answer": 0,
+        "explanation": "這杯裡的水是指定的那一些水，用 The。water 是不可數名詞，前面本來就不能加 a 或 an，也不能直接配數字，但 the 不管數量都接得上。"
+      },
+      {
+        "q": "下面哪一句的冠詞用得對？",
+        "options": [
+          "I have the two book.",
+          "There is a water in the glass.",
+          "The books on that table are new.",
+          "A books on that table are new."
+        ],
+        "answer": 2,
+        "explanation": "on that table 已經把是哪些書講清楚了，前面用 The，而且 the 後面接複數完全沒問題。a 只能接單數的可數名詞，所以 a books 是錯的，a water 把 a 加在不可數名詞前面也是錯的；the two book 前面說了 two，book 卻沒有跟著變複數。"
+      }
+    ]
+  },
+  {
+    "id": "ga-05",
+    "title": "不加冠詞的時候：通稱與專有名詞",
+    "goal": "知道什麼時候名詞前面三個冠詞都不用，包括講一整類東西、講人名地名，還有幾組固定講法。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "前面兩課講了 a、an 和 the，這一課講第三種選擇：什麼都不加。中文說「我喜歡狗」，前面沒有「一隻」也沒有「那隻」，因為你講的不是特定哪一隻狗，是狗這一整類動物。英文碰到這種情況，名詞前面就空著不放冠詞。這種講一整類的用法叫通稱。講通稱的時候，可數名詞要用複數而且不加冠詞，寫 I like dogs.。如果寫成 I like the dogs.，意思會變成「我喜歡那幾隻狗」，指的是眼前特定的那幾隻，跟原本想說的差很多。不可數名詞講通稱也一樣不加冠詞，Water is important. 就是說水這種東西很重要。"
+      },
+      {
+        "t": "ex",
+        "en": "I like dogs.",
+        "zh": "我喜歡狗。",
+        "focus": "dogs"
+      },
+      {
+        "t": "ex",
+        "en": "Water is important.",
+        "zh": "水很重要。",
+        "focus": "Water"
+      },
+      {
+        "t": "table",
+        "header": [
+          "寫法",
+          "意思"
+        ],
+        "rows": [
+          [
+            "I like dogs.",
+            "我喜歡狗，講的是狗這一整類"
+          ],
+          [
+            "I like the dogs.",
+            "我喜歡那幾隻狗，指眼前特定的"
+          ],
+          [
+            "Books are expensive.",
+            "書很貴，講的是書這一整類"
+          ],
+          [
+            "The books are expensive.",
+            "那幾本書很貴"
+          ],
+          [
+            "Water is important.",
+            "水很重要，講的是水這種東西"
+          ],
+          [
+            "The water is cold.",
+            "這些水很冰，指特定的那些"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "第二種不加冠詞的情況是專有名詞，也就是人名、國名、城市名、星期、月份、語言和科目這些獨一無二的名字。它們本身就已經指定好了，前面不需要再加東西去指定一次，所以寫 the Amy、a Taiwan 都不成立。"
+      },
+      {
+        "t": "ex",
+        "en": "Amy lives in Taipei.",
+        "zh": "Amy 住在台北。",
+        "focus": "Amy"
+      },
+      {
+        "t": "table",
+        "header": [
+          "類型",
+          "例子",
+          "寫出來長這樣"
+        ],
+        "rows": [
+          [
+            "人名",
+            "Amy、Mr. Chen",
+            "Amy is my friend."
+          ],
+          [
+            "國家、城市",
+            "Taiwan、Taipei、Japan",
+            "I live in Taipei."
+          ],
+          [
+            "星期、月份",
+            "Monday、May",
+            "We have class on Monday."
+          ],
+          [
+            "語言、科目",
+            "English、math",
+            "I study English every day."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "第三種是幾組固定講法，沒有什麼道理，硬記比較快。三餐的 have breakfast、have lunch、have dinner 前面不加冠詞；go to school、go to bed、go home 也不加。這些講的不是那棟建築或那張床，而是「上學」「睡覺」這件事本身。特別注意 go home 前面連 to 都不用。"
+      },
+      {
+        "t": "ex",
+        "en": "I have breakfast at seven.",
+        "zh": "我七點吃早餐。",
+        "focus": "breakfast"
+      },
+      {
+        "t": "tip",
+        "text": "中文說「回家」很容易讓人寫成 go to home，正確是 go home，這是被改到最多次的句子之一。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I like ___. They are cute animals.",
+        "options": [
+          "a dogs",
+          "the dogs",
+          "dogs",
+          "dog"
+        ],
+        "answer": 2,
+        "explanation": "講的是狗這一整類，可數名詞要用複數而且前面不加冠詞，寫 dogs 就好。the dogs 會變成特指那幾隻狗；a dogs 的 a 只能接單數；dog 單獨一個字既沒有冠詞也不是複數，講不通。"
+      },
+      {
+        "q": "___ is important for our body.",
+        "options": [
+          "A water",
+          "The water",
+          "Waters",
+          "Water"
+        ],
+        "answer": 3,
+        "explanation": "講的是水這種東西本身，不可數名詞前面不加冠詞也不加 s，直接寫 Water。The water 會變成特指某一些水，像杯子裡那些，跟這裡想講的通稱不一樣。"
+      },
+      {
+        "q": "___ lives in Taipei.",
+        "options": [
+          "The Amy",
+          "An Amy",
+          "Amy",
+          "A Amy"
+        ],
+        "answer": 2,
+        "explanation": "人名是專有名詞，本身就已經指定好是誰，前面不加冠詞。中文說「那個 Amy」是為了強調，英文寫成 the Amy 不成立。"
+      },
+      {
+        "q": "I go ___ at six every evening.",
+        "options": [
+          "home",
+          "to the home",
+          "to home",
+          "a home"
+        ],
+        "answer": 0,
+        "explanation": "go home 是固定講法，home 前面連 to 都不用。中文說「回家」很容易讓人寫成 go to home，這是台灣學生最常被改的句子之一。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "I have the breakfast at seven.",
+          "I have a breakfast at seven.",
+          "I have breakfasts at seven.",
+          "I have breakfast at seven."
+        ],
+        "answer": 3,
+        "explanation": "三餐前面不加冠詞也不加 s，直接寫 have breakfast。這是一組固定講法，講的是吃早餐這件事，不是某一份特定的早餐。"
+      },
+      {
+        "q": "你想說「我喜歡書」，講的是書這一整類。要寫哪一句？",
+        "options": [
+          "I like book.",
+          "I like the books.",
+          "I like a book.",
+          "I like books."
+        ],
+        "answer": 3,
+        "explanation": "講一整類東西要用複數而且不加冠詞，所以是 I like books.。I like the books 是說我喜歡那幾本特定的書；I like a book 是喜歡某一本；I like book 則是單數可數名詞前面空著，不成立。"
+      },
+      {
+        "q": "下面哪一句用得不對？",
+        "options": [
+          "The Japan is a beautiful country.",
+          "I study English every day.",
+          "The sun is very bright.",
+          "We have class on Monday."
+        ],
+        "answer": 0,
+        "explanation": "國名是專有名詞，前面不加 the，要寫 Japan is a beautiful country.。太陽只有一個所以配 the；English 這種語言名稱和 Monday 這種星期名稱都是專有名詞，前面同樣不加冠詞。"
+      },
+      {
+        "q": "下面哪一句符合英文的固定講法？",
+        "options": [
+          "My brother goes to the bed at ten.",
+          "My brother goes to bed at ten.",
+          "My brother goes to a bed at ten.",
+          "My brother goes bed at ten."
+        ],
+        "answer": 1,
+        "explanation": "go to bed 是固定講法，bed 前面不加冠詞，講的是去睡覺這件事而不是那張床。真的要講走向某一張床才會說 go to the bed，日常講睡覺不這樣用；最後一句則是少了 to。"
+      }
+    ]
+  },
+  {
+    "id": "ga-06",
+    "title": "some 和 any：肯定句、否定句、問句",
+    "goal": "會用 some 和 any 講不確定的數量，知道肯定句、否定句和問句各該用哪一個，也知道請人幫忙時的例外。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我有一些朋友」「我沒有任何朋友」「你有任何問題嗎」，「一些」和「任何」是兩個不同的詞，用在不同語氣的句子裡。英文的 some 和 any 差不多是這個分工，只是英文分得更死：看這句話是肯定句、否定句還是問句，來決定用哪一個。肯定句用 some，否定句和問句用 any。"
+      },
+      {
+        "t": "ex",
+        "en": "I have some friends in Japan.",
+        "zh": "我在日本有一些朋友。",
+        "focus": "some"
+      },
+      {
+        "t": "p",
+        "text": "否定句裡的 any 配上 not，整句的意思是「一個也沒有」，語氣比中文的「沒有」還要乾淨俐落。問句裡的 any 則是「有沒有任何」，講的人心裡沒有預設答案，只是單純在問。"
+      },
+      {
+        "t": "ex",
+        "en": "Do you have any questions?",
+        "zh": "你有任何問題嗎？",
+        "focus": "any"
+      },
+      {
+        "t": "table",
+        "header": [
+          "句型",
+          "用哪一個",
+          "例句"
+        ],
+        "rows": [
+          [
+            "肯定句",
+            "some",
+            "I have some books."
+          ],
+          [
+            "否定句",
+            "any",
+            "I do not have any books."
+          ],
+          [
+            "問句",
+            "any",
+            "Do you have any books?"
+          ],
+          [
+            "請人幫忙、給人東西的問句",
+            "some",
+            "Would you like some tea?"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "some 和 any 後面可以接兩種東西：可數名詞的複數，或不可數名詞。some books、some water 都對，但 some book 這種單數寫法不成立，因為 some 講的本來就不只一個。這一點跟前面學的 a 剛好互補，a 只接單數，some 和 any 只接複數或不可數。"
+      },
+      {
+        "t": "ex",
+        "en": "She buys some apples every week.",
+        "zh": "她每個星期買一些蘋果。",
+        "focus": "some apples"
+      },
+      {
+        "t": "p",
+        "text": "有一個例外一定要記。問句如果是在請人幫忙、給人東西或提出邀請，習慣用 some 不用 any，因為講的人心裡已經預期對方會說好。Would you like some tea? 是請你喝茶，不是在調查你身上有沒有茶。Can I have some water? 也是同樣的道理，是在開口要，不是在問有沒有。"
+      },
+      {
+        "t": "ex",
+        "en": "Would you like some tea?",
+        "zh": "要不要喝點茶？",
+        "focus": "some tea"
+      },
+      {
+        "t": "tip",
+        "text": "some 和 any 後面接可數名詞的時候一定是複數，寫成 some friend、any question 都漏掉了那個 s。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I have ___ friends in Japan.",
+        "options": [
+          "any",
+          "a",
+          "some",
+          "much"
+        ],
+        "answer": 2,
+        "explanation": "這是肯定句，用 some。any 主要出現在否定句和問句；a 只能接單數，跟複數的 friends 對不起來；much 後面接的是不可數名詞。"
+      },
+      {
+        "q": "I do not have ___ money.",
+        "options": [
+          "some",
+          "a",
+          "any",
+          "many"
+        ],
+        "answer": 2,
+        "explanation": "否定句要用 any，配上 not 就是「一毛錢也沒有」。肯定句才用 some；money 是不可數名詞，前面不能加 a，也不能配只接複數的 many。"
+      },
+      {
+        "q": "Do you have ___ questions?",
+        "options": [
+          "any",
+          "a",
+          "much",
+          "some"
+        ],
+        "answer": 0,
+        "explanation": "單純在問有沒有，問句用 any。some 主要用在肯定句；a 後面只能接單數，這裡是複數的 questions；question 可以一個一個數，不能配只接不可數名詞的 much。"
+      },
+      {
+        "q": "Would you like ___ coffee?",
+        "options": [
+          "some",
+          "any",
+          "a",
+          "many"
+        ],
+        "answer": 0,
+        "explanation": "問句原則上用 any，但這一句是在請對方喝咖啡，講的人預期答案是好，這種請人吃喝或幫忙的問句習慣用 some。coffee 在這裡是不可數名詞，所以 a 和 many 都接不上。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "I have some book.",
+          "I do not have some books.",
+          "I have any books.",
+          "I have some books."
+        ],
+        "answer": 3,
+        "explanation": "肯定句用 some，而且 some 後面接可數名詞時要用複數，所以是 some books。some book 漏了 s；否定句要換成 any；肯定句用 any 也不對。"
+      },
+      {
+        "q": "My father does not want ___ help.",
+        "options": [
+          "some",
+          "any",
+          "a",
+          "many"
+        ],
+        "answer": 1,
+        "explanation": "否定句用 any。help 在這裡是不可數名詞，前面不能加 a，也不能配只接可數複數的 many；肯定句才用 some。"
+      },
+      {
+        "q": "I do not have ___ information about the meeting.",
+        "options": [
+          "any",
+          "many",
+          "a",
+          "some"
+        ],
+        "answer": 0,
+        "explanation": "否定句用 any，而且 information 是不可數名詞，any 剛好兩種名詞都能接。many 只接可數名詞的複數；a 不能加在不可數名詞前面；some 用在肯定句。"
+      },
+      {
+        "q": "下面哪一句的 some 和 any 用得對？",
+        "options": [
+          "Do you want some any tea?",
+          "I have any questions.",
+          "She does not have some friends here.",
+          "Do you have any brothers?"
+        ],
+        "answer": 3,
+        "explanation": "問句用 any，後面接複數的 brothers 也對。第一句 some 和 any 疊在一起不成立；第二句是肯定句該用 some；第三句是否定句該用 any。"
+      }
+    ]
+  },
+  {
+    "id": "ga-07",
+    "title": "much、many、a lot of：中文的一個「很多」，英文分成三個字",
+    "goal": "會用 many 配可數名詞、much 配不可數名詞，知道 a lot of 兩邊都能接，也知道 much 為什麼很少出現在肯定句。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文只有一個「很多」，很多書、很多水都是同樣那兩個字。英文分成兩個字來講：可以一個一個數的東西用 many，數不出來的用 much。這是前面可數名詞和不可數名詞那一課的直接延伸，所以那一課如果還有點模糊，先回去看一眼再往下讀會比較順。"
+      },
+      {
+        "t": "p",
+        "text": "many 後面一定接可數名詞的複數，像 many books、many friends、many people。寫成 many book 就漏掉了 s。much 後面接不可數名詞，而且名詞本身不加 s，像 much water、much money、much time。判斷方法很簡單，先問自己這個東西能不能一個一個數，答案就出來了。"
+      },
+      {
+        "t": "ex",
+        "en": "I have many books at home.",
+        "zh": "我家裡有很多書。",
+        "focus": "many books"
+      },
+      {
+        "t": "ex",
+        "en": "He does not have much money.",
+        "zh": "他沒有很多錢。",
+        "focus": "much money"
+      },
+      {
+        "t": "table",
+        "header": [
+          "用哪一個",
+          "後面接什麼",
+          "例子"
+        ],
+        "rows": [
+          [
+            "many",
+            "可數名詞的複數",
+            "many books、many friends、many people"
+          ],
+          [
+            "much",
+            "不可數名詞，不加 s",
+            "much water、much money、much time"
+          ],
+          [
+            "a lot of",
+            "兩種都可以",
+            "a lot of books、a lot of water"
+          ],
+          [
+            "How many",
+            "可數名詞的複數",
+            "How many books do you have?"
+          ],
+          [
+            "How much",
+            "不可數名詞",
+            "How much water do you drink?"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "這裡有一個很多人不知道的習慣。much 放在肯定句裡聽起來很生硬，母語人士平常不太這樣講。I have much money. 文法上挑不出毛病，但沒有人會這樣說，一般會講 I have a lot of money.。much 主要出現在否定句和問句裡，像 I do not drink much coffee. 和 Do you have much time?，這兩個位置才是它的主場。"
+      },
+      {
+        "t": "ex",
+        "en": "I do not drink much coffee.",
+        "zh": "我不太喝咖啡。",
+        "focus": "much coffee"
+      },
+      {
+        "t": "p",
+        "text": "a lot of 就沒有這個限制。肯定句、否定句、問句都能用，後面接可數名詞的複數或不可數名詞也都行。你如果一時想不起來該用 many 還是 much，a lot of 是最安全的選擇，講出來不會錯。"
+      },
+      {
+        "t": "ex",
+        "en": "She has a lot of friends.",
+        "zh": "她有很多朋友。",
+        "focus": "a lot of friends"
+      },
+      {
+        "t": "tip",
+        "text": "問數量的時候一樣要分，可以數的用 How many 加複數，數不出來的用 How much 加不可數名詞。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I have ___ books at home.",
+        "options": [
+          "much",
+          "a lot",
+          "many",
+          "a many"
+        ],
+        "answer": 2,
+        "explanation": "book 可以一個一個數，要用 many，後面接複數的 books。much 只配不可數名詞；a lot 後面少了 of，要寫成 a lot of books；a many 這種寫法不存在。"
+      },
+      {
+        "q": "He does not have ___ money.",
+        "options": [
+          "many",
+          "much",
+          "many of",
+          "a many"
+        ],
+        "answer": 1,
+        "explanation": "money 是不可數名詞，要配 much，而且這是否定句，正好是 much 最自然的位置。many 只能接可數名詞的複數，如果硬寫成 many moneys 就錯得更徹底了。"
+      },
+      {
+        "q": "How ___ students do you have in your class?",
+        "options": [
+          "a lot of",
+          "much",
+          "many",
+          "lot of"
+        ],
+        "answer": 2,
+        "explanation": "student 可以一個一個數，問數量用 How many，後面接複數。How much 是問數不出來的東西，像 How much water；a lot of 是在陳述「很多」，不能拿來問問題。"
+      },
+      {
+        "q": "How ___ water do you drink every day?",
+        "options": [
+          "many",
+          "few",
+          "a lot of",
+          "much"
+        ],
+        "answer": 3,
+        "explanation": "water 是不可數名詞，問數量用 How much。How many 後面要接可數名詞的複數，而 water 加不了 s，所以接不上；few 也是只配可數名詞。"
+      },
+      {
+        "q": "下面哪一句聽起來最自然？",
+        "options": [
+          "I have much friends.",
+          "I have much friend.",
+          "I have many friend.",
+          "I have many friends."
+        ],
+        "answer": 3,
+        "explanation": "friend 可以數，要用 many 而且後面加 s，寫成 many friends。前兩句把只配不可數名詞的 much 用在可數名詞上；many friend 則是漏掉複數的 s。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "I have a lot of homework and a lot of time.",
+          "I have much homework and many time.",
+          "I have many homework and much time.",
+          "I have many homeworks and many times."
+        ],
+        "answer": 0,
+        "explanation": "homework 和 time 在這裡都是不可數名詞，a lot of 兩種名詞都能接，所以第一句最保險。many 只能接可數名詞的複數，homeworks 和 times 這種加 s 的寫法在這個意思下不成立。"
+      },
+      {
+        "q": "She has ___ friends in Taipei.",
+        "options": [
+          "much",
+          "a lot",
+          "a lot of",
+          "much of"
+        ],
+        "answer": 2,
+        "explanation": "friends 是可數名詞的複數，a lot of 接得上，寫成 a lot of friends。a lot 後面少了 of；much 只接不可數名詞；much of 在這裡也接不上複數的 friends。"
+      },
+      {
+        "q": "I do not have ___ time today.",
+        "options": [
+          "many",
+          "much",
+          "a much",
+          "some many"
+        ],
+        "answer": 1,
+        "explanation": "time 是不可數名詞，要配 much，而且否定句正是 much 最自然的位置。many 只接可數名詞的複數；a much 和 some many 這兩種寫法都不存在。"
+      }
+    ]
+  },
+  {
+    "id": "ga-08",
+    "title": "little、few 和 a little、a few：差一個 a，意思整個翻過來",
+    "goal": "會用 a few 和 a little 講「有一些」，用 few 和 little 講「幾乎沒有」，也分得出哪一組配可數名詞、哪一組配不可數名詞。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "這一課有兩件事要同時分清楚。第一件是後面接可數還是不可數名詞：few 這一組配可數名詞的複數，little 這一組配不可數名詞。分法跟上一課的 many 和 much 完全一樣，所以 a few books、a few friends 對，a little water、a little money 也對。"
+      },
+      {
+        "t": "ex",
+        "en": "Please give me a little water.",
+        "zh": "請給我一點水。",
+        "focus": "a little water"
+      },
+      {
+        "t": "p",
+        "text": "第二件事比較麻煩，也是這一課真正的重點。加了 a 的 a few 和 a little 是正面的語氣，意思是「有一些，雖然不多但夠用」。拿掉 a 的 few 和 little 是負面的語氣，意思是「幾乎沒有」。同樣一個名詞，差一個字母 a，聽起來就完全相反。中文沒有這種靠一個字母翻轉語氣的做法，所以特別容易搞混。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "寫法",
+          "後面接什麼",
+          "語氣",
+          "中文大概是"
+        ],
+        "rows": [
+          [
+            "a few",
+            "可數名詞的複數",
+            "正面",
+            "有幾個，不多但有"
+          ],
+          [
+            "few",
+            "可數名詞的複數",
+            "負面",
+            "幾乎沒有幾個"
+          ],
+          [
+            "a little",
+            "不可數名詞",
+            "正面",
+            "有一點，還夠"
+          ],
+          [
+            "little",
+            "不可數名詞",
+            "負面",
+            "幾乎沒有了"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "成對放在一起比一下就很清楚。同樣講朋友，I have a few friends here. 是說我在這裡有幾個朋友，語氣是安心的；I have few friends here. 是說我在這裡幾乎沒有朋友，語氣是孤單的。同樣講時間，We have a little time. 是還有一點時間，來得及；We have little time. 是幾乎沒時間了，快來不及。"
+      },
+      {
+        "t": "ex",
+        "en": "I have a few friends here.",
+        "zh": "我在這裡有幾個朋友。",
+        "focus": "a few"
+      },
+      {
+        "t": "ex",
+        "en": "I have few friends here.",
+        "zh": "我在這裡幾乎沒有朋友。",
+        "focus": "few"
+      },
+      {
+        "t": "ex",
+        "en": "We have little time.",
+        "zh": "我們幾乎沒有時間了。",
+        "focus": "little"
+      },
+      {
+        "t": "p",
+        "text": "台灣學生最常出的錯是想講「我有幾個朋友」，結果寫成 I have few friends.，聽的人會以為你在抱怨自己沒朋友。想表達正面的「有一些」，那個 a 絕對不能掉。寫完句子多看一眼那個 a，是這一課唯一要養成的習慣。"
+      },
+      {
+        "t": "tip",
+        "text": "a little 和 little 後面的名詞不加 s，a few 和 few 後面的名詞一定要加 s，這一點跟 much 和 many 是同一套邏輯。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I have ___ friends in Tainan. We often eat together.",
+        "options": [
+          "a few",
+          "little",
+          "much",
+          "a little"
+        ],
+        "answer": 0,
+        "explanation": "friends 是可數名詞的複數，而且後面說常一起吃飯，表示真的有幾個朋友，語氣是正面的，所以用 a few。a little 和 little 只接不可數名詞，much 也是只接不可數名詞。"
+      },
+      {
+        "q": "Please give me ___ water.",
+        "options": [
+          "a little",
+          "a few",
+          "a many",
+          "little of"
+        ],
+        "answer": 0,
+        "explanation": "water 是不可數名詞，而且是開口要一點水，語氣正面，所以用 a little。a few 只接可數名詞的複數；如果寫成 little water，語氣會變成「幾乎沒有水」，跟請對方給你水的意思剛好相反。"
+      },
+      {
+        "q": "We have ___ time. Hurry up!",
+        "options": [
+          "a little",
+          "a few",
+          "few",
+          "little"
+        ],
+        "answer": 3,
+        "explanation": "後面叫人快一點，表示時間快不夠了，要用沒有 a 的 little，意思是幾乎沒時間。a little time 是「還有一點時間」，語氣不合；time 在這裡是不可數名詞，所以 a few 和 few 都接不上。"
+      },
+      {
+        "q": "She has ___ money. She cannot buy the book.",
+        "options": [
+          "a little",
+          "little",
+          "a few",
+          "few"
+        ],
+        "answer": 1,
+        "explanation": "後面說她買不起，表示錢幾乎沒有，用沒有 a 的 little。a little money 是「還有一點錢」，語氣不合；money 是不可數名詞，a few 和 few 只接可數名詞的複數。"
+      },
+      {
+        "q": "你想說「我有幾個問題想問你」。I have ___ questions for you.",
+        "options": [
+          "little",
+          "few",
+          "a little",
+          "a few"
+        ],
+        "answer": 3,
+        "explanation": "想問幾個問題是正面的語氣，而且 question 可以數，所以用 a few。如果寫成 few questions，聽起來會變成「我幾乎沒有問題」，那就不用問了。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "I have a few money.",
+          "I have a little milk.",
+          "I have few money.",
+          "I have a little friends."
+        ],
+        "answer": 1,
+        "explanation": "milk 是不可數名詞，配 a little。money 也是不可數名詞，所以 a few money 和 few money 都配錯了；friends 是可數名詞的複數，該配 a few 而不是 a little。"
+      },
+      {
+        "q": "下面哪一句配 information 配得對？",
+        "options": [
+          "He has a little information.",
+          "He has a few informations.",
+          "He has a few information.",
+          "He has little informations."
+        ],
+        "answer": 0,
+        "explanation": "information 是不可數名詞而且不加 s，要配 a little。a few 只接可數名詞的複數；加了 s 的 informations 本身就是錯的寫法。"
+      },
+      {
+        "q": "你想說「我們班上學生很少，幾乎沒幾個人」。My class has ___ students.",
+        "options": [
+          "a few",
+          "a little",
+          "few",
+          "little"
+        ],
+        "answer": 2,
+        "explanation": "講的是幾乎沒有，要用沒有 a 的 few，而 student 可以數，所以是 few students。a few students 是「有幾個學生」，語氣剛好相反；little 和 a little 只接不可數名詞。"
+      }
+    ]
+  },
+  {
+    "id": "ga-09",
+    "title": "代名詞：主格與受格，I 和 me 什麼時候換",
+    "goal": "會用 I、he、she 這一排當句子的主角，用 me、him、her 這一排接在動作後面，也分得出兩排什麼時候該換。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "你跟朋友說「小明昨天很累，小明六點就起床」，講兩次小明很奇怪，中文會改說「他六點就起床」。這種用來代替名字的字就叫代名詞。英文的代名詞有一個中文完全沒有的麻煩：同一個人放在句子的不同位置，長相會跟著換。中文的「我」不管放哪裡都是「我」，我喜歡他、他喜歡我，兩句的「我」長一樣；英文不是這樣。"
+      },
+      {
+        "t": "p",
+        "text": "規則是這樣：這個代名詞如果是在講「誰做這件事」，通常放在句子最前面，用主格；如果是在講「這件事發生在誰身上」，放在動作後面，用受格。所以是 I like him.（我喜歡他）和 He likes me.（他喜歡我），兩句裡的「我」一個是 I 一個是 me。"
+      },
+      {
+        "t": "ex",
+        "en": "I like him.",
+        "zh": "我喜歡他。",
+        "focus": "I"
+      },
+      {
+        "t": "ex",
+        "en": "He likes me.",
+        "zh": "他喜歡我。",
+        "focus": "me"
+      },
+      {
+        "t": "table",
+        "header": [
+          "中文",
+          "主格：做動作的那一個",
+          "受格：動作落在他身上的"
+        ],
+        "rows": [
+          [
+            "我",
+            "I",
+            "me"
+          ],
+          [
+            "你、你們",
+            "you",
+            "you"
+          ],
+          [
+            "他",
+            "he",
+            "him"
+          ],
+          [
+            "她",
+            "she",
+            "her"
+          ],
+          [
+            "它",
+            "it",
+            "it"
+          ],
+          [
+            "我們",
+            "we",
+            "us"
+          ],
+          [
+            "他們、她們、它們",
+            "they",
+            "them"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "表格裡有兩個字比較好命，you 和 it 不管在哪個位置都不變，這兩個不用煩惱。剩下五組要記熟。另外提醒一件事，中文的「他」講出口不分男女，寫出來才有他和她的差別；英文說出來就分了，he 是男生、she 是女生、it 用在東西和動物，指不認識的東西不要隨便用 he 或 she。"
+      },
+      {
+        "t": "ex",
+        "en": "This is my cat. It sleeps all day.",
+        "zh": "這是我的貓。牠整天都在睡。",
+        "focus": "It"
+      },
+      {
+        "t": "p",
+        "text": "最常見的錯是把主格放在動作後面。中文「我愛她」照順序直接搬過去很容易寫成 I love she.，正確是 I love her.。還有一種情況也要用受格，就是接在 to、for、with 這幾個小字後面，所以是 Give it to me.，不是 Give it to I.。"
+      },
+      {
+        "t": "ex",
+        "en": "My mother gives the book to me.",
+        "zh": "我媽媽把那本書給我。",
+        "focus": "to me"
+      },
+      {
+        "t": "tip",
+        "text": "不管 I 出現在句子的哪個位置都要大寫，寫成小寫的 i 是最容易被抓到的錯。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Amy is my friend. ___ is very kind.",
+        "options": [
+          "Them",
+          "He",
+          "It",
+          "She"
+        ],
+        "answer": 3,
+        "explanation": "Amy 是女生，而且是這一句的主角，要用主格 She。He 是男生用的；It 用在東西和動物；Them 是受格而且是複數，放在句子最前面當主角不對。"
+      },
+      {
+        "q": "Tom is my classmate. I like ___.",
+        "options": [
+          "he",
+          "his",
+          "him",
+          "he is"
+        ],
+        "answer": 2,
+        "explanation": "喜歡這個動作落在 Tom 身上，要用受格 him。he 是他自己當主角時才用；his 是「他的」，這一句不是在講誰的東西；he is 是一句話的開頭，放進去會多出一個動作。"
+      },
+      {
+        "q": "My parents are very kind. I love ___.",
+        "options": [
+          "them",
+          "their",
+          "theirs",
+          "they"
+        ],
+        "answer": 0,
+        "explanation": "愛這個動作落在父母身上，要用受格 them。they 是他們自己當主角時才用；their 是「他們的」後面要接名詞；theirs 是「他們的東西」。"
+      },
+      {
+        "q": "My brother and I are students. ___ go to the same school.",
+        "options": [
+          "They",
+          "We",
+          "You",
+          "Us"
+        ],
+        "answer": 1,
+        "explanation": "「我哥哥和我」包含我自己在內，等於「我們」，當主角要用主格 We。They 是不包含自己的那群人；You 是在講對方，跟句子裡的「我哥哥和我」不是同一群人；Us 是受格，不能放在句子最前面。"
+      },
+      {
+        "q": "你想說「我愛她」。下面哪一句寫對了？",
+        "options": [
+          "I love she.",
+          "I love hers.",
+          "Me love her.",
+          "I love her."
+        ],
+        "answer": 3,
+        "explanation": "愛這個動作落在她身上，要用受格 her。I love she 是照中文「我愛她」的順序直接搬過去的錯句；Me 是受格不能當主角；hers 是「她的東西」，跟這裡的意思不合。"
+      },
+      {
+        "q": "My mother gives the book to ___.",
+        "options": [
+          "I",
+          "me",
+          "my",
+          "mine"
+        ],
+        "answer": 1,
+        "explanation": "to 這一類的字後面接的一律是受格，所以用 me。I 只在自己當主角時用；my 是「我的」後面要接名詞；mine 是「我的東西」，這裡前面已經講了 the book，不需要再講一次。"
+      },
+      {
+        "q": "This is my new phone. ___ is very light.",
+        "options": [
+          "It",
+          "She",
+          "He",
+          "They"
+        ],
+        "answer": 0,
+        "explanation": "手機是東西，用 It。中文說「它很輕」不太會意識到有沒有分性別，英文則規定人以外的東西一律用 it；They 是兩個以上才用。"
+      },
+      {
+        "q": "下面哪一句的主格和受格都放對位置？",
+        "options": [
+          "Her helps me every day.",
+          "She helps me every day.",
+          "Her helps I every day.",
+          "She helps I every day."
+        ],
+        "answer": 1,
+        "explanation": "做動作的那一個用主格 She，動作落在誰身上用受格 me，兩邊各站各的位置。Her 不能當主角，I 也不能放在動作後面，這兩個位置一旦互換就是錯的。"
+      }
+    ]
+  },
+  {
+    "id": "ga-10",
+    "title": "所有格：my 和 mine，還有名詞後面那一撇",
+    "goal": "會用 my、your、his 這一類字說「誰的」，也會用名詞加上一撇加 s 表示所有，並且分得出 my 和 mine 的差別。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我的書」「Amy 的書」，中間都是同一個「的」字。英文分成兩套做法：代名詞有自己的一套變化，一般名詞則是在後面加上一撇再加 s。這一整套講「誰的」的用法就叫所有格。先看代名詞這一套：my（我的）、your（你的）、his（他的）、her（她的）、its（它的）、our（我們的）、their（他們的）。這一排後面一定要接名詞，不能單獨用。"
+      },
+      {
+        "t": "ex",
+        "en": "This is my book.",
+        "zh": "這是我的書。",
+        "focus": "my"
+      },
+      {
+        "t": "table",
+        "header": [
+          "主格",
+          "所有格：後面要接名詞",
+          "所有格：可以單獨用"
+        ],
+        "rows": [
+          [
+            "I",
+            "my",
+            "mine"
+          ],
+          [
+            "you",
+            "your",
+            "yours"
+          ],
+          [
+            "he",
+            "his",
+            "his"
+          ],
+          [
+            "she",
+            "her",
+            "hers"
+          ],
+          [
+            "it",
+            "its",
+            "沒有單獨用的形式"
+          ],
+          [
+            "we",
+            "our",
+            "ours"
+          ],
+          [
+            "they",
+            "their",
+            "theirs"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "表格最右邊那一排是可以單獨用的形式。當雙方已經知道在講什麼東西，你不想再講一次那個名詞，就用 mine、yours、hers 這一排。This is my book. 和 This book is mine. 意思完全一樣，差別只在後面有沒有再把 book 講出來。要注意 mine 後面不能再接名詞，寫 mine book 是錯的。接下來是一般名詞。人名或指人的名詞後面加上一撇再加 s，就變成「誰的」。Amy's book 是 Amy 的書，my father's car 是我爸爸的車。如果那個名詞本身是複數而且已經是 s 結尾，就只加一撇，不用再加一個 s，像 the students' room。但如果複數本身不是 s 結尾，像 children，那還是照樣加一撇加 s，寫成 the children's toys。"
+      },
+      {
+        "t": "ex",
+        "en": "This book is mine.",
+        "zh": "這本書是我的。",
+        "focus": "mine"
+      },
+      {
+        "t": "ex",
+        "en": "My father's car is very old.",
+        "zh": "我爸爸的車很舊。",
+        "focus": "My father's"
+      },
+      {
+        "t": "table",
+        "header": [
+          "名詞長什麼樣",
+          "怎麼寫",
+          "例子"
+        ],
+        "rows": [
+          [
+            "單數",
+            "加一撇加 s",
+            "Amy's book、my father's car"
+          ],
+          [
+            "複數，s 結尾",
+            "只加一撇",
+            "the students' room、my parents' house"
+          ],
+          [
+            "複數，不是 s 結尾",
+            "加一撇加 s",
+            "the children's toys、the women's room"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "最後講一組非常容易寫錯的字。its 是「它的」，沒有撇號；it's 是 it is 縮起來的寫法，有撇號。中間差一個符號，意思完全不同。同樣的還有 your（你的）和 you're（you are）。記住一個大原則：代名詞的所有格那一排全部都沒有撇號，只有名詞加所有格才會出現撇號，剛好跟直覺相反。"
+      },
+      {
+        "t": "ex",
+        "en": "My cat likes its new bed.",
+        "zh": "我的貓喜歡牠的新床。",
+        "focus": "its"
+      },
+      {
+        "t": "tip",
+        "text": "寫完句子回頭看一眼撇號，its 和 it's 這一組是英文裡被寫錯最多次的字。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "This is ___ book. I bought it yesterday.",
+        "options": [
+          "me",
+          "my",
+          "mine",
+          "I"
+        ],
+        "answer": 1,
+        "explanation": "後面接了名詞 book，要用 my。mine 是單獨用的形式，後面不能再接名詞，得說成 This book is mine.；me 是受格，I 是主格，這兩個都不能表示「我的」。"
+      },
+      {
+        "q": "That car is ___.",
+        "options": [
+          "theirs",
+          "their",
+          "them",
+          "they"
+        ],
+        "answer": 0,
+        "explanation": "後面沒有再接名詞，要用單獨用的 theirs。their 後面一定要接名詞，像 their car；them 是受格；they 是主格。"
+      },
+      {
+        "q": "This is ___ bag.（這是 Amy 的包包。）",
+        "options": [
+          "Amys",
+          "Amy's",
+          "Amy",
+          "Amys'"
+        ],
+        "answer": 1,
+        "explanation": "人名後面加一撇加 s 表示「誰的」，寫成 Amy's。Amys 少了撇號，看起來像兩個 Amy；Amy 什麼都沒加就不是所有格；Amys' 是複數才用的寫法。"
+      },
+      {
+        "q": "The ___ room is on the second floor.（那間學生們的房間）",
+        "options": [
+          "students",
+          "students'",
+          "students's",
+          "student's"
+        ],
+        "answer": 1,
+        "explanation": "students 是複數而且已經是 s 結尾，只要加一撇就好，寫成 students'。students's 多加了一個 s；student's 是一個學生的；students 沒有撇號就只是複數，不是所有格。"
+      },
+      {
+        "q": "My cat likes ___ new bed.",
+        "options": [
+          "it's",
+          "it",
+          "its'",
+          "its"
+        ],
+        "answer": 3,
+        "explanation": "這裡要說「牠的」，用 its，沒有撇號。it's 是 it is 縮起來的，放進去整句會變成 My cat likes it is new bed，根本讀不通；its' 這種寫法不存在。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "This pen is my.",
+          "This is mine pen.",
+          "This pen is mine.",
+          "This is my's pen."
+        ],
+        "answer": 2,
+        "explanation": "後面沒有再接名詞，要用 mine。my 不能單獨用，一定要接名詞；mine 後面不能接名詞；my's 這種寫法不存在，代名詞的所有格一律沒有撇號。"
+      },
+      {
+        "q": "The ___ toys are on the floor.（那些小孩的玩具）",
+        "options": [
+          "children's",
+          "childrens'",
+          "children",
+          "childrens"
+        ],
+        "answer": 0,
+        "explanation": "children 本身已經是複數，但它不是 s 結尾，所以照樣加一撇加 s，寫成 children's。children 沒有撇號，只是複數，不是所有格；childrens 和 childrens' 的問題則出在又多加了一個表示複數的 s。"
+      },
+      {
+        "q": "下面哪一句的所有格用得對？",
+        "options": [
+          "She brother is my friend.",
+          "Hers brother is my friend.",
+          "Her brother is my friend.",
+          "Her's brother is my friend."
+        ],
+        "answer": 2,
+        "explanation": "後面接了名詞 brother，要用 her。hers 是單獨用的形式，後面不能接名詞；she 是主格，不能表示「她的」；her's 這種寫法不存在。"
+      }
+    ]
+  },
+  {
+    "id": "ga-11",
+    "title": "this、that、these、those：這個那個，一個字管遠近也管數量",
+    "goal": "會用 this、that、these、those 指出眼前的人或東西，分得出遠近和單數複數這四種組合。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「這本書」「那本書」「這些書」「那些書」，靠「這」和「那」分遠近，靠有沒有「些」分數量。英文用 this、that、these、those 這四個字，一個字同時包辦遠近和單複數，所以剛好排成一個四格表。近的東西用 this 和 these，遠的東西用 that 和 those；一個用 this 和 that，兩個以上用 these 和 those。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "距離",
+          "單數：一個",
+          "複數：兩個以上"
+        ],
+        "rows": [
+          [
+            "近的（這）",
+            "this",
+            "these"
+          ],
+          [
+            "遠的（那）",
+            "that",
+            "those"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "this 和 that 後面接單數名詞，these 和 those 後面接複數名詞，這一點絕對不能混。this books 和 these book 都是錯的。至於遠近怎麼分，手伸出去碰得到、或是在講話的人身邊的用 this 和 these；離得比較遠、要用手指出去的用 that 和 those。"
+      },
+      {
+        "t": "ex",
+        "en": "This book is very interesting.",
+        "zh": "這本書很有趣。",
+        "focus": "This book"
+      },
+      {
+        "t": "ex",
+        "en": "These books are very interesting.",
+        "zh": "這些書很有趣。",
+        "focus": "These books"
+      },
+      {
+        "t": "ex",
+        "en": "Those houses are very big.",
+        "zh": "那些房子很大。",
+        "focus": "Those houses"
+      },
+      {
+        "t": "p",
+        "text": "它們也可以單獨用，後面不接名詞，直接代表你在講的那樣東西。指著桌上的東西問 What is this? 就是「這是什麼」。Those are my shoes. 就是「那些是我的鞋子」。"
+      },
+      {
+        "t": "ex",
+        "en": "Those are my shoes.",
+        "zh": "那些是我的鞋子。",
+        "focus": "Those"
+      },
+      {
+        "t": "p",
+        "text": "有一個地方要特別注意。this book 是「這本書」，整串只是一個名詞，還不是一句話；This is a book. 才是完整的一句話，意思是「這是一本書」。中文的「這本書」跟「這是一本書」差一個「是」，英文差的就是中間那個 is。另外 this 後面不能再放 a 或 the，寫 this a book 是把兩種指定名詞的字疊在一起，不成立。最後補一個固定講法。講電話的時候要報自己是誰，英文不說 I am，習慣說 This is Amy.；問對方是誰則說 Who is this?。這是英文的習慣，直接記起來就好。"
+      },
+      {
+        "t": "tip",
+        "text": "these 和 those 後面的名詞一定要是複數，寫成 these book 就漏掉了那個 s。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "___ books on my desk are new.（我桌上這些書）",
+        "options": [
+          "This",
+          "That",
+          "These",
+          "Them"
+        ],
+        "answer": 2,
+        "explanation": "books 是複數，而且在我桌上算是近的，所以用 These。This 和 That 後面只能接單數；Them 是受格，不能放在名詞前面。"
+      },
+      {
+        "q": "Look at ___ house over there. It is very big.",
+        "options": [
+          "this",
+          "these",
+          "those",
+          "that"
+        ],
+        "answer": 3,
+        "explanation": "over there 表示在遠的地方，而 house 是單數，所以用 that。this 是近的；these 和 those 後面都要接複數名詞。"
+      },
+      {
+        "q": "___ is my phone.",
+        "options": [
+          "These",
+          "Them",
+          "Those",
+          "This"
+        ],
+        "answer": 3,
+        "explanation": "後面的 my phone 是單數，所以前面也要用單數的 This。These 和 Those 是複數才用；Them 是受格，不能放在句子最前面當主角。"
+      },
+      {
+        "q": "___ are my shoes.",
+        "options": [
+          "This",
+          "These",
+          "That",
+          "It"
+        ],
+        "answer": 1,
+        "explanation": "shoes 是複數，前面要用複數的 These。This 和 That 是單數才用；It 也只能指一樣東西，跟複數的 shoes 對不起來。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "These book is new.",
+          "This books are new.",
+          "These books are new.",
+          "This book are new."
+        ],
+        "answer": 2,
+        "explanation": "These 後面接複數的 books，前後才對得起來。第一句 These 配了單數；第二句 This 配了複數；第四句主角是單數卻用了複數的 are，三句都是前後不合。"
+      },
+      {
+        "q": "你在講電話，要說自己是 Amy，哪一句最自然？",
+        "options": [
+          "I am Amy speaking here.",
+          "Here is Amy.",
+          "That is Amy.",
+          "This is Amy."
+        ],
+        "answer": 3,
+        "explanation": "電話裡報自己的名字用 This is Amy.，這是英文的固定講法。That is Amy 是在指別人；Here is Amy 和第一句都不是英文的習慣說法。"
+      },
+      {
+        "q": "下面哪一句的 this 用得對？",
+        "options": [
+          "I like this red bag.",
+          "I like this red bags.",
+          "I like these red bag.",
+          "I like this a red bag."
+        ],
+        "answer": 0,
+        "explanation": "this 後面接單數名詞，寫成 this red bag。第二句 this 配了複數；第三句 these 配了單數；第四句 this 和 a 疊在一起，這兩種指定名詞的字不能同時出現。"
+      },
+      {
+        "q": "___ are my keys. I put them here every morning.",
+        "options": [
+          "This",
+          "That",
+          "These",
+          "It"
+        ],
+        "answer": 2,
+        "explanation": "keys 是複數，而且就放在說話的人手邊，用近的複數 These。That 是遠的單數；This 是近的單數；It 只能指一樣東西，都跟複數的 keys 對不起來。"
+      }
+    ]
+  },
+  {
+    "id": "ga-12",
+    "title": "something、anyone、nothing：拼起來的那一家人",
+    "goal": "會用 something、anything、nothing 這一組字代替不確定的人事物，知道它們當主角時算單數，也知道 nothing 為什麼不能再配 not。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我想吃點東西」「有人在嗎」「什麼事都沒有」，「東西」「人」「事」前面掛著「點」「有」「什麼都沒」。英文的做法是把這兩截拼成一個字：前半段用 some、any、no，後半段接 thing（東西）、one 或 body（人）、where（地方）。拼起來就是一整家人，看下面這張表一次記完。用法跟前面 some 和 any 那一課一模一樣，直接搬過來就好：肯定句用 some 這一排，否定句和問句用 any 這一排。所以是 I want something to eat.（肯定）、Do you know anyone here?（問句）、I do not have anything in my bag.（否定）。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "前半段",
+          "東西 thing",
+          "人 one 或 body",
+          "地方 where"
+        ],
+        "rows": [
+          [
+            "some",
+            "something",
+            "someone、somebody",
+            "somewhere"
+          ],
+          [
+            "any",
+            "anything",
+            "anyone、anybody",
+            "anywhere"
+          ],
+          [
+            "no",
+            "nothing",
+            "no one、nobody",
+            "nowhere"
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "I want something to eat.",
+        "zh": "我想吃點東西。",
+        "focus": "something"
+      },
+      {
+        "t": "p",
+        "text": "no 這一排最需要小心。nothing、nobody、nowhere 本身就已經含有「沒有」的意思，句子裡就不能再放 not，不然等於否定了兩次，意思會亂掉。所以 I do not have nothing. 是錯的，要嘛寫 I have nothing.，要嘛寫 I do not have anything.，這兩句意思一樣，選一個寫就好。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "你想說的意思",
+          "寫法一",
+          "寫法二"
+        ],
+        "rows": [
+          [
+            "我什麼都不知道",
+            "I know nothing.",
+            "I do not know anything."
+          ],
+          [
+            "我誰也沒看到",
+            "I see nobody.",
+            "I do not see anybody."
+          ],
+          [
+            "我星期天哪裡都沒去",
+            "I go nowhere on Sunday.",
+            "I do not go anywhere on Sunday."
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "I have nothing to say.",
+        "zh": "我沒什麼好說的。",
+        "focus": "nothing"
+      },
+      {
+        "t": "p",
+        "text": "這一家人當主角的時候還有一個規定：不管字面上聽起來像多少人，一律當單數看，所以後面要配 is，不能配 are。Someone is waiting for you. 用的是 is；Nothing is easy. 也是 is。順帶一提，every 開頭的 everything、everyone、everywhere 也屬於這一家人，當主角時同樣算單數。最後一個小地方，很多人會踩。如果要在 something 或 anything 後面加一個描述它的字，那個字要放在後面，跟一般名詞前面放描述的字剛好相反。something new（新的東西）、anything special（特別的東西）、somewhere quiet（安靜的地方），不能寫成 new something。"
+      },
+      {
+        "t": "ex",
+        "en": "Someone is waiting for you.",
+        "zh": "有人在等你。",
+        "focus": "Someone"
+      },
+      {
+        "t": "ex",
+        "en": "I want something cold.",
+        "zh": "我想要點冰的東西。",
+        "focus": "something cold"
+      },
+      {
+        "t": "tip",
+        "text": "nothing 和 nobody 本身就是否定的意思，句子裡再放一個 not 就變成否定兩次，反而不對。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I am hungry. I want ___ to eat.",
+        "options": [
+          "anything",
+          "nothing",
+          "something",
+          "everything"
+        ],
+        "answer": 2,
+        "explanation": "這是肯定句，用 something。anything 主要出現在否定句和問句；nothing 是「什麼都沒有」，跟肚子餓想吃東西的意思相反；everything 是「每樣東西」，講的是全部，語氣太誇張。"
+      },
+      {
+        "q": "Do you know ___ here?",
+        "options": [
+          "everyone",
+          "someone",
+          "no one",
+          "anyone"
+        ],
+        "answer": 3,
+        "explanation": "單純在問有沒有，問句用 any 這一排，所以是 anyone。someone 用在肯定句；no one 是「沒有人」，放進問句意思講不通；everyone 是「每個人」，跟這裡想問的不一樣。"
+      },
+      {
+        "q": "I do not have ___ in my bag.",
+        "options": [
+          "something",
+          "anything",
+          "nothing",
+          "everything"
+        ],
+        "answer": 1,
+        "explanation": "否定句用 any 這一排，寫成 do not have anything。如果用 nothing，句子裡就同時有 not 和 nothing，變成否定兩次；something 用在肯定句。"
+      },
+      {
+        "q": "「家裡沒有人」要寫哪一句？",
+        "options": [
+          "Nobody is at home.",
+          "Not anybody is at home.",
+          "Somebody is not at home.",
+          "Anybody is at home."
+        ],
+        "answer": 0,
+        "explanation": "要說一個人都沒有，直接用 Nobody 當主角最乾淨。anybody 不能放在句子最前面當肯定的主角；Not anybody 不是英文的講法；Somebody is not at home 是說某一個人不在家，跟一個人都沒有差很多。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "I know nothing about it.",
+          "I do not know nothing about it.",
+          "I know anything about it.",
+          "I do not know something about it."
+        ],
+        "answer": 0,
+        "explanation": "nothing 本身已經是否定，直接寫 I know nothing 就好。第二句 not 和 nothing 疊在一起是否定兩次；第三句肯定句不用 anything；第四句是否定句，該用 anything 而不是 something。"
+      },
+      {
+        "q": "___ waiting for you outside.",
+        "options": [
+          "Someone are",
+          "Someone is",
+          "Some one is",
+          "Anyone is"
+        ],
+        "answer": 1,
+        "explanation": "someone 當主角時算單數，後面要配單數的 is。Someone are 前後對不起來；some one 中間不能分開寫；肯定句的主角也不用 anyone。"
+      },
+      {
+        "q": "I want ___ to drink. It is very hot today.",
+        "options": [
+          "something cold",
+          "a cold something",
+          "cold anything",
+          "cold something"
+        ],
+        "answer": 0,
+        "explanation": "描述 something 的字要放在它後面，寫成 something cold，這跟一般名詞把描述的字放前面剛好相反。cold something 是照中文「冰的東西」順序直接搬過去的錯句；肯定句也不用 anything。"
+      },
+      {
+        "q": "下面哪一句的 something 用得對？",
+        "options": [
+          "I have a something in my hand.",
+          "I do not have something in my hand.",
+          "I have something in my hand.",
+          "Nobody does not have anything."
+        ],
+        "answer": 2,
+        "explanation": "肯定句用 something，所以第三句對。第一句在 something 前面多加了一個 a，這一家人本來就不跟冠詞連用；第二句是否定句，該用 anything；第四句的 Nobody 已經是否定，後面又加 does not，變成否定兩次。"
+      }
+    ]
+  }
+]

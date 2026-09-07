@@ -1,0 +1,1965 @@
+[
+  {
+    "id": "gf-01",
+    "title": "形容詞的位置：名詞前面和 be 動詞後面",
+    "goal": "學完你會知道形容詞只能站在哪兩個位置，也不會再把 s 加到形容詞上面。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「一隻大狗」跟「這隻狗很大」，兩句裡的「大」都是在描述狗長什麼樣子，這種字英文叫形容詞，像 big、new、happy、expensive 都是。中文擺形容詞的位置很自由，英文沒那麼隨便，形容詞只會出現在兩個地方。第一個地方是名詞前面，中文的「的」不用翻出來，「一隻大狗」直接寫成 a big dog，形容詞貼著名詞放就好。"
+      },
+      {
+        "t": "ex",
+        "en": "I have a big dog.",
+        "zh": "我有一隻大狗。",
+        "focus": "big"
+      },
+      {
+        "t": "p",
+        "text": "第二個地方是 be 動詞後面。中文說「這隻狗很大」，那個「很」不必翻成 very，英文靠 be 動詞把主詞跟形容詞接起來，寫成 My dog is big.。台灣學生最常犯的錯是把 be 動詞漏掉，寫成 My dog big.，這樣整句沒有動詞，句子就不成立了。中文可以說「我的狗大」，英文不行，一定要有動詞撐著。"
+      },
+      {
+        "t": "ex",
+        "en": "My dog is big.",
+        "zh": "我的狗很大。",
+        "focus": "is big"
+      },
+      {
+        "t": "table",
+        "header": [
+          "位置",
+          "例句",
+          "中文"
+        ],
+        "rows": [
+          [
+            "名詞前面",
+            "a new car",
+            "一台新車"
+          ],
+          [
+            "be 動詞後面",
+            "The car is new.",
+            "這台車是新的。"
+          ],
+          [
+            "look 這類動詞後面",
+            "The car looks new.",
+            "這台車看起來很新。"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "表格最後一列要特別記。除了 be 動詞，還有一小群動詞後面接的不是動作，而是主詞的樣子或感覺，用法跟 be 動詞完全一樣，常見的有 look（看起來）、feel（覺得）、sound（聽起來）、taste（嘗起來）、smell（聞起來）、seem（似乎）、become 和 get（變得）。這些字後面一律接形容詞，說 The soup smells good. 是對的，寫成 smells well 就錯了。"
+      },
+      {
+        "t": "ex",
+        "en": "You look tired today.",
+        "zh": "你今天看起來很累。",
+        "focus": "look tired"
+      },
+      {
+        "t": "p",
+        "text": "還有兩件事要提醒。第一，名詞碰到兩個以上要加 s，形容詞不用，two big dogs 裡面加 s 的是 dogs，big 永遠是 big。第二，形容詞碰到 something、anything、nothing、everything 這幾個字的時候會跑到後面，「喝點冰的東西」是 something cold，不是 cold something，這是唯一一種形容詞放在名詞後面的情況。"
+      },
+      {
+        "t": "ex",
+        "en": "I want something cold to drink.",
+        "zh": "我想喝點冰的東西。",
+        "focus": "something cold"
+      },
+      {
+        "t": "tip",
+        "text": "形容詞不管前面的數字是多少都不加 s，會加 s 的只有名詞和第三人稱單數的動詞。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "She bought a ___ dress for the wedding.",
+        "options": [
+          "beautifully",
+          "beauty",
+          "beautiful",
+          "beautifuls"
+        ],
+        "answer": 2,
+        "explanation": "dress 是名詞，前面要放形容詞 beautiful。beautifully 是拿來講動作怎麼做的，beauty 是「美」這樣東西的名字，形容詞也不會加 s，所以 beautifuls 這個寫法不存在。"
+      },
+      {
+        "q": "The children look ___ today.",
+        "options": [
+          "happily",
+          "happy",
+          "happiness",
+          "happyly"
+        ],
+        "answer": 1,
+        "explanation": "look 在這裡不是「看」這個動作，它跟 be 動詞一樣，後面接形容詞來描述孩子的樣子，所以用 happy。happily 是講動作怎麼做的，happiness 是名詞，happyly 這個拼法不存在。"
+      },
+      {
+        "q": "「兩間乾淨的房間」的英文是哪一個？",
+        "options": [
+          "two rooms clean",
+          "two cleans rooms",
+          "two clean rooms",
+          "clean two rooms"
+        ],
+        "answer": 2,
+        "explanation": "形容詞放在名詞前面，而且不會跟著加 s，s 只加在 rooms 上。中文說「兩間乾淨的房間」，英文也是先講乾淨再講房間，寫成 two clean rooms。"
+      },
+      {
+        "q": "Would you like something ___ to drink?",
+        "options": [
+          "cold",
+          "coldly",
+          "a cold",
+          "cold something"
+        ],
+        "answer": 0,
+        "explanation": "碰到 something 這類字，形容詞要放它後面，寫成 something cold。coldly 是講動作怎麼做的，a cold 後面還缺一個名詞，cold something 是把順序反過來了。"
+      },
+      {
+        "q": "The meeting room is ___ and quiet.",
+        "options": [
+          "a big",
+          "bigly",
+          "bigs",
+          "big"
+        ],
+        "answer": 3,
+        "explanation": "be 動詞後面直接放形容詞 big，兩個形容詞並列時用 and 接起來。形容詞不加 s，bigly 這個字不存在，a big 後面還少一個名詞。"
+      },
+      {
+        "q": "The cake ___ good.",
+        "options": [
+          "smell",
+          "smells well",
+          "smells",
+          "is smell"
+        ],
+        "answer": 2,
+        "explanation": "smell 跟 be 動詞一樣，後面接形容詞描述東西本身，所以是 smells good。主詞 The cake 是第三人稱單數，動詞要加 s，只寫 smell 就漏了；smells well 講的是鼻子很靈，不是蛋糕好聞；is smell 把 be 動詞和一般動詞疊在一起了。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "My sisters are tall.",
+          "My sisters are talls.",
+          "My sisters tall.",
+          "My sisters is tall."
+        ],
+        "answer": 0,
+        "explanation": "形容詞不會因為主詞變成複數就加 s，所以 talls 是錯的。第三句少了 be 動詞，句子不成立；sisters 是兩個以上，要配 are 不是 is。"
+      },
+      {
+        "q": "The new system is very ___.",
+        "options": [
+          "use",
+          "useful",
+          "usefully",
+          "usefulness"
+        ],
+        "answer": 1,
+        "explanation": "be 動詞後面是在描述這套系統的樣子，要用形容詞 useful。use 是「使用」這個動作或東西，usefully 是講動作怎麼做的，usefulness 是名詞，都不能放在 very 後面。"
+      }
+    ]
+  },
+  {
+    "id": "gf-02",
+    "title": "-ed 和 -ing 形容詞：bored 和 boring 差在哪",
+    "goal": "學完你會分清楚 -ing 是形容事情、-ed 是形容人的感覺，不會再說 I am boring。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「這部電影很無聊」跟「我很無聊」，用的都是「無聊」那兩個字，聽的人靠上下文自己分。英文分得比較細：造成感覺的那一方用 -ing，接收感覺的那一方用 -ed。所以電影是 boring，你是 bored，一個字尾差別就把兩件事分開了。"
+      },
+      {
+        "t": "p",
+        "text": "這兩種字都是從動詞變出來的。-ing 那種就是你在現在進行式看過的形式，當形容詞用的時候意思是「會讓人怎樣的」；-ed 那種就是你在現在完成式看過的過去分詞，意思是「被弄得怎樣的」，所以自然拿來講人的感受。真的分不出來的時候，把 -ed 那個字在心裡翻成「被弄無聊了」「被弄累了」，通常就對了。"
+      },
+      {
+        "t": "ex",
+        "en": "The presentation was interesting.",
+        "zh": "那場簡報很有趣。",
+        "focus": "interesting"
+      },
+      {
+        "t": "ex",
+        "en": "I was interested in the presentation.",
+        "zh": "我對那場簡報很有興趣。",
+        "focus": "interested"
+      },
+      {
+        "t": "table",
+        "header": [
+          "-ing 形容事情",
+          "-ed 形容人的感覺"
+        ],
+        "rows": [
+          [
+            "boring 令人無聊的",
+            "bored 覺得無聊的"
+          ],
+          [
+            "tiring 累人的",
+            "tired 覺得累的"
+          ],
+          [
+            "exciting 令人興奮的",
+            "excited 感到興奮的"
+          ],
+          [
+            "confusing 令人搞不懂的",
+            "confused 覺得混亂的"
+          ],
+          [
+            "surprising 令人意外的",
+            "surprised 感到意外的"
+          ],
+          [
+            "disappointing 令人失望的",
+            "disappointed 感到失望的"
+          ],
+          [
+            "annoying 惹人心煩的",
+            "annoyed 覺得心煩的"
+          ],
+          [
+            "relaxing 令人放鬆的",
+            "relaxed 覺得放鬆的"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "考題最愛把這兩個放在一起讓你選，判斷方法是看主詞。主詞是事情、東西、地方，用 -ing；主詞是人而且句子在講他的感受，用 -ed。要小心的是人也可能是造成感覺的那一方，He is boring. 是說他這個人很無趣，He is bored. 才是說他覺得很無聊，兩句意思差很多。"
+      },
+      {
+        "t": "ex",
+        "en": "The training was tiring, so everyone looked tired.",
+        "zh": "那場訓練很累人，所以大家看起來都很疲倦。",
+        "focus": "tiring"
+      },
+      {
+        "t": "p",
+        "text": "這兩種字都是形容詞，所以上一個單元學的位置規則照用，放名詞前面可以說 a boring meeting、a bored student，放 be 動詞後面也可以。另外 -ed 這一類後面常常接固定的介系詞，最常見的是 interested in、excited about、worried about、satisfied with、surprised at，這幾組直接整組背起來比較快。"
+      },
+      {
+        "t": "ex",
+        "en": "She is worried about the interview tomorrow.",
+        "zh": "她很擔心明天的面試。",
+        "focus": "worried about"
+      },
+      {
+        "t": "tip",
+        "text": "講自己的感覺幾乎都用 -ed，說 I am boring 等於承認自己是個無趣的人。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "The three-hour meeting was really ___.",
+        "options": [
+          "tired",
+          "tiring",
+          "tire",
+          "tires"
+        ],
+        "answer": 1,
+        "explanation": "會議是讓人累的那一方，用 -ing 的 tiring。tired 是在講人覺得累，tire 和 tires 是動詞形式，不能放在 be 動詞後面當形容詞。"
+      },
+      {
+        "q": "Everyone was ___ about the new project.",
+        "options": [
+          "excite",
+          "exciting",
+          "excitement",
+          "excited"
+        ],
+        "answer": 3,
+        "explanation": "everyone 指的是人，講人的感受要用 -ed 的 excited。exciting 是形容那件事很刺激，excitement 是名詞，excite 是動詞原形。"
+      },
+      {
+        "q": "I am ___ in the marketing position.",
+        "options": [
+          "interesting",
+          "interest",
+          "interested",
+          "interests"
+        ],
+        "answer": 2,
+        "explanation": "講自己的感覺用 -ed，而且 be interested in 是整組固定的用法。說 I am interesting 會變成「我這個人很有趣」，意思完全跑掉。"
+      },
+      {
+        "q": "The instructions were ___, so nobody knew what to do.",
+        "options": [
+          "confusing",
+          "confused",
+          "confuse",
+          "confuses"
+        ],
+        "answer": 0,
+        "explanation": "說明是讓人搞不懂的那一方，用 confusing。confused 是人覺得混亂，後半句 nobody knew what to do 剛好證明問題出在說明本身。"
+      },
+      {
+        "q": "She looked ___ when she saw the price.",
+        "options": [
+          "shocking",
+          "shock",
+          "shocked",
+          "shocks"
+        ],
+        "answer": 2,
+        "explanation": "主詞是 She，look 後面接形容詞描述她的狀態，用 shocked。shocking 是形容那個價格很嚇人，不是形容她。"
+      },
+      {
+        "q": "The movie was ___, so we were ___.",
+        "options": [
+          "boring / bored",
+          "bored / boring",
+          "boring / boring",
+          "bored / bored"
+        ],
+        "answer": 0,
+        "explanation": "電影是造成感覺的那一方用 boring，我們是接收感覺的一方用 bored。兩個空格填一樣的字，一定有一邊的主詞對不上。"
+      },
+      {
+        "q": "He interrupts everyone in every meeting. He is really ___.",
+        "options": [
+          "annoyed",
+          "annoying",
+          "annoy",
+          "annoyance"
+        ],
+        "answer": 1,
+        "explanation": "這裡是說他讓別人心煩，他是造成感覺的那一方，用 annoying。annoyed 是說他自己覺得心煩，跟前面那句在描述的行為對不起來。"
+      },
+      {
+        "q": "We were ___ by the sudden change of plan.",
+        "options": [
+          "surprising",
+          "surprised",
+          "surprise",
+          "surprises"
+        ],
+        "answer": 1,
+        "explanation": "主詞 We 是被弄得意外的一方，用 surprised，後面再用 by 帶出讓我們意外的來源。surprising 是形容那個改變本身很讓人意外。"
+      }
+    ]
+  },
+  {
+    "id": "gf-03",
+    "title": "副詞的構成與位置：-ly 和它的例外",
+    "goal": "學完你會自己把形容詞變成副詞，也知道副詞該塞在句子的哪裡。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「他輕輕地關上門」「她講話講得很流利」，「輕輕」和「流利」講的都是動作怎麼進行的，中文靠「地」「得」這兩個字把它們接到動作上。英文做這件事的字叫副詞，多數副詞是形容詞後面加 -ly 變出來的，quiet 變 quietly、slow 變 slowly、careful 變 carefully。你可以把 -ly 想成中文的「地」，看到它就知道這個字是在講動作。"
+      },
+      {
+        "t": "ex",
+        "en": "He closed the door quietly.",
+        "zh": "他輕輕地把門關上。",
+        "focus": "quietly"
+      },
+      {
+        "t": "p",
+        "text": "加 -ly 有幾個拼字上的小規則，跟名詞加 s、動詞加 ed 的邏輯很像：字尾是子音加 y 的要把 y 改成 i，字尾是 -le 的直接把 e 換成 y，字尾是 -ic 的要加 -ally 而不是只加 -ly。這些不是死背，多寫幾次手就記得了。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "情況",
+          "形容詞",
+          "副詞"
+        ],
+        "rows": [
+          [
+            "一般情況直接加 -ly",
+            "quick",
+            "quickly"
+          ],
+          [
+            "子音加 y 結尾，y 改成 i",
+            "happy",
+            "happily"
+          ],
+          [
+            "子音加 y 結尾，y 改成 i",
+            "easy",
+            "easily"
+          ],
+          [
+            "-le 結尾，e 換成 y",
+            "simple",
+            "simply"
+          ],
+          [
+            "-le 結尾，e 換成 y",
+            "terrible",
+            "terribly"
+          ],
+          [
+            "-ic 結尾，加 -ally",
+            "automatic",
+            "automatically"
+          ],
+          [
+            "特別要記",
+            "true",
+            "truly"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "位置方面，講動作怎麼做的副詞多半放在句子最後面。這裡有個台灣學生很常犯的錯：動詞後面有受詞的時候，副詞不可以插進動詞跟受詞中間。「我英文講得很好」要說 I speak English well.，不能說 I speak well English.。另外像 luckily、unfortunately 這種在評論整件事的副詞，習慣放句首再加一個逗號。副詞也不是只能講動作，放在形容詞前面可以加強語氣，像 really busy、surprisingly easy。要注意 very 就只能加在形容詞或副詞前面，中文的「我很喜歡這首歌」不能寫成 I very like this song.，要說 I like this song very much.。"
+      },
+      {
+        "t": "ex",
+        "en": "She speaks English fluently.",
+        "zh": "她英文講得很流利。",
+        "focus": "fluently"
+      },
+      {
+        "t": "ex",
+        "en": "Luckily, we caught the last bus.",
+        "zh": "還好我們趕上了最後一班公車。",
+        "focus": "Luckily"
+      },
+      {
+        "t": "p",
+        "text": "最後提醒一個陷阱：看到 -ly 結尾不要馬上認定它是副詞。friendly（友善的）、lovely（可愛的）、lonely（孤單的）、silly（傻的）這幾個字雖然長得像副詞，其實是形容詞，只能放名詞前面或 be 動詞後面。這幾個字沒有對應的副詞形式，真的要講動作的時候會改用別的說法。"
+      },
+      {
+        "t": "ex",
+        "en": "Our new neighbor is very friendly.",
+        "zh": "我們的新鄰居很友善。",
+        "focus": "friendly"
+      },
+      {
+        "t": "tip",
+        "text": "動詞後面有受詞的時候，副詞要放到受詞後面，不能夾在動詞跟受詞中間。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "He answered the question ___.",
+        "options": [
+          "politeness",
+          "polite",
+          "politer",
+          "politely"
+        ],
+        "answer": 3,
+        "explanation": "answered 是動作，要用副詞 politely 說明他回答得怎麼樣。polite 是形容詞只能描述人，politeness 是名詞，politer 是兩個人相比時才用的形式。"
+      },
+      {
+        "q": "She finished the report very ___.",
+        "options": [
+          "quick",
+          "quickness",
+          "quickly",
+          "quicker"
+        ],
+        "answer": 2,
+        "explanation": "finished 是動作，要用副詞 quickly。quick 是形容詞，用在 a quick lunch 這種地方；quickness 是名詞；quicker 是拿兩件事相比才用的。"
+      },
+      {
+        "q": "happy 的副詞形式是哪一個？",
+        "options": [
+          "happily",
+          "happyly",
+          "happyfully",
+          "happiness"
+        ],
+        "answer": 0,
+        "explanation": "字尾是子音加 y 的形容詞，y 要改成 i 再加 -ly，所以是 happily。happyly 是最常見的拼錯，happiness 是名詞不是副詞。"
+      },
+      {
+        "q": "___, we found a parking space right away.",
+        "options": [
+          "Luck",
+          "Luckily",
+          "Lucky",
+          "Luckly"
+        ],
+        "answer": 1,
+        "explanation": "這個位置是在評論整件事，要用副詞 Luckily 開頭再加逗號。Luck 是名詞，Lucky 是形容詞，Luckly 拼法不存在。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "I speak well English.",
+          "I well speak English.",
+          "I speak English well.",
+          "I speak English good."
+        ],
+        "answer": 2,
+        "explanation": "動詞 speak 後面有受詞 English，副詞要放到受詞後面。前兩句把副詞塞錯位置，最後一句用了形容詞 good，講動作要用副詞 well。"
+      },
+      {
+        "q": "She is a very ___ neighbor.",
+        "options": [
+          "friend",
+          "friendly",
+          "friendlily",
+          "friendily"
+        ],
+        "answer": 1,
+        "explanation": "neighbor 是名詞，前面要放形容詞。friendly 雖然是 -ly 結尾，它其實是形容詞不是副詞，而且沒有 friendlily 這種形式。friend 是名詞，不能拿來描述人。"
+      },
+      {
+        "q": "The doors open ___ when you walk in.",
+        "options": [
+          "automatic",
+          "automatically",
+          "automaticly",
+          "automaticaly"
+        ],
+        "answer": 1,
+        "explanation": "open 是動作，要用副詞。-ic 結尾的形容詞變副詞要加 -ally，所以是 automatically。另外兩個是常見的拼錯，automatic 則是形容詞。"
+      },
+      {
+        "q": "The test was ___ easy, so everyone finished ___.",
+        "options": [
+          "surprising / quick",
+          "surprisingly / quick",
+          "surprising / quickly",
+          "surprisingly / quickly"
+        ],
+        "answer": 3,
+        "explanation": "第一格後面接的是形容詞 easy，要用副詞 surprisingly 來加強它；第二格講 finished 這個動作，也要用副詞 quickly。兩格都不能填形容詞。"
+      }
+    ]
+  },
+  {
+    "id": "gf-04",
+    "title": "形容詞還是副詞：good 對 well、fast 對 hard",
+    "goal": "學完你會選對 good 跟 well，也知道哪些字加了 -ly 之後意思會整個變掉。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文的「好」一個字打天下，「他是個好歌手」跟「他唱得很好」都用同一個字。英文把這兩個位置分給不同的字：描述人或東西用形容詞 good，描述動作做得怎麼樣用副詞 well。這組是台灣學生講英文時最常出錯的地方，說 He sings good. 在英文裡聽起來就是不對。"
+      },
+      {
+        "t": "ex",
+        "en": "She is a good singer.",
+        "zh": "她是個很棒的歌手。",
+        "focus": "good"
+      },
+      {
+        "t": "ex",
+        "en": "She sings well.",
+        "zh": "她唱得很好。",
+        "focus": "well"
+      },
+      {
+        "t": "p",
+        "text": "well 還有一個身分要記住：它也可以當形容詞，但意思限定在身體狀況好、沒生病。所以 I don't feel well. 是「我不太舒服」，這裡的 well 不是在講動作，而是在講人的狀態。除了這個意思之外，well 都是副詞。"
+      },
+      {
+        "t": "ex",
+        "en": "I don't feel well today.",
+        "zh": "我今天不太舒服。",
+        "focus": "feel well"
+      },
+      {
+        "t": "p",
+        "text": "另一組麻煩的是 fast、hard、late、early、high、near 這幾個字。它們本身就同時是形容詞和副詞，形式完全一樣，不能自己加 -ly。所以 a fast car（形容詞）跟 He runs fast.（副詞）用的是同一個字，寫成 fastly 是錯的，英文根本沒有這個字。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "原形（形容詞和副詞同形）",
+          "加了 -ly 之後",
+          "意思差在哪"
+        ],
+        "rows": [
+          [
+            "hard 努力地、辛苦地",
+            "hardly",
+            "幾乎不，是否定的意思"
+          ],
+          [
+            "late 遲、晚",
+            "lately",
+            "最近，講一段時間"
+          ],
+          [
+            "near 靠近",
+            "nearly",
+            "幾乎、差一點"
+          ],
+          [
+            "high 高",
+            "highly",
+            "非常、高度地"
+          ],
+          [
+            "fast 快",
+            "沒有 fastly 這個字",
+            "要講快就用 fast"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "表格裡最容易搞錯的是 hardly。它看起來像 hard 的副詞，意思卻完全相反：hard 是努力，hardly 是幾乎不。He works hard. 是他很拚，He hardly works. 是他幾乎不做事，兩句差了十萬八千里。lately 也一樣，它不是「遲到地」，而是「最近」，常跟現在完成式一起出現。"
+      },
+      {
+        "t": "ex",
+        "en": "He works hard, but he hardly talks to anyone.",
+        "zh": "他工作很拚，但他幾乎不跟任何人講話。",
+        "focus": "hardly"
+      },
+      {
+        "t": "tip",
+        "text": "hardly 是否定字，句子裡有了它就不要再加 not，說 He doesn't hardly work 等於否定兩次。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "She sings ___.",
+        "options": [
+          "well",
+          "good",
+          "goodly",
+          "very good"
+        ],
+        "answer": 0,
+        "explanation": "sings 是動作，要用副詞 well。good 是形容詞只能描述人或東西，sings good 和 sings very good 都是很常聽到的錯句，goodly 這個字則不存在。"
+      },
+      {
+        "q": "He is a ___ runner, and he runs very ___.",
+        "options": [
+          "fastly / fast",
+          "fast / fastly",
+          "fastly / fastly",
+          "fast / fast"
+        ],
+        "answer": 3,
+        "explanation": "fast 的形容詞和副詞長得一模一樣，兩格都填 fast。英文沒有 fastly 這個字，不要照 quick 變 quickly 的規則亂套。"
+      },
+      {
+        "q": "My father works very ___ every day.",
+        "options": [
+          "hardly",
+          "hardily",
+          "hard",
+          "harder"
+        ],
+        "answer": 2,
+        "explanation": "要講努力工作就用 hard，它本身就是副詞。hardly 是「幾乎不」，填進去會變成他幾乎不工作；hardily 不是常用字；harder 是拿兩段時間相比才用的。"
+      },
+      {
+        "q": "This bread tastes ___.",
+        "options": [
+          "nicely",
+          "good",
+          "goodly",
+          "well"
+        ],
+        "answer": 1,
+        "explanation": "taste 跟 be 動詞一樣，後面接形容詞描述麵包本身，所以用 good。well 是講動作做得好，用在 She sings well 那種句子；nicely 是副詞，goodly 不存在。"
+      },
+      {
+        "q": "I ___ know anyone at this party.",
+        "options": [
+          "hardly",
+          "hard",
+          "hardily",
+          "not hard"
+        ],
+        "answer": 0,
+        "explanation": "這句要表達「我幾乎不認識這裡的人」，用 hardly。hard 是努力，填進去意思不通；hardly 本身已經帶否定，不需要再加 not。"
+      },
+      {
+        "q": "「他很努力工作」和「他幾乎不工作」對應到哪一組？",
+        "options": [
+          "He works hard. / He works hardly.",
+          "He hardly works. / He works hard.",
+          "He works hard. / He hardly works.",
+          "He hard works. / He works hardly."
+        ],
+        "answer": 2,
+        "explanation": "hard 是努力，hardly 是幾乎不，而 hardly 通常放在一般動詞前面。He works hardly 這種寫法會讓人搞不清楚你想講什麼，He hard works 則是位置錯了。"
+      },
+      {
+        "q": "Have you talked to him ___?",
+        "options": [
+          "late",
+          "later",
+          "latest",
+          "lately"
+        ],
+        "answer": 3,
+        "explanation": "這句在問最近有沒有聯絡，用 lately。late 是遲、晚，later 是之後，latest 是最新的，三個都填不進這個意思。"
+      },
+      {
+        "q": "She looked pale and said she didn't feel ___.",
+        "options": [
+          "goodly",
+          "well",
+          "nicely",
+          "badly"
+        ],
+        "answer": 1,
+        "explanation": "講身體舒不舒服用 well，這是 well 當形容詞的那個意思。nicely 和 badly 是副詞，不能放在 feel 後面描述狀態，goodly 這個字不存在。"
+      }
+    ]
+  },
+  {
+    "id": "gf-05",
+    "title": "比較級：-er 和 more 怎麼選",
+    "goal": "學完你可以把兩個東西拿來比，說出「比較便宜」「貴多了」這種句子，拼字也不會出錯。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文要比較的時候，形容詞本身不用動，前面加一個「比」就好，像「這件比那件便宜」。英文不一樣，形容詞自己要先變形，後面再用 than 說出跟誰比。這個「形容詞要變形」的動作是台灣學生最容易漏掉的一步。"
+      },
+      {
+        "t": "ex",
+        "en": "This shirt is cheaper than that one.",
+        "zh": "這件襯衫比那件便宜。",
+        "focus": "cheaper"
+      },
+      {
+        "t": "p",
+        "text": "怎麼變要看形容詞的長短。唸起來只有一個音的短字，像 tall、cheap、fast、big，直接在後面加 -er。唸起來三段以上的長字，像 expensive、difficult、important，字本身完全不動，前面加一個 more。中間那種兩段的字，-y 結尾的跟短字一樣加 -er，其他大多用 more。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "情況",
+          "形容詞",
+          "比較級"
+        ],
+        "rows": [
+          [
+            "短字直接加 -er",
+            "tall",
+            "taller"
+          ],
+          [
+            "-e 結尾只加 -r",
+            "nice",
+            "nicer"
+          ],
+          [
+            "短母音加單子音，最後一個字母重複",
+            "big",
+            "bigger"
+          ],
+          [
+            "短母音加單子音，最後一個字母重複",
+            "hot",
+            "hotter"
+          ],
+          [
+            "子音加 y 結尾，y 改成 i",
+            "easy",
+            "easier"
+          ],
+          [
+            "長字前面加 more",
+            "expensive",
+            "more expensive"
+          ],
+          [
+            "不照規則，直接背",
+            "good",
+            "better"
+          ],
+          [
+            "不照規則，直接背",
+            "bad",
+            "worse"
+          ],
+          [
+            "不照規則，直接背",
+            "little",
+            "less"
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "The weather today is better than yesterday.",
+        "zh": "今天的天氣比昨天好。",
+        "focus": "better"
+      },
+      {
+        "t": "p",
+        "text": "想說「好很多」「便宜多了」的時候，要在比較級前面加 much、a lot 或 far，不能用 very。very 只能加在沒變形的形容詞前面，像 very good；一旦變成 better 就換成 much better。這個區別考試很愛考，寫成 very better 會直接被判錯。"
+      },
+      {
+        "t": "ex",
+        "en": "This route is much faster than the one we took.",
+        "zh": "這條路線比我們走的那條快多了。",
+        "focus": "much faster"
+      },
+      {
+        "t": "p",
+        "text": "還有兩件事。第一，如果對方已經知道你在跟什麼比，than 那一段可以整個省略，句子還是通的。第二，加了 -er 就不要再加 more，more cheaper 等於同一件事講了兩次，兩個留一個就好。"
+      },
+      {
+        "t": "ex",
+        "en": "Do you have a bigger size?",
+        "zh": "有大一點的尺寸嗎？",
+        "focus": "bigger"
+      },
+      {
+        "t": "tip",
+        "text": "than 前面的形容詞一定要是變過形的，看到句子裡有 than 卻還是原形，那句幾乎都錯了。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "This box is ___ than that one.",
+        "options": [
+          "heavy",
+          "heavier",
+          "more heavy",
+          "heaviest"
+        ],
+        "answer": 1,
+        "explanation": "heavy 是子音加 y 結尾的字，這種字跟短字一樣加 -er，而且 y 要先改成 i，寫成 heavier，不用 more。heaviest 是三個以上挑第一名才用的形式，這裡有 than 所以是兩個在比。"
+      },
+      {
+        "q": "The new system is ___ than the old one.",
+        "options": [
+          "more efficient",
+          "efficienter",
+          "most efficient",
+          "more efficienter"
+        ],
+        "answer": 0,
+        "explanation": "efficient 是長字，前面加 more，字本身不變。長字不會在字尾加 -er，而 more 跟 -er 也不能同時出現。"
+      },
+      {
+        "q": "My new apartment is ___ than my old one.",
+        "options": [
+          "more big",
+          "biger",
+          "big",
+          "bigger"
+        ],
+        "answer": 3,
+        "explanation": "big 是短母音加單子音的短字，加 -er 之前要把最後一個字母重複，寫成 bigger。biger 少了一個 g，big 沒有變形，more big 則是把長字的規則套錯了。"
+      },
+      {
+        "q": "Today's traffic is ___ than yesterday's.",
+        "options": [
+          "worse",
+          "badder",
+          "more bad",
+          "worst"
+        ],
+        "answer": 0,
+        "explanation": "bad 不照規則走，兩個相比要用 worse。badder 和 more bad 都是把規則硬套上去，worst 是三個以上比出來的最後一名。"
+      },
+      {
+        "q": "His second attempt was ___ better than his first.",
+        "options": [
+          "very",
+          "so",
+          "much",
+          "too"
+        ],
+        "answer": 2,
+        "explanation": "要加強比較級用 much、a lot 或 far。very 只能放在沒變形的形容詞前面，說 very better 是錯的；so 和 too 也不能拿來修飾比較級。"
+      },
+      {
+        "q": "hot 的比較級是哪一個？",
+        "options": [
+          "hoter",
+          "more hot",
+          "hotest",
+          "hotter"
+        ],
+        "answer": 3,
+        "explanation": "hot 是短母音加單子音，最後一個字母要重複再加 -er，寫成 hotter。hoter 少了一個 t，hotest 想寫最高級卻同樣少一個 t，何況這題問的是比較級，more hot 則是長字才用的規則。"
+      },
+      {
+        "q": "She is two years ___ than her brother.",
+        "options": [
+          "older",
+          "more old",
+          "oldest",
+          "most old"
+        ],
+        "answer": 0,
+        "explanation": "old 是短字，加 -er 變 older，前面還可以加上 two years 說明差多少。有 than 就是兩個在比，不能用最高級 oldest。"
+      },
+      {
+        "q": "Of the two options, this one is ___.",
+        "options": [
+          "the cheapest",
+          "cheapest",
+          "cheaper",
+          "more cheaper"
+        ],
+        "answer": 2,
+        "explanation": "只有兩個東西在比，用比較級 cheaper。要三個以上才會用最高級 the cheapest，而 more cheaper 把兩種變形疊在一起，是重複。"
+      }
+    ]
+  },
+  {
+    "id": "gf-06",
+    "title": "最高級：-est 和 most，前面別忘了 the",
+    "goal": "學完你可以在三個以上的東西裡挑出第一名，也記得補上那個常被漏掉的 the。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "上一個單元是兩個東西在比，這一個是三個以上放在一起選出第一名。中文說「最便宜的那張票」，英文的形容詞再變一次，短字換成 -est、長字前面換成 most，規則跟比較級一模一樣，只是字尾不同。最重要的差別是前面一定要加 the，因為第一名只有一個，講的是特定的那一個。"
+      },
+      {
+        "t": "ex",
+        "en": "This is the cheapest ticket in the shop.",
+        "zh": "這是店裡最便宜的票。",
+        "focus": "the cheapest"
+      },
+      {
+        "t": "table",
+        "header": [
+          "形容詞",
+          "兩個相比",
+          "三個以上"
+        ],
+        "rows": [
+          [
+            "cheap",
+            "cheaper",
+            "the cheapest"
+          ],
+          [
+            "big",
+            "bigger",
+            "the biggest"
+          ],
+          [
+            "easy",
+            "easier",
+            "the easiest"
+          ],
+          [
+            "nice",
+            "nicer",
+            "the nicest"
+          ],
+          [
+            "expensive",
+            "more expensive",
+            "the most expensive"
+          ],
+          [
+            "good",
+            "better",
+            "the best"
+          ],
+          [
+            "bad",
+            "worse",
+            "the worst"
+          ],
+          [
+            "far",
+            "farther",
+            "the farthest"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "最高級後面常常會再補一句說明範圍，講清楚是在哪一群裡面第一名。範圍是一個地方、一個團體、一段時間，用 in，像 in our company、in the world、in May；範圍是一群人或東西本身，用 of，像 of the three plans、of all the students。"
+      },
+      {
+        "t": "ex",
+        "en": "She is the best salesperson in our company.",
+        "zh": "她是我們公司最好的業務。",
+        "focus": "the best"
+      },
+      {
+        "t": "p",
+        "text": "有一個句型很常出現也很常寫錯：one of the 加最高級，後面的名詞一定要用複數。中文說「其中一間最忙的車站」，英文的邏輯是「最忙的那幾間車站當中的一間」，既然是一群裡挑一個，那群本來就不只一個，所以名詞要加 s。寫成 one of the busiest station 就少了那個 s。"
+      },
+      {
+        "t": "ex",
+        "en": "It is one of the busiest train stations in the country.",
+        "zh": "那是全國最繁忙的火車站之一。",
+        "focus": "one of the busiest"
+      },
+      {
+        "t": "p",
+        "text": "分辨兩種比法其實很快。句子裡有 than，就是兩個東西在比，用比較級；看到 the 加上 -est 或 most，就是在一群裡選唯一的第一名。反過來說，最高級後面不會接 than，寫成 cheapest than 一定是錯的。"
+      },
+      {
+        "t": "ex",
+        "en": "This road is longer than that one, but Highway 1 is the longest.",
+        "zh": "這條路比那條長，但一號公路最長。",
+        "focus": "the longest"
+      },
+      {
+        "t": "tip",
+        "text": "最高級前面的 the 最容易漏掉，說 He is tallest boy 就少了一塊，補上 the 才完整。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "August is ___ month of the year here.",
+        "options": [
+          "hotter",
+          "hottest",
+          "the most hot",
+          "the hottest"
+        ],
+        "answer": 3,
+        "explanation": "一年十二個月裡選最熱的一個，用最高級而且前面要有 the，寫成 the hottest。hotter 是兩個相比才用，the most hot 把長字的規則套到短字上了。"
+      },
+      {
+        "q": "This is ___ restaurant in town.",
+        "options": [
+          "most expensive",
+          "the most expensive",
+          "the expensivest",
+          "more expensive"
+        ],
+        "answer": 1,
+        "explanation": "expensive 是長字，最高級是 the most expensive，不會在字尾加 -est。最高級前面的 the 不能省，more expensive 則是兩個相比時用的。"
+      },
+      {
+        "q": "He is ___ worker on the team.",
+        "options": [
+          "the better",
+          "best",
+          "the best",
+          "most good"
+        ],
+        "answer": 2,
+        "explanation": "整個團隊裡最好的一個用 the best。good 的最高級不照規則，不是 most good；best 前面漏了 the；the better 是兩個人相比才會用到。"
+      },
+      {
+        "q": "Of the three plans, this one is ___.",
+        "options": [
+          "cheaper",
+          "most cheap",
+          "cheapest than",
+          "the cheapest"
+        ],
+        "answer": 3,
+        "explanation": "三個方案裡挑一個，用最高級 the cheapest。cheaper 是兩個相比，most cheap 把短字寫成長字的形式，而最高級後面不會接 than。"
+      },
+      {
+        "q": "It is one of the ___ in the city.",
+        "options": [
+          "oldest buildings",
+          "oldest building",
+          "most old buildings",
+          "older buildings"
+        ],
+        "answer": 0,
+        "explanation": "one of the 加最高級的後面一定要接複數名詞，所以是 oldest buildings。old 是短字，最高級加 -est 不用 most；older 是兩棟相比才用的形式。"
+      },
+      {
+        "q": "That was ___ day of my life.",
+        "options": [
+          "worse",
+          "the worst",
+          "worstest",
+          "the worse"
+        ],
+        "answer": 1,
+        "explanation": "bad 的最高級是 worst，前面要加 the。worse 是兩件事相比時用的，worstest 是把兩種變形疊在一起，都不對。"
+      },
+      {
+        "q": "She is the tallest ___ her class.",
+        "options": [
+          "of",
+          "on",
+          "at",
+          "in"
+        ],
+        "answer": 3,
+        "explanation": "範圍是一個團體或地方的時候用 in。of 後面接的是一群人事物本身，像 the tallest of the three girls；on 和 at 不用來表示這種範圍。"
+      },
+      {
+        "q": "This road is ___ than that one, but Highway 1 is ___.",
+        "options": [
+          "the longest / longer",
+          "longer / longer",
+          "longest / the longest",
+          "longer / the longest"
+        ],
+        "answer": 3,
+        "explanation": "第一格後面有 than，是兩條路在比，用 longer；第二格是所有路裡面最長的一條，用 the longest。最高級不能少了 the，也不能接 than。"
+      }
+    ]
+  },
+  {
+    "id": "gf-07",
+    "title": "as...as：一樣的比法",
+    "goal": "學完你可以說「跟他一樣高」「沒有去年那麼好」，中間也不會誤放比較級。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "前兩個單元比的是誰多誰少，但生活裡也常要說兩邊差不多。中文說「我的包包跟你的一樣重」，英文用兩個 as 把形容詞夾在中間，寫成 as heavy as。這個句型有個關鍵：夾在中間的形容詞要用原形，也就是沒加 -er 也沒加 more 的樣子，不能換成比較級，寫 as heavier as 是最常見的錯。"
+      },
+      {
+        "t": "ex",
+        "en": "My bag is as heavy as yours.",
+        "zh": "我的包包跟你的一樣重。",
+        "focus": "as heavy as"
+      },
+      {
+        "t": "p",
+        "text": "中間放的可以是形容詞，也可以是副詞。放形容詞的時候前面通常是 be 動詞，講的是兩個人或東西的性質；放副詞的時候前面是一般動詞，講的是兩邊動作做得一樣。兩種情況的結構完全一樣，都是 as 加原形再加 as。"
+      },
+      {
+        "t": "ex",
+        "en": "He runs as fast as his brother.",
+        "zh": "他跑得跟他哥哥一樣快。",
+        "focus": "as fast as"
+      },
+      {
+        "t": "table",
+        "header": [
+          "想表達的意思",
+          "句型",
+          "例句"
+        ],
+        "rows": [
+          [
+            "A 比 B 多",
+            "比較級 + than",
+            "This job is harder than my last one."
+          ],
+          [
+            "A 跟 B 一樣",
+            "as + 原形 + as",
+            "This job is as hard as my last one."
+          ],
+          [
+            "A 沒有 B 那麼多",
+            "not as + 原形 + as",
+            "This job is not as hard as my last one."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "表格第三列要特別看。前面加 not 之後意思會變成「沒有那麼…」，也就是主詞的那一方比較少。所以 My new phone is not as expensive as my old one. 是說新手機比舊的便宜。這句台灣學生很容易看反，讀的時候先確定主詞是誰，再記住 not as 的那一邊比較少就好。口語裡也會聽到 not so...as，意思一樣。"
+      },
+      {
+        "t": "ex",
+        "en": "This year's sales are not as good as last year's.",
+        "zh": "今年的業績沒有去年那麼好。",
+        "focus": "not as good as"
+      },
+      {
+        "t": "p",
+        "text": "要比數量的時候，中間放的是 as many 加名詞或 as much 加名詞。能一個一個數的東西用 as many，像書、人、椅子；不能一個一個數的東西用 as much，像時間、錢、工作量。另外 as soon as possible 是一組固定用法，意思是盡快，最後不能改成 as soon as possibly。"
+      },
+      {
+        "t": "ex",
+        "en": "Please send me the report as soon as possible.",
+        "zh": "請盡快把報告寄給我。",
+        "focus": "as soon as possible"
+      },
+      {
+        "t": "tip",
+        "text": "兩個 as 中間永遠放原形，一旦寫成 as taller as 或 as more expensive as，句子就壞了。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "My bag is ___ heavy as yours.",
+        "options": [
+          "as",
+          "so",
+          "more",
+          "than"
+        ],
+        "answer": 0,
+        "explanation": "肯定句要用 as 開頭，寫成 as heavy as。so...as 只出現在有 not 的否定句；more 和 than 是比較級用的，跟 as 不能混在一起。"
+      },
+      {
+        "q": "He runs as ___ as his brother.",
+        "options": [
+          "faster",
+          "more fast",
+          "fast",
+          "fastest"
+        ],
+        "answer": 2,
+        "explanation": "兩個 as 中間要放原形 fast。faster 和 more fast 是比較級，fastest 是最高級，三個都不能夾在 as 中間。"
+      },
+      {
+        "q": "This year's sales are not as ___ as last year's.",
+        "options": [
+          "gooder",
+          "good",
+          "better",
+          "best"
+        ],
+        "answer": 1,
+        "explanation": "as 中間放原形 good，整句意思是今年沒有去年好。better 和 best 是變過形的，不能放進這個句型，gooder 這個字則不存在。"
+      },
+      {
+        "q": "Please reply as soon as ___.",
+        "options": [
+          "possibly",
+          "you possible",
+          "it can",
+          "possible"
+        ],
+        "answer": 3,
+        "explanation": "as soon as possible 是整組固定用法，最後一個字是 possible。改成 possibly 或其他寫法都不通，這種固定說法只能照原樣背下來。"
+      },
+      {
+        "q": "She has ___ books as I do.",
+        "options": [
+          "as much",
+          "as many",
+          "as many as",
+          "so many"
+        ],
+        "answer": 1,
+        "explanation": "books 是能一個一個數的東西，用 as many，而句子後面已經有一個 as，所以前面只要 as many。as much 是給不能數的東西用的，so many 不能跟 as 搭。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "This job is as harder as my last one.",
+          "This job is as hard than my last one.",
+          "This job is as hard as my last one.",
+          "This job is so hard as my last one."
+        ],
+        "answer": 2,
+        "explanation": "正確結構是 as 加原形再加 as。第一句放了比較級，第二句把 as 換成 than，第四句在肯定句用了 so，三個都不合這個句型。"
+      },
+      {
+        "q": "Tom 身高 180 公分，Ken 也是 180 公分。哪一句對？",
+        "options": [
+          "Tom is as tall as Ken.",
+          "Tom is taller than Ken.",
+          "Tom is the tallest.",
+          "Tom is as taller as Ken."
+        ],
+        "answer": 0,
+        "explanation": "兩個人一樣高要用 as tall as。taller than 表示比較高，跟事實不符；the tallest 是三個以上選第一名；as taller as 把比較級放進 as 中間，結構就錯了。"
+      },
+      {
+        "q": "My new phone is not as expensive as my old one. 這句是什麼意思？",
+        "options": [
+          "新手機比舊的便宜。",
+          "新手機比舊的貴。",
+          "兩支一樣貴。",
+          "新手機是最貴的。"
+        ],
+        "answer": 0,
+        "explanation": "not as...as 表示主詞那一方比較少，所以新手機比較便宜。沒有 not 的 as...as 才是一樣貴，要說比較貴會用 more expensive than。"
+      }
+    ]
+  },
+  {
+    "id": "gf-08",
+    "title": "too 和 enough：太…和夠…，位置剛好相反",
+    "goal": "學完你會擺對 too 和 enough 的位置，也知道 too 帶著什麼樣的語氣。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「這杯咖啡太燙了」「這間房間不夠大」，兩句的「太」跟「夠」在中文都放在形容詞前面。英文只有一半跟中文一樣：too 放在形容詞前面，enough 卻要放在形容詞後面。位置剛好相反，這是台灣學生最常擺錯的地方，寫成 enough big 是很典型的錯。"
+      },
+      {
+        "t": "ex",
+        "en": "The coffee is too hot to drink.",
+        "zh": "這杯咖啡太燙了，不能喝。",
+        "focus": "too hot"
+      },
+      {
+        "t": "ex",
+        "en": "This room isn't big enough for ten people.",
+        "zh": "這間房間不夠大，容不下十個人。",
+        "focus": "big enough"
+      },
+      {
+        "t": "table",
+        "header": [
+          "用法",
+          "位置",
+          "例子"
+        ],
+        "rows": [
+          [
+            "too + 形容詞或副詞",
+            "放前面",
+            "too expensive 太貴"
+          ],
+          [
+            "形容詞或副詞 + enough",
+            "放後面",
+            "warm enough 夠暖"
+          ],
+          [
+            "enough + 名詞",
+            "放名詞前面",
+            "enough time 足夠的時間"
+          ],
+          [
+            "too much / too many + 名詞",
+            "放名詞前面",
+            "too much noise 太多噪音"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "表格第三列要注意：enough 碰到名詞的時候又跑回前面去了。所以規則要這樣記，enough 遇到形容詞和副詞放後面，遇到名詞放前面。至於 too，它後面只能接形容詞或副詞，要接名詞就得換成 too much 或 too many，能一個一個數的名詞用 too many，不能數的用 too much。"
+      },
+      {
+        "t": "ex",
+        "en": "We don't have enough chairs for everyone.",
+        "zh": "我們沒有足夠的椅子給每個人坐。",
+        "focus": "enough chairs"
+      },
+      {
+        "t": "p",
+        "text": "too 後面常接一個不定詞，也就是 to 加動詞原形，變成 too...to 的句型，意思是「太…以至於不能…」。這裡有個中文沒有的地方：英文的 to 後面不加 not，否定的意思已經藏在 too 裡面了。所以 He was too tired to finish the report. 是他太累了沒辦法寫完，不是他太累了要寫完。enough 也可以接不定詞，寫成 old enough to drive，意思是夠大可以開車了。"
+      },
+      {
+        "t": "ex",
+        "en": "There is too much noise in this office.",
+        "zh": "這間辦公室太吵了。",
+        "focus": "too much noise"
+      },
+      {
+        "t": "tip",
+        "text": "very 只是程度很高，too 帶著「已經過頭、造成問題」的語氣，說 The soup is too hot 就是燙到沒辦法喝。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "The coffee is ___ hot to drink.",
+        "options": [
+          "so",
+          "very",
+          "enough",
+          "too"
+        ],
+        "answer": 3,
+        "explanation": "配上後面的 to drink，這是 too...to 的句型，表示燙到不能喝，要用 too。very 只是很燙但沒說喝不喝得下，enough 位置不對，so 後面通常接 that 子句。"
+      },
+      {
+        "q": "This room isn't ___ for ten people.",
+        "options": [
+          "enough big",
+          "big enough",
+          "too big",
+          "enough bigger"
+        ],
+        "answer": 1,
+        "explanation": "enough 修飾形容詞的時候放在後面，寫成 big enough。enough big 是把中文的語序直接搬過來，too big 意思變成太大了，跟句意相反。"
+      },
+      {
+        "q": "We don't have ___ chairs for everyone.",
+        "options": [
+          "chairs enough",
+          "enough of",
+          "enough",
+          "too much"
+        ],
+        "answer": 2,
+        "explanation": "enough 後面接名詞的時候放在名詞前面，所以是 enough chairs。chairs enough 把位置弄反了，chairs 是能數的名詞不能配 too much，enough of 在這裡多了一個 of。"
+      },
+      {
+        "q": "He was ___ tired ___ finish the report.",
+        "options": [
+          "too / to",
+          "too / that",
+          "so / to",
+          "enough / to"
+        ],
+        "answer": 0,
+        "explanation": "too...to 是固定搭配，意思是太累以至於沒辦法寫完。so 要搭 that 加一整句，enough 要放在形容詞後面，都不能填進這兩格。"
+      },
+      {
+        "q": "She is old ___ to drive.",
+        "options": [
+          "too",
+          "very",
+          "so",
+          "enough"
+        ],
+        "answer": 3,
+        "explanation": "形容詞後面接 enough 表示條件夠了，old enough to drive 是年紀夠大可以開車。too old to drive 意思會變成年紀太大不能開車，語氣完全相反。"
+      },
+      {
+        "q": "There is ___ noise in this office.",
+        "options": [
+          "too many",
+          "too much",
+          "enough too",
+          "very much"
+        ],
+        "answer": 1,
+        "explanation": "noise 不能一個一個數，所以用 too much。too many 是給能數的名詞用的，像 too many people；enough too 這種排法不存在。"
+      },
+      {
+        "q": "The soup is very hot. 和 The soup is too hot. 差在哪裡？",
+        "options": [
+          "兩句意思完全一樣。",
+          "very hot 表示燙到不能喝。",
+          "too hot 表示溫度剛剛好。",
+          "very hot 只是很燙，too hot 表示燙到沒辦法喝。"
+        ],
+        "answer": 3,
+        "explanation": "very 只是程度很高，還沒說喝不喝得下；too 帶著過頭、造成問題的語氣。中文的「很燙」和「太燙」也是這種差別，英文把它分得更清楚。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "He speaks enough clearly.",
+          "He speaks too clearly enough.",
+          "He speaks clearly enough.",
+          "He speaks enough clear."
+        ],
+        "answer": 2,
+        "explanation": "speaks 是動作，要用副詞 clearly，而 enough 修飾副詞時放在後面，寫成 clearly enough。enough clearly 位置反了，enough clear 放的是形容詞不是副詞，too clearly enough 則是把兩個字硬湊在一起。"
+      }
+    ]
+  },
+  {
+    "id": "gf-09",
+    "title": "so 和 such：so tired 和 such a long day",
+    "goal": "學完你會知道 so 後面接什麼、such 後面接什麼，a 該放在哪裡也不會再猶豫。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「我好累」跟「真是漫長的一天」，那個「好」跟「真是」在中文都是同一種加強語氣的字。英文卻分成兩個字，靠後面接什麼來決定：後面接形容詞或副詞用 so，後面接名詞用 such。so tired 是對的，such tired 就不對；such a long day 是對的，so a long day 也不對。"
+      },
+      {
+        "t": "ex",
+        "en": "I was so tired that I fell asleep on the bus.",
+        "zh": "我累到在公車上睡著了。",
+        "focus": "so tired"
+      },
+      {
+        "t": "p",
+        "text": "such 那一邊還有一個細節：後面如果是一個單數名詞，冠詞 a 或 an 要放在 such 後面、形容詞前面，順序是 such a long day。台灣學生常寫成 a such long day 或 such long a day，兩個都是把 a 擺錯了。如果名詞是複數，或是不能一個一個數的東西，就不用加 a，直接說 such kind people、such good news。"
+      },
+      {
+        "t": "ex",
+        "en": "It was such a long day.",
+        "zh": "那真是漫長的一天。",
+        "focus": "such a long day"
+      },
+      {
+        "t": "table",
+        "header": [
+          "後面接什麼",
+          "要用哪個",
+          "例子"
+        ],
+        "rows": [
+          [
+            "形容詞或副詞",
+            "so",
+            "so tired、so quickly"
+          ],
+          [
+            "形容詞 + 單數名詞",
+            "such a / such an",
+            "such a long day"
+          ],
+          [
+            "形容詞 + 複數名詞",
+            "such",
+            "such kind people"
+          ],
+          [
+            "能數的名詞（多）",
+            "so many",
+            "so many people"
+          ],
+          [
+            "不能數的名詞（多）",
+            "so much",
+            "so much work"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "表格最後兩列是例外，要單獨記。講數量多的時候不是用 such，而是用 so many 或 so much。能一個一個數的名詞配 so many，不能數的配 so much。所以是 so many people，不是 such many people，這個錯很常見。"
+      },
+      {
+        "t": "ex",
+        "en": "There were so many people at the station.",
+        "zh": "車站裡有好多人。",
+        "focus": "so many people"
+      },
+      {
+        "t": "p",
+        "text": "這兩個字後面都常接一個 that 帶出來的結果，形成「太…所以…」的意思。so 加形容詞加 that，或 such 加名詞加 that，中文都翻成「…到…」。要注意 very 沒有這個用法，說 very tired that 是不通的，想講結果就得換成 so。"
+      },
+      {
+        "t": "ex",
+        "en": "They are such kind people.",
+        "zh": "他們真是善良的人。",
+        "focus": "such kind people"
+      },
+      {
+        "t": "tip",
+        "text": "決定用 so 還是 such，看後面那一串字最後落在哪裡，落在形容詞就用 so，落在名詞就用 such。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "I was ___ tired that I fell asleep on the bus.",
+        "options": [
+          "so",
+          "such",
+          "such a",
+          "too"
+        ],
+        "answer": 0,
+        "explanation": "後面接的是形容詞 tired，要用 so。such 和 such a 後面要接名詞，too 雖然也能配形容詞，但它不能接 that 子句表示結果。"
+      },
+      {
+        "q": "It was ___ long day.",
+        "options": [
+          "so",
+          "so a",
+          "such a",
+          "such"
+        ],
+        "answer": 2,
+        "explanation": "後面是形容詞加單數名詞 long day，要用 such a，而且 a 放在 such 後面。so 只能接形容詞，so a 這種排法不存在，such 少了 a 也不完整。"
+      },
+      {
+        "q": "They are ___ kind people.",
+        "options": [
+          "so a",
+          "such a",
+          "so",
+          "such"
+        ],
+        "answer": 3,
+        "explanation": "people 是複數名詞，用 such 就好，不用加 a。so 後面只能接形容詞，而 a 不能放在複數名詞前面。"
+      },
+      {
+        "q": "There were ___ people at the concert.",
+        "options": [
+          "so much",
+          "so many",
+          "such many",
+          "such a many"
+        ],
+        "answer": 1,
+        "explanation": "people 是能一個一個數的名詞，講數量多用 so many。so much 是給不能數的東西用的，而 such many 這種搭配不存在。"
+      },
+      {
+        "q": "The book was ___ interesting that I read it twice.",
+        "options": [
+          "so",
+          "such",
+          "such an",
+          "very"
+        ],
+        "answer": 0,
+        "explanation": "後面接形容詞 interesting，而且要帶出 that 的結果，只能用 so。very 不能接 that 子句，such 和 such an 後面要有名詞。"
+      },
+      {
+        "q": "It was ___ good movie that we watched it again.",
+        "options": [
+          "so",
+          "such",
+          "such a",
+          "so a"
+        ],
+        "answer": 2,
+        "explanation": "後面是形容詞加單數名詞 good movie，要用 such a。so 直接接名詞不行，such 少了 a，so a 這種寫法根本不存在。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "She has such a nice voice.",
+          "She has so a nice voice.",
+          "She has such nice a voice.",
+          "She has so nice voice."
+        ],
+        "answer": 0,
+        "explanation": "順序是 such 加 a 加形容詞加名詞。第二句用了 so 又加 a，第三句把 a 擺到形容詞後面，第四句用 so 直接接名詞，都不合規則。"
+      },
+      {
+        "q": "We had ___ work last week that nobody took a break.",
+        "options": [
+          "so many",
+          "such many",
+          "so a much",
+          "so much"
+        ],
+        "answer": 3,
+        "explanation": "work 在這裡不能一個一個數，要用 so much。so many 是給能數的名詞用的，such many 和 so a much 都不是英文裡存在的搭配。"
+      }
+    ]
+  },
+  {
+    "id": "gf-10",
+    "title": "比較的慣用說法：the same as、different from、like",
+    "goal": "學完你會配對正確的介系詞，不再說 the same with 或 different with。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文說「跟…一樣」「跟…不一樣」，都用同一個「跟」字。英文麻煩的地方在於每個說法配的介系詞是固定的，而且沒什麼道理可講，只能整組記。台灣學生受中文影響最常寫成 the same with 和 different with，兩個都是錯的。"
+      },
+      {
+        "t": "ex",
+        "en": "Your bag is the same as mine.",
+        "zh": "你的包包跟我的一樣。",
+        "focus": "the same as"
+      },
+      {
+        "t": "p",
+        "text": "先看「一樣」。正確組合是 the same as，前面的 the 不能省略，因為 same 講的一定是特定那一個。中間還可以插進一個名詞說清楚是哪方面一樣，寫成 the same price as、the same size as。如果對方已經知道你在比什麼，後面的 as 那一段可以整個不講，只說 the same。"
+      },
+      {
+        "t": "ex",
+        "en": "The two coats are the same price.",
+        "zh": "這兩件外套價錢一樣。",
+        "focus": "the same price"
+      },
+      {
+        "t": "table",
+        "header": [
+          "中文",
+          "英文",
+          "例句"
+        ],
+        "rows": [
+          [
+            "跟…一樣",
+            "the same as",
+            "My schedule is the same as yours."
+          ],
+          [
+            "跟…不一樣",
+            "different from",
+            "This model is different from that one."
+          ],
+          [
+            "跟…相似",
+            "similar to",
+            "Her voice is similar to her sister's."
+          ],
+          [
+            "像…一樣",
+            "like + 名詞",
+            "He looks like his father."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "再看「不一樣」。標準組合是 different from，考試一律以這組為準。similar to 是「相似」，配的是 to 不是 with，這也很常寫錯。這三組沒有規則可推，把 same 配 as、different 配 from、similar 配 to 當成三個整體背下來最快。"
+      },
+      {
+        "t": "ex",
+        "en": "This model is different from the one I bought last year.",
+        "zh": "這個型號跟我去年買的那個不一樣。",
+        "focus": "different from"
+      },
+      {
+        "t": "p",
+        "text": "最後是 like。它在這裡是介系詞，後面直接接名詞或代名詞，意思是「像…一樣」，He looks like his father. 就是他長得像他爸。要注意的是 like 後面不能接一整句話，想接一整句話就要換成別的字。另外 like 也是「喜歡」那個動詞，同一個字兩種身分，靠位置分辨：句子已經有動詞了，那個 like 就是介系詞。"
+      },
+      {
+        "t": "ex",
+        "en": "He looks like his father.",
+        "zh": "他長得像他爸爸。",
+        "focus": "like"
+      },
+      {
+        "t": "tip",
+        "text": "the same 後面永遠接 as，different 後面永遠接 from，把中文的「跟」直接翻成 with 就會出錯。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Your bag is the same ___ mine.",
+        "options": [
+          "with",
+          "as",
+          "from",
+          "like"
+        ],
+        "answer": 1,
+        "explanation": "the same 固定配 as。中文說「跟我的一樣」很容易讓人寫成 the same with，但英文沒有這種搭配；from 是 different 用的，like 後面不會跟在 same 後面。"
+      },
+      {
+        "q": "This model is different ___ the one I bought last year.",
+        "options": [
+          "with",
+          "as",
+          "to me",
+          "from"
+        ],
+        "answer": 3,
+        "explanation": "different 固定配 from。different with 是受中文影響的錯誤說法，as 是 the same 用的，to me 在這裡完全接不上。"
+      },
+      {
+        "q": "He looks ___ his father.",
+        "options": [
+          "like",
+          "as",
+          "same",
+          "alike"
+        ],
+        "answer": 0,
+        "explanation": "後面接的是名詞 his father，要用介系詞 like。as 後面通常接一整句話，same 前面少了 the 而且要配 as，alike 只能放在句尾表示兩者相像。"
+      },
+      {
+        "q": "Our plan is similar ___ theirs.",
+        "options": [
+          "with",
+          "from",
+          "to",
+          "as"
+        ],
+        "answer": 2,
+        "explanation": "similar 固定配 to。similar with 是很常見的錯，from 是 different 用的，as 是 the same 用的，三組介系詞不能互換。"
+      },
+      {
+        "q": "The two tickets cost ___.",
+        "options": [
+          "the same",
+          "the same as",
+          "same",
+          "as the same"
+        ],
+        "answer": 0,
+        "explanation": "句子已經把兩張票都講出來了，不需要再說跟誰一樣，直接用 the same。要接比較對象才會加 as，而 same 前面一定要有 the。"
+      },
+      {
+        "q": "My schedule this week is ___ last week's.",
+        "options": [
+          "same as",
+          "different with",
+          "the same as",
+          "the same with"
+        ],
+        "answer": 2,
+        "explanation": "完整寫法是 the same as，the 和 as 都不能少。same as 漏了 the，the same with 用錯介系詞，different with 除了介系詞錯，意思也跟句子想表達的相反。"
+      },
+      {
+        "q": "___ many people, she checks her phone right after she wakes up.",
+        "options": [
+          "As",
+          "Like",
+          "Same as",
+          "Alike"
+        ],
+        "answer": 1,
+        "explanation": "後面接的是名詞 many people，要用 like。as 在這種位置後面要接一整句話，Same as 前面漏了 the，alike 不能放在句首帶名詞。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "My phone is the same with yours.",
+          "My phone is same as yours.",
+          "My phone is different with yours.",
+          "My phone is the same as yours."
+        ],
+        "answer": 3,
+        "explanation": "the same as 才是完整正確的組合。the same with 和 different with 都把介系詞換成 with，same as 則漏掉了 the，這三種是台灣學生最常寫錯的版本。"
+      }
+    ]
+  },
+  {
+    "id": "gf-11",
+    "title": "形容詞排序：a nice small leather bag 的順序怎麼來",
+    "goal": "學完你在名詞前面放好幾個形容詞時，排得出母語者聽起來自然的順序。",
+    "lesson": [
+      {
+        "t": "p",
+        "text": "中文也有順序感，我們會說「一個漂亮的小皮包」，不會說「一個皮的小漂亮包」，只是我們從來沒學過規則，靠語感就排對了。英文的順序比中文更固定，母語者排錯會覺得刺耳。好消息是這個順序有邏輯可循，不必硬背一長串。"
+      },
+      {
+        "t": "p",
+        "text": "邏輯是這樣：越主觀的形容詞離名詞越遠，越客觀、越接近「這東西是什麼做的」就越靠近名詞。所以先講你的看法，再講大小、新舊、形狀、顏色，最後才講來源和材質。完整順序是意見、大小、新舊、形狀、顏色、來源、材質，然後接名詞。"
+      },
+      {
+        "t": "table",
+        "header": [
+          "類別",
+          "例字",
+          "離名詞的距離"
+        ],
+        "rows": [
+          [
+            "意見（你的看法）",
+            "nice、beautiful、great",
+            "最遠"
+          ],
+          [
+            "大小",
+            "big、small、long",
+            "第二"
+          ],
+          [
+            "新舊或年紀",
+            "new、old、young",
+            "第三"
+          ],
+          [
+            "形狀",
+            "round、square",
+            "第四"
+          ],
+          [
+            "顏色",
+            "black、red、white",
+            "第五"
+          ],
+          [
+            "來源或國籍",
+            "Japanese、Italian",
+            "第六"
+          ],
+          [
+            "材質",
+            "leather、wooden、cotton",
+            "最靠近名詞"
+          ]
+        ]
+      },
+      {
+        "t": "ex",
+        "en": "She bought a nice small leather bag.",
+        "zh": "她買了一個漂亮的小皮包。",
+        "focus": "nice small leather"
+      },
+      {
+        "t": "ex",
+        "en": "We sat at a big old wooden table.",
+        "zh": "我們坐在一張又大又舊的木頭桌子旁。",
+        "focus": "big old wooden"
+      },
+      {
+        "t": "p",
+        "text": "實際說話很少一口氣放四五個形容詞，兩三個就差不多了，所以與其背整張表，不如記住那個大方向：主觀的先講，材質最後講。碰到不確定的時候，把「它是什麼做的、哪裡來的」那個字往名詞旁邊挪，通常就對了。"
+      },
+      {
+        "t": "ex",
+        "en": "He drives a small Japanese car.",
+        "zh": "他開一台小型的日本車。",
+        "focus": "small Japanese"
+      },
+      {
+        "t": "p",
+        "text": "還有一種情況不適用這個順序：兩個形容詞屬於同一類，或是放在 be 動詞後面的時候，要用 and 或逗號連起來，不能直接排在一起。所以會說 The meeting was long and boring.，寫成 The meeting was long boring. 就不成句了。"
+      },
+      {
+        "t": "ex",
+        "en": "The meeting was long and boring.",
+        "zh": "那場會議又長又無聊。",
+        "focus": "long and boring"
+      },
+      {
+        "t": "tip",
+        "text": "拿不定順序的時候，把講材質和產地的字放到最靠近名詞的位置，其他往前排就八九不離十。"
+      }
+    ],
+    "quiz": [
+      {
+        "q": "「一個漂亮的小皮包」的順序是哪一個？",
+        "options": [
+          "a small nice leather bag",
+          "a leather small nice bag",
+          "a nice small leather bag",
+          "a small leather nice bag"
+        ],
+        "answer": 2,
+        "explanation": "順序是意見在最前面、材質最靠近名詞，所以是 nice small leather bag。把 leather 往前挪或把 nice 往後挪，聽起來都不自然。"
+      },
+      {
+        "q": "「一張又大又舊的木頭桌子」是哪一個？",
+        "options": [
+          "a big old wooden table",
+          "an old big wooden table",
+          "a wooden big old table",
+          "a big wooden old table"
+        ],
+        "answer": 0,
+        "explanation": "大小排在新舊前面，材質放最後，所以是 big old wooden table。wooden 是講材質的字，一定要貼著名詞放。"
+      },
+      {
+        "q": "She wore a ___ dress.（一件長長的紅色絲質洋裝）",
+        "options": [
+          "red long silk",
+          "silk long red",
+          "long silk red",
+          "long red silk"
+        ],
+        "answer": 3,
+        "explanation": "大小在前、顏色在中間、材質最後，所以是 long red silk dress。silk 是材質，一定要排在最後、緊貼著 dress。"
+      },
+      {
+        "q": "He drives a ___ car.（一台小型的日本車）",
+        "options": [
+          "Japanese small",
+          "small Japanese",
+          "small car Japanese",
+          "Japanese a small"
+        ],
+        "answer": 1,
+        "explanation": "大小在前、來源在後，所以是 small Japanese car。small car Japanese 多塞了一個 car，Japanese a small 又把 a 插進中間，兩個都破壞了結構。"
+      },
+      {
+        "q": "哪一個順序是對的？",
+        "options": [
+          "a plastic black round tray",
+          "a round plastic black tray",
+          "a black round plastic tray",
+          "a round black plastic tray"
+        ],
+        "answer": 3,
+        "explanation": "形狀在顏色前面，材質放最後，所以是 round black plastic tray。plastic 是材質，只要它沒有緊貼著名詞，那個排法就不對。"
+      },
+      {
+        "q": "「一家很棒的新義大利餐廳」的英文是哪一個？",
+        "options": [
+          "a new great Italian restaurant",
+          "a great new Italian restaurant",
+          "an Italian new great restaurant",
+          "a great Italian new restaurant"
+        ],
+        "answer": 1,
+        "explanation": "great 是你的看法，排最前面；new 是新舊；Italian 是來源，最靠近名詞。把 Italian 往前挪或把 great 往後挪都不符合排序。"
+      },
+      {
+        "q": "The meeting was ___.（又長又無聊）",
+        "options": [
+          "long boring",
+          "a long boring",
+          "long and boring",
+          "long and bored"
+        ],
+        "answer": 2,
+        "explanation": "放在 be 動詞後面的兩個形容詞要用 and 連起來，寫成 long and boring。bored 是講人的感受，會議要用 boring；a long boring 後面還缺一個名詞。"
+      },
+      {
+        "q": "下面哪一句是對的？",
+        "options": [
+          "I bought two white cotton shirts.",
+          "I bought two shirts white cotton.",
+          "I bought two cotton white shirts.",
+          "I bought two whites cotton shirts."
+        ],
+        "answer": 0,
+        "explanation": "顏色在材質前面，而且形容詞都要放在名詞前面，所以是 two white cotton shirts。two shirts white cotton 把形容詞丟到名詞後面，two cotton white shirts 順序顛倒，two whites cotton shirts 還把 s 加到形容詞上。"
+      }
+    ]
+  }
+]

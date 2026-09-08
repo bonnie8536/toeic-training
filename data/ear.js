@@ -700,6 +700,286 @@ TOEIC.ear = {
    "text": "The hotel charged us for two nights instead of just one.",
    "zh": "飯店跟我們收了兩晚的錢，而不是只收一晚。",
    "note": "charged us 連音，for 與 of 都弱讀，two 和 one 兩個數字要聽準。"
+  },
+  {
+   "id": "d-101",
+   "level": "初級",
+   "text": "I need to send this by Wednesday.",
+   "zh": "我這個要在星期三前寄出。",
+   "note": "Wednesday 的第一個 d 不發音，整個字唸成 /ˈwɛnz.deɪ/，拼字時最容易把它漏掉。"
+  },
+  {
+   "id": "d-102",
+   "level": "初級",
+   "text": "The receipt is in the bag.",
+   "zh": "收據在袋子裡。",
+   "note": "receipt 的 p 是啞音，只聽得到 /rɪˈsiːt/，拼字要自己把它補回去。"
+  },
+  {
+   "id": "d-103",
+   "level": "初級",
+   "text": "We ordered twenty extra chairs.",
+   "zh": "我們多訂了二十張椅子。",
+   "note": "twenty 口語常唸成 /ˈtwɛni/，中間的 t 被前面的鼻音吃掉。"
+  },
+  {
+   "id": "d-104",
+   "level": "初級",
+   "text": "I left the file on her desk.",
+   "zh": "我把檔案放在她桌上。",
+   "note": "on her 黏成一個字 /ɑ.nər/，her 的 h 整個脫落。"
+  },
+  {
+   "id": "d-105",
+   "level": "初級",
+   "text": "Turn off your phone during the presentation.",
+   "zh": "簡報進行中請把手機關掉。",
+   "note": "Turn off 連成一個字 /tɜr.nɔf/，但 off 的母音飽滿、字尾是清音 /f/，和弱讀的 of /əv/ 不一樣，不能寫成 of。"
+  },
+  {
+   "id": "d-106",
+   "level": "初級",
+   "text": "Both shelves are already full.",
+   "zh": "兩個架子都已經放滿了。",
+   "note": "shelf 的複數要寫成 shelves，聽到 /vz/ 不能照著拼成 shelfs。"
+  },
+  {
+   "id": "d-107",
+   "level": "初級",
+   "text": "He brought lunch to the office.",
+   "zh": "他帶了午餐到辦公室。",
+   "note": "brought 比 bought 多一個 /r/，語速一快就會聽成 bought。"
+  },
+  {
+   "id": "d-108",
+   "level": "初級",
+   "text": "You're already on the list.",
+   "zh": "你已經在名單上了。",
+   "note": "You're 和 your 讀音相同，後面沒有名詞可以修飾，代表這裡是主詞加 be 動詞。"
+  },
+  {
+   "id": "d-109",
+   "level": "初級",
+   "text": "The bus stop is across the street.",
+   "zh": "公車站在對面。",
+   "note": "bus stop 兩個 /s/ 撞在一起只唸一次，聽起來像一個字。"
+  },
+  {
+   "id": "d-110",
+   "level": "初級",
+   "text": "We finished the report last night.",
+   "zh": "我們昨晚把報告做完了。",
+   "note": "finished 的 -ed 只剩一個很輕的 /t/，漏聽就會寫成現在式。"
+  },
+  {
+   "id": "d-111",
+   "level": "初級",
+   "text": "Its battery is almost dead.",
+   "zh": "它的電池快沒電了。",
+   "note": "its 和 it's 同音，這裡後面沒有第二個動詞，撇號不能加。"
+  },
+  {
+   "id": "d-112",
+   "level": "初級",
+   "text": "Let me know as soon as possible.",
+   "zh": "請盡快讓我知道。",
+   "note": "as soon as 三個字連成一串，兩個 as 都弱讀成 /əz/。"
+  },
+  {
+   "id": "d-113",
+   "level": "初級",
+   "text": "I'll pay you back next month.",
+   "zh": "我下個月還你錢。",
+   "note": "next month 中間的 t 被前後子音夾掉，整串唸成 /nɛks.mʌnθ/。"
+  },
+  {
+   "id": "d-114",
+   "level": "初級",
+   "text": "This letter came from the bank.",
+   "zh": "這封信是銀行寄來的。",
+   "note": "from 弱讀成 /frəm/，母音幾乎消失，聽寫時常整個漏掉，或反過來寫成 form。"
+  },
+  {
+   "id": "d-115",
+   "level": "中級",
+   "text": "I won't be able to join the call.",
+   "zh": "我沒辦法參加這場電話會議。",
+   "note": "won't 的母音是 /oʊ/、want 是 /ɑ/，字尾的 t 又都很輕，聽成 want 就會把整句的否定漏掉。"
+  },
+  {
+   "id": "d-116",
+   "level": "中級",
+   "text": "The parcels were sent to the wrong address.",
+   "zh": "包裹被寄到錯誤的地址了。",
+   "note": "were 弱讀成 /wər/，和 was 幾乎分不出來，只能靠 parcels 是複數回推。"
+  },
+  {
+   "id": "d-117",
+   "level": "中級",
+   "text": "Please put this in the manager's mailbox.",
+   "zh": "請把這個放進經理的信箱。",
+   "note": "manager's 的所有格 s 和複數 s 讀音一樣，後面接 mailbox 才知道要加撇號。"
+  },
+  {
+   "id": "d-118",
+   "level": "中級",
+   "text": "This model is cheaper than the one online.",
+   "zh": "這款比網路上那款便宜。",
+   "note": "than 弱讀成 /ðən/，聽起來像 then，前面有比較級 cheaper 才確定要寫 than。"
+  },
+  {
+   "id": "d-119",
+   "level": "中級",
+   "text": "I've got to catch the last train home.",
+   "zh": "我得趕上最後一班回家的火車。",
+   "note": "got to 在口語裡黏成 gotta，t 濁化成閃音。"
+  },
+  {
+   "id": "d-120",
+   "level": "中級",
+   "text": "The warranty on this laptop lasts twelve months.",
+   "zh": "這台筆電的保固是十二個月。",
+   "note": "months 的 /nθs/ 子音串太難唸，常被簡化成 /mʌns/，尾巴的 s 就消失了。"
+  },
+  {
+   "id": "d-121",
+   "level": "中級",
+   "text": "Bring an umbrella and a jacket tomorrow.",
+   "zh": "明天帶把傘和一件外套。",
+   "note": "an 和 and 弱讀後都只剩 /ən/，要看後面接的是名詞還是另一個並列項目。"
+  },
+  {
+   "id": "d-122",
+   "level": "中級",
+   "text": "Please have a seat while I check the system.",
+   "zh": "請先坐一下，我查一下系統。",
+   "note": "seat 的母音是長而緊的 /iː/、sit 是短而鬆的 /ɪ/，聽成 sit 就會寫出 have a sit 這種錯句。"
+  },
+  {
+   "id": "d-123",
+   "level": "中級",
+   "text": "The workshop is on Tuesday, not Thursday.",
+   "zh": "工作坊是星期二，不是星期四。",
+   "note": "Tuesday 開頭是 /t/、Thursday 是 /θ/，母音也不同（/uː/ 對 /ɜr/），/θ/ 一含糊就把日子聽反。"
+  },
+  {
+   "id": "d-124",
+   "level": "中級",
+   "text": "How long have you known the new supervisor?",
+   "zh": "你認識新主管多久了？",
+   "note": "have you 連讀時 h 脫落，兩個字擠成 /əv.jə/，完成式很容易整個漏掉。"
+  },
+  {
+   "id": "d-125",
+   "level": "中級",
+   "text": "The supplier sent sixty samples, not sixteen.",
+   "zh": "供應商寄來的是六十份樣品，不是十六份。",
+   "note": "sixty 的第二個音節又輕又短，sixteen 兩個音節都飽滿，靠節奏分辨最準。"
+  },
+  {
+   "id": "d-126",
+   "level": "中級",
+   "text": "They're still working on the final version.",
+   "zh": "他們還在處理最後的版本。",
+   "note": "口語的 -ing 常唸成 /ɪn/，working 聽起來像 workin，字尾的 g 要自己補上。"
+  },
+  {
+   "id": "d-127",
+   "level": "中級",
+   "text": "You need to press the button twice.",
+   "zh": "你要按這個按鈕兩下。",
+   "note": "button 中間的 tt 在美式發音變成喉塞音，唸起來像 /ˈbʌʔn̩/，t 的聲音整個消失。"
+  },
+  {
+   "id": "d-128",
+   "level": "中級",
+   "text": "She passed the test on her first try.",
+   "zh": "她第一次就通過考試了。",
+   "note": "passed 和 past 完全同音，過去式的 -ed 一點痕跡都聽不到。"
+  },
+  {
+   "id": "d-129",
+   "level": "進階",
+   "text": "Everyone accepted the new policy except the sales team.",
+   "zh": "除了業務部之外，大家都接受了新政策。",
+   "note": "accept 和 except 只差第一個母音，唸快時幾乎一樣，但一個是動詞、一個是介系詞，這句兩個都出現，得靠位置分辨。"
+  },
+  {
+   "id": "d-130",
+   "level": "進階",
+   "text": "The new rule will affect everyone in the branch office.",
+   "zh": "新規定會影響分公司裡的每一個人。",
+   "note": "affect 與 effect 的第一個音節都弱讀成 /ə/，聽起來幾乎同音，前面有 will，這裡一定是動詞 affect。"
+  },
+  {
+   "id": "d-131",
+   "level": "進階",
+   "text": "Please send your personal details to the personnel office.",
+   "zh": "請把你的個人資料寄到人事部門。",
+   "note": "personal 重音在第一個音節、personnel 在最後一個，只差重音位置，意思完全不同。"
+  },
+  {
+   "id": "d-132",
+   "level": "進階",
+   "text": "The waiting area is quite small but always quiet.",
+   "zh": "等候區蠻小的，但一直都很安靜。",
+   "note": "quite 是一個音節、quiet 是兩個音節，語速一快很容易併成同一個字。"
+  },
+  {
+   "id": "d-133",
+   "level": "進階",
+   "text": "One of the elevators has been out of service since Monday.",
+   "zh": "其中一部電梯從星期一開始就停用了。",
+   "note": "elevators 的複數 s 就在 has 前面，但主詞是 One，動詞不能跟著變複數。"
+  },
+  {
+   "id": "d-134",
+   "level": "進階",
+   "text": "Her train gets in at a quarter past eleven tonight.",
+   "zh": "她的火車今晚十一點十五分到。",
+   "note": "a quarter past 三個字連成一氣，要先抓到是 past 還是 to 才知道幾點幾分。"
+  },
+  {
+   "id": "d-135",
+   "level": "進階",
+   "text": "I'd like your advice on which vendor we should choose.",
+   "zh": "我想聽聽你的意見，看我們該選哪家廠商。",
+   "note": "advice 字尾是 /s/、advise 是 /z/，只差子音的清濁，前面有 your 代表要寫名詞。"
+  },
+  {
+   "id": "d-136",
+   "level": "進階",
+   "text": "All of the drivers' names are on the second page.",
+   "zh": "所有司機的名字都在第二頁。",
+   "note": "drivers' 的撇號放在 s 後面，讀音和普通複數毫無差別，要從 names 屬於誰去推。"
+  },
+  {
+   "id": "d-137",
+   "level": "進階",
+   "text": "Neither of the two dates works for our overseas clients.",
+   "zh": "這兩個日期我們的海外客戶都不行。",
+   "note": "works 的 s 夾在 dates 和 for 之間很難聽出來，但主詞是 Neither，動詞一定用單數。"
+  },
+  {
+   "id": "d-138",
+   "level": "進階",
+   "text": "Please confirm your attendance at least three days in advance.",
+   "zh": "請至少提前三天確認出席。",
+   "note": "at least 連成 /ə.tliːst/，in advance 的 in 又弱讀，數字被兩串虛詞夾住最難抓。"
+  },
+  {
+   "id": "d-139",
+   "level": "進階",
+   "text": "The proposal went through the review without a single change.",
+   "zh": "這份提案通過審查，一處都沒改。",
+   "note": "through 和 threw 同音，這裡後面接名詞，是介系詞的用法。"
+  },
+  {
+   "id": "d-140",
+   "level": "進階",
+   "text": "We hardly ever get complaints about the new packaging.",
+   "zh": "我們幾乎沒收過新包裝的客訴。",
+   "note": "hardly ever 是否定用法，意思是幾乎不曾；漏掉 -ly 聽成 hard，整句就會變成肯定。"
   }
  ],
  "pairs": [
@@ -2206,6 +2486,286 @@ TOEIC.ear = {
    "text": "How's everything going with the new project so far?",
    "zh": "新專案目前進行得還順利嗎?",
    "note": "with the 兩個 th 連著唸,project 當名詞重音在前。"
+  },
+  {
+   "id": "s-61",
+   "level": "初級",
+   "text": "Table for two, please.",
+   "zh": "我們兩位,謝謝。",
+   "note": "for 弱讀成「fər」,two 的 t 要把氣送足。"
+  },
+  {
+   "id": "s-62",
+   "level": "初級",
+   "text": "We're ready to order.",
+   "zh": "我們可以點餐了。",
+   "note": "ready 的 d 唸成快閃音,to 弱讀成「tə」。"
+  },
+  {
+   "id": "s-63",
+   "level": "初級",
+   "text": "My food never arrived.",
+   "zh": "我的餐點一直沒送到。",
+   "note": "food 的 d 收住不爆開,arrived 尾音是 d 的濁音。"
+  },
+  {
+   "id": "s-64",
+   "level": "初級",
+   "text": "Do I need a prescription?",
+   "zh": "我需要處方箋嗎?",
+   "note": "Do I 連音成「du-wai」,prescription 重音在 scrip。"
+  },
+  {
+   "id": "s-65",
+   "level": "初級",
+   "text": "Where do I mail this?",
+   "zh": "這個要在哪裡寄?",
+   "note": "Where do I 三個字黏著唸,mail this 的 l 直接接 th 不要停。"
+  },
+  {
+   "id": "s-66",
+   "level": "初級",
+   "text": "I lost my bank card.",
+   "zh": "我的金融卡不見了。",
+   "note": "lost my 的 t 幾乎不發,bank 的 n 在 k 前要唸成後鼻音 ŋ。"
+  },
+  {
+   "id": "s-67",
+   "level": "初級",
+   "text": "Not too short, please.",
+   "zh": "不要剪太短,謝謝。",
+   "note": "Not too 兩個 t 併成一個,short 的 r 要捲舌。"
+  },
+  {
+   "id": "s-68",
+   "level": "初級",
+   "text": "Is this machine free?",
+   "zh": "這台機器可以用嗎?",
+   "note": "Is this 的 z 直接滑進 th,machine 重音在後面。"
+  },
+  {
+   "id": "s-69",
+   "level": "初級",
+   "text": "Fill it up, please.",
+   "zh": "麻煩加滿。",
+   "note": "Fill it up 三個字連成「fi-li-dap」。"
+  },
+  {
+   "id": "s-70",
+   "level": "初級",
+   "text": "Where can I park?",
+   "zh": "我可以停哪裡?",
+   "note": "can 弱讀成「kən」,park 捲完舌 k 輕收不爆。"
+  },
+  {
+   "id": "s-71",
+   "level": "初級",
+   "text": "The parking lot is full.",
+   "zh": "停車場滿了。",
+   "note": "lot is 連音成「la-diz」,full 的 l 含在舌根。"
+  },
+  {
+   "id": "s-72",
+   "level": "初級",
+   "text": "I'll return it tomorrow.",
+   "zh": "我明天會還你。",
+   "note": "return it 連音成「ri-tər-nit」,tomorrow 重音在中間。"
+  },
+  {
+   "id": "s-73",
+   "level": "初級",
+   "text": "Can you lend me a pen?",
+   "zh": "可以借我一支筆嗎?",
+   "note": "lend me 的 d 被 m 吃掉,Can 弱讀成「kən」。"
+  },
+  {
+   "id": "s-74",
+   "level": "初級",
+   "text": "That road is closed.",
+   "zh": "那條路封起來了。",
+   "note": "road is 連音成「row-diz」,closed 尾音是 d 的濁音。"
+  },
+  {
+   "id": "s-75",
+   "level": "初級",
+   "text": "The printer is jammed.",
+   "zh": "印表機卡紙了。",
+   "note": "printer 美式常把 t 省掉唸成「prin-nər」。"
+  },
+  {
+   "id": "s-76",
+   "level": "初級",
+   "text": "It should clear up later.",
+   "zh": "晚一點應該就會放晴。",
+   "note": "should 弱讀成「shəd」,clear up 連音成「clea-rəp」。"
+  },
+  {
+   "id": "s-77",
+   "level": "中級",
+   "text": "Could we get the check, please?",
+   "zh": "麻煩幫我們結帳。",
+   "note": "get the 的 t 直接消失,check 的 ch 要送氣。"
+  },
+  {
+   "id": "s-78",
+   "level": "中級",
+   "text": "My order is running really late.",
+   "zh": "我點的外送拖很久了。",
+   "note": "order is 連音成「or-də-riz」,late 的 t 收住不爆開。"
+  },
+  {
+   "id": "s-79",
+   "level": "中級",
+   "text": "Can you leave it at the door?",
+   "zh": "可以放在門口就好嗎?",
+   "note": "leave it 連音成「lee-vit」,door 的 r 要捲到底。"
+  },
+  {
+   "id": "s-80",
+   "level": "中級",
+   "text": "Should I take this after meals?",
+   "zh": "這個要飯後吃嗎?",
+   "note": "take this 的 k 收住直接接 th,meals 尾音是 z。"
+  },
+  {
+   "id": "s-81",
+   "level": "中級",
+   "text": "How long does regular mail take?",
+   "zh": "普通信件要寄多久?",
+   "note": "does regular 連讀成「də-zre-gyu-lər」,take 的 t 要送氣。"
+  },
+  {
+   "id": "s-82",
+   "level": "中級",
+   "text": "Is there a fee for this transfer?",
+   "zh": "這筆轉帳要收手續費嗎?",
+   "note": "there a 連音成「the-rə」,transfer 當名詞重音在前。"
+  },
+  {
+   "id": "s-83",
+   "level": "中級",
+   "text": "Can you take a little off the top?",
+   "zh": "上面可以幫我修短一點嗎?",
+   "note": "little off 連音成「li-də-lɔf」,the top 的 th 輕輕帶過。"
+  },
+  {
+   "id": "s-84",
+   "level": "中級",
+   "text": "Is the gym open on Sundays?",
+   "zh": "健身房星期天有開嗎?",
+   "note": "gym 的 g 唸 dʒ,open on 連音成「o-pə-non」。"
+  },
+  {
+   "id": "s-85",
+   "level": "中級",
+   "text": "Which pump number are you at?",
+   "zh": "你在幾號加油機?",
+   "note": "number are 連音成「nam-bə-rar」,at 的 t 收在舌尖。"
+  },
+  {
+   "id": "s-86",
+   "level": "中級",
+   "text": "Is parking free on the weekend?",
+   "zh": "週末停車免費嗎?",
+   "note": "Is 的 s 唸成 z,free on 連音成「free-yon」。"
+  },
+  {
+   "id": "s-87",
+   "level": "中級",
+   "text": "Thanks for lending me the umbrella.",
+   "zh": "謝謝你借我雨傘。",
+   "note": "the umbrella 連音成「thi-yəm-brella」,for 弱讀成「fər」。"
+  },
+  {
+   "id": "s-88",
+   "level": "中級",
+   "text": "There's a lot of traffic today.",
+   "zh": "今天路上很塞。",
+   "note": "lot of 連音成「la-dəv」,traffic 的 tr 唸成「chr」。"
+  },
+  {
+   "id": "s-89",
+   "level": "中級",
+   "text": "I ordered the wrong size online.",
+   "zh": "我在網路上訂錯尺寸了。",
+   "note": "ordered the 的 d 直接接 th,wrong 的 ng 後面不要多加 g。"
+  },
+  {
+   "id": "s-90",
+   "level": "中級",
+   "text": "We're ordering lunch, do you want anything?",
+   "zh": "我們要訂午餐,你要點什麼嗎?",
+   "note": "want anything 連音成「wa-nə-nything」,We're 弱讀成「wər」。"
+  },
+  {
+   "id": "s-91",
+   "level": "進階",
+   "text": "Can we push the meeting back to next week?",
+   "zh": "會議可以延到下禮拜嗎?",
+   "note": "push the 的 sh 接 th 要黏住,back to 的 k 收住不爆開直接接 t。"
+  },
+  {
+   "id": "s-92",
+   "level": "進階",
+   "text": "Someone needs to clear the paper jam in the printer.",
+   "zh": "印表機卡紙要有人去清一下。",
+   "note": "needs to 併成「need-stə」,jam in 連音成「ja-min」。"
+  },
+  {
+   "id": "s-93",
+   "level": "進階",
+   "text": "The forecast says heavy rain until Thursday night.",
+   "zh": "氣象預報說到星期四晚上都有大雨。",
+   "note": "forecast says 的 t 幾乎消失,until 弱讀成「ən-til」。"
+  },
+  {
+   "id": "s-94",
+   "level": "進階",
+   "text": "Could we split the bill three ways, please?",
+   "zh": "我們可以分成三份結帳嗎?",
+   "note": "split the 的 t 消失,bill three 的 l 接 th 要換舌位。"
+  },
+  {
+   "id": "s-95",
+   "level": "進階",
+   "text": "How do I send this back for a refund?",
+   "zh": "這個要怎麼寄回去退款?",
+   "note": "send this 的 d 被 th 吃掉,for a 連音成「fə-rə」。"
+  },
+  {
+   "id": "s-96",
+   "level": "進階",
+   "text": "Do I need an appointment to open an account?",
+   "zh": "開戶需要先預約嗎?",
+   "note": "need an 連音成「nee-dən」,open an 連成「o-pə-nən」。"
+  },
+  {
+   "id": "s-97",
+   "level": "進階",
+   "text": "The gym gets really crowded after six o'clock.",
+   "zh": "健身房六點以後都很多人。",
+   "note": "gets really 的 ts 直接接 r,crowded 的 ed 唸成「id」。"
+  },
+  {
+   "id": "s-98",
+   "level": "進階",
+   "text": "There's construction on the main road this week.",
+   "zh": "這禮拜大馬路在施工。",
+   "note": "construction 重音在 struc,road this 的 d 接 th 要黏住。"
+  },
+  {
+   "id": "s-99",
+   "level": "進階",
+   "text": "I still have the book you lent me last month.",
+   "zh": "你上個月借我的書還在我這裡。",
+   "note": "lent me 的 t 被 m 吃掉,last month 的 t 幾乎不發。"
+  },
+  {
+   "id": "s-100",
+   "level": "進階",
+   "text": "Is there anywhere to park near the office?",
+   "zh": "辦公室附近有地方可以停車嗎?",
+   "note": "park near 的 k 收住直接接 n,to 弱讀成「tə」。"
   }
  ]
 };

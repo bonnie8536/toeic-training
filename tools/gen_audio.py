@@ -34,47 +34,74 @@ async def tts(text, voice, rate='-4%'):
             buf += chunk['data']
     return buf
 
+# ---------- 靜音段(用 ffmpeg 產生,格式對齊 edge-tts 的 24kHz mono 48kbps mp3) ----------
+_SIL_CACHE = {}
+
+def silence(ms):
+    """回傳指定毫秒數的靜音 mp3 位元組(快取)。"""
+    if ms not in _SIL_CACHE:
+        import subprocess, tempfile
+        tmp = os.path.join(tempfile.gettempdir(), 'sil_%d.mp3' % ms)
+        if not os.path.exists(tmp):
+            subprocess.run([
+                'ffmpeg', '-y', '-f', 'lavfi', '-i', 'anullsrc=r=24000:cl=mono',
+                '-t', str(ms / 1000), '-c:a', 'libmp3lame', '-b:a', '48k', tmp,
+            ], capture_output=True, check=True)
+        with open(tmp, 'rb') as f:
+            _SIL_CACHE[ms] = f.read()
+    return _SIL_CACHE[ms]
+
 async def save(fname, segments):
+    """segments 項目=(text, voice) 或 int(毫秒靜音)。段落間插靜音避免黏在一起。"""
     path = os.path.join(OUT, fname)
     if os.path.exists(path):
         print('skip', fname, flush=True)
         return
     data = b''
-    for text, voice in segments:
-        data += await tts(text, voice)
+    for seg in segments:
+        if isinstance(seg, int):
+            data += silence(seg)
+        else:
+            data += await tts(seg[0], seg[1])
     with open(path, 'wb') as f:
         f.write(data)
     print('ok', fname, len(data) // 1024, 'KB', flush=True)
 
-def letters_block(options, letters='ABCD'):
-    """選項合成單一文本,讓引擎自然斷句。句尾補句點確保停頓。"""
-    parts = []
+def letter_segments(options, voice, letters='ABCD', gap=700):
+    """每個選項獨立合成(各自是完整句,韻律不受影響),選項之間插靜音。"""
+    segs = []
     for li, opt in enumerate(options):
         o = opt.strip()
         if not o.endswith(('.', '?', '!')):
             o += '.'
-        parts.append('%s. %s' % (letters[li], o))
-    return ' '.join(parts)
+        if li:
+            segs.append(gap)
+        segs.append(('%s. %s' % (letters[li], o), voice))
+    return segs
 
 async def main():
     jobs = []
-    # P1:四句描述一段合成,單一聲線
+    # P1:四個選項各自獨立合成,選項間 700ms 靜音
     for i, q in enumerate(load('listening_p1.json')):
         acc = ACCENTS[i % 4]
         voice = VOICES[acc]['M' if i % 2 == 0 else 'F']
-        jobs.append((q['id'] + '.mp3', [(letters_block(q['options'], 'ABCD'), voice)]))
-    # P2:問句一段(聲線1)+三選項一段(聲線2)
+        jobs.append((q['id'] + '.mp3', letter_segments(q['options'], voice, 'ABCD')))
+    # P2:問句(聲線1)+800ms+三選項(聲線2,選項間 700ms)
     for i, q in enumerate(load('listening_p2_b*.json')):
         acc = q.get('accent', 'US')
         if acc not in VOICES:
             acc = 'US'
         qv = VOICES[acc]['F' if i % 2 == 0 else 'M']
         ov = VOICES[acc]['M' if i % 2 == 0 else 'F']
-        jobs.append((q['id'] + '.mp3', [(q['question'], qv), (letters_block(q['options'], 'ABC'), ov)]))
-    # P3:對話逐回合(必須換聲線),同回合內整段
+        jobs.append((q['id'] + '.mp3', [(q['question'], qv), 800] + letter_segments(q['options'], ov, 'ABC')))
+    # P3:對話逐回合(必須換聲線),回合間 400ms
     for i, s in enumerate(load('listening_p3_b*.json')):
         acc = ACCENTS[i % 4]
-        segs = [(t['text'], VOICES[acc]['M'] if t['s'] == 'M' else VOICES[acc]['F']) for t in s['dialogue']]
+        segs = []
+        for ti, t in enumerate(s['dialogue']):
+            if ti:
+                segs.append(400)
+            segs.append((t['text'], VOICES[acc]['M'] if t['s'] == 'M' else VOICES[acc]['F']))
         jobs.append((s['id'] + '.mp3', segs))
     # P4:獨白整段
     for i, s in enumerate(load('listening_p4_b*.json')):
@@ -92,7 +119,7 @@ async def main():
     for q in load('ear_dictation.json'):
         jobs.append(('dz-' + q['id'][2:] + '.mp3', [(q['zh'], 'zh-TW-HsiaoChenNeural')]))
     # 跟讀專用句庫:英文句(四腔輪替)+中文翻譯 s-01 → s-01.mp3 / dz-s-01.mp3
-    for i, q in enumerate(load('ear_shadow.json')):
+    for i, q in enumerate(load('ear_shadow*.json')):
         acc = ACCENTS[i % 4]
         jobs.append((q['id'] + '.mp3', [(q['text'], VOICES[acc]['F' if i % 2 else 'M'])]))
         jobs.append(('dz-' + q['id'] + '.mp3', [(q['zh'], 'zh-TW-HsiaoChenNeural')]))

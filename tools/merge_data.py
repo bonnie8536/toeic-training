@@ -337,7 +337,7 @@ for q in en_:
     w = f"ear {q.get('id','?')}"
     if need(q, ['id','audioText','question','options','note','zh','level'], w):
         check_options(q, w)
-esh = load_kind('ear_shadow.json', 'ear shadow')
+esh = load_kind('ear_shadow*.json', 'ear shadow')
 for q in esh:
     w = f"ear-shadow {q.get('id','?')}"
     if need(q, ['id','level','text','zh','note'], w):

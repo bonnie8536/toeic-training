@@ -228,6 +228,20 @@
     return opts;
   }
 
+  /* P5 考點 → 文法基礎對應單元(考點解析下放複習連結) */
+  const GRAMMAR_LINK = {
+    '動詞時態與語態': ['gc-12', '時態怎麼選'],
+    '介系詞': ['gg-01', '介系詞'],
+    '連接詞vs介系詞': ['gg-08', '連接詞'],
+    '代名詞': ['ga-09', '代名詞'],
+    '關係詞': ['gh-03', '關係代名詞'],
+    '分詞': ['gf-02', '-ed 與 -ing 形容詞'],
+    '比較級': ['gf-05', '比較級'],
+    '不定詞與動名詞': ['gg-11', '不定詞與動名詞'],
+    '主謂一致': ['gb-05', '第三人稱單數'],
+    '詞性變化': ['gf-04', '形容詞還是副詞'],
+  };
+
   function explainBox(q, rec, extraTr) {
     if (!rec) return null;
     const box = h('div', { class: 'explain' },
@@ -235,6 +249,11 @@
         rec.ok ? '答對了' : (rec.c === -1 ? '未作答,正確答案是 ' : '答錯了,正確答案是 ') + LETTERS[q.answer]),
       h('div', null, q.explanation));
     if (extraTr) box.append(h('div', { class: 'tr' }, extraTr));
+    const gl = q.category && GRAMMAR_LINK[q.category];
+    if (gl && !rec.ok) {
+      box.append(h('div', { class: 'tr' },
+        h('a', { href: 'grammar.html?u=' + gl[0] }, '這個考點不穩?回文法基礎複習「' + gl[1] + '」→')));
+    }
     return box;
   }
 
@@ -252,7 +271,7 @@
 
   function saveRec(p, id, oi, ok) {
     const st = store.get(KEY(p), {});
-    st[id] = { c: oi, ok };
+    st[id] = { c: oi, ok, t: Date.now() };
     store.set(KEY(p), st);
   }
 

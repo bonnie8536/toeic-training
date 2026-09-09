@@ -44,11 +44,12 @@
       return;
     }
 
-    /* 依學生分組 */
+    /* 依學生分組(kt=各鍵最後更新時間,週摘要用) */
     const students = {};
     rows.forEach(r => {
-      const s = students[r.user_id] = students[r.user_id] || { keys: {}, last: '' };
+      const s = students[r.user_id] = students[r.user_id] || { keys: {}, kt: {}, last: '' };
       if (r.v !== null) s.keys[r.k] = r.v;
+      s.kt[r.k] = r.updated_at;
       if (r.updated_at > s.last) s.last = r.updated_at;
     });
 
@@ -192,6 +193,38 @@
 
     const myKeys = (students[CLOUD.user.id] || { keys: {} }).keys;
     const ids = Object.keys(students).filter(uid => uid !== CLOUD.user.id);
+
+    /* 本週動態:近 7 天各學生動過哪些區域 */
+    const AREA = [
+      [/^drill_p/, '刷題'], [/^listen_p/, '聽力刷題'], [/^grammar_done/, '文法'],
+      [/^(vocab_|vgame_|phrase_)/, '單字片語'], [/^writing_/, '寫作'],
+      [/^ear_/, '聽力訓練'], [/^mock_history/, '模擬考'], [/^diag/, '檢測'],
+    ];
+    const weekAgo = new Date(Date.now() - 7 * 864e5).toISOString();
+    const weekRows = ids.map(uid => {
+      const s = students[uid];
+      const areas = new Set();
+      Object.entries(s.kt).forEach(([k, t]) => {
+        if (t > weekAgo) { const hit = AREA.find(([re]) => re.test(k)); if (hit) areas.add(hit[1]); }
+      });
+      return { uid, areas: [...areas], last: s.last };
+    }).filter(r => r.areas.length);
+    if (ids.length) {
+      const box = h('div', { class: 'q-block', style: 'margin-bottom:20px' },
+        h('h3', { style: 'font-size:15.5px;margin-bottom:8px' }, '本週動態(近 7 天)'));
+      if (!weekRows.length) {
+        box.append(h('p', { style: 'font-size:14px;color:var(--ink-light)' }, '這週還沒有學生活動。'));
+      } else {
+        weekRows.sort((a, b) => (b.last || '').localeCompare(a.last || '')).forEach(r => {
+          const meta = students[r.uid].keys['_meta'] || {};
+          const tn = myKeys['tnote_' + r.uid] || {};
+          const nm = tn.nick || meta.name || meta.email || r.uid.slice(0, 8);
+          box.append(h('div', { style: 'font-size:14px;padding:3px 0' },
+            h('b', null, nm), ':' + r.areas.join('、') + '(最近 ' + (r.last || '').slice(5, 10) + ')'));
+        });
+      }
+      root.append(box);
+    }
     if (!ids.length) {
       root.append(h('div', { class: 'q-block' }, '還沒有學生資料。學生第一次登入並開始作答後,這裡就會出現他們的進度。'));
       return;

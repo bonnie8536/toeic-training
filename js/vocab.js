@@ -512,7 +512,7 @@
             const ok = oi === p.quiz.answer;
             results[cur] = ok;
             const st2 = store.get('phrase_drill', {});
-            st2[p.id] = { ok };
+            st2[p.id] = { ok, t: Date.now() };
             store.set('phrase_drill', st2);
             [...opts.children].forEach((b, bi) => {
               b.disabled = true;

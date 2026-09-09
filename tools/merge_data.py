@@ -283,7 +283,7 @@ for lv in ['l1', 'l2', 'l3']:
 
 # ---------- 聽力 ----------
 listening = {}
-lp1 = load_kind('listening_p1.json', 'listening p1')
+lp1 = load_kind('listening_p1*.json', 'listening p1')
 for q in lp1:
     w = f"listening {q.get('id','?')}"
     if need(q, ['id','difficulty','photoPrompt','photoAlt','options','explanation','transcriptZh'], w):

@@ -133,12 +133,20 @@
       done[u.id] = { ok, t: u.quiz.length };
       store.set('grammar_done', done);
       const next = UNITS[idx + 1];
+      /* 對應題庫 P5 考點的單元,學完直接去刷題 */
+      const DRILL_LINK = {
+        'gc-12': '動詞時態與語態', 'gg-01': '介系詞', 'gg-08': '連接詞vs介系詞',
+        'ga-09': '代名詞', 'gh-03': '關係詞', 'gf-02': '分詞', 'gf-05': '比較級',
+        'gg-11': '不定詞與動名詞', 'gg-12': '不定詞與動名詞', 'gb-05': '主謂一致', 'gf-04': '詞性變化',
+      };
+      const cat = DRILL_LINK[u.id];
       tail.append(
         h('div', { class: 'report-head', style: 'margin-top:10px' },
           h('h2', null, '這一課完成:' + ok + ' / ' + u.quiz.length),
           h('div', { class: 'band-note' }, ok === u.quiz.length ? '全對,往下一課吧。' : '答錯的地方回頭再看一次講解,弄懂再走。')),
         h('div', { class: 'drill-nav-btns' },
           next ? h('a', { class: 'btn primary', href: 'grammar.html?u=' + next.id }, '下一課:' + next.title) : null,
+          cat ? h('a', { class: 'btn', href: 'practice.html?part=5&cat=' + encodeURIComponent(cat) }, '刷這個考點的題目') : null,
           h('a', { class: 'btn', href: 'grammar.html' }, '回文法基礎')));
     }
   }

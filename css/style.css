@@ -609,6 +609,11 @@ button { font-family: var(--font); cursor: pointer; }
 .ps-coupon-main { font-weight: 700; font-size: 15.5px; color: var(--primary-dark); }
 .ps-coupon-line { font-size: 12.5px; color: var(--ink-light); margin-top: 3px; }
 
+/* 模擬考 */
+.mock-timer { font-size: 18px; font-weight: 700; color: var(--primary-dark); font-variant-numeric: tabular-nums; margin-left: auto; }
+.mock-timer.low { color: var(--bad); }
+.q-nav button.mock-l { border-bottom: 3px solid var(--highlight-deep); }
+
 /* 文法基礎 */
 .gx-goal { font-size: 14.5px; color: var(--ink-light); margin: -6px 0 16px; }
 .gx-p { margin: 10px 0; line-height: 1.9; font-size: 15.5px; }

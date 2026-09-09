@@ -1,0 +1,14 @@
+{
+  "name": "刷刷英文",
+  "short_name": "刷刷英文",
+  "description": "免費英文練習:文法、單字、聽力、閱讀與多益題型刷題",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b72c4",
+  "lang": "zh-Hant",
+  "icons": [
+    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

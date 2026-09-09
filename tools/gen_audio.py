@@ -82,7 +82,7 @@ def letter_segments(options, voice, letters='ABCD', gap=700):
 async def main():
     jobs = []
     # P1:四個選項各自獨立合成,選項間 700ms 靜音
-    for i, q in enumerate(load('listening_p1.json')):
+    for i, q in enumerate(load('listening_p1*.json')):
         acc = ACCENTS[i % 4]
         voice = VOICES[acc]['M' if i % 2 == 0 else 'F']
         jobs.append((q['id'] + '.mp3', letter_segments(q['options'], voice, 'ABCD')))

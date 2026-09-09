@@ -240,6 +240,10 @@
         h('a', { href: catLink(cat, c.kind) }, cat),
         '(答對 ' + c.correct + '/' + c.total + ')——先刷 15–20 題,錯的隔天用「答錯」篩選重刷一次。'));
     });
+    if (score / total < 0.5) {
+      stepList.append(h('li', null, h('a', { href: 'grammar.html' }, '文法基礎'),
+        '從第一章照順序走。分數還沒過半時,把文法地基打穩比刷題更有效。'));
+    }
     stepList.append(h('li', null, h('a', { href: 'reading.html' }, '閱讀訓練'), '每週 2 篇:先不看翻譯讀完、做完抓重點題,再開對照翻譯逐段核對,順手把不會的單字點成填空練習。'));
     root.append(h('div', { class: 'next-steps' }, h('p', null, advice + (readNote ? ' ' + readNote : '')), stepList));
 

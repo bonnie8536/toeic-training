@@ -1,0 +1,197 @@
+[
+  {
+    "id": "l1-13",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic candid documentary photograph of a woman in a light gray blazer sitting at an office desk, typing on an open laptop with both hands resting on its keyboard. A desk phone stands beside the laptop with its receiver sitting in the cradle and nobody touching it. A closed notebook and a pen lie next to the laptop. The desks behind her are empty and no other person is in the room. Daylight from a window on the left, candid documentary style, shallow depth of field, no readable text or logos.",
+    "photoAlt": "辦公室裡，穿淺灰西裝外套的女子坐在辦公桌前，雙手放在打開的筆電鍵盤上打字；桌上電話的話筒好好掛在座上沒人使用，後方座位空著，室內只有她一個人。",
+    "options": [
+      "A woman is talking on the phone.",
+      "A woman is typing on a keyboard.",
+      "Some coworkers are gathered around her desk.",
+      "The laptop has been closed."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：她雙手放在筆電鍵盤上打字，type on a keyboard 與畫面動作完全吻合。\n(A) 陷阱＝物件在但動作錯：桌上確實有一台電話，但話筒好好掛在座上，沒有人拿起來講。\n(C) 陷阱＝畫面無此人物：後方座位都空著，室內只有她一個人，沒有同事聚在她桌邊。\n(D) 陷阱＝狀態相反：筆電是打開的、她正在上面打字，closed（已闔上）與畫面相反。",
+    "transcriptZh": "(A) 一名女子正在講電話。\n(B) 一名女子正在鍵盤上打字。\n(C) 有些同事聚在她的桌子旁。\n(D) 筆電已經闔上了。"
+  },
+  {
+    "id": "l1-14",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic candid documentary photograph of a woman in gardening gloves and a sun hat watering a bed of flowers with a green garden hose, a thin stream of water falling onto the plants. An empty metal wheelbarrow is parked on the grass behind her with nobody near it. A pair of garden shears lies unused on a low stone wall. No other people are in the frame. Bright morning natural light, candid documentary style, shallow depth of field, no text or logos.",
+    "photoAlt": "花園裡，戴手套與遮陽帽的女子正用水管澆灌花圃；後方草地上停著一台空的手推車，石牆上放著沒人使用的園藝剪，畫面中沒有其他人。",
+    "options": [
+      "A woman is watering some plants.",
+      "A woman is cutting some branches.",
+      "Some people are planting a tree.",
+      "A wheelbarrow is being pushed."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：她手持水管、水正澆在花圃上，water some plants 精準對應主要動作。\n(B) 陷阱＝物件在但動作錯：園藝剪確實放在石牆上，但沒有人拿起它修剪枝條。\n(C) 陷阱＝畫面無此人物：畫面裡只有她一個人，也沒有人在種樹。\n(D) 陷阱＝物件在但動作錯：手推車停在草地上而且是空的，沒有人在推它。",
+    "transcriptZh": "(A) 一名女子正在澆花。\n(B) 一名女子正在修剪樹枝。\n(C) 有些人正在種一棵樹。\n(D) 一台手推車正被推著走。"
+  },
+  {
+    "id": "l1-15",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic candid documentary photograph of a female librarian placing a hardcover book onto a wooden shelf at eye level, her hand still resting on the book. A metal book cart holding a few more books stands still beside her with nobody touching it. The shelves around her are full of books, and there are no cardboard boxes anywhere in the aisle. In the background a reading table with chairs is empty. Soft daylight from a tall window, candid documentary style, shallow depth of field, no readable text or logos.",
+    "photoAlt": "圖書館書架前，女館員正把一本精裝書放上與視線齊高的書架；旁邊靜止停著一台放了幾本書的推車，後方閱覽桌無人使用。",
+    "options": [
+      "A woman is reading at a table.",
+      "Some books have been packed into boxes.",
+      "A cart is being pushed down the aisle.",
+      "A woman is putting a book on a shelf."
+    ],
+    "answer": 3,
+    "explanation": "正解 (D)：她的手還按在書上、正把書放進架上，put a book on a shelf 就是上架這個動作最直接的說法。\n(A) 陷阱＝物件在但動作錯：後方確實有閱覽桌，但桌邊沒有人，她本人站在書架前。\n(B) 陷阱＝畫面無此物：書都在架上與推車上，畫面裡根本沒有箱子。\n(C) 陷阱＝物件在但動作錯：推車就在她身旁，但它靜止不動，沒有人在推。",
+    "transcriptZh": "(A) 一名女子正在桌邊看書。\n(B) 有些書已被裝進箱子裡。\n(C) 一台推車正被推過走道。\n(D) 一名女子正把一本書放上書架。"
+  },
+  {
+    "id": "l1-16",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic candid documentary photograph of a man standing beside a silver sedan at a gas station, holding the fuel nozzle inserted into the car's open fuel tank. The car's hood is closed and all four doors are shut. No attendant and no other customers are in the frame, and the small station shop in the background is empty. Flat overcast daylight, candid documentary style, shallow depth of field, no text or logos on the pumps or the shop.",
+    "photoAlt": "加油站旁，一名男子站在銀色轎車邊，手握加油槍插在油箱口加油；車蓋與四扇車門都關著，站內沒有其他人。",
+    "options": [
+      "A man is opening the hood of his car.",
+      "A man is filling up his car with gas.",
+      "Some workers are checking the tires.",
+      "The car door is standing open."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：他手握加油槍、油槍插在油箱口，fill up a car with gas 就是加油的標準說法。\n(A) 陷阱＝物件在但動作錯：引擎蓋在畫面中，但它是關著的，他也沒有伸手去掀開。\n(C) 陷阱＝畫面無此人物：加油站裡沒有服務員或其他人，沒有人在檢查輪胎。\n(D) 陷阱＝狀態相反：四扇車門都是關上的，standing open 與畫面牴觸。",
+    "transcriptZh": "(A) 一名男子正在打開車子的引擎蓋。\n(B) 一名男子正在幫車子加油。\n(C) 有些工作人員正在檢查輪胎。\n(D) 車門是開著的。"
+  },
+  {
+    "id": "l1-17",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic candid documentary photograph of a man in a T-shirt washing a dark blue car in a driveway, wiping the car door with a soapy sponge in his hand. A bucket already full of soapy water sits on the ground beside the front wheel, and a garden hose lies coiled on the pavement, not in his hand. The garage door behind the car is fully closed. No other people are in the frame. Bright afternoon sunlight, candid documentary style, shallow depth of field, no text or logos.",
+    "photoAlt": "自家車道上，穿 T 恤的男子拿海綿刷洗深藍色轎車的車門；地上放著已裝滿肥皂水的水桶與捲好沒人使用的水管，畫面中只有他一個人。",
+    "options": [
+      "A man is filling a bucket with water.",
+      "Some children are playing in the yard.",
+      "A man is washing a car.",
+      "A man is spraying water on a car."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：他拿著沾滿泡沫的海綿在擦洗車身，wash a car 完全對應主要動作。\n(A) 陷阱＝物件在但動作錯：水桶確實在腳邊，但它已經裝滿水，他手上拿的是海綿。\n(B) 陷阱＝畫面無此人物：畫面裡只有他一個人，沒有小孩在院子裡玩。\n(D) 陷阱＝動作相近但沒發生：水管捲好放在地上、沒有人拿起來，他手上是海綿，畫面裡沒有人在噴水。",
+    "transcriptZh": "(A) 一名男子正在把水裝進水桶。\n(B) 有些孩子正在院子裡玩耍。\n(C) 一名男子正在洗車。\n(D) 一名男子正在用水噴灑車子。"
+  },
+  {
+    "id": "l1-18",
+    "difficulty": "中級",
+    "photoPrompt": "A photorealistic candid documentary photograph of two male construction workers wearing hard hats and orange safety vests standing at a folding table on a building site, both looking down at a large paper drawing spread flat on the table while one of them points at it with his finger. Metal scaffolding rises behind them with nobody on it, and a parked excavator sits idle with an empty cab. Bright natural daylight, candid documentary style, shallow depth of field, no text or logos.",
+    "photoAlt": "工地上，兩名戴安全帽、穿橘色背心的男工人站在折疊桌前低頭看攤開的大張圖紙，其中一人用手指著圖；後方鷹架上無人，怪手停著沒人操作。",
+    "options": [
+      "Some workers are climbing the scaffolding.",
+      "A machine is being operated.",
+      "The men are putting on their helmets.",
+      "Two men are looking at a drawing."
+    ],
+    "answer": 3,
+    "explanation": "正解 (D)：兩人都低頭看著攤在桌上的圖紙，look at a drawing 同時交代了人數與動作。\n(A) 陷阱＝物件在但動作錯：鷹架確實在後方，但上面沒有任何人在攀爬。\n(B) 陷阱＝物件在但動作錯：怪手停在工地上，駕駛座是空的，被動進行式的動作並未發生。\n(C) 陷阱＝狀態與動作之別：他們是「已經戴著」安全帽，英文用 be wearing；put on 指的是「正在戴上」的瞬間動作，與畫面不符，這是本題最容易被騙的選項。",
+    "transcriptZh": "(A) 有些工人正在爬鷹架。\n(B) 一台機器正被操作。\n(C) 那些男子正在戴上安全帽。\n(D) 兩名男子正在看一張圖紙。"
+  },
+  {
+    "id": "l1-19",
+    "difficulty": "中級",
+    "photoPrompt": "A photorealistic documentary photograph of an empty clinic waiting room. Two rows of identical padded chairs stand against the walls, every seat unoccupied. A low table in the middle holds a neat stack of magazines. The reception window at the back is closed and no staff member is behind it. A potted plant stands in the corner. Soft daylight through a side window, candid documentary style, no readable text or logos.",
+    "photoAlt": "診所候診區空無一人，兩排軟墊椅靠牆排開、每個座位都空著；中央矮桌上疊著整齊的雜誌，後方掛號窗口關著。",
+    "options": [
+      "The waiting area is unoccupied.",
+      "Some patients are filling out forms.",
+      "Magazines are being handed out.",
+      "All of the seats have been taken."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：整間候診室沒有人，unoccupied 是 Part 1 描述「空無一人」最常用的字。\n(B) 陷阱＝畫面無人：沒有病患在場，也就不可能有人在填表格。\n(C) 陷阱＝物件在但動作錯：雜誌確實整齊疊在桌上，但沒有人在發放。\n(D) 陷阱＝狀態相反：每個座位都空著，taken（被坐滿）與畫面完全相反。",
+    "transcriptZh": "(A) 候診區空無一人。\n(B) 有些病患正在填寫表格。\n(C) 雜誌正被發放。\n(D) 所有座位都被坐滿了。"
+  },
+  {
+    "id": "l1-20",
+    "difficulty": "中級",
+    "photoPrompt": "A photorealistic candid documentary photograph of two movers in matching T-shirts carrying a gray sofa together down the ramp of a parked moving truck, one man at each end of the sofa. Several sealed cardboard boxes are stacked on the sidewalk beside the ramp. The truck's rear door is rolled up and the truck is standing still. Bright natural daylight on a quiet residential street, candid documentary style, shallow depth of field, no text or logos on the truck.",
+    "photoAlt": "住宅街道旁，兩名搬家工人一前一後合力把灰色沙發從貨車斜坡搬下來；斜坡邊人行道上堆著封好的紙箱，貨車後門捲起、車子靜止不動。",
+    "options": [
+      "Some boxes are being loaded into the truck.",
+      "Two men are carrying furniture.",
+      "A truck is pulling out of the driveway.",
+      "The sidewalk has been cleared."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：兩人一前一後合力搬運沙發，furniture 是涵蓋 sofa 的上位詞，Part 1 很常用這種概括說法。\n(A) 陷阱＝物件在但動作錯：紙箱確實堆在人行道旁，但沒有人碰它們，兩人手上抬的是沙發。\n(C) 陷阱＝物件在但動作錯：貨車在畫面中，可是它停著不動、後門敞開讓人搬貨，並沒有駛離。\n(D) 陷阱＝狀態相反：人行道上堆著紙箱，cleared（已被清空）與畫面牴觸。",
+    "transcriptZh": "(A) 有些箱子正被搬上貨車。\n(B) 兩名男子正在搬運家具。\n(C) 一輛貨車正駛出車道。\n(D) 人行道已被清空。"
+  },
+  {
+    "id": "l1-21",
+    "difficulty": "中級",
+    "photoPrompt": "A photorealistic candid documentary photograph of a bakery clerk in an apron standing behind a glass display case, using metal tongs to place a pastry into a small paper bag she holds open in her other hand. The case below her is full of bread and pastries on trays. One customer stands on the other side of the counter watching, with both hands at her sides and no wallet or money out. A cash register sits closed on the counter. The oven against the back wall has its door shut. Warm shop lighting mixed with daylight, candid documentary style, no text or logos.",
+    "photoAlt": "麵包店櫃台後，穿圍裙的女店員用夾子把一個點心放進手上撐開的紙袋；玻璃櫃裡擺滿麵包，一位顧客雙手垂在身側站在櫃台另一側等候，後方烤箱門關著。",
+    "options": [
+      "A woman is taking bread out of an oven.",
+      "A customer is taking out her wallet.",
+      "The display case has been emptied.",
+      "A woman is putting a pastry into a bag."
+    ],
+    "answer": 3,
+    "explanation": "正解 (D)：她用夾子把點心放進紙袋，動作、物品與人物三者都吻合。\n(A) 陷阱＝物件在但動作錯：後方牆邊確實有烤箱，但爐門關著，她人站在櫃台前，沒有在取出麵包。\n(B) 陷阱＝人物在但動作錯：顧客確實站在櫃台另一側，但她雙手垂在身側、手上沒有錢包也沒有錢，並沒有做出這個動作。\n(C) 陷阱＝狀態相反：玻璃櫃裡擺滿麵包與點心，emptied（已被清空）與畫面相反。",
+    "transcriptZh": "(A) 一名女子正把麵包從烤箱裡取出。\n(B) 一位顧客正拿出她的錢包。\n(C) 陳列櫃已被清空。\n(D) 一名女子正把一個點心放進袋子裡。"
+  },
+  {
+    "id": "l1-22",
+    "difficulty": "中級",
+    "photoPrompt": "A photorealistic candid documentary photograph of an outdoor market stall under a striped fabric awning that is already open and tied to its poles. Wooden crates on the stall are piled high with tomatoes, peppers and leafy greens. A female customer stands at the front of the stall holding up a single tomato in her hand as she looks at it closely. The vendor stands behind the crates with his arms at his sides. A metal hanging scale dangles empty above the stall. Bright natural daylight, candid documentary style, shallow depth of field, no text or logos.",
+    "photoAlt": "露天市場攤位上，條紋遮陽棚已撐開綁好，木箱裡堆滿番茄與青菜；一名女顧客拿起一顆番茄端詳，攤販站在後方，上方吊秤空著。",
+    "options": [
+      "A vendor is weighing some vegetables.",
+      "No one is standing behind the stall.",
+      "A woman is choosing some vegetables.",
+      "An awning is being put up."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：她拿起一顆番茄端詳，正在挑選蔬果，choose 精準對應這個動作。\n(A) 陷阱＝物件在但動作錯：攤位上方確實掛著磅秤，但秤是空的，攤販雙手垂在身側，沒有人在秤重。\n(B) 陷阱＝與畫面相反：攤販就站在木箱後方顧攤，No one 這種全盤否定只要畫面裡有人就不成立。\n(D) 陷阱＝物件在但動作錯：遮陽棚早已撐開綁好，沒有人正在架設它，被動進行式的動作並未發生。",
+    "transcriptZh": "(A) 一名攤販正在秤蔬菜。\n(B) 沒有人站在攤位後方。\n(C) 一名女子正在挑選蔬菜。\n(D) 一頂遮陽棚正被架設起來。"
+  },
+  {
+    "id": "l1-23",
+    "difficulty": "進階",
+    "photoPrompt": "A photorealistic candid documentary photograph of three colleagues, two men and one woman, standing together in front of a large whiteboard in a bright office. One of the men holds a marker and is writing on the board, which is already covered with a diagram and handwritten notes; the other man and the woman stand beside him holding notebooks. Every chair at the nearby table is empty and pushed in, and a laptop on the table is closed. The projector screen on the side wall is rolled up. Natural light from a window, candid documentary style, shallow depth of field, no readable text on the board, no logos.",
+    "photoAlt": "明亮辦公室裡，兩男一女三名同事並排站在白板前，其中一名男子拿著白板筆在已畫滿圖表的白板上書寫，另外兩人拿著筆記本站在旁邊；桌邊椅子全空著，投影布幕收起。",
+    "options": [
+      "One of the men is writing on a board.",
+      "They are seated around a table.",
+      "A presentation is being projected on a screen.",
+      "The board has been wiped clean."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：三人之中有一人手持白板筆正在板上書寫，One of the men 這種「其中一人」的主詞是進階題常見的說法。\n(B) 陷阱＝狀態相反：三個人都站著，桌邊椅子全是空的，seated（坐著）與畫面牴觸。\n(C) 陷阱＝物件在但動作錯：投影布幕確實在側牆上，但它是捲起來的，沒有任何簡報正在投影。\n(D) 陷阱＝狀態相反：白板上寫滿圖表與筆記，wiped clean（已被擦乾淨）與畫面完全相反。",
+    "transcriptZh": "(A) 其中一名男子正在白板上書寫。\n(B) 他們圍著桌子坐著。\n(C) 一份簡報正被投影在布幕上。\n(D) 白板已被擦乾淨。"
+  },
+  {
+    "id": "l1-24",
+    "difficulty": "進階",
+    "photoPrompt": "A photorealistic candid documentary photograph of a male painter in white overalls standing on the floor with both feet on a drop cloth, rolling pale green paint onto an interior wall with a long-handled roller, about half of the wall already painted. A cloth sheet covers the whole floor, and an open paint can with a brush resting on its rim sits on the cloth. Two chairs and a small table are pushed to the middle of the room and covered with plastic sheeting, with nobody touching them. Daylight from a bare window, candid documentary style, shallow depth of field, no text or logos.",
+    "photoAlt": "室內牆面前，穿白色工作服的男性油漆工雙腳站在地上，用長柄滾筒把淺綠色油漆刷上牆，牆面已刷好一半；地板整片鋪著防塵布，房間中央的桌椅蓋著塑膠布、沒有人碰。",
+    "options": [
+      "A man is climbing a ladder.",
+      "The floor has been left uncovered.",
+      "Some furniture is being carried out of the room.",
+      "A man is painting a wall."
+    ],
+    "answer": 3,
+    "explanation": "正解 (D)：他用長柄滾筒把油漆刷上牆、牆面已刷好一半，paint a wall 與畫面完全吻合。\n(A) 陷阱＝情境聯想：粉刷很容易讓人聯想到梯子，但他兩腳站在地上、靠長柄滾筒作業，畫面裡沒有人在爬梯子。\n(B) 陷阱＝狀態相反：地板整片鋪著防塵布，uncovered（未被覆蓋）與畫面相反。\n(C) 陷阱＝物件在但動作錯：桌椅確實在房間中央，但它們蓋著塑膠布、沒有人碰，並未被搬出房間。",
+    "transcriptZh": "(A) 一名男子正在爬梯子。\n(B) 地板沒有被覆蓋。\n(C) 有些家具正被搬出房間。\n(D) 一名男子正在粉刷牆壁。"
+  },
+  {
+    "id": "l1-25",
+    "difficulty": "進階",
+    "photoPrompt": "A photorealistic documentary photograph of three visitors standing in a quiet gallery, facing a white wall where six framed pictures are already hung in a straight row at eye level. One visitor leans slightly forward to look closer, and all three keep their hands down at their sides with nobody pointing at the wall. Nobody is holding, touching or lifting any frame, no tools are in sight, and no gallery guide or staff member is present. A long wooden bench in the middle of the room is completely empty. Soft even gallery lighting, candid documentary style, no readable text or logos, plain abstract shapes inside the frames.",
+    "photoAlt": "安靜的展場中，三名參觀者面向白牆上已掛好的六幅裱框作品，其中一人稍微前傾細看，三人雙手都垂在身側、沒有人指著畫；現場沒有導覽人員，也沒有人在掛畫，房間中央的木長椅空著。",
+    "options": [
+      "Some pictures are being hung on the wall.",
+      "The visitors are seated on a bench.",
+      "Some pictures have been hung on the wall.",
+      "A guide is pointing at a painting."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：畫作早已掛在牆上，現在完成被動 have been hung 表示「已被掛上」的結果狀態，正是描述這種畫面的標準句型。\n(A) 陷阱＝時態語態錯：are being hung 是「正被掛上」的進行動作，但畫面裡沒有人動手掛畫，也看不到工具。它與正解只差一個時態，是本題最容易被騙的選項。\n(B) 陷阱＝狀態相反：三個人都站著看畫，中央的長椅是空的，seated 與畫面牴觸。\n(D) 陷阱＝畫面無此人物：現場沒有導覽人員，三個人的手都垂在身側，沒有人伸手指著任何一幅畫。",
+    "transcriptZh": "(A) 有些畫正被掛上牆。\n(B) 參觀者們坐在長椅上。\n(C) 有些畫已被掛在牆上。\n(D) 一名導覽員正指著一幅畫。"
+  }
+]

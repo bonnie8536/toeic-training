@@ -34,22 +34,118 @@
       }
     ],
     "vocab": [
-      { "word": "firm", "base": "firm", "pos": "n.", "hint": "a business organization, usually small or medium in size", "zh": "公司；商行" },
-      { "word": "promise", "base": "promise", "pos": "n.", "hint": "a clear statement that you will surely do something", "zh": "承諾" },
-      { "word": "customer", "base": "customer", "pos": "n.", "hint": "a person who buys goods or services from a shop or company", "zh": "顧客；客戶" },
-      { "word": "staff", "base": "staff", "pos": "n.", "hint": "all the people who work for one company or office", "zh": "員工；全體職員" },
-      { "word": "sorted", "base": "sort", "pos": "v.", "hint": "arranged things into groups by type", "zh": "分類；歸類" },
-      { "word": "complicated", "base": "complicated", "pos": "adj.", "hint": "having many parts and not easy to deal with", "zh": "複雜的" },
-      { "word": "schedule", "base": "schedule", "pos": "n.", "hint": "a plan that shows the times when things will happen", "zh": "時間表；排班表" },
-      { "word": "shifts", "base": "shift", "pos": "n.", "hint": "fixed periods of working time in a day, such as morning or night", "zh": "輪班；班次" },
-      { "word": "training", "base": "training", "pos": "n.", "hint": "the process of teaching people the skills they need for a job", "zh": "訓練" },
-      { "word": "complaints", "base": "complaint", "pos": "n.", "hint": "statements saying that you are not happy with a product or service", "zh": "抱怨；客訴" },
-      { "word": "loyal", "base": "loyal", "pos": "adj.", "hint": "always staying with the same company, brand or person", "zh": "忠實的" },
-      { "word": "recommend", "base": "recommend", "pos": "v.", "hint": "tell someone that something is good and worth trying", "zh": "推薦" },
-      { "word": "hired", "base": "hire", "pos": "v.", "hint": "gave someone a job in a company", "zh": "僱用" },
-      { "word": "honest", "base": "honest", "pos": "adj.", "hint": "telling the truth and not hiding facts", "zh": "誠實的" },
-      { "word": "delay", "base": "delay", "pos": "n.", "hint": "a situation in which something happens later than planned", "zh": "延遲" },
-      { "word": "deadline", "base": "deadline", "pos": "n.", "hint": "the latest time by which a task must be finished", "zh": "截止期限" }
+      {
+        "word": "firm",
+        "base": "firm",
+        "pos": "n.",
+        "hint": "a business organization, usually small or medium in size",
+        "zh": "公司；商行"
+      },
+      {
+        "word": "promise",
+        "base": "promise",
+        "pos": "n.",
+        "hint": "a clear statement that you will surely do something",
+        "zh": "承諾"
+      },
+      {
+        "word": "customer",
+        "base": "customer",
+        "pos": "n.",
+        "hint": "a person who buys goods or services from a shop or company",
+        "zh": "顧客；客戶"
+      },
+      {
+        "word": "staff",
+        "base": "staff",
+        "pos": "n.",
+        "hint": "all the people who work for one company or office",
+        "zh": "員工；全體職員"
+      },
+      {
+        "word": "sorted",
+        "base": "sort",
+        "pos": "v.",
+        "hint": "arranged things into groups by type",
+        "zh": "分類；歸類"
+      },
+      {
+        "word": "complicated",
+        "base": "complicated",
+        "pos": "adj.",
+        "hint": "having many parts and not easy to deal with",
+        "zh": "複雜的"
+      },
+      {
+        "word": "schedule",
+        "base": "schedule",
+        "pos": "n.",
+        "hint": "a plan that shows the times when things will happen",
+        "zh": "時間表；排班表"
+      },
+      {
+        "word": "shifts",
+        "base": "shift",
+        "pos": "n.",
+        "hint": "fixed periods of working time in a day, such as morning or night",
+        "zh": "輪班；班次"
+      },
+      {
+        "word": "training",
+        "base": "training",
+        "pos": "n.",
+        "hint": "the process of teaching people the skills they need for a job",
+        "zh": "訓練"
+      },
+      {
+        "word": "complaints",
+        "base": "complaint",
+        "pos": "n.",
+        "hint": "statements saying that you are not happy with a product or service",
+        "zh": "抱怨；客訴"
+      },
+      {
+        "word": "loyal",
+        "base": "loyal",
+        "pos": "adj.",
+        "hint": "always staying with the same company, brand or person",
+        "zh": "忠實的"
+      },
+      {
+        "word": "recommend",
+        "base": "recommend",
+        "pos": "v.",
+        "hint": "tell someone that something is good and worth trying",
+        "zh": "推薦"
+      },
+      {
+        "word": "hired",
+        "base": "hire",
+        "pos": "v.",
+        "hint": "gave someone a job in a company",
+        "zh": "僱用"
+      },
+      {
+        "word": "honest",
+        "base": "honest",
+        "pos": "adj.",
+        "hint": "telling the truth and not hiding facts",
+        "zh": "誠實的"
+      },
+      {
+        "word": "delay",
+        "base": "delay",
+        "pos": "n.",
+        "hint": "a situation in which something happens later than planned",
+        "zh": "延遲"
+      },
+      {
+        "word": "deadline",
+        "base": "deadline",
+        "pos": "n.",
+        "hint": "the latest time by which a task must be finished",
+        "zh": "截止期限"
+      }
     ],
     "questions": [
       {
@@ -107,7 +203,8 @@
         "answer": 3,
         "explanation": "定位最後一段：解決不了也要回信，說明延遲原因並給明確期限；「Customers can accept a slow repair... They can never accept silence.」可推論她認為「讓客戶知道狀況」和速度一樣重要。折扣、公司規模文中都沒提。"
       }
-    ]
+    ],
+    "image": "img/articles/art-11a.jpg"
   },
   {
     "id": "art-11b",
@@ -144,22 +241,118 @@
       }
     ],
     "vocab": [
-      { "word": "suits", "base": "suit", "pos": "n.", "hint": "sets of matching jacket and trousers worn to an office", "zh": "西裝；套裝" },
-      { "word": "fee", "base": "fee", "pos": "n.", "hint": "money that you pay for a service or for joining something", "zh": "費用" },
-      { "word": "delivers", "base": "deliver", "pos": "v.", "hint": "brings goods to a place for the person who ordered them", "zh": "遞送；配送" },
-      { "word": "founder", "base": "founder", "pos": "n.", "hint": "the person who started a company or an organization", "zh": "創辦人" },
-      { "word": "factory", "base": "factory", "pos": "n.", "hint": "a large building where goods are made by machines", "zh": "工廠" },
-      { "word": "items", "base": "item", "pos": "n.", "hint": "single things in a list or in a group of goods", "zh": "品項；物品" },
-      { "word": "budgets", "base": "budget", "pos": "n.", "hint": "amounts of money that people plan to spend", "zh": "預算" },
-      { "word": "service", "base": "service", "pos": "n.", "hint": "work that a company does for the people who pay it", "zh": "服務" },
-      { "word": "damaged", "base": "damage", "pos": "adj.", "hint": "harmed or broken in some way", "zh": "損壞的" },
-      { "word": "charge", "base": "charge", "pos": "n.", "hint": "an amount of money asked for a product or a service", "zh": "收費；費用" },
-      { "word": "members", "base": "member", "pos": "n.", "hint": "people who have joined a club or a paid plan", "zh": "會員" },
-      { "word": "professional", "base": "professional", "pos": "adj.", "hint": "suitable for serious work; showing skill and good manners", "zh": "專業的" },
-      { "word": "interviews", "base": "interview", "pos": "n.", "hint": "meetings where a company asks questions to a person who wants a job", "zh": "面試" },
-      { "word": "borrowed", "base": "borrow", "pos": "adj.", "hint": "taken from someone else for a short time and then returned", "zh": "借來的" },
-      { "word": "concerns", "base": "concern", "pos": "n.", "hint": "worries about something that might go wrong", "zh": "疑慮；擔憂" },
-      { "word": "own", "base": "own", "pos": "v.", "hint": "have something as your property", "zh": "擁有" }
+      {
+        "word": "suits",
+        "base": "suit",
+        "pos": "n.",
+        "hint": "sets of matching jacket and trousers worn to an office",
+        "zh": "西裝；套裝"
+      },
+      {
+        "word": "fee",
+        "base": "fee",
+        "pos": "n.",
+        "hint": "money that you pay for a service or for joining something",
+        "zh": "費用"
+      },
+      {
+        "word": "delivers",
+        "base": "deliver",
+        "pos": "v.",
+        "hint": "brings goods to a place for the person who ordered them",
+        "zh": "遞送；配送"
+      },
+      {
+        "word": "founder",
+        "base": "founder",
+        "pos": "n.",
+        "hint": "the person who started a company or an organization",
+        "zh": "創辦人"
+      },
+      {
+        "word": "factory",
+        "base": "factory",
+        "pos": "n.",
+        "hint": "a large building where goods are made by machines",
+        "zh": "工廠"
+      },
+      {
+        "word": "items",
+        "base": "item",
+        "pos": "n.",
+        "hint": "single things in a list or in a group of goods",
+        "zh": "品項；物品"
+      },
+      {
+        "word": "budgets",
+        "base": "budget",
+        "pos": "n.",
+        "hint": "amounts of money that people plan to spend",
+        "zh": "預算"
+      },
+      {
+        "word": "service",
+        "base": "service",
+        "pos": "n.",
+        "hint": "work that a company does for the people who pay it",
+        "zh": "服務"
+      },
+      {
+        "word": "damaged",
+        "base": "damage",
+        "pos": "adj.",
+        "hint": "harmed or broken in some way",
+        "zh": "損壞的"
+      },
+      {
+        "word": "charge",
+        "base": "charge",
+        "pos": "n.",
+        "hint": "an amount of money asked for a product or a service",
+        "zh": "收費；費用"
+      },
+      {
+        "word": "members",
+        "base": "member",
+        "pos": "n.",
+        "hint": "people who have joined a club or a paid plan",
+        "zh": "會員"
+      },
+      {
+        "word": "professional",
+        "base": "professional",
+        "pos": "adj.",
+        "hint": "suitable for serious work; showing skill and good manners",
+        "zh": "專業的"
+      },
+      {
+        "word": "interviews",
+        "base": "interview",
+        "pos": "n.",
+        "hint": "meetings where a company asks questions to a person who wants a job",
+        "zh": "面試"
+      },
+      {
+        "word": "borrowed",
+        "base": "borrow",
+        "pos": "adj.",
+        "hint": "taken from someone else for a short time and then returned",
+        "zh": "借來的"
+      },
+      {
+        "word": "concerns",
+        "base": "concern",
+        "pos": "n.",
+        "hint": "worries about something that might go wrong",
+        "zh": "疑慮；擔憂"
+      },
+      {
+        "word": "own",
+        "base": "own",
+        "pos": "v.",
+        "hint": "have something as your property",
+        "zh": "擁有"
+      }
     ],
     "questions": [
       {
@@ -217,6 +410,7 @@
         "answer": 0,
         "explanation": "定位最後一段：反對的人說借來的衣服 never fit perfectly，也不喜歡穿陌生人穿過的東西。可推論他們在意的是合身度和衛生感受。費用太低、外國公司文中都沒提到。"
       }
-    ]
+    ],
+    "image": "img/articles/art-11b.jpg"
   }
 ]

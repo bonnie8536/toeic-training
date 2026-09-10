@@ -34,22 +34,118 @@
       }
     ],
     "vocab": [
-      { "word": "scooters", "base": "scooter", "pos": "n.", "hint": "a small two-wheeled machine that a person stands on and rides", "zh": "滑板車" },
-      { "word": "unlock", "base": "unlock", "pos": "v.", "hint": "to open something so that it can be used, often with a key or code", "zh": "解鎖" },
-      { "word": "app", "base": "app", "pos": "n.", "hint": "a small program that runs on a phone or tablet", "zh": "應用程式" },
-      { "word": "crowded", "base": "crowded", "pos": "adj.", "hint": "full of too many people or things in one place", "zh": "擁擠的" },
-      { "word": "vehicles", "base": "vehicle", "pos": "n.", "hint": "a machine such as a car or bus that carries people or goods", "zh": "車輛" },
-      { "word": "convenience", "base": "convenience", "pos": "n.", "hint": "the quality of being easy to use and saving time or effort", "zh": "便利" },
-      { "word": "sidewalk", "base": "sidewalk", "pos": "n.", "hint": "the paved part at the edge of a road, made for people on foot", "zh": "人行道" },
-      { "word": "Accidents", "base": "accident", "pos": "n.", "hint": "an event in which someone is hurt or something is damaged by chance", "zh": "事故" },
-      { "word": "officials", "base": "official", "pos": "n.", "hint": "a person with a position of duty in a government or a large organization", "zh": "官員" },
-      { "word": "require", "base": "require", "pos": "v.", "hint": "to say that someone must do something", "zh": "要求" },
-      { "word": "ban", "base": "ban", "pos": "v.", "hint": "to say by law that something must not be done", "zh": "禁止" },
-      { "word": "permit", "base": "permit", "pos": "n.", "hint": "a paper from a government that lets a person or company do something", "zh": "許可證" },
-      { "word": "Supporters", "base": "supporter", "pos": "n.", "hint": "a person who agrees with an idea and speaks for it", "zh": "支持者" },
-      { "word": "lanes", "base": "lane", "pos": "n.", "hint": "a narrow marked part of a road for one line of traffic", "zh": "車道" },
-      { "word": "technology", "base": "technology", "pos": "n.", "hint": "new machines and methods based on science", "zh": "科技" },
-      { "word": "benefits", "base": "benefit", "pos": "n.", "hint": "good results or advantages that come from something", "zh": "好處" }
+      {
+        "word": "scooters",
+        "base": "scooter",
+        "pos": "n.",
+        "hint": "a small two-wheeled machine that a person stands on and rides",
+        "zh": "滑板車"
+      },
+      {
+        "word": "unlock",
+        "base": "unlock",
+        "pos": "v.",
+        "hint": "to open something so that it can be used, often with a key or code",
+        "zh": "解鎖"
+      },
+      {
+        "word": "app",
+        "base": "app",
+        "pos": "n.",
+        "hint": "a small program that runs on a phone or tablet",
+        "zh": "應用程式"
+      },
+      {
+        "word": "crowded",
+        "base": "crowded",
+        "pos": "adj.",
+        "hint": "full of too many people or things in one place",
+        "zh": "擁擠的"
+      },
+      {
+        "word": "vehicles",
+        "base": "vehicle",
+        "pos": "n.",
+        "hint": "a machine such as a car or bus that carries people or goods",
+        "zh": "車輛"
+      },
+      {
+        "word": "convenience",
+        "base": "convenience",
+        "pos": "n.",
+        "hint": "the quality of being easy to use and saving time or effort",
+        "zh": "便利"
+      },
+      {
+        "word": "sidewalk",
+        "base": "sidewalk",
+        "pos": "n.",
+        "hint": "the paved part at the edge of a road, made for people on foot",
+        "zh": "人行道"
+      },
+      {
+        "word": "Accidents",
+        "base": "accident",
+        "pos": "n.",
+        "hint": "an event in which someone is hurt or something is damaged by chance",
+        "zh": "事故"
+      },
+      {
+        "word": "officials",
+        "base": "official",
+        "pos": "n.",
+        "hint": "a person with a position of duty in a government or a large organization",
+        "zh": "官員"
+      },
+      {
+        "word": "require",
+        "base": "require",
+        "pos": "v.",
+        "hint": "to say that someone must do something",
+        "zh": "要求"
+      },
+      {
+        "word": "ban",
+        "base": "ban",
+        "pos": "v.",
+        "hint": "to say by law that something must not be done",
+        "zh": "禁止"
+      },
+      {
+        "word": "permit",
+        "base": "permit",
+        "pos": "n.",
+        "hint": "a paper from a government that lets a person or company do something",
+        "zh": "許可證"
+      },
+      {
+        "word": "Supporters",
+        "base": "supporter",
+        "pos": "n.",
+        "hint": "a person who agrees with an idea and speaks for it",
+        "zh": "支持者"
+      },
+      {
+        "word": "lanes",
+        "base": "lane",
+        "pos": "n.",
+        "hint": "a narrow marked part of a road for one line of traffic",
+        "zh": "車道"
+      },
+      {
+        "word": "technology",
+        "base": "technology",
+        "pos": "n.",
+        "hint": "new machines and methods based on science",
+        "zh": "科技"
+      },
+      {
+        "word": "benefits",
+        "base": "benefit",
+        "pos": "n.",
+        "hint": "good results or advantages that come from something",
+        "zh": "好處"
+      }
     ],
     "questions": [
       {
@@ -107,7 +203,8 @@
         "answer": 2,
         "explanation": "推論題。第六段說新科技出現得比規則快，並以外送機器人、無人機類比，暗示今天的處理方式預示未來。"
       }
-    ]
+    ],
+    "image": "img/articles/art-16a.jpg"
   },
   {
     "id": "art-16b",
@@ -144,22 +241,118 @@
       }
     ],
     "vocab": [
-      { "word": "brain", "base": "brain", "pos": "n.", "hint": "the organ inside the head that thinks and controls the body", "zh": "大腦" },
-      { "word": "rests", "base": "rest", "pos": "v.", "hint": "to stop activity for a while in order to get energy back", "zh": "休息" },
-      { "word": "Memory", "base": "memory", "pos": "n.", "hint": "the ability of the mind to store facts and events for later use", "zh": "記憶力" },
-      { "word": "information", "base": "information", "pos": "n.", "hint": "facts or details about a person, an event, or a subject", "zh": "資訊" },
-      { "word": "storage", "base": "storage", "pos": "n.", "hint": "the act of keeping something in a place until it is needed", "zh": "儲存" },
-      { "word": "remembers", "base": "remember", "pos": "v.", "hint": "to still be able to think of something from an earlier time", "zh": "記得" },
-      { "word": "waste", "base": "waste", "pos": "n.", "hint": "material that is left over and no longer useful", "zh": "廢物" },
-      { "word": "repairs", "base": "repair", "pos": "v.", "hint": "to fix something that is damaged or worn out", "zh": "修復" },
-      { "word": "Attention", "base": "attention", "pos": "n.", "hint": "the act of watching or listening with care", "zh": "注意力" },
-      { "word": "mistakes", "base": "mistake", "pos": "n.", "hint": "an action or answer that is not correct", "zh": "錯誤" },
-      { "word": "linked", "base": "link", "pos": "v.", "hint": "to show a connection between two things", "zh": "使有關聯" },
-      { "word": "immune", "base": "immune", "pos": "adj.", "hint": "related to the body's natural defense against disease", "zh": "免疫的" },
-      { "word": "shifts", "base": "shift", "pos": "n.", "hint": "a fixed period of working hours during a day", "zh": "輪班" },
-      { "word": "alarm", "base": "alarm", "pos": "n.", "hint": "a device or sound that wakes a person at a set time", "zh": "鬧鐘" },
-      { "word": "improves", "base": "improve", "pos": "v.", "hint": "to make something better than it was before", "zh": "改善" },
-      { "word": "quality", "base": "quality", "pos": "n.", "hint": "how good or bad something is", "zh": "品質" }
+      {
+        "word": "brain",
+        "base": "brain",
+        "pos": "n.",
+        "hint": "the organ inside the head that thinks and controls the body",
+        "zh": "大腦"
+      },
+      {
+        "word": "rests",
+        "base": "rest",
+        "pos": "v.",
+        "hint": "to stop activity for a while in order to get energy back",
+        "zh": "休息"
+      },
+      {
+        "word": "Memory",
+        "base": "memory",
+        "pos": "n.",
+        "hint": "the ability of the mind to store facts and events for later use",
+        "zh": "記憶力"
+      },
+      {
+        "word": "information",
+        "base": "information",
+        "pos": "n.",
+        "hint": "facts or details about a person, an event, or a subject",
+        "zh": "資訊"
+      },
+      {
+        "word": "storage",
+        "base": "storage",
+        "pos": "n.",
+        "hint": "the act of keeping something in a place until it is needed",
+        "zh": "儲存"
+      },
+      {
+        "word": "remembers",
+        "base": "remember",
+        "pos": "v.",
+        "hint": "to still be able to think of something from an earlier time",
+        "zh": "記得"
+      },
+      {
+        "word": "waste",
+        "base": "waste",
+        "pos": "n.",
+        "hint": "material that is left over and no longer useful",
+        "zh": "廢物"
+      },
+      {
+        "word": "repairs",
+        "base": "repair",
+        "pos": "v.",
+        "hint": "to fix something that is damaged or worn out",
+        "zh": "修復"
+      },
+      {
+        "word": "Attention",
+        "base": "attention",
+        "pos": "n.",
+        "hint": "the act of watching or listening with care",
+        "zh": "注意力"
+      },
+      {
+        "word": "mistakes",
+        "base": "mistake",
+        "pos": "n.",
+        "hint": "an action or answer that is not correct",
+        "zh": "錯誤"
+      },
+      {
+        "word": "linked",
+        "base": "link",
+        "pos": "v.",
+        "hint": "to show a connection between two things",
+        "zh": "使有關聯"
+      },
+      {
+        "word": "immune",
+        "base": "immune",
+        "pos": "adj.",
+        "hint": "related to the body's natural defense against disease",
+        "zh": "免疫的"
+      },
+      {
+        "word": "shifts",
+        "base": "shift",
+        "pos": "n.",
+        "hint": "a fixed period of working hours during a day",
+        "zh": "輪班"
+      },
+      {
+        "word": "alarm",
+        "base": "alarm",
+        "pos": "n.",
+        "hint": "a device or sound that wakes a person at a set time",
+        "zh": "鬧鐘"
+      },
+      {
+        "word": "improves",
+        "base": "improve",
+        "pos": "v.",
+        "hint": "to make something better than it was before",
+        "zh": "改善"
+      },
+      {
+        "word": "quality",
+        "base": "quality",
+        "pos": "n.",
+        "hint": "how good or bad something is",
+        "zh": "品質"
+      }
     ],
     "questions": [
       {
@@ -217,6 +410,7 @@
         "answer": 3,
         "explanation": "推論題。第六段舉出固定就寢時間、昏暗房間、睡前少看螢幕，說明小習慣會影響睡眠。"
       }
-    ]
+    ],
+    "image": "img/articles/art-16b.jpg"
   }
 ]

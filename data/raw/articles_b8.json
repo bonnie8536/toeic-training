@@ -38,28 +38,160 @@
       }
     ],
     "vocab": [
-      { "word": "procurement", "base": "procurement", "pos": "n.", "hint": "the business function responsible for buying the goods and services an organization needs", "zh": "採購（部門／作業）" },
-      { "word": "turnover", "base": "turnover", "pos": "n.", "hint": "the rate at which employees leave a company and have to be replaced", "zh": "人員流動率；離職率" },
-      { "word": "quarterly", "base": "quarterly", "pos": "adj.", "hint": "happening or reported once every three months", "zh": "每季的" },
-      { "word": "automation", "base": "automation", "pos": "n.", "hint": "the use of machines and software to do work previously done by people", "zh": "自動化" },
-      { "word": "inventory", "base": "inventory", "pos": "n.", "hint": "the stock of goods a business holds for sale", "zh": "存貨；庫存" },
-      { "word": "unfamiliar with", "base": "unfamiliar with", "pos": "phr.", "hint": "not knowing, or having little experience of, something", "zh": "不熟悉……" },
-      { "word": "profit margin", "base": "profit margin", "pos": "n.", "hint": "the share of sales that is left as profit once costs are paid", "zh": "利潤率；毛利" },
-      { "word": "monitored", "base": "monitor", "pos": "v.", "hint": "watched or checked closely over a period of time", "zh": "受到監看；被監控" },
-      { "word": "suspicion", "base": "suspicion", "pos": "n.", "hint": "a feeling that someone may have done wrong, held without proof", "zh": "猜疑；懷疑" },
-      { "word": "tolerate", "base": "tolerate", "pos": "v.", "hint": "to accept something unpleasant without complaining or stopping it", "zh": "忍受；容許" },
-      { "word": "positioning", "base": "positioning", "pos": "n.", "hint": "how a company wants customers to see its brand compared with rivals", "zh": "（品牌）定位" },
-      { "word": "discount", "base": "discount", "pos": "n.", "hint": "a reduction from the usual selling price", "zh": "折扣；降價" },
-      { "word": "consistent with", "base": "consistent with", "pos": "phr.", "hint": "matching or fitting something else rather than contradicting it", "zh": "與……一致；相符" },
-      { "word": "weakens", "base": "weaken", "pos": "v.", "hint": "makes something less strong or less effective, often little by little", "zh": "削弱；動搖" },
-      { "word": "retaining", "base": "retain", "pos": "v.", "hint": "keeping something rather than removing or giving it up", "zh": "保留" },
-      { "word": "compromise", "base": "compromise", "pos": "n.", "hint": "something given up so that a dispute can be settled or pressure reduced", "zh": "妥協；讓步" },
-      { "word": "investment", "base": "investment", "pos": "n.", "hint": "money put in now in the hope of a return later", "zh": "投資" },
-      { "word": "retention", "base": "retention", "pos": "n.", "hint": "keeping employees or customers so that they do not leave", "zh": "留才；留住顧客" },
-      { "word": "overhead", "base": "overhead", "pos": "n.", "hint": "the ongoing running costs of a business that are not tied to one product", "zh": "營運成本；經常性支出" },
-      { "word": "operating income", "base": "operating income", "pos": "n.", "hint": "the profit a company earns from its core business before tax and financing costs", "zh": "營業利益" },
-      { "word": "offset", "base": "offset", "pos": "v.", "hint": "to balance out a gain or loss with an equal amount in the opposite direction", "zh": "抵銷" },
-      { "word": "exaggerate", "base": "exaggerate", "pos": "v.", "hint": "to describe something as bigger or more important than it really is", "zh": "誇大" }
+      {
+        "word": "procurement",
+        "base": "procurement",
+        "pos": "n.",
+        "hint": "the business function responsible for buying the goods and services an organization needs",
+        "zh": "採購（部門／作業）"
+      },
+      {
+        "word": "turnover",
+        "base": "turnover",
+        "pos": "n.",
+        "hint": "the rate at which employees leave a company and have to be replaced",
+        "zh": "人員流動率；離職率"
+      },
+      {
+        "word": "quarterly",
+        "base": "quarterly",
+        "pos": "adj.",
+        "hint": "happening or reported once every three months",
+        "zh": "每季的"
+      },
+      {
+        "word": "automation",
+        "base": "automation",
+        "pos": "n.",
+        "hint": "the use of machines and software to do work previously done by people",
+        "zh": "自動化"
+      },
+      {
+        "word": "inventory",
+        "base": "inventory",
+        "pos": "n.",
+        "hint": "the stock of goods a business holds for sale",
+        "zh": "存貨；庫存"
+      },
+      {
+        "word": "unfamiliar with",
+        "base": "unfamiliar with",
+        "pos": "phr.",
+        "hint": "not knowing, or having little experience of, something",
+        "zh": "不熟悉……"
+      },
+      {
+        "word": "profit margin",
+        "base": "profit margin",
+        "pos": "n.",
+        "hint": "the share of sales that is left as profit once costs are paid",
+        "zh": "利潤率；毛利"
+      },
+      {
+        "word": "monitored",
+        "base": "monitor",
+        "pos": "v.",
+        "hint": "watched or checked closely over a period of time",
+        "zh": "受到監看；被監控"
+      },
+      {
+        "word": "suspicion",
+        "base": "suspicion",
+        "pos": "n.",
+        "hint": "a feeling that someone may have done wrong, held without proof",
+        "zh": "猜疑；懷疑"
+      },
+      {
+        "word": "tolerate",
+        "base": "tolerate",
+        "pos": "v.",
+        "hint": "to accept something unpleasant without complaining or stopping it",
+        "zh": "忍受；容許"
+      },
+      {
+        "word": "positioning",
+        "base": "positioning",
+        "pos": "n.",
+        "hint": "how a company wants customers to see its brand compared with rivals",
+        "zh": "（品牌）定位"
+      },
+      {
+        "word": "discount",
+        "base": "discount",
+        "pos": "n.",
+        "hint": "a reduction from the usual selling price",
+        "zh": "折扣；降價"
+      },
+      {
+        "word": "consistent with",
+        "base": "consistent with",
+        "pos": "phr.",
+        "hint": "matching or fitting something else rather than contradicting it",
+        "zh": "與……一致；相符"
+      },
+      {
+        "word": "weakens",
+        "base": "weaken",
+        "pos": "v.",
+        "hint": "makes something less strong or less effective, often little by little",
+        "zh": "削弱；動搖"
+      },
+      {
+        "word": "retaining",
+        "base": "retain",
+        "pos": "v.",
+        "hint": "keeping something rather than removing or giving it up",
+        "zh": "保留"
+      },
+      {
+        "word": "compromise",
+        "base": "compromise",
+        "pos": "n.",
+        "hint": "something given up so that a dispute can be settled or pressure reduced",
+        "zh": "妥協；讓步"
+      },
+      {
+        "word": "investment",
+        "base": "investment",
+        "pos": "n.",
+        "hint": "money put in now in the hope of a return later",
+        "zh": "投資"
+      },
+      {
+        "word": "retention",
+        "base": "retention",
+        "pos": "n.",
+        "hint": "keeping employees or customers so that they do not leave",
+        "zh": "留才；留住顧客"
+      },
+      {
+        "word": "overhead",
+        "base": "overhead",
+        "pos": "n.",
+        "hint": "the ongoing running costs of a business that are not tied to one product",
+        "zh": "營運成本；經常性支出"
+      },
+      {
+        "word": "operating income",
+        "base": "operating income",
+        "pos": "n.",
+        "hint": "the profit a company earns from its core business before tax and financing costs",
+        "zh": "營業利益"
+      },
+      {
+        "word": "offset",
+        "base": "offset",
+        "pos": "v.",
+        "hint": "to balance out a gain or loss with an equal amount in the opposite direction",
+        "zh": "抵銷"
+      },
+      {
+        "word": "exaggerate",
+        "base": "exaggerate",
+        "pos": "v.",
+        "hint": "to describe something as bigger or more important than it really is",
+        "zh": "誇大"
+      }
     ],
     "questions": [
       {
@@ -117,7 +249,8 @@
         "answer": 2,
         "explanation": "推論題。定位在第七段末句「量得出來的成本，永遠會比量不出來的成本更像真的」，重點在於「感覺更真實」，也就是決策時給予的權重不同，而非金額大小（故選項 D 誤讀）。選項 A、B 在文中都找不到根據。"
       }
-    ]
+    ],
+    "image": "img/articles/art-8a.jpg"
   },
   {
     "id": "art-8b",
@@ -158,27 +291,153 @@
       }
     ],
     "vocab": [
-      { "word": "security", "base": "security", "pos": "n.", "hint": "something valuable promised to a lender, which the lender can take if the loan is not repaid", "zh": "擔保品；抵押品" },
-      { "word": "treasurer", "base": "treasurer", "pos": "n.", "hint": "the officer in a company responsible for managing its cash, funding, and debt", "zh": "財務主管；資金調度主管" },
-      { "word": "interest rate", "base": "interest rate", "pos": "n.", "hint": "the percentage a lender charges for the use of borrowed money", "zh": "利率" },
-      { "word": "underlying", "base": "underlying", "pos": "adj.", "hint": "forming the real basis of something, though not immediately obvious", "zh": "底層的；根本的" },
-      { "word": "in partnership with", "base": "in partnership with", "pos": "phr.", "hint": "working together with another company on a shared product or service", "zh": "與……合作（推出）" },
-      { "word": "in bulk", "base": "in bulk", "pos": "phr.", "hint": "in large quantities at one time, usually at a lower price per unit", "zh": "整批地；大量地" },
-      { "word": "incentives", "base": "incentive", "pos": "n.", "hint": "rewards offered in order to encourage a particular behavior", "zh": "誘因；獎勵" },
-      { "word": "redeeming", "base": "redeem", "pos": "v.", "hint": "exchanging points or a voucher for goods, services, or cash", "zh": "兌換" },
-      { "word": "revenue", "base": "revenue", "pos": "n.", "hint": "the total money a business takes in from sales before expenses", "zh": "營收" },
-      { "word": "operating margin", "base": "operating margin", "pos": "n.", "hint": "core business profit expressed as a percentage of sales", "zh": "營業利益率" },
-      { "word": "subsidiary", "base": "subsidiary", "pos": "n.", "hint": "a company controlled by another, larger company", "zh": "子公司" },
-      { "word": "liability", "base": "liability", "pos": "n.", "hint": "a debt or obligation a company owes and must eventually settle", "zh": "負債" },
-      { "word": "balance sheet", "base": "balance sheet", "pos": "n.", "hint": "a financial report showing what a company owns and what it owes", "zh": "資產負債表" },
-      { "word": "regulators", "base": "regulator", "pos": "n.", "hint": "official bodies with power to supervise an industry and set rules for it", "zh": "主管機關" },
-      { "word": "earnings", "base": "earnings", "pos": "n.", "hint": "the profit a company reports for a given period", "zh": "盈餘；獲利" },
-      { "word": "disclosure", "base": "disclosure", "pos": "n.", "hint": "the act of making information public, especially when the law requires it", "zh": "揭露；公告" },
-      { "word": "trade-off", "base": "trade-off", "pos": "n.", "hint": "a situation in which gaining one thing means giving up another", "zh": "取捨" },
-      { "word": "accumulating", "base": "accumulate", "pos": "v.", "hint": "building up a growing quantity of something over time", "zh": "累積" },
-      { "word": "perceived", "base": "perceive", "pos": "adj.", "hint": "believed by people to be a certain way, whether or not it truly is", "zh": "（被）認知的；主觀認定的" },
-      { "word": "threshold", "base": "threshold", "pos": "n.", "hint": "the level that must be reached before something takes effect", "zh": "門檻" },
-      { "word": "profitable", "base": "profitable", "pos": "adj.", "hint": "bringing in a good amount of money after costs are paid", "zh": "獲利高的；有賺頭的" }
+      {
+        "word": "security",
+        "base": "security",
+        "pos": "n.",
+        "hint": "something valuable promised to a lender, which the lender can take if the loan is not repaid",
+        "zh": "擔保品；抵押品"
+      },
+      {
+        "word": "treasurer",
+        "base": "treasurer",
+        "pos": "n.",
+        "hint": "the officer in a company responsible for managing its cash, funding, and debt",
+        "zh": "財務主管；資金調度主管"
+      },
+      {
+        "word": "interest rate",
+        "base": "interest rate",
+        "pos": "n.",
+        "hint": "the percentage a lender charges for the use of borrowed money",
+        "zh": "利率"
+      },
+      {
+        "word": "underlying",
+        "base": "underlying",
+        "pos": "adj.",
+        "hint": "forming the real basis of something, though not immediately obvious",
+        "zh": "底層的；根本的"
+      },
+      {
+        "word": "in partnership with",
+        "base": "in partnership with",
+        "pos": "phr.",
+        "hint": "working together with another company on a shared product or service",
+        "zh": "與……合作（推出）"
+      },
+      {
+        "word": "in bulk",
+        "base": "in bulk",
+        "pos": "phr.",
+        "hint": "in large quantities at one time, usually at a lower price per unit",
+        "zh": "整批地；大量地"
+      },
+      {
+        "word": "incentives",
+        "base": "incentive",
+        "pos": "n.",
+        "hint": "rewards offered in order to encourage a particular behavior",
+        "zh": "誘因；獎勵"
+      },
+      {
+        "word": "redeeming",
+        "base": "redeem",
+        "pos": "v.",
+        "hint": "exchanging points or a voucher for goods, services, or cash",
+        "zh": "兌換"
+      },
+      {
+        "word": "revenue",
+        "base": "revenue",
+        "pos": "n.",
+        "hint": "the total money a business takes in from sales before expenses",
+        "zh": "營收"
+      },
+      {
+        "word": "operating margin",
+        "base": "operating margin",
+        "pos": "n.",
+        "hint": "core business profit expressed as a percentage of sales",
+        "zh": "營業利益率"
+      },
+      {
+        "word": "subsidiary",
+        "base": "subsidiary",
+        "pos": "n.",
+        "hint": "a company controlled by another, larger company",
+        "zh": "子公司"
+      },
+      {
+        "word": "liability",
+        "base": "liability",
+        "pos": "n.",
+        "hint": "a debt or obligation a company owes and must eventually settle",
+        "zh": "負債"
+      },
+      {
+        "word": "balance sheet",
+        "base": "balance sheet",
+        "pos": "n.",
+        "hint": "a financial report showing what a company owns and what it owes",
+        "zh": "資產負債表"
+      },
+      {
+        "word": "regulators",
+        "base": "regulator",
+        "pos": "n.",
+        "hint": "official bodies with power to supervise an industry and set rules for it",
+        "zh": "主管機關"
+      },
+      {
+        "word": "earnings",
+        "base": "earnings",
+        "pos": "n.",
+        "hint": "the profit a company reports for a given period",
+        "zh": "盈餘；獲利"
+      },
+      {
+        "word": "disclosure",
+        "base": "disclosure",
+        "pos": "n.",
+        "hint": "the act of making information public, especially when the law requires it",
+        "zh": "揭露；公告"
+      },
+      {
+        "word": "trade-off",
+        "base": "trade-off",
+        "pos": "n.",
+        "hint": "a situation in which gaining one thing means giving up another",
+        "zh": "取捨"
+      },
+      {
+        "word": "accumulating",
+        "base": "accumulate",
+        "pos": "v.",
+        "hint": "building up a growing quantity of something over time",
+        "zh": "累積"
+      },
+      {
+        "word": "perceived",
+        "base": "perceive",
+        "pos": "adj.",
+        "hint": "believed by people to be a certain way, whether or not it truly is",
+        "zh": "（被）認知的；主觀認定的"
+      },
+      {
+        "word": "threshold",
+        "base": "threshold",
+        "pos": "n.",
+        "hint": "the level that must be reached before something takes effect",
+        "zh": "門檻"
+      },
+      {
+        "word": "profitable",
+        "base": "profitable",
+        "pos": "adj.",
+        "hint": "bringing in a good amount of money after costs are paid",
+        "zh": "獲利高的；有賺頭的"
+      }
     ],
     "questions": [
       {
@@ -236,6 +495,7 @@
         "answer": 0,
         "explanation": "推論題。定位在第六段：拉高門檻後「訂位確實沒掉」，但八個月內辦卡申請掉了一成九、銀行要求重談合約，最後「守住了看得見的營收，卻放掉利潤高得多的營收」。選項 B 正好被「訂位沒掉」否定；選項 C 過度概括（銀行是重啟談判而非解約）；選項 D 與第五、六段所述的高消費會員價值相反。"
       }
-    ]
+    ],
+    "image": "img/articles/art-8b.jpg"
   }
 ]

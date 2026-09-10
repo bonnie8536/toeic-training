@@ -34,21 +34,111 @@
       }
     ],
     "vocab": [
-      { "word": "complaint", "base": "complaint", "pos": "n.", "hint": "a statement that shows you are not happy about a product or service", "zh": "抱怨；客訴" },
-      { "word": "review", "base": "review", "pos": "n.", "hint": "a written opinion about a hotel or product posted online for others", "zh": "評價；評論" },
-      { "word": "afford", "base": "afford", "pos": "v.", "hint": "to have enough money to pay for something", "zh": "負擔得起" },
-      { "word": "renovate", "base": "renovate", "pos": "v.", "hint": "to repair and improve an old building so it looks new again", "zh": "翻修；整修" },
-      { "word": "check-ins", "base": "check-in", "pos": "n.", "hint": "the act of registering at the front desk when you arrive at a hotel", "zh": "入住手續" },
-      { "word": "housekeeping", "base": "housekeeping", "pos": "n.", "hint": "the hotel department that cleans guest rooms", "zh": "房務" },
-      { "word": "staff", "base": "staff", "pos": "n.", "hint": "the group of people who work for a company", "zh": "員工" },
-      { "word": "budget", "base": "budget", "pos": "n.", "hint": "the amount of money planned for a project", "zh": "預算" },
-      { "word": "charged", "base": "charge", "pos": "v.", "hint": "to ask a customer to pay a certain price", "zh": "收費" },
-      { "word": "booked", "base": "book", "pos": "v.", "hint": "to reserve a room or a seat in advance", "zh": "預訂" },
-      { "word": "occupancy", "base": "occupancy", "pos": "n.", "hint": "the share of hotel rooms that are filled by guests", "zh": "住房率" },
-      { "word": "feedback", "base": "feedback", "pos": "n.", "hint": "comments about how good or bad a service is", "zh": "回饋意見" },
-      { "word": "ignore", "base": "ignore", "pos": "v.", "hint": "to pay no attention to a person or a message on purpose", "zh": "忽視" },
-      { "word": "experiment", "base": "experiment", "pos": "n.", "hint": "a test done to find out whether a new idea works", "zh": "實驗" },
-      { "word": "branches", "base": "branch", "pos": "n.", "hint": "a shop or office of the same company in another location", "zh": "分店；分公司" }
+      {
+        "word": "complaint",
+        "base": "complaint",
+        "pos": "n.",
+        "hint": "a statement that shows you are not happy about a product or service",
+        "zh": "抱怨；客訴"
+      },
+      {
+        "word": "review",
+        "base": "review",
+        "pos": "n.",
+        "hint": "a written opinion about a hotel or product posted online for others",
+        "zh": "評價；評論"
+      },
+      {
+        "word": "afford",
+        "base": "afford",
+        "pos": "v.",
+        "hint": "to have enough money to pay for something",
+        "zh": "負擔得起"
+      },
+      {
+        "word": "renovate",
+        "base": "renovate",
+        "pos": "v.",
+        "hint": "to repair and improve an old building so it looks new again",
+        "zh": "翻修；整修"
+      },
+      {
+        "word": "check-ins",
+        "base": "check-in",
+        "pos": "n.",
+        "hint": "the act of registering at the front desk when you arrive at a hotel",
+        "zh": "入住手續"
+      },
+      {
+        "word": "housekeeping",
+        "base": "housekeeping",
+        "pos": "n.",
+        "hint": "the hotel department that cleans guest rooms",
+        "zh": "房務"
+      },
+      {
+        "word": "staff",
+        "base": "staff",
+        "pos": "n.",
+        "hint": "the group of people who work for a company",
+        "zh": "員工"
+      },
+      {
+        "word": "budget",
+        "base": "budget",
+        "pos": "n.",
+        "hint": "the amount of money planned for a project",
+        "zh": "預算"
+      },
+      {
+        "word": "charged",
+        "base": "charge",
+        "pos": "v.",
+        "hint": "to ask a customer to pay a certain price",
+        "zh": "收費"
+      },
+      {
+        "word": "booked",
+        "base": "book",
+        "pos": "v.",
+        "hint": "to reserve a room or a seat in advance",
+        "zh": "預訂"
+      },
+      {
+        "word": "occupancy",
+        "base": "occupancy",
+        "pos": "n.",
+        "hint": "the share of hotel rooms that are filled by guests",
+        "zh": "住房率"
+      },
+      {
+        "word": "feedback",
+        "base": "feedback",
+        "pos": "n.",
+        "hint": "comments about how good or bad a service is",
+        "zh": "回饋意見"
+      },
+      {
+        "word": "ignore",
+        "base": "ignore",
+        "pos": "v.",
+        "hint": "to pay no attention to a person or a message on purpose",
+        "zh": "忽視"
+      },
+      {
+        "word": "experiment",
+        "base": "experiment",
+        "pos": "n.",
+        "hint": "a test done to find out whether a new idea works",
+        "zh": "實驗"
+      },
+      {
+        "word": "branches",
+        "base": "branch",
+        "pos": "n.",
+        "hint": "a shop or office of the same company in another location",
+        "zh": "分店；分公司"
+      }
     ],
     "questions": [
       {
@@ -106,7 +196,8 @@
         "answer": 0,
         "explanation": "推論題。定位第六段「Three other branches are copying her plan this year.」，願意照抄代表他們認為這套做法在自己的飯店同樣行得通；文中沒有提到其他分店的預算或降價。"
       }
-    ]
+    ],
+    "image": "img/articles/art-7a.jpg"
   },
   {
     "id": "art-7b",
@@ -143,20 +234,104 @@
       }
     ],
     "vocab": [
-      { "word": "night shifts", "base": "night shift", "pos": "n.", "hint": "a work period that runs during the night", "zh": "夜班" },
-      { "word": "harvest", "base": "harvest", "pos": "v.", "hint": "to pick or gather crops when they are ready to eat", "zh": "採收" },
-      { "word": "installed", "base": "install", "pos": "v.", "hint": "to put a machine in place so that it is ready to use", "zh": "安裝" },
-      { "word": "suppliers", "base": "supplier", "pos": "n.", "hint": "companies that provide goods to shops or restaurants", "zh": "供應商" },
-      { "word": "deliver", "base": "deliver", "pos": "v.", "hint": "to bring goods to a person or a place", "zh": "配送；送貨" },
-      { "word": "demand", "base": "demand", "pos": "n.", "hint": "the wish of customers to buy a certain product", "zh": "需求" },
-      { "word": "clients", "base": "client", "pos": "n.", "hint": "people or firms that pay for a service", "zh": "客戶" },
-      { "word": "recruit", "base": "recruit", "pos": "v.", "hint": "to find and hire new workers for a company", "zh": "招募" },
-      { "word": "lease", "base": "lease", "pos": "v.", "hint": "to pay a regular fee for the right to use equipment or space", "zh": "租用" },
-      { "word": "subscription", "base": "subscription", "pos": "n.", "hint": "a regular payment made to keep using a service", "zh": "訂閱制費用" },
-      { "word": "maintenance", "base": "maintenance", "pos": "n.", "hint": "the work of keeping equipment in good condition", "zh": "維護保養" },
-      { "word": "negotiated", "base": "negotiate", "pos": "v.", "hint": "to discuss terms with someone until both sides agree", "zh": "洽談；談成" },
-      { "word": "profitable", "base": "profitable", "pos": "adj.", "hint": "earning more money than it costs to run", "zh": "有獲利的" },
-      { "word": "expand", "base": "expand", "pos": "v.", "hint": "to grow into new places or new markets", "zh": "擴張" }
+      {
+        "word": "night shifts",
+        "base": "night shift",
+        "pos": "n.",
+        "hint": "a work period that runs during the night",
+        "zh": "夜班"
+      },
+      {
+        "word": "harvest",
+        "base": "harvest",
+        "pos": "v.",
+        "hint": "to pick or gather crops when they are ready to eat",
+        "zh": "採收"
+      },
+      {
+        "word": "installed",
+        "base": "install",
+        "pos": "v.",
+        "hint": "to put a machine in place so that it is ready to use",
+        "zh": "安裝"
+      },
+      {
+        "word": "suppliers",
+        "base": "supplier",
+        "pos": "n.",
+        "hint": "companies that provide goods to shops or restaurants",
+        "zh": "供應商"
+      },
+      {
+        "word": "deliver",
+        "base": "deliver",
+        "pos": "v.",
+        "hint": "to bring goods to a person or a place",
+        "zh": "配送；送貨"
+      },
+      {
+        "word": "demand",
+        "base": "demand",
+        "pos": "n.",
+        "hint": "the wish of customers to buy a certain product",
+        "zh": "需求"
+      },
+      {
+        "word": "clients",
+        "base": "client",
+        "pos": "n.",
+        "hint": "people or firms that pay for a service",
+        "zh": "客戶"
+      },
+      {
+        "word": "recruit",
+        "base": "recruit",
+        "pos": "v.",
+        "hint": "to find and hire new workers for a company",
+        "zh": "招募"
+      },
+      {
+        "word": "lease",
+        "base": "lease",
+        "pos": "v.",
+        "hint": "to pay a regular fee for the right to use equipment or space",
+        "zh": "租用"
+      },
+      {
+        "word": "subscription",
+        "base": "subscription",
+        "pos": "n.",
+        "hint": "a regular payment made to keep using a service",
+        "zh": "訂閱制費用"
+      },
+      {
+        "word": "maintenance",
+        "base": "maintenance",
+        "pos": "n.",
+        "hint": "the work of keeping equipment in good condition",
+        "zh": "維護保養"
+      },
+      {
+        "word": "negotiated",
+        "base": "negotiate",
+        "pos": "v.",
+        "hint": "to discuss terms with someone until both sides agree",
+        "zh": "洽談；談成"
+      },
+      {
+        "word": "profitable",
+        "base": "profitable",
+        "pos": "adj.",
+        "hint": "earning more money than it costs to run",
+        "zh": "有獲利的"
+      },
+      {
+        "word": "expand",
+        "base": "expand",
+        "pos": "v.",
+        "hint": "to grow into new places or new markets",
+        "zh": "擴張"
+      }
     ],
     "questions": [
       {
@@ -214,6 +389,7 @@
         "answer": 3,
         "explanation": "推論題。定位第六段：已有兩百四十台機器、去年春天開始獲利、明年想擴張到醫院和飯店，可推論公司體質穩定到足以進入新市場。"
       }
-    ]
+    ],
+    "image": "img/articles/art-7b.jpg"
   }
 ]

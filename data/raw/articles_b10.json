@@ -30,17 +30,83 @@
       }
     ],
     "vocab": [
-      { "word": "customers", "base": "customer", "pos": "n.", "hint": "people who buy food or goods from a shop", "zh": "顧客" },
-      { "word": "business", "base": "business", "pos": "n.", "hint": "the job of selling goods or a service for money", "zh": "生意；公司" },
-      { "word": "staff", "base": "staff", "pos": "n.", "hint": "all the people who have a job in one company", "zh": "員工；全體職員" },
-      { "word": "offer", "base": "offer", "pos": "v.", "hint": "to tell someone you are ready to give something", "zh": "提供" },
-      { "word": "discount", "base": "discount", "pos": "n.", "hint": "money taken off the normal price", "zh": "折扣" },
-      { "word": "poster", "base": "poster", "pos": "n.", "hint": "a large piece of paper with words or pictures on it", "zh": "海報" },
-      { "word": "orders", "base": "order", "pos": "n.", "hint": "requests for food or goods that a shop must fill", "zh": "訂單；點餐" },
-      { "word": "sales", "base": "sale", "pos": "n.", "hint": "the total money a company gets from its customers", "zh": "銷售額" },
-      { "word": "noticed", "base": "notice", "pos": "v.", "hint": "saw or understood something new", "zh": "注意到" },
-      { "word": "regular", "base": "regular", "pos": "adj.", "hint": "coming back again and again", "zh": "固定的；常來的" },
-      { "word": "profit", "base": "profit", "pos": "n.", "hint": "the money left after all costs are paid", "zh": "利潤" }
+      {
+        "word": "customers",
+        "base": "customer",
+        "pos": "n.",
+        "hint": "people who buy food or goods from a shop",
+        "zh": "顧客"
+      },
+      {
+        "word": "business",
+        "base": "business",
+        "pos": "n.",
+        "hint": "the job of selling goods or a service for money",
+        "zh": "生意；公司"
+      },
+      {
+        "word": "staff",
+        "base": "staff",
+        "pos": "n.",
+        "hint": "all the people who have a job in one company",
+        "zh": "員工；全體職員"
+      },
+      {
+        "word": "offer",
+        "base": "offer",
+        "pos": "v.",
+        "hint": "to tell someone you are ready to give something",
+        "zh": "提供"
+      },
+      {
+        "word": "discount",
+        "base": "discount",
+        "pos": "n.",
+        "hint": "money taken off the normal price",
+        "zh": "折扣"
+      },
+      {
+        "word": "poster",
+        "base": "poster",
+        "pos": "n.",
+        "hint": "a large piece of paper with words or pictures on it",
+        "zh": "海報"
+      },
+      {
+        "word": "orders",
+        "base": "order",
+        "pos": "n.",
+        "hint": "requests for food or goods that a shop must fill",
+        "zh": "訂單；點餐"
+      },
+      {
+        "word": "sales",
+        "base": "sale",
+        "pos": "n.",
+        "hint": "the total money a company gets from its customers",
+        "zh": "銷售額"
+      },
+      {
+        "word": "noticed",
+        "base": "notice",
+        "pos": "v.",
+        "hint": "saw or understood something new",
+        "zh": "注意到"
+      },
+      {
+        "word": "regular",
+        "base": "regular",
+        "pos": "adj.",
+        "hint": "coming back again and again",
+        "zh": "固定的；常來的"
+      },
+      {
+        "word": "profit",
+        "base": "profit",
+        "pos": "n.",
+        "hint": "the money left after all costs are paid",
+        "zh": "利潤"
+      }
     ],
     "questions": [
       {
@@ -87,7 +153,8 @@
         "answer": 3,
         "explanation": "推論題。第二段她只打算先試一個月，第四、五段訂單和利潤都變好，可以推出她會繼續這個雨天折扣。"
       }
-    ]
+    ],
+    "image": "img/articles/art-10a.jpg"
   },
   {
     "id": "art-10b",
@@ -120,17 +187,83 @@
       }
     ],
     "vocab": [
-      { "word": "co-worker", "base": "co-worker", "pos": "n.", "hint": "a person who has a job at the same company as you", "zh": "同事" },
-      { "word": "focus", "base": "focus", "pos": "v.", "hint": "to give all your mind to one thing", "zh": "專心；專注" },
-      { "word": "manager", "base": "manager", "pos": "n.", "hint": "the person who leads a team at a company", "zh": "主管；經理" },
-      { "word": "mistake", "base": "mistake", "pos": "n.", "hint": "something done in a wrong way", "zh": "錯誤" },
-      { "word": "report", "base": "report", "pos": "n.", "hint": "a written paper that gives facts about a job", "zh": "報告" },
-      { "word": "budget", "base": "budget", "pos": "n.", "hint": "a plan for the money a company will use", "zh": "預算" },
-      { "word": "client", "base": "client", "pos": "n.", "hint": "a person or company that pays you for a service", "zh": "客戶" },
-      { "word": "deadline", "base": "deadline", "pos": "n.", "hint": "the last time when a job must be finished", "zh": "截止期限" },
-      { "word": "project", "base": "project", "pos": "n.", "hint": "a planned piece of work with a goal and an end date", "zh": "專案" },
-      { "word": "schedule", "base": "schedule", "pos": "n.", "hint": "a plan that shows when things will happen", "zh": "行程表；時程" },
-      { "word": "team", "base": "team", "pos": "n.", "hint": "a group of people who do a job together", "zh": "團隊" }
+      {
+        "word": "co-worker",
+        "base": "co-worker",
+        "pos": "n.",
+        "hint": "a person who has a job at the same company as you",
+        "zh": "同事"
+      },
+      {
+        "word": "focus",
+        "base": "focus",
+        "pos": "v.",
+        "hint": "to give all your mind to one thing",
+        "zh": "專心；專注"
+      },
+      {
+        "word": "manager",
+        "base": "manager",
+        "pos": "n.",
+        "hint": "the person who leads a team at a company",
+        "zh": "主管；經理"
+      },
+      {
+        "word": "mistake",
+        "base": "mistake",
+        "pos": "n.",
+        "hint": "something done in a wrong way",
+        "zh": "錯誤"
+      },
+      {
+        "word": "report",
+        "base": "report",
+        "pos": "n.",
+        "hint": "a written paper that gives facts about a job",
+        "zh": "報告"
+      },
+      {
+        "word": "budget",
+        "base": "budget",
+        "pos": "n.",
+        "hint": "a plan for the money a company will use",
+        "zh": "預算"
+      },
+      {
+        "word": "client",
+        "base": "client",
+        "pos": "n.",
+        "hint": "a person or company that pays you for a service",
+        "zh": "客戶"
+      },
+      {
+        "word": "deadline",
+        "base": "deadline",
+        "pos": "n.",
+        "hint": "the last time when a job must be finished",
+        "zh": "截止期限"
+      },
+      {
+        "word": "project",
+        "base": "project",
+        "pos": "n.",
+        "hint": "a planned piece of work with a goal and an end date",
+        "zh": "專案"
+      },
+      {
+        "word": "schedule",
+        "base": "schedule",
+        "pos": "n.",
+        "hint": "a plan that shows when things will happen",
+        "zh": "行程表；時程"
+      },
+      {
+        "word": "team",
+        "base": "team",
+        "pos": "n.",
+        "hint": "a group of people who do a job together",
+        "zh": "團隊"
+      }
     ],
     "questions": [
       {
@@ -177,6 +310,7 @@
         "answer": 2,
         "explanation": "主旨題。全文從第一、二段的不合，寫到第四、五段變成好搭檔，重點是這個轉變。"
       }
-    ]
+    ],
+    "image": "img/articles/art-10b.jpg"
   }
 ]

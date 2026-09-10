@@ -38,26 +38,146 @@
       }
     ],
     "vocab": [
-      { "word": "artificial intelligence", "base": "artificial intelligence", "pos": "n.", "hint": "computer systems that can do tasks which normally need human thinking", "zh": "人工智慧" },
-      { "word": "draft", "base": "draft", "pos": "v.", "hint": "to write a first version of a letter or document", "zh": "草擬" },
-      { "word": "summarize", "base": "summarize", "pos": "v.", "hint": "to give the main points of something in a short form", "zh": "摘要;概述" },
-      { "word": "routine", "base": "routine", "pos": "n.", "hint": "the usual set of things a person does regularly", "zh": "例行事務" },
-      { "word": "Customer service", "base": "customer service", "pos": "n.", "hint": "the part of a company that helps buyers with questions and problems", "zh": "客服" },
-      { "word": "generate", "base": "generate", "pos": "v.", "hint": "to produce or create something", "zh": "產生;製作" },
-      { "word": "clause", "base": "clause", "pos": "n.", "hint": "a separate section or condition in a legal agreement", "zh": "條款" },
-      { "word": "colleague", "base": "colleague", "pos": "n.", "hint": "a person you work with", "zh": "同事" },
-      { "word": "barrier", "base": "barrier", "pos": "n.", "hint": "something that makes progress or entry difficult", "zh": "障礙;門檻" },
-      { "word": "employment", "base": "employment", "pos": "n.", "hint": "the state of having paid work", "zh": "就業" },
-      { "word": "spreadsheets", "base": "spreadsheet", "pos": "n.", "hint": "a computer program that arranges numbers in rows and columns for calculation", "zh": "試算表" },
-      { "word": "uncertainty", "base": "uncertainty", "pos": "n.", "hint": "a situation in which something is not known or decided", "zh": "不確定性" },
-      { "word": "accuracy", "base": "accuracy", "pos": "n.", "hint": "the quality of being correct and free from mistakes", "zh": "準確度" },
-      { "word": "fluent", "base": "fluent", "pos": "adj.", "hint": "able to use language smoothly and easily", "zh": "流暢的" },
-      { "word": "contracts", "base": "contract", "pos": "n.", "hint": "a written legal agreement between two sides", "zh": "合約" },
-      { "word": "Privacy", "base": "privacy", "pos": "n.", "hint": "the right to keep personal information away from other people", "zh": "隱私" },
-      { "word": "forbid", "base": "forbid", "pos": "v.", "hint": "to order someone not to do something", "zh": "禁止" },
-      { "word": "policies", "base": "policy", "pos": "n.", "hint": "an official rule or plan that an organization follows", "zh": "政策;規定" },
-      { "word": "judgment", "base": "judgment", "pos": "n.", "hint": "the ability to make good decisions after thinking carefully", "zh": "判斷力" },
-      { "word": "automated", "base": "automate", "pos": "v.", "hint": "to make a process work by machine instead of by a person", "zh": "自動化" }
+      {
+        "word": "artificial intelligence",
+        "base": "artificial intelligence",
+        "pos": "n.",
+        "hint": "computer systems that can do tasks which normally need human thinking",
+        "zh": "人工智慧"
+      },
+      {
+        "word": "draft",
+        "base": "draft",
+        "pos": "v.",
+        "hint": "to write a first version of a letter or document",
+        "zh": "草擬"
+      },
+      {
+        "word": "summarize",
+        "base": "summarize",
+        "pos": "v.",
+        "hint": "to give the main points of something in a short form",
+        "zh": "摘要;概述"
+      },
+      {
+        "word": "routine",
+        "base": "routine",
+        "pos": "n.",
+        "hint": "the usual set of things a person does regularly",
+        "zh": "例行事務"
+      },
+      {
+        "word": "Customer service",
+        "base": "customer service",
+        "pos": "n.",
+        "hint": "the part of a company that helps buyers with questions and problems",
+        "zh": "客服"
+      },
+      {
+        "word": "generate",
+        "base": "generate",
+        "pos": "v.",
+        "hint": "to produce or create something",
+        "zh": "產生;製作"
+      },
+      {
+        "word": "clause",
+        "base": "clause",
+        "pos": "n.",
+        "hint": "a separate section or condition in a legal agreement",
+        "zh": "條款"
+      },
+      {
+        "word": "colleague",
+        "base": "colleague",
+        "pos": "n.",
+        "hint": "a person you work with",
+        "zh": "同事"
+      },
+      {
+        "word": "barrier",
+        "base": "barrier",
+        "pos": "n.",
+        "hint": "something that makes progress or entry difficult",
+        "zh": "障礙;門檻"
+      },
+      {
+        "word": "employment",
+        "base": "employment",
+        "pos": "n.",
+        "hint": "the state of having paid work",
+        "zh": "就業"
+      },
+      {
+        "word": "spreadsheets",
+        "base": "spreadsheet",
+        "pos": "n.",
+        "hint": "a computer program that arranges numbers in rows and columns for calculation",
+        "zh": "試算表"
+      },
+      {
+        "word": "uncertainty",
+        "base": "uncertainty",
+        "pos": "n.",
+        "hint": "a situation in which something is not known or decided",
+        "zh": "不確定性"
+      },
+      {
+        "word": "accuracy",
+        "base": "accuracy",
+        "pos": "n.",
+        "hint": "the quality of being correct and free from mistakes",
+        "zh": "準確度"
+      },
+      {
+        "word": "fluent",
+        "base": "fluent",
+        "pos": "adj.",
+        "hint": "able to use language smoothly and easily",
+        "zh": "流暢的"
+      },
+      {
+        "word": "contracts",
+        "base": "contract",
+        "pos": "n.",
+        "hint": "a written legal agreement between two sides",
+        "zh": "合約"
+      },
+      {
+        "word": "Privacy",
+        "base": "privacy",
+        "pos": "n.",
+        "hint": "the right to keep personal information away from other people",
+        "zh": "隱私"
+      },
+      {
+        "word": "forbid",
+        "base": "forbid",
+        "pos": "v.",
+        "hint": "to order someone not to do something",
+        "zh": "禁止"
+      },
+      {
+        "word": "policies",
+        "base": "policy",
+        "pos": "n.",
+        "hint": "an official rule or plan that an organization follows",
+        "zh": "政策;規定"
+      },
+      {
+        "word": "judgment",
+        "base": "judgment",
+        "pos": "n.",
+        "hint": "the ability to make good decisions after thinking carefully",
+        "zh": "判斷力"
+      },
+      {
+        "word": "automated",
+        "base": "automate",
+        "pos": "v.",
+        "hint": "to make a process work by machine instead of by a person",
+        "zh": "自動化"
+      }
     ],
     "questions": [
       {
@@ -115,7 +235,8 @@
         "answer": 1,
         "explanation": "推論題。最後一段指出受惠者是「了解工具擅長什麼、對成果負責、能說明採用或否決理由」的人，並收在 It is judgment，暗示未來的價值來自判斷與負責，而非操作速度。"
       }
-    ]
+    ],
+    "image": "img/articles/art-18a.jpg"
   },
   {
     "id": "art-18b",
@@ -156,25 +277,139 @@
       }
     ],
     "vocab": [
-      { "word": "Microplastics", "base": "microplastic", "pos": "n.", "hint": "extremely small bits of man-made material found in water, soil and air", "zh": "微塑膠" },
-      { "word": "microscope", "base": "microscope", "pos": "n.", "hint": "an instrument that makes very small objects look much larger", "zh": "顯微鏡" },
-      { "word": "packaging", "base": "packaging", "pos": "n.", "hint": "the boxes, bags and wrapping used to hold and protect goods", "zh": "包裝材" },
-      { "word": "brittle", "base": "brittle", "pos": "adj.", "hint": "hard but easily broken or cracked", "zh": "脆的;易碎的" },
-      { "word": "fragments", "base": "fragment", "pos": "n.", "hint": "small parts broken off something larger", "zh": "碎片" },
-      { "word": "tires", "base": "tire", "pos": "n.", "hint": "the rubber rings around the wheels of a vehicle", "zh": "輪胎" },
-      { "word": "particles", "base": "particle", "pos": "n.", "hint": "extremely small bits of matter", "zh": "顆粒" },
-      { "word": "synthetic", "base": "synthetic", "pos": "adj.", "hint": "made by a chemical process rather than coming from nature", "zh": "合成的" },
-      { "word": "fibers", "base": "fiber", "pos": "n.", "hint": "thin threads used to make cloth or rope", "zh": "纖維" },
-      { "word": "filter", "base": "filter", "pos": "n.", "hint": "a device that separates unwanted material out of a liquid or gas", "zh": "濾網;過濾器" },
-      { "word": "plankton", "base": "plankton", "pos": "n.", "hint": "very small living things that float in the sea and are eaten by larger animals", "zh": "浮游生物" },
-      { "word": "sediment", "base": "sediment", "pos": "n.", "hint": "material that settles at the bottom of a river, lake or ocean", "zh": "沉積物" },
-      { "word": "durable", "base": "durable", "pos": "adj.", "hint": "able to last a long time without being damaged", "zh": "耐用的" },
-      { "word": "resists", "base": "resist", "pos": "v.", "hint": "to not be damaged or affected by something", "zh": "抵抗" },
-      { "word": "bacteria", "base": "bacteria", "pos": "n.", "hint": "extremely small living things that can cause decay or illness", "zh": "細菌" },
-      { "word": "absorbs", "base": "absorb", "pos": "v.", "hint": "to take in a liquid or substance through a surface", "zh": "吸收" },
-      { "word": "caution", "base": "caution", "pos": "n.", "hint": "care taken to avoid mistakes or danger", "zh": "謹慎;保留" },
-      { "word": "unnecessary", "base": "unnecessary", "pos": "adj.", "hint": "not needed", "zh": "不必要的" },
-      { "word": "persistent", "base": "persistent", "pos": "adj.", "hint": "continuing to exist or last for a long time", "zh": "難以消失的;持久的" }
+      {
+        "word": "Microplastics",
+        "base": "microplastic",
+        "pos": "n.",
+        "hint": "extremely small bits of man-made material found in water, soil and air",
+        "zh": "微塑膠"
+      },
+      {
+        "word": "microscope",
+        "base": "microscope",
+        "pos": "n.",
+        "hint": "an instrument that makes very small objects look much larger",
+        "zh": "顯微鏡"
+      },
+      {
+        "word": "packaging",
+        "base": "packaging",
+        "pos": "n.",
+        "hint": "the boxes, bags and wrapping used to hold and protect goods",
+        "zh": "包裝材"
+      },
+      {
+        "word": "brittle",
+        "base": "brittle",
+        "pos": "adj.",
+        "hint": "hard but easily broken or cracked",
+        "zh": "脆的;易碎的"
+      },
+      {
+        "word": "fragments",
+        "base": "fragment",
+        "pos": "n.",
+        "hint": "small parts broken off something larger",
+        "zh": "碎片"
+      },
+      {
+        "word": "tires",
+        "base": "tire",
+        "pos": "n.",
+        "hint": "the rubber rings around the wheels of a vehicle",
+        "zh": "輪胎"
+      },
+      {
+        "word": "particles",
+        "base": "particle",
+        "pos": "n.",
+        "hint": "extremely small bits of matter",
+        "zh": "顆粒"
+      },
+      {
+        "word": "synthetic",
+        "base": "synthetic",
+        "pos": "adj.",
+        "hint": "made by a chemical process rather than coming from nature",
+        "zh": "合成的"
+      },
+      {
+        "word": "fibers",
+        "base": "fiber",
+        "pos": "n.",
+        "hint": "thin threads used to make cloth or rope",
+        "zh": "纖維"
+      },
+      {
+        "word": "filter",
+        "base": "filter",
+        "pos": "n.",
+        "hint": "a device that separates unwanted material out of a liquid or gas",
+        "zh": "濾網;過濾器"
+      },
+      {
+        "word": "plankton",
+        "base": "plankton",
+        "pos": "n.",
+        "hint": "very small living things that float in the sea and are eaten by larger animals",
+        "zh": "浮游生物"
+      },
+      {
+        "word": "sediment",
+        "base": "sediment",
+        "pos": "n.",
+        "hint": "material that settles at the bottom of a river, lake or ocean",
+        "zh": "沉積物"
+      },
+      {
+        "word": "durable",
+        "base": "durable",
+        "pos": "adj.",
+        "hint": "able to last a long time without being damaged",
+        "zh": "耐用的"
+      },
+      {
+        "word": "resists",
+        "base": "resist",
+        "pos": "v.",
+        "hint": "to not be damaged or affected by something",
+        "zh": "抵抗"
+      },
+      {
+        "word": "bacteria",
+        "base": "bacteria",
+        "pos": "n.",
+        "hint": "extremely small living things that can cause decay or illness",
+        "zh": "細菌"
+      },
+      {
+        "word": "absorbs",
+        "base": "absorb",
+        "pos": "v.",
+        "hint": "to take in a liquid or substance through a surface",
+        "zh": "吸收"
+      },
+      {
+        "word": "caution",
+        "base": "caution",
+        "pos": "n.",
+        "hint": "care taken to avoid mistakes or danger",
+        "zh": "謹慎;保留"
+      },
+      {
+        "word": "unnecessary",
+        "base": "unnecessary",
+        "pos": "adj.",
+        "hint": "not needed",
+        "zh": "不必要的"
+      },
+      {
+        "word": "persistent",
+        "base": "persistent",
+        "pos": "adj.",
+        "hint": "continuing to exist or last for a long time",
+        "zh": "難以消失的;持久的"
+      }
     ],
     "questions": [
       {
@@ -232,6 +467,7 @@
         "answer": 1,
         "explanation": "推論題。第六段說結論尚未明確，並指出「檢出物質不等於證明有害」，最後一句更點明這種謹慎有時被誤讀成好消息，暗示讀者不該把不確定當成安全保證。"
       }
-    ]
+    ],
+    "image": "img/articles/art-18b.jpg"
   }
 ]

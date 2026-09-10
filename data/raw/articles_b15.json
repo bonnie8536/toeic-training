@@ -153,7 +153,8 @@
         "answer": 3,
         "explanation": "第四段說打哈欠會傳染，看到別人打，自己很快也會跟著打。"
       }
-    ]
+    ],
+    "image": "img/articles/art-15a.jpg"
   },
   {
     "id": "art-15b",
@@ -316,6 +317,7 @@
         "answer": 3,
         "explanation": "第五段說最好的袋子是你已經有的那一個，重點在重複使用。"
       }
-    ]
+    ],
+    "image": "img/articles/art-15b.jpg"
   }
 ]

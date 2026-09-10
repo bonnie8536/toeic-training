@@ -30,18 +30,90 @@
       }
     ],
     "vocab": [
-      { "word": "owned", "base": "own", "pos": "v.", "hint": "to have something as your property", "zh": "擁有；經營" },
-      { "word": "busy", "base": "busy", "pos": "adj.", "hint": "full of people or work; not free", "zh": "忙碌的；熱鬧的" },
-      { "word": "sales", "base": "sales", "pos": "n.", "hint": "money a shop gets from people who buy things", "zh": "銷售額；業績" },
-      { "word": "report", "base": "report", "pos": "n.", "hint": "a paper that gives facts about something", "zh": "報表；報告" },
-      { "word": "sign", "base": "sign", "pos": "n.", "hint": "a board with words that tells people something", "zh": "招牌；標示" },
-      { "word": "by hand", "base": "by hand", "pos": "phr.", "hint": "done by a person, not by a machine", "zh": "用手工；親手" },
-      { "word": "ordered", "base": "order", "pos": "v.", "hint": "asked a shop to give or send you goods", "zh": "訂購" },
-      { "word": "office", "base": "office", "pos": "n.", "hint": "a room where people do business work", "zh": "辦公室" },
-      { "word": "message", "base": "message", "pos": "n.", "hint": "a short piece of writing for other people", "zh": "訊息" },
-      { "word": "Customers", "base": "customer", "pos": "n.", "hint": "people who buy things from a shop", "zh": "顧客" },
-      { "word": "shared", "base": "share", "pos": "v.", "hint": "let other people see or use something", "zh": "分享" },
-      { "word": "delivers", "base": "deliver", "pos": "v.", "hint": "takes goods to the place people want them", "zh": "運送；配送" }
+      {
+        "word": "owned",
+        "base": "own",
+        "pos": "v.",
+        "hint": "to have something as your property",
+        "zh": "擁有；經營"
+      },
+      {
+        "word": "busy",
+        "base": "busy",
+        "pos": "adj.",
+        "hint": "full of people or work; not free",
+        "zh": "忙碌的；熱鬧的"
+      },
+      {
+        "word": "sales",
+        "base": "sales",
+        "pos": "n.",
+        "hint": "money a shop gets from people who buy things",
+        "zh": "銷售額；業績"
+      },
+      {
+        "word": "report",
+        "base": "report",
+        "pos": "n.",
+        "hint": "a paper that gives facts about something",
+        "zh": "報表；報告"
+      },
+      {
+        "word": "sign",
+        "base": "sign",
+        "pos": "n.",
+        "hint": "a board with words that tells people something",
+        "zh": "招牌；標示"
+      },
+      {
+        "word": "by hand",
+        "base": "by hand",
+        "pos": "phr.",
+        "hint": "done by a person, not by a machine",
+        "zh": "用手工；親手"
+      },
+      {
+        "word": "ordered",
+        "base": "order",
+        "pos": "v.",
+        "hint": "asked a shop to give or send you goods",
+        "zh": "訂購"
+      },
+      {
+        "word": "office",
+        "base": "office",
+        "pos": "n.",
+        "hint": "a room where people do business work",
+        "zh": "辦公室"
+      },
+      {
+        "word": "message",
+        "base": "message",
+        "pos": "n.",
+        "hint": "a short piece of writing for other people",
+        "zh": "訊息"
+      },
+      {
+        "word": "Customers",
+        "base": "customer",
+        "pos": "n.",
+        "hint": "people who buy things from a shop",
+        "zh": "顧客"
+      },
+      {
+        "word": "shared",
+        "base": "share",
+        "pos": "v.",
+        "hint": "let other people see or use something",
+        "zh": "分享"
+      },
+      {
+        "word": "delivers",
+        "base": "deliver",
+        "pos": "v.",
+        "hint": "takes goods to the place people want them",
+        "zh": "運送；配送"
+      }
     ],
     "questions": [
       {
@@ -88,7 +160,8 @@
         "answer": 1,
         "explanation": "第五段最後他說機器會印字卻不會打招呼，可推論他認為手寫比較有人情味，故選第二項。"
       }
-    ]
+    ],
+    "image": "img/articles/art-9a.jpg"
   },
   {
     "id": "art-9b",
@@ -125,18 +198,90 @@
       }
     ],
     "vocab": [
-      { "word": "job", "base": "job", "pos": "n.", "hint": "the work a person does to earn money", "zh": "工作；職務" },
-      { "word": "boss", "base": "boss", "pos": "n.", "hint": "the person who is in charge of you at work", "zh": "上司；主管" },
-      { "word": "meeting", "base": "meeting", "pos": "n.", "hint": "a time when people come together to talk about work", "zh": "會議" },
-      { "word": "product", "base": "product", "pos": "n.", "hint": "something a company makes and sells", "zh": "產品" },
-      { "word": "manager", "base": "manager", "pos": "n.", "hint": "a person who leads a team in a company", "zh": "經理；主管" },
-      { "word": "package", "base": "package", "pos": "n.", "hint": "the box or bag that holds a thing you buy", "zh": "包裝；包裹" },
-      { "word": "suggestion", "base": "suggestion", "pos": "n.", "hint": "an idea that you tell other people about", "zh": "建議" },
-      { "word": "mistake", "base": "mistake", "pos": "n.", "hint": "something you do wrong by accident", "zh": "錯誤" },
-      { "word": "project", "base": "project", "pos": "n.", "hint": "a piece of work with a clear goal and a plan", "zh": "專案" },
-      { "word": "tested", "base": "test", "pos": "v.", "hint": "tried something to see if it works well", "zh": "測試" },
-      { "word": "customers", "base": "customer", "pos": "n.", "hint": "people who buy things from a company", "zh": "顧客" },
-      { "word": "cost", "base": "cost", "pos": "n.", "hint": "the money you must pay for something", "zh": "成本；費用" }
+      {
+        "word": "job",
+        "base": "job",
+        "pos": "n.",
+        "hint": "the work a person does to earn money",
+        "zh": "工作；職務"
+      },
+      {
+        "word": "boss",
+        "base": "boss",
+        "pos": "n.",
+        "hint": "the person who is in charge of you at work",
+        "zh": "上司；主管"
+      },
+      {
+        "word": "meeting",
+        "base": "meeting",
+        "pos": "n.",
+        "hint": "a time when people come together to talk about work",
+        "zh": "會議"
+      },
+      {
+        "word": "product",
+        "base": "product",
+        "pos": "n.",
+        "hint": "something a company makes and sells",
+        "zh": "產品"
+      },
+      {
+        "word": "manager",
+        "base": "manager",
+        "pos": "n.",
+        "hint": "a person who leads a team in a company",
+        "zh": "經理；主管"
+      },
+      {
+        "word": "package",
+        "base": "package",
+        "pos": "n.",
+        "hint": "the box or bag that holds a thing you buy",
+        "zh": "包裝；包裹"
+      },
+      {
+        "word": "suggestion",
+        "base": "suggestion",
+        "pos": "n.",
+        "hint": "an idea that you tell other people about",
+        "zh": "建議"
+      },
+      {
+        "word": "mistake",
+        "base": "mistake",
+        "pos": "n.",
+        "hint": "something you do wrong by accident",
+        "zh": "錯誤"
+      },
+      {
+        "word": "project",
+        "base": "project",
+        "pos": "n.",
+        "hint": "a piece of work with a clear goal and a plan",
+        "zh": "專案"
+      },
+      {
+        "word": "tested",
+        "base": "test",
+        "pos": "v.",
+        "hint": "tried something to see if it works well",
+        "zh": "測試"
+      },
+      {
+        "word": "customers",
+        "base": "customer",
+        "pos": "n.",
+        "hint": "people who buy things from a company",
+        "zh": "顧客"
+      },
+      {
+        "word": "cost",
+        "base": "cost",
+        "pos": "n.",
+        "hint": "the money you must pay for something",
+        "zh": "成本；費用"
+      }
     ],
     "questions": [
       {
@@ -183,6 +328,7 @@
         "answer": 2,
         "explanation": "第四段她把凱文的建議寫在白板上，散會後才問名字，還請他下週再來，可推論她覺得這個建議有用，故選第三項。"
       }
-    ]
+    ],
+    "image": "img/articles/art-9b.jpg"
   }
 ]

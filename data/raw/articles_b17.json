@@ -34,22 +34,118 @@
       }
     ],
     "vocab": [
-      { "word": "delivery", "base": "delivery", "pos": "n.", "hint": "the act of bringing goods to a home or an office", "zh": "外送；遞送" },
-      { "word": "platforms", "base": "platform", "pos": "n.", "hint": "an online service that connects different groups of users", "zh": "平台" },
-      { "word": "fee", "base": "fee", "pos": "n.", "hint": "money charged for a service", "zh": "費用；手續費" },
-      { "word": "profits", "base": "profit", "pos": "n.", "hint": "money left after all costs are paid", "zh": "利潤" },
-      { "word": "margins", "base": "margin", "pos": "n.", "hint": "the gap between what something costs and what it sells for", "zh": "利潤空間；價差" },
-      { "word": "customers", "base": "customer", "pos": "n.", "hint": "a person who buys goods or services", "zh": "顧客" },
-      { "word": "survive", "base": "survive", "pos": "v.", "hint": "continue to exist without serious harm", "zh": "撐過；存活" },
-      { "word": "dish", "base": "dish", "pos": "n.", "hint": "food prepared in a certain way as part of a meal", "zh": "菜色；一道菜" },
-      { "word": "menus", "base": "menu", "pos": "n.", "hint": "a list of the food that a place offers", "zh": "菜單" },
-      { "word": "dining room", "base": "dining room", "pos": "n.", "hint": "a space in a home or a shop where people sit and eat", "zh": "內用區；餐廳用餐空間" },
-      { "word": "rent", "base": "rent", "pos": "n.", "hint": "money paid regularly for the use of a building or a space", "zh": "租金" },
-      { "word": "staff", "base": "staff", "pos": "n.", "hint": "all the people who work for a business", "zh": "員工；人手" },
-      { "word": "riders", "base": "rider", "pos": "n.", "hint": "a person who travels by bike or motorcycle to carry things", "zh": "外送員；騎士" },
-      { "word": "income", "base": "income", "pos": "n.", "hint": "money that a person receives for work", "zh": "收入" },
-      { "word": "depends on", "base": "depend on", "pos": "phr. v.", "hint": "be decided or controlled by something else", "zh": "取決於" },
-      { "word": "convenient", "base": "convenient", "pos": "adj.", "hint": "easy to use and saving time or effort", "zh": "方便的" }
+      {
+        "word": "delivery",
+        "base": "delivery",
+        "pos": "n.",
+        "hint": "the act of bringing goods to a home or an office",
+        "zh": "外送；遞送"
+      },
+      {
+        "word": "platforms",
+        "base": "platform",
+        "pos": "n.",
+        "hint": "an online service that connects different groups of users",
+        "zh": "平台"
+      },
+      {
+        "word": "fee",
+        "base": "fee",
+        "pos": "n.",
+        "hint": "money charged for a service",
+        "zh": "費用；手續費"
+      },
+      {
+        "word": "profits",
+        "base": "profit",
+        "pos": "n.",
+        "hint": "money left after all costs are paid",
+        "zh": "利潤"
+      },
+      {
+        "word": "margins",
+        "base": "margin",
+        "pos": "n.",
+        "hint": "the gap between what something costs and what it sells for",
+        "zh": "利潤空間；價差"
+      },
+      {
+        "word": "customers",
+        "base": "customer",
+        "pos": "n.",
+        "hint": "a person who buys goods or services",
+        "zh": "顧客"
+      },
+      {
+        "word": "survive",
+        "base": "survive",
+        "pos": "v.",
+        "hint": "continue to exist without serious harm",
+        "zh": "撐過；存活"
+      },
+      {
+        "word": "dish",
+        "base": "dish",
+        "pos": "n.",
+        "hint": "food prepared in a certain way as part of a meal",
+        "zh": "菜色；一道菜"
+      },
+      {
+        "word": "menus",
+        "base": "menu",
+        "pos": "n.",
+        "hint": "a list of the food that a place offers",
+        "zh": "菜單"
+      },
+      {
+        "word": "dining room",
+        "base": "dining room",
+        "pos": "n.",
+        "hint": "a space in a home or a shop where people sit and eat",
+        "zh": "內用區；餐廳用餐空間"
+      },
+      {
+        "word": "rent",
+        "base": "rent",
+        "pos": "n.",
+        "hint": "money paid regularly for the use of a building or a space",
+        "zh": "租金"
+      },
+      {
+        "word": "staff",
+        "base": "staff",
+        "pos": "n.",
+        "hint": "all the people who work for a business",
+        "zh": "員工；人手"
+      },
+      {
+        "word": "riders",
+        "base": "rider",
+        "pos": "n.",
+        "hint": "a person who travels by bike or motorcycle to carry things",
+        "zh": "外送員；騎士"
+      },
+      {
+        "word": "income",
+        "base": "income",
+        "pos": "n.",
+        "hint": "money that a person receives for work",
+        "zh": "收入"
+      },
+      {
+        "word": "depends on",
+        "base": "depend on",
+        "pos": "phr. v.",
+        "hint": "be decided or controlled by something else",
+        "zh": "取決於"
+      },
+      {
+        "word": "convenient",
+        "base": "convenient",
+        "pos": "adj.",
+        "hint": "easy to use and saving time or effort",
+        "zh": "方便的"
+      }
     ],
     "questions": [
       {
@@ -107,7 +203,8 @@
         "answer": 0,
         "explanation": "第五段明說外送員的收入常取決於完成的訂單數，且他們在車陣與雨中工作，餐廳幾乎無法控制這段服務。"
       }
-    ]
+    ],
+    "image": "img/articles/art-17a.jpg"
   },
   {
     "id": "art-17b",
@@ -144,22 +241,118 @@
       }
     ],
     "vocab": [
-      { "word": "immune system", "base": "immune system", "pos": "n.", "hint": "the parts of the body that work together to fight illness", "zh": "免疫系統" },
-      { "word": "germ", "base": "germ", "pos": "n.", "hint": "a very small living thing that can cause illness", "zh": "病原體；病菌" },
-      { "word": "vaccines", "base": "vaccine", "pos": "n.", "hint": "a medical product that prepares the body against a certain disease", "zh": "疫苗" },
-      { "word": "sample", "base": "sample", "pos": "n.", "hint": "a small part taken to show what the whole is like", "zh": "樣本" },
-      { "word": "virus", "base": "virus", "pos": "n.", "hint": "a very tiny thing that copies itself inside living cells and can cause disease", "zh": "病毒" },
-      { "word": "bacteria", "base": "bacteria", "pos": "n.", "hint": "very small living things, some of which cause illness", "zh": "細菌" },
-      { "word": "cells", "base": "cell", "pos": "n.", "hint": "the smallest working unit of a living body", "zh": "細胞" },
-      { "word": "antibodies", "base": "antibody", "pos": "n.", "hint": "a substance made by the body to attack a certain germ", "zh": "抗體" },
-      { "word": "stick to", "base": "stick to", "pos": "phr. v.", "hint": "become firmly joined onto the surface of something", "zh": "黏附於" },
-      { "word": "mild", "base": "mild", "pos": "adj.", "hint": "not strong or serious", "zh": "輕微的" },
-      { "word": "side effects", "base": "side effect", "pos": "n.", "hint": "an extra and often unwanted result of taking a medicine", "zh": "副作用" },
-      { "word": "fever", "base": "fever", "pos": "n.", "hint": "a body temperature that is higher than normal", "zh": "發燒" },
-      { "word": "dose", "base": "dose", "pos": "n.", "hint": "one measured amount of medicine taken at one time", "zh": "劑量；一劑" },
-      { "word": "protection", "base": "protection", "pos": "n.", "hint": "the state of being kept safe from harm", "zh": "保護力" },
-      { "word": "community", "base": "community", "pos": "n.", "hint": "a group of people living in the same area", "zh": "社群；社區" },
-      { "word": "spread", "base": "spread", "pos": "v.", "hint": "move into a wider area or reach more people", "zh": "傳播；散布" }
+      {
+        "word": "immune system",
+        "base": "immune system",
+        "pos": "n.",
+        "hint": "the parts of the body that work together to fight illness",
+        "zh": "免疫系統"
+      },
+      {
+        "word": "germ",
+        "base": "germ",
+        "pos": "n.",
+        "hint": "a very small living thing that can cause illness",
+        "zh": "病原體；病菌"
+      },
+      {
+        "word": "vaccines",
+        "base": "vaccine",
+        "pos": "n.",
+        "hint": "a medical product that prepares the body against a certain disease",
+        "zh": "疫苗"
+      },
+      {
+        "word": "sample",
+        "base": "sample",
+        "pos": "n.",
+        "hint": "a small part taken to show what the whole is like",
+        "zh": "樣本"
+      },
+      {
+        "word": "virus",
+        "base": "virus",
+        "pos": "n.",
+        "hint": "a very tiny thing that copies itself inside living cells and can cause disease",
+        "zh": "病毒"
+      },
+      {
+        "word": "bacteria",
+        "base": "bacteria",
+        "pos": "n.",
+        "hint": "very small living things, some of which cause illness",
+        "zh": "細菌"
+      },
+      {
+        "word": "cells",
+        "base": "cell",
+        "pos": "n.",
+        "hint": "the smallest working unit of a living body",
+        "zh": "細胞"
+      },
+      {
+        "word": "antibodies",
+        "base": "antibody",
+        "pos": "n.",
+        "hint": "a substance made by the body to attack a certain germ",
+        "zh": "抗體"
+      },
+      {
+        "word": "stick to",
+        "base": "stick to",
+        "pos": "phr. v.",
+        "hint": "become firmly joined onto the surface of something",
+        "zh": "黏附於"
+      },
+      {
+        "word": "mild",
+        "base": "mild",
+        "pos": "adj.",
+        "hint": "not strong or serious",
+        "zh": "輕微的"
+      },
+      {
+        "word": "side effects",
+        "base": "side effect",
+        "pos": "n.",
+        "hint": "an extra and often unwanted result of taking a medicine",
+        "zh": "副作用"
+      },
+      {
+        "word": "fever",
+        "base": "fever",
+        "pos": "n.",
+        "hint": "a body temperature that is higher than normal",
+        "zh": "發燒"
+      },
+      {
+        "word": "dose",
+        "base": "dose",
+        "pos": "n.",
+        "hint": "one measured amount of medicine taken at one time",
+        "zh": "劑量；一劑"
+      },
+      {
+        "word": "protection",
+        "base": "protection",
+        "pos": "n.",
+        "hint": "the state of being kept safe from harm",
+        "zh": "保護力"
+      },
+      {
+        "word": "community",
+        "base": "community",
+        "pos": "n.",
+        "hint": "a group of people living in the same area",
+        "zh": "社群；社區"
+      },
+      {
+        "word": "spread",
+        "base": "spread",
+        "pos": "v.",
+        "hint": "move into a wider area or reach more people",
+        "zh": "傳播；散布"
+      }
     ],
     "questions": [
       {
@@ -217,6 +410,7 @@
         "answer": 1,
         "explanation": "最後一段用他們說明群體保護：當社群裡多數人有保護力，無法接種的人就靠周圍的人得到保護。"
       }
-    ]
+    ],
+    "image": "img/articles/art-17b.jpg"
   }
 ]

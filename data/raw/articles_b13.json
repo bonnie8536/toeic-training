@@ -38,26 +38,146 @@
       }
     ],
     "vocab": [
-      {"word": "supplier", "base": "supplier", "pos": "n.", "hint": "a business that regularly provides goods or materials to another company", "zh": "供應商"},
-      {"word": "bids", "base": "bid", "pos": "n.", "hint": "formal prices offered by companies hoping to win a job or an order", "zh": "投標報價"},
-      {"word": "contract", "base": "contract", "pos": "n.", "hint": "a written legal agreement covering work, goods, or payment", "zh": "合約"},
-      {"word": "quarterly", "base": "quarterly", "pos": "adj.", "hint": "happening once every three months", "zh": "每季的"},
-      {"word": "shipment", "base": "shipment", "pos": "n.", "hint": "a load of goods sent together from one place to another", "zh": "一批貨、出貨"},
-      {"word": "deadline", "base": "deadline", "pos": "n.", "hint": "the latest time by which something must be finished", "zh": "期限"},
-      {"word": "overtime", "base": "overtime", "pos": "n.", "hint": "extra hours worked beyond the normal schedule, usually at higher pay", "zh": "加班"},
-      {"word": "budget", "base": "budget", "pos": "n.", "hint": "a plan for how much money may be spent in a given period", "zh": "預算"},
-      {"word": "quality", "base": "quality", "pos": "n.", "hint": "how good or bad something is when measured against what buyers expect", "zh": "品質"},
-      {"word": "refund", "base": "refund", "pos": "n.", "hint": "money given back to a buyer when goods are returned or a service fails", "zh": "退款"},
-      {"word": "replacement", "base": "replacement", "pos": "n.", "hint": "a new part sent to take the place of one that is broken or wrong", "zh": "替換件"},
-      {"word": "warehouse", "base": "warehouse", "pos": "n.", "hint": "a large building where goods are kept before being sold or sent out", "zh": "倉庫"},
-      {"word": "revenue", "base": "revenue", "pos": "n.", "hint": "the total money a business takes in from what it sells", "zh": "營收"},
-      {"word": "deliveries", "base": "delivery", "pos": "n.", "hint": "acts of bringing goods to the buyer's location", "zh": "交貨、送貨"},
-      {"word": "Complaints", "base": "complaint", "pos": "n.", "hint": "statements that a customer is not satisfied with a product or service", "zh": "客訴、抱怨"},
-      {"word": "warranty", "base": "warranty", "pos": "n.", "hint": "a written promise to repair or exchange a product within a set period", "zh": "保固"},
-      {"word": "inspection", "base": "inspection", "pos": "n.", "hint": "the act of looking at something carefully to find faults", "zh": "檢驗"},
-      {"word": "freight", "base": "freight", "pos": "n.", "hint": "goods carried in large amounts by truck, ship, or plane, or the cost of carrying them", "zh": "貨運、運費"},
-      {"word": "negotiated", "base": "negotiate", "pos": "v.", "hint": "discussed terms formally in order to reach an agreement", "zh": "談成、協商"},
-      {"word": "expenses", "base": "expense", "pos": "n.", "hint": "sums of money a business must pay out in order to operate", "zh": "支出、費用"}
+      {
+        "word": "supplier",
+        "base": "supplier",
+        "pos": "n.",
+        "hint": "a business that regularly provides goods or materials to another company",
+        "zh": "供應商"
+      },
+      {
+        "word": "bids",
+        "base": "bid",
+        "pos": "n.",
+        "hint": "formal prices offered by companies hoping to win a job or an order",
+        "zh": "投標報價"
+      },
+      {
+        "word": "contract",
+        "base": "contract",
+        "pos": "n.",
+        "hint": "a written legal agreement covering work, goods, or payment",
+        "zh": "合約"
+      },
+      {
+        "word": "quarterly",
+        "base": "quarterly",
+        "pos": "adj.",
+        "hint": "happening once every three months",
+        "zh": "每季的"
+      },
+      {
+        "word": "shipment",
+        "base": "shipment",
+        "pos": "n.",
+        "hint": "a load of goods sent together from one place to another",
+        "zh": "一批貨、出貨"
+      },
+      {
+        "word": "deadline",
+        "base": "deadline",
+        "pos": "n.",
+        "hint": "the latest time by which something must be finished",
+        "zh": "期限"
+      },
+      {
+        "word": "overtime",
+        "base": "overtime",
+        "pos": "n.",
+        "hint": "extra hours worked beyond the normal schedule, usually at higher pay",
+        "zh": "加班"
+      },
+      {
+        "word": "budget",
+        "base": "budget",
+        "pos": "n.",
+        "hint": "a plan for how much money may be spent in a given period",
+        "zh": "預算"
+      },
+      {
+        "word": "quality",
+        "base": "quality",
+        "pos": "n.",
+        "hint": "how good or bad something is when measured against what buyers expect",
+        "zh": "品質"
+      },
+      {
+        "word": "refund",
+        "base": "refund",
+        "pos": "n.",
+        "hint": "money given back to a buyer when goods are returned or a service fails",
+        "zh": "退款"
+      },
+      {
+        "word": "replacement",
+        "base": "replacement",
+        "pos": "n.",
+        "hint": "a new part sent to take the place of one that is broken or wrong",
+        "zh": "替換件"
+      },
+      {
+        "word": "warehouse",
+        "base": "warehouse",
+        "pos": "n.",
+        "hint": "a large building where goods are kept before being sold or sent out",
+        "zh": "倉庫"
+      },
+      {
+        "word": "revenue",
+        "base": "revenue",
+        "pos": "n.",
+        "hint": "the total money a business takes in from what it sells",
+        "zh": "營收"
+      },
+      {
+        "word": "deliveries",
+        "base": "delivery",
+        "pos": "n.",
+        "hint": "acts of bringing goods to the buyer's location",
+        "zh": "交貨、送貨"
+      },
+      {
+        "word": "Complaints",
+        "base": "complaint",
+        "pos": "n.",
+        "hint": "statements that a customer is not satisfied with a product or service",
+        "zh": "客訴、抱怨"
+      },
+      {
+        "word": "warranty",
+        "base": "warranty",
+        "pos": "n.",
+        "hint": "a written promise to repair or exchange a product within a set period",
+        "zh": "保固"
+      },
+      {
+        "word": "inspection",
+        "base": "inspection",
+        "pos": "n.",
+        "hint": "the act of looking at something carefully to find faults",
+        "zh": "檢驗"
+      },
+      {
+        "word": "freight",
+        "base": "freight",
+        "pos": "n.",
+        "hint": "goods carried in large amounts by truck, ship, or plane, or the cost of carrying them",
+        "zh": "貨運、運費"
+      },
+      {
+        "word": "negotiated",
+        "base": "negotiate",
+        "pos": "v.",
+        "hint": "discussed terms formally in order to reach an agreement",
+        "zh": "談成、協商"
+      },
+      {
+        "word": "expenses",
+        "base": "expense",
+        "pos": "n.",
+        "hint": "sums of money a business must pay out in order to operate",
+        "zh": "支出、費用"
+      }
     ],
     "questions": [
       {
@@ -115,7 +235,8 @@
         "answer": 1,
         "explanation": "細節題。定位在第六段：凱托比現在評一份報價看四件事——價格、準時交貨紀錄、不良率，以及打電話問其他買家會聽到什麼。A、C、D 三種做法文中都沒有提到。"
       }
-    ]
+    ],
+    "image": "img/articles/art-13a.jpg"
   },
   {
     "id": "art-13b",
@@ -156,26 +277,146 @@
       }
     ],
     "vocab": [
-      {"word": "branch", "base": "branch", "pos": "n.", "hint": "a single local shop or office that is one part of a larger company", "zh": "分店、分公司"},
-      {"word": "lease", "base": "lease", "pos": "n.", "hint": "a legal agreement to rent a building or vehicle for a fixed period", "zh": "租約"},
-      {"word": "competitors", "base": "competitor", "pos": "n.", "hint": "other businesses trying to sell to the same buyers", "zh": "同業、對手"},
-      {"word": "sessions", "base": "session", "pos": "n.", "hint": "periods of time set aside for classes, meetings, or other activities", "zh": "堂、場次"},
-      {"word": "inspector", "base": "inspector", "pos": "n.", "hint": "an official whose job is to visit places and check that rules are followed", "zh": "稽查員"},
-      {"word": "licenses", "base": "license", "pos": "n.", "hint": "official papers that allow a person or business to do something legally", "zh": "執照"},
-      {"word": "enroll", "base": "enroll", "pos": "v.", "hint": "to sign up officially as a member of a class or program", "zh": "報名、註冊"},
-      {"word": "account", "base": "account", "pos": "n.", "hint": "a regular business customer, or the buying arrangement a firm has with one", "zh": "客戶、往來戶頭"},
-      {"word": "supplies", "base": "supply", "pos": "n.", "hint": "materials and goods that a business needs in order to operate", "zh": "物料、貨品"},
-      {"word": "wholesale", "base": "wholesale", "pos": "adj.", "hint": "relating to selling goods in large amounts to shops rather than to the public", "zh": "批發的"},
-      {"word": "discount", "base": "discount", "pos": "n.", "hint": "an amount taken off the normal price", "zh": "折扣"},
-      {"word": "staff", "base": "staff", "pos": "n.", "hint": "the group of people employed by an organization", "zh": "員工"},
-      {"word": "recruit", "base": "recruit", "pos": "v.", "hint": "to find and take on new workers", "zh": "招募"},
-      {"word": "advertising", "base": "advertising", "pos": "n.", "hint": "paid messages used to make products or services known to the public", "zh": "廣告"},
-      {"word": "strategy", "base": "strategy", "pos": "n.", "hint": "a long-term plan for reaching an important business goal", "zh": "策略"},
-      {"word": "chain", "base": "chain", "pos": "n.", "hint": "a group of shops or restaurants owned by the same company", "zh": "連鎖企業"},
-      {"word": "profit", "base": "profit", "pos": "n.", "hint": "the money a business keeps after all its costs are paid", "zh": "利潤"},
-      {"word": "orders", "base": "order", "pos": "n.", "hint": "requests from customers for goods to be sent to them", "zh": "訂單"},
-      {"word": "clients", "base": "client", "pos": "n.", "hint": "people or companies that pay a business for its goods or services", "zh": "客戶"},
-      {"word": "investment", "base": "investment", "pos": "n.", "hint": "money or effort put into something now in the hope of a return later", "zh": "投資"}
+      {
+        "word": "branch",
+        "base": "branch",
+        "pos": "n.",
+        "hint": "a single local shop or office that is one part of a larger company",
+        "zh": "分店、分公司"
+      },
+      {
+        "word": "lease",
+        "base": "lease",
+        "pos": "n.",
+        "hint": "a legal agreement to rent a building or vehicle for a fixed period",
+        "zh": "租約"
+      },
+      {
+        "word": "competitors",
+        "base": "competitor",
+        "pos": "n.",
+        "hint": "other businesses trying to sell to the same buyers",
+        "zh": "同業、對手"
+      },
+      {
+        "word": "sessions",
+        "base": "session",
+        "pos": "n.",
+        "hint": "periods of time set aside for classes, meetings, or other activities",
+        "zh": "堂、場次"
+      },
+      {
+        "word": "inspector",
+        "base": "inspector",
+        "pos": "n.",
+        "hint": "an official whose job is to visit places and check that rules are followed",
+        "zh": "稽查員"
+      },
+      {
+        "word": "licenses",
+        "base": "license",
+        "pos": "n.",
+        "hint": "official papers that allow a person or business to do something legally",
+        "zh": "執照"
+      },
+      {
+        "word": "enroll",
+        "base": "enroll",
+        "pos": "v.",
+        "hint": "to sign up officially as a member of a class or program",
+        "zh": "報名、註冊"
+      },
+      {
+        "word": "account",
+        "base": "account",
+        "pos": "n.",
+        "hint": "a regular business customer, or the buying arrangement a firm has with one",
+        "zh": "客戶、往來戶頭"
+      },
+      {
+        "word": "supplies",
+        "base": "supply",
+        "pos": "n.",
+        "hint": "materials and goods that a business needs in order to operate",
+        "zh": "物料、貨品"
+      },
+      {
+        "word": "wholesale",
+        "base": "wholesale",
+        "pos": "adj.",
+        "hint": "relating to selling goods in large amounts to shops rather than to the public",
+        "zh": "批發的"
+      },
+      {
+        "word": "discount",
+        "base": "discount",
+        "pos": "n.",
+        "hint": "an amount taken off the normal price",
+        "zh": "折扣"
+      },
+      {
+        "word": "staff",
+        "base": "staff",
+        "pos": "n.",
+        "hint": "the group of people employed by an organization",
+        "zh": "員工"
+      },
+      {
+        "word": "recruit",
+        "base": "recruit",
+        "pos": "v.",
+        "hint": "to find and take on new workers",
+        "zh": "招募"
+      },
+      {
+        "word": "advertising",
+        "base": "advertising",
+        "pos": "n.",
+        "hint": "paid messages used to make products or services known to the public",
+        "zh": "廣告"
+      },
+      {
+        "word": "strategy",
+        "base": "strategy",
+        "pos": "n.",
+        "hint": "a long-term plan for reaching an important business goal",
+        "zh": "策略"
+      },
+      {
+        "word": "chain",
+        "base": "chain",
+        "pos": "n.",
+        "hint": "a group of shops or restaurants owned by the same company",
+        "zh": "連鎖企業"
+      },
+      {
+        "word": "profit",
+        "base": "profit",
+        "pos": "n.",
+        "hint": "the money a business keeps after all its costs are paid",
+        "zh": "利潤"
+      },
+      {
+        "word": "orders",
+        "base": "order",
+        "pos": "n.",
+        "hint": "requests from customers for goods to be sent to them",
+        "zh": "訂單"
+      },
+      {
+        "word": "clients",
+        "base": "client",
+        "pos": "n.",
+        "hint": "people or companies that pay a business for its goods or services",
+        "zh": "客戶"
+      },
+      {
+        "word": "investment",
+        "base": "investment",
+        "pos": "n.",
+        "hint": "money or effort put into something now in the hope of a return later",
+        "zh": "投資"
+      }
     ],
     "questions": [
       {
@@ -233,6 +474,7 @@
         "answer": 2,
         "explanation": "細節題。定位在第六段：開店的學員有四分之一撐不過兩年，欠下的貨款娜迪雅直接認賠。B 與第一段「免費上課」矛盾，A 與 D 文中都沒有依據。"
       }
-    ]
+    ],
+    "image": "img/articles/art-13b.jpg"
   }
 ]

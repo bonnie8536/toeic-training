@@ -38,27 +38,153 @@
       }
     ],
     "vocab": [
-      {"word": "shortage", "base": "shortage", "pos": "n.", "hint": "a situation in which there is not enough of something that people need", "zh": "短缺"},
-      {"word": "semiconductor", "base": "semiconductor", "pos": "n.", "hint": "a material used to make the tiny electronic parts inside phones and computers", "zh": "半導體"},
-      {"word": "demand", "base": "demand", "pos": "n.", "hint": "the amount of a product that buyers want at a given time", "zh": "需求"},
-      {"word": "components", "base": "component", "pos": "n.", "hint": "the separate parts that together make up a machine or a system", "zh": "零組件"},
-      {"word": "manufacturer", "base": "manufacturer", "pos": "n.", "hint": "a company that produces goods in large amounts, usually in factories", "zh": "製造商"},
-      {"word": "profit", "base": "profit", "pos": "n.", "hint": "the money left after all costs have been taken away from what a business earns", "zh": "利潤"},
-      {"word": "capacity", "base": "capacity", "pos": "n.", "hint": "the largest amount a factory or system is able to make or hold", "zh": "產能"},
-      {"word": "facility", "base": "facility", "pos": "n.", "hint": "a building or site set up for one particular kind of work", "zh": "廠房、設施"},
-      {"word": "production", "base": "production", "pos": "n.", "hint": "the process of making goods, or the quantity that is made", "zh": "生產、產量"},
-      {"word": "supply chain", "base": "supply chain", "pos": "n.", "hint": "the whole set of firms and steps that move a product from raw material to buyer", "zh": "供應鏈"},
-      {"word": "vulnerable", "base": "vulnerable", "pos": "adj.", "hint": "easily harmed or badly affected by damage or sudden events", "zh": "脆弱的、易受衝擊的"},
-      {"word": "disruption", "base": "disruption", "pos": "n.", "hint": "a sudden break in the normal flow of an activity or a service", "zh": "中斷、擾亂"},
-      {"word": "efficiency", "base": "efficiency", "pos": "n.", "hint": "the ability to work or produce with little waste of time or money", "zh": "效率"},
-      {"word": "inventory", "base": "inventory", "pos": "n.", "hint": "the goods and materials a business keeps in store", "zh": "庫存"},
-      {"word": "forecast", "base": "forecast", "pos": "n.", "hint": "a statement of what is expected to happen, based on present information", "zh": "預測"},
-      {"word": "backlog", "base": "backlog", "pos": "n.", "hint": "a pile of orders or work that has built up and is still waiting", "zh": "積壓的訂單"},
-      {"word": "consequences", "base": "consequence", "pos": "n.", "hint": "results that follow from an earlier action or event", "zh": "後果"},
-      {"word": "assembly", "base": "assembly", "pos": "n.", "hint": "the act of putting parts together to build a finished product", "zh": "組裝"},
-      {"word": "subsidies", "base": "subsidy", "pos": "n.", "hint": "money paid by a government to support an industry or lower a price", "zh": "補貼"},
-      {"word": "reserves", "base": "reserve", "pos": "n.", "hint": "an amount kept back so that it can be used when needed later", "zh": "儲備、存量"},
-      {"word": "supplier", "base": "supplier", "pos": "n.", "hint": "a business that provides goods or parts to another business", "zh": "供應商"}
+      {
+        "word": "shortage",
+        "base": "shortage",
+        "pos": "n.",
+        "hint": "a situation in which there is not enough of something that people need",
+        "zh": "短缺"
+      },
+      {
+        "word": "semiconductor",
+        "base": "semiconductor",
+        "pos": "n.",
+        "hint": "a material used to make the tiny electronic parts inside phones and computers",
+        "zh": "半導體"
+      },
+      {
+        "word": "demand",
+        "base": "demand",
+        "pos": "n.",
+        "hint": "the amount of a product that buyers want at a given time",
+        "zh": "需求"
+      },
+      {
+        "word": "components",
+        "base": "component",
+        "pos": "n.",
+        "hint": "the separate parts that together make up a machine or a system",
+        "zh": "零組件"
+      },
+      {
+        "word": "manufacturer",
+        "base": "manufacturer",
+        "pos": "n.",
+        "hint": "a company that produces goods in large amounts, usually in factories",
+        "zh": "製造商"
+      },
+      {
+        "word": "profit",
+        "base": "profit",
+        "pos": "n.",
+        "hint": "the money left after all costs have been taken away from what a business earns",
+        "zh": "利潤"
+      },
+      {
+        "word": "capacity",
+        "base": "capacity",
+        "pos": "n.",
+        "hint": "the largest amount a factory or system is able to make or hold",
+        "zh": "產能"
+      },
+      {
+        "word": "facility",
+        "base": "facility",
+        "pos": "n.",
+        "hint": "a building or site set up for one particular kind of work",
+        "zh": "廠房、設施"
+      },
+      {
+        "word": "production",
+        "base": "production",
+        "pos": "n.",
+        "hint": "the process of making goods, or the quantity that is made",
+        "zh": "生產、產量"
+      },
+      {
+        "word": "supply chain",
+        "base": "supply chain",
+        "pos": "n.",
+        "hint": "the whole set of firms and steps that move a product from raw material to buyer",
+        "zh": "供應鏈"
+      },
+      {
+        "word": "vulnerable",
+        "base": "vulnerable",
+        "pos": "adj.",
+        "hint": "easily harmed or badly affected by damage or sudden events",
+        "zh": "脆弱的、易受衝擊的"
+      },
+      {
+        "word": "disruption",
+        "base": "disruption",
+        "pos": "n.",
+        "hint": "a sudden break in the normal flow of an activity or a service",
+        "zh": "中斷、擾亂"
+      },
+      {
+        "word": "efficiency",
+        "base": "efficiency",
+        "pos": "n.",
+        "hint": "the ability to work or produce with little waste of time or money",
+        "zh": "效率"
+      },
+      {
+        "word": "inventory",
+        "base": "inventory",
+        "pos": "n.",
+        "hint": "the goods and materials a business keeps in store",
+        "zh": "庫存"
+      },
+      {
+        "word": "forecast",
+        "base": "forecast",
+        "pos": "n.",
+        "hint": "a statement of what is expected to happen, based on present information",
+        "zh": "預測"
+      },
+      {
+        "word": "backlog",
+        "base": "backlog",
+        "pos": "n.",
+        "hint": "a pile of orders or work that has built up and is still waiting",
+        "zh": "積壓的訂單"
+      },
+      {
+        "word": "consequences",
+        "base": "consequence",
+        "pos": "n.",
+        "hint": "results that follow from an earlier action or event",
+        "zh": "後果"
+      },
+      {
+        "word": "assembly",
+        "base": "assembly",
+        "pos": "n.",
+        "hint": "the act of putting parts together to build a finished product",
+        "zh": "組裝"
+      },
+      {
+        "word": "subsidies",
+        "base": "subsidy",
+        "pos": "n.",
+        "hint": "money paid by a government to support an industry or lower a price",
+        "zh": "補貼"
+      },
+      {
+        "word": "reserves",
+        "base": "reserve",
+        "pos": "n.",
+        "hint": "an amount kept back so that it can be used when needed later",
+        "zh": "儲備、存量"
+      },
+      {
+        "word": "supplier",
+        "base": "supplier",
+        "pos": "n.",
+        "hint": "a business that provides goods or parts to another business",
+        "zh": "供應商"
+      }
     ],
     "questions": [
       {
@@ -116,7 +242,8 @@
         "answer": 3,
         "explanation": "推論題，定位第七段：多備的產能在平常年份就是閒置產能、倉庫存貨是「沒在動的錢」，可推知安全是有代價的，且平安無事時照樣要付。"
       }
-    ]
+    ],
+    "image": "img/articles/art-20a.jpg"
   },
   {
     "id": "art-20b",
@@ -157,27 +284,153 @@
       }
     ],
     "vocab": [
-      {"word": "population", "base": "population", "pos": "n.", "hint": "all the people living in a country or an area", "zh": "人口"},
-      {"word": "pensions", "base": "pension", "pos": "n.", "hint": "regular money paid to someone who has stopped working because of age", "zh": "年金、退休金"},
-      {"word": "contributions", "base": "contribution", "pos": "n.", "hint": "regular payments made into a public or company fund", "zh": "提撥、保費"},
-      {"word": "workforce", "base": "workforce", "pos": "n.", "hint": "all the people available to do paid jobs in a country or a company", "zh": "勞動人口、員工總體"},
-      {"word": "budget", "base": "budget", "pos": "n.", "hint": "a plan showing how much money is available and how it will be used", "zh": "預算"},
-      {"word": "shortages", "base": "shortage", "pos": "n.", "hint": "situations in which there are not enough people or supplies for what is needed", "zh": "短缺、缺工"},
-      {"word": "sectors", "base": "sector", "pos": "n.", "hint": "separate parts of an economy, such as farming or banking", "zh": "產業部門"},
-      {"word": "recruit", "base": "recruit", "pos": "v.", "hint": "to find and take on new people for jobs", "zh": "招募"},
-      {"word": "labor market", "base": "labor market", "pos": "n.", "hint": "the overall supply of workers and the jobs open to them", "zh": "勞動市場"},
-      {"word": "wages", "base": "wage", "pos": "n.", "hint": "money paid to someone for the work done, often counted by the hour", "zh": "工資、薪資"},
-      {"word": "vacancies", "base": "vacancy", "pos": "n.", "hint": "job positions that nobody fills at present", "zh": "職缺"},
-      {"word": "flexible", "base": "flexible", "pos": "adj.", "hint": "able to change easily to fit new conditions or needs", "zh": "彈性的"},
-      {"word": "retirement", "base": "retirement", "pos": "n.", "hint": "the point at which a person stops working for good, usually because of age", "zh": "退休"},
-      {"word": "Automation", "base": "automation", "pos": "n.", "hint": "the use of machines and software to do work once done by people", "zh": "自動化"},
-      {"word": "Immigration", "base": "immigration", "pos": "n.", "hint": "the movement of people into a country in order to live and work there", "zh": "移民（移入）"},
-      {"word": "skilled", "base": "skilled", "pos": "adj.", "hint": "having the training and ability needed for a particular kind of work", "zh": "有技術的、熟練的"},
-      {"word": "supplier", "base": "supplier", "pos": "n.", "hint": "a firm that sells goods or parts to another company", "zh": "供應商"},
-      {"word": "colleagues", "base": "colleague", "pos": "n.", "hint": "the people you work together with at the same place", "zh": "同事"},
-      {"word": "retraining", "base": "retraining", "pos": "n.", "hint": "learning new job abilities in order to move into different work", "zh": "再訓練、轉職訓練"},
-      {"word": "occupation", "base": "occupation", "pos": "n.", "hint": "the kind of paid work a person does", "zh": "職業"},
-      {"word": "Demand", "base": "demand", "pos": "n.", "hint": "the wish or need for a product or service among many people", "zh": "需求"}
+      {
+        "word": "population",
+        "base": "population",
+        "pos": "n.",
+        "hint": "all the people living in a country or an area",
+        "zh": "人口"
+      },
+      {
+        "word": "pensions",
+        "base": "pension",
+        "pos": "n.",
+        "hint": "regular money paid to someone who has stopped working because of age",
+        "zh": "年金、退休金"
+      },
+      {
+        "word": "contributions",
+        "base": "contribution",
+        "pos": "n.",
+        "hint": "regular payments made into a public or company fund",
+        "zh": "提撥、保費"
+      },
+      {
+        "word": "workforce",
+        "base": "workforce",
+        "pos": "n.",
+        "hint": "all the people available to do paid jobs in a country or a company",
+        "zh": "勞動人口、員工總體"
+      },
+      {
+        "word": "budget",
+        "base": "budget",
+        "pos": "n.",
+        "hint": "a plan showing how much money is available and how it will be used",
+        "zh": "預算"
+      },
+      {
+        "word": "shortages",
+        "base": "shortage",
+        "pos": "n.",
+        "hint": "situations in which there are not enough people or supplies for what is needed",
+        "zh": "短缺、缺工"
+      },
+      {
+        "word": "sectors",
+        "base": "sector",
+        "pos": "n.",
+        "hint": "separate parts of an economy, such as farming or banking",
+        "zh": "產業部門"
+      },
+      {
+        "word": "recruit",
+        "base": "recruit",
+        "pos": "v.",
+        "hint": "to find and take on new people for jobs",
+        "zh": "招募"
+      },
+      {
+        "word": "labor market",
+        "base": "labor market",
+        "pos": "n.",
+        "hint": "the overall supply of workers and the jobs open to them",
+        "zh": "勞動市場"
+      },
+      {
+        "word": "wages",
+        "base": "wage",
+        "pos": "n.",
+        "hint": "money paid to someone for the work done, often counted by the hour",
+        "zh": "工資、薪資"
+      },
+      {
+        "word": "vacancies",
+        "base": "vacancy",
+        "pos": "n.",
+        "hint": "job positions that nobody fills at present",
+        "zh": "職缺"
+      },
+      {
+        "word": "flexible",
+        "base": "flexible",
+        "pos": "adj.",
+        "hint": "able to change easily to fit new conditions or needs",
+        "zh": "彈性的"
+      },
+      {
+        "word": "retirement",
+        "base": "retirement",
+        "pos": "n.",
+        "hint": "the point at which a person stops working for good, usually because of age",
+        "zh": "退休"
+      },
+      {
+        "word": "Automation",
+        "base": "automation",
+        "pos": "n.",
+        "hint": "the use of machines and software to do work once done by people",
+        "zh": "自動化"
+      },
+      {
+        "word": "Immigration",
+        "base": "immigration",
+        "pos": "n.",
+        "hint": "the movement of people into a country in order to live and work there",
+        "zh": "移民（移入）"
+      },
+      {
+        "word": "skilled",
+        "base": "skilled",
+        "pos": "adj.",
+        "hint": "having the training and ability needed for a particular kind of work",
+        "zh": "有技術的、熟練的"
+      },
+      {
+        "word": "supplier",
+        "base": "supplier",
+        "pos": "n.",
+        "hint": "a firm that sells goods or parts to another company",
+        "zh": "供應商"
+      },
+      {
+        "word": "colleagues",
+        "base": "colleague",
+        "pos": "n.",
+        "hint": "the people you work together with at the same place",
+        "zh": "同事"
+      },
+      {
+        "word": "retraining",
+        "base": "retraining",
+        "pos": "n.",
+        "hint": "learning new job abilities in order to move into different work",
+        "zh": "再訓練、轉職訓練"
+      },
+      {
+        "word": "occupation",
+        "base": "occupation",
+        "pos": "n.",
+        "hint": "the kind of paid work a person does",
+        "zh": "職業"
+      },
+      {
+        "word": "Demand",
+        "base": "demand",
+        "pos": "n.",
+        "hint": "the wish or need for a product or service among many people",
+        "zh": "需求"
+      }
     ],
     "questions": [
       {
@@ -235,6 +488,7 @@
         "answer": 0,
         "explanation": "推論題，定位第五段：許多國家同時老化，各國「在搶同一批技術人力，而不是從取之不盡的池子裡撈人」，可推知人力愈來愈難爭取。"
       }
-    ]
+    ],
+    "image": "img/articles/art-20b.jpg"
   }
 ]

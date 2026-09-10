@@ -38,27 +38,153 @@
       }
     ],
     "vocab": [
-      {"word": "budget", "base": "budget", "pos": "n.", "hint": "a plan showing how much money a company may spend and on what", "zh": "預算"},
-      {"word": "expense", "base": "expense", "pos": "n.", "hint": "money that has to be paid out for goods, services or business activity", "zh": "支出、費用"},
-      {"word": "vacancy", "base": "vacancy", "pos": "n.", "hint": "a job position that is open and waiting to be filled", "zh": "職缺"},
-      {"word": "applicants", "base": "applicant", "pos": "n.", "hint": "people who formally ask to be given a job or a place", "zh": "應徵者"},
-      {"word": "salary", "base": "salary", "pos": "n.", "hint": "fixed money paid to an employee, usually counted by the month or the year", "zh": "薪水"},
-      {"word": "hire", "base": "hire", "pos": "n.", "hint": "the act of taking a worker onto the staff, or the worker newly taken on", "zh": "雇用（一名新員工）"},
-      {"word": "shifts", "base": "shift", "pos": "n.", "hint": "a fixed block of working hours, such as nights or weekends", "zh": "班次、輪班"},
-      {"word": "overtime", "base": "overtime", "pos": "n.", "hint": "extra hours worked beyond the normal schedule, usually paid at a higher rate", "zh": "加班（費）"},
-      {"word": "productivity", "base": "productivity", "pos": "n.", "hint": "the amount of useful work or goods finished in a given time", "zh": "生產力"},
-      {"word": "client", "base": "client", "pos": "n.", "hint": "a company or person that pays another business for services", "zh": "客戶"},
-      {"word": "contract", "base": "contract", "pos": "n.", "hint": "a written legal agreement between two sides", "zh": "合約"},
-      {"word": "replacement", "base": "replacement", "pos": "n.", "hint": "a person or thing that takes the position of another", "zh": "接替者、替代品"},
-      {"word": "supervisor", "base": "supervisor", "pos": "n.", "hint": "a person who directs and checks the work of a team", "zh": "主管、督導"},
-      {"word": "wage", "base": "wage", "pos": "n.", "hint": "money paid to a worker, often counted by the hour or the week", "zh": "工資"},
-      {"word": "Morale", "base": "morale", "pos": "n.", "hint": "the level of confidence and willingness felt by a group of people", "zh": "士氣"},
-      {"word": "resignation", "base": "resignation", "pos": "n.", "hint": "the act of formally leaving a job by one's own choice", "zh": "辭職"},
-      {"word": "colleagues", "base": "colleague", "pos": "n.", "hint": "people who work at the same company as you", "zh": "同事"},
-      {"word": "turnover", "base": "turnover", "pos": "n.", "hint": "the rate at which workers leave a company and must be replaced", "zh": "人員流動率"},
-      {"word": "bonus", "base": "bonus", "pos": "n.", "hint": "extra money given in addition to normal pay", "zh": "獎金"},
-      {"word": "retention", "base": "retention", "pos": "n.", "hint": "the ability of a company to keep its staff or customers over time", "zh": "留任率、留存"},
-      {"word": "margin", "base": "margin", "pos": "n.", "hint": "the gap between what something costs a company and what it earns from it", "zh": "利潤率"}
+      {
+        "word": "budget",
+        "base": "budget",
+        "pos": "n.",
+        "hint": "a plan showing how much money a company may spend and on what",
+        "zh": "預算"
+      },
+      {
+        "word": "expense",
+        "base": "expense",
+        "pos": "n.",
+        "hint": "money that has to be paid out for goods, services or business activity",
+        "zh": "支出、費用"
+      },
+      {
+        "word": "vacancy",
+        "base": "vacancy",
+        "pos": "n.",
+        "hint": "a job position that is open and waiting to be filled",
+        "zh": "職缺"
+      },
+      {
+        "word": "applicants",
+        "base": "applicant",
+        "pos": "n.",
+        "hint": "people who formally ask to be given a job or a place",
+        "zh": "應徵者"
+      },
+      {
+        "word": "salary",
+        "base": "salary",
+        "pos": "n.",
+        "hint": "fixed money paid to an employee, usually counted by the month or the year",
+        "zh": "薪水"
+      },
+      {
+        "word": "hire",
+        "base": "hire",
+        "pos": "n.",
+        "hint": "the act of taking a worker onto the staff, or the worker newly taken on",
+        "zh": "雇用（一名新員工）"
+      },
+      {
+        "word": "shifts",
+        "base": "shift",
+        "pos": "n.",
+        "hint": "a fixed block of working hours, such as nights or weekends",
+        "zh": "班次、輪班"
+      },
+      {
+        "word": "overtime",
+        "base": "overtime",
+        "pos": "n.",
+        "hint": "extra hours worked beyond the normal schedule, usually paid at a higher rate",
+        "zh": "加班（費）"
+      },
+      {
+        "word": "productivity",
+        "base": "productivity",
+        "pos": "n.",
+        "hint": "the amount of useful work or goods finished in a given time",
+        "zh": "生產力"
+      },
+      {
+        "word": "client",
+        "base": "client",
+        "pos": "n.",
+        "hint": "a company or person that pays another business for services",
+        "zh": "客戶"
+      },
+      {
+        "word": "contract",
+        "base": "contract",
+        "pos": "n.",
+        "hint": "a written legal agreement between two sides",
+        "zh": "合約"
+      },
+      {
+        "word": "replacement",
+        "base": "replacement",
+        "pos": "n.",
+        "hint": "a person or thing that takes the position of another",
+        "zh": "接替者、替代品"
+      },
+      {
+        "word": "supervisor",
+        "base": "supervisor",
+        "pos": "n.",
+        "hint": "a person who directs and checks the work of a team",
+        "zh": "主管、督導"
+      },
+      {
+        "word": "wage",
+        "base": "wage",
+        "pos": "n.",
+        "hint": "money paid to a worker, often counted by the hour or the week",
+        "zh": "工資"
+      },
+      {
+        "word": "Morale",
+        "base": "morale",
+        "pos": "n.",
+        "hint": "the level of confidence and willingness felt by a group of people",
+        "zh": "士氣"
+      },
+      {
+        "word": "resignation",
+        "base": "resignation",
+        "pos": "n.",
+        "hint": "the act of formally leaving a job by one's own choice",
+        "zh": "辭職"
+      },
+      {
+        "word": "colleagues",
+        "base": "colleague",
+        "pos": "n.",
+        "hint": "people who work at the same company as you",
+        "zh": "同事"
+      },
+      {
+        "word": "turnover",
+        "base": "turnover",
+        "pos": "n.",
+        "hint": "the rate at which workers leave a company and must be replaced",
+        "zh": "人員流動率"
+      },
+      {
+        "word": "bonus",
+        "base": "bonus",
+        "pos": "n.",
+        "hint": "extra money given in addition to normal pay",
+        "zh": "獎金"
+      },
+      {
+        "word": "retention",
+        "base": "retention",
+        "pos": "n.",
+        "hint": "the ability of a company to keep its staff or customers over time",
+        "zh": "留任率、留存"
+      },
+      {
+        "word": "margin",
+        "base": "margin",
+        "pos": "n.",
+        "hint": "the gap between what something costs a company and what it earns from it",
+        "zh": "利潤率"
+      }
     ],
     "questions": [
       {
@@ -116,7 +242,8 @@
         "answer": 0,
         "explanation": "推論題，定位第七段：一年二十萬美元的樸素措施，換來離職率減半與利潤率上升一個百分點，可推知投入不高的條件改善其實划算。"
       }
-    ]
+    ],
+    "image": "img/articles/art-14a.jpg"
   },
   {
     "id": "art-14b",
@@ -157,27 +284,153 @@
       }
     ],
     "vocab": [
-      {"word": "subscribers", "base": "subscriber", "pos": "n.", "hint": "people who pay regularly to keep receiving a product or service", "zh": "訂閱者"},
-      {"word": "investors", "base": "investor", "pos": "n.", "hint": "people who put money into a business hoping to get more back later", "zh": "投資人"},
-      {"word": "warehouse", "base": "warehouse", "pos": "n.", "hint": "a large building where goods are kept before being sold or sent out", "zh": "倉庫"},
-      {"word": "advertising", "base": "advertising", "pos": "n.", "hint": "paid messages used to make the public aware of a product", "zh": "廣告宣傳"},
-      {"word": "discount", "base": "discount", "pos": "n.", "hint": "an amount taken off the usual price", "zh": "折扣"},
-      {"word": "shipping", "base": "shipping", "pos": "n.", "hint": "the work and cost of sending goods to the buyer", "zh": "運送（費）"},
-      {"word": "profit", "base": "profit", "pos": "n.", "hint": "the money left over once all costs have been paid", "zh": "利潤"},
-      {"word": "cancelled", "base": "cancel", "pos": "v.", "hint": "to end an arrangement so that it no longer continues", "zh": "取消"},
-      {"word": "loyal", "base": "loyal", "pos": "adj.", "hint": "continuing to support the same company or brand over a long period", "zh": "忠實的"},
-      {"word": "inventory", "base": "inventory", "pos": "n.", "hint": "the goods a company is holding in stock", "zh": "庫存"},
-      {"word": "demand", "base": "demand", "pos": "n.", "hint": "the amount of a product that buyers want at a given time", "zh": "需求"},
-      {"word": "forecast", "base": "forecast", "pos": "n.", "hint": "a statement of what a company expects to happen in the future", "zh": "預測"},
-      {"word": "packaging", "base": "packaging", "pos": "n.", "hint": "the boxes and materials used to hold and protect goods being sent", "zh": "包裝材料"},
-      {"word": "revenue", "base": "revenue", "pos": "n.", "hint": "the total money a business takes in from what it sells", "zh": "營收"},
-      {"word": "negotiate", "base": "negotiate", "pos": "v.", "hint": "to discuss terms with another side in order to reach an agreement", "zh": "協商"},
-      {"word": "suppliers", "base": "supplier", "pos": "n.", "hint": "companies that provide goods or materials to another business", "zh": "供應商"},
-      {"word": "wholesale", "base": "wholesale", "pos": "adj.", "hint": "relating to selling goods in large amounts to shops rather than to the public", "zh": "批發的"},
-      {"word": "retail", "base": "retail", "pos": "adj.", "hint": "relating to selling goods directly to ordinary buyers", "zh": "零售的"},
-      {"word": "delivery", "base": "delivery", "pos": "n.", "hint": "the act of bringing goods to the address of the buyer", "zh": "配送"},
-      {"word": "competitors", "base": "competitor", "pos": "n.", "hint": "other companies trying to win the same customers", "zh": "競爭對手"},
-      {"word": "launch", "base": "launch", "pos": "n.", "hint": "the start of a new product or business in the market", "zh": "推出、上市"}
+      {
+        "word": "subscribers",
+        "base": "subscriber",
+        "pos": "n.",
+        "hint": "people who pay regularly to keep receiving a product or service",
+        "zh": "訂閱者"
+      },
+      {
+        "word": "investors",
+        "base": "investor",
+        "pos": "n.",
+        "hint": "people who put money into a business hoping to get more back later",
+        "zh": "投資人"
+      },
+      {
+        "word": "warehouse",
+        "base": "warehouse",
+        "pos": "n.",
+        "hint": "a large building where goods are kept before being sold or sent out",
+        "zh": "倉庫"
+      },
+      {
+        "word": "advertising",
+        "base": "advertising",
+        "pos": "n.",
+        "hint": "paid messages used to make the public aware of a product",
+        "zh": "廣告宣傳"
+      },
+      {
+        "word": "discount",
+        "base": "discount",
+        "pos": "n.",
+        "hint": "an amount taken off the usual price",
+        "zh": "折扣"
+      },
+      {
+        "word": "shipping",
+        "base": "shipping",
+        "pos": "n.",
+        "hint": "the work and cost of sending goods to the buyer",
+        "zh": "運送（費）"
+      },
+      {
+        "word": "profit",
+        "base": "profit",
+        "pos": "n.",
+        "hint": "the money left over once all costs have been paid",
+        "zh": "利潤"
+      },
+      {
+        "word": "cancelled",
+        "base": "cancel",
+        "pos": "v.",
+        "hint": "to end an arrangement so that it no longer continues",
+        "zh": "取消"
+      },
+      {
+        "word": "loyal",
+        "base": "loyal",
+        "pos": "adj.",
+        "hint": "continuing to support the same company or brand over a long period",
+        "zh": "忠實的"
+      },
+      {
+        "word": "inventory",
+        "base": "inventory",
+        "pos": "n.",
+        "hint": "the goods a company is holding in stock",
+        "zh": "庫存"
+      },
+      {
+        "word": "demand",
+        "base": "demand",
+        "pos": "n.",
+        "hint": "the amount of a product that buyers want at a given time",
+        "zh": "需求"
+      },
+      {
+        "word": "forecast",
+        "base": "forecast",
+        "pos": "n.",
+        "hint": "a statement of what a company expects to happen in the future",
+        "zh": "預測"
+      },
+      {
+        "word": "packaging",
+        "base": "packaging",
+        "pos": "n.",
+        "hint": "the boxes and materials used to hold and protect goods being sent",
+        "zh": "包裝材料"
+      },
+      {
+        "word": "revenue",
+        "base": "revenue",
+        "pos": "n.",
+        "hint": "the total money a business takes in from what it sells",
+        "zh": "營收"
+      },
+      {
+        "word": "negotiate",
+        "base": "negotiate",
+        "pos": "v.",
+        "hint": "to discuss terms with another side in order to reach an agreement",
+        "zh": "協商"
+      },
+      {
+        "word": "suppliers",
+        "base": "supplier",
+        "pos": "n.",
+        "hint": "companies that provide goods or materials to another business",
+        "zh": "供應商"
+      },
+      {
+        "word": "wholesale",
+        "base": "wholesale",
+        "pos": "adj.",
+        "hint": "relating to selling goods in large amounts to shops rather than to the public",
+        "zh": "批發的"
+      },
+      {
+        "word": "retail",
+        "base": "retail",
+        "pos": "adj.",
+        "hint": "relating to selling goods directly to ordinary buyers",
+        "zh": "零售的"
+      },
+      {
+        "word": "delivery",
+        "base": "delivery",
+        "pos": "n.",
+        "hint": "the act of bringing goods to the address of the buyer",
+        "zh": "配送"
+      },
+      {
+        "word": "competitors",
+        "base": "competitor",
+        "pos": "n.",
+        "hint": "other companies trying to win the same customers",
+        "zh": "競爭對手"
+      },
+      {
+        "word": "launch",
+        "base": "launch",
+        "pos": "n.",
+        "hint": "the start of a new product or business in the market",
+        "zh": "推出、上市"
+      }
     ],
     "questions": [
       {
@@ -235,6 +488,7 @@
         "answer": 3,
         "explanation": "推論題，定位第七段並呼應第三段：第二家公司只賣自家咖啡、定期補貨，說明真正撐住訂閱的是既有需求所形成的習慣，而非開箱的驚喜。"
       }
-    ]
+    ],
+    "image": "img/articles/art-14b.jpg"
   }
 ]

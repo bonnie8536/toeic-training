@@ -38,25 +38,139 @@
       }
     ],
     "vocab": [
-      { "word": "absorb", "base": "absorb", "pos": "v.", "hint": "to take in heat, light or liquid", "zh": "吸收" },
-      { "word": "release", "base": "release", "pos": "v.", "hint": "to let something go out into the air or into a space", "zh": "釋放" },
-      { "word": "urban", "base": "urban", "pos": "adj.", "hint": "relating to a city or town rather than the countryside", "zh": "都市的" },
-      { "word": "shade", "base": "shade", "pos": "n.", "hint": "an area kept out of direct sunlight by something above it", "zh": "樹蔭；陰涼處" },
-      { "word": "evaporation", "base": "evaporation", "pos": "n.", "hint": "the process in which a liquid slowly turns into gas", "zh": "蒸發" },
-      { "word": "surrounding", "base": "surrounding", "pos": "adj.", "hint": "being all around a place or thing", "zh": "周圍的" },
-      { "word": "trap", "base": "trap", "pos": "v.", "hint": "to catch and hold something so that it cannot get away", "zh": "攔住；困住" },
-      { "word": "particles", "base": "particle", "pos": "n.", "hint": "extremely small pieces of a substance", "zh": "微粒；顆粒" },
-      { "word": "reduce", "base": "reduce", "pos": "v.", "hint": "to make something smaller in amount or degree", "zh": "減少" },
-      { "word": "flooding", "base": "flooding", "pos": "n.", "hint": "a situation in which water covers land that is usually dry", "zh": "淹水" },
-      { "word": "habitat", "base": "habitat", "pos": "n.", "hint": "the natural home of an animal or plant", "zh": "棲地" },
-      { "word": "residents", "base": "resident", "pos": "n.", "hint": "people who live in a particular place", "zh": "居民" },
-      { "word": "stress", "base": "stress", "pos": "n.", "hint": "the worried feeling caused by pressure or difficulty", "zh": "壓力" },
-      { "word": "recover", "base": "recover", "pos": "v.", "hint": "to return to a normal condition after difficulty or illness", "zh": "恢復" },
-      { "word": "budgets", "base": "budget", "pos": "n.", "hint": "plans showing how much money is available to spend", "zh": "預算" },
-      { "word": "maintenance", "base": "maintenance", "pos": "n.", "hint": "the work of keeping something in good condition", "zh": "維護" },
-      { "word": "damage", "base": "damage", "pos": "n.", "hint": "harm that makes something less useful or less valuable", "zh": "損害" },
-      { "word": "species", "base": "species", "pos": "n.", "hint": "a group of animals or plants of the same kind", "zh": "物種" },
-      { "word": "neighborhoods", "base": "neighborhood", "pos": "n.", "hint": "areas of a city or town where people live", "zh": "社區" }
+      {
+        "word": "absorb",
+        "base": "absorb",
+        "pos": "v.",
+        "hint": "to take in heat, light or liquid",
+        "zh": "吸收"
+      },
+      {
+        "word": "release",
+        "base": "release",
+        "pos": "v.",
+        "hint": "to let something go out into the air or into a space",
+        "zh": "釋放"
+      },
+      {
+        "word": "urban",
+        "base": "urban",
+        "pos": "adj.",
+        "hint": "relating to a city or town rather than the countryside",
+        "zh": "都市的"
+      },
+      {
+        "word": "shade",
+        "base": "shade",
+        "pos": "n.",
+        "hint": "an area kept out of direct sunlight by something above it",
+        "zh": "樹蔭；陰涼處"
+      },
+      {
+        "word": "evaporation",
+        "base": "evaporation",
+        "pos": "n.",
+        "hint": "the process in which a liquid slowly turns into gas",
+        "zh": "蒸發"
+      },
+      {
+        "word": "surrounding",
+        "base": "surrounding",
+        "pos": "adj.",
+        "hint": "being all around a place or thing",
+        "zh": "周圍的"
+      },
+      {
+        "word": "trap",
+        "base": "trap",
+        "pos": "v.",
+        "hint": "to catch and hold something so that it cannot get away",
+        "zh": "攔住；困住"
+      },
+      {
+        "word": "particles",
+        "base": "particle",
+        "pos": "n.",
+        "hint": "extremely small pieces of a substance",
+        "zh": "微粒；顆粒"
+      },
+      {
+        "word": "reduce",
+        "base": "reduce",
+        "pos": "v.",
+        "hint": "to make something smaller in amount or degree",
+        "zh": "減少"
+      },
+      {
+        "word": "flooding",
+        "base": "flooding",
+        "pos": "n.",
+        "hint": "a situation in which water covers land that is usually dry",
+        "zh": "淹水"
+      },
+      {
+        "word": "habitat",
+        "base": "habitat",
+        "pos": "n.",
+        "hint": "the natural home of an animal or plant",
+        "zh": "棲地"
+      },
+      {
+        "word": "residents",
+        "base": "resident",
+        "pos": "n.",
+        "hint": "people who live in a particular place",
+        "zh": "居民"
+      },
+      {
+        "word": "stress",
+        "base": "stress",
+        "pos": "n.",
+        "hint": "the worried feeling caused by pressure or difficulty",
+        "zh": "壓力"
+      },
+      {
+        "word": "recover",
+        "base": "recover",
+        "pos": "v.",
+        "hint": "to return to a normal condition after difficulty or illness",
+        "zh": "恢復"
+      },
+      {
+        "word": "budgets",
+        "base": "budget",
+        "pos": "n.",
+        "hint": "plans showing how much money is available to spend",
+        "zh": "預算"
+      },
+      {
+        "word": "maintenance",
+        "base": "maintenance",
+        "pos": "n.",
+        "hint": "the work of keeping something in good condition",
+        "zh": "維護"
+      },
+      {
+        "word": "damage",
+        "base": "damage",
+        "pos": "n.",
+        "hint": "harm that makes something less useful or less valuable",
+        "zh": "損害"
+      },
+      {
+        "word": "species",
+        "base": "species",
+        "pos": "n.",
+        "hint": "a group of animals or plants of the same kind",
+        "zh": "物種"
+      },
+      {
+        "word": "neighborhoods",
+        "base": "neighborhood",
+        "pos": "n.",
+        "hint": "areas of a city or town where people live",
+        "zh": "社區"
+      }
     ],
     "questions": [
       {
@@ -114,7 +228,8 @@
         "answer": 0,
         "explanation": "細節題。第七段指出較富裕社區樹蔭較多，最熱最光禿的街道往往住著最負擔不起冷氣的人。"
       }
-    ]
+    ],
+    "image": "img/articles/art-19a.jpg"
   },
   {
     "id": "art-19b",
@@ -155,26 +270,146 @@
       }
     ],
     "vocab": [
-      { "word": "caffeine", "base": "caffeine", "pos": "n.", "hint": "the substance in coffee and tea that makes people feel more awake", "zh": "咖啡因" },
-      { "word": "builds up", "base": "build up", "pos": "phr.v.", "hint": "to increase slowly in amount over a period of time", "zh": "逐漸累積" },
-      { "word": "chemical", "base": "chemical", "pos": "n.", "hint": "a substance produced by or used in a natural or scientific process", "zh": "化學物質" },
-      { "word": "signal", "base": "signal", "pos": "n.", "hint": "a message sent from one part of the body to another to make something happen", "zh": "訊號" },
-      { "word": "block", "base": "block", "pos": "v.", "hint": "to stop something from passing or from happening", "zh": "阻擋" },
-      { "word": "delays", "base": "delay", "pos": "v.", "hint": "to make something happen later than planned", "zh": "延後" },
-      { "word": "wears off", "base": "wear off", "pos": "phr.v.", "hint": "to become gradually weaker and finally disappear", "zh": "（藥效）消退" },
-      { "word": "alertness", "base": "alertness", "pos": "n.", "hint": "the state of being awake and quick to notice things", "zh": "清醒度；警醒" },
-      { "word": "affects", "base": "affect", "pos": "v.", "hint": "to produce a change in someone or something", "zh": "影響" },
-      { "word": "breaks down", "base": "break down", "pos": "phr.v.", "hint": "to separate a substance into smaller and simpler parts", "zh": "分解" },
-      { "word": "genes", "base": "gene", "pos": "n.", "hint": "the parts of a cell that pass features from parents to children", "zh": "基因" },
-      { "word": "dose", "base": "dose", "pos": "n.", "hint": "a measured amount of a drug or substance taken at one time", "zh": "劑量" },
-      { "word": "anxious", "base": "anxious", "pos": "adj.", "hint": "feeling worried and nervous", "zh": "焦慮的" },
-      { "word": "habit", "base": "habit", "pos": "n.", "hint": "something a person does regularly, often without thinking", "zh": "習慣" },
-      { "word": "tolerance", "base": "tolerance", "pos": "n.", "hint": "a weaker reaction to a substance after using it for a long time", "zh": "耐受性" },
-      { "word": "headache", "base": "headache", "pos": "n.", "hint": "a pain felt inside the head", "zh": "頭痛" },
-      { "word": "moderate", "base": "moderate", "pos": "adj.", "hint": "neither too large nor too small in amount", "zh": "適量的" },
-      { "word": "sensitive", "base": "sensitive", "pos": "adj.", "hint": "easily and strongly influenced by something", "zh": "敏感的" },
-      { "word": "replace", "base": "replace", "pos": "v.", "hint": "to take the place of something else", "zh": "取代" },
-      { "word": "concentrate", "base": "concentrate", "pos": "v.", "hint": "to give all your attention to one thing", "zh": "專注" }
+      {
+        "word": "caffeine",
+        "base": "caffeine",
+        "pos": "n.",
+        "hint": "the substance in coffee and tea that makes people feel more awake",
+        "zh": "咖啡因"
+      },
+      {
+        "word": "builds up",
+        "base": "build up",
+        "pos": "phr.v.",
+        "hint": "to increase slowly in amount over a period of time",
+        "zh": "逐漸累積"
+      },
+      {
+        "word": "chemical",
+        "base": "chemical",
+        "pos": "n.",
+        "hint": "a substance produced by or used in a natural or scientific process",
+        "zh": "化學物質"
+      },
+      {
+        "word": "signal",
+        "base": "signal",
+        "pos": "n.",
+        "hint": "a message sent from one part of the body to another to make something happen",
+        "zh": "訊號"
+      },
+      {
+        "word": "block",
+        "base": "block",
+        "pos": "v.",
+        "hint": "to stop something from passing or from happening",
+        "zh": "阻擋"
+      },
+      {
+        "word": "delays",
+        "base": "delay",
+        "pos": "v.",
+        "hint": "to make something happen later than planned",
+        "zh": "延後"
+      },
+      {
+        "word": "wears off",
+        "base": "wear off",
+        "pos": "phr.v.",
+        "hint": "to become gradually weaker and finally disappear",
+        "zh": "（藥效）消退"
+      },
+      {
+        "word": "alertness",
+        "base": "alertness",
+        "pos": "n.",
+        "hint": "the state of being awake and quick to notice things",
+        "zh": "清醒度；警醒"
+      },
+      {
+        "word": "affects",
+        "base": "affect",
+        "pos": "v.",
+        "hint": "to produce a change in someone or something",
+        "zh": "影響"
+      },
+      {
+        "word": "breaks down",
+        "base": "break down",
+        "pos": "phr.v.",
+        "hint": "to separate a substance into smaller and simpler parts",
+        "zh": "分解"
+      },
+      {
+        "word": "genes",
+        "base": "gene",
+        "pos": "n.",
+        "hint": "the parts of a cell that pass features from parents to children",
+        "zh": "基因"
+      },
+      {
+        "word": "dose",
+        "base": "dose",
+        "pos": "n.",
+        "hint": "a measured amount of a drug or substance taken at one time",
+        "zh": "劑量"
+      },
+      {
+        "word": "anxious",
+        "base": "anxious",
+        "pos": "adj.",
+        "hint": "feeling worried and nervous",
+        "zh": "焦慮的"
+      },
+      {
+        "word": "habit",
+        "base": "habit",
+        "pos": "n.",
+        "hint": "something a person does regularly, often without thinking",
+        "zh": "習慣"
+      },
+      {
+        "word": "tolerance",
+        "base": "tolerance",
+        "pos": "n.",
+        "hint": "a weaker reaction to a substance after using it for a long time",
+        "zh": "耐受性"
+      },
+      {
+        "word": "headache",
+        "base": "headache",
+        "pos": "n.",
+        "hint": "a pain felt inside the head",
+        "zh": "頭痛"
+      },
+      {
+        "word": "moderate",
+        "base": "moderate",
+        "pos": "adj.",
+        "hint": "neither too large nor too small in amount",
+        "zh": "適量的"
+      },
+      {
+        "word": "sensitive",
+        "base": "sensitive",
+        "pos": "adj.",
+        "hint": "easily and strongly influenced by something",
+        "zh": "敏感的"
+      },
+      {
+        "word": "replace",
+        "base": "replace",
+        "pos": "v.",
+        "hint": "to take the place of something else",
+        "zh": "取代"
+      },
+      {
+        "word": "concentrate",
+        "base": "concentrate",
+        "pos": "v.",
+        "hint": "to give all your attention to one thing",
+        "zh": "專注"
+      }
     ],
     "questions": [
       {
@@ -232,6 +467,7 @@
         "answer": 3,
         "explanation": "推論題。最後一段說咖啡不能取代睡眠、唯一的付款方式是去睡覺，呼應第三段「向稍晚的自己借清醒」的比喻。"
       }
-    ]
+    ],
+    "image": "img/articles/art-19b.jpg"
   }
 ]

@@ -30,18 +30,90 @@
       }
     ],
     "vocab": [
-      { "word": "busy", "base": "busy", "pos": "adj.", "hint": "having a lot of people or work; not free", "zh": "繁忙的" },
-      { "word": "customers", "base": "customer", "pos": "n.", "hint": "a person who buys goods or food at a shop", "zh": "顧客" },
-      { "word": "worried", "base": "worried", "pos": "adj.", "hint": "feeling bad because you think something may go wrong", "zh": "擔心的" },
-      { "word": "price", "base": "price", "pos": "n.", "hint": "the money you must pay for something", "zh": "價格" },
-      { "word": "offers", "base": "offer", "pos": "v.", "hint": "to give people the chance to buy or use something", "zh": "提供" },
-      { "word": "menu", "base": "menu", "pos": "n.", "hint": "a list of food that a place can cook for you", "zh": "菜單" },
-      { "word": "schedule", "base": "schedule", "pos": "n.", "hint": "a plan that shows when things will happen", "zh": "時程；排班表" },
-      { "word": "prepare", "base": "prepare", "pos": "v.", "hint": "to get something ready before it is used", "zh": "準備" },
-      { "word": "order", "base": "order", "pos": "v.", "hint": "to ask for food or goods that you want to buy", "zh": "點餐；訂購" },
-      { "word": "receipt", "base": "receipt", "pos": "n.", "hint": "a small paper that shows what you paid for", "zh": "收據" },
-      { "word": "popular", "base": "popular", "pos": "adj.", "hint": "liked by many people", "zh": "受歡迎的" },
-      { "word": "book", "base": "book", "pos": "v.", "hint": "to keep a seat or a table for a later time", "zh": "預訂" }
+      {
+        "word": "busy",
+        "base": "busy",
+        "pos": "adj.",
+        "hint": "having a lot of people or work; not free",
+        "zh": "繁忙的"
+      },
+      {
+        "word": "customers",
+        "base": "customer",
+        "pos": "n.",
+        "hint": "a person who buys goods or food at a shop",
+        "zh": "顧客"
+      },
+      {
+        "word": "worried",
+        "base": "worried",
+        "pos": "adj.",
+        "hint": "feeling bad because you think something may go wrong",
+        "zh": "擔心的"
+      },
+      {
+        "word": "price",
+        "base": "price",
+        "pos": "n.",
+        "hint": "the money you must pay for something",
+        "zh": "價格"
+      },
+      {
+        "word": "offers",
+        "base": "offer",
+        "pos": "v.",
+        "hint": "to give people the chance to buy or use something",
+        "zh": "提供"
+      },
+      {
+        "word": "menu",
+        "base": "menu",
+        "pos": "n.",
+        "hint": "a list of food that a place can cook for you",
+        "zh": "菜單"
+      },
+      {
+        "word": "schedule",
+        "base": "schedule",
+        "pos": "n.",
+        "hint": "a plan that shows when things will happen",
+        "zh": "時程；排班表"
+      },
+      {
+        "word": "prepare",
+        "base": "prepare",
+        "pos": "v.",
+        "hint": "to get something ready before it is used",
+        "zh": "準備"
+      },
+      {
+        "word": "order",
+        "base": "order",
+        "pos": "v.",
+        "hint": "to ask for food or goods that you want to buy",
+        "zh": "點餐；訂購"
+      },
+      {
+        "word": "receipt",
+        "base": "receipt",
+        "pos": "n.",
+        "hint": "a small paper that shows what you paid for",
+        "zh": "收據"
+      },
+      {
+        "word": "popular",
+        "base": "popular",
+        "pos": "adj.",
+        "hint": "liked by many people",
+        "zh": "受歡迎的"
+      },
+      {
+        "word": "book",
+        "base": "book",
+        "pos": "v.",
+        "hint": "to keep a seat or a table for a later time",
+        "zh": "預訂"
+      }
     ],
     "questions": [
       {
@@ -88,7 +160,8 @@
         "answer": 3,
         "explanation": "第三段說每天只供應一道主菜、一碗湯、一杯飲料，而且廚師中午前就備好料；由此可推論出餐快是因為每天只做一套餐點。"
       }
-    ]
+    ],
+    "image": "img/articles/art-5a.jpg"
   },
   {
     "id": "art-5b",
@@ -121,18 +194,90 @@
       }
     ],
     "vocab": [
-      { "word": "meeting", "base": "meeting", "pos": "n.", "hint": "a time when people come together to talk about work", "zh": "會議" },
-      { "word": "business trip", "base": "business trip", "pos": "phr.", "hint": "travel to another city or country for your job", "zh": "出差" },
-      { "word": "nervous", "base": "nervous", "pos": "adj.", "hint": "feeling afraid about something that will happen soon", "zh": "緊張的" },
-      { "word": "client", "base": "client", "pos": "n.", "hint": "a company or person who pays you for your work", "zh": "客戶" },
-      { "word": "report", "base": "report", "pos": "n.", "hint": "a paper that tells people facts about something", "zh": "報告" },
-      { "word": "problem", "base": "problem", "pos": "n.", "hint": "something bad that makes things hard to do", "zh": "問題" },
-      { "word": "flight", "base": "flight", "pos": "n.", "hint": "a trip in a plane from one city to another", "zh": "班機" },
-      { "word": "delayed", "base": "delay", "pos": "v.", "hint": "to make something start or happen later than planned", "zh": "延誤" },
-      { "word": "arrived", "base": "arrive", "pos": "v.", "hint": "to get to a place at the end of a trip", "zh": "抵達" },
-      { "word": "delivery", "base": "delivery", "pos": "n.", "hint": "the act of taking goods to the person who bought them", "zh": "交貨；送貨" },
-      { "word": "sign", "base": "sign", "pos": "v.", "hint": "to write your name on a paper to show that you agree", "zh": "簽署" },
-      { "word": "contract", "base": "contract", "pos": "n.", "hint": "a paper with rules that two sides agree to follow", "zh": "合約" }
+      {
+        "word": "meeting",
+        "base": "meeting",
+        "pos": "n.",
+        "hint": "a time when people come together to talk about work",
+        "zh": "會議"
+      },
+      {
+        "word": "business trip",
+        "base": "business trip",
+        "pos": "phr.",
+        "hint": "travel to another city or country for your job",
+        "zh": "出差"
+      },
+      {
+        "word": "nervous",
+        "base": "nervous",
+        "pos": "adj.",
+        "hint": "feeling afraid about something that will happen soon",
+        "zh": "緊張的"
+      },
+      {
+        "word": "client",
+        "base": "client",
+        "pos": "n.",
+        "hint": "a company or person who pays you for your work",
+        "zh": "客戶"
+      },
+      {
+        "word": "report",
+        "base": "report",
+        "pos": "n.",
+        "hint": "a paper that tells people facts about something",
+        "zh": "報告"
+      },
+      {
+        "word": "problem",
+        "base": "problem",
+        "pos": "n.",
+        "hint": "something bad that makes things hard to do",
+        "zh": "問題"
+      },
+      {
+        "word": "flight",
+        "base": "flight",
+        "pos": "n.",
+        "hint": "a trip in a plane from one city to another",
+        "zh": "班機"
+      },
+      {
+        "word": "delayed",
+        "base": "delay",
+        "pos": "v.",
+        "hint": "to make something start or happen later than planned",
+        "zh": "延誤"
+      },
+      {
+        "word": "arrived",
+        "base": "arrive",
+        "pos": "v.",
+        "hint": "to get to a place at the end of a trip",
+        "zh": "抵達"
+      },
+      {
+        "word": "delivery",
+        "base": "delivery",
+        "pos": "n.",
+        "hint": "the act of taking goods to the person who bought them",
+        "zh": "交貨；送貨"
+      },
+      {
+        "word": "sign",
+        "base": "sign",
+        "pos": "v.",
+        "hint": "to write your name on a paper to show that you agree",
+        "zh": "簽署"
+      },
+      {
+        "word": "contract",
+        "base": "contract",
+        "pos": "n.",
+        "hint": "a paper with rules that two sides agree to follow",
+        "zh": "合約"
+      }
     ],
     "questions": [
       {
@@ -179,6 +324,7 @@
         "answer": 0,
         "explanation": "第三段他一發現延誤就馬上寄信，第四段客戶十分鐘內就同意改時間，第五段他寫下心得「壞消息不可怕，只要早點說出來」，可推論出早點告知問題有幫助。"
       }
-    ]
+    ],
+    "image": "img/articles/art-5b.jpg"
   }
 ]

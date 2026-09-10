@@ -34,20 +34,104 @@
       }
     ],
     "vocab": [
-      { "word": "former", "base": "former", "pos": "adj.", "hint": "coming before the present one in time or in a job", "zh": "以前的、前任的" },
-      { "word": "lease", "base": "lease", "pos": "n.", "hint": "a written agreement that lets you use a building for a fixed period, in return for payment", "zh": "租約" },
-      { "word": "rented", "base": "rent", "pos": "v.", "hint": "to pay money regularly so that you can use a room, house, or machine", "zh": "承租" },
-      { "word": "retail", "base": "retail", "pos": "adj.", "hint": "connected with selling goods directly to ordinary shoppers", "zh": "零售的" },
-      { "word": "loss", "base": "loss", "pos": "n.", "hint": "money that a business spends but does not earn back", "zh": "虧損" },
-      { "word": "gains", "base": "gain", "pos": "v.", "hint": "to get something useful that you did not have before", "zh": "獲得" },
-      { "word": "stocked", "base": "stock", "pos": "v.", "hint": "to keep goods in a shop so that customers can buy them", "zh": "進貨、備有" },
-      { "word": "queue", "base": "queue", "pos": "n.", "hint": "a line of people waiting for their turn", "zh": "排隊的隊伍" },
-      { "word": "word of mouth", "base": "word of mouth", "pos": "phr.", "hint": "the passing of news from one person to another in ordinary talk", "zh": "口碑、口耳相傳" },
-      { "word": "deadline", "base": "deadline", "pos": "n.", "hint": "the latest time by which something must be finished", "zh": "期限" },
-      { "word": "demand", "base": "demand", "pos": "n.", "hint": "the wish of many buyers to have a product or a service", "zh": "需求" },
-      { "word": "revenue", "base": "revenue", "pos": "n.", "hint": "the money a business takes in from selling things", "zh": "營收" },
-      { "word": "staff", "base": "staff", "pos": "n.", "hint": "the group of people who work for one company", "zh": "員工" },
-      { "word": "launch", "base": "launch", "pos": "v.", "hint": "to start something new, such as a shop or a product", "zh": "推出、開辦" }
+      {
+        "word": "former",
+        "base": "former",
+        "pos": "adj.",
+        "hint": "coming before the present one in time or in a job",
+        "zh": "以前的、前任的"
+      },
+      {
+        "word": "lease",
+        "base": "lease",
+        "pos": "n.",
+        "hint": "a written agreement that lets you use a building for a fixed period, in return for payment",
+        "zh": "租約"
+      },
+      {
+        "word": "rented",
+        "base": "rent",
+        "pos": "v.",
+        "hint": "to pay money regularly so that you can use a room, house, or machine",
+        "zh": "承租"
+      },
+      {
+        "word": "retail",
+        "base": "retail",
+        "pos": "adj.",
+        "hint": "connected with selling goods directly to ordinary shoppers",
+        "zh": "零售的"
+      },
+      {
+        "word": "loss",
+        "base": "loss",
+        "pos": "n.",
+        "hint": "money that a business spends but does not earn back",
+        "zh": "虧損"
+      },
+      {
+        "word": "gains",
+        "base": "gain",
+        "pos": "v.",
+        "hint": "to get something useful that you did not have before",
+        "zh": "獲得"
+      },
+      {
+        "word": "stocked",
+        "base": "stock",
+        "pos": "v.",
+        "hint": "to keep goods in a shop so that customers can buy them",
+        "zh": "進貨、備有"
+      },
+      {
+        "word": "queue",
+        "base": "queue",
+        "pos": "n.",
+        "hint": "a line of people waiting for their turn",
+        "zh": "排隊的隊伍"
+      },
+      {
+        "word": "word of mouth",
+        "base": "word of mouth",
+        "pos": "phr.",
+        "hint": "the passing of news from one person to another in ordinary talk",
+        "zh": "口碑、口耳相傳"
+      },
+      {
+        "word": "deadline",
+        "base": "deadline",
+        "pos": "n.",
+        "hint": "the latest time by which something must be finished",
+        "zh": "期限"
+      },
+      {
+        "word": "demand",
+        "base": "demand",
+        "pos": "n.",
+        "hint": "the wish of many buyers to have a product or a service",
+        "zh": "需求"
+      },
+      {
+        "word": "revenue",
+        "base": "revenue",
+        "pos": "n.",
+        "hint": "the money a business takes in from selling things",
+        "zh": "營收"
+      },
+      {
+        "word": "staff",
+        "base": "staff",
+        "pos": "n.",
+        "hint": "the group of people who work for one company",
+        "zh": "員工"
+      },
+      {
+        "word": "launch",
+        "base": "launch",
+        "pos": "v.",
+        "hint": "to start something new, such as a shop or a product",
+        "zh": "推出、開辦"
+      }
     ],
     "questions": [
       {
@@ -105,7 +189,8 @@
         "answer": 0,
         "explanation": "細節題。第四段說一位大學生把照片貼上網，短片兩天內有二十萬人看到，週末就開始排隊；同段最後點明是口碑而非付費廣告。"
       }
-    ]
+    ],
+    "image": "img/articles/art-6a.jpg"
   },
   {
     "id": "art-6b",
@@ -142,21 +227,111 @@
       }
     ],
     "vocab": [
-      { "word": "experiment", "base": "experiment", "pos": "n.", "hint": "a careful test done to find out whether an idea works", "zh": "實驗" },
-      { "word": "announcement", "base": "announcement", "pos": "n.", "hint": "a public statement that gives people new information", "zh": "宣布、公告" },
-      { "word": "guilty", "base": "guilty", "pos": "adj.", "hint": "feeling bad because you think you have done something wrong", "zh": "心虛的、內疚的" },
-      { "word": "manager", "base": "manager", "pos": "n.", "hint": "a person who leads a team and makes decisions at work", "zh": "主管" },
-      { "word": "absences", "base": "absence", "pos": "n.", "hint": "days when a worker is not at the workplace", "zh": "缺勤" },
-      { "word": "survey", "base": "survey", "pos": "n.", "hint": "a set of questions given to many people in order to collect their opinions", "zh": "問卷調查" },
-      { "word": "focus", "base": "focus", "pos": "n.", "hint": "the ability to keep your attention on one task", "zh": "專注力" },
-      { "word": "productivity", "base": "productivity", "pos": "n.", "hint": "how much useful work is done in a set period of time", "zh": "生產力" },
-      { "word": "deadlines", "base": "deadline", "pos": "n.", "hint": "fixed times by which work must be handed in", "zh": "交件期限" },
-      { "word": "punish", "base": "punish", "pos": "v.", "hint": "to make someone suffer because they have broken a rule", "zh": "處罰" },
-      { "word": "policy", "base": "policy", "pos": "n.", "hint": "an official rule or plan that a company follows", "zh": "政策、規定" },
-      { "word": "culture", "base": "culture", "pos": "n.", "hint": "the shared habits and beliefs of the people in a company", "zh": "文化、企業文化" },
-      { "word": "trust", "base": "trust", "pos": "n.", "hint": "the belief that other people will act fairly and keep their promises", "zh": "信任" },
-      { "word": "benefit", "base": "benefit", "pos": "n.", "hint": "an extra reward given to workers besides their pay", "zh": "福利" },
-      { "word": "maintenance", "base": "maintenance", "pos": "n.", "hint": "regular care that keeps something working well", "zh": "保養、維護" }
+      {
+        "word": "experiment",
+        "base": "experiment",
+        "pos": "n.",
+        "hint": "a careful test done to find out whether an idea works",
+        "zh": "實驗"
+      },
+      {
+        "word": "announcement",
+        "base": "announcement",
+        "pos": "n.",
+        "hint": "a public statement that gives people new information",
+        "zh": "宣布、公告"
+      },
+      {
+        "word": "guilty",
+        "base": "guilty",
+        "pos": "adj.",
+        "hint": "feeling bad because you think you have done something wrong",
+        "zh": "心虛的、內疚的"
+      },
+      {
+        "word": "manager",
+        "base": "manager",
+        "pos": "n.",
+        "hint": "a person who leads a team and makes decisions at work",
+        "zh": "主管"
+      },
+      {
+        "word": "absences",
+        "base": "absence",
+        "pos": "n.",
+        "hint": "days when a worker is not at the workplace",
+        "zh": "缺勤"
+      },
+      {
+        "word": "survey",
+        "base": "survey",
+        "pos": "n.",
+        "hint": "a set of questions given to many people in order to collect their opinions",
+        "zh": "問卷調查"
+      },
+      {
+        "word": "focus",
+        "base": "focus",
+        "pos": "n.",
+        "hint": "the ability to keep your attention on one task",
+        "zh": "專注力"
+      },
+      {
+        "word": "productivity",
+        "base": "productivity",
+        "pos": "n.",
+        "hint": "how much useful work is done in a set period of time",
+        "zh": "生產力"
+      },
+      {
+        "word": "deadlines",
+        "base": "deadline",
+        "pos": "n.",
+        "hint": "fixed times by which work must be handed in",
+        "zh": "交件期限"
+      },
+      {
+        "word": "punish",
+        "base": "punish",
+        "pos": "v.",
+        "hint": "to make someone suffer because they have broken a rule",
+        "zh": "處罰"
+      },
+      {
+        "word": "policy",
+        "base": "policy",
+        "pos": "n.",
+        "hint": "an official rule or plan that a company follows",
+        "zh": "政策、規定"
+      },
+      {
+        "word": "culture",
+        "base": "culture",
+        "pos": "n.",
+        "hint": "the shared habits and beliefs of the people in a company",
+        "zh": "文化、企業文化"
+      },
+      {
+        "word": "trust",
+        "base": "trust",
+        "pos": "n.",
+        "hint": "the belief that other people will act fairly and keep their promises",
+        "zh": "信任"
+      },
+      {
+        "word": "benefit",
+        "base": "benefit",
+        "pos": "n.",
+        "hint": "an extra reward given to workers besides their pay",
+        "zh": "福利"
+      },
+      {
+        "word": "maintenance",
+        "base": "maintenance",
+        "pos": "n.",
+        "hint": "regular care that keeps something working well",
+        "zh": "保養、維護"
+      }
     ],
     "questions": [
       {
@@ -214,6 +389,7 @@
         "answer": 3,
         "explanation": "推論題。第六段說光有睡眠室救不了有毒的職場文化，只有帶著信任一起做才會有效。第五段也顯示他不處罰睡過頭的員工，所以 C 不對。"
       }
-    ]
+    ],
+    "image": "img/articles/art-6b.jpg"
   }
 ]

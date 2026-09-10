@@ -229,7 +229,8 @@ TOEIC.articles = [
     "answer": 2,
     "explanation": "定位：第六段「for the rest of the day laptops are permitted without limit」。禁令只在十一點到三點之間，並非全天，故第三個選項與文意不符。其餘三項在第六段均有明確依據。"
    }
-  ]
+  ],
+  "image": "img/articles/art-1a.jpg"
  },
  {
   "id": "art-1b",
@@ -460,7 +461,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "定位：第三段列出四項調整（錯開各部門休假日、取消沒有書面議程的會議、進度更新改用共用文件、簽核由三人減為一人），其中三項分別對應第二、三、四個選項。文中從未提到僱用臨時人員來支援星期五，故第一個選項為未提及的內容。"
    }
-  ]
+  ],
+  "image": "img/articles/art-1b.jpg"
  },
  {
   "id": "art-10a",
@@ -616,7 +618,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "推論題。第二段她只打算先試一個月，第四、五段訂單和利潤都變好，可以推出她會繼續這個雨天折扣。"
    }
-  ]
+  ],
+  "image": "img/articles/art-10a.jpg"
  },
  {
   "id": "art-10b",
@@ -772,7 +775,8 @@ TOEIC.articles = [
     "answer": 2,
     "explanation": "主旨題。全文從第一、二段的不合，寫到第四、五段變成好搭檔，重點是這個轉變。"
    }
-  ]
+  ],
+  "image": "img/articles/art-10b.jpg"
  },
  {
   "id": "art-11a",
@@ -978,7 +982,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "定位最後一段：解決不了也要回信，說明延遲原因並給明確期限；「Customers can accept a slow repair... They can never accept silence.」可推論她認為「讓客戶知道狀況」和速度一樣重要。折扣、公司規模文中都沒提。"
    }
-  ]
+  ],
+  "image": "img/articles/art-11a.jpg"
  },
  {
   "id": "art-11b",
@@ -1184,7 +1189,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "定位最後一段：反對的人說借來的衣服 never fit perfectly，也不喜歡穿陌生人穿過的東西。可推論他們在意的是合身度和衛生感受。費用太低、外國公司文中都沒提到。"
    }
-  ]
+  ],
+  "image": "img/articles/art-11b.jpg"
  },
  {
   "id": "art-12a",
@@ -1390,7 +1396,8 @@ TOEIC.articles = [
     "answer": 1,
     "explanation": "推論題。第六段先寫三名員工無法專心，接著說公司的做法「practical」，蓋了可預約的安靜房間，然後仍簽下更小的租約。可見公司是解決問題而非放棄計畫。文中說房間是「anyone could reserve」，選項 C 錯。"
    }
-  ]
+  ],
+  "image": "img/articles/art-12a.jpg"
  },
  {
   "id": "art-12b",
@@ -1589,7 +1596,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "定位第五段：「Three nearby farms have become suppliers too.」飯店廚房只是收剩下的部分煮湯，沒有自己開農場；靜妤仍在務農，且超市付款一事文中未提。"
    }
-  ]
+  ],
+  "image": "img/articles/art-12b.jpg"
  },
  {
   "id": "art-13a",
@@ -1827,7 +1835,8 @@ TOEIC.articles = [
     "answer": 1,
     "explanation": "細節題。定位在第六段：凱托比現在評一份報價看四件事——價格、準時交貨紀錄、不良率，以及打電話問其他買家會聽到什麼。A、C、D 三種做法文中都沒有提到。"
    }
-  ]
+  ],
+  "image": "img/articles/art-13a.jpg"
  },
  {
   "id": "art-13b",
@@ -2065,7 +2074,8 @@ TOEIC.articles = [
     "answer": 2,
     "explanation": "細節題。定位在第六段：開店的學員有四分之一撐不過兩年，欠下的貨款娜迪雅直接認賠。B 與第一段「免費上課」矛盾，A 與 D 文中都沒有依據。"
    }
-  ]
+  ],
+  "image": "img/articles/art-13b.jpg"
  },
  {
   "id": "art-14a",
@@ -2310,7 +2320,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "推論題，定位第七段：一年二十萬美元的樸素措施，換來離職率減半與利潤率上升一個百分點，可推知投入不高的條件改善其實划算。"
    }
-  ]
+  ],
+  "image": "img/articles/art-14a.jpg"
  },
  {
   "id": "art-14b",
@@ -2555,7 +2566,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "推論題，定位第七段並呼應第三段：第二家公司只賣自家咖啡、定期補貨，說明真正撐住訂閱的是既有需求所形成的習慣，而非開箱的驚喜。"
    }
-  ]
+  ],
+  "image": "img/articles/art-14b.jpg"
  },
  {
   "id": "art-15a",
@@ -2711,7 +2723,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "第四段說打哈欠會傳染，看到別人打，自己很快也會跟著打。"
    }
-  ]
+  ],
+  "image": "img/articles/art-15a.jpg"
  },
  {
   "id": "art-15b",
@@ -2874,7 +2887,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "第五段說最好的袋子是你已經有的那一個，重點在重複使用。"
    }
-  ]
+  ],
+  "image": "img/articles/art-15b.jpg"
  },
  {
   "id": "art-16a",
@@ -3080,7 +3094,8 @@ TOEIC.articles = [
     "answer": 2,
     "explanation": "推論題。第六段說新科技出現得比規則快，並以外送機器人、無人機類比，暗示今天的處理方式預示未來。"
    }
-  ]
+  ],
+  "image": "img/articles/art-16a.jpg"
  },
  {
   "id": "art-16b",
@@ -3286,7 +3301,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "推論題。第六段舉出固定就寢時間、昏暗房間、睡前少看螢幕，說明小習慣會影響睡眠。"
    }
-  ]
+  ],
+  "image": "img/articles/art-16b.jpg"
  },
  {
   "id": "art-17a",
@@ -3492,7 +3508,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "第五段明說外送員的收入常取決於完成的訂單數，且他們在車陣與雨中工作，餐廳幾乎無法控制這段服務。"
    }
-  ]
+  ],
+  "image": "img/articles/art-17a.jpg"
  },
  {
   "id": "art-17b",
@@ -3698,7 +3715,8 @@ TOEIC.articles = [
     "answer": 1,
     "explanation": "最後一段用他們說明群體保護：當社群裡多數人有保護力，無法接種的人就靠周圍的人得到保護。"
    }
-  ]
+  ],
+  "image": "img/articles/art-17b.jpg"
  },
  {
   "id": "art-18a",
@@ -3936,7 +3954,8 @@ TOEIC.articles = [
     "answer": 1,
     "explanation": "推論題。最後一段指出受惠者是「了解工具擅長什麼、對成果負責、能說明採用或否決理由」的人，並收在 It is judgment，暗示未來的價值來自判斷與負責，而非操作速度。"
    }
-  ]
+  ],
+  "image": "img/articles/art-18a.jpg"
  },
  {
   "id": "art-18b",
@@ -4167,7 +4186,8 @@ TOEIC.articles = [
     "answer": 1,
     "explanation": "推論題。第六段說結論尚未明確，並指出「檢出物質不等於證明有害」，最後一句更點明這種謹慎有時被誤讀成好消息，暗示讀者不該把不確定當成安全保證。"
    }
-  ]
+  ],
+  "image": "img/articles/art-18b.jpg"
  },
  {
   "id": "art-19a",
@@ -4398,7 +4418,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "細節題。第七段指出較富裕社區樹蔭較多，最熱最光禿的街道往往住著最負擔不起冷氣的人。"
    }
-  ]
+  ],
+  "image": "img/articles/art-19a.jpg"
  },
  {
   "id": "art-19b",
@@ -4636,7 +4657,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "推論題。最後一段說咖啡不能取代睡眠、唯一的付款方式是去睡覺，呼應第三段「向稍晚的自己借清醒」的比喻。"
    }
-  ]
+  ],
+  "image": "img/articles/art-19b.jpg"
  },
  {
   "id": "art-2a",
@@ -4860,7 +4882,8 @@ TOEIC.articles = [
     "answer": 2,
     "explanation": "定位:第三段列出三項措施(平板顯示行程、自動餐券、事先簡訊通知)。現金直接匯入帳戶全文未出現;第六段只提到必須遵守聯邦的旅客賠償規定，並未說明賠償形式。"
    }
-  ]
+  ],
+  "image": "img/articles/art-2a.jpg"
  },
  {
   "id": "art-2b",
@@ -5091,7 +5114,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "定位:第四段(加班費、保險同意、預算不足)與第六段(畫作移位、資深會員抱怨)。停車位不足全文從未提及，故選A。"
    }
-  ]
+  ],
+  "image": "img/articles/art-2b.jpg"
  },
  {
   "id": "art-20a",
@@ -5336,7 +5360,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "推論題，定位第七段：多備的產能在平常年份就是閒置產能、倉庫存貨是「沒在動的錢」，可推知安全是有代價的，且平安無事時照樣要付。"
    }
-  ]
+  ],
+  "image": "img/articles/art-20a.jpg"
  },
  {
   "id": "art-20b",
@@ -5581,7 +5606,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "推論題，定位第五段：許多國家同時老化，各國「在搶同一批技術人力，而不是從取之不盡的池子裡撈人」，可推知人力愈來愈難爭取。"
    }
-  ]
+  ],
+  "image": "img/articles/art-20b.jpg"
  },
  {
   "id": "art-3a",
@@ -5815,7 +5841,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "定位:第三段。文中列出的三個問題分別是重複計費、深夜入住無法處理、水管爆裂無人指揮，對應選項 A、B、C。機器故障頻繁需天天維修全文未提，故 D 為未提及者。"
    }
-  ]
+  ],
+  "image": "img/articles/art-3a.jpg"
  },
  {
   "id": "art-3b",
@@ -6053,7 +6080,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "定位:第四段第二句「她不賣植物，而是收月費」，故 A 不正確。B 見第四段(枯死免費更換)，C 見第五段(九十四間辦公室)，D 見第六段(風險明顯的場地一律不接)。"
    }
-  ]
+  ],
+  "image": "img/articles/art-3b.jpg"
  },
  {
   "id": "art-4a",
@@ -6220,7 +6248,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "細節題。定位第五段第四、五句：一張小紙條貼在機器背面，那就是使用說明。第六段也再次提醒「先看機器的背面」。"
    }
-  ]
+  ],
+  "image": "img/articles/art-4a.jpg"
  },
  {
   "id": "art-4b",
@@ -6387,7 +6416,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "細節題。定位第四段第一、二句：山姆說可以退款，但莉莉要的是相機不是錢；再對照第一段，相機是要送爸爸的生日禮物。"
    }
-  ]
+  ],
+  "image": "img/articles/art-4b.jpg"
  },
  {
   "id": "art-5a",
@@ -6550,7 +6580,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "第三段說每天只供應一道主菜、一碗湯、一杯飲料，而且廚師中午前就備好料；由此可推論出餐快是因為每天只做一套餐點。"
    }
-  ]
+  ],
+  "image": "img/articles/art-5a.jpg"
  },
  {
   "id": "art-5b",
@@ -6713,7 +6744,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "第三段他一發現延誤就馬上寄信，第四段客戶十分鐘內就同意改時間，第五段他寫下心得「壞消息不可怕，只要早點說出來」，可推論出早點告知問題有幫助。"
    }
-  ]
+  ],
+  "image": "img/articles/art-5b.jpg"
  },
  {
   "id": "art-6a",
@@ -6905,7 +6937,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "細節題。第四段說一位大學生把照片貼上網，短片兩天內有二十萬人看到，週末就開始排隊；同段最後點明是口碑而非付費廣告。"
    }
-  ]
+  ],
+  "image": "img/articles/art-6a.jpg"
  },
  {
   "id": "art-6b",
@@ -7104,7 +7137,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "推論題。第六段說光有睡眠室救不了有毒的職場文化，只有帶著信任一起做才會有效。第五段也顯示他不處罰睡過頭的員工，所以 C 不對。"
    }
-  ]
+  ],
+  "image": "img/articles/art-6b.jpg"
  },
  {
   "id": "art-7a",
@@ -7303,7 +7337,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "推論題。定位第六段「Three other branches are copying her plan this year.」，願意照抄代表他們認為這套做法在自己的飯店同樣行得通；文中沒有提到其他分店的預算或降價。"
    }
-  ]
+  ],
+  "image": "img/articles/art-7a.jpg"
  },
  {
   "id": "art-7b",
@@ -7495,7 +7530,8 @@ TOEIC.articles = [
     "answer": 3,
     "explanation": "推論題。定位第六段：已有兩百四十台機器、去年春天開始獲利、明年想擴張到醫院和飯店，可推論公司體質穩定到足以進入新市場。"
    }
-  ]
+  ],
+  "image": "img/articles/art-7b.jpg"
  },
  {
   "id": "art-8a",
@@ -7747,7 +7783,8 @@ TOEIC.articles = [
     "answer": 2,
     "explanation": "推論題。定位在第七段末句「量得出來的成本，永遠會比量不出來的成本更像真的」，重點在於「感覺更真實」，也就是決策時給予的權重不同，而非金額大小（故選項 D 誤讀）。選項 A、B 在文中都找不到根據。"
    }
-  ]
+  ],
+  "image": "img/articles/art-8a.jpg"
  },
  {
   "id": "art-8b",
@@ -7992,7 +8029,8 @@ TOEIC.articles = [
     "answer": 0,
     "explanation": "推論題。定位在第六段：拉高門檻後「訂位確實沒掉」，但八個月內辦卡申請掉了一成九、銀行要求重談合約，最後「守住了看得見的營收，卻放掉利潤高得多的營收」。選項 B 正好被「訂位沒掉」否定；選項 C 過度概括（銀行是重啟談判而非解約）；選項 D 與第五、六段所述的高消費會員價值相反。"
    }
-  ]
+  ],
+  "image": "img/articles/art-8b.jpg"
  },
  {
   "id": "art-9a",
@@ -8155,7 +8193,8 @@ TOEIC.articles = [
     "answer": 1,
     "explanation": "第五段最後他說機器會印字卻不會打招呼，可推論他認為手寫比較有人情味，故選第二項。"
    }
-  ]
+  ],
+  "image": "img/articles/art-9a.jpg"
  },
  {
   "id": "art-9b",
@@ -8322,6 +8361,7 @@ TOEIC.articles = [
     "answer": 2,
     "explanation": "第四段她把凱文的建議寫在白板上，散會後才問名字，還請他下週再來，可推論她覺得這個建議有用，故選第三項。"
    }
-  ]
+  ],
+  "image": "img/articles/art-9b.jpg"
  }
 ];

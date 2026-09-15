@@ -230,7 +230,73 @@ TOEIC.articles = [
     "explanation": "定位：第六段「for the rest of the day laptops are permitted without limit」。禁令只在十一點到三點之間，並非全天，故第三個選項與文意不符。其餘三項在第六段均有明確依據。"
    }
   ],
-  "image": "img/articles/art-1a.jpg"
+  "image": "img/articles/art-1a.jpg",
+  "transfer": {
+   "passage": "Ironhouse, a fitness club in Taoyuan with nine hundred members, [[implemented]] a new [[policy]] in March: anyone who wants to use the four squat racks must book a forty-minute slot online. The owner, Ms. Fang, had [[anticipated]] some anger even before the announcement, and the first weeks proved her right. The front desk received dozens of [[complaints]], and one longtime member demanded a full [[refund]] of his yearly fee, [[claiming]] that the club had changed the terms of his membership. That [[dispute]] dragged on for a month, until the two sides sat down to [[negotiate]] and settled on six months of free classes.\n\nThe change remains [[controversial]], and members still argue about it in the locker room. Yet the numbers tell their own story. Evening crowds have thinned, waiting time at the racks has nearly disappeared, and the club's [[quarterly]] report shows [[revenue]] up eleven percent, because fewer members are quitting. Best of all, Ms. Fang says, attendance has become [[predictable]], so she can plan classes and staffing weeks ahead.",
+   "passageZh": "「鐵屋」是桃園一間擁有九百名會員的健身俱樂部，三月實施了一項新政策：想使用四座深蹲架的人，必須先上網預約四十分鐘的時段。負責人方小姐早在公告之前就預期會出現一些不滿，而頭幾週證明她料得沒錯。櫃檯收到數十件抱怨，一位資深會員更要求全額退還年費，聲稱俱樂部擅自更改了他的會員條款。那場糾紛拖了一個月，直到雙方坐下來協商，以六個月的免費課程達成和解。\n\n這項改變至今仍具爭議，會員們還在更衣室裡為此爭論。但數字說明了一切。傍晚的人潮變少了，深蹲架前的等待時間幾乎消失，俱樂部的季度報表顯示營收成長百分之十一，因為退會的人變少了。方小姐說，最棒的是出席人數變得可以預測，讓她能提前數週安排課程與人力。",
+   "words": [
+    {
+     "word": "implemented",
+     "base": "implement",
+     "zh": "實施；執行"
+    },
+    {
+     "word": "policy",
+     "base": "policy",
+     "zh": "政策；規定"
+    },
+    {
+     "word": "anticipated",
+     "base": "anticipate",
+     "zh": "預期；預料"
+    },
+    {
+     "word": "complaints",
+     "base": "complaint",
+     "zh": "抱怨；客訴"
+    },
+    {
+     "word": "refund",
+     "base": "refund",
+     "zh": "退款"
+    },
+    {
+     "word": "claiming",
+     "base": "claim",
+     "zh": "聲稱；主張"
+    },
+    {
+     "word": "dispute",
+     "base": "dispute",
+     "zh": "爭議；糾紛"
+    },
+    {
+     "word": "negotiate",
+     "base": "negotiate",
+     "zh": "協商；談判"
+    },
+    {
+     "word": "controversial",
+     "base": "controversial",
+     "zh": "有爭議的"
+    },
+    {
+     "word": "quarterly",
+     "base": "quarterly",
+     "zh": "每季的"
+    },
+    {
+     "word": "revenue",
+     "base": "revenue",
+     "zh": "營收；收益"
+    },
+    {
+     "word": "predictable",
+     "base": "predictable",
+     "zh": "可預測的"
+    }
+   ]
+  }
  },
  {
   "id": "art-1b",
@@ -462,7 +528,73 @@ TOEIC.articles = [
     "explanation": "定位：第三段列出四項調整（錯開各部門休假日、取消沒有書面議程的會議、進度更新改用共用文件、簽核由三人減為一人），其中三項分別對應第二、三、四個選項。文中從未提到僱用臨時人員來支援星期五，故第一個選項為未提及的內容。"
    }
   ],
-  "image": "img/articles/art-1b.jpg"
+  "image": "img/articles/art-1b.jpg",
+  "transfer": {
+   "passage": "The Harborlight Hotel could not fill its front-desk [[vacancy]] for months. The manager, Daniel Weiss, received only three [[applications]], and two of them came from Emily Carter and Grace Lane, who proposed sharing one position: each would work half the week for half the [[wages]].\n\nDaniel agreed to test the idea during a three-month [[trial]] period. He [[staggered]] their start times by one hour so the desk was never empty during the morning rush, and he added a clause allowing either side to [[terminate]] the contract early. To [[comply]] with local labor rules, he recorded every extra hour, and any [[overtime]] was paid at a higher rate.\n\nAt the next staff meeting, the results were the first item on the [[agenda]]. The new schedule had clearly improved [[efficiency]]: guests waited less, and no shift was ever missed. Daniel made the job-sharing plan [[permanent]], and he now hopes to [[recruit]] a similar pair for the night desk.",
+   "passageZh": "海港燈飯店的櫃檯職缺懸了好幾個月都補不上。經理 Daniel Weiss 只收到三份應徵，其中兩份來自 Emily Carter 和 Grace Lane——她們提議兩人共享一個職位：各自工作半週，領一半的工資。\n\nDaniel 同意用三個月的試行期來測試這個構想。他把兩人的上班時間錯開一小時，讓櫃檯在早晨尖峰時段不會沒人，並加入一項條款，允許任何一方提前終止合約。為了遵守當地勞動法規，他記錄每一小時的額外工時，所有加班都以較高的費率支付。\n\n在下一次員工會議上，這項結果被列為議程的第一項。新班表明顯提升了效率：客人等待的時間變短了，也從來沒有漏掉任何一個班。Daniel 把這個職位共享方案改為永久實施，現在還希望為夜間櫃檯再招募一對類似的搭檔。",
+   "words": [
+    {
+     "word": "vacancy",
+     "base": "vacancy",
+     "zh": "職缺"
+    },
+    {
+     "word": "applications",
+     "base": "application",
+     "zh": "應徵；申請"
+    },
+    {
+     "word": "wages",
+     "base": "wage",
+     "zh": "工資；薪資"
+    },
+    {
+     "word": "trial",
+     "base": "trial",
+     "zh": "試行；試辦"
+    },
+    {
+     "word": "staggered",
+     "base": "stagger",
+     "zh": "錯開（時間）"
+    },
+    {
+     "word": "terminate",
+     "base": "terminate",
+     "zh": "終止"
+    },
+    {
+     "word": "comply",
+     "base": "comply",
+     "zh": "遵守；配合"
+    },
+    {
+     "word": "overtime",
+     "base": "overtime",
+     "zh": "加班"
+    },
+    {
+     "word": "agenda",
+     "base": "agenda",
+     "zh": "議程"
+    },
+    {
+     "word": "efficiency",
+     "base": "efficiency",
+     "zh": "效率"
+    },
+    {
+     "word": "permanent",
+     "base": "permanent",
+     "zh": "永久的；長期的"
+    },
+    {
+     "word": "recruit",
+     "base": "recruit",
+     "zh": "招募"
+    }
+   ]
+  }
  },
  {
   "id": "art-10a",
@@ -619,7 +751,68 @@ TOEIC.articles = [
     "explanation": "推論題。第二段她只打算先試一個月，第四、五段訂單和利潤都變好，可以推出她會繼續這個雨天折扣。"
    }
   ],
-  "image": "img/articles/art-10a.jpg"
+  "image": "img/articles/art-10a.jpg",
+  "transfer": {
+   "passage": "Ms. Wu started her own [[business]]: a small flower shop near some offices. One morning she [[noticed]] that office workers often bought birthday flowers for a co-worker.\n\nThis gave her an idea. She decided to [[offer]] a weekly flower plan to offices. A company could place [[orders]] once, and fresh flowers would arrive every Monday. Some companies came back month after month. She gave these [[regular]] buyers a small [[discount]] off the normal price. She also put up a big [[poster]] near the door of an office building.\n\nSoon new [[customers]] from other companies called to join the plan. Ms. Wu hired two more [[staff]] members to help her. Total [[sales]] went up fast. After paying for flowers and rent, she still had a good [[profit]] each month.",
+   "passageZh": "吳小姐開了自己的生意：一家小花店，開在幾間辦公室附近。一天早上，她注意到上班族常常買生日花送給同事。\n\n這給了她一個想法。她決定提供辦公室每週鮮花方案。公司只要下一次訂單，每週一就會收到新鮮的花。有些公司月復一月地回頭光顧。她給這些固定回購的買家一個原價之外的小折扣。她還在一棟辦公大樓門口貼了一張大海報。\n\n不久，其他公司的新顧客打電話來加入方案。吳小姐多僱了兩名員工來幫忙。總銷售額快速上升。付完花材和房租之後，她每個月仍然有不錯的利潤。",
+   "words": [
+    {
+     "word": "business",
+     "base": "business",
+     "zh": "生意；公司"
+    },
+    {
+     "word": "noticed",
+     "base": "notice",
+     "zh": "注意到"
+    },
+    {
+     "word": "offer",
+     "base": "offer",
+     "zh": "提供"
+    },
+    {
+     "word": "orders",
+     "base": "order",
+     "zh": "訂單；點餐"
+    },
+    {
+     "word": "regular",
+     "base": "regular",
+     "zh": "固定的；常來的"
+    },
+    {
+     "word": "discount",
+     "base": "discount",
+     "zh": "折扣"
+    },
+    {
+     "word": "poster",
+     "base": "poster",
+     "zh": "海報"
+    },
+    {
+     "word": "customers",
+     "base": "customer",
+     "zh": "顧客"
+    },
+    {
+     "word": "staff",
+     "base": "staff",
+     "zh": "員工；全體職員"
+    },
+    {
+     "word": "sales",
+     "base": "sale",
+     "zh": "銷售額"
+    },
+    {
+     "word": "profit",
+     "base": "profit",
+     "zh": "利潤"
+    }
+   ]
+  }
  },
  {
   "id": "art-10b",
@@ -776,7 +969,68 @@ TOEIC.articles = [
     "explanation": "主旨題。全文從第一、二段的不合，寫到第四、五段變成好搭檔，重點是這個轉變。"
    }
   ],
-  "image": "img/articles/art-10b.jpg"
+  "image": "img/articles/art-10b.jpg",
+  "transfer": {
+   "passage": "I work at a toy company in Tainan. My [[co-worker]], Amy, sits next to me. We do the same job and help each other. Our [[team]] has five people. We are working on a big [[project]]: a picture book about animals. The [[client]], a bookstore owner, will pay us next month.\n\nThe [[deadline]] is next Friday, so we must finish soon. Amy made a [[schedule]] to show what we will do each day. The [[budget]] is small, so we cannot spend money on extra pictures. Yesterday I found a [[mistake]] in the prices and fixed it. Then I wrote a short [[report]] about the things we finished. Our [[manager]], Mr. Yang, read it and gave us more time. The office is quiet, so I can [[focus]] on my work.",
+   "passageZh": "我在台南一家玩具公司上班。我的同事 Amy 坐在我旁邊。我們做一樣的工作，會互相幫忙。我們的團隊有五個人。我們正在進行一個大專案：一本關於動物的圖畫書。客戶是一位書店老闆，下個月會付錢給我們。\n\n截止期限是下星期五，所以我們必須快點完成。Amy 做了一張時程表，列出我們每天要做的事。預算很少，所以我們不能花錢加畫額外的圖。昨天我在價格裡發現一個錯誤，馬上把它改好。然後我寫了一份簡短的報告，說明我們完成的事情。我們的主管楊先生看了報告，多給了我們一些時間。辦公室很安靜，所以我可以專心工作。",
+   "words": [
+    {
+     "word": "co-worker",
+     "base": "co-worker",
+     "zh": "同事"
+    },
+    {
+     "word": "team",
+     "base": "team",
+     "zh": "團隊"
+    },
+    {
+     "word": "project",
+     "base": "project",
+     "zh": "專案"
+    },
+    {
+     "word": "client",
+     "base": "client",
+     "zh": "客戶"
+    },
+    {
+     "word": "deadline",
+     "base": "deadline",
+     "zh": "截止期限"
+    },
+    {
+     "word": "schedule",
+     "base": "schedule",
+     "zh": "行程表；時程"
+    },
+    {
+     "word": "budget",
+     "base": "budget",
+     "zh": "預算"
+    },
+    {
+     "word": "mistake",
+     "base": "mistake",
+     "zh": "錯誤"
+    },
+    {
+     "word": "report",
+     "base": "report",
+     "zh": "報告"
+    },
+    {
+     "word": "manager",
+     "base": "manager",
+     "zh": "主管；經理"
+    },
+    {
+     "word": "focus",
+     "base": "focus",
+     "zh": "專心；專注"
+    }
+   ]
+  }
  },
  {
   "id": "art-11a",
@@ -983,7 +1237,73 @@ TOEIC.articles = [
     "explanation": "定位最後一段：解決不了也要回信，說明延遲原因並給明確期限；「Customers can accept a slow repair... They can never accept silence.」可推論她認為「讓客戶知道狀況」和速度一樣重要。折扣、公司規模文中都沒提。"
    }
   ],
-  "image": "img/articles/art-11a.jpg"
+  "image": "img/articles/art-11a.jpg",
+  "transfer": {
+   "passage": "Mr. Bai runs a small moving [[firm]] on the south side of the city. Three trucks, eight workers, and a lot of heavy furniture. Last spring he [[hired]] two extra helpers for the busy season. Before their first job, every new helper receives a full week of [[training]] on how to pack plates and glass safely. Each morning, the boxes are [[sorted]] into groups by room: kitchen, bedroom, office.\n\nCarrying a piano down narrow stairs is the most [[complicated]] task, so senior workers always lead it. The men work in two [[shifts]], one starting at seven and one at noon, and Mr. Bai pays his [[staff]] extra for weekend hours.\n\nTo the families who pay for a move, he made one clear [[promise]]: if the trucks arrive late, half the money comes back. Since then, [[complaints]] about late trucks have almost disappeared. [[Customers]] who have paid for one move usually stay [[loyal]]: they call again the next time they move and [[recommend]] the company to their neighbors.",
+   "passageZh": "白先生在城市南邊經營一家小型搬家公司。三輛卡車、八名工人，還有搬不完的重家具。去年春天，他為旺季僱用了兩名額外的幫手。在第一次出工之前，每位新幫手都要接受整整一週的訓練，學習如何安全打包盤子和玻璃。每天早上，箱子會依照房間分類成幾組：廚房、臥室、辦公室。\n\n把鋼琴搬下狹窄的樓梯是最複雜的工作，所以總是由資深工人帶頭。工人分成兩個班次，一班早上七點開始，一班中午開始；而白先生也會為週末工時多付員工薪水。\n\n對每一個付錢搬家的家庭，他許下一個明確的承諾：如果卡車遲到，退還一半費用。從那之後，關於卡車遲到的抱怨幾乎消失了。付過一次搬家費用的顧客通常會保持忠實：下次搬家時再次來電，並把這家公司推薦給鄰居。",
+   "words": [
+    {
+     "word": "firm",
+     "base": "firm",
+     "zh": "公司；商行"
+    },
+    {
+     "word": "hired",
+     "base": "hire",
+     "zh": "僱用"
+    },
+    {
+     "word": "training",
+     "base": "training",
+     "zh": "訓練"
+    },
+    {
+     "word": "sorted",
+     "base": "sort",
+     "zh": "分類；歸類"
+    },
+    {
+     "word": "complicated",
+     "base": "complicated",
+     "zh": "複雜的"
+    },
+    {
+     "word": "shifts",
+     "base": "shift",
+     "zh": "輪班；班次"
+    },
+    {
+     "word": "staff",
+     "base": "staff",
+     "zh": "員工；全體職員"
+    },
+    {
+     "word": "promise",
+     "base": "promise",
+     "zh": "承諾"
+    },
+    {
+     "word": "complaints",
+     "base": "complaint",
+     "zh": "抱怨；客訴"
+    },
+    {
+     "word": "Customers",
+     "base": "customer",
+     "zh": "顧客；客戶"
+    },
+    {
+     "word": "loyal",
+     "base": "loyal",
+     "zh": "忠實的"
+    },
+    {
+     "word": "recommend",
+     "base": "recommend",
+     "zh": "推薦"
+    }
+   ]
+  }
  },
  {
   "id": "art-11b",
@@ -1190,7 +1510,73 @@ TOEIC.articles = [
     "explanation": "定位最後一段：反對的人說借來的衣服 never fit perfectly，也不喜歡穿陌生人穿過的東西。可推論他們在意的是合身度和衛生感受。費用太低、外國公司文中都沒提到。"
    }
   ],
-  "image": "img/articles/art-11b.jpg"
+  "image": "img/articles/art-11b.jpg",
+  "transfer": {
+   "passage": "Riverside College opened a small room beside its career office last year. Inside hang fifty [[suits]] in different sizes, along with other [[items]] such as ties, belts, and dress shoes. Students preparing for job [[interviews]] may borrow anything for a week. The [[founder]] of the program, a retired teacher named Mrs. Porter, started it after a bright student missed a chance because he could not afford [[professional]] clothes. Local companies donate most of the clothing, and a [[factory]] that makes shirts sends new pieces every season. Students pay only a small cleaning [[fee]] when they return what they wore.\n\nAt first, some parents raised [[concerns]] about sharing clothes, but a laundry now [[delivers]] freshly washed pieces twice a week, and anything [[damaged]] is repaired or removed. The [[service]] has grown quickly. More than two hundred students have signed up as [[members]], and many say the room helped them walk into the meeting room with confidence.",
+   "passageZh": "河濱學院去年在就業輔導室旁開設了一間小房間。裡面掛著五十套不同尺寸的西裝，還有領帶、皮帶、皮鞋等其他品項。準備求職面試的學生可以借用任何東西一個星期。這個計畫的創辦人是一位退休教師波特太太，她成立這個計畫，是因為一位優秀的學生曾因買不起專業的服裝而錯失機會。大部分衣物由本地公司捐贈，一家製作襯衫的工廠每季也會送來新品。學生只需在歸還衣物時支付一筆小額清潔費用。\n\n起初，有些家長對共穿衣物提出疑慮，但現在一家洗衣店每週兩次遞送洗淨的衣物，任何損壞的衣物都會被修補或移除。這項服務成長得很快。已有超過兩百名學生登記成為會員，許多人說這個房間讓他們能帶著自信走進會議室。",
+   "words": [
+    {
+     "word": "suits",
+     "base": "suit",
+     "zh": "西裝；套裝"
+    },
+    {
+     "word": "items",
+     "base": "item",
+     "zh": "品項；物品"
+    },
+    {
+     "word": "interviews",
+     "base": "interview",
+     "zh": "面試"
+    },
+    {
+     "word": "founder",
+     "base": "founder",
+     "zh": "創辦人"
+    },
+    {
+     "word": "professional",
+     "base": "professional",
+     "zh": "專業的"
+    },
+    {
+     "word": "factory",
+     "base": "factory",
+     "zh": "工廠"
+    },
+    {
+     "word": "fee",
+     "base": "fee",
+     "zh": "費用"
+    },
+    {
+     "word": "concerns",
+     "base": "concern",
+     "zh": "疑慮；擔憂"
+    },
+    {
+     "word": "delivers",
+     "base": "deliver",
+     "zh": "遞送；配送"
+    },
+    {
+     "word": "damaged",
+     "base": "damage",
+     "zh": "損壞的"
+    },
+    {
+     "word": "service",
+     "base": "service",
+     "zh": "服務"
+    },
+    {
+     "word": "members",
+     "base": "member",
+     "zh": "會員"
+    }
+   ]
+  }
  },
  {
   "id": "art-12a",
@@ -1397,7 +1783,73 @@ TOEIC.articles = [
     "explanation": "推論題。第六段先寫三名員工無法專心，接著說公司的做法「practical」，蓋了可預約的安靜房間，然後仍簽下更小的租約。可見公司是解決問題而非放棄計畫。文中說房間是「anyone could reserve」，選項 C 錯。"
    }
   ],
-  "image": "img/articles/art-12a.jpg"
+  "image": "img/articles/art-12a.jpg",
+  "transfer": {
+   "passage": "Melody House, a small music school in Kaohsiung, has eight practice rooms that students may use after class. In the past, anyone could walk in and play at any time. The noise from the next room often made it hard to [[concentrate]]. Last year, a [[survey]] asked two hundred students about the rooms, and the answers showed the problem clearly. Written [[complaints]] about waiting filled three pages.\n\nSo the director, Ms. Kao, tried an [[experiment]] for one term. Students now [[reserve]] a room online at least one day [[in advance]], and each booking lasts fifty minutes. Two of her [[colleagues]] doubted the plan at first, but they were [[convinced]] when [[satisfaction]] scores rose sharply in the spring.\n\nThe change also saved money. The school stopped paying [[rent]] for two extra rooms in the building next door and let that [[lease]] end in June. The savings now pay for new [[equipment]], such as music stands and a second piano.",
+   "passageZh": "「旋律之家」是高雄一間小型音樂教室，有八間琴房供學生課後使用。過去任何人隨時都能走進去彈奏，隔壁房間傳來的聲音常常讓人難以專心。去年，一份問卷調查詢問了兩百位學生對琴房的看法，答案清楚呈現了問題。關於排隊等候的書面抱怨寫滿了三頁。\n\n於是主任高老師試行了一學期的實驗。學生現在必須至少提前一天上網預約琴房，每次預約五十分鐘。她的兩位同事起初對這個計畫存疑，但春季滿意度分數大幅上升後，他們便信服了。\n\n這項改變也省下了錢。學校不再支付隔壁大樓兩間額外房間的租金，並讓那份租約在六月到期。省下來的錢現在用來購置新設備，例如譜架和第二台鋼琴。",
+   "words": [
+    {
+     "word": "concentrate",
+     "base": "concentrate",
+     "zh": "專心；專注"
+    },
+    {
+     "word": "survey",
+     "base": "survey",
+     "zh": "問卷調查"
+    },
+    {
+     "word": "complaints",
+     "base": "complaint",
+     "zh": "抱怨；投訴"
+    },
+    {
+     "word": "experiment",
+     "base": "experiment",
+     "zh": "實驗；試驗"
+    },
+    {
+     "word": "reserve",
+     "base": "reserve",
+     "zh": "預約；預留"
+    },
+    {
+     "word": "in advance",
+     "base": "in advance",
+     "zh": "事先；提前"
+    },
+    {
+     "word": "colleagues",
+     "base": "colleague",
+     "zh": "同事"
+    },
+    {
+     "word": "convinced",
+     "base": "convince",
+     "zh": "被說服的；信服的"
+    },
+    {
+     "word": "satisfaction",
+     "base": "satisfaction",
+     "zh": "滿意；滿意度"
+    },
+    {
+     "word": "rent",
+     "base": "rent",
+     "zh": "租金"
+    },
+    {
+     "word": "lease",
+     "base": "lease",
+     "zh": "租約"
+    },
+    {
+     "word": "equipment",
+     "base": "equipment",
+     "zh": "設備；器材"
+    }
+   ]
+  }
  },
  {
   "id": "art-12b",
@@ -1836,7 +2288,73 @@ TOEIC.articles = [
     "explanation": "細節題。定位在第六段：凱托比現在評一份報價看四件事——價格、準時交貨紀錄、不良率，以及打電話問其他買家會聽到什麼。A、C、D 三種做法文中都沒有提到。"
    }
   ],
-  "image": "img/articles/art-13a.jpg"
+  "image": "img/articles/art-13a.jpg",
+  "transfer": {
+   "passage": "When Parkfield Fitness opened three new clubs, purchasing manager Elena Ruiz [[negotiated]] with an overseas maker of exercise bikes and signed a two-year purchase [[contract]] for eight hundred machines. Each bike carries a five-year [[warranty]]: if a part breaks, the maker must repair it at no cost. The first [[shipment]] of three hundred bikes left the factory in June, and the machines were stored in a rented [[warehouse]] near the port until the clubs were ready.\n\nTrouble arrived with the second batch. During a routine [[inspection]], workers found deep scratches on forty machines. The [[supplier]] accepted the fault and sent a full [[refund]] for the damaged units. To open on time, workers put in [[overtime]] repacking the good bikes, and Ruiz paid extra [[freight]] to fly new units in instead of sending them by sea. Even so, member [[complaints]] about missing equipment reached head office for weeks. At the next [[quarterly]] review, Ruiz reported what the low price had really cost.",
+   "passageZh": "帕克菲健身開設三家新場館時，採購經理 Elena Ruiz 與一家海外健身車製造商談妥條件，簽下一紙為期兩年、共八百台機器的採購合約。每台健身車附有五年保固：零件若損壞，製造商必須免費修理。第一批三百台健身車於六月出廠，機器先存放在港口附近租來的倉庫，等場館完工。\n\n麻煩出在第二批貨。一次例行檢驗中，工作人員發現四十台機器有很深的刮痕。供應商承認疏失，針對受損品項寄回全額退款。為了如期開幕，工人加班重新包裝完好的機器，Ruiz 還額外支付運費，改以空運送來新機，而不是走海運。即便如此，會員抱怨器材不足的客訴仍連續數週傳到總部。在下一次季度檢討會上，Ruiz 報告了這筆低價交易真正的代價。",
+   "words": [
+    {
+     "word": "negotiated",
+     "base": "negotiate",
+     "zh": "談成、協商"
+    },
+    {
+     "word": "contract",
+     "base": "contract",
+     "zh": "合約"
+    },
+    {
+     "word": "warranty",
+     "base": "warranty",
+     "zh": "保固"
+    },
+    {
+     "word": "shipment",
+     "base": "shipment",
+     "zh": "一批貨、出貨"
+    },
+    {
+     "word": "warehouse",
+     "base": "warehouse",
+     "zh": "倉庫"
+    },
+    {
+     "word": "inspection",
+     "base": "inspection",
+     "zh": "檢驗"
+    },
+    {
+     "word": "supplier",
+     "base": "supplier",
+     "zh": "供應商"
+    },
+    {
+     "word": "refund",
+     "base": "refund",
+     "zh": "退款"
+    },
+    {
+     "word": "overtime",
+     "base": "overtime",
+     "zh": "加班"
+    },
+    {
+     "word": "freight",
+     "base": "freight",
+     "zh": "貨運、運費"
+    },
+    {
+     "word": "complaints",
+     "base": "complaint",
+     "zh": "客訴、抱怨"
+    },
+    {
+     "word": "quarterly",
+     "base": "quarterly",
+     "zh": "每季的"
+    }
+   ]
+  }
  },
  {
   "id": "art-13b",
@@ -2075,7 +2593,73 @@ TOEIC.articles = [
     "explanation": "細節題。定位在第六段：開店的學員有四分之一撐不過兩年，欠下的貨款娜迪雅直接認賠。B 與第一段「免費上課」矛盾，A 與 D 文中都沒有依據。"
    }
   ],
-  "image": "img/articles/art-13b.jpg"
+  "image": "img/articles/art-13b.jpg",
+  "transfer": {
+   "passage": "When Marcus Hale opened his first language school, he signed a five-year [[lease]] on an old building downtown. Today his [[chain]] has six schools, and the sixth [[branch]] opened last month in a small coastal town.\n\nStudents [[enroll]] online and attend evening classes twice a week. To keep prices low, Hale buys textbooks from publishers at a [[wholesale]] price. Finding teachers is harder than finding students. Local [[competitors]] had already hired the most experienced instructors, so Hale travels to universities abroad to [[recruit]] new ones. He now manages a [[staff]] of forty, and he pays for online [[advertising]] aimed at adults who need English for their careers.\n\nHis [[strategy]] is simple: open schools only in towns that bigger companies ignore. Each new location is expensive at first, but Hale treats every building as a long-term [[investment]]. Most of his schools begin to earn a steady [[profit]] within two years.",
+   "passageZh": "馬可斯・海爾開設第一間語言學校時，簽下一份五年的租約，租了市中心一棟老建築。如今他的連鎖企業已有六間學校，第六間分店上個月在一個小海濱小鎮開幕。\n\n學生在線上報名，每週兩個晚上來上課。為了壓低價格，海爾直接向出版社以批發價購買教科書。找老師比找學生還難。當地的同業早就聘走了最有經驗的講師，所以海爾親自前往國外的大學招募新血。他現在管理四十名員工，並花錢投放網路廣告，鎖定需要用英語發展職涯的成年人。\n\n他的策略很簡單：只在大公司忽略的城鎮開學校。每個新據點一開始都花費不小，但海爾把每一棟建築都視為長期投資。他旗下多數學校在兩年內就開始賺進穩定的利潤。",
+   "words": [
+    {
+     "word": "lease",
+     "base": "lease",
+     "zh": "租約"
+    },
+    {
+     "word": "chain",
+     "base": "chain",
+     "zh": "連鎖企業"
+    },
+    {
+     "word": "branch",
+     "base": "branch",
+     "zh": "分店、分公司"
+    },
+    {
+     "word": "enroll",
+     "base": "enroll",
+     "zh": "報名、註冊"
+    },
+    {
+     "word": "wholesale",
+     "base": "wholesale",
+     "zh": "批發的"
+    },
+    {
+     "word": "competitors",
+     "base": "competitor",
+     "zh": "同業、對手"
+    },
+    {
+     "word": "recruit",
+     "base": "recruit",
+     "zh": "招募"
+    },
+    {
+     "word": "staff",
+     "base": "staff",
+     "zh": "員工"
+    },
+    {
+     "word": "advertising",
+     "base": "advertising",
+     "zh": "廣告"
+    },
+    {
+     "word": "strategy",
+     "base": "strategy",
+     "zh": "策略"
+    },
+    {
+     "word": "investment",
+     "base": "investment",
+     "zh": "投資"
+    },
+    {
+     "word": "profit",
+     "base": "profit",
+     "zh": "利潤"
+    }
+   ]
+  }
  },
  {
   "id": "art-14a",
@@ -2321,7 +2905,73 @@ TOEIC.articles = [
     "explanation": "推論題，定位第七段：一年二十萬美元的樸素措施，換來離職率減半與利潤率上升一個百分點，可推知投入不高的條件改善其實划算。"
    }
   ],
-  "image": "img/articles/art-14a.jpg"
+  "image": "img/articles/art-14a.jpg",
+  "transfer": {
+   "passage": "When Dana Park became housekeeping manager at the Bayview Hotel, she inherited a department where [[turnover]] was out of control: cleaners kept quitting, and every departure set off a costly cycle.\n\nEach time someone handed in a [[resignation]], Dana had to post the [[vacancy]] online and read forms from dozens of [[applicants]]. While the position sat empty, the remaining cleaners covered extra [[shifts]], and paying [[overtime]] for those hours cost more than a normal hourly [[wage]]. The number of rooms made ready each day, the department's measure of [[productivity]], fell when the hotel was busiest.\n\nDana paid a small [[bonus]] on top of regular pay to anyone who completed a full year, and she trained a senior cleaner as a floor [[supervisor]] so new workers had someone to guide them. The change in [[morale]] came first: cleaners joked at lunch again and told her they felt valued. What followed was, quite simply, [[retention]]: people stayed. By the second summer, so few cleaners quit that Dana rarely needed to advertise.",
+   "passageZh": "當 Dana Park 成為 Bayview 飯店的房務部經理時，她接手了一個人員流動率完全失控的部門：清潔人員不斷離職，而每一次有人離開，都會啟動一輪代價高昂的循環。\n\n每當有人遞出辭呈，Dana 就得把職缺刊登到網路上，並閱讀數十位應徵者的表格。在職位懸空的期間，留下來的清潔人員得多輪好幾個班次，而為那些時數支付的加班費，比正常的時薪工資還要高。每天整理完成的房間數，也就是部門衡量生產力的指標，在飯店最忙的時候不斷下滑。\n\nDana 開始在正常薪資之外，發給做滿一整年的人一筆小額獎金，也培訓一位資深清潔人員擔任樓層督導，讓新進人員隨時有人帶領。士氣最先出現轉變：清潔人員午餐時又開始說笑，並告訴她自己終於覺得被重視。接著出現的，說穿了就是留任：大家留了下來。到了第二年夏天，離職的清潔人員少到 Dana 幾乎不再需要刊登徵人廣告。",
+   "words": [
+    {
+     "word": "turnover",
+     "base": "turnover",
+     "zh": "人員流動率"
+    },
+    {
+     "word": "resignation",
+     "base": "resignation",
+     "zh": "辭職"
+    },
+    {
+     "word": "vacancy",
+     "base": "vacancy",
+     "zh": "職缺"
+    },
+    {
+     "word": "applicants",
+     "base": "applicant",
+     "zh": "應徵者"
+    },
+    {
+     "word": "shifts",
+     "base": "shift",
+     "zh": "班次、輪班"
+    },
+    {
+     "word": "overtime",
+     "base": "overtime",
+     "zh": "加班（費）"
+    },
+    {
+     "word": "wage",
+     "base": "wage",
+     "zh": "工資"
+    },
+    {
+     "word": "productivity",
+     "base": "productivity",
+     "zh": "生產力"
+    },
+    {
+     "word": "bonus",
+     "base": "bonus",
+     "zh": "獎金"
+    },
+    {
+     "word": "supervisor",
+     "base": "supervisor",
+     "zh": "主管、督導"
+    },
+    {
+     "word": "morale",
+     "base": "morale",
+     "zh": "士氣"
+    },
+    {
+     "word": "retention",
+     "base": "retention",
+     "zh": "留任率、留存"
+    }
+   ]
+  }
  },
  {
   "id": "art-14b",
@@ -2567,7 +3217,73 @@ TOEIC.articles = [
     "explanation": "推論題，定位第七段並呼應第三段：第二家公司只賣自家咖啡、定期補貨，說明真正撐住訂閱的是既有需求所形成的習慣，而非開箱的驚喜。"
    }
   ],
-  "image": "img/articles/art-14b.jpg"
+  "image": "img/articles/art-14b.jpg",
+  "transfer": {
+   "passage": "When Marcus Hale turned his cycling newsletter into a printed monthly magazine, two [[investors]] backed him with early funding. To grow quickly, he spent most of that money on [[advertising]], and within a year the magazine had thirty thousand [[subscribers]] paying to receive it at home.\n\nGrowth, however, hid a weakness. Printing costs rose, so Hale rented a [[warehouse]] to store unsold copies, and the [[inventory]] piling up there tied up cash he did not have. His sales [[forecast]] assumed readers would stay for years, but many [[cancelled]] after only three issues, and the small group of [[loyal]] readers who remained could not cover the losses.\n\nThe rescue came from the cost side. Hale learned to [[negotiate]] with paper [[suppliers]] directly, buying at [[wholesale]] prices instead of through an agent, and he began printing only enough copies to match real [[demand]]. The magazine is smaller now, but it finally pays for itself.",
+   "passageZh": "當馬可斯・海爾把他的自行車通訊改成一本印刷月刊時，兩位投資人以早期資金支持他。為了快速成長，他把那筆錢大部分花在廣告宣傳上，一年之內，雜誌就有了三萬名付費在家收閱的訂閱者。\n\n然而，成長掩蓋了一個弱點。印刷成本上漲，海爾租了一座倉庫來存放賣不掉的雜誌，而堆在那裡的庫存綁住了他根本沒有的現金。他的銷售預測假設讀者會持續訂閱好幾年，但許多人只收了三期就取消了，留下來的一小群忠實讀者無法彌補虧損。\n\n轉機來自成本面。海爾學會直接與紙張供應商協商，改以批發價採購，不再透過中間商；他也開始只印足以符合實際需求的份數。這本雜誌如今規模變小了，但終於能自負盈虧。",
+   "words": [
+    {
+     "word": "investors",
+     "base": "investor",
+     "zh": "投資人"
+    },
+    {
+     "word": "advertising",
+     "base": "advertising",
+     "zh": "廣告宣傳"
+    },
+    {
+     "word": "subscribers",
+     "base": "subscriber",
+     "zh": "訂閱者"
+    },
+    {
+     "word": "warehouse",
+     "base": "warehouse",
+     "zh": "倉庫"
+    },
+    {
+     "word": "inventory",
+     "base": "inventory",
+     "zh": "庫存"
+    },
+    {
+     "word": "forecast",
+     "base": "forecast",
+     "zh": "預測"
+    },
+    {
+     "word": "cancelled",
+     "base": "cancel",
+     "zh": "取消"
+    },
+    {
+     "word": "loyal",
+     "base": "loyal",
+     "zh": "忠實的"
+    },
+    {
+     "word": "negotiate",
+     "base": "negotiate",
+     "zh": "協商"
+    },
+    {
+     "word": "suppliers",
+     "base": "supplier",
+     "zh": "供應商"
+    },
+    {
+     "word": "wholesale",
+     "base": "wholesale",
+     "zh": "批發的"
+    },
+    {
+     "word": "demand",
+     "base": "demand",
+     "zh": "需求"
+    }
+   ]
+  }
  },
  {
   "id": "art-15a",
@@ -2724,7 +3440,68 @@ TOEIC.articles = [
     "explanation": "第四段說打哈欠會傳染，看到別人打，自己很快也會跟著打。"
    }
   ],
-  "image": "img/articles/art-15a.jpg"
+  "image": "img/articles/art-15a.jpg",
+  "transfer": {
+   "passage": "Last Friday, Amy had a long afternoon meeting. The topic was [[boring]], and the speaker talked very slowly. The room was warm, and its [[temperature]] kept going up. Soon Amy felt sleepy, not [[alert]]. She tried hard to stay awake. But she [[yawned]] three times. Her boss looked at her, and she felt [[embarrassed]].\n\nDoctors say this is often a [[sign]] that the brain is tired. Some scientists think a big, deep breath brings in more [[oxygen]]. Others think it helps [[cool]] the head, like a small fan. One thing is clear: the action is [[catching]]. After Amy, two co-workers did the same thing.\n\nNow Amy has a new [[habit]]. Before every meeting, she drinks cold water and opens a window. The fresh air gives her [[plenty of]] energy.",
+   "passageZh": "上週五，Amy 開了一場漫長的下午會議。主題很無聊，講者又講得很慢。會議室很悶熱，溫度一直往上升。很快地，Amy 覺得昏昏欲睡，一點也不清醒。她努力想保持清醒，但還是打了三次哈欠。老闆看了她一眼，讓她覺得很尷尬。\n\n醫生說，這通常是大腦疲倦的跡象。有些科學家認為，深深吸一大口氣能帶進更多氧氣。也有人認為，這像一台小電扇，能幫頭部降溫。有一件事很清楚：這個動作是會傳染的。在 Amy 之後，兩位同事也做了同樣的事。\n\n現在 Amy 有一個新習慣。每次開會前，她會喝冰水、打開窗戶。新鮮空氣讓她有充足的活力。",
+   "words": [
+    {
+     "word": "boring",
+     "base": "boring",
+     "zh": "無聊的"
+    },
+    {
+     "word": "temperature",
+     "base": "temperature",
+     "zh": "溫度"
+    },
+    {
+     "word": "alert",
+     "base": "alert",
+     "zh": "警覺的；清醒的"
+    },
+    {
+     "word": "yawned",
+     "base": "yawn",
+     "zh": "打哈欠"
+    },
+    {
+     "word": "embarrassed",
+     "base": "embarrassed",
+     "zh": "尷尬的；難為情的"
+    },
+    {
+     "word": "sign",
+     "base": "sign",
+     "zh": "跡象；徵兆"
+    },
+    {
+     "word": "oxygen",
+     "base": "oxygen",
+     "zh": "氧氣"
+    },
+    {
+     "word": "cool",
+     "base": "cool",
+     "zh": "使降溫；冷卻"
+    },
+    {
+     "word": "catching",
+     "base": "catching",
+     "zh": "會傳染的；有感染力的"
+    },
+    {
+     "word": "habit",
+     "base": "habit",
+     "zh": "習慣"
+    },
+    {
+     "word": "plenty of",
+     "base": "plenty of",
+     "zh": "充足的；很多的"
+    }
+   ]
+  }
  },
  {
   "id": "art-15b",
@@ -2888,7 +3665,73 @@ TOEIC.articles = [
     "explanation": "第五段說最好的袋子是你已經有的那一個，重點在重複使用。"
    }
   ],
-  "image": "img/articles/art-15b.jpg"
+  "image": "img/articles/art-15b.jpg",
+  "transfer": {
+   "passage": "Green Hill is a small weekend market by the sea. Many [[shoppers]] come to buy fruit and flowers. Last spring, sellers found old cups on the beach. Some were made of [[plastic]]. It does not [[break down]] in nature for years. Birds can eat small pieces [[by mistake]]. This does great [[harm]] to sea animals.\n\nThe sellers asked [[experts]] on sea life for help. Paper cups are not perfect either, they said. Making paper takes trees from [[forests]]. It also uses a lot of [[energy]], often from burning [[fuel]]. The best choice [[depends on]] how you use a cup. So the plan is simple. Bring your own cup and [[recycle]] it later. Now the beach is clean, and the [[environment]] is healthy again.",
+   "passageZh": "綠丘是海邊一個小型的週末市集。許多購物者來買水果和花。去年春天，攤商在海灘上發現了舊杯子。有些是塑膠做的。它在自然中好幾年都不會分解。鳥可能不小心吃下小碎片。這對海洋動物造成很大的傷害。\n\n攤商向研究海洋生物的專家求助。他們說，紙杯也不完美。造紙要用森林裡的樹。它也要用很多能源，而且常常來自燃燒燃料。最好的選擇取決於你怎麼使用杯子。所以計畫很簡單。自備杯子，之後再回收。現在海灘乾淨了，環境也再次恢復健康。",
+   "words": [
+    {
+     "word": "shoppers",
+     "base": "shopper",
+     "zh": "購物者；顧客"
+    },
+    {
+     "word": "plastic",
+     "base": "plastic",
+     "zh": "塑膠"
+    },
+    {
+     "word": "break down",
+     "base": "break down",
+     "zh": "分解"
+    },
+    {
+     "word": "by mistake",
+     "base": "by mistake",
+     "zh": "不小心地；誤"
+    },
+    {
+     "word": "harm",
+     "base": "harm",
+     "zh": "傷害；害處"
+    },
+    {
+     "word": "experts",
+     "base": "expert",
+     "zh": "專家"
+    },
+    {
+     "word": "forests",
+     "base": "forest",
+     "zh": "森林"
+    },
+    {
+     "word": "energy",
+     "base": "energy",
+     "zh": "能源"
+    },
+    {
+     "word": "fuel",
+     "base": "fuel",
+     "zh": "燃料"
+    },
+    {
+     "word": "depends on",
+     "base": "depend on",
+     "zh": "取決於"
+    },
+    {
+     "word": "recycle",
+     "base": "recycle",
+     "zh": "回收再利用"
+    },
+    {
+     "word": "environment",
+     "base": "environment",
+     "zh": "環境"
+    }
+   ]
+  }
  },
  {
   "id": "art-16a",
@@ -3095,7 +3938,73 @@ TOEIC.articles = [
     "explanation": "推論題。第六段說新科技出現得比規則快，並以外送機器人、無人機類比，暗示今天的處理方式預示未來。"
    }
   ],
-  "image": "img/articles/art-16a.jpg"
+  "image": "img/articles/art-16a.jpg",
+  "transfer": {
+   "passage": "Bramble Toys makes ride-on toys for children. Its best sellers are small two-wheeled [[scooters]], which a child stands on and pushes with one foot. Last winter, the company received bad news. After three [[accidents]] in which children fell because a wheel came loose, safety [[officials]] visited the factory. They [[banned]] sales of the old model at once and [[required]] the company to fix every unit already sold.\n\nParents can type the wheel code into the company's free phone [[app]] to check if their toy needs a new part, or mail it back at no cost. The company also sent ten large [[vehicles]], each with a driver and a repair team, to smaller towns. That week, the repair centers were [[crowded]] with worried families.\n\nThe new wheels use a stronger locking [[technology]] and passed every safety test. Last month, the city government gave the factory a new [[permit]] to sell the model again. [[Supporters]] of strict toy laws say quick action brings two lasting [[benefits]]: safer products and stronger customer trust.",
+   "passageZh": "布蘭堡玩具生產兒童騎乘玩具。他們最暢銷的產品是小型兩輪滑板車，孩子站在上面、用單腳推動前進。去年冬天，公司收到了壞消息。三起孩童因輪子鬆脫而跌倒的事故發生後，安全官員造訪了工廠。他們立即禁止舊款的銷售，並要求公司修復每一台已售出的產品。\n\n家長可以把輪組編號輸入公司免費的手機應用程式，查看玩具是否需要更換零件，也可以免費把玩具寄回。公司還派出十輛大型車輛，每輛都配有司機與維修小組，前往較小的城鎮。那一週，各維修中心擠滿了憂心的家庭。\n\n新輪組採用更堅固的鎖定科技，通過了所有安全測試。上個月，市政府發給工廠新的許可證，讓這款產品重新上市。支持嚴格玩具法規的人士說，迅速的行動帶來兩項長遠的好處：更安全的產品，以及更強的顧客信任。",
+   "words": [
+    {
+     "word": "scooters",
+     "base": "scooter",
+     "zh": "滑板車"
+    },
+    {
+     "word": "accidents",
+     "base": "accident",
+     "zh": "事故"
+    },
+    {
+     "word": "officials",
+     "base": "official",
+     "zh": "官員"
+    },
+    {
+     "word": "banned",
+     "base": "ban",
+     "zh": "禁止"
+    },
+    {
+     "word": "required",
+     "base": "require",
+     "zh": "要求"
+    },
+    {
+     "word": "app",
+     "base": "app",
+     "zh": "應用程式"
+    },
+    {
+     "word": "vehicles",
+     "base": "vehicle",
+     "zh": "車輛"
+    },
+    {
+     "word": "crowded",
+     "base": "crowded",
+     "zh": "擁擠的"
+    },
+    {
+     "word": "technology",
+     "base": "technology",
+     "zh": "科技"
+    },
+    {
+     "word": "permit",
+     "base": "permit",
+     "zh": "許可證"
+    },
+    {
+     "word": "Supporters",
+     "base": "supporter",
+     "zh": "支持者"
+    },
+    {
+     "word": "benefits",
+     "base": "benefit",
+     "zh": "好處"
+    }
+   ]
+  }
  },
  {
   "id": "art-16b",
@@ -3302,7 +4211,73 @@ TOEIC.articles = [
     "explanation": "推論題。第六段舉出固定就寢時間、昏暗房間、睡前少看螢幕，說明小習慣會影響睡眠。"
    }
   ],
-  "image": "img/articles/art-16b.jpg"
+  "image": "img/articles/art-16b.jpg",
+  "transfer": {
+   "passage": "Lin Wei-Ming works at a busy call center that runs three [[shifts]] around the clock. For years he sat all day, ate at his desk, and drove home tired. He often lost focus during long calls and made small [[mistakes]] when typing order numbers.\n\nHis doctor gave him simple advice: walk for thirty minutes every day. Studies have long [[linked]] regular walking to better health, she explained. Movement sends more blood to the [[brain]], carries [[waste]] out of the body, and helps it [[repair]] the tiny tears in tired muscles.\n\nSix months later, Wei-Ming feels like a new man. His [[immune]] system is stronger, and he catches fewer colds. Names and numbers stay in his [[memory]] longer. He can hold his [[attention]] through an hour-long call without drifting. At lunch he now [[rests]] under the trees for twenty minutes instead of looking at his phone. His team leader says the [[quality]] of his work has never been higher. One simple habit, he tells new workers, [[improves]] almost every part of the day.",
+   "passageZh": "林偉明在一間全天候排三個班次的忙碌客服中心工作。多年來，他整天坐著、在座位上吃飯、下班開車回家時總是疲憊不堪。長時間通話時他常常失去專注，輸入訂單號碼時也會犯下小錯誤。\n\n醫生給了他簡單的建議：每天走路三十分鐘。她解釋，研究早已把規律步行和更好的健康連結在一起。運動會把更多血液送到大腦，把廢物帶出身體，也幫助身體修復疲勞肌肉裡的細微撕裂。\n\n六個月後，偉明覺得自己煥然一新。他的免疫系統更強了，感冒次數變少。名字和數字能在他的記憶裡留得更久。他可以在一小時的通話中保持注意力不渙散。午休時，他現在會在樹下休息二十分鐘，而不是滑手機。組長說他的工作品質從來沒有這麼好過。他告訴新同事：一個簡單的習慣，幾乎能改善一天中的每一個部分。",
+   "words": [
+    {
+     "word": "shifts",
+     "base": "shift",
+     "zh": "輪班"
+    },
+    {
+     "word": "mistakes",
+     "base": "mistake",
+     "zh": "錯誤"
+    },
+    {
+     "word": "linked",
+     "base": "link",
+     "zh": "使有關聯"
+    },
+    {
+     "word": "brain",
+     "base": "brain",
+     "zh": "大腦"
+    },
+    {
+     "word": "waste",
+     "base": "waste",
+     "zh": "廢物"
+    },
+    {
+     "word": "repair",
+     "base": "repair",
+     "zh": "修復"
+    },
+    {
+     "word": "immune",
+     "base": "immune",
+     "zh": "免疫的"
+    },
+    {
+     "word": "memory",
+     "base": "memory",
+     "zh": "記憶力"
+    },
+    {
+     "word": "attention",
+     "base": "attention",
+     "zh": "注意力"
+    },
+    {
+     "word": "rests",
+     "base": "rest",
+     "zh": "休息"
+    },
+    {
+     "word": "quality",
+     "base": "quality",
+     "zh": "品質"
+    },
+    {
+     "word": "improves",
+     "base": "improve",
+     "zh": "改善"
+    }
+   ]
+  }
  },
  {
   "id": "art-17a",
@@ -3509,7 +4484,73 @@ TOEIC.articles = [
     "explanation": "第五段明說外送員的收入常取決於完成的訂單數，且他們在車陣與雨中工作，餐廳幾乎無法控制這段服務。"
    }
   ],
-  "image": "img/articles/art-17a.jpg"
+  "image": "img/articles/art-17a.jpg",
+  "transfer": {
+   "passage": "Mr. Osman runs a small curry house on a quiet street, far from the train station. Few people walk past his door, and empty tables were common. Last year the landlord raised the [[rent]], and Osman knew the shop could not [[survive]] on walk-in [[customers]] alone.\n\nHis daughter suggested joining two online food [[platforms]]. She photographed every meal and rewrote the [[menus]] for phone screens, with short names and clear prices. Each of them charges a service [[fee]] of thirty percent per order, so Osman also hired three [[riders]] who carry nearby orders to homes by motorcycle. That way, more of the money stays as [[profits]] after costs are paid.\n\nToday the kitchen [[staff]] begin cooking at ten each morning, and warm boxes leave the shop every few minutes. The [[dining room]] holds only six tables now, but many guests say eating at home is more [[convenient]] than driving across town. Home [[delivery]] saved a business that the quiet street could not.",
+   "passageZh": "Osman 先生在一條安靜的街上經營一家小咖哩餐館，離火車站很遠。路過店門的人不多，空桌是常態。去年房東調漲租金，Osman 明白這家店光靠上門的顧客撐不下去。\n\n他的女兒建議加入兩個線上訂餐平台。她替每道餐點拍照，並重寫了適合手機畫面的菜單，名稱簡短、價格清楚。每個平台每筆訂單都收取三成服務費，所以 Osman 又僱了三名外送員，騎機車把附近的餐點送到府。這樣一來，扣掉成本之後留下的利潤就更多。\n\n現在廚房員工每天早上十點開始煮餐，溫熱的餐盒每隔幾分鐘就送出店門。內用區如今只剩六張桌子，但許多客人說，在家吃飯比開車橫越城區方便得多。外送救回了這家安靜街道救不回的店。",
+   "words": [
+    {
+     "word": "rent",
+     "base": "rent",
+     "zh": "租金"
+    },
+    {
+     "word": "survive",
+     "base": "survive",
+     "zh": "撐過；存活"
+    },
+    {
+     "word": "customers",
+     "base": "customer",
+     "zh": "顧客"
+    },
+    {
+     "word": "platforms",
+     "base": "platform",
+     "zh": "平台"
+    },
+    {
+     "word": "menus",
+     "base": "menu",
+     "zh": "菜單"
+    },
+    {
+     "word": "fee",
+     "base": "fee",
+     "zh": "費用；手續費"
+    },
+    {
+     "word": "riders",
+     "base": "rider",
+     "zh": "外送員；騎士"
+    },
+    {
+     "word": "profits",
+     "base": "profit",
+     "zh": "利潤"
+    },
+    {
+     "word": "staff",
+     "base": "staff",
+     "zh": "員工；人手"
+    },
+    {
+     "word": "dining room",
+     "base": "dining room",
+     "zh": "內用區；餐廳用餐空間"
+    },
+    {
+     "word": "convenient",
+     "base": "convenient",
+     "zh": "方便的"
+    },
+    {
+     "word": "delivery",
+     "base": "delivery",
+     "zh": "外送；遞送"
+    }
+   ]
+  }
  },
  {
   "id": "art-17b",
@@ -3716,7 +4757,73 @@ TOEIC.articles = [
     "explanation": "最後一段用他們說明群體保護：當社群裡多數人有保護力，無法接種的人就靠周圍的人得到保護。"
    }
   ],
-  "image": "img/articles/art-17b.jpg"
+  "image": "img/articles/art-17b.jpg",
+  "transfer": {
+   "passage": "Next month, the sales team at Harper Trading will attend a trade fair overseas. Their manager, Ms. Lin, booked a clinic visit before the trip.\n\nThe nurse explained that illness abroad may come from a [[virus]] that copies itself inside the body, or from [[bacteria]] that grow in badly cooked street food. Colds also [[spread]] fast in crowded airports.\n\nThe [[vaccines]] she gives today teach the body to fight a disease before the real one arrives. Afterward, the body makes its own [[antibodies]], which [[stick to]] the surface of the invader and mark it for attack. In this way the [[immune system]], the body's inner network of defenses, remembers the enemy for years.\n\nEach traveler gets one shot today and returns for a second [[dose]] four weeks later. A few people notice minor [[side effects]], such as a sore arm or a [[mild]] [[fever]] that passes within a day. Full [[protection]] arrives about two weeks after the final shot, in time for the fair.",
+   "passageZh": "下個月，哈波貿易公司的業務團隊將到海外參加一場商展。出發前，他們的經理林小姐預約了一次診所看診。\n\n護理師說明，在國外生病可能來自一種會在體內自我複製的病毒，也可能來自在未煮熟街頭食物中滋生的細菌。感冒也會在擁擠的機場快速傳播。\n\n她今天施打的疫苗，會在身體遇到真正的疾病之前，先教身體如何對抗它。之後，身體會製造自己的抗體；抗體會黏附於入侵者的表面，把它標記出來以便攻擊。透過這種方式，免疫系統——也就是身體內部的防禦網路——會把敵人記住很多年。\n\n每位旅客今天先打一針，四週後回診接種第二劑。少數人會出現輕微的副作用，例如手臂痠痛，或一天內就會退去的輕微發燒。完整的保護力大約在最後一針的兩週後產生，正好趕上商展。",
+   "words": [
+    {
+     "word": "virus",
+     "base": "virus",
+     "zh": "病毒"
+    },
+    {
+     "word": "bacteria",
+     "base": "bacteria",
+     "zh": "細菌"
+    },
+    {
+     "word": "spread",
+     "base": "spread",
+     "zh": "傳播；散布"
+    },
+    {
+     "word": "vaccines",
+     "base": "vaccine",
+     "zh": "疫苗"
+    },
+    {
+     "word": "antibodies",
+     "base": "antibody",
+     "zh": "抗體"
+    },
+    {
+     "word": "stick to",
+     "base": "stick to",
+     "zh": "黏附於"
+    },
+    {
+     "word": "immune system",
+     "base": "immune system",
+     "zh": "免疫系統"
+    },
+    {
+     "word": "dose",
+     "base": "dose",
+     "zh": "劑量；一劑"
+    },
+    {
+     "word": "side effects",
+     "base": "side effect",
+     "zh": "副作用"
+    },
+    {
+     "word": "mild",
+     "base": "mild",
+     "zh": "輕微的"
+    },
+    {
+     "word": "fever",
+     "base": "fever",
+     "zh": "發燒"
+    },
+    {
+     "word": "protection",
+     "base": "protection",
+     "zh": "保護力"
+    }
+   ]
+  }
  },
  {
   "id": "art-18a",
@@ -3955,7 +5062,73 @@ TOEIC.articles = [
     "explanation": "推論題。最後一段指出受惠者是「了解工具擅長什麼、對成果負責、能說明採用或否決理由」的人，並收在 It is judgment，暗示未來的價值來自判斷與負責，而非操作速度。"
    }
   ],
-  "image": "img/articles/art-18a.jpg"
+  "image": "img/articles/art-18a.jpg",
+  "transfer": {
+   "passage": "When Mina Park became the office manager of the Riverstone Hotel, most paperwork was still done by hand. Last spring, the hotel bought a new writing program to help her small team.\n\nEvery season, the hotel signs long [[contracts]] with two tour companies. Each agreement contains a strict [[clause]] about late payment. The program can [[summarize]] a forty-page agreement into a single short page. It also helps the front desk [[draft]] a first, rough version of reply letters, which the staff then correct before sending. The English in these letters sounds natural and [[fluent]]. Room bills, once typed one by one, are now fully [[automated]].\n\nStill, Mina is careful. She checks the [[accuracy]] of every total, because the program sometimes makes small number mistakes. Monthly sales figures go into [[spreadsheets]], where each column adds itself. To protect guests' [[privacy]], the head office wrote two new [[policies]]: the rules [[forbid]] staff from typing guest names or addresses into the program. And deciding which complaint is serious still needs human [[judgment]].",
+   "passageZh": "Mina Park 接任 Riverstone 飯店的辦公室主任時，大部分文書工作仍靠人工完成。去年春天，飯店買了一套新的寫作程式，來協助她的小團隊。\n\n每一季，飯店都會和兩家旅行社簽下長長的合約。每份協議裡都有一條關於逾期付款的嚴格條款。這套程式能把四十頁的協議摘要成短短一頁。它也協助櫃檯草擬回覆信件的初稿，員工再修改後寄出。這些信的英文讀起來自然又流暢。過去得一筆一筆打字的房帳，如今已完全自動化。\n\n即便如此，Mina 仍然很小心。她會核對每筆總額的準確度，因為程式偶爾會出現小的數字錯誤。每月的營收數字會輸入試算表，每個欄位都會自動加總。為了保護房客的隱私，總公司訂了兩條新政策：規定禁止員工把房客姓名或地址輸入程式。至於哪一件客訴才算嚴重，仍得靠人的判斷力來決定。",
+   "words": [
+    {
+     "word": "contracts",
+     "base": "contract",
+     "zh": "合約"
+    },
+    {
+     "word": "clause",
+     "base": "clause",
+     "zh": "條款"
+    },
+    {
+     "word": "summarize",
+     "base": "summarize",
+     "zh": "摘要;概述"
+    },
+    {
+     "word": "draft",
+     "base": "draft",
+     "zh": "草擬"
+    },
+    {
+     "word": "fluent",
+     "base": "fluent",
+     "zh": "流暢的"
+    },
+    {
+     "word": "automated",
+     "base": "automate",
+     "zh": "自動化"
+    },
+    {
+     "word": "accuracy",
+     "base": "accuracy",
+     "zh": "準確度"
+    },
+    {
+     "word": "spreadsheets",
+     "base": "spreadsheet",
+     "zh": "試算表"
+    },
+    {
+     "word": "privacy",
+     "base": "privacy",
+     "zh": "隱私"
+    },
+    {
+     "word": "policies",
+     "base": "policy",
+     "zh": "政策;規定"
+    },
+    {
+     "word": "forbid",
+     "base": "forbid",
+     "zh": "禁止"
+    },
+    {
+     "word": "judgment",
+     "base": "judgment",
+     "zh": "判斷力"
+    }
+   ]
+  }
  },
  {
   "id": "art-18b",
@@ -4187,7 +5360,73 @@ TOEIC.articles = [
     "explanation": "推論題。第六段說結論尚未明確，並指出「檢出物質不等於證明有害」，最後一句更點明這種謹慎有時被誤讀成好消息，暗示讀者不該把不確定當成安全保證。"
    }
   ],
-  "image": "img/articles/art-18b.jpg"
+  "image": "img/articles/art-18b.jpg",
+  "transfer": {
+   "passage": "Ms. Porter runs the water plant beside Gray Lake. Last month, under a [[microscope]], every drop she tested showed plastic bits beside the [[plankton]], the tiny floating creatures that young fish eat.\n\nShe found three sources. Years of sun had turned the old dock's plastic boards [[brittle]]; they cracked into sharp [[fragments]] when boats hit them, and heavy pieces sank into the [[sediment]] at the bottom. Sports clothes are made of [[synthetic]] cloth, not natural cotton or wool, and every wash pulls tiny [[fibers]], short threads of that cloth, down the drain. When cars brake on the lake road, their [[tires]] leave rubber dust that rain washes into the lake.\n\nThis plastic [[resists]] the bacteria that break down dead leaves, so it never rots, yet it [[absorbs]] oily chemicals and carries them into the fish that swallow it. Ms. Porter has fitted a fine [[filter]] on the plant's main water pipe to trap the pieces, and she tells residents with [[caution]] that the water is safe.",
+   "passageZh": "波特小姐負責管理灰湖旁的淨水廠。上個月，在顯微鏡下，她檢測的每一滴水裡，都出現了塑膠小碎屑，就漂在浮游生物旁邊——那些是幼魚賴以為食的微小漂浮生物。\n\n她找出了三個來源。多年的日曬讓舊碼頭的塑膠板變得脆化；船隻一撞上，它們就裂成尖銳的碎片，較重的碎塊沉入湖底的沉積物中。運動服是用合成布料製成的，而不是天然的棉或羊毛，每次洗衣都會把細小的纖維——也就是那種布料的短線頭——沖進排水管。汽車在湖邊道路上煞車時，輪胎會留下橡膠粉塵，再被雨水沖進湖裡。\n\n這種塑膠能抵抗分解落葉的細菌，所以永遠不會腐爛；但它同時會吸收水中的油性化學物質，把它們帶進吞下塑膠的魚體內。波特小姐已經在淨水廠的主水管上加裝了細密的濾網，攔住這些碎屑，並謹慎地告訴居民：自來水仍是安全的。",
+   "words": [
+    {
+     "word": "microscope",
+     "base": "microscope",
+     "zh": "顯微鏡"
+    },
+    {
+     "word": "plankton",
+     "base": "plankton",
+     "zh": "浮游生物"
+    },
+    {
+     "word": "brittle",
+     "base": "brittle",
+     "zh": "脆的;易碎的"
+    },
+    {
+     "word": "fragments",
+     "base": "fragment",
+     "zh": "碎片"
+    },
+    {
+     "word": "sediment",
+     "base": "sediment",
+     "zh": "沉積物"
+    },
+    {
+     "word": "synthetic",
+     "base": "synthetic",
+     "zh": "合成的"
+    },
+    {
+     "word": "fibers",
+     "base": "fiber",
+     "zh": "纖維"
+    },
+    {
+     "word": "tires",
+     "base": "tire",
+     "zh": "輪胎"
+    },
+    {
+     "word": "resists",
+     "base": "resist",
+     "zh": "抵抗"
+    },
+    {
+     "word": "absorbs",
+     "base": "absorb",
+     "zh": "吸收"
+    },
+    {
+     "word": "filter",
+     "base": "filter",
+     "zh": "濾網;過濾器"
+    },
+    {
+     "word": "caution",
+     "base": "caution",
+     "zh": "謹慎;保留"
+    }
+   ]
+  }
  },
  {
   "id": "art-19a",
@@ -4419,7 +5658,73 @@ TOEIC.articles = [
     "explanation": "細節題。第七段指出較富裕社區樹蔭較多，最熱最光禿的街道往往住著最負擔不起冷氣的人。"
    }
   ],
-  "image": "img/articles/art-19a.jpg"
+  "image": "img/articles/art-19a.jpg",
+  "transfer": {
+   "passage": "When Golden Plaza opened thirty years ago, its wide concrete roof had a single job: keeping the rain out. Last spring, the mall turned it into a garden for practical reasons. The building sits in a dense [[urban]] center, where summer heat makes cooling costs painful. Now a thick layer of soil covers the roof. It [[absorbs]] rainwater like a sponge, which helps [[reduce]] the risk of flooding on nearby roads after storms. Water rising from the plants through [[evaporation]] also cools the air, and visitors can eat lunch in the [[shade]] of small trees instead of behind hot glass.\n\nThe benefits reach beyond the mall's own walls into the [[surrounding]] streets. The leaves [[trap]] dust from passing trucks, so the air feels cleaner. Birds and bees now have a safe [[habitat]] there, and local [[residents]] may visit for free. Office workers say a quiet half hour in the garden lowers their [[stress]] and helps them [[recover]] before afternoon meetings. The garden is not free: [[maintenance]] takes two gardeners and steady spending.",
+   "passageZh": "金光廣場開幕三十年來，它寬闊的水泥屋頂只有一個功能：擋雨。去年春天，這座購物中心基於實際考量，把屋頂改造成花園。這棟建築位於密集的都市中心，夏天的高溫讓冷氣費用相當可觀。現在屋頂鋪上了厚厚的一層土壤。它像海綿一樣吸收雨水，有助於減少暴雨後附近道路淹水的風險。植物透過蒸發釋出的水氣也能替空氣降溫，訪客可以在小樹的樹蔭下吃午餐，而不必躲在發燙的玻璃後面。\n\n好處不只停留在商場本身，還延伸到周圍的街道。樹葉攔住了過往卡車揚起的灰塵，空氣感覺更乾淨。鳥和蜜蜂如今在屋頂上有了安全的棲地，當地居民可以免費參觀。上班族說，在花園裡安靜待上半小時能降低他們的壓力，幫助他們在下午開會前恢復精神。這座花園並非零成本：維護需要兩名園丁和持續的開銷。",
+   "words": [
+    {
+     "word": "urban",
+     "base": "urban",
+     "zh": "都市的"
+    },
+    {
+     "word": "absorbs",
+     "base": "absorb",
+     "zh": "吸收"
+    },
+    {
+     "word": "reduce",
+     "base": "reduce",
+     "zh": "減少"
+    },
+    {
+     "word": "evaporation",
+     "base": "evaporation",
+     "zh": "蒸發"
+    },
+    {
+     "word": "shade",
+     "base": "shade",
+     "zh": "樹蔭；陰涼處"
+    },
+    {
+     "word": "surrounding",
+     "base": "surrounding",
+     "zh": "周圍的"
+    },
+    {
+     "word": "trap",
+     "base": "trap",
+     "zh": "攔住；困住"
+    },
+    {
+     "word": "habitat",
+     "base": "habitat",
+     "zh": "棲地"
+    },
+    {
+     "word": "residents",
+     "base": "resident",
+     "zh": "居民"
+    },
+    {
+     "word": "stress",
+     "base": "stress",
+     "zh": "壓力"
+    },
+    {
+     "word": "recover",
+     "base": "recover",
+     "zh": "恢復"
+    },
+    {
+     "word": "maintenance",
+     "base": "maintenance",
+     "zh": "維護"
+    }
+   ]
+  }
  },
  {
   "id": "art-19b",
@@ -4658,7 +5963,73 @@ TOEIC.articles = [
     "explanation": "推論題。最後一段說咖啡不能取代睡眠、唯一的付款方式是去睡覺，呼應第三段「向稍晚的自己借清醒」的比喻。"
    }
   ],
-  "image": "img/articles/art-19b.jpg"
+  "image": "img/articles/art-19b.jpg",
+  "transfer": {
+   "passage": "Rita Moreno works as a hotel night manager. To stay awake, she used to drink three energy drinks every shift. Each can holds a high [[dose]] of [[caffeine]], a [[habit]] she picked up during her first month on the job. In the beginning, one can was enough. Then her body developed a [[tolerance]], and she needed two, then three, to feel the same lift. Worse, the effect [[wears off]] within a few hours, so by four in the morning she found it hard to [[concentrate]] on the front-desk reports. She also began to feel [[anxious]] over small problems, worrying long after they were solved. When she tried to quit suddenly, a pounding [[headache]] lasted two days.\n\nHer doctor explained that some people are simply more [[sensitive]] to the drug than others and advised a [[moderate]] amount instead: one small cup of tea early in the shift. Rita also decided to [[replace]] her late-night can with a short walk outside. A month later, her [[alertness]] through the night was steadier than it had been in years.",
+   "passageZh": "麗塔・莫雷諾是一家飯店的夜班經理。為了保持清醒，她以前每個班要喝三罐能量飲料。每一罐都含有高劑量的咖啡因，這是她上班第一個月養成的習慣。一開始，一罐就夠了。後來她的身體產生了耐受性，需要兩罐、三罐才能有同樣的提神感。更糟的是，效果幾個小時內就會消退，所以到了凌晨四點，她發現自己很難專注在櫃檯報表上。她也開始為小問題感到焦慮，事情解決了很久還在擔心。當她試著突然戒掉時，劇烈的頭痛持續了兩天。\n\n醫生解釋，有些人就是比別人對這種藥物更敏感，並建議改採適量：在班次開始時喝一小杯茶就好。麗塔也決定用到外面短暫散步來取代深夜的那一罐。一個月後，她整夜的清醒度比多年來都更穩定。",
+   "words": [
+    {
+     "word": "dose",
+     "base": "dose",
+     "zh": "劑量"
+    },
+    {
+     "word": "caffeine",
+     "base": "caffeine",
+     "zh": "咖啡因"
+    },
+    {
+     "word": "habit",
+     "base": "habit",
+     "zh": "習慣"
+    },
+    {
+     "word": "tolerance",
+     "base": "tolerance",
+     "zh": "耐受性"
+    },
+    {
+     "word": "wears off",
+     "base": "wear off",
+     "zh": "（藥效）消退"
+    },
+    {
+     "word": "concentrate",
+     "base": "concentrate",
+     "zh": "專注"
+    },
+    {
+     "word": "anxious",
+     "base": "anxious",
+     "zh": "焦慮的"
+    },
+    {
+     "word": "headache",
+     "base": "headache",
+     "zh": "頭痛"
+    },
+    {
+     "word": "sensitive",
+     "base": "sensitive",
+     "zh": "敏感的"
+    },
+    {
+     "word": "moderate",
+     "base": "moderate",
+     "zh": "適量的"
+    },
+    {
+     "word": "replace",
+     "base": "replace",
+     "zh": "取代"
+    },
+    {
+     "word": "alertness",
+     "base": "alertness",
+     "zh": "清醒度；警醒"
+    }
+   ]
+  }
  },
  {
   "id": "art-2a",
@@ -4883,7 +6254,73 @@ TOEIC.articles = [
     "explanation": "定位:第三段列出三項措施(平板顯示行程、自動餐券、事先簡訊通知)。現金直接匯入帳戶全文未出現;第六段只提到必須遵守聯邦的旅客賠償規定，並未說明賠償形式。"
    }
   ],
-  "image": "img/articles/art-2a.jpg"
+  "image": "img/articles/art-2a.jpg",
+  "transfer": {
+   "passage": "When Priya Nair took charge of customer care at a regional internet provider, the company was losing users fast. Aging cables broke down often, and service [[disruptions]] left whole neighborhoods offline for a day. The firm's [[reputation]] grew worse with every angry review, and [[revenue]] shrank as customers cancelled and took their payments to rival companies.\n\nNair started with the network itself. She sat down with the equipment supplier, [[negotiated]] lower prices for spare parts, and doubled the regular [[maintenance]] on the oldest lines. Customers now receive a text message [[in advance]] whenever planned repair work will cut their connection. She also introduced a written [[guarantee]]: any outage lasting more than a day brings an automatic [[refund]], paid straight back to the customer, plus a [[voucher]] that can be exchanged for a month of faster service. Small shops that lose business during an outage may claim extra [[compensation]]. Anyone still unhappy may [[terminate]] their contract without paying a fee.\n\nOnce the board approved the plan, her team [[implemented]] it region by region, and cancellations soon fell sharply.",
+   "passageZh": "普莉雅．奈爾接掌一家區域網路業者的客戶服務時，公司正快速流失用戶。老化的纜線經常故障，服務中斷動輒讓整片社區斷網一整天。每一則憤怒的評論都讓公司的名聲更糟，營收也隨著客戶解約、把錢付給對手公司而不斷縮水。\n\n奈爾從網路本身著手。她與設備供應商坐下來，協商出更低的零件價格，並讓最老舊線路的定期維修加倍。現在只要有預定的修繕工程會切斷連線，客戶都會事先收到簡訊。她還推出一項書面保證：任何超過一天的斷線，都會自動退款、直接退還給客戶，外加一張可兌換一個月更快網速的兌換券。在斷網期間損失生意的小店家，還可以申請額外的賠償。仍然不滿意的人，可以不付任何費用就終止合約。\n\n董事會核准這項計畫後，她的團隊便逐區實施，解約數量不久便大幅下降。",
+   "words": [
+    {
+     "word": "disruptions",
+     "base": "disruption",
+     "zh": "中斷;擾亂"
+    },
+    {
+     "word": "reputation",
+     "base": "reputation",
+     "zh": "名聲;聲譽"
+    },
+    {
+     "word": "revenue",
+     "base": "revenue",
+     "zh": "營收;收益"
+    },
+    {
+     "word": "negotiated",
+     "base": "negotiate",
+     "zh": "協商;談判"
+    },
+    {
+     "word": "maintenance",
+     "base": "maintenance",
+     "zh": "維修;保養"
+    },
+    {
+     "word": "in advance",
+     "base": "in advance",
+     "zh": "事先;預先"
+    },
+    {
+     "word": "guarantee",
+     "base": "guarantee",
+     "zh": "保證"
+    },
+    {
+     "word": "refund",
+     "base": "refund",
+     "zh": "退款"
+    },
+    {
+     "word": "voucher",
+     "base": "voucher",
+     "zh": "兌換券;抵用券"
+    },
+    {
+     "word": "compensation",
+     "base": "compensation",
+     "zh": "賠償;補償"
+    },
+    {
+     "word": "terminate",
+     "base": "terminate",
+     "zh": "終止;結束"
+    },
+    {
+     "word": "implemented",
+     "base": "implement",
+     "zh": "實施;執行"
+    }
+   ]
+  }
  },
  {
   "id": "art-2b",
@@ -5115,7 +6552,73 @@ TOEIC.articles = [
     "explanation": "定位:第四段(加班費、保險同意、預算不足)與第六段(畫作移位、資深會員抱怨)。停車位不足全文從未提及，故選A。"
    }
   ],
-  "image": "img/articles/art-2b.jpg"
+  "image": "img/articles/art-2b.jpg",
+  "transfer": {
+   "passage": "For sixty years, the Riverside soccer club filled its small stadium every weekend. Recently, though, [[attendance]] had been [[declining]] for five seasons; whole rows of seats sat empty.\n\nNew marketing director Elena Vargas began with a [[survey]] of local families. The answers pointed to one problem: parents thought a match was not an evening for children. Her response was an [[initiative]] called Family Night. The club [[launched]] it in March, moving one match a month to Saturday afternoon, with face painting outside the gates. To cover the extra cost, Vargas won [[sponsorship]] from a local supermarket chain, and she [[recruited]] forty student volunteers to run the activities.\n\nNobody had [[anticipated]] the result. The first Family Night sold out the stadium's full [[capacity]] of eight thousand seats. Sales of [[merchandise]], mostly children's shirts and scarves, tripled at the club shop, and with tickets and food counted together, matchday [[revenue]] reached its highest level in a decade. Other teams ask to hire the ground as a [[venue]] for their own family events.",
+   "passageZh": "六十年來，河濱足球俱樂部的小球場每個週末都座無虛席。但近來，出席人數已經連續下滑了五個球季；整排整排的座位空著。\n\n新任行銷總監艾蓮娜・瓦爾加斯先從一份針對當地家庭的問卷調查著手。答案指向一個問題：家長認為球賽不是適合帶孩子去的夜晚活動。她的回應是一項名為「家庭之夜」的新計畫。俱樂部在三月推出這項計畫，把每月一場比賽移到週六下午，並在大門外安排臉部彩繪。為了支應額外開銷，瓦爾加斯爭取到一家本地連鎖超市的贊助，還招募了四十名學生志工來帶活動。\n\n沒有人預料到後來的結果。第一場家庭之夜就把球場八千個座位的容納量全部賣光。商品——主要是童裝球衣和圍巾——在俱樂部商店的銷量成長為三倍；把門票和餐飲加總起來，比賽日收入創下十年來的新高。其他球隊也來詢問，想租這座球場作為自家家庭活動的場地。",
+   "words": [
+    {
+     "word": "attendance",
+     "base": "attendance",
+     "zh": "出席人數;參觀人數"
+    },
+    {
+     "word": "declining",
+     "base": "decline",
+     "zh": "下滑;減少"
+    },
+    {
+     "word": "survey",
+     "base": "survey",
+     "zh": "問卷調查"
+    },
+    {
+     "word": "initiative",
+     "base": "initiative",
+     "zh": "新計畫;方案"
+    },
+    {
+     "word": "launched",
+     "base": "launch",
+     "zh": "推出;啟動"
+    },
+    {
+     "word": "sponsorship",
+     "base": "sponsorship",
+     "zh": "贊助"
+    },
+    {
+     "word": "recruited",
+     "base": "recruit",
+     "zh": "招募"
+    },
+    {
+     "word": "anticipated",
+     "base": "anticipate",
+     "zh": "預料;預期"
+    },
+    {
+     "word": "capacity",
+     "base": "capacity",
+     "zh": "容納量;容量"
+    },
+    {
+     "word": "merchandise",
+     "base": "merchandise",
+     "zh": "商品"
+    },
+    {
+     "word": "revenue",
+     "base": "revenue",
+     "zh": "收入;營收"
+    },
+    {
+     "word": "venue",
+     "base": "venue",
+     "zh": "場地;會場"
+    }
+   ]
+  }
  },
  {
   "id": "art-20a",
@@ -5361,7 +6864,73 @@ TOEIC.articles = [
     "explanation": "推論題，定位第七段：多備的產能在平常年份就是閒置產能、倉庫存貨是「沒在動的錢」，可推知安全是有代價的，且平安無事時照樣要付。"
    }
   ],
-  "image": "img/articles/art-20a.jpg"
+  "image": "img/articles/art-20a.jpg",
+  "transfer": {
+   "passage": "A small bicycle [[manufacturer]] builds every frame in its own [[facility]] beside the river. The small metal [[components]], such as gears, come from one firm overseas. Last spring, heavy rain closed that firm's plant for five weeks. The [[disruption]] to deliveries came at the worst time, because [[demand]] from customers for bicycles rises sharply every summer, and the sales [[forecast]] had promised a record season.\n\nThe company kept only two weeks of [[inventory]] on its shelves, so the [[shortage]] of gear parts stopped the line within days. Soon the [[backlog]] of orders waiting to ship grew to more than eight weeks. Even when parts returned, the factory could not catch up, as it was already running at full [[capacity]].\n\nThe owner admitted that a [[supply chain]] stretching from raw metal to a finished bike is only as strong as its weakest link, and a single source for a key part had left it [[vulnerable]]. The company now buys gear parts from three firms and holds three months of stock.",
+   "passageZh": "一家小型自行車製造商在河邊自有的廠房裡打造每一支車架。像齒輪這類小型金屬零組件，則來自海外的一家公司。去年春天，大雨讓那家公司的工廠停工五週。這次交貨中斷來得最不是時候，因為每年夏天顧客對自行車的需求都會大幅上升，而銷售預測原本還看好會是創紀錄的一季。\n\n這家公司架上只留兩週的庫存，所以齒輪零件一短缺，幾天內生產線就停了。很快地，等待出貨的積壓訂單累積到超過八週。即使零件重新到貨，工廠也追不上進度，因為它早已是滿載產能在運作。\n\n老闆承認，一條從原料金屬延伸到成品自行車的供應鏈，強度只取決於最弱的那一環，而關鍵零件只有單一來源，讓它變得脆弱。如今這家公司向三家廠商採購齒輪零件，並保有三個月的存貨。",
+   "words": [
+    {
+     "word": "manufacturer",
+     "base": "manufacturer",
+     "zh": "製造商"
+    },
+    {
+     "word": "facility",
+     "base": "facility",
+     "zh": "廠房、設施"
+    },
+    {
+     "word": "components",
+     "base": "component",
+     "zh": "零組件"
+    },
+    {
+     "word": "disruption",
+     "base": "disruption",
+     "zh": "中斷、擾亂"
+    },
+    {
+     "word": "demand",
+     "base": "demand",
+     "zh": "需求"
+    },
+    {
+     "word": "forecast",
+     "base": "forecast",
+     "zh": "預測"
+    },
+    {
+     "word": "inventory",
+     "base": "inventory",
+     "zh": "庫存"
+    },
+    {
+     "word": "shortage",
+     "base": "shortage",
+     "zh": "短缺"
+    },
+    {
+     "word": "backlog",
+     "base": "backlog",
+     "zh": "積壓的訂單"
+    },
+    {
+     "word": "capacity",
+     "base": "capacity",
+     "zh": "產能"
+    },
+    {
+     "word": "supply chain",
+     "base": "supply chain",
+     "zh": "供應鏈"
+    },
+    {
+     "word": "vulnerable",
+     "base": "vulnerable",
+     "zh": "脆弱的、易受衝擊的"
+    }
+   ]
+  }
  },
  {
   "id": "art-20b",
@@ -5607,7 +7176,73 @@ TOEIC.articles = [
     "explanation": "推論題，定位第五段：許多國家同時老化，各國「在搶同一批技術人力，而不是從取之不盡的池子裡撈人」，可推知人力愈來愈難爭取。"
    }
   ],
-  "image": "img/articles/art-20b.jpg"
+  "image": "img/articles/art-20b.jpg",
+  "transfer": {
+   "passage": "Harborline Transit runs buses in three coastal cities. Nearly half of its [[workforce]] of 300 drivers and mechanics is over fifty-eight, and forty of them will reach [[retirement]] within five years. The company posted twenty-five [[vacancies]] last year; most are still unfilled. Employers in [[sectors]] such as construction, nursing, and transport are chasing the same small pool of younger workers, and the resulting [[shortage]] of drivers has forced Harborline to cut evening routes.\n\nManagement has tried several fixes. It raised hourly [[wages]] by ten percent and introduced [[flexible]] schedules so that parents can drive only during school hours. It visits job fairs in nearby towns to [[recruit]] candidates directly. It is also testing [[automation]]: ticket machines now sell and check fares, so drivers can focus on the road. Because those machines need [[skilled]] technicians to maintain them, the company pays for [[retraining]] so that senior drivers can move into repair jobs instead of leaving. [[Demand]] for bus travel keeps rising as the cities grow, so none of these efforts can wait.",
+   "passageZh": "Harborline Transit 在三座濱海城市經營公車。旗下由三百名司機與技師組成的全體員工中，將近一半已超過五十八歲，其中四十人將於五年內屆齡退休。公司去年刊登了二十五個職缺，大多至今仍無人填補。營建、護理與運輸等產業部門的雇主，都在爭搶同一小群年輕勞動力，隨之而來的司機短缺，已迫使 Harborline 削減夜間路線。\n\n管理層嘗試了幾種對策。它將時薪工資調高一成，並推出彈性班表，讓家長可以只在上課時段出勤開車。它也到鄰近城鎮的就業博覽會直接招募人選。公司同時在測試自動化：售票機如今負責售票與查票，司機因此能專心看路。由於這些機器仍需要有技術的技師維護，公司出資提供再訓練，讓資深司機能轉任維修工作，而不必離職。隨著城市持續成長，公車出行的需求不斷上升，這些措施沒有一項能再等。",
+   "words": [
+    {
+     "word": "workforce",
+     "base": "workforce",
+     "zh": "勞動人口、員工總體"
+    },
+    {
+     "word": "retirement",
+     "base": "retirement",
+     "zh": "退休"
+    },
+    {
+     "word": "vacancies",
+     "base": "vacancy",
+     "zh": "職缺"
+    },
+    {
+     "word": "sectors",
+     "base": "sector",
+     "zh": "產業部門"
+    },
+    {
+     "word": "shortage",
+     "base": "shortage",
+     "zh": "短缺、缺工"
+    },
+    {
+     "word": "wages",
+     "base": "wage",
+     "zh": "工資、薪資"
+    },
+    {
+     "word": "flexible",
+     "base": "flexible",
+     "zh": "彈性的"
+    },
+    {
+     "word": "recruit",
+     "base": "recruit",
+     "zh": "招募"
+    },
+    {
+     "word": "automation",
+     "base": "automation",
+     "zh": "自動化"
+    },
+    {
+     "word": "skilled",
+     "base": "skilled",
+     "zh": "有技術的、熟練的"
+    },
+    {
+     "word": "retraining",
+     "base": "retraining",
+     "zh": "再訓練、轉職訓練"
+    },
+    {
+     "word": "Demand",
+     "base": "demand",
+     "zh": "需求"
+    }
+   ]
+  }
  },
  {
   "id": "art-3a",
@@ -5842,7 +7477,73 @@ TOEIC.articles = [
     "explanation": "定位:第三段。文中列出的三個問題分別是重複計費、深夜入住無法處理、水管爆裂無人指揮，對應選項 A、B、C。機器故障頻繁需天天維修全文未提，故 D 為未提及者。"
    }
   ],
-  "image": "img/articles/art-3a.jpg"
+  "image": "img/articles/art-3a.jpg",
+  "transfer": {
+   "passage": "Two years ago, the Star Grand Cinema decided to [[implement]] self-service ticket machines at all six locations. The general manager, Ms. Fang, [[negotiated]] for months with an equipment [[supplier]] before signing, and she insisted on a three-year [[warranty]] covering parts and repairs. The goal of the [[automation]] project was simple: shorter lines on busy weekends.\n\nThe first month was rough. A software error meant some visitors were [[billed]] twice for one ticket, and each of them had to be given a [[refund]]. Dozens of angry [[complaints]] filled the cinema's inbox. Ms. Fang apologized and asked every buyer for [[feedback]] through a short online form. The answers surprised her: most people liked the machines and only wanted clearer on-screen steps. By the next [[quarterly]] report, ticket lines had almost disappeared. No jobs were cut, so the [[payroll]] stayed the same; counter workers simply moved from [[repetitive]] scanning tasks to helping guests in the lobby.",
+   "passageZh": "兩年前，星光大戲院決定在旗下六個據點導入自助售票機。總經理方女士與設備供應商協商了好幾個月才簽約，並堅持要有涵蓋零件與維修的三年保固。這個自動化專案的目標很單純：讓忙碌的週末不再大排長龍。\n\n第一個月狀況百出。一個軟體錯誤讓部分觀眾一張票被計費兩次，每位受影響的人都必須獲得退款。數十封憤怒的抱怨塞滿了戲院的信箱。方女士出面道歉，並透過簡短的線上表單向每位購票者徵求意見回饋。答案讓她很意外：大多數人喜歡這些機器，只是希望螢幕上的步驟更清楚。到了下一份季度報告，售票隊伍幾乎消失了。沒有裁掉任何工作，所以薪資支出維持不變；櫃檯人員只是從重複性的掃描工作，轉為在大廳協助觀眾。",
+   "words": [
+    {
+     "word": "implement",
+     "base": "implement",
+     "zh": "實施；導入"
+    },
+    {
+     "word": "negotiated",
+     "base": "negotiate",
+     "zh": "談判；協商"
+    },
+    {
+     "word": "supplier",
+     "base": "supplier",
+     "zh": "供應商"
+    },
+    {
+     "word": "warranty",
+     "base": "warranty",
+     "zh": "保固"
+    },
+    {
+     "word": "automation",
+     "base": "automation",
+     "zh": "自動化"
+    },
+    {
+     "word": "billed",
+     "base": "bill",
+     "zh": "開帳單；計費"
+    },
+    {
+     "word": "refund",
+     "base": "refund",
+     "zh": "退款"
+    },
+    {
+     "word": "complaints",
+     "base": "complaint",
+     "zh": "抱怨；客訴"
+    },
+    {
+     "word": "feedback",
+     "base": "feedback",
+     "zh": "意見回饋"
+    },
+    {
+     "word": "quarterly",
+     "base": "quarterly",
+     "zh": "每季的"
+    },
+    {
+     "word": "payroll",
+     "base": "payroll",
+     "zh": "薪資支出；薪資名冊"
+    },
+    {
+     "word": "repetitive",
+     "base": "repetitive",
+     "zh": "重複性的；一再重複的"
+    }
+   ]
+  }
  },
  {
   "id": "art-3b",
@@ -6081,7 +7782,73 @@ TOEIC.articles = [
     "explanation": "定位:第四段第二句「她不賣植物，而是收月費」，故 A 不正確。B 見第四段(枯死免費更換)，C 見第五段(九十四間辦公室)，D 見第六段(風險明顯的場地一律不接)。"
    }
   ],
-  "image": "img/articles/art-3b.jpg"
+  "image": "img/articles/art-3b.jpg",
+  "transfer": {
+   "passage": "For eight years, Daniel Reyes repaired treadmills at a fitness club in the city. Broken machines were a [[recurring]] problem: every few weeks, members [[complained]] that a running belt had stopped again. After an expensive [[renovation]] that gave the club new floors and walls, the [[budget]] for repairs was cut, and the manager began [[installing]] cheaper machines that failed even faster. A member [[survey]] that winter showed the same result: slow repairs were the top reason people quit.\n\nDaniel saw a business in the problem. He [[resigned]] last spring and set up a small company that offers regular [[maintenance]] for sports equipment. Clubs sign a one-year [[contract]] and receive a monthly visit. He now employs four trained [[technicians]] who check every machine before it breaks. One club that had [[terminated]] its agreement with a larger provider became his first customer, and [[referrals]] from happy managers brought him six more clubs within a year.",
+   "passageZh": "八年來，丹尼爾・雷耶斯在市區一家健身俱樂部修理跑步機。機器故障是個反覆發生的問題：每隔幾週，就有會員抱怨跑帶又停了。俱樂部經過一次昂貴的翻修、換上新地板和新牆面之後，維修預算被砍，經理開始安裝更便宜、卻壞得更快的機器。那年冬天的一份會員問卷調查顯示同樣的結果：修理太慢是大家退出的首要原因。\n\n丹尼爾從這個問題裡看見了生意。他去年春天辭職，成立了一家為運動器材提供定期養護的小公司。俱樂部簽一份一年期合約，每月獲得一次到府檢查。他現在僱用四名受過訓練的技術人員，在機器故障前檢查每一台。一家曾終止與大型廠商協議的俱樂部成了他的第一個客戶，而滿意的經理們帶來的轉介，讓他在一年內又多了六家俱樂部。",
+   "words": [
+    {
+     "word": "recurring",
+     "base": "recurring",
+     "zh": "反覆發生的"
+    },
+    {
+     "word": "complained",
+     "base": "complain",
+     "zh": "抱怨"
+    },
+    {
+     "word": "renovation",
+     "base": "renovation",
+     "zh": "翻修"
+    },
+    {
+     "word": "budget",
+     "base": "budget",
+     "zh": "預算"
+    },
+    {
+     "word": "installing",
+     "base": "install",
+     "zh": "安裝"
+    },
+    {
+     "word": "survey",
+     "base": "survey",
+     "zh": "問卷調查"
+    },
+    {
+     "word": "resigned",
+     "base": "resign",
+     "zh": "辭職"
+    },
+    {
+     "word": "maintenance",
+     "base": "maintenance",
+     "zh": "養護；維護"
+    },
+    {
+     "word": "contract",
+     "base": "contract",
+     "zh": "合約"
+    },
+    {
+     "word": "technicians",
+     "base": "technician",
+     "zh": "技術人員"
+    },
+    {
+     "word": "terminated",
+     "base": "terminate",
+     "zh": "終止"
+    },
+    {
+     "word": "referrals",
+     "base": "referral",
+     "zh": "轉介"
+    }
+   ]
+  }
  },
  {
   "id": "art-4a",
@@ -6417,7 +8184,73 @@ TOEIC.articles = [
     "explanation": "細節題。定位第四段第一、二句：山姆說可以退款，但莉莉要的是相機不是錢；再對照第一段，相機是要送爸爸的生日禮物。"
    }
   ],
-  "image": "img/articles/art-4b.jpg"
+  "image": "img/articles/art-4b.jpg",
+  "transfer": {
+   "passage": "Mia bakes cookies at home. Her little [[company]] has only one worker. Buyers visit her [[website]] and click \"buy\". She wraps each order into one neat [[package]]. On top she sticks a [[label]] with the buyer's name and [[address]].\n\nEvery morning a [[driver]] in a truck stops at her door. He takes the boxes away. Mia then sends each buyer a [[tracking number]]. With it, buyers can watch their box travel. Boxes arrive fast, and buyers love the quick [[delivery]].\n\nLast week one [[customer]] emailed Mia. He had paid for a gift box. But the cookies arrived in pieces. It was a polite [[complaint]]. Mia said sorry and gave him a full [[refund]]. He did not have to [[return]] the broken box. Now she puts extra paper in every box.",
+   "passageZh": "米亞在家裡烤餅乾。她的小公司只有一名員工。買家到她的網站點選「購買」。她把每筆訂單包成一個整齊的包裹。上面貼一張寫著買家姓名和地址的標籤。\n\n每天早上，一位司機開著卡車停在她家門口。他把箱子載走。接著米亞會寄給每位買家一組追蹤號碼。有了它，買家就能看著自己的箱子一路移動。箱子到得很快，買家都很喜歡這樣快速的送貨。\n\n上週，一位顧客寫信給米亞。他付錢買了一盒禮物餅乾。但餅乾送到時已碎成一片一片。那是一封很客氣的客訴。米亞道了歉，並給他全額退款。他不必退回那盒壞掉的餅乾。現在她在每個箱子裡都多放一些紙。",
+   "words": [
+    {
+     "word": "company",
+     "base": "company",
+     "zh": "公司"
+    },
+    {
+     "word": "website",
+     "base": "website",
+     "zh": "網站"
+    },
+    {
+     "word": "package",
+     "base": "package",
+     "zh": "包裹"
+    },
+    {
+     "word": "label",
+     "base": "label",
+     "zh": "標籤"
+    },
+    {
+     "word": "address",
+     "base": "address",
+     "zh": "地址"
+    },
+    {
+     "word": "driver",
+     "base": "driver",
+     "zh": "司機"
+    },
+    {
+     "word": "tracking number",
+     "base": "tracking number",
+     "zh": "追蹤號碼"
+    },
+    {
+     "word": "delivery",
+     "base": "delivery",
+     "zh": "送貨"
+    },
+    {
+     "word": "customer",
+     "base": "customer",
+     "zh": "顧客"
+    },
+    {
+     "word": "complaint",
+     "base": "complaint",
+     "zh": "客訴；申訴"
+    },
+    {
+     "word": "refund",
+     "base": "refund",
+     "zh": "退款"
+    },
+    {
+     "word": "return",
+     "base": "return",
+     "zh": "歸還；退回"
+    }
+   ]
+  }
  },
  {
   "id": "art-5a",
@@ -6581,7 +8414,73 @@ TOEIC.articles = [
     "explanation": "第三段說每天只供應一道主菜、一碗湯、一杯飲料，而且廚師中午前就備好料；由此可推論出餐快是因為每天只做一套餐點。"
    }
   ],
-  "image": "img/articles/art-5a.jpg"
+  "image": "img/articles/art-5a.jpg",
+  "transfer": {
+   "passage": "Mrs. Yang has a strawberry farm near the city. At first she was [[worried]] that no one would come. Now many [[customers]] visit every weekend. The farm [[offers]] free parking and picnic tables.\n\nFamilies must [[book]] a visit early because weekends are full. The tour [[schedule]] is online: ten in the morning, two in the afternoon. Each morning, workers [[prepare]] clean baskets and put them by the gate. The [[price]] of a basket depends on its weight. Guests pay, get a [[receipt]], and show it on the way out.\n\nThe food stand has a short [[menu]]: milk, cake, and jam toast. Guests [[order]] drinks and cakes at the stand and pay. The jam is the most [[popular]] item. On Sundays, Mrs. Yang is too [[busy]] to answer the phone.",
+   "passageZh": "楊太太在城市近郊有一座草莓農場。起初她很擔心沒有人會來。現在每個週末都有很多顧客造訪。農場提供免費停車位和野餐桌。\n\n因為週末總是客滿，家庭必須提早預訂參觀。導覽時程表放在網站上：早上十點一場、下午兩點一場。每天早上，工作人員會準備乾淨的籃子，放在大門旁。一籃的價格取決於重量。客人付款後拿到一張收據，離場時出示。\n\n小吃攤的菜單很簡短：牛奶、蛋糕和果醬吐司。客人在攤位點飲料和蛋糕並付款。果醬是最受歡迎的品項。週日時，楊太太忙得沒空接電話。",
+   "words": [
+    {
+     "word": "worried",
+     "base": "worried",
+     "zh": "擔心的"
+    },
+    {
+     "word": "customers",
+     "base": "customer",
+     "zh": "顧客"
+    },
+    {
+     "word": "offers",
+     "base": "offer",
+     "zh": "提供"
+    },
+    {
+     "word": "book",
+     "base": "book",
+     "zh": "預訂"
+    },
+    {
+     "word": "schedule",
+     "base": "schedule",
+     "zh": "時程；排班表"
+    },
+    {
+     "word": "prepare",
+     "base": "prepare",
+     "zh": "準備"
+    },
+    {
+     "word": "price",
+     "base": "price",
+     "zh": "價格"
+    },
+    {
+     "word": "receipt",
+     "base": "receipt",
+     "zh": "收據"
+    },
+    {
+     "word": "menu",
+     "base": "menu",
+     "zh": "菜單"
+    },
+    {
+     "word": "order",
+     "base": "order",
+     "zh": "點餐；訂購"
+    },
+    {
+     "word": "popular",
+     "base": "popular",
+     "zh": "受歡迎的"
+    },
+    {
+     "word": "busy",
+     "base": "busy",
+     "zh": "繁忙的"
+    }
+   ]
+  }
  },
  {
   "id": "art-5b",
@@ -6745,7 +8644,73 @@ TOEIC.articles = [
     "explanation": "第三段他一發現延誤就馬上寄信，第四段客戶十分鐘內就同意改時間，第五段他寫下心得「壞消息不可怕，只要早點說出來」，可推論出早點告知問題有幫助。"
    }
   ],
-  "image": "img/articles/art-5b.jpg"
+  "image": "img/articles/art-5b.jpg",
+  "transfer": {
+   "passage": "Anna works at a furniture store. Last week, her boss was away on a [[business trip]]. He went to a wood factory in Vietnam to check new chairs. His [[flight]] left the airport three hours late. He [[arrived]] there at night.\n\nAt the store, an important [[client]] called Anna. He asked about the [[delivery]] of his two tables. The truck was [[delayed]] by two days, so Anna felt [[nervous]]. She opened the daily [[report]] on her computer. It listed every truck. Then she found the [[problem]]: the driver had the wrong street name.\n\nLater, the boss called. The chairs were good. He was ready to [[sign]] a two-year [[contract]] with the factory. He also asked Anna to set up a [[meeting]] with the table buyer for Monday.",
+   "passageZh": "Anna 在一家家具店工作。上週，她的老闆出差不在。他去了越南的一間木工廠檢查新椅子。他的班機比預定晚了三小時才離開機場。他在夜裡才抵達那裡。\n\n在店裡，一位重要的客戶打電話給 Anna。他詢問他那兩張桌子的送貨情況。貨車延誤了兩天，所以 Anna 很緊張。她在電腦上打開每日報告。上面列出了每一輛貨車。接著她找到了問題：司機記錯了街道名稱。\n\n稍後，老闆打電話來。椅子的品質很好。他準備和工廠簽署一份兩年的合約。他也請 Anna 安排週一與那位桌子買家的會議。",
+   "words": [
+    {
+     "word": "business trip",
+     "base": "business trip",
+     "zh": "出差"
+    },
+    {
+     "word": "flight",
+     "base": "flight",
+     "zh": "班機"
+    },
+    {
+     "word": "arrived",
+     "base": "arrive",
+     "zh": "抵達"
+    },
+    {
+     "word": "client",
+     "base": "client",
+     "zh": "客戶"
+    },
+    {
+     "word": "delivery",
+     "base": "delivery",
+     "zh": "交貨；送貨"
+    },
+    {
+     "word": "delayed",
+     "base": "delay",
+     "zh": "延誤"
+    },
+    {
+     "word": "nervous",
+     "base": "nervous",
+     "zh": "緊張的"
+    },
+    {
+     "word": "report",
+     "base": "report",
+     "zh": "報告"
+    },
+    {
+     "word": "problem",
+     "base": "problem",
+     "zh": "問題"
+    },
+    {
+     "word": "sign",
+     "base": "sign",
+     "zh": "簽署"
+    },
+    {
+     "word": "contract",
+     "base": "contract",
+     "zh": "合約"
+    },
+    {
+     "word": "meeting",
+     "base": "meeting",
+     "zh": "會議"
+    }
+   ]
+  }
  },
  {
   "id": "art-6a",
@@ -6938,7 +8903,73 @@ TOEIC.articles = [
     "explanation": "細節題。第四段說一位大學生把照片貼上網，短片兩天內有二十萬人看到，週末就開始排隊；同段最後點明是口碑而非付費廣告。"
    }
   ],
-  "image": "img/articles/art-6a.jpg"
+  "image": "img/articles/art-6a.jpg",
+  "transfer": {
+   "passage": "Mr. Yang has sold bicycles in Tainan for ten years. After a mall opened nearby, fewer people walked past, and the shop recorded a [[loss]] for the second year. When his [[lease]] on the corner store ended, he chose not to sign again. Instead, he [[rented]] a smaller unit beside a cycling path, at a third of the cost.\n\nHe [[stocked]] the shelves with tires, lights, and spare parts, and [[launched]] a same-day repair service: every job has a five o'clock [[deadline]], and if a bike is not ready by then, the work is free. He hired two mechanics, including his [[former]] classmate, and sent the whole [[staff]] to a repair course.\n\nCycling clubs soon told each other about the shop. The [[demand]] for same-day repairs was stronger than expected; riders now book two days ahead, and on holiday mornings a [[queue]] of customers forms outside before the door opens. New bicycles still sell at full [[retail]] price, but repairs now bring in over half of the shop's [[revenue]].",
+   "passageZh": "楊先生在台南賣了十年腳踏車。附近一家購物中心開幕後，路過的人變少了，店裡連續第二年出現虧損。轉角店面的租約到期時，他決定不再續簽。他改為承租自行車道旁一個較小的店面，成本只有原來的三分之一。\n\n他在貨架上備齊了輪胎、車燈和備用零件，並開辦當日完修服務：每件工作都有下午五點的期限，如果腳踏車沒能在那之前修好，這次維修就免費。他聘了兩位技師，其中包括他以前的同學，並把全體員工送去上維修課程。\n\n自行車社團很快就互相談起這家店。當日維修的需求比預期強勁；車友現在得提前兩天預約，假日早晨開門前，門外就會排起顧客的隊伍。新車仍以完整零售價出售，但維修如今為店裡帶進超過一半的營收。",
+   "words": [
+    {
+     "word": "loss",
+     "base": "loss",
+     "zh": "虧損"
+    },
+    {
+     "word": "lease",
+     "base": "lease",
+     "zh": "租約"
+    },
+    {
+     "word": "rented",
+     "base": "rent",
+     "zh": "承租"
+    },
+    {
+     "word": "stocked",
+     "base": "stock",
+     "zh": "進貨、備有"
+    },
+    {
+     "word": "launched",
+     "base": "launch",
+     "zh": "推出、開辦"
+    },
+    {
+     "word": "deadline",
+     "base": "deadline",
+     "zh": "期限"
+    },
+    {
+     "word": "former",
+     "base": "former",
+     "zh": "以前的、前任的"
+    },
+    {
+     "word": "staff",
+     "base": "staff",
+     "zh": "員工"
+    },
+    {
+     "word": "demand",
+     "base": "demand",
+     "zh": "需求"
+    },
+    {
+     "word": "queue",
+     "base": "queue",
+     "zh": "排隊的隊伍"
+    },
+    {
+     "word": "retail",
+     "base": "retail",
+     "zh": "零售的"
+    },
+    {
+     "word": "revenue",
+     "base": "revenue",
+     "zh": "營收"
+    }
+   ]
+  }
  },
  {
   "id": "art-6b",
@@ -7138,7 +9169,73 @@ TOEIC.articles = [
     "explanation": "推論題。第六段說光有睡眠室救不了有毒的職場文化，只有帶著信任一起做才會有效。第五段也顯示他不處罰睡過頭的員工，所以 C 不對。"
    }
   ],
-  "image": "img/articles/art-6b.jpg"
+  "image": "img/articles/art-6b.jpg",
+  "transfer": {
+   "passage": "Elena Rivera is the [[manager]] of a small bicycle factory. Last year she faced two problems at once. The cutting machines often broke down because regular [[maintenance]] was always pushed to \"next week.\" At the same time, [[absences]] kept rising, as tired workers stayed home more and more often.\n\nRivera soon understood why the checks were skipped. Tight [[deadlines]] left no spare minutes, and workers felt [[guilty]] about stopping the line, sure that the company would [[punish]] anyone who slowed the day's output. So she tried an [[experiment]]: for one month, the whole line stopped every Friday afternoon for machine care and paid rest.\n\nThe month ended, and nobody wanted to go back. In an anonymous [[survey]], workers wrote that their [[focus]] on fine details had returned. The team also built more bicycles in fewer hours, so [[productivity]] rose although everyone worked less. Today the Friday stop is official company [[policy]], printed in the staff handbook, and [[trust]] between the factory floor and the office has grown with it.",
+   "passageZh": "艾蓮娜・里維拉是一家小型自行車工廠的主管。去年，她同時面對兩個問題。裁切機器經常故障，因為例行保養總是被推遲到「下星期」。同時，缺勤不斷增加，疲倦的員工愈來愈常待在家裡。\n\n里維拉很快明白檢查為什麼總被跳過。緊迫的交件期限讓大家連一分鐘空檔都沒有；員工對停下產線感到心虛，深信公司會處罰任何拖慢當天產量的人。於是她做了一個實驗：整整一個月，全條產線每週五下午停工，用來照料機器和帶薪休息。\n\n一個月結束，沒有人想回到過去。在一份匿名問卷調查中，員工寫道，他們對細節的專注力回來了。團隊也用更少的工時做出更多自行車，所以雖然每個人工作變少，生產力卻上升了。如今，週五停工已是公司的正式政策，印在員工手冊裡，而工廠現場與辦公室之間的信任也隨之成長。",
+   "words": [
+    {
+     "word": "manager",
+     "base": "manager",
+     "zh": "主管"
+    },
+    {
+     "word": "maintenance",
+     "base": "maintenance",
+     "zh": "保養、維護"
+    },
+    {
+     "word": "absences",
+     "base": "absence",
+     "zh": "缺勤"
+    },
+    {
+     "word": "deadlines",
+     "base": "deadline",
+     "zh": "交件期限"
+    },
+    {
+     "word": "guilty",
+     "base": "guilty",
+     "zh": "心虛的、內疚的"
+    },
+    {
+     "word": "punish",
+     "base": "punish",
+     "zh": "處罰"
+    },
+    {
+     "word": "experiment",
+     "base": "experiment",
+     "zh": "實驗"
+    },
+    {
+     "word": "survey",
+     "base": "survey",
+     "zh": "問卷調查"
+    },
+    {
+     "word": "focus",
+     "base": "focus",
+     "zh": "專注力"
+    },
+    {
+     "word": "productivity",
+     "base": "productivity",
+     "zh": "生產力"
+    },
+    {
+     "word": "policy",
+     "base": "policy",
+     "zh": "政策、規定"
+    },
+    {
+     "word": "trust",
+     "base": "trust",
+     "zh": "信任"
+    }
+   ]
+  }
  },
  {
   "id": "art-7a",
@@ -7338,7 +9435,73 @@ TOEIC.articles = [
     "explanation": "推論題。定位第六段「Three other branches are copying her plan this year.」，願意照抄代表他們認為這套做法在自己的飯店同樣行得通；文中沒有提到其他分店的預算或降價。"
    }
   ],
-  "image": "img/articles/art-7a.jpg"
+  "image": "img/articles/art-7a.jpg",
+  "transfer": {
+   "passage": "The Seabreeze Guesthouse sits on a quiet beach in the south. For years, guests loved the view but not the rooms. One online [[review]] after another said the same thing: old beds, weak showers, thin towels. The owner, Mr. Tsai, chose not to [[ignore]] these voices. He could not [[afford]] to rebuild the whole building at once, so he set aside a small [[budget]] and started an [[experiment]]. He would [[renovate]] just four rooms and watch what happened.\n\nThe new rooms were [[booked]] out within days, even though guests were [[charged]] thirty percent more for them. Six months later, [[occupancy]] across the whole guesthouse was higher than ever, because happy visitors kept coming back with friends. Mr. Tsai used the extra money to fix the rest of the rooms and to hire more [[staff]], including a full-time [[housekeeping]] team to keep everything spotless. Next year, he plans to open two [[branches]] farther up the coast.",
+   "passageZh": "海風民宿坐落在南部一處安靜的海灘上。多年來，房客喜歡這裡的景色，卻不喜歡房間。一則又一則的網路評價都說著同樣的事：床鋪老舊、水壓不足、毛巾太薄。老闆蔡先生選擇不忽視這些聲音。他負擔不起一次改建整棟建築，於是撥出一小筆預算，開始一項實驗：他只翻修四間房，看看會發生什麼事。\n\n新房間幾天內就被訂滿，即使房客要為它們多付百分之三十的收費。六個月後，整間民宿的住房率創下新高，因為滿意的旅客不斷帶著朋友回訪。蔡先生用多賺的錢整修其餘房間，並增聘員工，包括一組全職的房務團隊，把每個角落打掃得一塵不染。明年，他計畫沿著海岸再往北開設兩間分店。",
+   "words": [
+    {
+     "word": "review",
+     "base": "review",
+     "zh": "評價；評論"
+    },
+    {
+     "word": "ignore",
+     "base": "ignore",
+     "zh": "忽視"
+    },
+    {
+     "word": "afford",
+     "base": "afford",
+     "zh": "負擔得起"
+    },
+    {
+     "word": "budget",
+     "base": "budget",
+     "zh": "預算"
+    },
+    {
+     "word": "experiment",
+     "base": "experiment",
+     "zh": "實驗"
+    },
+    {
+     "word": "renovate",
+     "base": "renovate",
+     "zh": "翻修；整修"
+    },
+    {
+     "word": "booked",
+     "base": "book",
+     "zh": "預訂"
+    },
+    {
+     "word": "charged",
+     "base": "charge",
+     "zh": "收費"
+    },
+    {
+     "word": "occupancy",
+     "base": "occupancy",
+     "zh": "住房率"
+    },
+    {
+     "word": "staff",
+     "base": "staff",
+     "zh": "員工"
+    },
+    {
+     "word": "housekeeping",
+     "base": "housekeeping",
+     "zh": "房務"
+    },
+    {
+     "word": "branches",
+     "base": "branch",
+     "zh": "分店；分公司"
+    }
+   ]
+  }
  },
  {
   "id": "art-7b",
@@ -7531,7 +9694,73 @@ TOEIC.articles = [
     "explanation": "推論題。定位第六段：已有兩百四十台機器、去年春天開始獲利、明年想擴張到醫院和飯店，可推論公司體質穩定到足以進入新市場。"
    }
   ],
-  "image": "img/articles/art-7b.jpg"
+  "image": "img/articles/art-7b.jpg",
+  "transfer": {
+   "passage": "After ten years of [[night shifts]] in a hotel kitchen, chef Tomas Weber noticed a problem. Fresh herbs from distant [[suppliers]] often arrived tired and dry, days after being cut. His idea was simple: grow them where the cooking happens.\n\nTomas [[negotiated]] with the owner of his building to [[lease]] the empty roof for a low monthly rent. He [[installed]] rows of planting boxes and filled them with basil, mint, and thyme. Every morning he could [[harvest]] fresh leaves minutes before the kitchen opened. Other restaurants soon asked about the idea and became his first [[clients]]. Each one pays a monthly [[subscription]]; in return, a gardener visits weekly, cares for the boxes, and leaves a box of fresh herbs. As [[demand]] grew, Tomas had to [[recruit]] three part-time gardeners and leave his kitchen job. The business became [[profitable]] in its second year. Next spring he plans to [[expand]] to two nearby cities, where flat empty roofs are easy to find.",
+   "passageZh": "在飯店廚房上了十年夜班之後，主廚托馬斯・韋伯注意到一個問題。來自遠方供應商的新鮮香草，常常在採摘後好幾天才送到，早已疲軟乾枯。他的想法很簡單：讓香草長在做菜的地方。\n\n托馬斯與大樓房東洽談，以低廉的月租租用閒置的屋頂。他安裝了一排排種植箱，種滿羅勒、薄荷與百里香。每天早上，他能在廚房開門前幾分鐘採收新鮮的葉子。其他餐廳很快來詢問這個點子，成了他的第一批客戶。每家餐廳支付每月的訂閱制費用；作為回報，園丁每週到府照顧種植箱，並留下一箱新鮮香草。隨著需求成長，托馬斯必須招募三名兼職園丁，並辭去廚房的工作。這門生意在第二年開始有獲利。明年春天，他計畫擴張到兩座鄰近城市，那裡平坦閒置的屋頂很好找。",
+   "words": [
+    {
+     "word": "night shifts",
+     "base": "night shift",
+     "zh": "夜班"
+    },
+    {
+     "word": "suppliers",
+     "base": "supplier",
+     "zh": "供應商"
+    },
+    {
+     "word": "negotiated",
+     "base": "negotiate",
+     "zh": "洽談；談成"
+    },
+    {
+     "word": "lease",
+     "base": "lease",
+     "zh": "租用"
+    },
+    {
+     "word": "installed",
+     "base": "install",
+     "zh": "安裝"
+    },
+    {
+     "word": "harvest",
+     "base": "harvest",
+     "zh": "採收"
+    },
+    {
+     "word": "clients",
+     "base": "client",
+     "zh": "客戶"
+    },
+    {
+     "word": "subscription",
+     "base": "subscription",
+     "zh": "訂閱制費用"
+    },
+    {
+     "word": "demand",
+     "base": "demand",
+     "zh": "需求"
+    },
+    {
+     "word": "recruit",
+     "base": "recruit",
+     "zh": "招募"
+    },
+    {
+     "word": "profitable",
+     "base": "profitable",
+     "zh": "有獲利的"
+    },
+    {
+     "word": "expand",
+     "base": "expand",
+     "zh": "擴張"
+    }
+   ]
+  }
  },
  {
   "id": "art-8a",
@@ -7784,7 +10013,73 @@ TOEIC.articles = [
     "explanation": "推論題。定位在第七段末句「量得出來的成本，永遠會比量不出來的成本更像真的」，重點在於「感覺更真實」，也就是決策時給予的權重不同，而非金額大小（故選項 D 誤讀）。選項 A、B 在文中都找不到根據。"
    }
   ],
-  "image": "img/articles/art-8a.jpg"
+  "image": "img/articles/art-8a.jpg",
+  "transfer": {
+   "passage": "Maplewood Home, a mid-priced furniture chain, built its [[positioning]] around one promise: shoppers would always find a trained advisor who knew every sofa on the floor. Behind the scenes, however, the company chased savings. Two years ago its [[procurement]] office signed a contract for a warehouse [[automation]] system, in which robots carry [[inventory]] from the storage racks to the packing line.\n\nOn paper the project made sense. Rent, power, and other [[overhead]] at the warehouse fell, and the first [[quarterly]] figures looked healthy. But the same software also [[monitored]] each packer's speed, flashing a warning whenever someone fell behind. Workers came to believe that managers were collecting reasons to dismiss them, and that [[suspicion]] poisoned the whole floor. Within a year, staff [[turnover]] had doubled, and the cost of hiring and training newcomers [[offset]] most of the savings. A senior director summed up the lesson for the board: a system that drives away experienced people quietly [[weakens]] the brand, and no [[profit margin]] is wide enough to survive that for long.",
+   "passageZh": "「楓木居家」是一家中價位家具連鎖店，把品牌定位建立在一個承諾上：顧客永遠找得到一位熟悉場內每張沙發的專業顧問。然而在幕後，公司一味追求省錢。兩年前，採購部門簽約引進一套倉儲自動化系統，讓機器人把存貨從儲物架搬到包裝線。\n\n帳面上，這個專案很合理。倉庫的租金、電力和其他營運成本下降了，最初的季度數字也很亮眼。但同一套軟體也監控著每位包裝員的速度，只要有人落後就跳出警告。員工逐漸相信主管是在蒐集開除他們的理由，這種猜疑毒化了整個現場。不到一年，人員流動率翻了一倍，招聘與訓練新人的成本抵銷了大部分省下來的錢。一位資深主管向董事會總結了這個教訓：一套趕走資深員工的系統，會悄悄削弱品牌；再寬的利潤率也經不起這樣消耗太久。",
+   "words": [
+    {
+     "word": "positioning",
+     "base": "positioning",
+     "zh": "（品牌）定位"
+    },
+    {
+     "word": "procurement",
+     "base": "procurement",
+     "zh": "採購（部門／作業）"
+    },
+    {
+     "word": "automation",
+     "base": "automation",
+     "zh": "自動化"
+    },
+    {
+     "word": "inventory",
+     "base": "inventory",
+     "zh": "存貨；庫存"
+    },
+    {
+     "word": "overhead",
+     "base": "overhead",
+     "zh": "營運成本；經常性支出"
+    },
+    {
+     "word": "quarterly",
+     "base": "quarterly",
+     "zh": "每季的"
+    },
+    {
+     "word": "monitored",
+     "base": "monitor",
+     "zh": "受到監看；被監控"
+    },
+    {
+     "word": "suspicion",
+     "base": "suspicion",
+     "zh": "猜疑；懷疑"
+    },
+    {
+     "word": "turnover",
+     "base": "turnover",
+     "zh": "人員流動率；離職率"
+    },
+    {
+     "word": "offset",
+     "base": "offset",
+     "zh": "抵銷"
+    },
+    {
+     "word": "weakens",
+     "base": "weaken",
+     "zh": "削弱；動搖"
+    },
+    {
+     "word": "profit margin",
+     "base": "profit margin",
+     "zh": "利潤率；毛利"
+    }
+   ]
+  }
  },
  {
   "id": "art-8b",
@@ -8030,7 +10325,73 @@ TOEIC.articles = [
     "explanation": "推論題。定位在第六段：拉高門檻後「訂位確實沒掉」，但八個月內辦卡申請掉了一成九、銀行要求重談合約，最後「守住了看得見的營收，卻放掉利潤高得多的營收」。選項 B 正好被「訂位沒掉」否定；選項 C 過度概括（銀行是重啟談判而非解約）；選項 D 與第五、六段所述的高消費會員價值相反。"
    }
   ],
-  "image": "img/articles/art-8b.jpg"
+  "image": "img/articles/art-8b.jpg",
+  "transfer": {
+   "passage": "When Cassia Coffee introduced its prepaid card ten years ago, it was a small convenience: customers loaded money in advance and tapped to pay. Few expected it to reshape the chain's finances.\n\nThe program, launched [[in partnership with]] a regional bank, now holds a large pool of unspent value. The company's [[treasurer]] invests that idle cash, and the returns have quietly made the card more [[profitable]] than many stores. The pool keeps growing because members are [[accumulating]] credit faster than they are [[redeeming]] it for drinks. The app feeds the habit with [[incentives]], such as double credit on Monday deposits, and a free drink unlocks once a member's total crosses a set [[threshold]].\n\nThe accounting is delicate. Unspent money sits as a [[liability]] on the [[balance sheet]], because the chain still owes members every cup they have paid for; it becomes [[revenue]] only when a drink is actually served. [[Regulators]] in two markets are asking how long the money may sit unused, and they require an annual [[disclosure]] of the amounts customers never spend.",
+   "passageZh": "凱西亞咖啡十年前推出儲值卡時，它只是一項小小的便利服務：顧客先把錢存進卡裡，感應付款即可。很少有人料到，這張卡會重塑整個連鎖體系的財務。\n\n這個與一家區域銀行合作推出的方案，如今累積了一大筆尚未消費的儲值金。公司的財務主管把這筆閒置現金拿去投資，其報酬悄悄讓這張卡比許多門市更有賺頭。這筆資金持續成長，因為會員累積儲值額的速度，比他們把儲值兌換成飲品的速度更快。App 還用各種誘因助長這個習慣，例如星期一存入可得雙倍額度；會員總額一跨過設定的門檻，就會解鎖一杯免費飲品。\n\n帳務處理十分微妙。尚未消費的錢在資產負債表上列為負債，因為連鎖店仍然欠會員每一杯他們已付款的咖啡；只有在飲品實際端出時，這筆錢才變成營收。兩個市場的主管機關正在詢問這些錢可以閒置多久，並要求每年揭露顧客始終未動用的金額。",
+   "words": [
+    {
+     "word": "in partnership with",
+     "base": "in partnership with",
+     "zh": "與……合作（推出）"
+    },
+    {
+     "word": "treasurer",
+     "base": "treasurer",
+     "zh": "財務主管；資金調度主管"
+    },
+    {
+     "word": "profitable",
+     "base": "profitable",
+     "zh": "獲利高的；有賺頭的"
+    },
+    {
+     "word": "accumulating",
+     "base": "accumulate",
+     "zh": "累積"
+    },
+    {
+     "word": "redeeming",
+     "base": "redeem",
+     "zh": "兌換"
+    },
+    {
+     "word": "incentives",
+     "base": "incentive",
+     "zh": "誘因；獎勵"
+    },
+    {
+     "word": "threshold",
+     "base": "threshold",
+     "zh": "門檻"
+    },
+    {
+     "word": "liability",
+     "base": "liability",
+     "zh": "負債"
+    },
+    {
+     "word": "balance sheet",
+     "base": "balance sheet",
+     "zh": "資產負債表"
+    },
+    {
+     "word": "revenue",
+     "base": "revenue",
+     "zh": "營收"
+    },
+    {
+     "word": "Regulators",
+     "base": "regulator",
+     "zh": "主管機關"
+    },
+    {
+     "word": "disclosure",
+     "base": "disclosure",
+     "zh": "揭露；公告"
+    }
+   ]
+  }
  },
  {
   "id": "art-9a",
@@ -8194,7 +10555,73 @@ TOEIC.articles = [
     "explanation": "第五段最後他說機器會印字卻不會打招呼，可推論他認為手寫比較有人情味，故選第二項。"
    }
   ],
-  "image": "img/articles/art-9a.jpg"
+  "image": "img/articles/art-9a.jpg",
+  "transfer": {
+   "passage": "Mr. Abe has [[owned]] a small soap shop for eight years. The shop sits on a [[busy]] corner near a school. But last year, [[sales]] went down month after month. His monthly [[report]] showed fewer and fewer buyers.\n\nHe began to write a thank-you [[message]] on every box. He wrote each one [[by hand]]. One day, a young woman bought ten soaps. She [[shared]] a photo of the boxes online. Many people loved the warm words.\n\nNew buyers came the next week. [[Customers]] now ask for special words on their gifts. A company near the shop [[ordered]] two hundred soaps. Mr. Abe [[delivers]] the boxes to their [[office]] himself. He also hung a new [[sign]] outside the shop. It says, 'Every box comes with a little card.'",
+   "passageZh": "Abe 先生經營一家小肥皂店已經八年了。店面位在學校附近一個熱鬧的街角。但去年，銷售額一個月比一個月低。他的月報表顯示，買東西的人越來越少。\n\n他開始在每個盒子上寫一段感謝訊息。每一張都是親手寫的。有一天，一位年輕女士買了十塊肥皂。她把盒子的照片分享到網路上。許多人喜歡那些溫暖的字句。\n\n隔週就有新買家上門。顧客現在會請他在禮物上寫特別的話。附近一家公司訂購了兩百塊肥皂。Abe 先生親自把盒子送到他們的辦公室。他還在店外掛了一塊新招牌，上面寫著：「每個盒子都附一張小卡」。",
+   "words": [
+    {
+     "word": "owned",
+     "base": "own",
+     "zh": "擁有；經營"
+    },
+    {
+     "word": "busy",
+     "base": "busy",
+     "zh": "忙碌的；熱鬧的"
+    },
+    {
+     "word": "sales",
+     "base": "sales",
+     "zh": "銷售額；業績"
+    },
+    {
+     "word": "report",
+     "base": "report",
+     "zh": "報表；報告"
+    },
+    {
+     "word": "message",
+     "base": "message",
+     "zh": "訊息"
+    },
+    {
+     "word": "by hand",
+     "base": "by hand",
+     "zh": "用手工；親手"
+    },
+    {
+     "word": "shared",
+     "base": "share",
+     "zh": "分享"
+    },
+    {
+     "word": "Customers",
+     "base": "customer",
+     "zh": "顧客"
+    },
+    {
+     "word": "ordered",
+     "base": "order",
+     "zh": "訂購"
+    },
+    {
+     "word": "delivers",
+     "base": "deliver",
+     "zh": "運送；配送"
+    },
+    {
+     "word": "office",
+     "base": "office",
+     "zh": "辦公室"
+    },
+    {
+     "word": "sign",
+     "base": "sign",
+     "zh": "招牌；標示"
+    }
+   ]
+  }
  },
  {
   "id": "art-9b",

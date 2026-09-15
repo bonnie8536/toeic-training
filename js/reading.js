@@ -59,6 +59,7 @@
         const total = countVocabInstances(a);
         const qState = store.get('read_q_' + a.id, {});
         const qDone = Object.keys(qState).length;
+        const tqRes = store.get('read_tq_' + a.id, null);
         const img = h('img', { src: a.image || ('img/' + a.id + '.svg'), alt: '', onerror: e => e.target.parentNode.remove() });
         listWrap.append(h('a', { class: 'article-card', href: 'reading.html?id=' + a.id },
           h('div', { class: 'thumb' }, img),
@@ -69,8 +70,9 @@
               h('span', null, '約 ' + a.readTime + ' 分鐘')),
             h('h3', null, a.title),
             h('div', { class: 'zh' }, a.titleZh),
-            (doneCount || qDone)
-              ? h('div', { class: 'progress-note' }, '單字 ' + doneCount + '/' + total + ' · 題目已作答 ' + qDone + '/' + a.questions.length)
+            (doneCount || qDone || tqRes)
+              ? h('div', { class: 'progress-note' }, '單字 ' + doneCount + '/' + total + ' · 題目已作答 ' + qDone + '/' + a.questions.length
+                  + (tqRes ? ' · 單字考題 ' + tqRes.score + '/' + tqRes.total : ''))
               : null)));
       });
     }
@@ -112,17 +114,24 @@
 
     const progressEl = h('span', { class: 'vocab-progress' });
     const biBtn = h('button', { class: 'btn', onclick: toggleBilingual }, '對照翻譯');
+    const hasBank = store.get('vgame_banks', []).some(b => b.id === 'art_' + a.id);
+    const bankBtn = h('button', {
+      class: 'btn' + (hasBank ? ' on' : ''),
+      onclick: () => importVocabToBank(a, bankBtn),
+    }, hasBank ? '更新題庫單字' : '單字存入題庫');
     const toolbar = h('div', { class: 'reader-toolbar' },
-      biBtn,
+      biBtn, bankBtn,
       h('span', { class: 'toolbar-note' }, '虛線單字可以點'),
       progressEl);
 
     const bodyEl = h('div', { class: 'article-body' });
     const qWrap = h('div', null);
+    const tWrap = h('div', null);
 
-    root.append(head, illust, toolbar, bodyEl, qWrap);
+    root.append(head, illust, toolbar, bodyEl, qWrap, tWrap);
     renderBody();
     renderQuestions(a, qWrap);
+    renderTransfer(a, tWrap);
     updateProgress();
 
     function toggleBilingual() {
@@ -365,6 +374,7 @@
           onclick: () => {
             answers[qi] = oi;
             store.set(key, answers);
+            logAttempt('r', a.id + ':' + qi, oi, oi === q.answer);
             drawAll();
           },
         }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
@@ -378,5 +388,158 @@
       }
       return block;
     }
+  }
+
+  /* ============ 單字存入題庫(單字訓練的自訂題庫) ============ */
+  function importVocabToBank(a, btn) {
+    const norm = s => String(s).toLowerCase().replace(/\s+/g, ' ').trim();
+    const banks = store.get('vgame_banks', []);
+    const bid = 'art_' + a.id;
+    let bank = banks.find(b => b.id === bid);
+    if (!bank) { bank = { id: bid, name: '', words: [] }; banks.push(bank); }
+    bank.name = ('文章:' + a.titleZh).slice(0, 20);
+    (a.vocab || []).forEach(v => {
+      const en = v.base || v.word;
+      if (!en || en.length > 30) return;
+      const exist = (bank.words = bank.words || []).find(x => norm(x.en) === norm(en));
+      if (exist) exist.zh = v.zh;
+      else bank.words.push({ en, zh: v.zh, on: true });
+    });
+    store.set('vgame_banks', banks);
+    btn.textContent = '已存入題庫(' + bank.words.length + ' 字)';
+    btn.classList.add('on');
+    if (!btn.nextElementSibling || !btn.nextElementSibling.classList.contains('bank-golink')) {
+      btn.after(h('a', { class: 'bank-golink', href: 'vocab.html' }, '去單字訓練'));
+    }
+  }
+
+  /* ============ 單字考題:同一批單字、全新文章的挖空 ============ */
+  function renderTransfer(a, wrap) {
+    const tr = a.transfer;
+    if (!tr || !Array.isArray(tr.words) || !tr.words.length) return;
+    const storeKey = 'read_tq_' + a.id;
+
+    /* 解析:段落 ×(文字|空格),answers 依出現順序 */
+    const answers = [];
+    const paras = String(tr.passage).split(/\n{2,}/).map(para =>
+      para.split(/(\[\[.+?\]\])/).map(seg => {
+        const m = seg.match(/^\[\[(.+)\]\]$/);
+        if (!m) return { text: seg };
+        answers.push(m[1]);
+        return { blank: answers.length - 1 };
+      }).filter(seg => seg.text !== ''));
+
+    wrap.append(h('div', { class: 'exercise-head' }, h('h2', null, '單字考題')));
+    const last = store.get(storeKey, null);
+    const area = h('div', { class: 'tq-area' });
+    wrap.append(
+      h('p', { class: 'result-note' },
+        '同一批單字,換一篇全新的文章。點單字卡再點空格,依文意把每個字放回正確位置,全部放完才能交卷。'
+        + (last ? '上次成績 ' + last.score + '/' + last.total + '。' : '')),
+      area);
+
+    let placed = {}, selected = null, armed = null, submitted = false;
+    let bankOrder = shuffle(tr.words.map(x => x.word));
+
+    function shuffle(list) {
+      const arr = [...list];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function place(bi, word) {
+      Object.keys(placed).forEach(k => { if (placed[k] === word) delete placed[k]; });
+      placed[bi] = word;
+    }
+
+    function submit() {
+      submitted = true;
+      const score = answers.filter((w, bi) => placed[bi] === w).length;
+      store.set(storeKey, { score, total: answers.length, t: Date.now() });
+      logAttempt('tq', a.id, score, score === answers.length, { n: answers.length });
+      draw();
+    }
+
+    function reset() {
+      placed = {}; selected = null; armed = null; submitted = false;
+      bankOrder = shuffle(tr.words.map(x => x.word));
+      draw();
+    }
+
+    function draw() {
+      area.innerHTML = '';
+      const used = new Set(Object.values(placed));
+
+      const bank = h('div', { class: 'tq-bank' });
+      bankOrder.forEach(word => {
+        const isUsed = used.has(word);
+        bank.append(h('button', {
+          class: 'tq-chip' + (selected === word ? ' on' : '') + (isUsed ? ' used' : ''),
+          type: 'button',
+          disabled: (submitted || isUsed) ? '' : null,
+          onclick: () => {
+            if (armed !== null) { place(armed, word); armed = null; selected = null; }
+            else selected = (selected === word ? null : word);
+            draw();
+          },
+        }, word));
+      });
+
+      const body = h('div', { class: 'tq-passage' });
+      paras.forEach(segs => {
+        const p = h('p', null);
+        segs.forEach(seg => {
+          if (seg.text !== undefined) { p.append(document.createTextNode(seg.text)); return; }
+          const bi = seg.blank;
+          const word = placed[bi];
+          let cls = 'tq-blank' + (word ? ' filled' : '') + (armed === bi ? ' on' : '');
+          const nodes = [h('span', { class: 'no' }, String(bi + 1))];
+          if (submitted) {
+            const okB = word === answers[bi];
+            cls += okB ? ' ok' : ' bad';
+            if (okB) nodes.push(word);
+            else { nodes.push(h('s', null, word || '(空)'), ' ' + answers[bi]); }
+          } else nodes.push(word || '');
+          p.append(h('button', {
+            class: cls, type: 'button',
+            onclick: () => {
+              if (submitted) return;
+              if (selected) { place(bi, selected); selected = null; armed = null; }
+              else if (placed[bi]) { delete placed[bi]; armed = null; }
+              else armed = (armed === bi ? null : bi);
+              draw();
+            },
+          }, nodes));
+        });
+        body.append(p);
+      });
+
+      area.append(bank, body);
+
+      const filledN = Object.keys(placed).length;
+      if (!submitted) {
+        area.append(h('div', { class: 'drill-nav-btns' },
+          h('button', {
+            class: 'btn primary', type: 'button',
+            disabled: filledN < answers.length ? '' : null,
+            onclick: submit,
+          }, filledN < answers.length ? '交卷對答案(還有 ' + (answers.length - filledN) + ' 格)' : '交卷對答案')));
+      } else {
+        const score = answers.filter((w, bi) => placed[bi] === w).length;
+        area.append(h('div', { class: 'tq-result' }, '成績:' + score + '/' + answers.length));
+        const zhWrap = h('div', { class: 'tq-zh' });
+        String(tr.passageZh).split(/\n{2,}/).forEach(z => zhWrap.append(h('p', null, z)));
+        const words = h('div', { class: 'tq-review' });
+        tr.words.forEach(x => words.append(h('div', null, h('b', null, x.word), x.zh)));
+        area.append(zhWrap, words,
+          h('div', { class: 'drill-nav-btns' },
+            h('button', { class: 'btn', type: 'button', onclick: reset }, '重新挑戰')));
+      }
+    }
+
+    draw();
   }
 })();

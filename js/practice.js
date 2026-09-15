@@ -273,6 +273,7 @@
     const st = store.get(KEY(p), {});
     st[id] = { c: oi, ok, t: Date.now() };
     store.set(KEY(p), st);
+    logAttempt('p' + p, id, oi, ok);
   }
 
   function topBar(title, sub) {

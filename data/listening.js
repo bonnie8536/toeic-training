@@ -80,16 +80,16 @@ TOEIC.listening = {
    "id": "l1-06",
    "difficulty": "基礎",
    "photoPrompt": "A photorealistic candid documentary photograph of a shopkeeper in an apron sweeping the sidewalk with a long broom in front of a small storefront early in the morning. The shop's glass window is clean and its door is closed. The street beyond is quiet with no pedestrians and no moving cars. Soft morning light, candid documentary style, shallow depth of field, no text or logos on the storefront.",
-   "photoAlt": "清晨街邊，穿圍裙的店家拿長掃把在店門口人行道掃地；店面玻璃乾淨、門關著，街上沒有行人。",
+   "photoAlt": "清晨街邊，穿圍裙的女店家拿長掃把在店門口人行道掃地；店面玻璃乾淨、門關著，街上沒有行人。",
    "options": [
-    "A man is washing a window.",
+    "A woman is washing a window.",
     "Some people are crossing the street.",
-    "A man is unlocking a door.",
-    "A man is sweeping the sidewalk."
+    "A woman is unlocking a door.",
+    "A woman is sweeping the sidewalk."
    ],
    "answer": 3,
-   "explanation": "正解 (D)：他手持掃把在人行道上掃地，動作與地點都相符。\n(A) 陷阱＝物件在但動作錯：店面玻璃窗確實在畫面中，但他手上拿的是掃把，不是在擦窗。\n(B) 陷阱＝畫面無此人物：街上沒有行人，也沒有人在過馬路。\n(C) 陷阱＝物件在但動作錯：門就在旁邊，但他沒有在開鎖。",
-   "transcriptZh": "(A) 一名男子正在擦窗戶。\n(B) 有些人正在過馬路。\n(C) 一名男子正在開門鎖。\n(D) 一名男子正在掃人行道。"
+   "explanation": "正解 (D)：她手持掃把在人行道上掃地，動作與地點都相符。\n(A) 陷阱＝物件在但動作錯：店面玻璃窗確實在畫面中，但她手上拿的是掃把，不是在擦窗。\n(B) 陷阱＝畫面無此人物：街上沒有行人，也沒有人在過馬路。\n(C) 陷阱＝物件在但動作錯：門就在旁邊，但她沒有在開鎖。",
+   "transcriptZh": "(A) 一名女子正在擦窗戶。\n(B) 有些人正在過馬路。\n(C) 一名女子正在開門鎖。\n(D) 一名女子正在掃人行道。"
   },
   {
    "id": "l1-07",

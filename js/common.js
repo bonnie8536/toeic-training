@@ -80,3 +80,32 @@ function levelBadgeClass(level) {
 function getParam(name) {
   return new URLSearchParams(location.search).get(name);
 }
+
+/* 答題記錄(學習記錄頁用):每次作答一筆 {m:模組, id, c:選項, ok, t},最多留 600 筆。
+   模組代號:p5/p6/p7 刷題、l1~l4 聽力、g 文法、r 文章題、ph 片語、tq 單字考題、vq 單字遊戲 */
+const HIST_MAX = 600;
+function logAttempt(m, id, c, ok, extra) {
+  const hist = store.get('hist', []);
+  const rec = { m, id, c, ok: !!ok, t: Date.now() };
+  if (extra) Object.assign(rec, extra);
+  hist.push(rec);
+  if (hist.length > HIST_MAX) hist.splice(0, hist.length - HIST_MAX);
+  store.set('hist', hist);
+}
+
+/* 頂欄群組選單:桌機 hover/focus 由 CSS 處理,這裡補「點一下切換」給觸控裝置 */
+document.addEventListener('DOMContentLoaded', () => {
+  const groups = $$('.nav-group');
+  if (!groups.length) return;
+  groups.forEach(g => {
+    const btn = g.querySelector('.nav-btn');
+    if (!btn) return;
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const open = g.classList.contains('open');
+      groups.forEach(x => x.classList.remove('open'));
+      if (!open) g.classList.add('open');
+    });
+  });
+  document.addEventListener('click', () => groups.forEach(x => x.classList.remove('open')));
+});

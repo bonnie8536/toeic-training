@@ -105,6 +105,7 @@
             if (answered) return;
             answered = true;
             results[qi] = oi === q.answer;
+            logAttempt('g', u.id + ':' + qi, oi, results[qi]);
             [...opts.children].forEach((btn, bi) => {
               btn.disabled = true;
               if (bi === q.answer) btn.classList.add('correct');

@@ -113,6 +113,25 @@
             onclick: () => startGame(modeSel.value, levelSel.value, speedSel.value, dirSel.value),
           }, '開始遊戲')))));
 
+    /* 更多玩法:翻牌配對 / 記憶吐司 / 單字選擇題(共用同一套字池) */
+    const modeSel2 = h('select', { class: 'cfg-select' },
+      [['word', '單字'], ['phrase', '片語']].concat(banks.map(b => ['bank:' + b.id, '題庫:' + b.name]))
+        .map(([v, t]) => h('option', { value: v }, t)));
+    const levelSel2 = h('select', { class: 'cfg-select' },
+      ['全部', '初級', '中級', '中高級', '高級'].map(l => h('option', { value: l }, l === '全部' ? '全部級別' : l)));
+    const dirSel2 = h('select', { class: 'cfg-select' },
+      [['e2z', '看英文選中文'], ['z2e', '看中文選英文']].map(([v, t]) => h('option', { value: v }, t)));
+    modeSel2.addEventListener('change', () => { levelSel2.style.display = modeSel2.value === 'word' ? '' : 'none'; });
+    root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
+      h('div', { class: 'part-card' },
+        h('h3', null, '更多玩法'),
+        h('p', null, '同一批單字換三種練法:翻牌配對(把英文和中文翻成一對)、記憶吐司(吐司烤好前記住 6 個字,烤好後逐一考)、單字選擇題(四選一)。答錯或記錯的字會進漏接池,掉落遊戲會優先出現;每一題也都會留在學習記錄。'),
+        h('div', { class: 'cfg-row' }, modeSel2, levelSel2, dirSel2, h('span', { class: 'toolbar-note', style: 'align-self:center' }, '方向只影響選擇題')),
+        h('div', { class: 'cfg-row' },
+          h('button', { class: 'btn primary', onclick: () => startPairs(modeSel2.value, levelSel2.value) }, '翻牌配對'),
+          h('button', { class: 'btn primary', onclick: () => startToast(modeSel2.value, levelSel2.value) }, '記憶吐司'),
+          h('button', { class: 'btn primary', onclick: () => startMcq(modeSel2.value, levelSel2.value, dirSel2.value) }, '單字選擇題')))));
+
     /* 我的題庫 */
     root.append(h('div', { class: 'exercise-head' },
       h('h2', null, '我的題庫'),
@@ -514,6 +533,7 @@
             const st2 = store.get('phrase_drill', {});
             st2[p.id] = { ok, t: Date.now() };
             store.set('phrase_drill', st2);
+            logAttempt('ph', p.id, oi, ok);
             [...opts.children].forEach((b, bi) => {
               b.disabled = true;
               if (bi === p.quiz.answer) b.classList.add('correct');
@@ -556,6 +576,288 @@
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', onclick: () => startDrill(groupName, items) }, '再練一輪'),
         h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
+      window.scrollTo(0, 0);
+    }
+  }
+
+  /* ================= 更多玩法:共用工具 ================= */
+  function poolFor(mode, levelName) {
+    if (mode.startsWith('bank:')) {
+      const bank = getBanks().find(b => 'bank:' + b.id === mode);
+      if (!bank) return { pool: [], name: '' };
+      return { pool: bankPool(bank), name: '題庫:' + bank.name };
+    }
+    if (mode === 'phrase') return { pool: buildPhrasePool(), name: '片語' };
+    return { pool: buildWordPool(levelName), name: '單字' + (levelName !== '全部' ? ' · ' + levelName : '') };
+  }
+  function shuffleArr(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  /* 抽 n 個:漏接池裡的字優先(最多一半),其餘隨機 */
+  function pickN(pool, n) {
+    const missPool = store.get('vgame_miss', {});
+    const missed = shuffleArr(pool.filter(p => missPool[p.answer])).slice(0, Math.floor(n / 2));
+    const rest = shuffleArr(pool.filter(p => !missed.includes(p))).slice(0, n - missed.length);
+    return shuffleArr([...missed, ...rest]);
+  }
+  /* 干擾選項:先從 prefer(同一盤的字)挑,不夠再從整個字池補;中英都不能與正解相同 */
+  function distractors(pool, item, n, prefer) {
+    const diff = p => p.answer !== item.answer && p.zh !== item.zh;
+    const first = shuffleArr((prefer || []).filter(diff));
+    const more = shuffleArr(pool.filter(p => diff(p) && !first.includes(p)));
+    return [...first, ...more].slice(0, n);
+  }
+  function markMiss(item, ok) {
+    const missPool = store.get('vgame_miss', {});
+    if (ok) {
+      if (!missPool[item.answer]) return;
+      delete missPool[item.answer];
+    } else missPool[item.answer] = (missPool[item.answer] || 0) + 1;
+    store.set('vgame_miss', missPool);
+  }
+  function gameTop(title, sub) {
+    return h('div', { class: 'drill-top' },
+      h('h1', null, title + ' ', h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' }, sub)),
+      h('a', { href: 'vocab.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回單字訓練'));
+  }
+  function tooSmall(pool, min) {
+    if (pool.length >= min) return false;
+    alert('這個字池只有 ' + pool.length + ' 個字,至少要 ' + min + ' 個才能玩。');
+    renderHome();
+    return true;
+  }
+
+  /* ================= 翻牌配對 ================= */
+  function startPairs(mode, levelName) {
+    const { pool, name } = poolFor(mode, levelName);
+    if (tooSmall(pool, 3)) return;
+    const items = pickN(pool, Math.min(8, pool.length));
+    document.title = '翻牌配對|刷刷英文';
+    root.innerHTML = '';
+    const cards = shuffleArr(items.flatMap((it, i) => [{ k: i, face: it.answer, en: true }, { k: i, face: it.zh, en: false }]));
+    let first = null, lock = false, moves = 0, matched = 0, startT = 0, timer = null;
+    const movesEl = h('span', { class: 'hud-score' }, '0');
+    const timeEl = h('span', { class: 'hud-score' }, '0');
+    const grid = h('div', { class: 'mem-grid' });
+    root.append(gameTop('翻牌配對', name + ' · ' + items.length + ' 對'),
+      h('div', { class: 'game-hud' }, h('span', null, '步數 ', movesEl), h('span', null, '秒數 ', timeEl)),
+      h('p', { class: 'result-note' }, '一次翻兩張,英文和它的中文配成一對就會留下來。步數越少越厲害。'),
+      grid);
+    cards.forEach(c => {
+      c.el = h('button', { class: 'mem-card' + (c.en ? '' : ' zh'), type: 'button', onclick: () => flip(c) }, '?');
+      grid.append(c.el);
+    });
+    const tick = () => { timeEl.textContent = String(Math.round((Date.now() - startT) / 1000)); };
+    function flip(c) {
+      if (lock || c.done || c === first) return;
+      if (!startT) { startT = Date.now(); timer = setInterval(tick, 500); }
+      c.el.classList.add('flipped');
+      c.el.textContent = c.face;
+      if (!first) { first = c; return; }
+      moves++;
+      movesEl.textContent = String(moves);
+      if (first.k === c.k) {
+        first.done = c.done = true;
+        first.el.classList.add('matched');
+        c.el.classList.add('matched');
+        first = null;
+        matched++;
+        if (matched === items.length) finish();
+        return;
+      }
+      lock = true;
+      const a = first;
+      first = null;
+      setTimeout(() => {
+        [a, c].forEach(x => { x.el.classList.remove('flipped'); x.el.textContent = '?'; });
+        lock = false;
+      }, 850);
+    }
+    function finish() {
+      clearInterval(timer);
+      tick();
+      const secs = Math.round((Date.now() - startT) / 1000);
+      const key = mode + ':' + items.length;
+      const best = store.get('vgame_pairs_best', {});
+      const prev = best[key];
+      const isBest = !prev || moves < prev.moves || (moves === prev.moves && secs < prev.secs);
+      if (isBest) { best[key] = { moves, secs }; store.set('vgame_pairs_best', best); }
+      logAttempt('vq', 'pairs', moves, true, { q: '翻牌配對 ' + name + ':' + items.length + ' 對', x: moves + ' 步 · ' + secs + ' 秒', g: 'pairs' });
+      root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
+        h('h2', null, '完成!' + moves + ' 步 · ' + secs + ' 秒' + (isBest ? '(新紀錄)' : '')),
+        h('div', { class: 'band-note' }, prev && !isBest ? '最佳紀錄 ' + prev.moves + ' 步 · ' + prev.secs + ' 秒' : '再玩一次試試能不能更少步。')),
+        h('div', { class: 'drill-nav-btns' },
+          h('button', { class: 'btn primary', onclick: () => startPairs(mode, levelName) }, '再玩一次'),
+          h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
+    }
+  }
+
+  /* ================= 記憶吐司:限時記 6 個字,烤好後逐題考意思 ================= */
+  function startToast(mode, levelName) {
+    const { pool, name } = poolFor(mode, levelName);
+    if (tooSmall(pool, 4)) return;
+    const items = pickN(pool, Math.min(6, pool.length));
+    const SHOW_MS = 15000;
+    document.title = '記憶吐司|刷刷英文';
+    root.innerHTML = '';
+    const bar = h('i', { style: 'width:100%' });
+    const grid = h('div', { class: 'toast-grid' },
+      items.map(it => h('div', { class: 'toast-card' }, h('b', null, it.answer), h('span', null, it.zh))));
+    root.append(gameTop('記憶吐司', name),
+      h('p', { class: 'result-note' }, '吐司烤好前(15 秒)把這 ' + items.length + ' 個字記起來;烤好後會蓋住中文,逐一考你意思。'),
+      h('div', { class: 'toast-timer' }, bar), grid,
+      h('div', { class: 'drill-nav-btns' }, h('button', { class: 'btn primary', type: 'button', onclick: () => quiz() }, '我記好了,直接開考')));
+    const t0 = Date.now();
+    const iv = setInterval(() => {
+      const left = Math.max(0, SHOW_MS - (Date.now() - t0));
+      bar.style.width = (left / SHOW_MS * 100) + '%';
+      if (!left) quiz();
+    }, 100);
+    let started = false;
+
+    function quiz() {
+      if (started) return;
+      started = true;
+      clearInterval(iv);
+      const order = shuffleArr(items);
+      const results = [];
+      let cur = 0;
+      draw();
+
+      function draw() {
+        root.innerHTML = '';
+        root.append(gameTop('記憶吐司', name + ' · 第 ' + (cur + 1) + ' / ' + order.length + ' 題'));
+        const it = order[cur];
+        const opts = shuffleArr([it, ...distractors(pool, it, 3, items)]);
+        const ai = opts.indexOf(it);
+        let done = false;
+        const optsEl = h('div', { class: 'opts', style: 'margin-top:10px' });
+        const after = h('div', null);
+        opts.forEach((o, oi) => {
+          optsEl.append(h('button', {
+            class: 'opt',
+            onclick: () => {
+              if (done) return;
+              done = true;
+              const ok = oi === ai;
+              results.push({ it, ok });
+              markMiss(it, ok);
+              logAttempt('vq', it.answer, oi, ok, { q: it.answer, o: opts.map(x => x.zh), a: ai, g: 'toast' });
+              [...optsEl.children].forEach((b, bi) => {
+                b.disabled = true;
+                b.classList.add(bi === ai ? 'correct' : bi === oi ? 'wrong' : 'plain');
+              });
+              const isLast = cur === order.length - 1;
+              after.append(h('div', { class: 'drill-nav-btns' },
+                h('button', { class: 'btn primary', onclick: () => { if (isLast) summary(); else { cur++; draw(); } } },
+                  isLast ? '看成績' : '下一題 →')));
+            },
+          }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, o.zh)));
+        });
+        root.append(h('div', { class: 'q-block' },
+          h('div', { class: 'toast-stem' }, it.answer),
+          h('div', { class: 'result-note' }, '剛才吐司上這個字的意思是?'),
+          optsEl, after));
+      }
+
+      function summary() {
+        root.innerHTML = '';
+        const okN = results.filter(r => r.ok).length;
+        const best = store.get('vgame_toast_best', {});
+        const isBest = okN > (best[mode] || 0);
+        if (isBest) { best[mode] = okN; store.set('vgame_toast_best', best); }
+        root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
+          h('h2', null, '記憶吐司:' + okN + ' / ' + results.length + (isBest && okN ? '(新紀錄)' : '')),
+          h('div', { class: 'band-note' }, okN === results.length ? '全部記住了!' : '記錯的字已進漏接池,掉落遊戲會優先出現。')),
+          h('div', { class: 'vq-list' }, results.map(r => h('div', { class: 'vq-item' + (r.ok ? '' : ' bad') },
+            h('b', null, r.it.answer), h('span', null, r.it.zh), h('i', null, r.ok ? '✓' : '✗')))),
+          h('div', { class: 'drill-nav-btns' },
+            h('button', { class: 'btn primary', onclick: () => startToast(mode, levelName) }, '再烤一盤'),
+            h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
+        window.scrollTo(0, 0);
+      }
+    }
+  }
+
+  /* ================= 單字選擇題 ================= */
+  function startMcq(mode, levelName, dir) {
+    dir = dir === 'z2e' ? 'z2e' : 'e2z';
+    const { pool, name } = poolFor(mode, levelName);
+    if (tooSmall(pool, 4)) return;
+    const list = pickN(pool, Math.min(10, pool.length));
+    const results = [];
+    let cur = 0;
+    document.title = '單字選擇題|刷刷英文';
+    const face = o => (dir === 'e2z' ? o.zh : o.answer);
+    draw();
+
+    function draw() {
+      root.innerHTML = '';
+      root.append(gameTop('單字選擇題', name + ' · ' + (dir === 'e2z' ? '看英文選中文' : '看中文選英文')));
+      const nav = h('div', { class: 'q-nav' });
+      list.forEach((x, i) => {
+        let cls = i === cur ? 'cur' : '';
+        if (results[i] === true) cls += ' ok';
+        if (results[i] === false) cls += ' ng';
+        nav.append(h('button', { class: cls.trim(), disabled: '' }, String(i + 1)));
+      });
+      root.append(nav);
+      const it = list[cur];
+      const opts = shuffleArr([it, ...distractors(pool, it, 3)]);
+      const ai = opts.indexOf(it);
+      const stem = dir === 'e2z' ? it.answer : it.zh;
+      let done = false;
+      const optsEl = h('div', { class: 'opts', style: 'margin-top:10px' });
+      const after = h('div', null);
+      opts.forEach((o, oi) => {
+        optsEl.append(h('button', {
+          class: 'opt',
+          onclick: () => {
+            if (done) return;
+            done = true;
+            const ok = oi === ai;
+            results[cur] = ok;
+            markMiss(it, ok);
+            logAttempt('vq', it.answer, oi, ok, { q: stem, o: opts.map(face), a: ai, g: 'mcq' });
+            [...optsEl.children].forEach((b, bi) => {
+              b.disabled = true;
+              b.classList.add(bi === ai ? 'correct' : bi === oi ? 'wrong' : 'plain');
+            });
+            const isLast = cur === list.length - 1;
+            after.append(
+              h('div', { class: 'explain' },
+                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了,正確是 ' + face(it)),
+                h('div', null, it.answer + ' — ' + it.zh)),
+              h('div', { class: 'drill-nav-btns' },
+                h('button', {
+                  class: 'btn primary',
+                  onclick: () => { if (isLast) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
+                }, isLast ? '看本輪成績' : '下一題 →')));
+          },
+        }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, face(o))));
+      });
+      root.append(h('div', { class: 'q-block' },
+        h('div', { class: 'toast-stem' }, stem),
+        h('div', { class: 'result-note' }, dir === 'e2z' ? '這個字的意思是?' : '哪一個是它的英文?'),
+        optsEl, after));
+    }
+
+    function summary() {
+      root.innerHTML = '';
+      const okN = results.filter(Boolean).length;
+      const wrong = list.filter((x, i) => !results[i]);
+      root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
+        h('h2', null, '單字選擇題:' + okN + ' / ' + list.length),
+        h('div', { class: 'band-note' }, wrong.length ? '答錯的字已進漏接池,掉落遊戲會優先出現;每一題也能在學習記錄重看。' : '全對!')),
+        wrong.length ? h('div', { class: 'vq-list' }, wrong.map(x => h('div', { class: 'vq-item bad' }, h('b', null, x.answer), h('span', null, x.zh), h('i', null, '✗')))) : null,
+        h('div', { class: 'drill-nav-btns' },
+          h('button', { class: 'btn primary', onclick: () => startMcq(mode, levelName, dir) }, '再練一輪'),
+          h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
       window.scrollTo(0, 0);
     }
   }

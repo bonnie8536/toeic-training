@@ -65,18 +65,22 @@
     const st = store.get(KEY(p), {});
     st[id] = { c: oi, ok, t: Date.now() };
     store.set(KEY(p), st);
+    logAttempt('l' + p, id, oi, ok);
   }
 
   function makePlayer(id, state) {
     state.plays = state.plays || 0;
-    const audio = new Audio('audio/' + id + '.mp3');
+    /* 每按一次都換全新的 Audio 從第 0 秒解碼,不靠 seek 回頭:
+       手機瀏覽器對 mp3 的 seek 表很脆弱,重播時容易只播一半就停。 */
+    let audio = null;
+    const src = 'audio/' + id + '.mp3';
     const speedSel = h('select', { class: 'cfg-select speed-sel' },
       [['0.75', '慢速 0.75x'], ['1', '正常 1x'], ['1.25', '快速 1.25x']].map(([v, t]) => {
         const o = h('option', { value: v }, t);
         if (v === '1') o.selected = true;
         return o;
       }));
-    speedSel.addEventListener('change', () => { audio.playbackRate = Number(speedSel.value); });
+    speedSel.addEventListener('change', () => { if (audio) audio.playbackRate = Number(speedSel.value); });
     const label = h('span', { class: 'player-note' });
     const btn = h('button', { class: 'btn primary player-btn', type: 'button' }, '▶ 播放');
     function refresh() {
@@ -89,13 +93,16 @@
     btn.addEventListener('click', () => {
       if (!state.done && state.plays >= 2) return;
       state.plays++;
-      audio.currentTime = 0;
+      if (audio) audio.pause();
+      audio = new Audio(src);
+      audio.preload = 'auto';
+      audio.playbackRate = Number(speedSel.value);
+      audio.addEventListener('error', () => { label.textContent = '找不到音檔'; btn.disabled = true; });
       audio.play().catch(() => { label.textContent = '音檔載入失敗'; });
       refresh();
     });
-    audio.addEventListener('error', () => { label.textContent = '找不到音檔'; btn.disabled = true; });
     refresh();
-    return { el: h('div', { class: 'player' }, btn, speedSel, label), refresh, stop: () => audio.pause() };
+    return { el: h('div', { class: 'player' }, btn, speedSel, label), refresh, stop: () => { if (audio) audio.pause(); } };
   }
 
   /* ================= 混合聽力練習 ================= */

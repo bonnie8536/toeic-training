@@ -250,6 +250,57 @@ button { font-family: var(--font); cursor: pointer; }
   margin: 18px 0 8px;
   flex-wrap: wrap;
 }
+.bank-golink { font-size: 13.5px; }
+
+/* ---------------- 單字考題(同字新文挖空) ---------------- */
+.tq-bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 18px; }
+.tq-chip {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 15px;
+  color: var(--ink);
+  cursor: pointer;
+}
+.tq-chip:hover { border-color: var(--primary); color: var(--primary); }
+.tq-chip.on { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 700; }
+.tq-chip.used { opacity: .3; cursor: default; }
+.tq-passage p { line-height: 2.2; margin: 0 0 14px; font-size: 16.5px; }
+.tq-blank {
+  display: inline-block;
+  border: none;
+  border-bottom: 2px solid #b8c4cf;
+  background: var(--primary-tint);
+  border-radius: 3px 3px 0 0;
+  min-width: 76px;
+  padding: 0 8px;
+  margin: 0 2px;
+  font: inherit;
+  line-height: 1.9;
+  cursor: pointer;
+  vertical-align: baseline;
+  color: var(--ink);
+  text-align: left;
+}
+.tq-blank .no { font-size: 11px; color: var(--ink-light); margin-right: 5px; }
+.tq-blank.on { border-bottom-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+.tq-blank.filled { background: var(--highlight); border-bottom-color: var(--highlight-deep); }
+.tq-blank.ok { background: var(--ok-tint); border-bottom-color: var(--ok); cursor: default; }
+.tq-blank.bad { background: var(--bad-tint); border-bottom-color: var(--bad); cursor: default; }
+.tq-blank.bad s { color: var(--bad); margin-right: 4px; }
+.tq-result { font-size: 16px; font-weight: 700; margin: 4px 0 16px; }
+.tq-zh { border-top: 1px solid var(--line); padding-top: 14px; }
+.tq-zh p { color: var(--ink-light); font-size: 14.5px; line-height: 1.9; margin: 0 0 10px; }
+.tq-review {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 6px 18px;
+  margin: 12px 0 4px;
+  font-size: 14.5px;
+  color: var(--ink-light);
+}
+.tq-review b { color: var(--ink); margin-right: 8px; font-weight: 700; }
 .btn {
   border: 1px solid var(--line);
   background: #fff;
@@ -1223,4 +1274,83 @@ table.cat-table td.num { white-space: nowrap; }
   .unit-sub { max-width: 56vw; }
   .outline-grid { gap: 14px; }
   .wc-bar { flex-wrap: wrap; }
+}
+
+/* ---------------- 單字訓練:更多玩法 ---------------- */
+.mem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 6px 0 30px; }
+.mem-card {
+  min-height: 78px;
+  border: 2px solid var(--primary-dark);
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 8px 6px;
+  cursor: pointer;
+  transition: transform .18s, background .18s;
+  word-break: break-word;
+}
+.mem-card:hover { transform: translateY(-2px); }
+.mem-card.flipped { background: #fff; color: var(--ink); border-color: var(--primary); }
+.mem-card.flipped.zh { font-weight: 400; }
+.mem-card.matched { background: var(--ok-tint); border-color: var(--ok); color: var(--ok); cursor: default; transform: none; }
+.toast-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+.toast-card {
+  background: #fbe9c8;
+  border: 2px solid #e2b96f;
+  border-radius: 14px;
+  padding: 14px 10px;
+  text-align: center;
+}
+.toast-card b { display: block; font-size: 17px; color: #5b3d10; margin-bottom: 4px; }
+.toast-card span { font-size: 13.5px; color: #7a5a1e; }
+.toast-timer { height: 8px; background: var(--bg-soft); border-radius: 4px; overflow: hidden; margin: 4px 0 14px; }
+.toast-timer i { display: block; height: 100%; background: var(--hint-orange); transition: width .1s linear; }
+.toast-stem { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.vq-list { margin: 14px 0 4px; }
+.vq-item { display: flex; gap: 12px; align-items: center; padding: 7px 10px; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+.vq-item b { min-width: 130px; color: var(--primary-dark); }
+.vq-item span { color: var(--ink-light); flex: 1; }
+.vq-item i { font-style: normal; font-weight: 700; color: var(--ok); }
+.vq-item.bad i { color: var(--bad); }
+
+/* ---------------- 學習記錄 ---------------- */
+.hist-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }
+.hist-stats .stat { background: var(--bg-soft); border-radius: var(--radius); padding: 12px 8px; text-align: center; }
+.hist-stats .stat b { display: block; font-size: 22px; color: var(--primary); }
+.hist-stats .stat span { font-size: 12.5px; color: var(--ink-light); }
+.hist-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.hist-tab {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 20px;
+  padding: 5px 14px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.hist-tab.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+.hist-day-head { font-weight: 700; margin: 18px 0 8px; color: var(--ink-light); font-size: 13.5px; }
+.hist-row { border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 8px; background: #fff; }
+.hist-row.wrong { border-left: 4px solid var(--bad); }
+.hist-row-head { display: flex; gap: 10px; align-items: center; padding: 10px 12px; cursor: pointer; font-size: 14px; }
+.hist-row-head:hover { background: var(--bg-soft); }
+.hist-time { color: var(--ink-light); font-variant-numeric: tabular-nums; flex: none; }
+.hist-stem { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hist-verdict { flex: none; font-weight: 700; }
+.hist-verdict.ok { color: var(--ok); }
+.hist-verdict.bad { color: var(--bad); }
+.hist-row-body { padding: 6px 14px 14px; border-top: 1px dashed var(--line); }
+.hist-row-body .q-text { margin-top: 10px; }
+.hist-tag { font-size: 12.5px; color: var(--ink-light); margin: 8px 0 2px; }
+
+@media (max-width: 860px) {
+  .mem-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .mem-card { min-height: 66px; font-size: 14px; }
+  .toast-grid { grid-template-columns: 1fr 1fr; }
+  .hist-stats { grid-template-columns: 1fr 1fr; }
+  .hist-stem { white-space: normal; }
 }

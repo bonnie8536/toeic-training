@@ -51,6 +51,18 @@ def silence(ms):
             _SIL_CACHE[ms] = f.read()
     return _SIL_CACHE[ms]
 
+def reencode(data):
+    """多段 mp3 直接串接會殘留各段的 ID3/Xing 標頭在串流中間,瀏覽器 seek 表因此壞掉
+    (症狀:重播只播到一半)。統一重新編碼成單一乾淨 CBR 串流。"""
+    import subprocess
+    p = subprocess.run(
+        ['ffmpeg', '-y', '-i', 'pipe:0', '-c:a', 'libmp3lame', '-b:a', '48k',
+         '-ar', '24000', '-ac', '1', '-f', 'mp3', 'pipe:1'],
+        input=data, capture_output=True)
+    if p.returncode != 0 or not p.stdout:
+        raise RuntimeError('ffmpeg reencode 失敗: ' + p.stderr.decode('utf-8', 'replace')[-200:])
+    return p.stdout
+
 async def save(fname, segments):
     """segments 項目=(text, voice) 或 int(毫秒靜音)。段落間插靜音避免黏在一起。"""
     path = os.path.join(OUT, fname)
@@ -63,6 +75,8 @@ async def save(fname, segments):
             data += silence(seg)
         else:
             data += await tts(seg[0], seg[1])
+    if len(segments) > 1:
+        data = reencode(data)
     with open(path, 'wb') as f:
         f.write(data)
     print('ok', fname, len(data) // 1024, 'KB', flush=True)

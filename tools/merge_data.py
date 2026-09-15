@@ -190,6 +190,63 @@ for a in arts:
         check_options(q, f'{w} Q{qi+1}')
     scan_simplified(a, w)
 
+# ---------- 單字移轉考題(相同單字、全新文章的挖空) ----------
+transfers = load_kind('vocab_transfer_b*.json', 'vocab_transfer')
+art_by_id = {a.get('id'): a for a in arts}
+seen_tr = set()
+for tq in transfers:
+    w = f"transfer {tq.get('articleId','?')}"
+    if not need(tq, ['articleId', 'passage', 'passageZh', 'words'], w):
+        continue
+    aid = tq['articleId']
+    if aid in seen_tr:
+        errors.append(f'{w}: articleId 重複'); continue
+    seen_tr.add(aid)
+    art = art_by_id.get(aid)
+    if not art:
+        errors.append(f'{w}: 無此文章 id'); continue
+    vocab_by_base = {v['base'].lower(): v for v in art.get('vocab', [])}
+    twords = tq['words']
+    if not (8 <= len(twords) <= 12):
+        errors.append(f'{w}: 挖空字數 {len(twords)} 不在 8-12')
+    marks = re.findall(r'\[\[(.+?)\]\]', tq['passage'])
+    if sorted(marks) != sorted(x.get('word', '') for x in twords):
+        errors.append(f'{w}: 標記 {sorted(marks)} 與 words {sorted(x.get("word","") for x in twords)} 不一致')
+    for x in twords:
+        if not need(x, ['word', 'base', 'zh'], f'{w} word {x.get("word","?")}'):
+            continue
+        v = vocab_by_base.get(x['base'].lower())
+        if not v:
+            errors.append(f'{w}: base {x["base"]} 不在該篇 vocab')
+        elif x['zh'] != v['zh']:
+            errors.append(f'{w}: {x["base"]} 的 zh 與文章 vocab 不一致')
+        elif x['word'][:3].lower() != x['base'][:3].lower():
+            warnings.append(f'{w}: 形態 {x["word"]} 與原形 {x["base"]} 差異大,請人工確認')
+    plain = re.sub(r'\[\[.+?\]\]', ' ', tq['passage']).lower()
+    for x in twords:
+        for form in {str(x.get('word', '')).lower(), str(x.get('base', '')).lower()}:
+            if form and re.search(r'\b' + re.escape(form) + r'\b', plain):
+                errors.append(f'{w}: {form} 洩漏在標記外'); break
+    wc = len(re.sub(r'\[\[|\]\]', '', tq['passage']).split())
+    if not (60 <= wc <= 230):
+        warnings.append(f'{w}: 全文 {wc} 字(預期 60-230)')
+    if '[[' in tq['passageZh']:
+        errors.append(f'{w}: passageZh 殘留 [[ ]] 標記')
+    if re.search(r'[一-鿿]', tq['passage']):
+        errors.append(f'{w}: passage 含中文')
+    if not re.search(r'[一-鿿]', tq['passageZh']):
+        errors.append(f'{w}: passageZh 缺中文')
+    scan_simplified(tq, w)
+for a in arts:
+    if a.get('id') not in seen_tr and transfers:
+        warnings.append(f"article {a.get('id')}: 尚無單字移轉考題")
+if not errors:
+    for tq in transfers:
+        art = art_by_id.get(tq.get('articleId'))
+        if art is not None:
+            art['transfer'] = {'passage': tq['passage'], 'passageZh': tq['passageZh'],
+                               'words': tq['words']}
+
 # ---------- 程度檢測 ----------
 diag = None
 dpath = os.path.join(RAW, 'diagnostic.json')
@@ -417,7 +474,7 @@ def write_js(fname, varname, data):
     print(f'  寫出 {fname}')
 
 print('=== 驗證結果 ===')
-print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字 | 檢測卷: {n_diag} 題 | 文法: {len(gx)} 單元')
+print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字(移轉考題 {len(seen_tr)} 篇) | 檢測卷: {n_diag} 題 | 文法: {len(gx)} 單元')
 print(f'Part 5 答案分布: {dict(sorted(dist5.items()))}')
 if errors:
     print(f'\n-- 硬錯誤 {len(errors)} 筆 --')

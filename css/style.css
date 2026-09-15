@@ -77,7 +77,8 @@ button { font-family: var(--font); cursor: pointer; }
   border-radius: 5px;
   padding: 3px 7px;
 }
-.topnav { display: flex; gap: 4px; margin-left: auto; }
+.topnav { display: flex; gap: 4px; margin-left: auto; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.topnav::-webkit-scrollbar { display: none; }
 .topnav a {
   color: var(--ink);
   font-size: 15px;
@@ -87,6 +88,11 @@ button { font-family: var(--font); cursor: pointer; }
 }
 .topnav a:hover { background: var(--bg-soft); text-decoration: none; }
 .topnav a.active { color: var(--primary); font-weight: 700; background: var(--primary-tint); }
+/* 十項導覽在 860-1180px 會把學生選單擠出畫面:縮間距,再不夠就橫向滑動 */
+@media (max-width: 1180px) {
+  .topbar-inner { gap: 14px; }
+  .topnav a { padding: 6px 9px; font-size: 14px; }
+}
 
 /* ---------------- 版面容器 ---------------- */
 .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }

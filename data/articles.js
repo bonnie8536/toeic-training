@@ -8016,7 +8016,73 @@ TOEIC.articles = [
     "explanation": "細節題。定位第五段第四、五句：一張小紙條貼在機器背面，那就是使用說明。第六段也再次提醒「先看機器的背面」。"
    }
   ],
-  "image": "img/articles/art-4a.jpg"
+  "image": "img/articles/art-4a.jpg",
+  "transfer": {
+   "passage": "Amy [[arrived]] at the gym at nine. At the front desk she showed her [[receipt]] for the month's payment. All the [[employees]] wore blue shirts. A summer [[intern]] named Lily gave her a towel and a key. Lily was still learning the job.\n\nAmy walked to a running [[machine]]. It had many buttons. She felt [[confused]] and did not know how to start it. The small screen showed three short [[instructions]], but they did not help. So she went to the [[customer]] service desk. A service [[agent]] named Ken came with her. He took a thin paper [[manual]] from the desk and found the right page.\n\nAmy did not want to [[complain]]. Ken said the gym had [[ordered]] ten new bikes from a shop. They would come next week.",
+   "passageZh": "艾咪九點抵達了健身房。在櫃檯，她出示了本月付款的收據。所有員工都穿著藍色襯衫。一位名叫莉莉的暑期實習生給了她一條毛巾和一把鑰匙。莉莉還在學習這份工作。\n\n艾咪走向一台跑步機器。它有很多按鈕。她感到困惑，不知道怎麼啟動它。小螢幕顯示了三條簡短的使用說明，但沒有幫助。於是她去了顧客服務櫃檯。一位名叫肯的服務人員跟她一起過來。他從櫃檯拿了一本薄薄的紙本說明書，找到了正確的那一頁。\n\n艾咪不想抱怨。肯說健身房已經向一家商店訂購了十台新的腳踏車。它們下週會到。",
+   "words": [
+    {
+     "word": "arrived",
+     "base": "arrive",
+     "zh": "抵達；送達"
+    },
+    {
+     "word": "receipt",
+     "base": "receipt",
+     "zh": "收據"
+    },
+    {
+     "word": "employees",
+     "base": "employee",
+     "zh": "員工"
+    },
+    {
+     "word": "intern",
+     "base": "intern",
+     "zh": "實習生"
+    },
+    {
+     "word": "machine",
+     "base": "machine",
+     "zh": "機器"
+    },
+    {
+     "word": "confused",
+     "base": "confused",
+     "zh": "困惑的"
+    },
+    {
+     "word": "instructions",
+     "base": "instruction",
+     "zh": "使用說明"
+    },
+    {
+     "word": "customer",
+     "base": "customer",
+     "zh": "顧客"
+    },
+    {
+     "word": "agent",
+     "base": "agent",
+     "zh": "服務人員；代理人"
+    },
+    {
+     "word": "manual",
+     "base": "manual",
+     "zh": "說明書；使用手冊"
+    },
+    {
+     "word": "complain",
+     "base": "complain",
+     "zh": "抱怨"
+    },
+    {
+     "word": "ordered",
+     "base": "order",
+     "zh": "訂購"
+    }
+   ]
+  }
  },
  {
   "id": "art-4b",

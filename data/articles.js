@@ -2049,7 +2049,73 @@ TOEIC.articles = [
     "explanation": "定位第五段：「Three nearby farms have become suppliers too.」飯店廚房只是收剩下的部分煮湯，沒有自己開農場；靜妤仍在務農，且超市付款一事文中未提。"
    }
   ],
-  "image": "img/articles/art-12b.jpg"
+  "image": "img/articles/art-12b.jpg",
+  "transfer": {
+   "passage": "Three [[generations]] of the Lin family have run a small tea house in town. Most of their tea goes to regular [[customers]] who walk in every morning; the rest is sold to a few [[retail]] shops. For these morning visitors, the fresh taste, not the low price, is the main [[attraction]].\n\nLast spring, the tea [[harvest]] was small because of cold weather in March. The shop's [[suppliers]], the farms that grow the leaves, raised their prices. But [[demand]] for good tea did not fall, so the shop could not buy less. After paying for leaves, rent and wages, the [[profit]] was almost nothing.\n\nMei Lin's father gave her a [[warning]]: if prices rose too fast, people would go elsewhere. Her [[approach]] to the problem was simple. She raised prices a little and told everyone why. A small paper [[label]] on each bag now shows the farm's name and the month the leaves were picked. When one delivery arrived wet, the shop [[rejected]] the whole box and sent it back.",
+   "passageZh": "林家三代人在鎮上經營一間小茶行。他們的茶大多賣給每天早上走進店裡的老顧客；其餘的則賣給幾家零售商店。對這些早上來的客人來說，主要的賣點是新鮮的味道，而不是低價。\n\n去年春天，因為三月天氣寒冷，茶葉收成很少。茶行的供應商，也就是種茶葉的農場，提高了價格。但是好茶的需求並沒有下降，所以茶行不能少買。付完茶葉、房租和工資之後，利潤幾乎等於零。\n\n林美的父親給了她一個警告：如果價格漲得太快，人們就會到別處去買。她處理這個問題的做法很簡單。她把價格稍微調高，並告訴所有人原因。現在每個袋子上都有一張小紙標籤，標示農場的名字和茶葉採摘的月份。有一次送來的貨受潮了，茶行拒收了整箱並退了回去。",
+   "words": [
+    {
+     "word": "generations",
+     "base": "generation",
+     "zh": "世代；一代人"
+    },
+    {
+     "word": "customers",
+     "base": "customer",
+     "zh": "顧客；消費者"
+    },
+    {
+     "word": "retail",
+     "base": "retail",
+     "zh": "零售的"
+    },
+    {
+     "word": "attraction",
+     "base": "attraction",
+     "zh": "吸引力；賣點"
+    },
+    {
+     "word": "harvest",
+     "base": "harvest",
+     "zh": "收成；收穫量"
+    },
+    {
+     "word": "suppliers",
+     "base": "supplier",
+     "zh": "供應商"
+    },
+    {
+     "word": "demand",
+     "base": "demand",
+     "zh": "需求"
+    },
+    {
+     "word": "profit",
+     "base": "profit",
+     "zh": "利潤"
+    },
+    {
+     "word": "warning",
+     "base": "warning",
+     "zh": "警告"
+    },
+    {
+     "word": "approach",
+     "base": "approach",
+     "zh": "做法；方式"
+    },
+    {
+     "word": "label",
+     "base": "label",
+     "zh": "標籤"
+    },
+    {
+     "word": "rejected",
+     "base": "reject",
+     "zh": "拒收；退貨"
+    }
+   ]
+  }
  },
  {
   "id": "art-13a",
@@ -10855,6 +10921,62 @@ TOEIC.articles = [
     "explanation": "第四段她把凱文的建議寫在白板上，散會後才問名字，還請他下週再來，可推論她覺得這個建議有用，故選第三項。"
    }
   ],
-  "image": "img/articles/art-9b.jpg"
+  "image": "img/articles/art-9b.jpg",
+  "transfer": {
+   "passage": "Lisa owns a small bike shop. Mr. Chen is the store [[manager]]. He got the [[job]] ten years ago. He put a box by the door. Anyone could write a [[suggestion]] and drop it inside. One note said, \"Sell a rain cover for bike seats.\"\n\nEvery Monday the shop team holds a short [[meeting]]. There, they said yes to the idea. The cover became a team [[project]]. Lisa [[tested]] it in heavy rain for a week. Then she found a small [[mistake]]. The cover was too small for big seats. She made a larger size too. The [[cost]] to make each one is about two dollars. Now the shop has a new [[product]] line: seat covers in five colors. Many [[customers]] buy one with a new bike.",
+   "passageZh": "麗莎開了一家小小的自行車店。陳先生是店經理。他十年前得到這份工作。他在門邊放了一個箱子。任何人都可以寫下建議，投進去。有一張紙條寫著：「賣自行車座墊的雨罩吧。」\n\n每週一，店裡的團隊會開一場簡短的會議。在會議上，他們同意了這個想法。這個雨罩成了團隊專案。麗莎在大雨中測試它一個星期。接著她發現一個小錯誤。雨罩對大座墊來說太小了。她也做了一個較大的尺寸。每一個的製作成本大約兩元。現在店裡有了新的產品線：五種顏色的座墊雨罩。很多顧客買新車時會一起買一個。",
+   "words": [
+    {
+     "word": "manager",
+     "base": "manager",
+     "zh": "經理；主管"
+    },
+    {
+     "word": "job",
+     "base": "job",
+     "zh": "工作；職務"
+    },
+    {
+     "word": "suggestion",
+     "base": "suggestion",
+     "zh": "建議"
+    },
+    {
+     "word": "meeting",
+     "base": "meeting",
+     "zh": "會議"
+    },
+    {
+     "word": "project",
+     "base": "project",
+     "zh": "專案"
+    },
+    {
+     "word": "tested",
+     "base": "test",
+     "zh": "測試"
+    },
+    {
+     "word": "mistake",
+     "base": "mistake",
+     "zh": "錯誤"
+    },
+    {
+     "word": "cost",
+     "base": "cost",
+     "zh": "成本；費用"
+    },
+    {
+     "word": "product",
+     "base": "product",
+     "zh": "產品"
+    },
+    {
+     "word": "customers",
+     "base": "customer",
+     "zh": "顧客"
+    }
+   ]
+  }
  }
 ];

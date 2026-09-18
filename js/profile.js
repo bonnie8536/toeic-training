@@ -36,7 +36,7 @@
       current() {
         if (!CLOUD.user) return null;
         const email = CLOUD.user.email || '';
-        return { id: 'c' + CLOUD.user.id.replace(/-/g, ''), name: email.split('@')[0] };
+        return { id: 'c' + CLOUD.user.id.replace(/-/g, ''), name: CLOUD.nameOf(CLOUD.user) || email.split('@')[0] };
       },
       showGate: showLogin,
     };
@@ -71,49 +71,130 @@
         menu.innerHTML = '';
         const cur = PROFILE.current();
         if (!cur) {
-          menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; showLogin(); } }, '登入'));
+          menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; showLogin('login'); } }, '登入'));
+          menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; showLogin('signup'); } }, '註冊帳號'));
           return;
         }
         menu.append(h('div', { class: 'pm-head' }, CLOUD.user.email));
         menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'analysis.html'; } }, '能力分析'));
           menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'review.html'; } }, '每日複習'));
+        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'history.html'; } }, '學習記錄'));
         if (CLOUD.isTeacher) {
           menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'admin.html'; } }, '教師後台'));
         }
         menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => exportData(cur.id, cur.name) }, '匯出進度備份'));
         menu.append(h('div', { class: 'pm-sep' }));
         menu.append(h('button', { class: 'pm-item danger', type: 'button', onclick: () => CLOUD.logout() }, '登出'));
+        menu.append(h('button', {
+          class: 'pm-item danger', type: 'button',
+          onclick: () => {
+            if (!confirm('確定要刪除帳號?雲端上的所有進度、錯題與寫作內容都會永久刪除,無法復原。')) return;
+            if (!confirm('再確認一次:真的要刪除「' + CLOUD.user.email + '」?')) return;
+            CLOUD.deleteAccount().catch(e => alert(e.message));
+          },
+        }, '刪除帳號'));
       }
     }
 
-    function showLogin() {
+    /* 登入/註冊/忘記密碼 共用一個視窗;data-require-profile 的頁面不給關 */
+    function showLogin(startTab) {
       if (document.querySelector('.modal-mask')) return;
-      const email = h('input', { class: 'modal-input', type: 'text', placeholder: '帳號(老師給你的)', autocomplete: 'username' });
-      const pw = h('input', { class: 'modal-input', type: 'password', placeholder: '密碼', autocomplete: 'current-password' });
-      const err = h('div', { style: 'color:var(--bad);font-size:13.5px;margin-top:8px;min-height:20px' });
-      const loginBtn = h('button', {
-        class: 'btn primary', type: 'button',
-        onclick: async () => {
-          err.textContent = '';
-          loginBtn.disabled = true; loginBtn.textContent = '登入中…';
-          try {
-            await CLOUD.login(email.value, pw.value);   // 成功後 afterAuth 會 reload
-          } catch (e) {
-            err.textContent = e.message;
-            loginBtn.disabled = false; loginBtn.textContent = '登入';
-          }
-        },
-      }, '登入');
-      [email, pw].forEach(inp => inp.addEventListener('keydown', e => { if (e.key === 'Enter') loginBtn.click(); }));
+      const mask = h('div', { class: 'modal-mask' });
+      const box = h('div', { class: 'modal' });
+      mask.append(box);
+      document.body.append(mask);
+      const required = document.body.hasAttribute('data-require-profile');
+      let tab = startTab || 'login';
+      draw();
 
-      document.body.append(h('div', { class: 'modal-mask' },
-        h('div', { class: 'modal' },
-          h('h2', null, '登入'),
-          h('p', { class: 'modal-sub' }, '帳號密碼由老師發放。登入後,你的進度、錯題與檢測報告會自動同步,換電腦也能接續。'),
-          h('div', { style: 'display:grid;gap:8px' }, email, pw),
-          err,
-          h('div', { class: 'modal-row', style: 'margin-top:4px' }, loginBtn))));
-      email.focus();
+      function field(type, placeholder, ac) {
+        return h('input', { class: 'modal-input', type, placeholder, autocomplete: ac });
+      }
+      function tabs() {
+        const row = h('div', { class: 'modal-tabs' });
+        [['login', '登入'], ['signup', '註冊'], ['forgot', '忘記密碼']].forEach(([k, t]) => {
+          row.append(h('button', { class: 'modal-tab' + (tab === k ? ' on' : ''), type: 'button', onclick: () => { tab = k; draw(); } }, t));
+        });
+        return row;
+      }
+      function onEnter(inputs, btn) {
+        inputs.forEach(inp => inp.addEventListener('keydown', e => { if (e.key === 'Enter') btn.click(); }));
+      }
+      function draw() {
+        box.innerHTML = '';
+        const err = h('div', { style: 'color:var(--bad);font-size:13.5px;margin-top:8px;min-height:20px' });
+        if (tab === 'login') {
+          const email = field('email', 'Email', 'username');
+          const pw = field('password', '密碼', 'current-password');
+          const btn = h('button', {
+            class: 'btn primary', type: 'button',
+            onclick: async () => {
+              err.textContent = '';
+              btn.disabled = true; btn.textContent = '登入中…';
+              try { await CLOUD.login(email.value, pw.value); }   // 成功後 afterAuth 會 reload
+              catch (e) { err.textContent = e.message; btn.disabled = false; btn.textContent = '登入'; }
+            },
+          }, '登入');
+          onEnter([email, pw], btn);
+          box.append(tabs(), h('div', { style: 'display:grid;gap:8px' }, email, pw), err, h('div', { class: 'modal-row' }, btn));
+          email.focus();
+        } else if (tab === 'signup') {
+          const name = field('text', '暱稱(老師會看到這個名字)', 'nickname');
+          name.maxLength = 20;
+          const email = field('email', 'Email', 'email');
+          const pw = field('password', '密碼(至少 8 碼)', 'new-password');
+          const btn = h('button', {
+            class: 'btn primary', type: 'button',
+            onclick: async () => {
+              err.textContent = '';
+              if (!/^\S+@\S+\.\S+$/.test(email.value.trim())) { err.textContent = 'Email 格式不對。'; return; }
+              if (pw.value.length < 8) { err.textContent = '密碼至少 8 碼。'; return; }
+              btn.disabled = true; btn.textContent = '註冊中…';
+              try {
+                const r = await CLOUD.signUp(email.value, pw.value, name.value);
+                if (r.needsConfirm) sent(email.value.trim());
+              } catch (e) { err.textContent = e.message; btn.disabled = false; btn.textContent = '註冊'; }
+            },
+          }, '註冊');
+          onEnter([name, email, pw], btn);
+          box.append(tabs(), h('div', { style: 'display:grid;gap:8px' }, name, email, pw), err,
+            h('div', { class: 'modal-row' }, btn),
+            h('p', { class: 'modal-sub', style: 'margin:12px 0 0' }, '按下註冊即表示同意', h('a', { href: 'terms.html', target: '_blank' }, '服務條款與隱私權說明'), '。'));
+          name.focus();
+        } else {
+          const email = field('email', 'Email', 'email');
+          const btn = h('button', {
+            class: 'btn primary', type: 'button',
+            onclick: async () => {
+              err.style.color = 'var(--bad)'; err.textContent = '';
+              btn.disabled = true;
+              try { await CLOUD.resetPassword(email.value); err.style.color = 'var(--ok)'; err.textContent = '重設信已寄出,請到信箱點連結。'; }
+              catch (e) { err.textContent = e.message; btn.disabled = false; }
+            },
+          }, '寄重設信');
+          onEnter([email], btn);
+          box.append(tabs(), h('div', { style: 'display:grid;gap:8px' }, email), err, h('div', { class: 'modal-row' }, btn));
+          email.focus();
+        }
+        if (!required) box.append(h('button', { class: 'btn', style: 'margin-top:12px', type: 'button', onclick: () => mask.remove() }, '取消'));
+      }
+      function sent(email) {
+        box.innerHTML = '';
+        const msg = h('div', { class: 'result-note', style: 'margin-top:10px' });
+        box.append(h('h2', null, '驗證信已寄出'),
+          h('p', { class: 'modal-sub' }, '已寄到 ' + email + '。點信裡的連結完成註冊後會自動登入;幾分鐘內沒收到請看垃圾郵件。'),
+          h('div', { class: 'modal-row' },
+            h('button', {
+              class: 'btn', type: 'button',
+              onclick: async e => {
+                e.target.disabled = true;
+                try { await CLOUD.resendConfirm(email); msg.textContent = '已重寄。'; }
+                catch (er) { msg.textContent = er.message; e.target.disabled = false; }
+              },
+            }, '重寄驗證信'),
+            required ? null : h('button', { class: 'btn', type: 'button', onclick: () => mask.remove() }, '關閉')),
+          msg);
+      }
     }
     return;   // 雲端模式到此為止,不載入本機檔案邏輯
   }
@@ -204,6 +285,7 @@
       if (cur) {
         menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'analysis.html'; } }, '能力分析'));
           menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'review.html'; } }, '每日複習'));
+        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'history.html'; } }, '學習記錄'));
       }
       menu.append(h('div', { class: 'pm-sep' }));
       menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; showGate(true); } }, '＋ 新增學生'));

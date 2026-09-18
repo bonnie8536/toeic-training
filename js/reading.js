@@ -434,11 +434,12 @@
     const area = h('div', { class: 'tq-area' });
     wrap.append(
       h('p', { class: 'result-note' },
-        '同一批單字,換一篇全新的文章。點單字卡再點空格,依文意把每個字放回正確位置,全部放完才能交卷。'
+        '同一批單字,換一篇全新的文章。把字卡拖進空格(或先點字卡再點空格),全部放完才能交卷。'
         + (last ? '上次成績 ' + last.score + '/' + last.total + '。' : '')),
       area);
 
     let placed = {}, selected = null, armed = null, submitted = false;
+    let dragged = false;
     let bankOrder = shuffle(tr.words.map(x => x.word));
 
     function shuffle(list) {
@@ -453,6 +454,57 @@
     function place(bi, word) {
       Object.keys(placed).forEach(k => { if (placed[k] === word) delete placed[k]; });
       placed[bi] = word;
+    }
+
+    /* 把字卡(或已填的空格)拖到空格上;拖回字卡區=取消填入。移動 6px 內視為點擊,交給 onclick。 */
+    function enableDrag(el, word, fromBlank) {
+      el.addEventListener('pointerdown', e => {
+        if (submitted || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        const sx = e.clientX, sy = e.clientY;
+        let ghost = null, moving = false;
+        const under = ev => {
+          if (ghost) ghost.style.display = 'none';
+          const t = document.elementFromPoint(ev.clientX, ev.clientY);
+          if (ghost) ghost.style.display = '';
+          return t;
+        };
+        const move = ev => {
+          if (!moving) {
+            if (Math.hypot(ev.clientX - sx, ev.clientY - sy) < 6) return;
+            moving = true;
+            ghost = h('div', { class: 'tq-ghost' }, word);
+            document.body.append(ghost);
+            el.classList.add('dragging');
+          }
+          ghost.style.left = ev.clientX + 'px';
+          ghost.style.top = ev.clientY + 'px';
+          const t = under(ev);
+          const b = t && t.closest('.tq-blank');
+          area.querySelectorAll('.tq-blank.over').forEach(x => { if (x !== b) x.classList.remove('over'); });
+          if (b) b.classList.add('over');
+          ev.preventDefault();
+        };
+        const up = ev => {
+          document.removeEventListener('pointermove', move);
+          document.removeEventListener('pointerup', up);
+          document.removeEventListener('pointercancel', up);
+          if (!moving) return;
+          const t = ev.type === 'pointercancel' ? null : under(ev);
+          if (ghost) ghost.remove();
+          el.classList.remove('dragging');
+          const b = t && t.closest('.tq-blank');
+          if (b) place(Number(b.getAttribute('data-bi')), word);
+          else if (fromBlank !== undefined && t && t.closest('.tq-bank')) delete placed[fromBlank];
+          selected = null;
+          armed = null;
+          dragged = true;
+          setTimeout(() => { dragged = false; }, 300);
+          draw();
+        };
+        document.addEventListener('pointermove', move);
+        document.addEventListener('pointerup', up);
+        document.addEventListener('pointercancel', up);
+      });
     }
 
     function submit() {
@@ -476,16 +528,19 @@
       const bank = h('div', { class: 'tq-bank' });
       bankOrder.forEach(word => {
         const isUsed = used.has(word);
-        bank.append(h('button', {
+        const chip = h('button', {
           class: 'tq-chip' + (selected === word ? ' on' : '') + (isUsed ? ' used' : ''),
           type: 'button',
           disabled: (submitted || isUsed) ? '' : null,
           onclick: () => {
+            if (dragged) return;
             if (armed !== null) { place(armed, word); armed = null; selected = null; }
             else selected = (selected === word ? null : word);
             draw();
           },
-        }, word));
+        }, word);
+        if (!submitted && !isUsed) enableDrag(chip, word);
+        bank.append(chip);
       });
 
       const body = h('div', { class: 'tq-passage' });
@@ -503,16 +558,18 @@
             if (okB) nodes.push(word);
             else { nodes.push(h('s', null, word || '(空)'), ' ' + answers[bi]); }
           } else nodes.push(word || '');
-          p.append(h('button', {
-            class: cls, type: 'button',
+          const blankBtn = h('button', {
+            class: cls, type: 'button', 'data-bi': String(bi),
             onclick: () => {
-              if (submitted) return;
+              if (submitted || dragged) return;
               if (selected) { place(bi, selected); selected = null; armed = null; }
               else if (placed[bi]) { delete placed[bi]; armed = null; }
               else armed = (armed === bi ? null : bi);
               draw();
             },
-          }, nodes));
+          }, nodes);
+          if (word && !submitted) enableDrag(blankBtn, word, bi);
+          p.append(blankBtn);
         });
         body.append(p);
       });

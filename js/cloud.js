@@ -6,7 +6,7 @@
 (function () {
   const cfg = window.CLOUD_CONFIG || {};
   const enabled = !!(cfg.url && cfg.anonKey);
-  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, client: null, login, logout, push };
+  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, client: null, login, logout, push, signUp, resetPassword, updatePassword, resendConfirm, deleteAccount, nameOf };
   if (!enabled) return;
 
   let client = null;
@@ -68,7 +68,7 @@
       try {
         await client.from('progress').upsert({
           user_id: user.id, k: '_meta',
-          v: { email: user.email, name: (user.email || '').split('@')[0], last_login: new Date().toISOString() },
+          v: { email: user.email, name: nameOf(user), last_login: new Date().toISOString() },
           updated_at: new Date().toISOString(),
         }, { onConflict: 'user_id,k' });
       } catch (e) { /* 名冊寫入失敗不擋使用 */ }
@@ -82,7 +82,8 @@
     const { data, error } = await client.auth.signInWithPassword({ email: String(email).trim(), password });
     if (error) {
       if (/Invalid login credentials/i.test(error.message)) throw new Error('帳號或密碼不對');
-      if (/Email not confirmed/i.test(error.message)) throw new Error('帳號尚未啟用(請老師到 Supabase 後台關閉 Confirm email)');
+      if (/Email not confirmed/i.test(error.message)) throw new Error('信箱還沒驗證:請到信箱點驗證連結(找不到信可以到「註冊」分頁重寄)');
+      if (/rate limit|too many/i.test(error.message)) throw new Error('請求太頻繁,請幾分鐘後再試');
       if (/fetch|network/i.test(error.message)) throw new Error('連不上雲端伺服器:請檢查網路;若持續發生,請老師確認 Supabase 專案沒有休眠');
       throw new Error(error.message);
     }
@@ -103,6 +104,83 @@
     }
     localStorage.removeItem('tr_current_profile');
     location.reload();
+  }
+
+  /* 顯示名稱:註冊時填的暱稱(user_metadata.name),沒有就用 email 的 @ 前段 */
+  function nameOf(user) {
+    const m = (user && user.user_metadata) || {};
+    return String(m.name || ((user && user.email) || '').split('@')[0] || '').trim();
+  }
+
+  function siteUrl(page) {
+    return location.origin + location.pathname.replace(/[^/]*$/, '') + page;
+  }
+
+  function needClient() {
+    if (!client) throw new Error('雲端元件尚未載入,請重新整理再試');
+  }
+
+  function friendly(error) {
+    const m = error.message || '';
+    if (/already registered|already exists|already been registered/i.test(m)) return '這個 Email 已經註冊過,請直接登入;忘記密碼可以重設。';
+    if (/password/i.test(m) && /short|least|characters/i.test(m)) return '密碼至少 8 碼。';
+    if (/rate limit|too many|security purposes/i.test(m)) return '請求太頻繁,請幾分鐘後再試。';
+    if (/signups? not allowed|signup is disabled|not allowed/i.test(m)) return '目前未開放註冊,請聯絡老師。';
+    if (/invalid.*email|email.*invalid/i.test(m)) return 'Email 格式不對。';
+    if (/fetch|network/i.test(m)) return '連不上雲端伺服器,請檢查網路後再試。';
+    return m;
+  }
+
+  /* 註冊:Confirm email 開啟時要先到信箱點連結(回 needsConfirm:true);關閉時直接登入 */
+  async function signUp(email, password, name) {
+    await window.CLOUD.ready;
+    needClient();
+    const { data, error } = await client.auth.signUp({
+      email: String(email).trim(), password,
+      options: { data: { name: String(name || '').trim().slice(0, 20) }, emailRedirectTo: siteUrl('index.html') },
+    });
+    if (error) throw new Error(friendly(error));
+    /* Confirm email 開啟時,已註冊過的 email 會回一個沒有 identities 的假 user(不洩漏帳號存在),這裡當作已註冊處理 */
+    if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+      throw new Error('這個 Email 已經註冊過,請直接登入;忘記密碼可以重設。');
+    }
+    if (data.session) {
+      window.CLOUD.user = data.user;
+      await afterAuth(data.user, true);
+      return { needsConfirm: false };
+    }
+    return { needsConfirm: true };
+  }
+
+  async function resetPassword(email) {
+    await window.CLOUD.ready;
+    needClient();
+    if (!/^\S+@\S+\.\S+$/.test(String(email).trim())) throw new Error('Email 格式不對。');
+    const { error } = await client.auth.resetPasswordForEmail(String(email).trim(), { redirectTo: siteUrl('reset.html') });
+    if (error) throw new Error(friendly(error));
+  }
+
+  async function updatePassword(password) {
+    await window.CLOUD.ready;
+    needClient();
+    const { error } = await client.auth.updateUser({ password });
+    if (error) throw new Error(friendly(error));
+  }
+
+  async function resendConfirm(email) {
+    await window.CLOUD.ready;
+    needClient();
+    const { error } = await client.auth.resend({ type: 'signup', email: String(email).trim(), options: { emailRedirectTo: siteUrl('index.html') } });
+    if (error) throw new Error(friendly(error));
+  }
+
+  /* 自助刪除帳號:呼叫資料庫函式 delete_own_account(見 tools/supabase_public_signup.sql),成功後清本機並登出 */
+  async function deleteAccount() {
+    await window.CLOUD.ready;
+    needClient();
+    const { error } = await client.rpc('delete_own_account');
+    if (error) throw new Error('刪除失敗:' + error.message + '。請寫信給站長要求刪除。');
+    await logout();
   }
 
   function push(key, val) {

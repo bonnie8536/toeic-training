@@ -1360,3 +1360,78 @@ table.cat-table td.num { white-space: nowrap; }
   .hist-stats { grid-template-columns: 1fr 1fr; }
   .hist-stem { white-space: normal; }
 }
+
+/* ---------------- 導覽列群組下拉 ---------------- */
+.nav-group { position: relative; }
+.nav-btn {
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: none;
+  border: none;
+  padding: 6px 12px 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.nav-btn::after { content: '▾'; font-size: 11px; margin-left: 5px; color: var(--ink-light); }
+.nav-btn:hover, .nav-group.open .nav-btn { background: var(--bg-soft); }
+.nav-btn.active { color: var(--primary); font-weight: 700; background: var(--primary-tint); }
+.nav-btn.active::after { color: var(--primary); }
+.nav-menu {
+  display: none;
+  position: absolute;
+  top: 100%; left: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 24px rgba(30,40,50,.16);
+  padding: 6px;
+  min-width: 150px;
+  z-index: 120;
+}
+.nav-group:hover .nav-menu, .nav-group.open .nav-menu, .nav-group:focus-within .nav-menu { display: block; }
+.nav-menu a { display: block; padding: 8px 14px; }
+@media (max-width: 1180px) {
+  .nav-btn { padding: 6px 8px 6px 9px; font-size: 14px; }
+}
+@media (max-width: 860px) {
+  /* 行動版不用下拉:群組攤平,回到可橫向滑動的一列 */
+  .nav-group, .nav-menu { display: contents; }
+  .nav-btn { display: none; }
+  .nav-menu a { display: inline-block; padding: 5px 11px; }
+}
+
+/* 單字考題:拖曳 */
+.tq-chip, .tq-blank { touch-action: none; user-select: none; -webkit-user-select: none; }
+.tq-chip.dragging, .tq-blank.dragging { opacity: .4; }
+.tq-blank.over { outline: 2px dashed var(--primary); outline-offset: 2px; background: var(--primary-tint); }
+.tq-ghost {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 500;
+  padding: 6px 14px;
+  border-radius: 16px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: 0 6px 18px rgba(11,114,196,.35);
+  white-space: nowrap;
+}
+
+/* 登入/註冊視窗分頁 */
+.modal-tabs { display: flex; gap: 6px; margin-bottom: 14px; }
+.modal-tab {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 6px;
+  padding: 7px 0;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--ink-light);
+}
+.modal-tab.on { border-color: var(--primary); color: var(--primary); font-weight: 700; background: var(--primary-tint); }

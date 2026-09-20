@@ -2766,6 +2766,832 @@ TOEIC.ear = {
    "text": "Is there anywhere to park near the office?",
    "zh": "辦公室附近有地方可以停車嗎?",
    "note": "park near 的 k 收住直接接 n,to 弱讀成「tə」。"
+  },
+  {
+   "id": "s-101",
+   "level": "初級",
+   "text": "Dinner is almost ready.",
+   "zh": "晚餐快好了。",
+   "note": "Dinner is 連音成「di-nə-riz」,almost 重音在前面的 al。"
+  },
+  {
+   "id": "s-102",
+   "level": "初級",
+   "text": "Who left the window open?",
+   "zh": "是誰窗戶沒關?",
+   "note": "left the 的 t 幾乎消失,window open 連音成「win-dow-wo-pən」。"
+  },
+  {
+   "id": "s-103",
+   "level": "初級",
+   "text": "Did you lock the door?",
+   "zh": "你門有鎖嗎?",
+   "note": "Did you 併成「di-jyu」,lock 的 k 收住不爆開直接接 the。"
+  },
+  {
+   "id": "s-104",
+   "level": "初級",
+   "text": "Turn off the lights, please.",
+   "zh": "麻煩關一下燈。",
+   "note": "Turn off 連音成「tər-nɔf」,lights 尾音 ts 要發出來。"
+  },
+  {
+   "id": "s-105",
+   "level": "初級",
+   "text": "I can't find my keys.",
+   "zh": "我找不到鑰匙。",
+   "note": "can't 的 t 幾乎不發,但母音要唸滿才不會聽成 can;keys 尾音是 z。"
+  },
+  {
+   "id": "s-106",
+   "level": "初級",
+   "text": "My phone is about to die.",
+   "zh": "我手機快沒電了。",
+   "note": "phone is 連音成「fo-niz」,about to 兩個 t 只留一個。"
+  },
+  {
+   "id": "s-107",
+   "level": "初級",
+   "text": "What's the password again?",
+   "zh": "密碼是多少?再跟我說一次。",
+   "note": "What's the 的 ts 後面接 the,the 弱讀成「thə」很輕;password 重音在 pass,again 重音在第二音節 gain。"
+  },
+  {
+   "id": "s-108",
+   "level": "初級",
+   "text": "I'm going to bed.",
+   "zh": "我要去睡了。",
+   "note": "這裡 going to 後面接名詞,不能唸成 gonna,to 弱讀成「tə」;bed 的 d 收住不爆開。"
+  },
+  {
+   "id": "s-109",
+   "level": "初級",
+   "text": "Just leave it in the sink.",
+   "zh": "放水槽就好。",
+   "note": "leave it in 連成「lee-vi-din」,Just 的 t 在 leave 前幾乎不發。"
+  },
+  {
+   "id": "s-110",
+   "level": "初級",
+   "text": "Can you turn it down?",
+   "zh": "可以關小聲一點嗎?",
+   "note": "Can 弱讀成「kən」,turn it 連音成「tər-nit」,it 的 t 收住直接接 down。"
+  },
+  {
+   "id": "s-111",
+   "level": "初級",
+   "text": "I need a quick nap.",
+   "zh": "我要小睡一下。",
+   "note": "need a 連音成「nee-də」,quick 的 k 收住不爆開直接接 nap。"
+  },
+  {
+   "id": "s-112",
+   "level": "初級",
+   "text": "It's your turn to cook.",
+   "zh": "換你煮飯了。",
+   "note": "your 弱讀成「yər」,to 弱讀成「tə」,重音落在 turn 和 cook。"
+  },
+  {
+   "id": "s-113",
+   "level": "中級",
+   "text": "Could you take out the trash tonight?",
+   "zh": "你今天晚上可以倒一下垃圾嗎?",
+   "note": "Could you 併成「ku-jyu」,take out 連音成「tei-kaut」。"
+  },
+  {
+   "id": "s-114",
+   "level": "中級",
+   "text": "I forgot to charge my phone again.",
+   "zh": "我又忘記幫手機充電了。",
+   "note": "forgot to 兩個 t 只留一個,phone again 連音成「fo-nə-gain」。"
+  },
+  {
+   "id": "s-115",
+   "level": "中級",
+   "text": "What time did you get up today?",
+   "zh": "你今天幾點起床?",
+   "note": "did you 併成「di-jyu」,get up 連音成「ge-dəp」,t 唸成快閃音。"
+  },
+  {
+   "id": "s-116",
+   "level": "中級",
+   "text": "The internet is really slow right now.",
+   "zh": "現在網路超慢。",
+   "note": "internet 美式常省掉第一個 t 唸成「in-nər-net」,right now 的 t 收住不爆開。"
+  },
+  {
+   "id": "s-117",
+   "level": "中級",
+   "text": "I'll do the dishes after this show.",
+   "zh": "我看完這集再洗碗。",
+   "note": "I'll 弱讀成像「əl」很輕地帶過,母音不要完全丟掉;dishes 的 -es 要唸出「ɪz」,重音落在 dishes 和 show。"
+  },
+  {
+   "id": "s-118",
+   "level": "中級",
+   "text": "Have you seen my charger anywhere?",
+   "zh": "你有看到我的充電器嗎?",
+   "note": "Have you 弱讀帶過,charger anywhere 連讀,r 直接滑進 anywhere 的母音。"
+  },
+  {
+   "id": "s-119",
+   "level": "中級",
+   "text": "We're out of toilet paper again.",
+   "zh": "衛生紙又用完了。",
+   "note": "out of 連音成「au-dəv」,paper again 連成「pei-pə-rə-gain」。"
+  },
+  {
+   "id": "s-120",
+   "level": "中級",
+   "text": "Don't stay up too late, okay?",
+   "zh": "不要太晚睡,好嗎?",
+   "note": "Don't 的 t 在 stay 前省掉,stay up 連音成「stei-yəp」。"
+  },
+  {
+   "id": "s-121",
+   "level": "中級",
+   "text": "Can you help me fold the laundry?",
+   "zh": "可以幫我摺衣服嗎?",
+   "note": "help me 的 p 收住不爆開,fold the 的 d 直接黏進 th。"
+  },
+  {
+   "id": "s-122",
+   "level": "中級",
+   "text": "I woke up three times last night.",
+   "zh": "我昨天晚上醒來三次。",
+   "note": "woke up 連音成「wo-kəp」,last night 的 t 幾乎不發。"
+  },
+  {
+   "id": "s-123",
+   "level": "中級",
+   "text": "Let me text her and find out.",
+   "zh": "我傳訊息問她一下。",
+   "note": "text her 的 h 消失成「tex-tər」,find out 連音成「fain-daut」。"
+  },
+  {
+   "id": "s-124",
+   "level": "進階",
+   "text": "Can you keep it down? I'm trying to sleep.",
+   "zh": "可以小聲一點嗎?我要睡覺。",
+   "note": "keep it 連音成「kee-pit」,trying to 的 to 弱讀成「tə」。"
+  },
+  {
+   "id": "s-125",
+   "level": "進階",
+   "text": "Why don't you do the bathroom while I vacuum?",
+   "zh": "不然你掃浴室,我來吸地好不好?",
+   "note": "don't you 連起來唸成「don-chu」,while I 連音像「why-lai」;重音落在 bathroom 和 vacuum,the 輕輕帶過。"
+  },
+  {
+   "id": "s-126",
+   "level": "進階",
+   "text": "Did you take the clothes out of the washer?",
+   "zh": "你有把洗衣機裡的衣服拿出來嗎?",
+   "note": "clothes 口語唸成「kloz」就好,out of the 連成「au-də-thə」。"
+  },
+  {
+   "id": "s-127",
+   "level": "進階",
+   "text": "I was on my phone until two in the morning.",
+   "zh": "我滑手機滑到半夜兩點。",
+   "note": "was 弱讀成「wəz」,two in 連音成「too-win」。"
+  },
+  {
+   "id": "s-128",
+   "level": "進階",
+   "text": "My alarm went off, but I slept right through it.",
+   "zh": "鬧鐘有響,可是我完全沒聽到繼續睡。",
+   "note": "went off 連音成「wen-tɔf」,through it 連成「thru-wit」。"
+  },
+  {
+   "id": "s-129",
+   "level": "進階",
+   "text": "The signal in my room is terrible at night.",
+   "zh": "我房間晚上收訊超爛。",
+   "note": "signal in 連音成「sig-nə-lin」,terrible 重音在 ter。"
+  },
+  {
+   "id": "s-130",
+   "level": "進階",
+   "text": "Let me know when you're on your way home.",
+   "zh": "你要回家的時候跟我說一聲。",
+   "note": "Let me 的 t 被吃掉唸成「le-mi」,you're 和 your 都弱讀成「yər」。"
+  },
+  {
+   "id": "s-131",
+   "level": "初級",
+   "text": "Can I see the menu?",
+   "zh": "可以給我看一下菜單嗎?",
+   "note": "Can I 連音成「kə-nai」,menu 重音在前面的 me。"
+  },
+  {
+   "id": "s-132",
+   "level": "初級",
+   "text": "I'll have the chicken soup.",
+   "zh": "我要雞湯。",
+   "note": "I'll 弱讀成像「əl」,l 很輕帶過;soup 句尾的 p 收住不爆開,重音在 chicken 和 soup。"
+  },
+  {
+   "id": "s-133",
+   "level": "初級",
+   "text": "Is this seat taken?",
+   "zh": "這個位子有人坐嗎?",
+   "note": "seat taken 兩個 t 併成一個,Is this 的 z 直接滑進 th。"
+  },
+  {
+   "id": "s-134",
+   "level": "初級",
+   "text": "Just water for me, thanks.",
+   "zh": "我喝水就好,謝謝。",
+   "note": "Just 的 t 在 w 前面幾乎不發,water 的 t 唸成快閃音。"
+  },
+  {
+   "id": "s-135",
+   "level": "初級",
+   "text": "You can keep the change.",
+   "zh": "不用找了。",
+   "note": "can 弱讀成「kən」,keep the 的 p 收住不爆開直接接 th。"
+  },
+  {
+   "id": "s-136",
+   "level": "初級",
+   "text": "Do you take credit cards?",
+   "zh": "你們收信用卡嗎?",
+   "note": "Do you 弱讀成「də-yə」,cards 尾音是 z 不是 s。"
+  },
+  {
+   "id": "s-137",
+   "level": "初級",
+   "text": "I think this milk is expired.",
+   "zh": "這瓶牛奶好像過期了。",
+   "note": "milk is 連音成「mil-kiz」,expired 重音在後面的 pired。"
+  },
+  {
+   "id": "s-138",
+   "level": "初級",
+   "text": "Where's the fitting room?",
+   "zh": "試衣間在哪裡?",
+   "note": "Where's the 的 z 直接滑進 th,fitting 的 tt 唸成快閃音。"
+  },
+  {
+   "id": "s-139",
+   "level": "初級",
+   "text": "I didn't order this.",
+   "zh": "我沒有點這個。",
+   "note": "didn't 的 t 很輕幾乎聽不到,order this 的 r 直接接 th 不要停。"
+  },
+  {
+   "id": "s-140",
+   "level": "初級",
+   "text": "What time do you close?",
+   "zh": "你們幾點關門?",
+   "note": "What time 兩個 t 併成一個,do you 弱讀成「də-yə」。"
+  },
+  {
+   "id": "s-141",
+   "level": "中級",
+   "text": "What do you recommend for dessert?",
+   "zh": "甜點你推薦什麼?",
+   "note": "What do you 快讀成「wha-də-yə」,dessert 重音在後面的 ssert。"
+  },
+  {
+   "id": "s-142",
+   "level": "中級",
+   "text": "Can I have it without onions?",
+   "zh": "可以不要加洋蔥嗎?",
+   "note": "have it 連音成「ha-vit」,without onions 連讀,onions 尾音是 z。"
+  },
+  {
+   "id": "s-143",
+   "level": "中級",
+   "text": "Could I get a glass of water?",
+   "zh": "可以給我一杯水嗎?",
+   "note": "get a 連音成「ge-də」,glass of 連成「gla-səv」。"
+  },
+  {
+   "id": "s-144",
+   "level": "中級",
+   "text": "What kind of milk do you have?",
+   "zh": "你們有哪幾種牛奶?",
+   "note": "kind of 連音弱讀成「kain-də」,do you 弱讀帶過。"
+  },
+  {
+   "id": "s-145",
+   "level": "中級",
+   "text": "Could you heat it up for me?",
+   "zh": "可以幫我加熱嗎?",
+   "note": "heat it up 三個字連成「hee-di-dap」,for 弱讀成「fər」。"
+  },
+  {
+   "id": "s-146",
+   "level": "中級",
+   "text": "I think you gave me the wrong change.",
+   "zh": "你好像找錯錢了。",
+   "note": "gave me 的 v 輕輕帶過直接接 m,wrong 的 ng 後面不要多加 g。"
+  },
+  {
+   "id": "s-147",
+   "level": "中級",
+   "text": "I'm just looking around, thank you.",
+   "zh": "我先隨便看看,謝謝。",
+   "note": "just looking 的 t 幾乎不發,looking around 連音成「loo-king-ə-round」。"
+  },
+  {
+   "id": "s-148",
+   "level": "中級",
+   "text": "Can I try these on somewhere?",
+   "zh": "這幾件有地方可以試穿嗎?",
+   "note": "these on 連音成「thee-zon」,Can 弱讀成「kən」。"
+  },
+  {
+   "id": "s-149",
+   "level": "中級",
+   "text": "It doesn't fit, so I'm returning it.",
+   "zh": "穿起來不合,所以我要退。",
+   "note": "doesn't fit 的 t 幾乎不發直接接 f,returning it 連讀不要斷開。"
+  },
+  {
+   "id": "s-150",
+   "level": "中級",
+   "text": "The driver left it at the wrong door.",
+   "zh": "外送員把東西放錯門口了。",
+   "note": "left it at 連成「lef-ti-dat」,at the 的 t 幾乎消失。"
+  },
+  {
+   "id": "s-151",
+   "level": "中級",
+   "text": "Could you put the sauce on the side?",
+   "zh": "醬可以幫我另外放嗎?",
+   "note": "Could you 併成「ku-jyu」,put the 的 t 收住不爆開。"
+  },
+  {
+   "id": "s-152",
+   "level": "中級",
+   "text": "Is there a minimum for delivery?",
+   "zh": "外送有低消嗎?",
+   "note": "there a 連音成「the-rə」,minimum 重音在最前面的 mi。"
+  },
+  {
+   "id": "s-153",
+   "level": "進階",
+   "text": "Could you check if you have any in the back?",
+   "zh": "可以幫我看一下後面倉庫還有沒有嗎?",
+   "note": "check if 連音成「che-kif」,have any 連成「ha-ve-ny」。"
+  },
+  {
+   "id": "s-154",
+   "level": "進階",
+   "text": "Do you know when you'll get more of these?",
+   "zh": "你知道這個什麼時候會再進貨嗎?",
+   "note": "more of 連音唸成「mo-rəv」,of 弱讀成「əv」;開頭 Do you 唸得又輕又快,重音放在 know、more、these。"
+  },
+  {
+   "id": "s-155",
+   "level": "進階",
+   "text": "Can you tell me how long the wait is?",
+   "zh": "可以跟我說大概要等多久嗎?",
+   "note": "wait is 連音成「wei-diz」,t 夾在母音中間變快閃音;Can 弱讀成「kən」。"
+  },
+  {
+   "id": "s-156",
+   "level": "進階",
+   "text": "I ordered an hour ago and it's still not here.",
+   "zh": "我一個小時前就點了,到現在還沒來。",
+   "note": "ordered an hour ago 一路連讀成「or-dər-də-nau-ər-ə-go」,and 弱讀成「ən」。"
+  },
+  {
+   "id": "s-157",
+   "level": "進階",
+   "text": "Is it cheaper if I buy two of them?",
+   "zh": "買兩個會比較便宜嗎?",
+   "note": "Is it 連音成「i-zit」,of them 弱讀成「ə-vəm」,th 常被吃掉。"
+  },
+  {
+   "id": "s-158",
+   "level": "進階",
+   "text": "Could we get another minute to look at the menu?",
+   "zh": "可以再給我們一點時間看菜單嗎?",
+   "note": "get another 連音成「ge-də-nother」,look at 連成「loo-kat」。"
+  },
+  {
+   "id": "s-159",
+   "level": "進階",
+   "text": "I was charged twice for the same order.",
+   "zh": "同一筆訂單我被扣了兩次錢。",
+   "note": "was 弱讀成「wəz」,same order 連音成「sei-mor-dər」。"
+  },
+  {
+   "id": "s-160",
+   "level": "進階",
+   "text": "We'd like to pay separately if that's okay.",
+   "zh": "方便的話,我們想分開付。",
+   "note": "We'd 的 d 幾乎聽不到,separately 重音在最前面的 se,that's okay 連讀。"
+  },
+  {
+   "id": "s-163",
+   "level": "初級",
+   "text": "Turn left at the corner.",
+   "zh": "在轉角左轉。",
+   "note": "left at 連音成「lef-tat」,at the 的 t 幾乎消失。"
+  },
+  {
+   "id": "s-164",
+   "level": "初級",
+   "text": "What time is checkout?",
+   "zh": "幾點要退房?",
+   "note": "What time 兩個 t 併成一個,time is 連音成「tai-miz」。"
+  },
+  {
+   "id": "s-165",
+   "level": "初級",
+   "text": "I missed my stop.",
+   "zh": "我坐過站了。",
+   "note": "missed 的 ed 唸成 t,後面接 my 時這個 t 幾乎不發。"
+  },
+  {
+   "id": "s-166",
+   "level": "初級",
+   "text": "Bring an umbrella just in case.",
+   "zh": "帶把傘以防萬一。",
+   "note": "Bring an 連音成「bring-ən」,just in 連音成「jas-tin」。"
+  },
+  {
+   "id": "s-167",
+   "level": "初級",
+   "text": "My flight got delayed.",
+   "zh": "我的班機延誤了。",
+   "note": "flight 和 got 的 t 都收住不爆開,delayed 重音在後面。"
+  },
+  {
+   "id": "s-168",
+   "level": "初級",
+   "text": "Is it close enough to walk?",
+   "zh": "走路走得到嗎?",
+   "note": "Is it 連音成「i-zit」,to 弱讀成「tə」。"
+  },
+  {
+   "id": "s-169",
+   "level": "初級",
+   "text": "It's so humid out today.",
+   "zh": "今天外面好悶好濕。",
+   "note": "humid 重音在前面,humid out 連音成「hyu-mi-daut」。"
+  },
+  {
+   "id": "s-170",
+   "level": "中級",
+   "text": "Could you drop me off right here?",
+   "zh": "可以讓我在這裡下車嗎?",
+   "note": "Could you 併成「ku-jyu」,right 的 t 收住不爆開再接 here。"
+  },
+  {
+   "id": "s-171",
+   "level": "中級",
+   "text": "How often does the train come?",
+   "zh": "火車多久來一班?",
+   "note": "often 的 t 通常不發音唸成「ɔ-fən」,does the 的 z 直接接 th。"
+  },
+  {
+   "id": "s-172",
+   "level": "中級",
+   "text": "I think we got on the wrong bus.",
+   "zh": "我們好像搭錯公車了。",
+   "note": "got on 連音成「ga-don」,t 夾在母音中間變快閃音;on the 不要斷開。"
+  },
+  {
+   "id": "s-173",
+   "level": "中級",
+   "text": "What's the best way to get downtown?",
+   "zh": "去市區怎麼走最方便?",
+   "note": "best way 的 t 幾乎不發,to 弱讀成「tə」,get 的 t 收住不爆開。"
+  },
+  {
+   "id": "s-174",
+   "level": "中級",
+   "text": "Is breakfast included with the room?",
+   "zh": "房價有含早餐嗎?",
+   "note": "breakfast included 連音成「brek-fəs-tin」,with the 兩個 th 併成一個。"
+  },
+  {
+   "id": "s-175",
+   "level": "中級",
+   "text": "I have a reservation for two nights.",
+   "zh": "我有訂房,住兩個晚上。",
+   "note": "have a 連音成「ha-və」,reservation 重音在 va,for 弱讀成「fər」。"
+  },
+  {
+   "id": "s-176",
+   "level": "中級",
+   "text": "Where do I pick up my luggage?",
+   "zh": "行李要去哪裡領?",
+   "note": "pick up 連音成「pi-kap」,luggage 重音在前、尾音是 dʒ。"
+  },
+  {
+   "id": "s-177",
+   "level": "中級",
+   "text": "Which line should I transfer to?",
+   "zh": "我要轉哪一條線?",
+   "note": "should I 連音成「shu-dai」;句尾的 to 不弱讀,要唸滿成「tu」。"
+  },
+  {
+   "id": "s-178",
+   "level": "中級",
+   "text": "It's supposed to be sunny all weekend.",
+   "zh": "聽說整個週末都會是晴天。",
+   "note": "supposed to 的 d 不發,唸成「sə-pos-tə」。"
+  },
+  {
+   "id": "s-179",
+   "level": "中級",
+   "text": "Could we get a room with a view?",
+   "zh": "可以給我們景觀好一點的房間嗎?",
+   "note": "get a 連音成「ge-də」,with a 連音成「wi-thə」。"
+  },
+  {
+   "id": "s-180",
+   "level": "中級",
+   "text": "The air conditioner isn't working in our room.",
+   "zh": "我們房間的冷氣壞了。",
+   "note": "conditioner 重音在 di,isn't working 的 t 幾乎不發,in our 連音成「i-nar」。"
+  },
+  {
+   "id": "s-181",
+   "level": "中級",
+   "text": "It's about a ten-minute walk from here.",
+   "zh": "從這裡走路大概十分鐘。",
+   "note": "about a 連音成「ə-bau-də」,minute 的 t 收住不爆開再接 walk。"
+  },
+  {
+   "id": "s-182",
+   "level": "進階",
+   "text": "Could you let me know when we get there?",
+   "zh": "到了可以跟我說一聲嗎?",
+   "note": "let me 的 t 被 m 吃掉成「le-mi」,get there 的 t 收住直接接 th。"
+  },
+  {
+   "id": "s-183",
+   "level": "進階",
+   "text": "Is there a shuttle that goes straight to the hotel?",
+   "zh": "有直達飯店的接駁車嗎?",
+   "note": "shuttle 的 tt 唸成快閃音,straight to 兩個 t 併成一個、to 弱讀。"
+  },
+  {
+   "id": "s-184",
+   "level": "進階",
+   "text": "I left my phone in the back of the taxi.",
+   "zh": "我把手機忘在計程車後座了。",
+   "note": "left my 的 t 幾乎不發,back of 連音成「ba-kəv」。"
+  },
+  {
+   "id": "s-185",
+   "level": "進階",
+   "text": "Do you know if there's a convenience store nearby?",
+   "zh": "你知道附近有便利商店嗎?",
+   "note": "know if 連讀不要斷開,convenience 重音在第二音節 ve。"
+  },
+  {
+   "id": "s-186",
+   "level": "進階",
+   "text": "We should leave early in case traffic is bad.",
+   "zh": "我們早點出門好了,怕路上會塞。",
+   "note": "leave early 連音成「lee-vər-ly」,traffic is 連音成「tra-fi-kiz」。"
+  },
+  {
+   "id": "s-187",
+   "level": "進階",
+   "text": "Would it be possible to check in a little early?",
+   "zh": "有可能讓我們提早一點入住嗎?",
+   "note": "Would it 連音成「wu-dit」,check in a 連成「che-ki-nə」。"
+  },
+  {
+   "id": "s-188",
+   "level": "進階",
+   "text": "It gets pretty cold at night, so bring a jacket.",
+   "zh": "晚上會蠻冷的,記得帶件外套。",
+   "note": "pretty 的 tt 唸成快閃音「pri-dy」,cold at 連音成「col-dat」。"
+  },
+  {
+   "id": "s-189",
+   "level": "進階",
+   "text": "How early should I get to the airport tomorrow?",
+   "zh": "我明天要多早到機場?",
+   "note": "should I 連音成「shu-dai」,get to 兩個 t 併成一個,the 在 airport 前唸成「thi」。"
+  },
+  {
+   "id": "s-190",
+   "level": "進階",
+   "text": "I think my suitcase is over the weight limit.",
+   "zh": "我的行李箱好像超重了。",
+   "note": "suitcase is 連音成「suit-kei-siz」,weight limit 的 t 收住不爆開。"
+  },
+  {
+   "id": "s-191",
+   "level": "初級",
+   "text": "I have a bad headache.",
+   "zh": "我頭好痛。",
+   "note": "have a 連音成「ha-və」,headache 重音在 head,ch 唸 k。"
+  },
+  {
+   "id": "s-192",
+   "level": "初級",
+   "text": "Can you cover for me?",
+   "zh": "你可以幫我代班嗎?",
+   "note": "Can 弱讀成「kən」,for 弱讀成「fər」,重音放在 cover。"
+  },
+  {
+   "id": "s-193",
+   "level": "初級",
+   "text": "Let's meet at two.",
+   "zh": "我們兩點碰面吧。",
+   "note": "meet at 連音成「mee-dət」,at two 兩個 t 併成一個。"
+  },
+  {
+   "id": "s-194",
+   "level": "初級",
+   "text": "I'll text you later.",
+   "zh": "我晚點傳訊息給你。",
+   "note": "I'll 弱讀成像「əl」,l 很輕帶過;text you 常融合成「teks-chu」,later 的 t 彈舌,聽起來像輕輕的 d。"
+  },
+  {
+   "id": "s-195",
+   "level": "初級",
+   "text": "Who's taking notes today?",
+   "zh": "今天誰負責做紀錄?",
+   "note": "Who's 的 s 唸「z」;today 的 to 弱讀成「tə」,重音在 day,notes 句中的 ts 要唸清楚。"
+  },
+  {
+   "id": "s-196",
+   "level": "初級",
+   "text": "My throat really hurts.",
+   "zh": "我喉嚨好痛。",
+   "note": "throat 的 th 咬舌後馬上接 r,hurts 尾音 ts 不要吞掉。"
+  },
+  {
+   "id": "s-197",
+   "level": "初級",
+   "text": "Sorry, I missed your call.",
+   "zh": "抱歉,我沒接到你的電話。",
+   "note": "missed your 融合成「mis-chər」,call 的 l 含在舌根。"
+  },
+  {
+   "id": "s-198",
+   "level": "初級",
+   "text": "Does it hurt here?",
+   "zh": "這裡會痛嗎?",
+   "note": "Does it 連音成「da-zit」,hurt 的 t 收住不爆開。"
+  },
+  {
+   "id": "s-199",
+   "level": "初級",
+   "text": "Hold on a second.",
+   "zh": "等我一下。",
+   "note": "Hold on a 連成「hol-do-nə」,second 重音在前面。"
+  },
+  {
+   "id": "s-200",
+   "level": "中級",
+   "text": "Can you send me the file again?",
+   "zh": "檔案可以再傳一次給我嗎?",
+   "note": "send me 的 d 被 m 吃掉,file again 連音成「fai-lə-gain」。"
+  },
+  {
+   "id": "s-201",
+   "level": "中級",
+   "text": "What time works best for you?",
+   "zh": "你什麼時間最方便?",
+   "note": "What time 兩個 t 併成一個,for 弱讀成「fər」。"
+  },
+  {
+   "id": "s-202",
+   "level": "中級",
+   "text": "I've had a cough since last week.",
+   "zh": "我從上禮拜就一直咳嗽。",
+   "note": "had a 連音成「ha-də」,last week 的 t 幾乎不發。"
+  },
+  {
+   "id": "s-203",
+   "level": "中級",
+   "text": "I'll be about ten minutes late.",
+   "zh": "我大概會晚十分鐘到。",
+   "note": "about ten 兩個 t 併成一個,minutes 重音在前、尾音是 ts。"
+  },
+  {
+   "id": "s-204",
+   "level": "中級",
+   "text": "Let me check and get back to you.",
+   "zh": "我確認一下再回覆你。",
+   "note": "Let me 的 t 省掉成「le-mi」,and 弱讀成「ən」,to 弱讀成「tə」。"
+  },
+  {
+   "id": "s-205",
+   "level": "中級",
+   "text": "Did the teacher say when it's due?",
+   "zh": "老師有說什麼時候要交嗎?",
+   "note": "Did the 的 d 直接接 th,when it's 連音成「we-nits」。"
+  },
+  {
+   "id": "s-206",
+   "level": "中級",
+   "text": "I think I'm coming down with something.",
+   "zh": "我覺得我好像快感冒了。",
+   "note": "think I'm 連音成「thin-kaim」,with something 的 th 接 s 要輕輕帶過。"
+  },
+  {
+   "id": "s-207",
+   "level": "中級",
+   "text": "Sorry, you're breaking up a little.",
+   "zh": "不好意思,你的聲音有點斷斷續續。",
+   "note": "up a 連音成「a-pə」,little 的 tt 唸成快閃音。"
+  },
+  {
+   "id": "s-208",
+   "level": "中級",
+   "text": "Could you take a look at this?",
+   "zh": "可以幫我看一下這個嗎?",
+   "note": "look at 連音成「lu-kət」,at this 的 t 幾乎消失。"
+  },
+  {
+   "id": "s-209",
+   "level": "中級",
+   "text": "We should wrap this up by noon.",
+   "zh": "我們中午前要把這個結束掉。",
+   "note": "wrap 的 p 收住不爆開,this up 連音成「thi-sap」。"
+  },
+  {
+   "id": "s-210",
+   "level": "進階",
+   "text": "Let me know if you can't make it tomorrow.",
+   "zh": "如果你明天不能來,跟我說一聲。",
+   "note": "can't 的 t 收住但母音 æ 要唸滿,make it 連音成「mei-kit」。"
+  },
+  {
+   "id": "s-211",
+   "level": "進階",
+   "text": "Do you have a minute to go over this?",
+   "zh": "你有空跟我一起看一下這個嗎?",
+   "note": "have a 連音成「ha-və」,go over 中間滑出一個 w 成「go-wo-vər」。"
+  },
+  {
+   "id": "s-212",
+   "level": "進階",
+   "text": "I called in sick because I had a fever.",
+   "zh": "我發燒,所以請了病假。",
+   "note": "called in 連音成「col-din」,had a 連成「ha-də」。"
+  },
+  {
+   "id": "s-213",
+   "level": "進階",
+   "text": "The doctor told me to rest for a few days.",
+   "zh": "醫生叫我休息幾天。",
+   "note": "told me 的 d 被 m 吃掉,rest for 的 t 幾乎不發。"
+  },
+  {
+   "id": "s-214",
+   "level": "進階",
+   "text": "Could you remind everyone that the meeting got moved?",
+   "zh": "可以幫我提醒大家會議改時間了嗎?",
+   "note": "remind everyone 連音成「ri-main-dev-ry-one」,got moved 的 t 收住不爆開。"
+  },
+  {
+   "id": "s-215",
+   "level": "進階",
+   "text": "I'll send you the notes as soon as I'm done.",
+   "zh": "我一弄完就把筆記傳給你。",
+   "note": "send you 融合成「sen-jyu」,兩個 as 都弱讀成「əz」。"
+  },
+  {
+   "id": "s-216",
+   "level": "進階",
+   "text": "Is there any way I could turn it in late?",
+   "zh": "有沒有可能讓我晚一點交?",
+   "note": "turn it in 三個字連成「tər-ni-din」,late 的 t 收住不爆開。"
+  },
+  {
+   "id": "s-217",
+   "level": "進階",
+   "text": "What did the doctor say about your back pain?",
+   "zh": "你的背痛醫生怎麼說?",
+   "note": "What did 的 t 省掉,about your 融合成「ə-bau-chər」。"
+  },
+  {
+   "id": "s-218",
+   "level": "進階",
+   "text": "I didn't catch the last part, could you repeat it?",
+   "zh": "最後那段我沒聽清楚,可以再說一次嗎?",
+   "note": "last part 的 t 幾乎不發,repeat it 連音成「ri-pee-dit」。"
+  },
+  {
+   "id": "s-219",
+   "level": "進階",
+   "text": "I was in class, so I couldn't pick up.",
+   "zh": "我剛剛在上課,所以沒辦法接電話。",
+   "note": "was in 連音成「wə-zin」,pick up 連成「pi-kap」。"
+  },
+  {
+   "id": "s-220",
+   "level": "進階",
+   "text": "Take one of these every morning after you eat.",
+   "zh": "這個每天早上飯後吃一顆。",
+   "note": "one of 連音成「wa-nəv」,every 只唸兩個音節「ev-ry」。"
   }
  ]
 };

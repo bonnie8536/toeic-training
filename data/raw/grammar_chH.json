@@ -1574,13 +1574,23 @@
       },
       {
         "t": "p",
-        "text": "wish 和 hope 中文都翻成「希望」，差別在有沒有可能實現。hope 講的是還有機會成真的事，後面用現在式或未來式就好，像 I hope you feel better；wish 講的是不可能或已經來不及的事，所以才要退一格。後面要接一整句話祝福別人的時候一定用 hope，用 wish 反而變成在說「這大概不會發生」。"
+        "text": "wish 和 hope 中文都翻成「希望」，差別在有沒有可能實現。hope 講的是還有機會成真的事，後面用現在式或未來式就好，像 I hope you feel better；wish 講的是不可能或已經來不及的事，所以才要退一格。祝福別人的時候，後面如果接一整句話，就用 hope；用 wish 接句子反而變成在說「這大概不會發生」。"
       },
       {
         "t": "ex",
         "en": "I hope you have a good weekend.",
         "zh": "希望你週末愉快。",
         "focus": "hope"
+      },
+      {
+        "t": "p",
+        "text": "wish 也能拿來祝福，只有一種寫法：wish 加人再加名詞，像 I wish you a good journey、We wish you a merry Christmas。後面是名詞，不是句子，所以沒有退格的問題。I wish you have a good journey 很常聽到，可是這不是標準寫法，要嘛改成 I wish you a good journey，要嘛改成 I hope you have a good journey。"
+      },
+      {
+        "t": "ex",
+        "en": "I wish you a good journey.",
+        "zh": "祝你旅途愉快。",
+        "focus": "a good journey"
       },
       {
         "t": "tip",
@@ -1630,7 +1640,7 @@
           "hope"
         ],
         "answer": 3,
-        "explanation": "祝福別人早點好起來，是還有可能實現的事，用 hope 加現在式。用 wish 的話反而暗示這件事不會發生，而且後面的時態也不對。"
+        "explanation": "祝福別人早點好起來，是還有可能實現的事，後面又接了一整句話 you get well soon，所以用 hope 加現在式。wish 接句子會暗示這件事不會發生，時態也不對；wish 要祝福只能接名詞，像 I wish you a quick recovery。"
       },
       {
         "q": "He wishes he ___ more free time on weekends.",

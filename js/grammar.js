@@ -27,41 +27,107 @@
   if (unit) renderUnit(unit);
   else renderHome();
 
-  /* ================= 首頁 ================= */
-  function renderHome() {
-    document.title = '文法基礎|刷刷英文';
-    const done = store.get('grammar_done', {});
-    root.append(h('div', { class: 'page-head' },
-      h('h1', null, '文法基礎')));
+  /* ================= 左側路徑導引 =================
+     八章各一個站點(圓環=完成度);目前這章展開成一串蜿蜒的小圈,一課一顆。
+     首頁點站點=切換右側章節(不重載);單元頁點站點=回首頁並定位到該章。 */
+  function widen() {
+    const m = root.closest('main');
+    if (m) { m.classList.remove('container-narrow'); m.classList.add('container'); }
+  }
 
-    Object.entries(STAGES).forEach(([sk, sd]) => {
+  function buildRail(activeStage, currentId, onPickStage) {
+    const done = store.get('grammar_done', {});
+    const stations = h('div', { class: 'gx-stations' });
+    const pathWrap = h('div', { class: 'gx-pathwrap' });
+    const rail = h('nav', { class: 'gx-rail' }, stations, pathWrap);
+    const OFFS = [0, 16, 28, 16, 0, -16, -28, -16];
+    Object.entries(STAGES).forEach(([sk, sd], si) => {
       const list = UNITS.filter(u => stageOf(u) === sk);
       if (!list.length) return;
       const doneN = list.filter(u => done[u.id]).length;
-      root.append(h('div', { class: 'exercise-head' },
-        h('h2', null, sd.name),
-        h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + '/' + list.length)));
-      const grid = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });
+      const pct = Math.round(doneN / list.length * 100);
+      const active = sk === activeStage;
+      stations.append(h(onPickStage ? 'button' : 'a', {
+        class: 'gx-station' + (active ? ' on' : '') + (doneN === list.length ? ' full' : ''),
+        type: onPickStage ? 'button' : null,
+        href: onPickStage ? null : 'grammar.html?ch=' + sk,
+        title: sd.name + '(' + doneN + '/' + list.length + ')',
+        onclick: onPickStage ? () => onPickStage(sk) : null,
+      },
+        h('span', { class: 'gx-ring', style: 'background:conic-gradient(var(--ok) ' + pct + '%, var(--line) 0)' },
+          h('span', null, String(si + 1)))));
+      if (!active) return;
+      const path = h('div', { class: 'gx-path' });
+      const nextId = (list.find(u => !done[u.id]) || {}).id;
       list.forEach((u, i) => {
-        grid.append(h('div', {
-          class: 'part-card', style: 'cursor:pointer',
-          onclick: () => { location.href = 'grammar.html?u=' + u.id; },
-        },
-          h('h3', { style: 'font-size:16px' }, (i + 1) + '. ' + u.title, done[u.id] ? h('span', { class: 'gx-unit-done' }, ' ✓') : null)));
+        path.append(h('a', {
+          class: 'gx-node' + (done[u.id] ? ' done' : '') + (u.id === currentId ? ' cur' : '') +
+            (u.id === nextId && u.id !== currentId ? ' next' : ''),
+          href: 'grammar.html?u=' + u.id,
+          title: (i + 1) + '. ' + u.title,
+          style: 'transform:translateX(' + OFFS[i % OFFS.length] + 'px)',
+        }, done[u.id] && u.id !== currentId ? '✓' : String(i + 1)));
       });
-      root.append(grid);
+      pathWrap.append(
+        h('div', { class: 'gx-path-title' }, h('b', null, sd.name.replace(/^第.章\s*/, '')), h('i', null, doneN + ' / ' + list.length)),
+        path);
     });
-    root.append(h('div', { style: 'height:40px' }));
+    /* 讓目前這一課(或下一課)落在路徑欄中間 */
+    setTimeout(() => {
+      const n = pathWrap.querySelector('.gx-node.cur') || pathWrap.querySelector('.gx-node.next');
+      if (!n) return;
+      if (pathWrap.scrollHeight > pathWrap.clientHeight) pathWrap.scrollTop = n.offsetTop - pathWrap.clientHeight / 2;
+      if (pathWrap.scrollWidth > pathWrap.clientWidth) pathWrap.scrollLeft = n.offsetLeft - pathWrap.clientWidth / 2;
+    }, 0);
+    return rail;
+  }
+
+  /* ================= 首頁 ================= */
+  function renderHome() {
+    document.title = '文法基礎|刷刷英文';
+    widen();
+    const done = store.get('grammar_done', {});
+    const todo = UNITS.find(u => !done[u.id]) || null;
+    let stage = getParam('ch');
+    if (!STAGES[stage]) stage = todo ? stageOf(todo) : 'a';
+    const layout = h('div', { class: 'gx-layout' });
+    root.append(layout);
+    draw();
+
+    function draw() {
+      layout.innerHTML = '';
+      const list = UNITS.filter(u => stageOf(u) === stage);
+      const doneN = list.filter(u => done[u.id]).length;
+      const col = h('div', { class: 'gx-col' },
+        h('div', { class: 'page-head' }, h('h1', null, '文法基礎')),
+        todo ? h('div', { class: 'gx-continue' },
+          h('a', { class: 'btn primary', href: 'grammar.html?u=' + todo.id }, '繼續上課'),
+          h('span', null, STAGES[stageOf(todo)].name.replace(/\s.*$/, '') + ' 第 ' +
+            (UNITS.filter(u => stageOf(u) === stageOf(todo)).indexOf(todo) + 1) + ' 課')) : null,
+        h('div', { class: 'exercise-head' },
+          h('h2', null, STAGES[stage].name),
+          h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + '/' + list.length)));
+      list.forEach((u, i) => {
+        col.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : ''), href: 'grammar.html?u=' + u.id },
+          h('span', { class: 'n' }, done[u.id] ? '✓' : String(i + 1)),
+          h('span', { class: 't' }, u.title)));
+      });
+      col.append(h('div', { style: 'height:40px' }));
+      layout.append(buildRail(stage, null, sk => { stage = sk; draw(); window.scrollTo(0, 0); }), col);
+    }
   }
 
   /* ================= 單元 ================= */
   function renderUnit(u) {
     document.title = u.title + '|文法基礎';
     const idx = UNITS.indexOf(u);
-    root.append(h('div', { class: 'drill-top' },
+    widen();
+    const col = h('div', { class: 'gx-col' });
+    root.append(h('div', { class: 'gx-layout' }, buildRail(stageOf(u), u.id, null), col));
+    col.append(h('div', { class: 'drill-top' },
       h('h1', null, u.title),
       h('a', { href: 'grammar.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回文法基礎')));
-    root.append(h('div', { class: 'gx-goal' }, u.goal));
+    col.append(h('div', { class: 'gx-goal' }, u.goal));
 
     /* 講解 */
     const lesson = h('div', { class: 'lesson-view' });
@@ -85,10 +151,10 @@
         lesson.append(h('div', { class: 'gx-tip' }, b.text));
       }
     });
-    root.append(lesson);
+    col.append(lesson);
 
     /* 小試身手(即答:學習情境要立刻知道對錯) */
-    root.append(h('div', { class: 'exercise-head', style: 'margin-top:26px' }, h('h2', null, '小試身手')));
+    col.append(h('div', { class: 'exercise-head', style: 'margin-top:26px' }, h('h2', null, '小試身手')));
     const results = [];
     const quizWrap = h('div', null);
     u.quiz.forEach((q, qi) => {
@@ -121,9 +187,9 @@
         h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), q.q),
         opts, result));
     });
-    root.append(quizWrap);
+    col.append(quizWrap);
     const tail = h('div', null);
-    root.append(tail);
+    col.append(tail);
 
     function finish() {
       const ok = results.filter(Boolean).length;

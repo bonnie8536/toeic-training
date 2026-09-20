@@ -1373,3 +1373,96 @@ table.cat-table td.num { white-space: nowrap; }
   color: var(--ink-light);
 }
 .modal-tab.on { border-color: var(--primary); color: var(--primary); font-weight: 700; background: var(--primary-tint); }
+
+/* ---------------- 文法:左側路徑導引 ----------------
+   左一排=八章圓環(永遠看得到),右一排=目前這章的課程路徑 */
+.gx-layout { display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: 34px; align-items: start; }
+.gx-col { min-width: 0; max-width: 770px; }
+.gx-rail { position: sticky; top: 74px; display: flex; gap: 8px; align-items: flex-start; padding-top: 20px; }
+.gx-stations { position: relative; flex: none; display: flex; flex-direction: column; gap: 4px; }
+.gx-stations::before { content: ''; position: absolute; top: 24px; bottom: 24px; left: 50%; border-left: 2px solid var(--line); }
+.gx-station {
+  position: relative; z-index: 1;
+  display: block;
+  background: none; border: none;
+  padding: 3px;
+  border-radius: 50%;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+}
+.gx-station:hover { text-decoration: none; }
+.gx-ring { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; transition: transform .12s; }
+.gx-station:hover .gx-ring { transform: scale(1.06); }
+.gx-ring span {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #fff;
+  display: grid; place-items: center;
+  font-weight: 700; font-size: 15px;
+}
+.gx-station.on { box-shadow: 0 0 0 2px var(--primary); }
+.gx-station.on .gx-ring span { background: var(--primary); color: #fff; }
+.gx-station.full .gx-ring span { background: var(--ok); color: #fff; }
+.gx-pathwrap { flex: 1; min-width: 0; max-height: calc(100vh - 110px); overflow-y: auto; scrollbar-width: thin; padding: 2px 4px 20px; }
+.gx-path-title { padding: 6px 4px 2px; }
+.gx-path-title b { display: block; font-size: 13.5px; line-height: 1.4; }
+.gx-path-title i { font-style: normal; font-size: 12px; color: var(--ink-light); }
+.gx-path {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  width: 120px;
+  margin: 0 auto;
+  padding: 12px 0 14px;
+}
+.gx-path::before {
+  content: ''; position: absolute; top: 10px; bottom: 10px; left: 50%;
+  border-left: 2px dotted var(--line);
+}
+.gx-node {
+  position: relative; z-index: 1;
+  width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 13.5px; font-weight: 700;
+  background: #fff;
+  border: 2px solid var(--line);
+  color: var(--ink-light);
+  box-shadow: 0 3px 0 var(--line);
+}
+.gx-node:hover { text-decoration: none; border-color: var(--primary); color: var(--primary); }
+.gx-node.done { background: var(--ok); border-color: var(--ok); color: #fff; box-shadow: 0 3px 0 #2c6c3b; }
+.gx-node.next { border-color: var(--primary); color: var(--primary); box-shadow: 0 3px 0 var(--primary-dark); }
+.gx-node.cur, .gx-node.cur:hover { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: 0 3px 0 var(--primary-dark); }
+.gx-continue { display: flex; align-items: center; gap: 12px; margin: -4px 0 20px; font-size: 13.5px; color: var(--ink-light); }
+.gx-unit-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.gx-unit-row:hover { border-color: var(--primary); text-decoration: none; }
+.gx-unit-row .n {
+  flex: none; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--bg-soft);
+  display: grid; place-items: center;
+  font-size: 13px; font-weight: 700; color: var(--ink-light);
+}
+.gx-unit-row.done .n { background: var(--ok); color: #fff; }
+.gx-unit-row .t { flex: 1; font-size: 15px; }
+@media (max-width: 860px) {
+  .gx-layout { display: block; }
+  .gx-rail { position: static; display: block; padding-top: 10px; }
+  .gx-stations { flex-direction: row; gap: 2px; overflow-x: auto; scrollbar-width: none; padding: 3px 2px 6px; }
+  .gx-stations::-webkit-scrollbar { display: none; }
+  .gx-stations::before { display: none; }
+  .gx-ring { width: 40px; height: 40px; }
+  .gx-ring span { width: 31px; height: 31px; font-size: 14px; }
+  .gx-pathwrap { max-height: none; overflow-x: auto; overflow-y: hidden; display: flex; align-items: center; gap: 8px; padding: 4px 0 8px; scrollbar-width: none; }
+  .gx-pathwrap::-webkit-scrollbar { display: none; }
+  .gx-path-title { display: none; }
+  .gx-path { flex-direction: row; width: auto; margin: 0; padding: 0 2px 4px; gap: 6px; }
+  .gx-path::before { display: none; }
+  .gx-node { flex: none; transform: none !important; width: 32px; height: 32px; font-size: 12.5px; }
+}

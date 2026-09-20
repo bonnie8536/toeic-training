@@ -247,7 +247,7 @@
         value: editing && state[idx].t ? state[idx].t : '',
       });
       const submitBtn = h('button', { class: 'btn primary pop-fill-btn', type: 'button', onclick: fill }, editing ? '更新' : '填入');
-      const hintBox = h('div', { class: 'pop-hint', style: 'display:none' }, h('b', null, 'HINT'), entry.hint);
+      const hintBox = h('div', { class: 'pop-hint', style: 'display:none' }, h('b', null, '提示'), entry.hint);
       const zhBox = h('div', { class: 'pop-zh-hint', style: 'display:none' }, h('b', null, '中文意思'), entry.zh);
       const ansBox = h('div', { class: 'pop-zh-hint', style: 'display:none' }, h('b', null, '原文'), surface);
       const ansBtn = h('button', {
@@ -257,7 +257,7 @@
       const zhBtn = h('button', {
         class: 'pop-mini', type: 'button', style: 'display:none',
         onclick: () => { zhBox.style.display = ''; zhBtn.style.display = 'none'; ansBtn.style.display = ''; positionPop(); input.focus(); },
-      }, '還是不會?看中文意思');
+      }, '看中文意思');
       const hintBtn = h('button', {
         class: 'pop-mini', type: 'button',
         onclick: () => { hintBox.style.display = ''; hintBtn.style.display = 'none'; zhBtn.style.display = ''; positionPop(); input.focus(); },
@@ -305,7 +305,7 @@
           ? h('div', null, h('span', { class: 'pop-word' }, surface), h('span', { class: 'pop-pos' }, (entry.pos || '') + ' 原文'))
           : h('div', { class: 'pop-pos' }, entry.pos || ''),
         h('div', { class: 'pop-zh' }, entry.zh, ' ', baseNote),
-        h('div', { class: 'pop-hint' }, h('b', null, 'DEFINITION'), entry.hint),
+        h('div', { class: 'pop-hint' }, h('b', null, '英文釋義'), entry.hint),
         h('div', { class: 'pop-actions' },
           h('button', { type: 'button', onclick: () => openFillPop(span, surface, entry, idx) }, '修改填答'),
           h('button', {
@@ -434,7 +434,7 @@
     const area = h('div', { class: 'tq-area' });
     wrap.append(
       h('p', { class: 'result-note' },
-        '同一批單字,換一篇全新的文章。把字卡拖進空格(或先點字卡再點空格),全部放完才能交卷。'
+        '同一批單字換一篇文章。字卡拖進空格,或先點字卡再點空格。'
         + (last ? '上次成績 ' + last.score + '/' + last.total + '。' : '')),
       area);
 

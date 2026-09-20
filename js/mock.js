@@ -13,12 +13,12 @@
   const SIZES = {
     quick: {
       name: '快速回合', mins: 22,
-      desc: '聽力 12 題+閱讀約 18 題。午休就能做完一輪。',
+      desc: '聽力 12 題,閱讀約 18 題。',
       l: { p2: 6, p3: 1, p4: 1 }, r: { p5: 10, p6: 1, p7: 1 },
     },
     half: {
       name: '標準半回', mins: 47,
-      desc: '聽力 36 題+閱讀約 39 題,配速比照正式考。考前一週每天一回。',
+      desc: '聽力 36 題,閱讀約 39 題,配速比照正式考。',
       l: { p1: 3, p2: 12, p3: 4, p4: 3 }, r: { p5: 15, p6: 2, p7: 4 },
     },
   };
@@ -48,7 +48,7 @@
     root.innerHTML = '';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '模擬考'),
-      h('p', null, '全程倒數計時,聽力只播一次,交卷才看答案——把正式考的壓力搬進來練。')));
+      h('p', null, '聽力只播一次,交卷才看答案。')));
 
     const cards = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });
     Object.entries(SIZES).forEach(([k, s]) => {
@@ -75,8 +75,7 @@
           h('td', { class: 'num' }, r.rRaw + '/' + r.rTotal + ' · ' + r.rScore),
           h('td', { class: 'num' }, h('b', null, r.lScore + r.rScore))));
       });
-      root.append(table,
-        h('p', { class: 'result-note' }, '分數是小樣本的參考換算,適合看趨勢,不等於正式成績。'));
+      root.append(table);
     }
   }
 
@@ -162,7 +161,7 @@
         btn.disabled = true;
         btn.textContent = '已播放';
       });
-      return h('div', { class: 'player' }, btn, h('span', { class: 'player-note' }, '正式考規則:只播一次'));
+      return h('div', { class: 'player' }, btn);
     }
 
     function drawLUnit(u) {
@@ -267,7 +266,7 @@
 
     function p7Fallback(ps) {
       const box = h('div', { class: 'passage-box' },
-        h('span', { class: 'p-label' }, (ps.label ? ps.label + ' · ' : '') + String(ps.type || '').toUpperCase()));
+        h('span', { class: 'p-label' }, (ps.label ? ps.label + ' · ' : '') + passTypeLabel(ps.type)));
       if (ps.blocks) {
         /* 簡化渲染:模擬考中結構化文件以純文字段落呈現重點 */
         const wrap = h('div', { class: 'ps-blocks' });
@@ -338,7 +337,7 @@
         h('h2', null, '參考總分 ' + (lScore + rScore)),
         h('div', { class: 'band-note' },
           (timeUp ? '時間到,自動交卷。' : '') +
-          '聽力 ' + lRaw + '/' + lTotal + '(約 ' + lScore + ')· 閱讀 ' + rRaw + '/' + rTotal + '(約 ' + rScore + ')。小樣本換算,看趨勢就好。')));
+          '聽力 ' + lRaw + '/' + lTotal + '(約 ' + lScore + ')· 閱讀 ' + rRaw + '/' + rTotal + '(約 ' + rScore + ')。參考換算,非正式成績。')));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', onclick: () => startExam(sizeKey) }, '再來一回'),
         h('a', { class: 'btn', href: 'mock.html' }, '回模擬考')));
@@ -368,7 +367,7 @@
 
         if (u.p === '5') {
           block.append(h('div', { class: 'q-text' }, u.item.question), gradeOpts(u.item, st.answers.c), verdict(u.item, st.answers.c),
-            h('div', { class: 'explain' }, h('div', { class: 'tr' }, '句意:' + u.item.translation)));
+            h('div', { class: 'explain' }, h('div', { class: 'tr' }, u.item.translation)));
         } else if (u.p === '1' || u.p === '2') {
           if (u.p === '1') block.append(h('div', { class: 'listen-photo' }, h('img', {
             src: 'img/listening/' + u.item.id + '.jpg', alt: '聽力照片',

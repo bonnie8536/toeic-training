@@ -152,16 +152,14 @@
 
   /* ---------- 畫面 ---------- */
   const rec = collect();
-  const p = window.PROFILE && PROFILE.current();
   root.append(h('div', { class: 'page-head' },
-    h('h1', null, '能力分析'),
-    p ? h('p', null, p.name + ' 的累計紀錄') : null));
+    h('h1', null, '能力分析')));
 
   if (rec.total < 10) {
     root.append(h('div', { class: 'q-block' },
-      '目前累計作答 ' + rec.total + ' 題,還不夠做可靠的分析。先做',
-      h('a', { href: 'diagnostic.html' }, '程度檢測'), ',或到',
-      h('a', { href: 'practice.html' }, '題庫'), '刷一些題再回來。'));
+      '累計作答 ' + rec.total + ' 題,滿 10 題才會分析。先做',
+      h('a', { href: 'diagnostic.html' }, '程度檢測'), '或到',
+      h('a', { href: 'practice.html' }, '題庫'), '刷題。'));
     return;
   }
 
@@ -187,14 +185,14 @@
             Math.round(rec.parts[pp].ok / rec.parts[pp].n * 100) + '% · ' + rec.parts[pp].n + ' 題',
             accCls(rec.parts[pp].ok / rec.parts[pp].n))
         : null)),
-    h('div', { class: 'band-note' }, est.advice + ' 級距由練習紀錄推估、刻意放寬,與正式成績可能有明顯落差;累計越多題越準。')));
+    h('div', { class: 'band-note' }, '級距由練習紀錄推估,與正式成績會有落差。')));
 
   /* 2. 強弱項(長條圖,弱→強) */
   const catRows = Object.entries(rec.cats).filter(([, c]) => c.t >= 3)
     .sort((a, b) => a[1].c / a[1].t - b[1].c / b[1].t);
   root.append(h('div', { class: 'exercise-head' }, h('h2', null, '考點強弱項')));
   if (!catRows.length) {
-    root.append(h('p', { class: 'result-note' }, '單一考點的紀錄還太少(每類至少 3 題才列入)。'));
+    root.append(h('p', { class: 'result-note' }, '每類滿 3 題才列入。'));
   } else {
     const wrap = h('div', { class: 'cat-bars' });
     catRows.forEach(([cat, c]) => {

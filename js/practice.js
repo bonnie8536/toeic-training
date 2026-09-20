@@ -134,7 +134,7 @@
     root.append(h('div', { class: 'practice-panels' },
       h('div', { class: 'practice-panel' },
         h('h2', null, '隨機練習'),
-        h('p', null, '勾選要練的題型,可以同時勾好幾個。共 ' + (s5.total + s6.total + s7.total) + ' 題' +
+        h('p', null, '共 ' + (s5.total + s6.total + s7.total) + ' 題' +
           (totalAnswered ? ' · 已作答 ' + totalAnswered + ' 題 · 正確率 ' + Math.round(totalCorrect / totalAnswered * 100) + '%' : '')),
         h('div', { class: 'cfg-rows' }, rows.map(r => r.row)),
         h('button', {
@@ -153,7 +153,6 @@
         }, '開始練習')),
       h('div', { class: 'practice-panel' },
         h('h2', null, '錯題本'),
-        h('p', null, '重新答對就移出。'),
         h('div', { class: 'review-rows' },
           ['5', '6', '7'].map(p => {
             const s = partStats(p);
@@ -194,7 +193,7 @@
       });
       root.append(h('div', { class: 'practice-panel', style: 'margin-bottom:50px' },
         h('h2', null, '聽力隨機練習'),
-        h('p', null, '作答前每題最多播 2 次,答完可重聽、看逐字稿。'),
+        h('p', null, '每題最多播 2 次。'),
         h('div', { class: 'cfg-rows' }, lrows.map(r => r.row)),
         h('button', {
           class: 'btn primary', style: 'margin-top:14px',
@@ -252,7 +251,7 @@
     const gl = q.category && GRAMMAR_LINK[q.category];
     if (gl && !rec.ok) {
       box.append(h('div', { class: 'tr' },
-        h('a', { href: 'grammar.html?u=' + gl[0] }, '這個考點不穩?回文法基礎複習「' + gl[1] + '」→')));
+        h('a', { href: 'grammar.html?u=' + gl[0] }, '文法基礎「' + gl[1] + '」→')));
     }
     return box;
   }
@@ -430,10 +429,8 @@
         wrongN && config.length === 1 ? h('button', { class: 'btn', onclick: () => startReview(config[0].p) }, '複習錯題') : null,
         h('a', { class: 'btn', href: 'practice.html' }, '回題庫'));
       root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
-        h('h2', null, '本輪成績:' + qCorrect + ' / ' + qTotal + ' 題'),
-        h('div', { class: 'band-note' }, wrongN
-          ? '答錯的 ' + wrongN + ' 題已收進錯題本。往下逐題看解析。'
-          : '全對!換個題型或提高題數再練一輪吧。')));
+        h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),
+        wrongN ? h('div', { class: 'band-note' }, '答錯的 ' + wrongN + ' 題已收進錯題本。') : null));
       root.append(btns());
 
       /* 逐題檢討 */
@@ -447,7 +444,7 @@
               h('span', { class: 'badge cat' }, q.category)),
             h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, (i + 1) + '.'), q.question),
             optionButtons(q, rec, () => {}),
-            explainBox(q, rec, '句意:' + q.translation)));
+            explainBox(q, rec, q.translation)));
         } else {
           const set = u.item;
           const sess = session.answers[i];
@@ -501,7 +498,7 @@
     }
     if (!units.length) {
       root.innerHTML = '';
-      root.append(topBar(d.title + ' 錯題本'), h('div', { class: 'q-block' }, '目前沒有錯題,太好了。'),
+      root.append(topBar(d.title + ' 錯題本'), h('div', { class: 'q-block' }, '目前沒有錯題。'),
         h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
       return;
     }
@@ -533,8 +530,7 @@
       root.append(h('div', { class: 'q-block' },
         h('div', { class: 'meta', style: 'display:flex;gap:8px;margin-bottom:10px' },
           h('span', { class: 'badge cat' }, q.category),
-          h('span', { class: 'badge level-mid' }, q.difficulty),
-          h('span', { class: 'badge cat' }, '上次答錯')),
+          h('span', { class: 'badge level-mid' }, q.difficulty)),
         h('div', { class: 'q-text', style: 'font-size:17px' }, h('span', { class: 'q-no' }, (cur + 1) + '.'), q.question),
         optionButtons(q, rec, oi => {
           const ok = oi === q.answer;
@@ -544,7 +540,7 @@
           saveRec(p, q.id, oi, ok);
           draw();
         }),
-        explainBox(q, rec, rec ? '句意:' + q.translation : null),
+        explainBox(q, rec, rec ? q.translation : null),
         rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已答對,移出錯題本。') : null));
       root.append(nextRow(!!rec, cur === units.length - 1));
     }
@@ -566,7 +562,6 @@
         const label = p === '6' ? '(' + q.num + ')' : 'Q' + (qi + 1);
         const text = p === '6' ? '選出最適合填入空格 (' + q.num + ') 的答案' : q.q;
         qCol.append(h('div', { class: 'q-block' },
-          h('div', { style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, '上次答錯')),
           h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, label), text),
           optionButtons(q, rec, oi => {
             const ok = oi === q.answer;
@@ -597,8 +592,8 @@
       root.innerHTML = '';
       root.append(topBar(d.title + ' 錯題本'));
       root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
-        h('h2', null, '複習完成:移出 ' + cleared + ' 題'),
-        h('div', { class: 'band-note' }, '還沒答對的題目會留在錯題本,隔天再回來試一次。')));
+        h('h2', null, '移出 ' + cleared + ' 題'),
+        h('div', { class: 'band-note' }, '沒答對的留在錯題本,隔天再試。')));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('a', { class: 'btn primary', href: 'practice.html' }, '回題庫')));
       window.scrollTo(0, 0);
@@ -671,18 +666,5 @@
       }
     });
     return wrap;
-  }
-
-  function passTypeLabel(t) {
-    const map = {
-      email: 'E-MAIL', memo: 'MEMO 備忘錄', notice: 'NOTICE 公告', advertisement: 'AD 廣告',
-      letter: 'LETTER 信件', article: 'ARTICLE 文章', instructions: '使用說明',
-      'text message': '簡訊對話', 'text-message': '簡訊對話', 'text_message': '簡訊對話', 'text message chain': '簡訊對話',
-      webpage: '網頁', 'web page': '網頁',
-      schedule: '行程表', invoice: '發票/訂單', form: '表單', 'order form': '訂購單',
-      coupon: '優惠券', menu: '菜單', itinerary: '行程表', receipt: '收據', flyer: '傳單',
-      'sign-up form': '報名表', review: '評論', 'job advertisement': '徵才廣告',
-    };
-    return map[String(t || '').toLowerCase()] || String(t || '').toUpperCase();
   }
 })();

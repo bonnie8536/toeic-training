@@ -11,14 +11,14 @@
   }
 
   const STAGES = {
-    a: { name: '第一章 名詞、冠詞與代名詞', desc: '英文名詞的規矩:單複數、可不可數、a/an/the 怎麼選。' },
-    b: { name: '第二章 be 動詞與現在時態', desc: '從 am/is/are 到現在簡單與進行,講「現在」的各種說法。' },
-    c: { name: '第三章 過去與完成時態', desc: '過去簡單、過去進行、現在完成,把時間軸說清楚。' },
-    d: { name: '第四章 未來與助動詞', desc: 'will、be going to,加上 can/must/should 那一家人。' },
-    e: { name: '第五章 疑問、否定與祈使', desc: '各種問法與答法:附加問句、間接問句、我也是。' },
-    f: { name: '第六章 形容詞、副詞與比較', desc: '修飾的規矩:位置、-ed/-ing、比較級與 too/enough。' },
-    g: { name: '第七章 介系詞、連接詞與子句', desc: 'in/on/at、because/if,還有 to V 跟 V-ing 怎麼選。' },
-    h: { name: '第八章 進階句型', desc: '被動、關係子句、假設語氣,長句子的骨架。' },
+    a: { name: '第一章 名詞、冠詞與代名詞' },
+    b: { name: '第二章 be 動詞與現在時態' },
+    c: { name: '第三章 過去與完成時態' },
+    d: { name: '第四章 未來與助動詞' },
+    e: { name: '第五章 疑問、否定與祈使' },
+    f: { name: '第六章 形容詞、副詞與比較' },
+    g: { name: '第七章 介系詞、連接詞與子句' },
+    h: { name: '第八章 進階句型' },
   };
   const stageOf = u => u.id.charAt(1);
 
@@ -32,8 +32,7 @@
     document.title = '文法基礎|刷刷英文';
     const done = store.get('grammar_done', {});
     root.append(h('div', { class: 'page-head' },
-      h('h1', null, '文法基礎'),
-      h('p', null, '從零到高階的文法課。一個單元講一件事,講完馬上練;照順序走,也可以挑著補。')));
+      h('h1', null, '文法基礎')));
 
     Object.entries(STAGES).forEach(([sk, sd]) => {
       const list = UNITS.filter(u => stageOf(u) === sk);
@@ -42,15 +41,13 @@
       root.append(h('div', { class: 'exercise-head' },
         h('h2', null, sd.name),
         h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + '/' + list.length)));
-      root.append(h('p', { style: 'font-size:14px;color:var(--ink-light);margin:-6px 0 12px' }, sd.desc));
       const grid = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });
       list.forEach((u, i) => {
         grid.append(h('div', {
           class: 'part-card', style: 'cursor:pointer',
           onclick: () => { location.href = 'grammar.html?u=' + u.id; },
         },
-          h('h3', { style: 'font-size:16px' }, (i + 1) + '. ' + u.title, done[u.id] ? h('span', { class: 'gx-unit-done' }, ' ✓') : null),
-          h('p', null, u.goal)));
+          h('h3', { style: 'font-size:16px' }, (i + 1) + '. ' + u.title, done[u.id] ? h('span', { class: 'gx-unit-done' }, ' ✓') : null)));
       });
       root.append(grid);
     });
@@ -64,7 +61,7 @@
     root.append(h('div', { class: 'drill-top' },
       h('h1', null, u.title),
       h('a', { href: 'grammar.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回文法基礎')));
-    root.append(h('div', { class: 'gx-goal' }, '這一課:' + u.goal));
+    root.append(h('div', { class: 'gx-goal' }, u.goal));
 
     /* 講解 */
     const lesson = h('div', { class: 'lesson-view' });
@@ -85,7 +82,7 @@
         b.rows.forEach(r => tbl.append(h('tr', null, ...r.map(c => h('td', null, c)))));
         lesson.append(tbl);
       } else if (b.t === 'tip') {
-        lesson.append(h('div', { class: 'gx-tip' }, h('b', null, '小提醒:'), b.text));
+        lesson.append(h('div', { class: 'gx-tip' }, b.text));
       }
     });
     root.append(lesson);
@@ -143,8 +140,7 @@
       const cat = DRILL_LINK[u.id];
       tail.append(
         h('div', { class: 'report-head', style: 'margin-top:10px' },
-          h('h2', null, '這一課完成:' + ok + ' / ' + u.quiz.length),
-          h('div', { class: 'band-note' }, ok === u.quiz.length ? '全對,往下一課吧。' : '答錯的地方回頭再看一次講解,弄懂再走。')),
+          h('h2', null, '答對 ' + ok + ' / ' + u.quiz.length)),
         h('div', { class: 'drill-nav-btns' },
           next ? h('a', { class: 'btn primary', href: 'grammar.html?u=' + next.id }, '下一課:' + next.title) : null,
           cat ? h('a', { class: 'btn', href: 'practice.html?part=5&cat=' + encodeURIComponent(cat) }, '刷這個考點的題目') : null,

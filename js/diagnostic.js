@@ -78,7 +78,7 @@
     /* 篇章(p6/p7) */
     if (it.kind === 'p6') {
       const box = h('div', { class: 'passage-box', style: 'position:static;max-height:none;margin-bottom:14px' },
-        h('span', { class: 'p-label' }, '段落填空|依前後文選出最適合的答案'));
+        h('span', { class: 'p-label' }, '段落填空'));
       const frag = document.createDocumentFragment();
       String(D.p6.passage).split(/(\{\{\d\}\})/).forEach(seg => {
         const m = seg.match(/^\{\{(\d)\}\}$/);
@@ -170,7 +170,7 @@
     const est = bandEstimate(aB, aM, aA, score / total);
     const band = est.band, advice = est.advice;
     const readNote = (readT && (readC / readT) < Math.min(aB, aM) - 0.2)
-      ? '另外:你的篇章題(段落填空/閱讀理解)正確率明顯低於單句題,代表單點文法會、但放進文章脈絡就抓不到——閱讀訓練模組會特別有幫助。' : '';
+      ? '篇章題正確率明顯低於單句題,單句文法會、放進文章就抓不到,先做閱讀訓練。' : '';
 
     root.append(h('div', { class: 'page-head' }, h('h1', null, '檢測報告')));
 
@@ -178,41 +178,37 @@
       h('div', { class: 'who' }, (p ? p.name + ' · ' : '') + (st.finishedAt || '').slice(0, 10)),
       h('h2', null, '答對 ' + score + ' / ' + total + ' 題'),
       h('div', { class: 'band-line' },
-        h('div', { class: 'item' }, h('b', null, band), h('span', null, '閱讀參考級距(估計)')),
+        h('div', { class: 'item' }, h('b', null, band), h('span', null, '參考級距')),
         h('div', { class: 'item' }, h('b', null, Math.round(aB * 100) + '%'), h('span', null, '基礎題正確率')),
         h('div', { class: 'item' }, h('b', null, Math.round(aM * 100) + '%'), h('span', null, '中級題正確率')),
         h('div', { class: 'item' }, h('b', null, Math.round(aA * 100) + '%'), h('span', null, '進階題正確率'))),
-      h('div', { class: 'band-note' }, '28 題屬小樣本,級距為粗略定位、刻意放寬,僅供安排練習順序;與正式多益成績可能有明顯落差。')));
+      h('div', { class: 'band-note' }, '28 題為小樣本,級距僅供安排練習順序,與正式成績可能有落差。')));
 
     /* 考點總表 */
-    root.append(h('div', { class: 'exercise-head' }, h('span', { class: 'ex-no' }, '報告 1'), h('h2', null, '各考點掌握度')));
+    root.append(h('div', { class: 'exercise-head' }, h('h2', null, '各考點掌握度')));
     const sorted = Object.entries(cats).sort((a, b) => (a[1].correct / a[1].total) - (b[1].correct / b[1].total));
     const table = h('table', { class: 'cat-table' },
       h('tr', null, h('th', null, '考點'), h('th', null, '答對'), h('th', null, '判定'), h('th', { class: 'no-print' }, '')));
     sorted.forEach(([cat, c]) => {
       const [cls, label] = judge(c.correct / c.total);
+      const skills = cls === 'good'
+        ? c.items.filter(i => st.answers[i] === items[i].answer).map(i => items[i].skill).filter(Boolean).slice(0, 2).join(';')
+        : '';
       table.append(h('tr', null,
-        h('td', null, cat),
+        h('td', null, cat, skills ? h('div', { style: 'font-size:12px;color:var(--ink-light)' }, skills) : null),
         h('td', { class: 'num' }, c.correct + ' / ' + c.total),
         h('td', null, h('span', { class: 'verdict-pill ' + cls }, label), c.total === 1 ? h('span', { style: 'font-size:12px;color:var(--ink-light)' }, '(僅1題)') : null),
         h('td', { class: 'no-print' }, cls !== 'good' ? h('a', { href: catLink(cat, c.kind), style: 'font-size:13px' }, '去刷這類題 →') : '')));
     });
     root.append(table);
 
-    /* 會了/還不會 */
-    const good = sorted.filter(([, c]) => c.correct / c.total >= 0.8);
+    /* 還不會 */
     const weak = sorted.filter(([, c]) => c.correct / c.total < 0.8);
-    root.append(h('div', { class: 'exercise-head' }, h('span', { class: 'ex-no' }, '報告 2'), h('h2', null, '你可能已經會的')));
-    root.append(good.length
-      ? h('ul', { class: 'skill-list good' }, good.map(([cat, c]) =>
-          h('li', null, cat,
-            h('span', { class: 'why' }, c.items.filter(i => st.answers[i] === items[i].answer).map(i => items[i].skill).filter(Boolean).slice(0, 2).join(';') || '此類題目全數答對'))))
-      : h('p', { class: 'result-note' }, '這次檢測中還沒有達到「穩固」的考點——別擔心,這正是檢測的目的,下面告訴你從哪裡開始。'));
 
-    root.append(h('div', { class: 'exercise-head' }, h('span', { class: 'ex-no' }, '報告 3'), h('h2', null, '還不穩的地方(逐題分析)')));
+    root.append(h('div', { class: 'exercise-head' }, h('h2', null, '錯題分析')));
     const wrongs = items.map((it, i) => ({ it, i })).filter(x => st.answers[x.i] !== x.it.answer);
     if (!wrongs.length) {
-      root.append(h('p', { class: 'result-note' }, '全部答對,沒有錯題可以分析。直接進入題庫維持手感吧。'));
+      root.append(h('p', { class: 'result-note' }, '全部答對,沒有錯題。'));
     }
     wrongs.forEach(({ it, i }) => {
       const chosen = st.answers[i];
@@ -228,23 +224,23 @@
             : h('span', null, '你選 ', h('span', { class: 'you' }, LETTERS[chosen] + '. ' + it.options[chosen])),
           '  ',
           h('span', null, '正解 ', h('span', { class: 'right' }, LETTERS[it.answer] + '. ' + it.options[it.answer]))),
-        it.skill ? h('div', { class: 'w-skill' }, '這題在測:' + it.skill) : null,
+        it.skill ? h('div', { class: 'w-skill' }, it.skill) : null,
         h('div', { class: 'w-exp' }, it.explanation)));
     });
 
     /* 建議 */
-    root.append(h('div', { class: 'exercise-head' }, h('span', { class: 'ex-no' }, '報告 4'), h('h2', null, '建議的練習順序')));
+    root.append(h('div', { class: 'exercise-head' }, h('h2', null, '建議的練習順序')));
     const stepList = h('ol', null);
     weak.slice(0, 4).forEach(([cat, c]) => {
       stepList.append(h('li', null,
         h('a', { href: catLink(cat, c.kind) }, cat),
-        '(答對 ' + c.correct + '/' + c.total + ')——先刷 15–20 題,錯的隔天用「答錯」篩選重刷一次。'));
+        '(答對 ' + c.correct + '/' + c.total + '),先刷 15–20 題,錯的隔天在錯題本重做。'));
     });
     if (score / total < 0.5) {
       stepList.append(h('li', null, h('a', { href: 'grammar.html' }, '文法基礎'),
-        '從第一章照順序走。分數還沒過半時,把文法地基打穩比刷題更有效。'));
+        '分數未過半,先從第一章照順序走。'));
     }
-    stepList.append(h('li', null, h('a', { href: 'reading.html' }, '閱讀訓練'), '每週 2 篇:先不看翻譯讀完、做完抓重點題,再開對照翻譯逐段核對,順手把不會的單字點成填空練習。'));
+    stepList.append(h('li', null, h('a', { href: 'reading.html' }, '閱讀訓練'), '每週 2 篇,先不看翻譯讀完並做題,再開翻譯逐段核對。'));
     root.append(h('div', { class: 'next-steps' }, h('p', null, advice + (readNote ? ' ' + readNote : '')), stepList));
 
     /* 動作 */

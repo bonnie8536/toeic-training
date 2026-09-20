@@ -14,10 +14,10 @@
   }
 
   const SECTIONS = {
-    s: { key: 'ear_s', title: '句子跟讀', items: E.shadow || E.dictation, desc: '聽一句 → 換你唸 → 再一次 → 中文確認。開口才算練到。', per: 5 },
-    d: { key: 'ear_d', title: '句子聽寫', items: E.dictation, desc: '聽一句,打出整句。逐字比對,拼錯的字會標紅。', per: 5 },
-    mp: { key: 'ear_mp', title: '相似音辨析', items: E.pairs, desc: '句子裡出現的是哪個字?靠耳朵分辨。', per: 10 },
-    n: { key: 'ear_n', title: '數字與價格', items: E.numbers, desc: 'thirteen 還是 thirty?時間、金額、分機聽清楚。', per: 10 },
+    s: { key: 'ear_s', title: '句子跟讀', items: E.shadow || E.dictation, desc: '聽完跟著唸出來,每句兩遍。', per: 5 },
+    d: { key: 'ear_d', title: '句子聽寫', items: E.dictation, desc: '', per: 5 },
+    mp: { key: 'ear_mp', title: '相似音辨析', items: E.pairs, desc: '', per: 10 },
+    n: { key: 'ear_n', title: '數字與價格', items: E.numbers, desc: 'thirteen 還是 thirty;時間、金額、分機。', per: 10 },
   };
 
   function stats(sec) {
@@ -96,7 +96,7 @@
     document.title = '聽力訓練|刷刷英文';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '聽力訓練'),
-      h('p', null, '把耳朵磨利的基本功。可以重複聽,答錯的會優先再出現。')));
+      h('p', null, '答錯的下一輪會優先出現。')));
     root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
       Object.entries(SECTIONS).map(([k, d]) => {
         const s = stats(k);
@@ -109,7 +109,7 @@
             .map(([v, t]) => h('option', { value: v }, t + (v !== '全部' ? '(' + counts[v] + ')' : ''))));
         return h('div', { class: 'part-card' },
           h('h3', null, d.title),
-          h('p', null, d.desc),
+          d.desc ? h('p', null, d.desc) : null,
           h('div', { class: 'p-stats' }, '完成 ' + s.done + '/' + s.total +
             (s.done ? ' · 一次答對率 ' + Math.round(s.ok / s.done * 100) + '%' : '')),
           h('div', { class: 'bar' }, h('i', { style: 'width:' + pct + '%' })),
@@ -161,12 +161,11 @@
       player = { stop: () => { en.pause(); zh.pause(); clearTimeout(timer); } };
       let timer = null;
       let running = false;
-      const stage = h('div', { class: 'shadow-stage' }, '按「開始」,聽完換你唸出來');
+      const stage = h('div', { class: 'shadow-stage' }, '聽完跟著唸');
       const result = h('div', null);
       const startBtn = h('button', { class: 'btn primary player-btn', type: 'button', onclick: run }, '▶ 開始');
       const block = h('div', { class: 'q-block' },
         h('div', { class: 'meta', style: 'margin-bottom:8px' },
-          h('span', { class: 'badge cat' }, '跟讀'),
           h('span', { class: 'badge ' + (q.level === '初級' ? 'level-basic' : q.level === '進階' ? 'level-high' : 'level-mid') }, q.level)),
         stage,
         h('div', { class: 'player', style: 'justify-content:center' }, startBtn, speedSelect([en, zh])),
@@ -226,9 +225,8 @@
         if (!result.children.length) {
           result.append(
             h('div', { class: 'transcript-box' },
-              h('b', null, '句子'),
               h('div', { class: 'tr-en' }, q.text),
-              h('div', { class: 'tr-zh' }, q.zh + (q.note && q.note !== '無' ? '\n難點:' + q.note : ''))),
+              h('div', { class: 'tr-zh' }, q.zh + (q.note && q.note !== '無' ? '\n' + q.note : ''))),
             nextRow(true));
         }
       }
@@ -260,7 +258,6 @@
       const checkBtn = h('button', { class: 'btn primary', type: 'button', onclick: check }, '對答案');
       const block = h('div', { class: 'q-block' },
         h('div', { class: 'meta', style: 'margin-bottom:8px' },
-          h('span', { class: 'badge cat' }, '聽寫'),
           h('span', { class: 'badge ' + (q.level === '初級' ? 'level-basic' : q.level === '進階' ? 'level-high' : 'level-mid') }, q.level)),
         player.el,
         input,
@@ -294,7 +291,7 @@
               perfect ? '完全正確!' : '對了 ' + hits + '/' + ansWords.length + ' 個字'),
             h('div', { class: 'dict-diff' },
               diff.map(x => h('span', { class: 'dict-word ' + (x.hit ? 'hit' : 'miss') }, x.w))),
-            q.note && q.note !== '無' ? h('div', { class: 'tr' }, '聽力難點:' + q.note) : null,
+            q.note && q.note !== '無' ? h('div', { class: 'tr' }, q.note) : null,
             h('div', { class: 'tr' }, q.zh)),
           nextRow(true));
       }
@@ -329,7 +326,6 @@
         }, opt));
       });
       root.append(h('div', { class: 'q-block' },
-        h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, '相似音')),
         player.el,
         h('div', { class: 'q-text', style: 'margin-top:8px' }, '句子裡出現的是哪個字?'),
         btns, result), nextRow(false));
@@ -365,7 +361,6 @@
         }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
       });
       root.append(h('div', { class: 'q-block' },
-        h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, '數字與價格')),
         player.el,
         h('div', { class: 'q-text', style: 'margin-top:8px' }, q.question),
         opts, result), nextRow(false));
@@ -375,9 +370,10 @@
       if (player) player.stop();
       root.innerHTML = '';
       const ok = results.filter(Boolean).length;
+      const note = ok === list.length ? '' : '答錯的下一輪優先出現。';
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
         h('h2', null, d.title + ':' + ok + ' / ' + list.length),
-        h('div', { class: 'band-note' }, ok === list.length ? '全對!耳朵越來越利了。' : '答錯的下一輪會優先出現。')));
+        note ? h('div', { class: 'band-note' }, note) : null));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', onclick: () => startRound(sec) }, '再來一輪'),
         h('a', { class: 'btn', href: 'listening.html' }, '回聽力訓練')));

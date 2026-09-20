@@ -355,8 +355,8 @@
         h('button', { class: 'btn primary', onclick: () => startQuiz(root, config) }, '再練一輪'),
         h('a', { class: 'btn', href: 'practice.html' }, '回題庫'));
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-        h('h2', null, '聽力本輪成績:' + qCorrect + ' / ' + qTotal + ' 題'),
-        h('div', { class: 'band-note' }, qTotal - qCorrect ? '答錯的題目已收進聽力錯題。往下逐題看解析,音檔可以重聽。' : '全對!')));
+        h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),
+        qTotal - qCorrect ? h('div', { class: 'band-note' }, '答錯的題目已收進錯題本。') : null));
       root.append(btns());
 
       /* 逐題檢討(音檔解鎖重聽) */
@@ -433,8 +433,8 @@
         }
       });
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-        h('h2', null, '聽力本輪成績:' + qCorrect + ' / ' + qTotal + ' 題'),
-        h('div', { class: 'band-note' }, qTotal - qCorrect ? '答錯的題目已收進聽力錯題。' : '全對!')));
+        h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),
+        qTotal - qCorrect ? h('div', { class: 'band-note' }, '答錯的題目已收進錯題本。') : null));
       root.append(h('div', { class: 'drill-nav-btns' },
         opts.wrongOnly ? null : h('button', { class: 'btn primary', onclick: () => startQuiz(root, config) }, '再練一輪'),
         h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));

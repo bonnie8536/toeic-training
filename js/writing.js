@@ -51,6 +51,8 @@
     return !!((y.text || '').trim() || ['p0', 'p1', 'p2', 'p3'].some(p => String(y[p] || '').trim()));
   }
 
+  const LEVEL_NAME = { l1: '第一級 句子力', l2: '第二級 Email 力', l3: '第三級 論述力' };
+  const LEVEL_WHAT = { l1: '句子重組與造句', l2: 'Email 回信', l3: '短文論述' };
   const TYPE_BADGE = { lesson: ['技巧課', 'level-mid'], s: ['重組', 'level-basic'], b: ['造句', 'level-basic'], e: ['Email', 'level-adv'], y: ['論述', 'level-high'] };
 
   function wordCount(text) {
@@ -69,23 +71,15 @@
     document.title = '寫作練習|刷刷英文';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '寫作練習'),
-      h('p', null, '一個單元一小步,寫的內容會保存,老師看得到。')));
-    const desc = {
-      l1: '把句子寫對:重組與造句。',
-      l2: '寫得體的商用回信。',
-      l3: '把想法寫成短文。',
-    };
-    const badges = { l1: '基礎', l2: '中級', l3: '進階' };
+      h('p', null, '寫的內容會自動保存,老師看得到。')));
     root.append(h('div', { class: 'part-cards' },
       ['l1', 'l2', 'l3'].map(k => {
         const units = unitsOf(k);
         const done = units.filter(unitDone).length;
         const pct = Math.round(done / units.length * 100);
         return h('a', { class: 'part-card', href: 'writing.html?level=' + k, style: 'display:block' },
-          h('div', { class: 'p-label' }, 'LEVEL ' + k[1] + ' · ' + badges[k]),
-          h('h3', null, W[k].title.replace(/^Level \d /, '')),
-          h('p', null, desc[k]),
-          h('div', { class: 'p-stats' }, units.length + ' 個單元 · 已完成 ' + done),
+          h('h3', null, LEVEL_NAME[k]),
+          h('div', { class: 'p-stats' }, LEVEL_WHAT[k] + ' · ' + units.length + ' 個單元 · 已完成 ' + done),
           h('div', { class: 'bar' }, h('i', { style: 'width:' + pct + '%' })));
       })));
   }
@@ -100,7 +94,7 @@
 
     root.append(h('div', { class: 'page-head' },
       h('div', { class: 'meta', style: 'margin-bottom:4px' }, h('a', { href: 'writing.html' }, '← 回寫作練習')),
-      h('h1', null, L.title),
+      h('h1', null, LEVEL_NAME[lv]),
       h('p', null, '共 ' + units.length + ' 個單元 · 已完成 ' + done)));
 
     root.append(h('div', { class: 'diag-bar', style: 'margin-top:4px' },
@@ -109,16 +103,15 @@
     if (firstTodo >= 0) {
       root.append(h('div', { style: 'margin:14px 0 6px' },
         h('a', { class: 'btn primary', href: 'writing.html?level=' + lv + '&u=' + firstTodo },
-          done ? '繼續:單元 ' + (firstTodo + 1) : '從單元 1 開始')));
+          done ? '繼續單元 ' + (firstTodo + 1) : '從單元 1 開始')));
     }
 
     const list = h('div', { class: 'unit-list' });
     units.forEach((u, i) => {
       const isDone = unitDone(u);
-      const [label, cls] = TYPE_BADGE[u.t];
       list.append(h('a', { class: 'unit-row' + (isDone ? ' done' : ''), href: 'writing.html?level=' + lv + '&u=' + i },
         h('span', { class: 'unit-num' + (isDone ? ' ok' : '') }, isDone ? '✓' : String(i + 1)),
-        h('span', { class: 'badge ' + cls }, label),
+        u.t === 'lesson' ? h('span', { class: 'badge ' + TYPE_BADGE.lesson[1] }, TYPE_BADGE.lesson[0]) : null,
         h('span', { class: 'unit-title' }, u.title,
           u.sub ? h('span', { class: 'unit-sub' }, u.sub) : null)));
     });
@@ -134,7 +127,7 @@
     document.title = unit.title + '|' + L.title;
 
     root.append(h('div', { class: 'unit-head' },
-      h('a', { href: 'writing.html?level=' + lv, class: 'unit-back' }, '← ' + L.title + ' 單元列表'),
+      h('a', { href: 'writing.html?level=' + lv, class: 'unit-back' }, '← ' + LEVEL_NAME[lv] + ' 單元列表'),
       h('div', { class: 'diag-count', style: 'margin-top:8px' },
         '單元 ', h('b', null, String(idx + 1)), ' / ' + units.length,
         h('span', { class: 'badge ' + TYPE_BADGE[unit.t][1], style: 'margin-left:10px' }, TYPE_BADGE[unit.t][0])),
@@ -162,9 +155,8 @@
     const wrap = h('div', { class: 'lesson-view' },
       h('h2', { class: 'lesson-title' }, les.title),
       h('p', { class: 'lesson-intro' }, les.intro));
-    les.points.forEach((pt, i) => {
+    les.points.forEach(pt => {
       wrap.append(h('div', { class: 'lesson-point' },
-        h('div', { class: 'lp-num' }, '要點 ' + (i + 1)),
         h('div', { class: 'lp-tip' }, pt.tip),
         h('div', { class: 'lp-ex-box' },
           h('div', { class: 'lp-ex' }, pt.example),
@@ -176,12 +168,12 @@
         onclick: () => {
           readMap[les.id] = true;
           store.set(KEYS.read, readMap);
-          btn.replaceWith(h('span', { class: 'result-note', style: 'color:var(--ok)' }, '已標記讀完,按「下一步」開始練習。'));
+          btn.replaceWith(h('span', { class: 'result-note', style: 'color:var(--ok)' }, '已標記讀完。'));
         },
-      }, '我讀完了,標記完成');
+      }, '標記讀完');
       wrap.append(btn);
     } else {
-      wrap.append(h('div', { class: 'result-note', style: 'color:var(--ok)' }, '這堂課已讀完。隨時可以回來複習。'));
+      wrap.append(h('div', { class: 'result-note', style: 'color:var(--ok)' }, '已讀完。'));
     }
     return wrap;
   }
@@ -243,7 +235,7 @@
                 draw();
               } else {
                 attempts++;
-                msg.textContent = '順序還不對,再試試。想想:主詞在前,動詞跟著誰?';
+                msg.textContent = '順序不對,再試一次。';
                 msg.style.color = 'var(--bad)';
                 if (attempts >= 2) ansBtn.style.display = '';
               }
@@ -318,7 +310,7 @@
 
   function checklistBox(items) {
     return h('div', { class: 'check-box' },
-      h('b', null, '自評檢核(寫完自己勾)'),
+      h('b', null, '自評檢核'),
       items.map(c => {
         const cb = h('input', { type: 'checkbox' });
         return h('label', { class: 'check-item' }, cb, ' ', c);
@@ -327,8 +319,8 @@
 
   /* ---------- 造句 ---------- */
   function buildBlock(b, title) {
-    const wa = writeArea(KEYS.b, b.id, 'text', '用指定的兩個字,寫出一句完整的英文句子', 64);
-    const [rBtn, rBody] = revealSection('寫好了,看範例與檢核', [
+    const wa = writeArea(KEYS.b, b.id, 'text', '寫一句完整的英文句子', 64);
+    const [rBtn, rBody] = revealSection('看範例與檢核', [
       h('div', { class: 'model-box' },
         h('b', null, '範例寫法'),
         b.models.map(m => h('div', { class: 'model-line' }, m))),
@@ -344,8 +336,8 @@
   /* ---------- Email ---------- */
   function emailBlock(e, title) {
     const inc = e.incoming;
-    const wa = writeArea(KEYS.e, e.id, 'text', 'Dear ...,\n\n(記得:開頭句 → 逐項回應 → 下一步行動 → 結尾句)\n\nBest regards,\n', 190);
-    const [rBtn, rBody] = revealSection('寫好了,看範文對照', [
+    const wa = writeArea(KEYS.e, e.id, 'text', 'Dear ...,\n\n\n\nBest regards,\n', 190);
+    const [rBtn, rBody] = revealSection('看範文', [
       h('div', { class: 'model-box' }, h('b', null, '範文'), h('div', { class: 'model-line pre' }, e.model)),
       h('div', { class: 'explain', style: 'margin-top:10px' }, h('div', { class: 'verdict ok' }, '範文拆解'), h('div', null, e.modelNotes)),
       checklistBox(e.checklist),
@@ -363,8 +355,8 @@
   /* ---------- 論述 ---------- */
   function essayBlock(e, title) {
     const outlineAreas = e.outline.map((o, oi) =>
-      writeArea(KEYS.y, e.id, 'p' + oi, '寫在這裡', 74, OUTLINE_TARGETS[oi]));
-    const mainWa = writeArea(KEYS.y, e.id, 'text', '把四格內容整理成完整短文(也可以直接在這裡寫)', 210, { min: 200, max: 300 });
+      writeArea(KEYS.y, e.id, 'p' + oi, '', 74, OUTLINE_TARGETS[oi]));
+    const mainWa = writeArea(KEYS.y, e.id, 'text', '完整短文', 210, { min: 200, max: 300 });
     const mergeBtn = h('button', {
       class: 'btn', type: 'button', style: 'margin:10px 0',
       onclick: () => {
@@ -375,7 +367,7 @@
         mainWa.ta.focus();
       },
     }, '把四格合成草稿 ↓');
-    const [rBtn, rBody] = revealSection('寫好了,看範文拆解', [
+    const [rBtn, rBody] = revealSection('看範文拆解', [
       h('div', { class: 'model-box' }, h('b', null, '範文'), h('div', { class: 'model-line pre' }, e.model)),
       h('div', { class: 'explain', style: 'margin-top:10px' }, h('div', { class: 'verdict ok' }, '逐段拆解'), h('div', null, e.modelNotes)),
     ]);

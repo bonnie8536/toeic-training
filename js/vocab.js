@@ -101,12 +101,12 @@
       const nm = modeNames[e2z ? k.slice(0, -4) : k];
       return nm ? nm + (e2z ? '(英翻中)' : '') + ' ' + v : null;
     }).filter(Boolean);
-    const bestLine = '最佳分數:' + (bestParts.length ? bestParts.join(' · ') : '還沒有紀錄');
+    const bestLine = bestParts.length ? '最佳 ' + bestParts.join(' · ') : '';
     root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
       h('div', { class: 'part-card' },
         h('h3', null, '掉落消除'),
-        h('p', null, '單字往下掉,打出對應的翻譯消除它。中翻英看字首提示,英翻中看字數提示。漏接的字下一場會優先出現' + (missCount ? '(目前累積 ' + missCount + ' 個)' : '') + '。'),
-        h('div', { class: 'p-stats' }, bestLine),
+        h('p', null, '打出翻譯消除掉下來的字;漏接的下一場優先出現' + (missCount ? '(目前 ' + missCount + ' 個)' : '') + '。'),
+        bestLine ? h('div', { class: 'p-stats' }, bestLine) : null,
         h('div', { class: 'cfg-row' }, modeSel, dirSel, levelSel, speedSel,
           h('button', {
             class: 'btn primary',
@@ -125,7 +125,6 @@
     root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
       h('div', { class: 'part-card' },
         h('h3', null, '更多玩法'),
-        h('p', null, '同一批單字換三種練法:翻牌配對(把英文和中文翻成一對)、記憶吐司(吐司烤好前記住 6 個字,烤好後逐一考)、單字選擇題(四選一)。答錯或記錯的字會進漏接池,掉落遊戲會優先出現;每一題也都會留在學習記錄。'),
         h('div', { class: 'cfg-row' }, modeSel2, levelSel2, dirSel2, h('span', { class: 'toolbar-note', style: 'align-self:center' }, '方向只影響選擇題')),
         h('div', { class: 'cfg-row' },
           h('button', { class: 'btn primary', onclick: () => startPairs(modeSel2.value, levelSel2.value) }, '翻牌配對'),
@@ -137,7 +136,7 @@
       h('h2', null, '我的題庫'),
       h('button', { class: 'btn', style: 'margin-left:auto', onclick: () => renderBankEdit(null) }, '＋ 新增題庫')));
     if (!banks.length) {
-      root.append(h('p', { class: 'result-note' }, '自己建題庫,把課本或錯過的單字丟進來,再用掉落遊戲練。一行一個「英文 中文」。'));
+      root.append(h('p', { class: 'result-note' }, '還沒有題庫。'));
     } else {
       const bwrap = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });
       banks.forEach(b => {
@@ -235,7 +234,7 @@
       if (!bank.words.length) return;
       const onCount = bank.words.filter(w => w.on !== false).length;
       listWrap.append(h('div', { class: 'p-stats', style: 'margin:14px 0 6px' },
-        bank.words.length + ' 個字 · 勾選 ' + onCount + ' 個要練(取消勾選=暫時不練,不會刪掉)'));
+        bank.words.length + ' 個字,練 ' + onCount + ' 個(取消勾選不會刪掉)'));
       bank.words.forEach(w => {
         const cb = h('input', { type: 'checkbox' });
         cb.checked = w.on !== false;
@@ -468,10 +467,10 @@
         h('h2', null, '結束!分數 ' + score + (isBest ? '(新紀錄)' : '')),
         missedThisGame.length
           ? h('div', { class: 'miss-list' },
-              h('b', null, '漏接的字(下一場會優先出現):'),
+              h('b', null, '漏接的字'),
               missedThisGame.map(m => h('div', { class: 'miss-item' },
                 h('span', { class: 'miss-en' }, m.answer), h('span', null, m.zh))))
-          : h('p', null, '一個都沒漏,太強了。'),
+          : h('p', null, '沒有漏接。'),
         h('div', { class: 'drill-nav-btns', style: 'justify-content:center' },
           h('button', { class: 'btn primary', onclick: () => startGame(mode, levelName, speedKey, dir) }, '再玩一次'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
@@ -570,9 +569,10 @@
     function summary() {
       root.innerHTML = '';
       const ok = results.filter(Boolean).length;
+      const note = ok === list.length ? '' : '答錯的下一輪優先出現。';
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
         h('h2', null, groupName + ':' + ok + ' / ' + list.length),
-        h('div', { class: 'band-note' }, ok === list.length ? '全對!' : '答錯的下一輪會優先出現。')));
+        note ? h('div', { class: 'band-note' }, note) : null));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', onclick: () => startDrill(groupName, items) }, '再練一輪'),
         h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
@@ -646,7 +646,7 @@
     const grid = h('div', { class: 'mem-grid' });
     root.append(gameTop('翻牌配對', name + ' · ' + items.length + ' 對'),
       h('div', { class: 'game-hud' }, h('span', null, '步數 ', movesEl), h('span', null, '秒數 ', timeEl)),
-      h('p', { class: 'result-note' }, '一次翻兩張,英文和它的中文配成一對就會留下來。步數越少越厲害。'),
+      h('p', { class: 'result-note' }, '翻兩張,英文配它的中文。'),
       grid);
     cards.forEach(c => {
       c.el = h('button', { class: 'mem-card' + (c.en ? '' : ' zh'), type: 'button', onclick: () => flip(c) }, '?');
@@ -688,9 +688,10 @@
       const isBest = !prev || moves < prev.moves || (moves === prev.moves && secs < prev.secs);
       if (isBest) { best[key] = { moves, secs }; store.set('vgame_pairs_best', best); }
       logAttempt('vq', 'pairs', moves, true, { q: '翻牌配對 ' + name + ':' + items.length + ' 對', x: moves + ' 步 · ' + secs + ' 秒', g: 'pairs' });
+      const note = prev && !isBest ? '最佳紀錄 ' + prev.moves + ' 步 · ' + prev.secs + ' 秒' : '';
       root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
         h('h2', null, '完成!' + moves + ' 步 · ' + secs + ' 秒' + (isBest ? '(新紀錄)' : '')),
-        h('div', { class: 'band-note' }, prev && !isBest ? '最佳紀錄 ' + prev.moves + ' 步 · ' + prev.secs + ' 秒' : '再玩一次試試能不能更少步。')),
+        note ? h('div', { class: 'band-note' }, note) : null),
         h('div', { class: 'drill-nav-btns' },
           h('button', { class: 'btn primary', onclick: () => startPairs(mode, levelName) }, '再玩一次'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
@@ -709,9 +710,9 @@
     const grid = h('div', { class: 'toast-grid' },
       items.map(it => h('div', { class: 'toast-card' }, h('b', null, it.answer), h('span', null, it.zh))));
     root.append(gameTop('記憶吐司', name),
-      h('p', { class: 'result-note' }, '吐司烤好前(15 秒)把這 ' + items.length + ' 個字記起來;烤好後會蓋住中文,逐一考你意思。'),
+      h('p', { class: 'result-note' }, '15 秒內記住這 ' + items.length + ' 個字,之後考中文意思。'),
       h('div', { class: 'toast-timer' }, bar), grid,
-      h('div', { class: 'drill-nav-btns' }, h('button', { class: 'btn primary', type: 'button', onclick: () => quiz() }, '我記好了,直接開考')));
+      h('div', { class: 'drill-nav-btns' }, h('button', { class: 'btn primary', type: 'button', onclick: () => quiz() }, '直接開考')));
     const t0 = Date.now();
     const iv = setInterval(() => {
       const left = Math.max(0, SHOW_MS - (Date.now() - t0));
@@ -761,7 +762,6 @@
         });
         root.append(h('div', { class: 'q-block' },
           h('div', { class: 'toast-stem' }, it.answer),
-          h('div', { class: 'result-note' }, '剛才吐司上這個字的意思是?'),
           optsEl, after));
       }
 
@@ -771,9 +771,10 @@
         const best = store.get('vgame_toast_best', {});
         const isBest = okN > (best[mode] || 0);
         if (isBest) { best[mode] = okN; store.set('vgame_toast_best', best); }
+        const note = okN === results.length ? '' : '記錯的字在掉落遊戲會優先出現。';
         root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
           h('h2', null, '記憶吐司:' + okN + ' / ' + results.length + (isBest && okN ? '(新紀錄)' : '')),
-          h('div', { class: 'band-note' }, okN === results.length ? '全部記住了!' : '記錯的字已進漏接池,掉落遊戲會優先出現。')),
+          note ? h('div', { class: 'band-note' }, note) : null),
           h('div', { class: 'vq-list' }, results.map(r => h('div', { class: 'vq-item' + (r.ok ? '' : ' bad') },
             h('b', null, r.it.answer), h('span', null, r.it.zh), h('i', null, r.ok ? '✓' : '✗')))),
           h('div', { class: 'drill-nav-btns' },
@@ -832,7 +833,7 @@
             after.append(
               h('div', { class: 'explain' },
                 h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了,正確是 ' + face(it)),
-                h('div', null, it.answer + ' — ' + it.zh)),
+                h('div', null, h('b', null, it.answer), ' ', h('span', null, it.zh))),
               h('div', { class: 'drill-nav-btns' },
                 h('button', {
                   class: 'btn primary',
@@ -843,7 +844,6 @@
       });
       root.append(h('div', { class: 'q-block' },
         h('div', { class: 'toast-stem' }, stem),
-        h('div', { class: 'result-note' }, dir === 'e2z' ? '這個字的意思是?' : '哪一個是它的英文?'),
         optsEl, after));
     }
 
@@ -853,7 +853,7 @@
       const wrong = list.filter((x, i) => !results[i]);
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
         h('h2', null, '單字選擇題:' + okN + ' / ' + list.length),
-        h('div', { class: 'band-note' }, wrong.length ? '答錯的字已進漏接池,掉落遊戲會優先出現;每一題也能在學習記錄重看。' : '全對!')),
+        wrong.length ? h('div', { class: 'band-note' }, '答錯的字在掉落遊戲會優先出現。') : null),
         wrong.length ? h('div', { class: 'vq-list' }, wrong.map(x => h('div', { class: 'vq-item bad' }, h('b', null, x.answer), h('span', null, x.zh), h('i', null, '✗')))) : null,
         h('div', { class: 'drill-nav-btns' },
           h('button', { class: 'btn primary', onclick: () => startMcq(mode, levelName, dir) }, '再練一輪'),

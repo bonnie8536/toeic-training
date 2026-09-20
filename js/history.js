@@ -110,11 +110,10 @@
     root.innerHTML = '';
     const all = store.get('hist', []).slice().reverse();   // 新的在前
     root.append(h('div', { class: 'page-head' },
-      h('h1', null, '學習記錄'),
-      h('p', null, '每一次作答都在這裡,點任一筆可以重看題目與解析。答錯的題目也會進每日複習。')));
+      h('h1', null, '學習記錄')));
 
     if (!all.length) {
-      root.append(h('div', { class: 'q-block' }, '還沒有作答紀錄。去刷幾題,回來就看得到。'),
+      root.append(h('div', { class: 'q-block' }, '還沒有作答紀錄。'),
         h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn primary', href: 'practice.html' }, '去題庫刷題')));
       return;
     }
@@ -173,14 +172,14 @@
     const pickedText = !info ? '' : isScore ? info.score + '/' + info.n
       : info.options ? (rec.c === -1 || rec.c === undefined ? '未作答' : (rec.c >= 0 && info.options[rec.c] !== undefined ? LETTERS[rec.c] : String(info.picked || rec.c)))
       : String(info.picked !== undefined ? info.picked : rec.c);
-    const head = h('div', { class: 'hist-row-head' },
+    const head = h('div', { class: 'hist-row-head', style: info ? null : 'cursor:default' },
       h('span', { class: 'hist-time' }, fmtTime(rec.t)),
       h('span', { class: 'badge cat', style: 'flex:none' }, mod.label),
       h('span', { class: 'hist-stem' }, String(stem).length > 90 ? String(stem).slice(0, 90) + '…' : stem),
       h('span', { class: 'hist-verdict ' + (rec.ok ? 'ok' : 'bad') }, (rec.ok ? '✓ ' : '✗ ') + pickedText));
     const body = h('div', { class: 'hist-row-body', style: 'display:none' });
     const wrap = h('div', { class: 'hist-row' + (rec.ok ? '' : ' wrong') }, head, body);
-    head.addEventListener('click', () => {
+    if (info) head.addEventListener('click', () => {
       if (body.style.display === 'none') { if (!body.childNodes.length) body.append(detail(rec, info)); body.style.display = ''; }
       else body.style.display = 'none';
     });
@@ -188,7 +187,6 @@
   }
 
   function detail(rec, info) {
-    if (!info) return h('p', { class: 'result-note' }, '題庫已更新,找不到這一題的內容。');
     const box = h('div', null);
     if (info.tag) box.append(h('div', { class: 'hist-tag' }, info.tag));
     if (info.photo) box.append(h('div', { class: 'listen-photo', style: 'max-width:420px' }, h('img', { src: info.photo, alt: '聽力照片', onerror: e => e.target.remove() })));

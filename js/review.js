@@ -48,8 +48,7 @@
     document.title = '每日複習|刷刷英文';
     root.innerHTML = '';
     root.append(h('div', { class: 'page-head' },
-      h('h1', null, '每日複習'),
-      h('p', null, '錯過的東西集中在這裡,每天清一輪,越早錯的越先出。答對就移出。')));
+      h('h1', null, '每日複習')));
 
     const items = collect();
     const c = otherCounts();
@@ -57,10 +56,9 @@
 
     root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
       h('div', { class: 'part-card' },
-        h('h3', null, '今天的複習'),
         h('p', null, items.length
-          ? '待複習 ' + items.length + ' 題(單題類:文法題、聽力應答、片語)。這一輪出最早錯的 ' + todo.length + ' 題。'
-          : '單題類目前沒有待複習的,太好了。'),
+          ? '待複習 ' + items.length + ' 題(Part 5、聽力 Part 1/2、片語)。'
+          : '目前沒有待複習的單題。'),
         h('div', { class: 'cfg-row' },
           items.length ? h('button', { class: 'btn primary', onclick: () => runner(todo) }, '開始複習(' + todo.length + ' 題)') : null))));
 
@@ -220,7 +218,7 @@
       root.innerHTML = '';
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
         h('h2', null, '這一輪清掉 ' + cleared + ' / ' + list.length + ' 題'),
-        h('div', { class: 'band-note' }, cleared === list.length ? '全部清空,明天見。' : '沒清掉的之後會再出現。')));
+        cleared === list.length ? null : h('div', { class: 'band-note' }, '沒清掉的會再出現。')));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('a', { class: 'btn primary', href: 'review.html' }, '回每日複習'),
         h('a', { class: 'btn', href: 'index.html' }, '回首頁')));

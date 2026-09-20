@@ -144,13 +144,6 @@ button { font-family: var(--font); cursor: pointer; }
   padding-bottom: 8px;
   border-bottom: 2px solid var(--ink);
 }
-.exercise-head .ex-no {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--primary);
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
 .exercise-head h2 { font-size: 19px; }
 .exercise-head .en { color: var(--ink-light); font-size: 13.5px; font-weight: 400; }
 
@@ -480,7 +473,6 @@ button { font-family: var(--font); cursor: pointer; }
   transition: box-shadow .15s, border-color .15s;
 }
 .part-card:hover { border-color: var(--primary); box-shadow: 0 3px 14px rgba(11,114,196,.1); }
-.part-card .p-label { font-size: 13px; font-weight: 700; color: var(--primary); letter-spacing: 1px; }
 .part-card h3 { font-size: 18.5px; margin: 5px 0 3px; }
 .part-card p { font-size: 13.5px; color: var(--ink-light); }
 .part-card .p-stats { margin-top: 13px; font-size: 13px; color: var(--ink-light); }
@@ -740,7 +732,6 @@ button { font-family: var(--font); cursor: pointer; }
 .lesson-title { font-size: 22px; margin-bottom: 10px; }
 .lesson-intro { color: var(--ink-light); font-size: 15px; line-height: 1.85; margin-bottom: 24px; }
 .lesson-point { margin-bottom: 26px; }
-.lp-num { font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--primary); margin-bottom: 4px; }
 .lp-tip { font-size: 16px; font-weight: 700; line-height: 1.7; margin-bottom: 10px; }
 .lp-ex-box {
   border-left: 3px solid var(--primary);
@@ -1107,12 +1098,6 @@ table.cat-table th, table.cat-table td { border-bottom: 1px solid var(--line); p
 table.cat-table th { font-size: 12.5px; color: var(--ink-light); letter-spacing: 1px; font-weight: 700; }
 table.cat-table td.num { white-space: nowrap; }
 
-.skill-list { margin: 4px 0 8px; padding-left: 0; list-style: none; font-size: 14.5px; }
-.skill-list li { padding: 5px 0 5px 22px; position: relative; }
-.skill-list li::before { content: ''; position: absolute; left: 4px; top: 13px; width: 8px; height: 8px; border-radius: 50%; }
-.skill-list.good li::before { background: var(--ok); }
-.skill-list.weak li::before { background: var(--bad); }
-.skill-list .why { color: var(--ink-light); font-size: 13px; display: block; }
 
 .wrong-item { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 12px; background: #fff; font-size: 14.5px; }
 .wrong-item .w-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }

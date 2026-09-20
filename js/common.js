@@ -81,6 +81,20 @@ function getParam(name) {
   return new URLSearchParams(location.search).get(name);
 }
 
+/* Part 6/7 文章類型的中文標籤(刷題、模擬考共用)。查不到就原樣回傳,不轉大寫。 */
+function passTypeLabel(t) {
+  const map = {
+    email: '電子郵件', memo: '備忘錄', notice: '公告', advertisement: '廣告',
+    letter: '信件', article: '文章', instructions: '使用說明',
+    'text message': '簡訊對話', 'text-message': '簡訊對話', 'text_message': '簡訊對話', 'text message chain': '簡訊對話',
+    webpage: '網頁', 'web page': '網頁',
+    schedule: '行程表', invoice: '發票/訂單', form: '表單', 'order form': '訂購單',
+    coupon: '優惠券', menu: '菜單', itinerary: '行程表', receipt: '收據', flyer: '傳單',
+    'sign-up form': '報名表', review: '評論', 'job advertisement': '徵才廣告',
+  };
+  return map[String(t || '').toLowerCase()] || String(t || '');
+}
+
 /* 答題記錄(學習記錄頁用):每次作答一筆 {m:模組, id, c:選項, ok, t},最多留 600 筆。
    模組代號:p5/p6/p7 刷題、l1~l4 聽力、g 文法、r 文章題、ph 片語、tq 單字考題、vq 單字遊戲 */
 const HIST_MAX = 600;

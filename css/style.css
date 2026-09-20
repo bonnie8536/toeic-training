@@ -1473,3 +1473,72 @@ table.cat-table td.num { white-space: nowrap; }
 .vg-games .part-card { display: flex; flex-direction: column; }
 .vg-games .part-card .cfg-row { margin-top: auto; padding-top: 12px; }
 @media (max-width: 860px) { .vg-games { grid-template-columns: 1fr; } }
+
+/* ======== 視覺系統(2026-09):螢光筆+筆跡 ========
+   規則:元件是平的(不做厚底立體邊);標題與按鈕用圓體;
+   螢光筆=圓順的一道(重點與「目前」),其餘筆跡=潦草的原子筆(圈起來、畫線)。
+   一頁的螢光筆最多兩處。 */
+:root {
+  --round: "Chiron GoRound TC", -apple-system, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+  --marker: #ffd84d;
+  --radius: 12px;
+}
+h1, h2, h3, .brand, .btn, .hist-tab, .modal-tab, .nav-btn { font-family: var(--round); }
+h1, h2, h3, .brand { font-weight: 700; }
+.nav-btn { font-weight: 400; font-family: var(--font); }
+
+/* 按鈕:圓角、平的 */
+.btn { border-radius: 12px; padding: 8px 18px; font-weight: 700; transition: background .15s, border-color .15s, transform .1s; }
+.btn:active { transform: scale(.97); }
+.btn:disabled { opacity: .5; cursor: default; transform: none; }
+
+/* 螢光筆:圓順的一道,壓在頁面標題下半部 */
+.page-head h1 { display: inline-block; position: relative; z-index: 0; }
+.page-head h1::before {
+  content: ''; position: absolute; z-index: -1;
+  left: -8px; right: -10px; top: 46%; bottom: 3%;
+  background: var(--marker);
+  border-radius: 40% 60% 55% 45% / 60% 50% 50% 40%;
+  transform: rotate(-1.2deg);
+}
+
+/* 文法路徑:上過的課=用筆圈起來;目前這課=螢光筆塗底;還沒上的=淡淡一個圈 */
+.gx-node, .gx-node.done, .gx-node.next, .gx-node.cur, .gx-node.cur:hover {
+  box-shadow: none; background: none; border: 1.5px solid var(--line); color: var(--ink-light);
+}
+.gx-node:hover { border-color: var(--primary); color: var(--primary); }
+.gx-node.done {
+  border-color: transparent; color: var(--ink);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cfilter id='r' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.07' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='1.8'/%3E%3C/filter%3E%3Cpath d='M21 4.5C30 3.5 36.5 11 36 20.5C35.5 30 28 36.5 19 36C10 35.5 3.5 28 4.5 18.5C5.5 9.5 13 3 23.5 5.5' fill='none' stroke='%23222b36' stroke-width='2' stroke-linecap='round' filter='url(%23r)'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.gx-node.done:nth-child(even) {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cfilter id='r' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.07' numOctaves='2' seed='9'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='1.8'/%3E%3C/filter%3E%3Cpath d='M17.5 5C27 2.5 35.5 9 36.5 19C37.5 29 30 36 20.5 36.5C11 37 4 30 4 20.5C4 11 10 4.5 21 4' fill='none' stroke='%23222b36' stroke-width='2' stroke-linecap='round' filter='url(%23r)'/%3E%3C/svg%3E");
+}
+.gx-node.done:hover { color: var(--primary); }
+.gx-node.cur, .gx-node.next, .gx-node.cur:hover, .gx-node.next:hover { border-color: transparent; color: var(--ink); background: none; }
+.gx-node.cur::before, .gx-node.next::before {
+  content: ''; position: absolute; z-index: -1; inset: 1px -5px;
+  background: var(--marker);
+  border-radius: 46% 54% 50% 50% / 58% 46% 54% 42%;
+  transform: rotate(-5deg);
+}
+.gx-path::before { border-left: 2px dotted #c9d2da; }
+/* 右側課程列表同一套語言 */
+.gx-unit-row .n, .gx-unit-row.done .n { background: none; color: var(--ink-light); border: 1.5px solid var(--line); position: relative; z-index: 0; width: 30px; height: 30px; }
+.gx-unit-row.done .n {
+  border-color: transparent; color: var(--ink);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cfilter id='r' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.07' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='1.8'/%3E%3C/filter%3E%3Cpath d='M21 4.5C30 3.5 36.5 11 36 20.5C35.5 30 28 36.5 19 36C10 35.5 3.5 28 4.5 18.5C5.5 9.5 13 3 23.5 5.5' fill='none' stroke='%23222b36' stroke-width='2.2' stroke-linecap='round' filter='url(%23r)'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.gx-unit-row.next .n { border-color: transparent; color: var(--ink); }
+.gx-unit-row.next .n::before {
+  content: ''; position: absolute; z-index: -1; inset: 1px -5px;
+  background: var(--marker);
+  border-radius: 46% 54% 50% 50% / 58% 46% 54% 42%;
+  transform: rotate(-5deg);
+}
+
+/* 單字遊戲卡:大圖示在左 */
+.vg-top { display: flex; gap: 16px; align-items: center; }
+.vg-icon { flex: none; width: 84px; height: 84px; }
+.vg-icon svg { width: 100%; height: 100%; display: block; overflow: visible; }
+@media (max-width: 860px) { .vg-icon { width: 68px; height: 68px; } }

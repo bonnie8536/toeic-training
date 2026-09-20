@@ -122,11 +122,37 @@
     const dirSel2 = h('select', { class: 'cfg-select' },
       [['e2z', '看英文選中文'], ['z2e', '看中文選英文']].map(([v, t]) => h('option', { value: v }, t)));
 
-    function gameCard(title, rule, bestText, options, onStart) {
+    /* 玩法大圖示:黃色=圓順的螢光筆塊,線條=潦草的原子筆(濾鏡抖線)。之後可整組換成手繪稿。 */
+    const PEN = 'fill="none" stroke="#222b36" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#vgPen)"';
+    const PEN_DEF = '<filter id="vgPen" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="5"/><feDisplacementMap in="SourceGraphic" scale="2.4"/></filter>';
+    const svg = inner => '<svg viewBox="0 0 84 84" aria-hidden="true">' + PEN_DEF + inner + '</svg>';
+    const VG_ICON = {
+      /* 掉落消除:三塊字卡往下掉,最下面那塊被螢光筆刷到 */
+      fall: svg('<path d="M10 58c8-7 50-9 64-2c5 6 1 14-5 16c-16 4-44 4-56-1c-6-3-7-9-3-13z" fill="#ffd84d"/>'
+        + '<g ' + PEN + '><rect x="12" y="8" width="24" height="15" rx="4"/><rect x="46" y="22" width="26" height="15" rx="4"/><rect x="24" y="52" width="36" height="17" rx="4"/>'
+        + '<path d="M24 28v9M58 42v6M18 34v4"/></g>'),
+      /* 翻牌配對:兩張牌,一張翻開 */
+      pairs: svg('<path d="M40 16c10-6 28-2 32 8c4 12 1 34-6 42c-8 6-22 4-27-3c-6-12-6-36 1-47z" fill="#ffd84d"/>'
+        + '<g ' + PEN + '><rect x="10" y="18" width="30" height="42" rx="5" transform="rotate(-8 25 39)"/><rect x="42" y="22" width="30" height="42" rx="5" transform="rotate(7 57 43)"/>'
+        + '<path d="M20 34l5 -2M22 44l8 -2"/><path d="M52 38c3-5 9-4 10 1c1 4-4 6-5 10M57 55v1"/></g>'),
+      /* 記憶吐司:一片吐司+計時的三條熱氣 */
+      toast: svg('<path d="M18 40c-6-10 2-24 22-25c22-1 32 12 26 25c1 12 2 24-2 30c-12 4-34 4-44 0c-4-8-3-20-2-30z" fill="#ffd84d"/>'
+        + '<g ' + PEN + '><path d="M20 40c-7-9 0-23 21-24c22-1 31 13 24 24v26c0 3-2 5-5 5H25c-3 0-5-2-5-5z"/>'
+        + '<path d="M33 46h1M50 46h1M35 56c4 4 10 4 14 0"/><path d="M30 6c-2 3 2 4 0 7M42 4c-2 3 2 4 0 7M54 6c-2 3 2 4 0 7"/></g>'),
+      /* 單字選擇題:三個選項圈,其中一個打勾 */
+      mcq: svg('<path d="M8 34c10-6 56-8 68-1c4 5 2 12-3 14c-16 4-50 5-63 0c-5-3-6-9-2-13z" fill="#ffd84d"/>'
+        + '<g ' + PEN + '><circle cx="18" cy="16" r="7"/><path d="M32 16h36"/><circle cx="18" cy="40" r="7"/><path d="M32 40h40"/><circle cx="18" cy="64" r="7"/><path d="M32 64h30"/>'
+        + '<path d="M13 40l4 5l9-12"/></g>'),
+    };
+
+    function gameCard(icon, title, rule, bestText, options, onStart) {
       return h('div', { class: 'part-card' },
-        h('h3', null, title),
-        h('p', null, rule),
-        bestText ? h('div', { class: 'p-stats' }, bestText) : null,
+        h('div', { class: 'vg-top' },
+          h('div', { class: 'vg-icon', html: VG_ICON[icon] }),
+          h('div', null,
+            h('h3', null, title),
+            h('p', null, rule),
+            bestText ? h('div', { class: 'p-stats' }, bestText) : null)),
         h('div', { class: 'cfg-row' }, options, h('button', { class: 'btn primary', onclick: onStart }, '開始')));
     }
 
@@ -138,18 +164,18 @@
       const tb = store.get('vgame_toast_best', {})[mode];
       gamesWrap.innerHTML = '';
       gamesWrap.append(
-        gameCard('掉落消除',
+        gameCard('fall', '掉落消除',
           '打出翻譯消除掉下來的字;漏接的下一場優先出現' + (missCount ? '(目前 ' + missCount + ' 個)' : '') + '。',
           fallBest ? '最佳 ' + fallBest : '',
           [dirSel, speedSel],
           () => startGame(mode, level, speedSel.value, dirSel.value)),
-        gameCard('翻牌配對', '翻兩張,英文配它的中文。',
+        gameCard('pairs', '翻牌配對', '翻兩張,英文配它的中文。',
           pb ? '最佳 ' + pb.moves + ' 步 · ' + pb.secs + ' 秒' : '',
           [], () => startPairs(mode, level)),
-        gameCard('記憶吐司', '15 秒內記住 6 個字,之後考中文意思。',
+        gameCard('toast', '記憶吐司', '15 秒內記住 6 個字,之後考中文意思。',
           tb ? '最佳 ' + tb + ' / 6' : '',
           [], () => startToast(mode, level)),
-        gameCard('單字選擇題', '四選一,一輪 10 題。', '',
+        gameCard('mcq', '單字選擇題', '四選一,一輪 10 題。', '',
           [dirSel2], () => startMcq(mode, level, dirSel2.value)));
     }
     levelSel.style.display = srcSel.value === 'word' ? '' : 'none';

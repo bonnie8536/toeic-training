@@ -62,11 +62,11 @@
       list.forEach((u, i) => {
         path.append(h('a', {
           class: 'gx-node' + (done[u.id] ? ' done' : '') + (u.id === currentId ? ' cur' : '') +
-            (u.id === nextId && u.id !== currentId ? ' next' : ''),
+            (!currentId && u.id === nextId ? ' next' : ''),
           href: 'grammar.html?u=' + u.id,
           title: (i + 1) + '. ' + u.title,
           style: 'transform:translateX(' + OFFS[i % OFFS.length] + 'px)',
-        }, done[u.id] && u.id !== currentId ? '✓' : String(i + 1)));
+        }, String(i + 1)));
       });
       pathWrap.append(
         h('div', { class: 'gx-path-title' }, h('b', null, sd.name.replace(/^第.章\s*/, '')), h('i', null, doneN + ' / ' + list.length)),
@@ -108,8 +108,8 @@
           h('h2', null, STAGES[stage].name),
           h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + '/' + list.length)));
       list.forEach((u, i) => {
-        col.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : ''), href: 'grammar.html?u=' + u.id },
-          h('span', { class: 'n' }, done[u.id] ? '✓' : String(i + 1)),
+        col.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : '') + (todo && u.id === todo.id ? ' next' : ''), href: 'grammar.html?u=' + u.id },
+          h('span', { class: 'n' }, String(i + 1)),
           h('span', { class: 't' }, u.title)));
       });
       col.append(h('div', { style: 'height:40px' }));

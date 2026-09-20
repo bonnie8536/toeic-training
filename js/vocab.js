@@ -74,69 +74,93 @@
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '單字訓練')));
 
-    const best = store.get('vgame_best', {});
-    const missCount = Object.keys(store.get('vgame_miss', {})).length;
+    /* 兩個分頁:單字遊戲(字池玩法+我的題庫) / 片語特訓;分頁記在網址 #phrase,練完回來還在原分頁 */
+    const tab = location.hash === '#phrase' ? 'phrase' : 'game';
+    const gamesSec = h('div', { style: tab === 'game' ? null : 'display:none' });
+    const phraseSec = h('div', { style: tab === 'phrase' ? null : 'display:none' });
+    const tabBtn = (k, label) => h('button', {
+      class: 'hist-tab' + (tab === k ? ' on' : ''), type: 'button',
+      onclick: () => {
+        history.replaceState(null, '', k === 'phrase' ? '#phrase' : location.pathname + location.search);
+        renderHome();
+      },
+    }, label);
+    root.append(h('div', { class: 'hist-tabs' }, tabBtn('game', '單字遊戲'), tabBtn('phrase', '片語特訓')), gamesSec, phraseSec);
+    let host = gamesSec;
 
-    /* 掉落遊戲卡 */
+    const missCount = Object.keys(store.get('vgame_miss', {})).length;
+    const banks = getBanks();
+
+    /* 第一步:選字庫(四種玩法共用,記住上次的選擇) */
+    const srcSel = h('select', { class: 'cfg-select' },
+      [['word', '文章單字'], ['phrase', '片語']].concat(banks.map(b => ['bank:' + b.id, '題庫:' + b.name]))
+        .map(([v, t]) => h('option', { value: v }, t)));
     const levelSel = h('select', { class: 'cfg-select' },
       ['全部', '初級', '中級', '中高級', '高級'].map(l => h('option', { value: l }, l === '全部' ? '全部級別' : l)));
+    const last = store.get('vgame_src', null);
+    if (last && [...srcSel.options].some(o => o.value === last.mode)) srcSel.value = last.mode;
+    if (last && [...levelSel.options].some(o => o.value === last.level)) levelSel.value = last.level;
+    const gamesWrap = h('div', { class: 'part-cards vg-games' });
+    function onSource() {
+      levelSel.style.display = srcSel.value === 'word' ? '' : 'none';
+      store.set('vgame_src', { mode: srcSel.value, level: levelSel.value });
+      drawGames();
+    }
+    srcSel.addEventListener('change', onSource);
+    levelSel.addEventListener('change', onSource);
+    host.append(h('div', { class: 'vg-source' }, h('span', null, '練哪些字'), srcSel, levelSel), gamesWrap);
+
+    /* 第二步:選玩法。四張卡同一層級,各自只帶自己需要的選項 */
     const speedSel = h('select', { class: 'cfg-select' },
       [['slow', '輕鬆'], ['normal', '標準'], ['fast', '快速']].map(([v, t]) => {
         const o = h('option', { value: v }, t);
         if (v === 'normal') o.selected = true;
         return o;
       }));
-    const banks = getBanks();
-    const modeSel = h('select', { class: 'cfg-select' },
-      [['word', '單字'], ['phrase', '片語']].concat(banks.map(b => ['bank:' + b.id, '題庫:' + b.name]))
-        .map(([v, t]) => h('option', { value: v }, t)));
-    modeSel.addEventListener('change', () => { levelSel.style.display = modeSel.value === 'word' ? '' : 'none'; });
     const dirSel = h('select', { class: 'cfg-select' },
       [['z2e', '中翻英(打英文)'], ['e2z', '英翻中(打中文)']].map(([v, t]) => h('option', { value: v }, t)));
-
-    const modeNames = { word: '單字', phrase: '片語' };
-    banks.forEach(b => { modeNames['bank:' + b.id] = b.name; });
-    const bestParts = Object.entries(best).filter(([, v]) => v).map(([k, v]) => {
-      const e2z = k.endsWith(':e2z');
-      const nm = modeNames[e2z ? k.slice(0, -4) : k];
-      return nm ? nm + (e2z ? '(英翻中)' : '') + ' ' + v : null;
-    }).filter(Boolean);
-    const bestLine = bestParts.length ? '最佳 ' + bestParts.join(' · ') : '';
-    root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
-      h('div', { class: 'part-card' },
-        h('h3', null, '掉落消除'),
-        h('p', null, '打出翻譯消除掉下來的字;漏接的下一場優先出現' + (missCount ? '(目前 ' + missCount + ' 個)' : '') + '。'),
-        bestLine ? h('div', { class: 'p-stats' }, bestLine) : null,
-        h('div', { class: 'cfg-row' }, modeSel, dirSel, levelSel, speedSel,
-          h('button', {
-            class: 'btn primary',
-            onclick: () => startGame(modeSel.value, levelSel.value, speedSel.value, dirSel.value),
-          }, '開始遊戲')))));
-
-    /* 更多玩法:翻牌配對 / 記憶吐司 / 單字選擇題(共用同一套字池) */
-    const modeSel2 = h('select', { class: 'cfg-select' },
-      [['word', '單字'], ['phrase', '片語']].concat(banks.map(b => ['bank:' + b.id, '題庫:' + b.name]))
-        .map(([v, t]) => h('option', { value: v }, t)));
-    const levelSel2 = h('select', { class: 'cfg-select' },
-      ['全部', '初級', '中級', '中高級', '高級'].map(l => h('option', { value: l }, l === '全部' ? '全部級別' : l)));
     const dirSel2 = h('select', { class: 'cfg-select' },
       [['e2z', '看英文選中文'], ['z2e', '看中文選英文']].map(([v, t]) => h('option', { value: v }, t)));
-    modeSel2.addEventListener('change', () => { levelSel2.style.display = modeSel2.value === 'word' ? '' : 'none'; });
-    root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
-      h('div', { class: 'part-card' },
-        h('h3', null, '更多玩法'),
-        h('div', { class: 'cfg-row' }, modeSel2, levelSel2, dirSel2, h('span', { class: 'toolbar-note', style: 'align-self:center' }, '方向只影響選擇題')),
-        h('div', { class: 'cfg-row' },
-          h('button', { class: 'btn primary', onclick: () => startPairs(modeSel2.value, levelSel2.value) }, '翻牌配對'),
-          h('button', { class: 'btn primary', onclick: () => startToast(modeSel2.value, levelSel2.value) }, '記憶吐司'),
-          h('button', { class: 'btn primary', onclick: () => startMcq(modeSel2.value, levelSel2.value, dirSel2.value) }, '單字選擇題')))));
 
-    /* 我的題庫 */
-    root.append(h('div', { class: 'exercise-head' },
+    function gameCard(title, rule, bestText, options, onStart) {
+      return h('div', { class: 'part-card' },
+        h('h3', null, title),
+        h('p', null, rule),
+        bestText ? h('div', { class: 'p-stats' }, bestText) : null,
+        h('div', { class: 'cfg-row' }, options, h('button', { class: 'btn primary', onclick: onStart }, '開始')));
+    }
+
+    function drawGames() {
+      const mode = srcSel.value, level = levelSel.value;
+      const best = store.get('vgame_best', {});
+      const fallBest = [best[mode] ? '中翻英 ' + best[mode] : '', best[mode + ':e2z'] ? '英翻中 ' + best[mode + ':e2z'] : ''].filter(Boolean).join(' · ');
+      const pb = Object.entries(store.get('vgame_pairs_best', {})).filter(([k]) => k.startsWith(mode + ':')).map(([, v]) => v)[0];
+      const tb = store.get('vgame_toast_best', {})[mode];
+      gamesWrap.innerHTML = '';
+      gamesWrap.append(
+        gameCard('掉落消除',
+          '打出翻譯消除掉下來的字;漏接的下一場優先出現' + (missCount ? '(目前 ' + missCount + ' 個)' : '') + '。',
+          fallBest ? '最佳 ' + fallBest : '',
+          [dirSel, speedSel],
+          () => startGame(mode, level, speedSel.value, dirSel.value)),
+        gameCard('翻牌配對', '翻兩張,英文配它的中文。',
+          pb ? '最佳 ' + pb.moves + ' 步 · ' + pb.secs + ' 秒' : '',
+          [], () => startPairs(mode, level)),
+        gameCard('記憶吐司', '15 秒內記住 6 個字,之後考中文意思。',
+          tb ? '最佳 ' + tb + ' / 6' : '',
+          [], () => startToast(mode, level)),
+        gameCard('單字選擇題', '四選一,一輪 10 題。', '',
+          [dirSel2], () => startMcq(mode, level, dirSel2.value)));
+    }
+    levelSel.style.display = srcSel.value === 'word' ? '' : 'none';
+    drawGames();
+
+    /* 我的題庫:只管建立與編輯;要練就「用這個題庫」回到上面選玩法 */
+    host.append(h('div', { class: 'exercise-head' },
       h('h2', null, '我的題庫'),
       h('button', { class: 'btn', style: 'margin-left:auto', onclick: () => renderBankEdit(null) }, '＋ 新增題庫')));
     if (!banks.length) {
-      root.append(h('p', { class: 'result-note' }, '還沒有題庫。'));
+      host.append(h('p', { class: 'result-note' }, '還沒有題庫。'));
     } else {
       const bwrap = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });
       banks.forEach(b => {
@@ -148,8 +172,8 @@
           h('div', { class: 'cfg-row' },
             h('button', {
               class: 'btn primary', disabled: playable ? null : '',
-              onclick: () => startGame('bank:' + b.id, '全部', speedSel.value, dirSel.value),
-            }, '開始練習'),
+              onclick: () => { srcSel.value = 'bank:' + b.id; onSource(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+            }, '用這個題庫'),
             h('button', { class: 'btn', onclick: () => renderBankEdit(b.id) }, '編輯'),
             h('button', {
               class: 'btn', onclick: () => {
@@ -159,13 +183,13 @@
               },
             }, '刪除'))));
       });
-      root.append(bwrap);
+      host.append(bwrap);
     }
 
     /* 片語特訓 */
-    root.append(h('div', { class: 'exercise-head' }, h('h2', null, '片語特訓')));
+    host = phraseSec;
     if (!PHRASES.length) {
-      root.append(h('p', { class: 'result-note' }, '片語庫生成中,稍後再來。'));
+      host.append(h('p', { class: 'result-note' }, '片語庫生成中,稍後再來。'));
       return;
     }
     /* 動詞片語按家族分組;形容詞+介系詞/動詞+介系詞/慣用語各成一大組 */
@@ -201,7 +225,7 @@
           toggleBtn),
         table));
     });
-    root.append(wrap, h('div', { style: 'height:40px' }));
+    host.append(wrap, h('div', { style: 'height:40px' }));
   }
 
   /* ================= 題庫編輯 ================= */

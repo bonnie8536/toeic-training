@@ -1466,3 +1466,10 @@ table.cat-table td.num { white-space: nowrap; }
   .gx-path::before { display: none; }
   .gx-node { flex: none; transform: none !important; width: 32px; height: 32px; font-size: 12.5px; }
 }
+
+/* 單字訓練首頁:先選字庫,再選玩法 */
+.vg-source { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 2px 0 16px; font-size: 14.5px; color: var(--ink-light); }
+.vg-games { grid-template-columns: 1fr 1fr; margin-top: 0; }
+.vg-games .part-card { display: flex; flex-direction: column; }
+.vg-games .part-card .cfg-row { margin-top: auto; padding-top: 12px; }
+@media (max-width: 860px) { .vg-games { grid-template-columns: 1fr; } }

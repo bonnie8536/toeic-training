@@ -385,7 +385,12 @@
       function close() {
         document.removeEventListener('keydown', onKey);
         mask.remove();
-        if (opener && opener.focus) opener.focus();
+        /* 開視窗的那顆按鈕可能在已收起的選單裡(focus 會失效),退回頭像按鈕 */
+        try { if (opener && opener.focus) opener.focus(); } catch (e) {}
+        if (document.activeElement === document.body) {
+          const back = document.querySelector('.profile-btn');
+          if (back) back.focus();
+        }
       }
     }
 

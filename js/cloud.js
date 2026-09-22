@@ -6,7 +6,19 @@
 (function () {
   const cfg = window.CLOUD_CONFIG || {};
   const enabled = !!(cfg.url && cfg.anonKey);
-  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, client: null, login, logout, push, signUp, resetPassword, updatePassword, resendConfirm, deleteAccount, nameOf };
+
+  /* Google 登入失敗時 Supabase 不是回傳錯誤,而是把錯誤掛在網址的 # 後面導回來。
+     這裡先接住再把網址清乾淨(登入卡會把它顯示出來);密碼重設的 # 帶的是 token,不動它。 */
+  const authError = (function () {
+    const hash = location.hash || '';
+    if (!/[#&]error/.test(hash) || /access_token=/.test(hash)) return '';
+    const m = /[#&]error_description=([^&]*)/.exec(hash) || /[#&]error(?:_code)?=([^&]*)/.exec(hash);
+    const raw = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '登入沒有完成。';
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    return raw;
+  })();
+
+  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf };
   if (!enabled) return;
 
   let client = null;
@@ -81,7 +93,7 @@
     if (!client) throw new Error('雲端元件尚未載入,請重新整理再試');
     const { data, error } = await client.auth.signInWithPassword({ email: String(email).trim(), password });
     if (error) {
-      if (/Invalid login credentials/i.test(error.message)) throw new Error('帳號或密碼不對');
+      if (/Invalid login credentials/i.test(error.message)) throw new Error('帳號或密碼不對。當初用 Google 註冊的話,要按上面的 Google 登入。');
       if (/Email not confirmed/i.test(error.message)) throw new Error('信箱還沒驗證:請到信箱點驗證連結(找不到信可以到「註冊」分頁重寄)');
       if (/rate limit|too many/i.test(error.message)) throw new Error('請求太頻繁,請幾分鐘後再試');
       if (/fetch|network/i.test(error.message)) throw new Error('連不上雲端伺服器:請檢查網路;若持續發生,請老師確認 Supabase 專案沒有休眠');
@@ -106,10 +118,11 @@
     location.reload();
   }
 
-  /* 顯示名稱:註冊時填的暱稱(user_metadata.name),沒有就用 email 的 @ 前段 */
+  /* 顯示名稱:Email 註冊時填的暱稱(user_metadata.name);Google 登入沒填過暱稱,
+     就用 Google 帳戶的名字(full_name);兩者都沒有才用 email 的 @ 前段 */
   function nameOf(user) {
     const m = (user && user.user_metadata) || {};
-    return String(m.name || ((user && user.email) || '').split('@')[0] || '').trim();
+    return String(m.name || m.full_name || ((user && user.email) || '').split('@')[0] || '').trim();
   }
 
   function siteUrl(page) {
@@ -122,7 +135,9 @@
 
   function friendly(error) {
     const m = error.message || '';
-    if (/already registered|already exists|already been registered/i.test(m)) return '這個 Email 已經註冊過,請直接登入;忘記密碼可以重設。';
+    if (/already registered|already exists|already been registered/i.test(m)) return '這個 Email 已經註冊過,請直接登入;當初用 Google 註冊的話按 Google 登入,忘記密碼可以重設。';
+    if (/unsupported provider|provider is not enabled|provider.*disabled/i.test(m)) return 'Google 登入目前不能用,請改用 Email 註冊。';
+    if (/redirect|not allowed.*url/i.test(m)) return 'Google 登入的網址設定不對,請改用 Email 註冊。';
     if (/password/i.test(m) && /short|least|characters/i.test(m)) return '密碼至少 8 碼。';
     if (/rate limit|too many|security purposes/i.test(m)) return '請求太頻繁,請幾分鐘後再試。';
     if (/signups? not allowed|signup is disabled|not allowed/i.test(m)) return '目前未開放註冊,請聯絡老師。';
@@ -142,7 +157,7 @@
     if (error) throw new Error(friendly(error));
     /* Confirm email 開啟時,已註冊過的 email 會回一個沒有 identities 的假 user(不洩漏帳號存在),這裡當作已註冊處理 */
     if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
-      throw new Error('這個 Email 已經註冊過,請直接登入;忘記密碼可以重設。');
+      throw new Error('這個 Email 已經註冊過,請直接登入;當初用 Google 註冊的話按 Google 登入,忘記密碼可以重設。');
     }
     if (data.session) {
       window.CLOUD.user = data.user;
@@ -150,6 +165,40 @@
       return { needsConfirm: false };
     }
     return { needsConfirm: true };
+  }
+
+  /* Google 登入:導到 Google 同意頁,回來時 supabase-js 會從網址取回 session,
+     init() 接著跑 afterAuth 灌回進度。backTo 給空值就回到按下按鈕的那一頁。
+     Google 帳戶的 Email 本來就驗證過了,不會再寄驗證信。 */
+  async function signInWithGoogle(backTo) {
+    await window.CLOUD.ready;
+    needClient();
+    const redirectTo = backTo ? siteUrl(backTo) : location.href.split('#')[0];
+    const { error } = await client.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo, queryParams: { prompt: 'select_account' } },
+    });
+    if (error) throw new Error(friendly(error));
+  }
+
+  /* 改暱稱(Google 進來的人沒填過,教師後台看到的是 Google 帳戶名字) */
+  async function updateName(name) {
+    await window.CLOUD.ready;
+    needClient();
+    const n = String(name || '').trim().slice(0, 20);
+    if (!n) throw new Error('暱稱還沒填。');
+    const { data, error } = await client.auth.updateUser({ data: { name: n } });
+    if (error) throw new Error(friendly(error));
+    if (data && data.user) window.CLOUD.user = data.user;
+    const u = window.CLOUD.user;
+    try {
+      await client.from('progress').upsert({
+        user_id: u.id, k: '_meta',
+        v: { email: u.email, name: n, last_login: new Date().toISOString() },
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'user_id,k' });
+    } catch (e) { /* 名冊寫入失敗不擋使用 */ }
+    return n;
   }
 
   async function resetPassword(email) {

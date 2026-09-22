@@ -1581,3 +1581,80 @@ h1, h2, h3, .brand { font-weight: 700; }
   .vb-table td, .vb-table th { padding: 6px 9px; font-size: 14px; }
   .vb-input { max-width: 100%; flex: 1; }
 }
+
+/* ======== 登入/註冊卡(登入視窗與 signup.html 共用) ========
+   排法參考 Engoo、VoiceTube、Busuu、均一:Google 在最上面、標籤常駐、密碼可切換顯示。
+   一律平的:沒有厚底陰影;圓角刻意不統一(輸入框 10px、按鈕 12px),免得整片看起來是套版。 */
+.auth { display: grid; gap: 14px; }
+.auth .modal-tabs { margin-bottom: 0; }
+
+.btn-google {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; min-height: 44px; padding: 8px 16px;
+  border: 1px solid #dadce0; border-radius: 12px; background: #fff;
+  font-family: var(--round); font-size: 15px; font-weight: 700; color: #3c4043;
+  cursor: pointer; transition: background .15s, border-color .15s, transform .1s;
+}
+.btn-google:hover { background: #f7f8f9; border-color: #c6cacd; }
+.btn-google:active { transform: scale(.97); }
+.btn-google:disabled { opacity: .5; cursor: default; transform: none; }
+.btn-google .g-logo { display: flex; flex: none; }
+
+.auth-or { display: flex; align-items: center; gap: 12px; color: var(--ink-light); font-size: 13px; }
+.auth-or::before, .auth-or::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+.auth-form { display: grid; gap: 14px; }
+.auth-field { display: grid; gap: 5px; }
+.auth-field > label { font-size: 13.5px; color: var(--ink-light); }
+.auth-input {
+  width: 100%; border: 1px solid var(--line); border-radius: 10px;
+  padding: 10px 12px; font-size: 16px; font-family: var(--font); color: var(--ink);
+  background: #fff; outline: none; transition: border-color .15s, box-shadow .15s;
+}
+.auth-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-tint); }
+.auth-field.is-bad .auth-input { border-color: var(--bad); }
+.auth-field.is-bad .auth-hint { display: none; }   /* 出錯就不要把規則跟錯誤疊兩行 */
+.auth-field.is-bad .auth-input:focus { box-shadow: 0 0 0 3px var(--bad-tint); }
+
+.auth-pw { position: relative; }
+.auth-pw .auth-input { padding-right: 44px; }
+.auth-eye {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  display: flex; padding: 6px; border: 0; background: none; color: var(--ink-light); cursor: pointer;
+}
+.auth-eye:hover { color: var(--primary); }
+
+.auth-hint { font-size: 12.5px; color: var(--ink-light); }
+.auth-note { font-size: 13px; min-height: 0; }
+.auth-note.bad { color: var(--bad); }
+.auth-note.tip { color: var(--hint-orange); }
+.auth-aside { display: flex; justify-content: flex-end; }
+.auth-link {
+  border: 0; background: none; padding: 0; cursor: pointer;
+  font: inherit; font-size: 13.5px; color: var(--primary);
+}
+.auth-link:hover { text-decoration: underline; }
+.auth-link.tip { color: var(--hint-orange); text-decoration: underline; }
+
+.auth-msg { font-size: 13.5px; }
+.auth-msg.bad { color: var(--bad); }
+.auth-msg.ok { color: var(--ok); }
+.auth-msg:empty { display: none; }
+.auth-submit { width: 100%; min-height: 44px; font-size: 15.5px; }
+.auth-cancel { width: 100%; }
+.auth-fine { font-size: 12.5px; color: var(--ink-light); line-height: 1.7; }
+.auth-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.auth-head h2 { font-size: 19px; }
+.auth-sent { font-size: 14.5px; }
+.auth-row { display: flex; gap: 8px; }
+
+.modal-auth { max-width: 400px; }
+
+/* signup.html:卡片居中,頁面其他東西都拿掉 */
+.auth-page { max-width: 400px; margin: 40px auto 60px; }
+.auth-page .page-head { margin-bottom: 20px; }
+.auth-page .page-head h1 { font-size: 26px; }
+.auth-signed { font-size: 15px; display: grid; gap: 14px; justify-items: start; }
+@media (max-width: 560px) {
+  .auth-page { margin: 24px auto 44px; }
+}

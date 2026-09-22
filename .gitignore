@@ -1,3 +1,4 @@
 ﻿任務卡.md
 *.bak
-.claude/
+.claude/*
+!.claude/launch.json

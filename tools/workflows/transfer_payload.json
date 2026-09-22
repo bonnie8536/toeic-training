@@ -1,0 +1,5036 @@
+[
+ {
+  "id": "art-10a",
+  "title": "The Rainy Day Discount",
+  "titleZh": "雨天折扣",
+  "category": "餐飲",
+  "level": "初級 (TOEIC 400-550)",
+  "summary": "郭小姐在台北開了一家小麵店，店名叫「綠碗」。天氣好的時候，很多顧客會上門。但是一到下雨天，店裡幾乎沒有人。郭小姐很擔心自己的生意。",
+  "vocab": [
+   {
+    "word": "customers",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "people who buy food or goods from a shop",
+    "zh": "顧客"
+   },
+   {
+    "word": "business",
+    "base": "business",
+    "pos": "n.",
+    "hint": "the job of selling goods or a service for money",
+    "zh": "生意；公司"
+   },
+   {
+    "word": "staff",
+    "base": "staff",
+    "pos": "n.",
+    "hint": "all the people who have a job in one company",
+    "zh": "員工；全體職員"
+   },
+   {
+    "word": "offer",
+    "base": "offer",
+    "pos": "v.",
+    "hint": "to tell someone you are ready to give something",
+    "zh": "提供"
+   },
+   {
+    "word": "discount",
+    "base": "discount",
+    "pos": "n.",
+    "hint": "money taken off the normal price",
+    "zh": "折扣"
+   },
+   {
+    "word": "poster",
+    "base": "poster",
+    "pos": "n.",
+    "hint": "a large piece of paper with words or pictures on it",
+    "zh": "海報"
+   },
+   {
+    "word": "orders",
+    "base": "order",
+    "pos": "n.",
+    "hint": "requests for food or goods that a shop must fill",
+    "zh": "訂單；點餐"
+   },
+   {
+    "word": "sales",
+    "base": "sale",
+    "pos": "n.",
+    "hint": "the total money a company gets from its customers",
+    "zh": "銷售額"
+   },
+   {
+    "word": "noticed",
+    "base": "notice",
+    "pos": "v.",
+    "hint": "saw or understood something new",
+    "zh": "注意到"
+   },
+   {
+    "word": "regular",
+    "base": "regular",
+    "pos": "adj.",
+    "hint": "coming back again and again",
+    "zh": "固定的；常來的"
+   },
+   {
+    "word": "profit",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "the money left after all costs are paid",
+    "zh": "利潤"
+   }
+  ]
+ },
+ {
+  "id": "art-10b",
+  "title": "My Desk Neighbor",
+  "titleZh": "我的鄰座同事",
+  "category": "職場",
+  "level": "初級 (TOEIC 400-550)",
+  "summary": "我在台中一家旅行社上班。去年，一位新同事坐到我旁邊。他叫 Andy。Andy 人很友善，但是講話很大聲。他一整天都在講電話。",
+  "vocab": [
+   {
+    "word": "co-worker",
+    "base": "co-worker",
+    "pos": "n.",
+    "hint": "a person who has a job at the same company as you",
+    "zh": "同事"
+   },
+   {
+    "word": "focus",
+    "base": "focus",
+    "pos": "v.",
+    "hint": "to give all your mind to one thing",
+    "zh": "專心；專注"
+   },
+   {
+    "word": "manager",
+    "base": "manager",
+    "pos": "n.",
+    "hint": "the person who leads a team at a company",
+    "zh": "主管；經理"
+   },
+   {
+    "word": "mistake",
+    "base": "mistake",
+    "pos": "n.",
+    "hint": "something done in a wrong way",
+    "zh": "錯誤"
+   },
+   {
+    "word": "report",
+    "base": "report",
+    "pos": "n.",
+    "hint": "a written paper that gives facts about a job",
+    "zh": "報告"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "a plan for the money a company will use",
+    "zh": "預算"
+   },
+   {
+    "word": "client",
+    "base": "client",
+    "pos": "n.",
+    "hint": "a person or company that pays you for a service",
+    "zh": "客戶"
+   },
+   {
+    "word": "deadline",
+    "base": "deadline",
+    "pos": "n.",
+    "hint": "the last time when a job must be finished",
+    "zh": "截止期限"
+   },
+   {
+    "word": "project",
+    "base": "project",
+    "pos": "n.",
+    "hint": "a planned piece of work with a goal and an end date",
+    "zh": "專案"
+   },
+   {
+    "word": "schedule",
+    "base": "schedule",
+    "pos": "n.",
+    "hint": "a plan that shows when things will happen",
+    "zh": "行程表；時程"
+   },
+   {
+    "word": "team",
+    "base": "team",
+    "pos": "n.",
+    "hint": "a group of people who do a job together",
+    "zh": "團隊"
+   }
+  ]
+ },
+ {
+  "id": "art-11a",
+  "title": "The Company That Answers in One Hour",
+  "titleZh": "一小時內一定回信的公司",
+  "category": "客服",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "林佳薇早就受夠了等待。以前她寫信問軟體公司問題，回覆總要拖上三天。所以自己開公司「明線客服」時，她許下一個承諾：每一封客戶來信，一小時內一定得到真人回覆。朋友都",
+  "vocab": [
+   {
+    "word": "firm",
+    "base": "firm",
+    "pos": "n.",
+    "hint": "a business organization, usually small or medium in size",
+    "zh": "公司；商行"
+   },
+   {
+    "word": "promise",
+    "base": "promise",
+    "pos": "n.",
+    "hint": "a clear statement that you will surely do something",
+    "zh": "承諾"
+   },
+   {
+    "word": "customer",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "a person who buys goods or services from a shop or company",
+    "zh": "顧客；客戶"
+   },
+   {
+    "word": "staff",
+    "base": "staff",
+    "pos": "n.",
+    "hint": "all the people who work for one company or office",
+    "zh": "員工；全體職員"
+   },
+   {
+    "word": "sorted",
+    "base": "sort",
+    "pos": "v.",
+    "hint": "arranged things into groups by type",
+    "zh": "分類；歸類"
+   },
+   {
+    "word": "complicated",
+    "base": "complicated",
+    "pos": "adj.",
+    "hint": "having many parts and not easy to deal with",
+    "zh": "複雜的"
+   },
+   {
+    "word": "schedule",
+    "base": "schedule",
+    "pos": "n.",
+    "hint": "a plan that shows the times when things will happen",
+    "zh": "時間表；排班表"
+   },
+   {
+    "word": "shifts",
+    "base": "shift",
+    "pos": "n.",
+    "hint": "fixed periods of working time in a day, such as morning or night",
+    "zh": "輪班；班次"
+   },
+   {
+    "word": "training",
+    "base": "training",
+    "pos": "n.",
+    "hint": "the process of teaching people the skills they need for a job",
+    "zh": "訓練"
+   },
+   {
+    "word": "complaints",
+    "base": "complaint",
+    "pos": "n.",
+    "hint": "statements saying that you are not happy with a product or service",
+    "zh": "抱怨；客訴"
+   },
+   {
+    "word": "loyal",
+    "base": "loyal",
+    "pos": "adj.",
+    "hint": "always staying with the same company, brand or person",
+    "zh": "忠實的"
+   },
+   {
+    "word": "recommend",
+    "base": "recommend",
+    "pos": "v.",
+    "hint": "tell someone that something is good and worth trying",
+    "zh": "推薦"
+   },
+   {
+    "word": "hired",
+    "base": "hire",
+    "pos": "v.",
+    "hint": "gave someone a job in a company",
+    "zh": "僱用"
+   },
+   {
+    "word": "honest",
+    "base": "honest",
+    "pos": "adj.",
+    "hint": "telling the truth and not hiding facts",
+    "zh": "誠實的"
+   },
+   {
+    "word": "delay",
+    "base": "delay",
+    "pos": "n.",
+    "hint": "a situation in which something happens later than planned",
+    "zh": "延遲"
+   },
+   {
+    "word": "deadline",
+    "base": "deadline",
+    "pos": "n.",
+    "hint": "the latest time by which a task must be finished",
+    "zh": "截止期限"
+   }
+  ]
+ },
+ {
+  "id": "art-11b",
+  "title": "Renting Clothes for Work",
+  "titleZh": "租來的上班服",
+  "category": "商業",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "高美玲的衣櫃裡塞滿了套裝。每一套，她一年只穿幾次。大部分就掛在那裡積灰塵。去年冬天，一位朋友跟她提起「衣櫥九號」。這家公司以月為單位出租上班服。美玲當晚就報名了",
+  "vocab": [
+   {
+    "word": "suits",
+    "base": "suit",
+    "pos": "n.",
+    "hint": "sets of matching jacket and trousers worn to an office",
+    "zh": "西裝；套裝"
+   },
+   {
+    "word": "fee",
+    "base": "fee",
+    "pos": "n.",
+    "hint": "money that you pay for a service or for joining something",
+    "zh": "費用"
+   },
+   {
+    "word": "delivers",
+    "base": "deliver",
+    "pos": "v.",
+    "hint": "brings goods to a place for the person who ordered them",
+    "zh": "遞送；配送"
+   },
+   {
+    "word": "founder",
+    "base": "founder",
+    "pos": "n.",
+    "hint": "the person who started a company or an organization",
+    "zh": "創辦人"
+   },
+   {
+    "word": "factory",
+    "base": "factory",
+    "pos": "n.",
+    "hint": "a large building where goods are made by machines",
+    "zh": "工廠"
+   },
+   {
+    "word": "items",
+    "base": "item",
+    "pos": "n.",
+    "hint": "single things in a list or in a group of goods",
+    "zh": "品項；物品"
+   },
+   {
+    "word": "budgets",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "amounts of money that people plan to spend",
+    "zh": "預算"
+   },
+   {
+    "word": "service",
+    "base": "service",
+    "pos": "n.",
+    "hint": "work that a company does for the people who pay it",
+    "zh": "服務"
+   },
+   {
+    "word": "damaged",
+    "base": "damage",
+    "pos": "adj.",
+    "hint": "harmed or broken in some way",
+    "zh": "損壞的"
+   },
+   {
+    "word": "charge",
+    "base": "charge",
+    "pos": "n.",
+    "hint": "an amount of money asked for a product or a service",
+    "zh": "收費；費用"
+   },
+   {
+    "word": "members",
+    "base": "member",
+    "pos": "n.",
+    "hint": "people who have joined a club or a paid plan",
+    "zh": "會員"
+   },
+   {
+    "word": "professional",
+    "base": "professional",
+    "pos": "adj.",
+    "hint": "suitable for serious work; showing skill and good manners",
+    "zh": "專業的"
+   },
+   {
+    "word": "interviews",
+    "base": "interview",
+    "pos": "n.",
+    "hint": "meetings where a company asks questions to a person who wants a job",
+    "zh": "面試"
+   },
+   {
+    "word": "borrowed",
+    "base": "borrow",
+    "pos": "adj.",
+    "hint": "taken from someone else for a short time and then returned",
+    "zh": "借來的"
+   },
+   {
+    "word": "concerns",
+    "base": "concern",
+    "pos": "n.",
+    "hint": "worries about something that might go wrong",
+    "zh": "疑慮；擔憂"
+   },
+   {
+    "word": "own",
+    "base": "own",
+    "pos": "v.",
+    "hint": "have something as your property",
+    "zh": "擁有"
+   }
+  ]
+ },
+ {
+  "id": "art-12a",
+  "title": "The Office With No Fixed Seats",
+  "titleZh": "沒有固定座位的辦公室",
+  "category": "職場",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "Kestrel Design 在台北有四十名員工。去年春天，公司把桌上所有的名牌都拿掉了。從此沒有人擁有固定座位。每天早上，員工想坐哪裡就坐哪裡。辦公室主任陳如",
+  "vocab": [
+   {
+    "word": "experiment",
+    "base": "experiment",
+    "pos": "n.",
+    "hint": "a test done to find out whether an idea really works",
+    "zh": "實驗；試驗"
+   },
+   {
+    "word": "colleagues",
+    "base": "colleague",
+    "pos": "n.",
+    "hint": "people you work with at the same company",
+    "zh": "同事"
+   },
+   {
+    "word": "rent",
+    "base": "rent",
+    "pos": "n.",
+    "hint": "money paid regularly to use a building you do not own",
+    "zh": "租金"
+   },
+   {
+    "word": "equipment",
+    "base": "equipment",
+    "pos": "n.",
+    "hint": "the tools and machines needed for a particular job",
+    "zh": "設備；器材"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "a plan for how much money can be spent",
+    "zh": "預算"
+   },
+   {
+    "word": "Complaints",
+    "base": "complaint",
+    "pos": "n.",
+    "hint": "statements that something is wrong or not good enough",
+    "zh": "抱怨；投訴"
+   },
+   {
+    "word": "accounting",
+    "base": "accounting",
+    "pos": "n.",
+    "hint": "the work of keeping records of money coming in and going out",
+    "zh": "會計"
+   },
+   {
+    "word": "customer",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "a person who buys goods or services from a business",
+    "zh": "顧客；客戶"
+   },
+   {
+    "word": "annual",
+    "base": "annual",
+    "pos": "adj.",
+    "hint": "happening once every year",
+    "zh": "年度的；每年的"
+   },
+   {
+    "word": "survey",
+    "base": "survey",
+    "pos": "n.",
+    "hint": "a set of questions given to many people to collect opinions",
+    "zh": "問卷調查"
+   },
+   {
+    "word": "satisfaction",
+    "base": "satisfaction",
+    "pos": "n.",
+    "hint": "the good feeling you get when something meets your needs",
+    "zh": "滿意；滿意度"
+   },
+   {
+    "word": "convinced",
+    "base": "convince",
+    "pos": "adj.",
+    "hint": "made to believe that something is true or right",
+    "zh": "被說服的；信服的"
+   },
+   {
+    "word": "concentrate",
+    "base": "concentrate",
+    "pos": "v.",
+    "hint": "to give all your attention to one thing",
+    "zh": "專心；專注"
+   },
+   {
+    "word": "reserve",
+    "base": "reserve",
+    "pos": "v.",
+    "hint": "to arrange to keep something for your own use later",
+    "zh": "預約；預留"
+   },
+   {
+    "word": "in advance",
+    "base": "in advance",
+    "pos": "phr.",
+    "hint": "before a planned time or event",
+    "zh": "事先；提前"
+   },
+   {
+    "word": "lease",
+    "base": "lease",
+    "pos": "n.",
+    "hint": "a legal contract to use a building or car for a fixed period",
+    "zh": "租約"
+   }
+  ]
+ },
+ {
+  "id": "art-12b",
+  "title": "Selling Ugly Vegetables",
+  "titleZh": "把醜蔬菜賣成熱銷商品",
+  "category": "零售",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "每年都有幾噸好好的食物被農民丟掉。原因跟味道一點關係也沒有。長成兩條腿的紅蘿蔔，吃起來和直的一樣，但消費者就是走過去不看它。超市會退掉外形怪的蔬菜。在台灣中部，",
+  "vocab": [
+   {
+    "word": "reject",
+    "base": "reject",
+    "pos": "v.",
+    "hint": "to refuse to accept or take something",
+    "zh": "拒收；退貨"
+   },
+   {
+    "word": "harvest",
+    "base": "harvest",
+    "pos": "n.",
+    "hint": "the amount of food gathered from the fields in one season",
+    "zh": "收成；收穫量"
+   },
+   {
+    "word": "generations",
+    "base": "generation",
+    "pos": "n.",
+    "hint": "all the people in a family who are at about the same stage of life",
+    "zh": "世代；一代人"
+   },
+   {
+    "word": "customers",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "people who buy goods or services from a business",
+    "zh": "顧客；消費者"
+   },
+   {
+    "word": "label",
+    "base": "label",
+    "pos": "n.",
+    "hint": "a small piece of paper on a product that gives information about it",
+    "zh": "標籤"
+   },
+   {
+    "word": "warning",
+    "base": "warning",
+    "pos": "n.",
+    "hint": "a message that tells you danger or trouble may come",
+    "zh": "警告"
+   },
+   {
+    "word": "approach",
+    "base": "approach",
+    "pos": "n.",
+    "hint": "a way of dealing with a problem or doing a job",
+    "zh": "做法；方式"
+   },
+   {
+    "word": "retail",
+    "base": "retail",
+    "pos": "adj.",
+    "hint": "relating to selling goods in shops to the public",
+    "zh": "零售的"
+   },
+   {
+    "word": "subscribers",
+    "base": "subscriber",
+    "pos": "n.",
+    "hint": "people who pay regularly to keep receiving a product or service",
+    "zh": "訂戶"
+   },
+   {
+    "word": "crop",
+    "base": "crop",
+    "pos": "n.",
+    "hint": "a plant such as rice or corn that a farmer grows to sell",
+    "zh": "作物；農作物"
+   },
+   {
+    "word": "suppliers",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "companies that provide goods to a business",
+    "zh": "供應商"
+   },
+   {
+    "word": "profit",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "the money left after all costs have been paid",
+    "zh": "利潤"
+   },
+   {
+    "word": "attraction",
+    "base": "attraction",
+    "pos": "n.",
+    "hint": "the quality that makes people want something",
+    "zh": "吸引力；賣點"
+   },
+   {
+    "word": "stock",
+    "base": "stock",
+    "pos": "v.",
+    "hint": "to keep goods in a shop so they can be sold",
+    "zh": "進貨；備有存貨"
+   },
+   {
+    "word": "demand",
+    "base": "demand",
+    "pos": "n.",
+    "hint": "the amount of a product that people want to buy",
+    "zh": "需求"
+   }
+  ]
+ },
+ {
+  "id": "art-13a",
+  "title": "Why the Cheapest Supplier Was Not the Cheapest",
+  "titleZh": "最低報價的供應商，為什麼反而最貴",
+  "category": "商業",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "凱托比工具向同一家供應商採購鋼製把手已經十九年，直到金屬價格大漲，採購部門被要求想辦法省錢。三家公司送來報價，其中最低的一家叫維瑟金屬，比其他兩家便宜了百分之十",
+  "vocab": [
+   {
+    "word": "supplier",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "a business that regularly provides goods or materials to another company",
+    "zh": "供應商"
+   },
+   {
+    "word": "bids",
+    "base": "bid",
+    "pos": "n.",
+    "hint": "formal prices offered by companies hoping to win a job or an order",
+    "zh": "投標報價"
+   },
+   {
+    "word": "contract",
+    "base": "contract",
+    "pos": "n.",
+    "hint": "a written legal agreement covering work, goods, or payment",
+    "zh": "合約"
+   },
+   {
+    "word": "quarterly",
+    "base": "quarterly",
+    "pos": "adj.",
+    "hint": "happening once every three months",
+    "zh": "每季的"
+   },
+   {
+    "word": "shipment",
+    "base": "shipment",
+    "pos": "n.",
+    "hint": "a load of goods sent together from one place to another",
+    "zh": "一批貨、出貨"
+   },
+   {
+    "word": "deadline",
+    "base": "deadline",
+    "pos": "n.",
+    "hint": "the latest time by which something must be finished",
+    "zh": "期限"
+   },
+   {
+    "word": "overtime",
+    "base": "overtime",
+    "pos": "n.",
+    "hint": "extra hours worked beyond the normal schedule, usually at higher pay",
+    "zh": "加班"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "a plan for how much money may be spent in a given period",
+    "zh": "預算"
+   },
+   {
+    "word": "quality",
+    "base": "quality",
+    "pos": "n.",
+    "hint": "how good or bad something is when measured against what buyers expect",
+    "zh": "品質"
+   },
+   {
+    "word": "refund",
+    "base": "refund",
+    "pos": "n.",
+    "hint": "money given back to a buyer when goods are returned or a service fails",
+    "zh": "退款"
+   },
+   {
+    "word": "replacement",
+    "base": "replacement",
+    "pos": "n.",
+    "hint": "a new part sent to take the place of one that is broken or wrong",
+    "zh": "替換件"
+   },
+   {
+    "word": "warehouse",
+    "base": "warehouse",
+    "pos": "n.",
+    "hint": "a large building where goods are kept before being sold or sent out",
+    "zh": "倉庫"
+   },
+   {
+    "word": "revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the total money a business takes in from what it sells",
+    "zh": "營收"
+   },
+   {
+    "word": "deliveries",
+    "base": "delivery",
+    "pos": "n.",
+    "hint": "acts of bringing goods to the buyer's location",
+    "zh": "交貨、送貨"
+   },
+   {
+    "word": "Complaints",
+    "base": "complaint",
+    "pos": "n.",
+    "hint": "statements that a customer is not satisfied with a product or service",
+    "zh": "客訴、抱怨"
+   },
+   {
+    "word": "warranty",
+    "base": "warranty",
+    "pos": "n.",
+    "hint": "a written promise to repair or exchange a product within a set period",
+    "zh": "保固"
+   },
+   {
+    "word": "inspection",
+    "base": "inspection",
+    "pos": "n.",
+    "hint": "the act of looking at something carefully to find faults",
+    "zh": "檢驗"
+   },
+   {
+    "word": "freight",
+    "base": "freight",
+    "pos": "n.",
+    "hint": "goods carried in large amounts by truck, ship, or plane, or the cost of carrying them",
+    "zh": "貨運、運費"
+   },
+   {
+    "word": "negotiated",
+    "base": "negotiate",
+    "pos": "v.",
+    "hint": "discussed terms formally in order to reach an agreement",
+    "zh": "談成、協商"
+   },
+   {
+    "word": "expenses",
+    "base": "expense",
+    "pos": "n.",
+    "hint": "sums of money a business must pay out in order to operate",
+    "zh": "支出、費用"
+   }
+  ]
+ },
+ {
+  "id": "art-13b",
+  "title": "The Store That Trains Its Competitors",
+  "titleZh": "那家訓練同業的連鎖店",
+  "category": "商業",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "娜迪雅．奧斯川德擁有十一家店，把麵粉、烤箱和包材賣給三個州的烘焙坊。每年春天，她在多佛街分店樓上開一間教室，免費教三十個素不相識的人怎麼經營一家小麵包店：怎麼替",
+  "vocab": [
+   {
+    "word": "branch",
+    "base": "branch",
+    "pos": "n.",
+    "hint": "a single local shop or office that is one part of a larger company",
+    "zh": "分店、分公司"
+   },
+   {
+    "word": "lease",
+    "base": "lease",
+    "pos": "n.",
+    "hint": "a legal agreement to rent a building or vehicle for a fixed period",
+    "zh": "租約"
+   },
+   {
+    "word": "competitors",
+    "base": "competitor",
+    "pos": "n.",
+    "hint": "other businesses trying to sell to the same buyers",
+    "zh": "同業、對手"
+   },
+   {
+    "word": "sessions",
+    "base": "session",
+    "pos": "n.",
+    "hint": "periods of time set aside for classes, meetings, or other activities",
+    "zh": "堂、場次"
+   },
+   {
+    "word": "inspector",
+    "base": "inspector",
+    "pos": "n.",
+    "hint": "an official whose job is to visit places and check that rules are followed",
+    "zh": "稽查員"
+   },
+   {
+    "word": "licenses",
+    "base": "license",
+    "pos": "n.",
+    "hint": "official papers that allow a person or business to do something legally",
+    "zh": "執照"
+   },
+   {
+    "word": "enroll",
+    "base": "enroll",
+    "pos": "v.",
+    "hint": "to sign up officially as a member of a class or program",
+    "zh": "報名、註冊"
+   },
+   {
+    "word": "account",
+    "base": "account",
+    "pos": "n.",
+    "hint": "a regular business customer, or the buying arrangement a firm has with one",
+    "zh": "客戶、往來戶頭"
+   },
+   {
+    "word": "supplies",
+    "base": "supply",
+    "pos": "n.",
+    "hint": "materials and goods that a business needs in order to operate",
+    "zh": "物料、貨品"
+   },
+   {
+    "word": "wholesale",
+    "base": "wholesale",
+    "pos": "adj.",
+    "hint": "relating to selling goods in large amounts to shops rather than to the public",
+    "zh": "批發的"
+   },
+   {
+    "word": "discount",
+    "base": "discount",
+    "pos": "n.",
+    "hint": "an amount taken off the normal price",
+    "zh": "折扣"
+   },
+   {
+    "word": "staff",
+    "base": "staff",
+    "pos": "n.",
+    "hint": "the group of people employed by an organization",
+    "zh": "員工"
+   },
+   {
+    "word": "recruit",
+    "base": "recruit",
+    "pos": "v.",
+    "hint": "to find and take on new workers",
+    "zh": "招募"
+   },
+   {
+    "word": "advertising",
+    "base": "advertising",
+    "pos": "n.",
+    "hint": "paid messages used to make products or services known to the public",
+    "zh": "廣告"
+   },
+   {
+    "word": "strategy",
+    "base": "strategy",
+    "pos": "n.",
+    "hint": "a long-term plan for reaching an important business goal",
+    "zh": "策略"
+   },
+   {
+    "word": "chain",
+    "base": "chain",
+    "pos": "n.",
+    "hint": "a group of shops or restaurants owned by the same company",
+    "zh": "連鎖企業"
+   },
+   {
+    "word": "profit",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "the money a business keeps after all its costs are paid",
+    "zh": "利潤"
+   },
+   {
+    "word": "orders",
+    "base": "order",
+    "pos": "n.",
+    "hint": "requests from customers for goods to be sent to them",
+    "zh": "訂單"
+   },
+   {
+    "word": "clients",
+    "base": "client",
+    "pos": "n.",
+    "hint": "people or companies that pay a business for its goods or services",
+    "zh": "客戶"
+   },
+   {
+    "word": "investment",
+    "base": "investment",
+    "pos": "n.",
+    "hint": "money or effort put into something now in the hope of a return later",
+    "zh": "投資"
+   }
+  ]
+ },
+ {
+  "id": "art-14a",
+  "title": "The Real Cost of Employee Turnover",
+  "titleZh": "員工流動率的真實成本",
+  "category": "職場",
+  "level": "高級 (TOEIC 800+)",
+  "summary": "當 Harper Lin 接下 Vellmore Logistics 的人資主管一職時，她也接手了一個沒人願意講明的問題。倉儲部門每年流失將近三分之一的員工，但",
+  "vocab": [
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "a plan showing how much money a company may spend and on what",
+    "zh": "預算"
+   },
+   {
+    "word": "expense",
+    "base": "expense",
+    "pos": "n.",
+    "hint": "money that has to be paid out for goods, services or business activity",
+    "zh": "支出、費用"
+   },
+   {
+    "word": "vacancy",
+    "base": "vacancy",
+    "pos": "n.",
+    "hint": "a job position that is open and waiting to be filled",
+    "zh": "職缺"
+   },
+   {
+    "word": "applicants",
+    "base": "applicant",
+    "pos": "n.",
+    "hint": "people who formally ask to be given a job or a place",
+    "zh": "應徵者"
+   },
+   {
+    "word": "salary",
+    "base": "salary",
+    "pos": "n.",
+    "hint": "fixed money paid to an employee, usually counted by the month or the year",
+    "zh": "薪水"
+   },
+   {
+    "word": "hire",
+    "base": "hire",
+    "pos": "n.",
+    "hint": "the act of taking a worker onto the staff, or the worker newly taken on",
+    "zh": "雇用（一名新員工）"
+   },
+   {
+    "word": "shifts",
+    "base": "shift",
+    "pos": "n.",
+    "hint": "a fixed block of working hours, such as nights or weekends",
+    "zh": "班次、輪班"
+   },
+   {
+    "word": "overtime",
+    "base": "overtime",
+    "pos": "n.",
+    "hint": "extra hours worked beyond the normal schedule, usually paid at a higher rate",
+    "zh": "加班（費）"
+   },
+   {
+    "word": "productivity",
+    "base": "productivity",
+    "pos": "n.",
+    "hint": "the amount of useful work or goods finished in a given time",
+    "zh": "生產力"
+   },
+   {
+    "word": "client",
+    "base": "client",
+    "pos": "n.",
+    "hint": "a company or person that pays another business for services",
+    "zh": "客戶"
+   },
+   {
+    "word": "contract",
+    "base": "contract",
+    "pos": "n.",
+    "hint": "a written legal agreement between two sides",
+    "zh": "合約"
+   },
+   {
+    "word": "replacement",
+    "base": "replacement",
+    "pos": "n.",
+    "hint": "a person or thing that takes the position of another",
+    "zh": "接替者、替代品"
+   },
+   {
+    "word": "supervisor",
+    "base": "supervisor",
+    "pos": "n.",
+    "hint": "a person who directs and checks the work of a team",
+    "zh": "主管、督導"
+   },
+   {
+    "word": "wage",
+    "base": "wage",
+    "pos": "n.",
+    "hint": "money paid to a worker, often counted by the hour or the week",
+    "zh": "工資"
+   },
+   {
+    "word": "Morale",
+    "base": "morale",
+    "pos": "n.",
+    "hint": "the level of confidence and willingness felt by a group of people",
+    "zh": "士氣"
+   },
+   {
+    "word": "resignation",
+    "base": "resignation",
+    "pos": "n.",
+    "hint": "the act of formally leaving a job by one's own choice",
+    "zh": "辭職"
+   },
+   {
+    "word": "colleagues",
+    "base": "colleague",
+    "pos": "n.",
+    "hint": "people who work at the same company as you",
+    "zh": "同事"
+   },
+   {
+    "word": "turnover",
+    "base": "turnover",
+    "pos": "n.",
+    "hint": "the rate at which workers leave a company and must be replaced",
+    "zh": "人員流動率"
+   },
+   {
+    "word": "bonus",
+    "base": "bonus",
+    "pos": "n.",
+    "hint": "extra money given in addition to normal pay",
+    "zh": "獎金"
+   },
+   {
+    "word": "retention",
+    "base": "retention",
+    "pos": "n.",
+    "hint": "the ability of a company to keep its staff or customers over time",
+    "zh": "留任率、留存"
+   },
+   {
+    "word": "margin",
+    "base": "margin",
+    "pos": "n.",
+    "hint": "the gap between what something costs a company and what it earns from it",
+    "zh": "利潤率"
+   }
+  ]
+ },
+ {
+  "id": "art-14b",
+  "title": "Why Subscription Boxes Keep Failing",
+  "titleZh": "訂閱制電商為何總是難以獲利",
+  "category": "商業",
+  "level": "高級 (TOEIC 800+)",
+  "summary": "在創業的第一個春天，Harvest Crate 看起來勢不可擋。Nadia Reyes 辭掉行銷工作，每月寄出裝滿新奇食品的箱子——辣味蜂蜜、海苔脆餅、單一產區",
+  "vocab": [
+   {
+    "word": "subscribers",
+    "base": "subscriber",
+    "pos": "n.",
+    "hint": "people who pay regularly to keep receiving a product or service",
+    "zh": "訂閱者"
+   },
+   {
+    "word": "investors",
+    "base": "investor",
+    "pos": "n.",
+    "hint": "people who put money into a business hoping to get more back later",
+    "zh": "投資人"
+   },
+   {
+    "word": "warehouse",
+    "base": "warehouse",
+    "pos": "n.",
+    "hint": "a large building where goods are kept before being sold or sent out",
+    "zh": "倉庫"
+   },
+   {
+    "word": "advertising",
+    "base": "advertising",
+    "pos": "n.",
+    "hint": "paid messages used to make the public aware of a product",
+    "zh": "廣告宣傳"
+   },
+   {
+    "word": "discount",
+    "base": "discount",
+    "pos": "n.",
+    "hint": "an amount taken off the usual price",
+    "zh": "折扣"
+   },
+   {
+    "word": "shipping",
+    "base": "shipping",
+    "pos": "n.",
+    "hint": "the work and cost of sending goods to the buyer",
+    "zh": "運送（費）"
+   },
+   {
+    "word": "profit",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "the money left over once all costs have been paid",
+    "zh": "利潤"
+   },
+   {
+    "word": "cancelled",
+    "base": "cancel",
+    "pos": "v.",
+    "hint": "to end an arrangement so that it no longer continues",
+    "zh": "取消"
+   },
+   {
+    "word": "loyal",
+    "base": "loyal",
+    "pos": "adj.",
+    "hint": "continuing to support the same company or brand over a long period",
+    "zh": "忠實的"
+   },
+   {
+    "word": "inventory",
+    "base": "inventory",
+    "pos": "n.",
+    "hint": "the goods a company is holding in stock",
+    "zh": "庫存"
+   },
+   {
+    "word": "demand",
+    "base": "demand",
+    "pos": "n.",
+    "hint": "the amount of a product that buyers want at a given time",
+    "zh": "需求"
+   },
+   {
+    "word": "forecast",
+    "base": "forecast",
+    "pos": "n.",
+    "hint": "a statement of what a company expects to happen in the future",
+    "zh": "預測"
+   },
+   {
+    "word": "packaging",
+    "base": "packaging",
+    "pos": "n.",
+    "hint": "the boxes and materials used to hold and protect goods being sent",
+    "zh": "包裝材料"
+   },
+   {
+    "word": "revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the total money a business takes in from what it sells",
+    "zh": "營收"
+   },
+   {
+    "word": "negotiate",
+    "base": "negotiate",
+    "pos": "v.",
+    "hint": "to discuss terms with another side in order to reach an agreement",
+    "zh": "協商"
+   },
+   {
+    "word": "suppliers",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "companies that provide goods or materials to another business",
+    "zh": "供應商"
+   },
+   {
+    "word": "wholesale",
+    "base": "wholesale",
+    "pos": "adj.",
+    "hint": "relating to selling goods in large amounts to shops rather than to the public",
+    "zh": "批發的"
+   },
+   {
+    "word": "retail",
+    "base": "retail",
+    "pos": "adj.",
+    "hint": "relating to selling goods directly to ordinary buyers",
+    "zh": "零售的"
+   },
+   {
+    "word": "delivery",
+    "base": "delivery",
+    "pos": "n.",
+    "hint": "the act of bringing goods to the address of the buyer",
+    "zh": "配送"
+   },
+   {
+    "word": "competitors",
+    "base": "competitor",
+    "pos": "n.",
+    "hint": "other companies trying to win the same customers",
+    "zh": "競爭對手"
+   },
+   {
+    "word": "launch",
+    "base": "launch",
+    "pos": "n.",
+    "hint": "the start of a new product or business in the market",
+    "zh": "推出、上市"
+   }
+  ]
+ },
+ {
+  "id": "art-15a",
+  "title": "Why Do We Yawn?",
+  "titleZh": "我們為什麼會打哈欠？",
+  "category": "科普",
+  "level": "初級 (TOEIC 400-550)",
+  "summary": "每個人都會打哈欠。嬰兒會，老人也會。連狗和貓都會。我們大多數人一天要打好幾次哈欠。但我們為什麼會打哈欠呢？科學家研究這個問題很多年了。他們到現在還沒有完全一致的",
+  "vocab": [
+   {
+    "word": "yawns",
+    "base": "yawn",
+    "pos": "v.",
+    "hint": "to open the mouth wide and take a deep breath when tired",
+    "zh": "打哈欠"
+   },
+   {
+    "word": "oxygen",
+    "base": "oxygen",
+    "pos": "n.",
+    "hint": "the gas in the air that people and animals need to stay alive",
+    "zh": "氧氣"
+   },
+   {
+    "word": "plenty of",
+    "base": "plenty of",
+    "pos": "phr.",
+    "hint": "more than enough of something",
+    "zh": "充足的；很多的"
+   },
+   {
+    "word": "cool",
+    "base": "cool",
+    "pos": "v.",
+    "hint": "to make something less hot",
+    "zh": "使降溫；冷卻"
+   },
+   {
+    "word": "temperature",
+    "base": "temperature",
+    "pos": "n.",
+    "hint": "how hot or cold something is",
+    "zh": "溫度"
+   },
+   {
+    "word": "catching",
+    "base": "catching",
+    "pos": "adj.",
+    "hint": "easily passed from one person to another",
+    "zh": "會傳染的；有感染力的"
+   },
+   {
+    "word": "habit",
+    "base": "habit",
+    "pos": "n.",
+    "hint": "something a person does often and almost without thinking",
+    "zh": "習慣"
+   },
+   {
+    "word": "alert",
+    "base": "alert",
+    "pos": "adj.",
+    "hint": "awake and quick to notice things",
+    "zh": "警覺的；清醒的"
+   },
+   {
+    "word": "sign",
+    "base": "sign",
+    "pos": "n.",
+    "hint": "something that shows what is true or what is happening",
+    "zh": "跡象；徵兆"
+   },
+   {
+    "word": "boring",
+    "base": "boring",
+    "pos": "adj.",
+    "hint": "not interesting at all",
+    "zh": "無聊的"
+   },
+   {
+    "word": "embarrassed",
+    "base": "embarrassed",
+    "pos": "adj.",
+    "hint": "feeling shy or uncomfortable in front of other people",
+    "zh": "尷尬的；難為情的"
+   }
+  ]
+ },
+ {
+  "id": "art-15b",
+  "title": "Paper Bag or Plastic Bag?",
+  "titleZh": "紙袋還是塑膠袋？",
+  "category": "環境",
+  "level": "初級 (TOEIC 400-550)",
+  "summary": "在商店結帳時，店員常會問一個簡單的問題。要紙袋還是塑膠袋？很多人會選紙袋。他們相信紙袋對環境比較好。但真正的答案沒有那麼單純。",
+  "vocab": [
+   {
+    "word": "plastic",
+    "base": "plastic",
+    "pos": "n.",
+    "hint": "a light man-made material used for bags, bottles and toys",
+    "zh": "塑膠"
+   },
+   {
+    "word": "environment",
+    "base": "environment",
+    "pos": "n.",
+    "hint": "the natural world of air, water, land and living things",
+    "zh": "環境"
+   },
+   {
+    "word": "shoppers",
+    "base": "shopper",
+    "pos": "n.",
+    "hint": "people who buy things at a store",
+    "zh": "購物者；顧客"
+   },
+   {
+    "word": "break down",
+    "base": "break down",
+    "pos": "phr. v.",
+    "hint": "to slowly turn into very small parts and disappear in nature",
+    "zh": "分解"
+   },
+   {
+    "word": "by mistake",
+    "base": "by mistake",
+    "pos": "phr.",
+    "hint": "without meaning to do it",
+    "zh": "不小心地；誤"
+   },
+   {
+    "word": "forests",
+    "base": "forest",
+    "pos": "n.",
+    "hint": "a large area of land covered with many trees",
+    "zh": "森林"
+   },
+   {
+    "word": "energy",
+    "base": "energy",
+    "pos": "n.",
+    "hint": "the power that machines and factories need to work",
+    "zh": "能源"
+   },
+   {
+    "word": "fuel",
+    "base": "fuel",
+    "pos": "n.",
+    "hint": "oil, gas or coal that is burned to make power",
+    "zh": "燃料"
+   },
+   {
+    "word": "harm",
+    "base": "harm",
+    "pos": "n.",
+    "hint": "damage done to a person, an animal or a place",
+    "zh": "傷害；害處"
+   },
+   {
+    "word": "depends on",
+    "base": "depend on",
+    "pos": "phr. v.",
+    "hint": "to be decided by something else",
+    "zh": "取決於"
+   },
+   {
+    "word": "recycle",
+    "base": "recycle",
+    "pos": "v.",
+    "hint": "to treat used paper, glass or metal so it can be used again",
+    "zh": "回收再利用"
+   },
+   {
+    "word": "experts",
+    "base": "expert",
+    "pos": "n.",
+    "hint": "people who know a lot about one subject",
+    "zh": "專家"
+   }
+  ]
+ },
+ {
+  "id": "art-16a",
+  "title": "Electric Scooters Take Over the Sidewalk",
+  "titleZh": "電動滑板車佔領人行道",
+  "category": "時事",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "在今天的許多城市裡，共享電動滑板車隨處可見。人們用手機應用程式解鎖車輛。他們騎去上班、上課，或前往火車站。到了目的地，就直接把車停在路邊離開。對很多騎乘者來說，",
+  "vocab": [
+   {
+    "word": "scooters",
+    "base": "scooter",
+    "pos": "n.",
+    "hint": "a small two-wheeled machine that a person stands on and rides",
+    "zh": "滑板車"
+   },
+   {
+    "word": "unlock",
+    "base": "unlock",
+    "pos": "v.",
+    "hint": "to open something so that it can be used, often with a key or code",
+    "zh": "解鎖"
+   },
+   {
+    "word": "app",
+    "base": "app",
+    "pos": "n.",
+    "hint": "a small program that runs on a phone or tablet",
+    "zh": "應用程式"
+   },
+   {
+    "word": "crowded",
+    "base": "crowded",
+    "pos": "adj.",
+    "hint": "full of too many people or things in one place",
+    "zh": "擁擠的"
+   },
+   {
+    "word": "vehicles",
+    "base": "vehicle",
+    "pos": "n.",
+    "hint": "a machine such as a car or bus that carries people or goods",
+    "zh": "車輛"
+   },
+   {
+    "word": "convenience",
+    "base": "convenience",
+    "pos": "n.",
+    "hint": "the quality of being easy to use and saving time or effort",
+    "zh": "便利"
+   },
+   {
+    "word": "sidewalk",
+    "base": "sidewalk",
+    "pos": "n.",
+    "hint": "the paved part at the edge of a road, made for people on foot",
+    "zh": "人行道"
+   },
+   {
+    "word": "Accidents",
+    "base": "accident",
+    "pos": "n.",
+    "hint": "an event in which someone is hurt or something is damaged by chance",
+    "zh": "事故"
+   },
+   {
+    "word": "officials",
+    "base": "official",
+    "pos": "n.",
+    "hint": "a person with a position of duty in a government or a large organization",
+    "zh": "官員"
+   },
+   {
+    "word": "require",
+    "base": "require",
+    "pos": "v.",
+    "hint": "to say that someone must do something",
+    "zh": "要求"
+   },
+   {
+    "word": "ban",
+    "base": "ban",
+    "pos": "v.",
+    "hint": "to say by law that something must not be done",
+    "zh": "禁止"
+   },
+   {
+    "word": "permit",
+    "base": "permit",
+    "pos": "n.",
+    "hint": "a paper from a government that lets a person or company do something",
+    "zh": "許可證"
+   },
+   {
+    "word": "Supporters",
+    "base": "supporter",
+    "pos": "n.",
+    "hint": "a person who agrees with an idea and speaks for it",
+    "zh": "支持者"
+   },
+   {
+    "word": "lanes",
+    "base": "lane",
+    "pos": "n.",
+    "hint": "a narrow marked part of a road for one line of traffic",
+    "zh": "車道"
+   },
+   {
+    "word": "technology",
+    "base": "technology",
+    "pos": "n.",
+    "hint": "new machines and methods based on science",
+    "zh": "科技"
+   },
+   {
+    "word": "benefits",
+    "base": "benefit",
+    "pos": "n.",
+    "hint": "good results or advantages that come from something",
+    "zh": "好處"
+   }
+  ]
+ },
+ {
+  "id": "art-16b",
+  "title": "What Sleep Does for the Brain",
+  "titleZh": "睡眠為大腦做的事",
+  "category": "健康",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "每個人都知道睡覺很舒服。比較少人知道，大腦在夜裡有多忙。睡眠並不只是一段長長的停頓。身體休息的時候，大腦仍然努力工作。它負責整理、儲存與清理。早上覺得神清氣爽，",
+  "vocab": [
+   {
+    "word": "brain",
+    "base": "brain",
+    "pos": "n.",
+    "hint": "the organ inside the head that thinks and controls the body",
+    "zh": "大腦"
+   },
+   {
+    "word": "rests",
+    "base": "rest",
+    "pos": "v.",
+    "hint": "to stop activity for a while in order to get energy back",
+    "zh": "休息"
+   },
+   {
+    "word": "Memory",
+    "base": "memory",
+    "pos": "n.",
+    "hint": "the ability of the mind to store facts and events for later use",
+    "zh": "記憶力"
+   },
+   {
+    "word": "information",
+    "base": "information",
+    "pos": "n.",
+    "hint": "facts or details about a person, an event, or a subject",
+    "zh": "資訊"
+   },
+   {
+    "word": "storage",
+    "base": "storage",
+    "pos": "n.",
+    "hint": "the act of keeping something in a place until it is needed",
+    "zh": "儲存"
+   },
+   {
+    "word": "remembers",
+    "base": "remember",
+    "pos": "v.",
+    "hint": "to still be able to think of something from an earlier time",
+    "zh": "記得"
+   },
+   {
+    "word": "waste",
+    "base": "waste",
+    "pos": "n.",
+    "hint": "material that is left over and no longer useful",
+    "zh": "廢物"
+   },
+   {
+    "word": "repairs",
+    "base": "repair",
+    "pos": "v.",
+    "hint": "to fix something that is damaged or worn out",
+    "zh": "修復"
+   },
+   {
+    "word": "Attention",
+    "base": "attention",
+    "pos": "n.",
+    "hint": "the act of watching or listening with care",
+    "zh": "注意力"
+   },
+   {
+    "word": "mistakes",
+    "base": "mistake",
+    "pos": "n.",
+    "hint": "an action or answer that is not correct",
+    "zh": "錯誤"
+   },
+   {
+    "word": "linked",
+    "base": "link",
+    "pos": "v.",
+    "hint": "to show a connection between two things",
+    "zh": "使有關聯"
+   },
+   {
+    "word": "immune",
+    "base": "immune",
+    "pos": "adj.",
+    "hint": "related to the body's natural defense against disease",
+    "zh": "免疫的"
+   },
+   {
+    "word": "shifts",
+    "base": "shift",
+    "pos": "n.",
+    "hint": "a fixed period of working hours during a day",
+    "zh": "輪班"
+   },
+   {
+    "word": "alarm",
+    "base": "alarm",
+    "pos": "n.",
+    "hint": "a device or sound that wakes a person at a set time",
+    "zh": "鬧鐘"
+   },
+   {
+    "word": "improves",
+    "base": "improve",
+    "pos": "v.",
+    "hint": "to make something better than it was before",
+    "zh": "改善"
+   },
+   {
+    "word": "quality",
+    "base": "quality",
+    "pos": "n.",
+    "hint": "how good or bad something is",
+    "zh": "品質"
+   }
+  ]
+ },
+ {
+  "id": "art-17a",
+  "title": "Food Delivery Is Changing Restaurants",
+  "titleZh": "外送如何改變餐廳",
+  "category": "時事",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "打開 App，點幾下，晚餐就送到你家門口。在許多城市，外送 App 已經是日常生活的一部分。對消費者來說，訂一頓飯從來沒這麼容易過。對餐廳老闆而言，這個改變的影",
+  "vocab": [
+   {
+    "word": "delivery",
+    "base": "delivery",
+    "pos": "n.",
+    "hint": "the act of bringing goods to a home or an office",
+    "zh": "外送；遞送"
+   },
+   {
+    "word": "platforms",
+    "base": "platform",
+    "pos": "n.",
+    "hint": "an online service that connects different groups of users",
+    "zh": "平台"
+   },
+   {
+    "word": "fee",
+    "base": "fee",
+    "pos": "n.",
+    "hint": "money charged for a service",
+    "zh": "費用；手續費"
+   },
+   {
+    "word": "profits",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "money left after all costs are paid",
+    "zh": "利潤"
+   },
+   {
+    "word": "margins",
+    "base": "margin",
+    "pos": "n.",
+    "hint": "the gap between what something costs and what it sells for",
+    "zh": "利潤空間；價差"
+   },
+   {
+    "word": "customers",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "a person who buys goods or services",
+    "zh": "顧客"
+   },
+   {
+    "word": "survive",
+    "base": "survive",
+    "pos": "v.",
+    "hint": "continue to exist without serious harm",
+    "zh": "撐過；存活"
+   },
+   {
+    "word": "dish",
+    "base": "dish",
+    "pos": "n.",
+    "hint": "food prepared in a certain way as part of a meal",
+    "zh": "菜色；一道菜"
+   },
+   {
+    "word": "menus",
+    "base": "menu",
+    "pos": "n.",
+    "hint": "a list of the food that a place offers",
+    "zh": "菜單"
+   },
+   {
+    "word": "dining room",
+    "base": "dining room",
+    "pos": "n.",
+    "hint": "a space in a home or a shop where people sit and eat",
+    "zh": "內用區；餐廳用餐空間"
+   },
+   {
+    "word": "rent",
+    "base": "rent",
+    "pos": "n.",
+    "hint": "money paid regularly for the use of a building or a space",
+    "zh": "租金"
+   },
+   {
+    "word": "staff",
+    "base": "staff",
+    "pos": "n.",
+    "hint": "all the people who work for a business",
+    "zh": "員工；人手"
+   },
+   {
+    "word": "riders",
+    "base": "rider",
+    "pos": "n.",
+    "hint": "a person who travels by bike or motorcycle to carry things",
+    "zh": "外送員；騎士"
+   },
+   {
+    "word": "income",
+    "base": "income",
+    "pos": "n.",
+    "hint": "money that a person receives for work",
+    "zh": "收入"
+   },
+   {
+    "word": "depends on",
+    "base": "depend on",
+    "pos": "phr. v.",
+    "hint": "be decided or controlled by something else",
+    "zh": "取決於"
+   },
+   {
+    "word": "convenient",
+    "base": "convenient",
+    "pos": "adj.",
+    "hint": "easy to use and saving time or effort",
+    "zh": "方便的"
+   }
+  ]
+ },
+ {
+  "id": "art-17b",
+  "title": "How Vaccines Train Your Body",
+  "titleZh": "疫苗如何訓練你的身體",
+  "category": "健康",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "你的身體本來就有一支防衛部隊，它叫做免疫系統。當病原體進入身體，這支部隊會反擊。它也會記住入侵者。下一次，反應就會快得多。這份記憶可以維持很多年。疫苗背後的道理",
+  "vocab": [
+   {
+    "word": "immune system",
+    "base": "immune system",
+    "pos": "n.",
+    "hint": "the parts of the body that work together to fight illness",
+    "zh": "免疫系統"
+   },
+   {
+    "word": "germ",
+    "base": "germ",
+    "pos": "n.",
+    "hint": "a very small living thing that can cause illness",
+    "zh": "病原體；病菌"
+   },
+   {
+    "word": "vaccines",
+    "base": "vaccine",
+    "pos": "n.",
+    "hint": "a medical product that prepares the body against a certain disease",
+    "zh": "疫苗"
+   },
+   {
+    "word": "sample",
+    "base": "sample",
+    "pos": "n.",
+    "hint": "a small part taken to show what the whole is like",
+    "zh": "樣本"
+   },
+   {
+    "word": "virus",
+    "base": "virus",
+    "pos": "n.",
+    "hint": "a very tiny thing that copies itself inside living cells and can cause disease",
+    "zh": "病毒"
+   },
+   {
+    "word": "bacteria",
+    "base": "bacteria",
+    "pos": "n.",
+    "hint": "very small living things, some of which cause illness",
+    "zh": "細菌"
+   },
+   {
+    "word": "cells",
+    "base": "cell",
+    "pos": "n.",
+    "hint": "the smallest working unit of a living body",
+    "zh": "細胞"
+   },
+   {
+    "word": "antibodies",
+    "base": "antibody",
+    "pos": "n.",
+    "hint": "a substance made by the body to attack a certain germ",
+    "zh": "抗體"
+   },
+   {
+    "word": "stick to",
+    "base": "stick to",
+    "pos": "phr. v.",
+    "hint": "become firmly joined onto the surface of something",
+    "zh": "黏附於"
+   },
+   {
+    "word": "mild",
+    "base": "mild",
+    "pos": "adj.",
+    "hint": "not strong or serious",
+    "zh": "輕微的"
+   },
+   {
+    "word": "side effects",
+    "base": "side effect",
+    "pos": "n.",
+    "hint": "an extra and often unwanted result of taking a medicine",
+    "zh": "副作用"
+   },
+   {
+    "word": "fever",
+    "base": "fever",
+    "pos": "n.",
+    "hint": "a body temperature that is higher than normal",
+    "zh": "發燒"
+   },
+   {
+    "word": "dose",
+    "base": "dose",
+    "pos": "n.",
+    "hint": "one measured amount of medicine taken at one time",
+    "zh": "劑量；一劑"
+   },
+   {
+    "word": "protection",
+    "base": "protection",
+    "pos": "n.",
+    "hint": "the state of being kept safe from harm",
+    "zh": "保護力"
+   },
+   {
+    "word": "community",
+    "base": "community",
+    "pos": "n.",
+    "hint": "a group of people living in the same area",
+    "zh": "社群；社區"
+   },
+   {
+    "word": "spread",
+    "base": "spread",
+    "pos": "v.",
+    "hint": "move into a wider area or reach more people",
+    "zh": "傳播；散布"
+   }
+  ]
+ },
+ {
+  "id": "art-18a",
+  "title": "AI Tools Arrive in the Office",
+  "titleZh": "AI 工具進入辦公室",
+  "category": "科技",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "走進現在幾乎任何一間辦公室，都會看到有人正在對著人工智慧工具下指令。短短一段時間內，這類程式已經從科技新聞走進了平常的工作日常。員工用它來草擬電子郵件、把冗長的",
+  "vocab": [
+   {
+    "word": "artificial intelligence",
+    "base": "artificial intelligence",
+    "pos": "n.",
+    "hint": "computer systems that can do tasks which normally need human thinking",
+    "zh": "人工智慧"
+   },
+   {
+    "word": "draft",
+    "base": "draft",
+    "pos": "v.",
+    "hint": "to write a first version of a letter or document",
+    "zh": "草擬"
+   },
+   {
+    "word": "summarize",
+    "base": "summarize",
+    "pos": "v.",
+    "hint": "to give the main points of something in a short form",
+    "zh": "摘要;概述"
+   },
+   {
+    "word": "routine",
+    "base": "routine",
+    "pos": "n.",
+    "hint": "the usual set of things a person does regularly",
+    "zh": "例行事務"
+   },
+   {
+    "word": "Customer service",
+    "base": "customer service",
+    "pos": "n.",
+    "hint": "the part of a company that helps buyers with questions and problems",
+    "zh": "客服"
+   },
+   {
+    "word": "generate",
+    "base": "generate",
+    "pos": "v.",
+    "hint": "to produce or create something",
+    "zh": "產生;製作"
+   },
+   {
+    "word": "clause",
+    "base": "clause",
+    "pos": "n.",
+    "hint": "a separate section or condition in a legal agreement",
+    "zh": "條款"
+   },
+   {
+    "word": "colleague",
+    "base": "colleague",
+    "pos": "n.",
+    "hint": "a person you work with",
+    "zh": "同事"
+   },
+   {
+    "word": "barrier",
+    "base": "barrier",
+    "pos": "n.",
+    "hint": "something that makes progress or entry difficult",
+    "zh": "障礙;門檻"
+   },
+   {
+    "word": "employment",
+    "base": "employment",
+    "pos": "n.",
+    "hint": "the state of having paid work",
+    "zh": "就業"
+   },
+   {
+    "word": "spreadsheets",
+    "base": "spreadsheet",
+    "pos": "n.",
+    "hint": "a computer program that arranges numbers in rows and columns for calculation",
+    "zh": "試算表"
+   },
+   {
+    "word": "uncertainty",
+    "base": "uncertainty",
+    "pos": "n.",
+    "hint": "a situation in which something is not known or decided",
+    "zh": "不確定性"
+   },
+   {
+    "word": "accuracy",
+    "base": "accuracy",
+    "pos": "n.",
+    "hint": "the quality of being correct and free from mistakes",
+    "zh": "準確度"
+   },
+   {
+    "word": "fluent",
+    "base": "fluent",
+    "pos": "adj.",
+    "hint": "able to use language smoothly and easily",
+    "zh": "流暢的"
+   },
+   {
+    "word": "contracts",
+    "base": "contract",
+    "pos": "n.",
+    "hint": "a written legal agreement between two sides",
+    "zh": "合約"
+   },
+   {
+    "word": "Privacy",
+    "base": "privacy",
+    "pos": "n.",
+    "hint": "the right to keep personal information away from other people",
+    "zh": "隱私"
+   },
+   {
+    "word": "forbid",
+    "base": "forbid",
+    "pos": "v.",
+    "hint": "to order someone not to do something",
+    "zh": "禁止"
+   },
+   {
+    "word": "policies",
+    "base": "policy",
+    "pos": "n.",
+    "hint": "an official rule or plan that an organization follows",
+    "zh": "政策;規定"
+   },
+   {
+    "word": "judgment",
+    "base": "judgment",
+    "pos": "n.",
+    "hint": "the ability to make good decisions after thinking carefully",
+    "zh": "判斷力"
+   },
+   {
+    "word": "automated",
+    "base": "automate",
+    "pos": "v.",
+    "hint": "to make a process work by machine instead of by a person",
+    "zh": "自動化"
+   }
+  ]
+ },
+ {
+  "id": "art-18b",
+  "title": "The Trouble with Microplastics",
+  "titleZh": "微塑膠的難題",
+  "category": "環境",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "微塑膠是比一粒米還小的塑膠碎片，有些小到不用顯微鏡根本看不見。科學家陸續在海水、農地土壤、雨水，以及魚和海鳥的胃裡發現它們。接著自然會出現兩個問題：這些東西究竟",
+  "vocab": [
+   {
+    "word": "Microplastics",
+    "base": "microplastic",
+    "pos": "n.",
+    "hint": "extremely small bits of man-made material found in water, soil and air",
+    "zh": "微塑膠"
+   },
+   {
+    "word": "microscope",
+    "base": "microscope",
+    "pos": "n.",
+    "hint": "an instrument that makes very small objects look much larger",
+    "zh": "顯微鏡"
+   },
+   {
+    "word": "packaging",
+    "base": "packaging",
+    "pos": "n.",
+    "hint": "the boxes, bags and wrapping used to hold and protect goods",
+    "zh": "包裝材"
+   },
+   {
+    "word": "brittle",
+    "base": "brittle",
+    "pos": "adj.",
+    "hint": "hard but easily broken or cracked",
+    "zh": "脆的;易碎的"
+   },
+   {
+    "word": "fragments",
+    "base": "fragment",
+    "pos": "n.",
+    "hint": "small parts broken off something larger",
+    "zh": "碎片"
+   },
+   {
+    "word": "tires",
+    "base": "tire",
+    "pos": "n.",
+    "hint": "the rubber rings around the wheels of a vehicle",
+    "zh": "輪胎"
+   },
+   {
+    "word": "particles",
+    "base": "particle",
+    "pos": "n.",
+    "hint": "extremely small bits of matter",
+    "zh": "顆粒"
+   },
+   {
+    "word": "synthetic",
+    "base": "synthetic",
+    "pos": "adj.",
+    "hint": "made by a chemical process rather than coming from nature",
+    "zh": "合成的"
+   },
+   {
+    "word": "fibers",
+    "base": "fiber",
+    "pos": "n.",
+    "hint": "thin threads used to make cloth or rope",
+    "zh": "纖維"
+   },
+   {
+    "word": "filter",
+    "base": "filter",
+    "pos": "n.",
+    "hint": "a device that separates unwanted material out of a liquid or gas",
+    "zh": "濾網;過濾器"
+   },
+   {
+    "word": "plankton",
+    "base": "plankton",
+    "pos": "n.",
+    "hint": "very small living things that float in the sea and are eaten by larger animals",
+    "zh": "浮游生物"
+   },
+   {
+    "word": "sediment",
+    "base": "sediment",
+    "pos": "n.",
+    "hint": "material that settles at the bottom of a river, lake or ocean",
+    "zh": "沉積物"
+   },
+   {
+    "word": "durable",
+    "base": "durable",
+    "pos": "adj.",
+    "hint": "able to last a long time without being damaged",
+    "zh": "耐用的"
+   },
+   {
+    "word": "resists",
+    "base": "resist",
+    "pos": "v.",
+    "hint": "to not be damaged or affected by something",
+    "zh": "抵抗"
+   },
+   {
+    "word": "bacteria",
+    "base": "bacteria",
+    "pos": "n.",
+    "hint": "extremely small living things that can cause decay or illness",
+    "zh": "細菌"
+   },
+   {
+    "word": "absorbs",
+    "base": "absorb",
+    "pos": "v.",
+    "hint": "to take in a liquid or substance through a surface",
+    "zh": "吸收"
+   },
+   {
+    "word": "caution",
+    "base": "caution",
+    "pos": "n.",
+    "hint": "care taken to avoid mistakes or danger",
+    "zh": "謹慎;保留"
+   },
+   {
+    "word": "unnecessary",
+    "base": "unnecessary",
+    "pos": "adj.",
+    "hint": "not needed",
+    "zh": "不必要的"
+   },
+   {
+    "word": "persistent",
+    "base": "persistent",
+    "pos": "adj.",
+    "hint": "continuing to exist or last for a long time",
+    "zh": "難以消失的;持久的"
+   }
+  ]
+ },
+ {
+  "id": "art-19a",
+  "title": "Why Cities Are Planting More Trees",
+  "titleZh": "城市為什麼開始猛種樹",
+  "category": "環境",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "在炎熱的午後走進大城市，你馬上就會感覺到：街道比城外的田野與山丘熱得多。混凝土、柏油與玻璃整天吸收熱，到了晚上再慢慢釋放出來。科學家把這個溫差稱為熱島效應；隨著",
+  "vocab": [
+   {
+    "word": "absorb",
+    "base": "absorb",
+    "pos": "v.",
+    "hint": "to take in heat, light or liquid",
+    "zh": "吸收"
+   },
+   {
+    "word": "release",
+    "base": "release",
+    "pos": "v.",
+    "hint": "to let something go out into the air or into a space",
+    "zh": "釋放"
+   },
+   {
+    "word": "urban",
+    "base": "urban",
+    "pos": "adj.",
+    "hint": "relating to a city or town rather than the countryside",
+    "zh": "都市的"
+   },
+   {
+    "word": "shade",
+    "base": "shade",
+    "pos": "n.",
+    "hint": "an area kept out of direct sunlight by something above it",
+    "zh": "樹蔭；陰涼處"
+   },
+   {
+    "word": "evaporation",
+    "base": "evaporation",
+    "pos": "n.",
+    "hint": "the process in which a liquid slowly turns into gas",
+    "zh": "蒸發"
+   },
+   {
+    "word": "surrounding",
+    "base": "surrounding",
+    "pos": "adj.",
+    "hint": "being all around a place or thing",
+    "zh": "周圍的"
+   },
+   {
+    "word": "trap",
+    "base": "trap",
+    "pos": "v.",
+    "hint": "to catch and hold something so that it cannot get away",
+    "zh": "攔住；困住"
+   },
+   {
+    "word": "particles",
+    "base": "particle",
+    "pos": "n.",
+    "hint": "extremely small pieces of a substance",
+    "zh": "微粒；顆粒"
+   },
+   {
+    "word": "reduce",
+    "base": "reduce",
+    "pos": "v.",
+    "hint": "to make something smaller in amount or degree",
+    "zh": "減少"
+   },
+   {
+    "word": "flooding",
+    "base": "flooding",
+    "pos": "n.",
+    "hint": "a situation in which water covers land that is usually dry",
+    "zh": "淹水"
+   },
+   {
+    "word": "habitat",
+    "base": "habitat",
+    "pos": "n.",
+    "hint": "the natural home of an animal or plant",
+    "zh": "棲地"
+   },
+   {
+    "word": "residents",
+    "base": "resident",
+    "pos": "n.",
+    "hint": "people who live in a particular place",
+    "zh": "居民"
+   },
+   {
+    "word": "stress",
+    "base": "stress",
+    "pos": "n.",
+    "hint": "the worried feeling caused by pressure or difficulty",
+    "zh": "壓力"
+   },
+   {
+    "word": "recover",
+    "base": "recover",
+    "pos": "v.",
+    "hint": "to return to a normal condition after difficulty or illness",
+    "zh": "恢復"
+   },
+   {
+    "word": "budgets",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "plans showing how much money is available to spend",
+    "zh": "預算"
+   },
+   {
+    "word": "maintenance",
+    "base": "maintenance",
+    "pos": "n.",
+    "hint": "the work of keeping something in good condition",
+    "zh": "維護"
+   },
+   {
+    "word": "damage",
+    "base": "damage",
+    "pos": "n.",
+    "hint": "harm that makes something less useful or less valuable",
+    "zh": "損害"
+   },
+   {
+    "word": "species",
+    "base": "species",
+    "pos": "n.",
+    "hint": "a group of animals or plants of the same kind",
+    "zh": "物種"
+   },
+   {
+    "word": "neighborhoods",
+    "base": "neighborhood",
+    "pos": "n.",
+    "hint": "areas of a city or town where people live",
+    "zh": "社區"
+   }
+  ]
+ },
+ {
+  "id": "art-19b",
+  "title": "Coffee and Your Brain",
+  "titleZh": "咖啡在你腦中做了什麼",
+  "category": "科普",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "對數以百萬計的人來說，工作日要等到第一杯咖啡才真正開始。茶、能量飲料，甚至某些汽水都屬於同一個家族：它們都含有咖啡因，是全世界使用最廣的藥物之一。多數人知道它讓",
+  "vocab": [
+   {
+    "word": "caffeine",
+    "base": "caffeine",
+    "pos": "n.",
+    "hint": "the substance in coffee and tea that makes people feel more awake",
+    "zh": "咖啡因"
+   },
+   {
+    "word": "builds up",
+    "base": "build up",
+    "pos": "phr.v.",
+    "hint": "to increase slowly in amount over a period of time",
+    "zh": "逐漸累積"
+   },
+   {
+    "word": "chemical",
+    "base": "chemical",
+    "pos": "n.",
+    "hint": "a substance produced by or used in a natural or scientific process",
+    "zh": "化學物質"
+   },
+   {
+    "word": "signal",
+    "base": "signal",
+    "pos": "n.",
+    "hint": "a message sent from one part of the body to another to make something happen",
+    "zh": "訊號"
+   },
+   {
+    "word": "block",
+    "base": "block",
+    "pos": "v.",
+    "hint": "to stop something from passing or from happening",
+    "zh": "阻擋"
+   },
+   {
+    "word": "delays",
+    "base": "delay",
+    "pos": "v.",
+    "hint": "to make something happen later than planned",
+    "zh": "延後"
+   },
+   {
+    "word": "wears off",
+    "base": "wear off",
+    "pos": "phr.v.",
+    "hint": "to become gradually weaker and finally disappear",
+    "zh": "（藥效）消退"
+   },
+   {
+    "word": "alertness",
+    "base": "alertness",
+    "pos": "n.",
+    "hint": "the state of being awake and quick to notice things",
+    "zh": "清醒度；警醒"
+   },
+   {
+    "word": "affects",
+    "base": "affect",
+    "pos": "v.",
+    "hint": "to produce a change in someone or something",
+    "zh": "影響"
+   },
+   {
+    "word": "breaks down",
+    "base": "break down",
+    "pos": "phr.v.",
+    "hint": "to separate a substance into smaller and simpler parts",
+    "zh": "分解"
+   },
+   {
+    "word": "genes",
+    "base": "gene",
+    "pos": "n.",
+    "hint": "the parts of a cell that pass features from parents to children",
+    "zh": "基因"
+   },
+   {
+    "word": "dose",
+    "base": "dose",
+    "pos": "n.",
+    "hint": "a measured amount of a drug or substance taken at one time",
+    "zh": "劑量"
+   },
+   {
+    "word": "anxious",
+    "base": "anxious",
+    "pos": "adj.",
+    "hint": "feeling worried and nervous",
+    "zh": "焦慮的"
+   },
+   {
+    "word": "habit",
+    "base": "habit",
+    "pos": "n.",
+    "hint": "something a person does regularly, often without thinking",
+    "zh": "習慣"
+   },
+   {
+    "word": "tolerance",
+    "base": "tolerance",
+    "pos": "n.",
+    "hint": "a weaker reaction to a substance after using it for a long time",
+    "zh": "耐受性"
+   },
+   {
+    "word": "headache",
+    "base": "headache",
+    "pos": "n.",
+    "hint": "a pain felt inside the head",
+    "zh": "頭痛"
+   },
+   {
+    "word": "moderate",
+    "base": "moderate",
+    "pos": "adj.",
+    "hint": "neither too large nor too small in amount",
+    "zh": "適量的"
+   },
+   {
+    "word": "sensitive",
+    "base": "sensitive",
+    "pos": "adj.",
+    "hint": "easily and strongly influenced by something",
+    "zh": "敏感的"
+   },
+   {
+    "word": "replace",
+    "base": "replace",
+    "pos": "v.",
+    "hint": "to take the place of something else",
+    "zh": "取代"
+   },
+   {
+    "word": "concentrate",
+    "base": "concentrate",
+    "pos": "v.",
+    "hint": "to give all your attention to one thing",
+    "zh": "專注"
+   }
+  ]
+ },
+ {
+  "id": "art-1a",
+  "title": "The Cafe That Banned Laptops",
+  "titleZh": "那家禁用筆電的咖啡店",
+  "category": "零售",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "三年前 Marisol Vega 開設 Copper Kettle 咖啡館時，她想像的是一間充滿談話聲的店。到了第二個冬天，店裡卻幾乎完全安靜。幾乎每張桌子都坐",
+  "vocab": [
+   {
+    "word": "revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the money a business receives from its normal activities",
+    "zh": "營收；收益"
+   },
+   {
+    "word": "quarterly",
+    "base": "quarterly",
+    "pos": "adj.",
+    "hint": "happening once every three months",
+    "zh": "每季的"
+   },
+   {
+    "word": "transactions",
+    "base": "transaction",
+    "pos": "n.",
+    "hint": "individual acts of buying or selling something",
+    "zh": "交易"
+   },
+   {
+    "word": "discourage",
+    "base": "discourage",
+    "pos": "v.",
+    "hint": "to make someone less willing to do something",
+    "zh": "使卻步；打消念頭"
+   },
+   {
+    "word": "implemented",
+    "base": "implement",
+    "pos": "v.",
+    "hint": "put a plan or rule into effect",
+    "zh": "實施；執行"
+   },
+   {
+    "word": "policy",
+    "base": "policy",
+    "pos": "n.",
+    "hint": "an official rule that an organization follows",
+    "zh": "政策；規定"
+   },
+   {
+    "word": "in advance",
+    "base": "in advance",
+    "pos": "phr.",
+    "hint": "before something happens; ahead of time",
+    "zh": "事先；提前"
+   },
+   {
+    "word": "negotiate",
+    "base": "negotiate",
+    "pos": "v.",
+    "hint": "to discuss something with others in order to reach an agreement",
+    "zh": "協商；談判"
+   },
+   {
+    "word": "claiming",
+    "base": "claim",
+    "pos": "v.",
+    "hint": "saying that something is true without giving proof",
+    "zh": "聲稱；主張"
+   },
+   {
+    "word": "refund",
+    "base": "refund",
+    "pos": "n.",
+    "hint": "money given back to a buyer who is not satisfied",
+    "zh": "退款"
+   },
+   {
+    "word": "complaints",
+    "base": "complaint",
+    "pos": "n.",
+    "hint": "statements that someone is unhappy about a product or service",
+    "zh": "抱怨；客訴"
+   },
+   {
+    "word": "dispute",
+    "base": "dispute",
+    "pos": "n.",
+    "hint": "a serious public disagreement between people or groups",
+    "zh": "爭議；糾紛"
+   },
+   {
+    "word": "controversial",
+    "base": "controversial",
+    "pos": "adj.",
+    "hint": "likely to make many people argue with each other",
+    "zh": "有爭議的"
+   },
+   {
+    "word": "operates",
+    "base": "operate",
+    "pos": "v.",
+    "hint": "to run a business or keep a system working",
+    "zh": "營運；運作"
+   },
+   {
+    "word": "permitted",
+    "base": "permit",
+    "pos": "v.",
+    "hint": "officially allowed by a rule or authority",
+    "zh": "准許；允許"
+   },
+   {
+    "word": "reserving",
+    "base": "reserve",
+    "pos": "v.",
+    "hint": "arranging to keep a table or room for your own later use",
+    "zh": "預訂"
+   },
+   {
+    "word": "anticipated",
+    "base": "anticipate",
+    "pos": "v.",
+    "hint": "to expect that something will happen",
+    "zh": "預期；預料"
+   },
+   {
+    "word": "predictable",
+    "base": "predictable",
+    "pos": "adj.",
+    "hint": "able to be known beforehand because it follows a regular pattern",
+    "zh": "可預測的"
+   },
+   {
+    "word": "generates",
+    "base": "generate",
+    "pos": "v.",
+    "hint": "to produce something such as income, power or interest",
+    "zh": "產生；帶來"
+   }
+  ]
+ },
+ {
+  "id": "art-1b",
+  "title": "The Four-Day Workweek Experiment",
+  "titleZh": "週休三日實驗",
+  "category": "人資",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "兩年前，Vandermeer 印刷包裝公司的人資主管 Priya Raghavan 向董事會提出一項同事都以為是玩笑的方案：全體員工每週工作四天，工資照舊。產出",
+  "vocab": [
+   {
+    "word": "wages",
+    "base": "wage",
+    "pos": "n.",
+    "hint": "the money paid to an employee for the work he or she does",
+    "zh": "工資；薪資"
+   },
+   {
+    "word": "deadline",
+    "base": "deadline",
+    "pos": "n.",
+    "hint": "the latest time by which a task must be finished",
+    "zh": "期限；交期"
+   },
+   {
+    "word": "trial",
+    "base": "trial",
+    "pos": "n.",
+    "hint": "a test of something over a period of time to see whether it works",
+    "zh": "試行；試辦"
+   },
+   {
+    "word": "overtime",
+    "base": "overtime",
+    "pos": "n.",
+    "hint": "extra hours worked beyond a normal working day",
+    "zh": "加班"
+   },
+   {
+    "word": "terminate",
+    "base": "terminate",
+    "pos": "v.",
+    "hint": "to bring a contract or agreement to a formal end",
+    "zh": "終止"
+   },
+   {
+    "word": "structured",
+    "base": "structure",
+    "pos": "v.",
+    "hint": "organized into a particular form or order",
+    "zh": "安排；組織"
+   },
+   {
+    "word": "staggered",
+    "base": "stagger",
+    "pos": "v.",
+    "hint": "arranged so that things do not all happen at the same time",
+    "zh": "錯開（時間）"
+   },
+   {
+    "word": "agenda",
+    "base": "agenda",
+    "pos": "n.",
+    "hint": "a list of the items to be discussed at a meeting",
+    "zh": "議程"
+   },
+   {
+    "word": "efficiency",
+    "base": "efficiency",
+    "pos": "n.",
+    "hint": "the ability to work well without wasting time or resources",
+    "zh": "效率"
+   },
+   {
+    "word": "absence",
+    "base": "absence",
+    "pos": "n.",
+    "hint": "the fact of not being at work or at a place where you should be",
+    "zh": "缺席；缺勤"
+   },
+   {
+    "word": "scheduled",
+    "base": "schedule",
+    "pos": "v.",
+    "hint": "arranged for something to take place at a particular time",
+    "zh": "安排（時間）"
+   },
+   {
+    "word": "recruit",
+    "base": "recruit",
+    "pos": "v.",
+    "hint": "to find and hire new people to work for a company",
+    "zh": "招募"
+   },
+   {
+    "word": "applications",
+    "base": "application",
+    "pos": "n.",
+    "hint": "formal written requests from people who want a job",
+    "zh": "應徵；申請"
+   },
+   {
+    "word": "vacancy",
+    "base": "vacancy",
+    "pos": "n.",
+    "hint": "a job position that has not yet been filled",
+    "zh": "職缺"
+   },
+   {
+    "word": "fees",
+    "base": "fee",
+    "pos": "n.",
+    "hint": "the money charged for a professional or agency service",
+    "zh": "費用"
+   },
+   {
+    "word": "benefited",
+    "base": "benefit",
+    "pos": "v.",
+    "hint": "gained an advantage or improvement from something",
+    "zh": "受益"
+   },
+   {
+    "word": "comply",
+    "base": "comply",
+    "pos": "v.",
+    "hint": "to act in the way that a rule or another party requires",
+    "zh": "遵守；配合"
+   },
+   {
+    "word": "arrangement",
+    "base": "arrangement",
+    "pos": "n.",
+    "hint": "a plan or agreement about how something will be done",
+    "zh": "安排；方式"
+   },
+   {
+    "word": "permanent",
+    "base": "permanent",
+    "pos": "adj.",
+    "hint": "lasting for a long time with no expected end",
+    "zh": "永久的；長期的"
+   }
+  ]
+ },
+ {
+  "id": "art-20a",
+  "title": "The Global Chip Shortage, Explained",
+  "titleZh": "全球晶片荒是怎麼回事",
+  "category": "科技",
+  "level": "高級 (TOEIC 800+)",
+  "summary": "很少有消費者真的摸過一片電腦晶片，但晶片一缺貨，車商的展示間就可能空掉。晶片是一小片負責儲存與處理資訊的半導體材料，它藏在手機、醫院設備裡，也愈來愈多地裝進汽車",
+  "vocab": [
+   {
+    "word": "shortage",
+    "base": "shortage",
+    "pos": "n.",
+    "hint": "a situation in which there is not enough of something that people need",
+    "zh": "短缺"
+   },
+   {
+    "word": "semiconductor",
+    "base": "semiconductor",
+    "pos": "n.",
+    "hint": "a material used to make the tiny electronic parts inside phones and computers",
+    "zh": "半導體"
+   },
+   {
+    "word": "demand",
+    "base": "demand",
+    "pos": "n.",
+    "hint": "the amount of a product that buyers want at a given time",
+    "zh": "需求"
+   },
+   {
+    "word": "components",
+    "base": "component",
+    "pos": "n.",
+    "hint": "the separate parts that together make up a machine or a system",
+    "zh": "零組件"
+   },
+   {
+    "word": "manufacturer",
+    "base": "manufacturer",
+    "pos": "n.",
+    "hint": "a company that produces goods in large amounts, usually in factories",
+    "zh": "製造商"
+   },
+   {
+    "word": "profit",
+    "base": "profit",
+    "pos": "n.",
+    "hint": "the money left after all costs have been taken away from what a business earns",
+    "zh": "利潤"
+   },
+   {
+    "word": "capacity",
+    "base": "capacity",
+    "pos": "n.",
+    "hint": "the largest amount a factory or system is able to make or hold",
+    "zh": "產能"
+   },
+   {
+    "word": "facility",
+    "base": "facility",
+    "pos": "n.",
+    "hint": "a building or site set up for one particular kind of work",
+    "zh": "廠房、設施"
+   },
+   {
+    "word": "production",
+    "base": "production",
+    "pos": "n.",
+    "hint": "the process of making goods, or the quantity that is made",
+    "zh": "生產、產量"
+   },
+   {
+    "word": "supply chain",
+    "base": "supply chain",
+    "pos": "n.",
+    "hint": "the whole set of firms and steps that move a product from raw material to buyer",
+    "zh": "供應鏈"
+   },
+   {
+    "word": "vulnerable",
+    "base": "vulnerable",
+    "pos": "adj.",
+    "hint": "easily harmed or badly affected by damage or sudden events",
+    "zh": "脆弱的、易受衝擊的"
+   },
+   {
+    "word": "disruption",
+    "base": "disruption",
+    "pos": "n.",
+    "hint": "a sudden break in the normal flow of an activity or a service",
+    "zh": "中斷、擾亂"
+   },
+   {
+    "word": "efficiency",
+    "base": "efficiency",
+    "pos": "n.",
+    "hint": "the ability to work or produce with little waste of time or money",
+    "zh": "效率"
+   },
+   {
+    "word": "inventory",
+    "base": "inventory",
+    "pos": "n.",
+    "hint": "the goods and materials a business keeps in store",
+    "zh": "庫存"
+   },
+   {
+    "word": "forecast",
+    "base": "forecast",
+    "pos": "n.",
+    "hint": "a statement of what is expected to happen, based on present information",
+    "zh": "預測"
+   },
+   {
+    "word": "backlog",
+    "base": "backlog",
+    "pos": "n.",
+    "hint": "a pile of orders or work that has built up and is still waiting",
+    "zh": "積壓的訂單"
+   },
+   {
+    "word": "consequences",
+    "base": "consequence",
+    "pos": "n.",
+    "hint": "results that follow from an earlier action or event",
+    "zh": "後果"
+   },
+   {
+    "word": "assembly",
+    "base": "assembly",
+    "pos": "n.",
+    "hint": "the act of putting parts together to build a finished product",
+    "zh": "組裝"
+   },
+   {
+    "word": "subsidies",
+    "base": "subsidy",
+    "pos": "n.",
+    "hint": "money paid by a government to support an industry or lower a price",
+    "zh": "補貼"
+   },
+   {
+    "word": "reserves",
+    "base": "reserve",
+    "pos": "n.",
+    "hint": "an amount kept back so that it can be used when needed later",
+    "zh": "儲備、存量"
+   },
+   {
+    "word": "supplier",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "a business that provides goods or parts to another business",
+    "zh": "供應商"
+   }
+  ]
+ },
+ {
+  "id": "art-20b",
+  "title": "Aging Societies and the Future of Work",
+  "titleZh": "高齡化社會與工作的未來",
+  "category": "社會",
+  "level": "高級 (TOEIC 800+)",
+  "summary": "在愈來愈多國家，人們活得更久，出生的孩子卻更少。結果是人口的平均年齡持續往上，而這不只是政府規劃者要煩惱的事。因為一個社會消費的東西，大多得由當下正在工作的人生",
+  "vocab": [
+   {
+    "word": "population",
+    "base": "population",
+    "pos": "n.",
+    "hint": "all the people living in a country or an area",
+    "zh": "人口"
+   },
+   {
+    "word": "pensions",
+    "base": "pension",
+    "pos": "n.",
+    "hint": "regular money paid to someone who has stopped working because of age",
+    "zh": "年金、退休金"
+   },
+   {
+    "word": "contributions",
+    "base": "contribution",
+    "pos": "n.",
+    "hint": "regular payments made into a public or company fund",
+    "zh": "提撥、保費"
+   },
+   {
+    "word": "workforce",
+    "base": "workforce",
+    "pos": "n.",
+    "hint": "all the people available to do paid jobs in a country or a company",
+    "zh": "勞動人口、員工總體"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "a plan showing how much money is available and how it will be used",
+    "zh": "預算"
+   },
+   {
+    "word": "shortages",
+    "base": "shortage",
+    "pos": "n.",
+    "hint": "situations in which there are not enough people or supplies for what is needed",
+    "zh": "短缺、缺工"
+   },
+   {
+    "word": "sectors",
+    "base": "sector",
+    "pos": "n.",
+    "hint": "separate parts of an economy, such as farming or banking",
+    "zh": "產業部門"
+   },
+   {
+    "word": "recruit",
+    "base": "recruit",
+    "pos": "v.",
+    "hint": "to find and take on new people for jobs",
+    "zh": "招募"
+   },
+   {
+    "word": "labor market",
+    "base": "labor market",
+    "pos": "n.",
+    "hint": "the overall supply of workers and the jobs open to them",
+    "zh": "勞動市場"
+   },
+   {
+    "word": "wages",
+    "base": "wage",
+    "pos": "n.",
+    "hint": "money paid to someone for the work done, often counted by the hour",
+    "zh": "工資、薪資"
+   },
+   {
+    "word": "vacancies",
+    "base": "vacancy",
+    "pos": "n.",
+    "hint": "job positions that nobody fills at present",
+    "zh": "職缺"
+   },
+   {
+    "word": "flexible",
+    "base": "flexible",
+    "pos": "adj.",
+    "hint": "able to change easily to fit new conditions or needs",
+    "zh": "彈性的"
+   },
+   {
+    "word": "retirement",
+    "base": "retirement",
+    "pos": "n.",
+    "hint": "the point at which a person stops working for good, usually because of age",
+    "zh": "退休"
+   },
+   {
+    "word": "Automation",
+    "base": "automation",
+    "pos": "n.",
+    "hint": "the use of machines and software to do work once done by people",
+    "zh": "自動化"
+   },
+   {
+    "word": "Immigration",
+    "base": "immigration",
+    "pos": "n.",
+    "hint": "the movement of people into a country in order to live and work there",
+    "zh": "移民（移入）"
+   },
+   {
+    "word": "skilled",
+    "base": "skilled",
+    "pos": "adj.",
+    "hint": "having the training and ability needed for a particular kind of work",
+    "zh": "有技術的、熟練的"
+   },
+   {
+    "word": "supplier",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "a firm that sells goods or parts to another company",
+    "zh": "供應商"
+   },
+   {
+    "word": "colleagues",
+    "base": "colleague",
+    "pos": "n.",
+    "hint": "the people you work together with at the same place",
+    "zh": "同事"
+   },
+   {
+    "word": "retraining",
+    "base": "retraining",
+    "pos": "n.",
+    "hint": "learning new job abilities in order to move into different work",
+    "zh": "再訓練、轉職訓練"
+   },
+   {
+    "word": "occupation",
+    "base": "occupation",
+    "pos": "n.",
+    "hint": "the kind of paid work a person does",
+    "zh": "職業"
+   },
+   {
+    "word": "Demand",
+    "base": "demand",
+    "pos": "n.",
+    "hint": "the wish or need for a product or service among many people",
+    "zh": "需求"
+   }
+  ]
+ },
+ {
+  "id": "art-2a",
+  "title": "Turning Delays into Loyalty",
+  "titleZh": "把延誤變成忠誠度",
+  "category": "旅遊",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "當瑪莉貝爾．奧特嘉接任海岸之翼航空的營運總監時，這家服務十二座小型機場的區域型航空公司留給她一個再多廣告也遮不住的問題。準點率已跌到百分之六十一，滿意度分數是全",
+  "vocab": [
+   {
+    "word": "refund",
+    "base": "refund",
+    "pos": "n.",
+    "hint": "money paid back to a buyer when a purchase or service is unsatisfactory",
+    "zh": "退款"
+   },
+   {
+    "word": "quarterly",
+    "base": "quarterly",
+    "pos": "adj.",
+    "hint": "happening once every three months",
+    "zh": "每季的"
+   },
+   {
+    "word": "disruptions",
+    "base": "disruption",
+    "pos": "n.",
+    "hint": "events that interrupt the normal course of an activity",
+    "zh": "中斷;擾亂"
+   },
+   {
+    "word": "maintenance",
+    "base": "maintenance",
+    "pos": "n.",
+    "hint": "the work of keeping machines or buildings in good working condition",
+    "zh": "維修;保養"
+   },
+   {
+    "word": "implemented",
+    "base": "implement",
+    "pos": "v.",
+    "hint": "put a plan or system into action",
+    "zh": "實施;執行"
+   },
+   {
+    "word": "itinerary",
+    "base": "itinerary",
+    "pos": "n.",
+    "hint": "a detailed plan of a journey, listing times and places",
+    "zh": "行程表"
+   },
+   {
+    "word": "voucher",
+    "base": "voucher",
+    "pos": "n.",
+    "hint": "a printed slip that can be exchanged for goods or a service",
+    "zh": "兌換券;抵用券"
+   },
+   {
+    "word": "in advance",
+    "base": "in advance",
+    "pos": "phr.",
+    "hint": "before something happens; ahead of time",
+    "zh": "事先;預先"
+   },
+   {
+    "word": "estimated",
+    "base": "estimate",
+    "pos": "v.",
+    "hint": "calculated approximately, without exact figures",
+    "zh": "估計"
+   },
+   {
+    "word": "negotiated",
+    "base": "negotiate",
+    "pos": "v.",
+    "hint": "discussed something formally in order to reach an agreement",
+    "zh": "協商;談判"
+   },
+   {
+    "word": "terminate",
+    "base": "terminate",
+    "pos": "v.",
+    "hint": "to bring something to an end",
+    "zh": "終止;結束"
+   },
+   {
+    "word": "Revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the money a business earns from its sales or services",
+    "zh": "營收;收益"
+   },
+   {
+    "word": "comply",
+    "base": "comply",
+    "pos": "v.",
+    "hint": "to act in accordance with a rule, law or request",
+    "zh": "遵守;順從"
+   },
+   {
+    "word": "compensation",
+    "base": "compensation",
+    "pos": "n.",
+    "hint": "payment given to someone for loss, injury or inconvenience",
+    "zh": "賠償;補償"
+   },
+   {
+    "word": "expanded",
+    "base": "expand",
+    "pos": "v.",
+    "hint": "made something larger or applied it to a wider area",
+    "zh": "擴大;擴展"
+   },
+   {
+    "word": "guarantee",
+    "base": "guarantee",
+    "pos": "n.",
+    "hint": "a formal promise about the quality of a product or service",
+    "zh": "保證"
+   },
+   {
+    "word": "adopted",
+    "base": "adopt",
+    "pos": "v.",
+    "hint": "began to use a method or idea created by someone else",
+    "zh": "採用;採納"
+   },
+   {
+    "word": "reputation",
+    "base": "reputation",
+    "pos": "n.",
+    "hint": "the general opinion that people hold about a person or an organization",
+    "zh": "名聲;聲譽"
+   }
+  ]
+ },
+ {
+  "id": "art-2b",
+  "title": "Midnight at the Museum",
+  "titleZh": "美術館的午夜時光",
+  "category": "行銷",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "哈佛森美術館有個罕見的問題:全城幾乎人人都推崇它，卻幾乎沒有人去。平日參觀人數已經連續六年下滑，參觀者的平均年齡是五十八歲。娜迪雅．傅尼耶受聘為行銷經理時，館長",
+  "vocab": [
+   {
+    "word": "attendance",
+    "base": "attendance",
+    "pos": "n.",
+    "hint": "the number of people who come to an event or a place",
+    "zh": "出席人數;參觀人數"
+   },
+   {
+    "word": "declining",
+    "base": "decline",
+    "pos": "v.",
+    "hint": "becoming smaller in number or weaker over a period of time",
+    "zh": "下滑;減少"
+   },
+   {
+    "word": "survey",
+    "base": "survey",
+    "pos": "n.",
+    "hint": "a set of questions asked to many people in order to collect opinions",
+    "zh": "問卷調查"
+   },
+   {
+    "word": "feedback",
+    "base": "feedback",
+    "pos": "n.",
+    "hint": "comments telling you how good or useful something is",
+    "zh": "回饋意見"
+   },
+   {
+    "word": "anticipated",
+    "base": "anticipate",
+    "pos": "v.",
+    "hint": "expected something to happen before it actually did",
+    "zh": "預料;預期"
+   },
+   {
+    "word": "initiative",
+    "base": "initiative",
+    "pos": "n.",
+    "hint": "a new plan started in order to solve a problem or improve a situation",
+    "zh": "新計畫;方案"
+   },
+   {
+    "word": "launched",
+    "base": "launch",
+    "pos": "v.",
+    "hint": "started something new, such as a product or an event, for the first time",
+    "zh": "推出;啟動"
+   },
+   {
+    "word": "overtime",
+    "base": "overtime",
+    "pos": "n.",
+    "hint": "extra hours worked beyond the normal schedule, usually paid at a higher rate",
+    "zh": "加班;加班費"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "the amount of money available for a particular purpose",
+    "zh": "預算"
+   },
+   {
+    "word": "sponsorship",
+    "base": "sponsorship",
+    "pos": "n.",
+    "hint": "financial support given to an event in exchange for publicity",
+    "zh": "贊助"
+   },
+   {
+    "word": "recruited",
+    "base": "recruit",
+    "pos": "v.",
+    "hint": "found and brought new people into an organization",
+    "zh": "招募"
+   },
+   {
+    "word": "in charge of",
+    "base": "in charge of",
+    "pos": "phr.",
+    "hint": "responsible for controlling or managing something",
+    "zh": "負責;主管"
+   },
+   {
+    "word": "capacity",
+    "base": "capacity",
+    "pos": "n.",
+    "hint": "the largest number of people or things that a space can hold",
+    "zh": "容納量;容量"
+   },
+   {
+    "word": "Merchandise",
+    "base": "merchandise",
+    "pos": "n.",
+    "hint": "goods that are offered for sale in a shop",
+    "zh": "商品"
+   },
+   {
+    "word": "promoting",
+    "base": "promote",
+    "pos": "v.",
+    "hint": "advertising something in order to make it better known",
+    "zh": "宣傳;推廣"
+   },
+   {
+    "word": "Subsequent",
+    "base": "subsequent",
+    "pos": "adj.",
+    "hint": "coming after something else in time",
+    "zh": "後續的;接下來的"
+   },
+   {
+    "word": "extended",
+    "base": "extend",
+    "pos": "v.",
+    "hint": "made something continue for a longer time or apply more widely",
+    "zh": "延長;擴大"
+   },
+   {
+    "word": "revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the money an organization earns from its sales or services",
+    "zh": "收入;營收"
+   },
+   {
+    "word": "venue",
+    "base": "venue",
+    "pos": "n.",
+    "hint": "the place where an event or a performance is held",
+    "zh": "場地;會場"
+   }
+  ]
+ },
+ {
+  "id": "art-3a",
+  "title": "The Hotel Where Robots Check You In",
+  "titleZh": "機器人幫你辦入住的飯店",
+  "category": "科技",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "四年前梅里迪安灣飯店在高雄開幕時，櫃檯完全由機器負責。事先訂房的旅客會由一台及腰高、名叫 Pico 的機器人迎接，它會掃描護照、確認行程，並在九十秒內印出房卡。",
+  "vocab": [
+   {
+    "word": "in advance",
+    "base": "in advance",
+    "pos": "phr.",
+    "hint": "before the time when something happens",
+    "zh": "事先；預先"
+   },
+   {
+    "word": "itinerary",
+    "base": "itinerary",
+    "pos": "n.",
+    "hint": "a plan showing the places and times for a journey",
+    "zh": "行程表"
+   },
+   {
+    "word": "automation",
+    "base": "automation",
+    "pos": "n.",
+    "hint": "the use of machines to do work that people once did by hand",
+    "zh": "自動化"
+   },
+   {
+    "word": "quarterly",
+    "base": "quarterly",
+    "pos": "adj.",
+    "hint": "happening once every three months",
+    "zh": "每季的"
+   },
+   {
+    "word": "revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the money a business takes in from selling goods or services",
+    "zh": "營收；收入"
+   },
+   {
+    "word": "occupancy",
+    "base": "occupancy",
+    "pos": "n.",
+    "hint": "the share of rooms or seats that are being used",
+    "zh": "住房率；使用率"
+   },
+   {
+    "word": "implement",
+    "base": "implement",
+    "pos": "v.",
+    "hint": "to put a plan or system into practice",
+    "zh": "實施；導入"
+   },
+   {
+    "word": "complaints",
+    "base": "complaint",
+    "pos": "n.",
+    "hint": "expressions of dissatisfaction about a product or service",
+    "zh": "抱怨；客訴"
+   },
+   {
+    "word": "refund",
+    "base": "refund",
+    "pos": "n.",
+    "hint": "money returned to a customer who was charged wrongly or gave goods back",
+    "zh": "退款"
+   },
+   {
+    "word": "billed",
+    "base": "bill",
+    "pos": "v.",
+    "hint": "charged a customer an amount for goods or services",
+    "zh": "開帳單；計費"
+   },
+   {
+    "word": "feedback",
+    "base": "feedback",
+    "pos": "n.",
+    "hint": "comments about how well a product or service is working",
+    "zh": "意見回饋"
+   },
+   {
+    "word": "complied",
+    "base": "comply",
+    "pos": "v.",
+    "hint": "acted in agreement with a rule, order, or standard",
+    "zh": "遵守；符合"
+   },
+   {
+    "word": "specification",
+    "base": "specification",
+    "pos": "n.",
+    "hint": "a detailed statement of exactly what must be built or delivered",
+    "zh": "規格；規範"
+   },
+   {
+    "word": "supplier",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "a business that provides goods or parts to another company",
+    "zh": "供應商"
+   },
+   {
+    "word": "negotiated",
+    "base": "negotiate",
+    "pos": "v.",
+    "hint": "discussed terms with another party in order to reach an agreement",
+    "zh": "談判；協商"
+   },
+   {
+    "word": "warranty",
+    "base": "warranty",
+    "pos": "n.",
+    "hint": "a written promise to repair or replace something within a set period",
+    "zh": "保固"
+   },
+   {
+    "word": "duty",
+    "base": "duty",
+    "pos": "n.",
+    "hint": "something a person is required to do as part of a job",
+    "zh": "職責"
+   },
+   {
+    "word": "payroll",
+    "base": "payroll",
+    "pos": "n.",
+    "hint": "the total amount of money a company pays its employees",
+    "zh": "薪資支出；薪資名冊"
+   },
+   {
+    "word": "comparable",
+    "base": "comparable",
+    "pos": "adj.",
+    "hint": "similar enough to be judged against each other",
+    "zh": "同級的；可相比的"
+   },
+   {
+    "word": "repetitive",
+    "base": "repetitive",
+    "pos": "adj.",
+    "hint": "done over and over again in the same way",
+    "zh": "重複性的；一再重複的"
+   }
+  ]
+ },
+ {
+  "id": "art-3b",
+  "title": "The Office Plant Consultant",
+  "titleZh": "辦公室植物顧問",
+  "category": "職場",
+  "level": "中高級 (TOEIC 650-800)",
+  "summary": "克萊兒·惠特菲爾德從沒打算靠室內盆栽建立事業。她在中型會計事務所拉金與道爾負責設施管理長達十一年，其中最不起眼的工作之一，就是幫接待區訂購盆栽。每隔幾個月盆栽就",
+  "vocab": [
+   {
+    "word": "facilities",
+    "base": "facility",
+    "pos": "n.",
+    "hint": "the buildings, rooms and equipment an organization uses",
+    "zh": "設施"
+   },
+   {
+    "word": "expense",
+    "base": "expense",
+    "pos": "n.",
+    "hint": "money that has to be paid out for something",
+    "zh": "開銷；費用"
+   },
+   {
+    "word": "renovation",
+    "base": "renovation",
+    "pos": "n.",
+    "hint": "work done to repair and modernize a building",
+    "zh": "翻修"
+   },
+   {
+    "word": "complained",
+    "base": "complain",
+    "pos": "v.",
+    "hint": "said that something was unsatisfactory",
+    "zh": "抱怨"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "the amount of money set aside for a particular purpose",
+    "zh": "預算"
+   },
+   {
+    "word": "installing",
+    "base": "install",
+    "pos": "v.",
+    "hint": "putting equipment in place so that it is ready to use",
+    "zh": "安裝"
+   },
+   {
+    "word": "survey",
+    "base": "survey",
+    "pos": "n.",
+    "hint": "a set of questions used to gather opinions from a group",
+    "zh": "問卷調查"
+   },
+   {
+    "word": "assignments",
+    "base": "assignment",
+    "pos": "n.",
+    "hint": "pieces of work that someone is given to do",
+    "zh": "任務；案子"
+   },
+   {
+    "word": "maintenance",
+    "base": "maintenance",
+    "pos": "n.",
+    "hint": "the regular care needed to keep something in good condition",
+    "zh": "養護；維護"
+   },
+   {
+    "word": "resigned",
+    "base": "resign",
+    "pos": "v.",
+    "hint": "gave up a job of one's own accord",
+    "zh": "辭職"
+   },
+   {
+    "word": "fee",
+    "base": "fee",
+    "pos": "n.",
+    "hint": "an amount of money charged for a service",
+    "zh": "費用"
+   },
+   {
+    "word": "contract",
+    "base": "contract",
+    "pos": "n.",
+    "hint": "a formal written agreement that both sides must follow",
+    "zh": "合約"
+   },
+   {
+    "word": "inventory",
+    "base": "inventory",
+    "pos": "n.",
+    "hint": "the stock of goods that a business holds",
+    "zh": "庫存"
+   },
+   {
+    "word": "annual",
+    "base": "annual",
+    "pos": "adj.",
+    "hint": "happening once each year",
+    "zh": "年度的"
+   },
+   {
+    "word": "technicians",
+    "base": "technician",
+    "pos": "n.",
+    "hint": "workers trained to look after equipment or practical tasks",
+    "zh": "技術人員"
+   },
+   {
+    "word": "leases",
+    "base": "lease",
+    "pos": "n.",
+    "hint": "written agreements allowing someone to rent property for a fixed period",
+    "zh": "租約"
+   },
+   {
+    "word": "logistics",
+    "base": "logistics",
+    "pos": "n.",
+    "hint": "the organizing of transport, storage and delivery of goods",
+    "zh": "物流"
+   },
+   {
+    "word": "terminated",
+    "base": "terminate",
+    "pos": "v.",
+    "hint": "brought an agreement to an official end",
+    "zh": "終止"
+   },
+   {
+    "word": "referrals",
+    "base": "referral",
+    "pos": "n.",
+    "hint": "customers sent to a business by someone who was happy with it",
+    "zh": "轉介"
+   },
+   {
+    "word": "recurring",
+    "base": "recurring",
+    "pos": "adj.",
+    "hint": "coming back again and again at regular intervals",
+    "zh": "反覆發生的"
+   }
+  ]
+ },
+ {
+  "id": "art-4a",
+  "title": "The New Coffee Machine",
+  "titleZh": "辦公室的新咖啡機",
+  "category": "職場",
+  "level": "初級 (TOEIC 400-550)",
+  "summary": "上週一，一個大箱子送到了金菲設計公司。箱子裡是一台亮晶晶的新咖啡機。舊的那台六月壞掉了，大家都很想念它。林先生是老闆，這台是他在網路上訂的。",
+  "vocab": [
+   {
+    "word": "arrived",
+    "base": "arrive",
+    "pos": "v.",
+    "hint": "to get to a place at the end of a trip",
+    "zh": "抵達；送達"
+   },
+   {
+    "word": "machine",
+    "base": "machine",
+    "pos": "n.",
+    "hint": "a tool with moving parts that does a job by using power",
+    "zh": "機器"
+   },
+   {
+    "word": "ordered",
+    "base": "order",
+    "pos": "v.",
+    "hint": "to ask a shop or a company to send you goods",
+    "zh": "訂購"
+   },
+   {
+    "word": "confused",
+    "base": "confused",
+    "pos": "adj.",
+    "hint": "not able to understand something clearly",
+    "zh": "困惑的"
+   },
+   {
+    "word": "manual",
+    "base": "manual",
+    "pos": "n.",
+    "hint": "a small book that tells you how to use a thing",
+    "zh": "說明書；使用手冊"
+   },
+   {
+    "word": "customer",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "a person who buys goods or services from a shop",
+    "zh": "顧客"
+   },
+   {
+    "word": "agent",
+    "base": "agent",
+    "pos": "n.",
+    "hint": "a person whose job is to help buyers or do business for them",
+    "zh": "服務人員；代理人"
+   },
+   {
+    "word": "receipt",
+    "base": "receipt",
+    "pos": "n.",
+    "hint": "a small piece of paper that shows you paid for something",
+    "zh": "收據"
+   },
+   {
+    "word": "complain",
+    "base": "complain",
+    "pos": "v.",
+    "hint": "to say that you are not happy about something",
+    "zh": "抱怨"
+   },
+   {
+    "word": "intern",
+    "base": "intern",
+    "pos": "n.",
+    "hint": "a young person who works at a company for a short time to learn",
+    "zh": "實習生"
+   },
+   {
+    "word": "instructions",
+    "base": "instruction",
+    "pos": "n.",
+    "hint": "words that tell you how to do something step by step",
+    "zh": "使用說明"
+   },
+   {
+    "word": "employee",
+    "base": "employee",
+    "pos": "n.",
+    "hint": "a person who works for a company and gets paid",
+    "zh": "員工"
+   }
+  ]
+ },
+ {
+  "id": "art-4b",
+  "title": "The Lost Package",
+  "titleZh": "寄錯地方的包裹",
+  "category": "物流客服",
+  "level": "初級 (TOEIC 400-550)",
+  "summary": "莉莉在嘉義一家小花店上班。上個月她在網路上買了一台新相機。網站說包裹三天內會送到。她非常期待。這台相機是要送給爸爸的生日禮物。",
+  "vocab": [
+   {
+    "word": "website",
+    "base": "website",
+    "pos": "n.",
+    "hint": "a place on the internet where a company shows its goods or news",
+    "zh": "網站"
+   },
+   {
+    "word": "package",
+    "base": "package",
+    "pos": "n.",
+    "hint": "a thing put in a box or paper and sent to someone",
+    "zh": "包裹"
+   },
+   {
+    "word": "delivery",
+    "base": "delivery",
+    "pos": "n.",
+    "hint": "the act of bringing goods to a person's home or office",
+    "zh": "送貨"
+   },
+   {
+    "word": "customer",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "a person who buys goods or services from a shop",
+    "zh": "顧客"
+   },
+   {
+    "word": "tracking number",
+    "base": "tracking number",
+    "pos": "phr.",
+    "hint": "a code that lets you see where a sent box is now",
+    "zh": "追蹤號碼"
+   },
+   {
+    "word": "driver",
+    "base": "driver",
+    "pos": "n.",
+    "hint": "a person whose job is to take a car or a truck from place to place",
+    "zh": "司機"
+   },
+   {
+    "word": "label",
+    "base": "label",
+    "pos": "n.",
+    "hint": "a small piece of paper on a box that shows a name and a place",
+    "zh": "標籤"
+   },
+   {
+    "word": "refund",
+    "base": "refund",
+    "pos": "n.",
+    "hint": "money given back to you when you do not keep what you bought",
+    "zh": "退款"
+   },
+   {
+    "word": "return",
+    "base": "return",
+    "pos": "v.",
+    "hint": "to give or send a thing back to the person who owns it",
+    "zh": "歸還；退回"
+   },
+   {
+    "word": "complaint",
+    "base": "complaint",
+    "pos": "n.",
+    "hint": "words that say you are not happy about a service or a product",
+    "zh": "客訴；申訴"
+   },
+   {
+    "word": "company",
+    "base": "company",
+    "pos": "n.",
+    "hint": "a group of people who work together to sell goods or services",
+    "zh": "公司"
+   },
+   {
+    "word": "address",
+    "base": "address",
+    "pos": "n.",
+    "hint": "the words and numbers that show where a house or an office is",
+    "zh": "地址"
+   }
+  ]
+ },
+ {
+  "id": "art-5a",
+  "title": "The Lunch Special",
+  "titleZh": "午間特餐",
+  "category": "餐飲",
+  "level": "初級 (TOEIC 400-550)",
+  "summary": "林先生在一棟繁忙的辦公大樓旁邊開了一家小餐館。去年生意很差，只有少數幾位顧客來吃午餐。林先生很擔心，他找女兒 Amy 幫忙。",
+  "vocab": [
+   {
+    "word": "busy",
+    "base": "busy",
+    "pos": "adj.",
+    "hint": "having a lot of people or work; not free",
+    "zh": "繁忙的"
+   },
+   {
+    "word": "customers",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "a person who buys goods or food at a shop",
+    "zh": "顧客"
+   },
+   {
+    "word": "worried",
+    "base": "worried",
+    "pos": "adj.",
+    "hint": "feeling bad because you think something may go wrong",
+    "zh": "擔心的"
+   },
+   {
+    "word": "price",
+    "base": "price",
+    "pos": "n.",
+    "hint": "the money you must pay for something",
+    "zh": "價格"
+   },
+   {
+    "word": "offers",
+    "base": "offer",
+    "pos": "v.",
+    "hint": "to give people the chance to buy or use something",
+    "zh": "提供"
+   },
+   {
+    "word": "menu",
+    "base": "menu",
+    "pos": "n.",
+    "hint": "a list of food that a place can cook for you",
+    "zh": "菜單"
+   },
+   {
+    "word": "schedule",
+    "base": "schedule",
+    "pos": "n.",
+    "hint": "a plan that shows when things will happen",
+    "zh": "時程；排班表"
+   },
+   {
+    "word": "prepare",
+    "base": "prepare",
+    "pos": "v.",
+    "hint": "to get something ready before it is used",
+    "zh": "準備"
+   },
+   {
+    "word": "order",
+    "base": "order",
+    "pos": "v.",
+    "hint": "to ask for food or goods that you want to buy",
+    "zh": "點餐；訂購"
+   },
+   {
+    "word": "receipt",
+    "base": "receipt",
+    "pos": "n.",
+    "hint": "a small paper that shows what you paid for",
+    "zh": "收據"
+   },
+   {
+    "word": "popular",
+    "base": "popular",
+    "pos": "adj.",
+    "hint": "liked by many people",
+    "zh": "受歡迎的"
+   },
+   {
+    "word": "book",
+    "base": "book",
+    "pos": "v.",
+    "hint": "to keep a seat or a table for a later time",
+    "zh": "預訂"
+   }
+  ]
+ },
+ {
+  "id": "art-5b",
+  "title": "My First Business Trip",
+  "titleZh": "我的第一次出差",
+  "category": "差旅",
+  "level": "初級 (TOEIC 400-550)",
+  "summary": "Kevin 三個月前進了晨光貿易。上個月，主管給了他一個大消息。他要飛去大阪開會。這是他第一次出差，他既開心又緊張。",
+  "vocab": [
+   {
+    "word": "meeting",
+    "base": "meeting",
+    "pos": "n.",
+    "hint": "a time when people come together to talk about work",
+    "zh": "會議"
+   },
+   {
+    "word": "business trip",
+    "base": "business trip",
+    "pos": "phr.",
+    "hint": "travel to another city or country for your job",
+    "zh": "出差"
+   },
+   {
+    "word": "nervous",
+    "base": "nervous",
+    "pos": "adj.",
+    "hint": "feeling afraid about something that will happen soon",
+    "zh": "緊張的"
+   },
+   {
+    "word": "client",
+    "base": "client",
+    "pos": "n.",
+    "hint": "a company or person who pays you for your work",
+    "zh": "客戶"
+   },
+   {
+    "word": "report",
+    "base": "report",
+    "pos": "n.",
+    "hint": "a paper that tells people facts about something",
+    "zh": "報告"
+   },
+   {
+    "word": "problem",
+    "base": "problem",
+    "pos": "n.",
+    "hint": "something bad that makes things hard to do",
+    "zh": "問題"
+   },
+   {
+    "word": "flight",
+    "base": "flight",
+    "pos": "n.",
+    "hint": "a trip in a plane from one city to another",
+    "zh": "班機"
+   },
+   {
+    "word": "delayed",
+    "base": "delay",
+    "pos": "v.",
+    "hint": "to make something start or happen later than planned",
+    "zh": "延誤"
+   },
+   {
+    "word": "arrived",
+    "base": "arrive",
+    "pos": "v.",
+    "hint": "to get to a place at the end of a trip",
+    "zh": "抵達"
+   },
+   {
+    "word": "delivery",
+    "base": "delivery",
+    "pos": "n.",
+    "hint": "the act of taking goods to the person who bought them",
+    "zh": "交貨；送貨"
+   },
+   {
+    "word": "sign",
+    "base": "sign",
+    "pos": "v.",
+    "hint": "to write your name on a paper to show that you agree",
+    "zh": "簽署"
+   },
+   {
+    "word": "contract",
+    "base": "contract",
+    "pos": "n.",
+    "hint": "a paper with rules that two sides agree to follow",
+    "zh": "合約"
+   }
+  ]
+ },
+ {
+  "id": "art-6a",
+  "title": "The Pop-Up Bookstore",
+  "titleZh": "只開九十天的書店",
+  "category": "行銷",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "去年春天，台北一條安靜的街上開了一家小店。店裡只賣書。窗上的牌子寫著：「只開九十天」。老闆高蜜莉以前是雜誌編輯。她存了六年的錢，只為了試一個想法。附近的人都沒想",
+  "vocab": [
+   {
+    "word": "former",
+    "base": "former",
+    "pos": "adj.",
+    "hint": "coming before the present one in time or in a job",
+    "zh": "以前的、前任的"
+   },
+   {
+    "word": "lease",
+    "base": "lease",
+    "pos": "n.",
+    "hint": "a written agreement that lets you use a building for a fixed period, in return for payment",
+    "zh": "租約"
+   },
+   {
+    "word": "rented",
+    "base": "rent",
+    "pos": "v.",
+    "hint": "to pay money regularly so that you can use a room, house, or machine",
+    "zh": "承租"
+   },
+   {
+    "word": "retail",
+    "base": "retail",
+    "pos": "adj.",
+    "hint": "connected with selling goods directly to ordinary shoppers",
+    "zh": "零售的"
+   },
+   {
+    "word": "loss",
+    "base": "loss",
+    "pos": "n.",
+    "hint": "money that a business spends but does not earn back",
+    "zh": "虧損"
+   },
+   {
+    "word": "gains",
+    "base": "gain",
+    "pos": "v.",
+    "hint": "to get something useful that you did not have before",
+    "zh": "獲得"
+   },
+   {
+    "word": "stocked",
+    "base": "stock",
+    "pos": "v.",
+    "hint": "to keep goods in a shop so that customers can buy them",
+    "zh": "進貨、備有"
+   },
+   {
+    "word": "queue",
+    "base": "queue",
+    "pos": "n.",
+    "hint": "a line of people waiting for their turn",
+    "zh": "排隊的隊伍"
+   },
+   {
+    "word": "word of mouth",
+    "base": "word of mouth",
+    "pos": "phr.",
+    "hint": "the passing of news from one person to another in ordinary talk",
+    "zh": "口碑、口耳相傳"
+   },
+   {
+    "word": "deadline",
+    "base": "deadline",
+    "pos": "n.",
+    "hint": "the latest time by which something must be finished",
+    "zh": "期限"
+   },
+   {
+    "word": "demand",
+    "base": "demand",
+    "pos": "n.",
+    "hint": "the wish of many buyers to have a product or a service",
+    "zh": "需求"
+   },
+   {
+    "word": "revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the money a business takes in from selling things",
+    "zh": "營收"
+   },
+   {
+    "word": "staff",
+    "base": "staff",
+    "pos": "n.",
+    "hint": "the group of people who work for one company",
+    "zh": "員工"
+   },
+   {
+    "word": "launch",
+    "base": "launch",
+    "pos": "v.",
+    "hint": "to start something new, such as a shop or a product",
+    "zh": "推出、開辦"
+   }
+  ]
+ },
+ {
+  "id": "art-6b",
+  "title": "Paid to Sleep",
+  "titleZh": "睡午覺也算工時",
+  "category": "職場",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "佐藤健二在高雄經營一家小型軟體公司。他的四十人團隊替銀行開發應用程式。幾年前，他每天下午都看到同一個問題。午餐過後，辦公室變得又安靜又遲鈍。打字聲停了，疲倦的眼",
+  "vocab": [
+   {
+    "word": "experiment",
+    "base": "experiment",
+    "pos": "n.",
+    "hint": "a careful test done to find out whether an idea works",
+    "zh": "實驗"
+   },
+   {
+    "word": "announcement",
+    "base": "announcement",
+    "pos": "n.",
+    "hint": "a public statement that gives people new information",
+    "zh": "宣布、公告"
+   },
+   {
+    "word": "guilty",
+    "base": "guilty",
+    "pos": "adj.",
+    "hint": "feeling bad because you think you have done something wrong",
+    "zh": "心虛的、內疚的"
+   },
+   {
+    "word": "manager",
+    "base": "manager",
+    "pos": "n.",
+    "hint": "a person who leads a team and makes decisions at work",
+    "zh": "主管"
+   },
+   {
+    "word": "absences",
+    "base": "absence",
+    "pos": "n.",
+    "hint": "days when a worker is not at the workplace",
+    "zh": "缺勤"
+   },
+   {
+    "word": "survey",
+    "base": "survey",
+    "pos": "n.",
+    "hint": "a set of questions given to many people in order to collect their opinions",
+    "zh": "問卷調查"
+   },
+   {
+    "word": "focus",
+    "base": "focus",
+    "pos": "n.",
+    "hint": "the ability to keep your attention on one task",
+    "zh": "專注力"
+   },
+   {
+    "word": "productivity",
+    "base": "productivity",
+    "pos": "n.",
+    "hint": "how much useful work is done in a set period of time",
+    "zh": "生產力"
+   },
+   {
+    "word": "deadlines",
+    "base": "deadline",
+    "pos": "n.",
+    "hint": "fixed times by which work must be handed in",
+    "zh": "交件期限"
+   },
+   {
+    "word": "punish",
+    "base": "punish",
+    "pos": "v.",
+    "hint": "to make someone suffer because they have broken a rule",
+    "zh": "處罰"
+   },
+   {
+    "word": "policy",
+    "base": "policy",
+    "pos": "n.",
+    "hint": "an official rule or plan that a company follows",
+    "zh": "政策、規定"
+   },
+   {
+    "word": "culture",
+    "base": "culture",
+    "pos": "n.",
+    "hint": "the shared habits and beliefs of the people in a company",
+    "zh": "文化、企業文化"
+   },
+   {
+    "word": "trust",
+    "base": "trust",
+    "pos": "n.",
+    "hint": "the belief that other people will act fairly and keep their promises",
+    "zh": "信任"
+   },
+   {
+    "word": "benefit",
+    "base": "benefit",
+    "pos": "n.",
+    "hint": "an extra reward given to workers besides their pay",
+    "zh": "福利"
+   },
+   {
+    "word": "maintenance",
+    "base": "maintenance",
+    "pos": "n.",
+    "hint": "regular care that keeps something working well",
+    "zh": "保養、維護"
+   }
+  ]
+ },
+ {
+  "id": "art-7a",
+  "title": "The Quiet Hotel Floor",
+  "titleZh": "飯店的安靜樓層",
+  "category": "旅宿",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "梅羅飯店就在台北一座繁忙的火車站旁邊。多年來，房客在網路上寫下同樣的抱怨。牆壁很薄。半夜有人用力甩門。每天一大早，行李箱的輪子就從每個房間門口滾過。經理高艾薇每",
+  "vocab": [
+   {
+    "word": "complaint",
+    "base": "complaint",
+    "pos": "n.",
+    "hint": "a statement that shows you are not happy about a product or service",
+    "zh": "抱怨；客訴"
+   },
+   {
+    "word": "review",
+    "base": "review",
+    "pos": "n.",
+    "hint": "a written opinion about a hotel or product posted online for others",
+    "zh": "評價；評論"
+   },
+   {
+    "word": "afford",
+    "base": "afford",
+    "pos": "v.",
+    "hint": "to have enough money to pay for something",
+    "zh": "負擔得起"
+   },
+   {
+    "word": "renovate",
+    "base": "renovate",
+    "pos": "v.",
+    "hint": "to repair and improve an old building so it looks new again",
+    "zh": "翻修；整修"
+   },
+   {
+    "word": "check-ins",
+    "base": "check-in",
+    "pos": "n.",
+    "hint": "the act of registering at the front desk when you arrive at a hotel",
+    "zh": "入住手續"
+   },
+   {
+    "word": "housekeeping",
+    "base": "housekeeping",
+    "pos": "n.",
+    "hint": "the hotel department that cleans guest rooms",
+    "zh": "房務"
+   },
+   {
+    "word": "staff",
+    "base": "staff",
+    "pos": "n.",
+    "hint": "the group of people who work for a company",
+    "zh": "員工"
+   },
+   {
+    "word": "budget",
+    "base": "budget",
+    "pos": "n.",
+    "hint": "the amount of money planned for a project",
+    "zh": "預算"
+   },
+   {
+    "word": "charged",
+    "base": "charge",
+    "pos": "v.",
+    "hint": "to ask a customer to pay a certain price",
+    "zh": "收費"
+   },
+   {
+    "word": "booked",
+    "base": "book",
+    "pos": "v.",
+    "hint": "to reserve a room or a seat in advance",
+    "zh": "預訂"
+   },
+   {
+    "word": "occupancy",
+    "base": "occupancy",
+    "pos": "n.",
+    "hint": "the share of hotel rooms that are filled by guests",
+    "zh": "住房率"
+   },
+   {
+    "word": "feedback",
+    "base": "feedback",
+    "pos": "n.",
+    "hint": "comments about how good or bad a service is",
+    "zh": "回饋意見"
+   },
+   {
+    "word": "ignore",
+    "base": "ignore",
+    "pos": "v.",
+    "hint": "to pay no attention to a person or a message on purpose",
+    "zh": "忽視"
+   },
+   {
+    "word": "experiment",
+    "base": "experiment",
+    "pos": "n.",
+    "hint": "a test done to find out whether a new idea works",
+    "zh": "實驗"
+   },
+   {
+    "word": "branches",
+    "base": "branch",
+    "pos": "n.",
+    "hint": "a shop or office of the same company in another location",
+    "zh": "分店；分公司"
+   }
+  ]
+ },
+ {
+  "id": "art-7b",
+  "title": "The Vending Machine Farm",
+  "titleZh": "販賣機裡的農場",
+  "category": "科技",
+  "level": "中級 (TOEIC 550-650)",
+  "summary": "蘇亞倫在內湖一家軟體公司上夜班。九點的時候，辦公室冰箱總是空的。附近的店只賣便當和涼麵。亞倫只是想吃一份沙拉。他幾乎找不到。這個小問題後來變成他的公司。",
+  "vocab": [
+   {
+    "word": "night shifts",
+    "base": "night shift",
+    "pos": "n.",
+    "hint": "a work period that runs during the night",
+    "zh": "夜班"
+   },
+   {
+    "word": "harvest",
+    "base": "harvest",
+    "pos": "v.",
+    "hint": "to pick or gather crops when they are ready to eat",
+    "zh": "採收"
+   },
+   {
+    "word": "installed",
+    "base": "install",
+    "pos": "v.",
+    "hint": "to put a machine in place so that it is ready to use",
+    "zh": "安裝"
+   },
+   {
+    "word": "suppliers",
+    "base": "supplier",
+    "pos": "n.",
+    "hint": "companies that provide goods to shops or restaurants",
+    "zh": "供應商"
+   },
+   {
+    "word": "deliver",
+    "base": "deliver",
+    "pos": "v.",
+    "hint": "to bring goods to a person or a place",
+    "zh": "配送；送貨"
+   },
+   {
+    "word": "demand",
+    "base": "demand",
+    "pos": "n.",
+    "hint": "the wish of customers to buy a certain product",
+    "zh": "需求"
+   },
+   {
+    "word": "clients",
+    "base": "client",
+    "pos": "n.",
+    "hint": "people or firms that pay for a service",
+    "zh": "客戶"
+   },
+   {
+    "word": "recruit",
+    "base": "recruit",
+    "pos": "v.",
+    "hint": "to find and hire new workers for a company",
+    "zh": "招募"
+   },
+   {
+    "word": "lease",
+    "base": "lease",
+    "pos": "v.",
+    "hint": "to pay a regular fee for the right to use equipment or space",
+    "zh": "租用"
+   },
+   {
+    "word": "subscription",
+    "base": "subscription",
+    "pos": "n.",
+    "hint": "a regular payment made to keep using a service",
+    "zh": "訂閱制費用"
+   },
+   {
+    "word": "maintenance",
+    "base": "maintenance",
+    "pos": "n.",
+    "hint": "the work of keeping equipment in good condition",
+    "zh": "維護保養"
+   },
+   {
+    "word": "negotiated",
+    "base": "negotiate",
+    "pos": "v.",
+    "hint": "to discuss terms with someone until both sides agree",
+    "zh": "洽談；談成"
+   },
+   {
+    "word": "profitable",
+    "base": "profitable",
+    "pos": "adj.",
+    "hint": "earning more money than it costs to run",
+    "zh": "有獲利的"
+   },
+   {
+    "word": "expand",
+    "base": "expand",
+    "pos": "v.",
+    "hint": "to grow into new places or new markets",
+    "zh": "擴張"
+   }
+  ]
+ },
+ {
+  "id": "art-8a",
+  "title": "Why a Retailer Abandoned Self-Checkout",
+  "titleZh": "一家零售商為何撤掉自助結帳",
+  "category": "商業",
+  "level": "高級 (TOEIC 800+)",
+  "summary": "二○一九年，霍布魯克超市在旗下一百四十家門市裝設自助結帳通道時，採購團隊把這個決定講得像是算好的數學題：五年攤下來，一台機器比它取代的一名收銀員便宜。試算表抓不",
+  "vocab": [
+   {
+    "word": "procurement",
+    "base": "procurement",
+    "pos": "n.",
+    "hint": "the business function responsible for buying the goods and services an organization needs",
+    "zh": "採購（部門／作業）"
+   },
+   {
+    "word": "turnover",
+    "base": "turnover",
+    "pos": "n.",
+    "hint": "the rate at which employees leave a company and have to be replaced",
+    "zh": "人員流動率；離職率"
+   },
+   {
+    "word": "quarterly",
+    "base": "quarterly",
+    "pos": "adj.",
+    "hint": "happening or reported once every three months",
+    "zh": "每季的"
+   },
+   {
+    "word": "automation",
+    "base": "automation",
+    "pos": "n.",
+    "hint": "the use of machines and software to do work previously done by people",
+    "zh": "自動化"
+   },
+   {
+    "word": "inventory",
+    "base": "inventory",
+    "pos": "n.",
+    "hint": "the stock of goods a business holds for sale",
+    "zh": "存貨；庫存"
+   },
+   {
+    "word": "unfamiliar with",
+    "base": "unfamiliar with",
+    "pos": "phr.",
+    "hint": "not knowing, or having little experience of, something",
+    "zh": "不熟悉……"
+   },
+   {
+    "word": "profit margin",
+    "base": "profit margin",
+    "pos": "n.",
+    "hint": "the share of sales that is left as profit once costs are paid",
+    "zh": "利潤率；毛利"
+   },
+   {
+    "word": "monitored",
+    "base": "monitor",
+    "pos": "v.",
+    "hint": "watched or checked closely over a period of time",
+    "zh": "受到監看；被監控"
+   },
+   {
+    "word": "suspicion",
+    "base": "suspicion",
+    "pos": "n.",
+    "hint": "a feeling that someone may have done wrong, held without proof",
+    "zh": "猜疑；懷疑"
+   },
+   {
+    "word": "tolerate",
+    "base": "tolerate",
+    "pos": "v.",
+    "hint": "to accept something unpleasant without complaining or stopping it",
+    "zh": "忍受；容許"
+   },
+   {
+    "word": "positioning",
+    "base": "positioning",
+    "pos": "n.",
+    "hint": "how a company wants customers to see its brand compared with rivals",
+    "zh": "（品牌）定位"
+   },
+   {
+    "word": "discount",
+    "base": "discount",
+    "pos": "n.",
+    "hint": "a reduction from the usual selling price",
+    "zh": "折扣；降價"
+   },
+   {
+    "word": "consistent with",
+    "base": "consistent with",
+    "pos": "phr.",
+    "hint": "matching or fitting something else rather than contradicting it",
+    "zh": "與……一致；相符"
+   },
+   {
+    "word": "weakens",
+    "base": "weaken",
+    "pos": "v.",
+    "hint": "makes something less strong or less effective, often little by little",
+    "zh": "削弱；動搖"
+   },
+   {
+    "word": "retaining",
+    "base": "retain",
+    "pos": "v.",
+    "hint": "keeping something rather than removing or giving it up",
+    "zh": "保留"
+   },
+   {
+    "word": "compromise",
+    "base": "compromise",
+    "pos": "n.",
+    "hint": "something given up so that a dispute can be settled or pressure reduced",
+    "zh": "妥協；讓步"
+   },
+   {
+    "word": "investment",
+    "base": "investment",
+    "pos": "n.",
+    "hint": "money put in now in the hope of a return later",
+    "zh": "投資"
+   },
+   {
+    "word": "retention",
+    "base": "retention",
+    "pos": "n.",
+    "hint": "keeping employees or customers so that they do not leave",
+    "zh": "留才；留住顧客"
+   },
+   {
+    "word": "overhead",
+    "base": "overhead",
+    "pos": "n.",
+    "hint": "the ongoing running costs of a business that are not tied to one product",
+    "zh": "營運成本；經常性支出"
+   },
+   {
+    "word": "operating income",
+    "base": "operating income",
+    "pos": "n.",
+    "hint": "the profit a company earns from its core business before tax and financing costs",
+    "zh": "營業利益"
+   },
+   {
+    "word": "offset",
+    "base": "offset",
+    "pos": "v.",
+    "hint": "to balance out a gain or loss with an equal amount in the opposite direction",
+    "zh": "抵銷"
+   },
+   {
+    "word": "exaggerate",
+    "base": "exaggerate",
+    "pos": "v.",
+    "hint": "to describe something as bigger or more important than it really is",
+    "zh": "誇大"
+   }
+  ]
+ },
+ {
+  "id": "art-8b",
+  "title": "The Economics of Airline Loyalty",
+  "titleZh": "航空里程的經濟學",
+  "category": "商業",
+  "level": "高級 (TOEIC 800+)",
+  "summary": "二○二○年春天，子午太平洋航空需要籌措三十八億美元，卻沒有拿飛機去做擔保。這家航空公司的財務主管對半信半疑的董事會說，飛機值多少錢，取決於二手市場在某個星期二怎",
+  "vocab": [
+   {
+    "word": "security",
+    "base": "security",
+    "pos": "n.",
+    "hint": "something valuable promised to a lender, which the lender can take if the loan is not repaid",
+    "zh": "擔保品；抵押品"
+   },
+   {
+    "word": "treasurer",
+    "base": "treasurer",
+    "pos": "n.",
+    "hint": "the officer in a company responsible for managing its cash, funding, and debt",
+    "zh": "財務主管；資金調度主管"
+   },
+   {
+    "word": "interest rate",
+    "base": "interest rate",
+    "pos": "n.",
+    "hint": "the percentage a lender charges for the use of borrowed money",
+    "zh": "利率"
+   },
+   {
+    "word": "underlying",
+    "base": "underlying",
+    "pos": "adj.",
+    "hint": "forming the real basis of something, though not immediately obvious",
+    "zh": "底層的；根本的"
+   },
+   {
+    "word": "in partnership with",
+    "base": "in partnership with",
+    "pos": "phr.",
+    "hint": "working together with another company on a shared product or service",
+    "zh": "與……合作（推出）"
+   },
+   {
+    "word": "in bulk",
+    "base": "in bulk",
+    "pos": "phr.",
+    "hint": "in large quantities at one time, usually at a lower price per unit",
+    "zh": "整批地；大量地"
+   },
+   {
+    "word": "incentives",
+    "base": "incentive",
+    "pos": "n.",
+    "hint": "rewards offered in order to encourage a particular behavior",
+    "zh": "誘因；獎勵"
+   },
+   {
+    "word": "redeeming",
+    "base": "redeem",
+    "pos": "v.",
+    "hint": "exchanging points or a voucher for goods, services, or cash",
+    "zh": "兌換"
+   },
+   {
+    "word": "revenue",
+    "base": "revenue",
+    "pos": "n.",
+    "hint": "the total money a business takes in from sales before expenses",
+    "zh": "營收"
+   },
+   {
+    "word": "operating margin",
+    "base": "operating margin",
+    "pos": "n.",
+    "hint": "core business profit expressed as a percentage of sales",
+    "zh": "營業利益率"
+   },
+   {
+    "word": "subsidiary",
+    "base": "subsidiary",
+    "pos": "n.",
+    "hint": "a company controlled by another, larger company",
+    "zh": "子公司"
+   },
+   {
+    "word": "liability",
+    "base": "liability",
+    "pos": "n.",
+    "hint": "a debt or obligation a company owes and must eventually settle",
+    "zh": "負債"
+   },
+   {
+    "word": "balance sheet",
+    "base": "balance sheet",
+    "pos": "n.",
+    "hint": "a financial report showing what a company owns and what it owes",
+    "zh": "資產負債表"
+   },
+   {
+    "word": "regulators",
+    "base": "regulator",
+    "pos": "n.",
+    "hint": "official bodies with power to supervise an industry and set rules for it",
+    "zh": "主管機關"
+   },
+   {
+    "word": "earnings",
+    "base": "earnings",
+    "pos": "n.",
+    "hint": "the profit a company reports for a given period",
+    "zh": "盈餘；獲利"
+   },
+   {
+    "word": "disclosure",
+    "base": "disclosure",
+    "pos": "n.",
+    "hint": "the act of making information public, especially when the law requires it",
+    "zh": "揭露；公告"
+   },
+   {
+    "word": "trade-off",
+    "base": "trade-off",
+    "pos": "n.",
+    "hint": "a situation in which gaining one thing means giving up another",
+    "zh": "取捨"
+   },
+   {
+    "word": "accumulating",
+    "base": "accumulate",
+    "pos": "v.",
+    "hint": "building up a growing quantity of something over time",
+    "zh": "累積"
+   },
+   {
+    "word": "perceived",
+    "base": "perceive",
+    "pos": "adj.",
+    "hint": "believed by people to be a certain way, whether or not it truly is",
+    "zh": "（被）認知的；主觀認定的"
+   },
+   {
+    "word": "threshold",
+    "base": "threshold",
+    "pos": "n.",
+    "hint": "the level that must be reached before something takes effect",
+    "zh": "門檻"
+   },
+   {
+    "word": "profitable",
+    "base": "profitable",
+    "pos": "adj.",
+    "hint": "bringing in a good amount of money after costs are paid",
+    "zh": "獲利高的；有賺頭的"
+   }
+  ]
+ },
+ {
+  "id": "art-9a",
+  "title": "The Sign That Saved the Shop",
+  "titleZh": "救回一間小店的招牌",
+  "category": "零售",
+  "level": "初級 (TOEIC 400-550)",
+  "summary": "林先生在台南開了一間小花店。花店就在忙碌的火車站旁邊。十年前，每天都有客人上門。但去年春天，店裡幾乎沒有人。林先生看著他的銷售報表，心情很低落。",
+  "vocab": [
+   {
+    "word": "owned",
+    "base": "own",
+    "pos": "v.",
+    "hint": "to have something as your property",
+    "zh": "擁有；經營"
+   },
+   {
+    "word": "busy",
+    "base": "busy",
+    "pos": "adj.",
+    "hint": "full of people or work; not free",
+    "zh": "忙碌的；熱鬧的"
+   },
+   {
+    "word": "sales",
+    "base": "sales",
+    "pos": "n.",
+    "hint": "money a shop gets from people who buy things",
+    "zh": "銷售額；業績"
+   },
+   {
+    "word": "report",
+    "base": "report",
+    "pos": "n.",
+    "hint": "a paper that gives facts about something",
+    "zh": "報表；報告"
+   },
+   {
+    "word": "sign",
+    "base": "sign",
+    "pos": "n.",
+    "hint": "a board with words that tells people something",
+    "zh": "招牌；標示"
+   },
+   {
+    "word": "by hand",
+    "base": "by hand",
+    "pos": "phr.",
+    "hint": "done by a person, not by a machine",
+    "zh": "用手工；親手"
+   },
+   {
+    "word": "ordered",
+    "base": "order",
+    "pos": "v.",
+    "hint": "asked a shop to give or send you goods",
+    "zh": "訂購"
+   },
+   {
+    "word": "office",
+    "base": "office",
+    "pos": "n.",
+    "hint": "a room where people do business work",
+    "zh": "辦公室"
+   },
+   {
+    "word": "message",
+    "base": "message",
+    "pos": "n.",
+    "hint": "a short piece of writing for other people",
+    "zh": "訊息"
+   },
+   {
+    "word": "Customers",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "people who buy things from a shop",
+    "zh": "顧客"
+   },
+   {
+    "word": "shared",
+    "base": "share",
+    "pos": "v.",
+    "hint": "let other people see or use something",
+    "zh": "分享"
+   },
+   {
+    "word": "delivers",
+    "base": "deliver",
+    "pos": "v.",
+    "hint": "takes goods to the place people want them",
+    "zh": "運送；配送"
+   }
+  ]
+ },
+ {
+  "id": "art-9b",
+  "title": "The Wrong Meeting Room",
+  "titleZh": "走錯的那間會議室",
+  "category": "職場",
+  "level": "初級 (TOEIC 400-550)",
+  "summary": "凱文去年五月在陽光食品開始了他的第一份工作。上班第二天，他的主管要他去 502 會議室。凱文很緊張，走得很快。他在五樓走出電梯後往左轉。然後他推開了 520 會",
+  "vocab": [
+   {
+    "word": "job",
+    "base": "job",
+    "pos": "n.",
+    "hint": "the work a person does to earn money",
+    "zh": "工作；職務"
+   },
+   {
+    "word": "boss",
+    "base": "boss",
+    "pos": "n.",
+    "hint": "the person who is in charge of you at work",
+    "zh": "上司；主管"
+   },
+   {
+    "word": "meeting",
+    "base": "meeting",
+    "pos": "n.",
+    "hint": "a time when people come together to talk about work",
+    "zh": "會議"
+   },
+   {
+    "word": "product",
+    "base": "product",
+    "pos": "n.",
+    "hint": "something a company makes and sells",
+    "zh": "產品"
+   },
+   {
+    "word": "manager",
+    "base": "manager",
+    "pos": "n.",
+    "hint": "a person who leads a team in a company",
+    "zh": "經理；主管"
+   },
+   {
+    "word": "package",
+    "base": "package",
+    "pos": "n.",
+    "hint": "the box or bag that holds a thing you buy",
+    "zh": "包裝；包裹"
+   },
+   {
+    "word": "suggestion",
+    "base": "suggestion",
+    "pos": "n.",
+    "hint": "an idea that you tell other people about",
+    "zh": "建議"
+   },
+   {
+    "word": "mistake",
+    "base": "mistake",
+    "pos": "n.",
+    "hint": "something you do wrong by accident",
+    "zh": "錯誤"
+   },
+   {
+    "word": "project",
+    "base": "project",
+    "pos": "n.",
+    "hint": "a piece of work with a clear goal and a plan",
+    "zh": "專案"
+   },
+   {
+    "word": "tested",
+    "base": "test",
+    "pos": "v.",
+    "hint": "tried something to see if it works well",
+    "zh": "測試"
+   },
+   {
+    "word": "customers",
+    "base": "customer",
+    "pos": "n.",
+    "hint": "people who buy things from a company",
+    "zh": "顧客"
+   },
+   {
+    "word": "cost",
+    "base": "cost",
+    "pos": "n.",
+    "hint": "the money you must pay for something",
+    "zh": "成本；費用"
+   }
+  ]
+ }
+]

@@ -1167,18 +1167,16 @@ table.cat-table td.num { white-space: nowrap; }
   .brand { order: 1; flex: 1; min-width: 0; font-size: 16px; }
   .profile-widget { order: 2; margin-left: auto; }
   .profile-btn { max-width: 150px; overflow: hidden; }
+  /* 導覽收成 5 項後不再需要橫向捲動;捲動容器會把下拉選單裁掉,所以改成塞不下就換行 */
   .topnav {
     order: 3;
     width: 100%;
     margin-left: 0;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    flex-wrap: wrap;
+    gap: 2px;
     padding: 6px 0 8px;
   }
-  .topnav::-webkit-scrollbar { display: none; }
-  .topnav a { padding: 5px 11px; font-size: 14px; }
+  .topnav a { padding: 5px 10px; font-size: 14px; }
 
   .container, .container-narrow { padding: 0 16px; }
   .hero-inner { padding: 30px 16px 34px; }
@@ -1328,16 +1326,22 @@ table.cat-table td.num { white-space: nowrap; }
   min-width: 150px;
   z-index: 120;
 }
-.nav-group:hover .nav-menu, .nav-group.open .nav-menu, .nav-group:focus-within .nav-menu { display: block; }
+.nav-group.open .nav-menu, .nav-group:focus-within .nav-menu { display: block; }
+/* 只有真的有滑鼠時才用滑過展開;觸控裝置點一下會殘留 hover 狀態,會讓選單忽開忽關 */
+@media (hover: hover) and (pointer: fine) {
+  .nav-group:hover .nav-menu { display: block; }
+}
 .nav-menu a { display: block; padding: 8px 14px; }
 @media (max-width: 1180px) {
   .nav-btn { padding: 6px 8px 6px 9px; font-size: 14px; }
 }
 @media (max-width: 860px) {
-  /* 行動版不用下拉:群組攤平,回到可橫向滑動的一列 */
-  .nav-group, .nav-menu { display: contents; }
-  .nav-btn { display: none; }
-  .nav-menu a { display: inline-block; padding: 5px 11px; }
+  /* 行動版一樣是下拉,只是選單放大好按 */
+  .nav-btn { padding: 5px 9px 5px 10px; font-size: 14px; }
+  .nav-menu { min-width: 170px; padding: 8px; }
+  .nav-menu a { padding: 11px 14px; font-size: 15px; }
+  /* 靠右的群組把選單往左收,免得超出螢幕 */
+  .nav-group:last-of-type .nav-menu { left: auto; right: 0; }
 }
 
 /* 單字考題:拖曳 */
@@ -1542,3 +1546,38 @@ h1, h2, h3, .brand { font-weight: 700; }
 .vg-icon { flex: none; width: 84px; height: 84px; }
 .vg-icon svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @media (max-width: 860px) { .vg-icon { width: 68px; height: 68px; } }
+
+/* ---------------- 不規則動詞表 ---------------- */
+.vb-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 14px 0 12px; }
+.vb-bar .btn.on { background: var(--marker); border-color: var(--marker); color: var(--ink); }
+.vb-count { font-size: 13.5px; color: var(--ink-light); margin-left: auto; }
+.vb-chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 6px; }
+.vb-sep { width: 1px; height: 20px; background: var(--line); margin: 0 4px; }
+.vb-code { font-size: 12.5px; color: var(--ink-light); font-weight: 400; margin-left: 8px; letter-spacing: .5px; }
+.vb-wrap { overflow-x: auto; }
+.vb-table { width: 100%; margin-top: 4px; }
+.vb-table td, .vb-table th { padding: 7px 12px; }
+.vb-table b { font-size: 15.5px; }
+.vb-en { font-variant-numeric: tabular-nums; }
+.vb-zh { color: var(--ink-light); font-size: 14px; }
+.vb-mask {
+  border: 1px dashed var(--line); background: var(--bg-soft); color: var(--ink-light);
+  border-radius: 6px; padding: 1px 14px; font: inherit; font-size: 14px; cursor: pointer;
+}
+.vb-mask:hover { border-color: var(--primary); color: var(--primary); }
+.vb-extra-row td { border-top: 0; padding-top: 0; }
+.vb-extra { background: #fff; }
+.vb-ex { font-size: 13.5px; color: var(--ink); }
+.vb-ex span { color: var(--ink-light); margin-left: 10px; }
+.vb-note { font-size: 13px; color: var(--hint-orange); margin-top: 2px; }
+.vb-stem { font-size: 30px; font-weight: 700; font-family: var(--round); }
+.vb-stem span { font-size: 15px; font-weight: 400; color: var(--ink-light); margin-left: 12px; font-family: var(--font); }
+.vb-inputs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.vb-input { max-width: 180px; }
+.vb-input.vb-ok { border-color: var(--ok); background: var(--ok-tint); }
+.vb-input.vb-no { border-color: var(--bad); background: var(--bad-tint); }
+@media (max-width: 860px) {
+  .vb-count { margin-left: 0; width: 100%; }
+  .vb-table td, .vb-table th { padding: 6px 9px; font-size: 14px; }
+  .vb-input { max-width: 100%; flex: 1; }
+}

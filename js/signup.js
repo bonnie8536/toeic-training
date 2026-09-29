@@ -30,7 +30,6 @@
     const start = getParam('mode') === 'login' ? 'login' : 'signup';
     root.append(PROFILE.buildAuthCard({
       mode: start,
-      closable: false,
       autofocus: false,
       backTo: 'index.html',
       onMode(m) {

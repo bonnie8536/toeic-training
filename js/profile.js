@@ -122,6 +122,9 @@
       + '<path fill="#FBBC05" d="M3.97 10.71A5.41 5.41 0 0 1 3.68 9c0-.59.1-1.17.29-1.71V4.96H.96A8.997 8.997 0 0 0 0 9c0 1.45.35 2.83.96 4.04l3.01-2.33z"/>'
       + '<path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.59C13.46.89 11.43 0 9 0A8.997 8.997 0 0 0 .96 4.96l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>';
 
+    const X_ICON = '<svg viewBox="0 0 22 22" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">'
+      + '<path d="M5 5 17 17M17 5 5 17"/></svg>';
+
     const EYE = '<svg viewBox="0 0 22 22" width="19" height="19" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
       + '<path d="M1.6 11S5.2 5.2 11 5.2 20.4 11 20.4 11 16.8 16.8 11 16.8 1.6 11 1.6 11z"/><circle cx="11" cy="11" r="2.9"/></svg>';
     const EYE_OFF = '<svg viewBox="0 0 22 22" width="19" height="19" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
@@ -197,7 +200,7 @@
       return h('div', { class: 'auth-pw' }, input, btn);
     }
 
-    /* opts:{ mode:'login'|'signup'|'forgot', closable, onCancel, onMode, backTo, autofocus } */
+    /* opts:{ mode:'login'|'signup'|'forgot', onMode, backTo, autofocus } */
     function buildAuthCard(opts) {
       opts = opts || {};
       const card = h('div', { class: 'auth' });
@@ -222,16 +225,16 @@
         firstDraw = false;
       }
 
-      function tabs() {
-        const row = h('div', { class: 'modal-tabs' });
-        [['login', '登入'], ['signup', '註冊']].forEach(([k, t]) => {
-          row.append(h('button', {
-            class: 'modal-tab' + (mode === k ? ' on' : ''), type: 'button',
-            'aria-current': mode === k ? 'true' : null,
-            onclick: () => go(k),
-          }, t));
-        });
-        return row;
+      /* 標題:signup.html 用頁面的 h1(onMode 會去改它),登入視窗才自己畫 h2 */
+      function heading(text) {
+        return opts.onMode ? null : h('h2', { class: 'auth-h' }, text);
+      }
+
+      /* 底部一行切換。Engoo、Busuu、VoiceTube、均一都是這種做法:
+         一個標題配一行「還沒有帳號?註冊」,不是兩個同級分頁。 */
+      function switchLine(text, linkText, next) {
+        return h('p', { class: 'auth-switch' }, text,
+          h('button', { class: 'auth-link strong', type: 'button', onclick: () => go(next) }, linkText));
       }
 
       function googleBtn(msg) {
@@ -292,9 +295,10 @@
               if (r.needsConfirm) sent(email.value());
             } catch (e) { fail(e.message); unlock(); }
           }, name.el, email.el, pw.el);
-          card.append(tabs(), googleBtn(msg), orLine(), form,
+          put(heading('註冊'), googleBtn(msg), orLine(), form,
             h('p', { class: 'auth-fine' }, '按下註冊即表示同意',
-              h('a', { href: 'terms.html', target: '_blank', rel: 'noopener' }, '服務條款與隱私權說明'), '。'));
+              h('a', { href: 'terms.html', target: '_blank', rel: 'noopener' }, '服務條款與隱私權說明'), '。'),
+            switchLine('已經有帳號?', '登入', 'login'));
         } else {
           const email = authField({ label: 'Email', type: 'email', name: 'email', ac: 'username', inputmode: 'email' });
           const pw = authField({ label: '密碼', type: 'password', name: 'password', ac: 'current-password' });
@@ -310,9 +314,9 @@
             try { await CLOUD.login(email.value(), pw.raw()); }   // 成功後 afterAuth 會 reload
             catch (e) { fail(e.message); unlock(); }
           }, email.el, pw.el);
-          card.append(tabs(), googleBtn(msg), orLine(), form);
+          put(heading('登入'), googleBtn(msg), orLine(), form,
+            switchLine('還沒有帳號?', '註冊', 'signup'));
         }
-        if (opts.closable) card.append(cancelBtn());
       }
 
       function drawForgot(msg) {
@@ -324,35 +328,31 @@
           try { await CLOUD.resetPassword(email.value()); ok('重設信已寄出,到信箱點連結設新密碼。'); }
           catch (e) { fail(e.message); unlock(); }
         }, email.el);
-        card.append(
-          h('div', { class: 'auth-head' }, opts.onMode ? null : h('h2', null, '重設密碼'),
-            h('button', { class: 'auth-link', type: 'button', onclick: () => go('login') }, '回登入')),
-          form,
-          h('p', { class: 'auth-fine' }, '用 Google 登入的帳號沒有密碼,直接按 Google 登入就好。'));
-        if (opts.closable) card.append(cancelBtn());
+        put(heading('重設密碼'), form,
+          h('p', { class: 'auth-fine' }, '用 Google 登入的帳號沒有密碼,直接按 Google 登入就好。'),
+          switchLine(null, '回登入', 'login'));
       }
 
       function orLine() { return h('div', { class: 'auth-or' }, h('span', null, '或')); }
 
-      function cancelBtn() {
-        return h('button', { class: 'btn auth-cancel', type: 'button', onclick: () => { if (opts.onCancel) opts.onCancel(); } }, '取消');
-      }
+      /* 原生 append(null) 會印出 'null' 這個字,標題在頁面模式是 null,所以要先濾掉 */
+      function put(...nodes) { card.append(...nodes.filter(Boolean)); }
 
       /* 註冊完、等點驗證信 */
       function sent(email) {
         if (opts.onMode) opts.onMode('sent');
         card.innerHTML = '';
         const msg = h('p', { class: 'auth-msg', role: 'alert' });
-        const again = h('button', { class: 'btn', type: 'button' }, '重寄驗證信');
+        const again = h('button', { class: 'btn auth-full', type: 'button' }, '重寄驗證信');
         again.addEventListener('click', async () => {
           again.disabled = true;
           try { await CLOUD.resendConfirm(email); msg.textContent = '已重寄。'; msg.className = 'auth-msg ok'; }
           catch (e) { msg.textContent = e.message; msg.className = 'auth-msg bad'; again.disabled = false; }
         });
-        card.append(
-          opts.onMode ? null : h('div', { class: 'auth-head' }, h('h2', null, '驗證信已寄出')),
+        put(
+          opts.onMode ? null : h('h2', { class: 'auth-h' }, '驗證信已寄出'),
           h('p', { class: 'auth-sent' }, '寄到 ', h('b', null, email), ',點信裡的連結就完成註冊並登入。沒收到先看垃圾郵件。'),
-          h('div', { class: 'auth-row' }, again, opts.closable ? h('button', { class: 'btn', type: 'button', onclick: () => { if (opts.onCancel) opts.onCancel(); } }, '關閉') : null),
+          again,
           msg);
       }
     }
@@ -364,7 +364,8 @@
       const opener = document.activeElement;
       const mask = h('div', { class: 'modal-mask' });
       const box = h('div', { class: 'modal modal-auth', role: 'dialog', 'aria-modal': 'true', 'aria-label': '登入或註冊' });
-      box.append(buildAuthCard({ mode: startTab, closable: !required, onCancel: close }));
+      if (!required) box.append(h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }));
+      box.append(buildAuthCard({ mode: startTab }));
       mask.append(box);
       document.body.append(mask);
 

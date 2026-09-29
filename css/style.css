@@ -1285,6 +1285,10 @@ table.cat-table td.num { white-space: nowrap; }
 .hist-verdict { flex: none; font-weight: 700; }
 .hist-verdict.ok { color: var(--ok); }
 .hist-verdict.bad { color: var(--bad); }
+.hist-caret { flex: none; color: var(--ink-light); font-size: 12px; transition: transform .15s; }
+.hist-row.open .hist-caret { transform: rotate(180deg); }
+.hist-row-head:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.hist-tab.wrong-only.on { border-color: var(--bad); color: var(--bad); background: var(--bad-tint); }
 .hist-row-body { padding: 6px 14px 14px; border-top: 1px dashed var(--line); }
 .hist-row-body .q-text { margin-top: 10px; }
 .hist-tag { font-size: 12.5px; color: var(--ink-light); margin: 8px 0 2px; }

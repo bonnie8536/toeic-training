@@ -97,11 +97,16 @@ function passTypeLabel(t) {
 
 /* 答題記錄(學習記錄頁用):每次作答一筆 {m:模組, id, c:選項, ok, t},最多留 600 筆。
    模組代號:p5/p6/p7 刷題、l1~l4 聽力、g 文法、r 文章題、ph 片語、tq 單字考題、vq 單字遊戲 */
-const HIST_MAX = 600;
+/* 一筆約 77 bytes(2026-09-29 實測 54 筆 = 4,133 bytes)。
+   1500 筆約 115 KB,在資料庫的單鍵上限內;60 天足夠涵蓋這一頁顯示的所有統計。
+   錯題本不在這裡,它是各模組自己的鍵(drill_p5 等),答對才移出,不會因為時間被清掉。 */
+const HIST_MAX = 1500;
+const HIST_DAYS = 60;
 function logAttempt(m, id, c, ok, extra) {
-  const hist = store.get('hist', []);
   const rec = { m, id, c, ok: !!ok, t: Date.now() };
   if (extra) Object.assign(rec, extra);
+  const cutoff = rec.t - HIST_DAYS * 864e5;
+  const hist = store.get('hist', []).filter(r => !r.t || r.t >= cutoff);
   hist.push(rec);
   if (hist.length > HIST_MAX) hist.splice(0, hist.length - HIST_MAX);
   store.set('hist', hist);

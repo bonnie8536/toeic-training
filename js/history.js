@@ -110,6 +110,7 @@
   }
 
   let filter = 'all';
+  let wrongOnly = false;
   let shown = 150;
   render();
 
@@ -146,16 +147,21 @@
         onclick: () => { filter = k; shown = 150; render(); },
       }, label));
     });
+    tabs.append(h('button', {
+      class: 'hist-tab wrong-only' + (wrongOnly ? ' on' : ''), type: 'button',
+      'aria-pressed': wrongOnly ? 'true' : 'false',
+      onclick: () => { wrongOnly = !wrongOnly; shown = 150; render(); },
+    }, '只看錯的'));
     root.append(tabs);
 
-    const list = all.filter(r => filter === 'all' || (MOD[r.m] || {}).group === filter);
+    const list = all.filter(r => (filter === 'all' || (MOD[r.m] || {}).group === filter) && (!wrongOnly || !r.ok));
     if (!list.length) {
-      root.append(h('div', { class: 'q-block' }, '這個分類還沒有紀錄。'));
+      root.append(h('div', { class: 'q-block' }, wrongOnly ? '這個分類沒有答錯的紀錄。' : '這個分類還沒有紀錄。'));
       return;
     }
 
     /* 按日分組 */
-    let curDay = null, dayBox = null;
+    let curDay = null, dayBox = null, idx = 0;
     list.slice(0, shown).forEach(rec => {
       const dk = dayKey(rec.t);
       if (dk !== curDay) {
@@ -163,7 +169,8 @@
         dayBox = h('div', { class: 'hist-day' }, h('div', { class: 'hist-day-head' }, dayLabel(dk)));
         root.append(dayBox);
       }
-      dayBox.append(row(rec));
+      dayBox.append(row(rec, idx === 0));
+      idx++;
     });
     if (list.length > shown) {
       root.append(h('div', { class: 'drill-nav-btns' },
@@ -172,7 +179,7 @@
     root.append(h('div', { style: 'height:30px' }));
   }
 
-  function row(rec) {
+  function row(rec, openNow) {
     const mod = MOD[rec.m] || { label: rec.m };
     const info = resolve(rec);
     const stem = info ? info.stem : '(這題已從題庫移除)';
@@ -184,13 +191,28 @@
       h('span', { class: 'hist-time' }, fmtTime(rec.t)),
       h('span', { class: 'badge cat', style: 'flex:none' }, mod.label),
       h('span', { class: 'hist-stem' }, String(stem).length > 90 ? String(stem).slice(0, 90) + '…' : stem),
-      h('span', { class: 'hist-verdict ' + (rec.ok ? 'ok' : 'bad') }, (rec.ok ? '✓ ' : '✗ ') + pickedText));
+      h('span', { class: 'hist-verdict ' + (rec.ok ? 'ok' : 'bad') }, (rec.ok ? '✓ ' : '✗ ') + pickedText),
+      info ? h('span', { class: 'hist-caret', 'aria-hidden': 'true' }, '▾') : null);
     const body = h('div', { class: 'hist-row-body', style: 'display:none' });
     const wrap = h('div', { class: 'hist-row' + (rec.ok ? '' : ' wrong') }, head, body);
-    if (info) head.addEventListener('click', () => {
-      if (body.style.display === 'none') { if (!body.childNodes.length) body.append(detail(rec, info)); body.style.display = ''; }
-      else body.style.display = 'none';
-    });
+    if (info) {
+      /* 用 role/tabindex 讓它跟一般的可展開列一樣能用鍵盤操作 */
+      head.setAttribute('role', 'button');
+      head.setAttribute('tabindex', '0');
+      const toggle = () => {
+        const open = body.style.display === 'none';
+        if (open && !body.childNodes.length) body.append(detail(rec, info));
+        body.style.display = open ? '' : 'none';
+        wrap.classList.toggle('open', open);
+        head.setAttribute('aria-expanded', open ? 'true' : 'false');
+      };
+      head.setAttribute('aria-expanded', 'false');
+      head.addEventListener('click', toggle);
+      head.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+      if (openNow) toggle();   // 最新一筆先打開,不然看不出每列還能展開
+    }
     return wrap;
   }
 

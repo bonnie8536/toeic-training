@@ -15,6 +15,7 @@
     l3: { label: '聽力 P3', group: 'listen' },
     l4: { label: '聽力 P4', group: 'listen' },
     g: { label: '文法', group: 'grammar' },
+    iv: { label: '不規則動詞', group: 'grammar' },
     r: { label: '文章題', group: 'read' },
     tq: { label: '單字考題', group: 'read' },
     ph: { label: '片語', group: 'vocab' },
@@ -65,6 +66,13 @@
       const u = byId(T.grammar, uid);
       const q = u && u.quiz[Number(qi)];
       return q && { stem: q.q, options: q.options, answer: q.answer, explanation: q.explanation, tag: u.title, link: 'grammar.html?u=' + u.id };
+    }
+    if (m === 'iv') {
+      const v = byId(T.verbs, rec.id);
+      return v && {
+        stem: v.base + ' ' + v.zh, picked: rec.x, answer: v.past + ' / ' + v.pp,
+        explanation: v.note || (v.example ? v.example : null), tag: '三態填空', link: 'verbs.html',
+      };
     }
     if (m === 'r') {
       const [aid, qi] = String(rec.id).split(':');

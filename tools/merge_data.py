@@ -247,6 +247,49 @@ if not errors:
             art['transfer'] = {'passage': tq['passage'], 'passageZh': tq['passageZh'],
                                'words': tq['words']}
 
+# ---------- 不規則動詞表 ----------
+IV_TYPES = {'AAA', 'ABB', 'ABA', 'ABC'}
+verbs = load_kind('irregular_verbs*.json', 'irregular verb')
+seen_iv = set()
+seen_base = set()
+for v in verbs:
+    w = f"verb {v.get('id','?')}"
+    if not need(v, ['id', 'base', 'past', 'pp', 'zh', 'type', 'level'], w):
+        continue
+    if not re.match(r'^iv-\d{3}$', v['id']):
+        errors.append(f'{w}: id 格式需為 iv-001')
+    if v['id'] in seen_iv:
+        errors.append(f'{w}: id 重複')
+    seen_iv.add(v['id'])
+    b = v['base'].split('/')[0].strip().lower()
+    if b in seen_base:
+        errors.append(f'{w}: 動詞 {b} 重複')
+    seen_base.add(b)
+    if v['type'] not in IV_TYPES:
+        errors.append(f"{w}: type {v['type']!r} 不在 {sorted(IV_TYPES)}")
+    else:
+        # 變化型必須與三態實際關係相符(最常見的資料錯誤)
+        f0 = lambda s: str(s).split('/')[0].strip().lower()
+        bb, pa, pp_ = f0(v['base']), f0(v['past']), f0(v['pp'])
+        if bb == pa == pp_:
+            real = 'AAA'
+        elif bb != pa and pa == pp_:
+            real = 'ABB'
+        elif bb == pp_ and bb != pa:
+            real = 'ABA'
+        else:
+            real = 'ABC'
+        if real != v['type']:
+            errors.append(f"{w}: 變化型應為 {real},標成 {v['type']}")
+    for k in ('base', 'past', 'pp'):
+        if re.search(r'[一-鿿]', str(v.get(k, ''))):
+            errors.append(f'{w}: {k} 含中文')
+    if v.get('example') and not v.get('exampleZh'):
+        warnings.append(f'{w}: 有例句但缺中文翻譯')
+    if v.get('level') not in ('初級', '中級', '進階'):
+        errors.append(f"{w}: level {v.get('level')!r} 需為 初級/中級/進階")
+    scan_simplified(v, w)
+
 # ---------- 程度檢測 ----------
 diag = None
 dpath = os.path.join(RAW, 'diagnostic.json')
@@ -474,7 +517,7 @@ def write_js(fname, varname, data):
     print(f'  寫出 {fname}')
 
 print('=== 驗證結果 ===')
-print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字(移轉考題 {len(seen_tr)} 篇) | 檢測卷: {n_diag} 題 | 文法: {len(gx)} 單元')
+print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字(移轉考題 {len(seen_tr)} 篇) | 檢測卷: {n_diag} 題 | 文法: {len(gx)} 單元 | 不規則動詞: {len(verbs)} 個')
 print(f'Part 5 答案分布: {dict(sorted(dist5.items()))}')
 if errors:
     print(f'\n-- 硬錯誤 {len(errors)} 筆 --')
@@ -504,4 +547,6 @@ if phrases:
     write_js('phrases.js', 'phrases', phrases)
 if gx:
     write_js('grammar.js', 'grammar', gx)
+if verbs:
+    write_js('verbs.js', 'verbs', verbs)
 print('完成。')

@@ -100,6 +100,9 @@
       const doneN = list.filter(u => done[u.id]).length;
       const col = h('div', { class: 'gx-col' },
         h('div', { class: 'page-head' }, h('h1', null, '文法基礎')),
+        h('div', { class: 'gx-continue' },
+          h('a', { class: 'btn', href: 'verbs.html' }, '不規則動詞表'),
+          h('span', null, '三態一次查完,也可以測驗')),
         todo ? h('div', { class: 'gx-continue' },
           h('a', { class: 'btn primary', href: 'grammar.html?u=' + todo.id }, '繼續上課'),
           h('span', null, STAGES[stageOf(todo)].name.replace(/\s.*$/, '') + ' 第 ' +
@@ -204,12 +207,15 @@
         'gg-11': '不定詞與動名詞', 'gg-12': '不定詞與動名詞', 'gb-05': '主謂一致', 'gf-04': '詞性變化',
       };
       const cat = DRILL_LINK[u.id];
+      /* 過去式與完成式的課,學完直接去查三態 */
+      const VERB_UNITS = ['gc-02', 'gc-03', 'gc-04', 'gc-06', 'gc-08', 'gc-12'];
       tail.append(
         h('div', { class: 'report-head', style: 'margin-top:10px' },
           h('h2', null, '答對 ' + ok + ' / ' + u.quiz.length)),
         h('div', { class: 'drill-nav-btns' },
           next ? h('a', { class: 'btn primary', href: 'grammar.html?u=' + next.id }, '下一課:' + next.title) : null,
           cat ? h('a', { class: 'btn', href: 'practice.html?part=5&cat=' + encodeURIComponent(cat) }, '刷這個考點的題目') : null,
+          VERB_UNITS.includes(u.id) ? h('a', { class: 'btn', href: 'verbs.html' }, '查不規則動詞表') : null,
           h('a', { class: 'btn', href: 'grammar.html' }, '回文法基礎')));
     }
   }

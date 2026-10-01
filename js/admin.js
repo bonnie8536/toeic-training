@@ -1,6 +1,9 @@
 /* 教師後台:總覽每位學生的檢測結果、各 Part 進度與正確率、錯題與單字進度。
    資料權限由 Supabase RLS 控管——只有 teachers 表裡的帳號查得到全部學生的列。 */
 (function () {
+  /* 最近一次讀到的原始列,給「下載備份」用。Supabase 免費版沒有任何自動備份,
+     所以這是她唯一的還原來源——動資料庫之前先按一次。 */
+  let allRows = [];
   const root = $('#admin-root');
 
   function note(msg) {
@@ -39,6 +42,7 @@
       const res = await CLOUD.client.from('progress').select('user_id,k,v,updated_at');
       if (res.error) throw res.error;
       rows = res.data || [];
+      allRows = rows;
     } catch (e) {
       note('讀取失敗:' + e.message);
       return;
@@ -185,11 +189,30 @@
     return wrap;
   }
 
+  /* 把能讀到的每一列原樣存成 JSON。還原時可以直接 upsert 回 progress。 */
+  function downloadBackup() {
+    const payload = {
+      app: 'shuashua-progress-backup', version: 1,
+      exported: new Date().toISOString(),
+      by: CLOUD.user && CLOUD.user.email,
+      rows: allRows,
+    };
+    const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = '刷刷英文備份_' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
   function render(students) {
     root.innerHTML = '';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '教師後台'),
-      h('p', null, '點任一列展開該學生的檢測報告摘要、錯題與上課紀錄。資料為學生端最後同步的狀態。')));
+      h('p', null, '點任一列展開該學生的檢測報告摘要、錯題與上課紀錄。資料為學生端最後同步的狀態。'),
+      h('div', { class: 'modal-row' },
+        h('button', { class: 'btn', type: 'button', onclick: downloadBackup },
+          '下載全部備份(' + allRows.length + ' 列)'))));
 
     const myKeys = (students[CLOUD.user.id] || { keys: {} }).keys;
     const ids = Object.keys(students).filter(uid => uid !== CLOUD.user.id);

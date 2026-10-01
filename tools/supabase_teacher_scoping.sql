@@ -56,7 +56,34 @@ create table if not exists public.teacher_applications (
 -- 站長旗標:只有站長能審申請。她自己那一列設 true(下面的回填會設)
 alter table public.teachers add column if not exists is_owner boolean not null default false;
 
--- ---------- 3. 權限 ----------
+-- ---------- 3. 判斷用的函式(一定要有,否則政策會互相遞迴) ----------
+-- 政策之間不可以互相查對方的表:classes 的政策查 memberships、memberships 的政策查
+-- classes,Postgres 會回 42P17 infinite recursion,而且連 progress 都讀不出來
+-- (2026-10-01 真的踩到,全站登入後讀進度直接失敗)。
+-- 解法是把判斷包成 security definer 函式,函式內部不再套 RLS,遞迴就斷了。
+-- 這三個函式都只拿 auth.uid() 跟自己比對,問不出別人的資訊。
+
+create or replace function public.is_class_owner(p_class uuid) returns boolean
+language sql security definer stable set search_path = public as $
+  select exists (select 1 from public.classes c where c.id = p_class and c.teacher_id = auth.uid());
+$;
+
+create or replace function public.is_class_member(p_class uuid) returns boolean
+language sql security definer stable set search_path = public as $
+  select exists (select 1 from public.memberships m where m.class_id = p_class and m.student_id = auth.uid());
+$;
+
+create or replace function public.teaches_student(p_student uuid) returns boolean
+language sql security definer stable set search_path = public as $
+  select exists (select 1 from public.memberships m join public.classes c on c.id = m.class_id
+                 where m.student_id = p_student and c.teacher_id = auth.uid());
+$;
+
+grant execute on function public.is_class_owner(uuid) to authenticated;
+grant execute on function public.is_class_member(uuid) to authenticated;
+grant execute on function public.teaches_student(uuid) to authenticated;
+
+-- ---------- 4. 權限 ----------
 
 alter table public.classes enable row level security;
 alter table public.memberships enable row level security;
@@ -74,7 +101,7 @@ create policy "teacher owns classes" on public.classes
 drop policy if exists "student sees joined classes" on public.classes;
 create policy "student sees joined classes" on public.classes
   for select
-  using (exists (select 1 from public.memberships m where m.class_id = classes.id and m.student_id = auth.uid()));
+  using (public.is_class_member(id));
 
 -- 學生↔班級:學生看自己的、可自己退出;老師看管自己班上的
 -- 沒有給學生 insert,加入只能透過 join_class()
@@ -89,8 +116,8 @@ create policy "student leaves class" on public.memberships
 drop policy if exists "teacher manages own class members" on public.memberships;
 create policy "teacher manages own class members" on public.memberships
   for all
-  using (exists (select 1 from public.classes c where c.id = memberships.class_id and c.teacher_id = auth.uid()))
-  with check (exists (select 1 from public.classes c where c.id = memberships.class_id and c.teacher_id = auth.uid()));
+  using (public.is_class_owner(class_id))
+  with check (public.is_class_owner(class_id));
 
 -- 老師申請:自己送、自己查狀態;站長可讀可審
 drop policy if exists "applicant writes own application" on public.teacher_applications;
@@ -112,14 +139,9 @@ drop policy if exists "teacher read all" on public.progress;
 drop policy if exists "teacher reads own students" on public.progress;
 create policy "teacher reads own students" on public.progress
   for select
-  using (exists (
-    select 1
-    from public.memberships m
-    join public.classes c on c.id = m.class_id
-    where m.student_id = progress.user_id and c.teacher_id = auth.uid()
-  ));
+  using (public.teaches_student(user_id));
 
--- ---------- 4. 加入班級的函式 ----------
+-- ---------- 5. 加入班級的函式 ----------
 -- 學生不能直接寫 memberships,只能拿邀請碼呼叫這個函式。
 -- security definer 才能在沒有 classes 讀取權的情況下比對邀請碼。
 create or replace function public.join_class(p_code text)
@@ -157,7 +179,7 @@ grant execute on function public.join_class(text) to authenticated;
 -- 邀請碼比對用得到,順手補索引
 create index if not exists classes_code_idx on public.classes (upper(code));
 
--- ---------- 5. 回填:現有 6 位學生 → 她的預設班級 ----------
+-- ---------- 6. 回填:現有 6 位學生 → 她的預設班級 ----------
 -- 不回填的話,政策一換教師後台就看不到任何人。
 insert into public.teachers (user_id, is_owner)
 select id, true from auth.users where email = 'bonnie8536@gmail.com'
@@ -182,5 +204,9 @@ on conflict do nothing;
 -- ---------- 檢查 ----------
 -- select name, code from public.classes;                 → 一列「刷刷英文」+ 8 碼邀請碼
 -- select count(*) from public.memberships;               → 6
+-- 一定要跑這條,確認沒有遞迴(回 95 / 7 才算過):
+--   set role authenticated;
+--   set "request.jwt.claims" = '{"sub":"<老師的 uid>","role":"authenticated"}';
+--   select count(*), count(distinct user_id) from public.progress;
 -- select polname from pg_policy
 --   where polrelid = 'public.progress'::regclass;        → own rows + teacher reads own students

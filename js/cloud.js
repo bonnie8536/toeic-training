@@ -46,6 +46,7 @@
       if (!session) return null;
       window.CLOUD.user = session.user;
       await afterAuth(session.user, false);
+      flushAll();
       return session.user;
     } catch (e) {
       console.warn('雲端初始化失敗,以未登入狀態顯示:', e);
@@ -66,16 +67,40 @@
 
     const flagKey = 'tr_cloud_hydrated_' + user.id;
     if (fresh || !sessionStorage.getItem(flagKey)) {
-      const { data: rows, error } = await client.from('progress').select('k,v').eq('user_id', user.id);
-      if (error) throw error;
+      const { data: rows, error } = await client.from('progress').select('k,v,updated_at').eq('user_id', user.id);
+      if (error) throw error;   // 連不上就整段不做:本機一個都不刪
       const prefix = 'tr_u' + pid + '_';
+      const cloud = {};
+      (rows || []).forEach(r => { cloud[r.k] = r; });
+
+      /* 哪些鍵要留本機的版本(其餘照舊用雲端覆蓋):
+         - 帳本上有、而且本機改動時間比雲端新(或雲端沒有這一列)
+         - 帳本上沒有,但雲端完全沒有這一列:代表從來沒傳上去過(例如新建自訂題庫後馬上關頁)。
+           被別台裝置刪掉的鍵在雲端是 v=null 的一列,不會落在這裡。 */
+      const led = readLedger(user.id);
+      const keepLocal = {};
+      Object.keys(led).forEach(k => {
+        const c = cloud[k];
+        if (!c || !(Date.parse(c.updated_at) >= led[k])) keepLocal[k] = led[k];
+        else delete led[k];   // 雲端比較新:用雲端的,帳本劃掉
+      });
+      for (let i = 0; i < localStorage.length; i++) {
+        const lk = localStorage.key(i);
+        if (!lk || !lk.startsWith(prefix)) continue;
+        const k = lk.slice(prefix.length);
+        if (!(k in cloud) && !(k in keepLocal)) { keepLocal[k] = Date.now(); led[k] = keepLocal[k]; }
+      }
+      writeLedger(user.id, led);
+
       for (let i = localStorage.length - 1; i >= 0; i--) {
-        const k = localStorage.key(i);
-        if (k && k.startsWith(prefix)) localStorage.removeItem(k);
+        const lk = localStorage.key(i);
+        if (lk && lk.startsWith(prefix) && !(lk.slice(prefix.length) in keepLocal)) localStorage.removeItem(lk);
       }
       (rows || []).forEach(r => {
-        if (r.k !== '_meta' && r.v !== null) localStorage.setItem(prefix + r.k, JSON.stringify(r.v));
+        if (r.k !== '_meta' && r.v !== null && !(r.k in keepLocal)) localStorage.setItem(prefix + r.k, JSON.stringify(r.v));
       });
+      /* 留下來的本機改動補傳上去;失敗也沒關係,帳本還在,下次再傳 */
+      await Promise.all(Object.keys(keepLocal).map(k => upload(user, k, keepLocal[k])));
       sessionStorage.setItem(flagKey, '1');
       try {
         await client.from('progress').upsert({
@@ -103,10 +128,15 @@
     await afterAuth(data.user, true);
   }
 
-  async function logout() {
+  async function logout(opts) {
     const user = window.CLOUD.user;
+    if (user && !(opts && opts.discard)) {
+      const left = await flushAll();
+      if (left > 0 && !confirm('還有 ' + left + ' 項進度還沒同步到雲端(可能是網路不穩)。現在登出,這台裝置上的這些進度會刪除。確定要登出?')) return;
+    }
     try { await client.auth.signOut(); } catch (e) {}
     if (user) {
+      writeLedger(user.id, {});
       sessionStorage.removeItem('tr_cloud_hydrated_' + user.id);
       const prefix = 'tr_u' + pidOf(user) + '_';
       for (let i = localStorage.length - 1; i >= 0; i--) {
@@ -229,18 +259,69 @@
     needClient();
     const { error } = await client.rpc('delete_own_account');
     if (error) throw new Error('刪除失敗:' + error.message + '。請寫信給站長要求刪除。');
-    await logout();
+    await logout({ discard: true });
+  }
+
+  /* ---------- 「還沒上雲」帳本 ----------
+     鍵 → 本機改動的時間(ms)。寫入當下就記,上傳成功才劃掉。
+     存在 localStorage 但不在學生資料的前綴底下,灌資料與登出的批次刪除不會誤刪它。 */
+  function ledgerKey(uid) { return 'tr_unsynced_' + uid; }
+  function readLedger(uid) {
+    try { return JSON.parse(localStorage.getItem(ledgerKey(uid))) || {}; } catch (e) { return {}; }
+  }
+  function writeLedger(uid, led) {
+    try {
+      if (Object.keys(led).length) localStorage.setItem(ledgerKey(uid), JSON.stringify(led));
+      else localStorage.removeItem(ledgerKey(uid));
+    } catch (e) {}
+  }
+
+  /* 上傳一個鍵的「目前本機值」。成功且期間沒有更新的改動,才從帳本劃掉。 */
+  async function upload(user, key, t) {
+    let v = null;
+    try {
+      const raw = localStorage.getItem('tr_u' + pidOf(user) + '_' + key);
+      v = raw === null ? null : JSON.parse(raw);
+    } catch (e) { return false; }
+    try {
+      const { error } = await client.from('progress').upsert({
+        user_id: user.id, k: key, v, updated_at: new Date(t).toISOString(),
+      }, { onConflict: 'user_id,k' });
+      if (error) throw error;
+      const led = readLedger(user.id);
+      if (led[key] !== undefined && led[key] <= t) { delete led[key]; writeLedger(user.id, led); }
+      return true;
+    } catch (e) {
+      console.warn('進度暫時沒同步,已記下,下次連線會補傳:' + key, e);
+      return false;
+    }
+  }
+
+  /* 把帳本上全部補傳。回傳還剩幾筆沒傳成功。 */
+  async function flushAll() {
+    const user = window.CLOUD.user;
+    if (!client || !user) return 0;
+    Object.keys(pending).forEach(k => { clearTimeout(pending[k]); delete pending[k]; });
+    const led = readLedger(user.id);
+    await Promise.all(Object.keys(led).map(k => upload(user, k, led[k])));
+    return Object.keys(readLedger(user.id)).length;
   }
 
   function push(key, val) {
     if (!client || !window.CLOUD.user) return;
+    const user = window.CLOUD.user;
+    const t = Date.now();
+    const led = readLedger(user.id);
+    led[key] = t;
+    writeLedger(user.id, led);   // 先記帳:就算 0.8 秒內關頁,下次開站也會補傳
     clearTimeout(pending[key]);
-    pending[key] = setTimeout(async () => {
-      try {
-        await client.from('progress').upsert({
-          user_id: window.CLOUD.user.id, k: key, v: val, updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id,k' });
-      } catch (e) { console.warn('進度同步失敗(之後的變更會再觸發):' + key, e); }
-    }, 800);
+    pending[key] = setTimeout(() => { delete pending[key]; upload(user, key, t); }, 800);
   }
+
+  /* 關頁、切到背景、恢復連線時補傳 */
+  window.addEventListener('pagehide', () => { flushAll(); });
+  window.addEventListener('online', () => { flushAll(); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') flushAll();
+  });
 })();

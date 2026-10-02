@@ -92,6 +92,7 @@
     pick(TOEIC.part7, cfg.r.p7).forEach(item => units.push({ sec: 'R', p: '7', item }));
 
     document.title = '模擬考進行中|刷刷英文';
+    document.body.dataset.leaveConfirm = '模擬考還沒交卷，離開後這次作答不會計分。確定離開？';
     const sess = units.map(() => ({ answers: {}, played: 0 }));
     let cur = 0;
     let over = false;
@@ -307,6 +308,7 @@
         if (missing && !confirm('還有 ' + missing + ' 個題組沒答完,確定交卷?未作答算錯。')) return;
       }
       over = true;
+      delete document.body.dataset.leaveConfirm;
       clearInterval(timerId);
       stopAudio();
 

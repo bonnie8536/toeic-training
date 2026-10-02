@@ -1658,3 +1658,140 @@ h1, h2, h3, .brand { font-weight: 700; }
 @media (max-width: 560px) {
   .auth-page { margin: 24px auto 44px; }
 }
+
+/* ======== 安裝後的 App 外殼(2026-10) ========
+   head 的開機程式只在主畫面開啟時於 <html> 加 class:
+   is-app 處理安全區;app-shell 是外殼版面(外殼程式失敗就拿掉,自動回到網站版面);
+   has-tabbar 這頁有分頁列;is-tab-root 分頁根頁;app-kb 鍵盤打開中。
+   網站模式這些 class 都不存在,這一段不作用。元件一律平的:不加厚底陰影,不加螢光筆。 */
+.app-tabbar, .app-back, .app-title { display: none; }
+
+/* 「我的」頁(me.html;網站直接打開也正常) */
+.me-head { display: flex; align-items: center; gap: 14px; margin: 18px 0 20px; }
+.me-dot { width: 56px; height: 56px; font-size: 24px; font-family: var(--round); }
+.me-who { display: grid; min-width: 0; line-height: 1.5; }
+.me-name { font-family: var(--round); font-size: 20px; font-weight: 700; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.me-mail { font-size: 13.5px; color: var(--ink-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.me-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.me-list { list-style: none; margin: 0 0 14px; border: 1px solid var(--line); border-radius: 12px; background: #fff; overflow: hidden; }
+.me-list li + li { border-top: 1px solid var(--line); }
+.me-row {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; min-height: 48px; padding: 0 16px;
+  border: 0; background: none; font: inherit; font-size: 16px; color: var(--ink);
+  text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.me-row:hover, .me-row:active { background: var(--bg-soft); text-decoration: none; }
+.me-row:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+a.me-row::after { content: '›'; margin-left: 12px; font-size: 20px; line-height: 1; color: #b4bcc4; }
+.me-row.danger { color: var(--bad); }
+.me-delete { margin: 22px 0 0; }
+.me-delete button { border: 0; background: none; min-height: 44px; padding: 0 4px; margin-left: -4px; font: inherit; font-size: 13.5px; color: var(--bad); cursor: pointer; }
+.me-delete button:hover { text-decoration: underline; }
+
+/* 「安裝到手機」說明視窗:沿用登入視窗的 .modal-mask、.modal、.modal-close */
+.app-install { max-width: 400px; position: relative; }
+.app-steps { margin: 14px 0 16px 22px; display: grid; gap: 10px; font-size: 15.5px; line-height: 1.6; }
+.app-share { display: inline-flex; vertical-align: -3px; margin-left: 6px; color: var(--primary); }
+.app-install-note { padding-top: 12px; border-top: 1px solid var(--line); font-size: 14px; }
+
+/* 安全區:斷點照網站,左右留白取「原值或安全區」較大的那個,直放時就是原值 */
+html.is-app { --app-tab-h: 56px; --app-bar-h: 52px; --tab-ink: #5f6770; }
+html.is-app .topbar { padding-top: env(safe-area-inset-top); }
+html.is-app .topbar-inner { padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+html.is-app .container, html.is-app .container-narrow, html.is-app .hero-inner { padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+html.is-app .passage-box, html.is-app .passage-sticky-wrap { top: calc(76px + env(safe-area-inset-top)); }
+html.is-app .gx-rail { top: calc(74px + env(safe-area-inset-top)); }
+@media (max-width: 860px) {
+  html.is-app .topbar-inner { padding-left: max(14px, env(safe-area-inset-left)); padding-right: max(14px, env(safe-area-inset-right)); }
+  html.is-app .container, html.is-app .container-narrow, html.is-app .hero-inner { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+}
+
+/* 外殼:任何寬度都有返回鍵(iOS 主畫面 App 沒有瀏覽器返回) */
+html.app-shell .app-back {
+  display: inline-flex; align-items: center; justify-content: center; flex: none; order: -1;
+  width: 44px; height: 44px; margin-left: -12px; padding: 0;
+  border: 0; border-radius: 12px; background: none; color: var(--primary);
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+html.app-shell .app-back:active { background: var(--bg-soft); }
+html.app-shell .app-back:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+html.app-shell .modal-mask { overflow-y: auto; align-items: flex-start; }
+html.app-shell .modal-mask > .modal { margin: auto; }
+html.app-shell body[data-require-profile] .modal-mask { top: calc(59px + env(safe-area-inset-top)); }
+/* 強制登入時頂欄露在遮罩上方:頂欄自己要疊在遮罩之上,寬視窗的選單下拉才點得到 */
+html.app-gate .topbar { z-index: 210; }
+html.app-gate .profile-widget { display: none; }   /* 登入卡上已經有登入和註冊,選單裡那兩項會重複而且按了沒反應 */
+
+/* 外殼版面:手機直放、手機橫放、窄的 App 視窗 */
+@media (max-width: 860px), (pointer: coarse) and (max-height: 500px) {
+  html.app-shell .topbar-inner {
+    position: relative; height: var(--app-bar-h); flex-wrap: nowrap; gap: 0 10px;
+    padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+  }
+  html.app-shell .topnav, html.app-shell .profile-widget { display: none; }
+  html.app-shell:not(.is-tab-root) .brand { display: none; }
+  html.app-shell .app-title {
+    display: block; position: absolute; top: 0; left: 60px; right: 60px;
+    line-height: var(--app-bar-h); text-align: center;
+    font-family: var(--round); font-size: 16px; font-weight: 700; color: var(--ink);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    opacity: 0; transition: opacity .2s; pointer-events: none;
+  }
+  html.app-shell .topbar.is-scrolled .app-title { opacity: 1; }
+
+  html.app-shell.has-tabbar { scroll-padding-bottom: calc(var(--app-tab-h) + 8px); }
+  html.app-shell.has-tabbar body { padding-bottom: calc(var(--app-tab-h) + env(safe-area-inset-bottom)); }
+  html.app-shell.has-tabbar body::after {
+    content: ''; position: fixed; left: 0; right: 0; bottom: 0; z-index: 89;
+    height: calc(var(--app-tab-h) + env(safe-area-inset-bottom));
+    background: #fff; border-top: 1px solid var(--line);
+  }
+  html.app-shell .app-tabbar {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+    height: calc(var(--app-tab-h) + env(safe-area-inset-bottom));
+    padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    background: #fff; border-top: 1px solid var(--line);
+  }
+  html.app-shell .app-tab {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    height: var(--app-tab-h); color: var(--tab-ink);
+    font-family: var(--font); font-size: 12px; line-height: 16px; font-weight: 400; text-decoration: none;
+    transition: transform .1s;
+    -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none;
+    -webkit-user-select: none; user-select: none; touch-action: manipulation;
+  }
+  html.app-shell .app-tab:hover { text-decoration: none; }
+  html.app-shell .app-tab:active { transform: scale(.97); }
+  html.app-shell .app-tab:focus-visible { outline: 2px solid var(--primary); outline-offset: -4px; border-radius: 12px; }
+  html.app-shell .app-tab svg { display: block; width: 24px; height: 24px; }
+  html.app-shell .app-tab .ico-f { display: none; }
+  html.app-shell .app-tab.on { color: var(--primary); font-weight: 700; }
+  html.app-shell .app-tab.on .ico-o { display: none; }
+  html.app-shell .app-tab.on .ico-f { display: inline; }
+  html.app-shell.app-kb .app-tabbar, html.app-shell.app-kb.has-tabbar body::after { display: none; }
+
+  /* 強制登入的遮罩不蓋頂欄和分頁列,沒登入的學生還能點分頁離開 */
+  html.app-shell body[data-require-profile] .modal-mask {
+    top: calc(var(--app-bar-h) + 1px + env(safe-area-inset-top));
+    bottom: calc(var(--app-tab-h) + env(safe-area-inset-bottom));
+  }
+  html.app-shell.app-kb body[data-require-profile] .modal-mask { bottom: 0; }
+}
+/* 大手機橫放(寬過 860,網站版的黏住欄位還在):黏住的文章框、文法路線扣掉分頁列的高度,最後幾行才不會壓在分頁列底下 */
+@media (min-width: 861px) and (pointer: coarse) and (max-height: 500px) {
+  html.app-shell.has-tabbar .passage-box, html.app-shell.has-tabbar .passage-sticky-wrap {
+    max-height: calc(100vh - 100px - var(--app-tab-h) - env(safe-area-inset-bottom));
+  }
+  html.app-shell.has-tabbar .passage-col .passage-box, html.app-shell.has-tabbar .passage-sticky-wrap .passage-box { max-height: none; }
+  html.app-shell.has-tabbar .gx-pathwrap { max-height: calc(100vh - 110px - var(--app-tab-h) - env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.app-shell .app-title, html.app-shell .app-tab { transition: none; }
+}
+@media print {
+  .app-tabbar, .app-back, .app-title { display: none !important; }
+  html.app-shell.has-tabbar body { padding-bottom: 0 !important; }
+  html.app-shell.has-tabbar body::after { display: none !important; }
+}

@@ -28,6 +28,12 @@
     URL.revokeObjectURL(a.href);
   }
 
+  /* 頭像選單的「安裝到手機」:window.APP 由 js/app-shell.js 提供,沒載入或不能裝就不顯示 */
+  function installItem(menu) {
+    if (!window.APP || !window.APP.canOfferInstall()) return null;
+    return h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; window.APP.install(); } }, '安裝到手機');
+  }
+
   /* ========================================================= */
   /* 雲端模式                                                   */
   /* ========================================================= */
@@ -41,6 +47,7 @@
       showGate: showLogin,
       showLogin,
       buildAuthCard,   // signup.html 直接把同一張卡畫在頁面上
+      renderAccount,   // me.html 的帳號區
     };
 
     document.addEventListener('DOMContentLoaded', async () => {
@@ -76,6 +83,8 @@
         if (!cur) {
           menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; showLogin('login'); } }, '登入'));
           menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; showLogin('signup'); } }, '註冊帳號'));
+          const inst = installItem(menu);
+          if (inst) menu.append(h('div', { class: 'pm-sep' }), inst);
           return;
         }
         menu.append(h('div', { class: 'pm-head' }, CLOUD.user.email));
@@ -86,26 +95,54 @@
           menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'admin.html'; } }, '教師後台'));
         }
         menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => exportData(cur.id, cur.name) }, '匯出進度備份'));
-        menu.append(h('button', {
-          class: 'pm-item', type: 'button',
-          onclick: async () => {
-            const n = prompt('暱稱(老師會看到這個名字)', CLOUD.nameOf(CLOUD.user));
-            if (n === null) return;
-            try { await CLOUD.updateName(n); location.reload(); }
-            catch (e) { alert(e.message); }
-          },
-        }, '改暱稱'));
+        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: renameUser }, '改暱稱'));
+        const inst = installItem(menu);
+        if (inst) menu.append(inst);
         menu.append(h('div', { class: 'pm-sep' }));
         menu.append(h('button', { class: 'pm-item danger', type: 'button', onclick: () => CLOUD.logout() }, '登出'));
-        menu.append(h('button', {
-          class: 'pm-item danger', type: 'button',
-          onclick: () => {
-            if (!confirm('確定要刪除帳號?雲端上的所有進度、錯題與寫作內容都會永久刪除,無法復原。')) return;
-            if (!confirm('再確認一次:真的要刪除「' + CLOUD.user.email + '」?')) return;
-            CLOUD.deleteAccount().catch(e => alert(e.message));
-          },
-        }, '刪除帳號'));
+        menu.append(h('button', { class: 'pm-item danger', type: 'button', onclick: deleteUser }, '刪除帳號'));
       }
+    }
+
+    /* 改暱稱、刪除帳號:頭像選單與「我的」頁(me.html)共用 */
+    async function renameUser() {
+      const n = prompt('暱稱(老師會看到這個名字)', CLOUD.nameOf(CLOUD.user));
+      if (n === null) return;
+      try { await CLOUD.updateName(n); location.reload(); }
+      catch (e) { alert(e.message); }
+    }
+
+    function deleteUser() {
+      if (!confirm('確定要刪除帳號?雲端上的所有進度、錯題與寫作內容都會永久刪除,無法復原。')) return;
+      if (!confirm('再確認一次:真的要刪除「' + CLOUD.user.email + '」?')) return;
+      CLOUD.deleteAccount().catch(e => alert(e.message));
+    }
+
+    /* 「我的」頁(me.html)的帳號區:由 js/me.js 在 CLOUD.ready 之後呼叫 */
+    function renderAccount(root) {
+      root.innerHTML = '';
+      const cur = PROFILE.current();
+      if (!cur) {
+        root.append(h('div', { class: 'me-head' },
+          h('span', { class: 'profile-dot me-dot', 'aria-hidden': 'true' }, '?'),
+          h('div', { class: 'me-actions' },
+            h('button', { class: 'btn primary', type: 'button', onclick: () => showLogin('login') }, '登入'),
+            h('button', { class: 'btn', type: 'button', onclick: () => showLogin('signup') }, '註冊帳號'))));
+        return;
+      }
+      const row = (label, opt) => h('li', null, opt.href
+        ? h('a', { class: 'me-row', href: opt.href }, label)
+        : h('button', { class: 'me-row' + (opt.danger ? ' danger' : ''), type: 'button', onclick: opt.run }, label));
+      const list = (...rows) => h('ul', { class: 'me-list' }, rows.filter(Boolean));
+      root.append(
+        h('div', { class: 'me-head' },
+          h('span', { class: 'profile-dot me-dot', 'aria-hidden': 'true' }, cur.name.slice(0, 1).toUpperCase()),
+          h('div', { class: 'me-who' }, h('b', { class: 'me-name' }, cur.name), h('span', { class: 'me-mail' }, CLOUD.user.email || ''))),
+        list(row('能力分析', { href: 'analysis.html' }), row('學習記錄', { href: 'history.html' }),
+          CLOUD.isTeacher ? row('教師後台', { href: 'admin.html' }) : null),
+        list(row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }), row('改暱稱', { run: renameUser })),
+        list(row('登出', { run: () => CLOUD.logout(), danger: true })),
+        h('p', { class: 'me-delete' }, h('button', { type: 'button', onclick: deleteUser }, '刪除帳號')));
     }
 
     /* ---------- 登入/註冊/忘記密碼:共用一張卡 ----------
@@ -361,16 +398,25 @@
     function showLogin(startTab) {
       if (document.querySelector('.modal-mask')) return;
       const required = document.body.hasAttribute('data-require-profile');
+      /* App 外殼裡,強制登入的遮罩刻意露出頂欄和分頁列(沒登入也能點分頁離開),就不算整頁鎖住:
+         不標 aria-modal、不鎖 Tab,改把被遮住的內容設成 inert,鍵盤和 VoiceOver 才走得到返回鍵和分頁 */
+      const shellGate = required && document.documentElement.classList.contains('app-shell');
       const opener = document.activeElement;
       const mask = h('div', { class: 'modal-mask' });
-      const box = h('div', { class: 'modal modal-auth', role: 'dialog', 'aria-modal': 'true', 'aria-label': '登入或註冊' });
+      const box = h('div', { class: 'modal modal-auth', role: 'dialog', 'aria-modal': shellGate ? null : 'true', 'aria-label': '登入或註冊' });
       if (!required) box.append(h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }));
       box.append(buildAuthCard({ mode: startTab }));
       mask.append(box);
       document.body.append(mask);
+      if (shellGate) {
+        document.documentElement.classList.add('app-gate');
+        Array.from(document.body.children).forEach(el => {
+          if (el !== mask && !el.matches('.topbar, .app-tabbar, script')) el.inert = true;
+        });
+      }
 
       box.addEventListener('keydown', e => {
-        if (e.key !== 'Tab') return;
+        if (shellGate || e.key !== 'Tab') return;
         const f = Array.from(box.querySelectorAll('button,input,a[href]')).filter(x => !x.disabled);
         if (!f.length) return;
         const first = f[0], last = f[f.length - 1];
@@ -494,6 +540,8 @@
       const fileInput = h('input', { type: 'file', accept: '.json', style: 'display:none' });
       fileInput.addEventListener('change', () => { if (fileInput.files[0]) importProfile(fileInput.files[0]); });
       menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => fileInput.click() }, '匯入進度檔'), fileInput);
+      const inst = installItem(menu);
+      if (inst) menu.append(inst);
       if (cur) {
         menu.append(h('div', { class: 'pm-sep' }));
         menu.append(h('button', {

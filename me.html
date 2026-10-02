@@ -24,13 +24,8 @@
   window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
 })();
 </script>
-<meta name="description" content="28 題程度檢測,約 20 分鐘。交卷即看各考點掌握度、常見迷思分析與建議練習路徑。">
-<link rel="canonical" href="https://www.shuashualanguage.com/diagnostic.html">
-<meta property="og:type" content="website">
-<meta property="og:title" content="程度檢測|刷刷英文">
-<meta property="og:description" content="28 題程度檢測,約 20 分鐘。交卷即看各考點掌握度、常見迷思分析與建議練習路徑。">
-<meta property="og:url" content="https://www.shuashualanguage.com/diagnostic.html">
-<title>程度檢測|刷刷英文</title>
+<meta name="robots" content="noindex">
+<title>我的|刷刷英文</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap">
@@ -42,14 +37,14 @@
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <script src="js/app-shell.js" defer></script>
 </head>
-<body data-require-profile>
+<body>
 
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="index.html">刷刷英文</a>
     <nav class="topnav">
       <a href="index.html">首頁</a>
-      <a href="diagnostic.html" class="active">程度檢測</a>
+      <a href="diagnostic.html">程度檢測</a>
       <div class="nav-group">
         <button class="nav-btn" type="button">學習</button>
         <div class="nav-menu">
@@ -74,7 +69,8 @@
 </header>
 
 <main class="container-narrow">
-  <div id="diag-root"></div>
+  <div class="page-head"><h1>我的</h1></div>
+  <div id="me-root"></div>
 </main>
 
 <footer>
@@ -82,11 +78,10 @@
 </footer>
 
 <script src="js/cloud-config.js"></script>
-<script src="data/diagnostic.js"></script>
 <script src="js/common.js"></script>
 <script src="js/cloud.js"></script>
 <script src="js/profile.js"></script>
-<script src="js/diagnostic.js"></script>
+<script src="js/me.js"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "753df33a812d44c78d22641c5063e4d3"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

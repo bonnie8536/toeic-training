@@ -3,6 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* App 外殼開機:網站模式只登記安裝事件;主畫面開啟時才在 <html> 加 class、補 viewport-fit=cover */
+(function () {
+  var d = document.documentElement;
+  window.__bip = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; });
+  window.addEventListener('appinstalled', function () { window.__bip = null; });
+  var sa = false;
+  try { sa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; } catch (e) { sa = false; }
+  if (!sa) return;
+  var p = location.pathname.split('/').pop() || 'index.html';
+  if (p.indexOf('.') < 0) p += '.html';
+  d.classList.add('is-app');
+  d.classList.add('app-shell');
+  if (['signup.html', 'reset.html', 'terms.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
+  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  var m = document.querySelector('meta[name=viewport]');
+  if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
+  window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
+})();
+</script>
 <meta name="robots" content="noindex">
 <title>重設密碼|刷刷英文</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,10 +31,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap">
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-title" content="刷刷英文">
+<link rel="apple-touch-icon" href="img/icon-180.png">
 <script>
 /* 從重設密碼信點進來時網址帶 type=recovery;先記下來,雲端層初始化可能會重新整理頁面 */
 if (/type=recovery/.test(location.hash)) sessionStorage.setItem('tr_pw_recovery', '1');
 </script>
+<script src="js/app-shell.js" defer></script>
 </head>
 <body>
 

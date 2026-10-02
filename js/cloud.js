@@ -23,6 +23,14 @@
 
   let client = null;
   const pending = {};
+  /* supabase-js 把登入資料存在 localStorage 的這個位置(預設名稱:sb-<專案代號>-auth-token) */
+  const SB_KEY = 'sb-' + ((/^https?:\/\/([^./]+)\./.exec(cfg.url) || [])[1] || '') + '-auth-token';
+  /* 開站確認登入狀態(有網路約 1 秒;離線又遇到登入憑證過期,supabase-js 會重試約 25 秒)之前的寫入先放 early,
+     確認完再決定:這一頁剛灌完雲端資料要重載 → 作廢(那些寫入根據的是舊資料,以雲端為準);其他情況 → 記進帳本。 */
+  let settled = false;
+  let hydrating = false;   // 這一頁決定要灌雲端資料了(之後要重載)
+  let reloading = false;
+  const early = {};
 
   window.CLOUD.ready = init();
 
@@ -39,22 +47,50 @@
 
   async function init() {
     try {
+      if (window.navigator && navigator.onLine === false && adoptStored()) return window.CLOUD.user;
       await loadSdk();
       client = window.supabase.createClient(cfg.url, cfg.anonKey);
       window.CLOUD.client = client;
       const { data: { session } } = await client.auth.getSession();
-      if (!session) return null;
+      if (!session) { adoptStored(); return window.CLOUD.user; }
       window.CLOUD.user = session.user;
       await afterAuth(session.user, false);
-      flushAll();
       return session.user;
     } catch (e) {
-      console.warn('雲端初始化失敗,以未登入狀態顯示:', e);
-      return null;
+      console.warn('雲端初始化失敗:', e);
+      adoptStored();
+      return window.CLOUD.user;
+    } finally {
+      settled = true;
+      if (!reloading) keepEarly();
+      flushAll();
     }
   }
 
+  /* 離線開 App,或連不到雲端(登入憑證換不到新的、雲端元件載不到):這台還留著登入資料、而且就是目前資料夾的帳號,
+     就維持登入狀態。這時不灌資料、上傳多半會失敗,寫入照樣記帳,下次連上再補傳。
+     supabase-js 只有在網路類的失敗才會留著登入資料;憑證被撤銷之類會自己清掉,這裡就讀不到。 */
+  function adoptStored() {
+    if (window.CLOUD.user) return true;
+    try {
+      const saved = JSON.parse(localStorage.getItem(SB_KEY));
+      const u = saved && saved.user;
+      if (u && typeof u.id === 'string' && pidOf(u) === window.__PROFILE_ID) { window.CLOUD.user = u; return true; }
+    } catch (e) {}
+    return false;
+  }
+
   function pidOf(user) { return 'c' + user.id.replace(/-/g, ''); }
+  /* 這台 supabase-js 還留著登入資料、而且就是目前資料夾的帳號 → 回它的 id;否則回空字串。
+     登入被撤銷(別台按登出、帳號刪除)時 supabase-js 會清掉登入資料,這時的寫入不記帳:
+     那可能是別人在用這台,或是根據很久沒更新的本機資料,下次登入要以雲端為準。 */
+  function storedUid() {
+    try {
+      const u = (JSON.parse(localStorage.getItem(SB_KEY)) || {}).user;
+      if (u && typeof u.id === 'string' && pidOf(u) === window.__PROFILE_ID) return u.id;
+    } catch (e) {}
+    return '';
+  }
 
   async function afterAuth(user, fresh) {
     try {
@@ -67,6 +103,7 @@
 
     const flagKey = 'tr_cloud_hydrated_' + user.id;
     if (fresh || !sessionStorage.getItem(flagKey)) {
+      hydrating = true;
       const { data: rows, error } = await client.from('progress').select('k,v,updated_at').eq('user_id', user.id);
       if (error) throw error;   // 連不上就整段不做:本機一個都不刪
       const prefix = 'tr_u' + pid + '_';
@@ -78,6 +115,7 @@
          - 帳本上沒有,但雲端完全沒有這一列:代表從來沒傳上去過(例如新建自訂題庫後馬上關頁)。
            被別台裝置刪掉的鍵在雲端是 v=null 的一列,不會落在這裡。 */
       const led = readLedger(user.id);
+      Object.keys(early).forEach(k => { if (led[k] === early[k]) delete led[k]; });   // 這一頁確認登入前的寫入根據的是舊資料,以雲端為準
       const keepLocal = {};
       Object.keys(led).forEach(k => {
         const c = cloud[k];
@@ -109,6 +147,7 @@
           updated_at: new Date().toISOString(),
         }, { onConflict: 'user_id,k' });
       } catch (e) { /* 名冊寫入失敗不擋使用 */ }
+      reloading = true;
       location.reload();   // 重載讓各模組讀到剛灌回的雲端進度
     }
   }
@@ -134,7 +173,12 @@
       const left = await flushAll();
       if (left > 0 && !confirm('還有 ' + left + ' 項進度還沒同步到雲端(可能是網路不穩)。現在登出,這台裝置上的這些進度會刪除。確定要登出?')) return;
     }
-    try { await client.auth.signOut(); } catch (e) {}
+    /* 沒網路時 signOut 會失敗、而且不清本機的登入資料:改成只清這台,免得下次開站又自動登回去 */
+    try {
+      const { error } = await client.auth.signOut();
+      if (error) await client.auth.signOut({ scope: 'local' });
+    } catch (e) { /* 雲端元件沒載到 */ }
+    try { [SB_KEY, SB_KEY + '-user', SB_KEY + '-code-verifier'].forEach(k => localStorage.removeItem(k)); } catch (e) {}
     if (user) {
       writeLedger(user.id, {});
       sessionStorage.removeItem('tr_cloud_hydrated_' + user.id);
@@ -300,28 +344,54 @@
   /* 把帳本上全部補傳。回傳還剩幾筆沒傳成功。 */
   async function flushAll() {
     const user = window.CLOUD.user;
-    if (!client || !user) return 0;
-    Object.keys(pending).forEach(k => { clearTimeout(pending[k]); delete pending[k]; });
-    const led = readLedger(user.id);
-    await Promise.all(Object.keys(led).map(k => upload(user, k, led[k])));
+    if (!user) return 0;
+    if (canUpload(user)) {   // 傳不了就只回報帳本上還有幾筆(登出時要先問)
+      Object.keys(pending).forEach(k => { clearTimeout(pending[k]); delete pending[k]; });
+      const led = readLedger(user.id);
+      await Promise.all(Object.keys(led).map(k => upload(user, k, led[k])));
+    }
     return Object.keys(readLedger(user.id)).length;
   }
 
+  /* 可以直接上傳:雲端元件在、有登入,而且這個分頁已經灌過雲端資料(新舊比對過)、現在沒有在灌 */
+  function canUpload(user) {
+    return !!(client && user && !hydrating && sessionStorage.getItem('tr_cloud_hydrated_' + user.id));
+  }
+
   function push(key, val) {
-    if (!client || !window.CLOUD.user) return;
-    const user = window.CLOUD.user;
     const t = Date.now();
+    if (!settled) { early[key] = t; return; }
+    if (reloading) return;   // 剛灌完雲端資料、頁面要重載:這時的寫入根據的是舊畫面,不記帳
+    const user = window.CLOUD.user;
+    if (!user) return;
     const led = readLedger(user.id);
     led[key] = t;
     writeLedger(user.id, led);   // 先記帳:就算 0.8 秒內關頁,下次開站也會補傳
+    if (!canUpload(user)) return;   // 離線維持登入的頁面:記了帳就好,下次灌資料時比新舊再補傳
     clearTimeout(pending[key]);
     pending[key] = setTimeout(() => { delete pending[key]; upload(user, key, t); }, 800);
   }
 
-  /* 關頁、切到背景、恢復連線時補傳 */
-  window.addEventListener('pagehide', () => { flushAll(); });
+  /* 確認登入之前的寫入記進目前帳號的帳本 */
+  function keepEarly() {
+    const u = window.CLOUD.user;
+    const uid = u && pidOf(u) === window.__PROFILE_ID ? u.id : storedUid();
+    const keys = Object.keys(early);
+    if (!uid || !keys.length) return;
+    const led = readLedger(uid);
+    keys.forEach(k => { if (!(led[k] >= early[k])) led[k] = early[k]; });
+    writeLedger(uid, led);
+  }
+
+  /* 關頁、切到背景、恢復連線時補傳。還沒確認完登入就要離開:只有確定沒網路(這一頁不會灌資料)才先記帳;
+     有網路時照舊以雲端為準(之後若同一頁真的灌了資料,灌資料前會把這些作廢) */
+  function onLeave() {
+    if (!settled && !hydrating && window.navigator && navigator.onLine === false) keepEarly();
+    flushAll();
+  }
+  window.addEventListener('pagehide', onLeave);
   window.addEventListener('online', () => { flushAll(); });
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') flushAll();
+    if (document.visibilityState === 'hidden') onLeave();
   });
 })();

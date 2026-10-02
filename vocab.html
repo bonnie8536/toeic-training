@@ -3,6 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* App 外殼開機:網站模式只登記安裝事件;主畫面開啟時才在 <html> 加 class、補 viewport-fit=cover */
+(function () {
+  var d = document.documentElement;
+  window.__bip = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; });
+  window.addEventListener('appinstalled', function () { window.__bip = null; });
+  var sa = false;
+  try { sa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; } catch (e) { sa = false; }
+  if (!sa) return;
+  var p = location.pathname.split('/').pop() || 'index.html';
+  if (p.indexOf('.') < 0) p += '.html';
+  d.classList.add('is-app');
+  d.classList.add('app-shell');
+  if (['signup.html', 'reset.html', 'terms.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
+  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  var m = document.querySelector('meta[name=viewport]');
+  if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
+  window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
+})();
+</script>
 <meta name="description" content="單字掉落遊戲與片語特訓:打字消除掉落的中文、分家族練 put on/off 這類片語,附例句與解析。">
 <link rel="canonical" href="https://www.shuashualanguage.com/vocab.html">
 <meta property="og:type" content="website">
@@ -16,8 +37,10 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-title" content="刷刷英文">
 <meta name="theme-color" content="#0b72c4">
 <link rel="apple-touch-icon" href="img/icon-180.png">
+<script src="js/app-shell.js" defer></script>
 </head>
 <body data-require-profile>
 

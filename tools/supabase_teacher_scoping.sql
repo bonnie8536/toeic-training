@@ -64,20 +64,20 @@ alter table public.teachers add column if not exists is_owner boolean not null d
 -- 這三個函式都只拿 auth.uid() 跟自己比對,問不出別人的資訊。
 
 create or replace function public.is_class_owner(p_class uuid) returns boolean
-language sql security definer stable set search_path = public as $
+language sql security definer stable set search_path = public as $$
   select exists (select 1 from public.classes c where c.id = p_class and c.teacher_id = auth.uid());
-$;
+$$;
 
 create or replace function public.is_class_member(p_class uuid) returns boolean
-language sql security definer stable set search_path = public as $
+language sql security definer stable set search_path = public as $$
   select exists (select 1 from public.memberships m where m.class_id = p_class and m.student_id = auth.uid());
-$;
+$$;
 
 create or replace function public.teaches_student(p_student uuid) returns boolean
-language sql security definer stable set search_path = public as $
+language sql security definer stable set search_path = public as $$
   select exists (select 1 from public.memberships m join public.classes c on c.id = m.class_id
                  where m.student_id = p_student and c.teacher_id = auth.uid());
-$;
+$$;
 
 grant execute on function public.is_class_owner(uuid) to authenticated;
 grant execute on function public.is_class_member(uuid) to authenticated;

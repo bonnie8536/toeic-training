@@ -1828,6 +1828,7 @@ html.app-gate .profile-widget { display: none; }   /* 登入卡上已經有登�
 .tn-detail-head code { font-size: 14px; background: var(--bg-soft); padding: 3px 10px; border-radius: 6px; color: var(--primary-dark); }
 .tn-detail-head .pop-mini { margin-left: auto; }
 .tn-feel { font-size: 15.5px; margin: 10px 0 14px; line-height: 1.8; }
+.tn-formnote { font-size: 13.5px; color: var(--ink-light); line-height: 1.75; margin: -6px 0 14px; }
 .tn-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .tn-sub { font-size: 13px; font-weight: 700; color: var(--ink-light); margin: 14px 0 6px; }
 .tn-sub:first-child { margin-top: 0; }

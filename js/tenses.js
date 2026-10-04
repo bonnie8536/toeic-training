@@ -140,6 +140,7 @@
       h('code', null, v.form),
       h('button', { class: 'pop-mini', type: 'button', onclick: () => { open = null; render(); } }, '收起')));
     box.append(h('p', { class: 'tn-feel' }, v.feel));
+    if (v.formNote) box.append(h('p', { class: 'tn-formnote' }, v.formNote));
 
     const cols = h('div', { class: 'tn-cols' });
     const left = h('div', null);

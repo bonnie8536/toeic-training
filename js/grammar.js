@@ -22,6 +22,12 @@
   };
   const stageOf = u => u.id.charAt(1);
 
+  /* 各章附錄:查得到的表,排在該章課程後面 */
+  const APPENDIX = {
+    c: [{ href: 'verbs.html', title: '不規則動詞表', sub: '118 個字的三態,可查可測驗' }],
+    h: [{ href: 'tenses.html', title: '12 時態總整理', sub: '一張表看完全部時態,附時間連接詞的搭配' }],
+  };
+
   const uid = getParam('u');
   const unit = UNITS.find(x => x.id === uid);
   if (unit) renderUnit(unit);
@@ -100,9 +106,6 @@
       const doneN = list.filter(u => done[u.id]).length;
       const col = h('div', { class: 'gx-col' },
         h('div', { class: 'page-head' }, h('h1', null, '文法基礎')),
-        h('div', { class: 'gx-continue' },
-          h('a', { class: 'btn', href: 'verbs.html' }, '不規則動詞表'),
-          h('span', null, '三態一次查完,也可以測驗')),
         todo ? h('div', { class: 'gx-continue' },
           h('a', { class: 'btn primary', href: 'grammar.html?u=' + todo.id }, '繼續上課'),
           h('span', null, STAGES[stageOf(todo)].name.replace(/\s.*$/, '') + ' 第 ' +
@@ -114,6 +117,11 @@
         col.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : '') + (todo && u.id === todo.id ? ' next' : ''), href: 'grammar.html?u=' + u.id },
           h('span', { class: 'n' }, String(i + 1)),
           h('span', { class: 't' }, u.title)));
+      });
+      (APPENDIX[stage] || []).forEach(a => {
+        col.append(h('a', { class: 'gx-unit-row gx-appendix', href: a.href },
+          h('span', { class: 'n' }, '表'),
+          h('span', { class: 't' }, a.title, h('i', null, a.sub))));
       });
       col.append(h('div', { style: 'height:40px' }));
       layout.append(buildRail(stage, null, sk => { stage = sk; draw(); window.scrollTo(0, 0); }), col);

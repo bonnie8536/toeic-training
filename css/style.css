@@ -1795,3 +1795,72 @@ html.app-gate .profile-widget { display: none; }   /* 登入卡上已經有登�
   html.app-shell.has-tabbar body { padding-bottom: 0 !important; }
   html.app-shell.has-tabbar body::after { display: none !important; }
 }
+/* ---------------- 12 時態總整理 ---------------- */
+.tn-wrap { overflow-x: auto; margin: 16px 0 4px; }
+.tn-grid { display: grid; grid-template-columns: 150px repeat(3, minmax(190px, 1fr)); gap: 8px; min-width: 700px; }
+.tn-head {
+  font-family: var(--round); font-weight: 700; font-size: 16px;
+  text-align: center; padding: 6px 0 2px; position: relative; z-index: 0;
+}
+.tn-head::before {
+  content: ''; position: absolute; z-index: -1; left: 50%; width: 58px; margin-left: -29px;
+  top: 40%; bottom: 10%; background: var(--marker);
+  border-radius: 44% 56% 50% 50% / 60% 44% 56% 40%; transform: rotate(-1.5deg);
+}
+.tn-side { align-self: center; padding-right: 8px; }
+.tn-side b { display: block; font-family: var(--round); font-size: 15.5px; }
+.tn-side span { font-size: 12.5px; color: var(--ink-light); line-height: 1.5; display: block; margin-top: 2px; }
+.tn-cell {
+  border: 1px solid var(--line); border-radius: var(--radius); background: #fff;
+  padding: 8px 12px 12px; text-align: left; font: inherit; color: var(--ink); cursor: pointer;
+  display: flex; flex-direction: column; gap: 2px; transition: border-color .15s;
+}
+.tn-cell:hover { border-color: var(--primary); }
+.tn-cell.on { border-color: var(--primary); background: var(--primary-tint); }
+.tn-cell.empty { border: 0; background: none; cursor: default; }
+.tn-axis svg { width: 100%; height: auto; max-width: 150px; display: block; }
+.tn-form { font-size: 13.5px; font-weight: 700; color: var(--primary-dark); }
+.tn-ex { font-size: 12.5px; color: var(--ink-light); line-height: 1.5; }
+
+.tn-detail { border: 1px solid var(--primary); border-radius: var(--radius); padding: 18px 20px 20px; margin: 14px 0 6px; background: #fff; }
+.tn-detail-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.tn-detail-head h2 { font-size: 20px; margin: 0; }
+.tn-detail-head code { font-size: 14px; background: var(--bg-soft); padding: 3px 10px; border-radius: 6px; color: var(--primary-dark); }
+.tn-detail-head .pop-mini { margin-left: auto; }
+.tn-feel { font-size: 15.5px; margin: 10px 0 14px; line-height: 1.8; }
+.tn-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.tn-sub { font-size: 13px; font-weight: 700; color: var(--ink-light); margin: 14px 0 6px; }
+.tn-sub:first-child { margin-top: 0; }
+.tn-when { margin: 0; padding-left: 20px; display: grid; gap: 5px; font-size: 14.5px; }
+.tn-signals { display: flex; gap: 6px; flex-wrap: wrap; }
+.tn-signals span { border: 1px solid var(--line); border-radius: 20px; padding: 2px 12px; font-size: 13px; color: var(--ink-light); }
+.tn-contrast, .tn-mistake { font-size: 13.5px; line-height: 1.7; margin-top: 12px; padding-left: 12px; border-left: 3px solid var(--line); color: var(--ink-light); }
+.tn-mistake { border-left-color: var(--hint-orange); color: var(--ink); }
+.tn-exbox { margin-bottom: 10px; }
+.tn-pair-en { font-size: 15px; }
+.tn-pair-zh { font-size: 13px; color: var(--ink-light); margin-top: 1px; }
+.tn-pair-note { font-size: 12.5px; color: var(--hint-orange); margin-top: 2px; }
+.tn-partner { border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 10px; }
+.tn-partner:first-of-type { border-top: 0; }
+
+.tn-group { font-size: 15px; font-family: var(--round); margin: 20px 0 8px; }
+.tn-pairs { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; }
+.tn-pair { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 16px; background: #fff; }
+.tn-pair-head { display: flex; align-items: baseline; gap: 10px; }
+.tn-pair-head b { font-size: 16px; }
+.tn-pair-head span { font-size: 13px; color: var(--ink-light); }
+.tn-pattern { font-size: 13px; color: var(--primary-dark); background: var(--primary-tint); border-radius: 6px; padding: 5px 10px; margin: 8px 0; line-height: 1.6; }
+.tn-explain { font-size: 14px; margin: 0 0 10px; line-height: 1.75; }
+.tn-pair-ex > div { margin-bottom: 8px; }
+
+@media (max-width: 860px) {
+  .tn-grid { grid-template-columns: 112px repeat(3, minmax(165px, 1fr)); min-width: 620px; }
+  .tn-side span { display: none; }
+  .tn-cols { grid-template-columns: 1fr; gap: 4px; }
+  .tn-detail { padding: 16px 16px 18px; }
+}
+
+/* 章末附錄列(查得到的表,不是一堂課) */
+.gx-appendix { border-style: dashed; margin-top: 14px; }
+.gx-appendix .n { background: var(--marker); color: var(--ink); border-color: transparent; font-size: 12.5px; }
+.gx-appendix .t i { display: block; font-style: normal; font-size: 12.5px; color: var(--ink-light); margin-top: 1px; }

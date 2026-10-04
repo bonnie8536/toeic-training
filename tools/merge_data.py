@@ -290,6 +290,58 @@ for v in verbs:
         errors.append(f"{w}: level {v.get('level')!r} 需為 初級/中級/進階")
     scan_simplified(v, w)
 
+# ---------- 12 時態總整理 ----------
+TN_TIMES = {'now', 'past', 'fut'}
+TN_ASPECTS = {'simple', 'prog', 'perf', 'perfprog'}
+tn_path = os.path.join(RAW, 'tenses.json')
+tenses = None
+if os.path.exists(tn_path):
+    with open(tn_path, encoding='utf-8-sig') as f:
+        tenses = json.load(f)
+    tl = tenses.get('tenses', [])
+    pl = tenses.get('pairs', [])
+    want = {f't-{t}-{a}' for t in TN_TIMES for a in TN_ASPECTS}
+    got = {x.get('id') for x in tl}
+    if want - got:
+        errors.append(f'時態總整理: 缺少 {sorted(want - got)}')
+    if got - want:
+        errors.append(f'時態總整理: 多出不認得的 id {sorted(got - want)}')
+    for t in tl:
+        w = f"tense {t.get('id','?')}"
+        if not need(t, ['id', 'name', 'form', 'feel', 'when', 'examples'], w):
+            continue
+        if not 2 <= len(t['when']) <= 3:
+            warnings.append(f"{w}: 用時機 {len(t['when'])} 條(預期 2-3)")
+        if len(t['examples']) != 3:
+            errors.append(f"{w}: 例句 {len(t['examples'])} 句,需 3 句")
+        for ei, ex in enumerate(t['examples']):
+            if not need(ex, ['en', 'zh'], f'{w} 例句{ei+1}'):
+                continue
+            if re.search(r'[一-鿿]', ex['en']):
+                errors.append(f'{w} 例句{ei+1}: 英文含中文')
+        for pi, pr in enumerate(t.get('partners', [])):
+            if not need(pr, ['word', 'rule', 'en', 'zh'], f'{w} 夥伴字{pi+1}'):
+                continue
+            if re.search(r'[一-鿿]', pr['en']):
+                errors.append(f'{w} 夥伴字{pi+1}: 例句含中文')
+        scan_simplified(t, w)
+    seen_p = set()
+    for p in pl:
+        w = f"tense-pair {p.get('id','?')}"
+        if not need(p, ['id', 'word', 'zh', 'pattern', 'explain', 'examples'], w):
+            continue
+        if p['id'] in seen_p:
+            errors.append(f'{w}: id 重複')
+        seen_p.add(p['id'])
+        if not 2 <= len(p['examples']) <= 3:
+            errors.append(f"{w}: 例句 {len(p['examples'])} 句,需 2-3 句")
+        for ei, ex in enumerate(p['examples']):
+            if not need(ex, ['en', 'zh'], f'{w} 例句{ei+1}'):
+                continue
+            if re.search(r'[一-鿿]', ex['en']):
+                errors.append(f'{w} 例句{ei+1}: 英文含中文')
+        scan_simplified(p, w)
+
 # ---------- 程度檢測 ----------
 diag = None
 dpath = os.path.join(RAW, 'diagnostic.json')
@@ -517,7 +569,7 @@ def write_js(fname, varname, data):
     print(f'  寫出 {fname}')
 
 print('=== 驗證結果 ===')
-print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字(移轉考題 {len(seen_tr)} 篇) | 檢測卷: {n_diag} 題 | 文法: {len(gx)} 單元 | 不規則動詞: {len(verbs)} 個')
+print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字(移轉考題 {len(seen_tr)} 篇) | 檢測卷: {n_diag} 題 | 文法: {len(gx)} 單元 | 不規則動詞: {len(verbs)} 個 | 時態總整理: {len(tenses["tenses"]) if tenses else 0} 式 {len(tenses["pairs"]) if tenses else 0} 夥伴字')
 print(f'Part 5 答案分布: {dict(sorted(dist5.items()))}')
 if errors:
     print(f'\n-- 硬錯誤 {len(errors)} 筆 --')
@@ -549,4 +601,6 @@ if gx:
     write_js('grammar.js', 'grammar', gx)
 if verbs:
     write_js('verbs.js', 'verbs', verbs)
+if tenses:
+    write_js('tenses.js', 'tenses', tenses)
 print('完成。')

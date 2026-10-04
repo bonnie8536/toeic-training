@@ -3,41 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
-/* App 外殼開機:網站模式只登記安裝事件;主畫面開啟時才在 <html> 加 class、補 viewport-fit=cover */
-(function () {
-  var d = document.documentElement;
-  window.__bip = null;
-  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; });
-  window.addEventListener('appinstalled', function () { window.__bip = null; });
-  var sa = false;
-  try { sa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; } catch (e) { sa = false; }
-  if (!sa) return;
-  var p = location.pathname.split('/').pop() || 'index.html';
-  if (p.indexOf('.') < 0) p += '.html';
-  d.classList.add('is-app');
-  d.classList.add('app-shell');
-  if (['signup.html', 'reset.html', 'terms.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
-  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
-  var m = document.querySelector('meta[name=viewport]');
-  if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
-  window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
-})();
-</script>
-<meta name="robots" content="noindex">
-<title>教師後台|刷刷英文</title>
+<meta name="description" content="12 個英文時態總整理:時間軸對照、公式、例句,以及 before/after/since 這些詞怎麼決定時態。">
+<link rel="canonical" href="https://www.shuashualanguage.com/tenses.html">
+<meta property="og:title" content="12 時態總整理|刷刷英文">
+<meta property="og:description" content="一張表看完 12 個時態,附時間連接詞的搭配規則。">
+<title>12 時態總整理|刷刷英文</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap">
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="manifest.json">
-<meta name="apple-mobile-web-app-title" content="刷刷英文">
 <meta name="theme-color" content="#0b72c4">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<script src="js/app-shell.js" defer></script>
 </head>
-<body data-require-profile>
+<body>
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -46,10 +26,10 @@
       <a href="index.html">首頁</a>
       <a href="diagnostic.html">程度檢測</a>
       <div class="nav-group">
-        <button class="nav-btn" type="button">學習</button>
+        <button class="nav-btn active" type="button">學習</button>
         <div class="nav-menu">
           <a href="grammar.html">文法基礎</a>
-          <a href="tenses.html">時態總整理</a>
+          <a href="tenses.html" class="active">時態總整理</a>
           <a href="verbs.html">不規則動詞</a>
           <a href="vocab.html">單字訓練</a>
           <a href="listening.html">聽力訓練</a>
@@ -70,7 +50,7 @@
 </header>
 
 <main class="container">
-  <div id="admin-root"></div>
+  <div id="tenses-root"></div>
 </main>
 
 <footer>
@@ -78,15 +58,11 @@
 </footer>
 
 <script src="js/cloud-config.js"></script>
-<script src="data/part5.js"></script>
-<script src="data/part6.js"></script>
-<script src="data/part7.js"></script>
-<script src="data/articles.js"></script>
-<script src="data/diagnostic.js"></script>
+<script src="data/tenses.js"></script>
 <script src="js/common.js"></script>
 <script src="js/cloud.js"></script>
 <script src="js/profile.js"></script>
-<script src="js/admin.js"></script>
+<script src="js/tenses.js"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "753df33a812d44c78d22641c5063e4d3"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

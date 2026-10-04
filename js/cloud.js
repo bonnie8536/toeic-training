@@ -52,13 +52,14 @@
       client = window.supabase.createClient(cfg.url, cfg.anonKey);
       window.CLOUD.client = client;
       const { data: { session } } = await client.auth.getSession();
-      if (!session) { adoptStored(); return window.CLOUD.user; }
+      if (!session) { adoptStored(); leaveStaleAccount(); return window.CLOUD.user; }
       window.CLOUD.user = session.user;
       await afterAuth(session.user, false);
       return session.user;
     } catch (e) {
       console.warn('雲端初始化失敗:', e);
       adoptStored();
+      leaveStaleAccount();
       return window.CLOUD.user;
     } finally {
       settled = true;
@@ -78,6 +79,21 @@
       if (u && typeof u.id === 'string' && pidOf(u) === window.__PROFILE_ID) { window.CLOUD.user = u; return true; }
     } catch (e) {}
     return false;
+  }
+
+  /* 資料夾還停在雲端帳號,這台卻沒有這個帳號的登入資料(別台按登出、帳號刪除):改回訪客再重載。
+     之後沒登入的人練習的東西寫在訪客的資料夾,原帳號下次登入時才不會把它當成「從沒上傳過的資料」傳上去。
+     原帳號的資料與帳本一筆都不刪(只有登出才刪),下次登入照常比對新舊。
+     目前不處理(分不出是本人還是別人寫的,丟資料或混入別人的練習要二選一):開站確認登入那一兩秒內的寫入、
+     頁面開著時才被撤銷的寫入,照舊留在原帳號。 */
+  function leaveStaleAccount() {
+    const pid = window.__PROFILE_ID;
+    if (reloading || window.CLOUD.user || typeof pid !== 'string' || pid.charAt(0) !== 'c') return;
+    /* 別的分頁可能已經換成別的帳號登入:那就不動目前帳號,重載後跟著它 */
+    try { if (localStorage.getItem('tr_current_profile') === JSON.stringify(pid)) localStorage.removeItem('tr_current_profile'); } catch (e) { return; }
+    window.__PROFILE_ID = null;
+    reloading = true;
+    location.reload();
   }
 
   function pidOf(user) { return 'c' + user.id.replace(/-/g, ''); }

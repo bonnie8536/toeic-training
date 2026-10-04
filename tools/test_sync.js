@@ -28,7 +28,10 @@ function makeWorld() {
   return { db: [], local: makeStorage(), session: makeStorage(), offline: false, reloads: 0, confirms: [], confirmAnswer: true };
 }
 function makeClient(w) {
+  const cbs = [];
+  const emit = ev => cbs.forEach(cb => cb(ev, null));
   return {
+    emit,
     auth: {
       /* 登入憑證過期(預設 1 小時)又沒網路:supabase-js 換不到新憑證,回 session null */
       /* 跟真的 supabase-js 一樣:
@@ -37,7 +40,7 @@ function makeClient(w) {
          - w.authGate:還沒放行前,確認登入卡住(離線時 supabase-js 會重試約 25 秒)。 */
       getSession: async () => {
         if (w.authGate) await w.authGate;
-        if (w.revoked) { w.local.removeItem(SB_KEY); return { data: { session: null }, error: null }; }
+        if (w.revoked) { w.local.removeItem(SB_KEY); emit('SIGNED_OUT'); return { data: { session: null }, error: null }; }
         return w.offline && w.tokenExpired
           ? { data: { session: null }, error: { message: 'TypeError: Failed to fetch' } }
           : { data: { session: { user: USER } } };
@@ -47,7 +50,9 @@ function makeClient(w) {
         w.revoked = false; w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', user: USER }));
         return { data: { user: USER, session: { user: USER } }, error: null };
       },
-      signOut: async () => ({ error: null }),
+      /* 跟真的一樣:登出、自動更新換不到憑證(被撤銷)、別的分頁登出,都會清掉 SB_KEY 並通知 SIGNED_OUT */
+      onAuthStateChange(cb) { cbs.push(cb); return { data: { subscription: { unsubscribe() {} } } }; },
+      signOut: async () => { w.local.removeItem(SB_KEY); emit('SIGNED_OUT'); return { error: null }; },
     },
     rpc: async () => ({ error: null }),
     from(table) {
@@ -60,7 +65,7 @@ function makeClient(w) {
       };
       async function run() {
         if (w.offline) return { data: null, error: { message: 'TypeError: Failed to fetch' } };
-        if (table === 'teachers') return { data: [], error: null };
+        if (table === 'teachers') { if (w.teacherGate) await w.teacherGate; return { data: [], error: null }; }   // teacherGate:登入後查教師身分卡住(灌資料之前)
         if (table !== 'progress') return { data: null, error: null };
         if (q.op === 'select') {
           return { data: w.db.filter(r => r.user_id === q.filters.user_id).map(r => JSON.parse(JSON.stringify(r))), error: null };
@@ -446,7 +451,159 @@ const scenarios = {
     return { ok: same(lv(w, 'vgame_banks'), otherDevice) && same(cv(w, 'vgame_banks'), otherDevice),
              detail: '本機 ' + JSON.stringify(lv(w, 'vgame_banks')[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')[0].words) };
   },
+  '26. 共用裝置:登入被撤銷後,沒登入的人練習產生的新鍵,不能在原帳號下次登入時被傳上去': async src => {
+    const w = makeWorld();
+    w.db.push({ user_id: USER.id, k: 'vgame_banks', v: NEW_BANK, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    await openLoggedIn(w, src);
+    w.revoked = true; newSession(w);
+    const reloadsBefore = w.reloads;
+    const pg = loadPage(w, src); await pg.ready;
+    const switched = w.local.getItem('tr_current_profile') === null && w.reloads === reloadsBefore + 1;
+    const pg2 = loadPage(w, src); await pg2.ready;                 // 重載後是訪客
+    pageWrites(pg2, w, 'verb_quiz', { n: 9 });                     // 不規則動詞頁不需登入
+    await pg2.runTimers(); await pg2.fire('win:pagehide');
+    await pg2.ctx.CLOUD.login('s@x.com', 'test-only'); await tick(); pg2.close();
+    const pg3 = loadPage(w, src); await pg3.ready; await pg3.runTimers();
+    return { ok: switched && cv(w, 'verb_quiz') === undefined && lv(w, 'verb_quiz') === null && same(lv(w, 'vgame_banks'), NEW_BANK),
+             detail: '改回訪客 ' + switched + ' / 雲端 verb_quiz ' + JSON.stringify(cv(w, 'verb_quiz')) + ' / 帳號本機 verb_quiz ' + JSON.stringify(lv(w, 'verb_quiz')) + ' / 題庫 ' + JSON.stringify(lv(w, 'vgame_banks')) };
+  },
+  '27. 改回訪客時一筆都不刪:原帳號在這台的資料與還沒上雲的帳本都留著': async src => {
+    const w = makeWorld();
+    await openLoggedIn(w, src);
+    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(NEW_BANK));
+    w.local.setItem(LEDGER, JSON.stringify({ vgame_banks: Date.now() - HOUR }));
+    w.revoked = true; newSession(w);
+    const pg = loadPage(w, src); await pg.ready;
+    const led = JSON.parse(w.local.getItem(LEDGER) || '{}');
+    return { ok: w.local.getItem('tr_current_profile') === null && same(lv(w, 'vgame_banks'), NEW_BANK) && led.vgame_banks !== undefined,
+             detail: '目前帳號 ' + w.local.getItem('tr_current_profile') + ' / 題庫 ' + (lv(w, 'vgame_banks') ? '還在' : '被刪了') + ' / 帳本 ' + JSON.stringify(led) };
+  },
+  '28. 只有雲端帳號的資料夾會改回訪客:本機學生檔案、離線維持登入都不動': async src => {
+    const w = makeWorld();
+    w.local.setItem('tr_current_profile', JSON.stringify('pabc123'));
+    w.revoked = true;                                              // 這台沒有任何登入資料
+    const pg = loadPage(w, src); await pg.ready;
+    const localKept = JSON.parse(w.local.getItem('tr_current_profile')) === 'pabc123';
+    const w2 = makeWorld();
+    await openLoggedIn(w2, src);
+    w2.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', expires_at: 1, user: USER }));
+    w2.offline = true; w2.lieFi = true; w2.tokenExpired = true; newSession(w2);
+    const r0 = w2.reloads;
+    const pg2 = loadPage(w2, src); await pg2.ready;
+    const offlineKept = w2.local.getItem('tr_current_profile') !== null && w2.reloads === r0 && !!pg2.ctx.CLOUD.user;
+    return { ok: localKept && offlineKept, detail: '本機檔案 ' + localKept + ' / 離線維持登入 ' + offlineKept };
+  },
+  '29. 登入被撤銷、確認登入還沒結束時就有寫入:改回訪客,那些值不給訪客看、本機不刪;帳本上原帳號還沒上雲的資料照常上傳': async src => {
+    const w = makeWorld();
+    await openLoggedIn(w, src);
+    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(NEW_BANK));
+    w.local.setItem(LEDGER, JSON.stringify({ vgame_banks: Date.now() - HOUR }));   // 學生自己還沒上雲的題庫
+    w.revoked = true; newSession(w);
+    let release; w.authGate = new Promise(r => { release = r; });
+    const pg = loadPage(w, src); await tick();
+    pageWrites(pg, w, 'verb_quiz', { n: 9, by: 'stranger' });
+    pageWrites(pg, w, 'vgame_banks', NEW_BANK);                    // 讀進來再寫回的鍵:帳本上有,不能搬走
+    release(); w.authGate = null; await pg.ready;
+    const moved = w.local.getItem('tr_verb_quiz') === null;
+    const bankKept = same(lv(w, 'vgame_banks'), NEW_BANK) && w.local.getItem('tr_vgame_banks') === null;
+    await pg.close();
+    const pg2 = loadPage(w, src); await pg2.ready;
+    await pg2.ctx.CLOUD.login('s@x.com', 'test-only'); await tick(); pg2.close();
+    const pg3 = loadPage(w, src); await pg3.ready; await pg3.runTimers();
+    return { ok: moved && bankKept && same(cv(w, 'vgame_banks'), NEW_BANK) && lv(w, 'verb_quiz').n === 9,
+             detail: '沒給訪客 ' + moved + ' / 本機還在 ' + JSON.stringify(lv(w, 'verb_quiz')) + ' / 題庫留在帳號 ' + bankKept + ' / 雲端 verb_quiz ' + JSON.stringify(cv(w, 'verb_quiz')) + ' / 雲端題庫 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+  },
+  '30. 登入被撤銷又載不到雲端元件:一樣改回訪客;訪客資料夾原有的不動': async src => {
+    const w = makeWorld();
+    await openLoggedIn(w, src);
+    w.local.setItem('tr_verb_quiz', JSON.stringify({ n: 1, by: 'guest' }));
+    w.local.removeItem(SB_KEY); w.sdkFail = true; newSession(w);
+    const r0 = w.reloads;
+    const pg = loadPage(w, src);                                    // 還沒確認完登入就寫入
+    pageWrites(pg, w, 'verb_quiz', { n: 9, by: 'stranger' });
+    await new Promise(r => setTimeout(r, 20)); await pg.ready;
+    const guestKept = JSON.parse(w.local.getItem('tr_verb_quiz')).by === 'guest';
+    const switched = w.local.getItem('tr_current_profile') === null && w.reloads === r0 + 1;
+    w.sdkFail = false;
+    const pg2 = loadPage(w, src); await pg2.ready;
+    await pg2.ctx.CLOUD.login('s@x.com', 'test-only'); await tick(); pg2.close();
+    const pg3 = loadPage(w, src); await pg3.ready; await pg3.runTimers();
+    return { ok: switched && guestKept,
+             detail: '改回訪客 ' + switched + ' / 訪客原本的 ' + guestKept + ' / 雲端 verb_quiz ' + JSON.stringify(cv(w, 'verb_quiz')) };
+  },
+  '31. 自己按登出:只重載一次,這台的帳號資料刪光,一筆都不會跑到訪客資料夾': async src => {
+    const w = makeWorld();
+    await openLoggedIn(w, src);
+    let release; w.authGate = new Promise(r => { release = r; });
+    const pg = loadPage(w, src);
+    studentWrites(pg, w, 'vgame_banks', NEW_BANK);
+    release(); w.authGate = null; await pg.ready; await pg.runTimers();
+    const r0 = w.reloads;
+    await pg.ctx.CLOUD.logout(); await tick();
+    const left = []; for (let i = 0; i < w.local.length; i++) { const k = w.local.key(i); if (k.startsWith(PREFIX) || k === 'tr_vgame_banks') left.push(k); }
+    return { ok: w.reloads === r0 + 1 && left.length === 0 && same(cv(w, 'vgame_banks'), NEW_BANK),
+             detail: '重載 +' + (w.reloads - r0) + ' / 留下 ' + JSON.stringify(left) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+  },
+  '32. 從訪客頁登入、灌資料途中有寫入:不能被當成登入失效而清掉登入者': async src => {
+    const w = makeWorld();
+    w.db.push({ user_id: USER.id, k: 'vgame_banks', v: OLD_BANK, updated_at: new Date(Date.now() - HOUR).toISOString() });
+    w.revoked = true;                                              // 這台沒有登入資料
+    const pg = loadPage(w, src); await pg.ready;                   // 訪客
+    let release; w.teacherGate = new Promise(r => { release = r; });
+    const p = pg.ctx.CLOUD.login('s@x.com', 'test-only'); await tick();   // 剛登入、還沒灌資料
+    const mid = !!pg.ctx.CLOUD.user;
+    pageWrites(pg, w, 'verb_quiz', { n: 1 });
+    const kept = !!pg.ctx.CLOUD.user;
+    release(); w.teacherGate = null; await p; await tick();
+    return { ok: mid && kept && w.local.getItem('tr_current_profile') !== null,
+             detail: '寫入後登入者 ' + (kept ? 'ok' : 'null') + ' / 目前帳號 ' + w.local.getItem('tr_current_profile') };
+  },
+  '33. 原帳號很久以前沒傳上去的舊資料(沒帳本、雲端沒有),登入失效時自己在確認前改了它:一筆都不能刪': async src => {
+    const w = makeWorld();
+    w.local.setItem('tr_current_profile', JSON.stringify('c' + USER.id.replace(/-/g, '')));
+    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(OLD_BANK));   // 10/1 以前留下、從沒上雲
+    w.revoked = true;
+    let release; w.authGate = new Promise(r => { release = r; });
+    const pg = loadPage(w, src);
+    pageWrites(pg, w, 'vgame_banks', NEW_BANK);
+    release(); w.authGate = null; await pg.ready;
+    const kept1 = same(lv(w, 'vgame_banks'), NEW_BANK);
+    const pg2 = loadPage(w, src); await pg2.ready;
+    await pg2.ctx.CLOUD.login('s@x.com', 'test-only'); await tick(); pg2.close();
+    const pg3 = loadPage(w, src); await pg3.ready; await pg3.runTimers();
+    return { ok: kept1 && same(lv(w, 'vgame_banks'), NEW_BANK),
+             detail: '改回訪客後 ' + JSON.stringify(lv(w, 'vgame_banks')) + ' / 再登入後 ' + JSON.stringify(lv(w, 'vgame_banks')) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+  },
+  '34. 登入資料的格式看不懂(supabase-js 改版):照舊記帳上傳,不能把學生踢回訪客': async src => {
+    const w = makeWorld();
+    const pg = await openLoggedIn(w, src);
+    w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', expires_at: 1 }));   // 沒有 user 欄位
+    const r0 = w.reloads;
+    studentWrites(pg, w, 'vgame_banks', NEW_BANK); await pg.runTimers();
+    return { ok: w.reloads === r0 && same(cv(w, 'vgame_banks'), NEW_BANK) && !!pg.ctx.CLOUD.user,
+             detail: '重載 +' + (w.reloads - r0) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+  },
+  '35. 開站確認登入時,別的分頁已經換成另一個帳號登入:不能把新帳號的「目前帳號」清掉': async src => {
+    const w = makeWorld();
+    await openLoggedIn(w, src);
+    w.revoked = true; newSession(w);
+    let release; w.authGate = new Promise(r => { release = r; });
+    const pg = loadPage(w, src);
+    const otherPid = JSON.stringify('c11111111222233334444555555555555');
+    w.local.setItem('tr_current_profile', otherPid);               // 別的分頁剛登入另一個帳號
+    const r0 = w.reloads;
+    release(); w.authGate = null; await pg.ready;
+    return { ok: w.local.getItem('tr_current_profile') === otherPid && w.reloads === r0 + 1,
+             detail: '目前帳號 ' + w.local.getItem('tr_current_profile') + ' / 重載 +' + (w.reloads - r0) };
+  },
 };
+
+/* 跟 common.js 的 store.set 一樣依「目前資料夾」寫:訪客寫 tr_<鍵>,帳號寫 tr_u<id>_<鍵> */
+function pageWrites(pg, w, k, v) {
+  const id = pg.ctx.__PROFILE_ID;
+  w.local.setItem('tr_' + (id ? 'u' + id + '_' : '') + k, JSON.stringify(v));
+  pg.ctx.CLOUD.push(k, v);
+}
 
 (async () => {
   let pass = 0;

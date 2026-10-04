@@ -6,6 +6,8 @@ const assert = require('assert');
 
 const path = require('path');
 const REPO = path.join(__dirname, '..');
+/* 快取名稱跟著 sw.js 的 V(每次上線會換) */
+const SWV = /const V = '([^']+)'/.exec(fs.readFileSync(path.join(REPO, 'sw.js'), 'utf8'))[1];
 const ORIGIN = 'https://www.shuashualanguage.com';
 const TIME_SCALE = 0.01; // 4000ms timeout -> 40ms
 
@@ -103,8 +105,8 @@ async function t(name, fn) {
     W.caches.store.set('someone-else', new MockCache());
     const ev = mkEvent(); W.listeners.install(ev); await settle(ev);
     const d = W.caches.dump();
-    assert.deepStrictEqual(d['ss-pages-v1'], ['/offline.html']);
-    assert.deepStrictEqual(d['ss-assets-v1'], ['/css/style.css']);
+    assert.deepStrictEqual(d['ss-pages-' + SWV], ['/offline.html']);
+    assert.deepStrictEqual(d['ss-assets-' + SWV], ['/css/style.css']);
     assert.ok(W.self.skipped);
   });
   await t('install without addRoutes support does not throw (event.addRoutes undefined)', async () => {});
@@ -124,7 +126,7 @@ async function t(name, fn) {
     const ev = mkEvent(); W.listeners.activate(ev); await settle(ev);
     assert.ok(W.reg.preloadEnabled);
     const names = Object.keys(W.caches.dump()).sort();
-    assert.deepStrictEqual(names, ['someone-else', 'ss-assets-v1', 'ss-pages-v1']);
+    assert.deepStrictEqual(names, ['someone-else', 'ss-assets-' + SWV, 'ss-pages-' + SWV]);
   });
   await t('passthrough: POST, cross-origin, Range, audio, video, /audio/, fetch() with empty destination', async () => {
     const cases = [
@@ -147,17 +149,17 @@ async function t(name, fn) {
     const ev = await fire(mkReq('/grammar?u=7#top', { mode: 'navigate', destination: 'document' }));
     const res = await ev.responded; assert.strictEqual(await res.text(), 'NET /grammar');
     await settle(ev);
-    assert.ok(W.caches.dump()['ss-pages-v1'].includes('/grammar.html'));
+    assert.ok(W.caches.dump()['ss-pages-' + SWV].includes('/grammar.html'));
     const ev2 = await fire(mkReq('/', { mode: 'navigate', destination: 'document' })); await ev2.responded; await settle(ev2);
-    assert.ok(W.caches.dump()['ss-pages-v1'].includes('/index.html'));
-    assert.ok(!W.caches.dump()['ss-pages-v1'].some((k) => k.includes('?') || k.includes('#')));
+    assert.ok(W.caches.dump()['ss-pages-' + SWV].includes('/index.html'));
+    assert.ok(!W.caches.dump()['ss-pages-' + SWV].some((k) => k.includes('?') || k.includes('#')));
   });
   await t('navigate uses preloadResponse when present (no extra fetch)', async () => {
     state.log = [];
     const ev = await fire(mkReq('/review.html', { mode: 'navigate', destination: 'document' }), { preloadResponse: Promise.resolve(mkRes('PRELOAD review')) });
     assert.strictEqual(await (await ev.responded).text(), 'PRELOAD review');
     await settle(ev); assert.deepStrictEqual(state.log, []);
-    assert.ok(W.caches.dump()['ss-pages-v1'].includes('/review.html'));
+    assert.ok(W.caches.dump()['ss-pages-' + SWV].includes('/review.html'));
   });
   await t('navigate offline, page cached: cached copy', async () => {
     net = { online: false, delay: 0, routes: {} };
@@ -180,7 +182,7 @@ async function t(name, fn) {
     assert.deepStrictEqual(state.log, []);
     ev = await fire(mkReq('/index.html?foo=1&error_description=x', { mode: 'navigate', destination: 'document' }));
     assert.strictEqual(await (await ev.responded).text(), 'NET /index.html'); await settle(ev);
-    const pages = await W.caches.open('ss-pages-v1');
+    const pages = await W.caches.open('ss-pages-' + SWV);
     assert.ok(!(await pages.keys()).some((k) => /code=|error/.test(k.url)));
   });
   await t('slow page (> timeout) with cache: cached copy served at timeout; the late new copy is NOT stored; a fast load stores it', async () => {
@@ -190,7 +192,7 @@ async function t(name, fn) {
     ev = await fire(mkReq('/vocab.html', { mode: 'navigate', destination: 'document' }), { resultingClientId: 'slow-page' });
     assert.strictEqual(await (await ev.responded).text(), 'v1 page');
     await settle(ev);
-    const c = await W.caches.open('ss-pages-v1'); assert.strictEqual(await (await c.match(ORIGIN + '/vocab.html')).text(), 'v1 page');
+    const c = await W.caches.open('ss-pages-' + SWV); assert.strictEqual(await (await c.match(ORIGIN + '/vocab.html')).text(), 'v1 page');
     net.delay = 0;
     ev = await fire(mkReq('/vocab.html', { mode: 'navigate', destination: 'document' }), { resultingClientId: 'fast-page' });
     assert.strictEqual(await (await ev.responded).text(), 'v2 page'); await settle(ev);
@@ -224,7 +226,7 @@ async function t(name, fn) {
     ev = await fire(mkReq('/js/app.js', { destination: 'script' }), { clientId: 'fresh-page' });
     assert.strictEqual(await (await ev.responded).text(), 'v2 app');
     await settle(ev);
-    const c = await W.caches.open('ss-assets-v1'); assert.strictEqual(await (await c.match(ORIGIN + '/js/app.js')).text(), 'v2 app');
+    const c = await W.caches.open('ss-assets-' + SWV); assert.strictEqual(await (await c.match(ORIGIN + '/js/app.js')).text(), 'v2 app');
   });
   await t('page served from cache: its scripts/styles also come from cache (same version), even if the network is fast', async () => {
     net = { online: true, delay: 0, routes: { '/reading.html': () => mkRes('old page'), '/js/reading.js': () => mkRes('old js') } };
@@ -280,9 +282,9 @@ async function t(name, fn) {
     net.routes['/img/a.svg'] = () => mkRes('A2');
     ev = await fire(mkReq('/img/a.svg', { destination: 'image' }));
     assert.strictEqual(await (await ev.responded).text(), 'A1'); await settle(ev);
-    const c = await W.caches.open('ss-img-v1'); assert.strictEqual(await (await c.match(ORIGIN + '/img/a.svg')).text(), 'A2');
+    const c = await W.caches.open('ss-img-' + SWV); assert.strictEqual(await (await c.match(ORIGIN + '/img/a.svg')).text(), 'A2');
     for (let i = 0; i < 90; i++) { const e = await fire(mkReq('/img/art-' + i + '.svg', { destination: 'image' })); await e.responded; await settle(e); }
-    const keys = W.caches.dump()['ss-img-v1'];
+    const keys = W.caches.dump()['ss-img-' + SWV];
     assert.strictEqual(keys.length, 80); assert.ok(!keys.includes('/img/a.svg')); assert.ok(keys.includes('/img/art-89.svg'));
   });
   await t('image offline, never cached: rejects; offline cached: served', async () => {
@@ -294,14 +296,14 @@ async function t(name, fn) {
   await t('style + manifest handled network-first with pathname key', async () => {
     net = { online: true, delay: 0, routes: {} };
     for (const [p, d] of [['/css/style.css?v=9', 'style'], ['/manifest.json', 'manifest']]) { const ev = await fire(mkReq(p, { destination: d })); await ev.responded; await settle(ev); }
-    const k = W.caches.dump()['ss-assets-v1']; assert.ok(k.includes('/css/style.css') && k.includes('/manifest.json'));
+    const k = W.caches.dump()['ss-assets-' + SWV]; assert.ok(k.includes('/css/style.css') && k.includes('/manifest.json'));
   });
 
   // kill switch
   const K = loadWorker(REPO + '/tools/sw-killswitch.js');
   await t('killswitch: no fetch listener, install skipWaiting, activate deletes only ss- caches and unregisters', async () => {
     assert.strictEqual(K.listeners.fetch, undefined);
-    for (const n of ['ss-pages-v1', 'ss-assets-v1', 'ss-img-v1', 'ss-pages-v0', 'someone-else']) await K.caches.open(n);
+    for (const n of ['ss-pages-' + SWV, 'ss-assets-' + SWV, 'ss-img-' + SWV, 'ss-pages-v0', 'someone-else']) await K.caches.open(n);
     K.listeners.install(mkEvent()); assert.ok(K.self.skipped);
     const ev = mkEvent(); K.listeners.activate(ev); await settle(ev);
     assert.deepStrictEqual(Object.keys(K.caches.dump()), ['someone-else']);

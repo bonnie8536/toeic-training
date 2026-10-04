@@ -22,6 +22,38 @@ def read_json(path):
     with open(path, 'r', encoding='utf-8-sig') as f:
         return json.load(f)
 
+ZH_PUNCT = {';': '；', ':': '：', '?': '？', '!': '！', ',': '，', '(': '（', ')': '）'}
+
+
+def scan_zh_punct(obj, where, fields=None):
+    """中文句子裡出現半形標點就警告(規則:中文全形、英文半形)。只看中文欄位,英文例句與公式不碰。"""
+    def chk(s, path):
+        for m in re.finditer(r'[;:?!,()]', s):
+            i = m.start()
+            prev = s[:i].rstrip()[-1:]
+            nxt = s[i + 1:].lstrip()[:1]
+            if re.match(r'[一-鿿]', prev or '') or (m.group() in '()' and re.match(r'[一-鿿]', nxt or '')):
+                warnings.append(f"{where}{path}: 中文裡有半形「{m.group()}」,應為「{ZH_PUNCT[m.group()]}」")
+                return
+    def walk(node, path=''):
+        if isinstance(node, dict):
+            for k, v in node.items():
+                if fields and k in fields and isinstance(v, str):
+                    chk(v, path + '/' + k)
+                elif fields and k in fields and isinstance(v, list):
+                    for i, x in enumerate(v):
+                        if isinstance(x, str):
+                            chk(x, f'{path}/{k}/{i}')
+                elif not fields and isinstance(v, str) and re.search(r'[一-鿿]', v):
+                    chk(v, path + '/' + k)
+                else:
+                    walk(v, path + '/' + k)
+        elif isinstance(node, list):
+            for i, v in enumerate(node):
+                walk(v, f'{path}/{i}')
+    walk(obj)
+
+
 def scan_simplified(obj, where):
     text = json.dumps(obj, ensure_ascii=False)
     hits = sorted(set(c for c in text if c in SIMP))
@@ -325,7 +357,9 @@ if os.path.exists(tn_path):
             if re.search(r'[一-鿿]', pr['en']):
                 errors.append(f'{w} 夥伴字{pi+1}: 例句含中文')
         scan_simplified(t, w)
+        scan_zh_punct(t, w, {'zh', 'feel', 'explain', 'pattern', 'rule', 'mistake', 'contrast', 'note', 'formNote', 'when'})
     seen_p = set()
+    seen_pw = {}
     for p in pl:
         w = f"tense-pair {p.get('id','?')}"
         if not need(p, ['id', 'word', 'zh', 'pattern', 'explain', 'examples'], w):
@@ -333,14 +367,21 @@ if os.path.exists(tn_path):
         if p['id'] in seen_p:
             errors.append(f'{w}: id 重複')
         seen_p.add(p['id'])
-        if not 2 <= len(p['examples']) <= 3:
-            errors.append(f"{w}: 例句 {len(p['examples'])} 句,需 2-3 句")
+        key = re.sub(r'\s+', '', p['word']).lower()
+        if key in seen_pw:
+            errors.append(f"{w}: 夥伴字 {p['word']} 與 {seen_pw[key]} 重複(頁面會畫出兩張一樣的卡)")
+        seen_pw[key] = p['id']
+        # 一次對比兩個字的(word 含斜線,例如 recently / lately)需要雙倍例句,放寬到 4 句
+        ex_max = 4 if '/' in p['word'] else 3
+        if not 2 <= len(p['examples']) <= ex_max:
+            errors.append(f"{w}: 例句 {len(p['examples'])} 句,需 2-{ex_max} 句")
         for ei, ex in enumerate(p['examples']):
             if not need(ex, ['en', 'zh'], f'{w} 例句{ei+1}'):
                 continue
             if re.search(r'[一-鿿]', ex['en']):
                 errors.append(f'{w} 例句{ei+1}: 英文含中文')
         scan_simplified(p, w)
+        scan_zh_punct(p, w, {'zh', 'feel', 'explain', 'pattern', 'rule', 'mistake', 'contrast', 'note', 'formNote', 'when'})
 
 # ---------- 程度檢測 ----------
 diag = None

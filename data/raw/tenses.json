@@ -83,7 +83,7 @@
    ],
    "mistake": "第三人稱單數忘記加 -s（寫成 He work here），或否定句漏掉 does（寫成 He not work here）。",
    "contrast": "現在進行式講的是此刻正在發生或短期的狀態，現在簡單式講的是長期習慣與不會變的事實。",
-   "formNote": "第三人稱單數加 -s / -es(go → goes、study → studies、watch → watches);否定與疑問用 do / does + 原形(He does not work here. / Does she work here?)。"
+   "formNote": "第三人稱單數加 -s / -es(go → goes、study → studies、watch → watches);否定與疑問用 do / does + 原形（He does not work here. / Does she work here?）。"
   },
   {
    "id": "t-now-prog",
@@ -475,18 +475,18 @@
     },
     {
      "word": "when + 過去簡單式",
-     "rule": "when 子句用過去簡單式當基準點，主句用過去完成進行式交代在那之前一直在做的事;時間子句放句首最不會誤讀。",
-     "en": "When the office closed, he had been working there since 2015.",
-     "zh": "辦公室收掉的時候，他從 2015 年起就一直在那裡工作。"
+     "rule": "when 子句用過去簡單式當基準點，主句用過去完成進行式交代在那之前一直在做的事；時間子句放句首最不會誤讀。",
+     "en": "When the office closed down, he had been working there for seven years.",
+     "zh": "辦公室收掉的時候，他已經在那裡工作七年了。"
     },
     {
      "word": "for / since",
      "rule": "for 接一段長度、since 接過去的起點，兩個都用來講到過去那一刻為止累積了多久。",
-     "en": "By last winter, she had been teaching there for ten years.",
-     "zh": "到去年冬天，她在那裡已經教了十年。"
+     "en": "She had been teaching there since 2014, so she knew every student by name.",
+     "zh": "她從 2014 年就一直在那裡教書，所以每個學生的名字她都記得。"
     }
    ],
-   "mistake": "know、have、belong 這類狀態動詞不用進行式:要寫 He had known her for years，不是 had been knowing。",
+   "mistake": "know、own、belong 這類狀態動詞不用進行式：要寫 He had known her for years，不是 had been knowing。",
    "contrast": "過去完成式在意那之前已經完成了什麼，過去完成進行式在意已經持續做了多久。"
   },
   {
@@ -662,7 +662,8 @@
    "feel": "到未來的某一刻為止，這件事會已經持續了多久，重點同樣在時間的長度。",
    "when": [
     "講到未來某個時間點為止，已經連續做了多長時間。",
-    "強調到那時候為止都沒有停過。"
+    "強調到那時候為止都沒有停過。",
+    "常跟 for、since 或 all day 這類講時間長度的說法一起出現。"
    ],
    "examples": [
     {
@@ -675,7 +676,7 @@
     },
     {
      "en": "He will have been driving all day, so he will need a rest.",
-     "zh": "他到時候會開一整天的車，所以會需要休息。"
+     "zh": "他到那時候已經開了一整天的車，所以會需要休息。"
     }
    ],
    "signals": [
@@ -693,18 +694,18 @@
     },
     {
      "word": "when + 現在簡單式",
-     "rule": "when 子句講未來不用 will，用現在簡單式;主句才放未來完成進行式。",
-     "en": "When the contract is finally signed, they will have been negotiating for half a year.",
-     "zh": "等合約終於簽下來，他們就已經談了半年。"
+     "rule": "when 子句講未來不用 will，用現在簡單式；主句才放未來完成進行式。",
+     "en": "When the contract is finally signed, they will have been negotiating for six months.",
+     "zh": "等合約終於簽下來，他們就已經談了六個月。"
     },
     {
      "word": "for",
-     "rule": "for 接一段時間長度，是這個時態最關鍵的搭配;沒有這段長度，通常用未來完成式就夠了。",
-     "en": "By next week, she will have been studying English for three years.",
-     "zh": "到下週，她學英文就滿三年了。"
+     "rule": "for 接一段時間長度，是這個時態最關鍵的搭配；沒有這段長度，通常用未來完成式就夠了。",
+     "en": "By next month, she will have been studying English for three years.",
+     "zh": "到下個月，她學英文就滿三年了。"
     }
    ],
-   "mistake": "少了 for 或 since 帶出的時間長度，這個時態幾乎用不上;只是要講「到那時會完成」用未來完成式就好。",
+   "mistake": "沒有 for 帶出的長度、since 帶出的起點，或 all day 這類累積時間的說法，這個時態幾乎用不上；只是要講「到那時會完成」，用未來完成式就好。",
    "contrast": "未來完成式講到那時已經做完，未來完成進行式講到那時已經持續了多久。"
   }
  ],
@@ -816,9 +817,9 @@
   {
    "id": "p-05",
    "word": "as",
-   "zh": "當……的時候;隨著",
-   "pattern": "as 子句與主句同時發生 → 兩邊時態不必相同",
-   "explain": "as 強調兩件事同時發生或一起變化。講同一時間正在做的事，背景那半常用進行式;講「隨著……而……」時，兩邊的時態可以不一樣。",
+   "zh": "當…的時候；隨著",
+   "pattern": "as + 過去進行式 → 主句過去簡單式（同時發生）；as + 現在簡單式 → 主句現在簡單式／現在完成式／will（隨著……而……）；as 子句講未來不放 will",
+   "explain": "as 強調兩件事同時發生或一起變化。講同一時間正在做的事，背景那半常用進行式；講「隨著……而……」時，兩邊的時態可以不一樣。",
    "examples": [
     {
      "en": "As I was leaving the office, the phone rang.",
@@ -826,17 +827,17 @@
      "note": "拉長的背景用過去進行式，突然發生的那件用過去簡單式。"
     },
     {
-     "en": "As prices have risen, consumers have cut back.",
+     "en": "As prices have risen, consumers have cut back on spending.",
      "zh": "隨著物價上漲，消費者也減少了開銷。",
      "note": "一起變化時，兩邊可以都用完成式。"
     },
     {
-     "en": "As the deadline gets closer, the team has started working weekends.",
-     "zh": "隨著截止日逼近，團隊開始週末加班。",
-     "note": "兩邊時態不一致也沒問題。"
+     "en": "As the company grows, we will need a bigger office.",
+     "zh": "隨著公司成長，我們會需要更大的辦公室。",
+     "note": "講「隨著……而……」時，as 子句用現在簡單式、主句用 will；as 子句本身不可以放 will。"
     }
    ],
-   "mistake": "單一、瞬間發生的那一刻用 when 不用 as:火災警報響起要說 When the fire alarm rang;as 留給同時持續或一起變化的情況。",
+   "mistake": "as 要兩件事同時持續或一起變化。如果是「那一刻 A 發生，接著才 B」這種先後觸發，要用 when：When the fire alarm rang, everyone left the building.（大家是在警報之後才離開，不是同時）。另外 as 放句首又接一個事件時，很容易被讀成「因為」，所以指單一時間點時用 when 比較安全。",
    "group": "同時"
   },
   {
@@ -1127,12 +1128,12 @@
    "id": "p-17",
    "word": "recently / lately",
    "zh": "最近",
-   "pattern": "lately 幾乎只配完成式;recently 完成式與過去簡單式都可以",
-   "explain": "兩個字中文都是「最近」，搭配卻不一樣。lately 幾乎只跟現在完成式或現在完成進行式一起用;recently 除了完成式，也常直接配過去簡單式，講最近發生過的那一件事。",
+   "pattern": "lately 幾乎只配現在完成式／現在完成進行式；recently 完成式與過去簡單式都可以",
+   "explain": "兩個字中文都是「最近」，搭配卻不一樣。lately 幾乎只跟現在完成式或現在完成進行式一起用；recently 除了完成式，也常直接配過去簡單式，講最近發生過的那一件事。",
    "examples": [
     {
      "en": "Have you seen him lately?",
-     "zh": "你最近有看到他嗎?",
+     "zh": "你最近有看到他嗎？",
      "note": "lately 配現在完成式。"
     },
     {
@@ -1144,9 +1145,14 @@
      "en": "Sales have been dropping lately, so the manager called a meeting.",
      "zh": "最近業績一直在下滑，所以經理召開了會議。",
      "note": "強調一路持續下滑，用現在完成進行式。"
+    },
+    {
+     "en": "We have hired three new employees recently, and the team is busier.",
+     "zh": "我們最近聘了三位新人，團隊變得更忙。",
+     "note": "recently 配現在完成式。"
     }
    ],
-   "mistake": "lately 不要配過去簡單式(✗ I saw him lately)，改用 recently，或把句子改成完成式。",
+   "mistake": "lately 不要配過去簡單式（✗ I saw him lately），改用 recently，或把句子改成完成式。",
    "group": "完成與經驗"
   },
   {
@@ -1173,32 +1179,6 @@
     }
    ],
    "mistake": "不可以寫 I have not never used it；never 本身已經是否定了。",
-   "group": "完成與經驗"
-  },
-  {
-   "id": "p-19",
-   "word": "recently / lately",
-   "zh": "最近",
-   "pattern": "recently／lately → 主句用現在完成式或現在完成進行式（recently 指明確的過去動作時也可配過去簡單式）",
-   "explain": "「最近」這段時間還沒結束，所以通常配完成式；但 recently 如果指一個已經結束的明確動作，也可以用過去簡單式。",
-   "examples": [
-    {
-     "en": "We have hired three new employees recently, and the team is busier.",
-     "zh": "我們最近聘了三位新人，團隊變得更忙。",
-     "note": "recently 配現在完成式。"
-    },
-    {
-     "en": "He has been working late lately because the project is behind schedule.",
-     "zh": "他最近一直加班，因為專案進度落後。",
-     "note": "lately 常配現在完成進行式。"
-    },
-    {
-     "en": "The company recently moved its office, so the address has changed.",
-     "zh": "公司最近搬了辦公室，所以地址換了。",
-     "note": "指一個明確的過去動作時，recently 也能配過去簡單式。"
-    }
-   ],
-   "mistake": "lately 幾乎不配過去簡單式，要講「最近一直」就用完成式。",
    "group": "完成與經驗"
   },
   {

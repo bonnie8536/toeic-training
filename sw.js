@@ -5,7 +5,7 @@
    (node tools/check_release.js 會檢查,--fix 自動換),舊快取整批作廢,不會拿新版共用檔配舊版頁面。
    不經手:跨網域(Supabase、jsDelivr、Google Fonts、Cloudflare)、非 GET、Range 請求、音檔、帶登入參數的頁面。
    這裡不讀寫學生的進度資料,只刪自己 ss- 開頭的快取。 */
-const V = 'v20261005-1049';
+const V = 'v20261005-1335';
 const PAGES = 'ss-pages-' + V;
 const ASSETS = 'ss-assets-' + V;
 const IMAGES = 'ss-img-' + V;

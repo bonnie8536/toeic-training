@@ -34,36 +34,65 @@
     const byId = id => TENSES.find(x => x.id === id);
 
     /* ---------- 時間軸小圖:一條線標過去/現在/未來,再依時態畫標記 ---------- */
-    function axisSvg(time, aspect) {
-      const X = { past: 26, now: 60, fut: 94 }[time];
-      const C = { line: '#c9d2da', ink: '#2b2a28', mark: '#ffd84d', blue: '#0b72c4' };
-      const parts = [];
-      /* 底線與三個刻度 */
-      parts.push('<line x1="8" y1="34" x2="112" y2="34" stroke="' + C.line + '" stroke-width="2"/>');
-      [26, 60, 94].forEach(x => parts.push('<line x1="' + x + '" y1="30" x2="' + x + '" y2="38" stroke="' + C.line + '" stroke-width="2"/>'));
-      parts.push('<circle cx="60" cy="34" r="3" fill="' + C.line + '"/>');
+    /* ---------- 時間軸小圖:站著的人=做了這件事,跑步的人=正在進行;
+       灰色的人+虛線箭頭=從更早一路到那時(完成式);現在簡單式=一整排站著的人(一直都有在做) ---------- */
+    const C = { line: '#c9d2da', ink: '#222b36', past: '#c3ccd5', arrow: '#d2443c', mark: '#ffd84d', label: '#8a949f' };
+    const TICK = { past: 40, now: 74, fut: 108 };
+    const BASE = 40;
 
-      if (aspect === 'simple') {
-        /* 一個實心點:事情就發生在這個時間 */
-        parts.push('<circle cx="' + X + '" cy="20" r="7" fill="' + C.blue + '"/>');
+    function person(x, color, scale, running) {
+      const g = '<g transform="translate(' + x + ' ' + BASE + ') scale(' + scale + ')" fill="none" stroke="' + color +
+        '" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round">';
+      const body = running
+        ? '<circle cx="3.5" cy="-23.5" r="3.4" fill="' + color + '" stroke="none"/>' +
+          '<path d="M2 -18.5 L-1 -9.5"/>' +
+          '<path d="M1.5 -17 L5.5 -13.5 L8.5 -16.5"/>' +
+          '<path d="M1.5 -17 L-3.5 -15 L-5.5 -11"/>' +
+          '<path d="M-1 -9.5 L4 -6.5 L2.5 0"/>' +
+          '<path d="M-1 -9.5 L-4.5 -5 L-9 -5.5"/>'
+        : '<circle cx="0" cy="-23.5" r="3.4" fill="' + color + '" stroke="none"/>' +
+          '<path d="M0 -18 L0 -9"/>' +
+          '<path d="M0 -18 L-6 -25 M0 -18 L6 -25"/>' +
+          '<path d="M0 -9 L-4 0 M0 -9 L4 0"/>';
+      return g + body + '</g>';
+    }
+
+    function arrow(x1, x2) {
+      const y = BASE - 14;
+      return '<path d="M' + x1 + ' ' + y + ' H' + (x2 - 4) + '" stroke="' + C.arrow + '" stroke-width="1.8" stroke-dasharray="3 2.5" fill="none"/>' +
+        '<path d="M' + (x2 - 5) + ' ' + (y - 3.5) + ' L' + x2 + ' ' + y + ' L' + (x2 - 5) + ' ' + (y + 3.5) + ' z" fill="' + C.arrow + '"/>';
+    }
+
+    function axisSvg(time, aspect) {
+      const X = TICK[time];
+      const parts = [];
+      /* 時間軸、三個刻度與標籤;這一格的時間用螢光筆標起來 */
+      parts.push('<ellipse cx="' + X + '" cy="' + (BASE + 4) + '" rx="12" ry="5" fill="' + C.mark + '" opacity=".6"/>');
+      parts.push('<line x1="4" y1="' + (BASE + 4) + '" x2="142" y2="' + (BASE + 4) + '" stroke="' + C.line + '" stroke-width="2"/>');
+      Object.entries(TICK).forEach(([k, x]) => {
+        parts.push('<line x1="' + x + '" y1="' + (BASE + 1) + '" x2="' + x + '" y2="' + (BASE + 7) + '" stroke="' + C.line + '" stroke-width="2"/>');
+        parts.push('<text x="' + x + '" y="' + (BASE + 18) + '" text-anchor="middle" font-size="9.5" fill="' + C.label + '">' +
+          ({ past: '過去', now: '現在', fut: '未來' })[k] + '</text>');
+      });
+
+      if (aspect === 'simple' && time === 'now') {
+        /* 一直都有在做:從過去到未來都站著一個人 */
+        [12, 43, 74, 105, 136].forEach(x => parts.push(person(x, C.ink, 0.8, false)));
+      } else if (aspect === 'simple') {
+        parts.push(person(X, C.ink, 1, false));
       } else if (aspect === 'prog') {
-        /* 一小段波浪:那個時間點正在進行 */
-        parts.push('<path d="M' + (X - 13) + ' 20 q 4 -7 7 0 q 4 7 7 0 q 4 -7 7 0" fill="none" stroke="' + C.blue + '" stroke-width="3" stroke-linecap="round"/>');
-        parts.push('<circle cx="' + X + '" cy="20" r="3.2" fill="' + C.blue + '"/>');
+        parts.push(person(X, C.ink, 1, true));
       } else if (aspect === 'perf') {
-        /* 從更早的一點拉箭頭到這個時間:到此為止已完成 */
-        parts.push('<circle cx="' + (X - 26) + '" cy="20" r="5" fill="' + C.line + '"/>');
-        parts.push('<path d="M' + (X - 19) + ' 20 H' + (X - 8) + '" stroke="' + C.ink + '" stroke-width="2" stroke-dasharray="3 3"/>');
-        parts.push('<path d="M' + (X - 9) + ' 16 l5 4 l-5 4 z" fill="' + C.ink + '"/>');
-        parts.push('<circle cx="' + X + '" cy="20" r="7" fill="' + C.blue + '"/>');
+        parts.push(person(X - 32, C.past, 1, false));
+        parts.push(arrow(X - 24, X - 9));
+        parts.push(person(X, C.ink, 1, false));
       } else {
-        /* 一路持續的波浪到這個時間 */
-        parts.push('<path d="M' + (X - 30) + ' 20 q 4 -7 7 0 q 4 7 7 0 q 4 -7 7 0 q 4 7 7 0 q 4 -7 7 0" fill="none" stroke="' + C.blue + '" stroke-width="3" stroke-linecap="round"/>');
-        parts.push('<circle cx="' + X + '" cy="20" r="5.5" fill="' + C.blue + '"/>');
+        parts.push(arrow(X - 27, X - 10));
+        parts.push(person(X - 36, C.past, 0.8, true));
+        parts.push(person(X - 19, C.past, 0.8, true));
+        parts.push(person(X, C.ink, 1, true));
       }
-      /* 這一格對應的時間刻度用螢光筆標起來 */
-      parts.push('<ellipse cx="' + X + '" cy="34" rx="11" ry="6" fill="' + C.mark + '" opacity=".55"/>');
-      return '<svg viewBox="0 0 120 46" aria-hidden="true">' + parts.join('') + '</svg>';
+      return '<svg viewBox="0 0 148 64" aria-hidden="true">' + parts.join('') + '</svg>';
     }
 
     let open = null;   /* 展開中的時態 id */
@@ -143,6 +172,8 @@
         h('h2', null, v.name),
         h('code', null, v.form),
         h('button', { class: 'pop-mini', type: 'button', onclick: () => { open = null; render(); } }, '收起')));
+      const [, tk, ak] = v.id.split('-');
+      box.append(h('div', { class: 'tn-axis tn-axis-big', html: axisSvg(tk, ak) }));
       box.append(h('p', { class: 'tn-feel' }, v.feel));
       if (v.formNote) box.append(h('p', { class: 'tn-formnote' }, v.formNote));
 

@@ -95,6 +95,10 @@
       return '<svg viewBox="0 0 148 64" aria-hidden="true">' + parts.join('') + '</svg>';
     }
 
+    /* V-ing、V-ed 這類有連字號的字不要在連字號斷行(手機上格子窄) */
+    const formNodes = s => String(s).split(/([A-Za-z]+-[A-Za-z]+)/).filter(Boolean)
+      .map(t => /^[A-Za-z]+-[A-Za-z]+$/.test(t) ? h('span', { class: 'nobr' }, t) : t);
+
     let open = null;   /* 展開中的時態 id */
     render();
 
@@ -119,7 +123,7 @@
             onclick: () => { open = open === v.id ? null : v.id; render(); scrollTo(v.id); },
           },
             h('div', { class: 'tn-axis', html: axisSvg(t.k, a.k) }),
-            h('div', { class: 'tn-form' }, v.form),
+            h('div', { class: 'tn-form' }, formNodes(v.form)),
             h('div', { class: 'tn-ex' }, (v.examples[0] || {}).en || '')));
         });
       });

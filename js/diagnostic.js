@@ -197,7 +197,7 @@
       table.append(h('tr', null,
         h('td', null, cat, skills ? h('div', { style: 'font-size:12px;color:var(--ink-light)' }, skills) : null),
         h('td', { class: 'num' }, c.correct + ' / ' + c.total),
-        h('td', null, h('span', { class: 'verdict-pill ' + cls }, label), c.total === 1 ? h('span', { style: 'font-size:12px;color:var(--ink-light)' }, '(僅1題)') : null),
+        h('td', null, h('span', { class: 'verdict-pill ' + cls }, label), c.total === 1 ? h('span', { class: 'cat-few' }, '(僅1題)') : null),
         h('td', { class: 'no-print' }, cls !== 'good' ? h('a', { href: catLink(cat, c.kind), style: 'font-size:13px' }, '去刷這類題 →') : '')));
     });
     root.append(table);

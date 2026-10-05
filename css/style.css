@@ -1089,6 +1089,8 @@ footer {
 .bar-line .val { width: 74px; text-align: right; color: var(--ink-light); font-size: 13px; flex: none; }
 
 .verdict-pill { display: inline-block; font-size: 12.5px; font-weight: 700; border-radius: 4px; padding: 1px 8px; }
+.verdict-pill, table.cat-table a { white-space: nowrap; }
+.cat-few { font-size: 12px; color: var(--ink-light); margin-left: 4px; }
 .verdict-pill.good { background: var(--ok-tint); color: var(--ok); }
 .verdict-pill.mid { background: var(--tint-orange); color: #b05e0a; }
 .verdict-pill.weak { background: var(--bad-tint); color: var(--bad); }
@@ -1846,7 +1848,7 @@ html.app-gate .profile-widget { display: none; }   /* 登入卡上已經有登�
 .tn-partner:first-of-type { border-top: 0; }
 
 .tn-group { font-size: 15px; font-family: var(--round); margin: 20px 0 8px; }
-.tn-pairs { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; }
+.tn-pairs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr)); gap: 14px; }
 .tn-pair { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 16px; background: #fff; }
 .tn-pair-head { display: flex; align-items: baseline; gap: 10px; }
 .tn-pair-head b { font-size: 16px; }
@@ -1962,3 +1964,49 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 .gx-station-sum .gx-ring span { font-family: var(--round); }
 /* 嵌在文法區右欄時,時態矩陣收窄一點 */
 .gx-col .tn-grid { grid-template-columns: 124px repeat(3, minmax(176px, 1fr)); min-width: 680px; }
+
+/* ======== 手機版修正(2026-10 全站手機稽核) ======== */
+/* 篩選小圓鈕與標籤不拆字:對話、閱讀的分類一排放不下就換行,寫作單元的「技巧課」不被擠成直排 */
+.drill-filters { flex-wrap: wrap; }
+.chip, .badge { white-space: nowrap; }
+.unit-row .badge { flex: none; }
+/* 觸控螢幕上「← 回…」連結的可點範圍加高(上下內距配負外距,畫面位置不變) */
+@media (pointer: coarse) {
+  .drill-top > a, .meta > a, .unit-back { padding-top: 10px; padding-bottom: 10px; margin-top: -10px; margin-bottom: -10px; }
+}
+/* 條款頁的清單:全站 reset 把 ul 內距歸零,圓點會貼在卡片邊上 */
+.lesson-view > ul, .lesson-view > ol { padding-left: 1.4em; }
+
+@media (max-width: 600px) {
+  /* 12 時態總整理:手機上整張表三欄都看得到。面向名稱改直排,格子只留時間軸與公式,例句在點開的說明裡 */
+  .tn-wrap { overflow: visible; margin: 12px 0 4px; }
+  .tn-grid, .gx-col .tn-grid { grid-template-columns: 26px repeat(3, minmax(0, 1fr)); gap: 6px; min-width: 0; }
+  .tn-head { font-size: 14px; }
+  .tn-head::before { width: 44px; margin-left: -22px; }
+  .tn-side { padding-right: 0; justify-self: center; }
+  .tn-side b { writing-mode: vertical-rl; font-size: 14px; letter-spacing: 3px; }
+  .tn-cell { padding: 6px 6px 9px; gap: 4px; }
+  .tn-cell .tn-axis text { display: none; }
+  .tn-ex { display: none; }
+  .tn-form { font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+  .tn-form .nobr { white-space: nowrap; }
+
+  /* 動詞測驗:過去式、過去分詞兩格一樣寬,對答案鈕放下一行 */
+  .vb-inputs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .vb-inputs .btn { grid-column: 1 / -1; }
+  .vb-input { max-width: none; width: 100%; min-width: 0; }
+
+  /* 文法課內文的表格:縮小格子內距,欄位才不會被擠成一字一行 */
+  .lesson-view { padding: 18px 14px; }
+  .lesson-view .gx-table { font-size: 14px; }
+  .lesson-view .gx-table th, .lesson-view .gx-table td { padding: 6px 8px; }
+
+  /* 程度檢測報告的考點表:格子內距縮小,「僅1題」放到判定下面 */
+  table.cat-table th, table.cat-table td { padding: 8px 6px; }
+  .cat-few { display: block; margin: 2px 0 0; }
+
+  /* 學習記錄:時間、類別、對錯放第一行,題目整行放第二行 */
+  .hist-row-head { flex-wrap: wrap; row-gap: 4px; }
+  .hist-verdict { margin-left: auto; }
+  .hist-stem { order: 5; flex: 0 0 100%; white-space: normal; }
+}

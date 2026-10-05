@@ -68,6 +68,8 @@
       const menu = h('div', { class: 'profile-menu', style: 'display:none' });
       widget.append(btn, menu);
       bar.append(widget);
+      /* 要登入才能用的頁面會開登入視窗,這句話改寫在登入卡裡(buildAuthCard),不放頂欄 */
+      if (CLOUD.sessionExpired && !p && !document.body.hasAttribute('data-require-profile')) expiredNotice(bar.parentNode);
 
       btn.addEventListener('click', e => {
         e.stopPropagation();
@@ -102,6 +104,28 @@
         menu.append(h('button', { class: 'pm-item danger', type: 'button', onclick: () => CLOUD.logout() }, '登出'));
         menu.append(h('button', { class: 'pm-item danger', type: 'button', onclick: deleteUser }, '刪除帳號'));
       }
+    }
+
+    /* 登入失效(別台按登出、帳號刪除)改回訪客後,頂欄下面一行提示,只在那個分頁出現一次。
+       照 GitHub、Slack 網頁版的作法:頁首下方一條可關閉的提示加登入連結,不自動彈出登入視窗
+       (共用電腦上的下一個人也會看到,不該擋住他)。 */
+    function expiredNotice(topbar) {
+      if (!topbar) return;
+      CLOUD.sessionExpired = false;   // 從這裡開的登入卡不用再講一次
+      const note = h('div', { class: 'auth-expired', role: 'status' });
+      /* 關掉後焦點退回頭像按鈕(App 外殼裡頭像藏起來時退回返回鍵),不要掉到頁面最上面 */
+      const close = () => {
+        const had = note.contains(document.activeElement);
+        note.remove();
+        if (!had) return;
+        const back = [document.querySelector('.profile-btn'), document.querySelector('.app-back')].find(el => el && el.offsetParent);
+        if (back) back.focus();
+      };
+      note.append(
+        h('span', null, '登入已失效,請重新登入'),
+        h('button', { class: 'auth-expired-login', type: 'button', onclick: () => { close(); showLogin('login'); } }, '登入'),
+        h('button', { class: 'auth-expired-x', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: close }));
+      topbar.append(note);
     }
 
     /* 改暱稱、刪除帳號:頭像選單與「我的」頁(me.html)共用 */
@@ -253,6 +277,7 @@
         if (opts.onMode) opts.onMode(mode);
         const msg = h('p', { class: 'auth-msg', role: 'alert' });
         if (CLOUD.authError) { msg.textContent = CLOUD.authError; msg.className = 'auth-msg bad'; CLOUD.authError = ''; }
+        else if (CLOUD.sessionExpired && !CLOUD.user && mode === 'login') { msg.textContent = '登入已失效,請重新登入'; CLOUD.sessionExpired = false; }
 
         if (mode === 'forgot') drawForgot(msg);
         else drawMain(msg);

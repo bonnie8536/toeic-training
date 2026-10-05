@@ -18,8 +18,16 @@
     return raw;
   })();
 
-  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf };
+  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf };
   if (!enabled) return;
+
+  /* 登入失效改回訪客(leaveStaleAccount)時記一個旗標,重載後的那一頁讀到就清掉:
+     頂欄只在這個分頁顯示一次「登入已失效」,換頁或下一個人開新分頁都不會再出現 */
+  const EXPIRED_KEY = 'tr_auth_expired';
+  try {
+    window.CLOUD.sessionExpired = sessionStorage.getItem(EXPIRED_KEY) === '1';
+    sessionStorage.removeItem(EXPIRED_KEY);
+  } catch (e) { window.CLOUD.sessionExpired = false; }
 
   let client = null;
   const pending = {};
@@ -90,7 +98,12 @@
     const pid = window.__PROFILE_ID;
     if (reloading || window.CLOUD.user || typeof pid !== 'string' || pid.charAt(0) !== 'c') return;
     /* 別的分頁可能已經換成別的帳號登入:那就不動目前帳號,重載後跟著它 */
-    try { if (localStorage.getItem('tr_current_profile') === JSON.stringify(pid)) localStorage.removeItem('tr_current_profile'); } catch (e) { return; }
+    try {
+      if (localStorage.getItem('tr_current_profile') === JSON.stringify(pid)) {
+        localStorage.removeItem('tr_current_profile');
+        try { sessionStorage.setItem(EXPIRED_KEY, '1'); } catch (e) { /* 提示不顯示而已 */ }
+      }
+    } catch (e) { return; }
     window.__PROFILE_ID = null;
     reloading = true;
     location.reload();

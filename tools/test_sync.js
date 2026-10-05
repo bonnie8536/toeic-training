@@ -596,6 +596,36 @@ const scenarios = {
     return { ok: w.local.getItem('tr_current_profile') === otherPid && w.reloads === r0 + 1,
              detail: '目前帳號 ' + w.local.getItem('tr_current_profile') + ' / 重載 +' + (w.reloads - r0) };
   },
+  '36. 登入失效改回訪客後,重載的那一頁要知道「登入已失效」,而且只有那一次': async src => {
+    const w = makeWorld();
+    await openLoggedIn(w, src);
+    w.revoked = true; newSession(w);
+    const pg = loadPage(w, src); await pg.ready;                   // 改回訪客並重載
+    const pg2 = loadPage(w, src); await pg2.ready;                 // 重載後的頁面
+    const pg3 = loadPage(w, src); await pg3.ready;                 // 同一個分頁再換一頁
+    return { ok: pg2.ctx.CLOUD.sessionExpired === true && pg3.ctx.CLOUD.sessionExpired === false && w.local.getItem('tr_current_profile') === null,
+             detail: '重載後 ' + pg2.ctx.CLOUD.sessionExpired + ' / 再換一頁 ' + pg3.ctx.CLOUD.sessionExpired };
+  },
+  '37. 沒有登入失效的情況不顯示提示:從沒登入的訪客、自己按登出、還在登入中、別的分頁已換成另一個帳號': async src => {
+    const w = makeWorld();
+    const guest = loadPage(w, src); await guest.ready;
+    const w2 = makeWorld();
+    const pg = await openLoggedIn(w2, src);
+    const loggedIn = pg.ctx.CLOUD.sessionExpired;
+    await pg.ctx.CLOUD.logout(); pg.close();
+    const after = loadPage(w2, src); await after.ready;
+    /* 35 的情況:改回訪客時別的分頁已換成另一個帳號,重載後跟著那個帳號,不該說「登入已失效」 */
+    const w3 = makeWorld();
+    await openLoggedIn(w3, src);
+    w3.revoked = true; newSession(w3);
+    let release; w3.authGate = new Promise(r => { release = r; });
+    const p3 = loadPage(w3, src);
+    w3.local.setItem('tr_current_profile', JSON.stringify('c11111111222233334444555555555555'));
+    release(); w3.authGate = null; await p3.ready;
+    const p4 = loadPage(w3, src); await p4.ready;
+    return { ok: guest.ctx.CLOUD.sessionExpired === false && loggedIn === false && after.ctx.CLOUD.sessionExpired === false && p4.ctx.CLOUD.sessionExpired === false,
+             detail: '訪客 ' + guest.ctx.CLOUD.sessionExpired + ' / 登入中 ' + loggedIn + ' / 登出後 ' + after.ctx.CLOUD.sessionExpired + ' / 別的帳號 ' + p4.ctx.CLOUD.sessionExpired };
+  },
 };
 
 /* 跟 common.js 的 store.set 一樣依「目前資料夾」寫:訪客寫 tr_<鍵>,帳號寫 tr_u<id>_<鍵> */

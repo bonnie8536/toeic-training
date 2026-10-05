@@ -16,6 +16,7 @@
 
   const pad2 = (n) => String(n).padStart(2, '0');
   const audioUrl = (d, i) => 'audio/dlg/' + d.id + '-' + pad2(i + 1) + '.mp3';
+  const imageUrl = (d) => d.image || ('img/dialogues/' + d.id + '.jpg');   // 跟閱讀一樣的寫實配圖,載不到就整格拿掉
   const heardOf = (id) => (store.get('dlg_heard', {})[id] || []);
   function markHeard(id, i) {
     const all = store.get('dlg_heard', {});
@@ -48,7 +49,9 @@
       listWrap.innerHTML = '';
       dialogues.filter((d) => filter === '全部' || d.cat === filter).forEach((d) => {
         const heard = heardOf(d.id).length;
-        listWrap.append(h('a', { class: 'dlg-card', href: 'dialogue.html?id=' + d.id },
+        const thumb = h('div', { class: 'thumb' },
+          h('img', { src: imageUrl(d), alt: '', loading: 'lazy', width: '600', height: '400', onerror: (e) => e.target.parentNode.remove() }));
+        listWrap.append(h('a', { class: 'dlg-card', href: 'dialogue.html?id=' + d.id }, thumb, h('div', { class: 'body' },
           h('div', { class: 'meta' },
             h('span', { class: 'badge cat' }, d.cat),
             h('span', { class: 'badge ' + levelBadgeClass(d.level) }, d.level)),
@@ -56,7 +59,7 @@
           h('div', { class: 'dlg-card-en' }, d.titleEn),
           h('p', { class: 'dlg-card-scene' }, d.scene),
           h('div', { class: 'progress-note' },
-            d.lines.length + ' 句 · 口語 ' + slangCount(d) + ' 個' + (heard ? ' · 聽過 ' + heard + '/' + d.lines.length : ''))));
+            d.lines.length + ' 句 · 口語 ' + slangCount(d) + ' 個' + (heard ? ' · 聽過 ' + heard + '/' + d.lines.length : '')))));
       });
     }
     draw();
@@ -77,6 +80,8 @@
         h('span', null, d.lines.length + ' 句')),
       h('h1', null, d.titleEn),
       h('div', { class: 'zh-title' }, d.title));
+    const illust = h('div', { class: 'reader-illust dlg-illust' },
+      h('img', { src: imageUrl(d), alt: d.title, width: '1200', height: '800', onerror: (e) => e.target.parentNode.remove() }));
     const scene = h('p', { class: 'dlg-scene' }, d.scene);
 
     const allBtn = h('button', { class: 'btn primary', type: 'button', onclick: toggleAll }, '播放全部');
@@ -104,7 +109,7 @@
     });
 
     const glossary = renderGlossary(d);
-    root.append(head, scene, toolbar, linesEl, glossary);
+    root.append(head, illust, scene, toolbar, linesEl, glossary);
     updateProgress();
 
     /* 英文句子:口語的部分包成可以點的虛線字 */

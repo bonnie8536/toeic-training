@@ -1950,3 +1950,10 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   .dlg-glossary dd { margin-bottom: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .dlg-bubble, .dlg-card { transition: none; } }
+
+/* 文法路徑:章內的查表節點(三態表)與全部章節後的總整理站 */
+.gx-node-ref { border-style: dashed; font-size: 12.5px; }
+.gx-station-sum .gx-ring { background: repeating-conic-gradient(var(--line) 0 9deg, transparent 9deg 18deg); }
+.gx-station-sum .gx-ring span { font-family: var(--round); }
+/* 嵌在文法區右欄時,時態矩陣收窄一點 */
+.gx-col .tn-grid { grid-template-columns: 124px repeat(3, minmax(176px, 1fr)); min-width: 680px; }

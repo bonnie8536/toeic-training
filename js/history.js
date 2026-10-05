@@ -71,7 +71,7 @@
       const v = byId(T.verbs, rec.id);
       return v && {
         stem: v.base + ' ' + v.zh, picked: rec.x, answer: v.past + ' / ' + v.pp,
-        explanation: v.note || (v.example ? v.example : null), tag: '三態填空', link: 'verbs.html',
+        explanation: v.note || (v.example ? v.example : null), tag: '三態填空', link: 'grammar.html?ref=verbs',
       };
     }
     if (m === 'r') {

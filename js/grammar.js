@@ -22,15 +22,25 @@
   };
   const stageOf = u => u.id.charAt(1);
 
-  /* 各章附錄:查得到的表,排在該章課程後面 */
-  const APPENDIX = {
-    c: [{ href: 'verbs.html', title: '不規則動詞表', sub: '118 個字的三態,可查可測驗' }],
-    h: [{ href: 'tenses.html', title: '12 時態總整理', sub: '一張表看完全部時態,附時間連接詞的搭配' }],
+  /* 文法區裡的查表頁:三態表掛在第三章(過去式與過去分詞都在這章教),
+     時態總整理是全部章節後面的「總整理」(z)。資料與程式要用到才載入。 */
+  const REFS = {
+    verbs: {
+      stage: 'c', title: '不規則動詞表', sub: '118 個字的三態,可查可測驗',
+      files: ['data/verbs.js', 'js/verbs.js'], view: () => window.VERBS_VIEW,
+    },
+    tenses: {
+      stage: 'z', title: '12 時態總整理', sub: '一張表看完全部時態,附時間連接詞的搭配',
+      files: ['data/tenses.js', 'js/tenses.js'], view: () => window.TENSES_VIEW,
+    },
   };
+  const refsOf = sk => Object.entries(REFS).filter(([, r]) => r.stage === sk);
 
   const uid = getParam('u');
   const unit = UNITS.find(x => x.id === uid);
+  const ref = getParam('ref') || (getParam('ch') === 'z' ? 'tenses' : null);
   if (unit) renderUnit(unit);
+  else if (REFS[ref]) renderRef(ref);
   else renderHome();
 
   /* ================= 左側路徑導引 =================
@@ -41,7 +51,7 @@
     if (m) { m.classList.remove('container-narrow'); m.classList.add('container'); }
   }
 
-  function buildRail(activeStage, currentId, onPickStage) {
+  function buildRail(activeStage, currentId, onPickStage, currentRef) {
     const done = store.get('grammar_done', {});
     const stations = h('div', { class: 'gx-stations' });
     const pathWrap = h('div', { class: 'gx-pathwrap' });
@@ -68,18 +78,40 @@
       list.forEach((u, i) => {
         path.append(h('a', {
           class: 'gx-node' + (done[u.id] ? ' done' : '') + (u.id === currentId ? ' cur' : '') +
-            (!currentId && u.id === nextId ? ' next' : ''),
+            (!currentId && !currentRef && u.id === nextId ? ' next' : ''),
           href: 'grammar.html?u=' + u.id,
           title: (i + 1) + '. ' + u.title,
           style: 'transform:translateX(' + OFFS[i % OFFS.length] + 'px)',
         }, String(i + 1)));
       });
+      refsOf(sk).forEach(([k, r]) => path.append(h('a', {
+        class: 'gx-node gx-node-ref' + (currentRef === k ? ' cur' : ''),
+        href: 'grammar.html?ref=' + k, title: r.title,
+      }, '表')));
       pathWrap.append(
         h('div', { class: 'gx-path-title' }, h('b', null, sd.name.replace(/^第.章\s*/, '')), h('i', null, doneN + ' / ' + list.length)),
         path);
     });
+    /* 全部章節之後的「總整理」 */
+    const sumOn = activeStage === 'z';
+    stations.append(h('a', {
+      class: 'gx-station gx-station-sum' + (sumOn ? ' on' : ''),
+      href: 'grammar.html?ref=tenses', title: '總整理',
+    }, h('span', { class: 'gx-ring' }, h('span', null, '總'))));
+    if (sumOn) {
+      const path = h('div', { class: 'gx-path' });
+      refsOf('z').forEach(([k, r]) => path.append(h('a', {
+        class: 'gx-node gx-node-ref' + (currentRef === k ? ' cur' : ''),
+        href: 'grammar.html?ref=' + k, title: r.title,
+      }, '表')));
+      pathWrap.append(h('div', { class: 'gx-path-title' }, h('b', null, '總整理'), h('i', null, '學完全部章節再看')), path);
+    }
+
     /* 讓目前這一課(或下一課)落在路徑欄中間 */
     setTimeout(() => {
+      /* 手機版章節是一橫排:把目前這一章(或總整理)捲到看得到 */
+      const st = stations.querySelector('.gx-station.on');
+      if (st && stations.scrollWidth > stations.clientWidth) stations.scrollLeft = st.offsetLeft - stations.clientWidth / 2;
       const n = pathWrap.querySelector('.gx-node.cur') || pathWrap.querySelector('.gx-node.next');
       if (!n) return;
       if (pathWrap.scrollHeight > pathWrap.clientHeight) pathWrap.scrollTop = n.offsetTop - pathWrap.clientHeight / 2;
@@ -118,14 +150,43 @@
           h('span', { class: 'n' }, String(i + 1)),
           h('span', { class: 't' }, u.title)));
       });
-      (APPENDIX[stage] || []).forEach(a => {
-        col.append(h('a', { class: 'gx-unit-row gx-appendix', href: a.href },
+      /* 這一章的查表頁;最後一章後面接總整理 */
+      refsOf(stage).concat(stage === 'h' ? refsOf('z') : []).forEach(([k, r]) => {
+        col.append(h('a', { class: 'gx-unit-row gx-appendix', href: 'grammar.html?ref=' + k },
           h('span', { class: 'n' }, '表'),
-          h('span', { class: 't' }, a.title, h('i', null, a.sub))));
+          h('span', { class: 't' }, r.title, h('i', null, r.sub))));
       });
       col.append(h('div', { style: 'height:40px' }));
       layout.append(buildRail(stage, null, sk => { stage = sk; draw(); window.scrollTo(0, 0); }), col);
     }
+  }
+
+  /* ================= 查表頁:跟課程一樣在文法區裡,左邊路徑還在 ================= */
+  function renderRef(k) {
+    const r = REFS[k];
+    widen();
+    const host = h('div', null, h('p', { class: 'result-note', style: 'margin-top:30px' }, '載入中…'));
+    root.append(h('div', { class: 'gx-layout' }, buildRail(r.stage, null, null, k), h('div', { class: 'gx-col' }, host)));
+    loadScripts(r.files).then(() => {
+      const view = r.view();
+      if (!view) throw new Error('view missing');
+      view.mount(host);
+    }).catch(() => {
+      host.innerHTML = '';
+      host.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '這張表載入失敗,請重新整理再試。'));
+    });
+  }
+
+  function loadScripts(srcs) {
+    return srcs.reduce((p, src) => p.then(() => new Promise((res, rej) => {
+      if (document.querySelector('script[data-src="' + src + '"]')) return res();
+      const s = document.createElement('script');
+      s.src = src;
+      s.dataset.src = src;
+      s.onload = res;
+      s.onerror = () => rej(new Error(src));
+      document.head.append(s);
+    })), Promise.resolve());
   }
 
   /* ================= 單元 ================= */
@@ -223,7 +284,7 @@
         h('div', { class: 'drill-nav-btns' },
           next ? h('a', { class: 'btn primary', href: 'grammar.html?u=' + next.id }, '下一課:' + next.title) : null,
           cat ? h('a', { class: 'btn', href: 'practice.html?part=5&cat=' + encodeURIComponent(cat) }, '刷這個考點的題目') : null,
-          VERB_UNITS.includes(u.id) ? h('a', { class: 'btn', href: 'verbs.html' }, '查不規則動詞表') : null,
+          VERB_UNITS.includes(u.id) ? h('a', { class: 'btn', href: 'grammar.html?ref=verbs' }, '查不規則動詞表') : null,
           h('a', { class: 'btn', href: 'grammar.html' }, '回文法基礎')));
     }
   }

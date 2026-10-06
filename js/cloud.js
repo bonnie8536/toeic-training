@@ -89,7 +89,7 @@
     return false;
   }
 
-  /* 資料夾還停在雲端帳號,這台卻沒有這個帳號的登入資料(別台按登出、帳號刪除):改回訪客再重載。
+  /* 資料夾還停在雲端帳號,這台卻沒有這個帳號的登入資料(別台按「登出所有裝置」、帳號刪除):改回訪客再重載。
      之後沒登入的人練習的東西寫在訪客的資料夾,原帳號下次登入時才不會把它當成「從沒上傳過的資料」傳上去。
      原帳號的資料與帳本一筆都不刪(只有登出才刪),下次登入照常比對新舊。
      目前不處理(分不出是本人還是別人寫的,丟資料或混入別人的練習要二選一):開站確認登入那一兩秒內的寫入、
@@ -111,7 +111,7 @@
 
   function pidOf(user) { return 'c' + user.id.replace(/-/g, ''); }
   /* 這台 supabase-js 還留著登入資料、而且就是目前資料夾的帳號 → 回它的 id;否則回空字串。
-     登入被撤銷(別台按登出、帳號刪除)時 supabase-js 會清掉登入資料,這時的寫入不記帳:
+     登入被撤銷(別台按「登出所有裝置」、帳號刪除)時 supabase-js 會清掉登入資料,這時的寫入不記帳:
      那可能是別人在用這台,或是根據很久沒更新的本機資料,下次登入要以雲端為準。 */
   function storedUid() {
     try {
@@ -198,15 +198,29 @@
 
   async function logout(opts) {
     const user = window.CLOUD.user;
+    const everywhere = !!(opts && opts.everywhere);
+    /* 這台已經沒有登入資料時 supabase-js 不會呼叫伺服器、直接回成功,別台其實沒被登出:先擋下來,什麼都不刪 */
+    if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效,沒辦法登出其他裝置。請重新登入後再試一次。');
     if (user && !(opts && opts.discard)) {
       const left = await flushAll();
       if (left > 0 && !confirm('還有 ' + left + ' 項進度還沒同步到雲端(可能是網路不穩)。現在登出,這台裝置上的這些進度會刪除。確定要登出?')) return;
     }
-    /* 沒網路時 signOut 會失敗、而且不清本機的登入資料:改成只清這台,免得下次開站又自動登回去 */
-    try {
-      const { error } = await client.auth.signOut();
-      if (error) await client.auth.signOut({ scope: 'local' });
-    } catch (e) { /* 雲端元件沒載到 */ }
+    /* 一般的登出只登出這台(共用電腦登出不會把學生自己手機上的登入一起踢掉)。
+       everywhere:「我的」頁的「登出所有裝置」。連不上伺服器時 supabase-js 會先清掉這台的登入資料再回錯誤,
+       這時把登入資料放回去,這台維持登入、不刪資料,丟錯誤讓畫面講清楚。
+       只登出這台時沒網路 signOut 會失敗、而且可能不清本機的登入資料:下面照樣清掉,免得下次開站又自動登回去 */
+    if (everywhere) {
+      const saved = localStorage.getItem(SB_KEY);
+      let error = null;
+      try { ({ error } = await client.auth.signOut({ scope: 'global' })); }
+      catch (e) { error = e; }
+      if (error) {
+        try { if (saved && !localStorage.getItem(SB_KEY)) localStorage.setItem(SB_KEY, saved); } catch (e) {}
+        throw new Error('連不上雲端伺服器,沒辦法確認其他裝置已登出。這台維持登入,請確認網路後再試一次。');
+      }
+    } else {
+      try { await client.auth.signOut({ scope: 'local' }); } catch (e) { /* 雲端元件沒載到 */ }
+    }
     try { [SB_KEY, SB_KEY + '-user', SB_KEY + '-code-verifier'].forEach(k => localStorage.removeItem(k)); } catch (e) {}
     if (user) {
       writeLedger(user.id, {});

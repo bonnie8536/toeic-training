@@ -106,7 +106,7 @@
       }
     }
 
-    /* 登入失效(別台按登出、帳號刪除)改回訪客後,頂欄下面一行提示,只在那個分頁出現一次。
+    /* 登入失效(別台按「登出所有裝置」、帳號刪除)改回訪客後,頂欄下面一行提示,只在那個分頁出現一次。
        照 GitHub、Slack 網頁版的作法:頁首下方一條可關閉的提示加登入連結,不自動彈出登入視窗
        (共用電腦上的下一個人也會看到,不該擋住他)。 */
     function expiredNotice(topbar) {
@@ -134,6 +134,12 @@
       if (n === null) return;
       try { await CLOUD.updateName(n); location.reload(); }
       catch (e) { alert(e.message); }
+    }
+
+    /* 照 Netflix、Spotify 帳號頁的作法:一般的登出只登出這台,「登出所有裝置」另外一列、先確認 */
+    function logoutEverywhere() {
+      if (!confirm('要登出所有裝置嗎?這台會馬上登出,其他已登入的手機、電腦最晚約一小時內也會登出,下次要重新登入。')) return;
+      CLOUD.logout({ everywhere: true }).catch(e => alert(e.message));
     }
 
     function deleteUser() {
@@ -165,7 +171,7 @@
         list(row('能力分析', { href: 'analysis.html' }), row('學習記錄', { href: 'history.html' }),
           CLOUD.isTeacher ? row('教師後台', { href: 'admin.html' }) : null),
         list(row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }), row('改暱稱', { run: renameUser })),
-        list(row('登出', { run: () => CLOUD.logout(), danger: true })),
+        list(row('登出', { run: () => CLOUD.logout(), danger: true }), row('登出所有裝置', { run: logoutEverywhere, danger: true })),
         h('p', { class: 'me-delete' }, h('button', { type: 'button', onclick: deleteUser }, '刪除帳號')));
     }
 

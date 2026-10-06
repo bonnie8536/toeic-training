@@ -52,7 +52,20 @@ function makeClient(w) {
       },
       /* 跟真的一樣:登出、自動更新換不到憑證(被撤銷)、別的分頁登出,都會清掉 SB_KEY 並通知 SIGNED_OUT */
       onAuthStateChange(cb) { cbs.push(cb); return { data: { subscription: { unsubscribe() {} } } }; },
-      signOut: async () => { w.local.removeItem(SB_KEY); emit('SIGNED_OUT'); return { error: null }; },
+      /* 照 auth-js 2.117.2 的 _signOut:沒給 scope 是 global(所有裝置),'local' 只登出這台。
+         - 這台沒有登入資料:不呼叫伺服器,直接回成功(別台不受影響)。
+         - 憑證過期又沒網路:換不到新憑證,回 error,登入資料留著。
+         - 憑證沒過期但連不上伺服器:先清掉這台的登入資料,再回 error。
+         w.otherDevice:別台還登入著;w.signOuts:真的打到伺服器的 scope */
+      signOut: async opts => {
+        const scope = (opts && opts.scope) || 'global';
+        if (!w.local.getItem(SB_KEY)) { emit('SIGNED_OUT'); return { error: null }; }
+        if (w.offline && w.tokenExpired) return { error: { message: 'TypeError: Failed to fetch' } };
+        (w.signOuts = w.signOuts || []).push(scope);
+        if (w.offline) { w.local.removeItem(SB_KEY); emit('SIGNED_OUT'); return { error: { message: 'TypeError: Failed to fetch' } }; }
+        if (scope === 'global') w.otherDevice = false;
+        w.local.removeItem(SB_KEY); emit('SIGNED_OUT'); return { error: null };
+      },
     },
     rpc: async () => ({ error: null }),
     from(table) {
@@ -625,6 +638,66 @@ const scenarios = {
     const p4 = loadPage(w3, src); await p4.ready;
     return { ok: guest.ctx.CLOUD.sessionExpired === false && loggedIn === false && after.ctx.CLOUD.sessionExpired === false && p4.ctx.CLOUD.sessionExpired === false,
              detail: '訪客 ' + guest.ctx.CLOUD.sessionExpired + ' / 登入中 ' + loggedIn + ' / 登出後 ' + after.ctx.CLOUD.sessionExpired + ' / 別的帳號 ' + p4.ctx.CLOUD.sessionExpired };
+  },
+  '38. 按「登出」只登出這台:別台(例如學生的手機)維持登入,這台的登入資料與個資照樣清掉': async src => {
+    const w = makeWorld();
+    const pg = await openLoggedIn(w, src);
+    w.otherDevice = true;
+    studentWrites(pg, w, 'vgame_banks', [{ id: 'b1' }]); await pg.runTimers();
+    await pg.ctx.CLOUD.logout(); await tick();
+    const scopes = (w.signOuts || []).join(',');
+    return { ok: scopes === 'local' && w.otherDevice === true && w.local.getItem(SB_KEY) === null && lv(w, 'vgame_banks') === null && same(cv(w, 'vgame_banks'), [{ id: 'b1' }]),
+             detail: 'signOut ' + scopes + ' / 別台 ' + (w.otherDevice ? '還登入' : '被登出') + ' / 雲端題庫 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+  },
+  '39. 按「登出所有裝置」:所有裝置都登出,這台清掉登入資料並重載': async src => {
+    const w = makeWorld();
+    const pg = await openLoggedIn(w, src);
+    w.otherDevice = true;
+    const r0 = w.reloads;
+    await pg.ctx.CLOUD.logout({ everywhere: true }); await tick();
+    const scopes = (w.signOuts || []).join(',');
+    return { ok: scopes === 'global' && w.otherDevice === false && w.local.getItem(SB_KEY) === null && w.local.getItem('tr_current_profile') === null && w.reloads === r0 + 1,
+             detail: 'signOut ' + scopes + ' / 別台 ' + (w.otherDevice ? '還登入' : '被登出') + ' / 重載 +' + (w.reloads - r0) };
+  },
+  '40. 「登出所有裝置」連不上伺服器(憑證沒過期、已過期兩種):別台沒登出,這台也不登出、不刪資料,而且要讓畫面知道失敗': async src => {
+    const one = async expired => {
+      const w = makeWorld();
+      const pg = await openLoggedIn(w, src);
+      w.otherDevice = true;
+      studentWrites(pg, w, 'vgame_banks', [{ id: 'b1' }]); await pg.runTimers();
+      w.offline = true; w.tokenExpired = expired;
+      const r0 = w.reloads;
+      let err = null;
+      try { await pg.ctx.CLOUD.logout({ everywhere: true }); } catch (e) { err = e; }
+      await tick();
+      const ok = !!err && w.otherDevice === true && w.local.getItem(SB_KEY) !== null && same(lv(w, 'vgame_banks'), [{ id: 'b1' }]) && !!pg.ctx.CLOUD.user && w.reloads === r0;
+      return { ok, detail: (expired ? '過期:' : '沒過期:') + '錯誤 ' + (err ? '有' : '沒有') + ' / 登入資料 ' + (w.local.getItem(SB_KEY) ? '還在' : '已清') + ' / 本機題庫 ' + JSON.stringify(lv(w, 'vgame_banks')) };
+    };
+    const a = await one(false), b = await one(true);
+    return { ok: a.ok && b.ok, detail: a.detail + ' | ' + b.detail };
+  },
+  '42. 這台的登入資料已經不見(例如上一次失敗、別的分頁先登出)時按「登出所有裝置」:不能假裝成功,什麼都不刪': async src => {
+    const w = makeWorld();
+    const pg = await openLoggedIn(w, src);
+    w.otherDevice = true;
+    studentWrites(pg, w, 'vgame_banks', [{ id: 'b3' }]); await pg.runTimers();
+    w.local.removeItem(SB_KEY);
+    const r0 = w.reloads;
+    let err = null;
+    try { await pg.ctx.CLOUD.logout({ everywhere: true }); } catch (e) { err = e; }
+    await tick();
+    return { ok: !!err && w.otherDevice === true && same(lv(w, 'vgame_banks'), [{ id: 'b3' }]) && w.reloads === r0 && w.confirms.length === 0,
+             detail: '錯誤 ' + (err ? err.message : '沒有') + ' / 別台 ' + (w.otherDevice ? '還登入' : '被登出') + ' / 本機題庫 ' + JSON.stringify(lv(w, 'vgame_banks')) + ' / 重載 +' + (w.reloads - r0) };
+  },
+  '41. 「登出所有裝置」時有沒同步的進度:先問,按取消就什麼都不做(不呼叫登出)': async src => {
+    const w = makeWorld();
+    const pg = await openLoggedIn(w, src);
+    w.lieFi = true; w.offline = true;
+    studentWrites(pg, w, 'vgame_banks', [{ id: 'b2' }]);
+    w.confirmAnswer = false;
+    await pg.ctx.CLOUD.logout({ everywhere: true }); await tick();
+    return { ok: w.confirms.length === 1 && !(w.signOuts || []).length && same(lv(w, 'vgame_banks'), [{ id: 'b2' }]) && !!pg.ctx.CLOUD.user,
+             detail: '問了 ' + w.confirms.length + ' 次 / signOut ' + ((w.signOuts || []).join(',') || '沒呼叫') + ' / 本機題庫 ' + JSON.stringify(lv(w, 'vgame_banks')) };
   },
 };
 

@@ -16,6 +16,7 @@
     l4: { label: '聽力 P4', group: 'listen' },
     g: { label: '文法', group: 'grammar' },
     iv: { label: '不規則動詞', group: 'grammar' },
+    pn: { label: '自然發音', group: 'listen' },
     r: { label: '文章題', group: 'read' },
     tq: { label: '單字考題', group: 'read' },
     ph: { label: '片語', group: 'vocab' },
@@ -66,6 +67,17 @@
       const u = byId(T.grammar, uid);
       const q = u && u.quiz[Number(qi)];
       return q && { stem: q.q, options: q.options, answer: q.answer, explanation: q.explanation, tag: u.title, link: 'grammar.html?u=' + u.id };
+    }
+    if (m === 'pn') {
+      const [uid, qi] = String(rec.id).split(':');
+      const u = byId(T.phonics, uid);
+      const q = u && u.quiz[Number(qi)];
+      if (!q) return null;
+      const slug = w => String(w).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      return {
+        stem: q.type === 'listen' ? '聽聽看，是哪一個字？' : q.q, options: q.options, answer: q.answer, explanation: q.explanation,
+        tag: u.title, link: 'phonics.html?u=' + u.id, audio: q.type === 'listen' ? 'ph-' + slug(q.word) : null,
+      };
     }
     if (m === 'iv') {
       const v = byId(T.verbs, rec.id);

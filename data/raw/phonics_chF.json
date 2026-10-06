@@ -1,0 +1,1527 @@
+[
+ {
+  "id": "pf-01",
+  "title": "oo、u 唸 [ʊ]：book 裡的 oo",
+  "goal": "看到 book、put 這類字能唸出短而放鬆的 [ʊ]，也分得出 pull 和 pool。",
+  "key": {
+   "word": "book",
+   "kk": "ʊ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "[ʊ] 是一個很短、很放鬆的音。嘴唇微微圓起來，不用用力往前嘟，舌頭後面稍微抬高，唸完馬上收。可以把它想成很短的注音ㄨ，嘴巴再放鬆、稍微開一點。book 唸 [bʊk]，put 唸 [pʊt]。"
+   },
+   {
+    "t": "words",
+    "title": "oo 唸 [ʊ]",
+    "items": [
+     {
+      "w": "book",
+      "zh": "書",
+      "mark": "b[oo]k"
+     },
+     {
+      "w": "look",
+      "zh": "看",
+      "mark": "l[oo]k"
+     },
+     {
+      "w": "cook",
+      "zh": "煮；廚師",
+      "mark": "c[oo]k"
+     },
+     {
+      "w": "good",
+      "zh": "好的",
+      "mark": "g[oo]d"
+     },
+     {
+      "w": "wood",
+      "zh": "木頭",
+      "mark": "w[oo]d"
+     },
+     {
+      "w": "foot",
+      "zh": "腳",
+      "mark": "f[oo]t"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "第四章的 food、moon 也拼 oo，卻唸長長的 [u]。兩種唸法沒有百分之百可靠的規則。oo 後面接 k 的字（book、look、cook）幾乎都唸 [ʊ]；接 d、t 的兩種都有，good、foot 唸 [ʊ]，food、boot 唸 [u]，只能一個一個記。u 唸 [ʊ] 的常用字不多，put、pull、full、push 先記起來。could、would、should 中間的 oul 也唸 [ʊ]，l 不發音。另外 blood、flood 的 oo 唸 [ʌ]，是少數的例外。"
+   },
+   {
+    "t": "words",
+    "title": "u 和 oul 唸 [ʊ]",
+    "items": [
+     {
+      "w": "put",
+      "zh": "放",
+      "mark": "p[u]t"
+     },
+     {
+      "w": "pull",
+      "zh": "拉",
+      "mark": "p[u]ll"
+     },
+     {
+      "w": "full",
+      "zh": "滿的",
+      "mark": "f[u]ll"
+     },
+     {
+      "w": "push",
+      "zh": "推",
+      "mark": "p[u]sh"
+     },
+     {
+      "w": "could",
+      "zh": "可以（can 的過去式）",
+      "mark": "c[oul]d"
+     },
+     {
+      "w": "should",
+      "zh": "應該",
+      "mark": "sh[oul]d"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[ʊ] 跟 [u]、[ʌ] 比一比",
+    "items": [
+     {
+      "a": "pull",
+      "az": "拉",
+      "b": "pool",
+      "bz": "游泳池",
+      "note": "pool 的 [u] 比較長，嘴唇更圓、更往前。"
+     },
+     {
+      "a": "full",
+      "az": "滿的",
+      "b": "fool",
+      "bz": "傻瓜"
+     },
+     {
+      "a": "look",
+      "az": "看",
+      "b": "luck",
+      "bz": "運氣",
+      "note": "luck 的 [ʌ] 嘴巴比較開，嘴唇不圓。"
+     },
+     {
+      "a": "took",
+      "az": "拿了",
+      "b": "tuck",
+      "bz": "塞進"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "The cook took a good look at the book, then put it back on the shelf.",
+    "zh": "廚師把那本書仔細看了一遍，再把它放回架子上。"
+   },
+   {
+    "t": "tip",
+    "text": "pull 和 full 的 [ʊ] 要短、嘴唇放鬆，唸太長又把嘴唇嘟緊，就會變成 pool 和 fool。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "full",
+    "options": [
+     "fill",
+     "fell",
+     "full",
+     "fool"
+    ],
+    "answer": 2,
+    "explanation": "full 唸 [fʊl]，母音短而放鬆；fool 的 [u] 比較長、嘴唇更圓，fill 是 [ɪ]，fell 是 [ɛ]。"
+   },
+   {
+    "type": "listen",
+    "word": "pull",
+    "options": [
+     "pull",
+     "pool",
+     "pal",
+     "pill"
+    ],
+    "answer": 0,
+    "explanation": "pull 唸 [pʊl]，聲音短；pool 唸 [pul]，嘴唇更圓、聲音更長；pal 是 [æ]，pill 是 [ɪ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 oo 跟 book 的 oo 唸法一樣？",
+    "options": [
+     "moon",
+     "good",
+     "food",
+     "soon"
+    ],
+    "answer": 1,
+    "explanation": "good 唸 [gʊd]，跟 book 一樣是短的 [ʊ]；moon、food、soon 的 oo 都唸長的 [u]。"
+   },
+   {
+    "type": "listen",
+    "word": "look",
+    "options": [
+     "luck",
+     "lick",
+     "lack",
+     "look"
+    ],
+    "answer": 3,
+    "explanation": "look 唸 [lʊk]，嘴唇微圓；luck 的 [ʌ] 嘴巴比較開，嘴唇不圓；lick 是 [ɪ]，lack 是 [æ]。"
+   },
+   {
+    "type": "listen",
+    "word": "took",
+    "options": [
+     "tuck",
+     "took",
+     "tack",
+     "tick"
+    ],
+    "answer": 1,
+    "explanation": "took 是 take 的過去式，唸 [tʊk]；tuck 是 [tʌk]，tack 是 [tæk]，tick 是 [tɪk]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟另外三個不一樣？",
+    "options": [
+     "put",
+     "pull",
+     "cut",
+     "full"
+    ],
+    "answer": 2,
+    "explanation": "cut 的 u 唸 [ʌ]；put、pull、full 的 u 都唸 [ʊ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 oo 唸 [ʌ]？",
+    "options": [
+     "blood",
+     "book",
+     "boot",
+     "boom"
+    ],
+    "answer": 0,
+    "explanation": "blood 唸 [blʌd]，是 oo 的少數例外；book 唸 [ʊ]，boot、boom 唸 [u]。"
+   }
+  ]
+ },
+ {
+  "id": "pf-02",
+  "title": "ou、ow 唸 [aʊ]：out 裡的 ou",
+  "goal": "看到 ou、ow 能唸出 [aʊ]，也知道哪些 ow 要唸成 [o]。",
+  "key": {
+   "word": "out",
+   "kk": "aʊ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "[aʊ] 是從一個音滑到另一個音的雙母音。先把嘴巴張大唸 [a]，下巴往下，接著嘴唇慢慢收圓，滑到 [ʊ]。聽起來跟注音ㄠ很接近。out 唸 [aʊt]，cow 唸 [kaʊ]。"
+   },
+   {
+    "t": "words",
+    "title": "ou 唸 [aʊ]",
+    "items": [
+     {
+      "w": "out",
+      "zh": "外面",
+      "mark": "[ou]t"
+     },
+     {
+      "w": "loud",
+      "zh": "大聲的",
+      "mark": "l[ou]d"
+     },
+     {
+      "w": "cloud",
+      "zh": "雲",
+      "mark": "cl[ou]d"
+     },
+     {
+      "w": "round",
+      "zh": "圓的",
+      "mark": "r[ou]nd"
+     },
+     {
+      "w": "count",
+      "zh": "數；計算",
+      "mark": "c[ou]nt"
+     },
+     {
+      "w": "south",
+      "zh": "南方",
+      "mark": "s[ou]th"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "ou 多半出現在字的中間。ow 常出現在字尾，像 now、cow，在 n 前面也很常見，像 town、down。"
+   },
+   {
+    "t": "words",
+    "title": "ow 唸 [aʊ]",
+    "items": [
+     {
+      "w": "now",
+      "zh": "現在",
+      "mark": "n[ow]"
+     },
+     {
+      "w": "how",
+      "zh": "怎麼",
+      "mark": "h[ow]"
+     },
+     {
+      "w": "cow",
+      "zh": "母牛",
+      "mark": "c[ow]"
+     },
+     {
+      "w": "town",
+      "zh": "城鎮",
+      "mark": "t[ow]n"
+     },
+     {
+      "w": "down",
+      "zh": "往下",
+      "mark": "d[ow]n"
+     },
+     {
+      "w": "brown",
+      "zh": "棕色的",
+      "mark": "br[ow]n"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "ow 有兩種唸法。第四章的 snow、slow、grow 唸 [o]，這課的 now、cow、town 唸 [aʊ]，光看拼字分不出來，碰到新字就點來聽或查字典。ou 也有幾個例外要先知道：you、soup、group 唸 [u]，touch、young 唸 [ʌ]（這一章第六課會教），four 的 ou 唸 [ɔr]（第七章再教）。"
+   },
+   {
+    "t": "pairs",
+    "title": "[o] 跟 [aʊ] 比一比",
+    "items": [
+     {
+      "a": "no",
+      "az": "不",
+      "b": "now",
+      "bz": "現在"
+     },
+     {
+      "a": "tone",
+      "az": "語氣",
+      "b": "town",
+      "bz": "城鎮",
+      "note": "town 的嘴巴一開始要張大，tone 從頭到尾都是圓的。"
+     },
+     {
+      "a": "load",
+      "az": "裝載",
+      "b": "loud",
+      "bz": "大聲的"
+     },
+     {
+      "a": "coach",
+      "az": "教練",
+      "b": "couch",
+      "bz": "沙發"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "The crowd got so loud that the whole town came out to look.",
+    "zh": "人群吵到整個鎮的人都跑出來看。"
+   },
+   {
+    "t": "tip",
+    "text": "唸 town 時嘴巴一開始要張大，張不開就會聽起來像 tone。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "town",
+    "options": [
+     "tone",
+     "tan",
+     "town",
+     "tin"
+    ],
+    "answer": 2,
+    "explanation": "town 唸 [taʊn]，嘴巴先張大再收圓；tone 唸 [ton]，tan 是 [æ]，tin 是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "loud",
+    "options": [
+     "load",
+     "loud",
+     "lid",
+     "led"
+    ],
+    "answer": 1,
+    "explanation": "loud 唸 [laʊd]；load 唸 [lod]，嘴巴一開始就是圓的；lid 是 [ɪ]，led 是 [ɛ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ow 跟 cow 的 ow 唸法一樣？",
+    "options": [
+     "snow",
+     "slow",
+     "grow",
+     "down"
+    ],
+    "answer": 3,
+    "explanation": "down 唸 [daʊn]；snow、slow、grow 的 ow 都唸 [o]。"
+   },
+   {
+    "type": "listen",
+    "word": "now",
+    "options": [
+     "now",
+     "no",
+     "new",
+     "nine"
+    ],
+    "answer": 0,
+    "explanation": "now 唸 [naʊ]，嘴巴要先張大；no 唸 [no]，嘴型一直是圓的；new 是 [nu]，nine 是 [naɪn]。"
+   },
+   {
+    "type": "listen",
+    "word": "couch",
+    "options": [
+     "coach",
+     "catch",
+     "cash",
+     "couch"
+    ],
+    "answer": 3,
+    "explanation": "couch 是沙發，唸 [kaʊtʃ]；coach 是教練，唸 [kotʃ]；catch 是 [kætʃ]，cash 是 [kæʃ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ou 唸 [aʊ]？",
+    "options": [
+     "round",
+     "soup",
+     "you",
+     "group"
+    ],
+    "answer": 0,
+    "explanation": "round 唸 [raʊnd]；soup、you、group 的 ou 都唸 [u]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟另外三個不一樣？",
+    "options": [
+     "out",
+     "shout",
+     "touch",
+     "loud"
+    ],
+    "answer": 2,
+    "explanation": "touch 的 ou 唸 [ʌ]，是這課的例外；out、shout、loud 都唸 [aʊ]。"
+   }
+  ]
+ },
+ {
+  "id": "pf-03",
+  "title": "oi、oy 唸 [ɔɪ]：boy 裡的 oy",
+  "goal": "看到 oi、oy 能唸出 [ɔɪ]，並分清楚 boy 和 by。",
+  "key": {
+   "word": "boy",
+   "kk": "ɔɪ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "[ɔɪ] 也是會滑動的雙母音。開頭的 [ɔ] 嘴唇要圓、嘴巴半開，接近注音ㄛ但嘴巴再開一點，接著嘴角往兩邊放開，滑到短短的 [ɪ]。boy 唸 [bɔɪ]，oil 唸 [ɔɪl]。"
+   },
+   {
+    "t": "words",
+    "title": "oi 唸 [ɔɪ]",
+    "items": [
+     {
+      "w": "oil",
+      "zh": "油",
+      "mark": "[oi]l"
+     },
+     {
+      "w": "coin",
+      "zh": "硬幣",
+      "mark": "c[oi]n"
+     },
+     {
+      "w": "boil",
+      "zh": "煮沸",
+      "mark": "b[oi]l"
+     },
+     {
+      "w": "point",
+      "zh": "指；重點",
+      "mark": "p[oi]nt"
+     },
+     {
+      "w": "join",
+      "zh": "加入",
+      "mark": "j[oi]n"
+     },
+     {
+      "w": "voice",
+      "zh": "聲音",
+      "mark": "v[oi]ce"
+     },
+     {
+      "w": "noise",
+      "zh": "噪音",
+      "mark": "n[oi]se"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "oi 出現在字首或字中間（oil、coin），oy 用在字尾。英文字很少用 i 結尾，所以到了字尾就把 i 換成 y，跟第四章 rain 的 ai、day 的 ay 是同一個道理。這兩種拼法幾乎都唸 [ɔɪ]，看到就可以放心唸。順便注意 voice 的 ce 唸 [s]，noise 的 se 唸 [z]。"
+   },
+   {
+    "t": "words",
+    "title": "oy 唸 [ɔɪ]",
+    "items": [
+     {
+      "w": "boy",
+      "zh": "男孩",
+      "mark": "b[oy]"
+     },
+     {
+      "w": "toy",
+      "zh": "玩具",
+      "mark": "t[oy]"
+     },
+     {
+      "w": "joy",
+      "zh": "喜悅",
+      "mark": "j[oy]"
+     },
+     {
+      "w": "enjoy",
+      "zh": "享受",
+      "mark": "enj[oy]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[ɔɪ] 跟 [aɪ] 比一比",
+    "items": [
+     {
+      "a": "boy",
+      "az": "男孩",
+      "b": "by",
+      "bz": "經過；被",
+      "note": "boy 開頭嘴唇是圓的，by 開頭嘴巴張大、嘴唇不圓。"
+     },
+     {
+      "a": "toy",
+      "az": "玩具",
+      "b": "tie",
+      "bz": "領帶"
+     },
+     {
+      "a": "foil",
+      "az": "鋁箔紙",
+      "b": "file",
+      "bz": "檔案"
+     },
+     {
+      "a": "soy",
+      "az": "黃豆",
+      "b": "sigh",
+      "bz": "嘆氣"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "The boy enjoyed his new toy, but the noise annoyed his mom.",
+    "zh": "男孩玩新玩具玩得很開心，可是那些噪音讓媽媽很煩。"
+   },
+   {
+    "t": "tip",
+    "text": "oil 只有一個音節，滑完 [ɔɪ] 就把舌尖頂到上排牙齒後面收成 [l]，別拆成好幾個音。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "boy",
+    "options": [
+     "bay",
+     "boy",
+     "by",
+     "bee"
+    ],
+    "answer": 1,
+    "explanation": "boy 唸 [bɔɪ]，開頭嘴唇是圓的；by 唸 [baɪ]，開頭嘴巴張大、嘴唇不圓；bay 是 [be]，bee 是 [bi]。"
+   },
+   {
+    "type": "listen",
+    "word": "toy",
+    "options": [
+     "tie",
+     "tea",
+     "toy",
+     "toe"
+    ],
+    "answer": 2,
+    "explanation": "toy 唸 [tɔɪ]；tie 是 [taɪ]，toe 是 [to]，tea 是 [ti]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟 boy 的 oy 唸法一樣？",
+    "options": [
+     "bite",
+     "point",
+     "pain",
+     "pine"
+    ],
+    "answer": 1,
+    "explanation": "point 唸 [pɔɪnt]；bite、pine 是 [aɪ]，pain 是 [e]。"
+   },
+   {
+    "type": "listen",
+    "word": "coin",
+    "options": [
+     "cone",
+     "cane",
+     "keen",
+     "coin"
+    ],
+    "answer": 3,
+    "explanation": "coin 唸 [kɔɪn]；cone 是 [kon]，cane 是 [ken]，keen 是 [kin]。"
+   },
+   {
+    "type": "listen",
+    "word": "foil",
+    "options": [
+     "fail",
+     "file",
+     "foil",
+     "feel"
+    ],
+    "answer": 2,
+    "explanation": "foil 是鋁箔紙，唸 [fɔɪl]；file 是 [faɪl]，fail 是 [fel]，feel 是 [fil]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字裡有 [ɔɪ] 的音？",
+    "options": [
+     "voice",
+     "vice",
+     "vase",
+     "vote"
+    ],
+    "answer": 0,
+    "explanation": "voice 的 oi 唸 [ɔɪ]；vice 是 [aɪ]，vase 是 [e]，vote 是 [o]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟另外三個不一樣？",
+    "options": [
+     "oil",
+     "join",
+     "coin",
+     "line"
+    ],
+    "answer": 3,
+    "explanation": "line 的 i_e 唸 [aɪ]；oil、join、coin 的 oi 都唸 [ɔɪ]。"
+   }
+  ]
+ },
+ {
+  "id": "pf-04",
+  "title": "au、aw、al 唸 [ɔ]：saw 裡的 aw",
+  "goal": "看到 au、aw、all、alk、ought、aught 能唸出 [ɔ]，並分清楚 law 和 low。",
+  "key": {
+   "word": "saw",
+   "kk": "ɔ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "[ɔ] 的嘴巴要張開，嘴唇稍微圓起來，舌頭放低、往後縮，接近注音ㄛ但嘴巴再開一點。[o] 嘴巴開得比較小，唸到後面嘴唇會越收越圓；[ɔ] 嘴巴開得比較大，而且嘴型停住不滑動。saw 唸 [sɔ]，ball 唸 [bɔl]。"
+   },
+   {
+    "t": "words",
+    "title": "aw、au、ough、augh 唸 [ɔ]",
+    "items": [
+     {
+      "w": "saw",
+      "zh": "看見（see 的過去式）",
+      "mark": "s[aw]"
+     },
+     {
+      "w": "law",
+      "zh": "法律",
+      "mark": "l[aw]"
+     },
+     {
+      "w": "sauce",
+      "zh": "醬汁",
+      "mark": "s[au]ce"
+     },
+     {
+      "w": "launch",
+      "zh": "推出；發射",
+      "mark": "l[au]nch"
+     },
+     {
+      "w": "bought",
+      "zh": "買了（buy 的過去式）",
+      "mark": "b[ough]t"
+     },
+     {
+      "w": "taught",
+      "zh": "教了（teach 的過去式）",
+      "mark": "t[augh]t"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "aw 多半在字尾，au 多半在字中間。ought、aught 的 gh 不發音，bought 唸 [bɔt]。字尾是 all 的時候，a 也唸 [ɔ]，all 就唸 [ɔl]，ball、call、small 也一樣。shall 是例外，a 還是唸 cat 的 [æ]。alk 的 l 不發音，talk 唸 [tɔk]。"
+   },
+   {
+    "t": "words",
+    "title": "all、alk 唸 [ɔ]",
+    "items": [
+     {
+      "w": "ball",
+      "zh": "球",
+      "mark": "b[a]ll"
+     },
+     {
+      "w": "call",
+      "zh": "打電話",
+      "mark": "c[a]ll"
+     },
+     {
+      "w": "small",
+      "zh": "小的",
+      "mark": "sm[a]ll"
+     },
+     {
+      "w": "tall",
+      "zh": "高的",
+      "mark": "t[a]ll"
+     },
+     {
+      "w": "talk",
+      "zh": "說話",
+      "mark": "t[al]k"
+     },
+     {
+      "w": "walk",
+      "zh": "走路",
+      "mark": "w[al]k"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "很多美國人會把 [ɔ] 唸得接近 [ɑ]，網站的音檔有時也偏向 [ɑ]，兩種唸法都很常見，聽到不用緊張。al 後面接 f、m 的字要另外記，half 唸 [hæf]，calm 唸 [kɑm]。w 後面的 a 也常唸 [ɑ]，像 want、wash、watch，跟 walk 要分開記。"
+   },
+   {
+    "t": "pairs",
+    "title": "[ɔ] 跟 [o] 比一比",
+    "items": [
+     {
+      "a": "law",
+      "az": "法律",
+      "b": "low",
+      "bz": "低的",
+      "note": "law 嘴巴開得比較大、嘴型停住；low 嘴巴小，唸到後面嘴唇再收圓。"
+     },
+     {
+      "a": "saw",
+      "az": "看見",
+      "b": "so",
+      "bz": "所以"
+     },
+     {
+      "a": "ball",
+      "az": "球",
+      "b": "bowl",
+      "bz": "碗"
+     },
+     {
+      "a": "call",
+      "az": "打電話",
+      "b": "coal",
+      "bz": "煤"
+     },
+     {
+      "a": "bought",
+      "az": "買了",
+      "b": "boat",
+      "bz": "船"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "After the call, we walked to the mall and talked all day.",
+    "zh": "講完電話，我們走去購物中心，聊了一整天。"
+   },
+   {
+    "t": "tip",
+    "text": "walk 跟 work 很多同學唸成一樣，walk 的 l 不唸、嘴巴張開唸 [ɔ]，work 要捲舌，第七章會教。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "law",
+    "options": [
+     "lie",
+     "lay",
+     "low",
+     "law"
+    ],
+    "answer": 3,
+    "explanation": "law 唸 [lɔ]，嘴型張開後停住；low 唸 [lo]，嘴唇會越收越圓；lay 是 [le]，lie 是 [laɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "ball",
+    "options": [
+     "ball",
+     "bowl",
+     "bell",
+     "bill"
+    ],
+    "answer": 0,
+    "explanation": "ball 唸 [bɔl]；bowl 是 [bol]，bell 是 [bɛl]，bill 是 [bɪl]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 l 不發音？",
+    "options": [
+     "tell",
+     "talk",
+     "tall",
+     "till"
+    ],
+    "answer": 1,
+    "explanation": "talk 唸 [tɔk]，l 不發音；tell、tall、till 的 l 都要唸出來。"
+   },
+   {
+    "type": "listen",
+    "word": "saw",
+    "options": [
+     "sea",
+     "saw",
+     "sigh",
+     "so"
+    ],
+    "answer": 1,
+    "explanation": "saw 唸 [sɔ]，是 see 的過去式；so 唸 [so]，sea 是 [si]，sigh 是 [saɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "walk",
+    "options": [
+     "woke",
+     "week",
+     "walk",
+     "wake"
+    ],
+    "answer": 2,
+    "explanation": "walk 唸 [wɔk]，l 不發音；woke 是 [wok]，wake 是 [wek]，week 是 [wik]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟 saw 的 aw 唸法一樣？",
+    "options": [
+     "boat",
+     "snow",
+     "home",
+     "taught"
+    ],
+    "answer": 3,
+    "explanation": "taught 唸 [tɔt]，gh 不發音；boat、snow、home 都唸 [o]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 a 唸 [ɔ]？",
+    "options": [
+     "call",
+     "cake",
+     "cat",
+     "came"
+    ],
+    "answer": 0,
+    "explanation": "字尾是 all，a 唸 [ɔ]，call 唸 [kɔl]；cake、came 是 [e]，cat 是 [æ]。"
+   }
+  ]
+ },
+ {
+  "id": "pf-05",
+  "title": "字尾 y 唸 [ɪ]：happy 結尾的 y",
+  "goal": "看到兩個音節以上、結尾是 y 或 ey 的字，能唸出輕短的 [ɪ]，跟 my 的 [aɪ] 分開。",
+  "key": {
+   "word": "happy",
+   "kk": "ɪ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "這課的例字都有兩個音節。可以邊拍手邊唸來數音節，每拍一下就有一個母音的音：hap-py 拍兩下，sun-ny 也是兩下，my 只拍一下。"
+   },
+   {
+    "t": "p",
+    "text": "兩個音節以上的字，結尾的 y 唸 [ɪ]，聲音短又輕。第四章學過 my、fly 這種只有一個音節的字，結尾的 y 唸 [aɪ]，兩種要分開。重音落在最後一個音節的字是例外，apply、reply、supply 的 y 還是唸 [aɪ]。happy 結尾這個輕短的音，台灣常用的 KK 字典標成 [ɪ]，美式音檔聽起來會比較接近 [i]，新一點的字典也有標 [i] 的，跟著音檔唸就對了。"
+   },
+   {
+    "t": "words",
+    "title": "字尾 y 唸 [ɪ]",
+    "items": [
+     {
+      "w": "happy",
+      "zh": "快樂的",
+      "mark": "happ[y]"
+     },
+     {
+      "w": "funny",
+      "zh": "好笑的",
+      "mark": "funn[y]"
+     },
+     {
+      "w": "sunny",
+      "zh": "晴朗的",
+      "mark": "sunn[y]"
+     },
+     {
+      "w": "puppy",
+      "zh": "小狗",
+      "mark": "pupp[y]"
+     },
+     {
+      "w": "lucky",
+      "zh": "幸運的",
+      "mark": "luck[y]"
+     },
+     {
+      "w": "messy",
+      "zh": "亂七八糟的",
+      "mark": "mess[y]"
+     },
+     {
+      "w": "candy",
+      "zh": "糖果",
+      "mark": "cand[y]"
+     },
+     {
+      "w": "jelly",
+      "zh": "果凍",
+      "mark": "jell[y]"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "happy、funny、sunny 中間的子音寫了兩次，這樣前面的母音才會維持短母音，所以 happy 的 a 還是唸 [æ]。字尾是 ey 的字也唸 [ɪ]，像 hockey、chimney。obey 的重音在後面，ey 唸 [e]，跟 apply 是同一種例外。many、any 的 a 唸 [ɛ]，這兩個字要另外記。"
+   },
+   {
+    "t": "words",
+    "title": "字尾 ey 唸 [ɪ]",
+    "items": [
+     {
+      "w": "hockey",
+      "zh": "曲棍球",
+      "mark": "hock[ey]"
+     },
+     {
+      "w": "chimney",
+      "zh": "煙囪",
+      "mark": "chimn[ey]"
+     },
+     {
+      "w": "kidney",
+      "zh": "腎臟",
+      "mark": "kidn[ey]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "多一個 [ɪ] 就多一個音節",
+    "items": [
+     {
+      "a": "fun",
+      "az": "好玩的",
+      "b": "funny",
+      "bz": "好笑的",
+      "note": "funny 後面多一個輕短的 [ɪ]，字就多一個音節。"
+     },
+     {
+      "a": "sun",
+      "az": "太陽",
+      "b": "sunny",
+      "bz": "晴朗的"
+     },
+     {
+      "a": "luck",
+      "az": "運氣",
+      "b": "lucky",
+      "bz": "幸運的"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "It's a sunny day, and my puppy is very happy.",
+    "zh": "今天天氣很好，我的小狗很開心。"
+   },
+   {
+    "t": "tip",
+    "text": "happy 的重音在前面，結尾的 y 輕輕帶過就好，別唸得跟前面一樣重。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "sunny",
+    "options": [
+     "sun",
+     "sunny",
+     "sunset",
+     "sunk"
+    ],
+    "answer": 1,
+    "explanation": "sunny 唸 [ˋsʌnɪ]，第二個音節是輕輕的 [ɪ]；sun、sunk 只有一個音節，sunset 的第二個音節唸 [sɛt]。"
+   },
+   {
+    "type": "listen",
+    "word": "funny",
+    "options": [
+     "fun",
+     "fund",
+     "funny",
+     "fan"
+    ],
+    "answer": 2,
+    "explanation": "funny 唸 [ˋfʌnɪ]，後面多一個輕輕的 [ɪ]；fun、fund 都只有一個音節，fan 的母音是 [æ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字結尾的 y 唸 [aɪ]？",
+    "options": [
+     "happy",
+     "lucky",
+     "jelly",
+     "dry"
+    ],
+    "answer": 3,
+    "explanation": "dry 只有一個音節，y 唸 [aɪ]；happy、lucky、jelly 有兩個音節，y 唸 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "candy",
+    "options": [
+     "can",
+     "cane",
+     "candy",
+     "cone"
+    ],
+    "answer": 2,
+    "explanation": "candy 唸 [ˋkændɪ]；can 是 [kæn]，cane 是 [ken]，cone 是 [kon]。"
+   },
+   {
+    "type": "listen",
+    "word": "messy",
+    "options": [
+     "mess",
+     "miss",
+     "mass",
+     "messy"
+    ],
+    "answer": 3,
+    "explanation": "messy 唸 [ˋmɛsɪ]，比 mess 多一個輕輕的 [ɪ]；miss 的母音是 [ɪ]，mass 的母音是 [æ]。"
+   },
+   {
+    "type": "choose",
+    "q": "happy 中間為什麼要寫兩個 p？",
+    "options": [
+     "讓前面的 a 維持短母音 [æ]",
+     "讓 y 唸成 [aɪ]",
+     "讓 p 不發音",
+     "讓重音落在 y"
+    ],
+    "answer": 0,
+    "explanation": "子音寫兩次，前面的母音就維持短母音，所以 happy 的 a 唸 [æ]。兩個 p 合起來還是只唸一個 [p]，y 唸 [ɪ] 是因為 happy 有兩個音節，重音落在前面的 hap。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 a 唸 [ɛ]，要另外記？",
+    "options": [
+     "candy",
+     "many",
+     "happy",
+     "fancy"
+    ],
+    "answer": 1,
+    "explanation": "many 唸 [ˋmɛnɪ]，a 唸 [ɛ] 是例外；candy、happy、fancy 的 a 都唸 [æ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的結尾跟 happy 的結尾唸法一樣？",
+    "options": [
+     "hockey",
+     "they",
+     "my",
+     "day"
+    ],
+    "answer": 0,
+    "explanation": "hockey 有兩個音節，結尾的 ey 唸 [ɪ]，跟 happy 的 y 一樣；they 和 day 的結尾唸 [e]，my 只有一個音節，y 唸 [aɪ]。"
+   }
+  ]
+ },
+ {
+  "id": "pf-06",
+  "title": "o、ou 唸 [ʌ]：love 裡的 o",
+  "goal": "記住 come、love、son 這群常用字的 o 和 ou 唸 [ʌ]，跟 home 的 [o] 分開。",
+  "key": {
+   "word": "love",
+   "kk": "ʌ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "[ʌ] 第一章學過，cup 的 u 就是這個音，嘴巴半開、放鬆，聲音短促。這課要認識另一批也唸 [ʌ] 的字，拼字用的是 o 或 ou。love 唸 [lʌv]，come 唸 [kʌm]，young 唸 [jʌŋ]。"
+   },
+   {
+    "t": "p",
+    "text": "o 平常有兩種唸法，sock 的 o 唸 [ɑ]，home 的 o 唸 [o]。可是有一群很常用的字，o 唸成 [ʌ]，這個 o 多半在 m、n、v、th 前面。第三章提過的 mother、brother，o 也唸 [ʌ]。come、some 雖然字尾有 e，母音還是短的 [ʌ]。這些字數量不多、出現得很頻繁，集中記起來最划算。"
+   },
+   {
+    "t": "words",
+    "title": "o 唸 [ʌ]",
+    "items": [
+     {
+      "w": "come",
+      "zh": "來",
+      "mark": "c[o]me"
+     },
+     {
+      "w": "some",
+      "zh": "一些",
+      "mark": "s[o]me"
+     },
+     {
+      "w": "love",
+      "zh": "愛",
+      "mark": "l[o]ve"
+     },
+     {
+      "w": "glove",
+      "zh": "手套",
+      "mark": "gl[o]ve"
+     },
+     {
+      "w": "son",
+      "zh": "兒子",
+      "mark": "s[o]n"
+     },
+     {
+      "w": "front",
+      "zh": "前面",
+      "mark": "fr[o]nt"
+     },
+     {
+      "w": "month",
+      "zh": "月；一個月",
+      "mark": "m[o]nth"
+     },
+     {
+      "w": "money",
+      "zh": "錢",
+      "mark": "m[o]ney"
+     },
+     {
+      "w": "monkey",
+      "zh": "猴子",
+      "mark": "m[o]nkey"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "ou 唸 [ʌ]",
+    "items": [
+     {
+      "w": "young",
+      "zh": "年輕的",
+      "mark": "y[ou]ng"
+     },
+     {
+      "w": "touch",
+      "zh": "碰觸",
+      "mark": "t[ou]ch"
+     },
+     {
+      "w": "country",
+      "zh": "國家；鄉下",
+      "mark": "c[ou]ntry"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[ʌ] 跟 [o] 比一比",
+    "items": [
+     {
+      "a": "ton",
+      "az": "公噸",
+      "b": "tone",
+      "bz": "語氣",
+      "note": "ton 的 o 唸短短的 [ʌ]，tone 的 o_e 唸 [o]。"
+     },
+     {
+      "a": "cut",
+      "az": "切",
+      "b": "coat",
+      "bz": "外套"
+     },
+     {
+      "a": "nut",
+      "az": "堅果",
+      "b": "note",
+      "bz": "筆記"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "這群字裡有幾組同音字。son 和 sun 唸法完全一樣，won 和 one、none 和 nun 也是，聽的時候要靠句子判斷意思。"
+   },
+   {
+    "t": "sent",
+    "en": "Some young people love to come here every month.",
+    "zh": "有些年輕人很喜歡每個月來這裡。"
+   },
+   {
+    "t": "tip",
+    "text": "money、month 的 o 很容易照 hot 唸成 [ɑ]，嘴巴放鬆、只開一半，唸成 cup 的 [ʌ] 才對。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "come",
+    "options": [
+     "come",
+     "cone",
+     "cane",
+     "can"
+    ],
+    "answer": 0,
+    "explanation": "come 唸 [kʌm]，o 唸短短的 [ʌ]；cone 是 [kon]，cane 是 [ken]，can 是 [kæn]。"
+   },
+   {
+    "type": "listen",
+    "word": "son",
+    "options": [
+     "sin",
+     "son",
+     "soon",
+     "sane"
+    ],
+    "answer": 1,
+    "explanation": "son 唸 [sʌn]，跟 sun 同音；soon 的 oo 唸長的 [u]，sin 是 [sɪn]，sane 是 [sen]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 o 跟 love 的 o 唸法一樣？",
+    "options": [
+     "stove",
+     "hot",
+     "some",
+     "note"
+    ],
+    "answer": 2,
+    "explanation": "some 唸 [sʌm]；stove、note 是 [o]，hot 是 [ɑ]。"
+   },
+   {
+    "type": "listen",
+    "word": "month",
+    "options": [
+     "math",
+     "mouth",
+     "mint",
+     "month"
+    ],
+    "answer": 3,
+    "explanation": "month 唸 [mʌnθ]，o 唸短短的 [ʌ]；mouth 的 ou 唸 [aʊ]，嘴巴要先張大，math 是 [mæθ]，mint 是 [mɪnt]。"
+   },
+   {
+    "type": "listen",
+    "word": "glove",
+    "options": [
+     "globe",
+     "glove",
+     "glow",
+     "glue"
+    ],
+    "answer": 1,
+    "explanation": "glove 的 o 唸短短的 [ʌ]，整個字唸 [glʌv]；globe 也是 o 加子音加 e，唸的是 [glob]，glow 是 [glo]，glue 是 [glu]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪兩個字唸起來完全一樣？",
+    "options": [
+     "son 和 sun",
+     "son 和 soon",
+     "sun 和 soon",
+     "son 和 sin"
+    ],
+    "answer": 0,
+    "explanation": "son 和 sun 都唸 [sʌn]，只能靠句子分辨；soon 唸 [sun]，sin 唸 [sɪn]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ou 唸 [ʌ]？",
+    "options": [
+     "out",
+     "you",
+     "young",
+     "loud"
+    ],
+    "answer": 2,
+    "explanation": "young 唸 [jʌŋ]；out、loud 是 [aʊ]，you 是 [ju]。"
+   }
+  ]
+ },
+ {
+  "id": "pf-07",
+  "title": "ea 唸 [ɛ]：head 裡的 ea",
+  "goal": "認得 head、bread 這群 ea 唸 [ɛ] 的常用字，並分清楚 sweat 和 sweet。",
+  "key": {
+   "word": "head",
+   "kk": "ɛ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "第四章學過 ea 唸長長的 [i]，像 eat、sea。這課是 ea 的第二種唸法 [ɛ]，跟 bed 的 e 一樣。嘴巴比 [i] 張開一點，嘴角放鬆，聲音短，接近注音ㄝ。head 唸 [hɛd]，bread 唸 [brɛd]。"
+   },
+   {
+    "t": "words",
+    "title": "ea 唸 [ɛ]",
+    "items": [
+     {
+      "w": "head",
+      "zh": "頭",
+      "mark": "h[ea]d"
+     },
+     {
+      "w": "bread",
+      "zh": "麵包",
+      "mark": "br[ea]d"
+     },
+     {
+      "w": "dead",
+      "zh": "死的",
+      "mark": "d[ea]d"
+     },
+     {
+      "w": "spread",
+      "zh": "塗抹；散開",
+      "mark": "spr[ea]d"
+     },
+     {
+      "w": "thread",
+      "zh": "線",
+      "mark": "thr[ea]d"
+     },
+     {
+      "w": "breath",
+      "zh": "呼吸；氣息",
+      "mark": "br[ea]th"
+     },
+     {
+      "w": "health",
+      "zh": "健康",
+      "mark": "h[ea]lth"
+     },
+     {
+      "w": "sweat",
+      "zh": "汗",
+      "mark": "sw[ea]t"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "ea 唸 [ɛ] 的字很多在 d、th 前面（head、bread、breath），可是 bead 一樣是 ea 加 d，卻唸 [i]，而且整體來說唸 [i] 的字比較多。head、bread 這群字就當成熟字一個一個記。"
+   },
+   {
+    "t": "words",
+    "title": "兩個音節的字",
+    "items": [
+     {
+      "w": "ready",
+      "zh": "準備好的",
+      "mark": "r[ea]dy"
+     },
+     {
+      "w": "heavy",
+      "zh": "重的",
+      "mark": "h[ea]vy"
+     },
+     {
+      "w": "instead",
+      "zh": "代替；反而",
+      "mark": "inst[ea]d"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[ɛ] 跟 [i] 比一比",
+    "items": [
+     {
+      "a": "bread",
+      "az": "麵包",
+      "b": "breed",
+      "bz": "繁殖；品種"
+     },
+     {
+      "a": "sweat",
+      "az": "汗",
+      "b": "sweet",
+      "bz": "甜的",
+      "note": "sweat 的 [ɛ] 嘴巴比較開、聲音短；sweet 的 [i] 嘴角往兩邊拉、聲音長。"
+     },
+     {
+      "a": "dead",
+      "az": "死的",
+      "b": "deed",
+      "bz": "行為"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "read 也屬於這群字，不過只有過去式和過去分詞唸 [rɛd]，現在式唸 [rid]，單獨看一個字分不出來，要看句子。great、break、steak 的 ea 唸 [e]，是另一組例外。near、bear、learn 這類 ea 後面接 r 的字，第七章再教。"
+   },
+   {
+    "t": "sent",
+    "en": "She wiped the sweat off her head, then spread jam on her bread.",
+    "zh": "她擦掉頭上的汗，再把果醬抹在麵包上。"
+   },
+   {
+    "t": "tip",
+    "text": "看到 sweat 很容易照習慣把 ea 唸成 [i]，嘴巴要張開一點、嘴角放鬆，才不會聽起來像 sweet。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "bread",
+    "options": [
+     "bread",
+     "breed",
+     "bride",
+     "braid"
+    ],
+    "answer": 0,
+    "explanation": "bread 的 ea 唸短的 [ɛ]，整個字唸 [brɛd]；braid 的 ai 是長母音 [e]，唸 [bred]，聲音比較長；breed 是 [brid]，bride 是 [braɪd]。"
+   },
+   {
+    "type": "listen",
+    "word": "sweat",
+    "options": [
+     "sweet",
+     "swim",
+     "sweat",
+     "sweep"
+    ],
+    "answer": 2,
+    "explanation": "sweat 是汗，唸 [swɛt]；sweet 是甜的，唸 [swit]；swim 是 [swɪm]，sweep 是 [swip]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ea 跟 head 的 ea 唸法一樣？",
+    "options": [
+     "meat",
+     "seat",
+     "team",
+     "bread"
+    ],
+    "answer": 3,
+    "explanation": "bread 的 ea 唸 [ɛ]；meat、seat、team 的 ea 都唸 [i]。"
+   },
+   {
+    "type": "listen",
+    "word": "dead",
+    "options": [
+     "deed",
+     "dead",
+     "did",
+     "dad"
+    ],
+    "answer": 1,
+    "explanation": "dead 唸 [dɛd]；deed 是 [did]，did 是 [dɪd]，dad 是 [dæd]。"
+   },
+   {
+    "type": "listen",
+    "word": "head",
+    "options": [
+     "head",
+     "hid",
+     "hood",
+     "had"
+    ],
+    "answer": 0,
+    "explanation": "head 唸 [hɛd]；hid 是 [hɪd]，hood 是 [hʊd]，had 是 [hæd]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ea 唸 [e]？",
+    "options": [
+     "heavy",
+     "beach",
+     "great",
+     "ready"
+    ],
+    "answer": 2,
+    "explanation": "great 的 ea 唸 [e]，跟 break、steak 一樣是例外；heavy、ready 是 [ɛ]，beach 是 [i]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ea 唸法跟另外三個不一樣？",
+    "options": [
+     "sweat",
+     "speak",
+     "thread",
+     "heavy"
+    ],
+    "answer": 1,
+    "explanation": "speak 的 ea 唸長長的 [i]，整個字唸 [spik]；sweat、thread、heavy 的 ea 都唸短的 [ɛ]。"
+   }
+  ]
+ }
+]

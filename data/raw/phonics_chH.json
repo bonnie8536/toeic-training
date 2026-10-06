@@ -1,0 +1,1707 @@
+[
+ {
+  "id": "ph-01",
+  "title": "輕讀母音 [ə]：about 開頭那個輕輕的 a",
+  "goal": "學完你會看懂 KK 標重音的記號，也聽得出長單字裡又短又輕的 [ə]。",
+  "key": {
+   "word": "about",
+   "kk": "ə"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "前面已經看過 happy [ˋhæpɪ]、teacher [ˋtitʃɚ] 這種兩個音節的字，這一章的字會更長。英文的音節有輕有重，KK 裡的 ˋ 就是重音記號，放在重讀音節的前面。about 標成 [əˋbaʊt]，ˋ 在 b 前面，表示 bout 這一段要唸得重、唸得清楚，前面的 a 輕輕帶過就好。"
+   },
+   {
+    "t": "p",
+    "text": "不重讀的音節，母音常常會變成 [ə]。唸的時候嘴巴微開，舌頭和嘴唇都放鬆，發一個接近「ㄜ」的音，但是要很輕、很短，一下就帶過去。拼字不管是 a、e、i、o 還是 u，只要那個音節不重讀，都可能唸成 [ə]。台灣學生習慣每個音節都唸得一樣重，把 about 開頭的 a 唸成響亮的「ㄚ」，聽起來就會很用力。"
+   },
+   {
+    "t": "words",
+    "title": "字首的 a 輕讀成 [ə]",
+    "items": [
+     {
+      "w": "about",
+      "zh": "大約；關於",
+      "mark": "[a]bout"
+     },
+     {
+      "w": "alone",
+      "zh": "單獨；獨自",
+      "mark": "[a]lone"
+     },
+     {
+      "w": "ago",
+      "zh": "以前",
+      "mark": "[a]go"
+     },
+     {
+      "w": "above",
+      "zh": "在上方",
+      "mark": "[a]bove"
+     },
+     {
+      "w": "away",
+      "zh": "離開；在遠處",
+      "mark": "[a]way"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "其他位置的 [ə]",
+    "items": [
+     {
+      "w": "sofa",
+      "zh": "沙發",
+      "mark": "sof[a]"
+     },
+     {
+      "w": "banana",
+      "zh": "香蕉",
+      "mark": "b[a]nan[a]"
+     },
+     {
+      "w": "lemon",
+      "zh": "檸檬",
+      "mark": "lem[o]n"
+     },
+     {
+      "w": "salad",
+      "zh": "沙拉",
+      "mark": "sal[a]d"
+     },
+     {
+      "w": "today",
+      "zh": "今天",
+      "mark": "t[o]day"
+     },
+     {
+      "w": "problem",
+      "zh": "問題",
+      "mark": "probl[e]m"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "同一個字裡，重讀和輕讀的母音常常不一樣。banana [bəˋnænə] 有三個 a，只有中間重讀的那個唸 [æ]，頭尾兩個都輕讀成 [ə]。above [əˋbʌv] 的 a 輕讀成 [ə]，後面重讀的 o 唸 [ʌ]。[ə] 和 [ʌ] 的舌位差不多，[ʌ] 出現在重讀音節，唸得比較清楚、比較用力；[ə] 只在輕讀音節，一下就過去了。"
+   },
+   {
+    "t": "pairs",
+    "title": "多一個輕輕的 [ə]",
+    "items": [
+     {
+      "a": "round",
+      "az": "圓的",
+      "b": "around",
+      "bz": "在周圍",
+      "note": "around 開頭多一個很短的 [ə]，重音還是在 round 那一段。"
+     },
+     {
+      "a": "head",
+      "az": "頭",
+      "b": "ahead",
+      "bz": "在前方"
+     },
+     {
+      "a": "way",
+      "az": "路；方法",
+      "b": "away",
+      "bz": "離開"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "I left the lemon salad on the sofa about an hour ago.",
+    "zh": "我大概一個小時前把檸檬沙拉放在沙發上。"
+   },
+   {
+    "t": "tip",
+    "text": "about 開頭的 a 別唸成響亮的「ㄚ」，輕輕一個 [ə] 就好，把力氣留給後面的 bout。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "about",
+    "options": [
+     "ago",
+     "alone",
+     "above",
+     "about"
+    ],
+    "answer": 3,
+    "explanation": "about [əˋbaʊt] 後面重讀的是 [baʊt]，有 [aʊ] 這個雙母音。這四個字開頭都是輕輕的 [ə]，要靠後面重讀的那一段分辨，ago 是 [go]，alone 是 [lon]，above 是 [bʌv]。"
+   },
+   {
+    "type": "listen",
+    "word": "around",
+    "options": [
+     "round",
+     "around",
+     "ground",
+     "sound"
+    ],
+    "answer": 1,
+    "explanation": "around [əˋraʊnd] 開頭有一個很輕的 [ə]，round 直接從 [r] 開始。ground 和 sound 的開頭分別是 [g] 和 [s]。"
+   },
+   {
+    "type": "listen",
+    "word": "ahead",
+    "options": [
+     "head",
+     "had",
+     "ahead",
+     "hid"
+    ],
+    "answer": 2,
+    "explanation": "ahead [əˋhɛd] 比 head 多了開頭的 [ə]，這個音很短，要仔細聽 h 前面有沒有東西。had 唸 [hæd]，hid 唸 [hɪd]。"
+   },
+   {
+    "type": "listen",
+    "word": "asleep",
+    "options": [
+     "asleep",
+     "sleep",
+     "slip",
+     "sleepy"
+    ],
+    "answer": 0,
+    "explanation": "asleep [əˋslip] 開頭多了一個很輕的 [ə]，重音在 sleep 那一段。sleep 直接從 [s] 開始；slip 的母音是短的 [ɪ]；sleepy 結尾多了一個 [ɪ]。"
+   },
+   {
+    "type": "choose",
+    "q": "about 的 KK 是 [əˋbaʊt]，裡面的 ˋ 表示什麼？",
+    "options": [
+     "開頭的 a 唸得最重",
+     "bout 這個音節要重讀",
+     "整個字要唸兩次",
+     "結尾的 t 不發音"
+    ],
+    "answer": 1,
+    "explanation": "KK 的 ˋ 放在重讀音節的前面。about 的 ˋ 在 b 前面，所以 bout 唸重，開頭的 a 輕讀成 [ə]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字開頭的 a 唸輕讀的 [ə]？",
+    "options": [
+     "art",
+     "apple",
+     "able",
+     "alone"
+    ],
+    "answer": 3,
+    "explanation": "alone [əˋlon] 重音在後面，開頭的 a 輕讀成 [ə]。art 唸 [ɑrt]，apple 的 a 唸 [æ]，able 的 a 唸 [e]，這三個字的 a 都在重讀音節。"
+   },
+   {
+    "type": "choose",
+    "q": "banana 的三個 a，哪一個唸 [æ]？",
+    "options": [
+     "三個都唸 [æ]",
+     "第一個",
+     "第二個",
+     "第三個"
+    ],
+    "answer": 2,
+    "explanation": "banana 唸 [bəˋnænə]，ˋ 在第二個音節前面，所以中間的 a 重讀、唸 [æ]。頭尾兩個 a 不重讀，都輕讀成 [ə]。"
+   },
+   {
+    "type": "listen",
+    "word": "away",
+    "options": [
+     "wait",
+     "wet",
+     "way",
+     "away"
+    ],
+    "answer": 3,
+    "explanation": "away [əˋwe] 前面多了一個輕輕的 [ə]，way 只有 [we]。wait 結尾有 [t]，wet 的母音是 [ɛ]。"
+   }
+  ]
+ },
+ {
+  "id": "ph-02",
+  "title": "字尾 -le：table 結尾的 [l̩]",
+  "goal": "學完你會唸子音加 le 結尾的字，最後只用 [l] 收住，不多加母音。",
+  "key": {
+   "word": "table",
+   "kk": "l̩"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "table 有兩個音節，KK 標成 [ˋtebl̩]。後面的 ble 自己算一個音節，e 不發音，這個音節裡也沒有別的母音，靠 l 自己撐起來。KK 在 l 下面加一條小直線，寫成 [l̩]，意思是這個 l 當母音用。table 的 a 後面只有一個 b，ta 停在母音上，a 唸長母音 [e]，跟 cake 的 a 一樣；apple 的 a 後面有兩個 p 擋住，就唸短母音 [æ]。people 的 eo 唸長母音 [i]，拼法特別，要另外記。"
+   },
+   {
+    "t": "p",
+    "text": "唸法是前一個子音唸完，舌尖馬上往上頂到上排牙齒後方，發出 [l] 停在那裡，中間不插任何母音。apple 唸完 [p] 舌尖就頂上去，整個字是 [ˋæpl̩]。台灣學生常犯兩種錯，一種是舌尖沒碰上去，結尾聽起來像「ㄡ」；另一種是 [l] 唸完又補一個「ㄜ」，結尾多拖出一個音節。"
+   },
+   {
+    "t": "words",
+    "title": "子音加 le",
+    "items": [
+     {
+      "w": "table",
+      "zh": "桌子",
+      "mark": "tab[le]"
+     },
+     {
+      "w": "apple",
+      "zh": "蘋果",
+      "mark": "app[le]"
+     },
+     {
+      "w": "middle",
+      "zh": "中間",
+      "mark": "midd[le]"
+     },
+     {
+      "w": "simple",
+      "zh": "簡單的",
+      "mark": "simp[le]"
+     },
+     {
+      "w": "candle",
+      "zh": "蠟燭",
+      "mark": "cand[le]"
+     },
+     {
+      "w": "purple",
+      "zh": "紫色",
+      "mark": "purp[le]"
+     },
+     {
+      "w": "circle",
+      "zh": "圓圈",
+      "mark": "circ[le]"
+     },
+     {
+      "w": "puzzle",
+      "zh": "拼圖；謎題",
+      "mark": "puzz[le]"
+     },
+     {
+      "w": "people",
+      "zh": "人們",
+      "mark": "peop[le]"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "字尾 -able、-ible 也用同一個方式收尾，前面多一個輕讀的 [ə]，唸成 [əbl̩]。possible [ˋpɑsəbl̩] 和 available [əˋveləbl̩] 都是常用字，結尾一樣只用 [l] 收住。"
+   },
+   {
+    "t": "words",
+    "title": "-able、-ible",
+    "items": [
+     {
+      "w": "possible",
+      "zh": "可能的",
+      "mark": "possib[le]"
+     },
+     {
+      "w": "available",
+      "zh": "有空的；可取得的",
+      "mark": "availab[le]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[l̩] 和 [ɚ]",
+    "items": [
+     {
+      "a": "little",
+      "az": "小的",
+      "b": "litter",
+      "bz": "（亂丟的）垃圾",
+      "note": "兩個字中間的 t 在美式都會變成很快的輕 [d]，本章最後一課會教，這裡先專心聽結尾是 [l̩] 還是捲舌的 [ɚ]。"
+     },
+     {
+      "a": "battle",
+      "az": "戰鬥",
+      "b": "batter",
+      "bz": "麵糊"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "Put the purple candle in the middle of the table.",
+    "zh": "把紫色的蠟燭放在桌子正中間。"
+   },
+   {
+    "t": "tip",
+    "text": "唸到 -le 結尾，舌尖一定要碰到上排牙齒後方再停，嘴巴不要補一個「ㄡ」。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "little",
+    "options": [
+     "little",
+     "litter",
+     "lit",
+     "letter"
+    ],
+    "answer": 0,
+    "explanation": "little [ˋlɪtl̩] 結尾是舌尖頂住的 [l̩]，litter 結尾是捲舌的 [ɚ]。lit 只有一個音節，letter 的母音是 [ɛ]。"
+   },
+   {
+    "type": "listen",
+    "word": "candle",
+    "options": [
+     "can",
+     "candy",
+     "candle",
+     "handle"
+    ],
+    "answer": 2,
+    "explanation": "candle [ˋkændl̩] 結尾用 [l] 收住，candy [ˋkændɪ] 結尾是 [ɪ]。handle 開頭是 [h]，can 只有一個音節。"
+   },
+   {
+    "type": "listen",
+    "word": "battle",
+    "options": [
+     "batter",
+     "bottle",
+     "bat",
+     "battle"
+    ],
+    "answer": 3,
+    "explanation": "battle 結尾是 [l̩]，batter 結尾是捲舌的 [ɚ]。bottle 的母音是 [ɑ]，跟 battle 的 [æ] 不同，bat 只有一個音節。"
+   },
+   {
+    "type": "listen",
+    "word": "simple",
+    "options": [
+     "sample",
+     "symbol",
+     "simple",
+     "simply"
+    ],
+    "answer": 2,
+    "explanation": "simple [ˋsɪmpl̩] 中間是無聲的 [p]，結尾舌尖頂住 [l] 就停了。symbol [ˋsɪmbl̩] 是有聲的 [b]，sample 的母音是 [æ]，simply [ˋsɪmplɪ] 的 l 後面還有一個 [ɪ]。"
+   },
+   {
+    "type": "choose",
+    "q": "table [ˋtebl̩] 有幾個音節？",
+    "options": [
+     "一個",
+     "兩個",
+     "三個",
+     "四個"
+    ],
+    "answer": 1,
+    "explanation": "ta 是一個音節，ble 自己是一個音節，由 [l̩] 當母音，所以一共兩個。e 不發音，不會多出第三個音節。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的結尾跟 apple 的結尾唸法一樣？",
+    "options": [
+     "purple",
+     "paper",
+     "apply",
+     "happy"
+    ],
+    "answer": 0,
+    "explanation": "purple [ˋpɝpl̩] 跟 apple 一樣是子音加 le，用 [l̩] 收尾。paper 結尾是 [ɚ]，apply 結尾是 [aɪ]，happy 結尾是 [ɪ]。"
+   },
+   {
+    "type": "choose",
+    "q": "people 的結尾怎麼唸才對？",
+    "options": [
+     "唸成「ㄆㄡ」",
+     "在 l 後面加一個「ㄜ」",
+     "l 不發音，停在 [p]",
+     "舌尖頂到上排牙齒後方，用 [l] 收尾"
+    ],
+    "answer": 3,
+    "explanation": "people [ˋpipl̩] 結尾是 [l̩]，唸完 [p] 舌尖直接頂到上排牙齒後方。唸成「ㄆㄡ」是舌尖沒碰上去，加「ㄜ」會多出一個音節。"
+   },
+   {
+    "type": "listen",
+    "word": "people",
+    "options": [
+     "purple",
+     "people",
+     "pupil",
+     "paper"
+    ],
+    "answer": 1,
+    "explanation": "people [ˋpipl̩] 第一個母音是長長的 [i]。pupil [ˋpjupl̩] 是 [ju]，purple 是捲舌的 [ɝ]，paper 結尾是 [ɚ]。"
+   }
+  ]
+ },
+ {
+  "id": "ph-03",
+  "title": "-tion、-ssion：station 結尾的 [ʃən]",
+  "goal": "學完你看到 -tion、-ssion 結尾，會直接唸成 [ʃən]，不再把 t 照字母唸出來。",
+  "key": {
+   "word": "station",
+   "kk": "ʃən"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "station 唸 [ˋsteʃən]，結尾的 tion 整組唸 [ʃən]，也就是 ship 開頭的 [ʃ] 加上輕讀的 [ən]。台灣學生看到 t 常照字母唸，把 station 拆成 sta、ti、on 三段，多出一個音節。-tion 只算一個音節，t 和 i 合起來發 [ʃ]。-tion 前面的母音也有規律。a、o 直接接 -tion，中間沒有別的子音，就唸長母音，像 nation [ˋneʃən]、lotion [ˋloʃən]；中間有子音擋住就唸短母音，像 action [ˋækʃən]。i 比較特別，-ition 的 i 唸短的 [ɪ]，像 position [pəˋzɪʃən]。"
+   },
+   {
+    "t": "p",
+    "text": "-ssion 也唸 [ʃən]，像 mission [ˋmɪʃən]、session [ˋsɛʃən]，兩個 s 和 i 合起來發 [ʃ]。順便記一件事，-tion、-ssion 前面那個音節幾乎都重讀，station 重在 sta，information 重在 ma，本章第六課會整理成規則。"
+   },
+   {
+    "t": "words",
+    "title": "-tion",
+    "items": [
+     {
+      "w": "nation",
+      "zh": "國家",
+      "mark": "na[tion]"
+     },
+     {
+      "w": "station",
+      "zh": "車站",
+      "mark": "sta[tion]"
+     },
+     {
+      "w": "action",
+      "zh": "行動",
+      "mark": "ac[tion]"
+     },
+     {
+      "w": "lotion",
+      "zh": "乳液",
+      "mark": "lo[tion]"
+     },
+     {
+      "w": "motion",
+      "zh": "動作；移動",
+      "mark": "mo[tion]"
+     },
+     {
+      "w": "vacation",
+      "zh": "假期",
+      "mark": "vaca[tion]"
+     },
+     {
+      "w": "information",
+      "zh": "資訊",
+      "mark": "informa[tion]"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "-ssion",
+    "items": [
+     {
+      "w": "mission",
+      "zh": "任務",
+      "mark": "mi[ssion]"
+     },
+     {
+      "w": "session",
+      "zh": "（一場）會議；課程",
+      "mark": "se[ssion]"
+     },
+     {
+      "w": "discussion",
+      "zh": "討論",
+      "mark": "discu[ssion]"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "有兩個例外要知道。s 後面的 -tion 唸 [tʃən]，t 會發成 [tʃ]，像 question [ˋkwɛstʃən]、suggestion。另外，-cial、-cian 的 ci 也唸 [ʃ]，像 special [ˋspɛʃəl]、musician [mjuˋzɪʃən]。"
+   },
+   {
+    "t": "pairs",
+    "title": "比一比",
+    "items": [
+     {
+      "a": "act",
+      "az": "行動；做",
+      "b": "action",
+      "bz": "行動",
+      "note": "act 的 t 唸 [t]，加上 -ion 變成 action，t 就改唸 [ʃ]。"
+     },
+     {
+      "a": "express",
+      "az": "表達",
+      "b": "expression",
+      "bz": "表情；說法",
+      "note": "express 的 ss 唸 [s]，加上 -ion 變成 expression，ss 就改唸 [ʃ]。"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "After the session, we had a long discussion about the new station.",
+    "zh": "會議結束後，我們針對新車站討論了很久。"
+   },
+   {
+    "t": "tip",
+    "text": "看到 -tion 結尾，t 就別唸成 [t]，直接接 [ʃən]，整個字會短一截。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "lotion",
+    "options": [
+     "nation",
+     "notion",
+     "lotion",
+     "motion"
+    ],
+    "answer": 2,
+    "explanation": "四個字結尾都是 [ʃən]，要聽開頭。lotion 是 [lo]，nation 是 [ne]，notion 是 [no]，motion 是 [mo]。"
+   },
+   {
+    "type": "listen",
+    "word": "action",
+    "options": [
+     "act",
+     "actor",
+     "active",
+     "action"
+    ],
+    "answer": 3,
+    "explanation": "action [ˋækʃən] 的 t 跟 i 合起來唸 [ʃ]。act、actor、active 的 t 都照樣唸 [t]。"
+   },
+   {
+    "type": "listen",
+    "word": "session",
+    "options": [
+     "session",
+     "section",
+     "seven",
+     "season"
+    ],
+    "answer": 0,
+    "explanation": "session [ˋsɛʃən] 的 ss 直接唸 [ʃ]。section [ˋsɛkʃən] 在 [ʃ] 前面多了 [k]，要聽清楚。seven 中間是 [v]，season 的母音是長的 [i]。"
+   },
+   {
+    "type": "listen",
+    "word": "station",
+    "options": [
+     "stage",
+     "station",
+     "state",
+     "statue"
+    ],
+    "answer": 1,
+    "explanation": "station [ˋsteʃən] 後面多了 [ʃən] 這個音節。state 只有一個音節，stage 結尾是 [dʒ]，statue [ˋstætʃu] 的母音是 [æ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 t 唸 [ʃ]？",
+    "options": [
+     "test",
+     "motion",
+     "tent",
+     "note"
+    ],
+    "answer": 1,
+    "explanation": "motion 的 tion 唸 [ʃən]，t 發 [ʃ]。test、tent、note 的 t 都唸 [t]。"
+   },
+   {
+    "type": "choose",
+    "q": "question 的 -tion 怎麼唸？",
+    "options": [
+     "[tʃən]，因為前面是 s",
+     "[ʃən]，跟 station 一樣",
+     "[tən]，t 照字母唸",
+     "[ʒən]，跟 vision 一樣"
+    ],
+    "answer": 0,
+    "explanation": "s 後面的 -tion 唸 [tʃən]，所以 question 唸 [ˋkwɛstʃən]，suggestion 也一樣。[ʃən] 是 station、action 這種 t 前面不是 s 的情況；[tən] 是把 t 照字母唸；[ʒən] 是 vision 這種母音後面只有一個 s 的 -sion。"
+   },
+   {
+    "type": "choose",
+    "q": "information 的重音在哪個音節？",
+    "options": [
+     "第一個音節 in",
+     "第二個音節 for",
+     "第三個音節 ma",
+     "第四個音節 tion"
+    ],
+    "answer": 2,
+    "explanation": "-tion 前面那個音節幾乎都重讀。information 的 -tion 前面是 ma，所以 ma 唸得最重，唸 [me]。"
+   },
+   {
+    "type": "listen",
+    "word": "mission",
+    "options": [
+     "missing",
+     "machine",
+     "motion",
+     "mission"
+    ],
+    "answer": 3,
+    "explanation": "mission [ˋmɪʃən] 的 ss 唸 [ʃ]。missing 的 ss 唸 [s]，machine [məˋʃin] 重音在後面，motion 的母音是 [o]。"
+   }
+  ]
+ },
+ {
+  "id": "ph-04",
+  "title": "-sion、-sure 的 [ʒ]：vision 中間那個會振動的音",
+  "goal": "學完你會唸 [ʒ]，也分得出 vision 和 mission、pleasure 和 pressure。",
+  "key": {
+   "word": "vision",
+   "kk": "ʒ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "[ʒ] 就是 [ʃ] 加上聲帶振動。嘴型跟 [ʃ] 一樣，嘴唇往前嘟，舌面抬高靠近上顎，氣流從中間擠出來，同時聲帶要振動，手摸脖子會感覺到。台灣學生常把它唸成注音ㄖ。ㄖ的舌尖會往後捲，[ʒ] 的舌尖不捲，靠的是嘟出去的嘴唇和抬高的舌面。"
+   },
+   {
+    "t": "p",
+    "text": "常用字裡，[ʒ] 幾乎不會出現在字首，大多藏在這幾種拼字裡。母音後面的 -sion 唸 [ʒən]，像 vision [ˋvɪʒən]、decision [dɪˋsɪʒən]；母音後面的 -sure 唸 [ʒɚ]，像 measure [ˋmɛʒɚ]；-sual 唸 [ʒʊəl]，像 usual [ˋjuʒʊəl]。上一課的 mission 是兩個 s，唸 [ʃən]，這課的字都只有一個 s，前面還是母音。子音後面的 -sion 多半唸 [ʃən]，像 tension [ˋtɛnʃən]；sure 這個字本身唸 [ʃʊr]，也不算在內。"
+   },
+   {
+    "t": "words",
+    "title": "-sion 唸 [ʒən]",
+    "items": [
+     {
+      "w": "vision",
+      "zh": "視力；願景",
+      "mark": "vi[s]ion"
+     },
+     {
+      "w": "decision",
+      "zh": "決定",
+      "mark": "deci[s]ion"
+     },
+     {
+      "w": "television",
+      "zh": "電視",
+      "mark": "televi[s]ion"
+     },
+     {
+      "w": "conclusion",
+      "zh": "結論",
+      "mark": "conclu[s]ion"
+     },
+     {
+      "w": "division",
+      "zh": "部門；除法",
+      "mark": "divi[s]ion"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "-sure、-sual",
+    "items": [
+     {
+      "w": "measure",
+      "zh": "測量",
+      "mark": "mea[s]ure"
+     },
+     {
+      "w": "pleasure",
+      "zh": "樂趣；榮幸",
+      "mark": "plea[s]ure"
+     },
+     {
+      "w": "treasure",
+      "zh": "寶藏",
+      "mark": "trea[s]ure"
+     },
+     {
+      "w": "usual",
+      "zh": "平常的",
+      "mark": "u[s]ual"
+     },
+     {
+      "w": "casual",
+      "zh": "輕鬆的；休閒的",
+      "mark": "ca[s]ual"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[ʃ] 和 [ʒ]",
+    "items": [
+     {
+      "a": "mission",
+      "az": "任務",
+      "b": "vision",
+      "bz": "視力；願景",
+      "note": "這兩個字開頭也不一樣，一個是 [m]，一個是 [v]。先專心聽中間，mission 的 [ʃ] 聲帶不振動，vision 的 [ʒ] 會振動。"
+     },
+     {
+      "a": "pressure",
+      "az": "壓力",
+      "b": "pleasure",
+      "bz": "樂趣；榮幸",
+      "note": "pressure 的 ss 唸 [ʃ]，pleasure 的 s 唸 [ʒ]，而且第二個字母一個是 r、一個是 l。"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "I usually measure the room before I make a decision.",
+    "zh": "我通常會先量房間的大小，再做決定。"
+   },
+   {
+    "t": "tip",
+    "text": "唸 [ʒ] 的時候摸一下脖子，有振動才對，沒振動就變成 [ʃ] 了。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "pleasure",
+    "options": [
+     "pressure",
+     "measure",
+     "treasure",
+     "pleasure"
+    ],
+    "answer": 3,
+    "explanation": "pleasure [ˋplɛʒɚ] 開頭是 [pl]，s 唸 [ʒ]。pressure 開頭是 [pr]，ss 唸 [ʃ]；measure 和 treasure 的開頭是 [m] 和 [tr]。"
+   },
+   {
+    "type": "listen",
+    "word": "vision",
+    "options": [
+     "mission",
+     "version",
+     "vision",
+     "visit"
+    ],
+    "answer": 2,
+    "explanation": "vision [ˋvɪʒən] 開頭是 [v]，s 唸有聲的 [ʒ]。mission 開頭是 [m]，ss 唸 [ʃ]；version 的母音是捲舌的 [ɝ]；visit 的 s 唸 [z]。"
+   },
+   {
+    "type": "listen",
+    "word": "usual",
+    "options": [
+     "usual",
+     "useful",
+     "unusual",
+     "visual"
+    ],
+    "answer": 0,
+    "explanation": "usual [ˋjuʒʊəl] 一開頭就是 [ju]。unusual 前面多了 un，visual 開頭是 [v]，useful 的 s 唸 [s]，後面接 ful。"
+   },
+   {
+    "type": "listen",
+    "word": "casual",
+    "options": [
+     "castle",
+     "casual",
+     "cashier",
+     "catch"
+    ],
+    "answer": 1,
+    "explanation": "casual [ˋkæʒʊəl] 的 s 唸 [ʒ]。castle 的 t 不發音，唸 [ˋkæsl̩]；cashier 的 sh 唸 [ʃ]，重音在後面；catch 只有一個音節。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 s 唸 [ʒ]？",
+    "options": [
+     "sun",
+     "bus",
+     "decision",
+     "sure"
+    ],
+    "answer": 2,
+    "explanation": "decision 的 s 在母音後面、接 ion，唸 [ʒ]。sun 和 bus 的 s 唸 [s]，sure 的 s 唸 [ʃ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的結尾唸 [ʃən]，跟其他三個不一樣？",
+    "options": [
+     "decision",
+     "mission",
+     "television",
+     "conclusion"
+    ],
+    "answer": 1,
+    "explanation": "mission 是兩個 s，唸 [ʃən]。decision、television、conclusion 都是母音後面接一個 s，唸 [ʒən]。"
+   },
+   {
+    "type": "choose",
+    "q": "[ʒ] 跟 [ʃ] 差在哪裡？",
+    "options": [
+     "[ʒ] 的聲帶要振動",
+     "[ʒ] 嘴巴要張得比較大",
+     "[ʒ] 的舌尖要往後捲",
+     "[ʒ] 要唸得比較長"
+    ],
+    "answer": 0,
+    "explanation": "[ʒ] 和 [ʃ] 嘴型、舌位都一樣，差別只在聲帶。[ʃ] 只有氣流，[ʒ] 的聲帶會振動。"
+   },
+   {
+    "type": "listen",
+    "word": "measure",
+    "options": [
+     "major",
+     "mesh",
+     "messy",
+     "measure"
+    ],
+    "answer": 3,
+    "explanation": "measure [ˋmɛʒɚ] 中間是 [ʒ]，結尾捲舌。major [ˋmedʒɚ] 中間是 [dʒ]，舌尖會先堵住；mesh 只有一個音節，messy 的 ss 唸 [s]。"
+   }
+  ]
+ },
+ {
+  "id": "ph-05",
+  "title": "兩個音節的重音：begin 的重音在 gin",
+  "goal": "學完你看到兩個音節的字，會先猜重音在前還是在後，唸起來更自然。",
+  "key": {
+   "word": "begin",
+   "kk": "bɪˋgɪn"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "兩個音節的字，總有一個重、一個輕。重讀的音節比較大聲、比較長，輕讀的那一個又短又輕，母音常弱化成 [ə] 或 [ɪ]。要猜重音在哪裡，可以先看詞性。兩個音節的名詞和形容詞，重音大多在第一個音節，像 table [ˋtebl̩]、happy [ˋhæpɪ]。動詞剛好相反，像 begin [bɪˋgɪn]、forget [fɚˋgɛt]，重音大多落在第二個音節。下面例字框起來的字母，就是重讀音節的母音。"
+   },
+   {
+    "t": "words",
+    "title": "名詞，重音在前",
+    "items": [
+     {
+      "w": "table",
+      "zh": "桌子",
+      "mark": "t[a]ble"
+     },
+     {
+      "w": "paper",
+      "zh": "紙",
+      "mark": "p[a]per"
+     },
+     {
+      "w": "doctor",
+      "zh": "醫生",
+      "mark": "d[o]ctor"
+     },
+     {
+      "w": "window",
+      "zh": "窗戶",
+      "mark": "w[i]ndow"
+     },
+     {
+      "w": "teacher",
+      "zh": "老師",
+      "mark": "t[ea]cher"
+     },
+     {
+      "w": "garden",
+      "zh": "花園",
+      "mark": "g[ar]den"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "動詞，重音在後",
+    "items": [
+     {
+      "w": "begin",
+      "zh": "開始",
+      "mark": "beg[i]n"
+     },
+     {
+      "w": "forget",
+      "zh": "忘記",
+      "mark": "forg[e]t"
+     },
+     {
+      "w": "explain",
+      "zh": "解釋",
+      "mark": "expl[ai]n"
+     },
+     {
+      "w": "decide",
+      "zh": "決定",
+      "mark": "dec[i]d[e]"
+     },
+     {
+      "w": "repeat",
+      "zh": "重複",
+      "mark": "rep[ea]t"
+     },
+     {
+      "w": "relax",
+      "zh": "放鬆",
+      "mark": "rel[a]x"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "重音位置不同的兩個字",
+    "items": [
+     {
+      "a": "attic",
+      "az": "閣樓",
+      "b": "attack",
+      "bz": "攻擊",
+      "note": "attic [ˋætɪk] 重音在前；attack [əˋtæk] 重音在後，開頭的 a 也跟著弱化成 [ə]。"
+     },
+     {
+      "a": "personal",
+      "az": "個人的",
+      "b": "personnel",
+      "bz": "全體員工",
+      "note": "多益常見。personal 重音在第一個音節 per；personnel 雖然是名詞，重音卻在最後的 nel，是例外，要特別記。"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "規則也有例外。hotel [hoˋtɛl]、machine [məˋʃin] 是名詞，重音卻在後面；open、visit 是動詞，重音卻在前面。規則只能幫你先猜，最後還是要看字典上的 ˋ。"
+   },
+   {
+    "t": "sent",
+    "en": "Please explain the paper to the teacher before you begin.",
+    "zh": "開始之前，請先跟老師說明這份報告。"
+   },
+   {
+    "t": "tip",
+    "text": "背新單字的時候順手看 KK 的 ˋ 在哪裡，把重音跟拼字一起記。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "personnel",
+    "options": [
+     "person",
+     "personal",
+     "personality",
+     "personnel"
+    ],
+    "answer": 3,
+    "explanation": "personnel 重音在最後的 nel，意思是「全體員工」。personal 重音在第一個音節 per，意思是「個人的」。person 只有兩個音節。personality 比 personal 多了兩個音節，聽起來長很多。"
+   },
+   {
+    "type": "listen",
+    "word": "attack",
+    "options": [
+     "attic",
+     "attach",
+     "attack",
+     "tack"
+    ],
+    "answer": 2,
+    "explanation": "attack [əˋtæk] 重音在後面，開頭的 a 輕讀成 [ə]。attic [ˋætɪk] 重音在前面，attach 結尾是 [tʃ]，tack 只有一個音節。"
+   },
+   {
+    "type": "listen",
+    "word": "forget",
+    "options": [
+     "forget",
+     "forgot",
+     "forgive",
+     "forgave"
+    ],
+    "answer": 0,
+    "explanation": "四個字都是動詞，重音都在第二個音節，開頭的 for 都輕讀成 [fɚ]。forget 重讀的是 [gɛt]，forgot 是 [gɑt]，forgive 是 [gɪv]，forgave 是 [gev]。"
+   },
+   {
+    "type": "listen",
+    "word": "cartoon",
+    "options": [
+     "carton",
+     "cartoon",
+     "cotton",
+     "carpet"
+    ],
+    "answer": 1,
+    "explanation": "cartoon [kɑrˋtun] 重音在後面的 toon，oo 唸長長的 [u]。carton [ˋkɑrtn̩] 重音在前面的 car，後面輕輕帶過。cotton [ˋkɑtn̩] 沒有捲舌，carpet [ˋkɑrpɪt] 中間是 [p]。cartoon 是名詞，重音卻在後面，算是少數的例外。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的重音在第二個音節？",
+    "options": [
+     "window",
+     "garden",
+     "relax",
+     "doctor"
+    ],
+    "answer": 2,
+    "explanation": "relax [rɪˋlæks] 是動詞，重音在第二個音節。window、garden、doctor 都是名詞，重音在第一個音節。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的重音在第一個音節？",
+    "options": [
+     "teacher",
+     "begin",
+     "explain",
+     "decide"
+    ],
+    "answer": 0,
+    "explanation": "teacher [ˋtitʃɚ] 是名詞，重音在前面。begin、explain、decide 都是動詞，重音在後面。"
+   },
+   {
+    "type": "choose",
+    "q": "下面哪一組字，前一個重音在前、後一個重音在後？",
+    "options": [
+     "paper、table",
+     "attic、attack",
+     "begin、forget",
+     "doctor、garden"
+    ],
+    "answer": 1,
+    "explanation": "attic [ˋætɪk] 重音在前，attack [əˋtæk] 重音在後。paper、table 都是名詞，重音都在前；begin、forget 都是動詞，重音都在後；doctor、garden 也都是重音在前的名詞。"
+   },
+   {
+    "type": "choose",
+    "q": "attack [əˋtæk] 開頭的 a 為什麼唸 [ə]？",
+    "options": [
+     "因為它在字首",
+     "因為後面有兩個 t",
+     "因為它是名詞",
+     "因為那個音節不重讀"
+    ],
+    "answer": 3,
+    "explanation": "attack 的重音在第二個音節，第一個音節不重讀，母音就弱化成 [ə]。apple 的 a 也在字首，可是它重讀，所以唸 [æ]。"
+   }
+  ]
+ },
+ {
+  "id": "ph-06",
+  "title": "字尾決定重音：ability 的重音落在 bil",
+  "goal": "學完你看到 -tion、-sion、-ic、-ity 結尾的長單字，馬上找得到重讀的音節。",
+  "key": {
+   "word": "ability",
+   "kk": "əˋbɪlətɪ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "有些字尾會決定重音的位置。帶 -tion、-sion、-ic、-ity 的字，重音大多落在字尾前面那一個音節。information 的重音在 -tion 前面的 ma，economic 在 -ic 前面的 nom，ability [əˋbɪlətɪ] 在 -ity 前面的 bil。字再長，先找到字尾，往前數一個音節，大多就對了。下面例字框起來的字母，是重讀音節的母音。"
+   },
+   {
+    "t": "p",
+    "text": "加上這些字尾以後，重音常常會搬家，母音也跟著變。able [ˋebl̩] 的重音在 a，變成 ability 以後跑到 bil，開頭的 a 輕讀成 [ə]。economy [ɪˋkɑnəmɪ] 的重音在 con，變成 economic 以後跑到 nom。看到這類字，別照原本那個字的重音唸。"
+   },
+   {
+    "t": "pairs",
+    "title": "重音搬家",
+    "items": [
+     {
+      "a": "able",
+      "az": "能夠的",
+      "b": "ability",
+      "bz": "能力",
+      "note": "重音從 a 搬到 bil。"
+     },
+     {
+      "a": "active",
+      "az": "活躍的",
+      "b": "activity",
+      "bz": "活動",
+      "note": "重音從 ac 搬到 tiv。"
+     },
+     {
+      "a": "economy",
+      "az": "經濟",
+      "b": "economic",
+      "bz": "經濟的",
+      "note": "重音從 con 搬到 nom。"
+     },
+     {
+      "a": "inform",
+      "az": "通知",
+      "b": "information",
+      "bz": "資訊",
+      "note": "重音從 form 搬到 ma。"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "這條規則也有例外。television 美式唸 [ˋtɛləˏvɪʒən]，重音在第一個音節 tel；politics [ˋpɑlətɪks] 的重音在 pol。遇到這種字要另外記。字典上偶爾還會看到放在下面的 ˏ，那是次重音，像 information [ˏɪnfɚˋmeʃən] 的 in，唸得比 ma 輕，母音還是要唸清楚，不會變成 [ə]。"
+   },
+   {
+    "t": "words",
+    "title": "-tion、-sion",
+    "items": [
+     {
+      "w": "information",
+      "zh": "資訊",
+      "mark": "inform[a]tion"
+     },
+     {
+      "w": "invitation",
+      "zh": "邀請",
+      "mark": "invit[a]tion"
+     },
+     {
+      "w": "decision",
+      "zh": "決定",
+      "mark": "dec[i]sion"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "-ic、-ity",
+    "items": [
+     {
+      "w": "economic",
+      "zh": "經濟的",
+      "mark": "econ[o]mic"
+     },
+     {
+      "w": "specific",
+      "zh": "具體的",
+      "mark": "spec[i]fic"
+     },
+     {
+      "w": "electric",
+      "zh": "電的",
+      "mark": "el[e]ctric"
+     },
+     {
+      "w": "music",
+      "zh": "音樂",
+      "mark": "m[u]sic"
+     },
+     {
+      "w": "ability",
+      "zh": "能力",
+      "mark": "ab[i]lity"
+     },
+     {
+      "w": "activity",
+      "zh": "活動",
+      "mark": "act[i]vity"
+     },
+     {
+      "w": "community",
+      "zh": "社區",
+      "mark": "comm[u]nity"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "Thanks for the invitation and the specific information.",
+    "zh": "謝謝你的邀請，也謝謝你給的資訊這麼具體。"
+   },
+   {
+    "t": "tip",
+    "text": "長單字不知道重音在哪裡時，先看結尾，-tion、-ic、-ity 前面那一個音節唸最重，其他音節不要跟它搶。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "economic",
+    "options": [
+     "economy",
+     "economics",
+     "economist",
+     "economic"
+    ],
+    "answer": 3,
+    "explanation": "economic 重音在 nom，結尾是 [ɪk]。economics 結尾多了 [s]；economy 和 economist 的重音在 con。"
+   },
+   {
+    "type": "listen",
+    "word": "ability",
+    "options": [
+     "able",
+     "available",
+     "ability",
+     "possibility"
+    ],
+    "answer": 2,
+    "explanation": "ability [əˋbɪlətɪ] 重音在 bil，開頭的 a 輕讀成 [ə]。able 只有兩個音節，available 結尾是 [bl̩]，possibility 開頭是 [p]。"
+   },
+   {
+    "type": "listen",
+    "word": "activity",
+    "options": [
+     "activity",
+     "active",
+     "action",
+     "actor"
+    ],
+    "answer": 0,
+    "explanation": "activity [ækˋtɪvətɪ] 有四個音節，重音在 -ity 前面的 tiv。active、action、actor 都只有兩個音節，重音在 ac。"
+   },
+   {
+    "type": "listen",
+    "word": "electric",
+    "options": [
+     "election",
+     "electric",
+     "elect",
+     "electricity"
+    ],
+    "answer": 1,
+    "explanation": "electric [ɪˋlɛktrɪk] 重音在 -ic 前面的 lec。electricity 加了 -ity，重音搬到 tric；election 結尾是 [ʃən]，elect 結尾是 [kt]。"
+   },
+   {
+    "type": "choose",
+    "q": "ability 的重音在哪個音節？",
+    "options": [
+     "第一個音節 a",
+     "第二個音節 bil",
+     "第三個音節 i",
+     "第四個音節 ty"
+    ],
+    "answer": 1,
+    "explanation": "-ity 前面的音節重讀，ability 的 -ity 前面是 bil，所以唸成 [əˋbɪlətɪ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的重音在第二個音節？",
+    "options": [
+     "music",
+     "public",
+     "magic",
+     "specific"
+    ],
+    "answer": 3,
+    "explanation": "-ic 前面那個音節重讀。specific 的 -ic 前面是 cif，剛好是第二個音節。music、public、magic 都只有兩個音節，-ic 前面就是第一個音節。"
+   },
+   {
+    "type": "choose",
+    "q": "economy 變成 economic，重音怎麼移動？",
+    "options": [
+     "從 con 移到 nom",
+     "從 e 移到 my",
+     "位置不變",
+     "從 nom 移到 con"
+    ],
+    "answer": 0,
+    "explanation": "economy [ɪˋkɑnəmɪ] 的重音在 con。加上 -ic 以後，重音移到 -ic 前面的 nom。"
+   },
+   {
+    "type": "choose",
+    "q": "community 的重音在哪個音節？",
+    "options": [
+     "第一個音節 com",
+     "第二個音節 mu",
+     "第三個音節 ni",
+     "第四個音節 ty"
+    ],
+    "answer": 1,
+    "explanation": "community [kəˋmjunətɪ] 的 -ity 前面是 mu，所以 mu 重讀、唸 [mju]，開頭的 com 輕讀成 [kə]。"
+   }
+  ]
+ },
+ {
+  "id": "ph-07",
+  "title": "句子裡的弱讀：I can go 的 can 只剩 [kən]",
+  "goal": "學完你聽得出句子裡被唸輕的 to、for、and、of、can，也分得出 can 和 can't。",
+  "key": {
+   "word": "can",
+   "kk": "kən"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "前面幾課的例句裡，a、the、to 聽起來都很輕、很快，原因就在這一課。英文句子裡，名詞、動詞、形容詞這些帶意思的字會重讀。a、to、for、and、of、at 這類功能字，還有 can 這種助動詞，在句子裡通常不重讀，母音會弱化成 [ə]，有時連子音都省掉。"
+   },
+   {
+    "t": "p",
+    "text": "to 單獨唸是 [tu]，在句子裡多半變成 [tə]。for 從 [fɔr] 變成 [fɚ]，and 從 [ænd] 變成 [ən]，of 從 [ʌv] 變成 [əv]，can 從 [kæn] 變成 [kən]。上面的代表字 can 和下面每個字的音檔都是單獨唸的強讀，先聽它原本的樣子，再去例句裡聽它變輕。功能字放在句尾或被特別強調時，會唸回強讀，像回答 Yes, I can. 的 can 就唸 [kæn]。"
+   },
+   {
+    "t": "words",
+    "title": "功能字（音檔是強讀）",
+    "items": [
+     {
+      "w": "to",
+      "zh": "到；向",
+      "mark": "t[o]"
+     },
+     {
+      "w": "for",
+      "zh": "為了；給",
+      "mark": "f[or]"
+     },
+     {
+      "w": "and",
+      "zh": "和",
+      "mark": "[a]nd"
+     },
+     {
+      "w": "of",
+      "zh": "的",
+      "mark": "[o]f"
+     },
+     {
+      "w": "can",
+      "zh": "能夠；會",
+      "mark": "c[a]n"
+     },
+     {
+      "w": "at",
+      "zh": "在",
+      "mark": "[a]t"
+     },
+     {
+      "w": "from",
+      "zh": "從",
+      "mark": "fr[o]m"
+     },
+     {
+      "w": "than",
+      "zh": "比",
+      "mark": "th[a]n"
+     },
+     {
+      "w": "but",
+      "zh": "但是",
+      "mark": "b[u]t"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "最要緊的是 can 和 can't。肯定句裡的 can 弱讀成 [kən]，又短又輕，重音落在後面的動詞。can't 是否定，母音一定唸滿，美式唸 [kænt]，結尾那個 t 常常輕到聽不見，所以要靠母音分辨，聽到短短的 [kən] 是 can，聽到清楚的 [æ] 多半是 can't。多益聽力常靠這一點分出肯定和否定。考題也有英國口音，英式的 can't 唸 [kɑnt]，母音跟 can 差得更遠。下面這句前半的 can 弱讀成 [kən]，後半的 can't 母音唸滿 [æ]，可以對照著聽。"
+   },
+   {
+    "t": "sent",
+    "en": "We can send a copy of the report to you, but we can't send it to your team.",
+    "zh": "我們可以把報告寄一份給你，但是沒辦法寄給你的團隊。"
+   },
+   {
+    "t": "tip",
+    "text": "分辨 can 和 can't 別等結尾的 t，美式常把它吞掉，要聽 can 的母音有沒有唸滿。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "can't",
+    "options": [
+     "cat",
+     "cane",
+     "camp",
+     "can't"
+    ],
+    "answer": 3,
+    "explanation": "can't [kænt] 單獨唸時母音唸滿 [æ]，後面接 [n] 再收在 [t]。camp 結尾是 [mp]，雙唇會閉起來；cat 沒有 [n]；cane 的母音是 [e]。到了句子裡，肯定的 can 會弱讀成 [kən]，can't 的母音還是唸滿，這才是分辨兩個字的關鍵。"
+   },
+   {
+    "type": "listen",
+    "word": "of",
+    "options": [
+     "of",
+     "off",
+     "on",
+     "oven"
+    ],
+    "answer": 0,
+    "explanation": "of 單獨唸是 [ʌv]，結尾是有聲的 [v]。off 唸 [ɔf]，結尾是無聲的 [f]；on 結尾是 [n]，oven 有兩個音節。of 在句子裡會再弱讀成 [əv]。"
+   },
+   {
+    "type": "listen",
+    "word": "from",
+    "options": [
+     "form",
+     "farm",
+     "firm",
+     "from"
+    ],
+    "answer": 3,
+    "explanation": "from 單獨唸是 [frʌm]，r 緊接在 f 後面。form、farm、firm 的 r 都在母音後面。from 在句子裡會弱讀成 [frəm]。"
+   },
+   {
+    "type": "listen",
+    "word": "than",
+    "options": [
+     "then",
+     "them",
+     "than",
+     "thin"
+    ],
+    "answer": 2,
+    "explanation": "than 單獨唸是 [ðæn]，嘴巴張得比 then [ðɛn] 大。than 在句子裡常弱讀成 [ðən]，比 then 還輕。them 結尾是 [m]，thin 開頭是無聲的 [θ]。"
+   },
+   {
+    "type": "choose",
+    "q": "I can swim. 這句話裡的 can 通常怎麼唸？",
+    "options": [
+     "[kæn]，唸得又重又長",
+     "[kən]，又短又輕",
+     "[kænt]，跟 can't 一樣",
+     "完全不唸出來"
+    ],
+    "answer": 1,
+    "explanation": "肯定句裡的 can 不重讀，弱讀成 [kən]，重音放在後面的 swim。唸成 [kæn] 又重又長，聽起來像在強調；[kænt] 是 can't，意思會變成相反；can 再輕也還有 [k] 和 [n]，不會完全消失。"
+   },
+   {
+    "type": "choose",
+    "q": "下面哪一句的 can 要唸成完整的 [kæn]？",
+    "options": [
+     "I can help you.",
+     "We can meet at ten.",
+     "Yes, I can.",
+     "You can sit here."
+    ],
+    "answer": 2,
+    "explanation": "can 放在句尾時要唸回強讀，Yes, I can. 的 can 唸 [kæn]。其他三句的 can 後面還有動詞，都弱讀成 [kən]。"
+   },
+   {
+    "type": "choose",
+    "q": "a cup of tea 裡的 of，在句子裡通常唸成什麼？",
+    "options": [
+     "[ʌv]",
+     "[ɔf]",
+     "[əv]",
+     "[ɑf]"
+    ],
+    "answer": 2,
+    "explanation": "of 不重讀，母音弱化成 [ə]，唸成 [əv]。講快的時候連 [v] 都很輕，聽起來像 a cup a tea。[ʌv] 是 of 單獨唸時的強讀；[ɔf] 和 [ɑf] 是 off 的唸法，結尾是無聲的 [f]，跟 of 不一樣。"
+   },
+   {
+    "type": "choose",
+    "q": "美式口語裡，分辨 can 和 can't 最可靠的方法是什麼？",
+    "options": [
+     "聽 can 的母音有沒有唸滿",
+     "聽結尾有沒有 t",
+     "聽後面的動詞有沒有變輕",
+     "聽整句話的速度"
+    ],
+    "answer": 0,
+    "explanation": "美式的 can't 結尾 t 常被吞掉，靠 t 分辨不可靠。can 弱讀成短短的 [kən]，can't 的母音唸滿 [æ]，聽母音最準。"
+   }
+  ]
+ },
+ {
+  "id": "ph-08",
+  "title": "美式閃音 t：water 聽起來像 wa-der",
+  "goal": "學完你聽得懂美式口音裡的閃音 t，知道 water、city 的 t 為什麼聽起來像輕輕的 [d]。",
+  "key": {
+   "word": "water",
+   "kk": "t"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "查字典時，water 標成 [ˋwɔtɚ]，可是音檔聽起來比較像 wa-der。這是美式英語的閃音。t 或 tt 夾在兩個母音中間，後面那個音節又不重讀時，舌尖只在上排牙齒後方很快地彈一下，聽起來像很輕、很快的 [d]。前面是 r 的時候也會這樣，像 party。KK 沒有另外的符號，字典上看不出來，要靠耳朵記。"
+   },
+   {
+    "t": "words",
+    "title": "t 變成閃音",
+    "items": [
+     {
+      "w": "water",
+      "zh": "水",
+      "mark": "wa[t]er"
+     },
+     {
+      "w": "better",
+      "zh": "更好的",
+      "mark": "be[tt]er"
+     },
+     {
+      "w": "letter",
+      "zh": "信；字母",
+      "mark": "le[tt]er"
+     },
+     {
+      "w": "butter",
+      "zh": "奶油",
+      "mark": "bu[tt]er"
+     },
+     {
+      "w": "city",
+      "zh": "城市",
+      "mark": "ci[t]y"
+     },
+     {
+      "w": "pretty",
+      "zh": "漂亮的；相當",
+      "mark": "pre[tt]y"
+     },
+     {
+      "w": "party",
+      "zh": "派對",
+      "mark": "par[t]y"
+     },
+     {
+      "w": "meeting",
+      "zh": "會議",
+      "mark": "mee[t]ing"
+     },
+     {
+      "w": "computer",
+      "zh": "電腦",
+      "mark": "compu[t]er"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "重讀音節開頭的 t 不會變，照樣唸清楚的 [t]。hotel [hoˋtɛl]、attack [əˋtæk]、return [rɪˋtɝn] 的 t 後面就是重讀音節，所以要唸得清清楚楚，還帶一點氣。"
+   },
+   {
+    "t": "words",
+    "title": "t 照樣唸 [t]",
+    "items": [
+     {
+      "w": "hotel",
+      "zh": "飯店",
+      "mark": "ho[t]el"
+     },
+     {
+      "w": "attack",
+      "zh": "攻擊",
+      "mark": "a[tt]ack"
+     },
+     {
+      "w": "return",
+      "zh": "回來；歸還",
+      "mark": "re[t]urn"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "美式幾乎同音",
+    "items": [
+     {
+      "a": "writer",
+      "az": "作家",
+      "b": "rider",
+      "bz": "騎士；乘客",
+      "note": "美式兩個字中間都唸成閃音，聽起來幾乎一樣，rider 的 [aɪ] 稍微長一點。"
+     },
+     {
+      "a": "metal",
+      "az": "金屬",
+      "b": "medal",
+      "bz": "獎牌",
+      "note": "幾乎同音，只能靠前後文判斷。"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "美式口音還有兩個相關的特色。nt 後面接的是不重讀的音節時，中間的 t 常常被省掉，twenty 聽起來像 twenny，center、internet 也一樣。until、contain 的 t 後面是重讀音節，t 照樣要唸。另外，water 的 a 在美式音檔裡常常接近 [ɑ]，跟第六章 [ɔ] 那一課提過的情況一樣。"
+   },
+   {
+    "t": "sent",
+    "en": "We'll check the data on the computer after the meeting.",
+    "zh": "開完會以後，我們會在電腦上看這些資料。"
+   },
+   {
+    "t": "tip",
+    "text": "聽力裡聽到像 wa-der、ci-dy 的音，先想想那裡的 t 有沒有變成閃音。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "better",
+    "options": [
+     "bitter",
+     "better",
+     "butter",
+     "batter"
+    ],
+    "answer": 1,
+    "explanation": "四個字中間的 tt 都唸成閃音，要靠母音分辨。better 是 [ɛ]，bitter 是 [ɪ]，butter 是 [ʌ]，batter 是 [æ]。"
+   },
+   {
+    "type": "listen",
+    "word": "city",
+    "options": [
+     "kitty",
+     "silly",
+     "city",
+     "sit"
+    ],
+    "answer": 2,
+    "explanation": "city [ˋsɪtɪ] 的 t 在美式唸成閃音，聽起來像輕輕的 [d]。kitty 開頭是 [k]，silly 中間是 [l]，sit 只有一個音節。"
+   },
+   {
+    "type": "listen",
+    "word": "meeting",
+    "options": [
+     "meeting",
+     "meaning",
+     "melting",
+     "eating"
+    ],
+    "answer": 0,
+    "explanation": "meeting [ˋmitɪŋ] 中間的 t 是閃音。meaning 中間是 [n]；melting 的母音是 [ɛ]，t 前面還有 [l]；eating 開頭沒有 [m]。"
+   },
+   {
+    "type": "listen",
+    "word": "party",
+    "options": [
+     "part",
+     "pretty",
+     "parking",
+     "party"
+    ],
+    "answer": 3,
+    "explanation": "party [ˋpɑrtɪ] 的 t 跟在 r 後面，後面的音節不重讀，也唸成閃音。pretty 開頭是 [pr]，parking 中間是 [k]，part 只有一個音節。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 t 在美式不會變成閃音？",
+    "options": [
+     "water",
+     "letter",
+     "hotel",
+     "city"
+    ],
+    "answer": 2,
+    "explanation": "hotel [hoˋtɛl] 的 t 後面就是重讀音節，照樣唸清楚的 [t]。water、letter、city 的 t 後面音節不重讀，都會變成閃音。"
+   },
+   {
+    "type": "choose",
+    "q": "water 的 KK 是 [ˋwɔtɚ]，美式音檔裡的 t 聽起來像什麼？",
+    "options": [
+     "清楚、帶氣的 [t]",
+     "很快的輕 [d]",
+     "[θ]",
+     "完全聽不到"
+    ],
+    "answer": 1,
+    "explanation": "t 夾在兩個母音中間，後面的音節又不重讀，美式會唸成閃音，聽起來像很快的輕 [d]。KK 還是寫 [t]。t 完全聽不到是 twenty 這種 n 後面的 t；water 的 t 前面是母音，只會變成閃音，不會整個消失。"
+   },
+   {
+    "type": "choose",
+    "q": "下面哪一組在美式口語裡幾乎同音？",
+    "options": [
+     "water、winter",
+     "city、sit",
+     "hotel、hostel",
+     "writer、rider"
+    ],
+    "answer": 3,
+    "explanation": "writer 的 t 和 rider 的 d 在美式都唸成閃音，兩個字幾乎一樣，要靠前後文判斷。其他三組的子音或音節數都不同。"
+   },
+   {
+    "type": "listen",
+    "word": "letter",
+    "options": [
+     "letter",
+     "later",
+     "litter",
+     "lighter"
+    ],
+    "answer": 0,
+    "explanation": "letter [ˋlɛtɚ] 的母音是 [ɛ]。later 是 [e]，litter 是 [ɪ]，lighter 是 [aɪ]。四個字的 t 都唸成閃音，要靠母音分辨。"
+   }
+  ]
+ }
+]

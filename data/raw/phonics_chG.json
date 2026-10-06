@@ -1,0 +1,1382 @@
+[
+ {
+  "id": "pg-01",
+  "title": "ar 唸 [ɑr]：car 裡的 ar",
+  "goal": "看到 ar 會唸成 [ɑr]，把 car、park 裡的捲舌唸出來。",
+  "key": {
+   "word": "car",
+   "kk": "ɑr"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "ar 唸 [ɑr]，例如 car [kɑr]、park [pɑrk]。這個音分兩步：先把嘴巴張大唸 [ɑ]，就是第一章 hot 裡的母音，接著舌尖往上、往後捲，不要碰到上顎。唸 [ɑ] 的時候嘴唇放鬆、不要收圓，一收圓就會變成下一課 for 的 [ɔr]。很多同學把 car 唸成「卡」，就是少了後面捲舌那一段。"
+   },
+   {
+    "t": "words",
+    "title": "ar 唸 [ɑr]",
+    "items": [
+     {
+      "w": "car",
+      "zh": "汽車",
+      "mark": "c[ar]"
+     },
+     {
+      "w": "star",
+      "zh": "星星",
+      "mark": "st[ar]"
+     },
+     {
+      "w": "park",
+      "zh": "公園；停車",
+      "mark": "p[ar]k"
+     },
+     {
+      "w": "farm",
+      "zh": "農場",
+      "mark": "f[ar]m"
+     },
+     {
+      "w": "hard",
+      "zh": "困難的；硬的",
+      "mark": "h[ar]d"
+     },
+     {
+      "w": "card",
+      "zh": "卡片",
+      "mark": "c[ar]d"
+     },
+     {
+      "w": "arm",
+      "zh": "手臂",
+      "mark": "[ar]m"
+     },
+     {
+      "w": "start",
+      "zh": "開始",
+      "mark": "st[ar]t"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "生活和職場常見",
+    "items": [
+     {
+      "w": "chart",
+      "zh": "圖表",
+      "mark": "ch[ar]t"
+     },
+     {
+      "w": "large",
+      "zh": "大的；大型的",
+      "mark": "l[ar]ge"
+     },
+     {
+      "w": "smart",
+      "zh": "聰明的",
+      "mark": "sm[ar]t"
+     },
+     {
+      "w": "charge",
+      "zh": "收費；充電",
+      "mark": "ch[ar]ge"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "有沒有捲舌",
+    "items": [
+     {
+      "a": "shark",
+      "az": "鯊魚",
+      "b": "shock",
+      "bz": "震驚",
+      "note": "兩個字的嘴巴都張大，shark 在母音後面多了捲舌。"
+     },
+     {
+      "a": "card",
+      "az": "卡片",
+      "b": "cod",
+      "bz": "鱈魚"
+     },
+     {
+      "a": "part",
+      "az": "部分",
+      "b": "pot",
+      "bz": "鍋子"
+     },
+     {
+      "a": "dark",
+      "az": "暗的",
+      "b": "dock",
+      "bz": "碼頭"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "有幾個例外要先認識。w 後面的 ar 會變成 [ɔr]，所以 warm 唸 [wɔrm]、war 唸 [wɔr]，跟 farm 的母音不同。qu 唸 [kw]，後面也有 w 的音，所以 quarter（季度）的 ar 也唸 [ɔr]。heart 拼的是 ear，卻唸 [hɑrt]，跟 hard 只差最後一個子音。ar 後面多一個 e 的時候也不一樣，care [kɛr]、share [ʃɛr] 唸 [ɛr]，第六課會教。至於 dollar、grammar 這種字尾不重讀的 ar，會唸得又短又輕，本章第四課再教。"
+   },
+   {
+    "t": "sent",
+    "en": "Start the car before dark, because the farm is far from the park.",
+    "zh": "天黑前就發動車子吧，因為農場離公園很遠。"
+   },
+   {
+    "t": "tip",
+    "text": "嘴巴張大唸完 [ɑ] 之後要馬上捲舌，car 才不會變成「卡」。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "cart",
+    "options": [
+     "cot",
+     "cart",
+     "cut",
+     "cat"
+    ],
+    "answer": 1,
+    "explanation": "聽到的是 cart [kɑrt]，嘴巴張大之後有捲舌。cot [kɑt] 母音一樣但沒有 r，cut 是短促的 [ʌ]，cat 是嘴角拉開的 [æ]。"
+   },
+   {
+    "type": "listen",
+    "word": "dark",
+    "options": [
+     "dock",
+     "duck",
+     "dark",
+     "deck"
+    ],
+    "answer": 2,
+    "explanation": "dark [dɑrk] 在 [ɑ] 後面有捲舌。dock [dɑk] 沒有 r，duck 唸 [ʌ]，deck 唸 [ɛ]。"
+   },
+   {
+    "type": "listen",
+    "word": "barn",
+    "options": [
+     "barn",
+     "bun",
+     "ban",
+     "bone"
+    ],
+    "answer": 0,
+    "explanation": "barn [bɑrn] 是穀倉，ar 唸 [ɑr]。bun 的母音是 [ʌ]，ban 是 [æ]，bone 是長母音 [o]。"
+   },
+   {
+    "type": "listen",
+    "word": "hot",
+    "options": [
+     "hat",
+     "hut",
+     "heart",
+     "hot"
+    ],
+    "answer": 3,
+    "explanation": "這次聽到的是 hot [hɑt]，嘴巴張大但沒有捲舌。heart [hɑrt] 的母音後面多了 r，hat 唸 [æ]，hut 唸 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ar 跟 car 的 ar 唸法一樣？",
+    "options": [
+     "warm",
+     "dollar",
+     "star",
+     "war"
+    ],
+    "answer": 2,
+    "explanation": "star 的 ar 唸 [ɑr]，跟 car 一樣。warm 和 war 的 ar 接在 w 後面，要唸 [ɔr]；dollar 的 ar 在不重讀的字尾，唸得又短又輕。"
+   },
+   {
+    "type": "listen",
+    "word": "part",
+    "options": [
+     "pot",
+     "part",
+     "pat",
+     "put"
+    ],
+    "answer": 1,
+    "explanation": "part [pɑrt] 有捲舌。pot [pɑt] 沒有 r，pat 唸 [æ]，put 唸 [ʊ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音是 hot 的 [ɑ] 再加上捲舌？",
+    "options": [
+     "hat",
+     "hut",
+     "hate",
+     "hard"
+    ],
+    "answer": 3,
+    "explanation": "hard [hɑrd] 先張大嘴唸 hot 的 [ɑ]，再把舌頭捲起來。hat 是 [æ]，hut 是 [ʌ]，hate 是長母音 [e]，三個都沒有捲舌。"
+   },
+   {
+    "type": "choose",
+    "q": "heart 的 ear 怎麼唸？",
+    "options": [
+     "跟 warm 的 ar 一樣",
+     "跟 hard 的 ar 一樣",
+     "跟 hat 的 a 一樣",
+     "跟 eat 的 ea 一樣"
+    ],
+    "answer": 1,
+    "explanation": "heart 唸 [hɑrt]，這裡的 ear 唸 [ɑr]，跟 hard 的 ar 同一個音，是要特別記住的例外。warm 的 ar 接在 w 後面，唸 [ɔr]；hat 的 a 是 [æ]，eat 的 ea 是長母音 [i]，都跟 heart 的 ear 不一樣。"
+   }
+  ]
+ },
+ {
+  "id": "pg-02",
+  "title": "or 唸 [ɔr]：corn 裡的 or",
+  "goal": "看到 or、ore、oar 會唸成 [ɔr]，也能分清楚 form 和 farm。",
+  "key": {
+   "word": "corn",
+   "kk": "ɔr"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "or 唸 [ɔr]，例如 corn [kɔrn]、for [fɔr]。先把嘴唇收圓，嘴巴半開唸 [ɔ]，接著舌頭往後捲。跟上一課的 [ɑr] 比起來，[ɔr] 的嘴唇要收圓，開口也比較小。上一課提過的 warm、war，ar 接在 w 後面，唸的就是這一課的 [ɔr]。"
+   },
+   {
+    "t": "words",
+    "title": "or 唸 [ɔr]",
+    "items": [
+     {
+      "w": "for",
+      "zh": "為了；給",
+      "mark": "f[or]"
+     },
+     {
+      "w": "corn",
+      "zh": "玉米",
+      "mark": "c[or]n"
+     },
+     {
+      "w": "horse",
+      "zh": "馬",
+      "mark": "h[or]se"
+     },
+     {
+      "w": "short",
+      "zh": "短的",
+      "mark": "sh[or]t"
+     },
+     {
+      "w": "fork",
+      "zh": "叉子",
+      "mark": "f[or]k"
+     },
+     {
+      "w": "storm",
+      "zh": "暴風雨",
+      "mark": "st[or]m"
+     },
+     {
+      "w": "sport",
+      "zh": "運動",
+      "mark": "sp[or]t"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "字尾的 ore 和字中的 oar 也唸 [ɔr]，例如 more [mɔr]、board [bɔrd]，ore 最後的 e 不發音。door、four 拼法比較特別，母音也是 [ɔr]，four 跟 for 同音，直接記起來。查台灣的 KK 字典，more、store、board、door，還有 sport、pork，常標成 [or]，跟 corn 的 [ɔr] 寫法不同，不過美式發音裡兩種標法聽起來是同一個音，所以這一課統一標 [ɔr]。"
+   },
+   {
+    "t": "words",
+    "title": "ore、oar，還有 door",
+    "items": [
+     {
+      "w": "more",
+      "zh": "更多",
+      "mark": "m[ore]"
+     },
+     {
+      "w": "store",
+      "zh": "商店",
+      "mark": "st[ore]"
+     },
+     {
+      "w": "board",
+      "zh": "板子；董事會",
+      "mark": "b[oar]d"
+     },
+     {
+      "w": "door",
+      "zh": "門",
+      "mark": "d[oor]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[ɔr] 和 [ɑr]",
+    "items": [
+     {
+      "a": "form",
+      "az": "表格",
+      "b": "farm",
+      "bz": "農場",
+      "note": "form 的嘴唇是圓的，farm 嘴巴張大、嘴唇不圓。"
+     },
+     {
+      "a": "born",
+      "az": "出生",
+      "b": "barn",
+      "bz": "穀倉"
+     },
+     {
+      "a": "cord",
+      "az": "電線",
+      "b": "card",
+      "bz": "卡片"
+     },
+     {
+      "a": "pork",
+      "az": "豬肉",
+      "b": "park",
+      "bz": "公園"
+     },
+     {
+      "a": "store",
+      "az": "商店",
+      "b": "star",
+      "bz": "星星"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "doctor 這種字尾不重讀的 or 會唸得又短又輕，第四課再教。這一課的 [ɔr] 都在重讀的位置，要唸得清楚飽滿。另外，work、word、world 的 or 接在 w 後面，唸的是下一課的 [ɝ]，不唸 [ɔr]。"
+   },
+   {
+    "t": "sent",
+    "en": "Before the storm, we bought more corn and pork at the store.",
+    "zh": "暴風雨來之前，我們去店裡多買了一些玉米和豬肉。"
+   },
+   {
+    "t": "tip",
+    "text": "form 和 farm 常被唸成一樣，唸 or 之前先把嘴唇收圓就分得開。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "form",
+    "options": [
+     "form",
+     "farm",
+     "foam",
+     "fame"
+    ],
+    "answer": 0,
+    "explanation": "form [fɔrm] 嘴唇圓、有捲舌。farm [fɑrm] 嘴巴張大，foam 是長母音 [o] 沒有 r，fame 是長母音 [e]。"
+   },
+   {
+    "type": "listen",
+    "word": "cord",
+    "options": [
+     "card",
+     "code",
+     "cord",
+     "cod"
+    ],
+    "answer": 2,
+    "explanation": "cord [kɔrd] 是電線，or 唸 [ɔr]。card 唸 [ɑr]，code 是長母音 [o]，cod 是短的 [ɑ]，後兩個都沒有捲舌。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟 corn 的 or 唸法一樣？",
+    "options": [
+     "star",
+     "board",
+     "hot",
+     "boat"
+    ],
+    "answer": 1,
+    "explanation": "board 的 oar 唸 [ɔr]，跟 corn 一樣。star 是 [ɑr]，hot 是沒有捲舌的 [ɑ]，boat 的 oa 是長母音 [o]。"
+   },
+   {
+    "type": "listen",
+    "word": "short",
+    "options": [
+     "shot",
+     "shut",
+     "shark",
+     "short"
+    ],
+    "answer": 3,
+    "explanation": "short [ʃɔrt] 嘴唇圓再捲舌。shark [ʃɑrk] 嘴巴張大、嘴唇不圓；shot 唸 [ɑ]，shut 唸 [ʌ]，這兩個都沒有捲舌。"
+   },
+   {
+    "type": "listen",
+    "word": "park",
+    "options": [
+     "pork",
+     "park",
+     "poke",
+     "pick"
+    ],
+    "answer": 1,
+    "explanation": "這次聽到的是 park [pɑrk]，嘴巴張得比較大、嘴唇不圓。pork [pɔrk] 嘴唇是圓的，poke 是長母音 [o]，pick 唸 [ɪ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟另外三個不一樣？",
+    "options": [
+     "horse",
+     "sport",
+     "park",
+     "warm"
+    ],
+    "answer": 2,
+    "explanation": "horse、sport 的 or 唸 [ɔr]，warm 的 ar 接在 w 後面也唸 [ɔr]。只有 park 唸 [ɑr]。"
+   },
+   {
+    "type": "listen",
+    "word": "store",
+    "options": [
+     "store",
+     "star",
+     "stop",
+     "stone"
+    ],
+    "answer": 0,
+    "explanation": "store [stɔr] 的 ore 唸 [ɔr]，最後的 e 不發音。star 唸 [ɑr]，stop 是短的 [ɑ]，沒有捲舌，stone 是長母音 [o]。"
+   },
+   {
+    "type": "choose",
+    "q": "台灣的 KK 字典常把 store 標成 [stor]。用美式發音唸，store 的 ore 跟哪個部分唸法一樣？",
+    "options": [
+     "stone 的 o",
+     "stop 的 o",
+     "short 的 or",
+     "star 的 ar"
+    ],
+    "answer": 2,
+    "explanation": "字典標 [or] 的 store，美式唸起來跟 short 的 or 是同一個音 [ɔr]，嘴唇圓、最後要捲舌。stone 的 o 是長母音 [o]，後面沒有捲舌；stop 是短的 [ɑ]；star 是嘴巴張大的 [ɑr]。"
+   }
+  ]
+ },
+ {
+  "id": "pg-03",
+  "title": "er、ir、ur 唸 [ɝ]：bird 裡的 ir",
+  "goal": "看到重讀的 er、ir、ur，還有 work 的 or、learn 的 ear，都會唸成捲舌的 [ɝ]。",
+  "key": {
+   "word": "bird",
+   "kk": "ɝ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "重讀的 er、ir、ur 都唸 [ɝ]，例如 her [hɝ]、bird [bɝd]、turn [tɝn]。三種拼法唸起來完全一樣，看到哪一種都不用換嘴型。如果 er 後面直接接母音，像 very [ˋvɛrɪ]、zero [ˋzɪro]，就不唸 [ɝ]。唸的時候嘴巴微開，不要張大，舌頭往後捲起來，舌尖不碰任何地方，嘴唇可以微微嘟起，聲音拉長。台灣學生常唸成不捲舌的ㄜ，也常跟 car 的 [ɑr]、for 的 [ɔr] 混在一起，[ɝ] 的嘴巴開得比它們都小。"
+   },
+   {
+    "t": "words",
+    "title": "er、ir、ur",
+    "items": [
+     {
+      "w": "her",
+      "zh": "她",
+      "mark": "h[er]"
+     },
+     {
+      "w": "bird",
+      "zh": "鳥",
+      "mark": "b[ir]d"
+     },
+     {
+      "w": "girl",
+      "zh": "女孩",
+      "mark": "g[ir]l"
+     },
+     {
+      "w": "first",
+      "zh": "第一",
+      "mark": "f[ir]st"
+     },
+     {
+      "w": "turn",
+      "zh": "轉彎；輪到",
+      "mark": "t[ur]n"
+     },
+     {
+      "w": "nurse",
+      "zh": "護理師",
+      "mark": "n[ur]se"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "再加兩種拼法。w 後面的 or 大多唸 [ɝ]，所以 work、word、world 的 or 跟 bird 的 ir 同音，不過 wore、worn 還是唸 [ɔr]，要另外記。ear 後面再接子音時，常常也唸 [ɝ]，例如 learn、early、earth。這樣算起來，er、ir、ur、wor、ear 五種拼法唸的都是同一個音。ear 加子音也有例外，第一課的 heart 唸 [ɑr]，beard（鬍子）唸 [bɪrd]。nearly、years 則是 near、year 加上字尾，照原本的字唸 [ɪr]，第五課會教。"
+   },
+   {
+    "t": "words",
+    "title": "w 後面的 or、ear 加子音",
+    "items": [
+     {
+      "w": "work",
+      "zh": "工作",
+      "mark": "w[or]k"
+     },
+     {
+      "w": "word",
+      "zh": "字；單字",
+      "mark": "w[or]d"
+     },
+     {
+      "w": "world",
+      "zh": "世界",
+      "mark": "w[or]ld"
+     },
+     {
+      "w": "learn",
+      "zh": "學習",
+      "mark": "l[ear]n"
+     },
+     {
+      "w": "early",
+      "zh": "早的",
+      "mark": "[ear]ly"
+     },
+     {
+      "w": "earth",
+      "zh": "地球",
+      "mark": "[ear]th"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "小心別唸混",
+    "items": [
+     {
+      "a": "hurt",
+      "az": "受傷",
+      "b": "heart",
+      "bz": "心",
+      "note": "heart 嘴巴張大，hurt 嘴巴小、舌頭一開始就捲。"
+     },
+     {
+      "a": "firm",
+      "az": "公司；堅定的",
+      "b": "farm",
+      "bz": "農場"
+     },
+     {
+      "a": "shirt",
+      "az": "襯衫",
+      "b": "short",
+      "bz": "短的"
+     },
+     {
+      "a": "work",
+      "az": "工作",
+      "b": "walk",
+      "bz": "走路",
+      "note": "walk 的 l 不發音，母音是 [ɔ]，沒有捲舌。"
+     },
+     {
+      "a": "bird",
+      "az": "鳥",
+      "b": "bud",
+      "bz": "花苞",
+      "note": "bud 的 [ʌ] 短促、不捲舌。"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "The girl in the white shirt was the first to learn the new word.",
+    "zh": "穿白襯衫的女孩第一個學會這個新單字。"
+   },
+   {
+    "t": "tip",
+    "text": "唸 her、work 的時候嘴巴不要張大，舌頭一直捲著，聲音才不會變成ㄜ。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "work",
+    "options": [
+     "walk",
+     "woke",
+     "work",
+     "wake"
+    ],
+    "answer": 2,
+    "explanation": "work [wɝk] 的 or 接在 w 後面，唸捲舌的 [ɝ]。walk 唸 [ɔ] 沒有捲舌，woke 是長母音 [o]，wake 是長母音 [e]。"
+   },
+   {
+    "type": "listen",
+    "word": "hurt",
+    "options": [
+     "hurt",
+     "heart",
+     "hut",
+     "hot"
+    ],
+    "answer": 0,
+    "explanation": "hurt [hɝt] 嘴巴小、捲舌。heart [hɑrt] 嘴巴張大再捲舌，hut 是不捲舌的 [ʌ]，hot 是不捲舌的 [ɑ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟 bird 的 ir 唸法不一樣？",
+    "options": [
+     "nurse",
+     "learn",
+     "word",
+     "heart"
+    ],
+    "answer": 3,
+    "explanation": "nurse 的 ur、learn 的 ear、word 的 or 都唸 [ɝ]。heart 的 ear 是例外，唸 [ɑr]。"
+   },
+   {
+    "type": "listen",
+    "word": "turn",
+    "options": [
+     "torn",
+     "turn",
+     "ton",
+     "tan"
+    ],
+    "answer": 1,
+    "explanation": "turn [tɝn] 的 ur 唸 [ɝ]，嘴巴小、舌頭一直捲著。torn [tɔrn] 嘴唇圓，ton 是短促的 [ʌ]，tan 是嘴角拉開的 [æ]，後兩個都沒有捲舌。"
+   },
+   {
+    "type": "listen",
+    "word": "firm",
+    "options": [
+     "farm",
+     "fame",
+     "form",
+     "firm"
+    ],
+    "answer": 3,
+    "explanation": "firm [fɝm] 的 ir 唸 [ɝ]，嘴巴開得最小。farm 是 [ɑr]，form 是 [ɔr]，fame 是長母音 [e]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 or 唸 [ɝ]？",
+    "options": [
+     "fork",
+     "storm",
+     "world",
+     "short"
+    ],
+    "answer": 2,
+    "explanation": "world 的 or 接在 w 後面，唸 [ɝ]。fork、storm、short 的 or 都唸 [ɔr]。"
+   },
+   {
+    "type": "listen",
+    "word": "burn",
+    "options": [
+     "born",
+     "burn",
+     "bun",
+     "barn"
+    ],
+    "answer": 1,
+    "explanation": "burn [bɝn] 的 ur 唸 [ɝ]。born 是 [ɔr]，barn 是 [ɑr]，bun 是不捲舌的 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "early 的 ear 怎麼唸？",
+    "options": [
+     "跟 her 的 er 一樣",
+     "跟 heart 的 ear 一樣",
+     "跟 eat 的 ea 一樣",
+     "跟 head 的 ea 一樣"
+    ],
+    "answer": 0,
+    "explanation": "early 唸 [ˋɝlɪ]，ear 後面接子音 l，唸 [ɝ]，跟 her 的 er 同一個音。heart 的 ear 是例外，唸嘴巴張大的 [ɑr]。eat 的 ea 唸 [i]，head 的 ea 唸 [ɛ]，這兩個都沒有捲舌。"
+   }
+  ]
+ },
+ {
+  "id": "pg-04",
+  "title": "輕讀的 er、or、ar 唸 [ɚ]：teacher 字尾的 er",
+  "goal": "知道字尾不重讀的 er、or、ar 都唸成短而輕的 [ɚ]，而且照樣要捲舌。",
+  "key": {
+   "word": "teacher",
+   "kk": "ɚ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "KK 用兩個符號區分捲舌母音的輕重。重讀就是一個字裡唸得比較大聲、比較長的那個音節，兩個音節以上的字，KK 會在它前面標一個 ˋ。her [hɝ] 的 er 在重讀音節，聲音長而清楚；teacher [ˋtitʃɚ] 的 er 在不重讀的字尾，寫成 [ɚ]，聲音又短又輕。兩個音的舌位差不多，美式發音都要捲舌，所以音檔裡的 teacher 最後一定聽得到 r。"
+   },
+   {
+    "t": "words",
+    "title": "字尾的 er",
+    "items": [
+     {
+      "w": "teacher",
+      "zh": "老師",
+      "mark": "teach[er]"
+     },
+     {
+      "w": "sister",
+      "zh": "姊妹",
+      "mark": "sist[er]"
+     },
+     {
+      "w": "mother",
+      "zh": "媽媽",
+      "mark": "moth[er]"
+     },
+     {
+      "w": "brother",
+      "zh": "兄弟",
+      "mark": "broth[er]"
+     },
+     {
+      "w": "dinner",
+      "zh": "晚餐",
+      "mark": "dinn[er]"
+     },
+     {
+      "w": "paper",
+      "zh": "紙；報告",
+      "mark": "pap[er]"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "不重讀的時候，or 和 ar 也一樣唸 [ɚ]，例如 doctor [ˋdɑktɚ]、dollar [ˋdɑlɚ]。拼字看起來像 for 和 car，可是重音在前面，後面的 or、ar 只要輕輕捲一下舌頭帶過，不要唸成重讀的 [ɔr]、[ɑr]。er 也一樣，her 的 er 重讀唸 [ɝ]，到了 sister 的字尾就變輕。"
+   },
+   {
+    "t": "words",
+    "title": "字尾的 or、ar",
+    "items": [
+     {
+      "w": "doctor",
+      "zh": "醫生",
+      "mark": "doct[or]"
+     },
+     {
+      "w": "actor",
+      "zh": "演員",
+      "mark": "act[or]"
+     },
+     {
+      "w": "dollar",
+      "zh": "美元",
+      "mark": "doll[ar]"
+     },
+     {
+      "w": "grammar",
+      "zh": "文法",
+      "mark": "gramm[ar]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "有沒有字尾的 [ɚ]",
+    "items": [
+     {
+      "a": "teach",
+      "az": "教",
+      "b": "teacher",
+      "bz": "老師",
+      "note": "teacher 比 teach 多了最後輕輕捲舌的 [ɚ]。"
+     },
+     {
+      "a": "act",
+      "az": "行動",
+      "b": "actor",
+      "bz": "演員"
+     },
+     {
+      "a": "doll",
+      "az": "娃娃",
+      "b": "dollar",
+      "bz": "美元"
+     },
+     {
+      "a": "farm",
+      "az": "農場",
+      "b": "farmer",
+      "bz": "農夫"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "延伸一下，字尾 -ture 的 ure 也唸 [ɚ]，前面的 t 會變成 [tʃ]，例如 picture [ˋpɪktʃɚ]、nature [ˋnetʃɚ]、future [ˋfjutʃɚ]。照字面唸成 [tjur] 是很常見的錯誤。"
+   },
+   {
+    "t": "sent",
+    "en": "My sister is a doctor, and my brother is a teacher.",
+    "zh": "我姊姊是醫生，我哥哥是老師。"
+   },
+   {
+    "t": "tip",
+    "text": "字尾的 [ɚ] 雖然輕，舌頭還是要捲，teacher 最後要收在捲舌上。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "teacher",
+    "options": [
+     "teach",
+     "teacher",
+     "teaches",
+     "teaching"
+    ],
+    "answer": 1,
+    "explanation": "teacher [ˋtitʃɚ] 最後收在輕輕的捲舌 [ɚ]。teach 沒有第二個音節，teaches 結尾是 [ɪz]，teaching 結尾是 [ɪŋ]。"
+   },
+   {
+    "type": "listen",
+    "word": "dollar",
+    "options": [
+     "doll",
+     "dull",
+     "dolls",
+     "dollar"
+    ],
+    "answer": 3,
+    "explanation": "dollar [ˋdɑlɚ] 有兩個音節，最後是輕讀的 [ɚ]。doll 和 dolls 只有一個音節，dull 的母音是 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "doctor 的 or 怎麼唸？",
+    "options": [
+     "跟 for 的 or 一樣唸 [ɔr]",
+     "跟 car 的 ar 一樣唸 [ɑr]",
+     "輕輕帶過，唸 [ɚ]",
+     "不發音"
+    ],
+    "answer": 2,
+    "explanation": "doctor 的重音在前面，字尾的 or 不重讀，唸成又短又輕的 [ɚ]，舌頭還是要捲。唸成 [ɔr] 或 [ɑr] 是把它當成重讀音節了；美式發音字尾的 r 一定要捲出來，所以也不會不發音。"
+   },
+   {
+    "type": "listen",
+    "word": "sticker",
+    "options": [
+     "sticker",
+     "sticky",
+     "stick",
+     "sticks"
+    ],
+    "answer": 0,
+    "explanation": "sticker [ˋstɪkɚ] 最後是輕讀的 [ɚ]，舌頭要捲。sticky 的字尾 y 唸 [ɪ]，沒有捲舌；stick 和 sticks 只有一個音節。"
+   },
+   {
+    "type": "listen",
+    "word": "actor",
+    "options": [
+     "act",
+     "acts",
+     "actor",
+     "active"
+    ],
+    "answer": 2,
+    "explanation": "actor [ˋæktɚ] 結尾是捲舌的 [ɚ]。act 和 acts 只有一個音節，active 結尾是 [ɪv]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 er 是重讀的 [ɝ]？",
+    "options": [
+     "sister",
+     "her",
+     "mother",
+     "dinner"
+    ],
+    "answer": 1,
+    "explanation": "her 只有一個音節，er 重讀唸 [ɝ]。sister、mother、dinner 的 er 都在不重讀的字尾，唸 [ɚ]。"
+   },
+   {
+    "type": "listen",
+    "word": "picture",
+    "options": [
+     "pick",
+     "picked",
+     "pictures",
+     "picture"
+    ],
+    "answer": 3,
+    "explanation": "picture [ˋpɪktʃɚ] 的 -ture 唸 [tʃɚ]，最後收在捲舌，後面沒有別的音。pictures 多了複數的 [z]，pick 和 picked 只有一個音節。"
+   },
+   {
+    "type": "choose",
+    "q": "nature 的字尾 -ture 怎麼唸？",
+    "options": [
+     "[tʃɚ]",
+     "[tjur]",
+     "[tur]",
+     "[tɚ]"
+    ],
+    "answer": 0,
+    "explanation": "-ture 的 t 唸 [tʃ]，ure 輕讀唸 [ɚ]，合起來是 [tʃɚ]，所以 nature 唸 [ˋnetʃɚ]。[tjur] 和 [tur] 是照字面硬唸的讀法，美式發音不會這樣唸；[tɚ] 少了 t 變成 [tʃ] 這一步。"
+   }
+  ]
+ },
+ {
+  "id": "pg-05",
+  "title": "ear、eer、ere 唸 [ɪr]：near 裡的 ear",
+  "goal": "看到 ear、eer、ere 會唸成 [ɪr]，也聽得出 fear 和 fee 這種有沒有 r 的差別。",
+  "key": {
+   "word": "near",
+   "kk": "ɪr"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "ear、eer、ere 唸 [ɪr]，例如 ear [ɪr]、deer [dɪr]、here [hɪr]。先唸 [ɪ]，嘴巴微開、舌頭前面抬高，接著舌頭往後捲。[ɪ] 和捲舌要一口氣連著唸完，中間不要停頓。"
+   },
+   {
+    "t": "words",
+    "title": "ear、eer、ere",
+    "items": [
+     {
+      "w": "ear",
+      "zh": "耳朵",
+      "mark": "[ear]"
+     },
+     {
+      "w": "hear",
+      "zh": "聽見",
+      "mark": "h[ear]"
+     },
+     {
+      "w": "near",
+      "zh": "近的",
+      "mark": "n[ear]"
+     },
+     {
+      "w": "year",
+      "zh": "年",
+      "mark": "y[ear]"
+     },
+     {
+      "w": "fear",
+      "zh": "害怕",
+      "mark": "f[ear]"
+     },
+     {
+      "w": "clear",
+      "zh": "清楚的",
+      "mark": "cl[ear]"
+     },
+     {
+      "w": "deer",
+      "zh": "鹿",
+      "mark": "d[eer]"
+     },
+     {
+      "w": "cheer",
+      "zh": "歡呼",
+      "mark": "ch[eer]"
+     },
+     {
+      "w": "beer",
+      "zh": "啤酒",
+      "mark": "b[eer]"
+     },
+     {
+      "w": "here",
+      "zh": "這裡",
+      "mark": "h[ere]"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "hear 和 here 拼法不同，唸起來完全一樣，都是 [hɪr]，要看句子才知道是哪一個。ere 唸 [ɪr] 的字不多，最常見的就是 here；there 和 where 也拼 ere，卻唸 [ɛr]，下一課會拿來比較；were 更特別，唸 [wɝ]，跟 her 的 er 一樣。"
+   },
+   {
+    "t": "pairs",
+    "title": "有 r 和沒有 r",
+    "items": [
+     {
+      "a": "fear",
+      "az": "害怕",
+      "b": "fee",
+      "bz": "費用",
+      "note": "fee 唸到 [i] 就停，fear 最後要捲舌。"
+     },
+     {
+      "a": "near",
+      "az": "近的",
+      "b": "knee",
+      "bz": "膝蓋"
+     },
+     {
+      "a": "here",
+      "az": "這裡",
+      "b": "he",
+      "bz": "他"
+     },
+     {
+      "a": "beer",
+      "az": "啤酒",
+      "b": "bee",
+      "bz": "蜜蜂"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "ear 這個拼法常見的有四種唸法，可以把四個字放在一起記。near [nɪr] 是這一課的音，learn [lɝn] 是第三課教過的 [ɝ]，heart [hɑrt] 是第一課講過的例外，bear [bɛr] 則是下一課要學的 [ɛr]。"
+   },
+   {
+    "t": "sent",
+    "en": "Come over here, and you can hear the deer near the clear lake.",
+    "zh": "到這邊來，就聽得到清澈湖邊那群鹿的聲音。"
+   },
+   {
+    "t": "tip",
+    "text": "near 最後少了捲舌，聽起來就很像 knee，唸完母音一定要把舌頭捲起來。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "fear",
+    "options": [
+     "fee",
+     "far",
+     "fear",
+     "for"
+    ],
+    "answer": 2,
+    "explanation": "fear [fɪr] 先唸 [ɪ] 再捲舌。fee 唸到 [i] 就停，far 是嘴巴張大的 [ɑr]，for 是嘴唇圓的 [ɔr]。"
+   },
+   {
+    "type": "listen",
+    "word": "here",
+    "options": [
+     "he",
+     "here",
+     "hay",
+     "her"
+    ],
+    "answer": 1,
+    "explanation": "here [hɪr] 的 ere 唸 [ɪr]。he 是長母音 [i]，hay 是長母音 [e]，這兩個都沒有捲舌；her 是 [ɝ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ear 跟 near 的 ear 唸法一樣？",
+    "options": [
+     "bear",
+     "learn",
+     "heart",
+     "clear"
+    ],
+    "answer": 3,
+    "explanation": "clear 的 ear 唸 [ɪr]，跟 near 一樣。bear 的 ear 唸 [ɛr]，learn 唸 [ɝ]，heart 唸 [ɑr]。"
+   },
+   {
+    "type": "listen",
+    "word": "deer",
+    "options": [
+     "deer",
+     "door",
+     "dark",
+     "dirt"
+    ],
+    "answer": 0,
+    "explanation": "deer [dɪr] 的 eer 唸 [ɪr]。door 是 [ɔr]，dark 是嘴巴張大的 [ɑr]，dirt 是 [ɝ]。"
+   },
+   {
+    "type": "listen",
+    "word": "cheer",
+    "options": [
+     "cheese",
+     "chore",
+     "charm",
+     "cheer"
+    ],
+    "answer": 3,
+    "explanation": "cheer [tʃɪr] 最後要捲舌。cheese 唸到 [i] 接 [z]，chore 是 [ɔr]，charm 是嘴巴張大的 [ɑr]。"
+   },
+   {
+    "type": "choose",
+    "q": "hear 跟下面哪個字唸起來完全一樣？",
+    "options": [
+     "her",
+     "he",
+     "here",
+     "heard"
+    ],
+    "answer": 2,
+    "explanation": "hear 和 here 都唸 [hɪr]，是同音字。her 唸 [hɝ]，he 唸 [hi]，heard 唸 [hɝd]。"
+   },
+   {
+    "type": "listen",
+    "word": "near",
+    "options": [
+     "knee",
+     "near",
+     "new",
+     "nor"
+    ],
+    "answer": 1,
+    "explanation": "near [nɪr] 結尾有捲舌。knee 唸到 [i] 就停，new 是 [u]，nor 是 [ɔr]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ere 唸 [ɪr]？",
+    "options": [
+     "here",
+     "there",
+     "where",
+     "were"
+    ],
+    "answer": 0,
+    "explanation": "here 的 ere 唸 [ɪr]。there 和 where 的 ere 唸 [ɛr]，were 唸 [wɝ]。"
+   }
+  ]
+ },
+ {
+  "id": "pg-06",
+  "title": "air、are 唸 [ɛr]：hair 和 care 的母音",
+  "goal": "看到 air、are，以及 bear、wear、where 會唸成 [ɛr]，也能把 hair 和 here 分清楚。",
+  "key": {
+   "word": "hair",
+   "kk": "ɛr"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "air 和 are 唸 [ɛr]，例如 hair [hɛr]、care [kɛr]。先唸第一章 bed 的 [ɛ]，嘴巴比 [ɪ] 開，下巴放低一點，接著舌頭往後捲。care、share 最後的 e 不發音。要特別注意，be 動詞 are 本身是例外，唸 [ɑr]，跟第一課 car 的 ar 一樣，aren't 也是，不要唸成 [ɛr]。"
+   },
+   {
+    "t": "words",
+    "title": "air 和 are",
+    "items": [
+     {
+      "w": "air",
+      "zh": "空氣",
+      "mark": "[air]"
+     },
+     {
+      "w": "hair",
+      "zh": "頭髮",
+      "mark": "h[air]"
+     },
+     {
+      "w": "chair",
+      "zh": "椅子",
+      "mark": "ch[air]"
+     },
+     {
+      "w": "fair",
+      "zh": "公平的",
+      "mark": "f[air]"
+     },
+     {
+      "w": "repair",
+      "zh": "修理",
+      "mark": "rep[air]"
+     },
+     {
+      "w": "care",
+      "zh": "照顧；在乎",
+      "mark": "c[are]"
+     },
+     {
+      "w": "share",
+      "zh": "分享",
+      "mark": "sh[are]"
+     },
+     {
+      "w": "square",
+      "zh": "正方形；廣場",
+      "mark": "squ[are]"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "還有幾個常用字也唸 [ɛr]，像 bear、wear 的 ear，以及 where、there 的 ere。上一課的 here 唸 [ɪr]，跟 there、where 只差一兩個字母，母音卻不一樣，這三個字常常一起出現，要特別分清楚。"
+   },
+   {
+    "t": "words",
+    "title": "ear 和 ere",
+    "items": [
+     {
+      "w": "bear",
+      "zh": "熊",
+      "mark": "b[ear]"
+     },
+     {
+      "w": "wear",
+      "zh": "穿；戴",
+      "mark": "w[ear]"
+     },
+     {
+      "w": "where",
+      "zh": "哪裡",
+      "mark": "wh[ere]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[ɛr] 和 [ɪr]",
+    "items": [
+     {
+      "a": "hair",
+      "az": "頭髮",
+      "b": "here",
+      "bz": "這裡",
+      "note": "hair 嘴巴開大一點，here 嘴巴比較小。"
+     },
+     {
+      "a": "bear",
+      "az": "熊",
+      "b": "beer",
+      "bz": "啤酒"
+     },
+     {
+      "a": "chair",
+      "az": "椅子",
+      "b": "cheer",
+      "bz": "歡呼"
+     },
+     {
+      "a": "fair",
+      "az": "公平的",
+      "b": "fear",
+      "bz": "害怕"
+     },
+     {
+      "a": "stare",
+      "az": "盯著看",
+      "b": "steer",
+      "bz": "掌舵；駕駛"
+     },
+     {
+      "a": "pair",
+      "az": "一雙；一對",
+      "b": "peer",
+      "bz": "同儕"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "這一課有幾組同音字，像 hair 和 hare（野兔）、pair 和 pear（梨子）。where 和 wear 也很接近，台灣的 KK 字典把 where 標成 [hwɛr]，不過現在大多數美國人唸 [wɛr]，所以音檔裡的 where 跟 wear 聽起來一樣。"
+   },
+   {
+    "t": "sent",
+    "en": "Where can I wear this pair of shoes?",
+    "zh": "這雙鞋我可以穿去哪裡？"
+   },
+   {
+    "t": "tip",
+    "text": "bear 和 beer 最容易唸成一樣，bear 要先把嘴巴張開唸 [ɛ]，再捲舌。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "hair",
+    "options": [
+     "hair",
+     "here",
+     "her",
+     "hard"
+    ],
+    "answer": 0,
+    "explanation": "hair [hɛr] 嘴巴先張開唸 [ɛ] 再捲舌。here 是 [ɪr]，her 是 [ɝ]，hard 是嘴巴張大的 [ɑr]。"
+   },
+   {
+    "type": "listen",
+    "word": "bear",
+    "options": [
+     "beer",
+     "bar",
+     "bear",
+     "bore"
+    ],
+    "answer": 2,
+    "explanation": "bear [bɛr] 的 ear 唸 [ɛr]。beer 是嘴巴比較小的 [ɪr]，bar 是 [ɑr]，bore 是 [ɔr]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟 hair 一樣？",
+    "options": [
+     "near",
+     "share",
+     "heard",
+     "heart"
+    ],
+    "answer": 1,
+    "explanation": "share 的 are 唸 [ɛr]，跟 hair 一樣。near 是 [ɪr]，heard 是 [ɝ]，heart 是 [ɑr]。"
+   },
+   {
+    "type": "listen",
+    "word": "fair",
+    "options": [
+     "fear",
+     "fair",
+     "far",
+     "fur"
+    ],
+    "answer": 1,
+    "explanation": "fair [fɛr] 要先把嘴巴張開唸 [ɛ] 再捲舌。fear 是嘴巴比較小的 [ɪr]，far 是嘴巴張大的 [ɑr]，fur 是 [ɝ]。"
+   },
+   {
+    "type": "listen",
+    "word": "chair",
+    "options": [
+     "chain",
+     "chore",
+     "cheer",
+     "chair"
+    ],
+    "answer": 3,
+    "explanation": "chair [tʃɛr] 的 air 唸 [ɛr]。chain 是長母音 [e] 接 [n]，chore 是 [ɔr]，cheer 是 [ɪr]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟 wear 一樣？",
+    "options": [
+     "were",
+     "here",
+     "where",
+     "war"
+    ],
+    "answer": 2,
+    "explanation": "where 的 ere 唸 [ɛr]，跟 wear 的 ear 一樣。were 雖然也拼 ere，卻唸 [wɝ]；here 的 ere 唸 [ɪr]；war 的 ar 接在 w 後面，唸 [ɔr]。"
+   },
+   {
+    "type": "listen",
+    "word": "stare",
+    "options": [
+     "stare",
+     "star",
+     "steer",
+     "store"
+    ],
+    "answer": 0,
+    "explanation": "stare [stɛr] 的 are 唸 [ɛr]。star 是 [ɑr]，steer 是 [ɪr]，store 是 [ɔr]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ear 唸 [ɛr]？",
+    "options": [
+     "year",
+     "clear",
+     "early",
+     "pear"
+    ],
+    "answer": 3,
+    "explanation": "pear 的 ear 唸 [ɛr]，跟 pair 同音。year 和 clear 唸 [ɪr]，early 的 ear 唸 [ɝ]。"
+   }
+  ]
+ }
+]

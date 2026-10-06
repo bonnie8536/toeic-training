@@ -1,0 +1,211 @@
+[
+ {
+  "id": "pc-01",
+  "title": "sh 唸 [ʃ]：ship 裡的 sh",
+  "goal": "看到 sh 會唸 [ʃ]，也能聽出它跟 [s] 的差別。",
+  "key": {"word": "ship", "kk": "ʃ"},
+  "lesson": [
+   {"t": "p", "text": "s 和 h 寫在一起，會變成一個全新的音 [ʃ]，跟 s、h 各自的唸法都沒有關係。唸的時候嘴唇稍微往前嘟出來，不用縮成小圓圈，舌面往上抬、靠近上顎，舌尖不碰牙齒，接著輕輕送氣，聲帶不振動。叫旁邊的人小聲一點時發出的那個長長的氣音，就是這個音。"},
+   {"t": "p", "text": "[ʃ] 最容易跟 [s] 搞混。[s] 的舌尖靠近上排牙齒後面，氣流細細的，嘴唇不用動。[ʃ] 的舌頭要往後退一點，舌面抬高，嘴唇同時嘟出來，氣流就變得比較寬、比較厚。平常說話ㄕ、ㄙ不太分的人，常會把 sip 和 ship 唸成同一個字。也有人用「西」的ㄒ來唸，ㄒ的嘴角往兩邊拉，[ʃ] 記得要嘟嘴。"},
+   {"t": "p", "text": "sh 放在字首或字尾都唸 [ʃ]，像 ship 和 fish。另外 sure、sugar 只寫一個 s，卻也唸 [ʃ]，屬於例外，先認得就好。"},
+   {"t": "words", "title": "sh 在字首", "items": [
+    {"w": "ship", "zh": "船", "mark": "[sh]ip"},
+    {"w": "shop", "zh": "商店", "mark": "[sh]op"},
+    {"w": "shell", "zh": "貝殼", "mark": "[sh]ell"},
+    {"w": "shut", "zh": "關上", "mark": "[sh]ut"},
+    {"w": "shelf", "zh": "架子", "mark": "[sh]elf"}
+   ]},
+   {"t": "words", "title": "sh 在字尾", "items": [
+    {"w": "fish", "zh": "魚", "mark": "fi[sh]"},
+    {"w": "dish", "zh": "盤子", "mark": "di[sh]"},
+    {"w": "wish", "zh": "希望", "mark": "wi[sh]"},
+    {"w": "cash", "zh": "現金", "mark": "ca[sh]"},
+    {"w": "fresh", "zh": "新鮮的", "mark": "fre[sh]"},
+    {"w": "brush", "zh": "刷子", "mark": "bru[sh]"}
+   ]},
+   {"t": "pairs", "title": "[s] 和 [ʃ] 聽聽看", "items": [
+    {"a": "sip", "az": "小口喝", "b": "ship", "bz": "船"},
+    {"a": "sell", "az": "賣", "b": "shell", "bz": "貝殼"},
+    {"a": "sock", "az": "襪子", "b": "shock", "bz": "驚嚇"},
+    {"a": "self", "az": "自己", "b": "shelf", "bz": "架子"},
+    {"a": "mass", "az": "大量", "b": "mash", "bz": "搗碎"}
+   ]},
+   {"t": "sent", "en": "She put the fresh fish in a dish on the shelf.", "zh": "她把新鮮的魚裝進盤子，放到架子上。"},
+   {"t": "tip", "text": "唸 ship 時舌頭要往後退一點，嘴唇再嘟出來，舌尖如果還貼近上排牙齒後面，聽起來就會像 sip。"}
+  ],
+  "quiz": [
+   {"type": "listen", "word": "ship", "options": ["sip", "ship", "sock", "shock"], "answer": 1, "explanation": "答案是 ship。嘴唇嘟出來、氣流比較寬的是 [ʃ]，拼成 sh。sip 開頭是 [s]，sock 和 shock 的母音是 [ɑ]，跟 ship 的 [ɪ] 不同。"},
+   {"type": "choose", "q": "下面哪個字的開頭，跟 shop 的開頭唸法不一樣？", "options": ["shut", "shell", "sell", "shelf"], "answer": 2, "explanation": "sell 開頭只有一個 s，唸 [s]。shut、shell、shelf 都是 sh 開頭，跟 shop 一樣唸 [ʃ]。"},
+   {"type": "listen", "word": "self", "options": ["shell", "sell", "shelf", "self"], "answer": 3, "explanation": "答案是 self，開頭是細細的 [s]，結尾有 [lf]。shelf 開頭要嘟嘴唸 [ʃ]，shell 和 sell 結尾沒有 [f]。"},
+   {"type": "listen", "word": "shock", "options": ["shock", "sock", "shop", "stock"], "answer": 0, "explanation": "答案是 shock，開頭是氣流又寬又厚的 [ʃ]，結尾是 [k]。shop 結尾是 [p]。sock 開頭是細細的 [s]，stock 開頭是 [st]，s 後面還多了 [t]。"},
+   {"type": "choose", "q": "下面哪個字裡有 [ʃ] 的音？", "options": ["sit", "sock", "miss", "dish"], "answer": 3, "explanation": "dish 結尾的 sh 唸 [ʃ]。sit、sock 的 s 和 miss 的 ss 都唸 [s]。"},
+   {"type": "listen", "word": "mash", "options": ["mass", "mat", "mash", "mesh"], "answer": 2, "explanation": "答案是 mash，母音是 cat 的 [æ]，結尾是氣流又寬又厚的 [ʃ]。mass 結尾是細細的 [s]，mat 結尾是 [t]，mesh 結尾也是 [ʃ]，可是母音是 bed 的 [ɛ]。"},
+   {"type": "choose", "q": "sure 開頭的 s 唸哪個音？", "options": ["[s]", "[ʃ]", "[z]", "不發音"], "answer": 1, "explanation": "sure 是例外，只寫一個 s 卻唸 [ʃ]，sugar 也一樣。這個 s 有發音，唸的也不是一般的 [s] 或 [z]。"},
+   {"type": "listen", "word": "sell", "options": ["sell", "spell", "shell", "smell"], "answer": 0, "explanation": "答案是 sell，開頭是 [s]，嘴唇不用嘟。shell 開頭是 [ʃ]；spell 在 s 後面多了 [p]，smell 在 s 後面多了 [m]。"}
+  ]
+ },
+ {
+  "id": "pc-02",
+  "title": "ch、tch 唸 [tʃ]：chip 裡的 ch",
+  "goal": "看到 ch 或 tch 會唸 [tʃ]，也能跟上一課的 [ʃ] 分清楚。",
+  "key": {"word": "chip", "kk": "tʃ"},
+  "lesson": [
+   {"t": "p", "text": "ch 唸 [tʃ]。先把舌尖頂住上排牙齒後面的牙齦，把氣擋住，嘴唇像唸 [ʃ] 一樣往前嘟，然後舌尖一放開，氣就帶著 [ʃ] 衝出來，聲帶不振動。[t] 和 [ʃ] 連得很緊，聽起來是一個音。"},
+   {"t": "p", "text": "跟上一課的 [ʃ] 比，[tʃ] 開頭多了舌尖堵住再放開的那一下，所以短短的、拉不長。[ʃ] 的氣從頭到尾都在流，想拉多長都可以。很多人會用「七」的ㄑ來唸 [tʃ]，ㄑ的嘴角往兩邊拉，英文的 [tʃ] 要嘟嘴。"},
+   {"t": "p", "text": "ch 可以放在字首，也可以放在字尾，像 chip 和 much。[tʃ] 緊接在短母音後面時常寫 tch，像 catch、match，這裡的 t 不另外唸，三個字母合起來就是一個 [tʃ]。前面如果隔著子音，就只寫 ch，像 lunch、bench。much、rich、such 的 ch 也緊接在短母音後面，卻只寫 ch，要另外記。有些字的 ch 唸 [k] 或 [ʃ]，像 school 和 chef，這種字不多，碰到再一個一個記。"},
+   {"t": "words", "title": "ch", "items": [
+    {"w": "chip", "zh": "洋芋片；晶片", "mark": "[ch]ip"},
+    {"w": "chin", "zh": "下巴", "mark": "[ch]in"},
+    {"w": "chop", "zh": "切碎", "mark": "[ch]op"},
+    {"w": "check", "zh": "檢查", "mark": "[ch]eck"},
+    {"w": "much", "zh": "很多", "mark": "mu[ch]"},
+    {"w": "rich", "zh": "有錢的", "mark": "ri[ch]"},
+    {"w": "lunch", "zh": "午餐", "mark": "lun[ch]"}
+   ]},
+   {"t": "words", "title": "tch 在短母音後面", "items": [
+    {"w": "catch", "zh": "接住", "mark": "ca[tch]"},
+    {"w": "match", "zh": "比賽", "mark": "ma[tch]"},
+    {"w": "sketch", "zh": "草圖", "mark": "ske[tch]"},
+    {"w": "switch", "zh": "開關", "mark": "swi[tch]"}
+   ]},
+   {"t": "pairs", "title": "[tʃ] 和 [ʃ] 聽聽看", "items": [
+    {"a": "chip", "az": "洋芋片", "b": "ship", "bz": "船"},
+    {"a": "chop", "az": "切碎", "b": "shop", "bz": "商店"},
+    {"a": "catch", "az": "接住", "b": "cash", "bz": "現金"}
+   ]},
+   {"t": "sent", "en": "Check the lunch menu, then chop the chicken in the kitchen.", "zh": "先看一下午餐菜單，再到廚房把雞肉切好。"},
+   {"t": "tip", "text": "chip 開頭舌尖要先頂一下再放開，少了這一下，就會變成 ship。"}
+  ],
+  "quiz": [
+   {"type": "listen", "word": "chip", "options": ["ship", "chip", "chop", "shop"], "answer": 1, "explanation": "答案是 chip。開頭舌尖先頂住再放開，是短促的 [tʃ]。ship 開頭是可以拉長的 [ʃ]，chop 和 shop 的母音是 [ɑ]。"},
+   {"type": "listen", "word": "cash", "options": ["catch", "cap", "cash", "cast"], "answer": 2, "explanation": "答案是 cash，結尾是可以拉長的 [ʃ]。catch 結尾的 tch 是短促的 [tʃ]，cap 結尾是 [p]，cast 是 [st]。"},
+   {"type": "choose", "q": "下面哪個字裡沒有 [tʃ] 的音？", "options": ["chin", "much", "shop", "catch"], "answer": 2, "explanation": "shop 的 sh 唸 [ʃ]，沒有舌尖堵住的那一下。chin、much 的 ch 和 catch 的 tch 都唸 [tʃ]。"},
+   {"type": "listen", "word": "chop", "options": ["chop", "shop", "top", "cop"], "answer": 0, "explanation": "答案是 chop，開頭是短促的 [tʃ]。shop 開頭是 [ʃ]，top 是 [t]，cop 是 [k]。"},
+   {"type": "choose", "q": "much、rich、such 這三個字的拼法有什麼特別？", "options": ["ch 緊接在短母音後面，卻沒寫成 tch", "母音是長母音", "ch 唸 [k]", "ch 不發音"], "answer": 0, "explanation": "much、rich、such 的母音都是短母音，ch 也照常唸 [tʃ]，所以後面三個選項都不對。[tʃ] 緊接在短母音後面時通常寫 tch，像 catch、match，這三個字卻只寫 ch，要另外記。"},
+   {"type": "listen", "word": "match", "options": ["mash", "match", "mat", "mass"], "answer": 1, "explanation": "答案是 match，結尾是短促的 [tʃ]。mash 結尾是 [ʃ]，mat 是 [t]，mass 是 [s]。"},
+   {"type": "choose", "q": "下面哪個字的 ch 跟 chip 的 ch 唸法不一樣？", "options": ["chest", "chin", "check", "chef"], "answer": 3, "explanation": "chef 的 ch 唸 [ʃ]，是例外。chest、chin、check 的 ch 都跟 chip 一樣唸 [tʃ]。"},
+   {"type": "listen", "word": "chin", "options": ["shin", "sin", "tin", "chin"], "answer": 3, "explanation": "答案是 chin，開頭是短促的 [tʃ]。shin 開頭是可以拉長的 [ʃ]，sin 是舌尖在牙齒後面的 [s]，tin 是 [t]。"}
+  ]
+ },
+ {
+  "id": "pc-03",
+  "title": "ng、nk 的 [ŋ]：sing 裡的 ng",
+  "goal": "會唸 ng、nk 裡的 [ŋ]，也能聽出它跟 [n] 的差別。",
+  "key": {"word": "sing", "kk": "ŋ"},
+  "lesson": [
+   {"t": "p", "text": "ng 合起來唸一個音 [ŋ]，g 不會另外唸出來。唸的時候舌尖放低，舌頭後半部往上抬，頂住口腔後面上方的軟顎，讓氣從鼻子出來。中文「幫」「當」最後收尾的鼻音，就是這個音。"},
+   {"t": "p", "text": "[ŋ] 要跟 [n] 分開。[n] 是舌尖頂在上排牙齒後面，[ŋ] 的舌尖碰不到上面，出力的是舌根。有些人平常ㄣ、ㄥ不太分，英文的 sin 和 sing、win 和 wing 就容易唸成一樣。唸完可以停住檢查一下，舌尖如果貼在上排牙齒後面，就變成 [n] 了。"},
+   {"t": "p", "text": "nk 的 n 也唸 [ŋ]，後面再接 [k]，像 bank [bæŋk]。[ŋ] 和 [k] 都靠舌根，舌頭不用換位置。音檔裡 sing 的 i 會比 sit 緊一點，bank 的 a 也帶一點 [e] 的味道，這是後面的 [ŋ] 帶出來的，自己照 [ɪ]、[æ] 唸就好。ng 在字中間、後面還有別的音節時，常要多唸一個 [g]，像 finger、English、angry。singer、singing 是 sing 加上字尾，還是只唸 [ŋ]。"},
+   {"t": "words", "title": "ng", "items": [
+    {"w": "sing", "zh": "唱歌", "mark": "si[ng]"},
+    {"w": "ring", "zh": "戒指；（鈴）響", "mark": "ri[ng]"},
+    {"w": "king", "zh": "國王", "mark": "ki[ng]"},
+    {"w": "wing", "zh": "翅膀", "mark": "wi[ng]"},
+    {"w": "hang", "zh": "掛", "mark": "ha[ng]"},
+    {"w": "spring", "zh": "春天", "mark": "spri[ng]"}
+   ]},
+   {"t": "words", "title": "nk", "items": [
+    {"w": "bank", "zh": "銀行", "mark": "ba[n]k"},
+    {"w": "pink", "zh": "粉紅色的", "mark": "pi[n]k"},
+    {"w": "drink", "zh": "喝", "mark": "dri[n]k"},
+    {"w": "trunk", "zh": "後車廂", "mark": "tru[n]k"}
+   ]},
+   {"t": "pairs", "title": "[n] 和 [ŋ] 聽聽看", "items": [
+    {"a": "win", "az": "贏", "b": "wing", "bz": "翅膀"},
+    {"a": "ran", "az": "跑（過去式）", "b": "rang", "bz": "響（過去式）"},
+    {"a": "ban", "az": "禁止", "b": "bang", "bz": "砰的一聲"},
+    {"a": "sun", "az": "太陽", "b": "sung", "bz": "唱（過去分詞）"}
+   ]},
+   {"t": "sent", "en": "Thank you for bringing pink drinks to the meeting.", "zh": "謝謝你帶粉紅色的飲料來開會。"},
+   {"t": "tip", "text": "bank、pink 的 n 也要用舌根唸，舌尖不用往上頂，直接接 [k] 就好。"}
+  ],
+  "quiz": [
+   {"type": "listen", "word": "sing", "options": ["sin", "sing", "sang", "sung"], "answer": 1, "explanation": "答案是 sing，母音是 [ɪ]，結尾是舌根抬起的 [ŋ]。sin 結尾是舌尖頂上去的 [n]，sang 的母音是 cat 的 [æ]，sung 的母音是 cup 的 [ʌ]。"},
+   {"type": "listen", "word": "win", "options": ["wing", "wink", "wig", "win"], "answer": 3, "explanation": "答案是 win，結尾是 [n]，舌尖頂在上排牙齒後面。wing 結尾是 [ŋ]，wink 是 [ŋk]，wig 是 [g]。"},
+   {"type": "choose", "q": "下面哪個字的 n 唸 [ŋ]？", "options": ["ten", "pink", "hand", "sun"], "answer": 1, "explanation": "pink 的 n 後面接 k，所以唸 [ŋ]。ten、hand、sun 的 n 都唸舌尖頂上去的 [n]。"},
+   {"type": "listen", "word": "rang", "options": ["rang", "ran", "rank", "rat"], "answer": 0, "explanation": "答案是 rang，結尾是 [ŋ]，後面沒有 [k]。ran 結尾是 [n]，rank 是 [ŋk]，rat 是 [t]。"},
+   {"type": "listen", "word": "bank", "options": ["bag", "ban", "bank", "bang"], "answer": 2, "explanation": "答案是 bank，[ŋ] 後面還接一個 [k]。bang 只有 [ŋ]，ban 結尾是 [n]，bag 結尾是 [g]。"},
+   {"type": "choose", "q": "finger 的 ng 跟 sing 的 ng 有什麼不一樣？", "options": ["finger 的 ng 後面還多唸一個 [g]", "finger 的 ng 不發音", "finger 的 ng 唸 [n]", "兩個字的 ng 唸法完全一樣"], "answer": 0, "explanation": "ng 在字中間、後面還有音節時，常要多唸一個 [g]，finger、English 都是。sing 的 g 不另外唸。"},
+   {"type": "choose", "q": "唸 [ŋ] 的時候，舌頭要怎麼放？", "options": ["舌尖頂住上排牙齒後面", "舌尖放在上下排牙齒中間", "舌根抬起，舌尖不碰上面", "舌尖往後捲"], "answer": 2, "explanation": "[ŋ] 靠舌根抬起，氣從鼻子出來。舌尖頂住上排牙齒後面的是 [n]。"},
+   {"type": "listen", "word": "sun", "options": ["sung", "sum", "sunk", "sun"], "answer": 3, "explanation": "答案是 sun，結尾是 [n]。sung 結尾是 [ŋ]，sunk 是 [ŋk]，sum 要閉上嘴唇唸 [m]。"}
+  ]
+ },
+ {
+  "id": "pc-04",
+  "title": "無聲 th 唸 [θ]：thin 裡的 th",
+  "goal": "會把舌尖放在牙齒中間吹氣唸出 [θ]，不再唸成 [s] 或 [f]。",
+  "key": {"word": "thin", "kk": "θ"},
+  "lesson": [
+   {"t": "p", "text": "th 唸 [θ] 時，舌尖輕輕放在上下排牙齒中間，稍微露出來一點，然後從舌頭和上排牙齒之間的縫吹氣，聲帶不振動。中文沒有這個音，練習時可以照鏡子，看得到舌尖才算放對位置。"},
+   {"t": "p", "text": "台灣學生最常把 [θ] 唸成 [s]，thin 就變成 sin。也有人唸成 [f]，聽起來像 fin。[s] 的舌尖躲在牙齒後面，[f] 是上排牙齒碰下唇，兩個都用不到舌尖伸出來，所以只要舌尖確實放到牙齒中間，就不會跟它們搞混。"},
+   {"t": "p", "text": "thin、math、think 這種名詞、動詞、形容詞，th 大多唸無聲的 [θ]，有聲的 th 留到下一課。th 放在字首或字尾都一樣，像 thick 和 bath。bath、path 的 a 跟 cat 一樣唸 [æ]，英國腔會唸成比較長的ㄚ，聽到時知道是口音不同就好。think、thank 結尾的 nk，就是上一課的 [ŋk]。"},
+   {"t": "words", "title": "th 在字首", "items": [
+    {"w": "thin", "zh": "薄的；瘦的", "mark": "[th]in"},
+    {"w": "thick", "zh": "厚的", "mark": "[th]ick"},
+    {"w": "think", "zh": "想", "mark": "[th]ink"},
+    {"w": "thing", "zh": "東西", "mark": "[th]ing"},
+    {"w": "thank", "zh": "感謝", "mark": "[th]ank"},
+    {"w": "theft", "zh": "竊盜", "mark": "[th]eft"}
+   ]},
+   {"t": "words", "title": "th 在字尾", "items": [
+    {"w": "math", "zh": "數學", "mark": "ma[th]"},
+    {"w": "bath", "zh": "洗澡", "mark": "ba[th]"},
+    {"w": "path", "zh": "小路", "mark": "pa[th]"},
+    {"w": "tenth", "zh": "第十", "mark": "ten[th]"}
+   ]},
+   {"t": "pairs", "title": "[θ] 跟 [s]、[f] 聽聽看", "items": [
+    {"a": "thick", "az": "厚的", "b": "sick", "bz": "生病的"},
+    {"a": "think", "az": "想", "b": "sink", "bz": "水槽"},
+    {"a": "thing", "az": "東西", "b": "sing", "bz": "唱歌"},
+    {"a": "path", "az": "小路", "b": "pass", "bz": "通過"},
+    {"a": "thin", "az": "薄的", "b": "fin", "bz": "魚鰭"}
+   ]},
+   {"t": "sent", "en": "Thank you for the three thick math books.", "zh": "謝謝你給我這三本厚厚的數學書。"},
+   {"t": "tip", "text": "說 thank you 時舌尖要先伸到牙齒中間，縮在後面唸，聽起來就像 sank you。"}
+  ],
+  "quiz": [
+   {"type": "listen", "word": "thin", "options": ["thin", "sin", "fin", "tin"], "answer": 0, "explanation": "答案是 thin，開頭是舌尖伸到牙齒中間吹氣的 [θ]。sin 是 [s]，fin 是上排牙齒碰下唇的 [f]，tin 是 [t]。"},
+   {"type": "listen", "word": "sick", "options": ["thick", "sick", "tick", "chick"], "answer": 1, "explanation": "答案是 sick，開頭是舌尖躲在牙齒後面的 [s]。thick 開頭要伸舌頭唸 [θ]，tick 是 [t]，chick 是 [tʃ]。"},
+   {"type": "choose", "q": "唸 [θ] 時，舌尖要放在哪裡？", "options": ["上排牙齒後面", "往後捲起來", "上下排牙齒中間", "下排牙齒後面"], "answer": 2, "explanation": "[θ] 要把舌尖輕放在上下排牙齒中間，再吹氣。舌尖縮在上排牙齒後面，就會變成 [s] 或 [t]。"},
+   {"type": "listen", "word": "thank", "options": ["sink", "think", "thank", "thing"], "answer": 2, "explanation": "答案是 thank，母音是 cat 的 [æ]，結尾是 [ŋk]。think 的母音是 [ɪ]，thing 結尾沒有 [k]，sink 開頭是 [s]。"},
+   {"type": "listen", "word": "path", "options": ["pass", "pat", "pack", "path"], "answer": 3, "explanation": "答案是 path，結尾要伸舌頭吹氣唸 [θ]。pass 結尾是 [s]，pat 是 [t]，pack 是 [k]。"},
+   {"type": "choose", "q": "下面哪個字裡有 [θ] 的音？", "options": ["bath", "sick", "fish", "miss"], "answer": 0, "explanation": "bath 結尾的 th 唸 [θ]。sick 和 miss 的 s 唸 [s]，fish 的 sh 唸 [ʃ]。"},
+   {"type": "choose", "q": "有人把 math 唸成 mass，問題出在哪裡？", "options": ["嘴巴沒有張大", "舌尖沒有伸到牙齒中間", "母音唸太長", "嘴唇沒有嘟起來"], "answer": 1, "explanation": "math 結尾的 [θ] 要把舌尖伸到牙齒中間吹氣，舌尖縮在後面就變成 [s]，聽起來像 mass。"},
+   {"type": "listen", "word": "tenth", "options": ["tent", "ten", "tend", "tenth"], "answer": 3, "explanation": "答案是 tenth，n 後面還要把舌尖伸到牙齒中間吹氣，唸 [θ]。tent 結尾是舌尖頂在上排牙齒後面的 [t]，tend 結尾是 [d]，ten 唸到 [n] 就結束。"}
+  ]
+ },
+ {
+  "id": "pc-05",
+  "title": "有聲 th 唸 [ð]：this 裡的 th",
+  "goal": "知道 this、that 這類常用字的 th 要振動聲帶唸 [ð]，也能跟 thin 的 [θ] 分清楚。",
+  "key": {"word": "this", "kk": "ð"},
+  "lesson": [
+   {"t": "p", "text": "[ð] 的舌位跟上一課的 [θ] 一模一樣，舌尖輕放在上下排牙齒中間。差別在聲帶要振動。把手指輕輕放在喉嚨上唸唸看，唸 [θ] 時喉嚨很安靜，換成 [ð] 就會摸到嗡嗡的震動。"},
+   {"t": "p", "text": "同樣拼 th，怎麼知道要不要振動？the、this、that、these、those、then、than、them、they、there 這些在句子裡很常出現、用來指人指東西或連接句子的小字，th 都唸有聲的 [ð]。mother、brother、father、other 這種 th 後面接 er 的字，th 大多也唸 [ð]。其他像 thin、math、think 這種名詞、動詞、形容詞，大多唸無聲的 [θ]。"},
+   {"t": "p", "text": "台灣學生常把 [ð] 唸成 [d]，this 聽起來像 dis，也有人唸成 [z]，變成 zis。舌尖伸到牙齒中間，聲帶同時振動，這兩個毛病就都能改掉。"},
+   {"t": "words", "title": "跟著唸", "items": [
+    {"w": "this", "zh": "這個", "mark": "[th]is"},
+    {"w": "that", "zh": "那個", "mark": "[th]at"},
+    {"w": "then", "zh": "然後", "mark": "[th]en"},
+    {"w": "them", "zh": "他們（受詞）", "mark": "[th]em"},
+    {"w": "than", "zh": "比", "mark": "[th]an"},
+    {"w": "thus", "zh": "因此", "mark": "[th]us"}
+   ]},
+   {"t": "pairs", "title": "[ð] 跟 [d] 聽聽看", "items": [
+    {"a": "then", "az": "然後", "b": "den", "bz": "書房；獸穴", "note": "den 的舌尖頂在上排牙齒後面，then 的舌尖要伸到牙齒中間，聲帶同時振動。"}
+   ]},
+   {"t": "sent", "en": "This is my mother, and that is my brother.", "zh": "這位是我媽媽，那位是我哥哥。"},
+   {"t": "tip", "text": "this 和 that 天天都會說到，開口前先把舌尖放到牙齒中間，再讓聲帶振動。"}
+  ],
+  "quiz": [
+   {"type": "listen", "word": "then", "options": ["then", "den", "ten", "hen"], "answer": 0, "explanation": "答案是 then，開頭舌尖伸到牙齒中間、聲帶振動，是 [ð]。den 開頭是舌尖頂在上排牙齒後面的 [d]，ten 是 [t]，hen 是 [h]。"},
+   {"type": "choose", "q": "下面哪個字的 th 唸無聲的 [θ]？", "options": ["this", "them", "thick", "that"], "answer": 2, "explanation": "thick 是形容詞，th 唸無聲的 [θ]。this、them、that 是用來指人、指東西的小字，唸有聲的 [ð]。"},
+   {"type": "listen", "word": "den", "options": ["ten", "then", "den", "pen"], "answer": 2, "explanation": "答案是 den，開頭是 [d]，舌尖頂在上排牙齒後面，沒有伸出來。then 開頭要伸舌頭唸 [ð]，ten 是 [t]，pen 是 [p]。"},
+   {"type": "choose", "q": "[ð] 跟 [θ] 差在哪裡？", "options": ["舌頭的位置不一樣", "[ð] 要振動聲帶，[θ] 不用", "[ð] 要嘟嘴", "[θ] 唸得比較長"], "answer": 1, "explanation": "[ð] 和 [θ] 舌位一樣，舌尖都放在上下排牙齒中間。[ð] 要振動聲帶，[θ] 只吹氣。"},
+   {"type": "listen", "word": "thus", "options": ["dust", "bus", "fuss", "thus"], "answer": 3, "explanation": "答案是 thus，開頭要伸舌頭、振動聲帶唸 [ð]。dust 開頭是舌尖頂在上排牙齒後面的 [d]，結尾還多了 [t]；bus 開頭是雙唇閉起來的 [b]；fuss 開頭是上排牙齒碰下唇的 [f]，聲帶不振動。"},
+   {"type": "choose", "q": "下面哪一組字，th 的唸法相同？", "options": ["this 和 thin", "that 和 math", "them 和 then", "thick 和 than"], "answer": 2, "explanation": "them 和 then 都是常用的小字，th 都唸有聲的 [ð]。其他三組都是一個 [ð]、一個 [θ]。"},
+   {"type": "listen", "word": "than", "options": ["tan", "than", "then", "van"], "answer": 1, "explanation": "答案是 than，開頭伸舌頭、振動聲帶唸 [ð]，母音是 cat 的 [æ]。tan 開頭是 [t]，van 是上排牙齒碰下唇的 [v]，then 的母音是 bed 的 [ɛ]。"},
+   {"type": "listen", "word": "thin", "options": ["this", "sin", "tin", "thin"], "answer": 3, "explanation": "答案是 thin，開頭是無聲的 [θ]，只吹氣。this 開頭是有聲的 [ð]，結尾是 [s]，跟 thin 的 [n] 也不一樣。sin 開頭是 [s]，tin 開頭是 [t]。"}
+  ]
+ }
+]

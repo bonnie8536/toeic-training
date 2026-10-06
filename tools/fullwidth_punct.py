@@ -307,7 +307,7 @@ def fix_html(src):
 
 def targets():
     fs = sorted(glob.glob(os.path.join(ROOT, '*.html')) + glob.glob(os.path.join(ROOT, 'js', '*.js')) +
-                [f for f in glob.glob(os.path.join(ROOT, 'data', 'raw', '*.json')) if 'phonics_' not in f])
+                glob.glob(os.path.join(ROOT, 'data', 'raw', '*.json')))
     return fs
 
 

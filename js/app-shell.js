@@ -15,13 +15,13 @@
 
   const TABS = [
     { key: 'home', label: '首頁', href: 'index.html', pages: ['index.html', 'diagnostic.html'] },
-    { key: 'learn', label: '學習', href: 'learn.html', pages: ['learn.html', 'grammar.html', 'tenses.html', 'verbs.html', 'vocab.html', 'listening.html', 'reading.html', 'dialogue.html', 'writing.html'] },
+    { key: 'learn', label: '學習', href: 'learn.html', pages: ['learn.html', 'grammar.html', 'phonics.html', 'tenses.html', 'verbs.html', 'vocab.html', 'listening.html', 'reading.html', 'dialogue.html', 'writing.html'] },
     { key: 'drill', label: '刷題', href: 'drill.html', pages: ['drill.html', 'practice.html', 'mock.html'] },
     { key: 'review', label: '複習', href: 'review.html', pages: ['review.html'] },
     { key: 'me', label: '我的', href: 'me.html', pages: ['me.html', 'history.html', 'analysis.html', 'admin.html'] },
   ];
   const TITLES = {
-    'diagnostic.html': '程度檢測', 'grammar.html': '文法基礎', 'verbs.html': '不規則動詞', 'vocab.html': '單字訓練',
+    'diagnostic.html': '程度檢測', 'grammar.html': '文法基礎', 'phonics.html': '自然發音', 'verbs.html': '不規則動詞', 'vocab.html': '單字訓練',
     'listening.html': '聽力訓練', 'reading.html': '閱讀訓練', 'dialogue.html': '對話練習', 'tenses.html': '時態總整理', 'writing.html': '寫作練習', 'practice.html': '題庫刷題',
     'mock.html': '模擬考', 'history.html': '學習記錄', 'analysis.html': '能力分析', 'admin.html': '教師後台',
   };

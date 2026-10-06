@@ -2,3 +2,4 @@
 *.bak
 .claude/*
 !.claude/launch.json
+__pycache__/

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* App 外殼開機:網站模式只登記安裝事件;主畫面開啟時才在 <html> 加 class、補 viewport-fit=cover */
+(function () {
+  var d = document.documentElement;
+  window.__bip = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; });
+  window.addEventListener('appinstalled', function () { window.__bip = null; });
+  var sa = false;
+  try { sa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; } catch (e) { sa = false; }
+  if (!sa) return;
+  var p = location.pathname.split('/').pop() || 'index.html';
+  if (p.indexOf('.') < 0) p += '.html';
+  d.classList.add('is-app');
+  d.classList.add('app-shell');
+  if (['signup.html', 'reset.html', 'terms.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
+  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  var m = document.querySelector('meta[name=viewport]');
+  if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
+  window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
+})();
+</script>
+<meta name="description" content="自然發音從零開始：短母音、易錯子音、長母音、母音加 r 到多音節的重音與弱讀，8 章 54 課，一課一個發音規則，每個字都能點來聽，聽完馬上練聽音選字。">
+<link rel="canonical" href="https://www.shuashualanguage.com/phonics.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="自然發音|刷刷英文">
+<meta property="og:description" content="自然發音從零開始：短母音、易錯子音、長母音、母音加 r 到多音節的重音與弱讀，8 章 54 課，一課一個發音規則，每個字都能點來聽，聽完馬上練聽音選字。">
+<meta property="og:url" content="https://www.shuashualanguage.com/phonics.html">
+<title>自然發音|刷刷英文</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-title" content="刷刷英文">
+<meta name="theme-color" content="#0b72c4">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<script src="js/app-shell.js" defer></script>
+</head>
+<body data-require-profile>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">刷刷英文</a>
+    <nav class="topnav">
+      <a href="index.html">首頁</a>
+      <a href="diagnostic.html">程度檢測</a>
+      <div class="nav-group">
+        <button class="nav-btn active" type="button">學習</button>
+        <div class="nav-menu">
+          <a href="grammar.html">文法基礎</a>
+          <a href="phonics.html" class="active">自然發音</a>
+          <a href="vocab.html">單字訓練</a>
+          <a href="listening.html">聽力訓練</a>
+          <a href="reading.html">閱讀訓練</a>
+          <a href="dialogue.html">對話練習</a>
+          <a href="writing.html">寫作練習</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <button class="nav-btn" type="button">刷題</button>
+        <div class="nav-menu">
+          <a href="practice.html">題庫刷題</a>
+          <a href="mock.html">模擬考</a>
+          <a href="review.html">每日複習</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="container-narrow">
+  <div id="phonics-root"></div>
+</main>
+
+<footer>
+  <div class="container-narrow">刷刷英文是個人建置的免費英文練習資源，與 ETS 及忠欣公司無關；TOEIC 為 ETS 之註冊商標。 <a href="terms.html">服務條款與隱私權</a></div>
+</footer>
+
+<script src="js/cloud-config.js"></script>
+<script src="data/phonics.js"></script>
+<script src="js/common.js"></script>
+<script src="js/cloud.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/phonics.js"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "753df33a812d44c78d22641c5063e4d3"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

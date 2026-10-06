@@ -20,7 +20,7 @@
   }
 
   function otherCounts() {
-    const c = { sets: 0, lsets: 0, vocab: 0, grammar: 0 };
+    const c = { sets: 0, lsets: 0, vocab: 0, grammar: 0, phonics: 0 };
     ['6', '7'].forEach(p => {
       const st = store.get('drill_p' + p, {});
       (T['part' + p] || []).forEach(set => {
@@ -39,6 +39,8 @@
     c.vocab = Object.keys(store.get('vgame_miss', {})).length;
     const gd = store.get('grammar_done', {});
     (T.grammar || []).forEach(u => { const r = gd[u.id]; if (r && r.ok < r.t) c.grammar++; });
+    const pd = store.get('phonics_done', {});
+    (T.phonics || []).forEach(u => { const r = pd[u.id]; if (r && r.ok < r.t) c.phonics++; });
     return c;
   }
 
@@ -67,6 +69,7 @@
     if (c.lsets) links.push(['聽力對話/獨白錯題 ' + c.lsets + ' 組', 'practice.html']);
     if (c.vocab) links.push(['單字漏接 ' + c.vocab + ' 個（玩一場優先出）', 'vocab.html']);
     if (c.grammar) links.push(['文法課有錯題的單元 ' + c.grammar + ' 課', 'grammar.html']);
+    if (c.phonics) links.push(['自然發音有錯題的課 ' + c.phonics + ' 課', 'phonics.html']);
     if (links.length) {
       root.append(h('div', { class: 'exercise-head' }, h('h2', null, '其他待複習')));
       const grid = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });

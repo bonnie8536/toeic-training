@@ -219,7 +219,7 @@
 
     /* 本週動態:近 7 天各學生動過哪些區域 */
     const AREA = [
-      [/^drill_p/, '刷題'], [/^listen_p/, '聽力刷題'], [/^grammar_done/, '文法'],
+      [/^drill_p/, '刷題'], [/^listen_p/, '聽力刷題'], [/^grammar_done/, '文法'], [/^phonics_done/, '自然發音'],
       [/^(vocab_|vgame_|phrase_)/, '單字片語'], [/^writing_/, '寫作'],
       [/^ear_/, '聽力訓練'], [/^mock_history/, '模擬考'], [/^diag/, '檢測'],
     ];

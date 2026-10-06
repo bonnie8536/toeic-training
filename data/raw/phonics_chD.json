@@ -1,0 +1,1842 @@
+[
+ {
+  "id": "pd-01",
+  "title": "長母音 a：cake 裡的 a 唸 [e]",
+  "goal": "看到 a_e、ai、ay 會唸長 a [e]，也分得出 cap 和 cape。",
+  "key": {
+   "word": "cake",
+   "kk": "e"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "長 a 的唸法跟字母 A 的名稱一樣，KK 寫成 [e]。第一章提過，這個 [e] 跟注音ㄝ不一樣。美式發音會從 [e] 往 [ɪ] 滑過去，實際聽起來像 [eɪ]，很接近注音ㄟ。嘴巴的開口比短 a [æ] 小很多，下巴不用往下拉。"
+   },
+   {
+    "t": "p",
+    "text": "長 a 有三種常見拼法。最多的是 a＋一個子音＋字尾不發音的 e，像 cake、name。這種拼法常簡寫成 a_e，底線代表中間那一個子音，後面幾課的 e_e、i_e、o_e、u_e 也是同樣的寫法。這個 e 本身不發音，它的工作是讓前面的 a 唸成長母音，所以 cap 加上 e 變成 cape，唸法就從 [kæp] 變成 [kep]。字中間常寫成 ai，像 rain、wait；在字尾則寫成 ay，像 day、play。有幾個常用字不照規則走：have 的 a 還是唸 [æ]，第二章學過；said、says 的母音唸 [ɛ]，跟 bed 一樣。a 或 ai 後面接 r 的時候唸法會變，像 care、hair，第七章再教；are 這個字唸 [ɑr]，也不照這課的規則。"
+   },
+   {
+    "t": "words",
+    "title": "a＋子音＋e",
+    "items": [
+     {
+      "w": "cake",
+      "zh": "蛋糕",
+      "mark": "c[a]k[e]"
+     },
+     {
+      "w": "name",
+      "zh": "名字",
+      "mark": "n[a]m[e]"
+     },
+     {
+      "w": "make",
+      "zh": "做、製作",
+      "mark": "m[a]k[e]"
+     },
+     {
+      "w": "late",
+      "zh": "遲到的",
+      "mark": "l[a]t[e]"
+     },
+     {
+      "w": "plane",
+      "zh": "飛機",
+      "mark": "pl[a]n[e]"
+     },
+     {
+      "w": "tape",
+      "zh": "膠帶",
+      "mark": "t[a]p[e]"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "ai 與 ay",
+    "items": [
+     {
+      "w": "rain",
+      "zh": "雨",
+      "mark": "r[ai]n"
+     },
+     {
+      "w": "wait",
+      "zh": "等待",
+      "mark": "w[ai]t"
+     },
+     {
+      "w": "train",
+      "zh": "火車",
+      "mark": "tr[ai]n"
+     },
+     {
+      "w": "day",
+      "zh": "一天",
+      "mark": "d[ay]"
+     },
+     {
+      "w": "play",
+      "zh": "玩",
+      "mark": "pl[ay]"
+     },
+     {
+      "w": "pay",
+      "zh": "付錢",
+      "mark": "p[ay]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "加上字尾不發音的 e，a 就變長母音",
+    "items": [
+     {
+      "a": "cap",
+      "az": "棒球帽",
+      "b": "cape",
+      "bz": "披風"
+     },
+     {
+      "a": "mad",
+      "az": "生氣的",
+      "b": "made",
+      "bz": "做了（make 的過去式）"
+     },
+     {
+      "a": "plan",
+      "az": "計畫",
+      "b": "plane",
+      "bz": "飛機"
+     },
+     {
+      "a": "hat",
+      "az": "帽子",
+      "b": "hate",
+      "bz": "討厭"
+     },
+     {
+      "a": "tap",
+      "az": "輕拍",
+      "b": "tape",
+      "bz": "膠帶"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[ɛ] 和 [e] 要分開",
+    "items": [
+     {
+      "a": "wet",
+      "az": "濕的",
+      "b": "wait",
+      "bz": "等待"
+     },
+     {
+      "a": "men",
+      "az": "男人（複數）",
+      "b": "main",
+      "bz": "主要的"
+     },
+     {
+      "a": "pen",
+      "az": "筆",
+      "b": "pain",
+      "bz": "疼痛",
+      "note": "pain 的母音尾巴會往ㄧ滑，pen 沒有這個滑音。"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "We wait in the rain for the late train.",
+    "zh": "我們在雨中等那班誤點的火車。"
+   },
+   {
+    "t": "tip",
+    "text": "台灣學生常把 late 唸得像 let，長 a 的尾巴記得往ㄧ滑一點。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "cape",
+    "options": [
+     "cap",
+     "cop",
+     "cape",
+     "cup"
+    ],
+    "answer": 2,
+    "explanation": "播的是 cape [kep]，a＋p＋字尾不發音的 e，a 唸長母音。cap 唸 [kæp]，cop 唸 [kɑp]，cup 唸 [kʌp]。"
+   },
+   {
+    "type": "listen",
+    "word": "pain",
+    "options": [
+     "pan",
+     "pain",
+     "pen",
+     "pun"
+    ],
+    "answer": 1,
+    "explanation": "播的是 pain，KK 寫 [pen]，ai 唸長 a，尾巴往ㄧ滑。這個 [pen] 不是英文字 pen，pen 的 KK 是 [pɛn]，母音不會滑；pan 是 [æ]，pun 是 [ʌ]。"
+   },
+   {
+    "type": "listen",
+    "word": "made",
+    "options": [
+     "mad",
+     "mud",
+     "mid",
+     "made"
+    ],
+    "answer": 3,
+    "explanation": "播的是 made [med]。mad 字尾沒有不發音的 e，a 唸短母音 [æ]；mud 是 [ʌ]，mid 是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "late",
+    "options": [
+     "let",
+     "lit",
+     "late",
+     "lot"
+    ],
+    "answer": 2,
+    "explanation": "播的是 late，KK 寫成 [let]，別跟英文字 let 搞混。let 的 KK 是 [lɛt]，母音不會往ㄧ滑；lit 是 [ɪ]，lot 是 [ɑ]。"
+   },
+   {
+    "type": "listen",
+    "word": "plane",
+    "options": [
+     "plane",
+     "plan",
+     "play",
+     "plot"
+    ],
+    "answer": 0,
+    "explanation": "播的是 plane [plen]，a＋n＋字尾不發音的 e 唸長 a。plan 是短 a [æ]，play 結尾沒有 [n]，plot 是 [ɑ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 a 跟 cake 的 a 唸法一樣？",
+    "options": [
+     "hat",
+     "cap",
+     "have",
+     "rain"
+    ],
+    "answer": 3,
+    "explanation": "rain 的 ai 唸長 a [e]。hat、cap 是短 a [æ]；have 雖然有字尾不發音的 e，a 還是唸 [æ]，屬於例外。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音唸法跟其他三個不同？",
+    "options": [
+     "said",
+     "day",
+     "pay",
+     "stay"
+    ],
+    "answer": 0,
+    "explanation": "said 唸 [sɛd]，母音是 [ɛ]。day、pay、stay 的 ay 都唸 [e]。"
+   },
+   {
+    "type": "choose",
+    "q": "tap 加上字尾不發音的 e 變成 tape，a 的唸法怎麼變？",
+    "options": [
+     "從 [e] 變成 [æ]",
+     "從 [æ] 變成 [e]",
+     "從 [æ] 變成 [ɑ]",
+     "唸法沒有改變"
+    ],
+    "answer": 1,
+    "explanation": "字尾不發音的 e 會讓前面的 a 唸長母音，所以 tap [tæp] 變成 tape [tep]。"
+   }
+  ]
+ },
+ {
+  "id": "pd-02",
+  "title": "長母音 e：see 裡的 ee 唸 [i]",
+  "goal": "分得出 [ɪ] 和 [i]，看到 ee、ea、e_e 和字尾單獨的 e 會唸長 e。",
+  "key": {
+   "word": "see",
+   "kk": "i"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "長 e 唸 [i]，跟字母 E 的名稱一樣，很接近注音ㄧ，只是聲音要拉長。嘴角往兩邊拉開，像在微笑，舌頭往上抬高、繃緊。第一章的短 i [ɪ] 嘴巴比較鬆，舌頭低一點，聲音也短。台灣學生常把這兩個音唸成同一個，這課就是要把它們分開。"
+   },
+   {
+    "t": "p",
+    "text": "最常見的拼法是 ee 和 ea，像 see、tree、eat、team。e＋一個子音＋字尾不發音的 e 也唸 [i]，像 these，不過這種拼法的字不多。單音節字的結尾只有一個 e 時，這個 e 也唸 [i]，例如 he、she、we、me。"
+   },
+   {
+    "t": "p",
+    "text": "這課有幾個例外要另外記。ea 有一群常用字唸 [ɛ]，像 head、bread，第六章會教；great、break 的 ea 則唸長 a [e]。been 美式唸 [bɪn]。the 雖然結尾只有一個 e，在句子裡多半弱讀成 [ðə]，第八章會提到。ea、ee 後面接 r 時唸法會變，像 near、deer；there、where、were 看起來是 e＋子音＋e，可是中間的子音是 r，唸法也不一樣，這些第七章再教。"
+   },
+   {
+    "t": "words",
+    "title": "ee 與 ea",
+    "items": [
+     {
+      "w": "see",
+      "zh": "看見",
+      "mark": "s[ee]"
+     },
+     {
+      "w": "tree",
+      "zh": "樹",
+      "mark": "tr[ee]"
+     },
+     {
+      "w": "green",
+      "zh": "綠色的",
+      "mark": "gr[ee]n"
+     },
+     {
+      "w": "week",
+      "zh": "星期、週",
+      "mark": "w[ee]k"
+     },
+     {
+      "w": "eat",
+      "zh": "吃",
+      "mark": "[ea]t"
+     },
+     {
+      "w": "team",
+      "zh": "團隊",
+      "mark": "t[ea]m"
+     },
+     {
+      "w": "tea",
+      "zh": "茶",
+      "mark": "t[ea]"
+     },
+     {
+      "w": "clean",
+      "zh": "乾淨的",
+      "mark": "cl[ea]n"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "e＋子音＋e 與字尾的 e",
+    "items": [
+     {
+      "w": "these",
+      "zh": "這些",
+      "mark": "th[e]s[e]"
+     },
+     {
+      "w": "he",
+      "zh": "他",
+      "mark": "h[e]"
+     },
+     {
+      "w": "she",
+      "zh": "她",
+      "mark": "sh[e]"
+     },
+     {
+      "w": "we",
+      "zh": "我們",
+      "mark": "w[e]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[ɪ] 和 [i] 要分開",
+    "items": [
+     {
+      "a": "ship",
+      "az": "船",
+      "b": "sheep",
+      "bz": "綿羊"
+     },
+     {
+      "a": "sit",
+      "az": "坐",
+      "b": "seat",
+      "bz": "座位"
+     },
+     {
+      "a": "fit",
+      "az": "合身",
+      "b": "feet",
+      "bz": "腳（複數）"
+     },
+     {
+      "a": "hit",
+      "az": "打",
+      "b": "heat",
+      "bz": "熱"
+     },
+     {
+      "a": "fill",
+      "az": "裝滿",
+      "b": "feel",
+      "bz": "感覺"
+     },
+     {
+      "a": "chip",
+      "az": "洋芋片",
+      "b": "cheap",
+      "bz": "便宜的"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "We need to eat and sleep well before the team meeting next week.",
+    "zh": "下週團隊開會前，我們得吃飽睡飽。"
+   },
+   {
+    "t": "tip",
+    "text": "sheep 唸太短就會變成 ship，長 e 記得嘴角拉開、聲音拉長。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "sheep",
+    "options": [
+     "ship",
+     "chip",
+     "sheep",
+     "cheap"
+    ],
+    "answer": 2,
+    "explanation": "播的是 sheep，KK 寫 [ʃip]，ee 唸長 e，聲音長、嘴角拉開。英文字 ship 的 KK 是 [ʃɪp]，母音短而鬆；chip [tʃɪp] 和 cheap [tʃip] 開頭是 [tʃ]，不是 [ʃ]。"
+   },
+   {
+    "type": "listen",
+    "word": "seat",
+    "options": [
+     "sit",
+     "set",
+     "seat",
+     "sat"
+    ],
+    "answer": 2,
+    "explanation": "播的是 seat，KK 寫 [sit]，ea 唸長 e。英文字 sit 的 KK 是 [sɪt]，兩個符號不一樣，別搞混。set 是 [ɛ]，sat 是 [æ]。"
+   },
+   {
+    "type": "listen",
+    "word": "fill",
+    "options": [
+     "fill",
+     "feel",
+     "fell",
+     "fail"
+    ],
+    "answer": 0,
+    "explanation": "播的是 fill [fɪl]，母音短而鬆。feel 是長 e [i]，fell 是 [ɛ]，fail 是長 a [e]。"
+   },
+   {
+    "type": "listen",
+    "word": "heat",
+    "options": [
+     "hit",
+     "heat",
+     "hat",
+     "hot"
+    ],
+    "answer": 1,
+    "explanation": "播的是 heat，KK 寫 [hit]，ea 唸長 e。英文字 hit 的 KK 是 [hɪt]，聲音短；hat 是 [æ]，hot 是 [ɑ]。"
+   },
+   {
+    "type": "listen",
+    "word": "cheap",
+    "options": [
+     "chop",
+     "check",
+     "chip",
+     "cheap"
+    ],
+    "answer": 3,
+    "explanation": "播的是 cheap，KK 寫 [tʃip]，ea 唸長 e。英文字 chip 的 KK 是 [tʃɪp]，母音短而鬆；check 是 [ɛ]，chop 是 [ɑ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟 see 的 ee 唸法一樣？",
+    "options": [
+     "team",
+     "bed",
+     "sit",
+     "been"
+    ],
+    "answer": 0,
+    "explanation": "team 的 ea 唸 [i]。bed 是 [ɛ]，sit 是 [ɪ]，been 美式唸 [bɪn]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ea 唸法跟其他三個不同？",
+    "options": [
+     "eat",
+     "tea",
+     "clean",
+     "head"
+    ],
+    "answer": 3,
+    "explanation": "head 的 ea 唸 [ɛ]，是第六章會教的例外。eat、tea、clean 的 ea 都唸 [i]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 e 唸長 e [i]？",
+    "options": [
+     "red",
+     "we",
+     "ten",
+     "there"
+    ],
+    "answer": 1,
+    "explanation": "we 是單音節字，結尾只有一個 e，唸 [i]。red、ten 是短 e [ɛ]；there 唸 [ðɛr]，母音是 [ɛ]，也不唸 [i]。"
+   }
+  ]
+ },
+ {
+  "id": "pd-03",
+  "title": "長母音 i：bike 裡的 i 唸 [aɪ]",
+  "goal": "看到 i_e、igh、單音節字尾的 y 和 ie 會唸 [aɪ]，也分得出 bit 和 bite。",
+  "key": {
+   "word": "bike",
+   "kk": "aɪ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "長 i 唸 [aɪ]，跟字母 I 的名稱一樣，也跟英文的「我」I 同音。這是一個雙母音，嘴巴先張大唸 [a]，再往 [ɪ] 收小，聽起來很接近注音ㄞ。"
+   },
+   {
+    "t": "p",
+    "text": "最常見的拼法是 i＋一個子音＋字尾不發音的 e，像 bike、time、five，跟 cake 的道理一樣。igh 也唸 [aɪ]，裡面的 gh 不發音，像 night、light。單音節字結尾的 y 同樣唸 [aɪ]，像 my、fly、try。另外還有單音節字結尾的 ie，像 pie、tie；movie、cookie 這種長一點的字，結尾的 ie 不唸 [aɪ]。第一章提過的 find、kind、child，i 後面接 nd、ld，雖然字尾沒有不發音的 e，也唸 [aɪ]。"
+   },
+   {
+    "t": "p",
+    "text": "幾個例外先記住。give 的 i＋子音＋e 唸短母音 [ɪ]。happy 這種兩個音節、重音在前面的字，結尾的 y 大多唸 [ɪ]，第六章再教；apply、reply 的重音在後面，y 還是唸 [aɪ]。write 的 w 不發音，跟 right 唸起來完全一樣。"
+   },
+   {
+    "t": "words",
+    "title": "i＋子音＋e",
+    "items": [
+     {
+      "w": "bike",
+      "zh": "腳踏車",
+      "mark": "b[i]k[e]"
+     },
+     {
+      "w": "time",
+      "zh": "時間",
+      "mark": "t[i]m[e]"
+     },
+     {
+      "w": "five",
+      "zh": "五",
+      "mark": "f[i]v[e]"
+     },
+     {
+      "w": "line",
+      "zh": "線",
+      "mark": "l[i]n[e]"
+     },
+     {
+      "w": "ride",
+      "zh": "騎",
+      "mark": "r[i]d[e]"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "igh、y 與 ie",
+    "items": [
+     {
+      "w": "night",
+      "zh": "晚上",
+      "mark": "n[igh]t"
+     },
+     {
+      "w": "light",
+      "zh": "光、燈",
+      "mark": "l[igh]t"
+     },
+     {
+      "w": "my",
+      "zh": "我的",
+      "mark": "m[y]"
+     },
+     {
+      "w": "fly",
+      "zh": "飛",
+      "mark": "fl[y]"
+     },
+     {
+      "w": "try",
+      "zh": "試試看",
+      "mark": "tr[y]"
+     },
+     {
+      "w": "pie",
+      "zh": "派",
+      "mark": "p[ie]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "短 i 和長 i",
+    "items": [
+     {
+      "a": "kit",
+      "az": "一套工具",
+      "b": "kite",
+      "bz": "風箏"
+     },
+     {
+      "a": "bit",
+      "az": "一點點",
+      "b": "bite",
+      "bz": "咬"
+     },
+     {
+      "a": "fin",
+      "az": "魚鰭",
+      "b": "fine",
+      "bz": "很好的"
+     },
+     {
+      "a": "win",
+      "az": "贏",
+      "b": "wine",
+      "bz": "葡萄酒"
+     },
+     {
+      "a": "sit",
+      "az": "坐",
+      "b": "sight",
+      "bz": "景象",
+      "note": "sight 的 gh 不發音，i 唸 [aɪ]。"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "I like to ride my bike for a mile at night.",
+    "zh": "我喜歡晚上騎一英里的腳踏車。"
+   },
+   {
+    "t": "tip",
+    "text": "bite 唸太快會變成 bit，長 i 要從張大嘴的ㄚ滑到ㄧ，把滑音唸完整。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "bite",
+    "options": [
+     "bite",
+     "bit",
+     "bet",
+     "beat"
+    ],
+    "answer": 0,
+    "explanation": "播的是 bite [baɪt]，i＋t＋字尾不發音的 e，i 唸長母音。bit 是 [ɪ]，bet 是 [ɛ]，beat 是長 e [i]。"
+   },
+   {
+    "type": "listen",
+    "word": "kite",
+    "options": [
+     "kit",
+     "kite",
+     "cat",
+     "cut"
+    ],
+    "answer": 1,
+    "explanation": "播的是 kite [kaɪt]。kit 字尾沒有不發音的 e，唸短 i [ɪ]；cat 是 [æ]，cut 是 [ʌ]。"
+   },
+   {
+    "type": "listen",
+    "word": "fin",
+    "options": [
+     "fin",
+     "fine",
+     "fan",
+     "fun"
+    ],
+    "answer": 0,
+    "explanation": "播的是 fin [fɪn]，聲音短，沒有滑音。fine 是 [aɪ]，fan 是 [æ]，fun 是 [ʌ]。"
+   },
+   {
+    "type": "listen",
+    "word": "might",
+    "options": [
+     "mat",
+     "meat",
+     "mate",
+     "might"
+    ],
+    "answer": 3,
+    "explanation": "播的是 might [maɪt]，igh 唸 [aɪ]，gh 不發音。mat 是短 a [æ]，mate 是長 a [e]，meat 是長 e [i]。"
+   },
+   {
+    "type": "listen",
+    "word": "ride",
+    "options": [
+     "rid",
+     "ride",
+     "red",
+     "rod"
+    ],
+    "answer": 1,
+    "explanation": "播的是 ride [raɪd]。rid 唸 [rɪd]，red 是 [ɛ]，rod 是 [ɑ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 i 唸法跟 bike 的 i 不同？",
+    "options": [
+     "time",
+     "five",
+     "give",
+     "line"
+    ],
+    "answer": 2,
+    "explanation": "give 雖然是 i＋子音＋e，i 卻唸短母音 [ɪ]，是例外。time、five、line 的 i 都唸 [aɪ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 y 唸 [aɪ]？",
+    "options": [
+     "yes",
+     "happy",
+     "cry",
+     "yet"
+    ],
+    "answer": 2,
+    "explanation": "cry 是單音節字，結尾的 y 唸 [aɪ]。yes、yet 的 y 在字首，唸子音 [j]；happy 有兩個音節、重音在前面，結尾的 y 唸 [ɪ]。"
+   },
+   {
+    "type": "choose",
+    "q": "night 裡的 gh 怎麼唸？",
+    "options": [
+     "唸 [g]",
+     "唸 [f]",
+     "唸 [h]",
+     "不發音"
+    ],
+    "answer": 3,
+    "explanation": "igh 整組唸 [aɪ]，gh 不發音，所以 night 唸 [naɪt]。"
+   }
+  ]
+ },
+ {
+  "id": "pd-04",
+  "title": "長母音 o：home 裡的 o 唸 [o]",
+  "goal": "看到 o_e、oa、字尾 ow 和字尾單獨的 o 會唸長 o，也分得出 not 和 note。",
+  "key": {
+   "word": "home",
+   "kk": "o"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "長 o 跟字母 O 的名稱一樣。台灣的 KK 習慣標成 [o]，美式實際會從 [o] 往ㄨ的方向滑，有些字典標成 [oʊ]，聽起來很接近注音ㄡ。嘴唇要收圓，唸到後面再收小一點。第一章的短 o [ɑ] 嘴巴張大、不圓唇，兩個音的嘴型差很多。"
+   },
+   {
+    "t": "p",
+    "text": "o＋一個子音＋字尾不發音的 e 唸長 o，像 home、note、hope。oa 通常在字中間，像 boat、road。字尾的 ow 也常唸 [o]，像 snow、slow。單音節字結尾只有一個 o 的時候，大多也唸 [o]，像 go、no、so。另外，o 後面接 ld 時也唸長 o，像 old、cold、told，雖然字尾沒有不發音的 e。"
+   },
+   {
+    "t": "p",
+    "text": "這個音的例外不少。come、some、love、done 的 o 唸 [ʌ]，跟 cup 的 u 一樣，第六章會教；one 也唸 [ʌ]，前面還多一個 [w]。do、to、who 和 move、lose 的 o 唸 [u]。ow 還有另一種唸法 [aʊ]，像 cow、now、how，光看拼字分不出來，要靠熟字記，同樣留到第六章。"
+   },
+   {
+    "t": "words",
+    "title": "o＋子音＋e",
+    "items": [
+     {
+      "w": "home",
+      "zh": "家",
+      "mark": "h[o]m[e]"
+     },
+     {
+      "w": "note",
+      "zh": "筆記",
+      "mark": "n[o]t[e]"
+     },
+     {
+      "w": "hope",
+      "zh": "希望",
+      "mark": "h[o]p[e]"
+     },
+     {
+      "w": "rope",
+      "zh": "繩子",
+      "mark": "r[o]p[e]"
+     },
+     {
+      "w": "stone",
+      "zh": "石頭",
+      "mark": "st[o]n[e]"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "oa、ow 與字尾的 o",
+    "items": [
+     {
+      "w": "boat",
+      "zh": "船",
+      "mark": "b[oa]t"
+     },
+     {
+      "w": "road",
+      "zh": "道路",
+      "mark": "r[oa]d"
+     },
+     {
+      "w": "snow",
+      "zh": "雪",
+      "mark": "sn[ow]"
+     },
+     {
+      "w": "slow",
+      "zh": "慢的",
+      "mark": "sl[ow]"
+     },
+     {
+      "w": "go",
+      "zh": "去",
+      "mark": "g[o]"
+     },
+     {
+      "w": "no",
+      "zh": "不",
+      "mark": "n[o]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "短 o 和長 o",
+    "items": [
+     {
+      "a": "not",
+      "az": "不",
+      "b": "note",
+      "bz": "筆記"
+     },
+     {
+      "a": "hop",
+      "az": "單腳跳",
+      "b": "hope",
+      "bz": "希望"
+     },
+     {
+      "a": "rod",
+      "az": "竿子",
+      "b": "rode",
+      "bz": "騎了（ride 的過去式）"
+     },
+     {
+      "a": "got",
+      "az": "得到了（get 的過去式）",
+      "b": "goat",
+      "bz": "山羊"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "Don't go home alone on the road in the snow.",
+    "zh": "下雪時別一個人沿著馬路走回家。"
+   },
+   {
+    "t": "tip",
+    "text": "note 唸成 not 意思就變了，長 o 的嘴唇要收圓，尾巴往ㄨ收。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "note",
+    "options": [
+     "not",
+     "note",
+     "nut",
+     "net"
+    ],
+    "answer": 1,
+    "explanation": "播的是 note，KK 寫 [not]，o＋t＋字尾不發音的 e 唸長 o。英文字 not 的 KK 是 [nɑt]，嘴巴張大、不圓唇；nut 是 [ʌ]，net 是 [ɛ]。"
+   },
+   {
+    "type": "listen",
+    "word": "hope",
+    "options": [
+     "hope",
+     "hop",
+     "hip",
+     "heap"
+    ],
+    "answer": 0,
+    "explanation": "播的是 hope，KK 寫 [hop]，o＋p＋字尾不發音的 e 唸長 o，嘴唇收圓、有滑音。英文字 hop 的 KK 是 [hɑp]，嘴巴張大、不圓唇；hip 是 [ɪ]，heap 是長 e [i]。"
+   },
+   {
+    "type": "listen",
+    "word": "goat",
+    "options": [
+     "got",
+     "goat",
+     "gut",
+     "get"
+    ],
+    "answer": 1,
+    "explanation": "播的是 goat，KK 寫 [got]，oa 唸長 o。英文字 got 的 KK 是 [gɑt]；gut 是 [ʌ]，get 是 [ɛ]。"
+   },
+   {
+    "type": "listen",
+    "word": "road",
+    "options": [
+     "red",
+     "rod",
+     "rid",
+     "road"
+    ],
+    "answer": 3,
+    "explanation": "播的是 road，KK 寫 [rod]，oa 唸長 o。英文字 rod 的 KK 是 [rɑd]，嘴巴張大、不圓唇；red 是 [ɛ]，rid 是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "boat",
+    "options": [
+     "but",
+     "bait",
+     "bite",
+     "boat"
+    ],
+    "answer": 3,
+    "explanation": "播的是 boat [bot]，oa 唸長 o，嘴唇收圓。bait 是長 a [e]，bite 是長 i [aɪ]，but 是短母音 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 o 跟 home 的 o 唸法一樣？",
+    "options": [
+     "come",
+     "hot",
+     "rope",
+     "do"
+    ],
+    "answer": 2,
+    "explanation": "rope 是 o＋子音＋e，唸長 o [o]。come 唸 [ʌ]，hot 是 [ɑ]，do 是 [u]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 ow 唸 [o]？",
+    "options": [
+     "grow",
+     "cow",
+     "now",
+     "how"
+    ],
+    "answer": 0,
+    "explanation": "grow 的 ow 唸 [o]，跟 snow、slow 一樣。cow、now、how 的 ow 唸 [aʊ]。ow 在字尾兩種唸法都有，光看拼字分不出來，cow、now、how 這幾個常用字要另外記，第六章會整理。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音唸法跟其他三個不同？",
+    "options": [
+     "go",
+     "so",
+     "to",
+     "no"
+    ],
+    "answer": 2,
+    "explanation": "to 的 o 唸 [u]。go、so、no 結尾的 o 都唸長 o [o]。"
+   }
+  ]
+ },
+ {
+  "id": "pd-05",
+  "title": "長母音 u：cute 裡的 u 唸 [ju]",
+  "goal": "看到 cute、cube 這類 u_e 和 few、music 會唸 [ju]，也分得出 cut 和 cute。",
+  "key": {
+   "word": "cute",
+   "kk": "ju"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "長 u 有兩種唸法，這課先學 [ju]。它跟字母 U 的名稱一樣，也跟英文的 you 同音。唸的時候先很快帶過一個ㄧ，再接嘴唇收圓、往前突的ㄨ。前面這個 [j] 很短，但在這課的字裡不能省掉。"
+   },
+   {
+    "t": "p",
+    "text": "u＋一個子音＋字尾不發音的 e 唸 [ju]，像 cute、cube。u_e 跟在 r、l 後面時不加 [j]，像 rule；美式跟在 t、d、n 後面也常省掉 [j]，像 tube，這些下一課再教。ew 唸 [ju] 的常用字主要是 few；flew、new 這些字的 ew 美式唸 [u]，也留到下一課。"
+   },
+   {
+    "t": "words",
+    "title": "u＋子音＋e",
+    "items": [
+     {
+      "w": "cute",
+      "zh": "可愛的",
+      "mark": "c[u]t[e]"
+     },
+     {
+      "w": "cube",
+      "zh": "立方體",
+      "mark": "c[u]b[e]"
+     },
+     {
+      "w": "mute",
+      "zh": "靜音",
+      "mark": "m[u]t[e]"
+     },
+     {
+      "w": "mule",
+      "zh": "騾子",
+      "mark": "m[u]l[e]"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "第一章學過閉音節，母音後面被子音關住，就是短母音。母音自己結束一個音節、後面沒有子音關住，叫開音節，常唸成長母音。music 拆成 mu-sic，unit 拆成 u-nit，menu 拆成 men-u，這三個 u 都在開音節，所以唸 [ju]。"
+   },
+   {
+    "t": "words",
+    "title": "few 與開音節的 u",
+    "items": [
+     {
+      "w": "few",
+      "zh": "很少的",
+      "mark": "f[ew]"
+     },
+     {
+      "w": "menu",
+      "zh": "菜單",
+      "mark": "men[u]"
+     },
+     {
+      "w": "music",
+      "zh": "音樂",
+      "mark": "m[u]sic"
+     },
+     {
+      "w": "unit",
+      "zh": "單元",
+      "mark": "[u]nit"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "加上字尾不發音的 e，u 就從 [ʌ] 變成 [ju]",
+    "items": [
+     {
+      "a": "cut",
+      "az": "切",
+      "b": "cute",
+      "bz": "可愛的"
+     },
+     {
+      "a": "cub",
+      "az": "幼獸",
+      "b": "cube",
+      "bz": "立方體"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "The music unit has a few cute songs.",
+    "zh": "這個音樂單元有幾首可愛的歌。"
+   },
+   {
+    "t": "tip",
+    "text": "看到 u_e 別唸成短母音，cute 唸成 cut，意思就從可愛變成切。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "cute",
+    "options": [
+     "cut",
+     "cute",
+     "coat",
+     "kite"
+    ],
+    "answer": 1,
+    "explanation": "播的是 cute [kjut]，u＋t＋字尾不發音的 e 唸 [ju]。cut 字尾沒有不發音的 e，唸 [ʌ]；coat 是長 o [o]，kite 是 [aɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "cube",
+    "options": [
+     "cub",
+     "cab",
+     "keep",
+     "cube"
+    ],
+    "answer": 3,
+    "explanation": "播的是 cube [kjub]。cub 字尾沒有不發音的 e，唸 [kʌb]；cab 是 [æ]，keep 是長 e [i]。"
+   },
+   {
+    "type": "listen",
+    "word": "mule",
+    "options": [
+     "mile",
+     "meal",
+     "mule",
+     "mail"
+    ],
+    "answer": 2,
+    "explanation": "播的是 mule [mjul]，u＋l＋字尾不發音的 e 唸 [ju]，u 前面帶一個短短的 [j]。mile 是 [aɪ]，meal 是長 e [i]，mail 是長 a [e]。"
+   },
+   {
+    "type": "listen",
+    "word": "few",
+    "options": [
+     "fee",
+     "fly",
+     "few",
+     "fun"
+    ],
+    "answer": 2,
+    "explanation": "播的是 few [fju]，ew 唸 [ju]。fee 是長 e [i]，fly 是 [aɪ]，fun 是 [ʌ]。"
+   },
+   {
+    "type": "listen",
+    "word": "mute",
+    "options": [
+     "mute",
+     "mate",
+     "met",
+     "meet"
+    ],
+    "answer": 0,
+    "explanation": "播的是 mute [mjut]。mate 是長 a [e]，met 是 [ɛ]，meet 是長 e [i]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 u 唸 [ju]？",
+    "options": [
+     "cup",
+     "cube",
+     "bus",
+     "sun"
+    ],
+    "answer": 1,
+    "explanation": "cube 是 u＋子音＋e，唸 [ju]。cup、bus、sun 的 u 夾在子音中間，唸短母音 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "cut 加上字尾不發音的 e 變成 cute，u 的唸法怎麼變？",
+    "options": [
+     "從 [ʌ] 變成 [ɑ]",
+     "從 [ju] 變成 [ʌ]",
+     "唸法沒有改變",
+     "從 [ʌ] 變成 [ju]"
+    ],
+    "answer": 3,
+    "explanation": "字尾不發音的 e 讓前面的 u 唸長母音，cut [kʌt] 就變成 cute [kjut]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 u 唸法跟其他三個不同？",
+    "options": [
+     "bus",
+     "music",
+     "menu",
+     "unit"
+    ],
+    "answer": 0,
+    "explanation": "bus 的 u 夾在子音中間，是閉音節，唸 [ʌ]。music、menu、unit 的 u 都在開音節，唸 [ju]。"
+   }
+  ]
+ },
+ {
+  "id": "pd-06",
+  "title": "長母音 u：moon 裡的 oo 唸 [u]",
+  "goal": "看到 oo，以及跟在 r、l 後面的 ue、ew、u_e 會唸 [u]，也分得出 [u] 和 [ju]。",
+  "key": {
+   "word": "moon",
+   "kk": "u"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "長 u 的第二種唸法是 [u]，前面沒有 [j]。嘴唇收圓、往前突，舌頭後半部抬高，聲音拉長，很接近注音ㄨ。上一課的 cute 在 u 前面有一個短短的ㄧ，moon 的 oo 沒有，一開口就是ㄨ。"
+   },
+   {
+    "t": "p",
+    "text": "最常見的拼法是 oo，像 moon、food。ue、ew 和 u_e 也會唸 [u]，但唸 [u] 還是 [ju]，要看前面的子音。跟在 r、l 後面大多唸 [u]，像 true、blue、flew、rule；跟在 f、c、m 後面就唸 [ju]，像 few、fuel、cute、mute，上一課學的就是這一類。"
+   },
+   {
+    "t": "words",
+    "title": "oo",
+    "items": [
+     {
+      "w": "moon",
+      "zh": "月亮",
+      "mark": "m[oo]n"
+     },
+     {
+      "w": "food",
+      "zh": "食物",
+      "mark": "f[oo]d"
+     },
+     {
+      "w": "pool",
+      "zh": "游泳池",
+      "mark": "p[oo]l"
+     },
+     {
+      "w": "zoo",
+      "zh": "動物園",
+      "mark": "z[oo]"
+     },
+     {
+      "w": "soon",
+      "zh": "很快",
+      "mark": "s[oo]n"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "ue、ew 與 r、l 後面的 u_e",
+    "items": [
+     {
+      "w": "blue",
+      "zh": "藍色的",
+      "mark": "bl[ue]"
+     },
+     {
+      "w": "true",
+      "zh": "真的",
+      "mark": "tr[ue]"
+     },
+     {
+      "w": "glue",
+      "zh": "膠水",
+      "mark": "gl[ue]"
+     },
+     {
+      "w": "flew",
+      "zh": "飛了（fly 的過去式）",
+      "mark": "fl[ew]"
+     },
+     {
+      "w": "rule",
+      "zh": "規則",
+      "mark": "r[u]l[e]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[u]、[ʌ] 和 [ju] 要分開",
+    "items": [
+     {
+      "a": "but",
+      "az": "但是",
+      "b": "boot",
+      "bz": "靴子"
+     },
+     {
+      "a": "shut",
+      "az": "關上",
+      "b": "shoot",
+      "bz": "射擊"
+     },
+     {
+      "a": "sun",
+      "az": "太陽",
+      "b": "soon",
+      "bz": "很快"
+     },
+     {
+      "a": "fool",
+      "az": "傻瓜",
+      "b": "fuel",
+      "bz": "燃料",
+      "note": "fuel 的 u 跟在 f 後面，前面多一個 [j]，後面還帶一個輕輕的 [ə]，KK 寫成 [ˋfjuəl]。"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "幾個例外要小心。book、good、foot 的 oo 唸短的 [ʊ]，第六章再教；blood、flood 的 oo 唸 [ʌ]；do、to、who 的 o 反而唸 [u]；school 的 ch 唸 [k]。new、tube、student 這種跟在 n、t、d 後面的字，台灣的 KK 字典常標 [ju]，美式音檔大多唸 [u]，像 new 唸 [nu]，兩種標法你都會看到。"
+   },
+   {
+    "t": "sent",
+    "en": "Let's have some food by the pool at noon.",
+    "zh": "我們中午在泳池邊吃點東西吧。"
+   },
+   {
+    "t": "tip",
+    "text": "pool 唸得太短、太鬆，聽起來會像 pull，[u] 要把嘴唇往前嘟，聲音拉長。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "boot",
+    "options": [
+     "but",
+     "beat",
+     "bait",
+     "boot"
+    ],
+    "answer": 3,
+    "explanation": "播的是 boot，KK 寫 [but]，oo 唸長 u。英文字 but 的 KK 是 [bʌt]，聲音短、嘴唇不圓；beat 是 [i]，bait 是 [e]。"
+   },
+   {
+    "type": "listen",
+    "word": "shoot",
+    "options": [
+     "shoot",
+     "shot",
+     "shut",
+     "sheet"
+    ],
+    "answer": 0,
+    "explanation": "播的是 shoot，KK 寫 [ʃut]，oo 唸長 u，嘴唇圓、聲音長。這個 [ʃut] 不是英文字 shut，shut 的 KK 是 [ʃʌt]，聲音短、嘴唇不圓；shot 是 [ɑ]，sheet 是 [i]。"
+   },
+   {
+    "type": "listen",
+    "word": "soon",
+    "options": [
+     "sun",
+     "soon",
+     "seen",
+     "sin"
+    ],
+    "answer": 1,
+    "explanation": "播的是 soon，KK 寫 [sun]，oo 唸長 u。英文字 sun 的 KK 是 [sʌn]，嘴唇不圓、聲音短；seen 是長 e [i]，sin 是短 i [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "fool",
+    "options": [
+     "full",
+     "fool",
+     "fill",
+     "feel"
+    ],
+    "answer": 1,
+    "explanation": "播的是 fool，KK 寫 [ful]，嘴唇圓、聲音長。這個 [ful] 不是英文字 full，full 的 KK 是 [fʊl]，u 唸短而鬆的 [ʊ]，第六章會教；fill 是 [ɪ]，feel 是 [i]。"
+   },
+   {
+    "type": "listen",
+    "word": "moon",
+    "options": [
+     "men",
+     "mean",
+     "moon",
+     "main"
+    ],
+    "answer": 2,
+    "explanation": "播的是 moon [mun]。men 是 [ɛ]，mean 是 [i]，main 是 [e]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 oo 跟 moon 的 oo 唸法一樣？",
+    "options": [
+     "food",
+     "book",
+     "good",
+     "blood"
+    ],
+    "answer": 0,
+    "explanation": "food 的 oo 唸 [u]。book、good 的 oo 唸短的 [ʊ]，blood 的 oo 唸 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音唸 [u]，前面沒有 [j]？",
+    "options": [
+     "cute",
+     "few",
+     "blue",
+     "cube"
+    ],
+    "answer": 2,
+    "explanation": "blue 的 ue 跟在 l 後面，唸 [u]。cute、few、cube 都唸 [ju]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 u＋子音＋e 唸 [u]，前面沒有 [j]？",
+    "options": [
+     "mute",
+     "mule",
+     "cube",
+     "rule"
+    ],
+    "answer": 3,
+    "explanation": "rule 的 u＋l＋e 跟在 r 後面，美式不加 [j]，唸 [rul]。mute、mule、cube 的 u 前面都有 [j]，唸 [ju]。"
+   }
+  ]
+ },
+ {
+  "id": "pd-07",
+  "title": "軟音 c：face 裡的 c 唸 [s]",
+  "goal": "看 c 後面的字母，就能判斷它唸 [s] 還是 [k]。",
+  "key": {
+   "word": "face",
+   "kk": "s"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "c 要看後面接哪個字母才知道怎麼唸。後面是 e、i、y 的時候，c 唸 [s]，像 face、city；後面是 a、o、u 或 h 以外的子音，c 唸 [k]，像 cat、cop、cup、clap。c 在字尾也唸 [k]，像 music。ch 是另一組拼字，第三章學過。同一個 c 有兩種唸法，唸 [s] 的叫軟音，唸 [k] 的叫硬音，這課練的是軟音 c。"
+   },
+   {
+    "t": "p",
+    "text": "這個 [s] 跟 sun 的 s 完全一樣，舌尖靠近上排牙齒後面但不碰到，讓氣從縫裡吹出去，聲帶不振動。最常見的位置是字尾的 ce，像 face、nice、price。這個 e 本身不發音，它讓 c 唸 [s]。face、nice 這種單音節字，c 前面只有一個母音，母音也跟著變成長母音；dance、since 的 c 前面還有一個子音 n，母音維持短母音。"
+   },
+   {
+    "t": "p",
+    "text": "因為 c 和 s 可以唸成同一個音，有些字拼法不同，唸起來卻一模一樣。cell 和 sell 都唸 [sɛl]，cent 和 sent 都唸 [sɛnt]，聽的時候要靠前後文分辨。另外，ci 後面再接一個母音時常唸 [ʃ]，像 special、social，第八章會教。"
+   },
+   {
+    "t": "words",
+    "title": "字尾的 ce",
+    "items": [
+     {
+      "w": "face",
+      "zh": "臉",
+      "mark": "fa[c]e"
+     },
+     {
+      "w": "race",
+      "zh": "賽跑",
+      "mark": "ra[c]e"
+     },
+     {
+      "w": "place",
+      "zh": "地方",
+      "mark": "pla[c]e"
+     },
+     {
+      "w": "space",
+      "zh": "空間",
+      "mark": "spa[c]e"
+     },
+     {
+      "w": "nice",
+      "zh": "好的",
+      "mark": "ni[c]e"
+     },
+     {
+      "w": "rice",
+      "zh": "米飯",
+      "mark": "ri[c]e"
+     },
+     {
+      "w": "price",
+      "zh": "價格",
+      "mark": "pri[c]e"
+     },
+     {
+      "w": "ice",
+      "zh": "冰",
+      "mark": "i[c]e"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "其他位置的 ce、ci、cy",
+    "items": [
+     {
+      "w": "cent",
+      "zh": "一分錢",
+      "mark": "[c]ent"
+     },
+     {
+      "w": "cell",
+      "zh": "細胞",
+      "mark": "[c]ell"
+     },
+     {
+      "w": "city",
+      "zh": "城市",
+      "mark": "[c]ity"
+     },
+     {
+      "w": "spicy",
+      "zh": "辣的",
+      "mark": "spi[c]y"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[s] 和 [k] 的成對字",
+    "items": [
+     {
+      "a": "face",
+      "az": "臉",
+      "b": "fake",
+      "bz": "假的"
+     },
+     {
+      "a": "race",
+      "az": "賽跑",
+      "b": "rake",
+      "bz": "耙子"
+     },
+     {
+      "a": "lace",
+      "az": "蕾絲",
+      "b": "lake",
+      "bz": "湖"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "This place has nice rice at a low price.",
+    "zh": "這家店的米飯好吃，價格又便宜。"
+   },
+   {
+    "t": "tip",
+    "text": "看到 c 先看它後面的字母，face 的 c 後面是 e，唸成 [k] 就變成 fake 了。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "face",
+    "options": [
+     "fake",
+     "fade",
+     "fate",
+     "face"
+    ],
+    "answer": 3,
+    "explanation": "播的是 face [fes]，c 後面是 e，唸 [s]。fake 結尾是 [k]，fade 是 [d]，fate 是 [t]。"
+   },
+   {
+    "type": "listen",
+    "word": "race",
+    "options": [
+     "rake",
+     "rate",
+     "race",
+     "rain"
+    ],
+    "answer": 2,
+    "explanation": "播的是 race [res]，c 後面是 e，唸 [s]。rake 結尾是 [k]，rate 是 [t]，rain 是 [n]。"
+   },
+   {
+    "type": "listen",
+    "word": "lace",
+    "options": [
+     "late",
+     "lake",
+     "lane",
+     "lace"
+    ],
+    "answer": 3,
+    "explanation": "播的是 lace [les]。lake 結尾是 [k]，late 是 [t]，lane 是 [n]。"
+   },
+   {
+    "type": "listen",
+    "word": "rice",
+    "options": [
+     "rice",
+     "ride",
+     "right",
+     "ripe"
+    ],
+    "answer": 0,
+    "explanation": "播的是 rice [raɪs]，c 後面是 e，唸 [s]。ride 結尾是 [d]，right 是 [t]，ripe 是 [p]。"
+   },
+   {
+    "type": "listen",
+    "word": "price",
+    "options": [
+     "prize",
+     "pride",
+     "price",
+     "prime"
+    ],
+    "answer": 2,
+    "explanation": "播的是 price [praɪs]，結尾是無聲的 [s]。prize 結尾是 [z]，pride 是 [d]，prime 是 [m]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 c 唸 [s]？",
+    "options": [
+     "cap",
+     "city",
+     "cup",
+     "clap"
+    ],
+    "answer": 1,
+    "explanation": "city 的 c 後面是 i，唸 [s]。cap、cup 的 c 後面是 a、u，clap 的 c 後面是子音 l，都唸 [k]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 c 唸法跟其他三個不同？",
+    "options": [
+     "nice",
+     "cat",
+     "space",
+     "cell"
+    ],
+    "answer": 1,
+    "explanation": "cat 的 c 後面是 a，唸 [k]。nice、space、cell 的 c 後面都是 e，唸 [s]。"
+   },
+   {
+    "type": "choose",
+    "q": "cell 跟哪個字唸起來完全一樣？",
+    "options": [
+     "sell",
+     "sale",
+     "seal",
+     "shell"
+    ],
+    "answer": 0,
+    "explanation": "cell 的 c 後面是 e，唸 [s]，所以 cell 和 sell 都唸 [sɛl]。sale 是長 a [e]，seal 是長 e [i]，shell 開頭是 [ʃ]。"
+   }
+  ]
+ },
+ {
+  "id": "pd-08",
+  "title": "軟音 g：page 裡的 g 唸 [dʒ]",
+  "goal": "看到 ge、gi、gy 和 dge 會唸 [dʒ]，也記得 get、give 這幾個例外。",
+  "key": {
+   "word": "page",
+   "kk": "dʒ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "唸 [dʒ] 時，舌尖先頂住上排牙齒後面的牙齦，再放開，嘴唇稍微往前嘟，聲帶要振動。舌位跟第三章 chip 的 [tʃ] 一樣，差別只在 [dʒ] 的聲帶有振動。字母 j 也唸這個音，像 jam、job。"
+   },
+   {
+    "t": "p",
+    "text": "g 的規律跟上一課的 c 很像。後面接 e、i、y 時，g 常唸 [dʒ]，像 page、gem、magic、gym；後面接 a、o、u 或子音時唸 [g]，像 game、got、gum、glad；g 在字尾也唸 [g]，像 bag。gym 的 y 唸短母音 [ɪ]。字尾的 dge 也唸 [dʒ]，像 bridge、judge，d 不另外發音。dge 只出現在短母音後面，跟第三章 catch 的 tch 是同一個道理。"
+   },
+   {
+    "t": "p",
+    "text": "軟音 g 的例外比軟音 c 多，所以只能說它「常唸」[dʒ]。get、give、gift、girl、begin、tiger，還有第三章的 finger，g 後面接 e、i，仍然唸 [g]，這些字要另外記。change、strange 的 a 在 nge 前面唸長母音 [e]，跟 page 的 a 一樣。"
+   },
+   {
+    "t": "words",
+    "title": "g 後面接 e、i、y",
+    "items": [
+     {
+      "w": "page",
+      "zh": "頁",
+      "mark": "pa[g]e"
+     },
+     {
+      "w": "age",
+      "zh": "年紀",
+      "mark": "a[g]e"
+     },
+     {
+      "w": "stage",
+      "zh": "舞台",
+      "mark": "sta[g]e"
+     },
+     {
+      "w": "huge",
+      "zh": "巨大的",
+      "mark": "hu[g]e"
+     },
+     {
+      "w": "gem",
+      "zh": "寶石",
+      "mark": "[g]em"
+     },
+     {
+      "w": "gym",
+      "zh": "健身房",
+      "mark": "[g]ym"
+     },
+     {
+      "w": "magic",
+      "zh": "魔術",
+      "mark": "ma[g]ic"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "dge 與 j",
+    "items": [
+     {
+      "w": "bridge",
+      "zh": "橋",
+      "mark": "bri[dge]"
+     },
+     {
+      "w": "edge",
+      "zh": "邊緣",
+      "mark": "e[dge]"
+     },
+     {
+      "w": "badge",
+      "zh": "徽章",
+      "mark": "ba[dge]"
+     },
+     {
+      "w": "judge",
+      "zh": "法官",
+      "mark": "[j]u[dge]"
+     },
+     {
+      "w": "job",
+      "zh": "工作",
+      "mark": "[j]ob"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[dʒ] 和 [g] 的成對字",
+    "items": [
+     {
+      "a": "edge",
+      "az": "邊緣",
+      "b": "egg",
+      "bz": "蛋"
+     },
+     {
+      "a": "badge",
+      "az": "徽章",
+      "b": "bag",
+      "bz": "袋子"
+     },
+     {
+      "a": "jet",
+      "az": "噴射機",
+      "b": "get",
+      "bz": "得到",
+      "note": "get 的 g 後面雖然是 e，還是唸 [g]，是例外。"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "The judge stood at the edge of the stage.",
+    "zh": "法官站在舞台的邊緣。"
+   },
+   {
+    "t": "tip",
+    "text": "edge 和 egg 只差在結尾，edge 的舌尖要先頂住再放開，尾巴不要多加一個ㄧ。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "badge",
+    "options": [
+     "badge",
+     "bag",
+     "batch",
+     "back"
+    ],
+    "answer": 0,
+    "explanation": "播的是 badge [bædʒ]，dge 唸有聲的 [dʒ]。bag 結尾是 [g]，batch 結尾是無聲的 [tʃ]，back 是 [k]。"
+   },
+   {
+    "type": "listen",
+    "word": "edge",
+    "options": [
+     "egg",
+     "age",
+     "itch",
+     "edge"
+    ],
+    "answer": 3,
+    "explanation": "播的是 edge [ɛdʒ]。egg 結尾是 [g]；age 的母音是長 a [e]；itch 的母音是 [ɪ]，結尾是無聲的 [tʃ]。"
+   },
+   {
+    "type": "listen",
+    "word": "page",
+    "options": [
+     "pace",
+     "pain",
+     "page",
+     "pay"
+    ],
+    "answer": 2,
+    "explanation": "播的是 page [pedʒ]，g 後面是 e，唸 [dʒ]。pace 結尾是 [s]，pain 是 [n]，pay 結尾沒有子音。"
+   },
+   {
+    "type": "listen",
+    "word": "bug",
+    "options": [
+     "bug",
+     "budge",
+     "buzz",
+     "bus"
+    ],
+    "answer": 0,
+    "explanation": "播的是 bug [bʌg]，g 在字尾，後面沒有 e、i、y，唸 [g]。budge 結尾是 [dʒ]，buzz 是 [z]，bus 是 [s]。"
+   },
+   {
+    "type": "listen",
+    "word": "cage",
+    "options": [
+     "case",
+     "cage",
+     "cane",
+     "cake"
+    ],
+    "answer": 1,
+    "explanation": "播的是 cage [kedʒ]，g 後面是 e，唸 [dʒ]。case 結尾是 [s]，cane 是 [n]，cake 是 [k]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 g 唸 [dʒ]？",
+    "options": [
+     "get",
+     "bag",
+     "girl",
+     "gem"
+    ],
+    "answer": 3,
+    "explanation": "gem 的 g 後面是 e，唸 [dʒ]。get、girl 是例外，g 仍然唸 [g]；bag 的 g 在字尾，也唸 [g]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 g 唸法跟其他三個不同？",
+    "options": [
+     "page",
+     "give",
+     "stage",
+     "age"
+    ],
+    "answer": 1,
+    "explanation": "give 的 g 雖然接 i，仍然唸 [g]，是常見的例外。page、stage、age 的 g 都唸 [dʒ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字裡有 [dʒ] 的音？",
+    "options": [
+     "egg",
+     "gift",
+     "jam",
+     "glad"
+    ],
+    "answer": 2,
+    "explanation": "jam 開頭的 j 唸 [dʒ]。egg、gift、glad 的 g 都唸 [g]。"
+   }
+  ]
+ }
+]

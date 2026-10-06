@@ -20,7 +20,7 @@ const opt = (name) => { const i = args.indexOf(name); return i > -1 ? args[i + 1
 const ROOT = path.resolve(opt('--root') || REPO);
 const SAVE = args.includes('--save');
 const WIDTHS = [375, 1280];
-const PAGES = (opt('--pages') || 'index.html,learn.html,drill.html,me.html,grammar.html,practice.html,reading.html,dialogue.html,grammar.html?ref=tenses,listening.html,vocab.html,grammar.html?ref=verbs,writing.html,review.html,history.html,analysis.html,diagnostic.html,mock.html,signup.html,terms.html,reset.html,offline.html').split(',');
+const PAGES = (opt('--pages') || 'index.html,learn.html,drill.html,me.html,grammar.html,phonics.html,practice.html,reading.html,dialogue.html,grammar.html?ref=tenses,listening.html,vocab.html,grammar.html?ref=verbs,writing.html,review.html,history.html,analysis.html,diagnostic.html,mock.html,signup.html,terms.html,reset.html,offline.html').split(',');
 const CHROME = ['C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']
   .find((p) => fs.existsSync(p));
 const PORT = 8846, DEBUG_PORT = 9346;

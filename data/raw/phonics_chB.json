@@ -1,0 +1,1534 @@
+[
+ {
+  "id": "pb-01",
+  "title": "子音 v：van 裡的 v",
+  "goal": "會用上排牙齒碰下唇唸出 [v]，聽得出 van、fan、ban 的差別。",
+  "key": {
+   "word": "van",
+   "kk": "v"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "v 唸 [v]。上排牙齒輕輕放在下唇上，氣從牙齒和嘴唇中間的小縫擠出來，同時聲帶要振動。唸的時候用手摸著喉嚨，有感覺到振動才算對。"
+   },
+   {
+    "t": "words",
+    "title": "v 在字首或字中",
+    "items": [
+     {
+      "w": "van",
+      "zh": "廂型車",
+      "mark": "[v]an"
+     },
+     {
+      "w": "vet",
+      "zh": "獸醫",
+      "mark": "[v]et"
+     },
+     {
+      "w": "vest",
+      "zh": "背心",
+      "mark": "[v]est"
+     },
+     {
+      "w": "vent",
+      "zh": "通風口",
+      "mark": "[v]ent"
+     },
+     {
+      "w": "vivid",
+      "zh": "鮮明的",
+      "mark": "[v]i[v]id"
+     },
+     {
+      "w": "vast",
+      "zh": "廣大的",
+      "mark": "[v]ast"
+     },
+     {
+      "w": "invest",
+      "zh": "投資",
+      "mark": "in[v]est"
+     },
+     {
+      "w": "invent",
+      "zh": "發明",
+      "mark": "in[v]ent"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "英文字幾乎不會用 v 結尾，所以字尾的 [v] 會寫成 ve，這個 e 不發音。solve、valve 的 v 前面還有 l，母音照閉音節的規則唸短母音。have 的 a 和 give 的 i 也唸短母音，跟 cat、sit 一樣，這兩個字要當例外記。第四章會學到 gave、five 這種字，字尾的 e 會讓前面的母音變長。"
+   },
+   {
+    "t": "words",
+    "title": "字尾寫成 ve",
+    "items": [
+     {
+      "w": "have",
+      "zh": "有",
+      "mark": "ha[ve]"
+     },
+     {
+      "w": "give",
+      "zh": "給",
+      "mark": "gi[ve]"
+     },
+     {
+      "w": "solve",
+      "zh": "解決",
+      "mark": "sol[ve]"
+     },
+     {
+      "w": "valve",
+      "zh": "閥門",
+      "mark": "[v]al[ve]"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "台灣學生常把 [v] 唸成注音ㄨ開頭的音，嘴唇嘟圓、牙齒沒碰到嘴唇，vet 就變成 wet。也有人上下嘴唇整個閉起來，van 變成 ban。聲帶忘了振動的話，van 聽起來會像 fan。"
+   },
+   {
+    "t": "pairs",
+    "title": "聽聽看差在哪裡",
+    "items": [
+     {
+      "a": "van",
+      "az": "廂型車",
+      "b": "fan",
+      "bz": "電風扇"
+     },
+     {
+      "a": "van",
+      "az": "廂型車",
+      "b": "ban",
+      "bz": "禁止"
+     },
+     {
+      "a": "vet",
+      "az": "獸醫",
+      "b": "bet",
+      "bz": "打賭"
+     },
+     {
+      "a": "vest",
+      "az": "背心",
+      "b": "best",
+      "bz": "最好的"
+     },
+     {
+      "a": "vet",
+      "az": "獸醫",
+      "b": "wet",
+      "bz": "濕的"
+     },
+     {
+      "a": "vest",
+      "az": "背心",
+      "b": "west",
+      "bz": "西方"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "The vet left a vivid vest in the van.",
+    "zh": "獸醫把一件顏色很鮮豔的背心留在廂型車裡。"
+   },
+   {
+    "t": "tip",
+    "text": "唸 [v] 時上排牙齒一定要碰到下唇，嘴唇一閉起來就變成 [b] 了。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "fan",
+    "options": [
+     "fan",
+     "ban",
+     "van",
+     "man"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 fan（電風扇）。開頭只有吹氣，聲帶不振動，是 [f]。van 的 [v] 聲帶要振動，ban 和 man 的嘴唇會先閉起來。"
+   },
+   {
+    "type": "listen",
+    "word": "vet",
+    "options": [
+     "vet",
+     "net",
+     "bet",
+     "wet"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 vet（獸醫）。開頭上排牙齒碰下唇、聲帶振動。bet 的嘴唇會閉起來，wet 的嘴唇是嘟圓的，net 開頭是鼻音 [n]。"
+   },
+   {
+    "type": "listen",
+    "word": "best",
+    "options": [
+     "vest",
+     "west",
+     "rest",
+     "best"
+    ],
+    "answer": 3,
+    "explanation": "這題播的是 best（最好的）。開頭雙唇閉起來再彈開，是 [b]。vest 要用牙齒碰下唇，west 的嘴唇嘟圓，rest 開頭是 [r]。"
+   },
+   {
+    "type": "listen",
+    "word": "vent",
+    "options": [
+     "bent",
+     "vent",
+     "went",
+     "sent"
+    ],
+    "answer": 1,
+    "explanation": "這題播的是 vent（通風口）。開頭上排牙齒碰下唇、聲帶振動，是 [v]。bent 的嘴唇會先閉起來，是 [b]；went 的嘴唇嘟圓、牙齒沒碰到嘴唇，是 [w]；sent 開頭是 [s]，聲帶不振動。"
+   },
+   {
+    "type": "listen",
+    "word": "west",
+    "options": [
+     "vest",
+     "best",
+     "west",
+     "wet"
+    ],
+    "answer": 2,
+    "explanation": "這題播的是 west（西方）。開頭嘴唇嘟圓、牙齒沒碰到嘴唇，是 [w]。vest 要用上排牙齒碰下唇，best 的上下嘴唇會先閉起來，wet 的字尾只有 [t]，少了 [s]。"
+   },
+   {
+    "type": "choose",
+    "q": "have 的 a 唸什麼音？",
+    "options": [
+     "[e]，跟字母 A 的名稱一樣",
+     "[æ]，跟 cat 的 a 一樣",
+     "[ɑ]，跟 hot 的 o 一樣",
+     "不發音"
+    ],
+    "answer": 1,
+    "explanation": "have 的 a 唸短母音 [æ]，跟 cat 一樣。英文字不用 v 結尾，所以後面補了一個不發音的 e，但這個 e 在 have 裡沒有讓 a 變長，要當例外記。第四章會學到 gave、save，那裡的 a 就唸長母音 [e]。a 也不會唸成 hot 的 [ɑ]，它是這個字唯一的母音，一定要唸出來。"
+   },
+   {
+    "type": "choose",
+    "q": "唸 [v] 的時候，嘴巴要怎麼做？",
+    "options": [
+     "上下嘴唇閉起來再打開",
+     "上排牙齒輕碰下唇，只吹氣不振動",
+     "嘴唇嘟圓往前推",
+     "上排牙齒輕碰下唇，聲帶振動"
+    ],
+    "answer": 3,
+    "explanation": "[v] 要上排牙齒輕碰下唇，而且聲帶振動。只吹氣不振動是 [f]，嘴唇閉起來是 [b]，嘴唇嘟圓是 [w]。"
+   }
+  ]
+ },
+ {
+  "id": "pb-02",
+  "title": "子音 z：zip 裡的 z",
+  "goal": "會唸出聲帶振動的 [z]，也知道 is、his、has、as 的 s 唸 [z]。",
+  "key": {
+   "word": "zip",
+   "kk": "z"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "z 唸 [z]。舌頭的位置跟 [s] 一樣，舌尖靠近上排牙齒後面的牙齦，留一條細縫讓氣擠出來。差別在 [z] 聲帶要振動，聽起來像蜜蜂嗡嗡飛。"
+   },
+   {
+    "t": "p",
+    "text": "台灣學生常把 [z] 唸成 [s]，zip 一不小心就變成 sip。也有人唸成注音ㄗ，舌尖先頂住再放開。[z] 的氣從頭到尾沒有被擋住，可以一直拉長，試試看把 zzz 拖長兩秒。"
+   },
+   {
+    "t": "words",
+    "title": "z、zz 唸 [z]",
+    "items": [
+     {
+      "w": "zip",
+      "zh": "拉鍊",
+      "mark": "[z]ip"
+     },
+     {
+      "w": "zap",
+      "zh": "電擊",
+      "mark": "[z]ap"
+     },
+     {
+      "w": "zigzag",
+      "zh": "之字形",
+      "mark": "[z]ig[z]ag"
+     },
+     {
+      "w": "buzz",
+      "zh": "嗡嗡聲",
+      "mark": "bu[zz]"
+     },
+     {
+      "w": "jazz",
+      "zh": "爵士樂",
+      "mark": "ja[zz]"
+     },
+     {
+      "w": "fizz",
+      "zh": "氣泡的嘶嘶聲",
+      "mark": "fi[zz]"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "有幾個天天用到的小字，拼字是 s，卻唸 [z]。is、his、has、as 都是這樣，唸到字尾時聲帶要繼續振動。同樣是 s 結尾，bus、gas、yes、us 都唸 [s]，所以 is、his、has、as 這四個字要直接記起來。"
+   },
+   {
+    "t": "words",
+    "title": "s 唸 [z] 的常用字",
+    "items": [
+     {
+      "w": "is",
+      "zh": "是",
+      "mark": "i[s]"
+     },
+     {
+      "w": "his",
+      "zh": "他的",
+      "mark": "hi[s]"
+     },
+     {
+      "w": "has",
+      "zh": "有",
+      "mark": "ha[s]"
+     },
+     {
+      "w": "as",
+      "zh": "當作",
+      "mark": "a[s]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[z] 和 [s]",
+    "items": [
+     {
+      "a": "zip",
+      "az": "拉鍊",
+      "b": "sip",
+      "bz": "小口喝"
+     },
+     {
+      "a": "zap",
+      "az": "電擊",
+      "b": "sap",
+      "bz": "樹液"
+     },
+     {
+      "a": "buzz",
+      "az": "嗡嗡聲",
+      "b": "bus",
+      "bz": "公車"
+     },
+     {
+      "a": "his",
+      "az": "他的",
+      "b": "hiss",
+      "bz": "發出嘶嘶聲"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "His jazz band has a zigzag flag.",
+    "zh": "他的爵士樂團有一面之字形圖案的旗子。"
+   },
+   {
+    "t": "tip",
+    "text": "his、buzz 的母音要唸長一點，最後聲帶別停；母音一縮短、尾巴收成 [s]，就變成 hiss、bus 了。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "zip",
+    "options": [
+     "zip",
+     "sip",
+     "zap",
+     "sap"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 zip（拉鍊）。開頭聲帶有振動，是 [z]，母音是 sit 的 [ɪ]。sip 的 [s] 沒有振動，zap 和 sap 的母音是 cat 的 [æ]。"
+   },
+   {
+    "type": "listen",
+    "word": "bus",
+    "options": [
+     "buzz",
+     "boss",
+     "bus",
+     "bun"
+    ],
+    "answer": 2,
+    "explanation": "這題播的是 bus（公車）。字尾是沒有振動的 [s]。buzz 的字尾是有振動的 [z]，bun 的字尾是 [n]，boss 的母音不一樣。"
+   },
+   {
+    "type": "listen",
+    "word": "his",
+    "options": [
+     "hiss",
+     "hit",
+     "hip",
+     "his"
+    ],
+    "answer": 3,
+    "explanation": "這題播的是 his（他的）。拼字是 s，字尾卻唸有振動的 [z]。hiss 的字尾是 [s]，聲帶不振動。hit 和 hip 的字尾是 [t] 和 [p]，嘴巴會擋住氣，跟可以拉長的 [z] 不一樣。"
+   },
+   {
+    "type": "listen",
+    "word": "fuzz",
+    "options": [
+     "fuss",
+     "fuzz",
+     "fun",
+     "fizz"
+    ],
+    "answer": 1,
+    "explanation": "這題播的是 fuzz（絨毛）。字尾的 zz 唸 [z]，聲帶要一直振動，前面的母音是 cup 的 [ʌ]，會拉長一點。fuss 的字尾是不振動的 [s]，母音比較短；fun 的字尾是 [n]；fizz 的母音是 sit 的 [ɪ]。"
+   },
+   {
+    "type": "choose",
+    "q": "下面哪個字的 s 唸 [z]？",
+    "options": [
+     "bus",
+     "has",
+     "sit",
+     "gas"
+    ],
+    "answer": 1,
+    "explanation": "has 是常用小字，s 唸 [z]。bus、sit、gas 的 s 都唸 [s]。"
+   },
+   {
+    "type": "choose",
+    "q": "[z] 跟 [s] 差在哪裡？",
+    "options": [
+     "舌頭的位置不同",
+     "[z] 要用牙齒碰下唇",
+     "[z] 聲帶要振動，[s] 不振動",
+     "[z] 嘴唇要閉起來"
+    ],
+    "answer": 2,
+    "explanation": "[z] 和 [s] 的舌頭位置一樣，差別只在聲帶有沒有振動。牙齒碰下唇的是 [v] 和 [f]，嘴唇閉起來的是 [b] 和 [p]。"
+   },
+   {
+    "type": "choose",
+    "q": "his 的字尾怎麼唸？",
+    "options": [
+     "[s]，聲帶不振動",
+     "像注音ㄗ，舌尖先頂住",
+     "不發音",
+     "[z]，聲帶振動"
+    ],
+    "answer": 3,
+    "explanation": "his 的 s 唸 [z]，唸到字尾聲帶要繼續振動。唸成 [s] 就變成 hiss。[z] 的氣從頭到尾沒被擋住，跟舌尖先頂住再放開的ㄗ不一樣。字尾的 s 也要唸出來，不能省掉。"
+   }
+  ]
+ },
+ {
+  "id": "pb-03",
+  "title": "子音 l：let 開頭的 l",
+  "goal": "會唸出不帶鼻音的 [l]，把 let 和 net、lot 和 not 分清楚。",
+  "key": {
+   "word": "let",
+   "kk": "l"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "字首的 l 唸 [l]。舌尖頂住上排牙齒後面的牙齦，聲帶振動，讓氣從舌頭兩側流出去。舌尖先放好，再接後面的母音。"
+   },
+   {
+    "t": "p",
+    "text": "很多台灣人說國語時ㄌ、ㄋ分得不太清楚，「老」跟「腦」唸起來一樣，講英文時 let 就容易變成 net。[n] 的舌尖位置跟 [l] 差不多，差在 [n] 的氣從鼻子出來。可以捏住鼻子唸 let 試試看，聲音順順出來就是 [l]；聲音悶住、鼻子脹脹的，就是跑成 [n] 了。以後學到 light、night 這類字，也用同樣的方法分辨。"
+   },
+   {
+    "t": "words",
+    "items": [
+     {
+      "w": "let",
+      "zh": "讓",
+      "mark": "[l]et"
+     },
+     {
+      "w": "lot",
+      "zh": "很多（a lot）",
+      "mark": "[l]ot"
+     },
+     {
+      "w": "lap",
+      "zh": "膝上",
+      "mark": "[l]ap"
+     },
+     {
+      "w": "lip",
+      "zh": "嘴唇",
+      "mark": "[l]ip"
+     },
+     {
+      "w": "leg",
+      "zh": "腿",
+      "mark": "[l]eg"
+     },
+     {
+      "w": "lid",
+      "zh": "蓋子",
+      "mark": "[l]id"
+     },
+     {
+      "w": "lock",
+      "zh": "鎖",
+      "mark": "[l]ock"
+     },
+     {
+      "w": "lamp",
+      "zh": "檯燈",
+      "mark": "[l]amp"
+     },
+     {
+      "w": "list",
+      "zh": "清單",
+      "mark": "[l]ist"
+     },
+     {
+      "w": "left",
+      "zh": "左邊",
+      "mark": "[l]eft"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[l] 和 [n]",
+    "items": [
+     {
+      "a": "let",
+      "az": "讓",
+      "b": "net",
+      "bz": "網子"
+     },
+     {
+      "a": "lot",
+      "az": "很多",
+      "b": "not",
+      "bz": "不"
+     },
+     {
+      "a": "lap",
+      "az": "膝上",
+      "b": "nap",
+      "bz": "小睡"
+     },
+     {
+      "a": "lag",
+      "az": "落後",
+      "b": "nag",
+      "bz": "嘮叨"
+     },
+     {
+      "a": "lip",
+      "az": "嘴唇",
+      "b": "nip",
+      "bz": "輕咬；捏"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "Let me lock the lab and get the lamp.",
+    "zh": "我先把實驗室鎖好，再去拿檯燈。"
+   },
+   {
+    "t": "tip",
+    "text": "lot 和 not 只差開頭一個音，唸錯了「很多」就會變成「不」。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "net",
+    "options": [
+     "not",
+     "lot",
+     "net",
+     "let"
+    ],
+    "answer": 2,
+    "explanation": "這題播的是 net（網子）。開頭是氣從鼻子出來的 [n]，母音是 bed 的 [ɛ]。let 的 [l] 鼻子不出氣，lot 和 not 的母音是 hot 的 [ɑ]。"
+   },
+   {
+    "type": "listen",
+    "word": "lot",
+    "options": [
+     "lot",
+     "lit",
+     "not",
+     "nut"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 lot（很多）。開頭是 [l]，母音是 hot 的 [ɑ]。not 開頭是 [n]，nut 和 lit 的母音不一樣。"
+   },
+   {
+    "type": "listen",
+    "word": "nap",
+    "options": [
+     "lap",
+     "lip",
+     "nip",
+     "nap"
+    ],
+    "answer": 3,
+    "explanation": "這題播的是 nap（小睡）。開頭有鼻音，是 [n]，母音是 cat 的 [æ]。lap 開頭是 [l]，lip 和 nip 的母音是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "lag",
+    "options": [
+     "lag",
+     "nag",
+     "log",
+     "lid"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 lag（落後）。開頭是 [l]，母音嘴巴張大，是 [æ]。nag 開頭是 [n]，lid 的母音是 [ɪ]，log 的母音也不一樣。"
+   },
+   {
+    "type": "listen",
+    "word": "neck",
+    "options": [
+     "lock",
+     "neck",
+     "luck",
+     "leg"
+    ],
+    "answer": 1,
+    "explanation": "這題播的是 neck（脖子）。開頭氣從鼻子出來，是 [n]，母音是 bed 的 [ɛ]。leg 開頭是 [l]，字尾是 [g]。lock 和 luck 開頭也是 [l]，母音分別是 [ɑ] 和 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "唸 [l] 的時候，氣從哪裡出來？",
+    "options": [
+     "從鼻子",
+     "從舌頭兩側",
+     "從舌頭中間的一條細縫",
+     "從上排牙齒和下唇中間"
+    ],
+    "answer": 1,
+    "explanation": "[l] 的舌尖頂住上排牙齒後面的牙齦，把中間擋住，氣只能從舌頭兩側繞出去。氣從鼻子出來的是 [n]，從舌頭中間細縫擠出來的是 [s]、[z]，從上排牙齒和下唇中間出來的是 [f]、[v]。"
+   },
+   {
+    "type": "choose",
+    "q": "想知道自己唸的是 [l] 還是 [n]，最簡單的方法是什麼？",
+    "options": [
+     "嘴巴張到最大再唸",
+     "用手摸喉嚨，看有沒有振動",
+     "照鏡子看嘴唇有沒有嘟起來",
+     "捏住鼻子唸，唸得順就是 [l]"
+    ],
+    "answer": 3,
+    "explanation": "[n] 要靠鼻子出氣，捏住鼻子就唸不順。[l] 和 [n] 聲帶都會振動，摸喉嚨分不出來。"
+   }
+  ]
+ },
+ {
+  "id": "pb-04",
+  "title": "子音 r：red 開頭的 r",
+  "goal": "會唸出嘴唇微嘟、舌尖不碰上顎的 [r]，把 red 和 led、rock 和 lock 分清楚。",
+  "key": {
+   "word": "red",
+   "kk": "r"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "字首的 r 唸 [r]。嘴唇微微嘟起來，舌尖往後捲，靠近上顎但不要碰到，聲帶振動，接著滑到後面的母音。"
+   },
+   {
+    "t": "p",
+    "text": "台灣學生常把 [r] 唸成注音ㄖ。唸ㄖ時嘴唇是平的，舌尖翹得很靠近上顎，會帶一點摩擦聲。美式的 [r] 嘴唇會微微嘟起來，舌尖離上顎遠一點，聽不到摩擦聲。另一個常見的問題是 r、l 混在一起，rock 唸成 lock。分辨的關鍵在舌尖，[l] 的舌尖頂住上排牙齒後面，[r] 的舌尖懸在半空中，哪裡都不碰。"
+   },
+   {
+    "t": "words",
+    "items": [
+     {
+      "w": "red",
+      "zh": "紅色",
+      "mark": "[r]ed"
+     },
+     {
+      "w": "rock",
+      "zh": "岩石",
+      "mark": "[r]ock"
+     },
+     {
+      "w": "rip",
+      "zh": "撕破",
+      "mark": "[r]ip"
+     },
+     {
+      "w": "run",
+      "zh": "跑",
+      "mark": "[r]un"
+     },
+     {
+      "w": "rat",
+      "zh": "老鼠",
+      "mark": "[r]at"
+     },
+     {
+      "w": "rest",
+      "zh": "休息",
+      "mark": "[r]est"
+     },
+     {
+      "w": "rob",
+      "zh": "搶劫",
+      "mark": "[r]ob"
+     },
+     {
+      "w": "rug",
+      "zh": "小地毯",
+      "mark": "[r]ug"
+     },
+     {
+      "w": "rent",
+      "zh": "租金",
+      "mark": "[r]ent"
+     },
+     {
+      "w": "risk",
+      "zh": "風險",
+      "mark": "[r]isk"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[r] 和 [l]",
+    "items": [
+     {
+      "a": "red",
+      "az": "紅色",
+      "b": "led",
+      "bz": "帶領（過去式）"
+     },
+     {
+      "a": "rock",
+      "az": "岩石",
+      "b": "lock",
+      "bz": "鎖"
+     },
+     {
+      "a": "rip",
+      "az": "撕破",
+      "b": "lip",
+      "bz": "嘴唇"
+     },
+     {
+      "a": "rap",
+      "az": "饒舌",
+      "b": "lap",
+      "bz": "膝上"
+     },
+     {
+      "a": "rid",
+      "az": "擺脫",
+      "b": "lid",
+      "bz": "蓋子",
+      "note": "rid 常用在 get rid of，意思是擺脫。"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "這課只練開頭的 r。car、her 這種母音後面的 r 唸法不一樣，第七章會再教。"
+   },
+   {
+    "t": "sent",
+    "en": "The red rug has a big rip.",
+    "zh": "那塊紅色小地毯破了一個大洞。"
+   },
+   {
+    "t": "tip",
+    "text": "r 開頭的字，嘴唇先微微嘟起來再出聲，舌尖只要碰到上排牙齒後面就會變成 [l]。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "lock",
+    "options": [
+     "rock",
+     "lock",
+     "rack",
+     "lack"
+    ],
+    "answer": 1,
+    "explanation": "這題播的是 lock（鎖）。開頭舌尖頂住上排牙齒後面，是 [l]，母音是 hot 的 [ɑ]。rock 開頭是 [r]，rack 和 lack 的母音是 cat 的 [æ]。"
+   },
+   {
+    "type": "listen",
+    "word": "rag",
+    "options": [
+     "lag",
+     "rug",
+     "log",
+     "rag"
+    ],
+    "answer": 3,
+    "explanation": "這題播的是 rag（抹布）。開頭嘴唇微嘟、舌尖懸空，是 [r]，母音是 cat 的 [æ]。lag 開頭舌尖頂住上排牙齒後面，是 [l]；rug 的母音是 cup 的 [ʌ]；log 開頭是 [l]，母音也不一樣。"
+   },
+   {
+    "type": "listen",
+    "word": "red",
+    "options": [
+     "red",
+     "led",
+     "rid",
+     "lid"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 red（紅色）。開頭是 [r]，母音是 bed 的 [ɛ]。led 開頭是 [l]，rid 和 lid 的母音是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "lip",
+    "options": [
+     "rap",
+     "lap",
+     "lip",
+     "rip"
+    ],
+    "answer": 2,
+    "explanation": "這題播的是 lip（嘴唇）。開頭是 [l]，母音是 [ɪ]。rip 開頭是 [r]，rap 和 lap 的母音是 [æ]。"
+   },
+   {
+    "type": "listen",
+    "word": "rent",
+    "options": [
+     "rent",
+     "lent",
+     "rant",
+     "went"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 rent（租金）。開頭嘴唇微嘟、舌尖往後捲不碰上面，是 [r]，母音是 bed 的 [ɛ]。lent 開頭舌尖頂住上排牙齒後面，是 [l]；went 開頭是 [w]，舌頭不用往後捲；rant 的母音是 cat 的 [æ]。"
+   },
+   {
+    "type": "choose",
+    "q": "[r] 跟 [l] 最大的差別在哪裡？",
+    "options": [
+     "[r] 的舌尖頂住上排牙齒後面，[l] 的舌尖懸空不碰上面",
+     "[r] 聲帶不振動，[l] 聲帶振動",
+     "[r] 的氣從鼻子出來，[l] 的氣從舌頭兩側出來",
+     "[r] 的舌尖懸空不碰上面，[l] 的舌尖頂住上排牙齒後面"
+    ],
+    "answer": 3,
+    "explanation": "兩個音聲帶都會振動，氣也都從嘴巴出來，差別在舌尖。[l] 的舌尖頂住上排牙齒後面，[r] 的舌尖往後捲、懸在半空中。第一個選項剛好把兩個音說反了。"
+   },
+   {
+    "type": "choose",
+    "q": "唸 [r] 時，嘴唇要怎麼擺？",
+    "options": [
+     "抿成一條線",
+     "微微嘟起來",
+     "張到最大",
+     "上下嘴唇閉緊"
+    ],
+    "answer": 1,
+    "explanation": "美式的 [r] 嘴唇會微微嘟起來。注音ㄖ的嘴唇是平的，這也是兩個音聽起來不一樣的原因之一。"
+   }
+  ]
+ },
+ {
+  "id": "pb-05",
+  "title": "l 連綴：black 裡連著唸的 bl",
+  "goal": "會把 bl、cl、fl、gl、pl、sl 兩個子音連著唸，中間不多出ㄜ。",
+  "key": {
+   "word": "black",
+   "kk": "bl kl fl gl pl sl"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "bl、cl、fl、gl、pl、sl 是子音加 l 的連綴，兩個子音之間沒有母音，要一口氣唸完。唸 black 時，嘴唇閉著準備 [b]，舌尖同時已經頂到上排牙齒後面，嘴唇一打開就直接進到 [l]。cl 的 c 唸 [k]，所以 KK 寫成 [kl]。"
+   },
+   {
+    "t": "p",
+    "text": "中文沒有兩個子音連在一起的音節，所以台灣學生常在中間偷偷加一個ㄜ，black 唸成「ㄅㄜ lack」，一個音節變成兩個。另一種錯是把 l 吞掉，black 變成 back，意思就差很多了。"
+   },
+   {
+    "t": "words",
+    "items": [
+     {
+      "w": "black",
+      "zh": "黑色",
+      "mark": "[bl]ack"
+     },
+     {
+      "w": "block",
+      "zh": "街區",
+      "mark": "[bl]ock"
+     },
+     {
+      "w": "clap",
+      "zh": "拍手",
+      "mark": "[cl]ap"
+     },
+     {
+      "w": "class",
+      "zh": "班級",
+      "mark": "[cl]ass"
+     },
+     {
+      "w": "clock",
+      "zh": "時鐘",
+      "mark": "[cl]ock"
+     },
+     {
+      "w": "flag",
+      "zh": "旗子",
+      "mark": "[fl]ag"
+     },
+     {
+      "w": "flat",
+      "zh": "平的",
+      "mark": "[fl]at"
+     },
+     {
+      "w": "glad",
+      "zh": "高興的",
+      "mark": "[gl]ad"
+     },
+     {
+      "w": "plan",
+      "zh": "計畫",
+      "mark": "[pl]an"
+     },
+     {
+      "w": "plug",
+      "zh": "插頭",
+      "mark": "[pl]ug"
+     },
+     {
+      "w": "slip",
+      "zh": "滑倒",
+      "mark": "[sl]ip"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "少了 l 就變成另一個字",
+    "items": [
+     {
+      "a": "black",
+      "az": "黑色",
+      "b": "back",
+      "bz": "背後"
+     },
+     {
+      "a": "clap",
+      "az": "拍手",
+      "b": "cap",
+      "bz": "帽子"
+     },
+     {
+      "a": "plan",
+      "az": "計畫",
+      "b": "pan",
+      "bz": "平底鍋"
+     },
+     {
+      "a": "slip",
+      "az": "滑倒",
+      "b": "sip",
+      "bz": "小口喝"
+     },
+     {
+      "a": "flat",
+      "az": "平的",
+      "b": "fat",
+      "bz": "胖的"
+     },
+     {
+      "a": "glass",
+      "az": "玻璃",
+      "b": "gas",
+      "bz": "瓦斯"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "Slip the black plug into the slot.",
+    "zh": "把黑色插頭塞進插槽裡。"
+   },
+   {
+    "t": "tip",
+    "text": "唸完 bl、pl 這類連綴，如果聽到中間多了一個ㄜ，就是多唸了一個音節。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "back",
+    "options": [
+     "buck",
+     "black",
+     "back",
+     "block"
+    ],
+    "answer": 2,
+    "explanation": "這題播的是 back（背後）。開頭只有 [b]，後面沒有 [l]。black 和 block 都有 bl，buck 的母音是 cup 的 [ʌ]。"
+   },
+   {
+    "type": "listen",
+    "word": "clap",
+    "options": [
+     "clap",
+     "clip",
+     "cap",
+     "cop"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 clap（拍手）。[k] 後面直接接 [l]，母音是 [æ]。cap 沒有 [l]，cop 的母音是 [ɑ]，clip 的母音是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "pan",
+    "options": [
+     "plan",
+     "pan",
+     "pun",
+     "plum"
+    ],
+    "answer": 1,
+    "explanation": "這題播的是 pan（平底鍋）。p 後面直接接母音 [æ]，沒有 [l]。plan 有 pl 連綴，plum 和 pun 的母音是 [ʌ]。"
+   },
+   {
+    "type": "listen",
+    "word": "flat",
+    "options": [
+     "fat",
+     "fit",
+     "flap",
+     "flat"
+    ],
+    "answer": 3,
+    "explanation": "這題播的是 flat（平的）。開頭 fl 連著唸，字尾是 [t]。fat 少了 [l]，flap 的字尾是 [p]，fit 的母音是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "slip",
+    "options": [
+     "slap",
+     "sap",
+     "slip",
+     "sip"
+    ],
+    "answer": 2,
+    "explanation": "這題播的是 slip（滑倒）。s 後面直接接 [l]，中間沒有母音，母音是 sit 的 [ɪ]。sip 少了 [l]，slap 和 sap 的母音是 cat 的 [æ]。"
+   },
+   {
+    "type": "choose",
+    "q": "black 怎麼唸才對？",
+    "options": [
+     "b 後面加一個ㄜ，唸成「ㄅㄜ lack」",
+     "l 不發音，唸成 back",
+     "a 唸成 hot 的 [ɑ]",
+     "b 和 l 連著唸，整個字一個音節"
+    ],
+    "answer": 3,
+    "explanation": "bl 要一口氣連著唸，black 只有一個母音 a，所以只有一個音節。加了ㄜ會多出一個音節，l 不唸就變成 back，a 唸成 [ɑ] 就變成 block。"
+   },
+   {
+    "type": "choose",
+    "q": "下面哪個字的開頭是子音加 l 的連綴？",
+    "options": [
+     "glad",
+     "lamp",
+     "help",
+     "gap"
+    ],
+    "answer": 0,
+    "explanation": "glad 開頭是 g 加 l，兩個子音連著唸。lamp 開頭只有 l，help 的 l 在後面，gap 沒有 l。"
+   }
+  ]
+ },
+ {
+  "id": "pb-06",
+  "title": "r 連綴：grass 裡連著唸的 gr",
+  "goal": "會把 br、cr、dr、fr、gr、pr、tr 連著唸，也分得出 grass 和 glass。",
+  "key": {
+   "word": "grass",
+   "kk": "br kr dr fr gr pr tr"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "br、cr、dr、fr、gr、pr、tr 是子音加 r 的連綴，跟上一課一樣，中間不加母音。唸 grass 時，舌根抬起來準備 [g]，嘴唇同時微微嘟起、舌尖往後捲，[g] 一放開就滑進 [r]。cr 的 c 唸 [k]，所以 KK 寫成 [kr]。"
+   },
+   {
+    "t": "words",
+    "title": "br、cr、fr、gr、pr",
+    "items": [
+     {
+      "w": "brick",
+      "zh": "磚塊",
+      "mark": "[br]ick"
+     },
+     {
+      "w": "brand",
+      "zh": "品牌",
+      "mark": "[br]and"
+     },
+     {
+      "w": "crab",
+      "zh": "螃蟹",
+      "mark": "[cr]ab"
+     },
+     {
+      "w": "frog",
+      "zh": "青蛙",
+      "mark": "[fr]og"
+     },
+     {
+      "w": "grass",
+      "zh": "草",
+      "mark": "[gr]ass"
+     },
+     {
+      "w": "press",
+      "zh": "按；壓",
+      "mark": "[pr]ess"
+     },
+     {
+      "w": "print",
+      "zh": "列印",
+      "mark": "[pr]int"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "美式英文的 tr 聽起來很像注音ㄔ，dr 很像注音ㄓ。舌尖往後捲去接 [r]，前面的 [t]、[d] 就會帶出這種聲音，拼字還是 tr、dr。唸起來像ㄔ、ㄓ沒關係，嘴唇記得跟 [r] 一樣微微嘟起來，trip 開頭聽起來會比較像ㄔㄨ。"
+   },
+   {
+    "t": "words",
+    "title": "tr、dr",
+    "items": [
+     {
+      "w": "trip",
+      "zh": "旅行",
+      "mark": "[tr]ip"
+     },
+     {
+      "w": "track",
+      "zh": "追蹤",
+      "mark": "[tr]ack"
+     },
+     {
+      "w": "drum",
+      "zh": "鼓",
+      "mark": "[dr]um"
+     },
+     {
+      "w": "drop",
+      "zh": "掉落",
+      "mark": "[dr]op"
+     },
+     {
+      "w": "draft",
+      "zh": "草稿",
+      "mark": "[dr]aft"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "這課最容易跟上一課搞混。gr 唸成 gl，grass（草）就變成 glass（玻璃）。cram 和 clam、brand 和 bland 也是一樣的狀況，可以看下面的字兩兩對照著唸。分辨方法跟前面學 l、r 時一樣，[l] 的舌尖頂住上排牙齒後面，[r] 的舌尖懸空不碰。"
+   },
+   {
+    "t": "pairs",
+    "title": "r 連綴和 l 連綴",
+    "items": [
+     {
+      "a": "grass",
+      "az": "草",
+      "b": "glass",
+      "bz": "玻璃"
+     },
+     {
+      "a": "brand",
+      "az": "品牌",
+      "b": "bland",
+      "bz": "平淡的"
+     },
+     {
+      "a": "cram",
+      "az": "考前猛讀",
+      "b": "clam",
+      "bz": "蛤蜊"
+     },
+     {
+      "a": "grad",
+      "az": "畢業生",
+      "b": "glad",
+      "bz": "高興的"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "A crab crept on the grass.",
+    "zh": "一隻螃蟹在草地上慢慢爬。"
+   },
+   {
+    "t": "tip",
+    "text": "tr、dr 唸起來像ㄔ、ㄓ很正常，嘴唇記得微微嘟起來，後面的 [r] 才不會不見。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "glass",
+    "options": [
+     "brass",
+     "gas",
+     "grass",
+     "glass"
+    ],
+    "answer": 3,
+    "explanation": "這題播的是 glass（玻璃）。g 後面接的是舌尖頂住上面的 [l]。grass 是 gr，舌尖懸空；gas 沒有 [l]；brass 開頭是 [b]。"
+   },
+   {
+    "type": "listen",
+    "word": "brand",
+    "options": [
+     "brand",
+     "bend",
+     "bland",
+     "band"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 brand（品牌）。b 後面接 [r]，嘴唇微嘟。bland 是 bl，band 少了 [r]，bend 的母音是 [ɛ]。"
+   },
+   {
+    "type": "listen",
+    "word": "clam",
+    "options": [
+     "clam",
+     "crab",
+     "cap",
+     "cram"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 clam（蛤蜊）。[k] 後面接 [l]，字尾是 [m]。cram 是 cr，crab 的字尾是 [b]，cap 沒有 [l]。"
+   },
+   {
+    "type": "listen",
+    "word": "trip",
+    "options": [
+     "drip",
+     "trim",
+     "trip",
+     "tip"
+    ],
+    "answer": 2,
+    "explanation": "這題播的是 trip（旅行）。開頭的 tr 聽起來接近注音ㄔ，字尾是 [p]。tip 少了 [r]，drip 開頭接近ㄓ，trim 的字尾是 [m]。"
+   },
+   {
+    "type": "listen",
+    "word": "crab",
+    "options": [
+     "clap",
+     "crab",
+     "crib",
+     "cab"
+    ],
+    "answer": 1,
+    "explanation": "這題播的是 crab（螃蟹）。[k] 後面接 [r]，母音是 [æ]。cab 少了 [r]，clap 是 cl，crib 的母音是 [ɪ]。"
+   },
+   {
+    "type": "choose",
+    "q": "美式英文裡，trip 的 tr 聽起來接近哪個注音？",
+    "options": [
+     "ㄊ",
+     "ㄗ",
+     "ㄉ",
+     "ㄔ"
+    ],
+    "answer": 3,
+    "explanation": "t 後面接 r 時舌尖往後捲，美式唸起來接近ㄔ，嘴唇也要微微嘟起來帶出 [r]，拼字還是 tr。ㄊ和ㄉ是舌尖碰一下就放開，沒有捲舌的感覺；ㄗ的舌尖在前面，也不捲舌。"
+   },
+   {
+    "type": "choose",
+    "q": "grass 跟 glass 的開頭差在哪裡？",
+    "options": [
+     "grass 的舌尖頂住上排牙齒後面，glass 的舌尖懸空不碰上面",
+     "grass 的舌尖懸空不碰上面，glass 的舌尖頂住上排牙齒後面",
+     "grass 的 g 聲帶不振動，glass 的 g 聲帶振動",
+     "grass 的氣從鼻子出來，glass 的氣從舌頭兩側出來"
+    ],
+    "answer": 1,
+    "explanation": "兩個字只差 r 和 l。gr 的舌尖往後捲、不碰上面，gl 的舌尖頂住上排牙齒後面。第一個選項剛好說反了，兩個字的 g 聲帶都會振動，氣也都從嘴巴出來。"
+   }
+  ]
+ },
+ {
+  "id": "pb-07",
+  "title": "s 連綴：stop 裡連著唸的 st",
+  "goal": "會把 sk、sm、sn、sp、st、sw 和 str、spr、scr、spl 連著唸，s 後面不多出母音。",
+  "key": {
+   "word": "stop",
+   "kk": "sk sm sn sp st sw"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "s 後面接子音時，兩個音直接連在一起。唸 stop 時，先發出 [s] 的嘶嘶聲，舌尖順勢頂到上排牙齒後面變成 [t]，整個字只有一個音節。"
+   },
+   {
+    "t": "p",
+    "text": "台灣學生常把 s 唸成注音ㄙ，也就是「斯」，後面多出一個母音，stop 就變成「斯 top」，一個音節變成兩個。還有一個細節，s 後面的 p、t、k 不送氣。拿一張衛生紙放在嘴巴前面唸 top，紙會被吹動；唸 stop 時，紙幾乎不動。這個差別跟注音ㄊ和ㄉ一樣，top 的 t 像ㄊ，stop 的 t 比較像ㄉ，spin 的 p 也比較像ㄅ。拼字還是 p、t、k。"
+   },
+   {
+    "t": "words",
+    "title": "s 加一個子音",
+    "items": [
+     {
+      "w": "skill",
+      "zh": "技能",
+      "mark": "[sk]ill"
+     },
+     {
+      "w": "smell",
+      "zh": "氣味",
+      "mark": "[sm]ell"
+     },
+     {
+      "w": "snack",
+      "zh": "點心",
+      "mark": "[sn]ack"
+     },
+     {
+      "w": "spin",
+      "zh": "旋轉",
+      "mark": "[sp]in"
+     },
+     {
+      "w": "stop",
+      "zh": "停止",
+      "mark": "[st]op"
+     },
+     {
+      "w": "step",
+      "zh": "步驟",
+      "mark": "[st]ep"
+     },
+     {
+      "w": "stamp",
+      "zh": "郵票",
+      "mark": "[st]amp"
+     },
+     {
+      "w": "swim",
+      "zh": "游泳",
+      "mark": "[sw]im"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "去掉 s 就變成另一個字",
+    "items": [
+     {
+      "a": "spin",
+      "az": "旋轉",
+      "b": "pin",
+      "bz": "別針"
+     },
+     {
+      "a": "stop",
+      "az": "停止",
+      "b": "top",
+      "bz": "頂端",
+      "note": "stop 的 t 不送氣，top 的 t 要送氣。"
+     },
+     {
+      "a": "spot",
+      "az": "地點",
+      "b": "pot",
+      "bz": "鍋子"
+     },
+     {
+      "a": "stick",
+      "az": "棍子",
+      "b": "tick",
+      "bz": "打勾"
+     },
+     {
+      "a": "scan",
+      "az": "掃描",
+      "b": "can",
+      "bz": "罐頭"
+     },
+     {
+      "a": "snap",
+      "az": "啪一聲折斷",
+      "b": "nap",
+      "bz": "小睡"
+     },
+     {
+      "a": "swell",
+      "az": "腫起來",
+      "b": "well",
+      "bz": "很好地"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "s 後面接兩個子音的 str、spr、scr、spl 也一樣，三個子音一口氣唸完，中間都不加母音。scan、scrap 的 c 唸 [k]，開頭的 sc 跟 skill 的 sk 唸法一樣。"
+   },
+   {
+    "t": "words",
+    "title": "s 加兩個子音",
+    "items": [
+     {
+      "w": "strip",
+      "zh": "長條",
+      "mark": "[str]ip"
+     },
+     {
+      "w": "sprint",
+      "zh": "衝刺",
+      "mark": "[spr]int"
+     },
+     {
+      "w": "scrap",
+      "zh": "碎片",
+      "mark": "[scr]ap"
+     },
+     {
+      "w": "split",
+      "zh": "分開",
+      "mark": "[spl]it"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "Stop at the spot and grab a snack.",
+    "zh": "在那個地點停下來，吃點東西。"
+   },
+   {
+    "t": "tip",
+    "text": "stop 的 t 不用像 top 那樣用力送氣，唸成注音ㄉ的感覺就對了。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "pot",
+    "options": [
+     "spot",
+     "pit",
+     "spit",
+     "pot"
+    ],
+    "answer": 3,
+    "explanation": "這題播的是 pot（鍋子）。開頭直接是 [p]，前面沒有 [s]，p 會送氣。spot 多了 s，spit 和 pit 的母音是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "spin",
+    "options": [
+     "pin",
+     "spin",
+     "span",
+     "spit"
+    ],
+    "answer": 1,
+    "explanation": "這題播的是 spin（旋轉）。s 後面的 p 不送氣，字尾是 [n]。pin 少了 s，spit 的字尾是 [t]，span 的母音是 [æ]。"
+   },
+   {
+    "type": "listen",
+    "word": "stop",
+    "options": [
+     "stop",
+     "top",
+     "step",
+     "stab"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 stop（停止）。st 連著唸，母音是 hot 的 [ɑ]。top 少了 s，step 的母音是 [ɛ]，stab 的母音是 [æ]。"
+   },
+   {
+    "type": "listen",
+    "word": "nap",
+    "options": [
+     "snip",
+     "snap",
+     "nap",
+     "nip"
+    ],
+    "answer": 2,
+    "explanation": "這題播的是 nap（小睡）。開頭直接是 [n]，沒有 s。snap 有 sn 連綴，snip 和 nip 的母音是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "strip",
+    "options": [
+     "strip",
+     "trip",
+     "strict",
+     "strap"
+    ],
+    "answer": 0,
+    "explanation": "這題播的是 strip（長條）。str 三個子音連著唸，母音是短的 [ɪ]，字尾是 [p]。trip 少了 s，strap 的母音是 cat 的 [æ]，strict 的字尾是 [kt]。"
+   },
+   {
+    "type": "choose",
+    "q": "stop 的 t 跟 top 的 t 有什麼不同？",
+    "options": [
+     "stop 的 t 不發音",
+     "stop 的 t 送氣更強",
+     "stop 的 t 不送氣，聽起來像注音ㄉ",
+     "兩個 t 唸法完全一樣"
+    ],
+    "answer": 2,
+    "explanation": "s 後面的 p、t、k 不送氣，所以 stop 的 t 像注音ㄉ。top 的 t 在字首要送氣，像ㄊ。"
+   },
+   {
+    "type": "choose",
+    "q": "下面哪個字的開頭是三個子音連在一起？",
+    "options": [
+     "spot",
+     "split",
+     "skill",
+     "swim"
+    ],
+    "answer": 1,
+    "explanation": "split 開頭是 s、p、l 三個子音，要一口氣唸完。spot、skill、swim 開頭都只有兩個子音。"
+   }
+  ]
+ }
+]

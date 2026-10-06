@@ -592,6 +592,18 @@ for p_ in phrases:
             errors.append(f'{w}: quiz.q 缺 ___ 空格')
     scan_simplified(p_, w)
 
+# ---------- 自然發音 ----------
+# 規則跟 tools/check_phonics.py 同一份(它的錯誤=這裡的硬錯誤),另外掃簡體字
+import check_phonics
+phonics = []
+for _p in sorted(glob.glob(os.path.join(RAW, 'phonics_ch*.json'))):
+    phonics.extend(check_phonics.check_file(_p))
+errors.extend('phonics ' + e for e in check_phonics.errors)
+warnings.extend('phonics ' + x for x in check_phonics.warns)
+for u in phonics:
+    scan_simplified(u, f"phonics {u.get('id', '?')}")
+phonics.sort(key=lambda u: u.get('id', ''))
+
 # ---------- id 重複 ----------
 for kind, items in [('part5', p5), ('part6', p6), ('part7', p7), ('articles', arts)]:
     ids = [x.get('id') for x in items]
@@ -610,7 +622,7 @@ def write_js(fname, varname, data):
     print(f'  寫出 {fname}')
 
 print('=== 驗證結果 ===')
-print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字(移轉考題 {len(seen_tr)} 篇) | 檢測卷: {n_diag} 題 | 文法: {len(gx)} 單元 | 不規則動詞: {len(verbs)} 個 | 時態總整理: {len(tenses["tenses"]) if tenses else 0} 式 {len(tenses["pairs"]) if tenses else 0} 夥伴字')
+print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字(移轉考題 {len(seen_tr)} 篇) | 檢測卷: {n_diag} 題 | 文法: {len(gx)} 單元 | 不規則動詞: {len(verbs)} 個 | 時態總整理: {len(tenses["tenses"]) if tenses else 0} 式 {len(tenses["pairs"]) if tenses else 0} 夥伴字 | 自然發音: {len(phonics)} 課')
 print(f'Part 5 答案分布: {dict(sorted(dist5.items()))}')
 if errors:
     print(f'\n-- 硬錯誤 {len(errors)} 筆 --')
@@ -644,4 +656,6 @@ if verbs:
     write_js('verbs.js', 'verbs', verbs)
 if tenses:
     write_js('tenses.js', 'tenses', tenses)
+if phonics:
+    write_js('phonics.js', 'phonics', phonics)
 print('完成。')

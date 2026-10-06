@@ -1,0 +1,1666 @@
+[
+ {
+  "id": "pe-01",
+  "title": "字尾 b、d、g：bad 最後的 d 要唸出來",
+  "goal": "能把字尾的 b、d、g 唸清楚，也聽得出 bad 和 bat 的差別。",
+  "key": {
+   "word": "bad",
+   "kk": "b d g"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "bad、bag、cab 最後的 d、g、b 都是有聲子音。d 和 t、g 和 k、b 和 p 的嘴型和舌頭位置各自一樣，差在聲帶有沒有振動。中文沒有用這種音收尾的字，所以台灣學生常把它吞掉，或乾脆唸成 t、k、p，bad 一出口就變成 bat。"
+   },
+   {
+    "t": "p",
+    "text": "美國人分辨 bad 和 bat，最主要是聽前面母音的長短。字尾是 b、d、g 的時候，前面的母音會唸得比較長，bat 的 a 就短很多，很快收住。所以唸 bad 時，a 先多停半拍，再把舌尖頂到上排牙齒後面，輕輕收在 d。收完就停，後面不要再補一個ㄜ。"
+   },
+   {
+    "t": "words",
+    "title": "字尾是 d",
+    "items": [
+     {
+      "w": "bad",
+      "zh": "壞的",
+      "mark": "ba[d]"
+     },
+     {
+      "w": "bed",
+      "zh": "床",
+      "mark": "be[d]"
+     },
+     {
+      "w": "need",
+      "zh": "需要",
+      "mark": "nee[d]"
+     },
+     {
+      "w": "made",
+      "zh": "做（make 的過去式）",
+      "mark": "ma[d]e"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "字尾是 g 和 b",
+    "items": [
+     {
+      "w": "bag",
+      "zh": "包包",
+      "mark": "ba[g]"
+     },
+     {
+      "w": "big",
+      "zh": "大的",
+      "mark": "bi[g]"
+     },
+     {
+      "w": "pig",
+      "zh": "豬",
+      "mark": "pi[g]"
+     },
+     {
+      "w": "job",
+      "zh": "工作",
+      "mark": "jo[b]"
+     },
+     {
+      "w": "cab",
+      "zh": "計程車",
+      "mark": "ca[b]"
+     },
+     {
+      "w": "rib",
+      "zh": "肋骨",
+      "mark": "ri[b]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "左邊收在有聲子音，右邊收在無聲子音",
+    "items": [
+     {
+      "a": "bad",
+      "az": "壞的",
+      "b": "bat",
+      "bz": "球棒",
+      "note": "bad 的 a 比 bat 拉得長。"
+     },
+     {
+      "a": "bag",
+      "az": "包包",
+      "b": "back",
+      "bz": "背部"
+     },
+     {
+      "a": "cab",
+      "az": "計程車",
+      "b": "cap",
+      "bz": "帽子"
+     },
+     {
+      "a": "need",
+      "az": "需要",
+      "b": "neat",
+      "bz": "整齊的"
+     },
+     {
+      "a": "side",
+      "az": "旁邊",
+      "b": "sight",
+      "bz": "視力"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "Dad had a big red bag in the cab.",
+    "zh": "爸爸在計程車上帶著一個紅色的大包包。"
+   },
+   {
+    "t": "tip",
+    "text": "bad 的 a 多拉長半拍再收尾，對方就不會聽成 bat。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "bad",
+    "options": [
+     "bat",
+     "bed",
+     "bad",
+     "bet"
+    ],
+    "answer": 2,
+    "explanation": "答案是 bad。a 拉得比較長，最後收在有聲的 d。bat 的 a 比較短；bed、bet 的母音是嘴巴比較小的 [ɛ]。"
+   },
+   {
+    "type": "listen",
+    "word": "bag",
+    "options": [
+     "back",
+     "bug",
+     "big",
+     "bag"
+    ],
+    "answer": 3,
+    "explanation": "答案是 bag。a 唸 [æ]，拉長後收在 g。back 的 a 很短，收在無聲的 k；big 的母音是 [ɪ]，bug 是 [ʌ]。"
+   },
+   {
+    "type": "listen",
+    "word": "cap",
+    "options": [
+     "cab",
+     "cap",
+     "cup",
+     "cut"
+    ],
+    "answer": 1,
+    "explanation": "答案是 cap。a 很短，雙唇閉起來就收住，聲帶沒有振動。cab 的 a 比較長，收在 b；cup、cut 的母音是 [ʌ]。"
+   },
+   {
+    "type": "listen",
+    "word": "need",
+    "options": [
+     "need",
+     "neat",
+     "net",
+     "nod"
+    ],
+    "answer": 0,
+    "explanation": "答案是 need。ee 唸 [i]，拉長後收在 d。neat 收在 t，[i] 比較短；net 的母音是 [ɛ]，nod 是 [ɑ]。"
+   },
+   {
+    "type": "listen",
+    "word": "made",
+    "options": [
+     "mate",
+     "made",
+     "mad",
+     "mud"
+    ],
+    "answer": 1,
+    "explanation": "答案是 made。a_e 唸 [e]，最後是有聲的 d。mate 收在 t，母音比較短；mad 是短 a [æ]，mud 是 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字最後的子音，聲帶要振動？",
+    "options": [
+     "cap",
+     "bat",
+     "rib",
+     "back"
+    ],
+    "answer": 2,
+    "explanation": "rib 字尾是有聲的 b，前面的 i 也會唸得比較長。cap 的 p、bat 的 t、back 的 ck 都是無聲的。"
+   },
+   {
+    "type": "choose",
+    "q": "這四個字的 a 都唸 [æ]，哪一個的 a 唸得最長？",
+    "options": [
+     "bat",
+     "cap",
+     "back",
+     "bag"
+    ],
+    "answer": 3,
+    "explanation": "bag 最後是有聲的 g，所以前面的 a 拉得比較長。bat、cap、back 最後是無聲的 t、p、k，a 短短的就收住了。"
+   }
+  ]
+ },
+ {
+  "id": "pe-02",
+  "title": "字尾 l：bell 最後的 l 要收到位",
+  "goal": "唸字尾的 l 時，舌尖會碰到上排牙齒後方，不再唸成ㄡ或吞掉。",
+  "key": {
+   "word": "bell",
+   "kk": "l"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "bell、tell、milk 裡的 l 在字尾或子音前面，很多人會唸成ㄡ，bell 就變成「貝歐」，也有人乾脆不唸，聽起來像話沒說完。正確的唸法是母音唸完後，舌尖往上頂住上排牙齒後方的牙齦，讓聲音從舌頭兩側出來，最後舌尖就停在那裡。"
+   },
+   {
+    "t": "p",
+    "text": "美式的字尾 l 舌根也會往後抬，聽起來比字首的 l 暗、比較悶，有點像ㄡ，這就是容易唸錯的原因。分辨的方法看舌尖，唸 l 一定要碰到上面。字尾的 l 也要跟 n 分開，兩個音的舌尖位置一樣，唸 n 時氣從鼻子出去，換成 l 就把鼻子的路關掉，讓氣從舌頭兩側出來。有幾個常用字的 l 不發音，像 half、walk、talk、could、would、should，這些要單獨記。"
+   },
+   {
+    "t": "words",
+    "title": "字尾是 l、ll",
+    "items": [
+     {
+      "w": "bell",
+      "zh": "鈴",
+      "mark": "be[ll]"
+     },
+     {
+      "w": "tell",
+      "zh": "告訴",
+      "mark": "te[ll]"
+     },
+     {
+      "w": "hill",
+      "zh": "山丘",
+      "mark": "hi[ll]"
+     },
+     {
+      "w": "will",
+      "zh": "將會",
+      "mark": "wi[ll]"
+     },
+     {
+      "w": "feel",
+      "zh": "感覺",
+      "mark": "fee[l]"
+     },
+     {
+      "w": "mail",
+      "zh": "郵件",
+      "mark": "mai[l]"
+     },
+     {
+      "w": "smile",
+      "zh": "微笑",
+      "mark": "smi[l]e"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "l 在子音前面",
+    "items": [
+     {
+      "w": "milk",
+      "zh": "牛奶",
+      "mark": "mi[l]k"
+     },
+     {
+      "w": "help",
+      "zh": "幫忙",
+      "mark": "he[l]p"
+     },
+     {
+      "w": "belt",
+      "zh": "皮帶",
+      "mark": "be[l]t"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "有沒有收在 l",
+    "items": [
+     {
+      "a": "tie",
+      "az": "領帶",
+      "b": "tile",
+      "bz": "磁磚"
+     },
+     {
+      "a": "go",
+      "az": "去",
+      "b": "goal",
+      "bz": "目標"
+     },
+     {
+      "a": "my",
+      "az": "我的",
+      "b": "mile",
+      "bz": "英里"
+     },
+     {
+      "a": "see",
+      "az": "看見",
+      "b": "seal",
+      "bz": "海豹"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "收在 n 還是 l",
+    "items": [
+     {
+      "a": "ten",
+      "az": "十",
+      "b": "tell",
+      "bz": "告訴"
+     },
+     {
+      "a": "win",
+      "az": "贏",
+      "b": "will",
+      "bz": "將會"
+     },
+     {
+      "a": "pin",
+      "az": "別針",
+      "b": "pill",
+      "bz": "藥丸"
+     },
+     {
+      "a": "bin",
+      "az": "垃圾桶、收納箱",
+      "b": "bill",
+      "bz": "帳單"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "I feel well, so I will help you.",
+    "zh": "我覺得身體不錯，所以我會幫你。"
+   },
+   {
+    "t": "tip",
+    "text": "唸完 bell 先別急著放開，確認舌尖還貼在上排牙齒後方，那個 l 才算唸到。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "tell",
+    "options": [
+     "ten",
+     "tell",
+     "till",
+     "tip"
+    ],
+    "answer": 1,
+    "explanation": "答案是 tell。e 唸 [ɛ]，最後舌尖頂住上排牙齒後方，收成 [l]。ten 收尾的氣從鼻子出去；till 的母音是 [ɪ]；tip 的母音也是 [ɪ]，最後收在雙唇閉起來的 [p]。"
+   },
+   {
+    "type": "listen",
+    "word": "tile",
+    "options": [
+     "tie",
+     "time",
+     "tile",
+     "tight"
+    ],
+    "answer": 2,
+    "explanation": "答案是 tile。i_e 唸 [aɪ]，最後收在 [l]。tie 沒有收尾，time 收在雙唇閉起來的 [m]，tight 的 igh 也唸 [aɪ]，最後收在無聲的 [t]。"
+   },
+   {
+    "type": "listen",
+    "word": "goal",
+    "options": [
+     "goal",
+     "go",
+     "goat",
+     "coal"
+    ],
+    "answer": 0,
+    "explanation": "答案是 goal。oa 唸 [o]，最後舌尖抬起來收成 [l]。go 沒有收尾，goat 收在 [t]，coal 一樣收在 [l]，可是開頭是無聲的 [k]。"
+   },
+   {
+    "type": "listen",
+    "word": "pill",
+    "options": [
+     "pin",
+     "pit",
+     "peel",
+     "pill"
+    ],
+    "answer": 3,
+    "explanation": "答案是 pill。i 唸短母音 [ɪ]，最後收在 [l]。pin 收在 [n]，氣從鼻子出去；pit 收在 [t]；peel 的 ee 唸長母音 [i]。"
+   },
+   {
+    "type": "listen",
+    "word": "mile",
+    "options": [
+     "my",
+     "mile",
+     "mine",
+     "mice"
+    ],
+    "answer": 1,
+    "explanation": "答案是 mile。i_e 唸 [aɪ]，最後舌尖抬起來收成 [l]。my 沒有收尾，mine 收在 [n]，mice 收在 [s]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 l 不發音？",
+    "options": [
+     "milk",
+     "help",
+     "half",
+     "belt"
+    ],
+    "answer": 2,
+    "explanation": "half 的 l 不發音，唸 [hæf]。milk、help、belt 的 l 都要唸，舌尖碰到上排牙齒後方再接下一個音。"
+   },
+   {
+    "type": "choose",
+    "q": "唸 feel 最後的 l，舌尖要放在哪裡？",
+    "options": [
+     "頂住上排牙齒後方",
+     "縮在下排牙齒後面",
+     "懸空，不碰任何地方",
+     "伸到上下排牙齒中間"
+    ],
+    "answer": 0,
+    "explanation": "唸 [l] 時舌尖頂住上排牙齒後方，氣從舌頭兩側出來。舌尖懸空不碰，聲音就會變成ㄡ。"
+   }
+  ]
+ },
+ {
+  "id": "pe-03",
+  "title": "字尾兩個子音：hand 的 n 和 d 都要唸",
+  "goal": "能把 hand、desk、cats 這類字尾的兩個子音都唸完，不吞掉最後一個。",
+  "key": {
+   "word": "hand",
+   "kk": "nd nt mp st sk ts"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "hand、desk、gift 最後有兩個子音連在一起，兩個都要唸。台灣學生常把最後一個吞掉，hand 唸成 han，desk 唸成 des，聽的人會以為你說的是別的字。唸 hand 時，n 的舌尖頂住上排牙齒後方，位置不要移開，直接把 d 帶出來，兩個音一口氣接完。lamp 也一樣，雙唇閉著唸完 m，再把 p 放出來。"
+   },
+   {
+    "t": "p",
+    "text": "常見的字尾組合有 nd、nt、mp、st、sk、ft、lt。子音之間不能塞母音，最後也不要補ㄜ，lamp 只有一個音節，唸成「蘭普」就變成兩個了。另外，單音節字裡 i 後面接 nd、ld 時常唸長母音 [aɪ]，像 find、kind、child；o 後面接 ld 時唸長母音 [o]，像 old、cold、gold。這些跟短母音的規則不一樣，要單獨記。"
+   },
+   {
+    "t": "words",
+    "title": "字尾兩個子音",
+    "items": [
+     {
+      "w": "hand",
+      "zh": "手",
+      "mark": "ha[nd]"
+     },
+     {
+      "w": "tent",
+      "zh": "帳篷",
+      "mark": "te[nt]"
+     },
+     {
+      "w": "lamp",
+      "zh": "燈",
+      "mark": "la[mp]"
+     },
+     {
+      "w": "best",
+      "zh": "最好的",
+      "mark": "be[st]"
+     },
+     {
+      "w": "desk",
+      "zh": "書桌",
+      "mark": "de[sk]"
+     },
+     {
+      "w": "gift",
+      "zh": "禮物",
+      "mark": "gi[ft]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "少唸一個子音，就變成另一個字",
+    "items": [
+     {
+      "a": "tent",
+      "az": "帳篷",
+      "b": "ten",
+      "bz": "十"
+     },
+     {
+      "a": "band",
+      "az": "樂團",
+      "b": "ban",
+      "bz": "禁止"
+     },
+     {
+      "a": "lamp",
+      "az": "燈",
+      "b": "lap",
+      "bz": "膝上"
+     },
+     {
+      "a": "belt",
+      "az": "皮帶",
+      "b": "bell",
+      "bz": "鈴"
+     },
+     {
+      "a": "fact",
+      "az": "事實",
+      "b": "fat",
+      "bz": "胖的"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "名詞變複數時，也常出現這種字尾。cat、map、desk、cliff 這種最後是無聲子音 t、p、k、f 的字，加上 -s 唸 [s]，變成 ts、ps、ks、fs 連在一起。cats 的 ts 聽起來有點像注音ㄘ，但只能有氣流聲，不要把ㄘ後面的母音唸出來，不然 cats 會多出一拍。前面的 a 也要先唸完整。"
+   },
+   {
+    "t": "words",
+    "title": "複數 -s 接在 p、t、k 後面",
+    "items": [
+     {
+      "w": "cats",
+      "zh": "貓（複數）",
+      "mark": "ca[ts]"
+     },
+     {
+      "w": "maps",
+      "zh": "地圖（複數）",
+      "mark": "ma[ps]"
+     },
+     {
+      "w": "cups",
+      "zh": "杯子（複數）",
+      "mark": "cu[ps]"
+     },
+     {
+      "w": "desks",
+      "zh": "書桌（複數）",
+      "mark": "de[sks]"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "Two cats nap in the tent next to the desk.",
+    "zh": "兩隻貓在書桌旁邊的帳篷裡睡午覺。"
+   },
+   {
+    "t": "tip",
+    "text": "唸完 hand 的 n 舌尖別離開，順勢把 d 推出來，最後一個音就不會不見。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "cats",
+    "options": [
+     "cat",
+     "cats",
+     "cap",
+     "caps"
+    ],
+    "answer": 1,
+    "explanation": "答案是 cats，t 和 s 連在一起，有點像注音ㄘ，但只有氣流，不帶母音。cat 沒有 s；cap 收在雙唇閉起來的 p，caps 是 p 再接 s。"
+   },
+   {
+    "type": "listen",
+    "word": "tent",
+    "options": [
+     "ten",
+     "tend",
+     "tenth",
+     "tent"
+    ],
+    "answer": 3,
+    "explanation": "答案是 tent，n 後面還有無聲的 t。ten 唸到 n 就停；tend 收在有聲的 d，e 比較長；tenth 最後是舌尖放在上下排牙齒之間的 [θ]。"
+   },
+   {
+    "type": "listen",
+    "word": "lamp",
+    "options": [
+     "lamp",
+     "lap",
+     "lab",
+     "lamps"
+    ],
+    "answer": 0,
+    "explanation": "答案是 lamp，雙唇閉著唸完 m，再把 p 放出來。lap 少了 m；lab 也少了 m，最後收在有聲的 b；lamps 多了一個 s。"
+   },
+   {
+    "type": "listen",
+    "word": "fact",
+    "options": [
+     "fat",
+     "fan",
+     "fact",
+     "facts"
+    ],
+    "answer": 2,
+    "explanation": "答案是 fact，c 唸 [k]，k 和 t 兩個都要唸到。fat 少了 [k]，fan 收在 [n]，facts 後面還有 s。"
+   },
+   {
+    "type": "listen",
+    "word": "maps",
+    "options": [
+     "map",
+     "maps",
+     "mass",
+     "mats"
+    ],
+    "answer": 1,
+    "explanation": "答案是 maps，p 後面接 s，s 唸 [s]。map 沒有 s，mass 少了 p，mats 是 t 加 s。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字唸到最後，只收一個子音的音？",
+    "options": [
+     "hand",
+     "desk",
+     "bell",
+     "gift"
+    ],
+    "answer": 2,
+    "explanation": "bell 的 ll 雖然是兩個字母，只唸一個 [l]。hand、desk、gift 最後都有兩個子音要唸完。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 i 唸長母音 [aɪ]，是這課點名的例外？",
+    "options": [
+     "find",
+     "gift",
+     "list",
+     "milk"
+    ],
+    "answer": 0,
+    "explanation": "find 的 i 唸 [aɪ]，是要單獨記的例外。gift、list、milk 的 i 照規則唸短母音 [ɪ]。"
+   }
+  ]
+ },
+ {
+  "id": "pe-04",
+  "title": "-s 唸 [z]：bags 最後帶著振動",
+  "goal": "知道 -s 什麼時候唸 [z]，唸 bags、days 時不再全部唸成 [s]。",
+  "key": {
+   "word": "bags",
+   "kk": "z"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "上一課的 cats、maps，-s 接在無聲的 t、p 後面，唸 [s]。如果 -s 接在母音後面，或接在 b、d、g、v、m、n、ng、l、r 這些有聲子音後面，就要唸成 [z]，例如 bags [bægz]、days [dez]。名詞複數和第三人稱單數的動詞，都照這條規則。不過最後是 s、z、sh、ch、x，或是 se、ce、ze、ge 結尾的字，像 bus、page，加 -s 有另一種唸法，下一課再講。"
+   },
+   {
+    "t": "p",
+    "text": "[z] 的舌位跟 [s] 一樣，舌尖靠近上排牙齒後方，只是聲帶要跟著振動。其實不用背清單，前一個音有振動，-s 就順著振動下去，唸出來自然是 [z]。在句尾，這個 [z] 常常很短，只剩一點振動，不必刻意加重，只要別唸成又長又清楚的 [s] 就好。"
+   },
+   {
+    "t": "words",
+    "title": "-s 唸 [z]",
+    "items": [
+     {
+      "w": "bags",
+      "zh": "包包（複數）",
+      "mark": "bag[s]"
+     },
+     {
+      "w": "beds",
+      "zh": "床（複數）",
+      "mark": "bed[s]"
+     },
+     {
+      "w": "pens",
+      "zh": "筆（複數）",
+      "mark": "pen[s]"
+     },
+     {
+      "w": "hills",
+      "zh": "山丘（複數）",
+      "mark": "hill[s]"
+     },
+     {
+      "w": "rings",
+      "zh": "戒指（複數）",
+      "mark": "ring[s]"
+     },
+     {
+      "w": "days",
+      "zh": "日子（複數）",
+      "mark": "day[s]"
+     },
+     {
+      "w": "trees",
+      "zh": "樹（複數）",
+      "mark": "tree[s]"
+     },
+     {
+      "w": "names",
+      "zh": "名字（複數）",
+      "mark": "name[s]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "左邊唸 [z]，右邊唸 [s]",
+    "items": [
+     {
+      "a": "beds",
+      "az": "床（複數）",
+      "b": "bets",
+      "bz": "賭注（複數）"
+     },
+     {
+      "a": "bags",
+      "az": "包包（複數）",
+      "b": "backs",
+      "bz": "背部（複數）"
+     },
+     {
+      "a": "cabs",
+      "az": "計程車（複數）",
+      "b": "caps",
+      "bz": "帽子（複數）"
+     },
+     {
+      "a": "pigs",
+      "az": "豬（複數）",
+      "b": "picks",
+      "bz": "挑選（第三人稱單數）"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "She sings, and he plays games with the kids.",
+    "zh": "她唱歌，他陪孩子們玩遊戲。"
+   },
+   {
+    "t": "tip",
+    "text": "唸 bags 時，聲帶的振動從 g 一路延續到 s，不要在最後突然換成吹氣的 [s]。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "bags",
+    "options": [
+     "bags",
+     "backs",
+     "bag",
+     "back"
+    ],
+    "answer": 0,
+    "explanation": "答案是 bags。g 是有聲子音，後面的 -s 唸 [z]，a 也拉得比較長。backs 的 ck 是無聲的，-s 唸 [s]；bag、back 沒有 -s。"
+   },
+   {
+    "type": "listen",
+    "word": "beds",
+    "options": [
+     "bets",
+     "bed",
+     "beds",
+     "bet"
+    ],
+    "answer": 2,
+    "explanation": "答案是 beds，d 後面接 [z]，聲帶一路振動。bets 是 t 加 [s]，最後只有氣流聲，聲帶不振動，也不帶母音；bed、bet 沒有 -s。"
+   },
+   {
+    "type": "listen",
+    "word": "cabs",
+    "options": [
+     "caps",
+     "cabs",
+     "cap",
+     "cab"
+    ],
+    "answer": 1,
+    "explanation": "答案是 cabs，b 後面的 -s 唸 [z]。caps 是 p 加 [s]，前面的 a 比較短；cap、cab 沒有 -s。"
+   },
+   {
+    "type": "listen",
+    "word": "pigs",
+    "options": [
+     "picks",
+     "pick",
+     "pig",
+     "pigs"
+    ],
+    "answer": 3,
+    "explanation": "答案是 pigs，g 後面接 [z]，i 唸得比較長。picks 的 -s 接在無聲的 k 後面，唸 [s]；pick、pig 沒有 -s。"
+   },
+   {
+    "type": "listen",
+    "word": "plays",
+    "options": [
+     "plays",
+     "place",
+     "play",
+     "plate"
+    ],
+    "answer": 0,
+    "explanation": "答案是 plays，ay 唸 [e]，-s 接在母音後面，唸有聲的 [z]，母音也拉得比較長。place 的 ce 唸無聲的 [s]；play 沒有 -s；plate 收在 [t]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字最後的 -s 唸 [s]？",
+    "options": [
+     "days",
+     "pens",
+     "hills",
+     "cups"
+    ],
+    "answer": 3,
+    "explanation": "cups 的 -s 接在無聲的 p 後面，唸 [s]。days 接在母音後面，pens 接在 n 後面，hills 接在 l 後面，都唸 [z]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字最後的 -s 唸 [z]？",
+    "options": [
+     "maps",
+     "trees",
+     "desks",
+     "cats"
+    ],
+    "answer": 1,
+    "explanation": "trees 的 -s 接在母音 [i] 後面，唸 [z]。maps、desks、cats 的 -s 都接在無聲的 p、k、t 後面，唸 [s]。"
+   }
+  ]
+ },
+ {
+  "id": "pe-05",
+  "title": "-es 唸 [ɪz]：boxes 比 box 多一個音節",
+  "goal": "看到 s、z、sh、ch、x 或 se、ce、ze、ge、dge 結尾的字加上 -s 或 -es，知道要多唸一個音節 [ɪz]。",
+  "key": {
+   "word": "boxes",
+   "kk": "ɪz"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "box、bus、dish 這些字的結尾本來就是 [ks]、[s]、[ʃ] 這類帶著氣流摩擦的音，後面再直接接 [s] 或 [z]，兩個音會黏成一團，所以中間要多加一個母音，唸成 [ɪz]。box 只有一個音節，boxes 就變成 box、es 兩個音節。"
+   },
+   {
+    "t": "p",
+    "text": "會這樣唸的字尾有 s、z、sh、ch、x，還有 se、ce、ze、ge、dge。case、face、size、page、bridge 本來就有一個不發音的 e，所以只加 -s，寫成 cases、faces、sizes、pages、bridges，唸起來一樣多一個 [ɪz]。台灣 KK 標 [ɪz]，美式音檔常聽起來比較接近 [əz]，又短又輕，重音還是留在前面。"
+   },
+   {
+    "t": "pairs",
+    "title": "原形和加了 -es，數數看幾個音節",
+    "items": [
+     {
+      "a": "bus",
+      "az": "公車",
+      "b": "buses",
+      "bz": "公車（複數）",
+      "note": "左邊一個音節，右邊兩個音節。"
+     },
+     {
+      "a": "box",
+      "az": "盒子",
+      "b": "boxes",
+      "bz": "盒子（複數）"
+     },
+     {
+      "a": "page",
+      "az": "頁",
+      "b": "pages",
+      "bz": "頁（複數）"
+     },
+     {
+      "a": "face",
+      "az": "臉",
+      "b": "faces",
+      "bz": "臉（複數）"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "加 -es，最後唸 [ɪz]",
+    "items": [
+     {
+      "w": "dishes",
+      "zh": "盤子（複數）",
+      "mark": "dish[es]"
+     },
+     {
+      "w": "wishes",
+      "zh": "願望（複數）",
+      "mark": "wish[es]"
+     },
+     {
+      "w": "matches",
+      "zh": "比賽（複數）",
+      "mark": "match[es]"
+     },
+     {
+      "w": "classes",
+      "zh": "課（複數）",
+      "mark": "class[es]"
+     },
+     {
+      "w": "taxes",
+      "zh": "稅（複數）",
+      "mark": "tax[es]"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "字尾本來有 e，只加 -s",
+    "items": [
+     {
+      "w": "prizes",
+      "zh": "獎品（複數）",
+      "mark": "priz[es]"
+     },
+     {
+      "w": "sizes",
+      "zh": "尺寸（複數）",
+      "mark": "siz[es]"
+     },
+     {
+      "w": "bridges",
+      "zh": "橋（複數）",
+      "mark": "bridg[es]"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "She packs the dishes and glasses in two boxes.",
+    "zh": "她把盤子和玻璃杯裝進兩個箱子。"
+   },
+   {
+    "t": "tip",
+    "text": "boxes 要唸兩拍，少了 es 那一拍，聽起來就還是單數的 box。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "pages",
+    "options": [
+     "page",
+     "pages",
+     "pace",
+     "paces"
+    ],
+    "answer": 1,
+    "explanation": "答案是 pages，ge 唸 [dʒ]，加 -s 後多一個音節 [ɪz]。page 只有一個音節；pace、paces 的 ce 唸 [s]。"
+   },
+   {
+    "type": "listen",
+    "word": "boxes",
+    "options": [
+     "bus",
+     "box",
+     "buses",
+     "boxes"
+    ],
+    "answer": 3,
+    "explanation": "答案是 boxes，box 後面多唸一個音節 [ɪz]。box 只有一個音節；bus、buses 的母音是 [ʌ]。"
+   },
+   {
+    "type": "listen",
+    "word": "dish",
+    "options": [
+     "dish",
+     "dishes",
+     "ditch",
+     "ditches"
+    ],
+    "answer": 0,
+    "explanation": "答案是 dish，只有一個音節，收在 [ʃ]。dishes 後面多一個 [ɪz]；ditch 的 tch 唸 [tʃ]，舌尖要先堵住再放開；ditches 是 ditch 加 [ɪz]，兩個音節。"
+   },
+   {
+    "type": "listen",
+    "word": "faces",
+    "options": [
+     "face",
+     "fake",
+     "faces",
+     "fades"
+    ],
+    "answer": 2,
+    "explanation": "答案是 faces，ce 唸 [s]，加 -s 後唸 [ɪz]，是兩個音節。face 只有一個音節；fake 收在 [k]；fades 是 d 加 [z]，還是一個音節。"
+   },
+   {
+    "type": "listen",
+    "word": "wishes",
+    "options": [
+     "wish",
+     "wishes",
+     "witches",
+     "wins"
+    ],
+    "answer": 1,
+    "explanation": "答案是 wishes，wish 後面多一個音節 [ɪz]。wish 只有一個音節；witches 的 tch 唸 [tʃ]；wins 是 win 加 [z]，只有一個音節。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字加上 -s 或 -es 之後，不會多一個音節？",
+    "options": [
+     "bus",
+     "page",
+     "dish",
+     "cup"
+    ],
+    "answer": 3,
+    "explanation": "cup 加 -s 變成 cups，-s 唸 [s]，還是一個音節。bus、page、dish 的結尾是 [s]、[dʒ]、[ʃ]，加上去要唸 [ɪz]，多一個音節。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字有兩個音節？",
+    "options": [
+     "bags",
+     "maps",
+     "sizes",
+     "days"
+    ],
+    "answer": 2,
+    "explanation": "sizes 唸 [ˋsaɪzɪz]。size 最後的音是 [z]，加 -s 要唸 [ɪz]，所以變成兩個音節。bags、maps、days 的 -s 只唸 [z] 或 [s]，都是一個音節。"
+   }
+  ]
+ },
+ {
+  "id": "pe-06",
+  "title": "-ed 唸 [t]：jumped 只有一個音節",
+  "goal": "知道無聲子音結尾的動詞加 -ed 唸 [t]，唸 jumped 時不再唸成 jump、ed 兩拍。",
+  "key": {
+   "word": "jumped",
+   "kk": "t"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "jump、stop、fix 這些動詞最後是 p、k、f、s、sh、ch、x 這類無聲子音，加上 -ed 變成過去式時，-ed 只唸一個 [t]，不多一個音節。jumped 唸 [dʒʌmpt]，跟 jump 一樣是一個音節，只是最後多了一個 [t]。判斷時要聽最後一個音。like、hope 字尾的 e 不發音，真正收尾的是 [k]、[p]，所以 liked、hoped 的 -ed 也唸 [t]。t 雖然也是無聲子音，wait、test 這種最後是 [t] 的動詞不算在這裡，-ed 要唸 [ɪd]，兩課後再講。"
+   },
+   {
+    "t": "p",
+    "text": "拼字裡明明有 e，嘴巴卻不唸它，這點最容易出錯。台灣學生常把 jumped 唸成 jump、ed 兩拍，也有人把 -ed 整個吞掉，聽起來就跟現在式一樣。jump 唸完，舌尖馬上頂住上排牙齒後方，輕輕收一個 [t] 就對了。stop 這種短母音加一個子音的字，寫成 stopped 時 p 會重複，唸法一樣只有一個 [p]。like、hope 字尾本來就有 e，所以只加 -d，寫成 liked、hoped。"
+   },
+   {
+    "t": "words",
+    "title": "-ed 唸 [t]",
+    "items": [
+     {
+      "w": "jumped",
+      "zh": "跳（過去式）",
+      "mark": "jump[ed]"
+     },
+     {
+      "w": "stopped",
+      "zh": "停止（過去式）",
+      "mark": "stopp[ed]"
+     },
+     {
+      "w": "helped",
+      "zh": "幫忙（過去式）",
+      "mark": "help[ed]"
+     },
+     {
+      "w": "checked",
+      "zh": "檢查（過去式）",
+      "mark": "check[ed]"
+     },
+     {
+      "w": "kissed",
+      "zh": "親吻（過去式）",
+      "mark": "kiss[ed]"
+     },
+     {
+      "w": "fixed",
+      "zh": "修理（過去式）",
+      "mark": "fix[ed]"
+     },
+     {
+      "w": "wished",
+      "zh": "許願（過去式）",
+      "mark": "wish[ed]"
+     },
+     {
+      "w": "liked",
+      "zh": "喜歡（過去式）",
+      "mark": "lik[ed]"
+     },
+     {
+      "w": "hoped",
+      "zh": "希望（過去式）",
+      "mark": "hop[ed]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "原形和過去式",
+    "items": [
+     {
+      "a": "jump",
+      "az": "跳",
+      "b": "jumped",
+      "bz": "跳（過去式）",
+      "note": "過去式還是一個音節，只多一個 [t]。"
+     },
+     {
+      "a": "help",
+      "az": "幫忙",
+      "b": "helped",
+      "bz": "幫忙（過去式）"
+     },
+     {
+      "a": "fix",
+      "az": "修理",
+      "b": "fixed",
+      "bz": "修理（過去式）"
+     },
+     {
+      "a": "check",
+      "az": "檢查",
+      "b": "checked",
+      "bz": "檢查（過去式）"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "We fixed the desk and packed the lamps.",
+    "zh": "我們修好了書桌，也把檯燈打包好了。"
+   },
+   {
+    "t": "tip",
+    "text": "jumped 只有一拍，拼字裡的 e 不唸，最後收一個輕輕的 [t] 就好。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "jumped",
+    "options": [
+     "jump",
+     "jumps",
+     "jumped",
+     "jumping"
+    ],
+    "answer": 2,
+    "explanation": "答案是 jumped，只有一個音節，最後收在 [t]。jump 沒有收尾的 [t]，jumps 收在 [s]，jumping 多一個音節。"
+   },
+   {
+    "type": "listen",
+    "word": "stopped",
+    "options": [
+     "stopped",
+     "stops",
+     "stop",
+     "shopped"
+    ],
+    "answer": 0,
+    "explanation": "答案是 stopped，-ed 唸 [t]，一個音節。stops 收在 [s]，stop 沒有 [t]；shopped 開頭是 sh 的 [ʃ]。"
+   },
+   {
+    "type": "listen",
+    "word": "fixed",
+    "options": [
+     "fix",
+     "fixes",
+     "fixing",
+     "fixed"
+    ],
+    "answer": 3,
+    "explanation": "答案是 fixed，x 唸 [ks]，後面再加 [t]，還是一個音節。fix 少了 [t]，fixes、fixing 都是兩個音節。"
+   },
+   {
+    "type": "listen",
+    "word": "help",
+    "options": [
+     "helped",
+     "help",
+     "helps",
+     "held"
+    ],
+    "answer": 1,
+    "explanation": "答案是 help，最後收在 [p]，後面沒有 [t]。helped 多一個 [t]，helps 多一個 [s]，held 收在有聲的 [ld]。"
+   },
+   {
+    "type": "listen",
+    "word": "picked",
+    "options": [
+     "pick",
+     "picks",
+     "picked",
+     "pig"
+    ],
+    "answer": 2,
+    "explanation": "答案是 picked，ck 唸 [k]，後面接 [t]。pick 沒有 [t]，picks 收在 [s]，pig 收在有聲的 [g]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 -ed 唸 [t]？",
+    "options": [
+     "played",
+     "needed",
+     "filled",
+     "baked"
+    ],
+    "answer": 3,
+    "explanation": "baked 的原形 bake 最後是無聲的 [k]，-ed 唸 [t]。played、filled 的 -ed 唸 [d]，needed 唸 [ɪd]，後面兩課會教。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字唸起來只有一個音節？",
+    "options": [
+     "fixes",
+     "wished",
+     "jumping",
+     "kisses"
+    ],
+    "answer": 1,
+    "explanation": "wished 的 -ed 接在無聲的 [ʃ] 後面，只唸 [t]，整個字一個音節。fixes、kisses 的 x、ss 後面加 -es 要唸 [ɪz]，jumping 多了 -ing，這三個都是兩個音節。"
+   }
+  ]
+ },
+ {
+  "id": "pe-07",
+  "title": "-ed 唸 [d]：played 也只有一個音節",
+  "goal": "知道母音和有聲子音結尾的動詞加 -ed 唸 [d]，而且不多唸一個音節。",
+  "key": {
+   "word": "played",
+   "kk": "d"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "play、fill、plan 這些動詞最後的音是母音，或是 b、g、v、z、m、n、l、r 這類有聲子音，加上 -ed 唸 [d]。played 唸 [pled]，跟 play 一樣只有一個音節，最後舌尖頂住上排牙齒後方，帶出一個有聲的 [d]。smile、name 字尾的 e 不發音，真正收尾的是 [l]、[m]，所以 smiled、named 也唸 [d]。need、end 這種最後是 [d] 的動詞不算在這裡，下一課再講。"
+   },
+   {
+    "t": "p",
+    "text": "這個 [d] 和上一課的 [t] 其實會自己跟著前一個音走。前一個音有振動，-ed 就順勢唸成 [d]，反過來就變成 [t]，不必一個字一個字硬背。真正要注意的是 -ed 不能多唸一個音節，也不能吞掉不唸。plan 這種短母音加一個子音的字，寫成 planned 時 n 會重複，唸起來還是一個 [n]。beg 寫成 begged 也一樣，g 後面雖然接了 e，還是唸 [g]，加上 -ed 不會變成第四章的軟音 g。smile、name 字尾本來就有 e，所以只加 -d，寫成 smiled、named。"
+   },
+   {
+    "t": "words",
+    "title": "-ed 唸 [d]",
+    "items": [
+     {
+      "w": "played",
+      "zh": "玩（過去式）",
+      "mark": "play[ed]"
+     },
+     {
+      "w": "stayed",
+      "zh": "停留（過去式）",
+      "mark": "stay[ed]"
+     },
+     {
+      "w": "filled",
+      "zh": "裝滿（過去式）",
+      "mark": "fill[ed]"
+     },
+     {
+      "w": "planned",
+      "zh": "計畫（過去式）",
+      "mark": "plann[ed]"
+     },
+     {
+      "w": "begged",
+      "zh": "懇求（過去式）",
+      "mark": "begg[ed]"
+     },
+     {
+      "w": "cleaned",
+      "zh": "打掃（過去式）",
+      "mark": "clean[ed]"
+     },
+     {
+      "w": "rained",
+      "zh": "下雨（過去式）",
+      "mark": "rain[ed]"
+     },
+     {
+      "w": "smiled",
+      "zh": "微笑（過去式）",
+      "mark": "smil[ed]"
+     },
+     {
+      "w": "named",
+      "zh": "取名（過去式）",
+      "mark": "nam[ed]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "原形和過去式",
+    "items": [
+     {
+      "a": "play",
+      "az": "玩",
+      "b": "played",
+      "bz": "玩（過去式）",
+      "note": "過去式還是一個音節，只多一個 [d]。"
+     },
+     {
+      "a": "fill",
+      "az": "裝滿",
+      "b": "filled",
+      "bz": "裝滿（過去式）"
+     },
+     {
+      "a": "clean",
+      "az": "打掃",
+      "b": "cleaned",
+      "bz": "打掃（過去式）"
+     },
+     {
+      "a": "smile",
+      "az": "微笑",
+      "b": "smiled",
+      "bz": "微笑（過去式）"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "左邊唸 [d]，右邊唸 [t]",
+    "items": [
+     {
+      "a": "lagged",
+      "az": "延遲（過去式）",
+      "b": "lacked",
+      "bz": "缺乏（過去式）"
+     },
+     {
+      "a": "bagged",
+      "az": "裝進袋子（過去式）",
+      "b": "backed",
+      "bz": "支持（過去式）"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "We cleaned the room and stayed home when it rained.",
+    "zh": "下雨的時候，我們打掃了房間，一直待在家裡。"
+   },
+   {
+    "t": "tip",
+    "text": "played 是 play 後面直接帶一個輕輕的 [d]，別唸成 play 再加一拍ㄉㄜ。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "played",
+    "options": [
+     "play",
+     "played",
+     "plays",
+     "plate"
+    ],
+    "answer": 1,
+    "explanation": "答案是 played，play 後面輕輕帶一個 [d]，還是一個音節。play 沒有收尾；plays 收在 [z]；plate 收在無聲的 [t]，母音比較短。"
+   },
+   {
+    "type": "listen",
+    "word": "filled",
+    "options": [
+     "fill",
+     "filed",
+     "felt",
+     "filled"
+    ],
+    "answer": 3,
+    "explanation": "答案是 filled，i 唸短母音 [ɪ]，最後是 [l] 接 [d]。fill 沒有 [d]；filed 是 file 加 -d，i 唸長母音 [aɪ]；felt 的母音是 [ɛ]，最後收在無聲的 [t]。"
+   },
+   {
+    "type": "listen",
+    "word": "bagged",
+    "options": [
+     "bagged",
+     "backed",
+     "bag",
+     "back"
+    ],
+    "answer": 0,
+    "explanation": "答案是 bagged，g 後面接有聲的 [d]，a 拉得比較長。backed 是 [k] 接 [t]；bag、back 沒有 -ed。"
+   },
+   {
+    "type": "listen",
+    "word": "planned",
+    "options": [
+     "plan",
+     "plans",
+     "planned",
+     "plant"
+    ],
+    "answer": 2,
+    "explanation": "答案是 planned，n 後面收一個有聲的 [d]。plant 收在無聲的 [t]，a 比較短；plan 沒有收尾，plans 收在 [z]。"
+   },
+   {
+    "type": "listen",
+    "word": "smiled",
+    "options": [
+     "smile",
+     "smiles",
+     "smiling",
+     "smiled"
+    ],
+    "answer": 3,
+    "explanation": "答案是 smiled，smile 後面接 [d]，一個音節就唸完。smile 沒有 [d]，smiles 收在 [z]，smiling 是兩個音節。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 -ed 唸 [d]？",
+    "options": [
+     "stayed",
+     "jumped",
+     "helped",
+     "fixed"
+    ],
+    "answer": 0,
+    "explanation": "stay 最後是母音，-ed 唸 [d]。jump、help 最後是 [p]，fix 最後是 [ks]，都沒有振動，-ed 唸 [t]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 -ed 跟另外三個唸法不一樣？",
+    "options": [
+     "cleaned",
+     "named",
+     "liked",
+     "begged"
+    ],
+    "answer": 2,
+    "explanation": "liked 的原形 like 最後是無聲的 [k]，-ed 唸 [t]。cleaned、named、begged 前面是 n、m、g 這些有聲子音，-ed 唸 [d]。"
+   }
+  ]
+ },
+ {
+  "id": "pe-08",
+  "title": "-ed 唸 [ɪd]：needed 多出一個音節",
+  "goal": "知道 t、d 結尾的動詞加 -ed 要唸 [ɪd]，會多一個音節。",
+  "key": {
+   "word": "needed",
+   "kk": "ɪd"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "need、wait 這類最後的音是 [t] 或 [d] 的動詞，加上 -ed 要唸 [ɪd]，多出一個音節。need 是一個音節，needed 唸 [ˋnidɪd]，變成兩個音節。t 或 d 後面直接再接一個 [t] 或 [d]，兩個音會黏在一起聽不出來，所以中間要多加一個母音。hate、fade 字尾的 e 不發音，真正收尾的是 [t]、[d]，所以 hated、faded 也唸 [ɪd]，一樣是兩個音節。"
+   },
+   {
+    "t": "p",
+    "text": "整個 -ed 家族裡，只有這一種會多一個音節。前兩課的 jumped、played 都只唸一拍，這一課的 needed、waited 要唸兩拍。台灣 KK 標 [ɪd]，美式音檔常聽起來接近 [əd]，又輕又短，重音一樣留在前面。waited 的 t 夾在兩個母音中間，美式會唸得很像輕輕的 d，第八章會再細講。"
+   },
+   {
+    "t": "words",
+    "title": "-ed 唸 [ɪd]",
+    "items": [
+     {
+      "w": "needed",
+      "zh": "需要（過去式）",
+      "mark": "need[ed]"
+     },
+     {
+      "w": "waited",
+      "zh": "等待（過去式）",
+      "mark": "wait[ed]"
+     },
+     {
+      "w": "ended",
+      "zh": "結束（過去式）",
+      "mark": "end[ed]"
+     },
+     {
+      "w": "landed",
+      "zh": "降落（過去式）",
+      "mark": "land[ed]"
+     },
+     {
+      "w": "tested",
+      "zh": "測試（過去式）",
+      "mark": "test[ed]"
+     },
+     {
+      "w": "added",
+      "zh": "加上（過去式）",
+      "mark": "add[ed]"
+     },
+     {
+      "w": "lifted",
+      "zh": "舉起（過去式）",
+      "mark": "lift[ed]"
+     },
+     {
+      "w": "handed",
+      "zh": "遞給（過去式）",
+      "mark": "hand[ed]"
+     },
+     {
+      "w": "painted",
+      "zh": "粉刷（過去式）",
+      "mark": "paint[ed]"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "原形一拍，過去式兩拍",
+    "items": [
+     {
+      "a": "need",
+      "az": "需要",
+      "b": "needed",
+      "bz": "需要（過去式）",
+      "note": "右邊多出 [ɪd] 這一拍。"
+     },
+     {
+      "a": "wait",
+      "az": "等待",
+      "b": "waited",
+      "bz": "等待（過去式）"
+     },
+     {
+      "a": "end",
+      "az": "結束",
+      "b": "ended",
+      "bz": "結束（過去式）"
+     },
+     {
+      "a": "land",
+      "az": "降落",
+      "b": "landed",
+      "bz": "降落（過去式）"
+     },
+     {
+      "a": "test",
+      "az": "測試",
+      "b": "tested",
+      "bz": "測試（過去式）"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "The plane landed late, and we waited at the gate.",
+    "zh": "飛機比較晚降落，我們就在登機門等。"
+   },
+   {
+    "t": "tip",
+    "text": "needed 要唸成 need、ed 兩拍，少了後面那一拍，聽起來就像現在式的 need。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "needed",
+    "options": [
+     "need",
+     "needed",
+     "needs",
+     "neat"
+    ],
+    "answer": 1,
+    "explanation": "答案是 needed，need 後面多一個音節 [ɪd]，唸兩拍。need 只有一拍；needs 是 need 加 [z]，還是一拍；neat 收在無聲的 [t]，也是一拍。"
+   },
+   {
+    "type": "listen",
+    "word": "waited",
+    "options": [
+     "wait",
+     "waits",
+     "waited",
+     "wake"
+    ],
+    "answer": 2,
+    "explanation": "答案是 waited，t 後面加 [ɪd]，兩個音節，中間的 t 唸得很輕。wait 只有一個音節，waits 收在 [ts]，wake 收在 [k]，也只有一個音節。"
+   },
+   {
+    "type": "listen",
+    "word": "landed",
+    "options": [
+     "landed",
+     "land",
+     "lands",
+     "lend"
+    ],
+    "answer": 0,
+    "explanation": "答案是 landed，land 後面多一個 [ɪd]。land 和 lands 都只有一個音節；lend 的母音是 [ɛ]。"
+   },
+   {
+    "type": "listen",
+    "word": "tested",
+    "options": [
+     "test",
+     "tests",
+     "text",
+     "tested"
+    ],
+    "answer": 3,
+    "explanation": "答案是 tested，test 後面加 [ɪd]，兩個音節。test 和 tests 都是一個音節；text 在 s 前面多一個 [k]。"
+   },
+   {
+    "type": "listen",
+    "word": "added",
+    "options": [
+     "add",
+     "added",
+     "adds",
+     "act"
+    ],
+    "answer": 1,
+    "explanation": "答案是 added，add 後面加 [ɪd]，兩個音節。add 和 adds 都是一個音節；act 收在 [kt]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字唸起來有兩個音節？",
+    "options": [
+     "jumped",
+     "played",
+     "handed",
+     "fixed"
+    ],
+    "answer": 2,
+    "explanation": "hand 最後是 d，加 -ed 唸 [ɪd]，變成 hand、ed 兩個音節。jumped、fixed 的 -ed 唸 [t]，played 唸 [d]，都只有一個音節。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 -ed 跟 needed 的 -ed 唸法一樣？",
+    "options": [
+     "stayed",
+     "painted",
+     "kissed",
+     "smiled"
+    ],
+    "answer": 1,
+    "explanation": "paint 最後是 t，-ed 唸 [ɪd]，跟 needed 一樣。stayed、smiled 的 -ed 唸 [d]，kissed 唸 [t]。"
+   }
+  ]
+ }
+]

@@ -1,0 +1,1193 @@
+[
+ {
+  "id": "pa-01",
+  "title": "短母音 a：cat 的 a 唸 [æ]",
+  "goal": "看到夾在子音中間的 a，會唸出嘴巴張大的 [æ]，也分得出 bad 和 bed。",
+  "key": {
+   "word": "cat",
+   "kk": "æ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "a 夾在兩個子音中間，後面沒有別的母音，像 cat、map、bag，這時 a 唸 [æ]。這種被子音關起來的音節叫閉音節，裡面的母音是短母音。母音在字首、後面接子音的 at、egg、up 也算閉音節，一樣唸短母音。這一章的五個短母音都照這個規則，只有母音後面接 r 的字不算，像 car、her、bird、for、fur，第七章再教。"
+   },
+   {
+    "t": "p",
+    "text": "唸 [æ] 時，下巴往下掉，嘴巴張大，嘴角同時往兩邊拉，舌頭平放，舌尖輕碰下排牙齒。KK 符號 [æ] 是 a 和 e 連在一起寫，聲音也在ㄚ和ㄝ中間，嘴型比ㄝ開很多。台灣學生最常把它唸成ㄝ，結果 bad 聽起來像 bed。"
+   },
+   {
+    "t": "p",
+    "text": "順便認識幾個拼字。字尾的 ck、ll、ss、ff、zz 寫兩個字母，只唸一個音，back 的 ck 唸 [k]，pass 的 ss 唸 [s]。x 一個字母唸 [ks] 兩個音，tax 唸 [tæks]。qu 唸 [kw]，字首的 y 唸 [j]，這兩個後面幾課會用到。y 的 [j] 就是 yes 開頭的音，跟 jazz 裡字母 j 的唸法不同，別搞混。少數常用字是例外，was、what、want 的 a 都不唸 [æ]。all、ball、call 這種 a 後面接 ll 的字，a 唸 [ɔ]，第六章會教。看到這些字，先別套這條規則。"
+   },
+   {
+    "t": "words",
+    "title": "跟著唸",
+    "items": [
+     {
+      "w": "cat",
+      "zh": "貓",
+      "mark": "c[a]t"
+     },
+     {
+      "w": "hat",
+      "zh": "帽子",
+      "mark": "h[a]t"
+     },
+     {
+      "w": "map",
+      "zh": "地圖",
+      "mark": "m[a]p"
+     },
+     {
+      "w": "bag",
+      "zh": "袋子；包包",
+      "mark": "b[a]g"
+     },
+     {
+      "w": "sad",
+      "zh": "難過的",
+      "mark": "s[a]d"
+     },
+     {
+      "w": "cab",
+      "zh": "計程車",
+      "mark": "c[a]b"
+     },
+     {
+      "w": "lap",
+      "zh": "膝上；（跑道）一圈",
+      "mark": "l[a]p"
+     },
+     {
+      "w": "nap",
+      "zh": "小睡",
+      "mark": "n[a]p"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "ck、ss、zz 和 x",
+    "items": [
+     {
+      "w": "back",
+      "zh": "背；後面",
+      "mark": "b[a]ck"
+     },
+     {
+      "w": "pass",
+      "zh": "通過；傳遞",
+      "mark": "p[a]ss"
+     },
+     {
+      "w": "tax",
+      "zh": "稅",
+      "mark": "t[a]x"
+     },
+     {
+      "w": "jazz",
+      "zh": "爵士樂",
+      "mark": "j[a]zz"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[æ] 和 [ɛ] 比一比",
+    "items": [
+     {
+      "a": "bad",
+      "az": "壞的",
+      "b": "bed",
+      "bz": "床",
+      "note": "bad 嘴巴張大，bed 嘴巴小一點。"
+     },
+     {
+      "a": "sat",
+      "az": "坐（sit 的過去式）",
+      "b": "set",
+      "bz": "放置；一組"
+     },
+     {
+      "a": "bat",
+      "az": "球棒；蝙蝠",
+      "b": "bet",
+      "bz": "打賭"
+     },
+     {
+      "a": "man",
+      "az": "男人",
+      "b": "men",
+      "bz": "男人（複數）",
+      "note": "men 是 man 的複數，只差在母音。n 前面的 [æ] 聽起來會帶一點滑音，嘴巴還是要張大。"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "Pack the map and the hat in the bag.",
+    "zh": "把地圖和帽子收進包包裡。"
+   },
+   {
+    "t": "tip",
+    "text": "如果你唸 bad 和 bed 時嘴巴開得一樣大，[æ] 就還不夠開，下巴再往下掉一點。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "bad",
+    "options": [
+     "bad",
+     "bed",
+     "bid",
+     "bud"
+    ],
+    "answer": 0,
+    "explanation": "音檔唸的是 bad [bæd]，嘴巴張很開。bed 的 [ɛ] 開口小很多，bid 的 [ɪ] 更小，bud 的 [ʌ] 短而放鬆。"
+   },
+   {
+    "type": "listen",
+    "word": "mad",
+    "options": [
+     "mid",
+     "mad",
+     "mud",
+     "map"
+    ],
+    "answer": 1,
+    "explanation": "音檔是 mad [mæd]，嘴巴張很開，最後收在 [d]。map 的母音一樣是 [æ]，最後雙唇閉起來收在 [p]；mid 是 [ɪ]，mud 是 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 a 跟 cat 的 a 唸法一樣？",
+    "options": [
+     "what",
+     "car",
+     "bag",
+     "ball"
+    ],
+    "answer": 2,
+    "explanation": "bag 的 a 夾在 b 和 g 中間，後面沒有別的母音，唸 [æ]，跟 cat 一樣。what 是這課提過的例外，a 不唸 [æ]。car 的 a 後面接 r，唸 [ɑr]，第七章會教。ball 的 a 後面接 ll，唸 [ɔ]，第六章會教。"
+   },
+   {
+    "type": "listen",
+    "word": "sat",
+    "options": [
+     "sit",
+     "set",
+     "sun",
+     "sat"
+    ],
+    "answer": 3,
+    "explanation": "音檔是 sat [sæt]，嘴巴張很開，嘴角往兩邊拉。set 的 [ɛ] 開口小很多，這兩個字最常被搞混。sit 是 [ɪ]；sun 是 [ʌ]，結尾也不一樣。"
+   },
+   {
+    "type": "listen",
+    "word": "pack",
+    "options": [
+     "peck",
+     "pick",
+     "pack",
+     "puck"
+    ],
+    "answer": 2,
+    "explanation": "音檔是 pack [pæk]，字尾 ck 只唸一個 [k]。peck 是 [ɛ]，pick 是 [ɪ]，puck 是 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "下面哪個字的 a 不唸 [æ]？",
+    "options": [
+     "hat",
+     "was",
+     "fan",
+     "jam"
+    ],
+    "answer": 1,
+    "explanation": "was 是常見的例外，KK 標 [wɑz]，美國人也常唸成 [wʌz]，在句子裡常弱讀成 [wəz]。hat、fan、jam 的 a 都夾在子音中間，唸 [æ]。"
+   },
+   {
+    "type": "listen",
+    "word": "tap",
+    "options": [
+     "tap",
+     "tip",
+     "top",
+     "tan"
+    ],
+    "answer": 0,
+    "explanation": "音檔是 tap [tæp]，最後雙唇閉起來收在 [p]。tan 的母音一樣是 [æ]，結尾是 [n]；tip 是 [ɪ]，top 是 [ɑ]。"
+   },
+   {
+    "type": "choose",
+    "q": "tax 的 x 唸哪個音？",
+    "options": [
+     "[s]",
+     "[k]",
+     "[z]",
+     "[ks]"
+    ],
+    "answer": 3,
+    "explanation": "x 一個字母唸兩個音 [ks]，所以 tax 唸 [tæks]，fix、box 的 x 也一樣。只唸 [k] 會變成 tack，只唸 [s] 就少了前面的 [k]。[z] 是 jazz 字尾 zz 的音，tax 裡沒有這個音。"
+   }
+  ]
+ },
+ {
+  "id": "pa-02",
+  "title": "短母音 e：bed 的 e 唸 [ɛ]",
+  "goal": "會唸閉音節裡的 e [ɛ]，聽得出 bed 和 bad 的差別，也不會把 KK 的 [ɛ] 跟 [e] 看錯。",
+  "key": {
+   "word": "bed",
+   "kk": "ɛ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "e 夾在子音中間的閉音節，像 bed、pen、red，e 唸 [ɛ]。這個音很接近注音ㄝ，大家唸起來通常不難。嘴巴半開，下巴只放下一點，嘴角輕輕往兩邊拉，舌尖碰著下排牙齒。跟上一課的 [æ] 比，[ɛ] 的嘴巴小很多，bad 和 bed 就靠開口大小分開。"
+   },
+   {
+    "t": "p",
+    "text": "KK 音標有兩個長得很像的符號，最容易看錯。[ɛ] 才是接近ㄝ的這個音。[e] 是 cake 裡的長 a，跟字母 A 的名稱同音，第四章會教。很多人看到 [e] 就唸成ㄝ，查字典時要看清楚。"
+   },
+   {
+    "t": "p",
+    "text": "有幾個常用字拼法沒有 e，母音卻也唸 [ɛ]，像 said、says、many、any，先當例外記起來。head、bread 這種 ea 唸 [ɛ] 的字，第六章再整理。"
+   },
+   {
+    "t": "words",
+    "title": "跟著唸",
+    "items": [
+     {
+      "w": "bed",
+      "zh": "床",
+      "mark": "b[e]d"
+     },
+     {
+      "w": "pen",
+      "zh": "筆",
+      "mark": "p[e]n"
+     },
+     {
+      "w": "red",
+      "zh": "紅色的",
+      "mark": "r[e]d"
+     },
+     {
+      "w": "ten",
+      "zh": "十",
+      "mark": "t[e]n"
+     },
+     {
+      "w": "leg",
+      "zh": "腿",
+      "mark": "l[e]g"
+     },
+     {
+      "w": "egg",
+      "zh": "蛋",
+      "mark": "[e]gg"
+     },
+     {
+      "w": "net",
+      "zh": "網子",
+      "mark": "n[e]t"
+     },
+     {
+      "w": "yes",
+      "zh": "是的",
+      "mark": "y[e]s"
+     },
+     {
+      "w": "tell",
+      "zh": "告訴",
+      "mark": "t[e]ll"
+     },
+     {
+      "w": "sell",
+      "zh": "賣",
+      "mark": "s[e]ll"
+     },
+     {
+      "w": "mess",
+      "zh": "一團亂",
+      "mark": "m[e]ss"
+     },
+     {
+      "w": "neck",
+      "zh": "脖子",
+      "mark": "n[e]ck"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "跟 [æ] 比一比",
+    "items": [
+     {
+      "a": "pet",
+      "az": "寵物",
+      "b": "pat",
+      "bz": "輕拍",
+      "note": "pat 的嘴巴要張得比 pet 大。"
+     },
+     {
+      "a": "beg",
+      "az": "乞求",
+      "b": "bag",
+      "bz": "袋子"
+     },
+     {
+      "a": "met",
+      "az": "遇見（meet 的過去式）",
+      "b": "mat",
+      "bz": "墊子"
+     },
+     {
+      "a": "mess",
+      "az": "一團亂",
+      "b": "mass",
+      "bz": "大量"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "跟下一課的 [ɪ] 比一比",
+    "items": [
+     {
+      "a": "bet",
+      "az": "打賭",
+      "b": "bit",
+      "bz": "一點點",
+      "note": "[ɪ] 的嘴巴比 [ɛ] 再小一點，下一課會細講。"
+     },
+     {
+      "a": "set",
+      "az": "放置；一組",
+      "b": "sit",
+      "bz": "坐"
+     },
+     {
+      "a": "bell",
+      "az": "鈴；鐘",
+      "b": "bill",
+      "bz": "帳單"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "Get the red pen on the bed.",
+    "zh": "去拿床上那支紅筆。"
+   },
+   {
+    "t": "tip",
+    "text": "bed 的嘴巴開到ㄝ就夠了，下巴放太低就會變成 bad。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "pet",
+    "options": [
+     "pat",
+     "pet",
+     "pit",
+     "pot"
+    ],
+    "answer": 1,
+    "explanation": "音檔是 pet [pɛt]，嘴巴半開，接近ㄝ。pat 的 [æ] 開口比較大，pit 的 [ɪ] 比較小，pot 的 [ɑ] 下巴放最低。"
+   },
+   {
+    "type": "listen",
+    "word": "red",
+    "options": [
+     "rid",
+     "rod",
+     "red",
+     "rub"
+    ],
+    "answer": 2,
+    "explanation": "音檔是 red [rɛd]。rid 是 [ɪ]，rod 是 [ɑ]；rub 是 [ʌ]，結尾也不一樣。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的母音跟 bed 的 e 唸法一樣？",
+    "options": [
+     "tan",
+     "ten",
+     "her",
+     "tin"
+    ],
+    "answer": 1,
+    "explanation": "ten 的 e 夾在 t 和 n 中間，唸 [ɛ]，跟 bed 一樣。tan 是 [æ]，tin 是 [ɪ]。her 的 e 後面接 r，唸 [ɝ]，第七章會教。"
+   },
+   {
+    "type": "listen",
+    "word": "mess",
+    "options": [
+     "mess",
+     "mass",
+     "miss",
+     "mud"
+    ],
+    "answer": 0,
+    "explanation": "音檔是 mess [mɛs]，字尾 ss 只唸一個 [s]。mass 是 [æ]，miss 是 [ɪ]；mud 是 [ʌ]，結尾是 [d]。"
+   },
+   {
+    "type": "listen",
+    "word": "get",
+    "options": [
+     "got",
+     "gut",
+     "gap",
+     "get"
+    ],
+    "answer": 3,
+    "explanation": "音檔是 get [gɛt]，嘴巴半開，接近ㄝ。gap 的 [æ] 嘴巴張得比較大，結尾是 [p]；got 是 [ɑ]，gut 是 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "KK 音標裡，哪個符號代表 bed 的母音？",
+    "options": [
+     "[e]",
+     "[æ]",
+     "[ɪ]",
+     "[ɛ]"
+    ],
+    "answer": 3,
+    "explanation": "bed 的 KK 是 [bɛd]。[e] 是 cake 的長 a，跟字母 A 同音，很多人把它當成ㄝ，這是最常見的看錯。[æ] 是 cat 的音，[ɪ] 是 sit 的音。"
+   },
+   {
+    "type": "listen",
+    "word": "bat",
+    "options": [
+     "bet",
+     "bit",
+     "bat",
+     "but"
+    ],
+    "answer": 2,
+    "explanation": "這題聽到的是 bat [bæt]，嘴巴張很開。bet 的 [ɛ] 開口較小，bit 是 [ɪ]，but 是 [ʌ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字拼法裡沒有 e，母音卻唸 [ɛ]？",
+    "options": [
+     "said",
+     "sad",
+     "sit",
+     "sun"
+    ],
+    "answer": 0,
+    "explanation": "said 唸 [sɛd]，ai 在這個字裡唸 [ɛ]，是要特別記的例外。sad 是 [æ]，sit 是 [ɪ]，sun 是 [ʌ]。"
+   }
+  ]
+ },
+ {
+  "id": "pa-03",
+  "title": "短母音 i：sit 的 i 唸 [ɪ]",
+  "goal": "會把閉音節的 i 唸成短而放鬆的 [ɪ]，聽得出 sit 和 set 的差別。",
+  "key": {
+   "word": "sit",
+   "kk": "ɪ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "i 夾在子音中間的閉音節，像 sit、big、pin，i 唸 [ɪ]。嘴巴比唸注音ㄧ時略開，嘴角放鬆不用拉，舌頭也比ㄧ低一點。聲音要短，唸完就收。"
+   },
+   {
+    "t": "p",
+    "text": "台灣學生常把 [ɪ] 唸得太緊太長，變成ㄧ，ship 就會被聽成 sheep，sit 被聽成 seat。拉長的 [i] 拼法不一樣，第四章才教，這課先練習把 [ɪ] 唸鬆、唸短。另外要跟上一課的 [ɛ] 分開，[ɛ] 的嘴巴比 [ɪ] 再開一點，big 和 beg 就差在這裡。"
+   },
+   {
+    "t": "p",
+    "text": "quit 的 qu 唸 [kw]，six 的 x 唸 [ks]，fill、miss 的雙寫字母和 kick 的 ck 都只唸一個音。有兩種例外要另外記。pretty 的 e 和 women 的 o 也唸 [ɪ]，拼法很特別。find、kind、mind、child 的 i 後面接 nd 或 ld，雖然夾在子音中間，卻唸長母音 [aɪ]。"
+   },
+   {
+    "t": "words",
+    "title": "跟著唸",
+    "items": [
+     {
+      "w": "sit",
+      "zh": "坐",
+      "mark": "s[i]t"
+     },
+     {
+      "w": "big",
+      "zh": "大的",
+      "mark": "b[i]g"
+     },
+     {
+      "w": "pin",
+      "zh": "別針",
+      "mark": "p[i]n"
+     },
+     {
+      "w": "hit",
+      "zh": "打；撞",
+      "mark": "h[i]t"
+     },
+     {
+      "w": "lip",
+      "zh": "嘴唇",
+      "mark": "l[i]p"
+     },
+     {
+      "w": "win",
+      "zh": "贏",
+      "mark": "w[i]n"
+     },
+     {
+      "w": "kid",
+      "zh": "小孩",
+      "mark": "k[i]d"
+     },
+     {
+      "w": "six",
+      "zh": "六",
+      "mark": "s[i]x"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "ck、ll、ss 和 qu",
+    "items": [
+     {
+      "w": "fill",
+      "zh": "裝滿；填寫",
+      "mark": "f[i]ll"
+     },
+     {
+      "w": "miss",
+      "zh": "錯過；想念",
+      "mark": "m[i]ss"
+     },
+     {
+      "w": "kick",
+      "zh": "踢",
+      "mark": "k[i]ck"
+     },
+     {
+      "w": "quit",
+      "zh": "辭職；放棄",
+      "mark": "qu[i]t"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[ɪ] 和 [ɛ] 比一比",
+    "items": [
+     {
+      "a": "big",
+      "az": "大的",
+      "b": "beg",
+      "bz": "乞求",
+      "note": "beg 的嘴巴比 big 開一點。"
+     },
+     {
+      "a": "fill",
+      "az": "裝滿",
+      "b": "fell",
+      "bz": "跌倒（fall 的過去式）"
+     },
+     {
+      "a": "lid",
+      "az": "蓋子",
+      "b": "led",
+      "bz": "帶領（lead 的過去式）"
+     },
+     {
+      "a": "pit",
+      "az": "坑洞",
+      "b": "pet",
+      "bz": "寵物"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "Fill this big tin with milk.",
+    "zh": "把這個大鐵罐裝滿牛奶。"
+   },
+   {
+    "t": "tip",
+    "text": "[ɪ] 要唸得又短又鬆，嘴角一用力拉長，sit 就會被聽成 seat。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "big",
+    "options": [
+     "bag",
+     "big",
+     "bug",
+     "beg"
+    ],
+    "answer": 1,
+    "explanation": "音檔是 big [bɪg]，短而放鬆。bag 是 [æ]，bug 是 [ʌ]，beg 是 [ɛ]。"
+   },
+   {
+    "type": "listen",
+    "word": "fix",
+    "options": [
+     "fox",
+     "fax",
+     "fig",
+     "fix"
+    ],
+    "answer": 3,
+    "explanation": "音檔是 fix [fɪks]，x 唸 [ks]。fig 的母音一樣是 [ɪ]，結尾只有 [g]；fox 是 [ɑ]，fax 是 [æ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 i 跟 sit 的 i 唸法一樣？",
+    "options": [
+     "child",
+     "bird",
+     "kind",
+     "win"
+    ],
+    "answer": 3,
+    "explanation": "win 的 i 夾在 w 和 n 中間，唸 [ɪ]，跟 sit 一樣。child、kind 是這課提過的例外，i 唸 [aɪ]。bird 的 i 後面接 r，唸 [ɝ]，第七章會教。"
+   },
+   {
+    "type": "listen",
+    "word": "hid",
+    "options": [
+     "had",
+     "hut",
+     "hid",
+     "hot"
+    ],
+    "answer": 2,
+    "explanation": "音檔是 hid [hɪd]，短而放鬆。had 是 [æ]，hut 是 [ʌ]，hot 是 [ɑ]。"
+   },
+   {
+    "type": "listen",
+    "word": "fell",
+    "options": [
+     "fell",
+     "fill",
+     "fall",
+     "fun"
+    ],
+    "answer": 0,
+    "explanation": "這題聽到的是 fell [fɛl]，嘴巴比 fill 開一點。fill 是 [ɪ]，fun 是 [ʌ]。fall 的 a 後面接 ll，唸 [ɔ]，第一課提過。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 i 不唸 [ɪ]？",
+    "options": [
+     "kid",
+     "pin",
+     "find",
+     "quit"
+    ],
+    "answer": 2,
+    "explanation": "find 的 i 後面接 nd，是這課提過的例外，唸長母音 [aɪ]。kid、pin、quit 的 i 都夾在子音中間，唸 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "fit",
+    "options": [
+     "fed",
+     "fit",
+     "fat",
+     "fin"
+    ],
+    "answer": 1,
+    "explanation": "音檔是 fit [fɪt]，又短又鬆。fin 的母音一樣是 [ɪ]，結尾是 [n]；fed 是 [ɛ]，fat 是 [æ]。"
+   },
+   {
+    "type": "choose",
+    "q": "唸 [ɪ] 時，嘴巴和聲音應該怎樣？",
+    "options": [
+     "嘴巴略開、放鬆，聲音短",
+     "嘴角用力往兩邊拉，聲音拉長",
+     "嘴巴張大，下巴往下掉",
+     "嘴唇嘟圓往前突"
+    ],
+    "answer": 0,
+    "explanation": "[ɪ] 要短而鬆，嘴巴比ㄧ略開。嘴角用力拉長是長母音 [i] 的唸法，會讓 sit 聽起來像 seat。嘴巴張大、下巴往下掉是 cat 的 [æ]。嘴唇嘟圓往前突是 food 的 [u] 那一類音，唸 [ɪ] 時嘴唇不用圓。"
+   }
+  ]
+ },
+ {
+  "id": "pa-04",
+  "title": "短母音 o：hot 的 o 唸 [ɑ]",
+  "goal": "會用嘴唇不圓的 [ɑ] 唸 hot、box 這類字，也分得出 hot 和 hat。",
+  "key": {
+   "word": "hot",
+   "kk": "ɑ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "o 夾在子音中間的閉音節，像 hot、top、box，美式發音唸 [ɑ]，台灣常用的 KK 音標也標成 [ɑ]。唸的時候下巴往下放，嘴巴張大，嘴唇放鬆不圓，舌頭平放並往後縮，聲音很接近注音ㄚ。"
+   },
+   {
+    "t": "p",
+    "text": "台灣學生最常把這個 o 唸成嘴唇圓起來的ㄛ，美國人聽起來會覺得怪。[ɑ] 和第一課的 [æ] 嘴巴都張很大，差在 [æ] 的嘴角往兩邊拉、舌頭在前面，[ɑ] 的嘴角放鬆、舌頭往後，hot 和 hat 多唸幾次就能感覺到。"
+   },
+   {
+    "t": "p",
+    "text": "有些常用字的 o 夾在子音中間，卻不唸 [ɑ]。son、month、front 的 o 唸 [ʌ]，第六章會教。cold、old、most、both 的 o 唸長母音 [o]，要另外記。dog、long、off 這類字，KK 字典標成 [ɔ]，很多美國人唸得跟 [ɑ] 很接近，查字典看到 [ɔ] 不用緊張。"
+   },
+   {
+    "t": "words",
+    "title": "跟著唸",
+    "items": [
+     {
+      "w": "hot",
+      "zh": "熱的；燙的",
+      "mark": "h[o]t"
+     },
+     {
+      "w": "top",
+      "zh": "頂端",
+      "mark": "t[o]p"
+     },
+     {
+      "w": "box",
+      "zh": "箱子；盒子",
+      "mark": "b[o]x"
+     },
+     {
+      "w": "job",
+      "zh": "工作",
+      "mark": "j[o]b"
+     },
+     {
+      "w": "pot",
+      "zh": "鍋子",
+      "mark": "p[o]t"
+     },
+     {
+      "w": "mop",
+      "zh": "拖把",
+      "mark": "m[o]p"
+     },
+     {
+      "w": "got",
+      "zh": "得到（get 的過去式）",
+      "mark": "g[o]t"
+     },
+     {
+      "w": "lot",
+      "zh": "很多（a lot）",
+      "mark": "l[o]t"
+     }
+    ]
+   },
+   {
+    "t": "words",
+    "title": "ck 結尾",
+    "items": [
+     {
+      "w": "rock",
+      "zh": "石頭；搖滾樂",
+      "mark": "r[o]ck"
+     },
+     {
+      "w": "sock",
+      "zh": "襪子",
+      "mark": "s[o]ck"
+     },
+     {
+      "w": "lock",
+      "zh": "鎖",
+      "mark": "l[o]ck"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "[ɑ] 和 [æ] 比一比",
+    "items": [
+     {
+      "a": "hot",
+      "az": "熱的",
+      "b": "hat",
+      "bz": "帽子",
+      "note": "hat 的嘴角往兩邊拉，hot 的嘴唇放鬆。"
+     },
+     {
+      "a": "mop",
+      "az": "拖把",
+      "b": "map",
+      "bz": "地圖"
+     },
+     {
+      "a": "sock",
+      "az": "襪子",
+      "b": "sack",
+      "bz": "大袋子"
+     },
+     {
+      "a": "cop",
+      "az": "警察",
+      "b": "cap",
+      "bz": "棒球帽"
+     }
+    ]
+   },
+   {
+    "t": "sent",
+    "en": "The pot on top is hot.",
+    "zh": "上面那個鍋子很燙。"
+   },
+   {
+    "t": "tip",
+    "text": "唸 hot 時可以照鏡子，看到嘴唇往前圓起來就是唸成ㄛ了，把下巴放下、嘴唇放鬆再唸一次。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "hot",
+    "options": [
+     "hat",
+     "hot",
+     "hit",
+     "hut"
+    ],
+    "answer": 1,
+    "explanation": "音檔是 hot [hɑt]，嘴巴張大、嘴唇不圓。hat 是 [æ]，hit 是 [ɪ]，hut 是 [ʌ]。"
+   },
+   {
+    "type": "listen",
+    "word": "sock",
+    "options": [
+     "sack",
+     "six",
+     "sock",
+     "sick"
+    ],
+    "answer": 2,
+    "explanation": "音檔是 sock [sɑk]。sack 是 [æ]，sick 是 [ɪ]；six 也是 [ɪ]，結尾是 [ks]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 o 跟 hot 的 o 唸法一樣？",
+    "options": [
+     "cold",
+     "corn",
+     "box",
+     "son"
+    ],
+    "answer": 2,
+    "explanation": "box 的 o 夾在 b 和 x 中間，唸 [ɑ]，跟 hot 一樣。cold 和 son 是這課提過的例外，cold 的 o 唸長母音 [o]，son 的 o 唸 [ʌ]。corn 的 o 後面接 r，唸 [ɔr]，第七章會教。"
+   },
+   {
+    "type": "listen",
+    "word": "cop",
+    "options": [
+     "cap",
+     "cup",
+     "kit",
+     "cop"
+    ],
+    "answer": 3,
+    "explanation": "音檔是 cop [kɑp]，下巴放到底，嘴唇不圓。cup 的 [ʌ] 開口小、比較短。cap 是 [æ]，kit 是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "lock",
+    "options": [
+     "lock",
+     "luck",
+     "lick",
+     "lack"
+    ],
+    "answer": 0,
+    "explanation": "音檔是 lock [lɑk]。luck 是 [ʌ]，lick 是 [ɪ]，lack 是 [æ]。"
+   },
+   {
+    "type": "choose",
+    "q": "美式發音唸 hot 的 o，嘴型應該是哪一種？",
+    "options": [
+     "嘴唇嘟圓，像注音ㄛ",
+     "嘴角往兩邊拉，像注音ㄝ",
+     "嘴巴只開一點，像注音ㄧ",
+     "嘴巴張大、嘴唇不圓，接近注音ㄚ"
+    ],
+    "answer": 3,
+    "explanation": "美式的 [ɑ] 下巴放下、嘴唇放鬆不圓，接近ㄚ。唸成圓唇的ㄛ，是台灣學生最常見的問題。像ㄝ那樣嘴角往兩邊拉，比較接近 bed 的 [ɛ]；嘴巴只開一點像ㄧ，比較接近 sit 的 [ɪ]，兩個開口都太小。"
+   },
+   {
+    "type": "listen",
+    "word": "hop",
+    "options": [
+     "hip",
+     "hop",
+     "hug",
+     "ham"
+    ],
+    "answer": 1,
+    "explanation": "音檔是 hop [hɑp]，下巴放低、嘴唇不圓。hip 是 [ɪ]，hug 是 [ʌ]，ham 是 [æ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 o 跟 hot 的 o 唸法不同？",
+    "options": [
+     "most",
+     "top",
+     "job",
+     "rock"
+    ],
+    "answer": 0,
+    "explanation": "most 是這課提過的例外，o 唸長母音 [o]。top、job、rock 的 o 都唸 [ɑ]。"
+   }
+  ]
+ },
+ {
+  "id": "pa-05",
+  "title": "短母音 u：cup 的 u 唸 [ʌ]",
+  "goal": "會唸短而放鬆的 [ʌ]，分得出 cup 和 cop，也能把五個短母音分清楚。",
+  "key": {
+   "word": "cup",
+   "kk": "ʌ"
+  },
+  "lesson": [
+   {
+    "t": "p",
+    "text": "u 夾在子音中間的閉音節，像 cup、bus、sun，u 唸 [ʌ]。嘴巴半開，下巴只放下一點，嘴唇和舌頭都放鬆，舌頭平放在中間，聲音短短的，唸完就收。"
+   },
+   {
+    "t": "p",
+    "text": "台灣學生常把 [ʌ] 也唸成ㄚ，cup 和 cop 就分不出來。ㄚ比較接近上一課 hot 的 [ɑ]，那個音下巴要放到底，聲音也比較長。[ʌ] 嘴巴只開一半，很快帶過。cup 和 cap 也要分開，cap 的 [æ] 嘴角要往兩邊拉。"
+   },
+   {
+    "t": "words",
+    "title": "跟著唸",
+    "items": [
+     {
+      "w": "cup",
+      "zh": "杯子",
+      "mark": "c[u]p"
+     },
+     {
+      "w": "bus",
+      "zh": "公車",
+      "mark": "b[u]s"
+     },
+     {
+      "w": "sun",
+      "zh": "太陽",
+      "mark": "s[u]n"
+     },
+     {
+      "w": "run",
+      "zh": "跑",
+      "mark": "r[u]n"
+     },
+     {
+      "w": "cut",
+      "zh": "切；剪",
+      "mark": "c[u]t"
+     },
+     {
+      "w": "fun",
+      "zh": "好玩的",
+      "mark": "f[u]n"
+     },
+     {
+      "w": "mud",
+      "zh": "泥巴",
+      "mark": "m[u]d"
+     },
+     {
+      "w": "bug",
+      "zh": "蟲；程式錯誤",
+      "mark": "b[u]g"
+     },
+     {
+      "w": "up",
+      "zh": "往上",
+      "mark": "[u]p"
+     },
+     {
+      "w": "duck",
+      "zh": "鴨子",
+      "mark": "d[u]ck"
+     },
+     {
+      "w": "luck",
+      "zh": "運氣",
+      "mark": "l[u]ck"
+     },
+     {
+      "w": "buzz",
+      "zh": "嗡嗡聲",
+      "mark": "b[u]zz"
+     }
+    ]
+   },
+   {
+    "t": "pairs",
+    "title": "跟 [ɑ]、[æ] 比一比",
+    "items": [
+     {
+      "a": "cup",
+      "az": "杯子",
+      "b": "cop",
+      "bz": "警察",
+      "note": "cop 的下巴放得比 cup 低。"
+     },
+     {
+      "a": "luck",
+      "az": "運氣",
+      "b": "lock",
+      "bz": "鎖"
+     },
+     {
+      "a": "nut",
+      "az": "堅果",
+      "b": "not",
+      "bz": "不"
+     },
+     {
+      "a": "duck",
+      "az": "鴨子",
+      "b": "dock",
+      "bz": "碼頭"
+     },
+     {
+      "a": "cut",
+      "az": "切；剪",
+      "b": "cat",
+      "bz": "貓",
+      "note": "cat 的嘴角要往兩邊拉。"
+     },
+     {
+      "a": "bug",
+      "az": "蟲",
+      "b": "bag",
+      "bz": "袋子"
+     }
+    ]
+   },
+   {
+    "t": "p",
+    "text": "有些字的 u 不照這條規則，put、pull、push、full 的 u 嘴唇微圓，唸 [ʊ]，第六章再教，先當例外記起來。"
+   },
+   {
+    "t": "p",
+    "text": "五個短母音到這裡都學完了，可以放在一起比。sit 的 [ɪ] 開口最小，bed 的 [ɛ] 大一點，cat 的 [æ] 和 hot 的 [ɑ] 都張很大，差在嘴角有沒有往兩邊拉。cup 的 [ʌ] 只開一半，嘴巴放鬆，很快唸完。"
+   },
+   {
+    "t": "sent",
+    "en": "The duck had fun in the mud.",
+    "zh": "鴨子在泥巴裡玩得很開心。"
+   },
+   {
+    "t": "tip",
+    "text": "cup 跟 cop 分不出來時，先把 cup 唸短一點，嘴巴只開一半就好。"
+   }
+  ],
+  "quiz": [
+   {
+    "type": "listen",
+    "word": "cut",
+    "options": [
+     "cat",
+     "cot",
+     "cut",
+     "kit"
+    ],
+    "answer": 2,
+    "explanation": "音檔是 cut [kʌt]，短而放鬆。cot 的 [ɑ] 下巴放得更低，cat 是 [æ]，kit 是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "nut",
+    "options": [
+     "nut",
+     "net",
+     "not",
+     "nap"
+    ],
+    "answer": 0,
+    "explanation": "音檔是 nut [nʌt]。not 是 [ɑ]，net 是 [ɛ]，nap 是 [æ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 u 跟 cup 的 u 唸法一樣？",
+    "options": [
+     "push",
+     "fur",
+     "sun",
+     "full"
+    ],
+    "answer": 2,
+    "explanation": "sun 的 u 夾在 s 和 n 中間，唸 [ʌ]，跟 cup 一樣。push、full 是這課提過的例外，u 唸 [ʊ]。fur 的 u 後面接 r，唸 [ɝ]，第七章會教。"
+   },
+   {
+    "type": "listen",
+    "word": "duck",
+    "options": [
+     "dock",
+     "deck",
+     "dig",
+     "duck"
+    ],
+    "answer": 3,
+    "explanation": "音檔是 duck [dʌk]。dock 的 [ɑ] 嘴巴張得更大，deck 是 [ɛ]，dig 是 [ɪ]。"
+   },
+   {
+    "type": "listen",
+    "word": "bun",
+    "options": [
+     "ban",
+     "bun",
+     "bin",
+     "bus"
+    ],
+    "answer": 1,
+    "explanation": "音檔是 bun [bʌn]，小圓麵包。bus 的母音一樣是 [ʌ]，結尾是 [s]；ban 是 [æ]，bin 是 [ɪ]。"
+   },
+   {
+    "type": "choose",
+    "q": "哪個字的 u 不唸 [ʌ]？",
+    "options": [
+     "put",
+     "bus",
+     "mud",
+     "fun"
+    ],
+    "answer": 0,
+    "explanation": "put 的 u 嘴唇微圓，唸 [ʊ]，KK 是 [pʊt]，第六章會教。bus、mud、fun 的 u 都唸 [ʌ]。"
+   },
+   {
+    "type": "listen",
+    "word": "rob",
+    "options": [
+     "rub",
+     "rib",
+     "red",
+     "rob"
+    ],
+    "answer": 3,
+    "explanation": "這題複習 [ɑ]，音檔是 rob [rɑb]。rub 是 [ʌ]，rib 是 [ɪ]，red 是 [ɛ]。"
+   },
+   {
+    "type": "listen",
+    "word": "fed",
+    "options": [
+     "fad",
+     "fed",
+     "fit",
+     "fun"
+    ],
+    "answer": 1,
+    "explanation": "這題複習 [ɛ]，音檔是 fed [fɛd]。fad 是 [æ]，fit 是 [ɪ]，fun 是 [ʌ]。"
+   }
+  ]
+ }
+]

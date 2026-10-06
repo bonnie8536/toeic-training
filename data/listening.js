@@ -2399,7 +2399,7 @@ TOEIC.listening = {
       "To change a shipping address"
      ],
      "answer": 1,
-     "explanation": "定位在男子開頭第一句：I'm calling about our order. It was supposed to arrive on Monday, and it's still not here.（我打來是問訂單,原本星期一該到,到現在還沒收到）。他打電話的目的就是追一批遲到的貨,選 (B)。(A) 他沒有要下新單;(C) 對話中椅子沒有損壞,只是還沒送到;(D) 全程沒有提到更改地址。"
+     "explanation": "定位在男子開頭第一句：I'm calling about our order. It was supposed to arrive on Monday, and it's still not here.（我打來是問訂單，原本星期一該到，到現在還沒收到）。他打電話的目的就是追一批遲到的貨，選 (B)。(A) 他沒有要下新單；(C) 對話中椅子沒有損壞，只是還沒送到；(D) 全程沒有提到更改地址。"
     },
     {
      "q": "According to the woman, what caused the problem?",
@@ -2410,7 +2410,7 @@ TOEIC.listening = {
       "An issue with the delivery company"
      ],
      "answer": 3,
-     "explanation": "定位在女子第二次發言：the shipment left our warehouse late. There was a problem with our delivery company last week.（貨出倉庫就晚了,上週我們的物流公司出了狀況）。原因是物流商出問題,選 (D)。其餘三個選項都是常見的延誤理由,但對話中完全沒提到。"
+     "explanation": "定位在女子第二次發言：the shipment left our warehouse late. There was a problem with our delivery company last week.（貨出倉庫就晚了，上週我們的物流公司出了狀況）。原因是物流商出問題，選 (D)。其餘三個選項都是常見的延誤理由，但對話中完全沒提到。"
     },
     {
      "q": "What will the woman do this afternoon?",
@@ -2421,10 +2421,10 @@ TOEIC.listening = {
       "Refund the full amount of the order"
      ],
      "answer": 0,
-     "explanation": "定位在女子倒數第二次發言：I'll email you the updated invoice and the tracking number this afternoon.（我今天下午會把更新後的帳單和追蹤號碼寄給您）。題目問下午要做的事,選 (A)。(D) 是陷阱：她只說免掉約九十美元的運費（take the shipping fee off your invoice）,不是全額退款。"
+     "explanation": "定位在女子倒數第二次發言：I'll email you the updated invoice and the tracking number this afternoon.（我今天下午會把更新後的帳單和追蹤號碼寄給您）。題目問下午要做的事，選 (A)。(D) 是陷阱：她只說免掉約九十美元的運費（take the shipping fee off your invoice），不是全額退款。"
     }
    ],
-   "transcriptZh": "男：您好，我是 Brightway 家具的 Daniel Foster。我打來是想問我們的訂單，原本應該星期一就到，現在還沒收到。 女：Foster 先生，真的很抱歉。我幫您調一下資料，可以給我訂單編號嗎？ 男：好，是四七二九零。 女：謝謝。好，我看到了。嗯，看起來這批貨從我們倉庫出去的時間就晚了，上週我們的物流公司出了狀況。 男：這對我們來說很麻煩，有客人在等那些椅子。 女：我了解。好消息是貨已經在車上了，星期四早上應該就會送到。 男：星期四？那晚了三天。運費的部分能不能想想辦法？ 女：其實可以。我可以把運費從您的帳單上扣掉，大概九十美元。 男：好，這樣有幫助。可以給我一份書面的嗎？ 女：當然。我今天下午會把更新後的帳單和追蹤號碼寄到您信箱。 男：太好了。還有一件事，下次如果延誤，可以請人打電話通知我們嗎？ 女：沒問題。我會在您的帳戶加上註記，這樣一有狀況就會馬上打給您。"
+   "transcriptZh": "男：您好，我是 Brightway 家具的 Daniel Foster。我打來是想問我們的訂單，原本應該星期一就到，現在還沒收到。\n女：Foster 先生，真的很抱歉。我幫您調一下資料，可以給我訂單編號嗎？\n男：好，是四七二九零。\n女：謝謝。好，我看到了。嗯，看起來這批貨從我們倉庫出去的時間就晚了，上週我們的物流公司出了狀況。\n男：這對我們來說很麻煩，有客人在等那些椅子。\n女：我了解。好消息是貨已經在車上了，星期四早上應該就會送到。\n男：星期四？那晚了三天。運費的部分能不能想想辦法？\n女：其實可以。我可以把運費從您的帳單上扣掉，大概九十美元。\n男：好，這樣有幫助。可以給我一份書面的嗎？\n女：當然。我今天下午會把更新後的帳單和追蹤號碼寄到您信箱。\n男：太好了。還有一件事，下次如果延誤，可以請人打電話通知我們嗎？\n女：沒問題。我會在您的帳戶加上註記，這樣一有狀況就會馬上打給您。"
   },
   {
    "id": "l3-22",
@@ -2490,7 +2490,7 @@ TOEIC.listening = {
       "A training program for new employees"
      ],
      "answer": 2,
-     "explanation": "主旨題要聽前兩三句：女子說 I want to talk about the interviews for the marketing position，接著說 I think it's between Karen Wu and the guy who came in last（我覺得就是這兩個人在比）。整段都在比較兩位應徵者、決定下一步，選 (C)。(A) job posting 只是被拿來當條件引用，沒有要修改;(B)(D) 對話中沒出現。"
+     "explanation": "主旨題要聽前兩三句：女子說 I want to talk about the interviews for the marketing position，接著說 I think it's between Karen Wu and the guy who came in last（我覺得就是這兩個人在比）。整段都在比較兩位應徵者、決定下一步，選 (C)。(A) job posting 只是被拿來當條件引用，沒有要修改；(B)(D) 對話中沒出現。"
     },
     {
      "q": "What does the woman say about Peter Nakamura?",
@@ -2501,7 +2501,7 @@ TOEIC.listening = {
       "He is not familiar with social media"
      ],
      "answer": 0,
-     "explanation": "定位在女子第三次發言：he's only been working two years, and the job posting said five.（他只工作兩年，職缺公告寫的是五年）。年資不符要求，選 (A)。(D) 剛好講反：男子說 he had great ideas about social media，他社群這塊很強;(C) 是把 the guy who came in last（最後一位進來面試的人）誤聽成遲到。"
+     "explanation": "定位在女子第三次發言：he's only been working two years, and the job posting said five.（他只工作兩年，職缺公告寫的是五年）。年資不符要求，選 (A)。(D) 剛好講反：男子說 he had great ideas about social media，他社群這塊很強；(C) 是把 the guy who came in last（最後一位進來面試的人）誤聽成遲到。"
     },
     {
      "q": "What will the man most likely do next?",
@@ -2515,7 +2515,7 @@ TOEIC.listening = {
      "explanation": "定位在最後兩句：女子說 Can you check his calendar and set something up for next week?，男子回 No problem. I'll send you both an invitation this afternoon.（沒問題，下午我把邀請寄給你們兩位）。他要去安排與總監的面談，選 (D)。(A) 打電話給前主管的是女子，而且已經在今天早上做完了。"
     }
    ],
-   "transcriptZh": "女：嘿 Marcus，有空嗎？我想談一下行銷職缺的面試。 男：好啊。我們昨天看了四個人，對吧？ 女：對。老實說，我覺得就是 Karen Wu 跟最後進來的那位在比。 男：Peter Nakamura。對，他對社群媒體的想法很不錯。 女：確實。可是他才工作兩年，職缺公告寫的是五年。 男：也是。Karen 資歷夠，不過她在面試裡看起來有點安靜。 女：我也注意到了。所以我今天早上打給她其中一位推薦人。 男：喔？他們怎麼說？ 女：非常正面。她以前的主管說她帶六個人的團隊，還負責大客戶。 男：那她可能只是緊張而已。我們要不要請她回來進行第二輪面試？ 女：要，這次讓總監一起。你可以查一下他的行事曆，約在下週嗎？ 男：沒問題。我下午把邀請寄給你們兩位。"
+   "transcriptZh": "女：嘿 Marcus，有空嗎？我想談一下行銷職缺的面試。\n男：好啊。我們昨天看了四個人，對吧？\n女：對。老實說，我覺得就是 Karen Wu 跟最後進來的那位在比。\n男：Peter Nakamura。對，他對社群媒體的想法很不錯。\n女：確實。可是他才工作兩年，職缺公告寫的是五年。\n男：也是。Karen 資歷夠，不過她在面試裡看起來有點安靜。\n女：我也注意到了。所以我今天早上打給她其中一位推薦人。\n男：喔？他們怎麼說？\n女：非常正面。她以前的主管說她帶六個人的團隊，還負責大客戶。\n男：那她可能只是緊張而已。我們要不要請她回來進行第二輪面試？\n女：要，這次讓總監一起。你可以查一下他的行事曆，約在下週嗎？\n男：沒問題。我下午把邀請寄給你們兩位。"
   },
   {
    "id": "l3-23",
@@ -2581,7 +2581,7 @@ TOEIC.listening = {
       "At an insurance company"
      ],
      "answer": 0,
-     "explanation": "場景題：男子開口就說 I'm here to pick up a prescription（我來領處方藥），女子後面提到 tablet、cold medicine、pay at the register，是藥局的典型情境，選 (A)。(B) 醫生只是被提到 my doctor didn't really explain，人不在現場;(D) insurance 只出現在結帳時的 With your insurance。"
+     "explanation": "場景題：男子開口就說 I'm here to pick up a prescription（我來領處方藥），女子後面提到 tablet、cold medicine、pay at the register，是藥局的典型情境，選 (A)。(B) 醫生只是被提到 my doctor didn't really explain，人不在現場；(D) insurance 只出現在結帳時的 With your insurance。"
     },
     {
      "q": "What does the woman tell the man to do if he misses a dose?",
@@ -2606,7 +2606,7 @@ TOEIC.listening = {
      "explanation": "下一步題看結尾：女子說 it's twelve dollars. You can pay at the register over there.（十二美元，可以到那邊的櫃檯結帳）。所以他接著會去付錢，選 (B)。(D) 的四小時是指兩種藥之間要間隔，不是要在現場等。"
     }
    ],
-   "transcriptZh": "男：您好，我來領處方藥，名字是 Alan Reyes。 女：我查一下。Reyes。有，在這裡，今天早上就配好了。 男：太好了。其實我想問一下，我的醫生沒有很清楚說明要怎麼吃。 女：好啊，您問。 男：一天要吃幾顆？ 女：一天兩次，一次一顆，早上一次、晚上一次。要跟食物一起吃。 男：跟食物一起？好。那如果忘了吃一次呢？ 女：想起來的時候補吃就好。但如果快到下一次的時間了就跳過，不要一次吃兩顆。 男：了解。還有，這個可以跟我上週在這裡買的感冒藥一起吃嗎？ 女：我查一下。應該沒問題，不過兩種之間要間隔大約四小時。 男：太好了。喔對，這個多少錢？ 女：用您的保險是十二美元。可以到那邊的櫃檯結帳。"
+   "transcriptZh": "男：您好，我來領處方藥，名字是 Alan Reyes。\n女：我查一下。Reyes。有，在這裡，今天早上就配好了。\n男：太好了。其實我想問一下，我的醫生沒有很清楚說明要怎麼吃。\n女：好啊，您問。\n男：一天要吃幾顆？\n女：一天兩次，一次一顆，早上一次、晚上一次。要跟食物一起吃。\n男：跟食物一起？好。那如果忘了吃一次呢？\n女：想起來的時候補吃就好。但如果快到下一次的時間了就跳過，不要一次吃兩顆。\n男：了解。還有，這個可以跟我上週在這裡買的感冒藥一起吃嗎？\n女：我查一下。應該沒問題，不過兩種之間要間隔大約四小時。\n男：太好了。喔對，這個多少錢？\n女：用您的保險是十二美元。可以到那邊的櫃檯結帳。"
   },
   {
    "id": "l3-24",
@@ -2672,7 +2672,7 @@ TOEIC.listening = {
       "Preparations for moving to a new office"
      ],
      "answer": 3,
-     "explanation": "主旨題：女子開頭問 did you see the email about the office move?，之後談的都是搬家日期、打包、電腦、新地點，選 (D)。(A) Saturday morning 只是搬家公司來的時間，不是員工要加班;(C) 停車只在最後被順帶提到，是新辦公室的優點之一。"
+     "explanation": "主旨題：女子開頭問 did you see the email about the office move?，之後談的都是搬家日期、打包、電腦、新地點，選 (D)。(A) Saturday morning 只是搬家公司來的時間，不是員工要加班；(C) 停車只在最後被順帶提到，是新辦公室的優點之一。"
     },
     {
      "q": "What does the woman say employees must do by Friday?",
@@ -2694,10 +2694,10 @@ TOEIC.listening = {
       "They must be unplugged on Friday"
      ],
      "answer": 2,
-     "explanation": "定位在女子第五次發言：The IT team handles those. Don't unplug anything yourself.（電腦由資訊部處理，不要自己拔線）。選 (C)。(D) 剛好是女子明講不要做的事;(B) 的 labels 是給紙箱用的，不是給電腦。"
+     "explanation": "定位在女子第五次發言：The IT team handles those. Don't unplug anything yourself.（電腦由資訊部處理，不要自己拔線）。選 (C)。(D) 剛好是女子明講不要做的事；(B) 的 labels 是給紙箱用的，不是給電腦。"
     }
    ],
-   "transcriptZh": "女：Ken，你看到辦公室搬遷那封信了嗎？ 男：看到了，不過只讀了一半。我們下個月要搬，對吧？ 女：十五號那個週末。搬家公司星期六早上會來。 男：所以東西就放在桌上不用管？ 女：不是，這就是我想找你談的原因。每個人星期五前都要自己把箱子打包好。 男：好。紙箱去哪裡拿？ 女：現在都放在文具室，需要多少拿多少，還有標籤可以用。 男：了解。那電腦呢？ 女：電腦由資訊部處理，不要自己拔線。他們星期四會過來貼標籤。 男：那太好了，我本來就不想弄。新的地方怎麼樣？ 女：在 Sherman 大道，離這裡大概十分鐘。會議室變多了，樓下還有停車場。 男：有停車位？光這點就值得了。"
+   "transcriptZh": "女：Ken，你看到辦公室搬遷那封信了嗎？\n男：看到了，不過只讀了一半。我們下個月要搬，對吧？\n女：十五號那個週末。搬家公司星期六早上會來。\n男：所以東西就放在桌上不用管？\n女：不是，這就是我想找你談的原因。每個人星期五前都要自己把箱子打包好。\n男：好。紙箱去哪裡拿？\n女：現在都放在文具室，需要多少拿多少，還有標籤可以用。\n男：了解。那電腦呢？\n女：電腦由資訊部處理，不要自己拔線。他們星期四會過來貼標籤。\n男：那太好了，我本來就不想弄。新的地方怎麼樣？\n女：在 Sherman 大道，離這裡大概十分鐘。會議室變多了，樓下還有停車場。\n男：有停車位？光這點就值得了。"
   },
   {
    "id": "l3-25",
@@ -2763,7 +2763,7 @@ TOEIC.listening = {
       "The product is not ready for the launch"
      ],
      "answer": 2,
-     "explanation": "問題點在前兩句：男子說 A hundred and eighty people have confirmed，女子回 We booked the hall for a hundred and fifty.（我們訂的場地是一百五十人）。報名人數超過場地容量，選 (C)。(B) 加價的是飯店的大場地（another six hundred），不是餐飲公司;餐飲只是需要跟著改人數。"
+     "explanation": "問題點在前兩句：男子說 A hundred and eighty people have confirmed，女子回 We booked the hall for a hundred and fifty.（我們訂的場地是一百五十人）。報名人數超過場地容量，選 (C)。(B) 加價的是飯店的大場地（another six hundred），不是餐飲公司；餐飲只是需要跟著改人數。"
     },
     {
      "q": "Why does the woman think Mr. Duval will approve the change?",
@@ -2788,7 +2788,7 @@ TOEIC.listening = {
      "explanation": "定位在最後一句：send me the new floor plan when you get it. I want to see where the demo tables go.（拿到新的平面圖就寄給我，我想看展示桌要擺哪裡）。選 (B)。(D) 的報價男子早就問過了（I already asked），女子沒有再要一份。"
     }
    ],
-   "transcriptZh": "男：Sofia，產品發表會的人數統計出來了，有一百八十人確認出席。 女：一百八十？我們訂的場地是一百五十人的。 男：我知道，所以我先來找你。 女：嗯。飯店二樓有一間比較大的，不過我猜會比較貴。 男：我已經問過了。要多六百塊，而且他們星期五前要答覆。 女：六百。比我原本想花的多，不過把人擋在外面更難看。 男：我也是這麼想。還有餐飲那邊，他們也是照一百五十人準備的。 女：對，那邊也要打電話。好，就換大的那間，我去跟 Duval 先生報備。 男：你覺得他會答應嗎？ 女：他去年春天批准過類似的變更，應該會。我今天下午找他談。 男：好。你那邊有消息，我就跟飯店確認，順便改餐飲的訂單。 女：還有，拿到新的平面圖就寄給我，我想看展示桌要擺在哪裡。"
+   "transcriptZh": "男：Sofia，產品發表會的人數統計出來了，有一百八十人確認出席。\n女：一百八十？我們訂的場地是一百五十人的。\n男：我知道，所以我先來找你。\n女：嗯。飯店二樓有一間比較大的，不過我猜會比較貴。\n男：我已經問過了。要多六百塊，而且他們星期五前要答覆。\n女：六百。比我原本想花的多，不過把人擋在外面更難看。\n男：我也是這麼想。還有餐飲那邊，他們也是照一百五十人準備的。\n女：對，那邊也要打電話。好，就換大的那間，我去跟 Duval 先生報備。\n男：你覺得他會答應嗎？\n女：他去年春天批准過類似的變更，應該會。我今天下午找他談。\n男：好。你那邊有消息，我就跟飯店確認，順便改餐飲的訂單。\n女：還有，拿到新的平面圖就寄給我，我想看展示桌要擺在哪裡。"
   },
   {
    "id": "l3-31",
@@ -2854,7 +2854,7 @@ TOEIC.listening = {
       "The man's video is not working properly"
      ],
      "answer": 3,
-     "explanation": "定位在前兩句：男子說 something's wrong with my microphone（我的麥克風好像有問題）,女子回 I can hear you fine, but your video is frozen（我聽得很清楚,但你的畫面卡住了）。聲音其實沒問題,真正出狀況的是畫面,選 (D)。(A) 兩人已經在同一個會議中,沒有找不到連結的問題;(B) 全程沒有提到會議室;(C) 男子只關掉正在看的檔案,不是沒準備資料。"
+     "explanation": "定位在前兩句：男子說 something's wrong with my microphone（我的麥克風好像有問題），女子回 I can hear you fine, but your video is frozen（我聽得很清楚，但你的畫面卡住了）。聲音其實沒問題，真正出狀況的是畫面，選 (D)。(A) 兩人已經在同一個會議中，沒有找不到連結的問題；(B) 全程沒有提到會議室；(C) 男子只關掉正在看的檔案，不是沒準備資料。"
     },
     {
      "q": "What does the woman suggest the man do?",
@@ -2865,7 +2865,7 @@ TOEIC.listening = {
       "Call the technical support desk"
      ],
      "answer": 0,
-     "explanation": "定位在女子第三次發言：Why don't you close the other programs you have open?（要不要把你開著的其他程式關掉?）Why don't you 是提出建議的常見句型,選 (A)。(B) 男子只重開了相機,沒有重開電腦;(C) 女子只是問他今天在不在辦公室,沒有叫他進公司;(D) 對話中沒有提到技術支援。"
+     "explanation": "定位在女子第三次發言：Why don't you close the other programs you have open?（要不要把你開著的其他程式關掉？）Why don't you 是提出建議的常見句型，選 (A)。(B) 男子只重開了相機，沒有重開電腦；(C) 女子只是問他今天在不在辦公室，沒有叫他進公司；(D) 對話中沒有提到技術支援。"
     },
     {
      "q": "What will the speakers most likely do next?",
@@ -2876,10 +2876,10 @@ TOEIC.listening = {
       "Send an email to a client"
      ],
      "answer": 1,
-     "explanation": "定位在男子最後一句：let's start with the budget and leave the schedule until he's here（我們先從預算開始,行程表等他來再談）,女子回 Sounds good（好啊）。兩人已經談定下一步先討論預算,選 (B)。(C) 正好相反,他們決定不等 Mr. Okada;(A) 沒有要提早結束;(D) 打電話給客戶的是 Mr. Okada,不是這兩人要做的事。"
+     "explanation": "定位在男子最後一句：let's start with the budget and leave the schedule until he's here（我們先從預算開始，行程表等他來再談），女子回 Sounds good（好啊）。兩人已經談定下一步先討論預算，選 (B)。(C) 正好相反，他們決定不等 Mr. Okada；(A) 沒有要提早結束；(D) 打電話給客戶的是 Mr. Okada，不是這兩人要做的事。"
     }
    ],
-   "transcriptZh": "男：Karen,聽得到我說話嗎?我的麥克風好像有問題。\n女：我聽得很清楚,但你的畫面卡住了,大概一分鐘前就不動了。\n男：不好意思。我把相機關掉再打開看看。\n女：試試看。你今天是用公司的網路,還是在家?\n男：我今天在家工作,網路一整個早上都很慢。\n女：那大概就是原因了。要不要把你開著的其他程式關掉?通常會有幫助。\n男：好,我剛把信箱和正在看的檔案關掉了。現在呢?\n女：好多了,我可以清楚看到你。\n男：太好了。那我們要等 Okada 先生嗎?他還沒進來。\n女：他傳訊息給我了,他還在跟客戶通電話,大概會晚十分鐘。\n男：那我們先從預算開始,行程表等他來再談。\n女：好啊。我來做紀錄,結束後再寄給大家。"
+   "transcriptZh": "男：Karen，聽得到我說話嗎？我的麥克風好像有問題。\n女：我聽得很清楚，但你的畫面卡住了，大概一分鐘前就不動了。\n男：不好意思。我把相機關掉再打開看看。\n女：試試看。你今天是用公司的網路，還是在家？\n男：我今天在家工作，網路一整個早上都很慢。\n女：那大概就是原因了。要不要把你開著的其他程式關掉？通常會有幫助。\n男：好，我剛把信箱和正在看的檔案關掉了。現在呢？\n女：好多了，我可以清楚看到你。\n男：太好了。那我們要等 Okada 先生嗎？他還沒進來。\n女：他傳訊息給我了，他還在跟客戶通電話，大概會晚十分鐘。\n男：那我們先從預算開始，行程表等他來再談。\n女：好啊。我來做紀錄，結束後再寄給大家。"
   },
   {
    "id": "l3-32",
@@ -2945,7 +2945,7 @@ TOEIC.listening = {
       "He needs space to hold a meeting"
      ],
      "answer": 1,
-     "explanation": "定位在男子第二次發言：Last time I stayed here, the street noise kept me awake（上次我住這裡,街上的噪音吵得我睡不著）。他想換到高樓層是因為之前被噪音影響,選 (B)。(A) 完全沒提電梯;(C) 女子沒說房間還沒整理好,反而馬上就能安排;(D) 他是來住宿的,沒有提到開會。"
+     "explanation": "定位在男子第二次發言：Last time I stayed here, the street noise kept me awake（上次我住這裡，街上的噪音吵得我睡不著）。他想換到高樓層是因為之前被噪音影響，選 (B)。(A) 完全沒提電梯；(C) 女子沒說房間還沒整理好，反而馬上就能安排；(D) 他是來住宿的，沒有提到開會。"
     },
     {
      "q": "What does the woman say about the cost of the new room?",
@@ -2956,7 +2956,7 @@ TOEIC.listening = {
       "The man's company will pay for it"
      ],
      "answer": 2,
-     "explanation": "定位在女子第三次發言：Normally it's forty dollars more per night, but you're in our rewards program, so I won't charge you anything（平常一晚要多收四十元,但您是會員,所以我不收費）。關鍵在 but 之後的轉折,選 (C)。(A) 是原價,不是實際要付的金額,屬於典型的數字陷阱;(B) 女子明說不收費;(D) 沒有提到公司付款。"
+     "explanation": "定位在女子第三次發言：Normally it's forty dollars more per night, but you're in our rewards program, so I won't charge you anything（平常一晚要多收四十元，但您是會員，所以我不收費）。關鍵在 but 之後的轉折，選 (C)。(A) 是原價，不是實際要付的金額，屬於典型的數字陷阱；(B) 女子明說不收費；(D) 沒有提到公司付款。"
     },
     {
      "q": "What does the woman suggest the man do on Thursday night?",
@@ -2967,10 +2967,10 @@ TOEIC.listening = {
       "Visit the fitness center"
      ],
      "answer": 0,
-     "explanation": "定位在最後一句：call the front desk Thursday night and we'll do our best（星期四晚上打給櫃檯,我們會盡量安排）。這是針對延遲退房的建議,選 (A)。(B) 房卡是用來進健身房的,不是要退還;(C) 早餐已含在房價中,不需要預訂;(D) 健身房二十四小時開放,和星期四晚上無關。"
+     "explanation": "定位在最後一句：call the front desk Thursday night and we'll do our best（星期四晚上打給櫃檯，我們會盡量安排）。這是針對延遲退房的建議，選 (A)。(B) 房卡是用來進健身房的，不是要退還；(C) 早餐已含在房價中，不需要預訂；(D) 健身房二十四小時開放，和星期四晚上無關。"
     }
    ],
-   "transcriptZh": "男：午安,我有訂房,名字是 Patrick Hale,住三晚。\n女：Hale 先生您好,我查一下。有了,標準房、一張大床,星期五退房。\n男：沒錯。請問有可能換到高一點的樓層嗎?上次我住這裡,街上的噪音吵得我睡不著。\n女：我看看還有什麼房。剛好今天早上有人取消,我可以幫您換到十五樓。那間比較大,窗邊還有書桌。\n男：聽起來很好。需要另外加錢嗎?\n女：平常一晚要多收四十元,不過您是我們會員方案的客人,所以我不另外收費。\n男：太好了,謝謝。那早餐幾點開始?\n女：六點半到十點,在二樓的餐廳。您的房價含一位早餐。\n男：知道了。健身房晚上有開嗎?\n女：二十四小時開放,只要用房卡就能進去。\n男：太好了。喔,還有一件事,星期五可以延遲退房嗎?\n女：我現在沒辦法保證,但您星期四晚上打給櫃檯,我們會盡量安排。"
+   "transcriptZh": "男：午安，我有訂房，名字是 Patrick Hale，住三晚。\n女：Hale 先生您好，我查一下。有了，標準房、一張大床，星期五退房。\n男：沒錯。請問有可能換到高一點的樓層嗎？上次我住這裡，街上的噪音吵得我睡不著。\n女：我看看還有什麼房。剛好今天早上有人取消，我可以幫您換到十五樓。那間比較大，窗邊還有書桌。\n男：聽起來很好。需要另外加錢嗎？\n女：平常一晚要多收四十元，不過您是我們會員方案的客人，所以我不另外收費。\n男：太好了，謝謝。那早餐幾點開始？\n女：六點半到十點，在二樓的餐廳。您的房價含一位早餐。\n男：知道了。健身房晚上有開嗎？\n女：二十四小時開放，只要用房卡就能進去。\n男：太好了。喔，還有一件事，星期五可以延遲退房嗎？\n女：我現在沒辦法保證，但您星期四晚上打給櫃檯，我們會盡量安排。"
   },
   {
    "id": "l3-33",
@@ -3036,7 +3036,7 @@ TOEIC.listening = {
       "Setting the price of a new product"
      ],
      "answer": 2,
-     "explanation": "定位在女子開頭：did you finish comparing the two office supply companies?（你把兩家辦公用品公司比較完了嗎?）之後兩人一路討論價格、到貨時間與折扣,最後決定選 Nakamura。整段主題就是挑供應商,選 (C)。(A) 倉庫太滿只是其中一個考量,不是主題;(B) 沒有討論限制各部門的訂購;(D) 他們是買方,不是在訂價。"
+     "explanation": "定位在女子開頭：did you finish comparing the two office supply companies?（你把兩家辦公用品公司比較完了嗎？）之後兩人一路討論價格、到貨時間與折扣，最後決定選 Nakamura。整段主題就是挑供應商，選 (C)。(A) 倉庫太滿只是其中一個考量，不是主題；(B) 沒有討論限制各部門的訂購；(D) 他們是買方，不是在訂價。"
     },
     {
      "q": "What is the main disadvantage of Weston Office Direct?",
@@ -3047,7 +3047,7 @@ TOEIC.listening = {
       "It does not sell printer paper"
      ],
      "answer": 1,
-     "explanation": "定位在男子第一次發言：Weston Office Direct is cheaper on paper and folders, but delivery takes about a week（Weston 的紙和資料夾比較便宜,但到貨要一星期）,女子隨即說公司常在那之前就把影印紙用完。缺點在於出貨太慢,選 (B)。(A) 恰好相反,Weston 比較便宜;(C) 沒有最低訂購量的是 Nakamura,選項把兩家的資訊對調;(D) Weston 有賣紙,只是送得慢。"
+     "explanation": "定位在男子第一次發言：Weston Office Direct is cheaper on paper and folders, but delivery takes about a week（Weston 的紙和資料夾比較便宜，但到貨要一星期），女子隨即說公司常在那之前就把影印紙用完。缺點在於出貨太慢，選 (B)。(A) 恰好相反，Weston 比較便宜；(C) 沒有最低訂購量的是 Nakamura，選項把兩家的資訊對調；(D) Weston 有賣紙，只是送得慢。"
     },
     {
      "q": "What will the man most likely do next?",
@@ -3058,10 +3058,10 @@ TOEIC.listening = {
       "Prepare a document for the woman"
      ],
      "answer": 3,
-     "explanation": "定位在最後兩句：女子說 Could you write it up and send it to me before lunch?（可以寫好在午餐前寄給我嗎?）男子答應並說會把兩份報價放在同一個檔案裡。他接下來要做的是整理文件,選 (D)。(A) 拿去給 Bennett 女士的是女子,不是他;(B) 沒有提到要拜訪供應商;(C) 影印紙只是舉例說明用量,不是他下一步的動作。"
+     "explanation": "定位在最後兩句：女子說 Could you write it up and send it to me before lunch?（可以寫好在午餐前寄給我嗎？）男子答應並說會把兩份報價放在同一個檔案裡。他接下來要做的是整理文件，選 (D)。(A) 拿去給 Bennett 女士的是女子，不是他；(B) 沒有提到要拜訪供應商；(C) 影印紙只是舉例說明用量，不是他下一步的動作。"
     }
    ],
-   "transcriptZh": "女：Sam,你把那兩家辦公用品公司比較完了嗎?採購單星期五就要送出去。\n男：快好了。兩家的報價我都拿到了。Weston Office Direct 的紙和資料夾比較便宜,但到貨大概要一星期。\n女：一星期?我們通常在那之前影印紙就用完了。\n男：我也是擔心這點。另一家 Nakamura Supply 大約貴百分之八,但兩天到貨,而且沒有最低訂購量。\n女：百分之八也不算少。我們一個月大概花多少?\n男：一千二百元左右,所以一個月大概多付一百元。\n女：比我想的少。而且如果選 Weston,我們得在倉庫多囤一些,可是倉庫已經滿了。\n男：對。而且如果簽一整年,Nakamura 會給折扣。\n女：折多少?\n男：每一筆訂單都打九五折,這樣兩家的差距幾乎就沒了。\n女：那就選 Nakamura。你可以寫好在午餐前寄給我嗎?我拿去給 Bennett 女士核准。\n男：沒問題。我會把兩份報價放在同一個檔案裡,讓她可以並排看數字。"
+   "transcriptZh": "女：Sam，你把那兩家辦公用品公司比較完了嗎？採購單星期五就要送出去。\n男：快好了。兩家的報價我都拿到了。Weston Office Direct 的紙和資料夾比較便宜，但到貨大概要一星期。\n女：一星期？我們通常在那之前影印紙就用完了。\n男：我也是擔心這點。另一家 Nakamura Supply 大約貴百分之八，但兩天到貨，而且沒有最低訂購量。\n女：百分之八也不算少。我們一個月大概花多少？\n男：一千二百元左右，所以一個月大概多付一百元。\n女：比我想的少。而且如果選 Weston，我們得在倉庫多囤一些，可是倉庫已經滿了。\n男：對。而且如果簽一整年，Nakamura 會給折扣。\n女：折多少？\n男：每一筆訂單都打九五折，這樣兩家的差距幾乎就沒了。\n女：那就選 Nakamura。你可以寫好在午餐前寄給我嗎？我拿去給 Bennett 女士核准。\n男：沒問題。我會把兩份報價放在同一個檔案裡，讓她可以並排看數字。"
   },
   {
    "id": "l3-34",
@@ -3127,7 +3127,7 @@ TOEIC.listening = {
       "To meet a friend for exercise"
      ],
      "answer": 0,
-     "explanation": "定位在女子第一句：I thought I'd come in and ask about joining（我想說進來問問入會的事）,後面整段都在問方案、費用與人潮。她的目的是了解會員方案,選 (A)。(B) 沒有提到歸還器材;(C) 課程只是她順口問到的一部分,她還沒報名;(D) 沒有提到朋友。"
+     "explanation": "定位在女子第一句：I thought I'd come in and ask about joining（我想說進來問問入會的事），後面整段都在問方案、費用與人潮。她的目的是了解會員方案，選 (A)。(B) 沒有提到歸還器材；(C) 課程只是她順口問到的一部分，她還沒報名；(D) 沒有提到朋友。"
     },
     {
      "q": "What does the man say about the class package?",
@@ -3138,7 +3138,7 @@ TOEIC.listening = {
       "It costs fifteen dollars a month"
      ],
      "answer": 3,
-     "explanation": "定位在男子第三次發言：Fifteen dollars more a month, and then classes are free（一個月多十五元,課程就免費）。加購課程方案本身一個月要十五元,選 (D)。(A) 免費的是課程,不是方案本身,而且和年約無關;(B) 沒有說課程只在早上;(C) 游泳池兩種方案都含,不是課程方案的內容,屬於資訊錯置的誘答。"
+     "explanation": "定位在男子第三次發言：Fifteen dollars more a month, and then classes are free（一個月多十五元，課程就免費）。加購課程方案本身一個月要十五元，選 (D)。(A) 免費的是課程，不是方案本身，而且和年約無關；(B) 沒有說課程只在早上；(C) 游泳池兩種方案都含，不是課程方案的內容，屬於資訊錯置的誘答。"
     },
     {
      "q": "What does the man imply about the early morning?",
@@ -3149,10 +3149,10 @@ TOEIC.listening = {
       "There are no staff members on duty"
      ],
      "answer": 2,
-     "explanation": "定位在男子第四次發言：Between six and seven it's busy... After seven thirty it's pretty quiet（六點到七點很多人……七點半以後就滿安靜的）。可以推知早上只有一小段時間人多,選 (C)。(A) 完全沒說泳池關閉;(B) 男子沒有說早上不開課;(D) 沒有提到人手,而且他還說可以拿一日體驗券來用。"
+     "explanation": "定位在男子第四次發言：Between six and seven it's busy... After seven thirty it's pretty quiet（六點到七點很多人……七點半以後就滿安靜的）。可以推知早上只有一小段時間人多，選 (C)。(A) 完全沒說泳池關閉；(B) 男子沒有說早上不開課；(D) 沒有提到人手，而且他還說可以拿一日體驗券來用。"
     }
    ],
-   "transcriptZh": "女：你好,我每天上班都會經過你們健身房,所以想進來問問入會的事。\n男：很樂意為您說明。您考慮月繳方案還是年繳方案?\n女：我還不確定,兩種差在哪裡?\n男：月繳方案一個月五十元,隨時可以停。年繳方案平均一個月四十元,但要先付六個月。\n女：了解。方案包含哪些?\n男：兩種方案主樓層的設施都能用,包括器材、重量訓練區和游泳池。團體課程一堂十元,除非您加購課程方案。\n女：課程方案多少錢?\n男：一個月多十五元,課程就免費。一個月上兩堂以上就回本了。\n女：這蠻實用的。我大概會早上八點前來,那時候人多嗎?\n男：六點到七點很多人,大多是上班前來運動的。七點半以後就滿安靜的。\n女：那好。我可以先來體驗一次再決定嗎?\n男：當然。帶有照片的證件來,我們會給您一張免費體驗券,這禮拜任何一天都能用。"
+   "transcriptZh": "女：你好，我每天上班都會經過你們健身房，所以想進來問問入會的事。\n男：很樂意為您說明。您考慮月繳方案還是年繳方案？\n女：我還不確定，兩種差在哪裡？\n男：月繳方案一個月五十元，隨時可以停。年繳方案平均一個月四十元，但要先付六個月。\n女：了解。方案包含哪些？\n男：兩種方案主樓層的設施都能用，包括器材、重量訓練區和游泳池。團體課程一堂十元，除非您加購課程方案。\n女：課程方案多少錢？\n男：一個月多十五元，課程就免費。一個月上兩堂以上就回本了。\n女：這蠻實用的。我大概會早上八點前來，那時候人多嗎？\n男：六點到七點很多人，大多是上班前來運動的。七點半以後就滿安靜的。\n女：那好。我可以先來體驗一次再決定嗎？\n男：當然。帶有照片的證件來，我們會給您一張免費體驗券，這禮拜任何一天都能用。"
   },
   {
    "id": "l3-35",
@@ -3218,7 +3218,7 @@ TOEIC.listening = {
       "Hiring staff for a regional office"
      ],
      "answer": 2,
-     "explanation": "定位在女子第一句：I'd like to settle who does what on the quarterly report（我想把季報告誰做哪部分講定）,之後兩人交換了數字與摘要的分工並約定交件時間。主題是分工,選 (C)。(A) 董事會只是交件時間的參考點,日期沒有更動;(B) 軟體更新只被提到一次,用來說明兩個辦公室何時改用系統;(D) 完全沒有談到徵人。"
+     "explanation": "定位在女子第一句：I'd like to settle who does what on the quarterly report（我想把季報告誰做哪部分講定），之後兩人交換了數字與摘要的分工並約定交件時間。主題是分工，選 (C)。(A) 董事會只是交件時間的參考點，日期沒有更動；(B) 軟體更新只被提到一次，用來說明兩個辦公室何時改用系統；(D) 完全沒有談到徵人。"
     },
     {
      "q": "What does Ms. Alvarez want to receive by the twelfth?",
@@ -3229,7 +3229,7 @@ TOEIC.listening = {
       "A draft she can look over"
      ],
      "answer": 3,
-     "explanation": "定位在女子第二次發言：The eighteenth for the final version, but Ms. Alvarez wants a draft by the twelfth（十八號是定稿,但 Alvarez 女士要在十二號前拿到初稿）。十二號要的是初稿,選 (D)。(A) 是十八號才要的,兩個日期刻意放在同一句形成陷阱;(B) 各地區的數字是女子自己整理的資料,不是要交給她的東西;(C) 軟體更新要到十月,和這個期限無關。"
+     "explanation": "定位在女子第二次發言：The eighteenth for the final version, but Ms. Alvarez wants a draft by the twelfth（十八號是定稿，但 Alvarez 女士要在十二號前拿到初稿）。十二號要的是初稿，選 (D)。(A) 是十八號才要的，兩個日期刻意放在同一句形成陷阱；(B) 各地區的數字是女子自己整理的資料，不是要交給她的東西；(C) 軟體更新要到十月，和這個期限無關。"
     },
     {
      "q": "Why does the man mention the March numbers?",
@@ -3240,10 +3240,10 @@ TOEIC.listening = {
       "To suggest changing to a different system"
      ],
      "answer": 0,
-     "explanation": "定位在男子最後第二次發言：please point out anything unusual when you send me the figures. Last time I found a large return in the March numbers after I'd already written half the summary（給我數字時請標出異常的部分,上次我摘要寫到一半才發現三月有一筆大額退貨）。他提三月的數字是為了說明前一句的要求,選 (A)。(B) 大額退貨不是業績成長;(C) 他沒有要求更正舊報告,只希望這次先被提醒;(D) 換系統的討論是關於兩個辦公室用電子郵件送資料,不是他提三月數字的用意。"
+     "explanation": "定位在男子最後第二次發言：please point out anything unusual when you send me the figures. Last time I found a large return in the March numbers after I'd already written half the summary（給我數字時請標出異常的部分，上次我摘要寫到一半才發現三月有一筆大額退貨）。他提三月的數字是為了說明前一句的要求，選 (A)。(B) 大額退貨不是業績成長；(C) 他沒有要求更正舊報告，只希望這次先被提醒；(D) 換系統的討論是關於兩個辦公室用電子郵件送資料，不是他提三月數字的用意。"
     }
    ],
-   "transcriptZh": "女：你現在有空嗎?我想把季報告誰做哪一部分講定。\n男：現在可以。截止日是十二號吧?\n女：定稿是十八號,但 Alvarez 女士希望十二號前拿到初稿,這樣她能在董事會之前先看過。\n男：所以其實只有一個半星期。上一季是我做業績數字,你寫摘要。\n女：我在想這次我們換一下。新的追蹤系統我現在自己就能處理,而且你寫得比我快。\n男：有道理,不過摘要一向比較花時間。如果由我寫,我最晚七號要拿到數字。\n女：這我做得到。現在大部分資料系統會自動抓。比較花時間的是各地區的數字,因為還有兩個辦公室是用電子郵件寄過來。\n男：可以請他們直接輸入系統嗎?這樣你可以省一天。\n女：我問過兩次了。他們主管說十月軟體更新之後才會改。\n男：好吧,這一季就先這樣。不過有一件事,你把數字寄給我的時候,請把異常的地方標出來。上次我摘要都寫一半了,才發現三月有一筆大額退貨。\n女：我會另外寫一張註記標起來。還有,摘要可以控制在四頁以內嗎?上一份 Alvarez 女士刪掉了兩頁。\n男：了解。我會寫短一點,細節放在附件裡。"
+   "transcriptZh": "女：你現在有空嗎？我想把季報告誰做哪一部分講定。\n男：現在可以。截止日是十二號吧？\n女：定稿是十八號，但 Alvarez 女士希望十二號前拿到初稿，這樣她能在董事會之前先看過。\n男：所以其實只有一個半星期。上一季是我做業績數字，你寫摘要。\n女：我在想這次我們換一下。新的追蹤系統我現在自己就能處理，而且你寫得比我快。\n男：有道理，不過摘要一向比較花時間。如果由我寫，我最晚七號要拿到數字。\n女：這我做得到。現在大部分資料系統會自動抓。比較花時間的是各地區的數字，因為還有兩個辦公室是用電子郵件寄過來。\n男：可以請他們直接輸入系統嗎？這樣你可以省一天。\n女：我問過兩次了。他們主管說十月軟體更新之後才會改。\n男：好吧，這一季就先這樣。不過有一件事，你把數字寄給我的時候，請把異常的地方標出來。上次我摘要都寫一半了，才發現三月有一筆大額退貨。\n女：我會另外寫一張註記標起來。還有，摘要可以控制在四頁以內嗎？上一份 Alvarez 女士刪掉了兩頁。\n男：了解。我會寫短一點，細節放在附件裡。"
   },
   {
    "id": "l3-41",
@@ -3309,7 +3309,7 @@ TOEIC.listening = {
       "To change the date of an appointment"
      ],
      "answer": 3,
-     "explanation": "定位在女子第二次發言：Something came up at work, so I can't make it Friday. Do you have anything on Saturday?（我工作臨時有事,禮拜五沒辦法過去,禮拜六還有位子嗎?）她整通電話的目的就是把原訂週五的預約換到別天,選 (D)。(A) 全程沒有談到價錢;(B) 沒有任何抱怨,反而是她自己有事;(C) 男子雖然提到週日公休,但那是回答她的提問,不是她打電話的目的。"
+     "explanation": "定位在女子第二次發言：Something came up at work, so I can't make it Friday. Do you have anything on Saturday?（我工作臨時有事，禮拜五沒辦法過去，禮拜六還有位子嗎？）她整通電話的目的就是把原訂週五的預約換到別天，選 (D)。(A) 全程沒有談到價錢；(B) 沒有任何抱怨，反而是她自己有事；(C) 男子雖然提到週日公休，但那是回答她的提問，不是她打電話的目的。"
     },
     {
      "q": "What does the man say about Saturday?",
@@ -3320,7 +3320,7 @@ TOEIC.listening = {
       "Prices are higher on weekends"
      ],
      "answer": 1,
-     "explanation": "定位在男子第二次發言：Saturday's pretty full... I've only got one opening, at four in the afternoon.（禮拜六很滿,只剩下午四點一個時段。）只剩下午一個時段,選 (B)。(A) 公休的是週日 Sundays,不是週六,這是最常見的誤答;(C) 沒有提到換人服務;(D) 沒有提到週末加價。"
+     "explanation": "定位在男子第二次發言：Saturday's pretty full... I've only got one opening, at four in the afternoon.（禮拜六很滿，只剩下午四點一個時段。）只剩下午一個時段，選 (B)。(A) 公休的是週日 Sundays，不是週六，這是最常見的誤答；(C) 沒有提到換人服務；(D) 沒有提到週末加價。"
     },
     {
      "q": "What will the woman most likely do tonight?",
@@ -3331,10 +3331,10 @@ TOEIC.listening = {
       "Call the shop again"
      ],
      "answer": 0,
-     "explanation": "定位在對話後段：男子說 You can email it to us, or just bring it with you on Monday（您可以用電子郵件寄給我們,或禮拜一直接帶過來）,女子回 I'll email it tonight（我今天晚上寄）。她選了寄電子郵件,選 (A)。(B) 狗狗還沒送去美容;(C) 男子說 No need（不用）,店裡都有;(D) 事情已經在這通電話裡談定,不需要再打。"
+     "explanation": "定位在對話後段：男子說 You can email it to us, or just bring it with you on Monday（您可以用電子郵件寄給我們，或禮拜一直接帶過來），女子回 I'll email it tonight（我今天晚上寄）。她選了寄電子郵件，選 (A)。(B) 狗狗還沒送去美容；(C) 男子說 No need（不用），店裡都有；(D) 事情已經在這通電話裡談定，不需要再打。"
     }
    ],
-   "transcriptZh": "女：您好,我想問一下這禮拜五早上十點我家狗狗的美容預約,我叫 Diane Hollis。\n男：我查一下。有的,Pepper,棕色那隻,禮拜五早上十點。有什麼需要幫忙的嗎?\n女：我工作臨時有事,禮拜五沒辦法過去。禮拜六還有位子嗎?\n男：禮拜六很滿,只剩下午四點一個時段。\n女：四點對我們來說有點晚。禮拜天早上呢?\n男：我們禮拜天公休。不過禮拜一早上都還空著,可以的話。\n女：禮拜一十點其實很好,那天我休假。\n男：好,我把牠改到禮拜一。對了,還有一件事,來之前要麻煩您給我們一份牠的健康紀錄影本。\n女：我去年不是有給過嗎?\n男：有,但上個月到期了。您可以用電子郵件寄給我們,或禮拜一直接帶過來。\n女：我今天晚上寄。要再帶牠的梳子嗎?\n男：不用,我們這邊都有。"
+   "transcriptZh": "女：您好，我想問一下這禮拜五早上十點我家狗狗的美容預約，我叫 Diane Hollis。\n男：我查一下。有的，Pepper，棕色那隻，禮拜五早上十點。有什麼需要幫忙的嗎？\n女：我工作臨時有事，禮拜五沒辦法過去。禮拜六還有位子嗎？\n男：禮拜六很滿，只剩下午四點一個時段。\n女：四點對我們來說有點晚。禮拜天早上呢？\n男：我們禮拜天公休。不過禮拜一早上都還空著，可以的話。\n女：禮拜一十點其實很好，那天我休假。\n男：好，我把牠改到禮拜一。對了，還有一件事，來之前要麻煩您給我們一份牠的健康紀錄影本。\n女：我去年不是有給過嗎？\n男：有，但上個月到期了。您可以用電子郵件寄給我們，或禮拜一直接帶過來。\n女：我今天晚上寄。要再帶牠的梳子嗎？\n男：不用，我們這邊都有。"
   },
   {
    "id": "l3-42",
@@ -3400,7 +3400,7 @@ TOEIC.listening = {
       "A bill was paid twice"
      ],
      "answer": 2,
-     "explanation": "定位在第一句：It's leaking water all over the counter（水漏得整個檯面都是）,加上 the light on the front keeps flashing red（前面那個燈一直閃紅色）。咖啡機故障漏水就是全篇的問題,選 (C)。(A) 沒有提到任何送貨;(B) 只提到這層樓約四十人,不是空間太小;(D) 提到發票是為了查保固,不是重複付款。"
+     "explanation": "定位在第一句：It's leaking water all over the counter（水漏得整個檯面都是），加上 the light on the front keeps flashing red（前面那個燈一直閃紅色）。咖啡機故障漏水就是全篇的問題，選 (C)。(A) 沒有提到任何送貨；(B) 只提到這層樓約四十人，不是空間太小；(D) 提到發票是為了查保固，不是重複付款。"
     },
     {
      "q": "What does the woman want to check first?",
@@ -3411,7 +3411,7 @@ TOEIC.listening = {
       "When the repair company opens"
      ],
      "answer": 0,
-     "explanation": "定位在女子第三次發言：let me check something first. The machine's only two years old, so it might still be under warranty.（我想先確認一件事,這台機器才買兩年,搞不好還在保固期內。）under warranty 是「保固期內」,選 (A)。(B) 沒有要換新機;(C) 四十人是男子提到的喝咖啡人數,不是她要查的事;(D) 她確定會找同一家公司,但要查的不是營業時間。"
+     "explanation": "定位在女子第三次發言：let me check something first. The machine's only two years old, so it might still be under warranty.（我想先確認一件事，這台機器才買兩年，搞不好還在保固期內。）under warranty 是「保固期內」，選 (A)。(B) 沒有要換新機；(C) 四十人是男子提到的喝咖啡人數，不是她要查的事；(D) 她確定會找同一家公司，但要查的不是營業時間。"
     },
     {
      "q": "What does the woman ask the man to do at the end of the conversation?",
@@ -3422,10 +3422,10 @@ TOEIC.listening = {
       "Move the machine to another room"
      ],
      "answer": 1,
-     "explanation": "定位在最後兩句：男子問 Should I let everyone know?（要我通知一下嗎?）女子回 Yes, please. Send a short note to the floor（好,麻煩你寄個簡短的訊息給整層樓的同事）,選 (B)。(A) 打給維修公司要等保固確認後才處理,不是現在交辦給他;(C) 找發票是請 Diego 做的;(D) 只請他拔插頭貼告示,沒有要搬機器。"
+     "explanation": "定位在最後兩句：男子問 Should I let everyone know?（要我通知一下嗎？）女子回 Yes, please. Send a short note to the floor（好，麻煩你寄個簡短的訊息給整層樓的同事），選 (B)。(A) 打給維修公司要等保固確認後才處理，不是現在交辦給他；(C) 找發票是請 Diego 做的；(D) 只請他拔插頭貼告示，沒有要搬機器。"
     }
    ],
-   "transcriptZh": "男：Rachel,妳知道茶水間那台咖啡機怎麼了嗎?水漏得整個檯面都是。\n女：又來?三月的時候就這樣過。我以為那位技師已經修好了。\n男：看來沒有。現在機器下面地上都是水,前面那個燈還一直閃紅色。\n女：好,先別用。可以麻煩你把插頭拔掉,再貼張告示,不要讓人去碰它嗎?\n男：已經弄好了。要找上次那家公司嗎?\n女：要,不過我想先確認一件事。這台機器才買兩年,搞不好還在保固期內。\n男：那就可以省下好幾百塊。文件會在哪裡?\n女：採購那邊都有留。我寄信給 Diego,請他把發票調出來。\n男：那這段期間大家咖啡怎麼辦?我們這層樓大概有四十個人。\n女：對面有家店。我去問問看這禮拜能不能開個帳,費用掛在部門預算。\n男：大家會很開心。要我通知一下嗎?\n女：好,麻煩你寄個簡短的訊息給整層樓的同事,順便說機器至少會停用幾天。"
+   "transcriptZh": "男：Rachel，妳知道茶水間那台咖啡機怎麼了嗎？水漏得整個檯面都是。\n女：又來？三月的時候就這樣過。我以為那位技師已經修好了。\n男：看來沒有。現在機器下面地上都是水，前面那個燈還一直閃紅色。\n女：好，先別用。可以麻煩你把插頭拔掉，再貼張告示，不要讓人去碰它嗎？\n男：已經弄好了。要找上次那家公司嗎？\n女：要，不過我想先確認一件事。這台機器才買兩年，搞不好還在保固期內。\n男：那就可以省下好幾百塊。文件會在哪裡？\n女：採購那邊都有留。我寄信給 Diego，請他把發票調出來。\n男：那這段期間大家咖啡怎麼辦？我們這層樓大概有四十個人。\n女：對面有家店。我去問問看這禮拜能不能開個帳，費用掛在部門預算。\n男：大家會很開心。要我通知一下嗎？\n女：好，麻煩你寄個簡短的訊息給整層樓的同事，順便說機器至少會停用幾天。"
   },
   {
    "id": "l3-43",
@@ -3491,7 +3491,7 @@ TOEIC.listening = {
       "To sign up for a cooking class"
      ],
      "answer": 1,
-     "explanation": "定位在第一句：I'd like to ask about renting a booth at the Saturday farmers market（我想請問週六農夫市集攤位租借的事）。booth 就是攤位,rent a booth 等於 rent space,選 (B)。(A) 她要送的是申請表和照片,不是進貨;(C) 全程沒有訂單問題;(D) 她是想去擺攤賣果醬和蜂蜜,不是去上課。"
+     "explanation": "定位在第一句：I'd like to ask about renting a booth at the Saturday farmers market（我想請問週六農夫市集攤位租借的事）。booth 就是攤位，rent a booth 等於 rent space，選 (B)。(A) 她要送的是申請表和照片，不是進貨；(C) 全程沒有訂單問題；(D) 她是想去擺攤賣果醬和蜂蜜，不是去上課。"
     },
     {
      "q": "What does the man say about the tent?",
@@ -3502,7 +3502,7 @@ TOEIC.listening = {
       "Its color is set by a city rule"
      ],
      "answer": 3,
-     "explanation": "定位在男子第四次發言：You bring your own tent, and it has to be white — that's a rule from the city（帳篷要自己帶,而且必須是白色的,這是市政府的規定）,選 (D)。(A) 免費提供的是桌子和椅子,帳篷要自備,這是最容易混淆的一組;(B) 沒有提到前一晚搭設;(C) 四十元是「一天的攤位費」,不是帳篷租金,數字誘答。"
+     "explanation": "定位在男子第四次發言：You bring your own tent, and it has to be white — that's a rule from the city（帳篷要自己帶，而且必須是白色的，這是市政府的規定），選 (D)。(A) 免費提供的是桌子和椅子，帳篷要自備，這是最容易混淆的一組；(B) 沒有提到前一晚搭設；(C) 四十元是「一天的攤位費」，不是帳篷租金，數字誘答。"
     },
     {
      "q": "What does the man say about the food permit?",
@@ -3513,10 +3513,10 @@ TOEIC.listening = {
       "Two vendors are allowed to share one"
      ],
      "answer": 2,
-     "explanation": "定位在男子第五次發言：Without the permit we can't even review the application.（沒有許可證我們連審都沒辦法審。）can't even review 表示許可證是受理申請的前提,選 (C)。(A) 正好相反,要隨表格一起送;(B) 沒有說是市集辦公室核發;(D) 男子明確說 you each need your own permit（你們各自都要有自己的許可證）,可以共用的是攤位不是許可證。"
+     "explanation": "定位在男子第五次發言：Without the permit we can't even review the application.（沒有許可證我們連審都沒辦法審。）can't even review 表示許可證是受理申請的前提，選 (C)。(A) 正好相反，要隨表格一起送；(B) 沒有說是市集辦公室核發；(D) 男子明確說 you each need your own permit（你們各自都要有自己的許可證），可以共用的是攤位不是許可證。"
     }
    ],
-   "transcriptZh": "女：您好,我想請問週六農夫市集攤位租借的事。我做果醬和蜂蜜。\n男：好的。我們的申請都在網路上,表格在網站的攤商那一區。不過我得先跟您說,春季檔期已經滿了。\n女：喔,真可惜。下一輪什麼時候開放?\n男：夏季檔期的申請四月一日開放,通常兩個禮拜內就會額滿。\n女：我記下來。攤位費用怎麼算?\n男：一週一週報名的話一天四十元,整季十二週一次付則是四百元。多數人選整季的價格。\n女：整季比較划算。桌子有含嗎?\n男：我們提供一張桌子和一張椅子。帳篷要自己帶,而且必須是白色的,這是市政府的規定,不是我們訂的。\n女：了解。表格還要附上什麼嗎?\n男：食品許可證影本,還有幾張產品照片。沒有許可證我們連審都沒辦法審。\n女：許可證我已經有了。可以兩個人合租一個攤位嗎?我朋友是賣麵包的。\n男：可以,但你們各自都要有自己的許可證,而且只由其中一人提出申請,表格上寫兩個人的名字。"
+   "transcriptZh": "女：您好，我想請問週六農夫市集攤位租借的事。我做果醬和蜂蜜。\n男：好的。我們的申請都在網路上，表格在網站的攤商那一區。不過我得先跟您說，春季檔期已經滿了。\n女：喔，真可惜。下一輪什麼時候開放？\n男：夏季檔期的申請四月一日開放，通常兩個禮拜內就會額滿。\n女：我記下來。攤位費用怎麼算？\n男：一週一週報名的話一天四十元，整季十二週一次付則是四百元。多數人選整季的價格。\n女：整季比較划算。桌子有含嗎？\n男：我們提供一張桌子和一張椅子。帳篷要自己帶，而且必須是白色的，這是市政府的規定，不是我們訂的。\n女：了解。表格還要附上什麼嗎？\n男：食品許可證影本，還有幾張產品照片。沒有許可證我們連審都沒辦法審。\n女：許可證我已經有了。可以兩個人合租一個攤位嗎？我朋友是賣麵包的。\n男：可以，但你們各自都要有自己的許可證，而且只由其中一人提出申請，表格上寫兩個人的名字。"
   },
   {
    "id": "l3-44",
@@ -3582,7 +3582,7 @@ TOEIC.listening = {
       "A law office"
      ],
      "answer": 0,
-     "explanation": "定位在男子第二次發言：It's a small design studio — eight desks, some shelves, and about twenty boxes of files.（是一間小型設計工作室,八張辦公桌、一些層架,還有大概二十箱檔案。）選 (A)。(C) desks 和 shelves 是他們要搬的家具,不代表他們賣家具,這是常見的字面誤答;(B)(D) 對話中都沒有出現。"
+     "explanation": "定位在男子第二次發言：It's a small design studio — eight desks, some shelves, and about twenty boxes of files.（是一間小型設計工作室，八張辦公桌、一些層架，還有大概二十箱檔案。）選 (A)。(C) desks 和 shelves 是他們要搬的家具，不代表他們賣家具，這是常見的字面誤答；(B)(D) 對話中都沒有出現。"
     },
     {
      "q": "Why does the woman say the price may go up?",
@@ -3593,7 +3593,7 @@ TOEIC.listening = {
       "The company has too many boxes"
      ],
      "answer": 2,
-     "explanation": "定位在男子第四次發言與女子的回應：The building we're in now doesn't have one, and we're on the third floor（我們現在這棟沒有電梯,而且在三樓）→ That changes the price... Stairs mean an extra hourly charge（那價格就會不一樣了,走樓梯要另外按小時計費）,選 (C)。(A) 月底搬家只是時間,不影響報價;(B) 女子聽到兩英里還說 That's not far at all（那不遠）;(D) 二十箱不多,而且自己打包反而更便宜。"
+     "explanation": "定位在男子第四次發言與女子的回應：The building we're in now doesn't have one, and we're on the third floor（我們現在這棟沒有電梯，而且在三樓）→ That changes the price... Stairs mean an extra hourly charge（那價格就會不一樣了，走樓梯要另外按小時計費），選 (C)。(A) 月底搬家只是時間，不影響報價；(B) 女子聽到兩英里還說 That's not far at all（那不遠）；(D) 二十箱不多，而且自己打包反而更便宜。"
     },
     {
      "q": "What will most likely happen on Thursday?",
@@ -3604,10 +3604,10 @@ TOEIC.listening = {
       "A worker will visit the man's office"
      ],
      "answer": 3,
-     "explanation": "定位在女子最後兩次發言：Someone should come and look at the space（應該要派人去現場看過空間）→ Thursday morning is open（禮拜四早上有空）。所以週四是現場勘查,選 (D)。(A) 董事會是週五;(B) 搬家是下個月底;(C) 自己打包只是「如果決定」的省錢選項,沒有說在週四做。"
+     "explanation": "定位在女子最後兩次發言：Someone should come and look at the space（應該要派人去現場看過空間）→ Thursday morning is open（禮拜四早上有空）。所以週四是現場勘查，選 (D)。(A) 董事會是週五；(B) 搬家是下個月底；(C) 自己打包只是「如果決定」的省錢選項，沒有說在週四做。"
     }
    ],
-   "transcriptZh": "男：您好,我下個月底要搬辦公室,想請你們估個價。\n女：很樂意為您服務。請問是住家搬遷還是公司搬遷?\n男：公司。是一間小型設計工作室,八張辦公桌、一些層架,還有大概二十箱檔案。\n女：搬多遠呢?\n男：大概兩英里而已,從 Weller 街搬到 Park Row 的新大樓。\n女：那不遠。兩邊都有電梯嗎?\n男：新的地方有。我們現在這棟沒有電梯,而且在三樓。\n女：那價格就會不一樣了。走樓梯要多派人手,會另外按小時計費。\n男：大概是多少?\n女：電話裡沒辦法給您確切的數字。應該要派人去現場看過空間,這部分我們不收費。\n男：這禮拜可以過來嗎?我禮拜五董事會之前需要數字。\n女：禮拜四早上有空。另外,如果箱子你們自己打包,總金額可以省下不少。"
+   "transcriptZh": "男：您好，我下個月底要搬辦公室，想請你們估個價。\n女：很樂意為您服務。請問是住家搬遷還是公司搬遷？\n男：公司。是一間小型設計工作室，八張辦公桌、一些層架，還有大概二十箱檔案。\n女：搬多遠呢？\n男：大概兩英里而已，從 Weller 街搬到 Park Row 的新大樓。\n女：那不遠。兩邊都有電梯嗎？\n男：新的地方有。我們現在這棟沒有電梯，而且在三樓。\n女：那價格就會不一樣了。走樓梯要多派人手，會另外按小時計費。\n男：大概是多少？\n女：電話裡沒辦法給您確切的數字。應該要派人去現場看過空間，這部分我們不收費。\n男：這禮拜可以過來嗎？我禮拜五董事會之前需要數字。\n女：禮拜四早上有空。另外，如果箱子你們自己打包，總金額可以省下不少。"
   },
   {
    "id": "l3-45",
@@ -3673,7 +3673,7 @@ TOEIC.listening = {
       "How to prepare a sales report"
      ],
      "answer": 1,
-     "explanation": "定位在第一句：did you look at the results of the staff trip survey?（員工旅遊的問卷結果你看了嗎?）之後全篇都在比較海邊飯店和山上度假村,選 (B)。(A) 沒有提到上班時間;(C) 飯店是旅遊地點,不是新開幕;(D) numbers 指的是費用數字,不是業務報告。"
+     "explanation": "定位在第一句：did you look at the results of the staff trip survey?（員工旅遊的問卷結果你看了嗎？）之後全篇都在比較海邊飯店和山上度假村，選 (B)。(A) 沒有提到上班時間；(C) 飯店是旅遊地點，不是新開幕；(D) numbers 指的是費用數字，不是業務報告。"
     },
     {
      "q": "Why does the woman think the beach hotel costs less?",
@@ -3684,7 +3684,7 @@ TOEIC.listening = {
       "Fewer people chose it"
      ],
      "answer": 0,
-     "explanation": "定位在男子第三次發言與女子的回應：breakfast is included, and the mountain place charges extra for it（含早餐,山上那間早餐要另外付錢）→ the beach is actually cheaper once you add that up（這樣算下來海邊反而比較便宜）,選 (A)。(B) 車程較短的是山上,只要兩小時;(C) 沒有提到團體折扣;(D) 選海邊的人反而比較多。"
+     "explanation": "定位在男子第三次發言與女子的回應：breakfast is included, and the mountain place charges extra for it（含早餐，山上那間早餐要另外付錢）→ the beach is actually cheaper once you add that up（這樣算下來海邊反而比較便宜），選 (A)。(B) 車程較短的是山上，只要兩小時；(C) 沒有提到團體折扣；(D) 選海邊的人反而比較多。"
     },
     {
      "q": "What does the woman ask the man not to do yet?",
@@ -3695,10 +3695,10 @@ TOEIC.listening = {
       "Tell the staff about the results"
      ],
      "answer": 2,
-     "explanation": "定位在女子最後一次發言：Please do, but don't pay the deposit yet.（麻煩你,但先不要付訂金。）deposit 是訂金,選 (C)。(A) 寄信給 Alvarado 女士正是男子最後說要做的事;(B) 沒有提到要取消什麼;(D) 沒有交代要公布結果。"
+     "explanation": "定位在女子最後一次發言：Please do, but don't pay the deposit yet.（麻煩你，但先不要付訂金。）deposit 是訂金，選 (C)。(A) 寄信給 Alvarado 女士正是男子最後說要做的事；(B) 沒有提到要取消什麼；(D) 沒有交代要公布結果。"
     }
    ],
-   "transcriptZh": "女：Tom,員工旅遊的問卷結果你看了嗎?\n男：看了。海邊飯店排第一,山上的度假村緊追在後。\n女：差多少?\n男：三十一個人選海邊,二十八個人選山上,只有九個人選市區導覽。\n女：所以前兩名幾乎打平。價差呢?\n男：海邊飯店每個人大概貴二十元,但含早餐,山上那間早餐要另外付錢。\n女：這樣算下來海邊反而比較便宜。\n男：我也是這樣想。唯一的問題是車程,坐遊覽車要四個小時,山上只要兩個小時。\n女：四個小時是久了點,不過那天是禮拜五。我們中午出發,晚餐前還是到得了。\n男：也對。那我先請海邊飯店保留三十間房?\n女：麻煩你,但先不要付訂金。預算要 Alvarado 女士核准,她禮拜三才回來。\n男：我先把數字寄給她,讓她在那之前可以先看。"
+   "transcriptZh": "女：Tom，員工旅遊的問卷結果你看了嗎？\n男：看了。海邊飯店排第一，山上的度假村緊追在後。\n女：差多少？\n男：三十一個人選海邊，二十八個人選山上，只有九個人選市區導覽。\n女：所以前兩名幾乎打平。價差呢？\n男：海邊飯店每個人大概貴二十元，但含早餐，山上那間早餐要另外付錢。\n女：這樣算下來海邊反而比較便宜。\n男：我也是這樣想。唯一的問題是車程，坐遊覽車要四個小時，山上只要兩個小時。\n女：四個小時是久了點，不過那天是禮拜五。我們中午出發，晚餐前還是到得了。\n男：也對。那我先請海邊飯店保留三十間房？\n女：麻煩你，但先不要付訂金。預算要 Alvarado 女士核准，她禮拜三才回來。\n男：我先把數字寄給她，讓她在那之前可以先看。"
   }
  ],
  "p4": [
@@ -3933,7 +3933,7 @@ TOEIC.listening = {
       "At an art museum"
      ],
      "answer": 1,
-     "explanation": "定位在第一句 welcome to the Brightway Furniture factory,說話者自我介紹是今天的導覽員,可知聽者人在家具工廠。後面提到 wood shop（木工區）、painting area（上漆區）、packing room（包裝區）也都是工廠內部區域,可再次確認。"
+     "explanation": "定位在第一句 welcome to the Brightway Furniture factory，說話者自我介紹是今天的導覽員，可知聽者人在家具工廠。後面提到 wood shop（木工區）、painting area（上漆區）、packing room（包裝區）也都是工廠內部區域，可再次確認。"
     },
     {
      "q": "What does the speaker ask the listeners to do?",
@@ -3944,7 +3944,7 @@ TOEIC.listening = {
       "Put on safety glasses"
      ],
      "answer": 3,
-     "explanation": "定位在 please put on the safety glasses you got at the front desk,並補充 You'll need to wear them the whole time we're on the floor。front desk 只是拿護目鏡的地點,不是要簽文件,選項 A 是把地點細節挪去做陷阱。"
+     "explanation": "定位在 please put on the safety glasses you got at the front desk，並補充 You'll need to wear them the whole time we're on the floor。front desk 只是拿護目鏡的地點，不是要簽文件，選項 A 是把地點細節挪去做陷阱。"
     },
     {
      "q": "Where will the group go first?",
@@ -3955,10 +3955,10 @@ TOEIC.listening = {
       "To the front desk"
      ],
      "answer": 0,
-     "explanation": "定位在 We'll begin in the wood shop, then move to the painting area, and finish in the packing room。begin 對應第一站,then 與 finish 分別是第二、三站,B 與 C 都是順序陷阱。"
+     "explanation": "定位在 We'll begin in the wood shop, then move to the painting area, and finish in the packing room。begin 對應第一站，then 與 finish 分別是第二、三站，B 與 C 都是順序陷阱。"
     }
    ],
-   "transcriptZh": "早安,各位,歡迎來到 Brightway 家具工廠。我是 Daniel,今天由我為大家導覽。開始之前,請戴上各位在櫃檯拿到的護目鏡。只要人在廠區裡,全程都要戴著。\n這次參觀大約一小時。我們會先從木工區開始,接著到上漆區,最後在包裝區結束。喔,還有一件事——廠房內請不要拍照,這是公司規定。有問題的話,一邊走一邊問我就可以。好,我們往這邊走。"
+   "transcriptZh": "早安，各位，歡迎來到 Brightway 家具工廠。我是 Daniel，今天由我為大家導覽。開始之前，請戴上各位在櫃檯拿到的護目鏡。只要人在廠區裡，全程都要戴著。\n這次參觀大約一小時。我們會先從木工區開始，接著到上漆區，最後在包裝區結束。喔，還有一件事——廠房內請不要拍照，這是公司規定。有問題的話，一邊走一邊問我就可以。好，我們往這邊走。"
   },
   {
    "id": "l4-22",
@@ -3976,7 +3976,7 @@ TOEIC.listening = {
       "A shopping mall"
      ],
      "answer": 2,
-     "explanation": "定位在開頭兩句 Are you looking for a new place to work out? 與 City Fit is opening its third location next Monday。work out 是健身,加上後面的 machines、swimming pool、classes,可知廣告的是健身房。Central Station 只是位置參考,不是廣告主體。"
+     "explanation": "定位在開頭兩句 Are you looking for a new place to work out? 與 City Fit is opening its third location next Monday。work out 是健身，加上後面的 machines、swimming pool、classes，可知廣告的是健身房。Central Station 只是位置參考，不是廣告主體。"
     },
     {
      "q": "What will people get if they join during the first week?",
@@ -3987,7 +3987,7 @@ TOEIC.listening = {
       "A private trainer"
      ],
      "answer": 0,
-     "explanation": "定位在 if you sign up during our first week, you'll get three months free,並用 That's right, three months 重述一次。緊接著的 No sign-up fee 是另一項優惠,不等於長期折扣,C 是把兩個優惠混在一起的陷阱。"
+     "explanation": "定位在 if you sign up during our first week, you'll get three months free，並用 That's right, three months 重述一次。緊接著的 No sign-up fee 是另一項優惠，不等於長期折扣，C 是把兩個優惠混在一起的陷阱。"
     },
     {
      "q": "Why should listeners call the number?",
@@ -3998,10 +3998,10 @@ TOEIC.listening = {
       "To set up a free tour"
      ],
      "answer": 3,
-     "explanation": "定位在最後一句 Call 555-0182 to book a free tour, or check our website for class times。課表是要上網站查、不是打電話索取,B 把兩個管道對調了。"
+     "explanation": "定位在最後一句 Call 555-0182 to book a free tour, or check our website for class times。課表是要上網站查、不是打電話索取，B 把兩個管道對調了。"
     }
    ],
-   "transcriptZh": "你正在找新的健身地點嗎?好消息!City Fit 第三家分店下週一開幕,就在中央車站對面。我們有全新的器材、一座游泳池,還有每週三十堂以上的課程。\n最棒的來了——開幕第一週入會,就送三個月免費,沒錯,三個月,而且免入會費。開幕後每天早上六點營業到晚上十一點,一週七天。想先來看看場地嗎?預約免費參觀請撥 555-0182,或上我們的網站查課表。"
+   "transcriptZh": "你正在找新的健身地點嗎？好消息！City Fit 第三家分店下週一開幕，就在中央車站對面。我們有全新的器材、一座游泳池，還有每週三十堂以上的課程。\n最棒的來了——開幕第一週入會，就送三個月免費，沒錯，三個月，而且免入會費。開幕後每天早上六點營業到晚上十一點，一週七天。想先來看看場地嗎？預約免費參觀請撥 555-0182，或上我們的網站查課表。"
   },
   {
    "id": "l4-23",
@@ -4019,7 +4019,7 @@ TOEIC.listening = {
       "Changes to employee benefits"
      ],
      "answer": 3,
-     "explanation": "定位在 Starting next month, we're making a few changes to our benefits,後面用 First / Second / also 列出三項福利調整。學費補助只是其中一項,不能當成整段主旨,B 是以偏概全的陷阱。"
+     "explanation": "定位在 Starting next month, we're making a few changes to our benefits，後面用 First / Second / also 列出三項福利調整。學費補助只是其中一項，不能當成整段主旨，B 是以偏概全的陷阱。"
     },
     {
      "q": "What will the company pay for starting next month?",
@@ -4030,7 +4030,7 @@ TOEIC.listening = {
       "New office computers"
      ],
      "answer": 1,
-     "explanation": "定位在 the company will cover the full cost of your health plan — right now you pay about twenty percent。cover the full cost 就是全額負擔;twenty percent 是員工目前的自付比例,不是公司只出兩成。"
+     "explanation": "定位在 the company will cover the full cost of your health plan — right now you pay about twenty percent。cover the full cost 就是全額負擔；twenty percent 是員工目前的自付比例，不是公司只出兩成。"
     },
     {
      "q": "What are the listeners asked to do by Friday?",
@@ -4041,10 +4041,10 @@ TOEIC.listening = {
       "Turn in a leave request"
      ],
      "answer": 2,
-     "explanation": "定位在最後一句 send your questions to Human Resources by Friday。今天會收到的 email 是要仔細閱讀,不是上網選方案;paid leave 只是福利內容之一,不是本週要辦的手續。"
+     "explanation": "定位在最後一句 send your questions to Human Resources by Friday。今天會收到的 email 是要仔細閱讀，不是上網選方案；paid leave 只是福利內容之一，不是本週要辦的手續。"
     }
    ],
-   "transcriptZh": "大家早,謝謝各位提早進來。我知道這週很忙,所以我長話短說。從下個月開始,我們的福利會有幾項調整。\n第一,醫療保險的費用將由公司全額負擔——目前各位大約要自付兩成,這應該會有幫助。第二,每年增加兩天有薪假。另外,我們也要開辦一個方案:只要去上跟工作相關的課程,公司會補助部分學費。今天稍晚各位會收到一封電子郵件,裡面有完整說明。請仔細閱讀,有問題請在週五前寄給人力資源部。"
+   "transcriptZh": "大家早，謝謝各位提早進來。我知道這週很忙，所以我長話短說。從下個月開始，我們的福利會有幾項調整。\n第一，醫療保險的費用將由公司全額負擔——目前各位大約要自付兩成，這應該會有幫助。第二，每年增加兩天有薪假。另外，我們也要開辦一個方案：只要去上跟工作相關的課程，公司會補助部分學費。今天稍晚各位會收到一封電子郵件，裡面有完整說明。請仔細閱讀，有問題請在週五前寄給人力資源部。"
   },
   {
    "id": "l4-24",
@@ -4062,7 +4062,7 @@ TOEIC.listening = {
       "A change in station staff"
      ],
      "answer": 0,
-     "explanation": "定位在兩個重點句:running about twenty-five minutes late 與 this train will now leave from Platform 6, not Platform 3。整段就是誤點加月台更動兩件事,其餘選項廣播中完全沒提到。"
+     "explanation": "定位在兩個重點句：running about twenty-five minutes late 與 this train will now leave from Platform 6, not Platform 3。整段就是誤點加月台更動兩件事，其餘選項廣播中完全沒提到。"
     },
     {
      "q": "Why is the train late?",
@@ -4073,7 +4073,7 @@ TOEIC.listening = {
       "A staff shortage"
      ],
      "answer": 2,
-     "explanation": "定位在 because of track repairs near Green Hill。repairs 就是維修工程,對應 work on the tracks。Green Hill 是維修地點,不是列車終點,聽的時候別被地名帶走。"
+     "explanation": "定位在 because of track repairs near Green Hill。repairs 就是維修工程，對應 work on the tracks。Green Hill 是維修地點，不是列車終點，聽的時候別被地名帶走。"
     },
     {
      "q": "What should waiting passengers do now?",
@@ -4084,10 +4084,10 @@ TOEIC.listening = {
       "Check in at the ticket office"
      ],
      "answer": 1,
-     "explanation": "定位在 if you're waiting downstairs, please take the stairs or the elevator up to Platform 6 now。ten-forty 那班是「沒趕上這班車」才要搭的下一班,不是現在的動作,C 是條件句陷阱。"
+     "explanation": "定位在 if you're waiting downstairs, please take the stairs or the elevator up to Platform 6 now。ten-forty 那班是「沒趕上這班車」才要搭的下一班，不是現在的動作，C 是條件句陷阱。"
     }
    ],
-   "transcriptZh": "各位旅客請注意,請注意聽廣播。九點十五分開往 Riverton 的快車,因為 Green Hill 附近進行軌道維修,大約會誤點二十五分鐘,造成不便敬請見諒。\n另外請注意,本班列車改由第六月台發車,不是第三月台。如果您正在樓下候車,請現在走樓梯或搭電梯上到第六月台。座位在第一到第四節車廂的旅客,這幾節車廂會停在月台最尾端。如果您要前往 Riverton 卻沒趕上這班車,下一班是十點四十分發車。謝謝。"
+   "transcriptZh": "各位旅客請注意，請注意聽廣播。九點十五分開往 Riverton 的快車，因為 Green Hill 附近進行軌道維修，大約會誤點二十五分鐘，造成不便敬請見諒。\n另外請注意，本班列車改由第六月台發車，不是第三月台。如果您正在樓下候車，請現在走樓梯或搭電梯上到第六月台。座位在第一到第四節車廂的旅客，這幾節車廂會停在月台最尾端。如果您要前往 Riverton 卻沒趕上這班車，下一班是十點四十分發車。謝謝。"
   },
   {
    "id": "l4-25",
@@ -4105,7 +4105,7 @@ TOEIC.listening = {
       "Reporting last year's sales"
      ],
      "answer": 1,
-     "explanation": "定位在 Before we get started, a couple of quick notes,之後全部都在交代當天的議程與提醒（換講者、午餐時間地點、名牌、報名工作坊）。new customer app 只是代打講者的講題,不是這段話本身的目的,A 是把細節誤當主旨。"
+     "explanation": "定位在 Before we get started, a couple of quick notes，之後全部都在交代當天的議程與提醒（換講者、午餐時間地點、名牌、報名工作坊）。new customer app 只是代打講者的講題，不是這段話本身的目的，A 是把細節誤當主旨。"
     },
     {
      "q": "What problem does the speaker mention?",
@@ -4116,7 +4116,7 @@ TOEIC.listening = {
       "A speaker cannot be here this morning"
      ],
      "answer": 3,
-     "explanation": "定位在 Ms. Ruiz's flight was canceled last night, so she'll speak by video at two instead。班機取消代表她人到不了現場,只能改成下午視訊,這是本段唯一提到的問題。午餐照常十二點、名牌只是要求配戴,都沒有出狀況。"
+     "explanation": "定位在 Ms. Ruiz's flight was canceled last night, so she'll speak by video at two instead。班機取消代表她人到不了現場，只能改成下午視訊，這是本段唯一提到的問題。午餐照常十二點、名牌只是要求配戴，都沒有出狀況。"
     },
     {
      "q": "Why does the speaker tell the listeners to go to the front desk during the morning break?",
@@ -4127,10 +4127,10 @@ TOEIC.listening = {
       "Lunch tickets are sold there"
      ],
      "answer": 0,
-     "explanation": "定位在 the afternoon workshops fill up fast, so sign up at the front desk during the morning break, not after lunch。fill up fast 是「很快額滿」,所以要趁上午的休息時間先報名;說話者沒說服務台會關,B 是自行推測的陷阱。"
+     "explanation": "定位在 the afternoon workshops fill up fast, so sign up at the front desk during the morning break, not after lunch。fill up fast 是「很快額滿」，所以要趁上午的休息時間先報名；說話者沒說服務台會關，B 是自行推測的陷阱。"
     }
    ],
-   "transcriptZh": "早安,歡迎參加年度區域銷售大會。開始之前,有幾件事要快速說明。\n今天早上的開場演講必須調整——Ruiz 女士的班機昨晚取消了,所以她改在下午兩點以視訊方式演講。改由我們公司的 Mark Feng 為大家介紹新的顧客 App。午餐十二點在隔壁那間會議室,另外請配戴名牌,工作人員會在門口查驗。最後一件事——下午的工作坊很快就會額滿,所以請在上午的休息時間到服務台報名,不要等到午餐後。"
+   "transcriptZh": "早安，歡迎參加年度區域銷售大會。開始之前，有幾件事要快速說明。\n今天早上的開場演講必須調整——Ruiz 女士的班機昨晚取消了，所以她改在下午兩點以視訊方式演講。改由我們公司的 Mark Feng 為大家介紹新的顧客 App。午餐十二點在隔壁那間會議室，另外請配戴名牌，工作人員會在門口查驗。最後一件事——下午的工作坊很快就會額滿，所以請在上午的休息時間到服務台報名，不要等到午餐後。"
   },
   {
    "id": "l4-31",
@@ -4148,7 +4148,7 @@ TOEIC.listening = {
       "At a bookstore"
      ],
      "answer": 2,
-     "explanation": "定位在第一句 thanks for picking up an audio guide here at the Riverside Art Museum,說話者接著說 I'll walk you through our main hall,可知聽者人在美術館。後面提到 painting、gift shop 也都是館內元素。選項 D 的 bookstore 是被 gift shop 誘導的陷阱。"
+     "explanation": "定位在第一句 thanks for picking up an audio guide here at the Riverside Art Museum，說話者接著說 I'll walk you through our main hall，可知聽者人在美術館。後面提到 painting、gift shop 也都是館內元素。選項 D 的 bookstore 是被 gift shop 誘導的陷阱。"
     },
     {
      "q": "What does the speaker say about the painting?",
@@ -4159,7 +4159,7 @@ TOEIC.listening = {
       "It is the museum's newest piece."
      ],
      "answer": 1,
-     "explanation": "定位在 It was given to us by a local family about fifty years ago。given to us by 就是「由某人贈送」,對應 came from a local family。about fifty years ago 說的是入館時間,不是完成時間,選項 A 與 D 都在偷換這個時間點。"
+     "explanation": "定位在 It was given to us by a local family about fifty years ago。given to us by 就是「由某人贈送」，對應 came from a local family。about fifty years ago 說的是入館時間，不是完成時間，選項 A 與 D 都在偷換這個時間點。"
     },
     {
      "q": "What are the listeners asked to do before leaving?",
@@ -4170,10 +4170,10 @@ TOEIC.listening = {
       "Leave the device at the gift shop"
      ],
      "answer": 3,
-     "explanation": "定位在最後一句 don't worry about bringing the guide back to this floor — just drop it off at the gift shop before you leave。drop it off 就是歸還。說話者明講「不必回這層樓」,所以選項 C 正好講反,是最常被選走的誘答。"
+     "explanation": "定位在最後一句 don't worry about bringing the guide back to this floor — just drop it off at the gift shop before you leave。drop it off 就是歸還。說話者明講「不必回這層樓」，所以選項 C 正好講反，是最常被選走的誘答。"
     }
    ],
-   "transcriptZh": "哈囉,謝謝你在 Riverside 美術館拿了一台語音導覽。我是 Karen,接下來由我帶你走一趟主展廳。\n你現在站的位置,前面就是本館最有名的那幅畫——畫著藍色小船的那一幅。這幅畫大約五十年前由一個在地家族贈送給我們。\n準備好之後,按機器上的 2,就會播下一件作品的介紹。走動的時候請把包包背在身前,週末展間人比較多。還有,導覽機不用特地拿回這一層——離館前放在禮品店就可以了。"
+   "transcriptZh": "哈囉，謝謝你在 Riverside 美術館拿了一台語音導覽。我是 Karen，接下來由我帶你走一趟主展廳。\n你現在站的位置，前面就是本館最有名的那幅畫——畫著藍色小船的那一幅。這幅畫大約五十年前由一個在地家族贈送給我們。\n準備好之後，按機器上的 2，就會播下一件作品的介紹。走動的時候請把包包背在身前，週末展間人比較多。還有，導覽機不用特地拿回這一層——離館前放在禮品店就可以了。"
   },
   {
    "id": "l4-32",
@@ -4191,7 +4191,7 @@ TOEIC.listening = {
       "A different plane will be used."
      ],
      "answer": 0,
-     "explanation": "定位在 that's a change — this flight was listed at gate 12 earlier,現在改在 gate 14。廣播只講登機門更動,沒有提到取消或提早抵達;選項 D 雖然後面提到 tonight's plane,但那是在講行李架大小,不是換飛機。"
+     "explanation": "定位在 that's a change — this flight was listed at gate 12 earlier，現在改在 gate 14。廣播只講登機門更動，沒有提到取消或提早抵達；選項 D 雖然後面提到 tonight's plane，但那是在講行李架大小，不是換飛機。"
     },
     {
      "q": "Who will board the plane first?",
@@ -4202,7 +4202,7 @@ TOEIC.listening = {
       "Passengers who need extra time"
      ],
      "answer": 3,
-     "explanation": "定位在 We'll begin with passengers who need extra time, then business class, and then rows twenty and higher。begin with 標示第一順位,then 之後的兩個族群都是後面才登機,選項 A 與 B 是順序陷阱。"
+     "explanation": "定位在 We'll begin with passengers who need extra time, then business class, and then rows twenty and higher。begin with 標示第一順位，then 之後的兩個族群都是後面才登機，選項 A 與 B 是順序陷阱。"
     },
     {
      "q": "What does the speaker say about carry-on bags?",
@@ -4213,10 +4213,10 @@ TOEIC.listening = {
       "They should be placed under the seat."
      ],
      "answer": 1,
-     "explanation": "定位在 if your bag doesn't fit, we'll check it at the door for you at no charge。at no charge 就是免費,對應 for free。廣播沒提秤重、件數限制或放座位底下,選項 A、C、D 都是常見的機場情境聯想,不是本篇內容。"
+     "explanation": "定位在 if your bag doesn't fit, we'll check it at the door for you at no charge。at no charge 就是免費，對應 for free。廣播沒提秤重、件數限制或放座位底下，選項 A、C、D 都是常見的機場情境聯想，不是本篇內容。"
     }
    ],
-   "transcriptZh": "各位晚安。這是 Skyline 航空 402 班機飛往溫哥華的登機廣播。我們大約十分鐘後在 14 號登機門開始登機。這裡有更動——先前顯示的是 12 號門,所以請確認你站對地方了。\n我們會先請需要多一點時間的旅客登機,接著是商務艙,然後是第二十排以後的旅客。輪到你的時候,請先把登機證和有照片的證件拿在手上。\n另外提醒行李。今晚這架飛機的置物架比平常小一些,如果你的行李放不進去,我們會在登機門幫你託運,不另外收費。"
+   "transcriptZh": "各位晚安。這是 Skyline 航空 402 班機飛往溫哥華的登機廣播。我們大約十分鐘後在 14 號登機門開始登機。這裡有更動——先前顯示的是 12 號門，所以請確認你站對地方了。\n我們會先請需要多一點時間的旅客登機，接著是商務艙，然後是第二十排以後的旅客。輪到你的時候，請先把登機證和有照片的證件拿在手上。\n另外提醒行李。今晚這架飛機的置物架比平常小一些，如果你的行李放不進去，我們會在登機門幫你託運，不另外收費。"
   },
   {
    "id": "l4-33",
@@ -4234,7 +4234,7 @@ TOEIC.listening = {
       "To review last year's sales results"
      ],
      "answer": 1,
-     "explanation": "定位在 the company turns twenty next month, and we're having a party to celebrate,接著整段都在講日期、地點、回覆期限與影片素材,全部圍繞這場慶祝活動。開場的 Before you head out 只是提醒大家先別走,不是在講上班時間,選項 C 是誤抓關鍵字。"
+     "explanation": "定位在 the company turns twenty next month, and we're having a party to celebrate，接著整段都在講日期、地點、回覆期限與影片素材，全部圍繞這場慶祝活動。開場的 Before you head out 只是提醒大家先別走，不是在講上班時間，選項 C 是誤抓關鍵字。"
     },
     {
      "q": "What are the listeners asked to do by Tuesday?",
@@ -4245,7 +4245,7 @@ TOEIC.listening = {
       "Call the marketing department"
      ],
      "answer": 2,
-     "explanation": "定位在 please answer my email by Tuesday at the latest。注意兩個時間點:Wednesday 是公司要回報飯店人數的期限,Tuesday 才是員工要回信的期限,選項排列刻意讓人把兩者搞混。at the latest 表示「最晚」。"
+     "explanation": "定位在 please answer my email by Tuesday at the latest。注意兩個時間點：Wednesday 是公司要回報飯店人數的期限，Tuesday 才是員工要回信的期限，選項排列刻意讓人把兩者搞混。at the latest 表示「最晚」。"
     },
     {
      "q": "What does the speaker ask listeners to send to Maria?",
@@ -4256,10 +4256,10 @@ TOEIC.listening = {
       "Their travel receipts"
      ],
      "answer": 0,
-     "explanation": "定位在 We're putting together a short video with old office photos. If you have any, send them to Maria。要寄的是照片,影片是公司要做出來的成品,選項 C 把成品當成要寄的東西。說話者還特別說 not to me,提醒收件人不是她本人。"
+     "explanation": "定位在 We're putting together a short video with old office photos. If you have any, send them to Maria。要寄的是照片，影片是公司要做出來的成品，選項 C 把成品當成要寄的東西。說話者還特別說 not to me，提醒收件人不是她本人。"
     }
    ],
-   "transcriptZh": "大家好,先別急著走,我還有一件事。應該多數人都知道,公司下個月滿二十週年,我們會辦一場慶祝派對。時間是十五號星期五,地點在 Harbor 飯店,六點開始。\n接下來是需要各位配合的部分。我們星期三之前要告訴飯店總共幾個人,所以請你最晚星期二回我的信。另外,可以帶一位親友一起來。\n喔,還有一件事。我們正在做一支短片,會用到以前辦公室的照片。手上有照片的話,請寄給行銷部的 Maria,不要寄給我。謝謝大家。"
+   "transcriptZh": "大家好，先別急著走，我還有一件事。應該多數人都知道，公司下個月滿二十週年，我們會辦一場慶祝派對。時間是十五號星期五，地點在 Harbor 飯店，六點開始。\n接下來是需要各位配合的部分。我們星期三之前要告訴飯店總共幾個人，所以請你最晚星期二回我的信。另外，可以帶一位親友一起來。\n喔，還有一件事。我們正在做一支短片，會用到以前辦公室的照片。手上有照片的話，請寄給行銷部的 Maria，不要寄給我。謝謝大家。"
   },
   {
    "id": "l4-34",
@@ -4277,7 +4277,7 @@ TOEIC.listening = {
       "Rain will start around midday."
      ],
      "answer": 3,
-     "explanation": "定位在 the rain should move in around noon and last through the evening。move in 在氣象用語裡是「雨帶移入」,noon 對應 midday。選項 C 描述的是 Tomorrow looks a lot better — sunny 講的明天,是時間點陷阱。"
+     "explanation": "定位在 the rain should move in around noon and last through the evening。move in 在氣象用語裡是「雨帶移入」，noon 對應 midday。選項 C 描述的是 Tomorrow looks a lot better — sunny 講的明天，是時間點陷阱。"
     },
     {
      "q": "What is causing the delay on Fifth Street?",
@@ -4288,7 +4288,7 @@ TOEIC.listening = {
       "A broken traffic light"
      ],
      "answer": 0,
-     "explanation": "定位在 crews are still working on the Fifth Street bridge, and it's down to one lane。crews are working 就是施工,down to one lane 說明只剩一線道,所以車速慢。報導沒提事故或號誌故障。"
+     "explanation": "定位在 crews are still working on the Fifth Street bridge, and it's down to one lane。crews are working 就是施工，down to one lane 說明只剩一線道，所以車速慢。報導沒提事故或號誌故障。"
     },
     {
      "q": "What does the speaker suggest that drivers do?",
@@ -4299,10 +4299,10 @@ TOEIC.listening = {
       "Avoid driving downtown today"
      ],
      "answer": 2,
-     "explanation": "定位在 If you can, take Park Avenue instead。instead 表示改走另一條路,對應 Use a different road。number nine 那句是講公車加開班次,對象是 bus riders 不是開車的人,選項 A 是把不同族群的資訊混在一起。"
+     "explanation": "定位在 If you can, take Park Avenue instead。instead 表示改走另一條路，對應 Use a different road。number nine 那句是講公車加開班次，對象是 bus riders 不是開車的人，選項 A 是把不同族群的資訊混在一起。"
     }
    ],
-   "transcriptZh": "接下來是今天早上的天氣和路況。現在外頭多雲、有點涼,不過雨大概中午前後會進來,一路下到晚上。出門前記得帶把傘。明天會好很多——出太陽,也比今天暖。\n路況方面,第五街橋上還在施工,目前只剩一個車道。現在開到那裡大概要卡二十分鐘。可以的話,改走 Park 大道。\n搭公車的乘客,今天早上沒有延誤,不過九號公車這一整週都會加開幾班車。"
+   "transcriptZh": "接下來是今天早上的天氣和路況。現在外頭多雲、有點涼，不過雨大概中午前後會進來，一路下到晚上。出門前記得帶把傘。明天會好很多——出太陽，也比今天暖。\n路況方面，第五街橋上還在施工，目前只剩一個車道。現在開到那裡大概要卡二十分鐘。可以的話，改走 Park 大道。\n搭公車的乘客，今天早上沒有延誤，不過九號公車這一整週都會加開幾班車。"
   },
   {
    "id": "l4-35",
@@ -4320,7 +4320,7 @@ TOEIC.listening = {
       "A request from a large store"
      ],
      "answer": 1,
-     "explanation": "定位在 we asked our customers what they liked least about their coffee makers,再加上 Everything you'll see this afternoon came out of those conversations。those conversations 回指的就是與顧客的訪談,所以產品設計來自顧客意見。整段沒有提到同業、法規或通路商。"
+     "explanation": "定位在 we asked our customers what they liked least about their coffee makers，再加上 Everything you'll see this afternoon came out of those conversations。those conversations 回指的就是與顧客的訪談，所以產品設計來自顧客意見。整段沒有提到同業、法規或通路商。"
     },
     {
      "q": "What will Tom most likely do next?",
@@ -4331,7 +4331,7 @@ TOEIC.listening = {
       "Show how the product works"
      ],
      "answer": 3,
-     "explanation": "定位在 In a few minutes my coworker Tom will bring out the machine itself,以及後面 once Tom is finished。bring out the machine 加上聽眾要等他做完才能試喝,可推出他負責實機示範。試喝是 Tom 結束「之後」的活動,選項 B 是順序陷阱。"
+     "explanation": "定位在 In a few minutes my coworker Tom will bring out the machine itself，以及後面 once Tom is finished。bring out the machine 加上聽眾要等他做完才能試喝，可推出他負責實機示範。試喝是 Tom 結束「之後」的活動，選項 B 是順序陷阱。"
     },
     {
      "q": "What does the speaker say listeners cannot do today?",
@@ -4342,10 +4342,10 @@ TOEIC.listening = {
       "See the new machine"
      ],
      "answer": 0,
-     "explanation": "定位在 We won't be taking any orders today; the store version ships in October。won't be taking orders 就是今天不接單,市售版要等十月才出貨,所以現場買不到。試喝反而是有的（do stay for the tasting）,選項 B 正好講反。"
+     "explanation": "定位在 We won't be taking any orders today; the store version ships in October。won't be taking orders 就是今天不接單，市售版要等十月才出貨，所以現場買不到。試喝反而是有的（do stay for the tasting），選項 B 正好講反。"
     }
    ],
-   "transcriptZh": "午安,今天下雨還特地過來,謝謝各位。我是 Elena Ruiz,Nova Home 的產品負責人。再過幾分鐘,我同事 Tom 會把機器推出來,不過在那之前,我想先說說我們為什麼做這台。\n兩年前,我們問顧客:你對現在的咖啡機哪一點最不滿意?幾乎每個人的答案都一樣——清洗。所以我們就從這裡下手。各位今天下午看到的一切,都是從那些對話裡長出來的。\n今天我們不接訂單,市售版本十月出貨。不過 Tom 講完之後有試喝,請各位務必留下來。"
+   "transcriptZh": "午安，今天下雨還特地過來，謝謝各位。我是 Elena Ruiz，Nova Home 的產品負責人。再過幾分鐘，我同事 Tom 會把機器推出來，不過在那之前，我想先說說我們為什麼做這台。\n兩年前，我們問顧客：你對現在的咖啡機哪一點最不滿意？幾乎每個人的答案都一樣——清洗。所以我們就從這裡下手。各位今天下午看到的一切，都是從那些對話裡長出來的。\n今天我們不接訂單，市售版本十月出貨。不過 Tom 講完之後有試喝，請各位務必留下來。"
   },
   {
    "id": "l4-41",
@@ -4363,7 +4363,7 @@ TOEIC.listening = {
       "A book sale is being set up."
      ],
      "answer": 0,
-     "explanation": "定位在 We're opening late tomorrow, because the whole staff has computer training in the morning。because 後面接的就是原因,computer training 對應選項 A 的 attend a training session。選項 C 的整修全篇沒提,是靠「公家單位常閉館維修」的印象亂猜。"
+     "explanation": "定位在 We're opening late tomorrow, because the whole staff has computer training in the morning。because 後面接的就是原因，computer training 對應選項 A 的 attend a training session。選項 C 的整修全篇沒提，是靠「公家單位常閉館維修」的印象亂猜。"
     },
     {
      "q": "What time will the library open tomorrow?",
@@ -4374,7 +4374,7 @@ TOEIC.listening = {
       "At five in the evening"
      ],
      "answer": 2,
-     "explanation": "定位在 the doors won't open until one in the afternoon。won't ... until 就是「要到一點才開」,對應選項 C。廣播開頭的 twenty minutes 是閉館倒數,不是開門時間;nine 這個數字原文根本沒出現,只是用圖書館常識設的誘答。"
+     "explanation": "定位在 the doors won't open until one in the afternoon。won't ... until 就是「要到一點才開」，對應選項 C。廣播開頭的 twenty minutes 是閉館倒數，不是開門時間；nine 這個數字原文根本沒出現，只是用圖書館常識設的誘答。"
     },
     {
      "q": "What does the speaker say about the drop box?",
@@ -4385,10 +4385,10 @@ TOEIC.listening = {
       "It can be used at any time."
      ],
      "answer": 3,
-     "explanation": "定位在 just use the drop box by the side entrance. It's open all day。all day 就是全天都能用,對應選項 D。原文說還書箱在側門 (side entrance) 旁邊,選項 A 把地點換成前面櫃檯,聽到 front desk 就選會中招——那個字出現在第一段的還書指示裡。"
+     "explanation": "定位在 just use the drop box by the side entrance. It's open all day。all day 就是全天都能用，對應選項 D。原文說還書箱在側門 (side entrance) 旁邊，選項 A 把地點換成前面櫃檯，聽到 front desk 就選會中招——那個字出現在第一段的還書指示裡。"
     }
    ],
-   "transcriptZh": "各位讀者請注意,本館再二十分鐘就要閉館了,想借的書請現在拿到前面櫃檯來。\n如果你人在樓上的自習室,離開時別忘了把東西帶走,我們沒辦法幫忙保管過夜。\n還有一件事。明天早上全館同仁要上電腦教育訓練,所以會晚一點開門,要到下午一點才開放。如果你在那之前要還書,可以用側門旁邊的還書箱,那個箱子全天都能用。\n謝謝大家,明天見。"
+   "transcriptZh": "各位讀者請注意，本館再二十分鐘就要閉館了，想借的書請現在拿到前面櫃檯來。\n如果你人在樓上的自習室，離開時別忘了把東西帶走，我們沒辦法幫忙保管過夜。\n還有一件事。明天早上全館同仁要上電腦教育訓練，所以會晚一點開門，要到下午一點才開放。如果你在那之前要還書，可以用側門旁邊的還書箱，那個箱子全天都能用。\n謝謝大家，明天見。"
   },
   {
    "id": "l4-42",
@@ -4406,7 +4406,7 @@ TOEIC.listening = {
       "Soup and bread"
      ],
      "answer": 3,
-     "explanation": "定位在 Tonight we're keeping it simple — we're making soup and fresh bread。making 後面接的兩樣東西就是答案,對應選項 D。其他三個選項都是烹飪課常見的品項,但原文一個都沒提到。"
+     "explanation": "定位在 Tonight we're keeping it simple — we're making soup and fresh bread。making 後面接的兩樣東西就是答案，對應選項 D。其他三個選項都是烹飪課常見的品項，但原文一個都沒提到。"
     },
     {
      "q": "What does the speaker say about the tools?",
@@ -4417,7 +4417,7 @@ TOEIC.listening = {
       "They will be shared in pairs."
      ],
      "answer": 1,
-     "explanation": "定位在 Everything you need is already on your table, so you don't have to bring your own tools to class。already on your table 就是已經擺好在桌上,對應選項 B 的 set out。選項 A 把 don't have to bring 誤聽成「要另外買」。"
+     "explanation": "定位在 Everything you need is already on your table, so you don't have to bring your own tools to class。already on your table 就是已經擺好在桌上，對應選項 B 的 set out。選項 A 把 don't have to bring 誤聽成「要另外買」。"
     },
     {
      "q": "Why does the speaker mention the sheet?",
@@ -4428,10 +4428,10 @@ TOEIC.listening = {
       "To ask for feedback"
      ],
      "answer": 0,
-     "explanation": "定位在 take a look at the sheet in front of you. It lists what's in tonight's dishes, so if you can't eat something, tell me now。提那張單子是要讓學員確認食材,對應選項 A。這是「為何提及」的意圖題,線索在 so 之後的目的句,不在 sheet 這個字本身;講者提過 six-week course,但那張單子跟課表無關,選項 C 是把兩件事湊在一起。"
+     "explanation": "定位在 take a look at the sheet in front of you. It lists what's in tonight's dishes, so if you can't eat something, tell me now。提那張單子是要讓學員確認食材，對應選項 A。這是「為何提及」的意圖題，線索在 so 之後的目的句，不在 sheet 這個字本身；講者提過 six-week course，但那張單子跟課表無關，選項 C 是把兩件事湊在一起。"
     }
    ],
-   "transcriptZh": "各位晚安,歡迎來到 Corner Kitchen 上第一堂課。我是 Daniel,這六週的課都由我來帶。\n今天晚上我們先做簡單的——煮湯,還有現做的麵包。需要的東西都已經放在你的桌上了,所以不用自己帶工具來。\n開始之前,頭髮長的請先綁起來,然後到後面的水槽洗手。另外,看一下你面前那張單子,上面寫了今晚兩道菜的材料。如果有你不能吃的東西,現在跟我說,我幫你換掉。"
+   "transcriptZh": "各位晚安，歡迎來到 Corner Kitchen 上第一堂課。我是 Daniel，這六週的課都由我來帶。\n今天晚上我們先做簡單的——煮湯，還有現做的麵包。需要的東西都已經放在你的桌上了，所以不用自己帶工具來。\n開始之前，頭髮長的請先綁起來，然後到後面的水槽洗手。另外，看一下你面前那張單子，上面寫了今晚兩道菜的材料。如果有你不能吃的東西，現在跟我說，我幫你換掉。"
   },
   {
    "id": "l4-43",
@@ -4449,7 +4449,7 @@ TOEIC.listening = {
       "The bus company is moving."
      ],
      "answer": 1,
-     "explanation": "定位在 because the city is repairing Market Street。repairing a street 就是道路施工,對應選項 B 的 Road work。選項 C 的「加新站」把後面的「取消一站」聽反了。"
+     "explanation": "定位在 because the city is repairing Market Street。repairing a street 就是道路施工，對應選項 B 的 Road work。選項 C 的「加新站」把後面的「取消一站」聽反了。"
     },
     {
      "q": "Which stop will be closed?",
@@ -4460,7 +4460,7 @@ TOEIC.listening = {
       "The stop by the post office"
      ],
      "answer": 3,
-     "explanation": "定位在 the stop in front of the post office won't be in service for about three weeks。won't be in service 就是停止停靠,對應選項 D。train station 是接回原路線的地方,Pine 街和銀行是替代站,三個地名都在原文出現過,是典型的同場景誘答。"
+     "explanation": "定位在 the stop in front of the post office won't be in service for about three weeks。won't be in service 就是停止停靠，對應選項 D。train station 是接回原路線的地方，Pine 街和銀行是替代站，三個地名都在原文出現過，是典型的同場景誘答。"
     },
     {
      "q": "According to the speaker, what will stay the same?",
@@ -4471,10 +4471,10 @@ TOEIC.listening = {
       "The number of stops on the route"
      ],
      "answer": 2,
-     "explanation": "定位在最後一句 The change doesn't affect our times, so buses should still reach the station on schedule。doesn't affect our times 加上 on schedule,不變的就是抵達時間,對應選項 C。選項 D 剛好相反——郵局那站停用三個星期,停靠站數是有變的;票價和班次密度全篇沒提。"
+     "explanation": "定位在最後一句 The change doesn't affect our times, so buses should still reach the station on schedule。doesn't affect our times 加上 on schedule，不變的就是抵達時間，對應選項 C。選項 D 剛好相反——郵局那站停用三個星期，停靠站數是有變的；票價和班次密度全篇沒提。"
     }
    ],
-   "transcriptZh": "這是給搭乘八號公車乘客的服務通知。從下週一開始,我們在市中心這一段會改走別的路線,因為市政府要整修 Market 街。\n所以我們不會在 Market 街轉彎,而是直接沿著 Pine 街走,到火車站再接回原本的路線。也就是說,郵局前面那一站大概三個星期不會停靠。如果你平常在那站上下車,最近的一站在 Pine 街,就在銀行旁邊。\n造成不便,我們很抱歉。這次改道不會影響時間,公車還是會照原本的時刻抵達火車站。"
+   "transcriptZh": "這是給搭乘八號公車乘客的服務通知。從下週一開始，我們在市中心這一段會改走別的路線，因為市政府要整修 Market 街。\n所以我們不會在 Market 街轉彎，而是直接沿著 Pine 街走，到火車站再接回原本的路線。也就是說，郵局前面那一站大概三個星期不會停靠。如果你平常在那站上下車，最近的一站在 Pine 街，就在銀行旁邊。\n造成不便，我們很抱歉。這次改道不會影響時間，公車還是會照原本的時刻抵達火車站。"
   },
   {
    "id": "l4-44",
@@ -4492,7 +4492,7 @@ TOEIC.listening = {
       "Send in a paper form"
      ],
      "answer": 2,
-     "explanation": "定位在 you have to sign up online by this Friday。sign up online 就是線上登記,對應選項 C。後一句 We can't add names after that 再次確認這是截止日。選項 A 與原文 it's free 直接衝突,選項 D 的紙本表格則是把 online 聽反。"
+     "explanation": "定位在 you have to sign up online by this Friday。sign up online 就是線上登記，對應選項 C。後一句 We can't add names after that 再次確認這是截止日。選項 A 與原文 it's free 直接衝突，選項 D 的紙本表格則是把 online 聽反。"
     },
     {
      "q": "Where will the health checks take place?",
@@ -4503,7 +4503,7 @@ TOEIC.listening = {
       "In the front lobby"
      ],
      "answer": 0,
-     "explanation": "定位在 they'll set up in the training room on the second floor。地點講得很明確,對應選項 A。選項 B 是靠「健檢要去診所」的常識亂猜,原文說的是護理人員到公司來 (will be here)。"
+     "explanation": "定位在 they'll set up in the training room on the second floor。地點講得很明確，對應選項 A。選項 B 是靠「健檢要去診所」的常識亂猜，原文說的是護理人員到公司來 (will be here)。"
     },
     {
      "q": "Why do most people choose a morning appointment?",
@@ -4514,10 +4514,10 @@ TOEIC.listening = {
       "Parking is easier in the morning."
      ],
      "answer": 1,
-     "explanation": "定位在 Don't eat anything for eight hours before your visit, so most people sign up for a morning time。so 之前是原因:檢查前八小時不能進食,挑早上的時段比較好安排,對應選項 B。這題要把因果兩句串起來,不是單句聽寫。"
+     "explanation": "定位在 Don't eat anything for eight hours before your visit, so most people sign up for a morning time。so 之前是原因：檢查前八小時不能進食，挑早上的時段比較好安排，對應選項 B。這題要把因果兩句串起來，不是單句聽寫。"
     }
    ],
-   "transcriptZh": "在今天的會議結束之前,我想說明一下公司下個月要辦的健康檢查。\n會有一組護理人員在四號和五號到公司來,地點在二樓的教育訓練室。整個檢查大概半小時,全體同仁都免費。\n這裡有個大家常常漏掉的部分——你必須在這個星期五之前上網登記。過了就沒辦法再加名單了,因為護理人員要照我們報的人數帶器材過來。\n還有一點。檢查前八小時不能吃東西,所以大部分的人都會挑早上的時段。"
+   "transcriptZh": "在今天的會議結束之前，我想說明一下公司下個月要辦的健康檢查。\n會有一組護理人員在四號和五號到公司來，地點在二樓的教育訓練室。整個檢查大概半小時，全體同仁都免費。\n這裡有個大家常常漏掉的部分——你必須在這個星期五之前上網登記。過了就沒辦法再加名單了，因為護理人員要照我們報的人數帶器材過來。\n還有一點。檢查前八小時不能吃東西，所以大部分的人都會挑早上的時段。"
   },
   {
    "id": "l4-45",
@@ -4535,7 +4535,7 @@ TOEIC.listening = {
       "At the parking area"
      ],
      "answer": 1,
-     "explanation": "定位在 We'll start at the barn, then walk out to the fields, and finish at the shop。finish at 標示的就是結束地點,對應選項 B。barn 是起點、fields 是中途,順序聽混就會選錯。"
+     "explanation": "定位在 We'll start at the barn, then walk out to the fields, and finish at the shop。finish at 標示的就是結束地點，對應選項 B。barn 是起點、fields 是中途，順序聽混就會選錯。"
     },
     {
      "q": "Why does the speaker mention last night's rain?",
@@ -4546,7 +4546,7 @@ TOEIC.listening = {
       "To say the tour will be shorter"
      ],
      "answer": 0,
-     "explanation": "定位在 the path past the barn gets muddy after rain, and it rained pretty hard last night,接著她給出 a longer way around 這個替代路線。提下雨是要提醒那條小路現在不好走,對應選項 A。這是意圖題,線索在前後兩句的關係;單抓 rain 這個字反而會被選項 C 的雨傘拐走,而且雨是昨晚下的,現在沒在下。"
+     "explanation": "定位在 the path past the barn gets muddy after rain, and it rained pretty hard last night，接著她給出 a longer way around 這個替代路線。提下雨是要提醒那條小路現在不好走，對應選項 A。這是意圖題，線索在前後兩句的關係；單抓 rain 這個字反而會被選項 C 的雨傘拐走，而且雨是昨晚下的，現在沒在下。"
     },
     {
      "q": "What does the speaker ask the listeners not to do?",
@@ -4557,10 +4557,10 @@ TOEIC.listening = {
       "Give food to the animals"
      ],
      "answer": 3,
-     "explanation": "定位在最後一句 They're friendly, but please don't feed them anything from your bag。don't feed 就是不要餵食,對應選項 D。前半句說山羊很親人、會自己靠過來,所以選項 A 的「不要碰」與語氣正好相反。"
+     "explanation": "定位在最後一句 They're friendly, but please don't feed them anything from your bag。don't feed 就是不要餵食，對應選項 D。前半句說山羊很親人、會自己靠過來，所以選項 A 的「不要碰」與語氣正好相反。"
     }
    ],
-   "transcriptZh": "各位早安,歡迎來到 Hillside 農場。我是 Paula,接下來兩個小時由我帶大家參觀。\n我們先從穀倉開始,接著走到田裡,最後在農場商店結束,你們可以在那邊試吃我們自己做的起司。\n這邊我要先提醒一下——穀倉後面那條小路下過雨會很泥濘,昨天晚上雨下得滿大的。如果你不想走那條,還有一條比較遠的路可以繞過去,走大馬路,等一下到了我會指給大家看。\n喔對了,山羊會直接靠過來。牠們很親人,不過請不要拿包包裡的東西餵牠們。"
+   "transcriptZh": "各位早安，歡迎來到 Hillside 農場。我是 Paula，接下來兩個小時由我帶大家參觀。\n我們先從穀倉開始，接著走到田裡，最後在農場商店結束，你們可以在那邊試吃我們自己做的起司。\n這邊我要先提醒一下——穀倉後面那條小路下過雨會很泥濘，昨天晚上雨下得滿大的。如果你不想走那條，還有一條比較遠的路可以繞過去，走大馬路，等一下到了我會指給大家看。\n喔對了，山羊會直接靠過來。牠們很親人，不過請不要拿包包裡的東西餵牠們。"
   }
  ]
 };

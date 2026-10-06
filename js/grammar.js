@@ -6,7 +6,7 @@
   const UNITS = (window.TOEIC && TOEIC.grammar) || [];
 
   if (!UNITS.length) {
-    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '文法教材生成中,稍後再來。'));
+    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '文法教材生成中，稍後再來。'));
     return;
   }
 
@@ -26,11 +26,11 @@
      時態總整理是全部章節後面的「總整理」(z)。資料與程式要用到才載入。 */
   const REFS = {
     verbs: {
-      stage: 'c', title: '不規則動詞表', sub: '118 個字的三態,可查可測驗',
+      stage: 'c', title: '不規則動詞表', sub: '118 個字的三態，可查可測驗',
       files: ['data/verbs.js', 'js/verbs.js'], view: () => window.VERBS_VIEW,
     },
     tenses: {
-      stage: 'z', title: '12 時態總整理', sub: '一張表看完全部時態,附時間連接詞的搭配',
+      stage: 'z', title: '12 時態總整理', sub: '一張表看完全部時態，附時間連接詞的搭配',
       files: ['data/tenses.js', 'js/tenses.js'], view: () => window.TENSES_VIEW,
     },
   };
@@ -67,7 +67,7 @@
         class: 'gx-station' + (active ? ' on' : '') + (doneN === list.length ? ' full' : ''),
         type: onPickStage ? 'button' : null,
         href: onPickStage ? null : 'grammar.html?ch=' + sk,
-        title: sd.name + '(' + doneN + '/' + list.length + ')',
+        title: sd.name + '（' + doneN + '/' + list.length + '）',
         onclick: onPickStage ? () => onPickStage(sk) : null,
       },
         h('span', { class: 'gx-ring', style: 'background:conic-gradient(var(--ok) ' + pct + '%, var(--line) 0)' },
@@ -173,7 +173,7 @@
       view.mount(host);
     }).catch(() => {
       host.innerHTML = '';
-      host.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '這張表載入失敗,請重新整理再試。'));
+      host.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '這張表載入失敗，請重新整理再試。'));
     });
   }
 
@@ -249,7 +249,7 @@
             });
             result.append(h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (results[qi] ? 'ok' : 'bad') },
-                results[qi] ? '答對了' : '答錯了,正確答案是 ' + LETTERS[q.answer]),
+                results[qi] ? '答對了' : '答錯了，正確答案是 ' + LETTERS[q.answer]),
               h('div', null, q.explanation)));
             if (results.filter(x => x !== undefined).length === u.quiz.length) finish();
           },
@@ -282,7 +282,7 @@
         h('div', { class: 'report-head', style: 'margin-top:10px' },
           h('h2', null, '答對 ' + ok + ' / ' + u.quiz.length)),
         h('div', { class: 'drill-nav-btns' },
-          next ? h('a', { class: 'btn primary', href: 'grammar.html?u=' + next.id }, '下一課:' + next.title) : null,
+          next ? h('a', { class: 'btn primary', href: 'grammar.html?u=' + next.id }, '下一課：' + next.title) : null,
           cat ? h('a', { class: 'btn', href: 'practice.html?part=5&cat=' + encodeURIComponent(cat) }, '刷這個考點的題目') : null,
           VERB_UNITS.includes(u.id) ? h('a', { class: 'btn', href: 'grammar.html?ref=verbs' }, '查不規則動詞表') : null,
           h('a', { class: 'btn', href: 'grammar.html' }, '回文法基礎')));

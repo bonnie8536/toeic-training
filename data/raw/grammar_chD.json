@@ -1,12 +1,12 @@
 [
   {
     "id": "gd-01",
-    "title": "be going to:講早就打算好的事",
+    "title": "be going to：講早就打算好的事",
     "goal": "學完你會用 be going to 說出已經計畫好的打算，也知道前面的 be 動詞要跟著主詞換。",
     "lesson": [
       {
         "t": "p",
-        "text": "中文要講還沒發生的事，只要在動詞前面加一個「要」或「打算」就好，「我去台北」變成「我要去台北」，動詞本身完全沒動。英文沒辦法這樣省事，它得換上一整組零件：be 動詞加 going to,再加動詞原形。動詞原形就是字典裡查到的那個樣子，像 go、buy、eat,沒有加 s 也沒有加 ed。"
+        "text": "中文要講還沒發生的事，只要在動詞前面加一個「要」或「打算」就好，「我去台北」變成「我要去台北」，動詞本身完全沒動。英文沒辦法這樣省事，它得換上一整組零件：be 動詞加 going to，再加動詞原形。動詞原形就是字典裡查到的那個樣子，像 go、buy、eat，沒有加 s 也沒有加 ed。"
       },
       {
         "t": "ex",
@@ -16,7 +16,7 @@
       },
       {
         "t": "p",
-        "text": "三個零件裡最容易漏掉的是 be 動詞。中文的「要」只有一個字，寫英文的時候手就順著寫成 He going to call you,句子少了一隻腳。be 動詞還要跟著主詞換：I 配 am,he、she、it 和單數名詞配 is,you、we、they 和複數名詞配 are。至於 going to 後面那個動詞，不管主詞是誰都用原形，不會因為主詞是 he 就加 s。"
+        "text": "三個零件裡最容易漏掉的是 be 動詞。中文的「要」只有一個字，寫英文的時候手就順著寫成 He going to call you，句子少了一隻腳。be 動詞還要跟著主詞換：I 配 am，he、she、it 和單數名詞配 is，you、we、they 和複數名詞配 are。至於 going to 後面那個動詞，不管主詞是誰都用原形，不會因為主詞是 he 就加 s。"
       },
       {
         "t": "ex",
@@ -71,7 +71,7 @@
       },
       {
         "t": "tip",
-        "text": "常見的錯有兩種，is going to buys 多加了 s,is going buy 漏掉了 to,going to 後面只能放動詞原形。"
+        "text": "常見的錯有兩種，is going to buys 多加了 s，is going buy 漏掉了 to，going to 後面只能放動詞原形。"
       }
     ],
     "quiz": [
@@ -95,7 +95,7 @@
           "He is going to move tomorrow."
         ],
         "answer": 3,
-        "explanation": "be going to 的三個零件缺一不可。He going to move 少了 be 動詞；moves 多加了 s,going to 後面永遠是動詞原形；going move 中間漏掉了 to。"
+        "explanation": "be going to 的三個零件缺一不可。He going to move 少了 be 動詞；moves 多加了 s，going to 後面永遠是動詞原形；going move 中間漏掉了 to。"
       },
       {
         "q": "My parents ___ going to sell the old car.",
@@ -106,7 +106,7 @@
           "does"
         ],
         "answer": 0,
-        "explanation": "parents 是兩個人以上的複數名詞，要配 are。is 只能配單數，am 只能配 I,does 是幫一般動詞問句和否定句用的，跟 be going to 沒關係。"
+        "explanation": "parents 是兩個人以上的複數名詞，要配 are。is 只能配單數，am 只能配 I，does 是幫一般動詞問句和否定句用的，跟 be going to 沒關係。"
       },
       {
         "q": "「我們今天不打算出去吃。」哪一句對？",
@@ -117,7 +117,7 @@
           "We not are going to eat out today."
         ],
         "answer": 1,
-        "explanation": "句子裡已經有 be 動詞 are,not 直接放在它後面就好。don't 是給一般動詞用的，這裡用不上；not 放在 going 後面或 are 前面都不是英文的順序。"
+        "explanation": "句子裡已經有 be 動詞 are，not 直接放在它後面就好。don't 是給一般動詞用的，這裡用不上；not 放在 going 後面或 are 前面都不是英文的順序。"
       },
       {
         "q": "___ you going to take the bus?",
@@ -139,7 +139,7 @@
           "is go to"
         ],
         "answer": 0,
-        "explanation": "主詞 He 配 is,而且開這麼快就是快出事的跡象，正是 be going to 的典型場合。are 配不上 He;going to 前面漏了 be 動詞；is go to 把 going 寫成了原形，這個組合不存在。"
+        "explanation": "主詞 He 配 is，而且開這麼快就是快出事的跡象，正是 be going to 的典型場合。are 配不上 He；going to 前面漏了 be 動詞；is go to 把 going 寫成了原形，這個組合不存在。"
       },
       {
         "q": "下面哪一句在講已經計畫好的事？",
@@ -161,13 +161,13 @@
           "Are they going to come?"
         ],
         "answer": 2,
-        "explanation": "going to 後面一律接動詞原形 buy,主詞是 we 也不會讓動詞加 s。其他三句的 be 動詞都配對了主詞，後面接的 study、be、come 也都是原形。"
+        "explanation": "going to 後面一律接動詞原形 buy，主詞是 we 也不會讓動詞加 s。其他三句的 be 動詞都配對了主詞，後面接的 study、be、come 也都是原形。"
       }
     ]
   },
   {
     "id": "gd-02",
-    "title": "will:當場決定和預測都靠它",
+    "title": "will：當場決定和預測都靠它",
     "goal": "學完你會用 will 講當下才決定要做的事和心裡的預測，也記得 will 後面永遠接動詞原形。",
     "lesson": [
       {
@@ -182,7 +182,7 @@
       },
       {
         "t": "p",
-        "text": "will 後面接動詞原形，中間不放 to,後面的動詞也不加 s。口語裡 will 常常縮寫成 'll,I will 寫成 I'll,she will 寫成 she'll,聽起來比較自然。"
+        "text": "will 後面接動詞原形，中間不放 to，後面的動詞也不加 s。口語裡 will 常常縮寫成 'll，I will 寫成 I'll，she will 寫成 she'll，聽起來比較自然。"
       },
       {
         "t": "ex",
@@ -239,7 +239,7 @@
       },
       {
         "t": "tip",
-        "text": "will not 的縮寫是 won't,拼法要單獨背起來，它不是照著 will 直接縮出來的。"
+        "text": "will not 的縮寫是 won't，拼法要單獨背起來，它不是照著 will 直接縮出來的。"
       }
     ],
     "quiz": [
@@ -252,7 +252,7 @@
           "am will call"
         ],
         "answer": 2,
-        "explanation": "will 後面直接接動詞原形 call。calls 多加了 s,will 本身就管住了動詞的樣子；中間不放 to;前面也不用再加 be 動詞。"
+        "explanation": "will 後面直接接動詞原形 call。calls 多加了 s，will 本身就管住了動詞的樣子；中間不放 to；前面也不用再加 be 動詞。"
       },
       {
         "q": "will not 的縮寫是？",
@@ -263,7 +263,7 @@
           "wonn't"
         ],
         "answer": 1,
-        "explanation": "will not 縮寫成 won't,這個拼法跟 will 差很多，只能死背。willn't 是照規則推出來的錯誤寫法，英文裡沒有這個字。"
+        "explanation": "will not 縮寫成 won't，這個拼法跟 will 差很多，只能死背。willn't 是照規則推出來的錯誤寫法，英文裡沒有這個字。"
       },
       {
         "q": "A: This bag looks heavy. B: ___",
@@ -285,7 +285,7 @@
           "Will"
         ],
         "answer": 3,
-        "explanation": "問的是明天的事，把 will 搬到主詞前面就成問句。Do 和 Does 是給一般動詞用的；空格後面已經有 be,只有 Will 接得上。"
+        "explanation": "問的是明天的事，把 will 搬到主詞前面就成問句。Do 和 Does 是給一般動詞用的；空格後面已經有 be，只有 Will 接得上。"
       },
       {
         "q": "He ___ come to the meeting. He is on a business trip.",
@@ -307,7 +307,7 @@
           "is will know"
         ],
         "answer": 0,
-        "explanation": "will 不隨主詞變化，主詞是 she 也不會變成 wills;它後面的動詞同樣不加 s,所以不是 will knows;前面更不需要 be 動詞。"
+        "explanation": "will 不隨主詞變化，主詞是 she 也不會變成 wills；它後面的動詞同樣不加 s，所以不是 will knows；前面更不需要 be 動詞。"
       },
       {
         "q": "下面哪一句在講預測，不是在講習慣？",
@@ -335,12 +335,12 @@
   },
   {
     "id": "gd-03",
-    "title": "will 和 be going to:差別在你什麼時候決定的",
-    "goal": "學完你會判斷一句話該用 will 還是 be going to,不再兩個隨便挑一個。",
+    "title": "will 和 be going to：差別在你什麼時候決定的",
+    "goal": "學完你會判斷一句話該用 will 還是 be going to，不再兩個隨便挑一個。",
     "lesson": [
       {
         "t": "p",
-        "text": "中文兩種情況都講「我要…」，英文卻分成兩套說法。關鍵不在事情什麼時候發生，而在你什麼時候做的決定。決定早就在心裡了，用 be going to;話講到一半才臨時決定，用 will。"
+        "text": "中文兩種情況都講「我要…」，英文卻分成兩套說法。關鍵不在事情什麼時候發生，而在你什麼時候做的決定。決定早就在心裡了，用 be going to；話講到一半才臨時決定，用 will。"
       },
       {
         "t": "table",
@@ -395,7 +395,7 @@
       },
       {
         "t": "p",
-        "text": "預測也分成兩種。眼前擺著證據、任何人看了都會做同樣判斷的，用 be going to;沒有證據，純粹是你心裡覺得的，用 will,句子常常配上 I think、probably 或 maybe。"
+        "text": "預測也分成兩種。眼前擺著證據、任何人看了都會做同樣判斷的，用 be going to；沒有證據，純粹是你心裡覺得的，用 will，句子常常配上 I think、probably 或 maybe。"
       },
       {
         "t": "ex",
@@ -461,7 +461,7 @@
           "I'll take the blue one."
         ],
         "answer": 2,
-        "explanation": "只有 I'm going to quit 這句用 be going to,講的又是月底這種需要事先安排的事。另外三句都用 will,講的都是話說到一半才臨時決定的事。"
+        "explanation": "只有 I'm going to quit 這句用 be going to，講的又是月底這種需要事先安排的事。另外三句都用 will，講的都是話說到一半才臨時決定的事。"
       },
       {
         "q": "The meeting starts in five minutes and we are still at home. We ___ late.",
@@ -483,7 +483,7 @@
           "We are going to be late."
         ],
         "answer": 2,
-        "explanation": "will 和 be going to 是兩套獨立的說法，不能疊在一起。要嘛寫 They will come,要嘛寫 They are going to come。"
+        "explanation": "will 和 be going to 是兩套獨立的說法，不能疊在一起。要嘛寫 They will come，要嘛寫 They are going to come。"
       },
       {
         "q": "下面哪一個情況用 will 才自然？",
@@ -505,7 +505,7 @@
           "does"
         ],
         "answer": 1,
-        "explanation": "後面已經有 going to,前面就要放跟主詞搭配的 be 動詞，she 配 is。will 是另一套說法不能跟 going to 疊用；are 配不上單數的 she;does 跟 be going to 沒有關係。"
+        "explanation": "後面已經有 going to，前面就要放跟主詞搭配的 be 動詞，she 配 is。will 是另一套說法不能跟 going to 疊用；are 配不上單數的 she；does 跟 be going to 沒有關係。"
       }
     ]
   },
@@ -516,7 +516,7 @@
     "lesson": [
       {
         "t": "p",
-        "text": "中文說「我明天跟客戶吃飯」，動詞完全沒變，靠「明天」這兩個字告訴你是未來。英文剛好有一種很接近的說法：句子長得跟現在進行式一模一樣，be 動詞加 V-ing,但後面配上一個未來的時間，整句話就變成在講未來的安排。"
+        "text": "中文說「我明天跟客戶吃飯」，動詞完全沒變，靠「明天」這兩個字告訴你是未來。英文剛好有一種很接近的說法：句子長得跟現在進行式一模一樣，be 動詞加 V-ing，但後面配上一個未來的時間，整句話就變成在講未來的安排。"
       },
       {
         "t": "ex",
@@ -573,7 +573,7 @@
       },
       {
         "t": "p",
-        "text": "漏字的毛病跟一般的現在進行式一樣，be 動詞和 ing 兩個零件缺一不可。I meeting him tomorrow 少了 be 動詞，I am meet him tomorrow 少了 ing,兩種都不成句。"
+        "text": "漏字的毛病跟一般的現在進行式一樣，be 動詞和 ing 兩個零件缺一不可。I meeting him tomorrow 少了 be 動詞，I am meet him tomorrow 少了 ing，兩種都不成句。"
       },
       {
         "t": "tip",
@@ -601,7 +601,7 @@
           "We play basketball with them on Saturday."
         ],
         "answer": 2,
-        "explanation": "場地訂好了就是排定好的安排，用 are playing。are play 少了 ing;playing 前面少了 be 動詞；play 這種現在簡單式講的是每個星期六都打球的習慣。"
+        "explanation": "場地訂好了就是排定好的安排，用 are playing。are play 少了 ing；playing 前面少了 be 動詞；play 這種現在簡單式講的是每個星期六都打球的習慣。"
       },
       {
         "q": "下面哪一件事不能用現在進行式講未來？",
@@ -634,7 +634,7 @@
           "Is"
         ],
         "answer": 1,
-        "explanation": "後面是 doing,前面要放 be 動詞，主詞 you 配 Are。Do 是給一般動詞的問句用的；Will 後面要接動詞原形；Is 配不上 you。"
+        "explanation": "後面是 doing，前面要放 be 動詞，主詞 you 配 Are。Do 是給一般動詞的問句用的；Will 後面要接動詞原形；Is 配不上 you。"
       },
       {
         "q": "I am seeing Amy 這句話，後面加 now 跟加 tomorrow 有什麼差別？",
@@ -645,7 +645,7 @@
           "加 now 的那句才是在講未來"
         ],
         "answer": 0,
-        "explanation": "同樣的 be 動詞加 V-ing,配現在的時間就是此刻正在發生，配未來的時間就變成已經約好的安排。時間字決定了整句話指向哪裡。"
+        "explanation": "同樣的 be 動詞加 V-ing，配現在的時間就是此刻正在發生，配未來的時間就變成已經約好的安排。時間字決定了整句話指向哪裡。"
       },
       {
         "q": "下面哪一句有錯？",
@@ -673,12 +673,12 @@
   },
   {
     "id": "gd-05",
-    "title": "can、could:能做什麼和客氣的請求",
+    "title": "can、could：能做什麼和客氣的請求",
     "goal": "學完你會用 can 講能力和許可，也會用 could 把請求說得客氣一點。",
     "lesson": [
       {
         "t": "p",
-        "text": "中文的「會」很好用，「我會游泳」跟「我明天會去」都是同一個字。英文分得很清楚：講能力用 can,講未來用 will,兩個換過來意思就跑掉了。can 是助動詞，後面接動詞原形，主詞不管是誰它都長一樣，不會變成 cans,後面也不加 to。"
+        "text": "中文的「會」很好用，「我會游泳」跟「我明天會去」都是同一個字。英文分得很清楚：講能力用 can，講未來用 will，兩個換過來意思就跑掉了。can 是助動詞，後面接動詞原形，主詞不管是誰它都長一樣，不會變成 cans，後面也不加 to。"
       },
       {
         "t": "ex",
@@ -744,7 +744,7 @@
       },
       {
         "t": "p",
-        "text": "否定和問句都不用找 do 幫忙。can not 通常寫成一個字 cannot,縮寫是 can't;could 的否定是 could not,縮寫是 couldn't。問句就把 can 或 could 搬到主詞前面。Do you can swim 是很多人會寫出來的句子，但句子裡已經有助動詞了，不需要再放一個。"
+        "text": "否定和問句都不用找 do 幫忙。can not 通常寫成一個字 cannot，縮寫是 can't；could 的否定是 could not，縮寫是 couldn't。問句就把 can 或 could 搬到主詞前面。Do you can swim 是很多人會寫出來的句子，但句子裡已經有助動詞了，不需要再放一個。"
       },
       {
         "t": "tip",
@@ -761,7 +761,7 @@
           "is can"
         ],
         "answer": 2,
-        "explanation": "can 不管主詞是誰都不加 s,後面直接接動詞原形 speak,中間不加 to,前面也不放 be 動詞。"
+        "explanation": "can 不管主詞是誰都不加 s，後面直接接動詞原形 speak，中間不加 to，前面也不放 be 動詞。"
       },
       {
         "q": "___ you help me move this table, please?",
@@ -794,7 +794,7 @@
           "Are you can drive?"
         ],
         "answer": 1,
-        "explanation": "can 本身就是助動詞，問句把它搬到主詞前面就好，不用再找 do 幫忙，後面不加 to,前面也不放 be 動詞。"
+        "explanation": "can 本身就是助動詞，問句把它搬到主詞前面就好，不用再找 do 幫忙，後面不加 to，前面也不放 be 動詞。"
       },
       {
         "q": "I ___ find my keys anywhere.",
@@ -805,7 +805,7 @@
           "am not can"
         ],
         "answer": 0,
-        "explanation": "can 的否定就是後面加 not,縮寫成 can't。don't 是給一般動詞用的，不會跟 can 疊在一起；can not 後面不加 to;前面也不需要 be 動詞。"
+        "explanation": "can 的否定就是後面加 not，縮寫成 can't。don't 是給一般動詞用的，不會跟 can 疊在一起；can not 後面不加 to；前面也不需要 be 動詞。"
       },
       {
         "q": "在餐廳跟不太熟的服務生要菜單，最客氣的說法是？",
@@ -838,13 +838,13 @@
           "close"
         ],
         "answer": 3,
-        "explanation": "could 後面一律接動詞原形 close。請求裡的 could 不是過去式，所以不能寫 closed;助動詞後面也不接 ing 或 to。"
+        "explanation": "could 後面一律接動詞原形 close。請求裡的 could 不是過去式，所以不能寫 closed；助動詞後面也不接 ing 或 to。"
       }
     ]
   },
   {
     "id": "gd-06",
-    "title": "may、might:講沒有把握的事",
+    "title": "may、might：講沒有把握的事",
     "goal": "學完你會用 may 和 might 說出可能會發生的事，也分得出它們跟 will 的差別。",
     "lesson": [
       {
@@ -869,7 +869,7 @@
       },
       {
         "t": "p",
-        "text": "跟 will 的差別在把握有多少。will 是你認為事情就是會這樣，may 和 might 是有這個可能而已，說出來的時候心裡還留著另一半。否定就在後面加 not,寫成 may not、might not,平常不縮寫；這裡要特別小心，這種講可能性的 may not 意思是「可能不會」，中文很容易把它看成「不可以」，兩個差得很遠。"
+        "text": "跟 will 的差別在把握有多少。will 是你認為事情就是會這樣，may 和 might 是有這個可能而已，說出來的時候心裡還留著另一半。否定就在後面加 not，寫成 may not、might not，平常不縮寫；這裡要特別小心，這種講可能性的 may not 意思是「可能不會」，中文很容易把它看成「不可以」，兩個差得很遠。"
       },
       {
         "t": "table",
@@ -927,7 +927,7 @@
           "is might"
         ],
         "answer": 0,
-        "explanation": "might 是助動詞，主詞是誰都不加 s,後面直接接動詞原形 rain,中間不加 to,前面也不放 be 動詞。"
+        "explanation": "might 是助動詞，主詞是誰都不加 s，後面直接接動詞原形 rain，中間不加 to，前面也不放 be 動詞。"
       },
       {
         "q": "「他可能不會來。」哪一句對？",
@@ -938,7 +938,7 @@
           "He doesn't may come."
         ],
         "answer": 1,
-        "explanation": "助動詞的否定是在它後面加 not,而且後面的動詞維持原形。not 不能放在 may 前面；comes 多加了 s;doesn't 是給一般動詞用的。"
+        "explanation": "助動詞的否定是在它後面加 not，而且後面的動詞維持原形。not 不能放在 may 前面；comes 多加了 s；doesn't 是給一般動詞用的。"
       },
       {
         "q": "___ I ask you a question?",
@@ -949,7 +949,7 @@
           "Will"
         ],
         "answer": 2,
-        "explanation": "客氣地問對方可不可以，用 May 開頭。Do 是給一般動詞用的；Am 後面接不了原形動詞 ask;Will I ask 變成在問自己未來會不會問，語意不對。"
+        "explanation": "客氣地問對方可不可以，用 May 開頭。Do 是給一般動詞用的；Am 後面接不了原形動詞 ask；Will I ask 變成在問自己未來會不會問，語意不對。"
       },
       {
         "q": "I'm not sure yet, but I ___ go to the party tonight.",
@@ -960,7 +960,7 @@
           "can"
         ],
         "answer": 2,
-        "explanation": "前面已經說了 I'm not sure,表示沒把握，用 might。will 是很有把握；must 是非去不可；can 講的是有沒有辦法去，三個都跟句子前半矛盾。"
+        "explanation": "前面已經說了 I'm not sure，表示沒把握，用 might。will 是很有把握；must 是非去不可；can 講的是有沒有辦法去，三個都跟句子前半矛盾。"
       },
       {
         "q": "下面哪一句表示說話的人沒有把握？",
@@ -982,7 +982,7 @@
           "Might"
         ],
         "answer": 1,
-        "explanation": "句子後面已經有完整的主詞和動詞 he is,前面只能放 Maybe 這個副詞。May be 是兩個字，要接在主詞後面，寫成 He may be sleeping 才對。"
+        "explanation": "句子後面已經有完整的主詞和動詞 he is，前面只能放 Maybe 這個副詞。May be 是兩個字，要接在主詞後面，寫成 He may be sleeping 才對。"
       },
       {
         "q": "下面哪一句有錯？",
@@ -993,7 +993,7 @@
           "I may not go tomorrow."
         ],
         "answer": 2,
-        "explanation": "助動詞不隨主詞變化，主詞是 she 也不會變成 mights,要寫 She might know。其他三句的助動詞後面接的都是動詞原形。"
+        "explanation": "助動詞不隨主詞變化，主詞是 she 也不會變成 mights，要寫 She might know。其他三句的助動詞後面接的都是動詞原形。"
       },
       {
         "q": "May I take your order? 這句話最可能是誰說的？",
@@ -1010,7 +1010,7 @@
   },
   {
     "id": "gd-07",
-    "title": "must 和 have to:兩種必須",
+    "title": "must 和 have to：兩種必須",
     "goal": "學完你會用 must 和 have to 說出非做不可的事，也知道 have to 要跟著主詞變成 has to。",
     "lesson": [
       {
@@ -1060,7 +1060,7 @@
       },
       {
         "t": "p",
-        "text": "否定和問句是最容易出錯的地方。must 自己就能處理，否定寫成 must not,問句把 must 搬到主詞前面。have to 得找 do 或 does 幫忙，否定寫成 don't have to、doesn't have to,問句用 Do 或 Does 開頭。"
+        "text": "否定和問句是最容易出錯的地方。must 自己就能處理，否定寫成 must not，問句把 must 搬到主詞前面。have to 得找 do 或 does 幫忙，否定寫成 don't have to、doesn't have to，問句用 Do 或 Does 開頭。"
       },
       {
         "t": "ex",
@@ -1070,7 +1070,7 @@
       },
       {
         "t": "p",
-        "text": "還有一件事要記住，must 沒有過去式。要講以前非做不可的事，只能借 have to 的過去式 had to,而且不管主詞是誰都是 had to。"
+        "text": "還有一件事要記住，must 沒有過去式。要講以前非做不可的事，只能借 have to 的過去式 had to，而且不管主詞是誰都是 had to。"
       },
       {
         "t": "ex",
@@ -1080,7 +1080,7 @@
       },
       {
         "t": "tip",
-        "text": "must 後面不加 to,have 後面一定要有 to,這兩個很容易寫混。"
+        "text": "must 後面不加 to，have 後面一定要有 to，這兩個很容易寫混。"
       }
     ],
     "quiz": [
@@ -1093,7 +1093,7 @@
           "are must"
         ],
         "answer": 0,
-        "explanation": "must 是助動詞，主詞是誰都不加 s,後面直接接動詞原形 wear,中間不加 to,前面也不放 be 動詞。"
+        "explanation": "must 是助動詞，主詞是誰都不加 s，後面直接接動詞原形 wear，中間不加 to，前面也不放 be 動詞。"
       },
       {
         "q": "She ___ work late tonight.",
@@ -1104,7 +1104,7 @@
           "has to"
         ],
         "answer": 3,
-        "explanation": "have to 會跟著主詞變，she 是第三人稱單數要用 has to。have to 沒配合主詞；must 後面不加 to;前面也不需要 be 動詞。"
+        "explanation": "have to 會跟著主詞變，she 是第三人稱單數要用 has to。have to 沒配合主詞；must 後面不加 to；前面也不需要 be 動詞。"
       },
       {
         "q": "___ I have to sign this form?",
@@ -1115,7 +1115,7 @@
           "Have"
         ],
         "answer": 1,
-        "explanation": "have to 的問句要找 do 幫忙，主詞 I 配 Do。Does 是給第三人稱單數的；Am 後面接不了 have to;Have I to sign 是很舊的說法，現在不這樣講。"
+        "explanation": "have to 的問句要找 do 幫忙，主詞 I 配 Do。Does 是給第三人稱單數的；Am 後面接不了 have to；Have I to sign 是很舊的說法，現在不這樣講。"
       },
       {
         "q": "「我昨天必須早起。」哪一句對？",
@@ -1126,7 +1126,7 @@
           "I musted get up early yesterday."
         ],
         "answer": 0,
-        "explanation": "must 沒有過去式，講以前非做不可的事要用 had to。must 本身只能講現在；must to 中間多了 to;musted 這個變化不存在。"
+        "explanation": "must 沒有過去式，講以前非做不可的事要用 had to。must 本身只能講現在；must to 中間多了 to；musted 這個變化不存在。"
       },
       {
         "q": "He ___ to finish the report before Friday.",
@@ -1137,7 +1137,7 @@
           "has"
         ],
         "answer": 3,
-        "explanation": "空格後面有 to,表示這裡要用 have to 那一套，主詞 he 配 has。must 後面不接 to;have 沒有配合第三人稱單數；musts 這個變化不存在。"
+        "explanation": "空格後面有 to，表示這裡要用 have to 那一套，主詞 he 配 has。must 後面不接 to；have 沒有配合第三人稱單數；musts 這個變化不存在。"
       },
       {
         "q": "下面哪一句有錯？",
@@ -1176,7 +1176,7 @@
   },
   {
     "id": "gd-08",
-    "title": "mustn't 和 don't have to:不可以跟不必",
+    "title": "mustn't 和 don't have to：不可以跟不必",
     "goal": "學完你會分清楚「禁止你做」和「做不做都可以」，不再把這兩句話講反。",
     "lesson": [
       {
@@ -1226,7 +1226,7 @@
       },
       {
         "t": "p",
-        "text": "兩個的變化形也不一樣。mustn't 不管主詞是誰都長一個樣；don't have to 遇到第三人稱單數要改成 doesn't have to,這一點跟一般動詞的否定句規則相同。"
+        "text": "兩個的變化形也不一樣。mustn't 不管主詞是誰都長一個樣；don't have to 遇到第三人稱單數要改成 doesn't have to，這一點跟一般動詞的否定句規則相同。"
       },
       {
         "t": "ex",
@@ -1236,7 +1236,7 @@
       },
       {
         "t": "p",
-        "text": "判斷的方法就看中文怎麼說。句子裡出現禁止、不准、不可以，用 mustn't;出現不必、不用、隨你高興，用 don't have to。"
+        "text": "判斷的方法就看中文怎麼說。句子裡出現禁止、不准、不可以，用 mustn't；出現不必、不用、隨你高興，用 don't have to。"
       },
       {
         "t": "ex",
@@ -1259,7 +1259,7 @@
           "You don't have to wait for me."
         ],
         "answer": 3,
-        "explanation": "不必是把「非等不可」取消掉，用 don't have to。mustn't 是不可以等，意思整個相反；must 的否定不寫成 don't must;have to 的否定要找 don't 幫忙，不是 haven't。"
+        "explanation": "不必是把「非等不可」取消掉，用 don't have to。mustn't 是不可以等，意思整個相反；must 的否定不寫成 don't must；have to 的否定要找 don't 幫忙，不是 haven't。"
       },
       {
         "q": "You ___ smoke here. This is a hospital.",
@@ -1270,7 +1270,7 @@
           "not must"
         ],
         "answer": 1,
-        "explanation": "醫院是禁菸的，禁止用 mustn't。don't have to 會變成「你不必抽菸」，聽起來很奇怪；doesn't have to 配不上主詞 you;not must 的順序不對。"
+        "explanation": "醫院是禁菸的，禁止用 mustn't。don't have to 會變成「你不必抽菸」，聽起來很奇怪；doesn't have to 配不上主詞 you；not must 的順序不對。"
       },
       {
         "q": "She ___ cook tonight. Her husband already made dinner.",
@@ -1281,7 +1281,7 @@
           "must not"
         ],
         "answer": 0,
-        "explanation": "晚餐已經有人煮好了，她不必再煮，用 doesn't have to,主詞是 she 所以是 doesn't。mustn't 和 must not 都變成不准她煮；don't have to 沒有配合第三人稱單數。"
+        "explanation": "晚餐已經有人煮好了，她不必再煮，用 doesn't have to，主詞是 she 所以是 doesn't。mustn't 和 must not 都變成不准她煮；don't have to 沒有配合第三人稱單數。"
       },
       {
         "q": "mustn't 的意思最接近下面哪一個？",
@@ -1292,7 +1292,7 @@
           "不可以"
         ],
         "answer": 3,
-        "explanation": "mustn't 是禁止，做了就違規。不必是 don't have to;不一定是 may not;不會是 won't,三個都是別的字負責的。"
+        "explanation": "mustn't 是禁止，做了就違規。不必是 don't have to；不一定是 may not；不會是 won't，三個都是別的字負責的。"
       },
       {
         "q": "下面哪一句表示做不做都可以？",
@@ -1336,18 +1336,18 @@
           "She doesn't have to stay."
         ],
         "answer": 1,
-        "explanation": "must 和 mustn't 後面一律接動詞原形，中間不加 to,要寫 He mustn't go。have to 後面才有 to,兩套規則不要混在一起。"
+        "explanation": "must 和 mustn't 後面一律接動詞原形，中間不加 to，要寫 He mustn't go。have to 後面才有 to，兩套規則不要混在一起。"
       }
     ]
   },
   {
     "id": "gd-09",
-    "title": "should:給人建議的說法",
+    "title": "should：給人建議的說法",
     "goal": "學完你會用 should 給建議，也知道它跟 must 的語氣差在哪裡。",
     "lesson": [
       {
         "t": "p",
-        "text": "中文的「應該」，英文用 should。它是助動詞，規則跟 can 那一組一樣：後面接動詞原形，主詞是誰都不變，不會變成 shoulds,中間也不加 to。"
+        "text": "中文的「應該」，英文用 should。它是助動詞，規則跟 can 那一組一樣：後面接動詞原形，主詞是誰都不變，不會變成 shoulds，中間也不加 to。"
       },
       {
         "t": "ex",
@@ -1368,17 +1368,17 @@
         ],
         "rows": [
           [
-            "這樣做比較好(建議)",
+            "這樣做比較好（建議）",
             "should",
             "You should call her first."
           ],
           [
-            "非做不可(規定)",
+            "非做不可（規定）",
             "must / have to",
             "You must call her before nine."
           ],
           [
-            "最好不要(勸阻)",
+            "最好不要（勸阻）",
             "shouldn't",
             "You shouldn't eat so fast."
           ]
@@ -1392,7 +1392,7 @@
       },
       {
         "t": "p",
-        "text": "否定是 should not,縮寫成 shouldn't。問句把 should 搬到主詞前面，這種問法常拿來問別人的意見，而不是真的在問規定。"
+        "text": "否定是 should not，縮寫成 shouldn't。問句把 should 搬到主詞前面，這種問法常拿來問別人的意見，而不是真的在問規定。"
       },
       {
         "t": "ex",
@@ -1412,7 +1412,7 @@
       },
       {
         "t": "tip",
-        "text": "給建議的時候前面加一句 I think 或 Maybe,聽起來比較不像在教訓人。"
+        "text": "給建議的時候前面加一句 I think 或 Maybe，聽起來比較不像在教訓人。"
       }
     ],
     "quiz": [
@@ -1425,7 +1425,7 @@
           "are should"
         ],
         "answer": 0,
-        "explanation": "should 是助動詞，主詞是誰都不加 s,後面直接接動詞原形 see,中間不加 to,前面也不放 be 動詞。"
+        "explanation": "should 是助動詞，主詞是誰都不加 s，後面直接接動詞原形 see，中間不加 to，前面也不放 be 動詞。"
       },
       {
         "q": "「你不應該對他大吼。」哪一句對？",
@@ -1436,7 +1436,7 @@
           "You shouldn't shout at him."
         ],
         "answer": 3,
-        "explanation": "should 的否定是後面加 not,縮寫成 shouldn't,後面接動詞原形。don't 是給一般動詞用的；shouldn't 後面不加 to;not 也不能放在 should 前面。"
+        "explanation": "should 的否定是後面加 not，縮寫成 shouldn't，後面接動詞原形。don't 是給一般動詞用的；shouldn't 後面不加 to；not 也不能放在 should 前面。"
       },
       {
         "q": "___ I open the window?",
@@ -1480,7 +1480,7 @@
           "Should we wait here?"
         ],
         "answer": 2,
-        "explanation": "should 後面一律接動詞原形，主詞是 he 也不會讓動詞加 s,要寫 He should go now。助動詞已經扛下了配合主詞的工作，動詞就不必再變。"
+        "explanation": "should 後面一律接動詞原形，主詞是 he 也不會讓動詞加 s，要寫 He should go now。助動詞已經扛下了配合主詞的工作，動詞就不必再變。"
       },
       {
         "q": "It's only a ten-minute walk, so we ___ get there before noon.",
@@ -1502,18 +1502,18 @@
           "could、might"
         ],
         "answer": 1,
-        "explanation": "第一句是給對方許可，用 can;第二句是給建議，用 should。must 是規定對方一定要帶，語氣太重；might 只是說可能會帶，不是在建議。"
+        "explanation": "第一句是給對方許可，用 can；第二句是給建議，用 should。must 是規定對方一定要帶，語氣太重；might 只是說可能會帶，不是在建議。"
       }
     ]
   },
   {
     "id": "gd-10",
-    "title": "would like:把「我要」說得客氣一點",
+    "title": "would like：把「我要」說得客氣一點",
     "goal": "學完你會用 would like 客氣地說出你想要什麼，也分得出它跟 like 差在哪裡。",
     "lesson": [
       {
         "t": "p",
-        "text": "在店裡我們會說「我要一杯咖啡」，直接翻成 I want a cup of coffee,在英文裡聽起來有點衝，像小孩子伸手要東西。比較得體的說法是 I would like a cup of coffee。would like 就是 want 的客氣版，意思一樣，語氣差很多。"
+        "text": "在店裡我們會說「我要一杯咖啡」，直接翻成 I want a cup of coffee，在英文裡聽起來有點衝，像小孩子伸手要東西。比較得體的說法是 I would like a cup of coffee。would like 就是 want 的客氣版，意思一樣，語氣差很多。"
       },
       {
         "t": "ex",
@@ -1523,7 +1523,7 @@
       },
       {
         "t": "p",
-        "text": "would like 後面有兩種接法。一種是直接接名詞，講你要什麼東西；一種是接 to 加動詞原形，講你想做什麼。口語常把 would 縮寫成 'd,I would like 變成 I'd like,we would like 變成 we'd like。"
+        "text": "would like 後面有兩種接法。一種是直接接名詞，講你要什麼東西；一種是接 to 加動詞原形，講你想做什麼。口語常把 would 縮寫成 'd，I would like 變成 I'd like，we would like 變成 we'd like。"
       },
       {
         "t": "ex",
@@ -1568,7 +1568,7 @@
       },
       {
         "t": "p",
-        "text": "問句也分成兩邊。Would you like 開頭是問對方現在要不要，也可以拿來邀請；Do you like 開頭是問對方平常喜不喜歡。服務生問你 Would you like a dessert,問的是你現在要不要點，不是在問你喜不喜歡甜點。"
+        "text": "問句也分成兩邊。Would you like 開頭是問對方現在要不要，也可以拿來邀請；Do you like 開頭是問對方平常喜不喜歡。服務生問你 Would you like a dessert，問的是你現在要不要點，不是在問你喜不喜歡甜點。"
       },
       {
         "t": "ex",
@@ -1624,7 +1624,7 @@
           "I'd like to watch a movie."
         ],
         "answer": 2,
-        "explanation": "Do you like 問的是一直以來的喜好。前兩句都是 Would you like,問的是現在要不要；最後一句是說話的人自己現在想看電影。"
+        "explanation": "Do you like 問的是一直以來的喜好。前兩句都是 Would you like，問的是現在要不要；最後一句是說話的人自己現在想看電影。"
       },
       {
         "q": "She would like ___ to the manager.",
@@ -1635,7 +1635,7 @@
           "to speak"
         ],
         "answer": 3,
-        "explanation": "would like 後面接動作要用 to 加動詞原形，寫成 to speak。少了 to 的 speak 接不上；would like 後面不接 ing;speaks 的 s 更是多餘的。"
+        "explanation": "would like 後面接動作要用 to 加動詞原形，寫成 to speak。少了 to 的 speak 接不上；would like 後面不接 ing；speaks 的 s 更是多餘的。"
       },
       {
         "q": "I ___ chocolate, but I ___ some fruit right now.",
@@ -1646,7 +1646,7 @@
           "would like、would like"
         ],
         "answer": 0,
-        "explanation": "前半講的是平常就喜歡巧克力，用 like;後半有 right now,講的是此刻想要水果，用 would like。兩個位置對調就變成現在想要巧克力、平常喜歡水果，跟句意不合。"
+        "explanation": "前半講的是平常就喜歡巧克力，用 like；後半有 right now，講的是此刻想要水果，用 would like。兩個位置對調就變成現在想要巧克力、平常喜歡水果，跟句意不合。"
       },
       {
         "q": "下面哪一句有錯？",
@@ -1657,7 +1657,7 @@
           "They would like go home."
         ],
         "answer": 3,
-        "explanation": "would like 後面接動作一定要有 to,應該寫成 They would like to go home。前面三句分別接名詞、接 to 加動詞、問對方要不要，都是正確的用法。"
+        "explanation": "would like 後面接動作一定要有 to，應該寫成 They would like to go home。前面三句分別接名詞、接 to 加動詞、問對方要不要，都是正確的用法。"
       },
       {
         "q": "在餐廳櫃檯訂位，最得體的說法是？",
@@ -1674,7 +1674,7 @@
   },
   {
     "id": "gd-11",
-    "title": "Shall we 和 Let's:提議一起做某件事",
+    "title": "Shall we 和 Let's：提議一起做某件事",
     "goal": "學完你會用兩種以上的方式提議大家一起做某件事，也知道怎麼回應別人的提議。",
     "lesson": [
       {
@@ -1689,7 +1689,7 @@
       },
       {
         "t": "p",
-        "text": "不想做的時候說 Let's not,後面一樣接動詞原形。這裡不用 don't,寫成 Let's don't 是很常見的錯句。"
+        "text": "不想做的時候說 Let's not，後面一樣接動詞原形。這裡不用 don't，寫成 Let's don't 是很常見的錯句。"
       },
       {
         "t": "ex",
@@ -1699,7 +1699,7 @@
       },
       {
         "t": "p",
-        "text": "另一個說法是 Shall we,它是問句，把決定權交到對方手上，聽起來比 Let's 客氣一點。後面同樣接動詞原形，句尾要放問號。"
+        "text": "另一個說法是 Shall we，它是問句，把決定權交到對方手上，聽起來比 Let's 客氣一點。後面同樣接動詞原形，句尾要放問號。"
       },
       {
         "t": "ex",
@@ -1739,7 +1739,7 @@
       },
       {
         "t": "p",
-        "text": "表格最後一格最容易錯。How about 後面的動詞要加 ing,因為 about 後面接的是名詞的位置，動詞得先變成 V-ing 才站得住。How about go 是錯的，要寫 How about going。"
+        "text": "表格最後一格最容易錯。How about 後面的動詞要加 ing，因為 about 後面接的是名詞的位置，動詞得先變成 V-ing 才站得住。How about go 是錯的，要寫 How about going。"
       },
       {
         "t": "ex",
@@ -1762,7 +1762,7 @@
           "Let us to"
         ],
         "answer": 0,
-        "explanation": "提議大家一起做用 Let's,後面接動詞原形 go。Lets 少了那一撇；Let 後面通常要接對象；let us 後面不加 to。"
+        "explanation": "提議大家一起做用 Let's，後面接動詞原形 go。Lets 少了那一撇；Let 後面通常要接對象；let us 後面不加 to。"
       },
       {
         "q": "Shall we ___ a taxi?",
@@ -1795,7 +1795,7 @@
           "Let's not to work late today."
         ],
         "answer": 1,
-        "explanation": "Let's 的否定是在後面加 not,再接動詞原形。Let's don't 是很常見的錯句；Don't let's 的順序不對；not 後面也不加 to。"
+        "explanation": "Let's 的否定是在後面加 not，再接動詞原形。Let's don't 是很常見的錯句；Don't let's 的順序不對；not 後面也不加 to。"
       },
       {
         "q": "下面哪一句是在提議一起做，不是在叫人做？",
@@ -1828,7 +1828,7 @@
           "Shall we to leave now?"
         ],
         "answer": 3,
-        "explanation": "Shall we 後面直接接動詞原形，要寫 Shall we leave now?。前面三句分別是 Let's 加原形、Why don't we 加原形、How about 加 V-ing,都符合各自的規則。"
+        "explanation": "Shall we 後面直接接動詞原形，要寫 Shall we leave now?。前面三句分別是 Let's 加原形、Why don't we 加原形、How about 加 V-ing，都符合各自的規則。"
       },
       {
         "q": "「你要不要跟我們一起去？」和「我們一起去吧」，分別用哪兩個說法？",
@@ -1839,7 +1839,7 @@
           "Let's、Shall we"
         ],
         "answer": 0,
-        "explanation": "第一句是問對方要不要，焦點在對方身上，用 Would you like to;第二句是提議大家一起，用 Let's。兩個對調就變成邀請跟提議互換，語氣整個跑掉。"
+        "explanation": "第一句是問對方要不要，焦點在對方身上，用 Would you like to；第二句是提議大家一起，用 Let's。兩個對調就變成邀請跟提議互換，語氣整個跑掉。"
       }
     ]
   },
@@ -1850,7 +1850,7 @@
     "lesson": [
       {
         "t": "p",
-        "text": "這一章的字看起來各管各的，其實共用同一套規則。can、could、may、might、will、must、should 都是助動詞，後面一律接動詞原形，主詞是誰都不變形，否定就在後面加 not,問句就把它搬到主詞前面，全程都不用找 do 幫忙。整章只有 have to 是例外，它會跟著主詞變成 has to,否定和問句還要 do 或 does 出面。"
+        "text": "這一章的字看起來各管各的，其實共用同一套規則。can、could、may、might、will、must、should 都是助動詞，後面一律接動詞原形，主詞是誰都不變形，否定就在後面加 not，問句就把它搬到主詞前面，全程都不用找 do 幫忙。整章只有 have to 是例外，它會跟著主詞變成 has to，否定和問句還要 do 或 does 出面。"
       },
       {
         "t": "ex",
@@ -2006,7 +2006,7 @@
           "have"
         ],
         "answer": 2,
-        "explanation": "空格後面有 to,表示要用 have to 那一套，主詞 he 配 has。must 和 should 後面都不接 to;have 沒有配合第三人稱單數。"
+        "explanation": "空格後面有 to，表示要用 have to 那一套，主詞 he 配 has。must 和 should 後面都不接 to；have 沒有配合第三人稱單數。"
       },
       {
         "q": "「你不必現在就回覆我。」哪一句對？",
@@ -2028,7 +2028,7 @@
           "She has to leave early."
         ],
         "answer": 2,
-        "explanation": "助動詞後面一律接動詞原形，主詞是 she 也不會讓動詞加 s,要寫 She can play the piano。有了助動詞，配合主詞的工作就由它扛，動詞不必再變。"
+        "explanation": "助動詞後面一律接動詞原形，主詞是 she 也不會讓動詞加 s，要寫 She can play the piano。有了助動詞，配合主詞的工作就由它扛，動詞不必再變。"
       },
       {
         "q": "圖書館貼著「禁止飲食」，最接近的英文說法是？",
@@ -2050,7 +2050,7 @@
           "I should be late tomorrow, but I may be there."
         ],
         "answer": 0,
-        "explanation": "前半沒有把握用 might,後半很確定用 will,強度剛好一弱一強。其他三句都把弱的擺在確定的位置，或把 must 用在猜測上，語氣全反了。"
+        "explanation": "前半沒有把握用 might，後半很確定用 will，強度剛好一弱一強。其他三句都把弱的擺在確定的位置，或把 must 用在猜測上，語氣全反了。"
       }
     ]
   }

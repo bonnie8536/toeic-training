@@ -84,7 +84,7 @@ TOEIC.tenses = {
    ],
    "mistake": "第三人稱單數忘記加 -s（寫成 He work here），或否定句漏掉 does（寫成 He not work here）。",
    "contrast": "現在進行式講的是此刻正在發生或短期的狀態，現在簡單式講的是長期習慣與不會變的事實。",
-   "formNote": "第三人稱單數加 -s / -es(go → goes、study → studies、watch → watches);否定與疑問用 do / does + 原形（He does not work here. / Does she work here?）。"
+   "formNote": "第三人稱單數加 -s / -es（go → goes、study → studies、watch → watches）；否定與疑問用 do / does + 原形（He does not work here. / Does she work here?）。"
   },
   {
    "id": "t-now-prog",

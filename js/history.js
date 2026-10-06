@@ -82,7 +82,7 @@
     }
     if (m === 'tq') {
       const a = byId(T.articles, rec.id);
-      return { stem: '單字考題:' + (a ? a.titleZh : rec.id), score: rec.c, n: rec.n, link: a ? 'reading.html?id=' + a.id : null };
+      return { stem: '單字考題：' + (a ? a.titleZh : rec.id), score: rec.c, n: rec.n, link: a ? 'reading.html?id=' + a.id : null };
     }
     if (m === 'ph') {
       const p = byId(T.phrases, rec.id);
@@ -174,7 +174,7 @@
     });
     if (list.length > shown) {
       root.append(h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn', onclick: () => { shown += 150; render(); } }, '載入更早的紀錄(還有 ' + (list.length - shown) + ' 筆)')));
+        h('button', { class: 'btn', onclick: () => { shown += 150; render(); } }, '載入更早的紀錄（還有 ' + (list.length - shown) + ' 筆）')));
     }
     root.append(h('div', { style: 'height:30px' }));
   }
@@ -182,7 +182,7 @@
   function row(rec, openNow) {
     const mod = MOD[rec.m] || { label: rec.m };
     const info = resolve(rec);
-    const stem = info ? info.stem : '(這題已從題庫移除)';
+    const stem = info ? info.stem : '（這題已從題庫移除）';
     const isScore = info && info.score !== undefined;
     const pickedText = !info ? '' : isScore ? info.score + '/' + info.n
       : info.options ? (rec.c === -1 || rec.c === undefined ? '未作答' : (rec.c >= 0 && info.options[rec.c] !== undefined ? LETTERS[rec.c] : String(info.picked || rec.c)))
@@ -248,7 +248,7 @@
       });
       box.append(opts);
     } else if (info.picked !== undefined) {
-      box.append(h('p', { class: 'result-note' }, '你的答案:' + info.picked + (rec.ok ? '' : ' · 正解:' + info.answer)));
+      box.append(h('p', { class: 'result-note' }, '你的答案：' + info.picked + (rec.ok ? '' : ' · 正解：' + info.answer)));
     }
     if (info.explanation) box.append(h('div', { class: 'explain' }, h('div', null, info.explanation)));
     if (info.zh) box.append(h('div', { class: 'transcript-box' }, h('b', null, '逐字稿'), h('div', { class: 'tr-zh' }, info.zh)));

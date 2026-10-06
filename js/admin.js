@@ -12,7 +12,7 @@
   }
 
   if (!window.CLOUD || !CLOUD.enabled) {
-    note('教師後台需要雲端模式。請先依「GITHUB上線指南.md」設定 Supabase,並填好 js/cloud-config.js。');
+    note('教師後台需要雲端模式。請先依「GITHUB上線指南.md」設定 Supabase，並填好 js/cloud-config.js。');
     return;
   }
 
@@ -20,7 +20,7 @@
     await CLOUD.ready;
     if (!CLOUD.user) return;               // profile.js 會顯示登入視窗
     if (!CLOUD.isTeacher) {
-      note('這個帳號沒有教師權限。請用教師帳號登入(教師帳號=已加入 teachers 表的帳號,見指南步驟 D)。');
+      note('這個帳號沒有教師權限。請用教師帳號登入（教師帳號=已加入 teachers 表的帳號，見指南步驟 D）。');
       return;
     }
     load();
@@ -44,7 +44,7 @@
       rows = res.data || [];
       allRows = rows;
     } catch (e) {
-      note('讀取失敗:' + e.message);
+      note('讀取失敗：' + e.message);
       return;
     }
 
@@ -116,22 +116,22 @@
       statusEl.textContent = '已儲存';
       setTimeout(() => { if (statusEl.textContent === '已儲存') statusEl.textContent = ''; }, 2500);
     } catch (e) {
-      statusEl.textContent = '儲存失敗:' + e.message;
+      statusEl.textContent = '儲存失敗：' + e.message;
     }
   }
 
   function noteSection(uid, tnote, onNick) {
     const wrap = h('div', { style: 'margin-top:14px;border-top:1px solid var(--line);padding-top:12px' });
     const status = h('span', { class: 'player-note', style: 'margin-left:10px' });
-    wrap.append(h('h3', { style: 'font-size:15.5px;margin-bottom:6px' }, '上課紀錄與備註', h('span', { style: 'font-size:12px;color:var(--ink-light);font-weight:400' }, '(只有教師帳號看得到)'), status));
+    wrap.append(h('h3', { style: 'font-size:15.5px;margin-bottom:6px' }, '上課紀錄與備註', h('span', { style: 'font-size:12px;color:var(--ink-light);font-weight:400' }, '（只有教師帳號看得到）'), status));
 
     /* 暱稱+學生需求/長期備註 */
     const nick = h('input', {
       class: 'game-input', type: 'text', maxlength: '12',
-      placeholder: '暱稱(顯示在學生列表,方便認人)', style: 'max-width:260px;margin-bottom:8px',
+      placeholder: '暱稱（顯示在學生列表，方便認人）', style: 'max-width:260px;margin-bottom:8px',
     });
     nick.value = tnote.nick || '';
-    const needs = h('textarea', { class: 'write-area', style: 'min-height:52px', placeholder: '學生需求或長期備註(目標分數、弱點、偏好的上課方式…)' });
+    const needs = h('textarea', { class: 'write-area', style: 'min-height:52px', placeholder: '學生需求或長期備註（目標分數、弱點、偏好的上課方式…）' });
     needs.value = tnote.needs || '';
     wrap.append(nick, needs,
       h('div', { class: 'pop-btns', style: 'margin:6px 0 14px' },
@@ -157,7 +157,7 @@
           h('button', {
             class: 'bank-word-del', type: 'button', title: '刪除這筆紀錄',
             onclick: () => {
-              if (!confirm('刪除 ' + log.d + ' 的紀錄?')) return;
+              if (!confirm('刪除 ' + log.d + ' 的紀錄？')) return;
               tnote.logs = tnote.logs.filter(x => x !== log);
               saveNote(uid, tnote, status);
               drawLogs();
@@ -212,7 +212,7 @@
       h('p', null, '點任一列展開該學生的檢測報告摘要、錯題與上課紀錄。資料為學生端最後同步的狀態。'),
       h('div', { class: 'modal-row' },
         h('button', { class: 'btn', type: 'button', onclick: downloadBackup },
-          '下載全部備份(' + allRows.length + ' 列)'))));
+          '下載全部備份（' + allRows.length + ' 列）'))));
 
     const myKeys = (students[CLOUD.user.id] || { keys: {} }).keys;
     const ids = Object.keys(students).filter(uid => uid !== CLOUD.user.id);
@@ -234,7 +234,7 @@
     }).filter(r => r.areas.length);
     if (ids.length) {
       const box = h('div', { class: 'q-block', style: 'margin-bottom:20px' },
-        h('h3', { style: 'font-size:15.5px;margin-bottom:8px' }, '本週動態(近 7 天)'));
+        h('h3', { style: 'font-size:15.5px;margin-bottom:8px' }, '本週動態（近 7 天）'));
       if (!weekRows.length) {
         box.append(h('p', { style: 'font-size:14px;color:var(--ink-light)' }, '這週還沒有學生活動。'));
       } else {
@@ -243,13 +243,13 @@
           const tn = myKeys['tnote_' + r.uid] || {};
           const nm = tn.nick || meta.name || meta.email || r.uid.slice(0, 8);
           box.append(h('div', { style: 'font-size:14px;padding:3px 0' },
-            h('b', null, nm), ':' + r.areas.join('、') + '(最近 ' + (r.last || '').slice(5, 10) + ')'));
+            h('b', null, nm), '：' + r.areas.join('、') + '（最近 ' + (r.last || '').slice(5, 10) + '）'));
         });
       }
       root.append(box);
     }
     if (!ids.length) {
-      root.append(h('div', { class: 'q-block' }, '還沒有學生資料。學生第一次登入並開始作答後,這裡就會出現他們的進度。'));
+      root.append(h('div', { class: 'q-block' }, '還沒有學生資料。學生第一次登入並開始作答後，這裡就會出現他們的進度。'));
       return;
     }
     ids.sort((a, b) => (students[b].last || '').localeCompare(students[a].last || ''));
@@ -294,14 +294,14 @@
     const box = h('div', { style: 'padding:8px 4px' });
 
     if (diag) {
-      box.append(h('h3', { style: 'font-size:15.5px;margin-bottom:6px' }, '檢測(' + diag.finishedAt + '):答對 ' + diag.score + '/' + diag.total + ',參考級距 ' + diag.band));
+      box.append(h('h3', { style: 'font-size:15.5px;margin-bottom:6px' }, '檢測(' + diag.finishedAt + ')：答對 ' + diag.score + '/' + diag.total + '，參考級距 ' + diag.band));
       if (diag.weak.length) {
-        box.append(h('div', { style: 'font-size:14px;margin-bottom:4px' }, '待加強考點:',
+        box.append(h('div', { style: 'font-size:14px;margin-bottom:4px' }, '待加強考點：',
           diag.weak.map(([cat, c]) => h('span', { class: 'verdict-pill ' + (c.c / c.t < 0.4 ? 'weak' : 'mid'), style: 'margin:0 4px 4px 0;display:inline-block' }, cat + ' ' + c.c + '/' + c.t))));
       }
       if (diag.wrong.length) {
         box.append(h('div', { style: 'font-size:13.5px;color:var(--ink-light);margin-bottom:10px' },
-          '檢測錯題:' + diag.wrong.map(w => 'Q' + (w.i + 1) + '(' + w.it.category + ')').join('、')));
+          '檢測錯題：' + diag.wrong.map(w => 'Q' + (w.i + 1) + '（' + w.it.category + '）').join('、')));
       }
     } else {
       box.append(h('p', { style: 'font-size:14px;color:var(--ink-light);margin-bottom:8px' }, name + ' 還沒做程度檢測。'));
@@ -310,12 +310,12 @@
     const wrongLine = (label, d, describe) => {
       if (!d.wrong.length) return null;
       return h('div', { style: 'font-size:13.5px;color:var(--ink-light);margin-bottom:6px' },
-        label + ' 錯題(' + d.wrong.length + '):' + d.wrong.slice(0, 30).map(describe).join('、') + (d.wrong.length > 30 ? '…' : ''));
+        label + ' 錯題(' + d.wrong.length + ')：' + d.wrong.slice(0, 30).map(describe).join('、') + (d.wrong.length > 30 ? '…' : ''));
     };
     box.append(
       wrongLine('Part 5', d5, id => {
         const q = p5ById[id];
-        return '#' + ((TOEIC.part5 || []).indexOf(q) + 1) + (q ? '(' + q.category + ')' : '');
+        return '#' + ((TOEIC.part5 || []).indexOf(q) + 1) + (q ? '（' + q.category + '）' : '');
       }),
       wrongLine('Part 6', d6, id => '題組' + (((TOEIC.part6 || []).findIndex(s => id.startsWith(s.id + ':'))) + 1) + ' 第' + id.split(':')[1] + '格'),
       wrongLine('Part 7', d7, id => {

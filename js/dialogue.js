@@ -90,7 +90,7 @@
     const progressEl = h('span', { class: 'vocab-progress' });
     const msgEl = h('span', { class: 'dlg-msg', role: 'status' });
     const toolbar = h('div', { class: 'reader-toolbar' }, allBtn, biBtn, slowBtn,
-      h('span', { class: 'toolbar-note' }, '點句子播放,虛線字可以點'), progressEl, msgEl);
+      h('span', { class: 'toolbar-note' }, '點句子播放，虛線字可以點'), progressEl, msgEl);
 
     const linesEl = h('div', { class: 'dlg-lines' });
     const bubbles = d.lines.map((l, i) => {
@@ -98,7 +98,7 @@
       const enEl = h('div', { class: 'en' }, renderEn(l));
       const zhEl = h('div', { class: 'zh' }, l.zh);
       const bubble = h('div', {
-        class: 'dlg-bubble', tabindex: '0', role: 'button', 'aria-label': '播放:' + l.en,
+        class: 'dlg-bubble', tabindex: '0', role: 'button', 'aria-label': '播放：' + l.en,
         onclick: () => { playAll = false; play(i); },
         onkeydown: (e) => { if (e.target === bubble && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); playAll = false; play(i); } },
       }, enEl, zhEl);
@@ -122,7 +122,7 @@
         if (at < pos) return;                     // 重疊的跳過
         if (at > pos) out.push(l.en.slice(pos, at));
         const surface = l.en.slice(at, at + s.t.length);
-        const span = h('span', { class: 'vw dlg-sl', tabindex: '0', role: 'button', 'aria-label': surface + ',看意思' }, surface);
+        const span = h('span', { class: 'vw dlg-sl', tabindex: '0', role: 'button', 'aria-label': surface + '，看意思' }, surface);
         const show = (e) => { e.stopPropagation(); openPop(span, s); };
         span.addEventListener('click', show);
         span.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(e); } });
@@ -144,7 +144,7 @@
       audio.playbackRate = slow ? 0.8 : 1;
       msgEl.textContent = '';
       const p = audio.play();
-      if (p && p.catch) p.catch(() => { msgEl.textContent = '這句的聲音沒有載入,請檢查網路'; stop(); });
+      if (p && p.catch) p.catch(() => { msgEl.textContent = '這句的聲音沒有載入，請檢查網路'; stop(); });
       markHeard(d.id, i);
       updateProgress();
       if (playAll) bubbles[i].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
@@ -163,7 +163,7 @@
     });
     audio.addEventListener('error', () => {
       if (playing < 0) return;
-      msgEl.textContent = '這句的聲音沒有載入,請檢查網路';
+      msgEl.textContent = '這句的聲音沒有載入，請檢查網路';
       stop();
     });
     function toggleAll() {

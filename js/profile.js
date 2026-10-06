@@ -122,7 +122,7 @@
         if (back) back.focus();
       };
       note.append(
-        h('span', null, '登入已失效,請重新登入'),
+        h('span', null, '登入已失效，請重新登入'),
         h('button', { class: 'auth-expired-login', type: 'button', onclick: () => { close(); showLogin('login'); } }, '登入'),
         h('button', { class: 'auth-expired-x', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: close }));
       topbar.append(note);
@@ -130,7 +130,7 @@
 
     /* 改暱稱、刪除帳號:頭像選單與「我的」頁(me.html)共用 */
     async function renameUser() {
-      const n = prompt('暱稱(老師會看到這個名字)', CLOUD.nameOf(CLOUD.user));
+      const n = prompt('暱稱（老師會看到這個名字）', CLOUD.nameOf(CLOUD.user));
       if (n === null) return;
       try { await CLOUD.updateName(n); location.reload(); }
       catch (e) { alert(e.message); }
@@ -143,8 +143,8 @@
     }
 
     function deleteUser() {
-      if (!confirm('確定要刪除帳號?雲端上的所有進度、錯題與寫作內容都會永久刪除,無法復原。')) return;
-      if (!confirm('再確認一次:真的要刪除「' + CLOUD.user.email + '」?')) return;
+      if (!confirm('確定要刪除帳號？雲端上的所有進度、錯題與寫作內容都會永久刪除，無法復原。')) return;
+      if (!confirm('再確認一次：真的要刪除「' + CLOUD.user.email + '」？')) return;
       CLOUD.deleteAccount().catch(e => alert(e.message));
     }
 
@@ -247,7 +247,7 @@
           note.append(document.createTextNode(text));
           const b = h('button', { class: 'auth-link tip', type: 'button' }, fix);
           b.addEventListener('click', () => { input.value = fix; api.tip(''); input.focus(); });
-          note.append(b, document.createTextNode('?'));
+          note.append(b, document.createTextNode('？'));
         },
       };
       input.addEventListener('input', () => api.bad(''));
@@ -283,7 +283,7 @@
         if (opts.onMode) opts.onMode(mode);
         const msg = h('p', { class: 'auth-msg', role: 'alert' });
         if (CLOUD.authError) { msg.textContent = CLOUD.authError; msg.className = 'auth-msg bad'; CLOUD.authError = ''; }
-        else if (CLOUD.sessionExpired && !CLOUD.user && mode === 'login') { msg.textContent = '登入已失效,請重新登入'; CLOUD.sessionExpired = false; }
+        else if (CLOUD.sessionExpired && !CLOUD.user && mode === 'login') { msg.textContent = '登入已失效，請重新登入'; CLOUD.sessionExpired = false; }
 
         if (mode === 'forgot') drawForgot(msg);
         else drawMain(msg);
@@ -366,7 +366,7 @@
           put(heading('註冊'), googleBtn(msg), orLine(), form,
             h('p', { class: 'auth-fine' }, '按下註冊即表示同意',
               h('a', { href: 'terms.html', target: '_blank', rel: 'noopener' }, '服務條款與隱私權說明'), '。'),
-            switchLine('已經有帳號?', '登入', 'login'));
+            switchLine('已經有帳號？', '登入', 'login'));
         } else {
           const email = authField({ label: 'Email', type: 'email', name: 'email', ac: 'username', inputmode: 'email' });
           const pw = authField({ label: '密碼', type: 'password', name: 'password', ac: 'current-password' });
@@ -383,7 +383,7 @@
             catch (e) { fail(e.message); unlock(); }
           }, email.el, pw.el);
           put(heading('登入'), googleBtn(msg), orLine(), form,
-            switchLine('還沒有帳號?', '註冊', 'signup'));
+            switchLine('還沒有帳號？', '註冊', 'signup'));
         }
       }
 
@@ -393,11 +393,11 @@
         const form = formOf(btn, msg, async ({ lock, unlock, fail, ok }) => {
           if (!email.bad(EMAIL_RE.test(email.value()) ? '' : 'Email 格式不對。')) { email.input.focus(); return; }
           lock('寄送中');
-          try { await CLOUD.resetPassword(email.value()); ok('重設信已寄出,到信箱點連結設新密碼。'); }
+          try { await CLOUD.resetPassword(email.value()); ok('重設信已寄出，到信箱點連結設新密碼。'); }
           catch (e) { fail(e.message); unlock(); }
         }, email.el);
         put(heading('重設密碼'), form,
-          h('p', { class: 'auth-fine' }, '用 Google 登入的帳號沒有密碼,直接按 Google 登入就好。'),
+          h('p', { class: 'auth-fine' }, '用 Google 登入的帳號沒有密碼，直接按 Google 登入就好。'),
           switchLine(null, '回登入', 'login'));
       }
 
@@ -419,7 +419,7 @@
         });
         put(
           opts.onMode ? null : h('h2', { class: 'auth-h' }, '驗證信已寄出'),
-          h('p', { class: 'auth-sent' }, '寄到 ', h('b', null, email), ',點信裡的連結就完成註冊並登入。沒收到先看垃圾郵件。'),
+          h('p', { class: 'auth-sent' }, '寄到 ', h('b', null, email), '，點信裡的連結就完成註冊並登入。沒收到先看垃圾郵件。'),
           again,
           msg);
       }
@@ -513,14 +513,14 @@
       try {
         const payload = JSON.parse(reader.result);
         if (payload.app !== 'toeic-reading-room' || !payload.data) throw new Error('格式不符');
-        const name = payload.name ? payload.name + '(匯入)' : '匯入的學生';
+        const name = payload.name ? payload.name + '（匯入）' : '匯入的學生';
         const id = createProfile(name);
         for (const [k, v] of Object.entries(payload.data)) {
           localStorage.setItem('tr_u' + id + '_' + k, v);
         }
         switchTo(id);
       } catch (e) {
-        alert('匯入失敗:' + e.message);
+        alert('匯入失敗：' + e.message);
       }
     };
     reader.readAsText(file, 'utf-8');
@@ -566,7 +566,7 @@
       menu.append(h('div', { class: 'pm-sep' }));
       menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; showGate(true); } }, '＋ 新增學生'));
       if (cur) {
-        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => exportData(cur.id, cur.name) }, '匯出進度(給老師或換電腦)'));
+        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => exportData(cur.id, cur.name) }, '匯出進度（給老師或換電腦）'));
       }
       const fileInput = h('input', { type: 'file', accept: '.json', style: 'display:none' });
       fileInput.addEventListener('change', () => { if (fileInput.files[0]) importProfile(fileInput.files[0]); });
@@ -578,7 +578,7 @@
         menu.append(h('button', {
           class: 'pm-item danger', type: 'button',
           onclick: () => {
-            if (confirm('確定刪除「' + cur.name + '」的檔案?這位學生的所有進度與錯題紀錄都會消失,無法復原。')) deleteProfile(cur.id);
+            if (confirm('確定刪除「' + cur.name + '」的檔案？這位學生的所有進度與錯題紀錄都會消失，無法復原。')) deleteProfile(cur.id);
           },
         }, '刪除這個檔案'));
       }
@@ -589,7 +589,7 @@
   function showGate(voluntary) {
     if (document.querySelector('.modal-mask')) return;
     const list = getProfiles();
-    const input = h('input', { class: 'modal-input', type: 'text', placeholder: '輸入名字,例如:小安', maxlength: '20' });
+    const input = h('input', { class: 'modal-input', type: 'text', placeholder: '輸入名字，例如：小安', maxlength: '20' });
     const createBtn = h('button', {
       class: 'btn primary', type: 'button',
       onclick: () => {
@@ -597,13 +597,13 @@
         if (id) switchTo(id);
         else input.focus();
       },
-    }, '建立檔案,開始練習');
+    }, '建立檔案，開始練習');
     input.addEventListener('keydown', e => { if (e.key === 'Enter') createBtn.click(); });
 
     const mask = h('div', { class: 'modal-mask' },
       h('div', { class: 'modal' },
-        h('h2', null, voluntary ? '新增學生' : '你是哪位?'),
-        h('p', { class: 'modal-sub' }, '每位學生有自己的進度、錯題與檢測報告,都只存在這台裝置上。'),
+        h('h2', null, voluntary ? '新增學生' : '你是哪位？'),
+        h('p', { class: 'modal-sub' }, '每位學生有自己的進度、錯題與檢測報告，都只存在這台裝置上。'),
         list.length ? h('div', { class: 'modal-list' },
           h('div', { class: 'pm-head' }, '選擇既有檔案'),
           list.map(pr => h('button', { class: 'pm-item big', type: 'button', onclick: () => switchTo(pr.id) },

@@ -48,7 +48,7 @@
       const s = document.createElement('script');
       s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
       s.onload = res;
-      s.onerror = () => rej(new Error('無法載入雲端元件,請檢查網路後重新整理'));
+      s.onerror = () => rej(new Error('無法載入雲端元件，請檢查網路後重新整理'));
       document.head.appendChild(s);
     });
   }
@@ -65,7 +65,7 @@
       await afterAuth(session.user, false);
       return session.user;
     } catch (e) {
-      console.warn('雲端初始化失敗:', e);
+      console.warn('雲端初始化失敗：', e);
       adoptStored();
       leaveStaleAccount();
       return window.CLOUD.user;
@@ -183,13 +183,13 @@
 
   async function login(email, password) {
     await window.CLOUD.ready;
-    if (!client) throw new Error('雲端元件尚未載入,請重新整理再試');
+    if (!client) throw new Error('雲端元件尚未載入，請重新整理再試');
     const { data, error } = await client.auth.signInWithPassword({ email: String(email).trim(), password });
     if (error) {
-      if (/Invalid login credentials/i.test(error.message)) throw new Error('帳號或密碼不對。當初用 Google 註冊的話,要按上面的 Google 登入。');
-      if (/Email not confirmed/i.test(error.message)) throw new Error('信箱還沒驗證:請到信箱點驗證連結(找不到信可以到「註冊」分頁重寄)');
-      if (/rate limit|too many/i.test(error.message)) throw new Error('請求太頻繁,請幾分鐘後再試');
-      if (/fetch|network/i.test(error.message)) throw new Error('連不上雲端伺服器:請檢查網路;若持續發生,請老師確認 Supabase 專案沒有休眠');
+      if (/Invalid login credentials/i.test(error.message)) throw new Error('帳號或密碼不對。當初用 Google 註冊的話，要按上面的 Google 登入。');
+      if (/Email not confirmed/i.test(error.message)) throw new Error('信箱還沒驗證：請到信箱點驗證連結（找不到信可以到「註冊」分頁重寄）');
+      if (/rate limit|too many/i.test(error.message)) throw new Error('請求太頻繁，請幾分鐘後再試');
+      if (/fetch|network/i.test(error.message)) throw new Error('連不上雲端伺服器：請檢查網路；若持續發生，請老師確認 Supabase 專案沒有休眠');
       throw new Error(error.message);
     }
     window.CLOUD.user = data.user;
@@ -203,7 +203,7 @@
     if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效,沒辦法登出其他裝置。請重新登入後再試一次。');
     if (user && !(opts && opts.discard)) {
       const left = await flushAll();
-      if (left > 0 && !confirm('還有 ' + left + ' 項進度還沒同步到雲端(可能是網路不穩)。現在登出,這台裝置上的這些進度會刪除。確定要登出?')) return;
+      if (left > 0 && !confirm('還有 ' + left + ' 項進度還沒同步到雲端（可能是網路不穩）。現在登出，這台裝置上的這些進度會刪除。確定要登出？')) return;
     }
     /* 一般的登出只登出這台(共用電腦登出不會把學生自己手機上的登入一起踢掉)。
        everywhere:「我的」頁的「登出所有裝置」。連不上伺服器時 supabase-js 會先清掉這台的登入資料再回錯誤,
@@ -247,19 +247,19 @@
   }
 
   function needClient() {
-    if (!client) throw new Error('雲端元件尚未載入,請重新整理再試');
+    if (!client) throw new Error('雲端元件尚未載入，請重新整理再試');
   }
 
   function friendly(error) {
     const m = error.message || '';
-    if (/already registered|already exists|already been registered/i.test(m)) return '這個 Email 已經註冊過,請直接登入;當初用 Google 註冊的話按 Google 登入,忘記密碼可以重設。';
-    if (/unsupported provider|provider is not enabled|provider.*disabled/i.test(m)) return 'Google 登入目前不能用,請改用 Email 註冊。';
-    if (/redirect|not allowed.*url/i.test(m)) return 'Google 登入的網址設定不對,請改用 Email 註冊。';
+    if (/already registered|already exists|already been registered/i.test(m)) return '這個 Email 已經註冊過，請直接登入；當初用 Google 註冊的話按 Google 登入，忘記密碼可以重設。';
+    if (/unsupported provider|provider is not enabled|provider.*disabled/i.test(m)) return 'Google 登入目前不能用，請改用 Email 註冊。';
+    if (/redirect|not allowed.*url/i.test(m)) return 'Google 登入的網址設定不對，請改用 Email 註冊。';
     if (/password/i.test(m) && /short|least|characters/i.test(m)) return '密碼至少 8 碼。';
-    if (/rate limit|too many|security purposes/i.test(m)) return '請求太頻繁,請幾分鐘後再試。';
-    if (/signups? not allowed|signup is disabled|not allowed/i.test(m)) return '目前未開放註冊,請聯絡老師。';
+    if (/rate limit|too many|security purposes/i.test(m)) return '請求太頻繁，請幾分鐘後再試。';
+    if (/signups? not allowed|signup is disabled|not allowed/i.test(m)) return '目前未開放註冊，請聯絡老師。';
     if (/invalid.*email|email.*invalid/i.test(m)) return 'Email 格式不對。';
-    if (/fetch|network/i.test(m)) return '連不上雲端伺服器,請檢查網路後再試。';
+    if (/fetch|network/i.test(m)) return '連不上雲端伺服器，請檢查網路後再試。';
     return m;
   }
 
@@ -274,7 +274,7 @@
     if (error) throw new Error(friendly(error));
     /* Confirm email 開啟時,已註冊過的 email 會回一個沒有 identities 的假 user(不洩漏帳號存在),這裡當作已註冊處理 */
     if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
-      throw new Error('這個 Email 已經註冊過,請直接登入;當初用 Google 註冊的話按 Google 登入,忘記密碼可以重設。');
+      throw new Error('這個 Email 已經註冊過，請直接登入；當初用 Google 註冊的話按 Google 登入，忘記密碼可以重設。');
     }
     if (data.session) {
       window.CLOUD.user = data.user;
@@ -345,7 +345,7 @@
     await window.CLOUD.ready;
     needClient();
     const { error } = await client.rpc('delete_own_account');
-    if (error) throw new Error('刪除失敗:' + error.message + '。請寫信給站長要求刪除。');
+    if (error) throw new Error('刪除失敗：' + error.message + '。請寫信給站長要求刪除。');
     await logout({ discard: true });
   }
 
@@ -379,7 +379,7 @@
       if (led[key] !== undefined && led[key] <= t) { delete led[key]; writeLedger(user.id, led); }
       return true;
     } catch (e) {
-      console.warn('進度暫時沒同步,已記下,下次連線會補傳:' + key, e);
+      console.warn('進度暫時沒同步，已記下，下次連線會補傳：' + key, e);
       return false;
     }
   }

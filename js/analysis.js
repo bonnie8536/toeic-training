@@ -157,7 +157,7 @@
 
   if (rec.total < 10) {
     root.append(h('div', { class: 'q-block' },
-      '累計作答 ' + rec.total + ' 題,滿 10 題才會分析。先做',
+      '累計作答 ' + rec.total + ' 題，滿 10 題才會分析。先做',
       h('a', { href: 'diagnostic.html' }, '程度檢測'), '或到',
       h('a', { href: 'practice.html' }, '題庫'), '刷題。'));
     return;
@@ -172,8 +172,8 @@
   const est = bandEstimate(aB0 === null ? 1 : aB0, aM0 === null ? overall : aM0, aA0 === null ? overall : aA0, overall);
   const accCls = r => r < 0.4 ? 'weak' : r < 0.6 ? 'mid' : '';
   root.append(h('div', { class: 'report-head' },
-    h('div', { class: 'who' }, '依據:' + rec.sources.join('、')),
-    h('h2', null, '預測級距(閱讀)'),
+    h('div', { class: 'who' }, '依據：' + rec.sources.join('、')),
+    h('h2', null, '預測級距（閱讀）'),
     bandScale(est.band),
     h('div', { style: 'margin-top:18px' },
       bar('整體正確率', overall, Math.round(overall * 100) + '% · ' + rec.total + ' 題', accCls(overall)),
@@ -185,7 +185,7 @@
             Math.round(rec.parts[pp].ok / rec.parts[pp].n * 100) + '% · ' + rec.parts[pp].n + ' 題',
             accCls(rec.parts[pp].ok / rec.parts[pp].n))
         : null)),
-    h('div', { class: 'band-note' }, '級距由練習紀錄推估,與正式成績會有落差。')));
+    h('div', { class: 'band-note' }, '級距由練習紀錄推估，與正式成績會有落差。')));
 
   /* 2. 強弱項(長條圖,弱→強) */
   const catRows = Object.entries(rec.cats).filter(([, c]) => c.t >= 3)

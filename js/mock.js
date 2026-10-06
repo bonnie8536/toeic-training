@@ -6,19 +6,19 @@
   const root = $('#mock-root');
   const LDATA = (window.TOEIC && TOEIC.listening) || null;
   if (!window.TOEIC || !TOEIC.part5 || !LDATA) {
-    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '題庫載入中,稍後再來。'));
+    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '題庫載入中，稍後再來。'));
     return;
   }
 
   const SIZES = {
     quick: {
       name: '快速回合', mins: 22,
-      desc: '聽力 12 題,閱讀約 18 題。',
+      desc: '聽力 12 題，閱讀約 18 題。',
       l: { p2: 6, p3: 1, p4: 1 }, r: { p5: 10, p6: 1, p7: 1 },
     },
     half: {
       name: '標準半回', mins: 47,
-      desc: '聽力 36 題,閱讀約 39 題,配速比照正式考。',
+      desc: '聽力 36 題，閱讀約 39 題，配速比照正式考。',
       l: { p1: 3, p2: 12, p3: 4, p4: 3 }, r: { p5: 15, p6: 2, p7: 4 },
     },
   };
@@ -48,7 +48,7 @@
     root.innerHTML = '';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '模擬考'),
-      h('p', null, '聽力只播一次,交卷才看答案。')));
+      h('p', null, '聽力只播一次，交卷才看答案。')));
 
     const cards = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });
     Object.entries(SIZES).forEach(([k, s]) => {
@@ -151,7 +151,7 @@
     }
 
     function makeOncePlayer(id, state) {
-      const btn = h('button', { class: 'btn primary player-btn', type: 'button' }, state.played ? '已播放' : '▶ 播放(限一次)');
+      const btn = h('button', { class: 'btn primary player-btn', type: 'button' }, state.played ? '已播放' : '▶ 播放（限一次）');
       btn.disabled = !!state.played;
       btn.addEventListener('click', () => {
         if (state.played) return;
@@ -187,7 +187,7 @@
           }, LETTERS[i]));
         }
         block.append(h('div', { class: 'q-text', style: 'margin-top:10px' },
-          u.p === '1' ? '選出最符合照片的描述:' : '選出最合適的回應:'), row);
+          u.p === '1' ? '選出最符合照片的描述：' : '選出最合適的回應：'), row);
       } else {
         u.item.questions.forEach((q, qi) => {
           const opts = h('div', { class: 'opts', style: 'margin-top:6px' });
@@ -305,7 +305,7 @@
       if (over) return;
       if (!timeUp) {
         const missing = units.filter((u, i) => !unitAnswered(i)).length;
-        if (missing && !confirm('還有 ' + missing + ' 個題組沒答完,確定交卷?未作答算錯。')) return;
+        if (missing && !confirm('還有 ' + missing + ' 個題組沒答完，確定交卷？未作答算錯。')) return;
       }
       over = true;
       delete document.body.dataset.leaveConfirm;
@@ -338,8 +338,8 @@
       root.append(h('div', { class: 'report-head', style: 'margin-top:16px' },
         h('h2', null, '參考總分 ' + (lScore + rScore)),
         h('div', { class: 'band-note' },
-          (timeUp ? '時間到,自動交卷。' : '') +
-          '聽力 ' + lRaw + '/' + lTotal + '(約 ' + lScore + ')· 閱讀 ' + rRaw + '/' + rTotal + '(約 ' + rScore + ')。參考換算,非正式成績。')));
+          (timeUp ? '時間到，自動交卷。' : '') +
+          '聽力 ' + lRaw + '/' + lTotal + '（約 ' + lScore + '）· 閱讀 ' + rRaw + '/' + rTotal + '（約 ' + rScore + '）。參考換算，非正式成績。')));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', onclick: () => startExam(sizeKey) }, '再來一回'),
         h('a', { class: 'btn', href: 'mock.html' }, '回模擬考')));
@@ -364,7 +364,7 @@
         };
         const verdict = (q, chosen) => h('div', { class: 'explain' },
           h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
-            chosen === q.answer ? '答對了' : (chosen === undefined ? '未作答,正確答案是 ' : '答錯了,正確答案是 ') + LETTERS[q.answer]),
+            chosen === q.answer ? '答對了' : (chosen === undefined ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
           h('div', null, q.explanation));
 
         if (u.p === '5') {
@@ -388,7 +388,7 @@
               gradeOpts(q, st.answers[qi]), verdict(q, st.answers[qi]));
           });
           const transcript = u.p === '3'
-            ? set.dialogue.map(t => (t.s === 'M' ? '男:' : '女:') + t.text).join('\n')
+            ? set.dialogue.map(t => (t.s === 'M' ? '男：' : '女：') + t.text).join('\n')
             : set.talk;
           block.append(h('div', { class: 'transcript-box' }, h('b', null, '逐字稿'),
             h('div', { class: 'tr-en' }, transcript), h('div', { class: 'tr-zh' }, set.transcriptZh)));

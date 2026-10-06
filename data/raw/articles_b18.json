@@ -57,7 +57,7 @@
         "base": "summarize",
         "pos": "v.",
         "hint": "to give the main points of something in a short form",
-        "zh": "摘要;概述"
+        "zh": "摘要；概述"
       },
       {
         "word": "routine",
@@ -78,7 +78,7 @@
         "base": "generate",
         "pos": "v.",
         "hint": "to produce or create something",
-        "zh": "產生;製作"
+        "zh": "產生；製作"
       },
       {
         "word": "clause",
@@ -99,7 +99,7 @@
         "base": "barrier",
         "pos": "n.",
         "hint": "something that makes progress or entry difficult",
-        "zh": "障礙;門檻"
+        "zh": "障礙；門檻"
       },
       {
         "word": "employment",
@@ -162,7 +162,7 @@
         "base": "policy",
         "pos": "n.",
         "hint": "an official rule or plan that an organization follows",
-        "zh": "政策;規定"
+        "zh": "政策；規定"
       },
       {
         "word": "judgment",
@@ -303,7 +303,7 @@
         "base": "brittle",
         "pos": "adj.",
         "hint": "hard but easily broken or cracked",
-        "zh": "脆的;易碎的"
+        "zh": "脆的；易碎的"
       },
       {
         "word": "fragments",
@@ -345,7 +345,7 @@
         "base": "filter",
         "pos": "n.",
         "hint": "a device that separates unwanted material out of a liquid or gas",
-        "zh": "濾網;過濾器"
+        "zh": "濾網；過濾器"
       },
       {
         "word": "plankton",
@@ -394,7 +394,7 @@
         "base": "caution",
         "pos": "n.",
         "hint": "care taken to avoid mistakes or danger",
-        "zh": "謹慎;保留"
+        "zh": "謹慎；保留"
       },
       {
         "word": "unnecessary",
@@ -408,7 +408,7 @@
         "base": "persistent",
         "pos": "adj.",
         "hint": "continuing to exist or last for a long time",
-        "zh": "難以消失的;持久的"
+        "zh": "難以消失的；持久的"
       }
     ],
     "questions": [

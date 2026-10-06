@@ -4949,7 +4949,7 @@ TOEIC.articles = [
     "base": "summarize",
     "pos": "v.",
     "hint": "to give the main points of something in a short form",
-    "zh": "摘要;概述"
+    "zh": "摘要；概述"
    },
    {
     "word": "routine",
@@ -4970,7 +4970,7 @@ TOEIC.articles = [
     "base": "generate",
     "pos": "v.",
     "hint": "to produce or create something",
-    "zh": "產生;製作"
+    "zh": "產生；製作"
    },
    {
     "word": "clause",
@@ -4991,7 +4991,7 @@ TOEIC.articles = [
     "base": "barrier",
     "pos": "n.",
     "hint": "something that makes progress or entry difficult",
-    "zh": "障礙;門檻"
+    "zh": "障礙；門檻"
    },
    {
     "word": "employment",
@@ -5054,7 +5054,7 @@ TOEIC.articles = [
     "base": "policy",
     "pos": "n.",
     "hint": "an official rule or plan that an organization follows",
-    "zh": "政策;規定"
+    "zh": "政策；規定"
    },
    {
     "word": "judgment",
@@ -5146,7 +5146,7 @@ TOEIC.articles = [
     {
      "word": "summarize",
      "base": "summarize",
-     "zh": "摘要;概述"
+     "zh": "摘要；概述"
     },
     {
      "word": "draft",
@@ -5181,7 +5181,7 @@ TOEIC.articles = [
     {
      "word": "policies",
      "base": "policy",
-     "zh": "政策;規定"
+     "zh": "政策；規定"
     },
     {
      "word": "forbid",
@@ -5261,7 +5261,7 @@ TOEIC.articles = [
     "base": "brittle",
     "pos": "adj.",
     "hint": "hard but easily broken or cracked",
-    "zh": "脆的;易碎的"
+    "zh": "脆的；易碎的"
    },
    {
     "word": "fragments",
@@ -5303,7 +5303,7 @@ TOEIC.articles = [
     "base": "filter",
     "pos": "n.",
     "hint": "a device that separates unwanted material out of a liquid or gas",
-    "zh": "濾網;過濾器"
+    "zh": "濾網；過濾器"
    },
    {
     "word": "plankton",
@@ -5352,7 +5352,7 @@ TOEIC.articles = [
     "base": "caution",
     "pos": "n.",
     "hint": "care taken to avoid mistakes or danger",
-    "zh": "謹慎;保留"
+    "zh": "謹慎；保留"
    },
    {
     "word": "unnecessary",
@@ -5366,7 +5366,7 @@ TOEIC.articles = [
     "base": "persistent",
     "pos": "adj.",
     "hint": "continuing to exist or last for a long time",
-    "zh": "難以消失的;持久的"
+    "zh": "難以消失的；持久的"
    }
   ],
   "questions": [
@@ -5444,7 +5444,7 @@ TOEIC.articles = [
     {
      "word": "brittle",
      "base": "brittle",
-     "zh": "脆的;易碎的"
+     "zh": "脆的；易碎的"
     },
     {
      "word": "fragments",
@@ -5484,12 +5484,12 @@ TOEIC.articles = [
     {
      "word": "filter",
      "base": "filter",
-     "zh": "濾網;過濾器"
+     "zh": "濾網；過濾器"
     },
     {
      "word": "caution",
      "base": "caution",
-     "zh": "謹慎;保留"
+     "zh": "謹慎；保留"
     }
    ]
   }
@@ -6155,21 +6155,21 @@ TOEIC.articles = [
     "base": "disruption",
     "pos": "n.",
     "hint": "events that interrupt the normal course of an activity",
-    "zh": "中斷;擾亂"
+    "zh": "中斷；擾亂"
    },
    {
     "word": "maintenance",
     "base": "maintenance",
     "pos": "n.",
     "hint": "the work of keeping machines or buildings in good working condition",
-    "zh": "維修;保養"
+    "zh": "維修；保養"
    },
    {
     "word": "implemented",
     "base": "implement",
     "pos": "v.",
     "hint": "put a plan or system into action",
-    "zh": "實施;執行"
+    "zh": "實施；執行"
    },
    {
     "word": "itinerary",
@@ -6183,14 +6183,14 @@ TOEIC.articles = [
     "base": "voucher",
     "pos": "n.",
     "hint": "a printed slip that can be exchanged for goods or a service",
-    "zh": "兌換券;抵用券"
+    "zh": "兌換券；抵用券"
    },
    {
     "word": "in advance",
     "base": "in advance",
     "pos": "phr.",
     "hint": "before something happens; ahead of time",
-    "zh": "事先;預先"
+    "zh": "事先；預先"
    },
    {
     "word": "estimated",
@@ -6204,42 +6204,42 @@ TOEIC.articles = [
     "base": "negotiate",
     "pos": "v.",
     "hint": "discussed something formally in order to reach an agreement",
-    "zh": "協商;談判"
+    "zh": "協商；談判"
    },
    {
     "word": "terminate",
     "base": "terminate",
     "pos": "v.",
     "hint": "to bring something to an end",
-    "zh": "終止;結束"
+    "zh": "終止；結束"
    },
    {
     "word": "Revenue",
     "base": "revenue",
     "pos": "n.",
     "hint": "the money a business earns from its sales or services",
-    "zh": "營收;收益"
+    "zh": "營收；收益"
    },
    {
     "word": "comply",
     "base": "comply",
     "pos": "v.",
     "hint": "to act in accordance with a rule, law or request",
-    "zh": "遵守;順從"
+    "zh": "遵守；順從"
    },
    {
     "word": "compensation",
     "base": "compensation",
     "pos": "n.",
     "hint": "payment given to someone for loss, injury or inconvenience",
-    "zh": "賠償;補償"
+    "zh": "賠償；補償"
    },
    {
     "word": "expanded",
     "base": "expand",
     "pos": "v.",
     "hint": "made something larger or applied it to a wider area",
-    "zh": "擴大;擴展"
+    "zh": "擴大；擴展"
    },
    {
     "word": "guarantee",
@@ -6253,14 +6253,14 @@ TOEIC.articles = [
     "base": "adopt",
     "pos": "v.",
     "hint": "began to use a method or idea created by someone else",
-    "zh": "採用;採納"
+    "zh": "採用；採納"
    },
    {
     "word": "reputation",
     "base": "reputation",
     "pos": "n.",
     "hint": "the general opinion that people hold about a person or an organization",
-    "zh": "名聲;聲譽"
+    "zh": "名聲；聲譽"
    }
   ],
   "questions": [
@@ -6273,7 +6273,7 @@ TOEIC.articles = [
      "An airline lost market share after refusing to pay compensation."
     ],
     "answer": 1,
-    "explanation": "定位:全篇。第二段奧特嘉決定「改變等待期間發生的事」，第五段延誤沒有減少但回頭訂位上升，最後一段分析師的結論也指向出事後的處理方式決定忠誠度，故選B。選項A錯在第五段明說延誤「一點也沒有減少」;C與第一段相反(是旅行社停售機票，不是航空公司主動終止合作，也不是為了省錢);D錯在第六段寫的是航空公司遵守賠償規定，並未拒付。"
+    "explanation": "定位：全篇。第二段奧特嘉決定「改變等待期間發生的事」，第五段延誤沒有減少但回頭訂位上升，最後一段分析師的結論也指向出事後的處理方式決定忠誠度，故選B。選項A錯在第五段明說延誤「一點也沒有減少」；C與第一段相反（是旅行社停售機票，不是航空公司主動終止合作，也不是為了省錢）；D錯在第六段寫的是航空公司遵守賠償規定，並未拒付。"
    },
    {
     "q": "According to the article, what did passengers delayed more than ninety minutes receive automatically?",
@@ -6284,7 +6284,7 @@ TOEIC.articles = [
      "An upgrade on their next flight"
     ],
     "answer": 2,
-    "explanation": "定位:第三段「Anyone delayed more than ninety minutes automatically received a meal voucher」。旅館房間出現在第五段，但那是個別人員的臨機處理，不是自動提供的;退款與升等文中未提及。"
+    "explanation": "定位：第三段「Anyone delayed more than ninety minutes automatically received a meal voucher」。旅館房間出現在第五段，但那是個別人員的臨機處理，不是自動提供的；退款與升等文中未提及。"
    },
    {
     "q": "What can be inferred about Ortega's approach to the delay problem?",
@@ -6295,7 +6295,7 @@ TOEIC.articles = [
      "She accepted that some causes of delay were outside the company's control."
     ],
     "answer": 3,
-    "explanation": "定位:第二段「most came from weather and air traffic congestion, factors entirely beyond her control」，加上她「與其承諾做不到的準點」的選擇，可推論她接受部分延誤成因無法消除，故選D。選項A與同段內容相反，且文中未提排班軟體;B文中沒有依據，第五段反而把申訴件數當成主要成效指標;C與第四段「說服董事會比設計方案更難」矛盾。"
+    "explanation": "定位：第二段「most came from weather and air traffic congestion, factors entirely beyond her control」，加上她「與其承諾做不到的準點」的選擇，可推論她接受部分延誤成因無法消除，故選D。選項A與同段內容相反，且文中未提排班軟體；B文中沒有依據，第五段反而把申訴件數當成主要成效指標；C與第四段「說服董事會比設計方案更難」矛盾。"
    },
    {
     "q": "In the fourth paragraph, the phrase \"negotiated a compromise\" is closest in meaning to",
@@ -6306,7 +6306,7 @@ TOEIC.articles = [
      "persuaded the board to pay for the whole plan"
     ],
     "answer": 0,
-    "explanation": "定位:第四段。董事會想把錢用在行銷、奧特嘉想推行方案，最後變成「只試辦六個月、只在三座機場，失敗就終止」，雙方各退一步，故選A。選項B錯在被終止的是方案本身、而且是「試辦失敗才終止」，文中沒有取消任何合約;C錯在她是立刻開始試辦，不是把決定往後拖;D與「several directors insisted the money belonged in marketing」不符，董事會並未同意全額買單。"
+    "explanation": "定位：第四段。董事會想把錢用在行銷、奧特嘉想推行方案，最後變成「只試辦六個月、只在三座機場，失敗就終止」，雙方各退一步，故選A。選項B錯在被終止的是方案本身、而且是「試辦失敗才終止」，文中沒有取消任何合約；C錯在她是立刻開始試辦，不是把決定往後拖；D與「several directors insisted the money belonged in marketing」不符，董事會並未同意全額買單。"
    },
    {
     "q": "Which of the following is NOT mentioned as part of the new program?",
@@ -6317,7 +6317,7 @@ TOEIC.articles = [
      "Automatic meal vouchers for long delays"
     ],
     "answer": 2,
-    "explanation": "定位:第三段列出三項措施(平板顯示行程、自動餐券、事先簡訊通知)。現金直接匯入帳戶全文未出現;第六段只提到必須遵守聯邦的旅客賠償規定，並未說明賠償形式。"
+    "explanation": "定位：第三段列出三項措施（平板顯示行程、自動餐券、事先簡訊通知）。現金直接匯入帳戶全文未出現；第六段只提到必須遵守聯邦的旅客賠償規定，並未說明賠償形式。"
    }
   ],
   "image": "img/articles/art-2a.jpg",
@@ -6328,32 +6328,32 @@ TOEIC.articles = [
     {
      "word": "disruptions",
      "base": "disruption",
-     "zh": "中斷;擾亂"
+     "zh": "中斷；擾亂"
     },
     {
      "word": "reputation",
      "base": "reputation",
-     "zh": "名聲;聲譽"
+     "zh": "名聲；聲譽"
     },
     {
      "word": "revenue",
      "base": "revenue",
-     "zh": "營收;收益"
+     "zh": "營收；收益"
     },
     {
      "word": "negotiated",
      "base": "negotiate",
-     "zh": "協商;談判"
+     "zh": "協商；談判"
     },
     {
      "word": "maintenance",
      "base": "maintenance",
-     "zh": "維修;保養"
+     "zh": "維修；保養"
     },
     {
      "word": "in advance",
      "base": "in advance",
-     "zh": "事先;預先"
+     "zh": "事先；預先"
     },
     {
      "word": "guarantee",
@@ -6368,22 +6368,22 @@ TOEIC.articles = [
     {
      "word": "voucher",
      "base": "voucher",
-     "zh": "兌換券;抵用券"
+     "zh": "兌換券；抵用券"
     },
     {
      "word": "compensation",
      "base": "compensation",
-     "zh": "賠償;補償"
+     "zh": "賠償；補償"
     },
     {
      "word": "terminate",
      "base": "terminate",
-     "zh": "終止;結束"
+     "zh": "終止；結束"
     },
     {
      "word": "implemented",
      "base": "implement",
-     "zh": "實施;執行"
+     "zh": "實施；執行"
     }
    ]
   }
@@ -6399,7 +6399,7 @@ TOEIC.articles = [
   "paragraphs": [
    {
     "en": "The Halvorsen Museum of Fine Art had an unusual problem: nearly everyone in the city admired it, and hardly anyone visited it. Weekday [[attendance]] had been [[declining]] for six consecutive years, and the average visitor was fifty-eight years old. When Nadia Fournier was hired as marketing manager, the director gave her one instruction and very little else — attract a younger audience without lowering the ticket price.",
-    "zh": "哈佛森美術館有個罕見的問題:全城幾乎人人都推崇它，卻幾乎沒有人去。平日參觀人數已經連續六年下滑，參觀者的平均年齡是五十八歲。娜迪雅．傅尼耶受聘為行銷經理時，館長只給了她一項指示，其他什麼也沒給——在不調降票價的前提下，把年輕觀眾拉進來。"
+    "zh": "哈佛森美術館有個罕見的問題：全城幾乎人人都推崇它，卻幾乎沒有人去。平日參觀人數已經連續六年下滑，參觀者的平均年齡是五十八歲。娜迪雅．傅尼耶受聘為行銷經理時，館長只給了她一項指示，其他什麼也沒給——在不調降票價的前提下，把年輕觀眾拉進來。"
    },
    {
     "en": "Fournier began by listening. A short online [[survey]] of two thousand residents under thirty-five produced [[feedback]] she had not [[anticipated]]. The barrier was neither the price nor a lack of interest in art; it was the clock. Most respondents finished work after six, by which time the galleries had closed, and they reserved their weekends for family and rest.",
@@ -6419,11 +6419,11 @@ TOEIC.articles = [
    },
    {
     "en": "Not everything went smoothly. Two paintings had to be relocated after visitors crowded too closely, and several long-time members complained that the museum was turning into a nightclub. Fournier responded by [[promoting]] the late openings only through social media and campus newsletters, leaving the daytime program and its regular audience untouched.",
-    "zh": "並非一切都順利。有兩幅畫作因為觀眾靠得太近而必須移位，幾位資深會員也抱怨美術館快要變成夜店了。傅尼耶的回應是:夜間開放只透過社群媒體與校園電子報宣傳，白天的節目和它原有的觀眾則完全不動。"
+    "zh": "並非一切都順利。有兩幅畫作因為觀眾靠得太近而必須移位，幾位資深會員也抱怨美術館快要變成夜店了。傅尼耶的回應是：夜間開放只透過社群媒體與校園電子報宣傳，白天的節目和它原有的觀眾則完全不動。"
    },
    {
     "en": "[[Subsequent]] months confirmed the pattern. By December the museum had [[extended]] the event to twice a month and reported that ticket [[revenue]] from visitors under thirty-five had risen sixty-two percent. The [[venue]] had not changed at all; only the hours had. \"We did not need a new building,\" Fournier told a trade magazine. \"We needed a new clock.\"",
-    "zh": "接下來幾個月證實了這個趨勢。到了十二月，美術館已經把活動延長為每月兩次，並公布三十五歲以下觀眾的票房收入成長了百分之六十二。場地一點也沒有改變，改變的只有時間。傅尼耶對一家業界雜誌說:「我們需要的不是新館舍，而是一個新的時鐘。」"
+    "zh": "接下來幾個月證實了這個趨勢。到了十二月，美術館已經把活動延長為每月兩次，並公布三十五歲以下觀眾的票房收入成長了百分之六十二。場地一點也沒有改變，改變的只有時間。傅尼耶對一家業界雜誌說：「我們需要的不是新館舍，而是一個新的時鐘。」"
    }
   ],
   "vocab": [
@@ -6432,14 +6432,14 @@ TOEIC.articles = [
     "base": "attendance",
     "pos": "n.",
     "hint": "the number of people who come to an event or a place",
-    "zh": "出席人數;參觀人數"
+    "zh": "出席人數；參觀人數"
    },
    {
     "word": "declining",
     "base": "decline",
     "pos": "v.",
     "hint": "becoming smaller in number or weaker over a period of time",
-    "zh": "下滑;減少"
+    "zh": "下滑；減少"
    },
    {
     "word": "survey",
@@ -6460,28 +6460,28 @@ TOEIC.articles = [
     "base": "anticipate",
     "pos": "v.",
     "hint": "expected something to happen before it actually did",
-    "zh": "預料;預期"
+    "zh": "預料；預期"
    },
    {
     "word": "initiative",
     "base": "initiative",
     "pos": "n.",
     "hint": "a new plan started in order to solve a problem or improve a situation",
-    "zh": "新計畫;方案"
+    "zh": "新計畫；方案"
    },
    {
     "word": "launched",
     "base": "launch",
     "pos": "v.",
     "hint": "started something new, such as a product or an event, for the first time",
-    "zh": "推出;啟動"
+    "zh": "推出；啟動"
    },
    {
     "word": "overtime",
     "base": "overtime",
     "pos": "n.",
     "hint": "extra hours worked beyond the normal schedule, usually paid at a higher rate",
-    "zh": "加班;加班費"
+    "zh": "加班；加班費"
    },
    {
     "word": "budget",
@@ -6509,14 +6509,14 @@ TOEIC.articles = [
     "base": "in charge of",
     "pos": "phr.",
     "hint": "responsible for controlling or managing something",
-    "zh": "負責;主管"
+    "zh": "負責；主管"
    },
    {
     "word": "capacity",
     "base": "capacity",
     "pos": "n.",
     "hint": "the largest number of people or things that a space can hold",
-    "zh": "容納量;容量"
+    "zh": "容納量；容量"
    },
    {
     "word": "Merchandise",
@@ -6530,35 +6530,35 @@ TOEIC.articles = [
     "base": "promote",
     "pos": "v.",
     "hint": "advertising something in order to make it better known",
-    "zh": "宣傳;推廣"
+    "zh": "宣傳；推廣"
    },
    {
     "word": "Subsequent",
     "base": "subsequent",
     "pos": "adj.",
     "hint": "coming after something else in time",
-    "zh": "後續的;接下來的"
+    "zh": "後續的；接下來的"
    },
    {
     "word": "extended",
     "base": "extend",
     "pos": "v.",
     "hint": "made something continue for a longer time or apply more widely",
-    "zh": "延長;擴大"
+    "zh": "延長；擴大"
    },
    {
     "word": "revenue",
     "base": "revenue",
     "pos": "n.",
     "hint": "the money an organization earns from its sales or services",
-    "zh": "收入;營收"
+    "zh": "收入；營收"
    },
    {
     "word": "venue",
     "base": "venue",
     "pos": "n.",
     "hint": "the place where an event or a performance is held",
-    "zh": "場地;會場"
+    "zh": "場地；會場"
    }
   ],
   "questions": [
@@ -6571,7 +6571,7 @@ TOEIC.articles = [
      "A museum that moved to a larger building to increase attendance."
     ],
     "answer": 2,
-    "explanation": "定位:全篇。第一段設定「吸引年輕觀眾但不降票價」的任務，第三段推出夜間開放，最後一段「The venue had not changed at all; only the hours had」直接點題，故選C。選項A與第一段「不調降票價」的前提相反，且全文未提整修;B過度推論，研究生只負責夜間場的簡短導覽，館內原本的導覽人員並未被取代;D與最後一段「我們需要的不是新館舍」相反。"
+    "explanation": "定位：全篇。第一段設定「吸引年輕觀眾但不降票價」的任務，第三段推出夜間開放，最後一段「The venue had not changed at all; only the hours had」直接點題，故選C。選項A與第一段「不調降票價」的前提相反，且全文未提整修；B過度推論，研究生只負責夜間場的簡短導覽，館內原本的導覽人員並未被取代；D與最後一段「我們需要的不是新館舍」相反。"
    },
    {
     "q": "According to the survey, why did younger residents stay away from the museum?",
@@ -6582,7 +6582,7 @@ TOEIC.articles = [
      "The museum was too far from public transport."
     ],
     "answer": 0,
-    "explanation": "定位:第二段「The barrier was neither the price nor a lack of interest in art; it was the clock」，並說明多數人六點後才下班、展間已關。B、C正是文中明確排除的兩項;D未提及。"
+    "explanation": "定位：第二段「The barrier was neither the price nor a lack of interest in art; it was the clock」，並說明多數人六點後才下班、展間已關。B、C正是文中明確排除的兩項；D未提及。"
    },
    {
     "q": "In the fourth paragraph, the phrase \"closed the gap\" refers to",
@@ -6593,7 +6593,7 @@ TOEIC.articles = [
      "finding the extra money the project still needed"
     ],
     "answer": 3,
-    "explanation": "定位:第四段。前一句說董事會核准的預算「只勉強夠付一半的估計成本」，接著她取得書店連鎖的贊助，故 gap 指的是資金缺口，選D。選項A錯在董事會與館員之間並無爭執，只是預算不足;B的排隊人潮出現在第五段，時間點在活動當晚，與此無關;C與第三段「開放三個展間」不符，她並未縮減夜間開放的規模。"
+    "explanation": "定位：第四段。前一句說董事會核准的預算「只勉強夠付一半的估計成本」，接著她取得書店連鎖的贊助，故 gap 指的是資金缺口，選D。選項A錯在董事會與館員之間並無爭執，只是預算不足；B的排隊人潮出現在第五段，時間點在活動當晚，與此無關；C與第三段「開放三個展間」不符，她並未縮減夜間開放的規模。"
    },
    {
     "q": "What can be inferred from Fournier's decision to advertise the late openings only on social media and campus newsletters?",
@@ -6604,7 +6604,7 @@ TOEIC.articles = [
      "Older members had asked to be removed from the mailing list."
     ],
     "answer": 1,
-    "explanation": "定位:第六段。這個決定緊接在資深會員抱怨之後，句尾又說「白天的節目和它原有的觀眾則完全不動」，可推論用意是鎖定年輕客群又不驚動老會員，故選B。選項A與第四段不符，資金缺口已靠書店贊助補上;C、D文中都沒有提到，董事會並未禁止行銷支出，老會員也沒有要求退訂名單。"
+    "explanation": "定位：第六段。這個決定緊接在資深會員抱怨之後，句尾又說「白天的節目和它原有的觀眾則完全不動」，可推論用意是鎖定年輕客群又不驚動老會員，故選B。選項A與第四段不符，資金缺口已靠書店贊助補上；C、D文中都沒有提到，董事會並未禁止行銷支出，老會員也沒有要求退訂名單。"
    },
    {
     "q": "Which of the following is NOT mentioned as a difficulty the project faced?",
@@ -6615,7 +6615,7 @@ TOEIC.articles = [
      "A budget that covered only part of the cost"
     ],
     "answer": 0,
-    "explanation": "定位:第四段(加班費、保險同意、預算不足)與第六段(畫作移位、資深會員抱怨)。停車位不足全文從未提及，故選A。"
+    "explanation": "定位：第四段（加班費、保險同意、預算不足）與第六段（畫作移位、資深會員抱怨）。停車位不足全文從未提及，故選A。"
    }
   ],
   "image": "img/articles/art-2b.jpg",
@@ -6626,12 +6626,12 @@ TOEIC.articles = [
     {
      "word": "attendance",
      "base": "attendance",
-     "zh": "出席人數;參觀人數"
+     "zh": "出席人數；參觀人數"
     },
     {
      "word": "declining",
      "base": "decline",
-     "zh": "下滑;減少"
+     "zh": "下滑；減少"
     },
     {
      "word": "survey",
@@ -6641,12 +6641,12 @@ TOEIC.articles = [
     {
      "word": "initiative",
      "base": "initiative",
-     "zh": "新計畫;方案"
+     "zh": "新計畫；方案"
     },
     {
      "word": "launched",
      "base": "launch",
-     "zh": "推出;啟動"
+     "zh": "推出；啟動"
     },
     {
      "word": "sponsorship",
@@ -6661,12 +6661,12 @@ TOEIC.articles = [
     {
      "word": "anticipated",
      "base": "anticipate",
-     "zh": "預料;預期"
+     "zh": "預料；預期"
     },
     {
      "word": "capacity",
      "base": "capacity",
-     "zh": "容納量;容量"
+     "zh": "容納量；容量"
     },
     {
      "word": "merchandise",
@@ -6676,12 +6676,12 @@ TOEIC.articles = [
     {
      "word": "revenue",
      "base": "revenue",
-     "zh": "收入;營收"
+     "zh": "收入；營收"
     },
     {
      "word": "venue",
      "base": "venue",
-     "zh": "場地;會場"
+     "zh": "場地；會場"
     }
    ]
   }
@@ -7496,7 +7496,7 @@ TOEIC.articles = [
      "Hotel guests generally prefer human staff to machines at every stage of a stay."
     ],
     "answer": 2,
-    "explanation": "定位:第五、六段。飯店沒有放棄機器人，而是減少機台並聘人專門處理例外狀況，最後滿意度創新高;第六段許先生總結「科技用來移除繁瑣工作，而不是移除人力」。A 錯在文中從未說機器人太貴，第六段反而指出薪資支出仍低於同級飯店;B 錯在飯店並未放棄機器人(仍完成八成入住)，全文也沒提到虧損;D 過度概括，第四段明說旅客喜歡機器處理例行交易的速度。"
+    "explanation": "定位：第五、六段。飯店沒有放棄機器人，而是減少機台並聘人專門處理例外狀況，最後滿意度創新高；第六段許先生總結「科技用來移除繁瑣工作，而不是移除人力」。A 錯在文中從未說機器人太貴，第六段反而指出薪資支出仍低於同級飯店；B 錯在飯店並未放棄機器人（仍完成八成入住），全文也沒提到虧損；D 過度概括，第四段明說旅客喜歡機器處理例行交易的速度。"
    },
    {
     "q": "According to the article, what happened to the hotel's business during its first year?",
@@ -7507,7 +7507,7 @@ TOEIC.articles = [
      "Occupancy dropped sharply as soon as the slow winter season began."
     ],
     "answer": 0,
-    "explanation": "定位:第二段第二句。原文為「季營收穩定成長，住房率即使在淡季的冬天仍維持在九成以上」，與 A 完全對應。B 說營收下滑，與「穩定成長」相反;C 的前半(獲頒創新獎)雖屬實，但後半「冬天房間住不滿」與原文相反;D 說淡季一開始住房率就大跌，同樣與原文相反。"
+    "explanation": "定位：第二段第二句。原文為「季營收穩定成長，住房率即使在淡季的冬天仍維持在九成以上」，與 A 完全對應。B 說營收下滑，與「穩定成長」相反；C 的前半（獲頒創新獎）雖屬實，但後半「冬天房間住不滿」與原文相反；D 說淡季一開始住房率就大跌，同樣與原文相反。"
    },
    {
     "q": "What can be inferred about the four clerks Hsu hired?",
@@ -7518,7 +7518,7 @@ TOEIC.articles = [
      "Their value came from handling situations the machines could not."
     ],
     "answer": 3,
-    "explanation": "定位:第五段。原文指示他們「例行工作一律不要做」，唯一職責是處理例外(誤點班機、爭議帳款、爆裂水管)，這些正是第三段機器人搞砸的情況，故可推論其價值在於處理機器無法處理的狀況。A 錯在原文說許先生聘的是資深櫃檯人員，全文未提到他們負責維修或保養機器;第六段說機器人仍完成八成入住，可排除 B;文中雖以深夜入住為例，但從未說這四人只上夜班，故 C 也不成立。"
+    "explanation": "定位：第五段。原文指示他們「例行工作一律不要做」，唯一職責是處理例外（誤點班機、爭議帳款、爆裂水管），這些正是第三段機器人搞砸的情況，故可推論其價值在於處理機器無法處理的狀況。A 錯在原文說許先生聘的是資深櫃檯人員，全文未提到他們負責維修或保養機器；第六段說機器人仍完成八成入住，可排除 B；文中雖以深夜入住為例，但從未說這四人只上夜班，故 C 也不成立。"
    },
    {
     "q": "In paragraph 4, the remark \"Efficiency is not hospitality\" is closest in meaning to which of the following?",
@@ -7529,7 +7529,7 @@ TOEIC.articles = [
      "Machines are usually more polite to guests than human employees are."
     ],
     "answer": 1,
-    "explanation": "定位:第四段。這句話緊接在「飯店符合每一項規格，滿意度卻持續下滑」之後，用來對比「快」與「照顧好客人」的差別，故 B 最貼近。A 與句意相反;C、D 文中皆未提及。"
+    "explanation": "定位：第四段。這句話緊接在「飯店符合每一項規格，滿意度卻持續下滑」之後，用來對比「快」與「照顧好客人」的差別，故 B 最貼近。A 與句意相反；C、D 文中皆未提及。"
    },
    {
     "q": "Which of the following is NOT mentioned as a problem at the hotel?",
@@ -7540,7 +7540,7 @@ TOEIC.articles = [
      "The robots broke down so often that repairs became a daily task."
     ],
     "answer": 3,
-    "explanation": "定位:第三段。文中列出的三個問題分別是重複計費、深夜入住無法處理、水管爆裂無人指揮，對應選項 A、B、C。機器故障頻繁需天天維修全文未提，故 D 為未提及者。"
+    "explanation": "定位：第三段。文中列出的三個問題分別是重複計費、深夜入住無法處理、水管爆裂無人指揮，對應選項 A、B、C。機器故障頻繁需天天維修全文未提，故 D 為未提及者。"
    }
   ],
   "image": "img/articles/art-3a.jpg",
@@ -7801,7 +7801,7 @@ TOEIC.articles = [
      "Why office workers around the world dislike open floor plans."
     ],
     "answer": 0,
-    "explanation": "定位:全文結構。第一段的「訂購蕨類」只是她最不起眼的雜務，第二段是轉折，第四、五段寫她辭職創業並擴張，主軸是一份雜務變成一門生意。B、C、D 都只是文中的細節或背景，撐不起全文。"
+    "explanation": "定位：全文結構。第一段的「訂購蕨類」只是她最不起眼的雜務，第二段是轉折，第四、五段寫她辭職創業並擴張，主軸是一份雜務變成一門生意。B、C、D 都只是文中的細節或背景，撐不起全文。"
    },
    {
     "q": "What did Whitfield do during the 2019 renovation?",
@@ -7812,7 +7812,7 @@ TOEIC.articles = [
      "She surveyed the employees before the move to the new space."
     ],
     "answer": 2,
-    "explanation": "定位:第二段第三句。原文為「沒有安裝昂貴的吸音板，而是沿著走道擺了六十盆植物」，故 C 正確。A 與原文相反;問卷是搬遷三個月「之後」才做的，故 D 錯;外聘顧問文中未提。"
+    "explanation": "定位：第二段第三句。原文為「沒有安裝昂貴的吸音板，而是沿著走道擺了六十盆植物」，故 C 正確。A 與原文相反；問卷是搬遷三個月「之後」才做的，故 D 錯；外聘顧問文中未提。"
    },
    {
     "q": "Why does Verdant Works charge a monthly fee instead of selling the plants to clients?",
@@ -7823,7 +7823,7 @@ TOEIC.articles = [
      "Because monthly billing is cheaper for Verdant Works to manage."
     ],
     "answer": 1,
-    "explanation": "定位:第四段。原文說這套模式打動了「受夠帳單忽高忽低」的辦公室主管，而且庫存與隨之而來的風險都由她承擔，可推論客戶要的是可預期的成本，並希望由別人承擔風險。A(辦公室買不起大型植物)與 C(法規要求租用辦公室植物)文中完全沒提;D 把理由說成她自己收費作業比較省事，但原文給的理由來自客戶端的需求。"
+    "explanation": "定位：第四段。原文說這套模式打動了「受夠帳單忽高忽低」的辦公室主管，而且庫存與隨之而來的風險都由她承擔，可推論客戶要的是可預期的成本，並希望由別人承擔風險。A（辦公室買不起大型植物）與 C（法規要求租用辦公室植物）文中完全沒提；D 把理由說成她自己收費作業比較省事，但原文給的理由來自客戶端的需求。"
    },
    {
     "q": "In the final paragraph, the word \"straightforward\" most nearly means",
@@ -7834,7 +7834,7 @@ TOEIC.articles = [
      "simple and easy to understand."
     ],
     "answer": 3,
-    "explanation": "定位:第七段。這個字後面接的建議是「找出一筆持續發生的支出、衡量它實際換來什麼、為結果負責」，三個步驟講得清楚直接，故 D 最貼近。A(對新手來說很難跟著做)與這個字的意思正好相反;B(執行起來意外昂貴)與字義無關;C 說「其他公司普遍忽略」講的是採用情形，而非這個字用來形容建議本身的性質。"
+    "explanation": "定位：第七段。這個字後面接的建議是「找出一筆持續發生的支出、衡量它實際換來什麼、為結果負責」，三個步驟講得清楚直接，故 D 最貼近。A（對新手來說很難跟著做）與這個字的意思正好相反；B（執行起來意外昂貴）與字義無關；C 說「其他公司普遍忽略」講的是採用情形，而非這個字用來形容建議本身的性質。"
    },
    {
     "q": "Which of the following is NOT true of Verdant Works?",
@@ -7845,7 +7845,7 @@ TOEIC.articles = [
      "It now turns down sites where the risk is clearly too high."
     ],
     "answer": 0,
-    "explanation": "定位:第四段第二句「她不賣植物，而是收月費」，故 A 不正確。B 見第四段(枯死免費更換)，C 見第五段(九十四間辦公室)，D 見第六段(風險明顯的場地一律不接)。"
+    "explanation": "定位：第四段第二句「她不賣植物，而是收月費」，故 A 不正確。B 見第四段（枯死免費更換），C 見第五段（九十四間辦公室），D 見第六段（風險明顯的場地一律不接）。"
    }
   ],
   "image": "img/articles/art-3b.jpg",

@@ -2,7 +2,7 @@
   "id": "/index.html",
   "name": "刷刷英文",
   "short_name": "刷刷英文",
-  "description": "免費英文練習:文法、單字、聽力、閱讀與多益題型刷題",
+  "description": "免費英文練習：文法、單字、聽力、閱讀與多益題型刷題",
   "start_url": "./index.html",
   "scope": "/",
   "display": "standalone",

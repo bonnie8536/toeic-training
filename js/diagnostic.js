@@ -5,7 +5,7 @@
 
   if (!D || !D.p5 || !D.p6 || !D.p7) {
     root.append(h('div', { class: 'q-block', style: 'margin-top:30px' },
-      '檢測題庫尚未載入。請確認 data/diagnostic.js 存在(執行 tools/merge_data.py 產生)。'));
+      '檢測題庫尚未載入。請確認 data/diagnostic.js 存在（執行 tools/merge_data.py 產生）。'));
     return;
   }
 
@@ -42,8 +42,8 @@
         h('h1', null, '程度檢測')),
       h('div', { class: 'diag-intro' },
         h('ul', { style: 'margin-top:0' },
-          h('li', null, '28 題,約 20 分鐘。作答中不顯示對錯,交卷後有報告。'),
-          h('li', null, '可以往回改答案;中途離開,進度會保留。')),
+          h('li', null, '28 題，約 20 分鐘。作答中不顯示對錯，交卷後有報告。'),
+          h('li', null, '可以往回改答案；中途離開，進度會保留。')),
         h('button', {
           class: 'btn primary', style: 'font-size:16px;padding:10px 26px',
           onclick: () => {
@@ -123,14 +123,14 @@
       h('button', {
         class: 'btn primary',
         onclick: () => {
-          if (unanswered > 0 && !confirm('還有 ' + unanswered + ' 題沒作答,未作答會列入「答錯」計算。確定交卷?')) return;
+          if (unanswered > 0 && !confirm('還有 ' + unanswered + ' 題沒作答，未作答會列入「答錯」計算。確定交卷？')) return;
           st.done = true;
           st.finishedAt = new Date().toISOString();
           store.set(KEY, st);
           window.scrollTo(0, 0);
           renderReport();
         },
-      }, '交卷,看報告')));
+      }, '交卷，看報告')));
   }
 
   /* ============ 報告 ============ */
@@ -170,7 +170,7 @@
     const est = bandEstimate(aB, aM, aA, score / total);
     const band = est.band, advice = est.advice;
     const readNote = (readT && (readC / readT) < Math.min(aB, aM) - 0.2)
-      ? '篇章題正確率明顯低於單句題,單句文法會、放進文章就抓不到,先做閱讀訓練。' : '';
+      ? '篇章題正確率明顯低於單句題，單句文法會、放進文章就抓不到，先做閱讀訓練。' : '';
 
     root.append(h('div', { class: 'page-head' }, h('h1', null, '檢測報告')));
 
@@ -182,7 +182,7 @@
         h('div', { class: 'item' }, h('b', null, Math.round(aB * 100) + '%'), h('span', null, '基礎題正確率')),
         h('div', { class: 'item' }, h('b', null, Math.round(aM * 100) + '%'), h('span', null, '中級題正確率')),
         h('div', { class: 'item' }, h('b', null, Math.round(aA * 100) + '%'), h('span', null, '進階題正確率'))),
-      h('div', { class: 'band-note' }, '28 題為小樣本,級距僅供安排練習順序,與正式成績可能有落差。')));
+      h('div', { class: 'band-note' }, '28 題為小樣本，級距僅供安排練習順序，與正式成績可能有落差。')));
 
     /* 考點總表 */
     root.append(h('div', { class: 'exercise-head' }, h('h2', null, '各考點掌握度')));
@@ -192,12 +192,12 @@
     sorted.forEach(([cat, c]) => {
       const [cls, label] = judge(c.correct / c.total);
       const skills = cls === 'good'
-        ? c.items.filter(i => st.answers[i] === items[i].answer).map(i => items[i].skill).filter(Boolean).slice(0, 2).join(';')
+        ? c.items.filter(i => st.answers[i] === items[i].answer).map(i => items[i].skill).filter(Boolean).slice(0, 2).join('；')
         : '';
       table.append(h('tr', null,
         h('td', null, cat, skills ? h('div', { style: 'font-size:12px;color:var(--ink-light)' }, skills) : null),
         h('td', { class: 'num' }, c.correct + ' / ' + c.total),
-        h('td', null, h('span', { class: 'verdict-pill ' + cls }, label), c.total === 1 ? h('span', { class: 'cat-few' }, '(僅1題)') : null),
+        h('td', null, h('span', { class: 'verdict-pill ' + cls }, label), c.total === 1 ? h('span', { class: 'cat-few' }, '（僅1題）') : null),
         h('td', { class: 'no-print' }, cls !== 'good' ? h('a', { href: catLink(cat, c.kind), style: 'font-size:13px' }, '去刷這類題 →') : '')));
     });
     root.append(table);
@@ -208,7 +208,7 @@
     root.append(h('div', { class: 'exercise-head' }, h('h2', null, '錯題分析')));
     const wrongs = items.map((it, i) => ({ it, i })).filter(x => st.answers[x.i] !== x.it.answer);
     if (!wrongs.length) {
-      root.append(h('p', { class: 'result-note' }, '全部答對,沒有錯題。'));
+      root.append(h('p', { class: 'result-note' }, '全部答對，沒有錯題。'));
     }
     wrongs.forEach(({ it, i }) => {
       const chosen = st.answers[i];
@@ -234,13 +234,13 @@
     weak.slice(0, 4).forEach(([cat, c]) => {
       stepList.append(h('li', null,
         h('a', { href: catLink(cat, c.kind) }, cat),
-        '(答對 ' + c.correct + '/' + c.total + '),先刷 15–20 題,錯的隔天在錯題本重做。'));
+        '（答對 ' + c.correct + '/' + c.total + '），先刷 15–20 題，錯的隔天在錯題本重做。'));
     });
     if (score / total < 0.5) {
       stepList.append(h('li', null, h('a', { href: 'grammar.html' }, '文法基礎'),
-        '分數未過半,先從第一章照順序走。'));
+        '分數未過半，先從第一章照順序走。'));
     }
-    stepList.append(h('li', null, h('a', { href: 'reading.html' }, '閱讀訓練'), '每週 2 篇,先不看翻譯讀完並做題,再開翻譯逐段核對。'));
+    stepList.append(h('li', null, h('a', { href: 'reading.html' }, '閱讀訓練'), '每週 2 篇，先不看翻譯讀完並做題，再開翻譯逐段核對。'));
     root.append(h('div', { class: 'next-steps' }, h('p', null, advice + (readNote ? ' ' + readNote : '')), stepList));
 
     /* 動作 */
@@ -249,7 +249,7 @@
       h('button', {
         class: 'btn',
         onclick: () => {
-          if (!confirm('重新檢測會清除這份報告(刷題與閱讀進度不受影響)。確定?')) return;
+          if (!confirm('重新檢測會清除這份報告（刷題與閱讀進度不受影響）。確定？')) return;
           store.remove(KEY);
           st = null; cur = 0;
           renderIntro();

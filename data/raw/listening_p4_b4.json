@@ -15,7 +15,7 @@
           "A book sale is being set up."
         ],
         "answer": 0,
-        "explanation": "定位在 We're opening late tomorrow, because the whole staff has computer training in the morning。because 後面接的就是原因,computer training 對應選項 A 的 attend a training session。選項 C 的整修全篇沒提,是靠「公家單位常閉館維修」的印象亂猜。"
+        "explanation": "定位在 We're opening late tomorrow, because the whole staff has computer training in the morning。because 後面接的就是原因，computer training 對應選項 A 的 attend a training session。選項 C 的整修全篇沒提，是靠「公家單位常閉館維修」的印象亂猜。"
       },
       {
         "q": "What time will the library open tomorrow?",
@@ -26,7 +26,7 @@
           "At five in the evening"
         ],
         "answer": 2,
-        "explanation": "定位在 the doors won't open until one in the afternoon。won't ... until 就是「要到一點才開」,對應選項 C。廣播開頭的 twenty minutes 是閉館倒數,不是開門時間;nine 這個數字原文根本沒出現,只是用圖書館常識設的誘答。"
+        "explanation": "定位在 the doors won't open until one in the afternoon。won't ... until 就是「要到一點才開」，對應選項 C。廣播開頭的 twenty minutes 是閉館倒數，不是開門時間；nine 這個數字原文根本沒出現，只是用圖書館常識設的誘答。"
       },
       {
         "q": "What does the speaker say about the drop box?",
@@ -37,10 +37,10 @@
           "It can be used at any time."
         ],
         "answer": 3,
-        "explanation": "定位在 just use the drop box by the side entrance. It's open all day。all day 就是全天都能用,對應選項 D。原文說還書箱在側門 (side entrance) 旁邊,選項 A 把地點換成前面櫃檯,聽到 front desk 就選會中招——那個字出現在第一段的還書指示裡。"
+        "explanation": "定位在 just use the drop box by the side entrance. It's open all day。all day 就是全天都能用，對應選項 D。原文說還書箱在側門 (side entrance) 旁邊，選項 A 把地點換成前面櫃檯，聽到 front desk 就選會中招——那個字出現在第一段的還書指示裡。"
       }
     ],
-    "transcriptZh": "各位讀者請注意,本館再二十分鐘就要閉館了,想借的書請現在拿到前面櫃檯來。\n如果你人在樓上的自習室,離開時別忘了把東西帶走,我們沒辦法幫忙保管過夜。\n還有一件事。明天早上全館同仁要上電腦教育訓練,所以會晚一點開門,要到下午一點才開放。如果你在那之前要還書,可以用側門旁邊的還書箱,那個箱子全天都能用。\n謝謝大家,明天見。"
+    "transcriptZh": "各位讀者請注意，本館再二十分鐘就要閉館了，想借的書請現在拿到前面櫃檯來。\n如果你人在樓上的自習室，離開時別忘了把東西帶走，我們沒辦法幫忙保管過夜。\n還有一件事。明天早上全館同仁要上電腦教育訓練，所以會晚一點開門，要到下午一點才開放。如果你在那之前要還書，可以用側門旁邊的還書箱，那個箱子全天都能用。\n謝謝大家，明天見。"
   },
   {
     "id": "l4-42",
@@ -58,7 +58,7 @@
           "Soup and bread"
         ],
         "answer": 3,
-        "explanation": "定位在 Tonight we're keeping it simple — we're making soup and fresh bread。making 後面接的兩樣東西就是答案,對應選項 D。其他三個選項都是烹飪課常見的品項,但原文一個都沒提到。"
+        "explanation": "定位在 Tonight we're keeping it simple — we're making soup and fresh bread。making 後面接的兩樣東西就是答案，對應選項 D。其他三個選項都是烹飪課常見的品項，但原文一個都沒提到。"
       },
       {
         "q": "What does the speaker say about the tools?",
@@ -69,7 +69,7 @@
           "They will be shared in pairs."
         ],
         "answer": 1,
-        "explanation": "定位在 Everything you need is already on your table, so you don't have to bring your own tools to class。already on your table 就是已經擺好在桌上,對應選項 B 的 set out。選項 A 把 don't have to bring 誤聽成「要另外買」。"
+        "explanation": "定位在 Everything you need is already on your table, so you don't have to bring your own tools to class。already on your table 就是已經擺好在桌上，對應選項 B 的 set out。選項 A 把 don't have to bring 誤聽成「要另外買」。"
       },
       {
         "q": "Why does the speaker mention the sheet?",
@@ -80,10 +80,10 @@
           "To ask for feedback"
         ],
         "answer": 0,
-        "explanation": "定位在 take a look at the sheet in front of you. It lists what's in tonight's dishes, so if you can't eat something, tell me now。提那張單子是要讓學員確認食材,對應選項 A。這是「為何提及」的意圖題,線索在 so 之後的目的句,不在 sheet 這個字本身;講者提過 six-week course,但那張單子跟課表無關,選項 C 是把兩件事湊在一起。"
+        "explanation": "定位在 take a look at the sheet in front of you. It lists what's in tonight's dishes, so if you can't eat something, tell me now。提那張單子是要讓學員確認食材，對應選項 A。這是「為何提及」的意圖題，線索在 so 之後的目的句，不在 sheet 這個字本身；講者提過 six-week course，但那張單子跟課表無關，選項 C 是把兩件事湊在一起。"
       }
     ],
-    "transcriptZh": "各位晚安,歡迎來到 Corner Kitchen 上第一堂課。我是 Daniel,這六週的課都由我來帶。\n今天晚上我們先做簡單的——煮湯,還有現做的麵包。需要的東西都已經放在你的桌上了,所以不用自己帶工具來。\n開始之前,頭髮長的請先綁起來,然後到後面的水槽洗手。另外,看一下你面前那張單子,上面寫了今晚兩道菜的材料。如果有你不能吃的東西,現在跟我說,我幫你換掉。"
+    "transcriptZh": "各位晚安，歡迎來到 Corner Kitchen 上第一堂課。我是 Daniel，這六週的課都由我來帶。\n今天晚上我們先做簡單的——煮湯，還有現做的麵包。需要的東西都已經放在你的桌上了，所以不用自己帶工具來。\n開始之前，頭髮長的請先綁起來，然後到後面的水槽洗手。另外，看一下你面前那張單子，上面寫了今晚兩道菜的材料。如果有你不能吃的東西，現在跟我說，我幫你換掉。"
   },
   {
     "id": "l4-43",
@@ -101,7 +101,7 @@
           "The bus company is moving."
         ],
         "answer": 1,
-        "explanation": "定位在 because the city is repairing Market Street。repairing a street 就是道路施工,對應選項 B 的 Road work。選項 C 的「加新站」把後面的「取消一站」聽反了。"
+        "explanation": "定位在 because the city is repairing Market Street。repairing a street 就是道路施工，對應選項 B 的 Road work。選項 C 的「加新站」把後面的「取消一站」聽反了。"
       },
       {
         "q": "Which stop will be closed?",
@@ -112,7 +112,7 @@
           "The stop by the post office"
         ],
         "answer": 3,
-        "explanation": "定位在 the stop in front of the post office won't be in service for about three weeks。won't be in service 就是停止停靠,對應選項 D。train station 是接回原路線的地方,Pine 街和銀行是替代站,三個地名都在原文出現過,是典型的同場景誘答。"
+        "explanation": "定位在 the stop in front of the post office won't be in service for about three weeks。won't be in service 就是停止停靠，對應選項 D。train station 是接回原路線的地方，Pine 街和銀行是替代站，三個地名都在原文出現過，是典型的同場景誘答。"
       },
       {
         "q": "According to the speaker, what will stay the same?",
@@ -123,10 +123,10 @@
           "The number of stops on the route"
         ],
         "answer": 2,
-        "explanation": "定位在最後一句 The change doesn't affect our times, so buses should still reach the station on schedule。doesn't affect our times 加上 on schedule,不變的就是抵達時間,對應選項 C。選項 D 剛好相反——郵局那站停用三個星期,停靠站數是有變的;票價和班次密度全篇沒提。"
+        "explanation": "定位在最後一句 The change doesn't affect our times, so buses should still reach the station on schedule。doesn't affect our times 加上 on schedule，不變的就是抵達時間，對應選項 C。選項 D 剛好相反——郵局那站停用三個星期，停靠站數是有變的；票價和班次密度全篇沒提。"
       }
     ],
-    "transcriptZh": "這是給搭乘八號公車乘客的服務通知。從下週一開始,我們在市中心這一段會改走別的路線,因為市政府要整修 Market 街。\n所以我們不會在 Market 街轉彎,而是直接沿著 Pine 街走,到火車站再接回原本的路線。也就是說,郵局前面那一站大概三個星期不會停靠。如果你平常在那站上下車,最近的一站在 Pine 街,就在銀行旁邊。\n造成不便,我們很抱歉。這次改道不會影響時間,公車還是會照原本的時刻抵達火車站。"
+    "transcriptZh": "這是給搭乘八號公車乘客的服務通知。從下週一開始，我們在市中心這一段會改走別的路線，因為市政府要整修 Market 街。\n所以我們不會在 Market 街轉彎，而是直接沿著 Pine 街走，到火車站再接回原本的路線。也就是說，郵局前面那一站大概三個星期不會停靠。如果你平常在那站上下車，最近的一站在 Pine 街，就在銀行旁邊。\n造成不便，我們很抱歉。這次改道不會影響時間，公車還是會照原本的時刻抵達火車站。"
   },
   {
     "id": "l4-44",
@@ -144,7 +144,7 @@
           "Send in a paper form"
         ],
         "answer": 2,
-        "explanation": "定位在 you have to sign up online by this Friday。sign up online 就是線上登記,對應選項 C。後一句 We can't add names after that 再次確認這是截止日。選項 A 與原文 it's free 直接衝突,選項 D 的紙本表格則是把 online 聽反。"
+        "explanation": "定位在 you have to sign up online by this Friday。sign up online 就是線上登記，對應選項 C。後一句 We can't add names after that 再次確認這是截止日。選項 A 與原文 it's free 直接衝突，選項 D 的紙本表格則是把 online 聽反。"
       },
       {
         "q": "Where will the health checks take place?",
@@ -155,7 +155,7 @@
           "In the front lobby"
         ],
         "answer": 0,
-        "explanation": "定位在 they'll set up in the training room on the second floor。地點講得很明確,對應選項 A。選項 B 是靠「健檢要去診所」的常識亂猜,原文說的是護理人員到公司來 (will be here)。"
+        "explanation": "定位在 they'll set up in the training room on the second floor。地點講得很明確，對應選項 A。選項 B 是靠「健檢要去診所」的常識亂猜，原文說的是護理人員到公司來 (will be here)。"
       },
       {
         "q": "Why do most people choose a morning appointment?",
@@ -166,10 +166,10 @@
           "Parking is easier in the morning."
         ],
         "answer": 1,
-        "explanation": "定位在 Don't eat anything for eight hours before your visit, so most people sign up for a morning time。so 之前是原因:檢查前八小時不能進食,挑早上的時段比較好安排,對應選項 B。這題要把因果兩句串起來,不是單句聽寫。"
+        "explanation": "定位在 Don't eat anything for eight hours before your visit, so most people sign up for a morning time。so 之前是原因：檢查前八小時不能進食，挑早上的時段比較好安排，對應選項 B。這題要把因果兩句串起來，不是單句聽寫。"
       }
     ],
-    "transcriptZh": "在今天的會議結束之前,我想說明一下公司下個月要辦的健康檢查。\n會有一組護理人員在四號和五號到公司來,地點在二樓的教育訓練室。整個檢查大概半小時,全體同仁都免費。\n這裡有個大家常常漏掉的部分——你必須在這個星期五之前上網登記。過了就沒辦法再加名單了,因為護理人員要照我們報的人數帶器材過來。\n還有一點。檢查前八小時不能吃東西,所以大部分的人都會挑早上的時段。"
+    "transcriptZh": "在今天的會議結束之前，我想說明一下公司下個月要辦的健康檢查。\n會有一組護理人員在四號和五號到公司來，地點在二樓的教育訓練室。整個檢查大概半小時，全體同仁都免費。\n這裡有個大家常常漏掉的部分——你必須在這個星期五之前上網登記。過了就沒辦法再加名單了，因為護理人員要照我們報的人數帶器材過來。\n還有一點。檢查前八小時不能吃東西，所以大部分的人都會挑早上的時段。"
   },
   {
     "id": "l4-45",
@@ -187,7 +187,7 @@
           "At the parking area"
         ],
         "answer": 1,
-        "explanation": "定位在 We'll start at the barn, then walk out to the fields, and finish at the shop。finish at 標示的就是結束地點,對應選項 B。barn 是起點、fields 是中途,順序聽混就會選錯。"
+        "explanation": "定位在 We'll start at the barn, then walk out to the fields, and finish at the shop。finish at 標示的就是結束地點，對應選項 B。barn 是起點、fields 是中途，順序聽混就會選錯。"
       },
       {
         "q": "Why does the speaker mention last night's rain?",
@@ -198,7 +198,7 @@
           "To say the tour will be shorter"
         ],
         "answer": 0,
-        "explanation": "定位在 the path past the barn gets muddy after rain, and it rained pretty hard last night,接著她給出 a longer way around 這個替代路線。提下雨是要提醒那條小路現在不好走,對應選項 A。這是意圖題,線索在前後兩句的關係;單抓 rain 這個字反而會被選項 C 的雨傘拐走,而且雨是昨晚下的,現在沒在下。"
+        "explanation": "定位在 the path past the barn gets muddy after rain, and it rained pretty hard last night，接著她給出 a longer way around 這個替代路線。提下雨是要提醒那條小路現在不好走，對應選項 A。這是意圖題，線索在前後兩句的關係；單抓 rain 這個字反而會被選項 C 的雨傘拐走，而且雨是昨晚下的，現在沒在下。"
       },
       {
         "q": "What does the speaker ask the listeners not to do?",
@@ -209,9 +209,9 @@
           "Give food to the animals"
         ],
         "answer": 3,
-        "explanation": "定位在最後一句 They're friendly, but please don't feed them anything from your bag。don't feed 就是不要餵食,對應選項 D。前半句說山羊很親人、會自己靠過來,所以選項 A 的「不要碰」與語氣正好相反。"
+        "explanation": "定位在最後一句 They're friendly, but please don't feed them anything from your bag。don't feed 就是不要餵食，對應選項 D。前半句說山羊很親人、會自己靠過來，所以選項 A 的「不要碰」與語氣正好相反。"
       }
     ],
-    "transcriptZh": "各位早安,歡迎來到 Hillside 農場。我是 Paula,接下來兩個小時由我帶大家參觀。\n我們先從穀倉開始,接著走到田裡,最後在農場商店結束,你們可以在那邊試吃我們自己做的起司。\n這邊我要先提醒一下——穀倉後面那條小路下過雨會很泥濘,昨天晚上雨下得滿大的。如果你不想走那條,還有一條比較遠的路可以繞過去,走大馬路,等一下到了我會指給大家看。\n喔對了,山羊會直接靠過來。牠們很親人,不過請不要拿包包裡的東西餵牠們。"
+    "transcriptZh": "各位早安，歡迎來到 Hillside 農場。我是 Paula，接下來兩個小時由我帶大家參觀。\n我們先從穀倉開始，接著走到田裡，最後在農場商店結束，你們可以在那邊試吃我們自己做的起司。\n這邊我要先提醒一下——穀倉後面那條小路下過雨會很泥濘，昨天晚上雨下得滿大的。如果你不想走那條，還有一條比較遠的路可以繞過去，走大馬路，等一下到了我會指給大家看。\n喔對了，山羊會直接靠過來。牠們很親人，不過請不要拿包包裡的東西餵牠們。"
   }
 ]

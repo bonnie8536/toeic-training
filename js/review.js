@@ -57,15 +57,15 @@
     root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
       h('div', { class: 'part-card' },
         h('p', null, items.length
-          ? '待複習 ' + items.length + ' 題(Part 5、聽力 Part 1/2、片語)。'
+          ? '待複習 ' + items.length + ' 題（Part 5、聽力 Part 1/2、片語）。'
           : '目前沒有待複習的單題。'),
         h('div', { class: 'cfg-row' },
-          items.length ? h('button', { class: 'btn primary', onclick: () => runner(todo) }, '開始複習(' + todo.length + ' 題)') : null))));
+          items.length ? h('button', { class: 'btn primary', onclick: () => runner(todo) }, '開始複習（' + todo.length + ' 題）') : null))));
 
     const links = [];
     if (c.sets) links.push(['閱讀題組錯題 ' + c.sets + ' 組', 'practice.html']);
     if (c.lsets) links.push(['聽力對話/獨白錯題 ' + c.lsets + ' 組', 'practice.html']);
-    if (c.vocab) links.push(['單字漏接 ' + c.vocab + ' 個(玩一場優先出)', 'vocab.html']);
+    if (c.vocab) links.push(['單字漏接 ' + c.vocab + ' 個（玩一場優先出）', 'vocab.html']);
     if (c.grammar) links.push(['文法課有錯題的單元 ' + c.grammar + ' 課', 'grammar.html']);
     if (links.length) {
       root.append(h('div', { class: 'exercise-head' }, h('h2', null, '其他待複習')));
@@ -160,8 +160,8 @@
             const ok = grade(q, oi, opts);
             settle(item, ok);
             result.append(h('div', { class: 'explain' },
-              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了,移出錯題本' : '再想想,正確是 ' + LETTERS[q.answer]),
-              h('div', null, q.explanation), h('div', { class: 'tr' }, '句意:' + q.translation)), next(isLast));
+              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了，移出錯題本' : '再想想，正確是 ' + LETTERS[q.answer]),
+              h('div', null, q.explanation), h('div', { class: 'tr' }, '句意：' + q.translation)), next(isLast));
           }), result);
       } else if (item.kind === 'ph') {
         block.append(
@@ -172,7 +172,7 @@
             const ok = grade(q.quiz, oi, opts);
             settle(item, ok);
             result.append(h('div', { class: 'explain' },
-              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了,移出錯題本' : '再想想,正確是 ' + LETTERS[q.quiz.answer]),
+              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了，移出錯題本' : '再想想，正確是 ' + LETTERS[q.quiz.answer]),
               h('div', null, q.quiz.explanation)),
               h('div', { class: 'phrase-card' },
                 h('div', { class: 'pc-head' }, h('b', null, q.phrase), h('span', null, q.zh)),
@@ -196,13 +196,13 @@
         }
         block.append(h('div', { class: 'player' }, playBtn),
           h('div', { class: 'q-text', style: 'margin-top:10px' },
-            item.kind === 'l1' ? '選出最符合照片的描述:' : '選出最合適的回應:'),
+            item.kind === 'l1' ? '選出最符合照片的描述：' : '選出最合適的回應：'),
           optButtons(q, (oi, opts) => {
             if (done) return; done = true;
             const ok = grade(q, oi, opts, true);
             settle(item, ok);
             result.append(h('div', { class: 'explain' },
-              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了,移出錯題本' : '再想想,正確是 ' + LETTERS[q.answer]),
+              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了，移出錯題本' : '再想想，正確是 ' + LETTERS[q.answer]),
               h('div', null, q.explanation)),
               h('div', { class: 'transcript-box' }, h('b', null, '逐字稿'),
                 h('div', { class: 'tr-en' }, (q.question ? q.question + '\n' : '') + q.options.map((o, oi2) => LETTERS[oi2] + '. ' + o).join('\n')),

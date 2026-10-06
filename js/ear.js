@@ -9,15 +9,15 @@
 
   if (!E || !E.dictation || !E.dictation.length) {
     root.append(h('div', { class: 'q-block', style: 'margin-top:30px' },
-      '聽力訓練教材尚未載入(內容生成中,稍後再來)。'));
+      '聽力訓練教材尚未載入（內容生成中，稍後再來）。'));
     return;
   }
 
   const SECTIONS = {
-    s: { key: 'ear_s', title: '句子跟讀', items: E.shadow || E.dictation, desc: '聽完跟著唸出來,每句兩遍。', per: 5 },
+    s: { key: 'ear_s', title: '句子跟讀', items: E.shadow || E.dictation, desc: '聽完跟著唸出來，每句兩遍。', per: 5 },
     d: { key: 'ear_d', title: '句子聽寫', items: E.dictation, desc: '', per: 5 },
     mp: { key: 'ear_mp', title: '相似音辨析', items: E.pairs, desc: '', per: 10 },
-    n: { key: 'ear_n', title: '數字與價格', items: E.numbers, desc: 'thirteen 還是 thirty;時間、金額、分機。', per: 10 },
+    n: { key: 'ear_n', title: '數字與價格', items: E.numbers, desc: 'thirteen 還是 thirty；時間、金額、分機。', per: 10 },
   };
 
   function stats(sec) {
@@ -104,9 +104,9 @@
         const counts = {};
         d.items.forEach(q => { counts[q.level] = (counts[q.level] || 0) + 1; });
         const lvSel = h('select', { class: 'cfg-select' },
-          [['全部', '混搭(全部)'], ['初級', '初級'], ['中級', '中級'], ['進階', '進階']]
+          [['全部', '混搭（全部）'], ['初級', '初級'], ['中級', '中級'], ['進階', '進階']]
             .filter(([v]) => v === '全部' || counts[v])
-            .map(([v, t]) => h('option', { value: v }, t + (v !== '全部' ? '(' + counts[v] + ')' : ''))));
+            .map(([v, t]) => h('option', { value: v }, t + (v !== '全部' ? '（' + counts[v] + '）' : ''))));
         return h('div', { class: 'part-card' },
           h('h3', null, d.title),
           d.desc ? h('p', null, d.desc) : null,
@@ -117,7 +117,7 @@
             h('a', {
               class: 'btn primary', href: 'listening.html?sec=' + k,
               onclick: e => { e.currentTarget.href = 'listening.html?sec=' + k + '&lv=' + encodeURIComponent(lvSel.value); },
-            }, '開始一輪(' + d.per + ' 題)')));
+            }, '開始一輪 ' + d.per + ' 題')));
       })));
   }
 
@@ -194,9 +194,9 @@
         }
         const seq = [
           () => { setStage('仔細聽…'); playStage(en); },
-          () => { setStage('換你唸!', true); timer = setTimeout(step, pauseLen()); },
+          () => { setStage('換你唸！', true); timer = setTimeout(step, pauseLen()); },
           () => { setStage('再聽一次…'); playStage(en); },
-          () => { setStage('再唸一次!', true); timer = setTimeout(step, pauseLen()); },
+          () => { setStage('再唸一次！', true); timer = setTimeout(step, pauseLen()); },
           () => { setStage('中文確認'); playStage(zh); },
           finish,
         ];
@@ -210,13 +210,13 @@
           a.onerror = go;
           try { a.currentTime = 0; } catch (e) { /* 尚未載入 */ }
           const p = a.play();
-          if (p && p.catch) p.catch(() => { setStage('音檔播放失敗,直接往下'); timer = setTimeout(go, 800); });
+          if (p && p.catch) p.catch(() => { setStage('音檔播放失敗，直接往下'); timer = setTimeout(go, 800); });
           timer = setTimeout(go, 20000);
         }
         step();
       }
       function finish() {
-        setStage('完成!');
+        setStage('完成！');
         results[cur] = true;
         save('s', q.id, true);
         startBtn.disabled = false;
@@ -288,7 +288,7 @@
         result.append(
           h('div', { class: 'explain' },
             h('div', { class: 'verdict ' + (perfect ? 'ok' : 'bad') },
-              perfect ? '完全正確!' : '對了 ' + hits + '/' + ansWords.length + ' 個字'),
+              perfect ? '完全正確！' : '對了 ' + hits + '/' + ansWords.length + ' 個字'),
             h('div', { class: 'dict-diff' },
               diff.map(x => h('span', { class: 'dict-word ' + (x.hit ? 'hit' : 'miss') }, x.w))),
             q.note && q.note !== '無' ? h('div', { class: 'tr' }, q.note) : null,
@@ -318,7 +318,7 @@
             });
             result.append(
               h('div', { class: 'explain' },
-                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了,是 ' + q.options[q.answer]),
+                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了，是 ' + q.options[q.answer]),
                 h('div', null, q.note),
                 h('div', { class: 'tr' }, q.audioText + '\n' + q.zh)),
               nextRow(true));
@@ -327,7 +327,7 @@
       });
       root.append(h('div', { class: 'q-block' },
         player.el,
-        h('div', { class: 'q-text', style: 'margin-top:8px' }, '句子裡出現的是哪個字?'),
+        h('div', { class: 'q-text', style: 'margin-top:8px' }, '句子裡出現的是哪個字？'),
         btns, result), nextRow(false));
     }
 
@@ -353,7 +353,7 @@
             });
             result.append(
               h('div', { class: 'explain' },
-                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了,正確是 ' + q.options[q.answer]),
+                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了，正確是 ' + q.options[q.answer]),
                 h('div', null, q.note),
                 h('div', { class: 'tr' }, q.audioText + '\n' + q.zh)),
               nextRow(true));
@@ -372,7 +372,7 @@
       const ok = results.filter(Boolean).length;
       const note = ok === list.length ? '' : '答錯的下一輪優先出現。';
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-        h('h2', null, d.title + ':' + ok + ' / ' + list.length),
+        h('h2', null, d.title + '：' + ok + ' / ' + list.length),
         note ? h('div', { class: 'band-note' }, note) : null));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', onclick: () => startRound(sec) }, '再來一輪'),

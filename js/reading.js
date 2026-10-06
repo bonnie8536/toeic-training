@@ -8,7 +8,7 @@
 
   if (!articles.length) {
     root.append(h('div', { class: 'q-block', style: 'margin-top:30px' },
-      '文章資料尚未載入。請確認 data/articles.js 存在(執行 tools/merge_data.py 產生)。'));
+      '文章資料尚未載入。請確認 data/articles.js 存在（執行 tools/merge_data.py 產生）。'));
     return;
   }
 
@@ -285,7 +285,7 @@
         span.classList.remove('gap');
         span.classList.add('done');
         span.textContent = surface;   // 本文恢復原文英文,填的內容存在卡片裡
-        showTranslationPop(span, surface, entry, idx, '已填入!');
+        showTranslationPop(span, surface, entry, idx, '已填入！');
       }
     }
 
@@ -295,7 +295,7 @@
       const typed = st.t;
       const differs = typed && typed.toLowerCase().trim() !== surface.toLowerCase();
       const baseNote = entry.base && entry.base.toLowerCase() !== surface.toLowerCase()
-        ? h('span', { class: 'base' }, '(原形 ' + entry.base + ')') : null;
+        ? h('span', { class: 'base' }, '（原形 ' + entry.base + '）') : null;
       openPop(span, [
         okMsg ? h('div', { class: 'pop-ok' }, okMsg) : null,
         typed
@@ -318,7 +318,7 @@
               span.classList.remove('done');
               span.textContent = surface;
             },
-          }, '清除,重新練習')),
+          }, '清除，重新練習')),
       ]);
     }
 
@@ -350,7 +350,7 @@
         }, '重做全部題目'),
         answered === a.questions.length
           ? h('span', { class: 'result-note', style: 'align-self:center' },
-              '本篇成績:' + correct + '/' + a.questions.length)
+              '本篇成績：' + correct + '/' + a.questions.length)
           : null);
       list.append(foot);
     }
@@ -383,7 +383,7 @@
       if (done) {
         block.append(h('div', { class: 'explain' },
           h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
-            chosen === q.answer ? '答對了' : '答錯了,正確答案是 ' + LETTERS[q.answer]),
+            chosen === q.answer ? '答對了' : '答錯了，正確答案是 ' + LETTERS[q.answer]),
           h('div', null, q.explanation)));
       }
       return block;
@@ -397,7 +397,7 @@
     const bid = 'art_' + a.id;
     let bank = banks.find(b => b.id === bid);
     if (!bank) { bank = { id: bid, name: '', words: [] }; banks.push(bank); }
-    bank.name = ('文章:' + a.titleZh).slice(0, 20);
+    bank.name = ('文章：' + a.titleZh).slice(0, 20);
     (a.vocab || []).forEach(v => {
       const en = v.base || v.word;
       if (!en || en.length > 30) return;
@@ -406,7 +406,7 @@
       else bank.words.push({ en, zh: v.zh, on: true });
     });
     store.set('vgame_banks', banks);
-    btn.textContent = '已存入題庫(' + bank.words.length + ' 字)';
+    btn.textContent = '已存入題庫（' + bank.words.length + ' 字）';
     btn.classList.add('on');
     if (!btn.nextElementSibling || !btn.nextElementSibling.classList.contains('bank-golink')) {
       btn.after(h('a', { class: 'bank-golink', href: 'vocab.html' }, '去單字訓練'));
@@ -434,7 +434,7 @@
     const area = h('div', { class: 'tq-area' });
     wrap.append(
       h('p', { class: 'result-note' },
-        '同一批單字換一篇文章。字卡拖進空格,或先點字卡再點空格。'
+        '同一批單字換一篇文章。字卡拖進空格，或先點字卡再點空格。'
         + (last ? '上次成績 ' + last.score + '/' + last.total + '。' : '')),
       area);
 
@@ -556,7 +556,7 @@
             const okB = word === answers[bi];
             cls += okB ? ' ok' : ' bad';
             if (okB) nodes.push(word);
-            else { nodes.push(h('s', null, word || '(空)'), ' ' + answers[bi]); }
+            else { nodes.push(h('s', null, word || '（空）'), ' ' + answers[bi]); }
           } else nodes.push(word || '');
           const blankBtn = h('button', {
             class: cls, type: 'button', 'data-bi': String(bi),
@@ -583,10 +583,10 @@
             class: 'btn primary', type: 'button',
             disabled: filledN < answers.length ? '' : null,
             onclick: submit,
-          }, filledN < answers.length ? '交卷對答案(還有 ' + (answers.length - filledN) + ' 格)' : '交卷對答案')));
+          }, filledN < answers.length ? '交卷對答案（還有 ' + (answers.length - filledN) + ' 格）' : '交卷對答案')));
       } else {
         const score = answers.filter((w, bi) => placed[bi] === w).length;
-        area.append(h('div', { class: 'tq-result' }, '成績:' + score + '/' + answers.length));
+        area.append(h('div', { class: 'tq-result' }, '成績：' + score + '/' + answers.length));
         const zhWrap = h('div', { class: 'tq-zh' });
         String(tr.passageZh).split(/\n{2,}/).forEach(z => zhWrap.append(h('p', null, z)));
         const words = h('div', { class: 'tq-review' });

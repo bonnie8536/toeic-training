@@ -13,7 +13,7 @@
   const KEY = p => 'drill_p' + p;
 
   if (!DATA['5'].items.length) {
-    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '題庫尚未載入(請執行 tools/merge_data.py)。'));
+    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '題庫尚未載入（請執行 tools/merge_data.py）。'));
     return;
   }
 
@@ -88,7 +88,7 @@
 
     function sizeLabel(p, n) {
       if (p === '5') return n + ' 題';
-      return n + ' 組(' + (p === '6' ? n * 4 + ' 題' : '約 ' + n * 4 + '-' + n * 5 + ' 題') + ')';
+      return n + ' 組（' + (p === '6' ? n * 4 + ' 題' : '約 ' + n * 4 + '-' + n * 5 + ' 題') + '）';
     }
 
     const rows = ['5', '6', '7'].map(p => {
@@ -245,7 +245,7 @@
     if (!rec) return null;
     const box = h('div', { class: 'explain' },
       h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-        rec.ok ? '答對了' : (rec.c === -1 ? '未作答,正確答案是 ' : '答錯了,正確答案是 ') + LETTERS[q.answer]),
+        rec.ok ? '答對了' : (rec.c === -1 ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
       h('div', null, q.explanation));
     if (extraTr) box.append(h('div', { class: 'tr' }, extraTr));
     const gl = q.category && GRAMMAR_LINK[q.category];
@@ -309,7 +309,7 @@
       return;
     }
     const sub = config.map(c =>
-      'Part ' + c.p + ' × ' + c.n + ' ' + DATA[c.p].unit + (c.cat && c.cat !== 'all' ? '(' + c.cat + ')' : '')).join(' · ');
+      'Part ' + c.p + ' × ' + c.n + ' ' + DATA[c.p].unit + (c.cat && c.cat !== 'all' ? '（' + c.cat + '）' : '')).join(' · ');
     /* 交卷式:作答期間只記選擇不對答,交卷後一次看成績+逐題檢討(她指定的流程) */
     const session = { answers: {} };   // p5 單元:{c};p6/7 單元:{qKey:{c}};交卷後補 ok
     const okFlags = [];
@@ -383,7 +383,7 @@
 
     function submit() {
       const missing = units.filter((u, i) => !unitAnswered(i)).length;
-      if (missing && !confirm('還有 ' + missing + ' 個單元沒答完,確定要交卷嗎?未作答的算錯。')) return;
+      if (missing && !confirm('還有 ' + missing + ' 個單元沒答完，確定要交卷嗎？未作答的算錯。')) return;
       /* 統一批改+寫入紀錄(只記有作答的) */
       units.forEach((u, i) => {
         if (u.p === '5') {
@@ -509,7 +509,7 @@
 
     function draw() {
       root.innerHTML = '';
-      root.append(topBar(d.title + ' 錯題本', '共 ' + units.length + ' ' + d.unit + ',答對就移出'));
+      root.append(topBar(d.title + ' 錯題本', '共 ' + units.length + ' ' + d.unit + '，答對就移出'));
       root.append(sessionDots(units, cur, okFlags));
       if (p === '5') drawP5(); else drawSet();
     }
@@ -541,7 +541,7 @@
           draw();
         }),
         explainBox(q, rec, rec ? q.translation : null),
-        rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已答對,移出錯題本。') : null));
+        rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已答對，移出錯題本。') : null));
       root.append(nextRow(!!rec, cur === units.length - 1));
     }
 
@@ -573,7 +573,7 @@
             draw();
           }),
           explainBox(q, rec),
-          rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已答對,移出錯題本。') : null));
+          rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已答對，移出錯題本。') : null));
       });
       layout.append(qCol);
       root.append(layout);
@@ -593,7 +593,7 @@
       root.append(topBar(d.title + ' 錯題本'));
       root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
         h('h2', null, '移出 ' + cleared + ' 題'),
-        h('div', { class: 'band-note' }, '沒答對的留在錯題本,隔天再試。')));
+        h('div', { class: 'band-note' }, '沒答對的留在錯題本，隔天再試。')));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('a', { class: 'btn primary', href: 'practice.html' }, '回題庫')));
       window.scrollTo(0, 0);
@@ -613,7 +613,7 @@
       const q = set.questions.find(x => x.num === num);
       const rec = q ? sess[qid(set, q, 0)] : null;
       if (rec && graded) {
-        frag.append(h('span', { class: 'gap-mark answered', title: rec.ok ? '' : '(答錯,顯示正解)' }, q.options[q.answer]));
+        frag.append(h('span', { class: 'gap-mark answered', title: rec.ok ? '' : '（答錯，顯示正解）' }, q.options[q.answer]));
       } else if (rec && rec.c !== undefined && rec.c > -1) {
         /* 作答中:顯示自己選的,不透露對錯 */
         frag.append(h('span', { class: 'gap-mark filled' }, q.options[rec.c]));

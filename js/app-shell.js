@@ -97,8 +97,8 @@
       /* prompt() 回傳 Promise,失敗多半是非同步 reject,try/catch 接不到,要另外 catch */
       try {
         const p = e.prompt();
-        if (p && p.catch) p.catch(function (err) { console.warn('安裝視窗打不開:', err); });
-      } catch (err) { console.warn('安裝視窗打不開:', err); return; }
+        if (p && p.catch) p.catch(function (err) { console.warn('安裝視窗打不開：', err); });
+      } catch (err) { console.warn('安裝視窗打不開：', err); return; }
       if (e.userChoice) e.userChoice.catch(function () {});
       return;
     }
@@ -239,7 +239,7 @@
             return Promise.all(names.filter(function (n) { return n.indexOf('ss-') === 0; })
               .map(function (n) { return caches.delete(n); }));
           })
-          .catch(function (err) { console.warn('service worker 註銷失敗:', err); });
+          .catch(function (err) { console.warn('service worker 註銷失敗：', err); });
         return;
       }
       navigator.serviceWorker.register('/sw.js', { scope: '/', updateViaCache: 'none' }).then(function (reg) {
@@ -247,7 +247,7 @@
         doc.addEventListener('visibilitychange', function () {
           if (doc.visibilityState === 'visible') reg.update().catch(function () {});
         });
-      }).catch(function (err) { console.warn('service worker 註冊失敗:', err); });
+      }).catch(function (err) { console.warn('service worker 註冊失敗：', err); });
     });
   }
 
@@ -255,7 +255,7 @@
   if (STANDALONE) {
     doc.addEventListener('touchstart', function () {}, { passive: true });   // iOS 要有觸控監聽,分頁和返回鍵的 :active 按下效果才會出現
     try { buildShell(); }
-    catch (err) { html.classList.remove('app-shell'); console.warn('App 外殼建立失敗,改用網站版面:', err); }
+    catch (err) { html.classList.remove('app-shell'); console.warn('App 外殼建立失敗，改用網站版面：', err); }
     window.APP_SHELL_OK = true;
   }
   registerSW();

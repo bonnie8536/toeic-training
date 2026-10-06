@@ -9,7 +9,7 @@
 
   if (!W || !W.l1) {
     root.append(h('div', { class: 'q-block', style: 'margin-top:30px' },
-      '寫作教材尚未載入。請確認 data/writing.js 存在(執行 tools/merge_data.py 產生)。'));
+      '寫作教材尚未載入。請確認 data/writing.js 存在（執行 tools/merge_data.py 產生）。'));
     return;
   }
 
@@ -71,7 +71,7 @@
     document.title = '寫作練習|刷刷英文';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '寫作練習'),
-      h('p', null, '寫的內容會自動保存,老師看得到。')));
+      h('p', null, '寫的內容會自動保存，老師看得到。')));
     root.append(h('div', { class: 'part-cards' },
       ['l1', 'l2', 'l3'].map(k => {
         const units = unitsOf(k);
@@ -146,7 +146,7 @@
       idx > 0 ? h('a', { class: 'btn', href: 'writing.html?level=' + lv + '&u=' + (idx - 1) }, '← 上一步') : null,
       idx < units.length - 1
         ? h('a', { class: 'btn primary', href: 'writing.html?level=' + lv + '&u=' + (idx + 1) }, '下一步 →')
-        : h('a', { class: 'btn primary', href: 'writing.html?level=' + lv }, '最後一個單元了,回列表')));
+        : h('a', { class: 'btn primary', href: 'writing.html?level=' + lv }, '最後一個單元了，回列表')));
   }
 
   /* ---------- 技巧課(整頁,寬鬆排版) ---------- */
@@ -191,7 +191,7 @@
       block.innerHTML = '';
       block.append(
         h('h2', { class: 'unit-title-lg' }, title),
-        h('div', { class: 'q-text' }, '中文意思:', s.zh));
+        h('div', { class: 'q-text' }, '中文意思：', s.zh));
       if (st[s.id] && st[s.id].ok) {
         block.append(
           h('div', { class: 'assembly done-line' }, s.answer),
@@ -206,12 +206,12 @@
       const assembly = h('div', { class: 'assembly' });
       const tiles = h('div', { class: 'tiles' });
       const msg = h('div', { class: 'pop-msg' });
-      const ansBtn = h('button', { class: 'pop-mini danger', type: 'button', style: 'display:none', onclick: () => { msg.textContent = '正確排列:' + s.answer; msg.style.color = 'var(--ink-light)'; } }, '看答案');
+      const ansBtn = h('button', { class: 'pop-mini danger', type: 'button', style: 'display:none', onclick: () => { msg.textContent = '正確排列：' + s.answer; msg.style.color = 'var(--ink-light)'; } }, '看答案');
       redraw();
 
       function redraw() {
         assembly.innerHTML = '';
-        if (!picked.length) assembly.append(h('span', { class: 'assembly-hint' }, '點下面的單字,排出句子'));
+        if (!picked.length) assembly.append(h('span', { class: 'assembly-hint' }, '點下面的單字，排出句子'));
         picked.forEach((t, pi) => assembly.append(h('button', {
           class: 'tile picked', type: 'button',
           onclick: () => { pool.push(t); picked.splice(pi, 1); redraw(); },
@@ -235,7 +235,7 @@
                 draw();
               } else {
                 attempts++;
-                msg.textContent = '順序不對,再試一次。';
+                msg.textContent = '順序不對，再試一次。';
                 msg.style.color = 'var(--bad)';
                 if (attempts >= 2) ansBtn.style.display = '';
               }
@@ -329,7 +329,7 @@
     return h('div', { class: 'q-block unit-block' },
       h('h2', { class: 'unit-title-lg' }, title),
       h('div', { class: 'q-text' }, b.scenario),
-      h('div', { class: 'kw-row' }, '必須用到:', b.keywords.map(k => h('span', { class: 'kw-chip' }, k))),
+      h('div', { class: 'kw-row' }, '必須用到：', b.keywords.map(k => h('span', { class: 'kw-chip' }, k))),
       wa.ta, wa.bar, rBtn, rBody);
   }
 
@@ -347,7 +347,7 @@
       h('div', { class: 'passage-box letter', style: 'position:static;max-height:none;margin-bottom:14px' },
         h('span', { class: 'p-label' }, '來信'),
         h('div', null, 'From: ' + inc.from + '\nSubject: ' + inc.subject + '\n\n' + inc.body)),
-      h('div', { class: 'task-list' }, h('b', null, '你的回信要做到:'),
+      h('div', { class: 'task-list' }, h('b', null, '你的回信要做到：'),
         h('ol', null, e.tasksZh.map(t => h('li', null, t)))),
       wa.ta, wa.bar, rBtn, rBody);
   }
@@ -375,7 +375,7 @@
       h('h2', { class: 'unit-title-lg' }, title),
       h('div', { class: 'q-text' }, e.question),
       h('div', { class: 'zh', style: 'color:var(--ink-light);font-size:14px;margin:-6px 0 12px' }, e.questionZh),
-      h('div', { class: 'kw-row' }, '可用轉折語:', e.transitions.map(t => h('span', { class: 'kw-chip' }, t))),
+      h('div', { class: 'kw-row' }, '可用轉折語：', e.transitions.map(t => h('span', { class: 'kw-chip' }, t))),
       h('div', { class: 'outline-grid' },
         e.outline.map((o, oi) => h('div', { class: 'outline-cell' },
           h('b', null, o.label,

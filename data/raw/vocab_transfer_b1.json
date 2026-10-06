@@ -141,32 +141,32 @@
    {
     "word": "disruptions",
     "base": "disruption",
-    "zh": "中斷;擾亂"
+    "zh": "中斷；擾亂"
    },
    {
     "word": "reputation",
     "base": "reputation",
-    "zh": "名聲;聲譽"
+    "zh": "名聲；聲譽"
    },
    {
     "word": "revenue",
     "base": "revenue",
-    "zh": "營收;收益"
+    "zh": "營收；收益"
    },
    {
     "word": "negotiated",
     "base": "negotiate",
-    "zh": "協商;談判"
+    "zh": "協商；談判"
    },
    {
     "word": "maintenance",
     "base": "maintenance",
-    "zh": "維修;保養"
+    "zh": "維修；保養"
    },
    {
     "word": "in advance",
     "base": "in advance",
-    "zh": "事先;預先"
+    "zh": "事先；預先"
    },
    {
     "word": "guarantee",
@@ -181,22 +181,22 @@
    {
     "word": "voucher",
     "base": "voucher",
-    "zh": "兌換券;抵用券"
+    "zh": "兌換券；抵用券"
    },
    {
     "word": "compensation",
     "base": "compensation",
-    "zh": "賠償;補償"
+    "zh": "賠償；補償"
    },
    {
     "word": "terminate",
     "base": "terminate",
-    "zh": "終止;結束"
+    "zh": "終止；結束"
    },
    {
     "word": "implemented",
     "base": "implement",
-    "zh": "實施;執行"
+    "zh": "實施；執行"
    }
   ]
  },
@@ -208,12 +208,12 @@
    {
     "word": "attendance",
     "base": "attendance",
-    "zh": "出席人數;參觀人數"
+    "zh": "出席人數；參觀人數"
    },
    {
     "word": "declining",
     "base": "decline",
-    "zh": "下滑;減少"
+    "zh": "下滑；減少"
    },
    {
     "word": "survey",
@@ -223,12 +223,12 @@
    {
     "word": "initiative",
     "base": "initiative",
-    "zh": "新計畫;方案"
+    "zh": "新計畫；方案"
    },
    {
     "word": "launched",
     "base": "launch",
-    "zh": "推出;啟動"
+    "zh": "推出；啟動"
    },
    {
     "word": "sponsorship",
@@ -243,12 +243,12 @@
    {
     "word": "anticipated",
     "base": "anticipate",
-    "zh": "預料;預期"
+    "zh": "預料；預期"
    },
    {
     "word": "capacity",
     "base": "capacity",
-    "zh": "容納量;容量"
+    "zh": "容納量；容量"
    },
    {
     "word": "merchandise",
@@ -258,12 +258,12 @@
    {
     "word": "revenue",
     "base": "revenue",
-    "zh": "收入;營收"
+    "zh": "收入；營收"
    },
    {
     "word": "venue",
     "base": "venue",
-    "zh": "場地;會場"
+    "zh": "場地；會場"
    }
   ]
  },
@@ -2270,7 +2270,7 @@
    {
     "word": "summarize",
     "base": "summarize",
-    "zh": "摘要;概述"
+    "zh": "摘要；概述"
    },
    {
     "word": "draft",
@@ -2305,7 +2305,7 @@
    {
     "word": "policies",
     "base": "policy",
-    "zh": "政策;規定"
+    "zh": "政策；規定"
    },
    {
     "word": "forbid",
@@ -2337,7 +2337,7 @@
    {
     "word": "brittle",
     "base": "brittle",
-    "zh": "脆的;易碎的"
+    "zh": "脆的；易碎的"
    },
    {
     "word": "fragments",
@@ -2377,12 +2377,12 @@
    {
     "word": "filter",
     "base": "filter",
-    "zh": "濾網;過濾器"
+    "zh": "濾網；過濾器"
    },
    {
     "word": "caution",
     "base": "caution",
-    "zh": "謹慎;保留"
+    "zh": "謹慎；保留"
    }
   ]
  },

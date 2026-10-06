@@ -3051,7 +3051,7 @@ TOEIC.part7 = [
      "To announce a change in manufacturing procedures"
     ],
     "answer": 1,
-    "explanation": "定位:第一段第二句「The order was scheduled to reach your Fairview warehouse this Thursday, but I am afraid that we will not be able to meet that date.」全文接著說明延誤原因與補償,故主旨是解釋出貨延遲。(A)錯:信中只提到把運費從發票扣除,未提及收到任何款項。(C)錯:Ferreira 是提供資訊的一方,並未向對方索取訂單細節。(D)錯:鍋爐故障是突發事件,並非製程改變的公告。"
+    "explanation": "定位：第一段第二句「The order was scheduled to reach your Fairview warehouse this Thursday, but I am afraid that we will not be able to meet that date.」全文接著說明延誤原因與補償，故主旨是解釋出貨延遲。(A)錯：信中只提到把運費從發票扣除，未提及收到任何款項。(C)錯：Ferreira 是提供資訊的一方，並未向對方索取訂單細節。(D)錯：鍋爐故障是突發事件，並非製程改變的公告。"
    },
    {
     "q": "What caused the problem at the Bellhaven plant?",
@@ -3062,7 +3062,7 @@ TOEIC.part7 = [
      "A larger than expected number of orders"
     ],
     "answer": 2,
-    "explanation": "定位:第二段第一句「a boiler failure halted the painting line for six days」,鍋爐故障即設備停止運作。(A)錯:全文未提到原料短缺。(B)錯:貨物並未送錯地址,而是尚未出廠。(D)錯:第二段確實提到 backlog(積壓),但那是停工六天造成的結果,不是原因。"
+    "explanation": "定位：第二段第一句「a boiler failure halted the painting line for six days」，鍋爐故障即設備停止運作。(A)錯：全文未提到原料短缺。(B)錯：貨物並未送錯地址，而是尚未出廠。(D)錯：第二段確實提到 backlog（積壓），但那是停工六天造成的結果，不是原因。"
    },
    {
     "q": "What is NOT mentioned in the e-mail?",
@@ -3073,7 +3073,7 @@ TOEIC.part7 = [
      "The total price of the eighteen desk frames"
     ],
     "answer": 3,
-    "explanation": "定位:採刪去法。(A)見第一段「ordered on 20 February」。(B)見第三段「the freight charge of $260」。(C)見第二段「our plant in Bellhaven」。只有十八組桌架的總價全文從未出現,故(D)為未提及者。"
+    "explanation": "定位：採刪去法。(A)見第一段「ordered on 20 February」。(B)見第三段「the freight charge of $260」。(C)見第二段「our plant in Bellhaven」。只有十八組桌架的總價全文從未出現，故(D)為未提及者。"
    },
    {
     "q": "The word \"meet\" in paragraph 1 is closest in meaning to",
@@ -3084,11 +3084,11 @@ TOEIC.part7 = [
      "join"
     ],
     "answer": 0,
-    "explanation": "定位:第一段「we will not be able to meet that date」。此處 meet 搭配 date/deadline,意為「遵守、如期達成」,故 keep to 最貼近。(B)greet 是「問候」,用於人不用於日期。(C)discover 是「發現」,語意不合。(D)join 是「加入」,與期限無關。"
+    "explanation": "定位：第一段「we will not be able to meet that date」。此處 meet 搭配 date/deadline，意為「遵守、如期達成」，故 keep to 最貼近。(B)greet 是「問候」，用於人不用於日期。(C)discover 是「發現」，語意不合。(D)join 是「加入」，與期限無關。"
    }
   ],
   "translation": [
-   "收件者:t.abernathy@crestwoodinteriors.com\n寄件者:n.ferreira@vantagepointsupply.com\n日期:3月3日\n主旨:訂單 48219 — 修訂後的送達日期\n\n親愛的 Abernathy 先生:\n\n我來信是關於 Crestwood Interiors 於 2 月 20 日訂購的十八組可調式桌架。這筆訂單原訂本週四送達貴公司的 Fairview 倉庫,但恐怕我們無法如期達成。\n\n這些桌架在我們位於 Bellhaven 的廠區製造,該廠的鍋爐故障使塗裝線停擺了六天。生產已於週一恢復,積壓的訂單正依收件先後順序陸續消化。您的貨現在預計 3 月 11 日出廠,3 月 14 日送達。\n\n由於延誤完全是我方責任,我已安排將 260 美元的運費從您的發票中扣除。我也請倉儲團隊從展示間備品中保留了六組桌架。除了表面顏色略深之外,這些桌架與您訂購的完全相同;若您在 14 日之前需要現場先有貨可用,我可以明天免費寄出。\n\n請於週五前告知您是否需要這批展示間的桌架。若未收到您的回覆,我將視為您希望等待完整出貨。\n\n造成不便,敬請見諒,並感謝您的耐心。\n\n敬上\n\nNadia Ferreira\n客戶服務部\nVantage Point Supply"
+   "收件者：t.abernathy@crestwoodinteriors.com\n寄件者：n.ferreira@vantagepointsupply.com\n日期：3月3日\n主旨：訂單 48219 — 修訂後的送達日期\n\n親愛的 Abernathy 先生：\n\n我來信是關於 Crestwood Interiors 於 2 月 20 日訂購的十八組可調式桌架。這筆訂單原訂本週四送達貴公司的 Fairview 倉庫，但恐怕我們無法如期達成。\n\n這些桌架在我們位於 Bellhaven 的廠區製造，該廠的鍋爐故障使塗裝線停擺了六天。生產已於週一恢復，積壓的訂單正依收件先後順序陸續消化。您的貨現在預計 3 月 11 日出廠，3 月 14 日送達。\n\n由於延誤完全是我方責任，我已安排將 260 美元的運費從您的發票中扣除。我也請倉儲團隊從展示間備品中保留了六組桌架。除了表面顏色略深之外，這些桌架與您訂購的完全相同；若您在 14 日之前需要現場先有貨可用，我可以明天免費寄出。\n\n請於週五前告知您是否需要這批展示間的桌架。若未收到您的回覆，我將視為您希望等待完整出貨。\n\n造成不便，敬請見諒，並感謝您的耐心。\n\n敬上\n\nNadia Ferreira\n客戶服務部\nVantage Point Supply"
   ]
  },
  {
@@ -3162,7 +3162,7 @@ TOEIC.part7 = [
      "A complaint received from a convention center"
     ],
     "answer": 1,
-    "explanation": "定位:9:42 Raghavan 表示「the crate with the display screens hasn't turned up」,後續訊息全繞著這批未送達的螢幕與應變安排展開。(A)錯:午餐約會只在 9:58 被順帶提到,用來說明 Oyelaran 上午有空。(C)錯:手冊只是要順便帶進會場的物品,不是討論主題。(D)錯:對話中沒有任何來自會展中心的抱怨;三人不滿的對象是未依約卸貨的貨運業者。"
+    "explanation": "定位：9:42 Raghavan 表示「the crate with the display screens hasn't turned up」，後續訊息全繞著這批未送達的螢幕與應變安排展開。(A)錯：午餐約會只在 9:58 被順帶提到，用來說明 Oyelaran 上午有空。(C)錯：手冊只是要順便帶進會場的物品，不是討論主題。(D)錯：對話中沒有任何來自會展中心的抱怨；三人不滿的對象是未依約卸貨的貨運業者。"
    },
    {
     "q": "What does Ms. Oyelaran offer to bring to the hall?",
@@ -3173,7 +3173,7 @@ TOEIC.part7 = [
      "Some printed materials"
     ],
     "answer": 3,
-    "explanation": "定位:10:07 Oyelaran 寫道「I have a box of the printed brochures in my car — shall I bring those in as well?」,即印刷品。(A)錯:螢幕在第二輛卡車上,不在她手上。(B)錯:展板已經送到會場了。(C)錯:全篇未提到任何客戶名單。"
+    "explanation": "定位：10:07 Oyelaran 寫道「I have a box of the printed brochures in my car — shall I bring those in as well?」，即印刷品。(A)錯：螢幕在第二輛卡車上，不在她手上。(B)錯：展板已經送到會場了。(C)錯：全篇未提到任何客戶名單。"
    },
    {
     "q": "At 10:15 A.M., what does Mr. Hale most likely mean when he writes, \"we'll have to think about renting\"?",
@@ -3184,7 +3184,7 @@ TOEIC.part7 = [
      "He plans to look for a different storage facility"
     ],
     "answer": 0,
-    "explanation": "定位:該句緊接在「If those screens aren't here by noon」之後,條件句指向的缺件就是展示螢幕,因此 renting 指改用租借方式取得螢幕。(B)錯:攤位大小從未被討論。(C)錯:卡車是貨運業者的事,他們不需要自己租車。(D)錯:全篇沒有倉儲需求的線索。"
+    "explanation": "定位：該句緊接在「If those screens aren't here by noon」之後，條件句指向的缺件就是展示螢幕，因此 renting 指改用租借方式取得螢幕。(B)錯：攤位大小從未被討論。(C)錯：卡車是貨運業者的事，他們不需要自己租車。(D)錯：全篇沒有倉儲需求的線索。"
    },
    {
     "q": "What is suggested about Ms. Oyelaran?",
@@ -3195,11 +3195,11 @@ TOEIC.part7 = [
      "She has worked at the company longer than Mr. Hale"
     ],
     "answer": 2,
-    "explanation": "定位:9:58 她說「I can rearrange my morning if that helps. I'm not due at the client lunch until one.」可推知她在下午一點之前有空。(A)錯:與貨運業者聯絡的是 Raghavan(問了裝卸區主管)與 Hale(說要再去催)。(B)錯:沒有任何人提及展板是誰設計的。(D)錯:對話中沒有任何資歷或職級的比較。"
+    "explanation": "定位：9:58 她說「I can rearrange my morning if that helps. I'm not due at the client lunch until one.」可推知她在下午一點之前有空。(A)錯：與貨運業者聯絡的是 Raghavan（問了裝卸區主管）與 Hale（說要再去催）。(B)錯：沒有任何人提及展板是誰設計的。(D)錯：對話中沒有任何資歷或職級的比較。"
    }
   ],
   "translation": [
-   "Priya Raghavan(上午 9:42)\n兩位早。我剛到會展中心。展板已經到了,但裝展示螢幕的木箱沒出現。\n\nDominic Hale(上午 9:47)\n這下麻煩了。貨運業者保證八點前全部卸完的。\n\nPriya Raghavan(上午 9:51)\n我問過裝卸區的主管。他說第二輛卡車還在路上,大概十一點左右會到。\n\nMarta Oyelaran(上午 9:58)\n有需要的話我可以調整上午的行程。我到一點才要去和客戶吃午餐。\n\nDominic Hale(上午 10:03)\nMarta,你可以直接去會場、不用進辦公室嗎?不該讓 Priya 一個人組框架。\n\nMarta Oyelaran(上午 10:07)\n我出發了。Priya,我車上有一箱印好的手冊,要不要一起帶進去?\n\nPriya Raghavan(上午 10:11)\n麻煩你了。第一天一箱就很夠了。\n\nDominic Hale(上午 10:15)\n我再去催貨運業者。如果那些螢幕中午還沒到,我們就得考慮用租的了。\n\nMarta Oyelaran(上午 10:19)\n希望不至於走到那一步。待會見。"
+   "Priya Raghavan（上午 9:42）\n兩位早。我剛到會展中心。展板已經到了，但裝展示螢幕的木箱沒出現。\n\nDominic Hale（上午 9:47）\n這下麻煩了。貨運業者保證八點前全部卸完的。\n\nPriya Raghavan（上午 9:51）\n我問過裝卸區的主管。他說第二輛卡車還在路上，大概十一點左右會到。\n\nMarta Oyelaran（上午 9:58）\n有需要的話我可以調整上午的行程。我到一點才要去和客戶吃午餐。\n\nDominic Hale（上午 10:03）\nMarta，你可以直接去會場、不用進辦公室嗎？不該讓 Priya 一個人組框架。\n\nMarta Oyelaran（上午 10:07）\n我出發了。Priya，我車上有一箱印好的手冊，要不要一起帶進去？\n\nPriya Raghavan（上午 10:11）\n麻煩你了。第一天一箱就很夠了。\n\nDominic Hale（上午 10:15）\n我再去催貨運業者。如果那些螢幕中午還沒到，我們就得考慮用租的了。\n\nMarta Oyelaran（上午 10:19）\n希望不至於走到那一步。待會見。"
   ]
  },
  {
@@ -3222,7 +3222,7 @@ TOEIC.part7 = [
      "To introduce a newly appointed building manager"
     ],
     "answer": 0,
-    "explanation": "定位:第一段第一句「the building's three passenger elevators will be modernized one at a time」,全文說明施工期程與對租戶的影響。(B)錯:通知完全沒有提到租金或任何費用。(C)錯:第一段的問卷是去年秋天已完成的,不是邀請填寫。(D)錯:Brackley 只是文末列出的聯絡窗口,並未被介紹為新任人員。"
+    "explanation": "定位：第一段第一句「the building's three passenger elevators will be modernized one at a time」，全文說明施工期程與對租戶的影響。(B)錯：通知完全沒有提到租金或任何費用。(C)錯：第一段的問卷是去年秋天已完成的，不是邀請填寫。(D)錯：Brackley 只是文末列出的聯絡窗口，並未被介紹為新任人員。"
    },
    {
     "q": "According to the notice, why was the project scheduled?",
@@ -3233,7 +3233,7 @@ TOEIC.part7 = [
      "All of the elevators had stopped working"
     ],
     "answer": 2,
-    "explanation": "定位:第一段第二句「in response to the tenant survey conducted last fall, in which waiting times were the most frequently raised concern」,等候時間過長即租戶反映的問題。(A)錯:全文未提及市政府或任何檢查。(B)錯:沒有任何新租戶被提到。(D)錯:第二段說施工期間仍有兩台正常運轉,表示電梯目前可用,只是速度不理想。"
+    "explanation": "定位：第一段第二句「in response to the tenant survey conducted last fall, in which waiting times were the most frequently raised concern」，等候時間過長即租戶反映的問題。(A)錯：全文未提及市政府或任何檢查。(B)錯：沒有任何新租戶被提到。(D)錯：第二段說施工期間仍有兩台正常運轉，表示電梯目前可用，只是速度不理想。"
    },
    {
     "q": "What are tenants asked to do when they expect a large delivery?",
@@ -3244,7 +3244,7 @@ TOEIC.part7 = [
      "Use the rear entrance of the building"
     ],
     "answer": 1,
-    "explanation": "定位:第三段最後一句「Tenants expecting large deliveries are asked to reserve the service elevator through the management office at least two business days in advance.」(A)錯:三樓只是貨梯不停靠的樓層,與通知其他租戶無關。(C)錯:8:30 至 9:30 是提醒高樓層租戶等候較久的時段,並非送貨限制。(D)錯:文中提到的是大廳後方的貨梯,不是建築物後門。"
+    "explanation": "定位：第三段最後一句「Tenants expecting large deliveries are asked to reserve the service elevator through the management office at least two business days in advance.」(A)錯：三樓只是貨梯不停靠的樓層，與通知其他租戶無關。(C)錯：8:30 至 9:30 是提醒高樓層租戶等候較久的時段，並非送貨限制。(D)錯：文中提到的是大廳後方的貨梯，不是建築物後門。"
    },
    {
     "q": "What is NOT stated about the modernization project?",
@@ -3255,11 +3255,11 @@ TOEIC.part7 = [
      "How much the project will cost"
     ],
     "answer": 3,
-    "explanation": "定位:採刪去法。(A)見第四段「weekdays between 9:00 A.M. and 4:00 P.M.」。(B)見第二段「out of service for approximately four weeks」。(C)見第五段「posted in the lobby and sent by e-mail」。工程費用全文從未提及,故(D)為未陳述者。"
+    "explanation": "定位：採刪去法。(A)見第四段「weekdays between 9:00 A.M. and 4:00 P.M.」。(B)見第二段「out of service for approximately four weeks」。(C)見第五段「posted in the lobby and sent by e-mail」。工程費用全文從未提及，故(D)為未陳述者。"
    }
   ],
   "translation": [
-   "全體租戶通知\nKingsway 商務中心 — 電梯更新工程\n公告日期:6 月 5 日\n\n自 6 月 22 日(星期一)起,本大樓三部載客電梯將逐一進行更新。此項工程是依據去年秋季租戶問卷的結果安排的,問卷中被提及次數最多的問題即為等候時間。\n\n每部電梯停用時間約四週。第 1 號梯最先施工,第 2 號梯於 7 月下旬接續,第 3 號梯則於 8 月下旬進行。施工期間其餘兩部電梯照常運轉,惟高樓層租戶在上午 8:30 至 9:30 之間應預期等候時間較長。\n\n工程期間,大廳後方的貨梯開放全體租戶使用。請注意,該梯不停靠三樓。預期有大批貨物送達的租戶,請至少於兩個工作天前透過管理室預約貨梯。\n\n鑽孔噪音將限於平日上午 9:00 至下午 4:00,週末不施工。\n\n各樓層的詳細施工時程將於每階段開始時張貼於大廳並以電子郵件寄送。如有疑問,請洽大樓管理員 Owen Brackley,分機 4120,或來信 obrackley@kingswaycenter.com。\n\n感謝您的配合。"
+   "全體租戶通知\nKingsway 商務中心 — 電梯更新工程\n公告日期：6 月 5 日\n\n自 6 月 22 日（星期一）起，本大樓三部載客電梯將逐一進行更新。此項工程是依據去年秋季租戶問卷的結果安排的，問卷中被提及次數最多的問題即為等候時間。\n\n每部電梯停用時間約四週。第 1 號梯最先施工，第 2 號梯於 7 月下旬接續，第 3 號梯則於 8 月下旬進行。施工期間其餘兩部電梯照常運轉，惟高樓層租戶在上午 8:30 至 9:30 之間應預期等候時間較長。\n\n工程期間，大廳後方的貨梯開放全體租戶使用。請注意，該梯不停靠三樓。預期有大批貨物送達的租戶，請至少於兩個工作天前透過管理室預約貨梯。\n\n鑽孔噪音將限於平日上午 9:00 至下午 4:00，週末不施工。\n\n各樓層的詳細施工時程將於每階段開始時張貼於大廳並以電子郵件寄送。如有疑問，請洽大樓管理員 Owen Brackley，分機 4120，或來信 obrackley@kingswaycenter.com。\n\n感謝您的配合。"
   ]
  },
  {
@@ -3287,7 +3287,7 @@ TOEIC.part7 = [
      "To request a copy of a workbook"
     ],
     "answer": 0,
-    "explanation": "定位:第一封信第四段「Could you tell me which of your programs would suit us, what a session would cost, and how far in advance we would need to book?」,三個問題都指向課程洽詢。(B)錯:參加談判課程的是她的同事,而且信中並無抱怨。(C)錯:同事只是介紹管道,沒有任何既有預約。(D)錯:教材是第二封信提到的內容,她並未索取。"
+    "explanation": "定位：第一封信第四段「Could you tell me which of your programs would suit us, what a session would cost, and how far in advance we would need to book?」，三個問題都指向課程洽詢。(B)錯：參加談判課程的是她的同事，而且信中並無抱怨。(C)錯：同事只是介紹管道，沒有任何既有預約。(D)錯：教材是第二封信提到的內容，她並未索取。"
    },
    {
     "q": "What does Ms. Castellanos indicate about the supervisors?",
@@ -3298,7 +3298,7 @@ TOEIC.part7 = [
      "They attended a negotiation workshop last year"
     ],
     "answer": 2,
-    "explanation": "定位:第一封信第二段「Most of them have never managed a team before」。(A)錯:公司有 Ardmore 與 Selby 兩個廠區,且輪班安排顯示人員分散。(B)錯:全文未提及薪資。(D)錯:去年參加談判課程的是推薦這家顧問公司的那位同事,不是這批主管。"
+    "explanation": "定位：第一封信第二段「Most of them have never managed a team before」。(A)錯：公司有 Ardmore 與 Selby 兩個廠區，且輪班安排顯示人員分散。(B)錯：全文未提及薪資。(D)錯：去年參加談判課程的是推薦這家顧問公司的那位同事，不是這批主管。"
    },
    {
     "q": "Why does Ms. Okonjo suggest running each day of the program twice?",
@@ -3309,7 +3309,7 @@ TOEIC.part7 = [
      "Because only half of the supervisors can be away at one time"
     ],
     "answer": 3,
-    "explanation": "定位:需整合兩封信。第一封信第三段「our supervisors work rotating shifts, so we cannot release more than half of them at any one time」,第二封信第二段呼應「so that no more than sixteen people are away from the floor at once」(32 人的一半)。(A)錯:課程本來就設計成兩整天,重複開班是為了人數而非內容量。(B)錯:全文沒有提到講師人數。(C)錯:行事曆將滿是催促儘早確認的理由,與重複開班無關。"
+    "explanation": "定位：需整合兩封信。第一封信第三段「our supervisors work rotating shifts, so we cannot release more than half of them at any one time」，第二封信第二段呼應「so that no more than sixteen people are away from the floor at once」（32 人的一半）。(A)錯：課程本來就設計成兩整天，重複開班是為了人數而非內容量。(B)錯：全文沒有提到講師人數。(C)錯：行事曆將滿是催促儘早確認的理由，與重複開班無關。"
    },
    {
     "q": "Why will the sessions be held at the Ardmore site?",
@@ -3320,7 +3320,7 @@ TOEIC.part7 = [
      "Rooms there can be hired at a lower price"
     ],
     "answer": 1,
-    "explanation": "定位:需整合兩封信。第一封信第三段「our Selby site has no room large enough for a group of that size; the Ardmore site does」,第二封信第二段則據此表示「We can deliver everything at your Ardmore site」。(A)錯:兩封信都沒有提到顧問公司的所在位置。(C)錯:全文未提及任何整修。(D)錯:第二封信說在自家廠區上課可以省下租場地的費用,而非場地租金較便宜。"
+    "explanation": "定位：需整合兩封信。第一封信第三段「our Selby site has no room large enough for a group of that size; the Ardmore site does」，第二封信第二段則據此表示「We can deliver everything at your Ardmore site」。(A)錯：兩封信都沒有提到顧問公司的所在位置。(C)錯：全文未提及任何整修。(D)錯：第二封信說在自家廠區上課可以省下租場地的費用，而非場地租金較便宜。"
    },
    {
     "q": "According to the second e-mail, what must Brightwater Foods do to secure dates in March?",
@@ -3331,12 +3331,12 @@ TOEIC.part7 = [
      "Sign a two-year agreement"
     ],
     "answer": 0,
-    "explanation": "定位:第二封信第四段「If you can confirm by 25 January, I can hold the last week of March for you.」(B)錯:180 美元是每趟差旅的固定費用,不是訂金。(C)錯:名單從未被要求。(D)錯:信中沒有任何長期合約的條件。"
+    "explanation": "定位：第二封信第四段「If you can confirm by 25 January, I can hold the last week of March for you.」(B)錯：180 美元是每趟差旅的固定費用，不是訂金。(C)錯：名單從未被要求。(D)錯：信中沒有任何長期合約的條件。"
    }
   ],
   "translation": [
-   "收件者:inquiries@lumenfieldtraining.com\n寄件者:h.castellanos@brightwaterfoods.com\n日期:1 月 8 日\n主旨:主管階層的培訓課程\n\n您好:\n\n我是 Brightwater Foods 的人力資源經理,本公司是區域型食品經銷商,在 Ardmore 與 Selby 設有加工廠。是一位去年參加過貴公司談判課程的同事把您的聯絡方式給我的。\n\n我們正在為三十二位新升任的主管規劃一套培訓計畫。他們大多從未帶過團隊,我們最希望處理的面向是給予回饋、處理班表衝突,以及主持簡短的每日會議。\n\n有兩件事讓我們的情況有點棘手。第一,我們的主管採輪班制,因此任何時候都不能同時抽離超過一半的人。第二,Selby 廠沒有容納得下這種規模團體的場地,Ardmore 廠則有。\n\n能否請您告知哪一項課程適合我們、單場費用多少,以及需要提前多久預約?若情況允許,我們希望三月開始。\n\n謝謝您。\n\nHelena Castellanos\n人力資源經理\nBrightwater Foods",
-   "收件者:h.castellanos@brightwaterfoods.com\n寄件者:r.okonjo@lumenfieldtraining.com\n日期:1 月 9 日\n主旨:回覆:主管階層的培訓課程\n\n親愛的 Castellanos 女士:\n\n感謝您的來信。我們的「基層領導」課程涵蓋您列出的三個主題,也是我們最推薦給任職第一年主管的課程。\n\n這套課程為兩個整天,通常相隔兩週。考量您所描述的輪班型態,我建議每一天各開兩梯次,如此同一時間離開現場的人不會超過十六位。所有課程都可以在貴公司 Ardmore 廠進行,替您省下租借場地的費用。\n\n我們的收費為每個授課日 2,400 美元,適用於二十人以內的班級。兩天各開兩梯次,合計為四個授課日。教材與學員手冊已包含在內;差旅費另計,每趟固定 180 美元。\n\n三月是可行的,不過我們的行事曆在年後很快就會排滿。若您能於 1 月 25 日前確認,我可以為您保留三月最後一週。\n\n我很樂意安排一次通話,詳細說明課程大綱。\n\n敬上\n\nRachel Okonjo\n課程總監\nLumenfield Training"
+   "收件者：inquiries@lumenfieldtraining.com\n寄件者：h.castellanos@brightwaterfoods.com\n日期：1 月 8 日\n主旨：主管階層的培訓課程\n\n您好：\n\n我是 Brightwater Foods 的人力資源經理，本公司是區域型食品經銷商，在 Ardmore 與 Selby 設有加工廠。是一位去年參加過貴公司談判課程的同事把您的聯絡方式給我的。\n\n我們正在為三十二位新升任的主管規劃一套培訓計畫。他們大多從未帶過團隊，我們最希望處理的面向是給予回饋、處理班表衝突，以及主持簡短的每日會議。\n\n有兩件事讓我們的情況有點棘手。第一，我們的主管採輪班制，因此任何時候都不能同時抽離超過一半的人。第二，Selby 廠沒有容納得下這種規模團體的場地，Ardmore 廠則有。\n\n能否請您告知哪一項課程適合我們、單場費用多少，以及需要提前多久預約？若情況允許，我們希望三月開始。\n\n謝謝您。\n\nHelena Castellanos\n人力資源經理\nBrightwater Foods",
+   "收件者：h.castellanos@brightwaterfoods.com\n寄件者：r.okonjo@lumenfieldtraining.com\n日期：1 月 9 日\n主旨：回覆：主管階層的培訓課程\n\n親愛的 Castellanos 女士：\n\n感謝您的來信。我們的「基層領導」課程涵蓋您列出的三個主題，也是我們最推薦給任職第一年主管的課程。\n\n這套課程為兩個整天，通常相隔兩週。考量您所描述的輪班型態，我建議每一天各開兩梯次，如此同一時間離開現場的人不會超過十六位。所有課程都可以在貴公司 Ardmore 廠進行，替您省下租借場地的費用。\n\n我們的收費為每個授課日 2,400 美元，適用於二十人以內的班級。兩天各開兩梯次，合計為四個授課日。教材與學員手冊已包含在內；差旅費另計，每趟固定 180 美元。\n\n三月是可行的，不過我們的行事曆在年後很快就會排滿。若您能於 1 月 25 日前確認，我可以為您保留三月最後一週。\n\n我很樂意安排一次通話，詳細說明課程大綱。\n\n敬上\n\nRachel Okonjo\n課程總監\nLumenfield Training"
   ]
  },
  {
@@ -3461,7 +3461,7 @@ TOEIC.part7 = [
      "It costs $50 regardless of the order size"
     ],
     "answer": 1,
-    "explanation": "定位:廣告 DELIVERY 欄「Free on merchandise totals over $600; otherwise $35.」商品金額超過 600 美元即免運。(A)錯:廣告寫的是五個工作天內送達。(C)錯:廣告未對配送區域設限,Denton 只是廠商地址。(D)錯:50 美元是商標印製的一次性製版費,不是運費;運費為 35 美元。"
+    "explanation": "定位：廣告 DELIVERY 欄「Free on merchandise totals over $600; otherwise $35.」商品金額超過 600 美元即免運。(A)錯：廣告寫的是五個工作天內送達。(C)錯：廣告未對配送區域設限，Denton 只是廠商地址。(D)錯：50 美元是商標印製的一次性製版費，不是運費；運費為 35 美元。"
    },
    {
     "q": "Why did Ridgemont Coffee House receive a discount on the merchandise total?",
@@ -3472,7 +3472,7 @@ TOEIC.part7 = [
      "Because it paid before the invoice was due"
     ],
     "answer": 2,
-    "explanation": "定位:需整合兩份文件。廣告 VOLUME DISCOUNT 欄規定「Orders of 25 items or more receive 10% off」,訂購單上 14 + 12 + 4 = 30 件,達到門檻,故有 10% 折扣。(A)錯:兩份文件都沒有提到過去的交易紀錄。(B)錯:折扣依件數計算,與品項種類無關。(D)錯:訂購單上沒有任何付款日期或條件。"
+    "explanation": "定位：需整合兩份文件。廣告 VOLUME DISCOUNT 欄規定「Orders of 25 items or more receive 10% off」，訂購單上 14 + 12 + 4 = 30 件，達到門檻，故有 10% 折扣。(A)錯：兩份文件都沒有提到過去的交易紀錄。(B)錯：折扣依件數計算，與品項種類無關。(D)錯：訂購單上沒有任何付款日期或條件。"
    },
    {
     "q": "What benefit did the promotion code provide to the customer?",
@@ -3483,7 +3483,7 @@ TOEIC.part7 = [
      "The removal of a one-time charge"
     ],
     "answer": 3,
-    "explanation": "定位:需整合兩份文件。廣告 SPRING PROMOTION 欄說明報上 SPRING14 可免除商標印製的 set-up fee,而 LOGO PRINTING 欄註明該費用為一次性的 50 美元;訂購單上「Printing set-up fee: waived」正是這項優惠。(A)錯:鞋子仍以每雙 72 美元計價。(B)錯:訂購單仍支付 12 件、每件 6 美元的印製費 72 美元。(C)錯:10% 是件數達標的數量折扣,與促銷代碼無關。"
+    "explanation": "定位：需整合兩份文件。廣告 SPRING PROMOTION 欄說明報上 SPRING14 可免除商標印製的 set-up fee，而 LOGO PRINTING 欄註明該費用為一次性的 50 美元；訂購單上「Printing set-up fee: waived」正是這項優惠。(A)錯：鞋子仍以每雙 72 美元計價。(B)錯：訂購單仍支付 12 件、每件 6 美元的印製費 72 美元。(C)錯：10% 是件數達標的數量折扣，與促銷代碼無關。"
    },
    {
     "q": "What information is NOT included on the order form?",
@@ -3494,7 +3494,7 @@ TOEIC.part7 = [
      "The date the order was placed"
     ],
     "answer": 0,
-    "explanation": "定位:採刪去法。(B)見「Address: 208 Pinecrest Way, Denton」。(C)見品項表的 Quantity 欄。(D)見「Date of order: 12 April」。付款方式在訂購單上完全沒有出現,故(A)為未包含者。"
+    "explanation": "定位：採刪去法。(B)見「Address: 208 Pinecrest Way, Denton」。(C)見品項表的 Quantity 欄。(D)見「Date of order: 12 April」。付款方式在訂購單上完全沒有出現，故(A)為未包含者。"
    },
    {
     "q": "What does Mr. Mbeki indicate about his business?",
@@ -3505,12 +3505,12 @@ TOEIC.part7 = [
      "It has moved its offices to Halloway Road"
     ],
     "answer": 1,
-    "explanation": "定位:訂購單最後的 Customer notes「We would like delivery before 24 April, as our second location opens that weekend.」第二家分店即將開幕。(A)錯:文件未提及任何前一家供應商。(C)錯:訂購件數(含 12 件襯衫)反而暗示員工不只十人,且商標印製最低訂量為十件。(D)錯:Halloway Road 是 Thornbury Workwear 的地址,顧客地址為 Pinecrest Way。"
+    "explanation": "定位：訂購單最後的 Customer notes「We would like delivery before 24 April, as our second location opens that weekend.」第二家分店即將開幕。(A)錯：文件未提及任何前一家供應商。(C)錯：訂購件數（含 12 件襯衫）反而暗示員工不只十人，且商標印製最低訂量為十件。(D)錯：Halloway Road 是 Thornbury Workwear 的地址，顧客地址為 Pinecrest Way。"
    }
   ],
   "translation": [
-   "THORNBURY 工作服\n專為咖啡館、旅館與餐廳打造的耐用制服\n\n我們的服飾專為長工時與頻繁清洗而設計,我們所有的服飾皆備有 XS 到 3XL 尺碼。\n\n經典圍裙(品號 A-12)— 每件 18 美元\n長袖廚師服(品號 C-30)— 每件 46 美元\n中性服務生襯衫(品號 S-07)— 每件 29 美元\n防滑工作鞋(品號 F-55)— 每雙 72 美元\n\n數量折扣\n訂購 25 件以上,商品總額享 9 折。\n\n商標印製\n每件 6 美元,最低訂量十件。每個新商標另收一次性製版費 50 美元。\n\n配送\n標準配送五個工作天內送達。商品總額超過 600 美元免運費,未達則收取 35 美元。\n\n春季優惠\n4 月 30 日前報上代碼 SPRING14,即可免除印製製版費。\n\nThornbury 工作服\nDenton 市 Halloway 路 41 號\n電話:555-0148 | orders@thornburyworkwear.com",
-   "THORNBURY 工作服 — 訂購單\n\n客戶:Ridgemont 咖啡館\n聯絡人:Julian Mbeki,營運經理\n地址:Denton 市 Pinecrest 路 208 號\n訂購日期:4 月 12 日\n優惠代碼:SPRING14\n\n品項 / 品號 / 數量 / 單價 / 小計\n經典圍裙 / A-12 / 14 / 18 美元 / 252 美元\n中性服務生襯衫 / S-07 / 12 / 29 美元 / 348 美元\n防滑工作鞋 / F-55 / 4 / 72 美元 / 288 美元\n\n商品小計:888.00 美元\n數量折扣(10%):-88.80 美元\n商標印製,12 件每件 6 美元:72.00 美元\n印製製版費:免收\n運費:免費\n應付總額:871.20 美元\n\n客戶備註:請只在服務生襯衫上印上我們的商標,圍裙維持素面。希望能在 4 月 24 日前送達,因為我們的第二家門市將於該週末開幕。"
+   "THORNBURY 工作服\n專為咖啡館、旅館與餐廳打造的耐用制服\n\n我們的服飾專為長工時與頻繁清洗而設計，我們所有的服飾皆備有 XS 到 3XL 尺碼。\n\n經典圍裙（品號 A-12）— 每件 18 美元\n長袖廚師服（品號 C-30）— 每件 46 美元\n中性服務生襯衫（品號 S-07）— 每件 29 美元\n防滑工作鞋（品號 F-55）— 每雙 72 美元\n\n數量折扣\n訂購 25 件以上，商品總額享 9 折。\n\n商標印製\n每件 6 美元，最低訂量十件。每個新商標另收一次性製版費 50 美元。\n\n配送\n標準配送五個工作天內送達。商品總額超過 600 美元免運費，未達則收取 35 美元。\n\n春季優惠\n4 月 30 日前報上代碼 SPRING14，即可免除印製製版費。\n\nThornbury 工作服\nDenton 市 Halloway 路 41 號\n電話：555-0148 | orders@thornburyworkwear.com",
+   "THORNBURY 工作服 — 訂購單\n\n客戶：Ridgemont 咖啡館\n聯絡人：Julian Mbeki，營運經理\n地址：Denton 市 Pinecrest 路 208 號\n訂購日期：4 月 12 日\n優惠代碼：SPRING14\n\n品項 / 品號 / 數量 / 單價 / 小計\n經典圍裙 / A-12 / 14 / 18 美元 / 252 美元\n中性服務生襯衫 / S-07 / 12 / 29 美元 / 348 美元\n防滑工作鞋 / F-55 / 4 / 72 美元 / 288 美元\n\n商品小計：888.00 美元\n數量折扣(10%)：-88.80 美元\n商標印製，12 件每件 6 美元：72.00 美元\n印製製版費：免收\n運費：免費\n應付總額：871.20 美元\n\n客戶備註：請只在服務生襯衫上印上我們的商標，圍裙維持素面。希望能在 4 月 24 日前送達，因為我們的第二家門市將於該週末開幕。"
   ]
  },
  {
@@ -3533,7 +3533,7 @@ TOEIC.part7 = [
      "A change to a city parking regulation"
     ],
     "answer": 1,
-    "explanation": "定位:第一段第一句「The former textile mill on Canal Street, empty since 2009, will reopen in September as a shared workplace for small design firms」,全文皆圍繞這棟舊紡織廠改建為設計工作空間。(A)錯:鐵路只在第四段以接駁車目的地出現,並非爭議焦點。(C)錯:工廠自 2009 年即已閒置,並非本則新聞的事件。(D)錯:停車位上限只是開發商對居民的讓步條件之一,非市府法規變更。"
+    "explanation": "定位：第一段第一句「The former textile mill on Canal Street, empty since 2009, will reopen in September as a shared workplace for small design firms」，全文皆圍繞這棟舊紡織廠改建為設計工作空間。(A)錯：鐵路只在第四段以接駁車目的地出現，並非爭議焦點。(C)錯：工廠自 2009 年即已閒置，並非本則新聞的事件。(D)錯：停車位上限只是開發商對居民的讓步條件之一，非市府法規變更。"
    },
    {
     "q": "According to Ms. Petrosyan, what will the site offer that tenants could not obtain on their own?",
@@ -3544,7 +3544,7 @@ TOEIC.part7 = [
      "Long-term contracts with local clients"
     ],
     "answer": 2,
-    "explanation": "定位:第三段引言「What they lack is not floor area but equipment they could never buy on their own」,呼應第二段列出的木工房與攝影棚等共用設施。(A)錯:商家協會出現在最後一段,是估算來客數的單位,與租戶福利無關。(B)錯:文中只提租金起價 520 美元,未提逐年調降。(D)錯:文中未承諾為租戶帶來客戶合約。"
+    "explanation": "定位：第三段引言「What they lack is not floor area but equipment they could never buy on their own」，呼應第二段列出的木工房與攝影棚等共用設施。(A)錯：商家協會出現在最後一段，是估算來客數的單位，與租戶福利無關。(B)錯：文中只提租金起價 520 美元，未提逐年調降。(D)錯：文中未承諾為租戶帶來客戶合約。"
    },
    {
     "q": "What did Arlen Property Group agree to do after the public hearing?",
@@ -3555,7 +3555,7 @@ TOEIC.part7 = [
      "Add more on-site parking spaces"
     ],
     "answer": 0,
-    "explanation": "定位:第四段末句「Arlen agreed to pay for a shuttle service linking the site to the Ferndale rail station」。(B)錯:文中未提縮減建物規模,坪數 40,000 平方英尺始終不變。(C)錯:九月是開幕時間,內部工程預定五月動工,並無延後之說。(D)錯:方向相反,開發商同意把基地內停車位限制在四十格。"
+    "explanation": "定位：第四段末句「Arlen agreed to pay for a shuttle service linking the site to the Ferndale rail station」。(B)錯：文中未提縮減建物規模，坪數 40,000 平方英尺始終不變。(C)錯：九月是開幕時間，內部工程預定五月動工，並無延後之說。(D)錯：方向相反，開發商同意把基地內停車位限制在四十格。"
    },
    {
     "q": "What is NOT mentioned as a feature of the renovated building?",
@@ -3566,11 +3566,11 @@ TOEIC.part7 = [
      "A conference auditorium"
     ],
     "answer": 3,
-    "explanation": "定位:第二段「will also house a woodshop, a photography stage, and a ground-floor café open to the public」明列三項設施,故(A)(B)(C)皆有提及。全文未出現任何會議禮堂或大型演講廳,故(D)為未提及者。"
+    "explanation": "定位：第二段「will also house a woodshop, a photography stage, and a ground-floor café open to the public」明列三項設施，故(A)(B)(C)皆有提及。全文未出現任何會議禮堂或大型演講廳，故(D)為未提及者。"
    }
   ],
   "translation": [
-   "北門週報｜商業版\n\n芬戴爾舊紡織廠將重生為設計基地\n柯琳・艾爾索普 撰\n\n芬戴爾訊（三月八日）——開發商亞倫地產集團於週二宣布,運河街上那座自二○○九年起便閒置的舊紡織廠,將於九月重新開放,作為小型設計公司的共用工作空間。\n\n這棟四萬平方英尺的建築將隔成二十八個工作室單位,另設木工房、攝影棚,以及一樓對外開放的咖啡館。租金起價每月五百二十美元,遠低於市中心同等空間平均八百九十美元的行情。\n\n「我們是刻意把單位做小的,」專案總監娜歐蜜・佩特羅席恩表示。「我們接觸過的業者多半僱用不到六個人。他們缺的不是坪數,而是自己絕對買不起的設備。」\n\n這項計畫並非全無反對聲音。一月的公聽會上,周邊社區數名居民主張,新增車流會讓運河街不堪負荷,該路北端縮減為單線道。亞倫地產因此同意出資開辦接駁車,連接基地與芬戴爾火車站,並將基地內停車位上限訂為四十格。\n\n施工團隊二月已開始拆除舊隔熱材,內部工程預定五月動工。佩特羅席恩表示,已有十一個單位被本郡其他地方目前暫用臨時辦公室的公司預訂。\n\n芬戴爾商家協會估計,咖啡館加上前來工作室洽公的客戶,每週可為運河街帶來數百名額外的來客。"
+   "北門週報｜商業版\n\n芬戴爾舊紡織廠將重生為設計基地\n柯琳・艾爾索普 撰\n\n芬戴爾訊（三月八日）——開發商亞倫地產集團於週二宣布，運河街上那座自二○○九年起便閒置的舊紡織廠，將於九月重新開放，作為小型設計公司的共用工作空間。\n\n這棟四萬平方英尺的建築將隔成二十八個工作室單位，另設木工房、攝影棚，以及一樓對外開放的咖啡館。租金起價每月五百二十美元，遠低於市中心同等空間平均八百九十美元的行情。\n\n「我們是刻意把單位做小的，」專案總監娜歐蜜・佩特羅席恩表示。「我們接觸過的業者多半僱用不到六個人。他們缺的不是坪數，而是自己絕對買不起的設備。」\n\n這項計畫並非全無反對聲音。一月的公聽會上，周邊社區數名居民主張，新增車流會讓運河街不堪負荷，該路北端縮減為單線道。亞倫地產因此同意出資開辦接駁車，連接基地與芬戴爾火車站，並將基地內停車位上限訂為四十格。\n\n施工團隊二月已開始拆除舊隔熱材，內部工程預定五月動工。佩特羅席恩表示，已有十一個單位被本郡其他地方目前暫用臨時辦公室的公司預訂。\n\n芬戴爾商家協會估計，咖啡館加上前來工作室洽公的客戶，每週可為運河街帶來數百名額外的來客。"
   ]
  },
  {
@@ -3593,7 +3593,7 @@ TOEIC.part7 = [
      "People organizing events"
     ],
     "answer": 3,
-    "explanation": "定位:標題下第一段「Lanternfield Events rents audiovisual and staging equipment to organizations throughout the Tri-County area, whether or not your event is held at one of our venues」,通篇以「您的活動」為對象說明下訂、送貨與賠償規定。(A)錯:內容是對外的客戶須知,不是員工作業手冊。(B)錯:公司是出租方,不是向製造商採購。(C)錯:全文與工程招標無關。"
+    "explanation": "定位：標題下第一段「Lanternfield Events rents audiovisual and staging equipment to organizations throughout the Tri-County area, whether or not your event is held at one of our venues」，通篇以「您的活動」為對象說明下訂、送貨與賠償規定。(A)錯：內容是對外的客戶須知，不是員工作業手冊。(B)錯：公司是出租方，不是向製造商採購。(C)錯：全文與工程招標無關。"
    },
    {
     "q": "What is indicated about orders placed fewer than ten business days in advance?",
@@ -3604,7 +3604,7 @@ TOEIC.part7 = [
      "They require the protection plan."
     ],
     "answer": 1,
-    "explanation": "定位:「How do I place an order?」段末句「Orders placed with less than ten days' notice are accepted by telephone only and carry a rush fee of $75」。(A)錯:仍然受理,只是限電話並加收急件費。(C)錯:150 人是建議另聘技術人員的門檻,與下訂時間無關。(D)錯:保障方案是選購項目,與急件無關。"
+    "explanation": "定位：「How do I place an order?」段末句「Orders placed with less than ten days' notice are accepted by telephone only and carry a rush fee of $75」。(A)錯：仍然受理，只是限電話並加收急件費。(C)錯：150 人是建議另聘技術人員的門檻，與下訂時間無關。(D)錯：保障方案是選購項目，與急件無關。"
    },
    {
     "q": "What will the company's drivers NOT do?",
@@ -3615,7 +3615,7 @@ TOEIC.part7 = [
      "Provide a delivery receipt"
     ],
     "answer": 0,
-    "explanation": "定位:「Is delivery included?」段「they are not permitted to mount screens or speakers on walls or ceilings」,司機不得將喇叭或螢幕安裝在牆面與天花板。(B)錯:同段明說司機會把設備搬進使用的房間。(C)錯:同段開頭提到 delivery and pickup,即含收回。(D)錯:最後一段提到 delivery receipt 上印有回報電話,可見有送貨單。"
+    "explanation": "定位：「Is delivery included?」段「they are not permitted to mount screens or speakers on walls or ceilings」，司機不得將喇叭或螢幕安裝在牆面與天花板。(B)錯：同段明說司機會把設備搬進使用的房間。(C)錯：同段開頭提到 delivery and pickup，即含收回。(D)錯：最後一段提到 delivery receipt 上印有回報電話，可見有送貨單。"
    },
    {
     "q": "The word \"carry\" in the section \"How do I place an order?\" is closest in meaning to",
@@ -3626,11 +3626,11 @@ TOEIC.part7 = [
      "extend"
     ],
     "answer": 2,
-    "explanation": "定位:「carry a rush fee of $75」中的 carry 意為「附帶、產生（費用）」,與 involve 最接近。(A)錯:transport（搬運）是同一頁下一段「drivers will carry equipment into the room」的用法,此處主詞是訂單而非人,不能搬運。(B)(D)錯:support（支撐）、extend（延長）皆無「附帶費用」之意。"
+    "explanation": "定位：「carry a rush fee of $75」中的 carry 意為「附帶、產生（費用）」，與 involve 最接近。(A)錯：transport（搬運）是同一頁下一段「drivers will carry equipment into the room」的用法，此處主詞是訂單而非人，不能搬運。(B)(D)錯：support（支撐）、extend（延長）皆無「附帶費用」之意。"
    }
   ],
   "translation": [
-   "www.lanternfieldevents.com/rentals\n\n首頁｜場地介紹｜設備租賃｜費率｜聯絡我們\n\n設備租賃－常見問題\n\n蘭登菲活動公司為三郡地區的各類機構出租視聽與舞台設備,無論您的活動是否在本公司場地舉辦皆可承租。\n\n如何下訂?\n請於活動前至少十個工作天填妥本頁的申請表。專員會在兩個工作天內來電確認庫存並安排送貨時段。距活動不足十個工作天才提出的訂單僅接受電話受理,並須加收七十五美元的急件費。\n\n含運嗎?\n以費爾蒙路倉庫為中心二十英里內,送貨與收回免費。超出此範圍者,去回程各按每英里一點四美元計費。司機會將設備搬進使用的房間,但不得將螢幕或喇叭安裝於牆面或天花板。\n\n我可以自己操作設備嗎?\n可以。每筆訂單皆附圖解安裝說明。不過,賓客超過一百五十人的客戶,我們強烈建議另聘技術人員（四小時班次二百四十美元）,因為本公司較大型的音響設備需要一定的操作經驗才能調得恰當。\n\n設備損壞怎麼辦?\n請在活動結束前撥打送貨單上印的電話回報故障。歸還時已損壞的品項將按重置成本計價,除非您已購買選購的保障方案（費用為訂單金額加收一成）。"
+   "www.lanternfieldevents.com/rentals\n\n首頁｜場地介紹｜設備租賃｜費率｜聯絡我們\n\n設備租賃－常見問題\n\n蘭登菲活動公司為三郡地區的各類機構出租視聽與舞台設備，無論您的活動是否在本公司場地舉辦皆可承租。\n\n如何下訂？\n請於活動前至少十個工作天填妥本頁的申請表。專員會在兩個工作天內來電確認庫存並安排送貨時段。距活動不足十個工作天才提出的訂單僅接受電話受理，並須加收七十五美元的急件費。\n\n含運嗎？\n以費爾蒙路倉庫為中心二十英里內，送貨與收回免費。超出此範圍者，去回程各按每英里一點四美元計費。司機會將設備搬進使用的房間，但不得將螢幕或喇叭安裝於牆面或天花板。\n\n我可以自己操作設備嗎？\n可以。每筆訂單皆附圖解安裝說明。不過，賓客超過一百五十人的客戶，我們強烈建議另聘技術人員（四小時班次二百四十美元），因為本公司較大型的音響設備需要一定的操作經驗才能調得恰當。\n\n設備損壞怎麼辦？\n請在活動結束前撥打送貨單上印的電話回報故障。歸還時已損壞的品項將按重置成本計價，除非您已購買選購的保障方案（費用為訂單金額加收一成）。"
   ]
  },
  {
@@ -3653,7 +3653,7 @@ TOEIC.part7 = [
      "To explain why some payments have been delayed"
     ],
     "answer": 0,
-    "explanation": "定位:第一段第一句「Beginning July 1, all travel and entertainment expenses must be submitted through Voyance」,後續說明期限、收據與教育訓練,全篇都在宣布報帳流程改制。(B)錯:文中只提 25 美元的收據門檻,不是消費上限提醒。(C)錯:拉斯穆森是發文者,無新任介紹。(D)錯:文中談的是核銷天數縮短,不是說明延遲。"
+    "explanation": "定位：第一段第一句「Beginning July 1, all travel and entertainment expenses must be submitted through Voyance」，後續說明期限、收據與教育訓練，全篇都在宣布報帳流程改制。(B)錯：文中只提 25 美元的收據門檻，不是消費上限提醒。(C)錯：拉斯穆森是發文者，無新任介紹。(D)錯：文中談的是核銷天數縮短，不是說明延遲。"
    },
    {
     "q": "What is indicated about the trial of Voyance?",
@@ -3664,7 +3664,7 @@ TOEIC.part7 = [
      "It required Finance to hire additional staff."
     ],
     "answer": 1,
-    "explanation": "定位:第二段「Reimbursements that once took an average of nineteen days now reach employees in six」,核銷時間由十九天縮短為六天。(A)錯:第一段說試辦對象是東北區業務團隊,不是主管層級。(C)錯:文中未提試辦期延長。(D)錯:文中未提增聘人力,只提到問題請洽服務台。"
+    "explanation": "定位：第二段「Reimbursements that once took an average of nineteen days now reach employees in six」，核銷時間由十九天縮短為六天。(A)錯：第一段說試辦對象是東北區業務團隊，不是主管層級。(C)錯：文中未提試辦期延長。(D)錯：文中未提增聘人力，只提到問題請洽服務台。"
    },
    {
     "q": "What are employees NO LONGER required to do?",
@@ -3675,7 +3675,7 @@ TOEIC.part7 = [
      "Attend a training session"
     ],
     "answer": 2,
-    "explanation": "定位:條列第三點「Your manager will approve claims inside the system. You no longer need to obtain a signature before submitting a claim」。(A)錯:第二點明說超過 25 美元的品項含餐費都要收據。(B)錯:第一點指出三十天期限「is not new」且系統會自動控管。(D)錯:過去一年曾報帳者仍須參加訓練。"
+    "explanation": "定位：條列第三點「Your manager will approve claims inside the system. You no longer need to obtain a signature before submitting a claim」。(A)錯：第二點明說超過 25 美元的品項含餐費都要收據。(B)錯：第一點指出三十天期限「is not new」且系統會自動控管。(D)錯：過去一年曾報帳者仍須參加訓練。"
    },
    {
     "q": "Who must attend a training session?",
@@ -3686,11 +3686,11 @@ TOEIC.part7 = [
      "Employees who submitted an expense claim in the past year"
     ],
     "answer": 3,
-    "explanation": "定位:倒數第二段「Attendance is required for anyone who filed an expense claim during the past year」。(A)錯:人資部只負責發送報名連結,且本備忘錄的收件對象是業務與行銷同仁,並未要求該部門受訓。(B)錯:條件是過去一年曾報帳,不是到職年資。(C)錯:部門主管只在逾期申請的書面同意中出現。"
+    "explanation": "定位：倒數第二段「Attendance is required for anyone who filed an expense claim during the past year」。(A)錯：人資部只負責發送報名連結，且本備忘錄的收件對象是業務與行銷同仁，並未要求該部門受訓。(B)錯：條件是過去一年曾報帳，不是到職年資。(C)錯：部門主管只在逾期申請的書面同意中出現。"
    }
   ],
   "translation": [
-   "備忘錄\n\n致:全體業務與行銷同仁\n發文者:財務部主任 普莉雅・拉斯穆森\n日期:六月二日\n主旨:改用 Voyance 費用系統\n\n自七月一日起,所有差旅與交際費用一律須透過 Voyance 線上系統提交;該系統自三月起由東北區業務團隊試用。該日之後不再受理紙本表單,七月收到的紙本申請一律退回原申請人。\n\n試用結果有兩項明確成效。過去平均需十九天的核銷款項,如今六天即可入帳;因文件不全而被退件的申請則減少約半數。這多半得力於行動應用程式,讓各位可在消費當下拍下收據,不必事後幾週再翻找。\n\n幾點提醒:\n\n－ 申請須於費用發生日起三十天內提出。此期限並非新規定,但 Voyance 會自動控管;逾期申請須取得所屬部門主管的書面同意。\n－ 單筆超過二十五美元的品項皆須檢附收據,餐費亦同。\n－ 主管將直接在系統內核准申請。提交前不必再取得簽名。\n\n教育訓練為期四十五分鐘,將於六月十日、十二日、十七日上午九時在 B 會議室舉行。過去一年內曾提出費用申請者一律必須參加。請透過人資部發送的連結報名;每場名額上限二十五人。\n\n系統本身的問題請洽服務台,勿逕洽財務部。"
+   "備忘錄\n\n致：全體業務與行銷同仁\n發文者：財務部主任 普莉雅・拉斯穆森\n日期：六月二日\n主旨：改用 Voyance 費用系統\n\n自七月一日起，所有差旅與交際費用一律須透過 Voyance 線上系統提交；該系統自三月起由東北區業務團隊試用。該日之後不再受理紙本表單，七月收到的紙本申請一律退回原申請人。\n\n試用結果有兩項明確成效。過去平均需十九天的核銷款項，如今六天即可入帳；因文件不全而被退件的申請則減少約半數。這多半得力於行動應用程式，讓各位可在消費當下拍下收據，不必事後幾週再翻找。\n\n幾點提醒：\n\n－ 申請須於費用發生日起三十天內提出。此期限並非新規定，但 Voyance 會自動控管；逾期申請須取得所屬部門主管的書面同意。\n－ 單筆超過二十五美元的品項皆須檢附收據，餐費亦同。\n－ 主管將直接在系統內核准申請。提交前不必再取得簽名。\n\n教育訓練為期四十五分鐘，將於六月十日、十二日、十七日上午九時在 B 會議室舉行。過去一年內曾提出費用申請者一律必須參加。請透過人資部發送的連結報名；每場名額上限二十五人。\n\n系統本身的問題請洽服務台，勿逕洽財務部。"
   ]
  },
  {
@@ -3718,7 +3718,7 @@ TOEIC.part7 = [
      "The instructors are available only part-time."
     ],
     "answer": 2,
-    "explanation": "定位:公告注意事項第三點「Each workshop is limited to eighteen participants so that every attendee can take part in the afternoon practice exercises」,so that 直接點出理由。(A)錯:別館提到的限制是停車位,不是教室大小。(B)錯:公告只說含午餐,未提訂餐時程。(D)錯:全文未提講師的工作型態。"
+    "explanation": "定位：公告注意事項第三點「Each workshop is limited to eighteen participants so that every attendee can take part in the afternoon practice exercises」，so that 直接點出理由。(A)錯：別館提到的限制是停車位，不是教室大小。(B)錯：公告只說含午餐，未提訂餐時程。(D)錯：全文未提講師的工作型態。"
    },
    {
     "q": "Why did Mr. Tiley write the e-mail?",
@@ -3729,7 +3729,7 @@ TOEIC.part7 = [
      "To ask about enrolling a group of employees"
     ],
     "answer": 3,
-    "explanation": "定位:電子郵件第一段「would like to enroll four members of my purchasing department... Could you confirm that places are still available」,後續各段都是報名衍生的問題。(A)錯:尚未報名,更無取消退費。(B)錯:他是選現有課程,未提議新主題。(C)錯:他只問接駁車班次,並未抱怨停車。"
+    "explanation": "定位：電子郵件第一段「would like to enroll four members of my purchasing department... Could you confirm that places are still available」，後續各段都是報名衍生的問題。(A)錯：尚未報名，更無取消退費。(B)錯：他是選現有課程，未提議新主題。(C)錯：他只問接駁車班次，並未抱怨停車。"
    },
    {
     "q": "How much will Brightwater Dairy most likely pay for each of the four registrations?",
@@ -3740,7 +3740,7 @@ TOEIC.part7 = [
      "$340"
     ],
     "answer": 1,
-    "explanation": "定位:須整合兩篇。電子郵件第一段說要替採購部門四人報名「the session you are offering for that group」,對照公告課程表即 Negotiation for Purchasing Staff,原價 340 美元;公告注意事項第一點規定同一場次三人以上每個名額打八五折,340 × 0.85 = 289。(A)錯:263.50 是誤用 310 美元的 Managing Remote Teams 計算。(C)錯:310 美元是另一門課的原價。(D)錯:340 美元是未套用團體折扣的原價。"
+    "explanation": "定位：須整合兩篇。電子郵件第一段說要替採購部門四人報名「the session you are offering for that group」，對照公告課程表即 Negotiation for Purchasing Staff，原價 340 美元；公告注意事項第一點規定同一場次三人以上每個名額打八五折，340 × 0.85 = 289。(A)錯：263.50 是誤用 310 美元的 Managing Remote Teams 計算。(C)錯：310 美元是另一門課的原價。(D)錯：340 美元是未套用團體折扣的原價。"
    },
    {
     "q": "Where will the two additional employees mentioned by Mr. Tiley most likely attend their workshop?",
@@ -3751,7 +3751,7 @@ TOEIC.part7 = [
      "At Kestrel Station"
     ],
     "answer": 0,
-    "explanation": "定位:須整合兩篇。電子郵件第三段說要再派兩人參加「the November session」;公告課程表顯示十一月唯一場次是十一月八日星期六的 Presenting with Data,而注意事項第五點規定「Saturday sessions meet in the Willowbank Annex」。(B)錯:主建築是平日場次的地點。(C)錯:課程在學院校區舉辦,不在客戶公司。(D)錯:凱斯楚車站只是搭接駁車的起點。"
+    "explanation": "定位：須整合兩篇。電子郵件第三段說要再派兩人參加「the November session」；公告課程表顯示十一月唯一場次是十一月八日星期六的 Presenting with Data，而注意事項第五點規定「Saturday sessions meet in the Willowbank Annex」。(B)錯：主建築是平日場次的地點。(C)錯：課程在學院校區舉辦，不在客戶公司。(D)錯：凱斯楚車站只是搭接駁車的起點。"
    },
    {
     "q": "What is suggested about Ms. Voss?",
@@ -3762,12 +3762,12 @@ TOEIC.part7 = [
      "She must wait until next year to register again."
     ],
     "answer": 2,
-    "explanation": "定位:須整合兩篇。電子郵件第二段說她去年十一月與今年三月各上過一場;公告注意事項第四點規定十二個月內完成兩場即可將第三場費用抵充 Certificate in Operations Management,兩次相隔僅約四個月,符合條件。(A)錯:帳務部門是處理匯款的單位,與她的職務無關。(B)錯:她尚未上第三場,證書尚未取得。(D)錯:兩份文件都沒有等待期的規定。"
+    "explanation": "定位：須整合兩篇。電子郵件第二段說她去年十一月與今年三月各上過一場；公告注意事項第四點規定十二個月內完成兩場即可將第三場費用抵充 Certificate in Operations Management，兩次相隔僅約四個月，符合條件。(A)錯：帳務部門是處理匯款的單位，與她的職務無關。(B)錯：她尚未上第三場，證書尚未取得。(D)錯：兩份文件都沒有等待期的規定。"
    }
   ],
   "translation": [
-   "哈佛森職能發展學院\n秋季證書工作坊－凱斯楚商業園區校區\n\n下列工作坊即日起開放報名。所有場次皆自上午九時進行至下午四時,並含午餐。\n\n遠距團隊管理－十月三日（星期五）－三一○美元\n採購人員談判技巧－十月十四日（星期二）－三四○美元\n財務報表基礎－十月二十三日（星期四）－三四○美元\n以數據做簡報－十一月八日（星期六）－二九○美元\n\n參加者須知:\n\n－ 同一機構於同一場工作坊報名三人以上者,每一名額均可享八五折優惠。\n－ 費用最遲須於工作坊日期前十天繳清。逾期未繳者,其名額將釋出給候補名單。\n－ 每場工作坊人數上限十八人,以確保每位學員都能參與下午的實作演練。\n－ 於十二個月內完成兩場工作坊者,可將第三場的費用抵充本院的營運管理證書學程。\n－ 星期六場次於威洛班克別館舉行,自主建築步行約十分鐘。別館停車位有限,建議搭乘凱斯楚車站發車的接駁車。\n\n報名請洽戴莉亞・安布羅斯,電子郵件 d.ambrose@halversoninstitute.org 或電話 555-0142。",
-   "收件者:戴莉亞・安布羅斯 <d.ambrose@halversoninstitute.org>\n寄件者:馬可斯・泰利 <m.tiley@brightwaterdairy.com>\n日期:九月十二日\n主旨:秋季工作坊\n\n安布羅斯女士您好:\n\n我在凱斯楚商業園區的服務櫃檯看到貴院的公告,想為採購部門的四位同仁報名貴院專為該職務開設的那場課程。可否確認名額是否仍有空缺,並告知套用團體折扣後的總費用?\n\n另有兩個問題。第一,我的同事芮娜塔・沃斯去年十一月上過貴院一場工作坊,今年三月又上了一場。她是否還能把第三場的費用抵充您提到的證書學程,還是時間已經超過了?\n\n第二,我也想派兩位同仁參加十一月的場次。他們都不開車,可否告知您提到的接駁車在週末的班次密度?\n\n最後,我們希望以銀行匯款支付。本公司帳務部門固定在每月最後一個工作日處理匯款,希望這樣仍在貴院的繳費期限之內。\n\n謹此\n布萊特沃乳品公司\n採購經理 馬可斯・泰利"
+   "哈佛森職能發展學院\n秋季證書工作坊－凱斯楚商業園區校區\n\n下列工作坊即日起開放報名。所有場次皆自上午九時進行至下午四時，並含午餐。\n\n遠距團隊管理－十月三日（星期五）－三一○美元\n採購人員談判技巧－十月十四日（星期二）－三四○美元\n財務報表基礎－十月二十三日（星期四）－三四○美元\n以數據做簡報－十一月八日（星期六）－二九○美元\n\n參加者須知：\n\n－ 同一機構於同一場工作坊報名三人以上者，每一名額均可享八五折優惠。\n－ 費用最遲須於工作坊日期前十天繳清。逾期未繳者，其名額將釋出給候補名單。\n－ 每場工作坊人數上限十八人，以確保每位學員都能參與下午的實作演練。\n－ 於十二個月內完成兩場工作坊者，可將第三場的費用抵充本院的營運管理證書學程。\n－ 星期六場次於威洛班克別館舉行，自主建築步行約十分鐘。別館停車位有限，建議搭乘凱斯楚車站發車的接駁車。\n\n報名請洽戴莉亞・安布羅斯，電子郵件 d.ambrose@halversoninstitute.org 或電話 555-0142。",
+   "收件者：戴莉亞・安布羅斯 <d.ambrose@halversoninstitute.org>\n寄件者：馬可斯・泰利 <m.tiley@brightwaterdairy.com>\n日期：九月十二日\n主旨：秋季工作坊\n\n安布羅斯女士您好：\n\n我在凱斯楚商業園區的服務櫃檯看到貴院的公告，想為採購部門的四位同仁報名貴院專為該職務開設的那場課程。可否確認名額是否仍有空缺，並告知套用團體折扣後的總費用？\n\n另有兩個問題。第一，我的同事芮娜塔・沃斯去年十一月上過貴院一場工作坊，今年三月又上了一場。她是否還能把第三場的費用抵充您提到的證書學程，還是時間已經超過了？\n\n第二，我也想派兩位同仁參加十一月的場次。他們都不開車，可否告知您提到的接駁車在週末的班次密度？\n\n最後，我們希望以銀行匯款支付。本公司帳務部門固定在每月最後一個工作日處理匯款，希望這樣仍在貴院的繳費期限之內。\n\n謹此\n布萊特沃乳品公司\n採購經理 馬可斯・泰利"
   ]
  },
  {
@@ -3892,7 +3892,7 @@ TOEIC.part7 = [
      "They will be served at the distribution center."
     ],
     "answer": 2,
-    "explanation": "定位:行程表 Notes 段「meals other than Tuesday's dinner should be submitted as expenses」,除週二晚宴外的餐費一律走費用核銷。(A)錯:同段只說房費由公司直接支付,未含餐費。(B)錯:阿契貝先生是參訪與會議的接待人,文中未說他請客。(D)錯:配送中心是參訪與開會地點,未提供餐飲。"
+    "explanation": "定位：行程表 Notes 段「meals other than Tuesday's dinner should be submitted as expenses」，除週二晚宴外的餐費一律走費用核銷。(A)錯：同段只說房費由公司直接支付，未含餐費。(B)錯：阿契貝先生是參訪與會議的接待人，文中未說他請客。(D)錯：配送中心是參訪與開會地點，未提供餐飲。"
    },
    {
     "q": "Why did Ms. Sato write the e-mail?",
@@ -3903,7 +3903,7 @@ TOEIC.part7 = [
      "To report a canceled flight"
     ],
     "answer": 0,
-    "explanation": "定位:主旨列「two changes」,第一段「Two things have come up since the itinerary was issued」,後續分別要求改航班與換會議室。(B)錯:她未提及要推掉週二晚宴。(C)錯:她只請櫃檯代問飯店會議室,並未建議換飯店。(D)錯:航班並未被取消,是她主動要求改期。"
+    "explanation": "定位：主旨列「two changes」，第一段「Two things have come up since the itinerary was issued」，後續分別要求改航班與換會議室。(B)錯：她未提及要推掉週二晚宴。(C)錯：她只請櫃檯代問飯店會議室，並未建議換飯店。(D)錯：航班並未被取消，是她主動要求改期。"
    },
    {
     "q": "If Ms. Sato's first request is approved, what will she do on the morning of Tuesday, April 7?",
@@ -3914,7 +3914,7 @@ TOEIC.part7 = [
      "Present to regional managers"
     ],
     "answer": 1,
-    "explanation": "定位:須整合兩篇。行程表原訂週二上午 09:00-12:00 為供應商檢討會議、週三上午 09:30-11:00 為預算規劃會議;電子郵件第二段請求把預算規劃會議移到週二上午,供應商則改到週三下午。兩相對照,週二上午將改為與阿契貝先生的預算規劃會議。(A)錯:配送中心參訪在週一下午。(C)錯:供應商會議依請求已挪到週三下午。(D)錯:對區域經理簡報排在週二下午 13:30。"
+    "explanation": "定位：須整合兩篇。行程表原訂週二上午 09:00-12:00 為供應商檢討會議、週三上午 09:30-11:00 為預算規劃會議；電子郵件第二段請求把預算規劃會議移到週二上午，供應商則改到週三下午。兩相對照，週二上午將改為與阿契貝先生的預算規劃會議。(A)錯：配送中心參訪在週一下午。(C)錯：供應商會議依請求已挪到週三下午。(D)錯：對區域經理簡報排在週二下午 13:30。"
    },
    {
     "q": "What is suggested about the change to Ms. Sato's return flight?",
@@ -3925,7 +3925,7 @@ TOEIC.part7 = [
      "It can be made without an additional charge."
     ],
     "answer": 3,
-    "explanation": "定位:須整合兩篇。行程表 Notes 說企業票價可免費更改一次,但須於起飛前至少七十二小時提出;電子郵件日期為四月一日,回程班機為四月八日,相隔遠超過七十二小時,故符合免費更改條件。(A)錯:阿契貝先生負責的是會議安排,機票由差旅櫃檯處理。(B)錯:預算會議依請求提前到週二,不受影響。(C)錯:Notes 明言企業票價可更改一次。"
+    "explanation": "定位：須整合兩篇。行程表 Notes 說企業票價可免費更改一次，但須於起飛前至少七十二小時提出；電子郵件日期為四月一日，回程班機為四月八日，相隔遠超過七十二小時，故符合免費更改條件。(A)錯：阿契貝先生負責的是會議安排，機票由差旅櫃檯處理。(B)錯：預算會議依請求提前到週二，不受影響。(C)錯：Notes 明言企業票價可更改一次。"
    },
    {
     "q": "What is the problem with the Emerson Room?",
@@ -3936,12 +3936,12 @@ TOEIC.part7 = [
      "It has been reserved by another group."
     ],
     "answer": 0,
-    "explanation": "定位:須整合兩篇。行程表顯示週二 13:30-15:00 對區域經理的簡報安排在 Hartfield Suites 的 Emerson Room;電子郵件第三段說出席人數已由十二人增至約三十人,而「the room currently reserved seats twenty」,可知該廳容納不下。(B)錯:位於一樓的是她想改訂的 Kingsley Room。(C)(D)錯:兩份文件皆未提整修或被其他團體預訂。"
+    "explanation": "定位：須整合兩篇。行程表顯示週二 13:30-15:00 對區域經理的簡報安排在 Hartfield Suites 的 Emerson Room；電子郵件第三段說出席人數已由十二人增至約三十人，而「the room currently reserved seats twenty」，可知該廳容納不下。(B)錯：位於一樓的是她想改訂的 Kingsley Room。(C)(D)錯：兩份文件皆未提整修或被其他團體預訂。"
    }
   ],
   "translation": [
-   "佩爾沃斯與葛雷公司－差旅行程表\n出行人:區域營運部 英格麗・佐藤 女士\n製表:企業差旅櫃檯\n行程編號:PG-40718\n\n四月六日（星期一）\n07:40 自艾許康國際機場出發（VN 216 班機）\n09:55 抵達拉克斯珀市\n11:30 入住哈特菲爾套房飯店,貝克特街十二號\n14:00-17:00 參訪拉克斯珀配送中心（接待人:歐文・阿契貝）\n\n四月七日（星期二）\n09:00-12:00 供應商檢討會議,拉克斯珀配送中心\n13:30-15:00 對區域經理進行簡報,哈特菲爾套房飯店愛默生廳\n19:00 與拉克斯珀管理團隊晚宴,卡薩瓦燒烤餐廳\n\n四月八日（星期三）\n09:30-11:00 與阿契貝先生及財務同仁進行預算規劃會議\n15:15 自拉克斯珀市出發（VN 341 班機）\n17:20 抵達艾許康國際機場\n\n附註\n抵達時將有車輛至機場接您。房費由公司直接支付;除星期二晚宴外的餐費請以費用申請方式核銷。以本公司企業票價訂購的機票可免費更改一次,惟須於起飛前至少七十二小時通知差旅櫃檯。",
-   "收件者:travel@pellworthgray.com\n寄件者:i.sato@pellworthgray.com\n日期:四月一日\n主旨:行程編號 PG-40718－兩項異動\n\n您好:\n\n行程表發出後有兩件事有了變化。\n\n第一,歐文・阿契貝詢問預算規劃會議能否改到星期二上午,因為他的財務團隊星期三要接受稽核。供應商願意改在星期三與我碰面,但只能約下午,這代表我得比原訂時間更晚離開拉克斯珀。我查到最近的一班是十八點零五分起飛。可否幫我確認這樣的更改是否仍在免費更改的期限內?\n\n第二,星期二的簡報出席人數已從十二人增加到約三十人,而目前預訂的會議室只能容納二十人。可否請您向飯店詢問一樓的金斯利廳當天下午是否有空?若無,我寧可把場地改到配送中心,那裡有一間大小合適的訓練教室。\n\n最後一點:由於我將在當地多待一個下午,請確認飯店不會向我收取延遲退房的費用。\n\n謝謝\n英格麗・佐藤"
+   "佩爾沃斯與葛雷公司－差旅行程表\n出行人：區域營運部 英格麗・佐藤 女士\n製表：企業差旅櫃檯\n行程編號：PG-40718\n\n四月六日（星期一）\n07:40 自艾許康國際機場出發（VN 216 班機）\n09:55 抵達拉克斯珀市\n11:30 入住哈特菲爾套房飯店，貝克特街十二號\n14:00-17:00 參訪拉克斯珀配送中心（接待人：歐文・阿契貝）\n\n四月七日（星期二）\n09:00-12:00 供應商檢討會議，拉克斯珀配送中心\n13:30-15:00 對區域經理進行簡報，哈特菲爾套房飯店愛默生廳\n19:00 與拉克斯珀管理團隊晚宴，卡薩瓦燒烤餐廳\n\n四月八日（星期三）\n09:30-11:00 與阿契貝先生及財務同仁進行預算規劃會議\n15:15 自拉克斯珀市出發（VN 341 班機）\n17:20 抵達艾許康國際機場\n\n附註\n抵達時將有車輛至機場接您。房費由公司直接支付；除星期二晚宴外的餐費請以費用申請方式核銷。以本公司企業票價訂購的機票可免費更改一次，惟須於起飛前至少七十二小時通知差旅櫃檯。",
+   "收件者：travel@pellworthgray.com\n寄件者：i.sato@pellworthgray.com\n日期：四月一日\n主旨：行程編號 PG-40718－兩項異動\n\n您好：\n\n行程表發出後有兩件事有了變化。\n\n第一，歐文・阿契貝詢問預算規劃會議能否改到星期二上午，因為他的財務團隊星期三要接受稽核。供應商願意改在星期三與我碰面，但只能約下午，這代表我得比原訂時間更晚離開拉克斯珀。我查到最近的一班是十八點零五分起飛。可否幫我確認這樣的更改是否仍在免費更改的期限內？\n\n第二，星期二的簡報出席人數已從十二人增加到約三十人，而目前預訂的會議室只能容納二十人。可否請您向飯店詢問一樓的金斯利廳當天下午是否有空？若無，我寧可把場地改到配送中心，那裡有一間大小合適的訓練教室。\n\n最後一點：由於我將在當地多待一個下午，請確認飯店不會向我收取延遲退房的費用。\n\n謝謝\n英格麗・佐藤"
   ]
  },
  {
@@ -3964,7 +3964,7 @@ TOEIC.part7 = [
      "To recommend another printing company"
     ],
     "answer": 1,
-    "explanation": "定位:第二段第一句「I am writing about the other half of the order」,接著說明紙廠停產、庫存用完、替代用紙六月二十二日才到。(A)錯:只有預約卡如期出貨,資料夾尚未印製,並非整筆訂單已出貨。(C)錯:全文未提付款或請款。(D)錯:他請客戶在兩個方案中選一個,並未推薦別家廠商。"
+    "explanation": "定位：第二段第一句「I am writing about the other half of the order」，接著說明紙廠停產、庫存用完、替代用紙六月二十二日才到。(A)錯：只有預約卡如期出貨，資料夾尚未印製，並非整筆訂單已出貨。(C)錯：全文未提付款或請款。(D)錯：他請客戶在兩個方案中選一個，並未推薦別家廠商。"
    },
    {
     "q": "What is indicated about the appointment cards?",
@@ -3975,7 +3975,7 @@ TOEIC.part7 = [
      "They will be sent out on the original date."
     ],
     "answer": 3,
-    "explanation": "定位:第一段第二句「Your 5,000 appointment cards are already being printed and will leave our shop on Tuesday, June 9, exactly as promised」,as promised 表示仍照原訂日期。(A)錯:較厚的白紙是資料夾的替代方案。(B)錯:六月二十二日是替代用紙到貨日,與預約卡無關。(C)錯:全文只說不加價,沒有降價。"
+    "explanation": "定位：第一段第二句「Your 5,000 appointment cards are already being printed and will leave our shop on Tuesday, June 9, exactly as promised」，as promised 表示仍照原訂日期。(A)錯：較厚的白紙是資料夾的替代方案。(B)錯：六月二十二日是替代用紙到貨日，與預約卡無關。(C)錯：全文只說不加價，沒有降價。"
    },
    {
     "q": "What does Mr. Brasher NOT offer to do?",
@@ -3986,7 +3986,7 @@ TOEIC.part7 = [
      "Send Ms. Kwan a sample by courier"
     ],
     "answer": 0,
-    "explanation": "定位:第三段說第二個方案「costs us more, but we will not pass that difference on to you」,只是不加價,並未降價,故 (A) 是他沒有提供的。(B)在第四段「we will cover the delivery charge on the folders」。(C)在第三段「print them this week on a slightly heavier white paper」。(D)在第三段「I have sent a sample of the white paper by courier」。"
+    "explanation": "定位：第三段說第二個方案「costs us more, but we will not pass that difference on to you」，只是不加價，並未降價，故 (A) 是他沒有提供的。(B)在第四段「we will cover the delivery charge on the folders」。(C)在第三段「print them this week on a slightly heavier white paper」。(D)在第三段「I have sent a sample of the white paper by courier」。"
    },
    {
     "q": "The word \"cover\" in paragraph 4, line 1, is closest in meaning to",
@@ -3997,11 +3997,11 @@ TOEIC.part7 = [
      "protect"
     ],
     "answer": 2,
-    "explanation": "定位:第四段「we will cover the delivery charge on the folders, since the delay is ours」,受詞是 delivery charge(運費),後面又說延誤責任在己方,可知是由印刷廠負擔費用。(A)(D)是 cover 的字面義「遮蓋、保護」,與費用無關。(B)錯:此處不是把運費「包含」在報價內,而是由賣方吸收。"
+    "explanation": "定位：第四段「we will cover the delivery charge on the folders, since the delay is ours」，受詞是 delivery charge（運費），後面又說延誤責任在己方，可知是由印刷廠負擔費用。(A)(D)是 cover 的字面義「遮蓋、保護」，與費用無關。(B)錯：此處不是把運費「包含」在報價內，而是由賣方吸收。"
    }
   ],
   "translation": [
-   "收件者:哈莉葉・關 <h.kwan@lindmarkclinic.com>\n寄件者:歐文・布拉舍 <o.brasher@quillpressprinting.com>\n日期:六月四日\n主旨:第 44821 號訂單\n\n關女士您好:\n\n感謝林馬克診所週一交給本廠的訂單。您的五千張預約卡已在印製中,會如約於六月九日星期二出貨。\n\n我來信是要說明訂單另一半的狀況。您選的灰色資料夾所用的紙,供應商已經停產,本廠最後一批也在兩週前用完。替代用紙要到六月二十二日才會送達,比您指定的日期晚了十天。\n\n目前有兩種作法。一是把資料夾押後,等新紙到貨;二是本週就改用略厚的白紙印製。第二種作法本廠成本較高,但差額不會轉嫁給您,而且我已用快遞寄出白紙樣張,讓您決定前先看過實品。\n\n無論您選哪一種,資料夾的運費都由我們負擔,畢竟延誤是我們造成的。\n\n可否請您在週五下午前回覆?超過這個時間,我無法保證還排得進下週的產程。\n\n謹此\n奎爾印刷公司\n業務專員 歐文・布拉舍\n555-0178"
+   "收件者：哈莉葉・關 <h.kwan@lindmarkclinic.com>\n寄件者：歐文・布拉舍 <o.brasher@quillpressprinting.com>\n日期：六月四日\n主旨：第 44821 號訂單\n\n關女士您好：\n\n感謝林馬克診所週一交給本廠的訂單。您的五千張預約卡已在印製中，會如約於六月九日星期二出貨。\n\n我來信是要說明訂單另一半的狀況。您選的灰色資料夾所用的紙，供應商已經停產，本廠最後一批也在兩週前用完。替代用紙要到六月二十二日才會送達，比您指定的日期晚了十天。\n\n目前有兩種作法。一是把資料夾押後，等新紙到貨；二是本週就改用略厚的白紙印製。第二種作法本廠成本較高，但差額不會轉嫁給您，而且我已用快遞寄出白紙樣張，讓您決定前先看過實品。\n\n無論您選哪一種，資料夾的運費都由我們負擔，畢竟延誤是我們造成的。\n\n可否請您在週五下午前回覆？超過這個時間，我無法保證還排得進下週的產程。\n\n謹此\n奎爾印刷公司\n業務專員 歐文・布拉舍\n555-0178"
   ]
  },
  {
@@ -4070,7 +4070,7 @@ TOEIC.part7 = [
      "To arrange a meeting with an audit team"
     ],
     "answer": 2,
-    "explanation": "定位:上午八時五十二分第一則「the copier on the third floor is showing an error code again」,通報影印機再度出現故障代碼。(A)錯:問維修紀錄本在哪的是艾德先生,不是她。(B)錯:全文未提訂購耗材。(D)錯:稽核小組只是她說明急迫性的原因,並非要安排會面。"
+    "explanation": "定位：上午八時五十二分第一則「the copier on the third floor is showing an error code again」，通報影印機再度出現故障代碼。(A)錯：問維修紀錄本在哪的是艾德先生，不是她。(B)錯：全文未提訂購耗材。(D)錯：稽核小組只是她說明急迫性的原因，並非要安排會面。"
    },
    {
     "q": "The word \"due\" at 9:03 A.M. is closest in meaning to",
@@ -4081,7 +4081,7 @@ TOEIC.part7 = [
      "required"
     ],
     "answer": 0,
-    "explanation": "定位:上午九時三分「The audit team is due on Thursday」,主詞是一群人加上時間點,意思是預定於週四抵達。(B)錯:due 作「應付的」時搭配款項,例如 payment is due。(C)錯:due 沒有「延誤」的意思,而且延誤的是維修不是稽核小組。(D)錯:要求四百頁影印的是稽核小組本身,不是 due 這個字的意思。"
+    "explanation": "定位：上午九時三分「The audit team is due on Thursday」，主詞是一群人加上時間點，意思是預定於週四抵達。(B)錯：due 作「應付的」時搭配款項，例如 payment is due。(C)錯：due 沒有「延誤」的意思，而且延誤的是維修不是稽核小組。(D)錯：要求四百頁影印的是稽核小組本身，不是 due 這個字的意思。"
    },
    {
     "q": "What does Mr. Ide say he will do?",
@@ -4092,7 +4092,7 @@ TOEIC.part7 = [
      "Ask the service company to come on Tuesday"
     ],
     "answer": 3,
-    "explanation": "定位:上午九時六分「I'll ask Fenwick for a Tuesday visit and explain why we need one」,Fenwick Office Systems 即上午九時一分提到的維修公司。(A)錯:滾輪是技師五月六日換的。(B)錯:兩人只談維修與備用機,未提採購。(C)錯:稽核時間是既定的,他反而是配合稽核提前叫修。"
+    "explanation": "定位：上午九時六分「I'll ask Fenwick for a Tuesday visit and explain why we need one」，Fenwick Office Systems 即上午九時一分提到的維修公司。(A)錯：滾輪是技師五月六日換的。(B)錯：兩人只談維修與備用機，未提採購。(C)錯：稽核時間是既定的，他反而是配合稽核提前叫修。"
    },
    {
     "q": "At 9:08 A.M., what does Ms. Sandhu most likely mean when she writes, \"it will do\"?",
@@ -4103,11 +4103,11 @@ TOEIC.part7 = [
      "The paper tray needs to be replaced."
     ],
     "answer": 1,
-    "explanation": "定位:上午九時八分她先指出收發室那台只有一個紙匣、得有人顧著補紙,再用 But 轉折說「for four hundred pages it will do」,表示以這次四百頁的量而言堪用。(A)錯:她說的是要有人補紙,並未表明由自己操作。(C)錯:全文沒有外送影印店的選項。(D)錯:紙匣少是機器本身的規格,不是待修的故障。"
+    "explanation": "定位：上午九時八分她先指出收發室那台只有一個紙匣、得有人顧著補紙，再用 But 轉折說「for four hundred pages it will do」，表示以這次四百頁的量而言堪用。(A)錯：她說的是要有人補紙，並未表明由自己操作。(C)錯：全文沒有外送影印店的選項。(D)錯：紙匣少是機器本身的規格，不是待修的故障。"
    }
   ],
   "translation": [
-   "普莉雅・桑杜（上午八時五十二分）\n馬可斯,三樓那台影印機又跳錯誤代碼了。E-24,跟上個月同一個。\n\n馬可斯・艾德（上午八時五十五分）\n真是麻煩。維修紀錄本還放在機器旁邊那個櫃子裡嗎?\n\n普莉雅・桑杜（上午八時五十七分）\n在我手上。技師寫說她五月六日換過滾輪,而且那個零件有六個月保固。\n\n馬可斯・艾德（上午九時一分）\n那就好。這樣維修還在保固範圍內,不會跟我們收費。芬威克辦公設備九點半一開門我就打電話過去。\n\n普莉雅・桑杜（上午九時三分）\n謝謝。不過有件事,稽核小組週四就要來,他們星期三下午要影印大約四百頁。\n\n馬可斯・艾德（上午九時六分）\n了解。我會請芬威克排星期二來,並說明我們為什麼需要提前。如果他們週四前排不出人,就先用收發室那台。\n\n普莉雅・桑杜（上午九時八分）\n那台只有一個紙匣,得有人站在旁邊補紙。不過四百頁的話還算堪用。\n\n馬可斯・艾德（上午九時十分）\n就先當備案。芬威克一給我時間我馬上通知妳。"
+   "普莉雅・桑杜（上午八時五十二分）\n馬可斯，三樓那台影印機又跳錯誤代碼了。E-24，跟上個月同一個。\n\n馬可斯・艾德（上午八時五十五分）\n真是麻煩。維修紀錄本還放在機器旁邊那個櫃子裡嗎？\n\n普莉雅・桑杜（上午八時五十七分）\n在我手上。技師寫說她五月六日換過滾輪，而且那個零件有六個月保固。\n\n馬可斯・艾德（上午九時一分）\n那就好。這樣維修還在保固範圍內，不會跟我們收費。芬威克辦公設備九點半一開門我就打電話過去。\n\n普莉雅・桑杜（上午九時三分）\n謝謝。不過有件事，稽核小組週四就要來，他們星期三下午要影印大約四百頁。\n\n馬可斯・艾德（上午九時六分）\n了解。我會請芬威克排星期二來，並說明我們為什麼需要提前。如果他們週四前排不出人，就先用收發室那台。\n\n普莉雅・桑杜（上午九時八分）\n那台只有一個紙匣，得有人站在旁邊補紙。不過四百頁的話還算堪用。\n\n馬可斯・艾德（上午九時十分）\n就先當備案。芬威克一給我時間我馬上通知妳。"
   ]
  },
  {
@@ -4130,7 +4130,7 @@ TOEIC.part7 = [
      "An agency that finds staff for restaurants"
     ],
     "answer": 1,
-    "explanation": "定位:第二段「Greenholt has supplied and cleaned work clothing for restaurants, garages, clinics, and hotels」,加上標題「Clean uniforms, delivered」。(A)錯:布料只出現在報價說明,公司並非織布廠。(C)錯:副標題「No machines to buy」正是說客戶不必買洗衣機。(D)錯:餐廳等是客戶類型,不是它替人找員工。"
+    "explanation": "定位：第二段「Greenholt has supplied and cleaned work clothing for restaurants, garages, clinics, and hotels」，加上標題「Clean uniforms, delivered」。(A)錯：布料只出現在報價說明，公司並非織布廠。(C)錯：副標題「No machines to buy」正是說客戶不必買洗衣機。(D)錯：餐廳等是客戶類型，不是它替人找員工。"
    },
    {
     "q": "What is NOT mentioned as part of Greenholt's service?",
@@ -4141,7 +4141,7 @@ TOEIC.part7 = [
      "One invoice for a customer with several locations"
     ],
     "answer": 2,
-    "explanation": "定位:WHAT YOU GET 五點逐一比對。(A)在第三點「Repairs at no extra cost」。(B)在第四點「A spare set for every employee」。(D)在第五點「a single invoice covering all of your locations」。(C)未出現在廣告任何段落,客戶不需自行洗衣,自然也沒有洗衣人員訓練。"
+    "explanation": "定位：WHAT YOU GET 五點逐一比對。(A)在第三點「Repairs at no extra cost」。(B)在第四點「A spare set for every employee」。(D)在第五點「a single invoice covering all of your locations」。(C)未出現在廣告任何段落，客戶不需自行洗衣，自然也沒有洗衣人員訓練。"
    },
    {
     "q": "What is stated about the uniforms?",
@@ -4152,7 +4152,7 @@ TOEIC.part7 = [
      "Employees are measured at the Denton Trade Park office."
     ],
     "answer": 0,
-    "explanation": "定位:PLEASE NOTE「Every garment remains the property of Greenholt and must be returned to us when an employee leaves」。(B)錯:PRICES 段說廚師服等的價格視布料而定,可見布料不只一種。(C)錯:公告寫明不販售制服,採月結帳單。(D)錯:量身是到客戶的工作場所,不是到公司門市。"
+    "explanation": "定位：PLEASE NOTE「Every garment remains the property of Greenholt and must be returned to us when an employee leaves」。(B)錯：PRICES 段說廚師服等的價格視布料而定，可見布料不只一種。(C)錯：公告寫明不販售制服，採月結帳單。(D)錯：量身是到客戶的工作場所，不是到公司門市。"
    },
    {
     "q": "How can a new customer receive the special offer?",
@@ -4163,11 +4163,11 @@ TOEIC.part7 = [
      "By signing a one-year agreement before September 30"
     ],
     "answer": 3,
-    "explanation": "定位:TRY US「New customers who sign a twelve-month agreement before September 30 pay half price for the first four weeks」,twelve-month 即一年。(A)錯:優惠條件與人數無關。(B)錯:簽的是十二個月的合約,不是預繳十二個月費用。(C)錯:辦公時間是週一至週五,週六並不營業。"
+    "explanation": "定位：TRY US「New customers who sign a twelve-month agreement before September 30 pay half price for the first four weeks」，twelve-month 即一年。(A)錯：優惠條件與人數無關。(B)錯：簽的是十二個月的合約，不是預繳十二個月費用。(C)錯：辦公時間是週一至週五，週六並不營業。"
    }
   ],
   "translation": [
-   "格林霍特制服服務\n乾淨制服,送到您手上。不必買設備,也不必自己洗。\n\n二十多年來,格林霍特為馬洛谷地一帶的餐廳、汽車修理廠、診所與旅館提供工作服並負責清洗。只要告訴我們您有多少員工、希望多久送一次,其餘的交給我們。\n\n服務內容\n－ 到府免費量身,通常在您來電後三個工作天內完成\n－ 由本公司司機每週一次或兩次收送\n－ 免費修補,含鈕扣、口袋與小破損\n－ 每位員工都配備一套備用制服,不會有人沒有乾淨衣服可穿\n－ 按月結帳,所有據點合開一張帳單\n\n價格\n標準棉質上衣與長褲,每位員工每週六・四美元起。廚師服與安全外套另行報價,費用視布料而定。\n\n請注意\n本公司不販售制服。所有衣物均為格林霍特所有,員工離職時必須歸還。\n\n歡迎試用\n新客戶於九月三十日前簽訂十二個月合約,前四週半價。來電時請提供代碼 VALLEY24。\n\n格林霍特制服服務\n丹頓工業園區 9 號廠房\n555-0193 | greenholtuniform.com\n辦公時間:週一至週五上午七時至下午五時"
+   "格林霍特制服服務\n乾淨制服，送到您手上。不必買設備，也不必自己洗。\n\n二十多年來，格林霍特為馬洛谷地一帶的餐廳、汽車修理廠、診所與旅館提供工作服並負責清洗。只要告訴我們您有多少員工、希望多久送一次，其餘的交給我們。\n\n服務內容\n－ 到府免費量身，通常在您來電後三個工作天內完成\n－ 由本公司司機每週一次或兩次收送\n－ 免費修補，含鈕扣、口袋與小破損\n－ 每位員工都配備一套備用制服，不會有人沒有乾淨衣服可穿\n－ 按月結帳，所有據點合開一張帳單\n\n價格\n標準棉質上衣與長褲，每位員工每週六・四美元起。廚師服與安全外套另行報價，費用視布料而定。\n\n請注意\n本公司不販售制服。所有衣物均為格林霍特所有，員工離職時必須歸還。\n\n歡迎試用\n新客戶於九月三十日前簽訂十二個月合約，前四週半價。來電時請提供代碼 VALLEY24。\n\n格林霍特制服服務\n丹頓工業園區 9 號廠房\n555-0193 | greenholtuniform.com\n辦公時間：週一至週五上午七時至下午五時"
   ]
  },
  {
@@ -4296,7 +4296,7 @@ TOEIC.part7 = [
      "They must still be in their packaging."
     ],
     "answer": 3,
-    "explanation": "定位:報價單條款第五點「Items may be returned within fourteen days of delivery if they have not been opened」,未拆封即仍在原包裝內。(A)錯:三十天是報價單本身的有效期,不是退貨期限,退貨期限是十四天。(B)錯:條款未規定退貨由誰運送。(C)錯:條件正好相反,已組裝或拆封的商品不得退貨。"
+    "explanation": "定位：報價單條款第五點「Items may be returned within fourteen days of delivery if they have not been opened」，未拆封即仍在原包裝內。(A)錯：三十天是報價單本身的有效期，不是退貨期限，退貨期限是十四天。(B)錯：條款未規定退貨由誰運送。(C)錯：條件正好相反，已組裝或拆封的商品不得退貨。"
    },
    {
     "q": "Why did Ms. Okafor write the e-mail?",
@@ -4307,7 +4307,7 @@ TOEIC.part7 = [
      "To ask for a copy of an invoice"
     ],
     "answer": 0,
-    "explanation": "定位:電子郵件第一段「our director approved this morning with two changes」,後面各段分別提出加訂椅子、刪除檔案櫃、加購組裝與詢問交期。(B)錯:家具還沒開始生產,談不上延遲。(C)錯:她是修改內容,並非取消訂單。(D)錯:她要的是修改後的總價,不是索取帳單副本。"
+    "explanation": "定位：電子郵件第一段「our director approved this morning with two changes」，後面各段分別提出加訂椅子、刪除檔案櫃、加購組裝與詢問交期。(B)錯：家具還沒開始生產，談不上延遲。(C)錯：她是修改內容，並非取消訂單。(D)錯：她要的是修改後的總價，不是索取帳單副本。"
    },
    {
     "q": "In the e-mail, the word \"leave\" in paragraph 5 is closest in meaning to",
@@ -4318,7 +4318,7 @@ TOEIC.part7 = [
      "delay"
     ],
     "answer": 2,
-    "explanation": "定位:電子郵件第五段最後一句「does that leave us enough time?」,受詞是 us 與 enough time,問的是這樣是否還來得及,即「留給我們足夠的時間」。(A)錯:leave 作「離開」時後面接地點,不接雙受詞。(B)(D)錯:兩者都不是 leave 的字義,句中也沒有忘記或延後的語意。"
+    "explanation": "定位：電子郵件第五段最後一句「does that leave us enough time?」，受詞是 us 與 enough time，問的是這樣是否還來得及，即「留給我們足夠的時間」。(A)錯：leave 作「離開」時後面接地點，不接雙受詞。(B)(D)錯：兩者都不是 leave 的字義，句中也沒有忘記或延後的語意。"
    },
    {
     "q": "How much will the assembly work requested by Ms. Okafor add to the order?",
@@ -4329,7 +4329,7 @@ TOEIC.part7 = [
      "$738"
     ],
     "answer": 1,
-    "explanation": "定位:須整合兩篇。電子郵件第四段說要請師傅組裝「the desks and the meeting tables」;報價單品項顯示書桌 24 張、會議桌 2 張,共 26 件,而條款第二點規定桌類每件 18 美元,26 × 18 = 468。(A)錯:432 只算了 24 張書桌。(C)錯:504 是把件數誤算為 28。(D)錯:738 是多加了三十張椅子的組裝費 270 美元,但她並未要求組裝椅子。"
+    "explanation": "定位：須整合兩篇。電子郵件第四段說要請師傅組裝「the desks and the meeting tables」；報價單品項顯示書桌 24 張、會議桌 2 張，共 26 件，而條款第二點規定桌類每件 18 美元，26 × 18 = 468。(A)錯：432 只算了 24 張書桌。(C)錯：504 是把件數誤算為 28。(D)錯：738 是多加了三十張椅子的組裝費 270 美元，但她並未要求組裝椅子。"
    },
    {
     "q": "If Ms. Okafor returns the signed quotation on August 11, when will the furniture most likely be delivered?",
@@ -4340,12 +4340,12 @@ TOEIC.part7 = [
      "On September 15"
     ],
     "answer": 2,
-    "explanation": "定位:須整合兩篇。報價單條款第四點寫明交期為收到簽署文件與訂金後四週;電子郵件第五段說她八月十一日寄回,八月十一日加四週即九月八日。(A)錯:八月二十五日只過了兩週。(B)錯:九月一日只過了三週。(D)錯:郵件只說希望九月八日那一週結束前家具就定位,並未提到九月十五日,依四週交期算出的也是九月八日。"
+    "explanation": "定位：須整合兩篇。報價單條款第四點寫明交期為收到簽署文件與訂金後四週；電子郵件第五段說她八月十一日寄回，八月十一日加四週即九月八日。(A)錯：八月二十五日只過了兩週。(B)錯：九月一日只過了三週。(D)錯：郵件只說希望九月八日那一週結束前家具就定位，並未提到九月十五日，依四週交期算出的也是九月八日。"
    }
   ],
   "translation": [
-   "梅里迪安辦公家具公司\n蘇德柏里市阿德路 1140 號\n報價單編號 Q-7719\n\n報價對象:貝斯利分析公司 辦公室主任 塔莉亞・奧卡佛\n日期:八月三日\n本報價單自上列日期起三十天內有效。\n\n品項 — 數量 — 單價 — 小計\n可調式辦公桌,140 公分,木質桌面 — 24 — 415 美元 — 9,960 美元\n辦公椅,TR-5 型 — 24 — 228 美元 — 5,472 美元\n雙抽屜檔案櫃 — 12 — 140 美元 — 1,680 美元\n八人座會議桌 — 2 — 690 美元 — 1,380 美元\n\n小計:18,492 美元\n運費:0 美元\n總計:18,492 美元\n\n條款\n1. 訂單金額逾一萬美元者,蘇德柏里市區內免運費。\n2. 不含組裝。本公司師傅可代為組裝,桌類每件 18 美元,椅子每張 9 美元。\n3. 同型號椅子訂購二十張以上者享九五折,上表價格已扣除此折扣。\n4. 交期為本公司收到簽署之報價單與三成訂金當日起算四週。\n5. 商品送達後十四天內,未拆封者可辦理退貨。\n\n如有疑問,請電洽戴文・馬許,555-0166。",
-   "收件者:戴文・馬許 <d.marsh@meridiancf.com>\n寄件者:塔莉亞・奧卡佛 <t.okafor@bexleyanalytics.com>\n日期:八月七日\n主旨:報價單 Q-7719\n\n馬許先生您好:\n\n感謝您的報價單,我們主管今天早上已核准,但有兩處要調整。\n\n第一,同型號的辦公椅想再加訂六張,合計三十張。分析團隊秋天會有兩位新同事報到,與其之後再付一次運費,不如現在一次訂足。請確認貴公司條款第三點的折扣在加量後仍然適用。\n\n第二,請刪除檔案櫃。本公司所有紙本資料這個月都會掃描建檔,已經用不到了。\n\n另外,想請貴公司師傅代為組裝辦公桌與會議桌,我們這邊實在沒有人手。請把這筆費用加進修正後的總價。\n\n還有一點關於時間。新樓層的租約自九月八日起算,我希望家具能在那一週結束前全部就定位。若我在八月十一日把簽好的報價單寄回,時間還來得及嗎?\n\n謹此\n貝斯利分析公司\n辦公室主任 塔莉亞・奧卡佛"
+   "梅里迪安辦公家具公司\n蘇德柏里市阿德路 1140 號\n報價單編號 Q-7719\n\n報價對象：貝斯利分析公司 辦公室主任 塔莉亞・奧卡佛\n日期：八月三日\n本報價單自上列日期起三十天內有效。\n\n品項 — 數量 — 單價 — 小計\n可調式辦公桌，140 公分，木質桌面 — 24 — 415 美元 — 9,960 美元\n辦公椅，TR-5 型 — 24 — 228 美元 — 5,472 美元\n雙抽屜檔案櫃 — 12 — 140 美元 — 1,680 美元\n八人座會議桌 — 2 — 690 美元 — 1,380 美元\n\n小計：18,492 美元\n運費：0 美元\n總計：18,492 美元\n\n條款\n1. 訂單金額逾一萬美元者，蘇德柏里市區內免運費。\n2. 不含組裝。本公司師傅可代為組裝，桌類每件 18 美元，椅子每張 9 美元。\n3. 同型號椅子訂購二十張以上者享九五折，上表價格已扣除此折扣。\n4. 交期為本公司收到簽署之報價單與三成訂金當日起算四週。\n5. 商品送達後十四天內，未拆封者可辦理退貨。\n\n如有疑問，請電洽戴文・馬許，555-0166。",
+   "收件者：戴文・馬許 <d.marsh@meridiancf.com>\n寄件者：塔莉亞・奧卡佛 <t.okafor@bexleyanalytics.com>\n日期：八月七日\n主旨：報價單 Q-7719\n\n馬許先生您好：\n\n感謝您的報價單，我們主管今天早上已核准，但有兩處要調整。\n\n第一，同型號的辦公椅想再加訂六張，合計三十張。分析團隊秋天會有兩位新同事報到，與其之後再付一次運費，不如現在一次訂足。請確認貴公司條款第三點的折扣在加量後仍然適用。\n\n第二，請刪除檔案櫃。本公司所有紙本資料這個月都會掃描建檔，已經用不到了。\n\n另外，想請貴公司師傅代為組裝辦公桌與會議桌，我們這邊實在沒有人手。請把這筆費用加進修正後的總價。\n\n還有一點關於時間。新樓層的租約自九月八日起算，我希望家具能在那一週結束前全部就定位。若我在八月十一日把簽好的報價單寄回，時間還來得及嗎？\n\n謹此\n貝斯利分析公司\n辦公室主任 塔莉亞・奧卡佛"
   ]
  },
  {
@@ -4368,7 +4368,7 @@ TOEIC.part7 = [
      "To report the results of a completed repair"
     ],
     "answer": 1,
-    "explanation": "定位:第一段「the two elevators in the north lobby will be taken out of service for a scheduled upgrade」,以及後文改用南側電梯、收發室暫時搬遷等說明,可知全文在告知施工期間的臨時狀況。(A)錯:全文未提任何租金或費用。(C)錯:停車位申請未出現。(D)錯:工程是三月十六日才要開始,並非已完成的維修結果。"
+    "explanation": "定位：第一段「the two elevators in the north lobby will be taken out of service for a scheduled upgrade」，以及後文改用南側電梯、收發室暫時搬遷等說明，可知全文在告知施工期間的臨時狀況。(A)錯：全文未提任何租金或費用。(C)錯：停車位申請未出現。(D)錯：工程是三月十六日才要開始，並非已完成的維修結果。"
    },
    {
     "q": "In the notice, the word \"scheduled\" in paragraph 1 is closest in meaning to",
@@ -4379,7 +4379,7 @@ TOEIC.part7 = [
      "repeated"
     ],
     "answer": 0,
-    "explanation": "定位:第一段「the two elevators in the north lobby will be taken out of service for a scheduled upgrade」。此處 scheduled 指這項工程是事先排定、計畫好的,故選 planned。(B)錯:工程並未取消,而是即將展開。(C)錯:文中沒有提到是否經過核准。(D)錯:也沒有重複施工之意。"
+    "explanation": "定位：第一段「the two elevators in the north lobby will be taken out of service for a scheduled upgrade」。此處 scheduled 指這項工程是事先排定、計畫好的，故選 planned。(B)錯：工程並未取消，而是即將展開。(C)錯：文中沒有提到是否經過核准。(D)錯：也沒有重複施工之意。"
    },
    {
     "q": "What are delivery workers with heavy items asked to do?",
@@ -4390,7 +4390,7 @@ TOEIC.part7 = [
      "Leave packages in Room 118"
     ],
     "answer": 2,
-    "explanation": "定位:第二段「Delivery workers carrying heavy items should contact the front desk at extension 210」,之後才會有人為他們開啟後方貨梯。(A)錯:走樓梯是給二至四樓員工的建議。(B)錯:八點半到九點半只是人潮擁擠的時段,並非送貨規定。(D)錯:一一八室是暫時的收發室位置,不是放置包裹的指示。"
+    "explanation": "定位：第二段「Delivery workers carrying heavy items should contact the front desk at extension 210」，之後才會有人為他們開啟後方貨梯。(A)錯：走樓梯是給二至四樓員工的建議。(B)錯：八點半到九點半只是人潮擁擠的時段，並非送貨規定。(D)錯：一一八室是暫時的收發室位置，不是放置包裹的指示。"
    },
    {
     "q": "What is NOT mentioned in the notice?",
@@ -4401,11 +4401,11 @@ TOEIC.part7 = [
      "How much the new equipment costs"
     ],
     "answer": 3,
-    "explanation": "定位:(A) 見第一段「expected to last three weeks」;(B) 見第三段「the mail room will move temporarily to Room 118」;(C) 見第四段三月十二日的說明會。全文完全沒有出現任何金額,故 (D) 為未提及者。"
+    "explanation": "定位：(A) 見第一段「expected to last three weeks」；(B) 見第三段「the mail room will move temporarily to Room 118」；(C) 見第四段三月十二日的說明會。全文完全沒有出現任何金額，故 (D) 為未提及者。"
    }
   ],
   "translation": [
-   "全體租戶公告\n河灣商務中心 — 大樓管理室\n公告日期:三月三日\n\n自三月十六日（星期一）起,北側大廳的兩部電梯將停止使用,進行預定的設備更新工程,預計為期三週。這段期間,租戶與訪客請改用南側大廳的電梯;該側電梯將延長運行時間,自上午六點至晚間十點。\n\n由於南側大廳在上午八點半至九點半之間可能相當擁擠,我們建議二樓至四樓的員工盡量走樓梯。搬運重物的送貨人員請撥分機 210 聯絡櫃檯,將有專人為您開啟大樓後方的貨梯。\n\n本次工程不會影響供水、暖氣或網路服務。惟施工期間北側大廳將封閉,收發室因此暫時移至一一八室,位置在租戶休息室隔壁。\n\n我們明白這項工程會造成一些不便,感謝各位的耐心配合。想進一步了解的租戶,可於三月十二日（星期四）下午五點半到三樓會議室參加簡短的說明會。也歡迎將書面問題寄至 management@riverbendcenter.com。"
+   "全體租戶公告\n河灣商務中心 — 大樓管理室\n公告日期：三月三日\n\n自三月十六日（星期一）起，北側大廳的兩部電梯將停止使用，進行預定的設備更新工程，預計為期三週。這段期間，租戶與訪客請改用南側大廳的電梯；該側電梯將延長運行時間，自上午六點至晚間十點。\n\n由於南側大廳在上午八點半至九點半之間可能相當擁擠，我們建議二樓至四樓的員工盡量走樓梯。搬運重物的送貨人員請撥分機 210 聯絡櫃檯，將有專人為您開啟大樓後方的貨梯。\n\n本次工程不會影響供水、暖氣或網路服務。惟施工期間北側大廳將封閉，收發室因此暫時移至一一八室，位置在租戶休息室隔壁。\n\n我們明白這項工程會造成一些不便，感謝各位的耐心配合。想進一步了解的租戶，可於三月十二日（星期四）下午五點半到三樓會議室參加簡短的說明會。也歡迎將書面問題寄至 management@riverbendcenter.com。"
   ]
  },
  {
@@ -4428,7 +4428,7 @@ TOEIC.part7 = [
      "A group of shops that began working together"
     ],
     "answer": 3,
-    "explanation": "定位:第二段「eleven shop owners formed a group called Milbrook Fresh」,後文都在說明這些店家如何共用司機、網站與資訊,故主旨是小店聯合經營。(A)錯:文中沒有任何市政限制超市的計畫。(B)錯:超市是競爭對手,並非新開分店的主角。(C)錯:網站是用來下單與看銷售資訊,不是比價。"
+    "explanation": "定位：第二段「eleven shop owners formed a group called Milbrook Fresh」，後文都在說明這些店家如何共用司機、網站與資訊，故主旨是小店聯合經營。(A)錯：文中沒有任何市政限制超市的計畫。(B)錯：超市是競爭對手，並非新開分店的主角。(C)錯：網站是用來下單與看銷售資訊，不是比價。"
    },
    {
     "q": "The word \"picture\" in paragraph 2 of the article is closest in meaning to",
@@ -4439,7 +4439,7 @@ TOEIC.part7 = [
      "memory"
     ],
     "answer": 0,
-    "explanation": "定位:第二段首句「That picture began to change in January」。這裡的 picture 承接第一段所描述的經營困境,指整體「情況、局面」,故選 situation。(B)(C) 是 picture 的字面義,文中沒有任何影像或圖畫。(D) 文意並非回憶。"
+    "explanation": "定位：第二段首句「That picture began to change in January」。這裡的 picture 承接第一段所描述的經營困境，指整體「情況、局面」，故選 situation。(B)(C) 是 picture 的字面義，文中沒有任何影像或圖畫。(D) 文意並非回憶。"
    },
    {
     "q": "According to Ms. Vargas, what is the greatest benefit of the group?",
@@ -4450,7 +4450,7 @@ TOEIC.part7 = [
      "Faster delivery than the supermarkets offer"
     ],
     "answer": 1,
-    "explanation": "定位:第四段末「the main benefit is not the orders themselves but the information: the shared website shows which products sell quickly」。(A)錯:租金完全未提。(C)錯:她說的是把原本的廣告費改花在司機身上,不是廣告變便宜。(D)錯:兩小時送達是服務內容,但她明言最大好處在資訊而非訂單。"
+    "explanation": "定位：第四段末「the main benefit is not the orders themselves but the information: the shared website shows which products sell quickly」。(A)錯：租金完全未提。(C)錯：她說的是把原本的廣告費改花在司機身上，不是廣告變便宜。(D)錯：兩小時送達是服務內容，但她明言最大好處在資訊而非訂單。"
    },
    {
     "q": "What is suggested about the bakery owners in Weston?",
@@ -4461,11 +4461,11 @@ TOEIC.part7 = [
      "They have opened stores along the highway."
     ],
     "answer": 2,
-    "explanation": "定位:最後一句「A similar group is now being formed by bakery owners in the neighboring Weston district」,可推知他們正要仿效同樣的合作方式。(A)錯:文中只說團體性質相似,未提共用同一批司機。(B)(D) 文中皆無根據。"
+    "explanation": "定位：最後一句「A similar group is now being formed by bakery owners in the neighboring Weston district」，可推知他們正要仿效同樣的合作方式。(A)錯：文中只說團體性質相似，未提共用同一批司機。(B)(D) 文中皆無根據。"
    }
   ],
   "translation": [
-   "商業週刊｜區域報導\n五月九日\n\n小型食品店靠外送合作重獲生機\n戈登・塞爾 撰\n\n多年來,米爾布魯克區小型食品店的老闆都說著同樣的話:他們拚不過公路旁陸續開幕的大型超市。營業額一季比一季下滑,光是去年就有三家店收攤。\n\n這個局面自一月起開始改變。當時十一位店主組成了名為「米爾布魯克鮮食」的團體。成員不再各自僱用司機,而是共用一套外送服務。顧客在同一個網站下單,兩小時內就能收到商品;司機的費用與網站軟體的費用,則由各店分攤。\n\n「我們以前花太多錢做廣告,卻沒有觸及任何人,」在米勒街開店的卡門・巴爾加斯說。「現在那筆錢用在司機身上,老顧客下單的次數變成兩倍。」\n\n成效並非人人相同。兩家成員店表示週末業績翻倍,其他店則說變化不大。不過十一家店至今沒有一家退出。巴爾加斯女士認為,最大的好處不在訂單本身,而在資訊:共用網站會顯示哪些商品賣得快,老闆因此能更精準地叫貨。\n\n鄰近的威斯頓區,現在也有麵包店老闆正在籌組類似的團體。"
+   "商業週刊｜區域報導\n五月九日\n\n小型食品店靠外送合作重獲生機\n戈登・塞爾 撰\n\n多年來，米爾布魯克區小型食品店的老闆都說著同樣的話：他們拚不過公路旁陸續開幕的大型超市。營業額一季比一季下滑，光是去年就有三家店收攤。\n\n這個局面自一月起開始改變。當時十一位店主組成了名為「米爾布魯克鮮食」的團體。成員不再各自僱用司機，而是共用一套外送服務。顧客在同一個網站下單，兩小時內就能收到商品；司機的費用與網站軟體的費用，則由各店分攤。\n\n「我們以前花太多錢做廣告，卻沒有觸及任何人，」在米勒街開店的卡門・巴爾加斯說。「現在那筆錢用在司機身上，老顧客下單的次數變成兩倍。」\n\n成效並非人人相同。兩家成員店表示週末業績翻倍，其他店則說變化不大。不過十一家店至今沒有一家退出。巴爾加斯女士認為，最大的好處不在訂單本身，而在資訊：共用網站會顯示哪些商品賣得快，老闆因此能更精準地叫貨。\n\n鄰近的威斯頓區，現在也有麵包店老闆正在籌組類似的團體。"
   ]
  },
  {
@@ -4488,7 +4488,7 @@ TOEIC.part7 = [
      "To compare prices at several stores"
     ],
     "answer": 2,
-    "explanation": "定位:標題「Cedarline Tool Rental — How It Works」加上 Step 1 至 Step 4 的四個步驟,整頁都在說明租借流程。(A)錯:營業時間只是上方選單的連結名稱,本頁未說明。(B)錯:全文租借的是設備,沒有販售二手工具。(D)錯:比較的是日租、週租、月租,而非不同店家的價格。"
+    "explanation": "定位：標題「Cedarline Tool Rental — How It Works」加上 Step 1 至 Step 4 的四個步驟，整頁都在說明租借流程。(A)錯：營業時間只是上方選單的連結名稱，本頁未說明。(B)錯：全文租借的是設備，沒有販售二手工具。(D)錯：比較的是日租、週租、月租，而非不同店家的價格。"
    },
    {
     "q": "What does the webpage recommend for a longer job?",
@@ -4499,7 +4499,7 @@ TOEIC.part7 = [
      "Paying a deposit in advance"
     ],
     "answer": 1,
-    "explanation": "定位:Step 1 末句「The weekly rate is the best value for any job that lasts longer than four days」。(A)(C) 文中沒有這類建議。(D)錯:兩百美元以下的訂單不需押金,更沒有預先付押金的建議。"
+    "explanation": "定位：Step 1 末句「The weekly rate is the best value for any job that lasts longer than four days」。(A)(C) 文中沒有這類建議。(D)錯：兩百美元以下的訂單不需押金，更沒有預先付押金的建議。"
    },
    {
     "q": "What is NOT mentioned as something customers must do?",
@@ -4510,7 +4510,7 @@ TOEIC.part7 = [
      "Give a reservation number at the rental desk"
     ],
     "answer": 0,
-    "explanation": "定位:(B) 見 Step 4「Please clean the equipment before you bring it back」;(C) 見「returned to the same store」;(D) 見 Step 3「Bring your reservation number to the rental desk」。Step 3 明說手套與護目鏡等安全裝備隨電動工具免費附上,顧客不必自行購買,故選 (A)。"
+    "explanation": "定位：(B) 見 Step 4「Please clean the equipment before you bring it back」；(C) 見「returned to the same store」；(D) 見 Step 3「Bring your reservation number to the rental desk」。Step 3 明說手套與護目鏡等安全裝備隨電動工具免費附上，顧客不必自行購買，故選 (A)。"
    },
    {
     "q": "The word \"holds\" in Step 2 is closest in meaning to",
@@ -4521,11 +4521,11 @@ TOEIC.part7 = [
      "keeps"
     ],
     "answer": 3,
-    "explanation": "定位:Step 2「A reservation holds your item for 24 hours after the pickup time you choose」。此處指預約會把商品「保留」給顧客二十四小時,故選 keeps。(A)(C) 是搬運、抬起的字面義。(B) 指容器裝有某物,與保留無關。"
+    "explanation": "定位：Step 2「A reservation holds your item for 24 hours after the pickup time you choose」。此處指預約會把商品「保留」給顧客二十四小時，故選 keeps。(A)(C) 是搬運、抬起的字面義。(B) 指容器裝有某物，與保留無關。"
    }
   ],
   "translation": [
-   "www.cedarlinetools.com/rentals\n\n首頁 | 租借 | 維修 | 營業時間 | 聯絡我們\n\n雪松工具租借 — 租借流程\n\n步驟一:挑選設備。\n我們的型錄收錄超過四百項商品,從小型手工具到大型地板清潔機都有。每項商品頁面均標示日租、週租與月租價格。工程若需時超過四天,以週租最划算。\n\n步驟二:線上預約。\n請選擇取件日期與門市地點。預約成立後,商品會自您選定的取件時間起為您保留二十四小時。訂單金額未滿兩百美元不需支付押金,但取件時必須在櫃檯出示有效駕照。\n\n步驟三:取件出發。\n請攜帶預約編號至租借櫃檯。門市人員會示範設備的操作方式,並回答您的問題。租借電動工具時,手套、護目鏡等安全裝備一律免費提供。\n\n步驟四:歸還。\n設備必須於到期日下午六點前歸還至同一家門市。逾期歸還將加收一日租金。歸還前請先清潔設備;沾滿油漆或泥土的商品將酌收二十五美元清潔費。\n\n不確定該租哪一項?請撥 555-0148,或使用本頁下方的線上客服按鈕。"
+   "www.cedarlinetools.com/rentals\n\n首頁 | 租借 | 維修 | 營業時間 | 聯絡我們\n\n雪松工具租借 — 租借流程\n\n步驟一：挑選設備。\n我們的型錄收錄超過四百項商品，從小型手工具到大型地板清潔機都有。每項商品頁面均標示日租、週租與月租價格。工程若需時超過四天，以週租最划算。\n\n步驟二：線上預約。\n請選擇取件日期與門市地點。預約成立後，商品會自您選定的取件時間起為您保留二十四小時。訂單金額未滿兩百美元不需支付押金，但取件時必須在櫃檯出示有效駕照。\n\n步驟三：取件出發。\n請攜帶預約編號至租借櫃檯。門市人員會示範設備的操作方式，並回答您的問題。租借電動工具時，手套、護目鏡等安全裝備一律免費提供。\n\n步驟四：歸還。\n設備必須於到期日下午六點前歸還至同一家門市。逾期歸還將加收一日租金。歸還前請先清潔設備；沾滿油漆或泥土的商品將酌收二十五美元清潔費。\n\n不確定該租哪一項？請撥 555-0148，或使用本頁下方的線上客服按鈕。"
   ]
  },
  {
@@ -4612,7 +4612,7 @@ TOEIC.part7 = [
      "To report a problem with a delivery"
     ],
     "answer": 1,
-    "explanation": "定位:郵件第一段「I plan to attend the meeting this Friday. I have three questions before I confirm my travel.」,之後三段分別問時間、參加資格與停車,故目的是詢問與會安排。(A)錯:工作坊照常舉行。(C)錯:她沒有推薦講者。(D)錯:出貨延誤是工作坊主題,不是她要申訴的問題。"
+    "explanation": "定位：郵件第一段「I plan to attend the meeting this Friday. I have three questions before I confirm my travel.」，之後三段分別問時間、參加資格與停車，故目的是詢問與會安排。(A)錯：工作坊照常舉行。(C)錯：她沒有推薦講者。(D)錯：出貨延誤是工作坊主題，不是她要申訴的問題。"
    },
    {
     "q": "According to the program, what will NOT take place on Friday afternoon?",
@@ -4623,7 +4623,7 @@ TOEIC.part7 = [
      "The opening remarks"
     ],
     "answer": 3,
-    "explanation": "定位:日程表顯示工作坊 B 在下午 1:15、分組討論在下午 2:45、頒獎在下午 4:15,皆屬下午;開場致詞排在上午 9:30,故選 (D)。"
+    "explanation": "定位：日程表顯示工作坊 B 在下午 1:15、分組討論在下午 2:45、頒獎在下午 4:15，皆屬下午；開場致詞排在上午 9:30，故選 (D)。"
    },
    {
     "q": "Who will lead the session Ms. Feld is concerned about missing?",
@@ -4634,7 +4634,7 @@ TOEIC.part7 = [
      "Marta Feld"
     ],
     "answer": 2,
-    "explanation": "整合題:郵件第二段說她中午才到,擔心錯過「the session on shipping delays」;對照日程表上午 10:30-11:45 的「Workshop A: Reducing shipping delays」,主講人是 Noor Bakshi。(A) 負責開場致詞。(B) 主講下午的季節性人員訓練。(D) 是寫信人本人。"
+    "explanation": "整合題：郵件第二段說她中午才到，擔心錯過「the session on shipping delays」；對照日程表上午 10:30-11:45 的「Workshop A: Reducing shipping delays」，主講人是 Noor Bakshi。(A) 負責開場致詞。(B) 主講下午的季節性人員訓練。(D) 是寫信人本人。"
    },
    {
     "q": "What will Ms. Feld most likely have to do on Friday?",
@@ -4645,7 +4645,7 @@ TOEIC.part7 = [
      "Pay a fee for two guests"
     ],
     "answer": 0,
-    "explanation": "整合題:日程表註記要求十月十日前告知素食需求,而郵件日期是十月十三日,已超過期限;她自己也寫「If it is too late to change the order, I am happy to bring my own lunch.」故最可能自備午餐。(B)錯:星期六出席只是她提出的另一個選項,兩場工作坊當天都會重辦,無須兩天都到。(C)(D) 文中皆無根據。"
+    "explanation": "整合題：日程表註記要求十月十日前告知素食需求，而郵件日期是十月十三日，已超過期限；她自己也寫「If it is too late to change the order, I am happy to bring my own lunch.」故最可能自備午餐。(B)錯：星期六出席只是她提出的另一個選項，兩場工作坊當天都會重辦，無須兩天都到。(C)(D) 文中皆無根據。"
    },
    {
     "q": "What does Ms. Feld ask about her vehicle?",
@@ -4656,12 +4656,12 @@ TOEIC.part7 = [
      "Whether her badge will be enough to enter the lot"
     ],
     "answer": 3,
-    "explanation": "定位:郵件第四段「Will my badge be accepted at the gate for a vehicle of that size, or do I need a separate pass?」,對應日程表註記「Show your staff badge at the gate.」。(A)(B)(C) 郵件中都沒有提到。"
+    "explanation": "定位：郵件第四段「Will my badge be accepted at the gate for a vehicle of that size, or do I need a separate pass?」，對應日程表註記「Show your staff badge at the gate.」。(A)(B)(C) 郵件中都沒有提到。"
    }
   ],
   "translation": [
-   "昆塔納供應公司\n門市經理會議 — 議程\n十月十七日（星期五）| 費爾蓮會議中心 B 室\n\n上午 9:00-9:30   咖啡與報到（大廳）\n上午 9:30-10:15   開場致詞 — 營運副總 泰瑞莎・莫利納\n上午 10:30-11:45   工作坊 A:減少出貨延誤 — 努爾・巴克希\n中午 12:00-下午 1:00   午餐（花園廳）\n下午 1:15-2:30   工作坊 B:季節性人員的訓練 — 漢娜・伊藤\n下午 2:45-4:00   門市經理分組討論\n下午 4:15   總結與服務獎頒發\n\n請注意:\n- 兩場工作坊將於星期六上午再辦一次,供星期五無法出席的經理參加。\n- 東側停車場免費停車,請於閘門出示員工識別證。\n- 講義將於會議結束一週後上傳公司網站,現場不提供紙本。\n- 需要素食餐點者,請於十月十日前告知服務台。",
-   "收件者:events@quintanasupply.com\n寄件者:m.feld@quintanasupply.com\n日期:十月十三日\n主旨:關於星期五議程的幾個問題\n\n您好:\n\n我負責布里奇波特門市,預計出席本週五的會議。在確認行程之前,有三個問題想請教。\n\n第一,我星期五上午必須拜訪一家供應商,中午才能抵達會場。我還來得及聽出貨延誤那一場嗎?還是改到隔天早上出席比較好?\n\n第二,我門市有兩位銷售同仁想參加下午的分組討論。他們並不是經理,所以在請他們跑這一趟之前,我想先確認他們是否也能參加。\n\n第三,我這次開的是公司廂型車,不是自用車。這種車型在閘門出示識別證即可通行嗎?還是需要另外申請通行證?\n\n最後補充一點:我不吃肉,也知道自己是在議程所訂日期之後才來信。若已來不及更改餐點,我自備午餐也沒問題。\n\n謝謝您。\n\n瑪塔・費爾德\n布里奇波特門市經理"
+   "昆塔納供應公司\n門市經理會議 — 議程\n十月十七日（星期五）| 費爾蓮會議中心 B 室\n\n上午 9:00-9:30   咖啡與報到（大廳）\n上午 9:30-10:15   開場致詞 — 營運副總 泰瑞莎・莫利納\n上午 10:30-11:45   工作坊 A：減少出貨延誤 — 努爾・巴克希\n中午 12:00-下午 1:00   午餐（花園廳）\n下午 1:15-2:30   工作坊 B：季節性人員的訓練 — 漢娜・伊藤\n下午 2:45-4:00   門市經理分組討論\n下午 4:15   總結與服務獎頒發\n\n請注意：\n- 兩場工作坊將於星期六上午再辦一次，供星期五無法出席的經理參加。\n- 東側停車場免費停車，請於閘門出示員工識別證。\n- 講義將於會議結束一週後上傳公司網站，現場不提供紙本。\n- 需要素食餐點者，請於十月十日前告知服務台。",
+   "收件者：events@quintanasupply.com\n寄件者：m.feld@quintanasupply.com\n日期：十月十三日\n主旨：關於星期五議程的幾個問題\n\n您好：\n\n我負責布里奇波特門市，預計出席本週五的會議。在確認行程之前，有三個問題想請教。\n\n第一，我星期五上午必須拜訪一家供應商，中午才能抵達會場。我還來得及聽出貨延誤那一場嗎？還是改到隔天早上出席比較好？\n\n第二，我門市有兩位銷售同仁想參加下午的分組討論。他們並不是經理，所以在請他們跑這一趟之前，我想先確認他們是否也能參加。\n\n第三，我這次開的是公司廂型車，不是自用車。這種車型在閘門出示識別證即可通行嗎？還是需要另外申請通行證？\n\n最後補充一點：我不吃肉，也知道自己是在議程所訂日期之後才來信。若已來不及更改餐點，我自備午餐也沒問題。\n\n謝謝您。\n\n瑪塔・費爾德\n布里奇波特門市經理"
   ]
  },
  {

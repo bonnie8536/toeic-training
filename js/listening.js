@@ -86,7 +86,7 @@
     function refresh() {
       const free = state.done;
       const left = 2 - state.plays;
-      label.textContent = free ? '已作答,可重複聽' : (left > 0 ? '還可播放 ' + left + ' 次' : '播放次數用完,請作答');
+      label.textContent = free ? '已作答，可重複聽' : (left > 0 ? '還可播放 ' + left + ' 次' : '播放次數用完，請作答');
       btn.disabled = !free && left <= 0;
       btn.textContent = state.plays > 0 ? '▶ 再播一次' : '▶ 播放';
     }
@@ -209,7 +209,7 @@
       return h('div', null,
         h('div', { class: 'explain' },
           h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-            rec.ok ? '答對了' : (rec.c === -1 ? '未作答,正確答案是 ' : '答錯了,正確答案是 ') + LETTERS[q.answer]),
+            rec.ok ? '答對了' : (rec.c === -1 ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
           h('div', null, q.explanation)),
         h('div', { class: 'transcript-box' },
           h('b', null, '逐字稿'),
@@ -227,7 +227,7 @@
         h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 1 照片描述')),
         h('div', { class: 'listen-photo' }, img),
         player.el,
-        h('div', { class: 'q-text', style: 'margin-top:10px' }, '選出最符合照片的描述:'),
+        h('div', { class: 'q-text', style: 'margin-top:10px' }, '選出最符合照片的描述：'),
         instant
           ? letterButtons(4, rec, q.answer, oi => {
               state.done = true;
@@ -246,7 +246,7 @@
       root.append(h('div', { class: 'q-block' },
         h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 2 應答')),
         player.el,
-        h('div', { class: 'q-text', style: 'margin-top:10px' }, '選出最合適的回應:'),
+        h('div', { class: 'q-text', style: 'margin-top:10px' }, '選出最合適的回應：'),
         instant
           ? letterButtons(3, rec, q.answer, oi => {
               state.done = true;
@@ -297,12 +297,12 @@
           opts,
           instant && done ? h('div', { class: 'explain' },
             h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
-              chosen === q.answer ? '答對了' : '答錯了,正確答案是 ' + LETTERS[q.answer]),
+              chosen === q.answer ? '答對了' : '答錯了，正確答案是 ' + LETTERS[q.answer]),
             h('div', null, q.explanation)) : null));
       });
       if (instant && complete) {
         const transcript = p === '3'
-          ? set.dialogue.map(t => (t.s === 'M' ? '男:' : '女:') + t.text).join('\n')
+          ? set.dialogue.map(t => (t.s === 'M' ? '男：' : '女：') + t.text).join('\n')
           : set.talk;
         block.append(h('div', { class: 'transcript-box' },
           h('b', null, '逐字稿'),
@@ -316,7 +316,7 @@
     /* 交卷:統一批改(未作答算錯,不寫入錯題紀錄) */
     function submit() {
       const missing = units.filter((u, i) => !unitAnswered(i)).length;
-      if (missing && !confirm('還有 ' + missing + ' 個單元沒答完,確定要交卷嗎?未作答的算錯。')) return;
+      if (missing && !confirm('還有 ' + missing + ' 個單元沒答完，確定要交卷嗎？未作答的算錯。')) return;
       units.forEach((u, i) => {
         const state = sess[i];
         state.done = true;
@@ -403,11 +403,11 @@
               opts,
               h('div', { class: 'explain' },
                 h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-                  rec.ok ? '答對了' : (rec.c === -1 ? '未作答,正確答案是 ' : '答錯了,正確答案是 ') + LETTERS[q.answer]),
+                  rec.ok ? '答對了' : (rec.c === -1 ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
                 h('div', null, q.explanation))));
           });
           const transcript = u.p === '3'
-            ? set.dialogue.map(t => (t.s === 'M' ? '男:' : '女:') + t.text).join('\n')
+            ? set.dialogue.map(t => (t.s === 'M' ? '男：' : '女：') + t.text).join('\n')
             : set.talk;
           block.append(h('div', { class: 'transcript-box' },
             h('b', null, '逐字稿'),

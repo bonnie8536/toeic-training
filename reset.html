@@ -71,16 +71,16 @@ if (/type=recovery/.test(location.hash)) sessionStorage.setItem('tr_pw_recovery'
     const msg = h('div', { class: 'result-note', style: 'margin-top:10px' });
     const btn = h('button', { class: 'btn primary', type: 'button', onclick: async () => {
       msg.textContent = ''; btn.disabled = true;
-      try { await CLOUD.resetPassword(email.value); msg.textContent = '重設信已寄出,請到信箱點連結(幾分鐘內沒收到可看垃圾郵件)。'; }
+      try { await CLOUD.resetPassword(email.value); msg.textContent = '重設信已寄出，請到信箱點連結（幾分鐘內沒收到可看垃圾郵件）。'; }
       catch (e) { msg.textContent = e.message; btn.disabled = false; }
     } }, '寄重設信');
-    draw(h('p', { class: 'result-note' }, CLOUD.user ? '這個重設連結已失效或已用過。' : '輸入註冊的 Email,我們會寄一封重設密碼的信給你。'),
+    draw(h('p', { class: 'result-note' }, CLOUD.user ? '這個重設連結已失效或已用過。' : '輸入註冊的 Email，我們會寄一封重設密碼的信給你。'),
       h('div', { class: 'modal-row' }, email, btn), msg,
       h('p', { style: 'margin-top:18px' }, h('a', { href: 'index.html' }, '回首頁')));
     return;
   }
 
-  const pw = h('input', { class: 'modal-input', type: 'password', placeholder: '新密碼(至少 8 碼)', autocomplete: 'new-password' });
+  const pw = h('input', { class: 'modal-input', type: 'password', placeholder: '新密碼（至少 8 碼）', autocomplete: 'new-password' });
   const pw2 = h('input', { class: 'modal-input', type: 'password', placeholder: '再輸入一次', autocomplete: 'new-password' });
   const msg = h('div', { style: 'color:var(--bad);font-size:13.5px;margin-top:8px;min-height:20px' });
   const btn = h('button', { class: 'btn primary', type: 'button', onclick: async () => {
@@ -91,11 +91,11 @@ if (/type=recovery/.test(location.hash)) sessionStorage.setItem('tr_pw_recovery'
     try {
       await CLOUD.updatePassword(pw.value);
       sessionStorage.removeItem('tr_pw_recovery');
-      draw(h('p', { class: 'result-note' }, '密碼已更新,你已經是登入狀態。'),
+      draw(h('p', { class: 'result-note' }, '密碼已更新，你已經是登入狀態。'),
         h('a', { class: 'btn primary', href: 'index.html' }, '回首頁開始練習'));
     } catch (e) { msg.textContent = e.message; btn.disabled = false; }
   } }, '更新密碼');
-  draw(h('p', { class: 'result-note' }, '帳號:' + (CLOUD.user.email || '')),
+  draw(h('p', { class: 'result-note' }, '帳號：' + (CLOUD.user.email || '')),
     h('div', { style: 'display:grid;gap:8px' }, pw, pw2), msg,
     h('div', { class: 'modal-row', style: 'margin-top:6px' }, btn));
 })();

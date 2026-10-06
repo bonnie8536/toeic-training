@@ -11,15 +11,15 @@
     const VERBS = (window.TOEIC && TOEIC.verbs) || [];
 
     if (!VERBS.length) {
-      root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '動詞表準備中,稍後再來。'));
+      root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '動詞表準備中，稍後再來。'));
       return;
     }
 
     const TYPES = [
-      { k: 'AAA', name: '三態同形', hint: '原形、過去式、過去分詞長得一樣,只能從句子判斷時態。' },
-      { k: 'ABB', name: '後兩個同形', hint: '過去式與過去分詞相同,是數量最多的一類。' },
-      { k: 'ABA', name: '頭尾同形', hint: '過去分詞變回原形的樣子,只有過去式不同。' },
-      { k: 'ABC', name: '三態都不同', hint: '三個形態各不相同,要一組一組記。' },
+      { k: 'AAA', name: '三態同形', hint: '原形、過去式、過去分詞長得一樣，只能從句子判斷時態。' },
+      { k: 'ABB', name: '後兩個同形', hint: '過去式與過去分詞相同，是數量最多的一類。' },
+      { k: 'ABA', name: '頭尾同形', hint: '過去分詞變回原形的樣子，只有過去式不同。' },
+      { k: 'ABC', name: '三態都不同', hint: '三個形態各不相同，要一組一組記。' },
     ];
     const LEVELS = ['全部', '初級', '中級', '進階'];
 
@@ -53,7 +53,7 @@
 
       /* 工具列:搜尋、級別、變化型、遮住、測驗 */
       const search = h('input', {
-        class: 'modal-input', type: 'search', value: keyword, placeholder: '找動詞(英文或中文)',
+        class: 'modal-input', type: 'search', value: keyword, placeholder: '找動詞（英文或中文）',
         style: 'max-width:200px;flex:none',
       });
       search.addEventListener('input', () => { keyword = search.value; redraw(); });
@@ -132,7 +132,7 @@
 
     /* ================= 測驗:給原形與中文,填過去式與過去分詞 ================= */
     function startQuiz(list) {
-      if (list.length < 4) { alert('至少要有 4 個字才能測驗,先放寬篩選條件。'); return; }
+      if (list.length < 4) { alert('至少要有 4 個字才能測驗，先放寬篩選條件。'); return; }
       const st = store.get('verb_quiz', {});
       const shuffle = arr => {
         const a = [...arr];

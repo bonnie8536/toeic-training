@@ -1,16 +1,16 @@
 [
   {
     "id": "gc-01",
-    "title": "was 和 were:be 動詞也有過去的樣子",
+    "title": "was 和 were：be 動詞也有過去的樣子",
     "goal": "學完你會用 was 和 were 講以前的狀態，也做得出否定句和問句。",
     "lesson": [
       {
         "t": "p",
-        "text": "中文說「我現在很忙」跟「我昨天很忙」，那個「忙」字從頭到尾都沒變，是靠「現在」「昨天」這種時間詞去分的。英文不是這樣。英文的動詞會自己換一個樣子來表示時間，be 動詞更是第一個換。你已經學過現在的 am、is、are,講過去的時候它們會縮成兩個字：was 和 were。"
+        "text": "中文說「我現在很忙」跟「我昨天很忙」，那個「忙」字從頭到尾都沒變，是靠「現在」「昨天」這種時間詞去分的。英文不是這樣。英文的動詞會自己換一個樣子來表示時間，be 動詞更是第一個換。你已經學過現在的 am、is、are，講過去的時候它們會縮成兩個字：was 和 were。"
       },
       {
         "t": "p",
-        "text": "怎麼分配很單純。am 和 is 都變成 was,are 變成 were。所以主詞是 I、he、she、it 或任何一個人一個東西，用 was;主詞是 you、we、they 或兩個以上的人事物，用 were。現在要記三個字，過去只要記兩個，反而變輕鬆了。"
+        "text": "怎麼分配很單純。am 和 is 都變成 was，are 變成 were。所以主詞是 I、he、she、it 或任何一個人一個東西，用 was；主詞是 you、we、they 或兩個以上的人事物，用 were。現在要記三個字，過去只要記兩個，反而變輕鬆了。"
       },
       {
         "t": "table",
@@ -61,7 +61,7 @@
       },
       {
         "t": "p",
-        "text": "問句同樣簡單，把 was 或 were 搬到句子最前面就成了。回答的時候用 Yes 加主詞加 was 或 were,不然就是 No 加主詞加 wasn't 或 weren't,而且主詞要換成 he、she、they 這種代名詞。"
+        "text": "問句同樣簡單，把 was 或 were 搬到句子最前面就成了。回答的時候用 Yes 加主詞加 was 或 were，不然就是 No 加主詞加 wasn't 或 weren't，而且主詞要換成 he、she、they 這種代名詞。"
       },
       {
         "t": "ex",
@@ -71,7 +71,7 @@
       },
       {
         "t": "tip",
-        "text": "中文的「我昨天很累」裡面根本沒有動詞，但英文一定要有 was,寫成 I tired yesterday 是不成句的。"
+        "text": "中文的「我昨天很累」裡面根本沒有動詞，但英文一定要有 was，寫成 I tired yesterday 是不成句的。"
       }
     ],
     "quiz": [
@@ -95,7 +95,7 @@
           "did"
         ],
         "answer": 2,
-        "explanation": "my brother 是一個人，現在會用 is,換到過去就是 was。were 是給兩個以上的人用的；sick 講的是狀態不是動作，前面要接 be 動詞，不能用 did。"
+        "explanation": "my brother 是一個人，現在會用 is，換到過去就是 was。were 是給兩個以上的人用的；sick 講的是狀態不是動作，前面要接 be 動詞，不能用 did。"
       },
       {
         "q": "「他們昨天不在家。」哪一句對？",
@@ -106,7 +106,7 @@
           "They aren't at home yesterday."
         ],
         "answer": 0,
-        "explanation": "they 的過去 be 動詞是 were,否定直接加 not 縮成 weren't。wasn't 是給 I、he、she、it 用的；be 動詞不需要 don't 幫忙；aren't 是現在的樣子，跟 yesterday 對不上。"
+        "explanation": "they 的過去 be 動詞是 were，否定直接加 not 縮成 weren't。wasn't 是給 I、he、she、it 用的；be 動詞不需要 don't 幫忙；aren't 是現在的樣子，跟 yesterday 對不上。"
       },
       {
         "q": "___ you at the store this morning?",
@@ -117,7 +117,7 @@
           "Do"
         ],
         "answer": 1,
-        "explanation": "主詞 you 的過去 be 動詞是 were,問句把 were 搬到句首就好。was 是配 I 或一個人一個東西的；這句話裡沒有一般動詞，所以輪不到 did 或 do。"
+        "explanation": "主詞 you 的過去 be 動詞是 were，問句把 were 搬到句首就好。was 是配 I 或一個人一個東西的；這句話裡沒有一般動詞，所以輪不到 did 或 do。"
       },
       {
         "q": "Was your father at work? 的肯定回答是？",
@@ -161,7 +161,7 @@
           "He was at home last night, and he were tired."
         ],
         "answer": 3,
-        "explanation": "he 從頭到尾都是一個人，兩個 be 動詞都應該是 was,後半句寫成 were 是主詞跟 be 動詞沒配好。前面三句的主詞和 be 動詞都配對正確。"
+        "explanation": "he 從頭到尾都是一個人，兩個 be 動詞都應該是 was，後半句寫成 were 是主詞跟 be 動詞沒配好。前面三句的主詞和 be 動詞都配對正確。"
       }
     ]
   },
@@ -172,7 +172,7 @@
     "lesson": [
       {
         "t": "p",
-        "text": "上一課換樣子的是 be 動詞，這一課輪到一般動詞。中文講過去的事，動詞完全不用改，靠「昨天」「上個禮拜」這些字撐著：我昨天吃飯、我上禮拜工作。英文不行，英文的動詞自己要換一個樣子，大部分動詞的做法就是在後面加 ed。這種用來講已經結束的事的時態，叫過去簡單式。這裡還有個好消息：主詞完全不用管了。現在簡單式碰到 he、she、it 這種第三人稱單數還要記得加 s,過去簡單式沒這回事，不管主詞是 I、he 還是 they,動詞都長同一個樣子。"
+        "text": "上一課換樣子的是 be 動詞，這一課輪到一般動詞。中文講過去的事，動詞完全不用改，靠「昨天」「上個禮拜」這些字撐著：我昨天吃飯、我上禮拜工作。英文不行，英文的動詞自己要換一個樣子，大部分動詞的做法就是在後面加 ed。這種用來講已經結束的事的時態，叫過去簡單式。這裡還有個好消息：主詞完全不用管了。現在簡單式碰到 he、she、it 這種第三人稱單數還要記得加 s，過去簡單式沒這回事，不管主詞是 I、he 還是 they，動詞都長同一個樣子。"
       },
       {
         "t": "ex",
@@ -182,7 +182,7 @@
       },
       {
         "t": "p",
-        "text": "拼法有四種情況。大部分直接加 ed;字尾已經有一個 e 的只要補一個 d,像 like 變成 liked;字尾是 y、而且 y 前面不是 a e i o u 的，把 y 拿掉改成 ied,像 study 變成 studied,但 play 的 y 前面是 a,所以它乖乖加 ed 變成 played;還有少數很短的動詞要把最後一個字母寫兩次再加 ed,像 stop 變成 stopped,判斷方式跟以前加 ing 的時候一樣。"
+        "text": "拼法有四種情況。大部分直接加 ed；字尾已經有一個 e 的只要補一個 d，像 like 變成 liked；字尾是 y、而且 y 前面不是 a e i o u 的，把 y 拿掉改成 ied，像 study 變成 studied，但 play 的 y 前面是 a，所以它乖乖加 ed 變成 played；還有少數很短的動詞要把最後一個字母寫兩次再加 ed，像 stop 變成 stopped，判斷方式跟以前加 ing 的時候一樣。"
       },
       {
         "t": "table",
@@ -199,7 +199,7 @@
           ],
           [
             "like",
-            "字尾有 e,只加 d",
+            "字尾有 e，只加 d",
             "liked"
           ],
           [
@@ -209,7 +209,7 @@
           ],
           [
             "play",
-            "y 前面是 a,直接加 ed",
+            "y 前面是 a，直接加 ed",
             "played"
           ],
           [
@@ -233,7 +233,7 @@
       },
       {
         "t": "p",
-        "text": "接下來是唸法。ed 有三種唸法，但你不用背規則，唸唸看就知道。動詞的最後一個音如果是 t 或 d 的音，ed 要多唸一個音節，也就是多一拍：want 是一拍，wanted 就變兩拍；need 和 needed 也是這樣。其他情況 ed 只在字尾多一個小小的音，拍子不會變多。前面是用力吐氣的音，ed 就唸成 t;前面是有聲音的音，ed 就唸成 d。"
+        "text": "接下來是唸法。ed 有三種唸法，但你不用背規則，唸唸看就知道。動詞的最後一個音如果是 t 或 d 的音，ed 要多唸一個音節，也就是多一拍：want 是一拍，wanted 就變兩拍；need 和 needed 也是這樣。其他情況 ed 只在字尾多一個小小的音，拍子不會變多。前面是用力吐氣的音，ed 就唸成 t；前面是有聲音的音，ed 就唸成 d。"
       },
       {
         "t": "table",
@@ -281,7 +281,7 @@
           "are watching"
         ],
         "answer": 2,
-        "explanation": "last night 是已經過去的時間，動詞要加 ed 變成 watched。watch 是現在的樣子；watchs 拼錯了，而且過去簡單式根本不加 s;are watching 講的是此刻正在做的事。"
+        "explanation": "last night 是已經過去的時間，動詞要加 ed 變成 watched。watch 是現在的樣子；watchs 拼錯了，而且過去簡單式根本不加 s；are watching 講的是此刻正在做的事。"
       },
       {
         "q": "「她去年在台北工作。」哪一句對？",
@@ -303,7 +303,7 @@
           "stopping"
         ],
         "answer": 1,
-        "explanation": "stop 是很短的動詞，要把最後一個字母 p 寫兩次再加 ed,變成 stopped。stoped 少寫了一個 p;stopd 漏掉了 e;stopping 是加 ing 的樣子，不是過去式。"
+        "explanation": "stop 是很短的動詞，要把最後一個字母 p 寫兩次再加 ed，變成 stopped。stoped 少寫了一個 p；stopd 漏掉了 e；stopping 是加 ing 的樣子，不是過去式。"
       },
       {
         "q": "下面哪一個 ed 唸起來會多一個音節？",
@@ -336,7 +336,7 @@
           "要變回最原本的樣子"
         ],
         "answer": 0,
-        "explanation": "加 s 只發生在現在簡單式的第三人稱單數。過去簡單式不管主詞是誰，動詞都長一樣，worked 就是 worked,不會變成 workeds。"
+        "explanation": "加 s 只發生在現在簡單式的第三人稱單數。過去簡單式不管主詞是誰，動詞都長一樣，worked 就是 worked，不會變成 workeds。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -358,7 +358,7 @@
           "is, worked"
         ],
         "answer": 1,
-        "explanation": "tired 講的是狀態，前面要用過去的 be 動詞 was;work 是一般動詞，講過去要自己加 ed 變成 worked。第一個空格用 were 的話跟主詞 she 配不起來；用 is 則把時間拉回現在。"
+        "explanation": "tired 講的是狀態，前面要用過去的 be 動詞 was；work 是一般動詞，講過去要自己加 ed 變成 worked。第一個空格用 were 的話跟主詞 she 配不起來；用 is 則把時間拉回現在。"
       }
     ]
   },
@@ -369,7 +369,7 @@
     "lesson": [
       {
         "t": "p",
-        "text": "上一課的動詞都很聽話，加個 ed 就變成過去。但英文裡最常用的那幾個動詞偏偏不聽話，它們的過去式是另一個長相完全不一樣的字，像 go 的過去式是 went,跟 go 一點都不像。這些動詞叫不規則動詞。為什麼偏偏是常用的字不規則？因為越常掛在嘴上的字越老，老到還留著幾百年前的變化方式，大家講習慣了就沒改。推是推不出來的，只能記。"
+        "text": "上一課的動詞都很聽話，加個 ed 就變成過去。但英文裡最常用的那幾個動詞偏偏不聽話，它們的過去式是另一個長相完全不一樣的字，像 go 的過去式是 went，跟 go 一點都不像。這些動詞叫不規則動詞。為什麼偏偏是常用的字不規則？因為越常掛在嘴上的字越老，老到還留著幾百年前的變化方式，大家講習慣了就沒改。推是推不出來的，只能記。"
       },
       {
         "t": "table",
@@ -459,7 +459,7 @@
       },
       {
         "t": "p",
-        "text": "跟加 ed 的動詞一樣，不規則動詞的過去式也完全不看主詞。he、she 用的還是 went,絕對不會變成 wents。台灣學生最常出的兩種錯，一種是把規則硬套上去寫成 goed、eated,另一種是想起來要用過去式，卻又忍不住補一個 s。兩種都不用擔心，記住過去式只有一個樣子就好。"
+        "text": "跟加 ed 的動詞一樣，不規則動詞的過去式也完全不看主詞。he、she 用的還是 went，絕對不會變成 wents。台灣學生最常出的兩種錯，一種是把規則硬套上去寫成 goed、eated，另一種是想起來要用過去式，卻又忍不住補一個 s。兩種都不用擔心，記住過去式只有一個樣子就好。"
       },
       {
         "t": "ex",
@@ -469,7 +469,7 @@
       },
       {
         "t": "p",
-        "text": "有幾組長得很像，特別容易記混。see 是看見，過去式是 saw;say 是說，過去式是 said,而且 said 唸起來像 sed,不是照著 say 的音再加一個 d。另外 read 這個字更妙，它的過去式拼起來跟原本一模一樣，還是 read,但唸法會變，只能靠句子裡的時間詞判斷是哪一種。除了這些零散的，還有一群可以整組一起記，因為它們的過去式都以 ought 或 aught 結尾，唸起來是同一個尾巴的音。"
+        "text": "有幾組長得很像，特別容易記混。see 是看見，過去式是 saw；say 是說，過去式是 said，而且 said 唸起來像 sed，不是照著 say 的音再加一個 d。另外 read 這個字更妙，它的過去式拼起來跟原本一模一樣，還是 read，但唸法會變，只能靠句子裡的時間詞判斷是哪一種。除了這些零散的，還有一群可以整組一起記，因為它們的過去式都以 ought 或 aught 結尾，唸起來是同一個尾巴的音。"
       },
       {
         "t": "ex",
@@ -520,7 +520,7 @@
       },
       {
         "t": "tip",
-        "text": "背的時候把兩個字當成一組一起唸出聲，go-went、eat-ate,只背原本的樣子等於沒背。"
+        "text": "背的時候把兩個字當成一組一起唸出聲，go-went、eat-ate，只背原本的樣子等於沒背。"
       }
     ],
     "quiz": [
@@ -544,7 +544,7 @@
           "buying"
         ],
         "answer": 1,
-        "explanation": "buy 的過去式是 bought,不是 buyed。last week 已經過去，不能用現在的 buys;buying 前面少了 be 動詞。"
+        "explanation": "buy 的過去式是 bought，不是 buyed。last week 已經過去，不能用現在的 buys；buying 前面少了 be 動詞。"
       },
       {
         "q": "「我們昨天看到你媽媽。」哪一句對？",
@@ -566,7 +566,7 @@
           "gives"
         ],
         "answer": 2,
-        "explanation": "give 的過去式是 gave,不是 gived。last year 已經過去，不能用現在的 give 或 gives。"
+        "explanation": "give 的過去式是 gave，不是 gived。last year 已經過去，不能用現在的 give 或 gives。"
       },
       {
         "q": "下面哪一組「原本的樣子和過去式」配錯了？",
@@ -577,7 +577,7 @@
           "come - came"
         ],
         "answer": 1,
-        "explanation": "take 是不規則動詞，過去式是 took,不是 taked。其他三組都配對正確。"
+        "explanation": "take 是不規則動詞，過去式是 took，不是 taked。其他三組都配對正確。"
       },
       {
         "q": "Last night my sister ___ her homework before dinner.",
@@ -599,7 +599,7 @@
           "He teached us English last year."
         ],
         "answer": 3,
-        "explanation": "teach 是不規則動詞，過去式是 taught,不是 teached。watch 是規則動詞所以加 ed;came 和 bought 都是正確的不規則過去式。"
+        "explanation": "teach 是不規則動詞，過去式是 taught，不是 teached。watch 是規則動詞所以加 ed；came 和 bought 都是正確的不規則過去式。"
       },
       {
         "q": "「他昨天在家寫了一封信。」He ___ at home yesterday and ___ a letter.",
@@ -610,7 +610,7 @@
           "was, writes"
         ],
         "answer": 0,
-        "explanation": "第一個空格講的是狀態，主詞 he 用過去的 be 動詞 was;write 是不規則動詞，過去式是 wrote。were 跟主詞 he 配不起來；writed 是硬加 ed;writes 是現在的樣子。"
+        "explanation": "第一個空格講的是狀態，主詞 he 用過去的 be 動詞 was；write 是不規則動詞，過去式是 wrote。were 跟主詞 he 配不起來；writed 是硬加 ed；writes 是現在的樣子。"
       }
     ]
   },
@@ -621,11 +621,11 @@
     "lesson": [
       {
         "t": "p",
-        "text": "中文要講「我昨天沒去」，只要在動詞前面塞一個「沒」就好，動詞本身完全不動。英文麻煩一點，它得請一個助動詞出來幫忙。現在簡單式用的是 do 和 does,還要看主詞是誰；到了過去，不管主詞是 I、he 還是 they,通通只用一個字：did。這點反而比現在簡單式好記。"
+        "text": "中文要講「我昨天沒去」，只要在動詞前面塞一個「沒」就好，動詞本身完全不動。英文麻煩一點，它得請一個助動詞出來幫忙。現在簡單式用的是 do 和 does，還要看主詞是誰；到了過去，不管主詞是 I、he 還是 they，通通只用一個字：did。這點反而比現在簡單式好記。"
       },
       {
         "t": "p",
-        "text": "否定句的公式是主詞加 didn't 加動詞。這裡有個非常重要的觀念：過去的意思已經被 did 扛走了，所以後面那個動詞不必再表示過去，要退回最原本的樣子。I didn't went 是台灣學生最常犯的錯，因為腦袋裡想著「這是昨天的事」就手滑把 go 改成 went,但 didn't 裡面已經有過去了，同一句話不需要說兩次。"
+        "text": "否定句的公式是主詞加 didn't 加動詞。這裡有個非常重要的觀念：過去的意思已經被 did 扛走了，所以後面那個動詞不必再表示過去，要退回最原本的樣子。I didn't went 是台灣學生最常犯的錯，因為腦袋裡想著「這是昨天的事」就手滑把 go 改成 went，但 didn't 裡面已經有過去了，同一句話不需要說兩次。"
       },
       {
         "t": "ex",
@@ -666,7 +666,7 @@
       },
       {
         "t": "p",
-        "text": "疑問句的做法是把 Did 搬到句子最前面，主詞放中間，動詞一樣是最原本的樣子。回答的時候不必把整個動詞再講一次，用 Yes 加主詞加 did,或是 No 加主詞加 didn't 就好。"
+        "text": "疑問句的做法是把 Did 搬到句子最前面，主詞放中間，動詞一樣是最原本的樣子。回答的時候不必把整個動詞再講一次，用 Yes 加主詞加 did，或是 No 加主詞加 didn't 就好。"
       },
       {
         "t": "ex",
@@ -682,11 +682,11 @@
       },
       {
         "t": "p",
-        "text": "最後提醒一件事：be 動詞不玩這一套。句子裡如果是 was 或 were,否定就直接加 not,問句就把 was、were 搬到句首，完全用不到 did。「他昨天累嗎？」是 Was he tired yesterday?,寫成 Did he was tired? 等於同時請了兩個幫手，一定錯。"
+        "text": "最後提醒一件事：be 動詞不玩這一套。句子裡如果是 was 或 were，否定就直接加 not，問句就把 was、were 搬到句首，完全用不到 did。「他昨天累嗎？」是 Was he tired yesterday?，寫成 Did he was tired? 等於同時請了兩個幫手，一定錯。"
       },
       {
         "t": "tip",
-        "text": "看到句子裡有 did 或 didn't,後面的動詞一定是字典裡那個最原本的樣子，一個字母都不用加。"
+        "text": "看到句子裡有 did 或 didn't，後面的動詞一定是字典裡那個最原本的樣子，一個字母都不用加。"
       }
     ],
     "quiz": [
@@ -710,7 +710,7 @@
           "cooking"
         ],
         "answer": 2,
-        "explanation": "didn't 已經把過去的意思扛走了，後面的動詞要退回最原本的 cook。cooked 是重複表示過去；cooks 是現在簡單式加了 s;cooking 是加 ing 的樣子。"
+        "explanation": "didn't 已經把過去的意思扛走了，後面的動詞要退回最原本的 cook。cooked 是重複表示過去；cooks 是現在簡單式加了 s；cooking 是加 ing 的樣子。"
       },
       {
         "q": "「你昨天有看到他嗎？」哪一句對？",
@@ -732,7 +732,7 @@
           "Were"
         ],
         "answer": 1,
-        "explanation": "come 是一般動詞，講過去的問句要用 Did 開頭。Do 是現在的；句子裡有一般動詞 come,所以不能用 Was 或 Were 來問。"
+        "explanation": "come 是一般動詞，講過去的問句要用 Did 開頭。Do 是現在的；句子裡有一般動詞 come，所以不能用 Was 或 Were 來問。"
       },
       {
         "q": "Did you finish your homework? 的否定回答是？",
@@ -776,22 +776,22 @@
           "don't"
         ],
         "answer": 0,
-        "explanation": "last year 是過去，而且後面接了一般動詞 drive,所以用 didn't。後半句的 does 是現在的習慣，前半句時間不同，不能也用 doesn't;wasn't 後面不能直接接 drive。"
+        "explanation": "last year 是過去，而且後面接了一般動詞 drive，所以用 didn't。後半句的 does 是現在的習慣，前半句時間不同，不能也用 doesn't；wasn't 後面不能直接接 drive。"
       }
     ]
   },
   {
     "id": "gc-05",
-    "title": "過去進行式：was 或 were 加 V-ing,講當時正在做的事",
+    "title": "過去進行式：was 或 were 加 V-ing，講當時正在做的事",
     "goal": "學完你會描述過去某個時間點正在進行的畫面，也做得出它的否定句和問句。",
     "lesson": [
       {
         "t": "p",
-        "text": "中文說「我昨天晚上八點正在洗澡」，關鍵在那個「正在」。你不是在說整晚都在洗，而是在說八點那個瞬間，這件事正做到一半。英文早就有一組專門講「正在」的說法，就是現在進行式的 am、is、are 加 V-ing。要把它搬到過去，你只要動一個地方：把前面的 be 動詞換成過去的 was 或 were,這就叫過去進行式。"
+        "text": "中文說「我昨天晚上八點正在洗澡」，關鍵在那個「正在」。你不是在說整晚都在洗，而是在說八點那個瞬間，這件事正做到一半。英文早就有一組專門講「正在」的說法，就是現在進行式的 am、is、are 加 V-ing。要把它搬到過去，你只要動一個地方：把前面的 be 動詞換成過去的 was 或 were，這就叫過去進行式。"
       },
       {
         "t": "p",
-        "text": "was 和 were 怎麼分配，跟第一課學的一模一樣：I、he、she、it 和一個人一個東西用 was;you、we、they 和兩個以上用 were。後面的 V-ing 拼法也沒有任何新規則，跟以前一樣，make 去掉 e 變 making,run 把最後一個字母寫兩次變 running。"
+        "text": "was 和 were 怎麼分配，跟第一課學的一模一樣：I、he、she、it 和一個人一個東西用 was；you、we、they 和兩個以上用 were。後面的 V-ing 拼法也沒有任何新規則，跟以前一樣，make 去掉 e 變 making，run 把最後一個字母寫兩次變 running。"
       },
       {
         "t": "table",
@@ -842,7 +842,7 @@
       },
       {
         "t": "p",
-        "text": "否定和疑問完全不用學新的東西，因為前面那個字就是 be 動詞。否定就在 was 或 were 後面加 not,縮成 wasn't、weren't,後面的 V-ing 不動；問句就把 was 或 were 搬到句首。這裡千萬不要跑去找 did 幫忙，句子裡已經有 be 動詞了。"
+        "text": "否定和疑問完全不用學新的東西，因為前面那個字就是 be 動詞。否定就在 was 或 were 後面加 not，縮成 wasn't、weren't，後面的 V-ing 不動；問句就把 was 或 were 搬到句首。這裡千萬不要跑去找 did 幫忙，句子裡已經有 be 動詞了。"
       },
       {
         "t": "ex",
@@ -887,7 +887,7 @@
           "She studying at that time."
         ],
         "answer": 2,
-        "explanation": "she 配 was,動詞加 ing 變 studying。were 跟 she 配不起來；was study 少了 ing;She studying 少了 be 動詞。"
+        "explanation": "she 配 was，動詞加 ing 變 studying。were 跟 she 配不起來；was study 少了 ing；She studying 少了 be 動詞。"
       },
       {
         "q": "___ you sleeping when I came in?",
@@ -898,7 +898,7 @@
           "Do"
         ],
         "answer": 2,
-        "explanation": "主詞 you 的過去 be 動詞是 were,問句把它搬到句首。Was 是配 I 或一個人一個東西的；句子裡已經有 be 動詞，不需要 Did 或 Do 來幫忙。"
+        "explanation": "主詞 you 的過去 be 動詞是 were，問句把它搬到句首。Was 是配 I 或一個人一個東西的；句子裡已經有 be 動詞，不需要 Did 或 Do 來幫忙。"
       },
       {
         "q": "My brother ___ his bike at six last night.",
@@ -909,7 +909,7 @@
           "was riding"
         ],
         "answer": 3,
-        "explanation": "at six last night 把鏡頭停在昨晚六點，主詞是一個人，用 was riding。rides 是現在的習慣；was ride 少了 ing;were 跟 my brother 配不起來。"
+        "explanation": "at six last night 把鏡頭停在昨晚六點，主詞是一個人，用 was riding。rides 是現在的習慣；was ride 少了 ing；were 跟 my brother 配不起來。"
       },
       {
         "q": "下面哪一句在講「昨天晚上正在下雨」？",
@@ -920,7 +920,7 @@
           "It was raining last night."
         ],
         "answer": 3,
-        "explanation": "過去進行式是 was 加 raining。is raining 是現在正在下；was rain 少了 ing;rains 是現在的樣子，跟 last night 對不上。"
+        "explanation": "過去進行式是 was 加 raining。is raining 是現在正在下；was rain 少了 ing；rains 是現在的樣子，跟 last night 對不上。"
       },
       {
         "q": "下面哪一句是錯的？",
@@ -1071,7 +1071,7 @@
           "gets"
         ],
         "answer": 1,
-        "explanation": "回到家是一瞬間的短事件，用過去簡單式 got;看電視才是當時的背景，所以後半句用過去進行式。兩件事的分工不能對調。"
+        "explanation": "回到家是一瞬間的短事件，用過去簡單式 got；看電視才是當時的背景，所以後半句用過去進行式。兩件事的分工不能對調。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -1093,7 +1093,7 @@
           "was cleaning"
         ],
         "answer": 3,
-        "explanation": "while 連起來的兩件事在同一段時間裡各做各的，兩邊都用過去進行式，所以是 was cleaning。cleaning 前面少了 was;cleans 是現在的樣子；clean 沒有做任何變化。"
+        "explanation": "while 連起來的兩件事在同一段時間裡各做各的，兩邊都用過去進行式，所以是 was cleaning。cleaning 前面少了 was；cleans 是現在的樣子；clean 沒有做任何變化。"
       },
       {
         "q": "He got up, ___ his teeth, and left the house.",
@@ -1115,13 +1115,13 @@
           "I am eating dinner at seven last night."
         ],
         "answer": 1,
-        "explanation": "中文的「正在」對應過去進行式 was eating。ate 只說有吃這件事，沒有「那一刻正在進行」的意思；was eat 少了 ing;am eating 是現在。"
+        "explanation": "中文的「正在」對應過去進行式 was eating。ate 只說有吃這件事，沒有「那一刻正在進行」的意思；was eat 少了 ing；am eating 是現在。"
       }
     ]
   },
   {
     "id": "gc-07",
-    "title": "used to:講以前會、現在不會了",
+    "title": "used to：講以前會、現在不會了",
     "goal": "學完你會用 used to 講以前常做但現在不做的事，也不會拿它去講只發生一次的事。",
     "lesson": [
       {
@@ -1130,7 +1130,7 @@
       },
       {
         "t": "p",
-        "text": "它的樣子很好記，而且完全不用管主詞。不管前面是 I、he 還是 they,都是 used to,不會變成 uses to,也不會加任何東西。used 本身已經是過去的樣子了，所以它一輩子就長這樣。"
+        "text": "它的樣子很好記，而且完全不用管主詞。不管前面是 I、he 還是 they，都是 used to，不會變成 uses to，也不會加任何東西。used 本身已經是過去的樣子了，所以它一輩子就長這樣。"
       },
       {
         "t": "ex",
@@ -1140,7 +1140,7 @@
       },
       {
         "t": "p",
-        "text": "要特別注意的是它的使用時機。used to 講的一定是以前長期、反覆做的事，或是以前長期維持的狀態，而且現在已經不是這樣了。所以只發生過一次的事不能用它。「我去年夏天去了日本」是一次性的事件，只能用過去簡單式 went,寫成 used to go 會變成「我以前常去日本，現在不去了」，意思整個跑掉。"
+        "text": "要特別注意的是它的使用時機。used to 講的一定是以前長期、反覆做的事，或是以前長期維持的狀態，而且現在已經不是這樣了。所以只發生過一次的事不能用它。「我去年夏天去了日本」是一次性的事件，只能用過去簡單式 went，寫成 used to go 會變成「我以前常去日本，現在不去了」，意思整個跑掉。"
       },
       {
         "t": "ex",
@@ -1204,7 +1204,7 @@
           "was used to"
         ],
         "answer": 1,
-        "explanation": "肯定句用 used to,那個 d 不能省。use to 只出現在 didn't 或 Did 後面；am used to 和 was used to 都多加了 be 動詞，不是這個用法。"
+        "explanation": "肯定句用 used to，那個 d 不能省。use to 只出現在 didn't 或 Did 後面；am used to 和 was used to 都多加了 be 動詞，不是這個用法。"
       },
       {
         "q": "She used to ___ long hair.",
@@ -1226,7 +1226,7 @@
           "I didn't use to like dogs."
         ],
         "answer": 3,
-        "explanation": "否定要用 didn't use to,did 一出場 used 就得把 d 拿掉。didn't used to 等於講了兩次過去；I not 少了助動詞；wasn't 是 be 動詞的否定，這裡用不到。"
+        "explanation": "否定要用 didn't use to，did 一出場 used 就得把 d 拿掉。didn't used to 等於講了兩次過去；I not 少了助動詞；wasn't 是 be 動詞的否定，這裡用不到。"
       },
       {
         "q": "___ you use to walk to school?",
@@ -1240,7 +1240,7 @@
         "explanation": "問句用 Did 開頭，後面才會是 use to。Do 和 Are 是現在的；Were 是 be 動詞，後面不能接 use to walk 這種一般動詞。"
       },
       {
-        "q": "下面哪一種情況最適合用 used to?",
+        "q": "下面哪一種情況最適合用 used to？",
         "options": [
           "我以前每天騎腳踏車上學，現在都搭公車",
           "我昨天去看了一部電影",
@@ -1259,7 +1259,7 @@
           "use to run"
         ],
         "answer": 0,
-        "explanation": "以前開店現在關了，正好是 used to 的對比語氣，後面接原形動詞 run。uses to 是把 used 誤加了 s;used to ran 後面用了過去式；use to 少了 d,只有在 didn't 或 Did 後面才這樣寫。"
+        "explanation": "以前開店現在關了，正好是 used to 的對比語氣，後面接原形動詞 run。uses to 是把 used 誤加了 s；used to ran 後面用了過去式；use to 少了 d，只有在 didn't 或 Did 後面才這樣寫。"
       },
       {
         "q": "I ___ to Japan last summer.",
@@ -1281,7 +1281,7 @@
           "watches"
         ],
         "answer": 2,
-        "explanation": "used to 後面固定接原形動詞 watch。watching 是加 ing 的樣子；watched 是過去式，跟 used to 重複表示過去；watches 是第三人稱單數才會加的 s,而且主詞是 we。"
+        "explanation": "used to 後面固定接原形動詞 watch。watching 是加 ing 的樣子；watched 是過去式，跟 used to 重複表示過去；watches 是第三人稱單數才會加的 s，而且主詞是 we。"
       }
     ]
   },
@@ -1296,7 +1296,7 @@
       },
       {
         "t": "p",
-        "text": "它的樣子是 have 或 has 加上過去分詞。過去分詞是動詞的第三種變化。你已經認識前兩種了，一種是原本的樣子 work,一種是過去式 worked,過去分詞就是再多的那一種。規則動詞很輕鬆，後兩種長得一模一樣，都是 worked;不規則動詞就沒有規則可循，得跟著過去式一起記。至於前面要用 have 還是 has,主詞是 he、she、it 或一個人一個東西就用 has,其他一律用 have,這跟現在簡單式第三人稱單數要加 s 是同一套道理。"
+        "text": "它的樣子是 have 或 has 加上過去分詞。過去分詞是動詞的第三種變化。你已經認識前兩種了，一種是原本的樣子 work，一種是過去式 worked，過去分詞就是再多的那一種。規則動詞很輕鬆，後兩種長得一模一樣，都是 worked；不規則動詞就沒有規則可循，得跟著過去式一起記。至於前面要用 have 還是 has，主詞是 he、she、it 或一個人一個東西就用 has，其他一律用 have，這跟現在簡單式第三人稱單數要加 s 是同一套道理。"
       },
       {
         "t": "table",
@@ -1382,7 +1382,7 @@
       },
       {
         "t": "p",
-        "text": "否定和疑問都不需要新的幫手，因為 have 和 has 自己就是助動詞。否定在後面加 not,縮成 haven't 和 hasn't;疑問就把 have 或 has 搬到句首。這裡不會用到 did,看到 Did you have finished 這種寫法就知道是兩個助動詞疊在一起了。"
+        "text": "否定和疑問都不需要新的幫手，因為 have 和 has 自己就是助動詞。否定在後面加 not，縮成 haven't 和 hasn't；疑問就把 have 或 has 搬到句首。這裡不會用到 did，看到 Did you have finished 這種寫法就知道是兩個助動詞疊在一起了。"
       },
       {
         "t": "ex",
@@ -1405,7 +1405,7 @@
           "is finish"
         ],
         "answer": 1,
-        "explanation": "主詞 she 是一個人，用 has,後面接過去分詞 finished。have 是給 I、you 和兩個以上的主詞用的；has finish 少了動詞的變化；is finish 用錯了助動詞。"
+        "explanation": "主詞 she 是一個人，用 has，後面接過去分詞 finished。have 是給 I、you 和兩個以上的主詞用的；has finish 少了動詞的變化；is finish 用錯了助動詞。"
       },
       {
         "q": "I have ___ my keys. Can you help me find them?",
@@ -1427,7 +1427,7 @@
           "We have wrote the letter."
         ],
         "answer": 2,
-        "explanation": "write 的過去分詞是 written。第一句沒有做任何變化；第二句主詞 we 應該配 have;第四句用的 wrote 是過去式，不能放在 have 後面。"
+        "explanation": "write 的過去分詞是 written。第一句沒有做任何變化；第二句主詞 we 應該配 have；第四句用的 wrote 是過去式，不能放在 have 後面。"
       },
       {
         "q": "go 的過去分詞是？",
@@ -1438,7 +1438,7 @@
           "goed"
         ],
         "answer": 0,
-        "explanation": "go 的三種變化是 go、went、gone,過去分詞是 gone。went 是過去式，只能自己單獨用；going 是加 ing 的樣子；goed 是硬加 ed 的錯誤寫法。"
+        "explanation": "go 的三種變化是 go、went、gone，過去分詞是 gone。went 是過去式，只能自己單獨用；going 是加 ing 的樣子；goed 是硬加 ed 的錯誤寫法。"
       },
       {
         "q": "___ you finished the book?",
@@ -1449,7 +1449,7 @@
           "Are"
         ],
         "answer": 2,
-        "explanation": "finished 是過去分詞，前面要配 have,問句就把 Have 搬到句首。Do 和 Did 後面要接原形動詞；Are 後面接 V-ing 講正在做的事，組不出現在完成式。"
+        "explanation": "finished 是過去分詞，前面要配 have，問句就把 Have 搬到句首。Do 和 Did 後面要接原形動詞；Are 後面接 V-ing 講正在做的事，組不出現在完成式。"
       },
       {
         "q": "He ___ eaten anything today.",
@@ -1482,7 +1482,7 @@
           "He have done his homework."
         ],
         "answer": 3,
-        "explanation": "he 是一個人，要用 has done,寫成 have 是主詞跟助動詞沒配好。其他三句的主詞和 have 或 has 都配對正確，後面接的也都是過去分詞。"
+        "explanation": "he 是一個人，要用 has done，寫成 have 是主詞跟助動詞沒配好。其他三句的主詞和 have 或 has 都配對正確，後面接的也都是過去分詞。"
       }
     ]
   },
@@ -1493,11 +1493,11 @@
     "lesson": [
       {
         "t": "p",
-        "text": "中文講到剛完成的事，會說「我剛吃完」「我已經吃過了」「我還沒吃」。這三句話在英文裡通常都用現在完成式，差別在後面配哪一個字：剛剛用 just,已經用 already,還沒用 yet。這三個字幾乎是現在完成式的固定班底，學會它們，你的句子馬上就有台灣人講中文那種自然的語氣。"
+        "text": "中文講到剛完成的事，會說「我剛吃完」「我已經吃過了」「我還沒吃」。這三句話在英文裡通常都用現在完成式，差別在後面配哪一個字：剛剛用 just，已經用 already，還沒用 yet。這三個字幾乎是現在完成式的固定班底，學會它們，你的句子馬上就有台灣人講中文那種自然的語氣。"
       },
       {
         "t": "p",
-        "text": "先看 just,它的意思是剛剛、才不久前，位置在 have 或 has 的後面、過去分詞的前面。它強調時間非常近，近到那件事的餘溫還在。"
+        "text": "先看 just，它的意思是剛剛、才不久前，位置在 have 或 has 的後面、過去分詞的前面。它強調時間非常近，近到那件事的餘溫還在。"
       },
       {
         "t": "ex",
@@ -1562,7 +1562,7 @@
       },
       {
         "t": "tip",
-        "text": "想講「我已經做完了」千萬別用 yet,那是 already 的位子。"
+        "text": "想講「我已經做完了」千萬別用 yet，那是 already 的位子。"
       }
     ],
     "quiz": [
@@ -1641,7 +1641,7 @@
           "was"
         ],
         "answer": 0,
-        "explanation": "the bus 是一個東西，用 has,後面接過去分詞 left。have 配不上單數主詞；did 後面要接原形動詞；was 是 be 動詞，不能這樣接過去分詞。"
+        "explanation": "the bus 是一個東西，用 has，後面接過去分詞 left。have 配不上單數主詞；did 後面要接原形動詞；was 是 be 動詞，不能這樣接過去分詞。"
       },
       {
         "q": "「我剛剛把那本書看完。」哪一句對？",
@@ -1652,7 +1652,7 @@
           "I just have finished that book."
         ],
         "answer": 1,
-        "explanation": "just 夾在 have 和過去分詞 finished 中間。第一句多了 yesterday,把時間釘死在昨天就不能用現在完成式；第三句的 finish 沒變成過去分詞；第四句把 just 放到 have 前面，位置錯了。"
+        "explanation": "just 夾在 have 和過去分詞 finished 中間。第一句多了 yesterday，把時間釘死在昨天就不能用現在完成式；第三句的 finish 沒變成過去分詞；第四句把 just 放到 have 前面，位置錯了。"
       }
     ]
   },
@@ -1677,7 +1677,7 @@
       },
       {
         "t": "p",
-        "text": "never 是「從來沒有」，位置跟 ever 一樣。它有一個地方特別要注意：never 本身就已經帶著否定的意思了，所以前面不可以再放 not。想講「我從來沒去過那裡」，have 加 never 就夠了，寫成 I haven't never been there 等於同一句話否定了兩次，正確的寫法是 I have never been there。台灣學生會多放一個 not,多半是因為心裡想著中文的「沒有」，忍不住要把它翻出來。"
+        "text": "never 是「從來沒有」，位置跟 ever 一樣。它有一個地方特別要注意：never 本身就已經帶著否定的意思了，所以前面不可以再放 not。想講「我從來沒去過那裡」，have 加 never 就夠了，寫成 I haven't never been there 等於同一句話否定了兩次，正確的寫法是 I have never been there。台灣學生會多放一個 not，多半是因為心裡想著中文的「沒有」，忍不住要把它翻出來。"
       },
       {
         "t": "ex",
@@ -1687,7 +1687,7 @@
       },
       {
         "t": "p",
-        "text": "講經驗常常會接著說次數，這時候把次數放在句子最後面。一次是 once,兩次是 twice,三次以上就用數字加 times,像 three times、five times,次數多到數不清就說 many times。這幾個字是台灣學生容易寫成 two times 的地方，兩次習慣上講 twice。"
+        "text": "講經驗常常會接著說次數，這時候把次數放在句子最後面。一次是 once，兩次是 twice，三次以上就用數字加 times，像 three times、five times，次數多到數不清就說 many times。這幾個字是台灣學生容易寫成 two times 的地方，兩次習慣上講 twice。"
       },
       {
         "t": "table",
@@ -1746,7 +1746,7 @@
           "yet"
         ],
         "answer": 1,
-        "explanation": "問經驗用 ever,夾在主詞和過去分詞中間。never 是「從來沒有」，是自己回答時用的，不是拿來問人有沒有做過；already 和 yet 講的是事情做完沒有，不是問經驗。"
+        "explanation": "問經驗用 ever，夾在主詞和過去分詞中間。never 是「從來沒有」，是自己回答時用的，不是拿來問人有沒有做過；already 和 yet 講的是事情做完沒有，不是問經驗。"
       },
       {
         "q": "I have ___ been to Kenting.",
@@ -1790,7 +1790,7 @@
           "the second"
         ],
         "answer": 1,
-        "explanation": "兩次習慣上說 twice,放在句子最後面。two time 少了複數；two times ago 把 ago 亂加進來，ago 是配一段時間講多久以前的；the second 是順序不是次數。"
+        "explanation": "兩次習慣上說 twice，放在句子最後面。two time 少了複數；two times ago 把 ago 亂加進來，ago 是配一段時間講多久以前的；the second 是順序不是次數。"
       },
       {
         "q": "下面哪一句是錯的？",
@@ -1801,7 +1801,7 @@
           "They have been there twice."
         ],
         "answer": 2,
-        "explanation": "never 本身就是否定，前面不能再有 hasn't,應該寫成 She has never been there。其他三句的 never、ever 和次數都放對了位置。"
+        "explanation": "never 本身就是否定，前面不能再有 hasn't，應該寫成 She has never been there。其他三句的 never、ever 和次數都放對了位置。"
       },
       {
         "q": "___ you ever eaten Japanese food?",
@@ -1829,12 +1829,12 @@
   },
   {
     "id": "gc-11",
-    "title": "for 和 since:一個講持續多久，一個講從何時起",
+    "title": "for 和 since：一個講持續多久，一個講從何時起",
     "goal": "學完你會用 for 和 since 說明一件事持續了多久，不會再把兩個字用反。",
     "lesson": [
       {
         "t": "p",
-        "text": "中文說「我學英文學了三年了」跟「我從三年前開始學英文」，兩句在講同一件事，但切入點不一樣。前面那句給你的是一段長度，後面那句給你的是一個起點。英文把這兩種講法交給兩個不同的字：講長度用 for,講起點用 since。台灣學生會用反，多半是因為中文的「從」跟「了」在腦中黏成一團，所以先把這個差別想清楚很重要。"
+        "text": "中文說「我學英文學了三年了」跟「我從三年前開始學英文」，兩句在講同一件事，但切入點不一樣。前面那句給你的是一段長度，後面那句給你的是一個起點。英文把這兩種講法交給兩個不同的字：講長度用 for，講起點用 since。台灣學生會用反，多半是因為中文的「從」跟「了」在腦中黏成一團，所以先把這個差別想清楚很重要。"
       },
       {
         "t": "p",
@@ -1848,7 +1848,7 @@
       },
       {
         "t": "p",
-        "text": "since 後面接的是時間的起點，也就是你指得出來的那一刻：2019、last month、Monday、nine o'clock,甚至可以接一整個句子，像 since I was a child。只要那個東西可以拿來回答「從什麼時候開始」，就用 since。"
+        "text": "since 後面接的是時間的起點，也就是你指得出來的那一刻：2019、last month、Monday、nine o'clock，甚至可以接一整個句子，像 since I was a child。只要那個東西可以拿來回答「從什麼時候開始」，就用 since。"
       },
       {
         "t": "ex",
@@ -1904,7 +1904,7 @@
       },
       {
         "t": "tip",
-        "text": "分不出來的時候就問自己那個時間是「多久」還是「哪一天」，多久用 for,哪一天用 since。"
+        "text": "分不出來的時候就問自己那個時間是「多久」還是「哪一天」，多久用 for，哪一天用 since。"
       }
     ],
     "quiz": [
@@ -1917,7 +1917,7 @@
           "from"
         ],
         "answer": 1,
-        "explanation": "five years 是一段長度，要用 for。since 後面接的是起點，像 since 2019;in 和 from 都不能這樣接一段持續的時間。"
+        "explanation": "five years 是一段長度，要用 for。since 後面接的是起點，像 since 2019；in 和 from 都不能這樣接一段持續的時間。"
       },
       {
         "q": "He has been sick ___ Monday.",
@@ -1939,7 +1939,7 @@
           "We are knowing each other for ten years."
         ],
         "answer": 2,
-        "explanation": "ten years 是長度，用 for,而且從以前持續到現在要用現在完成式。第一句沒有用現在完成式；第二句把 since 配到長度上；第四句的 know 不會這樣加 ing。"
+        "explanation": "ten years 是長度，用 for，而且從以前持續到現在要用現在完成式。第一句沒有用現在完成式；第二句把 since 配到長度上；第四句的 know 不會這樣加 ing。"
       },
       {
         "q": "She has lived in Taichung ___ she was born.",
@@ -1964,7 +1964,7 @@
         "explanation": "a long time 雖然沒有數字，但講的還是一段長度，所以用 for。since 要配得出來的起點；in 和 from 都不能這樣用。"
       },
       {
-        "q": "下面哪一個時間要接 for?",
+        "q": "下面哪一個時間要接 for？",
         "options": [
           "2020",
           "three days",
@@ -2101,7 +2101,7 @@
           "I have saw that movie already."
         ],
         "answer": 2,
-        "explanation": "already 夾在 have 和過去分詞 seen 中間。第一句和第四句都把過去式 saw 放在 have 後面；第二句少了 have,過去分詞不能單獨當動詞用。"
+        "explanation": "already 夾在 have 和過去分詞 seen 中間。第一句和第四句都把過去式 saw 放在 have 後面；第二句少了 have，過去分詞不能單獨當動詞用。"
       },
       {
         "q": "下面哪一個時間字不能跟現在完成式一起用？",

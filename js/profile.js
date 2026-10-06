@@ -138,7 +138,7 @@
 
     /* 照 Netflix、Spotify 帳號頁的作法:一般的登出只登出這台,「登出所有裝置」另外一列、先確認 */
     function logoutEverywhere() {
-      if (!confirm('要登出所有裝置嗎?這台會馬上登出,其他已登入的手機、電腦最晚約一小時內也會登出,下次要重新登入。')) return;
+      if (!confirm('要登出所有裝置嗎？這台會馬上登出，其他已登入的手機、電腦最晚約一小時內也會登出，下次要重新登入。')) return;
       CLOUD.logout({ everywhere: true }).catch(e => alert(e.message));
     }
 

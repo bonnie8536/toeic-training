@@ -200,7 +200,7 @@
     const user = window.CLOUD.user;
     const everywhere = !!(opts && opts.everywhere);
     /* 這台已經沒有登入資料時 supabase-js 不會呼叫伺服器、直接回成功,別台其實沒被登出:先擋下來,什麼都不刪 */
-    if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效,沒辦法登出其他裝置。請重新登入後再試一次。');
+    if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效，沒辦法登出其他裝置。請重新登入後再試一次。');
     if (user && !(opts && opts.discard)) {
       const left = await flushAll();
       if (left > 0 && !confirm('還有 ' + left + ' 項進度還沒同步到雲端（可能是網路不穩）。現在登出，這台裝置上的這些進度會刪除。確定要登出？')) return;
@@ -216,7 +216,7 @@
       catch (e) { error = e; }
       if (error) {
         try { if (saved && !localStorage.getItem(SB_KEY)) localStorage.setItem(SB_KEY, saved); } catch (e) {}
-        throw new Error('連不上雲端伺服器,沒辦法確認其他裝置已登出。這台維持登入,請確認網路後再試一次。');
+        throw new Error('連不上雲端伺服器，沒辦法確認其他裝置已登出。這台維持登入，請確認網路後再試一次。');
       }
     } else {
       try { await client.auth.signOut({ scope: 'local' }); } catch (e) { /* 雲端元件沒載到 */ }

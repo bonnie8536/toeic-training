@@ -18,7 +18,16 @@
     return raw;
   })();
 
-  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf };
+  /* 使用權(收費)的狀態。宣告在這裡,雲端沒開時 locked() 等函式也能安全呼叫 */
+  let serverAccess = null;    // 這個分頁從伺服器拿到的 my_access;null = 還不知道
+  let accessPromise = null;   // 這一頁正在查的 my_access(沒查就是 null)
+  let accessSeq = 0, appliedSeq = 0;   // 每次查詢編號;只採用比已採用的那次更新的回答(舊的晚回來就丟掉)
+  const ACCESS_TIMEOUT_MS = 8000;
+  const INTENT_WINDOW_MS = 30 * 60e3, INTENT_SKEW_MS = 2 * 60e3;
+
+  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
+    access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
+    saveSignupIntent, takeSignupIntent, clearSignupIntent };
   if (!enabled) return;
 
   /* 登入失效改回訪客(leaveStaleAccount)時記一個旗標,重載後的那一頁讀到就清掉:
@@ -41,6 +50,10 @@
   const early = {};
 
   window.CLOUD.ready = init();
+  /* 確認登入之後,等這一頁的 my_access 查完(沒查、失敗、逾時都是 null) */
+  window.CLOUD.accessReady = window.CLOUD.ready.then(() => accessPromise || null, () => null);
+  /* 使用權快取只留目前登入的帳號那一份;登出、刪帳號、換帳號後重載的那一頁就清掉 */
+  window.CLOUD.ready.then(() => purgeAccessCache(window.CLOUD.user), () => purgeAccessCache(null));
 
   function loadSdk() {
     return new Promise((res, rej) => {
@@ -122,10 +135,12 @@
   }
 
   async function afterAuth(user, fresh) {
+    if (paidUi()) accessPromise = fetchAccess(user);   // 使用權跟教師身分同時查;不等它,登入與灌資料照舊
     try {
       const { data } = await client.from('teachers').select('user_id').eq('user_id', user.id);
       window.CLOUD.isTeacher = !!(data && data.length);
     } catch (e) { /* 非教師 */ }
+    if (serverAccess && typeof serverAccess.is_teacher === 'boolean') window.CLOUD.isTeacher = serverAccess.is_teacher;   // my_access 先回來了:以它為準
 
     const pid = pidOf(user);
     localStorage.setItem('tr_current_profile', JSON.stringify(pid));
@@ -347,6 +362,172 @@
     const { error } = await client.rpc('delete_own_account');
     if (error) throw new Error('刪除失敗：' + error.message + '。請寫信給站長要求刪除。');
     await logout({ discard: true });
+  }
+
+  /* ---------- 使用權(收費) ----------
+     原則(前端計畫一.1、三):讀不到 my_access 一律放行,只有這個分頁從伺服器拿到 active === false 才算鎖住。
+     window.PAID_UI(js/plans-config.js)不是 true 時完全不呼叫 my_access(資料庫還沒有這個函式)。
+     快取 tr_access_<帳號 id> 只給離線時顯示日期,不拿來擋人。同步(push、flushAll、灌資料)完全不看使用權。 */
+  function paidUi() { return window.PAID_UI === true; }
+  function accessKey(uid) { return 'tr_access_' + uid; }
+
+  /* 快取只存離線時顯示日期要用的欄位;班名、點數、角色、教師欄位不存(共用電腦不留個資) */
+  const CACHE_FIELDS = ['active', 'source', 'is_owner', 'until', 'trial_until', 'paid_through', 'teacher_until', 'server_now'];
+  function slimAccess(a) {
+    const out = {};
+    CACHE_FIELDS.forEach(k => { if (a[k] !== undefined) out[k] = a[k]; });
+    return out;
+  }
+  function purgeAccessCache(user) {
+    try {
+      const keep = user && typeof user.id === 'string' ? accessKey(user.id) : null;
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const k = localStorage.key(i);
+        if (k && k.indexOf('tr_access_') === 0 && k !== keep) localStorage.removeItem(k);
+      }
+    } catch (e) { /* 讀不到 localStorage 就沒有東西可清 */ }
+  }
+
+  /* 查一次 my_access。失敗、沒資料、逾時、帳號已經換了都回 null,不動目前的結果;逾時之後才回來的也不採用。
+     同時有兩次在查時(開頁的還沒回、又按了開始老師試用),先送的比較晚回來就丟掉,回目前採用的那份 */
+  function fetchAccess(user) {
+    const seq = ++accessSeq;
+    return new Promise(resolve => {
+      let done = false;
+      const finish = a => { if (done) return; done = true; clearTimeout(timer); resolve(a); };
+      const timer = setTimeout(() => finish(null), ACCESS_TIMEOUT_MS);
+      let call;
+      try { call = Promise.resolve(client.rpc('my_access')); } catch (e) { call = Promise.reject(e); }
+      call.then(r => {
+        const a = r && !r.error && r.data && typeof r.data === 'object' && !Array.isArray(r.data) ? r.data : null;
+        const cur = window.CLOUD.user;
+        if (done || !a || !cur || cur.id !== user.id) return finish(null);
+        if (seq < appliedSeq) return finish(serverAccess);
+        appliedSeq = seq;
+        serverAccess = a;
+        window.CLOUD.access = a;
+        if (typeof a.is_teacher === 'boolean') window.CLOUD.isTeacher = a.is_teacher;
+        try { localStorage.setItem(accessKey(user.id), JSON.stringify({ at: Date.now(), access: slimAccess(a) })); } catch (e) { /* 存不進去只是離線時看不到日期 */ }
+        finish(a);
+      }, () => finish(null));
+    });
+  }
+
+  function refreshAccess() {
+    if (!enabled || !paidUi()) return Promise.resolve(null);
+    const user = window.CLOUD.user;
+    if (!user || !client) return Promise.resolve(null);
+    return fetchAccess(user);
+  }
+
+  function locked() {
+    return paidUi() && !!serverAccess && serverAccess.active === false;
+  }
+
+  /* 上一次存下來的使用權(只用來顯示日期) */
+  function cachedAccess() {
+    const u = window.CLOUD && window.CLOUD.user;
+    if (!u || typeof u.id !== 'string') return null;
+    try {
+      const c = JSON.parse(localStorage.getItem(accessKey(u.id)));
+      return c && c.access && typeof c.access === 'object' ? c.access : null;
+    } catch (e) { return null; }
+  }
+
+  /* 資料庫的訊息不帶句號(線上的舊函式也是),顯示時統一補上 */
+  function sentence(m) { return /[。！？!?.]$/.test(m) ? m : m + '。'; }
+
+  /* 呼叫資料庫函式;資料庫的錯誤訊息(中文)原樣丟出,連不上才換成網路的說明 */
+  async function callRpc(fn, args) {
+    if (!enabled) throw new Error('這個網站沒有開雲端帳號。');
+    await window.CLOUD.ready;
+    if (!window.CLOUD.user) throw new Error('請先登入。');
+    needClient();
+    let res;
+    try { res = await client.rpc(fn, args); } catch (e) { res = { error: e }; }
+    if (res && res.error) {
+      const m = String(res.error.message || '');
+      throw new Error(/failed to fetch|networkerror|load failed/i.test(m) ? '連不上雲端伺服器，請檢查網路後再試。' : (m ? sentence(m) : '發生錯誤，請稍後再試。'));
+    }
+    return res ? res.data : null;
+  }
+  function joinClass(code) { return callRpc('join_class', { p_code: String(code == null ? '' : code) }); }
+  async function startTeacherTrial(seats, name) {
+    const data = await callRpc('start_teacher_trial', { p_seats: Number(seats), p_class_name: String(name || '').trim() || null });
+    refreshAccess();
+    return data;
+  }
+  function myBilling() { return callRpc('my_billing', {}); }
+
+  /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email? }),綁在要註冊的那個帳號上:
+     - Email 註冊:存 localStorage(收驗證信可能換分頁),帶小寫的 Email,登入的帳號 Email 要一樣。
+     - Google 註冊(按按鈕時還不知道 Email):存 sessionStorage,只有同一個分頁從 Google 回來讀得到。
+     選學生註冊、按登入時呼叫 clearSignupIntent;讀過一次(takeSignupIntent)不論成不成立都清掉。 */
+  const INTENT_KEY = 'tr_signup_intent';
+  const sessionIntents = new WeakSet();   // takeSignupIntent 從這個分頁 sessionStorage 讀出來的(Google 那條)
+  function saveSignupIntent(o, at) {
+    const email = o && typeof o.email === 'string' ? o.email.trim().toLowerCase() : '';
+    const intent = { seats: Number(o && o.seats), name: String((o && o.name) || '').trim(), at: typeof at === 'number' ? at : Date.now() };
+    clearSignupIntent();
+    try {
+      if (email) localStorage.setItem(INTENT_KEY, JSON.stringify(Object.assign(intent, { email })));
+      else sessionStorage.setItem(INTENT_KEY, JSON.stringify(intent));
+    } catch (e) { /* 存不進去就不會自動開試用,登入後到「我的」頁自己開 */ }
+  }
+  function clearSignupIntent() {
+    try { localStorage.removeItem(INTENT_KEY); } catch (e) {}
+    try { sessionStorage.removeItem(INTENT_KEY); } catch (e) {}
+  }
+  function takeSignupIntent() {
+    const read = store => {
+      try {
+        const v = JSON.parse(store.getItem(INTENT_KEY));
+        return v && typeof v === 'object' && !Array.isArray(v) ? v : null;
+      } catch (e) { return null; }
+    };
+    let intent = null;
+    const s = read(sessionStorage);
+    if (s) { intent = { seats: s.seats, name: s.name, at: s.at }; sessionIntents.add(intent); }
+    else {
+      const l = read(localStorage);
+      if (l) intent = { seats: l.seats, name: l.name, at: l.at, email: typeof l.email === 'string' ? l.email : '' };
+    }
+    clearSignupIntent();
+    return intent;
+  }
+
+  /* 登入後要不要自動開老師試用。全部成立才開(前端計畫三.6):意向是 30 分鐘內存的、
+     綁的是這個帳號(Email 一樣,或是這個分頁自己存的 Google 那條)、帳號是這次才建立的、資料庫說可以試用。 */
+  function trialIntentOk(intent, user, access, now) {
+    const t = typeof now === 'number' ? now : Date.now();
+    if (!intent || typeof intent !== 'object' || [10, 30, 60].indexOf(intent.seats) < 0) return false;
+    if (typeof intent.email === 'string' && intent.email) {
+      if (!user || typeof user.email !== 'string' || user.email.trim().toLowerCase() !== intent.email.trim().toLowerCase()) return false;
+    } else if (!sessionIntents.has(intent)) return false;
+    const at = intent.at;
+    if (typeof at !== 'number' || !isFinite(at) || at > t + INTENT_SKEW_MS || t - at > INTENT_WINDOW_MS) return false;
+    const created = Date.parse(user && user.created_at);
+    if (!isFinite(created) || created < at - INTENT_SKEW_MS) return false;
+    return !!(access && access.teacher_trial_available === true);
+  }
+
+  /* 「我的」頁方案狀態用哪一種(前端計畫六.1 的順序);日期一律用伺服器回的 */
+  function accessStatus(a) {
+    if (!a || typeof a !== 'object') return null;
+    if (a.is_owner) return { kind: 'owner' };
+    const now = Date.parse(a.server_now);
+    const paid = Date.parse(a.paid_through);
+    if (isFinite(paid) && paid > (isFinite(now) ? now : Date.now())) return { kind: 'paid', until: a.paid_through };
+    if (a.source === 'legacy' || a.source === 'class' || a.source === 'trial') return { kind: a.source, until: a.until || null };
+    if (a.active === false) return { kind: 'expired' };
+    return { kind: 'active', until: a.until || null };
+  }
+
+  /* 試用快結束的提示條:只有目前靠試用、而且 until 在 2 天以內(試用中已付款的人 until 是付費到期日,不會出現) */
+  function trialEndsSoon(a) {
+    if (!a || a.source !== 'trial' || !a.until) return false;
+    const left = Date.parse(a.until) - Date.parse(a.server_now);
+    return isFinite(left) && left > 0 && left <= 2 * 864e5;
   }
 
   /* ---------- 「還沒上雲」帳本 ----------

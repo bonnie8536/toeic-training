@@ -18,7 +18,7 @@
   d.classList.add('is-app');
   d.classList.add('app-shell');
   if (['signup.html', 'reset.html', 'terms.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
-  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  if (!location.search.replace(/[?&]join=[^&]*/g, '') && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
   var m = document.querySelector('meta[name=viewport]');
   if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
   window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
@@ -79,9 +79,11 @@
 </footer>
 
 <script src="js/cloud-config.js"></script>
+<script src="js/plans-config.js"></script>
 <script src="js/common.js"></script>
 <script src="js/cloud.js"></script>
 <script src="js/profile.js"></script>
+<script src="js/classes.js"></script>
 <script src="js/me.js"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "753df33a812d44c78d22641c5063e4d3"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

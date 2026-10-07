@@ -93,6 +93,7 @@
         menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'analysis.html'; } }, '能力分析'));
           menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'review.html'; } }, '每日複習'));
         menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'history.html'; } }, '學習記錄'));
+        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; location.href = 'me.html?join='; } }, '加入班級'));   // 「我的」頁打開加入視窗
         if (CLOUD.isTeacher) {
           menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'admin.html'; } }, '教師後台'));
         }
@@ -170,6 +171,7 @@
           h('div', { class: 'me-who' }, h('b', { class: 'me-name' }, cur.name), h('span', { class: 'me-mail' }, CLOUD.user.email || ''))),
         list(row('能力分析', { href: 'analysis.html' }), row('學習記錄', { href: 'history.html' }),
           CLOUD.isTeacher ? row('教師後台', { href: 'admin.html' }) : null),
+        window.CLASSES ? CLASSES.section() : null,   // 班級(js/classes.js,只有 me.html 載入)
         list(row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }), row('改暱稱', { run: renameUser })),
         list(row('登出', { run: () => CLOUD.logout(), danger: true }), row('登出所有裝置', { run: logoutEverywhere, danger: true })),
         h('p', { class: 'me-delete' }, h('button', { type: 'button', onclick: deleteUser }, '刪除帳號')));

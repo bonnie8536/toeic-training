@@ -1690,6 +1690,24 @@ a.me-row::after { content: '›'; margin-left: 12px; font-size: 20px; line-heigh
 .me-delete { margin: 22px 0 0; }
 .me-delete button { border: 0; background: none; min-height: 44px; padding: 0 4px; margin-left: -4px; font: inherit; font-size: 13.5px; color: var(--bad); cursor: pointer; }
 .me-delete button:hover { text-decoration: underline; }
+/* 班級區(js/classes.js):一個小標、已加入的班一列一個(班名 + 退出)、最後一列「加入班級」 */
+.me-sec { margin: 0 0 14px; scroll-margin-top: 72px; }
+.me-sec .me-list { margin-bottom: 0; }
+.me-sec-h { margin: 22px 0 8px 4px; font-family: inherit; font-size: 13.5px; font-weight: 700; color: var(--ink-light); }
+.me-class-msg { margin: 0 0 8px 4px; font-size: 13.5px; overflow-wrap: anywhere; }
+.me-class-msg:empty { display: none; }
+.me-class-msg.ok { color: var(--ok); }
+.me-class-msg.bad { color: var(--bad); }
+.me-class { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 8px 0 16px; }
+.me-class-name { flex: 1; min-width: 0; font-size: 16px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.me-class-leave { flex: none; min-height: 44px; padding: 0 10px; border: 0; border-radius: 8px; background: none; font: inherit; font-size: 14.5px; color: var(--bad); cursor: pointer; }
+.me-class-leave:hover { background: var(--bad-tint); }
+.me-class-leave:focus-visible { outline: 2px solid var(--primary); outline-offset: 0; }
+.me-class-leave:disabled { opacity: .5; cursor: default; }
+.me-class.is-loading .me-class-name { color: var(--ink-light); }
+.modal-join { max-width: 360px; }
+.modal-join .auth-fine { margin-top: 12px; }
+.join-code { font-size: 20px; letter-spacing: .12em; text-transform: uppercase; font-variant-numeric: tabular-nums; }
 
 /* 「安裝到手機」說明視窗:沿用登入視窗的 .modal-mask、.modal、.modal-close */
 .app-install { max-width: 400px; position: relative; }

@@ -2085,3 +2085,40 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   .ph-chart-row a { grid-column: 1 / -1; }
 }
 @media (prefers-reduced-motion: reduce) { .ph-card, .ph-card:active { transition: none; transform: none; } }
+
+/* ======== 方案與價格(pricing.html,2026-10) ========
+   三個方案各一張平的卡片,規則、付款、聯絡是卡片外的一般段落。價格數字用圓體,表格數字靠右對齊。
+   月繳/年繳等小字標籤用 --ink(--ink-light 在 --bg-soft 上只有 3.8:1,不到 4.5:1);文中連結加底線,不只靠顏色區分。 */
+.pricing-plan { border: 1px solid var(--line); border-radius: 12px; background: #fff; padding: 24px 28px 20px; margin: 18px 0; }
+.pricing h2 { font-size: 20px; margin-bottom: 12px; }
+.pricing-plan p, .pricing-info p { margin: 0 0 10px; }
+.pricing-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; max-width: 460px; margin: 0 0 16px; }
+.pricing-opts .pricing-opt { display: flex; flex-direction: column; margin: 0; padding: 12px 16px; border-radius: 12px; background: var(--bg-soft); line-height: 1.35; }
+.pricing-opt span { font-size: 13.5px; color: var(--ink); }
+.pricing-opt b { font-family: var(--round); font-size: 26px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pricing-opt small { font-family: var(--font); font-size: 15px; font-weight: 400; }
+.pricing-table-wrap { overflow-x: auto; margin: 0 0 14px; }
+.pricing-table { width: 100%; max-width: 460px; border-collapse: collapse; font-size: 15.5px; line-height: 1.5; }
+.pricing-table caption { caption-side: top; text-align: left; font-size: 13.5px; color: var(--ink); padding-bottom: 4px; }
+.pricing-table th, .pricing-table td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; white-space: nowrap; }
+.pricing-table thead th { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.pricing-table tbody th { font-weight: 400; }
+.pricing-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.pricing-table td.num { font-family: var(--round); font-size: 17px; font-weight: 700; }
+.pricing-table td.num small { font-family: var(--font); font-size: 14px; font-weight: 400; }
+.pricing p, .pricing li { text-wrap: pretty; }
+.pricing p a { text-decoration: underline; text-underline-offset: 2px; }
+.pricing-list { margin: 0 0 10px; padding-left: 1.4em; }
+.pricing-list li + li { margin-top: 4px; }
+.pricing-info { margin: 30px 0 0; }
+.pricing-info h2 { font-size: 18px; margin-bottom: 8px; }
+@media (max-width: 600px) {
+  .pricing-plan { padding: 18px 16px 14px; }
+  .pricing h2 { font-size: 19px; }
+  .pricing-info h2 { font-size: 17px; }
+  .pricing-opts .pricing-opt { padding: 10px 12px; }
+  .pricing-opt b { font-size: 23px; }
+  .pricing-table { font-size: 15px; }
+  .pricing-table td.num { font-size: 16px; }
+  .pricing-table th, .pricing-table td { padding: 9px 6px; }
+}

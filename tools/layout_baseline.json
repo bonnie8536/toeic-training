@@ -1173,6 +1173,52 @@
   "bodyH": 1777,
   "shell": 0
  },
+ "375 pricing.html": {
+  "cls": "",
+  "topbar": [
+   0,
+   0,
+   375,
+   37
+  ],
+  "inner": [
+   0,
+   0,
+   375,
+   36
+  ],
+  "brand": [
+   14,
+   8,
+   347,
+   28
+  ],
+  "topnav": null,
+  "profile": null,
+  "main": [
+   0,
+   71,
+   375,
+   2111
+  ],
+  "h1": [
+   16,
+   71,
+   110,
+   39
+  ],
+  "footer": [
+   0,
+   2212,
+   375,
+   99
+  ],
+  "mask": null,
+  "modal": null,
+  "aria": null,
+  "bodyH": 2310,
+  "shell": 0
+ },
  "375 reset.html": {
   "cls": "",
   "topbar": [
@@ -2427,6 +2473,52 @@
   "modal": null,
   "aria": null,
   "bodyH": 1339,
+  "shell": 0
+ },
+ "1280 pricing.html": {
+  "cls": "",
+  "topbar": [
+   0,
+   0,
+   1280,
+   59
+  ],
+  "inner": [
+   100,
+   0,
+   1080,
+   58
+  ],
+  "brand": [
+   120,
+   14,
+   68,
+   30
+  ],
+  "topnav": null,
+  "profile": null,
+  "main": [
+   235,
+   93,
+   810,
+   1802
+  ],
+  "h1": [
+   255,
+   93,
+   130,
+   46
+  ],
+  "footer": [
+   0,
+   1925,
+   1280,
+   76
+  ],
+  "mask": null,
+  "modal": null,
+  "aria": null,
+  "bodyH": 2001,
   "shell": 0
  },
  "1280 reset.html": {

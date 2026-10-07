@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* App 外殼開機:網站模式只登記安裝事件;主畫面開啟時才在 <html> 加 class、補 viewport-fit=cover */
+(function () {
+  var d = document.documentElement;
+  window.__bip = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; });
+  window.addEventListener('appinstalled', function () { window.__bip = null; });
+  var sa = false;
+  try { sa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; } catch (e) { sa = false; }
+  if (!sa) return;
+  var p = location.pathname.split('/').pop() || 'index.html';
+  if (p.indexOf('.') < 0) p += '.html';
+  d.classList.add('is-app');
+  d.classList.add('app-shell');
+  if (['signup.html', 'reset.html', 'terms.html', 'pricing.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
+  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  var m = document.querySelector('meta[name=viewport]');
+  if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
+  window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
+})();
+</script>
+<meta name="description" content="刷刷英文的學生方案、老師方案與寫作真人批改價格。">
+<meta name="robots" content="noindex, follow">
+<title>方案與價格|刷刷英文</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-title" content="刷刷英文">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<script src="js/app-shell.js" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">刷刷英文</a>
+  </div>
+</header>
+
+<main class="container-narrow pricing">
+  <!-- 數字和後面的單位之間是不換行空格（U+00A0），窄螢幕才不會把「1」和「個月」拆到兩行；改字時要保留。 -->
+  <div class="page-head"><h1>方案與價格</h1><p>價格皆以新台幣計算。</p></div>
+
+  <section class="pricing-plan" aria-labelledby="pricing-student">
+    <h2 id="pricing-student">學生方案</h2>
+    <div class="pricing-opts">
+      <p class="pricing-opt"><span>一個月</span><b>199<small> 元</small></b></p>
+      <p class="pricing-opt"><span>一年</span><b>1,990<small> 元</small></b></p>
+    </div>
+    <p>包含網站上全部的練習功能：閱讀、聽力、對話、文法、自然發音、單字、寫作練習、題庫刷題、模擬考與每日複習。</p>
+    <p>程度檢測免費，不用購買方案。</p>
+  </section>
+
+  <section class="pricing-plan" aria-labelledby="pricing-teacher">
+    <h2 id="pricing-teacher">老師方案</h2>
+    <div class="pricing-table-wrap">
+      <table class="pricing-table">
+        <caption>依所有班級的學生人數合計計價</caption>
+        <thead>
+          <tr><th scope="col">學生人數</th><th scope="col" class="num">一個月</th><th scope="col" class="num">一年</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">10 位以內</th><td class="num">390<small> 元</small></td><td class="num">3,900<small> 元</small></td></tr>
+          <tr><th scope="row">30 位以內</th><td class="num">890<small> 元</small></td><td class="num">8,900<small> 元</small></td></tr>
+          <tr><th scope="row">60 位以內</th><td class="num">1,490<small> 元</small></td><td class="num">14,900<small> 元</small></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="pricing-list">
+      <li>建立班級，產生邀請碼讓學生加入。</li>
+      <li>查看班上學生的練習進度。</li>
+      <li>方案人數以內的班上學生，由老師的方案涵蓋，不用另外購買學生方案。</li>
+    </ul>
+  </section>
+
+  <section class="pricing-plan" aria-labelledby="pricing-correction">
+    <h2 id="pricing-correction">寫作真人批改</h2>
+    <div class="pricing-opts">
+      <p class="pricing-opt"><span>一篇</span><b>150<small> 元</small></b></p>
+      <p class="pricing-opt"><span>5 篇批改服務</span><b>650<small> 元</small></b></p>
+    </div>
+    <p>每篇 150 字以內。5 篇批改服務沒有使用期限。</p>
+  </section>
+
+  <section class="pricing-info" aria-labelledby="pricing-rules">
+    <h2 id="pricing-rules">使用規則</h2>
+    <ul class="pricing-list">
+      <li>新帳號可以免費試用 7 天。</li>
+      <li>老師方案到期後 3 天內，仍可以查看班上學生的練習進度，但這 3 天不能加入新學生。</li>
+      <li>開放購買前已經註冊的帳號，練習功能照常免費使用。</li>
+      <li>推薦另一位老師購買老師方案，雙方各多 1 個月，請寫信告知站長。</li>
+    </ul>
+  </section>
+
+  <section class="pricing-info" aria-labelledby="pricing-pay">
+    <h2 id="pricing-pay">付款與開通</h2>
+    <ul class="pricing-list">
+      <li>付款方式：信用卡、ATM 轉帳，由合法的第三方金流公司處理，本站不經手也不儲存卡號。</li>
+      <li>每次付款買一個月或一年，到期不會自動扣款，到期前會提醒你續購。</li>
+      <li>付款完成後在線上開通，不寄送實體商品。</li>
+      <li>線上付款開通中，開通後會在這一頁公布。</li>
+    </ul>
+  </section>
+
+  <section class="pricing-info" aria-labelledby="pricing-refund">
+    <h2 id="pricing-refund">退款</h2>
+    <ul class="pricing-list">
+      <li>付款後還沒開始使用的方案或批改服務，可以全額退款。</li>
+      <li>開始使用後不退款。付款前會請你確認：線上服務開始使用後，不適用 7 天猶豫期。</li>
+      <li>重複扣款，或付款後沒有開通，全額退款。</li>
+      <li>申請退款請寫信到 <a href="mailto:bonnie8536@gmail.com">bonnie8536@gmail.com</a>，附上帳號 Email 與付款日期。信用卡付款退回原卡，ATM 轉帳付款退到你提供的帳戶。</li>
+    </ul>
+    <p>帳號與個人資料的規定，請看<a href="terms.html">服務條款與隱私權說明</a>。</p>
+  </section>
+
+  <section class="pricing-info" aria-labelledby="pricing-contact">
+    <h2 id="pricing-contact">聯絡</h2>
+    <p>刷刷英文由個人經營。方案或付款的問題，請寫信到 <a href="mailto:bonnie8536@gmail.com">bonnie8536@gmail.com</a>。</p>
+  </section>
+</main>
+
+<footer>
+  <div class="container-narrow">刷刷英文與 ETS 及忠欣公司無關；TOEIC 為 ETS 之註冊商標。 <a href="terms.html">服務條款與隱私權</a></div>
+</footer>
+</body>
+</html>

@@ -9,6 +9,8 @@ const REPO = path.join(__dirname, '..');
 const SRC = fs.readFileSync(path.join(REPO, 'js', 'cloud.js'), 'utf8');
 const PLANS_SRC = fs.readFileSync(path.join(REPO, 'js', 'plans-config.js'), 'utf8');
 const PRICING = fs.readFileSync(path.join(REPO, 'pricing.html'), 'utf8');
+let PAYWALL_SRC = '';
+try { PAYWALL_SRC = fs.readFileSync(path.join(REPO, 'js', 'paywall.js'), 'utf8'); } catch (e) { /* 還沒寫:付費牆那兩項會失敗 */ }
 
 const USER = { id: '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72', email: 's@x.com', created_at: '2026-10-07T03:00:00Z', user_metadata: { name: '學生' } };
 const SB_KEY = 'sb-x-auth-token';
@@ -93,6 +95,7 @@ function loadPage(w) {
   try { ctx.__PROFILE_ID = JSON.parse(w.local.getItem('tr_current_profile')) || null; } catch (e) { ctx.__PROFILE_ID = null; }
   vm.createContext(ctx);
   vm.runInContext(SRC, ctx);
+  if (w.withPaywall) vm.runInContext(PAYWALL_SRC, ctx);   // 功能頁的載入順序:cloud.js 之後才是 paywall.js
   return {
     ctx, C: ctx.CLOUD,
     ready: ctx.CLOUD.ready.then(tick),
@@ -340,6 +343,27 @@ const cases = {
     const left = Array.from({ length: w.local.length }, (_, i) => w.local.key(i)).filter(k => /^tr_access_/.test(k));
     return { ok: w.rpc.some(c => c[0] === 'delete_own_account') && !p2.C.user && left.length === 0, detail: '剩 ' + JSON.stringify(left) };
   },
+  '試用提示條關掉的紀錄(tr_trial_note_closed 帶帳號 id):登出後重載就清掉;換別的帳號登入也清;同一個帳號留著': async () => {
+    const NOTE = 'tr_trial_note_closed';
+    const mine = JSON.stringify({ u: USER.id, until: '2026-10-08T17:00:00Z' });
+    const w1 = loggedIn(makeWorld({ paid: true, access: ACTIVE }));
+    w1.local.setItem(NOTE, mine);
+    const p1 = loadPage(w1); await p1.ready; await p1.C.accessReady;
+    const kept = w1.local.getItem(NOTE) === mine;
+    await p1.C.logout();
+    const p2 = loadPage(w1); await p2.ready;
+    const afterLogout = w1.local.getItem(NOTE);
+    const w2 = loggedIn(makeWorld({ paid: false, access: ACTIVE }));
+    w2.local.setItem(NOTE, JSON.stringify({ u: 'aaaaaaaa-0000-4000-8000-000000000001', until: '2026-10-08T17:00:00Z' }));
+    const p3 = loadPage(w2); await p3.ready;
+    const otherUser = w2.local.getItem(NOTE);
+    const w3 = loggedIn(makeWorld({ paid: true, access: ACTIVE }));
+    w3.local.setItem(NOTE, '{壞掉');
+    const p4 = loadPage(w3); await p4.ready;
+    const broken = w3.local.getItem(NOTE);
+    return { ok: kept && afterLogout === null && otherUser === null && broken === null,
+      detail: JSON.stringify({ kept, afterLogout, otherUser, broken }) };
+  },
   '同一台換另一個帳號登入:前一個帳號留下的 tr_access_ 清掉,自己的留著': async () => {
     const w = loggedIn(makeWorld({ paid: true, access: ACTIVE }));
     w.local.setItem('tr_access_aaaaaaaa-0000-4000-8000-000000000001', JSON.stringify({ at: 1, access: { active: true, classes: [{ class_name: '別人的班' }] } }));
@@ -399,6 +423,38 @@ const cases = {
     const ok = r.owner === 'owner' && r.paidPast === 'expired' && r.legacy === 'legacy' && r.cls === 'class' && r.trial === 'trial'
       && r.none === 'expired' && r.nullAccess === null && r.soon === true && r.far === false && r.past === false && r.legacySoon === false;
     return { ok, detail: JSON.stringify(r) };
+  },
+  '付費牆接上 cloud.js:my_access 錯誤、沒資料、丟例外、逾時、離線、開關關著都不蓋遮罩;伺服器回 active false 才蓋': async () => {
+    const gate = async (o, timeout) => {
+      const w = loggedIn(makeWorld(Object.assign({ withPaywall: true }, o)));
+      const p = loadPage(w); await p.ready;
+      if (timeout) await p.fireTimeouts();
+      await p.C.accessReady;
+      const P = p.ctx.PAYWALL;
+      if (!P) return 'no PAYWALL';
+      const r = P.decide(p.C.access, { paidUi: p.ctx.PAID_UI === true, locked: p.C.locked(), page: P.pageKind('/reading.html', '') });
+      return r ? r.kind : null;
+    };
+    const r = {
+      error: await gate({ paid: true, access: 'error' }),
+      nodata: await gate({ paid: true, access: 'nodata' }),
+      thrown: await gate({ paid: true, access: 'throw' }),
+      hang: await gate({ paid: true, access: 'hang' }, true),
+      offline: await gate({ paid: true, access: EXPIRED, offline: true }),
+      off: await gate({ paid: false, access: EXPIRED }),
+      active: await gate({ paid: true, access: ACTIVE }),
+      expired: await gate({ paid: true, access: EXPIRED }),
+    };
+    const ok = ['error', 'nodata', 'thrown', 'hang', 'offline', 'off', 'active'].every(k => r[k] === null) && r.expired === 'trial_ended';
+    return { ok, detail: JSON.stringify(r) };
+  },
+  '付費牆不多查一次 my_access、不碰同步:功能頁載入 paywall.js 後 my_access 仍只呼叫 1 次,帳本與進度鍵不變': async () => {
+    const w = loggedIn(makeWorld({ paid: true, access: EXPIRED, withPaywall: true }));
+    w.local.setItem('tr_uc' + USER.id.replace(/-/g, '') + '_grammar_done', '{"a1":1}');
+    const before = JSON.stringify(Array.from({ length: w.local.length }, (_, i) => w.local.key(i)).filter(k => !/^tr_access_/.test(k)).map(k => [k, w.local.getItem(k)]));
+    const p = loadPage(w); await p.ready; await p.C.accessReady;
+    const after = JSON.stringify(Array.from({ length: w.local.length }, (_, i) => w.local.key(i)).filter(k => !/^tr_access_/.test(k)).map(k => [k, w.local.getItem(k)]));
+    return { ok: !!p.ctx.PAYWALL && calls(w) === 1 && before === after && w.reloads === 0, detail: 'my_access ' + calls(w) + ' 次 / 鍵相同 ' + (before === after) };
   },
   'plans-config:開關預設關,價格跟 pricing.html 寫的一模一樣': async () => {
     const ctx = {}; ctx.window = ctx; vm.createContext(ctx); vm.runInContext(PLANS_SRC, ctx);

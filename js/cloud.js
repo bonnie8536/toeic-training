@@ -370,6 +370,7 @@
      快取 tr_access_<帳號 id> 只給離線時顯示日期,不拿來擋人。同步(push、flushAll、灌資料)完全不看使用權。 */
   function paidUi() { return window.PAID_UI === true; }
   function accessKey(uid) { return 'tr_access_' + uid; }
+  const NOTE_KEY = 'tr_trial_note_closed';
 
   /* 快取只存離線時顯示日期要用的欄位;班名、點數、角色、教師欄位不存(共用電腦不留個資) */
   const CACHE_FIELDS = ['active', 'source', 'is_owner', 'until', 'trial_until', 'paid_through', 'teacher_until', 'server_now'];
@@ -384,6 +385,13 @@
       for (let i = localStorage.length - 1; i >= 0; i--) {
         const k = localStorage.key(i);
         if (k && k.indexOf('tr_access_') === 0 && k !== keep) localStorage.removeItem(k);
+      }
+      /* js/paywall.js 的「試用提示條關掉了」({ u: 帳號 id, until }):只留給目前登入的那個帳號 */
+      const note = localStorage.getItem(NOTE_KEY);
+      if (note !== null) {
+        let u = null;
+        try { const v = JSON.parse(note); u = v && typeof v === 'object' ? v.u : null; } catch (e) { u = null; }
+        if (!keep || u !== user.id) localStorage.removeItem(NOTE_KEY);
       }
     } catch (e) { /* 讀不到 localStorage 就沒有東西可清 */ }
   }

@@ -165,16 +165,28 @@
         ? h('a', { class: 'me-row', href: opt.href }, label)
         : h('button', { class: 'me-row' + (opt.danger ? ' danger' : ''), type: 'button', onclick: opt.run }, label));
       const list = (...rows) => h('ul', { class: 'me-list' }, rows.filter(Boolean));
+      /* 方案狀態、方案與付款、開始老師試用(js/paywall.js):只有 PAID_UI 打開才有,沒開時這一頁跟以前一模一樣 */
+      const paid = !!(window.PAYWALL && PAYWALL.enabled());
+      const who = h('div', { class: 'me-who' }, h('b', { class: 'me-name' }, cur.name), h('span', { class: 'me-mail' }, CLOUD.user.email || ''));
+      const links = list(row('能力分析', { href: 'analysis.html' }), row('學習記錄', { href: 'history.html' }),
+        CLOUD.isTeacher ? row('教師後台', { href: 'admin.html' }) : null);
+      let plans = null;
+      const classOpts = paid ? {
+        ready: fresh => (fresh ? CLOUD.refreshAccess() : CLOUD.accessReady),
+        statusOf: id => PAYWALL.classStatus(CLOUD.access, id),
+        onChange: () => { if (plans) plans.update(); },
+      } : undefined;
       root.append(
         h('div', { class: 'me-head' },
           h('span', { class: 'profile-dot me-dot', 'aria-hidden': 'true' }, cur.name.slice(0, 1).toUpperCase()),
-          h('div', { class: 'me-who' }, h('b', { class: 'me-name' }, cur.name), h('span', { class: 'me-mail' }, CLOUD.user.email || ''))),
-        list(row('能力分析', { href: 'analysis.html' }), row('學習記錄', { href: 'history.html' }),
-          CLOUD.isTeacher ? row('教師後台', { href: 'admin.html' }) : null),
-        window.CLASSES ? CLASSES.section() : null,   // 班級(js/classes.js,只有 me.html 載入)
+          who),
+        links,
+        window.CLASSES ? CLASSES.section(classOpts) : null,   // 班級(js/classes.js,只有 me.html 載入)
         list(row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }), row('改暱稱', { run: renameUser })),
         list(row('登出', { run: () => CLOUD.logout(), danger: true }), row('登出所有裝置', { run: logoutEverywhere, danger: true })),
         h('p', { class: 'me-delete' }, h('button', { type: 'button', onclick: deleteUser }, '刪除帳號')));
+      /* 老師試用開通後:重新查使用權(教師後台那一列、老師方案那一列才會出現)再整頁重畫 */
+      if (paid) plans = PAYWALL.account({ who, after: links, onTrial: () => { Promise.resolve(CLOUD.refreshAccess()).then(() => renderAccount(root), () => renderAccount(root)); } });
     }
 
     /* ---------- 登入/註冊/忘記密碼:共用一張卡 ----------

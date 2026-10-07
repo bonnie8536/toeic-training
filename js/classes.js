@@ -145,7 +145,12 @@
     return code;
   }
 
-  function section() {
+  /* opts(收費畫面打開時才有,js/profile.js 傳進來):
+     ready(fresh) 回 promise,使用權查好時完成(加入、退出之後 fresh 為真,重新查);班級列不等它,查好才補上狀態;
+     statusOf(班級 id) 回這班的狀態文字;onChange() 加入或退出、使用權查好之後通知「我的」頁更新方案狀態。
+     沒有 opts 時跟以前一模一樣。 */
+  function section(opts) {
+    opts = opts || null;
     const status = h('p', { class: 'me-class-msg', role: 'status' });
     const ul = h('ul', { class: 'me-list me-classes', 'aria-busy': 'true' });
     /* 還在讀列表時先放一列「讀取中」;讀完才放「加入班級」,要按的那一列不會在手指下面移動 */
@@ -158,16 +163,35 @@
 
     const say = (text, kind) => { status.textContent = text || ''; status.className = 'me-class-msg' + (kind ? ' ' + kind : ''); };
 
-    async function refresh() {
+    /* 列表一讀完就畫(不等使用權);使用權查好之後才補上每班的狀態,班級區與 ?join= 不會被 my_access 拖慢 */
+    let shown = [];   // 目前畫在畫面上的每一班 { id, li, btn, state }
+    async function refresh(fresh) {
+      const wait = opts && opts.ready ? Promise.resolve(opts.ready(!!fresh)).catch(() => null) : null;
       const r = await list();
-      const rows = r.ok ? r.classes.map(classRow) : [];
+      shown = r.ok ? r.classes.map(classRow) : [];
       /* 「加入班級」那一列不拿下來重放:焦點可能正在它上面(加入視窗關掉後焦點回到這裡) */
       Array.from(ul.children).forEach(li => { if (li !== joinLi) li.remove(); });
       const anchor = joinLi.parentNode === ul ? joinLi : null;
-      rows.forEach(li => ul.insertBefore(li, anchor));
+      shown.forEach(row => ul.insertBefore(row.li, anchor));
       if (!anchor) ul.append(joinLi);
       ul.removeAttribute('aria-busy');
       if (!r.ok) say(r.message, 'bad');
+      if (wait) {
+        wait.then(() => {
+          shown.forEach(showState);
+          if (fresh && opts.onChange) opts.onChange();
+        });
+      }
+    }
+
+    /* 這一班的狀態(用目前的使用權);只換狀態那一格,班名與退出鈕不動 */
+    function showState(row) {
+      let text = '';
+      try { text = opts && opts.statusOf ? String(opts.statusOf(row.id) || '') : ''; } catch (e) { text = ''; }
+      if (row.state) { row.state.remove(); row.state = null; }
+      if (!text) return;
+      row.state = h('span', { class: 'me-class-state' + (text === '由班級提供' ? '' : ' is-off') }, text);
+      row.li.insertBefore(row.state, row.btn);
     }
 
     function classRow(c) {
@@ -182,10 +206,12 @@
         const r = await leave(c.id);
         if (!r.ok) { btn.disabled = false; say(r.message, 'bad'); return; }
         say('已退出「' + label + '」。', 'ok');
-        await refresh();
+        await refresh(true);
         joinBtn.focus();
       });
-      return h('li', { class: 'me-class' }, name, btn);
+      const row = { id: c.id, li: h('li', { class: 'me-class' }, name, btn), btn, state: null };
+      if (opts) showState(row);   // 已經知道使用權(加入、退出之後)就先放上,查好再換新的
+      return row;
     }
 
     joinBtn.addEventListener('click', () => openJoin(''));
@@ -193,7 +219,7 @@
     function openJoin(prefill) {
       showJoinDialog(prefill, joinBtn, async (name) => {
         say('已加入「' + name + '」。', 'ok');
-        await refresh();
+        await refresh(true);
       });
     }
 

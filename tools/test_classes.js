@@ -69,6 +69,59 @@ function load(w, user, local) {
   vm.runInContext(SRC, ctx);
   return ctx.CLASSES.api;
 }
+/* 「我的」頁班級區(CLASSES.section)要用到的最小 DOM:只有 append、insertBefore、remove、屬性與文字 */
+function fakeDom() {
+  class Node {
+    constructor(tag) { this.tagName = tag; this.nodeType = tag === '#text' ? 3 : 1; this.children = []; this.parentNode = null; this.attrs = {}; this.className = ''; this._text = ''; this.on = {}; this.dataset = {}; }
+    append(...ns) { ns.forEach(n => { if (typeof n === 'string') { const t = new Node('#text'); t._text = n; n = t; } if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.push(n); }); }
+    insertBefore(n, ref) { if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; const i = ref ? this.children.indexOf(ref) : -1; if (i < 0) this.children.push(n); else this.children.splice(i, 0, n); }
+    _rm(c) { const i = this.children.indexOf(c); if (i >= 0) this.children.splice(i, 1); c.parentNode = null; }
+    remove() { if (this.parentNode) this.parentNode._rm(this); }
+    get isConnected() { let n = this; while (n.parentNode) n = n.parentNode; return n.tagName === 'ROOT'; }
+    setAttribute(k, v) { this.attrs[k] = String(v); }
+    getAttribute(k) { return k in this.attrs ? this.attrs[k] : null; }
+    hasAttribute(k) { return k in this.attrs; }
+    removeAttribute(k) { delete this.attrs[k]; }
+    addEventListener(t, fn) { (this.on[t] = this.on[t] || []).push(fn); }
+    get textContent() { return this._text + this.children.map(c => c.textContent).join(''); }
+    set textContent(v) { this.children = []; this._text = String(v); }
+    set innerHTML(v) { this.children = []; this._text = ''; }
+    get classList() { const el = this; return { toggle(c, on) { const s = new Set(el.className.split(' ').filter(Boolean)); if (on) s.add(c); else s.delete(c); el.className = [...s].join(' '); }, contains(c) { return el.className.split(' ').includes(c); } }; }
+    scrollIntoView() {} focus() {}
+    find(pred) { const out = []; const walk = n => { if (pred(n)) out.push(n); n.children.forEach(walk); }; walk(this); return out; }
+  }
+  const root = new Node('ROOT');
+  const document = { createElement: t => new Node(t), createTextNode: t => { const n = new Node('#text'); n._text = String(t); return n; },
+    querySelector: () => null, addEventListener() {}, removeEventListener() {}, body: root };
+  return { root, document };
+}
+const settle = async () => { for (let i = 0; i < 20; i++) await new Promise(r => setImmediate(r)); };
+
+/* js/common.js 的 h() 原樣(classes.js 只用到它) */
+const H_SRC = (fs.readFileSync(path.join(__dirname, '..', 'js', 'common.js'), 'utf8').match(/function h\(tag[\s\S]*?\n}\r?\n/) || [''])[0];
+
+function loadSection(w, opts) {
+  const dom = fakeDom();
+  const ctx = { console, document: dom.document, window: {}, URL, confirm: () => true };
+  ctx.window = ctx;
+  ctx.localStorage = makeStorage();
+  ctx.location = { href: 'https://x/me.html', hash: '', search: '', pathname: '/me.html' };
+  ctx.history = { replaceState() {} };
+  ctx.CLOUD = { enabled: true, user: USER, client: w.client, ready: Promise.resolve() };
+  vm.createContext(ctx);
+  vm.runInContext(H_SRC, ctx);
+  vm.runInContext(SRC, ctx);
+  const box = ctx.CLASSES.section(opts);
+  dom.root.append(box);
+  const ul = box.find(n => /\bme-classes\b/.test(n.className))[0];
+  return {
+    box, ul,
+    rows: () => ul.children.map(li => li.textContent),
+    states: () => box.find(n => /\bme-class-state\b/.test(n.className)).map(n => n.textContent),
+    busy: () => ul.hasAttribute('aria-busy'),
+  };
+}
+
 function loadPending(local) {
   const ctx = { console, document: { addEventListener() {} }, window: {}, localStorage: local };
   ctx.window = ctx;
@@ -79,6 +132,30 @@ function loadPending(local) {
 }
 
 const cases = {
+  '班級區不等使用權:my_access 一直沒回,班級列與「加入班級」照樣在列表讀完就出現;使用權到了再補上狀態': async () => {
+    const w = world(); w.members.push({ student_id: USER.id, class_id: 'c1', joined_at: '2026-10-01T00:00:00Z' });
+    let release = null, known = false, changes = 0;
+    const s = loadSection(w, {
+      ready: () => new Promise(r => { release = r; }),
+      statusOf: id => (known && id === 'c1' ? '由班級提供' : ''),
+      onChange: () => { changes++; },
+    });
+    await settle();
+    const before = { rows: s.rows(), states: s.states(), busy: s.busy() };
+    known = true; release(); await settle();
+    const after = { rows: s.rows(), states: s.states(), changes };
+    const ok = before.rows.length === 2 && /晨讀班/.test(before.rows[0]) && before.rows[1] === '加入班級' && !before.busy && before.states.length === 0
+      && after.states.join() === '由班級提供' && after.rows.length === 2 && after.changes === 0;
+    return { ok, detail: JSON.stringify({ before, after }) };
+  },
+  '班級區:使用權永遠不回(逾時前)也不影響;沒傳 opts 時跟以前一樣': async () => {
+    const w = world(); w.members.push({ student_id: USER.id, class_id: 'c1', joined_at: '2026-10-01T00:00:00Z' });
+    const hang = loadSection(w, { ready: () => new Promise(() => {}), statusOf: () => '' });
+    const plain = loadSection(w);
+    await settle();
+    const ok = hang.rows().length === 2 && hang.rows()[1] === '加入班級' && plain.rows().length === 2 && plain.rows()[1] === '加入班級' && !hang.busy() && !plain.busy();
+    return { ok, detail: JSON.stringify({ hang: hang.rows(), plain: plain.rows() }) };
+  },
   '邀請碼整理:小寫、空白、連字號都接受': async () => {
     const api = load(world());
     const r = ['abcd2345', ' ABCD 2345 ', 'ABCD-2345'].map(api.normalize);

@@ -1041,6 +1041,11 @@ footer {
   width: 100%;
   box-shadow: 0 10px 40px rgba(20,30,40,.3);
 }
+/* 矮螢幕(手機橫放、鍵盤打開):視窗比畫面高時可以捲動看到全部,跟 App 外殼的 .modal-mask 一樣 */
+@media (max-height: 480px) {
+  .modal-mask { overflow-y: auto; align-items: flex-start; }
+  .modal-mask > .modal { margin: auto; }
+}
 .modal h2 { font-size: 20px; }
 .modal-sub { color: var(--ink-light); font-size: 13.5px; margin: 6px 0 14px; }
 .modal-list { max-height: 200px; overflow-y: auto; }
@@ -2140,3 +2145,59 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   .pricing-table td.num { font-size: 16px; }
   .pricing-table th, .pricing-table td { padding: 9px 6px; }
 }
+
+/* ======== 付費牆與「我的」頁的方案(js/paywall.js,只有 PAID_UI 打開才會出現) ======== */
+.modal-paywall { max-width: 360px; text-align: center; padding: 28px 24px 18px; }
+.pw-icon { display: inline-flex; color: var(--primary); margin-bottom: 6px; }
+.pw-h { font-size: 21px; }
+.pw-line { margin: 6px 0 0; font-size: 15px; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+.pw-actions { display: grid; gap: 10px; margin-top: 20px; }
+.pw-btn { display: flex; align-items: center; justify-content: center; min-height: 44px; font-size: 15.5px; text-decoration: none; }
+.pw-btn:hover { text-decoration: none; }
+.pw-logout { justify-self: center; min-height: 44px; padding: 0 12px; border: 0; border-radius: 10px; background: none; font: inherit; font-size: 14px; color: var(--ink-light); cursor: pointer; }
+.pw-logout:hover { color: var(--ink); background: var(--bg-soft); }
+.pw-actions a:focus-visible, .pw-logout:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.trial-note .auth-expired-login { text-decoration: none; }
+
+.me-plan { font-size: 13.5px; color: var(--ink); overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.me-plan.is-expired { color: var(--bad); }
+.me-plan-link { margin-left: 10px; font-weight: 700; }
+.me-expand::after { content: ''; width: 8px; height: 8px; margin: -4px 4px 0 12px; border: solid #b4bcc4; border-width: 0 2px 2px 0; transform: rotate(45deg); transition: transform .15s; }
+.me-expand[aria-expanded="true"]::after { transform: rotate(-135deg); margin-top: 4px; }
+.me-static { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 0 16px; font-size: 16px; color: var(--ink); }
+.me-static-val { color: var(--ink-light); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.me-bill { padding: 4px 16px 14px; border-top: 1px solid var(--line); background: var(--bg-soft); }
+.me-bill-sec + .me-bill-sec { margin-top: 4px; }
+.me-bill-h { margin: 10px 0 4px; font-family: inherit; font-size: 13.5px; font-weight: 700; color: var(--ink-light); }
+.me-bill-list { list-style: none; margin: 0; padding: 0; }
+.me-bill-list li { padding: 5px 0; font-size: 14.5px; line-height: 1.5; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.me-bill-list li + li { border-top: 1px dashed var(--line); }
+.me-bill-list li.is-revoked { color: var(--ink-light); }
+.me-bill-msg { margin: 10px 0 0; font-size: 14px; color: var(--ink-light); }
+.me-bill-msg.bad { color: var(--bad); }
+.me-bill-more { margin: 10px 0 0; font-size: 14px; }
+.me-class-state { flex: none; font-size: 13px; color: var(--ok); white-space: nowrap; }
+.me-class-state.is-off { color: var(--bad); }
+
+.modal-trial { max-width: 380px; }
+.modal-trial .auth-h { padding: 0 34px; }   /* 標題不跑到右上角的關閉鈕底下 */
+.trial-who { text-align: center; font-size: 14px; color: var(--ink-light); margin: 2px 0 14px; overflow-wrap: anywhere; }
+.trial-seats { border: 0; margin: 0; padding: 0; min-width: 0; }
+.trial-seats legend { padding: 0; margin-bottom: 5px; font-size: 13.5px; color: var(--ink-light); }
+.trial-seat-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.trial-seat { position: relative; display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid var(--line); border-radius: 12px; font-size: 15.5px; font-weight: 700; color: var(--ink); cursor: pointer; }
+.trial-seat input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.trial-seat:has(input:checked) { border-color: var(--primary); background: var(--primary-tint); color: var(--primary-dark); }
+.trial-seat:has(input:focus-visible) { outline: 2px solid var(--primary); outline-offset: 2px; }
+.trial-cancel { min-height: 44px; }
+.trial-code-box { display: grid; gap: 4px; margin: 4px 0 12px; padding: 14px 16px; border-radius: 12px; background: var(--bg-soft); text-align: center; }
+.trial-code-label { font-size: 13.5px; color: var(--ink-light); }
+.trial-class { margin: 0; font-size: 14.5px; color: var(--ink); overflow-wrap: anywhere; }
+.trial-class:empty { display: none; }
+.trial-code-note { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--ink); }
+.trial-code-row { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.trial-code { font-family: var(--round); font-weight: 700; color: var(--ink); }
+.trial-go { display: flex; align-items: center; justify-content: center; margin: 4px 0 10px; text-decoration: none; }
+.trial-go:hover { text-decoration: none; }
+.modal-trial .auth-fine { margin-top: 12px; text-align: center; }
+.trial-go:focus-visible, .trial-copy:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }

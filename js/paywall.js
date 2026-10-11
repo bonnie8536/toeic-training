@@ -242,7 +242,7 @@
   function trapTab(box, e) {
     if (e.key !== 'Tab') return;
     const f = Array.from(box.querySelectorAll('button,input,a[href]')).filter(x => !x.disabled && x.offsetParent !== null);
-    if (!f.length) return;
+    if (!f.length) { e.preventDefault(); return; }   // 開通中只有停用的關閉鈕:焦點留在視窗裡,不跑到後面的頁面
     const first = f[0], last = f[f.length - 1];
     if (!box.contains(document.activeElement)) { e.preventDefault(); (e.shiftKey ? last : first).focus(); }
     else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
@@ -395,6 +395,152 @@
     return { ready, update: draw };
   }
 
+  /* 老師試用開通後的畫面(「我的」頁、教師後台的試用視窗,與註冊後自動開的視窗共用):班名、邀請碼、複製、前往教師後台。
+     lost:開通的回應沒收到,只從使用權知道試用已開始(拿不到邀請碼) */
+  function trialSuccess(box, closeBtn, r, lost, close) {
+    const C = cloud();
+    box.innerHTML = '';
+    const o = trialOutcome(r);
+    const code = o.code;
+    const copied = h('p', { class: 'auth-msg', role: 'status' });
+    const copy = h('button', { class: 'btn trial-copy', type: 'button' }, '複製');
+    copy.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(code); copied.textContent = '已複製'; copied.className = 'auth-msg ok'; }
+      catch (e) { copied.textContent = '沒辦法自動複製，請手動抄下邀請碼'; copied.className = 'auth-msg bad'; }
+    });
+    const codeEl = h('span', { class: 'join-code trial-code' });
+    codeEl.textContent = code;
+    const nameEl = h('p', { class: 'trial-class' });
+    nameEl.textContent = o.name;
+    const go = h('a', { class: 'btn primary auth-submit trial-go', href: 'admin.html' }, '前往教師後台');
+    const day = dayText(o.until, C.access && C.access.server_now);
+    /* 班名在上、「班級邀請碼」緊貼在碼的上面 */
+    let codeBox = null;
+    if (code) codeBox = h('div', { class: 'trial-code-box' }, nameEl, h('span', { class: 'trial-code-label' }, '班級邀請碼'), h('div', { class: 'trial-code-row' }, codeEl, copy));
+    else if (o.closed) codeBox = h('div', { class: 'trial-code-box' }, nameEl, h('p', { class: 'trial-code-note' }, '這個班已停用，邀請碼不能用來加入，請聯絡站長。'));
+    else if (lost) codeBox = h('div', { class: 'trial-code-box' }, h('p', { class: 'trial-code-note' }, '沒有收到班級邀請碼，請聯絡站長。'));
+    box.append(closeBtn,
+      h('h2', { class: 'auth-h', id: 'trial-h' }, '老師試用已開始'),
+      day ? h('p', { class: 'trial-who' }, '試用到 ' + day) : null,
+      codeBox,
+      copied, go,
+      h('button', { class: 'btn auth-full trial-cancel', type: 'button', onclick: () => close() }, '關閉'));
+    go.focus();
+  }
+
+  /* ---------- 註冊時選了老師:登入完成後自動開老師試用(前端計畫三.6、四) ----------
+     意向只是提示,權限一律看資料庫。四個條件全部成立才開(cloud.js 的 trialIntentOk):30 分鐘內存的、
+     帳號是這次才建立的、綁的是這個帳號(Email 那條比帳號 id,沒有 id 才比 Email;Google 那條要是這個分頁自己從 Google 回來、
+     綁上的帳號 id 一樣)、my_access 說 teacher_trial_available。
+     不收費的頁面(analysis、diagnostic、drill、history、learn)也載入這支檔案,只為了登入完成時把意向用掉或清掉,不擋頁面。
+     意向讀一次就清掉(takeSignupIntent),所以一個註冊最多開一次;重載、換頁都不會再開。資料庫也只給每個帳號一次。
+     剛登入的那一頁(要灌雲端資料,馬上重載):不讀意向,留給重載後那一頁,免得開到一半頁面就換掉。
+     判斷方法:cloud.js 灌完資料才寫 tr_cloud_hydrated_<帳號 id>(這個分頁的 sessionStorage),
+     這支檔案載入的當下(cloud.js 還沒確認登入)就有這個旗標,才是不會再重載的那一頁。 */
+  const HYDRATED_PREFIX = 'tr_cloud_hydrated_';
+  const hydratedAtLoad = (function () {
+    const out = [];
+    if (!enabled()) return out;
+    try {
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const k = sessionStorage.key(i);
+        if (k && k.indexOf(HYDRATED_PREFIX) === 0 && sessionStorage.getItem(k) === '1') out.push(k.slice(HYDRATED_PREFIX.length));
+      }
+    } catch (e) { /* 讀不到:當成會重載的那一頁,不自動開 */ }
+    return out;
+  })();
+
+  /* 這一頁要不要自動開;要開就回意向。登入了、不是要重載的那一頁,才讀(讀了就清) */
+  function signupTrialIntent(C) {
+    const u = C && C.user;
+    if (!enabled() || !u || typeof u.id !== 'string' || hydratedAtLoad.indexOf(u.id) < 0) return null;
+    if (typeof C.takeSignupIntent !== 'function' || typeof C.trialIntentOk !== 'function') return null;
+    const intent = C.takeSignupIntent();
+    return intent && C.trialIntentOk(intent, u, C.access) ? intent : null;
+  }
+
+  function initSignupTrial() {
+    const C = cloud();
+    Promise.resolve(C.accessReady).then(() => {
+      const intent = signupTrialIntent(C);
+      if (intent) autoTrial(intent);
+    }).catch(e => console.warn('老師試用沒有自動開始：', e));
+  }
+
+  /* 自動開的視窗:先寫「開通中」(焦點放在標題),成功換成跟手動開同一個畫面;失敗寫資料庫的原文,附「再試一次」
+     (資料庫只給每個帳號一次,「我的」頁與教師後台的開始老師試用照舊在)。
+     等了 AUTO_TRIAL_WAIT_MS 還沒回應就不再擋著畫面:重新查一次使用權,看得出開了就當成功,否則請她到「我的」頁看;晚到的回應不再改畫面。
+     關掉之後重新整理這一頁,頂欄選單、「我的」頁、教師後台才看得到老師身分 */
+  const AUTO_TRIAL_WAIT_MS = 15000;
+  function autoTrial(intent) {
+    const C = cloud();
+    let busy = true, started = false, round = 0;
+    const mask = h('div', { class: 'modal-mask' });
+    const box = h('div', { class: 'modal modal-auth modal-trial', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'trial-h' });
+    const closeBtn = h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() });
+    mask.append(box);
+    document.body.append(mask);
+
+    function onKey(e) {
+      if (e.key === 'Escape') { if (!busy) close(); return; }
+      trapTab(box, e);
+    }
+    document.addEventListener('keydown', onKey);
+    mask.addEventListener('mousedown', e => { if (e.target === mask && !busy) close(); });
+
+    function close() {
+      if (busy) return;
+      document.removeEventListener('keydown', onKey);
+      mask.remove();
+      if (started) location.reload();
+    }
+    function pending() {
+      busy = true; closeBtn.disabled = true;
+      box.innerHTML = '';
+      const head = h('h2', { class: 'auth-h', id: 'trial-h', tabindex: '-1' }, '開始老師試用');
+      box.append(closeBtn, head, h('p', { class: 'trial-who', role: 'status' }, '開通中'));
+      head.focus();
+    }
+    function failed(title, message) {
+      box.innerHTML = '';
+      const again = h('button', { class: 'btn primary auth-submit trial-again', type: 'button', onclick: () => attempt() }, '再試一次');
+      const ok = h('button', { class: 'btn auth-full trial-cancel', type: 'button', onclick: () => close() }, '關閉');
+      box.append(closeBtn,
+        h('h2', { class: 'auth-h', id: 'trial-h' }, title),
+        h('p', { class: 'auth-msg bad trial-fail', role: 'alert' }, message),
+        again, ok);
+      again.focus();
+    }
+    /* 沒收到成功的回應(失敗或等太久):伺服器可能已經開好,重新查一次,看得出試用已開始就當成功 */
+    async function unsure(err, timedOut) {
+      let fresh = null;
+      try { fresh = await C.refreshAccess(); } catch (e2) { fresh = null; }
+      busy = false; closeBtn.disabled = false;
+      if (trialStarted(fresh)) { started = true; trialSuccess(box, closeBtn, { until: fresh.teacher_until }, true, close); return; }
+      if (timedOut) failed('還沒收到開通結果', '等了 15 秒沒有回應，試用可能已經開始，請到「我的」頁查看。');
+      else failed('老師試用沒有開始', (err && err.message) || '發生錯誤，請稍後再試。');
+    }
+    function attempt() {
+      const my = ++round;
+      pending();
+      const live = () => my === round;
+      const timer = setTimeout(() => { if (!live()) return; round++; unsure(null, true); }, AUTO_TRIAL_WAIT_MS);
+      return Promise.resolve()
+        .then(() => C.startTeacherTrial(intent.seats, intent.name))
+        .then(r => {
+          if (!live()) return;
+          clearTimeout(timer); round++;
+          started = true; busy = false; closeBtn.disabled = false;
+          trialSuccess(box, closeBtn, r, false, close);
+        }, err => {
+          if (!live()) return;
+          clearTimeout(timer); round++;
+          return unsure(err, false);
+        });
+    }
+    return attempt();
+  }
+
   /* 開始老師試用:先確認(這個視窗就是確認),選名額與班名;成功顯示邀請碼與教師後台的連結 */
   function trialDialog(returnTo, onDone) {
     if (document.querySelector('.modal-mask')) return;
@@ -451,36 +597,7 @@
       }
     });
 
-    /* lost:開通的回應沒收到,只從使用權知道試用已開始(拿不到邀請碼) */
-    function success(r, lost) {
-      box.innerHTML = '';
-      const o = trialOutcome(r);
-      const code = o.code;
-      const copied = h('p', { class: 'auth-msg', role: 'status' });
-      const copy = h('button', { class: 'btn trial-copy', type: 'button' }, '複製');
-      copy.addEventListener('click', async () => {
-        try { await navigator.clipboard.writeText(code); copied.textContent = '已複製'; copied.className = 'auth-msg ok'; }
-        catch (e) { copied.textContent = '沒辦法自動複製，請手動抄下邀請碼'; copied.className = 'auth-msg bad'; }
-      });
-      const codeEl = h('span', { class: 'join-code trial-code' });
-      codeEl.textContent = code;
-      const nameEl = h('p', { class: 'trial-class' });
-      nameEl.textContent = o.name;
-      const go = h('a', { class: 'btn primary auth-submit trial-go', href: 'admin.html' }, '前往教師後台');
-      const day = dayText(o.until, C.access && C.access.server_now);
-      /* 班名在上、「班級邀請碼」緊貼在碼的上面 */
-      let codeBox = null;
-      if (code) codeBox = h('div', { class: 'trial-code-box' }, nameEl, h('span', { class: 'trial-code-label' }, '班級邀請碼'), h('div', { class: 'trial-code-row' }, codeEl, copy));
-      else if (o.closed) codeBox = h('div', { class: 'trial-code-box' }, nameEl, h('p', { class: 'trial-code-note' }, '這個班已停用，邀請碼不能用來加入，請聯絡站長。'));
-      else if (lost) codeBox = h('div', { class: 'trial-code-box' }, h('p', { class: 'trial-code-note' }, '沒有收到班級邀請碼，請聯絡站長。'));
-      box.append(closeBtn,
-        h('h2', { class: 'auth-h', id: 'trial-h' }, '老師試用已開始'),
-        day ? h('p', { class: 'trial-who' }, '試用到 ' + day) : null,
-        codeBox,
-        copied, go,
-        h('button', { class: 'btn auth-full trial-cancel', type: 'button', onclick: () => close() }, '關閉'));
-      go.focus();
-    }
+    function success(r, lost) { trialSuccess(box, closeBtn, r, lost, close); }
 
     function onKey(e) {
       if (e.key === 'Escape') { if (!busy) close(); return; }
@@ -504,5 +621,8 @@
     showCredits, creditsText, billingLines, trialOutcome, trialStarted, whenNoExam, account, trialDialog };
 
   const C = cloud();
-  if (enabled() && C && C.enabled) document.addEventListener('DOMContentLoaded', initPage);
+  if (enabled() && C && C.enabled) {
+    document.addEventListener('DOMContentLoaded', initPage);
+    document.addEventListener('DOMContentLoaded', initSignupTrial);
+  }
 })();

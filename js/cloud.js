@@ -24,11 +24,14 @@
   let accessSeq = 0, appliedSeq = 0;   // 每次查詢編號;只採用比已採用的那次更新的回答(舊的晚回來就丟掉)
   const ACCESS_TIMEOUT_MS = 8000;
   const INTENT_WINDOW_MS = 30 * 60e3, INTENT_SKEW_MS = 2 * 60e3;
+  const INTENT_KEY = 'tr_signup_intent', OLD_INTENT_USED_KEY = 'tr_signup_intent_used';   // 後者是舊版寫的,開頁就清掉
+  let googleBack = false;   // 這一頁是這個分頁自己從 Google 回來的,而且有 Google 那條意向:getSession 之後綁帳號 id(bindGoogleIntent)
 
   window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
     saveSignupIntent, takeSignupIntent, clearSignupIntent };
   if (!enabled) return;
+  tidySignupIntent(authError);   // 註冊時選老師的意向:開頁就清過期的、記下「這個分頁從 Google 回來了」(要趁 supabase-js 清掉網址之前;getSession 之後綁帳號 id)
 
   /* 登入失效改回訪客(leaveStaleAccount)時記一個旗標,重載後的那一頁讀到就清掉:
      頂欄只在這個分頁顯示一次「登入已失效」,換頁或下一個人開新分頁都不會再出現 */
@@ -73,6 +76,7 @@
       client = window.supabase.createClient(cfg.url, cfg.anonKey);
       window.CLOUD.client = client;
       const { data: { session } } = await client.auth.getSession();
+      bindGoogleIntent(session);   // 只動註冊意向那一個鍵,不碰登入與同步
       if (!session) { adoptStored(); leaveStaleAccount(); return window.CLOUD.user; }
       window.CLOUD.user = session.user;
       await afterAuth(session.user, false);
@@ -83,6 +87,7 @@
       leaveStaleAccount();
       return window.CLOUD.user;
     } finally {
+      bindGoogleIntent(null);   // 從 Google 回來卻沒走到 getSession(離線、雲端元件載不到):Google 那條意向丟掉;已經綁過就什麼都不做
       settled = true;
       if (!reloading) keepEarly();
       flushAll();
@@ -247,6 +252,7 @@
       }
     }
     localStorage.removeItem('tr_current_profile');
+    clearSignupIntent();   // 註冊時選老師的意向(前端計畫三.6):登出就作廢,下一個人用這台不會沿用
     location.reload();
   }
 
@@ -291,6 +297,7 @@
     if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
       throw new Error('這個 Email 已經註冊過，請直接登入；當初用 Google 註冊的話按 Google 登入，忘記密碼可以重設。');
     }
+    bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(前端計畫三.6;沒有意向什麼都不做)
     if (data.session) {
       window.CLOUD.user = data.user;
       await afterAuth(data.user, true);
@@ -467,55 +474,125 @@
   }
   function myBilling() { return callRpc('my_billing', {}); }
 
-  /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email? }),綁在要註冊的那個帳號上:
-     - Email 註冊:存 localStorage(收驗證信可能換分頁),帶小寫的 Email,登入的帳號 Email 要一樣。
+  /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email?, uid? }),綁在要註冊的那個帳號上(前端計畫三.6;
+     站長選的保守做法:只存在這台,不寫進帳號資料 user_metadata,別台點驗證信不會自動開,改用「我的」頁與教師後台的開始老師試用):
+     - Email 註冊:存 localStorage(收驗證信可能換分頁),帶小寫的 Email。signUp 成功就綁上回來的帳號 id(uid),
+       之後只認這個 id(同一個 Email 刪掉重建的帳號是新的 id,不算);沒拿到 id 才退回比 Email。Email 對不上的當場清掉、不用。
      - Google 註冊(按按鈕時還不知道 Email):存 sessionStorage,只有同一個分頁從 Google 回來讀得到。
+       開頁時網址帶 access_token(或 ?code=)才算這個分頁自己從 Google 回來;那一頁 getSession 拿到帳號就綁上帳號 id,
+       拿不到(沒有 session、雲端初始化失敗)就丟掉。之後只認綁的 id 跟登入的帳號一樣的;沒綁 id 的一律不算。
+       別的分頁登入、在 Google 頁按上一頁、取消回來的都不算(取消回來的當場清掉)。
      選學生註冊、按登入時呼叫 clearSignupIntent;讀過一次(takeSignupIntent)不論成不成立都清掉。 */
-  const INTENT_KEY = 'tr_signup_intent';
-  const sessionIntents = new WeakSet();   // takeSignupIntent 從這個分頁 sessionStorage 讀出來的(Google 那條)
+  const sessionIntents = new WeakSet();   // takeSignupIntent 從這個分頁 sessionStorage 讀出來、綁的帳號 id 跟登入的一樣(Google 那條)
   function saveSignupIntent(o, at) {
     const email = o && typeof o.email === 'string' ? o.email.trim().toLowerCase() : '';
     const intent = { seats: Number(o && o.seats), name: String((o && o.name) || '').trim(), at: typeof at === 'number' ? at : Date.now() };
+    if (email) intent.email = email;
     clearSignupIntent();
     try {
-      if (email) localStorage.setItem(INTENT_KEY, JSON.stringify(Object.assign(intent, { email })));
+      if (email) localStorage.setItem(INTENT_KEY, JSON.stringify(intent));
       else sessionStorage.setItem(INTENT_KEY, JSON.stringify(intent));
     } catch (e) { /* 存不進去就不會自動開試用,登入後到「我的」頁自己開 */ }
+    return Object.assign({}, intent);
   }
   function clearSignupIntent() {
     try { localStorage.removeItem(INTENT_KEY); } catch (e) {}
     try { sessionStorage.removeItem(INTENT_KEY); } catch (e) {}
   }
-  function takeSignupIntent() {
-    const read = store => {
-      try {
-        const v = JSON.parse(store.getItem(INTENT_KEY));
-        return v && typeof v === 'object' && !Array.isArray(v) ? v : null;
-      } catch (e) { return null; }
+  function readIntent(store) {
+    try {
+      const v = JSON.parse(store.getItem(INTENT_KEY));
+      return v && typeof v === 'object' && !Array.isArray(v) ? v : null;
+    } catch (e) { return null; }
+  }
+  /* 每一頁一載入(有沒有登入都一樣):過期(超過 30 分鐘)或時間在未來的意向清掉,Email 不在這台久留;
+     Google 那條:網址是 Google 導回來的就記下(等 getSession 之後綁帳號 id),是登入失敗導回來的就清掉。
+     舊版寫過的 tr_signup_intent_used 一併清掉(已經不用) */
+  function tidySignupIntent(authErr) {
+    try { localStorage.removeItem(OLD_INTENT_USED_KEY); } catch (e) {}
+    const now = Date.now();
+    const hash = String(location.hash || ''), search = String(location.search || '');
+    const back = (/[#&]access_token=/.test(hash) && !/[#&]type=/.test(hash)) || /[?&]code=/.test(search);
+    const tidy = (store, isSession) => {
+      const raw = store.getItem(INTENT_KEY);
+      if (raw === null) return;
+      let v = null;
+      try { v = JSON.parse(raw); } catch (e) { v = null; }
+      const at = v && typeof v === 'object' ? v.at : NaN;
+      if (typeof at !== 'number' || !isFinite(at) || now - at > INTENT_WINDOW_MS || at > now + INTENT_SKEW_MS) { store.removeItem(INTENT_KEY); return; }
+      if (!isSession) return;
+      if (authErr) store.removeItem(INTENT_KEY);
+      else if (back) googleBack = true;
     };
+    try { tidy(localStorage, false); } catch (e) {}
+    try { tidy(sessionStorage, true); } catch (e) {}
+  }
+  /* 從 Google 回來的那一頁,getSession 之後呼叫一次(之後再呼叫什麼都不做):
+     拿到帳號就把這個分頁的 Google 意向綁上帳號 id;沒有帳號(session 是 null、雲端初始化失敗)就丟掉 */
+  function bindGoogleIntent(session) {
+    if (!googleBack) return;
+    googleBack = false;
+    const id = session && session.user && typeof session.user.id === 'string' ? session.user.id : '';
+    try {
+      const v = readIntent(sessionStorage);
+      if (!v) return;
+      if (!id) { sessionStorage.removeItem(INTENT_KEY); return; }
+      const out = Object.assign({}, v, { uid: id });
+      delete out.returned;
+      sessionStorage.setItem(INTENT_KEY, JSON.stringify(out));
+    } catch (e) { try { sessionStorage.removeItem(INTENT_KEY); } catch (e2) {} }
+  }
+  /* Email 註冊成功:把這台 localStorage 裡、Email 跟這次註冊一樣的意向綁上回來的帳號 id */
+  function bindEmailIntent(email, user) {
+    const id = user && typeof user.id === 'string' ? user.id : '';
+    if (!id) return;
+    try {
+      const v = readIntent(localStorage);
+      if (!v || typeof v.email !== 'string' || v.email !== String(email || '').trim().toLowerCase()) return;
+      localStorage.setItem(INTENT_KEY, JSON.stringify(Object.assign({}, v, { uid: id })));
+    } catch (e) { /* 綁不上:退回比 Email */ }
+  }
+  /* Email 那條綁的是不是這個帳號:有 uid 就只比 uid;沒有才比 Email(小寫) */
+  function emailIntentFor(v, user) {
+    if (typeof v.email !== 'string' || !v.email) return false;
+    if (typeof v.uid === 'string' && v.uid) return !!(user && user.id === v.uid);
+    return !!(user && typeof user.email === 'string' && user.email.trim().toLowerCase() === v.email.trim().toLowerCase());
+  }
+  /* 讀出這台的意向(讀了就清)。登入了就只回綁在這個帳號上的:Google 那條要綁的 id 一樣,
+     Email 那條要 id(沒有 id 時 Email)一樣;對不上的回 null(一樣清掉)。帳號資料 user_metadata 一律不讀。 */
+  function takeSignupIntent() {
+    const u = window.CLOUD.user;
+    const uid = u && typeof u.id === 'string' ? u.id : '';
     let intent = null;
-    const s = read(sessionStorage);
-    if (s) { intent = { seats: s.seats, name: s.name, at: s.at }; sessionIntents.add(intent); }
-    else {
-      const l = read(localStorage);
-      if (l) intent = { seats: l.seats, name: l.name, at: l.at, email: typeof l.email === 'string' ? l.email : '' };
+    const s = readIntent(sessionStorage), l = readIntent(localStorage);
+    if (s && uid && typeof s.uid === 'string' && s.uid === uid) {
+      intent = { seats: s.seats, name: s.name, at: s.at, uid: s.uid };
+      sessionIntents.add(intent);
+    } else if (l && typeof l.email === 'string' && l.email && (!u || emailIntentFor(l, u))) {
+      intent = { seats: l.seats, name: l.name, at: l.at, email: l.email };
+      if (typeof l.uid === 'string' && l.uid) intent.uid = l.uid;
     }
     clearSignupIntent();
     return intent;
   }
 
   /* 登入後要不要自動開老師試用。全部成立才開(前端計畫三.6):意向是 30 分鐘內存的、
-     綁的是這個帳號(Email 一樣,或是這個分頁自己存的 Google 那條)、帳號是這次才建立的、資料庫說可以試用。 */
+     綁的是這個帳號(Email 那條:綁的帳號 id 一樣,沒有 id 才比 Email;Google 那條:這個分頁讀出來、綁的帳號 id 一樣)、
+     帳號是這次才建立的、資料庫說可以試用。
+     帳號建立時間是伺服器的鐘,意向的 at 是裝置的鐘:用 my_access 的 server_now 算出兩個鐘差多少再比。 */
   function trialIntentOk(intent, user, access, now) {
     const t = typeof now === 'number' ? now : Date.now();
     if (!intent || typeof intent !== 'object' || [10, 30, 60].indexOf(intent.seats) < 0) return false;
-    if (typeof intent.email === 'string' && intent.email) {
-      if (!user || typeof user.email !== 'string' || user.email.trim().toLowerCase() !== intent.email.trim().toLowerCase()) return false;
-    } else if (!sessionIntents.has(intent)) return false;
+    if (sessionIntents.has(intent)) {
+      if (!user || typeof intent.uid !== 'string' || !intent.uid || user.id !== intent.uid) return false;
+    } else if (!emailIntentFor(intent, user)) return false;
+    const created = Date.parse(user && user.created_at);
+    if (!isFinite(created)) return false;
+    const serverNow = Date.parse(access && access.server_now);
+    const offset = isFinite(serverNow) ? serverNow - t : 0;   // 伺服器的鐘減裝置的鐘
     const at = intent.at;
     if (typeof at !== 'number' || !isFinite(at) || at > t + INTENT_SKEW_MS || t - at > INTENT_WINDOW_MS) return false;
-    const created = Date.parse(user && user.created_at);
-    if (!isFinite(created) || created < at - INTENT_SKEW_MS) return false;
+    if (created < at + offset - INTENT_SKEW_MS) return false;
     return !!(access && access.teacher_trial_available === true);
   }
 

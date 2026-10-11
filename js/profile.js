@@ -281,6 +281,81 @@
       return h('div', { class: 'auth-pw' }, input, btn);
     }
 
+    /* ---------- 註冊時選身分(前端計畫四;只有 window.PAID_UI === true 才出現) ----------
+       做法參考 Quizlet(註冊表單裡就問是不是老師,預設不是)、Kahoot(先選帳號類型,選了才出現那一類要填的欄位)、
+       Google Classroom(兩張「我是學生」「我是老師」大選項卡):兩張選項卡放在 Google 鈕上面(兩種註冊都適用),預設學生。
+       選老師只多三樣:名額(數字與價錢)、選填的班級名稱、方案說明連結;試用規則只寫在 pricing.html。
+       意向只是提示(js/cloud.js saveSignupIntent),權限一律看資料庫。 */
+    function paidUi() { return window.PAID_UI === true; }
+    /* 不看 PAID_UI:沒載入 plans-config 的頁面也要清掉別頁留下的老師意向。
+       PAID_UI 沒開時從來不會存意向,清一個不存在的鍵什麼都不會變 */
+    function forgetIntent() {
+      if (typeof CLOUD.clearSignupIntent === 'function') CLOUD.clearSignupIntent();
+    }
+
+    const SEAT_OPTIONS = [10, 30, 60];
+    const NB = ' ';   // 數字與單位之間不換行
+    /* 名額選項的字:「10 人」「每月 390 元」,價錢照 window.PLANS(js/plans-config.js);沒有價錢就只寫人數 */
+    function seatChoices(plans) {
+      const t = (plans && plans.teacher) || {};
+      return SEAT_OPTIONS.map(n => ({
+        seats: n,
+        count: n + NB + '人',
+        price: typeof t[n] === 'number' ? '每月 ' + String(t[n]).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + NB + '元' : '',
+      }));
+    }
+
+    let roleSeq = 0;
+    /* onRole(身分):換身分時通知註冊卡(選老師時藏起暱稱下面「老師會看到這個名字」) */
+    function rolePicker(onRole) {
+      const seq = ++roleSeq;
+      let role = 'student', seats = SEAT_OPTIONS[0];
+      const radio = (name, value, on) => {
+        const input = h('input', { type: 'radio', name, value: String(value) });
+        input.checked = !!on;
+        return input;
+      };
+      const panel = h('div', { class: 'auth-teacher' });
+      panel.hidden = true;
+      const cardOf = (value, text) => {
+        const input = radio('auth-role-' + seq, value, value === role);
+        input.addEventListener('change', () => {
+          if (!input.checked) return;
+          role = value;
+          panel.hidden = role !== 'teacher';
+          if (role === 'student') forgetIntent();   // 選學生:這台留著的老師意向作廢
+          if (onRole) onRole(role);
+        });
+        return h('label', { class: 'auth-role-card' }, input, h('span', null, text));
+      };
+      const seatRows = seatChoices(window.PLANS).map((c, i) => {
+        const input = radio('auth-seats-' + seq, c.seats, i === 0);
+        input.addEventListener('change', () => { if (input.checked) seats = c.seats; });
+        return h('label', { class: 'auth-seat' }, input,
+          h('span', { class: 'auth-seat-n' }, c.count), c.price ? ' ' : null, c.price ? h('span', { class: 'auth-seat-p' }, c.price) : null);
+      });
+      const className = authField({ label: '班級名稱', type: 'text', name: 'class-name', ac: 'off', max: 30, hint: '空白就用「我的班級」' });
+      panel.append(
+        h('fieldset', { class: 'auth-seats' }, h('legend', null, '名額'), h('div', { class: 'auth-seat-list' }, seatRows)),
+        className.el,
+        h('p', { class: 'auth-plan' }, h('a', { href: 'pricing.html', target: '_blank', rel: 'noopener' }, '方案說明')));
+      const el = h('fieldset', { class: 'auth-role' },
+        h('legend', { class: 'auth-role-legend' }, '身分'),
+        h('div', { class: 'auth-role-row' }, cardOf('student', '我是學生'), cardOf('teacher', '我是老師')),
+        panel);
+      return {
+        el,
+        /* 按註冊或 Google 之前呼叫:選老師就存 { 名額, 班名, Email(Email 註冊才有) }(只存在這台,不送給 signUp),
+           選學生就清掉 */
+        save(email) {
+          if (role !== 'teacher') { forgetIntent(); return; }
+          const o = { seats, name: className.value() };
+          if (email) o.email = email;
+          CLOUD.saveSignupIntent(o);
+        },
+      };
+    }
+
     /* opts:{ mode:'login'|'signup'|'forgot', onMode, backTo, autofocus } */
     function buildAuthCard(opts) {
       opts = opts || {};
@@ -290,7 +365,10 @@
       draw();
       return card;
 
-      function go(next) { mode = next; draw(); }
+      function go(next) {
+        if (next === 'login') forgetIntent();   // 切到登入分頁:註冊時選老師的意向作廢
+        mode = next; draw();
+      }
 
       function draw() {
         card.innerHTML = '';
@@ -319,7 +397,9 @@
           h('button', { class: 'auth-link strong', type: 'button', onclick: () => go(next) }, linkText));
       }
 
-      function googleBtn(msg) {
+      /* role:註冊分頁的身分選擇(PAID_UI 打開才有)。轉跳 Google 之前存好意向(Google 回來時頁面狀態都不見了);
+         登入分頁按 Google 是登入,意向作廢 */
+      function googleBtn(msg, role) {
         const text = mode === 'signup' ? '使用 Google 帳戶註冊' : '使用 Google 帳戶登入';
         const label = h('span', null, text);
         const btn = h('button', { class: 'btn-google', type: 'button', 'aria-label': text }, h('span', { class: 'g-logo', html: G_LOGO }), label);
@@ -328,8 +408,10 @@
           btn.disabled = true;
           const old = label.textContent;
           label.textContent = '前往 Google';
+          if (role) role.save('');
+          else forgetIntent();
           try { await CLOUD.signInWithGoogle(opts.backTo); }   // 成功就離開本頁
-          catch (e) { msg.textContent = e.message; msg.className = 'auth-msg bad'; btn.disabled = false; label.textContent = old; }
+          catch (e) { forgetIntent(); msg.textContent = e.message; msg.className = 'auth-msg bad'; btn.disabled = false; label.textContent = old; }
         });
         return btn;
       }
@@ -364,6 +446,9 @@
             const fix = typoFix(v);
             if (fix) email.tipFix('是不是要打 ', fix);
           });
+          /* 身分選擇:PAID_UI 沒開時一個節點都不多。選老師時藏起暱稱的「老師會看到這個名字」(老師帳號的暱稱學生看不到) */
+          const nameHint = name.el.querySelector('.auth-hint');
+          const role = paidUi() ? rolePicker(r => { if (nameHint) nameHint.hidden = r === 'teacher'; }) : null;
           const btn = submitBtn('註冊');
           const form = formOf(btn, msg, async ({ lock, unlock, fail }) => {
             let ok = true;
@@ -371,13 +456,16 @@
             ok = email.bad(EMAIL_RE.test(email.value()) ? '' : 'Email 格式不對。') && ok;
             ok = pw.bad(pw.raw().length >= 8 ? '' : '密碼至少 8 碼。') && ok;
             if (!ok) { const b = card.querySelector('.is-bad input'); if (b) b.focus(); return; }
+            /* 呼叫 signUp 之前存好(選學生、沒有身分選擇的頁面就清掉別頁留下的) */
+            if (role) role.save(email.value());
+            else forgetIntent();
             lock('註冊中');
             try {
               const r = await CLOUD.signUp(email.value(), pw.raw(), name.value());
               if (r.needsConfirm) sent(email.value());
-            } catch (e) { fail(e.message); unlock(); }
+            } catch (e) { forgetIntent(); fail(e.message); unlock(); }
           }, name.el, email.el, pw.el);
-          put(heading('註冊'), googleBtn(msg), orLine(), form,
+          put(heading('註冊'), role ? role.el : null, googleBtn(msg, role), orLine(), form,
             h('p', { class: 'auth-fine' }, '按下註冊即表示同意',
               h('a', { href: 'terms.html', target: '_blank', rel: 'noopener' }, '服務條款與隱私權說明'), '。'),
             switchLine('已經有帳號？', '登入', 'login'));
@@ -393,6 +481,7 @@
             ok = pw.bad(pw.raw() ? '' : '密碼還沒填。') && ok;
             if (!ok) { const b = card.querySelector('.is-bad input'); if (b) b.focus(); return; }
             lock('登入中');
+            forgetIntent();   // 登入既有帳號:註冊時選老師的意向作廢
             try { await CLOUD.login(email.value(), pw.raw()); }   // 成功後 afterAuth 會 reload
             catch (e) { fail(e.message); unlock(); }
           }, email.el, pw.el);
@@ -465,7 +554,10 @@
         const f = Array.from(box.querySelectorAll('button,input,a[href]')).filter(x => !x.disabled);
         if (!f.length) return;
         const first = f[0], last = f[f.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        /* 第一個是身分選項時,整組 radio 算同一站(選了老師,停在組裡的是「我是老師」);PAID_UI 沒開時第一個不會是 radio */
+        const a = document.activeElement;
+        const atFirst = a === first || (first.type === 'radio' && a && a.type === 'radio' && a.name === first.name);
+        if (e.shiftKey && atFirst) { e.preventDefault(); last.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       });
       if (!required) {

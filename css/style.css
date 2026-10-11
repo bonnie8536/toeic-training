@@ -2201,6 +2201,45 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 .trial-go:hover { text-decoration: none; }
 .modal-trial .auth-fine { margin-top: 12px; text-align: center; }
 .trial-go:focus-visible, .trial-copy:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.trial-fail { margin: 6px 0 16px; text-align: center; overflow-wrap: anywhere; }
+.trial-again { margin-bottom: 10px; }
+.modal-trial .auth-h:focus { outline: none; }   /* 自動開試用「開通中」把焦點放在標題(讓 Tab 留在視窗裡),標題不是按鈕,不畫框 */
+
+/* 登入視窗裡出現身分選擇(PAID_UI 打開)時,選了老師會比畫面高:遮罩改成可以捲動,視窗夠矮時照舊置中。
+   沒有身分選擇時這兩條都不成立,視窗跟以前一模一樣 */
+.modal-mask:has(.auth-role) { overflow-y: auto; align-items: flex-start; }
+.modal-mask:has(.auth-role) > .modal { margin: auto; }
+
+/* ======== 註冊時選身分(js/profile.js rolePicker;PAID_UI 打開才出現) ========
+   兩張選項卡用原生 radio(方向鍵可以換),選中的那張用主色框加淡底,跟試用視窗的名額選擇同一套語言 */
+.auth-role { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 12px; }
+.auth-role-legend { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.auth-role-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.auth-role-card {
+  position: relative; display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 8px 10px;
+  border: 1px solid var(--line); border-radius: 12px; background: #fff;
+  font-family: var(--round); font-size: 16px; font-weight: 700; color: var(--ink);
+  cursor: pointer; transition: border-color .15s, background .15s, color .15s;
+}
+.auth-role-card input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.auth-role-card:hover { border-color: var(--primary); }
+.auth-role-card:has(input:checked) { border-color: var(--primary); background: var(--primary-tint); color: var(--primary-dark); box-shadow: inset 0 0 0 1px var(--primary); }
+.auth-role-card:has(input:focus-visible) { outline: 2px solid var(--primary); outline-offset: 2px; }
+.auth-teacher { display: grid; gap: 12px; padding: 14px 14px 12px; border-radius: 12px; background: var(--bg-soft); }
+.auth-teacher[hidden] { display: none; }
+.auth-seats { border: 0; margin: 0; padding: 0; min-width: 0; }
+.auth-seats legend { padding: 0; margin-bottom: 5px; font-size: 13.5px; color: var(--ink-light); }
+.auth-seat-list { display: grid; gap: 8px; }
+.auth-seat {
+  display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 14px;
+  border: 1px solid var(--line); border-radius: 10px; background: #fff; font-size: 15px; color: var(--ink); cursor: pointer;
+}
+.auth-seat input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--primary); cursor: pointer; }
+.auth-seat:has(input:checked) { border-color: var(--primary); }
+.auth-seat-n { font-weight: 700; min-width: 3.6em; }
+.auth-seat-p { margin-left: auto; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+.auth-teacher .auth-input { background: #fff; }
+.auth-plan { margin: 0; font-size: 13.5px; }
 
 /* ======== 教師後台的班級區(js/admin-classes.js) ======== */
 .ac-box { margin: 18px 0 20px; padding: 16px 18px 14px; }

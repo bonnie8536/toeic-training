@@ -81,7 +81,7 @@ function loadPage(w) {
     setTimeout: (fn, ms) => { const id = ++tid; timers.set(id, { fn, ms }); return id; },
     clearTimeout: id => { timers.delete(id); },
     localStorage: w.local, sessionStorage: w.session,
-    location: { hash: '', search: '', pathname: '/me.html', origin: 'https://x', href: 'https://x/me.html', reload() { w.reloads++; } },
+    location: { hash: w.hash || '', search: '', pathname: '/me.html', origin: 'https://x', href: 'https://x/me.html', reload() { w.reloads++; } },
     history: { replaceState() {} },
     document: { visibilityState: 'visible', addEventListener() {}, createElement() { return {}; }, head: { appendChild() {} } },
     confirm: () => true,
@@ -278,7 +278,7 @@ const cases = {
     ];
     return { ok: r.every(x => x === false), detail: r.join(',') };
   },
-  '註冊意向綁在帳號上:Email 不同、舊格式沒有 Email 的都不開;Google 那條只認這個分頁 sessionStorage 裡的': async () => {
+  '註冊意向綁在帳號上:Email 不同、舊格式沒有 Email 的都不開;Google 那條只認這個分頁 sessionStorage 裡、從 Google 回來過的': async () => {
     const now = Date.parse('2026-10-07T03:10:00Z');
     const u = Object.assign({}, USER, { created_at: new Date(now - 5 * MIN).toISOString() });
     const ok = { teacher_trial_available: true };
@@ -292,17 +292,35 @@ const cases = {
     const tookMail = C.takeSignupIntent();
     const mailOk = C.trialIntentOk(tookMail, u, ok, now);
     const leftMail = w.local.getItem('tr_signup_intent');
-    C.saveSignupIntent({ seats: 10, name: '' }, now - 10 * MIN);
+    /* Google 那條:同一頁存了就讀(沒有從 Google 回來、沒綁帳號 id)不算;
+       從 Google 回來的那一頁(網址帶 access_token)getSession 拿到帳號、綁上帳號 id,登入的是這個帳號才算 */
+    const tNow = Date.now();
+    const uNow = Object.assign({}, USER, { created_at: new Date(tNow - 5 * MIN).toISOString() });
+    C.saveSignupIntent({ seats: 10, name: '' }, tNow - 10 * MIN);
     const inLocal = w.local.getItem('tr_signup_intent');
-    const tookG = C.takeSignupIntent();
-    const gOk = C.trialIntentOk(tookG, u, ok, now);
+    const notBack = C.trialIntentOk(C.takeSignupIntent(), uNow, ok, tNow);
+    C.saveSignupIntent({ seats: 10, name: '' }, tNow - 10 * MIN);
+    w.hash = '#access_token=eyJ&expires_in=3600&provider_token=ya29&refresh_token=r&token_type=bearer';
+    w.local.setItem(SB_KEY, JSON.stringify({ user: USER }));
+    const P2 = loadPage(w); await P2.ready;
+    w.hash = '';
+    const C2 = P2.C;
+    const stampedUid = (JSON.parse(w.session.getItem('tr_signup_intent')) || {}).uid;
+    const tookG = C2.takeSignupIntent();
+    const gOk = C2.trialIntentOk(tookG, uNow, ok, tNow) && notBack === false && stampedUid === USER.id;
     const leftG = w.session.getItem('tr_signup_intent');
+    /* 綁的是別的帳號 id:讀出來是 null,而且清掉 */
+    w.session.setItem('tr_signup_intent', JSON.stringify({ seats: 10, name: '', at: tNow - MIN, uid: 'someone-else' }));
+    const wrongUid = C2.takeSignupIntent();
+    const leftWrong = w.session.getItem('tr_signup_intent');
+    w.local.removeItem(SB_KEY);
     /* 有人在 localStorage 塞一個沒有 Email、標成 _session 的意向:讀出來也不算 Google 那條 */
     w.local.setItem('tr_signup_intent', JSON.stringify({ seats: 10, at: now - MIN, _session: true }));
     const fake = C.trialIntentOk(C.takeSignupIntent(), u, ok, now);
     return { ok: other === false && noMail === false && forged === false && savedMail.email === 's@x.com' && mailOk === true && leftMail === null
-      && inLocal === null && gOk === true && leftG === null && fake === false,
-      detail: ['別人的 Email ' + other, '沒有 Email ' + noMail, '偽造 ' + forged, 'Email 那條 ' + mailOk, 'Google 那條 ' + gOk, 'localStorage 偽造 ' + fake].join(' / ') };
+      && inLocal === null && gOk === true && leftG === null && fake === false && wrongUid === null && leftWrong === null,
+      detail: ['別人的 Email ' + other, '沒有 Email ' + noMail, '偽造 ' + forged, 'Email 那條 ' + mailOk, 'Google 那條 ' + gOk + '(綁 ' + stampedUid + ')',
+        'localStorage 偽造 ' + fake, '別的帳號 id ' + JSON.stringify(wrongUid)].join(' / ') };
   },
   '選學生註冊:先清掉這台留著的老師意向(A 選老師去收信,B 接著用學生註冊,B 不會變老師)': async () => {
     const now = Date.parse('2026-10-07T03:10:00Z');

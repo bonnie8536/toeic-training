@@ -471,6 +471,12 @@ const cases = {
     ];
     return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') };
   },
+  'pricing.html 使用規則:老師試用 7 天每個帳號一次,寫在使用規則那一段,只寫一次,數字與單位不換行': async () => {
+    const rules = (PRICING.match(/id="pricing-rules"[\s\S]*?<\/ul>/) || [''])[0];
+    const want = '<li>老師可以免費試用 7\u00a0天，每個帳號一次。</li>';
+    const checks = [rules.includes(want), PRICING.split('老師可以免費試用').length === 2, !/老師可以免費試用 7 天/.test(PRICING)];
+    return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') };
+  },
 };
 
 (async () => {

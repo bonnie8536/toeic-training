@@ -43,7 +43,13 @@
     const t = Date.parse(iso);
     if (!isFinite(t)) return null;
     const d = new Date(t + TZ_MS);
-    return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1, d: d.getUTCDate() };
+    return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1, d: d.getUTCDate(), hh: d.getUTCHours(), mm: d.getUTCMinutes() };
+  }
+  /* 「09:00」(台北時間、24 小時制),跟日期同一個時區 */
+  function fmtTime(iso) {
+    const p = ymd(iso);
+    const two = n => (n < 10 ? '0' : '') + n;
+    return p ? two(p.hh) + ':' + two(p.mm) : '';
   }
   /* 「10 月 11 日」 */
   function fmtDay(iso) { const p = ymd(iso); return p ? p.m + ' 月 ' + p.d + ' 日' : ''; }
@@ -75,7 +81,7 @@
     if (cls.some(c => c.covered === true)) return null;   // 有班級涵蓋(包括站長的班)就不擋
     if (o.page === 'writing' && typeof a.credits === 'number' && a.credits > 0) return null;
     if (cls.some(c => c.reason === 'expired')) return { kind: 'class_expired', title: '班級老師的方案已到期', line: '請聯絡老師' };
-    if (cls.some(c => c.reason === 'over_seats')) return { kind: 'over_seats', title: '班級名額已滿', line: '請聯絡老師' };
+    if (cls.some(c => c.reason === 'over_seats')) return { kind: 'over_seats', title: '超過老師的名額', line: '請聯絡老師' };
     /* 老師自己的方案(或老師試用)是最後一段:寫老師方案的到期日,不寫學生試用的日期 */
     const paidEnd = Date.parse(a.paid_through), teacherEnd = Date.parse(a.teacher_until);
     if (a.teacher_source && isFinite(teacherEnd) && !(isFinite(paidEnd) && paidEnd >= teacherEnd)) {
@@ -109,7 +115,8 @@
     const C = cloud();
     if (!C || typeof C.trialEndsSoon !== 'function' || !C.trialEndsSoon(a)) return null;
     if (bannerClosed(o.uid, a.until)) return null;
-    return { text: '試用到 ' + dayText(a.until, a.server_now), until: a.until };
+    /* 最後 2 天寫到幾點(她 2026-10-11 的決定):「試用到 10 月 8 日 09:00」 */
+    return { text: '試用到 ' + dayText(a.until, a.server_now) + ' ' + fmtTime(a.until), until: a.until };
   }
 
   /* 「我的」頁名字下方的方案狀態(前端計畫六.1)。站長不顯示。
@@ -125,7 +132,7 @@
         /* 撐著的只有贈送(沒有自己付費的)就不寫「已付費」 */
         if (Array.isArray(a.rights) && a.rights.indexOf('paid') < 0) return { text: '使用到 ' + until };
         return { text: '已付費，到 ' + until };
-      case 'class': return { text: '由班級老師提供' + (until ? '，到 ' + until : '') };
+      case 'class': return { text: '由班級提供' + (until ? '，到 ' + until : '') };
       case 'trial': return { text: '試用到 ' + dayText(s.until || a.trial_until, a.server_now) };
       case 'expired': return { text: '使用期限已到', expired: true };
       default: return { text: until ? '使用到 ' + until : '使用期限 無' };   // legacy、贈送
@@ -153,7 +160,7 @@
     if (!c) return '';
     if (c.covered === true) return '由班級提供';
     if (c.reason === 'expired') return '老師方案已到期';
-    if (c.reason === 'over_seats') return '超過名額';
+    if (c.reason === 'over_seats') return '超過老師的名額';
     return '';
   }
 
@@ -494,7 +501,7 @@
   }
 
   window.PAYWALL = { enabled, pageKind, decide, banner, dismissBanner, fmtDay, fmtDate, status, teacherLine, classStatus,
-    showCredits, creditsText, billingLines, trialOutcome, trialStarted, whenNoExam, account };
+    showCredits, creditsText, billingLines, trialOutcome, trialStarted, whenNoExam, account, trialDialog };
 
   const C = cloud();
   if (enabled() && C && C.enabled) document.addEventListener('DOMContentLoaded', initPage);

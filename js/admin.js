@@ -16,10 +16,21 @@
     return;
   }
 
+  /* 收費畫面(js/plans-config.js 的 PAID_UI)打開才看使用權;沒開時跟以前一模一樣 */
+  const PAID = window.PAID_UI === true;
+  const AC = window.ADMIN_CLASSES || null;   // js/admin-classes.js:班級區、方案那一列
+
   (async () => {
     await CLOUD.ready;
     if (!CLOUD.user) return;               // profile.js 會顯示登入視窗
+    if (PAID) { try { await CLOUD.accessReady; } catch (e) { /* 讀不到使用權:照沒開時的畫面 */ } }
     if (!CLOUD.isTeacher) {
+      const info = PAID && AC ? AC.planInfo(CLOUD.access, { paidUi: true }) : null;
+      if (info && info.kind === 'trial_offer') {
+        root.innerHTML = '';
+        root.append(h('div', { class: 'page-head' }, h('h1', null, '教師後台')), AC.trialBlock(info));
+        return;
+      }
       note('這個帳號沒有教師權限。請用教師帳號登入（教師帳號=已加入 teachers 表的帳號，見指南步驟 D）。');
       return;
     }
@@ -217,6 +228,21 @@
     const myKeys = (students[CLOUD.user.id] || { keys: {} }).keys;
     const ids = Object.keys(students).filter(uid => uid !== CLOUD.user.id);
 
+    /* 班級區(邀請碼、成員、移除);收費畫面打開時上面多一列方案與名額 */
+    const plan = PAID && AC ? AC.planInfo(CLOUD.access, { paidUi: true }) : null;
+    if (AC) {
+      root.append(AC.section({
+        access: PAID ? CLOUD.access : null,
+        nameOf: uid => {
+          const s = students[uid];
+          const meta = (s && s.keys['_meta']) || {};
+          const tn = myKeys['tnote_' + uid] || {};
+          const name = tn.nick || meta.name || meta.email || '';
+          return name ? { name, email: meta.email || '' } : null;
+        },
+      }));
+    }
+
     /* 本週動態:近 7 天各學生動過哪些區域 */
     const AREA = [
       [/^drill_p/, '刷題'], [/^listen_p/, '聽力刷題'], [/^grammar_done/, '文法'], [/^phonics_done/, '自然發音'],
@@ -249,7 +275,8 @@
       root.append(box);
     }
     if (!ids.length) {
-      root.append(h('div', { class: 'q-block' }, '還沒有學生資料。學生第一次登入並開始作答後，這裡就會出現他們的進度。'));
+      /* 老師方案過了寬限時讀不到學生進度,但資料都還在(方案那一列已經寫了),不說「還沒有學生資料」 */
+      if (!(plan && plan.kind === 'expired')) root.append(h('div', { class: 'q-block' }, '還沒有學生資料。學生用邀請碼加入班級、開始作答後，這裡會出現他們的進度。'));
       return;
     }
     ids.sort((a, b) => (students[b].last || '').localeCompare(students[a].last || ''));

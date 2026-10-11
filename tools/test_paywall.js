@@ -124,7 +124,7 @@ const cases = {
     const trial = P.decide(base(), LOCK);
     const plan = P.decide(base({ paid_through: '2026-11-03T16:30:00Z' }), LOCK);
     const ok = both.kind === 'class_expired' && both.title === '班級老師的方案已到期' && both.line === '請聯絡老師'
-      && seats.kind === 'over_seats' && seats.title === '班級名額已滿' && seats.line === '請聯絡老師'
+      && seats.kind === 'over_seats' && seats.title === '超過老師的名額' && seats.line === '請聯絡老師'
       && trial.kind === 'trial_ended' && trial.title === '試用已結束' && trial.line === '試用到 10 月 11 日'
       && plan.kind === 'expired' && plan.title === '方案已到期' && plan.line === '到期日 2026/11/04';
     return { ok, detail: [both, seats, trial, plan].map(r => r && r.kind + ':' + r.title + '/' + r.line).join(' | ') };
@@ -166,9 +166,17 @@ const cases = {
     const after = P.banner(soon, opt);
     const other = P.banner(base({ active: true, source: 'trial', until: '2026-10-09T00:00:00Z' }), opt);
     const otherUser = P.banner(soon, { paidUi: true, page: 'paid', uid: 'aaaaaaaa-0000-4000-8000-000000000001' });
-    const ok = a && a.text === '試用到 10 月 9 日' && far === null && paidInTrial === null && legacy === null && off === null && noPage === null
+    const ok = a && a.text === '試用到 10 月 9 日 01:00' && far === null && paidInTrial === null && legacy === null && off === null && noPage === null
       && unknown === null && after === null && other && otherUser;
     return { ok, detail: JSON.stringify({ a, far, paidInTrial, legacy, off, after, other: !!other, otherUser: !!otherUser }) };
+  },
+  '試用提示條寫到幾點(台北時間、24 小時制):試用到 10 月 8 日 09:00;下午寫 22:05;跨年帶年份': () => {
+    const { P } = load({ paid: true });
+    const opt = { paidUi: true, page: 'paid', uid: UID };
+    const t = (until, now) => { const b = P.banner(base({ active: true, source: 'trial', until, server_now: now || NOW }), opt); return b && b.text; };
+    const r = { am: t('2026-10-08T01:00:00Z'), pm: t('2026-10-07T14:05:00Z'), midnight: t('2026-10-08T16:00:00Z'), newYear: t('2027-01-01T01:00:00Z', '2026-12-31T03:00:00Z') };
+    const ok = r.am === '試用到 10 月 8 日 09:00' && r.pm === '試用到 10 月 7 日 22:05' && r.midnight === '試用到 10 月 9 日 00:00' && r.newYear === '試用到 2027/01/01 09:00';
+    return { ok, detail: JSON.stringify(r) };
   },
   '寫作頁有篇數的人照樣看得到試用提示條;遮罩出現時不放提示條(已鎖的人不是試用中)': () => {
     const { P } = load({ paid: true });
@@ -220,7 +228,7 @@ const cases = {
     };
     const ok = r.owner === null && r.paid.text === '已付費，到 2026/11/04' && r.comp.text === '使用到 2026/11/04'
       && r.legacy.text === '使用期限 無' && r.legacyUntil.text === '使用到 2026/11/04'
-      && r.cls.text === '由班級老師提供' && r.clsUntil.text === '由班級老師提供，到 2026/11/04'
+      && r.cls.text === '由班級提供' && r.clsUntil.text === '由班級提供，到 2026/11/04'
       && r.trial.text === '試用到 10 月 11 日' && r.expired.text === '使用期限已到' && r.expired.expired === true && !r.paid.expired && r.unknown === null;
     return { ok, detail: JSON.stringify(Object.fromEntries(Object.entries(r).map(([k, v]) => [k, v && v.text]))) };
   },
@@ -239,11 +247,11 @@ const cases = {
       && r[3] === '老師方案 30 人，2026/10/01 到期' && r[4] === null && r[5] === null && r[6] === null;
     return { ok, detail: JSON.stringify(r) };
   },
-  '班級列的狀態:由班級提供、老師方案已到期、超過名額;找不到或不知道就不寫': () => {
+  '班級列的狀態:由班級提供、老師方案已到期、超過老師的名額;找不到或不知道就不寫': () => {
     const { P } = load({ paid: true });
     const a = base({ classes: [{ class_id: 'k1', covered: true, reason: null }, { class_id: 'k2', covered: false, reason: 'expired' }, { class_id: 'k3', covered: false, reason: 'over_seats' }, { class_id: 'k4', covered: false, reason: null }] });
     const r = ['k1', 'k2', 'k3', 'k4', 'k9'].map(id => P.classStatus(a, id)).concat([P.classStatus(null, 'k1'), P.classStatus(base({ classes: null }), 'k1')]);
-    return { ok: r.join('|') === '由班級提供|老師方案已到期|超過名額||||', detail: r.join('|') };
+    return { ok: r.join('|') === '由班級提供|老師方案已到期|超過老師的名額||||', detail: r.join('|') };
   },
   '寫作批改那一列:有篇數、或買過(付款或點數紀錄)才出現;文字是「寫作批改 剩 N 篇」': () => {
     const { P } = load({ paid: true });

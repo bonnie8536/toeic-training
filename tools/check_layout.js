@@ -6,12 +6,14 @@
      node tools/check_layout.js                 比對目前的檔案和基準,有差異或有 JS 錯誤就 exit 1
      node tools/check_layout.js --save          把目前的量測存成新基準(只有「刻意改版面」時才做,並在 commit 說明)
      node tools/check_layout.js --root <資料夾>  量別的資料夾(例如舊版本的匯出)
-     node tools/check_layout.js --pages index.html,grammar.html  只量這幾頁 */
+     node tools/check_layout.js --pages index.html,grammar.html  只量這幾頁
+     node tools/check_layout.js --pages pricing.html --save     只把這幾頁的量測併進基準，其他頁的原文一個位元組都不動 */
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const os = require('os');
 const { spawn } = require('child_process');
+const { mergeBaseline } = require('./baseline_merge');
 
 const REPO = path.join(__dirname, '..');
 const BASELINE = path.join(__dirname, 'layout_baseline.json');
@@ -117,7 +119,18 @@ async function openPage() {
     setTimeout(() => { try { fs.rmSync(dir, { recursive: true, force: true }); } catch (e) {} }, 1000);
   }
 
-  if (SAVE) {
+  /* --pages 指定的頁有沒量到的（檔名打錯、檔案不存在、--pages 後面漏了頁名），就不存，免得以為存好了 */
+  const missing = PAGES.filter((p) => WIDTHS.some((w) => !now[w + ' ' + p]));
+  if (SAVE && opt('--pages') && missing.length) {
+    console.error('這幾頁沒量到，基準沒有改：' + missing.join('、'));
+    process.exitCode = 2;
+  } else if (SAVE && opt('--pages') && fs.existsSync(BASELINE)) {
+    /* 只量了幾頁：併進既有基準。整檔覆寫會把沒量的頁全刪掉（2026-10-07 出過事） */
+    const r = mergeBaseline(fs.readFileSync(BASELINE, 'utf8'), now);
+    if (r.changed.length || r.added.length) fs.writeFileSync(BASELINE, r.text);
+    console.log('已併入基準：量了 ' + Object.keys(now).length + ' 項，有變 ' + r.changed.length + ' 項、新增 ' + r.added.length
+      + ' 項，其他頁不動 → ' + path.relative(REPO, BASELINE));
+  } else if (SAVE) {
     fs.writeFileSync(BASELINE, JSON.stringify(now, null, 1) + '\n');
     console.log('已存基準:' + Object.keys(now).length + ' 項 → ' + path.relative(REPO, BASELINE));
   } else {

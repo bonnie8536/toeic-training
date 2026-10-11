@@ -1,0 +1,218 @@
+/* 站長後台「收費管理」(js/admin-owner-*.js)。只有 PAID_UI 打開、站長登入時才會有這些元素;
+   沒開時這支檔案裡的選擇器一個都對不到,教師後台的樣子不變。
+   跟教師後台班級區(.ac-*)同一套:白底清單、細框、12px 圓角、平的按鈕;不用厚底立體按鈕。 */
+
+/* 分頁:底線式(Google Classroom、Stripe 的做法) */
+.ow-tabs { display: flex; gap: 2px; margin: 16px 0 18px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.ow-tabs::-webkit-scrollbar { display: none; }
+.ow-top-tab, .ow-sub-tab { flex: none; min-height: 44px; padding: 0 16px; border: 0; background: none; font: inherit; font-size: 15.5px; color: var(--ink-light); cursor: pointer; border-radius: 8px 8px 0 0; }
+.ow-top-tab:hover, .ow-sub-tab:hover { color: var(--ink); background: var(--bg-soft); }
+.ow-top-tab[aria-selected="true"], .ow-sub-tab[aria-selected="true"] { color: var(--ink); font-weight: 700; box-shadow: inset 0 -3px 0 var(--primary); }
+.ow-top-tab:focus-visible, .ow-sub-tab:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.ow-tabs-sub { margin: 0 0 14px; }
+.ow-sub-tab { min-height: 40px; padding: 0 14px; font-size: 15px; }
+[role="tabpanel"][hidden] { display: none; }
+.ow-students-head { margin-top: 0; }
+
+/* 篩選與搜尋 */
+.ow-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.ow-chip { min-height: 34px; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; background: #fff; font: inherit; font-size: 14px; color: var(--ink); cursor: pointer; white-space: nowrap; }
+.ow-chip:hover { border-color: var(--primary); color: var(--primary); }
+.ow-chip[aria-pressed="true"] { background: var(--primary-tint); border-color: var(--primary); color: var(--primary-dark); font-weight: 700; }
+.ow-chip:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.ow-chip-group { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 3px; border-radius: 999px; background: var(--bg-soft); }
+.ow-chip-sub { min-height: 28px; padding: 0 10px; font-size: 13px; border-color: transparent; background: none; color: var(--ink-light); }
+.ow-chip-sub[aria-pressed="true"] { background: #fff; }
+.ow-search { margin: 12px 0 0; max-width: 380px; }
+.ow-search-input { width: 100%; }
+.ow-msg { margin: 10px 0 0; font-size: 14px; color: var(--ink-light); overflow-wrap: anywhere; }
+.ow-msg:empty { display: none; }
+.ow-msg.ok { color: var(--ok); }
+.ow-msg.bad { color: var(--bad); }
+
+/* 帳號清單:手機一個帳號一塊;寬螢幕(861px 起)一個帳號一列,欄位對齊上面的標題(Stripe、Supabase 使用者清單的做法) */
+.ow-table { margin: 12px 0 0; border: 1px solid var(--line); border-radius: 12px; background: #fff; overflow: hidden; }
+.ow-thead { display: none; }
+.ow-list { list-style: none; margin: 0; padding: 0; }
+.ow-list[aria-busy="true"] { opacity: .55; }
+.ow-list > li + li { border-top: 1px solid var(--line); }
+.ow-empty { padding: 14px 16px; font-size: 14.5px; color: var(--ink-light); }
+.ow-row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 2px 12px; padding: 12px 14px; }
+.ow-c-who { order: 1; flex: 1 1 calc(100% - 90px); min-width: 0; }   /* 同一行只放得下身分,註冊與最近登入換到下一行 */
+.ow-c-role { order: 2; flex: none; }
+.ow-c-reg { order: 3; }
+.ow-c-login { order: 4; }
+.ow-c-state { order: 5; flex-basis: 100%; }
+.ow-c-more { order: 6; flex-basis: 100%; }
+.ow-actions { order: 7; flex-basis: 100%; }
+.ow-row-msg { order: 8; flex-basis: 100%; margin: 4px 0 0; font-size: 14px; color: var(--bad); overflow-wrap: anywhere; }
+.ow-row-msg:empty { margin: 0; }
+.ow-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.ow-name { font-size: 16.5px; font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+button.ow-name { padding: 0; border: 0; background: none; font-family: inherit; text-align: left; cursor: pointer; border-radius: 4px; }
+button.ow-name:hover { color: var(--primary-dark); text-decoration: underline; text-underline-offset: 3px; }
+button.ow-name:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.ow-role { display: inline-block; padding: 1px 9px; border-radius: 999px; background: var(--bg-soft); font-size: 12.5px; color: var(--ink); white-space: nowrap; }
+.ow-tag { padding: 1px 9px; border-radius: 999px; background: var(--tint-orange); font-size: 12.5px; color: #8a4b00; white-space: nowrap; }
+.ow-mail { margin-top: 2px; font-size: 13.5px; color: var(--ink-light); overflow-wrap: anywhere; }
+.ow-meta { display: flex; flex-wrap: wrap; gap: 2px 14px; margin-top: 2px; font-size: 13px; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+.ow-c-date { font-size: 13px; color: var(--ink-light); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ow-status, .ow-teacher { margin-top: 6px; font-size: 14.5px; color: var(--ink); }
+.ow-teacher { font-variant-numeric: tabular-nums; }
+.ow-status.is-off, .ow-teacher.is-off { color: var(--bad); }
+.ow-sub-h { margin-top: 8px; font-size: 12.5px; color: var(--ink-light); }
+.ow-own, .ow-joined { list-style: none; margin: 2px 0 0; padding: 0; }
+.ow-own > li, .ow-jc { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 10px; padding: 3px 0; font-size: 14px; }
+.ow-jc { justify-content: space-between; }
+.ow-jc-info { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; min-width: 0; }
+.ow-c-name { color: var(--ink); overflow-wrap: anywhere; }
+.ow-c-mail, .ow-c-n { font-size: 13px; color: var(--ink-light); overflow-wrap: anywhere; }
+.ow-code { font-family: var(--round); font-weight: 700; letter-spacing: .05em; font-variant-numeric: tabular-nums; }
+.ow-off { font-size: 13px; color: var(--bad); white-space: nowrap; }
+.ow-jc-acts { display: flex; flex-wrap: wrap; gap: 2px; margin-right: -8px; }
+.ow-jc-acts .ac-btn { min-height: 36px; }
+.ow-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; margin-left: -8px; }
+.ow-actions .ac-btn { white-space: nowrap; }
+.ow-actions .ac-btn[aria-busy="true"] { opacity: .55; cursor: progress; }
+
+@media (min-width: 861px) {
+  .ow-thead, .ow-row { display: grid; grid-template-columns: minmax(0, 2.1fr) 64px minmax(0, 2fr) 92px 92px 220px; column-gap: 14px; }
+  .ow-thead { padding: 9px 16px; border-bottom: 1px solid var(--line); background: var(--bg-soft); font-size: 12.5px; color: var(--ink-light); }
+  .ow-row { grid-template-areas: "who role state reg login acts" "more more more more more acts" "msg msg msg msg msg msg"; row-gap: 0; align-items: start; padding: 11px 16px; }
+  .ow-row:hover { background: #fbfcfd; }
+  .ow-c-who { grid-area: who; } .ow-c-role { grid-area: role; } .ow-c-state { grid-area: state; } .ow-c-reg { grid-area: reg; } .ow-c-login { grid-area: login; }
+  .ow-c-more { grid-area: more; } .ow-actions { grid-area: acts; } .ow-row-msg { grid-area: msg; }
+  .ow-c-who .ow-name { font-size: 15.5px; }
+  .ow-c-state .ow-status:first-child, .ow-c-state .ow-teacher:first-child { margin-top: 0; }
+  .ow-c-state .ow-status, .ow-c-state .ow-teacher { font-size: 14px; }
+  .ow-c-date { padding-top: 2px; }
+  .ow-k { display: none; }
+  .ow-actions { justify-content: flex-end; margin: -8px -8px 0 0; }
+  .ow-c-more { display: flex; flex-wrap: wrap; gap: 0 28px; margin-top: 4px; }
+  .ow-more-part { display: flex; align-items: baseline; gap: 0 10px; min-width: 0; }
+  .ow-c-more .ow-sub-h { flex: none; margin-top: 0; }
+  .ow-c-more .ow-jc-acts .ac-btn { min-height: 30px; }
+  .ow-c-more .ow-own > li, .ow-c-more .ow-jc { padding: 0; font-size: 13.5px; }
+  .ow-c-more .ow-jc { justify-content: flex-start; }
+  .ow-c-more .ow-c-name { color: var(--ink-light); }
+}
+.ow-pager { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-top: 12px; }
+.ow-total { font-size: 14px; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+.ow-pager-btns { display: flex; gap: 8px; }
+.ow-page-btn { min-height: 40px; }
+
+/* 對話框:後果一行一句,靠左比較好讀 */
+.ow-dialog { max-width: 460px; max-height: calc(100vh - 32px); overflow-y: auto; }
+.ow-dialog .ac-dialog-line { text-align: left; font-size: 14.5px; margin-top: 6px; }
+.ow-dialog .ac-dialog-h + .ac-dialog-line { margin-top: 12px; }
+.ow-warn { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--tint-orange); color: #7a4200; font-size: 14.5px; line-height: 1.6; overflow-wrap: anywhere; }
+.ow-dialog .ow-dlg-who { font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+.ow-error:empty, .ow-field-note:empty { display: none; }
+.ow-field[hidden] { display: none; }
+.ow-quick { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0 4px; }
+.ow-radios { margin: 0; padding: 0; border: 0; display: grid; gap: 8px; }
+.ow-legend { margin-bottom: 4px; padding: 0; font-size: 13.5px; color: var(--ink-light); }
+.ow-radio { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; align-items: start; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; }
+.ow-radio:has(input:checked) { border-color: var(--primary); background: var(--primary-tint); }
+.ow-radio input { margin: 4px 0 0; accent-color: var(--primary); }
+.ow-radio-label { font-size: 15px; font-weight: 700; color: var(--ink); }
+.ow-radio-desc { grid-column: 2; font-size: 13.5px; line-height: 1.6; color: var(--ink-light); }
+.ow-ok.is-armed { background: var(--primary-dark); border-color: var(--primary-dark); }
+.ow-ok.ac-danger.is-armed { background: #a93434; border-color: #a93434; }
+.ow-codes { list-style: none; margin: 12px 0 0; padding: 0; border: 1px solid var(--line); border-radius: 10px; }
+.ow-codes > li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 8px 12px; }
+.ow-codes > li + li { border-top: 1px solid var(--line); }
+.ow-codes .ow-code { font-size: 19px; }
+.ow-copied { margin: 6px 0 0; font-size: 13.5px; color: var(--ok); }
+.ow-copied:empty { display: none; }
+.ow-other { margin-top: 10px; }
+.ow-other .ow-line { margin: 8px 0 0; font-size: 14.5px; color: var(--ink); }
+.ow-other .ow-done { margin: 0; color: var(--ok); }
+.ow-other .ow-field { margin-top: 8px; }
+.ow-other-btn { margin-top: 6px; min-height: 40px; color: var(--bad); border-color: var(--bad); }
+.ow-other-btn:hover { background: var(--bad-tint); color: var(--bad); border-color: var(--bad); }
+
+/* 查帳號 */
+.ow-lookup-label { display: block; font-size: 13.5px; color: var(--ink-light); margin-bottom: 5px; }
+.ow-lookup-row { display: flex; gap: 8px; max-width: 520px; }
+.ow-lookup-row .auth-input { flex: 1; min-width: 0; }
+.ow-lookup-row .btn { flex: none; min-height: 44px; }
+.ow-who { margin-top: 18px; }
+.ow-who-mail { font-size: 19px; }
+.ow-who-id { font-size: 12px; color: var(--ink-light); font-family: ui-monospace, Consolas, monospace; overflow-wrap: anywhere; }
+.ow-sec { margin-top: 20px; }
+.ow-sec-h { font-size: 15.5px; margin-bottom: 8px; }
+.ow-sec p.ow-cur-role { font-weight: 700; }
+.ow-sec .ow-status, .ow-sec .ow-teacher, .ow-credits { margin: 4px 0 0; font-size: 14.5px; }
+.ow-empty-line { font-size: 14px; color: var(--ink-light); }
+.ow-items { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 12px; background: #fff; overflow: hidden; }
+.ow-items > li + li { border-top: 1px solid var(--line); }
+.ow-item { padding: 10px 14px; }
+.ow-item-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; font-size: 14.5px; color: var(--ink); }
+.ow-item-text { overflow-wrap: anywhere; }
+.ow-when { font-size: 13px; color: var(--ink-light); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ow-amount { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ow-method, .ow-who-tag { font-size: 13px; color: var(--ink-light); white-space: nowrap; }
+.ow-state { padding: 0 8px; border-radius: 999px; background: var(--bg-soft); font-size: 12.5px; white-space: nowrap; }
+.ow-item.is-off .ow-item-text, .ow-item.is-off .ow-amount { color: var(--ink-light); }
+.ow-item.is-off .ow-state { background: var(--bad-tint); color: var(--bad); }
+.ow-item-note { margin: 3px 0 0; font-size: 13px; line-height: 1.55; color: var(--ink-light); overflow-wrap: anywhere; }
+.ow-item-acts { display: flex; flex-wrap: wrap; gap: 2px 4px; margin: 4px 0 0 -8px; }
+.ow-plain .ow-item { padding: 8px 14px; }
+
+@media (max-width: 860px) {
+  .ow-tabs { margin-top: 12px; }
+  .ow-search { max-width: none; }
+  .ow-item { padding: 10px 12px; }
+}
+
+/* 對話框裡選項少的單選(項目、月數、付款方式):排成一列 */
+.ow-radios.is-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.ow-radios.is-row .ow-legend { width: 100%; }
+.ow-radios.is-row .ow-radio { flex: 1 1 auto; display: flex; align-items: center; gap: 8px; padding: 9px 12px; white-space: nowrap; }
+.ow-radios.is-row .ow-radio input { margin: 0; }
+.ow-radios.is-row .ow-radio-label { font-size: 14.5px; }
+.ow-field .ow-warn { margin: 0; }
+
+/* 查帳號:帳號下面一排記帳的按鈕 */
+.ow-acts-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.ow-act { min-height: 40px; }
+
+/* 總覽 */
+.ow-ov-top { display: flex; justify-content: flex-end; }
+.ow-ov-refresh { min-height: 38px; }
+.ow-overview .ow-sec:first-child { margin-top: 4px; }
+.ow-ov-body[aria-busy="true"] { opacity: .55; }
+button.ow-ov-mail { font-size: 14.5px; font-weight: 700; }
+.ow-ov-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin: 4px 0 0; }
+.ow-ov-line .ow-teacher { margin: 0; font-size: 14px; }
+.ow-overview .ow-own { margin-top: 4px; }
+.ow-overview .ow-own > li { font-size: 13.5px; padding: 1px 0; }
+.ow-overview .ow-item.is-off .ow-ov-mail { color: var(--ink); }
+.ow-ov-legacy { padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: #fff; font-size: 14.5px; font-variant-numeric: tabular-nums; }
+.ow-ov-sub { margin-top: 2px; font-size: 13.5px; color: var(--ink-light); }
+
+/* 教師後台學生詳情的寫作批改(站長模式) */
+.ow-writing { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+.ow-wr-h { font-size: 15.5px; margin-bottom: 4px; }
+.ow-wr-top { display: grid; justify-items: start; gap: 2px; margin: 0 0 8px; }
+.ow-wr-bal { margin: 0; font-size: 14px; color: var(--ink-light); }
+.ow-wr-bal:empty { display: none; }
+.ow-wr-retry { min-height: 36px; padding: 0; }
+.ow-wr-retry[hidden] { display: none; }
+.ow-wr-full { margin: 4px 0 0; }
+.ow-wr-sum { display: inline-block; min-height: 32px; line-height: 32px; font-size: 13.5px; color: var(--primary); cursor: pointer; }
+.ow-wr-full[open] .ow-wr-sum { color: var(--ink-light); }
+.ow-wr-full .ow-wr-text { color: var(--ink); }
+.ow-wr-list { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 12px; background: #fff; overflow: hidden; }
+.ow-wr-item { padding: 10px 14px; }
+.ow-wr-item + .ow-wr-item { border-top: 1px solid var(--line); }
+.ow-wr-text { margin: 4px 0 0; font-size: 13.5px; line-height: 1.6; color: var(--ink-light); white-space: pre-line; overflow-wrap: anywhere; }
+.ow-wr-done { padding: 0 8px; border-radius: 999px; background: var(--primary-tint); color: var(--primary-dark); font-size: 12.5px; white-space: nowrap; }
+.ow-wr-done:empty { display: none; }
+.ow-wr-msg { margin: 2px 0 0; font-size: 13.5px; color: var(--ok); }
+.ow-wr-msg:empty { display: none; }
+
+/* 下載全部備份旁的說明(站長模式) */
+.ow-backup-note { margin-top: 6px; font-size: 13.5px; color: var(--ink-light); }
+.ow-students-head .btn[aria-busy="true"] { cursor: progress; }

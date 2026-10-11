@@ -35,6 +35,8 @@
    insert into public.teachers (user_id) values ('把UID貼在這裡');
    ```
 
+4. 這一步只用來建妳自己的站長帳號。收費資料庫（supabase_paid_access.sql）套用之後，新增其他老師不要再直接 insert teachers：直接 insert 的帳號沒有老師方案，學生用邀請碼加入會看到「這位老師還沒有開通方案」。請本人在教師後台按「開始老師試用」，或由妳在教師後台「收費管理」的帳號清單用「改角色」把他改成老師（老師申請核准也用改角色）。
+
 ## E. 發學生帳號(日常操作就這個)
 
 **Authentication → Users → Add user**,一人一組:

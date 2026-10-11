@@ -19,6 +19,19 @@
   /* 收費畫面(js/plans-config.js 的 PAID_UI)打開才看使用權;沒開時跟以前一模一樣 */
   const PAID = window.PAID_UI === true;
   const AC = window.ADMIN_CLASSES || null;   // js/admin-classes.js:班級區、方案那一列
+  /* js/admin-owner-*.js:收費管理(前端計畫九),只有收費畫面打開、而且 my_access 說是站長才掛上;
+     重新整理學生資料時留著同一個(篩選、頁數不會跑掉) */
+  const OW = window.ADMIN_OWNER || null;
+  let ownerArea = null;
+  /* 站長模式(收費畫面打開、my_access 說是站長):下載備份多存收費資料、學生詳情多一段寫作批改(js/admin-owner-billing.js);
+     沒開時這些都不出現,備份檔跟以前一模一樣 */
+  const ownerOn = () => PAID && !!OW && !!OW.billing && OW.enabled();
+  let backupMsg = null;
+  function withOwner() {
+    if (!PAID || !OW || !CLOUD.access || CLOUD.access.is_owner !== true) return;
+    if (!ownerArea) ownerArea = OW.mount({ ownerId: CLOUD.user.id });
+    if (ownerArea) OW.wrapTabs(root, ownerArea);
+  }
 
   (async () => {
     await CLOUD.ready;
@@ -56,6 +69,7 @@
       allRows = rows;
     } catch (e) {
       note('讀取失敗：' + e.message);
+      withOwner();
       return;
     }
 
@@ -201,7 +215,8 @@
   }
 
   /* 把能讀到的每一列原樣存成 JSON。還原時可以直接 upsert 回 progress。 */
-  function downloadBackup() {
+  function downloadBackup(e) {
+    if (ownerOn()) { OW.billing.backup({ rows: allRows, by: CLOUD.user && CLOUD.user.email, from: e && e.currentTarget, msg: backupMsg }); return; }
     const payload = {
       app: 'shuashua-progress-backup', version: 1,
       exported: new Date().toISOString(),
@@ -217,13 +232,22 @@
   }
 
   function render(students) {
+    renderStudents(students);
+    withOwner();
+  }
+
+  function renderStudents(students) {
     root.innerHTML = '';
+    const own = ownerOn();
+    backupMsg = own ? h('p', { class: 'ow-msg', role: 'status' }) : null;
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '教師後台'),
       h('p', null, '點任一列展開該學生的檢測報告摘要、錯題與上課紀錄。資料為學生端最後同步的狀態。'),
       h('div', { class: 'modal-row' },
         h('button', { class: 'btn', type: 'button', onclick: downloadBackup },
-          '下載全部備份（' + allRows.length + ' 列）'))));
+          '下載全部備份（' + allRows.length + ' 列）')),
+      own ? h('p', { class: 'ow-backup-note' }, '學生進度只有妳看得到的學生（妳班上的人），收費資料讀得到時一起存進去；完整備份請在 SQL Editor 跑 backup 快照。') : null,
+      backupMsg));
 
     const myKeys = (students[CLOUD.user.id] || { keys: {} }).keys;
     const ids = Object.keys(students).filter(uid => uid !== CLOUD.user.id);
@@ -304,11 +328,13 @@
         h('td', { class: 'num' }, fmt(d5)), h('td', { class: 'num' }, fmt(d6)), h('td', { class: 'num' }, fmt(d7)),
         h('td', { class: 'num' }, vo.done + '/' + vo.total));
 
+      const wb = ownerOn() ? OW.billing.writingBlock({ uid, keys: s.keys }) : null;
       const detailRow = h('tr', { style: 'display:none' },
-        h('td', { colspan: '7', style: 'background:var(--bg-soft)' }, detail(name, diag, d5, d6, d7),
+        h('td', { colspan: '7', style: 'background:var(--bg-soft)' }, detail(name, diag, d5, d6, d7), wb ? wb.el : null,
           noteSection(uid, tnote0, n => { nameEl.textContent = n || meta.name || meta.email || uid.slice(0, 8); })));
       row.addEventListener('click', () => {
         detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
+        if (wb && detailRow.style.display === '') wb.open();
       });
       table.append(row, detailRow);
     });

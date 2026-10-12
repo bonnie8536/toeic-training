@@ -41,6 +41,8 @@ function makeClient(w) {
       getSession: async () => {
         if (w.authGate) await w.authGate;
         if (w.revoked) { w.local.removeItem(SB_KEY); emit('SIGNED_OUT'); return { data: { session: null }, error: null }; }
+        if (w.noSession) return { data: { session: null }, error: null };
+        if (w.sessionUser) return { data: { session: { user: w.sessionUser } } };   // supabase-js 手上是另一個帳號(或 null:沒有登入)
         return w.offline && w.tokenExpired
           ? { data: { session: null }, error: { message: 'TypeError: Failed to fetch' } }
           : { data: { session: { user: USER } } };
@@ -81,7 +83,14 @@ function makeClient(w) {
         if (table === 'teachers') { if (w.teacherGate) await w.teacherGate; return { data: [], error: null }; }   // teacherGate:登入後查教師身分卡住(灌資料之前)
         if (table !== 'progress') return { data: null, error: null };
         if (q.op === 'select') {
-          return { data: w.db.filter(r => r.user_id === q.filters.user_id).map(r => JSON.parse(JSON.stringify(r))), error: null };
+          if (q.filters.k !== undefined) {   // 讀單一鍵(readKey):記下查了什麼;readGate 還沒放行前卡住
+            (w.keyReads = w.keyReads || []).push(Object.assign({}, q.filters));
+            if (w.readGate) await w.readGate;
+            if (w.offline) return { data: null, error: { message: 'TypeError: Failed to fetch' } };
+            if (w.readError) return { data: null, error: { message: 'JWT expired', code: 'PGRST301' } };
+            if (w.readNull) return { data: null, error: null };
+          }
+          return { data: w.db.filter(r => r.user_id === q.filters.user_id && (q.filters.k === undefined || r.k === q.filters.k)).map(r => JSON.parse(JSON.stringify(r))), error: null };
         }
         if (q.op === 'upsert') {
           const row = JSON.parse(JSON.stringify(q.row));
@@ -699,7 +708,110 @@ const scenarios = {
     return { ok: w.confirms.length === 1 && !(w.signOuts || []).length && same(lv(w, 'vgame_banks'), [{ id: 'b2' }]) && !!pg.ctx.CLOUD.user,
              detail: '問了 ' + w.confirms.length + ' 次 / signOut ' + ((w.signOuts || []).join(',') || '沒呼叫') + ' / 本機題庫 ' + JSON.stringify(lv(w, 'vgame_banks')) };
   },
+  /* ---------- 讀單一鍵(路線圖 1.2b,小雞寫回前先抓雲端那一份合併) ---------- */
+  '43. 讀單一鍵:只回這個帳號那一列,而且什麼都不寫(本機、帳本、雲端都不變)': async src => {
+    const w = makeWorld();
+    const PET = { v: 1, days: { '2026-10-10': 12 } };
+    w.db.push({ user_id: USER.id, k: 'pet', v: PET, updated_at: '2026-10-10T08:00:00.000Z' });
+    w.db.push({ user_id: 'someone-else', k: 'pet', v: { v: 1, days: { '2026-10-10': 99 } }, updated_at: '2026-10-11T08:00:00.000Z' });
+    const pg = await openLoggedIn(w, src);
+    studentWrites(pg, w, 'pet', { v: 1, days: { '2026-10-11': 3 } });   // 本機有一筆還沒傳的改動(帳本上有)
+    const before = snapshot(w);
+    const r = await pg.ctx.CLOUD.readKey('pet');
+    const after = snapshot(w);
+    const reads = (w.keyReads || []).map(f => f.user_id + ':' + f.k).join(',');
+    return { ok: !!r && r.ok === true && r.found === true && same(r.v, PET) && r.updated_at === '2026-10-10T08:00:00.000Z' && before === after && reads === USER.id + ':pet',
+             detail: '回傳 ' + JSON.stringify(r) + ' / 查詢 ' + reads + ' / 儲存與雲端 ' + (before === after ? '沒變' : '變了') };
+  },
+  '44. 讀單一鍵:雲端沒有這一列回 found:false;別台刪掉的(v=null)回 found:true、v:null': async src => {
+    const w = makeWorld();
+    w.db.push({ user_id: USER.id, k: 'gone', v: null, updated_at: '2026-10-10T08:00:00.000Z' });
+    const pg = await openLoggedIn(w, src);
+    const a = await pg.ctx.CLOUD.readKey('pet');
+    const b = await pg.ctx.CLOUD.readKey('gone');
+    return { ok: !!a && a.ok === true && a.found === false && a.v === null && !!b && b.ok === true && b.found === true && b.v === null,
+             detail: '沒有 ' + JSON.stringify(a) + ' / 刪掉的 ' + JSON.stringify(b) };
+  },
+  '45. 讀單一鍵:離線、沒登入(訪客)、鍵不合法都回 ok:false,不能讓呼叫的人以為雲端沒有': async src => {
+    const w = makeWorld();
+    w.db.push({ user_id: USER.id, k: 'pet', v: { v: 1 }, updated_at: '2026-10-10T08:00:00.000Z' });
+    const pg = await openLoggedIn(w, src);
+    w.offline = true;
+    const off = await pg.ctx.CLOUD.readKey('pet');
+    w.offline = false;
+    const n0 = (w.keyReads || []).length;
+    const bad = [await pg.ctx.CLOUD.readKey(''), await pg.ctx.CLOUD.readKey(null), await pg.ctx.CLOUD.readKey({ k: 'pet' })];
+    const badQueried = (w.keyReads || []).length - n0;
+    const g = makeWorld();
+    g.db.push({ user_id: USER.id, k: 'pet', v: { v: 1 }, updated_at: '2026-10-10T08:00:00.000Z' });
+    const guest = loadPage(g, src); await guest.ready;
+    const gr = await guest.ctx.CLOUD.readKey('pet');
+    return { ok: !!off && off.ok === false && bad.every(x => x && x.ok === false) && badQueried === 0 && !!gr && gr.ok === false && !(g.keyReads || []).length,
+             detail: '離線 ' + JSON.stringify(off) + ' / 不合法 ' + JSON.stringify(bad) + '(查了 ' + badQueried + ' 次) / 訪客 ' + JSON.stringify(gr) };
+  },
+  '46. 讀單一鍵:讀到一半換了帳號(別的分頁登入別人)回 ok:false,不把 A 的雲端資料交給 B 的頁面': async src => {
+    const w = makeWorld();
+    w.db.push({ user_id: USER.id, k: 'pet', v: { v: 1, days: { '2026-10-10': 12 } }, updated_at: '2026-10-10T08:00:00.000Z' });
+    const pg = await openLoggedIn(w, src);
+    let open; w.readGate = new Promise(r => { open = r; });
+    const p = pg.ctx.CLOUD.readKey('pet');
+    await tick();
+    pg.ctx.CLOUD.user = { id: '9a9a9a9a-0000-4000-8000-000000000000', email: 'b@x.com' };
+    open(); const r = await p;
+    return { ok: !!r && r.ok === false, detail: '回傳 ' + JSON.stringify(r) };
+  },
+  '47. 讀單一鍵:伺服器一直不回(Supabase 休眠剛醒、手機訊號差),逾時回 ok:false,不會永遠卡住': async src => {
+    const w = makeWorld();
+    w.db.push({ user_id: USER.id, k: 'pet', v: { v: 1 }, updated_at: '2026-10-10T08:00:00.000Z' });
+    const pg = await openLoggedIn(w, src);
+    w.readGate = new Promise(() => {});
+    let r = 'pending';
+    pg.ctx.CLOUD.readKey('pet').then(x => { r = x; });
+    await tick();
+    const stillPending = r === 'pending';
+    await pg.runTimers();
+    return { ok: stillPending && r !== 'pending' && !!r && r.ok === false, detail: '逾時前 ' + (stillPending ? '等待中' : '已回') + ' / 逾時後 ' + JSON.stringify(r) };
+  },
+  '48. 讀單一鍵:剛灌完雲端資料、頁面要重載的那一頁不查(回 ok:false),重載後的頁面照常讀': async src => {
+    const w = makeWorld();
+    w.db.push({ user_id: USER.id, k: 'pet', v: { v: 1 }, updated_at: '2026-10-10T08:00:00.000Z' });
+    w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', expires_at: 1, user: USER }));
+    w.local.setItem('tr_current_profile', JSON.stringify('c' + USER.id.replace(/-/g, '')));   // 隔天重開:資料夾已經是這個帳號
+    const first = loadPage(w, src); await first.ready;    // 新工作階段:灌資料後要重載
+    const r1 = await first.ctx.CLOUD.readKey('pet');
+    const second = loadPage(w, src); await second.ready;
+    const r2 = await second.ctx.CLOUD.readKey('pet');
+    return { ok: !!r1 && r1.ok === false && !!r2 && r2.ok === true && r2.found === true,
+             detail: '重載前 ' + JSON.stringify(r1) + ' / 重載後 ' + JSON.stringify(r2) };
+  },
+  '49. 讀單一鍵:supabase-js 手上已經沒有登入、或是別的帳號(查詢會被 RLS 回空陣列):回 ok:false,不能當成雲端沒有': async src => {
+    const w = makeWorld();
+    w.db.push({ user_id: USER.id, k: 'pet', v: { v: 1 }, updated_at: '2026-10-10T08:00:00.000Z' });
+    const pg = await openLoggedIn(w, src);
+    w.noSession = true;
+    const a = await pg.ctx.CLOUD.readKey('pet');
+    w.noSession = false; w.sessionUser = { id: '9a9a9a9a-0000-4000-8000-000000000000' };
+    const b = await pg.ctx.CLOUD.readKey('pet');
+    return { ok: !!a && a.ok === false && !!b && b.ok === false && !(w.keyReads || []).length,
+             detail: '沒有登入 ' + JSON.stringify(a) + ' / 別的帳號 ' + JSON.stringify(b) + ' / 查詢 ' + (w.keyReads || []).length + ' 次' };
+  },
+  '50. 讀單一鍵:伺服器回錯誤(憑證過期 401)或回 data:null,都回 ok:false': async src => {
+    const w = makeWorld();
+    w.db.push({ user_id: USER.id, k: 'pet', v: { v: 1 }, updated_at: '2026-10-10T08:00:00.000Z' });
+    const pg = await openLoggedIn(w, src);
+    w.readError = true;
+    const a = await pg.ctx.CLOUD.readKey('pet');
+    w.readError = false; w.readNull = true;
+    const b = await pg.ctx.CLOUD.readKey('pet');
+    return { ok: !!a && a.ok === false && !!b && b.ok === false, detail: '401 ' + JSON.stringify(a) + ' / data:null ' + JSON.stringify(b) };
+  },
 };
+
+/* 本機、分頁暫存、雲端全部轉成字串(比對「什麼都沒寫」用) */
+function snapshot(w) {
+  const dump = s => { const o = {}; for (let i = 0; i < s.length; i++) { const k = s.key(i); o[k] = s.getItem(k); } return JSON.stringify(Object.keys(o).sort().map(k => [k, o[k]])); };
+  return dump(w.local) + '|' + dump(w.session) + '|' + JSON.stringify(w.db);
+}
 
 /* 跟 common.js 的 store.set 一樣依「目前資料夾」寫:訪客寫 tr_<鍵>,帳號寫 tr_u<id>_<鍵> */
 function pageWrites(pg, w, k, v) {

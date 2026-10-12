@@ -27,7 +27,7 @@
   const INTENT_KEY = 'tr_signup_intent', OLD_INTENT_USED_KEY = 'tr_signup_intent_used';   // 後者是舊版寫的,開頁就清掉
   let googleBack = false;   // 這一頁是這個分頁自己從 Google 回來的,而且有 Google 那條意向:getSession 之後綁帳號 id(bindGoogleIntent)
 
-  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
+  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
     saveSignupIntent, takeSignupIntent, clearSignupIntent };
   if (!enabled) return;
@@ -473,6 +473,36 @@
     return data;
   }
   function myBilling() { return callRpc('my_billing', {}); }
+
+  /* 讀雲端單一鍵(唯讀;路線圖 1.2b,小雞寫回前先抓雲端那一份合併,因為每個分頁只灌一次雲端資料)。
+     回 { ok: true, found, v, updated_at }(雲端沒有這一列 found 是 false;別台刪掉的那一列 found 是 true、v 是 null)。
+     沒登入、離線、連不上、逾時、讀到一半換了帳號、這一頁剛灌完資料要重載:回 { ok: false },
+     呼叫的人這時不能把「沒讀到」當成「雲端沒有」去上傳。不寫本機、不動帳本、不上傳。 */
+  const READ_TIMEOUT_MS = 8000;
+  async function readKey(key) {
+    const fail = { ok: false };
+    if (!enabled || typeof key !== 'string' || !key || key.length > 100) return fail;
+    try { await window.CLOUD.ready; } catch (e) { return fail; }
+    const user = window.CLOUD.user;
+    if (!client || !user || typeof user.id !== 'string' || reloading || pidOf(user) !== window.__PROFILE_ID) return fail;
+    let timer = null;
+    const timeout = new Promise(resolve => { timer = setTimeout(() => resolve(null), READ_TIMEOUT_MS); });
+    /* 先確認 supabase-js 手上的登入就是這個帳號:沒有登入時查詢會用公開金鑰,RLS 回空陣列,會被誤當成「雲端沒有」 */
+    const query = (async () => {
+      const { data } = await client.auth.getSession();
+      const s = data && data.session;
+      if (!s || !s.user || s.user.id !== user.id) return null;
+      return client.from('progress').select('k,v,updated_at').eq('user_id', user.id).eq('k', key);
+    })();
+    let res;
+    try { res = await Promise.race([query, timeout]); } catch (e) { res = null; }
+    clearTimeout(timer);
+    const cur = window.CLOUD.user;
+    if (!res || res.error || !Array.isArray(res.data) || !cur || cur.id !== user.id || reloading) return fail;
+    const row = res.data.filter(r => r && r.k === key)[0];
+    if (!row) return { ok: true, found: false, v: null, updated_at: null };
+    return { ok: true, found: true, v: row.v === undefined ? null : row.v, updated_at: typeof row.updated_at === 'string' ? row.updated_at : null };
+  }
 
   /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email?, uid? }),綁在要註冊的那個帳號上(前端計畫三.6;
      站長選的保守做法:只存在這台,不寫進帳號資料 user_metadata,別台點驗證信不會自動開,改用「我的」頁與教師後台的開始老師試用):

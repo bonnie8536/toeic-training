@@ -21,6 +21,7 @@
     tq: { label: '單字考題', group: 'read' },
     ph: { label: '片語', group: 'vocab' },
     vq: { label: '單字遊戲', group: 'vocab' },
+    ed: { label: '聽寫', group: 'listen' },
   };
   const GROUPS = [['all', '全部'], ['drill', '刷題'], ['listen', '聽力'], ['grammar', '文法'], ['read', '閱讀'], ['vocab', '單字片語']];
 
@@ -102,6 +103,12 @@
     }
     if (m === 'vq') {
       return { stem: rec.q || rec.id, options: rec.o || null, answer: rec.a, explanation: rec.x !== undefined ? null : null, picked: rec.x, tag: ({ toast: '記憶吐司', pairs: '翻牌配對', mcq: '單字選擇題' })[rec.g] || '單字遊戲' };
+    }
+    if (m === 'ed') {
+      /* 每日練習的句子聽寫:紀錄帶原句 q、打的字 x、對了幾個字 c、總字數 w。
+         展開後原句只出現一次,下面一行是打的字(不走共用的「你的答案 · 正解」那一行) */
+      return { stem: rec.q || rec.id, typed: rec.x || '', audio: rec.id,
+        short: rec.w ? rec.c + ' / ' + rec.w + ' 字' : undefined };
     }
     return null;
   }
@@ -196,7 +203,7 @@
     const info = resolve(rec);
     const stem = info ? info.stem : '（這題已從題庫移除）';
     const isScore = info && info.score !== undefined;
-    const pickedText = !info ? '' : isScore ? info.score + '/' + info.n
+    const pickedText = !info ? '' : info.short !== undefined ? info.short : isScore ? info.score + '/' + info.n
       : info.options ? (rec.c === -1 || rec.c === undefined ? '未作答' : (rec.c >= 0 && info.options[rec.c] !== undefined ? LETTERS[rec.c] : String(info.picked || rec.c)))
       : String(info.picked !== undefined ? info.picked : rec.c);
     const head = h('div', { class: 'hist-row-head', style: info ? null : 'cursor:default' },
@@ -259,6 +266,8 @@
         opts.append(h('button', { class: cls, disabled: '' }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
       });
       box.append(opts);
+    } else if (info.typed !== undefined) {
+      box.append(h('p', { class: 'result-note' }, info.typed ? '你打的是 ' + info.typed : '這句沒有作答。'));
     } else if (info.picked !== undefined) {
       box.append(h('p', { class: 'result-note' }, '你的答案：' + info.picked + (rec.ok ? '' : ' · 正解：' + info.answer)));
     }

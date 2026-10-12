@@ -139,6 +139,47 @@ button { font-family: var(--font); cursor: pointer; }
 .free-note a { margin-left: 10px; }
 .free-note:not([hidden]) + script + .module-cards { margin-top: 16px; }
 
+/* 每日練習(首頁那一區與 daily.html 共用):三項各一列,名稱、進度、細進度條 */
+.daily-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 20px 24px 14px;
+}
+.daily-home { margin-top: 34px; }
+.free-note:not([hidden]) + script + .daily-home { margin-top: 16px; }
+.daily-home + .module-cards { margin-top: 22px; }
+.page-head + .daily-card { margin-top: 18px; }
+.daily-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.daily-head h2 { font-size: 21px; }
+.daily-count { font-size: 14px; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+.daily-list { list-style: none; margin-top: 6px; }
+.daily-list li + li { border-top: 1px solid var(--line); }
+.daily-row {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px 12px;
+  padding: 13px 2px 14px; color: var(--ink); border-radius: 6px;
+}
+.daily-row:hover { text-decoration: none; }
+.daily-row:hover .daily-name { color: var(--primary); }
+.daily-row:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.daily-name { font-size: 16px; font-weight: 700; transition: color .15s; }
+.daily-st { display: inline-flex; align-items: center; gap: 4px; font-size: 14px; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+.daily-bar { grid-column: 1 / -1; height: 6px; background: var(--bg-soft); border-radius: 3px; overflow: hidden; }
+.daily-bar i { display: block; height: 100%; background: var(--primary); border-radius: 3px; }
+.daily-row.is-done .daily-st { color: var(--ok); font-weight: 700; }
+.daily-row.is-done .daily-bar i { background: var(--ok); }
+.daily-done { margin: 4px 0 6px; font-size: 15px; }
+.daily-card .daily-list:first-child { margin-top: -6px; }
+.explain .daily-more { margin-top: 8px; font-size: 14px; }
+.daily-miss .vq-item span { color: var(--ink); }
+.daily-miss .vq-item span b { display: inline-block; margin-top: 2px; min-width: 0; }
+.daily-miss + .daily-done { margin-top: 14px; }
+/* 寬螢幕首頁:三項並排,名稱和進度不會隔一整個版面寬 */
+@media (min-width: 861px) {
+  .daily-home .daily-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; }
+  .daily-home .daily-list li + li { border-top: 0; }
+}
+
 /* ---------------- 練習/章節標頭(Engoo 式) ---------------- */
 .exercise-head {
   display: flex;
@@ -1195,6 +1236,10 @@ table.cat-table td.num { white-space: nowrap; }
   .hero .stats { gap: 20px; margin-top: 18px; }
   .free-note { margin-top: 20px; }
   .free-note:not([hidden]) + script + .module-cards { margin-top: 12px; }
+  .daily-home { margin-top: 24px; }
+  .free-note:not([hidden]) + script + .daily-home { margin-top: 12px; }
+  .daily-home + .module-cards { margin-top: 16px; }
+  .daily-card { padding: 16px 18px 10px; }
 
   .module-cards, .article-list, .part-cards { grid-template-columns: 1fr; gap: 14px; }
   .module-card { padding: 20px 20px 18px; }

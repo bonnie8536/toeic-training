@@ -94,6 +94,15 @@
   /* 台北日期在 data-show-until 當天或之前才顯示上面那一行；過了就一直藏著，不用重新部署 */
   (function () { var el = document.currentScript.previousElementSibling; var d = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10); if (el && d <= el.getAttribute('data-show-until')) el.hidden = false; })();
   </script>
+  <section class="daily-card daily-home" id="daily-home" aria-labelledby="daily-h">
+    <div class="daily-head"><h2 id="daily-h">每日練習</h2><span class="daily-count">做完 0 / 3 項</span></div>
+    <ol class="daily-list">
+      <li><a class="daily-row" href="daily.html?part=d"><span class="daily-name">聽寫 5 句</span><span class="daily-st">0 / 5</span><span class="daily-bar" aria-hidden="true"><i style="width:0%"></i></span></a></li>
+      <li><a class="daily-row" href="daily.html?part=v"><span class="daily-name">單字 5 題</span><span class="daily-st">0 / 5</span><span class="daily-bar" aria-hidden="true"><i style="width:0%"></i></span></a></li>
+      <li><a class="daily-row" href="daily.html?part=g"><span class="daily-name">文法 5 題</span><span class="daily-st">0 / 5</span><span class="daily-bar" aria-hidden="true"><i style="width:0%"></i></span></a></li>
+    </ol>
+    <p class="daily-done" hidden>今天的三項都做完了，明天換新題。</p>
+  </section>
   <div class="module-cards">
     <a class="module-card" href="review.html">
       <h2>每日複習</h2>
@@ -156,6 +165,8 @@
 <script src="js/cloud.js"></script>
 <script src="js/profile.js"></script>
 <script src="js/paywall.js"></script>
+<script src="js/daily.js"></script>
+<script src="js/daily-ui.js"></script>
 <script>
 (function () {
   const t = window.TOEIC || {};

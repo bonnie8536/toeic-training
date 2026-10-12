@@ -26,6 +26,10 @@
   const INTENT_WINDOW_MS = 30 * 60e3, INTENT_SKEW_MS = 2 * 60e3;
   const INTENT_KEY = 'tr_signup_intent', OLD_INTENT_USED_KEY = 'tr_signup_intent_used';   // 後者是舊版寫的,開頁就清掉
   let googleBack = false;   // 這一頁是這個分頁自己從 Google 回來的,而且有 Google 那條意向:getSession 之後綁帳號 id(bindGoogleIntent)
+  let idBeforeBack = '';    // 那一頁開頁時(supabase-js 處理網址之前)這台原本登入的帳號 id;getSession 拿到的還是它,就不是這次 Google 回來的
+  let otherTabSignedIn = false;   // 那一頁開頁到 getSession 之間,別的分頁改過登入資料(watchOtherTabs)
+  /* supabase-js 把登入資料存在 localStorage 的這個位置(預設名稱:sb-<專案代號>-auth-token) */
+  const SB_KEY = 'sb-' + ((/^https?:\/\/([^./]+)\./.exec(cfg.url) || [])[1] || '') + '-auth-token';
 
   window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
@@ -43,8 +47,6 @@
 
   let client = null;
   const pending = {};
-  /* supabase-js 把登入資料存在 localStorage 的這個位置(預設名稱:sb-<專案代號>-auth-token) */
-  const SB_KEY = 'sb-' + ((/^https?:\/\/([^./]+)\./.exec(cfg.url) || [])[1] || '') + '-auth-token';
   /* 開站確認登入狀態(有網路約 1 秒;離線又遇到登入憑證過期,supabase-js 會重試約 25 秒)之前的寫入先放 early,
      確認完再決定:這一頁剛灌完雲端資料要重載 → 作廢(那些寫入根據的是舊資料,以雲端為準);其他情況 → 記進帳本。 */
   let settled = false;
@@ -507,10 +509,11 @@
   /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email?, uid? }),綁在要註冊的那個帳號上(前端計畫三.6;
      站長選的保守做法:只存在這台,不寫進帳號資料 user_metadata,別台點驗證信不會自動開,改用「我的」頁與教師後台的開始老師試用):
      - Email 註冊:存 localStorage(收驗證信可能換分頁),帶小寫的 Email。signUp 成功就綁上回來的帳號 id(uid),
-       之後只認這個 id(同一個 Email 刪掉重建的帳號是新的 id,不算);沒拿到 id 才退回比 Email。Email 對不上的當場清掉、不用。
+       之後只認這個 id(同一個 Email 刪掉重建的帳號是新的 id,不算);沒拿到 id 就不自動開(不退回比 Email)。對不上的當場清掉、不用。
      - Google 註冊(按按鈕時還不知道 Email):存 sessionStorage,只有同一個分頁從 Google 回來讀得到。
        開頁時網址帶 access_token(或 ?code=)才算這個分頁自己從 Google 回來;那一頁 getSession 拿到帳號就綁上帳號 id,
-       拿不到(沒有 session、雲端初始化失敗)就丟掉。之後只認綁的 id 跟登入的帳號一樣的;沒綁 id 的一律不算。
+       拿不到(沒有 session、雲端初始化失敗)、拿到的是開頁前這台就登入著的帳號(假的 ?code= 網址),
+       或開頁到 getSession 之間別的分頁改過登入資料,就丟掉。之後只認綁的 id 跟登入的帳號一樣的;沒綁 id 的一律不算。
        別的分頁登入、在 Google 頁按上一頁、取消回來的都不算(取消回來的當場清掉)。
      選學生註冊、按登入時呼叫 clearSignupIntent;讀過一次(takeSignupIntent)不論成不成立都清掉。 */
   const sessionIntents = new WeakSet();   // takeSignupIntent 從這個分頁 sessionStorage 讀出來、綁的帳號 id 跟登入的一樣(Google 那條)
@@ -552,21 +555,37 @@
       if (typeof at !== 'number' || !isFinite(at) || now - at > INTENT_WINDOW_MS || at > now + INTENT_SKEW_MS) { store.removeItem(INTENT_KEY); return; }
       if (!isSession) return;
       if (authErr) store.removeItem(INTENT_KEY);
-      else if (back) googleBack = true;
+      else if (back) { googleBack = true; idBeforeBack = storedSessionId(); watchOtherTabs(true); }
     };
     try { tidy(localStorage, false); } catch (e) {}
     try { tidy(sessionStorage, true); } catch (e) {}
   }
+  /* localStorage 裡 supabase-js 現在存的登入帳號 id(沒有就空字串) */
+  function storedSessionId() {
+    try {
+      const u = (JSON.parse(localStorage.getItem(SB_KEY)) || {}).user;
+      return u && typeof u.id === 'string' ? u.id : '';
+    } catch (e) { return ''; }
+  }
+  /* 從 Google 回來的那一頁,開頁到 getSession 這段時間別的分頁有沒有改登入資料(storage 事件只有別的分頁寫的才會送,
+     這一頁 supabase-js 自己存的不會)。改過就不知道 getSession 拿到的是不是這次 Google 回來的帳號(記在 otherTabSignedIn) */
+  function onOtherTab(e) { if (e && (e.key === SB_KEY || e.key === null)) otherTabSignedIn = true; }
+  function watchOtherTabs(on) {
+    try { window[on ? 'addEventListener' : 'removeEventListener']('storage', onOtherTab); } catch (e) {}
+  }
   /* 從 Google 回來的那一頁,getSession 之後呼叫一次(之後再呼叫什麼都不做):
-     拿到帳號就把這個分頁的 Google 意向綁上帳號 id;沒有帳號(session 是 null、雲端初始化失敗)就丟掉 */
+     拿到帳號就把這個分頁的 Google 意向綁上帳號 id;沒有帳號(session 是 null、雲端初始化失敗)就丟掉。
+     拿到的帳號就是開頁前這台原本登入的那一個(網址的 ?code= 是假的、沒換成新帳號),
+     或這段時間別的分頁改過登入資料:也丟掉(改用「我的」頁與教師後台的開始老師試用) */
   function bindGoogleIntent(session) {
     if (!googleBack) return;
     googleBack = false;
+    watchOtherTabs(false);
     const id = session && session.user && typeof session.user.id === 'string' ? session.user.id : '';
     try {
       const v = readIntent(sessionStorage);
       if (!v) return;
-      if (!id) { sessionStorage.removeItem(INTENT_KEY); return; }
+      if (!id || id === idBeforeBack || otherTabSignedIn) { sessionStorage.removeItem(INTENT_KEY); return; }
       const out = Object.assign({}, v, { uid: id });
       delete out.returned;
       sessionStorage.setItem(INTENT_KEY, JSON.stringify(out));
@@ -580,16 +599,16 @@
       const v = readIntent(localStorage);
       if (!v || typeof v.email !== 'string' || v.email !== String(email || '').trim().toLowerCase()) return;
       localStorage.setItem(INTENT_KEY, JSON.stringify(Object.assign({}, v, { uid: id })));
-    } catch (e) { /* 綁不上:退回比 Email */ }
+    } catch (e) { /* 綁不上:不自動開,登入後到「我的」頁自己開 */ }
   }
-  /* Email 那條綁的是不是這個帳號:有 uid 就只比 uid;沒有才比 Email(小寫) */
+  /* Email 那條綁的是不是這個帳號:只比綁上的 uid。沒綁到 uid 的一律不算(不退回比 Email:
+     同一個 Email 刪掉重建的帳號會被當成同一個),這時改用「我的」頁與教師後台的開始老師試用 */
   function emailIntentFor(v, user) {
     if (typeof v.email !== 'string' || !v.email) return false;
-    if (typeof v.uid === 'string' && v.uid) return !!(user && user.id === v.uid);
-    return !!(user && typeof user.email === 'string' && user.email.trim().toLowerCase() === v.email.trim().toLowerCase());
+    return typeof v.uid === 'string' && !!v.uid && !!(user && user.id === v.uid);
   }
   /* 讀出這台的意向(讀了就清)。登入了就只回綁在這個帳號上的:Google 那條要綁的 id 一樣,
-     Email 那條要 id(沒有 id 時 Email)一樣;對不上的回 null(一樣清掉)。帳號資料 user_metadata 一律不讀。 */
+     Email 那條要綁的 id 一樣;對不上的回 null(一樣清掉)。帳號資料 user_metadata 一律不讀。 */
   function takeSignupIntent() {
     const u = window.CLOUD.user;
     const uid = u && typeof u.id === 'string' ? u.id : '';
@@ -607,7 +626,7 @@
   }
 
   /* 登入後要不要自動開老師試用。全部成立才開(前端計畫三.6):意向是 30 分鐘內存的、
-     綁的是這個帳號(Email 那條:綁的帳號 id 一樣,沒有 id 才比 Email;Google 那條:這個分頁讀出來、綁的帳號 id 一樣)、
+     綁的是這個帳號(Email 那條:綁的帳號 id 一樣,沒綁 id 的不算;Google 那條:這個分頁讀出來、綁的帳號 id 一樣)、
      帳號是這次才建立的、資料庫說可以試用。
      帳號建立時間是伺服器的鐘,意向的 at 是裝置的鐘:用 my_access 的 server_now 算出兩個鐘差多少再比。 */
   function trialIntentOk(intent, user, access, now) {

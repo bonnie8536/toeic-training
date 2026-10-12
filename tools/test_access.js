@@ -37,8 +37,12 @@ function makeWorld(o) {
 function makeClient(w) {
   return {
     auth: {
-      getSession: async () => (w.offline ? { data: { session: null }, error: { message: 'TypeError: Failed to fetch' } }
-        : { data: { session: w.local.getItem(SB_KEY) ? { user: USER } : null } }),
+      /* w.urlSession:網址帶著 Google 給的登入,supabase-js 在 getSession 時才把它存進 localStorage */
+      getSession: async () => {
+        if (w.offline) return { data: { session: null }, error: { message: 'TypeError: Failed to fetch' } };
+        if (w.urlSession) w.local.setItem(SB_KEY, JSON.stringify({ user: USER }));
+        return { data: { session: w.local.getItem(SB_KEY) ? { user: USER } : null } };
+      },
       signInWithPassword: async () => { w.local.setItem(SB_KEY, JSON.stringify({ user: USER })); return { data: { user: USER }, error: null }; },
       signOut: async () => ({ error: null }),
       onAuthStateChange() { return { data: { subscription: { unsubscribe() {} } } }; },
@@ -247,10 +251,10 @@ const cases = {
     try { await p.C.joinClass('ABCD2345'); } catch (e) { m = e.message; }
     return { ok: /登入/.test(m) && w.rpc.length === 0, detail: m };
   },
-  '註冊意向:30 分鐘內、這次才建立的帳號(Email 對得上)、資料庫說可以試用,三個都成立才自動開': async () => {
+  '註冊意向:30 分鐘內、這次才建立的帳號(綁的帳號 id 對得上)、資料庫說可以試用,三個都成立才自動開': async () => {
     const C = loadPage(makeWorld()).C;
     const now = Date.parse('2026-10-07T03:10:00Z');
-    const fresh = { seats: 30, name: '週六班', at: now - 12 * MIN, email: 'S@x.com' };
+    const fresh = { seats: 30, name: '週六班', at: now - 12 * MIN, email: 'S@x.com', uid: USER.id };
     const newUser = Object.assign({}, USER, { created_at: new Date(now - 11 * MIN).toISOString() });
     const ok = C.trialIntentOk(fresh, newUser, { teacher_trial_available: true }, now);
     return { ok: ok === true, detail: String(ok) };
@@ -289,6 +293,7 @@ const cases = {
     /* 存與讀:有 Email 的放 localStorage,Google(沒有 Email)放 sessionStorage */
     C.saveSignupIntent({ seats: 30, name: '週六班', email: 'S@X.com' }, now - 10 * MIN);
     const savedMail = JSON.parse(w.local.getItem('tr_signup_intent'));
+    w.local.setItem('tr_signup_intent', JSON.stringify(Object.assign({}, savedMail, { uid: u.id })));   // signUp 回來的帳號 id 綁上(bindEmailIntent)
     const tookMail = C.takeSignupIntent();
     const mailOk = C.trialIntentOk(tookMail, u, ok, now);
     const leftMail = w.local.getItem('tr_signup_intent');
@@ -301,9 +306,9 @@ const cases = {
     const notBack = C.trialIntentOk(C.takeSignupIntent(), uNow, ok, tNow);
     C.saveSignupIntent({ seats: 10, name: '' }, tNow - 10 * MIN);
     w.hash = '#access_token=eyJ&expires_in=3600&provider_token=ya29&refresh_token=r&token_type=bearer';
-    w.local.setItem(SB_KEY, JSON.stringify({ user: USER }));
+    w.urlSession = true;   // 開頁前這台沒有登入,supabase-js 從網址拿到 USER
     const P2 = loadPage(w); await P2.ready;
-    w.hash = '';
+    w.hash = ''; w.urlSession = false;
     const C2 = P2.C;
     const stampedUid = (JSON.parse(w.session.getItem('tr_signup_intent')) || {}).uid;
     const tookG = C2.takeSignupIntent();

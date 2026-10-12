@@ -430,7 +430,7 @@
 
   /* ---------- 註冊時選了老師:登入完成後自動開老師試用(前端計畫三.6、四) ----------
      意向只是提示,權限一律看資料庫。四個條件全部成立才開(cloud.js 的 trialIntentOk):30 分鐘內存的、
-     帳號是這次才建立的、綁的是這個帳號(Email 那條比帳號 id,沒有 id 才比 Email;Google 那條要是這個分頁自己從 Google 回來、
+     帳號是這次才建立的、綁的是這個帳號(Email 那條比帳號 id,沒綁 id 的不開;Google 那條要是這個分頁自己從 Google 回來、
      綁上的帳號 id 一樣)、my_access 說 teacher_trial_available。
      不收費的頁面(analysis、diagnostic、drill、history、learn)也載入這支檔案,只為了登入完成時把意向用掉或清掉,不擋頁面。
      意向讀一次就清掉(takeSignupIntent),所以一個註冊最多開一次;重載、換頁都不會再開。資料庫也只給每個帳號一次。

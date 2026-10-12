@@ -46,7 +46,13 @@
 
 <main class="container-narrow pricing">
   <!-- 數字和後面的單位之間是不換行空格（U+00A0），窄螢幕才不會把「1」和「個月」拆到兩行；改字時要保留。 -->
-  <div class="page-head"><h1>方案與價格</h1><p>價格皆以新台幣計算。</p></div>
+  <div class="page-head"><h1>方案與價格</h1><p>價格皆以新台幣計算。</p>
+    <p data-show-until="2026-10-31" hidden>11 月 1 日起收費。</p>
+    <script>
+    /* 台北日期在 data-show-until 當天或之前才顯示上面那一行；過了就一直藏著，不用重新部署 */
+    (function () { var el = document.currentScript.previousElementSibling; var d = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10); if (el && d <= el.getAttribute('data-show-until')) el.hidden = false; })();
+    </script>
+  </div>
 
   <section class="pricing-plan" aria-labelledby="pricing-student">
     <h2 id="pricing-student">學生方案</h2>
@@ -95,7 +101,7 @@
       <li>新帳號可以免費試用 7 天。</li>
       <li>老師可以免費試用 7 天，每個帳號一次。</li>
       <li>老師方案到期後 3 天內，仍可以查看班上學生的練習進度，但這 3 天不能加入新學生。</li>
-      <li>開放購買前已經註冊的帳號，練習功能照常免費使用。</li>
+      <li>2026 年 10 月 12 日以前註冊的帳號，練習功能照常免費使用。</li>
       <li>推薦另一位老師購買老師方案，雙方各多 1 個月，請寫信告知站長。</li>
     </ul>
   </section>

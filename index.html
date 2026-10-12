@@ -89,6 +89,11 @@
 </section>
 
 <main class="container">
+  <p class="free-note" data-show-until="2026-10-31" hidden>10 月 31 日前全站免費開放。<a href="pricing.html">方案與價格</a></p>
+  <script>
+  /* 台北日期在 data-show-until 當天或之前才顯示上面那一行；過了就一直藏著，不用重新部署 */
+  (function () { var el = document.currentScript.previousElementSibling; var d = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10); if (el && d <= el.getAttribute('data-show-until')) el.hidden = false; })();
+  </script>
   <div class="module-cards">
     <a class="module-card" href="review.html">
       <h2>每日複習</h2>

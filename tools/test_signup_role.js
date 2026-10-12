@@ -352,7 +352,19 @@ function world(o) {
 function client(w) {
   return {
     auth: {
-      getSession: async () => ({ data: { session: w.user ? { user: w.user } : null } }),
+      /* supabase-js 拿到 session 就存進 localStorage(從 Google 回來的那一頁,是在這時才換成新帳號) */
+      getSession: async () => {
+        /* w.otherTab:這一頁開頁之後、getSession 之前,別的分頁寫了 localStorage 的 key(預設是登入資料,user 是別的分頁登入的帳號);
+           瀏覽器在這一頁送 storage 事件(只有別的分頁寫的才會送) */
+        if (w.otherTab) {
+          const o = w.otherTab; delete w.otherTab;
+          const key = o.key || SB_KEY;
+          if (o.user) { w.user = o.user; w.local.setItem(key, JSON.stringify({ user: o.user })); } else w.local.setItem(key, '1');
+          (w.winOn || []).filter(l => l.t === 'storage').forEach(l => l.fn({ key, storageArea: w.local }));
+        }
+        if (w.user) w.local.setItem(SB_KEY, JSON.stringify({ user: w.user }));
+        return { data: { session: w.user ? { user: w.user } : null } };
+      },
       signOut: async () => ({ error: null }),
       signUp: async (args) => { w.signUps.push(JSON.parse(JSON.stringify(args))); return { data: { user: w.signUpUser !== undefined ? w.signUpUser : { id: 'n', identities: [{}] }, session: null }, error: null }; },
     },
@@ -369,19 +381,28 @@ function client(w) {
     from() { const b = { select() { return b; }, eq() { return b; }, upsert() { return b; }, then(ok, bad) { return Promise.resolve({ data: [], error: null }).then(ok, bad); } }; return b; },
   };
 }
+const isGoogleReturn = w => (/[#&]access_token=/.test(w.hash || '') && !/[#&]type=/.test(w.hash || '')) || /[?&]code=/.test(w.search || '');
 /* 開一頁:載入順序跟上線一樣 plans-config → cloud.js → paywall.js,然後送 DOMContentLoaded。
    noPaywall:模擬只載 plans-config、沒載 paywall.js 的頁面(修正前的 analysis、diagnostic、drill、history、learn) */
 async function openPage(w, page, noPaywall) {
   const dom = fakeDom();
   if (w.user && w.hydrated) w.session.setItem('tr_cloud_hydrated_' + w.user.id, '1');
-  if (w.user) w.local.setItem(SB_KEY, JSON.stringify({ user: w.user }));
+  /* 開頁前 localStorage 裡的登入資料:一般的頁面是 w.user;網址是 Google 導回來的那一頁,supabase-js 還沒處理網址,
+     留著的是之前的登入(w.sbBefore,沒給就是沒登入過),getSession 之後才換成 w.user */
+  if (isGoogleReturn(w)) {
+    if (w.sbBefore) w.local.setItem(SB_KEY, JSON.stringify({ user: w.sbBefore })); else w.local.removeItem(SB_KEY);
+  } else if (w.user) w.local.setItem(SB_KEY, JSON.stringify({ user: w.user }));
   /* 10 秒以上的計時器(自動開試用的等待上限)先扣著,測試用 fireHeld 手動觸發 */
   const st = (fn, ms) => { if (ms >= 10000) { const t = { fn, dead: false }; w.held.push(t); return t; } return setTimeout(fn, ms); };
   const ct = id => { if (id && typeof id === 'object' && 'dead' in id) { id.dead = true; return; } clearTimeout(id); };
   const ctx = { console: { warn() {}, log() {}, error() {} }, document: dom.document, setTimeout: st, clearTimeout: ct, Promise, URLSearchParams,
     localStorage: w.local, sessionStorage: w.session, history: { replaceState() {} }, navigator: { onLine: true, clipboard: { writeText: async () => {} } },
     location: { hash: w.hash || '', search: w.search || '', pathname: '/' + (page || 'index.html'), origin: 'https://x', href: 'https://x/' + (page || 'index.html'), reload() { w.reloads++; } },
-    addEventListener() {}, confirm: () => true, alert() {}, MutationObserver: undefined };
+    confirm: () => true, alert() {}, MutationObserver: undefined };
+  /* window 的事件只記下來(storage 事件由 w.otherTab 觸發) */
+  const winOn = []; w.winOn = winOn;
+  ctx.addEventListener = (t, fn) => { winOn.push({ t, fn }); };
+  ctx.removeEventListener = (t, fn) => { const i = winOn.findIndex(l => l.t === t && l.fn === fn); if (i >= 0) winOn.splice(i, 1); };
   ctx.window = ctx;
   ctx.CLOUD_CONFIG = { url: 'https://x.supabase.co', anonKey: 'k' };
   ctx.supabase = { createClient: () => client(w) };
@@ -409,6 +430,8 @@ async function backFromGoogle(w, hash, page) {
   if (w.user && !w.hydrated) w.session.removeItem('tr_cloud_hydrated_' + w.user.id);
 }
 const dialog = p => p.dom.body.byClass('modal-trial')[0] || null;
+/* Email 註冊成功時 signUp 回來的帳號 id 綁上這台的意向(cloud.js bindEmailIntent 做的事) */
+const stampUid = (w, id) => w.local.setItem('tr_signup_intent', JSON.stringify(Object.assign(JSON.parse(w.local.getItem('tr_signup_intent')), { uid: id })));
 const intentLeft = w => w.local.getItem('tr_signup_intent') || w.session.getItem('tr_signup_intent');
 /* 註冊那一頁存的意向(用真的 cloud.js 存,Google 那條才進得了這個分頁的 sessionStorage) */
 async function saveIntent(w, o, at, stay) {
@@ -447,9 +470,10 @@ cases['剛登入、這一頁要灌資料重載:這一頁不讀意向也不開,�
     detail: JSON.stringify(first) + ' 之後 ' + trialCalls(w).length };
 };
 
-cases['Email 那條:Email 一樣才開;Email 不同不開,而且意向清掉'] = async () => {
+cases['Email 那條:綁上這個帳號 id 才開;Email 不同(沒綁 id)不開,而且意向清掉'] = async () => {
   const w1 = world();
   await saveIntent(w1, { seats: 30, name: 'A 班', email: 'NEW@x.com' }, Date.now() - 5 * MIN);
+  stampUid(w1, UID);
   await openPage(w1);
   const w2 = world();
   await saveIntent(w2, { seats: 30, name: 'A 班', email: 'other@x.com' }, Date.now() - 5 * MIN);
@@ -628,7 +652,7 @@ cases['裝置時鐘跟伺服器差很多:用 server_now 校正,既有帳號不�
   const run = (offsetMin, ageMin) => {
     const S = T + offsetMin * MIN;   // 伺服器時間 = 裝置時間 + 差
     const user = { id: UID, email: 'was@gmail.com', created_at: new Date(S - ageMin * MIN).toISOString() };
-    return C.trialIntentOk({ seats: 10, name: '', email: 'was@gmail.com', at: T - MIN }, user, { teacher_trial_available: true, server_now: new Date(S).toISOString() }, T);
+    return C.trialIntentOk({ seats: 10, name: '', email: 'was@gmail.com', uid: UID, at: T - MIN }, user, { teacher_trial_available: true, server_now: new Date(S).toISOString() }, T);
   };
   const r = {
     behind60_old40: run(60, 40), behind10_old5: run(10, 5),
@@ -737,6 +761,7 @@ cases['tr_signup_intent_used 不再寫;這台留著的舊鍵開頁就清掉(有�
   /* 自動開成功一次的整個流程裡也不寫 */
   const w3 = world();
   await saveIntent(w3, { seats: 10, name: '', email: 'new@x.com' }, Date.now() - 2 * MIN);
+  stampUid(w3, UID);
   await openPage(w3); await openPage(w3);
   const r = [w1.local.getItem('tr_signup_intent_used'), w2.local.getItem('tr_signup_intent_used'), w3.local.getItem('tr_signup_intent_used'), trialCalls(w3).length];
   return { ok: r[0] === null && r[1] === null && r[2] === null && r[3] === 1, detail: JSON.stringify(r) };
@@ -810,7 +835,7 @@ cases['Email 意向綁了帳號 id:同一個 Email 刪掉重建成學生(新 id)
   return { ok: trialCalls(w).length === 0 && intentLeft(w) === null && !dialog(p2), detail: '呼叫 ' + trialCalls(w).length + ' 留下 ' + intentLeft(w) };
 };
 
-cases['Email 意向沒綁到 id(signUp 沒回 id):退回比 Email;Email 不同的不開,清掉'] = async () => {
+cases['Email 意向沒綁到 id(signUp 沒回 id):不退回比 Email,Email 一樣、不同都不開,清掉'] = async () => {
   const w1 = world({ user: null, signUpUser: null });
   const p1 = await openPage(w1, 'signup.html');
   p1.C.saveSignupIntent({ seats: 10, name: '', email: 'new@x.com' }, Date.now() - 2 * MIN);
@@ -822,7 +847,7 @@ cases['Email 意向沒綁到 id(signUp 沒回 id):退回比 Email;Email 不同�
   w2.local.setItem('tr_signup_intent', JSON.stringify({ seats: 10, name: '', at: Date.now() - 2 * MIN, email: 'someone@else.com' }));
   const p2 = await openPage(w2);
   const took = p2.C.takeSignupIntent();
-  return { ok: noUid && trialCalls(w1).length === 1 && trialCalls(w2).length === 0 && intentLeft(w2) === null && took === null,
+  return { ok: noUid && trialCalls(w1).length === 0 && intentLeft(w1) === null && trialCalls(w2).length === 0 && intentLeft(w2) === null && took === null,
     detail: 'noUid ' + noUid + ' / 同 Email ' + trialCalls(w1).length + ' / 別的 Email ' + trialCalls(w2).length };
 };
 
@@ -915,6 +940,74 @@ cases['選老師時暱稱下面「老師會看到這個名字」藏起來,改回
   await pick(card, 'student');
   const c = hint().shown;
   return { ok: a === true && b === false && c === true, detail: [a, b, c].join(',') };
+};
+
+/* ======================================================================= */
+/* 五、打開 PAID_UI 前補的兩個洞(路線圖 3.1)                               */
+/* ======================================================================= */
+cases['特製的 ?code= 網址:session 是開頁前這台就登入著的帳號,不算從 Google 回來,意向丟掉、不開'] = async () => {
+  /* 分頁 A 選老師按 Google 又退回來(意向留在 sessionStorage);別的分頁登入了新帳號 B(可以試用);分頁 A 被導到 ?code=forged */
+  const w = world({ hydrated: false });
+  await saveIntent(w, { seats: 30, name: 'A班' }, Date.now() - 2 * MIN, true);
+  await openPage(Object.assign(w, { search: '?code=forged', sbBefore: w.user }));
+  const stamped = w.session.getItem('tr_signup_intent');
+  w.search = ''; delete w.sbBefore;
+  const p = await openPage(w); await openPage(w, 'me.html');
+  return { ok: stamped === null && trialCalls(w).length === 0 && intentLeft(w) === null && !dialog(p),
+    detail: '回來那頁留下 ' + stamped + ' / 呼叫 ' + trialCalls(w).length + ' / 留下 ' + intentLeft(w) };
+};
+
+cases['真的從 Google 回來、開頁前這台登入的是別的帳號(或沒登入):照常綁上新帳號 id,重載後開一次'] = async () => {
+  const out = [];
+  for (const before of [null, { id: OTHER, email: 'old@x.com', created_at: '2026-01-01T00:00:00Z' }]) {
+    const w = world({ hydrated: false });
+    await saveIntent(w, { seats: 30, name: 'A班' }, Date.now() - 2 * MIN, true);
+    await openPage(Object.assign(w, { search: '?code=real', sbBefore: before }));
+    let uid = null;
+    try { uid = (JSON.parse(w.session.getItem('tr_signup_intent')) || {}).uid; } catch (e) { uid = null; }
+    w.search = ''; delete w.sbBefore;
+    await openPage(w); await openPage(w);
+    out.push((before ? 'other' : 'none') + ':' + (uid === UID ? 'uid' : String(uid)) + ':' + trialCalls(w).length);
+  }
+  return { ok: out.join(',') === 'none:uid:1,other:uid:1', detail: out.join(',') };
+};
+
+cases['Email 意向沒綁到帳號 id(signUp 沒回 id):Email 一樣也不自動開,意向清掉,改用手動的開始老師試用'] = async () => {
+  const w = world({ user: null, signUpUser: null });
+  const p0 = await openPage(w, 'signup.html');
+  p0.C.saveSignupIntent({ seats: 10, name: '', email: 'new@x.com' }, Date.now() - 20 * MIN);
+  await p0.C.signUp('new@x.com', '12345678', '王老師');
+  /* 意向存了 20 分鐘後,同一個 Email 的帳號(可能是刪掉重建的)登入 */
+  w.user = { id: UID, email: 'new@x.com', created_at: new Date(Date.now() - MIN).toISOString(), user_metadata: {} };
+  const p = await openPage(w);
+  const direct = p.C.trialIntentOk({ seats: 10, name: '', email: 'new@x.com', at: Date.now() - 2 * MIN }, w.user, ACCESS());
+  return { ok: trialCalls(w).length === 0 && intentLeft(w) === null && !dialog(p) && direct === false,
+    detail: '呼叫 ' + trialCalls(w).length + ' / 留下 ' + intentLeft(w) + ' / trialIntentOk ' + direct };
+};
+
+cases['特製的 ?code= 網址、開頁前沒人登入,getSession 之前別的分頁登入了新帳號 B:不綁 B、意向丟掉、不開'] = async () => {
+  /* 開頁時 localStorage 還沒有 B(記下的開頁前帳號是空的),SDK 載入到 getSession 這段時間別的分頁登入 B(可以試用) */
+  const w = world({ hydrated: false });
+  const B = w.user;
+  await saveIntent(w, { seats: 30, name: 'A班' }, Date.now() - 2 * MIN, true);
+  w.user = null;
+  await openPage(Object.assign(w, { search: '?code=forged', otherTab: { user: B } }));
+  const stamped = w.session.getItem('tr_signup_intent');
+  w.search = '';
+  const p = await openPage(w); await openPage(w, 'me.html');
+  return { ok: w.user === B && stamped === null && trialCalls(w).length === 0 && intentLeft(w) === null && !dialog(p),
+    detail: '回來那頁留下 ' + stamped + ' / 呼叫 ' + trialCalls(w).length + ' / 留下 ' + intentLeft(w) };
+};
+
+cases['真的從 Google 回來,別的分頁同時只改了別的 key(練習紀錄):照常綁上新帳號 id,重載後開一次'] = async () => {
+  const w = world({ hydrated: false });
+  await saveIntent(w, { seats: 30, name: 'A班' }, Date.now() - 2 * MIN, true);
+  await openPage(Object.assign(w, { search: '?code=real', otherTab: { key: 'tr_progress' } }));
+  let uid = null;
+  try { uid = (JSON.parse(w.session.getItem('tr_signup_intent')) || {}).uid; } catch (e) { uid = null; }
+  w.search = '';
+  await openPage(w); await openPage(w);
+  return { ok: uid === UID && trialCalls(w).length === 1, detail: 'uid ' + uid + ' / 呼叫 ' + trialCalls(w).length };
 };
 
 (async () => {

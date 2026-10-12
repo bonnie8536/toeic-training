@@ -85,7 +85,9 @@
         return li;
       }), '還沒有其他老師'));
 
-      /* 已經預付續約的人也在這裡(資料庫的 expiring 不看後面接著的那一段),所以標題寫「結束」不寫「要續約」 */
+      /* 資料庫的 expiring(2026-10-12 起):後面已經接上同一種、名額不比這段少的那一段(預付續約)就不列,前端不另外篩。
+         列出來的這一段真的會結束,但人不一定會沒有使用權:老師續約名額變少照樣列(超過新名額的學生會失去班級使用權),
+         學生的這一段結束後也可能還有班級提供或試用。所以標題寫「結束的使用權」,不寫「快到期」。 */
       body.append(section(DAYS + ' 天內結束的使用權', items(arr(d.expiring), g => h('li', { class: 'ow-item' },
         h('div', { class: 'ow-item-top' }, mail(g.email), text('span', 'ow-item-text', O.grantLabel(g)), text('span', 'ow-when', '到 ' + O.fmtDate(g.ends_at))))),
       DAYS + ' 天內沒有要結束的使用權'));

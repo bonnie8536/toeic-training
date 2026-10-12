@@ -2,10 +2,13 @@
    tools/test_owner_billing.js 用 fixture 測。
    - 只走 owner_record_payment、owner_grant_comp、owner_consume_credit、owner_adjust_credits、owner_export(資料庫在裡面檢查站長、寫異動紀錄)。
    - 記一筆收款是手動收款(轉帳、LINE Pay、現金)的路;之後接上藍新,線上付款由金流的 Edge Function 記,不經過這裡。
-     送出編號在表單打開時用 crypto.randomUUID() 產生,只有收到資料庫的回覆(記下了,或已經記過)才換新的:
-     連不上(可能送到了、只是回覆沒收到)時,這個帳號的編號留著,關掉表單再打開也沿用,資料庫只會記一筆。
-     重新整理頁面以後編號就沒了,所以連不上又關掉表單時,先重讀這個帳號,付款裡看得到剛才那筆有沒有記下。
-   - 贈送與更正在資料庫沒有送出編號,連不上時不讓她在同一個視窗再按:視窗關掉、重讀這個帳號、寫出要先核對。
+   - 記一筆收款、贈送、更正都帶送出編號 p_request_key(贈送與更正是 2026-10-12 資料庫加的),做法一樣(sendKey):
+     表單打開時用 crypto.randomUUID() 產生,只有資料庫回「記下了」或「已經記過」才換新的。
+     連不上(可能送到了、只是回覆沒收到)時,這個帳號的編號留著,在同一個視窗再按、關掉表單再打開都沿用,資料庫只會記一筆。
+     同一個編號拿去送別的帳號或別的內容,資料庫照樣回原本那一筆、duplicate = true,什麼都不做;
+     所以編號一個帳號一個,送出成功後下一次打開一定是新的,不會拿到別的帳號的結果。
+     被擋下來(或登入過期、閘道錯誤)時不換:那不能證明上一次沒送到,留著編號再送也只會記一筆。
+     重新整理頁面以後編號就沒了,所以連不上又關掉表單時,先重讀這個帳號,看得到剛才那筆有沒有記下。
    - 表單一律從查帳號頁打開(帳號已經讀到,視窗才寫得出後果),第一行寫帳號。
    - 對外的字一律寫「寫作批改 N 篇」;資料庫的錯誤訊息裡講「點數」的幾句換成篇數的說法,其他原樣顯示。
    做法參考 Stripe 客戶頁的「建立付款」與「新增訂閱」:在單一客戶頁上開表單,送出後回到同一頁、新的一筆出現在清單最上面。 */
@@ -111,10 +114,30 @@
   }
   const seatsQuick = () => SEATS.map(s => ({ label: String(s), value: String(s), aria: s + ' 人' }));
 
+  /* ---------- 送出編號(記一筆收款、贈送、更正共用) ---------- */
+  /* 還沒收到回覆的送出編號:表單種類 → (帳號 id → 編號),收到資料庫的回覆才拿掉 */
+  const pending = { record: new Map(), comp: new Map(), adjust: new Map() };
+  /* kind 是表單種類,netMsg 是連不上時寫在視窗裡的字。回傳 { key, left(沿用上一次沒收到回覆的編號), unsure(), send(fn) },
+     send(fn) 用這個編號呼叫 fn(key) */
+  function sendKey(kind, uid, netMsg) {
+    const m = pending[kind];
+    const left = m.has(uid);
+    const key = left ? m.get(uid) : newKey();
+    let unsure = false;
+    async function send(fn) {
+      const r = await fn(key);
+      if (r.ok) { m.delete(uid); unsure = false; return r; }
+      if (!r.net) return r;            // 擋下來不代表上一次沒送到(登入過期、閘道錯誤也長這樣),等著的編號與「不確定」都留著
+      m.set(uid, key); unsure = true;
+      return { ok: false, message: netMsg };
+    }
+    return { key, left, unsure: () => unsure, send };
+  }
+
   /* ---------- 記一筆收款 ---------- */
-  /* 還沒收到回覆的送出編號:帳號 id → 編號(收到回覆才拿掉) */
-  const pending = new Map();
   const NET_RECORD = '連不上雲端伺服器，不確定這筆有沒有記下。網路恢復後在這個視窗再按一次，不會記兩筆。';
+  const NET_COMP = '連不上雲端伺服器，不確定這次贈送有沒有送出。網路恢復後在這個視窗再按一次，不會送兩次。';
+  const NET_ADJUST = '連不上雲端伺服器，不確定這次更正有沒有記下。網路恢復後在這個視窗再送一次，不會記兩次。';
 
   function teacherNote(p) {
     if (p.teacher) return '';
@@ -136,9 +159,8 @@
   }
   async function record(d, from, ownerId) {
     const p = who(d, ownerId);
-    const left = pending.get(p.uid);
-    const key = left || newKey();
-    let unsure = false, sent = null;
+    const k = sendKey('record', p.uid, NET_RECORD);
+    let sent = null;
     const isTeacher = v => v.item === 'teacher';
     const fields = [
       { name: 'item', type: 'radio', inline: true, label: '項目', value: p.teacher ? 'teacher' : 'student',
@@ -158,20 +180,16 @@
       { name: 'paidAt', label: '付款日', type: 'date', value: todayInput(), check: checkPaidAt },
       O.noteField(),
     ];
-    const lines = left ? ['上一次送出沒有收到結果，這次送出如果已經記過，不會再記一筆。'] : [];
+    const lines = k.left ? ['上一次送出沒有收到結果，這次送出如果已經記過，不會再記一筆。'] : [];
     const res = await dialog({ title: '記一筆收款', who: p.id, lines, fields, ok: '記下這筆收款', from,
-      submit: async v => {
+      submit: v => {
         const item = v.item;
         sent = { item, months: item === 'credits' ? null : Number(v.months), seats: item === 'teacher' ? Number(trim(v.seats)) : null,
           credits: item === 'credits' ? Number(trim(v.credits)) : null, amount: Number(trim(v.amount)), method: v.method };
-        const r = await api.record({ p_request_key: key, p_who: p.id, p_item: item, p_months: sent.months, p_seats: sent.seats, p_credits: sent.credits,
-          p_amount: sent.amount, p_method: v.method, p_paid_at: paidAtOf(v.paidAt), p_starts_at: null, p_note: O.noteOf(v) });
-        if (r.ok) { pending.delete(p.uid); unsure = false; return r; }
-        if (!r.net) return r;   // 資料庫擋下的:整筆沒有寫進去
-        pending.set(p.uid, key); unsure = true;
-        return { ok: false, message: NET_RECORD };
+        return k.send(key => api.record({ p_request_key: key, p_who: p.id, p_item: item, p_months: sent.months, p_seats: sent.seats, p_credits: sent.credits,
+          p_amount: sent.amount, p_method: v.method, p_paid_at: paidAtOf(v.paidAt), p_starts_at: null, p_note: O.noteOf(v) }));
       } });
-    if (res === null) return unsure ? { text: '剛才那筆不確定有沒有記下，已重新讀取，請看付款裡有沒有這一筆再決定要不要重記。', bad: true } : null;
+    if (res === null) return k.unsure() ? { text: '剛才那筆不確定有沒有記下，已重新讀取，請看付款裡有沒有這一筆再決定要不要重記。', bad: true } : null;
     const r = recordResult(isObj(res) ? res : {}, sent, p);
     await dialog({ title: r.title, who: p.id, lines: r.lines, warns: r.warns, ok: '完成', cancel: false, from });
     return r.done;
@@ -209,14 +227,19 @@
         check: v => { if (!trim(v)) return ''; const u = O.untilFromDate(v); if (!u) return '請選正確的日期。'; return Date.parse(u) > Date.now() ? '' : '到期日要晚於今天。'; } },
       { name: 'note', label: '原因（選填，寫進異動紀錄）', type: 'text', maxlength: 200 },
     ];
+    const k = sendKey('comp', p.uid, NET_COMP);
     let sent = null;
-    const res = await dialog({ title: '贈送', who: p.id, fields, ok: '贈送', from, unsureOnNet: true,
+    const notice = k.left ? ['上一次送出沒有收到結果，這次送出如果已經贈送過，不會再送一次。'] : [];
+    const res = await dialog({ title: '贈送', who: p.id, lines: notice, fields, ok: '贈送', from,
       submit: v => {
         sent = { kind: v.kind, seats: v.kind === 'teacher' && trim(v.seats) ? Number(trim(v.seats)) : null, ends: trim(v.until) ? O.untilFromDate(v.until) : null };
-        return api.comp({ p_who: p.id, p_kind: sent.kind, p_seats: sent.seats, p_ends_at: sent.ends, p_starts_at: null, p_note: O.noteOf(v) });
+        return k.send(key => api.comp({ p_request_key: key, p_who: p.id, p_kind: sent.kind, p_seats: sent.seats, p_ends_at: sent.ends, p_starts_at: null, p_note: O.noteOf(v) }));
       } });
-    if (res === null) return null;
-    if (res === O.UNSURE) return { text: '連不上雲端伺服器，不確定這次贈送有沒有送出。已重新讀取，請先看使用權裡有沒有這一段，再決定要不要重做。', bad: true };
+    if (res === null) return k.unsure() ? { text: '剛才的贈送不確定有沒有送出，已重新讀取，請先看使用權裡有沒有這一段，再決定要不要重做。', bad: true } : null;
+    if (isObj(res) && res.duplicate === true) {
+      await dialog({ title: '已經贈送過了', who: p.id, lines: ['這張表單剛才已經送出過，這次沒有再贈送。請在使用權核對。'], ok: '完成', cancel: false, from });
+      return '這次贈送之前已經送出過了。';
+    }
     const what = sent.kind === 'teacher' ? '老師方案 ' + (sent.seats ? sent.seats + ' 人' : '名額不限') : '學生方案';
     const lines = ['贈送' + what + '，' + (sent.ends ? '到 ' + O.fmtDate(sent.ends) : '沒有期限') + '。'], warns = [];
     if (isObj(res)) classLines(res.class, lines, warns);
@@ -237,12 +260,16 @@
         } },
       { name: 'note', label: '原因（必填，寫進異動紀錄）', type: 'text', maxlength: 200, check: v => (trim(v) ? '' : '請寫更正的原因。') },
     ];
-    const res = await dialog({ title: '更正寫作批改篇數', who: p.id, lines: ['寫作批改現在剩 ' + p.credits + ' 篇。'], fields, ok: '更正', from, unsureOnNet: true,
+    const k = sendKey('adjust', p.uid, NET_ADJUST);
+    const lines = ['寫作批改現在剩 ' + p.credits + ' 篇。'].concat(k.left ? ['上一次送出沒有收到結果，這次送出如果已經記過，不會再記一次。'] : []);
+    const res = await dialog({ title: '更正寫作批改篇數', who: p.id, lines, fields, ok: '更正', from,
       confirmTwice: v => '更正後剩 ' + (p.credits + delta(v)) + ' 篇，再按一次確定',
-      submit: v => api.adjust({ p_who: p.id, p_delta: delta(v), p_note: trim(v.note) }) });
-    if (res === null) return null;
-    if (res === O.UNSURE) return { text: '連不上雲端伺服器，不確定這次更正有沒有送出。已重新讀取，請先看寫作批改紀錄，再決定要不要重做。', bad: true };
-    return typeof res === 'number' ? '已更正，剩 ' + res + ' 篇。' : '已更正。';
+      submit: v => k.send(key => api.adjust({ p_request_key: key, p_who: p.id, p_delta: delta(v), p_note: trim(v.note) })) });
+    if (res === null) return k.unsure() ? { text: '剛才的更正不確定有沒有記下，已重新讀取，請先看寫作批改紀錄，再決定要不要重做。', bad: true } : null;
+    if (isObj(res) && res.duplicate === true) return '這次更正之前已經記過了，沒有再記一次。請在寫作批改紀錄核對。';
+    /* 資料庫回 { balance, ledger_id, duplicate };2026-10-12 以前只回餘額這個數字,兩種都讀 */
+    const bal = isObj(res) ? res.balance : res;
+    return typeof bal === 'number' ? '已更正，剩 ' + bal + ' 篇。' : '已更正。';
   }
 
   /* ---------- 學生詳情的寫作批改(教師後台學生進度,只有站長模式) ----------

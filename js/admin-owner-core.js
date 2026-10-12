@@ -495,13 +495,11 @@
 
   /* ---------- 對話框 ----------
      o = { title, who(第一行的帳號), lines:[字串], warns:[字串], body:[節點], fields:[...], ok, danger, cancel(預設 true),
-           confirmTwice(values) → 字串(第二次按的按鈕字)或 null, submit(values) → { ok, data, message, net }, from,
-           unsureOnNet(連不上時不知道有沒有送到:關掉視窗回 UNSURE,不讓她在同一個視窗盲目重送) }
+           confirmTwice(values) → 字串(第二次按的按鈕字)或 null, submit(values) → { ok, data, message, net }, from }
      欄位 { name, label, type: text|number|date|radio|info, value, maxlength, placeholder, quick:[{label,value,aria}],
            options:[{value,label,desc}], inline, show(values), check(value, values) → 錯誤字或 '',
            derive(values) → 自己沒改過以前跟著別的欄位換的值(例如預填金額), text(values) → info 那一行的字(空字串就不顯示) }
      送出失敗:視窗不關,資料庫的訊息原樣顯示在視窗裡。回傳 promise:成功 → submit 的 data(沒有 submit 就是 true);取消 → null */
-  const UNSURE = Object.freeze({ unsure: true });
   function dialog(o) {
     return new Promise(resolve => {
       const id = nextId('ow-dlg');
@@ -557,7 +555,6 @@
         const r = await o.submit(values);
         busy = false; okBtn.disabled = false;
         if (r && r.ok) return finish(r.data === undefined || r.data === null ? true : r.data);
-        if (r && r.net && o.unsureOnNet) return finish(UNSURE);
         disarm();
         err.textContent = (r && r.message) || '發生錯誤，請稍後再試。';
       });
@@ -708,7 +705,7 @@
   }
 
   const O = window.ADMIN_OWNER = Object.assign(window.ADMIN_OWNER || {}, {
-    FILTERS, PAGE, DEBOUNCE_MS, UNSURE, creditsLeft, fmtDate, fmtTime, dayText, money, untilFromDate, dateInput, defaultUntilDate,
+    FILTERS, PAGE, DEBOUNCE_MS, creditsLeft, fmtDate, fmtTime, dayText, money, untilFromDate, dateInput, defaultUntilDate,
     displayName, roleText, isExTeacher, reasonText, statusText, teacherText, teacherOf,
     demoteLines, demoteResult, promoteChoice, promoteResult, moveResult, leaveLines, moveLines, ownGrantsText, fullWho,
     grantLabel, grantText, grantState, paymentText, creditText, historyText, noteText,

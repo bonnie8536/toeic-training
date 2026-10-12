@@ -212,8 +212,8 @@ const cases = {
     w.next.owner_grant_comp = ['owner_grant_comp.student_no_end'];
     await ok(d2);
     const b = w.calls('owner_grant_comp')[1];
-    const okk = until0 === '' && JSON.stringify(a) === JSON.stringify({ p_who: ACC.eve.email, p_kind: 'student', p_seats: null, p_ends_at: '2026-11-10T23:59:59+08:00', p_starts_at: null, p_note: '補償' })
-      && rl.some(x => /2026\/11\/10/.test(x)) && b.p_ends_at === null && b.p_note === null && /已贈送/.test(lookMsg(L)) && onlyOwnerRpcs(w);
+    const okk = until0 === '' && JSON.stringify(a) === JSON.stringify({ p_request_key: 'key-1', p_who: ACC.eve.email, p_kind: 'student', p_seats: null, p_ends_at: '2026-11-10T23:59:59+08:00', p_starts_at: null, p_note: '補償' })
+      && rl.some(x => /2026\/11\/10/.test(x)) && b.p_ends_at === null && b.p_note === null && b.p_request_key === 'key-2' && /已贈送/.test(lookMsg(L)) && onlyOwnerRpcs(w);
     return { ok: okk, detail: JSON.stringify({ until0, a, b, rl }) };
   },
   '贈送老師方案:名額空白是不限(送 null);學生(包括被改成學生的前老師)不能用贈送變成老師,寫要用改角色,不送': async () => {
@@ -265,9 +265,26 @@ const cases = {
     await ok(d);
     const a = w.calls('owner_adjust_credits');
     const okk = /原因/.test(noReason) && /剩 5 篇/.test(tooMany) && armed === '更正後剩 4 篇，再按一次確定'
-      && a.length === 1 && JSON.stringify(a[0]) === JSON.stringify({ p_who: ACC.pam.email, p_delta: -1, p_note: '多記一篇' })
+      && a.length === 1 && JSON.stringify(a[0]) === JSON.stringify({ p_request_key: 'key-1', p_who: ACC.pam.email, p_delta: -1, p_note: '多記一篇' })
       && /已更正，剩 5 篇/.test(lookMsg(L));
     return { ok: okk, detail: JSON.stringify({ noReason, tooMany, armed, a, msg: lookMsg(L) }) };
+  },
+  '更正:結果讀資料庫回的 balance(以前只回一個數字,也讀得懂),寫已更正剩 N 篇;兩個都沒有只寫已更正': async () => {
+    const w = world(); const L = await area(w);
+    await openLookup(L, ACC.pam.email);
+    const go = async reply => {
+      const d = await openForm(L, '更正寫作批改篇數');
+      await setVal(field(d, 'note'), '補發');
+      w.next.owner_adjust_credits = [reply];
+      await ok(d); await ok(d); await settle();
+      return lookMsg(L);
+    };
+    const m1 = await go('owner_adjust_credits.plus');
+    const m2 = await go({ data: 7, error: null });
+    const m3 = await go({ data: { ledger_id: 9, duplicate: false }, error: null });
+    const okk = m1.includes('已更正，剩 ' + FX['owner_adjust_credits.plus'].data.balance + ' 篇。') && m2.includes('已更正，剩 7 篇。')
+      && m3.includes('已更正。') && !/剩/.test(m3) && w.calls('owner_adjust_credits').length === 3;
+    return { ok: okk, detail: JSON.stringify([m1, m2, m3]) };
   },
   '資料庫寫「點數」的錯誤訊息換成「篇」;其他訊息原樣': async () => {
     const w = world(); const L = await area(w);
@@ -447,27 +464,115 @@ const cases = {
       && rw.some(x => /停用的班還有 1 位學生/.test(x)) && rw.some(x => /仍是停用的/.test(x));
     return { ok: okk, detail: JSON.stringify({ tom, old10, old1, other, rw }) };
   },
-  '贈送、更正:網路斷掉時不確定有沒有送出,視窗關掉、重讀這個帳號、寫先核對再決定;重讀後的更正用新的篇數': async () => {
+  /* ---------- 贈送、更正的送出編號(2026-10-12 資料庫加了 p_request_key,做法跟記一筆收款一樣) ---------- */
+  '贈送:送出編號在表單打開時產生;連不上時視窗不關,在同一個視窗再按用同一個編號;成功後下一次打開換新的': async () => {
     const w = world(); const L = await area(w);
     await openLookup(L, ACC.pam.email);
-    const c = await openForm(L, '贈送');
+    const d = await openForm(L, '贈送');
+    w.next.owner_grant_comp = [NET, 'owner_grant_comp.student_no_end'];
+    await ok(d);
+    const stillOpen = dlg(L) === d, err1 = errOf(d);
+    await ok(d);
+    const res = dlg(L); const title = res.find(n => n.tagName === 'H2')[0].textContent;
+    await ok(res); await settle();
+    const d2 = await openForm(L, '贈送'); const l2 = lines(d2);
+    w.next.owner_grant_comp = ['owner_grant_comp.student_no_end'];
+    await ok(d2); await ok(dlg(L)); await settle();
+    const keys = w.calls('owner_grant_comp').map(a => a.p_request_key);
+    const okk = stillOpen && /不確定/.test(err1) && /不會送兩次/.test(err1) && title === '已贈送' && l2.length === 1
+      && keys.join() === 'key-1,key-1,key-2' && L.ctx.uuidN === 2;
+    return { ok: okk, detail: JSON.stringify({ err1, title, l2, keys, n: L.ctx.uuidN }) };
+  },
+  '贈送:連不上又取消時重讀這個帳號、寫先核對;同一個帳號再打開沿用編號並寫出來,別的帳號是新的;資料庫回已經送過時寫出來,之後換新的': async () => {
+    const w = world(); const L = await area(w);
+    await openLookup(L, ACC.pam.email);
+    const d = await openForm(L, '贈送');
     w.next.owner_grant_comp = [NET];
+    await ok(d);
     const n0 = w.calls('owner_lookup').length;
-    await ok(c);
-    const cOpen = dlg(L) !== null, cMsg = lookMsg(L), cRe = w.calls('owner_lookup').length === n0 + 1;
-    const pam6 = clone(FX['owner_lookup.paid_with_credits'].data); pam6.access.credits = 6;
-    w.lookups[ACC.pam.id] = pam6;
+    await cancel(d); await settle();
+    const reread = w.calls('owner_lookup').length === n0 + 1 && w.calls('owner_lookup').pop().p_who === ACC.pam.id;
+    const msg1 = lookMsg(L);
+    await openLookup(L, ACC.gwen.email);
+    const g = await openForm(L, '贈送'); const gl = lines(g); await cancel(g);
+    await openLookup(L, ACC.pam.email);
+    const d2 = await openForm(L, '贈送'); const l2 = lines(d2);
+    w.next.owner_grant_comp = ['owner_grant_comp.duplicate'];
+    await ok(d2);
+    const res = dlg(L); const title = res.find(n => n.tagName === 'H2')[0].textContent; const rl = lines(res);
+    await ok(res); await settle();
+    const msg2 = lookMsg(L);
+    const d3 = await openForm(L, '贈送'); const l3 = lines(d3); await cancel(d3);
+    const keys = w.calls('owner_grant_comp').map(a => a.p_request_key);
+    const okk = reread && /不確定/.test(msg1) && /使用權/.test(msg1) && gl.length === 1 && l2[0] === ACC.pam.email
+      && l2.some(x => /上一次送出沒有收到結果/.test(x)) && title === '已經贈送過了' && rl.some(x => /沒有再贈送/.test(x)) && /之前已經送出過/.test(msg2)
+      && l3.length === 1 && keys.join() === 'key-1,key-1' && L.ctx.uuidN === 3;
+    return { ok: okk, detail: JSON.stringify({ msg1, gl, l2, title, rl, msg2, l3, keys, n: L.ctx.uuidN }) };
+  },
+  '贈送:沿用的編號送出後被擋下(不是網路),不能證明上一次沒送到(登入過期、閘道錯誤也長這樣);再打開照樣沿用編號、寫上一次沒收到結果': async () => {
+    const w = world(); const L = await area(w);
+    await openLookup(L, ACC.pam.email);
+    const d = await openForm(L, '贈送');
+    w.next.owner_grant_comp = [NET];
+    await ok(d); await cancel(d); await settle();
+    const d2 = await openForm(L, '贈送');
+    w.next.owner_grant_comp = ['error.grant_comp_end_before_start'];
+    await ok(d2);
+    const err = errOf(d2);
+    const n0 = w.calls('owner_lookup').length;
+    await cancel(d2); await settle();
+    const n1 = w.calls('owner_lookup').length;
+    const d3 = await openForm(L, '贈送'); const l3 = lines(d3);
+    w.next.owner_grant_comp = ['owner_grant_comp.student_no_end'];
+    await ok(d3);
+    const keys = w.calls('owner_grant_comp').map(a => a.p_request_key);
+    const okk = /到期日要晚於開始日/.test(err) && n1 === n0 && l3.some(x => /上一次送出沒有收到結果/.test(x)) && keys.join() === 'key-1,key-1,key-1';
+    return { ok: okk, detail: JSON.stringify({ err, n0, n1, l3, keys }) };
+  },
+  '更正:送出編號跟記一筆收款一樣;連不上時視窗不關、再確定一次用同一個編號;取消後重讀,再打開沿用並寫出來、用新的篇數;資料庫回已經記過時寫出來;成功後換新的': async () => {
+    const w = world(); const L = await area(w);
+    await openLookup(L, ACC.pam.email);
     const d = await openForm(L, '更正寫作批改篇數');
     await setVal(field(d, 'note'), '記錯了');
-    w.next.owner_adjust_credits = [NET];
+    w.next.owner_adjust_credits = [NET, NET];
     await ok(d); const armed = d.byClass('ow-ok')[0].textContent; await ok(d);
-    const dOpen = dlg(L) !== null, dMsg = lookMsg(L);
-    const d2 = await openForm(L, '更正寫作批改篇數');
-    const l2 = lines(d2);
-    const okk = !cOpen && cRe && /不確定/.test(cMsg) && /使用權/.test(cMsg) && w.calls('owner_grant_comp').length === 1
-      && armed === '更正後剩 6 篇，再按一次確定' && !dOpen && /不確定/.test(dMsg) && /寫作批改紀錄/.test(dMsg) && w.calls('owner_adjust_credits').length === 1
-      && l2.includes('寫作批改現在剩 6 篇。') && l2[0] === ACC.pam.email;
-    return { ok: okk, detail: JSON.stringify({ cMsg, armed, dMsg, l2 }) };
+    const open1 = dlg(L) === d, err1 = errOf(d);
+    await ok(d); await ok(d);
+    const open2 = dlg(L) === d;
+    const pam6 = clone(FX['owner_lookup.paid_with_credits'].data); pam6.access.credits = 6;
+    w.lookups[ACC.pam.id] = pam6;
+    const n0 = w.calls('owner_lookup').length;
+    await cancel(d); await settle();
+    const reread = w.calls('owner_lookup').length === n0 + 1;
+    const msg1 = lookMsg(L);
+    const d2 = await openForm(L, '更正寫作批改篇數'); const l2 = lines(d2);
+    await setVal(field(d2, 'note'), '記錯了');
+    w.next.owner_adjust_credits = ['owner_adjust_credits.duplicate'];
+    await ok(d2); await ok(d2); await settle();
+    const msg2 = lookMsg(L);
+    const d3 = await openForm(L, '更正寫作批改篇數'); const l3 = lines(d3);
+    await setVal(field(d3, 'note'), '補發');
+    w.next.owner_adjust_credits = ['owner_adjust_credits.plus'];
+    await ok(d3); await ok(d3); await settle();
+    const keys = w.calls('owner_adjust_credits').map(a => a.p_request_key);
+    const okk = armed === '更正後剩 6 篇，再按一次確定' && open1 && /不確定/.test(err1) && /不會記兩次/.test(err1) && open2
+      && reread && /不確定/.test(msg1) && /寫作批改紀錄/.test(msg1)
+      && l2[0] === ACC.pam.email && l2.includes('寫作批改現在剩 6 篇。') && l2.some(x => /上一次送出沒有收到結果/.test(x))
+      && /之前已經記過/.test(msg2) && !l3.some(x => /上一次/.test(x)) && /已更正，剩 6 篇/.test(lookMsg(L))
+      && keys.join() === 'key-1,key-1,key-1,key-2' && L.ctx.uuidN === 2;
+    return { ok: okk, detail: JSON.stringify({ armed, err1, msg1, l2, msg2, l3, keys, n: L.ctx.uuidN }) };
+  },
+  '總覽:14 天內結束的使用權照資料庫的 expiring 列(接上續約的不列由資料庫決定,前端不另外篩),標題不變': async () => {
+    const w = world(); const L = await area(w);
+    w.next.owner_overview = ['owner_overview.renewed_not_expiring'];
+    await btn(L.el, '總覽').click(); await settle();
+    const ov = L.el.byClass('ow-overview')[0];
+    const sec = ov.find(n => n.tagName === 'SECTION' && n.children[0].textContent === '14 天內結束的使用權')[0];
+    const e = FX['owner_overview.renewed_not_expiring'].data.expiring;
+    const gone = FX['owner_overview.d14'].data.expiring.map(g => g.email).filter(m => !e.some(x => x.email === m));
+    const okk = !!sec && sec.byClass('ow-item').length === e.length && e.every(g => sec.textContent.includes(g.email))
+      && gone.length > 0 && gone.every(m => !sec.textContent.includes(m));
+    return { ok: okk, detail: JSON.stringify({ e: e.map(g => g.email), gone }) };
   },
   '學生詳情的寫作批改:題目寫學生看到的名稱;長的作文可以看全文;帳號用查帳號讀到的 Email(不用進度裡的 _meta);讀到以前與扣過的版本不能按;剩 0 篇不能按': async () => {
     const w = world();

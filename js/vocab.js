@@ -40,10 +40,19 @@
 
   const norm = s => String(s).toLowerCase().trim().replace(/\s+/g, ' ');
 
-  /* 中文答案的可接受寫法:「上傳;上載」「(使)滿意」這類拆成多個可接受變體 */
+  /* 中文答案的可接受寫法:「上傳；上載」拆成多個;括號內容可有可無(（使）滿意=滿意或使滿意);刪節號不用打(對…有興趣=對有興趣)。
+     第一個寫法一定是不含括號的,掉落遊戲英翻中的◯提示照它算字數 */
+  const zhKey = s => String(s).replace(/[…⋯.．~～\s]/g, '');
   function zhVariants(zh) {
-    const list = String(zh).split(/[;；、,，/()（）「」\s]+/).map(x => x.trim()).filter(x => x && /[一-鿿]/.test(x));
-    return list.length ? list : [String(zh).trim()];
+    const s = String(zh);
+    const core = s.replace(/[(（][^)）]*[)）]/g, '');
+    const full = s.replace(/[()（）]/g, '');
+    const out = [];
+    [core, full].forEach(t => t.split(/[;；、,，/／「」\s]+/).forEach(x => {
+      x = zhKey(x);
+      if (/[一-鿿]/.test(x) && out.indexOf(x) < 0) out.push(x);
+    }));
+    return out.length ? out : [s.trim()];
   }
 
   /* ---------- 自訂題庫 ---------- */
@@ -160,13 +169,15 @@
       const mode = srcSel.value, level = levelSel.value;
       const best = store.get('vgame_best', {});
       const fallBest = [best[mode] ? '中翻英 ' + best[mode] : '', best[mode + ':e2z'] ? '英翻中 ' + best[mode + ':e2z'] : ''].filter(Boolean).join(' · ');
+      const clr = store.get('vgame_clear', {});
+      const fallClears = ((clr[mode] || {}).n || 0) + ((clr[mode + ':e2z'] || {}).n || 0);
       const pb = Object.entries(store.get('vgame_pairs_best', {})).filter(([k]) => k.startsWith(mode + ':')).map(([, v]) => v)[0];
       const tb = store.get('vgame_toast_best', {})[mode];
       gamesWrap.innerHTML = '';
       gamesWrap.append(
         gameCard('fall', '掉落消除',
-          '打出翻譯消除掉下來的字；漏接的下一場優先出現' + (missCount ? '（目前 ' + missCount + ' 個）' : '') + '。',
-          fallBest ? '最佳 ' + fallBest : '',
+          '打出翻譯消除掉下來的字，這一關的字全部打對就通關；漏接的字會再掉下來' + (missCount ? '，目前漏接 ' + missCount + ' 個' : '') + '。',
+          [fallBest ? '最佳 ' + fallBest : '', fallClears ? '通關 ' + fallClears + ' 次' : ''].filter(Boolean).join(' · '),
           [dirSel, speedSel],
           () => startGame(mode, level, speedSel.value, dirSel.value)),
         gameCard('pairs', '翻牌配對', '翻兩張，英文配它的中文。',
@@ -351,15 +362,53 @@
 
     const BASE_SPEED = { slow: 15, normal: 23, fast: 34 }[speedKey];
     const missPool = store.get('vgame_miss', {});
+    const bestKey = mode + (dir === 'e2z' ? ':e2z' : '');
     let score = 0, lives = 3, combo = 0;
     let blocks = [];
-    let lastSpawn = 0, lastTime = 0;
+    let lastSpawn = 0, lastTime = 0, playMs = 0;
     let running = true, over = false;
     let rafId = null;
-    const recent = [];
     const missedThisGame = [];
 
+    /* 這一關的字:自訂題庫=整個題庫(最多 30 個);內建字庫=20 個,
+       以前漏接的優先,其次是最近幾關沒出過的。打對的字這一關不再出現,漏接的過兩三個字會再掉下來,全部打對就通關。 */
+    const shuffle = arr => {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    };
+    const uniq = [...new Map(pool.map(p => [p.answer, p])).values()];
+    const ROUND_N = bankName ? Math.min(30, uniq.length) : Math.min(20, uniq.length);
+    const doneLog = store.get('vgame_done', {});
+    const doneIdx = new Map((doneLog[bestKey] || []).map((a, i) => [a, i]));   // 越前面=越久沒出
+    const missed = shuffle(uniq.filter(p => missPool[p.answer]));
+    const fresh = shuffle(uniq.filter(p => !missPool[p.answer] && !doneIdx.has(p.answer)));
+    const seen = uniq.filter(p => !missPool[p.answer] && doneIdx.has(p.answer))
+      .sort((a, b) => doneIdx.get(a.answer) - doneIdx.get(b.answer));
+    /* 畫面上看到的那一面:中翻英看中文、英翻中看英文。內建字庫有幾組中文相同的字(同事=co-worker、colleague),一關只放一個 */
+    const shownOf = p => (dir === 'e2z' ? p.answer : p.zh);
+    const usedShown = new Set();
+    const roundItems = [];
+    for (const p of [...missed, ...fresh, ...seen]) {
+      if (roundItems.length >= ROUND_N) break;
+      if (!bankName && usedShown.has(shownOf(p))) continue;
+      usedShown.add(shownOf(p));
+      roundItems.push(p);
+    }
+    /* 中文相同的字(同事=co-worker、colleague;題庫裡 big、large 都是「大」):打字庫裡任何一個對應的英文都算對 */
+    const sameZh = {};
+    uniq.forEach(p => { (sameZh[p.zh] = sameZh[p.zh] || new Set()).add(norm(p.answer)); });
+    const total = roundItems.length;
+    const queue = shuffle(roundItems);     // 還沒打對、也不在畫面上的字
+    const cleared = new Set();             // 這一關打對的字
+    let firstTry = 0;                      // 第一次掉下來就打對的字數
+    const missedOnce = new Set();          // 這一關漏接過的字(之後補打對的會列在通關畫面)
+
     const scoreEl = h('span', { class: 'hud-score' }, '0');
+    const progEl = h('span', { class: 'hud-prog' }, '0 / ' + total);
     const livesEl = h('span', { class: 'hud-lives' });
     const field = h('div', { class: 'game-field' });
     const input = h('input', {
@@ -381,29 +430,16 @@
           ' · ' + (dir === 'e2z' ? '英翻中' : '中翻英'))),
         h('a', { href: 'vocab.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回單字訓練')),
       h('div', { class: 'game-hud' },
-        h('span', null, '分數 ', scoreEl), livesEl, pauseBtn),
+        h('span', null, '分數 ', scoreEl), h('span', null, '進度 ', progEl), livesEl, pauseBtn),
       field,
       h('div', { class: 'game-input-row' }, input));
     input.focus();
 
-    function pickItem() {
-      const live = new Set(blocks.map(b => b.answer));
-      /* 30% 機率抽漏接過的字 */
-      const missKeys = Object.keys(missPool).filter(k => !live.has(k) && pool.some(p => p.answer === k));
-      if (missKeys.length && Math.random() < 0.3) {
-        const k = missKeys[Math.floor(Math.random() * missKeys.length)];
-        return pool.find(p => p.answer === k);
-      }
-      const candidates = pool.filter(p => !live.has(p.answer) && !recent.includes(p.answer));
-      const list = candidates.length ? candidates : pool.filter(p => !live.has(p.answer));
-      return list[Math.floor(Math.random() * list.length)];
-    }
-
     function spawn() {
-      const item = pickItem();
-      if (!item) return;
-      recent.push(item.answer);
-      if (recent.length > 10) recent.shift();
+      const onScreen = new Set(blocks.map(b => shownOf(b.item)));
+      const qi = queue.findIndex(it => !onScreen.has(shownOf(it)));
+      if (qi < 0) return;
+      const item = queue.splice(qi, 1)[0];
       /* 中翻英:中文掉下來+字首提示;英翻中:英文掉下來+中文字數提示 */
       const shown = dir === 'e2z' ? item.answer : item.zh;
       const hintText = dir === 'e2z' ? '◯'.repeat(zhVariants(item.zh)[0].length) : hint(item.answer);
@@ -414,21 +450,24 @@
       const maxX = Math.max(0, field.clientWidth - el.offsetWidth - 8);
       const x = 4 + Math.random() * maxX;
       el.style.left = x + 'px';
-      blocks.push({ el, answer: item.answer, zh: item.zh, y: -el.offsetHeight, speed: BASE_SPEED * (1 + Math.min(0.4, score / 500)) });
+      blocks.push({ el, item, answer: item.answer, zh: item.zh, y: -el.offsetHeight, speed: BASE_SPEED * (1 + Math.min(0.4, score / 500)) });
     }
 
     function loop(t) {
       if (!running) return;
       if (!lastTime) lastTime = t;
+      playMs += Math.min(250, t - lastTime);
       const dt = Math.min(0.05, (t - lastTime) / 1000);
       lastTime = t;
       const interval = Math.max(1600, 3200 - score * 8);
-      if (t - lastSpawn > interval && blocks.length < 4) {
+      /* 畫面空了就馬上出下一個字,不用乾等 */
+      if (queue.length && blocks.length < 4 && (t - lastSpawn > interval || !blocks.length)) {
         lastSpawn = t;
         spawn();
       }
       const H = field.clientHeight;
       blocks = blocks.filter(b => {
+        if (over) return false;
         b.y += b.speed * dt;
         b.el.style.transform = 'translateY(' + b.y + 'px)';
         if (b.y + b.el.offsetHeight >= H) {
@@ -437,32 +476,36 @@
         }
         return true;
       });
+      if (over) return;
       rafId = requestAnimationFrame(loop);
     }
 
     function miss(b) {
+      if (over) return;
       b.el.classList.add('missed');
       setTimeout(() => b.el.remove(), 400);
       lives--;
       drawLives();
       combo = 0;
-      missedThisGame.push({ answer: b.answer, zh: b.zh });
+      if (!missedOnce.has(b.answer)) missedThisGame.push({ answer: b.answer, zh: b.zh });
+      missedOnce.add(b.answer);
       missPool[b.answer] = (missPool[b.answer] || 0) + 1;
       store.set('vgame_miss', missPool);
+      queue.splice(Math.min(2, queue.length), 0, b.item);
       if (lives <= 0) gameOver();
     }
 
     input.addEventListener('keydown', e => {
       /* 中文輸入法選字中的 Enter 不算送出 */
       if (e.isComposing || e.keyCode === 229) return;
-      if (e.key !== 'Enter') return;
+      if (e.key !== 'Enter' || !running || over) return;
       const raw = input.value.trim();
       const val = norm(raw);
       if (!val) return;
       /* 打中最低(最危險)的那一個 */
       const match = dir === 'e2z'
-        ? b => raw === String(b.zh).trim() || zhVariants(b.zh).indexOf(raw) > -1
-        : b => norm(b.answer) === val;
+        ? b => raw === String(b.zh).trim() || zhVariants(b.zh).indexOf(zhKey(raw)) > -1
+        : b => norm(b.answer) === val || (sameZh[b.zh] && sameZh[b.zh].has(val));
       const hits = blocks.filter(match).sort((a, b2) => b2.y - a.y);
       if (hits.length) {
         const b = hits[0];
@@ -477,7 +520,11 @@
           delete missPool[b.answer];
           store.set('vgame_miss', missPool);
         }
+        if (!missedOnce.has(b.answer)) firstTry++;
+        cleared.add(b.answer);
+        progEl.textContent = cleared.size + ' / ' + total;
         input.value = '';
+        if (cleared.size === total) setTimeout(roundClear, 300);
       } else {
         combo = 0;
         input.classList.remove('wrong');
@@ -490,6 +537,7 @@
       if (over) return;
       running = !running;
       pauseBtn.textContent = running ? '暫停' : '繼續';
+      field.classList.toggle('paused', !running);
       if (running) {
         lastTime = 0;
         rafId = requestAnimationFrame(loop);
@@ -499,14 +547,27 @@
       }
     }
 
-    function gameOver() {
+    function stopGame() {
       over = true;
       running = false;
       if (rafId) cancelAnimationFrame(rafId);
       blocks.forEach(b => b.el.remove());
       blocks = [];
       input.disabled = true;
-      const bestKey = mode + (dir === 'e2z' ? ':e2z' : '');
+      pauseBtn.disabled = true;
+      /* 打對的字記下來,下一關先出別的字 */
+      const log = (doneLog[bestKey] || []).filter(a => !cleared.has(a)).concat([...cleared]).slice(-300);
+      doneLog[bestKey] = log;
+      store.set('vgame_done', doneLog);
+    }
+
+    const srcName = bankName ? '題庫：' + bankName : mode === 'word' ? '單字' + (levelName !== '全部' ? ' · ' + levelName : '') : '片語';
+    const fmtTime = ms => { const sec = Math.round(ms / 1000); return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); };
+
+    function gameOver() {
+      if (over) return;
+      stopGame();
+      logAttempt('vq', 'fall', score, false, { q: '掉落消除 ' + srcName + ' · ' + total + ' 字', x: '完成 ' + cleared.size + ' / ' + total + ' · ' + score + ' 分', g: 'fall' });
       const best = store.get('vgame_best', {});
       const isBest = score > (best[bestKey] || 0);
       if (isBest) {
@@ -514,7 +575,8 @@
         store.set('vgame_best', best);
       }
       const overlay = h('div', { class: 'game-over' },
-        h('h2', null, '結束！分數 ' + score + (isBest ? '（新紀錄）' : '')),
+        h('h2', null, '沒命了，分數 ' + score + (isBest ? '（新紀錄）' : '')),
+        h('p', { class: 'go-prog' }, '這一關打對 ' + cleared.size + ' / ' + total + ' 個字。'),
         missedThisGame.length
           ? h('div', { class: 'miss-list' },
               h('b', null, '漏接的字'),
@@ -522,7 +584,48 @@
                 h('span', { class: 'miss-en' }, m.answer), h('span', null, m.zh))))
           : h('p', null, '沒有漏接。'),
         h('div', { class: 'drill-nav-btns', style: 'justify-content:center' },
-          h('button', { class: 'btn primary', onclick: () => startGame(mode, levelName, speedKey, dir) }, '再玩一次'),
+          h('button', { class: 'btn primary', onclick: () => startGame(mode, levelName, speedKey, dir) }, '再挑戰'),
+          h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
+      field.append(overlay);
+    }
+
+    /* ---------- 通關 ---------- */
+    function roundClear() {
+      if (over) return;
+      stopGame();
+      const secs = Math.round(playMs / 1000);
+      const best = store.get('vgame_best', {});
+      const isBest = score > (best[bestKey] || 0);
+      if (isBest) {
+        best[bestKey] = score;
+        store.set('vgame_best', best);
+      }
+      const clears = store.get('vgame_clear', {});
+      const prev = clears[bestKey] || { n: 0, secs: 0 };
+      const fastest = !prev.n || secs < prev.secs;
+      clears[bestKey] = { n: prev.n + 1, secs: fastest ? secs : prev.secs };
+      store.set('vgame_clear', clears);
+      logAttempt('vq', 'fall', score, true, { q: '掉落消除 ' + srcName + ' · ' + total + ' 字', x: '通關 · ' + fmtTime(playMs) + ' · ' + score + ' 分', g: 'fall' });
+
+      const back = [...missedOnce].map(a => roundItems.find(p => p.answer === a)).filter(Boolean);
+      const RING = '<svg viewBox="0 0 220 96" aria-hidden="true"><filter id="clrPen" x="-10%" y="-10%" width="120%" height="120%">' +
+        '<feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>' +
+        '<path d="M30 52c-6-26 52-40 104-36c46 4 74 20 70 38c-4 22-60 32-110 30c-44-2-70-12-66-28c2-8 12-14 24-18" fill="none" stroke="#d2443c" stroke-width="3" stroke-linecap="round" filter="url(#clrPen)"/></svg>';
+      const overlay = h('div', { class: 'game-over round-clear' },
+        h('div', { class: 'clear-mark' }, h('span', { class: 'clear-ring', html: RING }), h('span', { class: 'clear-word' }, '通關')),
+        h('div', { class: 'clear-stats' },
+          h('div', null, h('b', null, String(score)), h('span', null, isBest ? '分數（新紀錄）' : '分數')),
+          h('div', null, h('b', null, fmtTime(playMs)), h('span', null, fastest && prev.n ? '用時（最快）' : '用時')),
+          h('div', null, h('b', null, firstTry + ' / ' + total), h('span', null, '一次就打對'))),
+        back.length
+          ? h('div', { class: 'miss-list' },
+              h('b', null, '漏接後補回來的字'),
+              back.map(m => h('div', { class: 'miss-item' },
+                h('span', { class: 'miss-en' }, m.answer), h('span', null, m.zh))))
+          : null,
+        h('p', { class: 'clear-count' }, (bankName ? '這個題庫' : '這個字庫') + '已通關 ' + clears[bestKey].n + ' 次' + (prev.n && !fastest ? '，最快 ' + fmtTime(prev.secs * 1000) : '')),
+        h('div', { class: 'drill-nav-btns', style: 'justify-content:center' },
+          h('button', { class: 'btn primary', onclick: () => startGame(mode, levelName, speedKey, dir) }, '再挑戰一關'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
       field.append(overlay);
     }

@@ -2358,3 +2358,38 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   .ac-expand { width: calc(100% + 28px); margin: 4px -14px 0; padding: 0 14px; }
   .ac-members { margin: 0 -14px; padding: 0 14px 8px; }
 }
+
+/* 掉落消除:進度與通關畫面(紅筆圈+螢光筆,沿用視覺系統) */
+.hud-prog { font-weight: 700; font-variant-numeric: tabular-nums; }
+.go-prog { font-size: 14.5px; color: var(--ink-light); margin: 0 0 12px; text-align: center; }
+.round-clear { background: rgba(255, 255, 255, .97); }
+.clear-mark { position: relative; width: 220px; height: 96px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.clear-ring { position: absolute; inset: 0; }
+.clear-ring svg { width: 100%; height: 100%; overflow: visible; }
+.clear-word { position: relative; z-index: 0; font-family: var(--round); font-weight: 900; font-size: 40px; letter-spacing: 6px; padding: 0 8px; }
+.clear-word::before {
+  content: ''; position: absolute; z-index: -1; left: 0; right: 0; top: 46%; bottom: 6%;
+  background: var(--marker); border-radius: 44% 56% 50% 50% / 60% 44% 56% 40%; transform: rotate(-1.5deg);
+}
+.clear-stats { display: flex; gap: 26px; margin: 4px 0 16px; text-align: center; }
+.clear-stats b { display: block; font-size: 24px; font-variant-numeric: tabular-nums; }
+.clear-stats span { font-size: 13px; color: var(--ink-light); }
+.clear-count { font-size: 13.5px; color: var(--ink-light); margin: 4px 0 10px; }
+@media (max-width: 600px) {
+  .clear-stats { gap: 16px; }
+  .clear-stats b { font-size: 20px; }
+  .game-hud { gap: 12px; }
+}
+.game-field.paused .fall-block { visibility: hidden; }
+/* 結束與通關畫面:放得下時置中,放不下時從頂端開始可以捲 */
+.game-over { justify-content: flex-start; }
+.game-over > * { flex-shrink: 0; }
+.game-over > :first-child { margin-top: auto; }
+.game-over > :last-child { margin-bottom: auto; }
+@media (max-width: 600px) {
+  .game-over { padding: 14px 16px; }
+  .round-clear .clear-mark { height: 76px; margin-bottom: 0; }
+  .clear-stats { margin: 0 0 10px; }
+  .miss-en { min-width: 96px; }
+}
+@media (prefers-reduced-motion: reduce) { .fall-block.boom { transition: none; } }

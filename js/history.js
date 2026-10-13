@@ -102,7 +102,8 @@
       return p && { stem: p.quiz.q, options: p.quiz.options, answer: p.quiz.answer, explanation: p.quiz.explanation, tag: p.phrase + ' ' + p.zh };
     }
     if (m === 'vq') {
-      return { stem: rec.q || rec.id, options: rec.o || null, answer: rec.a, explanation: rec.x !== undefined ? null : null, picked: rec.x, tag: ({ toast: '記憶吐司', pairs: '翻牌配對', mcq: '單字選擇題' })[rec.g] || '單字遊戲' };
+      return { stem: rec.q || rec.id, options: rec.o || null, answer: rec.a, explanation: rec.x !== undefined ? null : null, picked: rec.x, tag: ({ toast: '記憶吐司', pairs: '翻牌配對', mcq: '單字選擇題', fall: '掉落消除' })[rec.g] || '單字遊戲',
+        pickedLabel: rec.g === 'fall' || rec.g === 'pairs' ? '結果：' : null };
     }
     if (m === 'ed') {
       /* 每日練習的句子聽寫:紀錄帶原句 q、打的字 x、對了幾個字 c、總字數 w。
@@ -269,7 +270,8 @@
     } else if (info.typed !== undefined) {
       box.append(h('p', { class: 'result-note' }, info.typed ? '你打的是 ' + info.typed : '這句沒有作答。'));
     } else if (info.picked !== undefined) {
-      box.append(h('p', { class: 'result-note' }, '你的答案：' + info.picked + (rec.ok ? '' : ' · 正解：' + info.answer)));
+      box.append(h('p', { class: 'result-note' }, (info.pickedLabel || '你的答案：') + info.picked +
+        (rec.ok || info.answer === undefined || info.answer === null ? '' : ' · 正解：' + info.answer)));
     }
     if (info.explanation) box.append(h('div', { class: 'explain' }, h('div', null, info.explanation)));
     if (info.zh) box.append(h('div', { class: 'transcript-box' }, h('b', null, '逐字稿'), h('div', { class: 'tr-zh' }, info.zh)));

@@ -9,7 +9,7 @@ export const meta = {
 }
 
 const REPO = 'C:\\Users\\bonni\\Desktop\\claude\\toeic-training'
-const CTX = `對象網站「刷刷英文」(https://www.shuashualanguage.com/):台灣英文家教邱詩蘋(數位媒體設計碩士,自己會設計)做的免費英文練習站,純前端(HTML/CSS/原生 JS,無框架),學生從國高中到成人多益考生。現況視覺=白底、藍主色 #0b72c4、螢光筆黃、圓角 8px,偏「乾淨的教學網站」。站主現在說:「整個網站好像沒有一個可愛的視覺系統,想美化」,並希望文法區左邊有像 Duolingo 的圈圈路徑導引。她先前明確討厭的東西:AI 模板感(每個標題掛副標、eyebrow 小標、三欄同構卡、漸層紫、emoji 當圖示、口號式文案)。所以目標是「可愛、有辨識度、但不是模板」。品牌名「刷刷」有「刷題」與「刷子刷刷」的雙關。`
+const CTX = `對象網站「刷刷英文」(https://www.shuashualanguage.com/):台灣的英文家教(自己會設計)做的英文練習站,純前端(HTML/CSS/原生 JS,無框架),學生從國高中到成人多益考生。現況視覺=白底、藍主色 #0b72c4、螢光筆黃、圓角 8px,偏「乾淨的教學網站」。站主現在說:「整個網站好像沒有一個可愛的視覺系統,想美化」,並希望文法區左邊有像 Duolingo 的圈圈路徑導引。她先前明確討厭的東西:AI 模板感(每個標題掛副標、eyebrow 小標、三欄同構卡、漸層紫、emoji 當圖示、口號式文案)。所以目標是「可愛、有辨識度、但不是模板」。品牌名「刷刷」有「刷題」與「刷子刷刷」的雙關。`
 
 const CASE_SCHEMA = { type: 'object', required: ['cases', 'patterns'], properties: { cases: { type: 'array', items: { type: 'object', required: ['name', 'url', 'traits'], properties: { name: { type: 'string' }, url: { type: 'string' }, traits: { type: 'array', items: { type: 'string' } }, borrow: { type: 'string' }, avoid: { type: 'string' } } } }, patterns: { type: 'array', items: { type: 'object', required: ['pattern', 'how'], properties: { pattern: { type: 'string' }, how: { type: 'string' } } } } } }
 const AUDIT_SCHEMA = { type: 'object', required: ['flowProblems', 'proposal', 'styleInventory'], properties: { flowProblems: { type: 'array', items: { type: 'string' } }, proposal: { type: 'object', required: ['structure', 'steps'], properties: { structure: { type: 'string' }, steps: { type: 'array', items: { type: 'string' } } } }, styleInventory: { type: 'array', items: { type: 'string' } } } }

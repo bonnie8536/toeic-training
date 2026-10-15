@@ -1020,6 +1020,15 @@ footer {
   font-size: 13px;
   color: var(--ink-light);
 }
+footer p { margin: 0; }
+/* 方案、條款、隱私、退款、客服信箱：藍新商店規範要求每頁都看得到（2026-10-15） */
+.foot-links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; }
+.foot-links a { color: var(--ink-light); text-decoration: underline; text-underline-offset: 2px; }
+.foot-links a:hover { color: var(--primary-dark); }
+@media (max-width: 860px) {
+  footer { padding: 18px 0 24px; }
+  .foot-links { gap: 4px 14px; margin-top: 8px; }
+}
 
 /* ---------------- 學生檔案 ---------------- */
 .profile-widget { position: relative; margin-left: 12px; flex: none; }
@@ -1818,6 +1827,8 @@ html.app-gate .profile-widget { display: none; }   /* 登入卡上已經有登�
 
   html.app-shell.has-tabbar { scroll-padding-bottom: calc(var(--app-tab-h) + 8px); }
   html.app-shell.has-tabbar body { padding-bottom: calc(var(--app-tab-h) + env(safe-area-inset-bottom)); }
+  /* 沒有分頁列的頁面(條款、價格、註冊):頁尾連結要讓開 iPhone 底部的手勢條 */
+  html.app-shell:not(.has-tabbar) body { padding-bottom: env(safe-area-inset-bottom); }
   html.app-shell.has-tabbar body::after {
     content: ''; position: fixed; left: 0; right: 0; bottom: 0; z-index: 89;
     height: calc(var(--app-tab-h) + env(safe-area-inset-bottom));
@@ -2393,3 +2404,13 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   .miss-en { min-width: 96px; }
 }
 @media (prefers-reduced-motion: reduce) { .fall-block.boom { transition: none; } }
+
+/* ======== 服務條款、隱私權政策、退款政策(terms、privacy、refund,2026-10-15) ======== */
+.legal { margin: 30px 0 50px; line-height: 1.8; }
+.legal h1 { font-size: 24px; margin-bottom: 4px; }
+.legal h2 { font-size: 18px; margin: 28px 0 6px; }
+.legal p + p, .legal p + ul, .legal ul + p { margin-top: 8px; }
+.legal li + li { margin-top: 4px; }
+.legal p a, .legal li a { text-decoration: underline; text-underline-offset: 2px; overflow-wrap: anywhere; }
+.legal .result-note { margin: 4px 0 0; }
+.legal .legal-back { margin-top: 30px; }

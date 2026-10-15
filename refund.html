@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* App 外殼開機:網站模式只登記安裝事件;主畫面開啟時才在 <html> 加 class、補 viewport-fit=cover */
+(function () {
+  var d = document.documentElement;
+  window.__bip = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; });
+  window.addEventListener('appinstalled', function () { window.__bip = null; });
+  var sa = false;
+  try { sa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; } catch (e) { sa = false; }
+  if (!sa) return;
+  var p = location.pathname.split('/').pop() || 'index.html';
+  if (p.indexOf('.') < 0) p += '.html';
+  d.classList.add('is-app');
+  d.classList.add('app-shell');
+  if (['signup.html', 'reset.html', 'terms.html', 'pricing.html', 'privacy.html', 'refund.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
+  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  var m = document.querySelector('meta[name=viewport]');
+  if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
+  window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
+})();
+</script>
+<meta name="description" content="刷刷英文方案與寫作真人批改的退款條件、申請方式與處理時間。">
+<link rel="canonical" href="https://www.shuashualanguage.com/refund.html">
+<title>退款政策|刷刷英文</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-title" content="刷刷英文">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<script src="js/app-shell.js" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">刷刷英文</a>
+  </div>
+</header>
+
+<main class="container-narrow">
+  <article class="lesson-view legal">
+    <h1>退款政策</h1>
+    <p class="result-note">2026 年 10 月 15 日起適用</p>
+
+    <h2>全額退款</h2>
+    <ul>
+      <li>付款後還沒開始使用的方案或批改服務，可以全額退款。</li>
+      <li>重複扣款，或付款後沒有開通，全額退款。</li>
+      <li>因為本站的系統錯誤，付款後無法使用付費的服務，全額退款。</li>
+    </ul>
+
+    <h2>不退款</h2>
+    <ul>
+      <li>開始使用後不退款。</li>
+      <li>付款前，付款頁會請你勾選同意開始使用後不適用 7 天的解除權，說明在<a href="terms.html">服務條款</a>的消費者權益。</li>
+    </ul>
+
+    <h2>怎樣算開始使用</h2>
+    <ul>
+      <li>方案開始計算後，登入並使用過任何一項需要方案的練習功能，就算開始使用。</li>
+      <li>寫作真人批改以一篇為單位，批改完成的那一篇就算使用。5 篇批改服務批改過其中一篇，就算開始使用。</li>
+    </ul>
+
+    <h2>停止營運</h2>
+    <p>本站如果停止營運，已付費方案還沒用完的天數，以及還沒用掉的批改篇數，按比例退款。</p>
+
+    <h2>申請方式</h2>
+    <p>寫信到 <a href="mailto:bonnie8536@gmail.com">bonnie8536@gmail.com</a>，附上帳號 Email 與付款日期。ATM 轉帳付款的人，請一併提供退款用的銀行帳戶。</p>
+
+    <h2>處理時間與退款方式</h2>
+    <ul>
+      <li>本站會在收到申請後 3 個工作天內回覆，確認符合退款條件後，7 個工作天內辦理退款。</li>
+      <li>信用卡付款退回原信用卡，退款入帳的時間依發卡銀行作業，可能出現在下一期帳單。超過藍新金流可以退刷的期限時，改用轉帳退到你提供的銀行帳戶。</li>
+      <li>ATM 轉帳付款退到你提供的銀行帳戶。</li>
+      <li>用轉帳退款時，轉帳手續費由本站負擔。</li>
+      <li>退款完成後，那一筆方案或批改服務會一併取消。</li>
+    </ul>
+
+    <p class="legal-back"><a href="index.html">回首頁</a></p>
+  </article>
+</main>
+
+<footer>
+  <div class="container-narrow">
+    <p>刷刷英文由個人經營，與 ETS 及忠欣公司無關；TOEIC 為 ETS 之註冊商標。</p>
+    <nav class="foot-links" aria-label="網站資訊"><a href="pricing.html">方案與價格</a><a href="terms.html">服務條款</a><a href="privacy.html">隱私權政策</a><a href="refund.html">退款政策</a><a href="mailto:bonnie8536@gmail.com">客服信箱 bonnie8536@gmail.com</a></nav>
+  </div>
+</footer>
+</body>
+</html>

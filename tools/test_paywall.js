@@ -77,7 +77,7 @@ const cases = {
   '哪些頁面要擋:功能頁擋、寫作頁另外算、其他不擋': () => {
     const { P } = load({ paid: true });
     const paid = ['reading', 'practice', 'listening', 'grammar', 'vocab', 'mock', 'review', 'dialogue', 'phonics'];
-    const free = ['index', 'learn', 'drill', 'verbs', 'me', 'history', 'analysis', 'admin', 'signup', 'terms', 'reset', 'pricing', 'diagnostic', 'offline', 'tenses'];
+    const free = ['index', 'learn', 'drill', 'verbs', 'me', 'history', 'analysis', 'admin', 'signup', 'terms', 'privacy', 'refund', 'reset', 'pricing', 'diagnostic', 'offline', 'tenses'];
     const r = {
       paid: paid.every(p => P.pageKind('/' + p + '.html', '') === 'paid'),
       sub: P.pageKind('/toeic-training/reading.html', '?id=a3') === 'paid',

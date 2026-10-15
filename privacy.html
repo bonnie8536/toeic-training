@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* App 外殼開機:網站模式只登記安裝事件;主畫面開啟時才在 <html> 加 class、補 viewport-fit=cover */
+(function () {
+  var d = document.documentElement;
+  window.__bip = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; });
+  window.addEventListener('appinstalled', function () { window.__bip = null; });
+  var sa = false;
+  try { sa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; } catch (e) { sa = false; }
+  if (!sa) return;
+  var p = location.pathname.split('/').pop() || 'index.html';
+  if (p.indexOf('.') < 0) p += '.html';
+  d.classList.add('is-app');
+  d.classList.add('app-shell');
+  if (['signup.html', 'reset.html', 'terms.html', 'pricing.html', 'privacy.html', 'refund.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
+  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  var m = document.querySelector('meta[name=viewport]');
+  if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
+  window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
+})();
+</script>
+<meta name="description" content="刷刷英文如何蒐集、使用與保存個人資料，以及你可以行使的權利。">
+<link rel="canonical" href="https://www.shuashualanguage.com/privacy.html">
+<title>隱私權政策|刷刷英文</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-title" content="刷刷英文">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<script src="js/app-shell.js" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">刷刷英文</a>
+  </div>
+</header>
+
+<main class="container-narrow">
+  <article class="lesson-view legal">
+    <h1>隱私權政策</h1>
+    <p class="result-note">2026 年 10 月 15 日起適用</p>
+    <p>刷刷英文（www.shuashualanguage.com）由個人經營。個人資料的問題請寫信到 <a href="mailto:bonnie8536@gmail.com">bonnie8536@gmail.com</a>。</p>
+
+    <h2>蒐集的資料</h2>
+    <ul>
+      <li>帳號資料，包括 Email、你填的暱稱、註冊時間與最後登入時間。用 Google 帳號登入時，另外會收到 Google 提供的名字、Email 與大頭貼網址。</li>
+      <li>學習紀錄，包括各單元的作答、成績、錯題、單字進度、寫作練習輸入的內容，以及紀錄的更新時間。</li>
+      <li>班級資料，包括你加入的班級，以及老師留的上課備註。</li>
+      <li>方案與付款紀錄，包括購買項目、金額、付款日期、使用期間、付款方式與藍新金流的交易編號。信用卡付款另有卡號末四碼、收單銀行與授權碼，ATM 轉帳另有付款銀行代碼。</li>
+      <li>你寫信給本站時的 Email 與信件內容。申請 ATM 轉帳付款的退款時，會請你提供退款用的銀行帳戶，只用在那一次退款。</li>
+    </ul>
+    <p>完整卡號與安全碼在藍新金流的付款頁輸入，本站拿不到。藍新金流回傳的付款結果裡，本站只保存卡號末四碼，不保存卡號前六碼、卡片到期日與 ATM 付款帳號末五碼。本站不會要求你提供姓名、電話、地址或身分證字號。</p>
+
+    <h2>使用目的</h2>
+    <ul>
+      <li>提供帳號、登入與跨裝置同步進度。</li>
+      <li>提供班級功能，讓老師查看班上學生的練習。</li>
+      <li>處理方案的購買、開通、退款與帳務。</li>
+      <li>回覆客服信件與申訴。</li>
+      <li>維護網站安全、找出與修正錯誤。</li>
+    </ul>
+    <p>資料以自動化系統處理，並由站長人工查看。本站不投放廣告，不會把你的資料賣給第三方，也不會提供給第三方做行銷。</p>
+
+    <h2>誰看得到你的資料</h2>
+    <ul>
+      <li>你加入班級後，那一班的老師看得到你的暱稱、Email、學習紀錄與寫作內容，也可以留上課備註，學生看不到備註。退出班級後，那位老師就看不到你的紀錄。</li>
+      <li>站長是資料庫的管理者，技術上看得到所有資料，只在客服、除錯、帳務與批改需要時查看。你購買寫作真人批改時，站長會讀你送出的作文。</li>
+      <li>下一段列出的服務商，在提供服務需要的範圍內處理你的資料。</li>
+      <li>法律規定，或司法、行政機關依法要求時。</li>
+    </ul>
+
+    <h2>服務商與資料存放地點</h2>
+    <ul>
+      <li>帳號、學習紀錄與付款紀錄存放在 Supabase，資料庫位於新加坡。</li>
+      <li>網站放在 GitHub Pages。</li>
+      <li>付款由藍新金流（藍新科技股份有限公司）處理。</li>
+      <li>用 Google 帳號登入時，由 Google 驗證身分。標題字型由 Google Fonts 提供，載入字型時瀏覽器會連到 Google 的伺服器。</li>
+      <li>流量統計使用 Cloudflare Web Analytics，不使用 cookie，也不辨識個人。</li>
+    </ul>
+    <p>這些服務商的伺服器可能在台灣以外的地區。</p>
+
+    <h2>保存期間</h2>
+    <ul>
+      <li>帳號資料、學習紀錄與班級資料保存到你刪除帳號為止。刪除帳號後，雲端上的進度、錯題與寫作內容會一併刪除，無法復原。</li>
+      <li>付款紀錄在刪除帳號後仍會保留，包括 Email、購買項目、金額、日期、付款方式、藍新金流的交易編號、卡號末四碼、收單銀行、授權碼與付款銀行代碼，用在對帳、退款與稅務，保存到法令規定的保存期限屆滿為止。</li>
+      <li>客服信件保存在站長的信箱，你可以寫信要求刪除。</li>
+      <li>存在你裝置上的資料，保存到你清除瀏覽器資料為止。</li>
+    </ul>
+
+    <h2>你的權利</h2>
+    <p>依個人資料保護法第 3 條，你對本站保存的個人資料有以下權利。</p>
+    <ul>
+      <li>查詢或請求閱覽。</li>
+      <li>請求製給複製本。</li>
+      <li>請求補充或更正。</li>
+      <li>請求停止蒐集、處理或利用。</li>
+      <li>請求刪除。</li>
+    </ul>
+    <p>請用註冊的 Email 寫信到 <a href="mailto:bonnie8536@gmail.com">bonnie8536@gmail.com</a>，說明要行使哪一項權利。查詢、閱覽與複製的請求，本站會在 15 天內回覆；其他請求在 30 天內處理，不收費用。暱稱可以自己在網站上修改，帳號可以自己在頭像選單或「我的」頁刪除。法令規定必須保存的付款紀錄，在保存期限內無法刪除。</p>
+    <p>你可以選擇不提供 Email。不註冊也能使用部分練習，但無法同步進度、加入班級或購買方案。</p>
+
+    <h2>Cookie 與裝置上的儲存</h2>
+    <p>本站自己不設定 cookie。練習進度、設定與登入狀態存在瀏覽器的本機儲存空間（localStorage），沒登入時進度只存在這台裝置，清除瀏覽器資料會一併清掉還沒同步的進度。用 Google 帳號登入時，Google 的登入頁面會依 Google 的政策使用 cookie。</p>
+
+    <h2>資料安全</h2>
+    <p>網站全程使用 HTTPS 加密連線。資料庫設定了存取權限，每個人只能讀寫自己的資料，老師只讀得到自己班上學生的紀錄。密碼由 Supabase 以雜湊方式保存，本站看不到密碼。萬一發生資料外洩，本站查明後會通知受影響的使用者。</p>
+
+    <h2>未成年人</h2>
+    <p>未滿 18 歲的使用者，請在家長或監護人同意後再註冊並提供個人資料。</p>
+
+    <h2>政策修改</h2>
+    <p>政策修改時會在本頁公布新版本與適用日期，重大變更會另外寫信通知。</p>
+
+    <p class="legal-back"><a href="index.html">回首頁</a></p>
+  </article>
+</main>
+
+<footer>
+  <div class="container-narrow">
+    <p>刷刷英文由個人經營，與 ETS 及忠欣公司無關；TOEIC 為 ETS 之註冊商標。</p>
+    <nav class="foot-links" aria-label="網站資訊"><a href="pricing.html">方案與價格</a><a href="terms.html">服務條款</a><a href="privacy.html">隱私權政策</a><a href="refund.html">退款政策</a><a href="mailto:bonnie8536@gmail.com">客服信箱 bonnie8536@gmail.com</a></nav>
+  </div>
+</footer>
+</body>
+</html>

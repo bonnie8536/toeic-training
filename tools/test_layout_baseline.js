@@ -27,14 +27,15 @@ const page = (n) => ({ cls: '', main: [0, n, 375, 100 + n], bodyH: 200 + n });
 
 const T = {};
 
-T['真的基準檔：只換 pricing 兩項，其他 42 項原文逐位元組相同，順序不變'] = () => {
+T['真的基準檔：只換 pricing 兩項，其他各項原文逐位元組相同，順序不變'] = () => {
   const upd = {};
   PRICING.forEach((k) => { upd[k] = bump(BASE[k]); });
   const r = mergeBaseline(RAW, upd);
   const a = segments(RAW), b = segments(r.text);
   assert.deepStrictEqual(Object.keys(b), Object.keys(a));
   const others = Object.keys(a).filter((k) => !PRICING.includes(k));
-  assert.strictEqual(others.length, 42);
+  assert.strictEqual(others.length, Object.keys(BASE).length - PRICING.length);
+  assert.ok(others.length >= 42);
   others.forEach((k) => assert.strictEqual(b[k], a[k], k + ' 的原文變了'));
   PRICING.forEach((k) => assert.deepStrictEqual(JSON.parse(r.text)[k], upd[k]));
   assert.deepStrictEqual(r.changed, PRICING);

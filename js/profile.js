@@ -144,7 +144,7 @@
     }
 
     function deleteUser() {
-      if (!confirm('確定要刪除帳號？雲端上的所有進度、錯題與寫作內容都會永久刪除，無法復原。')) return;
+      if (!confirm('確定要刪除帳號？雲端上的所有進度、錯題與寫作內容都會永久刪除，無法復原。付款紀錄依法保留。')) return;
       if (!confirm('再確認一次：真的要刪除「' + CLOUD.user.email + '」？')) return;
       CLOUD.deleteAccount().catch(e => alert(e.message));
     }
@@ -465,9 +465,7 @@
               if (r.needsConfirm) sent(email.value());
             } catch (e) { forgetIntent(); fail(e.message); unlock(); }
           }, name.el, email.el, pw.el);
-          put(heading('註冊'), role ? role.el : null, googleBtn(msg, role), orLine(), form,
-            h('p', { class: 'auth-fine' }, '按下註冊即表示同意',
-              h('a', { href: 'terms.html', target: '_blank', rel: 'noopener' }, '服務條款與隱私權說明'), '。'),
+          put(heading('註冊'), role ? role.el : null, googleBtn(msg, role), orLine(), form, consentLine(),
             switchLine('已經有帳號？', '登入', 'login'));
         } else {
           const email = authField({ label: 'Email', type: 'email', name: 'email', ac: 'username', inputmode: 'email' });
@@ -485,7 +483,7 @@
             try { await CLOUD.login(email.value(), pw.raw()); }   // 成功後 afterAuth 會 reload
             catch (e) { fail(e.message); unlock(); }
           }, email.el, pw.el);
-          put(heading('登入'), googleBtn(msg), orLine(), form,
+          put(heading('登入'), googleBtn(msg), orLine(), form, consentLine(),
             switchLine('還沒有帳號？', '註冊', 'signup'));
         }
       }
@@ -505,6 +503,13 @@
       }
 
       function orLine() { return h('div', { class: 'auth-or' }, h('span', null, '或')); }
+
+      /* 登入分頁也要有:第一次用 Google 登入等於建立帳號 */
+      function consentLine() {
+        return h('p', { class: 'auth-fine' }, '註冊或使用 Google 帳戶登入，即表示同意',
+          h('a', { href: 'terms.html', target: '_blank', rel: 'noopener' }, '服務條款'), '與',
+          h('a', { href: 'privacy.html', target: '_blank', rel: 'noopener' }, '隱私權政策'), '。');
+      }
 
       /* 原生 append(null) 會印出 'null' 這個字,標題在頁面模式是 null,所以要先濾掉 */
       function put(...nodes) { card.append(...nodes.filter(Boolean)); }

@@ -24,6 +24,7 @@
     'diagnostic.html': '程度檢測', 'daily.html': '每日練習', 'grammar.html': '文法基礎', 'phonics.html': '自然發音', 'verbs.html': '不規則動詞', 'vocab.html': '單字訓練',
     'listening.html': '聽力訓練', 'reading.html': '閱讀訓練', 'dialogue.html': '對話練習', 'tenses.html': '時態總整理', 'writing.html': '寫作練習', 'practice.html': '題庫刷題',
     'mock.html': '模擬考', 'history.html': '學習記錄', 'analysis.html': '能力分析', 'admin.html': '教師後台', 'pricing.html': '方案與價格',
+    'terms.html': '服務條款', 'privacy.html': '隱私權政策', 'refund.html': '退款政策',
   };
   const PAGE = (function () {
     let p = location.pathname.split('/').pop() || 'index.html';

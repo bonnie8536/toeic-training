@@ -110,6 +110,10 @@ function logAttempt(m, id, c, ok, extra) {
   hist.push(rec);
   if (hist.length > HIST_MAX) hist.splice(0, hist.length - HIST_MAX);
   store.set('hist', hist);
+  /* 小雞(js/pet-store.js)跟著重算;頁面沒載入或開關關著就什麼都不做 */
+  if (window.PET_STORE && typeof window.PET_STORE.afterAnswer === 'function') {
+    try { window.PET_STORE.afterAnswer(); } catch (e) { /* 小雞出錯不影響作答紀錄 */ }
+  }
 }
 
 /* 頂欄群組選單:桌機 hover/focus 由 CSS 處理,這裡補「點一下切換」給觸控裝置 */

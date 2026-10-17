@@ -13,9 +13,14 @@ const SRC = {
   common: read('js/common.js'),
   cloud: read('js/cloud.js'),
   pet: read('js/pet.js'),
+  food: fs.existsSync(path.join(REPO, 'js/pet-food.js')) ? read('js/pet-food.js') : '',
   config: fs.existsSync(path.join(REPO, 'js/pet-config.js')) ? read('js/pet-config.js') : '',
   store: fs.existsSync(path.join(REPO, 'js/pet-store.js')) ? read('js/pet-store.js') : '',
 };
+/* 第二階段第 1 步的相容版(線上 27557eb 的 js/pet.js 與 js/pet-store.js 原樣複製):開 opt.step1 時用它們 */
+const STEP1 = { pet: read('tools/fixtures/pet_step1.js'), store: read('tools/fixtures/pet_store_step1.js'),
+  /* 舊分頁連 cloud.js 也是舊的(27557eb,cloud 的 builder 存的原樣複製);沒有這個檔就用現在的 */
+  cloud: fs.existsSync(path.join(REPO, 'tools/fixtures/cloud_step1.js')) ? read('tools/fixtures/cloud_step1.js') : read('js/cloud.js') };
 
 const USER = { id: '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72', email: 's@x.com', user_metadata: { name: '學生' } };
 const PID = 'c' + USER.id.replace(/-/g, '');
@@ -109,10 +114,13 @@ function makeClient(w) {
 }
 const tick = async () => { for (let i = 0; i < 8; i++) await new Promise(r => setImmediate(r)); };
 
-/* 開一頁:opt.on 是 PET_ON(預設 true),opt.search 是網址的 ?,opt.noCloud 是沒填雲端設定的網站 */
+/* 開一頁:opt.on 是 PET_ON(預設 true),opt.search 是網址的 ?,opt.noCloud 是沒填雲端設定的網站;
+   opt.step1:載入第 1 步的相容版(連 cloud.js 也是舊的;opt.newCloud 時用現在的 cloud.js,opt.oldCloud 時新版也配舊的 cloud.js);opt.food、opt.roam、opt.from:PET_FOOD、PET_ROAM_V2、PET_FOOD_FROM(沒給就照 pet-config.js);
+   opt.merged:true 時假裝 cloud.js 已經是先合併再上傳的新版(CLOUD.mergedKeys 有 pet),false 時拿掉 */
 function loadPage(w, opt) {
   opt = opt || {};
   const timers = new Map(); let tid = 0;
+  const delays = new Map();   // 每個計時器排的毫秒數(runShort 只跑短的)
   const listeners = {};
   class FakeDate extends Date {
     constructor(...a) { if (a.length) super(...a); else super(w.clock.t); }
@@ -122,8 +130,8 @@ function loadPage(w, opt) {
   const ctx = {
     console: { warn() {}, log() {}, error() {} },
     Date: FakeDate, CustomEvent,
-    setTimeout: fn => { const id = ++tid; timers.set(id, fn); return id; },
-    clearTimeout: id => { timers.delete(id); },
+    setTimeout: (fn, ms) => { const id = ++tid; timers.set(id, fn); delays.set(id, Number(ms) || 0); return id; },
+    clearTimeout: id => { timers.delete(id); delays.delete(id); },
     localStorage: w.local,
     sessionStorage: w.session,
     location: { hash: '', search: opt.search || '', pathname: '/index.html', origin: 'https://x', href: 'https://x/index.html' + (opt.search || ''), reload() { w.reloads++; } },
@@ -142,23 +150,33 @@ function loadPage(w, opt) {
   };
   ctx.window = ctx;
   ctx.addEventListener = (ev, fn) => { (listeners['win:' + ev] = listeners['win:' + ev] || []).push(fn); };
-  ctx.dispatchEvent = e => { w.events.push(e.type); return true; };
+  ctx.dispatchEvent = e => { w.events.push(e.type); (w.evs = w.evs || []).push({ type: e.type, detail: e.detail }); return true; };
   ctx.CLOUD_CONFIG = opt.noCloud ? {} : { url: 'https://x.supabase.co', anonKey: 'k' };
   ctx.supabase = { createClient: () => makeClient(w) };
   vm.createContext(ctx);
   vm.runInContext(SRC.common + '\n;globalThis.__api = { store, logAttempt };', ctx);
-  vm.runInContext(SRC.cloud, ctx);
-  vm.runInContext(SRC.pet, ctx);
+  vm.runInContext((opt.step1 || opt.oldCloud) && !opt.newCloud ? STEP1.cloud : SRC.cloud, ctx);
+  vm.runInContext(opt.step1 ? STEP1.pet : SRC.pet, ctx);
+  if (!opt.step1 && SRC.food) vm.runInContext(SRC.food, ctx);
+  /* 相容版配新的 cloud.js 時,cloud.js 找不到 PET.cloudMerge 就不上傳 pet;要比的是 pet-store 本身的行為,所以借新版的合併函式給它 */
+  if (opt.step1 && opt.lendMerge) { const c2 = { console }; vm.createContext(c2); vm.runInContext(SRC.pet, c2); if (c2.PET.cloudMerge) ctx.PET.cloudMerge = c2.PET.cloudMerge; }
   if (SRC.config) vm.runInContext(SRC.config, ctx);
   ctx.PET_ON = opt.on === undefined ? true : opt.on;
+  if (opt.food !== undefined) ctx.PET_FOOD = opt.food;
+  if (opt.roam !== undefined) ctx.PET_ROAM_V2 = opt.roam;
+  if (opt.from !== undefined) ctx.PET_FOOD_FROM = opt.from;
+  if (opt.merged === true) ctx.CLOUD.mergedKeys = Object.freeze(['pet']);
+  if (opt.merged === false) delete ctx.CLOUD.mergedKeys;
   if (!SRC.store) throw new Error('js/pet-store.js 還不存在');
-  vm.runInContext(SRC.store, ctx);
+  vm.runInContext(opt.step1 ? STEP1.store : SRC.store, ctx);
   const S = ctx.PET_STORE;
   return {
     ctx, S,
     ready: ctx.CLOUD.ready.then(tick).then(() => S && S.ready).then(tick),
     /* 排程中的計時器全部跑完(跑的過程又排的也跑,最多 6 輪);不等小雞的同步佇列,免得卡在等逾時計時器的 readKey */
     async runTimers() { for (let n = 0; n < 6 && timers.size; n++) { const fns = [...timers.values()]; timers.clear(); for (const f of fns) await f(); await tick(); } await tick(); },
+    /* 只跑排了 max 毫秒以內的計時器一輪(例如 earn 等雲端的上限;讀雲端 8 秒的逾時、答題後 4 秒的同步不跑) */
+    async runShort(max) { const ids = [...timers.keys()].filter(i => delays.get(i) <= max); for (const i of ids) { const f = timers.get(i); timers.delete(i); delays.delete(i); if (f) await f(); } await tick(); },
     async fire(name) { (listeners[name] || []).forEach(f => f()); await tick(); },
     answer(m, id) { w.clock.t += 10000; ctx.__api.logAttempt(m, id, 0, true); },
   };
@@ -190,6 +208,25 @@ function others(w) {
   return JSON.stringify(Object.keys(o).sort().map(k => [k, o[k]])) + '|' + JSON.stringify(db);
 }
 const sum = days => Object.values(days || {}).reduce((a, b) => a + b, 0);
+const J = x => JSON.stringify(x);
+const NEWK = ['got', 'ate', 'foodOld', 'once', 'roam'];
+const FROM = addDays(TODAY, -10);            // 食物上線日
+const FOOD = { food: true, from: FROM };     // 打開食物
+const evs = (w, type) => (w.evs || []).filter(e => e.type === type).map(e => e.detail);
+/* 從現在起本機 pet 每一次被寫進去的內容(不論誰寫) */
+function recordPetWrites(w) {
+  const log = [];
+  const orig = w.local.setItem;
+  w.local.setItem = (k, v) => { if (k === PETKEY || k === GUESTKEY) log.push(String(v)); return orig(k, v); };
+  return log;
+}
+const looksV2 = s => /"v":2/.test(s) || /"(got|ate|foodOld|once|roam)":/.test(s);
+/* n 張某種食物的券,放在今天以前的 n 天 */
+function ticketsBefore(food, n) { const got = {}; for (let i = 1; i <= n; i++) got[addDays(TODAY, -i)] = { ['r:t' + i]: food }; return got; }
+/* cloud.js 是不是先合併再上傳的新版(規格 A.5):是的話讀不到雲端時 pet-store 改用 store.set(記帳),帳本上會有 pet */
+const merged = pg => { try { const k = pg.ctx.CLOUD.mergedKeys; return Array.isArray(k) && k.indexOf('pet') >= 0; } catch (e) { return false; } };
+/* 讀不到雲端時記帳交給 cloud.js:要 cloud.js 是先合併的新版,而且第二階段的開關打開了(第 3 步;第 2 步時同一台可能還開著第 1 步的分頁,它的 cloud.js 補傳不先合併,第二輪審查 X1) */
+const ledgers = pg => merged(pg) && !!pg.S && (pg.S.food === true || pg.S.roamV2 === true);
 
 /* 第二階段的紀錄(v2):第一階段的欄位加上食物與走動開關。第 1 步的相容版只能看、一筆都不寫 */
 function v2Pet(over) {
@@ -294,7 +331,7 @@ const scenarios = {
     const c = cp(w);
     return { ok: !!c && c.days[TODAY] === 2, detail: '雲端 ' + JSON.stringify(c) };
   },
-  '8. 讀不到雲端(離線):只寫本機,不記帳、不上傳;恢復連線後合併上傳,雲端原本的天還在': async () => {
+  '8. 讀不到雲端(離線):寫本機,不上傳(cloud.js 是先合併的新版、而且第二階段開關打開時才記帳,其他不記帳);恢復連線後合併上傳,雲端原本的天還在': async () => {
     const w = makeWorld();
     cloudRow(w, 'pet', { v: 1, born: '2026-10-01', days: { '2026-10-01': 25 }, met: ['2026-10-01'] });
     const pg = await openLoggedIn(w);
@@ -309,7 +346,7 @@ const scenarios = {
     w.offline = false;
     await pg.fire('win:online'); await pg.runTimers();
     const c = cp(w);
-    return { ok: !!localOff && localOff.days[TODAY] === 4 && !('pet' in ledOff) && cloudOff === cloudBefore && !!c && c.days['2026-10-01'] === 25 && c.days[TODAY] === 4,
+    return { ok: !!localOff && localOff.days[TODAY] === 4 && ('pet' in ledOff) === ledgers(pg) && cloudOff === cloudBefore && !!c && c.days['2026-10-01'] === 25 && c.days[TODAY] === 4,
              detail: '離線時本機 ' + JSON.stringify(localOff && localOff.days) + ' / 帳本 ' + JSON.stringify(ledOff) + ' / 雲端 ' + (cloudOff === cloudBefore ? '沒動' : '被改了') + '(上傳 pet ' + upOff + ' 次)/ 連線後雲端 ' + JSON.stringify(c && c.days) };
   },
   '9. supabase-js 手上是別的帳號(或沒有登入):readKey 失敗,只寫本機,不上傳': async () => {
@@ -325,7 +362,7 @@ const scenarios = {
     pg.answer('p5', 'q3');
     await pg.S.sync(); await pg.runTimers();
     const l = lp(w);
-    return { ok: r1 === cloudBefore && JSON.stringify(cp(w)) === cloudBefore && !('pet' in led1) && !('pet' in ledger(w)) && !!l && l.days[TODAY] === 3,
+    return { ok: r1 === cloudBefore && JSON.stringify(cp(w)) === cloudBefore && ('pet' in led1) === ledgers(pg) && ('pet' in ledger(w)) === ledgers(pg) && !!l && l.days[TODAY] === 3,
              detail: '雲端 ' + (JSON.stringify(cp(w)) === cloudBefore ? '沒動' : '被改了') + ' / 本機 ' + JSON.stringify(l && l.days) };
   },
   '10. 伺服器一直不回(逾時):只寫本機,不上傳': async () => {
@@ -337,7 +374,7 @@ const scenarios = {
     pg.answer('p5', 'q1');
     await pg.runTimers(); await pg.runTimers();
     const l = lp(w);
-    return { ok: JSON.stringify(cp(w)) === cloudBefore && !('pet' in ledger(w)) && !!l && l.days[TODAY] === 1,
+    return { ok: JSON.stringify(cp(w)) === cloudBefore && ('pet' in ledger(w)) === ledgers(pg) && !!l && l.days[TODAY] === 1,
              detail: '雲端 ' + (JSON.stringify(cp(w)) === cloudBefore ? '沒動' : '被改了') + ' / 本機 ' + JSON.stringify(l && l.days) };
   },
   '11. 讀雲端時別台剛好寫了新的一天:讀到的那份併進來,不會被蓋掉': async () => {
@@ -352,13 +389,13 @@ const scenarios = {
   },
 
   /* ---------- 救不回的 ---------- */
-  '12. 雲端那份救不回(字串、陣列、v:2):本機與雲端都不寫,畫面照樣算得出今天的題數': async () => {
+  '12. 雲端那份救不回(字串、陣列、v:3;相容版遇到 v:2):本機與雲端都不寫,畫面照樣算得出今天的題數': async () => {
     const out = [];
-    for (const bad of ['oops', [1, 2], { v: 2, days: { '2026-10-01': 9 } }]) {
+    for (const [bad, opt] of [['oops', {}], [[1, 2], {}], [{ v: 3, days: { '2026-10-01': 9 } }, {}], [{ v: 2, days: { '2026-10-01': 9 } }, { step1: true }]]) {
       const w = makeWorld();
       cloudRow(w, 'pet', bad);
       cloudRow(w, 'hist', dayHist(TODAY, 3));
-      const pg = await openLoggedIn(w);
+      const pg = await openLoggedIn(w, opt);
       const r = await pg.S.feed();
       const st = pg.S.view();
       /* 灌資料時 cloud.js 會照抄雲端那份到本機;之後小雞不改它 */
@@ -443,7 +480,7 @@ const scenarios = {
     w.offline = false;
     await pg.fire('win:online'); await pg.runTimers();
     const c = cp(w);
-    return { ok: r.ok && r.uploaded === false && off.fed === 5 && !off.led && c.fed[TODAY] === 5 && c.days['2026-10-02'] === 30 && c.days[TODAY] === 5,
+    return { ok: r.ok && r.uploaded === false && off.fed === 5 && off.led === ledgers(pg) && c.fed[TODAY] === 5 && c.days['2026-10-02'] === 30 && c.days[TODAY] === 5,
              detail: '離線 ' + JSON.stringify(off) + ' / 連線後雲端 ' + JSON.stringify({ fed: c.fed, days: c.days }) };
   },
   '20. 本機那份救不回時按餵食:回 readOnly,不寫': async () => {
@@ -464,7 +501,8 @@ const scenarios = {
     const view = pg.S.view().status.todayCount;   // 畫面不用等同步
     await pg.runTimers();
     const c = cp(w);
-    return { ok: view === 5 && w.keyReads.length - reads === 1 && w.upserts.filter(k => k === 'pet').length - ups === 1 && c.days[TODAY] === 5 && JSON.parse(w.local.getItem(PREFIX + 'hist')).length === 5,
+    /* 小雞讀一次;cloud.js 是先合併再上傳的新版時,它上傳前自己再讀一次 */
+    return { ok: view === 5 && w.keyReads.length - reads === (merged(pg) ? 2 : 1) && w.upserts.filter(k => k === 'pet').length - ups === 1 && c.days[TODAY] === 5 && JSON.parse(w.local.getItem(PREFIX + 'hist')).length === 5,
              detail: '畫面 ' + view + ' / 讀雲端 ' + (w.keyReads.length - reads) + ' 次 / 上傳 pet ' + (w.upserts.filter(k => k === 'pet').length - ups) + ' 次 / 雲端 ' + JSON.stringify(c.days) };
   },
   '22. 每次同步後通知畫面(pet:change),答題後也會': async () => {
@@ -666,13 +704,13 @@ const scenarios = {
   },
 
   /* ---------- 第二階段第 1 步:相容版遇到 v2(別台裝了新版)只看不寫 ---------- */
-  '34. 雲端是 v2(灌資料後本機也是 v2):開頁、同步、餵飼料、改目標、取名各 3 次,本機與雲端的 pet 一次都沒寫,其他鍵逐位元組不變;畫面照 v2 顯示,說明資料是新版網頁存的(newer)': async () => {
+  '34. 相容版:雲端是 v2(灌資料後本機也是 v2):開頁、同步、餵飼料、改目標、取名各 3 次,本機與雲端的 pet 一次都沒寫,其他鍵逐位元組不變;畫面照 v2 顯示,說明資料是新版網頁存的(newer)': async () => {
     const w = makeWorld();
     const rec = v2Pet();
     cloudRow(w, 'pet', JSON.parse(JSON.stringify(rec)));
     cloudRow(w, 'hist', dayHist(TODAY, 3));
     cloudRow(w, 'drill_p5', ['a']);
-    const pg = await openLoggedIn(w);
+    const pg = await openLoggedIn(w, { step1: true });
     const afterOpen = { l: w.local.getItem(PETKEY), c: JSON.stringify(cp(w)) };
     const before = others(w);
     const writes = countPetWrites(w);
@@ -689,12 +727,12 @@ const scenarios = {
     return { ok: okData && okView && okAfter,
              detail: snap + ' / 資料 ' + okData + ' / 回覆 ' + JSON.stringify(res.map(r => r && r.reason)).slice(0, 80) + ' / 畫面 ' + JSON.stringify({ ro: v.readOnly, newer: v.newer, v: v.pet && v.pet.v, stage: s.stage, name: s.name, streak: s.streak, shields: s.shields, today: s.todayCount, food: s.food }) + ' / 答題後(會寫 hist)pet 寫 ' + writes.n + ' 次、' + okAfter };
   },
-  '35. 本機 v2、讀不到雲端(離線)與訪客:動作全部回絕,本機那份一個 byte 都沒變,不記帳、不上傳;恢復連線後雲端那份 v1 也不動': async () => {
+  '35. 相容版:本機 v2、讀不到雲端(離線)與訪客:動作全部回絕,本機那份一個 byte 都沒變,不記帳、不上傳;恢復連線後雲端那份 v1 也不動': async () => {
     const out = [];
     const w = makeWorld();
     const cloud1 = { v: 1, born: '2026-10-01', days: { '2026-10-01': 25 }, met: ['2026-10-01'] };
     cloudRow(w, 'pet', cloud1);
-    const pg = await openLoggedIn(w);
+    const pg = await openLoggedIn(w, { step1: true });
     const cloudBefore = JSON.stringify(cp(w));
     const raw = JSON.stringify(v2Pet());
     w.local.setItem(PETKEY, raw);   // 同一台另一個分頁的新版寫的
@@ -714,17 +752,17 @@ const scenarios = {
     setLocal(g, 'tr_hist', dayHist(TODAY, 2));
     g.local.setItem(GUESTKEY, raw);
     const gw = countPetWrites(g);
-    const pgG = loadPage(g); await pgG.ready;
+    const pgG = loadPage(g, { step1: true }); await pgG.ready;
     const resG = await pokeAll(pgG, g);
     const vg = pgG.S.view();
     out.push({ ok: gw.n === 0 && g.local.getItem(GUESTKEY) === raw && allRefused(resG) && vg.readOnly && vg.status.name === '小黃' && vg.status.todayCount === 25,
                d: '訪客:寫 ' + gw.n + ' 次、畫面 ' + JSON.stringify({ name: vg.status.name, today: vg.status.todayCount }) });
     return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
   },
-  '36. 這個分頁開著時別台把雲端升成 v2(本機還是 v1):本機、雲端都不寫;畫面顯示兩邊合併的結果': async () => {
+  '36. 相容版:這個分頁開著時別台把雲端升成 v2(本機還是 v1):本機、雲端都不寫;畫面顯示兩邊合併的結果': async () => {
     const w = makeWorld();
     cloudRow(w, 'hist', dayHist(TODAY, 4));
-    const pg = await openLoggedIn(w);
+    const pg = await openLoggedIn(w, { step1: true });
     const localRaw = w.local.getItem(PETKEY);
     const rec = v2Pet();
     w.db.find(r => r.k === 'pet').v = JSON.parse(JSON.stringify(rec));
@@ -737,10 +775,10 @@ const scenarios = {
                && v.readOnly && v.newer === true && v.status.name === '小黃' && v.status.stage === 3 && v.pet.days[TODAY] === 25,
              detail: '寫 ' + writes.n + ' 次 / 本機 ' + (w.local.getItem(PETKEY) === localRaw ? '沒動' : '被改') + ' / 雲端 ' + (same(cp(w), rec) ? '沒動' : '被改') + ' / 畫面 ' + JSON.stringify({ ro: v.readOnly, newer: v.newer, name: v.status.name, stage: v.status.stage, today: v.pet.days[TODAY] }) };
   },
-  '37. 本機 v2、雲端被舊分頁蓋回 v1(本機有雲端沒有的天):兩邊都不寫,誰都沒少;畫面顯示合併': async () => {
+  '37. 相容版:本機 v2、雲端被舊分頁蓋回 v1(本機有雲端沒有的天):兩邊都不寫,誰都沒少;畫面顯示合併': async () => {
     const w = makeWorld();
     cloudRow(w, 'hist', dayHist(TODAY, 1));
-    const pg = await openLoggedIn(w);
+    const pg = await openLoggedIn(w, { step1: true });
     const raw = JSON.stringify(v2Pet());
     w.local.setItem(PETKEY, raw);
     const cloud1 = { v: 1, born: '2026-09-01', days: { '2026-09-01': 30 }, met: ['2026-09-01'], name: '阿啾', nameAt: 9 };
@@ -765,6 +803,307 @@ const scenarios = {
       const v = pg.S.view();
       out.push({ ok: v.newer === newer && v.readOnly === (where !== 'none'), d: where + ':' + JSON.stringify({ ro: v.readOnly, newer: v.newer }) });
     }
+    return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
+  },
+  /* ---------- 第二階段第 2 步:新版(開關關著時跟第 1 步一樣;打開時食物、走動開關) ---------- */
+  '39. 兩個開關都關著:30 天的使用(答題、同步、餵飼料、改目標、取名、離線、呼叫 earn、eat、setRoam),寫出的每一份 pet、寫入次數、雲端、view() 的鍵都跟第 1 步相同;新函式全部回 off;從頭到尾沒有 v2': async () => {
+    const runOne = async opt => {
+      const w = makeWorld();
+      cloudRow(w, 'pet', { v: 1, born: '2026-09-20', days: { '2026-09-20': 25 }, met: ['2026-09-20'], name: '小黃', nameAt: 3 });
+      cloudRow(w, 'hist', dayHist(TODAY, 2));
+      cloudRow(w, 'daily_done', { [TODAY]: { d: { a: 1, b: 1, c: 1, e: 1, f: 1 } } });
+      cloudRow(w, 'mock_history', [{ d: new Date(tp(TODAY + ' 09:00:00')).toISOString(), size: 'mini' }]);
+      const log = recordPetWrites(w);
+      const pg = await openLoggedIn(w, Object.assign({ merged: false }, opt));
+      const out = { cloud: [], keys: [], offs: [], ups: 0 };
+      for (let i = 0; i < 30; i++) {
+        w.clock.t = tp(addDays(TODAY, i) + ' 10:00:00');
+        w.offline = i % 9 === 4;
+        for (let j = 0; j < 3 + (i % 4) * 6; j++) pg.answer('p5', 'd' + i + '-' + j);
+        await pg.runTimers(); await pg.S.idle();
+        if (i % 3 === 0) await pg.S.feed();
+        if (i % 7 === 2) await pg.S.setGoal([10, 20, 40][i % 3]);
+        if (i % 11 === 5) await pg.S.rename('啾' + i);
+        if (!opt.step1) {
+          const e = pg.S.eat('corn');
+          out.offs.push(J([(await pg.S.earn({ id: 'd' })).result, (await pg.S.earn({ id: 'g:ga-01', n: 9 })).result, e.ok, e.reason, (await e.saved).reason, (await pg.S.setRoam(false)).reason]));
+        }
+        w.clock.t += 5 * 60e3; await pg.fire('doc:visibilitychange'); await pg.runTimers(); await pg.S.idle();
+        out.cloud.push(JSON.stringify(cp(w)));
+        out.keys.push(J(Object.keys(pg.S.view())));
+      }
+      out.ups = w.upserts.filter(k => k === 'pet').length;
+      return { log, out };
+    };
+    /* 兩組:都配舊的 cloud.js(只比 pet-store 與 pet.js);都配現在的 cloud.js(相容版借新版的合併函式,不然 cloud.js 不上傳 pet) */
+    const res = [];
+    for (const [na, nb] of [[{ oldCloud: true }, { step1: true }], [{}, { step1: true, newCloud: true, lendMerge: true }]]) {
+      const a = await runOne(na), b = await runOne(nb);
+      const offOk = a.out.offs.length === 30 && a.out.offs.every(x => x === '["off","off",false,"off","off","off"]');
+      const v2 = a.log.concat(a.out.cloud).some(looksV2);
+      res.push({ ok: J(a.log) === J(b.log) && J(a.out.cloud) === J(b.out.cloud) && J(a.out.keys) === J(b.out.keys) && a.out.ups === b.out.ups && offOk && !v2 && a.log.length > 20,
+                 d: (na.oldCloud ? '舊 cloud.js' : '現在的 cloud.js') + ':本機寫 ' + a.log.length + ' / ' + b.log.length + ' 次、內容 ' + (J(a.log) === J(b.log) ? '相同' : '不同') + '、雲端 ' + (J(a.out.cloud) === J(b.out.cloud) ? '相同' : '不同') + '、上傳 ' + a.out.ups + ' / ' + b.out.ups + '、鍵 ' + (J(a.out.keys) === J(b.out.keys) ? '相同' : '不同') + '、新函式 ' + (a.out.offs[0] || '') + '、v2 ' + v2 });
+    }
+    return { ok: res.every(x => x.ok), detail: res.map(x => x.d).join(' / ') };
+  },
+  '40. 新版、開關關著:雲端 v2、本機 v1(別台新版寫的):合併後還是 v2、新欄位一個都沒掉;同步、餵飼料、改目標、取名之後也一樣;不唯讀、不說 newer': async () => {
+    const w = makeWorld();
+    cloudRow(w, 'hist', dayHist(TODAY, 4));
+    const pg = await openLoggedIn(w);
+    const rec = v2Pet();
+    w.db.find(r => r.k === 'pet').v = JSON.parse(JSON.stringify(rec));
+    const res = await pokeAll(pg, w);
+    const c = cp(w), l = lp(w), v = pg.S.view();
+    const keep = x => !!x && x.v === 2 && NEWK.every(k => J(x[k]) === J(rec[k]));
+    return { ok: keep(c) && keep(l) && same(c, l) && c.name === '啾2' && c.days[TODAY] === 25 && res.every(r => r.ok || r.reason === 'noFood') && v.readOnly === false && v.newer === false && !('food' in v) && !('roam' in v),
+             detail: J({ cloud: keep(c), local: keep(l), name: c && c.name, res: res.map(r => r.ok || r.reason), ro: v.readOnly, newer: v.newer }) };
+  },
+  '41. 同一個瀏覽器開相容版和新版兩個分頁(雲端是 v2):各同步 3 輪,寫入 0 次;相容版唯讀,顯示的階段和名字跟新版一致': async () => {
+    const w = makeWorld();
+    cloudRow(w, 'pet', v2Pet());
+    cloudRow(w, 'hist', dayHist(TODAY, 3));
+    const pgNew = await openLoggedIn(w);
+    const pgOld = loadPage(w, { step1: true }); await pgOld.ready; await pgOld.runTimers();
+    const writes = countPetWrites(w); const ups = w.upserts.length;
+    for (let i = 0; i < 3; i++) {
+      await pgNew.S.sync(); await pgOld.S.sync();
+      w.clock.t += 2 * 60e3;
+      await pgNew.fire('doc:visibilitychange'); await pgOld.fire('doc:visibilitychange'); await pgNew.runTimers(); await pgOld.runTimers();
+    }
+    const vn = pgNew.S.view(), vo = pgOld.S.view();
+    return { ok: writes.n === 0 && !w.upserts.slice(ups).includes('pet') && vo.readOnly && vo.newer && !vn.readOnly && vn.status.stage === vo.status.stage && vn.status.name === vo.status.name && vn.status.streak === vo.status.streak && vn.status.stage === 3,
+             detail: '寫 ' + writes.n + ' 次 / 新版 ' + J({ ro: vn.readOnly, stage: vn.status.stage, name: vn.status.name }) + ' / 相容版 ' + J({ ro: vo.readOnly, newer: vo.newer, stage: vo.status.stage, name: vo.status.name }) };
+  },
+  '42. 食物打開:earn 只寫 pet,其他鍵全部不動;券寫進本機與雲端;送 pet:earn(source hook)': async () => {
+    const w = makeWorld();
+    cloudRow(w, 'hist', dayHist(TODAY, 3)); cloudRow(w, 'drill_p5', ['a']); cloudRow(w, 'vgame_banks', [{ name: 'x' }]);
+    const pg = await openLoggedIn(w, FOOD);
+    const before = others(w);
+    const r = await pg.S.earn({ id: 'g:ga-01', n: 10 }); await pg.runTimers();
+    const c = cp(w);
+    const ev = evs(w, 'pet:earn');
+    return { ok: r.result === 'got' && r.food === 'pea' && r.id === 'g:ga-01' && !!c && c.v === 2 && c.got[TODAY]['g:ga-01'] === 'pea' && same(lp(w), c) && others(w) === before
+               && ev.length === 1 && J(ev[0]) === J({ result: 'got', food: 'pea', id: 'g:ga-01', date: TODAY, source: 'hook' }) && pg.S.food === true && pg.S.roamV2 === false,
+             detail: J({ r, got: c && c.got, others: others(w) === before, ev }) };
+  },
+  /* 第二輪審查:網路看起來連著、其實不通(訊號差、要登入的 Wi-Fi)時,讀雲端要等 8 秒才逾時,前面還排著答題後的同步就是 16 秒;
+     結束畫面只等 10 秒。券不用等雲端:等 2 秒還沒結果就先只寫本機(跟讀不到雲端時同一條路),離開頁面時也先寫 */
+  '42a. 網路卡住(讀雲端一直不回)、前面還有一次同步在等:earn 2 秒後先寫在本機並回 got,之後換頁那張券還在,網路好了傳上雲端': async () => {
+    const w = makeWorld();
+    cloudRow(w, 'hist', dayHist(TODAY, 3));
+    const pg = await openLoggedIn(w, FOOD);
+    w.readGate = new Promise(() => {});
+    pg.S.sync();                                     // 答題後排的同步正在讀雲端
+    await tick();
+    let r = null;
+    pg.S.earn({ id: 'g:ga-01', n: 10 }).then(x => { r = x; });
+    await tick();
+    const early = r;
+    await pg.runShort(3000);                         // 只過了 3 秒:讀雲端的 8 秒逾時還沒到
+    const l = lp(w), ev = evs(w, 'pet:earn');
+    /* 學生換頁(同一個工作階段),網路恢復 */
+    w.readGate = null;
+    const p2 = loadPage(w, FOOD); await p2.ready; await p2.runTimers(); await p2.S.idle();
+    const l2 = lp(w), c = cp(w);
+    return { ok: early === null && !!r && r.result === 'got' && r.food === 'pea' && !!l && l.got && l.got[TODAY] && l.got[TODAY]['g:ga-01'] === 'pea' &&
+               ev.length === 1 && ev[0].source === 'hook' && !('pet' in ledger(w) && !ledgers(pg)) && l2.got[TODAY]['g:ga-01'] === 'pea' && !!c && c.got && c.got[TODAY]['g:ga-01'] === 'pea',
+             detail: J({ early, r, local: l && l.got, ev: ev.length, next: l2 && l2.got, cloud: c && c.got }) };
+  },
+  '42b. 網路卡住時拿到點心、2 秒內就離開頁面(pagehide):券先寫在本機,下一頁還在;讀不到雲端時寫本機的規則不變(記帳只在第 3 步)': async () => {
+    const out = [];
+    for (const how of ['pagehide', 'hidden']) {
+      const w = makeWorld();
+      cloudRow(w, 'hist', dayHist(TODAY, 3));
+      const pg = await openLoggedIn(w, FOOD);
+      w.readGate = new Promise(() => {});
+      pg.S.earn({ id: 'wr:u1' });
+      await tick();
+      if (how === 'pagehide') await pg.fire('win:pagehide');
+      else { pg.ctx.document.visibilityState = 'hidden'; await pg.fire('doc:visibilitychange'); }
+      const l = lp(w);
+      w.readGate = null;
+      const p2 = loadPage(w, FOOD); await p2.ready; await p2.runTimers(); await p2.S.idle();
+      const c = cp(w);
+      out.push({ ok: !!l && !!l.got && !!l.got[TODAY] && l.got[TODAY]['wr:u1'] === 'greens' && !!c && !!c.got && c.got[TODAY]['wr:u1'] === 'greens',
+        d: how + ':離開時本機 ' + J(l && l.got) + ' / 下一頁雲端 ' + J(c && c.got) });
+    }
+    return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
+  },
+  '42d. 網路卡住時拿到點心(2 秒後先寫本機)、卡住的同步又失敗,然後登出:券記在帳本上,登出前補傳到雲端;網路還不通時登出會先問(第三輪審查 #2)': async () => {
+    const out = [];
+    for (const back of [true, false]) {
+      const w = makeWorld();
+      cloudRow(w, 'pet', { v: 1, born: addDays(TODAY, -5), goals: [], days: { [YDAY]: 3 }, met: [], oldMet: 0, oldBefore: '', fed: {}, name: '', nameAt: 0 });
+      const pg = await openLoggedIn(w, FOOD);
+      await pg.S.idle();
+      let release; w.readGate = new Promise(r => { release = r; });   // 網路看起來連著,請求卻卡住
+      w.clock.t += 60000;
+      const p = pg.S.earn({ id: 'pr', n: 10 });
+      await tick();
+      await pg.runShort(2000);   // earn 等 2 秒:先寫本機
+      const r = await p;
+      const ledQuick = 'pet' in ledger(w);
+      w.offline = true; release(); w.readGate = null;   // 卡住的那次讀雲端終於失敗
+      await tick(); await pg.S.idle(); await tick();
+      const ledAfter = 'pet' in ledger(w);
+      w.offline = !back;   // 網路恢復了但沒有 online 事件(它從來沒顯示離線);或還是不通
+      let asked = false; pg.ctx.confirm = () => { asked = true; return false; };
+      await pg.ctx.CLOUD.logout();
+      const c = cp(w);
+      const inCloud = !!(c && c.got && c.got[TODAY] && c.got[TODAY].pr === 'tomato');
+      const kept = !!lp(w) && !!lp(w).got && lp(w).got[TODAY].pr === 'tomato';
+      out.push({ ok: r.result === 'got' && r.food === 'tomato' && ledQuick && ledAfter && (back ? inCloud && !asked : asked && kept && !inCloud),
+        d: (back ? '網路恢復' : '還是不通') + ':' + J({ r: r.result, ledQuick, ledAfter, inCloud, asked, kept }) });
+    }
+    return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
+  },
+  '42c. 網路正常時 earn 照舊等合併後的結果(不先寫本機):別台今天已經拿過,這台回 cap,本機和雲端都只有那一張': async () => {
+    const w = makeWorld();
+    cloudRow(w, 'hist', dayHist(TODAY, 3));
+    const pg = await openLoggedIn(w, FOOD);
+    const c0 = cp(w);
+    w.db.find(x => x.k === 'pet').v = Object.assign({}, c0, { v: 2, got: { [TODAY]: { d: 'corn' } } });   // 手機剛拿到
+    const writes = recordPetWrites(w);
+    const r = await pg.S.earn({ id: 'g:ga-01', n: 10 }); await pg.runTimers(); await pg.runShort(5000);
+    const c = cp(w), l = lp(w);
+    return { ok: r.result === 'cap' && J(c.got) === J({ [TODAY]: { d: 'corn' } }) && J(l.got) === J(c.got) && !writes.some(s => /g:ga-01/.test(s)),
+             detail: J({ r, cloud: c.got, local: l.got }) };
+  },
+  '43. 食物打開:從 daily_done、mock_history、diag、達標補的券寫進 got;補到今天的才送 pet:earn(source backfill);那幾個鍵本機與雲端一個字都沒變': async () => {
+    const w = makeWorld();
+    const d1 = addDays(TODAY, -3), d2 = addDays(TODAY, -2), d3 = addDays(TODAY, -1);
+    const daily = { [d1]: { d: { a: 1, b: 1, c: 1, e: 1, f: 0 } } };
+    const mock = [{ d: new Date(tp(d2 + ' 09:00:00')).toISOString(), size: 'mini', lRaw: 1 }];
+    const diag = { answers: { 0: 1 }, done: true, startedAt: new Date(tp(d3 + ' 19:00:00')).toISOString(), finishedAt: new Date(tp(d3 + ' 20:00:00')).toISOString() };
+    cloudRow(w, 'daily_done', daily); cloudRow(w, 'mock_history', mock); cloudRow(w, 'diag', diag);
+    cloudRow(w, 'hist', dayHist(TODAY, 25));
+    const raw = () => J([w.local.getItem(PREFIX + 'daily_done'), w.local.getItem(PREFIX + 'mock_history'), w.local.getItem(PREFIX + 'diag'), w.local.getItem(PREFIX + 'hist')]);
+    const pg = await openLoggedIn(w, FOOD);
+    const r0 = raw();
+    await pg.S.sync(); await pg.runTimers();
+    const c = cp(w);
+    const ev = evs(w, 'pet:earn').filter(e => e.source === 'backfill');
+    const rows = ['daily_done', 'mock_history', 'diag'].map(k => J(w.db.find(r => r.k === k).v));
+    const want = [[d1, 'd', 'corn'], [d2, 'mock', 'melon'], [d3, 'diag', 'melon'], [TODAY, 'm', 'greens']];
+    return { ok: want.every(([d, id, f]) => c.got[d] && c.got[d][id] === f) && c.once.diag === d3 && J(rows) === J([daily, mock, diag].map(J)) && raw() === r0
+               && J(JSON.parse(w.local.getItem(PREFIX + 'daily_done'))) === J(daily) && ev.length >= 1 && ev.every(e => e.date === TODAY && e.id === 'm' && e.food === 'greens'),
+             detail: J({ got: c && c.got, once: c && c.once, ev: ev.map(e => e.date + ' ' + e.id) }) };
+  },
+  '44. 每日練習一項做完(daily_done 已經記了 5 題)時掛勾叫 earn("d"):拿到玉米,不會被補寫先搶走變成「拿過了」': async () => {
+    const w = makeWorld();
+    cloudRow(w, 'hist', dayHist(TODAY, 2));
+    const pg = await openLoggedIn(w, FOOD);
+    setLocal(w, PREFIX + 'daily_done', { [TODAY]: { d: { a: 1, b: 1, c: 1, e: 1, f: 1 } } });
+    const r = await pg.S.earn({ id: 'd' }); await pg.runTimers();
+    const ev = evs(w, 'pet:earn').filter(e => e.date === TODAY);
+    return { ok: r.result === 'got' && r.food === 'corn' && ev.length === 1 && ev[0].source === 'hook' && cp(w).got[TODAY].d === 'corn', detail: J({ r, ev }) };
+  },
+  '45. 食物打開:earn 的每一種結果(got、cap、full、once、off、bad、short);short 不排隊、不讀雲端': async () => {
+    const w0 = makeWorld(); const p0 = await openLoggedIn(w0, { food: false, from: FROM });
+    const off = await p0.S.earn({ id: 'd' });
+    const w1 = makeWorld(); const p1 = await openLoggedIn(w1, { food: true, from: '' });
+    const off2 = await p1.S.earn({ id: 'd' });
+    const w = makeWorld();
+    cloudRow(w, 'hist', dayHist(TODAY, 6));
+    cloudRow(w, 'pet', { v: 2, born: '2026-09-20', got: ticketsBefore('melon', 9), once: { diag: '2026-09-30' } });
+    const pg = await openLoggedIn(w, FOOD);
+    const reads = w.keyReads.length;
+    const short = await pg.S.earn({ id: 'g:ga-01', n: 4 });
+    const shortReads = w.keyReads.length - reads;
+    const bad = await pg.S.earn({ id: 'zz' });
+    const full = await pg.S.earn({ id: 'mock' });
+    const once = await pg.S.earn({ id: 'diag' });
+    const got = await pg.S.earn({ id: 'iv', n: 5 });
+    const cap = await pg.S.earn({ id: 'p5', n: 20 });
+    const res = [off, off2, short, bad, full, once, got, cap].map(r => r.result);
+    return { ok: J(res) === J(['off', 'off', 'short', 'bad', 'full', 'once', 'got', 'cap']) && shortReads === 0 && full.food === 'melon' && got.food === 'pea' && [off, off2, short, bad, once, cap].every(r => r.food === null) && p0.S.food === false && p1.S.food === false,
+             detail: J({ res, shortReads, full, got }) };
+  },
+  '46. 食物打開:這次唯讀(雲端是更新版 v3)時 earn 回 later,記在分頁裡;之後第一次正常的同步依原本的完成時間(前一天)補寫,送 pet:earn(source later)': async () => {
+    const w = makeWorld();
+    cloudRow(w, 'hist', dayHist(TODAY, 6));
+    const pg = await openLoggedIn(w, FOOD);
+    w.db.find(r => r.k === 'pet').v = { v: 3 };
+    w.clock.t = tp(TODAY + ' 23:50:00');
+    const r = await pg.S.earn({ id: 'g:ga-01', n: 10 });
+    const cloudV3 = same(cp(w), { v: 3 }) && !lp(w).got;
+    w.clock.t = tp(addDays(TODAY, 1) + ' 08:00:00');
+    w.db.find(r => r.k === 'pet').v = JSON.parse(JSON.stringify(lp(w)));   // 別台退回來了
+    await pg.S.sync(); await pg.runTimers();
+    const c = cp(w);
+    const ev = evs(w, 'pet:earn').filter(e => e.source === 'later');
+    await pg.S.sync(); await pg.runTimers();
+    const ev2 = evs(w, 'pet:earn').filter(e => e.source === 'later');
+    return { ok: r.result === 'later' && r.food === null && cloudV3 && !!c.got && c.got[TODAY] && c.got[TODAY]['g:ga-01'] === 'pea' && ev.length === 1 && ev[0].date === TODAY && ev2.length === 1,
+             detail: J({ r, cloudV3, got: c && c.got, ev }) };
+  },
+  '47. 食物打開:eat 當場回 ok 與剩幾份,saved 等正式寫入;寫入時雲端變成 v3 就 saved.ok false、本機沒寫;食物沒開回 off': async () => {
+    const w = makeWorld(); cloudRow(w, 'hist', dayHist(TODAY, 6));
+    const pg = await openLoggedIn(w, FOOD);
+    await pg.S.earn({ id: 'd' }); await pg.runTimers();
+    const e = pg.S.eat('corn');
+    const s = await e.saved; await pg.runTimers();
+    const c = cp(w);
+    const after = pg.S.view().pantry;
+    const w2 = makeWorld(); cloudRow(w2, 'hist', dayHist(TODAY, 6));
+    const pg2 = await openLoggedIn(w2, FOOD);
+    await pg2.S.earn({ id: 'iv', n: 9 }); await pg2.runTimers();
+    w2.db.find(r => r.k === 'pet').v = { v: 3 };
+    const e2 = pg2.S.eat('pea'); const s2 = await e2.saved;
+    const w3 = makeWorld(); const pg3 = await openLoggedIn(w3, { food: false });
+    const e3 = pg3.S.eat('corn'); const s3 = await e3.saved;
+    const bad = pg.S.eat('grain');
+    return { ok: e.ok && e.left === 0 && s.ok && !!c.ate && Object.values(c.ate[TODAY]).includes(TODAY + '/d') && same(lp(w), c) && after.ateToday && after.stock.corn === 0
+               && e2.ok && s2.ok === false && s2.reason === 'readOnly' && !lp(w2).ate && e3.ok === false && e3.reason === 'off' && s3.ok === false && s3.reason === 'off' && bad.ok === false && bad.reason === 'badFood',
+             detail: J({ e: [e.ok, e.left], s, ate: c && c.ate, s2, e3: e3.reason, bad: bad.reason }) };
+  },
+  '48. 同一個分頁快速連點 5 次:earn 排隊後只有第一個拿到、其他 cap;eat 第一下成功,其他當場就回 ateToday;上傳次數不多': async () => {
+    const w = makeWorld(); cloudRow(w, 'hist', dayHist(TODAY, 6));
+    const pg = await openLoggedIn(w, FOOD);
+    const ups = w.upserts.filter(k => k === 'pet').length;
+    const rs = await Promise.all(['g:ga-01', 'iv', 'pairs', 'p5', 'mock'].map(id => pg.S.earn({ id, n: 10 })));
+    const eats = [0, 1, 2, 3, 4].map(() => pg.S.eat('pea'));
+    const saved = await Promise.all(eats.map(e => e.saved));
+    await pg.runTimers();
+    const up = w.upserts.filter(k => k === 'pet').length - ups;
+    const c = cp(w);
+    return { ok: J(rs.map(r => r.result)) === J(['got', 'cap', 'cap', 'cap', 'cap']) && eats[0].ok && eats.slice(1).every(e => e.ok === false && e.reason === 'ateToday') && saved[0].ok && saved.slice(1).every(s => s.ok === false)
+               && Object.keys(c.ate[TODAY]).length === 1 && up >= 1 && up <= 2,
+             detail: J({ rs: rs.map(r => r.result), eats: eats.map(e => e.ok || e.reason), saved: saved.map(s => s.ok), up, ate: c && c.ate }) };
+  },
+  '49. view():開關都關時鍵跟第 1 步一樣;食物打開多 food、pantry;走動打開多 roamV2、roam': async () => {
+    const keysOf = async opt => { const w = makeWorld(); cloudRow(w, 'hist', dayHist(TODAY, 3)); const pg = await openLoggedIn(w, opt); return Object.keys(pg.S.view()); };
+    const k1 = await keysOf({ step1: true }), k0 = await keysOf({}), kf = await keysOf(FOOD), kr = await keysOf({ roam: true }), kb = await keysOf(Object.assign({ roam: true }, FOOD));
+    return { ok: J(k0) === J(k1) && J(kf) === J(k1.concat(['food', 'pantry'])) && J(kr) === J(k1.concat(['roamV2', 'roam'])) && J(kb) === J(k1.concat(['food', 'pantry', 'roamV2', 'roam'])),
+             detail: J({ k1, k0, kf, kr, kb }) };
+  },
+  '50. 走動開關:PET_ROAM_V2 關著時 setRoam 回 off、不寫;打開時寫 roam(v2),view().roam 跟著變;食物關著也一樣': async () => {
+    const w0 = makeWorld(); const p0 = await openLoggedIn(w0);
+    const writes = countPetWrites(w0);
+    const r0 = await p0.S.setRoam(false);
+    const w = makeWorld(); cloudRow(w, 'hist', dayHist(TODAY, 3));
+    const pg = await openLoggedIn(w, { roam: true });
+    const v0 = pg.S.view().roam;
+    const r = await pg.S.setRoam(false); await pg.runTimers();
+    const v1 = pg.S.view().roam, c = cp(w);
+    return { ok: r0.ok === false && r0.reason === 'off' && writes.n === 0 && v0 === true && r.ok && v1 === false && c.v === 2 && c.roam.on === false && !c.got && pg.S.roamV2 === true && pg.S.food === false,
+             detail: J({ r0, w: writes.n, v0, r: r.ok, v1, roam: c && c.roam }) };
+  },
+  '51. 讀不到雲端時(規格 A.5):cloud.js 是先合併的新版(mergedKeys 有 pet)而且第二階段的開關打開了(第 3 步)才用 store.set 記帳交給它;開關都關著(第 2 步,同一台可能還開著第 1 步的分頁)或舊版 cloud.js 照舊只寫本機;讀得到雲端但對不了時(沒有憑證)一律只寫本機': async () => {
+    const out = [];
+    const c0 = { v: 1, born: '2026-10-01', days: { '2026-10-01': 25 }, met: ['2026-10-01'] };
+    for (const [m, sw] of [[true, {}], [false, {}], [true, FOOD], [true, { roam: true }], [false, FOOD]]) {
+      const w = makeWorld(); cloudRow(w, 'pet', c0);
+      const pg = await openLoggedIn(w, Object.assign({ merged: m }, sw));
+      const before = J(cp(w));
+      const want = m && (sw.food === true || sw.roam === true);
+      w.offline = true; pg.answer('p5', 'a'); pg.answer('p5', 'b'); await pg.runTimers(); await pg.S.idle();
+      out.push({ ok: merged(pg) === m && ('pet' in ledger(w)) === want && lp(w).days[TODAY] === 2 && J(cp(w)) === before,
+        d: 'mergedKeys ' + m + ' 開關 ' + J(sw) + ':帳本 ' + ('pet' in ledger(w)) + '(應該 ' + want + ')、雲端 ' + (J(cp(w)) === before ? '沒動' : '被改') });
+    }
+    const w = makeWorld(); cloudRow(w, 'pet', c0); cloudRow(w, 'hist', dayHist(TODAY, 3)); w.noToken = true;
+    await openLoggedIn(w, { merged: true });
+    out.push({ ok: !('pet' in ledger(w)) && same(cp(w), c0) && lp(w).days[TODAY] === 3, d: '沒有憑證:帳本 ' + ('pet' in ledger(w)) + '、雲端 ' + (same(cp(w), c0) ? '沒動' : '被改') });
     return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
   },
 };

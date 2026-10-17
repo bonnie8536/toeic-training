@@ -1,14 +1,16 @@
-/* 小雞的純計算(路線圖 1.2a)。不碰畫面、不讀寫任何儲存鍵:呼叫的人把 hist 與 pet 傳進來,自己決定要不要存。
-   測試:node tools/test_pet.js。目前沒有頁面載入這個檔。
+/* 小雞的純計算(路線圖 1.2a;第二階段規格在 repo 外的 小雞第二階段規格.md)。不碰畫面、不讀寫任何儲存鍵:
+   呼叫的人把 hist 與 pet 傳進來,自己決定要不要存。測試:node tools/test_pet.js。
    - 有效題數:同一題(模組加題號)同一天只算一次;跟上一筆相隔不到 2 秒的不算;
      交卷時用迴圈一次寫很多筆(時間只差幾毫秒)算同一批,整批跟前一筆比;單字考題用 n、翻牌配對用配對數(最多 50)。
    - 跨日一律看台北時間(UTC+8,沒有日光節約),不看裝置時區。
    - pet 只存發生過的事實(每天題數、達標日、目標歷史、餵了幾顆、名字),連續天數、保護卡、成長階段每次重算。
      合併逐日取大、達標日取聯集,兩台裝置怎麼互蓋都不會倒退。
    - 日期比今天晚 7 天以內的先留著、不算進任何數字(時鐘慢的裝置不會刪掉別台的新進度);更晚的丟掉(時鐘被調快不留永久的錯)。
-   - 壞掉的欄位一個一個救;整個救不回或版本比 1 新就唯讀,不寫回。
-   - 第二階段的格式(v: 2)看得懂舊欄位、照常顯示,但唯讀;feed、setGoal、rename、merge 拿到它或救不回的直接丟錯。
-     這一版從不寫出 v2 或任何新欄位(第二階段規格 5.3 第 1 步)。 */
+   - 壞掉的欄位一個一個救;整個救不回或版本不認得(v 是大於 1 又不是 2 的數字)就唯讀,不寫回。
+   - 第二階段(v: 2)加了食物與走動開關:got(拿到的券)、ate(吃掉哪一張)、foodOld(壓縮掉的舊券)、once(一輩子一次的)、
+     roam(走動開關)。這一版照常讀寫 v2;新欄位只在有內容時才寫出來。v1 進來、沒有新內容,出去還是 v1,
+     而且跟 f18d208 那一版逐位元組相同(test_pet.js 比對)。合併只取聯集,已經拿到的券永遠不收回。
+     獎勵規則(拿到哪種食物)在 js/pet-food.js。 */
 'use strict';
 globalThis.PET = (function () {
   const V = 1;
@@ -87,20 +89,18 @@ globalThis.PET = (function () {
   /* ---------- 整理(救壞掉的欄位) ---------- */
   function empty() { return { v: V, born: '', goals: [], days: {}, met: [], oldMet: 0, oldBefore: '', fed: {}, name: '', nameAt: 0 }; }
   function isPlain(o) { return !!o && typeof o === 'object' && !Array.isArray(o); }
-  /* 第二階段的格式(v2):第一階段的欄位原樣,加上食物與走動開關。這一版看得懂第一階段那些欄位,
-     照常顯示,但整份唯讀、一筆都不寫(不寫回本機、不上傳、不把它整理成 v1 寫出去);新欄位不看也不帶出去 */
   const V_NEXT = 2;
-  /* 剛好是 v2 才算;v3、1.5 這些不認得的版本不算(規格 5.3:跟現在一樣)。pet-store 用它決定畫面要不要說「新版網頁存的」 */
+  /* 剛好是 v2 才算 */
   function isNext(raw) { return isPlain(raw) && raw.v === V_NEXT; }
-  /* 救不回:不是物件、或版本比 1 新又不是 2 */
+  /* 救不回:不是物件、或版本比 1 新又不是 2(v3、1.5 這些不認得的版本) */
   function unusable(raw) {
     if (raw === null || raw === undefined) return false;
     if (!isPlain(raw)) return true;
     return typeof raw.v === 'number' && raw.v > V && raw.v !== V_NEXT;
   }
-  /* 會產生要寫出去的那份的函式(feed、setGoal、rename、merge)拿到 v2 或救不回的,直接丟錯,不回傳任何 pet */
+  /* 會產生要寫出去的那份的函式拿到救不回的,直接丟錯,不回傳任何 pet */
   function writable(raw) {
-    if (unusable(raw) || isNext(raw)) throw new Error('這份小雞資料是較新的版本或讀不懂,這一版不改它');
+    if (unusable(raw)) throw new Error('這份小雞資料是較新的版本或讀不懂,這一版不改它');
   }
   function cleanCount(x, max) {
     if (typeof x !== 'number' || !isFinite(x)) return 0;
@@ -118,6 +118,7 @@ globalThis.PET = (function () {
   }
   function sortedKeys(o) { const s = {}; Object.keys(o).sort().forEach(k => { s[k] = o[k]; }); return s; }
 
+  /* 第一階段的欄位(v1 的樣子;v2 的新欄位另外由 readFood 整理) */
   function sanitizeObj(raw, today) {
     const p = empty();
     if (!isPlain(raw)) return p;
@@ -141,14 +142,16 @@ globalThis.PET = (function () {
     if (p.name) p.nameAt = cleanCount(raw.nameAt, 9e15);
     return trim(p, today);
   }
+  /* 整份整理:v1 照舊;v2 另外帶上整理過的新欄位 */
+  function full(raw, today) {
+    const p = sanitizeObj(raw, today);
+    return isNext(raw) ? attach(p, readFood(raw, today), true) : p;
+  }
   function sanitize(raw, now) {
     const today = todayOf(now);
     if (unusable(raw)) return { pet: empty(), readOnly: true };
-    if (isNext(raw)) return { pet: markNext(sanitizeObj(raw, today)), readOnly: true };
-    return { pet: sanitizeObj(raw, today), readOnly: false };
+    return { pet: full(raw, today), readOnly: false };
   }
-  /* 顯示用的那份保留 v:2,不會變成看起來可以寫的 v1 */
-  function markNext(p) { p.v = V_NEXT; return p; }
 
   /* 同一天開始的目標只留一筆:後改的(at 大)贏,同時改的取大的,結果跟順序無關 */
   function dedupeGoals(list) {
@@ -174,6 +177,149 @@ globalThis.PET = (function () {
     return p;
   }
 
+  /* ---------- 第二階段的欄位:食物(券)與走動開關 ---------- */
+  const KEEP_FOOD = 120;    // got、ate 留幾天,更早的壓縮進 foodOld
+  const MAX_STOCK = 9;      // 每種點心最多存幾份(在拿到時判斷,js/pet-food.js)
+  const PER_DAY = 4;        // 每天最多留幾張券、幾筆吃掉(正常一天 1 張;要 4 台以上同時離線才會超過)
+  const LEFT_MAX = 100000;
+  const ID_RE = /^[a-z0-9:_-]{1,24}$/;
+  const EAT_ID_RE = /^[a-z0-9]{1,24}$/;
+  const FOOD_RE = /^[a-z]{2,10}$/;
+  const TICKET_RE = /^(\d{4}-\d{2}-\d{2}\/[a-z0-9:_-]{1,24}|old:\d{4}-\d{2}-\d{2}:[a-z]{2,10}:(0|[1-9]\d{0,5}))$/;
+  const OLD_RE = /^old:(\d{4}-\d{2}-\d{2}):([a-z]{2,10}):(0|[1-9]\d{0,5})$/;
+  const FOODS = Object.freeze([
+    ['grain', '飼料', '顆'], ['corn', '玉米', '份'], ['greens', '青江菜', '份'], ['pea', '豌豆', '份'], ['berry', '藍莓', '份'],
+    ['tomato', '小番茄', '份'], ['melon', '西瓜', '份'], ['yam', '地瓜', '份'], ['worm', '麵包蟲', '份'],
+  ].map(([id, name, unit]) => Object.freeze({ id, name, unit })));
+  const SNACKS = Object.freeze(FOODS.slice(1).map(f => f.id));
+  const FAVS = Object.freeze(['corn', 'greens', 'yam']);
+
+  const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+  const okId = id => ID_RE.test(id) && id !== '__proto__';
+  const isFood = x => typeof x === 'string' && FOOD_RE.test(x);
+  const isTicket = x => typeof x === 'string' && TICKET_RE.test(x);
+  function nonEmpty(o) { return !!o && Object.keys(o).length > 0; }
+  function noFood() { return { got: {}, ate: {}, foodOld: null, once: {}, roam: null }; }
+
+  /* 一種「日期 -> { id: 值 }」的欄位:日期有效、不晚於今天加 7 天、不早於 before;id 符合格式、值通過 ok;
+     每天最多留 PER_DAY 筆(id 最小的)。被刪掉的吃掉紀錄會讓食物退回來,這是刻意的(寧可多給) */
+  function cleanDated(o, today, before, ok) {
+    const out = {};
+    if (!isPlain(o)) return out;
+    Object.keys(o).sort().forEach(d => {
+      if (!isDate(d) || d > addDays(today, AHEAD) || (before && d < before) || !isPlain(o[d])) return;
+      const day = {};
+      Object.keys(o[d]).filter(id => okId(id) && ok(o[d][id])).sort().slice(0, PER_DAY).forEach(id => { day[id] = o[d][id]; });
+      if (nonEmpty(day)) out[d] = day;
+    });
+    return out;
+  }
+  /* 讀 v2 的新欄位,壞掉的那一欄自己丟掉,其他照留 */
+  function readFood(raw, today) {
+    const F = noFood();
+    const fo = raw.foodOld;
+    if (isPlain(fo) && isDate(fo.before) && fo.before <= addDays(today, AHEAD)) {
+      const left = {};
+      if (isPlain(fo.left)) Object.keys(fo.left).sort().forEach(k => {
+        if (FOOD_RE.test(k) && typeof fo.left[k] === 'number' && isFinite(fo.left[k])) left[k] = cleanCount(fo.left[k], LEFT_MAX);
+      });
+      F.foodOld = { before: fo.before, left };
+    }
+    F.got = raw.got;
+    F.ate = raw.ate;
+    if (isPlain(raw.once)) Object.keys(raw.once).sort().forEach(id => { if (okId(id) && isDate(raw.once[id])) F.once[id] = raw.once[id]; });
+    const r = raw.roam;
+    if (isPlain(r) && typeof r.on === 'boolean' && typeof r.at === 'number' && isFinite(r.at)) F.roam = { on: r.on, at: cleanCount(r.at, 9e15) };
+    return normFood(F, today);
+  }
+  function normFood(F, today) {
+    const before = F.foodOld ? F.foodOld.before : '';
+    return compress({ got: cleanDated(F.got, today, before, isFood), ate: cleanDated(F.ate, today, before, isTicket), foodOld: F.foodOld, once: F.once, roam: F.roam }, today);
+  }
+  function foodOf(raw, today) { return isNext(raw) ? readFood(raw, today) : noFood(); }
+
+  function eatenOf(F) {
+    const s = new Set();
+    Object.keys(F.ate).forEach(d => Object.keys(F.ate[d]).forEach(id => s.add(F.ate[d][id])));
+    return s;
+  }
+  /* 舊券 old:<before>:<食物>:<序號>,序號 0 到 left-1;被吃掉幾張 */
+  function oldEaten(fo, f, eaten) {
+    let n = 0;
+    eaten.forEach(t => { const m = OLD_RE.exec(t); if (m && m[1] === fo.before && m[2] === f && +m[3] < fo.left[f]) n++; });
+    return n;
+  }
+  /* 壓縮(附錄 A.4):最早一筆 got 或 ate 早於「今天減 119 天」時,截止日 c 設成那天;
+     早於 c 的券加上現有的舊券,沒被任何 ate(不論日期)指到的逐種數進 foodOld.left,刪掉早於 c 的 got 與 ate。
+     吃光的食物在 left 留 0,托盤那一格才不會消失 */
+  function compress(F, today) {
+    const c = addDays(today, -(KEEP_FOOD - 1));
+    if (!Object.keys(F.got).concat(Object.keys(F.ate)).some(d => d < c)) return F;
+    return fold(F, c, eatenOf(F));
+  }
+  /* 把 F 壓縮到截止日 c:舊券(left 減掉被 eaten 指到的)加上早於 c、沒被 eaten 指到的券,逐種數進 left,before 設成 c,
+     刪掉早於 c 的 got 與 ate。eaten 由呼叫的人給(合併時是兩邊的吃掉紀錄) */
+  function fold(F, c, eaten) {
+    const left = {};
+    if (F.foodOld) Object.keys(F.foodOld.left).forEach(f => { left[f] = F.foodOld.left[f] - oldEaten(F.foodOld, f, eaten); });
+    const got = {}, ate = {};
+    Object.keys(F.got).forEach(d => {
+      if (d >= c) { got[d] = F.got[d]; return; }
+      Object.keys(F.got[d]).forEach(id => { const f = F.got[d][id]; left[f] = (left[f] || 0) + (eaten.has(d + '/' + id) ? 0 : 1); });
+    });
+    Object.keys(F.ate).forEach(d => { if (d >= c) ate[d] = F.ate[d]; });
+    const l2 = {};
+    Object.keys(left).sort().forEach(f => { l2[f] = Math.max(0, Math.min(LEFT_MAX, left[f])); });
+    return { got, ate, foodOld: { before: c, left: l2 }, once: F.once, roam: F.roam };
+  }
+
+  /* 合併(附錄 A.3):got、ate 逐日逐 id 聯集(同 id 不同值取字串較小的);foodOld 兩邊先壓縮到較晚的 before 再逐種取大;
+     once 聯集取較早的日期;roam 後改的贏,同時改的 on:false 贏(休息優先)。合併完再整理一次(每天上限、壓縮) */
+  function unionDated(a, b) {
+    const out = {};
+    [a, b].forEach(o => Object.keys(o).forEach(d => {
+      const day = own(out, d) ? out[d] : (out[d] = {});
+      Object.keys(o[d]).forEach(id => { const v = o[d][id]; if (!own(day, id) || v < day[id]) day[id] = v; });
+    }));
+    return out;
+  }
+  function mergeFood(A, B) {
+    /* 兩邊的 before 不同時(例如一台停用很久,自己壓縮到今天的截止日;另一台在截止日附近沒有券,before 還停在以前):
+       先把兩邊都壓縮到較晚的那個 before,再逐種取大。直接取 before 較晚的那組,會整份丟掉另一邊的舊券(第三輪審查 #1)。
+       重新壓縮時看兩邊的吃掉紀錄,另一台吃掉的舊券不會又算成沒吃 */
+    let foodOld = null;
+    const befores = [A.foodOld, B.foodOld].filter(Boolean).map(o => o.before).sort();
+    if (befores.length) {
+      const cut = befores[befores.length - 1];
+      const eaten = new Set([...eatenOf(A), ...eatenOf(B)]);
+      const at = F => (F.foodOld && F.foodOld.before === cut ? F : fold(F, cut, eaten));
+      A = at(A); B = at(B);
+      const left = {};
+      [A.foodOld, B.foodOld].forEach(o => Object.keys(o.left).forEach(f => { left[f] = Math.max(own(left, f) ? left[f] : 0, o.left[f]); }));
+      foodOld = { before: cut, left };
+    }
+    const once = {};
+    [A.once, B.once].forEach(o => Object.keys(o).forEach(id => { if (!own(once, id) || o[id] < once[id]) once[id] = o[id]; }));
+    let roam = A.roam || B.roam;
+    if (A.roam && B.roam) roam = A.roam.at !== B.roam.at ? (A.roam.at > B.roam.at ? A.roam : B.roam) : { on: A.roam.on && B.roam.on, at: A.roam.at };
+    return { got: unionDated(A.got, B.got), ate: unionDated(A.ate, B.ate), foodOld, once, roam };
+  }
+  /* 把新欄位接到整理好的舊欄位後面:有任何一個有內容、或輸入本來就是 v2,結果才是 v2;空的欄位不寫出來 */
+  function attach(p, F, wasNext) {
+    const has = nonEmpty(F.got) || nonEmpty(F.ate) || !!F.foodOld || nonEmpty(F.once) || !!F.roam;
+    if (!wasNext && !has) return p;
+    p.v = V_NEXT;
+    const dated = o => { const s = {}; Object.keys(o).sort().forEach(d => { s[d] = sortedKeys(o[d]); }); return s; };
+    if (nonEmpty(F.got)) p.got = dated(F.got);
+    if (nonEmpty(F.ate)) p.ate = dated(F.ate);
+    if (F.foodOld) p.foodOld = { before: F.foodOld.before, left: sortedKeys(F.foodOld.left) };
+    if (nonEmpty(F.once)) p.once = sortedKeys(F.once);
+    if (F.roam) p.roam = { on: F.roam.on, at: F.roam.at };
+    return p;
+  }
+  /* 動作(feed、setGoal、rename)做在舊欄位上,新欄位原樣帶著 */
+  function carry(p, raw, today) { return isNext(raw) ? attach(p, readFood(raw, today), true) : p; }
+
   /* ---------- 合併 ---------- */
   function mergeClean(a, b, today) {
     const p = empty();
@@ -194,10 +340,15 @@ globalThis.PET = (function () {
     if (names.length) { p.name = names[0].name; p.nameAt = names[0].nameAt; }
     return trim(p, today);
   }
+  /* 有一邊是 v2 時新欄位聯集;兩邊都是 v1 就跟以前完全一樣 */
+  function withFood(p, a, b, today) {
+    if (!isNext(a) && !isNext(b)) return p;
+    return attach(p, normFood(mergeFood(foodOf(a, today), foodOf(b, today)), today), true);
+  }
   function merge(a, b, now) {
     writable(a); writable(b);
     const today = todayOf(now);
-    return mergeClean(sanitizeObj(a, today), sanitizeObj(b, today), today);
+    return withFood(mergeClean(sanitizeObj(a, today), sanitizeObj(b, today), today), a, b, today);
   }
 
   /* ---------- 目標 ---------- */
@@ -213,7 +364,7 @@ globalThis.PET = (function () {
     const p = sanitizeObj(pet, today);
     const from = addDays(today, 1);
     p.goals = dedupeGoals(p.goals.filter(g => g.from < from).concat([{ from, n, at: Math.floor(now) }]));
-    return p;
+    return carry(p, pet, today);
   }
   function rename(pet, name, now) {
     writable(pet);
@@ -221,7 +372,7 @@ globalThis.PET = (function () {
     const p = sanitizeObj(pet, today);
     p.name = Array.from(String(name || '').trim()).slice(0, NAME_MAX).join('');
     p.nameAt = p.name ? Math.floor(now) : 0;
-    return p;
+    return carry(p, pet, today);
   }
 
   /* ---------- 從 hist 補進來,重算達標日 ---------- */
@@ -240,17 +391,16 @@ globalThis.PET = (function () {
   }
 
   /* 打開小雞時呼叫:本機那份、雲端那份(沒有就 null)、hist,回傳要顯示的 pet 與要不要寫回。
-     readOnly:有一份救不回或是新版格式,這次只顯示不寫,也不動雲端那份。
-     有一份是 v2:兩邊認得的欄位合併起來顯示(那份保留 v:2),一樣唯讀;救不回的那份當成空的。
+     readOnly:有一份救不回(不認得的版本),這次只顯示不寫,也不動雲端那份;救不回的那份當成空的。
+     v2 照常合併、照常寫(新欄位聯集)。
      changed:結果跟本機存的不一樣(要寫回本機);remoteBehind:結果跟雲端那份不一樣(要上傳)。 */
   function reconcile(o) {
     const today = todayOf(o.now);
-    const next = isNext(o.local) || isNext(o.remote);
-    const readOnly = next || unusable(o.local) || unusable(o.remote);
-    const local = unusable(o.local) ? empty() : sanitizeObj(o.local, today);
-    const remote = unusable(o.remote) ? empty() : sanitizeObj(o.remote, today);
-    const pet = absorb(mergeClean(local, remote, today), o.hist, today);
-    if (next) markNext(pet);
+    const readOnly = unusable(o.local) || unusable(o.remote);
+    const lraw = unusable(o.local) ? null : o.local, rraw = unusable(o.remote) ? null : o.remote;
+    const local = lraw === null ? empty() : sanitizeObj(lraw, today);
+    const remote = rraw === null ? empty() : sanitizeObj(rraw, today);
+    const pet = withFood(absorb(mergeClean(local, remote, today), o.hist, today), lraw, rraw, today);
     if (readOnly) return { pet, readOnly: true, changed: false, remoteBehind: false };
     const c = canon(pet);
     return {
@@ -260,14 +410,112 @@ globalThis.PET = (function () {
     };
   }
 
-  /* ---------- 餵食 ---------- */
+  /* ---------- 餵食(飼料) ---------- */
   function feed(pet, now) {
     writable(pet);
     const today = todayOf(now);
     const p = sanitizeObj(pet, today);
     p.fed[today] = Math.max(p.fed[today] || 0, p.days[today] || 0);
     p.fed = sortedKeys(p.fed);
-    return p;
+    return carry(p, pet, today);
+  }
+
+  /* ---------- 點心:剩幾份、吃 ---------- */
+  function foodName(code) { const f = FOODS.find(x => x.id === code); return f ? f.name : ''; }
+  function favOf(born) {
+    if (typeof born !== 'string' || !born) return FAVS[0];
+    return FAVS[[...born].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % FAVS.length];
+  }
+  /* 每種還沒被吃掉的券有幾張(含不認得的食物代號;畫面只看 SNACKS)。maxDate:只算這天以前的券(晚於今天的到那天才顯示) */
+  function stockOf(F, maxDate) {
+    const eaten = eatenOf(F);
+    const n = {};
+    if (F.foodOld) Object.keys(F.foodOld.left).forEach(f => { n[f] = F.foodOld.left[f] - oldEaten(F.foodOld, f, eaten); });
+    Object.keys(F.got).forEach(d => {
+      if (maxDate && d > maxDate) return;
+      Object.keys(F.got[d]).forEach(id => { const f = F.got[d][id]; n[f] = (own(n, f) ? n[f] : 0) + (eaten.has(d + '/' + id) ? 0 : 1); });
+    });
+    return n;
+  }
+  function ticketFood(t, F) {
+    const m = OLD_RE.exec(t);
+    if (m) return m[2];
+    const i = t.indexOf('/'), d = t.slice(0, i), id = t.slice(i + 1);
+    return own(F.got, d) && own(F.got[d], id) ? F.got[d][id] : '';
+  }
+  function pantryOf(p, F, today) {
+    const stock = stockOf(F, today);
+    const seen = new Set(F.foodOld ? Object.keys(F.foodOld.left) : []);
+    Object.keys(F.got).forEach(d => { if (d <= today) Object.keys(F.got[d]).forEach(id => seen.add(F.got[d][id])); });
+    eatenOf(F).forEach(t => { const f = ticketFood(t, F); if (f) seen.add(f); });
+    const order = SNACKS.filter(f => seen.has(f));
+    const out = {};
+    order.forEach(f => { out[f] = Math.max(0, own(stock, f) ? stock[f] : 0); });
+    const gotIds = own(F.got, today) ? Object.keys(F.got[today]).sort() : [];
+    const ateIds = own(F.ate, today) ? Object.keys(F.ate[today]).sort() : [];
+    const practiced = (p.days[today] || 0) > 0 || gotIds.length > 0;
+    const af = ateIds.length ? ticketFood(F.ate[today][ateIds[0]], F) : '';
+    return {
+      stock: out, order, practiced,
+      ateToday: ateIds.length > 0,
+      ateFood: SNACKS.includes(af) ? af : null,
+      gotToday: gotIds.length ? { id: gotIds[0], food: F.got[today][gotIds[0]] } : null,
+      canSnack: practiced && !ateIds.length,
+      fav: favOf(p.born), favKnown: own(F.once, 'fav'),
+    };
+  }
+  function split(pet, today) { return unusable(pet) ? { p: empty(), F: noFood() } : { p: sanitizeObj(pet, today), F: foodOf(pet, today) }; }
+  /* 托盤要的東西;畫面只看這個,不自己算券 */
+  function pantry(pet, now) {
+    const today = todayOf(now);
+    const s = split(pet, today);
+    return pantryOf(s.p, s.F, today);
+  }
+  /* 同種裡最舊、還沒被吃掉的那張:先舊券(序號小的),再依日期、id */
+  function pickTicket(F, food, today) {
+    const eaten = eatenOf(F);
+    if (F.foodOld && own(F.foodOld.left, food)) {
+      for (let i = 0; i < F.foodOld.left[food]; i++) { const t = 'old:' + F.foodOld.before + ':' + food + ':' + i; if (!eaten.has(t)) return t; }
+    }
+    for (const d of Object.keys(F.got).sort()) {
+      if (d > today) break;
+      for (const id of Object.keys(F.got[d]).sort()) { const t = d + '/' + id; if (F.got[d][id] === food && !eaten.has(t)) return t; }
+    }
+    return '';
+  }
+  /* 吃一份點心。eatId 由 pet-store 產生([a-z0-9]{1,24})。拒絕時什麼都不寫、不回 pet */
+  function eat(pet, food, eatId, now) {
+    if (unusable(pet)) return { ok: false, reason: 'readOnly' };
+    if (!SNACKS.includes(food)) return { ok: false, reason: 'badFood' };
+    if (typeof eatId !== 'string' || !EAT_ID_RE.test(eatId)) throw new Error('吃的 id 格式不對');
+    const today = todayOf(now);
+    const { p, F } = split(pet, today);
+    const pan = pantryOf(p, F, today);
+    if (!pan.practiced) return { ok: false, reason: 'notToday' };
+    if (pan.ateToday) return { ok: false, reason: 'ateToday' };
+    const ticket = pickTicket(F, food, today);
+    if (!ticket) return { ok: false, reason: 'none' };
+    const ate = Object.assign({}, F.ate, { [today]: Object.assign({}, own(F.ate, today) ? F.ate[today] : {}, { [eatId]: ticket }) });
+    const once = food === favOf(p.born) && !own(F.once, 'fav') ? Object.assign({}, F.once, { fav: today }) : F.once;
+    const F2 = normFood(Object.assign({}, F, { ate, once }), today);
+    return { ok: true, pet: attach(p, F2, true), ticket, left: Math.max(0, stockOf(F2, today)[food] || 0) };
+  }
+
+  /* ---------- 走動開關 ---------- */
+  function roamOn(pet) { return !(isNext(pet) && isPlain(pet.roam) && pet.roam.on === false); }
+  function setRoam(pet, on, now) {
+    writable(pet);
+    const today = todayOf(now);
+    const { p, F } = split(pet, today);
+    return attach(p, Object.assign({}, F, { roam: { on: !!on, at: cleanCount(now, 9e15) } }), true);
+  }
+
+  /* ---------- cloud.js 上傳前用:本機那份跟雲端那份合併(不讀 hist、不補今天) ---------- */
+  function cloudMerge(localRaw, cloudRaw, now) {
+    if (unusable(localRaw) || unusable(cloudRaw)) return { ok: false };
+    const v = merge(localRaw, cloudRaw, now);
+    const c = canon(v);
+    return { ok: true, v, sameAsLocal: c === canon(localRaw), sameAsCloud: c === canon(cloudRaw) };
   }
 
   /* ---------- 狀態(畫面用) ---------- */
@@ -328,5 +576,10 @@ globalThis.PET = (function () {
     return JSON.stringify(x === undefined ? null : x);
   }
 
-  return { dateOf, isSleeping, countHist, sanitize, merge, reconcile, setGoal, rename, feed, status, stageOf, accessoriesOf, goalOn, canon, isNext };
+  return {
+    dateOf, isSleeping, countHist, sanitize, merge, reconcile, setGoal, rename, feed, status, stageOf, accessoriesOf, goalOn, canon, isNext, isDate,
+    FOODS, SNACKS, MAX_STOCK, FAVS, KEEP_FOOD, foodName, favOf, roamOn, setRoam, pantry, eat, cloudMerge,
+    /* 給 js/pet-food.js 用的內部工具(同一套整理與合併規則);畫面不要用 */
+    _inner: Object.freeze({ STAGES, DAY, AHEAD, ID_RE, okId, isTime, todayOf, addDays, unusable, streakOf, split, normFood, attach, stockOf, own }),
+  };
 })();

@@ -7,6 +7,7 @@
 :root {
   --ink: #404040;
   --ink-light: #767f88;
+  --ink-soft: #5d6670;   /* 白底 5.8:1。付款視窗與價格頁的說明小字用(--ink-light 只有 4.07:1,不到 4.5:1) */
   --primary: #0b72c4;
   --primary-dark: #095d9f;
   --primary-tint: #e9f4fc;
@@ -2208,6 +2209,71 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   .pricing-table th, .pricing-table td { padding: 9px 6px; }
 }
 
+/* ======== 購買與付款結果(js/checkout.js、js/pay-result.js;PAID_UI 打開,或站長的 ?paytest=1 才出現) ========
+   購買按鈕放在每個方案的價格下面;按下去是一個確認視窗:選項目、勾選同意、前往付款。
+   選項用原生 radio,選中的那一列用主色框加淡底,跟註冊時選名額同一套語言。元件一律平的,不加厚底陰影 */
+.topbar-inner > .brand + .profile-widget { margin-left: auto; }   /* 價格頁、付款結果頁沒有導覽列:頭像照樣靠右 */
+.pricing-buy { margin: 0 0 16px; }
+.pricing-buy-btn { min-height: 44px; padding: 0 22px; font-size: 15.5px; }
+.pricing-buy-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.pricing-test { border-style: dashed; }
+.modal-buy { max-width: 400px; }
+/* 老師方案的購買視窗比手機與 1280×720、1366×768 的筆電畫面高:外框可以捲動、從頂端排,
+   標題、付款帳號、關閉鈕與最下面的條款連結才看得到(跟註冊視窗的 .auth-role 同一種做法) */
+.modal-mask.buy-mask { overflow-y: auto; align-items: flex-start; }
+.modal-mask.buy-mask > .modal { margin: auto; }
+.buy-opts { border: 0; margin: 0; padding: 0; min-width: 0; }
+.buy-legend { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.buy-opt-list { display: grid; gap: 8px; }
+.buy-opt {
+  position: relative; display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 6px 14px;
+  border: 1px solid var(--line); border-radius: 10px; background: #fff; font-size: 15px; color: var(--ink); cursor: pointer;
+}
+.buy-opt input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--primary); cursor: pointer; }
+.buy-opt input[hidden] { display: none; }
+.buy-opt-name { flex: 1; min-width: 0; }
+.buy-opt-amt { font-family: var(--round); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.buy-opt:has(input:checked) { border-color: var(--primary); background: var(--primary-tint); }
+.buy-opt:has(input[hidden]) { cursor: default; }
+.buy-opt:has(input:focus-visible) { outline: 2px solid var(--primary); outline-offset: 2px; }
+.buy-consent {
+  display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 10px; background: var(--bg-soft);
+  font-size: 14.5px; line-height: 1.6; color: var(--ink); cursor: pointer;
+}
+.buy-consent input { flex: none; width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--primary); cursor: pointer; }
+.buy-consent:has(input:focus-visible) { outline: 2px solid var(--primary); outline-offset: 2px; }
+.modal-buy .auth-fine { margin-top: 12px; text-align: center; color: var(--ink-soft); }
+.modal-buy .auth-fine a { text-decoration: underline; text-underline-offset: 2px; }
+/* 價格頁按鈕旁的一句說明(已經可以使用、班級提供、老師方案請聯絡站長);沒有按鈕時只有這一句 */
+.pricing-buy-note { margin: 0 0 10px; font-size: 14.5px; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
+.pricing-buy-note:last-child { margin-bottom: 0; }
+/* 選項下面的起算說明、勾選框下面「怎樣算開始使用」。顏色用 --ink-soft:白底對比要到 4.5:1(2026-10-17 第二輪複審) */
+.buy-note { margin: 10px 2px 0; font-size: 13.5px; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
+.buy-note[hidden] { display: none; }
+.buy-def { margin: 6px 2px 0; font-size: 13.5px; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
+/* 送出中:按鈕維持主色、不淡掉(跟還沒勾選的停用狀態分得出來) */
+.modal-buy[aria-busy="true"] .buy-submit { opacity: 1; cursor: progress; }
+/* 送出中「正在前往付款頁」寫在按鈕上;提示區的同一句只給讀螢幕軟體,畫面上不重複(第三輪複審) */
+.auth-msg.buy-sending { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* 送出中焦點移到標題(讀螢幕軟體用),不畫框 */
+.modal-buy .auth-h:focus { outline: none; }
+
+.pay-result { margin: 8px 0 40px; padding: 28px 24px 22px; border: 1px solid var(--line); border-radius: 12px; background: #fff; text-align: center; }
+.pay-h { font-size: 22px; margin-bottom: 10px; }
+.pay-h:focus { outline: none; }   /* 有最後結果時程式把焦點移到標題(朗讀用),不畫框 */
+.pay-result.is-ok .pay-h { color: var(--ok); }
+.pay-result.is-bad .pay-h { color: var(--bad); }
+.pay-line { margin: 0 0 6px; font-size: 15.5px; line-height: 1.7; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; text-wrap: pretty; }
+.pay-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
+.pay-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px; font-size: 15.5px; text-decoration: none; }
+.pay-btn:hover { text-decoration: none; }
+.pay-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.pay-order { margin: 18px 0 0; font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .pay-result { padding: 22px 16px 18px; }
+  .pay-actions { display: grid; }
+}
+
 /* ======== 付費牆與「我的」頁的方案(js/paywall.js,只有 PAID_UI 打開才會出現) ======== */
 .modal-paywall { max-width: 360px; text-align: center; padding: 28px 24px 18px; }
 .pw-icon { display: inline-flex; color: var(--primary); margin-bottom: 6px; }
@@ -2230,7 +2296,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 .me-static-val { color: var(--ink-light); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .me-bill { padding: 4px 16px 14px; border-top: 1px solid var(--line); background: var(--bg-soft); }
 .me-bill-sec + .me-bill-sec { margin-top: 4px; }
-.me-bill-h { margin: 10px 0 4px; font-family: inherit; font-size: 13.5px; font-weight: 700; color: var(--ink-light); }
+.me-bill-h { margin: 10px 0 4px; font-family: inherit; font-size: 13.5px; font-weight: 700; color: var(--ink-soft); }
 .me-bill-list { list-style: none; margin: 0; padding: 0; }
 .me-bill-list li { padding: 5px 0; font-size: 14.5px; line-height: 1.5; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .me-bill-list li + li { border-top: 1px dashed var(--line); }
@@ -2243,7 +2309,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 
 .modal-trial { max-width: 380px; }
 .modal-trial .auth-h { padding: 0 34px; }   /* 標題不跑到右上角的關閉鈕底下 */
-.trial-who { text-align: center; font-size: 14px; color: var(--ink-light); margin: 2px 0 14px; overflow-wrap: anywhere; }
+.trial-who { text-align: center; font-size: 14px; color: var(--ink-soft); margin: 2px 0 14px; overflow-wrap: anywhere; }
 .trial-seats { border: 0; margin: 0; padding: 0; min-width: 0; }
 .trial-seats legend { padding: 0; margin-bottom: 5px; font-size: 13.5px; color: var(--ink-light); }
 .trial-seat-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }

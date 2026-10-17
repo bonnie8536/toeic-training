@@ -202,6 +202,15 @@
       return '如果這是他唯一的老師方案，他會讀不到學生進度，班上學生也不再由他的方案提供使用權。';
     }
     const nowOf = d => { const t = Date.parse(isObj(d.access) ? d.access.server_now : ''); return isFinite(t) ? t : Date.now(); };
+    /* 退掉 g 之後會往前接的付費方案(資料庫 _refund_payment → _requeue_paid):同一種、還沒開始、排在 g 結束以後;
+       退老師方案時,接在老師方案後面的學生方案也算(2026-10-17 第二輪複審) */
+    function queuedAfter(d, g, now) {
+      if (!g || !g.ends_at) return [];
+      const end = Date.parse(g.ends_at);
+      return arr(d.grants).filter(x => x.id !== g.id && !x.revoked_at && x.source === 'paid'
+        && (x.kind === g.kind || (g.kind === 'teacher' && x.kind === 'student'))
+        && Date.parse(x.starts_at) > now && Date.parse(x.starts_at) >= end);
+    }
 
     async function revoke(g, d, b) {
       const lines = [O.grantText(g), '這段使用權會立刻失效，資料不會刪除，之後可以按恢復。'];
@@ -253,8 +262,10 @@
       if (p.item === 'credits') lines.push('會收回這一包還沒用掉的批改篇數，已經用掉的不收回。');
       else if (g && g.revoked_at) lines.push('這筆付款開通的方案已經撤銷，退款不會再改變他的使用權。');
       else {
+        const later = queuedAfter(d, g, nowOf(d));
         lines.push('這筆付款開通的方案會立刻撤銷。');
-        if (p.item === 'teacher') lines.push(teacherLine(d, g, nowOf(d)));
+        if (later.length) lines.push('排在它後面、還沒開始的付費方案會往前移，接上他現在的使用期間，長度不變。');
+        if (p.item === 'teacher' && !later.some(x => x.kind === 'teacher')) lines.push(teacherLine(d, g, nowOf(d)));
       }
       lines.push('這裡只記帳，錢要另外轉回給他。');
       const amountOf = v => Number(str(v.amount).trim());

@@ -178,7 +178,7 @@
     }
     const used = typeof o.used === 'number' ? o.used : (typeof a.seats_used === 'number' ? a.seats_used : null);
     const seats = typeof a.seats === 'number' && a.seats > 0 ? a.seats : null;
-    const chips = [seats ? (a.teacher_source === 'trial' ? '試用 ' : '方案 ') + seats + ' 人' : '名額不限'];
+    const chips = [seats ? (a.teacher_source === 'trial' ? '試用 ' : '方案 ') + seats + '\u00a0位以內' : '名額不限'];   // 名額的寫法跟價格頁一樣(N 位以內),數字和單位之間不換行
     if (used !== null) chips.push('已用 ' + used + ' 人');
     const until = fmtDate(a.teacher_until);
     if (until) chips.push('到期日 ' + until);

@@ -146,7 +146,7 @@
     const label = a.teacher_source === 'trial' ? '老師試用' : '老師方案';
     const until = fmtDate(a.teacher_until);
     if (a.seats === 0) return label + (until ? ' ' + until + ' 到期' : ' 已結束');
-    const seats = typeof a.seats === 'number' && a.seats > 0 ? a.seats + ' 人' : '名額不限';
+    const seats = typeof a.seats === 'number' && a.seats > 0 ? a.seats + NB + '位以內' : '名額不限';
     if (!until) return label + ' ' + seats;
     const now = Date.parse(a.server_now);
     const past = Date.parse(a.teacher_until) <= (isFinite(now) ? now : Date.now());
@@ -174,18 +174,31 @@
     return pays.some(p => isObj(p) && p.item === 'credits' && (p.status === 'paid' || p.status === 'refunded'))
       || log.some(l => isObj(l) && l.reason === 'purchase');
   }
+  /* 「我的」頁要不要多一條「購買方案」:只有使用期限已到(status 是 expired)的人;回要去的頁面 */
+  function buyPath(a) {
+    const s = isObj(a) ? status(a) : null;
+    return s && s.expired ? 'pricing.html' : null;
+  }
+
   function creditsLeft(n) { return '剩 ' + Math.max(0, Math.floor(Number(n) || 0)) + ' 篇'; }
   function creditsText(n) { return '寫作批改 ' + creditsLeft(n); }
 
   const SOURCE = { legacy: '既有帳號', paid: '付費', comp: '贈送', trial: '試用' };
-  const PAY_STATE = { pending: '處理中', failed: '未完成' };
+  /* pending 寫「尚未完成付款」:藍新付款頁按「返回商店」回來時,付款結果頁寫「付款沒有完成」,這裡不能寫「處理中」跟它矛盾 */
+  const PAY_STATE = { pending: '尚未完成付款', failed: '未完成' };
+  /* 建立超過這麼久還在 pending 的單:多半是到了藍新付款頁沒有刷卡就離開,寫「未付款」(伺服器的 my_billing 之後也不再回這種單) */
+  const STALE_PENDING_MS = 3600e3;
+  /* 期間的寫法跟價格頁一樣:一個月、一年;其他月數(站長記的帳)才寫「N 個月」 */
+  function period(m) { return m === 1 ? '一個月' : m === 12 ? '一年' : m + NB + '個月'; }
 
-  /* 「方案與付款」展開後的內容:使用期間(由舊到新)與付款紀錄(新的在上面,跟一般購買紀錄一樣),一筆一行 */
-  function billingLines(b) {
+  /* 「方案與付款」展開後的內容:使用期間(由舊到新)與付款紀錄(新的在上面,跟一般購買紀錄一樣),一筆一行。
+     now(毫秒)給「尚未完成付款」與「未付款」的分界用,沒給就用裝置的時間 */
+  function billingLines(b, now) {
+    const t = typeof now === 'number' && isFinite(now) ? now : Date.now();
     const out = { grants: [], payments: [] };
     if (!isObj(b)) return out;
     (Array.isArray(b.grants) ? b.grants : []).filter(isObj).forEach(g => {
-      const seats = typeof g.seats === 'number' && g.seats > 0 ? ' ' + g.seats + NB + '人' : '';
+      const seats = typeof g.seats === 'number' && g.seats > 0 ? ' ' + g.seats + NB + '位以內' : '';
       const label = g.kind === 'teacher'
         ? (g.source === 'trial' ? '老師試用' : '老師方案 ' + (SOURCE[g.source] || '')) + seats
         : '學生方案 ' + (SOURCE[g.source] || '');
@@ -193,12 +206,16 @@
       const span = to ? from + ' 到' + NB + to : from + ' 起 無期限';
       out.grants.push({ text: label.trim() + ' ' + span + (g.revoked_at ? ' 已撤銷' : ''), revoked: !!g.revoked_at });
     });
-    (Array.isArray(b.payments) ? b.payments : []).filter(isObj).reverse().forEach(p => {
+    /* 藍新沒有付成的單(刷卡被拒、站長整理時標成沒付款)不列:沒有扣到錢,付款結果頁已經寫過付款沒有完成。
+       伺服器的 my_billing 也不回這種單,這裡是舊資料庫的備援(2026-10-17 第二輪複審) */
+    (Array.isArray(b.payments) ? b.payments : []).filter(isObj).filter(p => !(p.method === 'newebpay' && p.status === 'failed')).reverse().forEach(p => {
       let item = '';
-      if (p.item === 'student') item = '學生方案 ' + p.months + NB + '個月';
-      else if (p.item === 'teacher') item = '老師方案 ' + p.seats + NB + '人 ' + p.months + NB + '個月';
+      if (p.item === 'student') item = '學生方案 ' + period(p.months);
+      else if (p.item === 'teacher') item = '老師方案 ' + p.seats + NB + '位以內 ' + period(p.months);   // 名額的寫法跟價格頁一樣
       else if (p.item === 'credits') item = '寫作批改 ' + p.credits + NB + '篇';
       let state = PAY_STATE[p.status] || '';
+      const made = Date.parse(p.created_at);
+      if (p.status === 'pending' && isFinite(made) && t - made > STALE_PENDING_MS) state = '未付款';
       if (p.status === 'refunded') state = '已退款' + (p.refund_amount ? ' ' + money(p.refund_amount) : '');
       const parts = [fmtDate(p.paid_at || p.created_at), item, money(p.amount), state].filter(Boolean);
       out.payments.push({ text: parts.join(' ') });
@@ -348,6 +365,8 @@
       const trialLi = a.teacher_trial_available === true
         ? h('li', null, h('button', { class: 'me-row', type: 'button', onclick: e => openTrial(e.currentTarget) }, '開始老師試用'))
         : null;
+      const buy = buyPath(a);
+      if (buy) ul.append(h('li', null, h('a', { class: 'me-row', href: buy }, '購買方案')));
       ul.append(billingRow());
       if (showCredits(a, null)) ul.append(credits);
       else getBilling().then(b => { if (showCredits(a, b) && ul.isConnected) ul.insertBefore(credits, trialLi); }, () => {});
@@ -373,7 +392,8 @@
       panel.append(h('p', { class: 'me-bill-msg' }, '讀取中'));
       getBilling().then(b => {
         panel.innerHTML = '';
-        const r = billingLines(b);
+        const sn = isObj(C.access) ? Date.parse(C.access.server_now) : NaN;
+        const r = billingLines(b, isFinite(sn) ? Math.max(sn, Date.now()) : Date.now());
         const block = (title, rows) => h('div', { class: 'me-bill-sec' },
           h('p', { class: 'me-bill-h' }, title),
           h('ul', { class: 'me-bill-list' }, rows.map(x => h('li', { class: x.revoked ? 'is-revoked' : null }, x.text))));
@@ -554,7 +574,7 @@
     const seatInputs = SEATS.map((n, i) => {
       const input = h('input', { type: 'radio', name: 'trial-seats', value: String(n) });
       if (i === 0) input.checked = true;
-      return h('label', { class: 'trial-seat' }, input, h('span', null, n + ' 人'));
+      return h('label', { class: 'trial-seat' }, input, h('span', null, n + NB + '位以內'));
     });
     const nameInput = h('input', { class: 'auth-input', id: 'trial-name', type: 'text', name: 'class-name', maxlength: '30', autocomplete: 'off' });
     const msg = h('p', { class: 'auth-msg', role: 'alert' });
@@ -617,7 +637,7 @@
     }
   }
 
-  window.PAYWALL = { enabled, pageKind, decide, banner, dismissBanner, fmtDay, fmtDate, status, teacherLine, classStatus,
+  window.PAYWALL = { enabled, pageKind, decide, banner, dismissBanner, fmtDay, fmtDate, status, teacherLine, classStatus, buyPath,
     showCredits, creditsText, billingLines, trialOutcome, trialStarted, whenNoExam, account, trialDialog };
 
   const C = cloud();

@@ -295,12 +295,12 @@
 
     const SEAT_OPTIONS = [10, 30, 60];
     const NB = ' ';   // 數字與單位之間不換行
-    /* 名額選項的字:「10 人」「每月 390 元」,價錢照 window.PLANS(js/plans-config.js);沒有價錢就只寫人數 */
+    /* 名額選項的字:「10 位以內」「每月 390 元」(名額的寫法跟價格頁一樣),價錢照 window.PLANS(js/plans-config.js);沒有價錢就只寫人數 */
     function seatChoices(plans) {
       const t = (plans && plans.teacher) || {};
       return SEAT_OPTIONS.map(n => ({
         seats: n,
-        count: n + NB + '人',
+        count: n + NB + '位以內',
         price: typeof t[n] === 'number' ? '每月 ' + String(t[n]).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + NB + '元' : '',
       }));
     }

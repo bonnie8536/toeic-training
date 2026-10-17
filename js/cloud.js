@@ -33,6 +33,7 @@
 
   window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
+    startCheckout, myCheckout, isOwner,
     saveSignupIntent, takeSignupIntent, clearSignupIntent };
   if (!enabled) return;
   tidySignupIntent(authError);   // 註冊時選老師的意向:開頁就清過期的、記下「這個分頁從 Google 回來了」(要趁 supabase-js 清掉網址之前;getSession 之後綁帳號 id)
@@ -475,6 +476,69 @@
     return data;
   }
   function myBilling() { return callRpc('my_billing', {}); }
+  /* 付款結果頁查自己的一筆單(newebpay/paid_gateway_additions.sql 的 my_checkout;不是自己的單回 null)。只讀 */
+  function myCheckout(orderNo) { return callRpc('my_checkout', { p_order_no: String(orderNo == null ? '' : orderNo) }); }
+
+  /* 建立藍新付款單(Edge Function newebpay-checkout,js/checkout.js 呼叫)。
+     只送商品代號與「勾選同意」:金額由伺服器的價格表決定,這裡一個數字都不送。
+     consent_at 是勾選的時間(裝置的鐘),伺服器另外用自己的時間記下同意的條款版本。
+     回伺服器原本的回應 { action, fields, order_no },檢查交給 checkout.js(validResponse)。 */
+  const CHECKOUT_TIMEOUT_MS = 20000;
+  async function startCheckout(sku, consentAt) {
+    if (!enabled) throw new Error('這個網站沒有開雲端帳號。');
+    await window.CLOUD.ready;
+    const user = window.CLOUD.user;
+    if (!user) throw new Error('請先登入。');
+    needClient();
+    let token = '';
+    try {
+      const { data } = await client.auth.getSession();
+      const s = data && data.session;
+      if (s && s.user && s.user.id === user.id && typeof s.access_token === 'string') token = s.access_token;
+    } catch (e) { token = ''; }
+    if (!token) throw new Error('登入已失效，請重新登入後再試。');
+    const ctl = typeof AbortController === 'function' ? new AbortController() : null;
+    const timer = setTimeout(() => { if (ctl) ctl.abort(); }, CHECKOUT_TIMEOUT_MS);
+    let res;
+    try {
+      res = await fetch(cfg.url.replace(/\/+$/, '') + '/functions/v1/newebpay-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token, apikey: cfg.anonKey },
+        body: JSON.stringify({ sku: String(sku), consent: true, consent_at: String(consentAt) }),
+        cache: 'no-store', credentials: 'omit', signal: ctl ? ctl.signal : undefined,
+      });
+    } catch (e) {
+      throw new Error('連不上付款伺服器，請檢查網路後再試。');
+    } finally {
+      clearTimeout(timer);
+    }
+    let body = null;
+    try { body = await res.json(); } catch (e) { body = null; }
+    if (res.status === 401) throw new Error('登入已失效，請重新登入後再試。');
+    if (!res.ok) {
+      /* 回應是 { error: 代碼, message: 給人看的話 }(11 月 1 日前、已經可以使用的帳號),或舊的 { error: 給人看的話 }。
+         英文代碼(not_open、method not allowed)不給人看 */
+      const say = v => (typeof v === 'string' && /[^\x00-\x7f]/.test(v) ? v.trim() : '');
+      const m = (body && (say(body.message) || say(body.error))) || '暫時無法建立付款，請稍後再試';
+      throw new Error(sentence(m.slice(0, 120)));
+    }
+    return body;
+  }
+
+  /* 是不是站長:只用來決定價格頁要不要顯示 NT$10 測試項目(?paytest=1)。能不能買由資料庫擋(newebpay_begin_checkout)。
+     有 my_access 就用它;PAID_UI 沒開時沒有,改讀自己那一列 teachers.is_owner(teachers 的政策只給讀自己的列)。 */
+  async function isOwner() {
+    if (!enabled) return false;
+    try { await window.CLOUD.ready; } catch (e) { return false; }
+    const user = window.CLOUD.user;
+    if (!user || !client) return false;
+    if (serverAccess && typeof serverAccess.is_owner === 'boolean') return serverAccess.is_owner;
+    try {
+      const { data, error } = await client.from('teachers').select('is_owner').eq('user_id', user.id);
+      if (error || !Array.isArray(data)) return false;
+      return data.some(r => r && r.is_owner === true);
+    } catch (e) { return false; }
+  }
 
   /* 讀雲端單一鍵(唯讀;路線圖 1.2b,小雞寫回前先抓雲端那一份合併,因為每個分頁只灌一次雲端資料)。
      回 { ok: true, found, v, updated_at }(雲端沒有這一列 found 是 false;別台刪掉的那一列 found 是 true、v 是 null)。

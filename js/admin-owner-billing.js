@@ -1,6 +1,6 @@
 /* 站長後台「收費管理」的記帳:記一筆收款(前端計畫九.3)、贈送(九.4)、寫作批改扣篇數與更正(九.5)、下載全部備份 v2(九.6)。
    tools/test_owner_billing.js 用 fixture 測。
-   - 只走 owner_record_payment、owner_grant_comp、owner_consume_credit、owner_adjust_credits、owner_export(資料庫在裡面檢查站長、寫異動紀錄)。
+   - 只走 owner_record_payment、owner_grant_comp、owner_consume_credit、owner_adjust_credits、owner_export、owner_export_gateway(資料庫在裡面檢查站長、寫異動紀錄)。
    - 記一筆收款是手動收款(轉帳、LINE Pay、現金)的路;之後接上藍新,線上付款由金流的 Edge Function 記,不經過這裡。
    - 記一筆收款、贈送、更正都帶送出編號 p_request_key(贈送與更正是 2026-10-12 資料庫加的),做法一樣(sendKey):
      表單打開時用 crypto.randomUUID() 產生,只有資料庫回「記下了」或「已經記過」才換新的。
@@ -52,6 +52,8 @@
     consume: a => call('owner_consume_credit', a),
     adjust: a => call('owner_adjust_credits', a),
     exportAll: () => O.rpc('owner_export', {}),
+    /* 藍新的建單紀錄(同意的條款版本與時間、sku)與通知紀錄(newebpay/paid_gateway_additions.sql) */
+    exportGateway: () => O.rpc('owner_export_gateway', {}),
   };
 
   /* ---------- 日期、金額 ---------- */
@@ -381,8 +383,9 @@
     return { el: box, open: () => { if (state === 'idle') load(); } };
   }
 
-  /* ---------- 下載全部備份(站長模式):同一個 JSON 加上 owner_export,version 2 ----------
+  /* ---------- 下載全部備份(站長模式):同一個 JSON 加上 owner_export(paid)與 owner_export_gateway(gateway),version 2 ----------
      讀不到收費資料(或等太久)時照樣存學生進度(跟以前一樣的 version 1),並在按鈕旁寫出沒有存到的原因。
+     收費資料有讀到、金流紀錄沒讀到(還沒裝 paid_gateway_additions.sql、出錯或等太久)時存 version 2 但沒有 gateway,一樣寫出原因。
      supabase-js 沒有逾時,所以自己等 waitMs;時間到以後才回來的收費資料不再存。 */
   function saveJson(payload) {
     const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
@@ -392,9 +395,9 @@
     a.click();
     URL.revokeObjectURL(a.href);
   }
-  function within(p, ms) {
+  function within(p, ms, what) {
     return new Promise(resolve => {
-      const t = setTimeout(() => resolve({ ok: false, message: '收費資料讀太久沒有回應，請稍後再按一次。' }), ms);
+      const t = setTimeout(() => resolve({ ok: false, message: (what || '收費資料') + '讀太久沒有回應，請稍後再按一次。' }), ms);
       p.then(r => { clearTimeout(t); resolve(r); }, () => { clearTimeout(t); resolve({ ok: false, message: '發生錯誤，請稍後再試。' }); });
     });
   }
@@ -404,13 +407,16 @@
     const show = (t, kind) => { if (note) { note.className = 'ow-msg' + (kind ? ' ' + kind : ''); note.textContent = t; } };
     if (b) { if (b.disabled || b.getAttribute('aria-busy') === 'true') return; b.disabled = true; b.setAttribute('aria-busy', 'true'); }
     show('正在準備備份，讀到收費資料就會存檔。', '');
-    const r = await within(api.exportAll(), O.billing.waitMs);
+    const [r, g] = await Promise.all([within(api.exportAll(), O.billing.waitMs), within(api.exportGateway(), O.billing.waitMs, '金流紀錄')]);
     if (b) { b.disabled = false; b.removeAttribute('aria-busy'); }
     const base = { app: 'shuashua-progress-backup', version: 1, exported: new Date().toISOString(), by: o.by, rows: o.rows };
     const good = r.ok && isObj(r.data);
-    saveJson(good ? { app: base.app, version: 2, exported: base.exported, by: base.by, rows: base.rows, paid: r.data } : base);
-    if (good) show('已存檔，學生進度與收費資料都在裡面。', 'ok');
-    else show('這次只存了學生進度，收費資料沒有存到。' + (r.ok ? '讀到的收費資料不完整。' : r.message), 'bad');
+    const gwGood = g.ok && isObj(g.data);
+    const full = Object.assign({ app: base.app, version: 2, exported: base.exported, by: base.by, rows: base.rows, paid: r.data }, gwGood ? { gateway: g.data } : {});
+    saveJson(good ? full : base);
+    if (!good) show('這次只存了學生進度，收費資料沒有存到。' + (r.ok ? '讀到的收費資料不完整。' : r.message), 'bad');
+    else if (gwGood) show('已存檔，學生進度、收費資料與金流紀錄都在裡面。', 'ok');
+    else show('已存檔，學生進度與收費資料在裡面，金流紀錄沒有存到。' + (g.ok ? '讀到的金流紀錄不完整。' : g.message), 'bad');
   }
 
   O.billing = { api, messageOf, priceOf, record, comp, adjust, writingBlock, writingRef, essaysOf, essayTitle, backup, waitMs: 20000 };

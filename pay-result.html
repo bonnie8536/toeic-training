@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* App 外殼開機:網站模式只登記安裝事件;主畫面開啟時才在 <html> 加 class、補 viewport-fit=cover */
+(function () {
+  var d = document.documentElement;
+  window.__bip = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; });
+  window.addEventListener('appinstalled', function () { window.__bip = null; });
+  var sa = false;
+  try { sa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; } catch (e) { sa = false; }
+  if (!sa) return;
+  var p = location.pathname.split('/').pop() || 'index.html';
+  if (p.indexOf('.') < 0) p += '.html';
+  d.classList.add('is-app');
+  d.classList.add('app-shell');
+  if (['signup.html', 'reset.html', 'terms.html', 'pricing.html', 'privacy.html', 'refund.html', 'pay-result.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
+  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  var m = document.querySelector('meta[name=viewport]');
+  if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
+  window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
+})();
+</script>
+<meta name="robots" content="noindex">
+<title>付款結果|刷刷英文</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-title" content="刷刷英文">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<script src="js/app-shell.js" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">刷刷英文</a>
+  </div>
+</header>
+
+<main class="container-narrow pay-page">
+  <div class="page-head"><h1>付款結果</h1></div>
+  <div id="pay-root" role="status" aria-live="polite"></div>
+</main>
+
+<footer>
+  <div class="container-narrow">
+    <p>刷刷英文由個人經營，與 ETS 及忠欣公司無關；TOEIC 為 ETS 之註冊商標。</p>
+    <nav class="foot-links" aria-label="網站資訊"><a href="pricing.html">方案與價格</a><a href="terms.html">服務條款</a><a href="privacy.html">隱私權政策</a><a href="refund.html">退款政策</a><a href="mailto:shuashualanguage@gmail.com">客服信箱 shuashualanguage@gmail.com</a></nav>
+  </div>
+</footer>
+
+<script src="js/cloud-config.js"></script>
+<script src="js/plans-config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/cloud.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/paywall.js"></script>
+<script src="js/checkout.js"></script>
+<script src="js/pay-result.js"></script>
+</body>
+</html>

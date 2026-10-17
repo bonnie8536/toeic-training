@@ -243,8 +243,8 @@ const cases = {
       P.teacherLine(base({ active: true, is_owner: true, is_teacher: true, teacher_source: 'owner' })),
       P.teacherLine(null),
     ];
-    const ok = r[0] === '老師方案 30 人，到 2026/11/04' && r[1] === '老師試用 10 人，到 2026/10/14' && r[2] === '老師方案 名額不限'
-      && r[3] === '老師方案 30 人，2026/10/01 到期' && r[4] === null && r[5] === null && r[6] === null;
+    const ok = r[0] === '老師方案 30' + NB + '位以內，到 2026/11/04' && r[1] === '老師試用 10' + NB + '位以內，到 2026/10/14' && r[2] === '老師方案 名額不限'
+      && r[3] === '老師方案 30' + NB + '位以內，2026/10/01 到期' && r[4] === null && r[5] === null && r[6] === null;
     return { ok, detail: JSON.stringify(r) };
   },
   '班級列的狀態:由班級提供、老師方案已到期、超過老師的名額;找不到或不知道就不寫': () => {
@@ -267,7 +267,7 @@ const cases = {
     const ok = r.has && !r.none && r.bought && r.logged && !r.other && !r.unknown && r.text === '寫作批改 剩 4 篇/寫作批改 剩 0 篇';
     return { ok, detail: JSON.stringify(r) };
   },
-  '方案與付款:使用期間與付款紀錄寫成一行一筆,日期 2026/11/04,金額千分位,不出現點數或儲值': () => {
+  '方案與付款:使用期間與付款紀錄寫成一行一筆,日期 2026/11/04,金額千分位,期間寫一個月/一年,不出現點數或儲值': () => {
     const { P } = load({ paid: true });
     const b = {
       grants: [
@@ -283,20 +283,49 @@ const cases = {
       ],
       credit_log: [],
     };
-    const r = P.billingLines(b);
+    const r = P.billingLines(b, Date.parse('2026-10-08T03:30:00Z'));
     const g = r.grants.map(x => x.text), p = r.payments.map(x => x.text);
     const all = JSON.stringify(r);
     /* 數字與單位、「到」與後面的日期用不換行空白(U+00A0),窄螢幕不會把「元」或日期單獨擠到下一行;付款紀錄新的在上面 */
     const ok = g[0] === '學生方案 既有帳號 2026/10/07 起 無期限'
       && g[1] === '學生方案 付費 2026/10/11 到' + NB + '2027/10/11'
-      && g[2] === '老師試用 30' + NB + '人 2026/10/07 到' + NB + '2026/10/14 已撤銷'
+      && g[2] === '老師試用 30' + NB + '位以內 2026/10/07 到' + NB + '2026/10/14 已撤銷'
       && g[3] === '學生方案 贈送 2026/10/07 到' + NB + '2026/12/07'
-      && p[0] === '2026/10/08 寫作批改 5' + NB + '篇 650' + NB + '元 處理中'
-      && p[1] === '2026/10/07 老師方案 30' + NB + '人 1' + NB + '個月 890' + NB + '元 已退款 890' + NB + '元'
-      && p[2] === '2026/10/07 學生方案 12' + NB + '個月 1,990' + NB + '元'
+      && p[0] === '2026/10/08 寫作批改 5' + NB + '篇 650' + NB + '元 尚未完成付款'
+      && p[1] === '2026/10/07 老師方案 30' + NB + '位以內 一個月 890' + NB + '元 已退款 890' + NB + '元'
+      && p[2] === '2026/10/07 學生方案 一年 1,990' + NB + '元'
       && b.payments[0].item === 'student'
       && !/點數|儲值/.test(all) && P.billingLines(null).grants.length === 0 && P.billingLines({}).payments.length === 0;
     return { ok, detail: JSON.stringify({ g, p }) };
+  },
+  '方案與付款:建立超過 1 小時還沒付款的那一筆寫「未付款」,1 小時內寫「尚未完成付款」(跟付款結果頁的付款沒有完成對得上);其他月數照寫幾個月': () => {
+    const { P } = load({ paid: true });
+    const pay = (created, status) => ({ item: 'student', months: 1, seats: null, credits: null, amount: 199, status, paid_at: null, created_at: created });
+    const T = Date.parse('2026-11-02T03:00:00Z');
+    const line = (p, now) => P.billingLines({ payments: [p] }, now).payments[0].text;
+    const fresh = line(pay('2026-11-02T02:10:00Z', 'pending'), T);
+    const stale = line(pay('2026-11-02T01:59:00Z', 'pending'), T);
+    const failed = line(pay('2026-11-01T01:00:00Z', 'failed'), T);
+    const six = P.billingLines({ payments: [{ item: 'teacher', months: 6, seats: 10, amount: 2000, status: 'paid', paid_at: '2026-11-01T01:00:00Z' }] }, T).payments[0].text;
+    const noNow = P.billingLines({ payments: [pay('2020-01-01T00:00:00Z', 'pending')] }).payments[0].text;
+    const ok = /尚未完成付款$/.test(fresh) && !/處理中/.test(fresh) && /未付款$/.test(stale) && !/尚未完成/.test(stale) && /未完成$/.test(failed)
+      && six.includes('老師方案 10' + NB + '位以內 6' + NB + '個月') && /未付款$/.test(noNow);
+    return { ok, detail: JSON.stringify({ fresh, stale, failed, six, noNow }) };
+  },
+  '方案與付款(第二輪複審):藍新沒有付成的單(刷卡被拒、站長整理時標成沒付款)不列,不會隔天又冒出一筆「未完成」;其他付款照列': () => {
+    const { P } = load({ paid: true });
+    const T = Date.parse('2026-11-03T03:00:00Z');
+    const b = { payments: [
+      { item: 'student', months: 1, amount: 199, method: 'newebpay', status: 'failed', paid_at: null, created_at: '2026-11-01T01:00:00Z', merchant_trade_no: 'S261101090000ABCDEFG' },
+      { item: 'credits', credits: 1, amount: 150, method: 'bank', status: 'failed', paid_at: null, created_at: '2026-11-01T02:00:00Z' },
+      { item: 'credits', credits: 1, amount: 150, method: 'newebpay', status: 'paid', paid_at: '2026-11-02T01:00:00Z', created_at: '2026-11-02T00:59:00Z' },
+      { item: 'credits', credits: 1, amount: 150, method: 'newebpay', status: 'pending', paid_at: null, created_at: '2026-11-03T02:50:00Z' },
+    ] };
+    /* 新的在上面:處理中的、已付款的、手動記的失敗 */
+    const p = P.billingLines(b, T).payments.map(x => x.text);
+    const ok = p.length === 3 && !p.some(x => /199/.test(x)) && /尚未完成付款$/.test(p[0]) && /150 元$/.test(p[1].split(NB).join(' '))
+      && /未完成$/.test(p[2]) && !/未付款/.test(p.join());
+    return { ok, detail: JSON.stringify(p) };
   },
 
   'grammar.html 的網址跟 grammar.js 一樣用 URLSearchParams 讀(鍵也解碼),u 要是真的課程才算課程': () => {
@@ -326,8 +355,8 @@ const cases = {
       paidStatus: P.status(paidT), paidLine: P.teacherLine(paidT),
       paidStudentToo: P.status(paidStudentToo),
     };
-    const ok = r.trialStatus === null && r.trialLine === '老師試用 30 人，到 2026/10/14' && r.bannerLastDay === null
-      && r.lastDayLine === '老師試用 30 人，2026/10/14 到期' && r.paidStatus === null && r.paidLine === '老師方案 30 人，到 2026/11/04'
+    const ok = r.trialStatus === null && r.trialLine === '老師試用 30' + NB + '位以內，到 2026/10/14' && r.bannerLastDay === null
+      && r.lastDayLine === '老師試用 30' + NB + '位以內，2026/10/14 到期' && r.paidStatus === null && r.paidLine === '老師方案 30' + NB + '位以內，到 2026/11/04'
       && !!r.paidStudentToo && r.paidStudentToo.text === '已付費，到 2026/11/01';
     return { ok, detail: JSON.stringify(r) };
   },

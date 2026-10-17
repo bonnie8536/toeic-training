@@ -225,8 +225,8 @@ cases['選老師:名額三選一只有數字(從 PLANS 來)、選填的班級名
     name: !!nameIn && nameIn.attrs.maxlength,
     texts,
   };
-  const allowed = new Set(['名額', '10 人', '30 人', '60 人', '每月 390 元', '每月 890 元', '每月 1,490 元', '班級名稱', '空白就用「我的班級」', '方案說明']);
-  const ok = r.shown === true && seats.join('|') === '10 人 每月 390 元|30 人 每月 890 元|60 人 每月 1,490 元'
+  const allowed = new Set(['名額', '10 位以內', '30 位以內', '60 位以內', '每月 390 元', '每月 890 元', '每月 1,490 元', '班級名稱', '空白就用「我的班級」', '方案說明']);
+  const ok = r.shown === true && seats.join('|') === '10 位以內 每月 390 元|30 位以內 每月 890 元|60 位以內 每月 1,490 元'
     && r.def === 'true,false,false' && r.values === '10,30,60' && r.link === '方案說明 pricing.html _blank' && r.name === '30'
     && texts.every(t => allowed.has(t));
   return { ok, detail: JSON.stringify(r) };
@@ -236,7 +236,7 @@ cases['名額的價錢照 window.PLANS 畫(改價只改 plans-config)'] = async 
   const { card } = loadCard({ paid: true, plans: { student: { month: 199, year: 1990 }, teacher: { 10: 400, 30: 900, 60: 1500 }, teacherYearMonths: 10 } });
   await pick(card, 'teacher');
   const seats = card.byClass('auth-seat').map(l => norm(l.textContent).trim());
-  return { ok: seats.join('|') === '10 人 每月 400 元|30 人 每月 900 元|60 人 每月 1,500 元', detail: seats.join('|') };
+  return { ok: seats.join('|') === '10 位以內 每月 400 元|30 位以內 每月 900 元|60 位以內 每月 1,500 元', detail: seats.join('|') };
 };
 
 cases['Email 註冊選老師:驗證過了、呼叫 signUp 之前存意向 {名額, 班名, Email};signUp 照舊只傳三個參數(不帶意向)'] = async () => {
@@ -555,11 +555,14 @@ cases['手動的開始老師試用視窗照舊:成功畫面同一套(班名、�
   p.ctx.PAYWALL.trialDialog(null, () => {});
   const d = dialog(p);
   const head = d && norm(d.byTag('h2')[0].textContent);
+  /* 名額的寫法跟價格頁一樣(N 位以內),數字和單位之間不換行 */
+  const seatText = d ? d.byClass('trial-seat').map(l => l.textContent).join('|') : '';
+  const seatsOk = seatText === ['10', '30', '60'].map(n => n + ' 位以內').join('|');
   await d.byTag('form')[0].fire('submit'); await settle();
   const after = dialog(p);
   const parts = after && ['trial-class', 'trial-code', 'trial-copy', 'trial-go', 'trial-cancel', 'modal-close'].map(c => after.byClass(c).length).join('');
-  return { ok: head === '用這個帳號開始老師試用？' && parts === '111111' && after.byClass('trial-code')[0].textContent === 'K7QM2XPA',
-    detail: head + ' / ' + parts };
+  return { ok: head === '用這個帳號開始老師試用？' && seatsOk && parts === '111111' && after.byClass('trial-code')[0].textContent === 'K7QM2XPA',
+    detail: head + ' / ' + norm(seatText) + ' / ' + parts };
 };
 
 /* ======================================================================= */

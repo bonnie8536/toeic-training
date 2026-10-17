@@ -329,7 +329,7 @@ const cases = {
     ];
     return { ok: r.every(x => x === null), detail: JSON.stringify(r) };
   },
-  '方案那一列:方案 30 人、已用 12 人、到期日 2026/11/04;已用以班級列為準(移除後馬上變);用滿寫名額已滿': () => {
+  '方案那一列:方案 30 位以內、已用 12 人、到期日 2026/11/04;已用以班級列為準(移除後馬上變);用滿寫名額已滿': () => {
     const { A } = load(world());
     const t = { is_teacher: true, role: 'teacher', teacher_source: 'paid', seats: 30, seats_used: 12, teacher_active: true, teacher_live: true, teacher_in_grace: false, teacher_until: '2026-11-03T16:30:00Z', server_now: NOW };
     const a = A.planInfo(t, { paidUi: true });
@@ -337,10 +337,10 @@ const cases = {
     const full = A.planInfo(Object.assign({}, t, { seats: 10, seats_used: 10 }), { paidUi: true });
     const trial = A.planInfo(Object.assign({}, t, { teacher_source: 'trial', seats: 10, seats_used: 2, teacher_until: '2026-10-14T03:00:00Z' }), { paidUi: true });
     const unlimited = A.planInfo(Object.assign({}, t, { teacher_source: 'legacy', seats: null, seats_used: 40, teacher_until: null }), { paidUi: true });
-    const ok = a.kind === 'plan' && a.chips.join('|') === '方案 30 人|已用 12 人|到期日 2026/11/04' && !a.full && a.lines.length === 0
+    const ok = a.kind === 'plan' && a.chips.join('|') === '方案 30\u00a0位以內|已用 12 人|到期日 2026/11/04' && !a.full && a.lines.length === 0
       && b.chips[1] === '已用 11 人'
       && full.full === true && full.lines.join() === '名額已滿，新的學生會加入失敗'
-      && trial.chips.join('|') === '試用 10 人|已用 2 人|到期日 2026/10/14'
+      && trial.chips.join('|') === '試用 10\u00a0位以內|已用 2 人|到期日 2026/10/14'
       && unlimited.chips.join('|') === '名額不限|已用 40 人' && !unlimited.full;
     return { ok, detail: JSON.stringify({ a, b: b.chips, full, trial: trial.chips, unlimited: unlimited.chips }) };
   },
@@ -483,7 +483,7 @@ const cases = {
     const off = await mount(world(), { paid: false, access, opts: { access } });
     const on = await mount(world(), { paid: true, access, opts: { access } });
     const ok = off.box.byClass('ac-plan').length === 0 && off.box.byClass('ac-class').length === 2
-      && on.box.byClass('ac-plan').length === 1 && /方案 3 人/.test(on.box.textContent) && /已用 3 人/.test(on.box.textContent) && /名額已滿，新的學生會加入失敗/.test(on.box.textContent);
+      && on.box.byClass('ac-plan').length === 1 && /方案 3\u00a0位以內/.test(on.box.textContent) && /已用 3 人/.test(on.box.textContent) && /名額已滿，新的學生會加入失敗/.test(on.box.textContent);
     return { ok, detail: JSON.stringify({ off: off.box.byClass('ac-plan').length, on: on.box.byClass('ac-plan').map(n => n.textContent) }) };
   },
   '全形標點:admin-classes.js 的中文字串裡沒有半形逗號、冒號、括號、問號、驚嘆號、破折號': () => {
@@ -707,7 +707,7 @@ Object.assign(cases, {
     const a = loadAdmin(w, { paid: true, isTeacher: true, access, rows: rowsFor() });
     await settle();
     const plan = a.root.byClass('ac-plan');
-    return { ok: plan.length === 1 && /方案 30 人/.test(plan[0].textContent) && /已用 3 人/.test(plan[0].textContent) && /到期日 2026\/11\/04/.test(plan[0].textContent), detail: plan.map(p => p.textContent).join() };
+    return { ok: plan.length === 1 && /方案 30\u00a0位以內/.test(plan[0].textContent) && /已用 3 人/.test(plan[0].textContent) && /到期日 2026\/11\/04/.test(plan[0].textContent), detail: plan.map(p => p.textContent).join() };
   },
 });
 

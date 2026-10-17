@@ -158,6 +158,34 @@ const cases = {
       && w.calls('owner_refund_payment').length === 0;
     return { ok: okk, detail: JSON.stringify({ l1, l2, l3 }) };
   },
+  '退款(第二輪複審):後面還有排著的付費方案時,確認框寫那幾段會往前接;老師方案有排著的就不寫立刻結束': async () => {
+    const w = world(); const L = await area(w);
+    const pam = clone(FX['owner_lookup.paid_with_credits'].data);
+    const sp = pam.payments.find(x => x.item === 'student');
+    const sg = pam.grants.find(g => g.payment_id === sp.id);
+    pam.grants.push(Object.assign(clone(sg), { id: 'queued-student', payment_id: 'queued-pay', starts_at: sg.ends_at,
+      ends_at: new Date(Date.parse(sg.ends_at) + 30 * 864e5).toISOString() }));
+    w.lookups[ACC.pam.email] = pam;
+    L.a.lookup(ACC.pam.email); await settle();
+    await btn(L.el.byClass('ow-pay').find(li => li.textContent.includes('學生方案')), '退款').click(); await settle();
+    const d1 = dlg(L); const l1 = lines(d1); await cancel(d1);
+    w.lookups[ACC.pam.email] = clone(FX['owner_lookup.paid_with_credits'].data);
+    L.a.lookup(ACC.pam.email); await settle();
+    await btn(L.el.byClass('ow-pay').find(li => li.textContent.includes('學生方案')), '退款').click(); await settle();
+    const d2 = dlg(L); const l2 = lines(d2); await cancel(d2);
+    const tina = clone(FX['owner_lookup.teacher_over_seats'].data);
+    const tg = tina.grants.find(g => g.kind === 'teacher' && g.payment_id);
+    tina.grants.push(Object.assign(clone(tg), { id: 'queued-teacher', payment_id: 'queued-pay-t', starts_at: tg.ends_at,
+      ends_at: new Date(Date.parse(tg.ends_at) + 30 * 864e5).toISOString() }));
+    w.lookups[ACC.tina.email] = tina;
+    L.a.lookup(ACC.tina.email); await settle();
+    await btn(L.el.byClass('ow-pay')[0], '退款').click(); await settle();
+    const d3 = dlg(L); const l3 = lines(d3); await cancel(d3);
+    const Q = '排在它後面、還沒開始的付費方案會往前移，接上他現在的使用期間，長度不變。';
+    const okk = l1.includes(Q) && l1.some(x => /方案會立刻撤銷/.test(x)) && !l2.includes(Q)
+      && l3.includes(Q) && !l3.some(x => /立刻結束/.test(x)) && w.calls('owner_refund_payment').length === 0;
+    return { ok: okk, detail: JSON.stringify({ l1, l2, l3 }) };
+  },
   '查另一個帳號讀取中:舊帳號的按鈕先拿掉;確認框第一行寫帳號;做完寫哪個帳號做了什麼,不會重讀成另一個帳號': async () => {
     const w = world(); const L = await area(w);
     L.a.lookup(ACC.amy.email); await settle();

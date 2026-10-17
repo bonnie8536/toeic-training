@@ -1,0 +1,12 @@
+# Supabase CLI 的函式設定(只放藍新金流這兩支;其他設定照 Supabase 預設)。
+# 部署步驟見 刷刷英文開發/收費/newebpay/上線步驟.md。
+
+# 本機用的名稱(CLI 讀設定檔時要有;跟線上專案代號無關,部署時用 --project-ref 指定線上專案)
+project_id = "toeic-training"
+
+[functions.newebpay-checkout]
+verify_jwt = true
+
+[functions.newebpay-notify]
+# 藍新主機的付款通知與買方瀏覽器的 POST 都沒有 Supabase 的 JWT。函式裡每個路徑都先驗 TradeSha,驗不過就回 400。
+verify_jwt = false

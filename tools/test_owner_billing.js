@@ -8,6 +8,8 @@ const { FX, ACC, OWNER_ID, clone, DATE, DAY, world, settle, area, loadAdmin, btn
 const tpToday = () => { const d = new Date(Date.now() + 8 * 3600e3); return d.toISOString().slice(0, 10); };
 const tpDay = off => { const d = new Date(Date.now() + 8 * 3600e3 + off * 864e5); return d.toISOString().slice(0, 10); };
 const sha12 = t => nodeCrypto.createHash('sha256').update(t, 'utf8').digest('hex').slice(0, 12);
+/* owner_export_gateway 的回覆形狀(newebpay/paid_gateway_additions.sql):兩張表原樣 */
+const GW = { exported_at: '2026-11-02T01:00:00Z', gateway_checkouts: [{ merchant_trade_no: 'S261101093000AB12C3D', sku: 'student_month', consent_version: 'terms-2026-10-16', consent_at: '2026-11-01T01:29:00Z' }], gateway_events: [{ id: 1, outcome: 'duplicate', needs_owner: false }] };
 const NET = { data: null, error: { message: 'TypeError: Failed to fetch', code: '' } };   // 送到了但回覆沒收到(postgrest-js 連不上時 code 是空字串)
 const detailOf = L => L.el.byClass('ow-detail')[0];
 const lookMsg = L => L.el.byClass('ow-lookup')[0].byClass('ow-msg')[0].textContent;
@@ -364,18 +366,50 @@ const cases = {
       && !/SQL Editor/.test(A.root.textContent);
     return { ok: okk, detail: JSON.stringify({ keys: Object.keys(p), rpcs: w.rpcs }) };
   },
-  '站長模式:下載全部備份也呼叫 owner_export,存成 version 2(rows 加 paid);按鈕旁寫只含她看得到的學生、完整備份用 SQL Editor': async () => {
+  '站長模式:下載全部備份也呼叫 owner_export 與 owner_export_gateway,存成 version 2(rows 加 paid、gateway);按鈕旁寫只含她看得到的學生、完整備份用 SQL Editor': async () => {
     const w = world();
+    w.next.owner_export_gateway = [{ data: clone(GW), error: null }];
     const A = loadAdmin(w, { paid: true }); await settle();
     const ps = A.root.byClass('ow-students')[0];
     const note = ps.children[0].textContent;
     const b = A.root.find(n => n.tagName === 'BUTTON' && /^下載全部備份/.test(n.textContent))[0];
     await b.click(); await settle();
     const p = JSON.parse(A.ctx.blobs[0]);
-    const okk = A.ctx.blobs.length === 1 && Object.keys(p).join() === 'app,version,exported,by,rows,paid' && p.version === 2
+    const msg = A.root.byClass('ow-students')[0].byClass('ow-msg')[0];
+    const okk = A.ctx.blobs.length === 1 && Object.keys(p).join() === 'app,version,exported,by,rows,paid,gateway' && p.version === 2
       && JSON.stringify(p.rows) === JSON.stringify(w.progressRows) && JSON.stringify(p.paid) === JSON.stringify(FX['owner_export.after_writes'].data)
-      && JSON.stringify(w.calls('owner_export')) === JSON.stringify([{}]) && /妳班上的人/.test(note) && /SQL Editor/.test(note) && onlyOwnerRpcs(w);
-    return { ok: okk, detail: JSON.stringify({ keys: Object.keys(p), note }) };
+      && JSON.stringify(p.gateway) === JSON.stringify(GW)
+      && JSON.stringify(w.calls('owner_export')) === JSON.stringify([{}]) && JSON.stringify(w.calls('owner_export_gateway')) === JSON.stringify([{}])
+      && /妳班上的人/.test(note) && /SQL Editor/.test(note) && onlyOwnerRpcs(w)
+      && /金流紀錄/.test(msg.textContent) && !/沒有存到/.test(msg.textContent) && /ok/.test(msg.className);
+    return { ok: okk, detail: JSON.stringify({ keys: Object.keys(p), note, msg: msg.textContent }) };
+  },
+  '站長模式:owner_export_gateway 讀不到(還沒裝或出錯)時,照樣存學生進度與收費資料(version 2),並寫出金流紀錄沒有存到與原因': async () => {
+    const w = world();
+    w.next.owner_export_gateway = ['error.not_owner'];
+    const A = loadAdmin(w, { paid: true }); await settle();
+    const b = A.root.find(n => n.tagName === 'BUTTON' && /^下載全部備份/.test(n.textContent))[0];
+    await b.click(); await settle();
+    const p = JSON.parse(A.ctx.blobs[0]);
+    const msg = A.root.byClass('ow-students')[0].byClass('ow-msg')[0];
+    const okk = A.ctx.blobs.length === 1 && p.version === 2 && Object.keys(p).join() === 'app,version,exported,by,rows,paid'
+      && /金流紀錄沒有存到/.test(msg.textContent) && /只有站長可以執行這個動作/.test(msg.textContent) && /bad/.test(msg.className);
+    return { ok: okk, detail: JSON.stringify({ keys: Object.keys(p), msg: msg.textContent }) };
+  },
+  '站長模式:owner_export_gateway 一直沒回時,時間到照樣存學生進度與收費資料,寫金流紀錄沒有存到;晚到的回覆不再存': async () => {
+    const w = world();
+    const release = w.hold('owner_export_gateway', { data: clone(GW), error: null });
+    const A = loadAdmin(w, { paid: true }); await settle();
+    A.ctx.ADMIN_OWNER.billing.waitMs = 30;
+    const b = A.root.find(n => n.tagName === 'BUTTON' && /^下載全部備份/.test(n.textContent))[0];
+    b.click(); await settle();
+    await K.wait(60); await settle();
+    const p = JSON.parse(A.ctx.blobs[0] || '{}');
+    const msg = A.root.byClass('ow-students')[0].byClass('ow-msg')[0].textContent;
+    release(); await settle();
+    const okk = A.ctx.blobs.length === 1 && p.version === 2 && !('gateway' in p) && /金流紀錄沒有存到/.test(msg) && /太久/.test(msg)
+      && b.disabled === false && w.calls('owner_export_gateway').length === 1;
+    return { ok: okk, detail: JSON.stringify({ keys: Object.keys(p), msg, n: A.ctx.blobs.length }) };
   },
   '站長模式:owner_export 讀不到時照樣存學生進度(version 1),並寫出收費資料沒有存到與原因': async () => {
     const w = world();

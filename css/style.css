@@ -2613,3 +2613,54 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   .pet-roam, .pet-mask { display: none !important; }
   html.app-shell.has-tabbar.has-pet body { padding-bottom: 0 !important; }
 }
+
+/* ======== 小雞第二階段:roam(js/pet-roam2.js)開始 ======== */
+/* 整頁跑(小雞第二階段規格.md 第 1 節)。每一條都掛在 html.pet-roam2 或 div.pet-roam2 底下,開關關著時不作用。
+   外層不接受點擊,只有小雞按鈕能點;地面層 z-index 91(App 模式要在分頁列 90 上面),站點層 49(頂欄 50 下面)。
+   網站模式的地面層也是 49:頂端導覽列的下拉選單、個人選單在頂欄 50 裡面,矮視窗時會長到視窗下緣,小雞不能蓋住它們。 */
+html.pet-roam2 { --pet2-h: 51px; }
+div.pet-roam2 { display: block; left: 0; right: 0; pointer-events: none; }
+div.pet-roam2[hidden], div.pet-roam2.is-off { display: none !important; }
+div.pet-roam2.is-ground { position: fixed; z-index: 91; height: var(--pet2-h); }
+div.pet-roam2.is-air { position: absolute; z-index: 49; top: 0; height: 0; }
+/* 網站模式:地面是視窗下緣往上 4 px,兩側各留 16 px;頁面底部留小雞的高度,捲到最底時最後的內容在小雞上面 */
+html.pet-roam2:not(.app-shell) div.pet-roam2 {
+  padding: 0 calc(16px + env(safe-area-inset-right)) 0 calc(16px + env(safe-area-inset-left));
+}
+html.pet-roam2:not(.app-shell) div.pet-roam2.is-ground { bottom: calc(4px + env(safe-area-inset-bottom)); z-index: 49; }
+html.pet-roam2.has-pet:not(.app-shell) body { padding-bottom: calc(var(--pet2-h) + 8px + env(safe-area-inset-bottom)); }
+html.pet-roam2.has-pet:not(.app-shell) { scroll-padding-bottom: calc(var(--pet2-h) + 12px); }
+/* App 模式:腳踩分頁列上緣(跟 pet-roam.js 相同);分頁列藏起來的寬視窗不放 */
+html.app-shell div.pet-roam2 { display: none; }
+@media (max-width: 860px), (pointer: coarse) and (max-height: 500px) {
+  html.app-shell.has-tabbar div.pet-roam2 { display: block; padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left); }
+  html.app-shell.has-tabbar div.pet-roam2.is-ground { bottom: calc(var(--app-tab-h) + env(safe-area-inset-bottom)); }
+  html.app-shell.app-kb div.pet-roam2 { display: none; }
+  /* 規格 1.2:「我的」那一區不再藏起來(只藏首頁那張),當餵食和走動開關的固定入口 */
+  html.app-shell.has-tabbar.pet-roam2 .pet-card.pet-me:not([hidden]) { display: grid; }
+}
+.pet-roam2-btn {
+  position: absolute; left: 0; top: 0; width: 48px; height: var(--pet2-h); padding: 0; border: 0; border-radius: 12px;
+  background: none; pointer-events: auto; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  will-change: transform; opacity: 1; transition: opacity .2s;
+}
+.pet-roam2-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+/* 飛行中、捲動中(停下 150 毫秒內)、別處按著手指時:點擊穿過小雞,落到底下的東西 */
+div.pet-roam2.is-fly .pet-roam2-btn, div.pet-roam2.is-scroll .pet-roam2-btn, div.pet-roam2.is-pass .pet-roam2-btn { pointer-events: none; }
+/* 有小雞的卡片在畫面上:原地淡出 0.2 秒 */
+div.pet-roam2.is-faded .pet-roam2-btn { opacity: 0; pointer-events: none; }
+/* 剛放進頁面、第一次排好位置之前:看不到,也不做淡出(有小雞的卡片在畫面上時一開始就是淡出的) */
+div.pet-roam2.is-init .pet-roam2-btn { opacity: 0; pointer-events: none; transition: none; }
+/* 站在卡片上緣:可點範圍往上移 8 px,點卡片上緣不會點到小雞 */
+.pet-roam2-btn.is-perch { margin-top: -8px; }
+.pet-roam2-cv { position: absolute; left: 0; top: 0; display: block; pointer-events: none; transform-origin: 50% 80%; }
+.pet-roam2-btn.is-perch .pet-roam2-cv { top: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  .pet-roam2-btn { transition: none; }
+}
+@media print {
+  div.pet-roam2 { display: none !important; }
+  html.pet-roam2.has-pet:not(.app-shell) body { padding-bottom: 0 !important; }
+}
+/* ======== 小雞第二階段:roam 結束 ======== */
+

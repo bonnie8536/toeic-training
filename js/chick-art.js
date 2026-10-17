@@ -1,6 +1,9 @@
-/* 塗鴉小雞的圖(路線圖 1.5)。原檔在 repo 外:D:/claudecode/刷刷英文開發/小雞/chick-art.js(第四版,Bonnie 2026-10-16 定稿),
+/* 塗鴉小雞的圖(路線圖 1.5)。原檔在 repo 外:D:/claudecode/刷刷英文開發/小雞/第二階段/chick-art.v5.js(第五版,2026-10-17),
    預覽 D:/claudecode/刷刷英文開發/小雞/塗鴉小雞預覽.html。要改圖先改原檔、在預覽看過,再整份複製過來(保留這段開頭)。
-   這裡只畫圖,不讀寫任何儲存;畫面怎麼用見 js/pet-ui.js、js/pet-roam.js。 */
+   這裡只畫圖,不讀寫任何儲存;畫面怎麼用見 js/pet-ui.js、js/pet-roam.js。
+   跟原檔不同的地方只有兩個,複製新版過來時要一起帶上:
+   - animate 多一個 opt.variants(1 或 2,預設 2;1 時只用抖動組 0)。
+   - animate 的 start() 先開計時器再畫第一拍(onTick 裡呼叫 setPose 時不會多留一個停不掉的計時器;tools/test_chick_art.js「重入」兩條)。 */
 /* 塗鴉小雞:用程式畫出手繪感(抖動的黑線、亂繞的黃色塗鴉),每一格重畫一次讓線條「沸騰」。
    風格依 Bonnie 2026-10-04 的參考圖;第二版依她的意見:動作更誇張、黃色塗鴉不用遮罩硬切、要有「雞掰可愛」的表情。
    第三版(2026-10-12):身體更圓潤可愛、黃色塗鴉的圈圈畫大一點。
@@ -16,6 +19,14 @@
        騰空時兩腳都離地很明顯、前傾、吐舌頭往後飄。
      - 每個動作有自己的速度(相對於 fps):跑步 1.5 倍、睡覺 5/8、肚子餓 6/8。
    2026-10-16:只改播放,圖沒變:用到哪一格才畫哪一格(審查發現第一次打開面板會一口氣畫完整個姿勢,卡住畫面約 0.1 秒)。
+   第五版(2026-10-17,第二階段「努力飛」):舊的 8 個姿勢一筆都沒改(新欄位沒給時,畫法和亂數用量跟第四版一模一樣),
+     新姿勢接在最後:takeoff 起飛、fly 努力飛、land 落地、nope 吃飽搖頭、flop 試飛失敗摔回地上(land 的慌張版)。
+     飛的時候正面朝你、翅膀變長而且有羽毛尖和一點黃色塗鴉、腳懸空划、翅膀旁邊有甩動的弧線;
+     fly 第 k 格用 floor(k/2) 當線條種子:翅膀每秒換 12 次,外框每秒只抖 6 次。
+     新的 API:a.show(k, variant, pose) 停掉計時器、只畫指定那一格,給飛行時用 requestAnimationFrame 自己對時間用;
+     ChickArt.flyRise:fly 每一格建議的上下位移(螢幕 px,負的是往上),下拍抬升、上拍下沉、第 7 格掉下來。
+   第五版審查後(2026-10-17,只動新姿勢):翅膀塗大圈到羽毛尖、下拍腳縮進肚子上拍往下踢、吐舌頭用力、甩動線只在下拍、
+     汗珠放大、失速線移到身體兩側;fly 照 ChickArt.flyPlan 播(失速隔一圈、停 2 拍);減少動態時 eat 的靜止格改第 4 格。
    畫法:所有點先算好再畫,壓扁拉長只動點的位置不動筆的粗細,線條才不會一邊粗一邊細。
    用法:const a = ChickArt.animate(canvas, { size: 200, fps: 8, pose: 'idle', onTick }); a.setPose('eat'); a.setFps(6); a.stop();
    fps 是「基準速度」:各動作會按 ChickArt.fps 的比例換算(fps 8 時跑步每秒 12 張、睡覺 5 張、肚子餓 6 張)。 */
@@ -248,18 +259,54 @@
     rest: [100, 100, 21], up: [-58, -58, 26], down: [88, 88, 24], flapA: [-38, -38, 26], flapB: [22, 22, 26],
     flailA: [-60, 28, 27], flailB: [28, -60, 27], limp: [50, 50, 24],
   };
-  function wing(ctx, r, o, a, len, body, th) {
-    const S = body([CX + o * RX * 0.97, CY + 2]);
+  function wingFrame(o, a, len, body, th, feather) {
+    const S = feather ? body([CX + o * RX * 0.9, CY - 8]) : body([CX + o * RX * 0.97, CY + 2]);   // 飛的翅膀從肩膀長出來
     const d = rot([o * Math.cos(a * RAD), Math.sin(a * RAD)], th);
     const pp = [-o * d[1], o * d[0]];        // 翅膀的「下面」那一側
-    const P = (k, m) => [S[0] + d[0] * len * k + pp[0] * len * m, S[1] + d[1] * len * k + pp[1] * len * m];
-    line(ctx, [S, P(0.5, -0.18), P(1, 0), P(0.5, 0.42), P(0.08, 0.3)], r, 3.6);
+    return { S, P: (k, m) => [S[0] + d[0] * len * k + pp[0] * len * m, S[1] + d[1] * len * k + pp[1] * len * m] };
+  }
+  function wing(ctx, r, o, a, len, body, th, feather) {
+    const { S, P } = wingFrame(o, a, len, body, th, feather);
+    if (!feather) { line(ctx, [S, P(0.5, -0.18), P(1, 0), P(0.5, 0.42), P(0.08, 0.3)], r, 3.6); return; }
+    // 飛的時候(第五版):翅膀張開,後緣是三根羽毛尖,一看就知道是在拍翅膀
+    line(ctx, [S, P(0.34, -0.16), P(0.74, -0.14), P(1.0, 0.02), P(0.92, 0.27), P(0.78, 0.2), P(0.74, 0.42),
+      P(0.58, 0.31), P(0.52, 0.5), P(0.38, 0.34), P(0.1, 0.3)], r, 3.6);
+  }
+  /* 飛的時候翅膀裡面也塗黃。審查後(2026-10-17)改成跟身體同一種塗法:2 到 3 行來回繞的大圈(圈半徑約 8,直徑 15 到 18),
+     一直塗到羽毛尖,可以塗出去一點;不再只有中線一串小圈、翅膀尖留白 */
+  function wingFill(ctx, r, f, body, th) {
+    const len = f.wlen || 26;
+    const R = Math.min(8.5, len * 0.2);
+    ctx.save();
+    ctx.strokeStyle = YELLOW;
+    ctx.lineWidth = 2.7 * (1 + (INKW - 1) * 0.4);
+    ctx.lineJoin = ctx.lineCap = 'round';
+    /* 每一行:m 是離翅膀上緣多遠(翅膀寬的比例)、t0~t1 是沿著翅膀從肩膀到尖端的範圍 */
+    const ROWS = [[-0.03, 0.16, 0.97], [0.16, 0.12, 0.93], [0.33, 0.2, 0.74]];
+    [[-1, f.wl], [1, f.wr]].forEach(([o, a]) => {
+      const { P } = wingFrame(o, a, len, body, th, 1);
+      const pts = [];
+      ROWS.forEach(([m, t0, t1], i) => {
+        const dir = i % 2 ? -1 : 1;
+        let t = dir > 0 ? t0 : t1, ang = r() * Math.PI * 2;
+        const dt = 5.2 / len / 14;                  // 每繞一圈往前約 5,圈和圈疊很多(跟身體一樣密)
+        while (dir > 0 ? t <= t1 : t >= t0) {
+          ang += 0.42 + r() * 0.08;
+          t += dir * dt * (0.8 + r() * 0.4);
+          const c = P(t, m + 0.03 * Math.sin(t * 7 + i)), rad = R * (0.85 + 0.2 * Math.sin(ang * 0.17 + i));
+          pts.push([c[0] + Math.cos(ang) * rad, c[1] + Math.sin(ang) * rad * 0.92]);
+        }
+      });
+      curve(ctx, pts);
+      ctx.stroke();
+    });
+    ctx.restore();
   }
   function wings(ctx, r, f, body, th) {
     const p = WING_PRESETS[f.wings || 'rest'] || WING_PRESETS.rest;
     const len = f.wlen || p[2];
-    wing(ctx, r, -1, f.wl !== undefined ? f.wl : p[0], len, body, th);
-    wing(ctx, r, 1, f.wr !== undefined ? f.wr : p[1], len, body, th);
+    wing(ctx, r, -1, f.wl !== undefined ? f.wl : p[0], len, body, th, f.feather);
+    wing(ctx, r, 1, f.wr !== undefined ? f.wr : p[1], len, body, th, f.feather);
   }
 
   /* 呆毛:tuft 是相對身體的彎曲角度(正 = 往右倒),越靠尖端彎越多;tl 是長度(>1 拉長、<1 縮短);
@@ -298,6 +345,25 @@
         const x = body([x0 + (x0 < CX ? -10 : 10), B])[0];
         line(ctx, [[x - 10, GROUND + 1], [x, GROUND], [x + 10, GROUND + 1]], r, 3.4, 0.8);
         line(ctx, [[x, GROUND], [x - 4, GROUND + 6]], r, 2.8, 0.6);
+      });
+      return;
+    }
+    if (kind === 'dangle') {                // 飛的時候(第五版):dangle = [[水平偏移, 腳多長(0 = 17)]...]
+      // 審查後:下拍時腳整個縮進肚子(ddy <= -10,只露出捲起來的腳趾);上拍和失速時用力往下踢(ddy +8 到 +14),
+      // 兩種之間差 20 以上,48px 也看得出腳在划;踢下去的腳趾張開、比站著的腳大
+      const dg = f.dangle || [[0, 0], [0, 0]];
+      hips.forEach((hip, i) => {
+        const [ddx, ddy] = dg[i], s = i ? 1 : -1;
+        if (ddy <= -10) {                   // 縮起來:腳趾捲在肚子下面
+          const x = hip[0] + ddx, y = hip[1] + 3;
+          line(ctx, [[x - 7, y], [x - 5, y + 5], [x - 1, y + 2], [x + 1, y + 6], [x + 4, y + 2], [x + 7, y + 4]], r, 3.4, 0.5);
+          return;
+        }
+        const foot = [hip[0] + ddx, hip[1] + 17 + ddy];
+        const knee = [(hip[0] + foot[0]) / 2 + s * 4, (hip[1] + foot[1]) / 2];
+        line(ctx, [hip, knee, foot], r, 3.8);
+        line(ctx, [[foot[0] - 9, foot[1] + 9], [foot[0], foot[1]], [foot[0] + 9, foot[1] + 9]], r, 3.6, 0.6);
+        line(ctx, [[foot[0], foot[1]], [foot[0] + s * 1, foot[1] + 12]], r, 3.2, 0.5);
       });
       return;
     }
@@ -390,6 +456,31 @@
           const h = 5 + i * 3.5, xx = x + i * 6;
           line(ctx, [[xx, y - h], [xx + 3 + i, y], [xx, y + h]], r, 2.3, 0.3);
         });
+      } else if (name === 'whoosh') {            // 第五版:翅膀往下打出去的風。審查後只畫在下拍,畫在翅膀尖下面、跟翅膀平行;
+        // 不再從肩膀畫圍住身體的大弧(48px 時跟舉起的翅膀連成「( )」像耳罩)。96px 以下只畫外面那一條
+        const len = k.wlen || 26, small = k.size && k.size < 96;
+        [[-1, k.wl], [1, k.wr]].forEach(([o, a]) => {
+          const { P } = wingFrame(o, a, len, k.body, k.th, 1);
+          (small ? [[0.7, 0.74, 1.08]] : [[0.7, 0.74, 1.08], [0.95, 0.58, 0.92]]).forEach(([m, t0, t1]) => {
+            const pts = [P(t0, m), P((t0 + t1) / 2, m + 0.08), P(t1, m - 0.02)];
+            if (pts.every(([x, y]) => x > 4 && x < W - 4 && y > 4 && y < GROUND)) line(ctx, pts, r, 2.4, 0.5);
+          });
+        });
+      } else if (name === 'drops') {             // 第五版:用力到汗珠往兩邊噴(n 換位置)。審查後放大到約 17 高、貼著頭的兩側
+        const top = k.cy - RY * k.sq, small = k.size && k.size < 96;
+        [-1, 1].forEach((s, i) => {
+          const alt = (n + i) % 2;
+          const x = k.cx + s * (RX * k.sx * 0.62 + 12 + alt * 6), y = top + 8 + alt * 8;
+          line(ctx, [[x, y - 10], [x + s * 6, y + 2], [x, y + 7], [x - s * 5, y + 2], [x, y - 10]], r, 2.8, 0.4);
+          if (!small) line(ctx, [[x + s * 9, y - 10], [x + s * 15, y - 15]], r, 2.2, 0.4);
+        });
+      } else if (name === 'fall') {              // 第五版:往下掉的速度線。審查後畫在身體兩側(不在頭上,48px 才不會跟呆毛連成皇冠);96px 以下每邊一條
+        const small = k.size && k.size < 96;
+        [-1, 1].forEach((s) => {
+          const x = k.cx + s * (RX * k.sx + 12);
+          line(ctx, [[x, k.cy + 38], [x + s, k.cy + 10]], r, 2.6, 0.5);
+          if (!small) line(ctx, [[x + s * 10, k.cy + 48], [x + s * 11, k.cy + 26]], r, 2.3, 0.5);
+        });
       } else if (name === 'z') {                 // 打呼的 z
         const z = (x, y, s) => line(ctx, [[x, y], [x + s, y], [x, y + s], [x + s, y + s]], r, 2.6, 0.5);
         z(CX + 58 + n * 3, CY - 74 - n * 5, 10);
@@ -460,6 +551,74 @@
     { tilt: -6, sq: 0.94, tuft: -8, eyes: 'smug', beak: 'bleh', tongue: 3, hold: 2 },
   ];
 
+  /* ---------- 第五版:努力飛 ----------
+     依據:下拍比上拍用力,身體在下拍時被推上去(壓扁變寬)、上拍時往下沉(拉長);吃力時翅膀張更開、拍更快,
+     快飛不動時往下掉一下再猛拍救回來;剛學飛的雛鳥常常掉回地上。
+     飛的時候正面朝你,眼睛用力閉成 > <、嘴巴抿緊,腳懸空交替划,呆毛跟翅膀反方向甩(慢半拍)。
+     FLY_Y:飛的時候身體在畫布裡抬高多少,讓懸著的腳趾離地約 30(實際飛多高由外面移動畫布決定) */
+  const FLY_Y = -34;
+  /* 審查後(2026-10-17):嘴巴改成吐舌頭用力(跟跑步的拚勁同一個表情),腳在下拍縮進肚子、上拍用力往下踢,
+     甩動的線只畫在下拍(翅膀尖下面),汗珠放大、貼著頭 */
+  const FLY_BASE = { eyes: 'squeeze', beak: 'bleh', feet: 'dangle', wlen: 56, wfill: 1, feather: 1 };
+  const flyFrame = (o) => Object.assign({}, FLY_BASE, o, { dy: FLY_Y + (o.dy || 0) });
+  const TUCK = -14;                                // 腳縮進肚子
+  const fly = [
+    // 1 下拍:翅膀往下甩到底,身體被推上去、壓扁變寬;兩腳縮進肚子
+    { wl: 40, wr: 40, sq: 0.86, sx: 1.14, dy: -6, tilt: -3, tuft: 30, tl: 0.8, tongue: -3, dangle: [[-2, TUCK], [2, TUCK]], fx: ['whoosh:1'] },
+    // 2 上拍:翅膀舉過頭,身體往下沉、拉長;左腳用力往下踢
+    { wl: -76, wr: -76, sq: 1.12, sx: 0.9, dy: 2, tilt: 2, tuft: -20, tl: 1.25, tongue: 4, dangle: [[-5, 14], [4, 5]] },
+    // 3 下拍:腳縮回去
+    { wl: 40, wr: 40, sq: 0.86, sx: 1.14, dy: -8, tilt: 3, tuft: 26, tl: 0.8, tongue: -2, dangle: [[-2, TUCK], [2, TUCK]], fx: ['whoosh:1'] },
+    // 4 上拍:換右腳踢
+    { wl: -76, wr: -76, sq: 1.12, sx: 0.9, dy: 0, tilt: -2, tuft: -22, tl: 1.25, tongue: 3, dangle: [[-4, 5], [5, 14]] },
+    // 5 下拍,最用力:壓最扁、翅膀打到最低、汗噴出來
+    { wl: 48, wr: 48, sq: 0.8, sx: 1.2, dy: -10, tuft: 34, tl: 0.75, tongue: -4, dangle: [[-2, TUCK], [2, TUCK]], fx: ['whoosh:1', 'drops:0'] },
+    // 6 上拍:有點拍不動了,翅膀舉不到頂,兩腳都踢
+    { wl: -58, wr: -58, sq: 1.08, sx: 0.93, dy: -2, tuft: -16, tl: 1.2, tongue: 4, dangle: [[-6, 11], [6, 11]], fx: ['drops:1'] },
+    // 7 失速往下掉:翅膀亂舉(左右不對稱)、眼睛嚇到一大一小、嘴巴張開、身體被往上拉長、呆毛往上飄、兩腳往外張開伸直
+    { wl: -70, wr: -18, sq: 1.18, sx: 0.88, dy: 8, tilt: 8, tuft: -36, tl: 1.35, eyes: 'derp', beak: 'open', dangle: [[-9, 14], [9, 13]], fx: ['fall'] },
+    // 8 猛拍救回來:翅膀狠狠往下打、壓扁,兩腳都縮起來
+    { wl: 50, wr: 50, sq: 0.82, sx: 1.18, dy: 2, tilt: -4, tuft: 34, tl: 0.75, tongue: -3, dangle: [[-3, TUCK], [3, TUCK]], fx: ['whoosh:1', 'drops:2'] },
+  ].map(flyFrame);
+  /* 播放順序(審查後):失速那格停 2 拍,而且隔一圈才失速一次:先一圈 6 格穩穩拍(下上下上下上),
+     再一圈 9 拍(6 格 + 失速 2 拍 + 救回來)。[格, 抖動組, 這一拍的上下位移(螢幕 px,48px 時;負 = 往上)] */
+  const FLY_PLAN = [
+    [0, 0, -16], [1, 0, 4], [2, 0, -16], [3, 0, 4], [4, 0, -20], [5, 0, 4],
+    [0, 1, -16], [1, 1, 4], [2, 1, -16], [3, 1, 4], [4, 1, -20], [5, 1, 4], [6, 1, 5], [6, 1, 4], [7, 1, -14],
+  ];
+
+  /* 起飛:用力蹲(預備,停兩拍)→ 腳還沒離地就拉長往上衝、翅膀舉過頭 → 離地第一下拍,腳還懸著(接 fly 第 1 格) */
+  const takeoff = [
+    { sq: 0.72, sx: 1.24, dy: 6, eyes: 'squeeze', beak: 'closed', wl: 116, wr: 116, tuft: 12, tl: 0.7, fx: ['dust'], hold: 2 },
+    { sq: 1.28, sx: 0.8, dy: -16, eyes: 'squeeze', beak: 'yell', wl: -76, wr: -76, wlen: 56, feather: 1, wfill: 1, feet: 'jump', tuft: -8, tl: 1.35, fx: ['motion'] },
+    flyFrame({ wl: 40, wr: 40, sq: 0.9, sx: 1.1, dy: 0, tuft: 24, tl: 0.9, dangle: [[-4, 9], [4, 9]], fx: ['whoosh:1'] }),
+  ];
+
+  /* 落地:壓扁著地冒煙(翅膀張開保持平衡)→ 回彈拉長、翅膀收回 → 往左晃 → 往右晃一點、換回待機的臉,接 idle */
+  const land = [
+    { sq: 0.66, sx: 1.28, dy: 6, eyes: 'squeeze', beak: 'closed', wl: 24, wr: 24, wlen: 34, feather: 1, wfill: 1, tuft: 36, tl: 0.7, fx: ['stomp', 'dust'] },
+    { sq: 1.14, sx: 0.9, dy: -6, eyes: 'open', beak: 'open', wl: 70, wr: 70, tuft: -20, tl: 1.25 },
+    { sq: 0.96, tilt: -6, eyes: 'blink', beak: 'closed', wl: 106, wr: 94, tuft: 14 },
+    { sq: 1.0, tilt: 3, eyes: 'smug', beak: 'bleh', tongue: 2, wl: 98, wr: 102, tuft: -6, hold: 2 },
+  ];
+  /* 試飛失敗摔回地上:跟落地一樣,但摔得更扁、眼睛一大一小、嘴巴張開,回彈後還愣一下 */
+  const flop = [
+    Object.assign({}, land[0], { sq: 0.58, sx: 1.34, eyes: 'derp', beak: 'open', wl: -6, wr: 18, tuft: 44 }),
+    Object.assign({}, land[1], { eyes: 'derp', beak: 'closed', hold: 2 }),
+    land[2],
+    land[3],
+  ];
+
+  /* 吃飽搖頭(點心第 4 份):閉眼、頭左右轉,轉到兩端壓扁、經過中間拉長;轉向右邊時從嘴邊嘆一口氣(氣團畫在右邊,所以放在朝右的格) */
+  const nope = [
+    { tilt: -10, look: -10, sq: 0.9, tuft: 18, wl: 92, wr: 108 },
+    { tilt: 10, look: 10, sq: 0.9, tuft: -18, wl: 108, wr: 92, fx: ['sigh:1'] },
+    { tilt: -10, look: -10, sq: 0.9, tuft: 18, wl: 92, wr: 108 },
+    { tilt: 10, look: 10, sq: 0.9, tuft: -18, wl: 108, wr: 92, fx: ['sigh:2'] },
+    { tilt: -5, look: -5, sq: 1.06, tuft: 10, wl: 96, wr: 104 },
+    { tilt: 2, look: 0, sq: 1.0, tuft: -4, hold: 2 },
+  ].map((f) => Object.assign({ eyes: 'closed', beak: 'closed' }, f));
+
   const POSES = {
     idle,
     // 開心:站好 → 蹲很低(預備,多停一拍)→ 腳還踩著地、身體拉長往上衝 → 騰空(一開始最快、越接近頂點越慢)→
@@ -515,13 +674,25 @@
     ].map((f) => Object.assign({ tilt: -4, eyes: 'closed', beak: 'bleh', tongue: 1, wings: 'down' }, f)),
     walk,
     run,
+    // 第五版:接在最後,舊姿勢的種子(用姿勢的順序算)不變
+    takeoff,
+    fly,
+    land,
+    nope,
+    flop,
   };
   /* 不想看動畫(減少動態)時每個姿勢顯示的那一格 */
-  const CALM = { idle: 1, happy: 0, eat: 0, hungry: 0, demand: 1, sleep: 0, walk: 0, run: 1 };
-  /* 走路和跑步每拍該往前移動多少(邏輯像素),移動速度跟腳步對上才不會滑 */
-  const TRAVEL = { walk: 10, run: 20 };
+  /* eat 用第 4 格(頭低下去啄到地):審查後改,減少動態時才看得出在吃,站著的第 1 格跟待機一樣 */
+  const CALM = { idle: 1, happy: 0, eat: 3, hungry: 0, demand: 1, sleep: 0, walk: 0, run: 1, takeoff: 0, fly: 0, land: 3, nope: 5, flop: 3 };
+  /* 走路和跑步每拍該往前移動多少(邏輯像素),移動速度跟腳步對上才不會滑;fly 的位移交給外面(見 FLY_RISE) */
+  const TRAVEL = { walk: 10, run: 20, fly: 0 };
   /* 各動作在基準 fps = 8 時的播放速度;實際 = 呼叫者給的 fps × 這裡 / 8 */
-  const POSE_FPS = { run: 12, sleep: 5, hungry: 6 };
+  const POSE_FPS = { run: 12, sleep: 5, hungry: 6, takeoff: 8, fly: 12, land: 8, nope: 8, flop: 8 };
+  /* fly 每一格建議的上下位移(螢幕 px,負 = 往上):下拍抬升 14~20、上拍下沉 4、第 7 格掉 9(停 2 拍,一拍 5、一拍 4)。
+     實際播放照 FLY_PLAN:一圈穩的 6 拍淨升 40,一圈有失速的 9 拍淨升 45 */
+  const FLY_RISE = [-16, 4, -16, 4, -20, 4, 9, -14];
+  /* 線條種子用第幾格:fly 相鄰兩格共用線條(翅膀每秒換 12 次、外框每秒抖 6 次),其他姿勢每格不同 */
+  const seedIndex = (pose, k) => (pose === 'fly' ? Math.floor(k / 2) : k);
   const fpsFor = (pose, base) => base * (POSE_FPS[pose] || 8) / 8;
 
   /* floor:讓身體(轉過、壓扁後)最低的那一點離地面剛好 floor 像素,啄地時身體才會貼地而不是陷進地裡 */
@@ -557,6 +728,7 @@
 
     XF = body;
     scribble(ctx, r, { sx, sq, size, puddle: pud });
+    if (f.wfill) { XF = ID; wingFill(ctx, r, f, body, th); XF = body; }   // 第五版才有;舊姿勢不會走到這裡,亂數用量不變
     ctx.strokeStyle = INK;
     line(ctx, blob(shape, CX, CY, RX, RY, -112, 338, 9), r, 4.4, 1.0);   // 外框左上留缺口
 
@@ -573,7 +745,7 @@
     XF = ID;
     const ctr = body([CX, CY]);
     fx(ctx, r, list.filter((e) => !FACE_FX(e)), {
-      sx, sq, bottom: B + dy, cx: ctr[0], cy: ctr[1], dir: look < 0 ? -1 : 1, body,
+      sx, sq, bottom: B + dy, cx: ctr[0], cy: ctr[1], dir: look < 0 ? -1 : 1, body, th, wlen: f.wlen, wl: f.wl, wr: f.wr, size,
       beak: face([CX + 1 + look * 1.35, CY + 10]),
     });
     ctx.restore();
@@ -595,13 +767,14 @@
       c.width = Math.round(W * px); c.height = Math.round(H * px);
       const ctx = c.getContext('2d');
       ctx.scale(px, px);
-      draw(ctx, shape, POSES[pose][i], frameSeed(seedBase, i, b), size);
+      draw(ctx, shape, POSES[pose][i], frameSeed(seedBase, seedIndex(pose, i), b), size);
       return c;
     })());
   }
 
   /* 把 hold 展開成播放順序:[格, 這格的第幾拍] */
   function sequence(pose) {
+    if (pose === 'fly') return FLY_PLAN.map(([k, j]) => [k, j]);   // 審查後:失速隔一圈才出現、停 2 拍
     const seq = [];
     POSES[pose].forEach((f, k) => { for (let j = 0; j < (f.hold || 1); j++) seq.push([k, j]); });
     return seq;
@@ -609,6 +782,7 @@
 
   function animate(canvas, opt) {
     const o = Object.assign({ size: 200, fps: 8, pose: 'idle', seed: 7 }, opt || {});
+    const one = o.variants === 1;           // 只用一種抖動(面板裡 160 px 的小雞,省一半記憶體;規格 A.9)
     const dpr = Math.min(window.devicePixelRatio || 1, o.maxDpr || 3);   // maxDpr:限制解析度,省記憶體(每格預先畫好兩張)
     const px = o.size / W * dpr;
     canvas.width = Math.round(W * px); canvas.height = Math.round(H * px);
@@ -624,16 +798,25 @@
       const fr = framesOf(pose);
       if (reduce) { paint(fr(CALM[pose] || 0, 0)); return; }
       const [k, j] = seq[i % seq.length];
-      paint(fr(k, (Math.floor(i / seq.length) + j) % 2));
+      paint(fr(k, one ? 0 : (Math.floor(i / seq.length) + j) % 2));
       if (typeof o.onTick === 'function') o.onTick({ pose, frame: k, tick: i, travel: (TRAVEL[pose] || 0) * o.size / W });
       i++;
     }
-    function start() { stop(); tick(); if (!reduce) timer = setInterval(tick, 1000 / fpsFor(pose, fps)); }
+    // 先開計時器再畫第一拍:onTick 裡又呼叫 setPose 時,裡面那次 start() 的 stop() 清得到這個計時器,不會留下停不掉的那一個
+    function start() { stop(); if (!reduce) timer = setInterval(tick, 1000 / fpsFor(pose, fps)); tick(); }
     function stop() { if (timer) clearInterval(timer); timer = null; }
     start();
     return {
       setPose(p) { if (POSES[p]) { pose = p; seq = sequence(p); i = 0; start(); } },
       setFps(n) { fps = n; start(); },
+      // 第五版:停掉計時器,只畫指定的那一格(飛行時外面用 requestAnimationFrame 依經過時間算格號,位移和格號才對得上)。
+      // 減少動態時一律畫該姿勢的靜止格
+      show(k, variant, p) {
+        if (p && POSES[p] && p !== pose) { pose = p; seq = sequence(p); i = 0; }
+        stop();
+        const n = POSES[pose].length;
+        paint(framesOf(pose)(reduce ? (CALM[pose] || 0) : (((k | 0) % n) + n) % n, reduce || one ? 0 : (variant ? 1 : 0)));
+      },
       stop,
       get pose() { return pose; },
       get fps() { return fpsFor(pose, fps); },
@@ -644,7 +827,7 @@
   /* 給測試和印格子表用:把某個姿勢的第 k 格畫進 ctx(邏輯尺寸 W×H,呼叫的人自己縮放) */
   function drawFrame(ctx, pose, k, opt) {
     const o = Object.assign({ seed: 7, variant: 0, size: 200 }, opt || {});
-    draw(ctx, makeShape(o.seed), POSES[pose][k], frameSeed(poseSeed(o.seed, pose), k, o.variant), o.size);
+    draw(ctx, makeShape(o.seed), POSES[pose][k], frameSeed(poseSeed(o.seed, pose), seedIndex(pose, k), o.variant), o.size);
   }
 
   window.ChickArt = {
@@ -656,6 +839,10 @@
     calm: Object.assign({}, CALM),
     travel: Object.assign({}, TRAVEL),       // 走路/跑步每拍前進的邏輯像素(乘上 size / metrics.width 就是螢幕像素)
     fps: Object.assign({ idle: 8, happy: 8, eat: 8, demand: 8, walk: 8 }, POSE_FPS),   // 基準 8 時各動作的每秒張數
+    flyRise: FLY_RISE.slice(),               // 第五版:fly 每格建議的上下位移(螢幕 px,負 = 往上)
+    flyPlan: FLY_PLAN.map((p) => p.slice()), // 審查後:fly 的播放順序 [格, 抖動組, 這一拍的位移],飛行時照這個播
+    seedIndex,                               // 第五版:第 k 格用哪一組線條(fly 兩格共用一組)
+    version: 5,
     metrics: { width: W, height: H, ground: GROUND },   // ground = 腳底在畫布裡的高度(邏輯像素)
   };
 })();

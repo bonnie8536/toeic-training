@@ -238,6 +238,18 @@ T['不認得的版本與讀不到(newer 沒亮)照舊是「' + OLD_BAD + '」;�
   return { ok: a === OLD_BAD && c === CLOCK, detail: JSON.stringify([a, c]) };
 };
 
+/* 第二階段加的(餵食面板 160 px 小雞省記憶體,規格 A.9):chick() 第四個參數照給;沒給時跟第 1 步一樣,不多帶 variants */
+T['PET_UI.chick:沒給 opt 時 animate 參數跟第 1 步一樣;給 { maxDpr, variants } 時照用'] = async () => {
+  const pg = loadPage({ view: 'v1', act: () => ({ ok: true }) });
+  const got = [];
+  pg.ctx.ChickArt.animate = (c, o) => { got.push(Object.assign({}, o, { onTick: typeof o.onTick })); return { pose: o.pose, setPose() {}, stop() {}, setFps() {} }; };
+  pg.ctx.PET_UI.chick(pg.doc.createElement('canvas'), 48);
+  pg.ctx.PET_UI.chick(pg.doc.createElement('canvas'), 160, null, { maxDpr: 1.5, variants: 1 });
+  const a = got[0], b = got[1];
+  return { ok: !!a && !!b && JSON.stringify(Object.keys(a)) === JSON.stringify(['size', 'fps', 'maxDpr', 'pose', 'onTick']) && a.maxDpr === 2 &&
+    b.maxDpr === 1.5 && b.variants === 1 && b.size === 160, detail: JSON.stringify(got) };
+};
+
 (async () => {
   let pass = 0;
   const names = Object.keys(T);

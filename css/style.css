@@ -2664,3 +2664,82 @@ div.pet-roam2.is-init .pet-roam2-btn { opacity: 0; pointer-events: none; transit
 }
 /* ======== 小雞第二階段:roam 結束 ======== */
 
+/* ======== 小雞第二階段:ui(js/pet-ui.js)開始 ======== */
+/* 餵食區(PET_FOOD 打開時才有這些元素):舞台、點心那一行、托盤、提示、沒有食物;走動開關(PET_ROAM_V2)。
+   舞台上的位置跟 pet-ui.js 的 STAGE 對齊:小雞 160 px 往左讓出嘴前的位置,食物腳底跟小雞腳底同高,上面多留 32 px 給跳起來和愛心 */
+.pet-stage { position: relative; z-index: 0; height: 191px; }
+.pet-stage .pet-big { position: absolute; z-index: 1; top: 4px; left: calc(50% - 92px); margin: 0; transform-origin: 50% 90%; }
+.pet-stage-food { position: absolute; z-index: 2; top: 126px; left: calc(50% + 36px); display: block; pointer-events: none; }
+.pet-stage-food[hidden] { display: none; }
+/* 最愛第一次吃到時的塗鴉愛心:一張畫布,位置和大小由 pet-ui.js 的 hearts() 設定 */
+.pet-pop { position: absolute; z-index: 3; display: block; pointer-events: none; }
+.pet-snack-line { margin-top: 2px; font-size: 14.5px; color: var(--ink-light); text-align: center; }
+.pet-snack-line:empty { display: none; }
+.pet-tray { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; margin-top: 10px; }
+.pet-tray.is-ro { opacity: .45; }
+.pet-tile {
+  position: relative; display: flex; flex-direction: column; align-items: center; min-width: 0; min-height: 92px; padding: 8px 2px 7px;
+  border: 1px solid transparent; border-radius: var(--radius); background: var(--bg-soft); color: var(--ink); font: inherit; line-height: 1.3;
+  cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; user-select: none; -webkit-user-select: none;
+  transition: background .15s, border-color .15s, transform .1s;
+}
+.pet-tile-cv { display: block; width: 40px; height: 40px; margin-bottom: 4px; pointer-events: none; }
+.pet-tile-n { font: 700 13.5px/1.3 var(--round); white-space: nowrap; }
+.pet-tile-c { font-size: 12.5px; color: var(--ink-light); text-align: center; font-variant-numeric: tabular-nums; }
+/* 存滿時「滿了」自己一行(跟預覽的 .ff 一樣),5 欄的窄格子裡不會只剩一個字換行 */
+.pet-tile-f { font-size: 11.5px; color: var(--ink-light); text-align: center; white-space: nowrap; }
+.pet-tile-f:empty { display: none; }
+.pet-tile:not([aria-disabled="true"]):hover { background: #fff; border-color: var(--line); }
+.pet-tile:not([aria-disabled="true"]):active { transform: scale(.95); }
+.pet-tile:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.pet-tile[aria-disabled="true"] { cursor: default; }
+/* 0 份淡;今天的點心餵過了淡一點(比 0 份淡得少);今天還沒練習照平常的樣子(規格 3.3) */
+.pet-tile.is-empty .pet-tile-cv { opacity: .32; }
+.pet-tile.is-empty .pet-tile-n, .pet-tile.is-empty .pet-tile-c { color: #a3abb3; }
+.pet-tile.is-done .pet-tile-cv { opacity: .6; }
+.pet-tile.is-done .pet-tile-c, .pet-tile.is-done .pet-tile-f { color: #8a939c; }
+.pet-heart { position: absolute; top: 5px; right: 6px; width: 15px; height: 14px; pointer-events: none; }
+.pet-heart svg { display: block; }
+.pet-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+/* 預設放在左緣:pet-ui 量寬度時可用的寬是整個視窗,量到的是一行的寬,再移到格子上方(放在 50% 量會被擠成兩行) */
+.pet-tip { position: fixed; z-index: 270; left: 8px; top: 16px; max-width: min(240px, calc(100vw - 16px)); text-wrap: balance; padding: 6px 10px; border-radius: 10px; background: #2b3036; color: #fff; font-size: 13px; line-height: 1.5; pointer-events: none; }
+.pet-tile-fly { position: fixed; z-index: 260; left: 0; top: 0; pointer-events: none; will-change: transform; }
+.pet-hint { margin-top: 10px; font-size: 13.5px; color: var(--ink-light); text-align: center; }
+.pet-hint:empty { display: none; }
+.pet-empty { display: grid; gap: 10px; margin-top: 10px; }
+.pet-empty p { font-size: 14.5px; text-align: center; text-wrap: balance; }
+.pet-empty .btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 44px; }
+.pet-empty .btn:hover { text-decoration: none; }
+/* 托盤下面原本的內容,用一條線隔開 */
+.pet-stage ~ .pet-sheet-body { margin-top: 14px; padding-top: 6px; border-top: 1px solid var(--line); }
+.pet-stage ~ .pet-msg ~ .pet-sheet-body { margin-top: 0; padding-top: 0; border-top: 0; }
+/* 走動開關(role=switch) */
+.pet-switch-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+.pet-switch-row > span { font-size: 14.5px; font-weight: 700; color: var(--ink); }
+.pet-switch { position: relative; flex: none; width: 50px; height: 30px; padding: 0; border: 0; border-radius: 15px; background: #8a939c; cursor: pointer; transition: background .15s; }
+.pet-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(20, 30, 40, .25); transition: transform .15s; }
+.pet-switch[aria-checked="true"] { background: var(--primary); }
+.pet-switch[aria-checked="true"]::after { transform: translateX(20px); }
+.pet-switch[aria-disabled="true"] { opacity: .6; cursor: default; }
+.pet-switch:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+/* 橫放(高度 500 以下):舞台 96 px,小雞在左、托盤在右(規格 3.2) */
+@media (orientation: landscape) and (max-height: 500px) {
+  .pet-sheet:has(> .pet-stage) { display: grid; grid-template-columns: 150px minmax(0, 1fr); column-gap: 16px; align-content: start; max-width: 720px; }
+  .pet-sheet:has(> .pet-stage) > * { grid-column: 1 / -1; }
+  .pet-sheet > .pet-stage { grid-column: 1; grid-row: 3; height: 95px; }
+  .pet-sheet > .pet-snack-line { grid-column: 1; grid-row: 4 / span 2; align-self: start; }
+  .pet-sheet > .pet-tray { grid-column: 2; grid-row: 3; margin-top: 4px; }
+  .pet-sheet > .pet-hint { grid-column: 2; grid-row: 4; }
+  .pet-sheet > .pet-empty { grid-column: 2; grid-row: 5; }
+  .pet-stage .pet-big { top: -17px; left: calc(50% - 55px); }
+  .pet-stage-food { top: 51px; left: calc(50% + 22px); }
+  .pet-tile { min-height: 82px; padding-top: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pet-tile, .pet-switch, .pet-switch::after { transition: none; }
+  .pet-tile:not([aria-disabled="true"]):active { transform: none; }
+}
+@media print {
+  .pet-tip, .pet-tile-fly { display: none !important; }
+}
+/* ======== 小雞第二階段:ui 結束 ======== */

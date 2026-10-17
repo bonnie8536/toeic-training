@@ -252,12 +252,40 @@
     });
   }
 
+  /* ---------- 分頁列上的小雞(js/pet-roam.js) ----------
+     只在有分頁列、而且載入了 common.js 與 cloud.js 的頁面(條款、價格頁沒有)。先載開關 pet-config.js,開著才載其他的;
+     首頁與「我的」頁網站模式就有的那幾個不重載。照順序執行(async = false)。 */
+  function addScript(src) {
+    return new Promise(function (resolve, reject) {
+      const s = doc.createElement('script');
+      s.src = src;
+      s.async = false;
+      s.onload = resolve;
+      s.onerror = function () { reject(new Error(src + ' 載入失敗')); };
+      doc.body.appendChild(s);
+    });
+  }
+  function petWanted() {
+    if (window.PET_ON === true) return true;
+    try { return new URLSearchParams(location.search).get('pet') === '1'; } catch (e) { return false; }
+  }
+  function loadPet() {
+    if (!doc.querySelector('.app-tabbar') || typeof window.storageKey !== 'function' || !window.CLOUD) return;
+    const first = window.PET_ON === undefined ? addScript('js/pet-config.js') : Promise.resolve();
+    first.then(function () {
+      if (!petWanted()) return;
+      [['PET', 'js/pet.js'], ['PET_STORE', 'js/pet-store.js'], ['ChickArt', 'js/chick-art.js'], ['PET_UI', 'js/pet-ui.js'], ['PET_ROAM', 'js/pet-roam.js']]
+        .forEach(function (x) { if (!window[x[0]]) addScript(x[1]).catch(function (err) { console.warn('小雞載入失敗：', err); }); });
+    }).catch(function (err) { console.warn('小雞載入失敗：', err); });
+  }
+
   window.APP = { standalone: STANDALONE, canOfferInstall: canOfferInstall, install: install };
   if (STANDALONE) {
     doc.addEventListener('touchstart', function () {}, { passive: true });   // iOS 要有觸控監聽,分頁和返回鍵的 :active 按下效果才會出現
     try { buildShell(); }
     catch (err) { html.classList.remove('app-shell'); console.warn('App 外殼建立失敗，改用網站版面：', err); }
     window.APP_SHELL_OK = true;
+    try { loadPet(); } catch (err) { console.warn('小雞載入失敗：', err); }
   }
   registerSW();
 })();

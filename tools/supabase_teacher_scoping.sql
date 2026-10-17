@@ -181,8 +181,9 @@ create index if not exists classes_code_idx on public.classes (upper(code));
 
 -- ---------- 6. 回填:現有 6 位學生 → 她的預設班級 ----------
 -- 不回填的話,政策一換教師後台就看不到任何人。
+-- 2026-10 已套用過。公開檔案不放個人信箱:重跑前把下一行的 <站長登入用的信箱> 換成站長登入用的信箱。
 insert into public.teachers (user_id, is_owner)
-select id, true from auth.users where email = 'bonnie8536@gmail.com'
+select id, true from auth.users where email = '<站長登入用的信箱>'
 on conflict (user_id) do update set is_owner = true;
 
 insert into public.classes (teacher_id, name)

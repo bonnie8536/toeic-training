@@ -2512,17 +2512,16 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   .pet-mask, .pet-sheet { transition: none; }
 }
 
-/* App 分頁列上的小雞:腳踩分頁列上緣。走的那一條是白底、跟分頁列連在一起,頁面捲到這裡被擋住、點不到(跟分頁列一樣),
-   小雞就不會蓋到頁面上的按鈕 */
+/* App 分頁列上的小雞(Bonnie 10/17:「讓他在 tab bar 跑」):腳直接踩在分頁列上緣,背景透明,沒有另外一條走道。
+   這一層不接受點擊,只有小雞本身可以點;頁面底部多留小雞的高度,捲到最底時最後的內容和按鈕在小雞上面 */
 .pet-roam { display: none; }
 @media (max-width: 860px), (pointer: coarse) and (max-height: 500px) {
   html.is-app { --pet-h: 51px; }
   html.app-shell.has-tabbar .pet-card { display: none; }
   html.app-shell.has-tabbar .pet-roam {
-    display: block; position: fixed; z-index: 91;
+    display: block; position: fixed; z-index: 91; pointer-events: none;
     left: 0; right: 0; padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
     bottom: calc(var(--app-tab-h) + env(safe-area-inset-bottom)); height: var(--pet-h);
-    background: #fff; box-shadow: 0 -1px 0 var(--line);
   }
   html.app-shell.has-tabbar .pet-roam-lane { position: relative; height: 100%; }
   html.app-shell.app-kb .pet-roam { display: none; }

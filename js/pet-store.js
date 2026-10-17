@@ -10,6 +10,7 @@
      所以不記帳、不上傳,沒合併過的本機那份不會蓋掉雲端;下次讀得到再合併上傳。
      訪客、網站沒開雲端:只寫本機。
    - 本機或雲端那一份救不回(不是物件、或版本比 1 新):唯讀,什麼都不寫。
+     第二階段的 v2(剛好 v: 2)也唯讀、什麼都不寫,但畫面照常顯示它認得的欄位;本機或雲端有一邊是 v2 時,view() 拿最後讀到的雲端那份合併顯示(不寫)。
    - 這台的時鐘跟伺服器差太多(慢超過 6 天或快超過 8 天):唯讀,本機、雲端都不寫。伺服器時間取自剛讀雲端時用的登入憑證
      (access_token 的 iat;伺服器剛收下這張憑證,所以 iat 跟伺服器時間最多差憑證的有效期,預設 1 小時)。
      慢的裝置會把它眼中「晚超過 7 天」的天丟掉,寫回去就刪掉了別台的進度(10/16 審查)。憑證沒有或解不開時對不了時,
@@ -38,6 +39,7 @@
   let timer = null;       // 答題後排的同步
   let lastSync = 0;       // 上次開始同步的時間
   let remoteBad = false;  // 上次讀到的雲端那份救不回
+  let remoteHeld = null;  // 上次同步牽涉到 v2(本機或雲端剛好是 v: 2)時讀到的雲端那份:只給 view() 合併顯示,不拿來寫;{ id: 帳號, v: 那份 }
   let clockBad = false;   // 上次對時,這台的時鐘差太多
 
   function previewOn() {
@@ -76,12 +78,20 @@
     try { localStorage.setItem(storageKey(KEY), JSON.stringify(p)); return true; } catch (e) { return false; }
   }
 
+  /* newer:唯讀而且本機或雲端那份剛好是第二階段的 v2,畫面說小雞的資料是新版網頁存的。
+     v3、1.5 這些不認得的版本不算,畫面照舊說資料讀不到(規格 5.3:不認得的版本跟現在一樣) */
   function view() {
     if (!on) return { on: false };
     const now = Date.now();
-    const r = P.reconcile({ local: readLocal(), remote: null, hist: readHist(), now });
+    const user = cloudUser();
+    const local = readLocal();
+    const last = remoteHeld && user && remoteHeld.id === user.id ? remoteHeld.v : null;
+    /* 只有牽涉到 v2 時才拿雲端那份來合併顯示;其他情況(包括不認得的版本)跟以前一樣只看本機 */
+    const held = P.isNext(local) || P.isNext(last) ? last : null;
+    const r = P.reconcile({ local, remote: held, hist: readHist(), now });
     const reason = r.readOnly || remoteBad ? 'readOnly' : clockBad ? 'clock' : '';
-    return { on: true, cloud: cloudOn(), guest: !cloudUser(), readOnly: !!reason, reason, status: P.status(r.pet, now), pet: r.pet };
+    const newer = !!reason && (P.isNext(local) || P.isNext(held));
+    return { on: true, cloud: cloudOn(), guest: !user, readOnly: !!reason, reason, newer, status: P.status(r.pet, now), pet: r.pet };
   }
   function emit() {
     try { window.dispatchEvent(new CustomEvent('pet:change', { detail: view() })); } catch (e) { /* 沒有畫面在聽也沒關係 */ }
@@ -118,7 +128,10 @@
     const now = Date.now();
     const local = readLocal();
     const base = P.reconcile({ local, remote, hist: readHist(), now });
-    if (cloudOk) remoteBad = P.sanitize(remote, now).readOnly;
+    if (cloudOk) {
+      remoteBad = P.sanitize(remote, now).readOnly;
+      remoteHeld = base.readOnly && (P.isNext(local) || P.isNext(remote)) ? { id: user.id, v: remote } : null;
+    }
     const info = { guest: !user, localOnly: !!user && !cloudOk };
     if (clockBad) return finish(Object.assign({ ok: false, reason: 'clock', readOnly: true, uploaded: false, status: P.status(base.pet, now), pet: base.pet }, info));
     if (base.readOnly) return finish(Object.assign({ ok: false, reason: 'readOnly', readOnly: true, uploaded: false, status: P.status(base.pet, now), pet: base.pet }, info));

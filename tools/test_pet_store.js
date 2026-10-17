@@ -191,6 +191,37 @@ function others(w) {
 }
 const sum = days => Object.values(days || {}).reduce((a, b) => a + b, 0);
 
+/* 第二階段的紀錄(v2):第一階段的欄位加上食物與走動開關。第 1 步的相容版只能看、一筆都不寫 */
+function v2Pet(over) {
+  const days = {}, met = [];
+  for (let i = 9; i >= 0; i--) { const d = addDays(TODAY, -i); days[d] = 25; met.push(d); }
+  return Object.assign({ v: 2, born: addDays(TODAY, -9), goals: [], days, met, oldMet: 0, oldBefore: '', fed: { [TODAY]: 25 }, name: '小黃', nameAt: 5,
+    got: { [YDAY]: { d: 'corn' } }, ate: { [YDAY]: { mh2lq01xk7: YDAY + '/d' } }, foodOld: { before: '2026-07-05', left: { corn: 2 } }, once: { diag: YDAY }, roam: { on: false, at: 1793000000000 } }, over || {});
+}
+/* 從現在起數本機 pet 被寫了幾次(不論誰寫) */
+function countPetWrites(w) {
+  const c = { n: 0 };
+  const orig = w.local.setItem;
+  w.local.setItem = (k, v) => { if (k === PETKEY || k === GUESTKEY) c.n++; return orig(k, v); };
+  return c;
+}
+/* 同步、餵飼料、改目標、取名各 3 次,外加答題後的自動同步 */
+async function pokeAll(pg, w) {
+  const res = [];
+  for (let i = 0; i < 3; i++) {
+    res.push(await pg.S.sync()); res.push(await pg.S.feed()); res.push(await pg.S.setGoal(40)); res.push(await pg.S.rename('啾' + i));
+    w.clock.t += 2 * 60e3;
+    await pg.fire('doc:visibilitychange'); await pg.fire('win:online'); await pg.runTimers(); await pg.S.idle();
+  }
+  return res;
+}
+/* 答題(會寫 hist,這是練習本身的寫入)之後的自動同步 */
+async function answerAll(pg) {
+  for (let i = 0; i < 3; i++) { pg.answer('p5', 'poke-' + i); await pg.runTimers(); await pg.S.idle(); }
+}
+/* 唯讀時每個動作都回 ok:false,而且什麼都沒寫 */
+const allRefused = res => res.length === 12 && res.every(r => r && r.ok === false && r.uploaded !== true);
+
 const scenarios = {
   /* ---------- 開關 ---------- */
   '1. PET_ON 關著:不讀雲端、不寫任何東西,餵食等動作回 off': async () => {
@@ -631,6 +662,109 @@ const scenarios = {
     await pgG.S.sync();
     const gp = lp(g, GUESTKEY);
     out.push({ ok: !!gp && gp.days[TODAY] === 3, d: '訪客:' + JSON.stringify(gp && gp.days) });
+    return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
+  },
+
+  /* ---------- 第二階段第 1 步:相容版遇到 v2(別台裝了新版)只看不寫 ---------- */
+  '34. 雲端是 v2(灌資料後本機也是 v2):開頁、同步、餵飼料、改目標、取名各 3 次,本機與雲端的 pet 一次都沒寫,其他鍵逐位元組不變;畫面照 v2 顯示,說明資料是新版網頁存的(newer)': async () => {
+    const w = makeWorld();
+    const rec = v2Pet();
+    cloudRow(w, 'pet', JSON.parse(JSON.stringify(rec)));
+    cloudRow(w, 'hist', dayHist(TODAY, 3));
+    cloudRow(w, 'drill_p5', ['a']);
+    const pg = await openLoggedIn(w);
+    const afterOpen = { l: w.local.getItem(PETKEY), c: JSON.stringify(cp(w)) };
+    const before = others(w);
+    const writes = countPetWrites(w);
+    const ups0 = w.upserts.length;
+    const res = await pokeAll(pg, w);
+    const v = pg.S.view();
+    const s = v.status;
+    const okData = same(JSON.parse(afterOpen.l), rec) && afterOpen.c === JSON.stringify(rec) && w.local.getItem(PETKEY) === afterOpen.l && JSON.stringify(cp(w)) === afterOpen.c
+      && writes.n === 0 && w.upserts.length === ups0 && !w.upserts.includes('pet') && !('pet' in ledger(w)) && others(w) === before && allRefused(res);
+    const okView = v.readOnly === true && v.newer === true && v.pet.v === 2 && s.stage === 3 && s.name === '小黃' && s.streak === 10 && s.shields === 2 && s.todayCount === 25 && s.food === 0;
+    const snap = '本機寫 pet ' + writes.n + ' 次 / 上傳 ' + JSON.stringify(w.upserts.slice(ups0)) + ' / 其他鍵 ' + (others(w) === before ? '沒變' : '變了');
+    await answerAll(pg);
+    const okAfter = writes.n === 0 && w.local.getItem(PETKEY) === afterOpen.l && JSON.stringify(cp(w)) === afterOpen.c && !w.upserts.includes('pet');
+    return { ok: okData && okView && okAfter,
+             detail: snap + ' / 資料 ' + okData + ' / 回覆 ' + JSON.stringify(res.map(r => r && r.reason)).slice(0, 80) + ' / 畫面 ' + JSON.stringify({ ro: v.readOnly, newer: v.newer, v: v.pet && v.pet.v, stage: s.stage, name: s.name, streak: s.streak, shields: s.shields, today: s.todayCount, food: s.food }) + ' / 答題後(會寫 hist)pet 寫 ' + writes.n + ' 次、' + okAfter };
+  },
+  '35. 本機 v2、讀不到雲端(離線)與訪客:動作全部回絕,本機那份一個 byte 都沒變,不記帳、不上傳;恢復連線後雲端那份 v1 也不動': async () => {
+    const out = [];
+    const w = makeWorld();
+    const cloud1 = { v: 1, born: '2026-10-01', days: { '2026-10-01': 25 }, met: ['2026-10-01'] };
+    cloudRow(w, 'pet', cloud1);
+    const pg = await openLoggedIn(w);
+    const cloudBefore = JSON.stringify(cp(w));
+    const raw = JSON.stringify(v2Pet());
+    w.local.setItem(PETKEY, raw);   // 同一台另一個分頁的新版寫的
+    w.offline = true;
+    const writes = countPetWrites(w);
+    const res = await pokeAll(pg, w);
+    const v = pg.S.view();
+    out.push({ ok: writes.n === 0 && w.local.getItem(PETKEY) === raw && !('pet' in ledger(w)) && allRefused(res) && v.readOnly && v.newer === true && v.status.name === '小黃' && v.status.stage === 3,
+               d: '離線:寫 ' + writes.n + ' 次、本機 ' + (w.local.getItem(PETKEY) === raw ? '沒動' : '被改') + '、畫面 ' + JSON.stringify({ ro: v.readOnly, newer: v.newer, name: v.status.name, stage: v.status.stage }) });
+    w.offline = false;
+    const ups = w.upserts.length;
+    const res2 = await pokeAll(pg, w);
+    out.push({ ok: writes.n === 0 && w.local.getItem(PETKEY) === raw && JSON.stringify(cp(w)) === cloudBefore && !w.upserts.slice(ups).includes('pet') && allRefused(res2),
+               d: '連線後:寫 ' + writes.n + ' 次、雲端 ' + (JSON.stringify(cp(w)) === cloudBefore ? '沒動' : '被改') });
+    const g = makeWorld();
+    g.noSession = true;
+    setLocal(g, 'tr_hist', dayHist(TODAY, 2));
+    g.local.setItem(GUESTKEY, raw);
+    const gw = countPetWrites(g);
+    const pgG = loadPage(g); await pgG.ready;
+    const resG = await pokeAll(pgG, g);
+    const vg = pgG.S.view();
+    out.push({ ok: gw.n === 0 && g.local.getItem(GUESTKEY) === raw && allRefused(resG) && vg.readOnly && vg.status.name === '小黃' && vg.status.todayCount === 25,
+               d: '訪客:寫 ' + gw.n + ' 次、畫面 ' + JSON.stringify({ name: vg.status.name, today: vg.status.todayCount }) });
+    return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
+  },
+  '36. 這個分頁開著時別台把雲端升成 v2(本機還是 v1):本機、雲端都不寫;畫面顯示兩邊合併的結果': async () => {
+    const w = makeWorld();
+    cloudRow(w, 'hist', dayHist(TODAY, 4));
+    const pg = await openLoggedIn(w);
+    const localRaw = w.local.getItem(PETKEY);
+    const rec = v2Pet();
+    w.db.find(r => r.k === 'pet').v = JSON.parse(JSON.stringify(rec));
+    const writes = countPetWrites(w);
+    const ups = w.upserts.length;
+    const before = others(w);
+    const res = await pokeAll(pg, w);
+    const v = pg.S.view();
+    return { ok: writes.n === 0 && w.local.getItem(PETKEY) === localRaw && same(cp(w), rec) && !w.upserts.slice(ups).includes('pet') && !('pet' in ledger(w)) && others(w) === before && allRefused(res)
+               && v.readOnly && v.newer === true && v.status.name === '小黃' && v.status.stage === 3 && v.pet.days[TODAY] === 25,
+             detail: '寫 ' + writes.n + ' 次 / 本機 ' + (w.local.getItem(PETKEY) === localRaw ? '沒動' : '被改') + ' / 雲端 ' + (same(cp(w), rec) ? '沒動' : '被改') + ' / 畫面 ' + JSON.stringify({ ro: v.readOnly, newer: v.newer, name: v.status.name, stage: v.status.stage, today: v.pet.days[TODAY] }) };
+  },
+  '37. 本機 v2、雲端被舊分頁蓋回 v1(本機有雲端沒有的天):兩邊都不寫,誰都沒少;畫面顯示合併': async () => {
+    const w = makeWorld();
+    cloudRow(w, 'hist', dayHist(TODAY, 1));
+    const pg = await openLoggedIn(w);
+    const raw = JSON.stringify(v2Pet());
+    w.local.setItem(PETKEY, raw);
+    const cloud1 = { v: 1, born: '2026-09-01', days: { '2026-09-01': 30 }, met: ['2026-09-01'], name: '阿啾', nameAt: 9 };
+    w.db.find(r => r.k === 'pet').v = JSON.parse(JSON.stringify(cloud1));
+    const writes = countPetWrites(w);
+    const ups = w.upserts.length;
+    const res = await pokeAll(pg, w);
+    const v = pg.S.view();
+    return { ok: writes.n === 0 && w.local.getItem(PETKEY) === raw && same(cp(w), cloud1) && !w.upserts.slice(ups).includes('pet') && allRefused(res)
+               && v.readOnly && v.newer === true && v.pet.days['2026-09-01'] === 30 && v.pet.days[TODAY] === 25 && v.status.name === '阿啾',
+             detail: '寫 ' + writes.n + ' 次 / 雲端 ' + (same(cp(w), cloud1) ? '沒動' : '被改') + ' / 畫面 ' + JSON.stringify({ newer: v.newer, d0901: v.pet.days['2026-09-01'], today: v.pet.days[TODAY], name: v.status.name }) };
+  },
+  '38. 雲端或本機是不認得的版本(v3、1.5、1e9)、或本機壞掉:唯讀,畫面照舊不說版本(只有剛好是 v2 才說,規格 5.3);v1 照常不是唯讀': async () => {
+    const out = [];
+    const cases = [['cloud', { v: 3, days: {} }], ['cloud', { v: 1.5 }], ['cloud', { v: 1e9 }], ['local', { v: 3, days: {} }], ['local', { v: 1.5 }], ['local', '{not json'], ['none', null]];
+    for (const [where, bad, newer] of cases.map(c => c.concat(false))) {
+      const w = makeWorld();
+      if (where === 'cloud') cloudRow(w, 'pet', bad);
+      cloudRow(w, 'hist', dayHist(TODAY, 2));
+      const pg = await openLoggedIn(w);
+      if (where === 'local') { setLocal(w, PETKEY, bad); await pg.S.sync(); }
+      const v = pg.S.view();
+      out.push({ ok: v.newer === newer && v.readOnly === (where !== 'none'), d: where + ':' + JSON.stringify({ ro: v.readOnly, newer: v.newer }) });
+    }
     return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
   },
 };

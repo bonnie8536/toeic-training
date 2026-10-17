@@ -6,7 +6,9 @@
    - pet 只存發生過的事實(每天題數、達標日、目標歷史、餵了幾顆、名字),連續天數、保護卡、成長階段每次重算。
      合併逐日取大、達標日取聯集,兩台裝置怎麼互蓋都不會倒退。
    - 日期比今天晚 7 天以內的先留著、不算進任何數字(時鐘慢的裝置不會刪掉別台的新進度);更晚的丟掉(時鐘被調快不留永久的錯)。
-   - 壞掉的欄位一個一個救;整個救不回或版本比 1 新就唯讀,不寫回。 */
+   - 壞掉的欄位一個一個救;整個救不回或版本比 1 新就唯讀,不寫回。
+   - 第二階段的格式(v: 2)看得懂舊欄位、照常顯示,但唯讀;feed、setGoal、rename、merge 拿到它或救不回的直接丟錯。
+     這一版從不寫出 v2 或任何新欄位(第二階段規格 5.3 第 1 步)。 */
 'use strict';
 globalThis.PET = (function () {
   const V = 1;
@@ -85,11 +87,20 @@ globalThis.PET = (function () {
   /* ---------- 整理(救壞掉的欄位) ---------- */
   function empty() { return { v: V, born: '', goals: [], days: {}, met: [], oldMet: 0, oldBefore: '', fed: {}, name: '', nameAt: 0 }; }
   function isPlain(o) { return !!o && typeof o === 'object' && !Array.isArray(o); }
-  /* 救不回:不是物件、或版本比 1 新 */
+  /* 第二階段的格式(v2):第一階段的欄位原樣,加上食物與走動開關。這一版看得懂第一階段那些欄位,
+     照常顯示,但整份唯讀、一筆都不寫(不寫回本機、不上傳、不把它整理成 v1 寫出去);新欄位不看也不帶出去 */
+  const V_NEXT = 2;
+  /* 剛好是 v2 才算;v3、1.5 這些不認得的版本不算(規格 5.3:跟現在一樣)。pet-store 用它決定畫面要不要說「新版網頁存的」 */
+  function isNext(raw) { return isPlain(raw) && raw.v === V_NEXT; }
+  /* 救不回:不是物件、或版本比 1 新又不是 2 */
   function unusable(raw) {
     if (raw === null || raw === undefined) return false;
     if (!isPlain(raw)) return true;
-    return typeof raw.v === 'number' && raw.v > V;
+    return typeof raw.v === 'number' && raw.v > V && raw.v !== V_NEXT;
+  }
+  /* 會產生要寫出去的那份的函式(feed、setGoal、rename、merge)拿到 v2 或救不回的,直接丟錯,不回傳任何 pet */
+  function writable(raw) {
+    if (unusable(raw) || isNext(raw)) throw new Error('這份小雞資料是較新的版本或讀不懂,這一版不改它');
   }
   function cleanCount(x, max) {
     if (typeof x !== 'number' || !isFinite(x)) return 0;
@@ -133,8 +144,11 @@ globalThis.PET = (function () {
   function sanitize(raw, now) {
     const today = todayOf(now);
     if (unusable(raw)) return { pet: empty(), readOnly: true };
+    if (isNext(raw)) return { pet: markNext(sanitizeObj(raw, today)), readOnly: true };
     return { pet: sanitizeObj(raw, today), readOnly: false };
   }
+  /* 顯示用的那份保留 v:2,不會變成看起來可以寫的 v1 */
+  function markNext(p) { p.v = V_NEXT; return p; }
 
   /* 同一天開始的目標只留一筆:後改的(at 大)贏,同時改的取大的,結果跟順序無關 */
   function dedupeGoals(list) {
@@ -181,10 +195,9 @@ globalThis.PET = (function () {
     return trim(p, today);
   }
   function merge(a, b, now) {
+    writable(a); writable(b);
     const today = todayOf(now);
-    const ca = unusable(a) ? empty() : sanitizeObj(a, today);
-    const cb = unusable(b) ? empty() : sanitizeObj(b, today);
-    return mergeClean(ca, cb, today);
+    return mergeClean(sanitizeObj(a, today), sanitizeObj(b, today), today);
   }
 
   /* ---------- 目標 ---------- */
@@ -195,6 +208,7 @@ globalThis.PET = (function () {
   }
   function setGoal(pet, n, now) {
     if (!GOALS.includes(n)) throw new Error('目標只能是 ' + GOALS.join('、'));
+    writable(pet);
     const today = todayOf(now);
     const p = sanitizeObj(pet, today);
     const from = addDays(today, 1);
@@ -202,6 +216,7 @@ globalThis.PET = (function () {
     return p;
   }
   function rename(pet, name, now) {
+    writable(pet);
     const today = todayOf(now);
     const p = sanitizeObj(pet, today);
     p.name = Array.from(String(name || '').trim()).slice(0, NAME_MAX).join('');
@@ -226,13 +241,16 @@ globalThis.PET = (function () {
 
   /* 打開小雞時呼叫:本機那份、雲端那份(沒有就 null)、hist,回傳要顯示的 pet 與要不要寫回。
      readOnly:有一份救不回或是新版格式,這次只顯示不寫,也不動雲端那份。
+     有一份是 v2:兩邊認得的欄位合併起來顯示(那份保留 v:2),一樣唯讀;救不回的那份當成空的。
      changed:結果跟本機存的不一樣(要寫回本機);remoteBehind:結果跟雲端那份不一樣(要上傳)。 */
   function reconcile(o) {
     const today = todayOf(o.now);
-    const readOnly = unusable(o.local) || unusable(o.remote);
+    const next = isNext(o.local) || isNext(o.remote);
+    const readOnly = next || unusable(o.local) || unusable(o.remote);
     const local = unusable(o.local) ? empty() : sanitizeObj(o.local, today);
     const remote = unusable(o.remote) ? empty() : sanitizeObj(o.remote, today);
     const pet = absorb(mergeClean(local, remote, today), o.hist, today);
+    if (next) markNext(pet);
     if (readOnly) return { pet, readOnly: true, changed: false, remoteBehind: false };
     const c = canon(pet);
     return {
@@ -244,6 +262,7 @@ globalThis.PET = (function () {
 
   /* ---------- 餵食 ---------- */
   function feed(pet, now) {
+    writable(pet);
     const today = todayOf(now);
     const p = sanitizeObj(pet, today);
     p.fed[today] = Math.max(p.fed[today] || 0, p.days[today] || 0);
@@ -309,5 +328,5 @@ globalThis.PET = (function () {
     return JSON.stringify(x === undefined ? null : x);
   }
 
-  return { dateOf, isSleeping, countHist, sanitize, merge, reconcile, setGoal, rename, feed, status, stageOf, accessoriesOf, goalOn, canon };
+  return { dateOf, isSleeping, countHist, sanitize, merge, reconcile, setGoal, rename, feed, status, stageOf, accessoriesOf, goalOn, canon, isNext };
 })();

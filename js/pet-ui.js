@@ -124,11 +124,20 @@
     msg = r && (r.reason === 'readOnly' || r.reason === 'clock' || r.reason === 'noFood') ? '' : '沒有存到，再試一次。';
     notify();
   }
+  /* 改目標、取名的結果(what 是「名字」或「目標」):成功不寫;唯讀(資料讀不到、新版網頁存的、時鐘不對)再試也沒用,
+     說一句沒有改和原因,跟 action() 的說明對得上(按下去才發現唯讀時,學生要知道剛打的名字或選的目標沒有存);
+     其他失敗(出錯、登出、沒存成)才請學生再試一次 */
+  function saveMsg(r, what) {
+    if (r && r.ok) return '';
+    if (r && r.reason === 'clock') return what + '沒有改，這台裝置的日期不對，調好以後再改。';
+    if (r && r.reason === 'readOnly') return what + '沒有改，這台先不能改小雞的資料。';
+    return '沒有存到，再試一次。';
+  }
   async function setGoal(n) {
     msg = '';
     let r;
     try { r = await S.setGoal(n); } catch (e) { r = { ok: false }; }
-    if (!r || !r.ok) msg = '沒有存到，再試一次。';
+    msg = saveMsg(r, '目標');
     notify();
   }
 
@@ -143,7 +152,7 @@
   /* noGo:首頁那張卡就在每日練習下面,沒有飼料時不再放一個去每日練習的按鈕 */
   function action(v, noGo) {
     const s = v.status;
-    if (v.readOnly) return h('p', { class: 'pet-note' }, v.reason === 'clock' ? '這台裝置的日期不對，調好以後再餵。' : '小雞的資料讀不到，這台先不能餵。');
+    if (v.readOnly) return h('p', { class: 'pet-note' }, v.newer ? '小雞的資料是新版網頁存的，這台先不能餵。' : v.reason === 'clock' ? '這台裝置的日期不對，調好以後再餵。' : '小雞的資料讀不到，這台先不能餵。');
     if (s.food > 0 || feeding) {
       /* 存的時候用 aria-disabled、不用 disabled:按鈕留得住焦點(feeding 擋住重複按) */
       return h('button', { class: 'btn primary pet-feed', type: 'button', 'data-focus': 'feed', 'aria-disabled': feeding ? 'true' : null, onclick: feed },
@@ -241,7 +250,8 @@
     function startRename() {
       renaming = true;
       const input = h('input', { class: 'modal-input pet-name-in', type: 'text', maxlength: '10', value: cur.status.name || '', 'aria-label': '小雞的名字', autocomplete: 'off' });
-      const done = (keep) => { renaming = false; drawHead(cur); if (keep !== false) { const b = head.querySelector('.pet-pen'); if (b) b.focus(); } };
+      /* 唯讀時沒有筆可以回去,焦點放到 ×,留在面板裡 */
+      const done = () => { renaming = false; drawHead(cur); (head.querySelector('.pet-pen') || x).focus(); };
       const form = h('form', { class: 'pet-name-f' }, input,
         h('button', { class: 'btn primary', type: 'submit' }, '儲存'),
         h('button', { class: 'btn', type: 'button', onclick: () => done() }, '取消'));
@@ -250,8 +260,9 @@
         const name = Array.from(input.value.trim()).slice(0, 10).join('');
         let r;
         try { r = await S.rename(name); } catch (err) { r = { ok: false }; }
-        msg = r && r.ok ? '' : '沒有存到，再試一次。';
-        done(); notify();
+        msg = saveMsg(r, '名字');
+        /* 先用最新的資料重畫(取名中 drawHead 不動),再收起表單:這時才知道還有沒有筆 */
+        notify(); done();
       });
       input.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.stopPropagation(); done(); } });
       head.replaceChildren(h('h2', { id: 'pet-sheet-h', class: 'pet-h-hidden' }, nameOf(cur)), form);
@@ -265,7 +276,7 @@
       moodOf(c, v, ev);
       paint(body, [todayLine(s), streakLine(s), week(v), h('div', { class: 'pet-act' }, action(v))], x);
       paint(rest, [s.totalMet > 0 ? h('p', { class: 'pet-grow' }, '累積達標 ' + s.totalMet + ' 天') : null,
-        v.readOnly || noGoal ? null : goalControl(v, 'pet-sheet'), noGoal ? null : notes(v, true)]);
+        v.readOnly || noGoal ? null : goalControl(v, 'pet-sheet'), noGoal ? null : notes(v, true)], x);
       if (live.textContent !== msg) live.textContent = msg;
     }
 
@@ -348,7 +359,7 @@
       moodOf(c, v, ev);
       paint(main, [h('h2', { id: idp + '-h' }, nameOf(v)), todayLine(s), streakLine(s)]);
       paint(act, [action(v, kind === 'home')], pic);
-      paint(more, kind === 'me' ? [v.readOnly ? null : goalControl(v, idp), notes(v, false)] : []);
+      paint(more, kind === 'me' ? [v.readOnly ? null : goalControl(v, idp), notes(v, false)] : [], pic);
       const t = sheet ? '' : msg;
       if (live.textContent !== t) live.textContent = t;
     });

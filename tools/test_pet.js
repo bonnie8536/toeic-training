@@ -9,13 +9,16 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const SRC = fs.readFileSync(path.join(__dirname, '..', 'js', 'pet.js'), 'utf8');
-function load() {
+/* 第二階段第 1 步的比對基準:origin/main f18d208 的 js/pet.js 原樣複製(git hash-object 跟 f18d208:js/pet.js 相同) */
+const BASE_SRC = fs.readFileSync(path.join(__dirname, 'fixtures', 'pet_v1_baseline.js'), 'utf8');
+function load(src) {
   const ctx = { console };
   vm.createContext(ctx);
-  vm.runInContext(SRC, ctx);
+  vm.runInContext(src || SRC, ctx);
   return ctx.PET;
 }
 const P = load();
+const BASE = load(BASE_SRC);
 
 function freeze(o) {
   if (o && typeof o === 'object') { Object.values(o).forEach(freeze); Object.freeze(o); }
@@ -327,13 +330,13 @@ T['餵食不改 days、met(只寫 fed)'] = () => {
 };
 
 /* ---------- 壞掉與未來版本 ---------- */
-T['pet 是字串、陣列、數字、v=2:唯讀,不寫回'] = () => {
-  const r = ['亂碼', [1, 2], 42, { v: 2, days: { '2026-10-07': 5 } }, true].map(x =>
+T['pet 是字串、陣列、數字、v=3:唯讀,不寫回'] = () => {
+  const r = ['亂碼', [1, 2], 42, { v: 3, days: { '2026-10-07': 5 } }, true].map(x =>
     P.reconcile({ local: freeze(x), remote: null, hist: freeze(dayHist('2026-10-07', 20)), now: now('2026-10-07') }));
   return { ok: r.every(x => x.readOnly && !x.changed), detail: JSON.stringify(r.map(x => [x.readOnly, x.changed])) };
 };
-T['雲端那份是 v=2(別台裝了新版):本機也不寫回,免得蓋掉新格式'] = () => {
-  const r = P.reconcile({ local: null, remote: freeze({ v: 2, days: {} }), hist: freeze(dayHist('2026-10-07', 20)), now: now('2026-10-07') });
+T['雲端那份是 v=3(別台裝了更新的版本):本機也不寫回,免得蓋掉新格式'] = () => {
+  const r = P.reconcile({ local: null, remote: freeze({ v: 3, days: {} }), hist: freeze(dayHist('2026-10-07', 20)), now: now('2026-10-07') });
   return { ok: r.readOnly && !r.changed, detail: JSON.stringify([r.readOnly, r.changed]) };
 };
 T['唯讀時還是算得出今天的題數給畫面看'] = () => {
@@ -377,6 +380,187 @@ T['雲端比本機多(別台的進度):changed,寫回合併後的版本'] = () =
   const remote = P.reconcile({ local: null, remote: null, hist: freeze(dayHist('2026-10-06', 20)), now: now(d) }).pet;
   const r = P.reconcile({ local: freeze(local), remote: freeze(remote), hist: freeze(dayHist(d, 5)), now: now(d) });
   return { ok: r.changed && r.pet.days['2026-10-06'] === 20 && r.pet.days[d] === 5, detail: JSON.stringify(r.pet.days) };
+};
+
+/* ---------- 第二階段第 1 步:相容版(看得懂 v2、一筆都不寫;v1 跟 f18d208 逐位元組相同) ---------- */
+const NEW_FIELDS = ['got', 'ate', 'foodOld', 'once', 'roam'];
+const S1 = '2026-11-10';
+function v2Rec(over) {
+  const days = {}, met = [];
+  range('2026-11-01', 10).forEach(d => { days[d] = 25; met.push(d); });
+  return Object.assign({ v: 2, born: '2026-11-01', goals: [{ from: '2026-11-02', n: 20, at: 1 }], days, met, oldMet: 3, oldBefore: '2026-10-01', fed: { [S1]: 25 }, name: '小黃', nameAt: 5,
+    got: { '2026-11-02': { d: 'corn' }, '2026-11-08': { y: 'yam' } }, ate: { '2026-11-02': { mh2lq01xk7: '2026-11-02/d' } },
+    foodOld: { before: '2026-07-05', left: { corn: 2, yam: 1 } }, once: { diag: '2026-11-02' }, roam: { on: false, at: 1793000000000 } }, over || {});
+}
+/* 同一份 v2 只留認得的欄位、v 改 1:「舊版看得懂的那部分」 */
+function strip(x) { const o = Object.assign({}, x, { v: 1 }); NEW_FIELDS.forEach(k => { delete o[k]; }); return o; }
+const V2S = () => [
+  v2Rec(),
+  { v: 2 },
+  v2Rec({ name: '阿啾', nameAt: 9, days: { '2026-11-09': 3, [S1]: 40 }, met: [S1], goals: [{ from: '2026-11-05', n: 40, at: 7 }], fed: {} }),
+  v2Rec({ got: '壞掉', ate: [1], foodOld: 5, once: null, roam: 'x', days: '壞掉', name: 7 }),
+];
+/* 現在就存在的 v1 樣子:v 是 1、沒有 v、v 不是數字、v 是 0 或負數、多了不認得的欄位、欄位壞掉 */
+const V1S = () => {
+  const full = strip(v2Rec());
+  return [
+    null, {}, full,
+    Object.assign({}, full, { v: undefined }), (() => { const o = Object.assign({}, full); delete o.v; return o; })(),
+    Object.assign({}, full, { v: '2' }), Object.assign({}, full, { v: null }), Object.assign({}, full, { v: NaN }),
+    Object.assign({}, full, { v: 0 }), Object.assign({}, full, { v: -1 }), Object.assign({}, full, { foo: 1, got: { x: 1 } }),
+    { v: 1, born: '2026-11-01', name: '阿啾', days: '壞掉', met: ['2026-11-02', 'xx', 5], goals: [{ from: '2026-11-01', n: 40 }, { from: 'x', n: 20 }], fed: [1], oldMet: -3, oldBefore: 'abc' },
+    { v: 1, born: '2026-12-30', days: { [S1]: 5, '2026-11-14': 9, '2026-12-30': 99 }, met: ['2026-11-14', '2026-12-30'], fed: { '2026-12-30': 9 } },
+    strip(v2Rec({ name: '阿啾', nameAt: 9, days: { '2026-11-09': 3, [S1]: 40 }, met: [S1], fed: {} })),
+  ];
+};
+const UNKNOWN = () => [{ v: 3, days: { [S1]: 5 } }, { v: 1.5, days: { [S1]: 5 } }, { v: Infinity }, { v: 1e9, name: 'x' }, [1, 2], '亂碼', '\u0000corrupt', 42, true];
+const HISTS = () => [[], dayHist(S1, 8), dayHist('2026-11-09', 30).concat(dayHist(S1, 2, 'g'))];
+const NOWS = [now(S1), tp(S1 + ' 23:30:00'), now('2026-11-20'), NaN];
+const J = x => JSON.stringify(x);
+function same2(fn) {
+  /* 新舊兩版各跑一次;丟錯也要丟一樣的錯 */
+  let a, b;
+  try { a = 'ok:' + J(fn(P)); } catch (e) { a = 'err:' + e.message; }
+  try { b = 'ok:' + J(fn(BASE)); } catch (e) { b = 'err:' + e.message; }
+  return a === b ? null : a.slice(0, 160) + '  ≠  ' + b.slice(0, 160);
+}
+T['第 1 步 v1:sanitize、reconcile、status、canon、merge、feed、setGoal、rename 跟 f18d208 逐位元組相同'] = () => {
+  const bad = [];
+  const v1s = V1S(), unk = UNKNOWN();
+  const sides = v1s.concat(unk);
+  let n = 0;
+  sides.forEach((x, i) => NOWS.forEach(t => {
+    n++; const d1 = same2(Q => Q.sanitize(freeze(x), t)); if (d1) bad.push('sanitize#' + i + ' ' + d1);
+    n++; const d2 = same2(Q => Q.status(freeze(x), t)); if (d2) bad.push('status#' + i + ' ' + d2);
+    n++; const d3 = same2(Q => Q.canon(freeze(x))); if (d3) bad.push('canon#' + i + ' ' + d3);
+  }));
+  sides.forEach((l, i) => sides.forEach((r, j) => HISTS().forEach((h, k) => [now(S1), now('2026-11-20')].forEach(t => {
+    n++; const d = same2(Q => Q.reconcile({ local: freeze(l), remote: freeze(r), hist: freeze(h), now: t }));
+    if (d) bad.push('reconcile#' + i + ',' + j + ',' + k + ' ' + d);
+  }))));
+  v1s.forEach((a, i) => v1s.forEach((b, j) => {
+    n++; const d = same2(Q => Q.merge(freeze(a), freeze(b), now(S1))); if (d) bad.push('merge#' + i + ',' + j + ' ' + d);
+  }));
+  v1s.forEach((x, i) => NOWS.forEach(t => {
+    n++; const f = same2(Q => Q.feed(freeze(x), t)); if (f) bad.push('feed#' + i + ' ' + f);
+    n++; const g = same2(Q => Q.setGoal(freeze(x), 40, t)); if (g) bad.push('setGoal#' + i + ' ' + g);
+    n++; const r = same2(Q => Q.rename(freeze(x), ' 小黃黃 ', t)); if (r) bad.push('rename#' + i + ' ' + r);
+  }));
+  return { ok: !bad.length && n > 2000, detail: '比了 ' + n + ' 組,不同 ' + bad.length + ':' + bad.slice(0, 3).join(' | ') };
+};
+T['第 1 步 v1:一路每天打開、餵食、改目標、取名 30 天,每次 changed、remoteBehind 與寫出去的那份都跟 f18d208 相同'] = () => {
+  const bad = [];
+  const run = Q => {
+    let local = null, remote = null; const log = [];
+    range('2026-11-01', 30).forEach((d, i) => {
+      const r = Q.reconcile({ local: local && freeze(JSON.parse(J(local))), remote: remote && freeze(JSON.parse(J(remote))), hist: freeze(dayHist(d, 5 + (i % 4) * 7)), now: now(d) });
+      let p = r.pet;
+      if (i % 3 === 0) p = Q.feed(freeze(p), now(d) + 60e3);
+      if (i % 7 === 2) p = Q.setGoal(freeze(p), [10, 20, 40][i % 3], now(d) + 120e3);
+      if (i % 11 === 5) p = Q.rename(freeze(p), '啾' + i, now(d) + 180e3);
+      if (r.changed || p !== r.pet) local = p;
+      if (r.remoteBehind || i % 5 === 0) remote = p;
+      log.push(J([r.readOnly, r.changed, r.remoteBehind, Q.canon(p)]));
+    });
+    return log;
+  };
+  const a = run(P), b = run(BASE);
+  a.forEach((x, i) => { if (x !== b[i]) bad.push('第 ' + (i + 1) + ' 天'); });
+  return { ok: !bad.length && a.length === 30, detail: bad.join('、') || '30 天相同' };
+};
+T['第 1 步:本機 v2、沒有雲端:唯讀、不寫;顯示的數字跟只留認得欄位的 v1 一樣,顯示的那份還是 v:2'] = () => {
+  const bad = [];
+  V2S().forEach((x, i) => HISTS().forEach((h, k) => {
+    const r = P.reconcile({ local: freeze(x), remote: null, hist: freeze(h), now: now(S1) });
+    const ref = BASE.reconcile({ local: freeze(strip(x)), remote: null, hist: freeze(h), now: now(S1) });
+    const sameShown = J(Object.assign({}, r.pet, { v: 1 })) === J(ref.pet) && J(P.status(r.pet, now(S1))) === J(BASE.status(ref.pet, now(S1)));
+    const noNew = NEW_FIELDS.every(f => !(f in r.pet));
+    if (!(r.readOnly === true && r.changed === false && r.remoteBehind === false && r.pet.v === 2 && sameShown && noNew)) bad.push('#' + i + ',' + k + ' ' + J([r.readOnly, r.changed, r.pet.v, sameShown, noNew]));
+  }));
+  const s = P.status(P.reconcile({ local: freeze(v2Rec()), remote: null, hist: [], now: now(S1) }).pet, now(S1));
+  const shown = { stage: s.stage, name: s.name, streak: s.streak, shields: s.shields, todayCount: s.todayCount, food: s.food, hungry: s.hungry, totalMet: s.totalMet, goal: s.goal };
+  const want = { stage: 3, name: '小黃', streak: 10, shields: 2, todayCount: 25, food: 0, hungry: false, totalMet: 13, goal: 20 };
+  return { ok: !bad.length && J(shown) === J(want), detail: bad.slice(0, 3).join(' | ') + ' 畫面 ' + J(shown) };
+};
+T['第 1 步:本機 v1 配雲端 v2、本機 v2 配雲端 v1、兩邊都 v2:唯讀、changed 與 remoteBehind 都 false,顯示兩邊合併'] = () => {
+  const bad = [];
+  const v2s = V2S(), v1s = V1S().filter(x => x !== null);
+  const pairs = [];
+  v1s.forEach(a => v2s.forEach(b => { pairs.push([a, b]); pairs.push([b, a]); }));
+  v2s.forEach(a => v2s.forEach(b => pairs.push([a, b])));
+  v2s.forEach(b => pairs.push([null, b]));
+  pairs.forEach(([l, r], i) => HISTS().forEach((h, k) => {
+    const x = P.reconcile({ local: freeze(l), remote: freeze(r), hist: freeze(h), now: now(S1) });
+    const sl = l && l.v === 2 ? strip(l) : l, sr = r && r.v === 2 ? strip(r) : r;
+    const ref = BASE.reconcile({ local: freeze(sl), remote: freeze(sr), hist: freeze(h), now: now(S1) });
+    const ok = x.readOnly === true && x.changed === false && x.remoteBehind === false && x.pet.v === 2 && J(Object.assign({}, x.pet, { v: 1 })) === J(ref.pet);
+    if (!ok) bad.push('#' + i + ',' + k + ' ' + J([x.readOnly, x.changed, x.remoteBehind, x.pet.v]));
+  }));
+  /* 雲端 v2 有本機沒有的天與名字:顯示看得到 */
+  const loc = { v: 1, born: '2026-11-09', days: { [S1]: 4 }, met: [] };
+  const m = P.reconcile({ local: freeze(loc), remote: freeze(v2Rec()), hist: [], now: now(S1) });
+  const s = P.status(m.pet, now(S1));
+  return { ok: !bad.length && pairs.length > 50 && s.name === '小黃' && s.stage === 3 && m.pet.days[S1] === 25 && m.pet.born === '2026-11-01',
+           detail: '比了 ' + pairs.length * 3 + ' 組,不對 ' + bad.length + ':' + bad.slice(0, 3).join(' | ') + ' / 合併後 ' + J({ name: s.name, stage: s.stage }) };
+};
+T['第 1 步:v2 配不認得的版本(v3、字串):整份唯讀;不認得的那份當成空的,v2 那份照常顯示'] = () => {
+  const out = [];
+  [{ v: 3, days: { '2026-11-03': 99 } }, '亂碼', [1]].forEach(u => {
+    [[v2Rec(), u], [u, v2Rec()]].forEach(([l, r]) => {
+      const x = P.reconcile({ local: freeze(l), remote: freeze(r), hist: [], now: now(S1) });
+      out.push(x.readOnly && !x.changed && !x.remoteBehind && x.pet.v === 2 && x.pet.name === '小黃' && x.pet.days['2026-11-03'] === 25);
+    });
+  });
+  return { ok: out.every(Boolean), detail: J(out) };
+};
+T['第 1 步:sanitize(v2) 是唯讀、保留 v:2 與認得的欄位,不帶新欄位;status(v2) 跟只留認得欄位的 v1 一樣'] = () => {
+  const bad = [];
+  V2S().forEach((x, i) => {
+    const s = P.sanitize(freeze(x), now(S1));
+    const ref = BASE.sanitize(freeze(strip(x)), now(S1));
+    if (!(s.readOnly === true && s.pet.v === 2 && J(Object.assign({}, s.pet, { v: 1 })) === J(ref.pet) && NEW_FIELDS.every(f => !(f in s.pet)))) bad.push('sanitize#' + i);
+    if (J(P.status(freeze(x), now(S1))) !== J(BASE.status(freeze(strip(x)), now(S1)))) bad.push('status#' + i);
+  });
+  return { ok: !bad.length, detail: bad.join('、') || 'ok' };
+};
+T['第 1 步:feed、setGoal、rename、merge 拿到 v2 或不認得的版本:丟錯,不回傳任何 pet'] = () => {
+  const bad = [];
+  const ok1 = strip(v2Rec());
+  V2S().concat(UNKNOWN()).forEach((x, i) => {
+    const calls = {
+      feed: () => P.feed(freeze(x), now(S1)),
+      setGoal: () => P.setGoal(freeze(x), 40, now(S1)),
+      rename: () => P.rename(freeze(x), '啾', now(S1)),
+      mergeA: () => P.merge(freeze(x), freeze(ok1), now(S1)),
+      mergeB: () => P.merge(freeze(ok1), freeze(x), now(S1)),
+    };
+    Object.keys(calls).forEach(k => {
+      let threw = false, got;
+      try { got = calls[k](); } catch (e) { threw = true; }
+      if (!threw) bad.push(k + '#' + i + ' 回了 ' + J(got).slice(0, 40));
+    });
+  });
+  /* 一般的 v1 與 null 照常可以用 */
+  let fine = true;
+  try { P.feed(null, now(S1)); P.setGoal(null, 10, now(S1)); P.rename(freeze(ok1), 'x', now(S1)); P.merge(null, freeze(ok1), now(S1)); } catch (e) { fine = false; }
+  return { ok: !bad.length && fine, detail: bad.slice(0, 4).join(' | ') + ' / v1 照常 ' + fine };
+};
+T['第 1 步:這一版不管拿到什麼,回傳要寫的那份(changed 或 remoteBehind)都不會是 v2、也沒有新欄位'] = () => {
+  const bad = [];
+  const sides = V1S().concat(V2S(), UNKNOWN());
+  sides.forEach((l, i) => sides.forEach((r, j) => {
+    const x = P.reconcile({ local: freeze(l), remote: freeze(r), hist: freeze(dayHist(S1, 3)), now: now(S1) });
+    const s = J(x.pet);
+    const writes = x.changed || x.remoteBehind;
+    if (writes && (x.readOnly || x.pet.v !== 1 || NEW_FIELDS.some(f => s.includes('"' + f + '"')))) bad.push(i + ',' + j);
+    if ((l && l.v === 2 || r && r.v === 2) && (writes || !x.readOnly)) bad.push('v2 ' + i + ',' + j);
+  }));
+  return { ok: !bad.length, detail: bad.slice(0, 5).join(' | ') || 'ok' };
+};
+T['第 1 步:isNext 只認得剛好是 v2 的紀錄;v3、1.5、1e9 這些不認得的版本、v1 與壞掉的都不算(規格 5.3:不認得的版本跟現在一樣)'] = () => {
+  const yes = [{ v: 2 }, v2Rec()].map(x => P.isNext(freeze(x)));
+  const no = [null, undefined, {}, { v: 1 }, { v: 3 }, { v: 1.5 }, { v: 1e9 }, { v: Infinity }, { v: '2' }, { v: NaN }, [2], '亂碼', 2].map(x => P.isNext(x));
+  return { ok: yes.every(x => x === true) && no.every(x => x === false) && !('isNewer' in P), detail: J(yes) + ' / ' + J(no) + ' / isNewer 還在=' + ('isNewer' in P) };
 };
 
 /* ---------- 純函式 ---------- */

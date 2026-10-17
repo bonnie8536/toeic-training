@@ -328,6 +328,7 @@
       store.set('mock_history', hist.slice(-30));
 
       results(timeUp, lRaw, lTotal, rRaw, rTotal, lScore, rScore);
+      if (window.PET_HOOK) PET_HOOK.done('mock', { into: root.querySelector('.report-head') });
     }
 
     function results(timeUp, lRaw, lTotal, rRaw, rTotal, lScore, rScore) {

@@ -2614,6 +2614,31 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   html.app-shell.has-tabbar.has-pet body { padding-bottom: 0 !important; }
 }
 
+/* ======== 小雞第二階段:hooks(js/pet-hook.js)開始 ======== */
+/* 結束畫面「小黃拿到 1 份小番茄。」那一行。只在 PET_FOOD 打開時才產生 .pet-earn。
+   等結果的時候(is-wait)先留一行的高度,字寫上去時下面的按鈕不會往下跳(第三輪審查 #9);
+   沒有字可寫、收起來以後看不見、不占位置,但留在讀螢幕的樹裡,寫字時 role=status 才念得到。 */
+.pet-earn { margin: 12px 0 0; font-size: 15px; font-weight: 700; line-height: 1.6; min-height: 1.6em; color: var(--ink); }
+.pet-earn:empty:not(.is-wait) {
+  position: absolute; width: 1px; height: 1px; min-height: 0; margin: 0; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+/* 放在一排按鈕、字數列裡時自己換一行 */
+.drill-nav-btns > .pet-earn, .wc-bar > .pet-earn { flex-basis: 100%; margin-top: 2px; }
+.drill-nav-btns:has(> .pet-earn:not(:empty)), .wc-bar:has(> .pet-earn:not(:empty)),
+.drill-nav-btns:has(> .pet-earn.is-wait), .wc-bar:has(> .pet-earn.is-wait) { flex-wrap: wrap; }
+.wc-bar > .pet-earn { text-align: right; font-size: 14px; }
+/* 對話:放在最後聽的那一句下面(第三輪審查 #4);題庫:放在成績下面(#5) */
+.dlg-lines > .pet-earn { margin: 0; text-align: center; }
+.tq-result + .pet-earn { margin: -8px 0 16px; }
+/* 掉落通關的畫面:那一行空著時,按鈕那一排照原本置中 */
+.game-over > .pet-earn { text-align: center; }
+.game-over > :nth-last-child(2):has(+ .pet-earn:empty:not(.is-wait)) { margin-bottom: auto; }
+@media print {
+  .pet-earn { display: none; }
+}
+/* ======== 小雞第二階段:hooks 結束 ======== */
+
 /* ======== 小雞第二階段:roam(js/pet-roam2.js)開始 ======== */
 /* 整頁跑(小雞第二階段規格.md 第 1 節)。每一條都掛在 html.pet-roam2 或 div.pet-roam2 底下,開關關著時不作用。
    外層不接受點擊,只有小雞按鈕能點;地面層 z-index 91(App 模式要在分頁列 90 上面),站點層 49(頂欄 50 下面)。

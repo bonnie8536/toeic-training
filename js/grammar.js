@@ -286,6 +286,7 @@
           cat ? h('a', { class: 'btn', href: 'practice.html?part=5&cat=' + encodeURIComponent(cat) }, '刷這個考點的題目') : null,
           VERB_UNITS.includes(u.id) ? h('a', { class: 'btn', href: 'grammar.html?ref=verbs' }, '查不規則動詞表') : null,
           h('a', { class: 'btn', href: 'grammar.html' }, '回文法基礎')));
+      if (window.PET_HOOK) PET_HOOK.done('g:' + u.id, { n: u.quiz.length, into: tail.querySelector('.report-head') });
     }
   }
 })();

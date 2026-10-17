@@ -260,6 +260,7 @@
           next ? h('a', { class: 'btn primary', href: 'daily.html?part=' + next.key }, '接著做' + label(next)) : h('a', { class: 'btn primary', href: 'index.html' }, '回首頁')),
       ].filter(Boolean));
       window.scrollTo(0, 0);
+      if (window.PET_HOOK) PET_HOOK.done('d', { into: root.querySelector('.report-head') });
     }
   }
 

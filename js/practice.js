@@ -409,6 +409,7 @@
         }
       });
       review();
+      if (window.PET_HOOK) PET_HOOK.done('p' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '5' ? [session.answers[i]] : u.item.questions.map((q, qi) => session.answers[i][qid(u.item, q, qi)])).filter(r => r && r.c > -1).length, 0), into: root.querySelector('.report-head') });
     }
 
     function review() {
@@ -597,6 +598,7 @@
       root.append(h('div', { class: 'drill-nav-btns' },
         h('a', { class: 'btn primary', href: 'practice.html' }, '回題庫')));
       window.scrollTo(0, 0);
+      if (window.PET_HOOK) PET_HOOK.done('pr', { n: Object.values(session).reduce((s, r) => s + (p === '5' ? 1 : Object.keys(r).length), 0), into: root.querySelector('.report-head') });
     }
   }
 

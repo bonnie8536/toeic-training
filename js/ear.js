@@ -378,6 +378,7 @@
         h('button', { class: 'btn primary', onclick: () => startRound(sec) }, '再來一輪'),
         h('a', { class: 'btn', href: 'listening.html' }, '回聽力訓練')));
       window.scrollTo(0, 0);
+      if (window.PET_HOOK) PET_HOOK.done('e' + sec, { n: list.length, into: root.querySelector('.report-head') });
     }
   }
 })();

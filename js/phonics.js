@@ -356,6 +356,7 @@
         h('div', { class: 'drill-nav-btns' },
           next ? h('a', { class: 'btn primary', href: 'phonics.html?u=' + next.id }, '下一課：' + next.title) : null,
           h('a', { class: 'btn', href: 'phonics.html' }, '回自然發音')));
+      if (window.PET_HOOK) PET_HOOK.done('pn:' + u.id, { n: u.quiz.length, into: tail.querySelector('.report-head') });
     }
   }
 })();

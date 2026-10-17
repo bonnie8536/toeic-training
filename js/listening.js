@@ -337,6 +337,7 @@
         }
       });
       review();
+      if (window.PET_HOOK) PET_HOOK.done('l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: root.querySelector('.report-head') });
     }
 
     function review() {
@@ -439,6 +440,7 @@
         opts.wrongOnly ? null : h('button', { class: 'btn primary', onclick: () => startQuiz(root, config) }, '再練一輪'),
         h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
       window.scrollTo(0, 0);
+      if (window.PET_HOOK) PET_HOOK.done(opts.wrongOnly ? 'pr' : 'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: root.querySelector('.report-head') });
     }
   }
 

@@ -233,6 +233,7 @@
           h('button', { class: 'btn primary', type: 'button', onclick: () => startQuiz(list) }, '再測一輪'),
           h('button', { class: 'btn', type: 'button', onclick: () => render() }, '回動詞表')));
         window.scrollTo(0, 0);
+        if (window.PET_HOOK) PET_HOOK.done('iv', { n: items.length, into: root.querySelector('.report-head') });
       }
     }
   }

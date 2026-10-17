@@ -23,6 +23,7 @@
     const list = all[id] || [];
     if (list.indexOf(i) > -1) return;
     store.set('dlg_heard', Object.assign({}, all, { [id]: list.concat(i).sort((a, b) => a - b) }));
+    if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { after: root.querySelectorAll('.dlg-line')[i] });
   }
   const slangCount = (d) => d.lines.reduce((n, l) => n + (l.slang || []).length, 0);
 

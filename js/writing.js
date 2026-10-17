@@ -169,6 +169,7 @@
           readMap[les.id] = true;
           store.set(KEYS.read, readMap);
           btn.replaceWith(h('span', { class: 'result-note', style: 'color:var(--ok)' }, '已標記讀完。'));
+          if (window.PET_HOOK && unitDone(units[idx])) PET_HOOK.done('wr:' + les.id, { into: wrap });
         },
       }, '標記讀完');
       wrap.append(btn);
@@ -233,6 +234,7 @@
                 st[s.id] = { ok: true };
                 store.set(KEY, st);
                 draw();
+                if (window.PET_HOOK && unitDone({ t: 's', ref: s })) PET_HOOK.done('wr:' + s.id, { into: block });
               } else {
                 attempts++;
                 msg.textContent = '順序不對，再試一次。';
@@ -289,8 +291,10 @@
       if (m[id][field] === ta.value) return;
       m[id][field] = ta.value;
       m[id].updatedAt = new Date().toISOString();
+      const petU = window.PET_HOOK ? { t: Object.keys(KEYS).find(k => KEYS[k] === storeKey), ref: { id } } : null, petWas = !petU || unitDone(petU);
       store.set(storeKey, m);
       savedNote.textContent = '已儲存';
+      if (window.PET_HOOK && !petWas && unitDone(petU)) PET_HOOK.done('wr:' + id, { into: savedNote.parentNode });
     }
     return { ta, bar: h('div', { class: 'wc-bar' }, counter, savedNote), value: () => ta.value };
   }

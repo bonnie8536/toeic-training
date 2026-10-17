@@ -628,6 +628,7 @@
           h('button', { class: 'btn primary', onclick: () => startGame(mode, levelName, speedKey, dir) }, '再挑戰一關'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
       field.append(overlay);
+      if (window.PET_HOOK) PET_HOOK.done('fall', { into: overlay });
     }
 
     rafId = requestAnimationFrame(loop);
@@ -730,6 +731,7 @@
         h('button', { class: 'btn primary', onclick: () => startDrill(groupName, items) }, '再練一輪'),
         h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
       window.scrollTo(0, 0);
+      if (window.PET_HOOK) PET_HOOK.done('ph', { n: list.length, into: root.querySelector('.report-head') });
     }
   }
 
@@ -848,6 +850,7 @@
         h('div', { class: 'drill-nav-btns' },
           h('button', { class: 'btn primary', onclick: () => startPairs(mode, levelName) }, '再玩一次'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
+      if (window.PET_HOOK) PET_HOOK.done('pairs', { into: root.querySelector('.report-head') });
     }
   }
 
@@ -934,6 +937,7 @@
             h('button', { class: 'btn primary', onclick: () => startToast(mode, levelName) }, '再烤一盤'),
             h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
         window.scrollTo(0, 0);
+        if (window.PET_HOOK) PET_HOOK.done('toast', { n: results.length, into: root.querySelector('.report-head') });
       }
     }
   }
@@ -1012,6 +1016,7 @@
           h('button', { class: 'btn primary', onclick: () => startMcq(mode, levelName, dir) }, '再練一輪'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
       window.scrollTo(0, 0);
+      if (window.PET_HOOK) PET_HOOK.done('mcq', { n: list.length, into: root.querySelector('.report-head') });
     }
   }
 })();

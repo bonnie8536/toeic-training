@@ -376,6 +376,7 @@
             store.set(key, answers);
             logAttempt('r', a.id + ':' + qi, oi, oi === q.answer);
             drawAll();
+            if (window.PET_HOOK && Object.keys(answers).length === a.questions.length) PET_HOOK.done('r:' + a.id, { into: list.querySelector('.drill-nav-btns') });
           },
         }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
       });
@@ -513,6 +514,7 @@
       store.set(storeKey, { score, total: answers.length, t: Date.now() });
       logAttempt('tq', a.id, score, score === answers.length, { n: answers.length });
       draw();
+      if (window.PET_HOOK) PET_HOOK.done('tq:' + a.id, { into: area, after: area.querySelector('.tq-result') });
     }
 
     function reset() {

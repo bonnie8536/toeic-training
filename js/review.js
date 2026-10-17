@@ -226,6 +226,7 @@
         h('a', { class: 'btn primary', href: 'review.html' }, '回每日複習'),
         h('a', { class: 'btn', href: 'index.html' }, '回首頁')));
       window.scrollTo(0, 0);
+      if (window.PET_HOOK) PET_HOOK.done('rv', { n: list.length, into: root.querySelector('.report-head') });
     }
   }
 })();

@@ -129,6 +129,7 @@
           store.set(KEY, st);
           window.scrollTo(0, 0);
           renderReport();
+          if (window.PET_HOOK) PET_HOOK.done('diag', { into: root.querySelector('.report-head') });
         },
       }, '交卷，看報告')));
   }

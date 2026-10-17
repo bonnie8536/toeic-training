@@ -252,9 +252,63 @@
     });
   }
 
-  /* ---------- 分頁列上的小雞(js/pet-roam.js) ----------
+  /* ---------- 分頁列上的小雞(js/pet-roam.js;第二階段 PET_ROAM_V2 開著時換成 js/pet-roam2.js) ----------
      只在有分頁列、而且載入了 common.js 與 cloud.js 的頁面(條款、價格頁沒有)。先載開關 pet-config.js,開著才載其他的;
-     首頁與「我的」頁網站模式就有的那幾個不重載。照順序執行(async = false)。 */
+     頁面上已經有的(首頁與「我的」頁網站模式就有的那幾個、每個載入 cloud.js 的頁面都有的 pet.js)不重載。照順序執行(async = false)。
+     第二階段(小雞第二階段規格、實作契約第 11 節):PET_FOOD 開著時多載 pet-food.js(pet.js 後)、pet-hook.js(pet-store.js 後)、
+     food-art.js(pet-ui.js 前)。網站模式只在開關打開時才動作(loadWebPet),兩個都關著時一個檔都不多載。 */
+  function on(name) { return window[name] === true; }
+  function hasGlobal(name) {
+    if (name === 'PET.earn') return !!window.PET && typeof window.PET.earn === 'function';
+    return !!window[name];
+  }
+  function loadList(list) {
+    list.forEach(function (x) { if (!hasGlobal(x[0])) addScript(x[1]).catch(function (err) { console.warn('小雞載入失敗：', err); }); });
+  }
+  /* App 模式(有分頁列的頁面):兩個開關都關著時跟第一階段的清單、順序完全一樣 */
+  function appPetList() {
+    const food = on('PET_FOOD');
+    const list = [['PET', 'js/pet.js']];
+    if (food) list.push(['PET.earn', 'js/pet-food.js']);
+    list.push(['PET_STORE', 'js/pet-store.js']);
+    if (food) list.push(['PET_HOOK', 'js/pet-hook.js']);
+    list.push(['ChickArt', 'js/chick-art.js']);
+    if (food) list.push(['FoodArt', 'js/food-art.js']);
+    list.push(['PET_UI', 'js/pet-ui.js']);
+    list.push(['PET_ROAM', on('PET_ROAM_V2') ? 'js/pet-roam2.js' : 'js/pet-roam.js']);
+    return list;
+  }
+  /* 網站模式(實作契約第 7.3 節):練習頁在 PET_FOOD 時載入補券和結束畫面那一行要的檔;
+     學習、刷題、複習在 PET_ROAM_V2 時載入走動的小雞和面板;首頁、「我的」本來就有面板,只多載 pet-roam2.js */
+  const WEB_FOOD_PAGES = ['daily.html', 'grammar.html', 'phonics.html', 'vocab.html', 'reading.html', 'practice.html', 'listening.html',
+    'review.html', 'dialogue.html', 'mock.html', 'diagnostic.html', 'writing.html'];
+  const WEB_ROAM_FULL = ['learn.html', 'drill.html', 'review.html'];
+  const WEB_ROAM_ONLY = ['index.html', 'me.html'];
+  function webPetList(page) {
+    const food = on('PET_FOOD'), roam2 = on('PET_ROAM_V2');
+    const hook = food && WEB_FOOD_PAGES.indexOf(page) > -1;
+    const full = roam2 && WEB_ROAM_FULL.indexOf(page) > -1;
+    const list = [];
+    if (!hook && !full) {
+      if (roam2 && WEB_ROAM_ONLY.indexOf(page) > -1) list.push(['PET_ROAM', 'js/pet-roam2.js']);
+      return list;
+    }
+    list.push(['PET', 'js/pet.js']);
+    if (food) list.push(['PET.earn', 'js/pet-food.js']);
+    list.push(['PET_STORE', 'js/pet-store.js']);
+    if (hook) list.push(['PET_HOOK', 'js/pet-hook.js']);
+    if (full) {
+      list.push(['ChickArt', 'js/chick-art.js']);
+      if (food) list.push(['FoodArt', 'js/food-art.js']);
+      list.push(['PET_UI', 'js/pet-ui.js'], ['PET_ROAM', 'js/pet-roam2.js']);
+    }
+    return list;
+  }
+  function loadWebPet() {
+    if (!on('PET_FOOD') && !on('PET_ROAM_V2')) return;
+    if (typeof window.storageKey !== 'function' || !window.CLOUD || !petWanted()) return;
+    loadList(webPetList(PAGE));
+  }
   function addScript(src) {
     return new Promise(function (resolve, reject) {
       const s = doc.createElement('script');
@@ -274,8 +328,7 @@
     const first = window.PET_ON === undefined ? addScript('js/pet-config.js') : Promise.resolve();
     first.then(function () {
       if (!petWanted()) return;
-      [['PET', 'js/pet.js'], ['PET_STORE', 'js/pet-store.js'], ['ChickArt', 'js/chick-art.js'], ['PET_UI', 'js/pet-ui.js'], ['PET_ROAM', 'js/pet-roam.js']]
-        .forEach(function (x) { if (!window[x[0]]) addScript(x[1]).catch(function (err) { console.warn('小雞載入失敗：', err); }); });
+      loadList(appPetList());
     }).catch(function (err) { console.warn('小雞載入失敗：', err); });
   }
 
@@ -286,6 +339,8 @@
     catch (err) { html.classList.remove('app-shell'); console.warn('App 外殼建立失敗，改用網站版面：', err); }
     window.APP_SHELL_OK = true;
     try { loadPet(); } catch (err) { console.warn('小雞載入失敗：', err); }
+  } else {
+    try { loadWebPet(); } catch (err) { console.warn('小雞載入失敗：', err); }
   }
   registerSW();
 })();

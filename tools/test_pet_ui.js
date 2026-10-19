@@ -125,6 +125,7 @@ function loadPage(state) {
   vm.createContext(ctx);
   vm.runInContext(H_SRC + '\nthis.h = h;', ctx);
   if (state.me) { doc.ids['me-root'] = doc.createElement('div'); doc.body.append(doc.ids['me-root']); }
+  if (state.setup) state.setup(ctx, doc);   // 測試自己再加的(假的 html、MutationObserver、animate)
   vm.runInContext(UI_SRC, ctx);
   if (state.me) return { doc, ctx, card: doc.ids['me-root'].querySelector('.pet-card'), live: () => doc.ids['me-root'].querySelector('.pet-msg').textContent };
   const opener = doc.createElement('button');
@@ -248,6 +249,58 @@ T['PET_UI.chick:沒給 opt 時 animate 參數跟第 1 步一樣;給 { maxDpr, va
   const a = got[0], b = got[1];
   return { ok: !!a && !!b && JSON.stringify(Object.keys(a)) === JSON.stringify(['size', 'fps', 'maxDpr', 'pose', 'onTick']) && a.maxDpr === 2 &&
     b.maxDpr === 1.5 && b.variants === 1 && b.size === 160, detail: JSON.stringify(got) };
+};
+
+/* 電腦版到處走(pet-roam2.js 在 html 加 pet-roam2-wide,css 把卡片裡的小雞藏起來):卡片裡的小雞停住不畫,class 拿掉就照常動(第四輪審查 #4) */
+T['首頁卡片、我的:html 有 pet-roam2-wide 時卡片裡的小雞停住(不跑計時器、不畫),拿掉就照常動;面板裡的小雞不受影響'] = async () => {
+  const out = [];
+  for (const [me, wide0] of [[true, true], [true, false], [false, true]]) {
+    const log = { start: 0, stop: 0 }, mos = [];
+    const pg = loadPage({ view: 'v1', me, act: () => ({ ok: true }), setup(ctx, doc) {
+      doc.documentElement = doc.createElement('html');
+      if (wide0) doc.documentElement.classList.add('pet-roam2-wide');
+      ctx.MutationObserver = class { constructor(cb) { this.cb = cb; mos.push(this); } observe(t, o) { this.t = t; this.o = o; } };
+      ctx.ChickArt.animate = (c, o) => { log.start++; return { pose: o.pose, setPose() { log.start++; }, stop() { log.stop++; }, setFps() { log.start++; } }; };
+    } });
+    const html = pg.doc.documentElement, fire = () => mos.filter((m) => m.t === html).forEach((m) => m.cb([{ attributeName: 'class' }]));
+    const card = me ? pg.card : null;
+    const a = Object.assign({}, log);
+    html.classList.remove('pet-roam2-wide'); fire();
+    const b = Object.assign({}, log);
+    html.classList.add('pet-roam2-wide'); fire();
+    const c = Object.assign({}, log);
+    out.push({ me, wide0, card: !!card, a, b, c, watched: mos.some((m) => m.t === html) });
+  }
+  const [m1, m2, sh] = out;
+  const okMe = m1.watched && m1.a.stop >= 1 && m1.b.start > m1.a.start && m1.c.stop > m1.b.stop;   // 假 DOM 沒有 IntersectionObserver:建好先畫一格就停
+  const okMe2 = m2.a.start > 0 && m2.c.stop > m2.b.stop;
+  const okSheet = sh.a.start > 0 && sh.c.stop === sh.b.stop;   // 只有面板(沒有卡片):面板裡的小雞照常動
+  return { ok: okMe && okMe2 && okSheet, detail: JSON.stringify(out) };
+};
+
+/* 規格 1.11「只有一隻」:列印時卡片的小雞照常印出來(第三輪複查 #2)。css 在列印時把卡片的小雞放回來、拿掉空的窩;
+   js 在 beforeprint 讓停住的小雞畫一格(不然印出來是舊的那格或空白),afterprint 再停住 */
+T['列印:電腦版到處走時卡片的小雞照常印出來(css 列印時放回小雞、拿掉窩;beforeprint 畫一格,afterprint 再停住)'] = async () => {
+  const css = read('css/style.css').replace(/\r\n/g, '\n'), pm = css.match(/@media print\s*\{[\s\S]*?\n\}/g) || [];
+  const pr = pm.join('\n');
+  const cssOk = /html\.pet-roam2\.pet-roam2-wide \.pet-card \.pet-cv\s*\{[^}]*visibility:\s*visible/.test(pr) && /html\.pet-roam2\.pet-roam2-wide \.pet-card \.pet-pic\s*\{[^}]*background-image:\s*none/.test(pr);
+  const log = { start: 0, stop: 0 }, win = {};
+  const pg = loadPage({ view: 'v1', me: true, act: () => ({ ok: true }), setup(ctx, doc) {
+    doc.documentElement = doc.createElement('html');
+    doc.documentElement.classList.add('pet-roam2-wide');
+    const add0 = ctx.addEventListener;
+    ctx.addEventListener = (t, f) => { (win[t] = win[t] || []).push(f); add0(t, f); };
+    ctx.MutationObserver = class { constructor(cb) { this.cb = cb; } observe() {} };
+    ctx.ChickArt.animate = (c, o) => { log.start++; return { pose: o.pose, setPose() { log.start++; }, stop() { log.stop++; }, setFps() { log.start++; } }; };
+  } });
+  const fire = (t) => (win[t] || []).forEach((f) => f({ type: t }));
+  const a = Object.assign({}, log);
+  fire('beforeprint');
+  const b = Object.assign({}, log);
+  fire('afterprint');
+  const c = Object.assign({}, log);
+  const jsOk = !!pg.card && b.start > a.start && c.stop > b.stop;
+  return { ok: cssOk && jsOk, detail: JSON.stringify({ cssOk, a, b, c, printBlocks: pm.length }) };
 };
 
 (async () => {

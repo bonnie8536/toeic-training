@@ -52,7 +52,7 @@ const CS0 = { display: 'block', visibility: 'visible', opacity: '1', cursor: 'au
   borderTopColor: 'rgb(0, 0, 0)', borderRightColor: 'rgb(0, 0, 0)', borderBottomColor: 'rgb(0, 0, 0)', borderLeftColor: 'rgb(0, 0, 0)' };
 const WHITE = { backgroundColor: 'rgb(255, 255, 255)' };
 
-/* o:{ src, zones(載入 js/pet-roam-zones.js), W, H, page, app, docH, seed, build(add) 建頁面, ui:{ mood, hungry, roam, reduced } } */
+/* o:{ src, zones(載入 js/pet-roam-zones.js), W, H, page, app, docH, seed, startX, build(add) 建頁面, ui:{ mood, hungry, roam, reduced } } */
 function sim(o) {
   const st = { t: 0, scrollY: 0, W: o.W, H: o.H, qsaStar: 0, rects: 0 };
   const timers = []; let tid = 0, rafs = [];
@@ -63,7 +63,7 @@ function sim(o) {
     constructor(tag, x) {
       x = x || {};
       this.tagName = tag.toUpperCase(); this.id = x.id || ''; this.attrs = Object.assign({}, x.attrs || {}); this._cls = (x.cls || '').split(/\s+/).filter(Boolean);
-      this.cs = Object.assign({}, CS0, x.style || {}); this.box = x.box || null; this.fixed = !!x.fixed; this.texts = (x.texts || []).map((r) => ({ nodeType: 3, nodeValue: '字', r }));
+      this.cs = Object.assign({}, CS0, x.style || {}); this.box = x.box || null; this.fixed = !!x.fixed; this.texts = (x.texts || []).map((r) => ({ nodeType: 3, nodeValue: '字', r })); this.pseudo = x.pseudo || null;
       this.kids = []; this.parentElement = null; this.hidden = false; this.inert = false; this.style = {}; this.on = {}; this.isConnected = true; this.isContentEditable = false;
       const self = this;
       this.classList = { add: (...c) => c.forEach((v) => { if (!self._cls.includes(v)) self._cls.push(v); }), remove: (...c) => { self._cls = self._cls.filter((v) => !c.includes(v)); },
@@ -134,9 +134,9 @@ function sim(o) {
     clearTimeout: (id) => { const i = timers.findIndex((x) => x.id === id); if (i >= 0) timers.splice(i, 1); },
     requestAnimationFrame: (f) => { rafs.push(f); return rafs.length; }, cancelAnimationFrame() {},
     addEventListener(t, f) { (winOn[t] = winOn[t] || []).push(f); },
-    getComputedStyle: (e) => (e === layer ? Object.assign({}, CS0, o.app ? {} : { paddingLeft: '16px', paddingRight: '16px' }) : e.cs),
+    getComputedStyle: (e, p) => (p ? Object.assign({ content: 'none', display: 'inline', position: 'static', transform: 'none' }, (e.pseudo && e.pseudo[p]) || {}) : e === layer ? Object.assign({}, CS0, o.app ? {} : { paddingLeft: '16px', paddingRight: '16px' }) : e.cs),   // p:'::before'、'::after'(假元素)
     getSelection: () => ({ isCollapsed: !st.sel, rangeCount: st.sel ? 1 : 0, getRangeAt: () => ({ getBoundingClientRect: () => RECT(st.sel[0], st.sel[1], st.sel[2], st.sel[3]) }) }),
-    sessionStorage: { getItem: () => null, setItem() {} },
+    sessionStorage: { getItem: () => (o.startX === undefined ? null : String(o.startX)), setItem() {} },   // startX:上一頁記下的 x(小雞從地面的這裡開始)
     MutationObserver: class { constructor(cb) { this.cb = cb; muts.push(this); } observe(t) { this.t = t; } },
     IntersectionObserver: class { constructor(cb) { ios.push(cb); } observe() {} },
   };
@@ -241,4 +241,88 @@ function wideSim(o) {
   return sim(Object.assign({ src: ROAM, zones: ZONES, W: 1440, H: 900, page: 'learn.html', build: learnPage }, o));
 }
 
-module.exports = { REPO, read, ROAM, ZONES, ART, nodeLoad, Z, mulberry, S, BOXH, ob, hitBox, RECT, CS0, WHITE, sim, learnPage, supported, obstaclesNow, wideSim };
+/* ---------- 五個主分頁的寬版(1.11 實測的版型):site(name, W, H) 回 build ----------
+   寬版頁(首頁、學習、刷題)主要內容 1040 寬、窄版頁(複習、我的)768 寬,置中;頁面標題是 .page-head 裡的 inline-block h1,
+   黃色螢光筆是 ::before(left -8、right -10、top 46%、bottom 3%、轉 -1.2 度,同 css/style.css 的 .page-head h1::before) */
+const MARK = { '::before': { content: '""', display: 'block', position: 'absolute', left: '-8px', right: '-10px', top: '20.24px', bottom: '1.32px', transform: 'matrix(0.99978, -0.020943, 0.020943, 0.99978, 0, 0)' } };
+const LINK = (x) => Object.assign({ attrs: { href: 'x.html' }, style: Object.assign({ cursor: 'pointer' }, WHITE) }, x);
+function site(name, W, H) {
+  const narrow = name === 'review' || name === 'me', mw = narrow ? 768 : 1040, L = Math.round((W - mw) / 2), R = L + mw, M = Math.round((L + R) / 2);
+  return (add) => {
+    add(null, 'header', { cls: 'topbar', box: [0, 0, W, 59], fixed: true, style: WHITE, texts: [[24, 20, 140, 40]] });
+    const main = add(null, 'main', { box: [L, 59, R, 1700] });
+    const head = (text) => { const ph = add(main, 'div', { cls: 'page-head', box: [L, 72, R, 128] }); return add(ph, 'h1', { box: [L, 80, L + text, 124], texts: [[L, 84, L + text, 120]], pseudo: MARK }); };
+    let h1 = null, card = null;
+    if (name === 'index') {
+      const band = add(main, 'section', { cls: 'hero', box: [0, 59, W, 250], style: { backgroundColor: 'rgb(246, 247, 249)' } });
+      h1 = add(band, 'h1', { box: [L, 80, R, 124], texts: [[L, 84, L + 620, 120]] });
+      add(band, 'p', { box: [L, 150, L + 420, 200], texts: [[L, 150, L + 420, 196]] });
+      add(main, 'p', { box: [L, 266, R, 292], texts: [[L, 268, L + 460, 290]] });
+      const daily = add(main, 'section', { id: 'daily-home', cls: 'daily-home', box: [L, 310, R, 460], style: WHITE, texts: [[L + 24, 330, L + 160, 352]] });
+      for (let i = 0; i < 3; i++) add(daily, 'button', { box: [L + 24 + i * 300, 380, L + 284 + i * 300, 424] });
+      card = add(main, 'section', { cls: 'pet-card pet-home', box: [L, 476, R, 580], style: WHITE, texts: [[L + 130, 496, L + 260, 520], [L + 130, 528, L + 420, 548]] });
+      add(card, 'button', { cls: 'pet-pic', box: [L + 12, 482, L + 108, 574] });
+      add(card, 'button', { cls: 'btn', box: [R - 120, 506, R - 24, 550] });
+      add(main, 'a', LINK({ box: [L, 602, M - 10, 860] }));
+      add(main, 'a', LINK({ box: [M + 10, 602, R, 860] }));
+    } else if (name === 'learn' || name === 'drill') {
+      h1 = head(64);
+      const rows = name === 'learn' ? 4 : 2;
+      for (let i = 0; i < rows; i++) { add(main, 'a', LINK({ box: [L, 150 + i * 200, M - 10, 330 + i * 200] })); add(main, 'a', LINK({ box: [M + 10, 150 + i * 200, R, 330 + i * 200] })); }
+      if (name === 'learn') { const w = add(main, 'section', { box: [L, 950, M - 10, 1150], style: WHITE }); add(w, 'h2', { box: [L + 24, 970, M - 34, 1000], texts: [[L + 24, 972, L + 130, 998]] }); }
+    } else if (name === 'review') {
+      h1 = head(64);
+      for (let i = 0; i < 4; i++) { const c = add(main, 'section', { cls: 'part-card', box: [L, 150 + i * 170, R, 300 + i * 170], style: WHITE, texts: [[L + 24, 170 + i * 170, L + 200, 194 + i * 170]] }); add(c, 'button', { box: [R - 140, 244 + i * 170, R - 24, 284 + i * 170] }); }
+    } else {
+      h1 = head(64);
+      const hd = add(main, 'div', { cls: 'me-head', box: [L, 150, R, 214] });
+      add(hd, 'img', { box: [L, 150, L + 64, 214] });
+      add(hd, 'p', { box: [L + 80, 166, L + 300, 198], texts: [[L + 80, 168, L + 260, 196]] });
+      card = add(main, 'section', { cls: 'pet-card pet-me', box: [L, 230, R, 340], style: WHITE, texts: [[L + 130, 250, L + 260, 274], [L + 130, 282, L + 420, 302]] });
+      add(card, 'button', { cls: 'pet-pic', box: [L + 12, 236, L + 108, 334] });
+      for (let i = 0; i < 2; i++) { const c = add(main, 'section', { box: [L, 360 + i * 220, R, 560 + i * 220], style: WHITE, texts: [[L + 24, 380 + i * 220, L + 300, 404 + i * 220]] }); add(c, 'button', { box: [L + 24, 500 + i * 220, L + 200, 540 + i * 220] }); }
+    }
+    const ft = name === 'drill' ? 600 : 1700;
+    add(null, 'footer', { box: [0, ft, W, ft + 160], style: { borderTopWidth: '1px', borderTopStyle: 'solid' }, texts: [[L, ft + 40, L + 400, ft + 60]] });
+    return { main, h1, card, L, R };
+  };
+}
+/* 跑 ms 毫秒,每 100 毫秒記一次小雞在哪:'ground'(視窗下緣)、空地的 key、null(換地方途中)。回 1.11 的數字:
+   first 第一次離開地面的時間、minZones 任一段 60 秒裡去過幾個地方(地面算一個)的最小值、maxGround 任一段 60 秒裡在地面的比例最大值、
+   ground 全程在地面的比例、stays 每次停在空地的秒數(長休息不算)、rests 長休息 [{ at, t, s }]、faded 淡出的比例 */
+function wanderRun(o) {
+  const lab = [];
+  let next = 0, first = -1;
+  const each = (Q) => {
+    if (Q.st.t < next) return;
+    next += 100;
+    const s = Q.R();
+    if (!s) { lab.push({ at: null }); return; }
+    const moving = !!s.move || !!s.flying;
+    if (first < 0 && (moving || !s.ground)) first = Q.st.t;
+    if (o.mark) o.mark(Q, s);
+    lab.push({ at: moving ? null : s.ground ? 'ground' : s.zone, rest: !!s.rest, faded: !!s.faded });
+  };
+  const P = sim(Object.assign({ src: ROAM, zones: ZONES, W: 1280, H: 800 }, o, { page: o.name + '.html', build: site(o.name, o.W || 1280, o.H || 800), each }));
+  P.step(o.ms || 5 * 60 * 1000);
+  const win = 600, out = { first, minZones: Infinity, maxGround: 0, stays: [], rests: [], P };
+  for (let i = 0; i + win <= lab.length; i += 10) {
+    const w = lab.slice(i, i + win), seen = new Set(w.map((q) => q.at).filter((a) => a !== null));
+    out.minZones = Math.min(out.minZones, seen.size);
+    out.maxGround = Math.max(out.maxGround, w.filter((q) => q.at === 'ground').length / win);
+  }
+  out.ground = lab.filter((q) => q.at === 'ground').length / lab.length;
+  out.faded = lab.filter((q) => q.faded).length / lab.length;
+  for (let i = 0; i < lab.length;) {
+    let j = i;
+    while (j < lab.length && lab[j].at === lab[i].at) j++;
+    const a = lab[i].at, rest = lab.slice(i, j).some((q) => q.rest);
+    if (a && a !== 'ground' && j < lab.length) { if (rest) out.rests.push({ at: a, t: i / 10, s: (j - i) / 10 }); else out.stays.push((j - i) / 10); }
+    if (a === 'ground' && rest) out.rests.push({ at: a, t: i / 10, s: (j - i) / 10 });
+    i = j;
+  }
+  return out;
+}
+const median = (a) => { const b = a.slice().sort((p, q) => p - q); return b.length ? b[Math.floor(b.length / 2)] : NaN; };
+
+module.exports = { REPO, read, ROAM, ZONES, ART, nodeLoad, Z, mulberry, S, BOXH, ob, hitBox, RECT, CS0, WHITE, sim, learnPage, supported, obstaclesNow, wideSim, site, wanderRun, median, MARK };

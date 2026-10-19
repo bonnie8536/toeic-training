@@ -2686,12 +2686,22 @@ div.pet-roam2.is-init .pet-roam2-btn { opacity: 0; pointer-events: none; transit
 .pet-roam2-btn.is-perch { margin-top: -8px; }
 .pet-roam2-cv { position: absolute; left: 0; top: 0; display: block; pointer-events: none; transform-origin: 50% 80%; }
 .pet-roam2-btn.is-perch .pet-roam2-cv { top: 8px; }
+/* 電腦版到處走(規格 1.11,寬 1024 以上的網站模式,js 加 html.pet-roam2-wide):畫面上只留走動的那隻。
+   首頁卡片、「我的」那一區的小雞藏起來(位置留著,版面不跳),畫一個空的窩;名字、今天的進度、餵食按鈕照舊,點窩一樣打開面板。
+   藏著的小雞由 js/pet-ui.js 停住不畫;列印時卡片的小雞照常印出來(下面的 @media print,pet-ui.js 在 beforeprint 先畫一格) */
+html.pet-roam2.pet-roam2-wide .pet-card .pet-cv { visibility: hidden; }
+html.pet-roam2.pet-roam2-wide .pet-card .pet-pic {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 40' fill='none' stroke='%23151515' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 17C6 31 18 37 32 37C46 37 58 31 59 17C50 12 14 12 5 17Z' fill='%23f2c46b'/%3E%3Cpath d='M10 17C18 13.5 46 13.5 54 17C46 20.5 18 20.5 10 17Z' fill='%23c98a1c' stroke-width='1.6'/%3E%3Cpath d='M10 24C18 27 26 28 34 27.5M30 31.5C38 31.5 46 29.5 53 25M15 30.5l7 2M3 13l7 3M55 14l7-3M23 12.5l-3-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: 50% 78%; background-size: 64px 40px;
+}
 @media (prefers-reduced-motion: reduce) {
   .pet-roam2-btn { transition: none; }
 }
 @media print {
   div.pet-roam2 { display: none !important; }
   html.pet-roam2.has-pet:not(.app-shell) body { padding-bottom: 0 !important; }
+  html.pet-roam2.pet-roam2-wide .pet-card .pet-cv { visibility: visible; }
+  html.pet-roam2.pet-roam2-wide .pet-card .pet-pic { background-image: none; }
 }
 /* ======== 小雞第二階段:roam 結束 ======== */
 

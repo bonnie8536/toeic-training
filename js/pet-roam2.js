@@ -6,7 +6,7 @@
      站點只選不能點、旁邊有空位的地方(可以點的東西間隔 8 px,文字、圖片、卡片 4 px);寬螢幕的網站模式,主要內容兩側的空白也是站點。
      飛行照 ChickArt.flyPlan 播,格號和位移在同一個 requestAnimationFrame 迴圈算,飛行中點擊穿過小雞。
    - 練習頁(App 模式非主分頁)坐在分頁列上畫靜止格;遊戲回合中、鍵盤打開、任何面板打開時整層隱藏;分頁在背景時停止。
-   - 有小雞的卡片(.pet-card)在畫面上時,走動那隻原地淡出,畫面上只有一隻。
+   - 有小雞的卡片(.pet-card)在畫面上時,走動那隻原地淡出,畫面上只有一隻;電腦版到處走時改成卡片裡的小雞藏起來(html.pet-roam2-wide,css 畫空的窩),走動那隻不淡出。
    - 減少動態、或學生關掉「小雞在頁面上走動」(view().roam === false):停在地面畫靜止格,不抖,一樣可以點。
    - 電腦版到處走(規格 1.11):網站模式、寬 1024 以上、有 js/pet-roam-zones.js 時不飛站點,在空地之間一直換地方;走、跳、飛時點擊穿過(is-move),
      停著才點得到;空地只在捲動停下、視窗大小改變、內容變動時量(最多每秒一次)。App 模式和 1023 以下照上面不變。 */
@@ -58,7 +58,7 @@
   function obstaclesOf(elems, o, env) {
     const out = [];
     const push = (r, p, k) => { if (r && r.width > 0.5 && r.height > 0.5) out.push({ l: r.left, t: r.top, r: r.right, b: r.bottom, p, k }); };
-    const texts = (e) => env.textRects(e).forEach((r) => push(r, CFG.padO, 't'));
+    const texts = (e) => env.textRects(e).concat(env.deco ? env.deco(e) : []).forEach((r) => push(r, CFG.padO, 't'));   // deco:標題的 ::before、::after(螢光筆)
     for (const e of elems) {
       if (env.skip(e)) continue;
       const s = env.style(e);
@@ -161,8 +161,7 @@
     if (root.PET_ROAM2 || !U || typeof U.onChange !== 'function' || !A || !(A.version >= 5) || typeof A.animate !== 'function') return;
     if (doc.querySelector('.pet-roam') || doc.querySelector('div.pet-roam2')) return;   // <html> 也有 pet-roam2,一律寫 div.pet-roam2
     const html = doc.documentElement, tabbar = doc.querySelector('.app-tabbar'), page = pageName();
-    const shell = html.classList.contains('app-shell');
-    const APP = shell && !!tabbar;
+    const shell = html.classList.contains('app-shell'), APP = shell && !!tabbar;
     if (!APP && (shell || WEB_PAGES.indexOf(page) < 0)) return;
     start(U, A, html, tabbar, APP, page, APP ? html.classList.contains('is-tab-root') : true);
   }
@@ -174,13 +173,10 @@
     layer.className = 'pet-roam2 is-ground is-init';   // 第一次排好位置之前看不到(css),免得在左緣或卡片旁邊閃一下
     const btn = doc.createElement('button');
     btn.className = 'pet-roam2-btn';
-    btn.setAttribute('type', 'button');
-    btn.setAttribute('aria-haspopup', 'dialog');
+    btn.setAttribute('type', 'button'); btn.setAttribute('aria-haspopup', 'dialog');
     const cv = doc.createElement('canvas');
-    cv.className = 'pet-roam2-cv';
-    cv.setAttribute('aria-hidden', 'true');
-    btn.append(cv);
-    layer.append(btn);
+    cv.className = 'pet-roam2-cv'; cv.setAttribute('aria-hidden', 'true');
+    btn.append(cv); layer.append(btn);
     const mainEl = doc.querySelector('main');
     if (APP) tabbar.before(layer);
     else if (mainEl) mainEl.after(layer);
@@ -189,16 +185,14 @@
     root.PET_ROAM = true;
 
     const reduced = !!U.reduced;
-    let roamOff = false;
+    let roamOff = false, wide = false, wz = null, curPose = 'idle';
     const still = () => reduced || roamOff || !MAIN;
     let mode = 'ground', x = 0, gy = 0, feetDoc = 0, origin = 0, dir = Math.random() < 0.5 ? 1 : -1, lean = 0;
     let lane = [0, 0], groundOff = CFG.webLift, perch = null, faded = false, off = false, sheetOpen = false, scrolling = false;
-    let act = null, turning = 0, held = false, flown = false, script = null, raf = 0, perchTimer = 0, lastFrame = '', lastMood = null, mine = false;
-    let failAt = 0;
+    let act = null, turning = 0, held = false, flown = false, script = null, raf = 0, perchTimer = 0, lastFrame = '', lastMood = null, mine = false, failAt = 0;
     const enteredAt = performance.now();
     const anim = A.animate(cv, { size: S, fps: 8, maxDpr: 2, pose: 'idle', onTick });
     const Z = !APP && MAIN && root.PET_ROAM_ZONES && root.PET_ROAM_ZONES.version === 1 ? root.PET_ROAM_ZONES : null, ZST = Object.freeze({ sel: 'zone', edge: 'zone' });
-    let wide = false, wz = null, curPose = 'idle';
 
     /* ---------- 儲存:只有上一頁的 x(和上次試飛失敗的時間,最多每 3 分鐘一次) ---------- */
     function readKey() {
@@ -234,6 +228,7 @@
         }
         return out;
       },
+      deco: Z ? (e) => Z.decoRects(e, getComputedStyle) : null,   // 網站模式:標題的螢光筆也是障礙(規格 1.11);App 模式不變
     };
     function collect(x0, x1, y0, y1, o) {
       const seen = new Set(), els = [];
@@ -327,7 +322,7 @@
       layer.classList.add('is-ground');
       gy = 0;
       x = clampLane(x);
-      if (wz) wz.at = 'ground';
+      if (wz) Z.grounded(wz, performance.now());
     }
     function frame(pose, k, v) {
       const key = pose + k + v;
@@ -346,6 +341,7 @@
 
     /* ---------- 畫面上只有一隻:有小雞的卡片在畫面上時原地淡出 ---------- */
     function twin() {
+      if (wide) return false;   // 電腦版到處走:卡片裡的小雞藏起來(css),走動那隻不淡出(Bonnie 10/20)
       const top = topLimit(), bot = groundLine();
       for (const c of doc.querySelectorAll('.pet-card')) {
         if (c.hidden) continue;
@@ -401,7 +397,7 @@
     function checkPerch(full) {
       if (!perch || script) return;
       const feet = perch.feetDoc - scrollY;
-      if (feet - BOXH < topLimit() || feet > groundLine()) { snapGround(); return; }
+      if (feet - BOXH < topLimit() || feet > groundLine()) { if (perch.zone && feet <= groundLine()) lostZone(); else snapGround(); return; }
       if (!full) return;
       if (perch.zone) { remeasure(); return; }   // 空地:量完看腳下那塊還在不在(zoneRecheck)
       const a = perch.a, g = a.isConnected && shown(getComputedStyle(a)) ? geom(perch.st, a) : null;
@@ -424,7 +420,7 @@
     }
 
     /* ---------- 一般走動(引擎計時器每拍呼叫) ---------- */
-    const span = () => (mode === 'air' ? perch && perch.span : lane);
+    const span = () => (mode === 'air' ? perch && perch.span : (wz && wz.lane) || lane);   // wz.lane:忙的時候落到一側的地面,只在那一側走
     function onTick(t) {
       if (script || off || faded || still() || scrolling || held) return;
       if (turning > 0) {
@@ -475,17 +471,18 @@
       if (!script) return;
       let t = Math.max(0, (now - script.t0) / 1000);
       let sg = script.segs[script.i];
+      const sc = script;   // 播到一半換成另一串(lostZone)時,這個迴圈就停,不排兩個
       while (t >= sg.dur) {
         sg.apply(sg.dur);
-        if (!script) return;
+        if (script !== sc) return;
         if (sg.end) sg.end();
-        if (!script) return;
+        if (script !== sc) return;
         script.i++; script.t0 += sg.dur * 1000; t -= sg.dur;
         if (script.i >= script.segs.length) { const d = script.done; endScript(); if (d) d(); return; }
         sg = script.segs[script.i];
       }
       sg.apply(t);
-      if (script) raf = requestAnimationFrame(step);
+      if (script === sc) raf = requestAnimationFrame(step);
     }
     function endScript() {
       const air = script && script.air;
@@ -611,7 +608,7 @@
     }
 
     /* ---------- 電腦版到處走(規格 1.11;空地、路線、權重、途中位置在 js/pet-roam-zones.js) ---------- */
-    function wzReset() { wide = !!Z && html.clientWidth >= Z.CFG.minW; wz = wide ? Z.memory(performance.now(), Math.random) : null; }
+    function wzReset() { wide = !!Z && html.clientWidth >= Z.CFG.minW; wz = wide ? Z.memory(performance.now(), Math.random) : null; if (Z) html.classList.toggle('pet-roam2-wide', wide); }
     /* 量空地:捲動停下、視窗大小改變、內容變動時,最多每秒一次。腳下那塊還在就留著,不在就小跳到 80 px 內的空地,再不行落回地面 */
     function remeasure() {
       if (!wide || off || faded || script || scrolling || still() || U.mood() !== 'idle') { if (wz) wz.dirty = true; return; }   // 不能走的時候不量,能走了 wanderTick 再量
@@ -620,13 +617,11 @@
       const m = mainBox(), W = html.clientWidth;
       Object.assign(wz, { measuredAt: now, dirty: false, main: m });
       const res = Z.measure({ doc, mainEl, W, H: innerHeight, docH: html.scrollHeight, top: topLimit(), bottom: groundLine() - BOXH - 8, scrollY, S, BOXH,
-        mainL: m ? m.l : 0, mainR: m ? m.r : W, util, env, now: () => performance.now() });
+        mainL: m ? m.l : 0, mainR: m ? m.r : W, keep: perch && perch.zone ? perch.feetDoc - scrollY : undefined, util, env, now: () => performance.now() });
       wz.zones = res.zones; wz.ms = res.ms;
       if (!perch || !perch.zone || script) return;
-      const z = wz.zones.find((q) => Math.abs(q.feetDoc - perch.feetDoc) < 2 && x >= q.lo - 1 && x <= q.hi + 1);
-      if (z) { perch.zone = z; perch.span = [z.lo, z.hi]; return; }
-      const h = Z.hopNear(wz.zones, perch.feetDoc, x, CFG.hopMax).find((c) => landOk(c.z, c.tx));
-      if (h) goZone({ z: h.z, tx: h.tx, how: 'hop', dur: Z.CFG.hopDur }); else descend();
+      const k = Z.keepOrHop(wz.zones, perch.feetDoc, x, CFG.hopMax, landOk);
+      if (k.z) { perch.zone = k.z; perch.span = [k.z.lo, k.z.hi]; } else if (k.hop) goZone({ z: k.hop.z, tx: k.hop.tx, how: 'hop', dur: Z.CFG.hopDur }); else descend();
     }
     const groundZone = () => ({ key: 'ground', ground: true, feet: groundLine(), lo: lane[0], hi: lane[1], x });
     /* 落地前照 1.4 用 elementsFromPoint 再確認一次 */
@@ -637,8 +632,8 @@
     /* 換到另一塊:小跳、努力飛、撲著翅膀落下(途中照 Z.glideAt);回地面照 descend()。途中點擊穿過(is-fly、is-move) */
     function goZone(d) {
       const z = d.z, now = performance.now(), how = d.how, tl = topLimit();
-      Z.arrived(wz, z.key, now, Math.random);
-      if (z.ground) { wz.arrive = true; descend(); return; }   // 回到地面也先站 1 到 2 秒
+      Z.arrived(wz, z.key, now, Math.random, d.dur);
+      if (z.ground) { wz.lane = d.span || null; wz.arrive = true; descend(); return; }   // 回到地面也先站 1 到 2 秒
       const f0 = mode === 'air' ? feetDoc : groundLine() + scrollY, x0 = x, dx = d.tx - x0;
       const F = how === 'fly' && f0 - z.feetDoc > 2 ? flyFrames(f0 - z.feetDoc, null, Math.abs(dx) / Z.CFG.flySpeed) : null;
       const g = { how, F, f0, f1: z.feetDoc, D: F ? F.dur : d.dur, plan: A.flyPlan };
@@ -646,13 +641,19 @@
       toAir(); perch = null; feetDoc = f0; dir = dx >= 0 ? 1 : -1; place();
       const mv = { dur: g.D, apply(t) {
         const fz = g.f1 - scrollY;
-        if (fz - BOXH < tl || fz > groundLine()) { snapGround(); return; }   // 目的地捲出視窗:直接回地面
+        if (fz - BOXH < tl || fz > groundLine()) { if (fz > groundLine()) snapGround(); else lostZone(); return; }   // 目的地捲出視窗:往上捲走的往下找空地,不然直接回地面
         const s = Z.glideAt(g, t);
         feetDoc = s.feet; x = x0 + dx * s.q; lean = how === 'hop' ? 0 : leanFor(dx, s.p);
         frame(s.pose, s.k, s.v); place();
       }, end() { feetDoc = g.f1; x = d.tx; lean = 0; place(); } };
       const land = how === 'hop' ? { dur: 0.25, apply(t) { frame('land', t < 0.125 ? 0 : 1, 0); } } : seq('land');
-      play(how === 'fly' ? [seq('takeoff'), mv, land] : [mv, land], () => { perch = { st: ZST, zone: z, feetDoc: g.f1, span: [z.lo, z.hi] }; wz.arrive = true; next(); }, true, how);
+      play(how === 'fly' ? [seq('takeoff'), mv, land] : [mv, land], () => { perch = { st: ZST, zone: z, feetDoc: g.f1, span: d.span || [z.lo, z.hi] }; wz.arrive = true; next(); }, true, how);
+    }
+    /* 站的、要去的空地被捲到頂欄底下:撲著翅膀往下落到看得到的空地(Z.rescue),沒有才回地面(第五輪審查 #2) */
+    function lostZone() {
+      const f = Math.max(feetDoc - scrollY, topLimit() + BOXH), ok = wide && mode === 'air' && !off && !faded && !still() && U.mood() === 'idle';
+      const d = ok ? Z.rescue(wz.zones, x, f, { top: topLimit(), bottom: groundLine() - BOXH - 8, scrollY, BOXH }, landOk) : null;
+      if (d) { abortScript(); feetDoc = f + scrollY; goZone(d); } else snapGround();
     }
     /* next() 的電腦版部分:空地上餓了、要睡了就落回地面;剛到先站 1 到 2 秒;長休息時站著 */
     function wideNext() {
@@ -662,23 +663,23 @@
       wz.arrive = false; act = { pose: 'idle', left: Math.ceil(ms / 125) }; turning = 0; setPose('idle'); place();
       return true;
     }
-    /* 每秒看一次:待夠了(15 到 40 秒)就挑下一塊;換 3 次後長休息 45 到 90 秒。餓、睡、忙、淡出、看不到、滑鼠或焦點在牠身上時不換 */
+    /* 每秒看一次:待夠了(Z.arrived 排的:空地 6 到 15 秒、地面 2 到 5 秒、長休息 20 到 30 秒)就挑下一塊。餓、睡、忙(只在同一側空白裡換)、淡出、看不到、滑鼠或焦點在牠身上時不換 */
     function wanderTick() {
       if (!wide || script || off || faded || still() || scrolling || held || sheetOpen || focused()) return;
       const now = performance.now(), v = U.view(), st = v && v.status;
       if (wz.dirty || wz.measuredAt < 0) { remeasure(); if (script) return; }
       if (!st || st.hungry || U.mood() !== 'idle' || now < wz.until) return;
-      if (wz.changes >= Z.CFG.longEvery) { wz.changes = 0; wz.rest = wz.until = now + rand(Z.CFG.longMin, Z.CFG.longMax); next(); return; }
       const here = mode === 'air' && perch && perch.zone ? Object.assign({}, perch.zone, { x, feet: perch.feetDoc - scrollY }) : groundZone();
-      const d = Z.choose({ zones: wz.zones, here, ground: groundZone(), now, busy: tr.busy(now), calm: tr.calm(now), near: tr.near(now), mouse: tr.pointer(now), lastFly: wz.lastFly,
-        recent: wz.recent, order: wz.order, H: innerHeight, top: topLimit(), bottom: groundLine() - BOXH - 8, scrollY, S, BOXH, flyFrames: (a, m) => flyFrames(a, null, m), rnd: Math.random });
+      const d = Z.choose({ zones: wz.zones, here, ground: groundZone(), now, busy: tr.busy(now), calm: tr.calm(now), near: tr.near(now), mouse: tr.pointer(now), mouseY: tr.pointerY(now), lastFly: wz.lastFly,
+        recent: wz.recent, order: wz.order, main: wz.main, scrolled: tr.scrolled(now), sc: tr.scrollInfo(), H: innerHeight, top: topLimit(), bottom: groundLine() - BOXH - 8, scrollY, S, BOXH, flyFrames: (a, m) => flyFrames(a, null, m), rnd: Math.random });
       if (!d) { wz.until = now + Z.CFG.retry; return; }
+      if (d.how === 'walk') { const p = d.pose || 'walk'; wz.until = now + d.dur * 1000; dir = d.tx >= x ? 1 : -1; act = { pose: p, left: Math.ceil(d.dur * (A.fps[p] || 8)) }; turning = 0; setPose(p); place(); return; }   // 忙著、飛不上去:沿著地面走(在地面用跑的)到一側空白(第四輪審查 #0;第三輪複查 #0)
       if (!d.z.ground && !landOk(d.z, d.tx)) { wz.zones = wz.zones.filter((q) => q !== d.z); wz.until = now + Z.CFG.retryLand; return; }
       goZone(d);
     }
     /* 滑鼠移到小雞上:走動中點擊穿過、收不到 pointerenter,改用小雞現在的位置算(不量版面):當場停下、點得到,移開 1 秒後再走 */
     const hover = (on) => { if (hovered !== on) { hovered = on; pause(); } };
-    const tr = Z ? Z.tracker(root, doc, { now: () => performance.now(), mainLR: () => wz && wz.main, hover,
+    const tr = Z ? Z.tracker(root, doc, { now: () => performance.now(), mainLR: () => wz && wz.main, top: topLimit, hover,
       box: () => (wide && !off && !faded ? { l: x, t: (mode === 'air' ? feetDoc - scrollY : innerHeight - groundOff) - BOXH + gy, w: S, h: BOXH } : null) }) : null;
     wzReset();
 
@@ -786,7 +787,7 @@
       get state() {
         return Object.freeze({ mode: APP ? 'app' : 'web', main: MAIN, x: Math.round(x), ground: mode === 'ground',
           perch: perch ? perch.st.sel : null, faded, flying: !!(script && script.air), pose: anim.pose, still: still(), off, scrolling,
-          wide, zone: wz ? wz.at : null, zones: wz ? wz.zones.length : 0, move: script ? script.how || 'act' : null, measureMs: wz ? Math.round(wz.ms * 10) / 10 : 0 });
+          wide, zone: wz ? wz.at : null, rest: !!wz && wz.rest > performance.now(), zones: wz ? wz.zones.length : 0, move: script ? script.how || 'act' : null, measureMs: wz ? Math.round(wz.ms * 10) / 10 : 0 });
       },
       util,
     });

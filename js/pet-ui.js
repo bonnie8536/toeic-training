@@ -116,7 +116,7 @@
         if (then) then();
         setTimeout(() => { if (queue[0] !== mine) return; queue = []; if (anim && running) anim.setPose(want()); }, ms);
       },
-      hold(on) { held = !!on; sync(); },
+      hold(on, show) { held = !!on; if (show) seen = true; sync(); },   // show:不在畫面上也畫(列印前;第三輪複查 #2)
       destroy() { held = true; sync(); if (io) io.disconnect(); doc.removeEventListener('visibilitychange', sync); },
       get pose() { return anim ? anim.pose : want(); },
       get busy() { return queue.length > 0; },
@@ -756,7 +756,8 @@
     const more = h('div', { class: 'pet-more' });
     const live = h('p', { class: 'pet-msg', role: 'status' });
     box.append(pic, main, act, more, live);
-    const c = chick(cv, 96);
+    const c = chick(cv, 96), de = doc.documentElement, isWide = () => !!de && de.classList.contains('pet-roam2-wide'), wide = () => c.hold(isWide());   // 電腦版到處走(pet-roam2.js 加 html.pet-roam2-wide,css 藏起來):停住不畫,拿掉照常動
+    if (de && 'MutationObserver' in window) { new MutationObserver(wide).observe(de, { attributes: true, attributeFilter: ['class'] }); wide(); window.addEventListener('beforeprint', () => { if (isWide()) c.hold(false, true); }); window.addEventListener('afterprint', wide); }   // 列印時卡片的小雞照常印出來:先畫一格,印完再停住(規格 1.11;第三輪複查 #2)
     pic.addEventListener('click', () => openSheet(pic, { noGoal: kind === 'me' }));
     /* 食物模式:「餵牠」打開面板(規格 3.1);同一顆按鈕一直用,關掉面板時焦點回得來 */
     const open = FOOD ? h('button', { class: 'btn primary pet-open', type: 'button', 'aria-haspopup': 'dialog', 'data-focus': 'open' }, '餵牠') : null;
@@ -793,7 +794,6 @@
     new MutationObserver(place).observe(root, { childList: true });
   }
 
-  mountHome();
-  mountMe();
+  mountHome(); mountMe();
   window.PET_UI = { chick, onChange, mood, label, wake, openSheet, view: () => cur, reduced: REDUCE };
 })();

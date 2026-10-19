@@ -26,7 +26,7 @@ function ok(cond, name, extra) {
 }
 function run(name, f) { try { f(); } catch (e) { fail++; console.log('FAIL ' + name + ' 丟錯: ' + String(e && e.stack || e).split('\n').slice(0, 3).join(' | ')); } }
 
-const { ART, nodeLoad, mulberry, S, BOXH, ob, hitBox, CS0, WHITE, sim, learnPage, supported, obstaclesNow, wideSim } = require('./pet_roam_sim.js');   // 假瀏覽器、引擎資料
+const { ART, nodeLoad, mulberry, S, BOXH, ob, hitBox, RECT, CS0, WHITE, sim, learnPage, supported, obstaclesNow, wideSim, site, wanderRun, median, MARK } = require('./pet_roam_sim.js');   // 假瀏覽器、引擎資料
 let Z = null, RU = null;
 try { Z = nodeLoad(ZONES); } catch (e) { Z = null; }
 try { RU = nodeLoad(ROAM).util; } catch (e) { RU = null; }
@@ -117,10 +117,10 @@ run('choose', () => {
   ok(!p0.ground && !p0.none && p0.a > 0 && p0.b > 0 && p0.c > 0, '在地面:去各塊空地,不選自己', p0);
   const p1 = pick({ recent: ['a', 'b'] });
   ok(!p1.a && !p1.b, '最近去過的 2 塊不去', p1);
-  const p2 = pick({ lastFly: 100000 - 5000 });
-  ok(Object.keys(p2).every((k) => k === 'none'), '上次起飛不到 20 秒:不起飛', p2);
-  const p3 = pick({ calm: 3000 });
-  ok(Object.keys(p3).every((k) => k === 'none'), '不忙還不到 8 秒:不起飛', p3);
+  const p2 = pick({ lastFly: 100000 - Z.CFG.flyGap + 1000 });
+  ok(Object.keys(p2).every((k) => k === 'none'), '上次起飛不到 ' + Z.CFG.flyGap / 1000 + ' 秒:不起飛', p2);
+  const p3 = pick({ calm: Z.CFG.calm - 1000 });
+  ok(Object.keys(p3).every((k) => k === 'none'), '不忙還不到 ' + Z.CFG.calm / 1000 + ' 秒:不起飛', p3);
   const p4 = pick({ near: [80] }, 2000), p5 = pick({}, 2000);
   ok(p4.b < p5.b * 0.5, '學生正在用的地方旁邊 240 px 內:少去(× 0.2)', { near: p4.b, far: p5.b });
   const inZone = { key: 'd', x: 500, feet: 150, lo: 424, hi: 654 };
@@ -279,7 +279,8 @@ run('電腦版:幾分鐘內換好幾塊空地,停著和走著都不碰到障礙,
     eq0(floating, '#' + seed + ' 停在空地上時腳下 12 px 內有真的邊(不站在半空)');
     eq0(taps, '#' + seed + ' 走、跳、飛的時候點擊穿過');
     ok(rest > 100, '#' + seed + ' 停著的時候點得到', rest);
-    ok(flights.every((ms) => ms <= (2.5 + 1.6) * 1000), '#' + seed + ' 每次飛行(含起飛、落地)不超過 2.5 秒加起落', flights);
+    ok(flights.every((ms) => ms <= (Z.CFG.reachFar + 1.6) * 1000) && flights.filter((ms) => ms > (2.5 + 1.6) * 1000).length <= flights.length / 4,
+      '#' + seed + ' 每次飛行(含起飛、落地)不超過 2.5 秒加起落;去另一側空白的偶爾到 ' + Z.CFG.reachFar + ' 秒(第五輪審查 #1、第三輪複查 #1)', flights);
     ok(zoneT < 30000 || flips / (zoneT / 60000) <= 3, '#' + seed + ' 在空地上多半站著:每分鐘轉身 3 次以內', { flips, min: zoneT / 60000 });
   }
 });
@@ -339,13 +340,16 @@ run('電腦版:滑鼠移到走動中的小雞上,當場停下、點得到;移開
   P.step(30000);
   ok(still && Math.abs(P.box().l - x0) > 1, '移開 0.5 秒還停著,之後再走', { still, dx: P.box().l - x0 });
 });
-run('電腦版:學生在打字、捲動、滑鼠在主要內容裡動時不起飛;閒下來 8 秒以後才起飛', () => {
+run('電腦版:學生在打字、捲動、滑鼠在主要內容裡動時不往主要內容那一欄起飛(只有從主要內容底下的地面離開那一次);閒下來 ' + Z.CFG.calm / 1000 + ' 秒以後照常', () => {
   let flyStart = [];
   let was = false;
-  const P = wideSim({ seed: 8, each: (Q) => { const s = Q.R(); const f = !!(s && s.flying && s.move === 'fly'); if (f && !was) flyStart.push(Q.st.t); was = f; } });
+  const inMain = [];   // 經過主要內容那一欄的每一趟:{ t, fromGround 從地面出發 }
+  let inEp = false, onGround = true;
+  const P = wideSim({ seed: 8, each: (Q) => { const s = Q.R(); const f = !!(s && s.flying && s.move === 'fly'); if (f && !was) flyStart.push(Q.st.t); was = f;
+    const b = Q.box(), mv = !!s && Q.st.t < 115000 + 20000 && (s.move === 'fly' || s.move === 'fall') && b.r > 200 && b.l < 1240;
+    if (mv && !inEp) inMain.push({ t: Q.st.t, b, move: s.move, fromGround: onGround }); inEp = mv; if (s && !s.move && !s.flying) onGround = s.ground; } });
   for (let i = 0; i < 24; i++) { P.fireDoc('keydown', { key: 'a' }); P.step(5000); }   // 2 分鐘一直在打字
-  const busyFlights = flyStart.filter((t) => t < 115000 + 20000 + 8000);
-  ok(busyFlights.length === 0, '一直按鍵(20 秒內按過):不起飛', busyFlights);
+  ok(inMain.length <= 1 && inMain.every((e) => e.fromGround), '一直按鍵(20 秒內按過):只有從主要內容底下的地面往一側空白離開那一次經過主要內容那一欄(200 到 1240),不往那一欄起飛、落下(第四輪審查 #0)', inMain);
   P.step(4 * 60 * 1000);
   ok(flyStart.length > 0, '不忙以後照常起飛', flyStart.length);
   /* 滑鼠在主要內容裡、離小雞現在的位置遠的那一邊(小雞就停在滑鼠旁邊時,本來就不從滑鼠旁邊飛走) */
@@ -519,15 +523,15 @@ run('電腦版:地面也是一個地方,多半站著;不跑、不隨便轉身(�
     ok(min < 0.5 || flips / min <= 3, '#' + seed + ' 地面上每分鐘轉身 3 次以內', { flips, min });
   }
 });
-run('電腦版:進到新的一頁先待 15 秒以上才換地方,不忙的時間從進頁開始算(第三輪審查 #4)', () => {
+run('電腦版:進到新的一頁 2 到 5 秒內離開地面(Bonnie 10/20;原本先待 15 秒),不忙的時間從進頁開始算(第三輪審查 #4)', () => {
   for (const seed of [1, 2, 3, 4, 5, 6]) {
     let first = -1;
     const P = wideSim({ seed, each: (Q) => { const s = Q.R(); if (first < 0 && s && (s.move === 'fly' || s.move === 'hop' || s.move === 'fall' || (s.zone && s.zone !== 'ground'))) first = Q.st.t; } });
     P.step(60000);
-    ok(first >= Z.CFG.stayMin, '#' + seed + ' 第一次換地方在進頁 ' + Z.CFG.stayMin / 1000 + ' 秒以後', first);
+    ok(first >= Z.CFG.calm && first <= 5000, '#' + seed + ' 第一次換地方在進頁 ' + Z.CFG.calm / 1000 + ' 到 5 秒之間', first);
   }
-  const m = Z.memory(1000, () => 0);
-  ok(m.until - 1000 >= Z.CFG.stayMin, 'memory:進頁當作剛到,待 stayMin 以上', m.until);
+  const m = Z.memory(1000, () => 0), m2 = Z.memory(1000, () => 0.9999);
+  ok(m.until - 1000 >= Z.CFG.calm && m2.until - 1000 <= 4000, 'memory:進頁當作剛到地面,2 到 4 秒後換地方', [m.until, m2.until]);
   const win = { addEventListener() {}, setTimeout: () => 1, clearTimeout() {}, getSelection: () => ({ isCollapsed: true, rangeCount: 0 }) };
   const doc = { addEventListener() {}, activeElement: null, body: {} };
   let now = 5e6;
@@ -535,7 +539,7 @@ run('電腦版:進到新的一頁先待 15 秒以上才換地方,不忙的時間
   now += 1000;
   const c1 = T.calm(now);
   now += Z.CFG.calm;
-  ok(c1 < Z.CFG.calm && T.calm(now) >= Z.CFG.calm, 'tracker:不忙的時間從進頁開始算(進頁 1 秒還不能起飛,8 秒以後可以)', { c1, c2: T.calm(now) });
+  ok(c1 < Z.CFG.calm && T.calm(now) >= Z.CFG.calm, 'tracker:不忙的時間從進頁開始算(進頁 1 秒還不能起飛,' + Z.CFG.calm / 1000 + ' 秒以後可以)', { c1, c2: T.calm(now) });
 });
 /* 很長的頁面:學習頁下面接 n 張卡片(每張裡面有 k 個子元素),都在視窗下面 */
 const longPage = (n, k) => (add) => {
@@ -567,6 +571,100 @@ run('電腦版:減少動態、關掉走動、餓、睡覺時捲動停下不量�
     P.ui.mood = 'idle'; P.ui.hungry = false; P.change({}); P.step(2500);
     ok(P.st.qsaStar > n0 && P.R().zones > 0, JSON.stringify(ui) + ' 變回不餓、醒著:量一次空地', { n0, n1: P.st.qsaStar, zones: P.R().zones });
   }
+});
+
+/* ---------- 第四輪:Bonnie 10/20「電腦板小雞也是要可以到處走」 ---------- */
+run('電腦版五個主分頁(1280、1440、1920):任一段 60 秒去 3 個地方以上、在地面不到 3 成、5 秒內離開地面、每塊待 6 到 15 秒、長休息最多每 3 分鐘一次且不在地面', () => {
+  for (const [W, H] of [[1280, 800], [1440, 900], [1920, 1080]]) for (const name of ['learn', 'drill', 'review', 'index', 'me']) {
+    const a = { minZones: Infinity, maxGround: 0, first: 0, stays: [], badRest: [] };
+    for (let seed = 1; seed <= 6; seed++) {
+      const r = wanderRun({ name, W, H, seed, ms: 6 * 60 * 1000 });
+      a.minZones = Math.min(a.minZones, r.minZones); a.maxGround = Math.max(a.maxGround, r.maxGround);
+      a.first = Math.max(a.first, r.first < 0 ? Infinity : r.first); a.stays.push(...r.stays);
+      r.rests.forEach((q, i) => { if (q.at === 'ground' || q.s > 31 || (i && q.t - r.rests[i - 1].t < 180)) a.badRest.push(Object.assign({ seed }, q)); });
+    }
+    const tag = name + ' ' + W + ':';
+    ok(a.minZones >= 3, tag + '任一段 60 秒裡去過 3 個以上的地方(地面算一個)', a.minZones);
+    ok(a.maxGround <= 0.3, tag + '任一段 60 秒裡在視窗下緣的地面不到 3 成', a.maxGround);
+    ok(a.first >= 0 && a.first <= 5000, tag + '進頁 5 秒內離開地面', a.first);
+    ok(median(a.stays) >= 5 && median(a.stays) <= 15 && Math.max(...a.stays) <= 16, tag + '每塊空地停 6 到 15 秒(扣掉路上)', { median: median(a.stays), max: Math.max(...a.stays) });
+    eq0(a.badRest, tag + '長休息 20 到 30 秒、最多每 3 分鐘一次、不在地面');
+  }
+});
+run('電腦版:學生在忙時不往主要內容那一欄起飛,在同一側空白的層之間照樣換、最低那層可以落回那一側的地面(Bonnie 10/20;第四輪審查 #0、#2)', () => {
+  let tried = 0;
+  for (const seed of [1, 2, 3, 4, 5, 6, 7, 8]) {
+    const P = sim({ src: ROAM, zones: ZONES, W: 1440, H: 900, page: 'learn.html', build: site('learn', 1440, 900), seed });
+    for (let t = 0; t < 120000 && !(String(P.R().zone).startsWith('side-') && !P.R().move && !P.R().flying); t += 200) P.step(200);
+    if (!String(P.R().zone).startsWith('side-')) continue;
+    tried++;
+    const bad = [], seen = new Set();
+    let ground = 0;
+    for (let i = 0; i < 18; i++) {   // 90 秒一直在打字
+      P.fireDoc('keydown', { key: 'a' });
+      for (let k = 0; k < 50; k++) {
+        P.step(100);
+        const s = P.R(), b = P.box();
+        if (s.ground) ground++;
+        if (!s.move && !s.flying) seen.add(s.zone);
+        if ((s.move || s.flying) && b.r > 200 && b.l < 1240) bad.push({ t: P.st.t, b, move: s.move });
+      }
+    }
+    eq0(bad, 'seed ' + seed + ':忙的時候換地方,整條路線都在同一側空白裡(不碰主要內容 200 到 1240)');
+    ok(ground <= 0.3 * 900 && seen.size >= 3, 'seed ' + seed + ':忙的 90 秒在地面不到 3 成,在同一側換了 2 次以上', { ground, seen: [...seen] });
+  }
+  ok(tried >= 3, '找到停在兩側空白的小雞', tried);
+  const zones = [{ key: 'L', kind: 'side-L', feetDoc: 420, lo: 16, hi: 136 }, { key: 'M', kind: 'main', feetDoc: 124, lo: 424, hi: 900 }];
+  const ground = { key: 'ground', feet: 896, lo: 16, hi: 1376, ground: true };
+  const pick = (x, near) => Z.choose({ zones, here: Object.assign({ x }, ground), ground, now: 1e6, busy: true, calm: 0, near: near || [], lastFly: -1e9, recent: [], order: ['ground'], main: { l: 200, r: 1240 },
+    H: 900, top: 59, bottom: 837, scrollY: 0, S, BOXH, flyFrames: FF, rnd: mulberry(1) });
+  const under = pick(60), mid = pick(600), mid2 = pick(600, [500]);
+  ok(under && under.z.key === 'L' && under.how === 'fly' && under.tx + S <= 200, '忙的時候:站在左側空白底下的地面往上飛到左側的空地(落在左側空白裡;第四輪審查 #0)', under);
+  ok(mid && mid.how === 'walk' && mid.pose === 'run' && mid.tx === 152, '忙的時候站在主要內容底下的地面:不斜斜飛過主要內容,沿著地面跑到左側空白(152),到了再往上飛(第三輪複查 #0)', mid);
+  ok(mid2 && mid2.how === 'walk' && mid2.tx === 152, '忙的時候路線經過學生正在用的地方附近:一樣沿著地面到左側空白(152;右側沒有空地)', mid2);
+});
+run('電腦版:卡片裡的小雞在畫面上時,走動那隻不淡出,改藏卡片裡的小雞(畫空的窩);手機、App、1023 以下照舊淡出(Bonnie 10/20)', () => {
+  for (const [name, W, H] of [['index', 1280, 800], ['me', 1440, 900]]) {
+    let faded = 0;
+    const P = sim({ src: ROAM, zones: ZONES, W, H, page: name + '.html', build: site(name, W, H), seed: 3, each: (Q) => { const s = Q.R(); if (s && s.faded) faded++; } });
+    P.step(60000);
+    ok(faded === 0 && P.html.classList.contains('pet-roam2-wide') && P.R().zones > 0, name + ' ' + W + ':卡片在畫面上,走動那隻一直在(不淡出)、html 有 pet-roam2-wide', { faded, cls: P.html.className, zones: P.R().zones });
+    P.resize(1000); P.step(2000);
+    ok(P.R().faded === true && !P.html.classList.contains('pet-roam2-wide'), name + ':視窗變成 1000 寬:回到原本的規則(走動那隻淡出、卡片裡的小雞出來)', { s: P.R(), cls: P.html.className });
+    P.resize(W); P.step(2000);
+    ok(P.R().faded === false && P.html.classList.contains('pet-roam2-wide'), name + ':再變回 ' + W + ' 寬:又只留走動那隻', P.R());
+  }
+  for (const c of [{ W: 1000, H: 800, page: 'index.html' }, { W: 860, H: 900, page: 'me.html' }, { W: 375, H: 812, page: 'learn.html', app: true, htmlClass: ['app-shell', 'has-tabbar', 'is-tab-root'] }]) {
+    const P = sim(Object.assign({ src: ROAM, zones: c.app ? null : ZONES, seed: 2, build: narrowPage(c.W) }, c));
+    P.step(3000); P.scroll(400); P.step(1000);
+    ok(P.R().faded === true && !P.html.classList.contains('pet-roam2-wide'), (c.app ? 'App ' : '網站 ') + c.W + ':卡片捲進畫面,走動那隻照舊淡出、卡片裡的小雞不藏', { s: P.R(), cls: P.html.className });
+  }
+  const css = read('css/style.css'), blk = css.slice(css.indexOf('小雞第二階段:roam(js/pet-roam2.js)開始'), css.indexOf('小雞第二階段:roam 結束'));
+  ok(/html\.pet-roam2\.pet-roam2-wide \.pet-card \.pet-cv \{ visibility: hidden; \}/.test(blk) && /html\.pet-roam2\.pet-roam2-wide \.pet-card \.pet-pic \{[^}]*background-image: url\("data:image\/svg\+xml/.test(blk),
+    'css:電腦版到處走時卡片裡的小雞藏起來(位置留著),按鈕上畫空的窩');
+});
+run('標題的螢光筆(::before)也是障礙:標題右邊的空地從螢光筆右端 4 px 外開始(Bonnie 10/20)', () => {
+  const h1 = { tagName: 'H1', getBoundingClientRect: () => RECT(120, 80, 184, 124) };
+  const gcs = (st) => (e, p) => (p === '::before' ? Object.assign({ content: '""', display: 'block', position: 'absolute', transform: 'none' }, st) : p ? { content: 'none' } : CS0);
+  const d = Z.decoRects(h1, gcs(MARK['::before']));
+  ok(d.length === 1 && d[0].left <= 112.5 && d[0].right >= 194 && d[0].top <= 100.3 && d[0].bottom >= 122.5, 'decoRects:left -8、right -10、top 46%、bottom 3%,轉 -1.2 度再加一點', d);
+  const pc = Z.decoRects(h1, gcs({ left: '-8px', right: '-10px', top: '46%', bottom: '3%' }));
+  ok(pc.length === 1 && Math.abs(pc[0].top - 100.24) < 0.01 && Math.abs(pc[0].bottom - 122.68) < 0.01 && pc[0].left === 112 && pc[0].right === 194, 'decoRects:% 照標題的大小換算', pc);
+  ok(Z.decoRects(Object.assign({}, h1, { tagName: 'P' }), gcs(MARK['::before'])).length === 0 && Z.decoRects(h1, gcs({ content: 'none' })).length === 0, '只看標題、有內容的假元素');
+  const obs = [ob(120, 84, 184, 120, 't')].concat(d.map((r) => ob(r.left, r.top, r.right, r.bottom, 't')));
+  const zs = Z.zonesOf(obs, [{ y: 124, l: 120, r: 304, k: 'h' }], ZC({ W: 1280, mainL: 120, mainR: 1160 }));
+  ok(zs.length === 1 && zs[0].lo >= d[0].right + 4, 'zonesOf:螢光筆擋住它旁邊的空地(間隔 4 px)', { zs, deco: d[0].right });
+  const keys = new Set(), over = [];
+  for (const seed of [1, 2, 3, 4]) {
+    wanderRun({ name: 'learn', W: 1280, H: 800, seed, ms: 4 * 60 * 1000, mark: (Q, s) => {
+      if (s.zone && s.zone !== 'ground') keys.add(s.zone);
+      const b = Q.box(), hl = Q.page.h1.getBoundingClientRect();
+      if (!s.move && !s.flying && b.l < hl.right + 10 + 4 && b.r > hl.left - 8 - 4 && b.t < hl.bottom && b.b > hl.top + 20) over.push({ t: Q.st.t, b });
+    } });
+  }
+  const title = [...keys].filter((k) => /^main:124:/.test(k)).map((k) => +k.split(':')[2]);
+  ok(title.length > 0 && title.every((lo) => lo >= 120 + 64 + 10 + 4), '學習頁 1280:標題右邊的空地從螢光筆右端(184 + 10)再 4 px 開始', { title, keys: [...keys] });
+  eq0(over, '學習頁 1280:停著、走著的小雞不碰到螢光筆(含 4 px)');
 });
 
 /* ---------- App 模式、窄的網站模式:跟 f94cec7 一模一樣 ---------- */

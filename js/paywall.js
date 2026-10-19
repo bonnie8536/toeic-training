@@ -80,14 +80,19 @@
     const cls = classesOf(a);
     if (cls.some(c => c.covered === true)) return null;   // 有班級涵蓋(包括站長的班)就不擋
     if (o.page === 'writing' && typeof a.credits === 'number' && a.credits > 0) return null;
-    if (cls.some(c => c.reason === 'expired')) return { kind: 'class_expired', title: '班級老師的方案已到期', line: '請聯絡老師' };
-    if (cls.some(c => c.reason === 'over_seats')) return { kind: 'over_seats', title: '超過老師的名額', line: '請聯絡老師' };
+    /* 停用的班(class_active false:老師自己停用,或老師被站長改成學生時一起停用)後端照樣回 reason 'expired',
+       但叫學生聯絡老師沒有用:不算進這兩句,放到下面另外寫(2026-10-19) */
+    const open = cls.filter(c => c.class_active !== false);
+    if (open.some(c => c.reason === 'expired')) return { kind: 'class_expired', title: '班級老師的方案已到期', line: '請聯絡老師' };
+    if (open.some(c => c.reason === 'over_seats')) return { kind: 'over_seats', title: '超過老師的名額', line: '請聯絡老師' };
     /* 老師自己的方案(或老師試用)是最後一段:寫老師方案的到期日,不寫學生試用的日期 */
     const paidEnd = Date.parse(a.paid_through), teacherEnd = Date.parse(a.teacher_until);
     if (a.teacher_source && isFinite(teacherEnd) && !(isFinite(paidEnd) && paidEnd >= teacherEnd)) {
       if (a.teacher_source === 'trial') return { kind: 'trial_ended', title: '試用已結束', line: '試用到 ' + dayText(a.teacher_until, a.server_now) };
       return { kind: 'expired', title: '方案已到期', line: '到期日 ' + fmtDate(a.teacher_until) };
     }
+    /* 只剩停用的班、自己也沒付過費:寫班級停用,要繼續用就自己買或加入新的班(遮罩的兩個按鈕) */
+    if (!a.paid_through && cls.some(c => c.class_active === false)) return { kind: 'class_closed', title: '班級已停用', line: '可以購買方案，或輸入新的班級邀請碼' };
     if (!a.paid_through) {
       const end = Date.parse(a.trial_until), now = Date.parse(a.server_now);
       if (isFinite(end) && (isFinite(now) ? now : Date.now()) - end > OLD_TRIAL_MS) return { kind: 'ended', title: '使用期限已到', line: '' };
@@ -159,6 +164,7 @@
     const c = classesOf(a).find(x => x.class_id === classId);
     if (!c) return '';
     if (c.covered === true) return '由班級提供';
+    if (c.class_active === false) return '班級已停用';
     if (c.reason === 'expired') return '老師方案已到期';
     if (c.reason === 'over_seats') return '超過老師的名額';
     return '';

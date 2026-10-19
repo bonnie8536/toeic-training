@@ -547,7 +547,7 @@ function v1(over) {
 }
 function v2Pet() {
   return { v: 2, born: FROM, goals: [], days: { [YDAY]: 25 }, met: [YDAY], oldMet: 0, oldBefore: '', fed: {}, name: '小黃', nameAt: 5,
-    got: { [YDAY]: { d: 'corn' } }, ate: { [YDAY]: { mh2lq01xk7: YDAY + '/d' } }, foodOld: { before: '2026-07-05', left: { corn: 2 } }, once: { diag: YDAY }, roam: { on: false, at: 1793000000000 } };
+    got: { [YDAY]: { d: 'corn' } }, ate: { [YDAY]: { mh2lq01xk7: YDAY + '/d' } }, foodOld: { before: '2026-07-05', got: { corn: 2 }, ate: {} }, once: { diag: YDAY }, roam: { on: false, at: 1793000000000 } };
 }
 const ticket = (p, id, d) => !!(p && p.got && p.got[d || TODAY] && p.got[d || TODAY][id]);
 const ateCount = (p, d) => (p && p.ate && p.ate[d || TODAY] ? Object.keys(p.ate[d || TODAY]).length : 0);
@@ -728,6 +728,115 @@ const B = {
     w.offline = false; await pg.fire('win:online'); await pg.runAll(); await pg.S.idle();
     const c = cp(w);
     return { ok: r.result === 'got' && led && ticket(c, 'd') && c.fed['2026-10-16'] === 30, detail: 'earn ' + J(r) + ' / 離線記帳 ' + led + ' / 雲端券 ' + ticket(c, 'd') + ' fed ' + J(c && c.fed) };
+  },
+  /* B12(chick2 第一輪修正 #2):開關都關時,讀不到雲端的那一下 pet-store 只寫本機、不記帳(B10 的理由)。
+     登出以前只看帳本,這些改動(取名、改目標、餵飼料)會不問就跟著帳號資料夾刪掉。現在登出時先把它們合併上傳,傳不上去就算進「還沒同步」 */
+  'B12. 開關都關:讀不到雲端時改的名字、目標、餵食,登出時先合併上傳;傳不上去就先問,取消時本機留著;沒有這種改動時登出不多讀雲端': async () => {
+    const out = [];
+    const base = () => v1({ days: { '2026-10-10': 25, [TODAY]: 25 }, met: ['2026-10-10', TODAY] });
+    const localOnly = k => { const o = []; for (let i = 0; i < k.local.length; i++) { const x = k.local.key(i); if (/^tr_localonly_/.test(x)) o.push(x); } return o; };
+    for (const how of ['offline', '401', 'readOk', 'none']) {
+      const w = makeWorld();
+      cloudRow(w, 'pet', base());
+      w.local.setItem(SB_KEY, J({ access_token: 'a', expires_at: 1, user: USER }));
+      const pg = await openLoggedIn(w, { stack: NEW, food: false });
+      if (how === 'offline') w.offline = true;
+      if (how === '401' || how === 'readOk') w.readError = true;
+      if (how !== 'none') {
+        w.clock.t += 60e3; await pg.S.feed(); await pg.runAll(); await pg.S.idle();
+        w.clock.t += 1000; await pg.S.rename('阿啾'); await pg.runAll(); await pg.S.idle();
+        w.clock.t += 1000; await pg.S.setGoal(40); await pg.runAll(); await pg.S.idle();
+      }
+      const before = lp(w);
+      const led = J(Object.keys(ledger(w)));
+      if (how === 'readOk') w.readError = false;     // 讀得到了,學生接著登出
+      w.confirmAnswer = false;
+      const ops0 = w.ops.length, reloads0 = w.reloads;
+      await pg.ctx.CLOUD.logout(); await tick();
+      const asked = w.confirms.length, petOpsAtLogout = w.ops.slice(ops0).filter(o => o.k === 'pet').map(o => o.op).join(',');
+      const c = cp(w), l = lp(w);
+      let ok, d;
+      if (how === 'offline' || how === '401') {
+        /* 傳不上去:要先問;取消就不登出,本機那份原封不動 */
+        ok = led === '[]' && before.name === '阿啾' && asked === 1 && same(l, before) && c.name === '小黃' && w.reloads === reloads0;
+        d = how + ':帳本 ' + led + ' 問了 ' + asked + ' 次 本機名字 ' + (l && l.name) + ' 雲端名字 ' + (c && c.name);
+      } else if (how === 'readOk') {
+        /* 讀得到:合併後上傳,不用問;雲端有名字、目標、餵食,還是 v1(開關關著不寫 v2);本機資料夾與標記照常清掉 */
+        ok = asked === 0 && !!c && c.v === 1 && c.name === '阿啾' && c.goals.some(g => g.n === 40) && c.fed[TODAY] === 25 && c.days[TODAY] === 25 && l === null && !localOnly(w).length;
+        d = how + ':問了 ' + asked + ' 次 pet 請求 ' + petOpsAtLogout + ' 雲端 ' + J(c).slice(0, 160) + ' 本機 ' + J(l) + ' 標記 ' + J(localOnly(w));
+      } else {
+        /* 沒有只寫在本機的改動:登出跟以前一樣,不讀雲端的 pet、不問 */
+        ok = asked === 0 && petOpsAtLogout === '' && l === null;
+        d = how + ':問了 ' + asked + ' 次 pet 請求 ' + (petOpsAtLogout || '(沒有)');
+      }
+      out.push({ ok, d });
+    }
+    return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
+  },
+  /* chick2 第二輪修正 #2:第 2 步開新的工作階段時,本機那份(帳本上沒有)會跟雲端那一列合併再上傳。很久沒同步、還留著 400 天前練習日的
+     那份,整理時自己移到今天的截止日,oldBefore 比雲端晚;以前成對取 oldBefore 較晚的那組,雲端累積的 30 天達標整個被丟掉再上傳 */
+  'B9b. 開新的工作階段:本機那份很久沒同步(還留著 400 天前的練習日)、雲端累積 30 天達標:合併上傳後累積達標不倒退': async () => {
+    const w = makeWorld();
+    w.clock.t = Date.parse('2029-04-14T12:00:00+08:00');
+    const cloud = v1({ born: '2026-10-11', days: {}, met: [], oldMet: 30, oldBefore: '2028-03-06' });
+    cloudRow(w, 'pet', cloud, w.clock.t - HOUR);
+    signedIn(w);
+    w.local.setItem(PREFIX + 'pet', J(v1({ born: '2026-10-11', days: { '2028-02-16': 1 }, met: [] })));
+    await openLoggedIn(w, { pet: 'real' });
+    const c = cp(w), l = lp(w);
+    const total = x => (x ? x.oldMet + x.met.length : -1);
+    return { ok: total(c) === 30 && total(l) === 30, detail: '雲端 ' + J(c && [c.oldMet, c.oldBefore, c.met.length]) + ' 本機 ' + J(l && [l.oldMet, l.oldBefore]) };
+  },
+  /* chick2 第二輪修正 #3:pet.js 的 fed 只留這台的今天往前 6 天。時鐘快 6 天多的裝置,真正的今天就掉出這個範圍,
+     合併會把別台今天餵的飼料清掉再上傳。所以快超過 6 天就不合併、不上傳(以前放到 8 天);快 6 天以內照常合併,今天的餵食還在 */
+  /* chick2 第三輪修正 #1:允許的範圍兩邊各 3 天(以前 6 天:一快一慢的兩台相差 12 天,慢的那台合併時丟掉快的那台的天) */
+  'B9a. 這台時鐘快 3.5、5.9、6.5、7.5 天或慢 3.5、5.9 天、開新的工作階段灌資料:雲端今天餵的飼料不會被清掉,也不上傳 pet;快或慢 2.9 天照常合併,餵食還在': async () => {
+    const out = [];
+    for (const fast of [6.5, 7.5, 5.9, 3.5, -3.5, -5.9, 2.9, -2.9]) {
+      const w = makeWorld();
+      const cloud = v1({ days: { '2026-10-10': 25, '2026-10-16': 25 }, met: ['2026-10-10', '2026-10-16'], fed: { '2026-10-16': 25 } });
+      cloudRow(w, 'pet', cloud, w.clock.t - HOUR);
+      signedIn(w);
+      w.local.setItem(PREFIX + 'pet', J(v1({ name: '阿啾', nameAt: 9 })));
+      w.clock.t += fast * 864e5; w.serverAhead = -fast * 864e5;
+      await openLoggedIn(w, { pet: 'real' });
+      const ups = w.ops.filter(o => o.k === 'pet' && o.op === 'upsert').length;
+      const c = cp(w);
+      const ok = Math.abs(fast) > 3 ? same(c, cloud) && ups === 0 : !!c && c.fed['2026-10-16'] === 25 && c.name === '阿啾' && ups === 1;
+      out.push({ ok, d: '快 ' + fast + ' 天:上傳 ' + ups + ' 次 雲端 fed ' + J(c && c.fed) + ' 名字 ' + (c && c.name) });
+    }
+    return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
+  },
+  /* chick2 第三輪修正 #1 的配套:允許範圍改成 3 天以後,差 3 到 6 天的裝置也不合併了。灌資料時對不了時,帳本上沒有、
+     只標記「只在本機」的 pet(第 2 步讀不到雲端時改的名字、目標、餵食)以前會被雲端那份蓋掉。現在留在本機、不上傳、標記留著,
+     時鐘調好以後同步時合併上傳 */
+  'B9b. 這台時鐘快或慢 4 天、開新的工作階段灌資料:只在本機(有標記)改的名字不會被雲端蓋掉,也不上傳;時鐘調好後合併上傳,兩邊的都在': async () => {
+    const out = [];
+    for (const skew of [4, -4, 10]) {
+      const w = makeWorld();
+      const recent = v1({ days: { '2026-10-10': 25, '2026-10-15': 9 }, met: ['2026-10-10'] });
+      cloudRow(w, 'pet', recent, w.clock.t - HOUR);
+      signedIn(w);
+      const mine = v1({ days: { '2026-10-12': 30 }, met: ['2026-10-12'], name: '阿啾', nameAt: w.clock.t - HOUR });
+      w.local.setItem(PREFIX + 'pet', J(mine));
+      w.local.setItem('tr_localonly_' + USER.id, J({ pet: w.clock.t - HOUR }));
+      w.clock.t += skew * 864e5; w.serverAhead = -skew * 864e5;
+      const pg = await openLoggedIn(w, { stack: NEW, food: false });
+      await pg.runAll(); await pg.S.idle();
+      const ups0 = w.ops.filter(o => o.k === 'pet' && o.op === 'upsert').length;
+      const marks = JSON.parse(w.local.getItem('tr_localonly_' + USER.id) || '{}');
+      const held = same(cp(w), recent) && ups0 === 0 && !!lp(w) && lp(w).name === '阿啾' && lp(w).days['2026-10-12'] === 30 && 'pet' in marks;
+      /* 時鐘還沒調好就登出:這份還沒上雲,要先問;取消就留著 */
+      w.confirmAnswer = false;
+      await pg.ctx.CLOUD.logout(); await tick();
+      const asked = w.confirms.length > 0 && !!lp(w) && lp(w).name === '阿啾';
+      w.clock.t -= skew * 864e5; w.serverAhead = 0;
+      await pg.fire('win:online'); await pg.runAll(); await pg.S.idle(); await pg.runAll();
+      const c = cp(w);
+      const merged = !!c && c.name === '阿啾' && c.days['2026-10-12'] === 30 && c.days['2026-10-15'] === 9 && c.met.includes('2026-10-12');
+      out.push({ ok: held && asked && merged, d: (skew > 0 ? '快 ' : '慢 ') + Math.abs(skew) + ' 天:留在本機 ' + held + '(上傳 ' + ups0 + ' 次,標記 ' + J(marks) + ')/ 登出先問 ' + asked + ' / 調好後雲端 ' + J(c).slice(0, 120) });
+    }
+    return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
   },
   'B9. 這台時鐘快 500 天、開新的工作階段灌資料:雲端那份不會被壓縮改寫,也不上傳 pet': async () => {
     const w = makeWorld();

@@ -18,13 +18,16 @@
    - 第二階段的開關(js/pet-config.js):PET_FOOD 打開而且 PET_FOOD_FROM 是有效日期時才有食物(earn、eat、每次同步補券),
      PET_ROAM_V2 打開時才有走動開關(setRoam)。兩個都關著時新函式一律立刻回 off、不讀不寫,
      其他行為(寫入次數、內容、view() 的鍵)跟第 1 步那版逐位元組相同(test_pet_store.js 比對)。
-   - 這台的時鐘跟伺服器差太多(慢超過 6 天或快超過 8 天):唯讀,本機、雲端都不寫。伺服器時間取自剛讀雲端時用的登入憑證
+   - 這台的時鐘跟伺服器差太多(慢或快超過 3 天,chick2 第三輪修正 #1):唯讀,本機、雲端都不寫。伺服器時間取自剛讀雲端時用的登入憑證
      (access_token 的 iat;伺服器剛收下這張憑證,所以 iat 跟伺服器時間最多差憑證的有效期,預設 1 小時)。
      慢的裝置會把它眼中「晚超過 7 天」的天丟掉,寫回去就刪掉了別台的進度(10/16 審查)。憑證沒有或解不開時對不了時,
      當成讀不到雲端:只寫本機、不上傳。
    - 讀雲端的時候登出了(或別的分頁換了帳號):帳號資料夾已經清掉,什麼都不寫,免得把 pet 和帳本寫回去。
-   - 已知限制:讀不到雲端時只寫了本機的改動(餵食、改目標、取名),若在下一次讀得到雲端之前開了新的工作階段
-     (cloud.js 灌資料會用雲端那份蓋掉本機),這些改動會不見;每天的題數從 hist 重算,不會少。
+   - 讀不到雲端時只寫了本機的改動(餵食、改目標、取名),登入時在 cloud.js 記一個「只在本機」的標記(不在帳本裡);
+     登出時 cloud.js 先合併上傳,傳不上去就算進「還沒同步」先問(chick2 第一輪修正 #2)。登出前還在排隊的動作和 earn,
+     cloud.js 會先呼叫 flushPending 照讀不到雲端的規則寫下來(#4)。
+     已知限制:在下一次讀得到雲端之前開了新的工作階段時,cloud.js 灌資料先合併本機與雲端(第二階段),合併不了(時鐘差太多)
+     才用雲端那份蓋掉本機,這些改動會不見;每天的題數從 hist 重算,不會少。
      合併後的那份上傳失敗(斷線、請求被中斷)時它留在帳本上,之後任何一次 cloud.js 的 flushAll(開別的頁、切到背景、
      恢復連線)都會先把這份沒有重新合併過的本機那份傳上去,蓋掉別台在這中間寫進雲端的名字、目標、餵食。
      別台只有在同一個工作階段裡再同步才併得回來;它開了新的工作階段的話,灌資料會先用雲端那份蓋掉它的本機,這些就沒了。
@@ -33,8 +36,12 @@
      之後第一次正常的同步依原本的完成時間補寫。每次同步也從 daily_done、mock_history、diag、hist 與達標日補最近 7 天的券
      (那些鍵只讀)。拿到券就在 window 送 'pet:earn'(detail { result, food, id, date, source })。
      同一輪裡掛勾的那一個先算,再補寫:每日練習做完一項時 daily_done 已經記好了,先補寫的話掛勾那一下會變成「今天拿過了」。
+     前一輪同步已經在讀雲端時交卷,補寫還是可能先寫了這次的券:交卷那一刻本機那天沒有券、現在那天的券又是同一個來源給的,
+     掛勾就回 got 與那份食物,不說「拿過了」(chick2 第三輪修正 #4,見 mine())。
      網路看起來連著、其實不通時讀雲端要 8 秒才逾時:earn 最多等 2 秒,之後先用這台的資料判斷,照讀不到雲端的規則寫(第 3 步登入時記帳),
      離開頁面或切到背景時也先寫(結束畫面只等 10 秒,分頁記憶體會跟著頁面不見);下一次同步再合併上傳。
+     吃點心(eat)也一樣:畫面當場就顯示吃掉了,正式寫入等 2 秒、離開頁面或切到背景時先照同樣的規則寫(同一個吃的 id,
+     之後合併只留一筆;chick2 第一輪修正 #3)。
    載入順序:common.js、pet-config.js、pet.js、cloud.js、(pet-food.js)、pet-store.js。測試:node tools/test_pet_store.js */
 (function () {
   'use strict';
@@ -42,8 +49,12 @@
   const DEBOUNCE_MS = 4000;      // 答題後停這麼久再同步(連續答題只做一次)
   const MIN_GAP_MS = 30000;      // 答題觸發的同步,兩次讀雲端至少隔這麼久
   const VISIBLE_GAP_MS = 60000;  // 回到頁面時,離上次同步超過這麼久才再做
-  const SLOW_MAX_MS = 6 * 864e5;  // 這台的時鐘比伺服器慢超過這麼久就不寫(pet.js 晚超過 7 天的日期會丟掉;留憑證有效期的餘裕)
-  const FAST_MAX_MS = 8 * 864e5;  // 快超過這麼久也不寫(憑證有效期最長 1 週,不會誤判時鐘準的裝置)
+  /* 這台的時鐘比伺服器慢或快超過這麼久就不寫。兩台一快一慢時相差兩邊相加:pet.js 只留這台的今天加 7 天以內的日期、
+     今天往前 6 天的 fed,所以兩邊相加不能超過 6 天。以前各 6 天,一台快 4 天、一台慢 4 天時,慢的那台合併會丟掉快的那台的
+     練習日、達標日、券和吃掉紀錄再上傳(chick2 第三輪修正 #1;js/cloud.js 同一組數字,test_pet.js 從兩個檔讀出來驗)。
+     憑證剛換過、跟伺服器只差幾分鐘到 1 小時;發了超過 3 天還沒換的憑證才會誤擋,那一次只是不寫,不丟資料 */
+  const SLOW_MAX_MS = 3 * 864e5;
+  const FAST_MAX_MS = 3 * 864e5;
   const LATER_MAX = 20;           // 這次寫不進去的完成,分頁記憶體最多記幾筆
   const P = window.PET;
   const on = !!P && (window.PET_ON === true || previewOn());
@@ -63,7 +74,9 @@
   let clockBad = false;   // 上次對時,這台的時鐘差太多
   let later = [];         // 這次寫不進去的完成 { id, at },之後第一次正常的同步補寫
   let eating = '';        // 正在寫入的那一口是哪天吃的(連點時當場就回 ateToday)
-  let asks = [];          // 還在等結果的 earn(離開頁面時先寫)
+  let asks = [];          // 還在等結果的 earn 與動作 { flush, leave }:離開頁面時先寫 leave 的(earn、吃點心),登出前全部先寫(flushPending)
+  let filled = [];        // 這個分頁補寫過的券 { date, src, id }(最多 LATER_MAX 筆):掛勾認得出是不是自己這次的完成
+  let claimed = [];       // 這個分頁掛勾已經回過 got 的券 'date/id':同一張不會回兩次 got
 
   function previewOn() {
     try { return new URLSearchParams(location.search || '').get('pet') === '1'; } catch (e) { return false; }
@@ -104,6 +117,14 @@
   function writeLocal(p) {
     try { localStorage.setItem(storageKey(KEY), JSON.stringify(p)); return true; } catch (e) { return false; }
   }
+  /* 登入時只寫在本機的改動,記在 cloud.js 的「只在本機」標記(不在帳本裡,第 1 步的 cloud.js 看不到):登出時這一版先合併上傳,
+     傳不上去就算進「還沒同步」先問(chick2 第一輪修正 #2)。讀到雲端、寫過合併後的那份,就劃掉。舊版 cloud.js 沒有這兩個函式,什麼都不做 */
+  function markLocal(on) {
+    try {
+      const C = window.CLOUD, f = C && (on ? C.markLocalOnly : C.clearLocalOnly);
+      if (typeof f === 'function') f(KEY);
+    } catch (e) { /* 標記不到只是登出時不會先問 */ }
+  }
 
   /* newer:這一版看得懂 v2,不會再因為版本說「新版網頁存的」;不認得的版本照舊說資料讀不到(規格 5.3)。鍵留著給畫面 */
   function view() {
@@ -141,15 +162,41 @@
       got.push({ result: 'got', food: r.food, id: r.id, date: r.date, source });
     };
     used.forEach(x => take(P.earn(pet, { id: x.id, at: x.at, from: FROM }, now), 'later'));
-    if (ask) { res = P.earn(pet, { id: ask.id, at: ask.at, from: FROM }, now); take(res, 'hook'); }
+    if (ask) { const r = P.earn(pet, { id: ask.id, at: ask.at, from: FROM }, now); take(r, 'hook'); res = mine(ask, pet, r); }
     const b = P.backfill(pet, { daily: store.get('daily_done', null), mock: store.get('mock_history', null), diag: store.get('diag', null), hist: readHist(), from: FROM }, now);
     if (b.added.length) {
       pet = b.pet;
+      filled = filled.concat(b.added.map(a => ({ date: a.date, src: a.src, id: a.id }))).slice(-LATER_MAX);
       /* 補到前幾天的不送事件(開頁時一次補好幾天,小雞不用跳好幾下);今天的才送 */
       const today = P.dateOf(now);
       b.added.forEach(a => { if (a.date === today) got.push({ result: 'got', food: a.food, id: a.id, date: a.date, source: 'backfill' }); });
     }
     return { pet, got, used, res };
+  }
+
+  /* 掛勾的結果(chick2 第三輪修正 #4):前一次同步正在讀雲端時交卷,那一輪讀完雲端才讀 hist,補寫先把這次的完成補成那天的券,
+     掛勾排在後面就拿到 cap,結束畫面說「今天的點心拿過了」,其實這就是那天第一份。
+     交卷那一刻本機那天還沒有券(ask.had 是 false),現在那天的券又是這個來源給的(id 相同,或這個分頁補寫時記下的來源相同),
+     就回 got 與那份食物(規格 5.2:同一天同一個來源是同一張券)。同一張只回一次 got(claimed),不另外送 pet:earn(補寫那時送過了) */
+  function mine(ask, pet, r) {
+    if (r && r.result === 'got') { claimed = claimed.concat([r.date + '/' + r.id]).slice(-LATER_MAX); return r; }
+    if (!r || r.result !== 'cap' || ask.had !== false) return r;
+    const d = P.dateOf(ask.at);
+    const day = pet && pet.got && Object.prototype.hasOwnProperty.call(pet.got, d) ? pet.got[d] : null;
+    if (!day || typeof day !== 'object') return r;
+    const ids = [ask.id].concat(filled.filter(x => x.date === d && x.src === ask.id).map(x => x.id));
+    const id = ids.find(i => Object.prototype.hasOwnProperty.call(day, i) && claimed.indexOf(d + '/' + i) < 0);
+    if (!id) return r;
+    claimed = claimed.concat([d + '/' + id]).slice(-LATER_MAX);
+    return { result: 'got', food: day[id], id, date: d };
+  }
+  /* 交卷那一刻本機那天有沒有券(讀不到、壞掉當成有:照舊回 cap) */
+  function hadTicket(t) {
+    const l = readLocal();
+    if (l === null) return false;
+    if (!l || typeof l !== 'object') return true;
+    const g = l.got, d = P.dateOf(t);
+    return !!(g && typeof g === 'object' && Object.prototype.hasOwnProperty.call(g, d) && g[d] && typeof g[d] === 'object' && Object.keys(g[d]).length);
   }
 
   /* 一次同步。mutate(pet, now) 回 { ok: true, pet } 或 { ok: false, reason }(餵食、改目標、取名、吃、走動開關用);
@@ -207,15 +254,17 @@
     const c = P.canon(pet);
     if (cloudOk && !(remoteRaw !== null && remoteRaw !== undefined && P.canon(remoteRaw) === c)) {
       store.set(KEY, pet);   // 寫本機,cloud.js 記帳後上傳
+      if (user) markLocal(false);   // 本機的改動都在這一份裡,交給帳本
       return 'uploaded';
     }
     if (local === null || P.canon(local) !== c) {
       /* 讀不到雲端:第 3 步(第二階段開關打開)而且 cloud.js 是先合併的新版時,記帳交給它;
-         第 2 步(開關都關)同一台可能還開著第 1 步的分頁,它的 cloud.js 會把帳本上的 pet 不合併就傳上去,所以跟第 1 步一樣只寫本機;
-         讀得到但對不了時、舊版 cloud.js 也只寫本機 */
+         第 2 步(開關都關)同一台可能還開著第 1 步的分頁,它的 cloud.js 會把帳本上的 pet 不合併就傳上去,所以跟第 1 步一樣只寫本機
+         (記一個「只在本機」的標記,登出時先合併上傳);讀得到但對不了時、舊版 cloud.js 也只寫本機 */
       if (user && !cloudRead && cloudMerges() && step3) store.set(KEY, pet);
-      else writeLocal(pet);
+      else if (writeLocal(pet) && user && !cloudOk) markLocal(true);
     }
+    if (user && cloudOk) markLocal(false);   // 跟雲端那份一樣:沒有只在本機的改動
     return 'local';
   }
   /* 寫成功之後:補寫過的完成從記憶體拿掉,送 pet:earn(掛勾、之後補寫的、補到今天的) */
@@ -231,9 +280,29 @@
     queued = enqueue(() => { queued = null; return run(null); });
     return queued;
   }
-  function act(mutate) {
+  /* 動作排進佇列。還沒做完就登出時(cloud.js 呼叫 flushPending),先照讀不到雲端的規則寫在本機,cloud.js 再合併上傳或先問;
+     leave(吃點心)時等 2 秒、離開頁面或切到背景也先寫(畫面當場就顯示吃掉了,chick2 第一輪修正 #3)。
+     先寫過的,正式那一輪的動作若因為「已經做過」被拒絕(今天吃過、沒有飼料),照樣算成功、寫合併後的那份 */
+  function act(mutate, leave) {
     if (!on) return Promise.resolve({ ok: false, reason: 'off' });
-    return enqueue(() => run(mutate));
+    const p = { leave: !!leave, flushed: false, over: false, timer: 0 };
+    p.flush = () => { if (!p.over && !p.flushed && quickAct(mutate)) p.flushed = true; };
+    asks.push(p);
+    if (p.leave) p.timer = setTimeout(p.flush, EARN_WAIT_MS);
+    const once = (pet, now) => {
+      const m = mutate(pet, now);
+      return (!m || !m.ok) && p.flushed ? { ok: true, pet } : m;
+    };
+    return enqueue(() => run(once)).then(r => {
+      p.over = true;
+      clearTimeout(p.timer);
+      asks = asks.filter(x => x !== p);
+      return r;
+    });
+  }
+  /* 還在等的全部先寫(cloud.js 登出前呼叫;第 2 步只寫本機加標記,第 3 步記帳) */
+  function flushPending() {
+    asks.slice().forEach(p => { try { p.flush(); } catch (e) { /* 寫不了就算了,登出照常先問帳本上的 */ } });
   }
 
   function feed() {
@@ -256,10 +325,13 @@
     if (!food) return Promise.resolve(out('off'));
     if (n !== undefined && n !== null && !(Number(n) >= P.ROUND_MIN)) return Promise.resolve(out('short'));
     if (!P.sourceFood(id)) return Promise.resolve(out('bad'));
-    const ask = { id, at: Date.now() };
+    const at = Date.now();
+    let had = true;
+    try { had = hadTicket(at); } catch (e) { had = true; }
+    const ask = { id, at, had };
     return new Promise(resolve => {
       let over = false, quickDone = false, timer = 0;
-      const p = {};
+      const p = { leave: true };
       const end = v => { if (over) return; over = true; clearTimeout(timer); asks = asks.filter(x => x !== p); resolve(v); };
       /* 網路看起來連著、其實不通時讀雲端要等 8 秒(前面排著同步就 16 秒):等不到就先照讀不到雲端的規則寫,離開頁面時也是 */
       p.flush = () => {
@@ -284,9 +356,31 @@
   /* 讀不到雲端時的寫法,跟 write() 讀不到雲端那一條相同:登入、第 3 步而且 cloud.js 是先合併的新版時用 store.set 記帳
      (cloud.js 先合併再上傳,登出前沒傳出去會先問);其他只寫本機。回寫進本機了沒 */
   function saveUnread(p) {
-    if (!(cloudUser() && cloudMerges() && step3)) return writeLocal(p);
+    if (!(cloudUser() && cloudMerges() && step3)) {
+      const ok = writeLocal(p);
+      if (ok && cloudUser()) markLocal(true);
+      return ok;
+    }
     store.set(KEY, p);
     try { return P.canon(readLocal()) === P.canon(p); } catch (e) { return false; }
+  }
+  /* 排隊中的動作先寫(act 的 flush):跟 quick() 一樣只用這台的資料、照讀不到雲端的規則寫;唯讀、時鐘不對、雲端那份救不回、
+     登出了、動作被拒絕時什麼都不做。讀寫之間沒有 await。回寫進去了沒(本來就一樣也算) */
+  function quickAct(mutate) {
+    try {
+      if (clockBad || remoteBad) return false;
+      if (cloudUser() && profileGone()) return false;
+      const now = Date.now();
+      const local = readLocal();
+      const base = P.reconcile({ local, remote: null, hist: readHist(), now });
+      if (base.readOnly) return false;
+      const m = mutate(base.pet, now);
+      if (!m || !m.ok) return false;
+      if (local !== null && P.canon(local) === P.canon(m.pet)) return true;
+      if (!saveUnread(m.pet)) return false;
+      emit();
+      return true;
+    } catch (e) { return false; }
   }
   /* 先寫本機:用這台現在的資料(本機那份、hist)判斷,拿到就照讀不到雲端的規則寫(saveUnread;第 3 步登入時記帳,第三輪審查 #2),
      下一次同步合併上傳。
@@ -300,8 +394,9 @@
       const base = P.reconcile({ local: readLocal(), remote: null, hist: readHist(), now });
       if (base.readOnly) return null;
       const r = P.earn(base.pet, { id: ask.id, at: ask.at, from: FROM }, now);
-      if (r.result === 'cap') return r;
+      if (r.result === 'cap') return mine(ask, base.pet, r);
       if (r.result !== 'got' || !saveUnread(r.pet)) return null;
+      mine(ask, base.pet, r);
       emitEarn([{ result: 'got', food: r.food, id: r.id, date: r.date, source: 'hook' }]);
       emit();
       return r;
@@ -325,7 +420,7 @@
     const saved = act((pet, t) => {
       const x = P.eat(pet, f, eatId, t);
       return x.ok ? { ok: true, pet: x.pet } : { ok: false, reason: x.reason };
-    }).then(res => {
+    }, true).then(res => {
       if (eating === day) eating = '';
       return { ok: !!(res && res.ok), reason: res && res.ok ? null : (res && res.reason) || 'error' };
     });
@@ -353,9 +448,9 @@
       if (document.visibilityState === 'visible' && Date.now() - lastSync >= VISIBLE_GAP_MS) sync();
     });
     window.addEventListener('online', () => { sync(); });
-    /* 離開頁面、切到背景:還在等雲端的 earn 先寫(分頁記憶體裡的會跟著頁面不見) */
+    /* 離開頁面、切到背景:還在等雲端的 earn 和吃點心先寫(分頁記憶體裡的會跟著頁面不見) */
     if (food) {
-      const flushAsks = () => { asks.slice().forEach(p => p.flush()); };
+      const flushAsks = () => { asks.slice().forEach(p => { if (p.leave) p.flush(); }); };
       window.addEventListener('pagehide', flushAsks);
       document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushAsks(); });
     }
@@ -366,5 +461,5 @@
     ready = sync();
   }
 
-  window.PET_STORE = { on, food, roamV2, ready, sync, view, feed, setGoal, rename, earn, eat, setRoam, afterAnswer, idle: () => chain };
+  window.PET_STORE = { on, food, roamV2, ready, sync, view, feed, setGoal, rename, earn, eat, setRoam, afterAnswer, flushPending, idle: () => chain };
 })();

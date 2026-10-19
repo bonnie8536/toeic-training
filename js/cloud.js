@@ -7,6 +7,8 @@
      存回本機,再上傳合併結果;灌雲端資料時本機和雲端都有就存合併結果,不直接覆蓋。讀不到雲端、合併說唯讀(雲端是更新版的格式)、
      頁面沒有 PET 時不上傳,帳本留著。合併前跟 pet-store 一樣用登入憑證的 iat 對時,這台時鐘差太多也不合併、不上傳,帳本留著
      (合併整理時用這台的時間,慢的時鐘會丟掉別台最近幾天的紀錄)。其他鍵的上傳、灌資料、帳本、登出跟以前一樣。
+     登出前(chick2 第一輪修正 #2、#4):先叫 pet-store 把還在等讀雲端的券和動作寫下來(PET_STORE.flushPending),
+     帳本上沒有、但標記成「只在本機」的 pet(開關都關時讀不到雲端只寫本機的改動)也先合併上傳,傳不上去就算進「還沒同步」先問。
      已知限制:兩台在同一時間讀雲端、合併、上傳時,後到的那台可能蓋掉先到的那台剛傳上去的東西;先到那台本機還留著,
      它的 pet-store 下次同步看到雲端少了會再合併上傳(remoteBehind),所以不會永久消失。
      pet 因為雲端是更新版格式(v3)而留在帳本時,登出會照樣提示把它算進「還沒同步」。 */
@@ -41,7 +43,7 @@
   window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
     startCheckout, myCheckout, isOwner,
-    saveSignupIntent, takeSignupIntent, clearSignupIntent };
+    saveSignupIntent, takeSignupIntent, clearSignupIntent, markLocalOnly, clearLocalOnly };
   window.CLOUD.mergedKeys = Object.freeze(['pet']);   // pet-store 用它判斷這一版 cloud.js 會先合併再上傳
   if (!enabled) return;
   tidySignupIntent(authError);   // 註冊時選老師的意向:開頁就清過期的、記下「這個分頁從 Google 回來了」(要趁 supabase-js 清掉網址之前;getSession 之後綁帳號 id)
@@ -192,8 +194,11 @@
         const k = lk.slice(prefix.length);
         if (!(k in cloud) && !(k in keepLocal)) { keepLocal[k] = Date.now(); led[k] = keepLocal[k]; }
       }
-      const plan = planMerged(prefix, cloud, keepLocal, led, clockOk);   // pet:本機和雲端都有就存合併結果(下面雲端蓋本機那一圈之後才寫)
+      const plan = planMerged(prefix, cloud, keepLocal, led, clockOk, readLocalOnly(user.id));   // pet:本機和雲端都有就存合併結果(下面雲端蓋本機那一圈之後才寫)
       writeLedger(user.id, led);
+      /* 灌過資料:只在本機的改動不是合併過(跟雲端一樣,或記在帳本上)、就是留本機記在帳本上,標記都不用了;
+         對不了時留在本機的(hold)標記留著,登出時還是先合併上傳、傳不上去先問 */
+      Object.keys(MERGED).forEach(k => { if (!plan.hold[k]) unmark(user.id, k, Infinity); });
 
       for (let i = localStorage.length - 1; i >= 0; i--) {
         const lk = localStorage.key(i);
@@ -239,7 +244,8 @@
     /* 這台已經沒有登入資料時 supabase-js 不會呼叫伺服器、直接回成功,別台其實沒被登出:先擋下來,什麼都不刪 */
     if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效，沒辦法登出其他裝置。請重新登入後再試一次。');
     if (user && !(opts && opts.discard)) {
-      const left = await flushAll();
+      flushPetStore();   // 小雞還在等讀雲端的券和動作先寫下來(chick2 第一輪修正 #4)
+      const left = await unsynced(user);
       if (left > 0 && !confirm('還有 ' + left + ' 項進度還沒同步到雲端（可能是網路不穩）。現在登出，這台裝置上的這些進度會刪除。確定要登出？')) return;
     }
     /* 一般的登出只登出這台(共用電腦登出不會把學生自己手機上的登入一起踢掉)。
@@ -261,6 +267,7 @@
     try { [SB_KEY, SB_KEY + '-user', SB_KEY + '-code-verifier'].forEach(k => localStorage.removeItem(k)); } catch (e) {}
     if (user) {
       writeLedger(user.id, {});
+      writeLocalOnly(user.id, {});
       sessionStorage.removeItem('tr_cloud_hydrated_' + user.id);
       const prefix = 'tr_u' + pidOf(user) + '_';
       for (let i = localStorage.length - 1; i >= 0; i--) {
@@ -756,6 +763,77 @@
     } catch (e) {}
   }
 
+  /* ---------- 「只在本機」標記(要合併的鍵,chick2 第一輪修正 #2) ----------
+     開關都關著(第 2 步)時,pet-store 讀不到雲端只寫本機、不記帳:同一台還開著的第 1 步分頁會把帳本上的 pet 不合併就傳上去。
+     以前登出只看帳本,這些改動(取名、改目標、餵飼料)會不問就跟著帳號資料夾刪掉。現在 pet-store 寫本機時在這裡記「鍵 → 時間」,
+     不在帳本裡,第 1 步的 cloud.js 看不到;登出時這一版先合併再上傳,傳不上去就算進「還沒同步」先問。
+     合併上傳成功、灌資料合併過、pet-store 讀到雲端再寫過,就劃掉。存在帳號資料夾外面(灌資料不會當成進度上傳),登出時清掉 */
+  let writeSeq = 0;   // 記帳(push)與標記的次數:登出補傳的時候又寫進來就再補傳一次
+  function localOnlyKey(uid) { return 'tr_localonly_' + uid; }
+  function readLocalOnly(uid) {
+    try { const o = JSON.parse(localStorage.getItem(localOnlyKey(uid))); return o && typeof o === 'object' && !Array.isArray(o) ? o : {}; } catch (e) { return {}; }
+  }
+  function writeLocalOnly(uid, o) {
+    try {
+      if (Object.keys(o).length) localStorage.setItem(localOnlyKey(uid), JSON.stringify(o));
+      else localStorage.removeItem(localOnlyKey(uid));
+    } catch (e) {}
+  }
+  function markedUser() {
+    const u = enabled ? window.CLOUD.user : null;
+    return u && typeof u.id === 'string' && pidOf(u) === window.__PROFILE_ID ? u : null;
+  }
+  function markLocalOnly(key) {
+    const u = markedUser();
+    if (!u || !MERGED[key]) return;
+    writeSeq++;
+    writeLocalOnly(u.id, Object.assign({}, readLocalOnly(u.id), { [key]: Date.now() }));
+  }
+  function clearLocalOnly(key) {
+    const u = markedUser();
+    if (u) unmark(u.id, key, Infinity);
+  }
+  /* 標記的時間不晚於 t(上傳的那份讀本機之前就寫了)才劃掉 */
+  function unmark(uid, key, t) {
+    const o = readLocalOnly(uid);
+    if (!(key in o) || o[key] > t) return;
+    const rest = Object.assign({}, o);
+    delete rest[key];
+    writeLocalOnly(uid, rest);
+  }
+  /* 登出前呼叫 pet-store:還在等讀雲端的券和動作先照讀不到雲端的規則寫下來(第 3 步記帳,第 2 步寫本機加標記) */
+  function flushPetStore() {
+    try { const S = window.PET_STORE; if (S && typeof S.flushPending === 'function') S.flushPending(); } catch (e) { /* 小雞出錯不擋登出 */ }
+  }
+  /* 登出前:帳本全部補傳,只在本機的要合併的鍵(帳本上沒有的)也先合併上傳。回傳還剩幾項沒上雲:
+     帳本上的加上還標記著的,同一個鍵只算一次。等的這段時間又有寫入(例如小雞那一輪讀到雲端、寫了合併後的那份,
+     讓這次合併上傳因為本機變了而放棄)就再補傳一次,最多三次;什麼都沒變就不再試(網路不通時不多等) */
+  async function unsynced(user) {
+    let left = 0;
+    for (let pass = 0; pass < 3; pass++) {
+      const before = pendingState(user), seq = writeSeq;
+      left = await uploadPass(user);
+      if (!left || (writeSeq === seq && pendingState(user) === before)) break;
+    }
+    return left;
+  }
+  async function uploadPass(user) {
+    const marks = readLocalOnly(user.id), led = readLedger(user.id);
+    const extra = Object.keys(marks).filter(k => MERGED[k] && !(k in led));
+    const at = k => (typeof marks[k] === 'number' && isFinite(marks[k]) && marks[k] > 0 ? marks[k] : Date.now());
+    await Promise.all([flushAll()].concat(canUpload(user) ? extra.map(k => upload(user, k, at(k))) : []));
+    const left = new Set(Object.keys(readLedger(user.id)));
+    Object.keys(readLocalOnly(user.id)).forEach(k => { if (MERGED[k]) left.add(k); });
+    return left.size;
+  }
+  /* 帳本、標記和要合併的鍵的本機值:補傳前後比對,看等的時候有沒有又寫進來 */
+  function pendingState(user) {
+    const prefix = 'tr_u' + pidOf(user) + '_';
+    let vals = [];
+    try { vals = Object.keys(MERGED).map(k => localStorage.getItem(prefix + k)); } catch (e) { /* 讀不到就只比帳本 */ }
+    return JSON.stringify([readLedger(user.id), readLocalOnly(user.id), vals]);
+  }
+
   /* 上傳一個鍵。登記過要合併的鍵(pet)排隊走 uploadMerged,其他鍵照舊 */
   function upload(user, key, t) {
     if (!MERGED[key]) return uploadPlain(user, key, t);
@@ -789,9 +867,12 @@
   /* ---------- 先合併再上傳的鍵(pet) ---------- */
   function mergeFn(key) { return MERGED[key] && window.PET && typeof window.PET.cloudMerge === 'function' ? window.PET.cloudMerge : null; }
   /* 合併前對時(Integrate 加,跟 js/pet-store.js 同一套):PET.cloudMerge 整理時用這台的時間,晚超過 7 天的日期會丟掉、
-     太舊的會壓縮。這台時鐘比伺服器慢超過 6 天或快超過 8 天、或拿不到登入憑證的 iat,就不合併、不上傳,帳本留著。
+     太舊的會壓縮。這台時鐘比伺服器慢超過 3 天或快超過 3 天、或拿不到登入憑證的 iat,就不合併、不上傳,帳本留著。
+     兩台一快一慢時相差兩邊相加,pet.js 只留這台的今天加 7 天以內的日期、今天往前 6 天的 fed,所以兩邊相加不能超過 6 天:
+     以前各 6 天,一台快 4 天、一台慢 4 天時,慢的那台合併會丟掉快的那台的練習日、達標日、券和吃掉紀錄再上傳
+     (chick2 第三輪修正 #1;js/pet-store.js 同一組數字,test_pet.js 從兩個檔讀出來驗)。
      伺服器時間取自 supabase-js 手上登入憑證的 iat(剛換過的憑證,跟伺服器最多差憑證的有效期) */
-  const SLOW_MAX_MS = 6 * 864e5, FAST_MAX_MS = 8 * 864e5;
+  const SLOW_MAX_MS = 3 * 864e5, FAST_MAX_MS = 3 * 864e5;
   function clockOkFrom(s) {
     try {
       const part = s && typeof s.access_token === 'string' ? s.access_token.split('.')[1] : '';
@@ -829,14 +910,15 @@
      寫回本機不經過 store.set(不再記帳、不再觸發上傳) */
   async function uploadMerged(user, key, t) {
     const lk = 'tr_u' + pidOf(user) + '_' + key;
+    const readAt = Date.now();   // 這之前標記的「只在本機」改動都在要上傳的這一份裡
     let raw, v;
     try { raw = localStorage.getItem(lk); v = raw === null ? null : JSON.parse(raw); } catch (e) { return false; }
-    if (v === null) { strike(user, key, t); return true; }
+    if (v === null) { strike(user, key, t); unmark(user.id, key, readAt); return true; }
     const merge = mergeFn(key);
     if (!merge) return false;
     const row = await fetchRow(user, key);
     if (!row.ok) return false;
-    let out = v;
+    let out = v, sent = raw;   // sent:上傳的那份在本機的樣子(上傳完本機還是它,標記才劃掉)
     if (row.found && row.v !== null) {
       if (!row.clock) return false;   // 時鐘差太多:不合併、不上傳,帳本留著
       let m = null;
@@ -846,8 +928,8 @@
         if (localStorage.getItem(lk) !== raw) return false;
         if (!m.sameAsLocal) localStorage.setItem(lk, JSON.stringify(m.v));
       } catch (e) { return false; }
-      if (m.sameAsCloud) { strike(user, key, t); return true; }
-      if (!m.sameAsLocal) out = m.v;
+      if (m.sameAsCloud) { strike(user, key, t); unmark(user.id, key, readAt); return true; }
+      if (!m.sameAsLocal) { out = m.v; sent = JSON.stringify(m.v); }
     }
     try {
       const { error } = await client.from('progress').upsert({
@@ -855,6 +937,7 @@
       }, { onConflict: 'user_id,k' });
       if (error) throw error;
       strike(user, key, t);
+      try { if (localStorage.getItem(lk) === sent) unmark(user.id, key, readAt); } catch (e) { /* 讀不到就留著標記,登出時多問一次 */ }
       return true;
     } catch (e) {
       console.warn('進度暫時沒同步，已記下，下次連線會補傳：' + key, e);
@@ -885,8 +968,11 @@
   }
   /* 灌雲端資料時:本機和雲端都有(雲端那一列 v 不是 null)就存合併結果(save,在雲端蓋本機那一圈之後才寫);
      結果跟雲端不同就記帳、補傳,一樣就從帳本和補傳清單拿掉。本機沒有、或是 null:用雲端那份。
-     拿不到合併函式、合併說唯讀、或時鐘差太多(clockOk 是 false):照原本的規則留本機或用雲端,但留本機也不補傳(hold),帳本留著 */
-  function planMerged(prefix, cloud, keepLocal, led, clockOk) {
+     拿不到合併函式、合併說唯讀、或時鐘差太多(clockOk 是 false):照原本的規則留本機或用雲端,但留本機也不補傳(hold),帳本留著。
+     時鐘差太多、本機那份有「只在本機」的標記(marks,帳本上沒有)時也留本機、不補傳(hold):以前用雲端那份蓋掉,
+     讀不到雲端時改的名字、目標、餵食就不見了。允許的範圍改成 3 天以後差 3 到 6 天的裝置也會走到這裡(chick2 第三輪修正 #1 的配套)。
+     留下來的那份下次對得了時由 pet-store 跟雲端合併上傳 */
+  function planMerged(prefix, cloud, keepLocal, led, clockOk, marks) {
     const plan = { save: {}, hold: {} };
     Object.keys(MERGED).forEach(k => {
       const c = cloud[k];
@@ -897,7 +983,11 @@
       const fn = local === undefined || !clockOk ? null : mergeFn(k);
       let m = null;
       if (fn) { try { m = fn(local, c.v, Date.now()); } catch (e) { m = null; } }
-      if (!m || m.ok !== true) { if (k in keepLocal) plan.hold[k] = true; return; }
+      if (!m || m.ok !== true) {
+        if (!(k in keepLocal) && !clockOk && local !== undefined && marks && Object.prototype.hasOwnProperty.call(marks, k)) keepLocal[k] = Date.now();
+        if (k in keepLocal) plan.hold[k] = true;
+        return;
+      }
       plan.save[k] = m.v;
       if (m.sameAsCloud) { delete keepLocal[k]; delete led[k]; return; }
       keepLocal[k] = led[k] || Date.now();
@@ -931,6 +1021,7 @@
     if (!user) return;
     const led = readLedger(user.id);
     led[key] = t;
+    writeSeq++;
     writeLedger(user.id, led);   // 先記帳:就算 0.8 秒內關頁,下次開站也會補傳
     if (!canUpload(user)) return;   // 離線維持登入的頁面:記了帳就好,下次灌資料時比新舊再補傳
     clearTimeout(pending[key]);

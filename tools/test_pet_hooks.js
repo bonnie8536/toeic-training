@@ -333,7 +333,7 @@ T['into 不是元素(null、字串、沒給):照樣領,不碰 DOM、不丟錯'] 
   return { ok: !threw && e.calls.length === 4 && e.dom.made.length === before, detail: [threw, e.calls.length, e.dom.made.length - before].join() };
 };
 /* 第三輪審查 #9:空的那一行不占位置,字 150 毫秒到 10 秒後才寫上去,下面的按鈕(再練一輪等)往下跳 36 px */
-T['等結果的時候先留一行的高度(.is-wait),寫上字時拿掉;沒有字可寫(later、逾時)也拿掉,收起來'] = async () => {
+T['等結果的時候先留一行的高度(.is-wait),寫上字時拿掉;沒有字可寫(later、逾時)也拿掉 is-wait,但改成 is-held 保留高度(chick2 第一輪修正 #6)'] = async () => {
   const out = [];
   const e = hookEnv();
   const pr = e.H.done('r:a1', { into: e.head });
@@ -344,14 +344,32 @@ T['等結果的時候先留一行的高度(.is-wait),寫上字時拿掉;沒有�
   const l = hookEnv({ result: { result: 'later' } });
   await l.H.done('d', { into: l.head });
   const lp = earnP(l)[0];
-  out.push(['later', !!lp && lp.textContent === '' && !lp.classList.contains('is-wait')]);
+  out.push(['later', !!lp && lp.textContent === '' && !lp.classList.contains('is-wait') && lp.classList.contains('is-held')]);
   const m = hookEnv({ manual: true });
   m.ctx.PET_STORE.earn = () => new Promise(() => {});
   const mp = m.H.done('d', { into: m.head });
   const mw = earnP(m)[0].classList.contains('is-wait');
   m.fire(10000); m.fire(200);
   await mp; await settle();
-  out.push(['逾時', mw && !earnP(m)[0].classList.contains('is-wait') && earnP(m)[0].textContent === '']);
+  out.push(['逾時', mw && !earnP(m)[0].classList.contains('is-wait') && earnP(m)[0].classList.contains('is-held') && earnP(m)[0].textContent === '']);
+  return { ok: out.every(x => x[1]), detail: JSON.stringify(out) };
+};
+/* chick2 第一輪修正 #6:結果是 once(重做程度檢測)、later、off 時沒有字,以前拿掉 is-wait 就收起來,下面的按鈕往上跳 34 px。
+   留過一行的那一行,這個結束畫面裡就一直留著那一行的高度(is-held);空的 role=status 留著不會被念 */
+T['留過高度的那一行,結果沒有字(once、later、off、出錯)時保留高度(is-held、不收起來);拿到時沒有 is-held'] = async () => {
+  const out = [];
+  for (const res of [{ result: 'once' }, { result: 'later' }, { result: 'off' }, null]) {
+    const e = res ? hookEnv({ result: res }) : hookEnv({ earn: () => { throw new Error('boom'); } });
+    const pr = e.H.done('diag', { into: e.head });
+    const p = earnP(e)[0];
+    const w0 = !!p && p.classList.contains('is-wait');
+    await pr; await settle();
+    out.push([res ? res.result : '出錯', w0 && p.textContent === '' && !p.classList.contains('is-wait') && p.classList.contains('is-held')]);
+  }
+  const g = hookEnv();
+  await g.H.done('r:a1', { into: g.head });
+  const gp = earnP(g)[0];
+  out.push(['拿到', gp.textContent === '小黃拿到 1 份小番茄。' && !gp.classList.contains('is-held') && !gp.classList.contains('is-wait')]);
   return { ok: out.every(x => x[1]), detail: JSON.stringify(out) };
 };
 T['看得出一定沒有字的(題數少於一回合、不認得的練習):一開始就不留高度'] = async () => {
@@ -414,8 +432,10 @@ T['style.css 檔尾有 hooks 那一塊,每一條規則都掛在 .pet-earn 上(�
   const bad = sels.filter(s => s.split(',').some(x => !x.includes('.pet-earn')));
   /* 第三輪審查 #9:等結果時留一行的高度;#4、#5:對話放在那一句下面、題庫放在成績下面 */
   const raw = css.slice(a, b);
-  const more = [/\.pet-earn \{[^}]*min-height: 1\.6em/, /\.pet-earn:empty:not\(\.is-wait\) \{[^}]*position: absolute[^}]*min-height: 0/,
-    /:has\(> \.pet-earn\.is-wait\)/, /\.dlg-lines > \.pet-earn \{/, /\.tq-result \+ \.pet-earn \{/, /:has\(\+ \.pet-earn:empty:not\(\.is-wait\)\)/].filter(r => !r.test(raw));
+  /* chick2 第一輪修正 #6:留過高度、結果沒有字的那一行(is-held)不收起來;#5:播放全部捲到的那一句下面留出那一行的空間 */
+  const more = [/\.pet-earn \{[^}]*min-height: 1\.6em/, /\.pet-earn:empty:not\(\.is-wait\):not\(\.is-held\) \{[^}]*position: absolute[^}]*min-height: 0/,
+    /:has\(> \.pet-earn\.is-wait\)/, /:has\(> \.pet-earn\.is-held\)/, /\.dlg-lines > \.pet-earn \{/, /\.tq-result \+ \.pet-earn \{/,
+    /:has\(\+ \.pet-earn:empty:not\(\.is-wait\):not\(\.is-held\)\)/, /\.dlg-line:has\(\+ \.pet-earn\) \.dlg-bubble \{[^}]*scroll-margin-bottom: \d+px/].filter(r => !r.test(raw));
   return { ok: sels.length > 0 && !bad.length && !more.length, detail: bad.join(' | ') + ' 缺:' + more.map(String).join(' ') };
 };
 
@@ -577,7 +597,7 @@ function dailyRun(o) {
   return { dom, root, ctx, threw, lsBefore };
 }
 /* 等結果的時候那一行多一個 is-wait(先留一行的高度,第三輪審查 #9) */
-const dropEarn = html => html.replace(/<P \.pet-earn( is-wait)? role="status"><\/P>/g, '');
+const dropEarn = html => html.replace(/<P \.pet-earn( is-wait| is-held)? role="status"><\/P>/g, '');
 T['每日練習頁:沒有掛勾、或開關關著(PET_STORE.food false),成績頁一模一樣、沒有 .pet-earn、不呼叫 earn'] = async () => {
   let called = 0;
   const a = dailyRun({ hook: 'none' });
@@ -611,7 +631,7 @@ T['每日練習頁:掛勾出錯(earn 當場丟錯、view 丟錯、earn 被拒絕
   ]) {
     const r = dailyRun({ store });
     await settle();
-    const s = dropEarn(ser(r.root).replace(/<P \.pet-earn( is-wait)? role="status">"[^"]*"<\/P>/, ''));
+    const s = dropEarn(ser(r.root).replace(/<P \.pet-earn( is-wait| is-held)? role="status">"[^"]*"<\/P>/, ''));
     if (r.threw || s !== base) bad.push(label + (r.threw ? ' 丟錯:' + r.threw.message : ' 畫面不同'));
   }
   return { ok: !bad.length, detail: bad.join('; ') };

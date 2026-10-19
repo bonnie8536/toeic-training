@@ -554,7 +554,9 @@
     /* 撲著翅膀落回地面(fly 第 1、2 格慢速循環,邊撲邊掉,最多 1.2 秒) */
     function descend() {
       clearTimeout(perchTimer);
-      if (mode !== 'air' || script) return;
+      if (mode !== 'air') return;
+      /* 站點上正在播一小段(拿到點心開心跳一下、站點上的小跳):過一下再看。以前直接回去,之後沒人再排,小雞一直站著(chick2 第二輪修正 #6) */
+      if (script) { if (perch) perchTimer = setTimeout(perchEnd, CFG.perchRetry); return; }
       if (off || sheetOpen || faded || still()) { snapGround(); return; }
       perch = null;   // 一開始落就離開站點:途中被中止(切到背景、淡出)時照「飛到一半」回地面,不會卡在半空(第三輪審查 #6)
       const gl = groundLine(), start = feetDoc, x0 = x, tx = clampLane(x), sy0 = scrollY;

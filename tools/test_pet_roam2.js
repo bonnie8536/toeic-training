@@ -340,13 +340,13 @@ function fakeBrowser(o) {
   }
   if (o.art !== false) {
     win.ChickArt = { version: o.artVersion || 5, metrics: { width: 240, height: 280, ground: 254 }, calm: { idle: 1 }, fps: {}, holds: () => [1], flyPlan: PLAN,
-      animate: () => ({ pose: 'idle', setPose(p) { this.pose = p; anim.poses.push(p); }, setFps() {}, show() { anim.shows++; }, stop() { anim.stops++; } }) };
+      animate: () => ({ pose: 'idle', setPose(p) { this.pose = p; anim.poses.push(p); }, setFps() {}, show(k, v, p) { anim.shows++; anim.shown = p; }, stop() { anim.stops++; } }) };
   }
   win.window = win;
   vm.createContext(win);
   vm.runInContext(SRC, win, { filename: 'pet-roam2.js' });
   const runRaf = (t) => { const l = rafs.splice(0); l.forEach((f) => f(t === undefined ? 0 : t)); };
-  const fire = (t) => (winOn[t] || []).forEach((f) => f({ type: t }));
+  const fire = (t, detail) => (winOn[t] || []).forEach((f) => f({ type: t, detail }));
   const change = (v, ev) => subs.forEach((f) => f(v, ev || {}));
   const fireDoc = (t) => (doc.on[t] || []).forEach((f) => f({ type: t }));
   return { win, doc, html, body, main, tabbar, all, anim, runRaf, fire, fireDoc, change, ios, timers };
@@ -520,6 +520,29 @@ run('第三輪審查 #6:從站點撲著翅膀落回地面到一半被中止(切�
     ok(up && perched && !!pe && falling && s.ground === true && s.perch === null && s.flying === false && P.ty() === 0,
       '落到一半、' + how + ':回來時在地面上', { up, perched, pe: !!pe, falling, state: s, y: P.ty() });
   }
+});
+/* chick2 第二輪修正 #6:站的時間到了的那一刻,站點上正在播一小段動作(拿到點心開心跳一下、站點上的小跳)。
+   以前 descend() 先清掉計時器、看到正在播就直接回去,之後沒有人再排下一次,小雞一直站在站點上 */
+run('chick2 第二輪修正 #6:站的時間到了時站點上正在播開心跳一下,播完過一下照樣落回地面,不會一直站著', () => {
+  const P = roamPage('learn.html', { random: 0.01 });
+  P.at(5000);
+  P.at(9000);   // 飛完、站上標題右邊
+  const perched = P.R.state.perch === 'main h1' && !P.R.state.ground;
+  const ends = () => P.timers.filter((t) => t.fn && t.fn.name === 'perchEnd');
+  const n0 = ends().length;
+  P.fire('pet:earn', { result: 'got' });   // 開心跳一下,正在播
+  P.at(9050);
+  const playing = P.anim.shown === 'happy';
+  ends().pop().fn();   // 站的時間剛好到了
+  const rearmed = ends().length === n0 + 1;
+  const still = P.R.state.perch === 'main h1';
+  P.at(12000);   // 開心那一段播完
+  const re = ends().pop();
+  if (rearmed) re.fn();
+  for (let t = 12100; t <= 16000; t += 100) P.at(t);
+  const s = P.R.state;
+  ok(perched && playing && rearmed && still && s.ground === true && s.perch === null && P.ty() === 0,
+    '站點上播開心時站的時間到了:重排一次,之後落回地面', { perched, playing, rearmed, still, state: s, y: P.ty() });
 });
 run('第三輪審查 #3:點小雞(觸控、滑鼠)留下的焦點沒有焦點框,有小雞的卡片回到畫面時照樣淡出;鍵盤焦點才不淡出,焦點離開就補淡出', () => {
   const P = roamPage('me.html', { web: true });

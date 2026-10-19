@@ -393,8 +393,7 @@
         lp = later(() => { held = true; showTip(b, id); }, LONG_MS);
       });
       const up = () => { clearTimeout(lp); if (held) later(hideTip, TIP_MS); };
-      b.addEventListener('pointerup', up);
-      b.addEventListener('pointercancel', up);
+      b.addEventListener('pointerup', up); b.addEventListener('pointercancel', up);
       b.addEventListener('contextmenu', (e) => e.preventDefault());
     }
     /* 工具列的鍵盤(WAI-ARIA toolbar):左右一格、Home、End;Enter、空白鍵交給按鈕本身 */
@@ -459,8 +458,7 @@
       }
       if (ev && ev.fed && REDUCE) o.chick().still('eat', STILL_MS);
     }
-    function redraw() { if (!closed) draw(cur, {}); }
-    function hold(ms) { busy = true; redraw(); later(() => { busy = false; redraw(); }, ms); }
+    function redraw() { if (!closed) draw(cur, {}); } function hold(ms) { busy = true; redraw(); later(() => { busy = false; redraw(); }, ms); }
 
     function act(id) {
       const v = cur, p = pan(v);
@@ -481,8 +479,11 @@
       if (closed) return;
       if (!ok) { unserve(t); return; }
       hold(EAT_MS); eat();
-      later(() => unserve(t), EAT_MS * 2);   // 小雞沒播到(例如畫面外)時也收回去
+      backstop(t, EAT_MS * 2);   // 小雞沒播到(例如畫面外)時也收回去
     }
+    /* 備用的收食物(#8):時間到了小雞還在吃(eat、開心還在播,或咬完了碎屑還在落)就隔 0.5 秒再看,切到背景、不吃了、多等 8 秒才收(chick2 第三輪修正 #5:慢的手機吃到一半食物不見) */
+    function backstop(t, ms, left = 16) { later(() => { if (t === tok) { if (left > 0 && doc.visibilityState !== 'hidden' && eatingNow()) backstop(t, 500, left - 1); else unserve(t); } }, ms); }
+    function eatingNow() { try { return !!o.chick().busy || sawEat || !!(stageM && stageM.step >= stageM.steps); } catch (e) { return false; } }
     function snack(id, p) {
       const first = id === p.fav && !p.favKnown;
       let r;
@@ -507,7 +508,7 @@
         spinNext = first;
         o.chick().still('happy', FLY_MS + 300, null, 0);   // 食物靠近時張嘴(規格 3.6;預覽 eatIt 的 happy 第 1 格),到了才吃
         const t = serve(id, () => { noCrumbs = true; if (!o.chick().eat(steps(id), ['happy'])) unserve(tok); });
-        later(() => unserve(t), FLY_MS + EAT_MS * 2);   // 切到背景、畫面外時小雞沒吃,也收回去(第三輪審查 #8)
+        backstop(t, FLY_MS + EAT_MS * 2);   // 切到背景、畫面外時小雞沒吃,也收回去(第三輪審查 #8)
       }
       Promise.resolve(r.saved).then((s) => s, () => ({ ok: false, reason: 'error' })).then((s) => {
         pending = null;

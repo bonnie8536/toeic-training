@@ -4,7 +4,8 @@
    - into 是元素時,當下在它裡面最後加一個空的 p.pet-earn[role=status](已經有就重用);after 是畫面上的元素時改放在它正後面
      (對話放在最後聽的那一句下面、題庫放在成績下面:學生拿到的當下看得到,第三輪審查 #4、#5)。
      PET_STORE.earn 的結果在 10 秒內回來、那一行還在畫面上,才寫「小黃拿到 1 份小番茄。」之類的一句。
-   - 等結果的時候那一行加 is-wait,css 先留一行的高度,字寫上去時下面的按鈕不會往下跳;沒有字可寫就拿掉、收起來。
+   - 等結果的時候那一行加 is-wait,css 先留一行的高度,字寫上去時下面的按鈕不會往下跳。沒有字可寫(once、later、off、逾時、出錯)
+     時改成 is-held,這個結束畫面裡一直留著那一行的高度:收起來的話按鈕會往上跳,學生正要點時容易點錯(chick2 第一輪修正 #6)。
      看得出一定沒有字的(題數少於一回合、不認得的練習)一開始就不留(第三輪審查 #9)。
      放進去以後至少隔 150 毫秒才寫字(結果早就回來也一樣):live 區域先空著進到讀螢幕的樹裡,寫字時才會被念出來。
    - 永遠不丟錯:小雞出錯只 console.warn,練習頁照常。PET_HOOK 本身凍結、改不掉,呼叫點的
@@ -82,9 +83,14 @@
       return false;
     }
   }
-  /* 結果回來(或逾時、出錯)以後:有字的留著,沒字的收起來 */
-  function unwait(p) {
-    try { if (p && p.classList) p.classList.remove('is-wait'); } catch (e) { warn(e); }
+  /* 結果回來(或逾時、出錯)以後拿掉 is-wait。留過高度、這次又沒寫字的,改成 is-held 繼續留著那一行的高度 */
+  function unwait(p, wrote) {
+    try {
+      if (!p || !p.classList) return;
+      if (wrote) p.classList.remove('is-held');
+      else if (p.classList.contains('is-wait')) p.classList.add('is-held');
+      p.classList.remove('is-wait');
+    } catch (e) { warn(e); }
   }
   /* earn 的結果,最多等 WAIT_MS;逾時或出錯都回 null */
   function waitEarn(S, req) {
@@ -115,15 +121,16 @@
       const ready = settled(p);
       const req = typeof o.n === 'number' ? { id, n: o.n } : { id };
       return waitEarn(S, req).then(r => ready.then(() => r)).then(r => {
+        let wrote = false;
         try {
           const text = r ? lineFor(r, S) : '';
-          if (text && p && p.isConnected === true) p.textContent = text;
+          if (text && p && p.isConnected === true) { p.textContent = text; wrote = true; }
         } catch (e) {
           warn(e);
         }
-        unwait(p);
+        unwait(p, wrote);
         return r;
-      }, e => { warn(e); unwait(p); return null; });
+      }, e => { warn(e); unwait(p, false); return null; });
     } catch (e) {
       warn(e);
       return Promise.resolve(null);

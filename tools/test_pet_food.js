@@ -287,6 +287,21 @@ T['補寫:沒有可補的就原樣回傳,不產生 v2'] = () => {
 };
 
 /* ---------- 純函式 ---------- */
+/* chick2 第二輪修正 #5(已知限制,規格 5.2 與附錄 C 第 10 條):麵包蟲領過沒有只看判斷那台的 once。手機停在筆電領之前,
+   隔天用自己舊的那份判斷,同一個階段的麵包蟲又給一次。這一張占掉手機那天的名額(拿到麵包蟲而不是那天的點心),總份數不變;
+   合併兩張都留著、兩個方向結果一樣、once 記較早那天、合併後的資料不會再給第三次 */
+T['已知限制:同一個階段的麵包蟲在兩台、兩天各給一次:兩張都留著、每天只有一張、合併順序無關、once 記較早那天、之後不再給'] = () => {
+  const D0 = '2026-11-10', D1 = addDays(D0, 1), D2 = addDays(D0, 2);
+  const base = pet({ days: { [addDays(D0, -1)]: 25 }, met: [addDays(D0, -1)] });
+  const lap = P.earn(freeze(base), { id: 'pr', at: now(D0), from: FROM }, now(D0));
+  const phone = P.earn(freeze(base), { id: 'iv', at: now(D1), from: FROM }, now(D1));
+  const m1 = P.merge(freeze(lap.pet), freeze(phone.pet), now(D1)), m2 = P.merge(freeze(phone.pet), freeze(lap.pet), now(D1));
+  const third = P.earn(freeze(m1), { id: 'iv', at: now(D2), from: FROM }, now(D2));
+  const worms = P.pantry(freeze(m1), now(D1)).stock.worm;
+  const perDay = Object.keys(m1.got).every(d => Object.keys(m1.got[d]).length === 1);
+  return { ok: lap.id === 'w:s1' && phone.id === 'w:s1' && worms === 2 && perDay && P.canon(m1) === P.canon(m2) && m1.once['w:s1'] === D0 && third.food === 'pea',
+           detail: J({ lap: [lap.id, lap.date], phone: [phone.id, phone.date], got: m1.got, once: m1.once, worms, third: [third.result, third.id] }) };
+};
 T['pet-food.js 不碰 store、document、localStorage、window、CLOUD,也不用亂數或 Date.now'] = () => {
   const code = SRC_FOOD.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
   const strict = /['"]use strict['"]/.test(SRC_FOOD);

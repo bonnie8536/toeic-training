@@ -26,7 +26,7 @@
       "pet": { "v": 2, "born": "2026-06-01", "goals": [], "days": { "2026-11-20": 20 }, "met": ["2026-11-20"], "oldMet": 0, "oldBefore": "", "fed": {}, "name": "", "nameAt": 0,
                "got": { "2026-08-01": { "d": "corn" }, "2026-11-20": { "wr:w1-lesson-1": "greens" } },
                "ate": { "2026-11-19": { "ma1b2c3d4e": "old:2026-07-24:corn:0" } },
-               "foodOld": { "before": "2026-07-24", "left": { "corn": 2, "yam": 0 } },
+               "foodOld": { "before": "2026-07-24", "got": { "corn": 3, "yam": 1 }, "ate": { "corn": 1, "yam": 1 } },
                "once": { "fav": "2026-11-19" } },
       "pantry": { "stock": { "corn": 2, "greens": 1, "yam": 0 }, "order": ["corn", "greens", "yam"], "practiced": true, "ateToday": false, "ateFood": null, "gotToday": { "id": "wr:w1-lesson-1", "food": "greens" }, "canSnack": true, "fav": "greens", "favKnown": true }
     },

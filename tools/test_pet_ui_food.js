@@ -682,6 +682,42 @@ T['餵點心時切到背景:飛行途中或吃到一半,回來時舞台上的食
   }
   return { ok: !bad.length, detail: bad.join(' / ') };
 };
+/* chick2 第三輪修正 #5:#10 改成一格一格吃以後,收食物的備用計時器(點心點下去 2.7 秒、飼料存好 2.4 秒)還是照時間收,
+   不看小雞吃完了沒。慢的手機每一格都比 125 毫秒晚,計時器先到,還沒咬完的食物就不見了。這裡把每一格拉長成 0.5 秒 */
+T['慢的手機(每一格 0.5 秒):小雞還在吃時舞台上的食物不收,每一口都咬到;吃完才收掉。點心與飼料都一樣'] = async () => {
+  const bad = [];
+  for (const [id, steps] of [['yam', 4], ['grain', 3]]) {
+    let v = foodView();
+    const pg = load({ view: () => v, food: true });
+    pg.ctx.FoodArt.info[id].steps = steps;
+    pg.open();
+    const st = pg.ctx.setTimeout;
+    pg.ctx.setTimeout = (f, ms) => st(f, ms === 125 ? 500 : ms);
+    pg.tile(id).fire('click');
+    if (id === 'grain') { v = foodView({ status: { food: 0 } }); await flush(); await flush(); }
+    const sf = pg.sheet.querySelector('.pet-stage-food');
+    let cut = false, stage = null;
+    for (let t = 0; t < 7000; t += 100) {
+      pg.timers.advance(100);
+      stage = stage || pg.log.mounts.find(m => m.opt && m.opt.size === 56 && m.id === id);
+      if (stage && sf.hidden && !stage.done) { cut = true; break; }
+    }
+    const bites = stage && stage.bites, eating = pg.log.poses.slice(-1)[0];
+    pg.state.tick({ pose: 'happy', frame: 0 });   // 離開 eat:每一口都咬了,等碎屑落地(onDone)收掉
+    if (!(stage && !cut && bites === steps && eating === 'happy' && stage.done && sf.hidden))
+      bad.push(id + ':' + J({ cut, bites, steps, eating, done: stage && stage.done, hidden: sf.hidden }));
+  }
+  return { ok: !bad.length, detail: bad.join(' / ') };
+};
+T['慢的手機:小雞一直沒吃完(卡在開心那一段沒有往下畫)時,食物最後還是收掉,不會一直留在舞台上'] = async () => {
+  const pg = load({ view: foodView(), food: true });
+  pg.open();
+  pg.tile('corn').fire('click');
+  pg.timers.advance(20000);
+  const sf = pg.sheet.querySelector('.pet-stage-food');
+  const stage = pg.log.mounts.find(m => m.opt && m.opt.size === 56);
+  return { ok: !!stage && sf.hidden && stage.stopped, detail: J({ hidden: sf.hidden, stopped: stage && stage.stopped }) };
+};
 T['最愛第一次吃到:頭上 3 顆塗鴉愛心畫在畫布上(預覽的 heartPath),每格重畫、線條會抖,約 1.7 秒後收掉;托盤格子的愛心還是那張圖'] = async () => {
   const pg = load({ view: foodView({ pantry: { fav: 'corn' } }), food: true });
   pg.open();

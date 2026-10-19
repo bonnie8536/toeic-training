@@ -9,7 +9,20 @@
    - 壞掉的欄位一個一個救;整個救不回或版本不認得(v 是大於 1 又不是 2 的數字)就唯讀,不寫回。
    - 第二階段(v: 2)加了食物與走動開關:got(拿到的券)、ate(吃掉哪一張)、foodOld(壓縮掉的舊券)、once(一輩子一次的)、
      roam(走動開關)。這一版照常讀寫 v2;新欄位只在有內容時才寫出來。v1 進來、沒有新內容,出去還是 v1,
-     而且跟 f18d208 那一版逐位元組相同(test_pet.js 比對)。合併只取聯集,已經拿到的券永遠不收回。
+     而且跟 f18d208 那一版逐位元組相同(test_pet.js 比對)。唯一的例外是合併時 oldMet 只增不減:兩份對不上
+     (較早移出的那份記得的達標比較晚那份多)時,f18d208 只取較晚那份會少算,這一版取大(chick2 第二輪修正 #2)。
+     已知限制(chick2 第三輪修正 #2):時鐘快的裝置寫的紀錄,oldBefore 會比合併那台的 400 天截止日晚(最多晚兩台的時鐘差)。
+     三份以上的紀錄合併時,落在截止日與那個 oldBefore 之間的達標日,依合併的順序可能被加起來或取大,累積達標差這幾天;
+     任何一種順序都不少於任何一份輸入,也不少於 f18d208。oldBefore 都不晚於截止日時跟順序無關(test_pet.js 釘住)。
+     要消掉得記下壓縮掉的是哪幾天,資料格式要改,所以不做;時鐘允許的範圍縮到 3 天(第三輪修正 #1)讓這段從 12 天縮到 6 天左右。
+     合併只取聯集,同步得到的券不會因為合併少掉。
+     foodOld 分開記每種「壓縮進去幾張券」(got)和「其中吃掉幾張」(ate),合併時各自取大,剩的是相減:
+     壓縮時沒看到某一口的那份,蓋不掉看到的那份,吃掉的點心不會隔天又回來(chick2 第二輪修正 #1、#4)。
+     已知限制:壓縮進去的券認不出是哪幾張。一張券超過 119 天沒同步、另一份同種的舊券已經壓縮成不少於它的數字時,
+     合併逐種取大,這一張不另外加(附錄 A.3、A.4;取大是唯一不會越合併越多的做法,test_pet.js 釘住這個行為)。
+     兩台都離線、各自吃了一口又各自壓縮,合併後只算得到一口(寧可多給)。
+     同一張券兩台各吃一次、一口在壓縮那天之前、一口在之後(吃到舊券)時,兩邊都算到;舊券剩的夾在 0、吃掉的不超過壓縮進去的,
+     多算的那一口不會扣到同種還沒吃的新券(chick2 第三輪修正 #3)。
      獎勵規則(拿到哪種食物)在 js/pet-food.js。 */
 'use strict';
 globalThis.PET = (function () {
@@ -214,66 +227,84 @@ globalThis.PET = (function () {
     });
     return out;
   }
-  /* 讀 v2 的新欄位,壞掉的那一欄自己丟掉,其他照留 */
-  function readFood(raw, today) {
+  /* foodOld 裡「每種幾張」的表:食物代號符合格式、數字有限,夾在 0 到 100000 */
+  function cleanTally(o) {
+    const out = {};
+    if (isPlain(o)) Object.keys(o).sort().forEach(k => { if (FOOD_RE.test(k) && typeof o[k] === 'number' && isFinite(o[k])) out[k] = cleanCount(o[k], LEFT_MAX); });
+    return out;
+  }
+  /* 讀 v2 的新欄位,壞掉的那一欄自己丟掉,其他照留。
+     foodOld 是 { before, got: 每種壓縮進去幾張券, ate: 其中吃掉幾張 }(chick2 第二輪修正 #1)。
+     舊的寫法 { before, left: 每種剩幾張 } 也讀得懂,當成 got 是 left、ate 是 0(線上沒有人寫過 v2,只是測試資料用得到) */
+  function readFood(raw, today) { return compress(rawFood(raw, today), today); }
+  function rawFood(raw, today) {
     const F = noFood();
     const fo = raw.foodOld;
     if (isPlain(fo) && isDate(fo.before) && fo.before <= addDays(today, AHEAD)) {
-      const left = {};
-      if (isPlain(fo.left)) Object.keys(fo.left).sort().forEach(k => {
-        if (FOOD_RE.test(k) && typeof fo.left[k] === 'number' && isFinite(fo.left[k])) left[k] = cleanCount(fo.left[k], LEFT_MAX);
-      });
-      F.foodOld = { before: fo.before, left };
+      const got = isPlain(fo.got) ? cleanTally(fo.got) : cleanTally(fo.left);
+      F.foodOld = { before: fo.before, got, ate: isPlain(fo.got) ? cleanTally(fo.ate) : {} };
     }
     F.got = raw.got;
     F.ate = raw.ate;
     if (isPlain(raw.once)) Object.keys(raw.once).sort().forEach(id => { if (okId(id) && isDate(raw.once[id])) F.once[id] = raw.once[id]; });
     const r = raw.roam;
     if (isPlain(r) && typeof r.on === 'boolean' && typeof r.at === 'number' && isFinite(r.at)) F.roam = { on: r.on, at: cleanCount(r.at, 9e15) };
-    return normFood(F, today);
+    return cleanFood(F, today);
   }
-  function normFood(F, today) {
+  /* 只做日期與格式的整理,不壓縮(合併前兩邊都用這個,壓縮等合併完、看得到兩邊的吃掉紀錄再做) */
+  function cleanFood(F, today) {
     const before = F.foodOld ? F.foodOld.before : '';
-    return compress({ got: cleanDated(F.got, today, before, isFood), ate: cleanDated(F.ate, today, before, isTicket), foodOld: F.foodOld, once: F.once, roam: F.roam }, today);
+    return { got: cleanDated(F.got, today, before, isFood), ate: cleanDated(F.ate, today, before, isTicket), foodOld: F.foodOld, once: F.once, roam: F.roam };
   }
+  function normFood(F, today) { return compress(cleanFood(F, today), today); }
   function foodOf(raw, today) { return isNext(raw) ? readFood(raw, today) : noFood(); }
+  function rawFoodOf(raw, today) { return isNext(raw) ? rawFood(raw, today) : noFood(); }
 
   function eatenOf(F) {
     const s = new Set();
     Object.keys(F.ate).forEach(d => Object.keys(F.ate[d]).forEach(id => s.add(F.ate[d][id])));
     return s;
   }
-  /* 舊券 old:<before>:<食物>:<序號>,序號 0 到 left-1;被吃掉幾張 */
+  /* 舊券 old:<before>:<食物>:<序號>,序號 0 到 got-1;還沒壓縮進 foodOld.ate 的吃掉紀錄指到幾張 */
   function oldEaten(fo, f, eaten) {
     let n = 0;
-    eaten.forEach(t => { const m = OLD_RE.exec(t); if (m && m[1] === fo.before && m[2] === f && +m[3] < fo.left[f]) n++; });
+    eaten.forEach(t => { const m = OLD_RE.exec(t); if (m && m[1] === fo.before && m[2] === f && +m[3] < (fo.got[f] || 0)) n++; });
     return n;
   }
+  /* 舊券還剩幾張:壓縮進去的減掉壓縮時已經吃掉的,再減掉之後吃掉的,最少 0。
+     同一張券在兩台各吃一次、一口在壓縮前(壓縮時算進 foodOld.ate)、一口在壓縮後(吃到舊券 old:…)時,合併後兩邊都算到,
+     會減成負的;負的加到同種的新券上,會把還沒吃的新券抵掉(chick2 第三輪修正 #3)。舊券不會被吃掉比壓縮進去的還多,所以夾在 0 */
+  function oldLeft(fo, f, eaten) { return Math.max(0, (fo.got[f] || 0) - (fo.ate[f] || 0) - oldEaten(fo, f, eaten)); }
   /* 壓縮(附錄 A.4):最早一筆 got 或 ate 早於「今天減 119 天」時,截止日 c 設成那天;
-     早於 c 的券加上現有的舊券,沒被任何 ate(不論日期)指到的逐種數進 foodOld.left,刪掉早於 c 的 got 與 ate。
-     吃光的食物在 left 留 0,托盤那一格才不會消失 */
+     早於 c 的券逐種數進 foodOld.got,其中被 ate(不論日期)指到的、加上指到舊券的吃掉紀錄,逐種數進 foodOld.ate;刪掉早於 c 的 got 與 ate。
+     吃光的食物在 got 還是有數字,托盤那一格才不會消失 */
   function compress(F, today) {
     const c = addDays(today, -(KEEP_FOOD - 1));
     if (!Object.keys(F.got).concat(Object.keys(F.ate)).some(d => d < c)) return F;
     return fold(F, c, eatenOf(F));
   }
-  /* 把 F 壓縮到截止日 c:舊券(left 減掉被 eaten 指到的)加上早於 c、沒被 eaten 指到的券,逐種數進 left,before 設成 c,
-     刪掉早於 c 的 got 與 ate。eaten 由呼叫的人給(合併時是兩邊的吃掉紀錄) */
+  /* 把 F 壓縮到截止日 c,before 設成 c,刪掉早於 c 的 got 與 ate。eaten 由呼叫的人給(合併時是兩邊的吃掉紀錄)。
+     foodOld.got 加上早於 c 的券;foodOld.ate 加上其中被 eaten 指到的,再加上指到舊券、這次一起壓縮掉的吃掉紀錄:
+     只算指到這一份現在的舊券(before 相同、序號在範圍內)的。指到別的 before 的舊券,是這份已經壓縮過的(壓縮時看到的算過了,
+     沒看到的由合併時取大補上),或是根本不在這份裡的券,不再算,免得一口算兩次、或扣到不相干的券 */
   function fold(F, c, eaten) {
-    const left = {};
-    if (F.foodOld) Object.keys(F.foodOld.left).forEach(f => { left[f] = F.foodOld.left[f] - oldEaten(F.foodOld, f, eaten); });
+    const fo = F.foodOld, n = {}, e = {};
+    if (fo) { Object.assign(n, fo.got); Object.assign(e, fo.ate); }
+    /* 舊券吃掉的不超過壓縮進去的:同一張券一口在壓縮前、一口在壓縮後(兩台各吃一次)時兩邊都算到,不夾的話再壓縮一次,
+       多算的那一口會把這次壓縮進去、還沒吃的新券扣掉(chick2 第三輪修正 #3) */
+    if (fo) Object.keys(fo.got).forEach(f => { const k = oldEaten(fo, f, eaten); if (k) e[f] = Math.min(fo.got[f], (own(e, f) ? e[f] : 0) + k); });
+    const add = (o, f) => { o[f] = (own(o, f) ? o[f] : 0) + 1; if (!own(n, f)) n[f] = 0; };
     const got = {}, ate = {};
     Object.keys(F.got).forEach(d => {
       if (d >= c) { got[d] = F.got[d]; return; }
-      Object.keys(F.got[d]).forEach(id => { const f = F.got[d][id]; left[f] = (left[f] || 0) + (eaten.has(d + '/' + id) ? 0 : 1); });
+      Object.keys(F.got[d]).forEach(id => { const f = F.got[d][id]; add(n, f); if (eaten.has(d + '/' + id)) add(e, f); });
     });
     Object.keys(F.ate).forEach(d => { if (d >= c) ate[d] = F.ate[d]; });
-    const l2 = {};
-    Object.keys(left).sort().forEach(f => { l2[f] = Math.max(0, Math.min(LEFT_MAX, left[f])); });
-    return { got, ate, foodOld: { before: c, left: l2 }, once: F.once, roam: F.roam };
+    return { got, ate, foodOld: { before: c, got: clampTally(n), ate: clampTally(e) }, once: F.once, roam: F.roam };
   }
+  function clampTally(o) { const s = {}; Object.keys(o).sort().forEach(f => { s[f] = Math.max(0, Math.min(LEFT_MAX, o[f])); }); return s; }
 
-  /* 合併(附錄 A.3):got、ate 逐日逐 id 聯集(同 id 不同值取字串較小的);foodOld 兩邊先壓縮到較晚的 before 再逐種取大;
+  /* 合併(附錄 A.3):got、ate 逐日逐 id 聯集(同 id 不同值取字串較小的);foodOld 兩邊先壓縮到較晚的 before,got、ate 再各自逐種取大;
      once 聯集取較早的日期;roam 後改的贏,同時改的 on:false 贏(休息優先)。合併完再整理一次(每天上限、壓縮) */
   function unionDated(a, b) {
     const out = {};
@@ -286,7 +317,10 @@ globalThis.PET = (function () {
   function mergeFood(A, B) {
     /* 兩邊的 before 不同時(例如一台停用很久,自己壓縮到今天的截止日;另一台在截止日附近沒有券,before 還停在以前):
        先把兩邊都壓縮到較晚的那個 before,再逐種取大。直接取 before 較晚的那組,會整份丟掉另一邊的舊券(第三輪審查 #1)。
-       重新壓縮時看兩邊的吃掉紀錄,另一台吃掉的舊券不會又算成沒吃 */
+       重新壓縮時看兩邊的吃掉紀錄,另一台吃掉的舊券不會又算成沒吃。
+       「壓縮進去幾張」和「其中吃掉幾張」分開取大:一份壓縮時沒看到某一口,它的吃掉數比較小,蓋不掉看到那一口的那份
+       (以前只記剩幾張、逐種取大,沒看到那一口的那份剩得多,吃掉的又回來;chick2 第二輪修正 #1、#4)。
+       壓縮進去的券認不出是哪幾張,所以券數也只能取大:一邊超過 119 天沒同步的券,若另一邊同種的券數不少於它,就不另外加(開頭的已知限制) */
     let foodOld = null;
     const befores = [A.foodOld, B.foodOld].filter(Boolean).map(o => o.before).sort();
     if (befores.length) {
@@ -294,9 +328,8 @@ globalThis.PET = (function () {
       const eaten = new Set([...eatenOf(A), ...eatenOf(B)]);
       const at = F => (F.foodOld && F.foodOld.before === cut ? F : fold(F, cut, eaten));
       A = at(A); B = at(B);
-      const left = {};
-      [A.foodOld, B.foodOld].forEach(o => Object.keys(o.left).forEach(f => { left[f] = Math.max(own(left, f) ? left[f] : 0, o.left[f]); }));
-      foodOld = { before: cut, left };
+      const big = k => { const o = {}; [A.foodOld[k], B.foodOld[k]].forEach(x => Object.keys(x).forEach(f => { o[f] = Math.max(own(o, f) ? o[f] : 0, x[f]); })); return sortedKeys(o); };
+      foodOld = { before: cut, got: big('got'), ate: big('ate') };
     }
     const once = {};
     [A.once, B.once].forEach(o => Object.keys(o).forEach(id => { if (!own(once, id) || o[id] < once[id]) once[id] = o[id]; }));
@@ -312,7 +345,7 @@ globalThis.PET = (function () {
     const dated = o => { const s = {}; Object.keys(o).sort().forEach(d => { s[d] = sortedKeys(o[d]); }); return s; };
     if (nonEmpty(F.got)) p.got = dated(F.got);
     if (nonEmpty(F.ate)) p.ate = dated(F.ate);
-    if (F.foodOld) p.foodOld = { before: F.foodOld.before, left: sortedKeys(F.foodOld.left) };
+    if (F.foodOld) p.foodOld = { before: F.foodOld.before, got: sortedKeys(F.foodOld.got), ate: sortedKeys(F.foodOld.ate) };
     if (nonEmpty(F.once)) p.once = sortedKeys(F.once);
     if (F.roam) p.roam = { on: F.roam.on, at: F.roam.at };
     return p;
@@ -323,10 +356,13 @@ globalThis.PET = (function () {
   /* ---------- 合併 ---------- */
   function mergeClean(a, b, today) {
     const p = empty();
-    /* oldMet 與 oldBefore 成對取:移出得比較晚的那組;一樣晚取大的 */
-    const pair = (a.oldBefore > b.oldBefore || (a.oldBefore === b.oldBefore && a.oldMet >= b.oldMet)) ? a : b;
-    p.oldMet = pair.oldMet;
-    p.oldBefore = pair.oldBefore;
+    /* oldBefore 取較晚的;oldMet 只增不減:每一邊把自己早於那天的達標日也算進去,取大的。
+       以前成對取 oldBefore 較晚的那組:很久沒同步、還留著 400 天前練習日的那份,整理時自己移到今天的截止日,
+       oldBefore 比雲端晚、oldMet 卻比較小,雲端累積的達標整個被丟掉(chick2 第二輪修正 #2)。
+       兩份對得上時兩邊算出來一樣,結果跟以前逐位元組相同;只有對不上(以前會少掉)時不同 */
+    p.oldBefore = a.oldBefore > b.oldBefore ? a.oldBefore : b.oldBefore;
+    const folded = x => x.oldMet + (p.oldBefore ? x.met.filter(d => d < p.oldBefore).length : 0);
+    p.oldMet = Math.min(1e6, Math.max(folded(a), folded(b)));
     const keep = d => !(p.oldBefore && d < p.oldBefore);
     [a.days, b.days].forEach(o => Object.keys(o).forEach(d => { if (keep(d)) p.days[d] = Math.max(p.days[d] || 0, o[d]); }));
     p.days = sortedKeys(p.days);
@@ -340,10 +376,11 @@ globalThis.PET = (function () {
     if (names.length) { p.name = names[0].name; p.nameAt = names[0].nameAt; }
     return trim(p, today);
   }
-  /* 有一邊是 v2 時新欄位聯集;兩邊都是 v1 就跟以前完全一樣 */
+  /* 有一邊是 v2 時新欄位聯集;兩邊都是 v1 就跟以前完全一樣。
+     兩邊先不壓縮:各自只用自己的吃掉紀錄壓縮到今天的截止日,會把另一邊吃掉的算成沒吃;合併完、看得到兩邊的吃掉紀錄再壓縮 */
   function withFood(p, a, b, today) {
     if (!isNext(a) && !isNext(b)) return p;
-    return attach(p, normFood(mergeFood(foodOf(a, today), foodOf(b, today)), today), true);
+    return attach(p, normFood(mergeFood(rawFoodOf(a, today), rawFoodOf(b, today)), today), true);
   }
   function merge(a, b, now) {
     writable(a); writable(b);
@@ -430,7 +467,7 @@ globalThis.PET = (function () {
   function stockOf(F, maxDate) {
     const eaten = eatenOf(F);
     const n = {};
-    if (F.foodOld) Object.keys(F.foodOld.left).forEach(f => { n[f] = F.foodOld.left[f] - oldEaten(F.foodOld, f, eaten); });
+    if (F.foodOld) Object.keys(F.foodOld.got).forEach(f => { n[f] = oldLeft(F.foodOld, f, eaten); });
     Object.keys(F.got).forEach(d => {
       if (maxDate && d > maxDate) return;
       Object.keys(F.got[d]).forEach(id => { const f = F.got[d][id]; n[f] = (own(n, f) ? n[f] : 0) + (eaten.has(d + '/' + id) ? 0 : 1); });
@@ -445,7 +482,7 @@ globalThis.PET = (function () {
   }
   function pantryOf(p, F, today) {
     const stock = stockOf(F, today);
-    const seen = new Set(F.foodOld ? Object.keys(F.foodOld.left) : []);
+    const seen = new Set(F.foodOld ? Object.keys(F.foodOld.got) : []);
     Object.keys(F.got).forEach(d => { if (d <= today) Object.keys(F.got[d]).forEach(id => seen.add(F.got[d][id])); });
     eatenOf(F).forEach(t => { const f = ticketFood(t, F); if (f) seen.add(f); });
     const order = SNACKS.filter(f => seen.has(f));
@@ -474,8 +511,8 @@ globalThis.PET = (function () {
   /* 同種裡最舊、還沒被吃掉的那張:先舊券(序號小的),再依日期、id */
   function pickTicket(F, food, today) {
     const eaten = eatenOf(F);
-    if (F.foodOld && own(F.foodOld.left, food)) {
-      for (let i = 0; i < F.foodOld.left[food]; i++) { const t = 'old:' + F.foodOld.before + ':' + food + ':' + i; if (!eaten.has(t)) return t; }
+    if (F.foodOld && own(F.foodOld.got, food) && oldLeft(F.foodOld, food, eaten) > 0) {
+      for (let i = 0; i < F.foodOld.got[food]; i++) { const t = 'old:' + F.foodOld.before + ':' + food + ':' + i; if (!eaten.has(t)) return t; }
     }
     for (const d of Object.keys(F.got).sort()) {
       if (d > today) break;

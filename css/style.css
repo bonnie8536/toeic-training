@@ -2676,6 +2676,8 @@ html.app-shell div.pet-roam2 { display: none; }
 .pet-roam2-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 /* 飛行中、捲動中(停下 150 毫秒內)、別處按著手指時:點擊穿過小雞,落到底下的東西 */
 div.pet-roam2.is-fly .pet-roam2-btn, div.pet-roam2.is-scroll .pet-roam2-btn, div.pet-roam2.is-pass .pet-roam2-btn { pointer-events: none; }
+/* 電腦版到處走(規格 1.11):走、跳、飛的時候點擊穿過,停著才點得到 */
+div.pet-roam2.is-move .pet-roam2-btn { pointer-events: none; }
 /* 有小雞的卡片在畫面上:原地淡出 0.2 秒 */
 div.pet-roam2.is-faded .pet-roam2-btn { opacity: 0; pointer-events: none; }
 /* 剛放進頁面、第一次排好位置之前:看不到,也不做淡出(有小雞的卡片在畫面上時一開始就是淡出的) */

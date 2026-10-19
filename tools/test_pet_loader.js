@@ -162,11 +162,11 @@ const STATIC_OLD = p => (p === 'index.html' || p === 'me.html' ? ['PET', 'PET_ST
     const want = [
       [FOOD, 'practice.html', FOODP], [FOOD, 'daily.html', FOODP], [FOOD, 'writing.html', FOODP], [FOOD, 'diagnostic.html', FOODP],
       [FOOD, 'learn.html', ''], [FOOD, 'index.html', ''], [FOOD, 'history.html', ''], [FOOD, 'review.html', FOODP],
-      [ROAM, 'learn.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam2.js'], [ROAM, 'drill.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam2.js'],
-      [ROAM, 'index.html', 'js/pet-roam2.js'], [ROAM, 'me.html', 'js/pet-roam2.js'], [ROAM, 'practice.html', ''], [ROAM, 'history.html', ''],
-      [BOTH, 'review.html', 'js/pet-food.js,js/pet-store.js,js/pet-hook.js,js/chick-art.js,js/food-art.js,js/pet-ui.js,js/pet-roam2.js'],
-      [BOTH, 'learn.html', 'js/pet-food.js,js/pet-store.js,js/chick-art.js,js/food-art.js,js/pet-ui.js,js/pet-roam2.js'],
-      [BOTH, 'index.html', 'js/pet-roam2.js'], [BOTH, 'grammar.html', FOODP],
+      [ROAM, 'learn.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'], [ROAM, 'drill.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'],
+      [ROAM, 'index.html', 'js/pet-roam-zones.js,js/pet-roam2.js'], [ROAM, 'me.html', 'js/pet-roam-zones.js,js/pet-roam2.js'], [ROAM, 'practice.html', ''], [ROAM, 'history.html', ''],
+      [BOTH, 'review.html', 'js/pet-food.js,js/pet-store.js,js/pet-hook.js,js/chick-art.js,js/food-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'],
+      [BOTH, 'learn.html', 'js/pet-food.js,js/pet-store.js,js/chick-art.js,js/food-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'],
+      [BOTH, 'index.html', 'js/pet-roam-zones.js,js/pet-roam2.js'], [BOTH, 'grammar.html', FOODP],
     ];
     const bad = [];
     for (const [cfg, page, list] of want) {
@@ -177,7 +177,7 @@ const STATIC_OLD = p => (p === 'index.html' || p === 'me.html' ? ['PET', 'PET_ST
     const off1 = await run(NEW_SHELL, { page: 'learn.html', standalone: false, cloud: true, has: ['PET'], config: Object.assign({}, BOTH, { PET_ON: false }) });
     const off2 = await run(NEW_SHELL, { page: 'learn.html', standalone: false, cloud: false, has: [], config: BOTH });
     if (off1.added.length || off2.added.length) bad.push('PET_ON 關或沒有 cloud.js 還是載了:' + off1.added.join(',') + ' / ' + off2.added.join(','));
-    check('開關打開,網站模式:練習頁(PET_FOOD)載 pet-food、pet-store、pet-hook;學習、刷題、複習(PET_ROAM_V2)載走動和面板;首頁、「我的」只多 pet-roam2', !bad.length, bad.length ? bad.join(' | ') : want.length + 2 + ' 種都對');
+    check('開關打開,網站模式:練習頁(PET_FOOD)載 pet-food、pet-store、pet-hook;學習、刷題、複習(PET_ROAM_V2)載走動和面板;首頁、「我的」只多 pet-roam-zones、pet-roam2(電腦版到處走)', !bad.length, bad.length ? bad.join(' | ') : want.length + 2 + ' 種都對');
   }
   /* 6. 載入失敗只 console.warn */
   {

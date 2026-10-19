@@ -279,7 +279,8 @@
     return list;
   }
   /* 網站模式(實作契約第 7.3 節):練習頁在 PET_FOOD 時載入補券和結束畫面那一行要的檔;
-     學習、刷題、複習在 PET_ROAM_V2 時載入走動的小雞和面板;首頁、「我的」本來就有面板,只多載 pet-roam2.js */
+     學習、刷題、複習在 PET_ROAM_V2 時載入走動的小雞和面板;首頁、「我的」本來就有面板,只多載 pet-roam2.js。
+     pet-roam-zones.js(電腦版到處走的空地,規格 1.11)只有網站模式載,放在 pet-roam2.js 前面;App 模式不載 */
   const WEB_FOOD_PAGES = ['daily.html', 'grammar.html', 'phonics.html', 'vocab.html', 'reading.html', 'practice.html', 'listening.html',
     'review.html', 'dialogue.html', 'mock.html', 'diagnostic.html', 'writing.html'];
   const WEB_ROAM_FULL = ['learn.html', 'drill.html', 'review.html'];
@@ -290,7 +291,7 @@
     const full = roam2 && WEB_ROAM_FULL.indexOf(page) > -1;
     const list = [];
     if (!hook && !full) {
-      if (roam2 && WEB_ROAM_ONLY.indexOf(page) > -1) list.push(['PET_ROAM', 'js/pet-roam2.js']);
+      if (roam2 && WEB_ROAM_ONLY.indexOf(page) > -1) list.push(['PET_ROAM_ZONES', 'js/pet-roam-zones.js'], ['PET_ROAM', 'js/pet-roam2.js']);
       return list;
     }
     list.push(['PET', 'js/pet.js']);
@@ -300,7 +301,7 @@
     if (full) {
       list.push(['ChickArt', 'js/chick-art.js']);
       if (food) list.push(['FoodArt', 'js/food-art.js']);
-      list.push(['PET_UI', 'js/pet-ui.js'], ['PET_ROAM', 'js/pet-roam2.js']);
+      list.push(['PET_UI', 'js/pet-ui.js'], ['PET_ROAM_ZONES', 'js/pet-roam-zones.js'], ['PET_ROAM', 'js/pet-roam2.js']);
     }
     return list;
   }

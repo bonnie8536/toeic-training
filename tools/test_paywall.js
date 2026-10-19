@@ -129,7 +129,7 @@ const cases = {
       && plan.kind === 'expired' && plan.title === '方案已到期' && plan.line === '到期日 2026/11/04';
     return { ok, detail: [both, seats, trial, plan].map(r => r && r.kind + ':' + r.title + '/' + r.line).join(' | ') };
   },
-  '停用的班(class_active false):不寫「請聯絡老師」;沒付過費寫班級已停用,付過費照寫方案到期;還有開著的班先照那個班寫': () => {
+  '停用而且老師方案沒了的班(class_active false、reason expired):沒付過費寫班級已停用;付過費照寫方案到期;還有開著的班先照那個班寫;停用但超過名額照寫超過名額': () => {
     const { P } = load({ paid: true });
     const closed = { class_id: 'a', class_name: '週三英文班', covered: false, reason: 'expired', class_active: false };
     const r = {
@@ -143,13 +143,17 @@ const cases = {
       plusCovered: P.decide(base({ classes: [closed, { class_id: 'b', covered: true, reason: null, class_active: true }] }), LOCK),
       noField: P.decide(base({ classes: [{ class_id: 'a', covered: false, reason: 'expired' }] }), LOCK),
       writing: P.decide(base({ credits: 2, classes: [closed] }), { paidUi: true, locked: true, page: 'writing' }),
+      closedSeats: P.decide(base({ classes: [{ class_id: 'c', covered: false, reason: 'over_seats', class_active: false, teacher_live: true }] }), LOCK),
+      plusOpenNone: P.decide(base({ classes: [closed, { class_id: 'b', covered: false, reason: null, class_active: true }] }), LOCK),
+      nullActive: P.decide(base({ classes: [{ class_id: 'a', covered: false, reason: 'expired', class_active: null }] }), LOCK),
     };
     const t = v => v && v.kind + ':' + v.title + '/' + v.line;
-    const isClosed = v => !!v && v.kind === 'class_closed' && v.title === '班級已停用' && v.line === '可以購買方案，或輸入新的班級邀請碼';
+    const isClosed = v => !!v && v.kind === 'class_closed' && v.title === '班級已停用' && v.line === '請聯絡老師，或購買自己的方案';
     const ok = isClosed(r.closed) && isClosed(r.closedOldTrial) && isClosed(r.closedNoTrial)
       && t(r.closedPaid) === 'expired:方案已到期/到期日 2026/10/01' && t(r.closedTeacher) === 'expired:方案已到期/到期日 2026/10/01'
       && kindOf(r.plusExpired) === 'class_expired' && kindOf(r.plusSeats) === 'over_seats' && r.plusCovered === null
-      && t(r.noField) === 'class_expired:班級老師的方案已到期/請聯絡老師' && r.writing === null;
+      && t(r.noField) === 'class_expired:班級老師的方案已到期/請聯絡老師' && r.writing === null
+      && t(r.closedSeats) === 'over_seats:超過老師的名額/請聯絡老師' && isClosed(r.plusOpenNone) && kindOf(r.nullActive) === 'class_expired';
     return { ok, detail: JSON.stringify(Object.fromEntries(Object.entries(r).map(([k, v]) => [k, t(v)]))) };
   },
   '試用結束但沒有 trial_until:只有標題,不寫壞掉的日期': () => {
@@ -273,9 +277,10 @@ const cases = {
   '班級列的狀態:由班級提供、老師方案已到期、超過老師的名額、班級已停用;找不到或不知道就不寫': () => {
     const { P } = load({ paid: true });
     const a = base({ classes: [{ class_id: 'k1', covered: true, reason: null }, { class_id: 'k2', covered: false, reason: 'expired' }, { class_id: 'k3', covered: false, reason: 'over_seats' }, { class_id: 'k4', covered: false, reason: null },
-      { class_id: 'k5', covered: false, reason: 'expired', class_active: false }, { class_id: 'k6', covered: false, reason: 'expired', class_active: true }] });
-    const r = ['k1', 'k2', 'k3', 'k4', 'k5', 'k6', 'k9'].map(id => P.classStatus(a, id)).concat([P.classStatus(null, 'k1'), P.classStatus(base({ classes: null }), 'k1')]);
-    return { ok: r.join('|') === '由班級提供|老師方案已到期|超過老師的名額||班級已停用|老師方案已到期|||', detail: r.join('|') };
+      { class_id: 'k5', covered: false, reason: 'expired', class_active: false }, { class_id: 'k6', covered: false, reason: 'expired', class_active: true },
+      { class_id: 'k7', covered: true, reason: null, class_active: false }, { class_id: 'k8', covered: false, reason: 'over_seats', class_active: false }] });
+    const r = ['k1', 'k2', 'k3', 'k4', 'k5', 'k6', 'k7', 'k8', 'k9'].map(id => P.classStatus(a, id)).concat([P.classStatus(null, 'k1'), P.classStatus(base({ classes: null }), 'k1')]);
+    return { ok: r.join('|') === '由班級提供|老師方案已到期|超過老師的名額||班級已停用|老師方案已到期|由班級提供|超過老師的名額|||', detail: r.join('|') };
   },
   '寫作批改那一列:有篇數、或買過(付款或點數紀錄)才出現;文字是「寫作批改 剩 N 篇」': () => {
     const { P } = load({ paid: true });

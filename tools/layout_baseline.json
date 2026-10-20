@@ -1,6 +1,6 @@
 {
  "375 index.html": {
-  "cls": "",
+  "cls": "pet-roam2 has-pet",
   "topbar": [
    0,
    0,
@@ -35,7 +35,7 @@
    0,
    326,
    375,
-   2104
+   2156
   ],
   "h1": [
    16,
@@ -45,14 +45,14 @@
   ],
   "footer": [
    0,
-   2460,
+   2512,
    375,
    146
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 2606,
+  "bodyH": 2717,
   "shell": 0
  },
  "375 daily.html": {
@@ -112,7 +112,7 @@
   "shell": 0
  },
  "375 learn.html": {
-  "cls": "",
+  "cls": "pet-roam2 has-pet",
   "topbar": [
    0,
    0,
@@ -164,11 +164,11 @@
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 1388,
+  "bodyH": 1447,
   "shell": 0
  },
  "375 drill.html": {
-  "cls": "",
+  "cls": "pet-roam2 has-pet",
   "topbar": [
    0,
    0,
@@ -220,11 +220,11 @@
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 677,
+  "bodyH": 736,
   "shell": 0
  },
  "375 me.html": {
-  "cls": "",
+  "cls": "pet-roam2 has-pet",
   "topbar": [
    0,
    0,
@@ -259,7 +259,7 @@
    0,
    128,
    375,
-   425
+   424
   ],
   "h1": [
    16,
@@ -269,14 +269,14 @@
   ],
   "footer": [
    0,
-   582,
+   581,
    375,
    146
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 728,
+  "bodyH": 786,
   "shell": 0
  },
  "375 grammar.html": {
@@ -808,7 +808,7 @@
   "shell": 0
  },
  "375 review.html": {
-  "cls": "",
+  "cls": "pet-roam2 has-pet",
   "topbar": [
    0,
    0,
@@ -870,7 +870,7 @@
    535
   ],
   "aria": "true",
-  "bodyH": 448,
+  "bodyH": 507,
   "shell": 0
  },
  "375 history.html": {
@@ -1506,7 +1506,7 @@
   "shell": 0
  },
  "1280 index.html": {
-  "cls": "",
+  "cls": "pet-roam2 has-pet pet-roam2-wide",
   "topbar": [
    0,
    0,
@@ -1558,7 +1558,7 @@
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 1711,
+  "bodyH": 1770,
   "shell": 0
  },
  "1280 daily.html": {
@@ -1618,7 +1618,7 @@
   "shell": 0
  },
  "1280 learn.html": {
-  "cls": "",
+  "cls": "pet-roam2 has-pet pet-roam2-wide",
   "topbar": [
    0,
    0,
@@ -1670,11 +1670,11 @@
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 890,
+  "bodyH": 949,
   "shell": 0
  },
  "1280 drill.html": {
-  "cls": "",
+  "cls": "pet-roam2 has-pet pet-roam2-wide",
   "topbar": [
    0,
    0,
@@ -1726,11 +1726,11 @@
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 439,
+  "bodyH": 498,
   "shell": 0
  },
  "1280 me.html": {
-  "cls": "",
+  "cls": "pet-roam2 has-pet pet-roam2-wide",
   "topbar": [
    0,
    0,
@@ -1782,7 +1782,7 @@
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 612,
+  "bodyH": 671,
   "shell": 0
  },
  "1280 grammar.html": {
@@ -2314,7 +2314,7 @@
   "shell": 0
  },
  "1280 review.html": {
-  "cls": "",
+  "cls": "pet-roam2 has-pet pet-roam2-wide",
   "topbar": [
    0,
    0,
@@ -2376,7 +2376,7 @@
    547
   ],
   "aria": "true",
-  "bodyH": 383,
+  "bodyH": 442,
   "shell": 0
  },
  "1280 history.html": {

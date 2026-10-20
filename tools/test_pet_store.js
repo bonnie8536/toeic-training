@@ -115,7 +115,8 @@ function makeClient(w) {
 const tick = async () => { for (let i = 0; i < 8; i++) await new Promise(r => setImmediate(r)); };
 
 /* 開一頁:opt.on 是 PET_ON(預設 true),opt.search 是網址的 ?,opt.noCloud 是沒填雲端設定的網站;
-   opt.step1:載入第 1 步的相容版(連 cloud.js 也是舊的;opt.newCloud 時用現在的 cloud.js,opt.oldCloud 時新版也配舊的 cloud.js);opt.food、opt.roam、opt.from:PET_FOOD、PET_ROAM_V2、PET_FOOD_FROM(沒給就照 pet-config.js);
+   opt.step1:載入第 1 步的相容版(連 cloud.js 也是舊的;opt.newCloud 時用現在的 cloud.js,opt.oldCloud 時新版也配舊的 cloud.js);opt.food、opt.roam、opt.from:PET_FOOD、PET_ROAM_V2、PET_FOOD_FROM
+   (沒給就是關著:false、false、'';不跟著 pet-config.js,10/20 開關打開後「開關都關」的情境照樣是關著跑);
    opt.merged:true 時假裝 cloud.js 已經是先合併再上傳的新版(CLOUD.mergedKeys 有 pet),false 時拿掉 */
 function loadPage(w, opt) {
   opt = opt || {};
@@ -162,9 +163,9 @@ function loadPage(w, opt) {
   if (opt.step1 && opt.lendMerge) { const c2 = { console }; vm.createContext(c2); vm.runInContext(SRC.pet, c2); if (c2.PET.cloudMerge) ctx.PET.cloudMerge = c2.PET.cloudMerge; }
   if (SRC.config) vm.runInContext(SRC.config, ctx);
   ctx.PET_ON = opt.on === undefined ? true : opt.on;
-  if (opt.food !== undefined) ctx.PET_FOOD = opt.food;
-  if (opt.roam !== undefined) ctx.PET_ROAM_V2 = opt.roam;
-  if (opt.from !== undefined) ctx.PET_FOOD_FROM = opt.from;
+  ctx.PET_FOOD = opt.food === undefined ? false : opt.food;
+  ctx.PET_ROAM_V2 = opt.roam === undefined ? false : opt.roam;
+  ctx.PET_FOOD_FROM = opt.from === undefined ? '' : opt.from;
   if (opt.merged === true) ctx.CLOUD.mergedKeys = Object.freeze(['pet']);
   if (opt.merged === false) delete ctx.CLOUD.mergedKeys;
   if (!SRC.store) throw new Error('js/pet-store.js 還不存在');

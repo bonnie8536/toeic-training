@@ -82,12 +82,18 @@ const cases = {
     const first = lines(d)[0];
     const amount0 = field(d, 'amount').value, paid0 = field(d, 'paidAt').value;
     await setVal(field(d, 'note'), '轉帳末五碼 12345');
-    w.next.owner_record_payment = ['owner_record_payment.student_in_trial'];
+    /* 錄下來的回覆把開始日寫死在 2026-10-22,過了那天這題就壞(10/23 發現)。這題要測「排在後面」,
+       所以開始日改成從現在算 3 天後、30 天期,其他欄位照錄下來的 */
+    const fut = clone(FX['owner_record_payment.student_in_trial'].data);
+    const st0 = Date.now() + 3 * 864e5;
+    fut.applied.starts_at = new Date(st0).toISOString();
+    fut.applied.ends_at = new Date(st0 + 30 * 864e5).toISOString();
+    w.next.owner_record_payment = [{ data: fut, error: null }];
     const n0 = w.calls('owner_lookup').length;
     await ok(d);
     const a = w.calls('owner_record_payment')[0];
     const res = dlg(L); const rl = lines(res);
-    const ap = FX['owner_record_payment.student_in_trial'].data.applied;
+    const ap = fut.applied;
     await ok(res);
     const reread = w.calls('owner_lookup').length === n0 + 1 && w.calls('owner_lookup').pop().p_who === ACC.tom.id;   // 重讀用帳號 id(E1 的做法)
     const okk = first === ACC.tom.email && amount0 === '199' && paid0 === tpToday()

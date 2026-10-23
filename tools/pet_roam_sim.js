@@ -54,15 +54,16 @@ const WHITE = { backgroundColor: 'rgb(255, 255, 255)' };
 
 /* 小雞的大小(2026-10-23 起每種模式一個數字,CFG.sizes):o.size 沒給時照 48 px 跑(這些模擬原本的數字都是照 48 px 調的,當成走法本身的回歸測試);
    o.size 是數字時三種模式都改成那個大小;'real' 照檔案裡的數字(tools/test_pet_roam_size.js 用)。沒有 sizes 那一行的舊版原樣載入 */
-const SIZES_RE = /sizes: Object\.freeze\(\{ app: \d+, (appLand: \d+, )?web: \d+, wide: \d+ \}\)/;   // appLand:App 橫放(審查第 2 輪 #4)
+const SIZES_RE = /sizes: Object\.freeze\(\{ app: \d+, (appLand: \d+, )?web: \d+, wide: (?:\d+|Object\.freeze\(\[\[[\d, \[\]]*\]\]\.map\(Object\.freeze\)\)) \}\)/;   // appLand:App 橫放(審查第 2 輪 #4);wide:一個數字,或照視窗寬分段的表(10/23 晚上起)
 function sized(src, size) {
   if (!src || size === 'real') return src;
   const n = size || 48;
-  return src.replace(SIZES_RE, (m, land) => 'sizes: Object.freeze({ app: ' + n + ', ' + (land ? 'appLand: ' + n + ', ' : '') + 'web: ' + n + ', wide: ' + n + ' })');
+  return src.replace(SIZES_RE, (m, land) => 'sizes: Object.freeze({ app: ' + n + ', ' + (land ? 'appLand: ' + n + ', ' : '') + 'web: ' + n + ', wide: ' + (/wide: \d/.test(m) ? n : 'Object.freeze([[0, ' + n + ']].map(Object.freeze))') + ' })');   // 分段表的版本:每個寬度都是 n
 }
-/* o:{ src, zones(載入 js/pet-roam-zones.js), W, H, page, app, docH, seed, startX, build(add) 建頁面, ui:{ mood, hungry, roam, reduced }, size } */
+/* o:{ src, zones(載入 js/pet-roam-zones.js), W, H, page, app, docH, seed, startX, build(add) 建頁面, ui:{ mood, hungry, roam, reduced }, size, bar }
+   W 是視窗寬(innerWidth);bar 是捲軸寬(預設 0),版面寬(clientWidth、st.W)是 W - bar。Windows 的 Chrome 頁面捲得動時捲軸 15 px(10/23 實測) */
 function sim(o) {
-  const st = { t: 0, scrollY: 0, W: o.W, H: o.H, qsaStar: 0, rects: 0 };
+  const st = { t: 0, scrollY: 0, W: o.W - (o.bar || 0), bar: o.bar || 0, H: o.H, qsaStar: 0, rects: 0 };
   const timers = []; let tid = 0, rafs = [];
   const rnd = mulberry(o.seed || 1);
   const docOn = {}, winOn = {}, muts = [], ios = [];
@@ -137,7 +138,7 @@ function sim(o) {
     document: doc, console, JSON, Object, Array, Number, String, Set, Map, Infinity, NaN, isFinite, parseFloat, SVGElement: class {},
     Math: Object.assign(Object.create(Math), { random: rnd }), Date: { now: () => 1.7e12 + st.t },
     location: { pathname: '/' + (o.page || 'learn.html') },
-    get innerHeight() { return st.H; }, get scrollY() { return st.scrollY; }, scrollX: 0,
+    get innerHeight() { return st.H; }, get innerWidth() { return st.W + st.bar; }, get scrollY() { return st.scrollY; }, scrollX: 0,
     performance: { now: () => st.t },
     setTimeout: (fn, ms) => { timers.push({ id: ++tid, at: st.t + (ms || 0), fn }); return tid; },
     setInterval: (fn, ms) => { timers.push({ id: ++tid, at: st.t + ms, fn, every: Math.max(1, ms) }); return tid; },
@@ -203,7 +204,7 @@ function sim(o) {
   function liveBox() { const s = win.PET_ROAM2 && win.PET_ROAM2.state; return s && s.size ? { w: s.size, h: s.boxH } : { w: S, h: BOXH }; }
   const box = () => { const [x, y] = ty(); const r = layer.getBoundingClientRect(), z = liveBox(); return { l: x, t: r.top + y, r: x + z.w, b: r.top + y + z.h }; };
   const api = { st, add, win, doc, html, body, page, layer, btn, cv, anim, ui, step, fireWin, fireDoc, change, muts, ios, box, liveBox, ty, R: () => win.PET_ROAM2 && win.PET_ROAM2.state,
-    scroll(y) { st.scrollY = y; fireWin('scroll'); }, resize(W, H) { st.W = W; if (H) st.H = H; fireWin('resize'); },
+    scroll(y) { st.scrollY = y; fireWin('scroll'); }, resize(W, H, bar) { if (bar !== undefined) st.bar = bar; st.W = W - st.bar; if (H) st.H = H; fireWin('resize'); },   // W:視窗寬;bar 沒給時捲軸不變
     tappable: () => !['is-move', 'is-fly', 'is-scroll', 'is-pass', 'is-faded', 'is-init', 'is-off'].some((c) => layer.classList.contains(c)) && !layer.hidden,
     trace: () => btn.style.transform + '|' + (cv.style.transform || '') + '|' + layer.className + '|' + anim.pose + '|' + anim.shown + '|' + btn.className };
   return api;
@@ -256,12 +257,12 @@ function wideSim(o) {
 }
 
 /* ---------- 五個主分頁的寬版(1.11 實測的版型):site(name, W, H) 回 build ----------
-   寬版頁(首頁、學習、刷題)主要內容 1040 寬、窄版頁(複習、我的)768 寬,置中;頁面標題是 .page-head 裡的 inline-block h1,
+   W 是版面寬(clientWidth,扣掉捲軸)。寬版頁(首頁、學習、刷題)主要內容 1040 寬、窄版頁(複習、我的)768 寬,置中,視窗不夠寬時左右各留 20 px(1024 兩側沒有空白);頁面標題是 .page-head 裡的 inline-block h1,
    黃色螢光筆是 ::before(left -8、right -10、top 46%、bottom 3%、轉 -1.2 度,同 css/style.css 的 .page-head h1::before) */
 const MARK = { '::before': { content: '""', display: 'block', position: 'absolute', left: '-8px', right: '-10px', top: '20.24px', bottom: '1.32px', transform: 'matrix(0.99978, -0.020943, 0.020943, 0.99978, 0, 0)' } };
 const LINK = (x) => Object.assign({ attrs: { href: 'x.html' }, style: Object.assign({ cursor: 'pointer' }, WHITE) }, x);
 function site(name, W, H) {
-  const narrow = name === 'review' || name === 'me', mw = narrow ? 768 : 1040, L = Math.round((W - mw) / 2), R = L + mw, M = Math.round((L + R) / 2);
+  const narrow = name === 'review' || name === 'me', mw = Math.min(narrow ? 768 : 1040, W - 40), L = Math.round((W - mw) / 2), R = L + mw, M = Math.round((L + R) / 2);
   return (add) => {
     add(null, 'header', { cls: 'topbar', box: [0, 0, W, 59], fixed: true, style: WHITE, texts: [[24, 20, 140, 40]] });
     const main = add(null, 'main', { box: [L, 59, R, 1700] });
@@ -281,8 +282,8 @@ function site(name, W, H) {
       add(main, 'a', LINK({ box: [M + 10, 602, R, 860] }));
     } else if (name === 'learn' || name === 'drill') {
       h1 = head(64);
-      const rows = name === 'learn' ? 4 : 2;
-      for (let i = 0; i < rows; i++) { add(main, 'a', LINK({ box: [L, 150 + i * 200, M - 10, 330 + i * 200] })); add(main, 'a', LINK({ box: [M + 10, 150 + i * 200, R, 330 + i * 200] })); }
+      if (name === 'drill') { add(main, 'a', LINK({ box: [L, 173, M - 11, 301] })); add(main, 'a', LINK({ box: [M + 11, 173, R, 301] })); }   // 刷題頁照真的:一排兩張卡片(10/24 無頭 Chrome 1440×900;審查第 1 輪 #1)
+      else for (let i = 0; i < 4; i++) { add(main, 'a', LINK({ box: [L, 150 + i * 200, M - 10, 330 + i * 200] })); add(main, 'a', LINK({ box: [M + 10, 150 + i * 200, R, 330 + i * 200] })); }
       if (name === 'learn') { const w = add(main, 'section', { box: [L, 950, M - 10, 1150], style: WHITE }); add(w, 'h2', { box: [L + 24, 970, M - 34, 1000], texts: [[L + 24, 972, L + 130, 998]] }); }
     } else if (name === 'review') {
       h1 = head(64);
@@ -296,7 +297,7 @@ function site(name, W, H) {
       add(card, 'button', { cls: 'pet-pic', box: [L + 12, 236, L + 108, 334] });
       for (let i = 0; i < 2; i++) { const c = add(main, 'section', { box: [L, 360 + i * 220, R, 560 + i * 220], style: WHITE, texts: [[L + 24, 380 + i * 220, L + 300, 404 + i * 220]] }); add(c, 'button', { box: [L + 24, 500 + i * 220, L + 200, 540 + i * 220] }); }
     }
-    const ft = name === 'drill' ? 600 : 1700;
+    const ft = name === 'drill' ? 331 : 1700;   // 刷題頁的頁尾上緣 331(實測)
     add(null, 'footer', { box: [0, ft, W, ft + 160], style: { borderTopWidth: '1px', borderTopStyle: 'solid' }, texts: [[L, ft + 40, L + 400, ft + 60]] });
     return { main, h1, card, L, R };
   };
@@ -317,7 +318,7 @@ function wanderRun(o) {
     if (o.mark) o.mark(Q, s);
     lab.push({ at: moving ? null : s.ground ? 'ground' : s.zone, rest: !!s.rest, faded: !!s.faded });
   };
-  const P = sim(Object.assign({ src: ROAM, zones: ZONES, W: 1280, H: 800 }, o, { page: o.name + '.html', build: site(o.name, o.W || 1280, o.H || 800), each }));
+  const P = sim(Object.assign({ src: ROAM, zones: ZONES, W: 1280, H: 800 }, o, { page: o.name + '.html', build: site(o.name, (o.W || 1280) - (o.bar || 0), o.H || 800), each }));   // site 照版面寬(扣掉捲軸)
   P.step(o.ms || 5 * 60 * 1000);
   const win = 600, out = { first, minZones: Infinity, maxGround: 0, stays: [], rests: [], P };
   for (let i = 0; i + win <= lab.length; i += 10) {

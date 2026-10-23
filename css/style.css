@@ -2635,8 +2635,9 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 /* 播放全部把正在播的那一句捲到剛好露出(block: nearest),那一行就在它下面:捲的時候多留間距 14 加一行 24 再多一點(chick2 第一輪修正 #5) */
 .dlg-line:has(+ .pet-earn) .dlg-bubble { scroll-margin-bottom: 56px; }
 .tq-result + .pet-earn { margin: -8px 0 16px; }
-/* 掉落通關的畫面:那一行空著時,按鈕那一排照原本置中 */
-.game-over > .pet-earn { text-align: center; }
+/* 掉落通關的畫面:那一行空著時,按鈕那一排照原本置中。
+   .game-over 是置中的直排,空的那一行會縮成 0 寬、量不到要留幾行;撐滿整排的寬,字照樣置中(審查第 2 輪 寬度 #1) */
+.game-over > .pet-earn { align-self: stretch; text-align: center; }
 .game-over > :nth-last-child(2):has(+ .pet-earn:empty:not(.is-wait):not(.is-held)) { margin-bottom: auto; }
 @media print {
   .pet-earn { display: none; }
@@ -2647,7 +2648,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 /* 整頁跑(小雞第二階段規格.md 第 1 節)。每一條都掛在 html.pet-roam2 或 div.pet-roam2 底下,開關關著時不作用。
    外層不接受點擊,只有小雞按鈕能點;地面層 z-index 91(App 模式要在分頁列 90 上面),站點層 49(頂欄 50 下面)。
    網站模式的地面層也是 49:頂端導覽列的下拉選單、個人選單在頂欄 50 裡面,矮視窗時會長到視窗下緣,小雞不能蓋住它們。 */
-/* 小雞的寬和框高:js/pet-roam2.js 照模式寫在 <html> 上(CFG.sizes:App、1023 以下 96×102,App 手機橫放 64×68,電腦版到處走 110×116;Bonnie 10/23 約 2 倍),這裡是 js 寫之前的預設。
+/* 小雞的寬和框高:js/pet-roam2.js 照模式寫在 <html> 上(CFG.sizes:App、1023 以下 96×102,App 手機橫放 64×68,電腦版到處走照視窗寬:1440 以上 110×116、1344 以上 94×99、1328 以上 86×91、1312 以上 78×83、1296 以上 70×74、其他 62×66;Bonnie 10/23 約 2 倍),這裡是 js 寫之前的預設。
    --pet2-tw、--pet2-th 是可以點的範圍(CFG.tap):只有畫出來的小雞那麼大,框上面留給跳起來的那一條透明的地方點得到底下的卡片(審查第 2 輪 #3) */
 html.pet-roam2 { --pet2-w: 96px; --pet2-h: 102px; --pet2-tw: 69px; --pet2-th: 71px; }
 div.pet-roam2 { display: block; left: 0; right: 0; pointer-events: none; }

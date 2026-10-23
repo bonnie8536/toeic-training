@@ -59,7 +59,7 @@ run('設定', () => {
   eq([CFG.hopMax, CFG.hopDur], [80, 0.4], '小跳 80 px、0.4 秒');
   eq([CFG.scrollIdle, CFG.mutThrottle, CFG.fade], [150, 250, 200], '捲動停 150、節流 250、淡出 200 毫秒');
   eq([CFG.flyMax, CFG.fallMax, CFG.leanMax, CFG.leanFull], [2.5, 1.2, 11, 60], '飛 2.5 秒、落 1.2 秒、斜 11 度、60 px');
-  eq([CFG.sizes, CFG.padI, CFG.padO, CFG.gap, CFG.webLift], [{ app: 96, appLand: 64, web: 96, wide: 110 }, 8, 4, 16, 4], '尺寸(每種模式一個,2026-10-23 約 2 倍;App 手機橫放 64,審查第 2 輪 #4)與間隔;兩側空白的門檻照大小算(tools/test_pet_roam_size.js)');
+  eq([CFG.sizes, CFG.padI, CFG.padO, CFG.gap, CFG.webLift], [{ app: 96, appLand: 64, web: 96, wide: [[1440, 110], [1344, 94], [1328, 86], [1312, 78], [1296, 70], [0, 62]] }, 8, 4, 16, 4], '尺寸(每種模式一個,2026-10-23 約 2 倍;App 手機橫放 64,審查第 2 輪 #4;電腦版到處走照視窗寬分段)與間隔;兩側空白的門檻照大小算(tools/test_pet_roam_size.js)');
 });
 
 /* ---------- freeSpans ---------- */

@@ -1,10 +1,10 @@
 /* 走動的小雞放大(Bonnie 2026-10-23:「小雞要大一點 現在好小」「About 2x」):js/pet-roam2.js、css/style.css。
    用法:node tools/test_pet_roam_size.js
-   - 每種模式一個數字(CFG.sizes):App 分頁列上 96、網站模式 1023 以下 96、電腦版到處走 110;框高照引擎的比例(102、116)。
-   - 兩側空白的門檻、空地、站點、落地前的再確認、可以點的範圍一律照現在的大小算;寬度跨過 1024 換大小時重開引擎(畫布照 DPR 重配)。
+   - 每種模式一個數字(CFG.sizes):App 分頁列上 96、網站模式 1023 以下 96;電腦版到處走照視窗寬分段(1440 以上 110、1344 以上 94、1328 以上 86、1312 以上 78、1296 以上 70、其他 62);框高照引擎的比例。
+   - 兩側空白的門檻、空地、站點、落地前的再確認、可以點的範圍一律照現在的大小算;載入時、拖完視窗(CFG.resizeEnd)換大小,一次只重開一次引擎(畫布照 DPR 重配)。
    - css:按鈕和地面那一條照 --pet2-w、--pet2-h,頁面底部留白(網站模式、App 模式)照 --pet2-h,最後的內容捲得到小雞上面。
-   - 用 tools/pet_roam_sim.js 的假瀏覽器照檔案裡真的大小(size: 'real')跑五個主分頁:停著的時候不蓋到按鈕、卡片、文字,
-     走、跳、飛的時候點擊穿過;另外印出每頁 1280、1920 量到幾塊空地(48 px 那一版對照)。 */
+   - 用 tools/pet_roam_sim.js 的假瀏覽器照檔案裡真的大小(size: 'real')跑五個主分頁 1024、1280、1366、1440、1920(另外 1152、1240、1270、每一段的下限、實際的視窗高):停著的時候不蓋到按鈕、卡片、文字,
+     走、跳、飛的時候點擊穿過;印出量到幾塊空地和 10/20 的走法數字(改之前一律 110 的對照)。 */
 const path = require('path');
 const { ART, nodeLoad, ROAM, ZONES, Z, sim, site, wanderRun, obstaclesNow, read, WHITE, median } = require('./pet_roam_sim.js');
 
@@ -24,15 +24,33 @@ let mod = null;
 try { mod = nodeLoad(ROAM); } catch (e) { mod = null; }
 const CFG = mod && mod.CFG, U = mod && mod.util;
 
-run('設定:每種模式一個數字,約 2 倍', () => {
-  eq(CFG && CFG.sizes, { app: 96, appLand: 64, web: 96, wide: 110 }, 'CFG.sizes:App 96、App 橫放 64(審查第 2 輪 #4)、網站 96、電腦版到處走 110');
-  ok(!!CFG && Object.isFrozen(CFG.sizes) && !('size' in CFG) && !('sideMin' in CFG), '凍結;舊的 size、sideMin 拿掉(門檻照大小算)');
+/* 電腦版到處走的大小照視窗寬(innerWidth,含捲軸)分段(10/23 晚上,主對話的決定;Bonnie 10/20「電腦板小雞也是要可以到處走」):
+   1440 以上 110;以下挑學習、刷題頁還量得到 3 塊空地的最大值(每 8 px 一級)。無頭 Chrome 實測(10/24):主要內容 1040 寬置中(版面寬 cw 扣掉捲軸),
+   兩側空白 mainL = (cw - 1040) / 2,兩側那一層要走得動 24 px:小雞寬 ≤ mainL - 48(js/pet-roam-zones.js 的 sideWalk、edgeIn、gap)。
+   學習頁有捲軸(Windows 的 Chrome 15 px,算 17 px 留餘裕),所以一段的下限是 2 × 寬 + 1153:94 從 1344、86 從 1328、78 從 1312、70 從 1296;
+   刷題頁卡片上緣 173、頂欄下緣 59:框高 102(96 px)以下才站得上那一層,所以 1440 以下最大 94。
+   62 是最小的一段(約 1.3 倍),往下不再縮:學習頁約 1275(捲軸 15)以下、刷題頁 1260 以下多小(48、56 px 也只有 0 到 1 塊)都量不到 3 塊空地,
+   主要內容貼著兩側、卡片都可以點(附錄 D 第八輪的 (3) 才有辦法),下面「規則的限制」那一項照實測寫成明確的預期(主對話待決定) */
+const BANDS = [[1440, 110], [1344, 94], [1328, 86], [1312, 78], [1296, 70], [0, 62]];
+const sizeAt = (W) => BANDS.find(([w]) => W >= w)[1];
+const VH = { 1024: 768, 1152: 768, 1240: 800, 1256: 800, 1260: 800, 1270: 800, 1280: 800, 1296: 800, 1312: 800, 1328: 800, 1344: 800, 1365: 768, 1366: 768, 1439: 900, 1440: 900, 1536: 864, 1920: 1080 };
+/* 實際的視窗高(扣掉工作列和瀏覽器的列,審查第 1 輪 #1):1280×690、1366×657、1440×790、1536×730(1920 寬 125% 縮放) */
+const REAL_H = [[1280, 690], [1366, 657], [1440, 790], [1536, 730]];
+const barOf = (name, W) => (name === 'index' || (name === 'learn' && W < 1920) ? 15 : 0);   // 實測:首頁、學習頁捲得動(學習頁 1920×1080 一頁放得下),Windows 的 Chrome 捲軸 15 px;刷題、複習、我的不捲
+run('設定:每種模式一個數字,電腦版到處走照視窗寬分段', () => {
+  eq(CFG && CFG.sizes, { app: 96, appLand: 64, web: 96, wide: BANDS }, 'CFG.sizes:App 96、App 橫放 64(審查第 2 輪 #4)、網站 96、電腦版到處走 [視窗寬下限, 大小]:1440 以上 110、1344 以上 94、1328 以上 86、1312 以上 78、1296 以上 70、其他 62');
+  ok(BANDS.every(([w, S], i) => i === 0 || (w === 0 ? S === 62 : w >= 2 * S + 1153 && S <= 96 && S < BANDS[i - 1][1])), '每一段的下限:學習頁(捲軸 17 px)兩側那一層走得動(2 × 寬 + 1153 以上);1440 以下不超過 96(刷題頁頂欄下面那一層);越窄越小、最小 62');
+  ok(!!CFG && Object.isFrozen(CFG.sizes) && Object.isFrozen(CFG.sizes.wide) && CFG.sizes.wide.every((b) => Object.isFrozen(b)) && !('size' in CFG) && !('sideMin' in CFG), '凍結(分段表也是);舊的 size、sideMin 拿掉(門檻照大小算)');
   ok(!!U && typeof U.sizeFor === 'function' && U.sizeFor(true, false) === 96 && U.sizeFor(true, true) === 96 && U.sizeFor(false, false) === 96 && U.sizeFor(false, true) === 110
-    && U.sizeFor(true, false, true) === 64 && U.sizeFor(true, false, false) === 96 && U.sizeFor(false, false, true) === 96 && U.sizeFor(false, true, true) === 110, 'sizeFor(App, 電腦版到處走, 矮的橫放):橫放只在 App 模式換成 64');
+    && U.sizeFor(true, false, true) === 64 && U.sizeFor(true, false, false) === 96 && U.sizeFor(false, false, true) === 96 && U.sizeFor(false, true, true) === 110, 'sizeFor(App, 電腦版到處走, 矮的橫放):橫放只在 App 模式換成 64;沒給視窗寬時電腦版 110');
+  const got = [1920, 1440, 1439, 1366, 1344, 1343, 1328, 1327, 1312, 1311, 1296, 1295, 1280, 1024].map((w) => U.sizeFor(false, true, false, w));
+  eq(got, [110, 110, 94, 94, 94, 86, 86, 78, 78, 70, 70, 62, 62, 62], 'sizeFor(..., 視窗寬):1440 以上 110,1344 到 1439 是 94,1328 起 86,1312 起 78,1296 起 70,1295 以下 62');
+  ok(U.sizeFor(false, false, false, 1280) === 96 && U.sizeFor(true, false, false, 1280) === 96 && U.sizeFor(true, false, true, 1280) === 64, '不是電腦版到處走時不看視窗寬(窄的網站 96、App 96、App 橫放 64)');
+  ok(!!CFG && CFG.resizeEnd >= 200 && CFG.resizeEnd <= 500, '拖動視窗停下多久才換大小(CFG.resizeEnd)在 200 到 500 毫秒', CFG && CFG.resizeEnd);
   ok(!!CFG && CFG.landH === 500, '橫放的門檻跟分頁列的 @media 一樣:視窗高 500 以下', CFG && CFG.landH);
   ok(!!CFG && !!CFG.tap && Object.isFrozen(CFG.tap) && CFG.tap.min === 44, '可以點的範圍比例在設定物件裡,最小 44', CFG && CFG.tap);
-  eq([boxOf(96), boxOf(110)], [102, 116], '框高照引擎的比例:102、116');
-  ok(96 / 48 === 2 && 110 / 48 > 2 && 110 / 48 < 2.4, '約 2 倍(App、窄的網站 2 倍,電腦版 2.3 倍)');
+  eq([boxOf(96), boxOf(110), boxOf(94), boxOf(86), boxOf(78), boxOf(70), boxOf(62)], [102, 116, 99, 91, 83, 74, 66], '框高照引擎的比例:102、116、99、91、83、74、66');
+  ok(96 / 48 === 2 && 110 / 48 > 2 && 110 / 48 < 2.4 && 62 / 48 > 1.25, '約 2 倍(App、窄的網站 2 倍,電腦版 1440 以上 2.3 倍);1295 以下的電腦版 1.3 倍');
 });
 
 run('兩側空白、空位照傳進來的大小算', () => {
@@ -97,6 +115,61 @@ run('電腦版到處走 1440 載入:引擎只用 110 開一次(不先用 96 開�
     eq(P.anim.sizes, [110], name + ' 1440:anim.sizes 只有 110');
   }
 });
+const webSim = (name, W, o) => { const bar = barOf(name, W), H = VH[W] || 900; return sim(Object.assign({ src: ROAM, zones: ZONES, size: 'real', W, H, bar, page: name + '.html', build: site(name, W - bar, H), seed: 2 }, o || {})); };
+run('電腦版到處走照視窗寬分段:載入時就是那一段的大小,引擎只開一次,css 變數跟著', () => {
+  for (const [W, name] of [[1920, 'learn'], [1440, 'learn'], [1440, 'drill'], [1439, 'drill'], [1366, 'learn'], [1366, 'drill'], [1365, 'drill'], [1344, 'learn'], [1328, 'drill'], [1312, 'learn'], [1296, 'drill'], [1280, 'learn'], [1280, 'drill'], [1280, 'index'], [1240, 'learn'], [1024, 'drill'], [1024, 'review'], [1024, 'me']]) {
+    const P = webSim(name, W), S = sizeAt(W);
+    P.step(1500);
+    const tag = name + ' ' + W + (barOf(name, W) ? '(捲軸 15)' : '') + ':';
+    ok(P.R().wide === true && P.R().size === S && P.R().boxH === boxOf(S), tag + '到處走、' + S + ' px、框高 ' + boxOf(S), P.R());
+    eq(P.anim.sizes, [S], tag + '引擎只用 ' + S + ' 開一次');
+    eq(vars(P), [S + 'px', boxOf(S) + 'px'], tag + 'css 變數');
+  }
+  for (const name of ['learn', 'index']) {
+    const P = webSim(name, 1024);
+    P.step(1500);
+    ok(P.R().wide === false && P.R().size === 96 && JSON.stringify(P.anim.sizes) === '[96]', name + ' 1024(捲軸 15,版面 1009 不到 1024):照窄的網站 96,跟以前一樣不到處走', { s: P.R(), sizes: P.anim.sizes });
+  }
+});
+/* 換大小只在載入、拖完視窗(最後一次 resize 之後 CFG.resizeEnd 毫秒)的時候;拖的途中跨過幾段都不換,一次拖動最多重開一次引擎(審查第 3 輪 #0 那種重開) */
+function drag(P, from, to, H) {
+  const d = to > from ? 8 : -8, seen = new Set();
+  for (let w = from + d; d > 0 ? w < to : w > to; w += d) { P.resize(w, H); P.step(16); seen.add(P.R().size); }
+  P.resize(to, H); P.step(16); seen.add(P.R().size);
+  return seen;
+}
+run('拖動視窗:拖的途中大小不變,停下 CFG.resizeEnd 毫秒後換成新的那一段,一次拖動只重開一次引擎', () => {
+  const R0 = CFG.resizeEnd;
+  for (const [from, to] of [[1920, 1100], [1100, 1920], [1920, 1000], [1000, 1500], [1440, 1366], [1366, 1300], [1300, 1340]]) {
+    const P = sim({ src: ROAM, zones: ZONES, size: 'real', W: from, H: 900, page: 'review.html', build: site('review', from, 900), seed: 3 });
+    P.step(2500);
+    const S0 = P.R().size, n0 = P.anim.sizes.length, S1 = to >= 1024 ? sizeAt(to) : 96;
+    const seen = drag(P, from, to, 900), tag = from + ' → ' + to + ':';
+    ok(seen.size === 1 && seen.has(S0) && P.anim.sizes.length === n0, tag + '拖的途中一直是 ' + S0, { seen: Array.from(seen), sizes: P.anim.sizes });
+    P.step(R0 - 60);
+    ok(P.R().size === S0, tag + '停下不到 ' + R0 + ' 毫秒還沒換', P.R());
+    P.step(120);
+    ok(P.R().size === S1 && vars(P)[0] === S1 + 'px', tag + '停下 ' + R0 + ' 毫秒後換成 ' + S1, { s: P.R(), v: vars(P) });
+    P.step(3000);
+    eq(P.anim.sizes.length - n0, S1 === S0 ? 0 : 1, tag + (S1 === S0 ? '同一段:沒有重開引擎' : '只重開一次引擎'));
+    ok(P.anim.live <= 1, tag + '同時最多一個引擎計時器', P.anim.live);
+  }
+});
+run('站在空地上時換了大小(1440 → 1280):回到地面,用新的大小重量空地,5 秒內再離開地面', () => {
+  for (const seed of [1, 2, 3]) {
+    const P = webSim('learn', 1440, { seed });
+    let s = null;
+    for (let t = 0; t < 40000; t += 100) { P.step(100); s = P.R(); if (!s.ground && s.zone && s.zone !== 'ground' && !s.move && !s.flying) break; }
+    ok(!!s && !s.ground, '#' + seed + ' 1440:先站上一塊空地', s);
+    P.resize(1280, 800, 15); P.step(CFG.resizeEnd + 40);
+    const a = P.R();
+    ok(a.size === 62 && a.ground === true && !a.flying && !a.move, '#' + seed + ' 換成 62 時回到地面', a);
+    let up = -1;
+    for (let t = 0; t < 5000 && up < 0; t += 100) { P.step(100); const q = P.R(); if (q.move || q.flying || !q.ground) up = t; }
+    ok(up >= 0, '#' + seed + ' 5 秒內再離開地面', { up, s: P.R() });
+    ok(P.R().zones > 0 && P.R().size === 62, '#' + seed + ' 用 62 量到空地', P.R());
+  }
+});
 run('關掉走動、或減少動態時,寬度跨過 1024 換大小:新的引擎也停在靜止格,不跑計時器、不抖(審查第 1 輪 #7)', () => {
   for (const ui of [{ roam: false }, { reduced: true }]) {
     const tag = ui.roam === false ? '關掉走動' : '減少動態';
@@ -114,103 +187,154 @@ run('關掉走動、或減少動態時,寬度跨過 1024 換大小:新的引擎�
 
 /* ---------- 五個主分頁:停著不蓋東西、移動中點擊穿過;量到幾塊空地 ---------- */
 const PAGES = ['index', 'learn', 'drill', 'review', 'me'];
-function zoneCount(name, W, H, size) {
-  const P = sim({ src: ROAM, zones: ZONES, size, W, H, page: name + '.html', build: site(name, W, H), seed: 1 });
+const WIDTHS = [1024, 1280, 1366, 1440, 1920];
+/* size:'real'(檔案裡的分段)或一個數字(三種模式都改成那個數字;110 是 10/23 那一版的電腦版,當「改之前」) */
+function zoneCount(name, W, size) {
+  const P = webSim(name, W, { size, seed: 1 });
   P.step(6000);
   return P.R().zones;
 }
-run('五個主分頁 1280、1440、1920(110 px):停著的時候不蓋到按鈕、卡片、文字;走、跳、飛的時候點擊穿過;框沒有跑出視窗', () => {
+/* 1024 不到處走、或量不到 3 塊空地的頁(實測,見最上面的說明):首頁、學習頁有捲軸,版面 1009 不到 1024,照窄的網站;刷題頁量不到空地 */
+const WANDERS = (name, W) => !((name === 'index' && W - barOf(name, W) < 1024) || ((name === 'learn' || name === 'drill') && W - barOf(name, W) < 1260));   // 學習頁版面寬 1260(視窗約 1275)、刷題頁 1260 以下:下面「規則的限制」
+run('五個主分頁 1024、1280、1366、1440、1920(照分段的大小):停著的時候不蓋到按鈕、卡片、文字;走、跳、飛的時候點擊穿過;框沒有跑出視窗', () => {
   const table = [];
-  for (const [W, H] of [[1280, 800], [1440, 900], [1920, 1080]]) for (const name of PAGES) {
-    const hits = [], taps = [], outside = [];
+  for (const W of WIDTHS) for (const name of PAGES) {
+    if (W === 1024 && name !== 'review' && name !== 'me' && name !== 'drill') continue;
+    const hits = [], taps = [], outside = [], H = VH[W], S = sizeAt(W), bar = barOf(name, W), CW = W - bar;
     let rest = 0, up = 0;
     for (const seed of [1, 2]) {
-      wanderRun({ name, W, H, seed, size: 'real', ms: 3 * 60 * 1000, mark: (Q, s) => {
+      wanderRun({ name, W, H, bar, seed, size: 'real', ms: 3 * 60 * 1000, mark: (Q, s) => {
         const b = Q.box(), w = b.r - b.l;
         const moving = !!s.move || s.flying || s.pose === 'walk' || s.pose === 'run';
-        if (Math.abs(w - 110) > 0.01) outside.push({ t: Q.st.t, w });
-        if (b.l < 16 - 0.5 || b.r > W - 16 + 0.5) outside.push({ t: Q.st.t, b });
+        if (Math.abs(w - S) > 0.01) outside.push({ t: Q.st.t, w });
+        if (b.l < 16 - 0.5 || b.r > CW - 16 + 0.5) outside.push({ t: Q.st.t, b });
         if (!s.ground && !moving) up++;
         /* 視窗下緣的地面是固定的一條,內容從牠底下捲過去(頁面底部留白讓最後的內容捲得上來),不算;整條橫幅是背景(同 zones 的 band) */
         if (!s.flying && !s.move && !s.ground) for (const q of obstaclesNow(Q)) {
-          const stand = (q.k === 'c' && Math.abs(q.t - b.b) < 1.5) || (q.k === 'c' && q.r - q.l > 0.9 * W);
+          const stand = (q.k === 'c' && Math.abs(q.t - b.b) < 1.5) || (q.k === 'c' && q.r - q.l > 0.9 * CW);
           if (!stand && hitW(q, b.l, w, b.t, b.b)) { hits.push({ t: Q.st.t, b, q, zone: s.zone }); break; }
         }
         if (moving && Q.tappable()) taps.push({ t: Q.st.t, s });
         if (!moving && Q.tappable()) rest++;
       } });
     }
-    const tag = name + ' ' + W + ':';
+    const tag = name + ' ' + W + '(' + S + ' px):';
     ok(!hits.length, tag + '停著、走著的時候框不碰到障礙', hits.slice(0, 2));
     ok(!taps.length, tag + '走、跳、飛的時候點擊穿過', taps.slice(0, 2));
-    ok(!outside.length, tag + '框 110 寬、在視窗兩側 16 px 以內', outside.slice(0, 2));
+    ok(!outside.length, tag + '框 ' + S + ' 寬、在版面兩側 16 px 以內', outside.slice(0, 2));
     ok(rest > 100, tag + '停著的時候點得到', rest);
-    table.push({ page: name, W, upShare: Math.round(up / (2 * 1800) * 100) });
+    table.push(name + ' ' + W + ' ' + Math.round(up / (2 * 1800) * 100));
   }
-  console.log('  離開地面、停在空地上的時間比例(%):' + table.map((r) => r.page + ' ' + r.W + ' ' + r.upShare).join(';'));
+  console.log('  離開地面、停在空地上的時間比例(%):' + table.join(';'));
 });
-run('量到幾塊空地(1280、1920;48 px 那一版對照):1920 每頁都有空地', () => {
+run('量到幾塊空地(改之前一律 110 → 照分段):1280、1366 的學習、刷題頁有 3 塊以上;1440 以下小雞變小,空地不會變少', () => {
   const rows = [];
-  for (const W of [1280, 1920]) {
-    const H = W === 1280 ? 800 : 1080;
-    for (const name of PAGES) {
-      const before = zoneCount(name, W, H, 48), after = zoneCount(name, W, H, 'real');
-      rows.push(name + ' ' + W + ' ' + before + '→' + after);
-      if (W === 1920) ok(after >= 1, name + ' 1920:110 px 還量得到空地', { before, after });
-      ok(after <= before, name + ' ' + W + ':小雞變大,空地不會變多', { before, after });
-    }
+  for (const W of WIDTHS) for (const name of PAGES) {
+    const before = zoneCount(name, W, 110), after = zoneCount(name, W, 'real');
+    rows.push(name + ' ' + W + ' ' + before + '→' + after);
+    if ((W === 1280 || W === 1366) && (name === 'learn' || name === 'drill')) ok(after >= 3, name + ' ' + W + ':' + sizeAt(W) + ' px 量得到 3 塊以上', { before, after });
+    if (W < 1440) ok(after >= before, name + ' ' + W + ':小雞變小,空地不會變少', { before, after });
+    else ok(after === before, name + ' ' + W + ':1440 以上大小不變,空地數一樣', { before, after });
   }
-  console.log('  空地數(48 px → 110 px):' + rows.join(';'));
+  console.log('  空地數(110 px → 照分段):' + rows.join(';'));
 });
 
 /* ---------- 真的大小的走法數字(審查第 1 輪 #8):pet_roam_sim 沒給 size 時照 48 px 跑,這裡照檔案裡的大小釘住 10/20 的要求 ---------- */
-run('真的大小:1366、1440、1920 五個主分頁和 1280 的複習、我的,照 10/20 的要求(任一段 60 秒去 3 個地方以上、在地面不到 3 成、5 秒內離開地面、每塊待 5 到 15 秒)', () => {
-  const list = [];
-  for (const [W, H] of [[1366, 768], [1440, 900], [1920, 1080]]) for (const name of PAGES) list.push([name, W, H]);
-  list.push(['review', 1280, 800], ['me', 1280, 800]);
-  for (const [name, W, H] of list) {
-    const a = { minZones: Infinity, maxGround: 0, first: 0, stays: [] };
-    for (const seed of [1, 2]) {
-      const r = wanderRun({ name, W, H, seed, size: 'real', ms: 3 * 60 * 1000 });
-      a.minZones = Math.min(a.minZones, r.minZones); a.maxGround = Math.max(a.maxGround, r.maxGround);
-      a.first = Math.max(a.first, r.first < 0 ? Infinity : r.first); a.stays.push(...r.stays);
-    }
-    const tag = name + ' ' + W + '(110 px):';
+function wanderStats(name, W, size, H) {
+  const a = { minZones: Infinity, maxGround: 0, first: 0, stays: [], maxZ: 0, ground: 0 };
+  for (const seed of [1, 2]) {
+    const r = wanderRun({ name, W, H: H || VH[W], bar: barOf(name, W), seed, size, ms: 3 * 60 * 1000, mark: (Q, s) => { a.maxZ = Math.max(a.maxZ, s.zones); } });
+    a.minZones = Math.min(a.minZones, r.minZones); a.maxGround = Math.max(a.maxGround, r.maxGround); a.ground = Math.max(a.ground, r.ground);
+    a.first = Math.max(a.first, r.first < 0 ? Infinity : r.first); a.stays.push(...r.stays);
+  }
+  return a;
+}
+const fmt = (a) => a.minZones + ' 處/' + Math.round(a.maxGround * 100) + '%/' + (isFinite(a.first) ? (a.first / 1000).toFixed(1) + ' 秒' : '沒離開');
+run('真的大小:1024 的複習、我的,1280 以上五個主分頁,照 10/20 的要求(任一段 60 秒去 3 個地方以上、在地面不到 3 成、5 秒內離開地面、每塊待 5 到 15 秒);印出改之前(110)對照', () => {
+  const rows = [];
+  for (const W of WIDTHS) for (const name of PAGES) {
+    if (!WANDERS(name, W)) continue;
+    const a = wanderStats(name, W, 'real'), b = W < 1440 ? wanderStats(name, W, 110) : a;
+    rows.push(name + ' ' + W + ' ' + fmt(b) + ' → ' + fmt(a));
+    const tag = name + ' ' + W + '(' + sizeAt(W) + ' px):';
     ok(a.minZones >= 3 && a.maxGround <= 0.3 && a.first >= 0 && a.first <= 5000, tag + '去 3 個地方以上、在地面不到 3 成、5 秒內離開地面', a);
     ok(median(a.stays) >= 5 && median(a.stays) <= 15, tag + '每塊空地停 5 到 15 秒', median(a.stays));
   }
+  console.log('  任一段 60 秒最少去幾處/在地面最多幾成/第一次離開地面(改之前 110 → 照分段):' + rows.join(';'));
 });
-run('真的大小:忙的時候(一直按鍵)1440、1920 的刷題、學習頁照樣在同一側換、5 秒內開始離開、不飛過主要內容那一欄', () => {
+run('真的大小:忙的時候(一直按鍵)1280、1440、1920 的刷題、學習頁照樣在同一側換、5 秒內開始離開、不飛過主要內容那一欄', () => {
   const key3 = (o) => { let last = -1e9; return (Q) => { if (Q.st.t - last >= 3000) { last = Q.st.t; Q.fireDoc('keydown', { key: 'Shift' }); } if (o) o(Q); }; };
-  for (const [W, H] of [[1440, 900], [1920, 1080]]) for (const name of ['drill', 'learn']) for (const seed of [1, 2]) {
-    const L = Math.round((W - 1040) / 2), R = L + 1040;
+  for (const [W, H] of [[1280, 800], [1440, 900], [1920, 1080]]) for (const name of ['drill', 'learn']) for (const seed of [1, 2]) {
+    const bar = barOf(name, W), L = Math.round((W - bar - 1040) / 2), R = L + 1040;
     let cross = 0, runAt = -1, runX = 0, upX = null;
-    const r = wanderRun({ name, W, H, seed, size: 'real', startX: Math.round(W / 2), ms: 150000, mark: key3((Q) => {
+    const r = wanderRun({ name, W, H, bar, seed, size: 'real', startX: Math.round(W / 2), ms: 150000, mark: key3((Q) => {
       const s = Q.R(), b = Q.box();
       if (runAt < 0 && s.ground && s.pose === 'run') { runAt = Q.st.t; runX = s.x; }
       if (upX === null && (s.move || s.flying || !s.ground)) upX = s.x;
       if ((s.move === 'fly' || s.move === 'fall') && b.r > L && b.l < R) cross++;
     }) });
     const go = runAt >= 0 ? runAt : r.first, need = runAt >= 0 ? Math.abs(upX - runX) / Z.CFG.runSpeed * 1000 + 2500 : 0;
-    ok(r.minZones >= 3 && r.ground <= 0.3 && go >= 0 && go <= 5000 && r.first - go <= need + 1 && cross === 0, name + ' ' + W + ' #' + seed + '(110 px,忙):', { minZones: r.minZones, ground: r.ground, first: r.first, runAt, need, cross });
+    /* 刷題頁 110 px(1440 以上):卡片上緣那一層站不上去,一側只有頁尾上緣那一塊;忙的時候不飛過主要內容,只剩這一側和地面 2 個地方、地面約 3 成。
+       這是規則的限制(主對話待決定:刷題頁也要 3 個地方就得 96 px 以下,或改頂欄下面的留空),這裡照現在的樣子寫成明確的預期 */
+    const few = name === 'drill' && sizeAt(W) === 110;
+    ok((few ? r.minZones >= 2 && r.ground <= 0.35 : r.minZones >= 3 && r.ground <= 0.3) && go >= 0 && go <= 5000 && r.first - go <= need + 1 && cross === 0, name + ' ' + W + ' #' + seed + '(' + sizeAt(W) + ' px,忙' + (few ? ',只有一側和地面' : '') + '):', { minZones: r.minZones, ground: r.ground, first: r.first, runAt, need, cross });
   }
 });
-/* 1280 的寬版頁(首頁、學習、刷題)放大以後的代價(規格 1.11 的 10/23 實測、附錄 D 第八輪,等 Bonnie 從 (1)(2)(3) 選;這一版照 (1) 接受)。
-   這裡把現在的樣子寫成明確的預期,改了做法就會紅,要一起改這裡:學習、刷題量不到空地、只在視窗下緣走;首頁只剩兩塊 */
-run('1280 的寬版頁(110 px,照附錄 D 第八輪 (1)):學習、刷題量不到空地,只在視窗下緣走來走去、停著時點得到;首頁 5 秒內離開地面、任一段 60 秒去 2 個地方以上', () => {
-  for (const name of ['learn', 'drill']) for (const seed of [1, 2]) {
-    let maxZ = 0, up = 0, rest = 0;
-    const xs = new Set();
-    const r = wanderRun({ name, W: 1280, H: 800, seed, size: 'real', ms: 2 * 60 * 1000, mark: (Q, s) => {
-      maxZ = Math.max(maxZ, s.zones); if (!s.ground && !s.move && !s.flying) up++; if (s.ground) xs.add(Math.round(s.x / 20));
+/* 規則的限制(審查第 1 輪 #0、#3;主對話待決定):學習頁版面寬 1260 以下(視窗約 1275,捲軸 15)、刷題頁 1260 以下,主要內容貼著兩側、卡片都可以點,
+   62 px 也量不到 3 塊空地(無頭 Chrome 實測 0 塊,48、56 px 也只有 0 到 1 塊),小雞大多在視窗下緣。要改得讓小雞站在可以點的卡片上緣(附錄 D 第八輪的 (3)),
+   或接受這一段只在地面(要 Bonnie 同意)。這裡把現在的樣子寫成明確的預期,改了規則或大小這一項會變紅;1024 的學習頁有捲軸,版面 1009 不到 1024,照窄的網站 96 */
+const DEAD = [[1024, 'drill'], [1152, 'learn'], [1152, 'drill'], [1240, 'learn'], [1240, 'drill'], [1256, 'drill'], [1270, 'learn']];
+run('規則的限制:學習頁約 1275 以下、刷題頁 1260 以下 62 px 量不到 3 塊空地、9 成以上在地面、停著點得到;學習頁 1024 照窄的網站 96;邊界外 3 塊以上', () => {
+  const rows = [];
+  for (const [W, name] of DEAD) for (const seed of [1, 2]) {
+    let maxZ = 0, rest = 0;
+    const r = wanderRun({ name, W, H: VH[W], bar: barOf(name, W), seed, size: 'real', ms: 2 * 60 * 1000, mark: (Q, s) => {
+      maxZ = Math.max(maxZ, s.zones);
       if (s.ground && !s.move && s.pose !== 'walk' && s.pose !== 'run' && Q.tappable()) rest++;
     } });
-    ok(maxZ === 0 && up === 0 && r.ground >= 0.9 && xs.size >= 3 && rest > 100, name + ' 1280 #' + seed + ':0 塊空地、都在地面、沿著下緣走、停著點得到', { maxZ, up, ground: r.ground, xs: xs.size, rest });
+    if (seed === 1) rows.push(name + ' ' + W + ' 空地 ' + maxZ + '、地面 ' + Math.round(r.ground * 100) + '%');
+    ok(r.P.R().wide === true && r.P.R().size === 62 && maxZ < 3 && r.ground >= 0.9 && rest > 100, name + ' ' + W + ' #' + seed + ':62 px、空地不到 3 塊、9 成以上在地面、停著點得到', { maxZ, ground: r.ground, rest, s: r.P.R() });
   }
   for (const seed of [1, 2]) {
-    const r = wanderRun({ name: 'index', W: 1280, H: 800, seed, size: 'real', ms: 3 * 60 * 1000 });
-    ok(r.first >= 0 && r.first <= 5000 && r.minZones >= 2 && r.maxGround <= 0.4, 'index 1280 #' + seed + ':5 秒內離開地面、去 2 個地方以上、在地面最多 4 成', { first: r.first, minZones: r.minZones, maxGround: r.maxGround });
+    const L = webSim('learn', 1024, { seed });
+    L.step(20000);
+    ok(L.R().wide === false && L.R().size === 96, 'learn 1024 #' + seed + ':窄的網站 96', L.R());
   }
+  for (const [W, name] of [[1280, 'learn'], [1260, 'drill'], [1270, 'drill']]) { const z = zoneCount(name, W, 'real'); ok(z >= 3, name + ' ' + W + ':62 px 量得到 3 塊以上(邊界外)', z); }
+  console.log('  規則的限制(62 px):' + rows.join(';'));
+});
+/* 每一段的下限(審查第 1 輪 #4):學習頁捲軸 15、17 px、刷題頁沒有捲軸,都量得到 3 塊以上;大一級(+8 px)時學習頁(捲軸 15)或刷題頁不到 3 塊,所以是最大的 */
+run('每一段的下限:學習頁(捲軸 15、17)、刷題頁量得到 3 塊以上;再大一級就不到 3 塊', () => {
+  const rows = [];
+  for (const [W, S] of BANDS.filter(([w]) => w > 0 && w < 1440)) {
+    const n = (name, bar, size) => { const P = sim({ src: ROAM, zones: ZONES, size, W, H: 800, bar, page: name + '.html', build: site(name, W - bar, 800), seed: 1 }); P.step(6000); return P.R().zones; };
+    const got = [n('learn', 15, 'real'), n('learn', 17, 'real'), n('drill', 0, 'real')], up = [n('learn', 15, S + 8), n('drill', 0, S + 8)];
+    rows.push(W + ' ' + S + ' px ' + got.join('/') + ',' + (S + 8) + ' px ' + up.join('/'));
+    ok(got.every((z) => z >= 3), W + '(' + S + ' px):學習頁捲軸 15、17 和刷題頁都 3 塊以上', got);
+    ok(up.some((z) => z < 3), W + ':' + (S + 8) + ' px 時學習頁或刷題頁不到 3 塊', up);
+  }
+  console.log('  每一段的下限 空地數(學習 15/學習 17/刷題,大一級 學習 15/刷題):' + rows.join(';'));
+});
+/* 假瀏覽器的刷題頁照真的版型(審查第 1 輪 #1:以前兩排卡片、頁尾在 600,量到 6 塊,真的只有 2 塊):
+   10/24 無頭 Chrome 1440×900:標題 93 到 139,一排兩張卡片 173 到 301(寬 509、中間 22),頁尾上緣 331 */
+run('假瀏覽器的刷題頁:一排兩張卡片 173 到 301、頁尾上緣 331(照無頭 Chrome 實測)', () => {
+  const got = [];
+  site('drill', 1440, 900)((parent, tag, o) => { got.push([tag, o.box]); return { tag }; });
+  eq(got.filter(([t]) => t === 'a').map(([, b]) => b), [[200, 173, 709, 301], [731, 173, 1240, 301]], '卡片');
+  eq((got.find(([t]) => t === 'footer') || [])[1].slice(1, 2), [331], '頁尾上緣');
+});
+/* 實際的視窗高(審查第 1 輪 #1):刷題頁 1440、1536 在 110 px 時框高 116,卡片上緣那一層站不上去,只有頁尾上緣那一層的兩側 2 塊(實測一樣),地面還是不到 3 成 */
+run('實際的視窗高 1280×690、1366×657、1440×790、1536×730(和 1440×900):學習、刷題頁照 10/20 的要求;刷題頁 110 px 只有兩側 2 塊', () => {
+  const rows = [];
+  for (const [W, H] of REAL_H.concat([[1440, 900]])) for (const name of ['learn', 'drill']) {
+    const a = wanderStats(name, W, 'real', H);
+    rows.push(name + ' ' + W + '×' + H + ' ' + fmt(a) + ',空地 ' + a.maxZ);
+    const tag = name + ' ' + W + '×' + H + '(' + sizeAt(W) + ' px):';
+    ok(a.minZones >= 3 && a.maxGround <= 0.3 && a.first >= 0 && a.first <= 5000, tag + '去 3 個地方以上、在地面不到 3 成、5 秒內離開地面', a);
+    ok(median(a.stays) >= 5 && median(a.stays) <= 15, tag + '每塊空地停 5 到 15 秒', median(a.stays));
+    if (name === 'drill' && sizeAt(W) === 110) ok(a.maxZ === 2, tag + '只有兩側 2 塊(實測一樣)', a.maxZ);
+  }
+  console.log('  實際的視窗高 最少去幾處/在地面最多幾成/第一次離開地面:' + rows.join(';'));
 });
 
 /* 手機(App 375、網站 375)的主分頁:放大以後 102 高的框塞不進頂欄和頁面標題之間,標題右邊那個站點不能用,偶爾飛上站點在手機上沒有了
@@ -254,6 +378,8 @@ run('可以點的範圍:只有畫出來的小雞那麼大,框上緣往下 14 px 
     ['App 375', { app: true, htmlClass: ['app-shell', 'has-tabbar', 'is-tab-root'], W: 375, H: 812, page: 'learn.html', build: narrowPage(375) }, 96],
     ['網站 375', { zones: ZONES, W: 375, H: 812, page: 'learn.html', build: narrowPage(375) }, 96],
     ['電腦版 1440', { zones: ZONES, W: 1440, H: 900, page: 'learn.html', build: site('learn', 1440, 900) }, 110],
+    ['電腦版 1366', { zones: ZONES, W: 1366, H: 768, page: 'drill.html', build: site('drill', 1366, 768) }, 94],
+    ['電腦版 1280', { zones: ZONES, W: 1280, H: 800, page: 'drill.html', build: site('drill', 1280, 800) }, 62],
     ['App 橫放 932×430', { app: true, htmlClass: ['app-shell', 'has-tabbar'], W: 932, H: 430, page: 'practice.html', build: narrowPage(932) }, 64],
   ];
   for (const [tag, o, S] of cases) {
@@ -303,6 +429,8 @@ run('換大小重開引擎:App 轉來轉去、網站跨過 1024 來回 80 次,�
       (P, k) => (k % 2 ? P.resize(412, 915) : P.resize(915, 412))],
     ['網站 1000 ↔ 1100', (seed) => sim({ src: ROAM, zones: ZONES, size: 'real', W: 1000, H: 900, page: 'learn.html', build: site('learn', 1000, 900), seed }),
       (P, k) => (k % 2 ? P.resize(1000, 900) : P.resize(1100, 900))],
+    ['電腦版 1300 ↔ 1500(70 ↔ 110,都在到處走)', (seed) => sim({ src: ROAM, zones: ZONES, size: 'real', W: 1300, H: 900, page: 'learn.html', build: site('learn', 1300, 900), seed }),
+      (P, k) => (k % 2 ? P.resize(1300, 900) : P.resize(1500, 900))],
   ];
   for (const [tag, mk, flip] of cases) {
     const r = flipRun(mk, flip);
@@ -363,6 +491,20 @@ run('原始碼:大小只寫在設定物件裡、800 行以內', () => {
   ok(!/CFG\.size\b|\bsize: \d+|\bS = [1-9]/.test(rest), 'pet-roam2.js 設定物件以外沒有寫死小雞的大小', (rest.match(/.{0,40}(CFG\.size\b|size: \d+|S = [1-9]).{0,20}/g) || []).slice(0, 4));
   ok(ROAM.split('\n').length <= 800, 'pet-roam2.js 800 行以內', ROAM.split('\n').length);
   ok(/maxDpr: 2/.test(code), '畫布照裝置像素比(最多 2 倍)畫,放大以後一樣清楚');
+});
+
+run('註解:電腦版分段寫的跟 CFG.sizes.wide 一樣(審查第 3 輪 LOW:110 下一段是 94,差 16,不是每 8 px 一級)', () => {
+  const lineOf = (src, re) => (src.split('\n').find((l) => re.test(l)) || '');
+  const cfgLine = lineOf(ROAM, /^\s*sizes: Object\.freeze\(/), zoneLine = lineOf(ZONES, /minWalk: \d+, headroom: \d+/);
+  const pairs = (s) => [...s.matchAll(/(\d{4}) 以上 (\d+)/g)].map((m) => [+m[1], +m[2]]);
+  const inTable = (s) => pairs(s).every(([w, S]) => BANDS.some(([bw, bs]) => bw === w && bs === S));
+  const noEvery8 = (s) => !/(以下|往下)每 8 px 一級/.test(s);
+  ok(!!cfgLine && noEvery8(cfgLine) && inTable(cfgLine) && BANDS.filter(([w]) => w > 0).every(([w, S]) => pairs(cfgLine).some(([a, b]) => a === w && b === S)) && /其他 62/.test(cfgLine),
+    'js/pet-roam2.js CFG 那一行的註解照表列出每一段(1440 以上 110、1344 以上 94、1328 以上 86、1312 以上 78、1296 以上 70、其他 62)', cfgLine.slice(cfgLine.indexOf('//'), cfgLine.indexOf('//') + 200));
+  ok(!!zoneLine && noEvery8(zoneLine) && inTable(zoneLine) && /CFG\.sizes\.wide/.test(zoneLine),
+    'js/pet-roam-zones.js minWalk 那一行的註解指向 CFG.sizes.wide,不自己重寫級距', zoneLine.slice(zoneLine.indexOf('//'), zoneLine.indexOf('//') + 200));
+  const CSS = read('css/style.css');
+  ok(noEvery8(CSS) && inTable(lineOf(CSS, /電腦版到處走照視窗寬/)), 'css/style.css 的註解也跟表一樣');
 });
 
 console.log((fail ? 'FAILED' : 'OK') + ' pet-roam size:' + pass + ' 通過,' + fail + ' 失敗');

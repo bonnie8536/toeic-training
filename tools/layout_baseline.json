@@ -1558,7 +1558,7 @@
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 1835,
+  "bodyH": 1785,
   "shell": 0
  },
  "1280 daily.html": {
@@ -1670,7 +1670,7 @@
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 1014,
+  "bodyH": 964,
   "shell": 0
  },
  "1280 drill.html": {
@@ -1726,7 +1726,7 @@
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 563,
+  "bodyH": 513,
   "shell": 0
  },
  "1280 me.html": {
@@ -1782,7 +1782,7 @@
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 736,
+  "bodyH": 686,
   "shell": 0
  },
  "1280 grammar.html": {
@@ -2376,7 +2376,7 @@
    547
   ],
   "aria": "true",
-  "bodyH": 507,
+  "bodyH": 457,
   "shell": 0
  },
  "1280 history.html": {

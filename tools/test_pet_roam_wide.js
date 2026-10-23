@@ -504,6 +504,28 @@ run('choose:上下疊著的兩塊空地(高的那塊只有從低的那塊飛得�
     ok(n('side-R:173:1488') >= 3 && n('side-R:331:1488') >= 3 && n('ground') >= 3 && !seq.includes('none'), 'seed ' + seed + ':16 次裡高的、低的、地面都去 3 次以上', seq);
   }
 });
+/* 刷題頁 1440 以上 110 px(10/24 無頭 Chrome 實測):只有頁尾上緣那一層的兩側各一塊,兩塊相隔 2.5 秒以上。
+   以前兩塊都剛去過時,最久沒去的那塊在 2.5 秒外就不算,只剩「這一側、地面」來回,60 秒裡只去 2 個地方、地面 3 成以上(審查第 1 輪 #1) */
+run('choose:只有兩側各一塊、相隔 2.5 秒以上(刷題頁 1440、110 px):不忙的時候兩側和地面輪流去,不在同一側和地面之間來回', () => {
+  const S = 110, B = 116, zones = [{ key: 'side-L:331:16', kind: 'side-L', feetDoc: 331, lo: 16, hi: 74 }, { key: 'side-R:331:1256', kind: 'side-R', feetDoc: 331, lo: 1256, hi: 1314 }];
+  const ground = { key: 'ground', feet: 896, lo: 16, hi: 1314, ground: true };
+  for (const seed of [1, 2, 3, 4]) for (const x0 of [30, 1300]) {
+    const m = Z.memory(0), rnd = mulberry(seed), seq = [];
+    let here = Object.assign({ x: x0 }, ground);
+    for (let i = 0; i < 18; i++) {
+      const now = 100000 + i * 60000;
+      const d = Z.choose({ zones, here, ground, now, busy: false, calm: 1e9, near: [], mouse: null, lastFly: -1e9, recent: m.recent, order: m.order, main: { l: 200, r: 1240 }, H: 900, top: 59, bottom: 896 - B - 8, scrollY: 0, S, BOXH: B, flyFrames: FF, rnd });
+      seq.push(d ? d.z.key : 'none');
+      if (!d) continue;
+      Z.arrived(m, d.z.key, now, rnd);
+      here = d.z.ground ? Object.assign({}, ground, { x: here.x }) : { key: d.z.key, kind: d.z.kind, x: d.tx, feet: d.z.feetDoc, lo: d.z.lo, hi: d.z.hi };
+    }
+    const n = (k) => seq.filter((v) => v === k).length;
+    let pingPong = 0;
+    for (let i = 0; i + 4 <= seq.length; i++) if (new Set(seq.slice(i, i + 4)).size < 3) pingPong++;
+    ok(n(zones[0].key) >= 4 && n(zones[1].key) >= 4 && n('ground') >= 3 && !seq.includes('none') && pingPong === 0, 'seed ' + seed + ' 從 ' + x0 + ' 開始:18 次裡兩側各 4 次以上、地面 3 次以上,任 4 次都去過 3 個地方', seq);
+  }
+});
 run('電腦版:地面也是一個地方,多半站著;不跑、不隨便轉身(第三輪審查 #3)', () => {
   for (const seed of [1, 2, 3]) {
     let n = 0, idle = 0, run = 0, flips = 0, sgn = 0, prev = null;

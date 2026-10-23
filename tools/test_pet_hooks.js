@@ -33,7 +33,7 @@ function fakeDom() {
         toggle: (c, f) => { const on = f === undefined ? !s.has(c) : !!f; if (on) s.add(c); else s.delete(c); return on; } };
     }
     get children() { return this.childNodes.filter(c => c.nodeType === 1); }
-    get clientWidth() { return this._w !== undefined ? this._w : this.parentNode && this.parentNode.nodeType === 1 ? this.parentNode.clientWidth : 0; }   // 寬:自己的 _w,沒有就跟外層一樣(區塊元素);都沒有是 0
+    get clientWidth() { return this._w !== undefined ? this._w : this.parentNode && this.parentNode._shrink ? 0 : this.parentNode && this.parentNode.nodeType === 1 ? this.parentNode.clientWidth : 0; }   // 寬:自己的 _w,沒有就跟外層一樣(區塊元素);外層是置中的直排(_shrink,像 .game-over)時空的子元素縮成 0;都沒有是 0
     get isConnected() { let e = this; while (e.parentNode) e = e.parentNode; return !!e._mounted; }
     setAttribute(k, v) {
       if (k === 'class') this.className = v;
@@ -139,7 +139,7 @@ function hookEnv(o) {
     },
     clearTimeout: t => { if (t) t.done = true; },
   };
-  if (o.fontSize) ctx.getComputedStyle = () => ({ fontSize: o.fontSize + 'px' });
+  if (o.fontSize) ctx.getComputedStyle = el => ({ fontSize: o.fontSize + 'px', paddingLeft: ((el && el._padL) || 0) + 'px', paddingRight: ((el && el._padR) || 0) + 'px' });
   ctx.window = ctx;
   if (o.store !== null) {
     const name = o.name === undefined ? '小黃' : o.name;
@@ -291,6 +291,43 @@ T['手機寬留了兩行、結果沒有字(once)時一直留著(is-held,高度�
   const q = earnP(e)[0];
   return { ok: a.before.rows >= 2 && a.after.held && a.after.min === a.before.min && a.after.text === '' && !!q && !q.style.minHeight && !q.classList.contains('is-wait'),
     detail: JSON.stringify([a.before, a.after, q && q.style.minHeight, q && q.className]) };
+};
+/* 掉落通關畫面(vocab.js PET_HOOK.done('fall', { into: overlay })):.game-over 是置中的直排(align-items: center),
+   空的那一行縮成 0 寬,量不到寬就只留一行;手機上字寫上去折成兩行,再挑戰一關、回單字訓練往上跳 12 px(審查第 2 輪 寬度 #1)。
+   量不到自己的寬時改量外層扣掉左右 padding 的寬,照那個寬留夠行數 */
+async function fallThenWrite(W, name, result) {
+  let res;
+  const e = hookEnv({ manual: true, fontSize: 15, name, earn: () => new Promise(r => { res = r; }) });
+  const ov = e.dom.createElement('div'); ov.className = 'game-over'; ov._w = W; ov._shrink = true; ov._padL = 16; ov._padR = 16;
+  const h = e.dom.createElement('h2'); h.textContent = '過關'; ov.append(h);
+  e.root.append(ov);
+  const pr = e.H.done('fall', { into: ov });
+  const p = ov.querySelector('.pet-earn');
+  const before = { wait: !!p && p.classList.contains('is-wait'), min: p && p.style.minHeight, rows: minRows(p) };
+  res(result); await settle(); e.fire(200); await pr; await settle();
+  return { p, before, after: { min: p && p.style.minHeight, rows: minRows(p), text: p ? p.textContent : '' } };
+}
+T['掉落通關畫面(.game-over 置中直排,空的那一行量起來 0 寬):手機寬照外層扣掉 padding 的寬留夠行數,寫上字後高度不變,按鈕不跳(審查第 2 輪 寬度 #1)'] = async () => {
+  const bad = [];
+  for (const W of [337, 352, 375]) for (const name of ['小黃', LONG_NAME]) for (const [tag, r] of RESULTS) {
+    const { before, after } = await fallThenWrite(W, name, r);
+    const need = rowsOf(after.text, W - 32, 15);
+    const label = W + ' px、' + name + '、' + tag;
+    if (!before.wait) bad.push(label + ':沒有先留高度');
+    if (!after.text) bad.push(label + ':沒寫字');
+    if (need > before.rows) bad.push(label + ':字要 ' + need + ' 行,只留了 ' + before.rows + ' 行(按鈕往上跳)');
+    if (after.min !== before.min) bad.push(label + ':寫上字以後留的高度從 ' + before.min + ' 變成 ' + after.min);
+  }
+  const d = await fallThenWrite(375, '小黃', RESULTS[0][1]);
+  if (!(d.before.rows >= 2)) bad.push('375 px(那一行 343 px)拿過了那一句一定要留兩行以上,留了 ' + d.before.rows);
+  const z = await fallThenWrite(0, '小黃', RESULTS[0][1]);
+  if (z.before.min || !z.after.text) bad.push('外層也量不到寬(0)時照 css 一行:' + JSON.stringify([z.before, z.after]));
+  return { ok: !bad.length, detail: bad.slice(0, 6).join('; ') };
+};
+T['css:掉落通關畫面的那一行撐滿 .game-over 的寬(align-self: stretch),字照樣置中'] = () => {
+  const css = read('css/style.css');
+  const m = /\.game-over\s*>\s*\.pet-earn\s*\{([^}]*)\}/.exec(css);
+  return { ok: !!m && /align-self\s*:\s*stretch/.test(m[1]) && /text-align\s*:\s*center/.test(m[1]), detail: m ? m[1] : '沒有 .game-over > .pet-earn' };
 };
 T['存滿:「小番茄已經存滿 9 份，先餵掉一些再來拿。」'] = async () => {
   const e = hookEnv({ result: { result: 'full', food: 'tomato', id: null } });

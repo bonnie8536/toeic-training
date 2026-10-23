@@ -13,7 +13,7 @@
     sideLayers: 3, layerGap: 64, // 兩側每邊最多 3 層;上下差不到 64 px 又左右重疊的兩塊算同一個地方
     titleRun: 120,              // 頁面標題下緣只算到標題文字右邊 120 px(再往右是半空)
     cardW: 160, cardH: 48,      // 兩側借上下緣的卡片(可以點的也算):寬 160、高 48 以上
-    minWalk: 48, headroom: 8,   // 空地寬:小雞的寬加 48 以上(至少走得動 48 px);高:框高加 8 以上(小雞的大小由 pet-roam2.js 傳進來,10/23 起電腦版 110×116)
+    minWalk: 48, headroom: 8,   // 空地寬:小雞的寬加 48 以上(至少走得動 48 px);高:框高加 8 以上(小雞的大小由 pet-roam2.js 傳進來,電腦版照視窗寬分段,級距看 pet-roam2.js 的 CFG.sizes.wide)
     sideWalk: 24,               // 兩側空白走得動 24 px 就留(1280 只有 48,有捲軸時更少;第二輪審查 #2)
     firstMin: 2000, firstMax: 4000,   // 進頁(和寬度跨過 1024)後 2 到 4 秒第一次離開地面(Bonnie 10/20:5 秒內)
     stayMin: 6000, stayMax: 15000, arriveMin: 1000, arriveMax: 2000,   // 每塊空地待 6 到 15 秒(含路上),到了先站 1 到 2 秒
@@ -207,7 +207,7 @@
     const eTop = Math.max(CFG.edge, sc.dir > 0 ? stepE : 0), eBot = Math.max(CFG.edge, sc.dir < 0 ? stepE : 0);
     const old = [], late = [];
     let hid = 0;   // 剛捲過、靠近上下緣先不去的有幾塊
-    function consider(q, reach) {
+    function consider(q, reach, asOld) {
       const feet = q.feetDoc - c.scrollY;
       const edgy = memo && (feet - B - c.top < eTop || c.ground.feet - feet < eBot);
       if (edgy && (!here.ground || reach)) { hid++; return; }   // 站在空地上就先別去;在地面上的只在沒有別的地方去時才去(late)
@@ -218,7 +218,7 @@
       r = r || route(z, nx, reach);
       if (!r) return;
       if (edgy) { late.push({ z, w: 1, nx, r }); return; }
-      if (c.recent.indexOf(q.key) > -1) { if (!reach) old.push({ z, w: 1, nx, r, age: c.recent.indexOf(q.key) }); return; }
+      if (c.recent.indexOf(q.key) > -1) { if (!reach || asOld) old.push({ z, w: 1, nx, r, age: c.recent.indexOf(q.key) }); return; }
       let w = 1;
       const mid = feet - B / 2;
       if (mid >= c.H * CFG.mid && mid <= c.H * (1 - CFG.mid)) w *= CFG.wMid;
@@ -236,6 +236,8 @@
     /* 別的空地都剛去過:最久沒去的那塊跟地面比,照 order(含地面的去過順序)去比較久沒去的那個;沒有 order 就一起抽。
        不然疊著的兩塊(高的那塊只有從低的那塊飛得到),高的那塊去過一次以後只剩地面和低的那塊輪流(第三輪審查 #2) */
     const fresh = list.length;
+    /* 都剛去過、不忙:2.5 秒外的那塊也算進「最久沒去的」(只有兩側各一塊的頁面,例如 1440 以上 110 px 的刷題頁),不在「這一側、地面」一直來回(審查第 1 輪 #1) */
+    if (!fresh && !quiet) for (const q of vis) if (c.recent.indexOf(q.key) > -1 && !old.some((o) => o.z.key === q.key)) consider(q, CFG.reachFar, true);
     let g = null;
     if (!here.ground) { const r = route(c.ground, here.x); if (r) list.push(g = { z: c.ground, w: CFG.wGround, nx: here.x, r }); }
     if (!fresh && old.length) {

@@ -13,7 +13,7 @@
   'use strict';
   /* 規格的數字都在這裡(時間是毫秒,flyMax、fallMax、hopDur 是秒) */
   const CFG = Object.freeze({
-    sizes: Object.freeze({ app: 96, appLand: 64, web: 96, wide: 110 }), landH: 500, tap: Object.freeze({ w: 0.72, h: 0.7, min: 44 }), padI: 8, padO: 4, step: 12, maxPts: 240, turnTicks: 8, gap: 16, webLift: 4,   // sizes:走動那隻的寬,App 分頁列上(手機橫放、視窗高 landH 以下用 appLand)、網站模式 1023 以下、電腦版到處走(以前都是 48);框高照引擎的比例;tap:可以點的範圍佔寬、框高的比例(只有畫出來的小雞那麼大,最小 44)
+    sizes: Object.freeze({ app: 96, appLand: 64, web: 96, wide: Object.freeze([[1440, 110], [1344, 94], [1328, 86], [1312, 78], [1296, 70], [0, 62]].map(Object.freeze)) }), landH: 500, resizeEnd: 300, tap: Object.freeze({ w: 0.72, h: 0.7, min: 44 }), padI: 8, padO: 4, step: 12, maxPts: 240, turnTicks: 8, gap: 16, webLift: 4,   // sizes:走動那隻的寬,App 分頁列上(手機橫放、視窗高 landH 以下用 appLand)、網站模式 1023 以下、電腦版到處走(以前都是 48;照視窗寬 innerWidth 分段 [下限, 寬]:1440 以上 110、1344 以上 94、1328 以上 86、1312 以上 78、1296 以上 70、其他 62,挑學習、刷題頁兩側還站得下的最大值,最小 62;理由和實測在 tools/test_pet_roam_size.js);resizeEnd:拖動視窗停下多久才換大小;框高照引擎的比例;tap:可以點的範圍佔寬、框高的比例(只有畫出來的小雞那麼大,最小 44)
     flyChance: 0.3, flyAfter: 4000, perchMin: 8000, perchMax: 20000, perchRetry: 3000, hopMax: 80, hopDur: 0.4,
     failChance: 0.05, failEvery: 180000, scrollIdle: 150, mutThrottle: 250, fade: 200,
     flyMax: 2.5, fallMax: 1.2, leanMax: 11, leanFull: 60,
@@ -91,7 +91,7 @@
     return !obs.some((o) => hits(o, top, bot) && o.l - o.p - S < v && o.r + o.p > v);
   }
   /* 主要內容外左右的空白放得下小雞加兩邊各 16 px(48 px 時是 80,96 是 128,110 是 142):那一欄也是站點 */
-  const sizeFor = (app, wide, land) => CFG.sizes[app ? (land ? 'appLand' : 'app') : wide ? 'wide' : 'web'];   // land:App 手機橫放(審查第 2 輪 #4,102 高的框會吃掉兩條分頁列中間三分之一)
+  const sizeFor = (app, wide, land, iw) => (app ? CFG.sizes[land ? 'appLand' : 'app'] : !wide ? CFG.sizes.web : CFG.sizes.wide.find(([w]) => !(iw < w))[1]);   // land:App 手機橫放(審查第 2 輪 #4,102 高的框會吃掉兩條分頁列中間三分之一);iw:視窗寬,沒給時當最寬那段
   function sideColumns(mainL, mainR, vw, size) {
     const out = [], S = size || CFG.sizes.web, g = CFG.gap, min = S + 2 * g;
     if (mainL >= min) out.push({ side: 'left', lo: g, hi: Math.floor(mainL - g - S) });
@@ -188,11 +188,11 @@
     const enteredAt = performance.now();
     /* 照模式定大小(CFG.sizes):換了就重開引擎(畫布照裝置像素比重配,最多 2 倍),css 的 --pet2-w、--pet2-h 跟著改;靜止的小雞新的引擎馬上停在靜止格(審查第 1 輪 #7);寬不寬先算好再開第一次(#9) */
     function sized() {
-      const so = root.screen && root.screen.orientation, s = sizeFor(APP, wide, APP && innerHeight <= CFG.landH && html.clientWidth > innerHeight && !/^portrait/.test((so && so.type) || '')), st = html.style;   // 橫放看方向不只看高:直放的視窗變矮(鍵盤、分割畫面)不換(審查第 3 輪 #2)
-      if (s === S || (S && html.classList.contains('app-kb'))) return;   // 鍵盤開著不換,收起來再換
+      const so = root.screen && root.screen.orientation, s = sizeFor(APP, wide, APP && innerHeight <= CFG.landH && html.clientWidth > innerHeight && !/^portrait/.test((so && so.type) || ''), root.innerWidth), st = html.style;   // 橫放看方向不只看高:直放的視窗變矮(鍵盤、分割畫面)不換(審查第 3 輪 #2)
+      if (s === S || (S && html.classList.contains('app-kb'))) return false;   // 鍵盤開著不換,收起來再換
       S = s; BOXH = Math.round(S * M.ground / M.width); TW = Math.max(CFG.tap.min, Math.round(S * CFG.tap.w)); TH = Math.max(CFG.tap.min, Math.round(BOXH * CFG.tap.h)); lastFrame = ''; const old = anim; anim = null; if (old) old.stop();
       anim = A.animate(cv, { size: S, fps: 8, maxDpr: 2, pose: curPose, onTick: (t) => { if (anim) onTick(t); } }); if (off || faded) anim.stop(); else if (still()) showStill();   // 新引擎的第一拍在 animate() 裡同步跑、anim 還沒換好:這一拍不走 onTick,不然換姿勢會叫醒剛停掉的舊引擎、之後沒人停得掉(審查第 3 輪 #0)
-      if (st && typeof st.setProperty === 'function') { st.setProperty('--pet2-w', S + 'px'); st.setProperty('--pet2-h', BOXH + 'px'); st.setProperty('--pet2-tw', TW + 'px'); st.setProperty('--pet2-th', TH + 'px'); }
+      if (st && typeof st.setProperty === 'function') { st.setProperty('--pet2-w', S + 'px'); st.setProperty('--pet2-h', BOXH + 'px'); st.setProperty('--pet2-tw', TW + 'px'); st.setProperty('--pet2-th', TH + 'px'); } return true;
     }
     const Z = !APP && MAIN && root.PET_ROAM_ZONES && root.PET_ROAM_ZONES.version === 1 ? root.PET_ROAM_ZONES : null, ZST = Object.freeze({ sel: 'zone', edge: 'zone' });
     wide = !!Z && html.clientWidth >= Z.CFG.minW; sized();
@@ -609,7 +609,7 @@
     }
 
     /* ---------- 電腦版到處走(規格 1.11;空地、路線、權重、途中位置在 js/pet-roam-zones.js) ---------- */
-    function wzReset() { wide = !!Z && html.clientWidth >= Z.CFG.minW; wz = wide ? Z.memory(performance.now(), Math.random) : null; if (Z) html.classList.toggle('pet-roam2-wide', wide); sized(); }
+    function wzReset() { wide = !!Z && html.clientWidth >= Z.CFG.minW; wz = wide ? Z.memory(performance.now(), Math.random) : null; if (Z) html.classList.toggle('pet-roam2-wide', wide); }   // 大小在載入時、拖完視窗時換(resizeEnd)
     /* 量空地:捲動停下、視窗大小改變、內容變動時,最多每秒一次。腳下那塊還在就留著,不在就小跳到 80 px 內的空地,再不行落回地面 */
     function remeasure() {
       if (!wide || off || faded || script || scrolling || still() || U.mood() !== 'idle') { if (wz) wz.dirty = true; return; }   // 不能走的時候不量,能走了 wanderTick 再量
@@ -685,7 +685,7 @@
     wzReset();
 
     /* ---------- 事件 ---------- */
-    let scrollTimer = 0, mutTimer = 0;
+    let scrollTimer = 0, mutTimer = 0, sizeT = 0;   // sizeT:拖完視窗才換大小(resizeEnd)
     root.addEventListener('scroll', () => {
       scrolling = true;
       layer.classList.add('is-scroll');                 // 捲動中和停下來 150 毫秒內點擊穿過小雞,落到捲過來的內容
@@ -702,10 +702,11 @@
       if (mutTimer || recs.every((r) => layer.contains(r.target) || (r.target.closest && r.target.closest('.pet-mask')))) return;
       mutTimer = setTimeout(() => { mutTimer = 0; settle(); }, CFG.mutThrottle);
     }).observe(doc.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['class', 'style', 'hidden', 'open'] });
-    const relayout = () => { offCheck(); sized(); measure(); if (Z && (html.clientWidth >= Z.CFG.minW) !== wide) { if (mode === 'air') snapGround(); wzReset(); syncMove(); } else if (wide && mode === 'air' && x > lane[1]) snapGround(); if (perch) checkPerch(true); else settle(); };   // 分頁列藏起來時停住;寬度跨過 1024 時回地面換規則;變窄後小雞在視窗外(右側空白不見了)直接回地面,不從視窗外飛回來、頁面不變寬(第二輪審查 #3)
+    function resizeEnd() { sizeT = 0; if (!sized()) return; if (wide) { if (mode === 'air') snapGround(); Object.assign(wz, { zones: [], measuredAt: -1e9, dirty: true }); } measure(); if (mode === 'ground') { x = clampLane(x); place(); } }   // 拖完視窗才換大小(網站模式;拖的途中跨過幾段都不換,一次拖動最多重開一次引擎):到處走的時候回地面、用新的大小重量空地
+    const relayout = () => { offCheck(); if (APP) sized(); else { clearTimeout(sizeT); sizeT = setTimeout(resizeEnd, CFG.resizeEnd); } measure(); if (Z && (html.clientWidth >= Z.CFG.minW) !== wide) { if (mode === 'air') snapGround(); wzReset(); syncMove(); } else if (wide && mode === 'air' && x > lane[1]) snapGround(); if (perch) checkPerch(true); else settle(); };   // 分頁列藏起來時停住;寬度跨過 1024 時回地面換規則;變窄後小雞在視窗外(右側空白不見了)直接回地面,不從視窗外飛回來、頁面不變寬(第二輪審查 #3)
     root.addEventListener('resize', relayout);
     root.addEventListener('orientationchange', relayout);
-    new MutationObserver(() => { offCheck(); sized(); }).observe(html, { attributes: true, attributeFilter: ['class'] });   // app-kb:鍵盤收起來時補換大小
+    new MutationObserver(() => { offCheck(); if (APP) sized(); }).observe(html, { attributes: true, attributeFilter: ['class'] });   // app-kb:鍵盤收起來時補換大小(網站模式只在拖完視窗時換)
     doc.addEventListener('visibilitychange', () => {
       if (doc.visibilityState === 'hidden') { if (mode === 'ground') writeKey(); stopScript(); }
       offCheck();
@@ -730,7 +731,6 @@
     btn.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { if (wide) tr.leave(); else { hovered = false; pause(); } } });
     btn.addEventListener('click', () => { if (script && script.air) return; mine = true; U.openSheet(btn); });
     root.addEventListener('pet:earn', (e) => { const d = e && e.detail; if (d && d.result === 'got') playOnce(['happy']); });
-
     measure();
     U.onChange((v, ev) => {
       if (!v.on || !v.status) { layer.hidden = true; html.classList.remove('has-pet'); abortScript(); offCheck(); return; }

@@ -61,9 +61,19 @@
   }
   /* 這次可能寫的最長一句要幾行:手機上那一行只有 305 px 左右,拿過了、拿到第 3 份、名字長的那幾句會折成兩行(審查第 3 輪 #1)。
      每個字算 1 個字寬(中文字剛好,數字、空白只會算多),跟那一行現在的寬比;量不到寬時回 1(照 css 留一行) */
+  const px = v => parseFloat(v) || 0;
+  /* 那一行能用的寬:空的那一行在置中的直排裡(掉落通關的 .game-over)縮成 0 寬,改量外層扣掉左右 padding 的寬(審查第 2 輪 寬度 #1) */
+  function widthFor(p) {
+    const w = p && p.clientWidth;
+    if (w > 0) return w;
+    const box = p && p.parentNode;
+    if (!box || box.nodeType !== 1 || !(box.clientWidth > 0)) return 0;
+    const bs = typeof window.getComputedStyle === 'function' ? window.getComputedStyle(box) : null;
+    return box.clientWidth - (bs ? px(bs.paddingLeft) + px(bs.paddingRight) : 0);
+  }
   function rowsFor(p, S) {
     try {
-      const w = p && p.clientWidth;
+      const w = widthFor(p);
       if (!(w > 0)) return 1;
       const cs = typeof window.getComputedStyle === 'function' ? window.getComputedStyle(p) : null;
       const fs = (cs && parseFloat(cs.fontSize)) || 15;

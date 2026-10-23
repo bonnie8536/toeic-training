@@ -1,7 +1,7 @@
 {
   "id": "/index.html",
-  "name": "刷刷英文",
-  "short_name": "刷刷英文",
+  "name": "衝衝英文",
+  "short_name": "衝衝英文",
   "description": "多益英文練習：文法、單字、聽力、閱讀與題型刷題",
   "start_url": "./index.html",
   "scope": "/",

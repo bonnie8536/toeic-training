@@ -1,4 +1,4 @@
-/* 刷刷英文:安裝後的 App 外殼、安裝入口、service worker 註冊(2026-10)
+/* 衝衝英文:安裝後的 App 外殼、安裝入口、service worker 註冊(2026-10)
    網站模式只做兩件事:提供 window.APP(頭像選單的「安裝到手機」)與註冊 /sw.js。
    主畫面開啟時(head 開機程式已在 <html> 加 is-app、app-shell)才建返回鍵、分頁列、捲動小標題、鍵盤偵測。
    不依賴 common.js(terms.html 沒載入它)。不讀寫任何瀏覽器端儲存,不碰 Supabase(只讀 CLOUD.user)。

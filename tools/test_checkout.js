@@ -1033,7 +1033,7 @@ const cases = {
     const order = ['js/cloud-config.js', 'js/plans-config.js', 'js/common.js', 'js/cloud.js', 'js/profile.js', 'js/checkout.js', 'js/pay-result.js'].map(s => pr.indexOf('src="' + s + '"'));
     const boot = (/if \(\[([^\]]*)\]\.indexOf\(p\) < 0\) d\.classList\.add\('has-tabbar'\)/.exec(pr) || [])[1] || '';
     const checks = [
-      /<meta name="robots" content="noindex">/.test(pr), /<title>付款結果｜刷刷英文<\/title>|<title>付款結果\|刷刷英文<\/title>/.test(pr),
+      /<meta name="robots" content="noindex">/.test(pr), /<title>付款結果｜衝衝英文<\/title>|<title>付款結果\|衝衝英文<\/title>/.test(pr),
       boot.includes("'pay-result.html'"), order.every((x, i) => x > 0 && (i === 0 || x > order[i - 1])), /id="pay-root"/.test(pr),
       /'pay-result\.html': '付款結果'/.test(read('js/app-shell.js')), /pay-result\.html/.test(read('tools/check_layout.js')),
       !/sitemap/.test('') && !read('sitemap.xml').includes('pay-result'),

@@ -536,10 +536,18 @@ T['跟 ' + BASE + ' 比:只多了掛勾那幾行,沒有刪掉或改掉任何一�
   FILES.forEach(f => {
     const r = spawnSync('git', ['-C', REPO, 'diff', '--no-color', '-U0', BASE, '--', f], { encoding: 'utf8' });
     if (r.status !== 0) { bad.push(f + ' git 失敗:' + (r.stderr || '').trim()); return; }
-    r.stdout.split('\n').forEach(l => {
-      if (/^(\+\+\+|---) /.test(l)) return;
-      if (l.startsWith('-')) bad.push(f + ' 刪改:' + l.slice(0, 80));
-      else if (l.startsWith('+')) { added++; if (!allowed.has(l.slice(1).trim())) bad.push(f + ' 多了:' + l.slice(0, 80)); }
+    /* 站名從刷刷英文改成衝衝英文(2026-10)那一批只換站名的行成對抵掉,不算刪改 */
+    const lines = r.stdout.split('\n').filter(l => !/^(\+\+\+|---) /.test(l));
+    const minus = lines.filter(l => l.startsWith('-'));
+    const renamed = lines.filter(l => l.startsWith('+') && /衝衝英文/.test(l)).filter(l => {
+      const i = minus.indexOf('-' + l.slice(1).replace(/衝衝英文/g, '刷刷英文'));
+      if (i < 0) return false;
+      minus.splice(i, 1);
+      return true;
+    });
+    minus.forEach(l => bad.push(f + ' 刪改:' + l.slice(0, 80)));
+    lines.filter(l => l.startsWith('+') && !renamed.includes(l)).forEach(l => {
+      added++; if (!allowed.has(l.slice(1).trim())) bad.push(f + ' 多了:' + l.slice(0, 80));
     });
   });
   return { ok: !bad.length && added === allowed.size, detail: '多了 ' + added + ' 行,應該 ' + allowed.size + ' 行;' + bad.join(' | ') };

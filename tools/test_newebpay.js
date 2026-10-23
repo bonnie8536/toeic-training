@@ -222,7 +222,7 @@ test('錯的金鑰解不出原文', async () => {
 test('makeMpgFields:欄位、驗章、解密內容', async () => {
   const { makeMpgFields, tradeSha, aesDecryptHex } = await LIB;
   const order = {
-    MerchantOrderNo: 'S2610071230ABCDEFG12', Amt: 199, ItemDesc: '刷刷英文 學生方案 1 個月', Email: 'a@example.com',
+    MerchantOrderNo: 'S2610071230ABCDEFG12', Amt: 199, ItemDesc: '衝衝英文 學生方案 1 個月', Email: 'a@example.com',
     LoginType: 0, NotifyURL: 'https://abcdefghijklmnopqrst.supabase.co/functions/v1/newebpay-notify',
     CREDIT: 1, TradeLimit: 900, OrderComment: undefined,
   };
@@ -235,7 +235,7 @@ test('makeMpgFields:欄位、驗章、解密內容', async () => {
   assert.equal(p.get('RespondType'), 'JSON');
   assert.equal(p.get('TimeStamp'), '1791345600');
   assert.equal(p.get('Amt'), '199');
-  assert.equal(p.get('ItemDesc'), '刷刷英文 學生方案 1 個月');
+  assert.equal(p.get('ItemDesc'), '衝衝英文 學生方案 1 個月');
   assert.equal(p.get('NotifyURL'), order.NotifyURL);
   assert.equal(p.has('OrderComment'), false);
   assert.equal(f.TradeInfo.length % 64, 0);
@@ -387,7 +387,7 @@ test('價格表:只有 test10 限站長;品名合規;怪代號查不到', async 
   const { PRODUCTS, findProduct } = await PROD_MOD;
   for (const p of PRODUCTS.values()) {
     assert.equal(p.ownerOnly, p.sku === 'test10', p.sku);
-    assert.ok(p.desc.startsWith('刷刷英文 '), p.sku);
+    assert.ok(p.desc.startsWith('衝衝英文 '), p.sku);
     assert.ok([...p.desc].length <= 50 && !/[\r\n']/.test(p.desc), p.sku);
     assert.ok(Object.isFrozen(p), p.sku);
     if (p.item === 'student') assert.ok(p.months && p.seats === null && p.credits === null, p.sku);
@@ -414,17 +414,17 @@ test('價格表的代號與內容跟 paid_gateway_additions.sql 的核對表相�
 test('審查:品名跟網站的寫法一樣(一個月、一年、N 位以內),一般空白,UTF-8 也在 50 位元組以內', async () => {
   const { PRODUCTS } = await PROD_MOD;
   const want = {
-    student_month: '刷刷英文 學生方案 一個月',
-    student_year: '刷刷英文 學生方案 一年',
-    teacher10_month: '刷刷英文 老師方案 10 位以內 一個月',
-    teacher10_year: '刷刷英文 老師方案 10 位以內 一年',
-    teacher30_month: '刷刷英文 老師方案 30 位以內 一個月',
-    teacher30_year: '刷刷英文 老師方案 30 位以內 一年',
-    teacher60_month: '刷刷英文 老師方案 60 位以內 一個月',
-    teacher60_year: '刷刷英文 老師方案 60 位以內 一年',
-    correction_one: '刷刷英文 寫作批改 1 篇',
-    correction_five: '刷刷英文 寫作批改 5 篇',
-    test10: '刷刷英文 站長測試項目',
+    student_month: '衝衝英文 學生方案 一個月',
+    student_year: '衝衝英文 學生方案 一年',
+    teacher10_month: '衝衝英文 老師方案 10 位以內 一個月',
+    teacher10_year: '衝衝英文 老師方案 10 位以內 一年',
+    teacher30_month: '衝衝英文 老師方案 30 位以內 一個月',
+    teacher30_year: '衝衝英文 老師方案 30 位以內 一年',
+    teacher60_month: '衝衝英文 老師方案 60 位以內 一個月',
+    teacher60_year: '衝衝英文 老師方案 60 位以內 一年',
+    correction_one: '衝衝英文 寫作批改 1 篇',
+    correction_five: '衝衝英文 寫作批改 5 篇',
+    test10: '衝衝英文 站長測試項目',
   };
   assert.deepEqual(Object.fromEntries([...PRODUCTS.values()].map((p) => [p.sku, p.desc])), want);
   for (const p of PRODUCTS.values()) {
@@ -435,7 +435,7 @@ test('審查:品名跟網站的寫法一樣(一個月、一年、N 位以內),�
   // 實際送到藍新的 ItemDesc 就是這一句
   const { handler } = await checkoutWith();
   const j = await (await handler(checkoutReq({ sku: 'teacher30_year', consent: true }))).json();
-  assert.equal((await decryptFields(j.fields)).get('ItemDesc'), '刷刷英文 老師方案 30 位以內 一年');
+  assert.equal((await decryptFields(j.fields)).get('ItemDesc'), '衝衝英文 老師方案 30 位以內 一年');
 });
 
 // ---------- 3. 處理邏輯:假的 Supabase ----------
@@ -619,7 +619,7 @@ test('checkout:學生月繳,正式環境,欄位只開信用卡、金額由伺服
   assert.equal(p.get('MerchantID'), MID);
   assert.equal(p.get('MerchantOrderNo'), j.order_no);
   assert.equal(p.get('Amt'), '199');
-  assert.equal(p.get('ItemDesc'), '刷刷英文 學生方案 一個月');
+  assert.equal(p.get('ItemDesc'), '衝衝英文 學生方案 一個月');
   assert.equal(p.get('Email'), USER.email);
   assert.equal(p.get('LoginType'), '0');
   assert.equal(p.get('CREDIT'), '1');
@@ -670,7 +670,7 @@ test('checkout:test10 送 10 元,站長以外由資料庫擋下並回 409', asyn
   const j = await ok.json();
   const p = await decryptFields(j.fields);
   assert.equal(p.get('Amt'), '10');
-  assert.equal(p.get('ItemDesc'), '刷刷英文 站長測試項目');
+  assert.equal(p.get('ItemDesc'), '衝衝英文 站長測試項目');
   assert.equal(sb1.rpcCalls('newebpay_begin_checkout')[0].body.p_sku, 'test10');
   assert.equal(sb1.rpcCalls('newebpay_begin_checkout')[0].body.p_user, OWNER.id);
   const sb2 = fakeSupabase({ rpcReply: () => ({ status: 400, body: { code: 'P0001', message: '這個測試項目只有站長可以購買' } }) });

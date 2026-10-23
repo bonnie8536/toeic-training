@@ -18,7 +18,7 @@
 
     if (CLOUD.user) {
       titleEl.textContent = '已經登入';
-      document.title = '已經登入|刷刷英文';
+      document.title = '已經登入|衝衝英文';
       root.append(h('div', { class: 'auth-signed' },
         h('div', null, CLOUD.nameOf(CLOUD.user), h('span', { style: 'color:var(--ink-light)' }, ' ' + (CLOUD.user.email || ''))),
         h('div', { class: 'auth-row' },
@@ -34,7 +34,7 @@
       backTo: 'index.html',
       onMode(m) {
         titleEl.textContent = TITLE[m] || TITLE.signup;
-        document.title = titleEl.textContent + '|刷刷英文';
+        document.title = titleEl.textContent + '|衝衝英文';
       },
     }));
   });

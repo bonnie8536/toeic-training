@@ -959,7 +959,7 @@ T['新版:壞資料(got 是字串、ate 某天是陣列、foodOld.before 不是�
     && J(f.got) === J({ '2026-11-02': { d: 'corn' } }) && a.name === '小黃' && a.days['2026-11-01'] === 25;
   return { ok, detail: J({ a: NEWF(a), b: b.ate, c: c.foodOld, e: [e.once, e.roam], f: f.got }) };
 };
-T['新版:大小:每天塞 50 張券、50 筆吃掉,整理後每天只剩 4 張、4 筆;400 天的舊欄位加 120 天的食物小於 100 KB'] = () => {
+T['新版:大小:每天塞 50 張券、50 筆吃掉,整理後每天只剩 9 張、9 筆(一天 3 份、三台);400 天的舊欄位加 120 天的食物小於 128 KB(雲端單一鍵上限 256 KB 的一半)'] = () => {
   const today = '2026-11-20';
   const days = {}, met = [];
   range(addDays(today, -399), 400).forEach(d => { days[d] = 9999; met.push(d); });
@@ -973,8 +973,8 @@ T['新版:大小:每天塞 50 張券、50 筆吃掉,整理後每天只剩 4 張�
     once: { diag: today, fav: today, 'w:s1': today, 'w:s2': today, 'w:s3': today, 'w:s4': today, 'w:s5': today, 'w:s6': today, 'w:a1': today, 'w:a2': today }, roam: { on: false, at: 1793000000000 } };
   const p = P.sanitize(freeze(raw), now(today)).pet;
   const size = J(p).length;
-  const perDay = Object.values(p.got).every(x => Object.keys(x).length === 4) && Object.values(p.ate).every(x => Object.keys(x).length === 4);
-  return { ok: perDay && size < 100000 && Object.keys(p.got).length === 120, detail: '整理後 ' + size + ' bytes,每天 4 張 4 筆 ' + perDay };
+  const perDay = Object.values(p.got).every(x => Object.keys(x).length === 9) && Object.values(p.ate).every(x => Object.keys(x).length === 9);
+  return { ok: perDay && size < 128 * 1024 && Object.keys(p.got).length === 120, detail: '整理後 ' + size + ' bytes,每天 9 張 9 筆 ' + perDay };
 };
 T['新版:roam 後改的贏;同時改的 on:false 贏(休息優先);合併順序無關'] = () => {
   const a = { v: 2, roam: { on: true, at: 5 } }, b = { v: 2, roam: { on: false, at: 3 } }, c = { v: 2, roam: { on: true, at: 3 } };
@@ -1007,7 +1007,7 @@ T['新版:pantry 只看拿到過的、份數扣掉吃掉的、今天的狀態'] 
     ate: { [y]: { e1: '2026-11-02/d' } }, foodOld: { before: '2026-10-01', left: { berry: 2 } }, once: {} };
   const pan = P.pantry(freeze(p), now(d));
   const want = { stock: { corn: 0, pea: 1, berry: 2, melon: 1, worm: 1 }, order: ['corn', 'pea', 'berry', 'melon', 'worm'], practiced: true, ateToday: false, ateFood: null,
-    gotToday: { id: 'w:s1', food: 'worm' }, canSnack: true, fav: P.favOf('2026-11-01'), favKnown: false };
+    gotToday: { id: 'w:s1', food: 'worm' }, canSnack: true, fav: P.favOf('2026-11-01'), favKnown: false, ateCount: 0, ateMax: 3, gotAll: [{ id: 'w:s1', food: 'worm' }] };
   const p2 = Object.assign({}, p, { got: { '2026-11-02': { d: 'corn' } }, ate: { [d]: { e9: 'old:2026-10-01:berry:0' } }, once: { fav: '2026-11-05' } });
   const pan2 = P.pantry(freeze(p2), now(d));
   const pan3 = P.pantry(freeze({ v: 1, born: '2026-11-01' }), now(d));
@@ -1015,7 +1015,7 @@ T['新版:pantry 只看拿到過的、份數扣掉吃掉的、今天的狀態'] 
              && J(pan3.order) === '[]' && pan3.practiced === false && pan3.gotToday === null,
            detail: J(pan) + ' / ' + J(pan2) };
 };
-T['新版:eat 五種拒絕各一次(pet 不變、不回 pet);吃最舊的券(先舊券,再依日期、id);吃到最愛記 once.fav'] = () => {
+T['新版:eat 五種拒絕各一次(pet 不變、不回 pet;ateToday 是一天餵滿 3 份以後);吃最舊的券(先舊券,再依日期、id);吃到最愛記 once.fav'] = () => {
   const d = S1;
   const fav = P.favOf('2026-11-01');
   const p = { v: 2, born: '2026-11-01', days: { [d]: 4, [addDays(d, 1)]: 4, [addDays(d, 2)]: 4, [addDays(d, 3)]: 4 }, got: { '2026-11-03': { 'g:z': fav, 'g:a': fav }, '2026-11-02': { d: fav }, [d]: { mock: 'melon' } }, foodOld: { before: '2026-10-01', left: { [fav]: 1 } } };
@@ -1027,7 +1027,8 @@ T['新版:eat 五種拒絕各一次(pet 不變、不回 pet);吃最舊的券(先
     ['none', P.eat(freeze(p), 'berry', 'a1', now(d))],
   ];
   const e1 = P.eat(freeze(p), fav, 'a1', now(d));
-  rej.push(['ateToday', P.eat(freeze(e1.pet), fav, 'a2', now(d))]);
+  const e3 = P.eat(freeze(P.eat(freeze(e1.pet), fav, 'a2', now(d)).pet), fav, 'a3', now(d));
+  rej.push(['ateToday', P.eat(freeze(e3.pet), fav, 'a4', now(d))]);
   const bad = rej.filter(([want, r]) => !(r.ok === false && r.reason === want && !('pet' in r))).map(x => x[0]);
   const seq = [e1.ticket];
   let q = e1.pet;

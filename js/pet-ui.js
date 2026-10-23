@@ -5,8 +5,7 @@
    - 面板照 js/app-shell.js 的 showInstallHelp:遮罩、右上角 ×、Esc、點背景關、關掉焦點回原處;另加從下面滑上來、
      把手與標題那一條往下拉關、背景設 inert、焦點鎖在面板裡。剛打開的 350 毫秒不接受點按(連點小雞時第二下不會按到面板裡的按鈕)。
    - 每日目標只放一個地方:「我的」頁那一區有,從那裡打開的面板就不再放。
-   - 第二階段(小雞第二階段規格.md 第 3 節、實作契約第 6 節):PET_STORE.food 為真時面板上半是餵食區(舞台、托盤),
-     卡片上的按鈕改成「餵牠」打開面板;PET_STORE.roamV2 為真時面板放「小雞在頁面上走動」開關。兩個開關各自獨立,
+   - 第二階段(小雞第二階段規格.md 第 3 節、實作契約第 6 節):PET_STORE.food 為真時面板上半是餵食區(舞台、托盤),卡片上的按鈕改成「餵牠」打開面板;PET_STORE.roamV2 為真時面板放「小雞在頁面上走動」開關。兩個開關各自獨立,
      都關著時畫出來的東西、焦點、事件跟第 1 步那版完全一樣(tools/test_pet_ui_food.js 對 tools/fixtures/pet_ui_step1.js 比)。
      食物模式唯一碰 localStorage 的是 tr_pet_hint(「點一下就餵」出現過幾次,不在學生資料裡、不同步)。
    載入順序:common.js、cloud.js、pet-config.js、pet.js、pet-store.js、chick-art.js、(food-art.js)、pet-ui.js(App 再加 pet-roam.js)。 */
@@ -83,8 +82,7 @@
       queue = list.map((p) => ({ pose: p, left: len(p) }));
       if (queue.length) anim.setPose(queue[0].pose); else if (anim.pose !== base) anim.setPose(base);
     }
-    /* 吃 n 口再播 after(規格 3.6;預覽 eatSeq):eat 第 1 到 5 格,口數不夠就重複第 4、5 格,最後第 6、7 格,每秒 8 格;引擎的 eat
-       只啄 2 下,要咬 3、4 口的食物會剩一截直接消失(第三輪審查 #10)。啄地那格照樣經過 onTick 咬一口。看不到、減少動態時不播,
+    /* 吃 n 口再播 after(規格 3.6;預覽 eatSeq):eat 第 1 到 5 格,口數不夠就重複第 4、5 格,最後第 6、7 格,每秒 8 格;引擎的 eat 只啄 2 下,要咬 3、4 口的食物會剩一截直接消失(第三輪審查 #10)。啄地那格照樣經過 onTick 咬一口。看不到、減少動態時不播,
        回 false;播到一半看不到了就停,回來時回到 base(舞台的食物由 onTick 收掉) */
     function eat(n, after) {
       if (REDUCE || !running || typeof anim.show !== 'function') return false;
@@ -153,8 +151,7 @@
     notify();
     return false;
   }
-  /* 改目標、取名的結果(what 是「名字」或「目標」):成功不寫;唯讀(資料讀不到、新版網頁存的、時鐘不對)再試也沒用,
-     說一句沒有改和原因,跟 action() 的說明對得上(按下去才發現唯讀時,學生要知道剛打的名字或選的目標沒有存);
+  /* 改目標、取名的結果(what 是「名字」或「目標」):成功不寫;唯讀(資料讀不到、新版網頁存的、時鐘不對)再試也沒用,說一句沒有改和原因,跟 action() 的說明對得上(按下去才發現唯讀時,學生要知道剛打的名字或選的目標沒有存);
      其他失敗(出錯、登出、沒存成)才請學生再試一次 */
   function saveMsg(r, what) {
     if (r && r.ok) return '';
@@ -268,6 +265,8 @@
   /* 舞台上的位置,跟 css 那一塊對齊:食物在小雞嘴前(對舞台中線的位移、上緣),愛心從頭頂冒出來 */
   const STAGE = { port: { chick: 160, food: 56, dx: 36, top: 126, cx: -12, head: 65, rise: 46 }, land: { chick: 96, food: 40, dx: 22, top: 51, cx: -7, head: 20, rise: 16 } };
   const LOCK = '今天練習一下，就可以餵點心。';
+  /* 一天可以餵幾份、今天餵了幾份(pantry 的 ateMax、ateCount;一天一份那版的 pantry 沒有這兩個鍵,照 ateToday 算 1 份、上限 3) */
+  const ateN = (p) => (typeof p.ateCount === 'number' && p.ateCount >= 0 ? p.ateCount : p.ateToday ? 1 : 0), ateMax = (p) => (typeof p.ateMax === 'number' && p.ateMax > 0 ? p.ateMax : 3), ateAll = (p) => ateN(p) >= ateMax(p);
   const HEART = "<svg viewBox='0 0 30 28' width='15' height='14' aria-hidden='true' focusable='false'><path d='M15 26C8 20.5 2.6 15.8 2.4 9.6 2.2 5.2 5.5 2.3 9.1 2.6c2.6.2 4.6 2 5.8 4.1 1.3-2.3 3.4-4.2 6.2-4.2 3.7 0 6.6 3.2 6.2 7.4-.6 6-6.2 10.6-12.3 16.1z' fill='#ff7a93' stroke='#151515' stroke-width='2.4' stroke-linejoin='round'/></svg>";
   function foodName(id) {
     try { const n = P.foodName && P.foodName(id); if (n) return n; } catch (e) { /* 舊版 pet.js */ } return F && F.info && F.info[id] ? F.info[id].name : '';
@@ -300,8 +299,7 @@
       g.setTransform(1, 0, 0, 1, 0, 0);
     } catch (e) { console.warn('小雞畫面更新失敗：', e); }
   }
-  /* 托盤小圖:每種只畫一張、不動(規格 3.3)。塗鴉畫法很花時間(9 種在手機上要好幾百毫秒),點下去那一下只放大小定好的
-     空白畫布交給 later 排隊,面板出來以後才一格一格畫;這一頁畫好的留著,再打開直接用 */
+  /* 托盤小圖:每種只畫一張、不動(規格 3.3)。塗鴉畫法很花時間(9 種在手機上要好幾百毫秒),點下去那一下只放大小定好的空白畫布交給 later 排隊,面板出來以後才一格一格畫;這一頁畫好的留著,再打開直接用 */
   const iconImg = {}, iconDpr = () => Math.min(2, window.devicePixelRatio || 1);
   function icon(id, later) {
     const cv = h('canvas', { class: 'pet-tile-cv', 'aria-hidden': 'true' });
@@ -331,28 +329,30 @@
     const hint = h('p', { class: 'pet-hint' });
     const hintOn = hintTurn();
     const timers = [], flyers = [];
-    let tiles = [], idx = 0, busy = false, pending = null, stageM = null, tok = 0, sawEat = false, noCrumbs = false, spinNext = false;
+    let tiles = [], idx = 0, busy = false, pending = [], stageM = null, tok = 0, sawEat = false, noCrumbs = false, spinNext = false;
     let tipEl = null, kbd = false, closed = false, empty = null;
     const later = (f, ms) => { const t = setTimeout(() => { if (!closed) f(); }, ms); timers.push(t); return t; };
     o.mask.addEventListener('pointerdown', () => { kbd = false; });
     o.box.addEventListener('scroll', () => hideTip());   // 提示是 fixed,面板捲動就收起來,不會離開格子
 
     function say(t) { msg = t; o.live.textContent = ''; later(() => { if (msg === t) o.live.textContent = t; }, 30); }   // 先清掉再寫,同一句也會再念一次
-    /* 畫面用的 pantry:剛吃的那一口還在存的時候,份數和「吃過了」先照吃完算(規格 3.4 當下一起更新) */
+    /* 畫面用的 pantry:剛吃的那幾口還在存的時候,份數和今天吃了幾份先照吃完算(規格 3.4 當下一起更新);已經寫進 view() 的那一口不再多算 */
     function pan(v) {
       const p = v.pantry || { stock: {}, order: [], practiced: false, ateToday: false, gotToday: null, fav: '', favKnown: false };
-      if (!pending) return p;
-      return Object.assign({}, p, { stock: Object.assign({}, p.stock, { [pending.id]: pending.left }), ateToday: true, ateFood: pending.id,
-        canSnack: false, favKnown: p.favKnown || pending.first });
+      const today = v.status && v.status.today, ate = today && v.pet && v.pet.ate && v.pet.ate[today];
+      const live = pending.filter((x) => !(x.eatId && ate && Object.prototype.hasOwnProperty.call(ate, x.eatId))), k = ateN(p) + live.length, stock = Object.assign({}, p.stock);
+      if (!live.length) return p;
+      live.forEach((x) => { stock[x.id] = x.left; });
+      return Object.assign({}, p, { stock, ateToday: true, ateFood: p.ateFood || live[0].id, ateCount: k, canSnack: !!p.practiced && k < ateMax(p), favKnown: p.favKnown || live.some((x) => x.first) });
     }
     function stateOf(id, v, p) {
       const snack = id !== 'grain';
       const n = snack ? Math.max(0, (p.stock && p.stock[id]) || 0) : feeding ? 0 : Math.max(0, v.status.food || 0);
       const full = snack && n >= MAX_STOCK, fav = snack && id === p.fav && !!p.favKnown;
-      const locked = snack && n > 0 && !p.practiced, done = snack && n > 0 && !!p.practiced && !!p.ateToday;
+      const locked = snack && n > 0 && !p.practiced, done = snack && n > 0 && !!p.practiced && ateAll(p);
       const count = n + (snack ? ' 份' : ' 顆'), text = count + (full ? '，滿了' : '');   // 格子上「滿了」自己一行(預覽 .ff)
       const name = foodName(id) + (fav ? '，最喜歡的' : '') + '，' + text;
-      const label = n === 0 || v.readOnly ? name : !snack ? name + '，全部餵牠' : locked ? name + '，今天練習一下才能餵' : done ? name + '，今天的點心餵過了' : name + '，餵一份';
+      const label = n === 0 || v.readOnly ? name : !snack ? name + '，全部餵牠' : locked ? name + '，今天練習一下才能餵' : done ? name + '，今天的 ' + ateMax(p) + ' 份點心餵過了' : name + '，餵一份';
       const hold = busy || feeding;
       return { n, count, full, label, fav, off: !!v.readOnly || n === 0 || locked || done || hold,
         cls: { 'is-empty': n === 0, 'is-locked': locked, 'is-done': done, 'is-full': full, 'is-fav': fav, 'is-busy': hold } };
@@ -440,17 +440,17 @@
         if (st.fav && !heart) t.b.append(h('span', { class: 'pet-heart', 'aria-hidden': 'true', html: HEART }));
         else if (!st.fav && heart) heart.remove();
       });
-      /* 今天的券沒有結束畫面講過(達標 m),或看不出是不是結束畫面給的(地瓜 y、麵包蟲 w:):打開面板時講(規格 4.3) */
-      const told = !!p.gotToday && /^(m|y|w:.*)$/.test(p.gotToday.id || '');
-      const lt = p.ateToday ? '今天的點心吃過了，明天再餵。' : told ? '今天拿到 1 份' + foodName(p.gotToday.food) + '。' : '';
+      /* 今天吃過了講吃了幾份、還能再餵幾份;還沒吃時,今天的券沒有結束畫面講過(達標 m)或看不出是不是結束畫面給的(一天一份那版的 y、w:s1,沒有 _來源)就講;達標補寫給的地瓜、麵包蟲記在 y_m、w:…_m,也沒有結束畫面,也講(規格 4.3,審查第 2 輪 #2) */
+      const gl = Array.isArray(p.gotAll) ? p.gotAll : p.gotToday ? [p.gotToday] : [], told = gl.find((g) => g && /^(m|y|w:[a-z0-9]+|(?:y|w:[a-z0-9]+)_m)$/.test(g.id || '')), k = ateN(p), mx = ateMax(p);
+      const lt = k >= mx ? '今天的 ' + mx + ' 份點心都吃了，明天再餵。' : k > 0 ? '今天吃了 ' + k + ' 份點心，還能再餵 ' + (mx - k) + ' 份。' : told ? '今天拿到 1 份' + foodName(told.food) + '。' : '';
       if (line.textContent !== lt) line.textContent = lt;
       const stocked = (p.order || []).some((id) => ((p.stock && p.stock[id]) || 0) > 0);
       const grain = !feeding && v.status.food > 0;
-      const ht = v.readOnly ? roText(v) : !p.practiced && stocked ? LOCK : hintOn && (grain || stocked) ? '點一下就餵' : '';
+      const ht = v.readOnly ? roText(v) : !p.practiced && stocked ? LOCK : hintOn && (grain || (stocked && !ateAll(p))) ? '點一下就餵' : '';   // 點心餵滿、飼料也沒了就不叫學生點(上一行已經寫明天再餵)
       if (hint.textContent !== ht) hint.textContent = ht;
       const none = !v.readOnly && !feeding && !grain && !stocked;
       if (none && !empty) {
-        empty = h('div', { class: 'pet-empty' }, h('p', null, '答題就有飼料，每天第一個完成的練習有一份點心。'), goLink(true));
+        empty = h('div', { class: 'pet-empty' }, h('p', null, '答題就有飼料，每天完成練習最多可以拿 ' + ateMax(p) + ' 份點心。'), goLink(true));
         hint.after(empty);
       } else if (!none && empty) {
         if (empty.contains(doc.activeElement)) tiles[0].b.focus();
@@ -467,7 +467,7 @@
       wake();
       if (id === 'grain') { grain(); return; }
       if (!p.practiced) { say(LOCK); return; }
-      if (p.ateToday) { refuse(id); return; }
+      if (ateAll(p)) { refuse(id); return; }
       snack(id, p);
     }
     /* 飼料到了舞台、也存好了才吃(每一口都咬到);小雞沒播(看不到)就收回去 */
@@ -497,8 +497,8 @@
         else say(eatFail(fn, why));
         return;
       }
-      pending = { id, left: Math.max(0, Math.floor(r.left) || 0), first };
-      say(nameOf() + '吃了' + fn + '。' + (pending.left > 0 ? '還有 ' + pending.left + ' 份。' : '') + (first ? '牠最喜歡' + fn + '。' : ''));
+      const mine = { id, left: Math.max(0, Math.floor(r.left) || 0), first, eatId: typeof r.eatId === 'string' ? r.eatId : '' }; pending = pending.concat([mine]);
+      say(nameOf() + '吃了' + fn + '。' + (mine.left > 0 ? '還有 ' + mine.left + ' 份。' : '') + (first ? '牠最喜歡' + fn + '。' : ''));
       if (REDUCE) {
         hold(STILL_MS);
         o.chick().still('eat', STILL_MS, () => plainFrame(cv, geo().chick, 'eat', A.calm.eat || 0));
@@ -511,14 +511,14 @@
         backstop(t, FLY_MS + EAT_MS * 2);   // 切到背景、畫面外時小雞沒吃,也收回去(第三輪審查 #8)
       }
       Promise.resolve(r.saved).then((s) => s, () => ({ ok: false, reason: 'error' })).then((s) => {
-        pending = null;
+        pending = pending.filter((x) => x !== mine);
         if (!s || !s.ok) msg = eatFail(fn, s && s.reason);
         notify();
       });
     }
-    /* 今天的點心吃過了:搖頭,食物飛回托盤,不扣(規格 3.5) */
+    /* 今天的 3 份點心都吃過了:搖頭,食物飛回托盤,不扣(規格 3.5) */
     function refuse(id) {
-      say(nameOf() + '今天吃過點心了，明天再餵。');
+      say(nameOf() + '今天吃了 ' + ateMax(pan(cur)) + ' 份點心，明天再餵。');
       if (REDUCE) { hold(STILL_MS); o.chick().still('nope', STILL_MS); return; }
       hold(FLY_MS * 2 + NOPE_MS);
       const t = serve(id, () => o.chick().play(['nope']));

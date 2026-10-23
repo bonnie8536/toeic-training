@@ -73,7 +73,7 @@
   let remoteBad = false;  // 上次讀到的雲端那份救不回
   let clockBad = false;   // 上次對時,這台的時鐘差太多
   let later = [];         // 這次寫不進去的完成 { id, at },之後第一次正常的同步補寫
-  let eating = '';        // 正在寫入的那一口是哪天吃的(連點時當場就回 ateToday)
+  let eating = [];        // 還在寫入的那幾口 { day, f, eatId }(連點時算進今天的份數,第 4 口當場就回 ateToday)
   let asks = [];          // 還在等結果的 earn 與動作 { flush, leave }:離開頁面時先寫 leave 的(earn、吃點心),登出前全部先寫(flushPending)
   let filled = [];        // 這個分頁補寫過的券 { date, src, id }(最多 LATER_MAX 筆):掛勾認得出是不是自己這次的完成
   let claimed = [];       // 這個分頁掛勾已經回過 got 的券 'date/id':同一張不會回兩次 got
@@ -180,7 +180,8 @@
      就回 got 與那份食物(規格 5.2:同一天同一個來源是同一張券)。同一張只回一次 got(claimed),不另外送 pet:earn(補寫那時送過了) */
   function mine(ask, pet, r) {
     if (r && r.result === 'got') { claimed = claimed.concat([r.date + '/' + r.id]).slice(-LATER_MAX); return r; }
-    if (!r || r.result !== 'cap' || ask.had !== false) return r;
+    /* 一天 3 份以後:補寫先寫了同一個來源的券,掛勾那一下會是 dup(同一個來源拿過了),那天剛好滿 3 張時是 cap */
+    if (!r || (r.result !== 'cap' && r.result !== 'dup') || ask.had !== false) return r;
     const d = P.dateOf(ask.at);
     const day = pet && pet.got && Object.prototype.hasOwnProperty.call(pet.got, d) ? pet.got[d] : null;
     if (!day || typeof day !== 'object') return r;
@@ -188,15 +189,17 @@
     const id = ids.find(i => Object.prototype.hasOwnProperty.call(day, i) && claimed.indexOf(d + '/' + i) < 0);
     if (!id) return r;
     claimed = claimed.concat([d + '/' + id]).slice(-LATER_MAX);
-    return { result: 'got', food: day[id], id, date: d };
+    return { result: 'got', food: day[id], id, date: d, left: Math.max(0, P.SNACKS_PER_DAY - Object.keys(day).length) };
   }
-  /* 交卷那一刻本機那天有沒有券(讀不到、壞掉當成有:照舊回 cap) */
-  function hadTicket(t) {
+  /* 交卷那一刻本機那天有沒有這個來源的券(一天 3 份以後只看同一個來源;讀不到、壞掉當成有:照舊回 cap、dup)。
+     跟 earn 判斷 dup 用同一條規則(審查第 2 輪 #1):特別的券記在 y_<來源>、w:…_<來源>,也算這個來源的 */
+  function hadTicket(t, id) {
     const l = readLocal();
     if (l === null) return false;
     if (!l || typeof l !== 'object') return true;
     const g = l.got, d = P.dateOf(t);
-    return !!(g && typeof g === 'object' && Object.prototype.hasOwnProperty.call(g, d) && g[d] && typeof g[d] === 'object' && Object.keys(g[d]).length);
+    if (!(g && typeof g === 'object' && Object.prototype.hasOwnProperty.call(g, d) && g[d] && typeof g[d] === 'object')) return false;
+    return typeof P.usedSource === 'function' ? P.usedSource(g[d], id) : Object.prototype.hasOwnProperty.call(g[d], id);
   }
 
   /* 一次同步。mutate(pet, now) 回 { ok: true, pet } 或 { ok: false, reason }(餵食、改目標、取名、吃、走動開關用);
@@ -318,16 +321,17 @@
   }
 
   /* ---------- 食物 ---------- */
-  /* 一個練習完成(js/pet-hook.js 呼叫)。回 { result, food, id };拿到或存滿時 food 是食物代號,其他是 null */
+  /* 一個練習完成(js/pet-hook.js 呼叫)。回 { result, food, id, left };拿到或存滿時 food 是食物代號,其他是 null;
+     left 是今天還能拿幾份(got、dup、cap、full 才有,其他沒有這個鍵) */
   function earn(o) {
     const id = o && o.id, n = o && o.n;
-    const out = (result, f, i) => ({ result, food: f || null, id: i || null });
+    const out = (result, f, i, left) => Object.assign({ result, food: f || null, id: i || null }, typeof left === 'number' ? { left } : {});
     if (!food) return Promise.resolve(out('off'));
     if (n !== undefined && n !== null && !(Number(n) >= P.ROUND_MIN)) return Promise.resolve(out('short'));
     if (!P.sourceFood(id)) return Promise.resolve(out('bad'));
     const at = Date.now();
     let had = true;
-    try { had = hadTicket(at); } catch (e) { had = true; }
+    try { had = hadTicket(at, id); } catch (e) { had = true; }
     const ask = { id, at, had };
     return new Promise(resolve => {
       let over = false, quickDone = false, timer = 0;
@@ -339,14 +343,14 @@
         const q = quick(ask);
         if (!q) return;
         quickDone = true;
-        end(out(q.result, q.result === 'got' ? q.food : null, q.result === 'got' ? q.id : null));
+        end(out(q.result, q.result === 'got' ? q.food : null, q.result === 'got' ? q.id : null, q.left));
       };
       asks.push(p);
       timer = setTimeout(p.flush, EARN_WAIT_MS);
       enqueue(() => run(null, ask)).then(r => {
         if (quickDone) return;   // 已經先寫在本機:券在本機那份裡,這一輪只負責合併與上傳
         const e = r && r.earn;
-        if (r && r.ok && e) { end(out(e.result, e.result === 'got' || e.result === 'full' ? e.food : null, e.result === 'got' ? e.id : null)); return; }
+        if (r && r.ok && e) { end(out(e.result, e.result === 'got' || e.result === 'full' ? e.food : null, e.result === 'got' ? e.id : null, e.left)); return; }
         /* 這次唯讀、時鐘不對或出錯:記下來,之後第一次正常的同步依原本的完成時間補寫(換了帳號就不記) */
         if (!r || r.reason !== 'loggedOut') { later.push(ask); if (later.length > LATER_MAX) later = later.slice(-LATER_MAX); }
         end(out('later'));
@@ -384,7 +388,7 @@
   }
   /* 先寫本機:用這台現在的資料(本機那份、hist)判斷,拿到就照讀不到雲端的規則寫(saveUnread;第 3 步登入時記帳,第三輪審查 #2),
      下一次同步合併上傳。
-     只在 got(寫了券)和 cap(今天已經有券,合併只會多不會少,答案不會變)時回結果,其他回 null 繼續等。
+     只在 got(寫了券)、cap(今天已經有 3 張)和 dup(這個來源今天拿過了)時回結果(合併只會多不會少,答案不會變),其他回 null 繼續等。
      唯讀、時鐘不對、雲端那份救不回、登出了:什麼都不做。讀寫之間沒有 await,跟同步的寫入不會交錯 */
   function quick(ask) {
     try {
@@ -394,7 +398,7 @@
       const base = P.reconcile({ local: readLocal(), remote: null, hist: readHist(), now });
       if (base.readOnly) return null;
       const r = P.earn(base.pet, { id: ask.id, at: ask.at, from: FROM }, now);
-      if (r.result === 'cap') return mine(ask, base.pet, r);
+      if (r.result === 'cap' || r.result === 'dup') return mine(ask, base.pet, r);
       if (r.result !== 'got' || !saveUnread(r.pet)) return null;
       mine(ask, base.pet, r);
       emitEarn([{ result: 'got', food: r.food, id: r.id, date: r.date, source: 'hook' }]);
@@ -403,6 +407,18 @@
     } catch (e) { return null; }
   }
   /* 吃一份點心:當場用畫面上的資料決定能不能吃(畫面靠它在點下去的當下更新),正式寫入排在後面;saved 是寫入的結果 */
+  /* 一天可以餵 3 份:還在寫入的那幾口先疊到畫面的資料上再判斷(連點時第 4 口當場就回 ateToday,剩幾份也算對);
+     已經寫進去的(今天的吃掉紀錄裡有那個吃的 id)不再疊 */
+  function withEating(pet, day, now) {
+    let p = pet;
+    eating.forEach(x => {
+      if (x.day !== day) return;
+      const ate = p && p.ate && Object.prototype.hasOwnProperty.call(p.ate, day) ? p.ate[day] : null;
+      if (ate && Object.prototype.hasOwnProperty.call(ate, x.eatId)) return;
+      try { const y = P.eat(p, x.f, x.eatId, now); if (y.ok) p = y.pet; } catch (e) { /* 疊不上就照畫面的資料算 */ }
+    });
+    return p;
+  }
   function eat(f) {
     const no = reason => ({ ok: false, reason, saved: Promise.resolve({ ok: false, reason }) });
     if (!food) return no('off');
@@ -410,21 +426,25 @@
     try { v = view(); } catch (e) { return no('error'); }
     if (v.readOnly) return no(v.reason || 'readOnly');
     const now = Date.now();
-    if (eating === P.dateOf(now) && P.SNACKS.indexOf(f) >= 0) return no('ateToday');
+    const day = P.dateOf(now);
     const eatId = now.toString(36) + randChar() + randChar();
     let r;
-    try { r = P.eat(v.pet, f, eatId, now); } catch (e) { return no('error'); }
+    try { r = P.eat(withEating(v.pet, day, now), f, eatId, now); } catch (e) { return no('error'); }
     if (!r.ok) return no(r.reason);
-    const day = P.dateOf(now);
-    eating = day;
+    const mineEat = { day, f, eatId };
+    eating = eating.concat([mineEat]);
     const saved = act((pet, t) => {
+      /* 這一口已經先寫過(離開頁面、等了 2 秒):不再吃一次。一天一份時正式那一輪會被「今天吃過了」擋下來;
+         一天 3 份以後擋不住,同一個吃的 id 會改指到下一張券(第一張又回到托盤、第二張被吃掉) */
+      const done = pet && pet.ate && pet.ate[day] && typeof pet.ate[day] === 'object' && Object.prototype.hasOwnProperty.call(pet.ate[day], eatId);
+      if (done) return { ok: true, pet };
       const x = P.eat(pet, f, eatId, t);
       return x.ok ? { ok: true, pet: x.pet } : { ok: false, reason: x.reason };
     }, true).then(res => {
-      if (eating === day) eating = '';
+      eating = eating.filter(x => x !== mineEat);
       return { ok: !!(res && res.ok), reason: res && res.ok ? null : (res && res.reason) || 'error' };
     });
-    return { ok: true, reason: null, left: r.left, saved };
+    return { ok: true, reason: null, left: r.left, saved, eatId };   // eatId:畫面用來認出這一口寫進去了沒
   }
   function randChar() { return '0123456789abcdefghijklmnopqrstuvwxyz'.charAt(Math.floor(Math.random() * 36)); }
   /* 「小雞在頁面上走動」開關 */

@@ -2647,7 +2647,9 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 /* 整頁跑(小雞第二階段規格.md 第 1 節)。每一條都掛在 html.pet-roam2 或 div.pet-roam2 底下,開關關著時不作用。
    外層不接受點擊,只有小雞按鈕能點;地面層 z-index 91(App 模式要在分頁列 90 上面),站點層 49(頂欄 50 下面)。
    網站模式的地面層也是 49:頂端導覽列的下拉選單、個人選單在頂欄 50 裡面,矮視窗時會長到視窗下緣,小雞不能蓋住它們。 */
-html.pet-roam2 { --pet2-h: 51px; }
+/* 小雞的寬和框高:js/pet-roam2.js 照模式寫在 <html> 上(CFG.sizes:App、1023 以下 96×102,App 手機橫放 64×68,電腦版到處走 110×116;Bonnie 10/23 約 2 倍),這裡是 js 寫之前的預設。
+   --pet2-tw、--pet2-th 是可以點的範圍(CFG.tap):只有畫出來的小雞那麼大,框上面留給跳起來的那一條透明的地方點得到底下的卡片(審查第 2 輪 #3) */
+html.pet-roam2 { --pet2-w: 96px; --pet2-h: 102px; --pet2-tw: 69px; --pet2-th: 71px; }
 div.pet-roam2 { display: block; left: 0; right: 0; pointer-events: none; }
 div.pet-roam2[hidden], div.pet-roam2.is-off { display: none !important; }
 div.pet-roam2.is-ground { position: fixed; z-index: 91; height: var(--pet2-h); }
@@ -2667,9 +2669,12 @@ html.app-shell div.pet-roam2 { display: none; }
   html.app-shell.app-kb div.pet-roam2 { display: none; }
   /* 規格 1.2:「我的」那一區不再藏起來(只藏首頁那張),當餵食和走動開關的固定入口 */
   html.app-shell.has-tabbar.pet-roam2 .pet-card.pet-me:not([hidden]) { display: grid; }
+  /* 分頁列那一套頁面底部留白、橫放時文章框扣掉的高度(--pet-h,第一階段 51 px)改成走動那隻的高度,最後的內容捲得到小雞上面 */
+  html.app-shell.pet-roam2 { --pet-h: var(--pet2-h); }
 }
+/* 按鈕:腳底對齊框底、左右置中;畫布往回移到框的左上角,照舊佔整個框(跳起來畫在按鈕外面,那裡不接點擊) */
 .pet-roam2-btn {
-  position: absolute; left: 0; top: 0; width: 48px; height: var(--pet2-h); padding: 0; border: 0; border-radius: 12px;
+  position: absolute; left: calc((var(--pet2-w) - var(--pet2-tw)) / 2); top: calc(var(--pet2-h) - var(--pet2-th)); width: var(--pet2-tw); height: var(--pet2-th); padding: 0; border: 0; border-radius: 12px;
   background: none; pointer-events: auto; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation;
   will-change: transform; opacity: 1; transition: opacity .2s;
 }
@@ -2684,8 +2689,8 @@ div.pet-roam2.is-faded .pet-roam2-btn { opacity: 0; pointer-events: none; }
 div.pet-roam2.is-init .pet-roam2-btn { opacity: 0; pointer-events: none; transition: none; }
 /* 站在卡片上緣:可點範圍往上移 8 px,點卡片上緣不會點到小雞 */
 .pet-roam2-btn.is-perch { margin-top: -8px; }
-.pet-roam2-cv { position: absolute; left: 0; top: 0; display: block; pointer-events: none; transform-origin: 50% 80%; }
-.pet-roam2-btn.is-perch .pet-roam2-cv { top: 8px; }
+.pet-roam2-cv { position: absolute; left: calc((var(--pet2-tw) - var(--pet2-w)) / 2); top: calc(var(--pet2-th) - var(--pet2-h)); display: block; pointer-events: none; transform-origin: 50% 80%; }
+.pet-roam2-btn.is-perch .pet-roam2-cv { top: calc(8px + var(--pet2-th) - var(--pet2-h)); }
 /* 電腦版到處走(規格 1.11,寬 1024 以上的網站模式,js 加 html.pet-roam2-wide):畫面上只留走動的那隻。
    首頁卡片、「我的」那一區的小雞藏起來(位置留著,版面不跳),畫一個空的窩;名字、今天的進度、餵食按鈕照舊,點窩一樣打開面板。
    藏著的小雞由 js/pet-ui.js 停住不畫;列印時卡片的小雞照常印出來(下面的 @media print,pet-ui.js 在 beforeprint 先畫一格) */

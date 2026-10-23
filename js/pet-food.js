@@ -1,17 +1,23 @@
 /* 小雞第二階段的獎勵規則(規格 4.3、5.2、附錄 A.2;規格在 repo 外的 小雞第二階段規格.md)。純函式:
    不碰畫面、不讀寫任何儲存鍵、不用亂數、不讀時鐘(現在的時間一律由參數 now 傳入)。輸入一律不改,回傳新物件。
    載入在 js/pet.js 之後,把 sourceFood、ROUND_MIN、earn、backfill 掛到同一個 PET 上;pet.js 沒載入就什麼都不做。
-   - 一天最多拿到 1 份點心,由當天第一個完成的練習給,種類看是什麼練習(來源 id 對照表);在寫入的那台判斷,
-     判斷時用這台合併後的資料,種類寫進券以後不再改。
+   - 一天最多拿到 3 份點心(PET.SNACKS_PER_DAY;Bonnie 2026-10-23「每天拿三個阿」「應該有做任何練習都要拿的到食物」),
+     每個完成的練習都可以拿,種類看是什麼練習(來源 id 對照表)。同一個來源 id 一天只算一次(再做一次回 dup),
+     重複做同一關拿不到第二份。在寫入的那台判斷,判斷時用這台合併後的資料,種類寫進券以後不再改。
+     一般的券記在來源 id 底下(日期 -> { 來源 id: 食物 });地瓜、麵包蟲記在自己的 id,後面帶著給它的練習(y_p5、w:s1_p5),
+     同一個來源一般券和特別的券的 id 不同,兩台各給一種時合併兩張都留著(審查第 1 輪 #1)。
+     一天一份那版的地瓜、麵包蟲券 id 是 y、w:…(沒有來源),照樣讀得懂,算那天的 1 份,也算那天的特別的。
    - 特別的日子:拿到那一刻的連續天數(含保護卡,含今天)剛好是 7 的倍數 → 地瓜;
-     之前某一天長到新階段、或累積達標滿 60、90…天還沒領過 → 麵包蟲(記進 once),一天給一個。兩個都符合先給地瓜。
+     之前某一天長到新階段、或累積達標滿 60、90…天還沒領過 → 麵包蟲(記進 once)。兩個都符合先給地瓜。
+     特別的算在一天 3 份裡,一天最多一份特別的(那天第一份),麵包蟲留到下一個沒有特別的日子。
      只算上線日(from)以後的事,上線前的紀錄不補發。
      已知限制(chick2 第二輪修正 #5):麵包蟲領過沒有只看判斷那台的 once。一台的資料停在別台領之前(離線、網路卡住),
      隔天在那台完成練習,同一個階段的麵包蟲會再給一次;日期不同是另一張券,合併兩張都留著(寧可多給,不收回已經給的)。
-     這一張占掉那台那天的名額,學生拿到麵包蟲而不是那天的點心,總份數不變。同步之後 once 記較早那天,不會再給第三次。
-   - 每種最多存 9 份,滿了不給(full),當天的名額留給下一個完成的練習。
-   - 補寫(backfill):最近 7 天裡還沒有券的日子,從既有的鍵看得到的完成補一張。
-   測試:node tools/test_pet_food.js */
+     這一張占掉那台那天的一個名額,學生拿到麵包蟲而不是那一份點心,總份數不變。同步之後 once 記較早那天,不會再給第三次。
+   - 每種最多存 9 份,滿了不給(full),不占名額,留給下一個完成的練習。
+   - 補寫(backfill):最近 7 天裡還沒有任何券的日子,從既有的鍵看得到的完成補一張(跟一天一份那版相同,不補到 3 份:
+     已經有券的日子不動,舊規則寫好的那幾天不會因為改成一天 3 份被補上券)。
+   測試:node tools/test_pet_food.js、node tools/test_pet_food3.js */
 'use strict';
 (function () {
   const P = globalThis.PET;
@@ -82,24 +88,46 @@
     return '';
   }
 
+  /* ---------- 特別的券的 id(審查第 1 輪 #1) ---------- */
+  /* 地瓜、麵包蟲的券記在自己的 id:y_<來源>、w:s<階段>_<來源>、w:a<第幾個 30 天>_<來源>,超過 24 個字截掉後面。
+     不跟同一個來源的一般券共用 id:兩台同一天各自完成同一個來源、一台給了特別的另一台給一般的,合併時兩張都留著
+     (共用 id 時合併只留一個值,特別的那張會不見,吃掉紀錄也會指到另一台的一般券)。一天一份那版的 y、w:… 沒有來源 */
+  const SPECIAL_ID = /^(y|w:(?:s[1-6]|a[1-9]\d{0,3}))_(.+)$/;
+  const specialId = (kind, src) => (kind + '_' + src).slice(0, 24);
+  /* 那天的券裡有沒有這個來源給的(一般券的 id 就是來源;特別的券看 _ 後面,截掉的比對前面那段) */
+  function usedSource(day, src) {
+    if (!day || typeof day !== 'object') return false;
+    return Object.keys(day).some(id => {
+      if (id === src) return true;
+      const m = SPECIAL_ID.exec(id);
+      return !!m && (m[2] === src || (id.length === 24 && src.startsWith(m[2])));
+    });
+  }
+
   /* ---------- 決定那天拿什麼(earn 與 backfill 共用) ---------- */
-  /* 回傳 { result, food, id, F }:F 是寫好的新欄位(只有 got 時有) */
+  /* 回傳 { result, food, id, left, F }:F 是寫好的新欄位(只有 got 時有);id 是券的 id;left 是那天還能拿幾份。
+     先看那天滿 3 張沒有(cap),再看同一個來源拿過沒有(dup) */
+  const SPECIAL_FOODS = ['yam', 'worm'];
   function decide(p, F, src, d, from, streak) {
-    if (K.own(F.got, d) && Object.keys(F.got[d]).length) return { result: 'cap' };
+    const day = K.own(F.got, d) ? F.got[d] : {};
+    const n = Object.keys(day).length, max = P.SNACKS_PER_DAY;
+    if (n >= max) return { result: 'cap', left: 0 };
+    if (usedSource(day, src)) return { result: 'dup', left: max - n };
     if (src === 'diag' && K.own(F.once, 'diag')) return { result: 'once' };
     const stock = K.stockOf(F);
     const room = f => (K.own(stock, f) ? stock[f] : 0) < P.MAX_STOCK;
-    let id = src, food = regularFood(src);
+    const special = Object.keys(day).some(id => SPECIAL_FOODS.includes(day[id]));   // 那天給過特別的了(含一天一份那版的 y、w:…)
+    let food = regularFood(src), id = src;
     const once = Object.assign({}, F.once);
-    if (streak > 0 && streak % WEEK === 0 && (p.days[d] || 0) > 0 && room('yam')) { id = 'y'; food = 'yam'; }
+    if (!special && streak > 0 && streak % WEEK === 0 && (p.days[d] || 0) > 0 && room('yam')) { food = 'yam'; id = specialId('y', src); }
     else {
-      const w = wormDue(p, F, d, from);
-      if (w && room('worm')) { id = w; food = 'worm'; once[w] = d; }
-      else if (!room(food)) return { result: 'full', food };
+      const w = special ? '' : wormDue(p, F, d, from);
+      if (w && room('worm')) { food = 'worm'; id = specialId(w, src); once[w] = d; }
+      else if (!room(food)) return { result: 'full', food, left: max - n };
     }
     if (src === 'diag') once.diag = d;   // 程度檢測一輩子只給一次:第一次交卷那天就記下,就算那天換成了特別的食物
-    const got = Object.assign({}, F.got, { [d]: { [id]: food } });
-    return { result: 'got', food, id, F: Object.assign({}, F, { got, once }) };
+    const got = Object.assign({}, F.got, { [d]: Object.assign({}, day, { [id]: food }) });
+    return { result: 'got', food, id, left: max - n - 1, F: Object.assign({}, F, { got, once }) };
   }
 
   /* 一個練習完成(掛勾呼叫,經過 pet-store):at 是完成的時間(決定券算哪一天),now 是現在(整理用) */
@@ -112,9 +140,10 @@
     const today = K.todayOf(now);
     const { p, F } = K.split(pet, today);
     const r = decide(p, F, id, d, from, streakAt(p, d));
-    if (r.result === 'full') return { result: 'full', food: r.food };
+    if (r.result === 'full') return { result: 'full', food: r.food, left: r.left };
+    if (r.result === 'cap' || r.result === 'dup') return { result: r.result, left: r.left };
     if (r.result !== 'got') return { result: r.result };
-    return { result: 'got', food: r.food, id: r.id, date: d, pet: K.attach(p, K.normFood(r.F, today), true) };
+    return { result: 'got', food: r.food, id: r.id, date: d, left: r.left, pet: K.attach(p, K.normFood(r.F, today), true) };
   }
 
   /* ---------- 補寫最近 7 天 ---------- */
@@ -165,5 +194,5 @@
     return { pet: K.attach(p, K.normFood(F, today), true), added };
   }
 
-  Object.assign(P, { ROUND_MIN, sourceFood, earn, backfill });
+  Object.assign(P, { ROUND_MIN, sourceFood, usedSource, earn, backfill });
 })();

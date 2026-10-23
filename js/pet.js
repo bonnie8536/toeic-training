@@ -193,7 +193,13 @@ globalThis.PET = (function () {
   /* ---------- 第二階段的欄位:食物(券)與走動開關 ---------- */
   const KEEP_FOOD = 120;    // got、ate 留幾天,更早的壓縮進 foodOld
   const MAX_STOCK = 9;      // 每種點心最多存幾份(在拿到時判斷,js/pet-food.js)
-  const PER_DAY = 4;        // 每天最多留幾張券、幾筆吃掉(正常一天 1 張;要 4 台以上同時離線才會超過)
+  const SNACKS_PER_DAY = 3; // 一天最多拿幾份、最多餵幾份點心(Bonnie 2026-10-23:「每天拿三個阿 可以為三次」);在寫入的那台判斷
+  /* 整理時每天最多留幾張券、幾筆吃掉。一台一天最多寫 3 張、3 筆;三台同一天各自離線、各拿 3 份吃 3 份,合併後 9 張 9 筆,
+     上限要容得下,不然 id 大的那幾張會被整理掉(券不見、吃掉的又回來;審查第 1 輪 #2,6 的時候三台就會掉)。一天一份那版是 4。
+     每天 9 張 9 筆、id 都最長、120 天加第一階段 400 天約 120 KB,在測試門檻 128 KB 以內,是雲端單一鍵上限 256 KB
+     (tools/supabase_hardening.sql)的一半(附錄 A.8);一般學生一天 3 張 3 筆,120 天約 20 KB。
+     要 4 台以上同一天都離線、各拿滿 3 份才會超過,超過時留 id 最小的 9 張(寧可少這幾張,不讓資料無上限長大) */
+  const PER_DAY = 3 * SNACKS_PER_DAY;
   const LEFT_MAX = 100000;
   const ID_RE = /^[a-z0-9:_-]{1,24}$/;
   const EAT_ID_RE = /^[a-z0-9]{1,24}$/;
@@ -492,13 +498,17 @@ globalThis.PET = (function () {
     const ateIds = own(F.ate, today) ? Object.keys(F.ate[today]).sort() : [];
     const practiced = (p.days[today] || 0) > 0 || gotIds.length > 0;
     const af = ateIds.length ? ticketFood(F.ate[today][ateIds[0]], F) : '';
+    /* 一天一份那版就有的鍵意思不變(ateToday:今天吃過任何一份;gotToday:今天 id 最小的那張);
+       一天 3 份另外加 ateCount(今天吃了幾份)、ateMax(一天最多幾份)、gotAll(今天全部的券,照 id 排)。canSnack 看今天還能不能再餵 */
     return {
       stock: out, order, practiced,
       ateToday: ateIds.length > 0,
       ateFood: SNACKS.includes(af) ? af : null,
       gotToday: gotIds.length ? { id: gotIds[0], food: F.got[today][gotIds[0]] } : null,
-      canSnack: practiced && !ateIds.length,
+      canSnack: practiced && ateIds.length < SNACKS_PER_DAY,
       fav: favOf(p.born), favKnown: own(F.once, 'fav'),
+      ateCount: ateIds.length, ateMax: SNACKS_PER_DAY,
+      gotAll: gotIds.map(id => ({ id, food: F.got[today][id] })),
     };
   }
   function split(pet, today) { return unusable(pet) ? { p: empty(), F: noFood() } : { p: sanitizeObj(pet, today), F: foodOf(pet, today) }; }
@@ -520,7 +530,7 @@ globalThis.PET = (function () {
     }
     return '';
   }
-  /* 吃一份點心。eatId 由 pet-store 產生([a-z0-9]{1,24})。拒絕時什麼都不寫、不回 pet */
+  /* 吃一份點心,一天最多 SNACKS_PER_DAY 份。eatId 由 pet-store 產生([a-z0-9]{1,24})。拒絕時什麼都不寫、不回 pet */
   function eat(pet, food, eatId, now) {
     if (unusable(pet)) return { ok: false, reason: 'readOnly' };
     if (!SNACKS.includes(food)) return { ok: false, reason: 'badFood' };
@@ -529,7 +539,7 @@ globalThis.PET = (function () {
     const { p, F } = split(pet, today);
     const pan = pantryOf(p, F, today);
     if (!pan.practiced) return { ok: false, reason: 'notToday' };
-    if (pan.ateToday) return { ok: false, reason: 'ateToday' };
+    if (pan.ateCount >= SNACKS_PER_DAY) return { ok: false, reason: 'ateToday' };   // 今天的 3 份都餵過了(理由的名字沿用一天一份那版)
     const ticket = pickTicket(F, food, today);
     if (!ticket) return { ok: false, reason: 'none' };
     const ate = Object.assign({}, F.ate, { [today]: Object.assign({}, own(F.ate, today) ? F.ate[today] : {}, { [eatId]: ticket }) });
@@ -615,7 +625,7 @@ globalThis.PET = (function () {
 
   return {
     dateOf, isSleeping, countHist, sanitize, merge, reconcile, setGoal, rename, feed, status, stageOf, accessoriesOf, goalOn, canon, isNext, isDate,
-    FOODS, SNACKS, MAX_STOCK, FAVS, KEEP_FOOD, foodName, favOf, roamOn, setRoam, pantry, eat, cloudMerge,
+    FOODS, SNACKS, MAX_STOCK, SNACKS_PER_DAY, FAVS, KEEP_FOOD, foodName, favOf, roamOn, setRoam, pantry, eat, cloudMerge,
     /* 給 js/pet-food.js 用的內部工具(同一套整理與合併規則);畫面不要用 */
     _inner: Object.freeze({ STAGES, DAY, AHEAD, ID_RE, okId, isTime, todayOf, addDays, unusable, streakOf, split, normFood, attach, stockOf, own }),
   };

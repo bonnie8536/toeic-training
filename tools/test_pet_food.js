@@ -76,24 +76,27 @@ T['earn:off(版本不認得、上線日不對、早於上線日、時間差超�
   return { ok: offs.every(x => x === 'off') && bads.every(x => x === 'bad') && offBeforeBad === 'off', detail: J({ offs, bads, offBeforeBad }) };
 };
 T['earn:拒絕時不回 pet、什麼都不寫;拿到時只多一張券,其他欄位不變'] = () => {
-  const p = pet({ v: 2, got: { [D]: { d: 'corn' } } });
+  const p = pet({ v: 2, got: { [D]: { d: 'corn', fall: 'berry', p5: 'tomato' } } });
   const cap = earn(p, 'g:ga-01');
   const p2 = pet();
   const r = earn(p2, 'iv');
   const same = J(Object.assign({}, r.pet, { v: 1, got: undefined })) === J(Object.assign(P.sanitize(freeze(p2), now(D)).pet, { got: undefined }));
-  return { ok: cap.result === 'cap' && !('pet' in cap) && r.result === 'got' && same && J(r.pet.got) === J({ [D]: { iv: 'pea' } }) && !r.pet.ate && !r.pet.once, detail: J({ cap, got: r.pet && r.pet.got }) };
+  return { ok: cap.result === 'cap' && cap.left === 0 && !('pet' in cap) && r.result === 'got' && r.left === 2 && same && J(r.pet.got) === J({ [D]: { iv: 'pea' } }) && !r.pet.ate && !r.pet.once, detail: J({ cap, got: r.pet && r.pet.got }) };
 };
 
-/* ---------- 一天一張(附錄 C 第 6、7、12 條) ---------- */
-T['一天一張在寫入時判斷:同一台第二個完成回 cap;兩台各自離線拿到不同 id,合併後兩張都在;拿到同一個 id,合併後只有一張'] = () => {
+/* ---------- 一天 3 張(附錄 C 第 6、7、12 條;2026-10-23 從一天一張改成 3 張) ---------- */
+T['一天 3 張在寫入時判斷:同一台第 4 個完成回 cap;兩台各自離線拿到不同 id,合併後全部都在;拿到同一個 id,合併後只有一張'] = () => {
   const a1 = earn(pet(), 'd', tp(D + ' 09:00:00'));
   const a2 = earn(a1.pet, 'g:ga-01', tp(D + ' 10:00:00'));
+  const a3 = earn(a2.pet, 'fall', tp(D + ' 10:30:00'));
+  const a4 = earn(a3.pet, 'p5', tp(D + ' 10:40:00'));
   const b = earn(pet(), 'g:ga-01', tp(D + ' 11:00:00'));
-  const m = P.merge(freeze(a1.pet), freeze(b.pet), now(D));
+  const b2 = earn(b.pet, 'iv', tp(D + ' 11:10:00'));
+  const m = P.merge(freeze(a3.pet), freeze(b2.pet), now(D));
   const c = earn(pet(), 'd', tp(D + ' 11:00:00'));
   const m2 = P.merge(freeze(a1.pet), freeze(c.pet), now(D));
-  return { ok: a1.result === 'got' && a2.result === 'cap' && J(m.got[D]) === J({ d: 'corn', 'g:ga-01': 'pea' }) && J(m2.got[D]) === J({ d: 'corn' }) && P.pantry(freeze(m), now(D)).stock.corn === 1,
-           detail: J({ a2: a2.result, m: m.got, m2: m2.got }) };
+  return { ok: a1.result === 'got' && a2.result === 'got' && a3.result === 'got' && a4.result === 'cap' && J(m.got[D]) === J({ d: 'corn', fall: 'berry', 'g:ga-01': 'pea', iv: 'pea' }) && J(m2.got[D]) === J({ d: 'corn' }) && P.pantry(freeze(m), now(D)).stock.corn === 1 && P.pantry(freeze(m), now(D)).stock.pea === 2,
+           detail: J({ a4: a4.result, m: m.got, m2: m2.got }) };
 };
 T['第一個完成的那種存滿 9 份回 full,當天的名額留著,下一個完成的別種照樣拿得到'] = () => {
   const p = pet({ v: 2, got: tickets('corn', 9) });
@@ -102,18 +105,19 @@ T['第一個完成的那種存滿 9 份回 full,當天的名額留著,下一個�
   const f8 = earn(pet({ v: 2, got: tickets('corn', 8) }), 'd');
   return { ok: f.result === 'full' && f.food === 'corn' && !('pet' in f) && g.result === 'got' && g.food === 'pea' && f8.result === 'got', detail: J([f, g.result, f8.result]) };
 };
-T['一天 15 個練習 id 加上 d、m:只寫第一個,其他都 cap'] = () => {
+T['一天 15 個練習 id 加上 d、m:只寫前 3 個,其他都 cap'] = () => {
   const ids = ['iv', 'g:ga-01', 'pn:a', 'fall', 'pairs', 'toast', 'mcq', 'ph', 'r:art-1', 'tq:art-1', 'p5', 'l2', 'es', 'rv', 'dlg:x', 'd', 'm'];
   let p = pet(); const res = [];
   ids.forEach((id, i) => { const r = earn(p, id, tp(D + ' 09:00:00') + i * 60e3); res.push(r.result); if (r.result === 'got') p = r.pet; });
-  return { ok: res[0] === 'got' && res.slice(1).every(x => x === 'cap') && J(p.got[D]) === J({ iv: 'pea' }), detail: J(res) };
+  return { ok: res.slice(0, 3).every(x => x === 'got') && res.slice(3).every(x => x === 'cap') && J(p.got[D]) === J({ 'g:ga-01': 'pea', iv: 'pea', 'pn:a': 'pea' }), detail: J(res) };
 };
 
 /* ---------- 吃(附錄 C 第 8、9 條) ---------- */
-T['點心第 2 份、今天還沒練習、沒有券:eat 拒絕,pet 不變;只寫了作業、今天有券但 days 是 0:可以餵'] = () => {
-  const p = pet({ v: 2, got: tickets('pea', 2) });
+T['點心第 4 份、今天還沒練習、沒有券:eat 拒絕,pet 不變;只寫了作業、今天有券但 days 是 0:可以餵'] = () => {
+  const p = pet({ v: 2, got: tickets('pea', 4) });
   const e1 = P.eat(freeze(p), 'pea', 'a1', now(D));
-  const e2 = P.eat(freeze(e1.pet), 'pea', 'a2', now(D));
+  const e1c = P.eat(freeze(P.eat(freeze(e1.pet), 'pea', 'a2', now(D)).pet), 'pea', 'a2b', now(D));
+  const e2 = P.eat(freeze(e1c.pet), 'pea', 'a2c', now(D));
   const e3 = P.eat(freeze(pet({ v: 2, days: {}, got: tickets('pea', 2) })), 'pea', 'a3', now(D));
   const e4 = P.eat(freeze(p), 'melon', 'a4', now(D));
   const hw = earn(pet({ days: {} }), 'wr:w1-lesson-1');
@@ -137,7 +141,7 @@ T['連續天數到 7 的倍數那天給地瓜;今天還沒答題(只寫作業)�
   const r6 = earn(streakPet(D, 6), 'd');
   const p = streakPet(addDays(D, -1), 7);
   const r0 = earn(p, 'wr:w1-lesson-1');
-  return { ok: r7.result === 'got' && r7.food === 'yam' && r7.id === 'y' && r14.food === 'yam' && r6.food === 'corn' && r0.food === 'greens', detail: J([r7.id, r7.food, r14.food, r6.food, r0.food]) };
+  return { ok: r7.result === 'got' && r7.food === 'yam' && r7.id === 'y_g:ga-01' && r14.food === 'yam' && r6.food === 'corn' && r0.food === 'greens', detail: J([r7.id, r7.food, r14.food, r6.food, r0.food]) };
 };
 T['麵包蟲:之前長大還沒領的,在之後第一個拿到點心的日子給;好幾個一天一個;同一天地瓜也符合時先給地瓜'] = () => {
   /* 11/2 到 11/8 每天達標:11/2 第 1 階、11/4 第 2 階、11/8 第 3 階 */
@@ -157,7 +161,7 @@ T['麵包蟲:之前長大還沒領的,在之後第一個拿到點心的日子給
   const nx = addDays(D, 1);
   const q2 = P.reconcile({ local: freeze(y1.pet), remote: null, hist: freeze(dayHist(nx, 5)), now: now(nx) }).pet;
   const y2 = P.earn(freeze(q2), { id: 'd', at: now(nx), from: FROM }, now(nx));
-  return { ok: J(res) === J(['w:s1>worm', 'w:s2>worm', 'w:s3>worm', 'd>corn']) && p.once['w:s1'] === D && y1.id === 'y' && y2.id === 'w:s1' && y2.food === 'worm',
+  return { ok: J(res) === J(['w:s1_d>worm', 'w:s2_d>worm', 'w:s3_d>worm', 'd>corn']) && p.once['w:s1'] === D && p.once['w:s2'] === addDays(D, 1) && p.once['w:s3'] === addDays(D, 2) && y1.food === 'yam' && y2.id === 'w:s1_d' && y2.food === 'worm' && y2.pet.once['w:s1'] === nx,
            detail: J(res) + ' / 同一天 ' + y1.id + '、隔天 ' + y2.id };
 };
 T['麵包蟲:累積達標 60、90 天(配件的節奏)也給;30 天那次是第 6 階;同一個只給一次,壓縮之後也不再給'] = () => {
@@ -168,14 +172,14 @@ T['麵包蟲:累積達標 60、90 天(配件的節奏)也給;30 天那次是第 
   for (let i = 0; i < 4; i++) {
     const d = addDays(D, i);
     p = P.reconcile({ local: freeze(p), remote: null, hist: freeze(dayHist(d, 5)), now: now(d) }).pet;
-    const r = P.earn(freeze(p), { id: 'd', at: now(d), from: '2026-08-15' }, now(d)); got.push(r.id); p = r.pet;
+    const r = P.earn(freeze(p), { id: 'd', at: now(d), from: '2026-08-15' }, now(d)); got.push(Object.keys(r.pet.once).find(k => k !== 'fav' && r.pet.once[k] === d) || r.food); p = r.pet;
   }
   /* 半年後(券都壓縮掉了)once 還在,不會再給 */
   const late = '2027-06-01';
   const pl = P.reconcile({ local: freeze(p), remote: null, hist: freeze(dayHist(late, 5)), now: now(late) }).pet;
   const rl = P.earn(freeze(pl), { id: 'd', at: now(late), from: '2026-08-15' }, now(late));
   /* 8/14 以前達到的第 1 到 4 階早於上線日(8/15),不給 */
-  return { ok: J(got) === J(['w:s5', 'w:s6', 'w:a1', 'w:a2']) && !pl.got && pl.once['w:a1'] === addDays(D, 2) && rl.id === 'd', detail: J(got) + ' / 之後 ' + rl.id };
+  return { ok: J(got) === J(['w:s5', 'w:s6', 'w:a1', 'w:a2']) && !pl.got && pl.once['w:a1'] === addDays(D, 2) && rl.id === 'd' && rl.food === 'corn', detail: J(got) + ' / 之後 ' + rl.id };
 };
 T['麵包蟲存滿:改給一般的,麵包蟲留著;地瓜存滿:照一般的種類'] = () => {
   const w = earn(pet({ v: 2, met: ['2026-11-03'], got: tickets('worm', 9) }), 'g:ga-01');
@@ -204,7 +208,7 @@ T['days 超過 400 天的資料逐日推進 30 天:地瓜照樣每 7 天一次,�
     const e = P.eat(freeze(p), r.food === 'yam' ? 'corn' : 'corn', 'e' + i, now(d));
     if (e.ok) p = e.pet;
   }
-  const kept = yams.every(d => p.got[d] && p.got[d].y === 'yam');
+  const kept = yams.every(d => p.got[d] && Object.values(p.got[d]).includes('yam'));
   const gaps = yams.slice(1).map((d, i) => (Date.parse(d) - Date.parse(yams[i])) / 864e5);
   return { ok: yams.length >= 4 && yams.length <= 5 && gaps.every(g => g === 7) && kept && Object.keys(p.days).length <= 400, detail: J({ yams, gaps, kept }) };
 };
@@ -276,7 +280,7 @@ T['補寫:地瓜與麵包蟲照「那一天」的規則(用那天當拿到的日
   const src = { daily: { '2026-11-08': { d: { a: 1, b: 1, c: 1, e: 1, f: 1 } }, '2026-11-09': { d: { a: 1, b: 1, c: 1, e: 1, f: 1 } } }, mock: [], diag: null, hist: [], from: FROM };
   const r = P.backfill(freeze(p), freeze(src), now(D));
   /* 11/7 達標那天:第 1 階是那天才達到的,不算「之前」,給青江菜;11/8 才給麵包蟲;11/9 連續第 7 天給地瓜 */
-  const want = [['2026-11-07', 'm', 'greens'], ['2026-11-08', 'w:s1', 'worm'], ['2026-11-09', 'y', 'yam']];
+  const want = [['2026-11-07', 'm', 'greens'], ['2026-11-08', 'w:s1_d', 'worm'], ['2026-11-09', 'y_d', 'yam']];
   return { ok: J(r.added.map(a => [a.date, a.id, a.food])) === J(want) && r.pet.once['w:s1'] === '2026-11-08', detail: J(r.added) };
 };
 T['補寫:沒有可補的就原樣回傳,不產生 v2'] = () => {
@@ -290,7 +294,7 @@ T['補寫:沒有可補的就原樣回傳,不產生 v2'] = () => {
 /* chick2 第二輪修正 #5(已知限制,規格 5.2 與附錄 C 第 10 條):麵包蟲領過沒有只看判斷那台的 once。手機停在筆電領之前,
    隔天用自己舊的那份判斷,同一個階段的麵包蟲又給一次。這一張占掉手機那天的名額(拿到麵包蟲而不是那天的點心),總份數不變;
    合併兩張都留著、兩個方向結果一樣、once 記較早那天、合併後的資料不會再給第三次 */
-T['已知限制:同一個階段的麵包蟲在兩台、兩天各給一次:兩張都留著、每天只有一張、合併順序無關、once 記較早那天、之後不再給'] = () => {
+T['已知限制:同一個階段的麵包蟲在兩台、兩天各給一次:兩張都留著(各記在自己的 id:w:s1_<給它的練習>)、每天只有一張、合併順序無關、once 記較早那天、之後不再給'] = () => {
   const D0 = '2026-11-10', D1 = addDays(D0, 1), D2 = addDays(D0, 2);
   const base = pet({ days: { [addDays(D0, -1)]: 25 }, met: [addDays(D0, -1)] });
   const lap = P.earn(freeze(base), { id: 'pr', at: now(D0), from: FROM }, now(D0));
@@ -299,7 +303,7 @@ T['已知限制:同一個階段的麵包蟲在兩台、兩天各給一次:兩張
   const third = P.earn(freeze(m1), { id: 'iv', at: now(D2), from: FROM }, now(D2));
   const worms = P.pantry(freeze(m1), now(D1)).stock.worm;
   const perDay = Object.keys(m1.got).every(d => Object.keys(m1.got[d]).length === 1);
-  return { ok: lap.id === 'w:s1' && phone.id === 'w:s1' && worms === 2 && perDay && P.canon(m1) === P.canon(m2) && m1.once['w:s1'] === D0 && third.food === 'pea',
+  return { ok: lap.id === 'w:s1_pr' && lap.food === 'worm' && phone.id === 'w:s1_iv' && phone.food === 'worm' && worms === 2 && perDay && P.canon(m1) === P.canon(m2) && m1.once['w:s1'] === D0 && third.food === 'pea',
            detail: J({ lap: [lap.id, lap.date], phone: [phone.id, phone.date], got: m1.got, once: m1.once, worms, third: [third.result, third.id] }) };
 };
 T['pet-food.js 不碰 store、document、localStorage、window、CLOUD,也不用亂數或 Date.now'] = () => {

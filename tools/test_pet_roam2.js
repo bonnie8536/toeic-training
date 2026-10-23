@@ -59,7 +59,7 @@ run('設定', () => {
   eq([CFG.hopMax, CFG.hopDur], [80, 0.4], '小跳 80 px、0.4 秒');
   eq([CFG.scrollIdle, CFG.mutThrottle, CFG.fade], [150, 250, 200], '捲動停 150、節流 250、淡出 200 毫秒');
   eq([CFG.flyMax, CFG.fallMax, CFG.leanMax, CFG.leanFull], [2.5, 1.2, 11, 60], '飛 2.5 秒、落 1.2 秒、斜 11 度、60 px');
-  eq([CFG.size, CFG.padI, CFG.padO, CFG.sideMin, CFG.gap, CFG.webLift], [48, 8, 4, 80, 16, 4], '尺寸與間隔');
+  eq([CFG.sizes, CFG.padI, CFG.padO, CFG.gap, CFG.webLift], [{ app: 96, appLand: 64, web: 96, wide: 110 }, 8, 4, 16, 4], '尺寸(每種模式一個,2026-10-23 約 2 倍;App 手機橫放 64,審查第 2 輪 #4)與間隔;兩側空白的門檻照大小算(tools/test_pet_roam_size.js)');
 });
 
 /* ---------- freeSpans ---------- */
@@ -98,11 +98,12 @@ run('freeSpans', () => {
 /* ---------- 兩側空白 ---------- */
 run('sideColumns', () => {
   const C = U.sideColumns;
-  eq(C(200, 1240, 1440), [{ side: 'left', lo: 16, hi: 136 }, { side: 'right', lo: 1256, hi: 1376 }], '1440 寬:兩側都是站點');
-  eq(C(80, 1360, 1440), [{ side: 'left', lo: 16, hi: 16 }, { side: 'right', lo: 1376, hi: 1376 }], '剛好 80 px:站得下');
-  eq(C(79, 1361, 1440), [], '79 px:不算');
-  eq(C(20, 1004, 1024), [], '1024 寬:沒有兩側空白');
-  eq(C(90, 1300, 1320), [{ side: 'left', lo: 16, hi: 26 }], '只有一邊夠寬:只算那一邊');
+  /* 48 px 的小雞(門檻 80);別的大小在 tools/test_pet_roam_size.js */
+  eq(C(200, 1240, 1440, 48), [{ side: 'left', lo: 16, hi: 136 }, { side: 'right', lo: 1256, hi: 1376 }], '1440 寬:兩側都是站點');
+  eq(C(80, 1360, 1440, 48), [{ side: 'left', lo: 16, hi: 16 }, { side: 'right', lo: 1376, hi: 1376 }], '剛好 80 px:站得下');
+  eq(C(79, 1361, 1440, 48), [], '79 px:不算');
+  eq(C(20, 1004, 1024, 48), [], '1024 寬:沒有兩側空白');
+  eq(C(90, 1300, 1320, 48), [{ side: 'left', lo: 16, hi: 26 }], '只有一邊夠寬:只算那一邊');
 });
 
 /* ---------- 往前進的方向斜 ---------- */

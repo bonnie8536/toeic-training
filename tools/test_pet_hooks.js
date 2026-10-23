@@ -33,6 +33,7 @@ function fakeDom() {
         toggle: (c, f) => { const on = f === undefined ? !s.has(c) : !!f; if (on) s.add(c); else s.delete(c); return on; } };
     }
     get children() { return this.childNodes.filter(c => c.nodeType === 1); }
+    get clientWidth() { return this._w !== undefined ? this._w : this.parentNode && this.parentNode.nodeType === 1 ? this.parentNode.clientWidth : 0; }   // 寬:自己的 _w,沒有就跟外層一樣(區塊元素);都沒有是 0
     get isConnected() { let e = this; while (e.parentNode) e = e.parentNode; return !!e._mounted; }
     setAttribute(k, v) {
       if (k === 'class') this.className = v;
@@ -138,6 +139,7 @@ function hookEnv(o) {
     },
     clearTimeout: t => { if (t) t.done = true; },
   };
+  if (o.fontSize) ctx.getComputedStyle = () => ({ fontSize: o.fontSize + 'px' });
   ctx.window = ctx;
   if (o.store !== null) {
     const name = o.name === undefined ? '小黃' : o.name;
@@ -147,11 +149,12 @@ function hookEnv(o) {
       earn: o.earn || (a => { calls.push(a); return Promise.resolve('result' in o ? o.result : { result: 'got', food: 'tomato', id: 'r:a1' }); }),
     };
   }
-  ctx.PET = Object.assign({ foodName: c => FOOD_NAMES[c] || '' }, o.pet || {});
+  ctx.PET = Object.assign({ foodName: c => FOOD_NAMES[c] || '', SNACKS: Object.keys(FOOD_NAMES).slice(1) }, o.pet || {});   // SNACKS:跟 pet.js 一樣是飼料以外的點心
   vm.createContext(ctx);
   if (exists('js/pet-hook.js')) vm.runInContext(read('js/pet-hook.js'), ctx, { filename: 'pet-hook.js' });
   const root = dom.mount('root');
   const head = dom.createElement('div'); head.className = 'report-head';
+  if (o.width) head._w = o.width;
   root.append(head);
   const fire = ms => timers.filter(t => !t.done && t.ms <= ms).forEach(t => { t.done = true; t.f(); });
   return { ctx, dom, root, head, timers, warns, calls, fire, H: ctx.PET_HOOK };
@@ -212,11 +215,82 @@ T['等那 150 毫秒時那一行離開畫面:不寫字'] = async () => {
   const p = e.head.querySelector('p');
   return { ok: !!p && p.textContent === '' && r && r.result === 'got', detail: p && JSON.stringify(p.textContent) };
 };
-T['今天拿過了:「今天的點心拿過了，明天再來。」'] = async () => {
-  const e = hookEnv({ result: { result: 'cap', food: null, id: null } });
+T['今天的 3 份都拿了(cap):「今天的 3 份點心都拿到了，明天再來。」'] = async () => {
+  const e = hookEnv({ result: { result: 'cap', food: null, id: null, left: 0 } });
   await e.H.done('mock', { into: e.head });
   const p = earnP(e)[0];
-  return { ok: !!p && p.textContent === '今天的點心拿過了，明天再來。', detail: p && p.textContent };
+  return { ok: !!p && p.textContent === '今天的 3 份點心都拿到了，明天再來。', detail: p && p.textContent };
+};
+T['拿到而且知道今天還能拿幾份:「小黃拿到 1 份小番茄。今天還能拿 2 份。」;拿到第 3 份:「小黃拿到 1 份小番茄。今天的 3 份點心都拿到了。」'] = async () => {
+  const e = hookEnv({ result: { result: 'got', food: 'tomato', id: 'p5', left: 2 } });
+  await e.H.done('p5', { n: 10, into: e.head });
+  const a = earnP(e)[0];
+  const e2 = hookEnv({ result: { result: 'got', food: 'tomato', id: 'p5', left: 0 } });
+  await e2.H.done('p5', { n: 10, into: e2.head });
+  const b = earnP(e2)[0];
+  return { ok: !!a && a.textContent === '小黃拿到 1 份小番茄。今天還能拿 2 份。' && !!b && b.textContent === '小黃拿到 1 份小番茄。今天的 3 份點心都拿到了。', detail: [a && a.textContent, b && b.textContent].join(' / ') };
+};
+T['同一個練習今天拿過了(dup):「這個練習今天拿過點心了，換別的練習還能拿 2 份。」;沒有 left 時只說前半句'] = async () => {
+  const e = hookEnv({ result: { result: 'dup', food: null, id: null, left: 2 } });
+  await e.H.done('p5', { n: 10, into: e.head });
+  const a = earnP(e)[0];
+  const e2 = hookEnv({ result: { result: 'dup', food: null, id: null } });
+  await e2.H.done('p5', { n: 10, into: e2.head });
+  const b = earnP(e2)[0];
+  return { ok: !!a && a.textContent === '這個練習今天拿過點心了，換別的練習還能拿 2 份。' && !!b && b.textContent === '這個練習今天拿過點心了。' && !a.classList.contains('is-held'), detail: [a && a.textContent, b && b.textContent].join(' / ') };
+};
+/* 手機上那一行比一行長(審查第 3 輪 #1:375 寬時那一行 305 px,拿過了、拿到第 3 份、名字 10 個字的那幾句會折成兩行,
+   只留一行的話字寫上去時下面的按鈕往下跳 24 px)。等結果的時候就照這次可能寫的最長一句留夠行數(style.minHeight,每行 1.6em),
+   寫上去、沒字可寫都一直留著:按鈕不往下跳也不往上跳。這裡的版面照「每個字 1 個字寬」算(中文字剛好、數字和空白只會算多) */
+const rowsOf = (t, w, fs) => Math.max(1, Math.ceil(String(t).length * fs / w));
+const minRows = p => { const v = p && p.style && p.style.minHeight; return v ? Math.round(parseFloat(v) / 1.6) : 1; };
+async function waitThenWrite(o, result) {
+  let res;
+  const e = hookEnv(Object.assign({ manual: true, earn: () => new Promise(r => { res = r; }) }, o));
+  const pr = e.H.done('p5', { n: 10, into: e.head });
+  const p = earnP(e)[0];
+  const before = { wait: !!p && p.classList.contains('is-wait'), min: p && p.style.minHeight, rows: minRows(p) };
+  res(result); await settle(); e.fire(200); await pr; await settle();
+  return { p, before, after: { min: p && p.style.minHeight, rows: minRows(p), text: p ? p.textContent : '', held: !!p && p.classList.contains('is-held') } };
+}
+const LONG_NAME = '一二三四五六七八九十';   // 名字最多 10 個字(pet.js NAME_MAX)
+const RESULTS = [
+  ['拿過了', { result: 'dup', food: null, id: null, left: 2 }],
+  ['拿到第 3 份', { result: 'got', food: 'berry', id: 'p5', left: 0 }],
+  ['拿到第 3 份(麵包蟲)', { result: 'got', food: 'worm', id: 'p5', left: 0 }],
+  ['拿到、還能拿 2 份', { result: 'got', food: 'tomato', id: 'p5', left: 2 }],
+  ['3 份都拿了', { result: 'cap', food: null, id: null, left: 0 }],
+  ['存滿', { result: 'full', food: 'tomato', id: null }],
+];
+T['手機寬(305、320、250 px):等結果時就照最長的一句留夠行數,寫上字以後高度不變,下面的按鈕不跳(拿過了、拿到第 3 份、名字 10 個字;審查第 3 輪 #1)'] = async () => {
+  const bad = [];
+  for (const w of [305, 320, 250]) for (const name of ['小黃', LONG_NAME]) for (const [tag, r] of RESULTS) {
+    const fs = 15;
+    const { before, after } = await waitThenWrite({ width: w, fontSize: fs, name }, r);
+    const need = rowsOf(after.text, w, fs);
+    const label = w + ' px、' + name + '、' + tag;
+    if (!before.wait) bad.push(label + ':沒有先留高度');
+    if (!after.text) bad.push(label + ':沒寫字');
+    if (need > before.rows) bad.push(label + ':字要 ' + need + ' 行,只留了 ' + before.rows + ' 行(按鈕往下跳)');
+    if (after.min !== before.min) bad.push(label + ':寫上字以後留的高度從 ' + before.min + ' 變成 ' + after.min + '(按鈕跳)');
+  }
+  const d = await waitThenWrite({ width: 305, fontSize: 15 }, RESULTS[0][1]);
+  if (!(d.before.rows >= 2)) bad.push('305 px 拿過了那一句一定要留兩行以上,留了 ' + d.before.rows);
+  return { ok: !bad.length, detail: bad.slice(0, 6).join('; ') };
+};
+T['寬的時候(720 px)最長的一句也放得下一行:不另外留高度(照 css 的一行);量不到寬(0)時也照 css'] = async () => {
+  const a = await waitThenWrite({ width: 720, fontSize: 15, name: LONG_NAME }, RESULTS[1][1]);
+  const b = await waitThenWrite({}, RESULTS[0][1]);
+  return { ok: !a.before.min && !a.after.min && a.after.text !== '' && !b.before.min && !b.after.min && b.after.text !== '',
+    detail: JSON.stringify([a.before, a.after, b.before, b.after]) };
+};
+T['手機寬留了兩行、結果沒有字(once)時一直留著(is-held,高度不變);一開始就看得出沒字(題數不夠)時不留'] = async () => {
+  const a = await waitThenWrite({ width: 305, fontSize: 15, name: LONG_NAME }, { result: 'once', food: null, id: null });
+  const e = hookEnv({ width: 305, fontSize: 15, pet: { ROUND_MIN: 5 } });
+  await e.H.done('p5', { n: 1, into: e.head });
+  const q = earnP(e)[0];
+  return { ok: a.before.rows >= 2 && a.after.held && a.after.min === a.before.min && a.after.text === '' && !!q && !q.style.minHeight && !q.classList.contains('is-wait'),
+    detail: JSON.stringify([a.before, a.after, q && q.style.minHeight, q && q.className]) };
 };
 T['存滿:「小番茄已經存滿 9 份，先餵掉一些再來拿。」'] = async () => {
   const e = hookEnv({ result: { result: 'full', food: 'tomato', id: null } });
@@ -323,7 +397,7 @@ T['同一個 into 呼叫兩次只有一個 .pet-earn,文字是後來那次的'] 
   await e.H.done('iv', { n: 10, into: e.head });
   await e.H.done('g:ga-01', { n: 5, into: e.head });
   const ps = earnP(e);
-  return { ok: ps.length === 1 && ps[0].textContent === '今天的點心拿過了，明天再來。', detail: ps.length + ' ' + (ps[0] && ps[0].textContent) };
+  return { ok: ps.length === 1 && ps[0].textContent === '今天的 3 份點心都拿到了，明天再來。', detail: ps.length + ' ' + (ps[0] && ps[0].textContent) };
 };
 T['into 不是元素(null、字串、沒給):照樣領,不碰 DOM、不丟錯'] = async () => {
   const e = hookEnv();

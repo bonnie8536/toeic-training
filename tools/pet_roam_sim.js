@@ -52,7 +52,15 @@ const CS0 = { display: 'block', visibility: 'visible', opacity: '1', cursor: 'au
   borderTopColor: 'rgb(0, 0, 0)', borderRightColor: 'rgb(0, 0, 0)', borderBottomColor: 'rgb(0, 0, 0)', borderLeftColor: 'rgb(0, 0, 0)' };
 const WHITE = { backgroundColor: 'rgb(255, 255, 255)' };
 
-/* o:{ src, zones(載入 js/pet-roam-zones.js), W, H, page, app, docH, seed, startX, build(add) 建頁面, ui:{ mood, hungry, roam, reduced } } */
+/* 小雞的大小(2026-10-23 起每種模式一個數字,CFG.sizes):o.size 沒給時照 48 px 跑(這些模擬原本的數字都是照 48 px 調的,當成走法本身的回歸測試);
+   o.size 是數字時三種模式都改成那個大小;'real' 照檔案裡的數字(tools/test_pet_roam_size.js 用)。沒有 sizes 那一行的舊版原樣載入 */
+const SIZES_RE = /sizes: Object\.freeze\(\{ app: \d+, (appLand: \d+, )?web: \d+, wide: \d+ \}\)/;   // appLand:App 橫放(審查第 2 輪 #4)
+function sized(src, size) {
+  if (!src || size === 'real') return src;
+  const n = size || 48;
+  return src.replace(SIZES_RE, (m, land) => 'sizes: Object.freeze({ app: ' + n + ', ' + (land ? 'appLand: ' + n + ', ' : '') + 'web: ' + n + ', wide: ' + n + ' })');
+}
+/* o:{ src, zones(載入 js/pet-roam-zones.js), W, H, page, app, docH, seed, startX, build(add) 建頁面, ui:{ mood, hungry, roam, reduced }, size } */
 function sim(o) {
   const st = { t: 0, scrollY: 0, W: o.W, H: o.H, qsaStar: 0, rects: 0 };
   const timers = []; let tid = 0, rafs = [];
@@ -64,7 +72,9 @@ function sim(o) {
       x = x || {};
       this.tagName = tag.toUpperCase(); this.id = x.id || ''; this.attrs = Object.assign({}, x.attrs || {}); this._cls = (x.cls || '').split(/\s+/).filter(Boolean);
       this.cs = Object.assign({}, CS0, x.style || {}); this.box = x.box || null; this.fixed = !!x.fixed; this.texts = (x.texts || []).map((r) => ({ nodeType: 3, nodeValue: '字', r })); this.pseudo = x.pseudo || null;
-      this.kids = []; this.parentElement = null; this.hidden = false; this.inert = false; this.style = {}; this.on = {}; this.isConnected = true; this.isContentEditable = false;
+      this.kids = []; this.parentElement = null; this.hidden = false; this.inert = false; this.on = {}; this.isConnected = true; this.isContentEditable = false;
+      const vars = this.vars = {};
+      this.style = {}; Object.defineProperty(this.style, 'setProperty', { value: (k, v) => { vars[k] = String(v); } });   // css 變數(--pet2-w、--pet2-h)記在 vars
       const self = this;
       this.classList = { add: (...c) => c.forEach((v) => { if (!self._cls.includes(v)) self._cls.push(v); }), remove: (...c) => { self._cls = self._cls.filter((v) => !c.includes(v)); },
         contains: (c) => self._cls.includes(c), toggle: (c, on) => { const w = on === undefined ? !self._cls.includes(c) : !!on; if (w) self.classList.add(c); else self.classList.remove(c); return w; } };
@@ -94,7 +104,7 @@ function sim(o) {
       if (this === layer) {
         if (!this.classList.contains('is-ground')) return RECT(0, -st.scrollY, st.W, -st.scrollY);
         const g = o.app ? st.H - 52 : st.H - 4;
-        return RECT(0, g - BOXH, st.W, g);
+        return RECT(0, g - liveBox().h, st.W, g);
       }
       const b = this.box; if (!b) return RECT(0, 0, 0, 0);
       const dy = this.fixed ? 0 : st.scrollY;
@@ -145,15 +155,17 @@ function sim(o) {
   const subs = [];
   const view = () => ({ on: true, status: { hungry: ui.hungry }, roam: ui.roam });
   win.PET_UI = { reduced: ui.reduced, mood: () => ui.mood, label: () => '小黃', view, onChange: (f) => { subs.push(f); f(view(), {}); }, openSheet() {} };
-  const anim = { pose: 'idle', shown: null };
+  const liveT = new Set();   // 還在跑的引擎計時器(換大小重開引擎時,舊的不能再被叫醒;審查第 3 輪 #0)
+  const anim = { pose: 'idle', shown: null, sizes: [], ticks: 0, get live() { return liveT.size; } };   // sizes:每次開引擎的大小(換模式時重開);ticks:引擎的計時器跑了幾拍(靜止的小雞不該跑);live:同時在跑的引擎計時器
   win.ChickArt = Object.assign({}, ART, {
     animate(cv, opt) {
+      anim.sizes.push(opt.size);
       let pose = opt.pose || 'idle', i = 0, timer = 0;
       const seqOf = (p) => { const s = []; ART.holds(p).forEach((h, k) => { for (let j = 0; j < h; j++) s.push(k); }); return s; };
       let seq = seqOf(pose);
-      const tick = () => { const k = seq[i % seq.length]; anim.shown = pose; opt.onTick({ pose, frame: k, tick: i, travel: (ART.travel[pose] || 0) * opt.size / ART.metrics.width }); i++; };
-      const stop = () => { if (timer) win.clearTimeout(timer); timer = 0; };
-      const start = () => { stop(); timer = win.setInterval(tick, 1000 / (ART.fps[pose] || 8)); tick(); };
+      const tick = () => { anim.ticks++; const k = seq[i % seq.length]; anim.shown = pose; opt.onTick({ pose, frame: k, tick: i, travel: (ART.travel[pose] || 0) * opt.size / ART.metrics.width }); i++; };
+      const stop = () => { if (timer) { win.clearTimeout(timer); liveT.delete(timer); } timer = 0; };
+      const start = () => { stop(); timer = win.setInterval(tick, 1000 / (ART.fps[pose] || 8)); liveT.add(timer); tick(); };
       const a = { setPose(p) { pose = p; anim.pose = p; seq = seqOf(p); i = 0; start(); }, setFps() {}, show(k, v, p) { if (p) { pose = p; anim.pose = p; } anim.shown = pose; stop(); }, stop, get pose() { return pose; } };
       start();
       return a;
@@ -162,7 +174,7 @@ function sim(o) {
   win.window = win;
   vm.createContext(win);
   if (o.zones) vm.runInContext(o.zones, win, { filename: 'pet-roam-zones.js' });
-  vm.runInContext(o.src, win, { filename: 'pet-roam2.js' });
+  vm.runInContext(sized(o.src, o.size), win, { filename: 'pet-roam2.js' });
   layer = html.all().find((e) => e.tagName === 'DIV' && e.classList.contains('pet-roam2')) || null;
   const btn = layer && layer.kids[0], cv = btn && btn.kids[0];
   function step(ms) {
@@ -187,8 +199,10 @@ function sim(o) {
   const change = (ev) => subs.forEach((f) => f(view(), ev || {}));
   const ty = () => { const m = /translate\(([-\d.]+)px,([-\d.]+)px\)/.exec(btn.style.transform || ''); return m ? [+m[1], +m[2]] : [NaN, NaN]; };
   /* 小雞框在視窗裡的位置(照 css:地面層固定在視窗下緣,站點層從文件頂端算) */
-  const box = () => { const [x, y] = ty(); const r = layer.getBoundingClientRect(); return { l: x, t: r.top + y, r: x + S, b: r.top + y + BOXH }; };
-  const api = { st, add, win, doc, html, body, page, layer, btn, cv, anim, ui, step, fireWin, fireDoc, change, muts, ios, box, ty, R: () => win.PET_ROAM2 && win.PET_ROAM2.state,
+  /* 小雞框現在的大小:新版的 state 有 size、boxH;舊版(f94cec7)沒有,是 48×51 */
+  function liveBox() { const s = win.PET_ROAM2 && win.PET_ROAM2.state; return s && s.size ? { w: s.size, h: s.boxH } : { w: S, h: BOXH }; }
+  const box = () => { const [x, y] = ty(); const r = layer.getBoundingClientRect(), z = liveBox(); return { l: x, t: r.top + y, r: x + z.w, b: r.top + y + z.h }; };
+  const api = { st, add, win, doc, html, body, page, layer, btn, cv, anim, ui, step, fireWin, fireDoc, change, muts, ios, box, liveBox, ty, R: () => win.PET_ROAM2 && win.PET_ROAM2.state,
     scroll(y) { st.scrollY = y; fireWin('scroll'); }, resize(W, H) { st.W = W; if (H) st.H = H; fireWin('resize'); },
     tappable: () => !['is-move', 'is-fly', 'is-scroll', 'is-pass', 'is-faded', 'is-init', 'is-off'].some((c) => layer.classList.contains(c)) && !layer.hidden,
     trace: () => btn.style.transform + '|' + (cv.style.transform || '') + '|' + layer.className + '|' + anim.pose + '|' + anim.shown + '|' + btn.className };
@@ -325,4 +339,4 @@ function wanderRun(o) {
 }
 const median = (a) => { const b = a.slice().sort((p, q) => p - q); return b.length ? b[Math.floor(b.length / 2)] : NaN; };
 
-module.exports = { REPO, read, ROAM, ZONES, ART, nodeLoad, Z, mulberry, S, BOXH, ob, hitBox, RECT, CS0, WHITE, sim, learnPage, supported, obstaclesNow, wideSim, site, wanderRun, median, MARK };
+module.exports = { REPO, read, ROAM, ZONES, ART, nodeLoad, Z, mulberry, S, BOXH, ob, hitBox, RECT, CS0, WHITE, sim, sized, learnPage, supported, obstaclesNow, wideSim, site, wanderRun, median, MARK };

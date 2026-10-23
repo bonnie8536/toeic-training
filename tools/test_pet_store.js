@@ -987,7 +987,7 @@ const scenarios = {
   '42e. 網路卡住時餵點心,2 秒內離開頁面、切到背景,或等了 2 秒:這一口先寫在本機(第 3 步記帳),下一頁還是吃過了;網路好了以後只有一筆、雲端也有': async () => {
     const out = [];
     const seed = () => { const days = {}, met = []; for (let i = 3; i >= 1; i--) { const d = addDays(TODAY, -i); days[d] = 25; met.push(d); }
-      return { v: 2, born: addDays(TODAY, -3), goals: [], days, met, oldMet: 0, oldBefore: '', fed: {}, name: '小黃', nameAt: 5, got: { [YDAY]: { d: 'corn' } } }; };
+      return { v: 2, born: addDays(TODAY, -3), goals: [], days, met, oldMet: 0, oldBefore: '', fed: {}, name: '小黃', nameAt: 5, got: { [addDays(TODAY, -2)]: { d: 'corn' }, [YDAY]: { d: 'corn' } } }; };   // 兩張玉米:先寫過的那一口,正式寫入時不能再吃到第二張(一天 3 份以後正式那一輪不會被「今天吃過了」擋住)
     const ateToday = p => (p && p.ate && p.ate[TODAY] ? p.ate[TODAY] : {});
     for (const how of ['pagehide', 'hidden', 'wait', 'release']) {
       const w = makeWorld();
@@ -1004,20 +1004,20 @@ const scenarios = {
       if (how === 'wait' || how === 'release') await pg.runShort(2000);
       const atLeave = ateToday(lp(w));
       const ids = Object.keys(atLeave);
-      const okLeave = e.ok && e.left === 0 && ids.length === 1 && atLeave[ids[0]] === YDAY + '/d' && 'pet' in ledger(w);
+      const okLeave = e.ok && e.left === 1 && ids.length === 1 && atLeave[ids[0]] === addDays(TODAY, -2) + '/d' && 'pet' in ledger(w);
       let d;
       if (how === 'release') {
         release(); w.readGate = null;
         await tick(); await pg.S.idle(); await pg.runTimers(); await tick();
         const c = cp(w);
-        const ok = okLeave && !!saved && saved.ok === true && J(Object.keys(ateToday(lp(w)))) === J(ids) && J(Object.keys(ateToday(c))) === J(ids);
+        const ok = okLeave && !!saved && saved.ok === true && J(ateToday(lp(w))) === J(atLeave) && J(ateToday(c)) === J(atLeave) && pg.S.view().pantry.stock.corn === 1;
         d = { ok, how, eat: e.ok, saved, local: ateToday(lp(w)), cloud: ateToday(c) };
       } else {
         w.readGate = null;   // 網路好了;同一個工作階段的下一頁
         const p2 = loadPage(w, FOOD); await p2.ready; await p2.runTimers(); await p2.S.idle();
         const v = p2.S.view().pantry;
         const c = cp(w);
-        const ok = okLeave && v.stock.corn === 0 && v.ateToday === true && J(Object.keys(ateToday(lp(w)))) === J(ids) && J(Object.keys(ateToday(c))) === J(ids);
+        const ok = okLeave && v.stock.corn === 1 && v.ateToday === true && v.ateCount === 1 && J(ateToday(lp(w))) === J(atLeave) && J(ateToday(c)) === J(atLeave);
         d = { ok, how, eat: e.ok, atLeave, ledger: ledger(w), next: { corn: v.stock.corn, ateToday: v.ateToday }, cloud: ateToday(c) };
       }
       out.push(d);
@@ -1055,7 +1055,7 @@ const scenarios = {
     }
     return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
   },
-  '42c. 網路正常時 earn 照舊等合併後的結果(不先寫本機):別台今天已經拿過,這台回 cap,本機和雲端都只有那一張': async () => {
+  '42c. 網路正常時 earn 照舊等合併後的結果(不先寫本機):別台今天已經拿過一張,這台換別的練習照樣拿到(一天 3 份),兩張都在;別台拿滿 3 張時這台回 cap': async () => {
     const w = makeWorld();
     cloudRow(w, 'hist', dayHist(TODAY, 3));
     const pg = await openLoggedIn(w, FOOD);
@@ -1064,8 +1064,13 @@ const scenarios = {
     const writes = recordPetWrites(w);
     const r = await pg.S.earn({ id: 'g:ga-01', n: 10 }); await pg.runTimers(); await pg.runShort(5000);
     const c = cp(w), l = lp(w);
-    return { ok: r.result === 'cap' && J(c.got) === J({ [TODAY]: { d: 'corn' } }) && J(l.got) === J(c.got) && !writes.some(s => /g:ga-01/.test(s)),
-             detail: J({ r, cloud: c.got, local: l.got }) };
+    w.db.find(x => x.k === 'pet').v = Object.assign({}, c, { got: { [TODAY]: Object.assign({}, c.got[TODAY], { fall: 'berry', p5: 'tomato' }) } });   // 手機又拿了兩張
+    const writes2 = recordPetWrites(w);
+    const r2 = await pg.S.earn({ id: 'iv', n: 10 }); await pg.runTimers(); await pg.runShort(5000);
+    const c2 = cp(w), l2 = lp(w);
+    return { ok: r.result === 'got' && r.left === 1 && J(c.got) === J({ [TODAY]: { d: 'corn', 'g:ga-01': 'pea' } }) && J(l.got) === J(c.got)
+               && r2.result === 'cap' && r2.left === 0 && J(Object.keys(c2.got[TODAY]).sort()) === J(['d', 'fall', 'g:ga-01', 'p5']) && J(Object.keys(l2.got[TODAY]).sort()) === J(['d', 'fall', 'g:ga-01', 'p5']) && !writes2.some(s => /"iv"/.test(s)),
+             detail: J({ r, r2, cloud: c2.got, local: l2.got }) };
   },
   '43. 食物打開:從 daily_done、mock_history、diag、達標補的券寫進 got;補到今天的才送 pet:earn(source backfill);那幾個鍵本機與雲端一個字都沒變': async () => {
     const w = makeWorld();
@@ -1119,10 +1124,10 @@ const scenarios = {
     await s1; await pg.S.idle(); await tick();
     const today = lp(w).got && lp(w).got[TODAY];
     const ev = evs(w, 'pet:earn').filter(e => e.date === TODAY);
-    return { ok: !!res && res.result === 'got' && res.food === 'tomato' && res.id === 'tq:a1' && J(today) === J({ 'tq:a1': 'tomato' }) && ev.length === 1,
+    return { ok: !!res && res.result === 'got' && res.food === 'tomato' && res.id === 'tq:a1' && res.left === 2 && J(today) === J({ 'tq:a1': 'tomato' }) && ev.length === 1,
              detail: J({ res, today, ev }) };
   },
-  '44b. 44a 的對照:補寫寫的是今天更早的另一個完成(先玩的落葉),或同一個來源今天已經拿過、再做一次:掛勾照舊回 cap': async () => {
+  '44b. 44a 的對照:補寫寫的是今天更早的另一個完成(先玩的落葉)時掛勾照樣拿到(一天 3 份);同一個來源今天已經拿過、再做一次:掛勾回 dup': async () => {
     const out = [];
     /* 先玩了落葉(沒有掛勾,只在 hist),同步讀雲端讀到一半時交卷 */
     {
@@ -1145,7 +1150,7 @@ const scenarios = {
       w.readGate = null; release();
       await s1; await pg.S.idle(); await tick();
       const today = lp(w).got && lp(w).got[TODAY];
-      out.push({ ok: !!res && res.result === 'cap' && J(today) === J({ fall: 'berry' }), d: '先玩落葉:' + J({ res, today }) });
+      out.push({ ok: !!res && res.result === 'got' && res.food === 'tomato' && J(today) === J({ fall: 'berry', 'tq:a1': 'tomato' }), d: '先玩落葉:' + J({ res, today }) });
     }
     /* 同一個來源今天拿過了,再做一次;同時連叫兩次同一個來源 */
     {
@@ -1154,16 +1159,16 @@ const scenarios = {
       const pg = await openLoggedIn(w, FOOD);
       const r1 = await pg.S.earn({ id: 'tq:a1' }); await pg.runTimers();
       const r2 = await pg.S.earn({ id: 'tq:a1' }); await pg.runTimers();
-      out.push({ ok: r1.result === 'got' && r2.result === 'cap', d: '再做一次:' + J([r1.result, r2.result]) });
+      out.push({ ok: r1.result === 'got' && r2.result === 'dup' && r2.left === 2 && r2.food === null, d: '再做一次:' + J([r1, r2]) });
       const w2 = makeWorld();
       cloudRow(w2, 'hist', dayHist(YDAY, 5));
       const pg2 = await openLoggedIn(w2, FOOD);
       const rs = await Promise.all([pg2.S.earn({ id: 'iv' }), pg2.S.earn({ id: 'iv' })]);
-      out.push({ ok: J(rs.map(r => r.result)) === J(['got', 'cap']), d: '連叫兩次:' + J(rs.map(r => r.result)) });
+      out.push({ ok: J(rs.map(r => r.result)) === J(['got', 'dup']), d: '連叫兩次:' + J(rs.map(r => r.result)) });
     }
     return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
   },
-  '45. 食物打開:earn 的每一種結果(got、cap、full、once、off、bad、short);short 不排隊、不讀雲端': async () => {
+  '45. 食物打開:earn 的每一種結果(got、dup、cap、full、once、off、bad、short)與今天還能拿幾份(left);short 不排隊、不讀雲端': async () => {
     const w0 = makeWorld(); const p0 = await openLoggedIn(w0, { food: false, from: FROM });
     const off = await p0.S.earn({ id: 'd' });
     const w1 = makeWorld(); const p1 = await openLoggedIn(w1, { food: true, from: '' });
@@ -1179,10 +1184,14 @@ const scenarios = {
     const full = await pg.S.earn({ id: 'mock' });
     const once = await pg.S.earn({ id: 'diag' });
     const got = await pg.S.earn({ id: 'iv', n: 5 });
-    const cap = await pg.S.earn({ id: 'p5', n: 20 });
-    const res = [off, off2, short, bad, full, once, got, cap].map(r => r.result);
-    return { ok: J(res) === J(['off', 'off', 'short', 'bad', 'full', 'once', 'got', 'cap']) && shortReads === 0 && full.food === 'melon' && got.food === 'pea' && [off, off2, short, bad, once, cap].every(r => r.food === null) && p0.S.food === false && p1.S.food === false,
-             detail: J({ res, shortReads, full, got }) };
+    const dup = await pg.S.earn({ id: 'iv', n: 5 });
+    const g2 = await pg.S.earn({ id: 'p5', n: 20 });
+    const g3 = await pg.S.earn({ id: 'rv', n: 20 });
+    const cap = await pg.S.earn({ id: 'pr', n: 20 });
+    const res = [off, off2, short, bad, full, once, got, dup, g2, g3, cap].map(r => r.result);
+    return { ok: J(res) === J(['off', 'off', 'short', 'bad', 'full', 'once', 'got', 'dup', 'got', 'got', 'cap']) && shortReads === 0 && full.food === 'melon' && got.food === 'pea' && [off, off2, short, bad, once, dup, cap].every(r => r.food === null) && p0.S.food === false && p1.S.food === false
+               && J([got.left, dup.left, g2.left, g3.left, cap.left]) === J([2, 2, 1, 0, 0]),
+             detail: J({ res, shortReads, full, got, left: [got.left, dup.left, g2.left, g3.left, cap.left] }) };
   },
   '46. 食物打開:這次唯讀(雲端是更新版 v3)時 earn 回 later,記在分頁裡;之後第一次正常的同步依原本的完成時間(前一天)補寫,送 pet:earn(source later)': async () => {
     const w = makeWorld();
@@ -1222,18 +1231,19 @@ const scenarios = {
                && e2.ok && s2.ok === false && s2.reason === 'readOnly' && !lp(w2).ate && e3.ok === false && e3.reason === 'off' && s3.ok === false && s3.reason === 'off' && bad.ok === false && bad.reason === 'badFood',
              detail: J({ e: [e.ok, e.left], s, ate: c && c.ate, s2, e3: e3.reason, bad: bad.reason }) };
   },
-  '48. 同一個分頁快速連點 5 次:earn 排隊後只有第一個拿到、其他 cap;eat 第一下成功,其他當場就回 ateToday;上傳次數不多': async () => {
+  '48. 同一個分頁快速連點 5 次:earn 排隊後前 3 個拿到、其他 cap;eat 前 3 下成功(還在寫的也算進今天的份數),其他當場就回 ateToday;上傳次數不多': async () => {
     const w = makeWorld(); cloudRow(w, 'hist', dayHist(TODAY, 6));
     const pg = await openLoggedIn(w, FOOD);
     const ups = w.upserts.filter(k => k === 'pet').length;
     const rs = await Promise.all(['g:ga-01', 'iv', 'pairs', 'p5', 'mock'].map(id => pg.S.earn({ id, n: 10 })));
-    const eats = [0, 1, 2, 3, 4].map(() => pg.S.eat('pea'));
+    const eats = ['pea', 'pea', 'berry', 'pea', 'berry'].map(f => pg.S.eat(f));
     const saved = await Promise.all(eats.map(e => e.saved));
     await pg.runTimers();
     const up = w.upserts.filter(k => k === 'pet').length - ups;
     const c = cp(w);
-    return { ok: J(rs.map(r => r.result)) === J(['got', 'cap', 'cap', 'cap', 'cap']) && eats[0].ok && eats.slice(1).every(e => e.ok === false && e.reason === 'ateToday') && saved[0].ok && saved.slice(1).every(s => s.ok === false)
-               && Object.keys(c.ate[TODAY]).length === 1 && up >= 1 && up <= 2,
+    return { ok: J(rs.map(r => r.result)) === J(['got', 'got', 'got', 'cap', 'cap']) && eats.slice(0, 3).every(e => e.ok) && J(eats.map(e => e.left)) === J([1, 0, 0, undefined, undefined]) && eats.slice(3).every(e => e.ok === false && e.reason === 'ateToday') && saved.slice(0, 3).every(s => s.ok) && saved.slice(3).every(s => s.ok === false)
+               && Object.keys(c.ate[TODAY]).length === 3 && J(Object.values(c.ate[TODAY]).sort()) === J([TODAY + '/g:ga-01', TODAY + '/iv', TODAY + '/pairs']) && up >= 1 && up <= 4
+               && J(Object.keys(c.ate[TODAY]).sort()) === J(eats.slice(0, 3).map(e => e.eatId).sort()),
              detail: J({ rs: rs.map(r => r.result), eats: eats.map(e => e.ok || e.reason), saved: saved.map(s => s.ok), up, ate: c && c.ate }) };
   },
   '49. view():開關都關時鍵跟第 1 步一樣;食物打開多 food、pantry;走動打開多 roamV2、roam': async () => {
@@ -1302,7 +1312,7 @@ const scenarios = {
   /* chick2 第二輪修正 #5(規格 5.2 與附錄 C 第 10 條改寫的取捨):手機分頁停在筆電領麵包蟲之前,隔天在卡住的網路上完成練習,
      用自己舊的那份判斷,同一個階段的麵包蟲又給一次(日期不同,是另一張券)。這一張占掉手機那天的名額,學生拿到麵包蟲而不是那天的點心,
      總份數不變;合併不收回任何一張(寧可多給)。這裡釘住:兩張都在、每天只有一張、once 記較早那天、之後不會再給第三次 */
-  '53. 食物打開:同一個階段的麵包蟲在兩台、兩天各給一次:兩張都留著、每天還是只有一張、once 記較早那天;之後不再給第三次': async () => {
+  '53. 食物打開:同一個階段的麵包蟲在兩台、兩天各給一次:兩張都留著(記在自己的 id:w:s1_<給它的練習>)、每天還是只有一張、once 記較早那天;之後不再給第三次': async () => {
     const db = [];
     const wl = makeWorld(db), wp = makeWorld(db);
     cloudRow(wl, 'hist', dayHist(YDAY, 25));
@@ -1321,9 +1331,52 @@ const scenarios = {
     const D2 = addDays(TODAY, 2); wl.clock.t = tp(D2 + ' 09:00:00');
     const r3 = await lap.S.earn({ id: 'iv', n: 10 }); await lap.runTimers();
     const worms = lap.S.view().pantry.stock.worm || 0;
-    return { ok: r1.food === 'worm' && r2 && r2.food === 'worm' && c.got[TODAY]['w:s1'] === 'worm' && c.got[D1]['w:s1'] === 'worm' && perDay
+    return { ok: r1.food === 'worm' && r2 && r2.food === 'worm' && c.got[TODAY]['w:s1_pr'] === 'worm' && c.got[D1]['w:s1_iv'] === 'worm' && perDay
       && c.once['w:s1'] === TODAY && r3.food === 'pea' && worms === 2,
       detail: J({ laptop: r1, phone: r2, got: c.got, once: c.once, third: r3, worms }) };
+  },
+  '54. 一天餵 3 份(2026-10-23):一份一份餵、每份都存好,第 4 份回 ateToday、什麼都不寫;本機與雲端今天都是 3 筆吃掉;隔天又能餵': async () => {
+    const w = makeWorld(); cloudRow(w, 'hist', dayHist(TODAY, 6));
+    const pg = await openLoggedIn(w, FOOD);
+    for (const id of ['d', 'iv', 'fall']) { await pg.S.earn({ id, n: 10 }); await pg.runTimers(); }
+    const res = [];
+    for (const f of ['corn', 'pea', 'berry']) { const e = pg.S.eat(f); const s = await e.saved; await pg.runTimers(); res.push(e.ok && s.ok); }
+    const pan = pg.S.view().pantry;
+    const raw = JSON.stringify(lp(w));
+    const e4 = pg.S.eat('corn');
+    const s4 = await e4.saved; await pg.runTimers();
+    const c = cp(w);
+    const rawSame = JSON.stringify(lp(w)) === raw, synced = same(lp(w), c);
+    const D1 = addDays(TODAY, 1); w.clock.t = tp(D1 + ' 09:00:00');
+    pg.answer('p5', 'z:1');
+    await pg.S.sync(); await pg.runTimers();
+    const p1 = pg.S.view().pantry;
+    return { ok: res.every(Boolean) && pan.ateCount === 3 && pan.canSnack === false && e4.ok === false && e4.reason === 'ateToday' && s4.ok === false && rawSame
+               && Object.keys(c.ate[TODAY]).length === 3 && synced && p1.ateCount === 0 && p1.canSnack === true,
+             detail: J({ res, pan: [pan.ateCount, pan.canSnack], e4: e4.reason, s4, rawSame, synced, ate: c && c.ate, next: [p1.ateCount, p1.canSnack, p1.practiced] }) };
+  },
+  /* 審查第 2 輪 #1:今天這個來源的券是開頁補寫給的地瓜(y_<來源>),掛勾沒有領過。學生重做同一份練習,
+     交卷那一刻本機已經有這個來源的券,要回 dup(結束畫面說同一份今天拿過了),不能把補寫那張說成這次新拿到的;資料一個字都不動 */
+  '55. 食物打開:今天補寫給了這個來源的地瓜(y_tq:a1),重做同一份練習回 dup、不說拿到地瓜;一般券的對照也是 dup;券不變': async () => {
+    const out = {};
+    for (const kind of ['special', 'regular']) {
+      const w = makeWorld();
+      const hist = [];
+      for (let i = 6; i >= 1; i--) hist.push(...dayHist(addDays(TODAY, -i), 5));
+      hist.push({ m: 'tq', id: 'a1', c: 0, ok: true, n: 5, t: tp(TODAY + ' 09:00:00') });
+      hist.push(...dayHist(TODAY, 5, 'p5', '10'));
+      cloudRow(w, 'hist', kind === 'special' ? hist : hist.filter(r => r.t >= tp(addDays(TODAY, -3) + ' 00:00:00')));
+      const pg = await openLoggedIn(w, FOOD);
+      await pg.S.idle(); await pg.runTimers();
+      const before = J(lp(w).got && lp(w).got[TODAY]);
+      pg.ctx.__api.logAttempt('tq', 'a1', 4, false, { n: 5 });
+      const r = await pg.S.earn({ id: 'tq:a1' }); await pg.runTimers(); await pg.S.idle();
+      out[kind] = { before, r, after: J(lp(w).got && lp(w).got[TODAY]) };
+    }
+    const s = out.special, g = out.regular;
+    return { ok: s.before === J({ 'y_tq:a1': 'yam' }) && s.r.result === 'dup' && s.after === s.before
+               && g.before === J({ 'tq:a1': 'tomato' }) && g.r.result === 'dup' && g.after === g.before,
+             detail: J(out) };
   },
 };
 

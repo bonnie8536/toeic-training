@@ -1,20 +1,19 @@
 /* 小雞第二階段:整頁跑(小雞第二階段規格.md 第 1、2 節、附錄 A.1、A.9;原型在 小雞/第二階段/roam-proto.js)。
    - 只由 js/app-shell.js 依 PET_ROAM_V2 載入,跟 js/pet-roam.js 二選一。不讀寫學生資料;唯一的儲存是 sessionStorage pet_roam_x。
-   - App 模式(html.app-shell 有分頁列):腳一直踩在分頁列上緣(Bonnie 10/17 選 B),地面上不閃、不縮。
-     網站模式(五個主分頁):地面是視窗下緣往上 4 px,兩側各留 16 px。
+   - App 模式(html.app-shell 有分頁列):腳一直踩在分頁列上緣(Bonnie 10/17 選 B),地面上不閃、不縮。網站模式(五個主分頁):地面是視窗下緣往上 4 px,兩側各留 16 px。
    - 主分頁偶爾飛上站點(停 4 秒以上、今天吃過飼料、不在睡覺、不餓:30%,每次進頁最多一次),停 8 到 20 秒再撲著翅膀落回地面。
      站點只選不能點、旁邊有空位的地方(可以點的東西間隔 8 px,文字、圖片、卡片 4 px);寬螢幕的網站模式,主要內容兩側的空白也是站點。
      飛行照 ChickArt.flyPlan 播,格號和位移在同一個 requestAnimationFrame 迴圈算,飛行中點擊穿過小雞。
    - 練習頁(App 模式非主分頁)坐在分頁列上畫靜止格;遊戲回合中、鍵盤打開、任何面板打開時整層隱藏;分頁在背景時停止。
    - 有小雞的卡片(.pet-card)在畫面上時,走動那隻原地淡出,畫面上只有一隻;電腦版到處走時改成卡片裡的小雞藏起來(html.pet-roam2-wide,css 畫空的窩),走動那隻不淡出。
-   - 減少動態、或學生關掉「小雞在頁面上走動」(view().roam === false):停在地面畫靜止格,不抖,一樣可以點。
+   - 減少動態、或學生關掉「小雞在頁面上走動」(view().roam === false):停在地面畫靜止格,不抖,一樣可以點。大小(Bonnie 10/23 約 2 倍)每種模式一個數字(CFG.sizes)。
    - 電腦版到處走(規格 1.11):網站模式、寬 1024 以上、有 js/pet-roam-zones.js 時不飛站點,在空地之間一直換地方;走、跳、飛時點擊穿過(is-move),
      停著才點得到;空地只在捲動停下、視窗大小改變、內容變動時量(最多每秒一次)。App 模式和 1023 以下照上面不變。 */
 (function (root) {
   'use strict';
   /* 規格的數字都在這裡(時間是毫秒,flyMax、fallMax、hopDur 是秒) */
   const CFG = Object.freeze({
-    size: 48, padI: 8, padO: 4, step: 12, maxPts: 240, turnTicks: 8, gap: 16, sideMin: 80, webLift: 4,
+    sizes: Object.freeze({ app: 96, appLand: 64, web: 96, wide: 110 }), landH: 500, tap: Object.freeze({ w: 0.72, h: 0.7, min: 44 }), padI: 8, padO: 4, step: 12, maxPts: 240, turnTicks: 8, gap: 16, webLift: 4,   // sizes:走動那隻的寬,App 分頁列上(手機橫放、視窗高 landH 以下用 appLand)、網站模式 1023 以下、電腦版到處走(以前都是 48);框高照引擎的比例;tap:可以點的範圍佔寬、框高的比例(只有畫出來的小雞那麼大,最小 44)
     flyChance: 0.3, flyAfter: 4000, perchMin: 8000, perchMax: 20000, perchRetry: 3000, hopMax: 80, hopDur: 0.4,
     failChance: 0.05, failEvery: 180000, scrollIdle: 150, mutThrottle: 250, fade: 200,
     flyMax: 2.5, fallMax: 1.2, leanMax: 11, leanFull: 60,
@@ -53,8 +52,7 @@
     const bd = ['Top', 'Right', 'Bottom', 'Left'].some((k) => parseFloat(s['border' + k + 'Width']) > 0 && s['border' + k + 'Style'] !== 'none' && alpha(s['border' + k + 'Color']) > 0.05);
     return bg || bd || (!!s.boxShadow && s.boxShadow !== 'none') || (!!s.backgroundImage && s.backgroundImage !== 'none');
   }
-  /* 取樣點的元素 → 障礙外框 { l, t, r, b, p 間隔, k 種類 i 可以點 / m 圖片 / t 文字 / c 卡片 }。
-     o:{ text, media, cards, anchor 站的那個元素(只算它的文字,包著它的卡片不算) };env 由呼叫的人給(瀏覽器或測試的假 DOM) */
+  /* 取樣點的元素 → 障礙外框 { l, t, r, b, p 間隔, k 種類 i 可以點 / m 圖片 / t 文字 / c 卡片 }。o:{ text, media, cards, anchor 站的那個元素(只算它的文字,包著它的卡片不算) };env 由呼叫的人給(瀏覽器或測試的假 DOM) */
   function obstaclesOf(elems, o, env) {
     const out = [];
     const push = (r, p, k) => { if (r && r.width > 0.5 && r.height > 0.5) out.push({ l: r.left, t: r.top, r: r.right, b: r.bottom, p, k }); };
@@ -71,11 +69,10 @@
     }
     return out;
   }
-  /* 小雞框 [v, v+size]×[top, bot] 不碰到任何障礙(含間隔)的 v 範圍。框的上緣本來就留了頭頂的空,
-     所以框上方的文字、圖片、卡片不再另加間隔;可以點的東西四邊都加 */
+  /* 小雞框 [v, v+size]×[top, bot] 不碰到任何障礙(含間隔)的 v 範圍。框的上緣本來就留了頭頂的空,所以框上方的文字、圖片、卡片不再另加間隔;可以點的東西四邊都加 */
   const hits = (o, top, bot) => o.t - o.p < bot && o.b + (o.k === 'i' ? o.p : 0) > top;
   function freeSpans(obs, lo, hi, top, bot, size) {
-    const S = size || CFG.size, bl = [];
+    const S = size || CFG.sizes.web, bl = [];
     for (const o of obs) if (hits(o, top, bot)) bl.push([o.l - o.p - S, o.r + o.p]);
     bl.sort((a, b) => a[0] - b[0]);
     const out = [];
@@ -90,14 +87,15 @@
     return out.map(([a, b]) => [Math.ceil(a), Math.floor(b)]).filter(([a, b]) => b >= a);
   }
   function clearAt(obs, v, top, bot, size) {
-    const S = size || CFG.size;
+    const S = size || CFG.sizes.web;
     return !obs.some((o) => hits(o, top, bot) && o.l - o.p - S < v && o.r + o.p > v);
   }
-  /* 主要內容外左右各有 80 px 以上的空白:那一欄也是站點(兩邊各留 16 px) */
-  function sideColumns(mainL, mainR, vw) {
-    const out = [], S = CFG.size, g = CFG.gap;
-    if (mainL >= CFG.sideMin) out.push({ side: 'left', lo: g, hi: Math.floor(mainL - g - S) });
-    if (vw - mainR >= CFG.sideMin) out.push({ side: 'right', lo: Math.ceil(mainR + g), hi: vw - g - S });
+  /* 主要內容外左右的空白放得下小雞加兩邊各 16 px(48 px 時是 80,96 是 128,110 是 142):那一欄也是站點 */
+  const sizeFor = (app, wide, land) => CFG.sizes[app ? (land ? 'appLand' : 'app') : wide ? 'wide' : 'web'];   // land:App 手機橫放(審查第 2 輪 #4,102 高的框會吃掉兩條分頁列中間三分之一)
+  function sideColumns(mainL, mainR, vw, size) {
+    const out = [], S = size || CFG.sizes.web, g = CFG.gap, min = S + 2 * g;
+    if (mainL >= min) out.push({ side: 'left', lo: g, hi: Math.floor(mainL - g - S) });
+    if (vw - mainR >= min) out.push({ side: 'right', lo: Math.ceil(mainR + g), hi: vw - g - S });
     return out;
   }
   /* 往旁邊飛時往前進的方向斜:最多 11 度,中段最斜、頭尾回正,橫移不到 60 px 照比例 */
@@ -105,8 +103,7 @@
     const q = Math.min(1, Math.max(0, p));
     return Math.sign(dx) * CFG.leanMax * Math.min(1, Math.abs(dx) / CFG.leanFull) * Math.sin(Math.PI * q);
   }
-  /* 往上飛 dist px:照 flyPlan 的拍子(每秒 12 拍),下拍的抬升等比放大到剛好飛到;飛不到(超過 2.5 秒的高度)回 null。
-     minDur:至少飛幾秒(電腦版到處走橫移遠時,每秒約 400 px)。cum[i] 是第 i 拍開始時的位移(負 = 往上),frames[i] 是 [格, 抖動組] */
+  /* 往上飛 dist px:照 flyPlan 的拍子(每秒 12 拍),下拍的抬升等比放大到剛好飛到;飛不到(超過 2.5 秒的高度)回 null。minDur:至少飛幾秒(電腦版到處走橫移遠時,每秒約 400 px)。cum[i] 是第 i 拍開始時的位移(負 = 往上),frames[i] 是 [格, 抖動組] */
   function flyFrames(dist, plan, minDur) {
     plan = plan || (root.ChickArt && root.ChickArt.flyPlan);
     if (!(dist > 0) || dist > CFG.maxRise || !plan || !plan.length) return null;
@@ -137,7 +134,7 @@
     out.push([(a + b) / 2, (c + d) / 2]);
     return out;
   }
-  const util = Object.freeze({ freeSpans, clearAt, sideColumns, leanFor, flyFrames, obstaclesOf, samplePoints, isClickable, isSurface, shown });
+  const util = Object.freeze({ freeSpans, clearAt, sideColumns, sizeFor, leanFor, flyFrames, obstaclesOf, samplePoints, isClickable, isSurface, shown });
   if (typeof module === 'object' && module && module.exports) { module.exports = { util, CFG }; return; }
 
   const doc = root.document;
@@ -167,14 +164,12 @@
   }
 
   function start(U, A, html, tabbar, APP, PAGE, MAIN) {
-    const S = CFG.size, M = A.metrics;
-    const BOXH = Math.round(S * M.ground / M.width);
+    const M = A.metrics;
+    let S = 0, BOXH = 0, TW = 0, TH = 0, anim = null;   // 小雞的寬、框高、可以點的寬高、引擎:照模式(sized())
     const layer = doc.createElement('div');
     layer.className = 'pet-roam2 is-ground is-init';   // 第一次排好位置之前看不到(css),免得在左緣或卡片旁邊閃一下
-    const btn = doc.createElement('button');
-    btn.className = 'pet-roam2-btn';
-    btn.setAttribute('type', 'button'); btn.setAttribute('aria-haspopup', 'dialog');
-    const cv = doc.createElement('canvas');
+    const btn = doc.createElement('button'), cv = doc.createElement('canvas');   // 按鈕只有畫出來的小雞那麼大(腳底對齊框底),畫布照舊整個框、超出按鈕(審查第 2 輪 #3)
+    btn.className = 'pet-roam2-btn'; btn.setAttribute('type', 'button'); btn.setAttribute('aria-haspopup', 'dialog');
     cv.className = 'pet-roam2-cv'; cv.setAttribute('aria-hidden', 'true');
     btn.append(cv); layer.append(btn);
     const mainEl = doc.querySelector('main');
@@ -191,8 +186,16 @@
     let lane = [0, 0], groundOff = CFG.webLift, perch = null, faded = false, off = false, sheetOpen = false, scrolling = false;
     let act = null, turning = 0, held = false, flown = false, script = null, raf = 0, perchTimer = 0, lastFrame = '', lastMood = null, mine = false, failAt = 0;
     const enteredAt = performance.now();
-    const anim = A.animate(cv, { size: S, fps: 8, maxDpr: 2, pose: 'idle', onTick });
+    /* 照模式定大小(CFG.sizes):換了就重開引擎(畫布照裝置像素比重配,最多 2 倍),css 的 --pet2-w、--pet2-h 跟著改;靜止的小雞新的引擎馬上停在靜止格(審查第 1 輪 #7);寬不寬先算好再開第一次(#9) */
+    function sized() {
+      const so = root.screen && root.screen.orientation, s = sizeFor(APP, wide, APP && innerHeight <= CFG.landH && html.clientWidth > innerHeight && !/^portrait/.test((so && so.type) || '')), st = html.style;   // 橫放看方向不只看高:直放的視窗變矮(鍵盤、分割畫面)不換(審查第 3 輪 #2)
+      if (s === S || (S && html.classList.contains('app-kb'))) return;   // 鍵盤開著不換,收起來再換
+      S = s; BOXH = Math.round(S * M.ground / M.width); TW = Math.max(CFG.tap.min, Math.round(S * CFG.tap.w)); TH = Math.max(CFG.tap.min, Math.round(BOXH * CFG.tap.h)); lastFrame = ''; const old = anim; anim = null; if (old) old.stop();
+      anim = A.animate(cv, { size: S, fps: 8, maxDpr: 2, pose: curPose, onTick: (t) => { if (anim) onTick(t); } }); if (off || faded) anim.stop(); else if (still()) showStill();   // 新引擎的第一拍在 animate() 裡同步跑、anim 還沒換好:這一拍不走 onTick,不然換姿勢會叫醒剛停掉的舊引擎、之後沒人停得掉(審查第 3 輪 #0)
+      if (st && typeof st.setProperty === 'function') { st.setProperty('--pet2-w', S + 'px'); st.setProperty('--pet2-h', BOXH + 'px'); st.setProperty('--pet2-tw', TW + 'px'); st.setProperty('--pet2-th', TH + 'px'); }
+    }
     const Z = !APP && MAIN && root.PET_ROAM_ZONES && root.PET_ROAM_ZONES.version === 1 ? root.PET_ROAM_ZONES : null, ZST = Object.freeze({ sel: 'zone', edge: 'zone' });
+    wide = !!Z && html.clientWidth >= Z.CFG.minW; sized();
 
     /* ---------- 儲存:只有上一頁的 x(和上次試飛失敗的時間,最多每 3 分鐘一次) ---------- */
     function readKey() {
@@ -248,7 +251,7 @@
     function geom(st, a) {
       const W = html.clientWidth, r = a.getBoundingClientRect();
       if (st.edge === 'side') {
-        const m = mainBox(), col = m && sideColumns(m.l, m.r, W).find((c) => c.side === st.side);
+        const m = mainBox(), col = m && sideColumns(m.l, m.r, W, S).find((c) => c.side === st.side);
         return col ? { feet: r.top, lo: col.lo, hi: col.hi, below: CFG.padO } : null;
       }
       if (st.edge === 'top') return { feet: r.top, lo: Math.max(0, r.left + 8), hi: Math.min(W - S, r.right - S - 8), below: CFG.padO };
@@ -258,7 +261,7 @@
     function spansOf(st, a, g) {
       const obs = collect(g.lo - CFG.padI, g.hi + S + CFG.padI, g.feet - BOXH - CFG.padI, g.feet + g.below,
         { text: true, media: true, cards: true, anchor: st.edge === 'side' ? null : a });
-      return freeSpans(obs, g.lo, g.hi, g.feet - BOXH, g.feet);
+      return freeSpans(obs, g.lo, g.hi, g.feet - BOXH, g.feet, S);
     }
     const inView = (feet) => feet - BOXH >= topLimit() + 4 && feet <= groundLine() - BOXH - 8;
     function addCand(out, st, a) {
@@ -290,7 +293,7 @@
       }
       const m = !APP && mainEl ? mainBox() : null;
       if (m) {
-        for (const col of sideColumns(m.l, m.r, html.clientWidth)) {
+        for (const col of sideColumns(m.l, m.r, html.clientWidth, S)) {
           const cards = sideCards(col.side === 'left' ? m.l + 12 : m.r - 12);
           if (cards.length) addCand(out, { sel: 'side-' + col.side, edge: 'side', side: col.side }, cards[Math.floor(Math.random() * cards.length)]);
         }
@@ -333,8 +336,7 @@
     function setPose(p) { lastFrame = ''; curPose = p; anim.setPose(p); syncMove(); }
     function showStill() { const m = U.mood(); lastFrame = ''; curPose = m; anim.show(A.calm[m] || 0, 0, m); syncMove(); }
     function syncMove() { if (Z) layer.classList.toggle('is-move', wide && !held && (!!script || ((curPose === 'walk' || curPose === 'run') && !still()))); }   // 電腦版:走、跳、飛時點擊穿過,停著才點得到
-    /* 鍵盤焦點(看得到焦點框)在小雞上:不淡出、不飛、站點上不飛走(規格 1.2、1.8)。點小雞(觸控、滑鼠)、關掉面板後
-       pet-ui 把焦點放回來,沒有焦點框,不算(第三輪審查 #3:不然卡片捲回畫面時兩隻同時在) */
+    /* 鍵盤焦點(看得到焦點框)在小雞上:不淡出、不飛、站點上不飛走(規格 1.2、1.8)。點小雞(觸控、滑鼠)、關掉面板後 pet-ui 把焦點放回來,沒有焦點框,不算(第三輪審查 #3:不然卡片捲回畫面時兩隻同時在) */
     let hovered = false, keyFocus = false;
     const focusShown = () => { try { return btn.matches(':focus-visible'); } catch (e) { return false; } };
     const focused = () => doc.activeElement === btn && (keyFocus || focusShown());
@@ -372,8 +374,7 @@
       const g = Array.from(doc.querySelectorAll(GAME)).some((e) => e.getClientRects().length && shown(getComputedStyle(e)));
       return g && !doc.querySelector('.report-head,.game-over');
     }
-    /* 這一層畫不出來:小雞關掉(hidden),或 App 模式分頁列藏起來的寬視窗(css 跟分頁列用同一組條件,看分頁列就知道)。
-       不能看這一層自己:停住時加的 is-off 也是 display: none */
+    /* 這一層畫不出來:小雞關掉(hidden),或 App 模式分頁列藏起來的寬視窗(css 跟分頁列用同一組條件,看分頁列就知道)。不能看這一層自己:停住時加的 is-off 也是 display: none */
     const unshown = () => layer.hidden || (APP && tabbar.getClientRects().length === 0);
     function offCheck() {
       const now = unshown() || sheetOpen || !!doc.querySelector('.modal-mask') || html.classList.contains('app-kb') || typing() || gameOn() || doc.visibilityState === 'hidden';
@@ -608,7 +609,7 @@
     }
 
     /* ---------- 電腦版到處走(規格 1.11;空地、路線、權重、途中位置在 js/pet-roam-zones.js) ---------- */
-    function wzReset() { wide = !!Z && html.clientWidth >= Z.CFG.minW; wz = wide ? Z.memory(performance.now(), Math.random) : null; if (Z) html.classList.toggle('pet-roam2-wide', wide); }
+    function wzReset() { wide = !!Z && html.clientWidth >= Z.CFG.minW; wz = wide ? Z.memory(performance.now(), Math.random) : null; if (Z) html.classList.toggle('pet-roam2-wide', wide); sized(); }
     /* 量空地:捲動停下、視窗大小改變、內容變動時,最多每秒一次。腳下那塊還在就留著,不在就小跳到 80 px 內的空地,再不行落回地面 */
     function remeasure() {
       if (!wide || off || faded || script || scrolling || still() || U.mood() !== 'idle') { if (wz) wz.dirty = true; return; }   // 不能走的時候不量,能走了 wanderTick 再量
@@ -627,7 +628,7 @@
     /* 落地前照 1.4 用 elementsFromPoint 再確認一次 */
     function landOk(z, tx) {
       const f = z.feetDoc - scrollY, o = collect(tx - CFG.padI, tx + S + CFG.padI, f - BOXH - CFG.padI, f + CFG.padI, { text: true, media: true, cards: true });
-      return clearAt(Z.landObs(o, f, html.clientWidth), tx, f - BOXH, f);
+      return clearAt(Z.landObs(o, f, html.clientWidth), tx, f - BOXH, f, S);
     }
     /* 換到另一塊:小跳、努力飛、撲著翅膀落下(途中照 Z.glideAt);回地面照 descend()。途中點擊穿過(is-fly、is-move) */
     function goZone(d) {
@@ -680,7 +681,7 @@
     /* 滑鼠移到小雞上:走動中點擊穿過、收不到 pointerenter,改用小雞現在的位置算(不量版面):當場停下、點得到,移開 1 秒後再走 */
     const hover = (on) => { if (hovered !== on) { hovered = on; pause(); } };
     const tr = Z ? Z.tracker(root, doc, { now: () => performance.now(), mainLR: () => wz && wz.main, top: topLimit, hover,
-      box: () => (wide && !off && !faded ? { l: x, t: (mode === 'air' ? feetDoc - scrollY : innerHeight - groundOff) - BOXH + gy, w: S, h: BOXH } : null) }) : null;
+      box: () => (wide && !off && !faded ? { l: x + (S - TW) / 2, t: (mode === 'air' ? feetDoc - scrollY : innerHeight - groundOff) - TH + gy, w: TW, h: TH } : null) }) : null;   // 跟按鈕一樣大
     wzReset();
 
     /* ---------- 事件 ---------- */
@@ -701,10 +702,10 @@
       if (mutTimer || recs.every((r) => layer.contains(r.target) || (r.target.closest && r.target.closest('.pet-mask')))) return;
       mutTimer = setTimeout(() => { mutTimer = 0; settle(); }, CFG.mutThrottle);
     }).observe(doc.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['class', 'style', 'hidden', 'open'] });
-    const relayout = () => { offCheck(); measure(); if (Z && (html.clientWidth >= Z.CFG.minW) !== wide) { if (mode === 'air') snapGround(); wzReset(); syncMove(); } else if (wide && mode === 'air' && x > lane[1]) snapGround(); if (perch) checkPerch(true); else settle(); };   // 分頁列藏起來時停住;寬度跨過 1024 時回地面換規則;變窄後小雞在視窗外(右側空白不見了)直接回地面,不從視窗外飛回來、頁面不變寬(第二輪審查 #3)
+    const relayout = () => { offCheck(); sized(); measure(); if (Z && (html.clientWidth >= Z.CFG.minW) !== wide) { if (mode === 'air') snapGround(); wzReset(); syncMove(); } else if (wide && mode === 'air' && x > lane[1]) snapGround(); if (perch) checkPerch(true); else settle(); };   // 分頁列藏起來時停住;寬度跨過 1024 時回地面換規則;變窄後小雞在視窗外(右側空白不見了)直接回地面,不從視窗外飛回來、頁面不變寬(第二輪審查 #3)
     root.addEventListener('resize', relayout);
     root.addEventListener('orientationchange', relayout);
-    new MutationObserver(() => offCheck()).observe(html, { attributes: true, attributeFilter: ['class'] });   // app-kb
+    new MutationObserver(() => { offCheck(); sized(); }).observe(html, { attributes: true, attributeFilter: ['class'] });   // app-kb:鍵盤收起來時補換大小
     doc.addEventListener('visibilitychange', () => {
       if (doc.visibilityState === 'hidden') { if (mode === 'ground') writeKey(); stopScript(); }
       offCheck();
@@ -787,7 +788,7 @@
       get state() {
         return Object.freeze({ mode: APP ? 'app' : 'web', main: MAIN, x: Math.round(x), ground: mode === 'ground',
           perch: perch ? perch.st.sel : null, faded, flying: !!(script && script.air), pose: anim.pose, still: still(), off, scrolling,
-          wide, zone: wz ? wz.at : null, rest: !!wz && wz.rest > performance.now(), zones: wz ? wz.zones.length : 0, move: script ? script.how || 'act' : null, measureMs: wz ? Math.round(wz.ms * 10) / 10 : 0 });
+          wide, size: S, boxH: BOXH, zone: wz ? wz.at : null, rest: !!wz && wz.rest > performance.now(), zones: wz ? wz.zones.length : 0, move: script ? script.how || 'act' : null, measureMs: wz ? Math.round(wz.ms * 10) / 10 : 0 });
       },
       util,
     });

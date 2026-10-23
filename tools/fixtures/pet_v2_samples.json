@@ -1,12 +1,12 @@
 {
-  "about": "小雞第二階段 v2 紀錄的樣本(2026-10-17)。每一份都已經整理乾淨:PET.sanitize 之後 canon 不變。pantry 是手算的預期值(台北時間 now 那天)。給 test_pet.js 與畫面測試用。",
+  "about": "小雞第二階段 v2 紀錄的樣本(2026-10-17)。每一份都已經整理乾淨:PET.sanitize 之後 canon 不變。pantry 是手算的預期值(台北時間 now 那天)。2026-10-23 一天 3 份:pantry 多了 ateCount、ateMax、gotAll,吃過 1 份的那天 canSnack 變成 true(還能再餵),紀錄本身一個字都沒改。給 test_pet.js 與畫面測試用。",
   "now": "2026-11-20T04:00:00.000Z",
   "records": [
     {
       "name": "今天拿到一份玉米",
       "pet": { "v": 2, "born": "2026-11-01", "goals": [], "days": { "2026-11-20": 5 }, "met": [], "oldMet": 0, "oldBefore": "", "fed": {}, "name": "", "nameAt": 0,
                "got": { "2026-11-20": { "d": "corn" } } },
-      "pantry": { "stock": { "corn": 1 }, "order": ["corn"], "practiced": true, "ateToday": false, "ateFood": null, "gotToday": { "id": "d", "food": "corn" }, "canSnack": true, "fav": "corn", "favKnown": false }
+      "pantry": { "stock": { "corn": 1 }, "order": ["corn"], "practiced": true, "ateToday": false, "ateFood": null, "gotToday": { "id": "d", "food": "corn" }, "canSnack": true, "fav": "corn", "favKnown": false, "ateCount": 0, "ateMax": 3, "gotAll": [{ "id": "d", "food": "corn" }] }
     },
     {
       "name": "今天的點心吃過了",
@@ -14,7 +14,7 @@
                "met": ["2026-11-18", "2026-11-20"], "oldMet": 0, "oldBefore": "", "fed": { "2026-11-20": 12 }, "name": "小黃", "nameAt": 1792000000000,
                "got": { "2026-11-18": { "g:ga-01": "pea" }, "2026-11-20": { "mock": "melon" } },
                "ate": { "2026-11-20": { "mh9k2ab3x1": "2026-11-18/g:ga-01" } } },
-      "pantry": { "stock": { "pea": 0, "melon": 1 }, "order": ["pea", "melon"], "practiced": true, "ateToday": true, "ateFood": "pea", "gotToday": { "id": "mock", "food": "melon" }, "canSnack": false, "fav": "corn", "favKnown": false }
+      "pantry": { "stock": { "pea": 0, "melon": 1 }, "order": ["pea", "melon"], "practiced": true, "ateToday": true, "ateFood": "pea", "gotToday": { "id": "mock", "food": "melon" }, "canSnack": true, "fav": "corn", "favKnown": false, "ateCount": 1, "ateMax": 3, "gotAll": [{ "id": "mock", "food": "melon" }] }
     },
     {
       "name": "走動關掉",
@@ -28,19 +28,19 @@
                "ate": { "2026-11-19": { "ma1b2c3d4e": "old:2026-07-24:corn:0" } },
                "foodOld": { "before": "2026-07-24", "got": { "corn": 3, "yam": 1 }, "ate": { "corn": 1, "yam": 1 } },
                "once": { "fav": "2026-11-19" } },
-      "pantry": { "stock": { "corn": 2, "greens": 1, "yam": 0 }, "order": ["corn", "greens", "yam"], "practiced": true, "ateToday": false, "ateFood": null, "gotToday": { "id": "wr:w1-lesson-1", "food": "greens" }, "canSnack": true, "fav": "greens", "favKnown": true }
+      "pantry": { "stock": { "corn": 2, "greens": 1, "yam": 0 }, "order": ["corn", "greens", "yam"], "practiced": true, "ateToday": false, "ateFood": null, "gotToday": { "id": "wr:w1-lesson-1", "food": "greens" }, "canSnack": true, "fav": "greens", "favKnown": true, "ateCount": 0, "ateMax": 3, "gotAll": [{ "id": "wr:w1-lesson-1", "food": "greens" }] }
     },
     {
       "name": "只有 v:2、沒有新欄位",
       "pet": { "v": 2, "born": "2026-11-01", "goals": [], "days": {}, "met": [], "oldMet": 0, "oldBefore": "", "fed": {}, "name": "", "nameAt": 0 },
-      "pantry": { "stock": {}, "order": [], "practiced": false, "ateToday": false, "ateFood": null, "gotToday": null, "canSnack": false, "fav": "corn", "favKnown": false }
+      "pantry": { "stock": {}, "order": [], "practiced": false, "ateToday": false, "ateFood": null, "gotToday": null, "canSnack": false, "fav": "corn", "favKnown": false, "ateCount": 0, "ateMax": 3, "gotAll": [] }
     },
     {
       "name": "地瓜與麵包蟲",
       "pet": { "v": 2, "born": "2026-10-01", "goals": [], "days": { "2026-11-14": 6, "2026-11-15": 7 }, "met": [], "oldMet": 0, "oldBefore": "", "fed": {}, "name": "", "nameAt": 0,
                "got": { "2026-11-14": { "y": "yam" }, "2026-11-15": { "w:s3": "worm" } },
                "once": { "w:s3": "2026-11-15" } },
-      "pantry": { "stock": { "yam": 1, "worm": 1 }, "order": ["yam", "worm"], "practiced": false, "ateToday": false, "ateFood": null, "gotToday": null, "canSnack": false, "fav": "yam", "favKnown": false }
+      "pantry": { "stock": { "yam": 1, "worm": 1 }, "order": ["yam", "worm"], "practiced": false, "ateToday": false, "ateFood": null, "gotToday": null, "canSnack": false, "fav": "yam", "favKnown": false, "ateCount": 0, "ateMax": 3, "gotAll": [] }
     }
   ]
 }

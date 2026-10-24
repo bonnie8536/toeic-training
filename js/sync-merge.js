@@ -10,8 +10,11 @@
    - 時鐘只拿來決定「同一個欄位兩邊都改了誰當主要」,輸的那個中文放進 alt,不丟。
    題庫多的欄位(舊版頁面看不懂,但改的時候是改物件本身,會原樣留著):
    - _r:新版建立題庫(6 碼)或字(4 碼)時給的隨機碼,算進內容雜湊(刪掉又加回一模一樣的字,雜湊不同,不會被舊標記刪掉)。
-   - _t:新版最後一次改它的時間(新加的字沒有,改過才有);_nt:題庫名稱最後一次改的時間。都不算進雜湊。
-     名稱:一份是另一份的新版本就用新版本的名稱;兩台同時改名才比 _nt。
+   - _t:新版最後一次改它的時間(新加的字沒有,改過才有);_nt:題庫名稱最後一次改的時間;_on:新版改名時改之前那個名稱的雜湊。都不算進雜湊。
+     名稱:一份是另一份的新版本就用新版本的名稱;不然只有一份是從另一份現在的名稱改過來的(_on)就用它(不看時鐘);
+     兩台都改了名才比 _nt;_nt 也一樣(舊版頁面就地改名)用主要那份。
+   - banks 的 ctx.localClean:本機那份(第一個參數)上次跟雲端對齊之後沒改過(cloud.js 看帳本)。舊版頁面就地改名、取消勾選、改中文
+     不動戳記,兩份分不出先後(_t 一樣)時用雲端那份當主要,不比字串(第二輪審查 r2 #1、#4)。中文衝突時本機的照樣放 alt。
    - _p:它吸收過的舊版本,「雜湊.時間(36 進位毫秒)」;時間是吸收的那一刻(新版本的 _t)。這一版那一刻吸收的一定留(最多 16 個),
      其他的留最新的,題庫補到 8 個、字補到 4 個。用來判斷「另一份是不是我的舊版本」。
    - alt(字):兩台同時改了同一個字的中文,沒當主要的那個(不設上限:以前排序後只留 3 個,會把學生剛打的丟掉)。
@@ -99,10 +102,12 @@
     if (!k || k === zhKey(p)) return false;
     return String(p === undefined || p === null ? '' : p).split(/[;；、,，/／]+/).map(zhKey).indexOf(k) < 0;
   }
-  /* 兩份都不是對方的舊版本時,誰當主要:_t 大的;一樣就比內容固定選一個(兩台算出來一樣) */
-  function primary(x, y, content) {
+  /* 兩份都不是對方的舊版本時,誰當主要:_t 大的;一樣時 pref(本機沒改過時的雲端那份,見 banks 的 localClean)優先,
+     沒有 pref 就比內容固定選一個(兩台算出來一樣) */
+  function primary(x, y, content, pref) {
     const tx = isNum(x._t) ? x._t : 0, ty = isNum(y._t) ? y._t : 0;
     if (tx !== ty) return tx > ty ? [x, y] : [y, x];
+    if (pref === x || pref === y) return pref === x ? [x, y] : [y, x];
     return canon(content(x)) >= canon(content(y)) ? [x, y] : [y, x];
   }
   /* 兩份都不是對方的舊版本、合併結果卻跟其中一份一模一樣(只差 _r、只差勾選、另一個中文是主要那個的一種寫法):
@@ -113,15 +118,15 @@
     if (h === hx || h === hy) out._m = quickHash([hx, hy].sort().join('+'));
   }
   /* 誰是新版本:y 吸收過 x(x 的雜湊在 y 的 _p)→ y。兩邊互相吸收過(內容改回以前的樣子,例如刪掉 alt 後跟某一版一樣):
-     兩份的內容都在對方的歷史裡,沒有誰是新的另一份,用 _t 大的當新版本(不放 alt) */
-  function newer(x, y, hx, hy, content) {
+     兩份的內容都在對方的歷史裡,沒有誰是新的另一份,用 _t 大的當新版本(題庫用;字在 joinWord 另外處理,輸的中文放 alt) */
+  function newer(x, y, hx, hy, content, pref) {
     const yx = hasP(y._p, hx), xy = hasP(x._p, hy);
-    if (yx && xy) return primary(x, y, content)[0];
+    if (yx && xy) return primary(x, y, content, pref)[0];
     if (yx) return y;
     if (xy) return x;
     return null;
   }
-  function joinWord(x, y) {
+  function joinWord(x, y, pref) {
     if (canon(x) === canon(y)) return x;
     const hx = wordHash(x), hy = wordHash(y);
     const t = maxT(x._t, y._t);
@@ -130,12 +135,22 @@
       out = Object.assign({}, canon(x) <= canon(y) ? x : y);
       imm = [];
     } else {
-      const win = newer(x, y, hx, hy, wordContent);
-      if (win) {
+      const yx = hasP(y._p, hx), xy = hasP(x._p, hy);
+      if (yx && xy) {
+        /* 互相吸收過(改回以前某一版的樣子,例如改回原本的中文、刪掉 alt 後跟某一版一樣):分不出哪個是後來改的,_t 大的當主要;
+           另一個的中文跟主要的不一樣就放 alt(以前不放:改回去那台時鐘慢時,學生後來打的中文哪裡都沒有了)。
+           另一個的 alt 不帶進來(刪掉 alt 之後跟某一版一樣,刪掉的不會回來) */
+        const [p, q] = primary(x, y, wordContent, pref);
+        out = Object.assign({}, p);
+        const alt = altList(p.alt).concat(zhDiffers(q.zh, p.zh) ? [String(q.zh)] : []).filter((z, i, l) => l.indexOf(z) === i).sort();
+        put(out, 'alt', alt);
+        imm = [pEntry(hx, t), pEntry(hy, t)];
+      } else if (yx || xy) {
+        const win = yx ? y : x;
         out = Object.assign({}, win);
         imm = [pEntry(win === x ? hy : hx, t)];
       } else {
-        const [p, q] = primary(x, y, wordContent);
+        const [p, q] = primary(x, y, wordContent, pref);
         out = Object.assign({}, p);
         const alt = altList(p.alt).concat(altList(q.alt), zhDiffers(q.zh, p.zh) ? [String(q.zh)] : [])
           .filter((s, i, a) => zhDiffers(s, p.zh) && a.indexOf(s) === i).sort();
@@ -148,8 +163,9 @@
     put(out, '_p', normP(imm.concat(pList(x._p), pList(y._p)), wordHash(out), WORD_P_MAX, t));
     return out;
   }
-  /* 字取聯集:用 norm(en) 對應。同一份裡同一個英文出現兩次(舊資料)不合併成一個:兩份的都留,去掉一樣的和被吸收過的舊版本 */
-  function joinWords(xs, ys) {
+  /* 字取聯集:用 norm(en) 對應。同一份裡同一個英文出現兩次(舊資料)不合併成一個:兩份的都留,去掉一樣的和被吸收過的舊版本。
+     side:'x' 或 'y' 是分不出先後時優先的那一份(只用在一對一的字) */
+  function joinWords(xs, ys, side) {
     const gx = new Map(), gy = new Map(), order = [];
     const add = (m, w) => { const k = wordKey(w); if (!gx.has(k) && !gy.has(k)) order.push(k); (m.get(k) || m.set(k, []).get(k)).push(w); };
     xs.forEach(w => add(gx, w));
@@ -158,12 +174,16 @@
     order.forEach(k => {
       const a = gx.get(k) || [], b = gy.get(k) || [];
       if (k.charAt(0) === 'o') { out.push(a.length ? a[0] : b[0]); return; }
-      if (a.length <= 1 && b.length <= 1) { out.push(a.length && b.length ? joinWord(a[0], b[0]) : (a[0] || b[0])); return; }
+      if (a.length <= 1 && b.length <= 1) { out.push(a.length && b.length ? joinWord(a[0], b[0], side === 'x' ? a[0] : side === 'y' ? b[0] : null) : (a[0] || b[0])); return; }
       const byHash = new Map();
       a.concat(b).forEach(w => { const h = wordHash(w); byHash.set(h, byHash.has(h) ? joinWord(byHash.get(h), w) : w); });
       const all = Array.from(byHash.entries());
-      all.filter(([h]) => !all.some(([h2, w2]) => h2 !== h && hasP(w2._p, h)))
-        .map(e => e[1]).sort((p, q) => cmp(canon(p), canon(q))).forEach(w => out.push(w));
+      /* 被另一個吸收過的(舊版本)拿掉。兩個互相吸收過(取消勾選又勾回來,內容跟以前某一版一樣):跟 newer() 一樣留 primary 那個,
+         不能兩個都拿掉(以前兩個都拿掉,那個字就不見了)。萬一全部都被拿掉(繞一圈互相吸收),留 primary 最大的那一個 */
+      const drop = ([h, w]) => all.some(([h2, w2]) => h2 !== h && hasP(w2._p, h) && !(hasP(w._p, h2) && primary(w, w2, wordContent)[0] === w));
+      let keep = all.filter(e => !drop(e)).map(e => e[1]);
+      if (!keep.length) keep = [all.map(e => e[1]).reduce((p, q) => primary(p, q, wordContent)[0])];
+      keep.sort((p, q) => cmp(canon(p), canon(q))).forEach(w => out.push(w));
     });
     return out;
   }
@@ -176,22 +196,33 @@
       w: wordsOf(b).map(w => canon(isWord(w) ? wordContent(w) : w)).sort() };
   }
   const bankHash = b => quickHash(canon(bankContent(b)));
-  function joinBank(x, y) {
+  /* 名稱的雜湊(_on 用):新版改名時記下改之前的名稱 */
+  const nameHash = n => quickHash('n\u0000' + String(n));
+  /* x 是從 y 現在的名稱改過來的(x 的 _on 是 y 的名稱)。y 的 _on 就是它自己的名稱時不算:那是舊版頁面把名稱改回去(_on 是抄來的) */
+  const renamedFrom = (x, y) => typeof x._on === 'string' && x._on === nameHash(y.name) && y._on !== nameHash(y.name);
+  function joinBank(x, y, pref) {
     if (canon(x) === canon(y)) return x;
     const hx = bankHash(x), hy = bankHash(y);
     const t = maxT(x._t, y._t), nt = maxT(x._nt, y._nt);
-    const win = hx === hy ? (canon(x) <= canon(y) ? x : y) : newer(x, y, hx, hy, bankContent);
-    const bp = win || primary(x, y, bankContent)[0];
-    /* 名稱:一份是另一份的新版本(win)就用它的名稱(改名的那台看過舊名稱);兩份都不是對方的舊版本(兩台同時改名)才比 _nt。
-       以前一律比 _nt:時鐘慢的裝置後來改的名稱、或時鐘快的裝置建立的題庫被改名時,新名稱被退回舊的,而且永遠回不來 */
-    let name = bp.name;
+    const win = hx === hy ? (canon(x) <= canon(y) ? x : y) : newer(x, y, hx, hy, bankContent, pref);
+    const bp = win || primary(x, y, bankContent, pref)[0];
+    /* 名稱(用哪一份的 name 和 _on):
+       1. 一份是另一份的新版本(win)就用它的(改名的那台看過舊名稱);
+       2. 兩份都不是對方的舊版本(另一台同時改了字):只有一份是從另一份現在的名稱改過來的(_on)→ 用改過的那份,不看時鐘
+          (以前比 _nt:時鐘快的裝置建立題庫時的 _nt、或時鐘慢的裝置改名,都會讓真的改名被退回,名稱沒有 alt,永遠回不來);
+       3. 兩台都改了名(或都沒有 _on 可以判斷):_nt 大的;
+       4. _nt 也一樣(舊版頁面就地改名,戳記沒動):主要那份(bp,本機沒改過時是雲端那份) */
+    let src = bp;
     if (!win && x.name !== y.name) {
+      const fx = renamedFrom(x, y), fy = renamedFrom(y, x);
       const nx = isNum(x._nt) ? x._nt : 0, ny = isNum(y._nt) ? y._nt : 0;
-      if (nx !== ny) name = nx > ny ? x.name : y.name;
+      if (fx !== fy) src = fx ? x : y;
+      else if (nx !== ny) src = nx > ny ? x : y;
     }
     const out = Object.assign({}, bp);
-    put(out, 'name', name);
-    if (x.words !== undefined || y.words !== undefined) out.words = joinWords(wordsOf(x), wordsOf(y));
+    put(out, 'name', src.name);
+    put(out, '_on', src._on);
+    if (x.words !== undefined || y.words !== undefined) out.words = joinWords(wordsOf(x), wordsOf(y), pref === x ? 'x' : pref === y ? 'y' : null);
     put(out, '_t', t);
     put(out, '_nt', nt);
     if (!win) mark(out, hx, hy, bankHash);
@@ -303,11 +334,12 @@
   function banks(a, b, ctx) {
     if ((a !== null && a !== undefined && !Array.isArray(a)) || (b !== null && b !== undefined && !Array.isArray(b))) return { ok: false };
     const T = ctx && isPlain(ctx.tombs) ? ctx.tombs : null;
+    const clean = !!(ctx && ctx.localClean === true);
     const order = [], copies = new Map(), opaque = new Map();
-    [a || [], b || []].forEach(arr => arr.forEach(x => {
+    [a || [], b || []].forEach((arr, src) => arr.forEach(x => {
       if (isBank(x)) {
         if (!copies.has(x.id)) { copies.set(x.id, []); order.push('b' + x.id); }
-        copies.get(x.id).push(x);
+        copies.get(x.id).push({ v: x, src });
       } else {
         const c = canon(x);
         if (!opaque.has(c)) { opaque.set(c, x); order.push('o' + c); }
@@ -318,11 +350,17 @@
       if (k.charAt(0) === 'o') { v.push(opaque.get(k.slice(1))); return; }
       const id = k.slice(1);
       /* 先拿掉被刪的字;拿掉前或拿掉後的樣子對得上題庫的標記,這一份就不要(刪題庫的那台當時看到的就是拿掉字之後的樣子) */
-      const live = copies.get(id).map(x => {
+      const live = copies.get(id).map(({ v: x, src }) => {
         const sx = stripWords(x, T);
-        return tombHit(T, id, null, bankHash(x)) || (sx !== x && tombHit(T, id, null, bankHash(sx))) ? null : sx;
+        return tombHit(T, id, null, bankHash(x)) || (sx !== x && tombHit(T, id, null, bankHash(sx))) ? null : { v: sx, src };
       }).filter(Boolean);
-      if (live.length) v.push(live.reduce(joinBank));
+      /* localClean:本機那份(a)上次跟雲端對齊之後沒改過(帳本上沒有),雲端(b)跟它不一樣就是別台改的。
+         舊版頁面就地改名、取消勾選、改中文不動戳記,兩份分不出先後:這時用雲端那份當主要(中文衝突時本機的照樣放 alt)。
+         同一份裡同一個 id 出現兩次合出來的(src 2)不偏哪一邊 */
+      if (live.length) v.push(live.reduce((p, q) => {
+        const pref = !clean || p.src === q.src || p.src === 2 || q.src === 2 ? null : p.src === 1 ? p.v : q.v;
+        return { v: joinBank(p.v, q.v, pref), src: p.src === q.src ? p.src : 2 };
+      }).v);
     });
     const s = stateKey(v);
     const sameAsLocal = Array.isArray(a) && s === stateKey(a);
@@ -393,7 +431,7 @@
     const h = bankHash(old), hn = bankHash(next);
     if (h === hn) return old;
     const out = Object.assign({}, next, { _t: now });
-    if (next.name !== old.name) out._nt = now;
+    if (next.name !== old.name) { out._nt = now; put(out, '_on', old.name === undefined ? undefined : nameHash(old.name)); }
     put(out, '_p', normP([pEntry(h, now)].concat(pList(old._p), pList(next._p)), hn, BANK_P_MAX, now));
     return out;
   }

@@ -3,6 +3,7 @@
    頁面是真的 js/sync-merge.js 與 js/cloud.js(假的 Supabase 在 tools/sync_harness.js)。每一組:2 到 3 台裝置、10 到 16 個隨機操作
    (加字、改中文、勾選、改名、刪字、刪題庫、存入文章題庫、模擬考交卷、上傳、關頁補傳、斷線、恢復連線、App 重開(灌資料)、換頁、
    開單字頁(syncKey)、登出、重新登入、App 被殺),最後全部連上、各自重開一次再開一次單字頁。
+   有三成的序列一開始雲端就有一個部署前的舊題庫,裡面同一個英文出現兩次(run/跑、Run/經營,舊資料可能有)。
    - A 依序(新版頁面,一次一個操作做完):每一步之後
        雲端:曾經在雲端出現過、沒被使用者刪掉的字都還在;
        本機:每台登入中的裝置,曾經在它本機出現過、沒被刪掉的字都還在;
@@ -10,11 +11,14 @@
      最後雲端與每台登入中的裝置題庫一樣(stateKey)、模擬考紀錄一樣而且一筆不少。
    - B 搶時間(兩台的上傳同時讀雲端、同時寫,後到的蓋掉先到的;已知限制 1):本機每一步都不少;最後收斂、雲端一個都不少。
    - C 混一台舊版頁面(main 4c823ec 的 cloud.js、編輯頁開著時記住的整份陣列寫回;已知限制 2):新版裝置本機每一步都不少;
-     最後新版裝置出現過的字雲端都有、新版裝置之間一樣。舊版自己的資料不保證(舊版本來就會掉,這次修不到)。
+     最後每台還登入中的新版裝置出現過的字雲端都有、新版裝置跟雲端一樣。已經登出的新版裝置傳上去的字可能被舊版整份上傳蓋掉
+     (登出那一刻雲端有,之後才被蓋掉:已知限制 2、6),舊版自己的資料也不保證(舊版本來就會掉,這次修不到)。
    「被使用者刪掉」:在新版頁面刪字、刪題庫(舊版頁面刪的不算,會回來)。刪除那一刻之前就存在的同一個字(題庫 id + 英文)都算刪掉;
-   之後新加的(新的 _r)不算。只比「題庫 id + 英文」在不在;同一個英文兩台同時加的會合成一個(另一個中文放 alt)。 */
+   之後新加的(新的 _r)不算。字比「題庫 id + 英文」在不在;同一個英文兩台同時加的會合成一個(另一個中文放 alt)。
+   中文另外比(不用 SYNC_MERGE 的任何函式):每個字的中文和 alt 裡的每一個(題庫|英文|中文)跟字一樣只能多不能少,
+   除了被刪掉的、和某一台在自己畫面上換掉的(那台的使用者改中文、批次加字更新中文,本機少了它)。 */
 const H = require('./sync_harness');
-const { J, makeWorld, makeDevice, signIn, newSession, open, logout, loggedIn, banksOf, localOf, cloudOf, storeSet,
+const { J, makeWorld, makeDevice, signIn, newSession, open, logout, loggedIn, banksOf, localOf, cloudOf, storeSet, setCloud,
   newBank, addWords, setWord, rename, deleteWord, deleteBank, oldEdit, oldOpenEditor, mockSubmit, idents, PID } = H;
 
 const N = Number(process.env.N || 2000), NB = Number(process.env.NB || 300), NC = Number(process.env.NC || 300);
@@ -23,6 +27,19 @@ const EN = ['apple', 'banana', 'cherry', 'put on', 'take off', 'schedule', 'invo
 const ZH = ['蘋果', '香蕉', '櫻桃', '穿上', '脫下', '行程表', '發票', '截止日', '退款', '場地', '配額', '時間表'];
 const ARTICLES = { art_1: [['refund', '退款'], ['invoice', '發票']], art_2: [['venue', '場地'], ['quota', '配額'], ['apple', '蘋果']] };
 const key = s => String(s).toLowerCase().trim().replace(/\s+/g, ' ');
+/* 題庫裡的每一個中文(主要的和 alt 的):題庫 id|norm(en)|去空白的中文 */
+function zhItems(banks) {
+  const out = new Set();
+  (Array.isArray(banks) ? banks : []).forEach(b => {
+    if (!b || typeof b.id !== 'string' || !Array.isArray(b.words)) return;
+    b.words.forEach(w => {
+      if (!w || typeof w.en !== 'string') return;
+      [w.zh].concat(Array.isArray(w.alt) ? w.alt : []).forEach(z => { if (typeof z === 'string' && z.trim()) out.add(b.id + '|' + key(w.en) + '|' + z.replace(/\s+/g, '')); });
+    });
+  });
+  return out;
+}
+const USER_EDIT = /^d\d+ (加字|新增題庫|改中文|勾選|改名|刪字|刪題庫|單字存入題庫) /;
 
 function runOne(seed, mode) {
   const w = makeWorld(seed);
@@ -34,10 +51,12 @@ function runOne(seed, mode) {
   for (let i = 0; i < nDev; i++) devs.push(makeDevice(w, 'd' + i, { old: mode === 'C' && i === nDev - 1 }));
   devs.forEach(d => { d.skew = Math.floor((rnd() - 0.5) * 6 * 3600e3); });
   const fresh = devs.filter(d => !d.old);
+  if (chance(0.3)) setCloud(w, 'vgame_banks', [{ id: 'bLegacy', name: '舊資料', words: [{ en: 'run', zh: '跑', on: true }, { en: 'Run', zh: '經營', on: true }, { en: 'refund', zh: '退款', on: true }] }]);
   /* 追蹤:每個字(題庫|英文|_r)第一次出現在第幾步;刪除:題庫|英文、題庫 → 第幾步 */
   let step = 0;
   const first = new Map(), delKey = new Map(), delBank = new Map();
   const protCloud = new Set(), protDev = new Map();   // 裝置 → 它本機出現過的字
+  const firstZ = new Map(), supZ = new Map(), protZCloud = new Set(), protZDev = new Map();   // 中文:第一次出現、被某台自己換掉的那一步
   const mocks = new Set();
   const log = [];
   const fail = msg => { const e = new Error(msg); e.log = log; throw e; };
@@ -48,7 +67,15 @@ function runOne(seed, mode) {
   };
   const keysOf = banks => new Set([...idents(banks)].map(s => s.split('|').slice(0, 2).join('|')));
   const present = (banks, id) => keysOf(banks).has(id.split('|').slice(0, 2).join('|'));
-  const see = banks => idents(banks).forEach(id => { if (!first.has(id)) first.set(id, step); });
+  const see = banks => {
+    idents(banks).forEach(id => { if (!first.has(id)) first.set(id, step); });
+    zhItems(banks).forEach(it => { if (!firstZ.has(it)) firstZ.set(it, step); });
+  };
+  const exemptZ = it => {
+    const [b, k] = it.split('|');
+    const f = firstZ.get(it) || 0;
+    return (delKey.get(b + '|' + k) || -1) >= f || (delBank.get(b) || -1) >= f || (supZ.get(it) || -1) >= f;
+  };
   const isNew = d => !d.old;
 
   function observe() {
@@ -59,9 +86,12 @@ function runOne(seed, mode) {
       const had = protDev.get(d) || new Set();
       idents(banksOf(d)).forEach(id => had.add(id));
       protDev.set(d, had);
+      const hz = protZDev.get(d) || new Set();
+      zhItems(banksOf(d)).forEach(it => hz.add(it));
+      protZDev.set(d, hz);
     });
     if (mode !== 'C') idents(cloudOf(w, 'vgame_banks')).forEach(id => protCloud.add(id));
-    else protDev.forEach(set => set.forEach(id => protCloud.add(id)));
+    if (mode === 'A') zhItems(cloudOf(w, 'vgame_banks')).forEach(it => protZCloud.add(it));
     const cm = cloudOf(w, 'mock_history');
     (Array.isArray(cm) ? cm : []).forEach(r => mocks.add(r.d + '|' + r.lRaw));
   }
@@ -70,10 +100,14 @@ function runOne(seed, mode) {
       if (!loggedIn(d)) return;
       const b = banksOf(d);
       (protDev.get(d) || new Set()).forEach(id => { if (!exempt(id) && !present(b, id)) fail(where + ':' + d.name + ' 本機少了 ' + id); });
+      const z = zhItems(b);
+      (protZDev.get(d) || new Set()).forEach(it => { if (!exemptZ(it) && !z.has(it)) fail(where + ':' + d.name + ' 本機中文不見了 ' + it); });
     });
     if (mode === 'A') {
       const c = cloudOf(w, 'vgame_banks');
       protCloud.forEach(id => { if (!exempt(id) && !present(c, id)) fail(where + ':雲端少了 ' + id); });
+      const zc = zhItems(c);
+      protZCloud.forEach(it => { if (!exemptZ(it) && !zc.has(it)) fail(where + ':雲端中文不見了 ' + it); });
       const cm = (cloudOf(w, 'mock_history') || []).map(r => r.d + '|' + r.lRaw);
       mocks.forEach(m => { if (cm.indexOf(m) < 0) fail(where + ':雲端模擬考少了 ' + m); });
     }
@@ -89,7 +123,7 @@ function runOne(seed, mode) {
     const banks = loggedIn(d) ? banksOf(d) : [];
     const bids = banks.filter(b => b && typeof b.id === 'string').map(b => b.id);
     if (!loggedIn(d)) {
-      if (r < 0.5 && !d.offline) { log.push(d.name + ' 登入'); await signIn(d); protDev.set(d, new Set()); return; }
+      if (r < 0.5 && !d.offline) { log.push(d.name + ' 登入'); await signIn(d); protDev.set(d, new Set()); protZDev.set(d, new Set()); return; }
       if (r < 0.7) { d.offline = !d.offline; log.push(d.name + (d.offline ? ' 斷線' : ' 連上')); return; }
       return;
     }
@@ -156,7 +190,7 @@ function runOne(seed, mode) {
       if (done) {
         const c = cloudOf(w, 'vgame_banks');
         mine.forEach(id => { if (!exempt(id) && !present(c, id)) fail('登出:' + d.name + ' 沒問就登出,雲端少了 ' + id); });
-        protDev.delete(d);
+        protDev.delete(d); protZDev.delete(d);
       }
       return;
     }
@@ -175,7 +209,13 @@ function runOne(seed, mode) {
         if (two.length >= 2) { log.push('同時上傳 ' + two.map(d => d.name).join('+')); await Promise.all(two.map(d => d.pg.runTimers())); observe(); check('第 ' + s + ' 步'); continue; }
       }
       const d = pick(devs);
+      const beforeZ = !d.old && loggedIn(d) ? zhItems(banksOf(d)) : null, nlog = log.length;
       await act(d);
+      /* 這台的使用者自己在畫面上改的:本機少了的中文是學生換掉的,不算不見 */
+      if (beforeZ && log.length > nlog && USER_EDIT.test(log[log.length - 1])) {
+        const afterZ = zhItems(banksOf(d));
+        beforeZ.forEach(it => { if (!afterZ.has(it)) supZ.set(it, step); });
+      }
       if (process.env.DEBUG) {
         const brief = b => (Array.isArray(b) ? b : []).map(x => x.id + ':' + x._r + '[' + (x.words || []).map(y => y.en + '/' + y._r).join(',') + ']').join(' ');
         log.push('    雲端 ' + brief(cloudOf(w, 'vgame_banks')) + ' 標記 ' + J(cloudOf(w, 'sync_del') && cloudOf(w, 'sync_del').vgame_banks.b));
@@ -191,11 +231,13 @@ function runOne(seed, mode) {
     for (let round = 0; round < 2; round++) {
       for (const d of fresh) if (loggedIn(d)) { if (round === 0) await newSession(d); else { await d.pg.ctx.CLOUD.syncKey('vgame_banks'); await d.pg.ctx.CLOUD.syncKey('mock_history'); await d.pg.fire('win:pagehide'); } }
       observe();
+      check('最後第 ' + (round + 1) + ' 輪');
     }
     const c = cloudOf(w, 'vgame_banks');
-    /* C:舊版頁面整份上傳會把雲端蓋掉;有這個字的新版裝置都已經登出時救不回(舊版本來就會掉)。改看「每台還登入的新版裝置一個不少」+「跟雲端一樣」 */
-    if (mode !== 'C') protCloud.forEach(id => { if (!exempt(id) && !present(c, id)) fail('最後:雲端少了 ' + id); });
     const live = fresh.filter(loggedIn);
+    /* C:舊版頁面整份上傳會把雲端蓋掉;有這個字的新版裝置都已經登出時救不回(舊版本來就會掉)。改看「每台還登入的新版裝置出現過的字雲端都有」+「跟雲端一樣」 */
+    if (mode !== 'C') protCloud.forEach(id => { if (!exempt(id) && !present(c, id)) fail('最後:雲端少了 ' + id); });
+    else live.forEach(d => (protDev.get(d) || new Set()).forEach(id => { if (!exempt(id) && !present(c, id)) fail('最後:' + d.name + ' 出現過的 ' + id + ' 雲端沒有'); }));
     live.forEach(d => {
       if (w.SM.stateKey(banksOf(d)) !== w.SM.stateKey(c || [])) fail('最後:' + d.name + ' 跟雲端不一樣 ' + J(banksOf(d)).slice(0, 300) + ' ≠ ' + J(c).slice(0, 300));
       if (J(localOf(d, 'mock_history') || []) !== J(cloudOf(w, 'mock_history') || [])) fail('最後:' + d.name + ' 模擬考紀錄跟雲端不一樣');

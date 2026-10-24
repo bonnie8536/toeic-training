@@ -352,6 +352,97 @@ const scenarios = {
     const kept = !!(t && t.vgame_banks && t.vgame_banks.w[A] && t.vgame_banks.w[A].kiwi);
     return { ok: kept && 'vgame_banks' in ledgerOf(pc) && has(banksOf(pc), A, 'cherry'), detail: '本機 kiwi 標記還在 ' + kept + ' / 帳本 ' + J(Object.keys(ledgerOf(pc))) };
   },
+  '25. (r2 #1、#4)舊版頁面就地改名、取消勾選、改中文,新版那台沒動過那個題庫:開單字頁、灌資料、登出前對帳都不退回;舊版那台之後更新成新版也一樣': async () => {
+    const out = [];
+    for (const legacy of [true, false]) for (const how of ['syncKey', 'hydrate', 'logout']) {
+      const w = makeWorld(109);
+      const pc = makeDevice(w, '電腦'), phone = makeDevice(w, '手機舊版', { old: true });
+      let A = 'bOld';
+      const words = [{ en: 'apple', zh: '蘋果', on: true }, { en: 'pear', zh: '梨', on: true }];
+      if (legacy) { setCloud(w, 'vgame_banks', [{ id: A, name: 'Unit 1', words }]); await signIn(pc); }   // 部署前就有的題庫(沒有任何戳記)
+      else { await signIn(pc); A = newBank(pc, 'Unit 1'); addWords(pc, A, words.map(x => ({ en: x.en, zh: x.zh }))); await pc.pg.runTimers(); }
+      await signIn(phone); oldOpenEditor(phone);
+      w.clock.t += 60e3;
+      oldEdit(phone, arr => { const b = arr.find(x => x.id === A); b.name = 'Food'; b.words.find(x => x.en === 'apple').on = false; b.words.find(x => x.en === 'pear').zh = '一種水果'; });
+      await phone.pg.runTimers();                                   // 舊版整份上傳成功:雲端是改過的
+      w.clock.t += 3600e3;
+      if (how === 'syncKey') await pc.pg.ctx.CLOUD.syncKey('vgame_banks');
+      if (how === 'hydrate') await newSession(pc);
+      if (how === 'logout') { pc.confirmAnswer = true; await logout(pc); }
+      if (how !== 'logout') await pc.pg.runTimers();
+      phone.old = false; await newSession(phone);                   // 舊版那台重新整理成新版、灌資料
+      const good = banks => {
+        const b = (Array.isArray(banks) ? banks : []).find(x => x.id === A) || { words: [] };
+        const wd = en => b.words.find(x => x.en === en) || {};
+        return b.name === 'Food' && wd('apple').on === false && wd('pear').zh === '一種水果';
+      };
+      const brief = banks => { const b = (banks || []).find(x => x.id === A); return b ? b.name + ' ' + J(b.words.map(x => x.en + (x.on === false ? '(不勾)' : '') + '=' + x.zh)) : '沒有'; };
+      out.push({ ok: good(cloudOf(w, 'vgame_banks')) && good(banksOf(phone)) && (how === 'logout' || good(banksOf(pc))),
+        d: (legacy ? '舊資料' : '新版建的') + how + ':雲端 ' + brief(cloudOf(w, 'vgame_banks')) + ' 電腦 ' + brief(banksOf(pc)) + ' 手機 ' + brief(banksOf(phone)) });
+    }
+    return { ok: out.every(x => x.ok), detail: out.filter(x => !x.ok).map(x => x.d).join(' / ') || out.length + ' 種都留著' };
+  },
+  '26. (r2 #3)開單字頁(syncKey)發現雲端少了、合併後上傳失敗:記進帳本;恢復連線自己補傳、離線登出會先問': async () => {
+    const out = [];
+    for (const then of ['online', 'offlineLogout']) {
+      const w = makeWorld(113);
+      const pc = makeDevice(w, '電腦'), phone = makeDevice(w, '手機舊版', { old: true });
+      await signIn(phone); oldOpenEditor(phone);                    // 舊版編輯頁開著(記住的是空陣列)
+      await signIn(pc);
+      const X = newBank(pc, '第5課'); addWords(pc, X, [{ en: 'refund', zh: '退款' }]); await pc.pg.runTimers();
+      w.clock.t += 60e3;
+      oldEdit(phone, arr => { arr.push({ id: 'bOld', name: '舊版的', words: [{ en: 'pear', zh: '梨', on: true }] }); });
+      await phone.pg.runTimers();                                   // 舊版整份上傳:雲端少了第5課
+      const wiped = !has(cloudOf(w, 'vgame_banks'), X, 'refund');
+      pc.writeError = true;
+      const r = await pc.pg.ctx.CLOUD.syncKey('vgame_banks');
+      pc.writeError = false;
+      const led = Object.keys(ledgerOf(pc));
+      if (then === 'online') {
+        await pc.pg.fire('win:online');
+        out.push({ ok: wiped && led.indexOf('vgame_banks') >= 0 && has(cloudOf(w, 'vgame_banks'), X, 'refund') && !Object.keys(ledgerOf(pc)).length,
+          d: '失敗後帳本 ' + J(led) + ' / 恢復連線後雲端有第5課 ' + has(cloudOf(w, 'vgame_banks'), X, 'refund') + ' ' + J(r) });
+      } else {
+        pc.offline = true; pc.confirmAnswer = false;
+        const done = await logout(pc);
+        out.push({ ok: wiped && led.indexOf('vgame_banks') >= 0 && !done && pc.confirms.length === 1 && has(banksOf(pc), X, 'refund'),
+          d: '失敗後帳本 ' + J(led) + ' / 離線登出問了 ' + pc.confirms.length + ' 登出 ' + done + ' 本機有第5課 ' + has(banksOf(pc), X, 'refund') });
+      }
+    }
+    {
+      /* 模擬考紀錄(uploadMerged 的 pull):舊版頁面交卷整份上傳蓋掉電腦那一筆,電腦 syncKey 合併後上傳失敗 → 帳本記著,恢復連線補傳 */
+      const w = makeWorld(131);
+      const pc = makeDevice(w, '電腦'), phone = makeDevice(w, '手機舊版', { old: true });
+      await signIn(phone); await signIn(pc);
+      mockSubmit(pc, 8); await pc.pg.runTimers();
+      w.clock.t += 60e3;
+      mockSubmit(phone, 3); await phone.pg.runTimers();            // 舊版本機沒有電腦那一筆,整份上傳
+      const mine = arr => (Array.isArray(arr) ? arr : []).some(r => r.lRaw === 8);
+      const wiped = !mine(cloudOf(w, 'mock_history'));
+      pc.writeError = true;
+      await pc.pg.ctx.CLOUD.syncKey('mock_history');
+      pc.writeError = false;
+      const led = Object.keys(ledgerOf(pc));
+      await pc.pg.fire('win:online');
+      out.push({ ok: wiped && led.indexOf('mock_history') >= 0 && mine(cloudOf(w, 'mock_history')) && !Object.keys(ledgerOf(pc)).length,
+        d: '模擬考:失敗後帳本 ' + J(led) + ' / 恢復連線後雲端有電腦那一筆 ' + mine(cloudOf(w, 'mock_history')) });
+    }
+    return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
+  },
+  '27. (r2 #8)只有帶刪除標記的寫入失敗:雲端的題庫那一列不會先變少(題庫和標記同一個 upsert,一起失敗);恢復後刪掉、標記也上雲、帳本清空': async () => {
+    const { w, phone, A } = await twoDevices(127);
+    const B = newBank(phone, '乙'); await phone.pg.runTimers();
+    phone.writeFail = keys => keys.indexOf('sync_del') >= 0;
+    deleteBank(phone, A); await phone.pg.runTimers();
+    await phone.pg.fire('win:pagehide'); await phone.pg.fire('win:online');
+    const c1 = cloudOf(w, 'vgame_banks'), led = Object.keys(ledgerOf(phone));
+    const held = ids(c1).includes(A) && led.indexOf('vgame_banks') >= 0 && led.indexOf('sync_del') >= 0;
+    phone.writeFail = null;
+    await phone.pg.fire('win:pagehide');
+    const c2 = cloudOf(w, 'vgame_banks'), t2 = cloudOf(w, 'sync_del');
+    const done = !ids(c2).includes(A) && ids(c2).includes(B) && !!(t2 && t2.vgame_banks.b[A]) && !Object.keys(ledgerOf(phone)).length;
+    return { ok: held && done, detail: '失敗時雲端 ' + J(ids(c1)) + ' 帳本 ' + J(led) + ' / 恢復後雲端 ' + J(ids(c2)) + ' 標記有A ' + !!(t2 && t2.vgame_banks.b[A]) + ' 帳本 ' + J(Object.keys(ledgerOf(phone))) };
+  },
 };
 
 (async () => {

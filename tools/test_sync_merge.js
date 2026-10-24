@@ -63,7 +63,7 @@ const findWord = (banks, id, en) => { const b = (banks || []).find(x => x.id ===
 /* ---------- 隨機產生「兩台各自改過」的題庫 ---------- */
 const EN = ['apple', 'banana', 'cherry', 'put on', 'take off', 'schedule', 'Apple ', 'invoice', 'deadline', 'refund'];
 const ZH = ['蘋果', '香蕉', '櫻桃', '穿上', '脫下', '行程表', '發票', '截止日', '退款', '蘋果；蘋果樹', '時間表'];
-/* 共同祖先:一份舊資料(沒有戳記)或新版資料 */
+/* 共同祖先:一份舊資料(沒有戳記;同一個英文可能出現兩次,例如 apple 和 'Apple ')或新版資料 */
 function baseBanks(now) {
   const n = 1 + Math.floor(rand() * 3);
   const out = [];
@@ -73,17 +73,35 @@ function baseBanks(now) {
     const m = Math.floor(rand() * 5);
     for (let j = 0; j < m; j++) {
       const en = pick(EN);
-      if (b.words.some(w => key(w.en) === key(en))) continue;
+      if (b.words.some(w => (legacy ? w.en === en : key(w.en) === key(en)))) continue;
       b.words.push(legacy ? { en, zh: pick(ZH), on: true } : SM.newWord(en, pick(ZH), now - 5 * DAY));
     }
     out.push(b);
   }
   return out;
 }
-/* 一台裝置用新版頁面的寫入函式隨機改幾下;回傳改過的題庫與這台寫的刪除標記 */
-function evolve(banks, tombs, now, steps) {
+/* 這個測試自己的「同一個版本」:字看 en、zh、勾選、_r、alt、_m,題庫看名稱、_r、_m 和每個字(不呼叫 SM 的雜湊、標記函式,
+   「不會少」的答案才不會跟著實作一起錯) */
+const sortedAlt = w => (Array.isArray(w.alt) && w.alt.length ? w.alt.slice().sort() : null);
+const wc = w => J([w.en, w.zh === undefined ? null : w.zh, w.on !== false, typeof w._r === 'string' ? w._r : null, sortedAlt(w), typeof w._m === 'string' ? w._m : null]);
+const bc = b => J([b.name === undefined ? null : b.name, typeof b._r === 'string' ? b._r : null, typeof b._m === 'string' ? b._m : null, (b.words || []).map(wc).sort()]);
+/* 一條裝置的歷史:每個題庫、每個字(題庫|英文)出現過的版本;刪的時候,刪的那一份和它之前出現過的版本都算「可以刪」(放進 del) */
+function history(from) {
+  const cp = m => new Map(Array.from(m || [], ([k, v]) => [k, new Set(v)]));
+  return { w: cp(from && from.w), b: cp(from && from.b) };
+}
+const addTo = (m, k, v) => (m.get(k) || m.set(k, new Set()).get(k)).add(v);
+function record(h, B) {
+  B.forEach(b => { addTo(h.b, b.id, bc(b)); b.words.forEach(w => addTo(h.w, b.id + '|' + key(w.en), wc(w))); });
+}
+const DEL = { w: new Map(), b: new Map() };
+/* 一台裝置用新版頁面的寫入函式隨機改幾下;回傳改過的題庫、這台寫的刪除標記和它的歷史 */
+function evolve(banks, tombs, now, steps, from) {
   let B = clone(banks), T = clone(tombs);
+  const h = history(from);
+  record(h, B);
   for (let s = 0; s < steps; s++) {
+    if (s) record(h, B);
     now += 1000 + Math.floor(rand() * 60000);
     const r = rand();
     const ids = B.map(b => b.id);
@@ -110,15 +128,18 @@ function evolve(banks, tombs, now, steps) {
       const id = pick(ids), b = B.find(x => x.id === id);
       if (!b.words.length) continue;
       const w = pick(b.words);
+      (h.w.get(id + '|' + key(w.en)) || new Set()).forEach(v => addTo(DEL.w, id + '|' + key(w.en), v));
       const d = SM.deleteWord(B, T, id, key(w.en), now);
       B = d.banks; T = d.tombs;
     } else {
       const id = pick(ids);
+      (h.b.get(id) || new Set()).forEach(v => addTo(DEL.b, id, v));
       const d = SM.deleteBank(B, T, id, now);
       B = d.banks; T = d.tombs;
     }
   }
-  return { banks: B, tombs: T, now };
+  record(h, B);
+  return { banks: B, tombs: T, now, h };
 }
 
 /* ---------- 1. 基本 ---------- */
@@ -259,14 +280,17 @@ function evolve(banks, tombs, now, steps) {
 /* ---------- 6. 隨機:交換律、冪等、吸收、不會少 ---------- */
 (function fuzz() {
   const N = 3000;
-  let bad = { comm: 0, idem: 0, absorb: 0, loss: 0, conv: 0, ok: 0 };
-  let example = '';
+  let bad = { comm: 0, idem: 0, absorb: 0, loss: 0, conv: 0, ok: 0, kept: 0 };
+  let example = '', dupRuns = 0;
   for (let i = 0; i < N; i++) {
     const now = T0 + i * 1000;
     const base = baseBanks(now);
+    if (base.some(b => b.words.length !== new Set(b.words.map(w => key(w.en))).size)) dupRuns++;
+    DEL.w.clear(); DEL.b.clear();
     const A = evolve(base, null, now, Math.floor(rand() * 4));
     const B = evolve(base, null, A.now, Math.floor(rand() * 4));
-    const C = evolve(chance(0.5) ? base : A.banks, null, B.now, Math.floor(rand() * 3));
+    const fromA = chance(0.5);
+    const C = evolve(fromA ? A.banks : base, null, B.now, Math.floor(rand() * 3), fromA ? A.h : null);
     const T = SM.tombs(SM.tombs(A.tombs, B.tombs, now).v, C.tombs, now).v;
     const ab = merge(A.banks, B.banks, T), ba = merge(B.banks, A.banks, T);
     if (!ab.ok || !ba.ok) { bad.ok++; continue; }
@@ -274,16 +298,27 @@ function evolve(banks, tombs, now, steps) {
     const self = merge(ab.v, ab.v, T);
     if (!self.sameAsLocal || !self.sameAsCloud) { bad.idem++; if (process.env.DUMP) fs.writeFileSync(process.env.DUMP, J({ A: A.banks, B: B.banks, C: C.banks, T })); }
     if (!merge(ab.v, A.banks, T).sameAsLocal || !merge(ab.v, B.banks, T).sameAsLocal) { bad.absorb++; if (!example) example = 'absorb ' + J([A.banks, B.banks, ab.v]); }
-    /* 不會少:兩份裡沒被標記刪掉的字都在(題庫:這一份、或拿掉被刪的字之後的樣子對得上題庫的標記,才算刪掉) */
-    const want = new Set();
+    /* 不會少:兩份裡沒被刪掉的字都在。「可以刪」用產生資料時記下的(DEL:刪的那台刪之前出現過的每一個版本),不用實作的標記函式:
+       字的這個版本出現在某一台刪它之前;題庫的這一份(或拿掉可以刪的字之後的樣子)出現在某一台刪題庫之前 */
+    const want = new Set(), live = [];
     [A.banks, B.banks].forEach(bs => bs.forEach(bk => {
-      const left = bk.words.filter(w => !SM.tombHit(T, bk.id, key(w.en), SM.wordHash(w)));
-      if (SM.tombHit(T, bk.id, null, SM.bankHash(bk)) || SM.tombHit(T, bk.id, null, SM.bankHash(Object.assign({}, bk, { words: left })))) return;
+      const gone = w => (DEL.w.get(bk.id + '|' + key(w.en)) || new Set()).has(wc(w));
+      const left = bk.words.filter(w => !gone(w));
+      const db = DEL.b.get(bk.id) || new Set();
+      if (db.has(bc(bk)) || db.has(bc(Object.assign({}, bk, { words: left })))) return;
       left.forEach(w => want.add(bk.id + '|' + key(w.en)));
+      live.push([bk.id, new Set(left.map(wc))]);
     }));
     const got = wordSet(ab.v);
     const miss = [...want].filter(k => !got.has(k));
     if (miss.length) { bad.loss++; if (!example) example = 'loss ' + miss.join(',') + ' ' + J([A.banks, B.banks, T]); }
+    /* 兩份都一樣、都沒被刪的字(含同一個英文出現兩次的舊資料):結果裡原樣在(同一個 en、zh、勾選),一個都不能合掉 */
+    const outW = new Set();
+    ab.v.forEach(bk => bk.words.forEach(w => outW.add(bk.id + '|' + wc(w))));
+    live.filter(([id]) => live.filter(x => x[0] === id).length === 2).forEach(([id, ws]) => {
+      const other = live.find(x => x[0] === id && x[1] !== ws)[1];
+      ws.forEach(c => { if (other.has(c) && !outW.has(id + '|' + c)) { bad.kept++; if (!example) example = 'kept ' + id + ' ' + c; } });
+    });
     /* 三份不同順序合併,再互相合併一次就收斂(兩台各自用不同順序合併過,碰面一次之後就一樣) */
     const r1 = merge(ab.v, C.banks, T).v, r2 = merge(A.banks, merge(B.banks, C.banks, T).v, T).v;
     const j = merge(r1, r2, T).v;
@@ -293,7 +328,8 @@ function evolve(banks, tombs, now, steps) {
   check('隨機:交換律(兩邊順序內容一樣)', bad.comm === 0, bad.comm + ' 組不同 ' + example.slice(0, 300));
   check('隨機:冪等(自己跟自己合併不變)', bad.idem === 0, bad.idem + ' 組');
   check('隨機:吸收(合併結果再跟任一份合併不變,兩台不會一直互傳)', bad.absorb === 0, bad.absorb + ' 組 ' + (example.indexOf('absorb') === 0 ? example.slice(0, 400) : ''));
-  check('隨機:不會少(沒被標記刪掉的字都在)', bad.loss === 0, bad.loss + ' 組 ' + (example.indexOf('loss') === 0 ? example.slice(0, 400) : ''));
+  check('隨機:不會少(沒被刪掉的字都在;答案用產生資料時記下的刪除,不用實作的標記函式)', bad.loss === 0, bad.loss + ' 組 ' + (example.indexOf('loss') === 0 ? example.slice(0, 400) : ''));
+  check('隨機:兩份都一樣的字原樣留著(含同一個英文出現兩次的舊資料,' + dupRuns + ' 組有)', bad.kept === 0 && dupRuns > 50, bad.kept + ' 組 ' + (example.indexOf('kept') === 0 ? example.slice(0, 300) : ''));
   check('隨機:三份不同順序合併後再互相合併一次就收斂', bad.conv === 0, bad.conv + ' 組');
 })();
 
@@ -491,6 +527,115 @@ function evolve(banks, tombs, now, steps) {
   const a = size(mainFmt), b = size(ours);
   check('題庫大小:3000 字批次加字剛匯入,新版格式最多是 main 的 1.05 倍、在 256 KB 以內', b <= a * 1.05 && b <= 256 * 1024,
     'main ' + (a / 1024).toFixed(1) + ' KB / 新版 ' + (b / 1024).toFixed(1) + ' KB / 倍數 ' + (b / a).toFixed(3));
+})();
+
+/* ---------- 10. 第二輪審查(2026-10-25 r2)找到的 ---------- */
+(function oldPageEdits() {
+  /* 舊版頁面(main 的 vocab.js)改名、取消勾選、改中文都是就地改物件,_t、_nt、_p 原樣留著,只有內容雜湊變了。
+     這台本機那份是改之前的(上次跟雲端對齊之後沒改過,帳本上沒有:localClean),雲端是舊版頁面改過的:要用雲端改的,不能退回。
+     以前兩份分不出先後就比 canon 字串,舊名稱字串比較大時改名一定被退回(名稱沒有 alt,哪裡都找不到) */
+  const legacy = [{ id: 'b1', name: 'Unit 1', words: [{ en: 'apple', zh: '蘋果', on: true }] }];
+  const stamped = SM.editBank([], 'b1', T0, b => SM.addWords(Object.assign({}, b, { name: '第3課' }), [{ en: 'apple', zh: '蘋果' }], T0));
+  const edits = [
+    ['改名', (arr, base) => { arr[0].name = base === legacy ? 'Food' : '第3課 動物'; }, (v, base) => v[0].name === (base === legacy ? 'Food' : '第3課 動物')],
+    ['取消勾選', arr => { arr[0].words[0].on = false; }, v => v[0].words[0].on === false],
+    ['改中文', arr => { arr[0].words[0].zh = '一種水果'; }, v => v[0].words[0].zh === '一種水果'],
+  ];
+  const bad = [];
+  [['舊資料', legacy], ['新版建的', stamped]].forEach(([label, base]) => edits.forEach(([what, fn, ok]) => {
+    const edited = clone(base); fn(edited, base);
+    const m = SM.banks(freeze(clone(base)), freeze(clone(edited)), { now: T0 + DAY, tombs: null, localClean: true });
+    /* 舊版那台之後重新整理成新版、灌資料:本機是它改的那份(沒改過),雲端是上面的合併結果 */
+    const back = SM.banks(freeze(clone(edited)), freeze(clone(m.v)), { now: T0 + 2 * DAY, tombs: null, localClean: true });
+    const again = merge(m.v, base);
+    if (!m.ok || !ok(m.v, base) || !ok(back.v, base) || !ok(again.v, base)) bad.push(label + what + ':' + J(m.v[0]).slice(0, 160));
+  }));
+  check('舊版頁面改的名稱、取消勾選、中文:本機沒改過(localClean)時用雲端那份,不會被退回,之後也不會被改回來', !bad.length, J(bad));
+  /* localClean 只在分不出先後時才用:本機在新版改過名(已經傳上去),雲端是舊版頁面整份上傳的舊快照(只多一個字):改名留著、字都在 */
+  const renamed = SM.editBank(clone(stamped), 'b1', T0 + 1000, b => Object.assign({}, b, { name: '新名字' }));
+  const staleOld = clone(stamped); staleOld[0].words.push({ en: 'pear', zh: '梨', on: true });
+  const m2 = SM.banks(freeze(clone(renamed)), freeze(clone(staleOld)), { now: T0 + DAY, tombs: null, localClean: true });
+  check('localClean 不會讓雲端的舊快照蓋掉本機在新版改過的名稱', m2.v[0].name === '新名字' && wordSet(m2.v).has('b1|pear') && wordSet(m2.v).has('b1|apple'), J(m2.v[0]).slice(0, 200));
+  /* 雲端被舊版頁面改中文、本機沒改過:新中文當主要,舊的中文也不丟(在 alt) */
+  const zhEdited = clone(legacy); zhEdited[0].words[0].zh = '一種水果';
+  const m3 = SM.banks(freeze(clone(legacy)), freeze(clone(zhEdited)), { now: T0, tombs: null, localClean: true });
+  const w3 = m3.v[0].words[0];
+  check('localClean 改中文:雲端的新中文當主要,本機的舊中文留在 alt(不少)', w3.zh === '一種水果' && J(w3.alt) === J(['蘋果']), J(w3));
+})();
+
+(function renameClockConcurrent() {
+  /* 審查 r2 #2:只有一台改了名、另一台同時改了同一個題庫的字(誰都不是誰的新版本):不能比 _nt。
+     建立題庫那台時鐘快(建立時的 _nt 在未來)、或改名那台時鐘慢,以前改名都會被退回 */
+  const MIN = 60e3;
+  const run = (creatorSkew, renamerSkew, how) => {
+    const A = SM.editBank([], 'b1', T0 + creatorSkew, b => SM.addWords(Object.assign({}, b, { name: '第3課' }), [{ en: 'apple', zh: '蘋果' }], T0 + creatorSkew));
+    const tr = T0 + 2 * MIN + renamerSkew;
+    const R = SM.editBank(clone(A), 'b1', tr, b => Object.assign({}, b, { name: '第3課 動物' }));
+    const tc = T0 + 3 * MIN + creatorSkew;
+    const A2 = how === 'add' ? SM.editBank(clone(A), 'b1', tc, b => SM.addWords(b, [{ en: 'dog', zh: '狗' }], tc))
+      : SM.editBank(clone(A), 'b1', tc, b => SM.setWord(b, 'apple', { zh: '紅蘋果' }, tc));
+    const m1 = merge(R, A2), m2 = merge(A2, R);
+    return [m1.v[0].name, m2.v[0].name, merge(m1.v, A2).v[0].name, merge(m1.v, R).v[0].name, m1.v[0].words.length];
+  };
+  const cases = [['時鐘都準、另一台加字', 0, 0, 'add'], ['建立那台快 10 分鐘、之後加字', 10 * MIN, 0, 'add'], ['建立那台快 10 分鐘、之後改中文', 10 * MIN, 0, 'zh'],
+    ['改名那台慢 10 分鐘、另一台加字', 0, -10 * MIN, 'add']];
+  const out = cases.map(c => [c[0], run(c[1], c[2], c[3])]);
+  check('只有一台改名、另一台同時改字:改名留著(不管時鐘快慢),兩邊順序一樣、再合併也不變', out.every(x => x[1].slice(0, 4).every(n => n === '第3課 動物')), J(out));
+  /* 兩台真的同時改名(都從同一個名稱改):還是比 _nt;另一台把名稱改回原名也算改名 */
+  const base = SM.editBank([], 'b1', T0, b => Object.assign({}, b, { name: '原名' }));
+  const X = SM.editBank(clone(base), 'b1', T0 + 1000, b => SM.addWords(Object.assign({}, b, { name: '甲' }), [{ en: 'x', zh: 'ㄨ' }], T0 + 1000));
+  const Y = SM.editBank(clone(base), 'b1', T0 + 2000, b => SM.addWords(Object.assign({}, b, { name: '乙' }), [{ en: 'y', zh: 'ㄧ' }], T0 + 2000));
+  check('兩台都改了名(同時):_nt 大的,兩邊順序一樣', merge(X, Y).v[0].name === '乙' && merge(Y, X).v[0].name === '乙', merge(X, Y).v[0].name + ' / ' + merge(Y, X).v[0].name);
+})();
+
+(function loserAlt() {
+  /* 審查 r2 #5:三台。輸的那一份(q)帶著之前衝突留下的 alt,合併時那些 alt 要留著(不能只留主要那份的 alt) */
+  const edit = (banks, zh, t) => SM.editBank(clone(banks), 'b1', t, b => SM.setWord(b, 'issue', { zh }, t));
+  const base = SM.editBank([], 'b1', T0, b => SM.addWords(Object.assign({}, b, { name: 'x' }), [{ en: 'issue', zh: '問題' }], T0));
+  const pc = edit(base, '議題', T0 + 10000), phone = edit(base, '發行', T0 + 20000);
+  let cloud = merge(pc, base).v;
+  cloud = merge(phone, cloud).v;                       // 雲端:發行(主要)+ alt 議題
+  const tablet = edit(base, '核發', T0 + 30000);       // 平板還是 base,之後改(_t 最新,當主要)
+  const r1 = merge(tablet, cloud).v, r2 = merge(cloud, tablet).v;
+  const pcAgain = merge(cloud, r1).v;
+  const seen = v => { const w = findWord(v, 'b1', 'issue'); return [w.zh].concat(w.alt || []); };
+  const lost = ['核發', '發行', '議題'].filter(z => [r1, r2, pcAgain].some(v => seen(v).indexOf(z) < 0));
+  check('三台輪流改同一個字的中文:輸的那份身上之前留下的 alt 也留著(不只主要那份的 alt)', !lost.length && SM.stateKey(r1) === SM.stateKey(r2), '少了 ' + J(lost) + ' / ' + J(seen(r1)));
+})();
+
+(function changeBack() {
+  /* test_sync_fuzz 的中文檢查找到的(seed 66 B 7719918;審查 r2 #7 也提過):手機時鐘快 3 小時,12:10 把「退款」改成「退錢」;
+     電腦時鐘準,拿到之後 12:30 改回「退款」(跟以前某一版一模一樣)。兩份互相在對方的 _p 裡,以前用 _t 大的(手機的「退錢」)、
+     不留 alt,電腦後來打的「退款」哪裡都沒有了。現在 _t 大的當主要,另一個中文放 alt */
+  const base = [{ id: 'b1', name: 'x', _r: 'rrrrrr', words: [{ en: 'refund', zh: '退款', _r: 'dc43' }] }];
+  const phoneT = T0 + 10 * 60e3 + 3 * 3600e3;
+  const phone = SM.editBank(clone(base), 'b1', phoneT, b => SM.setWord(b, 'refund', { zh: '退錢' }, phoneT));
+  const pcT = T0 + 30 * 60e3;
+  const pc = SM.editBank(clone(phone), 'b1', pcT, b => SM.setWord(b, 'refund', { zh: '退款' }, pcT));
+  const m1 = merge(pc, phone), m2 = merge(phone, pc);
+  const seen = v => { const w = findWord(v.v, 'b1', 'refund'); return [w.zh].concat(w.alt || []).sort().join(); };
+  check('改回以前的中文(兩份互相吸收過)、改回去那台時鐘慢:兩個中文都留(一個在 alt),順序無關、再合併不變',
+    seen(m1) === '退款,退錢' && SM.stateKey(m1.v) === SM.stateKey(m2.v) && merge(m1.v, pc).sameAsLocal && merge(m1.v, phone).sameAsLocal, seen(m1) + ' / ' + seen(m2));
+})();
+
+(function dupWords() {
+  /* 審查 r2 #6:舊資料同一個題庫裡同一個英文出現兩次(run/跑、Run/經營):一台新版改名、一台舊版頁面就地加字,兩個都要留著 */
+  const legacy = [{ id: 'b1', name: '第一課', words: [{ en: 'apple', zh: '蘋果', on: true }] },
+    { id: 'b2', name: '舊題庫', words: [{ en: 'run', zh: '跑', on: true }, { en: 'Run', zh: '經營', on: true }] }];
+  const A = SM.editBank(clone(legacy), 'b2', T0, b => Object.assign({}, b, { name: '舊題庫改名' }));
+  const B = clone(legacy); B[1].words.push({ en: 'walk', zh: '走', on: true });
+  const zhs = v => v.find(b => b.id === 'b2').words.map(w => w.zh).sort().join();
+  const r1 = merge(A, B).v, r2 = merge(B, A).v, r3 = merge(A, legacy).v;
+  check('同一個英文出現兩次的舊資料:兩個字都留(改名+舊版加字、只有改名)', zhs(r1) === '經營,走,跑' && zhs(r2) === zhs(r1) && zhs(r3) === '經營,跑',
+    zhs(r1) + ' / ' + zhs(r2) + ' / ' + zhs(r3));
+  /* test_sync_fuzz 加了重複英文的舊資料後找到的(seed 8392968 B):一台取消勾選 run、另一台拿到之後又勾回來(內容跟原本一模一樣)。
+     兩份 run 互相在對方的 _p 裡,以前重複英文那一組把「被吸收過的」都拿掉,兩份一起不見,run/跑 從雲端和本機消失 */
+  const off = SM.editBank(clone(legacy), 'b2', T0 + 1000, b => SM.setWord(b, 'run', { on: false }, T0 + 1000));
+  const backOn = SM.editBank(clone(off), 'b2', T0 + 5000, b => SM.setWord(b, 'run', { on: true }, T0 + 5000));
+  const runs = v => v.find(b => b.id === 'b2').words.filter(w => w.zh === '跑').map(w => w.on !== false);
+  const t1 = merge(off, backOn).v, t2 = merge(backOn, off).v;
+  check('同一個英文出現兩次的舊資料:取消勾選又勾回來(內容跟原本一樣、兩份互相吸收過)合併後那個字還在,用 _t 新的那份', J(runs(t1)) === '[true]' && J(runs(t2)) === '[true]'
+    && zhs(t1) === '經營,跑' && merge(t1, off).sameAsLocal && merge(t1, backOn).sameAsLocal, J(runs(t1)) + ' / ' + J(runs(t2)) + ' / ' + zhs(t1));
 })();
 
 console.log(pass + ' / ' + (pass + fail) + ' 通過');

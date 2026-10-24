@@ -3,7 +3,8 @@
    - 每台裝置自己的 localStorage、分頁暫存、時鐘偏差、離線開關;頁面在 node 的 vm 沙盒裡載入真的 js/sync-merge.js 與 js/cloud.js
      (或 tools/fixtures/cloud_sync_base.js:main 4c823ec 那一版、沒有合併表的舊版 cloud.js,當「部署前就開著的舊版頁面」)。
    - 頁面寫入照新版 js/vocab.js 的做法:每次寫入前重讀本機、用 SYNC_MERGE 的戳記函式改、先存刪除標記再存題庫(store.set = 寫本機 + CLOUD.push)。
-   每一次請求記在 dev.ops:{ op: 'read' | 'write' | 'teachers', keys: [...] }。 */
+   每一次請求記在 dev.ops:{ op: 'read' | 'write' | 'teachers', keys: [...] }。
+   寫入失敗:dev.writeError = true 每一次都失敗;dev.writeFail = keys => 布林 只讓這一次 upsert 的鍵符合的失敗。 */
 const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
@@ -111,6 +112,7 @@ function makeClient(dev) {
           if (dev.writeGate) await dev.writeGate;
           if (dev.offline) return { data: null, error: { message: 'TypeError: Failed to fetch' } };
           if (dev.writeError) return { data: null, error: { message: 'value too large' } };
+          if (typeof dev.writeFail === 'function' && dev.writeFail(q.rows.map(r => r.k))) return { data: null, error: { message: 'value too large' } };
           q.rows.forEach(row0 => {
             const row = clone(row0);
             const i = w.db.findIndex(r => r.user_id === row.user_id && r.k === row.k);

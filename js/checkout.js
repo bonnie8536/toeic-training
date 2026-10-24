@@ -25,7 +25,7 @@
   const POLL_MS = 3000, POLL_LIMIT_MS = 60000;
   /* 查到這些狀態就不再查。slow 只有在 my_checkout 讀不到、改看 my_billing 而那一筆已付款時才會在這裡出現(看不出有沒有開通) */
   const FINAL = ['paid', 'unapplied', 'test', 'failed', 'refunded', 'missing', 'slow'];
-  const MAIL = 'shuashualanguage@gmail.com';
+  const MAIL = 'rushuplanguage@gmail.com';
   const TZ_MS = 8 * 3600e3;
 
   const SAY = Object.freeze({

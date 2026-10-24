@@ -3,7 +3,8 @@
    頁面是真的 js/sync-merge.js 與 js/cloud.js(假的 Supabase 在 tools/sync_harness.js)。每一組:2 到 3 台裝置、10 到 16 個隨機操作
    (加字、改中文、勾選、改名、刪字、刪題庫、存入文章題庫、模擬考交卷、上傳、關頁補傳、斷線、恢復連線、App 重開(灌資料)、換頁、
    開單字頁(syncKey)、登出、重新登入、App 被殺),最後全部連上、各自重開一次再開一次單字頁。
-   有三成的序列一開始雲端就有一個部署前的舊題庫,裡面同一個英文出現兩次(run/跑、Run/經營,舊資料可能有)。
+   有三成的序列一開始雲端就有一個部署前的舊題庫,裡面同一個英文出現兩次(run/跑、Run/經營,舊資料可能有);有它時會把第一個 run 的中文
+   在 跑/跑步/慢跑 之間換來換去(含改回原本的)、刪 alt、把 alt 換成主要的(第三輪:重複英文那一組改回以前的中文不能不見)。
    - A 依序(新版頁面,一次一個操作做完):每一步之後
        雲端:曾經在雲端出現過、沒被使用者刪掉的字都還在;
        本機:每台登入中的裝置,曾經在它本機出現過、沒被刪掉的字都還在;
@@ -16,7 +17,8 @@
    「被使用者刪掉」:在新版頁面刪字、刪題庫(舊版頁面刪的不算,會回來)。刪除那一刻之前就存在的同一個字(題庫 id + 英文)都算刪掉;
    之後新加的(新的 _r)不算。字比「題庫 id + 英文」在不在;同一個英文兩台同時加的會合成一個(另一個中文放 alt)。
    中文另外比(不用 SYNC_MERGE 的任何函式):每個字的中文和 alt 裡的每一個(題庫|英文|中文)跟字一樣只能多不能少,
-   除了被刪掉的、和某一台在自己畫面上換掉的(那台的使用者改中文、批次加字更新中文,本機少了它)。 */
+   除了被刪掉的、和某一台在自己畫面上換掉的(那台的使用者改中文、批次加字更新中文,本機少了它)。
+   學生又打回以前被換掉的中文(別的地方都沒有它的時候),從那一步重新保護:之前的「換掉」「刪掉」不再豁免它。 */
 const H = require('./sync_harness');
 const { J, makeWorld, makeDevice, signIn, newSession, open, logout, loggedIn, banksOf, localOf, cloudOf, storeSet, setCloud,
   newBank, addWords, setWord, rename, deleteWord, deleteBank, oldEdit, oldOpenEditor, mockSubmit, idents, PID } = H;
@@ -25,6 +27,7 @@ const N = Number(process.env.N || 2000), NB = Number(process.env.NB || 300), NC 
 const SEED = Number(process.env.SEED || 20261024);
 const EN = ['apple', 'banana', 'cherry', 'put on', 'take off', 'schedule', 'invoice', 'deadline', 'refund', 'Apple', 'venue', 'quota'];
 const ZH = ['蘋果', '香蕉', '櫻桃', '穿上', '脫下', '行程表', '發票', '截止日', '退款', '場地', '配額', '時間表'];
+const LEGACY_ZH = ['跑', '跑步', '慢跑'];
 const ARTICLES = { art_1: [['refund', '退款'], ['invoice', '發票']], art_2: [['venue', '場地'], ['quota', '配額'], ['apple', '蘋果']] };
 const key = s => String(s).toLowerCase().trim().replace(/\s+/g, ' ');
 /* 題庫裡的每一個中文(主要的和 alt 的):題庫 id|norm(en)|去空白的中文 */
@@ -56,7 +59,9 @@ function runOne(seed, mode) {
   let step = 0;
   const first = new Map(), delKey = new Map(), delBank = new Map();
   const protCloud = new Set(), protDev = new Map();   // 裝置 → 它本機出現過的字
-  const firstZ = new Map(), supZ = new Map(), protZCloud = new Set(), protZDev = new Map();   // 中文:第一次出現、被某台自己換掉的那一步
+  /* 中文:firstZ 是這個中文「這一次」出現的那一步(學生又打了一次以前被換掉的中文,從那一步重新算);supZ 是被某台自己換掉的那一步。
+     protZCloud、protZDev 記每個中文從哪一步起要保護(拿到它那一刻的 firstZ);不見了、而且是被刪掉或換掉的,就不再保護,之後又出現再從那時的 firstZ 算 */
+  const firstZ = new Map(), supZ = new Map(), protZCloud = new Map(), protZDev = new Map();
   const mocks = new Set();
   const log = [];
   const fail = msg => { const e = new Error(msg); e.log = log; throw e; };
@@ -71,12 +76,16 @@ function runOne(seed, mode) {
     idents(banks).forEach(id => { if (!first.has(id)) first.set(id, step); });
     zhItems(banks).forEach(it => { if (!firstZ.has(it)) firstZ.set(it, step); });
   };
-  const exemptZ = it => {
+  const exemptZ = (it, f) => {
     const [b, k] = it.split('|');
-    const f = firstZ.get(it) || 0;
     return (delKey.get(b + '|' + k) || -1) >= f || (delBank.get(b) || -1) >= f || (supZ.get(it) || -1) >= f;
   };
   const isNew = d => !d.old;
+  function guardZ(m, z) {
+    m.forEach((f, it) => { if (!z.has(it) && exemptZ(it, f)) m.delete(it); });
+    z.forEach(it => { if (!m.has(it)) m.set(it, firstZ.get(it) || 0); });
+    return m;
+  }
 
   function observe() {
     fresh.forEach(d => { if (loggedIn(d)) see(banksOf(d)); });
@@ -86,12 +95,10 @@ function runOne(seed, mode) {
       const had = protDev.get(d) || new Set();
       idents(banksOf(d)).forEach(id => had.add(id));
       protDev.set(d, had);
-      const hz = protZDev.get(d) || new Set();
-      zhItems(banksOf(d)).forEach(it => hz.add(it));
-      protZDev.set(d, hz);
+      protZDev.set(d, guardZ(protZDev.get(d) || new Map(), zhItems(banksOf(d))));
     });
     if (mode !== 'C') idents(cloudOf(w, 'vgame_banks')).forEach(id => protCloud.add(id));
-    if (mode === 'A') zhItems(cloudOf(w, 'vgame_banks')).forEach(it => protZCloud.add(it));
+    if (mode === 'A') guardZ(protZCloud, zhItems(cloudOf(w, 'vgame_banks')));
     const cm = cloudOf(w, 'mock_history');
     (Array.isArray(cm) ? cm : []).forEach(r => mocks.add(r.d + '|' + r.lRaw));
   }
@@ -101,13 +108,13 @@ function runOne(seed, mode) {
       const b = banksOf(d);
       (protDev.get(d) || new Set()).forEach(id => { if (!exempt(id) && !present(b, id)) fail(where + ':' + d.name + ' 本機少了 ' + id); });
       const z = zhItems(b);
-      (protZDev.get(d) || new Set()).forEach(it => { if (!exemptZ(it) && !z.has(it)) fail(where + ':' + d.name + ' 本機中文不見了 ' + it); });
+      (protZDev.get(d) || new Map()).forEach((f, it) => { if (!exemptZ(it, f) && !z.has(it)) fail(where + ':' + d.name + ' 本機中文不見了 ' + it); });
     });
     if (mode === 'A') {
       const c = cloudOf(w, 'vgame_banks');
       protCloud.forEach(id => { if (!exempt(id) && !present(c, id)) fail(where + ':雲端少了 ' + id); });
       const zc = zhItems(c);
-      protZCloud.forEach(it => { if (!exemptZ(it) && !zc.has(it)) fail(where + ':雲端中文不見了 ' + it); });
+      protZCloud.forEach((f, it) => { if (!exemptZ(it, f) && !zc.has(it)) fail(where + ':雲端中文不見了 ' + it); });
       const cm = (cloudOf(w, 'mock_history') || []).map(r => r.d + '|' + r.lRaw);
       mocks.forEach(m => { if (cm.indexOf(m) < 0) fail(where + ':雲端模擬考少了 ' + m); });
     }
@@ -123,7 +130,7 @@ function runOne(seed, mode) {
     const banks = loggedIn(d) ? banksOf(d) : [];
     const bids = banks.filter(b => b && typeof b.id === 'string').map(b => b.id);
     if (!loggedIn(d)) {
-      if (r < 0.5 && !d.offline) { log.push(d.name + ' 登入'); await signIn(d); protDev.set(d, new Set()); protZDev.set(d, new Set()); return; }
+      if (r < 0.5 && !d.offline) { log.push(d.name + ' 登入'); await signIn(d); protDev.set(d, new Set()); protZDev.set(d, new Map()); return; }
       if (r < 0.7) { d.offline = !d.offline; log.push(d.name + (d.offline ? ' 斷線' : ' 連上')); return; }
       return;
     }
@@ -143,6 +150,20 @@ function runOne(seed, mode) {
       if (r < 0.8) { await pg.runTimers(); log.push(d.name + ' 舊版上傳'); return; }
       if (r < 0.88) { d.offline = !d.offline; log.push(d.name + (d.offline ? ' 斷線' : ' 連上')); if (!d.offline) await pg.fire('win:online'); return; }
       await newSession(d); log.push(d.name + ' 舊版重開'); return;
+    }
+    if (bids.indexOf('bLegacy') >= 0 && chance(0.15)) {
+      /* 重複英文的舊資料(run/跑、Run/經營):把第一個 run 的中文在幾個寫法之間換來換去(含改回原本的「跑」)、在編輯頁刪掉 alt、
+         把 alt 換成主要的。裝置時鐘有快有慢,會出現「改回以前的樣子」:改回的(和合併後內容跟以前某一版一樣的)那一份跟別台的版本
+         互相吸收過、或被當成舊版本,學生打的中文要在主要或 alt,不能不見(第三輪) */
+      const run = (banks.find(b => b.id === 'bLegacy').words || []).find(x => x && key(x.en) === 'run');
+      if (run && Array.isArray(run.alt) && run.alt.length && chance(0.5)) {
+        if (chance(0.5)) { setWord(d, 'bLegacy', 'run', { alt: [] }); log.push(d.name + ' 改中文 bLegacy run 刪 alt'); return; }
+        const [top, ...rest] = run.alt;
+        setWord(d, 'bLegacy', 'run', { zh: top, alt: rest.concat([run.zh]) }); log.push(d.name + ' 改中文 bLegacy run 換成 alt ' + top); return;
+      }
+      const zh = pick(LEGACY_ZH);
+      setWord(d, 'bLegacy', 'run', { zh }); log.push(d.name + ' 改中文 bLegacy run ' + zh);
+      return;
     }
     if (r < 0.22) {
       const id = bids.length && chance(0.8) ? pick(bids) : newBank(d, '題庫' + Math.floor(rnd() * 99));
@@ -215,6 +236,11 @@ function runOne(seed, mode) {
       if (beforeZ && log.length > nlog && USER_EDIT.test(log[log.length - 1])) {
         const afterZ = zhItems(banksOf(d));
         beforeZ.forEach(it => { if (!afterZ.has(it)) supZ.set(it, step); });
+        /* 學生這一步打的中文(以前出現過、被換掉,現在又改回來的):從這一步起算,之前的「換掉」「刪掉」不再豁免它。
+           只在別的地方(其他裝置本機、舊版頁面記住的那份、雲端)都沒有它的時候重新算:別的地方還有的是舊的那一份,之後被換掉、刪掉是對的,
+           分不出來就照舊豁免(少抓,不誤報) */
+        const elsewhere = it => devs.some(x => x !== d && (zhItems(banksOf(x)).has(it) || zhItems(x.snapshot).has(it))) || zhItems(cloudOf(w, 'vgame_banks')).has(it);
+        afterZ.forEach(it => { if (!beforeZ.has(it) && !elsewhere(it)) firstZ.set(it, step); });
       }
       if (process.env.DEBUG) {
         const brief = b => (Array.isArray(b) ? b : []).map(x => x.id + ':' + x._r + '[' + (x.words || []).map(y => y.en + '/' + y._r).join(',') + ']').join(' ');

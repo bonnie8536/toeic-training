@@ -58,6 +58,14 @@ function wordSet(banks) {
   return out;
 }
 const bankIds = banks => new Set((banks || []).filter(b => b && typeof b.id === 'string').map(b => b.id));
+/* 模擬「改回去的內容跟以前那一版一模一樣」(第三輪起新版改內容會換 _r,不會這樣;舊版頁面、這一版之前的資料可能有):
+   每個字的 _r 換回 ref 裡同一個英文那個字的(ref 沒有 _r 就拿掉)、拿掉 _m,兩份互相吸收過 */
+const unmark = (banks, ref) => banks.map(b => Object.assign({}, b, { words: (b.words || []).map(w => {
+  const c = Object.assign({}, w), o = findWord(ref, b.id, w.en);
+  delete c._m; delete c._r;
+  if (o && typeof o._r === 'string') c._r = o._r;
+  return c;
+}) }));
 const findWord = (banks, id, en) => { const b = (banks || []).find(x => x.id === id); return b && (b.words || []).find(w => key(w.en) === key(en)); };
 
 /* ---------- 隨機產生「兩台各自改過」的題庫 ---------- */
@@ -611,11 +619,43 @@ function evolve(banks, tombs, now, steps, from) {
   const phoneT = T0 + 10 * 60e3 + 3 * 3600e3;
   const phone = SM.editBank(clone(base), 'b1', phoneT, b => SM.setWord(b, 'refund', { zh: '退錢' }, phoneT));
   const pcT = T0 + 30 * 60e3;
-  const pc = SM.editBank(clone(phone), 'b1', pcT, b => SM.setWord(b, 'refund', { zh: '退款' }, pcT));
+  const pcMarked = SM.editBank(clone(phone), 'b1', pcT, b => SM.setWord(b, 'refund', { zh: '退款' }, pcT));
+  const pc = unmark(pcMarked, base);   // 第三輪起改內容會換 _r,改回去跟以前一模一樣時才會互相吸收過
   const m1 = merge(pc, phone), m2 = merge(phone, pc);
   const seen = v => { const w = findWord(v.v, 'b1', 'refund'); return [w.zh].concat(w.alt || []).sort().join(); };
   check('改回以前的中文(兩份互相吸收過)、改回去那台時鐘慢:兩個中文都留(一個在 alt),順序無關、再合併不變',
     seen(m1) === '退款,退錢' && SM.stateKey(m1.v) === SM.stateKey(m2.v) && merge(m1.v, pc).sameAsLocal && merge(m1.v, phone).sameAsLocal, seen(m1) + ' / ' + seen(m2));
+  check('改回以前的中文、新版(改內容換 _r):電腦改回的「退款」是新版本(不管時鐘),順序無關', seen(merge(pcMarked, phone)) === '退款' && seen(merge(phone, pcMarked)) === '退款', seen(merge(pcMarked, phone)));
+})();
+
+(function revertMark() {
+  /* 第三輪(test_sync_fuzz 加了「學生又打回以前的中文」的檢查後找到的):改回以前某一版的內容(雜湊一樣),會被當成那個舊版本:
+     1. 電腦改回「跑」、手機同時把「跑步」改成「慢跑」:慢跑的 _p 裡有原本「跑」的雜湊,電腦改回的「跑」被當成舊版本拿掉;
+     2. 手機刪了 run(標記記的是原本「跑」的雜湊),電腦拿到別台改的版本後又改回「跑」:被那個刪除標記刪掉。
+     3. 兩台各自把「跑」改成「跑步」,其中一台再改成「慢跑」:另一台的「跑步」跟慢跑 _p 裡的那一版同一個雜湊,被當成舊版本拿掉。
+     現在改內容會換 _r(算進內容雜湊),每一版都是新的版本 */
+  const legacy = [{ id: 'b1', name: 'x', _r: 'rrrrrr', words: [{ en: 'run', zh: '跑', on: true }] }];
+  const t1 = T0 + 60e3, t2 = T0 + 120e3, t3 = T0 + 180e3;
+  const B = SM.editBank(clone(legacy), 'b1', t1, b => SM.setWord(b, 'run', { zh: '跑步' }, t1));
+  const back = SM.editBank(clone(B), 'b1', t2, b => SM.setWord(b, 'run', { zh: '跑' }, t2));
+  const jog = SM.editBank(clone(B), 'b1', t3, b => SM.setWord(b, 'run', { zh: '慢跑' }, t3));
+  const seen = v => { const w = findWord(v, 'b1', 'run'); return w ? [w.zh].concat(w.alt || []).sort().join() : '(沒有 run)'; };
+  const r1 = merge(back, jog).v, r2 = merge(jog, back).v;
+  check('改回以前的中文、另一台同時改成別的:改回的不會被當成舊版本拿掉,兩個中文都留(一個在 alt),順序無關、再合併不變',
+    SM.wordHash(back[0].words[0]) !== SM.wordHash(legacy[0].words[0]) && seen(r1) === '慢跑,跑' && SM.stateKey(r1) === SM.stateKey(r2)
+    && merge(r1, back).sameAsLocal && merge(r1, jog).sameAsLocal, seen(r1) + ' / ' + seen(r2));
+  check('改回以前的中文、沒有別台同時改:改回的那一份是新版本(用它,不多 alt);沒改到內容照樣原樣回',
+    seen(merge(back, B).v) === '跑' && seen(merge(B, back).v) === '跑' && SM.reviseWord(back[0].words[0], { zh: '跑' }, t3) === back[0].words[0], seen(merge(back, B).v));
+  const del = SM.deleteWord(clone(legacy), null, 'b1', 'run', t1);
+  const again = SM.editBank(clone(B), 'b1', t2, b => SM.setWord(b, 'run', { zh: '跑' }, t2));
+  const r3 = merge(again, del.banks, del.tombs).v, r4 = merge(del.banks, again, del.tombs).v;
+  check('一台刪了字、另一台拿到別台改的版本後又改回原本的中文:不會被那個刪除標記刪掉(刪的是刪的時候那個樣子)',
+    seen(r3) === '跑' && seen(r4) === '跑' && seen(merge(legacy, del.banks, del.tombs).v) === '(沒有 run)', seen(r3) + ' / ' + seen(r4));
+  const other = SM.editBank(clone(legacy), 'b1', t2, b => SM.setWord(b, 'run', { zh: '跑步' }, t2));
+  const jog2 = SM.editBank(clone(B), 'b1', t3, b => SM.setWord(b, 'run', { zh: '慢跑' }, t3));
+  const r5 = merge(other, jog2).v, r6 = merge(jog2, other).v;
+  check('兩台各自打了同一個中文、其中一台之後又改掉:另一台打的不會被當成舊版本拿掉,順序無關、再合併不變',
+    seen(r5) === '慢跑,跑步' && SM.stateKey(r5) === SM.stateKey(r6) && merge(r5, other).sameAsLocal && merge(r5, jog2).sameAsLocal, seen(r5) + ' / ' + seen(r6));
 })();
 
 (function dupWords() {
@@ -636,6 +676,33 @@ function evolve(banks, tombs, now, steps, from) {
   const t1 = merge(off, backOn).v, t2 = merge(backOn, off).v;
   check('同一個英文出現兩次的舊資料:取消勾選又勾回來(內容跟原本一樣、兩份互相吸收過)合併後那個字還在,用 _t 新的那份', J(runs(t1)) === '[true]' && J(runs(t2)) === '[true]'
     && zhs(t1) === '經營,跑' && merge(t1, off).sameAsLocal && merge(t1, backOn).sameAsLocal, J(runs(t1)) + ' / ' + J(runs(t2)) + ' / ' + zhs(t1));
+  /* 第二輪摘要發現(第三輪修):重複英文的舊資料裡,手機時鐘快 3 小時把 run 的「跑」改成「跑步」;電腦時鐘準,拿到之後改回「跑」
+     (跟舊資料一模一樣,兩份互相吸收過)。以前重複英文那一組只留 _t 大的(手機的「跑步」),電腦改回的「跑」沒放 alt,哪裡都沒有了。
+     跟英文只出現一次的 changeBack 一樣:主要那個留著,輸的中文放 alt */
+  const phoneT = T0 + 10 * 60e3 + 3 * 3600e3, pcT = T0 + 30 * 60e3;
+  const phone = SM.editBank(clone(legacy), 'b2', phoneT, b => SM.setWord(b, 'run', { zh: '跑步' }, phoneT));
+  const pcMarked = SM.editBank(clone(phone), 'b2', pcT, b => SM.setWord(b, 'run', { zh: '跑' }, pcT));
+  const pc = unmark(pcMarked, legacy);   // 改回去跟以前一模一樣才會互相吸收過(新版會換 _r,見下面)
+  const allZh = v => v.find(b => b.id === 'b2').words.map(w => [w.zh].concat(w.alt || [])).reduce((p, q) => p.concat(q), []).sort().join();
+  const c1 = merge(pc, phone).v, c2 = merge(phone, pc).v;
+  const c3 = merge(merge(pc, legacy).v, phone).v, c4 = merge(pc, merge(phone, legacy).v).v;
+  check('同一個英文出現兩次的舊資料:改回以前的中文、改回去那台時鐘慢:兩個中文都留(一個在 alt),經營也在,順序無關、再合併不變',
+    allZh(c1) === '經營,跑,跑步' && SM.stateKey(c1) === SM.stateKey(c2) && SM.stateKey(c1) === SM.stateKey(c3) && SM.stateKey(c1) === SM.stateKey(c4)
+    && merge(c1, pc).sameAsLocal && merge(c1, phone).sameAsLocal && merge(c1, legacy).sameAsLocal && merge(c1, c2).sameAsLocal
+    && c1.find(b => b.id === 'b2').words.length === 2, allZh(c1) + ' / ' + allZh(c2) + ' / ' + J(c1.find(b => b.id === 'b2').words));
+  const e1 = merge(pcMarked, phone).v, e2 = merge(phone, pcMarked).v;
+  check('同一個英文出現兩次的舊資料:改回以前的中文、新版(改內容換 _r):電腦改回的「跑」是新版本,經營也在,順序無關',
+    allZh(e1) === '經營,跑' && SM.stateKey(e1) === SM.stateKey(e2) && e1.find(b => b.id === 'b2').words.length === 2, allZh(e1) + ' / ' + allZh(e2));
+  /* 再一台:手機那份拿去改成「慢跑」(時鐘更快),另一台拿到「慢跑」之後改回「跑步」(時鐘慢)。慢跑是那台學生自己換掉的,可以不在;
+     電腦改回的「跑」和改回「跑步」的都要在 */
+  const p2T = T0 + 3600e3 * 5, p3T = T0 + 3600e3;
+  const jog = SM.editBank(clone(phone), 'b2', p2T, b => SM.setWord(b, 'run', { zh: '慢跑' }, p2T));
+  const back = SM.editBank(clone(jog), 'b2', p3T, b => SM.setWord(b, 'run', { zh: '跑步' }, p3T));
+  const d1 = merge(merge(pcMarked, back).v, jog).v, d2 = merge(jog, merge(back, pcMarked).v).v;   // 再合併不變只看最後一次合併的兩份(三份以上不保證,見檔頭)
+  const lostD = ['跑', '跑步', '經營'].filter(z => allZh(d1).split(',').indexOf(z) < 0 || allZh(d2).split(',').indexOf(z) < 0);
+  check('同一個英文出現兩次的舊資料:三台輪流改、兩台改回以前的中文:沒被自己換掉的中文都還在,順序無關、再合併不變',
+    !lostD.length && SM.stateKey(d1) === SM.stateKey(d2) && merge(d1, merge(pcMarked, back).v).sameAsLocal && merge(d1, jog).sameAsLocal,
+    '少了 ' + J(lostD) + ' / ' + allZh(d1) + ' / ' + allZh(d2));
 })();
 
 console.log(pass + ' / ' + (pass + fail) + ' 通過');

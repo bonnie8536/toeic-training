@@ -10,13 +10,14 @@
    - 時鐘只拿來決定「同一個欄位兩邊都改了誰當主要」,輸的那個中文放進 alt,不丟。
    題庫多的欄位(舊版頁面看不懂,但改的時候是改物件本身,會原樣留著):
    - _r:新版建立題庫(6 碼)或字(4 碼)時給的隨機碼,算進內容雜湊(刪掉又加回一模一樣的字,雜湊不同,不會被舊標記刪掉)。
+     字的 _r 每次改內容都換一個(reviseWord):改回以前的樣子、兩台打了同一個中文,也不會跟哪一個舊版本同一個雜湊。
    - _t:新版最後一次改它的時間(新加的字沒有,改過才有);_nt:題庫名稱最後一次改的時間;_on:新版改名時改之前那個名稱的雜湊。都不算進雜湊。
      名稱:一份是另一份的新版本就用新版本的名稱;不然只有一份是從另一份現在的名稱改過來的(_on)就用它(不看時鐘);
      兩台都改了名才比 _nt;_nt 也一樣(舊版頁面就地改名)用主要那份。
    - banks 的 ctx.localClean:本機那份(第一個參數)上次跟雲端對齊之後沒改過(cloud.js 看帳本)。舊版頁面就地改名、取消勾選、改中文
      不動戳記,兩份分不出先後(_t 一樣)時用雲端那份當主要,不比字串(第二輪審查 r2 #1、#4)。中文衝突時本機的照樣放 alt。
    - _p:它吸收過的舊版本,「雜湊.時間(36 進位毫秒)」;時間是吸收的那一刻(新版本的 _t)。這一版那一刻吸收的一定留(最多 16 個),
-     其他的留最新的,題庫補到 8 個、字補到 4 個。用來判斷「另一份是不是我的舊版本」。
+     其他的留最新的,題庫補到 8 個、字補到 4 個。用來判斷「另一份是不是我的舊版本」(看雜湊,所以字每一版的雜湊都要不一樣:改內容換 _r)。
    - alt(字):兩台同時改了同一個字的中文,沒當主要的那個(不設上限:以前排序後只留 3 個,會把學生剛打的丟掉)。
      編輯頁全部顯示「另一台寫的」,可以換或刪。
    跟 feat/move 共用:canon、quickHash 跟 js/move-merge.js 同一個函式;mock 的「同一筆」判斷一樣(兩個分支都進 main 後只留這一份)。
@@ -163,6 +164,20 @@
     put(out, '_p', normP(imm.concat(pList(x._p), pList(y._p)), wordHash(out), WORD_P_MAX, t));
     return out;
   }
+  /* 重複英文那一組裡留下的字 [雜湊, 字] 收下輸給它的那些(losers)的中文:跟它不一樣的放 alt(輸的 alt 不帶進來,跟 joinWord 一樣)。
+     有新的 alt 才換成新版本:_p 記下它和輸的那些(之後再跟它們合併,認得出是舊版本,結果不變);沒有新的就原樣回它 */
+  function absorbZh([h, w], losers) {
+    const have = altList(w.alt);
+    const add = losers.map(([, l]) => l.zh).filter(z => zhDiffers(z, w.zh)).map(String).filter(z => have.indexOf(z) < 0);
+    if (!add.length) return w;
+    const out = Object.assign({}, w);
+    put(out, 'alt', have.concat(add).filter((z, i, l) => l.indexOf(z) === i).sort());
+    const t = losers.reduce((m, [, l]) => maxT(m, l._t), w._t);
+    put(out, '_t', t);
+    const imm = [pEntry(h, t)].concat(losers.map(([hl]) => pEntry(hl, t)));
+    put(out, '_p', normP(losers.reduce((p, [, l]) => p.concat(pList(l._p)), imm.concat(pList(w._p))), wordHash(out), WORD_P_MAX, t));
+    return out;
+  }
   /* 字取聯集:用 norm(en) 對應。同一份裡同一個英文出現兩次(舊資料)不合併成一個:兩份的都留,去掉一樣的和被吸收過的舊版本。
      side:'x' 或 'y' 是分不出先後時優先的那一份(只用在一對一的字) */
   function joinWords(xs, ys, side) {
@@ -181,9 +196,14 @@
       /* 被另一個吸收過的(舊版本)拿掉。兩個互相吸收過(取消勾選又勾回來,內容跟以前某一版一樣):跟 newer() 一樣留 primary 那個,
          不能兩個都拿掉(以前兩個都拿掉,那個字就不見了)。萬一全部都被拿掉(繞一圈互相吸收),留 primary 最大的那一個 */
       const drop = ([h, w]) => all.some(([h2, w2]) => h2 !== h && hasP(w2._p, h) && !(hasP(w._p, h2) && primary(w, w2, wordContent)[0] === w));
-      let keep = all.filter(e => !drop(e)).map(e => e[1]);
-      if (!keep.length) keep = [all.map(e => e[1]).reduce((p, q) => primary(p, q, wordContent)[0])];
-      keep.sort((p, q) => cmp(canon(p), canon(q))).forEach(w => out.push(w));
+      /* 輸的中文(跟英文只出現一次時 joinWord 的「互相吸收過」一樣,第三輪):留下的那個跟被拿掉的互相吸收過(改回以前的中文、
+         改回去那台時鐘慢),被拿掉的中文放進留下那個的 alt。以前只留 primary,改回的中文哪裡都沒有了。
+         全部都被拿掉時(繞一圈互相吸收)留 primary 最大的那一個,其他的中文都放進它的 alt(寧可多留) */
+      const kept = all.filter(e => !drop(e));
+      const win = (e, o) => hasP(e[1]._p, o[0]) && hasP(o[1]._p, e[0]) && primary(e[1], o[1], wordContent)[0] === e[1];
+      const top = kept.length ? null : all.reduce((p, q) => (primary(p[1], q[1], wordContent)[0] === p[1] ? p : q));
+      const groups = top ? [[top, all.filter(o => o !== top)]] : kept.map(e => [e, all.filter(o => o !== e && win(e, o))]);
+      groups.map(([e, losers]) => absorbZh(e, losers)).sort((p, q) => cmp(canon(p), canon(q))).forEach(w => out.push(w));
     });
     return out;
   }
@@ -409,13 +429,19 @@
   /* 新字只多 _r(不寫 on: true、不寫 _t):批次加字一次幾千個字,每個字多 _t 和 on 會讓題庫變成 main 的 1.7 倍,
      256 KB 的上限從約 4800 字掉到約 2900 字。on 沒寫就是勾選(每個讀的地方都是 on !== false);_t 只在兩台同時改同一個字時
      決定誰當主要,沒有 _t 就比內容(兩台算出來一樣)。改過的字(reviseWord)才有 _t、_p。字的 _r 4 碼(題庫 6 碼):
-     只用來分「刪掉又加回一模一樣的字」,36^4 種夠了。now 不用,留著參數給呼叫的人 */
+     只用來分「刪掉又加回一模一樣的字」和「改回以前一模一樣的內容」(reviseWord 換新的),36^4 種夠了。now 不用,留著參數給呼叫的人 */
   function newWord(en, zh, now) { return { en, zh, _r: rnd(4) }; }
   function reviseWord(w, patch, now) {
     const next = Object.assign({}, w, patch);
     if (own(patch, 'alt')) put(next, 'alt', altList(patch.alt).slice().sort());
-    const h = wordHash(w), hn = wordHash(next);
-    if (h === hn) return w;
+    const h = wordHash(w);
+    if (h === wordHash(next)) return w;
+    /* 改到內容就換一個 _r(第三輪):每一版都是獨一無二的版本。不然改回以前的中文、取消勾選又勾回來、兩台各自打了同一個中文,
+       雜湊會跟某一個舊版本一樣:別台的版本 _p 裡有那個雜湊,學生剛打的被當成舊版本拿掉;刪那個舊版本的標記也會把它刪掉。
+       合併記號 _m 不用留了(_r 換了,跟合併的兩份一定不同) */
+    next._r = rnd(4);
+    delete next._m;
+    const hn = wordHash(next);
     next._t = now;
     put(next, '_p', normP([pEntry(h, now)].concat(pList(w._p)), hn, WORD_P_MAX, now));
     return next;

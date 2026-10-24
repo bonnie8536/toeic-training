@@ -13,6 +13,10 @@ const PREFIX = 'tr_u' + 'c' + USER.id.replace(/-/g, '') + '_';
 const LEDGER = 'tr_unsynced_' + USER.id;
 const SB_KEY = 'sb-x-auth-token';   // supabase-js 存登入資料的位置(專案網址 https://x.supabase.co)
 const HOUR = 3600e3;
+/* 這裡測的是「整份上傳、後傳的蓋掉先傳的」那一套(帳本、灌資料時二選一)。以前拿自訂題庫(vgame_banks)當例子;
+   題庫改成先讀雲端、合併再上傳之後(js/sync-merge.js,tools/test_sync_union.js 測),改用不在合併表上的鍵(錯題本 drill_p5),
+   情境與規則都沒變。OLD_BANK、NEW_BANK 只是拿來當值 */
+const K = 'drill_p5';
 
 function makeStorage() {
   const m = new Map();
@@ -165,86 +169,86 @@ const OLD_BANK = [{ name: '我的題庫', words: ['apple'] }];
 const NEW_BANK = [{ name: '我的題庫', words: ['apple', 'banana', 'cherry'] }];
 
 const scenarios = {
-  '1. 自訂題庫加字後 0.8 秒內 App 被關掉,隔天重開': async src => {
+  '1. 錯題本(整份上傳的鍵)改了之後 0.8 秒內 App 被關掉,隔天重開': async src => {
     const w = makeWorld();
-    w.db.push({ user_id: USER.id, k: 'vgame_banks', v: OLD_BANK, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    w.db.push({ user_id: USER.id, k: K, v: OLD_BANK, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
     const pg = await openLoggedIn(w, src);
-    studentWrites(pg, w, 'vgame_banks', NEW_BANK);
+    studentWrites(pg, w, K, NEW_BANK);
     pg.close();
     newSession(w);
     const pg2 = loadPage(w, src); await pg2.ready; await pg2.runTimers();
-    return { ok: same(lv(w, 'vgame_banks'), NEW_BANK) && same(cv(w, 'vgame_banks'), NEW_BANK),
-             detail: '本機 ' + JSON.stringify(lv(w, 'vgame_banks')[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')[0].words) };
+    return { ok: same(lv(w, K), NEW_BANK) && same(cv(w, K), NEW_BANK),
+             detail: '本機 ' + JSON.stringify(lv(w, K)[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, K)[0].words) };
   },
   '2. 網路不穩上傳失敗,下次連線開站': async src => {
     const w = makeWorld();
-    w.db.push({ user_id: USER.id, k: 'vgame_banks', v: OLD_BANK, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    w.db.push({ user_id: USER.id, k: K, v: OLD_BANK, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
     const pg = await openLoggedIn(w, src);
     w.offline = true;
-    studentWrites(pg, w, 'vgame_banks', NEW_BANK);
+    studentWrites(pg, w, K, NEW_BANK);
     await pg.runTimers();                                // 上傳失敗
     w.offline = false;
     newSession(w);
     const pg2 = loadPage(w, src); await pg2.ready; await pg2.runTimers();
-    return { ok: same(lv(w, 'vgame_banks'), NEW_BANK) && same(cv(w, 'vgame_banks'), NEW_BANK),
-             detail: '本機 ' + JSON.stringify(lv(w, 'vgame_banks')[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')[0].words) };
+    return { ok: same(lv(w, K), NEW_BANK) && same(cv(w, K), NEW_BANK),
+             detail: '本機 ' + JSON.stringify(lv(w, K)[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, K)[0].words) };
   },
-  '3. 修改前就沒傳上去的新題庫(雲端從沒有這一列)': async src => {
+  '3. 修改前就沒傳上去的鍵(雲端從沒有這一列)': async src => {
     const w = makeWorld();
     w.local.setItem('tr_current_profile', JSON.stringify('c' + USER.id.replace(/-/g, '')));
-    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(NEW_BANK));   // 沒有帳本、雲端沒有列
+    w.local.setItem(PREFIX + K, JSON.stringify(NEW_BANK));   // 沒有帳本、雲端沒有列
     const pg = loadPage(w, src); await pg.ready; await pg.runTimers();
-    return { ok: same(lv(w, 'vgame_banks'), NEW_BANK) && same(cv(w, 'vgame_banks'), NEW_BANK),
-             detail: '本機 ' + JSON.stringify(lv(w, 'vgame_banks')) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+    return { ok: same(lv(w, K), NEW_BANK) && same(cv(w, K), NEW_BANK),
+             detail: '本機 ' + JSON.stringify(lv(w, K)) + ' / 雲端 ' + JSON.stringify(cv(w, K)) };
   },
   '4. 另一台裝置比較新:要用雲端的,不能被舊的本機蓋回去': async src => {
     const w = makeWorld();
     const otherDevice = [{ name: '我的題庫', words: ['from-phone'] }];
-    w.db.push({ user_id: USER.id, k: 'vgame_banks', v: otherDevice, updated_at: new Date(Date.now() - 1 * HOUR).toISOString() });
+    w.db.push({ user_id: USER.id, k: K, v: otherDevice, updated_at: new Date(Date.now() - 1 * HOUR).toISOString() });
     w.local.setItem('tr_current_profile', JSON.stringify('c' + USER.id.replace(/-/g, '')));
-    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(NEW_BANK));
-    w.local.setItem(LEDGER, JSON.stringify({ vgame_banks: Date.now() - 2 * HOUR }));   // 本機改動比較舊
+    w.local.setItem(PREFIX + K, JSON.stringify(NEW_BANK));
+    w.local.setItem(LEDGER, JSON.stringify({ [K]: Date.now() - 2 * HOUR }));   // 本機改動比較舊
     const pg = loadPage(w, src); await pg.ready; await pg.runTimers();
-    return { ok: same(lv(w, 'vgame_banks'), otherDevice) && same(cv(w, 'vgame_banks'), otherDevice),
-             detail: '本機 ' + JSON.stringify(lv(w, 'vgame_banks')[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')[0].words) };
+    return { ok: same(lv(w, K), otherDevice) && same(cv(w, K), otherDevice),
+             detail: '本機 ' + JSON.stringify(lv(w, K)[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, K)[0].words) };
   },
   '5. 開站時沒網路:本機一個都不能刪': async src => {
     const w = makeWorld();
-    w.db.push({ user_id: USER.id, k: 'vgame_banks', v: OLD_BANK, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    w.db.push({ user_id: USER.id, k: K, v: OLD_BANK, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
     w.local.setItem('tr_current_profile', JSON.stringify('c' + USER.id.replace(/-/g, '')));
-    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(NEW_BANK));
-    w.local.setItem(LEDGER, JSON.stringify({ vgame_banks: Date.now() }));
+    w.local.setItem(PREFIX + K, JSON.stringify(NEW_BANK));
+    w.local.setItem(LEDGER, JSON.stringify({ [K]: Date.now() }));
     w.offline = true;
     const pg = loadPage(w, src); await pg.ready; await pg.runTimers();
-    return { ok: same(lv(w, 'vgame_banks'), NEW_BANK), detail: '本機 ' + JSON.stringify(lv(w, 'vgame_banks')[0].words) };
+    return { ok: same(lv(w, K), NEW_BANK), detail: '本機 ' + JSON.stringify(lv(w, K)[0].words) };
   },
   '6. 一般寫入照常上傳,帳本清空': async src => {
     const w = makeWorld();
     const pg = await openLoggedIn(w, src);
-    studentWrites(pg, w, 'vgame_banks', NEW_BANK);
+    studentWrites(pg, w, K, NEW_BANK);
     await pg.runTimers();
     const led = JSON.parse(w.local.getItem(LEDGER) || '{}');
-    return { ok: same(cv(w, 'vgame_banks'), NEW_BANK) && Object.keys(led).length === 0,
-             detail: '雲端 ' + JSON.stringify(cv(w, 'vgame_banks')) + ' / 帳本剩 ' + Object.keys(led).length + ' 筆' };
+    return { ok: same(cv(w, K), NEW_BANK) && Object.keys(led).length === 0,
+             detail: '雲端 ' + JSON.stringify(cv(w, K)) + ' / 帳本剩 ' + Object.keys(led).length + ' 筆' };
   },
   '7. 關頁(pagehide)立刻補傳,不等 0.8 秒': async src => {
     const w = makeWorld();
     const pg = await openLoggedIn(w, src);
-    studentWrites(pg, w, 'vgame_banks', NEW_BANK);
+    studentWrites(pg, w, K, NEW_BANK);
     await pg.fire('win:pagehide');
-    return { ok: same(cv(w, 'vgame_banks'), NEW_BANK), detail: '雲端 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+    return { ok: same(cv(w, K), NEW_BANK), detail: '雲端 ' + JSON.stringify(cv(w, K)) };
   },
   '8. 還有沒同步的資料時登出:先問,按取消就不刪': async src => {
     const w = makeWorld();
     const pg = await openLoggedIn(w, src);
     w.offline = true;
-    studentWrites(pg, w, 'vgame_banks', NEW_BANK);
+    studentWrites(pg, w, K, NEW_BANK);
     await pg.runTimers();
     w.confirmAnswer = false;
     const before = w.reloads;
     await pg.ctx.CLOUD.logout(); await tick();
-    return { ok: w.confirms.length === 1 && same(lv(w, 'vgame_banks'), NEW_BANK) && w.reloads === before,
-             detail: '問了 ' + w.confirms.length + ' 次 / 本機題庫 ' + (lv(w, 'vgame_banks') ? '還在' : '被刪了') };
+    return { ok: w.confirms.length === 1 && same(lv(w, K), NEW_BANK) && w.reloads === before,
+             detail: '問了 ' + w.confirms.length + ' 次 / 本機題庫 ' + (lv(w, K) ? '還在' : '被刪了') };
   },
   '9. 離線開 App、登入憑證已過期:離線時練的進度,恢復連線開站後要留著並上雲': async src => {
     const w = makeWorld();
@@ -288,14 +292,14 @@ const scenarios = {
   '12. 頁面還在確認登入時就寫入(用的是舊的本機資料):灌資料仍以雲端較新的為準': async src => {
     const w = makeWorld();
     const otherDevice = [{ name: '我的題庫', words: ['from-phone'] }];
-    w.db.push({ user_id: USER.id, k: 'vgame_banks', v: otherDevice, updated_at: new Date(Date.now() - 1 * HOUR).toISOString() });
+    w.db.push({ user_id: USER.id, k: K, v: otherDevice, updated_at: new Date(Date.now() - 1 * HOUR).toISOString() });
     w.local.setItem('tr_current_profile', JSON.stringify('c' + USER.id.replace(/-/g, '')));
-    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(OLD_BANK));   // 這台很久沒開
+    w.local.setItem(PREFIX + K, JSON.stringify(OLD_BANK));   // 這台很久沒開
     const pg = loadPage(w, src);
-    studentWrites(pg, w, 'vgame_banks', OLD_BANK);                      // 還沒確認登入就寫
+    studentWrites(pg, w, K, OLD_BANK);                      // 還沒確認登入就寫
     await pg.ready; await pg.runTimers();
-    return { ok: same(lv(w, 'vgame_banks'), otherDevice) && same(cv(w, 'vgame_banks'), otherDevice),
-             detail: '本機 ' + JSON.stringify(lv(w, 'vgame_banks')[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')[0].words) };
+    return { ok: same(lv(w, K), otherDevice) && same(cv(w, K), otherDevice),
+             detail: '本機 ' + JSON.stringify(lv(w, K)[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, K)[0].words) };
   },
   '13. 沒登入、用的是本機學生檔案:寫入不會產生任何雲端帳本': async src => {
     const w = makeWorld();
@@ -351,17 +355,17 @@ const scenarios = {
   '17. 有網路、還在確認登入就寫入又馬上關頁:下次灌資料仍以雲端較新的為準': async src => {
     const w = makeWorld();
     const otherDevice = [{ name: '我的題庫', words: ['from-phone'] }];
-    w.db.push({ user_id: USER.id, k: 'vgame_banks', v: otherDevice, updated_at: new Date(Date.now() - 1 * HOUR).toISOString() });
+    w.db.push({ user_id: USER.id, k: K, v: otherDevice, updated_at: new Date(Date.now() - 1 * HOUR).toISOString() });
     w.local.setItem('tr_current_profile', JSON.stringify('c' + USER.id.replace(/-/g, '')));
-    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(OLD_BANK));
+    w.local.setItem(PREFIX + K, JSON.stringify(OLD_BANK));
     w.authGate = new Promise(() => {});
     const pg = loadPage(w, src); await tick();
-    studentWrites(pg, w, 'vgame_banks', OLD_BANK);
+    studentWrites(pg, w, K, OLD_BANK);
     await pg.fire('win:pagehide'); pg.close();
     w.authGate = null;
     const pg2 = loadPage(w, src); await pg2.ready; await pg2.runTimers();
-    return { ok: same(lv(w, 'vgame_banks'), otherDevice) && same(cv(w, 'vgame_banks'), otherDevice),
-             detail: '本機 ' + JSON.stringify(lv(w, 'vgame_banks')[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')[0].words) };
+    return { ok: same(lv(w, K), otherDevice) && same(cv(w, K), otherDevice),
+             detail: '本機 ' + JSON.stringify(lv(w, K)[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, K)[0].words) };
   },
   '18. 離線開 App(登入憑證過期):仍是登入狀態、不跳登入框;離線練的進度恢復連線後上雲': async src => {
     const w = makeWorld();
@@ -459,23 +463,23 @@ const scenarios = {
   '25. 還在確認登入時寫入、離線時切到背景,之後同一頁連上並灌資料:那些寫入作廢,以雲端較新的為準': async src => {
     const w = makeWorld();
     const otherDevice = [{ name: '我的題庫', words: ['from-phone'] }];
-    w.db.push({ user_id: USER.id, k: 'vgame_banks', v: otherDevice, updated_at: new Date(Date.now() - 1 * HOUR).toISOString() });
+    w.db.push({ user_id: USER.id, k: K, v: otherDevice, updated_at: new Date(Date.now() - 1 * HOUR).toISOString() });
     w.local.setItem('tr_current_profile', JSON.stringify('c' + USER.id.replace(/-/g, '')));
     w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', expires_at: 1, user: USER }));
-    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(OLD_BANK));
+    w.local.setItem(PREFIX + K, JSON.stringify(OLD_BANK));
     let release; w.authGate = new Promise(r => { release = r; });
     const pg = loadPage(w, src); await tick();
-    studentWrites(pg, w, 'vgame_banks', OLD_BANK);
+    studentWrites(pg, w, K, OLD_BANK);
     w.offline = true;
     pg.ctx.document.visibilityState = 'hidden'; await pg.fire('doc:visibilitychange');
     w.offline = false; pg.ctx.document.visibilityState = 'visible';
     release(); w.authGate = null; await pg.ready; await pg.runTimers();
-    return { ok: same(lv(w, 'vgame_banks'), otherDevice) && same(cv(w, 'vgame_banks'), otherDevice),
-             detail: '本機 ' + JSON.stringify(lv(w, 'vgame_banks')[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')[0].words) };
+    return { ok: same(lv(w, K), otherDevice) && same(cv(w, K), otherDevice),
+             detail: '本機 ' + JSON.stringify(lv(w, K)[0].words) + ' / 雲端 ' + JSON.stringify(cv(w, K)[0].words) };
   },
   '26. 共用裝置:登入被撤銷後,沒登入的人練習產生的新鍵,不能在原帳號下次登入時被傳上去': async src => {
     const w = makeWorld();
-    w.db.push({ user_id: USER.id, k: 'vgame_banks', v: NEW_BANK, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    w.db.push({ user_id: USER.id, k: K, v: NEW_BANK, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
     await openLoggedIn(w, src);
     w.revoked = true; newSession(w);
     const reloadsBefore = w.reloads;
@@ -486,19 +490,19 @@ const scenarios = {
     await pg2.runTimers(); await pg2.fire('win:pagehide');
     await pg2.ctx.CLOUD.login('s@x.com', 'test-only'); await tick(); pg2.close();
     const pg3 = loadPage(w, src); await pg3.ready; await pg3.runTimers();
-    return { ok: switched && cv(w, 'verb_quiz') === undefined && lv(w, 'verb_quiz') === null && same(lv(w, 'vgame_banks'), NEW_BANK),
-             detail: '改回訪客 ' + switched + ' / 雲端 verb_quiz ' + JSON.stringify(cv(w, 'verb_quiz')) + ' / 帳號本機 verb_quiz ' + JSON.stringify(lv(w, 'verb_quiz')) + ' / 題庫 ' + JSON.stringify(lv(w, 'vgame_banks')) };
+    return { ok: switched && cv(w, 'verb_quiz') === undefined && lv(w, 'verb_quiz') === null && same(lv(w, K), NEW_BANK),
+             detail: '改回訪客 ' + switched + ' / 雲端 verb_quiz ' + JSON.stringify(cv(w, 'verb_quiz')) + ' / 帳號本機 verb_quiz ' + JSON.stringify(lv(w, 'verb_quiz')) + ' / 題庫 ' + JSON.stringify(lv(w, K)) };
   },
   '27. 改回訪客時一筆都不刪:原帳號在這台的資料與還沒上雲的帳本都留著': async src => {
     const w = makeWorld();
     await openLoggedIn(w, src);
-    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(NEW_BANK));
-    w.local.setItem(LEDGER, JSON.stringify({ vgame_banks: Date.now() - HOUR }));
+    w.local.setItem(PREFIX + K, JSON.stringify(NEW_BANK));
+    w.local.setItem(LEDGER, JSON.stringify({ [K]: Date.now() - HOUR }));
     w.revoked = true; newSession(w);
     const pg = loadPage(w, src); await pg.ready;
     const led = JSON.parse(w.local.getItem(LEDGER) || '{}');
-    return { ok: w.local.getItem('tr_current_profile') === null && same(lv(w, 'vgame_banks'), NEW_BANK) && led.vgame_banks !== undefined,
-             detail: '目前帳號 ' + w.local.getItem('tr_current_profile') + ' / 題庫 ' + (lv(w, 'vgame_banks') ? '還在' : '被刪了') + ' / 帳本 ' + JSON.stringify(led) };
+    return { ok: w.local.getItem('tr_current_profile') === null && same(lv(w, K), NEW_BANK) && led[K] !== undefined,
+             detail: '目前帳號 ' + w.local.getItem('tr_current_profile') + ' / 題庫 ' + (lv(w, K) ? '還在' : '被刪了') + ' / 帳本 ' + JSON.stringify(led) };
   },
   '28. 只有雲端帳號的資料夾會改回訪客:本機學生檔案、離線維持登入都不動': async src => {
     const w = makeWorld();
@@ -518,22 +522,22 @@ const scenarios = {
   '29. 登入被撤銷、確認登入還沒結束時就有寫入:改回訪客,那些值不給訪客看、本機不刪;帳本上原帳號還沒上雲的資料照常上傳': async src => {
     const w = makeWorld();
     await openLoggedIn(w, src);
-    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(NEW_BANK));
-    w.local.setItem(LEDGER, JSON.stringify({ vgame_banks: Date.now() - HOUR }));   // 學生自己還沒上雲的題庫
+    w.local.setItem(PREFIX + K, JSON.stringify(NEW_BANK));
+    w.local.setItem(LEDGER, JSON.stringify({ [K]: Date.now() - HOUR }));   // 學生自己還沒上雲的題庫
     w.revoked = true; newSession(w);
     let release; w.authGate = new Promise(r => { release = r; });
     const pg = loadPage(w, src); await tick();
     pageWrites(pg, w, 'verb_quiz', { n: 9, by: 'stranger' });
-    pageWrites(pg, w, 'vgame_banks', NEW_BANK);                    // 讀進來再寫回的鍵:帳本上有,不能搬走
+    pageWrites(pg, w, K, NEW_BANK);                    // 讀進來再寫回的鍵:帳本上有,不能搬走
     release(); w.authGate = null; await pg.ready;
     const moved = w.local.getItem('tr_verb_quiz') === null;
-    const bankKept = same(lv(w, 'vgame_banks'), NEW_BANK) && w.local.getItem('tr_vgame_banks') === null;
+    const bankKept = same(lv(w, K), NEW_BANK) && w.local.getItem('tr_' + K) === null;
     await pg.close();
     const pg2 = loadPage(w, src); await pg2.ready;
     await pg2.ctx.CLOUD.login('s@x.com', 'test-only'); await tick(); pg2.close();
     const pg3 = loadPage(w, src); await pg3.ready; await pg3.runTimers();
-    return { ok: moved && bankKept && same(cv(w, 'vgame_banks'), NEW_BANK) && lv(w, 'verb_quiz').n === 9,
-             detail: '沒給訪客 ' + moved + ' / 本機還在 ' + JSON.stringify(lv(w, 'verb_quiz')) + ' / 題庫留在帳號 ' + bankKept + ' / 雲端 verb_quiz ' + JSON.stringify(cv(w, 'verb_quiz')) + ' / 雲端題庫 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+    return { ok: moved && bankKept && same(cv(w, K), NEW_BANK) && lv(w, 'verb_quiz').n === 9,
+             detail: '沒給訪客 ' + moved + ' / 本機還在 ' + JSON.stringify(lv(w, 'verb_quiz')) + ' / 題庫留在帳號 ' + bankKept + ' / 雲端 verb_quiz ' + JSON.stringify(cv(w, 'verb_quiz')) + ' / 雲端題庫 ' + JSON.stringify(cv(w, K)) };
   },
   '30. 登入被撤銷又載不到雲端元件:一樣改回訪客;訪客資料夾原有的不動': async src => {
     const w = makeWorld();
@@ -558,17 +562,17 @@ const scenarios = {
     await openLoggedIn(w, src);
     let release; w.authGate = new Promise(r => { release = r; });
     const pg = loadPage(w, src);
-    studentWrites(pg, w, 'vgame_banks', NEW_BANK);
+    studentWrites(pg, w, K, NEW_BANK);
     release(); w.authGate = null; await pg.ready; await pg.runTimers();
     const r0 = w.reloads;
     await pg.ctx.CLOUD.logout(); await tick();
-    const left = []; for (let i = 0; i < w.local.length; i++) { const k = w.local.key(i); if (k.startsWith(PREFIX) || k === 'tr_vgame_banks') left.push(k); }
-    return { ok: w.reloads === r0 + 1 && left.length === 0 && same(cv(w, 'vgame_banks'), NEW_BANK),
-             detail: '重載 +' + (w.reloads - r0) + ' / 留下 ' + JSON.stringify(left) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+    const left = []; for (let i = 0; i < w.local.length; i++) { const k = w.local.key(i); if (k.startsWith(PREFIX) || k === 'tr_' + K) left.push(k); }
+    return { ok: w.reloads === r0 + 1 && left.length === 0 && same(cv(w, K), NEW_BANK),
+             detail: '重載 +' + (w.reloads - r0) + ' / 留下 ' + JSON.stringify(left) + ' / 雲端 ' + JSON.stringify(cv(w, K)) };
   },
   '32. 從訪客頁登入、灌資料途中有寫入:不能被當成登入失效而清掉登入者': async src => {
     const w = makeWorld();
-    w.db.push({ user_id: USER.id, k: 'vgame_banks', v: OLD_BANK, updated_at: new Date(Date.now() - HOUR).toISOString() });
+    w.db.push({ user_id: USER.id, k: K, v: OLD_BANK, updated_at: new Date(Date.now() - HOUR).toISOString() });
     w.revoked = true;                                              // 這台沒有登入資料
     const pg = loadPage(w, src); await pg.ready;                   // 訪客
     let release; w.teacherGate = new Promise(r => { release = r; });
@@ -583,27 +587,27 @@ const scenarios = {
   '33. 原帳號很久以前沒傳上去的舊資料(沒帳本、雲端沒有),登入失效時自己在確認前改了它:一筆都不能刪': async src => {
     const w = makeWorld();
     w.local.setItem('tr_current_profile', JSON.stringify('c' + USER.id.replace(/-/g, '')));
-    w.local.setItem(PREFIX + 'vgame_banks', JSON.stringify(OLD_BANK));   // 10/1 以前留下、從沒上雲
+    w.local.setItem(PREFIX + K, JSON.stringify(OLD_BANK));   // 10/1 以前留下、從沒上雲
     w.revoked = true;
     let release; w.authGate = new Promise(r => { release = r; });
     const pg = loadPage(w, src);
-    pageWrites(pg, w, 'vgame_banks', NEW_BANK);
+    pageWrites(pg, w, K, NEW_BANK);
     release(); w.authGate = null; await pg.ready;
-    const kept1 = same(lv(w, 'vgame_banks'), NEW_BANK);
+    const kept1 = same(lv(w, K), NEW_BANK);
     const pg2 = loadPage(w, src); await pg2.ready;
     await pg2.ctx.CLOUD.login('s@x.com', 'test-only'); await tick(); pg2.close();
     const pg3 = loadPage(w, src); await pg3.ready; await pg3.runTimers();
-    return { ok: kept1 && same(lv(w, 'vgame_banks'), NEW_BANK),
-             detail: '改回訪客後 ' + JSON.stringify(lv(w, 'vgame_banks')) + ' / 再登入後 ' + JSON.stringify(lv(w, 'vgame_banks')) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+    return { ok: kept1 && same(lv(w, K), NEW_BANK),
+             detail: '改回訪客後 ' + JSON.stringify(lv(w, K)) + ' / 再登入後 ' + JSON.stringify(lv(w, K)) + ' / 雲端 ' + JSON.stringify(cv(w, K)) };
   },
   '34. 登入資料的格式看不懂(supabase-js 改版):照舊記帳上傳,不能把學生踢回訪客': async src => {
     const w = makeWorld();
     const pg = await openLoggedIn(w, src);
     w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', expires_at: 1 }));   // 沒有 user 欄位
     const r0 = w.reloads;
-    studentWrites(pg, w, 'vgame_banks', NEW_BANK); await pg.runTimers();
-    return { ok: w.reloads === r0 && same(cv(w, 'vgame_banks'), NEW_BANK) && !!pg.ctx.CLOUD.user,
-             detail: '重載 +' + (w.reloads - r0) + ' / 雲端 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+    studentWrites(pg, w, K, NEW_BANK); await pg.runTimers();
+    return { ok: w.reloads === r0 && same(cv(w, K), NEW_BANK) && !!pg.ctx.CLOUD.user,
+             detail: '重載 +' + (w.reloads - r0) + ' / 雲端 ' + JSON.stringify(cv(w, K)) };
   },
   '35. 開站確認登入時,別的分頁已經換成另一個帳號登入:不能把新帳號的「目前帳號」清掉': async src => {
     const w = makeWorld();
@@ -652,11 +656,11 @@ const scenarios = {
     const w = makeWorld();
     const pg = await openLoggedIn(w, src);
     w.otherDevice = true;
-    studentWrites(pg, w, 'vgame_banks', [{ id: 'b1' }]); await pg.runTimers();
+    studentWrites(pg, w, K, [{ id: 'b1' }]); await pg.runTimers();
     await pg.ctx.CLOUD.logout(); await tick();
     const scopes = (w.signOuts || []).join(',');
-    return { ok: scopes === 'local' && w.otherDevice === true && w.local.getItem(SB_KEY) === null && lv(w, 'vgame_banks') === null && same(cv(w, 'vgame_banks'), [{ id: 'b1' }]),
-             detail: 'signOut ' + scopes + ' / 別台 ' + (w.otherDevice ? '還登入' : '被登出') + ' / 雲端題庫 ' + JSON.stringify(cv(w, 'vgame_banks')) };
+    return { ok: scopes === 'local' && w.otherDevice === true && w.local.getItem(SB_KEY) === null && lv(w, K) === null && same(cv(w, K), [{ id: 'b1' }]),
+             detail: 'signOut ' + scopes + ' / 別台 ' + (w.otherDevice ? '還登入' : '被登出') + ' / 雲端題庫 ' + JSON.stringify(cv(w, K)) };
   },
   '39. 按「登出所有裝置」:所有裝置都登出,這台清掉登入資料並重載': async src => {
     const w = makeWorld();
@@ -673,14 +677,14 @@ const scenarios = {
       const w = makeWorld();
       const pg = await openLoggedIn(w, src);
       w.otherDevice = true;
-      studentWrites(pg, w, 'vgame_banks', [{ id: 'b1' }]); await pg.runTimers();
+      studentWrites(pg, w, K, [{ id: 'b1' }]); await pg.runTimers();
       w.offline = true; w.tokenExpired = expired;
       const r0 = w.reloads;
       let err = null;
       try { await pg.ctx.CLOUD.logout({ everywhere: true }); } catch (e) { err = e; }
       await tick();
-      const ok = !!err && w.otherDevice === true && w.local.getItem(SB_KEY) !== null && same(lv(w, 'vgame_banks'), [{ id: 'b1' }]) && !!pg.ctx.CLOUD.user && w.reloads === r0;
-      return { ok, detail: (expired ? '過期:' : '沒過期:') + '錯誤 ' + (err ? '有' : '沒有') + ' / 登入資料 ' + (w.local.getItem(SB_KEY) ? '還在' : '已清') + ' / 本機題庫 ' + JSON.stringify(lv(w, 'vgame_banks')) };
+      const ok = !!err && w.otherDevice === true && w.local.getItem(SB_KEY) !== null && same(lv(w, K), [{ id: 'b1' }]) && !!pg.ctx.CLOUD.user && w.reloads === r0;
+      return { ok, detail: (expired ? '過期:' : '沒過期:') + '錯誤 ' + (err ? '有' : '沒有') + ' / 登入資料 ' + (w.local.getItem(SB_KEY) ? '還在' : '已清') + ' / 本機題庫 ' + JSON.stringify(lv(w, K)) };
     };
     const a = await one(false), b = await one(true);
     return { ok: a.ok && b.ok, detail: a.detail + ' | ' + b.detail };
@@ -689,24 +693,24 @@ const scenarios = {
     const w = makeWorld();
     const pg = await openLoggedIn(w, src);
     w.otherDevice = true;
-    studentWrites(pg, w, 'vgame_banks', [{ id: 'b3' }]); await pg.runTimers();
+    studentWrites(pg, w, K, [{ id: 'b3' }]); await pg.runTimers();
     w.local.removeItem(SB_KEY);
     const r0 = w.reloads;
     let err = null;
     try { await pg.ctx.CLOUD.logout({ everywhere: true }); } catch (e) { err = e; }
     await tick();
-    return { ok: !!err && w.otherDevice === true && same(lv(w, 'vgame_banks'), [{ id: 'b3' }]) && w.reloads === r0 && w.confirms.length === 0,
-             detail: '錯誤 ' + (err ? err.message : '沒有') + ' / 別台 ' + (w.otherDevice ? '還登入' : '被登出') + ' / 本機題庫 ' + JSON.stringify(lv(w, 'vgame_banks')) + ' / 重載 +' + (w.reloads - r0) };
+    return { ok: !!err && w.otherDevice === true && same(lv(w, K), [{ id: 'b3' }]) && w.reloads === r0 && w.confirms.length === 0,
+             detail: '錯誤 ' + (err ? err.message : '沒有') + ' / 別台 ' + (w.otherDevice ? '還登入' : '被登出') + ' / 本機題庫 ' + JSON.stringify(lv(w, K)) + ' / 重載 +' + (w.reloads - r0) };
   },
   '41. 「登出所有裝置」時有沒同步的進度:先問,按取消就什麼都不做(不呼叫登出)': async src => {
     const w = makeWorld();
     const pg = await openLoggedIn(w, src);
     w.lieFi = true; w.offline = true;
-    studentWrites(pg, w, 'vgame_banks', [{ id: 'b2' }]);
+    studentWrites(pg, w, K, [{ id: 'b2' }]);
     w.confirmAnswer = false;
     await pg.ctx.CLOUD.logout({ everywhere: true }); await tick();
-    return { ok: w.confirms.length === 1 && !(w.signOuts || []).length && same(lv(w, 'vgame_banks'), [{ id: 'b2' }]) && !!pg.ctx.CLOUD.user,
-             detail: '問了 ' + w.confirms.length + ' 次 / signOut ' + ((w.signOuts || []).join(',') || '沒呼叫') + ' / 本機題庫 ' + JSON.stringify(lv(w, 'vgame_banks')) };
+    return { ok: w.confirms.length === 1 && !(w.signOuts || []).length && same(lv(w, K), [{ id: 'b2' }]) && !!pg.ctx.CLOUD.user,
+             detail: '問了 ' + w.confirms.length + ' 次 / signOut ' + ((w.signOuts || []).join(',') || '沒呼叫') + ' / 本機題庫 ' + JSON.stringify(lv(w, K)) };
   },
   /* ---------- 讀單一鍵(路線圖 1.2b,小雞寫回前先抓雲端那一份合併) ---------- */
   '43. 讀單一鍵:只回這個帳號那一列,而且什麼都不寫(本機、帳本、雲端都不變)': async src => {

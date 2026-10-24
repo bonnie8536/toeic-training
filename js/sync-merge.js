@@ -83,7 +83,8 @@
   const altList = a => (Array.isArray(a) ? a.filter(x => typeof x === 'string' && x.trim()) : []);
   function wordContent(w) {
     const alt = altList(w.alt).slice().sort();
-    return { en: w.en, zh: w.zh === undefined ? null : w.zh, on: w.on !== false, r: typeof w._r === 'string' ? w._r : null, alt: alt.length ? alt : null };
+    return { en: w.en, zh: w.zh === undefined ? null : w.zh, on: w.on !== false, r: typeof w._r === 'string' ? w._r : null, alt: alt.length ? alt : null,
+      m: typeof w._m === 'string' ? w._m : null };
   }
   const wordHash = w => quickHash(canon(isWord(w) ? wordContent(w) : w));
   const wordKey = w => (isWord(w) ? 'w:' + norm(w.en) : 'o:' + canon(w));
@@ -99,6 +100,13 @@
     const tx = isNum(x._t) ? x._t : 0, ty = isNum(y._t) ? y._t : 0;
     if (tx !== ty) return tx > ty ? [x, y] : [y, x];
     return canon(content(x)) >= canon(content(y)) ? [x, y] : [y, x];
+  }
+  /* 兩份都不是對方的舊版本、合併結果卻跟其中一份一模一樣(只差 _r、只差勾選、另一個中文是主要那個的一種寫法):
+     加一個合併記號 _m(兩份雜湊算出來的,算進內容雜湊),讓結果跟兩份都不同。不然別台刪掉其中一份時(刪除標記記的是那一份的雜湊),
+     連帶把另一份(別台在刪之後才加的、改的)一起刪掉。同步合併設計 3.8.1 的「別台在那之後改過的,留著」 */
+  function mark(out, hx, hy, hashOf) {
+    const h = hashOf(out);
+    if (h === hx || h === hy) out._m = quickHash([hx, hy].sort().join('+'));
   }
   /* 誰是新版本:y 吸收過 x(x 的雜湊在 y 的 _p)→ y。兩邊互相吸收過(內容改回以前的樣子,例如刪掉 alt 後跟某一版一樣):
      兩份的內容都在對方的歷史裡,沒有誰是新的另一份,用 _t 大的當新版本(不放 alt) */
@@ -128,6 +136,7 @@
         const alt = altList(p.alt).concat(altList(q.alt), zhDiffers(q.zh, p.zh) ? [String(q.zh)] : [])
           .filter((s, i, a) => zhDiffers(s, p.zh) && a.indexOf(s) === i).sort().slice(0, ALT_MAX);
         put(out, 'alt', alt);
+        mark(out, hx, hy, wordHash);
         imm = [pEntry(hx, t), pEntry(hy, t)];
       }
     }
@@ -159,7 +168,7 @@
   const isBank = b => isPlain(b) && typeof b.id === 'string' && (b.words === undefined || Array.isArray(b.words));
   const wordsOf = b => (Array.isArray(b.words) ? b.words : []);
   function bankContent(b) {
-    return { n: b.name === undefined ? null : b.name, r: typeof b._r === 'string' ? b._r : null,
+    return { n: b.name === undefined ? null : b.name, r: typeof b._r === 'string' ? b._r : null, m: typeof b._m === 'string' ? b._m : null,
       w: wordsOf(b).map(w => canon(isWord(w) ? wordContent(w) : w)).sort() };
   }
   const bankHash = b => quickHash(canon(bankContent(b)));
@@ -179,6 +188,7 @@
     if (x.words !== undefined || y.words !== undefined) out.words = joinWords(wordsOf(x), wordsOf(y));
     put(out, '_t', t);
     put(out, '_nt', nt);
+    if (!win) mark(out, hx, hy, bankHash);
     const h = bankHash(out);
     const imm = [hx, hy].filter(z => z !== h).map(z => pEntry(z, t));
     put(out, '_p', normP(imm.concat(pList(x._p), pList(y._p)), h, BANK_P_MAX, t));

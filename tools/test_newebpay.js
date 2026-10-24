@@ -447,7 +447,12 @@ const USER_JWT = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0In0.c2lnbmF0dXJl';
 const OWNER_JWT = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvd25lciJ9.c2lnbmF0dXJl';
 const USER = { id: '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72', email: 'student@example.com' };
 const OWNER = { id: '00000000-0000-4000-8000-000000000001', email: 'owner@example.com' };
-const SITE = 'https://www.shuashualanguage.com';
+/* 付款回來的網站跟著 supabase/functions/_shared/site.ts(tools/apply_domain.js 依 tools/domain.json 改它),切換前後都要過 */
+const SITE = (() => {
+  const src = fs.readFileSync(path.join(FN, '_shared', 'site.ts'), 'utf8');
+  const m = (re) => { const x = re.exec(src); if (!x) throw new Error('site.ts 讀不到 ' + re); return x[1]; };
+  return m(/export const LIVE: 'old' \| 'new' = '(old|new)';/) === 'new' ? m(/export const NEW_SITE = '([^']+)';/) : m(/export const OLD_SITE = '([^']+)';/);
+})();
 
 function baseEnv(over = {}) {
   return {
@@ -1188,8 +1193,8 @@ test('build_edge_dashboard:攤平後沒有上層 import,檔案齊全,內容只�
   const out = fs.mkdtempSync(path.join(os.tmpdir(), 'nwp-dash-'));
   try {
     const r = build(out);
-    assert.deepEqual(r['newebpay-checkout'], ['handler.ts', 'index.ts', 'newebpay.ts', 'products.ts', 'supabase_rest.ts']);
-    assert.deepEqual(r['newebpay-notify'], ['handler.ts', 'index.ts', 'newebpay.ts', 'supabase_rest.ts']);
+    assert.deepEqual(r['newebpay-checkout'], ['handler.ts', 'index.ts', 'newebpay.ts', 'products.ts', 'site.ts', 'supabase_rest.ts']);
+    assert.deepEqual(r['newebpay-notify'], ['handler.ts', 'index.ts', 'newebpay.ts', 'site.ts', 'supabase_rest.ts']);
     for (const [fnName, files] of Object.entries(r)) {
       for (const f of files) {
         const src = fs.readFileSync(path.join(out, fnName, f), 'utf8');

@@ -1,6 +1,7 @@
 /* 上線前檢查:這次改到網頁會用到的檔案(html、js、css、json、data),sw.js 的 V 就要換新。
    service worker 的快取以檔名為準,共用的 JS、CSS 只留最後抓到的那一版;V 不換,離線或慢網路時
    可能拿新版共用檔配舊版頁面。V 一換,舊快取整批作廢。
+   另外檢查網域開關(tools/domain.json)跟 CNAME、canonical、sitemap 等一致(tools/apply_domain.js --check)。
    用法(跟 origin/main 比,先 git pull 或 git fetch):
      node tools/check_release.js        只檢查,需要換 V 就 exit 1
      node tools/check_release.js --fix  需要的話自動把 V 換成新的版本號 */
@@ -13,6 +14,13 @@ const SW = path.join(REPO, 'sw.js');
 const FIX = process.argv.includes('--fix');
 const git = (cmd) => execSync('git ' + cmd, { cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
 const vOf = (src) => { const m = /const V = '([^']+)';/.exec(src || ''); return m ? m[1] : null; };
+
+/* 網域開關(tools/domain.json,搬家計畫 7.1、7.2):檔案跟它不一致就不能上線 */
+const dom = require('./apply_domain.js').run(REPO, true);
+if (dom.changed.length) {
+  console.log('網域設定是 ' + dom.cfg.live + ',這些檔案還沒跟上:' + dom.changed.join('、') + '。執行 node tools/apply_domain.js');
+  process.exit(1);
+}
 
 let baseSw = null;
 try { baseSw = git('show origin/main:sw.js'); } catch (e) { /* 線上還沒有 service worker */ }

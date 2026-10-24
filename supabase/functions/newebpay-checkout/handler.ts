@@ -16,11 +16,12 @@
 import { MPG_GATEWAY, makeMpgFields, type Env } from '../_shared/newebpay.ts';
 import { CONSENT_VERSION, findProduct, type Product } from '../_shared/products.ts';
 import { getAuthUser, makeRpc, type FetchLike, type RestError } from '../_shared/supabase_rest.ts';
+import { SITE as LIVE_SITE, SITE_ORIGINS } from '../_shared/site.ts';
 
-export const SITE = 'https://www.shuashualanguage.com';
+// 網址集中在 _shared/site.ts(搬家計畫 5.3):SITE 是付款後帶回的網站,兩個網域在搬家期間都放行
+export const SITE = LIVE_SITE;
 export const ALLOWED_ORIGINS: readonly string[] = Object.freeze([
-  SITE,
-  'https://shuashualanguage.com',
+  ...SITE_ORIGINS,
   'http://127.0.0.1:8754', // 本機預覽(.claude/launch.json 的 site)
   'http://localhost:8754',
 ]);

@@ -158,7 +158,7 @@ function copyProblems(s) {
 }
 /* 個人資料檢查:公開的程式庫不能寫出要擋的字,所以這裡只放 SHA-256。
    每一筆是 { len, sha256 },把文字轉小寫後,用長度 len 的視窗一路滑過去,算出來的雜湊對上就算有。 */
-const CONTACT_EMAIL = 'shuashualanguage@gmail.com';
+const CONTACT_EMAIL = JSON.parse(fs.readFileSync(path.join(__dirname, 'domain.json'), 'utf8')).mail;   // 客服信箱跟著 tools/domain.json,換信箱之後照樣要過
 const PRIVATE_HASHES = [
   { len: 10, sha256: '3d8402edab4526030bb0c0d69fc43a954c126a5bf9faad17871661c7319cb290' },
   { len: 3, sha256: '9a1a49fda8cad4af41cd35e893f1c04163e6fb1e52d60f8947d14ca015d21d07' },
@@ -175,7 +175,7 @@ function hashedHits(s, list) {
   return hits;
 }
 function foreignEmails(s) {
-  return (String(s).match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) || []).filter(e => e.toLowerCase() !== CONTACT_EMAIL);
+  return (String(s).match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) || []).filter(e => e.toLowerCase() !== CONTACT_EMAIL.toLowerCase());
 }
 /* 只取 JS 檔字串常數裡有中文的部分(註解不算) */
 function jsStrings(src) {
@@ -563,7 +563,7 @@ const cases = {
   '老師方案按鈕:被站長改成學生的寫聯絡站長;無期限的既有或贈送老師寫不用買;站長與讀不到使用權不放;沒登入照樣放': async () => {
     const { K } = load(makeWorld());
     const s = (a, signedIn) => K.slotFor('teacher', { signedIn: signedIn !== false, access: a });
-    const ASK = '老師方案請寫信到 shuashualanguage@gmail.com 聯絡站長。';
+    const ASK = '老師方案請寫信到 ' + CONTACT_EMAIL + ' 聯絡站長。';
     const demoted = { teacher_purchase_allowed: false, is_owner: false, teacher_source: null };
     const legacyT = { teacher_purchase_allowed: true, is_owner: false, teacher_source: 'legacy', teacher_until: null, seats: null };
     const compT = { teacher_purchase_allowed: true, is_owner: false, teacher_source: 'comp', teacher_until: null, seats: 30 };
@@ -1064,7 +1064,7 @@ const cases = {
     const self = [
       hashedHits('xxABCDEyy', probe).join() === '0', hashedHits('吃雞蛋糕', probe).join() === '1',
       hashedHits('abcdf 雞肉', probe).length === 0,
-      foreignEmails('寫信到 ' + CONTACT_EMAIL + ' 或 SHUASHUALANGUAGE@GMAIL.COM').length === 0,
+      foreignEmails('寫信到 ' + CONTACT_EMAIL + ' 或 ' + CONTACT_EMAIL.toUpperCase()).length === 0,
       foreignEmails('寫信到 someone@example.com').length === 1,
     ];
     const files = ['js/checkout.js', 'js/pay-result.js', 'js/paywall.js', 'js/profile.js', 'js/cloud.js',

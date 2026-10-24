@@ -9,8 +9,9 @@
 
 import { checkPaid, parseNotify, type Keys, type ParsedNotify } from '../_shared/newebpay.ts';
 import { makeRpc, type FetchLike } from '../_shared/supabase_rest.ts';
+import { SITE as LIVE_SITE } from '../_shared/site.ts';
 
-export const SITE = 'https://www.shuashualanguage.com';
+export const SITE = LIVE_SITE;   // 付款後帶回的結果頁跟著 _shared/site.ts(搬家計畫 5.3)
 const RESULT_PAGE = `${SITE}/pay-result.html`;
 const FUNCTION_NAME = 'newebpay-notify';
 const MAX_BODY = 65536;

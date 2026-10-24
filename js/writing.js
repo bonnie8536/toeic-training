@@ -258,6 +258,57 @@
     return a;
   }
 
+  /* 搬家時同一題兩邊都寫了、內容不一樣:比較新的那份在輸入框,另一份存在 alt(js/move-merge.js),放在這裡給學生看、可以換過來。
+     刪掉要再確認一次;換過來時原本輸入框那份改放進 alt,不會不見。 */
+  function altBox(storeKey, id, field, onSwap) {
+    const box = h('div');
+    draw();
+    return box;
+
+    function list() {
+      const it = store.get(storeKey, {})[id] || {};
+      const cur = String(it[field] || '').trim();
+      return (Array.isArray(it.alt) ? it.alt : []).map((a, ai) => [a, ai])
+        .filter(([a]) => a && typeof a[field] === 'string' && a[field].trim() && a[field].trim() !== cur);
+    }
+    function change(ai, fn) {
+      const m = store.get(storeKey, {});
+      const it = m[id];
+      if (!it || !Array.isArray(it.alt) || !it.alt[ai]) return;
+      fn(it, it.alt[ai]);
+      it.alt = it.alt.filter(a => a && Object.keys(a).some(k => k !== 'updatedAt' && typeof a[k] === 'string' && a[k].trim()));
+      if (!it.alt.length) delete it.alt;
+      store.set(storeKey, m);
+    }
+    function draw() {
+      box.replaceChildren();
+      list().forEach(([a, ai]) => {
+        const t = Date.parse(a.updatedAt || '');
+        box.append(h('div', { class: 'explain', style: 'margin-top:8px' },
+          h('div', null, h('b', null, '搬家時留下的另一份'), isFinite(t) ? '（' + new Date(t).toLocaleDateString('zh-TW') + ' 寫的）' : ''),
+          h('div', { style: 'white-space:pre-wrap;margin:6px 0' }, a[field]),
+          h('div', { class: 'pop-btns' },
+            h('button', { class: 'pop-mini', type: 'button', onclick: () => {
+              let text = '';
+              change(ai, (it, x) => {
+                const was = it[field] || '', wasAt = it.updatedAt;
+                text = x[field];
+                it[field] = text;
+                it.updatedAt = new Date().toISOString();
+                if (String(was).trim()) { x[field] = was; if (wasAt) x.updatedAt = wasAt; } else delete x[field];
+              });
+              onSwap(text);
+              draw();
+            } }, '換成這一份'),
+            h('button', { class: 'pop-mini danger', type: 'button', onclick: () => {
+              if (!confirm('這一份會刪掉，不能復原。確定不要這一份嗎？')) return;
+              change(ai, (it, x) => { delete x[field]; });
+              draw();
+            } }, '不要這一份'))));
+      });
+    }
+  }
+
   /* ---------- 共用:寫作輸入(自動儲存;target={min,max} 顯示建議字數) ---------- */
   function writeArea(storeKey, id, field, placeholder, minH, target) {
     const map = store.get(storeKey, {});
@@ -296,7 +347,9 @@
       savedNote.textContent = '已儲存';
       if (window.PET_HOOK && !petWas && unitDone(petU)) PET_HOOK.done('wr:' + id, { into: savedNote.parentNode });
     }
-    return { ta, bar: h('div', { class: 'wc-bar' }, counter, savedNote), value: () => ta.value };
+    /* 搬家留下的另一份(js/move-merge.js 的 alt)放在輸入框下面 */
+    const alt = altBox(storeKey, id, field, (text) => { ta.value = text; updateCount(); savedNote.textContent = '已儲存'; });
+    return { ta, bar: h('div', null, h('div', { class: 'wc-bar' }, counter, savedNote), alt), value: () => ta.value };
   }
 
   function revealSection(label, nodes) {

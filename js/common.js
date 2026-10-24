@@ -27,6 +27,61 @@ function escapeHtml(s) {
 
 const LETTERS = ['A', 'B', 'C', 'D'];
 
+/* 搬家寫到一半分頁被關了(js/move-apply.js 寫入前存的日誌還在):照日誌處理動到的鍵,再留一個記號,
+   收件頁與新網址的提示(js/move-in-boot.js)會請使用者再搬一次。要在各模組讀資料之前做,所以放在這裡。
+   日誌第 2 版 { v: 2, at, backup, keys: [[鍵, 種類, 寫入值的指紋, (搬家自己的鍵的原值)]] }:
+   - 只動「現在的值還是搬家寫的那個」(指紋一樣)的鍵:新加的(add)拿掉,換掉的(replace)從備份換回原值;
+     之後被別的頁面改過的一律留著(那是比較新的練習),原值留在備份 tr_move_backup_<時間> 裡,不會少。
+   - 合併的鍵(grow)留著合併後的樣子:它包含新網址原本的東西,再搬一次也不會重複。
+   - 每個換掉的鍵都換回去了才刪備份。
+   日誌是 15 秒內寫的就先不動:可能是另一個分頁正在寫(寫入是同步的,幾毫秒就寫完)。force:不等 15 秒。
+   第 1 版的日誌({ before: [[鍵, 原值]] })照舊全部換回原值。沒有日誌時什麼都不做;舊網址從來不會有日誌。 */
+function moveHash(s) {
+  let h = 0x811c9dc5;
+  const str = String(s);
+  for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+  return str.length.toString(36) + '.' + h.toString(36);
+}
+function moveRecoverV2(ls, j) {
+  const rm = (k) => { try { ls.removeItem(k); } catch (e) { /* 刪不掉就留著 */ } };
+  let bk = null;
+  try { bk = typeof j.backup === 'string' && /^tr_move_backup_/.test(j.backup) ? JSON.parse(ls.getItem(j.backup)) : null; } catch (e) { bk = null; }
+  const saved = new Map(bk && Array.isArray(bk.keys) ? bk.keys.filter((e) => Array.isArray(e) && typeof e[0] === 'string' && typeof e[1] === 'string') : []);
+  const list = j.keys.filter((e) => Array.isArray(e) && typeof e[0] === 'string' && /^tr_/.test(e[0]) && typeof e[2] === 'string');
+  const untouched = (k, h) => { const cur = ls.getItem(k); return cur !== null && moveHash(cur) === h; };
+  let kept = 0;
+  list.forEach(([k, mode, h]) => { if (mode === 'add' && untouched(k, h)) rm(k); });   // 先拿掉新加的,騰出空間
+  list.forEach(([k, mode, h, inline]) => {
+    if (mode !== 'replace') return;
+    const before = typeof inline === 'string' ? inline : saved.get(k);
+    if (typeof before !== 'string') return;   // 寫的時候空間不夠備份:留現在的
+    if (untouched(k, h)) { try { ls.setItem(k, before); } catch (e) { kept++; } }
+    else if (saved.has(k)) kept++;
+  });
+  if (bk && !kept) rm(j.backup);
+}
+function moveJournalRecover(ls, force, quiet) {
+  let j = null;
+  try {
+    const raw = ls.getItem('tr_move_journal');
+    if (raw === null) return '';
+    j = JSON.parse(raw);
+  } catch (e) { return ''; }
+  const v2 = !!j && j.v === 2 && Array.isArray(j.keys);
+  if (!v2 && !(j && Array.isArray(j.before))) return '';
+  if (!force && typeof j.at === 'number' && Date.now() - j.at < 15000 && Date.now() >= j.at) return 'wait';
+  if (v2) moveRecoverV2(ls, j);
+  else {
+    const before = j.before.filter((e) => Array.isArray(e) && typeof e[0] === 'string' && /^tr_/.test(e[0]));
+    before.forEach(([k, v]) => { if (v === null) { try { ls.removeItem(k); } catch (e) { /* 刪不掉就留著 */ } } });   // 先刪新加的,騰出空間
+    before.forEach(([k, v]) => { if (typeof v === 'string') { try { ls.setItem(k, v); } catch (e) { /* 原本放得下,這裡不會發生 */ } } });
+  }
+  try { ls.removeItem('tr_move_journal'); } catch (e) { /* 下一頁再試 */ }
+  if (!quiet) { try { ls.setItem('tr_move_restored', String(j.at || Date.now())); } catch (e) { /* 只是看不到提示 */ } }
+  return 'restored';
+}
+try { moveJournalRecover(localStorage); } catch (e) { /* 讀不到 localStorage 就沒有東西可還原 */ }
+
 /* localStorage 包裝(全站前綴 tr_)。
    除了 RAW_KEYS(學生檔案登錄表)外,所有鍵都以目前學生檔案 id 做命名空間:
    tr_u<pid>_<key>,達成「每位學生各自存進度與錯題」。 */

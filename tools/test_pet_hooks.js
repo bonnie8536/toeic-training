@@ -3,7 +3,8 @@
    1. pet-hook.js 配假的 PET_STORE、假的 PET、小假 DOM:三種結束畫面文字逐字對;其他結果、逾時、丟錯都不寫字、不丟錯;
       PET_STORE.food 不是 true 時不碰 DOM;into 已經離開畫面時不寫;同一個 into 只有一個 .pet-earn。
    2. 每個呼叫點(實作契約第 7.2 節):讀原始碼確認呼叫在對的函式裡、是那個函式的最後一句、id 和 n 寫法對、
-      前面有 window.PET_HOOK 的判斷;vocab.js 的 gameOver() 沒有呼叫;跟 27557eb 比,只多了這幾行,沒有刪改任何一行。
+      前面有 window.PET_HOOK 的判斷;vocab.js 的 gameOver() 沒有呼叫;跟 27557eb 比,只多了這幾行,沒有刪改任何一行
+      (站名改名的行,與搬家另外加的「/* 搬家」開頭整段除外)。
    3. 真的 daily-ui.js 跑在假 DOM 上:沒有掛勾或開關關著時畫面跟原本一樣;掛勾出錯(earn 丟錯、view 丟錯)時成績頁照樣畫完。 */
 const fs = require('fs');
 const vm = require('vm');
@@ -640,6 +641,10 @@ T['14 個模組都有改到(每日練習、文法、發音、動詞、單字、�
   const miss = want.filter(f => !FILES.includes(f) || !/PET_HOOK\.done\(/.test(read(f)));
   return { ok: !miss.length, detail: miss.join(', ') };
 };
+const MOVE_REPLACED = {
+  'js/writing.js': [["    return { ta, bar: h('div', { class: 'wc-bar' }, counter, savedNote), value: () => ta.value };",
+    "    return { ta, bar: h('div', null, h('div', { class: 'wc-bar' }, counter, savedNote), alt), value: () => ta.value };"]],
+};
 T['跟 ' + BASE + ' 比:只多了掛勾那幾行,沒有刪掉或改掉任何一行'] = () => {
   const allowed = new Set(SITES.map(s => s[3]).concat([WRITE_BEFORE]));
   const bad = [];
@@ -647,8 +652,20 @@ T['跟 ' + BASE + ' 比:只多了掛勾那幾行,沒有刪掉或改掉任何一�
   FILES.forEach(f => {
     const r = spawnSync('git', ['-C', REPO, 'diff', '--no-color', '-U0', BASE, '--', f], { encoding: 'utf8' });
     if (r.status !== 0) { bad.push(f + ' git 失敗:' + (r.stderr || '').trim()); return; }
+    /* 搬家(2026-10,第一輪審查):寫作與文章單字顯示「搬家留下的另一份」。那幾段整段是新加的、第一行是「/* 搬家」開頭的註解,
+       只換掉 MOVE_REPLACED 列的那一行;這樣的段落不算掛勾以外的刪改。其他段落照原本的規則檢查。 */
+    const hunks = [];
+    r.stdout.split('\n').filter(l => !/^(\+\+\+|---) /.test(l)).forEach(l => {
+      if (/^@@/.test(l)) hunks.push([]); else if (hunks.length) hunks[hunks.length - 1].push(l.replace(/\r$/, ''));
+    });
+    const moveHunk = h => {
+      const plus = h.filter(l => l.startsWith('+')), minus = h.filter(l => l.startsWith('-'));
+      const first = plus.map(l => l.slice(1).trim()).find(Boolean);
+      if (!first || first.indexOf('/* 搬家') !== 0) return false;
+      return minus.every(m => (MOVE_REPLACED[f] || []).some(([o, n]) => m.slice(1) === o && plus.some(p => p.slice(1) === n)));
+    };
     /* 站名從刷刷英文改成衝衝英文(2026-10)那一批只換站名的行成對抵掉,不算刪改 */
-    const lines = r.stdout.split('\n').filter(l => !/^(\+\+\+|---) /.test(l));
+    const lines = hunks.filter(h => !moveHunk(h)).reduce((a, h) => a.concat(h), []);
     const minus = lines.filter(l => l.startsWith('-'));
     const renamed = lines.filter(l => l.startsWith('+') && /衝衝英文/.test(l)).filter(l => {
       const i = minus.indexOf('-' + l.slice(1).replace(/衝衝英文/g, '刷刷英文'));

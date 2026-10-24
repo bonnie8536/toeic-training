@@ -87,8 +87,11 @@
     }
     return true;
   }
+  /* 重疊期的舊網址(Worker 代理新網址,manifest 也是新網址那份)不給安裝:裝起來的 App 綁在舊網址,轉址期就打不開了。
+     每一頁的開機程式已經 preventDefault 掉 Chrome 自己的安裝提示,這裡不給頭像選單的「安裝到手機」 */
   function canOfferInstall() {
     if (STANDALONE || IN_APP || !mq('(pointer: coarse)')) return false;
+    if (MOVE_OLD.indexOf(location.origin) > -1) return false;
     return !!window.__bip || iosAllowed();
   }
   function install() {
@@ -333,6 +336,21 @@
     }).catch(function (err) { console.warn('小雞載入失敗：', err); });
   }
 
+  /* 搬家(搬家計畫 2.11、2.12):舊網址載入提示與帶走的程式(js/move-out.js),新網址載入新網址的提示(js/move-in-boot.js);
+     其他網域(本機預覽)一個都不載。網域清單跟 js/move-config.js 一樣(tools/test_move_core.js 檢查),後面那個是本機測試用的。
+     新課程上線時(js/courses.js)PAGE 要改成扣掉課程的 base 再判斷,否則 /ja/english/grammar.html 會被當成根目錄的文法頁。 */
+  const MOVE_OLD = ['https://www.shuashualanguage.com', 'http://127.0.0.1:8931'];
+  const MOVE_NEW = ['https://www.rushuplanguage.com', 'http://localhost:8932'];
+  function loadMove() {
+    if (PAGE === 'move-out.html' || PAGE === 'move-in.html') return;
+    const o = location.origin;
+    const list = MOVE_OLD.indexOf(o) > -1 ? ['js/move-config.js', 'js/move-rules.js', 'js/move-out.js']
+      : MOVE_NEW.indexOf(o) > -1 ? ['js/move-config.js', 'js/move-in-boot.js'] : null;
+    if (!list) return;
+    list.reduce(function (p, src) { return p.then(function () { return addScript(src); }); }, Promise.resolve())
+      .catch(function (err) { console.warn('搬家提示載入失敗：', err); });
+  }
+
   window.APP = { standalone: STANDALONE, canOfferInstall: canOfferInstall, install: install };
   if (STANDALONE) {
     doc.addEventListener('touchstart', function () {}, { passive: true });   // iOS 要有觸控監聽,分頁和返回鍵的 :active 按下效果才會出現
@@ -344,4 +362,5 @@
     try { loadWebPet(); } catch (err) { console.warn('小雞載入失敗：', err); }
   }
   registerSW();
+  try { loadMove(); } catch (err) { console.warn('搬家提示載入失敗：', err); }
 })();

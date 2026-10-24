@@ -36,6 +36,7 @@ class MockCacheStorage {
   constructor() { this.store = new Map(); }
   async open(n) { if (!this.store.has(n)) this.store.set(n, new MockCache()); return this.store.get(n); }
   async keys() { return [...this.store.keys()]; }
+  async has(n) { return this.store.has(n); }
   async delete(n) { return this.store.delete(n); }
   async match(req) { for (const c of this.store.values()) { const r = await c.match(req); if (r) return r; } return undefined; }
   dump() { const o = {}; for (const [n, c] of this.store) o[n] = [...c.map.keys()].map((k) => k.replace(ORIGIN, '')); return o; }
@@ -43,14 +44,14 @@ class MockCacheStorage {
 
 const state = { fetch: null, log: [] };
 
-function loadWorker(file) {
+function loadWorker(file, origin) {
   const listeners = {};
   const caches = new MockCacheStorage();
   const reg = { unregistered: false, preloadEnabled: false,
     navigationPreload: { enable: async () => { reg.preloadEnabled = true; } },
     unregister: async () => { reg.unregistered = true; return true; } };
   const self = {
-    location: new URL(ORIGIN + '/sw.js'),
+    location: new URL((origin || ORIGIN) + '/sw.js'),
     registration: reg,
     skipped: false,
     skipWaiting() { self.skipped = true; return Promise.resolve(); },
@@ -120,13 +121,13 @@ async function t(name, fn) {
     const W2 = loadWorker(REPO + '/sw.js');
     const ev = mkEvent({ addRoutes: () => { throw new TypeError('sync'); } });
     W2.listeners.install(ev); const r = await Promise.allSettled(ev.waits);
-    assert.ok(r.length === 1 && r[0].status === 'fulfilled');
+    assert.ok(r.length >= 1 && r.every((x) => x.status === 'fulfilled'));   // 舊網址多一個:存搬家頁(存不到也不擋)
   });
   await t('activate enables navigation preload, deletes only stale ss- caches', async () => {
     const ev = mkEvent(); W.listeners.activate(ev); await settle(ev);
     assert.ok(W.reg.preloadEnabled);
     const names = Object.keys(W.caches.dump()).sort();
-    assert.deepStrictEqual(names, ['someone-else', 'ss-assets-' + SWV, 'ss-pages-' + SWV]);
+    assert.deepStrictEqual(names, ['someone-else', 'ss-assets-' + SWV, 'ss-move-' + SWV, 'ss-pages-' + SWV]);
   });
   await t('passthrough: POST, cross-origin, Range, audio, video, /audio/, fetch() with empty destination', async () => {
     const cases = [
@@ -297,6 +298,85 @@ async function t(name, fn) {
     net = { online: true, delay: 0, routes: {} };
     for (const [p, d] of [['/css/style.css?v=9', 'style'], ['/manifest.json', 'manifest']]) { const ev = await fire(mkReq(p, { destination: d })); await ev.responded; await settle(ev); }
     const k = W.caches.dump()['ss-assets-' + SWV]; assert.ok(k.includes('/css/style.css') && k.includes('/manifest.json'));
+  });
+
+  // 搬家(搬家計畫 3.5):舊網址轉址期第一次回來的人
+  const redirectRes = () => mkRes(null, { status: 200, type: 'opaqueredirect' });
+  await t('move: 舊網址安裝時存好搬家頁與它載入的每個檔案(清單跟 move-out.html 一樣)', async () => {
+    const html = fs.readFileSync(path.join(REPO, 'move-out.html'), 'utf8');
+    const want = ['/move-out.html'].concat([...html.matchAll(/<(?:script|link)\b[^>]*\b(?:src|href)="([^"]+)"/g)].map((m) => m[1])
+      .filter((u) => !/^https?:/.test(u)).map((u) => '/' + u.replace(/^\.?\//, '')));
+    const sw = fs.readFileSync(path.join(REPO, 'sw.js'), 'utf8');
+    const list = eval('(' + /const MOVE_ASSETS = (\[[\s\S]*?\]);/.exec(sw)[1].replace('MOVE_PAGE', "'/move-out.html'") + ')');
+    assert.deepStrictEqual([...list].sort(), [...new Set(want)].sort());
+    net = { online: true, delay: 0, routes: {} };
+    const W3 = loadWorker(REPO + '/sw.js');
+    const ev = mkEvent(); W3.listeners.install(ev); await settle(ev);
+    assert.deepStrictEqual([...W3.caches.dump()['ss-move-' + SWV]].sort(), [...list].sort());
+  });
+  await t('move: 舊網址導覽被轉址、有 ss-move-flag:回存好的搬家頁;沒有記號照常放行;一般頁面不受影響', async () => {
+    net = { online: true, delay: 0, routes: { '/grammar.html': redirectRes } };
+    const W3 = loadWorker(REPO + '/sw.js');
+    const ins = mkEvent(); W3.listeners.install(ins); await settle(ins);
+    const go = async () => { const e = mkEvent({ request: mkReq('/grammar.html', { mode: 'navigate', destination: 'document' }) }); W3.listeners.fetch(e); const r = await e.responded; await settle(e); return r; };
+    const r1 = await go();
+    assert.strictEqual(r1.type, 'opaqueredirect');
+    await W3.caches.open('ss-move-flag');
+    const r2 = await go();
+    assert.strictEqual(await r2.text(), 'NET /move-out.html');
+    net.routes = {};
+    const r3 = await go();
+    assert.strictEqual(await r3.text(), 'NET /grammar.html');
+    assert.ok(!(W3.caches.dump()['ss-pages-' + SWV] || []).includes('/move-out.html'));
+  });
+  await t('move: 舊網址拿到 Worker 的 503 維護頁、這一頁有快取:給快取的頁面(之後的 JS 也拿快取),沒快取才給維護頁,維護頁不進快取', async () => {
+    const maint = () => { const r = new Response('MAINT', { status: 503, headers: { 'x-rushup-maintenance': '1', 'retry-after': '300' } }); Object.defineProperty(r, 'type', { value: 'basic' }); Object.defineProperty(r, 'redirected', { value: false }); return r; };
+    net = { online: true, delay: 0, routes: {} };
+    const W3 = loadWorker(REPO + '/sw.js');
+    const ins = mkEvent(); W3.listeners.install(ins); await settle(ins);
+    const nav = async (p) => { const e = mkEvent({ request: mkReq(p, { mode: 'navigate', destination: 'document' }), resultingClientId: 'c-' + p }); W3.listeners.fetch(e); const r = await e.responded; await settle(e); return r; };
+    assert.strictEqual(await (await nav('/grammar.html')).text(), 'NET /grammar.html');
+    net.routes = { '/grammar.html': maint, '/vocab.html': maint, '/js/common.js': maint };
+    const r1 = await nav('/grammar.html');
+    assert.strictEqual(r1.status, 200);
+    assert.strictEqual(await r1.text(), 'NET /grammar.html');
+    const js = mkEvent({ request: mkReq('/js/common.js', { destination: 'script' }), clientId: 'c-/grammar.html' });
+    await W3.caches.open('ss-assets-' + SWV).then((c) => c.put(ORIGIN + '/js/common.js', mkRes('CACHED common')));
+    W3.listeners.fetch(js);
+    assert.strictEqual(await (await js.responded).text(), 'CACHED common');
+    const r2 = await nav('/vocab.html');
+    assert.strictEqual(r2.status, 503);
+    assert.strictEqual(await r2.text(), 'MAINT');
+    assert.ok(!(W3.caches.dump()['ss-pages-' + SWV] || []).includes('/vocab.html'));
+    assert.strictEqual(await (await (await W3.caches.open('ss-pages-' + SWV)).match(ORIGIN + '/grammar.html')).text(), 'NET /grammar.html');
+  });
+  await t('move: 舊網址離線時搬家頁要的 JS 從搬家快取拿得到', async () => {
+    net = { online: true, delay: 0, routes: {} };
+    const W3 = loadWorker(REPO + '/sw.js');
+    const ins = mkEvent(); W3.listeners.install(ins); await settle(ins);
+    net = { online: false, delay: 0, routes: {} };
+    const e = mkEvent({ request: mkReq('/js/move-out-page.js', { destination: 'script' }) }); W3.listeners.fetch(e);
+    assert.strictEqual(await (await e.responded).text(), 'NET /js/move-out-page.js');
+  });
+  await t('move: 新網址不存搬家頁,轉址照常放行(就算有記號)', async () => {
+    const NEWO = 'https://www.rushuplanguage.com';
+    const saved = state.fetch;
+    state.fetch = async (req) => { const u = new URL(typeof req === 'string' ? req : req.url, NEWO + '/'); return u.pathname === '/grammar.html' ? redirectRes() : mkRes('NEW ' + u.pathname); };
+    try {
+      const W4 = loadWorker(REPO + '/sw.js', NEWO);
+      const ins = mkEvent(); W4.listeners.install(ins); await settle(ins);
+      assert.ok(!Object.keys(W4.caches.dump()).some((n) => /^ss-move-v/.test(n)));
+      await W4.caches.open('ss-move-flag');
+      const e = mkEvent({ request: mkReq(NEWO + '/grammar.html', { mode: 'navigate', destination: 'document' }) }); W4.listeners.fetch(e);
+      assert.strictEqual((await e.responded).type, 'opaqueredirect');
+    } finally { state.fetch = saved; }
+  });
+  await t('move: activate 留著 ss-move-flag 與這一版的搬家快取,刪掉舊版的搬家快取', async () => {
+    const W3 = loadWorker(REPO + '/sw.js');
+    for (const n of ['ss-move-flag', 'ss-move-' + SWV, 'ss-move-v0']) await W3.caches.open(n);
+    const ev = mkEvent(); W3.listeners.activate(ev); await settle(ev);
+    const names = Object.keys(W3.caches.dump());
+    assert.ok(names.includes('ss-move-flag') && names.includes('ss-move-' + SWV) && !names.includes('ss-move-v0'));
   });
 
   // kill switch

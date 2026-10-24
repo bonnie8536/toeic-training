@@ -43,7 +43,7 @@
   window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
     startCheckout, myCheckout, isOwner,
-    saveSignupIntent, takeSignupIntent, clearSignupIntent, markLocalOnly, clearLocalOnly };
+    saveSignupIntent, takeSignupIntent, clearSignupIntent, markLocalOnly, clearLocalOnly, flushForMove };
   window.CLOUD.mergedKeys = Object.freeze(['pet']);   // pet-store 用它判斷這一版 cloud.js 會先合併再上傳
   if (!enabled) return;
   tidySignupIntent(authError);   // 註冊時選老師的意向:開頁就清過期的、記下「這個分頁從 Google 回來了」(要趁 supabase-js 清掉網址之前;getSession 之後綁帳號 id)
@@ -166,7 +166,10 @@
     localStorage.setItem('tr_current_profile', JSON.stringify(pid));
 
     const flagKey = 'tr_cloud_hydrated_' + user.id;
-    if (fresh || !sessionStorage.getItem(flagKey)) {
+    const pendTry = 'tr_move_pending_tried_' + user.id;   // 搬家暫存區:這個分頁只為它重灌一次,載不到合併程式也不會一直重載
+    const movePend = hasPending(user.id) && !sessionStorage.getItem(pendTry);
+    if (fresh || !sessionStorage.getItem(flagKey) || movePend) {
+      if (movePend) sessionStorage.setItem(pendTry, '1');
       hydrating = true;
       const { data: rows, error } = await client.from('progress').select('k,v,updated_at').eq('user_id', user.id);
       if (error) throw error;   // 連不上就整段不做:本機一個都不刪
@@ -174,6 +177,7 @@
       const cloud = {};
       (rows || []).forEach(r => { cloud[r.k] = r; });
       /* 要合併的鍵本機和雲端都有時,先對時;時鐘差太多就不合併(planMerged 照原本的規則,留本機也不補傳) */
+      await takePending(user, prefix, cloud);   // 搬家暫存區先併進本機與帳本,下面照常比新舊、上傳(搬家計畫 2.7)
       const clockOk = mergeNeeded(prefix, cloud) ? await sessionClockOk(user) : true;
 
       /* 哪些鍵要留本機的版本(其餘照舊用雲端覆蓋):
@@ -996,6 +1000,157 @@
     return plan;
   }
 
+  /* ---------- 搬家(搬家計畫 2.7) ----------
+     舊網址:CLOUD.flushForMove() 在寄出頁「準備搬家」時呼叫。跟登出前一樣先叫小雞把等著的動作寫下來,但不登出、不刪任何東西;
+     帳本上(加上只在本機標記的 pet)每一項先讀雲端那一列的 updated_at:雲端沒有、或比帳本舊,照原本的方式上傳(pet 先合併再傳);
+     雲端比帳本新的不上傳(uploadPlain 不比新舊,會用舊的蓋掉別台的新版),連同傳不上去的一起交給搬家包,
+     這一頁之後也不再自動補傳它們(held,只在這一頁,不寫進任何儲存)。回 { ok, left, accounts: { 帳號 id: [[鍵, 原字串, 帳本時間]] } }。
+     新網址:收件頁把那幾項存成 tr_move_pending_<帳號 id>,這個帳號在這台登入、灌資料時由 takePending 處理(手上有雲端每一列的 updated_at):
+     先決定這台這一項算不算數(跟下面灌資料同一套規則):本機有,而且帳本上比雲端新(或雲端沒有這一列)、
+     或帳本沒記但雲端完全沒有這一列(從沒上傳過),就以本機那份為底;否則以雲端那份為底。
+     可以聯集的(題庫、練習紀錄、錯題、完成紀錄、最佳成績、每日練習)本機算數就本機跟雲端先合併,再跟暫存那份合併,
+     寫進帳號資料夾、帳本記現在,下面照常上傳;錯題本同一題留時間比較新的;同一項兩邊不一樣又沒辦法比的,沒選上的那一整份也放進備份;pet 本機沒有就放暫存那份,交給 planMerged 跟雲端合併;
+     其他鍵(單一值)比時間:本機算數就拿帳本時間比(從沒上傳過的不知道時間,留本機),否則拿雲端那一列的時間比,暫存那份比較新才用。
+     沒被選上的每一份(本機、雲端、暫存)都存進 tr_move_backup_<時間>。處理完刪掉暫存區。合併程式(js/move-rules.js、
+     js/move-merge.js、js/daily.js)載不到、或寫不進去,就整個不處理,暫存區留著,下一個分頁再來。 */
+  const held = new Set();
+  function pendingKey(uid) { return 'tr_move_pending_' + uid; }
+  function hasPending(uid) { try { return localStorage.getItem(pendingKey(uid)) !== null; } catch (e) { return false; } }
+  function loadMovers() {
+    const have = () => !!(window.MOVE_RULES && window.MOVE_MERGE && window.DAILY);
+    if (have()) return Promise.resolve(true);
+    const add = src => new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+    const load = (window.MOVE_RULES ? Promise.resolve() : add('js/move-rules.js')).then(() => (window.MOVE_MERGE ? null : add('js/move-merge.js')))
+      .then(() => (window.DAILY ? null : add('js/daily.js')))
+      .then(have, () => false);
+    return Promise.race([load, new Promise(resolve => setTimeout(() => resolve(false), READ_TIMEOUT_MS))]);
+  }
+  const UNION = { banks: 1, hist: 1, mock: 1, idmap: 1, answers: 1, texts: 1, fills: 1, pool: 1, best: 1, pairsBest: 1, clear: 1, daily: 1 };   // answers:雲端答過的不換;texts、fills:兩份都留(js/move-merge.js);daily:DAILY.merge
+  /* 兩份合併:回 { v, lost }(合併不了回 null)。lost:b 那份有項目沒留下來(同一項兩邊不一樣又沒辦法比,js/move-merge.js 的 dropped),
+     呼叫的人要把 b 那份放進備份 */
+  function unionOf(MM, rule, k, a, b, now) {
+    if (rule === 'banks') { const m = MM.mergeBanks(a, b, 'acct', {}, { now }); return m ? { v: m.banks, lost: false } : null; }
+    const m = MM.mergeOne(rule, k, a, b, { now, daily: window.DAILY });
+    return m.kind === 'conflict' ? null : { v: m.v, lost: !!m.dropped };
+  }
+  /* 單一值:本機算數時 localT 是帳本時間(從沒上傳過的是 Infinity,不知道就不換),否則跟雲端那一列比。
+     回 { use: 'local' | 'pending' | 'cloud', drop: [沒選上的值] } */
+  function pickSingle(local, localWins, localT, cv, cloudT, pv, t) {
+    const pendingWins = localWins ? !(localT >= t) : (cv === undefined || !(cloudT >= t));
+    const use = pendingWins ? 'pending' : (localWins ? 'local' : 'cloud');
+    const drop = [];
+    const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+    const keep = use === 'pending' ? pv : use === 'local' ? local : cv;
+    [pv, local, cv].forEach(x => { if (x !== undefined && !same(x, keep) && !drop.some(d => same(d, x))) drop.push(x); });
+    return { use, drop };
+  }
+  async function takePending(user, prefix, cloud) {
+    if (!hasPending(user.id)) return;
+    let items = null;
+    try { const p = JSON.parse(localStorage.getItem(pendingKey(user.id))); items = p && Array.isArray(p.items) ? p.items : null; } catch (e) { items = null; }
+    if (!items) return;   // 讀不懂的暫存區不刪,留著(每個分頁最多為它重灌一次)
+    if (!(await loadMovers())) return;
+    const R = window.MOVE_RULES, MM = window.MOVE_MERGE;
+    const now = Date.now();
+    const led = readLedger(user.id), backup = [], sets = [];
+    const parse = raw => { try { return raw === null ? undefined : JSON.parse(raw); } catch (e) { return undefined; } };
+    items.forEach(e => {
+      if (!Array.isArray(e) || e.length !== 3 || typeof e[0] !== 'string' || typeof e[1] !== 'string') return;
+      const k = e[0], raw = e[1], t = typeof e[2] === 'number' && isFinite(e[2]) ? Math.min(e[2], now) : 0;
+      const rule = R.ruleOf(k), pv = parse(raw);
+      if (!rule || pv === undefined) return;
+      const c = cloud[k];
+      const cv = c && c.v !== null && c.v !== undefined ? c.v : undefined;
+      const cloudT = c ? Date.parse(c.updated_at) : NaN;
+      let local;
+      try { local = parse(localStorage.getItem(prefix + k)); } catch (err) { local = undefined; }
+      /* 這台的本機那份算不算數:帳本上比雲端新、或帳本沒記但雲端沒有這一列(從沒上傳過,下面灌資料也會留它) */
+      const hasLed = led[k] !== undefined;
+      const localWins = local !== undefined && (hasLed ? !(cloudT >= led[k]) : !c);
+      const localT = hasLed ? led[k] : Infinity;
+      if (rule === 'pet') {
+        if (local === undefined) { sets.push([k, raw]); led[k] = now; }   // 跟雲端那份的合併交給 planMerged(會先對時)
+        else {
+          const fn = mergeFn('pet');
+          let m = null;
+          try { m = fn ? fn(local, pv, now) : null; } catch (err) { m = null; }
+          if (m && m.ok === true) { if (!m.sameAsLocal) sets.push([k, JSON.stringify(m.v)]); led[k] = now; }
+          else backup.push([k, raw]);
+        }
+        return;
+      }
+      if (UNION[rule]) {
+        let base = localWins ? local : cv;
+        const lost = [];
+        if (localWins && cv !== undefined) {   // 合併不了(null):下面照單一值處理,不拿暫存那份蓋掉本機
+          const u = unionOf(MM, rule, k, local, cv, now);
+          base = u ? u.v : null;
+          if (u && u.lost) lost.push(cv);
+        }
+        let out = null;
+        if (base === undefined) out = pv;
+        else if (base !== null) { const u = unionOf(MM, rule, k, base, pv, now); out = u ? u.v : null; if (u && u.lost) lost.push(pv); }
+        if (out !== null) {
+          lost.forEach(x => backup.push([k, JSON.stringify(x)]));   // 沒辦法比的那幾項:整份放進備份,不會默默不見
+          sets.push([k, JSON.stringify(out)]); led[k] = now; return;
+        }
+      }
+      const pick = pickSingle(local, localWins, localT, cv, cloudT, pv, t);
+      pick.drop.forEach(x => backup.push([k, JSON.stringify(x)]));
+      if (pick.use === 'pending') { sets.push([k, raw]); led[k] = now; }
+      else if (pick.use === 'local' && !hasLed) led[k] = now;   // 從沒上傳過的留本機:帳本記上,下面照常上傳
+    });
+    try {
+      if (backup.length) localStorage.setItem('tr_move_backup_' + now, JSON.stringify({ at: now, uid: user.id, keys: backup }));
+      sets.forEach(([k, v]) => localStorage.setItem(prefix + k, v));
+      writeLedger(user.id, led);
+      localStorage.removeItem(pendingKey(user.id));
+    } catch (e) { /* 空間不夠:暫存區留著;寫了一半的鍵帳本沒記,下面以雲端為準,暫存區下一次再合併一次(聯集,不會變少) */ }
+  }
+
+  async function flushForMove() {
+    const empty = { ok: true, left: 0, accounts: {} };
+    try { await window.CLOUD.ready; } catch (e) { /* 照目前的狀態 */ }
+    const user = window.CLOUD.user;
+    if (!enabled || !user || typeof user.id !== 'string') return empty;
+    flushPetStore();
+    const pend = () => {
+      const led = readLedger(user.id), marks = readLocalOnly(user.id);
+      const at = {};
+      Object.keys(marks).forEach(k => { if (MERGED[k]) at[k] = marks[k]; });
+      Object.keys(led).forEach(k => { at[k] = led[k]; });
+      return at;
+    };
+    const first = pend();
+    if (!Object.keys(first).length) return empty;
+    let rows = null;
+    if (canUpload(user)) {
+      try {
+        const { data, error } = await client.from('progress').select('k,updated_at').eq('user_id', user.id);
+        if (!error && Array.isArray(data)) rows = data;
+      } catch (e) { rows = null; }
+    }
+    if (rows) {
+      const upd = {};
+      rows.forEach(r => { if (r && typeof r.k === 'string') upd[r.k] = Date.parse(r.updated_at); });
+      await Promise.all(Object.keys(first).filter(k => !(upd[k] >= first[k])).map(k => upload(user, k, first[k])));
+    }
+    const left = pend(), prefix = 'tr_u' + pidOf(user) + '_', items = [];
+    Object.keys(left).sort().forEach(k => {
+      let raw = null;
+      try { raw = localStorage.getItem(prefix + k); JSON.parse(raw); } catch (e) { raw = null; }
+      if (raw === null) return;
+      held.add(k);
+      const t = Math.floor(Number(left[k]));
+      items.push([k, raw, isFinite(t) && t > 0 ? t : 0]);
+    });
+    return { ok: true, left: items.length, accounts: items.length ? { [user.id]: items } : {} };
+  }
+
   /* 把帳本上全部補傳。回傳還剩幾筆沒傳成功。 */
   async function flushAll() {
     const user = window.CLOUD.user;
@@ -1003,7 +1158,7 @@
     if (canUpload(user)) {   // 傳不了就只回報帳本上還有幾筆(登出時要先問)
       Object.keys(pending).forEach(k => { clearTimeout(pending[k]); delete pending[k]; });
       const led = readLedger(user.id);
-      await Promise.all(Object.keys(led).map(k => upload(user, k, led[k])));
+      await Promise.all(Object.keys(led).filter(k => !held.has(k)).map(k => upload(user, k, led[k])));
     }
     return Object.keys(readLedger(user.id)).length;
   }

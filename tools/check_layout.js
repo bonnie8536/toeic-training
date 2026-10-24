@@ -7,7 +7,9 @@
      node tools/check_layout.js --save          把目前的量測存成新基準(只有「刻意改版面」時才做,並在 commit 說明)
      node tools/check_layout.js --root <資料夾>  量別的資料夾(例如舊版本的匯出)
      node tools/check_layout.js --pages index.html,grammar.html  只量這幾頁
-     node tools/check_layout.js --pages pricing.html --save     只把這幾頁的量測併進基準，其他頁的原文一個位元組都不動 */
+     node tools/check_layout.js --pages pricing.html --save     只把這幾頁的量測併進基準，其他頁的原文一個位元組都不動
+     node tools/check_layout.js --port 8941 --debug-port 8942 --tmp <資料夾>   換本機伺服器與 Chrome 的埠、Chrome 使用者資料放哪(預設系統暫存)
+   搬家的兩頁(move-out.html、move-in.html)在這裡量到的是「不在舊網址或新網址打開」的樣子。 */
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
@@ -22,10 +24,11 @@ const opt = (name) => { const i = args.indexOf(name); return i > -1 ? args[i + 1
 const ROOT = path.resolve(opt('--root') || REPO);
 const SAVE = args.includes('--save');
 const WIDTHS = [375, 1280];
-const PAGES = (opt('--pages') || 'index.html,daily.html,learn.html,drill.html,me.html,grammar.html,phonics.html,practice.html,reading.html,dialogue.html,grammar.html?ref=tenses,listening.html,vocab.html,grammar.html?ref=verbs,writing.html,review.html,history.html,analysis.html,diagnostic.html,mock.html,signup.html,terms.html,privacy.html,refund.html,pricing.html,pay-result.html,reset.html,offline.html').split(',');
+const PAGES = (opt('--pages') || 'index.html,daily.html,learn.html,drill.html,me.html,grammar.html,phonics.html,practice.html,reading.html,dialogue.html,grammar.html?ref=tenses,listening.html,vocab.html,grammar.html?ref=verbs,writing.html,review.html,history.html,analysis.html,diagnostic.html,mock.html,signup.html,terms.html,privacy.html,refund.html,pricing.html,pay-result.html,reset.html,offline.html,move-out.html,move-in.html').split(',');
 const CHROME = ['C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']
   .find((p) => fs.existsSync(p));
-const PORT = 8846, DEBUG_PORT = 9346;
+const PORT = Number(opt('--port')) || 8846, DEBUG_PORT = Number(opt('--debug-port')) || 9346;
+const TMP = path.resolve(opt('--tmp') || os.tmpdir());
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'application/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.mp3': 'audio/mpeg' };
 
@@ -58,7 +61,7 @@ function serve() {
 }
 
 async function launch() {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'ss-layout-'));
+  const dir = fs.mkdtempSync(path.join(TMP, 'ss-layout-'));
   const proc = spawn(CHROME, ['--headless=new', '--remote-debugging-port=' + DEBUG_PORT, '--user-data-dir=' + dir,
     '--no-first-run', '--no-default-browser-check', '--disable-extensions', '--hide-scrollbars', 'about:blank'], { stdio: 'ignore' });
   for (let i = 0; i < 50; i++) {

@@ -302,6 +302,56 @@ const scenarios = {
     const listed = /js\/(cloud|pet|common)\.js/.test(sw);   // sw.js 是執行時才快取,沒有寫死的檔案清單;有的話新檔要加進去
     return { ok: n >= 20 && !bad.length && !listed, detail: n + ' 頁' + (bad.length ? ',沒載或順序不對:' + bad.join('、') : ',都在 cloud.js 前面') + ' / sw.js 寫死清單 ' + listed };
   },
+  '22. 頁面沒載到 sync-merge.js、雲端又比帳本新(別台後來上傳過):灌資料時不拿雲端蓋掉本機沒上傳的題庫,留本機、帳本留著,回正常頁面再合併上傳': async () => {
+    const w = makeWorld(101);
+    const pc = makeDevice(w, '電腦'), phone = makeDevice(w, '手機');
+    await signIn(pc); await signIn(phone);
+    const A = newBank(phone, '手機的'); await phone.pg.runTimers();
+    await newSession(pc);
+    pc.offline = true;
+    const X = newBank(pc, '電腦離線新增的');
+    addWords(pc, X, [{ en: 'offline', zh: '離線' }]);
+    await pc.pg.runTimers();
+    w.clock.t += 60000;
+    addWords(phone, A, [{ en: 'later', zh: '之後' }]); await phone.pg.runTimers();   // 雲端比電腦的帳本新
+    pc.offline = false;
+    pc.noSm = true;
+    const cloudBefore = J(cloudOf(w, 'vgame_banks'));
+    await newSession(pc);
+    const a = ids(banksOf(pc)).includes(X) && 'vgame_banks' in ledgerOf(pc) && J(cloudOf(w, 'vgame_banks')) === cloudBefore;
+    pc.noSm = false;
+    await newSession(pc); await pc.pg.runTimers(); await pc.pg.fire('win:pagehide');
+    const c = cloudOf(w, 'vgame_banks');
+    const b = has(c, X, 'offline') && has(c, A, 'later') && has(banksOf(pc), X, 'offline') && has(banksOf(pc), A, 'later') && !('vgame_banks' in ledgerOf(pc));
+    return { ok: a && b, detail: '沒合併檔的頁面灌資料後 本機有X ' + ids(banksOf(pc)).includes(X) + ' 帳本 ' + J(Object.keys(ledgerOf(pc))) + ' / 回正常頁面後 ' + b + ' 雲端 ' + J([...wordKeys(c || [])]) };
+  },
+  '23. 模擬考紀錄:時鐘錯了的手機考完一次(日期比雲端 30 筆都舊):那一筆留在手機、傳上雲端、電腦也拿得到': async () => {
+    const w = makeWorld(103);
+    const pc = makeDevice(w, '電腦'), phone = makeDevice(w, '手機');
+    await signIn(pc);
+    for (let i = 0; i < 30; i++) { mockSubmit(pc, i % 10); await pc.pg.runTimers(); }
+    await signIn(phone);
+    phone.skew = Date.parse('2026-01-01T00:00:00Z') - w.clock.t;
+    mockSubmit(phone, 7.7);
+    await phone.pg.runTimers();
+    const mine = arr => (Array.isArray(arr) ? arr : []).some(r => r.lRaw === 7.7);
+    const a = mine(localOf(phone, 'mock_history')), b = mine(cloudOf(w, 'mock_history'));
+    await newSession(pc);
+    const c = mine(localOf(pc, 'mock_history'));
+    return { ok: a && b && c && !Object.keys(ledgerOf(phone)).length, detail: '手機 ' + a + ' / 雲端 ' + b + ' / 電腦 ' + c + ' / 手機帳本 ' + J(Object.keys(ledgerOf(phone))) };
+  },
+  '24. 上傳題庫讀雲端的這段時間,同一台另一個分頁把新的刪除標記寫進本機:這次放棄(帳本留著),本機的新標記不被舊的蓋掉': async () => {
+    const { w, phone, pc, A } = await twoDevices(107);
+    addWords(phone, A, [{ en: 'kiwi', zh: '奇異果' }]); await phone.pg.runTimers();
+    await newSession(pc);
+    const d = w.SM.deleteWord(banksOf(pc), tombsOf(pc), A, 'kiwi', H.now(pc) + 500);   // 另一個分頁算出來、合併進本機的標記(只寫標記,沒動題庫)
+    addWords(pc, A, [{ en: 'cherry', zh: '櫻桃' }]);
+    pc.onRead = () => { pc.local.setItem(PREFIX + 'sync_del', J(d.tombs)); };
+    await pc.pg.runTimers();
+    const t = tombsOf(pc);
+    const kept = !!(t && t.vgame_banks && t.vgame_banks.w[A] && t.vgame_banks.w[A].kiwi);
+    return { ok: kept && 'vgame_banks' in ledgerOf(pc) && has(banksOf(pc), A, 'cherry'), detail: '本機 kiwi 標記還在 ' + kept + ' / 帳本 ' + J(Object.keys(ledgerOf(pc))) };
+  },
 };
 
 (async () => {

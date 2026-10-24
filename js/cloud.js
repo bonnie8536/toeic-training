@@ -4,7 +4,8 @@
      localStorage(沿用既有命名空間機制),各模組程式完全不用改。
    - 同步策略:每次 store.set 後 0.8 秒內去抖動上傳該鍵;每個分頁工作階段登入時整批下載一次。
    - 合併表(MERGED)上的鍵上傳前先讀雲端那一列、合併、存回本機,再上傳合併結果;灌雲端資料時本機和雲端都有就存合併結果,不直接覆蓋。
-     讀不到雲端、合併說唯讀(形狀認不得,例如更新版的格式)、頁面沒有合併函式時不上傳,帳本留著(不會退回整份上傳)。
+     讀不到雲端、合併說唯讀(形狀認不得,例如更新版的格式)、頁面沒有合併函式時不上傳,帳本留著(不會退回整份上傳);
+     灌資料時碰到這些情況,題庫、標記、模擬考紀錄也留本機(帳本記著),不拿雲端蓋掉。
      其他鍵的上傳、灌資料、帳本、登出跟以前一樣(整份上傳,後傳的蓋掉先傳的)。
      · pet(小雞第二階段規格附錄 A.5):合併函式 PET.cloudMerge(js/pet.js)。合併前跟 pet-store 一樣用登入憑證的 iat 對時,
        這台時鐘差太多也不合併、不上傳,帳本留著(合併整理時用這台的時間,慢的時鐘會丟掉別台最近幾天的紀錄)。
@@ -21,9 +22,11 @@
      2. 舊版頁面(部署前就開著的分頁、拿快取的頁面)整份上傳題庫,可能暫時把雲端蓋掉,新版下一次合併時補回;舊版頁面刪的題庫、字沒有標記,會回來。
      3. 在新版刪掉一個舊資料的字(沒有 _r),之後在舊版頁面加回一模一樣的字(英文、中文、勾選都一樣),會被標記刪掉。
      4. 刪除標記保留 400 天、最多 1000 筆;清掉之後,很久沒開的裝置可能把刪掉的帶回來(只會多)。
-     5. 兩台都改了同一個字的中文:新的當主要,另一個放 alt(編輯頁看得到,可以換或刪)。
+     5. 兩台都改了同一個字的中文:新的當主要,另一個放 alt(不設上限,編輯頁全部看得到,可以換或刪)。
      6. 別台舊版把雲端蓋掉、而唯一還有那份的新版裝置在登出時又讀不到雲端(帳本是空的,不會問):那份會跟著登出刪掉。
-     7. 單鍵 256 KB:合併只會讓題庫變大,碰到上限時上傳會一直失敗、帳本一直留著,登出時會問。 */
+     7. 單鍵 256 KB:合併只會讓題庫變大,碰到上限時上傳會一直失敗、帳本一直留著,登出時會問。新字只多 4 碼的 _r(不寫 on、_t),
+        剛批次加字的題庫大約是 main 格式的 1.04 倍(tools/test_sync_merge.js 量 jsonb 的大小);改過、取消勾選、合併過的字多 _t、_p,
+        每個大約多 40 到 100 位元組。模擬考紀錄合併時留 300 筆(大約 40 KB),不照 mock.js 的 30 筆裁(時鐘錯的裝置剛考完的那一筆才不會被裁掉)。 */
 (function () {
   const cfg = window.CLOUD_CONFIG || {};
   const enabled = !!(cfg.url && cfg.anonKey);
@@ -938,6 +941,12 @@
     if (!fn) return null;
     try { return spec(key).tombs ? fn(local, cloudV, { now: Date.now(), tombs: tombsV }) : fn(local, cloudV, Date.now()); } catch (e) { return null; }
   }
+  /* 比較兩份 JSON 內容(物件的鍵排序後;雲端 jsonb 回來的鍵順序跟本機寫的不一樣) */
+  function canonOf(x) {
+    if (Array.isArray(x)) return '[' + x.map(canonOf).join(',') + ']';
+    if (x && typeof x === 'object') return '{' + Object.keys(x).sort().map(k => JSON.stringify(k) + ':' + canonOf(x[k])).join(',') + '}';
+    return JSON.stringify(x === undefined ? null : x);
+  }
   /* 讀本機一個鍵:沒有是 null,壞掉(不是 JSON)是 undefined */
   function readLocal(lk) {
     try { const raw = localStorage.getItem(lk); return raw === null ? null : JSON.parse(raw); } catch (e) { return undefined; }
@@ -1129,7 +1138,8 @@
   }
   /* 灌雲端資料時:本機和雲端都有(雲端那一列 v 不是 null)就存合併結果(save,在雲端蓋本機那一圈之後才寫);
      結果跟雲端不同就記帳、補傳,一樣就從帳本和補傳清單拿掉。本機沒有、或是 null:用雲端那份。
-     拿不到合併函式、合併說唯讀、或時鐘差太多(clockOk 是 false):照原本的規則留本機或用雲端,但留本機也不補傳(hold),帳本留著。
+     拿不到合併函式、合併說唯讀、或時鐘差太多(clockOk 是 false):要對時的鍵(pet)照原本的規則留本機或用雲端,但留本機也不補傳(hold),帳本留著;
+     其他鍵(題庫、標記、模擬考紀錄)本機跟雲端不一樣就一律留本機、不補傳(hold)、記帳本,不拿雲端蓋掉(本機可能有還沒傳上去的題庫)。
      時鐘差太多、本機那份有「只在本機」的標記(marks,帳本上沒有)時也留本機、不補傳(hold):以前用雲端那份蓋掉,
      讀不到雲端時改的名字、目標、餵食就不見了。允許的範圍改成 3 天以後差 3 到 6 天的裝置也會走到這裡(chick2 第三輪修正 #1 的配套)。
      留下來的那份下次對得了時由 pet-store 跟雲端合併上傳 */
@@ -1155,6 +1165,9 @@
       if (k === TOMBS) tombsV = m && m.ok === true ? m.v : null;   // 標記認不得:題庫照聯集合併(只會多)
       if (!m || m.ok !== true) {
         if (s.clock && !(k in keepLocal) && !clockOk && local !== undefined && marks && Object.prototype.hasOwnProperty.call(marks, k)) keepLocal[k] = Date.now();
+        /* 不對時的鍵(題庫、標記、模擬考紀錄)本機和雲端都有、又合併不了(頁面沒有合併函式、合併說唯讀):一律留本機、不補傳、帳本記著,
+           之後有合併函式的頁面再合併上傳。以前雲端比帳本新時用雲端蓋掉本機,這台還沒傳上去的題庫就不見了(第二輪審查) */
+        if (!s.clock && !(k in keepLocal) && local !== undefined && canonOf(local) !== canonOf(c.v)) { keepLocal[k] = led[k] = Date.now(); }
         if (k in keepLocal) plan.hold[k] = true;
         return;
       }

@@ -130,15 +130,15 @@ T['hreflang:現在只有一個介面語言開著,不產生任何 hreflang;頁面
   const links = Array.from(C.hreflangFor('/grammar.html', 'https://www.rushuplanguage.com', fake)).map((l) => l.lang + ' ' + l.href);
   assert.deepEqual(links, ['zh-Hant-TW https://www.rushuplanguage.com/grammar.html', 'ja https://www.rushuplanguage.com/ja/english/grammar.html', 'x-default https://www.rushuplanguage.com/grammar.html']);
 };
-T['原名:每一頁的頁尾都寫「衝衝英文（原名刷刷英文）由個人經營」(藍新舊商店「可相互勾稽」靠它,舊商店關掉之前不能拿掉);舊網址的搬家提示也說改名'] = () => {
+T['原名:Bonnie 說原名不用加(2026-10-23)——頁尾只寫「衝衝英文由個人經營」,JSON-LD 只列 Rushup;舊網址的搬家提示才說改名'] = () => {
   const pages = Object.keys(files).filter((rel) => /^[^/]+[.]html$/.test(rel) && files[rel] && /由個人經營/.test(files[rel]));
   assert.ok(pages.length >= 25, '有頁尾的頁面太少:' + pages.length);
   pages.forEach((rel) => {
-    const foot = files[rel].split('<footer').slice(1).join('<footer');
-    assert.ok(foot.indexOf('衝衝英文（原名刷刷英文）由個人經營') > -1, rel + ' 的頁尾沒寫原名');
-    assert.equal(foot.indexOf('衝衝英文由個人經營'), -1, rel);
+    assert.equal(files[rel].indexOf('原名'), -1, rel + ' 寫了原名');
+    assert.ok(files[rel].split('<footer').slice(1).join('<footer').indexOf('衝衝英文由個人經營') > -1, rel + ' 的頁尾沒寫站名');
   });
-  assert.ok(files['pricing.html'].indexOf('衝衝英文（原名刷刷英文）由個人經營。方案或付款的問題') > -1, 'pricing.html 的說明也寫原名');
+  assert.ok(files['index.html'].indexOf('"alternateName":"Rushup"') > -1, 'index.html 的 JSON-LD 只列 Rushup');
+  assert.equal(files['index.html'].indexOf('"alternateName":["Rushup","刷刷英文"]'), -1);
   assert.ok(read('js/move-out.js').indexOf('刷刷英文改名為衝衝英文') > -1);
   assert.ok(read('js/move-out-page.js').indexOf('刷刷英文改名為衝衝英文') > -1);
 };

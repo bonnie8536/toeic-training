@@ -220,7 +220,7 @@ function runOne(seed, mode) {
     for (let i = 0; i < count; i++) {
       const seed = (SEED + i * 7919 + mode.charCodeAt(0) * 104729) >>> 0;
       try { const r = await runOne(seed, mode); ok++; words += r.words; dels += r.deletes; }
-      catch (e) { if (!firstErr) firstErr = 'seed ' + seed + ':' + e.message + '\n    ' + (e.log || []).slice(-14).join('\n    '); }
+      catch (e) { if (!firstErr) firstErr = 'seed ' + seed + ':' + (e.log ? e.message : e.stack) + '\n    ' + (e.log || []).slice(-14).join('\n    '); }
     }
     report(label + ':' + count + ' 組隨機操作序列', ok === count,
       ok + ' / ' + count + ' 組通過,平均每組最後 ' + (words / Math.max(1, ok)).toFixed(1) + ' 個字、刪除 ' + (dels / Math.max(1, ok)).toFixed(1) + ' 次,' + Math.round((Date.now() - t0) / 1000) + ' 秒' + (firstErr ? '\n  第一個失敗 ' + firstErr : ''));

@@ -18,10 +18,16 @@
     return '中級';
   }
 
+  let bankBtnSync = null;   // 文章頁的題庫按鈕跟著本機題庫更新(syncKey 合併進來時)
   const artId = getParam('id');
   const article = articles.find(a => a.id === artId);
   if (article) renderReader(article);
   else renderList();
+  /* 自訂題庫先跟雲端對齊一次(同步合併設計 3.6):開了好幾天的 App,「單字存入題庫」才不是根據舊資料;
+     文章頁的「單字存入題庫／更新題庫單字」按鈕跟著更新 */
+  if (window.CLOUD && typeof CLOUD.syncKey === 'function') {
+    CLOUD.syncKey('vgame_banks').then(r => { if (r && r.changed && bankBtnSync) bankBtnSync(); }, () => {});
+  }
 
   /* ============ 文章列表 ============ */
   function renderList() {
@@ -114,11 +120,16 @@
 
     const progressEl = h('span', { class: 'vocab-progress' });
     const biBtn = h('button', { class: 'btn', onclick: toggleBilingual }, '對照翻譯');
-    const hasBank = store.get('vgame_banks', []).some(b => b.id === 'art_' + a.id);
+    const hasBank = () => [].concat(store.get('vgame_banks', [])).some(b => b && b.id === 'art_' + a.id);
     const bankBtn = h('button', {
-      class: 'btn' + (hasBank ? ' on' : ''),
+      class: 'btn' + (hasBank() ? ' on' : ''),
       onclick: () => importVocabToBank(a, bankBtn),
-    }, hasBank ? '更新題庫單字' : '單字存入題庫');
+    }, hasBank() ? '更新題庫單字' : '單字存入題庫');
+    bankBtnSync = () => {
+      if (/^已存入/.test(bankBtn.textContent)) return;
+      bankBtn.textContent = hasBank() ? '更新題庫單字' : '單字存入題庫';
+      bankBtn.classList.toggle('on', hasBank());
+    };
     const toolbar = h('div', { class: 'reader-toolbar' },
       biBtn, bankBtn,
       h('span', { class: 'toolbar-note' }, '虛線單字可以點'),
@@ -391,22 +402,30 @@
     }
   }
 
-  /* ============ 單字存入題庫(單字訓練的自訂題庫) ============ */
+  /* ============ 單字存入題庫(單字訓練的自訂題庫) ============
+     每次都重讀本機的題庫、用 js/sync-merge.js 的函式改(蓋 _r、_t、_p 戳記,多台裝置合併用;同步合併設計 3.7.4),改到才存 */
   function importVocabToBank(a, btn) {
     const norm = s => String(s).toLowerCase().replace(/\s+/g, ' ').trim();
-    const banks = store.get('vgame_banks', []);
+    const SM = window.SYNC_MERGE || null;
+    const before = [].concat(store.get('vgame_banks', []));
     const bid = 'art_' + a.id;
-    let bank = banks.find(b => b.id === bid);
-    if (!bank) { bank = { id: bid, name: '', words: [] }; banks.push(bank); }
-    bank.name = ('文章：' + a.titleZh).slice(0, 20);
-    (a.vocab || []).forEach(v => {
-      const en = v.base || v.word;
-      if (!en || en.length > 30) return;
-      const exist = (bank.words = bank.words || []).find(x => norm(x.en) === norm(en));
-      if (exist) exist.zh = v.zh;
-      else bank.words.push({ en, zh: v.zh, on: true });
-    });
-    store.set('vgame_banks', banks);
+    const name = ('文章：' + a.titleZh).slice(0, 20);
+    const list = (a.vocab || []).map(v => ({ en: v.base || v.word, zh: v.zh })).filter(v => v.en && v.en.length <= 30);
+    let banks;
+    if (SM) banks = SM.editBank(before, bid, Date.now(), b => SM.addWords(Object.assign({}, b, { name }), list, Date.now()));
+    else {
+      banks = JSON.parse(JSON.stringify(before));
+      let b = banks.find(x => x && x.id === bid);
+      if (!b) { b = { id: bid, name: '', words: [] }; banks.push(b); }
+      b.name = name;
+      list.forEach(v => {
+        const exist = (b.words = b.words || []).find(x => norm(x.en) === norm(v.en));
+        if (exist) exist.zh = v.zh;
+        else b.words.push({ en: v.en, zh: v.zh, on: true });
+      });
+    }
+    if (banks !== before) store.set('vgame_banks', banks);
+    const bank = banks.find(b => b && b.id === bid) || { words: [] };
     btn.textContent = '已存入題庫（' + bank.words.length + ' 字）';
     btn.classList.add('on');
     if (!btn.nextElementSibling || !btn.nextElementSibling.classList.contains('bank-golink')) {

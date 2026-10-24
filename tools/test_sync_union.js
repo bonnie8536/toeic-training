@@ -283,6 +283,25 @@ const scenarios = {
     return { ok: has(banksOf(phone), A, 'early') && ids(banksOf(phone)).includes(B) && has(cloudOf(w, 'vgame_banks'), A, 'early') && !!p2,
              detail: '本機 ' + J([...wordKeys(banksOf(phone))]) + ' / 雲端 ' + J([...wordKeys(cloudOf(w, 'vgame_banks'))]) };
   },
+  '21. 每個載入 js/cloud.js 的頁面都在它前面載入 js/sync-merge.js(沒載到的頁面題庫就傳不上去),sw.js 沒有要另外列的快取清單': async () => {
+    const fs = require('fs'), path = require('path');
+    const dir = path.join(__dirname, '..');
+    const pages = fs.readdirSync(dir).filter(f => /\.html$/.test(f));
+    const bad = [];
+    let n = 0;
+    pages.forEach(f => {
+      const srcs = [];
+      fs.readFileSync(path.join(dir, f), 'utf8').replace(/<script[^>]*\ssrc="([^"]+)"/g, (m, src) => { srcs.push(src); return m; });
+      const ci = srcs.indexOf('js/cloud.js');
+      if (ci < 0) return;
+      n++;
+      const si = srcs.indexOf('js/sync-merge.js');
+      if (si < 0 || si > ci || srcs.lastIndexOf('js/sync-merge.js') !== si) bad.push(f);
+    });
+    const sw = fs.readFileSync(path.join(dir, 'sw.js'), 'utf8');
+    const listed = /js\/(cloud|pet|common)\.js/.test(sw);   // sw.js 是執行時才快取,沒有寫死的檔案清單;有的話新檔要加進去
+    return { ok: n >= 20 && !bad.length && !listed, detail: n + ' 頁' + (bad.length ? ',沒載或順序不對:' + bad.join('、') : ',都在 cloud.js 前面') + ' / sw.js 寫死清單 ' + listed };
+  },
 };
 
 (async () => {

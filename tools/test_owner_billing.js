@@ -390,6 +390,40 @@ const cases = {
       && /金流紀錄/.test(msg.textContent) && !/沒有存到/.test(msg.textContent) && /ok/.test(msg.className);
     return { ok: okk, detail: JSON.stringify({ keys: Object.keys(p), note, msg: msg.textContent }) };
   },
+  /* 站名改成衝衝英文:下載檔名換新,檔裡的格式代號不變,改名前下載的舊檔照樣認得。
+     站上沒有匯入站長備份的功能(還原走 SQL Editor,認的是檔裡的 app、version、rows,不看檔名),
+     所以這裡用同一個條件檢查新舊兩種檔。 */
+  '改名後:兩條下載路徑的檔名都是「衝衝英文備份_日期.json」,格式代號仍是 shuashua-progress-backup': async () => {
+    const name = /^衝衝英文備份_\d{4}-\d{2}-\d{2}\.json$/;
+    const w1 = world();
+    const A = loadAdmin(w1, { paid: false }); await settle();
+    await A.root.find(n => n.tagName === 'BUTTON' && /^下載全部備份/.test(n.textContent))[0].click(); await settle();
+    const w2 = world();
+    w2.next.owner_export_gateway = [{ data: clone(GW), error: null }];
+    const B = loadAdmin(w2, { paid: true }); await settle();
+    await B.root.find(n => n.tagName === 'BUTTON' && /^下載全部備份/.test(n.textContent))[0].click(); await settle();
+    const p1 = JSON.parse(A.ctx.blobs[0]), p2 = JSON.parse(B.ctx.blobs[0]);
+    const okk = A.ctx.downloads.length === 1 && name.test(A.ctx.downloads[0]) && B.ctx.downloads.length === 1 && name.test(B.ctx.downloads[0])
+      && p1.app === 'shuashua-progress-backup' && p1.version === 1 && p2.app === 'shuashua-progress-backup' && p2.version === 2
+      && !A.ctx.downloads.concat(B.ctx.downloads).some(f => /刷刷/.test(f));
+    return { ok: okk, detail: JSON.stringify({ files: A.ctx.downloads.concat(B.ctx.downloads), apps: [p1.app, p2.app] }) };
+  },
+  '改名前下載的「刷刷英文備份_」舊檔:格式跟改名後下載的一樣,還原時照樣認得(只看檔裡的 app、version、rows,不看檔名)': async () => {
+    /* 還原條件:跟 admin.js 寫出的格式一致,檔名不參與 */
+    const readable = (file, text) => { const j = JSON.parse(text); return typeof file === 'string' && j.app === 'shuashua-progress-backup' && (j.version === 1 || j.version === 2) && Array.isArray(j.rows); };
+    const w = world();
+    const A = loadAdmin(w, { paid: false }); await settle();
+    await A.root.find(n => n.tagName === 'BUTTON' && /^下載全部備份/.test(n.textContent))[0].click(); await settle();
+    const fresh = JSON.parse(A.ctx.blobs[0]);
+    /* 改名前(2026-10-20)的 v1 舊檔:欄位與順序照當時的 admin.js */
+    const oldFile = '刷刷英文備份_2026-10-20.json';
+    const oldText = JSON.stringify({ app: 'shuashua-progress-backup', version: 1, exported: '2026-10-20T02:00:00.000Z', by: ACC.owner.email, rows: clone(w.progressRows) });
+    const old = JSON.parse(oldText);
+    const okk = readable(oldFile, oldText) && readable(A.ctx.downloads[0], A.ctx.blobs[0])
+      && Object.keys(old).join() === Object.keys(fresh).join() && old.app === fresh.app && old.version === fresh.version
+      && JSON.stringify(old.rows) === JSON.stringify(fresh.rows) && A.ctx.downloads[0] !== oldFile;
+    return { ok: okk, detail: JSON.stringify({ oldKeys: Object.keys(old), freshKeys: Object.keys(fresh), file: A.ctx.downloads[0] }) };
+  },
   '站長模式:owner_export_gateway 讀不到(還沒裝或出錯)時,照樣存學生進度與收費資料(version 2),並寫出金流紀錄沒有存到與原因': async () => {
     const w = world();
     w.next.owner_export_gateway = ['error.not_owner'];

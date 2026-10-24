@@ -78,7 +78,7 @@
   renderHome();
 
   function renderHome() {
-    document.title = '單字訓練|刷刷英文';
+    document.title = '單字訓練|衝衝英文';
     root.innerHTML = '';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '單字訓練')));
@@ -273,7 +273,7 @@
       bank = { id: 'b' + Date.now().toString(36), name: '', words: [] };
       banks.push(bank);
     }
-    document.title = '編輯題庫|刷刷英文';
+    document.title = '編輯題庫|衝衝英文';
     root.innerHTML = '';
     const nameInput = h('input', {
       class: 'game-input', type: 'text', value: bank.name,
@@ -357,7 +357,7 @@
       pool = mode === 'word' ? buildWordPool(levelName) : buildPhrasePool();
       if (pool.length < 8) { renderHome(); return; }
     }
-    document.title = '掉落消除|刷刷英文';
+    document.title = '掉落消除|衝衝英文';
     root.innerHTML = '';
 
     const BASE_SPEED = { slow: 15, normal: 23, fast: 34 }[speedKey];
@@ -636,7 +636,7 @@
 
   /* ================= 片語特訓 ================= */
   function startDrill(groupName, items) {
-    document.title = '片語特訓|刷刷英文';
+    document.title = '片語特訓|衝衝英文';
     const st = store.get('phrase_drill', {});
     /* 錯的與沒做過的優先 */
     const shuffle = arr => {
@@ -792,7 +792,7 @@
     const { pool, name } = poolFor(mode, levelName);
     if (tooSmall(pool, 3)) return;
     const items = pickN(pool, Math.min(8, pool.length));
-    document.title = '翻牌配對|刷刷英文';
+    document.title = '翻牌配對|衝衝英文';
     root.innerHTML = '';
     const cards = shuffleArr(items.flatMap((it, i) => [{ k: i, face: it.answer, en: true }, { k: i, face: it.zh, en: false }]));
     let first = null, lock = false, moves = 0, matched = 0, startT = 0, timer = null;
@@ -860,7 +860,7 @@
     if (tooSmall(pool, 4)) return;
     const items = pickN(pool, Math.min(6, pool.length));
     const SHOW_MS = 15000;
-    document.title = '記憶吐司|刷刷英文';
+    document.title = '記憶吐司|衝衝英文';
     root.innerHTML = '';
     const bar = h('i', { style: 'width:100%' });
     const grid = h('div', { class: 'toast-grid' },
@@ -950,7 +950,7 @@
     const list = pickN(pool, Math.min(10, pool.length));
     const results = [];
     let cur = 0;
-    document.title = '單字選擇題|刷刷英文';
+    document.title = '單字選擇題|衝衝英文';
     const face = o => (dir === 'e2z' ? o.zh : o.answer);
     draw();
 

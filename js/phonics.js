@@ -172,7 +172,7 @@
 
   /* ================= 首頁 ================= */
   function renderHome() {
-    document.title = '自然發音|刷刷英文';
+    document.title = '自然發音|衝衝英文';
     widen();
     const done = store.get('phonics_done', {});
     const todo = UNITS.find(u => !done[u.id]) || null;

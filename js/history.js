@@ -135,7 +135,7 @@
   render();
 
   function render() {
-    document.title = '學習記錄|刷刷英文';
+    document.title = '學習記錄|衝衝英文';
     root.innerHTML = '';
     const all = store.get('hist', []).slice().reverse();   // 新的在前
     root.append(h('div', { class: 'page-head' },

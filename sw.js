@@ -1,11 +1,11 @@
-/* 刷刷英文 service worker(2026-10)
+/* 衝衝英文 service worker(2026-10)
    只處理同網域的 GET:頁面網路優先,4 秒沒回應改給快取;JS、CSS、題庫資料等網路,真的連不上才用快取;
    拿快取版頁面的那一頁,它的 JS、CSS 也先拿快取,而且那次晚到的新版頁面不存(頁面和 JS 要一起更新)。圖片先給快取、背景更新。
    快取以檔名為準,不同頁面共用的 JS、CSS 只會留最後抓到的那一版:所以**每次上線只要改到網頁檔案就把 V 換新**
    (node tools/check_release.js 會檢查,--fix 自動換),舊快取整批作廢,不會拿新版共用檔配舊版頁面。
    不經手:跨網域(Supabase、jsDelivr、Google Fonts、Cloudflare)、非 GET、Range 請求、音檔、帶登入參數的頁面。
    這裡不讀寫學生的進度資料,只刪自己 ss- 開頭的快取。 */
-const V = 'v20261024-0219';
+const V = 'v20261024-1400';
 const PAGES = 'ss-pages-' + V;
 const ASSETS = 'ss-assets-' + V;
 const IMAGES = 'ss-img-' + V;

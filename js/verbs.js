@@ -43,7 +43,7 @@
     }
 
     function render() {
-      document.title = '不規則動詞表|刷刷英文';
+      document.title = '不規則動詞表|衝衝英文';
       root.innerHTML = '';
       root.append(h('div', { class: 'page-head' }, h('h1', null, '不規則動詞表')));
 
@@ -149,7 +149,7 @@
       const items = [...shuffle(wrong), ...shuffle(fresh), ...shuffle(done)].slice(0, 10);
       const results = [];
       let cur = 0;
-      document.title = '動詞測驗|刷刷英文';
+      document.title = '動詞測驗|衝衝英文';
       draw();
 
       function draw() {

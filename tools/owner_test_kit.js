@@ -82,6 +82,7 @@ function world() {
 }
 
 function fakeDom() {
+  const downloads = [];
   class Node {
     constructor(tag) { this.tagName = String(tag).toUpperCase(); this.nodeType = tag === '#text' ? 3 : 1; this.children = []; this.parentNode = null; this.attrs = {}; this.className = ''; this._text = ''; this.on = {}; this.dataset = {}; this.style = {}; this.hidden = false; this.disabled = false; this.value = ''; this.checked = false; }
     get type() { return this.attrs.type || ''; }
@@ -109,7 +110,8 @@ function fakeDom() {
     addEventListener(t, fn) { (this.on[t] = this.on[t] || []).push(fn); }
     removeEventListener(t, fn) { this.on[t] = (this.on[t] || []).filter(f => f !== fn); }
     async fire(t, ev) { const e = Object.assign({ preventDefault() {}, stopPropagation() {}, currentTarget: this, target: this }, ev); for (const f of (this.on[t] || [])) await f(e); }
-    click() { return this.fire('click'); }
+    /* 下載備份:被點的 <a download> 檔名記在 downloads(ctx.downloads) */
+    click() { if (this.tagName === 'A' && this.download) downloads.push(this.download); return this.fire('click'); }
     get textContent() { return this._text + this.children.map(c => c.textContent).join(''); }
     set textContent(v) { this.children.forEach(c => { c.parentNode = null; }); this.children = []; this._text = String(v); }
     set innerHTML(v) { this.children.forEach(c => { c.parentNode = null; }); this.children = []; this._text = ''; this._html = String(v); }
@@ -136,7 +138,7 @@ function fakeDom() {
     body, documentElement: new Node('html'),
   };
   document.key = ev => { let prevented = false; const e = Object.assign({ preventDefault() { prevented = true; }, stopPropagation() {}, target: document.activeElement }, ev); document.listeners.filter(l => l.t === 'keydown').forEach(l => l.fn(e)); return prevented; };
-  return { root, body, document, Node };
+  return { root, body, document, Node, downloads };
 }
 const settle = async () => { for (let i = 0; i < 40; i++) await new Promise(r => setImmediate(r)); };
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -147,7 +149,7 @@ function context(w, o) {
   /* 下載備份:Blob 的內容記在 ctx.blobs;createObjectURL 回假的網址 */
   class FakeURL extends URL { static createObjectURL() { return 'blob:test'; } static revokeObjectURL() {} }
   const ctx = { console: { warn() {}, log() {}, error() {} }, document: dom.document, window: {}, URL: FakeURL, setTimeout, clearTimeout, Promise, TextEncoder,
-    Blob: function (parts) { ctx.blobs.push((parts || []).join('')); }, blobs: [],
+    Blob: function (parts) { ctx.blobs.push((parts || []).join('')); }, blobs: [], downloads: dom.downloads,
     location: { origin: 'https://x', pathname: '/admin.html', href: 'https://x/admin.html', reload() {} }, confirm: () => { ctx.nativeConfirms = (ctx.nativeConfirms || 0) + 1; return true; }, alert() {} };
   ctx.window = ctx;
   /* randomUUID 依序回 key-1、key-2…(送出編號);subtle 用 node 的真的 SHA-256 */

@@ -33,7 +33,7 @@
 
   /* ============ 情境列表 ============ */
   function renderList() {
-    document.title = '對話練習|刷刷英文';
+    document.title = '對話練習|衝衝英文';
     let filter = '全部';
     const chips = h('div', { class: 'drill-filters', style: 'margin:14px 0 4px' });
     const listWrap = h('div', { class: 'dlg-list' });
@@ -68,7 +68,7 @@
 
   /* ============ 對話頁 ============ */
   function renderDialogue(d) {
-    document.title = d.title + '|刷刷英文';
+    document.title = d.title + '|衝衝英文';
     let bilingual = false, slow = false, playAll = false, playing = -1;
     const audio = new Audio();
     audio.preload = 'none';

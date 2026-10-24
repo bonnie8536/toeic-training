@@ -93,7 +93,7 @@
 
   /* ================= 首頁 ================= */
   function renderHome() {
-    document.title = '聽力訓練|刷刷英文';
+    document.title = '聽力訓練|衝衝英文';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '聽力訓練'),
       h('p', null, '答錯的下一輪會優先出現。')));

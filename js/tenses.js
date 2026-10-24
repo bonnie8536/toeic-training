@@ -103,7 +103,7 @@
     render();
 
     function render() {
-      document.title = '12 時態總整理|刷刷英文';
+      document.title = '12 時態總整理|衝衝英文';
       root.innerHTML = '';
       root.append(h('div', { class: 'page-head' }, h('h1', null, '12 時態總整理')));
       root.append(h('p', { class: 'result-note' },

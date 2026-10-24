@@ -79,7 +79,7 @@
 
   /* ---------- daily.html 沒有指定項目:三項清單 ---------- */
   function overview() {
-    document.title = '每日練習|刷刷英文';
+    document.title = '每日練習|衝衝英文';
     const pr = prog();
     root.replaceChildren(
       h('div', { class: 'page-head' }, h('h1', null, '每日練習'), pr.complete ? null : h('p', null, '做完 ' + pr.doneParts + ' / ' + D.PARTS.length + ' 項')),

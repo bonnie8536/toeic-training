@@ -29,19 +29,19 @@ function p(sku: string, item: Item, months: number | null, seats: number | null,
 }
 
 const LIST: Product[] = [
-  p('student_month', 'student', 1, null, null, 199, '刷刷英文 學生方案 一個月'),
-  p('student_year', 'student', 12, null, null, 1990, '刷刷英文 學生方案 一年'),
-  p('teacher10_month', 'teacher', 1, 10, null, 390, '刷刷英文 老師方案 10 位以內 一個月'),
-  p('teacher10_year', 'teacher', 12, 10, null, 390 * TEACHER_YEAR_MONTHS, '刷刷英文 老師方案 10 位以內 一年'),
-  p('teacher30_month', 'teacher', 1, 30, null, 890, '刷刷英文 老師方案 30 位以內 一個月'),
-  p('teacher30_year', 'teacher', 12, 30, null, 890 * TEACHER_YEAR_MONTHS, '刷刷英文 老師方案 30 位以內 一年'),
-  p('teacher60_month', 'teacher', 1, 60, null, 1490, '刷刷英文 老師方案 60 位以內 一個月'),
-  p('teacher60_year', 'teacher', 12, 60, null, 1490 * TEACHER_YEAR_MONTHS, '刷刷英文 老師方案 60 位以內 一年'),
-  p('correction_one', 'credits', null, null, 1, 150, '刷刷英文 寫作批改 1 篇'),
-  p('correction_five', 'credits', null, null, 5, 650, '刷刷英文 寫作批改 5 篇'),
+  p('student_month', 'student', 1, null, null, 199, '衝衝英文 學生方案 一個月'),
+  p('student_year', 'student', 12, null, null, 1990, '衝衝英文 學生方案 一年'),
+  p('teacher10_month', 'teacher', 1, 10, null, 390, '衝衝英文 老師方案 10 位以內 一個月'),
+  p('teacher10_year', 'teacher', 12, 10, null, 390 * TEACHER_YEAR_MONTHS, '衝衝英文 老師方案 10 位以內 一年'),
+  p('teacher30_month', 'teacher', 1, 30, null, 890, '衝衝英文 老師方案 30 位以內 一個月'),
+  p('teacher30_year', 'teacher', 12, 30, null, 890 * TEACHER_YEAR_MONTHS, '衝衝英文 老師方案 30 位以內 一年'),
+  p('teacher60_month', 'teacher', 1, 60, null, 1490, '衝衝英文 老師方案 60 位以內 一個月'),
+  p('teacher60_year', 'teacher', 12, 60, null, 1490 * TEACHER_YEAR_MONTHS, '衝衝英文 老師方案 60 位以內 一年'),
+  p('correction_one', 'credits', null, null, 1, 150, '衝衝英文 寫作批改 1 篇'),
+  p('correction_five', 'credits', null, null, 5, 650, '衝衝英文 寫作批改 5 篇'),
   // 站長專用的正式環境測試:刷 10 元確認付款與通知都通,入帳時不開通任何東西,刷完到藍新後台退款。
   // 只有站長能建單(資料庫 newebpay_begin_checkout 用 _is_owner 擋)。item / credits 只是佔位。
-  p('test10', 'credits', null, null, 1, 10, '刷刷英文 站長測試項目', true),
+  p('test10', 'credits', null, null, 1, 10, '衝衝英文 站長測試項目', true),
 ];
 
 export const PRODUCTS: ReadonlyMap<string, Product> = new Map(LIST.map((x) => [x.sku, x]));

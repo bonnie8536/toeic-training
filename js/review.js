@@ -47,7 +47,7 @@
   renderHome();
 
   function renderHome() {
-    document.title = '每日複習|刷刷英文';
+    document.title = '每日複習|衝衝英文';
     root.innerHTML = '';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '每日複習')));

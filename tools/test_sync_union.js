@@ -443,6 +443,38 @@ const scenarios = {
     const done = !ids(c2).includes(A) && ids(c2).includes(B) && !!(t2 && t2.vgame_banks.b[A]) && !Object.keys(ledgerOf(phone)).length;
     return { ok: held && done, detail: '失敗時雲端 ' + J(ids(c1)) + ' 帳本 ' + J(led) + ' / 恢復後雲端 ' + J(ids(c2)) + ' 標記有A ' + !!(t2 && t2.vgame_banks.b[A]) + ' 帳本 ' + J(Object.keys(ledgerOf(phone))) };
   },
+  '28. (r3 #3)小雞開關關著時只寫本機的 pet(只有「只在本機」標記),登出時讀得到雲端、上傳失敗:跟 main 一樣只送一次讀和一次寫,帳本不記 pet,之後 online/關頁也不補傳 pet': async () => {
+    const P = items => ({ v: 1, items });
+    const fakePet = () => ({ cloudMerge(a, b) {
+      const ok = x => !!x && typeof x === 'object' && !Array.isArray(x);
+      if (!ok(a) || !ok(b)) return { ok: false };
+      const v = { v: 1, items: [...new Set([].concat(a.items || [], b.items || []))].sort() };
+      return { ok: true, v, sameAsLocal: J(v) === J(a), sameAsCloud: J(v) === J(b) };
+    } });
+    const w = makeWorld(128);
+    setCloud(w, 'pet', P(['a']), H.T0 - 864e5);
+    const dev = makeDevice(w, '手機');
+    await signIn(dev);
+    dev.pg.ctx.PET = fakePet();
+    w.clock.t += 1000;
+    dev.local.setItem(PREFIX + 'pet', J(P(['a', 'b'])));
+    dev.pg.ctx.CLOUD.markLocalOnly('pet');
+    const markAt = new Date(w.clock.t).toISOString();
+    w.clock.t += 5000;
+    dev.writeFail = keys => keys.indexOf('pet') >= 0;
+    dev.confirmAnswer = false;
+    dev.ops = [];
+    await dev.pg.ctx.CLOUD.logout(); await tick(10);
+    const petOps = () => dev.ops.filter(o => o.keys.indexOf('pet') >= 0).map(o => o.op + (o.op === 'write' ? '@' + o.rows.find(r => r.k === 'pet').updated_at : ''));
+    const atLogout = petOps(), led = Object.keys(ledgerOf(dev));
+    dev.ops = [];
+    w.clock.t += 60e3;
+    await dev.pg.fire('win:online');
+    await dev.pg.fire('win:pagehide');
+    const after = petOps();
+    const ok = J(atLogout) === J(['read', 'write@' + markAt]) && led.indexOf('pet') < 0 && !after.length && dev.confirms.length === 1;
+    return { ok, detail: '登出時 pet 的請求 ' + J(atLogout) + ' / 帳本 ' + J(led) + ' / 之後 ' + J(after) + ' / 問了 ' + dev.confirms.length + ' 次' };
+  },
 };
 
 (async () => {

@@ -4,7 +4,12 @@
    (加字、改中文、勾選、改名、刪字、刪題庫、存入文章題庫、模擬考交卷、上傳、關頁補傳、斷線、恢復連線、App 重開(灌資料)、換頁、
    開單字頁(syncKey)、登出、重新登入、App 被殺),最後全部連上、各自重開一次再開一次單字頁。
    有三成的序列一開始雲端就有一個部署前的舊題庫,裡面同一個英文出現兩次(run/跑、Run/經營,舊資料可能有);有它時會把第一個 run 的中文
-   在 跑/跑步/慢跑 之間換來換去(含改回原本的)、刪 alt、把 alt 換成主要的(第三輪:重複英文那一組改回以前的中文不能不見)。
+   在 跑/跑步/慢跑 之間換來換去(含改回原本的)、刪 alt、把 alt 換成主要的。新版改內容會換 _r,這些操作做不出「跟以前某一版一模一樣」的字;
+   所以另外有「這個分支早期的頁面改回以前那一版」:把 run 或 refund 整個改回這台以前看過的某一版(中文、勾選、alt、_r 都一樣,
+   _p 記改前那一版),跟別台的版本互相吸收過,重複英文那一組的 absorbZh、joinWord 的「互相吸收過」才走得到(第三輪審查 r3 #4)。
+   改回的那個中文不重新保護(別台同時從那一版改過時,早期的頁面本來就會被當成舊版本);這個操作守的是別台打的中文、字、最後收斂。
+   被刪過的字不改回(改回的可能就是刪掉的那個樣子)。重複英文那一組的細節(繞一圈吸收、兩個輸家的順序、_p 滿了、沒有新的 alt)
+   在 tools/test_sync_merge.js 的「重複英文那一組」用手寫的資料守。
    - A 依序(新版頁面,一次一個操作做完):每一步之後
        雲端:曾經在雲端出現過、沒被使用者刪掉的字都還在;
        本機:每台登入中的裝置,曾經在它本機出現過、沒被刪掉的字都還在;
@@ -43,6 +48,10 @@ function zhItems(banks) {
   return out;
 }
 const USER_EDIT = /^d\d+ (加字|新增題庫|改中文|勾選|改名|刪字|刪題庫|單字存入題庫) /;
+const RESTORE_EN = ['run', 'refund'];
+/* 字的「內容」(不含 _t、_p):這個分支早期的頁面改回以前那一版時,內容跟那一版一模一樣 */
+const CONTENT = ['zh', 'on', 'alt', '_r', '_m'];
+const contentOf = x => J(CONTENT.map(k => (x[k] === undefined ? null : x[k])));
 
 function runOne(seed, mode) {
   const w = makeWorld(seed);
@@ -63,6 +72,8 @@ function runOne(seed, mode) {
      protZCloud、protZDev 記每個中文從哪一步起要保護(拿到它那一刻的 firstZ);不見了、而且是被刪掉或換掉的,就不再保護,之後又出現再從那時的 firstZ 算 */
   const firstZ = new Map(), supZ = new Map(), protZCloud = new Map(), protZDev = new Map();
   const mocks = new Set();
+  const seenVer = new Map();   // 裝置 → bLegacy 的 run、refund 在它本機出現過的每一版(內容)
+  let restoredAny = false;
   const log = [];
   const fail = msg => { const e = new Error(msg); e.log = log; throw e; };
   const exempt = id => {
@@ -92,6 +103,12 @@ function runOne(seed, mode) {
     see(cloudOf(w, 'vgame_banks'));
     fresh.forEach(d => {
       if (!loggedIn(d)) return;
+      const lb = banksOf(d).find(b => b && b.id === 'bLegacy');
+      (lb && lb.words || []).forEach(x => {
+        if (!x || RESTORE_EN.indexOf(x.en) < 0) return;
+        const m = seenVer.get(d) || seenVer.set(d, new Map()).get(d), list = m.get(x.en) || m.set(x.en, []).get(x.en);
+        if (!list.some(v => contentOf(v) === contentOf(x))) list.push(JSON.parse(J(x)));
+      });
       const had = protDev.get(d) || new Set();
       idents(banksOf(d)).forEach(id => had.add(id));
       protDev.set(d, had);
@@ -151,11 +168,36 @@ function runOne(seed, mode) {
       if (r < 0.88) { d.offline = !d.offline; log.push(d.name + (d.offline ? ' 斷線' : ' 連上')); if (!d.offline) await pg.fire('win:online'); return; }
       await newSession(d); log.push(d.name + ' 舊版重開'); return;
     }
+    /* 這個分支早期的頁面(改內容不換 _r):把 run 或 refund 改回這台以前看過的某一版,內容一模一樣,_p 記改前那一版 */
+    const restorable = en => { const cur = (banks.find(b => b.id === 'bLegacy') || {}).words || []; const c = cur.find(x => x && x.en === en);
+      return c ? ((seenVer.get(d) || new Map()).get(en) || []).filter(v => contentOf(v) !== contentOf(c)) : []; };
+    /* 這個字被刪過就不改回:改回的那一版可能就是刪掉的那個樣子(刪除標記記的是它的雜湊),早期的頁面本來就會被刪掉(第三輪起新版換 _r 修好) */
+    const canRestore = bids.indexOf('bLegacy') >= 0 && !delBank.has('bLegacy') ? RESTORE_EN.filter(en => !delKey.has('bLegacy|' + en) && restorable(en).length) : [];
+    if (canRestore.length && chance(0.3)) {
+      const lw = banks.find(b => b.id === 'bLegacy').words || [];
+      const en = pick(canRestore), i = lw.findIndex(x => x && x.en === en), vers = restorable(en);
+      const v = pick(vers), t = H.now(d) + 1000, SM = w.SM;
+      H.edit(d, 'bLegacy', b => {
+        const ws = (b.words || []).slice(), c = ws[i];
+        if (!c || c.en !== en) return b;
+        const nx = Object.assign({}, c);
+        CONTENT.forEach(k => { if (v[k] === undefined) delete nx[k]; else nx[k] = v[k]; });
+        nx._t = t;
+        const p = [SM.wordHash(c) + '.' + t.toString(36)].concat(Array.isArray(c._p) ? c._p : []);
+        nx._p = p.filter((e, j) => p.findIndex(o => o.split('.')[0] === e.split('.')[0]) === j && e.split('.')[0] !== SM.wordHash(nx)).slice(0, 4);
+        ws[i] = nx;
+        return Object.assign({}, b, { words: ws });
+      });
+      restoredAny = true;
+      log.push(d.name + ' 改中文 bLegacy ' + en + ' 改回以前那一版(早期的頁面) ' + v.zh + (v.on === false ? ' 取消勾選' : '') + ' alt ' + J(v.alt || []));
+      return;
+    }
     if (bids.indexOf('bLegacy') >= 0 && chance(0.15)) {
       /* 重複英文的舊資料(run/跑、Run/經營):把第一個 run 的中文在幾個寫法之間換來換去(含改回原本的「跑」)、在編輯頁刪掉 alt、
-         把 alt 換成主要的。裝置時鐘有快有慢,會出現「改回以前的樣子」:改回的(和合併後內容跟以前某一版一樣的)那一份跟別台的版本
-         互相吸收過、或被當成舊版本,學生打的中文要在主要或 alt,不能不見(第三輪) */
-      const run = (banks.find(b => b.id === 'bLegacy').words || []).find(x => x && key(x.en) === 'run');
+         把 alt 換成主要的。裝置時鐘有快有慢,學生改回以前的中文要在主要或 alt,不能不見。新版改內容會換 _r,改回的那一份跟以前那一版
+         雜湊不同,不會被當成舊版本(第三輪);「互相吸收過」要靠上面早期頁面的「改回以前那一版」才做得出來 */
+      const lw = banks.find(b => b.id === 'bLegacy').words || [];
+      const run = lw.find(x => x && key(x.en) === 'run');
       if (run && Array.isArray(run.alt) && run.alt.length && chance(0.5)) {
         if (chance(0.5)) { setWord(d, 'bLegacy', 'run', { alt: [] }); log.push(d.name + ' 改中文 bLegacy run 刪 alt'); return; }
         const [top, ...rest] = run.alt;
@@ -238,9 +280,12 @@ function runOne(seed, mode) {
         beforeZ.forEach(it => { if (!afterZ.has(it)) supZ.set(it, step); });
         /* 學生這一步打的中文(以前出現過、被換掉,現在又改回來的):從這一步起算,之前的「換掉」「刪掉」不再豁免它。
            只在別的地方(其他裝置本機、舊版頁面記住的那份、雲端)都沒有它的時候重新算:別的地方還有的是舊的那一份,之後被換掉、刪掉是對的,
-           分不出來就照舊豁免(少抓,不誤報) */
+           分不出來就照舊豁免(少抓,不誤報)。
+           「早期的頁面改回以前那一版」改回的中文不重新算:內容跟那一版一模一樣,別台同時從那一版改過的,會把它當成那個舊版本
+           (早期的頁面本來就會這樣,第三輪起新版改內容換 _r 才修好);這個操作守的是別台打的中文、字、最後收斂 */
+        const restored = /改回以前那一版/.test(log[log.length - 1]);
         const elsewhere = it => devs.some(x => x !== d && (zhItems(banksOf(x)).has(it) || zhItems(x.snapshot).has(it))) || zhItems(cloudOf(w, 'vgame_banks')).has(it);
-        afterZ.forEach(it => { if (!beforeZ.has(it) && !elsewhere(it)) firstZ.set(it, step); });
+        afterZ.forEach(it => { if (!restored && !beforeZ.has(it) && !elsewhere(it)) firstZ.set(it, step); });
       }
       if (process.env.DEBUG) {
         const brief = b => (Array.isArray(b) ? b : []).map(x => x.id + ':' + x._r + '[' + (x.words || []).map(y => y.en + '/' + y._r).join(',') + ']').join(' ');
@@ -250,11 +295,13 @@ function runOne(seed, mode) {
       observe();
       check('第 ' + s + ' 步(' + log[log.length - 1] + ')');
     }
-    /* 最後:全部連上;登入中的新版裝置各自重開一次(灌資料),再各開一次單字頁(syncKey)、關頁補傳 */
+    /* 最後:全部連上;登入中的新版裝置各自重開一次(灌資料),再各開一次單字頁(syncKey)、關頁補傳。
+       有「早期的頁面改回以前那一版」時多開一輪單字頁:改回的那一版跟以前那一版雜湊一樣,前一台合併時把它當成舊版本拿掉,
+       它吸收過的版本要等下一輪才再被吸收(只會多留,收斂慢一輪;新版頁面做不出這種資料) */
     step++;
     devs.forEach(d => { d.offline = false; d.readError = false; });
     for (const d of devs) if (d.old && loggedIn(d)) { await d.pg.fire('win:online'); }
-    for (let round = 0; round < 2; round++) {
+    for (let round = 0; round < (restoredAny ? 3 : 2); round++) {
       for (const d of fresh) if (loggedIn(d)) { if (round === 0) await newSession(d); else { await d.pg.ctx.CLOUD.syncKey('vgame_banks'); await d.pg.ctx.CLOUD.syncKey('mock_history'); await d.pg.fire('win:pagehide'); } }
       observe();
       check('最後第 ' + (round + 1) + ' 輪');

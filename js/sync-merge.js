@@ -10,10 +10,11 @@
    - 時鐘只拿來決定「同一個欄位兩邊都改了誰當主要」,輸的那個中文放進 alt,不丟。
    題庫多的欄位(舊版頁面看不懂,但改的時候是改物件本身,會原樣留著):
    - _r:新版建立題庫(6 碼)或字(4 碼)時給的隨機碼,算進內容雜湊(刪掉又加回一模一樣的字,雜湊不同,不會被舊標記刪掉)。
-     字的 _r 每次改內容都換一個(reviseWord):改回以前的樣子、兩台打了同一個中文,也不會跟哪一個舊版本同一個雜湊。
-   - _t:新版最後一次改它的時間(新加的字沒有,改過才有);_nt:題庫名稱最後一次改的時間;_on:新版改名時改之前那個名稱的雜湊。都不算進雜湊。
-     名稱:一份是另一份的新版本就用新版本的名稱;不然只有一份是從另一份現在的名稱改過來的(_on)就用它(不看時鐘);
-     兩台都改了名才比 _nt;_nt 也一樣(舊版頁面就地改名)用主要那份。
+     字和題庫的 _r 每次改內容都換一個(reviseWord、reviseBank):改回以前的樣子、兩台打了同一個中文,也不會跟哪一個舊版本同一個雜湊。
+   - _t:新版最後一次改它的時間(新加的字沒有,改過才有);_nt:題庫名稱最後一次改的時間;_nr:新版每次改名給的隨機碼(4 碼);
+     _nl:這個名稱之前那些名稱版本的代號(名稱 + _nr 的雜湊,最多 8 個)。都不算進雜湊。(這個分支早期的 _on 當成 _nl 的一個來讀,不再寫)
+     名稱:只有一份是從另一份現在的名稱改過來的(另一份的代號在它的 _nl 裡)就用它(不看時鐘、改幾次都認得、改回以前的名稱也認得);
+     不然一份是另一份的新版本就用新版本的名稱;兩台都改了名才比 _nt;_nt 也一樣(舊版頁面就地改名)用主要那份。
    - banks 的 ctx.localClean:本機那份(第一個參數)上次跟雲端對齊之後沒改過(cloud.js 看帳本)。舊版頁面就地改名、取消勾選、改中文
      不動戳記,兩份分不出先後(_t 一樣)時用雲端那份當主要,不比字串(第二輪審查 r2 #1、#4)。中文衝突時本機的照樣放 alt。
    - _p:它吸收過的舊版本,「雜湊.時間(36 進位毫秒)」;時間是吸收的那一刻(新版本的 _t)。這一版那一刻吸收的一定留(最多 16 個),
@@ -194,15 +195,37 @@
       a.concat(b).forEach(w => { const h = wordHash(w); byHash.set(h, byHash.has(h) ? joinWord(byHash.get(h), w) : w); });
       const all = Array.from(byHash.entries());
       /* 被另一個吸收過的(舊版本)拿掉。兩個互相吸收過(取消勾選又勾回來,內容跟以前某一版一樣):跟 newer() 一樣留 primary 那個,
-         不能兩個都拿掉(以前兩個都拿掉,那個字就不見了)。萬一全部都被拿掉(繞一圈互相吸收),留 primary 最大的那一個 */
-      const drop = ([h, w]) => all.some(([h2, w2]) => h2 !== h && hasP(w2._p, h) && !(hasP(w._p, h2) && primary(w, w2, wordContent)[0] === w));
+         不能兩個都拿掉(以前兩個都拿掉,那個字就不見了)。繞一圈吸收、沒有出口的見下面的 tops */
+      const beats = ([h, w], [h2, w2]) => h2 !== h && hasP(w2._p, h) && !(hasP(w._p, h2) && primary(w, w2, wordContent)[0] === w);   // e 輸給 o(e 被拿掉)
+      const drop = e => all.some(o => beats(e, o));
       /* 輸的中文(跟英文只出現一次時 joinWord 的「互相吸收過」一樣,第三輪):留下的那個跟被拿掉的互相吸收過(改回以前的中文、
          改回去那台時鐘慢),被拿掉的中文放進留下那個的 alt。以前只留 primary,改回的中文哪裡都沒有了。
-         全部都被拿掉時(繞一圈互相吸收)留 primary 最大的那一個,其他的中文都放進它的 alt(寧可多留) */
+         被拿掉的要有人接:沿著「輸給誰」走得到某個留下的。走不到的(繞一圈吸收、沒有出口)留其中 primary 最大的那一個(top),
+         走得到它的那些的中文都放進它的 alt;還有走不到的就再留一個(寧可多留)。以前只在「全部都被拿掉」時才留 top:
+         同一組還有別的字(例如 Run/經營)時,繞一圈的那幾個字整組不見(第三輪審查 r3 #4) */
       const kept = all.filter(e => !drop(e));
+      const reaches = (e, targets) => {
+        const seen = new Set([e]), queue = [e];
+        while (queue.length) {
+          const c = queue.shift();
+          if (targets.indexOf(c) >= 0) return true;
+          all.forEach(o => { if (!seen.has(o) && beats(c, o)) { seen.add(o); queue.push(o); } });
+        }
+        return false;
+      };
+      const tops = [];
+      let left = all.filter(e => kept.indexOf(e) < 0 && !reaches(e, kept));
+      while (left.length) {
+        const top = left.reduce((p, q) => (primary(p[1], q[1], wordContent)[0] === p[1] ? p : q));
+        tops.push(top);
+        left = left.filter(e => e !== top && !reaches(e, [top]));
+      }
       const win = (e, o) => hasP(e[1]._p, o[0]) && hasP(o[1]._p, e[0]) && primary(e[1], o[1], wordContent)[0] === e[1];
-      const top = kept.length ? null : all.reduce((p, q) => (primary(p[1], q[1], wordContent)[0] === p[1] ? p : q));
-      const groups = top ? [[top, all.filter(o => o !== top)]] : kept.map(e => [e, all.filter(o => o !== e && win(e, o))]);
+      /* 只因為「互相吸收過」輸掉的(沒有誰是從它改過來的):它輸給的那個又是別人的舊版本時,中文交給最後接住的那個。
+         以前只交給直接贏它的那個,贏它的那個被拿掉,中文就跟著不見,而且結果跟合併順序有關(test_sync_fuzz 早期頁面改回找到的) */
+      const ambiguous = o => !all.some(z => z !== o && hasP(z[1]._p, o[0]) && !hasP(o[1]._p, z[0]));
+      const groups = kept.map(e => [e, all.filter(o => o !== e && (win(e, o) || (kept.indexOf(o) < 0 && ambiguous(o) && reaches(o, [e]))))])
+        .concat(tops.map(t => [t, all.filter(o => o !== t && kept.indexOf(o) < 0 && tops.indexOf(o) < 0 && reaches(o, [t]))]));
       groups.map(([e, losers]) => absorbZh(e, losers)).sort((p, q) => cmp(canon(p), canon(q))).forEach(w => out.push(w));
     });
     return out;
@@ -216,32 +239,43 @@
       w: wordsOf(b).map(w => canon(isWord(w) ? wordContent(w) : w)).sort() };
   }
   const bankHash = b => quickHash(canon(bankContent(b)));
-  /* 名稱的雜湊(_on 用):新版改名時記下改之前的名稱 */
-  const nameHash = n => quickHash('n\u0000' + String(n));
-  /* x 是從 y 現在的名稱改過來的(x 的 _on 是 y 的名稱)。y 的 _on 就是它自己的名稱時不算:那是舊版頁面把名稱改回去(_on 是抄來的) */
-  const renamedFrom = (x, y) => typeof x._on === 'string' && x._on === nameHash(y.name) && y._on !== nameHash(y.name);
+  /* 名稱的版本(第三輪審查 r3 #1、#2):新版每次改名給一個新的 _nr(4 碼),名稱這一版的代號 = 名稱 + _nr 的雜湊
+     (沒有 _nr 的舊資料就是名稱的雜湊,跟以前的 _on 一樣)。_nl 記這個名稱之前的那些版本的代號(「代號.時間」,跟 _p 同一種格式,最多 8 個):
+     改名時記改之前那一版;合併時兩份的都收,沒用上的那個名稱也記(合併時看過、決定過了)。
+     以前 _on 只記上一個名稱的雜湊:連改兩次名認不出「只有一台改名」(退回比 _nt,時鐘快的裝置建立時的 _nt 會贏);
+     名稱改回以前用過的,也跟以前那一版分不出來。改名換 _nr,每一次改名都是新的代號 */
+  const NAME_L_MAX = 8;
+  const nameId = b => quickHash('n\u0000' + String(b.name) + (typeof b._nr === 'string' ? '\u0000' + b._nr : ''));
+  /* 這個分支早期的資料只有 _on(上一個名稱的雜湊):當成 _nl 裡的一個(時間 0) */
+  const lineage = b => pList(b._nl).concat(typeof b._on === 'string' && /^[0-9a-z]+$/.test(b._on) ? [b._on + '.0'] : []);
+  /* x 的名稱是從 y 現在的名稱改過來的(y 的代號在 x 的 _nl 裡)、y 沒看過 x 的名稱。
+     y 自己的代號在 y 的 _nl 裡時不算:那是舊版頁面就地把名稱改回以前那一版(_nr、_nl 是抄來的,分不出誰新) */
+  const renamedFrom = (x, y, lx, ly) => hasP(lx, nameId(y)) && !hasP(ly, nameId(x)) && !hasP(ly, nameId(y));
   function joinBank(x, y, pref) {
     if (canon(x) === canon(y)) return x;
     const hx = bankHash(x), hy = bankHash(y);
     const t = maxT(x._t, y._t), nt = maxT(x._nt, y._nt);
     const win = hx === hy ? (canon(x) <= canon(y) ? x : y) : newer(x, y, hx, hy, bankContent, pref);
     const bp = win || primary(x, y, bankContent, pref)[0];
-    /* 名稱(用哪一份的 name 和 _on):
-       1. 一份是另一份的新版本(win)就用它的(改名的那台看過舊名稱);
-       2. 兩份都不是對方的舊版本(另一台同時改了字):只有一份是從另一份現在的名稱改過來的(_on)→ 用改過的那份,不看時鐘
+    /* 名稱(用哪一份的 name 和 _nr):
+       1. 只有一份是從另一份現在的名稱改過來的(另一份的代號在它的 _nl 裡)→ 用改過的那份,不看時鐘、也不看誰是新版本
           (以前比 _nt:時鐘快的裝置建立題庫時的 _nt、或時鐘慢的裝置改名,都會讓真的改名被退回,名稱沒有 alt,永遠回不來);
-       3. 兩台都改了名(或都沒有 _on 可以判斷):_nt 大的;
+       2. 一份是另一份的新版本(win)就用它的(舊版頁面就地改名:代號不在誰的 _nl 裡);
+       3. 兩台都改了名(或都沒有 _nl 可以判斷):_nt 大的;
        4. _nt 也一樣(舊版頁面就地改名,戳記沒動):主要那份(bp,本機沒改過時是雲端那份) */
     let src = bp;
-    if (!win && x.name !== y.name) {
-      const fx = renamedFrom(x, y), fy = renamedFrom(y, x);
+    const ix = nameId(x), iy = nameId(y), lx = lineage(x), ly = lineage(y);
+    if (ix !== iy) {
+      const fx = renamedFrom(x, y, lx, ly), fy = renamedFrom(y, x, ly, lx);
       const nx = isNum(x._nt) ? x._nt : 0, ny = isNum(y._nt) ? y._nt : 0;
       if (fx !== fy) src = fx ? x : y;
-      else if (nx !== ny) src = nx > ny ? x : y;
+      else if (!win && x.name !== y.name && nx !== ny) src = nx > ny ? x : y;
     }
     const out = Object.assign({}, bp);
     put(out, 'name', src.name);
-    put(out, '_on', src._on);
+    put(out, '_nr', src._nr);
+    delete out._on;
+    put(out, '_nl', normP([pEntry(ix, nt), pEntry(iy, nt)].concat(lx, ly), nameId(out), NAME_L_MAX, nt));
     if (x.words !== undefined || y.words !== undefined) out.words = joinWords(wordsOf(x), wordsOf(y), pref === x ? 'x' : pref === y ? 'y' : null);
     put(out, '_t', t);
     put(out, '_nt', nt);
@@ -454,11 +488,19 @@
       if (!isNum(out._nt)) out._nt = now;
       return out;
     }
-    const h = bankHash(old), hn = bankHash(next);
-    if (h === hn) return old;
-    const out = Object.assign({}, next, { _t: now });
-    if (next.name !== old.name) { out._nt = now; put(out, '_on', old.name === undefined ? undefined : nameHash(old.name)); }
-    put(out, '_p', normP([pEntry(h, now)].concat(pList(old._p), pList(next._p)), hn, BANK_P_MAX, now));
+    const h = bankHash(old);
+    if (h === bankHash(next)) return old;
+    /* 改到內容就換題庫的 _r(第三輪審查 r3 #1,跟 reviseWord 一樣):改回以前的名稱、字又沒動時,雜湊不會跟以前某一版一樣
+       (別台的 _p 裡有那一版,改回的那一份會被當成舊版本,名稱被退回) */
+    const out = Object.assign({}, next, { _t: now, _r: rnd(6) });
+    delete out._m;
+    if (next.name !== old.name) {
+      out._nt = now;
+      out._nr = rnd(4);
+      delete out._on;
+      put(out, '_nl', normP([pEntry(nameId(old), now)].concat(lineage(old), lineage(next)), nameId(out), NAME_L_MAX, now));
+    }
+    put(out, '_p', normP([pEntry(h, now)].concat(pList(old._p), pList(next._p)), bankHash(out), BANK_P_MAX, now));
     return out;
   }
   /* 改一個題庫:fn 拿到這個題庫(沒有就是新的空題庫),回改好的題庫。沒改到內容就回原本的陣列 */

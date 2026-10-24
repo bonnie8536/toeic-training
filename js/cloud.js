@@ -17,7 +17,7 @@
        題庫上傳時跟 sync_del 一次查詢讀兩列、一次 upsert 傳兩列。單字頁、閱讀頁開頁時呼叫 syncKey 跟雲端對齊一次;
        登出前多一輪對帳(雲端比本機少就先合併上傳再刪本機)。寫作、hist、錯題本還是整份上傳(下一輪)。
        帳本上沒有這個鍵(本機上次對齊之後沒改過)時合併給 localClean:舊版頁面就地改的名稱、勾選、中文用雲端那份(r2 #1、#4)。
-       合併後上傳失敗時,帳本上沒有的鍵補記(開單字頁、對帳的 pull 原本帳本是空的,失敗後不會重傳、離線登出也不問;r2 #3)。
+       合併後上傳失敗時,帳本上沒有的鍵補記(開單字頁、對帳的 pull 原本帳本是空的,失敗後不會重傳、離線登出也不問;r2 #3);pet 不補記(r3 #3)。
    已知限制:
      1. 兩台在同一時間讀雲端、合併、上傳時,後到的那台可能蓋掉先到的那台剛傳上去的東西;先到那台本機還留著,
         下次上傳、灌資料、開單字頁、登出前對帳時會再合併上傳(pet 是 pet-store 的 remoteBehind),所以不會永久消失。
@@ -1055,7 +1055,8 @@
       try { if (localStorage.getItem(lk) === sent) unmark(user.id, key, readAt); } catch (e) { /* 讀不到就留著標記,登出時多問一次 */ }
       return true;
     } catch (e) {
-      holdInLedger(user, [key]);
+      /* pet 不補記:跟以前一樣只留「只在本機」標記(pet 的請求逐位元組不變;第三輪審查 r3 #3) */
+      if (!spec(key).clock) holdInLedger(user, [key]);
       console.warn('進度暫時沒同步，已記下，下次連線會補傳：' + key, e);
       return false;
     }

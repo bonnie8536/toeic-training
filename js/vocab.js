@@ -339,10 +339,25 @@
     const status = h('div', { class: 'result-note' });
     const listWrap = h('div', null);
 
+    /* 名稱欄位:shownName 是最後一次放進輸入框(或存過)的名稱。輸入框跟它一樣 = 學生沒動過名稱,
+       persist 就不寫名稱(題庫已經存在時),重畫時換成本機現在的名稱(別台改的名稱合併進來了)。
+       以前每次 persist 都把輸入框的值寫回去:輸入框還停在合併前的舊名稱時,會把別台的改名蓋掉(而且 _nt 是新的,之後每台都用舊名稱) */
+    let shownName = nameInput.value;
     function persist() {
-      const name = nameInput.value.trim() || '未命名題庫';
+      const typed = nameInput.value;
+      if (typed === shownName && bankOf(id)) return;
+      const name = typed.trim() || '未命名題庫';
       editBank(id, b => Object.assign({}, b, { name }));
+      shownName = typed;
     }
+    function syncName() {
+      const b = bankOf(id);
+      if (b && nameInput.value === shownName && typeof b.name === 'string' && b.name !== shownName) {
+        nameInput.value = b.name;
+        shownName = b.name;
+      }
+    }
+    function redraw() { syncName(); drawList(); }
     function drawList() {
       listWrap.innerHTML = '';
       const words = (current().words || []).filter(w => w && typeof w.en === 'string');
@@ -401,7 +416,7 @@
     }
 
     nameInput.addEventListener('change', persist);
-    editRedraw = drawList;
+    editRedraw = redraw;
     root.append(
       h('div', { class: 'drill-top', 'data-vview': 'edit' },
         h('h1', null, bankId ? '編輯題庫' : '新增題庫'),

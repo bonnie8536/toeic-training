@@ -4,6 +4,7 @@
    - 刪字、刪題庫:雲端帳號先存刪除標記(sync_del)再存題庫;本機學生檔案、訪客不寫標記。
    - 新版寫入蓋戳記(_r、_t、_p);兩台同時改中文留下的 alt 顯示「另一台寫的」,可以換或刪。
    - 開頁呼叫一次 CLOUD.syncKey('vgame_banks'),有變就重畫;cloud:merged、別的分頁(storage)改了題庫:首頁、編輯頁重畫,遊戲中不打斷。
+   - 編輯頁的名稱欄位:重畫時換成合併後的名稱;學生沒動過名稱欄位,勾選、刪字、加字、按完成都不寫名稱(不會把別台的改名蓋回去)。
    - 閱讀頁「單字存入題庫」(js/reading.js):每次重讀本機題庫、蓋戳記;同一篇再按一次沒有變就不存(不多上傳一次)。 */
 const fs = require('fs');
 const vm = require('vm');
@@ -255,6 +256,91 @@ const legacy = () => [{ id: 'b1', name: '第一課', words: [{ en: 'apple', zh: 
     btn2.click();
     check('閱讀頁單字存入題庫:原本的題庫留著、新題庫和字有戳記;再按一次沒變就不存', synced && !!b && b.name === '文章：退款的文章' && !!b._r && b.words.length === 2 && b.words.every(w => !!w._r)
       && pg.banks().length === 2 && pg.pushes.length === before, J(b) + ' / 再按一次多存 ' + (pg.pushes.length - before) + ' 次');
+  }
+  /* 7. 編輯頁的名稱欄位跟著合併更新:別台改的名稱不會被輸入框裡的舊名稱蓋回去(只有學生真的改了名稱欄位才寫名稱) */
+  {
+    const stamped = () => SM.editBank([], 'b1', Date.now() - 60e3, b => SM.addWords(Object.assign({}, b, { name: '第一課' }),
+      [{ en: 'apple', zh: '蘋果' }, { en: 'pear', zh: '梨' }], Date.now() - 60e3));
+    const renamedBy = (banks, name) => SM.editBank(banks, 'b1', Date.now() - 5e3, b => Object.assign({}, b, { name }));   // 手機的改名(比現在早)
+    const inputOf = pg => pg.root.all().find(e => e.tagName === 'INPUT' && e.attrs.type === 'text');
+    const doneLink = pg => pg.root.all().find(e => e.tagName === 'A' && /完成/.test(textOf(e)));
+    const out = [];
+    /* A. 開單字頁後 syncKey 還沒回來就點「編輯」,syncKey 帶回別台的改名;學生什麼都沒改,直接按「← 完成」 */
+    {
+      const local = makeStorage();
+      const pg = openVocab(CID, local);
+      pg.setBanks(stamped());
+      const home = openVocab(CID, local);
+      button(home.root, '編輯').click();
+      const merged = renamedBy(home.banks(), '期中考');
+      home.setBanks(merged);
+      home.resolveSync({ ok: true, changed: true }); await tick();
+      const shown = inputOf(home).value;
+      doneLink(home).click();
+      const b1 = home.banks()[0];
+      out.push(['A', shown === '期中考' && b1.name === '期中考' && b1._nt === merged[0]._nt, '輸入框 ' + shown + ' / 存的 ' + b1.name]);
+    }
+    /* B. 編輯頁一直開著,cloud:merged 帶進別台的改名;學生取消勾一個字、刪一個字、加字 */
+    for (const act of ['uncheck', 'delete', 'add']) {
+      const local = makeStorage();
+      const pg = openVocab(CID, local);
+      pg.setBanks(stamped());
+      const home = openVocab(CID, local);
+      home.resolveSync({ ok: true, changed: false }); await tick();
+      button(home.root, '編輯').click();
+      const merged = renamedBy(home.banks(), '第一課 動詞');
+      home.setBanks(merged);
+      home.fire('cloud:merged', { detail: { key: 'vgame_banks' } });
+      if (act === 'uncheck') { const cb = home.root.all().find(e => e.tagName === 'INPUT' && e.attrs.type === 'checkbox'); cb.checked = false; cb.fire('change'); }
+      if (act === 'delete') home.root.all().find(e => e.tagName === 'BUTTON' && e.attrs.title === '刪除這個字').click();
+      if (act === 'add') { home.root.all().find(e => e.tagName === 'TEXTAREA').value = 'grape 葡萄'; button(home.root, '加入單字').click(); }
+      const b1 = home.banks()[0];
+      const didIt = act === 'uncheck' ? b1.words[0].on === false : act === 'delete' ? b1.words.length === 1 : b1.words.length === 3;
+      out.push(['B-' + act, didIt && b1.name === '第一課 動詞' && b1._nt === merged[0]._nt && inputOf(home).value === '第一課 動詞', b1.name + ' / 字 ' + b1.words.length]);
+    }
+    /* C. 學生自己打了新名稱(還沒離開欄位),這時別台的改名合併進來:輸入框不被換掉,按「完成」用學生打的(新的 _nt) */
+    {
+      const local = makeStorage();
+      const pg = openVocab(CID, local);
+      pg.setBanks(stamped());
+      const home = openVocab(CID, local);
+      home.resolveSync({ ok: true, changed: false }); await tick();
+      button(home.root, '編輯').click();
+      const input = inputOf(home);
+      input.value = '我自己取的'; input.fire('input');
+      const merged = renamedBy(home.banks(), '期中考');
+      home.setBanks(merged);
+      home.fire('cloud:merged', { detail: { key: 'vgame_banks' } });
+      const kept = input.value === '我自己取的';
+      doneLink(home).click();
+      const b1 = home.banks()[0];
+      out.push(['C', kept && b1.name === '我自己取的' && b1._nt > merged[0]._nt, '輸入框 ' + input.value + ' / 存的 ' + b1.name]);
+    }
+    /* E. 本機的名稱被換掉了、但這一頁沒收到通知(沒重畫):學生沒動名稱欄位,按「完成」也不寫名稱 */
+    {
+      const local = makeStorage();
+      const pg = openVocab(CID, local);
+      pg.setBanks(stamped());
+      const home = openVocab(CID, local);
+      home.resolveSync({ ok: true, changed: false }); await tick();
+      button(home.root, '編輯').click();
+      const merged = renamedBy(home.banks(), '期末考');
+      home.setBanks(merged);
+      doneLink(home).click();
+      const b1 = home.banks()[0];
+      out.push(['E', b1.name === '期末考' && b1._nt === merged[0]._nt, '存的 ' + b1.name]);
+    }
+    /* D. 新增題庫:名稱沒填按「加入單字」照舊存成「未命名題庫」 */
+    {
+      const local = makeStorage();
+      const home = openVocab(CID, local);
+      button(home.root, '＋ 新增題庫').click();
+      home.root.all().find(e => e.tagName === 'TEXTAREA').value = 'grape 葡萄'; button(home.root, '加入單字').click();
+      const b = home.banks();
+      out.push(['D', b.length === 1 && b[0].name === '未命名題庫' && b[0].words.length === 1, J(b.map(x => x.name))]);
+    }
+    check('編輯頁開著時別台改了題庫名稱:名稱欄位跟著更新,勾選、刪字、加字、按完成都不會把別台的改名蓋回舊名稱;學生自己打的名稱照樣存',
+      out.every(x => x[1]), out.map(x => x[0] + (x[1] ? ' ok' : ' 壞:' + x[2])).join(' / '));
   }
   console.log(pass + ' / ' + (pass + fail) + ' 通過');
   process.exit(fail ? 1 : 0);

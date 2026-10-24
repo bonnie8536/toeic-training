@@ -9,15 +9,19 @@
    - 合併結果跟參數順序無關、重複合併不變、合併結果再跟任一份合併也不變(兩台各自合併會收斂,不會一直互傳)。
    - 時鐘只拿來決定「同一個欄位兩邊都改了誰當主要」,輸的那個中文放進 alt,不丟。
    題庫多的欄位(舊版頁面看不懂,但改的時候是改物件本身,會原樣留著):
-   - _r:新版建立題庫或字時給的隨機 6 碼,算進內容雜湊(刪掉又加回一模一樣的字,雜湊不同,不會被舊標記刪掉)。
-   - _t:新版最後一次改它的時間;_nt:題庫名稱最後一次改的時間。都不算進雜湊。
+   - _r:新版建立題庫(6 碼)或字(4 碼)時給的隨機碼,算進內容雜湊(刪掉又加回一模一樣的字,雜湊不同,不會被舊標記刪掉)。
+   - _t:新版最後一次改它的時間(新加的字沒有,改過才有);_nt:題庫名稱最後一次改的時間。都不算進雜湊。
+     名稱:一份是另一份的新版本就用新版本的名稱;兩台同時改名才比 _nt。
    - _p:它吸收過的舊版本,「雜湊.時間(36 進位毫秒)」;時間是吸收的那一刻(新版本的 _t)。這一版那一刻吸收的一定留(最多 16 個),
      其他的留最新的,題庫補到 8 個、字補到 4 個。用來判斷「另一份是不是我的舊版本」。
-   - alt(字):兩台同時改了同一個字的中文,沒當主要的那個(最多 3 個)。編輯頁顯示「另一台寫的」,可以換或刪。
-   跟 feat/move 共用:canon、quickHash 跟 js/move-merge.js 同一個函式;mock 的「同一筆」判斷一樣(兩個分支都進 main 後只留這一份)。 */
+   - alt(字):兩台同時改了同一個字的中文,沒當主要的那個(不設上限:以前排序後只留 3 個,會把學生剛打的丟掉)。
+     編輯頁全部顯示「另一台寫的」,可以換或刪。
+   跟 feat/move 共用:canon、quickHash 跟 js/move-merge.js 同一個函式;mock 的「同一筆」判斷一樣(兩個分支都進 main 後只留這一份)。
+   題庫規則跟 js/move-merge.js 的 mergeBanks 不一樣(那邊同一個 id 內容不同就複製一份「（舊網址）」,戳記不同也算不同):
+   合進 feat/move 時,搬家暫存區合併表上的鍵要改用這裡的函式、sync_del 要有搬家規則,tools/test_sync_move_compat.js 會擋。 */
 (function (root) {
   'use strict';
-  const WORD_P_MAX = 4, BANK_P_MAX = 8, ALT_MAX = 3, MOCK_MAX = 30;
+  const WORD_P_MAX = 4, BANK_P_MAX = 8, MOCK_MAX = 300;
   const TOMB_KEEP_MS = 400 * 864e5, TOMB_MAX = 1000, TOMB_H0_MAX = 4, TOMB_H_MAX = 8;
   const B36 = '0123456789abcdefghijklmnopqrstuvwxyz';
   /* 常用的內建函式先放進區域變數:每次查全域在 node 的 vm 沙盒(測試)裡很慢,瀏覽器裡沒差 */
@@ -134,7 +138,7 @@
         const [p, q] = primary(x, y, wordContent);
         out = Object.assign({}, p);
         const alt = altList(p.alt).concat(altList(q.alt), zhDiffers(q.zh, p.zh) ? [String(q.zh)] : [])
-          .filter((s, i, a) => zhDiffers(s, p.zh) && a.indexOf(s) === i).sort().slice(0, ALT_MAX);
+          .filter((s, i, a) => zhDiffers(s, p.zh) && a.indexOf(s) === i).sort();
         put(out, 'alt', alt);
         mark(out, hx, hy, wordHash);
         imm = [pEntry(hx, t), pEntry(hy, t)];
@@ -178,8 +182,10 @@
     const t = maxT(x._t, y._t), nt = maxT(x._nt, y._nt);
     const win = hx === hy ? (canon(x) <= canon(y) ? x : y) : newer(x, y, hx, hy, bankContent);
     const bp = win || primary(x, y, bankContent)[0];
+    /* 名稱:一份是另一份的新版本(win)就用它的名稱(改名的那台看過舊名稱);兩份都不是對方的舊版本(兩台同時改名)才比 _nt。
+       以前一律比 _nt:時鐘慢的裝置後來改的名稱、或時鐘快的裝置建立的題庫被改名時,新名稱被退回舊的,而且永遠回不來 */
     let name = bp.name;
-    if (x.name !== y.name) {
+    if (!win && x.name !== y.name) {
       const nx = isNum(x._nt) ? x._nt : 0, ny = isNum(y._nt) ? y._nt : 0;
       if (nx !== ny) name = nx > ny ? x.name : y.name;
     }
@@ -337,7 +343,11 @@
   }
 
   /* ---------- 模擬考紀錄(mock_history) ----------
-     取聯集;同一筆看 [d, size, lRaw, rRaw, lScore, rScore](跟 feat/move 的 mock 一樣);照 d 排序,留最後 30 筆(js/mock.js 原本的規則)。
+     取聯集;同一筆看 [d, size, lRaw, rRaw, lScore, rScore](跟 feat/move 的 mock 一樣);照 d 排序,留最後 300 筆。
+     不照 js/mock.js 的 30 筆裁:d 是那台的時鐘,時鐘錯了(RTC 沒電、手動設錯)的裝置剛考完的那一筆日期最舊,會被裁掉,
+     而且合併結果跟雲端一樣、寫回本機,那次考試就哪裡都沒有了(main 整份上傳會留著)。要讓兩台合併的結果一樣只能用 d 排,
+     所以上限放寬到 300 筆(大約 40 KB),時鐘要錯得比 300 次考試的時間跨度還多才會裁到。mock.js 交卷時本機照舊留 30 筆,
+     下一次合併會從雲端補回來;頁面只顯示最後 8 筆。
      沒有刪除,不用標記。 */
   function mock(a, b) {
     if ((a !== null && a !== undefined && !Array.isArray(a)) || (b !== null && b !== undefined && !Array.isArray(b))) return { ok: false };
@@ -358,7 +368,11 @@
      都回新的物件或陣列,不改輸入。改到內容才蓋戳記:改前的雜湊放進 _p、_t 換成現在;沒改到就回原本那一份(不用寫、不上傳) */
   function newBankId(now) { return 'b' + Math.floor(now).toString(36) + rnd(3); }
   function newBank(id, name, now) { return { id, name, words: [], _r: rnd(6), _t: now, _nt: now }; }
-  function newWord(en, zh, now) { return { en, zh, on: true, _r: rnd(6), _t: now }; }
+  /* 新字只多 _r(不寫 on: true、不寫 _t):批次加字一次幾千個字,每個字多 _t 和 on 會讓題庫變成 main 的 1.7 倍,
+     256 KB 的上限從約 4800 字掉到約 2900 字。on 沒寫就是勾選(每個讀的地方都是 on !== false);_t 只在兩台同時改同一個字時
+     決定誰當主要,沒有 _t 就比內容(兩台算出來一樣)。改過的字(reviseWord)才有 _t、_p。字的 _r 4 碼(題庫 6 碼):
+     只用來分「刪掉又加回一模一樣的字」,36^4 種夠了。now 不用,留著參數給呼叫的人 */
+  function newWord(en, zh, now) { return { en, zh, _r: rnd(4) }; }
   function reviseWord(w, patch, now) {
     const next = Object.assign({}, w, patch);
     if (own(patch, 'alt')) put(next, 'alt', altList(patch.alt).slice().sort());

@@ -305,7 +305,7 @@ function evolve(banks, tombs, now, steps) {
   check('模擬考紀錄:取聯集、同一筆不重複、照時間排,兩邊順序一樣', m1.ok && m1.v.length === 3 && J(m1.v) === J(m2.v) && m1.v[1].d.slice(8, 10) === '02', J(m1.v.map(x => x.d.slice(8, 10))));
   const many = Array.from({ length: 25 }, (_, i) => r(String(10 + i).padStart(2, '0'), i)), many2 = Array.from({ length: 25 }, (_, i) => Object.assign(r(String(10 + i).padStart(2, '0'), i), { d: '2026-11-' + String(1 + i).padStart(2, '0') + 'T01:00:00.000Z' }));
   const m3 = SM.mock(many, many2);
-  check('模擬考紀錄:留最後 30 筆(mock.js 原本的規則)', m3.v.length === 30 && m3.v[29].d.indexOf('2026-11-25') === 0, m3.v.length + ' 筆');
+  check('模擬考紀錄:合併不照 mock.js 的 30 筆裁(兩份 25 筆不同的都留,最後一筆是最新的)', m3.v.length === 50 && m3.v[49].d.indexOf('2026-11-25') === 0, m3.v.length + ' 筆');
   const same = SM.mock(freeze(clone(a)), freeze(clone(a)));
   check('模擬考紀錄:一樣就不變', same.sameAsLocal && same.sameAsCloud && J(same.v) === J(a), J(same));
   check('模擬考紀錄:不是陣列就唯讀', SM.mock({}, []).ok === false && SM.mock([], 'x').ok === false, '');
@@ -317,7 +317,7 @@ function evolve(banks, tombs, now, steps) {
   const id1 = SM.newBankId(now), id2 = SM.newBankId(now);
   check('新題庫 id:時間 + 隨機 3 碼,同一毫秒兩個不會撞', /^b[0-9a-z]+$/.test(id1) && id1 !== id2 && id1.length === ('b' + now.toString(36)).length + 3, id1 + ' / ' + id2);
   const w = SM.newWord('apple', '蘋果', now);
-  check('新字有 _r(6 碼)和 _t', typeof w._r === 'string' && w._r.length === 6 && w._t === now && w.on === true, J(w));
+  check('新字只多 _r(4 碼):不寫 on(沒寫就是勾選)、不寫 _t(題庫才不會變大)', typeof w._r === 'string' && w._r.length === 4 && !('_t' in w) && !('on' in w) && J(Object.keys(w)) === J(['en', 'zh', '_r']), J(w));
   const w2 = SM.reviseWord(w, { zh: '蘋果樹' }, now + 1000);
   check('改中文:改前的雜湊放進 _p、_t 換新;沒改就原樣', w2._p.length === 1 && w2._p[0].split('.')[0] === SM.wordHash(w) && w2._t === now + 1000 && SM.reviseWord(w2, { zh: '蘋果樹' }, now + 5) === w2, J(w2));
   const banks = freeze([{ id: 'b1', name: 'x', words: [{ en: 'apple', zh: '蘋果', on: true }] }]);
@@ -330,6 +330,167 @@ function evolve(banks, tombs, now, steps) {
   check('刪題庫:標記記題庫雜湊與它的 _p,之前的字標記留著', db.banks.length === 0 && db.tombs.vgame_banks.b.b1.h0[0] === SM.bankHash(next[0]) && db.tombs.vgame_banks.b.b1.hs.indexOf(SM.bankHash(banks[0])) >= 0 && !!db.tombs.vgame_banks.w.b1.pear, J(db.tombs.vgame_banks.b));
   const unchanged = SM.editBank(next, 'b1', now + 9, b => b);
   check('editBank 沒改到內容:回原本的陣列(不寫、不上傳)', unchanged === next, '');
+})();
+
+/* ---------- 9. 第二輪審查(2026-10-25)找到的會丟資料的情況 ---------- */
+(function nameClock() {
+  /* A 建題庫,B 拿到一樣的一份;B 改名時 B 的時鐘慢(或 A 建立時 A 的時鐘快):B 的 _nt 比 A 小,但 B 的那一份吸收過 A 的(新版本) */
+  const run = (aSkew, bSkew, bLater) => {
+    const id = 'b1';
+    const A = SM.editBank([], id, T0 + aSkew, b => SM.addWords(Object.assign({}, b, { name: '商用單字' }), [{ en: 'invoice', zh: '發票' }], T0 + aSkew));
+    const B = SM.editBank(clone(A), id, T0 + bLater + bSkew, b => Object.assign({}, b, { name: '期中考範圍' }));
+    const m1 = merge(B, A), m2 = merge(A, B);
+    const again = merge(m1.v, B);
+    return [m1.v[0].name, m2.v[0].name, again.v[0].name];
+  };
+  const cases = [['時鐘都準', 0, 0, 2 * DAY], ['B 的時鐘慢 3 天', 0, -3 * DAY, 2 * DAY], ['A 建立時時鐘快 3 天', 3 * DAY, 0, 2 * DAY], ['B 晚 30 秒改名、時鐘慢 1 分鐘', 0, -60e3, 30e3]];
+  const out = cases.map(c => [c[0], run(c[1], c[2], c[3])]);
+  check('題庫名稱:另一份是我的舊版本時用我的名稱(不看 _nt),時鐘慢或快的裝置改的名稱不會被退回', out.every(x => x[1].every(n => n === '期中考範圍')), J(out));
+  /* 兩份都不是對方的舊版本(兩台同時改名):照舊用 _nt 大的,兩邊順序一樣 */
+  const base = SM.editBank([], 'b1', T0, b => Object.assign({}, b, { name: '原名' }));
+  const X = SM.editBank(clone(base), 'b1', T0 + 1000, b => Object.assign({}, b, { name: '甲' }));
+  const Y = SM.editBank(clone(base), 'b1', T0 + 2000, b => Object.assign({}, b, { name: '乙' }));
+  check('兩台同時改名(誰都不是誰的舊版本):_nt 大的那個,兩邊順序一樣', merge(X, Y).v[0].name === '乙' && merge(Y, X).v[0].name === '乙', merge(X, Y).v[0].name);
+})();
+
+(function mockClock() {
+  const rec = (d, s) => ({ d, size: 'full', lRaw: s, lTotal: 100, rRaw: s, rTotal: 100, lScore: s * 4, rScore: s * 4 });
+  const cloud = Array.from({ length: 30 }, (_, i) => rec(new Date(Date.parse('2026-09-01T01:00:00Z') + i * DAY).toISOString(), 40 + i));
+  const fresh = rec('2026-01-01T00:00:00.000Z', 77);   // 時鐘錯了的手機剛考完的那一筆
+  const local = cloud.slice(1).concat([fresh]);          // mock.js:push 後 slice(-30)
+  const m = SM.mock(freeze(clone(local)), freeze(clone(cloud)));
+  const has = arr => arr.some(r => r.d === fresh.d && r.lRaw === 77);
+  const m2 = SM.mock(freeze(clone(cloud)), freeze(clone(local)));
+  const again = SM.mock(freeze(clone(m.v)), freeze(clone(cloud)));
+  check('模擬考紀錄:時鐘錯的裝置剛考完的那一筆(日期比雲端 30 筆都舊)合併後還在,也要上傳(跟雲端不同)',
+    m.ok && has(m.v) && !m.sameAsCloud && has(m2.v) && J(m.v) === J(m2.v) && again.sameAsLocal, m.v.length + ' 筆 / 有那一筆 ' + has(m.v));
+  const big = Array.from({ length: 400 }, (_, i) => rec(new Date(Date.parse('2026-01-01T00:00:00Z') + i * 36e5).toISOString(), i % 100));
+  const mb = SM.mock(big.slice(0, 250), big.slice(150));
+  check('模擬考紀錄:合併最多留 300 筆(依時間留最新的;單鍵大小不會一直長)', mb.v.length === 300 && mb.v[299].d === big[399].d && mb.v[0].d === big[100].d, mb.v.length + ' 筆');
+})();
+
+(function altKeep() {
+  /* 審查 r5:同一個字已經有 3 個 alt(之前幾輪兩台同時改中文留下的),再一輪同時改:兩台寫的中文都要留著 */
+  const edit = (banks, zh, t) => SM.editBank(banks, 'b1', t, b => SM.setWord(b, 'issue', { zh }, t));
+  let cloud = SM.editBank([], 'b1', T0, b => SM.addWords(Object.assign({}, b, { name: 'x' }), [{ en: 'issue', zh: '問題' }], T0));
+  const rounds = [['一期', '核發'], ['發行', '課題'], ['核准', '議題']];
+  let t = T0;
+  rounds.forEach(([pc, ph]) => { t += 10000; const a = edit(clone(cloud), pc, t), b = edit(clone(cloud), ph, t + 1000); cloud = merge(a, b).v; });
+  const seen = w => [w.zh].concat(w.alt || []);
+  const before = findWord(cloud, 'b1', 'issue');
+  const lost = [];
+  if (!before.alt || before.alt.length < 3) lost.push('起始狀態不到 3 個 alt:' + J(before));
+  for (const [mine, theirs] of [['議程', '爭議點'], ['安排', '爭議點']]) {
+    const a = edit(clone(cloud), mine, t + 50000), b = edit(clone(cloud), theirs, t + 60000);
+    const m = merge(a, b), m2 = merge(b, a);
+    const w = findWord(m.v, 'b1', 'issue');
+    const want = (before.alt || []).concat([mine, theirs]);
+    want.forEach(z => { if (seen(w).indexOf(z) < 0) lost.push(mine + '那一輪少了 ' + z); });
+    if (SM.stateKey(m.v) !== SM.stateKey(m2.v)) lost.push('順序不同');
+  }
+  check('alt 不設上限:同一個字第 4 個以後的不同中文也留著(不會丟學生打的中文)', !lost.length, '不見的:' + J(lost));
+})();
+
+(function altAlternate() {
+  /* 審查 repro_alt2:兩台輪流改同一個字的中文,每次照 cloud.js 的流程上傳(本機改 → 跟雲端合併 → 寫回本機 → 上傳),中間沒重開頁面。
+     學生打過、而且沒有在自己畫面上被換掉的中文(那台改的時候畫面上的主要中文才算「換掉」),最後雲端和兩台都要看得到 */
+  const runSeq = (labels, order) => {
+    let cloud = SM.editBank([], 'b1', T0, b => SM.addWords(Object.assign({}, b, { name: 'x' }), [{ en: 'run', zh: '跑' }], T0));
+    const local = { A: clone(cloud), B: clone(cloud) };
+    const replaced = new Set(['跑']);
+    let t = T0;
+    labels.forEach((zh, i) => {
+      const d = order[i];
+      t += 60000;
+      replaced.add(findWord(local[d], 'b1', 'run').zh);
+      local[d] = SM.editBank(local[d], 'b1', t, b => SM.setWord(b, 'run', { zh }, t));
+      const m = SM.banks(local[d], cloud, { now: t, tombs: null });
+      local[d] = m.v; cloud = m.v;
+    });
+    ['A', 'B'].forEach(d => { local[d] = SM.banks(local[d], cloud, { now: t + 1, tombs: null }).v; });
+    const lost = [];
+    labels.filter(z => !replaced.has(z)).forEach(z => {
+      [['雲端', cloud], ['A', local.A], ['B', local.B]].forEach(([where, banks]) => {
+        const w = findWord(banks, 'b1', 'run');
+        if ([w.zh].concat(w.alt || []).indexOf(z) < 0) lost.push(where + ':' + z);
+      });
+    });
+    return lost;
+  };
+  const fixed = runSeq(['A1', 'B2', 'A3', 'B4', 'A5', 'B6', 'A7', 'B8'], 'ABABABAB');
+  const real = runSeq(['奔跑', '跑步', '經營', '執行', '運轉', '競選'], 'ABABAB');
+  let randLost = 0, example = '';
+  const pool = ['奔跑', '跑步', '經營', '執行', '運轉', '競選', '管理', '流動', '進行', '參選', '運行', '延續'];
+  for (let n = 0; n < 300; n++) {
+    const k = 3 + Math.floor(rand() * 6);
+    const labels = [], order = [];
+    for (let i = 0; i < k; i++) { labels.push(pool[(n + i * 5) % pool.length] + i); order.push(chance(0.5) ? 'A' : 'B'); }
+    const l = runSeq(labels, order.join(''));
+    if (l.length) { randLost++; if (!example) example = J({ labels, order: order.join(''), l }); }
+  }
+  check('兩台輪流改同一個字的中文:沒被自己換掉的中文(含另一台最新寫的)雲端和兩台都還在;隨機 300 組',
+    !fixed.length && !real.length && !randLost, J({ fixed, real, randLost, example }));
+})();
+
+(function markNeeded() {
+  /* _m(合併記號):兩台各自建了同一個文章題庫,字是同一份(只差題庫的 _r),合併結果跟其中一份(X,_t 比較新)一模一樣的話,
+     X 的那台之後刪掉題庫時(標記記的是 X 的雜湊),連另一台建的也一起刪掉。有 _m 就跟兩份都不同,不會被刪 */
+  const words = [{ en: 'refund', zh: '退款', on: true }];
+  const X = [{ id: 'art_1', name: '文章：一', words, _r: 'xxxxxx', _t: T0 + 10000, _nt: T0 + 10000 }];
+  const Y = [{ id: 'art_1', name: '文章：一', words, _r: 'yyyyyy', _t: T0, _nt: T0 }];
+  const M = merge(Y, X).v;
+  const del = SM.deleteBank(X, null, 'art_1', T0 + 20000);
+  const after = SM.banks(M, del.banks, { now: T0 + 30000, tombs: del.tombs });
+  check('合併記號 _m:合併結果跟其中一份一模一樣時,刪掉那一份的標記不會刪到合併結果', SM.bankHash(M[0]) !== SM.bankHash(X[0]) && SM.bankHash(M[0]) !== SM.bankHash(Y[0])
+    && bankIds(after.v).has('art_1'), J({ hM: SM.bankHash(M[0]), hX: SM.bankHash(X[0]), hY: SM.bankHash(Y[0]), after: [...bankIds(after.v)] }));
+})();
+
+(function stripKeepsP() {
+  /* stripWords 的 _p:X 刪字;Y 還是舊題庫 P,只收到標記,拿掉那個字之後又刪掉整個題庫(標記記的是拿掉字之後的樣子和它的 _p);
+     Z 很久沒開,手上還是 P,字的標記過期了(400 天)、題庫的標記還在:P 不能回來 */
+  const id = 'bdemo';
+  let P = SM.editBank([], id, T0, b => Object.assign({}, b, { name: 'demo' }));
+  P = SM.editBank(P, id, T0 + 1000, b => SM.addWords(b, [{ en: 'apple', zh: '蘋果' }, { en: 'banana', zh: '香蕉' }], T0 + 1000));
+  const t1 = T0 + DAY;
+  const dX = SM.deleteWord(P, null, id, 'apple', t1);
+  const tY = SM.tombs(null, dX.tombs, t1 + DAY).v;
+  const SY = SM.banks(P, P, { now: t1 + DAY, tombs: tY }).v;
+  const dY = SM.deleteBank(SY, tY, id, t1 + 100 * DAY);
+  const t4 = t1 + 401 * DAY;
+  const tZ = SM.tombs(null, dY.tombs, t4).v;
+  const bZ = SM.banks(P, dY.banks, { now: t4, tombs: tZ });
+  check('拿掉被刪的字時題庫記下拿掉前那一版(_p):字的標記過期後,別台舊的那一版也對得上題庫的標記,刪掉的題庫不會回來',
+    !tZ.vgame_banks.w[id] && !!tZ.vgame_banks.b[id] && !bankIds(bZ.v).has(id), J([...bankIds(bZ.v)]));
+})();
+
+(function sizeBudget() {
+  /* 雲端單鍵 256 KB(progress_guard 量 octet_length(v::text),jsonb 的輸出:鍵去重、依長度再依位元組排序、冒號和逗號後面加空白)。
+     新版的戳記不能讓題庫比 main 的格式大太多:批次加字剛匯入的大小最多是 main 的 1.05 倍,3000 字放得下 */
+  const jtext = v => {
+    if (v === null || v === undefined) return 'null';
+    if (Array.isArray(v)) return '[' + v.map(jtext).join(', ') + ']';
+    if (typeof v === 'object') {
+      const ks = Object.keys(v).filter(k => v[k] !== undefined).sort((a, b) => Buffer.byteLength(a) - Buffer.byteLength(b) || Buffer.compare(Buffer.from(a), Buffer.from(b)));
+      return '{' + ks.map(k => JSON.stringify(k) + ': ' + jtext(v[k])).join(', ') + '}';
+    }
+    return JSON.stringify(v);
+  };
+  const size = v => Buffer.byteLength(jtext(v), 'utf8');
+  const CJK = '營收交易政策規定事先協商發票退款截止日行程表會議預算合約客戶供應商員工訓練部門經理報告';
+  const list = n => Array.from({ length: n }, (_, i) => {
+    let en = '', zh = '';
+    const el = 5 + (i * 7) % 8, zl = 2 + (i * 5) % 4;
+    for (let j = 0; j < el; j++) en += String.fromCharCode(97 + ((i * 31 + j * 17 + Math.floor(i / 26)) % 26));
+    for (let j = 0; j < zl; j++) zh += CJK.charAt((i * 13 + j * 7) % CJK.length);
+    return { en: en + i.toString(36), zh };
+  });
+  const now = T0;
+  const words = list(3000);
+  const mainFmt = [{ id: 'b' + now.toString(36), name: '多益單字', words: words.map(p => ({ en: p.en, zh: p.zh, on: true })) }];
+  const ours = SM.editBank([], SM.newBankId(now), now, b => SM.addWords(Object.assign({}, b, { name: '多益單字' }), words, now));
+  const a = size(mainFmt), b = size(ours);
+  check('題庫大小:3000 字批次加字剛匯入,新版格式最多是 main 的 1.05 倍、在 256 KB 以內', b <= a * 1.05 && b <= 256 * 1024,
+    'main ' + (a / 1024).toFixed(1) + ' KB / 新版 ' + (b / 1024).toFixed(1) + ' KB / 倍數 ' + (b / a).toFixed(3));
 })();
 
 console.log(pass + ' / ' + (pass + fail) + ' 通過');

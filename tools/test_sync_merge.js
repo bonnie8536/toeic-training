@@ -899,5 +899,158 @@ function syncTo(state, dev, clean) {
   }
 })();
 
+/* ---------- 12. 第三輪審查第二批(2026-10-25 r3b)找到的 ---------- */
+(function oldRenameCleanLocal() {
+  /* r3b #1:A(新版)建題庫、上傳;C(部署前開著的舊版頁面)編輯頁開著;A 在同一個題庫改另一個字的中文(或只加一個字)並上傳;
+     C 就地改名、整份上傳。A 本機沒改過(帳本空)就對齊或灌資料:以前主要那份用整個題庫的 _t 選(A 改字時蓋了新的 _t),
+     _nt 又一樣,名稱跟著 A 退回;C 重開也拿到舊名稱,C 的改名哪裡都沒有了(main 最後上傳的那份會留著) */
+  const run = (how, aSkew) => {
+    const t0 = T0 + aSkew;
+    const s = { cloud: SM.editBank([], 'b', t0, b => SM.addWords(renameTo('多益單字')(b), [{ en: 'apple', zh: '蘋果' }, { en: 'invoice', zh: '發票' }], t0)) };
+    s.A = clone(s.cloud);
+    const snap = clone(s.cloud);                                    // C 的舊版編輯頁記住的整份陣列
+    const t1 = T0 + 60e3 + aSkew;
+    if (how === '改字') s.A = SM.editBank(s.A, 'b', t1, b => SM.setWord(b, 'invoice', { zh: '發票單' }, t1));
+    if (how === '加字') s.A = SM.editBank(s.A, 'b', t1, b => SM.addWords(b, [{ en: 'refund', zh: '退款' }], t1));
+    syncTo(s, 'A', false);                                          // A 上傳成功,帳本空
+    snap[0].name = '我的多益'; s.cloud = clone(snap);               // C 就地改名、整份上傳
+    const other = SM.banks(freeze(clone(s.A)), freeze(clone(s.cloud)), { now: T0, tombs: null, localClean: true }).v[0].name;
+    syncTo(s, 'A', true);                                           // A 開單字頁(或隔天重開灌資料),本機沒改過
+    s.C = clone(snap); syncTo(s, 'C', true);                        // C 之後重開(新版)灌資料
+    const b = s.cloud[0], wd = en => b.words.find(w => w.en === en) || {};
+    const kept = how === '改字' ? wd('invoice').zh === '發票單' : how === '加字' ? !!wd('refund').en : true;
+    const stable = SM.banks(freeze(clone(s.cloud)), freeze(clone(s.A)), { now: T0, tombs: null }).sameAsLocal
+      && SM.banks(freeze(clone(s.cloud)), freeze(clone(snap)), { now: T0, tombs: null }).sameAsLocal;
+    return [b.name, s.A[0].name, s.C[0].name, other, kept, stable];
+  };
+  const cases = [['A 改另一個字的中文', '改字', 0], ['A 只加一個字', '加字', 0], ['A 沒動', '沒動', 0], ['A 改字、時鐘慢 1 小時', '改字', -3600e3], ['A 加字、時鐘快 1 小時', '加字', 3600e3]];
+  const out = cases.map(c => [c[0], run(c[1], c[2])]);
+  check('舊版頁面就地改名、新版那台之前在同一個題庫改過別的字並上傳(本機沒改過):舊版的改名留著(每台和雲端),新版改的字也在,再合併不變',
+    out.every(x => x[1].slice(0, 4).every(n => n === '我的多益') && x[1][4] && x[1][5]), J(out));
+})();
+
+(function oldRenameGuards() {
+  /* r3b #5:第三輪(7578bdf)加的兩條舊版頁面改名保護,以前改壞了也沒有測試抓得到 */
+  {
+    /* (a) renamedFrom 的「y 自己的代號在 y 的 _nl 裡不算」:雲端叫甲,新版 N 改成乙並上傳;舊版 O 灌資料後就地改成丙、整份上傳,
+       N 對齊(本機沒改過)拿到丙;O 再灌資料、就地把名稱改回乙(_nr、_nl 是抄來的),整份上傳,N 再對齊。
+       沒有這一條:N 那份(丙)的 _nl 裡有乙那一版的代號,被當成「從乙改過來的」,舊版最後改的乙被退回丙 */
+    const s = { cloud: [SM.newBank('b', '甲', T0 - DAY)] };
+    s.N = clone(s.cloud);
+    s.N = SM.editBank(s.N, 'b', T0 + 60e3, renameTo('乙')); syncTo(s, 'N', false);
+    let O = clone(s.cloud); O[0].name = '丙'; s.cloud = clone(O);
+    syncTo(s, 'N', true);
+    const first = s.cloud[0].name;
+    O = clone(s.cloud); O[0].name = '乙'; s.cloud = clone(O);
+    syncTo(s, 'N', true);
+    check('舊版頁面就地改名、再就地改回以前那一版(乙→丙→乙),新版那台本機沒改過:每次都留舊版最後改的名稱',
+      first === '丙' && s.cloud[0].name === '乙' && s.N[0].name === '乙', J([first, s.cloud[0].name, s.N[0].name]));
+  }
+  {
+    /* (b) 合併時 _nl 記下沒用上的名稱:裝置 0 加字還沒上傳;舊版頁面就地改成乙並上傳;裝置 1(本機沒改過)對齊,用了乙;
+       裝置 0 再對齊。裝置 1 合併時沒記下甲的代號:裝置 0 分不出乙是從甲改過來的,比 _nt 也一樣,用主要那份(裝置 0)的甲,改名被退回 */
+    const run = old => {
+      const s = { cloud: [SM.newBank('b', '甲', T0 - DAY)] };
+      s.d0 = clone(s.cloud); s.d1 = clone(s.cloud);
+      s.d0 = SM.editBank(s.d0, 'b', T0 + 60e3, addInvoice(T0 + 60e3));
+      const O = clone(s.cloud); O[0].name = '乙'; s.cloud = clone(O);
+      syncTo(s, 'd1', true);
+      syncTo(s, 'd0', false);
+      syncTo(s, 'd1', true);
+      return [s.cloud[0].name, s.d0[0].name, s.d1[0].name, s.cloud[0].words.some(w => w.en === 'invoice')];
+    };
+    const r = run();
+    check('舊版頁面就地改名、一台新版(本機沒改過)先對齊接受了,另一台有沒上傳的加字再對齊:改名留著,字也在',
+      r.slice(0, 3).every(n => n === '乙') && r[3], J(r));
+  }
+})();
+
+(function nameRevertSlowClock() {
+  /* r3b #6:先看名稱來源、再看誰是新版本的排序(r3 #1、#2)以前只靠名稱隨機測試的某一組守著,換種子就抓不到。
+     兩台新版,裝置 0 快約 4.5 分鐘、裝置 1 慢約 2.1 小時;裝置 1 把甲改成丙、後來又改回甲,裝置 0 同時在加字。
+     把「誰是新版本」放在名稱來源前面時,三處都變成丙(裝置 1 最後改的甲被退回);時鐘都準時不會發生 */
+  const s = { cloud: [SM.newBank('b', '甲', T0 - DAY)] };
+  s.d0 = clone(s.cloud); s.d1 = clone(s.cloud);
+  const dirty = { d0: false, d1: false };
+  const sync = (d, t) => { const m = SM.banks(freeze(clone(s[d])), freeze(clone(s.cloud)), { now: T0 + t, tombs: null, localClean: !dirty[d] }); s[d] = clone(m.v); s.cloud = clone(m.v); dirty[d] = false; };
+  const edit = (d, t, fn) => { const nb = SM.editBank(s[d], 'b', T0 + t, fn); if (nb !== s[d]) { s[d] = clone(nb); dirty[d] = true; } };
+  const add = (d, en, zh, t) => edit(d, t, b => SM.addWords(b, [{ en, zh }], T0 + t));
+  sync('d1', -7010611); sync('d0', 928547); add('d0', 'deadline', '發票', 1292511); edit('d1', -6330212, renameTo('丙')); add('d0', 'take off', '蘋果', 1515657);
+  sync('d1', -6155834); sync('d0', 1843341); edit('d1', -5932448, renameTo('甲')); sync('d1', -5352533); add('d1', 'deadline', '蘋果', -5197527);
+  add('d1', 'deadline', '櫻桃', -4756438); add('d0', 'put on', '櫻桃', 3579009);
+  for (let k = 0; k < 3; k++) { sync('d0', 3579009); sync('d1', -4241696); }
+  const names = [s.cloud[0].name, s.d0[0].name, s.d1[0].name];
+  const words = s.cloud[0].words.map(w => w.en).sort().join('|');
+  check('兩台新版、改名那台時鐘慢 2 小時:甲→丙→甲,另一台同時加字:最後每台和雲端都是甲,字都在,兩台跟雲端一樣',
+    names.every(n => n === '甲') && words === 'deadline|put on|take off' && SM.stateKey(s.d0) === SM.stateKey(s.cloud) && SM.stateKey(s.d1) === SM.stateKey(s.cloud),
+    J(names) + ' ' + words);
+})();
+
+(function dupTwoCycles() {
+  /* r3b #8:重複英文那一組有兩個互不相通的圈(run:跑/跑步/慢跑、Run:經營/管理/營運,各自繞一圈單向吸收),分在兩份。
+     走不到第一個 top 的要再留一個 top;只留第一個時 run 的三個中文整組不見 */
+  const pE = (h, t) => h + '.' + t.toString(36);
+  const cyc = (en, zs, t0) => {
+    const ws = zs.map((z, i) => ({ en, zh: z, on: true, _r: 'r' + i + en.charAt(0), _t: t0 + i * 1000 }));
+    const hs = ws.map(w => SM.wordHash(w));
+    ws.forEach((w, i) => { w._p = [pE(hs[(i + ws.length - 1) % ws.length], w._t)]; });
+    return ws;
+  };
+  const [a1, a2, a3] = cyc('run', ['跑', '跑步', '慢跑'], 1000), [b1, b2, b3] = cyc('Run', ['經營', '管理', '營運'], 10000);
+  const x = [{ id: 'b1', name: 'x', words: [a1, a2, b1, b2] }], y = [{ id: 'b1', name: 'x', words: [a3, b3] }];
+  const r1 = merge(x, y).v, r2 = merge(y, x).v;
+  const zhOf = (v, en) => v[0].words.filter(w => w.en === en).map(w => [w.zh].concat(w.alt || [])).reduce((p, q) => p.concat(q), []).sort().join();
+  check('重複英文那一組兩個互不相通的圈(run、Run 各繞一圈):兩組中文都在,順序無關、再合併不變',
+    zhOf(r1, 'run') === ['跑', '跑步', '慢跑'].sort().join() && zhOf(r1, 'Run') === ['經營', '管理', '營運'].sort().join() && SM.stateKey(r1) === SM.stateKey(r2) && merge(r1, x).sameAsLocal && merge(r1, y).sameAsLocal,
+    zhOf(r1, 'run') + ' / ' + zhOf(r1, 'Run') + ' / ' + zhOf(r2, 'run') + ' / ' + zhOf(r2, 'Run'));
+})();
+
+(function tombOldReadd() {
+  /* r3b #3:刪除標記的 hs(被刪那一份吸收過的舊版本)以前不分有沒有 _r。舊版頁面存的東西沒有 _r,文章題庫的內容又是固定的
+     (id art_<文章>、名稱、每個字的中文都照文章產生),學生在舊版頁面重新存入,雜湊一定對得上被刪那一份吸收過的舊版本,又被刪掉。
+     現在 hs 只刪有 _r 的(新版做的版本,_r 每一版都不一樣,對得上就一定是那個舊版本);沒有 _r 的只有 h0(刪的就是那個樣子)刪得掉 */
+  const T1 = T0 + DAY;
+  const oldImport = (banks, a) => {                                   // main 的 importVocabToBank:讀本機、就地改、整份寫回
+    const out = clone(banks || []);
+    const bid = 'art_' + a.id;
+    let b = out.find(x => x.id === bid);
+    if (!b) { b = { id: bid, name: '', words: [] }; out.push(b); }
+    b.name = '文章：' + a.titleZh;
+    a.vocab.forEach(([en, zh]) => { const ex = b.words.find(x => key(x.en) === key(en)); if (ex) ex.zh = zh; else b.words.push({ en, zh, on: true }); });
+    return out;
+  };
+  const art = { id: 'x1', titleZh: '機場', vocab: [['gate', '登機門'], ['board', '登機']] };
+  const both = (a, b, tombs) => { const r1 = SM.banks(freeze(clone(a)), freeze(clone(b)), { now: T1, tombs: freeze(clone(tombs)) }).v, r2 = SM.banks(freeze(clone(b)), freeze(clone(a)), { now: T1, tombs: freeze(clone(tombs)) }).v; return SM.stateKey(r1) === SM.stateKey(r2) ? r1 : null; };
+  const brief = v => (v ? J(v.map(b => b.id + '[' + (b.words || []).map(w => w.en + ':' + w.zh).join(',') + ']')) : '兩種順序不一樣');
+  /* 新版 A 存過(有 _r)、舊版 O 也存過(沒有 _r),合併後在 A 刪掉;O 的舊分頁之後重新存入(跟 O 當初那份一模一樣):留著 */
+  const A = SM.editBank([], 'art_x1', T0, b => SM.addWords(Object.assign({}, b, { name: '文章：機場' }), art.vocab.map(([en, zh]) => ({ en, zh })), T0));
+  const O = oldImport([], art);
+  const d2 = SM.deleteBank(merge(A, O).v, null, 'art_x1', T0 + 1000);
+  const r2 = both(oldImport(d2.banks, art), d2.banks, d2.tombs);
+  check('新版和舊版都存過同一篇文章、合併後在新版刪掉,之後在舊版頁面重新存入:題庫留著(兩種順序一樣)',
+    !!r2 && r2.some(b => b.id === 'art_x1' && b.words.length === 2), brief(r2));
+  /* 舊資料的字 gate 登機門,在新版改成大門(有 _r 了)再刪掉;舊版頁面重新存入文章,加回 gate 登機門(跟改之前那一版一模一樣):留著 */
+  let L = SM.editBank(oldImport([], art), 'art_x1', T0, b => SM.setWord(b, 'gate', { zh: '大門' }, T0));
+  const d3 = SM.deleteWord(L, null, 'art_x1', 'gate', T0 + 1000, null);
+  const r3 = both(oldImport(d3.banks, art), d3.banks, d3.tombs);
+  check('舊資料的字在新版改過再刪掉,之後在舊版頁面加回改之前那個樣子:字留著(兩種順序一樣)',
+    !!r3 && !!findWord(r3, 'art_x1', 'gate') && findWord(r3, 'art_x1', 'gate').zh === '登機門', brief(r3));
+  /* 對照:新版做的舊版本(有 _r)被帶回來照樣刪;刪的就是那個樣子(h0)的舊資料照樣刪 */
+  const N1 = SM.editBank([], 'bN', T0, b => SM.addWords(renameTo('甲')(b), [{ en: 'apple', zh: '蘋果' }], T0));
+  const N2 = SM.editBank(N1, 'bN', T0 + 1000, b => SM.addWords(b, [{ en: 'pear', zh: '梨' }], T0 + 1000));
+  const dN = SM.deleteBank(N2, null, 'bN', T0 + 2000);
+  const rN = both(N1, dN.banks, dN.tombs);
+  const W1 = SM.editBank(N1, 'bN', T0 + 1000, b => SM.setWord(b, 'apple', { zh: '蘋果樹' }, T0 + 1000));
+  const W2 = SM.editBank(W1, 'bN', T0 + 1500, b => SM.setWord(b, 'apple', { zh: '大蘋果' }, T0 + 1500));
+  const dW = SM.deleteWord(W2, null, 'bN', 'apple', T0 + 2000, null);
+  const rW = both(W1, dW.banks, dW.tombs);
+  const leg = [{ id: 'bL', name: 'Unit 1', words: [{ en: 'gate', zh: '登機門', on: true }, { en: 'board', zh: '登機', on: true }] }];
+  const dL = SM.deleteWord(leg, null, 'bL', 'gate', T0 + 1000, null), dLB = SM.deleteBank(leg, null, 'bL', T0 + 1000);
+  const rL = both(leg, dL.banks, dL.tombs), rLB = both(leg, dLB.banks, dLB.tombs);
+  check('對照:新版做的舊版本(題庫、改過的字)被帶回來照樣刪掉;刪的就是那個樣子的舊資料字、舊資料題庫照樣刪掉',
+    !!rN && !rN.length && !!rW && !findWord(rW, 'bN', 'apple') && !!rL && !findWord(rL, 'bL', 'gate') && !!findWord(rL, 'bL', 'board') && !!rLB && !rLB.length,
+    brief(rN) + ' / ' + brief(rW) + ' / ' + brief(rL) + ' / ' + brief(rLB));
+})();
+
 console.log(pass + ' / ' + (pass + fail) + ' 通過');
 process.exit(fail ? 1 : 0);

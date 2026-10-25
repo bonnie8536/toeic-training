@@ -5,8 +5,11 @@
    開單字頁(syncKey)、登出、重新登入、App 被殺),最後全部連上、各自重開一次再開一次單字頁。
    有三成的序列一開始雲端就有一個部署前的舊題庫,裡面同一個英文出現兩次(run/跑、Run/經營,舊資料可能有);有它時會把第一個 run 的中文
    在 跑/跑步/慢跑 之間換來換去(含改回原本的)、刪 alt、把 alt 換成主要的。新版改內容會換 _r,這些操作做不出「跟以前某一版一模一樣」的字;
-   所以另外有「這個分支早期的頁面改回以前那一版」:把 run 或 refund 整個改回這台以前看過的某一版(中文、勾選、alt、_r 都一樣,
-   _p 記改前那一版),跟別台的版本互相吸收過,重複英文那一組的 absorbZh、joinWord 的「互相吸收過」才走得到(第三輪審查 r3 #4)。
+   所以另外有「這個分支早期的頁面改回以前那一版」:把 run 或 refund 的中文、勾選、alt 改回這個字以前的某一版(這台看過、雜湊在它的 _p 裡),
+   _r、_m 原樣留著(早期的頁面改內容不換 _r),_p 記改前那一版。那一版的 _r 跟現在一樣時(之後只有合併改過 alt、或也是早期的頁面改的)
+   內容就跟那一版一模一樣,跟別台的版本互相吸收過,重複英文那一組的 absorbZh、joinWord 的「互相吸收過」才走得到(第三輪審查 r3 #4;
+   每組結果印出改回幾次、其中一模一樣幾次)。以前連 _r 一起抄、也會抄到重複英文那一組另一個 run 的版本,做出早期的頁面也做不出的資料
+   (兩個 run 雜湊一樣、改回新版才有的版本),換種子會失敗(第三輪審查第二批 r3b #2)。
    改回的那個中文不重新保護(別台同時從那一版改過時,早期的頁面本來就會被當成舊版本);這個操作守的是別台打的中文、字、最後收斂。
    被刪過的字不改回(改回的可能就是刪掉的那個樣子)。重複英文那一組的細節(繞一圈吸收、兩個輸家的順序、_p 滿了、沒有新的 alt)
    在 tools/test_sync_merge.js 的「重複英文那一組」用手寫的資料守。
@@ -23,7 +26,9 @@
    之後新加的(新的 _r)不算。字比「題庫 id + 英文」在不在;同一個英文兩台同時加的會合成一個(另一個中文放 alt)。
    中文另外比(不用 SYNC_MERGE 的任何函式):每個字的中文和 alt 裡的每一個(題庫|英文|中文)跟字一樣只能多不能少,
    除了被刪掉的、和某一台在自己畫面上換掉的(那台的使用者改中文、批次加字更新中文,本機少了它)。
-   學生又打回以前被換掉的中文(別的地方都沒有它的時候),從那一步重新保護:之前的「換掉」「刪掉」不再豁免它。 */
+   學生又打回以前被換掉的中文(別的地方都沒有它的時候),從那一步重新保護:之前的「換掉」「刪掉」不再豁免它。
+   另外(r3b #7):同一個英文(norm)在一個題庫裡不會有兩個字(重複英文的舊資料除外);重複英文那一組的 run 和 Run(英文完全一樣)
+   出現過就一直在;A、B 最後,只有一台的使用者改過的勾選、題庫名稱,每台和雲端都是那台最後改的樣子(兩台都改過的是衝突,看時鐘,不斷言)。 */
 const H = require('./sync_harness');
 const { J, makeWorld, makeDevice, signIn, newSession, open, logout, loggedIn, banksOf, localOf, cloudOf, storeSet, setCloud,
   newBank, addWords, setWord, rename, deleteWord, deleteBank, oldEdit, oldOpenEditor, mockSubmit, idents, PID } = H;
@@ -49,9 +54,10 @@ function zhItems(banks) {
 }
 const USER_EDIT = /^d\d+ (加字|新增題庫|改中文|勾選|改名|刪字|刪題庫|單字存入題庫) /;
 const RESTORE_EN = ['run', 'refund'];
-/* 字的「內容」(不含 _t、_p):這個分支早期的頁面改回以前那一版時,內容跟那一版一模一樣 */
-const CONTENT = ['zh', 'on', 'alt', '_r', '_m'];
+/* 字的「內容」(不含 _t、_p);早期的頁面改的是畫面上看得到的中文、勾選、alt,_r 和 _m 原樣留著(bf1f594 之前改內容不換 _r) */
+const CONTENT = ['zh', 'on', 'alt', '_r', '_m'], EDITABLE = ['zh', 'on', 'alt'];
 const contentOf = x => J(CONTENT.map(k => (x[k] === undefined ? null : x[k])));
+const editableOf = x => J(EDITABLE.map(k => (x[k] === undefined ? null : x[k])));
 
 function runOne(seed, mode) {
   const w = makeWorld(seed);
@@ -73,7 +79,7 @@ function runOne(seed, mode) {
   const firstZ = new Map(), supZ = new Map(), protZCloud = new Map(), protZDev = new Map();
   const mocks = new Set();
   const seenVer = new Map();   // 裝置 → bLegacy 的 run、refund 在它本機出現過的每一版(內容)
-  let restoredAny = false;
+  let restoredAny = false, restores = 0, restoredSame = 0;
   const log = [];
   const fail = msg => { const e = new Error(msg); e.log = log; throw e; };
   const exempt = id => {
@@ -97,6 +103,32 @@ function runOne(seed, mode) {
     z.forEach(it => { if (!m.has(it)) m.set(it, firstZ.get(it) || 0); });
     return m;
   }
+  /* 重複英文那一組的 run 和 Run(英文完全一樣才算):present() 用 norm(en) 比,兩個是同一個鍵,少了一個抓不到。出現過就要一直在(被刪過就不算) */
+  const LEG_EN = ['run', 'Run'];
+  const legacyEns = banks => { const b = (Array.isArray(banks) ? banks : []).find(x => x && x.id === 'bLegacy');
+    return new Set(b && Array.isArray(b.words) ? b.words.filter(x => x && LEG_EN.indexOf(x.en) >= 0).map(x => x.en) : []); };
+  const legGone = () => delKey.has('bLegacy|run') || delBank.has('bLegacy');
+  const exactCloud = new Set(), exactDev = new Map();
+  /* 同一個英文(norm)在一個題庫裡只會有一個字(重複英文的舊資料 bLegacy|run 除外):多出來的就是合併時多複製了一份 */
+  const dupOf = banks => {
+    for (const b of (Array.isArray(banks) ? banks : [])) {
+      if (!b || !Array.isArray(b.words)) continue;
+      const seen = new Set();
+      for (const x of b.words) {
+        if (!x || typeof x.en !== 'string') continue;
+        const k = b.id + '|' + key(x.en);
+        if (k === 'bLegacy|run') continue;
+        if (seen.has(k)) return k;
+        seen.add(k);
+      }
+    }
+    return null;
+  };
+  /* 勾選和題庫名稱:只看「只有一台的使用者改過」的(兩台都改過就是衝突,誰當主要看時鐘,不能斷言);那台最後一次改的就是最後每台和雲端的樣子。
+     新增題庫時取的名稱不算改名(別台要先拿到這個題庫才改得了名);文章題庫是各台各自建立的,存入時取名算改名 */
+  const wordEd = new Map(), bankEd = new Map();
+  const editWord = (d, bid, en, kind, v) => { const k = bid + '|' + key(en); const e = wordEd.get(k) || wordEd.set(k, { devs: new Set() }).get(k); e.devs.add(d); e.kind = kind; e.v = v; };
+  const editName = (d, bid, name, created) => { const e = bankEd.get(bid) || bankEd.set(bid, { devs: new Set() }).get(bid); if (created) e.created = name; else { e.devs.add(d); e.name = name; } };
 
   function observe() {
     fresh.forEach(d => { if (loggedIn(d)) see(banksOf(d)); });
@@ -112,9 +144,13 @@ function runOne(seed, mode) {
       const had = protDev.get(d) || new Set();
       idents(banksOf(d)).forEach(id => had.add(id));
       protDev.set(d, had);
+      const ex = exactDev.get(d) || new Set();
+      legacyEns(banksOf(d)).forEach(en => ex.add(en));
+      exactDev.set(d, ex);
       protZDev.set(d, guardZ(protZDev.get(d) || new Map(), zhItems(banksOf(d))));
     });
     if (mode !== 'C') idents(cloudOf(w, 'vgame_banks')).forEach(id => protCloud.add(id));
+    if (mode !== 'C') legacyEns(cloudOf(w, 'vgame_banks')).forEach(en => exactCloud.add(en));
     if (mode === 'A') guardZ(protZCloud, zhItems(cloudOf(w, 'vgame_banks')));
     const cm = cloudOf(w, 'mock_history');
     (Array.isArray(cm) ? cm : []).forEach(r => mocks.add(r.d + '|' + r.lRaw));
@@ -126,10 +162,18 @@ function runOne(seed, mode) {
       (protDev.get(d) || new Set()).forEach(id => { if (!exempt(id) && !present(b, id)) fail(where + ':' + d.name + ' 本機少了 ' + id); });
       const z = zhItems(b);
       (protZDev.get(d) || new Map()).forEach((f, it) => { if (!exemptZ(it, f) && !z.has(it)) fail(where + ':' + d.name + ' 本機中文不見了 ' + it); });
+      const dup = dupOf(b);
+      if (dup) fail(where + ':' + d.name + ' 本機同一個字有兩份 ' + dup);
+      const le = legacyEns(b);
+      if (!legGone()) (exactDev.get(d) || new Set()).forEach(en => { if (!le.has(en)) fail(where + ':' + d.name + ' 本機重複英文那一組少了 bLegacy|' + en); });
     });
+    const dupC = dupOf(cloudOf(w, 'vgame_banks'));
+    if (dupC) fail(where + ':雲端同一個字有兩份 ' + dupC);
     if (mode === 'A') {
       const c = cloudOf(w, 'vgame_banks');
       protCloud.forEach(id => { if (!exempt(id) && !present(c, id)) fail(where + ':雲端少了 ' + id); });
+      const lc = legacyEns(c);
+      if (!legGone()) exactCloud.forEach(en => { if (!lc.has(en)) fail(where + ':雲端重複英文那一組少了 bLegacy|' + en); });
       const zc = zhItems(c);
       protZCloud.forEach((f, it) => { if (!exemptZ(it, f) && !zc.has(it)) fail(where + ':雲端中文不見了 ' + it); });
       const cm = (cloudOf(w, 'mock_history') || []).map(r => r.d + '|' + r.lRaw);
@@ -147,7 +191,7 @@ function runOne(seed, mode) {
     const banks = loggedIn(d) ? banksOf(d) : [];
     const bids = banks.filter(b => b && typeof b.id === 'string').map(b => b.id);
     if (!loggedIn(d)) {
-      if (r < 0.5 && !d.offline) { log.push(d.name + ' 登入'); await signIn(d); protDev.set(d, new Set()); protZDev.set(d, new Map()); return; }
+      if (r < 0.5 && !d.offline) { log.push(d.name + ' 登入'); await signIn(d); protDev.set(d, new Set()); protZDev.set(d, new Map()); exactDev.set(d, new Set()); return; }
       if (r < 0.7) { d.offline = !d.offline; log.push(d.name + (d.offline ? ' 斷線' : ' 連上')); return; }
       return;
     }
@@ -168,9 +212,13 @@ function runOne(seed, mode) {
       if (r < 0.88) { d.offline = !d.offline; log.push(d.name + (d.offline ? ' 斷線' : ' 連上')); if (!d.offline) await pg.fire('win:online'); return; }
       await newSession(d); log.push(d.name + ' 舊版重開'); return;
     }
-    /* 這個分支早期的頁面(改內容不換 _r):把 run 或 refund 改回這台以前看過的某一版,內容一模一樣,_p 記改前那一版 */
+    /* 這個分支早期的頁面(改內容不換 _r):把 run 或 refund 的中文、勾選、alt 改回這個字以前的某一版(這台看過、雜湊在它的 _p 裡),
+       _r、_m 原樣留著,_p 記改前那一版。那一版的 _r 跟現在一樣(之後只有合併改過 alt,或也是早期的頁面改的)時,內容就跟那一版一模一樣。
+       以前連 _r 一起抄、也會抄到重複英文那一組另一個 run 的版本:兩個 run 雜湊一樣、或改回新版才有的版本,早期的頁面做不出這種資料
+       (第三輪審查第二批 r3b #2 找到的 6 組種子都是這樣) */
     const restorable = en => { const cur = (banks.find(b => b.id === 'bLegacy') || {}).words || []; const c = cur.find(x => x && x.en === en);
-      return c ? ((seenVer.get(d) || new Map()).get(en) || []).filter(v => contentOf(v) !== contentOf(c)) : []; };
+      const past = c && Array.isArray(c._p) ? c._p.map(e => String(e).split('.')[0]) : [];
+      return c ? ((seenVer.get(d) || new Map()).get(en) || []).filter(v => editableOf(v) !== editableOf(c) && past.indexOf(w.SM.wordHash(v)) >= 0) : []; };
     /* 這個字被刪過就不改回:改回的那一版可能就是刪掉的那個樣子(刪除標記記的是它的雜湊),早期的頁面本來就會被刪掉(第三輪起新版換 _r 修好) */
     const canRestore = bids.indexOf('bLegacy') >= 0 && !delBank.has('bLegacy') ? RESTORE_EN.filter(en => !delKey.has('bLegacy|' + en) && restorable(en).length) : [];
     if (canRestore.length && chance(0.3)) {
@@ -181,14 +229,15 @@ function runOne(seed, mode) {
         const ws = (b.words || []).slice(), c = ws[i];
         if (!c || c.en !== en) return b;
         const nx = Object.assign({}, c);
-        CONTENT.forEach(k => { if (v[k] === undefined) delete nx[k]; else nx[k] = v[k]; });
+        EDITABLE.forEach(k => { if (v[k] === undefined) delete nx[k]; else nx[k] = v[k]; });
+        if (SM.wordHash(nx) === SM.wordHash(v)) restoredSame++;
         nx._t = t;
         const p = [SM.wordHash(c) + '.' + t.toString(36)].concat(Array.isArray(c._p) ? c._p : []);
         nx._p = p.filter((e, j) => p.findIndex(o => o.split('.')[0] === e.split('.')[0]) === j && e.split('.')[0] !== SM.wordHash(nx)).slice(0, 4);
         ws[i] = nx;
         return Object.assign({}, b, { words: ws });
       });
-      restoredAny = true;
+      restoredAny = true; restores++; editWord(d, 'bLegacy', en, 'zh');
       log.push(d.name + ' 改中文 bLegacy ' + en + ' 改回以前那一版(早期的頁面) ' + v.zh + (v.on === false ? ' 取消勾選' : '') + ' alt ' + J(v.alt || []));
       return;
     }
@@ -199,32 +248,36 @@ function runOne(seed, mode) {
       const lw = banks.find(b => b.id === 'bLegacy').words || [];
       const run = lw.find(x => x && key(x.en) === 'run');
       if (run && Array.isArray(run.alt) && run.alt.length && chance(0.5)) {
+        editWord(d, 'bLegacy', 'run', 'zh');
         if (chance(0.5)) { setWord(d, 'bLegacy', 'run', { alt: [] }); log.push(d.name + ' 改中文 bLegacy run 刪 alt'); return; }
         const [top, ...rest] = run.alt;
         setWord(d, 'bLegacy', 'run', { zh: top, alt: rest.concat([run.zh]) }); log.push(d.name + ' 改中文 bLegacy run 換成 alt ' + top); return;
       }
       const zh = pick(LEGACY_ZH);
+      editWord(d, 'bLegacy', 'run', 'zh');
       setWord(d, 'bLegacy', 'run', { zh }); log.push(d.name + ' 改中文 bLegacy run ' + zh);
       return;
     }
     if (r < 0.22) {
-      const id = bids.length && chance(0.8) ? pick(bids) : newBank(d, '題庫' + Math.floor(rnd() * 99));
+      let id = bids.length && chance(0.8) ? pick(bids) : null;
+      if (id === null) { const nm = '題庫' + Math.floor(rnd() * 99); id = newBank(d, nm); editName(d, id, nm, true); }
       const list = [{ en: pick(EN), zh: pick(ZH) }].concat(chance(0.3) ? [{ en: pick(EN), zh: pick(ZH) }] : []);
+      list.forEach(x => editWord(d, id, x.en, 'add'));
       addWords(d, id, list); log.push(d.name + ' 加字 ' + id + ' ' + J(list.map(x => x.en)));
       return;
     }
-    if (r < 0.27) { const id = newBank(d, '新題庫'); log.push(d.name + ' 新增題庫 ' + id); return; }
+    if (r < 0.27) { const id = newBank(d, '新題庫'); editName(d, id, '新題庫', true); log.push(d.name + ' 新增題庫 ' + id); return; }
     if (r < 0.35 && bids.length) {
       const pid = pick(bids), b = banks.find(x => x.id === pid); const wd = (b.words || [])[Math.floor(rnd() * (b.words || []).length)];
-      if (wd) { setWord(d, b.id, wd.en, { zh: pick(ZH) }); log.push(d.name + ' 改中文 ' + b.id + ' ' + wd.en); }
+      if (wd) { editWord(d, b.id, wd.en, 'zh'); setWord(d, b.id, wd.en, { zh: pick(ZH) }); log.push(d.name + ' 改中文 ' + b.id + ' ' + wd.en); }
       return;
     }
     if (r < 0.39 && bids.length) {
       const pid = pick(bids), b = banks.find(x => x.id === pid); const wd = (b.words || [])[Math.floor(rnd() * (b.words || []).length)];
-      if (wd) { setWord(d, b.id, wd.en, { on: wd.on === false }); log.push(d.name + ' 勾選 ' + b.id + ' ' + wd.en); }
+      if (wd) { editWord(d, b.id, wd.en, 'on', wd.on === false); setWord(d, b.id, wd.en, { on: wd.on === false }); log.push(d.name + ' 勾選 ' + b.id + ' ' + wd.en); }
       return;
     }
-    if (r < 0.42 && bids.length) { const id = pick(bids); rename(d, id, '改名' + Math.floor(rnd() * 99)); log.push(d.name + ' 改名 ' + id); return; }
+    if (r < 0.42 && bids.length) { const id = pick(bids), nm = '改名' + Math.floor(rnd() * 99); editName(d, id, nm); rename(d, id, nm); log.push(d.name + ' 改名 ' + id); return; }
     if (r < 0.49 && bids.length) {
       const pid = pick(bids), b = banks.find(x => x.id === pid); const wd = (b.words || [])[Math.floor(rnd() * (b.words || []).length)];
       if (wd) { markDelete(d, b.id, wd.en); deleteWord(d, b.id, wd.en); log.push(d.name + ' 刪字 ' + b.id + ' ' + wd.en); }
@@ -233,8 +286,9 @@ function runOne(seed, mode) {
     if (r < 0.52 && bids.length) { const id = pick(bids); markDelete(d, id, null); deleteBank(d, id); log.push(d.name + ' 刪題庫 ' + id); return; }
     if (r < 0.56) {
       const aid = pick(Object.keys(ARTICLES));
+      ARTICLES[aid].forEach(([en]) => editWord(d, aid, en, 'add'));
       addWords(d, aid, ARTICLES[aid].map(([en, zh]) => ({ en, zh })));
-      if (!banksOf(d).find(b => b.id === aid).name) rename(d, aid, '文章：' + aid);
+      if (!banksOf(d).find(b => b.id === aid).name) { editName(d, aid, '文章：' + aid); rename(d, aid, '文章：' + aid); }
       log.push(d.name + ' 單字存入題庫 ' + aid); return;
     }
     if (r < 0.58 && mocks.size < 20) { mockSubmit(d, Math.floor(rnd() * 10)); log.push(d.name + ' 模擬考交卷'); return; }
@@ -253,7 +307,7 @@ function runOne(seed, mode) {
       if (done) {
         const c = cloudOf(w, 'vgame_banks');
         mine.forEach(id => { if (!exempt(id) && !present(c, id)) fail('登出:' + d.name + ' 沒問就登出,雲端少了 ' + id); });
-        protDev.delete(d); protZDev.delete(d);
+        protDev.delete(d); protZDev.delete(d); exactDev.delete(d);
       }
       return;
     }
@@ -261,7 +315,7 @@ function runOne(seed, mode) {
   }
 
   return (async () => {
-    for (const d of devs) { await signIn(d); protDev.set(d, new Set()); }
+    for (const d of devs) { await signIn(d); protDev.set(d, new Set()); exactDev.set(d, new Set()); }
     observe();
     const steps = 10 + Math.floor(rnd() * 7);
     for (let s = 0; s < steps; s++) {
@@ -317,7 +371,30 @@ function runOne(seed, mode) {
     });
     const cm = (cloudOf(w, 'mock_history') || []).map(r => r.d + '|' + r.lRaw);
     if (mode !== 'C') mocks.forEach(m => { if (cm.indexOf(m) < 0) fail('最後:雲端模擬考少了 ' + m); });
-    return { steps, words: keysOf(c).size, deletes: delKey.size + delBank.size, live: live.length };
+    /* 勾選、名稱、重複英文的 run/Run(C 不看:舊版頁面整份上傳會把雲端蓋成舊的,改的那台登出了就救不回,已知限制 2、6) */
+    if (mode !== 'C') {
+      const lc = legacyEns(c);
+      if (!legGone()) exactCloud.forEach(en => { if (!lc.has(en)) fail('最後:雲端重複英文那一組少了 bLegacy|' + en); });
+      const targets = [['雲端', c]].concat(live.map(d => [d.name, banksOf(d)]));
+      wordEd.forEach((e, k) => {
+        const bid = k.split('|')[0], en = k.slice(bid.length + 1);
+        if (e.devs.size !== 1 || e.kind !== 'on' || k === 'bLegacy|run' || delKey.has(k) || delBank.has(bid)) return;
+        targets.forEach(([who, banks]) => {
+          const b = (Array.isArray(banks) ? banks : []).find(x => x && x.id === bid), x = b && (b.words || []).find(y => y && key(y.en) === en);
+          if (x && (x.on !== false) !== e.v) fail('最後:' + who + ' ' + k + (e.v ? ' 沒勾選' : ' 還是勾選') + ',只有 ' + [...e.devs][0].name + ' 改過勾選');
+        });
+      });
+      bankEd.forEach((e, bid) => {
+        if (delBank.has(bid) || e.devs.size > 1) return;
+        const want = e.devs.size ? e.name : e.created;
+        if (want === undefined) return;
+        targets.forEach(([who, banks]) => {
+          const b = (Array.isArray(banks) ? banks : []).find(x => x && x.id === bid);
+          if (b && b.name !== want) fail('最後:' + who + ' 題庫 ' + bid + ' 叫「' + b.name + '」,只有一台改過名,要「' + want + '」');
+        });
+      });
+    }
+    return { steps, words: keysOf(c).size, deletes: delKey.size + delBank.size, live: live.length, restores, restoredSame };
   })().catch(e => { e.log = log; throw e; });
 }
 
@@ -330,15 +407,15 @@ function runOne(seed, mode) {
   let pass = 0, fail = 0;
   const report = (name, ok, detail) => { if (ok) pass++; else fail++; console.log((ok ? 'PASS ' : 'FAIL ') + name + '  →  ' + detail); };
   for (const [mode, count, label] of [['A', N, 'A 依序(新版頁面)'], ['B', NB, 'B 兩台同時上傳(搶時間)'], ['C', NC, 'C 混一台舊版頁面']]) {
-    let ok = 0, words = 0, dels = 0, firstErr = null;
+    let ok = 0, words = 0, dels = 0, rs = 0, rsame = 0, firstErr = null;
     const t0 = Date.now();
     for (let i = 0; i < count; i++) {
       const seed = (SEED + i * 7919 + mode.charCodeAt(0) * 104729) >>> 0;
-      try { const r = await runOne(seed, mode); ok++; words += r.words; dels += r.deletes; }
+      try { const r = await runOne(seed, mode); ok++; words += r.words; dels += r.deletes; rs += r.restores; rsame += r.restoredSame; }
       catch (e) { if (!firstErr) firstErr = 'seed ' + seed + ':' + (e.log ? e.message : e.stack) + '\n    ' + (e.log || []).slice(-14).join('\n    '); }
     }
     report(label + ':' + count + ' 組隨機操作序列', ok === count,
-      ok + ' / ' + count + ' 組通過,平均每組最後 ' + (words / Math.max(1, ok)).toFixed(1) + ' 個字、刪除 ' + (dels / Math.max(1, ok)).toFixed(1) + ' 次,' + Math.round((Date.now() - t0) / 1000) + ' 秒' + (firstErr ? '\n  第一個失敗 ' + firstErr : ''));
+      ok + ' / ' + count + ' 組通過,平均每組最後 ' + (words / Math.max(1, ok)).toFixed(1) + ' 個字、刪除 ' + (dels / Math.max(1, ok)).toFixed(1) + ' 次,早期頁面改回 ' + rs + ' 次(跟以前那一版一模一樣 ' + rsame + ' 次),' + Math.round((Date.now() - t0) / 1000) + ' 秒' + (firstErr ? '\n  第一個失敗 ' + firstErr : ''));
   }
   console.log(pass + ' / ' + (pass + fail) + ' 通過');
   process.exit(fail ? 1 : 0);

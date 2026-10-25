@@ -475,6 +475,79 @@ const scenarios = {
     const ok = J(atLogout) === J(['read', 'write@' + markAt]) && led.indexOf('pet') < 0 && !after.length && dev.confirms.length === 1;
     return { ok, detail: '登出時 pet 的請求 ' + J(atLogout) + ' / 帳本 ' + J(led) + ' / 之後 ' + J(after) + ' / 問了 ' + dev.confirms.length + ' 次' };
   },
+  '29. (r3b #1)新版那台在同一個題庫改了別的字(或加字)並上傳、之後舊版頁面就地改名整份上傳:新版開單字頁、隔天重開都留舊版的改名,舊版那台重開也是;新版改的字也在': async () => {
+    const out = [];
+    for (const how of ['改字', '加字']) for (const when of ['syncKey', 'hydrate']) {
+      const w = makeWorld(7);
+      const A = makeDevice(w, 'A'), C = makeDevice(w, 'C', { old: true });
+      await signIn(A);
+      const id = newBank(A, '多益單字');
+      addWords(A, id, [{ en: 'apple', zh: '蘋果' }, { en: 'invoice', zh: '發票' }]);
+      await A.pg.runTimers();
+      await signIn(C); oldOpenEditor(C);                            // 部署前開著的舊版頁面,編輯頁開著
+      w.clock.t += 60e3;
+      if (how === '改字') setWord(A, id, 'invoice', { zh: '發票單' }); else addWords(A, id, [{ en: 'refund', zh: '退款' }]);
+      await A.pg.runTimers();
+      const ledgerEmpty = !Object.keys(ledgerOf(A)).length;
+      w.clock.t += 60e3;
+      oldEdit(C, arr => { arr.find(b => b.id === id).name = '我的多益'; });
+      await C.pg.runTimers();
+      w.clock.t += 3600e3;
+      if (when === 'syncKey') { await A.pg.ctx.CLOUD.syncKey('vgame_banks'); await A.pg.runTimers(); } else await newSession(A);
+      await newSession(C);                                          // 舊版那台重開(還是舊版)
+      C.old = false; await newSession(C);                           // 之後重新整理成新版
+      const name = banks => ((Array.isArray(banks) ? banks : []).find(b => b.id === id) || {}).name;
+      const word = banks => { const b = (banks || []).find(x => x.id === id); return b ? b.words.find(x => x.en === (how === '改字' ? 'invoice' : 'refund')) : null; };
+      const kept = banks => { const x = word(banks); return !!x && (how !== '改字' || x.zh === '發票單'); };
+      out.push({ ok: ledgerEmpty && [cloudOf(w, 'vgame_banks'), banksOf(A), banksOf(C)].every(b => name(b) === '我的多益' && kept(b)),
+        d: how + when + ':雲端 ' + name(cloudOf(w, 'vgame_banks')) + ' A ' + name(banksOf(A)) + ' C ' + name(banksOf(C)) + ' 字 ' + J(word(cloudOf(w, 'vgame_banks'))) + ' A 帳本空 ' + ledgerEmpty });
+    }
+    return { ok: out.every(x => x.ok), detail: out.filter(x => !x.ok).map(x => x.d).join(' / ') || out.length + ' 種都留著' };
+  },
+  '30. (r3b #3)在新版刪掉的文章題庫、改過再刪的字,之後在舊版頁面重新「單字存入題庫」(main 的寫法,內容跟以前一模一樣):留著,不會被刪除標記再刪一次': async () => {
+    const VOCAB = [['gate', '登機門'], ['board', '登機']];
+    const oldImport = arr => {                                     // main 的 importVocabToBank:讀本機、就地改、整份寫回
+      let b = arr.find(x => x.id === 'art_x1');
+      if (!b) { b = { id: 'art_x1', name: '', words: [] }; arr.push(b); }
+      b.name = '文章：機場';
+      VOCAB.forEach(([en, zh]) => { const ex = b.words.find(x => x.en === en); if (ex) ex.zh = zh; else b.words.push({ en, zh, on: true }); });
+    };
+    const art = banks => (Array.isArray(banks) ? banks : []).find(b => b.id === 'art_x1');
+    const out = [];
+    {
+      /* 新版 A 和舊版 O(離線時)各存過一次,O 連上後整份上傳;A 合併後刪掉題庫;O 之後重開、再存一次 */
+      const w = makeWorld(31);
+      const A = makeDevice(w, 'A'), O = makeDevice(w, 'O', { old: true });
+      await signIn(A); await signIn(O);
+      O.offline = true; oldOpenEditor(O); oldEdit(O, oldImport); await O.pg.runTimers();
+      addWords(A, 'art_x1', VOCAB.map(([en, zh]) => ({ en, zh }))); rename(A, 'art_x1', '文章：機場'); await A.pg.runTimers();
+      O.offline = false; await O.pg.fire('win:online');
+      await A.pg.ctx.CLOUD.syncKey('vgame_banks'); await A.pg.runTimers();
+      const mergedBoth = !!art(banksOf(A));
+      deleteBank(A, 'art_x1'); await A.pg.runTimers();
+      const gone = !art(cloudOf(w, 'vgame_banks'));
+      await newSession(O); oldOpenEditor(O); oldEdit(O, oldImport); await O.pg.runTimers();
+      await A.pg.ctx.CLOUD.syncKey('vgame_banks'); await A.pg.runTimers();
+      const ok = mergedBoth && gone && !!art(cloudOf(w, 'vgame_banks')) && !!art(banksOf(A)) && art(banksOf(A)).words.length === 2;
+      out.push({ ok, d: '文章題庫:合併過 ' + mergedBoth + ' 刪掉後雲端沒有 ' + gone + ' 重新存入後 雲端 ' + J(art(cloudOf(w, 'vgame_banks')) || null).slice(0, 120) + ' A ' + !!art(banksOf(A)) });
+    }
+    {
+      /* 部署前的文章題庫(舊資料),在新版把 gate 改成大門再刪掉;舊版頁面重新存入文章,加回 gate 登機門 */
+      const w = makeWorld(37);
+      setCloud(w, 'vgame_banks', [{ id: 'art_x1', name: '文章：機場', words: VOCAB.map(([en, zh]) => ({ en, zh, on: true })) }]);
+      const A = makeDevice(w, 'A'), O = makeDevice(w, 'O', { old: true });
+      await signIn(A);
+      setWord(A, 'art_x1', 'gate', { zh: '大門' }); await A.pg.runTimers();
+      deleteWord(A, 'art_x1', 'gate'); await A.pg.runTimers();
+      await signIn(O); oldOpenEditor(O); oldEdit(O, oldImport); await O.pg.runTimers();
+      await A.pg.ctx.CLOUD.syncKey('vgame_banks'); await A.pg.runTimers();
+      await newSession(A);
+      const gate = banks => (art(banks) || { words: [] }).words.find(x => x.en === 'gate');
+      const ok = [cloudOf(w, 'vgame_banks'), banksOf(A)].every(b => gate(b) && gate(b).zh === '登機門');
+      out.push({ ok, d: '改過再刪的字:雲端 ' + J(gate(cloudOf(w, 'vgame_banks')) || null) + ' A ' + J(gate(banksOf(A)) || null) });
+    }
+    return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
+  },
 };
 
 (async () => {

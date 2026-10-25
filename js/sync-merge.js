@@ -6,6 +6,7 @@
    - 少了不算刪除。一份有、另一份沒有的題庫和字一律留下;只有刪除標記(sync_del)對得上的那一份才刪。
      舊陣列整份寫回、舊版頁面整份上傳、讀到一半的資料,都只會讓東西「多回來」,不會少。
    - 刪除標記只刪「刪的時候那個樣子」:記刪的那一份的內容雜湊(h0)和它吸收過的舊版本(hs);別台在那之後改過的,雜湊對不上,留著。
+     hs 只刪有 _r 的(新版做的版本);沒有 _r 的(舊版頁面、部署前的資料)只有 h0 刪得掉,舊版頁面重新加回的不會被當成舊版本刪掉。
    - 合併結果跟參數順序無關、重複合併不變、合併結果再跟任一份合併也不變(兩台各自合併會收斂,不會一直互傳)。
    - 時鐘只拿來決定「同一個欄位兩邊都改了誰當主要」,輸的那個中文放進 alt,不丟。
    題庫多的欄位(舊版頁面看不懂,但改的時候是改物件本身,會原樣留著):
@@ -14,7 +15,8 @@
    - _t:新版最後一次改它的時間(新加的字沒有,改過才有);_nt:題庫名稱最後一次改的時間;_nr:新版每次改名給的隨機碼(4 碼);
      _nl:這個名稱之前那些名稱版本的代號(名稱 + _nr 的雜湊,最多 8 個)。都不算進雜湊。(這個分支早期的 _on 當成 _nl 的一個來讀,不再寫)
      名稱:只有一份是從另一份現在的名稱改過來的(另一份的代號在它的 _nl 裡)就用它(不看時鐘、改幾次都認得、改回以前的名稱也認得);
-     不然一份是另一份的新版本就用新版本的名稱;兩台都改了名才比 _nt;_nt 也一樣(舊版頁面就地改名)用主要那份。
+     不然一份是另一份的新版本就用新版本的名稱;兩台都改了名才比 _nt;_nt 也一樣(舊版頁面就地改名):本機沒改過時用雲端那份,
+     不然用主要那份。
    - banks 的 ctx.localClean:本機那份(第一個參數)上次跟雲端對齊之後沒改過(cloud.js 看帳本)。舊版頁面就地改名、取消勾選、改中文
      不動戳記,兩份分不出先後(_t 一樣)時用雲端那份當主要,不比字串(第二輪審查 r2 #1、#4)。中文衝突時本機的照樣放 alt。
    - _p:它吸收過的舊版本,「雜湊.時間(36 進位毫秒)」;時間是吸收的那一刻(新版本的 _t)。這一版那一刻吸收的一定留(最多 16 個),
@@ -262,7 +264,9 @@
           (以前比 _nt:時鐘快的裝置建立題庫時的 _nt、或時鐘慢的裝置改名,都會讓真的改名被退回,名稱沒有 alt,永遠回不來);
        2. 一份是另一份的新版本(win)就用它的(舊版頁面就地改名:代號不在誰的 _nl 裡);
        3. 兩台都改了名(或都沒有 _nl 可以判斷):_nt 大的;
-       4. _nt 也一樣(舊版頁面就地改名,戳記沒動):主要那份(bp,本機沒改過時是雲端那份) */
+       4. _nt 也一樣(舊版頁面就地改名,戳記沒動):本機沒改過(pref)就用雲端那份的名稱,不跟著主要那份(第三輪審查第二批 r3b #1:
+          主要那份看整個題庫的 _t,新版那台之前改過別的字、已經上傳,_t 比舊版頁面那份大,舊版的改名就被退回,而且每台都是舊名稱;
+          本機沒改過時名稱不一樣一定是別台改的);沒有 pref 才用主要那份(bp) */
     let src = bp;
     const ix = nameId(x), iy = nameId(y), lx = lineage(x), ly = lineage(y);
     if (ix !== iy) {
@@ -270,6 +274,7 @@
       const nx = isNum(x._nt) ? x._nt : 0, ny = isNum(y._nt) ? y._nt : 0;
       if (fx !== fy) src = fx ? x : y;
       else if (!win && x.name !== y.name && nx !== ny) src = nx > ny ? x : y;
+      else if (!win && x.name !== y.name && (pref === x || pref === y)) src = pref;
     }
     const out = Object.assign({}, bp);
     put(out, 'name', src.name);
@@ -288,6 +293,7 @@
 
   /* ---------- 刪除標記(sync_del) ----------
      { v: 1, vgame_banks: { b: { 題庫 id: 標記 }, w: { 題庫 id: { norm(en): 標記 } } } },標記 = { at, h0: [刪的那份的雜湊], hs: [它吸收過的舊版本] }。
+     套用:h0 對得上就刪;hs 只刪有 _r 的那一份(見 tombHit)。
      合併:鍵取聯集、at 取大、h0 與 hs 取聯集(h0 最多 4 個,加起來最多 8 個,超過時留排序後的前幾個,兩台算出來一樣)。
      at 早於 400 天前的清掉;全部超過 1000 筆時從最舊的清。清掉只會讓刪掉的回來,不會讓沒刪的不見。
      這一版不認得的鍵(以後的寫作標記):兩邊一樣就留、只有一邊有就留、兩邊不同就固定選一份(少的只是標記,只會多留) */
@@ -354,13 +360,16 @@
     const sameAsCloud = b !== null && b !== undefined && canon(v) === canon(b);
     return { ok: true, v: sameAsLocal ? a : v, sameAsLocal, sameAsCloud };
   }
-  /* 這一份(題庫:key 給 null)有沒有被標記刪掉 */
-  function tombHit(T, id, key, hash) {
+  /* 這一份(題庫:key 給 null)有沒有被標記刪掉。h0(刪的那份)對得上就刪;hs(它吸收過的舊版本)只刪有 _r 的(withR 給 false 就不看 hs)。
+     沒有 _r 的是舊版頁面或部署前的資料:舊版頁面重新加回的(文章題庫的內容是固定的,照著存一定一模一樣)跟被刪那一份吸收過的舊版本
+     分不出來,寧可留著(第三輪審查第二批 r3b #3)。代價:在新版改過再刪的舊資料,舊版頁面或很久沒同步的裝置還留著改之前那份時
+     會帶回改之前那份(只會多,再刪一次就是 h0)。有 _r 的是新版做的版本,_r 每一版都不一樣,對得上就一定是那個舊版本 */
+  function tombHit(T, id, key, hash, withR) {
     const vb = isPlain(T) && isPlain(T.vgame_banks) ? T.vgame_banks : null;
     if (!vb) return false;
     const e = key === null ? (isPlain(vb.b) ? vb.b[id] : null) : (isPlain(vb.w) && isPlain(vb.w[id]) ? vb.w[id][key] : null);
     if (!isPlain(e)) return false;
-    return (Array.isArray(e.h0) && e.h0.indexOf(hash) >= 0) || (Array.isArray(e.hs) && e.hs.indexOf(hash) >= 0);
+    return (Array.isArray(e.h0) && e.h0.indexOf(hash) >= 0) || (withR !== false && Array.isArray(e.hs) && e.hs.indexOf(hash) >= 0);
   }
   /* 套用字的標記:拿掉對得上的字,題庫吸收被拿掉之前那一版(之後刪題庫時,別台的那一版也對得上) */
   function stripWords(bank, T) {
@@ -371,7 +380,7 @@
     const words = bank.words.filter(w => {
       if (!isWord(w)) return true;
       const k = norm(w.en);
-      if (!tombHit(T, bank.id, k, wordHash(w))) return true;
+      if (!tombHit(T, bank.id, k, wordHash(w), typeof w._r === 'string')) return true;
       at = Math.max(at, readEntry(tw[k]).at);
       return false;
     });
@@ -406,7 +415,7 @@
       /* 先拿掉被刪的字;拿掉前或拿掉後的樣子對得上題庫的標記,這一份就不要(刪題庫的那台當時看到的就是拿掉字之後的樣子) */
       const live = copies.get(id).map(({ v: x, src }) => {
         const sx = stripWords(x, T);
-        return tombHit(T, id, null, bankHash(x)) || (sx !== x && tombHit(T, id, null, bankHash(sx))) ? null : { v: sx, src };
+        return tombHit(T, id, null, bankHash(x), typeof x._r === 'string') || (sx !== x && tombHit(T, id, null, bankHash(sx), typeof sx._r === 'string')) ? null : { v: sx, src };
       }).filter(Boolean);
       /* localClean:本機那份(a)上次跟雲端對齊之後沒改過(帳本上沒有),雲端(b)跟它不一樣就是別台改的。
          舊版頁面就地改名、取消勾選、改中文不動戳記,兩份分不出先後:這時用雲端那份當主要(中文衝突時本機的照樣放 alt)。

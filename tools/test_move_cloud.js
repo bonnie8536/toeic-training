@@ -55,6 +55,7 @@ function makeClient(w) {
         if (q.op === 'upsert') q.rows.forEach((r) => w.ops.push({ table, op: q.op, k: r.k, cols: q.cols }));
         else w.ops.push({ table, op: q.op, k: q.inKeys ? q.inKeys.join(',') : (q.filters.k || '*'), cols: q.cols });
         if (w.offline) return { data: null, error: { message: 'TypeError: Failed to fetch' } };
+        if (q.op === 'upsert' && w.failUpsert) return { data: null, error: { message: 'payload too large' } };   // 讀得到、傳不上去
         if (table !== 'progress') return { data: [], error: null };
         if (q.op === 'select') return { data: w.db.filter((r) => r.user_id === q.filters.user_id && (q.filters.k === undefined || r.k === q.filters.k) && (!q.inKeys || q.inKeys.includes(r.k))).map((r) => JSON.parse(J(r))), error: null };
         q.rows.forEach((x) => {
@@ -415,6 +416,88 @@ T['flushForMove:題庫、刪除標記就算雲端比較新也先合併上傳(不
   const ok = J(carriedOff) === J(['sync_del', 'vgame_banks']) && v.ok === true && J(carried) === J([]) && J(ids) === J(['bm', 'bo'])
     && !!(cv(w, 'sync_del') || { vgame_banks: { b: {} } }).vgame_banks.b.bg && !Object.keys(ledger(w)).length;
   return { ok, detail: J({ carriedOff, v: v.ok || v.why, carried, ids, ledger: ledger(w) }) };
+};
+
+/* ---------- 搬家前也跟雲端對帳(跟登出前 reconcile 一樣):離開舊網址之後這台的本機那份再也用不到 ----------
+   這台(舊網址,新版)建了題庫 B、已經上傳(帳本空的);別台舊版頁面(整份上傳,沒看過 B)改了 A、把雲端蓋成只剩 A'。
+   這台是唯一還有 B 的地方。 */
+async function overwrittenByOld(w) {
+  const A = sbank('bA', '共用的', ['a'], T0 - 5 * DAY);
+  cloudRow(w, 'vgame_banks', [A], T0 - 5 * DAY);
+  const pg = await openLoggedIn(w);
+  w.clock.t += 1000;
+  const B = sbank('bB', '這台新建的', ['bee', 'cat'], w.clock.t);
+  w.local.setItem(PREFIX + 'vgame_banks', J([A, B])); pg.ctx.CLOUD.push('vgame_banks', 1);
+  await pg.runTimers();
+  const uploaded = (cv(w, 'vgame_banks') || []).map((b) => b.id);
+  w.clock.t += 60e3;
+  const row = w.db.find((r) => r.k === 'vgame_banks');
+  row.v = [Object.assign({}, A, { words: A.words.concat([{ en: 'dog', zh: '狗', on: true }]) })];
+  row.updated_at = iso(w.clock.t);
+  w.clock.t += 60e3;
+  return { pg, uploaded };
+}
+
+T['flushForMove:別台舊版頁面剛把雲端的題庫整份蓋掉(這台帳本空的):先跟雲端對帳,合併後補回雲端(別台改的字也在),不放進搬家包'] = async () => {
+  const w = makeWorld();
+  const { pg, uploaded } = await overwrittenByOld(w);
+  const before = ledger(w);
+  const r = await pg.ctx.CLOUD.flushForMove();
+  const carried = (r.accounts[USER.id] || []).map((e) => e[0]);
+  const c = cv(w, 'vgame_banks') || [];
+  const ids = c.map((b) => b.id).sort();
+  const a = c.find((b) => b.id === 'bA');
+  const ok = J(uploaded) === J(['bA', 'bB']) && !Object.keys(before).length && J(ids) === J(['bA', 'bB']) && !!a && J(enOf(a)) === J(['a', 'dog'])
+    && r.left === 0 && J(carried) === J([]) && !Object.keys(ledger(w)).length;
+  return { ok, detail: J({ uploaded, before, ids, a: a && enOf(a), left: r.left, carried, ledger: ledger(w) }) };
+};
+
+T['flushForMove:對帳發現雲端少了題庫但傳不上去:題庫放進搬家包(left>0,前往新網址會改去寄出頁),收件端驗證收得下;新網址收件登入後兩個題庫都在'] = async () => {
+  const w = makeWorld();
+  const { pg } = await overwrittenByOld(w);
+  w.failUpsert = true;
+  const r = await pg.ctx.CLOUD.flushForMove();
+  const carried = (r.accounts[USER.id] || []).map((e) => e[0]);
+  const v = pg.ctx.MOVE_RULES.validate({ app: 'rushup-move', v: 1, keys: [], accounts: r.accounts }, w.clock.t);
+  /* 新網址:同一個雲端、空的 localStorage,收件頁把這幾項存成暫存區,登入灌資料時合併 */
+  const w2 = makeWorld();
+  w2.db = w.db; w2.clock.t = w.clock.t + 60e3;
+  const items = r.accounts[USER.id] || [];
+  w2.local.setItem(PEND, J({ from: 'https://www.shuashualanguage.com', at: w.clock.t, items }));
+  await openLoggedIn(w2);
+  const ids = (cv(w2, 'vgame_banks') || []).map((b) => b.id).sort();
+  const local2 = (lv(w2, 'vgame_banks') || []).map((b) => b.id).sort();
+  const ok = r.left > 0 && carried.indexOf('vgame_banks') >= 0 && v.ok === true && J(ids) === J(['bA', 'bB']) && J(local2) === J(['bA', 'bB'])
+    && w2.local.getItem(PEND) === null;
+  return { ok, detail: J({ left: r.left, carried, v: v.ok || v.why, ids, local2 }) };
+};
+
+T['flushForMove:讀不到雲端(離線)、帳本空的但本機有題庫和模擬考紀錄:確認不了雲端有沒有少,一起放進搬家包(寧可多帶)'] = async () => {
+  const w = makeWorld();
+  const A = sbank('bA', '共用的', ['a'], T0 - 5 * DAY);
+  const mocks = [mockRec('2026-10-01T10:00', 1)];
+  cloudRow(w, 'vgame_banks', [A], T0 - 5 * DAY);
+  cloudRow(w, 'mock_history', mocks, T0 - 5 * DAY);
+  const pg = await openLoggedIn(w);
+  w.offline = true;
+  const r = await pg.ctx.CLOUD.flushForMove();
+  const carried = (r.accounts[USER.id] || []).map((e) => e[0]);
+  const v = pg.ctx.MOVE_RULES.validate({ app: 'rushup-move', v: 1, keys: [], accounts: r.accounts }, w.clock.t);
+  const ok = J(lv(w, 'vgame_banks')) === J([A]) && J(carried) === J(['mock_history', 'vgame_banks']) && r.left === 2 && v.ok === true
+    && !Object.keys(ledger(w)).length;
+  return { ok, detail: J({ left: r.left, carried, v: v.ok || v.why, ledger: ledger(w) }) };
+};
+
+T['flushForMove:題庫跟雲端一樣、帳本空的:讀一次雲端就好,不上傳、不放進搬家包(照樣直接前往新網址)'] = async () => {
+  const w = makeWorld();
+  const A = sbank('bA', '共用的', ['a'], T0 - 5 * DAY);
+  cloudRow(w, 'vgame_banks', [A], T0 - 5 * DAY);
+  const pg = await openLoggedIn(w);
+  w.ops = [];
+  const r = await pg.ctx.CLOUD.flushForMove();
+  const reads = w.ops.filter((o) => o.op === 'select').length;
+  const ok = r.left === 0 && J(r.accounts) === '{}' && reads === 1 && ups(w).length === 0 && J(cv(w, 'vgame_banks')) === J([A]);
+  return { ok, detail: J({ left: r.left, reads, ups: ups(w) }) };
 };
 
 (async () => {

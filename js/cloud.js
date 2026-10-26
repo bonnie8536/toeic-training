@@ -15,7 +15,8 @@
      · vgame_banks(自訂題庫)、sync_del(刪除標記)、mock_history(模擬考紀錄)(同步合併設計,2026-10-24):
        合併函式在 js/sync-merge.js(SYNC_MERGE,每一頁都在 cloud.js 之前載入)。題庫「少了不算刪除」,只有刪除標記對得上的才刪;
        題庫上傳時跟 sync_del 一次查詢讀兩列、一次 upsert 傳兩列。單字頁、閱讀頁開頁時呼叫 syncKey 跟雲端對齊一次;
-       登出前多一輪對帳(雲端比本機少就先合併上傳再刪本機)。寫作、hist、錯題本還是整份上傳(下一輪)。
+       登出前多一輪對帳(雲端比本機少就先合併上傳再刪本機);搬家離開舊網址前(flushForMove)也對帳,傳不上去、讀不到雲端的放進搬家包。
+       寫作、hist、錯題本還是整份上傳(下一輪)。
        帳本上沒有這個鍵(本機上次對齊之後沒改過)時合併給 localClean:舊版頁面就地改的名稱、勾選、中文用雲端那份(r2 #1、#4;
        名稱不看 _t:這台之前在同一個題庫改過別的字、已經上傳也一樣,r3b #1)。
        合併後上傳失敗時,帳本上沒有的鍵補記(開單字頁、對帳的 pull 原本帳本是空的,失敗後不會重傳、離線登出也不問;r2 #3);pet 不補記(r3 #3)。
@@ -32,6 +33,7 @@
      5. 兩台都改了同一個字的中文:新的當主要,另一個放 alt(不設上限,編輯頁全部看得到,可以換或刪)。改回以前用過的中文也一樣
         (分不出哪個是後來改的,_t 大的當主要);所以在編輯頁「換成另一台寫的、再刪掉原本的」剛好跟以前某一版一樣時,刪掉的那個可能又出現在 alt。
      6. 別台舊版把雲端蓋掉、而唯一還有那份的新版裝置在登出時又讀不到雲端(帳本是空的,不會問):那份會跟著登出刪掉。
+        (只講登出。搬家不會:flushForMove 讀不到雲端時把題庫、刪除標記、模擬考紀錄放進搬家包,而且舊網址本機不刪。)
      7. 單鍵 256 KB:合併只會讓題庫變大,碰到上限時上傳會一直失敗、帳本一直留著,登出時會問。新字只多 4 碼的 _r(不寫 on、_t),
         剛批次加字的題庫大約是 main 格式的 1.04 倍(tools/test_sync_merge.js 量 jsonb 的大小);改過、取消勾選、合併過的字多 _t、_p,
         每個大約多 40 到 100 位元組。模擬考紀錄合併時留 300 筆(大約 40 KB),不照 mock.js 的 30 筆裁(時鐘錯的裝置剛考完的那一筆才不會被裁掉)。 */
@@ -878,35 +880,38 @@
   /* 登出前對帳(同步合併設計 3.5):表上 reconcile 的鍵、本機有值的,一次查詢讀它們在雲端的列(題庫連 sync_del 一起讀),
      合併結果跟雲端不同就記帳、走 upload 的佇列上傳。別台的舊版頁面可能剛把雲端蓋掉,這台本機是唯一還有那份的地方,
      登出要刪本機,刪之前確認雲端不比本機少。讀不到雲端(離線)、合併說唯讀:什麼都不做,不另外算進「還沒同步」
-     (不然每次離線登出都要問;已知限制 6)。回傳有沒有發現雲端少了 */
-  async function reconcile(user) {
-    if (!canUpload(user)) return false;
+     (不然每次離線登出都要問;已知限制 6)。回傳有沒有發現雲端少了。
+     搬家(flushForMove)也對帳,用 checkCloud 多拿 unsure:本機有、但沒確認雲端不比本機少的鍵(讀不到雲端、合併說唯讀),放進搬家包 */
+  async function reconcile(user) { return (await checkCloud(user)).behind; }
+  async function checkCloud(user) {
     const prefix = 'tr_u' + pidOf(user) + '_';
     const has = k => { const v = readLocal(prefix + k); return v !== null && v !== undefined; };
     const keys = Object.keys(MERGED).filter(k => MERGED[k].reconcile && has(k));
-    if (!keys.length) return false;
+    const notRead = { behind: false, unsure: keys };
+    if (!keys.length || !canUpload(user)) return notRead;
     const want = keys.some(k => MERGED[k].tombs) && keys.indexOf(TOMBS) < 0 ? [TOMBS].concat(keys) : keys;
     const clean = {};
     want.forEach(k => { clean[k] = cleanKey(user.id, k); });
     const rows = await readRows(user, want);
-    if (!rows.ok) return false;
+    if (!rows.ok) return notRead;
     let tombsV = null;
-    const behind = [];
+    const behind = [], unsure = [];
     Object.keys(MERGED).filter(k => want.indexOf(k) >= 0).forEach(k => {
       const local = readLocal(prefix + k);
       const cv = rows.found[k] ? rows.v[k] : null;
       if (local === null || local === undefined) { if (k === TOMBS) tombsV = cv; return; }
       const m = runMerge(k, local, cv, tombsV, clean[k] && cleanKey(user.id, k));
       if (k === TOMBS) tombsV = m && m.ok ? m.v : null;
-      if (m && m.ok === true && !m.sameAsCloud) behind.push(k);
+      if (!m || m.ok !== true) unsure.push(k);
+      else if (!m.sameAsCloud) behind.push(k);
     });
-    if (!behind.length) return false;
+    if (!behind.length) return { behind: false, unsure };
     const led = readLedger(user.id), t = Date.now();
     behind.forEach(k => { if (!(k in led)) led[k] = t; });
     writeSeq++;
     writeLedger(user.id, led);
     await Promise.all(behind.map(k => upload(user, k, led[k], clean[k])));   // 帳本是對帳剛記的:本機還是沒改過的那份(localClean)
-    return true;
+    return { behind: true, unsure };
   }
   /* 帳本、標記和要合併的鍵的本機值:補傳前後比對,看等的時候有沒有又寫進來 */
   function pendingState(user) {
@@ -1219,6 +1224,9 @@
      舊網址:CLOUD.flushForMove() 在寄出頁「準備搬家」時呼叫。跟登出前一樣先叫小雞把等著的動作寫下來,但不登出、不刪任何東西;
      帳本上(加上只在本機標記的 pet)每一項先讀雲端那一列的 updated_at:雲端沒有、或比帳本舊,照原本的方式上傳(pet 先合併再傳);
      合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄)不看 updated_at,一律先合併再上傳(合併不會蓋掉別台的東西);
+     接著跟登出前一樣對帳(帳本是空的也做,checkCloud):別台舊版頁面剛把雲端蓋掉時,這台是唯一還有那份的地方,
+     離開舊網址之後(轉址期 301、service worker 註銷)不會再有機會補回;雲端少了就合併上傳,傳不上去的留在帳本,
+     讀不到雲端或合併說唯讀的,本機那份(時間 0)也一起交給搬家包;
      其他雲端比帳本新的不上傳(uploadPlain 不比新舊,會用舊的蓋掉別台的新版),連同傳不上去的一起交給搬家包,
      這一頁之後也不再自動補傳它們(held,只在這一頁,不寫進任何儲存)。回 { ok, left, accounts: { 帳號 id: [[鍵, 原字串, 帳本時間]] } }。
      新網址:收件頁把那幾項存成 tr_move_pending_<帳號 id>,這個帳號在這台登入、灌資料時由 takePending 處理(手上有雲端每一列的 updated_at):
@@ -1403,9 +1411,8 @@
       return at;
     };
     const first = pend();
-    if (!Object.keys(first).length) return empty;
     let rows = null;
-    if (canUpload(user)) {
+    if (Object.keys(first).length && canUpload(user)) {
       try {
         const { data, error } = await client.from('progress').select('k,updated_at').eq('user_id', user.id);
         if (!error && Array.isArray(data)) rows = data;
@@ -1418,7 +1425,14 @@
       const merges = k => !!spec(k) && !spec(k).clock;
       await Promise.all(Object.keys(first).filter(k => merges(k) || !(upd[k] >= first[k])).map(k => upload(user, k, first[k])));
     }
+    /* 跟登出前一樣對帳(帳本是空的也要):別台舊版頁面可能剛把雲端的題庫整份蓋掉,這台是唯一還有那份的地方;
+       離開舊網址之後(轉址期每個請求都 301、service worker 也註銷了)這台的程式再也跑不到,不會再補回。
+       雲端少了:合併上傳,傳不上去的記在帳本,下面放進搬家包;讀不到雲端、合併說唯讀(確認不了):本機那份也放進搬家包,
+       收件端用同步的合併(只會多),寧可多帶 */
+    let unsure;
+    try { unsure = (await checkCloud(user)).unsure; } catch (e) { unsure = Object.keys(MERGED).filter(k => MERGED[k].reconcile); }
     const left = pend(), prefix = 'tr_u' + pidOf(user) + '_', items = [];
+    unsure.forEach(k => { if (!(k in left)) left[k] = 0; });   // 帳本沒記:時間給 0(收件端當成上次對齊之後沒改過,分不出先後的偏雲端那份)
     Object.keys(left).sort().forEach(k => {
       let raw = null;
       try { raw = localStorage.getItem(prefix + k); JSON.parse(raw); } catch (e) { raw = null; }

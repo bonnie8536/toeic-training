@@ -46,6 +46,7 @@
   /* 「只在本機」標記(tr_localonly_)只有 pet-store 會寫,所以只有 pet。js/cloud.js 的 MERGED 表後來加了題庫、刪除標記、模擬考紀錄,
      那幾個一律經過 store.set 記帳本(帳本上的照樣搬),不會只有標記 */
   const LOCAL_ONLY_SUBS = Object.freeze(['pet']);
+  const TOMBS = 'sync_del';
 
   function ruleOf(sub) {
     if (typeof sub !== 'string') return null;
@@ -166,6 +167,24 @@
         out.push([sub, raw, Math.max(0, Math.min(t, now))]);
       }
       if (out.length) accounts.set(uid, out);
+    }
+    /* 帳號的刪除標記(js/move-pack.js 放在 del,舊收件頁不看):{ 帳號 id: [原字串, 時間] },放回那個帳號,跟 accounts 裡的一樣驗證 */
+    const del = pack.del === undefined ? {} : pack.del;
+    if (!del || typeof del !== 'object' || Array.isArray(del)) return bad('格式不對');
+    const dids = Object.keys(del);
+    if (dids.filter((uid) => ids.indexOf(uid) < 0).length + ids.length > LIMITS.accounts) return bad('帳號太多');
+    for (let i = 0; i < dids.length; i++) {
+      const uid = dids[i], e = del[uid];
+      if (!UUID.test(uid)) return bad('帳號編號不對');
+      if (!Array.isArray(e) || e.length !== 2 || typeof e[0] !== 'string') return bad('有一項格式不對');
+      const [raw, t] = e;
+      const out = accounts.get(uid) || [];
+      if (out.some((x) => x[0] === TOMBS)) return bad('同一個鍵出現兩次');
+      if (out.length + 1 > LIMITS.perAccount) return bad('格式不對');
+      if (raw.length > LIMITS.key || !parses(raw)) return bad('有一項讀不懂');
+      if (typeof t !== 'number' || !isFinite(t) || Math.floor(t) !== t) return bad('時間不對');
+      total += TOMBS.length + raw.length;
+      accounts.set(uid, out.concat([[TOMBS, raw, Math.max(0, Math.min(t, now))]]));
     }
     if (total > LIMITS.total) return bad('整包太大');
     return { ok: true, keys, accounts, profileIds, device: typeof pack.device === 'string' ? pack.device : '' };

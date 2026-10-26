@@ -2,6 +2,7 @@
    - 搬家包只放在記憶體、視窗之間的 postMessage、使用者自己存的檔案或複製的搬家碼裡,不放進網址、不寄到任何伺服器。
    - keys 存 localStorage 原本的字串,不先解析,避免轉換時改到內容;讀不懂的值不放進包,列在摘要上。
    - 雜湊只算內容({ keys, accounts },鍵排序後用 canon 轉字串),不含 at、from:同一台、內容沒變,兩次組出來的雜湊一定一樣。
+   - 帳號的刪除標記(sync_del)放在 del,不放進 accounts(舊收件頁會整包拒收,見 splitTombs);雜湊不算它,記在 tr_move_log 的(logHash)才算。
    - 登入憑證(sb- 開頭)、使用權快取、搬家自己的紀錄一律不放(js/move-rules.js 的 classify)。
    - 每台裝置(每個瀏覽器的儲存空間)第一次搬家時在舊網址新增一個 tr_move_device(隨機編號),放進包的 device:
      新網址的 tr_move_log 依它分開記,別台搬來的不會被當成「同一台再搬」。寄出頁在舊網址只新增它與 tr_move_done 兩個鍵。
@@ -62,6 +63,29 @@
     return out;
   }
 
+  /* 帳號的刪除標記(sync_del)從 accounts 拿出來,放進包的 del:{ 帳號 id: [原字串, 時間] }。
+     新網址 service worker 快取的舊收件頁(844e936)的 MOVE_RULES 沒有 sync_del 的規則,accounts 裡有就整包拒收(題庫也一起沒收);
+     del 它不看:標記沒帶到只會讓刪掉的題庫、字回來,不會少。新版收件頁(MOVE_RULES.validate)把 del 放回那個帳號。
+     不改傳進來的東西:回新的 { accounts(沒有標記;只剩標記的帳號拿掉), del } */
+  const TOMBS = 'sync_del';
+  function splitTombs(all) {
+    const accounts = {}, del = {};
+    Object.keys(all).forEach((uid) => {
+      const hit = all[uid].filter((e) => e[0] === TOMBS)[0];
+      if (hit) del[uid] = [hit[1], hit[2]];
+      const rest = all[uid].filter((e) => e[0] !== TOMBS);
+      if (rest.length) accounts[uid] = rest;
+    });
+    return { accounts, del };
+  }
+  /* 記在新網址 tr_move_log 的雜湊:hashOf 只算 keys、accounts(舊收件頁也這樣算,要對得上),有 del 就再加上它的雜湊,
+     只差刪除標記的兩包才不會被當成「搬過同一份」 */
+  function logHash(pack, hash) {
+    const d = isPlain(pack) && isPlain(pack.del) ? pack.del : null;
+    if (!d || !Object.keys(d).length) return hash;
+    return hash + '+' + M.quickHash(M.canon(d));
+  }
+
   /* 組一包。opt:{ from, now, device(deviceId 給的), uid(目前登入的帳號), accounts(flushForMove 回的目前帳號 { 帳號 id: [[鍵, 原字串, 時間]] }) }
      帳號的部分:先讀這台每個帳號的帳本,再把目前帳號換成 flushForMove 給的(它已經傳上去的不必帶),同一台其他帳號照帶。
      回 { pack, summary }。summary:{ hasData, profiles, banks(名稱), pet, hist, keys, unknown, unreadable, unreadableNames, tooBig(搬不了的項目名稱:太大的鍵、整包太大、鍵數或帳號數超過 MOVE_RULES.LIMITS),
@@ -91,26 +115,29 @@
       if (c.sub === 'hist' && Array.isArray(p.v)) sum.hist += p.v.length;
     });
     out.sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0));
-    const accounts = ledgerAccounts(ls, keys);
+    const all = ledgerAccounts(ls, keys);
     if (opt && isPlain(opt.accounts)) {
-      if (typeof opt.uid === 'string') delete accounts[opt.uid];
-      Object.keys(opt.accounts).forEach((uid) => { if (Array.isArray(opt.accounts[uid]) && opt.accounts[uid].length) accounts[uid] = opt.accounts[uid]; });
+      if (typeof opt.uid === 'string') delete all[opt.uid];
+      Object.keys(opt.accounts).forEach((uid) => { if (Array.isArray(opt.accounts[uid]) && opt.accounts[uid].length) all[uid] = opt.accounts[uid]; });
     }
+    const { accounts, del } = splitTombs(all);
     Object.keys(accounts).forEach((uid) => { sum.accountItems += accounts[uid].length; accounts[uid].forEach((e) => { sum.bytes += e[0].length + e[1].length; }); });
+    Object.keys(del).forEach((uid) => { sum.accountItems++; sum.bytes += TOMBS.length + del[uid][0].length; });
     if (sum.accountItems) sum.hasData = true;
     sum.keys = out.length;
     if (sum.bytes > R.LIMITS.total) note(sum.tooBig, '全部的資料');
     /* 收件端(MOVE_RULES.validate)的鍵數、帳號數上限,這裡先擋:超過就不給送出,不會送到新網址才被拒 */
     if (out.length > R.LIMITS.keys) note(sum.tooBig, '全部的項目（' + out.length + ' 項）');
-    const uids = Object.keys(accounts);
+    const uids = Object.keys(accounts).concat(Object.keys(del).filter((uid) => !accounts[uid]));
     if (uids.length > R.LIMITS.accounts) note(sum.tooBig, '登入過的帳號（' + uids.length + ' 個）');
-    if (uids.some((uid) => accounts[uid].length > R.LIMITS.perAccount)) note(sum.tooBig, '帳號還沒上傳的進度');
+    if (uids.some((uid) => (accounts[uid] ? accounts[uid].length : 0) + (del[uid] ? 1 : 0) > R.LIMITS.perAccount)) note(sum.tooBig, '帳號還沒上傳的進度');
     const pack = { app: 'rushup-move', v: 1, from: (opt && opt.from) || '', at: new Date((opt && opt.now) || Date.now()).toISOString(), keys: out, accounts };
+    if (Object.keys(del).length) pack.del = del;
     if (opt && typeof opt.device === 'string' && R.DEVICE.test(opt.device)) pack.device = opt.device;
     return { pack, summary: sum };
   }
 
-  /* 雜湊要算的字串:keys 依鍵名排序,accounts 依帳號 id、再依鍵名排序;不含 at、from */
+  /* 雜湊要算的字串:keys 依鍵名排序,accounts 依帳號 id、再依鍵名排序;不含 at、from、del(舊收件頁也這樣算,收件端用它檢查收到的完不完整) */
   /* 格式不對的包(收件端還沒驗證的)也不會丟錯 */
   const byKey = (a, b) => { const x = Array.isArray(a) ? String(a[0]) : '', y = Array.isArray(b) ? String(b[0]) : ''; return x < y ? -1 : x > y ? 1 : 0; };
   function hashInput(pack) {
@@ -195,5 +222,5 @@
     return { ok: true, pack: o.pack, hash: o.hash };
   }
 
-  root.MOVE_PACK = Object.freeze({ collect, meaningful, deviceId, ledgerAccounts, hashInput, sha256, hashOf, toFileText, fileName, toCode, fromText, MAX_BYTES, MAX_TEXT });
+  root.MOVE_PACK = Object.freeze({ collect, meaningful, deviceId, ledgerAccounts, hashInput, sha256, hashOf, logHash, toFileText, fileName, toCode, fromText, MAX_BYTES, MAX_TEXT });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

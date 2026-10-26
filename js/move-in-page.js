@@ -64,7 +64,8 @@
         showFallback();
         return;
       }
-      const ctx = { now, from: fromOf(pack, origin), hash, pet: window.PET, petClockOk: await clockOk(), daily: window.DAILY, choices: {} };
+      /* hash:記在 tr_move_log 的(連刪除標記 del 一起算);sent:寄出頁送來的那個,回報「搬好了」要用它(寄出頁比對的是它) */
+      const ctx = { now, from: fromOf(pack, origin), hash: P.logHash(pack, hash), sent: hash, pet: window.PET, petClockOk: await clockOk(), daily: window.DAILY, choices: {} };
       review(valid, ctx);
     } catch (e) {
       unusable('');
@@ -91,7 +92,7 @@
     if (link) link.stop();
     const plan = MM.plan(valid, target(), Object.assign({}, ctx, { log: readLog() }));
     if (plan.already) {
-      if (link) link.done(ctx.hash);
+      if (link) link.done(ctx.sent);
       draw(say('這台已經搬過同一份進度了，這次沒有新東西。'), h('p', null, h('a', { class: 'btn primary', href: 'index.html' }, '開始練習')));
       return;
     }
@@ -183,7 +184,7 @@
     }
     tellOthers();
     const left = o.unfinished ? chosen : [];
-    if (!t.plan.skipped.length && !left.length) { if (link) link.done(ctx.hash); drawDone(t.plan); return; }
+    if (!t.plan.skipped.length && !left.length) { if (link) link.done(ctx.sent); drawDone(t.plan); return; }
     drawPartial(valid, ctx, t.plan, left, o.skip || []);
   }
   function attempt(valid, base, o) {
@@ -218,7 +219,7 @@
         const t = attempt(valid, Object.assign({}, ctx, { now: Date.now(), log: readLog() }), { choices, skip, allowNoBackup: true, noBackupOnly: true });
         if (!t.r.ok) { status.textContent = '這台的空間還是不夠，這次沒有換。舊網址的資料都還在。'; go.disabled = false; return; }
         tellOthers();
-        if (!t.plan.skipped.length) { if (link) link.done(ctx.hash); drawDone(t.plan); return; }
+        if (!t.plan.skipped.length) { if (link) link.done(ctx.sent); drawDone(t.plan); return; }
         drawPartial(valid, ctx, t.plan, [], skip);
       });
       nodes.push(say('你選了「用舊網址的」的' + left.map((k) => '「' + nameOf(k) + '」').join('、') + '還沒換：這台的空間不夠先備份這台原本的那份。'),

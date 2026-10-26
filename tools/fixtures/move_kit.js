@@ -67,7 +67,7 @@ async function moveInto(newLs, init, extra, packOpt) {
   const hash = await P.hashOf(pack);
   const v = R.validate(JSON.parse(J(pack)), NOW);
   assert.ok(v.ok, 'validate ' + v.why);
-  const plan = M.plan(v, tgt(newLs), ctxFor(newLs, hash, extra));
+  const plan = M.plan(v, tgt(newLs), ctxFor(newLs, P.logHash(pack, hash), extra));   // 跟 js/move-in-page.js 一樣:記在 tr_move_log 的連 del 一起算
   if (!plan.already) { const r = A.apply(newLs, plan.writes, { now: NOW }); assert.ok(r.ok, 'apply ' + r.why); }
   return { plan, hash, pack };
 }

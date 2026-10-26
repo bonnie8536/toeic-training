@@ -15,6 +15,7 @@
    - 閱讀題作答(read_q_)是選項編號:新網址答過的題目不換,只補沒答的;答案不一樣的算「留這台的」,計數(dropped)並列在確認畫面。
    - 其他完成紀錄合併時兩邊不一樣、又沒辦法合的,也算 dropped。只有 dropped 是 0,確認畫面才說「不會少」。
    - 重搬:同一包(hash 一樣)什麼都不寫;改過 id 的對照記在 tr_move_log,重搬用同一個新 id。
+     題庫另外記這台上次送的每個題庫的雜湊與它落在哪(bankSent):舊網址那份之後沒改過、落腳的題庫還在,就跳過,不再另存「（舊網址）」。
      tr_move_log 依「舊網址的網域#寄出那台的裝置編號」分開記(js/move-pack.js deviceId):
      「上次搬家寫的、新網址之後沒動過就直接換新」只對同一台裝置再搬有效,別台搬來的不同值列為衝突。沒有裝置編號的包不走這條捷徑。
    - 新網址算不算已經有資料(要不要問「切換到舊網址的學生檔案」):用 MOVE_RULES.meaningful,頁面自己建的空小雞不算。
@@ -351,12 +352,22 @@
     const v = m && m.ok === true && Array.isArray(m.v) ? m.v.filter((b) => bankId(b) === bankId(ob)) : [];
     return v.length === 1 ? v[0] : null;
   }
-  /* 舊網址的題庫併進新網址的。回 { banks, remap: { 舊 id: 新 id }, added, renamed, updated, skipped, written, replaced } 或 null(新網址那份不是陣列)。
-     replaced:有沒有換掉新網址原本的某個題庫(搬家寫過、之後沒改過的換成舊網址的新版),寫入時要先備份 */
+  /* 舊網址的題庫併進新網址的。回 { banks, remap: { 舊 id: 新 id }, added, renamed, updated, skipped, written, replaced, sent } 或 null(新網址那份不是陣列)。
+     replaced:有沒有換掉新網址原本的某個題庫(搬家寫過、之後沒改過的換成舊網址的新版),寫入時要先備份。
+     sent:{ '資料夾|舊 id': { h: 這次送來的那份的雜湊, to: 它落在新網址哪個題庫(id) } },plan 記進 tr_move_log(依裝置分開)。
+     同一台再搬、舊網址那份的雜湊跟上次送的一樣(之後沒改過)、上次落腳的題庫還在:舊網址這份沒有新東西,跳過。
+     新網址之後怎麼改都一樣(不靠 _p:它最多記 8 個舊版本,改 9 次以上就認不出來);落腳的題庫被刪了就照舊再放(寧可多留) */
   function mergeBanks(nb, ob, folder, prev, ctx) {
     if (!Array.isArray(nb) || !Array.isArray(ob)) return null;
     const out = nb.slice();
-    const remap = {}, added = [], renamed = [], updated = [], keep = [];
+    const remap = {}, added = [], renamed = [], updated = [], keep = [], sent = {};
+    const sentPrev = isPlain(prev.bankSent) ? prev.bankSent : {};
+    const note = (id, b, to) => { if (typeof to === 'string') sent[folder + '|' + id] = { h: quickHash(canon(b)), to }; };
+    const bodyAt = (body) => { const x = out.find((y) => bankBody(y) === body); return x ? bankId(x) : null; };
+    const unchanged = (id, b) => {   // 上次這台送的就是這份、它落腳的題庫還在
+      const s = sentPrev[folder + '|' + id];
+      return isPlain(s) && typeof s.to === 'string' && s.h === quickHash(canon(b)) && out.some((x) => bankId(x) === s.to);
+    };
     let skipped = 0, n = 0, replaced = false;
     const ids = () => new Set(out.map(bankId));
     const hasBody = (body) => out.some((b) => bankBody(b) === body);
@@ -374,31 +385,34 @@
       const body = bankBody(b);
       const at0 = out.findIndex((x) => bankId(x) === id);
       if (at0 < 0) {
-        if (hasBody(body)) { skipped++; return; }
-        out.push(b); added.push(String(b.name || '')); keep.push(id); return;
+        if (hasBody(body)) { skipped++; note(id, b, bodyAt(body)); return; }
+        out.push(b); added.push(String(b.name || '')); keep.push(id); note(id, b, id); return;
       }
       const same = out[at0];
+      /* 這台上次送的就是這份(舊網址之後沒改過),落腳的題庫還在:新網址之後的修改都比它新,不再另存 */
+      if (unchanged(id, b)) { skipped++; sent[folder + '|' + id] = sentPrev[folder + '|' + id]; return; }
       /* 只差同步的戳記(看得到的都一樣)、或新網址那份是從舊網址這份改過來的:舊網址這份沒有新東西 */
-      if (canon(same) === canon(b) || hasBody(body) || bankLook(same) === bankLook(b) || stampOrder(same, b) === 'new') { skipped++; return; }
-      if (wroteBy(same)) { out[at0] = b; updated.push(String(b.name || '')); keep.push(id); replaced = true; return; }   // 舊網址後來改過、新網址沒動:換成舊網址的新版
+      if (canon(same) === canon(b) || hasBody(body) || bankLook(same) === bankLook(b) || stampOrder(same, b) === 'new') { skipped++; note(id, b, hasBody(body) ? bodyAt(body) : id); return; }
+      if (wroteBy(same)) { out[at0] = b; updated.push(String(b.name || '')); keep.push(id); replaced = true; note(id, b, id); return; }   // 舊網址後來改過、新網址沒動:換成舊網址的新版
       if (stampOrder(same, b) === 'old') {   // 舊網址那份是從新網址這份改過來的(戳記看得出來):換成合併後的新版,新網址原本那份寫入前備份
         const j = joinNewer(same, b, ctx.now);
-        if (j) { out[at0] = j; updated.push(String(j.name || '')); keep.push(id); replaced = true; return; }
+        if (j) { out[at0] = j; updated.push(String(j.name || '')); keep.push(id); replaced = true; note(id, b, id); return; }
       }
       const name = String(b.name || '');
       const copy = Object.assign({}, b, { name: name.slice(-SUFFIX.length) === SUFFIX ? name : name + SUFFIX });
       const was = prev.bankIds && prev.bankIds[folder + '|' + id];
       const at = was ? out.findIndex((x) => bankId(x) === was) : -1;
-      if (at > -1 && wroteBy(out[at])) { out[at] = Object.assign(copy, { id: was }); remap[id] = was; renamed.push(copy.name); keep.push(was); replaced = true; return; }
+      if (at > -1 && wroteBy(out[at])) { out[at] = Object.assign(copy, { id: was }); remap[id] = was; renamed.push(copy.name); keep.push(was); replaced = true; note(id, b, was); return; }
       const nid = was && at < 0 ? was : freshId();
       out.push(Object.assign(copy, { id: nid }));
       remap[id] = nid;
       renamed.push(copy.name);
       keep.push(nid);
+      note(id, b, nid);
     });
     const written = {};
     out.forEach((x) => { if (keep.indexOf(bankId(x)) > -1) written[bankId(x)] = quickHash(canon(x)); });
-    return { banks: out, remap, added, renamed, updated, skipped, written, replaced };
+    return { banks: out, remap, added, renamed, updated, skipped, written, replaced, sent };
   }
   /* 改過 id 的題庫:舊網址那幾個成績鍵裡 bank:<舊 id> 的項目複製一份到 bank:<新 id> */
   function remapRelated(sub, ov, remap) {
@@ -442,6 +456,7 @@
     if (prev.hash && prev.hash === ctx.hash) { res.already = true; return res; }
     const choices = isPlain(ctx.choices) ? ctx.choices : {};
     const wrote = {}, bankIds = Object.assign({}, prev.bankIds || {}), bankHashes = Object.assign({}, prev.bankHashes || {});
+    const bankSent = Object.assign({}, isPlain(prev.bankSent) ? prev.bankSent : {});   // 這台每個題庫上次送的那份落在哪(mergeBanks 的 sent)
     const writes = new Map(), modes = new Map();
     const put = (k, raw, mode) => { if (target.get(k) !== raw) { writes.set(k, raw); modes.set(k, mode || 'replace'); } };
     const skipSet = new Set(Array.isArray(ctx.skip) ? ctx.skip : []);
@@ -471,7 +486,12 @@
         put(k, raw, 'add');
         res.counts.added++;
         res.items.push({ key: k, kind: 'added' });
-        if (Array.isArray(ov)) ov.forEach((b) => { res.banks.added.push(String((b && b.name) || '')); if (bankId(b) !== null) bankHashes[bankId(b)] = quickHash(canon(b)); });
+        if (Array.isArray(ov)) ov.forEach((b) => {
+          res.banks.added.push(String((b && b.name) || ''));
+          if (bankId(b) === null) return;
+          bankHashes[bankId(b)] = quickHash(canon(b));
+          bankSent[folder + '|' + bankId(b)] = { h: quickHash(canon(b)), to: bankId(b) };
+        });
         return;
       }
       const nv = parse(cur);
@@ -480,6 +500,7 @@
       remaps[folder] = m.remap;
       Object.keys(m.remap).forEach((o) => { bankIds[folder + '|' + o] = m.remap[o]; });
       Object.assign(bankHashes, m.written);
+      Object.assign(bankSent, m.sent);
       res.banks.added = res.banks.added.concat(m.added, m.updated);
       res.banks.renamed = res.banks.renamed.concat(m.renamed);
       res.banks.skipped += m.skipped;
@@ -557,7 +578,7 @@
 
     res.writes = Array.from(writes.entries()).map(([k, v]) => [k, v, modes.get(k)]);
     const done = !ctx.unfinished && !res.skipped.length;
-    const entry = { hash: done ? ctx.hash : '', at: ctx.now, wrote: Object.assign({}, prev.wrote || {}, wrote), bankIds, bankHashes };
+    const entry = { hash: done ? ctx.hash : '', at: ctx.now, wrote: Object.assign({}, prev.wrote || {}, wrote), bankIds, bankHashes, bankSent };
     res.log = Object.assign({}, log, { [logKey]: entry });
     res.writes.push(['tr_move_log', JSON.stringify(res.log), 'replace']);
     return res;

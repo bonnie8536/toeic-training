@@ -346,10 +346,12 @@ T['sync_del(刪除標記)有搬家規則 tombs,不是整份換掉的 single;帳�
   const init = { ['tr_unsynced_' + UID]: J({ vgame_banks: NOW - 2 * DAY, sync_del: NOW - 2 * DAY }),
     ['tr_u' + CPID + '_vgame_banks']: J(d.banks), ['tr_u' + CPID + '_sync_del']: J(d.tombs) };
   const { pack, summary } = packOf(init);
-  assert.deepEqual(pack.accounts[UID].map((e) => e[0]), ['sync_del', 'vgame_banks']);
+  assert.deepEqual(pack.accounts[UID].map((e) => e[0]), ['vgame_banks']);   // 標記放在 del(舊收件頁收得下,見下面「刪除標記不放進 accounts」)
+  assert.deepEqual(Object.keys(pack.del), [UID]);
   assert.equal(summary.unknown, 0);
   const v = R.validate(JSON.parse(J(pack)), NOW);
   assert.ok(v.ok, v.why);
+  assert.deepEqual(v.accounts.get(UID).map((e) => e[0]).sort(), ['sync_del', 'vgame_banks']);
   assert.equal(R.classify('tr_u' + CPID + '_sync_del', new Set()).kind, 'cloud');   // 雲端帳號資料夾裡的:有規則,不算「認不得」
   return 'ok';
 };
@@ -414,6 +416,176 @@ T['暫存區(帳號還沒上傳的)再搬一次:題庫、刪除標記、模擬�
   assert.deepEqual(Object.keys(get('sync_del').vgame_banks.b), ['b3']);
   assert.deepEqual(get('mock_history').map((r) => r.d), ['2026-10-01', '2026-10-02']);
   assert.equal(items.find((e) => e[0] === 'vgame_banks')[2], NOW - 5000);
+  return 'ok';
+};
+
+/* ---------- 再搬一次:舊網址的題庫從上次搬家後沒變過(第二輪審查 #1、#2) ----------
+   舊網址這份上次已經送到新網址(加進去、合併、或另存「（舊網址）」),那個題庫還在,就不再另存一份:
+   不靠 _p(最多 8 個舊版本,新網址改 9 次以上就認不出來),靠 tr_move_log 記的「這台上次送的那份」的雜湊與它落在哪個題庫 */
+const plainBank = () => ({ id: 'b1', name: '我的單字', words: [{ en: 'gate', zh: '登機門', on: true }, { en: 'board', zh: '登機', on: true }, { en: 'seat', zh: '座位', on: true }] });
+const editN = (ls, id, n, t0, k) => {
+  const key = k || 'tr_vgame_banks';
+  for (let i = 0; i < n; i++) {
+    const t = t0 + i * 60e3;
+    ls.setItem(key, J(SM.editBank(JSON.parse(ls.getItem(key)), id, t, (b) => SM.setWord(b, 'seat', { on: i % 2 === 1 }, t))));
+  }
+};
+
+T['再搬一次(訪客):新網址把搬過去的題庫改了 9 次以上、舊網址那份沒動(只多練習):不多一份「（舊網址）」'] = async () => {
+  for (const n of [1, 8, 9, 13, 21]) {
+    const ls = makeStorage(0, {});
+    const old = { tr_vgame_banks: J([plainBank()]), tr_hist: J([histRec(NOW - 9 * DAY, 'q1')]) };
+    await moveInto(ls, old);
+    editN(ls, 'b1', n, NOW - 8 * DAY);
+    const mine = ls.getItem('tr_vgame_banks');
+    const { plan } = await moveInto(ls, Object.assign({}, old, { tr_hist: J([histRec(NOW - 9 * DAY, 'q1'), histRec(NOW - 7 * DAY, 'q2')]) }));
+    assert.deepEqual(namesOf(ls), ['我的單字'], '改 ' + n + ' 次');
+    assert.equal(plan.banks.renamed.length, 0, '改 ' + n + ' 次');
+    assert.equal(ls.getItem('tr_vgame_banks'), mine, '改 ' + n + ' 次:新網址改過的那份不動');
+  }
+  return 'ok';
+};
+
+T['再搬一次(本機學生):同上,學生資料夾的題庫改 9 次以上也不多一份'] = async () => {
+  const ls = makeStorage(0, {});
+  const K2 = 'tr_upabc123_vgame_banks';
+  const old = { tr_profiles: J([{ id: 'pabc123', name: '小明' }]), [K2]: J([plainBank()]), tr_upabc123_hist: J([histRec(NOW - 9 * DAY, 'q1')]) };
+  await moveInto(ls, old);
+  editN(ls, 'b1', 13, NOW - 8 * DAY, K2);   // 單數次:勾選跟搬過去時不一樣
+  await moveInto(ls, Object.assign({}, old, { tr_upabc123_hist: J([histRec(NOW - 9 * DAY, 'q1'), histRec(NOW - 7 * DAY, 'q2')]) }));
+  assert.deepEqual(namesOf(ls, K2), ['我的單字']);
+  return 'ok';
+};
+
+T['再搬一次:新網址改了 9 次以上、舊網址那份也真的改了(加了字):照舊另存「（舊網址）」,舊網址加的字在'] = async () => {
+  const ls = makeStorage(0, {});
+  await moveInto(ls, { tr_vgame_banks: J([plainBank()]) });
+  editN(ls, 'b1', 9, NOW - 8 * DAY);
+  const changed = plainBank();
+  changed.words.push({ en: 'aisle', zh: '走道', on: true });
+  await moveInto(ls, { tr_vgame_banks: J([changed]) });
+  const after = JSON.parse(ls.getItem('tr_vgame_banks'));
+  assert.deepEqual(after.map((b) => b.name), ['我的單字', '我的單字（舊網址）']);
+  assert.ok(after[1].words.some((w) => w.en === 'aisle'));
+  return 'ok';
+};
+
+T['再搬一次:新網址把搬過去的題庫刪了、舊網址那份沒動:照舊加回來(寧可多留)'] = async () => {
+  const ls = makeStorage(0, {});
+  const old = { tr_vgame_banks: J([plainBank()]), tr_hist: J([histRec(NOW - 9 * DAY, 'q1')]) };
+  await moveInto(ls, old);
+  ls.setItem('tr_vgame_banks', J([bank('b9', '新網址自己的', ['x'])]));
+  await moveInto(ls, Object.assign({}, old, { tr_hist: J([histRec(NOW - 9 * DAY, 'q1'), histRec(NOW - 7 * DAY, 'q2')]) }));
+  assert.deepEqual(namesOf(ls).sort(), ['我的單字', '新網址自己的'].sort());
+  return 'ok';
+};
+
+/* 兩邊都改了 → 第 2 次搬家另存一份「（舊網址）」(預期的);之後舊網址的題庫沒動,學生每次都在新網址改最新那份複本 */
+async function copyLoop(editCopy, delCopy) {
+  const ls = makeStorage(0, {});
+  let ob = SM.editBank([], 'b1', NOW - 20 * DAY, (b) => SM.addWords(Object.assign({}, b, { name: '我的單字' }), [{ en: 'gate', zh: '登機門' }, { en: 'board', zh: '登機' }], NOW - 20 * DAY));
+  const hist = [histRec(NOW - 20 * DAY, 'q1')];
+  const old = () => ({ tr_vgame_banks: J(ob), tr_hist: J(hist) });
+  await moveInto(ls, old());
+  ls.setItem('tr_vgame_banks', J(SM.editBank(JSON.parse(ls.getItem('tr_vgame_banks')), 'b1', NOW - 19 * DAY, (b) => SM.setWord(b, 'gate', { on: false }, NOW - 19 * DAY))));
+  ob = SM.editBank(ob, 'b1', NOW - 18 * DAY, (b) => SM.addWords(b, [{ en: 'seat', zh: '座位' }], NOW - 18 * DAY));
+  hist.push(histRec(NOW - 18 * DAY, 'q2'));
+  await moveInto(ls, old());
+  for (let i = 3; i <= 6; i++) {
+    const t = NOW - (18 - i) * DAY;
+    const nb = JSON.parse(ls.getItem('tr_vgame_banks'));
+    const copy = nb[nb.length - 1];
+    if (delCopy) ls.setItem('tr_vgame_banks', J(nb.filter((b) => b.id !== copy.id)));
+    else if (editCopy) ls.setItem('tr_vgame_banks', J(SM.editBank(nb, copy.id, t, (b) => SM.setWord(b, 'board', { on: !(b.words.find((w) => w.en === 'board').on !== false) }, t))));
+    hist.push(histRec(t, 'q' + i));
+    await moveInto(ls, old());
+  }
+  return namesOf(ls);
+}
+T['再搬一次:舊網址的題庫沒變、學生每次都改新網址最新那份「（舊網址）」複本:不會每搬一次就多一份'] = async () => {
+  const names = await copyLoop(true, false);
+  assert.deepEqual(names, ['我的單字', '我的單字（舊網址）']);
+  return J(names);
+};
+T['再搬一次:舊網址的題庫沒變、學生把「（舊網址）」複本刪了:照舊再放一份回來(寧可多留),不會越來越多'] = async () => {
+  const names = await copyLoop(false, true);
+  assert.deepEqual(names, ['我的單字', '我的單字（舊網址）']);
+  return J(names);
+};
+
+/* ---------- 刪除標記不放進 accounts(第二輪審查 #3) ----------
+   新網址 service worker 快取的舊收件頁(844e936)的 MOVE_RULES 沒有 sync_del 的規則,accounts 裡有就整包拒收。
+   新版寄出頁把刪除標記放在另外的 del 欄位(舊收件頁不看,只會讓刪掉的回來,不會少),雜湊照舊只算 keys、accounts */
+function oldRules() {
+  const c = { console };
+  c.window = c;
+  require('vm').createContext(c);
+  require('vm').runInContext(read('tools/fixtures/move_rules_844e936.js'), c);
+  return c.MOVE_RULES;
+}
+const delInit = () => {
+  const b1 = sbank('b1', '帳號的', ['a'], NOW - 3 * DAY), b2 = sbank('b2', '要刪的', ['x'], NOW - 3 * DAY);
+  const d = SM.deleteBank([b1, b2], null, 'b2', NOW - 2 * DAY);
+  return { d, init: { ['tr_unsynced_' + UID]: J({ vgame_banks: NOW - 2 * DAY, sync_del: NOW - 2 * DAY }),
+    ['tr_u' + CPID + '_vgame_banks']: J(d.banks), ['tr_u' + CPID + '_sync_del']: J(d.tombs), tr_hist: J([histRec(NOW - DAY, 'q1')]) } };
+};
+
+T['刪除標記:帳本上的(或 flushForMove 給的)不放進 accounts,放在 del;844e936 的舊收件頁驗證收得下'] = () => {
+  const { d, init } = delInit();
+  const { pack, summary } = packOf(init);
+  assert.deepEqual(pack.accounts[UID].map((e) => e[0]), ['vgame_banks']);
+  assert.deepEqual(Object.keys(pack.del), [UID]);
+  assert.equal(pack.del[UID][0], J(d.tombs));
+  assert.equal(summary.accountItems, 2);
+  const OR = oldRules();
+  const vo = OR.validate(JSON.parse(J(pack)), NOW);
+  assert.ok(vo.ok, '舊收件頁:' + vo.why);
+  assert.deepEqual(vo.accounts.get(UID).map((e) => e[0]), ['vgame_banks']);
+  /* flushForMove 給的(雲端確認不了,時間 0):一樣不放進 accounts */
+  const { pack: p2 } = packOf({ tr_hist: J([histRec(NOW - DAY, 'q1')]) },
+    { uid: UID, accounts: { [UID]: [['sync_del', J(d.tombs), 0], ['vgame_banks', J(d.banks), 0]] } });
+  assert.deepEqual(p2.accounts[UID].map((e) => e[0]), ['vgame_banks']);
+  assert.deepEqual(p2.del[UID], [J(d.tombs), 0]);
+  assert.ok(OR.validate(JSON.parse(J(p2)), NOW).ok);
+  /* 只有刪除標記:accounts 不留空的帳號 */
+  const { pack: p3 } = packOf({ tr_hist: J([histRec(NOW - DAY, 'q1')]) }, { uid: UID, accounts: { [UID]: [['sync_del', J(d.tombs), 5]] } });
+  assert.deepEqual(Object.keys(p3.accounts), []);
+  assert.ok(OR.validate(JSON.parse(J(p3)), NOW).ok);
+  return 'ok';
+};
+
+T['刪除標記:新版收件端把 del 收進那個帳號的暫存區;只差 del 的兩包不算「搬過同一份」;del 格式不對整包拒收'] = async () => {
+  const { d, init } = delInit();
+  const ls = makeStorage(0, {});
+  const { pack } = await moveInto(ls, init);
+  const items = JSON.parse(ls.getItem('tr_move_pending_' + UID)).items;
+  assert.deepEqual(items.map((e) => e[0]), ['sync_del', 'vgame_banks']);
+  assert.equal(items[0][1], J(d.tombs));
+  const v = R.validate(JSON.parse(J(pack)), NOW);
+  assert.deepEqual(v.accounts.get(UID).map((e) => e[0]).sort(), ['sync_del', 'vgame_banks']);
+  /* 雜湊(收件端用來檢查收到的完不完整)跟舊版一樣只算 keys、accounts;記在 tr_move_log 的要連 del 一起算 */
+  const noDel = Object.assign({}, pack);
+  delete noDel.del;
+  assert.equal(await P.hashOf(pack), await P.hashOf(noDel));
+  const h = await P.hashOf(pack);
+  assert.notEqual(P.logHash(pack, h), h);
+  assert.equal(P.logHash(noDel, h), h);
+  const d2 = SM.deleteBank(d.banks, d.tombs, 'b1', NOW - DAY);
+  const other = JSON.parse(J(pack));
+  other.del[UID] = [J(d2.tombs), NOW - DAY];
+  assert.notEqual(P.logHash(other, h), P.logHash(pack, h));
+  const init2 = Object.assign({}, init, { ['tr_u' + CPID + '_sync_del']: J(d2.tombs) });   // 只有刪除標記不一樣
+  const again = await moveInto(ls, init2);
+  assert.equal(again.hash, h);
+  assert.equal(again.plan.already, false);
+  assert.ok(Object.keys(JSON.parse(JSON.parse(ls.getItem('tr_move_pending_' + UID)).items[0][1]).vgame_banks.b).indexOf('b1') > -1);
+  const bad = (mut) => { const p = JSON.parse(J(pack)); mut(p); return R.validate(p, NOW).ok; };
+  assert.equal(bad((p) => { p.del = [1]; }), false);
+  assert.equal(bad((p) => { p.del = { 'not-uuid': [J(d.tombs), 1] }; }), false);
+  assert.equal(bad((p) => { p.del[UID] = ['{broken', 1]; }), false);
+  assert.equal(bad((p) => { p.del[UID] = [J(d.tombs), 1.5]; }), false);
+  assert.equal(bad((p) => { p.del[UID] = [J(d.tombs)]; }), false);
+  assert.equal(bad((p) => { p.accounts[UID].push(['sync_del', J(d.tombs), 1]); }), false);   // 兩個地方都有:不知道用哪份,整包拒收
   return 'ok';
 };
 

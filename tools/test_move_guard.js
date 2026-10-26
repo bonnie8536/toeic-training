@@ -112,7 +112,10 @@ T['沒換成「用舊網址的」那幾項(unfinished):這次的雜湊不記成�
 T['收件頁:備份放不下時不默默丟掉「用舊網址的」;不送「搬好了」給舊網址;給「下載這台現在的資料」再換'] = () => {
   const src = read('js/move-in-page.js');
   assert.ok(/choices: \{\}, unfinished: chosen\.length > 0/.test(src), '改用沒備份的合併時要標 unfinished');
-  assert.ok(/if \(!t\.plan\.skipped\.length && !left\.length\) \{ if \(link\) link\.done\(ctx\.hash\)/.test(src), '沒搬完不送 done');
+  assert.ok(/if \(!t\.plan\.skipped\.length && !left\.length\) \{ if \(link\) link\.done\(ctx\.sent\)/.test(src), '沒搬完不送 done');
+  /* 回報「搬好了」用寄出頁送來的雜湊(寄出頁比對它);記在 tr_move_log 的連刪除標記 del 一起算(MOVE_PACK.logHash) */
+  assert.ok(/hash: P\.logHash\(pack, hash\), sent: hash/.test(src), 'ctx.hash 要用 logHash、ctx.sent 是送來的雜湊');
+  assert.ok(!/link\.done\(ctx\.hash\)/.test(src), 'link.done 不能用 logHash(寄出頁會等不到 done)');
   assert.ok(/下載這台現在的資料/.test(src));
   assert.ok(!/「用舊網址的」那幾項維持這台的/.test(src), '不能再說維持這台的就算搬完');
   return 'ok';

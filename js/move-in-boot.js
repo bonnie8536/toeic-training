@@ -3,11 +3,13 @@
    1. 上次搬到一半分頁被關,js/common.js 已經照日誌處理過(tr_move_restored):請再搬一次。
    2. 這台有從舊網址搬來、還沒合併的帳號進度(tr_move_pending_<帳號 id>),目前卻沒登入那個帳號:請登入一次(每一頁都出現)。
    3. 從切換日起,還沒搬過(沒有 tr_move_log)也沒按過「沒有」:以前在舊網址練習過?先搬再開始。
+      但這一頁是舊網址帶過來的(document.referrer 是舊網址):舊網址那邊已經判斷過(沒資料、搬過了、或按了「不用，直接去新網址」),
+      不再問,直接記成按過「沒有」(tr_move_hint_off);「我的」頁的入口照樣留著。
    「我的」頁另外一直留一個「從舊網址搬進度」的入口。
    iPhone 主畫面 App 裡:按鈕改成「貼上搬家碼」(move-in.html)。主畫面 App 的資料跟 Safari 分開存,從這裡連到舊網址會開在 Safari,
    拿不到舊的主畫面 App 的資料;舊的 App 只用文字說明怎麼做。
    也回應收件頁的 BroadcastChannel('rushup-move'):問「還有誰開著」就回答;收件頁寫完叫大家重新整理就重新整理。
-   只讀 localStorage,只寫 tr_move_hint_off(按「沒有」)與刪 tr_move_restored(看過提示)。畫面只用 textContent。 */
+   只讀 localStorage,只寫 tr_move_hint_off(按「沒有」,或從舊網址帶過來)與刪 tr_move_restored(看過提示)。畫面只用 textContent。 */
 (function (root) {
   'use strict';
   const M = root.MOVE;
@@ -37,7 +39,7 @@
   function which(s) {
     if (s.restored) return 'restored';
     if (s.pending.some((id) => id !== s.uid)) return 'pending';
-    if (!s.log && !s.hintOff) return 'hint';
+    if (!s.log && !s.hintOff) return s.fromOld ? 'hint-skip' : 'hint';
     return '';
   }
 
@@ -64,9 +66,13 @@
   }
   const close = () => { const x = root.document.getElementById('move-bar'); if (x) x.remove(); };
 
+  function fromOld() {
+    try { const r = root.document.referrer; return !!r && M.from.indexOf(new URL(r).origin) > -1; } catch (e) { return false; }
+  }
   function draw() {
-    const s = { restored: get('tr_move_restored') !== null, pending: pendingFor(), uid: signedInId(), log: get('tr_move_log') !== null, hintOff: get('tr_move_hint_off') === '1' };
+    const s = { restored: get('tr_move_restored') !== null, pending: pendingFor(), uid: signedInId(), log: get('tr_move_log') !== null, hintOff: get('tr_move_hint_off') === '1', fromOld: fromOld() };
     const kind = which(s);
+    if (kind === 'hint-skip') { try { root.localStorage.setItem('tr_move_hint_off', '1'); } catch (e) { /* 下一頁不是從舊網址來的就會問 */ } }
     if (kind === 'restored') {
       bar(IOS_APP ? '上次搬家搬到一半就關掉了。已經合併好的留著，其他的換回搬之前的樣子。請在舊的 App 重新複製搬家碼，再貼一次，把沒搬完的補上。' : '上次搬家搬到一半就關掉了。已經合併好的留著，其他的換回搬之前的樣子。請回舊網址再搬一次，把沒搬完的補上。', [
         IOS_APP ? { label: '貼上搬家碼', primary: true, href: 'move-in.html' } : { label: '回舊網址搬', primary: true, href: OLD_PAGE },

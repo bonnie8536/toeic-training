@@ -295,6 +295,10 @@ T['move-in-boot:一次一條,依序是還原過、還沒合併的帳號進度(�
   assert.equal(w({ restored: false, pending: [], uid: '', log: false, hintOff: false }), 'hint');
   assert.equal(w({ restored: false, pending: [], uid: '', log: false, hintOff: true }), '');
   assert.equal(w({ restored: false, pending: [], uid: '', log: true, hintOff: false }), '');
+  // 舊網址帶過來的(referrer 是舊網址):舊網址已經判斷過,不再問
+  assert.equal(w({ restored: false, pending: [], uid: '', log: false, hintOff: false, fromOld: true }), 'hint-skip');
+  assert.equal(w({ restored: false, pending: [U], uid: '', log: false, hintOff: false, fromOld: true }), 'pending');
+  assert.equal(w({ restored: true, pending: [], uid: '', log: false, hintOff: false, fromOld: true }), 'restored');
 };
 T['兩頁都拒絕被框住;收件頁不載 cloud.js、pet-store.js;寄出頁要等 cloud.js 灌完資料才讓人按'] = () => {
   for (const f of ['move-in.html', 'move-out.html']) assert.match(read(f), /window\.top !== window\.self/);

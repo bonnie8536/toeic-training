@@ -11,8 +11,8 @@
      記號改回 tr_hd,不帶走(新網址連不上時練習的、退回期間練習的、舊的 App 離線用的,都不會被默默留在這裡)。
    - 搬過了、新網址連不上:頁面頂端說這裡練習的進度不會自動過去,連得上之後會提醒再搬一次。
    - 離開這一頁(pagehide、切到背景)時重算一次記號:在這一頁練習的,下一次 Worker 就知道這台又有要搬的。
-   - 沒資料也沒登入:帶到新網址同一路徑,帶之前刪掉自己 ss- 開頭的快取、註銷 service worker(這台不需要它接轉址)。
-   - 有資料還沒搬:頁面頂端一條提示,「現在搬」「先不要」;價格、註冊、付款結果頁改成先問要不要先搬。
+   - 沒資料也沒登入:頁面頂端先說「拍謝！我們換網址了…正在幫你導過去」,約 1.8 秒後帶到新網址同一路徑,帶之前刪掉自己 ss- 開頭的快取、註銷 service worker(這台不需要它接轉址)。
+   - 有資料還沒搬:頁面頂端一條提示,「帶我過去（進度一起搬）」「等一下再搬」;價格、註冊、付款結果頁改成先問要不要先搬。
    - 登入著、沒有要搬的:提示到新網址重新登入一次;按下去先補傳(CLOUD.flushForMove),剩 0 項才走,有剩就去搬家頁。
    這支只讀 localStorage,除了上面兩個記號以外不寫任何東西,一筆資料都不刪不改。畫面只用 textContent。 */
 (function (root) {
@@ -126,7 +126,8 @@
   }
   function later() { try { return root.sessionStorage.getItem('tr_move_later') === '1'; } catch (e) { return false; } }
   function setLater() { try { root.sessionStorage.setItem('tr_move_later', '1'); } catch (e) { /* 只是下一頁還會出現 */ } }
-  const RENAMED = '刷刷英文改名為衝衝英文，搬到新網址 ';
+  const RENAMED = '拍謝！我們換網址了，因為名字跟別人重疊！新網址是 ';
+  const GO_DELAY_MS = 1800;   // 沒有要搬的:先讓人看到上面那句,再帶過去
   function close() { setLater(); const x = root.document.getElementById('move-bar'); if (x) x.remove(); }
   function show(kind, st) {
     const M = root.MOVE;
@@ -134,14 +135,19 @@
     if (kind === 'bar') {
       if (later()) return;
       if (again) {
-        return bar(RENAMED + M.newName + '。這台在上次搬家之後又有新的進度，要再搬一次，在新網址才看得到。', [
+        return bar(RENAMED + M.newName + '。這台在上次搬家之後又有新的練習進度，要再搬一次，按下面的按鈕我幫你帶過去。', [
           { label: '再搬一次', primary: true, href: 'move-out.html' },
-          { label: '先不要', onClick: close },
+          { label: '等一下再搬', onClick: close },
         ]);
       }
-      return bar(RENAMED + M.newName + '。這台的進度要搬過去，在新網址才看得到。', [
-        { label: '現在搬', primary: true, href: 'move-out.html' },
-        { label: '先不要', onClick: close },
+      return bar(RENAMED + M.newName + '。這台的練習進度，按下面的按鈕，我幫你一起帶過去。', [
+        { label: '帶我過去（進度一起搬）', primary: true, href: 'move-out.html' },
+        { label: '等一下再搬', onClick: close },
+      ]);
+    }
+    if (kind === 'go') {
+      return bar(RENAMED + M.newName + '。正在幫你導過去…', [
+        { label: '馬上過去', primary: true, onClick: () => go(!(st && st.hasData) || !!(st && st.moved)) },
       ]);
     }
     if (kind === 'offline') {
@@ -151,13 +157,13 @@
       ]);
     }
     if (kind === 'ask') {
-      return bar(RENAMED + M.newName + '，舊網址不再註冊與付款。這台有' + (again ? '上次搬家之後的新' : '練習') + '進度，要先搬過去嗎？', [
-        { label: '先搬進度', primary: true, href: 'move-out.html' },
+      return bar(RENAMED + M.newName + '，舊網址不再註冊與付款。這台有' + (again ? '上次搬家之後的新' : '練習') + '進度，我幫你一起帶過去。', [
+        { label: '帶我過去（進度一起搬）', primary: true, href: 'move-out.html' },
         { label: '不用，直接去新網址', onClick: () => go(false) },
       ]);
     }
     if (kind === 'login') {
-      return bar(RENAMED + M.newName + '。到新網址重新登入一次，進度會從雲端回來。', [
+      return bar(RENAMED + M.newName + '。我幫你導過去，到新網址登入同一個帳號，進度會從雲端回來。', [
         { label: '前往新網址', primary: true, onClick: (e) => leaveLoggedIn(e.currentTarget) },
       ]);
     }
@@ -189,8 +195,15 @@
     if (decide(Object.assign({ pingOk: true }, base)) === 'stay') return Promise.resolve('stay');
     return ping().then((ok) => {
       const kind = decide(Object.assign({ pingOk: ok }, base));
-      if (kind === 'go') go(!st.hasData || st.moved);
-      else if (kind !== 'stay') {
+      if (kind === 'go') {
+        /* 先讓人看到換網址的那句話,再帶過去;畫不出來(沒有 body)就直接帶 */
+        const leave = () => go(!st.hasData || st.moved);
+        root.setTimeout(leave, GO_DELAY_MS);   // 計時器一定開,提示畫不出來也照樣帶走
+        try {
+          const draw = () => { try { show('go', st); } catch (e) { /* 只是少了那句話 */ } };
+          if (root.document && root.document.body) draw(); else if (root.document) root.document.addEventListener('DOMContentLoaded', draw);
+        } catch (e) { /* 照樣會帶走 */ }
+      } else if (kind !== 'stay') {
         const draw = () => show(kind, st);
         if (root.document.body) draw(); else root.document.addEventListener('DOMContentLoaded', draw);
       }

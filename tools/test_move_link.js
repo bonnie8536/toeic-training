@@ -265,7 +265,7 @@ T['搬過了、新網址連不上:提示這裡練習的不會自動過去;離開
   assert.match(lastCookie(a.cookies, 'tr_hd'), /^tr_hd=1;/);
   assert.match(lastCookie(a.cookies, 'tr_moved'), /^tr_moved=; Max-Age=0/);
   const src = read('js/move-out.js');
-  assert.match(src, /刷刷英文改名為衝衝英文/);
+  assert.match(src, /拍謝！我們換網址了，因為名字跟別人重疊！/);
   assert.match(src, /visibilitychange/);
 };
 T['寄出頁:準備時記下指紋,搬好時存進 tr_move_done;按「我已經在新網址搬好了」也記'] = () => {

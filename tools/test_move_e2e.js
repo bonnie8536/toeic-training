@@ -273,7 +273,7 @@ T['舊網址每一頁:有資料出現搬家提示;搬好之後帶到新網址同
   await s.until('location.origin === ' + J(NEW), 8000, '帶到新網址');
   const where = await s.eval('location.pathname + location.search');
   await s.close();
-  return { ok: /現在搬/.test(barTxt) && /tr_hd=1/.test(cookie) && stayed && where === '/vocab.html?x=1', detail: J({ cookie, stayed, where }) };
+  return { ok: /帶我過去/.test(barTxt) && /tr_hd=1/.test(cookie) && stayed && where === '/vocab.html?x=1', detail: J({ cookie, stayed, where }) };
 };
 T['兩邊都有的寫作與文章單字:兩份都留(比較新的放原位);閱讀題新網址的作答不被換掉;確認畫面明講,不說「不會少」'] = async (B) => {
   const oldTab = await tab(B);
@@ -425,7 +425,7 @@ T['搬好之後新網址連不上:舊網址每一頁說這裡練習的不會自�
   await inTab.until('/搬好了/.test(document.body.innerText)', 8000, '再搬一次搬好了');
   const got = await inTab.ls();
   await inTab.close(); await oldTab.close();
-  const ok = /連不上新網址/.test(offTxt) && /不會自動過去/.test(offTxt) && stayed && /再搬一次/.test(againTxt) && /刷刷英文改名為衝衝英文/.test(againTxt)
+  const ok = /連不上新網址/.test(offTxt) && /不會自動過去/.test(offTxt) && stayed && /再搬一次/.test(againTxt) && /拍謝！我們換網址了，因為名字跟別人重疊！/.test(againTxt)
     && /tr_hd=1/.test(cookie) && !/tr_moved=1/.test(cookie) && J(got.tr_hist).indexOf('practiced-while-down') > -1;
   return { ok, detail: J({ offTxt: offTxt.slice(0, 80), stayed, againTxt: againTxt.slice(0, 80), cookie }) };
 };

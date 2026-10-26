@@ -86,7 +86,7 @@
     const btn = h('button', { class: 'btn primary', type: 'button' }, '準備搬家');
     const msg = h('div', { class: 'result-note' });
     btn.addEventListener('click', () => prepare(btn, msg));
-    draw(say('刷刷英文改名為衝衝英文，搬到新網址 ' + M.newName + '。瀏覽器的資料是依網址分開存的，這台的進度要搬過去，在新網址才看得到。'),
+    draw(say('拍謝！我們換網址了，因為名字跟別人重疊！新網址是 ' + M.newName + '。瀏覽器的資料是依網址分開存的，我幫你把這台的進度帶過去，在新網址就看得到。'),
       ...notes,
       say('搬家不會刪掉或改掉這裡的任何資料。搬的過程中請不要關掉這一頁。'),
       h('div', { class: 'modal-row' }, btn), msg,

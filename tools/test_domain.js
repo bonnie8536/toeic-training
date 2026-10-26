@@ -139,8 +139,8 @@ T['原名:Bonnie 說原名不用加(2026-10-23)——頁尾只寫「衝衝英文
   });
   assert.ok(files['index.html'].indexOf('"alternateName":"Rushup"') > -1, 'index.html 的 JSON-LD 只列 Rushup');
   assert.equal(files['index.html'].indexOf('"alternateName":["Rushup","刷刷英文"]'), -1);
-  assert.ok(read('js/move-out.js').indexOf('刷刷英文改名為衝衝英文') > -1);
-  assert.ok(read('js/move-out-page.js').indexOf('刷刷英文改名為衝衝英文') > -1);
+  assert.ok(read('js/move-out.js').indexOf('拍謝！我們換網址了，因為名字跟別人重疊！') > -1);
+  assert.ok(read('js/move-out-page.js').indexOf('拍謝！我們換網址了，因為名字跟別人重疊！') > -1);
 };
 
 let pass = 0;

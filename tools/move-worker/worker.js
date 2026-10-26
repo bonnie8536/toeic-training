@@ -28,7 +28,7 @@ const NEW = 'https://www.rushuplanguage.com';
 const NEW_HOST = 'www.rushuplanguage.com';
 const OLD_WWW = 'www.shuashualanguage.com';
 const KEEP_PATHS = [/^\/move-out(\.html)?$/, /^\/move-ping\.txt$/, /^\/sw\.js$/];
-const KEEP_ASSETS = ['/css/style.css', '/img/favicon.svg', '/js/move-config.js', '/js/cloud-config.js', '/js/common.js', '/js/pet-config.js',
+const KEEP_ASSETS = ['/css/style.css', '/img/favicon.svg', '/js/move-config.js', '/js/cloud-config.js', '/js/common.js', '/js/sync-merge.js', '/js/pet-config.js',
   '/js/pet.js', '/js/cloud.js', '/js/move-rules.js', '/js/move-merge.js', '/js/move-pack.js', '/js/move-link.js', '/js/move-out.js', '/js/move-out-page.js'];
 const COOKIE_AGE = 34560000;   // 400 天,Chrome 的上限
 const HSTS = 'max-age=31536000';

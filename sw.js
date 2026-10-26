@@ -5,7 +5,7 @@
    (node tools/check_release.js 會檢查,--fix 自動換),舊快取整批作廢,不會拿新版共用檔配舊版頁面。
    不經手:跨網域(Supabase、jsDelivr、Google Fonts、Cloudflare)、非 GET、Range 請求、音檔、帶登入參數的頁面。
    這裡不讀寫學生的進度資料,只刪自己 ss- 開頭的快取。 */
-const V = 'v20261026-2246';
+const V = 'v20261026-2359';
 const PAGES = 'ss-pages-' + V;
 const ASSETS = 'ss-assets-' + V;
 const IMAGES = 'ss-img-' + V;
@@ -27,7 +27,7 @@ const ON_OLD = MOVE_FROM.indexOf(self.location.origin) > -1;
 const MOVE = 'ss-move-' + V;
 const MOVE_FLAG = 'ss-move-flag';
 const MOVE_PAGE = '/move-out.html';
-const MOVE_ASSETS = [MOVE_PAGE, '/css/style.css', '/img/favicon.svg', '/js/move-config.js', '/js/cloud-config.js', '/js/common.js', '/js/pet-config.js',
+const MOVE_ASSETS = [MOVE_PAGE, '/css/style.css', '/img/favicon.svg', '/js/move-config.js', '/js/cloud-config.js', '/js/common.js', '/js/sync-merge.js', '/js/pet-config.js',
   '/js/pet.js', '/js/cloud.js', '/js/move-rules.js', '/js/move-merge.js', '/js/move-pack.js', '/js/move-link.js', '/js/move-out.js', '/js/move-out-page.js'];
 
 self.addEventListener('install', (event) => {

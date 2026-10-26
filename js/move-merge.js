@@ -344,11 +344,12 @@
     const n2o = pHas(nb, ho), o2n = pHas(ob, hn);
     return n2o === o2n ? '' : (n2o ? 'new' : 'old');
   }
-  /* 舊網址那份比較新:用 SYNC_MERGE 合併(分不出的名稱、勾選偏舊網址那份),結果包含新網址那份的版本紀錄;合併不了回 null */
-  function joinNewer(nb, ob, now) {
+  /* 舊網址那份比較新:用 SYNC_MERGE 合併(分不出的名稱、勾選偏舊網址那份),結果包含新網址那份的版本紀錄;合併不了回 null。
+     both:兩邊都改過(看不出誰新),不偏哪一份,照同步的規則(名稱看得出誰從誰改的就用改過的,不然用時間晚的) */
+  function joinNewer(nb, ob, now, both) {
     const S = sync();
     let m = null;
-    try { m = S ? S.banks([nb], [ob], { now, localClean: true }) : null; } catch (e) { m = null; }
+    try { m = S ? S.banks([nb], [ob], both ? { now } : { now, localClean: true }) : null; } catch (e) { m = null; }
     const v = m && m.ok === true && Array.isArray(m.v) ? m.v.filter((b) => bankId(b) === bankId(ob)) : [];
     return v.length === 1 ? v[0] : null;
   }
@@ -370,7 +371,8 @@
     };
     let skipped = 0, n = 0, replaced = false;
     const ids = () => new Set(out.map(bankId));
-    const hasBody = (body) => out.some((b) => bankBody(b) === body);
+    /* 別的題庫已經有一模一樣的字(連戳記)。沒有字的題庫不算:每個空題庫的字都一樣,以前舊網址新建、還沒加字的題庫(和它的名稱)會因為新網址有別的空題庫就沒搬過去 */
+    const hasBody = (body) => body !== '[]' && body !== 'null' && out.some((b) => bankBody(b) === body);
     const freshId = () => {
       const have = ids();
       let id;
@@ -391,17 +393,30 @@
       const same = out[at0];
       /* 這台上次送的就是這份(舊網址之後沒改過),落腳的題庫還在:新網址之後的修改都比它新,不再另存 */
       if (unchanged(id, b)) { skipped++; sent[folder + '|' + id] = sentPrev[folder + '|' + id]; return; }
+      const name = String(b.name || '');
+      const copyName = name.slice(-SUFFIX.length) === SUFFIX ? name : name + SUFFIX;
+      const was = prev.bankIds && prev.bankIds[folder + '|' + id];   // 上次另存的「（舊網址）」那份
+      const at = was ? out.findIndex((x) => bankId(x) === was) : -1;
+      /* 舊網址只改了名、字一模一樣(第三輪審查:以前看到「這些字新網址已經有了」就跳過,改的名稱不會過去)。字一樣的只有:
+         nameOnly:同一個 id 的這份(或沒有字);copyRenamed:上次另存的「（舊網址）」那份,搬家寫的、之後沒動過。交給下面判斷 */
+      const twins = hasBody(body) ? out.reduce((a, x, i) => (bankBody(x) === body ? a.concat(i) : a), []) : [];
+      const nameOnly = bankBody(same) === body && same.name !== b.name && twins.every((i) => i === at0);
+      const copyRenamed = !nameOnly && at > -1 && twins.length === 1 && twins[0] === at && wroteBy(out[at]) && out[at].name !== copyName;
       /* 只差同步的戳記(看得到的都一樣)、或新網址那份是從舊網址這份改過來的:舊網址這份沒有新東西 */
-      if (canon(same) === canon(b) || hasBody(body) || bankLook(same) === bankLook(b) || stampOrder(same, b) === 'new') { skipped++; note(id, b, hasBody(body) ? bodyAt(body) : id); return; }
+      if (canon(same) === canon(b) || (hasBody(body) && !nameOnly && !copyRenamed) || bankLook(same) === bankLook(b) || stampOrder(same, b) === 'new') { skipped++; note(id, b, hasBody(body) ? bodyAt(body) : id); return; }
       if (wroteBy(same)) { out[at0] = b; updated.push(String(b.name || '')); keep.push(id); replaced = true; note(id, b, id); return; }   // 舊網址後來改過、新網址沒動:換成舊網址的新版
       if (stampOrder(same, b) === 'old') {   // 舊網址那份是從新網址這份改過來的(戳記看得出來):換成合併後的新版,新網址原本那份寫入前備份
         const j = joinNewer(same, b, ctx.now);
         if (j) { out[at0] = j; updated.push(String(j.name || '')); keep.push(id); replaced = true; note(id, b, id); return; }
       }
-      const name = String(b.name || '');
-      const copy = Object.assign({}, b, { name: name.slice(-SUFFIX.length) === SUFFIX ? name : name + SUFFIX });
-      const was = prev.bankIds && prev.bankIds[folder + '|' + id];
-      const at = was ? out.findIndex((x) => bankId(x) === was) : -1;
+      /* 字一樣、兩邊都動過(例如兩邊刪了同一個字、只有舊網址改了名):不為了名稱多複製一整份題庫;
+         名稱照同步的規則(只有舊網址改名就用舊網址的,兩邊都改了用時間晚的),換掉時新網址原本那份寫入前備份 */
+      if (nameOnly) {
+        const j = joinNewer(same, b, ctx.now, true);
+        if (j && j.name !== same.name) { out[at0] = j; updated.push(String(j.name || '')); keep.push(id); replaced = true; note(id, b, id); return; }
+        skipped++; note(id, b, id); return;
+      }
+      const copy = Object.assign({}, b, { name: copyName });
       if (at > -1 && wroteBy(out[at])) { out[at] = Object.assign(copy, { id: was }); remap[id] = was; renamed.push(copy.name); keep.push(was); replaced = true; note(id, b, was); return; }
       const nid = was && at < 0 ? was : freshId();
       out.push(Object.assign(copy, { id: nid }));

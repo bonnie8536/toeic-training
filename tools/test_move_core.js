@@ -513,6 +513,73 @@ T['再搬一次:舊網址的題庫沒變、學生把「（舊網址）」複本�
   return J(names);
 };
 
+/* ---------- 舊網址只改了題庫名稱(字沒動)(第三輪審查) ----------
+   以前看到「這些字新網址已經有了」就跳過,舊網址搬完之後改的名稱不會過去 */
+const renamed = (b, name, t) => edit(b, t, (x) => Object.assign({}, x, { name }));
+T['再搬一次:舊網址搬完之後只改了題庫名稱、新網址沒動過:名稱跟過去,不多一份;新網址原本那份寫入前備份'] = async () => {
+  const ls = makeStorage(0, {});
+  const b0 = sbank('b1', '甲', ['a', 'b'], NOW - 9 * DAY);
+  await moveInto(ls, { tr_vgame_banks: J([b0]) });
+  await moveInto(ls, { tr_vgame_banks: J([renamed(b0, '乙', NOW - 8 * DAY)]) });
+  const after = JSON.parse(ls.getItem('tr_vgame_banks'));
+  assert.deepEqual(after.map((b) => [b.id, b.name, wordsOf(b)]), [['b1', '乙', ['a', 'b']]]);
+  const bk = JSON.parse(ls.getItem('tr_move_backup_' + NOW));
+  assert.ok(bk && bk.keys.some((e) => e[0] === 'tr_vgame_banks' && JSON.parse(e[1])[0].name === '甲'), '備份裡有改名前那份');
+  return 'ok';
+};
+
+T['再搬一次:舊網址只改了名、新網址刪了同一個字(字又一樣了):用舊網址的名稱,不為了名稱多一份;兩邊都改了名用後改的'] = async () => {
+  const b0 = sbank('b1', '甲', ['a', 'b'], NOW - 9 * DAY);
+  const gone = (b, t) => SM.deleteWord([b], null, 'b1', 'b', t).banks[0];
+  const ls = makeStorage(0, {});
+  await moveInto(ls, { tr_vgame_banks: J([b0]) });
+  ls.setItem('tr_vgame_banks', J([gone(JSON.parse(ls.getItem('tr_vgame_banks'))[0], NOW - 8 * DAY)]));
+  await moveInto(ls, { tr_vgame_banks: J([renamed(gone(b0, NOW - 7 * DAY), '乙', NOW - 6 * DAY)]) });
+  assert.deepEqual(JSON.parse(ls.getItem('tr_vgame_banks')).map((b) => [b.name, wordsOf(b)]), [['乙', ['a']]]);
+  /* 兩邊都改了名:新網址先改(丙)、舊網址後改(丁)→ 丁;新網址後改 → 留新網址的 */
+  for (const [tn, to, want] of [[NOW - 5 * DAY, NOW - 4 * DAY, '丁'], [NOW - 4 * DAY, NOW - 5 * DAY, '丙']]) {
+    const l2 = makeStorage(0, {});
+    await moveInto(l2, { tr_vgame_banks: J([b0]) });
+    l2.setItem('tr_vgame_banks', J([renamed(JSON.parse(l2.getItem('tr_vgame_banks'))[0], '丙', tn)]));
+    await moveInto(l2, { tr_vgame_banks: J([renamed(b0, '丁', to)]) });
+    assert.deepEqual(JSON.parse(l2.getItem('tr_vgame_banks')).map((b) => [b.name, wordsOf(b)]), [[want, ['a', 'b']]], want);
+  }
+  return 'ok';
+};
+
+T['再搬一次:舊網址只改了名、那個題庫上次另存成「（舊網址）」而且新網址沒動過那份:那份換成新名稱,不多一份'] = async () => {
+  const ls = makeStorage(0, {});
+  const b0 = sbank('b1', '甲', ['a'], NOW - 9 * DAY);
+  await moveInto(ls, { tr_vgame_banks: J([b0]) });
+  ls.setItem('tr_vgame_banks', J([addW(JSON.parse(ls.getItem('tr_vgame_banks'))[0], 'n', NOW - 8 * DAY)]));
+  const o1 = addW(b0, 'o', NOW - 7 * DAY);
+  await moveInto(ls, { tr_vgame_banks: J([o1]) });
+  assert.deepEqual(namesOf(ls), ['甲', '甲（舊網址）']);
+  await moveInto(ls, { tr_vgame_banks: J([renamed(o1, '乙', NOW - 6 * DAY)]) });
+  const after = JSON.parse(ls.getItem('tr_vgame_banks'));
+  assert.deepEqual(after.map((b) => [b.name, wordsOf(b)]), [['甲', ['a', 'n']], ['乙（舊網址）', ['a', 'o']]]);
+  /* 學生在新網址改過那份複本(加了字):那份不動(學生加的字在),舊網址改名後的那份照舊另存(寧可多留) */
+  const l2 = makeStorage(0, {});
+  await moveInto(l2, { tr_vgame_banks: J([b0]) });
+  l2.setItem('tr_vgame_banks', J([addW(JSON.parse(l2.getItem('tr_vgame_banks'))[0], 'n', NOW - 8 * DAY)]));
+  await moveInto(l2, { tr_vgame_banks: J([o1]) });
+  const nb = JSON.parse(l2.getItem('tr_vgame_banks'));
+  const mine = [nb[0], addW(nb[1], 'm', NOW - 7 * DAY + 1000)];
+  l2.setItem('tr_vgame_banks', J(mine));
+  await moveInto(l2, { tr_vgame_banks: J([renamed(o1, '乙', NOW - 6 * DAY)]) });
+  const a2 = JSON.parse(l2.getItem('tr_vgame_banks'));
+  assert.deepEqual(a2.slice(0, 2), mine);
+  assert.deepEqual(a2.slice(2).map((b) => [b.name, wordsOf(b)]), [['乙（舊網址）', ['a', 'o']]]);
+  return 'ok';
+};
+
+T['題庫(訪客):舊網址新建、還沒加字的題庫,新網址已經有別的空題庫:照樣搬過去,名稱在'] = async () => {
+  const ls = makeStorage(0, { tr_vgame_banks: J([sbank('e1', '新網址的空題庫', [], NOW - 9 * DAY)]) });
+  await moveInto(ls, { tr_vgame_banks: J([sbank('e2', '舊網址的空題庫', [], NOW - 8 * DAY)]) });
+  assert.deepEqual(namesOf(ls), ['新網址的空題庫', '舊網址的空題庫']);
+  return 'ok';
+};
+
 /* ---------- 刪除標記不放進 accounts(第二輪審查 #3) ----------
    新網址 service worker 快取的舊收件頁(844e936)的 MOVE_RULES 沒有 sync_del 的規則,accounts 裡有就整包拒收。
    新版寄出頁把刪除標記放在另外的 del 欄位(舊收件頁不看,只會讓刪掉的回來,不會少),雜湊照舊只算 keys、accounts */

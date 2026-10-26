@@ -31,7 +31,7 @@
 
   /* ============ 文章列表 ============ */
   function renderList() {
-    document.title = '閱讀訓練|刷刷英文';
+    document.title = '閱讀訓練|衝衝英文';
     let levelFilter = '全部';
 
     const head = h('div', { class: 'page-head' },
@@ -93,7 +93,7 @@
 
   /* ============ 閱讀器 ============ */
   function renderReader(a) {
-    document.title = a.title + '|刷刷英文';
+    document.title = a.title + '|衝衝英文';
     const vocabMap = {};
     (a.vocab || []).forEach(v => { vocabMap[v.word.toLowerCase()] = v; });
     /* state = {idx: {t: 學生填的內容}};不批改對錯,填了就算完成,之後可修改 */
@@ -199,7 +199,11 @@
     }
 
     function saveFill(idx, text) {
+      /* 搬家留下的另一份(js/move-merge.js 的 alt,搬家時另一邊填的):改填答時留著 */
+      const alt = state[idx] && Array.isArray(state[idx].alt) ? state[idx].alt.filter(x => x !== text) : [];
       state[idx] = { t: text };
+      /* 搬家留下的另一份:接回去 */
+      if (alt.length) state[idx].alt = alt;
       store.set('vocab_' + a.id, state);
       updateProgress();
     }
@@ -315,6 +319,10 @@
         differs || !typed
           ? h('div', null, h('span', { class: 'pop-word' }, surface), h('span', { class: 'pop-pos' }, (entry.pos || '') + ' 原文'))
           : h('div', { class: 'pop-pos' }, entry.pos || ''),
+        /* 搬家留下的另一份 */
+        Array.isArray(st.alt) && st.alt.length
+          ? h('div', { class: 'pop-pos' }, '搬家時另一份填的：' + st.alt.join('、'))
+          : null,
         h('div', { class: 'pop-zh' }, entry.zh, ' ', baseNote),
         h('div', { class: 'pop-hint' }, h('b', null, '英文釋義'), entry.hint),
         h('div', { class: 'pop-actions' },

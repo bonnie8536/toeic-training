@@ -1218,21 +1218,25 @@
   /* ---------- 搬家(搬家計畫 2.7) ----------
      舊網址:CLOUD.flushForMove() 在寄出頁「準備搬家」時呼叫。跟登出前一樣先叫小雞把等著的動作寫下來,但不登出、不刪任何東西;
      帳本上(加上只在本機標記的 pet)每一項先讀雲端那一列的 updated_at:雲端沒有、或比帳本舊,照原本的方式上傳(pet 先合併再傳);
-     雲端比帳本新的不上傳(uploadPlain 不比新舊,會用舊的蓋掉別台的新版),連同傳不上去的一起交給搬家包,
+     合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄)不看 updated_at,一律先合併再上傳(合併不會蓋掉別台的東西);
+     其他雲端比帳本新的不上傳(uploadPlain 不比新舊,會用舊的蓋掉別台的新版),連同傳不上去的一起交給搬家包,
      這一頁之後也不再自動補傳它們(held,只在這一頁,不寫進任何儲存)。回 { ok, left, accounts: { 帳號 id: [[鍵, 原字串, 帳本時間]] } }。
      新網址:收件頁把那幾項存成 tr_move_pending_<帳號 id>,這個帳號在這台登入、灌資料時由 takePending 處理(手上有雲端每一列的 updated_at):
      先決定這台這一項算不算數(跟下面灌資料同一套規則):本機有,而且帳本上比雲端新(或雲端沒有這一列)、
      或帳本沒記但雲端完全沒有這一列(從沒上傳過),就以本機那份為底;否則以雲端那份為底。
-     可以聯集的(題庫、練習紀錄、錯題、完成紀錄、最佳成績、每日練習)本機算數就本機跟雲端先合併,再跟暫存那份合併,
+     合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄)用同步的合併(js/sync-merge.js,同步合併設計 3.12):本機、雲端、暫存三份合併
+     (題庫套三份聯集的刪除標記;分不出先後的名稱、勾選:暫存那份比雲端新就偏暫存那份,本機有比暫存那份新的改動才不偏),寫進帳號資料夾、帳本記現在;
+     同一個題庫不會因為戳記不同另存「（舊網址）」,舊網址刪掉的題庫、字照標記刪掉;合併不了的(形狀認不得)暫存那份放進備份,本機不動。
+     其他可以聯集的(練習紀錄、錯題、完成紀錄、最佳成績、每日練習)本機算數就本機跟雲端先合併,再跟暫存那份合併,
      寫進帳號資料夾、帳本記現在,下面照常上傳;錯題本同一題留時間比較新的;同一項兩邊不一樣又沒辦法比的,沒選上的那一整份也放進備份;pet 本機沒有就放暫存那份,交給 planMerged 跟雲端合併;
      其他鍵(單一值)比時間:本機算數就拿帳本時間比(從沒上傳過的不知道時間,留本機),否則拿雲端那一列的時間比,暫存那份比較新才用。
      沒被選上的每一份(本機、雲端、暫存)都存進 tr_move_backup_<時間>。處理完刪掉暫存區。合併程式(js/move-rules.js、
-     js/move-merge.js、js/daily.js)載不到、或寫不進去,就整個不處理,暫存區留著,下一個分頁再來。 */
+     js/move-merge.js、js/daily.js、js/sync-merge.js)載不到、或寫不進去,就整個不處理,暫存區留著,下一個分頁再來。 */
   const held = new Set();
   function pendingKey(uid) { return 'tr_move_pending_' + uid; }
   function hasPending(uid) { try { return localStorage.getItem(pendingKey(uid)) !== null; } catch (e) { return false; } }
   function loadMovers() {
-    const have = () => !!(window.MOVE_RULES && window.MOVE_MERGE && window.DAILY);
+    const have = () => !!(window.MOVE_RULES && window.MOVE_MERGE && window.DAILY && window.SYNC_MERGE);
     if (have()) return Promise.resolve(true);
     const add = src => new Promise((res, rej) => {
       const s = document.createElement('script');
@@ -1241,14 +1245,16 @@
     });
     const load = (window.MOVE_RULES ? Promise.resolve() : add('js/move-rules.js')).then(() => (window.MOVE_MERGE ? null : add('js/move-merge.js')))
       .then(() => (window.DAILY ? null : add('js/daily.js')))
+      .then(() => (window.SYNC_MERGE ? null : add('js/sync-merge.js')))
       .then(have, () => false);
     return Promise.race([load, new Promise(resolve => setTimeout(() => resolve(false), READ_TIMEOUT_MS))]);
   }
-  const UNION = { banks: 1, hist: 1, mock: 1, idmap: 1, answers: 1, texts: 1, fills: 1, pool: 1, best: 1, pairsBest: 1, clear: 1, daily: 1 };   // answers:雲端答過的不換;texts、fills:兩份都留(js/move-merge.js);daily:DAILY.merge
+  /* 題庫、刪除標記、模擬考紀錄不在這裡:合併表上的鍵走 takeSynced(SYNC_MERGE)。題庫不能用 MOVE_MERGE.mergeBanks:
+     它把蓋過戳記的同一個題庫當成內容不同,另存一份「（舊網址）」、刪除標記(用 id 記)也對不上那份(tools/test_sync_move_compat.js) */
+  const UNION = { hist: 1, mock: 1, idmap: 1, answers: 1, texts: 1, fills: 1, pool: 1, best: 1, pairsBest: 1, clear: 1, daily: 1 };   // answers:雲端答過的不換;texts、fills:兩份都留(js/move-merge.js);daily:DAILY.merge
   /* 兩份合併:回 { v, lost }(合併不了回 null)。lost:b 那份有項目沒留下來(同一項兩邊不一樣又沒辦法比,js/move-merge.js 的 dropped),
      呼叫的人要把 b 那份放進備份 */
   function unionOf(MM, rule, k, a, b, now) {
-    if (rule === 'banks') { const m = MM.mergeBanks(a, b, 'acct', {}, { now }); return m ? { v: m.banks, lost: false } : null; }
     const m = MM.mergeOne(rule, k, a, b, { now, daily: window.DAILY });
     return m.kind === 'conflict' ? null : { v: m.v, lost: !!m.dropped };
   }
@@ -1263,6 +1269,56 @@
     [pv, local, cv].forEach(x => { if (x !== undefined && !same(x, keep) && !drop.some(d => same(d, x))) drop.push(x); });
     return { use, drop };
   }
+  /* 暫存區裡合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄):本機、雲端、暫存三份用 SYNC_MERGE 合併(同步合併設計 3.12)。
+     標記先合(三份聯集),題庫套合併後的標記。先合雲端和暫存那份(暫存那份比雲端新就在分不出先後時偏它),再合本機
+     (本機帳本上的改動不比暫存那份新就偏剛合好的那份);結果吸收過雲端那份,下面 planMerged 再跟雲端合併時不會又被改回去。
+     回 { sets: [[鍵, 原字串]], backup: [[鍵, 原字串]] };合併不了的鍵暫存那份放進備份,本機不動 */
+  function takeSynced(syncItems, led, cloud, prefix, now) {
+    const S = window.SYNC_MERGE, sets = [], backup = [];
+    const val = (raw) => { try { return raw === null || raw === undefined ? null : JSON.parse(raw); } catch (e) { return undefined; } };
+    const local = {}, cv = {};
+    ['sync_del', 'vgame_banks', 'mock_history'].forEach((k) => {
+      try { local[k] = val(localStorage.getItem(prefix + k)); } catch (e) { local[k] = undefined; }
+      const c = cloud[k];
+      cv[k] = c && c.v !== null && c.v !== undefined ? c.v : null;
+    });
+    const ok = (m) => !!m && m.ok === true;
+    const run = (fn) => { try { return fn(); } catch (e) { return null; } };
+    let T = null;
+    const t0 = run(() => S.tombs(local.sync_del === undefined ? null : local.sync_del, cv.sync_del, now));
+    if (ok(t0)) T = t0.v;
+    const byKey = new Map(syncItems.map((x) => [x.k, x]));
+    const pt = byKey.get('sync_del');
+    if (pt) { const t1 = run(() => S.tombs(T, pt.pv, now)); if (ok(t1)) T = t1.v; }
+    ['sync_del', 'vgame_banks', 'mock_history'].forEach((k) => {
+      const x = byKey.get(k);
+      if (!x) return;
+      const c = cloud[k], cloudT = c ? Date.parse(c.updated_at) : NaN;
+      const pendNewer = !(cloudT >= x.t);
+      const lv = local[k];
+      if (lv === undefined) { try { const raw = localStorage.getItem(prefix + k); if (raw !== null) backup.push([k, raw]); } catch (e) { /* 讀不到 */ } }
+      const base = lv === undefined ? null : lv;
+      const localNewer = led[k] !== undefined && led[k] >= x.t;
+      let m = null;
+      if (k === 'sync_del') m = T === null ? null : run(() => S.tombs(base, T, now));
+      else if (k === 'mock_history') { const a = run(() => S.mock(cv[k], x.pv)); m = ok(a) ? run(() => S.mock(base, a.v)) : null; }
+      else {
+        const a = run(() => (pendNewer ? S.banks(cv[k], x.pv, { now, tombs: T, localClean: true }) : S.banks(x.pv, cv[k], { now, tombs: T, localClean: cv[k] !== null })));
+        m = ok(a) ? run(() => S.banks(base, a.v, { now, tombs: T, localClean: !localNewer })) : null;
+        if (ok(m) && Array.isArray(m.v) && !m.sameAsLocal) m = { ok: true, v: orderLike(m.v, [base, cv[k], x.pv]), sameAsLocal: false };
+      }
+      if (!ok(m) || m.v === null) { backup.push([k, x.raw]); return; }
+      if (!m.sameAsLocal || lv === undefined) sets.push([k, JSON.stringify(m.v)]);
+    });
+    return { sets, backup };
+  }
+  /* 題庫的順序:本機的在前、雲端的接著、暫存那份才有的最後(SYNC_MERGE 照第一個參數的順序;分不出先後時偏第二個參數,所以參數順序不一定是這個) */
+  function orderLike(v, lists) {
+    const rank = new Map();
+    lists.forEach(l => { if (Array.isArray(l)) l.forEach(b => { if (b && typeof b.id === 'string' && !rank.has(b.id)) rank.set(b.id, rank.size); }); });
+    const r = b => (b && typeof b.id === 'string' && rank.has(b.id) ? rank.get(b.id) : Infinity);
+    return v.map((b, i) => [b, i]).sort((p, q) => r(p[0]) - r(q[0]) || p[1] - q[1]).map(p => p[0]);
+  }
   async function takePending(user, prefix, cloud) {
     if (!hasPending(user.id)) return;
     let items = null;
@@ -1271,13 +1327,14 @@
     if (!(await loadMovers())) return;
     const R = window.MOVE_RULES, MM = window.MOVE_MERGE;
     const now = Date.now();
-    const led = readLedger(user.id), backup = [], sets = [];
+    const led = readLedger(user.id), backup = [], sets = [], synced = [];
     const parse = raw => { try { return raw === null ? undefined : JSON.parse(raw); } catch (e) { return undefined; } };
     items.forEach(e => {
       if (!Array.isArray(e) || e.length !== 3 || typeof e[0] !== 'string' || typeof e[1] !== 'string') return;
       const k = e[0], raw = e[1], t = typeof e[2] === 'number' && isFinite(e[2]) ? Math.min(e[2], now) : 0;
       const rule = R.ruleOf(k), pv = parse(raw);
       if (!rule || pv === undefined) return;
+      if (spec(k) && !spec(k).clock) { synced.push({ k, raw, pv, t }); return; }   // 題庫、刪除標記、模擬考紀錄:下面 takeSynced 一起合併
       const c = cloud[k];
       const cv = c && c.v !== null && c.v !== undefined ? c.v : undefined;
       const cloudT = c ? Date.parse(c.updated_at) : NaN;
@@ -1319,6 +1376,11 @@
       if (pick.use === 'pending') { sets.push([k, raw]); led[k] = now; }
       else if (pick.use === 'local' && !hasLed) led[k] = now;   // 從沒上傳過的留本機:帳本記上,下面照常上傳
     });
+    if (synced.length) {
+      const r = takeSynced(synced, led, cloud, prefix, now);
+      r.backup.forEach(x => backup.push(x));
+      r.sets.forEach(x => { sets.push(x); led[x[0]] = now; });
+    }
     try {
       if (backup.length) localStorage.setItem('tr_move_backup_' + now, JSON.stringify({ at: now, uid: user.id, keys: backup }));
       sets.forEach(([k, v]) => localStorage.setItem(prefix + k, v));
@@ -1352,7 +1414,9 @@
     if (rows) {
       const upd = {};
       rows.forEach(r => { if (r && typeof r.k === 'string') upd[r.k] = Date.parse(r.updated_at); });
-      await Promise.all(Object.keys(first).filter(k => !(upd[k] >= first[k])).map(k => upload(user, k, first[k])));
+      /* 合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄)一律先合併再上傳:不會蓋掉別台的,傳上去的就不必放進搬家包 */
+      const merges = k => !!spec(k) && !spec(k).clock;
+      await Promise.all(Object.keys(first).filter(k => merges(k) || !(upd[k] >= first[k])).map(k => upload(user, k, first[k])));
     }
     const left = pend(), prefix = 'tr_u' + pidOf(user) + '_', items = [];
     Object.keys(left).sort().forEach(k => {

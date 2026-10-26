@@ -123,7 +123,7 @@
       r.addEventListener('change', () => { choices[x.key] = v; });
       return h('label', { style: 'display:block;margin:2px 0' }, r, ' ' + label);
     };
-    const why = { clock: '這台的時鐘跟伺服器差太多，小雞先不合併，留這台的。', pet: '小雞的資料版本對不上，留這台的。', broken: '這台的這一項讀不懂。', shape: '兩邊的格式不一樣，沒辦法合併。', daily: '每日練習沒辦法合併，留這台的。' };
+    const why = { clock: '這台的時鐘跟伺服器差太多，小雞先不合併，留這台的。', pet: '小雞的資料版本對不上，留這台的。', broken: '這台的這一項讀不懂。', shape: '兩邊的格式不一樣，沒辦法合併。', daily: '每日練習沒辦法合併，留這台的。', tombs: '刪除紀錄的格式認不得，留這台的（舊網址刪掉的題庫可能會回來，不會少）。' };
     const box = h('div', { class: 'q-block', style: 'padding:10px 14px;margin:8px 0' }, h('b', null, x.label));
     if (x.sub === 'current_profile') box.append(say('要不要切換到舊網址的學生檔案「' + (x.oldName || '未命名') + '」？'));
     else if (why[x.why]) box.append(say(why[x.why]));

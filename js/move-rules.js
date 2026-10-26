@@ -7,9 +7,11 @@
 (function (root) {
   'use strict';
 
-  /* 模組鍵 → 合併規則(規則的意思在 js/move-merge.js) */
+  /* 模組鍵 → 合併規則(規則的意思在 js/move-merge.js)。
+     sync_del:自訂題庫的刪除標記(js/sync-merge.js,只有雲端帳號的資料夾會寫)。tombs = 兩份標記聯集(SYNC_MERGE.tombs),
+     不能是 single(整份換掉):少了別台的標記,刪掉的題庫和字會回來;沒有規則時搬家包整包被 validate 拒絕。 */
   const EXACT = Object.freeze({
-    hist: 'hist', mock_history: 'mock', pet: 'pet', daily_done: 'daily', vgame_banks: 'banks',
+    hist: 'hist', mock_history: 'mock', pet: 'pet', daily_done: 'daily', vgame_banks: 'banks', sync_del: 'tombs',
     vgame_best: 'best', vgame_toast_best: 'best', vgame_pairs_best: 'pairsBest', vgame_clear: 'clear',
     vgame_done: 'idmap', vgame_miss: 'pool', phrase_drill: 'pool', verb_quiz: 'pool',
     grammar_done: 'idmap', phonics_done: 'idmap', dlg_heard: 'idmap',
@@ -41,7 +43,9 @@
   const NAME_MAX = 100;
   const DEVICE = /^[0-9a-f]{16,64}$/;
   const LOCAL_ONLY = /^tr_localonly_([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/;
-  const LOCAL_ONLY_SUBS = Object.freeze(['pet']);   // 跟 js/cloud.js 的 MERGED 一樣:只在本機標記、還沒合併上傳的鍵
+  /* 「只在本機」標記(tr_localonly_)只有 pet-store 會寫,所以只有 pet。js/cloud.js 的 MERGED 表後來加了題庫、刪除標記、模擬考紀錄,
+     那幾個一律經過 store.set 記帳本(帳本上的照樣搬),不會只有標記 */
+  const LOCAL_ONLY_SUBS = Object.freeze(['pet']);
 
   function ruleOf(sub) {
     if (typeof sub !== 'string') return null;

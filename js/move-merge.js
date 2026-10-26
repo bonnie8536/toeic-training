@@ -3,6 +3,12 @@
    - 題庫(vgame_banks):用 id 合併,任何一個題庫都不會少;同 id 內容不同就改一個新 id、名稱加「（舊網址）」,
      並把 vgame_best、vgame_clear、vgame_pairs_best、vgame_toast_best、vgame_done 裡 bank:<舊 id> 那幾項
      與指到它的 vgame_src 一起複製到 bank:<新 id>(js/vocab.js 用 bank:<id> 對應題庫)。
+     新版頁面寫的題庫有同步的戳記(js/sync-merge.js:_r、_t、_p…,每改一次就變):只差戳記、看得到的內容一樣(名稱、字、中文、勾選、alt)
+     就當成同一份;一份的 _p 記著另一份(另一份是它的舊版本)就用新的那份(舊網址的比較新:換成 SYNC_MERGE 合併的結果,原值先備份)。
+     只有兩邊都真的改了才另存「（舊網址）」(同步合併設計 3.12:兩個網域沒有共同的同步紀錄,一次搬完就結束)。
+   - 刪除標記(sync_del,只有雲端帳號的資料夾會寫):兩份聯集(SYNC_MERGE.tombs),不整份換掉、不問。
+   - 雲端帳號還沒上傳的(暫存區 tr_move_pending_<帳號 id>):同一個帳號又搬來一包時,題庫、刪除標記、模擬考紀錄兩包用 SYNC_MERGE 合併
+     (js/cloud.js 的 MERGED 表上的鍵;登入時 cloud.js takePending 也用同一套跟本機、雲端合併),其他鍵照舊留時間比較晚的那包。
    - 寫作(writing_b、writing_e、writing_y)同一題兩邊寫的不一樣:updatedAt 比較新的那份放原位,另一份放進那一題的 alt(陣列),兩份都留;
      文章單字(vocab_)同一格兩邊填的不一樣:留新網址的,舊網址那份放進 alt。js/writing.js、js/reading.js 會把 alt 顯示出來。
    - 錯題本(drill_p、listen_p、phrase_drill、verb_quiz)同一題兩邊都有:留時間(t)比較新的那份(錯題本看最後一次作答);單字錯題 vgame_miss 的次數取大的。
@@ -13,15 +19,17 @@
      「上次搬家寫的、新網址之後沒動過就直接換新」只對同一台裝置再搬有效,別台搬來的不同值列為衝突。沒有裝置編號的包不走這條捷徑。
    - 新網址算不算已經有資料(要不要問「切換到舊網址的學生檔案」):用 MOVE_RULES.meaningful,頁面自己建的空小雞不算。
    - 小雞用 PET.cloudMerge,每日練習用 DAILY.merge;呼叫的人沒給(或小雞的時鐘對不上)就列為衝突、留新網址的。
-   依賴 js/move-rules.js(MOVE_RULES)。 */
+   依賴 js/move-rules.js(MOVE_RULES);題庫的戳記、刪除標記、暫存區的合併用 js/sync-merge.js(SYNC_MERGE,頁面要在這個檔之前載入;
+   沒載到時題庫照舊另存「（舊網址）」、刪除標記列為衝突留新網址的、暫存區留時間晚的,只會多,不會少)。 */
 (function (root) {
   'use strict';
   const R = root.MOVE_RULES;
+  const sync = () => (root.SYNC_MERGE && typeof root.SYNC_MERGE.banks === 'function' ? root.SYNC_MERGE : null);
   const HIST_MAX = 1500, HIST_DAYS = 60, MOCK_MAX = 30, DONE_MAX = 300;   // 跟 js/common.js、js/mock.js、js/vocab.js 一樣
   const SUFFIX = '（舊網址）';
   const BANK_KEYS = ['vgame_best', 'vgame_clear', 'vgame_pairs_best', 'vgame_toast_best', 'vgame_done'];
   const LABELS = {
-    hist: '練習紀錄', mock_history: '模擬考紀錄', pet: '小雞', daily_done: '每日練習', vgame_banks: '自訂單字題庫',
+    hist: '練習紀錄', mock_history: '模擬考紀錄', pet: '小雞', daily_done: '每日練習', vgame_banks: '自訂單字題庫', sync_del: '自訂題庫的刪除紀錄',
     vgame_best: '單字遊戲最佳分數', vgame_toast_best: '單字快問快答最佳', vgame_pairs_best: '翻牌配對最佳', vgame_clear: '單字遊戲通關',
     vgame_done: '單字遊戲出過的字', vgame_miss: '單字錯題', phrase_drill: '片語錯題', verb_quiz: '不規則動詞紀錄',
     grammar_done: '文法完成紀錄', phonics_done: '自然發音完成紀錄', dlg_heard: '對話聽過的句子',
@@ -294,6 +302,13 @@
         if (!m || m.ok !== true) return { v: nv, kind: 'conflict', why: 'pet' };
         return m.sameAsLocal ? { v: nv, kind: 'same' } : { v: m.v, kind: 'merged' };
       }
+      case 'tombs': {   // 刪除標記:兩份聯集(js/sync-merge.js),認不得就留新網址的(只會讓刪掉的回來,不會少)
+        const S = sync();
+        let m = null;
+        try { m = S ? S.tombs(nv, ov, ctx.now) : null; } catch (e) { m = null; }
+        if (!m || m.ok !== true) return { v: nv, kind: 'conflict', why: 'tombs' };
+        return m.sameAsLocal ? { v: nv, kind: 'same' } : { v: m.v, kind: 'merged' };
+      }
       case 'daily': {
         const D = ctx.daily;
         if (!D || typeof D.merge !== 'function') return { v: nv, kind: 'conflict', why: 'daily' };
@@ -310,6 +325,32 @@
   /* ---------- 題庫 ---------- */
   function bankId(b) { return isPlain(b) && typeof b.id === 'string' ? b.id : null; }
   function bankBody(b) { return canon(isPlain(b) ? b.words : null); }
+  /* 題庫看得到的樣子:名稱、每個字的英文、中文、勾選、alt(另一台寫的),不看同步的戳記(_r、_t、_p、_nl、_m…)與字的順序 */
+  function bankLook(b) {
+    if (!isPlain(b)) return canon(b);
+    const word = (w) => (isPlain(w) && typeof w.en === 'string'
+      ? canon({ en: w.en, zh: w.zh === undefined ? null : w.zh, on: w.on !== false, alt: Array.isArray(w.alt) ? w.alt.slice().sort() : [] }) : canon(w));
+    return canon({ n: b.name === undefined ? null : b.name, w: Array.isArray(b.words) ? b.words.map(word).sort() : canon(b.words) });
+  }
+  /* 戳記看得出先後嗎(js/sync-merge.js 的 _p:新版本記著它吸收過的舊版本的內容雜湊):
+     'new' 新網址那份是從舊網址這份改過來的、'old' 反過來、'' 看不出來(沒有戳記、或兩邊都改了) */
+  const pHas = (b, h) => isPlain(b) && Array.isArray(b._p) && b._p.some((e) => typeof e === 'string' && e.split('.')[0] === h);
+  function stampOrder(nb, ob) {
+    const S = sync();
+    if (!S) return '';
+    let hn, ho;
+    try { hn = S.bankHash(nb); ho = S.bankHash(ob); } catch (e) { return ''; }
+    const n2o = pHas(nb, ho), o2n = pHas(ob, hn);
+    return n2o === o2n ? '' : (n2o ? 'new' : 'old');
+  }
+  /* 舊網址那份比較新:用 SYNC_MERGE 合併(分不出的名稱、勾選偏舊網址那份),結果包含新網址那份的版本紀錄;合併不了回 null */
+  function joinNewer(nb, ob, now) {
+    const S = sync();
+    let m = null;
+    try { m = S ? S.banks([nb], [ob], { now, localClean: true }) : null; } catch (e) { m = null; }
+    const v = m && m.ok === true && Array.isArray(m.v) ? m.v.filter((b) => bankId(b) === bankId(ob)) : [];
+    return v.length === 1 ? v[0] : null;
+  }
   /* 舊網址的題庫併進新網址的。回 { banks, remap: { 舊 id: 新 id }, added, renamed, updated, skipped, written, replaced } 或 null(新網址那份不是陣列)。
      replaced:有沒有換掉新網址原本的某個題庫(搬家寫過、之後沒改過的換成舊網址的新版),寫入時要先備份 */
   function mergeBanks(nb, ob, folder, prev, ctx) {
@@ -337,8 +378,13 @@
         out.push(b); added.push(String(b.name || '')); keep.push(id); return;
       }
       const same = out[at0];
-      if (canon(same) === canon(b) || hasBody(body)) { skipped++; return; }
+      /* 只差同步的戳記(看得到的都一樣)、或新網址那份是從舊網址這份改過來的:舊網址這份沒有新東西 */
+      if (canon(same) === canon(b) || hasBody(body) || bankLook(same) === bankLook(b) || stampOrder(same, b) === 'new') { skipped++; return; }
       if (wroteBy(same)) { out[at0] = b; updated.push(String(b.name || '')); keep.push(id); replaced = true; return; }   // 舊網址後來改過、新網址沒動:換成舊網址的新版
+      if (stampOrder(same, b) === 'old') {   // 舊網址那份是從新網址這份改過來的(戳記看得出來):換成合併後的新版,新網址原本那份寫入前備份
+        const j = joinNewer(same, b, ctx.now);
+        if (j) { out[at0] = j; updated.push(String(j.name || '')); keep.push(id); replaced = true; return; }
+      }
       const name = String(b.name || '');
       const copy = Object.assign({}, b, { name: name.slice(-SUFFIX.length) === SUFFIX ? name : name + SUFFIX });
       const was = prev.bankIds && prev.bankIds[folder + '|' + id];
@@ -497,7 +543,12 @@
       const curP = was === null ? { ok: false } : parse(was);
       const have = curP.ok && isPlain(curP.v) && Array.isArray(curP.v.items) ? curP.v.items.filter((e) => Array.isArray(e) && e.length === 3 && typeof e[0] === 'string') : [];
       const bySub = new Map(have.map((e) => [e[0], e]));
-      items.forEach((e) => { const h = bySub.get(e[0]); if (!h || !(h[2] > e[2])) bySub.set(e[0], e); });
+      const joined = joinPending(bySub, items, ctx.now);   // 題庫、刪除標記、模擬考紀錄:兩包合併
+      items.forEach((e) => {
+        if (joined.has(e[0])) { bySub.set(e[0], joined.get(e[0])); return; }
+        const h = bySub.get(e[0]);
+        if (!h || !(h[2] > e[2])) bySub.set(e[0], e);   // 其他鍵:留時間比較晚的那包
+      });
       const list = Array.from(bySub.values()).sort((x, y) => (x[0] < y[0] ? -1 : x[0] > y[0] ? 1 : 0));
       if (canon(list) === canon(have)) return;
       put(pk, JSON.stringify({ from: ctx.from, at: ctx.now, items: list }), 'grow');
@@ -510,6 +561,33 @@
     res.log = Object.assign({}, log, { [logKey]: entry });
     res.writes.push(['tr_move_log', JSON.stringify(res.log), 'replace']);
     return res;
+  }
+  /* 同一個帳號的暫存區已經有一包、又搬來一包(例如別台用搬家碼帶來的):js/cloud.js 的 MERGED 表上的鍵(題庫、刪除標記、模擬考紀錄)
+     兩包用 SYNC_MERGE 合併,不是時間晚的整份換掉(另一包可能有這包沒有的題庫、標記、考試)。標記先合併,題庫用合併後的標記;
+     分不出先後的名稱、勾選用時間晚的那包。讀不懂、合併不了的鍵不放進來(照原本的規則)。回 Map(鍵 → [鍵, 原字串, 兩包裡比較晚的時間]) */
+  const SYNC_SUBS = ['sync_del', 'vgame_banks', 'mock_history'];
+  function joinPending(have, items, now) {
+    const out = new Map();
+    const S = sync();
+    if (!S) return out;
+    const fresh = new Map(items.map((e) => [e[0], e]));
+    const val = (e) => { if (!e) return null; const p = parse(e[1]); return p.ok ? p.v : undefined; };
+    let T = null;
+    try { const t = S.tombs(val(have.get('sync_del')), val(fresh.get('sync_del')), now); T = t && t.ok === true ? t.v : null; } catch (e) { T = null; }
+    SYNC_SUBS.forEach((sub) => {
+      const a = have.get(sub), b = fresh.get(sub);
+      if (!a || !b) return;
+      const va = val(a), vb = val(b);
+      if (va === undefined || vb === undefined) return;
+      const [older, newer] = a[2] > b[2] ? [vb, va] : [va, vb];
+      let m = null;
+      try {
+        m = sub === 'sync_del' ? S.tombs(va, vb, now) : sub === 'vgame_banks' ? S.banks(older, newer, { now, tombs: T, localClean: true }) : S.mock(va, vb);
+      } catch (e) { m = null; }
+      if (!m || m.ok !== true || m.v === null) return;
+      out.set(sub, [sub, JSON.stringify(m.v), Math.max(a[2], b[2])]);
+    });
+    return out;
   }
   function nameOf(valid, pid) {
     const e = valid.keys.filter((x) => x[0] === 'tr_profiles')[0];

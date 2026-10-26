@@ -24,8 +24,9 @@
    - alt(字):兩台同時改了同一個字的中文,沒當主要的那個(不設上限:以前排序後只留 3 個,會把學生剛打的丟掉)。
      編輯頁全部顯示「另一台寫的」,可以換或刪。
    跟 feat/move 共用:canon、quickHash 跟 js/move-merge.js 同一個函式;mock 的「同一筆」判斷一樣(兩個分支都進 main 後只留這一份)。
-   題庫規則跟 js/move-merge.js 的 mergeBanks 不一樣(那邊同一個 id 內容不同就複製一份「（舊網址）」,戳記不同也算不同):
-   合進 feat/move 時,搬家暫存區合併表上的鍵要改用這裡的函式、sync_del 要有搬家規則,tools/test_sync_move_compat.js 會擋。 */
+   題庫規則跟 js/move-merge.js 的 mergeBanks 不一樣(那邊是訪客、本機學生的搬家:同一個 id 兩邊都真的改了就複製一份「（舊網址）」;
+   只差戳記、或戳記看得出誰是新版本時不複製,用這裡的 bankHash、banks 判斷)。雲端帳號的搬家暫存區(js/cloud.js takePending、
+   js/move-merge.js 的暫存區合併)上合併表的鍵用這裡的函式;sync_del 的搬家規則是 tombs(js/move-rules.js)。tools/test_sync_move_compat.js 會擋。 */
 (function (root) {
   'use strict';
   const WORD_P_MAX = 4, BANK_P_MAX = 8, MOCK_MAX = 300;

@@ -43,6 +43,8 @@ const addDays = (d, n) => new Date(Date.parse(d + 'T00:00:00Z') + n * 864e5).toI
 const YDAY = addDays(TODAY, -1);
 const OLD_BANK = [{ name: '我的題庫', words: ['apple'] }];
 const NEW_BANK = [{ name: '我的題庫', words: ['apple', 'banana', 'cherry'] }];
+/* 「其他鍵照舊整份上傳」用的例子:以前是自訂題庫 vgame_banks,題庫改成先合併再上傳(js/sync-merge.js)後換成不在合併表上的錯題本 */
+const PLAIN = 'drill_p5';
 
 /* ---------- 假的環境 ---------- */
 function makeStorage() {
@@ -365,15 +367,15 @@ const A = {
     cloudRow(w, 'pet', P(['a']));
     const pg = await openLoggedIn(w, {});
     write(pg, w, 'pet', P(['a', 'b']));
-    write(pg, w, 'vgame_banks', NEW_BANK);
+    write(pg, w, PLAIN, NEW_BANK);
     await pg.runTimers(); await pg.fire('win:pagehide');
-    const a = petOps(w) === '(沒有)' && same(cp(w), P(['a'])) && same(cp(w, 'vgame_banks'), NEW_BANK) && 'pet' in ledger(w) && !('vgame_banks' in ledger(w));
+    const a = petOps(w) === '(沒有)' && same(cp(w), P(['a'])) && same(cp(w, PLAIN), NEW_BANK) && 'pet' in ledger(w) && !(PLAIN in ledger(w));
     const w2 = makeWorld();
     cloudRow(w2, 'pet', P(['a', 'c']), w2.clock.t - 2 * HOUR); signedIn(w2);
     w2.local.setItem(PREFIX + 'pet', J(P(['a', 'b']))); w2.local.setItem(LEDGER, J({ pet: w2.clock.t - HOUR }));
     const p2 = loadPage(w2, {}); await p2.ready;
     const b = same(lp(w2), P(['a', 'b'])) && same(cp(w2), P(['a', 'c'])) && 'pet' in ledger(w2) && petOps(w2) === '(沒有)';
-    return { ok: a && b, detail: '上傳時:請求 ' + petOps(w) + ' 題庫 ' + (same(cp(w, 'vgame_banks'), NEW_BANK) ? '上去了' : '沒上去') + ' 帳本 ' + J(Object.keys(ledger(w))) + ' / 灌資料:本機 ' + J(lp(w2)) + ' 雲端 ' + J(cp(w2)) };
+    return { ok: a && b, detail: '上傳時:請求 ' + petOps(w) + ' 題庫 ' + (same(cp(w, PLAIN), NEW_BANK) ? '上去了' : '沒上去') + ' 帳本 ' + J(Object.keys(ledger(w))) + ' / 灌資料:本機 ' + J(lp(w2)) + ' 雲端 ' + J(cp(w2)) };
   },
   'A10. 同一個鍵的上傳排隊:前一次還在讀雲端時第二次不會同時讀;讀雲端這段時間本機又改了,前一次不寫回、不上傳舊的,後一次傳最新的': async () => {
     const w = makeWorld();
@@ -448,7 +450,7 @@ const A = {
   },
   'A14. 其他鍵逐位元組不變:tools/test_sync.js 每個情境,第 1 步的 cloud.js 和新版的本機、分頁暫存、雲端、每一次請求都一樣(頁面沒有 PET)': () => replay('none'),
   'A15. 其他鍵逐位元組不變:同上,頁面有 PET(合併函式在)時,pet 以外的東西都一樣': () => replay('fake'),
-  'A16. 混合情境(pet 跟 hist、daily_done、自訂題庫一起寫:上傳、離線補傳、灌資料、登出):其他鍵的請求順序、內容、本機、帳本跟第 1 步完全相同': async () => {
+  'A16. 混合情境(pet 跟 hist、daily_done、錯題本一起寫:上傳、離線補傳、灌資料、登出):其他鍵的請求順序、內容、本機、帳本跟第 1 步完全相同': async () => {
     const a = await mixed(OLD.cloud), b = await mixed(NEW.cloud);
     const diff = a.findIndex((x, i) => x !== b[i]);
     return { ok: a.length === b.length && diff < 0, detail: '比對 ' + a.length + ' 個檢查點' + (diff < 0 ? ',全部相同' : ',第 ' + (diff + 1) + ' 個不同:' + a[diff].slice(0, 160) + ' ≠ ' + (b[diff] || '').slice(0, 160)) };
@@ -460,19 +462,19 @@ async function mixed(src) {
   const w = makeWorld();
   const shots = [];
   const shot = () => shots.push(otherState(w, true));
-  cloudRow(w, 'hist', [1], w.clock.t - 2 * HOUR); cloudRow(w, 'pet', P(['a']), w.clock.t - 2 * HOUR); cloudRow(w, 'vgame_banks', OLD_BANK, w.clock.t - 2 * HOUR);
+  cloudRow(w, 'hist', [1], w.clock.t - 2 * HOUR); cloudRow(w, 'pet', P(['a']), w.clock.t - 2 * HOUR); cloudRow(w, PLAIN, OLD_BANK, w.clock.t - 2 * HOUR);
   signedIn(w);
   w.local.setItem(PREFIX + 'hist', J([1, 2])); w.local.setItem(PREFIX + 'pet', J(P(['a', 'b']))); w.local.setItem(PREFIX + 'daily_done', J({ x: 1 }));
   w.local.setItem(LEDGER, J({ hist: w.clock.t - HOUR, pet: w.clock.t - HOUR }));
   let pg = loadPage(w, { src, pet: 'fake' }); await pg.ready; shot();
   pg = loadPage(w, { src, pet: 'fake' }); await pg.ready; shot();
-  write(pg, w, 'hist', [1, 2, 3]); write(pg, w, 'pet', P(['a', 'b', 'c'])); write(pg, w, 'vgame_banks', NEW_BANK);
+  write(pg, w, 'hist', [1, 2, 3]); write(pg, w, 'pet', P(['a', 'b', 'c'])); write(pg, w, PLAIN, NEW_BANK);
   await pg.runTimers(); shot();
   w.offline = true;
   write(pg, w, 'daily_done', { x: 2 }); write(pg, w, 'pet', P(['a', 'b', 'c', 'd'])); write(pg, w, 'hist', [1, 2, 3, 4]);
   await pg.runTimers(); shot();
   w.offline = false; await pg.fire('win:online'); shot();
-  write(pg, w, 'vgame_banks', OLD_BANK); write(pg, w, 'pet', P(['e']));
+  write(pg, w, PLAIN, OLD_BANK); write(pg, w, 'pet', P(['e']));
   await pg.fire('win:pagehide'); shot();
   newSession(w);
   pg = loadPage(w, { src, pet: 'fake' }); await pg.ready; shot();

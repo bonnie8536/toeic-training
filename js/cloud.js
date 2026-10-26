@@ -3,15 +3,38 @@
    - 已填 → 載入 supabase-js(CDN),提供 login/logout/push;登入後把雲端進度灌回
      localStorage(沿用既有命名空間機制),各模組程式完全不用改。
    - 同步策略:每次 store.set 後 0.8 秒內去抖動上傳該鍵;每個分頁工作階段登入時整批下載一次。
-   - 登記過要合併的鍵(MERGED,目前只有 pet;小雞第二階段規格附錄 A.5):上傳前先讀雲端那一列、用 PET.cloudMerge 合併、
-     存回本機,再上傳合併結果;灌雲端資料時本機和雲端都有就存合併結果,不直接覆蓋。讀不到雲端、合併說唯讀(雲端是更新版的格式)、
-     頁面沒有 PET 時不上傳,帳本留著。合併前跟 pet-store 一樣用登入憑證的 iat 對時,這台時鐘差太多也不合併、不上傳,帳本留著
-     (合併整理時用這台的時間,慢的時鐘會丟掉別台最近幾天的紀錄)。其他鍵的上傳、灌資料、帳本、登出跟以前一樣。
-     登出前(chick2 第一輪修正 #2、#4):先叫 pet-store 把還在等讀雲端的券和動作寫下來(PET_STORE.flushPending),
-     帳本上沒有、但標記成「只在本機」的 pet(開關都關時讀不到雲端只寫本機的改動)也先合併上傳,傳不上去就算進「還沒同步」先問。
-     已知限制:兩台在同一時間讀雲端、合併、上傳時,後到的那台可能蓋掉先到的那台剛傳上去的東西;先到那台本機還留著,
-     它的 pet-store 下次同步看到雲端少了會再合併上傳(remoteBehind),所以不會永久消失。
-     pet 因為雲端是更新版格式(v3)而留在帳本時,登出會照樣提示把它算進「還沒同步」。 */
+   - 合併表(MERGED)上的鍵上傳前先讀雲端那一列、合併、存回本機,再上傳合併結果;灌雲端資料時本機和雲端都有就存合併結果,不直接覆蓋。
+     讀不到雲端、合併說唯讀(形狀認不得,例如更新版的格式)、頁面沒有合併函式時不上傳,帳本留著(不會退回整份上傳);
+     灌資料時碰到這些情況,題庫、標記、模擬考紀錄也留本機(帳本記著),不拿雲端蓋掉。
+     其他鍵的上傳、灌資料、帳本、登出跟以前一樣(整份上傳,後傳的蓋掉先傳的)。
+     · pet(小雞第二階段規格附錄 A.5):合併函式 PET.cloudMerge(js/pet.js)。合併前跟 pet-store 一樣用登入憑證的 iat 對時,
+       這台時鐘差太多也不合併、不上傳,帳本留著(合併整理時用這台的時間,慢的時鐘會丟掉別台最近幾天的紀錄)。
+       登出前(chick2 第一輪修正 #2、#4):先叫 pet-store 把還在等讀雲端的券和動作寫下來(PET_STORE.flushPending),
+       帳本上沒有、但標記成「只在本機」的 pet(開關都關時讀不到雲端只寫本機的改動)也先合併上傳,傳不上去就算進「還沒同步」先問。
+       pet 因為雲端是更新版格式(v3)而留在帳本時,登出會照樣提示把它算進「還沒同步」。pet 的每一次請求跟以前逐位元組相同。
+     · vgame_banks(自訂題庫)、sync_del(刪除標記)、mock_history(模擬考紀錄)(同步合併設計,2026-10-24):
+       合併函式在 js/sync-merge.js(SYNC_MERGE,每一頁都在 cloud.js 之前載入)。題庫「少了不算刪除」,只有刪除標記對得上的才刪;
+       題庫上傳時跟 sync_del 一次查詢讀兩列、一次 upsert 傳兩列。單字頁、閱讀頁開頁時呼叫 syncKey 跟雲端對齊一次;
+       登出前多一輪對帳(雲端比本機少就先合併上傳再刪本機)。寫作、hist、錯題本還是整份上傳(下一輪)。
+       帳本上沒有這個鍵(本機上次對齊之後沒改過)時合併給 localClean:舊版頁面就地改的名稱、勾選、中文用雲端那份(r2 #1、#4;
+       名稱不看 _t:這台之前在同一個題庫改過別的字、已經上傳也一樣,r3b #1)。
+       合併後上傳失敗時,帳本上沒有的鍵補記(開單字頁、對帳的 pull 原本帳本是空的,失敗後不會重傳、離線登出也不問;r2 #3);pet 不補記(r3 #3)。
+   已知限制:
+     1. 兩台在同一時間讀雲端、合併、上傳時,後到的那台可能蓋掉先到的那台剛傳上去的東西;先到那台本機還留著,
+        下次上傳、灌資料、開單字頁、登出前對帳時會再合併上傳(pet 是 pet-store 的 remoteBehind),所以不會永久消失。
+     2. 舊版頁面(部署前就開著的分頁、拿快取的頁面)整份上傳題庫,可能暫時把雲端蓋掉,新版下一次合併時補回;舊版頁面刪的題庫、字沒有標記,會回來。
+        舊版頁面就地改的名稱、取消勾選、中文:這台本機的題庫也有還沒上傳的改動(帳本上有;之前改過、已經上傳的不算)時分不出誰新,固定選一份(名稱、勾選可能退回,
+        中文輸的放 alt);舊版頁面把名稱、勾選、中文改回以前用過的值,新版認得那是舊版本,會被改回新版那一份。
+     3. 在新版刪掉一個沒改過的舊資料(字或題庫,沒有 _r;包括部署前用舊版存的文章題庫),之後在舊版頁面加回一模一樣的
+        (文章題庫照著存一定一模一樣),會被標記刪掉;在新版頁面加回不會。刪除標記的 hs(被刪那一份吸收過的舊版本)只刪有 _r 的(r3b #3),
+        所以在新版改過才刪的,舊版頁面重新加回會留著;代價是舊版頁面或很久沒同步的裝置會把改之前那份帶回來(只會多,再刪一次就好)。
+     4. 刪除標記保留 400 天、最多 1000 筆;清掉之後,很久沒開的裝置可能把刪掉的帶回來(只會多)。
+     5. 兩台都改了同一個字的中文:新的當主要,另一個放 alt(不設上限,編輯頁全部看得到,可以換或刪)。改回以前用過的中文也一樣
+        (分不出哪個是後來改的,_t 大的當主要);所以在編輯頁「換成另一台寫的、再刪掉原本的」剛好跟以前某一版一樣時,刪掉的那個可能又出現在 alt。
+     6. 別台舊版把雲端蓋掉、而唯一還有那份的新版裝置在登出時又讀不到雲端(帳本是空的,不會問):那份會跟著登出刪掉。
+     7. 單鍵 256 KB:合併只會讓題庫變大,碰到上限時上傳會一直失敗、帳本一直留著,登出時會問。新字只多 4 碼的 _r(不寫 on、_t),
+        剛批次加字的題庫大約是 main 格式的 1.04 倍(tools/test_sync_merge.js 量 jsonb 的大小);改過、取消勾選、合併過的字多 _t、_p,
+        每個大約多 40 到 100 位元組。模擬考紀錄合併時留 300 筆(大約 40 KB),不照 mock.js 的 30 筆裁(時鐘錯的裝置剛考完的那一筆才不會被裁掉)。 */
 (function () {
   const cfg = window.CLOUD_CONFIG || {};
   const enabled = !!(cfg.url && cfg.anonKey);
@@ -43,8 +66,23 @@
   window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
     startCheckout, myCheckout, isOwner,
-    saveSignupIntent, takeSignupIntent, clearSignupIntent, markLocalOnly, clearLocalOnly, flushForMove };
-  window.CLOUD.mergedKeys = Object.freeze(['pet']);   // pet-store 用它判斷這一版 cloud.js 會先合併再上傳
+    saveSignupIntent, takeSignupIntent, clearSignupIntent, markLocalOnly, clearLocalOnly, syncKey, flushForMove };
+  /* 先合併再上傳的鍵(同步合併設計 3.2)。merge() 用到時才找合併函式:頁面沒載到(pet.js、sync-merge.js)就是 null,
+     這時不上傳、帳本留著,不會退回整份上傳。
+     clock:合併前要對時(只有 pet:PET.cloudMerge 依日期裁切,慢的時鐘會丟掉別台的新日期)。
+     tombs:合併要用刪除標記;上傳時跟 sync_del 一次查詢讀兩列、一次 upsert 傳兩列(雲端不會有「題庫少了、標記還沒到」的空窗)。
+     reconcile:登出前、頁面呼叫 syncKey 時也比一次雲端(pet 不加,它的請求維持不變)。queue:跟哪個鍵排同一個佇列。
+     順序有用:灌資料時 sync_del 要先合併,合併後的標記給 vgame_banks 用。 */
+  const TOMBS = 'sync_del';
+  const SMF = name => () => { const S = window.SYNC_MERGE; return S && typeof S[name] === 'function' ? S[name] : null; };
+  const MERGED = {
+    pet: { merge: () => (window.PET && typeof window.PET.cloudMerge === 'function' ? window.PET.cloudMerge : null), clock: true },
+    sync_del: { merge: SMF('tombs'), reconcile: true, queue: 'vgame_banks' },
+    vgame_banks: { merge: SMF('banks'), tombs: true, reconcile: true },
+    mock_history: { merge: SMF('mock'), reconcile: true },
+  };
+  const spec = k => (typeof k === 'string' && Object.prototype.hasOwnProperty.call(MERGED, k) ? MERGED[k] : null);
+  window.CLOUD.mergedKeys = Object.freeze(Object.keys(MERGED));   // pet-store 用它判斷這一版 cloud.js 會先合併 pet 再上傳
   if (!enabled) return;
   tidySignupIntent(authError);   // 註冊時選老師的意向:開頁就清過期的、記下「這個分頁從 Google 回來了」(要趁 supabase-js 清掉網址之前;getSession 之後綁帳號 id)
 
@@ -58,8 +96,7 @@
 
   let client = null;
   const pending = {};
-  const MERGED = { pet: true };   // 上傳前先跟雲端那一列合併的鍵(合併函式在 js/pet.js,用到時才找)
-  const queues = {};              // 這些鍵的上傳一個一個做,不跟自己搶
+  const queues = {};              // 要合併的鍵的上傳一個一個做,不跟自己搶(sync_del 跟 vgame_banks 排同一個)
   /* 開站確認登入狀態(有網路約 1 秒;離線又遇到登入憑證過期,supabase-js 會重試約 25 秒)之前的寫入先放 early,
      確認完再決定:這一頁剛灌完雲端資料要重載 → 作廢(那些寫入根據的是舊資料,以雲端為準);其他情況 → 記進帳本。 */
   let settled = false;
@@ -176,7 +213,7 @@
       const prefix = 'tr_u' + pid + '_';
       const cloud = {};
       (rows || []).forEach(r => { cloud[r.k] = r; });
-      /* 要合併的鍵本機和雲端都有時,先對時;時鐘差太多就不合併(planMerged 照原本的規則,留本機也不補傳) */
+      /* 要對時的鍵(pet)本機和雲端都有時,先對時;時鐘差太多就不合併(planMerged 照原本的規則,留本機也不補傳) */
       await takePending(user, prefix, cloud);   // 搬家暫存區先併進本機與帳本,下面照常比新舊、上傳(搬家計畫 2.7)
       const clockOk = mergeNeeded(prefix, cloud) ? await sessionClockOk(user) : true;
 
@@ -185,6 +222,9 @@
          - 帳本上沒有,但雲端完全沒有這一列:代表從來沒傳上去過(例如新建自訂題庫後馬上關頁)。
            被別台裝置刪掉的鍵在雲端是 v=null 的一列,不會落在這裡。 */
       const led = readLedger(user.id);
+      /* 本機有還沒上傳的改動的鍵(帳本、確認登入前的寫入、「只在本機」的標記):其他的鍵本機上次跟雲端對齊之後沒改過(合併時 localClean) */
+      const dirty = {};
+      Object.keys(led).concat(Object.keys(early), Object.keys(readLocalOnly(user.id))).forEach(k => { dirty[k] = true; });
       Object.keys(early).forEach(k => { if (led[k] === early[k]) delete led[k]; });   // 這一頁確認登入前的寫入根據的是舊資料,以雲端為準
       const keepLocal = {};
       Object.keys(led).forEach(k => {
@@ -198,7 +238,7 @@
         const k = lk.slice(prefix.length);
         if (!(k in cloud) && !(k in keepLocal)) { keepLocal[k] = Date.now(); led[k] = keepLocal[k]; }
       }
-      const plan = planMerged(prefix, cloud, keepLocal, led, clockOk, readLocalOnly(user.id));   // pet:本機和雲端都有就存合併結果(下面雲端蓋本機那一圈之後才寫)
+      const plan = planMerged(prefix, cloud, keepLocal, led, clockOk, readLocalOnly(user.id), dirty);   // pet:本機和雲端都有就存合併結果(下面雲端蓋本機那一圈之後才寫)
       writeLedger(user.id, led);
       /* 灌過資料:只在本機的改動不是合併過(跟雲端一樣,或記在帳本上)、就是留本機記在帳本上,標記都不用了;
          對不了時留在本機的(hold)標記留著,登出時還是先合併上傳、傳不上去先問 */
@@ -789,7 +829,7 @@
   }
   function markLocalOnly(key) {
     const u = markedUser();
-    if (!u || !MERGED[key]) return;
+    if (!u || !spec(key)) return;
     writeSeq++;
     writeLocalOnly(u.id, Object.assign({}, readLocalOnly(u.id), { [key]: Date.now() }));
   }
@@ -819,16 +859,54 @@
       left = await uploadPass(user);
       if (!left || (writeSeq === seq && pendingState(user) === before)) break;
     }
+    if (await reconcile(user)) left = leftCount(user);   // 對帳時發現雲端少了:合併上傳;傳不上去的記在帳本,算進「還沒同步」
     return left;
   }
   async function uploadPass(user) {
     const marks = readLocalOnly(user.id), led = readLedger(user.id);
-    const extra = Object.keys(marks).filter(k => MERGED[k] && !(k in led));
+    const extra = Object.keys(marks).filter(k => spec(k) && !(k in led));
     const at = k => (typeof marks[k] === 'number' && isFinite(marks[k]) && marks[k] > 0 ? marks[k] : Date.now());
     await Promise.all([flushAll()].concat(canUpload(user) ? extra.map(k => upload(user, k, at(k))) : []));
+    return leftCount(user);
+  }
+  /* 還剩幾項沒上雲:帳本上的加上還標記著「只在本機」的,同一個鍵只算一次 */
+  function leftCount(user) {
     const left = new Set(Object.keys(readLedger(user.id)));
-    Object.keys(readLocalOnly(user.id)).forEach(k => { if (MERGED[k]) left.add(k); });
+    Object.keys(readLocalOnly(user.id)).forEach(k => { if (spec(k)) left.add(k); });
     return left.size;
+  }
+  /* 登出前對帳(同步合併設計 3.5):表上 reconcile 的鍵、本機有值的,一次查詢讀它們在雲端的列(題庫連 sync_del 一起讀),
+     合併結果跟雲端不同就記帳、走 upload 的佇列上傳。別台的舊版頁面可能剛把雲端蓋掉,這台本機是唯一還有那份的地方,
+     登出要刪本機,刪之前確認雲端不比本機少。讀不到雲端(離線)、合併說唯讀:什麼都不做,不另外算進「還沒同步」
+     (不然每次離線登出都要問;已知限制 6)。回傳有沒有發現雲端少了 */
+  async function reconcile(user) {
+    if (!canUpload(user)) return false;
+    const prefix = 'tr_u' + pidOf(user) + '_';
+    const has = k => { const v = readLocal(prefix + k); return v !== null && v !== undefined; };
+    const keys = Object.keys(MERGED).filter(k => MERGED[k].reconcile && has(k));
+    if (!keys.length) return false;
+    const want = keys.some(k => MERGED[k].tombs) && keys.indexOf(TOMBS) < 0 ? [TOMBS].concat(keys) : keys;
+    const clean = {};
+    want.forEach(k => { clean[k] = cleanKey(user.id, k); });
+    const rows = await readRows(user, want);
+    if (!rows.ok) return false;
+    let tombsV = null;
+    const behind = [];
+    Object.keys(MERGED).filter(k => want.indexOf(k) >= 0).forEach(k => {
+      const local = readLocal(prefix + k);
+      const cv = rows.found[k] ? rows.v[k] : null;
+      if (local === null || local === undefined) { if (k === TOMBS) tombsV = cv; return; }
+      const m = runMerge(k, local, cv, tombsV, clean[k] && cleanKey(user.id, k));
+      if (k === TOMBS) tombsV = m && m.ok ? m.v : null;
+      if (m && m.ok === true && !m.sameAsCloud) behind.push(k);
+    });
+    if (!behind.length) return false;
+    const led = readLedger(user.id), t = Date.now();
+    behind.forEach(k => { if (!(k in led)) led[k] = t; });
+    writeSeq++;
+    writeLedger(user.id, led);
+    await Promise.all(behind.map(k => upload(user, k, led[k], clean[k])));   // 帳本是對帳剛記的:本機還是沒改過的那份(localClean)
+    return true;
   }
   /* 帳本、標記和要合併的鍵的本機值:補傳前後比對,看等的時候有沒有又寫進來 */
   function pendingState(user) {
@@ -838,12 +916,17 @@
     return JSON.stringify([readLedger(user.id), readLocalOnly(user.id), vals]);
   }
 
-  /* 上傳一個鍵。登記過要合併的鍵(pet)排隊走 uploadMerged,其他鍵照舊 */
-  function upload(user, key, t) {
-    if (!MERGED[key]) return uploadPlain(user, key, t);
-    const run = () => uploadMerged(user, key, t);
-    const p = (queues[key] || Promise.resolve()).then(run, run);
-    queues[key] = p.catch(() => false);
+  /* 上傳一個鍵。合併表上的鍵排隊走 uploadMerged(題庫走 uploadWithTombs),其他鍵照舊。
+     clean:帳本上這一筆(時間 t)是登出前對帳記的,本機那份上次跟雲端對齊之後沒改過 */
+  function upload(user, key, t, clean) {
+    const s = spec(key);
+    if (!s) return uploadPlain(user, key, t);
+    return enqueue(key, () => (s.tombs ? uploadWithTombs(user, key, t, false, clean === true) : uploadMerged(user, key, t)));
+  }
+  function enqueue(key, run) {
+    const q = spec(key).queue || key;
+    const p = (queues[q] || Promise.resolve()).then(run, run);
+    queues[q] = p.catch(() => false);
     return p;
   }
 
@@ -868,8 +951,42 @@
     }
   }
 
-  /* ---------- 先合併再上傳的鍵(pet) ---------- */
-  function mergeFn(key) { return MERGED[key] && window.PET && typeof window.PET.cloudMerge === 'function' ? window.PET.cloudMerge : null; }
+  /* ---------- 先合併再上傳的鍵(pet、自訂題庫、刪除標記、模擬考紀錄) ---------- */
+  function mergeFn(key) { const s = spec(key); return s ? s.merge() : null; }
+  /* 呼叫合併函式:題庫多給合併後的刪除標記和 localClean;其他照 PET.cloudMerge 的約定(本機, 雲端, 現在)。丟錯當成合併不了。
+     clean:本機這個鍵上次跟雲端對齊之後沒改過(帳本上沒有、也沒有「只在本機」的標記)。雲端跟它不一樣就是別台改的;
+     舊版頁面就地改名、取消勾選、改中文不動戳記,兩份分不出先後時用雲端那份(第二輪審查 r2 #1、#4:以前比字串,改名會被退回) */
+  function runMerge(key, local, cloudV, tombsV, clean) {
+    const fn = mergeFn(key);
+    if (!fn) return null;
+    try { return spec(key).tombs ? fn(local, cloudV, { now: Date.now(), tombs: tombsV, localClean: clean === true }) : fn(local, cloudV, Date.now()); } catch (e) { return null; }
+  }
+  function cleanKey(uid, key) { return !(key in readLedger(uid)) && !(key in readLocalOnly(uid)); }
+  /* 合併後上傳失敗:本機已經是合併結果、跟雲端不同,帳本上沒有的鍵補記(開單字頁、對帳的 pull 走到這裡時帳本本來是空的)。
+     不記的話恢復連線、關頁都不會補傳,離線登出也不會問,別台舊版剛把雲端蓋掉時這台是唯一還有那份的地方(第二輪審查 r2 #3) */
+  function holdInLedger(user, keys) {
+    const led = readLedger(user.id), t = Date.now();
+    const add = keys.filter(k => !(k in led));
+    if (!add.length) return;
+    add.forEach(k => { led[k] = t; });
+    writeSeq++;
+    writeLedger(user.id, led);
+  }
+  /* 比較兩份 JSON 內容(物件的鍵排序後;雲端 jsonb 回來的鍵順序跟本機寫的不一樣) */
+  function canonOf(x) {
+    if (Array.isArray(x)) return '[' + x.map(canonOf).join(',') + ']';
+    if (x && typeof x === 'object') return '{' + Object.keys(x).sort().map(k => JSON.stringify(k) + ':' + canonOf(x[k])).join(',') + '}';
+    return JSON.stringify(x === undefined ? null : x);
+  }
+  /* 讀本機一個鍵:沒有是 null,壞掉(不是 JSON)是 undefined */
+  function readLocal(lk) {
+    try { const raw = localStorage.getItem(lk); return raw === null ? null : JSON.parse(raw); } catch (e) { return undefined; }
+  }
+  /* 合併後寫回本機的通知(單字頁在首頁時重畫);pet 不送 */
+  function notify(key) {
+    if (key === 'pet') return;
+    try { if (typeof window.dispatchEvent === 'function' && typeof CustomEvent === 'function') window.dispatchEvent(new CustomEvent('cloud:merged', { detail: { key } })); } catch (e) { /* 只是不會自動重畫 */ }
+  }
   /* 合併前對時(Integrate 加,跟 js/pet-store.js 同一套):PET.cloudMerge 整理時用這台的時間,晚超過 7 天的日期會丟掉、
      太舊的會壓縮。這台時鐘比伺服器慢超過 3 天或快超過 3 天、或拿不到登入憑證的 iat,就不合併、不上傳,帳本留著。
      兩台一快一慢時相差兩邊相加,pet.js 只留這台的今天加 7 天以內的日期、今天往前 6 天的 fed,所以兩邊相加不能超過 6 天:
@@ -897,9 +1014,9 @@
     const s = res && res.data && res.data.session;
     return !!(s && s.user && s.user.id === user.id) && clockOkFrom(s);
   }
-  /* 灌資料時有沒有要合併的鍵(本機和雲端都有,雲端那一列 v 不是 null) */
+  /* 灌資料時有沒有要對時的鍵(pet)要合併(本機和雲端都有,雲端那一列 v 不是 null) */
   function mergeNeeded(prefix, cloud) {
-    return Object.keys(MERGED).some(k => {
+    return Object.keys(MERGED).filter(k => MERGED[k].clock).some(k => {
       const c = cloud[k];
       if (!c || c.v === null || c.v === undefined) return false;
       try { const raw = localStorage.getItem(prefix + k); return raw !== null && raw !== 'null'; } catch (e) { return true; }
@@ -912,25 +1029,26 @@
   /* 先讀雲端那一列、合併、存回本機,再上傳合併結果。本機是 null:不上傳 null(不刪雲端那份),帳本劃掉。
      拿不到合併函式、讀不到雲端、合併說唯讀、讀雲端這段時間本機又改了:回 false,帳本留著,下一次再來。
      寫回本機不經過 store.set(不再記帳、不再觸發上傳) */
-  async function uploadMerged(user, key, t) {
+  async function uploadMerged(user, key, t, pull) {
     const lk = 'tr_u' + pidOf(user) + '_' + key;
     const readAt = Date.now();   // 這之前標記的「只在本機」改動都在要上傳的這一份裡
     let raw, v;
     try { raw = localStorage.getItem(lk); v = raw === null ? null : JSON.parse(raw); } catch (e) { return false; }
-    if (v === null) { strike(user, key, t); unmark(user.id, key, readAt); return true; }
+    if (v === null && !pull) { strike(user, key, t); unmark(user.id, key, readAt); return true; }
     const merge = mergeFn(key);
     if (!merge) return false;
     const row = await fetchRow(user, key);
     if (!row.ok) return false;
+    if (v === null && !(row.found && row.v !== null)) return true;   // syncKey:兩邊都沒有
     let out = v, sent = raw;   // sent:上傳的那份在本機的樣子(上傳完本機還是它,標記才劃掉)
     if (row.found && row.v !== null) {
-      if (!row.clock) return false;   // 時鐘差太多:不合併、不上傳,帳本留著
+      if (spec(key).clock && !row.clock) return false;   // 時鐘差太多:不合併、不上傳,帳本留著
       let m = null;
       try { m = merge(v, row.v, Date.now()); } catch (e) { m = null; }
       if (!m || m.ok !== true) return false;
       try {
         if (localStorage.getItem(lk) !== raw) return false;
-        if (!m.sameAsLocal) localStorage.setItem(lk, JSON.stringify(m.v));
+        if (!m.sameAsLocal) { localStorage.setItem(lk, JSON.stringify(m.v)); notify(key); }
       } catch (e) { return false; }
       if (m.sameAsCloud) { strike(user, key, t); unmark(user.id, key, readAt); return true; }
       if (!m.sameAsLocal) { out = m.v; sent = JSON.stringify(m.v); }
@@ -944,6 +1062,8 @@
       try { if (localStorage.getItem(lk) === sent) unmark(user.id, key, readAt); } catch (e) { /* 讀不到就留著標記,登出時多問一次 */ }
       return true;
     } catch (e) {
+      /* pet 不補記:跟以前一樣只留「只在本機」標記(pet 的請求逐位元組不變;第三輪審查 r3 #3) */
+      if (!spec(key).clock) holdInLedger(user, [key]);
       console.warn('進度暫時沒同步，已記下，下次連線會補傳：' + key, e);
       return false;
     }
@@ -951,6 +1071,12 @@
   /* 上傳前讀雲端單一列。跟 readKey 一樣先確認 supabase-js 手上的登入就是這個帳號、8 秒逾時、讀到一半換帳號或要重載就算失敗;
      不等 CLOUD.ready(灌資料就在 init 裡面,等它會卡死)。回 { ok, found, v } */
   async function fetchRow(user, key) {
+    const r = await readRows(user, [key]);
+    if (!r.ok) return r;
+    return r.found[key] ? { ok: true, found: true, v: r.v[key], clock: r.clock } : { ok: true, found: false, v: null, clock: r.clock };
+  }
+  /* 讀幾列(一列用 eq,跟以前的請求一模一樣;多列用 in,一次查詢)。回 { ok, found: { 鍵: true }, v: { 鍵: 值 }, clock } */
+  async function readRows(user, keys) {
     const fail = { ok: false };
     if (!client || reloading) return fail;
     let timer = null, clock = false;
@@ -960,35 +1086,124 @@
       const s = data && data.session;
       if (!s || !s.user || s.user.id !== user.id) return null;
       clock = clockOkFrom(s);
-      return client.from('progress').select('k,v,updated_at').eq('user_id', user.id).eq('k', key);
+      const q = client.from('progress').select('k,v,updated_at').eq('user_id', user.id);
+      return keys.length === 1 ? q.eq('k', keys[0]) : q.in('k', keys);
     })();
     let res;
     try { res = await Promise.race([query, timeout]); } catch (e) { res = null; }
     clearTimeout(timer);
     const cur = window.CLOUD.user;
     if (!res || res.error || !Array.isArray(res.data) || !cur || cur.id !== user.id || reloading) return fail;
-    const row = res.data.filter(r => r && r.k === key)[0];
-    return row ? { ok: true, found: true, v: row.v === undefined ? null : row.v, clock } : { ok: true, found: false, v: null, clock };
+    const out = { ok: true, found: {}, v: {}, clock };
+    res.data.forEach(r => { if (r && keys.indexOf(r.k) >= 0 && !out.found[r.k]) { out.found[r.k] = true; out.v[r.k] = r.v === undefined ? null : r.v; } });
+    return out;
+  }
+
+  /* 題庫(合併要用刪除標記的鍵)先合併再上傳(同步合併設計 3.3):
+     1. 讀本機的題庫和 sync_del;2. 一次查詢讀雲端這兩列;3. 標記先合併,4. 題庫用合併後的標記合併;
+     5. 讀雲端這段時間本機兩個鍵有變 → 放棄(下一次再來);6. 寫回本機(不經 store.set,不記帳);
+     7. 跟雲端不同的列放在同一個 upsert 送出(兩列一起成功或一起失敗);8. 成功(或兩列都跟雲端一樣)就劃帳本:
+        題庫用帳本時間 t,標記用讀本機的時間(那之前寫的標記都在這一份裡)。
+     拿不到合併函式、讀不到雲端、任一個合併說唯讀:回 false,帳本留著,本機不改。
+     pull(syncKey):本機沒有題庫也照樣把雲端那份(套過標記)放進本機 */
+  async function uploadWithTombs(user, key, t, pull, cleanAt) {
+    const prefix = 'tr_u' + pidOf(user) + '_';
+    const lk = prefix + key, dk = prefix + TOMBS;
+    const readAt = Date.now();
+    /* 讀本機之前:帳本上沒有(或只有對帳記的那一筆,之後沒再寫過)→ 本機這份上次對齊之後沒改過(讀雲端的時候本機又改了就放棄) */
+    const clean = cleanKey(user.id, key) || (cleanAt === true && readLedger(user.id)[key] === t && !(key in readLocalOnly(user.id)));
+    let raw, rawD, v, d;
+    try {
+      raw = localStorage.getItem(lk); rawD = localStorage.getItem(dk);
+      v = raw === null ? null : JSON.parse(raw); d = rawD === null ? null : JSON.parse(rawD);
+    } catch (e) { return false; }
+    if (v === null && !pull) { strike(user, key, t); return true; }
+    if (!mergeFn(key) || !mergeFn(TOMBS)) return false;
+    const rows = await readRows(user, [key, TOMBS]);
+    if (!rows.ok) return false;
+    const cv = rows.found[key] ? rows.v[key] : null, cd = rows.found[TOMBS] ? rows.v[TOMBS] : null;
+    if (v === null && cv === null) return true;   // syncKey:兩邊都沒有
+    const md = runMerge(TOMBS, d, cd);
+    if (!md || md.ok !== true) return false;
+    const mb = runMerge(key, v, cv, md.v, clean);
+    if (!mb || mb.ok !== true) return false;
+    const tombsOut = md.v !== null && !md.sameAsLocal, banksOut = !mb.sameAsLocal;
+    try {
+      if (localStorage.getItem(lk) !== raw || localStorage.getItem(dk) !== rawD) return false;
+      if (tombsOut) localStorage.setItem(dk, JSON.stringify(md.v));
+      if (banksOut) localStorage.setItem(lk, JSON.stringify(mb.v));
+    } catch (e) { return false; }
+    if (banksOut) notify(key);
+    const at = new Date(t).toISOString();
+    const send = [];
+    if (md.v !== null && !md.sameAsCloud) send.push({ user_id: user.id, k: TOMBS, v: md.v, updated_at: at });
+    if (!mb.sameAsCloud) send.push({ user_id: user.id, k: key, v: mb.v, updated_at: at });
+    if (send.length) {
+      try {
+        const { error } = await client.from('progress').upsert(send, { onConflict: 'user_id,k' });
+        if (error) throw error;
+      } catch (e) {
+        holdInLedger(user, send.map(r => r.k));
+        console.warn('進度暫時沒同步，已記下，下次連線會補傳：' + key, e);
+        return false;
+      }
+    }
+    strike(user, key, t);
+    strike(user, TOMBS, readAt);
+    return true;
+  }
+
+  /* 頁面打開時跟雲端對齊一次(同步合併設計 3.6;單字頁、閱讀頁開頁時呼叫 syncKey('vgame_banks')):
+     讀雲端、合併,本機有變就寫回本機(送 cloud:merged),雲端比較舊就上傳;走同一個佇列。等於題庫版的 remoteBehind:
+     開了好幾天的 App 一進單字頁就先對齊雲端,之後的編輯不會是根據舊資料。
+     回 { ok, changed }。沒登入、這一頁還沒灌過資料、不是合併表上要對帳的鍵、讀不到雲端:ok 是 false,什麼都不改 */
+  async function syncKey(key) {
+    const fail = { ok: false, changed: false };
+    const s = spec(key);
+    if (!enabled || !s || !s.reconcile) return fail;
+    try { await window.CLOUD.ready; } catch (e) { return fail; }
+    const user = window.CLOUD.user;
+    if (!user || typeof user.id !== 'string' || reloading || !canUpload(user) || pidOf(user) !== window.__PROFILE_ID) return fail;
+    const lk = 'tr_u' + pidOf(user) + '_' + key;
+    let before = null;
+    try { before = localStorage.getItem(lk); } catch (e) { return fail; }
+    const ok = await enqueue(key, () => (s.tombs ? uploadWithTombs(user, key, Date.now(), true) : uploadMerged(user, key, Date.now(), true)));
+    let after = before;
+    try { after = localStorage.getItem(lk); } catch (e) { after = before; }
+    return { ok: ok === true, changed: after !== before };
   }
   /* 灌雲端資料時:本機和雲端都有(雲端那一列 v 不是 null)就存合併結果(save,在雲端蓋本機那一圈之後才寫);
      結果跟雲端不同就記帳、補傳,一樣就從帳本和補傳清單拿掉。本機沒有、或是 null:用雲端那份。
-     拿不到合併函式、合併說唯讀、或時鐘差太多(clockOk 是 false):照原本的規則留本機或用雲端,但留本機也不補傳(hold),帳本留著。
+     拿不到合併函式、合併說唯讀、或時鐘差太多(clockOk 是 false):要對時的鍵(pet)照原本的規則留本機或用雲端,但留本機也不補傳(hold),帳本留著;
+     其他鍵(題庫、標記、模擬考紀錄)本機跟雲端不一樣就一律留本機、不補傳(hold)、記帳本,不拿雲端蓋掉(本機可能有還沒傳上去的題庫)。
      時鐘差太多、本機那份有「只在本機」的標記(marks,帳本上沒有)時也留本機、不補傳(hold):以前用雲端那份蓋掉,
      讀不到雲端時改的名字、目標、餵食就不見了。允許的範圍改成 3 天以後差 3 到 6 天的裝置也會走到這裡(chick2 第三輪修正 #1 的配套)。
      留下來的那份下次對得了時由 pet-store 跟雲端合併上傳 */
-  function planMerged(prefix, cloud, keepLocal, led, clockOk, marks) {
+  function planMerged(prefix, cloud, keepLocal, led, clockOk, marks, dirty) {
     const plan = { save: {}, hold: {} };
+    let tombsV = null;   // 合併後的刪除標記(表上 sync_del 排在 vgame_banks 前面),給題庫用
     Object.keys(MERGED).forEach(k => {
+      const s = MERGED[k];
       const c = cloud[k];
-      if (!c || c.v === null || c.v === undefined) return;
-      let local;
-      try { const raw = localStorage.getItem(prefix + k); local = raw === null ? null : JSON.parse(raw); } catch (e) { local = undefined; }
-      if (local === null) { delete keepLocal[k]; delete led[k]; return; }
-      const fn = local === undefined || !clockOk ? null : mergeFn(k);
-      let m = null;
-      if (fn) { try { m = fn(local, c.v, Date.now()); } catch (e) { m = null; } }
+      const local = readLocal(prefix + k);
+      if (!c || c.v === null || c.v === undefined) { if (k === TOMBS && local) tombsV = local; return; }   // 雲端沒有:照舊留本機、補傳
+      /* 本機沒有:用雲端那份(下面雲端蓋本機那一圈寫進來)。題庫先套一次刪除標記(舊版頁面整份上傳時可能把刪掉的帶回雲端),
+         套完跟雲端不同就存套過的那份、記帳補傳;標記認不得或頁面沒有合併函式就照舊用雲端那份 */
+      if (local === null) {
+        delete keepLocal[k]; delete led[k];
+        if (k === TOMBS) { const t = runMerge(k, null, c.v); tombsV = t && t.ok === true ? t.v : null; }
+        const m = s.tombs ? runMerge(k, null, c.v, tombsV) : null;
+        if (m && m.ok === true && !m.sameAsCloud) { plan.save[k] = m.v; keepLocal[k] = led[k] = Date.now(); }
+        return;
+      }
+      const fn = local === undefined || (s.clock && !clockOk) ? null : mergeFn(k);
+      const m = fn ? runMerge(k, local, c.v, tombsV, !(dirty && dirty[k])) : null;
+      if (k === TOMBS) tombsV = m && m.ok === true ? m.v : null;   // 標記認不得:題庫照聯集合併(只會多)
       if (!m || m.ok !== true) {
-        if (!(k in keepLocal) && !clockOk && local !== undefined && marks && Object.prototype.hasOwnProperty.call(marks, k)) keepLocal[k] = Date.now();
+        if (s.clock && !(k in keepLocal) && !clockOk && local !== undefined && marks && Object.prototype.hasOwnProperty.call(marks, k)) keepLocal[k] = Date.now();
+        /* 不對時的鍵(題庫、標記、模擬考紀錄)本機和雲端都有、又合併不了(頁面沒有合併函式、合併說唯讀):一律留本機、不補傳、帳本記著,
+           之後有合併函式的頁面再合併上傳。以前雲端比帳本新時用雲端蓋掉本機,這台還沒傳上去的題庫就不見了(第二輪審查) */
+        if (!s.clock && !(k in keepLocal) && local !== undefined && canonOf(local) !== canonOf(c.v)) { keepLocal[k] = led[k] = Date.now(); }
         if (k in keepLocal) plan.hold[k] = true;
         return;
       }

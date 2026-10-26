@@ -15,6 +15,7 @@ const REPO = path.join(__dirname, '..');
 const read = f => fs.readFileSync(path.join(REPO, f), 'utf8');
 const exists = f => fs.existsSync(path.join(REPO, f));
 const BASE = '27557eb';
+const LATER_BASE = ['js/vocab.js', 'js/reading.js'];   // 27557eb 之後被別的功能改過的檔案(同步合併),基準在 tools/fixtures/pet_hooks_base/
 
 /* ---------- 小假 DOM(跟 test_daily.js 同一套做法,多了 isConnected) ---------- */
 function fakeDom() {
@@ -650,6 +651,20 @@ T['跟 ' + BASE + ' 比:只多了掛勾那幾行,沒有刪掉或改掉任何一�
   const bad = [];
   let added = 0;
   FILES.forEach(f => {
+    /* 之後別的功能(同步合併,2026-10-24)改過的檔案:比對基準換成 tools/fixtures/pet_hooks_base/ 裡「那一版拿掉掛勾那幾行」的樣子,
+       一樣要求跟基準比只多了掛勾、沒有刪改任何一行。之後再改這幾個檔案,要重新產生基準(拿掉掛勾那幾行)並在 commit 說明 */
+    const fixture = 'tools/fixtures/pet_hooks_base/' + f.split('/').pop();
+    if (LATER_BASE.includes(f) && exists(fixture)) {
+      const base = read(fixture).replace(/\r\n/g, '\n').split('\n');
+      const cur = read(f).replace(/\r\n/g, '\n').split('\n');
+      const kept = [];
+      cur.forEach(l => { if (allowed.has(l.trim())) added++; else kept.push(l); });
+      if (kept.join('\n') !== base.join('\n')) {
+        const i = kept.findIndex((l, n) => l !== base[n]);
+        bad.push(f + ' 跟 ' + fixture + ' 比,第 ' + (i + 1) + ' 行起不一樣:' + String(kept[i]).slice(0, 80));
+      }
+      return;
+    }
     const r = spawnSync('git', ['-C', REPO, 'diff', '--no-color', '-U0', BASE, '--', f], { encoding: 'utf8' });
     if (r.status !== 0) { bad.push(f + ' git 失敗:' + (r.stderr || '').trim()); return; }
     /* 搬家(2026-10,第一輪審查):寫作與文章單字顯示「搬家留下的另一份」。那幾段整段是新加的、第一行是「/* 搬家」開頭的註解,

@@ -55,9 +55,53 @@
     return out.length ? out : [s.trim()];
   }
 
-  /* ---------- 自訂題庫 ---------- */
-  function getBanks() { return store.get('vgame_banks', []); }
+  /* ---------- 自訂題庫 ----------
+     多台裝置同步(同步合併設計 3.6、3.7.4):每次寫入前重新讀本機那一份,用 js/sync-merge.js 的函式改(蓋 _r、_t、_p 戳記),
+     不拿畫面打開時讀進來的舊陣列整份寫回(同一台兩個分頁,另一個分頁剛存的文章題庫才不會被蓋掉)。
+     刪題庫、刪字先存刪除標記(sync_del,只有雲端帳號才寫)再存題庫:中途被關掉只會多留,不會少。
+     頁面沒載到 sync-merge.js(不該發生)時照舊直接改,不蓋戳記。 */
+  const SM = window.SYNC_MERGE || null;
+  function getBanks() { const b = store.get('vgame_banks', []); return Array.isArray(b) ? b : []; }
   function saveBanks(banks) { store.set('vgame_banks', banks); }
+  function bankOf(id) { return getBanks().find(b => b && b.id === id) || null; }
+  const cloudAccount = () => String(window.__PROFILE_ID || '').charAt(0) === 'c';
+  /* 改一個題庫(沒有就建立):fn 拿到題庫的複本,回改好的;沒改到內容就不存 */
+  function editBank(id, fn) {
+    const before = getBanks(), now = Date.now();
+    let after;
+    if (SM) after = SM.editBank(before, id, now, fn);
+    else {
+      const i = before.findIndex(b => b && b.id === id);
+      const next = fn(i >= 0 ? Object.assign({}, before[i], { words: (before[i].words || []).slice() }) : { id, name: '', words: [] });
+      after = before.slice();
+      if (i >= 0) after[i] = next; else after.push(next);
+    }
+    if (after !== before) saveBanks(after);
+  }
+  /* 改一個字:找同一個英文、內容也一樣的那一個(舊資料可能有兩個同樣的英文),找不到就用第一個同樣英文的 */
+  function editWord(id, w, patch) {
+    editBank(id, b => {
+      const words = (b.words || []).slice();
+      let i = SM ? words.findIndex(x => x && norm(x.en) === norm(w.en) && SM.wordHash(x) === SM.wordHash(w)) : -1;
+      if (i < 0) i = words.findIndex(x => x && norm(x.en) === norm(w.en));
+      if (i < 0) return b;
+      words[i] = SM ? SM.reviseWord(words[i], patch, Date.now()) : Object.assign({}, words[i], patch);
+      return Object.assign({}, b, { words });
+    });
+  }
+  function removeBank(id) {
+    if (!SM) { saveBanks(getBanks().filter(x => x.id !== id)); return; }
+    const d = SM.deleteBank(getBanks(), store.get('sync_del', null), id, Date.now());
+    if (cloudAccount()) store.set('sync_del', d.tombs);
+    saveBanks(d.banks);
+  }
+  function removeWord(id, w) {
+    if (!SM) { editBank(id, b => Object.assign({}, b, { words: (b.words || []).filter(x => !(x && x.en === w.en && x.zh === w.zh)) })); return; }
+    const d = SM.deleteWord(getBanks(), store.get('sync_del', null), id, norm(w.en), Date.now(), SM.wordHash(w));
+    if (d.banks === getBanks()) return;
+    if (cloudAccount()) store.set('sync_del', d.tombs);
+    saveBanks(d.banks);
+  }
   function bankPool(bank) {
     return (bank.words || []).filter(w => w.on !== false)
       .map(w => ({ answer: norm(w.en), zh: w.zh }))
@@ -76,11 +120,23 @@
 
   /* ---------- 路由(頁內狀態) ---------- */
   renderHome();
+  /* 開了好幾天的 App 一進單字頁先跟雲端對齊(CLOUD.syncKey),之後的編輯才不是根據舊資料;
+     有變(別台加的題庫合併進來)、或別的分頁改了題庫,畫面在首頁或編輯頁時重畫,遊戲中不打斷 */
+  let editRedraw = null;
+  function redrawBanks() {
+    if (root.querySelector('[data-vview="home"]')) renderHome();
+    else if (editRedraw && root.querySelector('[data-vview="edit"]')) editRedraw();
+  }
+  if (window.CLOUD && typeof CLOUD.syncKey === 'function') {
+    CLOUD.syncKey('vgame_banks').then(r => { if (r && r.changed) redrawBanks(); }, () => {});
+  }
+  window.addEventListener('cloud:merged', e => { if (e && e.detail && e.detail.key === 'vgame_banks') redrawBanks(); });
+  window.addEventListener('storage', e => { if (e && e.key === storageKey('vgame_banks')) redrawBanks(); });
 
   function renderHome() {
     document.title = '單字訓練|衝衝英文';
     root.innerHTML = '';
-    root.append(h('div', { class: 'page-head' },
+    root.append(h('div', { class: 'page-head', 'data-vview': 'home' },
       h('h1', null, '單字訓練')));
 
     /* 兩個分頁:單字遊戲(字池玩法+我的題庫) / 片語特訓;分頁記在網址 #phrase,練完回來還在原分頁 */
@@ -215,7 +271,7 @@
             h('button', {
               class: 'btn', onclick: () => {
                 if (!confirm('刪除題庫「' + b.name + '」？單字會一起刪掉。')) return;
-                saveBanks(getBanks().filter(x => x.id !== b.id));
+                removeBank(b.id);
                 renderHome();
               },
             }, '刪除'))));
@@ -267,12 +323,9 @@
 
   /* ================= 題庫編輯 ================= */
   function renderBankEdit(bankId) {
-    const banks = getBanks();
-    let bank = banks.find(b => b.id === bankId);
-    if (!bank) {
-      bank = { id: 'b' + Date.now().toString(36), name: '', words: [] };
-      banks.push(bank);
-    }
+    const id = bankId || (SM ? SM.newBankId(Date.now()) : 'b' + Date.now().toString(36));
+    const current = () => bankOf(id) || { id, name: '', words: [] };   // 每次都重讀(別的分頁、別台合併進來的才看得到)
+    const bank = current();
     document.title = '編輯題庫|衝衝英文';
     root.innerHTML = '';
     const nameInput = h('input', {
@@ -286,41 +339,76 @@
     const status = h('div', { class: 'result-note' });
     const listWrap = h('div', null);
 
+    /* 名稱欄位:shownName 是最後一次放進輸入框(或存過)的名稱。輸入框跟它一樣 = 學生沒動過名稱,
+       persist 就不寫名稱(題庫已經存在時),重畫時換成本機現在的名稱(別台改的名稱合併進來了)。
+       以前每次 persist 都把輸入框的值寫回去:輸入框還停在合併前的舊名稱時,會把別台的改名蓋掉(而且 _nt 是新的,之後每台都用舊名稱) */
+    let shownName = nameInput.value;
     function persist() {
-      bank.name = nameInput.value.trim() || '未命名題庫';
-      saveBanks(banks);
+      const typed = nameInput.value;
+      if (typed === shownName && bankOf(id)) return;
+      const name = typed.trim() || '未命名題庫';
+      editBank(id, b => Object.assign({}, b, { name }));
+      shownName = typed;
     }
+    function syncName() {
+      const b = bankOf(id);
+      if (b && nameInput.value === shownName && typeof b.name === 'string' && b.name !== shownName) {
+        nameInput.value = b.name;
+        shownName = b.name;
+      }
+    }
+    function redraw() { syncName(); drawList(); }
     function drawList() {
       listWrap.innerHTML = '';
-      if (!bank.words.length) return;
-      const onCount = bank.words.filter(w => w.on !== false).length;
+      const words = (current().words || []).filter(w => w && typeof w.en === 'string');
+      if (!words.length) return;
+      const onCount = words.filter(w => w.on !== false).length;
       listWrap.append(h('div', { class: 'p-stats', style: 'margin:14px 0 6px' },
-        bank.words.length + ' 個字，練 ' + onCount + ' 個（取消勾選不會刪掉）'));
-      bank.words.forEach(w => {
+        words.length + ' 個字，練 ' + onCount + ' 個（取消勾選不會刪掉）'));
+      words.forEach(w => {
         const cb = h('input', { type: 'checkbox' });
         cb.checked = w.on !== false;
-        cb.addEventListener('change', () => { w.on = cb.checked; persist(); drawList(); });
-        listWrap.append(h('div', { class: 'bank-word' },
+        cb.addEventListener('change', () => { persist(); editWord(id, w, { on: cb.checked }); drawList(); });
+        const alt = Array.isArray(w.alt) ? w.alt.filter(a => typeof a === 'string' && a.trim()) : [];
+        listWrap.append(h('div', { class: 'bank-word' + (alt.length ? ' has-alt' : '') },
           h('label', { class: 'bank-word-main' }, cb,
             h('b', null, w.en), h('span', { class: 'bank-word-zh' }, w.zh)),
           h('button', {
             class: 'bank-word-del', type: 'button', title: '刪除這個字',
-            onclick: () => { bank.words = bank.words.filter(x => x !== w); persist(); drawList(); },
-          }, '✕')));
+            onclick: () => { persist(); removeWord(id, w); drawList(); },
+          }, '✕'),
+          /* 兩台同時改了這個字的中文:沒當主要的那個放在 alt(同步合併設計 3.7.3),可以換成它或刪掉 */
+          alt.map(a => h('div', { class: 'bank-word-alt' },
+            h('span', null, '另一台寫的：' + a),
+            h('button', { class: 'pop-mini', type: 'button', onclick: () => { editWord(id, w, { zh: a, alt: alt.filter(x => x !== a) }); drawList(); } }, '換成這個'),
+            h('button', { class: 'pop-mini', type: 'button', onclick: () => { editWord(id, w, { alt: alt.filter(x => x !== a) }); drawList(); } }, '刪掉')))));
       });
     }
     function addBulk() {
       const lines = bulkInput.value.split('\n');
       let added = 0, updated = 0, skipped = 0;
+      const seen = new Set((current().words || []).filter(w => w && typeof w.en === 'string').map(w => norm(w.en)));
+      const list = [];
       lines.forEach(line => {
         const p = parseWordLine(line);
         if (!p || !p.en || !p.zh || p.en.length > 30) { if (line.trim()) skipped++; return; }
         const key = norm(p.en);
-        const exist = bank.words.find(w => norm(w.en) === key);
-        if (exist) { exist.zh = p.zh; updated++; }
-        else { bank.words.push({ en: p.en, zh: p.zh, on: true }); added++; }
+        if (seen.has(key)) updated++;
+        else { seen.add(key); added++; }
+        list.push({ en: p.en, zh: p.zh });
       });
       persist();
+      if (list.length) {
+        editBank(id, b => {
+          if (SM) return SM.addWords(b, list, Date.now());
+          const words = (b.words || []).slice();
+          list.forEach(p => {
+            const i = words.findIndex(w => norm(w.en) === norm(p.en));
+            if (i >= 0) words[i] = Object.assign({}, words[i], { zh: p.zh }); else words.push({ en: p.en, zh: p.zh, on: true });
+          });
+          return Object.assign({}, b, { words });
+        });
+      }
       bulkInput.value = '';
       status.textContent = '加入 ' + added + ' 個' + (updated ? '，更新 ' + updated + ' 個' : '') +
         (skipped ? '，有 ' + skipped + ' 行看不懂（要有英文和中文）' : '');
@@ -328,8 +416,9 @@
     }
 
     nameInput.addEventListener('change', persist);
+    editRedraw = redraw;
     root.append(
-      h('div', { class: 'drill-top' },
+      h('div', { class: 'drill-top', 'data-vview': 'edit' },
         h('h1', null, bankId ? '編輯題庫' : '新增題庫'),
         h('a', { href: 'vocab.html', style: 'font-size:13.5px;margin-left:auto', onclick: e => { e.preventDefault(); persist(); renderHome(); } }, '← 完成，回單字訓練')),
       h('div', { class: 'q-block' },

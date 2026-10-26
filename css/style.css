@@ -683,6 +683,9 @@ button { font-family: var(--font); cursor: pointer; }
 .bank-word-zh { color: var(--ink-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bank-word-del { border: none; background: none; color: var(--ink-light); cursor: pointer; font-size: 14px; padding: 2px 8px; }
 .bank-word-del:hover { color: #c0392b; }
+/* 兩台同時改了同一個字的中文:另一個寫法(alt)列在那個字下面,可以換成它或刪掉 */
+.bank-word.has-alt { flex-wrap: wrap; }
+.bank-word-alt { flex-basis: 100%; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 2px 0 2px 32px; font-size: 13px; color: var(--ink-light); }
 .passage-col .passage-box { position: static; max-height: none; }
 .passage-sticky-wrap { position: sticky; top: 76px; max-height: calc(100vh - 100px); overflow-y: auto; }
 .passage-sticky-wrap .passage-box { position: static; max-height: none; }

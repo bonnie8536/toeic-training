@@ -156,7 +156,7 @@ T['演練版 Worker(tools/build_rehearsal_worker.js):只換三個網域,代理�
   const { build } = require('./build_rehearsal_worker.js');
   const WH = 'rushup-move-worker.example.workers.dev', NP = 'https://rushup-move-new.pages.dev';
   const src = build(SRC, { old: WH, new: NP });
-  const lines = (s) => s.split('\n');
+  const lines = (s) => s.replace(/\r\n/g, '\n').split('\n');   // Windows 上 git 取出來的是 CRLF
   const diff = lines(src).slice(1).filter((l, i) => l !== lines(SRC)[i]);
   assert.deepEqual(diff, ["const NEW = '" + NP + "';", "const NEW_HOST = 'rushup-move-new.pages.dev';", "const OLD_WWW = '" + WH + "';"]);
   const up = (status, headers) => () => new Response(status === 200 ? 'page' : null, { status, headers: headers || {} });
@@ -218,6 +218,15 @@ T['B:導覽帶 tr_hd=1、沒有 tr_moved=1:回搬家頁的內容(網址不變、
   assert.equal(doneR.status, 301);
   const img = await w.fetch(req('/img/a.png', { headers: { cookie: 'tr_hd=1', accept: 'image/*' } }));
   assert.equal(img.status, 301);
+};
+
+/* 要貼到 Cloudflare 的那一份在 repo 外(D:/claudecode/刷刷英文開發/搬家/worker/舊網址worker_貼上用.js):改了這裡要一起換、線上 Worker 也要重貼。
+   那份不在這台(別的電腦、CI)就略過 */
+T['tools/move-worker/worker.js 跟貼上用那一份(repo 外)一樣'] = async () => {
+  const p = path.join(REPO, '..', '刷刷英文開發', '搬家', 'worker', '舊網址worker_貼上用.js');
+  if (!fs.existsSync(p)) return;
+  const n = (s) => s.replace(/\r\n/g, '\n');
+  assert.equal(n(fs.readFileSync(p, 'utf8')), n(SRC), '兩份不一樣:改了 tools/move-worker/worker.js 要把貼上用那份一起換掉(線上 Worker 也要重貼)');
 };
 
 (async () => {

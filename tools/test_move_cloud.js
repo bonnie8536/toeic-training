@@ -1,5 +1,6 @@
 /* 搬家計畫 2.7:js/cloud.js 的 flushForMove(舊網址寄出頁)與搬家暫存區 tr_move_pending_<帳號 id>(新網址登入灌資料時合併)。
-   跟 tools/test_cloud_merge.js 同一套假的 Supabase、localStorage、時鐘與計時器;合併規則載入真的 js/move-rules.js、js/move-merge.js,
+   跟 tools/test_cloud_merge.js 同一套假的 Supabase(加上 in() 與一次傳多列的 upsert,題庫跟 sync_del 一起讀、一起傳)、localStorage、時鐘與計時器;
+   合併規則載入真的 js/sync-merge.js(每一頁都在 cloud.js 前面載入)、js/move-rules.js、js/move-merge.js,
    小雞用真的 js/pet.js。用法:node tools/test_move_cloud.js */
 'use strict';
 const fs = require('fs');
@@ -8,7 +9,7 @@ const path = require('path');
 
 const REPO = path.join(__dirname, '..');
 const read = (f) => fs.readFileSync(path.join(REPO, f), 'utf8');
-const SRC = { cloud: read('js/cloud.js'), pet: read('js/pet.js'), food: read('js/pet-food.js'), rules: read('js/move-rules.js'), merge: read('js/move-merge.js'), daily: read('js/daily.js') };
+const SRC = { cloud: read('js/cloud.js'), sync: read('js/sync-merge.js'), pet: read('js/pet.js'), food: read('js/pet-food.js'), rules: read('js/move-rules.js'), merge: read('js/move-merge.js'), daily: read('js/daily.js') };
 const USER = { id: '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72', email: 's@x.com', user_metadata: { name: '學生' } };
 const OTHER = '9a9a9a9a-0000-4000-8000-000000000000';
 const PID = 'c' + USER.id.replace(/-/g, '');
@@ -44,19 +45,23 @@ function makeClient(w) {
     },
     rpc: async () => ({ error: null }),
     from(table) {
-      const q = { op: null, filters: {}, row: null, cols: '' };
+      const q = { op: null, filters: {}, rows: null, cols: '', inKeys: null };
       const b = {
         select(c) { q.op = 'select'; q.cols = c; return b; }, eq(c, v) { q.filters[c] = v; return b; },
-        upsert(row) { q.op = 'upsert'; q.row = row; return b; }, then(ok, bad) { return run().then(ok, bad); },
+        in(c, v) { if (c === 'k') q.inKeys = v.slice(); else q.filters[c] = v; return b; },
+        upsert(rows) { q.op = 'upsert'; q.rows = Array.isArray(rows) ? rows : [rows]; return b; }, then(ok, bad) { return run().then(ok, bad); },
       };
       async function run() {
-        w.ops.push({ table, op: q.op, k: q.op === 'upsert' ? q.row.k : (q.filters.k || '*'), cols: q.cols });
+        if (q.op === 'upsert') q.rows.forEach((r) => w.ops.push({ table, op: q.op, k: r.k, cols: q.cols }));
+        else w.ops.push({ table, op: q.op, k: q.inKeys ? q.inKeys.join(',') : (q.filters.k || '*'), cols: q.cols });
         if (w.offline) return { data: null, error: { message: 'TypeError: Failed to fetch' } };
         if (table !== 'progress') return { data: [], error: null };
-        if (q.op === 'select') return { data: w.db.filter((r) => r.user_id === q.filters.user_id && (q.filters.k === undefined || r.k === q.filters.k)).map((r) => JSON.parse(J(r))), error: null };
-        const row = JSON.parse(J(q.row));
-        const i = w.db.findIndex((r) => r.user_id === row.user_id && r.k === row.k);
-        if (i >= 0) w.db[i] = row; else w.db.push(row);
+        if (q.op === 'select') return { data: w.db.filter((r) => r.user_id === q.filters.user_id && (q.filters.k === undefined || r.k === q.filters.k) && (!q.inKeys || q.inKeys.includes(r.k))).map((r) => JSON.parse(J(r))), error: null };
+        q.rows.forEach((x) => {
+          const row = JSON.parse(J(x));
+          const i = w.db.findIndex((r) => r.user_id === row.user_id && r.k === row.k);
+          if (i >= 0) w.db[i] = row; else w.db.push(row);
+        });
         return { data: null, error: null };
       }
       return b;
@@ -93,7 +98,7 @@ function loadPage(w, opt) {
   vm.createContext(ctx);
   try { ctx.__PROFILE_ID = JSON.parse(w.local.getItem('tr_current_profile')) || null; } catch (e) { ctx.__PROFILE_ID = null; }
   Object.assign(ctx, { PET_ON: true, PET_FOOD: true, PET_FOOD_FROM: '2026-10-20' });
-  vm.runInContext(SRC.pet, ctx); vm.runInContext(SRC.food, ctx);
+  vm.runInContext(SRC.pet, ctx); vm.runInContext(SRC.food, ctx); vm.runInContext(SRC.sync, ctx);
   if (opt.movers !== 'fail') { vm.runInContext(SRC.rules, ctx); vm.runInContext(SRC.merge, ctx); vm.runInContext(SRC.daily, ctx); }
   vm.runInContext(SRC.cloud, ctx);
   return {
@@ -118,25 +123,25 @@ const ups = (w) => w.ops.filter((o) => o.op === 'upsert' && o.k !== '_meta').map
 
 const T = {};
 
-T['flushForMove:帳本比雲端新的照常上傳;雲端比較新的不上傳、交給搬家包;這一頁之後關頁也不自動補傳它'] = async () => {
+T['flushForMove:帳本比雲端新的照常上傳;雲端比較新的(不在合併表上的鍵)不上傳、交給搬家包;這一頁之後關頁也不自動補傳它'] = async () => {
   const w = makeWorld();
-  cloudRow(w, 'vgame_banks', [bank('b1', '雲端的', ['a'])], T0 - 24 * HOUR);
+  cloudRow(w, 'diag', { s: 1 }, T0 - 24 * HOUR);
   cloudRow(w, 'hist', [], T0 - 24 * HOUR);
   const pg = await openLoggedIn(w);
   w.offline = true;
   w.clock.t += 1000; w.local.setItem(PREFIX + 'hist', J([{ m: 'p5', id: 'q', c: 1, ok: true, t: w.clock.t }])); pg.ctx.CLOUD.push('hist', 1);
-  w.clock.t += 1000; w.local.setItem(PREFIX + 'vgame_banks', J([bank('b1', '雲端的', ['a']), bank('b2', '離線加的', ['z'])])); pg.ctx.CLOUD.push('vgame_banks', 1);
+  w.clock.t += 1000; w.local.setItem(PREFIX + 'diag', J({ s: 2 })); pg.ctx.CLOUD.push('diag', 1);
   await pg.runTimers();
-  /* 別台(新網址)這時更新了雲端的題庫 */
-  w.db.find((r) => r.k === 'vgame_banks').updated_at = iso(w.clock.t + 60e3);
+  /* 別台(新網址)這時更新了雲端的 diag */
+  w.db.find((r) => r.k === 'diag').updated_at = iso(w.clock.t + 60e3);
   w.offline = false; w.ops = [];
   const r = await pg.ctx.CLOUD.flushForMove();
   const carried = (r.accounts[USER.id] || []).map((e) => e[0]);
   const upOnce = ups(w);
   await pg.fire('win:pagehide');
   const after = ups(w);
-  const ok = r.left === 1 && J(carried) === J(['vgame_banks']) && J(upOnce) === J(['hist']) && J(after) === J(['hist'])
-    && cv(w, 'vgame_banks')[0].name === '雲端的' && cv(w, 'vgame_banks').length === 1 && 'vgame_banks' in ledger(w);
+  const ok = r.left === 1 && J(carried) === J(['diag']) && J(upOnce) === J(['hist']) && J(after) === J(['hist'])
+    && cv(w, 'diag').s === 1 && 'diag' in ledger(w);
   return { ok, detail: J({ left: r.left, carried, upOnce, after, ledger: ledger(w) }) };
 };
 
@@ -333,6 +338,83 @@ T['暫存區:可以合併的鍵,同一項兩邊不一樣又沒辦法比(沒有�
   const bv = backupVals(w);
   const ok = J(c) === J({ q: { c: 1 }, r: { c: 3 } }) && bv.includes(J({ q: { c: 2 }, r: { c: 3 } })) && w.local.getItem(PEND) === null;
   return { ok, detail: J({ c, bv }) };
+};
+
+/* ---------- 跟同步合併(js/sync-merge.js)對齊:合併表上的鍵(題庫、刪除標記、模擬考紀錄)用同一套合併(同步合併設計 3.12) ---------- */
+const SMX = { console: { log() {}, warn() {}, error() {} } };
+SMX.window = SMX;
+vm.createContext(SMX);
+vm.runInContext(SRC.sync, SMX);
+const SM = SMX.SYNC_MERGE;
+const DAY = 24 * HOUR;
+/* 新版頁面做的題庫(有 _r、_t、_p 戳記) */
+const sbank = (id, name, words, t) => SM.editBank([], id, t, (b) => SM.addWords(Object.assign(b, { name }), words.map((x) => ({ en: x, zh: '中' + x })), t))[0];
+const addW = (b, en, t) => SM.editBank([b], b.id, t, (x) => SM.addWords(x, [{ en, zh: '中' + en }], t))[0];
+const enOf = (b) => b.words.map((x) => x.en).sort();
+const mockRec = (d, n) => ({ d, size: 'mini', lRaw: n, rRaw: n, lScore: 5, rScore: 5 });
+
+T['暫存區:同一個題庫雲端(別台)和暫存那份(舊網址)各加了字、戳記不同:合併成一個題庫、字都在,不另存「（舊網址）」'] = async () => {
+  const w = makeWorld();
+  const b0 = sbank('b1', '甲', ['a'], T0 - 5 * DAY);
+  cloudRow(w, 'vgame_banks', [addW(b0, 'c', T0 - 3 * DAY)], T0 - HOUR);
+  w.local.setItem(PEND, J({ items: [['vgame_banks', J([addW(b0, 'z', T0 - 4 * DAY)]), T0 - 4 * DAY]] }));
+  await openLoggedIn(w);
+  const c = cv(w, 'vgame_banks') || [];
+  const ok = c.length === 1 && c[0].id === 'b1' && c[0].name === '甲' && J(enOf(c[0])) === J(['a', 'c', 'z'])
+    && J(SM.stateKey(lv(w, 'vgame_banks'))) === J(SM.stateKey(c)) && w.local.getItem(PEND) === null && !Object.keys(ledger(w)).length;
+  return { ok, detail: J({ c: c.map((b) => [b.id, b.name, enOf(b)]), ledger: ledger(w) }) };
+};
+
+T['暫存區:舊網址離線刪掉的題庫(暫存區帶刪除標記 sync_del):搬過來登入之後雲端也刪掉、標記傳上去,不會回來'] = async () => {
+  const w = makeWorld();
+  const b1 = sbank('b1', '留著', ['a'], T0 - 5 * DAY), b2 = sbank('b2', '舊網址刪的', ['x'], T0 - 5 * DAY);
+  cloudRow(w, 'vgame_banks', [b1, b2], T0 - HOUR);
+  const d = SM.deleteBank([b1, b2], null, 'b2', T0 - 3 * HOUR);
+  w.local.setItem(PEND, J({ items: [['sync_del', J(d.tombs), T0 - 3 * HOUR], ['vgame_banks', J(d.banks), T0 - 3 * HOUR]] }));
+  await openLoggedIn(w);
+  const ids = (cv(w, 'vgame_banks') || []).map((b) => b.id);
+  const t = cv(w, 'sync_del');
+  const ok = J(ids) === J(['b1']) && !!t && !!t.vgame_banks.b.b2 && J((lv(w, 'vgame_banks') || []).map((b) => b.id)) === J(['b1'])
+    && J(lv(w, 'sync_del')) === J(t) && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ ids, t, local: lv(w, 'vgame_banks') }) };
+};
+
+T['暫存區:模擬考紀錄跟雲端聯集、留到 300 筆(同步的規則),不照搬家的 30 筆把舊網址的裁掉'] = async () => {
+  const w = makeWorld();
+  const cloud = Array.from({ length: 30 }, (x, i) => mockRec('2026-10-' + String(i + 1).padStart(2, '0') + 'T10:00', i));
+  const old = Array.from({ length: 5 }, (x, i) => mockRec('2026-09-0' + (i + 1) + 'T10:00', 100 + i));
+  cloudRow(w, 'mock_history', cloud, T0 - HOUR);
+  w.local.setItem(PEND, J({ items: [['mock_history', J(old), T0 - 2 * HOUR]] }));
+  await openLoggedIn(w);
+  const c = cv(w, 'mock_history') || [];
+  const ok = c.length === 35 && c[0].d === old[0].d && J(lv(w, 'mock_history')) === J(c) && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ n: c.length, first: c[0] && c[0].d }) };
+};
+
+T['flushForMove:題庫、刪除標記就算雲端比較新也先合併上傳(不蓋掉別台的),傳上去的不放進搬家包;離線時兩個都放進搬家包,收件端驗證收得下'] = async () => {
+  const w = makeWorld();
+  const other = sbank('bo', '別台的', ['o'], T0 - 2 * DAY), mine = sbank('bm', '這台離線加的', ['m'], T0 - 2 * DAY), gone = sbank('bg', '這台離線刪的', ['g'], T0 - 2 * DAY);
+  cloudRow(w, 'vgame_banks', [gone], T0 - DAY);
+  const pg = await openLoggedIn(w);
+  w.offline = true;
+  w.clock.t += 1000;
+  const d = SM.deleteBank([gone, mine], null, 'bg', w.clock.t);
+  w.local.setItem(PREFIX + 'sync_del', J(d.tombs)); pg.ctx.CLOUD.push('sync_del', 1);
+  w.local.setItem(PREFIX + 'vgame_banks', J(d.banks)); pg.ctx.CLOUD.push('vgame_banks', 1);
+  await pg.runTimers();
+  /* 搬家前:別台在雲端加了一個題庫(雲端那一列比帳本新) */
+  w.db.find((r) => r.k === 'vgame_banks').v = [gone, other];
+  w.db.find((r) => r.k === 'vgame_banks').updated_at = iso(w.clock.t + 60e3);
+  const off = await pg.ctx.CLOUD.flushForMove();
+  const carriedOff = (off.accounts[USER.id] || []).map((e) => e[0]);
+  const v = pg.ctx.MOVE_RULES.validate({ app: 'rushup-move', v: 1, keys: [], accounts: off.accounts }, w.clock.t);
+  w.offline = false;
+  const r = await pg.ctx.CLOUD.flushForMove();
+  const carried = (r.accounts[USER.id] || []).map((e) => e[0]);
+  const ids = (cv(w, 'vgame_banks') || []).map((b) => b.id).sort();
+  const ok = J(carriedOff) === J(['sync_del', 'vgame_banks']) && v.ok === true && J(carried) === J([]) && J(ids) === J(['bm', 'bo'])
+    && !!(cv(w, 'sync_del') || { vgame_banks: { b: {} } }).vgame_banks.b.bg && !Object.keys(ledger(w)).length;
+  return { ok, detail: J({ carriedOff, v: v.ok || v.why, carried, ids, ledger: ledger(w) }) };
 };
 
 (async () => {

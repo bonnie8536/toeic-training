@@ -1,5 +1,5 @@
 /* 搬家測試共用的東西(tools/test_move_core.js、tools/test_move_guard.js):假的 localStorage(可以設容量)、
-   在 vm 裡載入真的 js/common.js、js/pet*.js、js/daily.js、js/move-*.js,組包、驗證、合併、寫入一次做完的 moveInto。 */
+   在 vm 裡載入真的 js/common.js、js/pet*.js、js/daily.js、js/sync-merge.js(題庫、刪除標記、模擬考紀錄跟同步共用的合併)、js/move-*.js,組包、驗證、合併、寫入一次做完的 moveInto。 */
 'use strict';
 const fs = require('fs');
 const vm = require('vm');
@@ -46,12 +46,12 @@ function load() {
   };
   ctx.window = ctx;
   vm.createContext(ctx);
-  ['js/common.js', 'js/pet-config.js', 'js/pet.js', 'js/pet-food.js', 'js/daily.js', 'js/move-rules.js', 'js/move-merge.js', 'js/move-pack.js', 'js/move-apply.js', 'js/move-link.js']
+  ['js/common.js', 'js/pet-config.js', 'js/pet.js', 'js/pet-food.js', 'js/daily.js', 'js/sync-merge.js', 'js/move-rules.js', 'js/move-merge.js', 'js/move-pack.js', 'js/move-apply.js', 'js/move-link.js']
     .forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   return ctx;
 }
 const G = load();
-const { MOVE_RULES: R, MOVE_MERGE: M, MOVE_PACK: P, MOVE_APPLY: A, PET, DAILY } = G;
+const { MOVE_RULES: R, MOVE_MERGE: M, MOVE_PACK: P, MOVE_APPLY: A, PET, DAILY, SYNC_MERGE: SM } = G;
 const J = (x) => JSON.stringify(x);
 const bank = (id, name, words) => ({ id, name, words: words.map((w) => ({ en: w, zh: '中' + w })) });
 const tgt = (ls) => ({ get: (k) => ls.getItem(k), keys: Object.keys(ls.dump()) });
@@ -74,4 +74,4 @@ async function moveInto(newLs, init, extra, packOpt) {
 function petWith(days, name) { return { v: 1, born: '2026-10-01', goals: [], days, met: [], fed: {}, oldMet: 0, name: name || '' }; }
 function histRec(t, id, ok) { return { m: 'p5', id, c: 1, ok: !!ok, t }; }
 
-module.exports = { REPO, read, NOW, DAY, FROM, UID, CPID, makeStorage, load, G, R, M, P, A, PET, DAILY, J, bank, tgt, ctxFor, DEV_A, DEV_B, packOf, moveInto, petWith, histRec };
+module.exports = { REPO, read, NOW, DAY, FROM, UID, CPID, makeStorage, load, G, R, M, P, A, PET, DAILY, SM, J, bank, tgt, ctxFor, DEV_A, DEV_B, packOf, moveInto, petWith, histRec };

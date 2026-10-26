@@ -10,6 +10,7 @@
       沒有規則時搬家包會跳過它,舊網址離線刪掉的題庫、字搬過去之後會回來;flushForMove 不過濾就整包被 validate 拒絕。
    3. move-out.html 也要在 cloud.js 前面載入 js/sync-merge.js(tools/test_sync_union.js 第 21 項也會擋):
       沒載到的頁面灌資料時題庫留本機、不上傳(第 22 項),但寄出頁的 flushForMove 就傳不了題庫。
+      move-in.html 要在 js/move-merge.js 前面載入:收件頁合併同一個帳號的兩包暫存區、看訪客題庫的戳記,都用 SYNC_MERGE。
    4. tools/test_pet_hooks.js 兩個分支各自改過(這邊加了 tools/fixtures/pet_hooks_base/ 基準檔,搬家那邊改了站名例外):
       合併時用合併後的頁面重新產生基準檔,兩邊的例外都留。這一項只能在合併時人工處理,這裡不檢查。 */
 const fs = require('fs');
@@ -59,6 +60,18 @@ if (!moving) {
     check('js/move-rules.js:合併表上的鍵都有搬家規則,sync_del 不是整份換掉的 single', !missing.length && !single,
       JSON.stringify(rules) + (missing.length ? ' 沒有規則:' + missing.join('、') : '') + (single ? ' sync_del 是 single' : ''));
   }
+}
+
+if (moving) {
+  /* 3. 寄出頁、收件頁都要在用到合併的程式前面載入 js/sync-merge.js(只載一次) */
+  const order = (f, before) => {
+    const srcs = [];
+    read(f).replace(/<script[^>]*\ssrc="([^"]+)"/g, (m, s) => { srcs.push(s); return m; });
+    const i = srcs.indexOf('js/sync-merge.js'), j = srcs.indexOf(before);
+    return i > -1 && j > -1 && i < j && srcs.lastIndexOf('js/sync-merge.js') === i;
+  };
+  check('move-out.html 在 js/cloud.js 前面載入 js/sync-merge.js', has('move-out.html') && order('move-out.html', 'js/cloud.js'), '');
+  check('move-in.html 在 js/move-merge.js 前面載入 js/sync-merge.js', has('move-in.html') && order('move-in.html', 'js/move-merge.js'), '');
 }
 
 console.log(pass + ' / ' + (pass + fail) + ' 通過');

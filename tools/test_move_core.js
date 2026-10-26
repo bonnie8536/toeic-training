@@ -8,7 +8,7 @@ const path = require('path');
 const assert = require('assert');
 
 const K = require('./fixtures/move_kit.js');
-const { REPO, read, NOW, DAY, FROM, UID, CPID, makeStorage, G, R, M, P, A, PET, DAILY, J, bank, tgt, ctxFor, DEV_A, DEV_B, packOf, moveInto, petWith, histRec } = K;
+const { REPO, read, NOW, DAY, FROM, UID, CPID, makeStorage, G, R, M, P, A, PET, DAILY, SM, J, bank, tgt, ctxFor, DEV_A, DEV_B, packOf, moveInto, petWith, histRec } = K;
 
 const T = {};
 
@@ -327,6 +327,93 @@ T['登入過的帳號還沒上傳的:放進 tr_move_pending_<帳號>,不寫進�
   assert.deepEqual(pend.items.map((e) => [e[0], e[2]]), [['vgame_banks', NOW - 5000]]);
   await moveInto(ls, { ['tr_unsynced_' + UID]: J({ vgame_banks: NOW - 9000 }), ['tr_u' + CPID + '_vgame_banks']: J([bank('b1', '更舊的', ['a'])]) });
   assert.equal(JSON.parse(JSON.parse(ls.getItem('tr_move_pending_' + UID)).items[0][1])[0].name, '帳號的');
+  return 'ok';
+};
+
+/* ---------- 跟同步合併(js/sync-merge.js)對齊:題庫戳記、刪除標記、暫存區(同步合併設計 3.12) ---------- */
+/* 新版頁面做的題庫(有 _r、_t、_p 戳記):用 SYNC_MERGE 一步一步改,跟 js/vocab.js 一樣 */
+const sbank = (id, name, words, t) => SM.editBank([], id, t, (b) => SM.addWords(Object.assign(b, { name }), words.map((w) => ({ en: w, zh: '中' + w })), t))[0];
+const edit = (b, t, fn) => SM.editBank([b], b.id, t, fn)[0];
+const toggle = (b, en, t) => edit(edit(b, t, (x) => SM.setWord(x, en, { on: false }, t)), t + 1000, (x) => SM.setWord(x, en, { on: true }, t + 1000));
+const addW = (b, en, t) => edit(b, t, (x) => SM.addWords(x, [{ en, zh: '中' + en }], t));
+const namesOf = (ls, k) => JSON.parse(ls.getItem(k || 'tr_vgame_banks')).map((b) => b.name);
+const wordsOf = (b) => b.words.map((w) => w.en).sort();
+
+T['sync_del(刪除標記)有搬家規則 tombs,不是整份換掉的 single;帳號還沒上傳的標記放得進搬家包、收件端驗證收得下'] = () => {
+  assert.equal(R.ruleOf('sync_del'), 'tombs');
+  const b1 = sbank('b1', '帳號的', ['a'], NOW - 3 * DAY), b2 = sbank('b2', '要刪的', ['x'], NOW - 3 * DAY);
+  const d = SM.deleteBank([b1, b2], null, 'b2', NOW - 2 * DAY);
+  const init = { ['tr_unsynced_' + UID]: J({ vgame_banks: NOW - 2 * DAY, sync_del: NOW - 2 * DAY }),
+    ['tr_u' + CPID + '_vgame_banks']: J(d.banks), ['tr_u' + CPID + '_sync_del']: J(d.tombs) };
+  const { pack, summary } = packOf(init);
+  assert.deepEqual(pack.accounts[UID].map((e) => e[0]), ['sync_del', 'vgame_banks']);
+  assert.equal(summary.unknown, 0);
+  const v = R.validate(JSON.parse(J(pack)), NOW);
+  assert.ok(v.ok, v.why);
+  assert.equal(R.classify('tr_u' + CPID + '_sync_del', new Set()).kind, 'cloud');   // 雲端帳號資料夾裡的:有規則,不算「認不得」
+  return 'ok';
+};
+
+T['刪除標記(訪客的 tr_sync_del):兩邊的標記聯集,不問、不整份換掉'] = async () => {
+  const x = sbank('bx', '新網址刪的', ['x'], NOW - 3 * DAY), y = sbank('by', '舊網址刪的', ['y'], NOW - 3 * DAY);
+  const tn = SM.deleteBank([x], null, 'bx', NOW - 2 * DAY).tombs, to = SM.deleteBank([y], null, 'by', NOW - 2 * DAY).tombs;
+  const ls = makeStorage(0, { tr_sync_del: J(tn) });
+  const { plan } = await moveInto(ls, { tr_sync_del: J(to) });
+  const t = JSON.parse(ls.getItem('tr_sync_del'));
+  assert.deepEqual(Object.keys(t.vgame_banks.b).sort(), ['bx', 'by']);
+  assert.deepEqual(plan.conflicts.map((c) => c.key), []);
+  return 'ok';
+};
+
+T['題庫(訪客):同一個題庫兩邊只差戳記(勾選取消又勾回),不另存「（舊網址）」'] = async () => {
+  const b0 = sbank('b1', '甲', ['a', 'b'], NOW - 5 * DAY);
+  const ls = makeStorage(0, { tr_vgame_banks: J([toggle(b0, 'a', NOW - 4 * DAY)]) });
+  const { plan } = await moveInto(ls, { tr_vgame_banks: J([toggle(b0, 'b', NOW - 3 * DAY)]) });
+  assert.deepEqual(namesOf(ls), ['甲']);
+  assert.equal(plan.banks.renamed.length, 0);
+  return 'ok';
+};
+
+T['題庫(訪客):一份是另一份改過來的(戳記看得出先後):用新的那份,不另存「（舊網址）」;新網址的比較新就不動'] = async () => {
+  const b0 = sbank('b1', '甲', ['a'], NOW - 5 * DAY);
+  const newer = addW(b0, 'z', NOW - 4 * DAY);
+  const ls = makeStorage(0, { tr_vgame_banks: J([b0]) });
+  await moveInto(ls, { tr_vgame_banks: J([newer]) });
+  const after = JSON.parse(ls.getItem('tr_vgame_banks'));
+  assert.deepEqual(after.map((b) => [b.id, b.name, wordsOf(b)]), [['b1', '甲', ['a', 'z']]]);
+  const ls2 = makeStorage(0, { tr_vgame_banks: J([newer]) });
+  const { plan } = await moveInto(ls2, { tr_vgame_banks: J([b0]) });
+  assert.equal(ls2.getItem('tr_vgame_banks'), J([newer]));
+  assert.equal(plan.banks.renamed.length, 0);
+  return 'ok';
+};
+
+T['題庫(訪客):兩邊都真的改了(各加了不同的字):照舊另存一份「（舊網址）」,兩份都在'] = async () => {
+  const b0 = sbank('b1', '甲', ['a'], NOW - 5 * DAY);
+  const ls = makeStorage(0, { tr_vgame_banks: J([addW(b0, 'n', NOW - 4 * DAY)]) });
+  await moveInto(ls, { tr_vgame_banks: J([addW(b0, 'o', NOW - 3 * DAY)]) });
+  assert.deepEqual(namesOf(ls), ['甲', '甲（舊網址）']);
+  return 'ok';
+};
+
+T['暫存區(帳號還沒上傳的)再搬一次:題庫、刪除標記、模擬考紀錄跟上一包合併,不整份換掉;標記刪掉的題庫不會回來'] = async () => {
+  const ls = makeStorage(0, {});
+  const k = (s) => 'tr_u' + CPID + '_' + s;
+  const b1 = sbank('b1', '帳號的', ['a'], NOW - 9 * DAY), b3 = sbank('b3', '之後刪掉', ['q'], NOW - 9 * DAY);
+  const mk = (d) => ({ d, size: 'mini', lRaw: 1, rRaw: 1, lScore: 5, rScore: 5 });
+  await moveInto(ls, { ['tr_unsynced_' + UID]: J({ vgame_banks: NOW - 9000, mock_history: NOW - 9000 }),
+    [k('vgame_banks')]: J([b1, b3]), [k('mock_history')]: J([mk('2026-10-01')]) });
+  /* 別台(搬家碼帶來的)的同一個帳號:加了 b2、刪了 b3、考了另一次 */
+  const del = SM.deleteBank([b1, b3], null, 'b3', NOW - 6000);
+  const b2 = sbank('b2', '別台加的', ['z'], NOW - 6000);
+  await moveInto(ls, { ['tr_unsynced_' + UID]: J({ vgame_banks: NOW - 5000, sync_del: NOW - 5000, mock_history: NOW - 5000 }),
+    [k('vgame_banks')]: J(del.banks.concat([b2])), [k('sync_del')]: J(del.tombs), [k('mock_history')]: J([mk('2026-10-02')]) }, {}, { device: DEV_B });
+  const items = JSON.parse(ls.getItem('tr_move_pending_' + UID)).items;
+  const get = (s) => JSON.parse(items.find((e) => e[0] === s)[1]);
+  assert.deepEqual(get('vgame_banks').map((b) => b.id).sort(), ['b1', 'b2']);
+  assert.deepEqual(Object.keys(get('sync_del').vgame_banks.b), ['b3']);
+  assert.deepEqual(get('mock_history').map((r) => r.d), ['2026-10-01', '2026-10-02']);
+  assert.equal(items.find((e) => e[0] === 'vgame_banks')[2], NOW - 5000);
   return 'ok';
 };
 

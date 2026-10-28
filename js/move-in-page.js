@@ -5,6 +5,12 @@
      列給人看,按「確定搬進來」才寫(js/move-apply.js:先寫日誌、量空間、被換掉的先備份)。空間不夠時怎麼辦寫在 commit 前面。
    - 寫之前用 BroadcastChannel('rushup-move') 問「還有誰開著」:有別的新網址分頁就要求先關掉(它們可能寫回舊的小雞、洗掉正在考的模擬考)。
    - 小雞合併要對時:讀同網域不快取的 move-ping.txt 回應的 Date 標頭,差超過 3 天就不合併小雞(列為衝突、留新網址的)。
+   - 自動搬家:舊網址每一頁(js/move-out.js tryAuto)帶到 move-in.html#auto=<搬家碼>&back=<原路徑>。move-in.html 開頭的 script 先把 # 後面
+     收進 window.MOVE_AUTO_IN、用 replaceState 從網址拿掉;這裡把搬家碼交給跟「貼上搬家碼」同一個 fromText(同樣的驗證、雜湊、合併、備份)。
+     確認畫面照樣畫出來,下面這些都成立才不等按鈕、直接照預設(留這台的)寫:從舊網址帶過來的(document.referrer 是舊網址;
+     別的網站做一個 #auto= 連結騙人點,不會不經同意就寫進來)、沒有要選的衝突、沒有「兩邊不一樣只留一份」的項目、新網址沒有登入著(訪客資料登入時看不到)、
+     沒有其他新網址分頁開著、空間一次放得下(不先搬一部分)。寫好(或這台早就搬過同一包)就帶回舊網址 move-out.html#ack=<雜湊>&back=<原路徑>,
+     舊網址寫完成記號再帶到新網址的原路徑。沒寫成就什麼都不寫、說清楚,給「回舊網址用按鈕搬」;舊網址這個分頁不會再自動(js/move-out.js 的 tr_move_auto)。
    - 這一頁不載 cloud.js、pet-store.js(免得它在登入著時重新整理頁面,或小雞模組自己寫入)。畫面只用 textContent。
    依賴 js/move-config.js、js/common.js(h、日誌還原)、js/pet.js、js/pet-food.js、js/daily.js、js/move-*.js。 */
 (function () {
@@ -18,10 +24,35 @@
   const say = (text, cls) => h('p', { class: cls || 'result-note' }, text);
   const head = () => h('h1', { style: 'font-size:22px;margin:0 0 6px' }, '把舊網址的進度搬進來');
   let link = null, busy = false;
+  let auto = null;   // 舊網址自動搬家帶來的:{ code, back(原路徑), trusted(從舊網址帶過來的), from(回去的舊網址) }
   const fallbackBox = h('div', { id: 'move-fallback' });
   const live = h('div', { class: 'result-note', 'aria-live': 'polite' });
 
   function draw(...nodes) { root.replaceChildren(head(), ...nodes.filter(Boolean)); }
+
+  /* ---------- 自動搬家 ---------- */
+  function cameFromOld() { try { return M.from.indexOf(new URL(document.referrer).origin) > -1; } catch (e) { return false; } }
+  function backLink() {
+    if (!auto) return null;
+    return h('p', { style: 'margin-top:12px' }, h('a', { class: 'btn', href: (auto.from || M.from[0]) + '/move-out.html' }, '回舊網址用按鈕搬'));
+  }
+  const AUTO_FAIL = '自動搬家沒有成功，這次沒有寫入任何東西，舊網址的資料都還在。可以按「回舊網址用按鈕搬」，或用下面的搬家檔、搬家碼。';
+  /* 不能不問就寫的原因;'' 表示可以直接寫 */
+  function autoStop(plan, valid) {
+    if (!auto.trusted) return '這一頁不是從舊網址自動帶過來的，請看過上面的內容，確定是你的進度再按「確定搬進來」。';
+    if (plan.conflicts.length) return '有些項目兩邊不一樣，要你決定留哪一份。看過之後按「確定搬進來」。';
+    if (plan.dropped.length) return '有些項目兩邊不一樣、只能留一份（上面有列），看過之後按「確定搬進來」。';
+    if (signedIn() && valid.keys.some((e) => !/^tr_u/.test(e[0]))) return '你現在在新網址是登入的，請看過上面的說明，再按「確定搬進來」。';
+    return '';
+  }
+  /* 寫好了:自動搬家帶回舊網址寫完成記號;不是自動搬家的照舊顯示搬好了 */
+  function finish(plan, ctx) {
+    if (!auto) { drawDone(plan); return; }
+    const url = L.ackUrl(ctx.from, ctx.sent, auto.back);
+    draw(say('搬好了。舊網址那台的進度已經在這裡。', 'move-done'), say('正在回舊網址記下「搬好了」，再帶你回原本的頁面…'),
+      h('p', null, h('a', { class: 'btn primary', href: url }, '沒有自動跳過去的話，按這裡')));
+    location.replace(url);
+  }
 
   /* ---------- 其他分頁 ---------- */
   function others() {
@@ -60,12 +91,13 @@
       const valid = R.validate(pack, now);
       if (!valid.ok) { unusable('（' + valid.why + '）'); return; }
       if ((await P.hashOf(pack)) !== hash) {
-        draw(say('收到的資料不完整，這次沒有寫入任何東西。請回上一個分頁，重新按一次「送到新網址」，或用下面的搬家檔、搬家碼。'), live, fallbackBox);
+        draw(say(auto ? AUTO_FAIL : '收到的資料不完整，這次沒有寫入任何東西。請回上一個分頁，重新按一次「送到新網址」，或用下面的搬家檔、搬家碼。'), backLink(), live, fallbackBox);
         showFallback();
         return;
       }
       /* hash:記在 tr_move_log 的(連刪除標記 del 一起算);sent:寄出頁送來的那個,回報「搬好了」要用它(寄出頁比對的是它) */
       const ctx = { now, from: fromOf(pack, origin), hash: P.logHash(pack, hash), sent: hash, pet: window.PET, petClockOk: await clockOk(), daily: window.DAILY, choices: {} };
+      if (auto) auto.from = ctx.from;
       review(valid, ctx);
     } catch (e) {
       unusable('');
@@ -73,7 +105,7 @@
   }
   function unusable(why) {
     if (link) link.stop();
-    draw(say('這份搬家資料不能用' + why + '，這次沒有寫入任何東西。可以回舊網址的搬家頁重新準備一次，或用下面的搬家檔、搬家碼。'), live, fallbackBox);
+    draw(say('這份搬家資料不能用' + why + '，這次沒有寫入任何東西。可以回舊網址的搬家頁重新準備一次，或用下面的搬家檔、搬家碼。'), backLink(), live, fallbackBox);
     showFallback();
   }
   function target() {
@@ -93,6 +125,7 @@
     const plan = MM.plan(valid, target(), Object.assign({}, ctx, { log: readLog() }));
     if (plan.already) {
       if (link) link.done(ctx.sent);
+      if (auto) { finish(plan, ctx); return; }   // 自動搬家重來一次(上次 ack 沒回到舊網址):同一包不重寫,直接回舊網址記下搬好了
       draw(say('這台已經搬過同一份進度了，這次沒有新東西。'), h('p', null, h('a', { class: 'btn primary', href: 'index.html' }, '開始練習')));
       return;
     }
@@ -114,7 +147,12 @@
       say((c.dropped ? '其他兩邊都有的練習紀錄、錯題、完成紀錄、最佳成績會合在一起。' : '兩邊都有的練習紀錄、錯題、完成紀錄、最佳成績都會合在一起，不會少。') + '同一題兩邊都答過的，錯題本留最後一次的作答。'
         + '如果你在新網址刪過題庫，再搬一次它會回來。'),
       signedIn() && valid.keys.some((e) => !/^tr_u/.test(e[0])) ? say('你現在在新網址是登入的。搬進來的是舊網址的訪客資料，登出之後才看得到。', 'move-note') : null,
-      h('div', { class: 'modal-row' }, btn), msg);
+      h('div', { class: 'modal-row' }, btn), msg, backLink());
+    if (!auto) return;
+    const stop = autoStop(plan, valid);
+    if (stop) { msg.textContent = stop; return; }
+    msg.textContent = '正在自動搬進來…';
+    commit(valid, ctx, btn, msg, true).catch(() => { msg.textContent = AUTO_FAIL; btn.disabled = false; });
   }
   function conflictRow(x, choices) {
     const name = 'c' + Math.random().toString(36).slice(2);
@@ -152,7 +190,8 @@
   /* 按「確定搬進來」。寫得不完整時不送「搬好了」給舊網址(舊網址會繼續提示、可以再搬),這次也不記成搬過(js/move-merge.js 的 unfinished、skip):
      - 被換掉的值備份放不下:先做不會變少的合併,選了「用舊網址的」那幾項這次不換,給「下載這台現在的資料」再「換成舊網址的」(搬家計畫 2.4)。
      - 整包放不下:先搬放得下的(js/move-apply.js 的 pickFit),放不下的列出來,清出空間之後再搬一次補上。 */
-  async function commit(valid, ctx, btn, msg) {
+  /* isAuto:自動搬家(沒有人按):其他分頁的檢查做不到不跳確認框、改等人按;寫不下就停,不先搬一部分、不改用不備份的合併 */
+  async function commit(valid, ctx, btn, msg, isAuto) {
     btn.disabled = true;
     msg.textContent = '正在檢查其他分頁…';
     const n = await others();
@@ -161,11 +200,22 @@
       btn.disabled = false;
       return;
     }
+    if (n < 0 && isAuto) {
+      msg.textContent = '這個瀏覽器沒辦法自動檢查其他分頁。請先確認沒有其他衝衝英文的分頁開著，再按「確定搬進來」。';
+      btn.disabled = false;
+      return;
+    }
     if (n < 0 && !confirm('這個瀏覽器沒辦法自動檢查其他分頁。請先確認沒有其他衝衝英文的分頁開著，再按確定。')) { btn.disabled = false; msg.textContent = ''; return; }
     const base = Object.assign({}, ctx, { now: Date.now(), log: readLog() });
     const chosen = Object.keys(ctx.choices).filter((k) => ctx.choices[k] === 'old');
     let o = { choices: ctx.choices };
     let t = attempt(valid, base, o);
+    if (isAuto && !t.r.ok) {
+      msg.textContent = t.r.why === 'busy' ? '上一次搬家還沒處理完，自動搬家沒有寫入任何東西。請重新整理這一頁再試一次，或按「回舊網址用按鈕搬」。'
+        : '這台瀏覽器的空間不夠，自動搬家沒有寫入任何東西，舊網址的資料都還在。可以按「確定搬進來」先搬放得下的，或刪掉這台用不到的自訂題庫再搬，或按「回舊網址用按鈕搬」。';
+      btn.disabled = false;
+      return;
+    }
     const noBackup = () => {
       if (t.r.ok || t.r.why !== 'noBackup') return;
       o = Object.assign({}, o, { choices: {}, unfinished: chosen.length > 0, allowNoBackup: true });
@@ -184,7 +234,7 @@
     }
     tellOthers();
     const left = o.unfinished ? chosen : [];
-    if (!t.plan.skipped.length && !left.length) { if (link) link.done(ctx.sent); drawDone(t.plan); return; }
+    if (!t.plan.skipped.length && !left.length) { if (link) link.done(ctx.sent); finish(t.plan, ctx); return; }
     drawPartial(valid, ctx, t.plan, left, o.skip || []);
   }
   function attempt(valid, base, o) {
@@ -219,7 +269,7 @@
         const t = attempt(valid, Object.assign({}, ctx, { now: Date.now(), log: readLog() }), { choices, skip, allowNoBackup: true, noBackupOnly: true });
         if (!t.r.ok) { status.textContent = '這台的空間還是不夠，這次沒有換。舊網址的資料都還在。'; go.disabled = false; return; }
         tellOthers();
-        if (!t.plan.skipped.length) { if (link) link.done(ctx.sent); drawDone(t.plan); return; }
+        if (!t.plan.skipped.length) { if (link) link.done(ctx.sent); finish(t.plan, ctx); return; }
         drawPartial(valid, ctx, t.plan, [], skip);
       });
       nodes.push(say('你選了「用舊網址的」的' + left.map((k) => '「' + nameOf(k) + '」').join('、') + '還沒換：這台的空間不夠先備份這台原本的那份。'),
@@ -269,12 +319,12 @@
       if (!f) return;
       if (f.size > P.MAX_BYTES) { live.textContent = '這個檔案太大了，不是衝衝英文的搬家檔。請選舊網址搬家頁下載的那個檔案。'; return; }
       const rd = new FileReader();
-      rd.onload = () => { fromText(String(rd.result || '')).catch(() => { live.textContent = '讀不懂這份搬家資料，這次沒有寫入任何東西。'; }); };
+      rd.onload = () => { auto = null; fromText(String(rd.result || '')).catch(() => { live.textContent = '讀不懂這份搬家資料，這次沒有寫入任何東西。'; }); };
       rd.onerror = () => { live.textContent = '讀不到這個檔案。'; };
       rd.readAsText(f, 'utf-8');
     });
     const ta = h('textarea', { class: 'modal-input', rows: '4', style: 'width:100%;font-size:12px', placeholder: '把搬家碼貼在這裡', 'aria-label': '搬家碼' });
-    const go = h('button', { class: 'btn', type: 'button', onclick: () => fromText(ta.value) }, '讀取搬家碼');
+    const go = h('button', { class: 'btn', type: 'button', onclick: () => { auto = null; fromText(ta.value); } }, '讀取搬家碼');
     fallbackBox.append(h('h2', { style: 'font-size:17px;margin:18px 0 6px' }, '另一個方法：搬家檔或搬家碼'),
       say('在舊網址的搬家頁按「下載搬家檔」或「複製搬家碼」，再回到這裡。'),
       h('p', null, h('b', null, '選擇搬家檔　'), file), ta, h('div', { class: 'modal-row' }, go));
@@ -287,9 +337,19 @@
       live.textContent = r.why === 'noGzip' ? '這個瀏覽器讀不了壓縮過的搬家碼，請改用電腦或新一點的瀏覽器，或在舊網址改用「下載搬家檔」。'
         : r.why === 'tooBig' ? '這份資料太大了，不是衝衝英文的搬家碼或搬家檔。請確認是從舊網址的搬家頁複製或下載的。'
           : '讀不懂這份搬家資料，請確認是從舊網址的搬家頁複製或下載的。';
+      if (auto) { draw(say(AUTO_FAIL), backLink(), live, fallbackBox); showFallback(); }
       return;
     }
     await receive(r.pack, r.hash, '');
+  }
+  /* 舊網址自動搬家帶來的(move-in.html 開頭已經從網址拿掉):走跟「貼上搬家碼」同一個 fromText */
+  function startAuto(raw) {
+    window.MOVE_AUTO_IN = null;   // 搬家碼只留在這一頁的記憶體
+    const a = L.parseAuto(raw);
+    auto = { code: a ? a.code : '', back: a ? a.back : '/', trusted: cameFromOld(), from: '' };
+    if (!a) { draw(say(AUTO_FAIL), backLink(), live, fallbackBox); showFallback(); return; }
+    draw(say('拍謝！我們換網址了，因為名字跟別人重疊！正在把舊網址的進度搬進來…'), live, fallbackBox);
+    fromText(auto.code).catch(() => unusable(''));
   }
 
   /* ---------- 開始 ---------- */
@@ -302,6 +362,7 @@
       try { localStorage.removeItem('tr_move_restored'); } catch (e) { /* 只是提示 */ }
       live.textContent = '上次搬到一半就關掉了。已經合併好的留著，其他的換回搬之前的樣子。請再搬一次，把沒搬完的補上。';
     }
+    if (typeof window.MOVE_AUTO_IN === 'string') { startAuto(window.MOVE_AUTO_IN); return; }
     const opener = window.opener;
     if (!opener) {
       draw(say('沒有從舊網址的搬家頁打開。請在舊網址 ' + M.oldName + ' 打開搬家頁，或用下面的搬家檔、搬家碼。'), live, fallbackBox);

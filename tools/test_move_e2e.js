@@ -137,6 +137,8 @@ async function seed(s, origin, kv, clear) {
   await s.go(origin + '/move-ping.txt');
   await s.eval((clear ? 'localStorage.clear();' : '') + 'Object.entries(' + J(kv) + ').forEach(([k, v]) => localStorage.setItem(k, v)); true');
 }
+/* 這個分頁當成「試過自動搬家了」(js/move-out.js 的 tr_move_auto):要測按鈕流程的情境用,舊網址每一頁才會照舊顯示按鈕 */
+async function noAuto(s) { await s.eval('sessionStorage.setItem("tr_move_auto", JSON.stringify({ step: "test" })); true'); }
 /* 舊網址的寄出頁搬到新網址,回收件頁的分頁 */
 async function sendViaWindow(B, oldTab) {
   await oldTab.go(OLD + '/move-out.html');
@@ -258,9 +260,10 @@ T['4 MB 的大包從視窗一次送到,寫得進去'] = async (B) => {
   await inTab.close(); await oldTab.close();
   return { ok: n === 38, detail: n + ' 個鍵,' + (Date.now() - t0) + ' ms' };
 };
-T['舊網址每一頁:有資料出現搬家提示;搬好之後帶到新網址同一路徑;登入回來的網址不帶走'] = async (B) => {
+T['舊網址每一頁:有資料(這個分頁試過自動搬家)出現搬家按鈕;搬好之後帶到新網址同一路徑;登入回來的網址不帶走'] = async (B) => {
   const s = await tab(B);
   await seed(s, OLD, { tr_hist: J(hist(2, 'p')) }, true);
+  await noAuto(s);
   await s.go(OLD + '/grammar.html');
   await s.until('!!document.getElementById("move-bar")', 8000, '搬家提示');
   const barTxt = await s.eval('document.getElementById("move-bar").innerText');
@@ -316,6 +319,7 @@ T['只在本機的小雞(登入失效後留下的,沒有帳本):舊網址照樣�
   const U = '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72', CP = 'c' + U.replace(/-/g, '');
   const s = await tab(B);
   await seed(s, OLD, { ['tr_localonly_' + U]: J({ pet: Date.now() - 5000 }), ['tr_u' + CP + '_pet']: J(PET({ '2026-10-20': 9 }, '只在本機')) }, true);
+  await noAuto(s);
   await s.go(OLD + '/grammar.html');
   await s.until('!!document.getElementById("move-bar")', 8000, '搬家提示');
   const stayed = (await s.eval('location.origin')) === OLD;
@@ -414,6 +418,7 @@ T['搬好之後新網址連不上:舊網址每一頁說這裡練習的不會自�
   const offTxt = await oldTab.eval('document.getElementById("move-bar").innerText');
   await oldTab.eval('(() => { const x = JSON.parse(localStorage.getItem("tr_hist")); x.unshift({ m: "p5", id: "practiced-while-down", c: 1, ok: true, t: Date.now() }); localStorage.setItem("tr_hist", JSON.stringify(x)); return true; })()');
   PING = 'ok';
+  await noAuto(oldTab);
   await oldTab.go(OLD + '/vocab.html');
   await oldTab.until('!!document.getElementById("move-bar")', 8000, '再搬一次的提示');
   await sleep(1500);
@@ -441,6 +446,7 @@ T['再搬一次(錯題本):搬完之後在舊網址又答錯同一題,舊網址�
   await oldTab.until('/搬好了/.test(document.body.innerText)', 8000, '舊網址也顯示搬好了');
   await oldTab.go(OLD + '/move-ping.txt');
   await oldTab.eval('(() => { const x = JSON.parse(localStorage.getItem("tr_drill_p5")); x.q1 = { c: 3, ok: false, t: Date.now() }; localStorage.setItem("tr_drill_p5", JSON.stringify(x)); return true; })()');
+  await noAuto(oldTab);
   await oldTab.go(OLD + '/vocab.html');
   await oldTab.until('!!document.getElementById("move-bar")', 8000, '再搬一次的提示');
   const bar = await oldTab.eval('document.getElementById("move-bar").innerText');
@@ -537,6 +543,157 @@ T['寄出頁在新網址連不上時:說連不上(不說還沒開放),照樣能�
   await s.close();
   const ok = /連不上新網址/.test(t1) && !/還沒開放/.test(t1) && btns.includes('複製搬家碼') && btns.includes('下載搬家檔') && btns.includes('再連一次新網址') && !btns.includes('送到新網址');
   return { ok, detail: J({ t1: t1.slice(0, 160), btns }) };
+};
+
+/* ---------- 自動搬家(有資料的訪客打開舊網址任何一頁,不用按按鈕) ---------- */
+const onNewPage = (p) => 'location.origin === ' + J(NEW) + ' && location.pathname === ' + J(p) + ' && document.readyState === "complete"';
+/* 這個分頁的上一頁紀錄裡有沒有搬家碼、ack(Page.getNavigationHistory 給每一筆現在的網址) */
+async function historyUrls(s) { const r = await s.send('Page.getNavigationHistory'); return r.result.entries.map((e) => e.url); }
+async function oldLs(B) { const t = await tab(B); await t.go(OLD + '/move-ping.txt'); const ls = await t.ls(); await t.close(); return ls; }
+T['自動搬家:有題庫的訪客打開舊網址的文法頁,不用按 → 新網址合併 → 回舊網址寫完成(含指紋)→ 回到新網址的文法頁;網址列與上一頁紀錄沒有搬家碼;舊網址的資料沒變'] = async (B) => {
+  PING = 'ok';
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('a1', '自動搬的題庫', ['apple', 'pear'])]), tr_hist: J(hist(5, 'a')), tr_pet: J(PET({ '2026-10-20': 25 }, '小黃')) }, true);
+  const before = await s.ls();
+  const nt = await tab(B); await seed(nt, NEW, {}, true); await nt.close();
+  await s.send('Page.navigate', { url: OLD + '/grammar.html?u=2' });
+  await s.until('/正在把你的進度帶過去/.test(document.body.innerText)', 10000, '舊網址的自動搬家提示');
+  const barTxt = await s.eval('document.getElementById("move-bar").innerText');
+  const noBtn = await s.eval('!document.querySelector("#move-bar .btn")');
+  await s.until(onNewPage('/grammar.html'), 25000, '回到新網址的文法頁');
+  const where = await s.eval('location.href');
+  const got = await s.ls();
+  const urls = await historyUrls(s);
+  await s.close();
+  const after = await oldLs(B);
+  const done = after.tr_move_done ? JSON.parse(after.tr_move_done) : null;
+  const extra = Object.keys(after).filter((k) => !(k in before)).sort();
+  /* 小雞是頁面自己寫的(打開文法頁就加今天的分數),不是搬家改的:搬過去的那份要有這一天 */
+  const changed = Object.keys(before).filter((k) => before[k] !== after[k]);
+  const names = got.tr_vgame_banks ? JSON.parse(got.tr_vgame_banks).map((b) => b.name) : [];
+  const ok = /拍謝！我們換網址了，因為名字跟別人重疊！正在把你的進度帶過去…/.test(barTxt) && noBtn && where === NEW + '/grammar.html?u=2'
+    && J(names) === J(['自動搬的題庫']) && JSON.parse(got.tr_hist).length === 5 && JSON.parse(got.tr_pet).name === '小黃'
+    && !!done && /^[0-9a-f]{64}$/.test(done.hash) && typeof done.fp === 'string' && done.manual === false && done.to === NEW
+    && J(extra) === J(['tr_move_device', 'tr_move_done']) && changed.every((k) => k === 'tr_pet')
+    && J(JSON.parse(got.tr_pet).days) === J(JSON.parse(after.tr_pet).days)
+    && !urls.some((u) => /auto=|ack=|RU1/.test(u));
+  return { ok, detail: J({ changed, petBefore: before.tr_pet, petAfter: after.tr_pet, urls, barTxt: barTxt.slice(0, 60), where, names, done, extra }) };
+};
+T['自動搬家冪等:舊網址沒記到搬好了(ack 沒回來),換一個分頁再開舊網址 → 再自動一次,同一包不重寫、題庫不多一份;之後又練習再開一次,只多那筆紀錄'] = async (B) => {
+  PING = 'ok';
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('i1', '只要一份', ['a', 'b'])]), tr_hist: J(hist(4, 'i')) }, true);
+  const nt = await tab(B); await seed(nt, NEW, {}, true); await nt.close();
+  await s.send('Page.navigate', { url: OLD + '/grammar.html' });
+  await s.until(onNewPage('/grammar.html'), 25000, '第一次自動搬家');
+  await s.close();
+  /* 當成 ack 沒回來:舊網址沒有搬好的記號 */
+  const t1 = await tab(B); await t1.go(OLD + '/move-ping.txt'); await t1.eval('localStorage.removeItem("tr_move_done"); true'); await t1.close();
+  const s2 = await tab(B);
+  await s2.go(OLD + '/move-ping.txt');
+  await s2.send('Page.navigate', { url: OLD + '/vocab.html' });
+  await s2.until(onNewPage('/vocab.html'), 25000, '第二次自動搬家');
+  const got2 = await s2.ls();
+  await s2.close();
+  const done2 = !!(await oldLs(B)).tr_move_done;
+  /* 搬完之後又在舊網址練習了一筆:新的分頁再自動一次 */
+  const t2 = await tab(B); await t2.go(OLD + '/move-ping.txt');
+  await t2.eval('(() => { const x = JSON.parse(localStorage.getItem("tr_hist")); x.unshift({ m: "p5", id: "after-move", c: 1, ok: true, t: Date.now() }); localStorage.setItem("tr_hist", JSON.stringify(x)); return true; })()');
+  await t2.close();
+  const s3 = await tab(B);
+  await s3.go(OLD + '/move-ping.txt');
+  await s3.send('Page.navigate', { url: OLD + '/index.html' });
+  await s3.until(onNewPage('/index.html'), 25000, '第三次自動搬家');
+  const got3 = await s3.ls();
+  await s3.close();
+  const after = await oldLs(B);
+  const names2 = JSON.parse(got2.tr_vgame_banks).map((b) => b.name), names3 = JSON.parse(got3.tr_vgame_banks).map((b) => b.name);
+  const fpNow = after.tr_move_done ? JSON.parse(after.tr_move_done).fp : null;
+  const ok = J(names2) === J(['只要一份']) && J(names3) === J(['只要一份']) && JSON.parse(got2.tr_hist).length === 4 && done2
+    && JSON.parse(got3.tr_hist).length === 5 && J(got3.tr_hist).indexOf('after-move') > -1 && typeof fpNow === 'string';
+  return { ok, detail: J({ names2, names3, h2: JSON.parse(got2.tr_hist).length, h3: JSON.parse(got3.tr_hist).length, done2, fpNow }) };
+};
+T['自動搬家:搬家碼超過 48 KB 照舊顯示按鈕、不帶走;LINE 內建瀏覽器也照舊顯示按鈕'] = async (B) => {
+  PING = 'ok';
+  const noise = (n) => { let x = ''; while (x.length < n) x += Math.random().toString(36).slice(2); return x.slice(0, n); };
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('g1', '大的', ['a'])]), 'tr_read_q_art-9': J({ note: noise(90 * 1024) }) }, true);
+  await s.go(OLD + '/grammar.html');
+  await s.until('!!document.getElementById("move-bar") && /帶我過去（進度一起搬）/.test(document.getElementById("move-bar").innerText)', 15000, '大的照舊顯示按鈕');
+  await sleep(2500);
+  const stayed = (await s.eval('location.origin')) === OLD;
+  const memo = await s.eval('sessionStorage.getItem("tr_move_auto")');
+  await s.close();
+  const l = await tab(B);
+  await l.send('Emulation.setUserAgentOverride', { userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Safari Line/13.0.0' });
+  await seed(l, OLD, { tr_vgame_banks: J([bank('l1', 'LINE 裡的', ['a'])]) }, true);
+  await l.go(OLD + '/grammar.html');
+  await l.until('!!document.getElementById("move-bar") && /帶我過去/.test(document.getElementById("move-bar").innerText)', 10000, 'LINE 照舊顯示按鈕');
+  await sleep(2500);
+  const lineStayed = (await l.eval('location.origin')) === OLD;
+  await l.close();
+  return { ok: stayed && !!memo && JSON.parse(memo).step === 'big' && lineStayed, detail: J({ stayed, memo, lineStayed }) };
+};
+T['自動搬家遇到要選的(兩邊不一樣):停在確認畫面等人按;按了之後一樣回舊網址寫完成、回到原頁面'] = async (B) => {
+  PING = 'ok';
+  const s = await tab(B);
+  await seed(s, OLD, { tr_diag: J({ done: true, tag: 'OLD' }), tr_vgame_banks: J([bank('c1', '要確認的', ['a'])]) }, true);
+  const nt = await tab(B); await seed(nt, NEW, { tr_diag: J({ done: false, tag: 'NEW' }) }, true); await nt.close();
+  await s.send('Page.navigate', { url: OLD + '/grammar.html' });
+  await s.until('location.origin === ' + J(NEW) + ' && [...document.querySelectorAll("button")].some((b) => b.textContent === "確定搬進來" && !b.disabled)', 20000, '確認畫面');
+  await sleep(1500);
+  const txt = await s.text();
+  const mid = await s.ls();
+  const oldMid = !(await oldLs(B)).tr_move_done;
+  const stillHere = (await s.eval('location.pathname')) === '/move-in.html';
+  await s.click('確定搬進來');
+  await s.until(onNewPage('/grammar.html'), 20000, '按了之後回到文法頁');
+  const got = await s.ls();
+  await s.close();
+  const done = !!(await oldLs(B)).tr_move_done;
+  const ok = stillHere && /要你決定留哪一份/.test(txt) && /回舊網址用按鈕搬/.test(txt) && !mid.tr_vgame_banks && oldMid
+    && JSON.parse(got.tr_vgame_banks)[0].name === '要確認的' && JSON.parse(got.tr_diag).tag === 'NEW' && done;
+  return { ok, detail: J({ stillHere, oldMid, done, txt: txt.slice(0, 200) }) };
+};
+T['自動搬家失敗(新網址還有別的分頁開著):什麼都沒寫、說清楚、給「回舊網址用按鈕搬」;回到舊網址這個分頁不再自動(不會一直來回)'] = async (B) => {
+  PING = 'ok';
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('f1', '失敗也還在', ['a'])]) }, true);
+  const other = await tab(B);
+  await seed(other, NEW, {}, true);
+  await other.go(NEW + '/grammar.html');
+  await other.until('!!window.MOVE_IN_BOOT', 8000, '新網址的提示程式');
+  await s.send('Page.navigate', { url: OLD + '/vocab.html' });
+  await s.until('location.origin === ' + J(NEW) + ' && /還有 1 個衝衝英文的分頁開著/.test(document.body.innerText)', 20000, '要求先關');
+  const wrote = (await s.ls()).tr_vgame_banks !== undefined;
+  const oldDone = !!(await oldLs(B)).tr_move_done;
+  await s.click('回舊網址用按鈕搬');
+  await s.until('location.origin === ' + J(OLD) + ' && [...document.querySelectorAll("button")].some((b) => b.textContent === "準備搬家")', 15000, '舊網址的搬家頁');
+  await s.go(OLD + '/grammar.html');
+  await s.until('!!document.getElementById("move-bar") && /帶我過去/.test(document.getElementById("move-bar").innerText)', 10000, '舊網址照舊顯示按鈕');
+  await sleep(2500);
+  const stayed = (await s.eval('location.origin')) === OLD;
+  await other.close(); await s.close();
+  return { ok: !wrote && !oldDone && stayed, detail: J({ wrote, oldDone, stayed }) };
+};
+T['別的網站做的 #auto= 連結(不是從舊網址帶過來的):不會不問就寫,停在確認畫面;網址列的搬家碼一樣拿掉'] = async (B) => {
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('e1', '別人塞的', ['x'])]) }, true);
+  const nt = await tab(B); await seed(nt, NEW, {}, true); await nt.close();
+  /* 用舊網址的程式組一包(等於有人拿到一份搬家碼),從空白分頁直接打開(沒有舊網址的 referrer) */
+  await s.go(OLD + '/move-out.html');
+  await s.until('!!window.MOVE_PACK');
+  const code = await s.eval('(async () => { const r = MOVE_PACK.collect(localStorage, { from: location.origin }); return MOVE_PACK.toCode(r.pack, await MOVE_PACK.hashOf(r.pack)); })()');
+  await s.close();
+  const e = await tab(B);
+  await e.go(NEW + '/move-in.html#auto=' + code + '&back=%2Fvocab.html');
+  await e.until('[...document.querySelectorAll("button")].some((b) => b.textContent === "確定搬進來")', 10000, '確認畫面');
+  await sleep(1500);
+  const txt = await e.text();
+  const href = await e.eval('location.href');
+  const ls = await e.ls();
+  await e.close();
+  return { ok: !ls.tr_vgame_banks && /不是從舊網址自動帶過來的/.test(txt) && href === NEW + '/move-in.html', detail: J({ href, keys: Object.keys(ls), txt: txt.slice(0, 120) }) };
 };
 
 (async () => {

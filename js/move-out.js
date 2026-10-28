@@ -12,9 +12,16 @@
    - 搬過了、新網址連不上:頁面頂端說這裡練習的進度不會自動過去,連得上之後會提醒再搬一次。
    - 離開這一頁(pagehide、切到背景)時重算一次記號:在這一頁練習的,下一次 Worker 就知道這台又有要搬的。
    - 沒資料也沒登入:頁面頂端先說「拍謝！我們換網址了…正在幫你導過去」,約 1.8 秒後帶到新網址同一路徑,帶之前刪掉自己 ss- 開頭的快取、註銷 service worker(這台不需要它接轉址)。
-   - 有資料還沒搬:頁面頂端一條提示,「帶我過去（進度一起搬）」「等一下再搬」;價格、註冊、付款結果頁改成先問要不要先搬。
+   - 有資料還沒搬:先試自動搬家(tryAuto;站長 10/28:「為甚麼你不能自動把進度全部搬過去」):組好跟「複製搬家碼」同一包(buildPack,
+     登入著先 flushForMove 跟雲端對帳),整個網址不超過 MOVE_LINK.AUTO_MAX 就顯示「…正在把你的進度帶過去…」,
+     帶到新網址 move-in.html#auto=<搬家碼>&back=<原路徑>。新網址合併好帶回 move-out.html#ack=<雜湊>,js/move-out-page.js 用 ackCheck
+     核對「送出的那包」與「這台現在的包」一樣才寫 tr_move_done,再帶到新網址的原路徑。
+     不自動(照舊顯示下面的按鈕):搬家碼太大、組包失敗、付款結果頁、LINE/Facebook/Instagram 內建瀏覽器、主畫面或安裝的 App、
+     登入著卻沒有 cloud.js 可以對帳、按過「等一下再搬」、這個分頁已經試過(sessionStorage 的 tr_move_auto;寫不進去就不試,免得每一頁重來)。
+   - 有資料還沒搬、不自動:頁面頂端一條提示,「帶我過去（進度一起搬）」「等一下再搬」;價格、註冊、付款結果頁改成先問要不要先搬。
    - 登入著、沒有要搬的:提示到新網址重新登入一次;按下去先補傳(CLOUD.flushForMove),剩 0 項才走,有剩就去搬家頁。
-   這支只讀 localStorage,除了上面兩個記號以外不寫任何東西,一筆資料都不刪不改。畫面只用 textContent。 */
+   這支只讀 localStorage,除了上面兩個記號、自動搬家組包時的裝置編號(tr_move_device,寄出頁本來就會寫)以外不寫任何東西,
+   一筆資料都不刪不改。畫面只用 textContent。 */
 (function (root) {
   'use strict';
   const AUTH_QS = /[?&](code|error|error_code|error_description|access_token|refresh_token|token_hash)=/;
@@ -177,6 +184,130 @@
     return run.then((r) => (r && r.left > 0 ? root.location.assign('move-out.html') : go(true)), () => root.location.assign('move-out.html'));
   }
 
+  /* ---------- 自動搬家(有資料、還沒搬;不用按按鈕) ---------- */
+  const AUTO_SCRIPTS = [['MOVE_MERGE', 'js/move-merge.js'], ['MOVE_PACK', 'js/move-pack.js'], ['MOVE_LINK', 'js/move-link.js']];
+  const CLOUD_WAIT_MS = 8000;
+  const AUTO_TEXT = '拍謝！我們換網址了，因為名字跟別人重疊！正在把你的進度帶過去…';
+  let autoRun = Promise.resolve('none');
+
+  function whenBody(fn) {
+    const d = root.document;
+    if (!d) return;
+    if (d.body) fn(); else d.addEventListener('DOMContentLoaded', fn);
+  }
+  /* 特殊環境:LINE、Facebook、Instagram 內建瀏覽器(資料存在那個 App 裡,寄出頁會教用搬家碼帶到以後要用的瀏覽器);
+     主畫面或安裝的 App(iPhone 主畫面 App 的資料跟 Safari 分開存,帶出去會開在別的地方;Android、電腦的 App 帶出去會變成 App 裡的外部網頁,
+     寄出頁另外說明要重新安裝)。這兩種都照舊用按鈕。 */
+  function envOf(nav, mm) {
+    const n = nav || {}, ua = String(n.userAgent || '');
+    let sa = n.standalone === true;
+    try { sa = sa || !!(mm && mm('(display-mode: standalone)').matches); } catch (e) { /* 當成不是 */ }
+    return { inApp: ua.indexOf('Line/') > -1 || /FBAN|FBAV|Instagram/.test(ua), standalone: sa };
+  }
+  /* 純判斷,測試直接呼叫。回 '' 表示可以自動,其他是不自動的原因。
+     付款結果頁不自動:那一頁要讓人看到付款的結果(舊網址已經不收款,只會是很久以前的連結)。
+     登入著卻不能對帳(這一頁沒有 cloud.js):帳號的進度可能只有一部分在這台,交給寄出頁(會先 flushForMove)。 */
+  function autoBlock(o) {
+    if (o.kind !== 'bar' && o.kind !== 'ask') return 'kind';
+    if (o.page === 'pay-result.html') return 'page';
+    if (o.inApp) return 'inApp';
+    if (o.standalone) return 'app';
+    if (o.tried) return 'tried';
+    if (o.later) return 'later';
+    if (o.loggedIn && !o.canFlush) return 'noFlush';
+    return '';
+  }
+  /* 這個分頁試過自動搬家的紀錄(sessionStorage 的 tr_move_auto,只有這個分頁、這個網域看得到,關掉分頁就沒了):
+     { step: 'build' | 'sent' | 'big' | 'skip' | 'error', hash(送出的包), local(這台當時的包,不含 flushForMove 給的帳號), fp(指紋), at }。
+     有紀錄就不再自動(失敗不會一直重來;換一個分頁會再試一次)。讀不懂也算有。 */
+  function memo() {
+    let s = null;
+    try { s = root.sessionStorage; } catch (e) { s = null; }
+    return {
+      get() {
+        if (!s) return null;
+        try { const r = s.getItem('tr_move_auto'); if (r === null) return null; const v = JSON.parse(r); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
+      },
+      set(o) {
+        if (!s) return false;
+        try { const v = JSON.stringify(o); s.setItem('tr_move_auto', v); return s.getItem('tr_move_auto') === v; } catch (e) { return false; }
+      },
+    };
+  }
+  /* 組包要的程式(一般頁面沒有載):照順序補載 */
+  function need() {
+    return AUTO_SCRIPTS.reduce((p, [g, src]) => p.then(() => (root[g] ? null : new Promise((res, rej) => {
+      const d = root.document, s = d.createElement('script');
+      s.src = src; s.onload = res; s.onerror = () => rej(new Error('載不到 ' + src));
+      (d.head || d.body).appendChild(s);
+    }))), Promise.resolve());
+  }
+  /* 登入著:先跟雲端對帳(CLOUD.flushForMove),回 { accounts(這個帳號還沒上傳的), uid };沒登入、沒有 cloud.js、對帳失敗回 {}(組包時改用這台的帳本) */
+  async function flushAccounts() {
+    const C = root.CLOUD;
+    if (!C) return {};
+    if (C.enabled && C.ready) await Promise.race([Promise.resolve(C.ready).catch(() => {}), new Promise((r) => root.setTimeout(r, CLOUD_WAIT_MS))]);
+    if (!C.user || typeof C.flushForMove !== 'function') return {};
+    const uid = typeof C.user.id === 'string' ? C.user.id : undefined;
+    try { return { accounts: (await C.flushForMove()).accounts, uid }; } catch (e) { return {}; }
+  }
+  /* 組一包:寄出頁的「準備搬家」(搬家碼、搬家檔、視窗)與每一頁的自動搬家共用這一個。o:{ from, accounts, uid }
+     回 { pack, summary, hash, fp(組包那一刻的指紋), local(不含 accounts 的那包的雜湊,ack 回來時跟這台現在的比) } */
+  async function buildPack(ls, o) {
+    const P = root.MOVE_PACK;
+    const opt = o || {};
+    const from = opt.from || root.location.origin;
+    const device = P.deviceId(ls, root.crypto);
+    let fp = null;
+    try { fp = root.MOVE_RULES.fingerprint(ls); } catch (e) { fp = null; }
+    const { pack, summary } = P.collect(ls, { from, accounts: opt.accounts, uid: opt.uid, device });
+    const hash = await P.hashOf(pack);
+    const local = opt.accounts ? await P.hashOf(P.collect(ls, { from, device }).pack) : hash;
+    return { pack, summary, hash, fp, local };
+  }
+  /* 新網址搬好、帶回舊網址(move-out.html#ack=<雜湊>):這個分頁送出的就是這包,而且送出之後這台沒有新的進度(指紋、不含帳號的包都一樣)才算數。
+     回 { ok, fp(送出那一刻的指紋,寫進 tr_move_done) } 或 { ok: false, why } */
+  async function ackCheck(ls, hash) {
+    const m = memo().get();
+    if (!m || m.step !== 'sent' || typeof hash !== 'string' || m.hash !== hash || typeof m.local !== 'string') return { ok: false, why: 'memo' };
+    let fp = null;
+    try { fp = root.MOVE_RULES.fingerprint(ls); } catch (e) { fp = null; }
+    if (fp === null || fp !== m.fp) return { ok: false, why: 'changed' };
+    const P = root.MOVE_PACK;
+    let device = null;
+    try { device = ls.getItem('tr_move_device'); } catch (e) { device = null; }
+    const { pack } = P.collect(ls, { from: root.location.origin, device: typeof device === 'string' ? device : undefined });
+    if ((await P.hashOf(pack)) !== m.local) return { ok: false, why: 'changed' };
+    return { ok: true, fp: m.fp };
+  }
+  /* 回 'auto'(已經帶走)或不自動的原因;不是 'auto' 時頂端的「正在帶過去」會拿掉,由 start 畫回按鈕 */
+  async function tryAuto(kind, st) {
+    const M = root.MOVE, l = root.location, C = root.CLOUD;
+    const env = envOf(root.navigator, typeof root.matchMedia === 'function' ? (q) => root.matchMedia(q) : null);
+    const mem = memo();
+    const why = autoBlock({ kind, page: pageOf(l.pathname), inApp: env.inApp, standalone: env.standalone, tried: mem.get() !== null, later: later(),
+      loggedIn: st.loggedIn, canFlush: !!(C && typeof C.flushForMove === 'function') });
+    if (why) return why;
+    if (!mem.set({ step: 'build', at: Date.now() })) return 'session';
+    let live = true, box = null, shown = 0;
+    whenBody(() => { if (live) { box = bar(AUTO_TEXT, []); shown = Date.now(); } });
+    const stop = (step) => { live = false; if (box) box.remove(); mem.set({ step, at: Date.now() }); return step; };
+    try {
+      await need();
+      const acc = st.loggedIn ? await flushAccounts() : {};
+      const b = await buildPack(root.localStorage, { from: l.origin, accounts: acc.accounts, uid: acc.uid });
+      if (b.summary.tooBig.length || !b.summary.hasData) return stop('skip');
+      const url = root.MOVE_LINK.autoUrl(M.to, await root.MOVE_PACK.toCode(b.pack, b.hash), l.pathname + l.search);
+      if (url.length > root.MOVE_LINK.AUTO_MAX) return stop('big');
+      if (!mem.set({ step: 'sent', hash: b.hash, local: b.local, fp: b.fp, at: Date.now() })) return stop('error');
+      await new Promise((r) => root.setTimeout(r, Math.max(0, GO_DELAY_MS - (shown ? Date.now() - shown : 0))));
+      l.replace(url);
+      return 'auto';
+    } catch (e) {
+      return stop('error');
+    }
+  }
+
   function start() {
     const M = root.MOVE;
     if (!M || !M.onOld || !root.MOVE_RULES) return Promise.resolve('stay');
@@ -203,14 +334,17 @@
           const draw = () => { try { show('go', st); } catch (e) { /* 只是少了那句話 */ } };
           if (root.document && root.document.body) draw(); else if (root.document) root.document.addEventListener('DOMContentLoaded', draw);
         } catch (e) { /* 照樣會帶走 */ }
+      } else if (kind === 'bar' || kind === 'ask') {
+        /* 先試自動搬家;不自動(或沒成功)就照舊畫按鈕 */
+        autoRun = tryAuto(kind, st).catch(() => 'error').then((r) => { if (r !== 'auto') whenBody(() => show(kind, st)); return r; });
       } else if (kind !== 'stay') {
-        const draw = () => show(kind, st);
-        if (root.document.body) draw(); else root.document.addEventListener('DOMContentLoaded', draw);
+        whenBody(() => show(kind, st));
       }
       return kind;
     });
   }
 
-  root.MOVE_OUT = Object.freeze({ decide, pageOf, stateOf, flags, ping, start, cleanup, go, target });
+  root.MOVE_OUT = Object.freeze({ decide, pageOf, stateOf, flags, ping, start, cleanup, go, target,
+    envOf, autoBlock, buildPack, flushAccounts, ackCheck, tryAuto, autoRun: () => autoRun });
   if (root.MOVE && root.MOVE.onOld && !root.MOVE_OUT_NO_AUTO) start();
 })(typeof window !== 'undefined' ? window : globalThis);

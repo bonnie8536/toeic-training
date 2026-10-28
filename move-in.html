@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
+/* 第一件事:舊網址自動搬家帶來的 #auto=<搬家碼>(js/move-out.js)先收進記憶體,再用 replaceState 拿掉,
+   搬家碼不留在網址列與上一頁的紀錄裡(# 後面本來就不會送到伺服器);之後由 js/move-in-page.js 讀 window.MOVE_AUTO_IN */
+(function () {
+  var h = '';
+  try { h = String(location.hash || ''); } catch (e) { h = ''; }
+  if (h.indexOf('#auto=') !== 0) return;
+  try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { return; }
+  if (window.top === window.self) window.MOVE_AUTO_IN = h;
+})();
 /* 搬家收件頁(新網址用,搬家計畫 2.3)。不能被別的網站框住誘按:被框住就什麼都不顯示 */
 if (window.top !== window.self) { document.documentElement.style.display = 'none'; }
 (function () {

@@ -7,6 +7,8 @@
    有搬不了的項目(太大,summary.tooBig)就不給送出、不給搬家碼與搬家檔,也就不會寫 tr_move_done,並說出是哪一項。
    主畫面 App(iPhone 的加到主畫面、Android 與電腦安裝的 App)另外提示:iPhone 主畫面 App 不給「送到新網址」(開出去的是 Safari,
    拿不到這個 App 的資料),只給搬家碼;搬好之後請到新網址重新安裝一次 App。
+   每一頁的自動搬家(js/move-out.js tryAuto)搬好之後,新網址帶回這一頁 #ack=<雜湊>&back=<原路徑>:takeAck 核對過才寫 tr_move_done,
+   再帶到新網址的原路徑;對不上(送出之後又練習了、不是這個分頁送的)什麼都不寫,照常顯示再搬一次。組包跟它共用 MOVE_OUT.buildPack。
    這一頁在舊網址只新增 tr_move_device(裝置編號,js/move-pack.js deviceId)、tr_move_done 兩個鍵與兩個不含資料的 cookie,
    其他一筆都不改不刪;畫面只用 textContent。
    依賴 js/move-config.js、js/move-rules.js、js/move-merge.js、js/move-pack.js、js/move-link.js、js/move-out.js、js/common.js(h)、js/cloud.js(可以沒有)。 */
@@ -51,6 +53,8 @@
     }
     draw(say('正在檢查這台的資料…'));
     if (window.CLOUD && CLOUD.enabled) { try { await CLOUD.ready; } catch (e) { /* 照目前的狀態 */ } }
+    const ackNote = await takeAck();
+    if (ackNote === true) return;
     const st = lsState();
     OUT.flags(st);
     draw(say('正在連新網址…'));
@@ -62,7 +66,25 @@
         online ? h('p', null, h('button', { class: 'btn primary', type: 'button', onclick: () => goNew(true) }, '前往新網址')) : null);
       return;
     }
-    drawStart(st.stale ? say('這台上次搬家之後又有新的進度，再搬一次就會過去，已經搬過的不會重複。', 'move-note') : null);
+    drawStart(ackNote || (st.stale ? say('這台上次搬家之後又有新的進度，再搬一次就會過去，已經搬過的不會重複。', 'move-note') : null));
+  }
+
+  /* 自動搬家(js/move-out.js 的 tryAuto)在新網址搬好,帶回這裡 #ack=<雜湊>&back=<原路徑>(開頭的 script 已經從網址拿掉,放在 MOVE_ACK_IN):
+     這個分頁送出的就是那包、而且之後這台沒有新的進度(OUT.ackCheck)才寫 tr_move_done(跟按鈕搬完一樣,含指紋),再帶到新網址的原路徑。
+     對不上就什麼都不寫,回一段說明,照常讓人再搬一次。回 true(已經帶走)、說明的段落,或 null(不是從新網址帶回來的) */
+  async function takeAck() {
+    const ack = window.MOVE_ACK_IN ? L.parseAck(window.MOVE_ACK_IN) : null;
+    if (!ack) return null;
+    let r = { ok: false };
+    try { r = await OUT.ackCheck(localStorage, ack.hash); } catch (e) { r = { ok: false }; }
+    if (!r.ok) {
+      return say('剛剛自動搬過去的進度已經在新網址了，但這台現在的進度跟搬過去的那份對不上（可能之後又練習了），所以還沒標成搬好了：按「準備搬家」再搬一次就會補上，已經搬過的不會重複。', 'move-note');
+    }
+    markDone(ack.hash, false, r.fp);
+    draw(say('搬好了，正在帶你到新網址 ' + M.newName + '…', 'move-done'), say('舊網址這裡的資料都還留著。'));
+    await OUT.cleanup();
+    location.replace(M.to + ack.back);
+    return true;
   }
 
   function drawMoved(off) {
@@ -111,18 +133,10 @@
   async function prepare(btn, msg) {
     btn.disabled = true;
     msg.textContent = '正在準備…';
-    let accounts, uid;
-    try {
-      if (window.CLOUD && CLOUD.user && typeof CLOUD.flushForMove === 'function') {
-        msg.textContent = '正在把還沒同步的進度傳到雲端…';
-        uid = typeof CLOUD.user.id === 'string' ? CLOUD.user.id : undefined;
-        accounts = (await CLOUD.flushForMove()).accounts;
-      }
-    } catch (e) { accounts = undefined; uid = undefined; }
-    const device = P.deviceId(localStorage, window.crypto);
-    const fp = fingerprint();   // 跟組包同一刻:之後才有的進度,舊網址會提示再搬一次
-    const { pack, summary } = P.collect(localStorage, { from: location.origin, accounts, uid, device });
-    const hash = await P.hashOf(pack);
+    if (window.CLOUD && CLOUD.user && typeof CLOUD.flushForMove === 'function') msg.textContent = '正在把還沒同步的進度傳到雲端…';
+    const acc = await OUT.flushAccounts();   // 登入著:先跟雲端對帳;失敗就用這台的帳本
+    /* 跟每一頁的自動搬家同一套(MOVE_OUT.buildPack):裝置編號、指紋(跟組包同一刻,之後才有的進度舊網址會提示再搬一次)、collect、雜湊 */
+    const { pack, summary, hash, fp } = await OUT.buildPack(localStorage, { from: location.origin, accounts: acc.accounts, uid: acc.uid });
     if (summary.tooBig.length) { drawTooBig(summary); return; }
     if (!summary.hasData) {
       draw(say('你的進度都已經在雲端。到新網址登入同一個帳號，進度就會回來。'), STANDALONE ? say(APP_NOTE, 'move-note') : null, h('p', null, h('button', { class: 'btn primary', type: 'button', onclick: () => goNew(true) }, '前往新網址')));

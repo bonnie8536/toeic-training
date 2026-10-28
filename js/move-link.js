@@ -77,5 +77,41 @@
     };
   }
 
-  root.MOVE_LINK = Object.freeze({ newNonce, sender, receiver });
+  /* ---------- 自動搬家的網址(js/move-out.js 組、js/move-in-page.js 解;回程 js/move-out-page.js 解) ----------
+     去程:新網址/move-in.html#auto=<搬家碼>&back=<原路徑>;回程:舊網址/move-out.html#ack=<雜湊>&back=<原路徑>。
+     搬家碼放在 # 後面:# 後面不會送到任何伺服器(Worker、GitHub、Cloudflare 都看不到,也不會出現在 Referer),
+     兩頁的開頭第一件事就用 history.replaceState 拿掉,不留在網址列與上一頁的紀錄裡。
+     AUTO_MAX:整個網址的上限 48 KB(49152 字)。# 不送伺服器,伺服器與 CDN 的網址上限(Cloudflare 約 16 KB)管不到;
+     瀏覽器:Chrome、Edge、Android 2 MB,Firefox 網址列顯示到 65536 字,Safari 實測約 8 萬字會出錯,取最小的再留餘裕。
+     搬家碼是 gzip 過的 base64,48 KB 大約裝得下 200 到 400 KB 的練習資料;超過的照舊用按鈕(視窗之間 postMessage,沒有長度問題)。
+     base64 只有英數與 + / =,不需要跳脫;back 用 encodeURIComponent。 */
+  const AUTO_MAX = 48 * 1024;
+  const CODE = /^RU1Z?:[A-Za-z0-9+/=]+$/;
+  /* 原路徑:只收本站的「/路徑?查詢字串」,其他(別的網站、// 開頭、反斜線、太長、怪字元)一律回首頁 / */
+  function safeBack(b) {
+    if (typeof b !== 'string' || b.length > 512) return '/';
+    return /^\/(?![/\\])[A-Za-z0-9._~!$'()*,;:@%/-]*(\?[A-Za-z0-9._~!$'()*,;:@%/?=&+-]*)?$/.test(b) ? b : '/';
+  }
+  function backOf(raw) {
+    if (raw === undefined) return '/';
+    try { return safeBack(decodeURIComponent(raw)); } catch (e) { return null; }
+  }
+  function autoUrl(to, code, back) { return to + '/move-in.html#auto=' + code + '&back=' + encodeURIComponent(safeBack(back)); }
+  /* '#auto=…&back=…' → { code, back } 或 null */
+  function parseAuto(h) {
+    const m = /^#auto=([^&]*)(?:&back=([^&]*))?$/.exec(String(h || ''));
+    if (!m || !CODE.test(m[1])) return null;
+    const back = backOf(m[2]);
+    return back === null ? null : { code: m[1], back };
+  }
+  function ackUrl(from, hash, back) { return from + '/move-out.html#ack=' + hash + '&back=' + encodeURIComponent(safeBack(back)); }
+  /* '#ack=…&back=…' → { hash, back } 或 null */
+  function parseAck(h) {
+    const m = /^#ack=([0-9a-f]{64})(?:&back=([^&]*))?$/.exec(String(h || ''));
+    if (!m) return null;
+    const back = backOf(m[2]);
+    return back === null ? null : { hash: m[1], back };
+  }
+
+  root.MOVE_LINK = Object.freeze({ newNonce, sender, receiver, AUTO_MAX, safeBack, autoUrl, parseAuto, ackUrl, parseAck });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -19,8 +19,9 @@
      核對「送出的那包」與「這台現在的包」一樣才寫 tr_move_done,再帶到新網址的原路徑。
      不自動(照舊顯示下面的按鈕):付款結果頁、主畫面或安裝的 App、按過「等一下再搬」、這個分頁已經試過(sessionStorage 的 tr_move_auto,
      真的帶走那一刻才寫,倒數中重新整理還會再試;寫不進去就不試,免得每一頁重來)、打開這一頁之後(ping 之前也算)使用者在頁面上點了、按了鍵、
-     按下滑鼠、手指碰到螢幕、用滾輪捲動、模擬考進行中。寄出頁那一站太大、組包失敗、對帳與組包超過 SEND_MAX_MS(15 秒),就回原頁面顯示按鈕。
-     倒數的提示黏在頁面頂端、蓋在「你是哪位？」建檔視窗上面,「等一下再搬」一定按得到;倒數到期、正在換頁時按也算數。
+     按下滑鼠、手指碰到螢幕、用滾輪捲動、模擬考進行中。寄出頁那一站太大、組包失敗、對帳與組包超過 SEND_MAX_MS(15 秒)、登入著卻沒跟雲端對到帳(雲端 8 秒還沒好),就回原頁面顯示按鈕(不改用帳本)。
+     倒數的提示黏在頁面頂端、蓋在「你是哪位？」建檔視窗上面,「等一下再搬」一定按得到;倒數到期、正在換頁時按也算數,在頁面上有動作也一樣停下來、改顯示按鈕。
+     登入著:倒數到期先等 cloud.js 開站做完(新分頁第一次灌雲端資料,最後會重載、把換頁取消掉);要重載就不走,重載之後照樣自動。
      LINE/Facebook/Instagram 內建瀏覽器(資料存在那個 App 裡,跟手機的 Safari、Chrome 分開)一樣自動,搬進同一個 App 裡的新網址。
    - 有資料還沒搬、不自動:頁面頂端一條提示,「帶我過去（進度一起搬）」「等一下再搬」;價格、註冊、付款結果頁改成先問要不要先搬。
      一般瀏覽器的主按鈕去寄出頁(開新視窗送);LINE 等內建瀏覽器開新視窗不可靠,主按鈕一鍵走自動搬家同一條路(startHere),
@@ -45,6 +46,14 @@
   function loggedIn(ls) {
     for (let i = 0; i < ls.length; i++) { const k = ls.key(i); if (k && /^sb-[a-z0-9]+-auth-token$/.test(k)) return true; }
     return false;
+  }
+  /* 這台在用雲端帳號:有登入資料,或目前的資料夾是雲端帳號的(c 開頭;登入失效時 cloud.js 會改回訪客、重載) */
+  function accountHere(ls) {
+    try {
+      if (loggedIn(ls)) return true;
+      const p = JSON.parse(ls.getItem('tr_current_profile'));
+      return typeof p === 'string' && p.charAt(0) === 'c';
+    } catch (e) { return false; }
   }
   /* 純判斷,測試直接呼叫。回 'stay'(什麼都不做)、'go'(帶到新網址)、'bar'(提示搬家)、'ask'(先問要不要先搬)、'login'(提示重新登入)、
      'offline'(搬過了但新網址連不上)。o.done:有 tr_move_done;o.moved:有 tr_move_done 而且之後沒有新的進度 */
@@ -242,6 +251,7 @@
   const AUTO_DELAY_MS = 2500;   // 第一站:提示出現後等這麼久才帶走,讓人有時間按「等一下再搬」
   const SEND_MAX_MS = 15000;    // 寄出頁:對帳、組包、加密的總逾時;逾時就回原頁面顯示按鈕,晚到的結果也不帶走
   const KEY_MAX_MS = 10 * 60000;   // 第一站之後這麼久還沒拿到公鑰回來,就當這個分頁沒有在搬
+  const RELOAD_GRACE_MS = 5000;    // 第一站倒數到期時 cloud.js 說這一頁要重載:等這麼久還沒重載就改畫按鈕
   const AUTO_TEXT = '拍謝！我們換網址了，因為名字跟別人重疊！正在把你的進度帶過去…';
   let autoRun = Promise.resolve('none');
 
@@ -325,17 +335,42 @@
   /* 「等一下再搬」:這個分頁不再提示、不再自動 */
   function skipAuto() { setLater(); memo().set({ step: 'later', at: Date.now() }); }
   /* 登入著:先跟雲端對帳(CLOUD.flushForMove),回 { accounts(這個帳號還沒上傳的), uid };沒登入、沒有 cloud.js、對帳失敗、
-     超過 maxMs(預設 FLUSH_MAX_MS)還沒好,回 {}(組包時改用這台的帳本:帳本上還沒上傳的照樣放進包) */
-  async function flushAccounts(maxMs) {
+     超過 maxMs(預設 FLUSH_MAX_MS)還沒好,回 {}(組包時改用這台的帳本:帳本上還沒上傳的照樣放進包)。
+     strict(自動搬家):這台有登入資料、雲端啟用,卻沒對到帳(等雲端超過 CLOUD_WAIT_MS、確認不了登入的帳號、對帳失敗或逾時),
+     回 { stuck: true },不改用帳本:帳本沒記、只在這台的帳號題庫(雲端被別台舊版頁面整份蓋掉)只有對帳帶得走;
+     自動搬家沒人看著,帶走之後寫了搬好了,那份就再也不會被對帳或上傳(js/cloud.js flushForMove 的說明) */
+  async function flushAccounts(maxMs, strict) {
     const C = root.CLOUD;
     if (!C) return {};
-    if (C.enabled && C.ready) await withTimeout(Promise.resolve(C.ready).catch(() => {}), CLOUD_WAIT_MS);
+    let need = false;
+    try { need = !!strict && !!C.enabled && loggedIn(root.localStorage); } catch (e) { need = !!strict && !!C.enabled; }
+    const late = {};
+    let w = null;
+    if (C.enabled && C.ready) w = await withTimeout(Promise.resolve(C.ready).catch(() => {}), CLOUD_WAIT_MS, late);
+    if (need && (w === late || !C.user || typeof C.flushForMove !== 'function')) return { stuck: true };
     if (!C.user || typeof C.flushForMove !== 'function') return {};
     const uid = typeof C.user.id === 'string' ? C.user.id : undefined;
     try {
       const r = await withTimeout(Promise.resolve().then(() => C.flushForMove()), typeof maxMs === 'number' ? maxMs : FLUSH_MAX_MS, null);
-      return r ? { accounts: r.accounts, uid } : {};
-    } catch (e) { return {}; }
+      return r ? { accounts: r.accounts, uid } : need ? { stuck: true } : {};
+    } catch (e) { return need ? { stuck: true } : {}; }
+  }
+  /* 等 cloud.js 開站確認登入(CLOUD.ready),最多 ms(預設 CLOUD_WAIT_MS):好了回 true,逾時回 false(沒有 cloud.js、沒啟用也回 true)。
+     寄出頁收到 #ack= 時用:核對只讀這台的資料,不用等雲端;先等一下是讓 cloud.js 第一次灌資料的重載先跑完,雲端元件載不到也不會一直卡著 */
+  function waitCloud(ms) {
+    const C = root.CLOUD;
+    if (!C || !C.enabled || !C.ready) return Promise.resolve(true);
+    return withTimeout(Promise.resolve(C.ready).then(() => true, () => true), typeof ms === 'number' ? ms : CLOUD_WAIT_MS, false);
+  }
+  /* 舊網址每一頁、倒數到期要帶走之前:這台在用雲端帳號(accountHere)就先等 cloud.js 開站做完(新分頁第一次會灌雲端資料,
+     最後 location.reload(),會把正在換到新網址的那一下取消掉)。回 'ok'(可以走)、'reload'(這一頁要重載了,不走;重載之後照樣自動)、
+     'slow'(等超過 ms 還沒好,不走) */
+  function cloudSettled(ms) {
+    const C = root.CLOUD;
+    let acc = false;
+    try { acc = accountHere(root.localStorage); } catch (e) { acc = false; }
+    if (!C || !C.enabled || !C.ready || !acc) return Promise.resolve('ok');
+    return waitCloud(ms).then((ok) => (!ok ? 'slow' : C.reloading === true ? 'reload' : 'ok'));
   }
   /* 組一包:寄出頁的「準備搬家」(搬家碼、搬家檔、視窗)與自動搬家共用這一個。o:{ from, accounts, uid }
      回 { pack, summary, hash, fp(組包那一刻的指紋), local(不含 accounts 的那包的雜湊,ack 回來時跟這台現在的比) } */
@@ -380,7 +415,9 @@
      使用者在頁面上有動作(watchUser:start 一開始就聽,ping 之前的也算;move-out.js 載入之前的看 activatedBefore),
      或模擬考進行中(body 的 data-leave-confirm,js/mock.js 設的),就不帶走,改畫按鈕。
      倒數的時候不寫 tr_move_auto(只先試寫得進去):倒數中這一頁重新整理(登入著 cloud.js 每個分頁第一次灌完雲端資料會重載),重載之後照樣自動;
-     真的帶走那一刻(startHere)才記。倒數到期、正在換到新網址時按「等一下再搬」也算數:停止換頁、記下 later,換頁停不下來的話寄出頁那一站看到 later 也不組包。
+     真的帶走那一刻(startHere)才記。倒數到期、正在換到新網址時按「等一下再搬」也算數:停止換頁、記下 later,換頁停不下來的話寄出頁那一站看到 later 也不組包;
+     換頁中在頁面上有動作(作答、按鍵、捲動)也一樣:停止換頁、記下 busy、改畫按鈕,跟倒數中的規則一致。
+     登入著(accountHere):倒數到期先等 cloud.js 開站(cloudSettled,最多 CLOUD_WAIT_MS),要重載(CLOUD.reloading)就不走、不記,逾時改畫按鈕。
      回 'auto'(已經帶走)或不自動的原因;不是 'auto' 時由 start 畫回按鈕 */
   function tryAuto(kind, st, watch) {
     const l = root.location, d = root.document;
@@ -392,8 +429,9 @@
     if (!mem.writable()) { w.stop(); return Promise.resolve('session'); }
     if (w.acted() || activatedBefore()) { w.stop(); mem.set({ step: 'busy', at: Date.now() }); return Promise.resolve('busy'); }
     return new Promise((resolve) => {
-      let done = false, leaving = false, box = null, timer = null;
+      let done = false, leaving = false, halted = false, box = null, timer = null;
       const inBar = (t) => { for (let n = t; n; n = n.parentNode) if (n === box) return true; return false; };
+      const exam = () => !!(d && d.body && d.body.dataset && d.body.dataset.leaveConfirm);
       const finish = (r, step) => {
         if (done) return;
         done = true;
@@ -403,24 +441,43 @@
         if (step) mem.set({ step, at: Date.now() });
         resolve(r);
       };
-      w.when(() => finish('busy', 'busy'), inBar);
+      /* 已經在換到新網址(startHere 之後、這一頁還沒卸載):停止換頁、記下 step(寄出頁那一站看到就不組包、回原頁面);
+         'busy'(使用者在頁面上有動作)改畫按鈕,'later'(按了「等一下再搬」)什麼都不畫 */
+      const halt = (step) => {
+        if (halted) return;
+        halted = true;
+        w.stop();
+        mem.set({ step, at: Date.now() });
+        try { if (typeof root.stop === 'function') root.stop(); } catch (e) { /* 停不下來:寄出頁看到這個紀錄不組包、回原頁面 */ }
+        if (box) box.remove();
+        if (step === 'busy') whenBody(() => show(kind, st));
+      };
+      w.when(() => (leaving ? halt('busy') : finish('busy', 'busy')), inBar);
       const cancel = () => {
         setLater();
         if (!leaving) { finish('later', 'later'); return; }
-        mem.set({ step: 'later', at: Date.now() });
-        try { if (typeof root.stop === 'function') root.stop(); } catch (e) { /* 停不下來:寄出頁看到 later 不組包、回原頁面 */ }
-        if (box) box.remove();
+        halt('later');
+      };
+      const leave = () => {
+        if (done) return;
+        if (exam()) { finish('busy', 'busy'); return; }
+        if (!startHere(l.pathname + l.search)) { finish('session'); return; }
+        done = true;
+        leaving = true;
+        resolve('auto');   // 換頁中繼續聽使用者的動作(halt)
       };
       whenBody(() => { if (!done) box = bar(AUTO_TEXT, [{ label: '等一下再搬', onClick: cancel }], true); });
       timer = root.setTimeout(() => {
         if (done) return;
-        const exam = !!(d && d.body && d.body.dataset && d.body.dataset.leaveConfirm);
-        if (exam) { finish('busy', 'busy'); return; }
-        if (!startHere(l.pathname + l.search)) { finish('session'); return; }
-        done = true;
-        leaving = true;
-        w.stop();
-        resolve('auto');
+        if (exam()) { finish('busy', 'busy'); return; }
+        /* 登入著:cloud.js 開站(新分頁第一次灌雲端資料、最後重載)做完才走;等的時候提示與「等一下再搬」照樣在,有動作照樣不走 */
+        cloudSettled(CLOUD_WAIT_MS).then((c) => {
+          if (done) return;
+          if (c === 'slow') { finish('cloud', 'cloud'); return; }
+          /* 這一頁馬上會重載:不走、不記試過,重載之後照樣自動;萬一沒有重載,過一下改畫按鈕 */
+          if (c === 'reload') { timer = root.setTimeout(() => finish('reload'), RELOAD_GRACE_MS); return; }
+          leave();
+        }, () => finish('error'));
       }, AUTO_DELAY_MS);
     });
   }
@@ -432,13 +489,14 @@
   async function autoSend(o) {
     const M = root.MOVE, L = root.MOVE_LINK, P = root.MOVE_PACK, l = root.location;
     const mem = memo(), m = mem.get();
-    if (m && m.step === 'later') return 'cancel';
+    if (m && (m.step === 'later' || m.step === 'busy')) return 'cancel';   // 第一站換頁時按了「等一下再搬」或在頁面上有動作(換頁沒停下來)
     const age = m ? Date.now() - m.at : NaN;
     if (!m || m.step !== 'key' || !(age >= 0 && age < KEY_MAX_MS)) return 'memo';
     if (typeof m.n !== 'string' || !/^[0-9a-f]{32}$/.test(m.n) || !o || o.n !== m.n) return 'memo';
     if (!mem.set({ step: 'build', at: Date.now() })) return 'session';
     const work = (async () => {
-      const acc = await flushAccounts(SEND_MAX_MS);   // 自動搬家不改用帳本:對帳卡住就整段逾時、回原頁面給按鈕
+      const acc = await flushAccounts(SEND_MAX_MS, true);   // 自動搬家不改用帳本:登入著卻沒對到帳(雲端沒好、對帳卡住)就不組包、回原頁面給按鈕
+      if (acc.stuck) return { why: 'timeout' };
       const b = await buildPack(root.localStorage, { from: l.origin, accounts: acc.accounts, uid: acc.uid });
       if (b.summary.tooBig.length || !b.summary.hasData) return { why: 'skip' };
       const url = L.autoUrl(M.to, await L.seal(o.pub, await P.toCode(b.pack, b.hash)), o.back);
@@ -495,6 +553,6 @@
   }
 
   root.MOVE_OUT = Object.freeze({ decide, pageOf, stateOf, flags, ping, start, cleanup, go, target,
-    envOf, autoBlock, buildPack, flushAccounts, ackCheck, tryAuto, startHere, autoSend, skipAuto, autoStuck, AUTO_TEXT, autoRun: () => autoRun });
+    envOf, autoBlock, buildPack, flushAccounts, waitCloud, ackCheck, tryAuto, startHere, autoSend, skipAuto, autoStuck, AUTO_TEXT, autoRun: () => autoRun });
   if (root.MOVE && root.MOVE.onOld && !root.MOVE_OUT_NO_AUTO) start();
 })(typeof window !== 'undefined' ? window : globalThis);

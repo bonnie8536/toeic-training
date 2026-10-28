@@ -2,7 +2,7 @@
    127.0.0.1:8933 當冒充的網站。用真的滑鼠點擊(window.open 要使用者的點擊)。
    不連外網:js/cloud-config.js 換成空的(不載 Supabase),其他網域一律解析不到。
    情境:訪客搬家、新網址已經有資料(題庫同 id 不同內容)、同一包再搬、搬家碼貼上、其他分頁開著要先關、冒充的網站送來的包不收、
-   4 MB 的大包、舊網址每一頁的提示與搬完之後帶走、寫到一半被關掉之後還原。
+   4 MB 的大包、舊網址每一頁的提示與搬完之後帶走、寫到一半被關掉之後還原、自動搬家時新網址對時卡住、舊網址雲端元件載不到。
    用法:node tools/test_move_e2e.js [--tmp <放 Chrome 使用者資料的資料夾>] [--only <測試名稱的一段>]   每次一個新的使用者資料夾,跑完刪掉。 */
 'use strict';
 const fs = require('fs');
@@ -26,6 +26,11 @@ let PING = 'ok';
 let DROP_MOVE_IN = 0, moveInHits = 0;
 /* 新網址的 move-in.html 晚這麼多毫秒才回(手機第一次連新網址很慢:舊網址那一頁已經在換頁、還沒換過去);move-ping.txt 晚這麼多毫秒才回(ping 還沒回來) */
 let HOLD_MOVE_IN = 0, PING_DELAY = 0;
+/* HANG_CLOCK:新網址收件頁自己對時抓的 move-ping.txt(同網域)收下請求、一直不回(手機網路切換時連線卡住);舊網址跨網域的 ping 照常 */
+let HANG_CLOCK = false;
+/* OLD_CLOUD:舊網址的 cloud-config 填上(cloud.js 啟用、要從 cdn.jsdelivr.net 載 supabase-js;那個請求由測試用 CDP Fetch 攔下、一直不回) */
+let OLD_CLOUD = false;
+const held = [];
 /* 冒充的網站 /attack.html:用 window.open 開舊網址一頁,ATTACK.after 毫秒之後把那個視窗導到 move-out.html#key=<它自己的公鑰>(猜一個號碼) */
 const ATTACK = { pub: '', after: [] };
 const ATTACKER_KEYS = [];
@@ -55,6 +60,8 @@ function serve(port) {
       if (p === '/') p = '/index.html';
       if (port === 8932 && p === '/move-in.html' && DROP_MOVE_IN && ++moveInHits >= DROP_MOVE_IN) { req.socket.destroy(); return; }
       if (port === 8932 && p === '/move-ping.txt' && PING === 'down') { res.writeHead(503, { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-store' }); return res.end('down'); }
+      if (port === 8932 && p === '/move-ping.txt' && HANG_CLOCK && req.headers['sec-fetch-site'] === 'same-origin') { held.push(req.socket); return; }
+      if (p === '/js/cloud-config.js' && port === 8931 && OLD_CLOUD) { res.writeHead(200, { 'Content-Type': TYPES['.js'], 'Cache-Control': 'no-store' }); return res.end("window.CLOUD_CONFIG = { url: 'https://fakeproj.supabase.co', anonKey: 'x' };"); }
       if (p === '/js/cloud-config.js') { res.writeHead(200, { 'Content-Type': TYPES['.js'], 'Cache-Control': 'no-store' }); return res.end('window.CLOUD_CONFIG = {};'); }
       const file = path.join(REPO, p);
       if (!path.resolve(file).startsWith(REPO)) { res.writeHead(403); return res.end(); }
@@ -72,6 +79,7 @@ function serve(port) {
     srv.listen(port, '127.0.0.1', () => resolve(srv));
   });
 }
+function release() { held.splice(0).forEach((x) => { try { x.destroy(); } catch (e) { /* 已經斷了 */ } }); }
 
 async function launch() {
   const dir = fs.mkdtempSync(path.join(TMP, 'move-e2e-'));
@@ -88,16 +96,17 @@ async function launch() {
 function connect(wsUrl) {
   const ws = new WebSocket(wsUrl);
   let id = 0;
-  const waiting = new Map(), created = [], errors = [];
+  const waiting = new Map(), created = [], errors = [], paused = [];
   ws.onmessage = (m) => {
     const msg = JSON.parse(m.data);
     if (msg.id && waiting.has(msg.id)) { waiting.get(msg.id)(msg); waiting.delete(msg.id); return; }
     if (msg.method === 'Target.targetCreated' && msg.params.targetInfo.type === 'page') created.push(msg.params.targetInfo);
+    if (msg.method === 'Fetch.requestPaused') paused.push(msg.params.request.url);   // 測試攔下、故意不回的請求
     if (msg.method === 'Runtime.exceptionThrown') errors.push((msg.params.exceptionDetails.exception || {}).description || msg.params.exceptionDetails.text);
   };
   const send = (method, params, sessionId) => new Promise((res) => { const i = ++id; waiting.set(i, res); ws.send(JSON.stringify(Object.assign({ id: i, method, params: params || {} }, sessionId ? { sessionId } : {}))); });
   return new Promise((resolve, reject) => {
-    ws.onopen = async () => { await send('Target.setDiscoverTargets', { discover: true }); resolve({ ws, send, created, errors }); };
+    ws.onopen = async () => { await send('Target.setDiscoverTargets', { discover: true }); resolve({ ws, send, created, errors, paused }); };
     ws.onerror = reject;
   });
 }
@@ -906,6 +915,43 @@ T['自動搬家:倒數到期、正在換到新網址(新網址還沒回應)時�
   const ok = r.where === OLD + '/vocab.html' && /"later"/.test(r.memo || '') && r.later === '1' && !newLs.tr_vgame_banks && !oldAfter.tr_move_done
     && JSON.parse(oldAfter.tr_vgame_banks)[0].name === '我按了取消';
   return { ok, detail: J({ r, newKeys: Object.keys(newLs), oldDone: !!oldAfter.tr_move_done }) };
+};
+
+T['自動搬家:新網址收件頁對時(move-ping.txt)卡住不回:有逾時,照樣搬完回到原頁面,不會停在「正在把舊網址的進度搬進來…」'] = async (B) => {
+  PING = 'ok';
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('h1', '對時卡住的題庫', ['a'])]), tr_hist: J(hist(2, 'h')) }, true);
+  const nt = await tab(B); await seed(nt, NEW, {}, true); await nt.close();
+  let r = null;
+  try {
+    HANG_CLOCK = true;
+    await s.send('Page.navigate', { url: OLD + '/grammar.html' });
+    await s.until(onNewPage('/grammar.html'), 25000, '對時逾時之後照樣搬完、回到新網址的文法頁');
+    r = { got: await s.ls(), hung: held.length };
+  } finally { HANG_CLOCK = false; release(); }
+  await s.close();
+  const done = !!(await oldLs(B)).tr_move_done;
+  const names = r.got.tr_vgame_banks ? JSON.parse(r.got.tr_vgame_banks).map((b) => b.name) : [];
+  return { ok: r.hung > 0 && J(names) === J(['對時卡住的題庫']) && done, detail: J({ hung: r.hung, names, done }) };
+};
+T['自動搬家:舊網址載不到雲端元件(CDN 一直不回):帶回舊網址寫完成那一站不會卡在「正在檢查這台的資料…」,寫好搬好了、回到新網址原頁面'] = async (B) => {
+  PING = 'ok';
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('k1', '雲端卡住也搬', ['a'])]), tr_hist: J(hist(3, 'k')) }, true);
+  const nt = await tab(B); await seed(nt, NEW, {}, true); await nt.close();
+  let r = null;
+  try {
+    OLD_CLOUD = true;
+    const p0 = B.paused.length;
+    await s.send('Fetch.enable', { patterns: [{ urlPattern: '*cdn.jsdelivr.net*' }] });   // 載 supabase-js 的請求攔下、一直不回
+    await s.send('Page.navigate', { url: OLD + '/grammar.html' });
+    await s.until(onNewPage('/grammar.html'), 40000, '寫好搬好了、回到新網址的文法頁');
+    r = { got: await s.ls(), hung: B.paused.length - p0 };
+  } finally { OLD_CLOUD = false; }
+  await s.close();
+  const done = !!(await oldLs(B)).tr_move_done;
+  const names = r.got.tr_vgame_banks ? JSON.parse(r.got.tr_vgame_banks).map((b) => b.name) : [];
+  return { ok: r.hung > 0 && J(names) === J(['雲端卡住也搬']) && done, detail: J({ hung: r.hung, names, done }) };
 };
 
 /* 跑完所有情境、瀏覽器正常關掉之後,讀使用者資料夾的 Default/History(SQLite 的 urls 表,chrome://history、網址列建議、同步用的就是它):

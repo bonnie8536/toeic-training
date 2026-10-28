@@ -4,7 +4,7 @@
    - 備案:選搬家檔、貼上搬家碼。不管從哪一路來,都重算雜湊、重新驗證(js/move-rules.js 的 validate)、算合併(js/move-merge.js)、
      列給人看,按「確定搬進來」才寫(js/move-apply.js:先寫日誌、量空間、被換掉的先備份)。空間不夠時怎麼辦寫在 commit 前面。
    - 寫之前用 BroadcastChannel('rushup-move') 問「還有誰開著」:有別的新網址分頁就要求先關掉(它們可能寫回舊的小雞、洗掉正在考的模擬考)。
-   - 小雞合併要對時:讀同網域不快取的 move-ping.txt 回應的 Date 標頭,差超過 3 天就不合併小雞(列為衝突、留新網址的)。
+   - 小雞合併要對時:讀同網域不快取的 move-ping.txt 回應的 Date 標頭,差超過 3 天(或 4 秒內沒回應)就不合併小雞(列為衝突、留新網址的)。
    - 自動搬家(四站,js/move-link.js 開頭):舊網址每一頁帶到 move-in.html#want&n=<一次性號碼>,這裡產生一次性金鑰(私鑰只放這個分頁的 sessionStorage),
      帶公鑰與同一個號碼回舊網址寄出頁(寄出頁核對號碼,別的網站塞的公鑰不用);寄出頁加密後帶到 move-in.html#auto=<密文>&back=<原路徑>。move-in.html 開頭的 script 先把 # 後面
      收進 window.MOVE_AUTO_IN、用 replaceState 從網址列拿掉;這裡用私鑰解開(解開前就刪私鑰),交給跟「貼上搬家碼」同一個 fromText
@@ -21,6 +21,7 @@
   if (window.top !== window.self) { document.body.textContent = '這一頁不能放在別的網頁裡面打開。'; return; }
   const M = window.MOVE, R = window.MOVE_RULES, MM = window.MOVE_MERGE, P = window.MOVE_PACK, A = window.MOVE_APPLY, L = window.MOVE_LINK;
   const CLOCK_MAX = 3 * 864e5;
+  const CLOCK_MS = 4000;   // 對時(抓 move-ping.txt)最多等這麼久
   const HINT_MS = 8000, FALLBACK_MS = 20000;
   const IS_IOS = /iPhone|iPad|iPod/.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   const say = (text, cls) => h('p', { class: cls || 'result-note' }, text);
@@ -70,12 +71,17 @@
   function tellOthers() { try { const ch = new BroadcastChannel('rushup-move'); ch.postMessage({ t: 'reload' }); ch.close(); } catch (e) { /* 沒有就算了 */ } }
 
   /* ---------- 對時(小雞) ---------- */
+  /* 最多等 CLOCK_MS:網路切換時連線卡住、一直不回,當成對不了時(小雞不合併、列為衝突留新網址的),不會停在「正在搬進來…」 */
   async function clockOk() {
+    const ctl = typeof AbortController === 'function' ? new AbortController() : null;
+    let tm = null;
+    const late = new Promise((res) => { tm = setTimeout(() => { if (ctl) ctl.abort(); res(null); }, CLOCK_MS); });
     try {
-      const r = await fetch('move-ping.txt?t=' + Date.now(), { cache: 'no-store' });
+      const r = await Promise.race([fetch('move-ping.txt?t=' + Date.now(), { cache: 'no-store', signal: ctl ? ctl.signal : undefined }), late]);
+      if (!r) return false;
       const d = Date.parse(r.headers.get('date') || '');
       return isFinite(d) && Math.abs(d - Date.now()) <= CLOCK_MAX;
-    } catch (e) { return false; }
+    } catch (e) { return false; } finally { clearTimeout(tm); }
   }
 
   /* ---------- 進來的那一包 ---------- */

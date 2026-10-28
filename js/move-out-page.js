@@ -55,9 +55,13 @@
     }
     if (await autoKey()) return;
     draw(say('正在檢查這台的資料…'));
-    if (window.CLOUD && CLOUD.enabled) { try { await CLOUD.ready; } catch (e) { /* 照目前的狀態 */ } }
+    /* 自動搬家帶回來寫完成(#ack=):核對只讀這台的資料,等雲端最多 OUT.waitCloud 的上限(讓 cloud.js 第一次灌資料的重載先跑完),
+       雲端元件載不到、登入憑證一直換不到也照樣核對、寫完成、帶回新網址,不會一直停在這一行 */
+    if (window.MOVE_ACK_IN) await OUT.waitCloud();
     const ackNote = await takeAck();
     if (ackNote === true) return;
+    /* 按鈕搬家:等 cloud.js 灌完雲端資料才讓人按「準備搬家」 */
+    if (window.CLOUD && CLOUD.enabled) { try { await CLOUD.ready; } catch (e) { /* 照目前的狀態 */ } }
     const st = lsState();
     OUT.flags(st);
     draw(say('正在連新網址…'));

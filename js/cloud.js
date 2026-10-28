@@ -104,6 +104,8 @@
   let settled = false;
   let hydrating = false;   // 這一頁決定要灌雲端資料了(之後要重載)
   let reloading = false;
+  /* 這一頁已經要重載了(灌完雲端資料、改回訪客):舊網址的自動搬家(js/move-out.js)看到就不帶走,免得重載把換到新網址的那一下取消掉 */
+  Object.defineProperty(window.CLOUD, 'reloading', { get: () => reloading, enumerable: true });
   const early = {};
 
   window.CLOUD.ready = init();

@@ -235,6 +235,21 @@ T['暫存區:這個分頁已經灌過資料,有暫存區就重灌一次;合併�
   return { ok, detail: J({ r0, r1, r2, still, bankNames }) };
 };
 
+T['CLOUD.reloading:這一頁第一次灌完雲端資料要重載時是 true(舊網址自動搬家看到就不帶走,免得重載把換頁取消掉);灌過的分頁、訪客是 false'] = async () => {
+  const w = makeWorld();
+  signedIn(w);
+  const p1 = loadPage(w); await p1.ready;
+  const first = p1.ctx.CLOUD.reloading;
+  const p2 = loadPage(w); await p2.ready;
+  const second = p2.ctx.CLOUD.reloading;
+  const g = makeWorld();
+  g.noSession = true;   // 這台沒登入過
+  const p3 = loadPage(g); await p3.ready;
+  const guest = p3.ctx.CLOUD.reloading;
+  const ok = first === true && w.reloads === 1 && second === false && guest === false;
+  return { ok, detail: J({ first, second, guest, reloads: w.reloads }) };
+};
+
 const backups = (w) => Object.keys(w.local.dump()).filter((k) => /^tr_move_backup_/.test(k)).map((k) => JSON.parse(w.local.getItem(k)));
 const backupVals = (w) => [].concat(...backups(w).map((b) => b.keys.map((e) => e[1])));
 /* 新網址這台登入中、離線時改了單一值(帳本記著),之後才收到舊網址的暫存區 */

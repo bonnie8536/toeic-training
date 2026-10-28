@@ -437,6 +437,134 @@ T['寄出頁:按了「等一下再搬」就不帶走'] = async () => {
   assert.equal(JSON.parse(o.sess.get('tr_move_auto')).step, 'later');
 };
 
+/* 雲端帳號的資料夾(cloud.js 的 tr_u<pid>_):帳本沒記的題庫只有 flushForMove 的對帳會帶走 */
+const UID = '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72';
+const CPID = 'c' + UID.replace(/-/g, '');
+T['寄出頁(自動搬家):登入著、雲端超過 8 秒還沒好(CLOUD.user 還是 null):不改用帳本組包,記下逾時、回原頁面給按鈕;晚好的雲端也不帶走'] = async () => {
+  let flushed = 0, ready = null;
+  const cloud = { enabled: true, user: null, ready: new Promise((r) => { ready = r; }),
+    flushForMove: async () => { flushed++; return { left: 1, accounts: { [UID]: [['vgame_banks', BANKS, 5]] } }; } };
+  const ls = { 'sb-abc-auth-token': '{}', tr_current_profile: J(CPID), tr_hist: HIST, ['tr_u' + CPID + '_vgame_banks']: BANKS };
+  const { o, k } = await keyed({ ls, cloud, scale: 100 });
+  /* 手機網路慢:supabase-js 加換登入憑證 9 秒(縮小 100 倍:90 毫秒)才好;等雲端最多 8 秒(80 毫秒) */
+  setTimeout(() => { cloud.user = { id: UID }; ready(cloud.user); }, 90);
+  assert.equal(await o.O.autoSend({ pub: k.pub, n: N0, back: '/', cancelled: () => false }), 'timeout');
+  assert.equal(flushed, 0, '沒跟雲端對帳');
+  assert.equal(o.loc.replaced, null, '沒對帳就不帶走');
+  assert.equal(JSON.parse(o.sess.get('tr_move_auto')).step, 'timeout');
+  await sleep(300);
+  assert.equal(o.loc.replaced, null, '晚好的雲端也不帶走');
+  /* 雲端好了、但沒有登入的帳號(這台有登入資料,卻確認不了):一樣不改用帳本 */
+  const none = { enabled: true, user: null, ready: Promise.resolve(null), flushForMove: async () => { flushed++; return { left: 0, accounts: {} }; } };
+  const b = await keyed({ ls, cloud: none, scale: 100 });
+  assert.equal(await b.o.O.autoSend({ pub: b.k.pub, n: N0, back: '/', cancelled: () => false }), 'timeout');
+  assert.equal(b.o.loc.replaced, null);
+  /* 沒登入的訪客:雲端慢不影響,照常用這台的資料搬 */
+  const slow = { enabled: true, user: null, ready: new Promise(() => {}), flushForMove: async () => ({ left: 0, accounts: {} }) };
+  const g = await keyed({ ls: { tr_hist: HIST, tr_vgame_banks: BANKS }, cloud: slow, scale: 100 });
+  assert.equal(await g.o.O.autoSend({ pub: g.k.pub, n: N0, back: '/', cancelled: () => false }), 'auto');
+  /* 按鈕搬家(寄出頁的「準備搬家」)照舊:對帳不了就用這台的帳本 */
+  const p = loadOld({ ls, cloud: { enabled: true, user: null, ready: new Promise(() => {}) }, path: '/move-out.html', scale: 100 });
+  assert.deepEqual(J(await p.O.flushAccounts()), J({}));
+};
+T['寄出頁(自動搬家):雲端在 8 秒內好了就照常對帳,帳號只在這台的題庫放進包'] = async () => {
+  let flushed = 0, ready = null;
+  const cloud = { enabled: true, user: null, ready: new Promise((r) => { ready = r; }),
+    flushForMove: async () => { flushed++; return { left: 1, accounts: { [UID]: [['vgame_banks', BANKS, 5]] } }; } };
+  const ls = { 'sb-abc-auth-token': '{}', tr_current_profile: J(CPID), tr_hist: HIST, ['tr_u' + CPID + '_vgame_banks']: BANKS };
+  const { o, k } = await keyed({ ls, cloud, scale: 100 });
+  setTimeout(() => { cloud.user = { id: UID }; ready(cloud.user); }, 20);
+  assert.equal(await o.O.autoSend({ pub: k.pub, n: N0, back: '/', cancelled: () => false }), 'auto');
+  assert.equal(flushed, 1);
+  const r = await o.P.fromText(await o.L.open(k.jwk, o.L.parseAuto(hashOfUrl(o.loc.replaced)).code));
+  assert.deepEqual(Object.keys(r.pack.accounts), [UID]);
+};
+T['登入著(新分頁):倒數到期時 cloud.js 還在第一次灌雲端資料,等它好了才帶走;灌完要重載就不帶走、不記試過(重載之後照樣自動)'] = async () => {
+  let ready = null;
+  const cloud = { enabled: true, user: null, reloading: false, ready: new Promise((r) => { ready = r; }) };
+  const ls = { 'sb-abc-auth-token': '{}', tr_current_profile: J(CPID), tr_hist: HIST };
+  const o = loadOld({ ls, path: '/vocab.html', cloud, scale: 50 });
+  assert.equal(await o.O.start(), 'bar');
+  await sleep(120);   // 倒數 2.5 秒(縮小 50 倍:50 毫秒)已經到期
+  assert.equal(o.loc.replaced, null, '灌資料還沒好,不帶走(它最後的重載會把換頁取消掉)');
+  assert.equal(o.sess.has('tr_move_auto'), false);
+  assert.match(o.barText(), /正在把你的進度帶過去/, '還在等,提示與「等一下再搬」照樣在');
+  cloud.user = { id: UID }; cloud.reloading = true; ready(cloud.user);
+  const r = await o.O.autoRun();
+  assert.notEqual(r, 'auto');
+  assert.equal(o.loc.replaced, null, '要重載了:不帶走');
+  assert.equal(o.sess.has('tr_move_auto'), false, '不記試過:重載之後照樣自動');
+  /* 重載之後(這個分頁灌過資料,cloud.js 很快就好、不再重載):照常帶走 */
+  const again = { enabled: true, user: { id: UID }, reloading: false, ready: Promise.resolve({ id: UID }) };
+  const p = loadOld({ ls, path: '/vocab.html', cloud: again, session: o.sess, scale: 50 });
+  assert.equal(await p.O.start(), 'bar');
+  assert.equal(await p.O.autoRun(), 'auto');
+  assert.equal(p.loc.replaced.indexOf(NEW + '/move-in.html#want&n='), 0);
+  /* 灌資料晚一點好了、不用重載:等到才帶走 */
+  let ready2 = null;
+  const late = { enabled: true, user: null, reloading: false, ready: new Promise((r) => { ready2 = r; }) };
+  const q = loadOld({ ls, path: '/vocab.html', cloud: late, scale: 50 });
+  await q.O.start();
+  await sleep(100);
+  assert.equal(q.loc.replaced, null);
+  ready2(null);
+  assert.equal(await q.O.autoRun(), 'auto');
+  /* 雲端一直沒好(超過 8 秒):不帶走,改顯示按鈕 */
+  const never = { enabled: true, user: null, reloading: false, ready: new Promise(() => {}) };
+  const s = loadOld({ ls, path: '/vocab.html', cloud: never, scale: 50 });
+  await s.O.start();
+  assert.notEqual(await s.O.autoRun(), 'auto');
+  assert.equal(s.loc.replaced, null);
+  assert.match(s.barText(), /帶我過去（進度一起搬）/);
+  /* 訪客(沒有登入資料、不是雲端帳號的資料夾):不等雲端,照常帶走 */
+  const g = loadOld({ ls: { tr_vgame_banks: BANKS }, path: '/vocab.html', cloud: { enabled: true, user: null, reloading: false, ready: new Promise(() => {}) }, scale: 50 });
+  await g.O.start();
+  assert.equal(await g.O.autoRun(), 'auto');
+};
+T['倒數到期、正在換到新網址時在頁面上有動作(作答、按鍵、捲動):照樣停下來、不帶走,改顯示按鈕;停不下來的話寄出頁那一站也不組包、回原頁面'] = async () => {
+  for (const type of ['click', 'keydown', 'pointerdown', 'touchstart', 'wheel']) {
+    const sess = new Map();
+    const o = loadOld({ ls: { tr_vgame_banks: BANKS }, path: '/writing.html', session: sess, scale: 20 });
+    await o.O.start();
+    assert.equal(await o.O.autoRun(), 'auto', type);
+    const n = nOf(o.loc.replaced);
+    o.fire(type);
+    assert.equal(o.win.stopped, 1, type + ':停止換頁(window.stop)');
+    assert.equal(JSON.parse(sess.get('tr_move_auto')).step, 'busy', type);
+    assert.doesNotMatch(o.barText(), /正在把你的進度帶過去/, type);
+    assert.match(o.barText(), /帶我過去（進度一起搬）/, type + ':改顯示按鈕');
+    o.fire(type);
+    assert.equal(o.win.stopped, 1, type + ':只停一次');
+    /* 新網址已經回應、停不下來:寄出頁不組包、不帶到 #auto= */
+    const k = await o.L.newKey();
+    const out = loadOld({ ls: { tr_vgame_banks: BANKS }, path: '/move-out.html', session: sess, scale: 20 });
+    assert.equal(await out.O.autoSend({ pub: k.pub, n, back: '/writing.html', cancelled: () => false }), 'cancel', type);
+    assert.equal(out.loc.replaced, null, type);
+    assert.deepEqual(out.writes, [], type);
+  }
+};
+T['寄出頁收到 #ack= 時等雲端有上限(CLOUD.ready 一直不好也不會卡在「正在檢查這台的資料…」)'] = async () => {
+  const o = loadOld({ ls: { tr_vgame_banks: BANKS }, path: '/move-out.html', cloud: { enabled: true, user: null, ready: new Promise(() => {}) }, scale: 100 });
+  assert.equal(typeof o.O.waitCloud, 'function');
+  const t0 = Date.now();
+  assert.equal(await o.O.waitCloud(), false, '逾時回 false');
+  assert.ok(Date.now() - t0 < 1000);
+  const ok = loadOld({ ls: {}, path: '/move-out.html', cloud: { enabled: true, user: null, ready: Promise.resolve(null) }, scale: 100 });
+  assert.equal(await ok.O.waitCloud(), true);
+  const src = read('js/move-out-page.js');
+  const ack = src.indexOf('await takeAck()');
+  assert.ok(ack > -1);
+  const before = src.slice(src.indexOf('async function start()'), ack);
+  assert.match(before, /OUT\.waitCloud\(/, '核對 ack 之前等雲端要有上限');
+  assert.doesNotMatch(before, /await CLOUD\.ready/, '核對 ack 之前不能沒有上限地等 CLOUD.ready');
+};
+T['新網址收件頁:自動搬家對時(move-ping.txt)有逾時,不會停在「正在把舊網址的進度搬進來…」'] = () => {
+  const src = read('js/move-in-page.js');
+  const fn = src.slice(src.indexOf('async function clockOk()'), src.indexOf('/* ---------- 進來的那一包'));
+  assert.match(fn, /AbortController/, '對時要能中止');
+  assert.match(fn, /setTimeout\(/, '對時要有逾時');
+};
+
 /* ---------- 舊網址:新網址搬好帶回來(#ack=) ---------- */
 async function sentOld(ls) {
   const { o, k } = await keyed({ ls });

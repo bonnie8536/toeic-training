@@ -80,10 +80,13 @@
   /* ---------- 自動搬家:同一個分頁換頁,不開新視窗(LINE 等內建瀏覽器也能用),搬家碼不以明文進任何網址 ----------
      網址的 # 後面不會送到伺服器,但瀏覽器的全域歷史紀錄(Chrome 的 History 檔、開了同步會上傳)在換頁那一刻就記下含 # 的完整網址,
      之後的 history.replaceState 只改得了分頁的上一頁紀錄,改不了那一筆;新網址連不上時錯誤頁的網址列也會留著。所以分四站:
-     1. 舊網址每一頁(js/move-out.js tryAuto)→ 新網址/move-in.html#want&back=<原路徑>:網址裡沒有任何資料。
+     1. 舊網址每一頁(js/move-out.js tryAuto)→ 新網址/move-in.html#want&n=<一次性號碼>&back=<原路徑>:網址裡沒有任何資料。
+        號碼是隨機的 16 位元組,同時記在舊網址這個分頁的 sessionStorage(tr_move_auto 的 n)。
      2. 新網址(js/move-in-page.js)產生一次性的 ECDH P-256 金鑰,私鑰只放新網址這個分頁的 sessionStorage(tr_move_key),
-        → 舊網址/move-out.html#key=<公鑰>&back=<原路徑>:公鑰公開也沒關係。
-     3. 舊網址寄出頁(js/move-out.js autoSend)組包(跟「複製搬家碼」同一包),用公鑰加密(seal:臨時 ECDH 金鑰 + AES-GCM)
+        → 舊網址/move-out.html#key=<公鑰>&n=<同一個號碼>&back=<原路徑>:公鑰公開也沒關係。
+     3. 舊網址寄出頁(js/move-out.js autoSend)先核對號碼跟這個分頁記的一樣(用過就作廢),公鑰才算是這一趟新網址給的:
+        別的網站用 window.open 開舊網址一頁、再把那個視窗導到 #key=<它自己的公鑰>,拿不到號碼,寄出頁什麼都不組、不加密。
+        對了才組包(跟「複製搬家碼」同一包),用公鑰加密(seal:臨時 ECDH 金鑰 + AES-GCM)
         → 新網址/move-in.html#auto=RU1E:<臨時公鑰>.<iv>.<密文>&back=<原路徑>。
      4. 新網址用私鑰解開(open),解開就刪私鑰;合併好 → 舊網址/move-out.html#ack=<雜湊>&back=<原路徑>,舊網址核對後寫完成記號。
      歷史紀錄、錯誤頁、被複製出去的網址裡只有公鑰與密文;私鑰在新網址那個分頁用過就刪,別的分頁、別台、別人都解不開。
@@ -161,21 +164,23 @@
     return (plain[0] === 1 ? 'RU1Z:' : 'RU1:') + bytesToB64(plain.subarray(1));
   }
 
-  /* 第一站:'#want&back=…' → { back } 或 null */
-  function wantUrl(to, back) { return to + '/move-in.html#want' + backPart(back); }
+  /* 一次性號碼(第一站記在舊網址這個分頁,經新網址照原樣帶回第三站核對):沒有或格式不對就不放進網址 */
+  const nPart = (n) => (typeof n === 'string' && NONCE.test(n) ? '&n=' + n : '');
+  /* 第一站:'#want&n=<號碼>&back=…' → { back, n(沒有是 null) } 或 null */
+  function wantUrl(to, back, n) { return to + '/move-in.html#want' + nPart(n) + backPart(back); }
   function parseWant(h) {
-    const m = /^#want(?:&back=([^&]*))?$/.exec(String(h || ''));
-    if (!m) return null;
-    const back = backOf(m[1]);
-    return back === null ? null : { back };
-  }
-  /* 第二站:'#key=<公鑰>&back=…' → { pub, back } 或 null */
-  function keyUrl(from, pub, back) { return from + '/move-out.html#key=' + pub + backPart(back); }
-  function parseKey(h) {
-    const m = /^#key=([^&]*)(?:&back=([^&]*))?$/.exec(String(h || ''));
-    if (!m || !PUB.test(m[1])) return null;
+    const m = /^#want(?:&n=([^&]*))?(?:&back=([^&]*))?$/.exec(String(h || ''));
+    if (!m || (m[1] !== undefined && !NONCE.test(m[1]))) return null;
     const back = backOf(m[2]);
-    return back === null ? null : { pub: m[1], back };
+    return back === null ? null : { back, n: m[1] === undefined ? null : m[1] };
+  }
+  /* 第二站:'#key=<公鑰>&n=<號碼>&back=…' → { pub, n(沒有是 null,寄出頁一定對不上), back } 或 null */
+  function keyUrl(from, pub, back, n) { return from + '/move-out.html#key=' + pub + nPart(n) + backPart(back); }
+  function parseKey(h) {
+    const m = /^#key=([^&]*)(?:&n=([^&]*))?(?:&back=([^&]*))?$/.exec(String(h || ''));
+    if (!m || !PUB.test(m[1]) || (m[2] !== undefined && !NONCE.test(m[2]))) return null;
+    const back = backOf(m[3]);
+    return back === null ? null : { pub: m[1], n: m[2] === undefined ? null : m[2], back };
   }
   /* 第三站:只收加密過的(RU1E:);明文的搬家碼不放進網址,也不收 */
   function autoUrl(to, sealed, back) {

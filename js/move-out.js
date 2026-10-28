@@ -13,17 +13,18 @@
    - 離開這一頁(pagehide、切到背景)時重算一次記號:在這一頁練習的,下一次 Worker 就知道這台又有要搬的。
    - 沒資料也沒登入:頁面頂端先說「拍謝！我們換網址了…正在幫你導過去」,約 1.8 秒後帶到新網址同一路徑,帶之前刪掉自己 ss- 開頭的快取、註銷 service worker(這台不需要它接轉址)。
    - 有資料還沒搬:先試自動搬家(站長 10/28:「為甚麼你不能自動把進度全部搬過去」)。四站,搬家碼只以加密過的樣子進網址(js/move-link.js 開頭):
-     tryAuto 顯示「…正在把你的進度帶過去…」與「等一下再搬」,2.5 秒後帶到新網址 move-in.html#want(網址裡沒有資料)拿一次性公鑰;
-     新網址帶回寄出頁 move-out.html#key=<公鑰>,autoSend 組好跟「複製搬家碼」同一包(buildPack,登入著先 flushForMove 跟雲端對帳)、
+     tryAuto 顯示「…正在把你的進度帶過去…」與「等一下再搬」,2.5 秒後帶到新網址 move-in.html#want&n=<一次性號碼>(網址裡沒有資料)拿一次性公鑰;
+     新網址帶回寄出頁 move-out.html#key=<公鑰>&n=<同一個號碼>,autoSend 核對號碼(別的網站塞的公鑰不用)、組好跟「複製搬家碼」同一包(buildPack,登入著先 flushForMove 跟雲端對帳)、
      加密,不超過 MOVE_LINK.AUTO_MAX 就帶到 move-in.html#auto=<密文>;新網址合併好帶回 move-out.html#ack=<雜湊>,js/move-out-page.js 用 ackCheck
      核對「送出的那包」與「這台現在的包」一樣才寫 tr_move_done,再帶到新網址的原路徑。
-     不自動(照舊顯示下面的按鈕):付款結果頁、主畫面或安裝的 App、按過「等一下再搬」、這個分頁已經試過(sessionStorage 的 tr_move_auto;
-     寫不進去就不試,免得每一頁重來)、等的時候使用者在頁面上點了、按了鍵、按下滑鼠或手指碰到螢幕、模擬考進行中。寄出頁那一站太大、組包失敗、
-     對帳與組包超過 SEND_MAX_MS(15 秒),就回原頁面顯示按鈕。倒數的提示黏在頁面頂端、蓋在「你是哪位？」建檔視窗上面,「等一下再搬」一定按得到。
+     不自動(照舊顯示下面的按鈕):付款結果頁、主畫面或安裝的 App、按過「等一下再搬」、這個分頁已經試過(sessionStorage 的 tr_move_auto,
+     真的帶走那一刻才寫,倒數中重新整理還會再試;寫不進去就不試,免得每一頁重來)、打開這一頁之後(ping 之前也算)使用者在頁面上點了、按了鍵、
+     按下滑鼠、手指碰到螢幕、用滾輪捲動、模擬考進行中。寄出頁那一站太大、組包失敗、對帳與組包超過 SEND_MAX_MS(15 秒),就回原頁面顯示按鈕。
+     倒數的提示黏在頁面頂端、蓋在「你是哪位？」建檔視窗上面,「等一下再搬」一定按得到;倒數到期、正在換頁時按也算數。
      LINE/Facebook/Instagram 內建瀏覽器(資料存在那個 App 裡,跟手機的 Safari、Chrome 分開)一樣自動,搬進同一個 App 裡的新網址。
    - 有資料還沒搬、不自動:頁面頂端一條提示,「帶我過去（進度一起搬）」「等一下再搬」;價格、註冊、付款結果頁改成先問要不要先搬。
      一般瀏覽器的主按鈕去寄出頁(開新視窗送);LINE 等內建瀏覽器開新視窗不可靠,主按鈕一鍵走自動搬家同一條路(startHere),
-     這個分頁記下太大(網址裝不下)才去寄出頁用搬家碼。
+     這個分頁記下寄出頁那一站沒搬成(太大、超過上限、逾時、出錯)才去寄出頁,提示說這次沒辦法自動。
    - 登入著、沒有要搬的:提示到新網址重新登入一次;按下去先補傳(CLOUD.flushForMove),剩 0 項才走,有剩或 FLUSH_MAX_MS 還沒好就去搬家頁。
    這支只讀 localStorage,除了上面兩個記號、寄出頁組包時的裝置編號(tr_move_device,按鈕搬家本來就會寫)以外不寫任何東西,
    一筆資料都不刪不改。畫面只用 textContent。 */
@@ -156,9 +157,19 @@
         ]);
       }
       /* LINE、Facebook、Instagram 內建瀏覽器走到這裡是自動搬家沒有走(這個分頁試過:作答中、出錯、太大)。寄出頁的「送到新網址」要開新視窗,
-         在這些 App 裡不可靠;主按鈕改成一鍵在同一個分頁搬(跟自動搬家同一條路)。太大(網址裝不下)才只能用搬家碼,不說「我幫你帶過去」 */
-      if (inAppBig()) {
+         在這些 App 裡不可靠;主按鈕改成一鍵在同一個分頁搬(跟自動搬家同一條路)。太大(網址裝不下)才只能用搬家碼,不說「我幫你帶過去」;
+         寄出頁那一站沒搬成(超過上限、逾時、出錯)說這次沒辦法自動,主按鈕去搬家頁(那裡說原因、給搬家碼) */
+      const stuck = inAppStuck();
+      if (stuck === 'big') {
         return bar(RENAMED + M.newName + '。這台的練習進度比較多，要用搬家碼帶過去：按下面的按鈕，照著搬家頁的說明做。', [
+          { label: '帶我過去（進度一起搬）', primary: true, href: 'move-out.html' },
+          { label: '等一下再搬', onClick: close },
+        ]);
+      }
+      if (stuck) {
+        return bar(RENAMED + M.newName + '。' + (stuck === 'skip'
+          ? '這台有些進度超過一次搬家的上限，這次沒辦法自動帶過去：按下面的按鈕，到搬家頁看是哪一項、怎麼辦。'
+          : '剛剛沒辦法自動把這台的進度帶過去（可能是網路比較慢）：按下面的按鈕，到搬家頁再搬一次，或改用搬家碼。'), [
           { label: '帶我過去（進度一起搬）', primary: true, href: 'move-out.html' },
           { label: '等一下再搬', onClick: close },
         ]);
@@ -192,16 +203,20 @@
     }
     return null;
   }
-  /* LINE、Facebook、Instagram 內建瀏覽器,而且這個分頁的自動搬家記下「太大」(網址裝不下,只能用搬家碼) */
-  function inAppBig() {
-    if (!envNow().inApp) return false;
+  /* 這個分頁的自動搬家在寄出頁那一站沒搬成:回 'big'(網址裝不下,只能用搬家碼)、'skip'(有項目超過一次搬家的上限,或沒有要搬的)、
+     'timeout'(對帳、組包超過 SEND_MAX_MS)、'error'、'build'(組包到一半就斷了,例如分頁被關、重新整理);其他回 '' */
+  const STUCK = ['big', 'skip', 'timeout', 'error', 'build'];
+  function autoStuck() {
     const m = memo().get();
-    return !!(m && m.step === 'big');
+    return m && STUCK.indexOf(m.step) > -1 ? m.step : '';
   }
+  /* LINE、Facebook、Instagram 內建瀏覽器裡沒搬成的(同上);一般瀏覽器回 '' */
+  function inAppStuck() { return envNow().inApp ? autoStuck() : ''; }
   /* 提示的主按鈕:一般瀏覽器去寄出頁(準備搬家 → 送到新網址,開新視窗送);LINE 等內建瀏覽器開新視窗不可靠,
-     網址裝得下就一鍵在同一個分頁搬(startHere,跟自動搬家同一條路),記不住這個分頁開始了就改去寄出頁 */
+     網址裝得下就一鍵在同一個分頁搬(startHere,跟自動搬家同一條路),記不住這個分頁開始了就改去寄出頁。
+     LINE 裡自動搬家在寄出頁沒搬成(inAppStuck)也去寄出頁:那裡說得出原因(哪一項超過上限)、給得了搬家碼,不會一按就默默回原頁面 */
   function carry(label) {
-    if (!envNow().inApp || inAppBig()) return { label, primary: true, href: 'move-out.html' };
+    if (!envNow().inApp || inAppStuck()) return { label, primary: true, href: 'move-out.html' };
     return { label, primary: true, onClick: () => { const l = root.location; if (!startHere(l.pathname + l.search)) l.assign('move-out.html'); } };
   }
   /* 登入著:先補傳,剩 0 項才走;有剩(沒網路、雲端比較新)或 FLUSH_MAX_MS 還沒好就去搬家頁(不會一直停在「正在確認進度…」;
@@ -257,7 +272,7 @@
     return '';
   }
   /* 這個分頁試過自動搬家的紀錄(sessionStorage 的 tr_move_auto,只有這個分頁、這個網域看得到,關掉分頁就沒了):
-     { step: 'key'(第一站送出,等公鑰)| 'build' | 'sent' | 'big' | 'skip' | 'busy' | 'later' | 'timeout' | 'error', hash(送出的包),
+     { step: 'key'(第一站送出,等公鑰;n 是一次性號碼,寄出頁核對)| 'build' | 'sent' | 'big' | 'skip' | 'busy' | 'later' | 'timeout' | 'error', hash(送出的包),
        local(這台當時的包,不含 flushForMove 給的帳號), fp(指紋), at }。
      有紀錄就不再自動(失敗不會一直重來;換一個分頁會再試一次)。讀不懂也算有。 */
   function memo() {
@@ -272,7 +287,40 @@
         if (!s) return false;
         try { const v = JSON.stringify(o); s.setItem('tr_move_auto', v); return s.getItem('tr_move_auto') === v; } catch (e) { return false; }
       },
+      /* 寫得進去嗎(倒數之前先試,不留 tr_move_auto:倒數中重新整理還會再試) */
+      writable() {
+        if (!s) return false;
+        try { s.setItem('tr_move_probe', '1'); const ok = s.getItem('tr_move_probe') === '1'; s.removeItem('tr_move_probe'); return ok; } catch (e) { return false; }
+      },
     };
+  }
+  /* 一次性號碼(16 位元組,十六進位):第一站記在這個分頁、放進 #want,新網址照原樣帶回 #key=,寄出頁核對(js/move-link.js 開頭)。
+     別的網站把這個分頁導到 move-out.html#key=<它的公鑰>,拿不到號碼,寄出頁就不組包。沒有 crypto 回 null(不自動) */
+  function nonce() {
+    const c = root.crypto;
+    if (!c || typeof c.getRandomValues !== 'function') return null;
+    try {
+      const b = c.getRandomValues(new Uint8Array(16));
+      return Array.from(b).map((x) => x.toString(16).padStart(2, '0')).join('');
+    } catch (e) { return null; }
+  }
+  /* 使用者在頁面上有動作:點、按鍵、按下滑鼠或手指碰到(手機上開始捲動、作答)、滑鼠滾輪或觸控板捲動。
+     start() 一開始(ping 之前)就聽:手機網路慢,ping 還沒回來就按了「開始」、在作答的,也看得到。
+     ignore(t):搬家提示自己的點擊不算 */
+  const USER_EVENTS = ['click', 'keydown', 'pointerdown', 'touchstart', 'wheel'];
+  function watchUser() {
+    let acted = false, onAct = null, ignore = () => false;
+    const on = (e) => { if (ignore(e && e.target)) return; acted = true; if (onAct) onAct(); };
+    try { USER_EVENTS.forEach((t) => root.addEventListener(t, on, { capture: true, passive: true })); } catch (e) { /* 聽不到就只靠「等一下再搬」與模擬考的記號 */ }
+    return {
+      acted: () => acted,
+      when(fn, skip) { onAct = fn; if (skip) ignore = skip; },
+      stop() { onAct = null; try { USER_EVENTS.forEach((t) => root.removeEventListener(t, on, true)); } catch (e) { /* 沒有就算了 */ } },
+    };
+  }
+  /* move-out.js 載入之前(app-shell 依序載入、ping 之前)就點過、按過鍵:瀏覽器記的 sticky activation(Chrome、Android、Safari 16.4 以上) */
+  function activatedBefore() {
+    try { const u = root.navigator && root.navigator.userActivation; return !!(u && u.hasBeenActive); } catch (e) { return false; }
   }
   /* 「等一下再搬」:這個分頁不再提示、不再自動 */
   function skipAuto() { setLater(); memo().set({ step: 'later', at: Date.now() }); }
@@ -319,62 +367,75 @@
     return { ok: true, fp: m.fp };
   }
   /* 第一站的網址(格式跟 MOVE_LINK.wantUrl 一樣;一般頁面沒有載 move-link.js,新網址用 parseWant 解、safeBack 過濾) */
-  const wantUrl = (back) => root.MOVE.to + '/move-in.html#want&back=' + encodeURIComponent(back);
-  /* 馬上走第一站(LINE 等內建瀏覽器提示的主按鈕、寄出頁的「搬到新網址」):記下這個分頁開始了(寄出頁那一站才認),帶到新網址拿金鑰。
-     記不住(sessionStorage 不給寫)回 false,不帶走 */
+  const wantUrl = (back, n) => root.MOVE.to + '/move-in.html#want&n=' + n + '&back=' + encodeURIComponent(back);
+  /* 馬上走第一站(LINE 等內建瀏覽器提示的主按鈕、寄出頁的「搬到新網址」、每一頁倒數到期):這一刻才記下這個分頁開始了與一次性號碼
+     (寄出頁那一站才認),帶到新網址拿金鑰。記不住(sessionStorage 不給寫、沒有 crypto)回 false,不帶走 */
   function startHere(back) {
-    if (!memo().set({ step: 'key', at: Date.now() })) return false;
-    root.location.replace(wantUrl(back));
+    const n = nonce();
+    if (!n || !memo().set({ step: 'key', at: Date.now(), n })) return false;
+    root.location.replace(wantUrl(back, n));
     return true;
   }
   /* 第一站(舊網址每一頁):提示「正在把你的進度帶過去…」與「等一下再搬」,AUTO_DELAY_MS 之後帶到新網址 move-in.html#want(網址裡沒有任何資料)。
-     等的時候使用者在頁面上點了、按了鍵、按下滑鼠或手指碰到(作答、按「開始」、捲動),或模擬考進行中(body 的 data-leave-confirm,js/mock.js 設的),就不帶走,改畫按鈕。
+     使用者在頁面上有動作(watchUser:start 一開始就聽,ping 之前的也算;move-out.js 載入之前的看 activatedBefore),
+     或模擬考進行中(body 的 data-leave-confirm,js/mock.js 設的),就不帶走,改畫按鈕。
+     倒數的時候不寫 tr_move_auto(只先試寫得進去):倒數中這一頁重新整理(登入著 cloud.js 每個分頁第一次灌完雲端資料會重載),重載之後照樣自動;
+     真的帶走那一刻(startHere)才記。倒數到期、正在換到新網址時按「等一下再搬」也算數:停止換頁、記下 later,換頁停不下來的話寄出頁那一站看到 later 也不組包。
      回 'auto'(已經帶走)或不自動的原因;不是 'auto' 時由 start 畫回按鈕 */
-  function tryAuto(kind, st) {
+  function tryAuto(kind, st, watch) {
     const l = root.location, d = root.document;
     const env = envNow();
     const mem = memo();
+    const w = watch || watchUser();
     const why = autoBlock({ kind, page: pageOf(l.pathname), inApp: env.inApp, standalone: env.standalone, tried: mem.get() !== null, later: later() });
-    if (why) return Promise.resolve(why);
-    if (!mem.set({ step: 'key', at: Date.now() })) return Promise.resolve('session');
+    if (why) { w.stop(); return Promise.resolve(why); }
+    if (!mem.writable()) { w.stop(); return Promise.resolve('session'); }
+    if (w.acted() || activatedBefore()) { w.stop(); mem.set({ step: 'busy', at: Date.now() }); return Promise.resolve('busy'); }
     return new Promise((resolve) => {
-      let done = false, box = null, timer = null;
-      /* 使用者有動作:點、按鍵、按下滑鼠或手指碰到(手機上開始捲動、作答) */
-      const EVENTS = ['click', 'keydown', 'pointerdown', 'touchstart'];
+      let done = false, leaving = false, box = null, timer = null;
       const inBar = (t) => { for (let n = t; n; n = n.parentNode) if (n === box) return true; return false; };
-      const unlisten = () => { try { EVENTS.forEach((t) => root.removeEventListener(t, onUser, true)); } catch (e) { /* 沒有就算了 */ } };
       const finish = (r, step) => {
         if (done) return;
         done = true;
         root.clearTimeout(timer);
-        unlisten();
+        w.stop();
         if (box) box.remove();
         if (step) mem.set({ step, at: Date.now() });
         resolve(r);
       };
-      function onUser(e) { if (!inBar(e && e.target)) finish('busy', 'busy'); }
-      try { EVENTS.forEach((t) => root.addEventListener(t, onUser, { capture: true, passive: true })); } catch (e) { /* 聽不到就只靠「等一下再搬」與模擬考的記號 */ }
-      whenBody(() => { if (!done) box = bar(AUTO_TEXT, [{ label: '等一下再搬', onClick: () => { setLater(); finish('later', 'later'); } }], true); });
+      w.when(() => finish('busy', 'busy'), inBar);
+      const cancel = () => {
+        setLater();
+        if (!leaving) { finish('later', 'later'); return; }
+        mem.set({ step: 'later', at: Date.now() });
+        try { if (typeof root.stop === 'function') root.stop(); } catch (e) { /* 停不下來:寄出頁看到 later 不組包、回原頁面 */ }
+        if (box) box.remove();
+      };
+      whenBody(() => { if (!done) box = bar(AUTO_TEXT, [{ label: '等一下再搬', onClick: cancel }], true); });
       timer = root.setTimeout(() => {
         if (done) return;
         const exam = !!(d && d.body && d.body.dataset && d.body.dataset.leaveConfirm);
         if (exam) { finish('busy', 'busy'); return; }
+        if (!startHere(l.pathname + l.search)) { finish('session'); return; }
         done = true;
-        unlisten();
-        l.replace(wantUrl(l.pathname + l.search));
+        leaving = true;
+        w.stop();
         resolve('auto');
       }, AUTO_DELAY_MS);
     });
   }
-  /* 第三站(舊網址寄出頁 move-out.html#key=<公鑰>,js/move-out-page.js 呼叫):這個分頁真的開始過(tr_move_auto 是 key、沒過太久)才做。
+  /* 第三站(舊網址寄出頁 move-out.html#key=<公鑰>&n=<號碼>,js/move-out-page.js 呼叫):這個分頁真的開始過(tr_move_auto 是 key、沒過太久),
+     而且帶回來的號碼就是這個分頁第一站記的(公鑰是這一趟新網址給的,不是別的網站把這個分頁導過來塞的)才做;號碼用一次就作廢(改記 build)。
      對帳(登入著)、組包、加密、檢查長度,整段最多 SEND_MAX_MS;成了才記下送出的包(ack 回來時核對)、帶到新網址 #auto=。
-     o:{ pub, back, cancelled()(按了「等一下再搬」) }。回 'auto'(已經帶走)、'memo'(不是這個分頁開始的,什麼都沒做),
-     或沒搬成的原因(這個分頁已經記下,回原頁面會顯示按鈕) */
+     o:{ pub, n, back, cancelled()(按了「等一下再搬」) }。回 'auto'(已經帶走)、'memo'(不是這個分頁開始的、號碼不對,什麼都沒做)、
+     'cancel'(第一站已經在換頁時按了「等一下再搬」,什麼都沒做),或沒搬成的原因(這個分頁已經記下,回原頁面會顯示按鈕) */
   async function autoSend(o) {
     const M = root.MOVE, L = root.MOVE_LINK, P = root.MOVE_PACK, l = root.location;
     const mem = memo(), m = mem.get();
+    if (m && m.step === 'later') return 'cancel';
     const age = m ? Date.now() - m.at : NaN;
     if (!m || m.step !== 'key' || !(age >= 0 && age < KEY_MAX_MS)) return 'memo';
+    if (typeof m.n !== 'string' || !/^[0-9a-f]{32}$/.test(m.n) || !o || o.n !== m.n) return 'memo';
     if (!mem.set({ step: 'build', at: Date.now() })) return 'session';
     const work = (async () => {
       const acc = await flushAccounts(SEND_MAX_MS);   // 自動搬家不改用帳本:對帳卡住就整段逾時、回原頁面給按鈕
@@ -408,9 +469,13 @@
     } catch (e) { /* 沒有就算了 */ }
     const l = root.location;
     const base = { search: l.search, hash: l.hash, page: pageOf(l.pathname), done: st.done, moved: st.moved, hasData: st.hasData, loggedIn: st.loggedIn };
-    if (decide(Object.assign({ pingOk: true }, base)) === 'stay') return Promise.resolve('stay');
+    const pre = decide(Object.assign({ pingOk: true }, base));
+    if (pre === 'stay') return Promise.resolve('stay');
+    /* 可能自動搬家的:ping 之前就開始聽使用者的動作(手機網路慢,ping 還沒回來就在作答的,不帶走) */
+    const watch = pre === 'bar' || pre === 'ask' ? watchUser() : null;
     return ping().then((ok) => {
       const kind = decide(Object.assign({ pingOk: ok }, base));
+      if (watch && kind !== 'bar' && kind !== 'ask') watch.stop();
       if (kind === 'go') {
         /* 先讓人看到換網址的那句話,再帶過去;畫不出來(沒有 body)就直接帶 */
         const leave = () => go(!st.hasData || st.moved);
@@ -421,7 +486,7 @@
         } catch (e) { /* 照樣會帶走 */ }
       } else if (kind === 'bar' || kind === 'ask') {
         /* 先試自動搬家;不自動(或沒成功)就照舊畫按鈕 */
-        autoRun = tryAuto(kind, st).catch(() => 'error').then((r) => { if (r !== 'auto') whenBody(() => show(kind, st)); return r; });
+        autoRun = tryAuto(kind, st, watch).catch(() => 'error').then((r) => { if (r !== 'auto') whenBody(() => show(kind, st)); return r; });
       } else if (kind !== 'stay') {
         whenBody(() => show(kind, st));
       }
@@ -430,6 +495,6 @@
   }
 
   root.MOVE_OUT = Object.freeze({ decide, pageOf, stateOf, flags, ping, start, cleanup, go, target,
-    envOf, autoBlock, buildPack, flushAccounts, ackCheck, tryAuto, startHere, autoSend, skipAuto, AUTO_TEXT, autoRun: () => autoRun });
+    envOf, autoBlock, buildPack, flushAccounts, ackCheck, tryAuto, startHere, autoSend, skipAuto, autoStuck, AUTO_TEXT, autoRun: () => autoRun });
   if (root.MOVE && root.MOVE.onOld && !root.MOVE_OUT_NO_AUTO) start();
 })(typeof window !== 'undefined' ? window : globalThis);

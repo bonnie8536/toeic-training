@@ -5,8 +5,8 @@
      列給人看,按「確定搬進來」才寫(js/move-apply.js:先寫日誌、量空間、被換掉的先備份)。空間不夠時怎麼辦寫在 commit 前面。
    - 寫之前用 BroadcastChannel('rushup-move') 問「還有誰開著」:有別的新網址分頁就要求先關掉(它們可能寫回舊的小雞、洗掉正在考的模擬考)。
    - 小雞合併要對時:讀同網域不快取的 move-ping.txt 回應的 Date 標頭,差超過 3 天就不合併小雞(列為衝突、留新網址的)。
-   - 自動搬家(四站,js/move-link.js 開頭):舊網址每一頁帶到 move-in.html#want,這裡產生一次性金鑰(私鑰只放這個分頁的 sessionStorage),
-     帶公鑰回舊網址寄出頁;寄出頁加密後帶到 move-in.html#auto=<密文>&back=<原路徑>。move-in.html 開頭的 script 先把 # 後面
+   - 自動搬家(四站,js/move-link.js 開頭):舊網址每一頁帶到 move-in.html#want&n=<一次性號碼>,這裡產生一次性金鑰(私鑰只放這個分頁的 sessionStorage),
+     帶公鑰與同一個號碼回舊網址寄出頁(寄出頁核對號碼,別的網站塞的公鑰不用);寄出頁加密後帶到 move-in.html#auto=<密文>&back=<原路徑>。move-in.html 開頭的 script 先把 # 後面
      收進 window.MOVE_AUTO_IN、用 replaceState 從網址列拿掉;這裡用私鑰解開(解開前就刪私鑰),交給跟「貼上搬家碼」同一個 fromText
      (同樣的驗證、雜湊、合併、備份)。解不開(別的分頁、別台、用過、過期、明文的 #auto=)什麼都不顯示、不寫。
      確認畫面照樣畫出來,下面這些都成立才不等按鈕、直接照預設(留這台的)寫:解得開(整條路是這個分頁從舊網址開始的;
@@ -355,19 +355,21 @@
     const age = v && typeof v.at === 'number' ? Date.now() - v.at : NaN;
     return v && v.jwk && typeof v.jwk === 'object' && age >= 0 && age < KEY_MS ? v.jwk : null;
   }
-  /* 第二站(#want):產生金鑰、私鑰放這個分頁,帶公鑰回舊網址的寄出頁。做不到(沒有 Web Crypto、sessionStorage 不給寫)就回舊網址原頁面,
-     那一頁照舊顯示按鈕(舊網址這個分頁不會再自動) */
+  /* 第二站(#want&n=):產生金鑰、私鑰放這個分頁,帶公鑰與第一站的號碼(照原樣)回舊網址的寄出頁,寄出頁核對號碼才用這把公鑰。
+     做不到(沒有號碼、沒有 Web Crypto、sessionStorage 不給寫)就回舊網址原頁面,那一頁照舊顯示按鈕(舊網址這個分頁不會再自動) */
   async function startWant(w) {
     const from = oldOrigin();
     draw(say('拍謝！我們換網址了，因為名字跟別人重疊！正在把舊網址的進度帶過來…'), live);
     let pub = '';
-    try {
-      const k = await L.newKey();
-      const v = JSON.stringify({ jwk: k.jwk, at: Date.now() });
-      sessionStorage.setItem(KEY, v);
-      if (sessionStorage.getItem(KEY) === v) pub = k.pub;
-    } catch (e) { pub = ''; }
-    location.replace(pub ? L.keyUrl(from, pub, w.back) : from + w.back);
+    if (w.n) {
+      try {
+        const k = await L.newKey();
+        const v = JSON.stringify({ jwk: k.jwk, at: Date.now() });
+        sessionStorage.setItem(KEY, v);
+        if (sessionStorage.getItem(KEY) === v) pub = k.pub;
+      } catch (e) { pub = ''; }
+    }
+    location.replace(pub ? L.keyUrl(from, pub, w.back, w.n) : from + w.back);
   }
   const AUTO_GONE = '這個自動搬家的網址已經用過、過期了，或不是在這個分頁開始的（為了保護你的資料，搬家的內容只有原本那個分頁解得開，而且只能用一次），這次沒有寫入任何東西。舊網址的資料都還在：可以按「回舊網址用按鈕搬」，或用下面的搬家檔、搬家碼。';
   /* 舊網址自動搬家帶來的(move-in.html 開頭已經從網址拿掉):#want 是第二站;#auto= 是第四站,用這個分頁的私鑰解開(解開前就刪私鑰),

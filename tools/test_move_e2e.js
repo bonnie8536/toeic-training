@@ -24,6 +24,20 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 let PING = 'ok';
 /* 新網址的 move-in.html:DROP_MOVE_IN = n 時,從現在起第 n 次以後的請求都直接切斷連線(自動搬家第二次進收件頁、帶著密文的那一站連不上) */
 let DROP_MOVE_IN = 0, moveInHits = 0;
+/* 新網址的 move-in.html 晚這麼多毫秒才回(手機第一次連新網址很慢:舊網址那一頁已經在換頁、還沒換過去);move-ping.txt 晚這麼多毫秒才回(ping 還沒回來) */
+let HOLD_MOVE_IN = 0, PING_DELAY = 0;
+/* 冒充的網站 /attack.html:用 window.open 開舊網址一頁,ATTACK.after 毫秒之後把那個視窗導到 move-out.html#key=<它自己的公鑰>(猜一個號碼) */
+const ATTACK = { pub: '', after: [] };
+const ATTACKER_KEYS = [];
+const attackPage = () => `<!doctype html><meta charset="utf-8"><body><button id="go">go</button><script>
+document.getElementById('go').onclick = () => {
+  const w = window.open('${OLD}/index.html', '_blank');
+  window.__nav = [];
+  ${J(ATTACK.after)}.forEach((ms) => setTimeout(() => {
+    try { w.location = '${OLD}/move-out.html#key=${ATTACK.pub}&n=' + 'f'.repeat(32) + '&back=%2F'; window.__nav.push('ok ' + ms); } catch (e) { window.__nav.push(String(e)); }
+  }, ms));
+};
+</script>`;
 
 const EVIL_PAGE = `<!doctype html><meta charset="utf-8"><body><button id="go">go</button><script>
 document.getElementById('go').onclick = () => {
@@ -37,20 +51,22 @@ function serve(port) {
   return new Promise((resolve, reject) => {
     const srv = http.createServer((req, res) => {
       let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
-      if (port === 8933) { res.writeHead(200, { 'Content-Type': TYPES['.html'] }); return res.end(EVIL_PAGE); }
+      if (port === 8933) { res.writeHead(200, { 'Content-Type': TYPES['.html'], 'Cache-Control': 'no-store' }); return res.end(p === '/attack.html' ? attackPage() : EVIL_PAGE); }
       if (p === '/') p = '/index.html';
       if (port === 8932 && p === '/move-in.html' && DROP_MOVE_IN && ++moveInHits >= DROP_MOVE_IN) { req.socket.destroy(); return; }
       if (port === 8932 && p === '/move-ping.txt' && PING === 'down') { res.writeHead(503, { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-store' }); return res.end('down'); }
       if (p === '/js/cloud-config.js') { res.writeHead(200, { 'Content-Type': TYPES['.js'], 'Cache-Control': 'no-store' }); return res.end('window.CLOUD_CONFIG = {};'); }
       const file = path.join(REPO, p);
       if (!path.resolve(file).startsWith(REPO)) { res.writeHead(403); return res.end(); }
-      fs.readFile(file, (err, buf) => {
+      const send = () => fs.readFile(file, (err, buf) => {
         if (err) { res.writeHead(404); return res.end(); }
         const h = { 'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' };
         if (p === '/move-ping.txt') h['Access-Control-Allow-Origin'] = '*';
         res.writeHead(200, h);
         res.end(buf);
       });
+      const wait = port === 8932 && p === '/move-in.html' ? HOLD_MOVE_IN : port === 8932 && p === '/move-ping.txt' ? PING_DELAY : 0;
+      if (wait) setTimeout(send, wait); else send();
     });
     srv.on('error', (e) => reject(new Error('埠 ' + port + ' 不能用(' + e.code + '),先關掉占用它的程式')));
     srv.listen(port, '127.0.0.1', () => resolve(srv));
@@ -784,11 +800,119 @@ T['自動搬家(LINE 內建瀏覽器,這個分頁試過):寄出頁沒有開新�
   return { ok, detail: J({ btns, names, done, note: note.slice(0, 200) }) };
 };
 
+/* ---------- 審查第二輪(10/28) ---------- */
+/* js/move-link.js 在 node 裡(冒充的網站產生自己的金鑰;最後檢查歷史紀錄裡的密文它解不解得開) */
+function linkLib() { require(path.join(REPO, 'js/move-link.js')); return globalThis.MOVE_LINK; }
+const barBtn = (text) => `(() => { const b = [...document.querySelectorAll('#move-bar button')].find((x) => x.textContent === ${J(text)});
+  if (!b) return null; const r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; })()`;
+async function mouseAt(B, s, x, y) {
+  await B.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', clickCount: 1 }, s.sid);
+  await B.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', clickCount: 1 }, s.sid);
+}
+T['自動搬家:別的網站先開舊網址一頁、再把那個視窗導到 move-out.html#key=<它自己的公鑰>(倒數中、已經在換到新網址時各一次):號碼對不上,不組包、不加密,停在一般的搬家頁'] = async (B) => {
+  PING = 'ok';
+  const L = linkLib();
+  const out = [];
+  try {
+    for (const after of [1800, 4500]) {
+      const att = await L.newKey();
+      ATTACKER_KEYS.push(att.jwk);
+      ATTACK.pub = att.pub; ATTACK.after = [after];
+      const st = await tab(B);
+      await seed(st, OLD, { tr_vgame_banks: J([bank('x1', '私人單字', ['secretword'])]), tr_hist: J(hist(2, 'x')) }, true);
+      await seed(st, NEW, {}, true);
+      await st.close();
+      /* 第二次:倒數到期、換到新網址的請求還沒回來(第一站已經記下號碼)時被導走 */
+      HOLD_MOVE_IN = after > 3000 ? 8000 : 0;
+      const ev = await tab(B, EVIL + '/attack.html');
+      const before = B.created.length;
+      await ev.click('go');
+      const w = await popup(B, before, OLD + '/');
+      await w.until('location.origin === ' + J(OLD) + ' && location.pathname === "/move-out.html" && [...document.querySelectorAll("button")].some((b) => b.textContent === "準備搬家")', 20000, '停在一般的搬家頁');
+      await sleep(2500);
+      const r = { after, nav: await ev.eval('window.__nav'), where: await w.eval('location.origin + location.pathname'), memo: await w.eval('sessionStorage.getItem("tr_move_auto")') };
+      HOLD_MOVE_IN = 0;
+      await w.close(); await ev.close();
+      const nt = await tab(B); await nt.go(NEW + '/move-ping.txt'); r.newGot = 'tr_vgame_banks' in (await nt.ls()); await nt.close();
+      out.push(r);
+    }
+  } finally { HOLD_MOVE_IN = 0; }
+  const m2 = out[1] && out[1].memo ? JSON.parse(out[1].memo) : {};
+  const ok = out.length === 2 && out.every((r) => /^ok/.test((r.nav || [])[0] || '') && r.where === OLD + '/move-out.html' && !r.newGot)
+    && out[0].memo === null && m2.step === 'key' && /^[0-9a-f]{32}$/.test(m2.n || '');
+  return { ok, detail: J(out) };
+};
+T['自動搬家:倒數中這一頁重新整理(登入著 cloud.js 第一次灌完雲端資料會重載):重載之後照樣自動搬過去'] = async (B) => {
+  PING = 'ok';
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('r1', '重載也搬', ['a'])]), tr_hist: J(hist(2, 'r')) }, true);
+  const nt = await tab(B); await seed(nt, NEW, {}, true); await nt.close();
+  await s.send('Page.navigate', { url: OLD + '/vocab.html' });
+  await s.until('!!document.getElementById("move-bar") && /正在把你的進度帶過去/.test(document.getElementById("move-bar").innerText)', 10000, '自動搬家提示');
+  const memoMid = await s.eval('sessionStorage.getItem("tr_move_auto")');
+  await s.send('Page.reload');
+  await s.until(onNewPage('/vocab.html'), 25000, '重新整理之後照樣搬到新網址');
+  const got = await s.ls();
+  await s.close();
+  const done = !!(await oldLs(B)).tr_move_done;
+  const names = got.tr_vgame_banks ? JSON.parse(got.tr_vgame_banks).map((b) => b.name) : [];
+  return { ok: memoMid === null && J(names) === J(['重載也搬']) && done, detail: J({ memoMid, names, done }) };
+};
+T['自動搬家:手機網路慢,ping 還沒回來就在頁面上點了(作答):不帶走、改顯示按鈕;倒數時用滾輪捲動(讀文章)也不帶走'] = async (B) => {
+  PING = 'ok';
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('p1', '作答中', ['a'])]) }, true);
+  let a = null;
+  try {
+    PING_DELAY = 2000;
+    await s.send('Page.navigate', { url: OLD + '/vocab.html' });
+    await s.until('!!window.MOVE_OUT && !document.getElementById("move-bar") && document.readyState === "complete"', 10000, 'move-out.js 載入了、ping 還沒回來');
+    await mouseAt(B, s, 300, 500);
+    await sleep(6000);
+    a = { origin: await s.eval('location.origin'), bar: await s.eval('document.getElementById("move-bar") ? document.getElementById("move-bar").innerText : ""') };
+  } finally { PING_DELAY = 0; }
+  await s.close();
+  const t = await tab(B);
+  await seed(t, OLD, { tr_vgame_banks: J([bank('p2', '讀文章', ['a'])]) }, true);
+  await t.send('Page.navigate', { url: OLD + '/vocab.html' });
+  await t.until('!!document.getElementById("move-bar") && /正在把你的進度帶過去/.test(document.getElementById("move-bar").innerText)', 10000, '自動搬家提示');
+  for (let i = 0; i < 4; i++) { await B.send('Input.dispatchMouseEvent', { type: 'mouseWheel', x: 400, y: 400, deltaX: 0, deltaY: i % 2 ? -120 : 120 }, t.sid); await sleep(150); }
+  await sleep(3500);
+  const b = { origin: await t.eval('location.origin'), bar: await t.eval('document.getElementById("move-bar") ? document.getElementById("move-bar").innerText : ""') };
+  await t.close();
+  const ok = a.origin === OLD && /帶我過去（進度一起搬）/.test(a.bar) && b.origin === OLD && /帶我過去（進度一起搬）/.test(b.bar);
+  return { ok, detail: J({ a: { origin: a.origin, bar: a.bar.slice(0, 60) }, b: { origin: b.origin, bar: b.bar.slice(0, 60) } }) };
+};
+T['自動搬家:倒數到期、正在換到新網址(新網址還沒回應)時按「等一下再搬」:照樣算數,留在舊網址原頁面,什麼都沒搬'] = async (B) => {
+  PING = 'ok';
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('c9', '我按了取消', ['a'])]), tr_hist: J(hist(3, 'c')) }, true);
+  const nt = await tab(B); await seed(nt, NEW, {}, true); await nt.close();
+  let r = null;
+  try {
+    HOLD_MOVE_IN = 4000;
+    await s.send('Page.navigate', { url: OLD + '/vocab.html' });
+    await s.until('!!document.getElementById("move-bar") && /正在把你的進度帶過去/.test(document.getElementById("move-bar").innerText)', 10000, '自動搬家提示');
+    const t0 = Date.now();
+    const c = await s.eval(barBtn('等一下再搬'));
+    await sleep(Math.max(0, 2900 - (Date.now() - t0)));   // 倒數 2.5 秒已經到期、正在等新網址回應
+    await mouseAt(B, s, c.x, c.y);
+    await sleep(7000);
+    r = { where: await s.eval('location.origin + location.pathname'), memo: await s.eval('sessionStorage.getItem("tr_move_auto")'), later: await s.eval('sessionStorage.getItem("tr_move_later")') };
+  } finally { HOLD_MOVE_IN = 0; }
+  await s.close();
+  const n2 = await tab(B); await n2.go(NEW + '/move-ping.txt'); const newLs = await n2.ls(); await n2.close();
+  const oldAfter = await oldLs(B);
+  const ok = r.where === OLD + '/vocab.html' && /"later"/.test(r.memo || '') && r.later === '1' && !newLs.tr_vgame_banks && !oldAfter.tr_move_done
+    && JSON.parse(oldAfter.tr_vgame_banks)[0].name === '我按了取消';
+  return { ok, detail: J({ r, newKeys: Object.keys(newLs), oldDone: !!oldAfter.tr_move_done }) };
+};
+
 /* 跑完所有情境、瀏覽器正常關掉之後,讀使用者資料夾的 Default/History(SQLite 的 urls 表,chrome://history、網址列建議、同步用的就是它):
    replaceState 改不了這裡,所以裡面任何一個網址都不能有明文的搬家碼(RU1Z:、RU1:)或題庫裡的字;有跑自動搬家時,要看得到加密過的 #auto=RU1E:(證明真的查到了那一站) */
 const TYPED_BY_TEST = [];
-const HISTORY_NAME ='瀏覽器的歷史紀錄檔(History)裡沒有明文的搬家碼,只有加密過的';
-function historyCheck(dir, ranAuto) {
+const HISTORY_NAME ='瀏覽器的歷史紀錄檔(History)裡沒有明文的搬家碼,只有加密過的;冒充的網站的金鑰一筆都解不開';
+async function historyCheck(dir, ranAuto) {
   const db = path.join(dir, 'Default', 'History');
   if (!fs.existsSync(db)) return { ok: false, detail: '沒有 History 檔' };
   const copy = path.join(dir, 'History-copy');
@@ -800,7 +924,14 @@ function historyCheck(dir, ranAuto) {
   const mine = urls.filter((u) => !TYPED_BY_TEST.some((c) => u.indexOf(c) > -1));
   const plain = mine.filter((u) => /RU1Z?:|secretword|apple|%E8%87%AA/.test(u));
   const sealed = urls.filter((u) => /#auto=RU1E:/.test(u));
-  return { ok: !plain.length && (!ranAuto || sealed.length > 0), detail: J({ rows: urls.length, plain: plain.map((u) => u.slice(0, 80)), sealed: sealed.length }) };
+  /* 冒充的網站的金鑰解不開歷史紀錄裡任何一筆密文(它塞的公鑰沒有被拿來加密) */
+  const L = linkLib();
+  let opened = 0;
+  for (const u of sealed) {
+    const a = L.parseAuto(u.slice(u.indexOf('#')));
+    for (const jwk of ATTACKER_KEYS) { try { if (a && await L.open(jwk, a.code)) opened++; } catch (e) { /* 解不開才對 */ } }
+  }
+  return { ok: !plain.length && !opened && (!ranAuto || sealed.length > 0), detail: J({ rows: urls.length, plain: plain.map((u) => u.slice(0, 80)), sealed: sealed.length, attackerKeys: ATTACKER_KEYS.length, opened }) };
 }
 
 (async () => {
@@ -825,7 +956,7 @@ function historyCheck(dir, ranAuto) {
     try { await Promise.race([B.send('Browser.close'), sleep(3000)]); } catch (e) { /* 照樣往下 */ }
     for (let i = 0; i < 50 && proc.exitCode === null; i++) await sleep(200);
     B.ws.close();
-    const h = historyCheck(dir, names.some((n) => /自動搬家/.test(n)));
+    const h = await historyCheck(dir, names.some((n) => /自動搬家/.test(n)));
     if (h.ok) pass++;
     console.log((h.ok ? 'PASS ' : 'FAIL ') + HISTORY_NAME + '  →  ' + String(h.detail).slice(0, 400));
   } finally {

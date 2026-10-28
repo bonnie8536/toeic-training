@@ -72,8 +72,8 @@
     drawStart(ackNote || (st.stale ? say('這台上次搬家之後又有新的進度，再搬一次就會過去，已經搬過的不會重複。', 'move-note') : null));
   }
 
-  /* 自動搬家第三站(js/move-link.js 開頭):新網址帶回這裡 #key=<一次性公鑰>&back=<原路徑>(開頭的 script 已經從網址拿掉,放在 MOVE_KEY_IN)。
-     這個分頁真的開始過自動搬家(OUT.autoSend 會核對)才組包、加密、帶到新網址;畫面上一直有「等一下再搬」。
+  /* 自動搬家第三站(js/move-link.js 開頭):新網址帶回這裡 #key=<一次性公鑰>&n=<第一站的號碼>&back=<原路徑>(開頭的 script 已經從網址拿掉,放在 MOVE_KEY_IN)。
+     這個分頁真的開始過自動搬家、號碼對得上(OUT.autoSend 會核對)才組包、加密、帶到新網址;畫面上一直有「等一下再搬」。
      沒搬成(太大、對帳超過 15 秒、出錯)就回原頁面,那一頁照舊顯示按鈕(這個分頁不再自動)。回 true(已經離開這一頁)或 false(照常顯示寄出頁) */
   async function autoKey() {
     const k = window.MOVE_KEY_IN ? L.parseKey(window.MOVE_KEY_IN) : null;
@@ -83,8 +83,9 @@
     const wait = h('button', { class: 'btn', type: 'button' }, '等一下再搬');
     wait.addEventListener('click', () => { stopped = true; wait.disabled = true; OUT.skipAuto(); location.replace(k.back); });
     draw(say(OUT.AUTO_TEXT), say('舊網址這裡的資料都會留著。'), h('div', { class: 'modal-row' }, wait));
-    const r = await OUT.autoSend({ pub: k.pub, back: k.back, cancelled: () => stopped });
-    if (r === 'memo') return false;   // 不是這個分頁開始的(別人做的連結、過太久):什麼都沒做,照常顯示寄出頁
+    const r = await OUT.autoSend({ pub: k.pub, n: k.n, back: k.back, cancelled: () => stopped });
+    if (r === 'memo') return false;   // 不是這個分頁開始的(別人做的連結、別的網站塞的公鑰、號碼不對、過太久):什麼都沒做,照常顯示寄出頁
+    /* 'cancel':第一站換頁時按了「等一下再搬」(換頁沒停下來),什麼都沒組,回原頁面 */
     if (r !== 'auto' && r !== 'later') location.replace(k.back);
     return true;
   }
@@ -195,6 +196,9 @@
        這裡加密才放進網址)。搬到這個 App 裡的新網址(這些 App 的資料跟手機的 Safari、Chrome 分開存)。
        帶著密文的網址超過 MOVE_LINK.AUTO_MAX 就不給,改用搬家碼:「複製搬家碼」→「打開新網址的搬家頁」(同一個分頁)→ 貼上 */
     const fits = IN_APP && L.autoLen(M.to, codeOf(), '/') <= L.AUTO_MAX;
+    /* 這個分頁上次自動搬家在寄出頁那一站沒搬成(逾時、出錯、組包到一半就斷):「搬到新網址」照樣給(網路好了再試),也給搬家碼的路,並說上次沒搬成 */
+    const stuck = IN_APP ? OUT.autoStuck() : '';
+    const retried = fits && (stuck === 'timeout' || stuck === 'error' || stuck === 'build');
     const here = h('button', { class: 'btn primary', type: 'button' }, '搬到新網址');
     here.addEventListener('click', () => {
       here.disabled = true;
@@ -234,11 +238,12 @@
       ta.select();
     } }, '顯示搬家碼');
     /* 放不下一鍵搬的 LINE 等內建瀏覽器:搬家碼貼到同一個 App 裡的新網址收件頁(同一個分頁打開,資料才會在這個 App 裡) */
-    const pasteHere = IN_APP && !fits ? h('a', { class: 'btn', href: M.to + '/move-in.html' }, '打開新網址的搬家頁') : null;
+    const pasteHere = IN_APP && (!fits || retried) ? h('a', { class: 'btn', href: M.to + '/move-in.html' }, '打開新網址的搬家頁') : null;
     draw(say('這台要搬的：'), summaryList(s),
       h('div', { class: 'modal-row', style: 'flex-wrap:wrap' }, IOS_APP || (IN_APP && !go) ? null : (online ? go : retry), copy, pasteHere, file, showCode), status,
       IOS_APP ? say('主畫面 App 要用「複製搬家碼」：到新的 App 打開「我的」，按「我有搬家碼或搬家檔」，貼上。', 'move-note') : null,
-      pasteHere ? say('這台的進度比較多，沒辦法一鍵搬：先按「複製搬家碼」，再按「打開新網址的搬家頁」，貼在「貼上搬家碼」那一格。', 'move-note') : null,
+      retried ? say('剛剛自動搬家沒有成功（可能是網路比較慢），這次沒有搬過去，這台的資料都還在。可以再按一次「搬到新網址」；還是不行的話，先按「複製搬家碼」，再按「打開新網址的搬家頁」，貼在「貼上搬家碼」那一格。', 'move-note')
+        : pasteHere ? say('這台的進度比較多，沒辦法一鍵搬：先按「複製搬家碼」，再按「打開新網址的搬家頁」，貼在「貼上搬家碼」那一格。', 'move-note') : null,
       say('搬家檔與搬家碼裡面是你的練習紀錄，不要傳給別人。裡面沒有登入密碼。'),
       directLink(false));
   }

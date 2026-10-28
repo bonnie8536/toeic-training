@@ -30,7 +30,8 @@ function loadLink() {
 }
 
 /* 舊網址的一頁:move-rules、move-merge、move-pack、move-link、move-out 都載好(一般頁面只用到 move-out 的 tryAuto,寄出頁用 autoSend);
-   opt:{ ls, path, search, ping, ua, standalone, session: 'ok' | 'none'(不給寫) | 物件(分頁裡已經有的), cloud, scale(計時器縮小的倍數,預設最多 5 毫秒) } */
+   opt:{ ls, path, search, ping('fail' | 'slow'), ua, standalone, activated(navigator.userActivation.hasBeenActive),
+     session: 'ok' | 'none'(不給寫) | 物件(分頁裡已經有的) | Map(跟別的頁面共用:同一個分頁換頁、重新整理), cloud, scale(計時器縮小的倍數,預設最多 5 毫秒) } */
 function loadOld(opt) {
   const store = new Map(Object.entries(opt.ls || {}));
   const writes = [];
@@ -38,7 +39,7 @@ function loadOld(opt) {
     getItem: (k) => (store.has(k) ? store.get(k) : null), key: (i) => [...store.keys()][i] || null, get length() { return store.size; },
     setItem: (k, v) => { writes.push(k); store.set(k, String(v)); }, removeItem: (k) => { writes.push('-' + k); store.delete(k); },
   };
-  const sess = new Map(Object.entries(opt.session && typeof opt.session === 'object' ? opt.session : {}));
+  const sess = opt.session instanceof Map ? opt.session : new Map(Object.entries(opt.session && typeof opt.session === 'object' ? opt.session : {}));
   const sessionStorage = opt.session === 'none'
     ? { getItem: () => null, setItem() { throw new Error('QuotaExceededError'); } }
     : { getItem: (k) => (sess.has(k) ? sess.get(k) : null), setItem: (k, v) => { sess.set(k, String(v)); }, removeItem: (k) => { sess.delete(k); } };
@@ -59,9 +60,15 @@ function loadOld(opt) {
     caches: { open: async () => ({}), delete: async () => true, keys: async () => [] },
     document: { set cookie(v) { /* 記號另外測 */ }, body, head: { appendChild() {} }, visibilityState: 'visible', addEventListener() {},
       getElementById: (id) => bars.filter((b) => !b.removed && b.attrs.id === id)[0] || null, createElement: node },
-    navigator: { userAgent: opt.ua || UA_PC, platform: /iPhone/.test(opt.ua || '') ? 'iPhone' : 'Win32', maxTouchPoints: 0, standalone: !!opt.standalone },
+    navigator: { userAgent: opt.ua || UA_PC, platform: /iPhone/.test(opt.ua || '') ? 'iPhone' : 'Win32', maxTouchPoints: 0, standalone: !!opt.standalone,
+      userActivation: { hasBeenActive: !!opt.activated, isActive: false } },
     matchMedia: () => ({ matches: !!opt.standalone }),
-    fetch: async () => { if (opt.ping !== 'fail') return { ok: true, text: async () => 'rushup-move-ping 1' }; throw new TypeError('fail'); },
+    fetch: async () => {
+      if (opt.ping === 'fail') throw new TypeError('fail');
+      if (opt.ping === 'slow') await new Promise((r) => setTimeout(r, 60));   // 手機網路慢:ping 還沒回來的這段時間,使用者已經在頁面上動作
+      return { ok: true, text: async () => 'rushup-move-ping 1' };
+    },
+    stop() { win.stopped = (win.stopped || 0) + 1; },
     setTimeout: timer, clearTimeout, AbortController, MOVE_OUT_NO_AUTO: true,
     crypto: globalThis.crypto, TextEncoder, TextDecoder, Blob, Response, CompressionStream, DecompressionStream, btoa, atob,
     MOVE: { from: [OLD], to: NEW, onOld: true, onNew: false, newName: 'www.rushuplanguage.com', oldName: 'shuashualanguage.com' },
@@ -90,8 +97,12 @@ const HIST = J([{ t: Date.now() - 60000, m: 'p5', id: 'q1', c: 1, ok: true }]);
 const BANKS = J([bank('b1', '我的單字', ['apple', 'banana'])]);
 /* 壓不小的資料:隨機字(gzip 之後還是很大) */
 function noise(n) { let s = ''; while (s.length < n) s += Math.random().toString(36).slice(2); return s.slice(0, n); }
-const KEY_MEMO = () => ({ tr_move_auto: J({ step: 'key', at: Date.now() }) });
+/* 第一站記下的一次性號碼(js/move-out.js 的 memo n):新網址照原樣帶回 #key=,寄出頁核對 */
+const N0 = '0123456789abcdef0123456789abcdef';
+const KEY_MEMO = () => ({ tr_move_auto: J({ step: 'key', at: Date.now(), n: N0 }) });
 const hashOfUrl = (u) => u.slice(u.indexOf('#'));
+/* 第一站網址裡的一次性號碼 */
+const nOf = (u) => { const w = loadLink().parseWant(hashOfUrl(String(u))); return w ? w.n : null; };
 
 /* ---------- 網址格式(js/move-link.js) ---------- */
 T['上限:整個網址 48 KB(Safari 約 8 萬字、Firefox 網址列 65536 字都放得下)'] = () => {
@@ -119,18 +130,22 @@ T['原路徑:只收本站的路徑與查詢字串;別的網站、// 開頭、反
 };
 T['#want、#key=、#auto=、#ack= 的格式:組出來的解得回去;格式不對回 null;明文的搬家碼(RU1Z:、RU1:)放在 #auto= 一律不收'] = async () => {
   const L = loadLink();
-  const w = L.wantUrl(NEW, '/vocab.html?x=1');
-  assert.equal(w, NEW + '/move-in.html#want&back=' + encodeURIComponent('/vocab.html?x=1'));
-  assert.deepEqual(JSON.parse(J(L.parseWant(hashOfUrl(w)))), { back: '/vocab.html?x=1' });
+  const w = L.wantUrl(NEW, '/vocab.html?x=1', N0);
+  assert.equal(w, NEW + '/move-in.html#want&n=' + N0 + '&back=' + encodeURIComponent('/vocab.html?x=1'));
+  assert.deepEqual(JSON.parse(J(L.parseWant(hashOfUrl(w)))), { back: '/vocab.html?x=1', n: N0 });
   assert.equal(L.parseWant('#want').back, '/');
+  assert.equal(L.parseWant('#want').n, null, '沒有號碼:新網址不給金鑰,直接回原頁面');
+  assert.equal(L.parseWant('#want&n=xyz&back=%2F'), null, '號碼格式不對');
   assert.equal(L.parseWant('#want&back=' + encodeURIComponent('//evil.example')).back, '/');
   assert.equal(L.parseWant('#wantx'), null);
   const k = await L.newKey();
   assert.match(k.pub, /^[A-Za-z0-9_-]{87}$/);
-  const ku = L.keyUrl(OLD, k.pub, '/grammar.html');
-  assert.equal(ku, OLD + '/move-out.html#key=' + k.pub + '&back=' + encodeURIComponent('/grammar.html'));
-  assert.deepEqual(JSON.parse(J(L.parseKey(hashOfUrl(ku)))), { pub: k.pub, back: '/grammar.html' });
+  const ku = L.keyUrl(OLD, k.pub, '/grammar.html', N0);
+  assert.equal(ku, OLD + '/move-out.html#key=' + k.pub + '&n=' + N0 + '&back=' + encodeURIComponent('/grammar.html'));
+  assert.deepEqual(JSON.parse(J(L.parseKey(hashOfUrl(ku)))), { pub: k.pub, n: N0, back: '/grammar.html' });
   assert.equal(L.parseKey('#key=abc'), null);
+  assert.equal(L.parseKey('#key=' + k.pub + '&n=ZZ&back=%2F'), null, '號碼格式不對');
+  assert.equal(L.parseKey('#key=' + k.pub + '&back=%2F').n, null, '沒有號碼:寄出頁一定對不上');
   const sealed = await L.seal(k.pub, 'RU1Z:H4sIAAAAAAAAAwMAAAAAAAAAAAA=');
   const u = L.autoUrl(NEW, sealed, '/vocab.html?x=1');
   assert.equal(u.indexOf(NEW + '/move-in.html#auto=RU1E:'), 0);
@@ -200,9 +215,11 @@ T['有題庫的訪客:先顯示「正在把你的進度帶過去」與「等一�
   assert.equal(await o.O.start(), 'bar');
   assert.match(o.barText(), /拍謝！我們換網址了，因為名字跟別人重疊！正在把你的進度帶過去…/);
   assert.deepEqual(o.buttons().map((b) => b.textContent), ['等一下再搬']);
+  assert.equal(o.sess.has('tr_move_auto'), false, '倒數中還沒記「這個分頁試過」(中途重新整理還會再試)');
   assert.equal(o.loc.replaced, null, '要等一下,讓人有時間按「等一下再搬」');
   assert.equal(await o.O.autoRun(), 'auto');
-  assert.equal(o.loc.replaced, NEW + '/move-in.html#want&back=' + encodeURIComponent('/vocab.html?x=1'));
+  assert.equal(o.loc.replaced, NEW + '/move-in.html#want&n=' + nOf(o.loc.replaced) + '&back=' + encodeURIComponent('/vocab.html?x=1'));
+  assert.match(nOf(o.loc.replaced) || '', /^[0-9a-f]{32}$/);
   assert.equal(/RU1|auto=|apple|%E6/.test(o.loc.replaced), false, '網址裡不能有資料');
   assert.deepEqual(o.writes, []);
   for (const [k, v] of before) assert.equal(o.store.get(k), v, k);
@@ -266,6 +283,7 @@ T['同一個分頁試過(不管成功失敗)就不再自動:顯示原本的按�
 T['sessionStorage 不給寫(記不住試過):不自動,免得每一頁都重來'] = async () => {
   const o = loadOld({ ls: { tr_vgame_banks: BANKS }, session: 'none' });
   await o.O.start();
+  assert.doesNotMatch(o.barText(), /正在把你的進度帶過去/, '記不住就不倒數(不會每一頁倒數完才變成按鈕)');
   assert.notEqual(await o.O.autoRun(), 'auto');
   assert.equal(o.loc.replaced, null);
   assert.match(o.barText(), /帶我過去（進度一起搬）/);
@@ -290,7 +308,7 @@ T['LINE 內建瀏覽器沒有自動(這個分頁試過、作答中):提示的主
   const btn = l.buttons().find((b) => b.textContent === '帶我過去（進度一起搬）');
   assert.ok(btn && !btn.attrs.href, 'LINE 裡的主按鈕不是去寄出頁的連結(寄出頁的「送到新網址」要開新視窗)');
   l.click('帶我過去（進度一起搬）');
-  assert.equal(l.loc.replaced, NEW + '/move-in.html#want&back=' + encodeURIComponent('/vocab.html?x=1'));
+  assert.equal(l.loc.replaced, NEW + '/move-in.html#want&n=' + nOf(l.loc.replaced) + '&back=' + encodeURIComponent('/vocab.html?x=1'));
   assert.equal(JSON.parse(l.sess.get('tr_move_auto')).step, 'key', '寄出頁那一站認得是這個分頁開始的');
   /* 太大:網址裝不下,只能用搬家碼 */
   const b = loadOld({ ls: { tr_vgame_banks: BANKS }, ua: UA_IPHONE + ' Line/13.0.0', session: { tr_move_auto: J({ step: 'big' }) } });
@@ -349,7 +367,7 @@ async function keyed(opt) {
 T['寄出頁拿到公鑰:組好跟「複製搬家碼」同一包、加密,帶到新網址 move-in.html#auto=RU1E:<密文>&back=;網址裡沒有明文;舊網址只多裝置編號'] = async () => {
   const { o, k } = await keyed({ ls: { tr_vgame_banks: BANKS, tr_hist: HIST } });
   const before = new Map(o.store);
-  assert.equal(await o.O.autoSend({ pub: k.pub, back: '/vocab.html?x=1', cancelled: () => false }), 'auto');
+  assert.equal(await o.O.autoSend({ pub: k.pub, n: N0, back: '/vocab.html?x=1', cancelled: () => false }), 'auto');
   assert.ok(/^https:\/\/www\.rushuplanguage\.com\/move-in\.html#auto=RU1E:/.test(o.loc.replaced), o.loc.replaced);
   assert.equal(/RU1Z?:|apple|banana/.test(o.loc.replaced.replace('#auto=RU1E:', '')), false, '網址裡不能有明文');
   const a = o.L.parseAuto(hashOfUrl(o.loc.replaced));
@@ -369,14 +387,14 @@ T['寄出頁拿到公鑰:組好跟「複製搬家碼」同一包、加密,帶到
 T['寄出頁拿到公鑰,但這個分頁沒有開始過自動搬家(別人做的連結、過太久):什麼都不組、不帶走'] = async () => {
   for (const session of [{}, { tr_move_auto: J({ step: 'key', at: Date.now() - 3600e3 }) }, { tr_move_auto: J({ step: 'sent', at: Date.now() }) }]) {
     const { o, k } = await keyed({ ls: { tr_vgame_banks: BANKS }, session });
-    assert.equal(await o.O.autoSend({ pub: k.pub, back: '/', cancelled: () => false }), 'memo');
+    assert.equal(await o.O.autoSend({ pub: k.pub, n: N0, back: '/', cancelled: () => false }), 'memo');
     assert.equal(o.loc.replaced, null);
     assert.deepEqual(o.writes, []);
   }
 };
 T['寄出頁:搬家碼加密後超過 48 KB 不帶走,這個分頁記下太大'] = async () => {
   const { o, k } = await keyed({ ls: { tr_vgame_banks: BANKS, 'tr_read_q_art-1': J({ note: noise(80 * 1024) }) } });
-  assert.equal(await o.O.autoSend({ pub: k.pub, back: '/', cancelled: () => false }), 'big');
+  assert.equal(await o.O.autoSend({ pub: k.pub, n: N0, back: '/', cancelled: () => false }), 'big');
   assert.equal(o.loc.replaced, null);
   assert.equal(JSON.parse(o.sess.get('tr_move_auto')).step, 'big');
 };
@@ -385,7 +403,7 @@ T['寄出頁:登入著先 flushForMove 跟雲端對帳,帳號剩下的放進包'
   let flushed = 0;
   const cloud = { enabled: true, ready: Promise.resolve(), user: { id: U }, flushForMove: async () => { flushed++; return { left: 1, accounts: { [U]: [['vgame_banks', BANKS, 5]] } }; } };
   const { o, k } = await keyed({ ls: { 'sb-abc-auth-token': '{}', tr_hist: HIST }, cloud });
-  assert.equal(await o.O.autoSend({ pub: k.pub, back: '/', cancelled: () => false }), 'auto');
+  assert.equal(await o.O.autoSend({ pub: k.pub, n: N0, back: '/', cancelled: () => false }), 'auto');
   assert.equal(flushed, 1);
   const r = await o.P.fromText(await o.L.open(k.jwk, o.L.parseAuto(hashOfUrl(o.loc.replaced)).code));
   assert.deepEqual(Object.keys(r.pack.accounts), [U]);
@@ -398,7 +416,7 @@ T['寄出頁:跟雲端對帳卡住(請求一直不回)有總逾時,不會一直�
   const cloud = { enabled: true, ready: Promise.resolve(), user: { id: U }, flushForMove: () => stuck };
   const { o, k } = await keyed({ ls: { 'sb-abc-auth-token': '{}', tr_hist: HIST }, cloud, scale: 100 });
   const t0 = Date.now();
-  assert.equal(await o.O.autoSend({ pub: k.pub, back: '/', cancelled: () => false }), 'timeout');
+  assert.equal(await o.O.autoSend({ pub: k.pub, n: N0, back: '/', cancelled: () => false }), 'timeout');
   assert.ok(Date.now() - t0 < 2000, '總逾時(縮小 100 倍)');
   assert.equal(JSON.parse(o.sess.get('tr_move_auto')).step, 'timeout');
   release({ left: 0, accounts: {} });
@@ -407,12 +425,12 @@ T['寄出頁:跟雲端對帳卡住(請求一直不回)有總逾時,不會一直�
   /* 二:CLOUD.ready 永遠不好(登入著、雲端一開始就卡住) */
   const never = { enabled: true, ready: new Promise(() => {}), user: { id: U }, flushForMove: () => new Promise(() => {}) };
   const b = await keyed({ ls: { 'sb-abc-auth-token': '{}', tr_hist: HIST }, cloud: never, scale: 100 });
-  assert.equal(await b.o.O.autoSend({ pub: b.k.pub, back: '/', cancelled: () => false }), 'timeout');
+  assert.equal(await b.o.O.autoSend({ pub: b.k.pub, n: N0, back: '/', cancelled: () => false }), 'timeout');
   assert.equal(b.o.loc.replaced, null);
 };
 T['寄出頁:按了「等一下再搬」就不帶走'] = async () => {
   const { o, k } = await keyed({ ls: { tr_vgame_banks: BANKS } });
-  assert.equal(await o.O.autoSend({ pub: k.pub, back: '/', cancelled: () => true }), 'later');
+  assert.equal(await o.O.autoSend({ pub: k.pub, n: N0, back: '/', cancelled: () => true }), 'later');
   assert.equal(o.loc.replaced, null);
   o.O.skipAuto();
   assert.equal(o.sess.get('tr_move_later'), '1');
@@ -422,7 +440,7 @@ T['寄出頁:按了「等一下再搬」就不帶走'] = async () => {
 /* ---------- 舊網址:新網址搬好帶回來(#ack=) ---------- */
 async function sentOld(ls) {
   const { o, k } = await keyed({ ls });
-  assert.equal(await o.O.autoSend({ pub: k.pub, back: '/', cancelled: () => false }), 'auto');
+  assert.equal(await o.O.autoSend({ pub: k.pub, n: N0, back: '/', cancelled: () => false }), 'auto');
   const hash = (await o.P.fromText(await o.L.open(k.jwk, o.L.parseAuto(hashOfUrl(o.loc.replaced)).code))).hash;
   return { o, hash };
 }
@@ -445,6 +463,152 @@ T['ack:送出之後又練習了(搬過去的不是現在這份)→ 不寫;雜湊
   assert.equal((await g.o.O.ackCheck(g.o.ls, g.hash)).ok, false);
   const other = loadOld({ ls: { tr_vgame_banks: BANKS } });
   assert.equal((await other.O.ackCheck(other.ls, hash)).ok, false);
+};
+
+
+/* ---------- 審查第二輪(10/28):公鑰綁這個分頁、倒數中重新整理、ping 之前的動作、換頁中的取消、LINE 裡沒搬成 ---------- */
+T['第一站:帶到新網址時附上這個分頁的一次性號碼 n(32 位十六進位),同一個號碼記在這個分頁的 tr_move_auto;每次都不一樣;LINE 一鍵也一樣'] = async () => {
+  const a = loadOld({ ls: { tr_vgame_banks: BANKS }, scale: 50 });
+  await a.O.start();
+  assert.equal(await a.O.autoRun(), 'auto');
+  const n = nOf(a.loc.replaced);
+  assert.match(n || '', /^[0-9a-f]{32}$/);
+  assert.equal(JSON.parse(a.sess.get('tr_move_auto')).n, n);
+  const b = loadOld({ ls: { tr_vgame_banks: BANKS }, scale: 50 });
+  await b.O.start();
+  await b.O.autoRun();
+  assert.notEqual(nOf(b.loc.replaced), n);
+  const l = loadOld({ ls: { tr_vgame_banks: BANKS }, ua: UA_IPHONE + ' Line/13.0.0', session: { tr_move_auto: J({ step: 'busy' }) } });
+  await l.O.start();
+  await l.O.autoRun();
+  l.click('帶我過去（進度一起搬）');
+  assert.match(nOf(l.loc.replaced) || '', /^[0-9a-f]{32}$/);
+  assert.equal(JSON.parse(l.sess.get('tr_move_auto')).n, nOf(l.loc.replaced));
+};
+T['別的網站先開舊網址一頁、再把那個視窗導到 move-out.html#key=<自己的公鑰>:號碼對不上就不組包、不加密、不帶走(歷史紀錄裡不會有它解得開的密文);號碼只能用一次'] = async () => {
+  const sess = new Map();
+  const ls = { tr_vgame_banks: J([bank('s1', '私房題庫', ['secretword'])]), tr_hist: HIST };
+  const page = loadOld({ ls, session: sess, scale: 50 });
+  await page.O.start();
+  assert.equal(await page.O.autoRun(), 'auto');   // 第一站已經記下 key 與號碼
+  const n = nOf(page.loc.replaced);
+  assert.match(n || '', /^[0-9a-f]{32}$/);
+  const attacker = await page.L.newKey();
+  for (const bad of [undefined, null, '', 'f'.repeat(32), n.toUpperCase(), n + '0']) {
+    const out = loadOld({ ls, path: '/move-out.html', session: sess, scale: 20 });
+    assert.equal(await out.O.autoSend({ pub: attacker.pub, n: bad, back: '/', cancelled: () => false }), 'memo', String(bad));
+    assert.equal(out.loc.replaced, null, String(bad));
+    assert.deepEqual(out.writes, [], String(bad));
+    assert.equal(JSON.parse(sess.get('tr_move_auto')).step, 'key', '對不上不動這個分頁的紀錄');
+  }
+  /* 新網址照原樣帶回號碼:照常加密、帶走 */
+  const k = await page.L.newKey();
+  const ok = loadOld({ ls, path: '/move-out.html', session: sess, scale: 20 });
+  assert.equal(await ok.O.autoSend({ pub: k.pub, n, back: '/', cancelled: () => false }), 'auto');
+  assert.ok(/#auto=RU1E:/.test(ok.loc.replaced));
+  const again = loadOld({ ls, path: '/move-out.html', session: sess, scale: 20 });
+  assert.equal(await again.O.autoSend({ pub: attacker.pub, n, back: '/', cancelled: () => false }), 'memo', '同一個號碼不能再用');
+  assert.equal(again.loc.replaced, null);
+};
+T['倒數中重新整理(登入著 cloud.js 第一次灌完雲端資料會重載):重載之後照樣自動;真的帶走那一刻才記「這個分頁試過」'] = async () => {
+  const sess = new Map();
+  const a = loadOld({ ls: { tr_vgame_banks: BANKS, tr_hist: HIST }, session: sess, scale: 20 });
+  assert.equal(await a.O.start(), 'bar');
+  assert.match(a.barText(), /正在把你的進度帶過去/);
+  assert.equal(sess.has('tr_move_auto'), false, '倒數中還沒寫');
+  /* 重新整理:同一個分頁(sessionStorage 還在)、新的一頁 */
+  const b = loadOld({ ls: { tr_vgame_banks: BANKS, tr_hist: HIST }, session: sess, scale: 20 });
+  assert.equal(await b.O.start(), 'bar');
+  assert.match(b.barText(), /正在把你的進度帶過去/, '重載之後照樣倒數');
+  assert.doesNotMatch(b.barText(), /帶我過去（進度一起搬）/);
+  assert.equal(await b.O.autoRun(), 'auto');
+  assert.equal(b.loc.replaced.indexOf(NEW + '/move-in.html#want&n='), 0);
+  await a.O.autoRun();
+};
+T['ping 還沒回來就在頁面上有動作(手機網路慢,先按了開始、作答、捲動):一樣不帶走,改顯示按鈕'] = async () => {
+  for (const type of ['click', 'keydown', 'pointerdown', 'touchstart', 'wheel']) {
+    const o = loadOld({ ls: { tr_vgame_banks: BANKS }, path: '/vocab.html', ping: 'slow', scale: 20 });
+    const run = o.O.start();
+    await sleep(5);
+    assert.equal(o.barText(), '', 'ping 還沒回來,還沒有提示');
+    o.fire(type);
+    assert.equal(await run, 'bar');
+    assert.equal(await o.O.autoRun(), 'busy', type);
+    await sleep(300);
+    assert.equal(o.loc.replaced, null, type);
+    assert.match(o.barText(), /帶我過去（進度一起搬）/, type);
+    assert.equal(JSON.parse(o.sess.get('tr_move_auto')).step, 'busy', type);
+  }
+};
+T['move-out.js 載入之前就點過(navigator.userActivation.hasBeenActive):不帶走;沒點過照常自動'] = async () => {
+  const o = loadOld({ ls: { tr_vgame_banks: BANKS }, path: '/reading.html', activated: true, scale: 20 });
+  assert.equal(await o.O.start(), 'bar');
+  assert.equal(await o.O.autoRun(), 'busy');
+  await sleep(300);
+  assert.equal(o.loc.replaced, null);
+  assert.match(o.barText(), /帶我過去（進度一起搬）/);
+  const q = loadOld({ ls: { tr_vgame_banks: BANKS }, path: '/reading.html', activated: false, scale: 20 });
+  await q.O.start();
+  assert.equal(await q.O.autoRun(), 'auto');
+};
+T['倒數時用滑鼠滾輪、觸控板捲動(讀題目、文章):算有動作,不帶走'] = async () => {
+  const o = loadOld({ ls: { tr_vgame_banks: BANKS }, path: '/reading.html', scale: 20 });
+  assert.equal(await o.O.start(), 'bar');
+  o.fire('wheel');
+  assert.equal(await o.O.autoRun(), 'busy');
+  await sleep(300);
+  assert.equal(o.loc.replaced, null);
+};
+T['倒數到期、正在換到新網址時按「等一下再搬」:照樣算數:停止換頁、這個分頁記下 later、提示拿掉;停不下來的話寄出頁那一站看到 later 不組包、回原頁面'] = async () => {
+  const sess = new Map();
+  const o = loadOld({ ls: { tr_vgame_banks: BANKS }, path: '/vocab.html', session: sess, scale: 20 });
+  await o.O.start();
+  assert.equal(await o.O.autoRun(), 'auto');
+  const n = nOf(o.loc.replaced);
+  const btn = o.buttons().find((b) => b.textContent === '等一下再搬');
+  assert.ok(btn && !btn.disabled, '換頁中「等一下再搬」還在、按得到');
+  o.click('等一下再搬');
+  assert.equal(o.win.stopped, 1, '停止換頁(window.stop)');
+  assert.equal(sess.get('tr_move_later'), '1');
+  assert.equal(JSON.parse(sess.get('tr_move_auto')).step, 'later');
+  assert.equal(o.barText(), '', '提示拿掉');
+  /* 新網址已經回應、停不下來:第二站照常帶回 #key=,寄出頁不組包、不帶到 #auto= */
+  const k = await o.L.newKey();
+  const out = loadOld({ ls: { tr_vgame_banks: BANKS }, path: '/move-out.html', session: sess, scale: 20 });
+  assert.equal(await out.O.autoSend({ pub: k.pub, n, back: '/vocab.html', cancelled: () => false }), 'cancel');
+  assert.equal(out.loc.replaced, null);
+  assert.deepEqual(out.writes, []);
+  const src = read('js/move-out-page.js');
+  assert.match(src, /r !== 'auto' && r !== 'later'\) location\.replace\(k\.back\)/, '寄出頁:不是 auto、later 都回原頁面(cancel 也是)');
+};
+T['LINE 內建瀏覽器,自動搬家在寄出頁沒搬成(有項目超過上限、對帳逾時、出錯、組包到一半就斷):主按鈕去搬家頁、說這次沒辦法自動,不會一按就默默回原頁面'] = async () => {
+  for (const step of ['skip', 'timeout', 'error', 'build']) {
+    const l = loadOld({ ls: { tr_vgame_banks: BANKS }, ua: UA_IPHONE + ' Line/13.0.0', session: { tr_move_auto: J({ step, at: Date.now() }) } });
+    await l.O.start();
+    assert.equal(await l.O.autoRun(), 'tried', step);
+    assert.doesNotMatch(l.barText(), /我幫你一起帶過去/, step);
+    assert.match(l.barText(), /沒辦法自動/, step);
+    assert.equal(l.buttons().find((x) => x.textContent === '帶我過去（進度一起搬）').attrs.href, 'move-out.html', step);
+  }
+  /* 整條路:LINE、有一項超過上限 → 第一站 → 寄出頁 skip → 回原頁面:主按鈕去搬家頁(那裡說是哪一項超過) */
+  const sess = new Map();
+  const ls = { tr_vgame_banks: BANKS, 'tr_read_q_art-1': J({ note: 'x'.repeat(8 * 1024 * 1024 + 16) }) };
+  const ua = UA_IPHONE + ' Line/13.0.0';
+  const p1 = loadOld({ ls, ua, path: '/vocab.html', session: sess, scale: 20 });
+  await p1.O.start();
+  assert.equal(await p1.O.autoRun(), 'auto');
+  const k = await p1.L.newKey();
+  const p3 = loadOld({ ls, ua, path: '/move-out.html', session: sess, scale: 2 });   // 8 MB 的一項組包要一點時間,逾時不縮太小
+  assert.equal(await p3.O.autoSend({ pub: k.pub, n: nOf(p1.loc.replaced), back: '/vocab.html', cancelled: () => false }), 'skip');
+  const back = loadOld({ ls, ua, path: '/vocab.html', session: sess, scale: 20 });
+  await back.O.start();
+  assert.equal(await back.O.autoRun(), 'tried');
+  assert.equal(back.buttons().find((x) => x.textContent === '帶我過去（進度一起搬）').attrs.href, 'move-out.html');
+  assert.match(back.barText(), /沒辦法自動/);
+};
+T['寄出頁(LINE):這個分頁上次自動搬家沒搬成(逾時、出錯),除了「搬到新網址」也給搬家碼的路,並說上次沒搬成'] = () => {
+  const src = read('js/move-out-page.js');
+  assert.match(src, /OUT\.autoStuck\(/, '寄出頁要知道這個分頁上次自動搬家沒搬成');
 };
 
 /* ---------- 頁面上的接法(靜態檢查) ---------- */
@@ -473,6 +637,7 @@ T['新網址收件頁:第一件事拿掉 #auto= 與 #want(在任何外部 script
   assert.ok(/L\.open\(/.test(src) && /L\.newKey\(/.test(src), '收件頁要產生金鑰、解密');
   assert.ok(/fromText\(code\)/.test(src), '自動搬家要走 fromText(跟貼上搬家碼同一條)');
   assert.ok(/removeItem\(KEY\)/.test(src), '私鑰用過就刪');
+  assert.ok(/L\.keyUrl\(from, pub, w\.back, w\.n\)/.test(src), '第二站把第一站的號碼照原樣帶回寄出頁');
 };
 T['舊網址寄出頁:開頭拿掉 #ack= 與 #key=;組包跟按鈕搬家共用 MOVE_OUT.buildPack'] = () => {
   const a = runHead('move-out.html', '#ack=' + 'a'.repeat(64));

@@ -4,13 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
-/* 第一件事:新網址搬好帶回來的 #ack=<雜湊>(js/move-in-page.js)收進記憶體,再用 replaceState 拿掉;之後由 js/move-out-page.js 讀 window.MOVE_ACK_IN */
+/* 第一件事:自動搬家帶回來的 #key=<新網址的一次性公鑰>、#ack=<雜湊>(js/move-in-page.js)收進記憶體,再用 replaceState 從網址列拿掉;
+   之後由 js/move-out-page.js 讀 window.MOVE_KEY_IN、window.MOVE_ACK_IN。這兩個都不是學生的資料(搬家碼只以加密過的樣子進網址,見 js/move-link.js) */
 (function () {
   var h = '';
   try { h = String(location.hash || ''); } catch (e) { h = ''; }
-  if (h.indexOf('#ack=') !== 0) return;
+  var key = h.indexOf('#key=') === 0;
+  if (!key && h.indexOf('#ack=') !== 0) return;
   try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { return; }
-  if (window.top === window.self) window.MOVE_ACK_IN = h;
+  if (window.top !== window.self) return;
+  if (key) window.MOVE_KEY_IN = h; else window.MOVE_ACK_IN = h;
 })();
 /* 搬家寄出頁(舊網址用,搬家計畫 2.3)。不能被別的網站框住誘按(GitHub Pages 不能設 frame-ancestors):被框住就什麼都不顯示 */
 if (window.top !== window.self) { document.documentElement.style.display = 'none'; }

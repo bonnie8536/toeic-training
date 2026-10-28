@@ -22,6 +22,8 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'application/javascr
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 /* 新網址的 move-ping.txt:'ok' 照常、'down' 回 503(新網址連不上) */
 let PING = 'ok';
+/* 新網址的 move-in.html:DROP_MOVE_IN = n 時,從現在起第 n 次以後的請求都直接切斷連線(自動搬家第二次進收件頁、帶著密文的那一站連不上) */
+let DROP_MOVE_IN = 0, moveInHits = 0;
 
 const EVIL_PAGE = `<!doctype html><meta charset="utf-8"><body><button id="go">go</button><script>
 document.getElementById('go').onclick = () => {
@@ -37,6 +39,7 @@ function serve(port) {
       let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
       if (port === 8933) { res.writeHead(200, { 'Content-Type': TYPES['.html'] }); return res.end(EVIL_PAGE); }
       if (p === '/') p = '/index.html';
+      if (port === 8932 && p === '/move-in.html' && DROP_MOVE_IN && ++moveInHits >= DROP_MOVE_IN) { req.socket.destroy(); return; }
       if (port === 8932 && p === '/move-ping.txt' && PING === 'down') { res.writeHead(503, { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'no-store' }); return res.end('down'); }
       if (p === '/js/cloud-config.js') { res.writeHead(200, { 'Content-Type': TYPES['.js'], 'Cache-Control': 'no-store' }); return res.end('window.CLOUD_CONFIG = {};'); }
       const file = path.join(REPO, p);
@@ -559,10 +562,11 @@ T['自動搬家:有題庫的訪客打開舊網址的文法頁,不用按 → 新�
   await s.send('Page.navigate', { url: OLD + '/grammar.html?u=2' });
   await s.until('/正在把你的進度帶過去/.test(document.body.innerText)', 10000, '舊網址的自動搬家提示');
   const barTxt = await s.eval('document.getElementById("move-bar").innerText');
-  const noBtn = await s.eval('!document.querySelector("#move-bar .btn")');
+  const btns = await s.eval('[...document.querySelectorAll("#move-bar .btn")].map((b) => b.textContent).join(",")');
   await s.until(onNewPage('/grammar.html'), 25000, '回到新網址的文法頁');
   const where = await s.eval('location.href');
   const got = await s.ls();
+  const keyLeft = await s.eval('sessionStorage.getItem("tr_move_key")');
   const urls = await historyUrls(s);
   await s.close();
   const after = await oldLs(B);
@@ -571,13 +575,13 @@ T['自動搬家:有題庫的訪客打開舊網址的文法頁,不用按 → 新�
   /* 小雞是頁面自己寫的(打開文法頁就加今天的分數),不是搬家改的:搬過去的那份要有這一天 */
   const changed = Object.keys(before).filter((k) => before[k] !== after[k]);
   const names = got.tr_vgame_banks ? JSON.parse(got.tr_vgame_banks).map((b) => b.name) : [];
-  const ok = /拍謝！我們換網址了，因為名字跟別人重疊！正在把你的進度帶過去…/.test(barTxt) && noBtn && where === NEW + '/grammar.html?u=2'
+  const ok = /拍謝！我們換網址了，因為名字跟別人重疊！正在把你的進度帶過去…/.test(barTxt) && btns === '等一下再搬' && where === NEW + '/grammar.html?u=2' && keyLeft === null
     && J(names) === J(['自動搬的題庫']) && JSON.parse(got.tr_hist).length === 5 && JSON.parse(got.tr_pet).name === '小黃'
     && !!done && /^[0-9a-f]{64}$/.test(done.hash) && typeof done.fp === 'string' && done.manual === false && done.to === NEW
     && J(extra) === J(['tr_move_device', 'tr_move_done']) && changed.every((k) => k === 'tr_pet')
     && J(JSON.parse(got.tr_pet).days) === J(JSON.parse(after.tr_pet).days)
     && !urls.some((u) => /auto=|ack=|RU1/.test(u));
-  return { ok, detail: J({ changed, petBefore: before.tr_pet, petAfter: after.tr_pet, urls, barTxt: barTxt.slice(0, 60), where, names, done, extra }) };
+  return { ok, detail: J({ changed, petBefore: before.tr_pet, petAfter: after.tr_pet, urls, barTxt: barTxt.slice(0, 60), btns, keyLeft, where, names, done, extra }) };
 };
 T['自動搬家冪等:舊網址沒記到搬好了(ack 沒回來),換一個分頁再開舊網址 → 再自動一次,同一包不重寫、題庫不多一份;之後又練習再開一次,只多那筆紀錄'] = async (B) => {
   PING = 'ok';
@@ -613,7 +617,7 @@ T['自動搬家冪等:舊網址沒記到搬好了(ack 沒回來),換一個分頁
     && JSON.parse(got3.tr_hist).length === 5 && J(got3.tr_hist).indexOf('after-move') > -1 && typeof fpNow === 'string';
   return { ok, detail: J({ names2, names3, h2: JSON.parse(got2.tr_hist).length, h3: JSON.parse(got3.tr_hist).length, done2, fpNow }) };
 };
-T['自動搬家:搬家碼超過 48 KB 照舊顯示按鈕、不帶走;LINE 內建瀏覽器也照舊顯示按鈕'] = async (B) => {
+T['自動搬家:搬家碼超過 48 KB 回原頁面照舊顯示按鈕、不帶走;LINE 內建瀏覽器自動搬過去(同一個分頁,資料留在 LINE 裡的新網址)'] = async (B) => {
   PING = 'ok';
   const noise = (n) => { let x = ''; while (x.length < n) x += Math.random().toString(36).slice(2); return x.slice(0, n); };
   const s = await tab(B);
@@ -626,13 +630,17 @@ T['自動搬家:搬家碼超過 48 KB 照舊顯示按鈕、不帶走;LINE 內建
   await s.close();
   const l = await tab(B);
   await l.send('Emulation.setUserAgentOverride', { userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Safari Line/13.0.0' });
-  await seed(l, OLD, { tr_vgame_banks: J([bank('l1', 'LINE 裡的', ['a'])]) }, true);
-  await l.go(OLD + '/grammar.html');
-  await l.until('!!document.getElementById("move-bar") && /帶我過去/.test(document.getElementById("move-bar").innerText)', 10000, 'LINE 照舊顯示按鈕');
-  await sleep(2500);
-  const lineStayed = (await l.eval('location.origin')) === OLD;
+  await seed(l, OLD, { tr_vgame_banks: J([bank('l1', 'LINE 裡的', ['a'])]), tr_hist: J(hist(3, 'l')) }, true);
+  const nl = await tab(B); await seed(nl, NEW, {}, true); await nl.close();
+  await l.send('Page.navigate', { url: OLD + '/grammar.html' });
+  await l.until(onNewPage('/grammar.html'), 25000, 'LINE 自動搬到新網址的文法頁');
+  const lineGot = await l.ls();
+  const lineUrl = await l.eval('location.href');
   await l.close();
-  return { ok: stayed && !!memo && JSON.parse(memo).step === 'big' && lineStayed, detail: J({ stayed, memo, lineStayed }) };
+  const lineDone = !!(await oldLs(B)).tr_move_done;
+  const lineNames = lineGot.tr_vgame_banks ? JSON.parse(lineGot.tr_vgame_banks).map((b) => b.name) : [];
+  const lineOk = J(lineNames) === J(['LINE 裡的']) && JSON.parse(lineGot.tr_hist || '[]').length === 3 && lineDone && lineUrl === NEW + '/grammar.html';
+  return { ok: stayed && !!memo && JSON.parse(memo).step === 'big' && lineOk, detail: J({ stayed, memo, lineNames, lineDone, lineUrl }) };
 };
 T['自動搬家遇到要選的(兩邊不一樣):停在確認畫面等人按;按了之後一樣回舊網址寫完成、回到原頁面'] = async (B) => {
   PING = 'ok';
@@ -676,25 +684,93 @@ T['自動搬家失敗(新網址還有別的分頁開著):什麼都沒寫、說�
   await other.close(); await s.close();
   return { ok: !wrote && !oldDone && stayed, detail: J({ wrote, oldDone, stayed }) };
 };
-T['別的網站做的 #auto= 連結(不是從舊網址帶過來的):不會不問就寫,停在確認畫面;網址列的搬家碼一樣拿掉'] = async (B) => {
+T['別人拿到的 #auto= 網址(明文的搬家碼、別的分頁加密的):解不開,什麼都不顯示、不寫;網址列一樣拿掉'] = async (B) => {
   const s = await tab(B);
   await seed(s, OLD, { tr_vgame_banks: J([bank('e1', '別人塞的', ['x'])]) }, true);
   const nt = await tab(B); await seed(nt, NEW, {}, true); await nt.close();
-  /* 用舊網址的程式組一包(等於有人拿到一份搬家碼),從空白分頁直接打開(沒有舊網址的 referrer) */
+  /* 用舊網址的程式組一包(等於有人拿到一份搬家碼):一份明文,一份用「另一個分頁」的金鑰加密(像是從共用電腦的歷史紀錄撿到的) */
   await s.go(OLD + '/move-out.html');
   await s.until('!!window.MOVE_PACK');
-  const code = await s.eval('(async () => { const r = MOVE_PACK.collect(localStorage, { from: location.origin }); return MOVE_PACK.toCode(r.pack, await MOVE_PACK.hashOf(r.pack)); })()');
+  const codes = await s.eval(`(async () => { const r = MOVE_PACK.collect(localStorage, { from: location.origin });
+    const plain = await MOVE_PACK.toCode(r.pack, await MOVE_PACK.hashOf(r.pack));
+    const k = await MOVE_LINK.newKey();
+    return { plain, sealed: await MOVE_LINK.seal(k.pub, plain) }; })()`);
   await s.close();
-  const e = await tab(B);
-  await e.go(NEW + '/move-in.html#auto=' + code + '&back=%2Fvocab.html');
-  await e.until('[...document.querySelectorAll("button")].some((b) => b.textContent === "確定搬進來")', 10000, '確認畫面');
-  await sleep(1500);
-  const txt = await e.text();
-  const href = await e.eval('location.href');
-  const ls = await e.ls();
-  await e.close();
-  return { ok: !ls.tr_vgame_banks && /不是從舊網址自動帶過來的/.test(txt) && href === NEW + '/move-in.html', detail: J({ href, keys: Object.keys(ls), txt: txt.slice(0, 120) }) };
+  const out = [];
+  for (const code of [codes.plain, codes.sealed]) {
+    const e = await tab(B);
+    await e.go(NEW + '/move-in.html#auto=' + code + '&back=%2Fvocab.html');
+    await e.until('/已經用過、過期了/.test(document.body.innerText)', 10000, '解不開的說明');
+    await sleep(1000);
+    const txt = await e.text();
+    out.push({ wrote: !!(await e.ls()).tr_vgame_banks, shows: /別人塞的/.test(txt), confirm: /確定搬進來/.test(txt), href: await e.eval('location.href') });
+    await e.close();
+  }
+  return { ok: out.every((x) => !x.wrote && !x.shows && !x.confirm && x.href === NEW + '/move-in.html'), detail: J(out) };
 };
+T['自動搬家的網址都不帶明文:帶著密文的那一站連不上(錯誤頁),網址列只有密文、解不開;網路好了重新整理,同一個分頁照樣搬完'] = async (B) => {
+  PING = 'ok';
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('d1', '斷線也還在', ['secretword'])]), tr_hist: J(hist(2, 'd')) }, true);
+  const nt = await tab(B); await seed(nt, NEW, {}, true); await nt.close();
+  moveInHits = 0; DROP_MOVE_IN = 2;   // 第一次進收件頁是拿金鑰(#want),第二次是帶著密文(#auto=)
+  await s.send('Page.navigate', { url: OLD + '/vocab.html' });
+  let cur = '';
+  for (let i = 0; i < 150 && !/#auto=/.test(cur); i++) { await sleep(100); const r = await s.send('Page.getNavigationHistory'); cur = (r.result.entries[r.result.currentIndex] || {}).url || ''; }
+  await sleep(1500);
+  DROP_MOVE_IN = 0;
+  const r = await s.send('Page.getNavigationHistory');
+  const urls = r.result.entries.map((e) => e.url);
+  const current = urls[r.result.currentIndex] || '';
+  const oldMid = !(await oldLs(B)).tr_move_done;
+  const plainInUrls = urls.some((u) => /RU1Z?:|secretword/.test(u));
+  await s.send('Page.reload');
+  await s.until(onNewPage('/vocab.html'), 25000, '重新整理之後搬完');
+  const got = await s.ls();
+  await s.close();
+  const done = !!(await oldLs(B)).tr_move_done;
+  const ok = /#auto=RU1E:/.test(current) && !plainInUrls && oldMid && JSON.parse(got.tr_vgame_banks)[0].name === '斷線也還在' && done;
+  return { ok, detail: J({ current: current.slice(0, 90), plainInUrls, oldMid, done }) };
+};
+T['自動搬家:按「等一下再搬」不帶走、提示拿掉;在頁面上點了別的(作答、按開始)也不帶走,改顯示按鈕'] = async (B) => {
+  PING = 'ok';
+  const s = await tab(B);
+  await seed(s, OLD, { tr_vgame_banks: J([bank('w1', '等一下', ['a'])]) }, true);
+  await s.send('Page.navigate', { url: OLD + '/grammar.html' });
+  await s.until('!!document.getElementById("move-bar") && /正在把你的進度帶過去/.test(document.getElementById("move-bar").innerText)', 10000, '自動搬家提示');
+  await s.click('等一下再搬');
+  await sleep(3500);
+  const a = { origin: await s.eval('location.origin'), bar: await s.eval('!!document.getElementById("move-bar")') };
+  await s.close();
+  const t = await tab(B);
+  await seed(t, OLD, { tr_vgame_banks: J([bank('w2', '作答中', ['a'])]) }, true);
+  await t.send('Page.navigate', { url: OLD + '/mock.html' });
+  await t.until('!!document.getElementById("move-bar") && /正在把你的進度帶過去/.test(document.getElementById("move-bar").innerText)', 10000, '自動搬家提示');
+  await B.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: 300, y: 500, button: 'left', clickCount: 1 }, t.sid);
+  await B.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: 300, y: 500, button: 'left', clickCount: 1 }, t.sid);
+  await sleep(3500);
+  const b = { origin: await t.eval('location.origin'), bar: await t.eval('document.getElementById("move-bar") ? document.getElementById("move-bar").innerText : ""') };
+  await t.close();
+  const ok = a.origin === OLD && !a.bar && b.origin === OLD && /帶我過去（進度一起搬）/.test(b.bar);
+  return { ok, detail: J({ a, b: { origin: b.origin, bar: b.bar.slice(0, 80) } }) };
+};
+
+/* 跑完所有情境、瀏覽器正常關掉之後,讀使用者資料夾的 Default/History(SQLite 的 urls 表,chrome://history、網址列建議、同步用的就是它):
+   replaceState 改不了這裡,所以裡面任何一個網址都不能有明文的搬家碼(RU1Z:、RU1:)或題庫裡的字;有跑自動搬家時,要看得到加密過的 #auto=RU1E:(證明真的查到了那一站) */
+const HISTORY_NAME = '瀏覽器的歷史紀錄檔(History)裡沒有明文的搬家碼,只有加密過的';
+function historyCheck(dir, ranAuto) {
+  const db = path.join(dir, 'Default', 'History');
+  if (!fs.existsSync(db)) return { ok: false, detail: '沒有 History 檔' };
+  const copy = path.join(dir, 'History-copy');
+  fs.copyFileSync(db, copy);
+  const { DatabaseSync } = require('node:sqlite');
+  const d = new DatabaseSync(copy, { readOnly: true });
+  const urls = d.prepare('SELECT url FROM urls').all().map((r) => r.url);
+  d.close();
+  const plain = urls.filter((u) => /RU1Z?:|secretword|apple|%E8%87%AA/.test(u));
+  const sealed = urls.filter((u) => /#auto=RU1E:/.test(u));
+  return { ok: !plain.length && (!ranAuto || sealed.length > 0), detail: J({ rows: urls.length, plain: plain.map((u) => u.slice(0, 80)), sealed: sealed.length }) };
+}
 
 (async () => {
   if (!CHROME) { console.error('找不到 Chrome 或 Edge'); process.exit(2); }
@@ -714,13 +790,19 @@ T['別的網站做的 #auto= 連結(不是從舊網址帶過來的):不會不問
       console.log((r.ok ? 'PASS ' : 'FAIL ') + n + '  →  ' + String(r.detail).slice(0, 400));
     }
     if (B.errors.length) console.log('頁面 JS 錯誤:' + B.errors.slice(0, 5).join(' | '));
+    /* 正常關掉瀏覽器,歷史紀錄才會寫進檔案 */
+    try { await Promise.race([B.send('Browser.close'), sleep(3000)]); } catch (e) { /* 照樣往下 */ }
+    for (let i = 0; i < 50 && proc.exitCode === null; i++) await sleep(200);
     B.ws.close();
+    const h = historyCheck(dir, names.some((n) => /自動搬家/.test(n)));
+    if (h.ok) pass++;
+    console.log((h.ok ? 'PASS ' : 'FAIL ') + HISTORY_NAME + '  →  ' + String(h.detail).slice(0, 400));
   } finally {
-    proc.kill();
+    if (proc.exitCode === null) proc.kill();
     srvs.forEach((s) => s.close());
     await sleep(1500);
     try { fs.rmSync(dir, { recursive: true, force: true }); } catch (e) { console.log('使用者資料夾沒刪掉:' + dir); }
   }
-  console.log(pass + ' / ' + names.length + ' 通過');
-  process.exit(pass === names.length ? 0 : 1);
+  console.log(pass + ' / ' + (names.length + 1) + ' 通過');
+  process.exit(pass === names.length + 1 ? 0 : 1);
 })().catch((e) => { console.error(e); process.exit(2); });

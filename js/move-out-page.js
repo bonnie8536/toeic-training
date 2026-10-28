@@ -7,7 +7,7 @@
    有搬不了的項目(太大,summary.tooBig)就不給送出、不給搬家碼與搬家檔,也就不會寫 tr_move_done,並說出是哪一項。
    主畫面 App(iPhone 的加到主畫面、Android 與電腦安裝的 App)另外提示:iPhone 主畫面 App 不給「送到新網址」(開出去的是 Safari,
    拿不到這個 App 的資料),只給搬家碼;搬好之後請到新網址重新安裝一次 App。
-   每一頁的自動搬家(js/move-out.js tryAuto)搬好之後,新網址帶回這一頁 #ack=<雜湊>&back=<原路徑>:takeAck 核對過才寫 tr_move_done,
+   每一頁的自動搬家:新網址帶回這一頁 #key=<一次性公鑰>,autoKey 交給 MOVE_OUT.autoSend 組包、加密、帶到新網址;搬好之後,新網址帶回這一頁 #ack=<雜湊>&back=<原路徑>:takeAck 核對過才寫 tr_move_done,
    再帶到新網址的原路徑;對不上(送出之後又練習了、不是這個分頁送的)什麼都不寫,照常顯示再搬一次。組包跟它共用 MOVE_OUT.buildPack。
    這一頁在舊網址只新增 tr_move_device(裝置編號,js/move-pack.js deviceId)、tr_move_done 兩個鍵與兩個不含資料的 cookie,
    其他一筆都不改不刪;畫面只用 textContent。
@@ -51,6 +51,7 @@
       draw(say('這一頁要在舊網址 ' + M.oldName + ' 打開。'), h('p', null, h('a', { class: 'btn primary', href: M.from[0] + '/move-out.html' }, '打開舊網址的搬家頁')));
       return;
     }
+    if (await autoKey()) return;
     draw(say('正在檢查這台的資料…'));
     if (window.CLOUD && CLOUD.enabled) { try { await CLOUD.ready; } catch (e) { /* 照目前的狀態 */ } }
     const ackNote = await takeAck();
@@ -67,6 +68,23 @@
       return;
     }
     drawStart(ackNote || (st.stale ? say('這台上次搬家之後又有新的進度，再搬一次就會過去，已經搬過的不會重複。', 'move-note') : null));
+  }
+
+  /* 自動搬家第三站(js/move-link.js 開頭):新網址帶回這裡 #key=<一次性公鑰>&back=<原路徑>(開頭的 script 已經從網址拿掉,放在 MOVE_KEY_IN)。
+     這個分頁真的開始過自動搬家(OUT.autoSend 會核對)才組包、加密、帶到新網址;畫面上一直有「等一下再搬」。
+     沒搬成(太大、對帳超過 15 秒、出錯)就回原頁面,那一頁照舊顯示按鈕(這個分頁不再自動)。回 true(已經離開這一頁)或 false(照常顯示寄出頁) */
+  async function autoKey() {
+    const k = window.MOVE_KEY_IN ? L.parseKey(window.MOVE_KEY_IN) : null;
+    window.MOVE_KEY_IN = null;
+    if (!k) return false;
+    let stopped = false;
+    const wait = h('button', { class: 'btn', type: 'button' }, '等一下再搬');
+    wait.addEventListener('click', () => { stopped = true; wait.disabled = true; OUT.skipAuto(); location.replace(k.back); });
+    draw(say(OUT.AUTO_TEXT), say('舊網址這裡的資料都會留著。'), h('div', { class: 'modal-row' }, wait));
+    const r = await OUT.autoSend({ pub: k.pub, back: k.back, cancelled: () => stopped });
+    if (r === 'memo') return false;   // 不是這個分頁開始的(別人做的連結、過太久):什麼都沒做,照常顯示寄出頁
+    if (r !== 'auto' && r !== 'later') location.replace(k.back);
+    return true;
   }
 
   /* 自動搬家(js/move-out.js 的 tryAuto)在新網址搬好,帶回這裡 #ack=<雜湊>&back=<原路徑>(開頭的 script 已經從網址拿掉,放在 MOVE_ACK_IN):

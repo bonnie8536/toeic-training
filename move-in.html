@@ -4,12 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
-/* 第一件事:舊網址自動搬家帶來的 #auto=<搬家碼>(js/move-out.js)先收進記憶體,再用 replaceState 拿掉,
-   搬家碼不留在網址列與上一頁的紀錄裡(# 後面本來就不會送到伺服器);之後由 js/move-in-page.js 讀 window.MOVE_AUTO_IN */
+/* 第一件事:舊網址自動搬家帶來的 #want(要一次性金鑰)、#auto=<加密過的搬家碼>(js/move-out.js)先收進記憶體,再用 replaceState 從網址列拿掉;
+   之後由 js/move-in-page.js 讀 window.MOVE_AUTO_IN。replaceState 改不了瀏覽器的全域歷史紀錄,所以搬家碼只以加密過的樣子進網址,
+   私鑰只在這個分頁的 sessionStorage,用過就刪(見 js/move-link.js) */
 (function () {
   var h = '';
   try { h = String(location.hash || ''); } catch (e) { h = ''; }
-  if (h.indexOf('#auto=') !== 0) return;
+  if (h.indexOf('#auto=') !== 0 && h.indexOf('#want') !== 0) return;
   try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { return; }
   if (window.top === window.self) window.MOVE_AUTO_IN = h;
 })();

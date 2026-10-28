@@ -12,15 +12,17 @@
    - 搬過了、新網址連不上:頁面頂端說這裡練習的進度不會自動過去,連得上之後會提醒再搬一次。
    - 離開這一頁(pagehide、切到背景)時重算一次記號:在這一頁練習的,下一次 Worker 就知道這台又有要搬的。
    - 沒資料也沒登入:頁面頂端先說「拍謝！我們換網址了…正在幫你導過去」,約 1.8 秒後帶到新網址同一路徑,帶之前刪掉自己 ss- 開頭的快取、註銷 service worker(這台不需要它接轉址)。
-   - 有資料還沒搬:先試自動搬家(tryAuto;站長 10/28:「為甚麼你不能自動把進度全部搬過去」):組好跟「複製搬家碼」同一包(buildPack,
-     登入著先 flushForMove 跟雲端對帳),整個網址不超過 MOVE_LINK.AUTO_MAX 就顯示「…正在把你的進度帶過去…」,
-     帶到新網址 move-in.html#auto=<搬家碼>&back=<原路徑>。新網址合併好帶回 move-out.html#ack=<雜湊>,js/move-out-page.js 用 ackCheck
+   - 有資料還沒搬:先試自動搬家(站長 10/28:「為甚麼你不能自動把進度全部搬過去」)。四站,搬家碼只以加密過的樣子進網址(js/move-link.js 開頭):
+     tryAuto 顯示「…正在把你的進度帶過去…」與「等一下再搬」,2.5 秒後帶到新網址 move-in.html#want(網址裡沒有資料)拿一次性公鑰;
+     新網址帶回寄出頁 move-out.html#key=<公鑰>,autoSend 組好跟「複製搬家碼」同一包(buildPack,登入著先 flushForMove 跟雲端對帳)、
+     加密,不超過 MOVE_LINK.AUTO_MAX 就帶到 move-in.html#auto=<密文>;新網址合併好帶回 move-out.html#ack=<雜湊>,js/move-out-page.js 用 ackCheck
      核對「送出的那包」與「這台現在的包」一樣才寫 tr_move_done,再帶到新網址的原路徑。
-     不自動(照舊顯示下面的按鈕):搬家碼太大、組包失敗、付款結果頁、LINE/Facebook/Instagram 內建瀏覽器、主畫面或安裝的 App、
-     登入著卻沒有 cloud.js 可以對帳、按過「等一下再搬」、這個分頁已經試過(sessionStorage 的 tr_move_auto;寫不進去就不試,免得每一頁重來)。
+     不自動(照舊顯示下面的按鈕):付款結果頁、主畫面或安裝的 App、按過「等一下再搬」、這個分頁已經試過(sessionStorage 的 tr_move_auto;
+     寫不進去就不試,免得每一頁重來)、等的時候使用者在頁面上點了或按了鍵、模擬考進行中。寄出頁那一站太大、組包失敗、對帳超過 15 秒,
+     就回原頁面顯示按鈕。LINE/Facebook/Instagram 內建瀏覽器一樣自動(同一個分頁換頁,不用開新視窗)。
    - 有資料還沒搬、不自動:頁面頂端一條提示,「帶我過去（進度一起搬）」「等一下再搬」;價格、註冊、付款結果頁改成先問要不要先搬。
    - 登入著、沒有要搬的:提示到新網址重新登入一次;按下去先補傳(CLOUD.flushForMove),剩 0 項才走,有剩就去搬家頁。
-   這支只讀 localStorage,除了上面兩個記號、自動搬家組包時的裝置編號(tr_move_device,寄出頁本來就會寫)以外不寫任何東西,
+   這支只讀 localStorage,除了上面兩個記號、寄出頁組包時的裝置編號(tr_move_device,按鈕搬家本來就會寫)以外不寫任何東西,
    一筆資料都不刪不改。畫面只用 textContent。 */
 (function (root) {
   'use strict';
@@ -147,7 +149,9 @@
           { label: '等一下再搬', onClick: close },
         ]);
       }
-      return bar(RENAMED + M.newName + '。這台的練習進度，按下面的按鈕，我幫你一起帶過去。', [
+      /* LINE、Facebook、Instagram 內建瀏覽器走到這裡是自動搬家沒成(太大、這個分頁試過):寄出頁在這裡不能開新視窗送,只能用搬家碼,不說「我幫你帶過去」 */
+      const text = envNow().inApp ? '。這台的練習進度要用搬家碼帶過去：按下面的按鈕，照著搬家頁的說明做。' : '。這台的練習進度，按下面的按鈕，我幫你一起帶過去。';
+      return bar(RENAMED + M.newName + text, [
         { label: '帶我過去（進度一起搬）', primary: true, href: 'move-out.html' },
         { label: '等一下再搬', onClick: close },
       ]);
@@ -184,9 +188,11 @@
     return run.then((r) => (r && r.left > 0 ? root.location.assign('move-out.html') : go(true)), () => root.location.assign('move-out.html'));
   }
 
-  /* ---------- 自動搬家(有資料、還沒搬;不用按按鈕) ---------- */
-  const AUTO_SCRIPTS = [['MOVE_MERGE', 'js/move-merge.js'], ['MOVE_PACK', 'js/move-pack.js'], ['MOVE_LINK', 'js/move-link.js']];
+  /* ---------- 自動搬家(有資料、還沒搬;不用按按鈕)。四站怎麼走、為什麼搬家碼不以明文進網址,寫在 js/move-link.js ---------- */
   const CLOUD_WAIT_MS = 8000;
+  const AUTO_DELAY_MS = 2500;   // 第一站:提示出現後等這麼久才帶走,讓人有時間按「等一下再搬」
+  const SEND_MAX_MS = 15000;    // 寄出頁:對帳、組包、加密的總逾時;逾時就回原頁面顯示按鈕,晚到的結果也不帶走
+  const KEY_MAX_MS = 10 * 60000;   // 第一站之後這麼久還沒拿到公鑰回來,就當這個分頁沒有在搬
   const AUTO_TEXT = '拍謝！我們換網址了，因為名字跟別人重疊！正在把你的進度帶過去…';
   let autoRun = Promise.resolve('none');
 
@@ -195,30 +201,30 @@
     if (!d) return;
     if (d.body) fn(); else d.addEventListener('DOMContentLoaded', fn);
   }
-  /* 特殊環境:LINE、Facebook、Instagram 內建瀏覽器(資料存在那個 App 裡,寄出頁會教用搬家碼帶到以後要用的瀏覽器);
-     主畫面或安裝的 App(iPhone 主畫面 App 的資料跟 Safari 分開存,帶出去會開在別的地方;Android、電腦的 App 帶出去會變成 App 裡的外部網頁,
-     寄出頁另外說明要重新安裝)。這兩種都照舊用按鈕。 */
+  /* 特殊環境:LINE、Facebook、Instagram 內建瀏覽器(資料存在那個 App 裡;自動搬家在同一個分頁換頁,照樣能搬,搬到同一個 App 的新網址,
+     以後從 LINE 點新網址也是開在這裡);主畫面或安裝的 App(iPhone 主畫面 App 的資料跟 Safari 分開存,換到新網址會變成 App 裡的外部網頁,
+     寄出頁另外說明要重新安裝)照舊用按鈕。 */
   function envOf(nav, mm) {
     const n = nav || {}, ua = String(n.userAgent || '');
     let sa = n.standalone === true;
     try { sa = sa || !!(mm && mm('(display-mode: standalone)').matches); } catch (e) { /* 當成不是 */ }
     return { inApp: ua.indexOf('Line/') > -1 || /FBAN|FBAV|Instagram/.test(ua), standalone: sa };
   }
+  function envNow() { return envOf(root.navigator, typeof root.matchMedia === 'function' ? (q) => root.matchMedia(q) : null); }
   /* 純判斷,測試直接呼叫。回 '' 表示可以自動,其他是不自動的原因。
      付款結果頁不自動:那一頁要讓人看到付款的結果(舊網址已經不收款,只會是很久以前的連結)。
-     登入著卻不能對帳(這一頁沒有 cloud.js):帳號的進度可能只有一部分在這台,交給寄出頁(會先 flushForMove)。 */
+     登入著也可以:對帳(CLOUD.flushForMove)在寄出頁做,寄出頁一定載 cloud.js。 */
   function autoBlock(o) {
     if (o.kind !== 'bar' && o.kind !== 'ask') return 'kind';
     if (o.page === 'pay-result.html') return 'page';
-    if (o.inApp) return 'inApp';
     if (o.standalone) return 'app';
     if (o.tried) return 'tried';
     if (o.later) return 'later';
-    if (o.loggedIn && !o.canFlush) return 'noFlush';
     return '';
   }
   /* 這個分頁試過自動搬家的紀錄(sessionStorage 的 tr_move_auto,只有這個分頁、這個網域看得到,關掉分頁就沒了):
-     { step: 'build' | 'sent' | 'big' | 'skip' | 'error', hash(送出的包), local(這台當時的包,不含 flushForMove 給的帳號), fp(指紋), at }。
+     { step: 'key'(第一站送出,等公鑰)| 'build' | 'sent' | 'big' | 'skip' | 'busy' | 'later' | 'timeout' | 'error', hash(送出的包),
+       local(這台當時的包,不含 flushForMove 給的帳號), fp(指紋), at }。
      有紀錄就不再自動(失敗不會一直重來;換一個分頁會再試一次)。讀不懂也算有。 */
   function memo() {
     let s = null;
@@ -234,14 +240,8 @@
       },
     };
   }
-  /* 組包要的程式(一般頁面沒有載):照順序補載 */
-  function need() {
-    return AUTO_SCRIPTS.reduce((p, [g, src]) => p.then(() => (root[g] ? null : new Promise((res, rej) => {
-      const d = root.document, s = d.createElement('script');
-      s.src = src; s.onload = res; s.onerror = () => rej(new Error('載不到 ' + src));
-      (d.head || d.body).appendChild(s);
-    }))), Promise.resolve());
-  }
+  /* 「等一下再搬」:這個分頁不再提示、不再自動 */
+  function skipAuto() { setLater(); memo().set({ step: 'later', at: Date.now() }); }
   /* 登入著:先跟雲端對帳(CLOUD.flushForMove),回 { accounts(這個帳號還沒上傳的), uid };沒登入、沒有 cloud.js、對帳失敗回 {}(組包時改用這台的帳本) */
   async function flushAccounts() {
     const C = root.CLOUD;
@@ -251,7 +251,7 @@
     const uid = typeof C.user.id === 'string' ? C.user.id : undefined;
     try { return { accounts: (await C.flushForMove()).accounts, uid }; } catch (e) { return {}; }
   }
-  /* 組一包:寄出頁的「準備搬家」(搬家碼、搬家檔、視窗)與每一頁的自動搬家共用這一個。o:{ from, accounts, uid }
+  /* 組一包:寄出頁的「準備搬家」(搬家碼、搬家檔、視窗)與自動搬家共用這一個。o:{ from, accounts, uid }
      回 { pack, summary, hash, fp(組包那一刻的指紋), local(不含 accounts 的那包的雜湊,ack 回來時跟這台現在的比) } */
   async function buildPack(ls, o) {
     const P = root.MOVE_PACK;
@@ -280,32 +280,70 @@
     if ((await P.hashOf(pack)) !== m.local) return { ok: false, why: 'changed' };
     return { ok: true, fp: m.fp };
   }
-  /* 回 'auto'(已經帶走)或不自動的原因;不是 'auto' 時頂端的「正在帶過去」會拿掉,由 start 畫回按鈕 */
-  async function tryAuto(kind, st) {
-    const M = root.MOVE, l = root.location, C = root.CLOUD;
-    const env = envOf(root.navigator, typeof root.matchMedia === 'function' ? (q) => root.matchMedia(q) : null);
+  /* 第一站(舊網址每一頁):提示「正在把你的進度帶過去…」與「等一下再搬」,AUTO_DELAY_MS 之後帶到新網址 move-in.html#want(網址裡沒有任何資料)。
+     等的時候使用者在頁面上點了或按了鍵(作答、按「開始」),或模擬考進行中(body 的 data-leave-confirm,js/mock.js 設的),就不帶走,改畫按鈕。
+     回 'auto'(已經帶走)或不自動的原因;不是 'auto' 時由 start 畫回按鈕 */
+  function tryAuto(kind, st) {
+    const M = root.MOVE, l = root.location, d = root.document;
+    const env = envNow();
     const mem = memo();
-    const why = autoBlock({ kind, page: pageOf(l.pathname), inApp: env.inApp, standalone: env.standalone, tried: mem.get() !== null, later: later(),
-      loggedIn: st.loggedIn, canFlush: !!(C && typeof C.flushForMove === 'function') });
-    if (why) return why;
+    const why = autoBlock({ kind, page: pageOf(l.pathname), inApp: env.inApp, standalone: env.standalone, tried: mem.get() !== null, later: later() });
+    if (why) return Promise.resolve(why);
+    if (!mem.set({ step: 'key', at: Date.now() })) return Promise.resolve('session');
+    return new Promise((resolve) => {
+      let done = false, box = null, timer = null;
+      const EVENTS = ['click', 'keydown'];
+      const inBar = (t) => { for (let n = t; n; n = n.parentNode) if (n === box) return true; return false; };
+      const unlisten = () => { try { EVENTS.forEach((t) => root.removeEventListener(t, onUser, true)); } catch (e) { /* 沒有就算了 */ } };
+      const finish = (r, step) => {
+        if (done) return;
+        done = true;
+        root.clearTimeout(timer);
+        unlisten();
+        if (box) box.remove();
+        if (step) mem.set({ step, at: Date.now() });
+        resolve(r);
+      };
+      function onUser(e) { if (!inBar(e && e.target)) finish('busy', 'busy'); }
+      try { EVENTS.forEach((t) => root.addEventListener(t, onUser, true)); } catch (e) { /* 聽不到就只靠「等一下再搬」與模擬考的記號 */ }
+      whenBody(() => { if (!done) box = bar(AUTO_TEXT, [{ label: '等一下再搬', onClick: () => { setLater(); finish('later', 'later'); } }]); });
+      timer = root.setTimeout(() => {
+        if (done) return;
+        const exam = !!(d && d.body && d.body.dataset && d.body.dataset.leaveConfirm);
+        if (exam) { finish('busy', 'busy'); return; }
+        done = true;
+        unlisten();
+        /* 格式跟 MOVE_LINK.wantUrl 一樣(這一頁沒有載 move-link.js);新網址用 parseWant 解、safeBack 過濾 */
+        l.replace(M.to + '/move-in.html#want&back=' + encodeURIComponent(l.pathname + l.search));
+        resolve('auto');
+      }, AUTO_DELAY_MS);
+    });
+  }
+  /* 第三站(舊網址寄出頁 move-out.html#key=<公鑰>,js/move-out-page.js 呼叫):這個分頁真的開始過(tr_move_auto 是 key、沒過太久)才做。
+     對帳(登入著)、組包、加密、檢查長度,整段最多 SEND_MAX_MS;成了才記下送出的包(ack 回來時核對)、帶到新網址 #auto=。
+     o:{ pub, back, cancelled()(按了「等一下再搬」) }。回 'auto'(已經帶走)、'memo'(不是這個分頁開始的,什麼都沒做),
+     或沒搬成的原因(這個分頁已經記下,回原頁面會顯示按鈕) */
+  async function autoSend(o) {
+    const M = root.MOVE, L = root.MOVE_LINK, P = root.MOVE_PACK, l = root.location;
+    const mem = memo(), m = mem.get();
+    const age = m ? Date.now() - m.at : NaN;
+    if (!m || m.step !== 'key' || !(age >= 0 && age < KEY_MAX_MS)) return 'memo';
     if (!mem.set({ step: 'build', at: Date.now() })) return 'session';
-    let live = true, box = null, shown = 0;
-    whenBody(() => { if (live) { box = bar(AUTO_TEXT, []); shown = Date.now(); } });
-    const stop = (step) => { live = false; if (box) box.remove(); mem.set({ step, at: Date.now() }); return step; };
-    try {
-      await need();
-      const acc = st.loggedIn ? await flushAccounts() : {};
+    const work = (async () => {
+      const acc = await flushAccounts();
       const b = await buildPack(root.localStorage, { from: l.origin, accounts: acc.accounts, uid: acc.uid });
-      if (b.summary.tooBig.length || !b.summary.hasData) return stop('skip');
-      const url = root.MOVE_LINK.autoUrl(M.to, await root.MOVE_PACK.toCode(b.pack, b.hash), l.pathname + l.search);
-      if (url.length > root.MOVE_LINK.AUTO_MAX) return stop('big');
-      if (!mem.set({ step: 'sent', hash: b.hash, local: b.local, fp: b.fp, at: Date.now() })) return stop('error');
-      await new Promise((r) => root.setTimeout(r, Math.max(0, GO_DELAY_MS - (shown ? Date.now() - shown : 0))));
-      l.replace(url);
-      return 'auto';
-    } catch (e) {
-      return stop('error');
-    }
+      if (b.summary.tooBig.length || !b.summary.hasData) return { why: 'skip' };
+      const url = L.autoUrl(M.to, await L.seal(o.pub, await P.toCode(b.pack, b.hash)), o.back);
+      return url.length > L.AUTO_MAX ? { why: 'big' } : { url, b };
+    })().catch(() => ({ why: 'error' }));
+    let tm = null;
+    const r = await Promise.race([work, new Promise((res) => { tm = root.setTimeout(() => res({ why: 'timeout' }), SEND_MAX_MS); })]);
+    root.clearTimeout(tm);
+    if (o.cancelled && o.cancelled()) return 'later';
+    if (r.why) { mem.set({ step: r.why, at: Date.now() }); return r.why; }
+    if (!mem.set({ step: 'sent', hash: r.b.hash, local: r.b.local, fp: r.b.fp, at: Date.now() })) { mem.set({ step: 'error', at: Date.now() }); return 'error'; }
+    l.replace(r.url);
+    return 'auto';
   }
 
   function start() {
@@ -345,6 +383,6 @@
   }
 
   root.MOVE_OUT = Object.freeze({ decide, pageOf, stateOf, flags, ping, start, cleanup, go, target,
-    envOf, autoBlock, buildPack, flushAccounts, ackCheck, tryAuto, autoRun: () => autoRun });
+    envOf, autoBlock, buildPack, flushAccounts, ackCheck, tryAuto, autoSend, skipAuto, AUTO_TEXT, autoRun: () => autoRun });
   if (root.MOVE && root.MOVE.onOld && !root.MOVE_OUT_NO_AUTO) start();
 })(typeof window !== 'undefined' ? window : globalThis);

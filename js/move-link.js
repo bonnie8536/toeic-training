@@ -77,16 +77,26 @@
     };
   }
 
-  /* ---------- 自動搬家的網址(js/move-out.js 組、js/move-in-page.js 解;回程 js/move-out-page.js 解) ----------
-     去程:新網址/move-in.html#auto=<搬家碼>&back=<原路徑>;回程:舊網址/move-out.html#ack=<雜湊>&back=<原路徑>。
-     搬家碼放在 # 後面:# 後面不會送到任何伺服器(Worker、GitHub、Cloudflare 都看不到,也不會出現在 Referer),
-     兩頁的開頭第一件事就用 history.replaceState 拿掉,不留在網址列與上一頁的紀錄裡。
+  /* ---------- 自動搬家:同一個分頁換頁,不開新視窗(LINE 等內建瀏覽器也能用),搬家碼不以明文進任何網址 ----------
+     網址的 # 後面不會送到伺服器,但瀏覽器的全域歷史紀錄(Chrome 的 History 檔、開了同步會上傳)在換頁那一刻就記下含 # 的完整網址,
+     之後的 history.replaceState 只改得了分頁的上一頁紀錄,改不了那一筆;新網址連不上時錯誤頁的網址列也會留著。所以分四站:
+     1. 舊網址每一頁(js/move-out.js tryAuto)→ 新網址/move-in.html#want&back=<原路徑>:網址裡沒有任何資料。
+     2. 新網址(js/move-in-page.js)產生一次性的 ECDH P-256 金鑰,私鑰只放新網址這個分頁的 sessionStorage(tr_move_key),
+        → 舊網址/move-out.html#key=<公鑰>&back=<原路徑>:公鑰公開也沒關係。
+     3. 舊網址寄出頁(js/move-out.js autoSend)組包(跟「複製搬家碼」同一包),用公鑰加密(seal:臨時 ECDH 金鑰 + AES-GCM)
+        → 新網址/move-in.html#auto=RU1E:<臨時公鑰>.<iv>.<密文>&back=<原路徑>。
+     4. 新網址用私鑰解開(open),解開就刪私鑰;合併好 → 舊網址/move-out.html#ack=<雜湊>&back=<原路徑>,舊網址核對後寫完成記號。
+     歷史紀錄、錯誤頁、被複製出去的網址裡只有公鑰與密文;私鑰在新網址那個分頁用過就刪,別的分頁、別台、別人都解不開。
+     每一站的頁面開頭都先用 history.replaceState 把 # 後面拿掉(只是讓網址列乾淨,不是保密的手段)。
      AUTO_MAX:整個網址的上限 48 KB(49152 字)。# 不送伺服器,伺服器與 CDN 的網址上限(Cloudflare 約 16 KB)管不到;
      瀏覽器:Chrome、Edge、Android 2 MB,Firefox 網址列顯示到 65536 字,Safari 實測約 8 萬字會出錯,取最小的再留餘裕。
-     搬家碼是 gzip 過的 base64,48 KB 大約裝得下 200 到 400 KB 的練習資料;超過的照舊用按鈕(視窗之間 postMessage,沒有長度問題)。
-     base64 只有英數與 + / =,不需要跳脫;back 用 encodeURIComponent。 */
+     密文是 gzip 過的位元組直接加密再轉 base64url,48 KB 大約裝得下 200 到 400 KB 的練習資料;超過的照舊用按鈕(視窗之間 postMessage,沒有長度問題)。
+     base64url 只有英數與 - _,不需要跳脫;back 用 encodeURIComponent。 */
   const AUTO_MAX = 48 * 1024;
-  const CODE = /^RU1Z?:[A-Za-z0-9+/=]+$/;
+  const PUB = /^[A-Za-z0-9_-]{87}$/;   // P-256 未壓縮公鑰 65 位元組
+  const SEALED = /^RU1E:([A-Za-z0-9_-]{87})\.([A-Za-z0-9_-]{16})\.([A-Za-z0-9_-]{24,})$/;
+  const PLAIN = /^RU1(Z?):([A-Za-z0-9+/=]+)$/;
+  const EC = { name: 'ECDH', namedCurve: 'P-256' };
   /* 原路徑:只收本站的「/路徑?查詢字串」,其他(別的網站、// 開頭、反斜線、太長、怪字元)一律回首頁 / */
   function safeBack(b) {
     if (typeof b !== 'string' || b.length > 512) return '/';
@@ -96,15 +106,91 @@
     if (raw === undefined) return '/';
     try { return safeBack(decodeURIComponent(raw)); } catch (e) { return null; }
   }
-  function autoUrl(to, code, back) { return to + '/move-in.html#auto=' + code + '&back=' + encodeURIComponent(safeBack(back)); }
-  /* '#auto=…&back=…' → { code, back } 或 null */
+  const backPart = (back) => '&back=' + encodeURIComponent(safeBack(back));
+
+  function bytesToB64(bytes) {
+    let s = '';
+    for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return root.btoa(s);
+  }
+  function b64ToBytes(str) {
+    const s = root.atob(str);
+    const out = new Uint8Array(s.length);
+    for (let i = 0; i < s.length; i++) out[i] = s.charCodeAt(i);
+    return out;
+  }
+  const b64u = (bytes) => bytesToB64(bytes).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  function unb64u(str) {
+    const t = str.replace(/-/g, '+').replace(/_/g, '/');
+    return b64ToBytes(t + '==='.slice((t.length + 3) % 4));
+  }
+  function subtle() {
+    const s = root.crypto && root.crypto.subtle;
+    if (!s) throw new Error('這個瀏覽器沒有 Web Crypto');
+    return s;
+  }
+  const aes = (priv, pub, use) => subtle().deriveKey({ name: 'ECDH', public: pub }, priv, { name: 'AES-GCM', length: 256 }, false, [use]);
+  /* 新網址:一次性金鑰。回 { pub(base64url,放進網址), jwk(私鑰,只放新網址這個分頁的 sessionStorage) } */
+  async function newKey() {
+    const kp = await subtle().generateKey(EC, true, ['deriveKey']);
+    return { pub: b64u(new Uint8Array(await subtle().exportKey('raw', kp.publicKey))), jwk: await subtle().exportKey('jwk', kp.privateKey) };
+  }
+  /* 舊網址:搬家碼(RU1Z: 或 RU1:)用新網址的公鑰加密 → 'RU1E:<臨時公鑰>.<iv>.<密文>'。第一個位元組記是不是 gzip,其餘是搬家碼解開 base64 的位元組 */
+  async function seal(pubText, code) {
+    if (typeof pubText !== 'string' || !PUB.test(pubText)) throw new Error('公鑰格式不對');
+    const m = PLAIN.exec(String(code || ''));
+    if (!m) throw new Error('不是搬家碼');
+    const body = b64ToBytes(m[2]);
+    const plain = new Uint8Array(body.length + 1);
+    plain[0] = m[1] ? 1 : 0;
+    plain.set(body, 1);
+    const pub = await subtle().importKey('raw', unb64u(pubText), EC, false, []);
+    const eph = await subtle().generateKey(EC, true, ['deriveKey']);
+    const iv = root.crypto.getRandomValues(new Uint8Array(12));
+    const ct = new Uint8Array(await subtle().encrypt({ name: 'AES-GCM', iv }, await aes(eph.privateKey, pub, 'encrypt'), plain));
+    return 'RU1E:' + b64u(new Uint8Array(await subtle().exportKey('raw', eph.publicKey))) + '.' + b64u(iv) + '.' + b64u(ct);
+  }
+  /* 新網址:用私鑰解開 → 原本的搬家碼(交給 MOVE_PACK.fromText,跟貼上搬家碼同一條路)。金鑰不對、被改過就丟錯 */
+  async function open(jwk, sealed) {
+    const m = SEALED.exec(String(sealed || ''));
+    if (!m || !isPlain(jwk)) throw new Error('解不開');
+    const priv = await subtle().importKey('jwk', jwk, EC, false, ['deriveKey']);
+    const eph = await subtle().importKey('raw', unb64u(m[1]), EC, false, []);
+    const plain = new Uint8Array(await subtle().decrypt({ name: 'AES-GCM', iv: unb64u(m[2]) }, await aes(priv, eph, 'decrypt'), unb64u(m[3])));
+    if (!plain.length || plain[0] > 1) throw new Error('解不開');
+    return (plain[0] === 1 ? 'RU1Z:' : 'RU1:') + bytesToB64(plain.subarray(1));
+  }
+
+  /* 第一站:'#want&back=…' → { back } 或 null */
+  function wantUrl(to, back) { return to + '/move-in.html#want' + backPart(back); }
+  function parseWant(h) {
+    const m = /^#want(?:&back=([^&]*))?$/.exec(String(h || ''));
+    if (!m) return null;
+    const back = backOf(m[1]);
+    return back === null ? null : { back };
+  }
+  /* 第二站:'#key=<公鑰>&back=…' → { pub, back } 或 null */
+  function keyUrl(from, pub, back) { return from + '/move-out.html#key=' + pub + backPart(back); }
+  function parseKey(h) {
+    const m = /^#key=([^&]*)(?:&back=([^&]*))?$/.exec(String(h || ''));
+    if (!m || !PUB.test(m[1])) return null;
+    const back = backOf(m[2]);
+    return back === null ? null : { pub: m[1], back };
+  }
+  /* 第三站:只收加密過的(RU1E:);明文的搬家碼不放進網址,也不收 */
+  function autoUrl(to, sealed, back) {
+    if (!SEALED.test(String(sealed || ''))) throw new Error('只放加密過的搬家碼,明文不進網址');
+    return to + '/move-in.html#auto=' + sealed + backPart(back);
+  }
+  /* '#auto=…&back=…' → { code(密文), back } 或 null */
   function parseAuto(h) {
     const m = /^#auto=([^&]*)(?:&back=([^&]*))?$/.exec(String(h || ''));
-    if (!m || !CODE.test(m[1])) return null;
+    if (!m || !SEALED.test(m[1])) return null;
     const back = backOf(m[2]);
     return back === null ? null : { code: m[1], back };
   }
-  function ackUrl(from, hash, back) { return from + '/move-out.html#ack=' + hash + '&back=' + encodeURIComponent(safeBack(back)); }
+  /* 第四站(回程) */
+  function ackUrl(from, hash, back) { return from + '/move-out.html#ack=' + hash + backPart(back); }
   /* '#ack=…&back=…' → { hash, back } 或 null */
   function parseAck(h) {
     const m = /^#ack=([0-9a-f]{64})(?:&back=([^&]*))?$/.exec(String(h || ''));
@@ -113,5 +199,6 @@
     return back === null ? null : { hash: m[1], back };
   }
 
-  root.MOVE_LINK = Object.freeze({ newNonce, sender, receiver, AUTO_MAX, safeBack, autoUrl, parseAuto, ackUrl, parseAck });
+  root.MOVE_LINK = Object.freeze({ newNonce, sender, receiver, AUTO_MAX, safeBack, newKey, seal, open, wantUrl, parseWant, keyUrl, parseKey,
+    autoUrl, parseAuto, ackUrl, parseAck });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

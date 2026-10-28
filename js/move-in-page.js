@@ -5,10 +5,12 @@
      列給人看,按「確定搬進來」才寫(js/move-apply.js:先寫日誌、量空間、被換掉的先備份)。空間不夠時怎麼辦寫在 commit 前面。
    - 寫之前用 BroadcastChannel('rushup-move') 問「還有誰開著」:有別的新網址分頁就要求先關掉(它們可能寫回舊的小雞、洗掉正在考的模擬考)。
    - 小雞合併要對時:讀同網域不快取的 move-ping.txt 回應的 Date 標頭,差超過 3 天就不合併小雞(列為衝突、留新網址的)。
-   - 自動搬家:舊網址每一頁(js/move-out.js tryAuto)帶到 move-in.html#auto=<搬家碼>&back=<原路徑>。move-in.html 開頭的 script 先把 # 後面
-     收進 window.MOVE_AUTO_IN、用 replaceState 從網址拿掉;這裡把搬家碼交給跟「貼上搬家碼」同一個 fromText(同樣的驗證、雜湊、合併、備份)。
-     確認畫面照樣畫出來,下面這些都成立才不等按鈕、直接照預設(留這台的)寫:從舊網址帶過來的(document.referrer 是舊網址;
-     別的網站做一個 #auto= 連結騙人點,不會不經同意就寫進來)、沒有要選的衝突、沒有「兩邊不一樣只留一份」的項目、新網址沒有登入著(訪客資料登入時看不到)、
+   - 自動搬家(四站,js/move-link.js 開頭):舊網址每一頁帶到 move-in.html#want,這裡產生一次性金鑰(私鑰只放這個分頁的 sessionStorage),
+     帶公鑰回舊網址寄出頁;寄出頁加密後帶到 move-in.html#auto=<密文>&back=<原路徑>。move-in.html 開頭的 script 先把 # 後面
+     收進 window.MOVE_AUTO_IN、用 replaceState 從網址列拿掉;這裡用私鑰解開(解開前就刪私鑰),交給跟「貼上搬家碼」同一個 fromText
+     (同樣的驗證、雜湊、合併、備份)。解不開(別的分頁、別台、用過、過期、明文的 #auto=)什麼都不顯示、不寫。
+     確認畫面照樣畫出來,下面這些都成立才不等按鈕、直接照預設(留這台的)寫:解得開(整條路是這個分頁從舊網址開始的;
+     別的網站做一個 #auto= 連結騙人點,解不開,也不會顯示內容)、沒有要選的衝突、沒有「兩邊不一樣只留一份」的項目、新網址沒有登入著(訪客資料登入時看不到)、
      沒有其他新網址分頁開著、空間一次放得下(不先搬一部分)。寫好(或這台早就搬過同一包)就帶回舊網址 move-out.html#ack=<雜湊>&back=<原路徑>,
      舊網址寫完成記號再帶到新網址的原路徑。沒寫成就什麼都不寫、說清楚,給「回舊網址用按鈕搬」;舊網址這個分頁不會再自動(js/move-out.js 的 tr_move_auto)。
    - 這一頁不載 cloud.js、pet-store.js(免得它在登入著時重新整理頁面,或小雞模組自己寫入)。畫面只用 textContent。
@@ -31,7 +33,6 @@
   function draw(...nodes) { root.replaceChildren(head(), ...nodes.filter(Boolean)); }
 
   /* ---------- 自動搬家 ---------- */
-  function cameFromOld() { try { return M.from.indexOf(new URL(document.referrer).origin) > -1; } catch (e) { return false; } }
   function backLink() {
     if (!auto) return null;
     return h('p', { style: 'margin-top:12px' }, h('a', { class: 'btn', href: (auto.from || M.from[0]) + '/move-out.html' }, '回舊網址用按鈕搬'));
@@ -342,14 +343,49 @@
     }
     await receive(r.pack, r.hash, '');
   }
-  /* 舊網址自動搬家帶來的(move-in.html 開頭已經從網址拿掉):走跟「貼上搬家碼」同一個 fromText */
-  function startAuto(raw) {
+  /* ---------- 自動搬家的一次性金鑰(四站怎麼走寫在 js/move-link.js 開頭) ----------
+     私鑰只放新網址這個分頁的 sessionStorage(tr_move_key:{ jwk, at }),第四站讀出來就刪:歷史紀錄、錯誤頁、被複製出去的 #auto= 網址
+     在別的分頁、別台、過了 KEY_MS 之後都解不開。 */
+  const KEY = 'tr_move_key', KEY_MS = 10 * 60000;
+  function oldOrigin() { try { const o = new URL(document.referrer).origin; return M.from.indexOf(o) > -1 ? o : M.from[0]; } catch (e) { return M.from[0]; } }
+  function takeKey() {
+    let v = null;
+    try { v = JSON.parse(sessionStorage.getItem(KEY)); } catch (e) { v = null; }
+    try { sessionStorage.removeItem(KEY); } catch (e) { /* 拿不掉:過了 KEY_MS 一樣不收 */ }
+    const age = v && typeof v.at === 'number' ? Date.now() - v.at : NaN;
+    return v && v.jwk && typeof v.jwk === 'object' && age >= 0 && age < KEY_MS ? v.jwk : null;
+  }
+  /* 第二站(#want):產生金鑰、私鑰放這個分頁,帶公鑰回舊網址的寄出頁。做不到(沒有 Web Crypto、sessionStorage 不給寫)就回舊網址原頁面,
+     那一頁照舊顯示按鈕(舊網址這個分頁不會再自動) */
+  async function startWant(w) {
+    const from = oldOrigin();
+    draw(say('拍謝！我們換網址了，因為名字跟別人重疊！正在把舊網址的進度帶過來…'), live);
+    let pub = '';
+    try {
+      const k = await L.newKey();
+      const v = JSON.stringify({ jwk: k.jwk, at: Date.now() });
+      sessionStorage.setItem(KEY, v);
+      if (sessionStorage.getItem(KEY) === v) pub = k.pub;
+    } catch (e) { pub = ''; }
+    location.replace(pub ? L.keyUrl(from, pub, w.back) : from + w.back);
+  }
+  const AUTO_GONE = '這個自動搬家的網址已經用過、過期了，或不是在這個分頁開始的（為了保護你的資料，搬家的內容只有原本那個分頁解得開，而且只能用一次），這次沒有寫入任何東西。舊網址的資料都還在：可以按「回舊網址用按鈕搬」，或用下面的搬家檔、搬家碼。';
+  /* 舊網址自動搬家帶來的(move-in.html 開頭已經從網址拿掉):#want 是第二站;#auto= 是第四站,用這個分頁的私鑰解開(解開前就刪私鑰),
+     再走跟「貼上搬家碼」同一個 fromText。解得開表示整條路是這個分頁、舊網址那一頁開始的,才算可信(可以不問就照預設寫) */
+  async function startAuto(raw) {
     window.MOVE_AUTO_IN = null;   // 搬家碼只留在這一頁的記憶體
+    const w = L.parseWant(raw);
+    if (w) { await startWant(w); return; }
     const a = L.parseAuto(raw);
-    auto = { code: a ? a.code : '', back: a ? a.back : '/', trusted: cameFromOld(), from: '' };
-    if (!a) { draw(say(AUTO_FAIL), backLink(), live, fallbackBox); showFallback(); return; }
+    const jwk = takeKey();
+    auto = { code: '', back: a ? a.back : '/', trusted: false, from: '' };
+    let code = '';
+    if (a && jwk) { try { code = await L.open(jwk, a.code); } catch (e) { code = ''; } }
+    if (!code) { draw(say(AUTO_GONE), backLink(), live, fallbackBox); showFallback(); return; }
+    auto.code = code;
+    auto.trusted = true;
     draw(say('拍謝！我們換網址了，因為名字跟別人重疊！正在把舊網址的進度搬進來…'), live, fallbackBox);
-    fromText(auto.code).catch(() => unusable(''));
+    fromText(code).catch(() => unusable(''));
   }
 
   /* ---------- 開始 ---------- */
@@ -362,7 +398,7 @@
       try { localStorage.removeItem('tr_move_restored'); } catch (e) { /* 只是提示 */ }
       live.textContent = '上次搬到一半就關掉了。已經合併好的留著，其他的換回搬之前的樣子。請再搬一次，把沒搬完的補上。';
     }
-    if (typeof window.MOVE_AUTO_IN === 'string') { startAuto(window.MOVE_AUTO_IN); return; }
+    if (typeof window.MOVE_AUTO_IN === 'string') { startAuto(window.MOVE_AUTO_IN).catch(() => { draw(say(AUTO_FAIL), backLink(), live, fallbackBox); showFallback(); }); return; }
     const opener = window.opener;
     if (!opener) {
       draw(say('沒有從舊網址的搬家頁打開。請在舊網址 ' + M.oldName + ' 打開搬家頁，或用下面的搬家檔、搬家碼。'), live, fallbackBox);

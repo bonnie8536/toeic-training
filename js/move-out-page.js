@@ -1,7 +1,9 @@
 /* 衝衝英文搬家:舊網址的寄出頁 move-out.html(搬家計畫 2.3、2.7、2.9、2.10、3.5)。
    兩下:「準備搬家」(補傳、組包、算雜湊、列摘要;可以慢,不碰新視窗)→「送到新網址」(點擊當下同步開新分頁,網址不帶任何參數)。
    之後只等新網址的 hello,一次送出整包;收到 done 而且雜湊一樣才寫 tr_move_done 與 cookie tr_moved=1。
-   開不出新視窗、等不到、在 LINE 或 Facebook 裡面打開的,改用搬家檔或搬家碼(內容就是同一包加雜湊)。
+   開不出新視窗、等不到的,改用搬家檔或搬家碼(內容就是同一包加雜湊)。
+   LINE、Facebook、Instagram 內建瀏覽器不開新視窗:「搬到新網址」一鍵在同一個分頁搬(MOVE_OUT.startHere,跟每一頁的自動搬家同一條路,
+   搬進同一個 App 裡的新網址);帶著密文的網址放不下(MOVE_LINK.autoLen 超過 AUTO_MAX)才改用搬家碼,貼到同一個分頁打開的新網址收件頁。
    新網址連不上(先等 3 秒,再等 10 秒):只是不給「送到新網址」(改成「再連一次新網址」),準備搬家、搬家檔、搬家碼照樣能用(都不需要新網址)。
    準備搬家時記下這台資料的指紋(MOVE_RULES.fingerprint),搬好時跟雜湊一起存進 tr_move_done;之後指紋不一樣,舊網址每一頁會提示再搬一次。
    有搬不了的項目(太大,summary.tooBig)就不給送出、不給搬家碼與搬家檔,也就不會寫 tr_move_done,並說出是哪一項。
@@ -121,7 +123,7 @@
     const notes = [];
     if (extra) notes.push(extra);
     if (!online) notes.push(say(OFF_NOTE, 'move-note'));
-    if (IN_APP) notes.push(say('你現在是在 LINE、Facebook 或 Instagram 裡面打開的。這裡的進度只存在這個 App 裡，請就在這裡搬：準備好之後按「複製搬家碼」，再用你以後要用的瀏覽器打開新網址貼上。', 'move-note'));
+    if (IN_APP) notes.push(say('你現在是在 LINE、Facebook 或 Instagram 裡面打開的。這裡的進度只存在這個 App 裡，會搬到這個 App 裡的新網址：按「準備搬家」，再按「搬到新網址」。以後在這個 App 裡打開新網址就看得到。', 'move-note'));
     if (IOS_APP) notes.push(say('你現在是在主畫面的 App 裡。主畫面 App 的進度跟 Safari 分開存，要用搬家碼：先在 Safari 打開 ' + M.newName + '，加到主畫面，打開新的 App；再回到這個舊的 App 按「複製搬家碼」，回新的 App 貼上。', 'move-note'));
     const btn = h('button', { class: 'btn primary', type: 'button' }, '準備搬家');
     const msg = h('div', { class: 'result-note' });
@@ -161,7 +163,9 @@
       return;
     }
     let code = '';
-    P.toCode(pack, hash).then((c) => { code = c; }, () => { code = ''; });
+    const coding = P.toCode(pack, hash).then((c) => { code = c; }, () => { code = ''; });
+    /* LINE 等內建瀏覽器:先算好搬家碼,才知道一鍵搬(網址裡放密文)放不放得下 */
+    if (IN_APP) await coding;
     drawReady(pack, hash, summary, () => code, fp);
   }
 
@@ -187,7 +191,18 @@
   function drawReady(pack, hash, s, codeOf, fp) {
     const status = h('div', { class: 'result-note', 'aria-live': 'polite' });
     let child = null, link = null;
+    /* LINE、Facebook、Instagram 內建瀏覽器:開新視窗不可靠,改成一鍵在同一個分頁搬(跟每一頁的自動搬家同一條路:新網址給一次性公鑰、
+       這裡加密才放進網址)。搬到這個 App 裡的新網址(這些 App 的資料跟手機的 Safari、Chrome 分開存)。
+       帶著密文的網址超過 MOVE_LINK.AUTO_MAX 就不給,改用搬家碼:「複製搬家碼」→「打開新網址的搬家頁」(同一個分頁)→ 貼上 */
+    const fits = IN_APP && L.autoLen(M.to, codeOf(), '/') <= L.AUTO_MAX;
+    const here = h('button', { class: 'btn primary', type: 'button' }, '搬到新網址');
+    here.addEventListener('click', () => {
+      here.disabled = true;
+      if (!OUT.startHere('/')) { here.disabled = false; status.textContent = '這個瀏覽器不讓我記下搬家的進度，請改用「複製搬家碼」，再按「打開新網址的搬家頁」貼上。'; return; }
+      status.textContent = '正在把你的進度帶過去…';
+    });
     const send = h('button', { class: 'btn primary', type: 'button' }, '送到新網址');
+    const go = IN_APP ? (fits ? here : null) : send;
     /* 新網址連不上:先不給送出,給「再連一次新網址」;連上了換回送出。搬家檔、搬家碼照樣能用 */
     const retry = h('button', { class: 'btn primary', type: 'button' }, '再連一次新網址');
     retry.addEventListener('click', async () => {
@@ -195,7 +210,8 @@
       status.textContent = '正在連新網址…';
       online = await reach();
       retry.disabled = false;
-      if (online) { retry.replaceWith(send); status.textContent = '連上了，可以按「送到新網址」。'; }
+      if (online && go) { retry.replaceWith(go); status.textContent = '連上了，可以按「' + go.textContent + '」。'; }
+      else if (online) { retry.remove(); status.textContent = '連上了，可以按「複製搬家碼」，再按「打開新網址的搬家頁」貼上。'; }
       else status.textContent = '還是連不上新網址。可以先用「下載搬家檔」或「複製搬家碼」，到新網址打開搬家頁再讀進去。';
     });
     send.addEventListener('click', () => {
@@ -217,9 +233,12 @@
       showCode.replaceWith(ta);
       ta.select();
     } }, '顯示搬家碼');
+    /* 放不下一鍵搬的 LINE 等內建瀏覽器:搬家碼貼到同一個 App 裡的新網址收件頁(同一個分頁打開,資料才會在這個 App 裡) */
+    const pasteHere = IN_APP && !fits ? h('a', { class: 'btn', href: M.to + '/move-in.html' }, '打開新網址的搬家頁') : null;
     draw(say('這台要搬的：'), summaryList(s),
-      h('div', { class: 'modal-row', style: 'flex-wrap:wrap' }, IN_APP || IOS_APP ? null : (online ? send : retry), copy, file, showCode), status,
+      h('div', { class: 'modal-row', style: 'flex-wrap:wrap' }, IOS_APP || (IN_APP && !go) ? null : (online ? go : retry), copy, pasteHere, file, showCode), status,
       IOS_APP ? say('主畫面 App 要用「複製搬家碼」：到新的 App 打開「我的」，按「我有搬家碼或搬家檔」，貼上。', 'move-note') : null,
+      pasteHere ? say('這台的進度比較多，沒辦法一鍵搬：先按「複製搬家碼」，再按「打開新網址的搬家頁」，貼在「貼上搬家碼」那一格。', 'move-note') : null,
       say('搬家檔與搬家碼裡面是你的練習紀錄，不要傳給別人。裡面沒有登入密碼。'),
       directLink(false));
   }

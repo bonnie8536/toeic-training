@@ -18,10 +18,13 @@
      加密,不超過 MOVE_LINK.AUTO_MAX 就帶到 move-in.html#auto=<密文>;新網址合併好帶回 move-out.html#ack=<雜湊>,js/move-out-page.js 用 ackCheck
      核對「送出的那包」與「這台現在的包」一樣才寫 tr_move_done,再帶到新網址的原路徑。
      不自動(照舊顯示下面的按鈕):付款結果頁、主畫面或安裝的 App、按過「等一下再搬」、這個分頁已經試過(sessionStorage 的 tr_move_auto;
-     寫不進去就不試,免得每一頁重來)、等的時候使用者在頁面上點了或按了鍵、模擬考進行中。寄出頁那一站太大、組包失敗、對帳超過 15 秒,
-     就回原頁面顯示按鈕。LINE/Facebook/Instagram 內建瀏覽器一樣自動(同一個分頁換頁,不用開新視窗)。
+     寫不進去就不試,免得每一頁重來)、等的時候使用者在頁面上點了、按了鍵、按下滑鼠或手指碰到螢幕、模擬考進行中。寄出頁那一站太大、組包失敗、
+     對帳與組包超過 SEND_MAX_MS(15 秒),就回原頁面顯示按鈕。倒數的提示黏在頁面頂端、蓋在「你是哪位？」建檔視窗上面,「等一下再搬」一定按得到。
+     LINE/Facebook/Instagram 內建瀏覽器(資料存在那個 App 裡,跟手機的 Safari、Chrome 分開)一樣自動,搬進同一個 App 裡的新網址。
    - 有資料還沒搬、不自動:頁面頂端一條提示,「帶我過去（進度一起搬）」「等一下再搬」;價格、註冊、付款結果頁改成先問要不要先搬。
-   - 登入著、沒有要搬的:提示到新網址重新登入一次;按下去先補傳(CLOUD.flushForMove),剩 0 項才走,有剩就去搬家頁。
+     一般瀏覽器的主按鈕去寄出頁(開新視窗送);LINE 等內建瀏覽器開新視窗不可靠,主按鈕一鍵走自動搬家同一條路(startHere),
+     這個分頁記下太大(網址裝不下)才去寄出頁用搬家碼。
+   - 登入著、沒有要搬的:提示到新網址重新登入一次;按下去先補傳(CLOUD.flushForMove),剩 0 項才走,有剩或 FLUSH_MAX_MS 還沒好就去搬家頁。
    這支只讀 localStorage,除了上面兩個記號、寄出頁組包時的裝置編號(tr_move_device,按鈕搬家本來就會寫)以外不寫任何東西,
    一筆資料都不刪不改。畫面只用 textContent。 */
 (function (root) {
@@ -117,11 +120,14 @@
     if (text) n.textContent = text;
     return n;
   }
-  function bar(text, buttons) {
+  /* z-index 300:蓋在「你是哪位？」建檔視窗(.modal-mask 200;有資料、還沒選學生的訪客一打開要選學生的頁面就是它)與頂端列上面,
+     提示的按鈕一定按得到。sticky:自動搬家倒數時黏在頁面頂端,捲動過也看得到「等一下再搬」 */
+  function bar(text, buttons, sticky) {
     const d = root.document;
     if (d.getElementById('move-bar')) return null;
     const box = el('div', { id: 'move-bar', role: 'region', 'aria-label': '搬家提示',
-      style: 'background:var(--tint-orange,#fff0e1);border-bottom:1px solid var(--line,#e3e8ed);padding:10px 16px;font-size:15px;line-height:1.6;position:relative;z-index:50' });
+      style: 'background:var(--tint-orange,#fff0e1);border-bottom:1px solid var(--line,#e3e8ed);padding:10px 16px;font-size:15px;line-height:1.6;'
+        + (sticky ? 'position:sticky;top:0' : 'position:relative') + ';z-index:300' });
     const inner = el('div', { style: 'max-width:960px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center' });
     inner.appendChild(el('span', { style: 'flex:1 1 260px' }, text));
     buttons.forEach((b) => {
@@ -145,14 +151,20 @@
       if (later()) return;
       if (again) {
         return bar(RENAMED + M.newName + '。這台在上次搬家之後又有新的練習進度，要再搬一次，按下面的按鈕我幫你帶過去。', [
-          { label: '再搬一次', primary: true, href: 'move-out.html' },
+          carry('再搬一次'),
           { label: '等一下再搬', onClick: close },
         ]);
       }
-      /* LINE、Facebook、Instagram 內建瀏覽器走到這裡是自動搬家沒成(太大、這個分頁試過):寄出頁在這裡不能開新視窗送,只能用搬家碼,不說「我幫你帶過去」 */
-      const text = envNow().inApp ? '。這台的練習進度要用搬家碼帶過去：按下面的按鈕，照著搬家頁的說明做。' : '。這台的練習進度，按下面的按鈕，我幫你一起帶過去。';
-      return bar(RENAMED + M.newName + text, [
-        { label: '帶我過去（進度一起搬）', primary: true, href: 'move-out.html' },
+      /* LINE、Facebook、Instagram 內建瀏覽器走到這裡是自動搬家沒有走(這個分頁試過:作答中、出錯、太大)。寄出頁的「送到新網址」要開新視窗,
+         在這些 App 裡不可靠;主按鈕改成一鍵在同一個分頁搬(跟自動搬家同一條路)。太大(網址裝不下)才只能用搬家碼,不說「我幫你帶過去」 */
+      if (inAppBig()) {
+        return bar(RENAMED + M.newName + '。這台的練習進度比較多，要用搬家碼帶過去：按下面的按鈕，照著搬家頁的說明做。', [
+          { label: '帶我過去（進度一起搬）', primary: true, href: 'move-out.html' },
+          { label: '等一下再搬', onClick: close },
+        ]);
+      }
+      return bar(RENAMED + M.newName + '。這台的練習進度，按下面的按鈕，我幫你一起帶過去。', [
+        carry('帶我過去（進度一起搬）'),
         { label: '等一下再搬', onClick: close },
       ]);
     }
@@ -169,7 +181,7 @@
     }
     if (kind === 'ask') {
       return bar(RENAMED + M.newName + '，舊網址不再註冊與付款。這台有' + (again ? '上次搬家之後的新' : '練習') + '進度，我幫你一起帶過去。', [
-        { label: '帶我過去（進度一起搬）', primary: true, href: 'move-out.html' },
+        carry('帶我過去（進度一起搬）'),
         { label: '不用，直接去新網址', onClick: () => go(false) },
       ]);
     }
@@ -180,16 +192,38 @@
     }
     return null;
   }
-  /* 登入著:先補傳,剩 0 項才走;有剩(沒網路、雲端比較新)就去搬家頁 */
+  /* LINE、Facebook、Instagram 內建瀏覽器,而且這個分頁的自動搬家記下「太大」(網址裝不下,只能用搬家碼) */
+  function inAppBig() {
+    if (!envNow().inApp) return false;
+    const m = memo().get();
+    return !!(m && m.step === 'big');
+  }
+  /* 提示的主按鈕:一般瀏覽器去寄出頁(準備搬家 → 送到新網址,開新視窗送);LINE 等內建瀏覽器開新視窗不可靠,
+     網址裝得下就一鍵在同一個分頁搬(startHere,跟自動搬家同一條路),記不住這個分頁開始了就改去寄出頁 */
+  function carry(label) {
+    if (!envNow().inApp || inAppBig()) return { label, primary: true, href: 'move-out.html' };
+    return { label, primary: true, onClick: () => { const l = root.location; if (!startHere(l.pathname + l.search)) l.assign('move-out.html'); } };
+  }
+  /* 登入著:先補傳,剩 0 項才走;有剩(沒網路、雲端比較新)或 FLUSH_MAX_MS 還沒好就去搬家頁(不會一直停在「正在確認進度…」;
+     晚到的結果不再帶走,搬家頁會重新對帳) */
   function leaveLoggedIn(btn) {
     const C = root.CLOUD;
     if (btn) { btn.disabled = true; btn.textContent = '正在確認進度…'; }
-    const run = C && typeof C.flushForMove === 'function' ? C.flushForMove() : Promise.resolve({ left: 0 });
-    return run.then((r) => (r && r.left > 0 ? root.location.assign('move-out.html') : go(true)), () => root.location.assign('move-out.html'));
+    const run = C && typeof C.flushForMove === 'function' ? Promise.resolve().then(() => C.flushForMove()) : Promise.resolve({ left: 0 });
+    const late = {};
+    return withTimeout(run, FLUSH_MAX_MS, late)
+      .then((r) => (r === late || (r && r.left > 0) ? root.location.assign('move-out.html') : go(true)), () => root.location.assign('move-out.html'));
+  }
+  /* p 在 ms 之內沒好就回 late(p 之後才好也不管);p 失敗照樣丟錯 */
+  function withTimeout(p, ms, late) {
+    let tm = null;
+    const t = new Promise((res) => { tm = root.setTimeout(() => res(late), ms); });
+    return Promise.race([p, t]).finally(() => root.clearTimeout(tm));
   }
 
   /* ---------- 自動搬家(有資料、還沒搬;不用按按鈕)。四站怎麼走、為什麼搬家碼不以明文進網址,寫在 js/move-link.js ---------- */
   const CLOUD_WAIT_MS = 8000;
+  const FLUSH_MAX_MS = 12000;   // 跟雲端對帳(CLOUD.flushForMove)最多等這麼久:寄出頁的「準備搬家」改用這台的帳本(跟對帳失敗一樣)、登入提示改去搬家頁,不會一直掛著
   const AUTO_DELAY_MS = 2500;   // 第一站:提示出現後等這麼久才帶走,讓人有時間按「等一下再搬」
   const SEND_MAX_MS = 15000;    // 寄出頁:對帳、組包、加密的總逾時;逾時就回原頁面顯示按鈕,晚到的結果也不帶走
   const KEY_MAX_MS = 10 * 60000;   // 第一站之後這麼久還沒拿到公鑰回來,就當這個分頁沒有在搬
@@ -242,14 +276,18 @@
   }
   /* 「等一下再搬」:這個分頁不再提示、不再自動 */
   function skipAuto() { setLater(); memo().set({ step: 'later', at: Date.now() }); }
-  /* 登入著:先跟雲端對帳(CLOUD.flushForMove),回 { accounts(這個帳號還沒上傳的), uid };沒登入、沒有 cloud.js、對帳失敗回 {}(組包時改用這台的帳本) */
-  async function flushAccounts() {
+  /* 登入著:先跟雲端對帳(CLOUD.flushForMove),回 { accounts(這個帳號還沒上傳的), uid };沒登入、沒有 cloud.js、對帳失敗、
+     超過 maxMs(預設 FLUSH_MAX_MS)還沒好,回 {}(組包時改用這台的帳本:帳本上還沒上傳的照樣放進包) */
+  async function flushAccounts(maxMs) {
     const C = root.CLOUD;
     if (!C) return {};
-    if (C.enabled && C.ready) await Promise.race([Promise.resolve(C.ready).catch(() => {}), new Promise((r) => root.setTimeout(r, CLOUD_WAIT_MS))]);
+    if (C.enabled && C.ready) await withTimeout(Promise.resolve(C.ready).catch(() => {}), CLOUD_WAIT_MS);
     if (!C.user || typeof C.flushForMove !== 'function') return {};
     const uid = typeof C.user.id === 'string' ? C.user.id : undefined;
-    try { return { accounts: (await C.flushForMove()).accounts, uid }; } catch (e) { return {}; }
+    try {
+      const r = await withTimeout(Promise.resolve().then(() => C.flushForMove()), typeof maxMs === 'number' ? maxMs : FLUSH_MAX_MS, null);
+      return r ? { accounts: r.accounts, uid } : {};
+    } catch (e) { return {}; }
   }
   /* 組一包:寄出頁的「準備搬家」(搬家碼、搬家檔、視窗)與自動搬家共用這一個。o:{ from, accounts, uid }
      回 { pack, summary, hash, fp(組包那一刻的指紋), local(不含 accounts 的那包的雜湊,ack 回來時跟這台現在的比) } */
@@ -280,11 +318,20 @@
     if ((await P.hashOf(pack)) !== m.local) return { ok: false, why: 'changed' };
     return { ok: true, fp: m.fp };
   }
+  /* 第一站的網址(格式跟 MOVE_LINK.wantUrl 一樣;一般頁面沒有載 move-link.js,新網址用 parseWant 解、safeBack 過濾) */
+  const wantUrl = (back) => root.MOVE.to + '/move-in.html#want&back=' + encodeURIComponent(back);
+  /* 馬上走第一站(LINE 等內建瀏覽器提示的主按鈕、寄出頁的「搬到新網址」):記下這個分頁開始了(寄出頁那一站才認),帶到新網址拿金鑰。
+     記不住(sessionStorage 不給寫)回 false,不帶走 */
+  function startHere(back) {
+    if (!memo().set({ step: 'key', at: Date.now() })) return false;
+    root.location.replace(wantUrl(back));
+    return true;
+  }
   /* 第一站(舊網址每一頁):提示「正在把你的進度帶過去…」與「等一下再搬」,AUTO_DELAY_MS 之後帶到新網址 move-in.html#want(網址裡沒有任何資料)。
-     等的時候使用者在頁面上點了或按了鍵(作答、按「開始」),或模擬考進行中(body 的 data-leave-confirm,js/mock.js 設的),就不帶走,改畫按鈕。
+     等的時候使用者在頁面上點了、按了鍵、按下滑鼠或手指碰到(作答、按「開始」、捲動),或模擬考進行中(body 的 data-leave-confirm,js/mock.js 設的),就不帶走,改畫按鈕。
      回 'auto'(已經帶走)或不自動的原因;不是 'auto' 時由 start 畫回按鈕 */
   function tryAuto(kind, st) {
-    const M = root.MOVE, l = root.location, d = root.document;
+    const l = root.location, d = root.document;
     const env = envNow();
     const mem = memo();
     const why = autoBlock({ kind, page: pageOf(l.pathname), inApp: env.inApp, standalone: env.standalone, tried: mem.get() !== null, later: later() });
@@ -292,7 +339,8 @@
     if (!mem.set({ step: 'key', at: Date.now() })) return Promise.resolve('session');
     return new Promise((resolve) => {
       let done = false, box = null, timer = null;
-      const EVENTS = ['click', 'keydown'];
+      /* 使用者有動作:點、按鍵、按下滑鼠或手指碰到(手機上開始捲動、作答) */
+      const EVENTS = ['click', 'keydown', 'pointerdown', 'touchstart'];
       const inBar = (t) => { for (let n = t; n; n = n.parentNode) if (n === box) return true; return false; };
       const unlisten = () => { try { EVENTS.forEach((t) => root.removeEventListener(t, onUser, true)); } catch (e) { /* 沒有就算了 */ } };
       const finish = (r, step) => {
@@ -305,16 +353,15 @@
         resolve(r);
       };
       function onUser(e) { if (!inBar(e && e.target)) finish('busy', 'busy'); }
-      try { EVENTS.forEach((t) => root.addEventListener(t, onUser, true)); } catch (e) { /* 聽不到就只靠「等一下再搬」與模擬考的記號 */ }
-      whenBody(() => { if (!done) box = bar(AUTO_TEXT, [{ label: '等一下再搬', onClick: () => { setLater(); finish('later', 'later'); } }]); });
+      try { EVENTS.forEach((t) => root.addEventListener(t, onUser, { capture: true, passive: true })); } catch (e) { /* 聽不到就只靠「等一下再搬」與模擬考的記號 */ }
+      whenBody(() => { if (!done) box = bar(AUTO_TEXT, [{ label: '等一下再搬', onClick: () => { setLater(); finish('later', 'later'); } }], true); });
       timer = root.setTimeout(() => {
         if (done) return;
         const exam = !!(d && d.body && d.body.dataset && d.body.dataset.leaveConfirm);
         if (exam) { finish('busy', 'busy'); return; }
         done = true;
         unlisten();
-        /* 格式跟 MOVE_LINK.wantUrl 一樣(這一頁沒有載 move-link.js);新網址用 parseWant 解、safeBack 過濾 */
-        l.replace(M.to + '/move-in.html#want&back=' + encodeURIComponent(l.pathname + l.search));
+        l.replace(wantUrl(l.pathname + l.search));
         resolve('auto');
       }, AUTO_DELAY_MS);
     });
@@ -330,7 +377,7 @@
     if (!m || m.step !== 'key' || !(age >= 0 && age < KEY_MAX_MS)) return 'memo';
     if (!mem.set({ step: 'build', at: Date.now() })) return 'session';
     const work = (async () => {
-      const acc = await flushAccounts();
+      const acc = await flushAccounts(SEND_MAX_MS);   // 自動搬家不改用帳本:對帳卡住就整段逾時、回原頁面給按鈕
       const b = await buildPack(root.localStorage, { from: l.origin, accounts: acc.accounts, uid: acc.uid });
       if (b.summary.tooBig.length || !b.summary.hasData) return { why: 'skip' };
       const url = L.autoUrl(M.to, await L.seal(o.pub, await P.toCode(b.pack, b.hash)), o.back);
@@ -383,6 +430,6 @@
   }
 
   root.MOVE_OUT = Object.freeze({ decide, pageOf, stateOf, flags, ping, start, cleanup, go, target,
-    envOf, autoBlock, buildPack, flushAccounts, ackCheck, tryAuto, autoSend, skipAuto, AUTO_TEXT, autoRun: () => autoRun });
+    envOf, autoBlock, buildPack, flushAccounts, ackCheck, tryAuto, startHere, autoSend, skipAuto, AUTO_TEXT, autoRun: () => autoRun });
   if (root.MOVE && root.MOVE.onOld && !root.MOVE_OUT_NO_AUTO) start();
 })(typeof window !== 'undefined' ? window : globalThis);

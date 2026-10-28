@@ -182,6 +182,15 @@
     if (!SEALED.test(String(sealed || ''))) throw new Error('只放加密過的搬家碼,明文不進網址');
     return to + '/move-in.html#auto=' + sealed + backPart(back);
   }
+  /* 搬家碼(明文)加密之後放進 autoUrl 會有多長,不用真的加密:寄出頁先判斷能不能一鍵搬(LINE 等內建瀏覽器)。
+     密文 = 第一個位元組(是不是 gzip)+ 搬家碼解開 base64 的位元組 + AES-GCM 的 16 位元組標籤;臨時公鑰 87 字、iv 16 字。不是搬家碼回 Infinity */
+  function autoLen(to, code, back) {
+    const m = PLAIN.exec(String(code || ''));
+    if (!m) return Infinity;
+    const pad = (/=+$/.exec(m[2]) || [''])[0].length;
+    const bytes = Math.floor(m[2].length * 3 / 4) - pad;
+    return (to + '/move-in.html#auto=RU1E:').length + 87 + 1 + 16 + 1 + Math.ceil((bytes + 1 + 16) * 4 / 3) + backPart(back).length;
+  }
   /* '#auto=…&back=…' → { code(密文), back } 或 null */
   function parseAuto(h) {
     const m = /^#auto=([^&]*)(?:&back=([^&]*))?$/.exec(String(h || ''));
@@ -200,5 +209,5 @@
   }
 
   root.MOVE_LINK = Object.freeze({ newNonce, sender, receiver, AUTO_MAX, safeBack, newKey, seal, open, wantUrl, parseWant, keyUrl, parseKey,
-    autoUrl, parseAuto, ackUrl, parseAck });
+    autoUrl, autoLen, parseAuto, ackUrl, parseAck });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

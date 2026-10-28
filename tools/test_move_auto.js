@@ -98,6 +98,16 @@ T['上限:整個網址 48 KB(Safari 約 8 萬字、Firefox 網址列 65536 字�
   const L = loadLink();
   assert.equal(L.AUTO_MAX, 48 * 1024);
 };
+T['autoLen:不用加密就算得出帶著密文的網址有多長(寄出頁先判斷能不能一鍵搬),跟真的加密出來的一樣長'] = async () => {
+  const L = loadLink();
+  const k = await L.newKey();
+  for (const code of ['RU1Z:H4sIAAAAAAAAAwMAAAAAAAAAAAA=', 'RU1:eyJwYWNrIjp7fX0=', 'RU1:eyJwYWNrIjp7fX0', 'RU1Z:' + Buffer.from(noise(5000)).toString('base64')]) {
+    for (const back of ['/', '/vocab.html?x=1']) {
+      assert.equal(L.autoLen(NEW, code, back), L.autoUrl(NEW, await L.seal(k.pub, code), back).length, code.slice(0, 12) + ' ' + back);
+    }
+  }
+  assert.equal(L.autoLen(NEW, 'not a code', '/'), Infinity);
+};
 T['原路徑:只收本站的路徑與查詢字串;別的網站、// 開頭、反斜線、javascript:、太長的都改成 /'] = () => {
   const L = loadLink();
   assert.equal(L.safeBack('/vocab.html?x=1'), '/vocab.html?x=1');
@@ -208,8 +218,25 @@ T['按「等一下再搬」:不帶走,這個分頁不再提示也不再自動'] 
   assert.equal(o.sess.get('tr_move_later'), '1');
   assert.equal(o.barText(), '', '提示拿掉,也不畫按鈕');
 };
-T['使用者在頁面上有動作(點、按鍵):不帶走,改顯示按鈕(作答到一半不會被整頁帶走)'] = async () => {
-  for (const type of ['click', 'keydown']) {
+T['自動搬家的提示蓋在「你是哪位？」建檔視窗(.modal-mask,z-index 200)上面、捲動也看得到:「等一下再搬」一定按得到'] = async () => {
+  const o = loadOld({ ls: { tr_vgame_banks: BANKS }, scale: 50 });
+  assert.equal(await o.O.start(), 'bar');
+  const style = o.bars[0].attrs.style;
+  const z = Number((/z-index:\s*(\d+)/.exec(style) || [])[1]);
+  assert.ok(z > 200, '提示的 z-index 要大於建檔視窗的 200:' + style);
+  assert.match(style, /position:\s*sticky/, '自動搬家倒數時黏在頁面頂端');
+  assert.match(style, /top:\s*0/);
+  o.click('等一下再搬');
+  await o.O.autoRun();
+  /* 沒有自動時的按鈕提示也要在建檔視窗上面(有資料、還沒選學生的訪客,一打開就是建檔視窗) */
+  const p = loadOld({ ls: { tr_vgame_banks: BANKS }, session: { tr_move_auto: J({ step: 'busy' }) } });
+  await p.O.start();
+  await p.O.autoRun();
+  const z2 = Number((/z-index:\s*(\d+)/.exec(p.bars[0].attrs.style) || [])[1]);
+  assert.ok(z2 > 200, '按鈕提示的 z-index 也要大於 200');
+};
+T['使用者在頁面上有動作(點、按鍵、手指碰到、按下滑鼠):不帶走,改顯示按鈕(作答到一半不會被整頁帶走)'] = async () => {
+  for (const type of ['click', 'keydown', 'pointerdown', 'touchstart']) {
     const o = loadOld({ ls: { tr_vgame_banks: BANKS }, path: '/mock.html', scale: 50 });
     assert.equal(await o.O.start(), 'bar');
     o.fire(type);
@@ -254,16 +281,54 @@ T['LINE 內建瀏覽器也自動(同一個分頁換頁);iPhone 主畫面 App 照
   assert.equal(a.loc.replaced, null);
   assert.equal(a.sess.has('tr_move_auto'), false, '沒試就不記');
 };
-T['LINE 內建瀏覽器沒有自動成功時(這個分頁試過):提示不說「我幫你一起帶過去」,說要照著搬家頁做'] = async () => {
-  const l = loadOld({ ls: { tr_vgame_banks: BANKS }, ua: UA_IPHONE + ' Line/13.0.0', session: { tr_move_auto: J({ step: 'big' }) } });
+T['LINE 內建瀏覽器沒有自動(這個分頁試過、作答中):提示的主按鈕一鍵在同一個分頁搬(不開新視窗);太大才說用搬家碼'] = async () => {
+  /* 試過但不是太大(作答中、出錯):按一下就走自動搬家同一條路(第一站 #want,網址裡沒有資料) */
+  const l = loadOld({ ls: { tr_vgame_banks: BANKS }, ua: UA_IPHONE + ' Line/13.0.0', path: '/vocab.html', search: '?x=1', session: { tr_move_auto: J({ step: 'busy' }) } });
   await l.O.start();
-  await l.O.autoRun();
-  assert.doesNotMatch(l.barText(), /我幫你一起帶過去/);
-  assert.match(l.barText(), /搬家頁/);
+  assert.equal(await l.O.autoRun(), 'tried');
+  assert.match(l.barText(), /我幫你一起帶過去/);
+  const btn = l.buttons().find((b) => b.textContent === '帶我過去（進度一起搬）');
+  assert.ok(btn && !btn.attrs.href, 'LINE 裡的主按鈕不是去寄出頁的連結(寄出頁的「送到新網址」要開新視窗)');
+  l.click('帶我過去（進度一起搬）');
+  assert.equal(l.loc.replaced, NEW + '/move-in.html#want&back=' + encodeURIComponent('/vocab.html?x=1'));
+  assert.equal(JSON.parse(l.sess.get('tr_move_auto')).step, 'key', '寄出頁那一站認得是這個分頁開始的');
+  /* 太大:網址裝不下,只能用搬家碼 */
+  const b = loadOld({ ls: { tr_vgame_banks: BANKS }, ua: UA_IPHONE + ' Line/13.0.0', session: { tr_move_auto: J({ step: 'big' }) } });
+  await b.O.start();
+  await b.O.autoRun();
+  assert.doesNotMatch(b.barText(), /我幫你一起帶過去/);
+  assert.match(b.barText(), /搬家碼/);
+  assert.equal(b.buttons().find((x) => x.textContent === '帶我過去（進度一起搬）').attrs.href, 'move-out.html');
+  /* LINE 裡記不住這個分頁開始了(sessionStorage 不給寫):改去寄出頁 */
+  const n = loadOld({ ls: { tr_vgame_banks: BANKS }, ua: UA_IPHONE + ' Line/13.0.0', session: 'none' });
+  await n.O.start();
+  await n.O.autoRun();
+  n.click('帶我過去（進度一起搬）');
+  assert.equal(n.loc.replaced, null);
+  assert.equal(n.loc.assigned, 'move-out.html');
+  /* 一般瀏覽器照舊:去寄出頁(有「送到新網址」) */
   const p = loadOld({ ls: { tr_vgame_banks: BANKS }, session: { tr_move_auto: J({ step: 'big' }) } });
   await p.O.start();
   await p.O.autoRun();
   assert.match(p.barText(), /我幫你一起帶過去/, '一般瀏覽器照舊(寄出頁有「送到新網址」)');
+  assert.equal(p.buttons().find((x) => x.textContent === '帶我過去（進度一起搬）').attrs.href, 'move-out.html');
+};
+T['跟雲端對帳(flushForMove)一直不回:flushAccounts 有逾時,回 {}(改用這台的帳本),寄出頁的「準備搬家」不會一直掛著'] = async () => {
+  const U = '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72';
+  const cloud = { enabled: true, ready: Promise.resolve(), user: { id: U }, flushForMove: () => new Promise(() => {}) };
+  const o = loadOld({ ls: { 'sb-abc-auth-token': '{}', tr_hist: HIST }, cloud, scale: 100 });
+  const r = await Promise.race([o.O.flushAccounts(), sleep(1500).then(() => 'hang')]);
+  assert.deepEqual(J(r), J({}));
+};
+T['登入著、沒有要搬的:按「前往新網址」對帳卡住,逾時就去搬家頁,不會一直停在「正在確認進度…」'] = async () => {
+  const U = '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72';
+  const cloud = { enabled: true, ready: Promise.resolve(), user: { id: U }, flushForMove: () => new Promise(() => {}) };
+  const o = loadOld({ ls: { 'sb-abc-auth-token': '{}' }, cloud, scale: 100 });
+  assert.equal(await o.O.start(), 'login');
+  o.click('前往新網址');
+  for (let i = 0; i < 30 && !o.loc.assigned; i++) await sleep(50);
+  assert.equal(o.loc.assigned, 'move-out.html');
+  assert.equal(o.loc.replaced, null);
 };
 T['新網址連不上、搬過了、沒資料:不自動'] = async () => {
   const a = loadOld({ ls: { tr_vgame_banks: BANKS }, ping: 'fail' });
@@ -421,6 +486,8 @@ T['舊網址寄出頁:開頭拿掉 #ack= 與 #key=;組包跟按鈕搬家共用 M
   assert.ok(/OUT\.buildPack\(/.test(src), '寄出頁要用 MOVE_OUT.buildPack');
   assert.ok(/OUT\.ackCheck\(/.test(src));
   assert.ok(/OUT\.autoSend\(/.test(src));
+  assert.ok(/OUT\.startHere\(/.test(src) && /L\.autoLen\(/.test(src), 'LINE 等內建瀏覽器:寄出頁有一鍵在同一個分頁搬(放得下才給)');
+  assert.doesNotMatch(src, /再用你以後要用的瀏覽器打開新網址貼上/, 'LINE 裡的進度搬進 LINE 裡的新網址');
 };
 T['說明與實作一致:不再有「搬家碼放進網址、replaceState 就不留紀錄」的說法'] = () => {
   for (const f of ['js/move-link.js', 'js/move-out.js', 'js/move-in-page.js', 'move-in.html']) {

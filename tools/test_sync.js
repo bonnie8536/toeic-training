@@ -49,7 +49,7 @@ function makeClient(w) {
         if (w.sessionUser) return { data: { session: { user: w.sessionUser } } };   // supabase-js 手上是另一個帳號(或 null:沒有登入)
         if (w.offline && w.tokenExpired) return { data: { session: null }, error: { message: 'TypeError: Failed to fetch' } };
         /* w.authFromStorage:跟真的 supabase-js 一樣看這台 localStorage 的登入資料(別的分頁登出清掉了就是沒登入) */
-        if (w.authFromStorage) { const u = storedUser(w); return { data: { session: u ? { user: u } : null }, error: null }; }
+        if (w.authFromStorage) { const u = storedUser(w); return { data: { session: u ? (w.withToken ? { user: u, access_token: 'tok-' + u.id } : { user: u }) : null }, error: null }; }   // withToken:付款要的登入憑證(情境 63)
         return { data: { session: { user: USER } } };
       },
       /* w.loginAs:這次登入的是別的帳號(換帳號) */
@@ -71,12 +71,22 @@ function makeClient(w) {
         if (!w.local.getItem(SB_KEY)) { emit('SIGNED_OUT'); return { error: null }; }
         if (w.offline && w.tokenExpired) return { error: { message: 'TypeError: Failed to fetch' } };
         (w.signOuts = w.signOuts || []).push(scope);
+        (w.signOutAs = w.signOutAs || []).push((storedUser(w) || {}).id || null);   // 用這台現在的登入資料登出的是哪個帳號(情境 63)
         if (w.offline) { w.local.removeItem(SB_KEY); emit('SIGNED_OUT'); return { error: { message: 'TypeError: Failed to fetch' } }; }
         if (scope === 'global') w.otherDevice = false;
         w.local.removeItem(SB_KEY); emit('SIGNED_OUT'); return { error: null };
       },
+      /* 改暱稱、改密碼(情境 63):跟真的一樣作用在這台現在的登入資料那個帳號上;w.authCalls 記下作用在誰身上 */
+      updateUser: async attrs => {
+        const u = storedUser(w);
+        (w.authCalls = w.authCalls || []).push({ op: 'updateUser', as: u ? u.id : null, attrs: JSON.parse(JSON.stringify(attrs || {})) });
+        if (!u) return { data: { user: null }, error: { message: 'Auth session missing!' } };
+        const meta = attrs && attrs.data ? Object.assign({}, u.user_metadata, attrs.data) : u.user_metadata;
+        return { data: { user: Object.assign({}, u, { user_metadata: meta }) }, error: null };
+      },
     },
-    rpc: async () => ({ error: null }),
+    /* 資料庫函式(刪除帳號、加入班級、老師試用…):跟真的一樣用這台現在的登入資料;w.rpcs 記下呼叫了什麼、作用在誰身上(情境 63) */
+    rpc: async fn => { (w.rpcs = w.rpcs || []).push({ fn, as: (storedUser(w) || {}).id || null }); return { error: null }; },
     from(table) {
       const q = { op: null, filters: {}, row: null };
       const b = {
@@ -141,8 +151,13 @@ function loadPage(w, src) {
       createElement() { return {}; },
       head: { appendChild(el) { if (w.sdkFail && el.onerror) setImmediate(el.onerror); } },   // 雲端元件沒快取又沒網路
     },
-    confirm: msg => { w.confirms.push(msg); return w.confirmAnswer; },
+    confirm: msg => { w.confirms.push(msg); if (w.onConfirm) { const f = w.onConfirm; w.onConfirm = null; f(); } return w.confirmAnswer; },   // onConfirm:確認視窗開著的時候發生的事(情境 63)
     navigator: { get onLine() { return w.lieFi ? true : !w.offline; } },   // lieFi:手機以為有網路,其實連不出去
+    /* 付款(startCheckout 打 Edge Function):w.fetches 記下送了幾次、帶的是誰的登入憑證(情境 63) */
+    fetch: async (url, init) => {
+      const m = /tok-(.+)$/.exec(String((init && init.headers && init.headers.Authorization) || ''));
+      (w.fetches = w.fetches || []).push({ url: String(url), as: m ? m[1] : null });
+      return { status: 200, ok: true, json: async () => ({ action: 'https://pay', fields: {}, order_no: 'o1' }) }; },
   };
   ctx.window = ctx;
   ctx.addEventListener = (ev, fn) => { (listeners['win:' + ev] = listeners['win:' + ev] || []).push(fn); };
@@ -1276,6 +1291,93 @@ const scenarios = {
     };
     const rs = [await one('讀失敗', true), await one('還在讀', true), await one('讀失敗', false), await two()];
     return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
+  },
+  /* 審查 D(e49e444 就有):帳號層級的動作送出時,supabase-js 用的是這台 localStorage 現在的登入資料,不是這一頁記憶體裡的 CLOUD.user。
+     分頁 A 畫面是帳號 X、沒重載,別的分頁登出 X、改登入 Y:A 按「刪除帳號」刪掉的是 Y 的帳號與雲端進度(接著把 Y 登出),
+     「登出」「登出所有裝置」登出的是 Y,「改暱稱」「改密碼」改的是 Y,加入班級、老師試用開在 Y 身上。
+     要的是:送出前這台的目前帳號(tr_current_profile)與登入資料不是畫面上這個帳號,就一個請求都不送、不問、不重載,丟 code 'account_gone'
+     (js/profile.js 開「這個帳號已經在別的分頁登出」卡),本機、分頁暫存、雲端一個字都不動。
+     三種:別的分頁換帳號、只登出、剛在別的分頁登入 Y(登入資料已經是 Y,還在查教師身分、目前帳號還沒改)。
+     別的分頁登出又登回 X、平常登入著的頁面:照常送,作用在 X 身上 */
+  '63. 分頁 A 畫面是帳號 X、沒重載,別的分頁登出 X 改登入 Y(或只登出、或剛登入 Y):A 按刪除帳號、登出、登出所有裝置、改暱稱、改密碼、加入班級、老師試用、付款,一個請求都不送,什麼都不動;登回 X、平常登入著照常送': async src => {
+    const ACTS = {
+      刪除帳號: C => C.deleteAccount(),
+      登出: C => C.logout(),
+      登出所有裝置: C => C.logout({ everywhere: true }),
+      改暱稱: C => C.updateName('新暱稱'),
+      改密碼: C => C.updatePassword('new-pass-123'),
+      加入班級: C => C.joinClass('ABCD2345'),
+      老師試用: C => C.startTeacherTrial(10, '週六班'),
+      付款: C => C.startCheckout('student_month', '2026-11-01T01:30:00.000Z'),
+    };
+    const who = id => (id === USER.id ? 'X' : id === OTHER_USER.id ? 'Y' : String(id));
+    /* A 灌過、之後一直沒重載;另一個分頁 B 照 how 改這台的登入 */
+    const setup = async how => {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true; w.withToken = true;
+      w.db.push({ user_id: USER.id, k: K, v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      w.db.push({ user_id: OTHER_USER.id, k: K, v: ['y1'], updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const sA = w.session;
+      const pgA = await openLoggedIn(w, src);
+      if (how === '剛登入 Y') w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'b', user: OTHER_USER }));   // B(訪客畫面)送出 Y 的密碼,還在查教師身分
+      else if (how !== '平常') {
+        w.session = makeStorage();
+        let pgB = loadPage(w, src); await pgB.ready; pgB = loadPage(w, src); await pgB.ready;   // B 也灌過
+        await pgB.ctx.CLOUD.logout(); await tick();
+        pgB = loadPage(w, src); await pgB.ready;                       // B 重載成訪客
+        const as = how === '換帳號' ? OTHER_USER : how === '登回 X' ? USER : null;
+        if (as) { w.loginAs = as; await pgB.ctx.CLOUD.login(as.email, 'test-only'); await tick(); w.loginAs = null; }
+        w.session = sA;
+      }
+      return { w, pgA };
+    };
+    const run = async (how, act) => {
+      const { w, pgA } = await setup(how);
+      const n = k => (w[k] || []).length;
+      const n0 = { rpcs: n('rpcs'), authCalls: n('authCalls'), signOutAs: n('signOutAs'), fetches: n('fetches') };
+      const before = snapshot(w), r0 = w.reloads, c0 = w.confirms.length;
+      let err = null;
+      try { await ACTS[act](pgA.ctx.CLOUD); } catch (e) { err = e; }
+      await tick();
+      const sent = [].concat(
+        (w.rpcs || []).slice(n0.rpcs).map(x => x.fn + '@' + who(x.as)),
+        (w.authCalls || []).slice(n0.authCalls).map(x => x.op + '@' + who(x.as)),
+        (w.signOutAs || []).slice(n0.signOutAs).map(x => 'signOut@' + who(x)),
+        (w.fetches || []).slice(n0.fetches).map(x => 'checkout@' + who(x.as)));
+      return { how, act, err: err ? (err.code || '') + ':' + err.message : '', code: err && err.code, sent, same: snapshot(w) === before, reloaded: w.reloads > r0, asked: w.confirms.length > c0 };
+    };
+    const bad = [];
+    for (const how of ['換帳號', '只登出', '剛登入 Y']) {
+      for (const act of Object.keys(ACTS)) {
+        const r = await run(how, act);
+        if (!(r.code === 'account_gone' && !r.sent.length && r.same && !r.reloaded && !r.asked)) bad.push(r);
+      }
+    }
+    /* 有還沒同步的進度、問「確定要登出？」的時候別的分頁換成 Y(登入資料、目前帳號都是 Y):按確定之後也不能登出 Y、不刪 X 這台的進度 */
+    {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      w.db.push({ user_id: USER.id, k: K, v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const pgA = await openLoggedIn(w, src);
+      w.offline = true; w.lieFi = true;
+      studentWrites(pgA, w, K, FIVE.concat(['off-1'])); await pgA.runTimers();   // 傳不上去,帳本記著
+      const yPid = 'c' + OTHER_USER.id.replace(/-/g, '');
+      w.onConfirm = () => { w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'b', user: OTHER_USER })); w.local.setItem('tr_current_profile', JSON.stringify(yPid)); };
+      const c0 = w.confirms.length, r0 = w.reloads, o0 = (w.signOutAs || []).length;
+      let err = null;
+      try { await pgA.ctx.CLOUD.logout(); } catch (e) { err = e; }
+      await tick();
+      const r = { how: '問的時候換帳號', act: '登出', err: err ? (err.code || '') + ':' + err.message : '', sent: (w.signOutAs || []).slice(o0).map(x => 'signOut@' + who(x)),
+        same: (storedUser(w) || {}).id === OTHER_USER.id && w.local.getItem('tr_current_profile') === JSON.stringify(yPid) && same(lv(w, K), FIVE.concat(['off-1'])) && w.local.getItem(LEDGER) !== null,
+        reloaded: w.reloads > r0, asked: w.confirms.length > c0 };
+      if (!(err && err.code === 'account_gone' && !r.sent.length && r.same && !r.reloaded && r.asked)) bad.push(r);
+    }
+    for (const how of ['平常', '登回 X']) {
+      for (const act of Object.keys(ACTS)) {
+        const r = await run(how, act);
+        if (r.err || !r.sent.length || !r.sent.every(s => /@X$/.test(s))) bad.push(r);
+      }
+    }
+    return { ok: !bad.length, detail: bad.length ? '不對的 ' + bad.length + ' 項:' + bad.map(r => r.how + '/' + r.act + ' 送了 ' + (r.sent.join(',') || '沒有') + ' 錯誤 ' + (r.err || '沒有') + ' 沒動 ' + r.same + ' 重載 ' + r.reloaded + ' 問了 ' + r.asked).join(' | ')
+      : '換帳號、只登出、剛登入 Y × 8 個動作都沒送、什麼都沒動;平常、登回 X 都照常送到 X' };
   },
 };
 const FIVE = ['q1', 'q2', 'q3', 'q4', 'q5'];

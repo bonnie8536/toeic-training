@@ -12,6 +12,21 @@ const { FX, SRC, ACC, OWNER_ID, ALL, clone, rowBy, DATE, DAY, isoOf, world, sett
   rowOf, btn, dlg, field, radio, setVal, pick, ok, cancel, lines, warns, onlyOwnerRpcs, run } = K;
 
 const cases = {
+  /* 審查 D:owner_* 送出時用的是這台現在的登入資料。別的分頁登出、換了帳號(CLOUD.accountCheck 回原因)就不送,回那句話;
+     平常(回空字串)、舊版 cloud.js 沒有 accountCheck 照常送 */
+  '別的分頁登出、換了帳號:owner_* 一個都不送,回那句話;平常照常送': async () => {
+    const GONE = '這個帳號已經在別的分頁登出，剛剛按的沒有送出。請重新整理這一頁。';
+    const w = world(); const { ctx, O } = context(w, { paid: true });
+    let gone = GONE;
+    ctx.CLOUD.accountCheck = () => gone;
+    const a = await O.api.setRole({ p_who: 'x', p_role: 'student', p_note: null });
+    const b = await O.api.lookup('x');
+    const sent = w.rpcs.length;
+    gone = '';
+    await O.api.lookup('x');
+    const ok = !a.ok && a.message === GONE && !b.ok && b.message === GONE && sent === 0 && w.rpcs.length === 1 && w.rpcs[0][0] === 'owner_lookup';
+    return { ok, detail: JSON.stringify({ a: a.message, b: b.message, sent, after: w.rpcs.map(r => r[0]) }) };
+  },
   /* ---------- 純邏輯 ---------- */
   '分類按鈕:13 個 p_filter 跟資料庫的清單一樣(從 fixture 的錯誤訊息讀),文字照九.8,老師四個小按鈕標 sub': () => {
     const { O } = context(world(), { paid: true });

@@ -542,6 +542,10 @@ function syncScenarios() {
      (第 1 步那版、e49e444 都會紅:照空畫面整份寫回,雲端寫作紀錄被蓋成只剩一課),不比,只要新版通過
    - 61:確認登入(查教師身分)時別的分頁登出:不寫回目前帳號、不記帳(第 1 步那版、e49e444 會紅:雲端錯題本被蓋成只剩新那一題),不比,只要新版通過
    - 62(不是例外):雲端沒有進度的帳號,另一個分頁正在灌或灌失敗,灌好的分頁照常作答;跟第 1 步那版逐位元組相同(這個分支 4ea2c29 會紅)
+   審查 D(2026-11-01,e49e444 就有):
+   - 63:別的分頁登出、換帳號後沒重載的分頁按刪除帳號、登出、改暱稱、加入班級這些帳號層級的動作,不能作用在別的分頁登入的那個人身上
+     (第 1 步那版、e49e444 都會紅:delete_own_account、signOut、updateUser 用的是 Y 的登入資料),不比,只要新版通過。
+     情境裡「平常登入著」「登回同一個帳號」那幾項照常送,也要新版通過
    新版那一邊的 tr_cloud_seen_<帳號 id> 一律先拿掉再比(見 otherState)。
    1~51、56、62 照樣逐位元組比(平常登入、重新整理、離線、兩台裝置、登出的請求與儲存都沒變) */
 function dropNullUpload(state, key) {
@@ -552,7 +556,7 @@ function dropNullUpload(state, key) {
   return J(o);
 }
 const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null, '52': null, '53': null, '54': null, '55': null, '57': 'state', '58': null,
-  '59': null, '60': null, '61': null };
+  '59': null, '60': null, '61': null, '63': null };
 const intended = name => Object.prototype.hasOwnProperty.call(INTENDED, name.split('.')[0]);
 async function replay(variant) {
   const make = syncScenarios();

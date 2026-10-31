@@ -23,7 +23,8 @@
         h('div', null, CLOUD.nameOf(CLOUD.user), h('span', { style: 'color:var(--ink-light)' }, ' ' + (CLOUD.user.email || ''))),
         h('div', { class: 'auth-row' },
           h('a', { class: 'btn primary', href: 'index.html' }, '回首頁'),
-          h('button', { class: 'btn', type: 'button', onclick: () => CLOUD.logout() }, '登出'))));
+          /* 別的分頁已經登出、換了帳號就不登出,開「這個帳號已經在別的分頁登出」卡(js/profile.js,審查 D) */
+          h('button', { class: 'btn', type: 'button', onclick: e => (window.PROFILE && PROFILE.logout ? PROFILE.logout(e) : CLOUD.logout()) }, '登出'))));
       return;
     }
 

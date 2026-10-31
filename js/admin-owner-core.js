@@ -415,6 +415,9 @@
   async function rpc(fn, args) {
     const C = window.CLOUD;
     if (!C || !C.client) return { ok: false, message: NET_MSG };
+    /* 送出時用的是這台現在的登入資料:別的分頁登出、換了帳號(這一頁沒重載)就不送(審查 D) */
+    const gone = typeof C.accountCheck === 'function' ? C.accountCheck() : '';
+    if (gone) return { ok: false, message: gone };
     try {
       const r = await C.client.rpc(fn, args);
       if (r && r.error) return { ok: false, message: messageOf(r.error), net: isNetwork(r.error) };

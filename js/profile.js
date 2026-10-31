@@ -208,17 +208,19 @@
        js/cloud.js afterAuth 沒灌資料、這一頁沒重載。作答照樣擋下(這時寫進訪客的資料夾,之後照帳號資料夾裡的舊值上傳會蓋掉雲端那一列),
        但頂欄顯示的是他的名字,不能叫他「登入之後才能作答」:請他重新整理,下一頁的資料夾就是這個帳號的,會重灌雲端進度(第 4 輪審查 #2)。
        跟本機的「你是哪位？」一樣可以關(X、Esc、點遮罩),關掉焦點回到被按的那個東西 */
-    function showReload(opener) {
+    /* account:帳號層級的動作(登出、刪除帳號、改暱稱、加入班級…)被擋下開的(審查 D):一定是「已經在別的分頁登出」那張,
+       說的是剛剛那一下沒有送出,不說作答 */
+    function showReload(opener, account) {
       if (document.querySelector('.modal-mask')) return null;
       /* 別的分頁已經登出、換了帳號(js/common.js accountBlock 回 'gone'):這一頁頂欄還是原帳號,但不能跟他說「你已經登入了」(第 2 輪審查) */
-      const gone = typeof accountBlock === 'function' && accountBlock() === 'gone';
+      const gone = !!account || (typeof accountBlock === 'function' && accountBlock() === 'gone');
       const title = gone ? '這個帳號已經在別的分頁登出' : '還沒載入你的練習紀錄';
       const btn = h('button', { class: 'btn primary', type: 'button', onclick: () => location.reload() }, '重新整理');
       const box = h('div', { class: 'modal modal-gate modal-reload', role: 'dialog', 'aria-modal': 'true', 'aria-label': title, 'aria-describedby': 'reload-why' },
         h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }),
         h('h2', null, title),
         h('p', { class: 'modal-why', id: 'reload-why' }, gone
-          ? '這一頁還是登出前的畫面，先不能作答。重新整理一次，就會換成這台現在的登入狀態。'
+          ? '這一頁還是登出前的畫面，' + (account ? '剛剛按的沒有送出' : '先不能作答') + '。重新整理一次，就會換成這台現在的登入狀態。'
           : '你已經登入了，但這一頁還沒從雲端拿到你的練習紀錄，先不能作答。重新整理一次就會載入。'),
         gone ? null : h('p', { class: 'modal-sub' }, '一直出現的話，請檢查網路連線。'),
         h('div', { class: 'modal-row' }, btn));
@@ -253,6 +255,9 @@
       askToAct,
       /* store 與作答紀錄的最後一道(js/common.js canKeepProgress):內容頁、頁面載完之後、不能作答 → 不寫 */
       blocksWrite: () => gateMode() === 'action' && document.readyState !== 'loading' && !canAct(),
+      /* 審查 D:帳號層級的動作被擋下時開「這個帳號已經在別的分頁登出」卡(js/classes.js、教師後台、signup.js 用) */
+      accountGone: (opener) => goneCard(opener),
+      logout: (e) => logoutHere(e),
     };
 
     if (gateMode() === 'action') installActionGate(canAct, askToAct);
@@ -309,7 +314,7 @@
         const inst = installItem(menu);
         if (inst) menu.append(inst);
         menu.append(h('div', { class: 'pm-sep' }));
-        menu.append(h('button', { class: 'pm-item danger', type: 'button', onclick: () => CLOUD.logout() }, '登出'));
+        menu.append(h('button', { class: 'pm-item danger', type: 'button', onclick: logoutHere }, '登出'));
         menu.append(h('button', { class: 'pm-item danger', type: 'button', onclick: deleteUser }, '刪除帳號'));
       }
     }
@@ -336,24 +341,50 @@
       topbar.append(note);
     }
 
+    /* 帳號層級的動作(登出、登出所有裝置、刪除帳號、改暱稱;審查 D,e49e444 就有):supabase-js 送出時用的是這台現在的登入資料。
+       別的分頁登出這個帳號、改登入別人之後,這一頁沒重載、畫面還是原帳號,按下去會作用在別的分頁登入的那個人身上(刪除帳號會刪掉他的帳號與雲端進度)。
+       這台現在的登入不是畫面上這個帳號(js/cloud.js accountCheck)就不問、不送,開「這個帳號已經在別的分頁登出」卡。
+       按確認視窗的時候別的分頁也可能剛好換人:js/cloud.js 送出前會再確認一次,那時丟出來的 code 'account_gone' 一樣開這張卡,不跳 alert。
+       平常登入著的頁面照舊。舊版 cloud.js 沒有 accountCheck 就照舊 */
+    const accountMoved = () => typeof CLOUD.accountCheck === 'function' && !!CLOUD.accountCheck();
+    const isGone = err => !!err && err.code === 'account_gone';
+    function goneCard(opener) {
+      hideMenus();
+      return showReload(opener || document.activeElement, true);
+    }
+    const openerOf = e => (e && e.currentTarget && e.currentTarget.nodeType === 1 ? e.currentTarget : null);
+
+    /* 頭像選單、「我的」頁、signup.html 的「登出」。其他錯誤跟以前一樣不接 */
+    function logoutHere(e) {
+      const opener = openerOf(e);
+      if (accountMoved()) { goneCard(opener); return; }
+      CLOUD.logout().catch(err => { if (isGone(err)) goneCard(opener); else throw err; });
+    }
+
     /* 改暱稱、刪除帳號:頭像選單與「我的」頁(me.html)共用 */
-    async function renameUser() {
+    async function renameUser(e) {
+      const opener = openerOf(e);
+      if (accountMoved()) { goneCard(opener); return; }
       const n = prompt('暱稱（老師會看到這個名字）', CLOUD.nameOf(CLOUD.user));
       if (n === null) return;
       try { await CLOUD.updateName(n); location.reload(); }
-      catch (e) { alert(e.message); }
+      catch (err) { if (isGone(err)) goneCard(opener); else alert(err.message); }
     }
 
     /* 照 Netflix、Spotify 帳號頁的作法:一般的登出只登出這台,「登出所有裝置」另外一列、先確認 */
-    function logoutEverywhere() {
+    function logoutEverywhere(e) {
+      const opener = openerOf(e);
+      if (accountMoved()) { goneCard(opener); return; }
       if (!confirm('要登出所有裝置嗎？這台會馬上登出，其他已登入的手機、電腦最晚約一小時內也會登出，下次要重新登入。')) return;
-      CLOUD.logout({ everywhere: true }).catch(e => alert(e.message));
+      CLOUD.logout({ everywhere: true }).catch(err => { if (isGone(err)) goneCard(opener); else alert(err.message); });
     }
 
-    function deleteUser() {
+    function deleteUser(e) {
+      const opener = openerOf(e);
+      if (accountMoved()) { goneCard(opener); return; }
       if (!confirm('確定要刪除帳號？雲端上的所有進度、錯題與寫作內容都會永久刪除，無法復原。付款紀錄依法保留。')) return;
       if (!confirm('再確認一次：真的要刪除「' + CLOUD.user.email + '」？')) return;
-      CLOUD.deleteAccount().catch(e => alert(e.message));
+      CLOUD.deleteAccount().catch(err => { if (isGone(err)) goneCard(opener); else alert(err.message); });
     }
 
     /* 「我的」頁(me.html)的帳號區:由 js/me.js 在 CLOUD.ready 之後呼叫 */
@@ -390,7 +421,7 @@
         links,
         window.CLASSES ? CLASSES.section(classOpts) : null,   // 班級(js/classes.js,只有 me.html 載入)
         list(row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }), row('改暱稱', { run: renameUser })),
-        list(row('登出', { run: () => CLOUD.logout(), danger: true }), row('登出所有裝置', { run: logoutEverywhere, danger: true })),
+        list(row('登出', { run: logoutHere, danger: true }), row('登出所有裝置', { run: logoutEverywhere, danger: true })),
         h('p', { class: 'me-delete' }, h('button', { type: 'button', onclick: deleteUser }, '刪除帳號')));
       /* 老師試用開通後:重新查使用權(教師後台那一列、老師方案那一列才會出現)再整頁重畫 */
       if (paid) plans = PAYWALL.account({ who, after: links, onTrial: () => { Promise.resolve(CLOUD.refreshAccess()).then(() => renderAccount(root), () => renderAccount(root)); } });

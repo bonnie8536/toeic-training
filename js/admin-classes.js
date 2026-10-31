@@ -47,12 +47,19 @@
   function isUnique(err) { return !!err && (err.code === '23505' || /duplicate key|unique constraint/i.test(String(err.message || ''))); }
   function isNoActive(err) { return !!err && (err.code === '42703' || /column .*active.* does not exist/i.test(String(err.message || ''))); }
 
-  async function session() {
+  /* write(新增班級、換邀請碼、停用、移除學生):送出時用的是這台現在的登入資料,別的分頁登出、換了帳號(這一頁沒重載)就不送,
+     開「這個帳號已經在別的分頁登出」卡(js/profile.js;審查 D) */
+  async function session(write) {
     const C = window.CLOUD;
     if (!C || !C.enabled) return { message: '這個網站沒有開雲端帳號。' };
     try { await C.ready; } catch (e) { /* ready 不會失敗,保險 */ }
     if (!C.user) return { message: '請先登入。' };
     if (!C.client) return { message: NET_MSG };
+    const gone = write && typeof C.accountCheck === 'function' ? C.accountCheck() : '';
+    if (gone) {
+      if (window.PROFILE && typeof PROFILE.accountGone === 'function') PROFILE.accountGone();
+      return { message: gone };
+    }
     return { client: C.client, uid: C.user.id };
   }
   /* 查詢包一層:丟例外也當成錯誤回來 */
@@ -93,7 +100,7 @@
     const n = cleanName(name);
     if (!n) return { ok: false, field: true, message: '請輸入班級名稱。' };
     if (n.length > NAME_MAX) return { ok: false, field: true, message: '班級名稱最多 ' + NAME_MAX + ' 個字。' };
-    const s = await session();
+    const s = await session(true);
     if (s.message) return { ok: false, message: s.message };
     for (let i = 0; i < INSERT_TRIES; i++) {
       const r = await run(s.client.from('classes').insert({ teacher_id: s.uid, name: n }).select('id,name,code'));
@@ -113,7 +120,7 @@
 
   async function regenerate(classId, gen) {
     if (!classId) return { ok: false, message: '找不到這個班級，請重新整理再試。' };
-    const s = await session();
+    const s = await session(true);
     if (s.message) return { ok: false, message: s.message };
     for (let i = 0; i < CODE_TRIES; i++) {
       const code = gen ? String(gen()) : genCode();
@@ -128,7 +135,7 @@
 
   async function setActive(classId, active) {
     if (!classId) return { ok: false, message: '找不到這個班級，請重新整理再試。' };
-    const s = await session();
+    const s = await session(true);
     if (s.message) return { ok: false, message: s.message };
     const r = await updateOne(s, classId, { active: !!active });
     if (r.error) return { ok: false, message: messageOf(r.error) };
@@ -139,7 +146,7 @@
   /* 移除學生:只刪「這一班、這一位」的一列(memberships 的主鍵就是這兩欄),兩個條件少一個就不送 */
   async function remove(classId, studentId) {
     if (!classId || !studentId) return { ok: false, message: '找不到這位學生，請重新整理再試。' };
-    const s = await session();
+    const s = await session(true);
     if (s.message) return { ok: false, message: s.message };
     const r = await run(s.client.from('memberships').delete().eq('class_id', classId).eq('student_id', studentId).select('student_id,class_id'));
     if (r.error) return { ok: false, message: messageOf(r.error) };

@@ -132,6 +132,13 @@
 
   /* ---------- 教師紀錄(存在教師自己的資料列,學生看不到) ---------- */
   async function saveNote(uid, obj, statusEl) {
+    /* 存進「這台現在登入的帳號」那一列:別的分頁登出、換了帳號(這一頁沒重載)就不送(審查 D) */
+    const gone = typeof CLOUD.accountCheck === 'function' ? CLOUD.accountCheck() : '';
+    if (gone) {
+      statusEl.textContent = gone;
+      if (window.PROFILE && typeof PROFILE.accountGone === 'function') PROFILE.accountGone();
+      return;
+    }
     statusEl.textContent = '儲存中…';
     try {
       const res = await CLOUD.client.from('progress').upsert({

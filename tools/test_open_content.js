@@ -134,6 +134,9 @@ function fakeCloud(c) {
     return q;
   }
   const session = () => { try { return JSON.parse(localStorage.getItem(SB)); } catch (e) { return null; } };
+  /* 帳號層級的請求(登出、改暱稱、資料庫函式;my_access 不算)記在 sessionStorage 的 __fake_calls:
+     { op, as: 送出時這台登入資料的帳號 id }(跟真的 supabase-js 一樣,請求帶的是 localStorage 現在的登入資料;審查 D 那一項看有沒有送、送給誰)。回的東西跟以前一樣 */
+  const called = (op) => { const log = ss('__fake_calls'); const cur = session(); log.push({ op, as: cur && cur.user ? cur.user.id : null }); sessionStorage.setItem('__fake_calls', JSON.stringify(log)); };
   /* Google 登入:先離開這一頁(到 robots.txt,當作 Google 的同意頁),測試再開 redirectTo#access_token=…;
      回來那一頁 getSession 跟真的 supabase-js(detectSessionInUrl)一樣,把網址上的登入資料存起來、清掉網址。
      C.sessionDelay:getSession 慢這麼多毫秒才回(真的 supabase-js 回來那一頁要先拿 access_token 去問 /auth/v1/user),登入資料到那時才存 */
@@ -150,8 +153,10 @@ function fakeCloud(c) {
     signInWithPassword: () => { sessionStorage.setItem('__fake_pw', String(Number(sessionStorage.getItem('__fake_pw') || 0) + 1));
       const s = { access_token: 'x', user: C.user }; localStorage.setItem(SB, JSON.stringify(s)); return later(0, { data: { user: C.user, session: s }, error: null }); },
     signInWithOAuth: (o) => { sessionStorage.setItem('__fake_oauth_to', (o && o.options && o.options.redirectTo) || ''); setTimeout(() => location.assign('/robots.txt'), 0); return later(0, { data: {}, error: null }); },
+    signOut: () => { called('signOut'); return Promise.resolve({ data: {}, error: null }); },
+    updateUser: () => { called('updateUser'); return Promise.resolve({ data: {}, error: null }); },
   }, { get: (t, k) => t[k] || (() => Promise.resolve({ data: {}, error: null })) });
-  const client = { auth, from: query, rpc: (n) => later(0, { data: n === 'my_access' && C.access ? C.access : null, error: null }) };
+  const client = { auth, from: query, rpc: (n) => { if (n !== 'my_access') called('rpc:' + n); return later(0, { data: n === 'my_access' && C.access ? C.access : null, error: null }); } };
   window.supabase = { createClient: () => client };
 })();`;
 }
@@ -1537,6 +1542,91 @@ T['寫作頁:開頁時帳號資料夾還沒灌過(別的分頁正在灌),確認�
     out.push(r);
   }
   return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 審查 D(e49e444 就有;tools/test_sync.js 情境 63 測 js/cloud.js 送出前的確認):分頁畫面是帳號 X、沒重載,別的分頁登出 X、改登入 Y(或只登出)。
+   supabase-js 送出時用的是這台現在的登入資料:以前這一頁按「刪除帳號」刪掉的是 Y 的帳號與雲端進度,「登出」把 Y 登出,
+   「改暱稱」改的是 Y,「加入班級」把 Y 加進班。要的是:「我的」頁、頭像選單的這些按鈕都不問、不送,跳「這個帳號已經在別的分頁登出」卡,
+   說剛剛按的沒有送出;Y 的登入資料、目前帳號、資料夾都不動,這一頁不重載,X 的資料夾不會被建回來。
+   問的時候換帳號:確認視窗、暱稱視窗開著時別的分頁才換成 Y,按確定之後 js/cloud.js 送出前那一次確認擋下,一樣跳卡、不跳 alert、不送。
+   平常登入著的「我的」頁:改暱稱、刪除帳號照常問、照常送到 X */
+T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出所有裝置、改暱稱、刪除帳號、加入班級都不問不送,跳「這個帳號已經在別的分頁登出」卡;平常登入著照常'] = async (B) => {
+  const login = J({ access_token: 'x', user: USER });
+  /* 確認視窗、輸入視窗記在 sessionStorage 的 __dlg(重載後還在):都回「確定」 */
+  const DLG = `(() => { const rec = (x) => { const d = JSON.parse(sessionStorage.getItem('__dlg') || '[]'); d.push(x); sessionStorage.setItem('__dlg', JSON.stringify(d)); };
+    window.confirm = () => { rec('confirm'); return true; }; window.prompt = () => { rec('prompt'); return '新暱稱'; }; window.alert = (m) => { rec('alert:' + m); };
+    window.__mark = 1; return true; })()`;
+  const OTHER = {
+    換帳號: `(() => { ${OTHER_TAB_LOGOUT}; localStorage.setItem(${J(SB)}, ${J(J({ access_token: 'y', user: Y_USER }))}); localStorage.setItem('tr_current_profile', ${J(J(YPID))});
+      localStorage.setItem(${J('tr_u' + YPID + '_hist')}, '[1]'); return true; })()`,
+    只登出: OTHER_TAB_LOGOUT,
+  };
+  const press = async (s, sel, text) => {
+    const ok = await s.eval(`(() => { const old = document.getElementById('__press'); if (old) old.removeAttribute('id');
+      const b = [...document.querySelectorAll(${J(sel)})].find((x) => x.textContent.trim() === ${J(text)}); if (!b) return false; b.id = '__press'; return true; })()`);
+    if (!ok) throw new Error('找不到 ' + sel + ' 「' + text + '」');
+    await click(s, '#__press');
+  };
+  const ACTS = {
+    '我的頁:登出': (s) => press(s, '.me-row', '登出'),
+    '我的頁:登出所有裝置': (s) => press(s, '.me-row', '登出所有裝置'),
+    '我的頁:改暱稱': (s) => press(s, '.me-row', '改暱稱'),
+    '我的頁:刪除帳號': (s) => press(s, '.me-delete button', '刪除帳號'),
+    /* 以前會先開加入視窗:照樣填碼按加入,看請求送給誰 */
+    '我的頁:加入班級': async (s) => {
+      await press(s, '.me-row', '加入班級');
+      if (await s.eval("!!document.querySelector('.modal-join')")) {
+        await s.eval("document.querySelector('.modal-join .join-code').value = 'ABCD2345'; true");
+        await press(s, '.modal-join .auth-submit', '加入');
+      }
+    },
+    '頭像選單:登出': async (s) => { await click(s, '.profile-btn'); await press(s, '.profile-menu .pm-item', '登出'); },
+    '頭像選單:改暱稱': async (s) => { await click(s, '.profile-btn'); await press(s, '.profile-menu .pm-item', '改暱稱'); },
+    '頭像選單:刪除帳號': async (s) => { await click(s, '.profile-btn'); await press(s, '.profile-menu .pm-item', '刪除帳號'); },
+  };
+  const keys = (ls) => { const o = JSON.parse(ls); return { sb: o[SB] || null, cp: o.tr_current_profile || null, y: o['tr_u' + YPID + '_hist'] || null, x: accountKeys(ls).length }; };
+  const who = (id) => (id === UID ? 'X' : id === Y_USER.id ? 'Y' : String(id));
+  const run = async (how, name) => {
+    const r = { how, name };
+    const s = await open(B, { url: 'me.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login } });
+    try {
+      await s.eval(DLG);
+      if (OTHER[how]) await s.eval(OTHER[how]);
+      /* 第一個確認視窗、暱稱視窗開著的時候,別的分頁換成 Y */
+      if (how === '問的時候換帳號') {
+        await s.eval(`(() => { const sw = () => { if (!window.__switched) { window.__switched = 1; ${OTHER['換帳號']}; } };
+          const c = window.confirm, p = window.prompt; window.confirm = (m) => { sw(); return c(m); }; window.prompt = (m, d) => { sw(); return p(m, d); }; return true; })()`);
+      }
+      const before = keys(await s.eval(LS));
+      const c0 = JSON.parse(await s.eval("sessionStorage.getItem('__fake_calls') || '[]'")).length;
+      await ACTS[name](s);
+      await sleep(900);
+      await s.loaded();
+      r.stay = await s.eval('window.__mark === 1');   // 這一頁沒有重載
+      const st = await state(s);
+      r.card = { mask: st.mask, title: st.title, why: st.why };
+      r.dlg = JSON.parse(await s.eval("sessionStorage.getItem('__dlg') || '[]'"));
+      r.sent = JSON.parse(await s.eval("sessionStorage.getItem('__fake_calls') || '[]'")).slice(c0).map((c) => c.op + '@' + who(c.as));
+      const after = keys(await s.eval(LS));
+      r.kept = how === '問的時候換帳號'
+        ? after.cp === J(YPID) && JSON.parse(after.sb || '{}').user.id === Y_USER.id && after.y === '[1]' && after.x === 0
+        : J(before) === J(after) && after.x === 0;
+    } finally { await s.close(); }
+    const asked = { '我的頁:改暱稱': ['prompt'], '我的頁:登出所有裝置': ['confirm'], '我的頁:刪除帳號': ['confirm', 'confirm'] };
+    r.ok = how === '平常'
+      ? (name === '我的頁:改暱稱' ? J(r.dlg) === J(['prompt']) && J(r.sent) === J(['updateUser@X'])
+        : J(r.dlg) === J(['confirm', 'confirm']) && J(r.sent) === J(['rpc:delete_own_account@X', 'signOut@X']))
+      : r.stay && r.card.mask && /已經在別的分頁登出/.test(r.card.title) && /剛剛按的沒有送出/.test(r.card.why) && /重新整理/.test(r.card.why)
+        && (how === '問的時候換帳號' ? J(r.dlg) === J(asked[name]) : !r.dlg.length) && !r.sent.length && r.kept;
+    return r;
+  };
+  const out = [];
+  for (const name of Object.keys(ACTS)) out.push(await run('換帳號', name));
+  for (const name of ['我的頁:刪除帳號', '頭像選單:登出']) out.push(await run('只登出', name));
+  for (const name of ['我的頁:改暱稱', '我的頁:登出所有裝置', '我的頁:刪除帳號']) out.push(await run('問的時候換帳號', name));
+  for (const name of ['我的頁:改暱稱', '我的頁:刪除帳號']) out.push(await run('平常', name));
+  const bad = out.filter((r) => !r.ok);
+  return { ok: !bad.length, detail: bad.length ? '不對的 ' + bad.length + ' 項:' + J(bad) : J(out.map((r) => r.how + '/' + r.name + ' 送了 ' + (r.sent.join(',') || '沒有'))) };
 };
 
 (async () => {

@@ -38,22 +38,28 @@
     return m ? sentence(m) : '發生錯誤，請稍後再試。';
   }
 
-  /* 可以呼叫雲端:回 { client, user };不行就回 { message } */
-  async function session() {
+  /* 可以呼叫雲端:回 { client, user };不行就回 { message }。
+     write(加入、退出):送出時用的是這台現在的登入資料,別的分頁登出、換了帳號(這一頁沒重載)就不送,回 { message, gone: true }(審查 D) */
+  async function session(write) {
     const C = window.CLOUD;
     if (!C || !C.enabled) return { message: '這個網站沒有開雲端帳號。' };
     try { await C.ready; } catch (e) { /* ready 不會失敗,保險 */ }
     if (!C.user) return { message: '請先登入。' };
     if (!C.client) return { message: NET_MSG };
+    const gone = write && typeof C.accountCheck === 'function' ? C.accountCheck() : '';
+    if (gone) return { message: gone, gone: true };
     return { client: C.client, user: C.user };
   }
+  /* 這一頁畫的帳號已經不是這台現在的登入:開「這個帳號已經在別的分頁登出」卡(js/profile.js) */
+  const accountMoved = () => { const C = window.CLOUD; return !!(C && C.user && typeof C.accountCheck === 'function' && C.accountCheck()); };
+  function goneCard(opener) { if (window.PROFILE && typeof PROFILE.accountGone === 'function') PROFILE.accountGone(opener); }
 
   async function join(raw) {
     const code = normalize(raw);
     const bad = formatError(code);
     if (bad) return { ok: false, message: bad, field: true };
-    const s = await session();
-    if (s.message) return { ok: false, message: s.message };
+    const s = await session(true);
+    if (s.message) return { ok: false, message: s.message, gone: !!s.gone };
     try {
       const { data, error } = await s.client.rpc('join_class', { p_code: code });
       if (error) return { ok: false, message: messageOf(error) };
@@ -81,8 +87,8 @@
 
   async function leave(classId) {
     if (!classId) return { ok: false, message: '找不到這個班級。' };
-    const s = await session();
-    if (s.message) return { ok: false, message: s.message };
+    const s = await session(true);
+    if (s.message) return { ok: false, message: s.message, gone: !!s.gone };
     try {
       const { error } = await s.client.from('memberships').delete()
         .eq('student_id', s.user.id)
@@ -201,10 +207,11 @@
       const btn = h('button', { class: 'me-class-leave', type: 'button' }, '退出');
       btn.setAttribute('aria-label', '退出' + label);
       btn.addEventListener('click', async () => {
+        if (accountMoved()) { goneCard(btn); return; }
         if (!confirm('要退出「' + label + '」嗎？要回來得再輸入一次邀請碼。')) return;
         btn.disabled = true;
         const r = await leave(c.id);
-        if (!r.ok) { btn.disabled = false; say(r.message, 'bad'); return; }
+        if (!r.ok) { btn.disabled = false; say(r.message, 'bad'); if (r.gone) goneCard(btn); return; }
         say('已退出「' + label + '」。', 'ok');
         await refresh(true);
         joinBtn.focus();
@@ -217,6 +224,7 @@
     joinBtn.addEventListener('click', () => openJoin(''));
 
     function openJoin(prefill) {
+      if (accountMoved()) { goneCard(joinBtn); return; }
       showJoinDialog(prefill, joinBtn, async (name) => {
         say('已加入「' + name + '」。', 'ok');
         await refresh(true);
@@ -282,6 +290,8 @@
       closeBtn.disabled = false;
       submit.textContent = '加入';
       if (!r.ok) {
+        /* 審查 D:按加入的時候別的分頁登出、換了帳號:關掉這個視窗,開「這個帳號已經在別的分頁登出」卡 */
+        if (r.gone) { close(); goneCard(returnTo); return; }
         if (r.field) bad(r.message); else fail(r.message);
         input.focus();
         return;

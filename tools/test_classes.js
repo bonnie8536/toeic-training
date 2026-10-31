@@ -60,11 +60,12 @@ function makeStorage(broken) {
   };
 }
 
-function load(w, user, local) {
+/* extra:併進 CLOUD 的東西(accountCheck:這台現在的登入是不是畫面上這個帳號,審查 D) */
+function load(w, user, local, extra) {
   const ctx = { console, document: { addEventListener() {} }, window: {} };
   ctx.window = ctx;
   ctx.localStorage = local || makeStorage();
-  ctx.CLOUD = { enabled: true, user: user === undefined ? USER : user, client: w.client, ready: Promise.resolve() };
+  ctx.CLOUD = Object.assign({ enabled: true, user: user === undefined ? USER : user, client: w.client, ready: Promise.resolve() }, extra || {});
   vm.createContext(ctx);
   vm.runInContext(SRC, ctx);
   return ctx.CLASSES.api;
@@ -236,6 +237,22 @@ const cases = {
     const w = world(); const api = load(w, null);
     const r = await api.join('ABCD2345');
     return { ok: !r.ok && /登入/.test(r.message) && w.calls.length === 0, detail: r.message };
+  },
+  /* 審查 D:supabase-js 送出時用的是這台現在的登入資料。別的分頁登出、換了帳號(CLOUD.accountCheck 回原因)就不送,
+     回那句話與 gone:true(畫面開「這個帳號已經在別的分頁登出」卡);列表照讀。CLOUD 沒有 accountCheck(舊版)照舊 */
+  '別的分頁登出、換了帳號:加入、退出都不送,回 gone;列表照讀;舊版 cloud.js 沒有 accountCheck 照舊': async () => {
+    const w = world(); w.classes[1].active = true;
+    let gone = '';
+    const api = load(w, undefined, undefined, { accountCheck: () => gone });
+    await api.join('KX7MPQ2R');
+    const n0 = w.calls.length;
+    gone = '這個帳號已經在別的分頁登出，剛剛按的沒有送出。請重新整理這一頁。';
+    const j = await api.join('ABCD2345'), l = await api.leave('c2');
+    const sent = w.calls.slice(n0);
+    const list = await api.list();
+    const read = w.calls.slice(n0).some(c => c[0] === 'memberships' && c[1] === 'select');
+    const ok = !j.ok && j.gone === true && j.message === gone && !l.ok && l.gone === true && !sent.length && list.ok && read && w.members.length === 1;
+    return { ok, detail: JSON.stringify({ j, l, sent: sent.length, list: list.classes.map(c => c.name) }) };
   },
   '退出:只刪自己在那一班的那一列,其他班不動': async () => {
     const w = world(); w.classes[1].active = true; const api = load(w);

@@ -183,6 +183,11 @@ function load(w, o) {
   if (o.paid !== undefined) ctx.PAID_UI = o.paid;
   ctx.CLOUD = { enabled: true, user: o.user === undefined ? { id: ME, email: 'teacher@example.com' } : o.user, client: w.client, ready: Promise.resolve(),
     isTeacher: o.isTeacher !== false, access: o.access || null, accessReady: Promise.resolve(o.access || null) };
+  /* o.gone:別的分頁登出、換了帳號(CLOUD.accountCheck 回原因;審查 D)。PROFILE.accountGone 開卡的次數記在 ctx.goneCards */
+  if (o.gone !== undefined) {
+    ctx.CLOUD.accountCheck = () => (typeof o.gone === 'function' ? o.gone() : o.gone);
+    ctx.PROFILE = { accountGone: () => { ctx.goneCards = (ctx.goneCards || 0) + 1; } };
+  }
   vm.createContext(ctx);
   vm.runInContext(H_SRC, ctx);
   vm.runInContext(SRC, ctx);
@@ -303,6 +308,20 @@ const cases = {
     const gone = await A.api.remove('k1', S3);
     const ok = !a.ok && !b.ok && !c.ok && sent === 0 && !gone.ok && /不在/.test(gone.message) && w.memberships.length === 5;
     return { ok, detail: JSON.stringify([a.message, gone.message, sent]) };
+  },
+  /* 審查 D:新增班級、換邀請碼、停用、移除學生送出時用的是這台現在的登入資料:別的分頁登出、換了帳號就不送,
+     回那句話、開「這個帳號已經在別的分頁登出」卡;讀班級照讀;平常(accountCheck 回空字串)照常送 */
+  '別的分頁登出、換了帳號:新增班級、換邀請碼、停用、移除學生都不送,開卡;讀班級照讀;平常照常送': async () => {
+    const GONE = '這個帳號已經在別的分頁登出，剛剛按的沒有送出。請重新整理這一頁。';
+    const w = world(); const { ctx, A } = load(w, { gone: GONE });
+    const rs = [await A.api.create('A班'), await A.api.regenerate('k1'), await A.api.setActive('k1', false), await A.api.remove('k1', S1)];
+    const sent = w.calls.length;
+    const list = await A.api.list();
+    const w2 = world(); const L2 = load(w2, { gone: '' });
+    const r2 = await L2.A.api.setActive('k1', false);
+    const ok = rs.every(r => !r.ok && r.message === GONE) && sent === 0 && ctx.goneCards === 4 && list.ok && list.classes.length > 0
+      && r2.ok && w2.calls.length > 0 && !L2.ctx.goneCards && w.memberships.length === 5;
+    return { ok, detail: JSON.stringify({ msgs: rs.map(r => r.message), sent, cards: ctx.goneCards, list: list.classes.length, normal: r2.ok }) };
   },
   '沒登入、沒網路:不打 API 或說連不上,不說碼錯': async () => {
     const w = world(); const { A } = load(w, { user: null });

@@ -376,6 +376,41 @@
     }
   }
 
+  /* ---------- 帳號層級的動作:送出前確認這台現在的登入就是畫面上這個帳號(審查 D,e49e444 就有) ----------
+     supabase-js 每一次請求都拿這台 localStorage 現在的登入資料(SB_KEY),不看這一頁記憶體裡的 CLOUD.user。
+     別的分頁登出這個帳號、改登入別人之後,沒重載的分頁頂欄還是原帳號:按「刪除帳號」刪掉的是別的分頁登入的那個人的帳號與雲端進度,
+     「登出」「登出所有裝置」登出的是他,「改暱稱」「改密碼」改的是他,加入班級、老師試用開在他身上,讀方案、付款紀錄讀的也是他的。
+     兩樣都對得上才送,不然丟 code 'account_gone'(js/profile.js、js/classes.js、教師後台開「這個帳號已經在別的分頁登出」卡):
+     - 目前帳號(tr_current_profile)是畫面上這個帳號的資料夾:別的分頁登出會刪掉、換帳號會改掉。
+     - supabase-js 的登入資料是這個帳號的:別的分頁剛登入別人、還在確認登入,目前帳號還沒改的那一兩秒。
+     登入資料不見了(被撤銷、別台按「登出所有裝置」)或格式認不得、目前帳號還是它:不算換人,照以前的路走
+     (登出照常清掉這台、登出所有裝置照常說這台的登入已失效)。讀不到 localStorage 就分不出來,也照以前。
+     平常登入著的頁面兩樣都對得上,行為不變。 */
+  const GONE_MSG = '這個帳號已經在別的分頁登出，剛剛按的沒有送出。請重新整理這一頁。';
+  function accountShown() {
+    const u = window.CLOUD.user;
+    if (!u || typeof u.id !== 'string') return false;
+    let cp = null, saved = null;
+    try { cp = localStorage.getItem('tr_current_profile'); saved = localStorage.getItem(SB_KEY); } catch (e) { return true; }
+    const mine = cp === JSON.stringify(pidOf(u));
+    if (cp !== null && !mine) return false;
+    let id = null;
+    try { const s = JSON.parse(saved); id = s && s.user && typeof s.user.id === 'string' ? s.user.id : null; } catch (e) { id = null; }
+    return id !== null ? id === u.id : mine;
+  }
+  function goneError() {
+    const e = new Error(GONE_MSG);
+    e.code = 'account_gone';
+    return e;
+  }
+  /* 送出帳號層級的請求前呼叫 */
+  function mustBeShown() {
+    if (!window.CLOUD.user) throw new Error('請先登入。');
+    if (!accountShown()) throw goneError();
+  }
+  /* 給頁面(js/profile.js、js/classes.js、教師後台)送出前先問:回空字串 = 可以送(或還沒登入,讓頁面照自己的「請先登入」);回字 = 不能送,要顯示的原因 */
+  window.CLOUD.accountCheck = () => (!window.CLOUD.user || accountShown() ? '' : GONE_MSG);
+
   async function login(email, password) {
     await window.CLOUD.ready;
     if (!client) throw new Error('雲端元件尚未載入，請重新整理再試');
@@ -394,12 +429,16 @@
   async function logout(opts) {
     const user = window.CLOUD.user;
     const everywhere = !!(opts && opts.everywhere);
+    const discard = !!(opts && opts.discard);   // 刪除帳號成功之後(deleteAccount 送出前已經確認過是畫面上這個帳號)
+    /* 別的分頁已經登出這個帳號、改登入別人:不登出(會把別的分頁登入的那個人登出、清掉目前帳號),什麼都不刪、不問(審查 D) */
+    if (user && !discard && !accountShown()) throw goneError();
     /* 這台已經沒有登入資料時 supabase-js 不會呼叫伺服器、直接回成功,別台其實沒被登出:先擋下來,什麼都不刪 */
     if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效，沒辦法登出其他裝置。請重新登入後再試一次。');
-    if (user && !(opts && opts.discard)) {
+    if (user && !discard) {
       flushPetStore();   // 小雞還在等讀雲端的券和動作先寫下來(chick2 第一輪修正 #4)
       const left = await unsynced(user);
       if (left > 0 && !confirm('還有 ' + left + ' 項進度還沒同步到雲端（可能是網路不穩）。現在登出，這台裝置上的這些進度會刪除。確定要登出？')) return;
+      if (!accountShown()) throw goneError();   // 對帳、問的時候別的分頁換了人
     }
     /* 一般的登出只登出這台(共用電腦登出不會把學生自己手機上的登入一起踢掉)。
        everywhere:「我的」頁的「登出所有裝置」。連不上伺服器時 supabase-js 會先清掉這台的登入資料再回錯誤,
@@ -509,6 +548,7 @@
     needClient();
     const n = String(name || '').trim().slice(0, 20);
     if (!n) throw new Error('暱稱還沒填。');
+    mustBeShown();   // 改的是這台現在登入的帳號:不是畫面上這個就不送(審查 D)
     const { data, error } = await client.auth.updateUser({ data: { name: n } });
     if (error) throw new Error(friendly(error));
     if (data && data.user) window.CLOUD.user = data.user;
@@ -534,6 +574,7 @@
   async function updatePassword(password) {
     await window.CLOUD.ready;
     needClient();
+    mustBeShown();   // 審查 D:別的分頁換了帳號,改到的會是那個人的密碼
     const { error } = await client.auth.updateUser({ password });
     if (error) throw new Error(friendly(error));
   }
@@ -549,6 +590,7 @@
   async function deleteAccount() {
     await window.CLOUD.ready;
     needClient();
+    mustBeShown();   // 審查 D:delete_own_account 刪的是這台現在登入的帳號,不是畫面上這個就不送
     const { error } = await client.rpc('delete_own_account');
     if (error) throw new Error('刪除失敗：' + error.message + '。請寫信給站長要求刪除。');
     await logout({ discard: true });
@@ -615,6 +657,7 @@
     if (!enabled || !paidUi()) return Promise.resolve(null);
     const user = window.CLOUD.user;
     if (!user || !client) return Promise.resolve(null);
+    if (!accountShown()) return Promise.resolve(null);   // 審查 D:讀到的會是別的分頁登入的那個人的使用權,不採用
     return fetchAccess(user);
   }
 
@@ -635,12 +678,14 @@
   /* 資料庫的訊息不帶句號(線上的舊函式也是),顯示時統一補上 */
   function sentence(m) { return /[。！？!?.]$/.test(m) ? m : m + '。'; }
 
-  /* 呼叫資料庫函式;資料庫的錯誤訊息(中文)原樣丟出,連不上才換成網路的說明 */
+  /* 呼叫資料庫函式;資料庫的錯誤訊息(中文)原樣丟出,連不上才換成網路的說明。
+     加入班級、老師試用、讀方案與付款紀錄都是「這台現在登入的帳號」的:不是畫面上這個就不送(審查 D) */
   async function callRpc(fn, args) {
     if (!enabled) throw new Error('這個網站沒有開雲端帳號。');
     await window.CLOUD.ready;
     if (!window.CLOUD.user) throw new Error('請先登入。');
     needClient();
+    mustBeShown();
     let res;
     try { res = await client.rpc(fn, args); } catch (e) { res = { error: e }; }
     if (res && res.error) {
@@ -670,6 +715,7 @@
     const user = window.CLOUD.user;
     if (!user) throw new Error('請先登入。');
     needClient();
+    mustBeShown();   // 審查 D:別的分頁登出、換了帳號(下面的登入憑證比對擋得住換帳號,擋不住登出又登回別人之前的那一下)
     let token = '';
     try {
       const { data } = await client.auth.getSession();

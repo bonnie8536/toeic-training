@@ -187,14 +187,49 @@
     };
     /* 作答被攔下:開可以關的登入卡,多一句為什麼要登入。頁面正要重載就只擋下,不開卡(馬上就換成登入後的畫面)。
        已經登入、雲端還在確認也只擋下:Google 回來的那一頁正在灌這個帳號的資料,灌完就重載(js/cloud.js afterAuth),
-       不能跟已經登入的人說「登入之後才能作答」(第 3 輪審查 #1) */
+       不能跟已經登入的人說「登入之後才能作答」(第 3 輪審查 #1)。
+       登入回來的那一頁(CLOUD.authReturning)在雲端確認之前 CLOUD.user 還是 null,一樣只擋下(第 4 輪審查 #1):
+       剛在 Google 登入完、一回來就再按剛剛那一題的人,不能又看到登入卡;確認完沒拿到帳號(登入沒成功)才照常開卡。
+       確認完已經登入、資料夾卻還不是這個帳號(讀雲端進度失敗,這一頁沒重載):開「重新整理」卡,不叫已經登入的人去登入(第 4 輪審查 #2) */
     const askToAct = opener => {
-      if (canAct() || CLOUD.reloading || (CLOUD.user && !settled)) return;
+      if (canAct() || CLOUD.reloading) return;
+      if (!settled && (CLOUD.user || CLOUD.authReturning)) return;
       hideMenus();
+      if (CLOUD.user) { showReload(opener); return; }
       const close = showLogin('login', { why: true, opener });
       /* 還沒確認登入就按了,確認完其實是登入著的(而且這一頁不重載):卡片自己收掉,再按一次就照常作答 */
       if (close && !settled) Promise.resolve(CLOUD.ready).then(() => { if (canAct()) close(); }, () => {});
     };
+
+    /* 已經登入、這一頁的資料夾卻還不是這個帳號:登入(Google 回來、登入卡)時讀雲端進度失敗(網路斷一下、Supabase 慢或休眠),
+       js/cloud.js afterAuth 沒灌資料、這一頁沒重載。作答照樣擋下(這時寫進訪客的資料夾,之後照帳號資料夾裡的舊值上傳會蓋掉雲端那一列),
+       但頂欄顯示的是他的名字,不能叫他「登入之後才能作答」:請他重新整理,下一頁的資料夾就是這個帳號的,會重灌雲端進度(第 4 輪審查 #2)。
+       跟本機的「你是哪位？」一樣可以關(X、Esc、點遮罩),關掉焦點回到被按的那個東西 */
+    function showReload(opener) {
+      if (document.querySelector('.modal-mask')) return null;
+      const btn = h('button', { class: 'btn primary', type: 'button', onclick: () => location.reload() }, '重新整理');
+      const box = h('div', { class: 'modal modal-gate modal-reload', role: 'dialog', 'aria-modal': 'true', 'aria-label': '還沒載入你的練習紀錄', 'aria-describedby': 'reload-why' },
+        h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }),
+        h('h2', null, '還沒載入你的練習紀錄'),
+        h('p', { class: 'modal-why', id: 'reload-why' }, '你已經登入了，但這一頁還沒從雲端拿到你的練習紀錄，先不能作答。重新整理一次就會載入。'),
+        h('p', { class: 'modal-sub' }, '一直出現的話，請檢查網路連線。'),
+        h('div', { class: 'modal-row' }, btn));
+      const mask = h('div', { class: 'modal-mask' }, box);
+      document.body.append(mask);
+      focusInto(box, btn);   // 觸控螢幕停在標題
+      trapTab(box);
+      /* preventDefault:點遮罩的預設動作會把焦點拉到 body,蓋掉 close() 放回去的焦點。按在遮罩的捲軸上不算 */
+      mask.addEventListener('mousedown', e => { if (onMaskItself(mask, e)) { e.preventDefault(); close(); } });
+      document.addEventListener('keydown', onKey);
+      function onKey(e) { if (e.key === 'Escape') close(); }
+      function close() {
+        if (!mask.parentNode) return;
+        document.removeEventListener('keydown', onKey);
+        mask.remove();
+        focusBack(opener, true);
+      }
+      return close;
+    }
 
     window.PROFILE = {
       current() {

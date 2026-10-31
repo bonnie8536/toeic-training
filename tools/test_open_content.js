@@ -106,7 +106,7 @@ function fakeSdk(user, delay) {
 }
 /* 會登入、會存雲端的假 supabase-js(第 2 輪審查的三項用):登入資料存在 SB(跟真的 supabase-js 同一個鍵),重載後 getSession 讀得到;
    雲端的 progress 表與收到的 upsert 放 sessionStorage(__fake_rows、__fake_up),重載後還在。
-   c = { user:登入後的帳號, teachersDelay、progressDelay:查詢延遲毫秒, access:rpc('my_access') 回的使用權 } */
+   c = { user:登入後的帳號, teachersDelay、progressDelay:查詢延遲毫秒, sessionDelay:getSession 延遲毫秒, access:rpc('my_access') 回的使用權 } */
 const SB = 'sb-fakeproj-auth-token';
 function fakeCloud(c) {
   return `(() => {
@@ -124,7 +124,9 @@ function fakeCloud(c) {
         return later(0, { data: null, error: null });
       }
       if (table === 'teachers') return later(C.teachersDelay, { data: [], error: null });
-      if (table === 'progress') return later(C.progressDelay, { data: ss('__fake_rows').filter((r) => !f.k || r.k === f.k), error: null });
+      /* sessionStorage 的 __fake_fail 有值:讀 progress 失敗(網路斷一下、Supabase 休眠),upsert 照常 */
+      if (table === 'progress') return later(C.progressDelay, sessionStorage.getItem('__fake_fail') ? { data: null, error: { message: 'Failed to fetch' } }
+        : { data: ss('__fake_rows').filter((r) => !f.k || r.k === f.k), error: null });
       return later(0, { data: [], error: null });
     };
     const q = { select: () => q, eq: (k, v) => { f[k] = v; return q; }, in: () => q, order: () => q, limit: () => q,
@@ -133,16 +135,20 @@ function fakeCloud(c) {
   }
   const session = () => { try { return JSON.parse(localStorage.getItem(SB)); } catch (e) { return null; } };
   /* Google 登入:先離開這一頁(到 robots.txt,當作 Google 的同意頁),測試再開 redirectTo#access_token=…;
-     回來那一頁 getSession 跟真的 supabase-js(detectSessionInUrl)一樣,把網址上的登入資料存起來、清掉網址 */
+     回來那一頁 getSession 跟真的 supabase-js(detectSessionInUrl)一樣,把網址上的登入資料存起來、清掉網址。
+     C.sessionDelay:getSession 慢這麼多毫秒才回(真的 supabase-js 回來那一頁要先拿 access_token 去問 /auth/v1/user),登入資料到那時才存 */
+  const fromUrl = () => {
+    if (/[#&]access_token=/.test(location.hash)) {
+      localStorage.setItem(SB, JSON.stringify({ access_token: 'x', user: C.user }));
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    }
+    return { data: { session: session() }, error: null };
+  };
   const auth = new Proxy({
-    getSession: () => {
-      if (/[#&]access_token=/.test(location.hash)) {
-        localStorage.setItem(SB, JSON.stringify({ access_token: 'x', user: C.user }));
-        try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
-      }
-      return later(0, { data: { session: session() }, error: null });
-    },
-    signInWithPassword: () => { const s = { access_token: 'x', user: C.user }; localStorage.setItem(SB, JSON.stringify(s)); return later(0, { data: { user: C.user, session: s }, error: null }); },
+    getSession: () => (C.sessionDelay ? later(C.sessionDelay).then(fromUrl) : later(0, fromUrl())),
+    /* 送了幾次密碼記在 sessionStorage 的 __fake_pw(重載後還在) */
+    signInWithPassword: () => { sessionStorage.setItem('__fake_pw', String(Number(sessionStorage.getItem('__fake_pw') || 0) + 1));
+      const s = { access_token: 'x', user: C.user }; localStorage.setItem(SB, JSON.stringify(s)); return later(0, { data: { user: C.user, session: s }, error: null }); },
     signInWithOAuth: (o) => { sessionStorage.setItem('__fake_oauth_to', (o && o.options && o.options.redirectTo) || ''); setTimeout(() => location.assign('/robots.txt'), 0); return later(0, { data: {}, error: null }); },
   }, { get: (t, k) => t[k] || (() => Promise.resolve({ data: {}, error: null })) });
   const client = { auth, from: query, rpc: (n) => later(0, { data: n === 'my_access' && C.access ? C.access : null, error: null }) };
@@ -946,6 +952,193 @@ T['貼上、拖文字進作答框:沒登入時跳出視窗,框裡沒有字、資
     } finally { await s.close(); }
   }
   return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 第 4 輪審查 #1:先看再登入的主要流程是「沒登入按作答 → 登入卡 → Google → 回到同一個內容頁」。回來那一頁內容先畫好,
+   supabase-js 要先拿網址上的 access_token 去問帳號(getSession 慢),這段時間 CLOUD.user 是 null、資料夾還是訪客的。
+   這時按作答(通常一回來就再按剛剛那一題)只擋下,不能跳「登入之後才能作答」;確認完灌資料、重載,之後照常作答。
+   另外這一頁正要灌資料重載時,開著的登入卡上按 Google 不導去 Google(location.assign 會蓋掉重載,剛登入的人又被送去 Google 一次);
+   送密碼不導頁、蓋不掉重載,照舊送(tools/test_sync.js 情境 30 就是這樣),最後一樣是登入後的畫面、雲端與本機的紀錄一筆不少 */
+const GOOGLE_BACK = '#access_token=fakegoogle&token_type=bearer&expires_in=3600';
+/* 在這個分頁開一個網址,內容一出現就回來(不等雲端確認登入) */
+async function openNow(s, url) {
+  await s.send('Page.navigate', { url: s.origin + '/' + url });
+  for (let i = 0; i < 250; i++) { await sleep(20); try { if (await s.eval("!!document.querySelector('.q-block .opt')")) return true; } catch (e) { /* 換頁中 */ } }
+  return false;
+}
+const PICKED = "document.querySelectorAll('.q-block .opt.correct, .q-block .opt.wrong').length";
+T['Google 登入回來、雲端還沒確認登入:按作答只擋下、不跳「登入之後才能作答」,確認完照常作答;正要重載時卡上按 Google 不再被送去 Google、送密碼也停在登入後的畫面'] = async (B) => {
+  const out = [];
+  const day = Date.now() - 864e5;
+  const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
+  const rows = J([{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }]);
+  for (const how of ['第一次登入', '登入失效後同分頁登回來']) {
+    const ss = { __fake_rows: rows };
+    if (how !== '第一次登入') ss['tr_cloud_hydrated_' + UID] = '1';
+    const s = await open(B, { url: 'robots.txt', early: true, sdk: fakeCloud({ user: USER, sessionDelay: 1500, progressDelay: 600 }), ss });
+    const r = { how };
+    try {
+      r.shown = await openNow(s, 'grammar.html?u=ga-01' + GOOGLE_BACK);
+      r.at = await s.eval('({ user: !!CLOUD.user, pid: window.__PROFILE_ID, reloading: CLOUD.reloading })');
+      const before = await snap(s);
+      await s.eval('window.__old = 1; true');
+      await click(s, '.q-block .opt');
+      const st = await state(s);
+      r.card = st.mask ? st.why || st.title : false;
+      r.picked = await s.eval(PICKED);
+      r.same = (await s.eval(MAIN)) === before.main;
+      r.stillWaiting = await s.eval('window.__old === 1 && !CLOUD.user');   // 擋下的那一下真的落在雲端確認之前
+      r.settled = await settleNav(s);
+      await sleep(1300);
+      r.after = await s.eval(`({ user: !!CLOUD.user, pid: window.__PROFILE_ID === ${J(CPID)}, canAct: PROFILE.canAct() })`);
+      await click(s, '.q-block .opt');
+      r.mask = (await state(s)).mask;
+      r.answered = await s.eval("!!document.querySelector('.q-block .opt.correct')");
+      await sleep(1500);   // 上傳(0.8 秒去抖動)
+      const end = JSON.parse(await s.eval(LS));
+      const db = JSON.parse(await s.eval("sessionStorage.getItem('__fake_rows') || '[]'"));
+      r.local = JSON.parse(end['tr_u' + CPID + '_hist'] || '[]').length;
+      r.cloud = ((db.find((x) => x.k === 'hist') || {}).v || []).length;
+      r.guestHist = 'tr_hist' in end;
+      r.ok = r.shown && !r.at.user && r.at.pid === null && !r.at.reloading && r.card === false && r.picked === 0 && r.same && r.stillWaiting
+        && r.settled && r.after.user && r.after.pid && r.after.canAct && !r.mask && r.answered
+        && r.local === oldHist.length + 1 && r.cloud === oldHist.length + 1 && !r.guestHist;
+    } finally { await s.close(); }
+    out.push(r);
+  }
+  /* 這一頁開著登入卡、正要灌資料重載(開頁時這台已經有登入資料,資料夾卻還是訪客的):卡上按 Google、送密碼 */
+  for (const how of ['Google', '密碼']) {
+    const s = await open(B, { url: 'robots.txt', early: true, sdk: fakeCloud({ user: USER, sessionDelay: 900, progressDelay: 1500 }),
+      ls: { [SB]: J({ access_token: 'x', user: USER }) }, ss: { __fake_rows: rows } });
+    const r = { how };
+    try {
+      r.shown = await openNow(s, 'grammar.html?u=ga-01');
+      await s.eval('window.__old = 1; true');
+      await click(s, '.q-block .opt');
+      r.card = (await state(s)).mask;
+      for (let i = 0; i < 80 && !(await s.eval('!!CLOUD.user')); i++) await sleep(25);
+      r.busy = await s.eval('!!CLOUD.user && !CLOUD.reloading && window.__PROFILE_ID === null');   // 已經在灌資料、還沒重載
+      if (how === 'Google') await click(s, '.modal-auth .btn-google');
+      else {
+        for (const [n, v] of [['email', 'student@example.com'], ['password', 'password123']]) {
+          await s.eval(`document.querySelector('.modal-auth input[name=${n}]').focus(); true`);
+          await s.send('Input.insertText', { text: v });
+        }
+        await click(s, '.modal-auth .auth-submit');
+      }
+      r.settled = await settleNav(s);
+      await sleep(600);
+      r.end = await s.eval(`({ path: location.pathname, oauth: sessionStorage.getItem('__fake_oauth_to'), pw: sessionStorage.getItem('__fake_pw'),
+        pid: window.__PROFILE_ID === ${J(CPID)}, canAct: !!window.PROFILE && PROFILE.canAct(), mask: !!document.querySelector('.modal-mask'),
+        local: (JSON.parse(localStorage.getItem(${J('tr_u' + CPID + '_hist')}) || '[]')).length,
+        cloud: ((JSON.parse(sessionStorage.getItem('__fake_rows') || '[]').find((x) => x.k === 'hist') || {}).v || []).length })`);
+      r.ok = r.shown && r.card && r.busy && r.settled && r.end.path === '/grammar.html' && r.end.oauth === null && (how !== '密碼' || r.end.pw === '1')
+        && r.end.pid && r.end.canAct && !r.end.mask && r.end.local === oldHist.length && r.end.cloud === oldHist.length;
+    } finally { await s.close(); }
+    out.push(r);
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 第 4 輪審查 #2:Google 回來(或在登入卡用密碼登入)時讀雲端進度失敗(網路斷一下、Supabase 慢或休眠):這一頁不重載,
+   CLOUD.user 有了、頂欄顯示已登入,資料夾卻還是訪客的,作答照樣擋下(寫進訪客資料夾、之後照帳號資料夾的舊值上傳會蓋掉雲端)。
+   這時不能叫已登入的人「登入之後才能作答」:跳一張「還沒載入你的練習紀錄」的卡,附「重新整理」;重新整理之後灌回雲端紀錄、照常作答 */
+T['登入後讀雲端進度失敗、資料夾還不是這個帳號:作答跳「重新整理」卡(不叫人登入)、什麼都不寫;重新整理後灌回雲端紀錄、照常作答'] = async (B) => {
+  const out = [];
+  const day = Date.now() - 864e5;
+  const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
+  const rows = J([{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }]);
+  for (const how of ['Google 回來', '登入卡用密碼登入']) {
+    const s = await open(B, { url: 'robots.txt', early: true, sdk: fakeCloud({ user: USER }), ss: { __fake_rows: rows, __fake_fail: '1' } });
+    const r = { how };
+    try {
+      await s.go('grammar.html?u=ga-01' + (how === 'Google 回來' ? GOOGLE_BACK : ''));
+      await s.eval('CLOUD.ready.then(() => true, () => true)');
+      await sleep(300);
+      if (how !== 'Google 回來') {
+        await click(s, '.q-block .opt');
+        for (const [n, v] of [['email', 'student@example.com'], ['password', 'password123']]) {
+          await s.eval(`document.querySelector('.modal-auth input[name=${n}]').focus(); true`);
+          await s.send('Input.insertText', { text: v });
+        }
+        await click(s, '.modal-auth .auth-submit');
+        for (let i = 0; i < 80 && !(await s.eval("!!document.querySelector('.modal-auth .auth-msg.bad')")); i++) await sleep(25);
+        r.loginFailed = await s.eval("(document.querySelector('.modal-auth .auth-msg.bad') || {}).textContent || ''");
+        await closeBy(s, 'x');
+      }
+      await sleep(1300);   // 小雞開頁同步寫 tr_pet 是非同步的,等它寫完再拍「之前」
+      r.at = await s.eval('({ user: !!CLOUD.user, pid: window.__PROFILE_ID, canAct: PROFILE.canAct(), reloading: CLOUD.reloading })');
+      const before = await snap(s);
+      await click(s, '.q-block .opt');
+      const st1 = await state(s);
+      r.card1 = { mask: st1.mask, x: st1.x, title: st1.title, why: st1.why, aria: st1.aria };
+      r.btn = await s.eval("(document.querySelector('.modal-reload .btn.primary') || {}).textContent || ''");
+      r.focus = (await s.eval(FOCUS)).inMask;
+      r.closed = await closeBy(s, 'esc');
+      await click(s, '.q-block .opt');
+      const st2 = await state(s);
+      r.again = st2.mask && st2.title === st1.title;
+      const mid = await snap(s);
+      r.wrote = lsDiff(before.ls, mid.ls);
+      r.same = mid.main === before.main;
+      r.picked = await s.eval(PICKED);
+      /* 網路好了,按「重新整理」 */
+      await s.eval("sessionStorage.removeItem('__fake_fail'); window.__old = 1; true");
+      await click(s, '.modal-reload .btn.primary');
+      r.settled = await settleNav(s);
+      await sleep(1300);
+      r.after = await s.eval(`({ user: !!CLOUD.user, pid: window.__PROFILE_ID === ${J(CPID)}, canAct: PROFILE.canAct() })`);
+      const ups = JSON.parse(await s.eval("sessionStorage.getItem('__fake_up') || '[]'"));
+      r.uploads = ups.filter((u) => u.k !== '_meta');
+      r.localBefore = JSON.parse((JSON.parse(await s.eval(LS)))['tr_u' + CPID + '_hist'] || '[]').length;
+      await click(s, '.q-block .opt');
+      r.mask = (await state(s)).mask;
+      r.answered = await s.eval("!!document.querySelector('.q-block .opt.correct')");
+      await sleep(1500);
+      const end = JSON.parse(await s.eval(LS));
+      const db = JSON.parse(await s.eval("sessionStorage.getItem('__fake_rows') || '[]'"));
+      r.local = JSON.parse(end['tr_u' + CPID + '_hist'] || '[]').length;
+      r.cloud = ((db.find((x) => x.k === 'hist') || {}).v || []).length;
+      r.guestHist = 'tr_hist' in end;
+      r.ok = r.at.user && r.at.pid === null && !r.at.canAct && !r.at.reloading
+        && r.card1.mask && r.card1.x && r.card1.aria === 'true' && /還沒載入/.test(r.card1.title) && !WHY.cloud.test(r.card1.why) && /重新整理/.test(r.card1.why) && /重新整理/.test(r.btn)
+        && r.focus && r.closed && r.again && !r.wrote.length && r.same && r.picked === 0
+        && r.settled && r.after.user && r.after.pid && r.after.canAct && !r.uploads.length && r.localBefore === oldHist.length
+        && !r.mask && r.answered && r.local === oldHist.length + 1 && r.cloud === oldHist.length + 1 && !r.guestHist;
+    } finally { await s.close(); }
+    out.push(r);
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 已登入的人開新分頁(sessionStorage 是每個分頁自己的,這個分頁還沒灌過):內容頁照舊先灌雲端資料再重載。
+   重載前那一下小雞照常同步一次,寫入被最後一道擋下(根據的是舊畫面,本來就不寫),但那是登入著的人,不能留「還沒登入」的警告
+   (第 4 輪審查 #2 的測試重新整理後就是這一頁,98f3778 就有);重載後照常作答、寫進帳號資料夾、雲端原本的紀錄還在 */
+T['已登入的人開新分頁的內容頁:灌資料重載前那一下不寫、不留「還沒登入」警告,重載後照常作答'] = async (B) => {
+  const day = Date.now() - 864e5;
+  const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
+  const s = await open(B, { url: 'robots.txt', early: true, sdk: fakeCloud({ user: USER, progressDelay: 300 }),
+    ls: { [SB]: J({ access_token: 'x', user: USER }), tr_current_profile: J(CPID), ['tr_u' + CPID + '_hist']: J(oldHist) },
+    ss: { __fake_rows: J([{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }]) } });
+  const r = {};
+  try {
+    r.shown = await openNow(s, 'grammar.html?u=ga-01');
+    r.settled = await settleNav(s);   // 第一頁灌完要重載(ready 之後 reloading),等的是重載後那一頁
+    await sleep(1300);
+    r.after = await s.eval(`({ user: !!CLOUD.user, pid: window.__PROFILE_ID === ${J(CPID)}, canAct: PROFILE.canAct(), flag: sessionStorage.getItem(${J('tr_cloud_hydrated_' + UID)}) })`);
+    r.meta = JSON.parse(await s.eval("sessionStorage.getItem('__fake_up') || '[]'")).map((u) => u.k);
+    await click(s, '.q-block .opt');
+    r.mask = (await state(s)).mask;
+    r.answered = await s.eval("!!document.querySelector('.q-block .opt.correct')");
+    await sleep(1500);
+    const end = JSON.parse(await s.eval(LS));
+    const db = JSON.parse(await s.eval("sessionStorage.getItem('__fake_rows') || '[]'"));
+    r.local = JSON.parse(end['tr_u' + CPID + '_hist'] || '[]').length;
+    r.cloud = ((db.find((x) => x.k === 'hist') || {}).v || []).length;
+  } finally { await s.close(); }
+  const ok = r.shown && r.settled && r.after.user && r.after.pid && r.after.canAct && r.after.flag === '1' && r.meta[0] === '_meta'
+    && !r.mask && r.answered && r.local === 4 && r.cloud === 4;
+  return { ok, detail: J(r) };
 };
 
 (async () => {

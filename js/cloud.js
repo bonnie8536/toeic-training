@@ -51,6 +51,13 @@
     try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
     return raw;
   })();
+  /* 這一頁是登入回來的頁面(Google 導回來、點信裡的連結):網址帶 access_token(密碼重設的 type=recovery 不算)或 ?code=,
+     要趁 supabase-js 清掉網址之前記下來。回來那一頁 supabase-js 先拿 access_token 去問帳號,雲端確認登入之前 CLOUD.user 是 null、
+     資料夾還是訪客的:內容頁這時按作答只擋下、不跳「登入之後才能作答」(js/profile.js askToAct,第 4 輪審查 #1) */
+  const authReturning = !authError && (function () {
+    const hash = String(location.hash || ''), search = String(location.search || '');
+    return (/[#&]access_token=/.test(hash) && !/[#&]type=recovery/.test(hash)) || /[?&]code=/.test(search);
+  })();
 
   /* 使用權(收費)的狀態。宣告在這裡,雲端沒開時 locked() 等函式也能安全呼叫 */
   let serverAccess = null;    // 這個分頁從伺服器拿到的 my_access;null = 還不知道
@@ -65,7 +72,8 @@
   /* supabase-js 把登入資料存在 localStorage 的這個位置(預設名稱:sb-<專案代號>-auth-token) */
   const SB_KEY = 'sb-' + ((/^https?:\/\/([^./]+)\./.exec(cfg.url) || [])[1] || '') + '-auth-token';
 
-  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '', login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
+  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '',
+    authReturning: enabled && authReturning, login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
     startCheckout, myCheckout, isOwner,
     saveSignupIntent, takeSignupIntent, clearSignupIntent, markLocalOnly, clearLocalOnly, syncKey, flushForMove };
@@ -385,9 +393,14 @@
 
   /* Google 登入:導到 Google 同意頁,回來時 supabase-js 會從網址取回 session,
      init() 接著跑 afterAuth 灌回進度。backTo 給空值就回到按下按鈕的那一頁。
-     Google 帳戶的 Email 本來就驗證過了,不會再寄驗證信。 */
+     Google 帳戶的 Email 本來就驗證過了,不會再寄驗證信。
+     等雲端確認登入(CLOUD.ready)之後,這一頁要是已經登入、灌完雲端資料正要重載(afterAuth 最後那一下),就不導去 Google,
+     讓重載照常發生(重載後就是登入後的畫面);不然 location.assign 會蓋掉重載,剛登入的人又被送去 Google 一次(第 4 輪審查 #1)。
+     登入失效改回訪客的那一下(leaveStaleAccount,CLOUD.user 是 null)照舊。密碼登入、註冊不導頁,蓋不掉重載,不擋
+     (跟重載搶到的話,下一頁資料夾跟帳號對不上就照第 3 輪的規則重灌,最多多重載一次;tools/test_sync.js 情境 30 就是在這種頁面送密碼) */
   async function signInWithGoogle(backTo) {
     await window.CLOUD.ready;
+    if (reloading && window.CLOUD.user) return;
     needClient();
     const redirectTo = backTo ? siteUrl(backTo) : location.href.split('#')[0];
     const { error } = await client.auth.signInWithOAuth({

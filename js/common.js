@@ -104,9 +104,11 @@ function canKeepProgress() {
   const P = window.PROFILE;
   try { return !(P && typeof P.blocksWrite === 'function' && P.blocksWrite()); } catch (e) { return true; }
 }
+/* 剛灌完雲端資料、頁面正要重載(js/cloud.js 的 CLOUD.reloading)的那一下也不寫(根據的是舊畫面),但那是登入著的人,不是漏攔:
+   不留「還沒登入」的警告。已登入的人開新分頁的內容頁就會遇到(這個分頁還沒灌過,灌完重載前小雞照常同步一次) */
 function keepOrWarn(what) {
   if (canKeepProgress()) return true;
-  try { console.warn('還沒登入，這一筆沒有存：' + what); } catch (e) { /* 沒有 console 也一樣不存 */ }
+  try { if (!(window.CLOUD && window.CLOUD.reloading)) console.warn('還沒登入，這一筆沒有存：' + what); } catch (e) { /* 沒有 console 也一樣不存 */ }
   return false;
 }
 

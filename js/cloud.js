@@ -115,6 +115,12 @@
   /* 這一頁已經要重載了(灌完雲端資料、改回訪客):舊網址的自動搬家(js/move-out.js)看到就不帶走,免得重載把換到新網址的那一下取消掉 */
   Object.defineProperty(window.CLOUD, 'reloading', { get: () => reloading, enumerable: true });
   const early = {};
+  /* 這一頁的資料夾(雲端帳號的)開頁時是不是空的:cloud.js 載入當下就看,這時頁面程式還沒寫任何東西。
+     afterAuth 判斷「帳號資料夾是空的」用(見 folderEmpty 上面的說明;第 2 輪審查 2026-10-31) */
+  const emptyAtLoad = (function () {
+    const pid = window.__PROFILE_ID;
+    return typeof pid === 'string' && pid.charAt(0) === 'c' && folderEmpty('tr_u' + pid + '_', null);
+  })();
 
   window.CLOUD.ready = init();
   /* 確認登入之後,等這一頁的 my_access 查完(沒查、失敗、逾時都是 null) */
@@ -208,7 +214,7 @@
         CLOUD.user、__PROFILE_ID 還是原帳號。照寫照記帳的話,寫入根據的是空的資料夾(或是下一個人的練習),
         上傳因為登入不在了失敗、帳本留著,原帳號下次在這台登入時灌資料把它當成本機較新,整份上傳蓋掉雲端(js/pet-store.js profileGone 同一套判斷)。
      2. 「還沒灌過」標記 tr_cloud_unhydrated_<帳號 id>(在帳號資料夾外面,跟帳本一樣):要灌資料時帳號資料夾是空的
-        (這台第一次登入、別的分頁登出把資料夾刪了;這一頁確認登入前寫的不算)就先記上,灌成功才劃掉,登出時清掉。
+        (這台第一次登入、別的分頁登出把資料夾刪了;怎麼算空的見 accountFolderEmpty)就先記上,灌成功才劃掉,登出時清掉。
         記著的時候每一頁都要灌(別的分頁之前灌過的旗標不算數),這段時間的寫入不記帳:讀雲端進度失敗(網路斷一下、Supabase 慢或休眠)時
         頁面拿到的是空資料夾,記了帳,下一頁灌資料會把只有新那幾筆的 hist、錯題本整份傳上去蓋掉雲端。
         資料夾不是空的(之前灌過、登入失效改回訪客留著的)不記,跟以前一樣:讀不到雲端時照常作答記帳,下次灌資料比新舊(離線也是這樣)。
@@ -221,7 +227,7 @@
     try { return localStorage.getItem('tr_current_profile') === JSON.stringify(window.__PROFILE_ID); } catch (e) { return false; }
   }
   function canRecord(uid) { return sameFolder() && !unhydrated(uid); }
-  /* 帳號資料夾有沒有東西;skip:這一頁確認登入前寫進去的鍵(early)不算 */
+  /* 帳號資料夾有沒有東西;skip:這些鍵不算 */
   function folderEmpty(prefix, skip) {
     try {
       for (let i = 0; i < localStorage.length; i++) {
@@ -230,6 +236,16 @@
       }
     } catch (e) { return false; }
     return true;
+  }
+  /* 要灌資料時,帳號資料夾算不算空的(空的就記「還沒灌過」):
+     - 這一頁的資料夾不是這個帳號的(otherFolder):這一頁確認登入前寫的在別的資料夾,直接看帳號資料夾。
+     - 是這個帳號的:現在一個鍵都沒有;或開頁時是空的(emptyAtLoad)、現在只有這一頁確認登入前寫的鍵(early)。
+       不能把 early 的鍵一律當成不算:資料夾本來就有資料、只是剛好每個鍵都在確認登入前重寫過(新學生常常只有 hist)時,
+       會被當成空的,讀雲端失敗時已登入、本機資料完整的人被擋下,那一筆也丟了(第 2 輪審查)。
+       開頁後別的分頁把資料夾刪了(登出)、這一頁又沒寫:現在一個鍵都沒有,一樣算空的 */
+  function accountFolderEmpty(prefix, otherFolder) {
+    if (otherFolder) return folderEmpty(prefix, null);
+    return folderEmpty(prefix, null) || (emptyAtLoad && folderEmpty(prefix, early));
   }
   /* js/profile.js canAct 用:已登入、這一頁的資料夾就是這台目前的帳號、而且灌過雲端進度,才能作答(不然開「重新整理」卡) */
   function folderReady() {
@@ -257,7 +273,7 @@
     const notYet = unhydrated(user.id);   // 這台這個帳號的資料夾還沒灌過:別的分頁之前灌過的旗標不算數
     const hydrate = fresh || otherFolder || !sessionStorage.getItem(flagKey) || movePend || notYet;
     /* 帳號資料夾是空的:先記「還沒灌過」再寫目前帳號,別的分頁一看到目前帳號是它,就知道資料夾還不能用 */
-    if (hydrate && !notYet && folderEmpty(prefix, otherFolder ? null : early)) { try { localStorage.setItem(unhydratedKey(user.id), '1'); } catch (e) { /* 寫不進去就跟以前一樣 */ } }
+    if (hydrate && !notYet && accountFolderEmpty(prefix, otherFolder)) { try { localStorage.setItem(unhydratedKey(user.id), '1'); } catch (e) { /* 寫不進去就跟以前一樣 */ } }
     localStorage.setItem('tr_current_profile', JSON.stringify(pid));
 
     if (hydrate) {

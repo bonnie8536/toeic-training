@@ -101,16 +101,35 @@ function storageKey(key) {
    頁面自己要分「存起來」或「只記在這一頁」(對話頁聽過哪幾句、發音頁的慢速)時呼叫 canKeepProgress()。
    開頁時本來就會寫的東西(頁面載完之前)、學生檔案登錄表(RAW_KEYS,本機建檔要用)照舊。 */
 function canKeepProgress() {
-  if (folderGone()) return false;
+  if (accountBlock()) return false;
   const P = window.PROFILE;
   try { return !(P && typeof P.blocksWrite === 'function' && P.blocksWrite()); } catch (e) { return true; }
 }
 /* 這一頁的資料夾是雲端帳號的,可是這台目前的帳號已經不是它(別的分頁登出、換了帳號,這一頁沒重載):每一頁都不寫(內容頁 profile.js canAct 也擋)。
-   寫了會把登出時刪掉的帳號資料夾建回來,共用電腦上下一個人的練習也會留在前一個人的資料夾裡(2026-10-31 審查)。訪客、本機學生檔案不看這個 */
+   寫了會把登出時刪掉的帳號資料夾建回來,共用電腦上下一個人的練習也會留在前一個人的資料夾裡(2026-10-31 審查)。訪客、本機學生檔案不看這個。
+   頁面還在確認登入(CLOUD.user 還是 null)、或 cloud.js 是沒有 folderReady 的舊版時,只有這一條擋得住 */
 function folderGone() {
   const id = window.__PROFILE_ID;
   if (typeof id !== 'string' || id.charAt(0) !== 'c') return false;
   try { return localStorage.getItem('tr_current_profile') !== JSON.stringify(id); } catch (e) { return false; }
+}
+/* 這一頁因為帳號那一邊存不進去的原因(每一頁都看,不只內容頁;第 2 輪審查 2026-10-31):
+   'gone':folderGone(別的分頁登出、換帳號)。
+   'loading':已登入,可是 js/cloud.js folderReady 說這一頁的資料夾還不能用:這台的帳號資料夾還沒灌過雲端進度(空的,讀雲端失敗)、
+   或剛在這一頁登入、重載之前(資料夾還是訪客的)。以前非內容頁(每日練習、每日複習)照常寫進資料夾但不記帳,
+   下次灌資料用雲端蓋回去,那段時間的練習沒有任何提示就不見了。
+   '':不是帳號的原因(訪客、本機學生檔案、平常登入著)。舊版 cloud.js 沒有 folderReady 就只看 folderGone */
+function accountBlock() {
+  if (folderGone()) return 'gone';
+  const C = window.CLOUD;
+  try { return C && C.user && typeof C.folderReady === 'function' && !C.folderReady() ? 'loading' : ''; } catch (e) { return ''; }
+}
+/* 沒有 data-gate 的作答(每日練習、每日複習這類非內容頁)按下去之前問一下:這一頁因為帳號那一邊存不進去,
+   就不讓這一下生效(不對答案),開 js/profile.js 的「重新整理」卡,跟內容頁一樣;不能顯示「答對了」卻什麼都沒存。回 true = 擋下了 */
+function holdForAccount(opener) {
+  if (!accountBlock()) return false;
+  try { if (window.PROFILE && typeof PROFILE.askToAct === 'function') PROFILE.askToAct(opener); } catch (e) { /* 卡開不了也一樣擋下 */ }
+  return true;
 }
 /* 剛灌完雲端資料、頁面正要重載(js/cloud.js 的 CLOUD.reloading)的那一下也不寫(根據的是舊畫面),但那是登入著的人,不是漏攔:
    不留「還沒登入」的警告。已登入的人開新分頁的內容頁就會遇到(這個分頁還沒灌過,灌完重載前小雞照常同步一次)。
@@ -123,9 +142,7 @@ function keepOrWarn(what) {
 }
 function quietBlock() {
   const C = window.CLOUD;
-  if (C && C.reloading) return true;
-  if (folderGone()) return true;
-  return !!(C && C.user && typeof C.folderReady === 'function' && !C.folderReady());
+  return !!(C && C.reloading) || !!accountBlock();
 }
 
 const store = {

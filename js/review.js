@@ -130,7 +130,8 @@
       q.options.forEach((opt, oi) => {
         opts.append(h('button', {
           class: letterOnly ? 'letter-big' : 'opt',
-          onclick: () => onPick(oi, opts),
+          /* 因為帳號那一邊存不進去時(別的分頁登出、換帳號,或帳號資料夾還沒從雲端灌好)這一下不生效,開「重新整理」卡(js/common.js holdForAccount) */
+          onclick: e => { if (typeof holdForAccount === 'function' && holdForAccount(e.currentTarget)) return; onPick(oi, opts); },
         }, letterOnly ? LETTERS[oi] : h('span', { class: 'letter' }, LETTERS[oi]),
           letterOnly ? null : h('span', null, opt)));
       });

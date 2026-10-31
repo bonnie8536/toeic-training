@@ -1143,7 +1143,8 @@ T['已登入的人開新分頁的內容頁:灌資料重載前那一下不寫、�
 
 /* 2026-10-31 審查(main 130f330 就有,tools/test_sync.js 情境 52~54 測 cloud.js 的記帳;這裡測內容頁擋不擋得住、什麼都不寫):
    甲:別的分頁按登出(帳號資料夾、帳本、登入資料、目前帳號都刪了),這一頁沒重載,記憶體裡還是原帳號:作答跳「重新整理」卡,
-       帳號資料夾不會被建回來、不記帳;非內容頁的寫入(store.set)也不寫。
+       帳號資料夾不會被建回來、不記帳;這一頁不經過作答鈕的寫入(store.set、logAttempt)也不寫。
+       這裡是內容頁(grammar.html,profile.js 的 blocksWrite 也擋);沒有 data-require-profile 的頁面只靠 common.js 的最後一道,另見「非內容頁(每日練習)」那兩項。
    乙:帳號資料夾是空的(這台還沒灌過)、讀雲端進度失敗:作答跳「重新整理」卡、什麼都不寫;網路好了重新整理,灌回雲端紀錄、照常作答,雲端原本的紀錄還在 */
 T['別的分頁登出後沒重載的內容頁、帳號資料夾還沒灌過又讀不到雲端的內容頁:作答跳「重新整理」卡,什麼都不寫'] = async (B) => {
   const day = Date.now() - 864e5;
@@ -1167,7 +1168,8 @@ T['別的分頁登出後沒重載的內容頁、帳號資料夾還沒灌過又�
     a.wrote = lsDiff(before.ls, mid.ls);
     a.same = mid.main === before.main;
     a.picked = await s.eval(PICKED);
-    a.ok = a.at === true && a.card.mask && /還沒載入/.test(a.card.title) && !WHY.cloud.test(a.card.why) && !a.wrote.length && a.same && a.picked === 0;
+    /* 卡上說的是帳號已經在別的分頁登出,不是「你已經登入了」(第 2 輪審查之後;之前沿用「還沒載入你的練習紀錄」那張) */
+    a.ok = a.at === true && a.card.mask && /登出/.test(a.card.title) && !/你已經登入/.test(a.card.why) && !WHY.cloud.test(a.card.why) && !a.wrote.length && a.same && a.picked === 0;
   } finally { await s.close(); }
   s = await open(B, { url: 'robots.txt', early: true, sdk: fakeCloud({ user: USER }),
     ls: { [SB]: login, tr_current_profile: J(CPID) }, ss: { __fake_rows: rows, __fake_fail: '1' } });
@@ -1200,6 +1202,206 @@ T['別的分頁登出後沒重載的內容頁、帳號資料夾還沒灌過又�
       && b.settled && b.after.canAct && b.after.mark === null && b.answered && b.local === oldHist.length + 1 && b.cloud === oldHist.length + 1;
   } finally { await s.close(); }
   return { ok: !!a.ok && !!b.ok, detail: '別的分頁登出 ' + J(a) + ' | 還沒灌過又讀不到 ' + J(b) };
+};
+
+/* 別的分頁按登出:js/cloud.js logout 刪的那幾個鍵(登入資料、帳本、只在本機的標記、還沒灌過的標記、目前帳號、整個帳號資料夾) */
+const OTHER_TAB_LOGOUT = `(() => { [${J(SB)}, ${J(SB + '-user')}, ${J('tr_unsynced_' + UID)}, ${J('tr_localonly_' + UID)}, ${J('tr_cloud_unhydrated_' + UID)}, 'tr_current_profile'].forEach((k) => localStorage.removeItem(k));
+  Object.keys(localStorage).filter((k) => k.indexOf(${J('tr_u' + CPID + '_')}) === 0).forEach((k) => localStorage.removeItem(k)); return true; })()`;
+const KEEP = "(typeof canKeepProgress === 'function' ? canKeepProgress() : null)";
+const accountKeys = (ls) => Object.keys(JSON.parse(ls)).filter((k) => k.indexOf('tr_u' + CPID + '_') === 0 || k === 'tr_unsynced_' + UID);
+
+/* 第 2 輪審查(2026-10-31):沒有 data-require-profile 的頁面(每日練習)沒有 data-gate,profile.js 的 blocksWrite 也不管,
+   別的分頁登出之後只有 common.js 的最後一道擋得住。不擋的話這一頁把登出時刪掉的帳號資料夾建回來,之後帳號在這台登回來時
+   資料夾不是空的、不記「還沒灌過」,別的分頁沿用舊的「灌過」旗標整份上傳(tools/test_sync.js 情境 52 那條又回來)。
+   甲:已登入、灌過的頁面(記憶體裡還是原帳號):store.set、logAttempt 都不寫;按作答跳「重新整理」卡,說的是帳號已經登出
+       (不是「你已經登入了」),不對答案、什麼都不寫。
+   乙:頁面還在確認登入(CLOUD.user 還是 null,只有 common.js 的 folderGone 擋得住):寫入一樣不寫;確認完改回訪客,
+       帳號資料夾、帳本都沒有被建回來 */
+T['非內容頁(每日練習):別的分頁登出後沒重載,寫入與作答都不把帳號資料夾建回來、不記帳,作答跳「重新整理」卡'] = async (B) => {
+  const day = Date.now() - 864e5;
+  const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
+  const rows = J([{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }]);
+  const login = J({ access_token: 'x', user: USER });
+  const probe = "store.set('daily_probe', { n: 1 }); logAttempt('g', 'stale-a', 0, true); true";
+  const a = {}, b = {};
+  let s = await open(B, { url: 'daily.html?part=g', user: true, sdk: fakeCloud({ user: USER }),
+    ls: { [SB]: login, ['tr_u' + CPID + '_hist']: J(oldHist) }, ss: { __fake_rows: rows } });
+  try {
+    a.at = await s.eval(`({ user: !!CLOUD.user, canAct: PROFILE.canAct(), keep: ${KEEP} })`);
+    await s.eval(OTHER_TAB_LOGOUT);
+    const before = await snap(s);
+    await s.eval(probe);
+    await sleep(1500);
+    const mid = await snap(s);
+    a.wrote = lsDiff(before.ls, mid.ls);
+    await click(s, '.q-block .opt');
+    const st = await state(s);
+    a.card = { mask: st.mask, title: st.title, why: st.why };
+    a.picked = await s.eval(PICKED);
+    await sleep(800);
+    const end = await snap(s);
+    a.wrote2 = lsDiff(mid.ls, end.ls);
+    a.mine = accountKeys(end.ls);
+    a.ok = a.at.user && a.at.canAct && a.at.keep === true && !a.wrote.length
+      && a.card.mask && /登出/.test(a.card.title) && !/你已經登入/.test(a.card.why) && /重新整理/.test(a.card.why) && a.picked === 0 && !a.wrote2.length && !a.mine.length;
+  } finally { await s.close(); }
+  s = await open(B, { url: 'robots.txt', early: true, sdk: fakeCloud({ user: USER, sessionDelay: 3000 }),
+    ls: { [SB]: login, tr_current_profile: J(CPID), ['tr_u' + CPID + '_hist']: J(oldHist) }, ss: { __fake_rows: rows, ['tr_cloud_hydrated_' + UID]: '1' } });
+  try {
+    await s.go('daily.html?part=g');
+    b.at = await s.eval(`({ user: !!CLOUD.user, pid: window.__PROFILE_ID === ${J(CPID)} })`);
+    await s.eval(OTHER_TAB_LOGOUT);
+    const before = await snap(s);
+    await s.eval(probe);
+    const mid = await snap(s);
+    b.wrote = lsDiff(before.ls, mid.ls);
+    b.settled = await settleNav(s);   // 確認完:這台已經沒有登入資料,改回訪客、重載
+    await sleep(1300);
+    b.after = await s.eval('({ user: !!CLOUD.user, pid: window.__PROFILE_ID })');
+    b.mine = accountKeys(await s.eval(LS));
+    b.ok = !b.at.user && b.at.pid && !b.wrote.length && b.settled && !b.after.user && b.after.pid === null && !b.mine.length;
+  } finally { await s.close(); }
+  /* 丙:每日複習(個人頁,一打開就要登入,但作答一樣沒有 data-gate):複習到一半別的分頁登出,按選項跳卡、不對答案、不寫 */
+  const c = {};
+  s = await open(B, { url: 'review.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login }, ss: { __fake_rows: J([]) } });
+  try {
+    await s.eval(`localStorage.setItem(${J('tr_u' + CPID + '_drill_p5')}, JSON.stringify({ [TOEIC.part5[0].id]: { ok: false, t: 1 } })); location.reload(); true`);
+    c.settled = await settleNav(s);
+    await sleep(800);
+    await click(s, '.part-card .btn.primary');   // 開始複習
+    c.items = await s.eval("document.querySelectorAll('.q-block .opts .opt').length");
+    await s.eval(OTHER_TAB_LOGOUT);
+    const before = await snap(s);
+    await click(s, '.q-block .opts .opt');
+    const st = await state(s);
+    c.card = { mask: st.mask, title: st.title };
+    c.picked = await s.eval(PICKED);
+    await sleep(800);
+    c.wrote = lsDiff(before.ls, (await snap(s)).ls);
+    c.ok = c.settled && c.items > 0 && c.card.mask && /登出/.test(c.card.title) && c.picked === 0 && !c.wrote.length;
+  } finally { await s.close(); }
+  return { ok: !!a.ok && !!b.ok && !!c.ok, detail: '已登入的頁面 ' + J(a) + ' | 還在確認登入 ' + J(b) + ' | 每日複習 ' + J(c) };
+};
+
+/* 第 2 輪審查(2026-10-31):已登入、這台的帳號資料夾還沒灌過(空的,「還沒灌過」標記在)、讀雲端進度失敗時,
+   每日練習(非內容頁)以前照常顯示對錯、寫進帳號資料夾但不記帳;網路好了灌資料用雲端蓋回去,剛答的題目沒有任何提示就不見了
+   (雲端也有今天的每日進度時一起被蓋掉)。要跟內容頁一樣:作答跳「重新整理」卡、不對答案、什麼都不寫;
+   網路好了重新整理,灌回雲端紀錄、照常作答,雲端原本的紀錄還在 */
+T['非內容頁(每日練習):已登入、帳號資料夾還沒灌過又讀不到雲端,作答跳「重新整理」卡、什麼都不寫;重新整理後照常作答'] = async (B) => {
+  const day = Date.now() - 864e5;
+  const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
+  const rows = J([{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }]);
+  const MARK = J('tr_cloud_unhydrated_' + UID);
+  const s = await open(B, { url: 'robots.txt', early: true, sdk: fakeCloud({ user: USER }),
+    ls: { [SB]: J({ access_token: 'x', user: USER }), tr_current_profile: J(CPID) }, ss: { __fake_rows: rows, __fake_fail: '1' } });
+  const r = {};
+  try {
+    await s.go('daily.html?part=g');
+    await s.eval('CLOUD.ready.then(() => true, () => true)');
+    await sleep(1300);
+    r.at = await s.eval(`({ user: !!CLOUD.user, pid: window.__PROFILE_ID === ${J(CPID)}, canAct: PROFILE.canAct(), keep: ${KEEP}, mark: localStorage.getItem(${MARK}) })`);
+    const before = await snap(s);
+    await click(s, '.q-block .opt');
+    const st = await state(s);
+    r.card = { mask: st.mask, title: st.title, why: st.why };
+    r.picked = await s.eval(PICKED);
+    await s.eval("store.set('daily_probe', { n: 1 }); logAttempt('g', 'probe', 0, true); true");
+    await sleep(800);
+    r.wrote = lsDiff(before.ls, (await snap(s)).ls);
+    await s.eval("sessionStorage.removeItem('__fake_fail'); true");
+    if (await s.eval("!!document.querySelector('.modal-reload .btn.primary')")) await click(s, '.modal-reload .btn.primary');
+    else await s.eval('location.reload(); true');   // 沒跳卡(會紅):照樣重新整理,把之後的結果記下來
+    r.settled = await settleNav(s);
+    await sleep(1300);
+    r.after = await s.eval(`({ canAct: PROFILE.canAct(), keep: ${KEEP}, mark: localStorage.getItem(${MARK}) })`);
+    await click(s, '.q-block .opt');
+    r.answered = await s.eval(PICKED);
+    await sleep(1500);
+    const end = JSON.parse(await s.eval(LS));
+    const db = JSON.parse(await s.eval("sessionStorage.getItem('__fake_rows') || '[]'"));
+    r.local = JSON.parse(end['tr_u' + CPID + '_hist'] || '[]').length;
+    r.cloud = ((db.find((x) => x.k === 'hist') || {}).v || []).length;
+    r.done = 'tr_u' + CPID + '_daily_done' in end;
+    r.ok = r.at.user && r.at.pid && !r.at.canAct && r.at.keep === false && r.at.mark === '1'
+      && r.card.mask && /還沒載入/.test(r.card.title) && r.picked === 0 && !r.wrote.length
+      && r.settled && r.after.canAct && r.after.keep === true && r.after.mark === null && r.answered > 0
+      && r.local === oldHist.length + 1 && r.cloud === oldHist.length + 1 && r.done;
+  } finally { await s.close(); }
+  return { ok: !!r.ok, detail: J(r) };
+};
+
+/* 第 2 輪審查(2026-10-31):模擬考的「交卷」(和時間到自動交卷)沒有 data-gate。考到一半別的分頁登出、換帳號,
+   或登回來時帳號資料夾空的又讀不到雲端(「還沒灌過」標記),交卷那一下被 common.js 的最後一道靜靜擋下:
+   以前結果畫面照常出現,這次成績哪裡都沒有存,學生也不知道。
+   要的是:結果照樣給他看,寫明「這次成績還沒存進紀錄」,成績先放這個分頁的 sessionStorage(綁交卷時的帳號資料夾);
+   這個分頁之後回到同一個帳號、能作答了就補存(模擬考紀錄先合併再上傳,不會蓋掉別台的)。換成別人的帳號時不補進別人的資料夾。
+   照常:平常登入著交卷,跟以前一樣馬上存、上傳,沒有提示 */
+const Y_USER = { id: '99999999-8888-4777-8666-555544443333', email: 'other@example.com', user_metadata: { name: '別人' }, app_metadata: { providers: ['email'] } };
+const YPID = 'c' + Y_USER.id.replace(/-/g, '');
+T['模擬考考到一半別的分頁登出、換帳號、登回來還沒灌好,或時間到自動交卷:結果寫明還沒存,成績留在這個分頁,回到同一個帳號後補存;不寫進別人的資料夾'] = async (B) => {
+  const day = Date.now() - 864e5;
+  const three = [1, 2, 3].map((n) => ({ d: new Date(day + n * 1000).toISOString(), size: 'quick', lRaw: n, lTotal: 12, rRaw: n, rTotal: 18, lScore: 5, rScore: 5 }));
+  const rows = J([{ k: 'mock_history', v: three, updated_at: new Date(day + 10000).toISOString() }]);
+  const login = J({ access_token: 'x', user: USER });
+  const LATER = "JSON.parse(sessionStorage.getItem('tr_mock_unsaved') || '[]').length";
+  const out = [];
+  for (const how of ['照常', '登出', '換帳號', '登回來還沒灌好', '時間到']) {
+    const r = { how };
+    const s = await open(B, { url: 'mock.html', user: true, sdk: fakeCloud({ user: USER }),
+      ls: { [SB]: login, ['tr_u' + CPID + '_mock_history']: J(three) }, ss: { __fake_rows: rows } });
+    try {
+      await click(s, '.part-card .btn.primary');   // 開始(這時登入著、能作答)
+      r.started = await s.eval("!!document.querySelector('.drill-top .mock-timer') && PROFILE.canAct()");
+      if (how !== '照常') await s.eval(OTHER_TAB_LOGOUT);
+      if (how === '換帳號') await s.eval(`localStorage.setItem(${J(SB)}, ${J(J({ access_token: 'y', user: Y_USER }))}); localStorage.setItem('tr_current_profile', ${J(J(YPID))}); true`);
+      if (how === '登回來還沒灌好') await s.eval(`localStorage.setItem(${J(SB)}, ${J(login)}); localStorage.setItem('tr_current_profile', ${J(J(CPID))}); localStorage.setItem(${J('tr_cloud_unhydrated_' + UID)}, '1'); true`);
+      const before = await s.eval(LS);
+      await s.eval('window.confirm = () => true; true');
+      if (how === '時間到') { await s.eval('(() => { const t = Date.now; Date.now = () => t() + 60 * 60e3; return true; })()'); await sleep(1600); }
+      else await click(s, '.drill-top .btn');   // 交卷
+      await sleep(how === '照常' ? 1500 : 600);
+      r.result = await s.eval(`({ title: document.title, head: (document.querySelector('.report-head h2') || {}).textContent || '',
+        note: (document.querySelector('.mock-unsaved') || {}).textContent || '', mask: !!document.querySelector('.modal-mask'), later: ${LATER} })`);
+      r.wrote = lsDiff(before, await s.eval(LS)).filter((k) => /^tr_u|^tr_unsynced_/.test(k));
+      r.ups = JSON.parse(await s.eval("sessionStorage.getItem('__fake_up') || '[]'")).filter((u) => u.k === 'mock_history').length;
+      const shown = /模擬考結果/.test(r.result.title) && /參考總分/.test(r.result.head) && !r.result.mask;
+      if (how === '照常') {
+        const db = JSON.parse(await s.eval("sessionStorage.getItem('__fake_rows') || '[]'"));
+        r.cloud = ((db.find((x) => x.k === 'mock_history') || {}).v || []).length;
+        r.ok = r.started && shown && !r.result.note && r.result.later === 0 && r.ups >= 1 && r.cloud === 4;
+        out.push(r);
+        continue;
+      }
+      if (how === '換帳號') {   // 這個分頁重新整理,變成別人的頁面:不能補存進他的資料夾
+        await s.eval('location.reload(); true');
+        r.ySettled = await settleNav(s);
+        await sleep(1300);
+        r.y = await s.eval(`({ pid: window.__PROFILE_ID === ${J(YPID)}, has: (JSON.parse(localStorage.getItem(${J('tr_u' + YPID + '_mock_history')}) || '[]')).length, later: ${LATER} })`);
+        await s.eval(`(() => { [${J(SB)}, 'tr_current_profile'].forEach((k) => localStorage.removeItem(k));
+          Object.keys(localStorage).filter((k) => k.indexOf(${J('tr_u' + YPID + '_')}) === 0).forEach((k) => localStorage.removeItem(k)); return true; })()`);   // 別人登出
+      }
+      if (how === '登回來還沒灌好') {   // 網路好了,按結果上的「重新整理」
+        if (await s.eval("!!document.querySelector('.mock-unsaved .btn')")) await click(s, '.mock-unsaved .btn');
+        else await s.eval('location.reload(); true');
+      } else {   // 原帳號在這個分頁登回來(登入資料存回來,下一頁灌資料、重載)
+        await s.eval(`localStorage.setItem(${J(SB)}, ${J(login)}); true`);
+        await s.go('mock.html');
+      }
+      r.settled = await settleNav(s);
+      await sleep(1500);
+      const end = JSON.parse(await s.eval(LS));
+      const db = JSON.parse(await s.eval("sessionStorage.getItem('__fake_rows') || '[]'"));
+      r.local = JSON.parse(end['tr_u' + CPID + '_mock_history'] || '[]').length;
+      r.cloud = ((db.find((x) => x.k === 'mock_history') || {}).v || []).length;
+      r.laterEnd = await s.eval(LATER);
+      r.rows = await s.eval("document.querySelectorAll('.cat-table tr').length");   // 歷次紀錄:表頭加 4 筆
+      r.ok = r.started && shown && /還沒存/.test(r.result.note) && r.result.later === 1 && !r.wrote.length && r.ups === 0
+        && (how !== '換帳號' || (r.ySettled && r.y.pid && r.y.has === three.length && r.y.later === 1))
+        && r.settled && r.local === 4 && r.cloud === 4 && r.laterEnd === 0 && r.rows === 5;
+    } finally { await s.close(); }
+    out.push(r);
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
 (async () => {

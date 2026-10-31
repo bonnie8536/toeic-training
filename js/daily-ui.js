@@ -150,6 +150,10 @@
     function save(q, extra) {
       return D.record(Object.assign({ store, log: logAttempt, now: Date.now(), date: DAY, part: key, item: q }, extra));
     }
+    /* 這一頁沒有 data-gate(訪客也能做每日練習)。已登入、可是因為帳號那一邊存不進去時(別的分頁登出、換帳號,
+       或這台的帳號資料夾還沒從雲端灌好):這一下不生效、不對答案,開「重新整理」卡(js/common.js holdForAccount;第 2 輪審查)。
+       舊版 common.js 沒有這個函式就照舊 */
+    function held(el) { return typeof holdForAccount === 'function' && holdForAccount(el); }
     /* 答完一題後把題號列的對錯更新 */
     function refreshNav() { const old = root.querySelector('.q-nav'); if (old) old.replaceWith(nav()); }
 
@@ -173,7 +177,7 @@
       input.addEventListener('input', () => { if (!checked) checkBtn.disabled = empty(); });
       input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
       function check() {
-        if (checked || empty()) return;
+        if (checked || empty() || held(checkBtn)) return;
         checked = true;
         checkBtn.disabled = true;
         input.readOnly = true;
@@ -205,8 +209,8 @@
       options.forEach((opt, oi) => {
         opts.append(h('button', {
           class: 'opt', type: 'button',
-          onclick: () => {
-            if (done) return;
+          onclick: e => {
+            if (done || held(e.currentTarget)) return;
             done = true;
             const ok = oi === answer;
             save(q, { pick: oi });

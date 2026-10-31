@@ -973,6 +973,116 @@ const scenarios = {
     const rs = [await one('密碼'), await one('Google 讀失敗'), await one('Google 讀到')];
     return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
   },
+  /* 第 2 輪審查(2026-10-31):「帳號資料夾是空的」以前把這一頁確認登入前寫的鍵(early)一律當成不算。
+     資料夾本來就有資料、只是剛好每個鍵都在確認登入前重寫過(新學生的資料夾常常只有 hist),會被當成空的、記上「還沒灌過」:
+     讀雲端進度失敗時,已登入、本機有完整資料的人被擋下,那一筆也丟掉;另一個早就灌好的分頁一樣被擋下。
+     要的是:不記標記,確認前那一筆照常記帳,下一頁雲端留著(e49e444 就是這樣) */
+  '56. 帳號資料夾本來就有資料,新分頁確認登入前把每個鍵都重寫過、讀雲端進度失敗:不能當成空的資料夾,確認前那一筆照常記帳、下一頁上雲,另一個灌好的分頁也照常作答': async src => {
+    const UNHYD = 'tr_cloud_unhydrated_' + USER.id;
+    const ready = pg => (typeof pg.ctx.CLOUD.folderReady === 'function' ? pg.ctx.CLOUD.folderReady() : true);   // 舊版沒有這個函式:當成可以
+    /* 甲:這台灌過,資料夾只有 hist(跟雲端一樣);新分頁還在確認登入時作答(根據的是完整的本機資料) */
+    const one = async () => {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      w.db.push({ user_id: USER.id, k: 'hist', v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      await openLoggedIn(w, src);
+      newSession(w);                                                 // 新分頁
+      w.progressFail = true;
+      let release; w.authGate = new Promise(r => { release = r; });
+      const pg = loadPage(w, src); await tick();
+      studentWrites(pg, w, 'hist', (lv(w, 'hist') || []).concat(['early-ok']));
+      release(); w.authGate = null; await pg.ready;
+      const mark = w.local.getItem(UNHYD), led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}')), can = ready(pg);
+      w.progressFail = false;
+      await settle(w, src);                                          // 網路好了,下一頁
+      const want = FIVE.concat(['early-ok']);
+      return { ok: mark === null && led.includes('hist') && can && same(cv(w, 'hist'), want) && same(lv(w, 'hist'), want),
+               detail: '只有 hist:標記 ' + mark + ' / 帳本 ' + JSON.stringify(led) + ' / 能作答 ' + can + ' / 下一頁雲端 ' + JSON.stringify(cv(w, 'hist')) + ' / 本機 ' + JSON.stringify(lv(w, 'hist')) };
+    };
+    /* 乙:另一個分頁 A 早就灌好、一直開著;新分頁 B 確認登入前把 hist、錯題本都重寫過,讀雲端失敗。A 照常作答 */
+    const two = async () => {
+      const D3 = ['d1', 'd2', 'd3'];
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      w.db.push({ user_id: USER.id, k: 'hist', v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      w.db.push({ user_id: USER.id, k: K, v: D3, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const sA = w.session;
+      const pgA = await openLoggedIn(w, src);
+      w.session = makeStorage();                                     // 分頁 B
+      w.progressFail = true;
+      let release; w.authGate = new Promise(r => { release = r; });
+      const pgB = loadPage(w, src); await tick();
+      studentWrites(pgB, w, K, (lv(w, K) || []).concat(['early-d']));
+      studentWrites(pgB, w, 'hist', (lv(w, 'hist') || []).concat(['early-h']));
+      release(); w.authGate = null; await pgB.ready;
+      const mark = w.local.getItem(UNHYD), canA = ready(pgA);
+      studentWrites(pgA, w, 'hist', (lv(w, 'hist') || []).concat(['A-ans'])); await pgA.runTimers();
+      const led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}')).sort();
+      w.progressFail = false;
+      w.session = sA;
+      await settle(w, src);                                          // A 換頁
+      const hist = FIVE.concat(['early-h', 'A-ans']), drill = D3.concat(['early-d']);
+      return { ok: mark === null && canA && same(cv(w, 'hist'), hist) && same(cv(w, K), drill) && same(lv(w, 'hist'), hist) && same(lv(w, K), drill),
+               detail: '另一個灌好的分頁:標記 ' + mark + ' / A 能作答 ' + canA + ' / A 作答後帳本 ' + JSON.stringify(led) + ' / 最後雲端 hist ' + JSON.stringify(cv(w, 'hist')) + '、錯題本 ' + JSON.stringify(cv(w, K)) };
+    };
+    const a = await one(), b = await two();
+    return { ok: a.ok && b.ok, detail: a.detail + ' | ' + b.detail };
+  },
+  /* 跟 56 同一條(不能把有資料的資料夾當成空的),這次是開頁時資料夾真的是空的:分頁 B 是這台第一次登入、正在讀雲端進度
+     (資料夾空的、標記記著),這時開分頁 C;C 還在確認登入時 B 灌好了(資料夾有 hist、標記劃掉)。
+     C 確認登入時資料夾已經有東西,不能因為開頁那一刻是空的又記上標記;之後 C 讀雲端失敗,作答照常記帳,下一頁上雲 */
+  '57. 新分頁開頁時帳號資料夾是空的(別的分頁正在灌),確認登入前那個分頁灌好了:不能再記「還沒灌過」,讀雲端失敗時作答照常記帳、下一頁上雲': async src => {
+    const UNHYD = 'tr_cloud_unhydrated_' + USER.id;
+    {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      w.db.push({ user_id: USER.id, k: 'hist', v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const guest = loadPage(w, src); await guest.ready;             // 分頁 B:訪客頁
+      let go; w.progressGate = new Promise(r => { go = r; });
+      const loginP = guest.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e); await tick();
+      const markB = w.local.getItem(UNHYD);
+      w.session = makeStorage();                                     // 分頁 C
+      let release; w.authGate = new Promise(r => { release = r; });
+      const pg = loadPage(w, src); await tick();
+      const emptyAtOpen = lv(w, 'hist') === null;
+      go(); await loginP; await tick();                              // B 灌好了
+      w.progressFail = true;
+      release(); w.authGate = null; await pg.ready;
+      const mark = w.local.getItem(UNHYD), can = typeof pg.ctx.CLOUD.folderReady === 'function' ? pg.ctx.CLOUD.folderReady() : true;
+      studentWrites(pg, w, 'hist', (lv(w, 'hist') || []).concat(['c-ans'])); await pg.runTimers(); await pg.fire('win:pagehide');
+      const led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}'));
+      w.progressFail = false;
+      await settle(w, src);                                          // C 的下一頁
+      const want = FIVE.concat(['c-ans']);
+      return { ok: markB === '1' && emptyAtOpen && mark === null && can && led.includes('hist') && same(cv(w, 'hist'), want) && same(lv(w, 'hist'), want),
+               detail: 'B 讀的時候標記 ' + markB + ' / C 開頁時空的 ' + emptyAtOpen + ' / C 確認登入後標記 ' + mark + ' / 能作答 ' + can + ' / 帳本 ' + JSON.stringify(led) + ' / 下一頁雲端 ' + JSON.stringify(cv(w, 'hist')) };
+    }
+  },
+  /* 跟 56、57 反過來:開頁時資料夾還有東西,確認登入之前別的分頁按了登出(資料夾刪光)、又用密碼登回來,登入資料存好了、
+     但那個分頁還在查教師身分,還沒走到記「還沒灌過」。這一頁確認登入時資料夾已經空了,要當成空的記上標記,
+     不能只看開頁那一刻(不然讀雲端失敗時,這一頁拿空資料夾作答、記帳,下一頁只拿新的那一筆蓋掉雲端的 hist) */
+  '58. 新分頁開頁時帳號資料夾還有東西,確認登入前別的分頁登出又登回來(還沒記標記):確認登入時資料夾已經空了,要記「還沒灌過」,讀雲端失敗時作答不記帳,雲端不變少': async src => {
+    const UNHYD = 'tr_cloud_unhydrated_' + USER.id;
+    const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+    w.db.push({ user_id: USER.id, k: 'hist', v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    await openLoggedIn(w, src);
+    newSession(w);                                                 // 新分頁:開頁時帳號資料夾有 hist
+    let release; w.authGate = new Promise(r => { release = r; });
+    const pg = loadPage(w, src); await tick();
+    /* 別的分頁:登出(cloud.js logout 刪的那些),又登回來(登入資料存好了,afterAuth 還在查教師身分) */
+    const folder = [];
+    for (let i = 0; i < w.local.length; i++) { const k = w.local.key(i); if (k.startsWith(PREFIX)) folder.push(k); }
+    folder.concat([SB_KEY, LEDGER, 'tr_current_profile']).forEach(k => w.local.removeItem(k));
+    w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', expires_at: 1, user: USER }));
+    w.progressFail = true;
+    release(); w.authGate = null; await pg.ready;
+    const mark = w.local.getItem(UNHYD);
+    const can = typeof pg.ctx.CLOUD.folderReady === 'function' ? pg.ctx.CLOUD.folderReady() : true;
+    studentWrites(pg, w, 'hist', (lv(w, 'hist') || []).concat(['new1'])); await pg.runTimers(); await pg.fire('win:pagehide');
+    const led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}'));
+    w.progressFail = false;
+    await settle(w, src);                                          // 網路好了,下一頁
+    return { ok: folder.length > 0 && mark === '1' && !can && !led.includes('hist') && same(cv(w, 'hist'), FIVE) && same(lv(w, 'hist'), FIVE),
+             detail: '開頁時資料夾 ' + JSON.stringify(folder.map(k => k.slice(PREFIX.length))) + ' / 標記 ' + mark + ' / 能作答 ' + can + ' / 帳本 ' + JSON.stringify(led) +
+               ' / 下一頁雲端 ' + JSON.stringify(cv(w, 'hist')) + ' / 本機 ' + JSON.stringify(lv(w, 'hist')) };
+  },
 };
 const FIVE = ['q1', 'q2', 'q3', 'q4', 'q5'];
 const PID = 'c' + USER.id.replace(/-/g, '');

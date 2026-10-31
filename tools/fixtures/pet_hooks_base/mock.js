@@ -40,10 +40,52 @@
   const pick = (arr, n) => shuffle(arr || []).slice(0, n);
   const qid = (set, i) => set.id + ':' + i;
 
+  /* ---------- 交卷時存不進去的成績(第 2 輪審查 2026-10-31) ----------
+     「交卷」和時間到自動交卷沒有 data-gate(開始的時候是能作答的)。考到一半別的分頁登出、換帳號,
+     或登回來時這台的帳號資料夾還沒從雲端灌好,交卷那一下 js/common.js 的最後一道會擋下:以前結果照常出現、成績哪裡都沒存。
+     現在結果照樣給他看,但寫明還沒存;這一筆先放這個分頁的 sessionStorage,綁交卷時的資料夾(帳號),
+     之後這個分頁回到同一個資料夾、能作答了(登回來、灌好雲端進度)就補存。模擬考紀錄是先合併再上傳的鍵(js/sync-merge.js mock),
+     晚一點補存不會蓋掉別台的;換成別人的帳號時不補進別人的資料夾。關掉分頁就沒了(結果上有寫) */
+  const LATER = 'tr_mock_unsaved';
+  function laterList() {
+    try { const a = JSON.parse(sessionStorage.getItem(LATER)); return Array.isArray(a) ? a : []; } catch (e) { return []; }
+  }
+  function setLater(a) {
+    try { if (a.length) sessionStorage.setItem(LATER, JSON.stringify(a)); else sessionStorage.removeItem(LATER); return true; } catch (e) { return false; }
+  }
+  /* 現在寫得進去嗎:跟 store.set 的最後一道同一套(common.js canKeepProgress),再加內容頁的「能作答」 */
+  function canSaveNow() {
+    try {
+      if (typeof canKeepProgress === 'function' && !canKeepProgress()) return false;
+      return !(window.PROFILE && typeof PROFILE.canAct === 'function' && !PROFILE.canAct());
+    } catch (e) { return true; }
+  }
+  function addRecords(recs) {
+    const hist = store.get('mock_history', []);
+    const S = window.SYNC_MERGE;
+    const m = S && typeof S.mock === 'function' ? S.mock(Array.isArray(hist) ? hist : [], recs) : null;   // 同一筆不會變兩筆,照日期排
+    store.set('mock_history', (m && m.ok ? m.v : (Array.isArray(hist) ? hist : []).concat(recs)).slice(-30));
+  }
+  function saveLater() {
+    const all = laterList();
+    const mine = all.filter(x => x && x.pid === window.__PROFILE_ID && x.rec && typeof x.rec.d === 'string');
+    if (!mine.length || !canSaveNow()) return false;
+    addRecords(mine.map(x => x.rec));
+    const after = store.get('mock_history', []);
+    const kept = new Set((Array.isArray(after) ? after : []).map(r => r && r.d));
+    if (!mine.every(x => kept.has(x.rec.d))) return false;   // 沒寫進去:留著下次再補
+    setLater(all.filter(x => mine.indexOf(x) < 0));
+    return true;
+  }
+  let onHome = false;
+
   renderHome();
+  /* 確認登入之後(這一頁不重載、能作答):之前存不進去的成績補存,首頁的紀錄表跟著重畫 */
+  Promise.resolve(window.CLOUD ? CLOUD.ready : null).then(() => { if (saveLater() && onHome) renderHome(); }, () => {});
 
   /* ================= 首頁 ================= */
   function renderHome() {
+    onHome = true;
     document.title = '模擬考|衝衝英文';
     root.innerHTML = '';
     root.append(h('div', { class: 'page-head' },
@@ -81,6 +123,7 @@
 
   /* ================= 考試 ================= */
   function startExam(sizeKey) {
+    onHome = false;
     const cfg = SIZES[sizeKey];
     const units = [];
     if (cfg.l.p1) pick(LDATA.p1, cfg.l.p1).forEach(item => units.push({ sec: 'L', p: '1', item }));
@@ -323,14 +366,37 @@
       });
       const lScore = scaled(lTotal ? lRaw / lTotal : 0);
       const rScore = scaled(rTotal ? rRaw / rTotal : 0);
-      const hist = store.get('mock_history', []);
-      hist.push({ d: new Date().toISOString(), size: sizeKey, lRaw, lTotal, rRaw, rTotal, lScore, rScore });
-      store.set('mock_history', hist.slice(-30));
+      const rec = { d: new Date().toISOString(), size: sizeKey, lRaw, lTotal, rRaw, rTotal, lScore, rScore };
+      let unsaved = '';
+      if (canSaveNow()) {
+        const hist = store.get('mock_history', []);
+        hist.push(rec);
+        store.set('mock_history', hist.slice(-30));
+      } else {
+        /* 存不進去:先放這個分頁,寫明原因(js/common.js accountBlock);放不進 sessionStorage 就只能請他記下分數 */
+        const why = typeof accountBlock === 'function' ? accountBlock() : '';
+        unsaved = !setLater(laterList().concat([{ pid: window.__PROFILE_ID, rec }])) ? 'lost' : why === 'gone' ? 'gone' : why === 'loading' ? 'loading' : 'other';
+      }
 
-      results(timeUp, lRaw, lTotal, rRaw, rTotal, lScore, rScore);
+      results(timeUp, lRaw, lTotal, rRaw, rTotal, lScore, rScore, unsaved);
     }
 
-    function results(timeUp, lRaw, lTotal, rRaw, rTotal, lScore, rScore) {
+    /* 這次成績還沒存進紀錄的說明(unsaved:'gone' 別的分頁登出或換帳號、'loading' 帳號資料夾還沒從雲端灌好、'other'、'lost' 連這個分頁都放不進去) */
+    const UNSAVED = {
+      gone: '這個帳號在別的分頁登出或換了帳號，這次成績存不進去，先留在這個分頁。在這個分頁用原本的帳號登入、回到模擬考頁就會自動補存；關掉這個分頁就不會留。',
+      loading: '這一頁還沒從雲端拿到你的練習紀錄，這次成績先留在這個分頁。網路恢復後重新整理，就會自動補存；關掉這個分頁就不會留。',
+      other: '這次成績先留在這個分頁，在這個分頁回到交卷時的帳號或學生、再開模擬考頁就會自動補存；關掉這個分頁就不會留。',
+      lost: '這個瀏覽器不讓網頁暫存，這次成績沒辦法留下來，請先記下分數。',
+    };
+    function unsavedNote(unsaved) {
+      if (!unsaved) return null;
+      return h('div', { class: 'mock-unsaved', role: 'status' },
+        h('b', null, '這次成績還沒存進紀錄'),
+        h('p', null, UNSAVED[unsaved] || UNSAVED.other),
+        unsaved === 'lost' ? null : h('button', { class: 'btn', type: 'button', onclick: () => location.reload() }, '重新整理'));
+    }
+
+    function results(timeUp, lRaw, lTotal, rRaw, rTotal, lScore, rScore, unsaved) {
       document.title = '模擬考結果|衝衝英文';
       root.innerHTML = '';
       root.append(h('div', { class: 'drill-top' }, h('h1', null, '模擬考結果'),
@@ -339,7 +405,8 @@
         h('h2', null, '參考總分 ' + (lScore + rScore)),
         h('div', { class: 'band-note' },
           (timeUp ? '時間到，自動交卷。' : '') +
-          '聽力 ' + lRaw + '/' + lTotal + '（約 ' + lScore + '）· 閱讀 ' + rRaw + '/' + rTotal + '（約 ' + rScore + '）。參考換算，非正式成績。')));
+          '聽力 ' + lRaw + '/' + lTotal + '（約 ' + lScore + '）· 閱讀 ' + rRaw + '/' + rTotal + '（約 ' + rScore + '）。參考換算，非正式成績。'),
+        unsavedNote(unsaved)));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startExam(sizeKey) }, '再來一回'),
         h('a', { class: 'btn', href: 'mock.html' }, '回模擬考')));

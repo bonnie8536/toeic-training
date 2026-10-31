@@ -527,6 +527,10 @@ function syncScenarios() {
    帳號資料夾還沒灌過(「還沒灌過」標記)的頁面不記帳、不能作答;記著標記時每一頁都要灌。
    - 52、53、54:就是測這些改動的新情境(第 1 步那版、e49e444 都會紅:雲端被只有新那幾筆的錯題本、hist 蓋掉),不比,只要新版通過
    - 55:釘住第 3 輪的「fresh 或 otherFolder 時先清掉灌過旗標」與 otherFolder 的新情境(第 1 步那版沒有這兩條,會紅),不比,只要新版通過
+   第 2 輪審查(2026-10-31):「帳號資料夾是空的」改成看開頁當下(cloud.js 載入時)和確認登入時的資料夾,不再把確認登入前寫的鍵一律當成不算。
+   - 56:資料夾本來就有資料、確認登入前每個鍵都重寫過:不記標記,跟第 1 步那版一樣照常記帳,照樣逐位元組比(不是例外)
+   - 57:另一個分頁正在灌(標記記著)時開的新分頁:那個分頁的標記本來就是 52~55 那一套改動,第 1 步那版沒有,不比,只要新版通過
+   - 58:確認登入前別的分頁登出又登回來、還沒記標記:要記上標記、不記帳(第 1 步那版會記帳,雲端被蓋成只有新那一筆),不比,只要新版通過
    1~51 照樣逐位元組比(平常登入、重新整理、離線、兩台裝置、登出的請求與儲存都沒變) */
 function dropNullUpload(state, key) {
   const o = JSON.parse(state);
@@ -535,7 +539,7 @@ function dropNullUpload(state, key) {
   o.ops = o.ops.filter(x => { const q = JSON.parse(x); return !(q.op === 'upsert' && q.k === key && isNull(q.row)); });
   return J(o);
 }
-const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null, '52': null, '53': null, '54': null, '55': null };
+const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null, '52': null, '53': null, '54': null, '55': null, '57': null, '58': null };
 const intended = name => Object.prototype.hasOwnProperty.call(INTENDED, name.split('.')[0]);
 async function replay(variant) {
   const make = syncScenarios();

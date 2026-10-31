@@ -210,12 +210,17 @@
        跟本機的「你是哪位？」一樣可以關(X、Esc、點遮罩),關掉焦點回到被按的那個東西 */
     function showReload(opener) {
       if (document.querySelector('.modal-mask')) return null;
+      /* 別的分頁已經登出、換了帳號(js/common.js accountBlock 回 'gone'):這一頁頂欄還是原帳號,但不能跟他說「你已經登入了」(第 2 輪審查) */
+      const gone = typeof accountBlock === 'function' && accountBlock() === 'gone';
+      const title = gone ? '這個帳號已經在別的分頁登出' : '還沒載入你的練習紀錄';
       const btn = h('button', { class: 'btn primary', type: 'button', onclick: () => location.reload() }, '重新整理');
-      const box = h('div', { class: 'modal modal-gate modal-reload', role: 'dialog', 'aria-modal': 'true', 'aria-label': '還沒載入你的練習紀錄', 'aria-describedby': 'reload-why' },
+      const box = h('div', { class: 'modal modal-gate modal-reload', role: 'dialog', 'aria-modal': 'true', 'aria-label': title, 'aria-describedby': 'reload-why' },
         h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }),
-        h('h2', null, '還沒載入你的練習紀錄'),
-        h('p', { class: 'modal-why', id: 'reload-why' }, '你已經登入了，但這一頁還沒從雲端拿到你的練習紀錄，先不能作答。重新整理一次就會載入。'),
-        h('p', { class: 'modal-sub' }, '一直出現的話，請檢查網路連線。'),
+        h('h2', null, title),
+        h('p', { class: 'modal-why', id: 'reload-why' }, gone
+          ? '這一頁還是登出前的畫面，先不能作答。重新整理一次，就會換成這台現在的登入狀態。'
+          : '你已經登入了，但這一頁還沒從雲端拿到你的練習紀錄，先不能作答。重新整理一次就會載入。'),
+        gone ? null : h('p', { class: 'modal-sub' }, '一直出現的話，請檢查網路連線。'),
         h('div', { class: 'modal-row' }, btn));
       const mask = h('div', { class: 'modal-mask' }, box);
       document.body.append(mask);

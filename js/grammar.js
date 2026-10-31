@@ -123,6 +123,7 @@
   /* ================= 首頁 ================= */
   function renderHome() {
     document.title = '文法基礎|衝衝英文';
+    setPageMeta('');
     widen();
     const done = store.get('grammar_done', {});
     const todo = UNITS.find(u => !done[u.id]) || null;
@@ -164,6 +165,7 @@
   /* ================= 查表頁:跟課程一樣在文法區裡,左邊路徑還在 ================= */
   function renderRef(k) {
     const r = REFS[k];
+    setPageMeta('ref=' + k);
     widen();
     const host = h('div', null, h('p', { class: 'result-note', style: 'margin-top:30px' }, '載入中…'));
     root.append(h('div', { class: 'gx-layout' }, buildRail(r.stage, null, null, k), h('div', { class: 'gx-col' }, host)));
@@ -191,7 +193,8 @@
 
   /* ================= 單元 ================= */
   function renderUnit(u) {
-    document.title = u.title + '|文法基礎';
+    document.title = u.title + '|衝衝英文';
+    setPageMeta('u=' + encodeURIComponent(u.id), u.goal);
     const idx = UNITS.indexOf(u);
     widen();
     const col = h('div', { class: 'gx-col' });

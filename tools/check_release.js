@@ -1,7 +1,8 @@
 /* 上線前檢查:這次改到網頁會用到的檔案(html、js、css、json、data),sw.js 的 V 就要換新。
    service worker 的快取以檔名為準,共用的 JS、CSS 只留最後抓到的那一版;V 不換,離線或慢網路時
    可能拿新版共用檔配舊版頁面。V 一換,舊快取整批作廢。
-   另外檢查網域開關(tools/domain.json)跟 CNAME、canonical、sitemap 等一致(tools/apply_domain.js --check)。
+   另外檢查網域開關(tools/domain.json)跟 CNAME、canonical、sitemap 等一致(tools/apply_domain.js --check),
+   以及 sitemap.xml 跟頁面、單元資料、各頁改動日期一致(tools/build_sitemap.js --check)。
    用法(跟 origin/main 比,先 git pull 或 git fetch):
      node tools/check_release.js        只檢查,需要換 V 就 exit 1
      node tools/check_release.js --fix  需要的話自動把 V 換成新的版本號 */
@@ -19,6 +20,12 @@ const vOf = (src) => { const m = /const V = '([^']+)';/.exec(src || ''); return 
 const dom = require('./apply_domain.js').run(REPO, true);
 if (dom.changed.length) {
   console.log('網域設定是 ' + dom.cfg.live + ',這些檔案還沒跟上:' + dom.changed.join('、') + '。執行 node tools/apply_domain.js');
+  process.exit(1);
+}
+
+/* sitemap(SEO 稽核 2026-10-31):要收錄的頁、每個單元、各頁實際改動日期,都要跟 tools/build_sitemap.js 產生的一樣 */
+if (fs.readFileSync(path.join(REPO, 'sitemap.xml'), 'utf8').replace(/\r\n/g, '\n') !== require('./build_sitemap.js').build(REPO)) {
+  console.log('sitemap.xml 跟頁面、單元資料或改動日期對不上。執行 node tools/build_sitemap.js');
   process.exit(1);
 }
 

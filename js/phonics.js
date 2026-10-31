@@ -173,6 +173,7 @@
   /* ================= 首頁 ================= */
   function renderHome() {
     document.title = '自然發音|衝衝英文';
+    setPageMeta('');
     widen();
     const done = store.get('phonics_done', {});
     const todo = UNITS.find(u => !done[u.id]) || null;
@@ -213,7 +214,8 @@
 
   /* ================= 發音總表 ================= */
   function renderChart() {
-    document.title = '發音總表|自然發音';
+    document.title = '發音總表|自然發音|衝衝英文';
+    setPageMeta('ref=chart');
     widen();
     const done = store.get('phonics_done', {});
     const col = h('div', { class: 'gx-col' },
@@ -242,7 +244,8 @@
 
   /* ================= 單元 ================= */
   function renderUnit(u) {
-    document.title = u.title + '|自然發音';
+    document.title = u.title + '|衝衝英文';
+    setPageMeta('u=' + encodeURIComponent(u.id), u.goal);
     const idx = UNITS.indexOf(u);
     widen();
     const col = h('div', { class: 'gx-col' });

@@ -136,6 +136,26 @@ function getParam(name) {
   return new URLSearchParams(location.search).get(name);
 }
 
+/* 搜尋引擎用:這一頁的正式網址(canonical)、og:url,和說明文字。
+   文法、自然發音、閱讀、對話的每一課都有自己的網址(grammar.html?u=ga-01 這類),canonical 要寫自己,Google 才會分開收錄;
+   所以這四頁的 HTML 不寫死 canonical,由頁面程式依畫面呼叫這裡。query 只放決定內容的參數('u=ga-01'),列表頁給 ''。
+   網域取 HTML 裡的 og:url(tools/apply_domain.js 會換),舊網址代理時也指向新網址;沒有 og:url 就什麼都不寫。 */
+function setPageMeta(query, desc) {
+  const og = document.querySelector('meta[property="og:url"]');
+  if (!og || !og.getAttribute('content')) return;
+  if (!og.dataset.base) og.dataset.base = og.getAttribute('content').replace(/[?#].*$/, '');
+  const url = og.dataset.base + (query ? '?' + query : '');
+  let link = document.querySelector('link[rel="canonical"]');
+  if (!link) { link = document.createElement('link'); link.rel = 'canonical'; document.head.append(link); }
+  link.href = url;
+  og.setAttribute('content', url);
+  if (!desc) return;
+  ['meta[name="description"]', 'meta[property="og:description"]'].forEach((s) => {
+    const m = document.querySelector(s);
+    if (m) m.setAttribute('content', desc);
+  });
+}
+
 /* Part 6/7 文章類型的中文標籤(刷題、模擬考共用)。查不到就原樣回傳,不轉大寫。 */
 function passTypeLabel(t) {
   const map = {

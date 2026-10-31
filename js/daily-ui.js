@@ -91,7 +91,7 @@
   function runPart(key) {
     const p = PART[key];
     const list5 = items[key];
-    document.title = p.name + '|每日練習';
+    document.title = p.name + '|每日練習|衝衝英文';
     let player = null;
     let rate = '1';   // 聽寫選的速度,換句子時沿用
     if (!list5.length) {

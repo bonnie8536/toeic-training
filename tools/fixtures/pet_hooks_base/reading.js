@@ -32,6 +32,7 @@
   /* ============ 文章列表 ============ */
   function renderList() {
     document.title = '閱讀訓練|衝衝英文';
+    setPageMeta('');
     let levelFilter = '全部';
 
     const head = h('div', { class: 'page-head' },
@@ -66,7 +67,7 @@
         const qState = store.get('read_q_' + a.id, {});
         const qDone = Object.keys(qState).length;
         const tqRes = store.get('read_tq_' + a.id, null);
-        const img = h('img', { src: a.image || ('img/' + a.id + '.svg'), alt: '', onerror: e => e.target.parentNode.remove() });
+        const img = h('img', { src: a.image || ('img/' + a.id + '.svg'), alt: '', loading: 'lazy', decoding: 'async', width: '1200', height: '800', onerror: e => e.target.parentNode.remove() });
         listWrap.append(h('a', { class: 'article-card', href: 'reading.html?id=' + a.id },
           h('div', { class: 'thumb' }, img),
           h('div', { class: 'body' },
@@ -93,7 +94,8 @@
 
   /* ============ 閱讀器 ============ */
   function renderReader(a) {
-    document.title = a.title + '|衝衝英文';
+    document.title = a.title + (a.titleZh ? '（' + a.titleZh + '）' : '') + '|衝衝英文';
+    setPageMeta('id=' + encodeURIComponent(a.id), a.titleZh ? '英文閱讀「' + a.title + '」（' + a.titleZh + '），' + (a.level || '') + '，看不懂的單字點一下練填空，可切英中對照。' : '');
     const vocabMap = {};
     (a.vocab || []).forEach(v => { vocabMap[v.word.toLowerCase()] = v; });
     /* state = {idx: {t: 學生填的內容}};不批改對錯,填了就算完成,之後可修改 */

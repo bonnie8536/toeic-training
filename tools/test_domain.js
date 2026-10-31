@@ -2,7 +2,7 @@
    - 現在的檔案跟 domain.json 一致(live 是 old 時整站照舊能部署在舊網址)。
    - 在記憶體裡切到 new:CNAME、canonical、og:url、結構化資料、sitemap、robots、Edge Function 的 LIVE 全部換成新網址,
      舊網域只剩「舊網址 shuashualanguage.com」的說明與兩邊都要在的網域清單;再切回 old 一個位元組都不差;重跑一次不再變。
-   - 網頁與 js/ 裡新網域的絕對網址,只准出現在 canonical、og、結構化資料與網域清單(站內連結必須是相對路徑)。
+   - 網頁與 js/ 裡新網域的絕對網址,只准出現在 canonical、og:url、og:image、結構化資料與網域清單(站內連結必須是相對路徑)。
    - courses.js:只有根目錄這門課是開的;保留的資料夾名稱沒被用掉;新課程的鍵有前綴,不會跟現在的鍵撞。
    用法:node tools/test_domain.js */
 'use strict';
@@ -33,7 +33,8 @@ T['切到 new:該換的全換成新網址,舊網域只剩說明文字;切回現�
   assert.match(toNew['index.html'], /"url":"https:\/\/www\.rushuplanguage\.com\/"/);
   assert.match(toNew['robots.txt'], /Sitemap: https:\/\/www\.rushuplanguage\.com\/sitemap\.xml/);
   assert.equal((toNew['sitemap.xml'].match(/<loc>https:\/\/www\.rushuplanguage\.com\//g) || []).length, (files['sitemap.xml'].match(/<loc>/g) || []).length);
-  assert.ok(toNew['sitemap.xml'].match(/<lastmod>[^<]+<\/lastmod>/g).every((x) => x === '<lastmod>2026-11-04</lastmod>'));
+  /* lastmod 不跟著換網域被蓋成同一天(交給 tools/build_sitemap.js 依各頁改動日期) */
+  assert.deepEqual(toNew['sitemap.xml'].match(/<lastmod>[^<]+<\/lastmod>/g), files['sitemap.xml'].match(/<lastmod>[^<]+<\/lastmod>/g));
   assert.match(toNew['supabase/functions/_shared/site.ts'], /export const LIVE: 'old' \| 'new' = 'new';/);
   Object.keys(toNew).forEach((rel) => {
     const s = toNew[rel] || '';
@@ -41,7 +42,7 @@ T['切到 new:該換的全換成新網址,舊網域只剩說明文字;切回現�
   });
   assert.equal(transform(toNew, Object.assign({}, CFG, { live: 'new', switchDate: '2026-11-04' })).CNAME, undefined);
   const back = apply(toNew, CFG);
-  Object.keys(files).filter((r) => r !== 'sitemap.xml' || CFG.live === 'new').forEach((rel) => assert.equal(back[rel], files[rel], rel + ' 切回去不一樣'));
+  Object.keys(files).forEach((rel) => assert.equal(back[rel], files[rel], rel + ' 切回去不一樣'));
   const toOld = apply(files, Object.assign({}, CFG, { live: 'old' }));
   assert.equal(toOld.CNAME.trim(), 'www.shuashualanguage.com');
   assert.match(toOld['supabase/functions/_shared/site.ts'], /export const LIVE: 'old' \| 'new' = 'old';/);
@@ -58,7 +59,7 @@ T['站內連結是相對路徑:網頁與 js/ 裡新網域的絕對網址只在 c
   const scan = (rel, src) => {
     src.split(/\r?\n/).forEach((line, i) => {
       if (!/https?:\/\/(www\.)?rushuplanguage\.com/.test(line)) return;   // 文字裡寫網域名稱可以,絕對網址才算
-      if (/rel="canonical"|property="og:url"|"@type":"WebSite"/.test(line)) return;
+      if (/rel="canonical"|property="og:url"|property="og:image"|"@type":"WebSite"/.test(line)) return;
       if (allowJs.indexOf(rel) > -1) return;
       bad.push(rel + ':' + (i + 1));
     });

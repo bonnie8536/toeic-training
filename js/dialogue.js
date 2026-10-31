@@ -34,6 +34,7 @@
   /* ============ 情境列表 ============ */
   function renderList() {
     document.title = '對話練習|衝衝英文';
+    setPageMeta('');
     let filter = '全部';
     const chips = h('div', { class: 'drill-filters', style: 'margin:14px 0 4px' });
     const listWrap = h('div', { class: 'dlg-list' });
@@ -69,6 +70,7 @@
   /* ============ 對話頁 ============ */
   function renderDialogue(d) {
     document.title = d.title + '|衝衝英文';
+    setPageMeta('id=' + encodeURIComponent(d.id), d.titleEn ? '英文對話「' + d.titleEn + '」（' + d.title + '），點句子就播放，口語和俚語都有中文解釋。' : '');
     let bilingual = false, slow = false, playAll = false, playing = -1;
     const audio = new Audio();
     audio.preload = 'none';

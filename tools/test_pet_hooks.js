@@ -15,7 +15,9 @@ const REPO = path.join(__dirname, '..');
 const read = f => fs.readFileSync(path.join(REPO, f), 'utf8');
 const exists = f => fs.existsSync(path.join(REPO, f));
 const BASE = '27557eb';
-const LATER_BASE = ['js/vocab.js', 'js/reading.js'];   // 27557eb 之後被別的功能改過的檔案(同步合併),基準在 tools/fixtures/pet_hooks_base/
+/* 27557eb 之後被別的功能改過的檔案,基準在 tools/fixtures/pet_hooks_base/:vocab、reading 是同步合併(2026-10-24);
+   daily-ui、grammar、phonics、ear、dialogue 與 reading 再加 SEO(2026-10-31,標題帶站名、setPageMeta 寫 canonical) */
+const LATER_BASE = ['js/vocab.js', 'js/reading.js', 'js/daily-ui.js', 'js/grammar.js', 'js/phonics.js', 'js/ear.js', 'js/dialogue.js'];
 
 /* ---------- 小假 DOM(跟 test_daily.js 同一套做法,多了 isConnected) ---------- */
 function fakeDom() {

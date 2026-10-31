@@ -1,9 +1,11 @@
 /* 網站現在掛在哪個網域,只看 tools/domain.json 這一個開關(搬家計畫 1.4、7.1 第 2 項、7.2 第 3 項)。
    live 是 'old' 時,整個網站照舊部署在 www.shuashualanguage.com;切換那一個 commit 只做兩件事:
    把 live 改成 'new'(switchDate 填切換日),再跑 node tools/apply_domain.js,一起改掉:
-     CNAME、每一頁的 canonical、og:url、首頁結構化資料的 url、頁面文字裡的「www.<網域>」、sitemap.xml(網址與 lastmod)、
+     CNAME、每一頁的 canonical、og:url、og:image、首頁結構化資料的網址、頁面文字裡的「www.<網域>」、sitemap.xml 的網址、
      robots.txt 的 Sitemap、supabase/functions/_shared/site.ts 的 LIVE。
    mail 是客服信箱:改了它再跑一次,js/checkout.js 的 MAIL 與每一頁的信箱一起換(新信箱定了才改)。
+   sitemap.xml 的 lastmod 不在這裡改(以前會一律蓋成 switchDate,Google 看到日期不準會整份不採用);
+   切換後跑 node tools/build_sitemap.js,日期照各頁實際改動。
    不會改:js/move-config.js、sw.js、js/app-shell.js、tools/move-worker/worker.js 裡的兩個網域清單(兩邊都要在),
    以及文字裡不帶 www 的「舊網址 shuashualanguage.com」說明。
    用法:
@@ -34,11 +36,7 @@ function transform(files, cfg) {
     if (src === null || src === undefined) return;
     if (rel === 'CNAME') return put(rel, src.trim() ? src.replace(src.trim(), liveHost) : liveHost + '\n');   // 原本的換行照留
     if (/\.html$/.test(rel) && rel.indexOf('/') < 0) return put(rel, swapMail(src.split('https://' + otherHost).join('https://' + liveHost).split('www.' + otherHost.replace(/^www\./, '')).join(liveHost)));
-    if (rel === 'sitemap.xml') {
-      let s = src.split(other).join(live);
-      if (cfg.live === 'new' && /^\d{4}-\d{2}-\d{2}$/.test(cfg.switchDate || '')) s = s.replace(/<lastmod>[^<]*<\/lastmod>/g, '<lastmod>' + cfg.switchDate + '</lastmod>');
-      return put(rel, s);
-    }
+    if (rel === 'sitemap.xml') return put(rel, src.split(other).join(live));   // lastmod 不動,交給 tools/build_sitemap.js
     if (rel === 'robots.txt') return put(rel, src.split(other).join(live));
     if (rel === 'supabase/functions/_shared/site.ts') return put(rel, src.replace(/export const LIVE: 'old' \| 'new' = '(old|new)';/, "export const LIVE: 'old' | 'new' = '" + cfg.live + "';"));
     if (rel === 'js/checkout.js') return put(rel, swapMail(src));

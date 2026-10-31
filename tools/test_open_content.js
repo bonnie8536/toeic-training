@@ -102,6 +102,42 @@ function fakeSdk(user, delay) {
   window.supabase = { createClient: () => client };
 })();`;
 }
+/* 會登入、會存雲端的假 supabase-js(第 2 輪審查的三項用):登入資料存在 SB(跟真的 supabase-js 同一個鍵),重載後 getSession 讀得到;
+   雲端的 progress 表與收到的 upsert 放 sessionStorage(__fake_rows、__fake_up),重載後還在。
+   c = { user:登入後的帳號, teachersDelay、progressDelay:查詢延遲毫秒, access:rpc('my_access') 回的使用權 } */
+const SB = 'sb-fakeproj-auth-token';
+function fakeCloud(c) {
+  return `(() => {
+  const C = ${J(c)}, SB = ${J(SB)};
+  const ss = (k) => { try { return JSON.parse(sessionStorage.getItem(k)) || []; } catch (e) { return []; } };
+  const later = (ms, v) => new Promise((r) => setTimeout(() => r(v), ms || 0));
+  function query(table) {
+    const f = {}; let up = null;
+    const run = () => {
+      if (up) {
+        const log = ss('__fake_up'), db = ss('__fake_rows');
+        up.forEach((r) => { const row = { k: r.k, v: r.v === undefined ? null : r.v, updated_at: r.updated_at || new Date().toISOString() };
+          log.push({ k: row.k, v: row.v }); const i = db.findIndex((x) => x.k === r.k); if (i > -1) db[i] = row; else db.push(row); });
+        sessionStorage.setItem('__fake_up', JSON.stringify(log)); sessionStorage.setItem('__fake_rows', JSON.stringify(db));
+        return later(0, { data: null, error: null });
+      }
+      if (table === 'teachers') return later(C.teachersDelay, { data: [], error: null });
+      if (table === 'progress') return later(C.progressDelay, { data: ss('__fake_rows').filter((r) => !f.k || r.k === f.k), error: null });
+      return later(0, { data: [], error: null });
+    };
+    const q = { select: () => q, eq: (k, v) => { f[k] = v; return q; }, in: () => q, order: () => q, limit: () => q,
+      upsert: (rows) => { up = [].concat(rows); return q; }, then: (a, b) => run().then(a, b) };
+    return q;
+  }
+  const session = () => { try { return JSON.parse(localStorage.getItem(SB)); } catch (e) { return null; } };
+  const auth = new Proxy({
+    getSession: () => later(0, { data: { session: session() }, error: null }),
+    signInWithPassword: () => { const s = { access_token: 'x', user: C.user }; localStorage.setItem(SB, JSON.stringify(s)); return later(0, { data: { user: C.user, session: s }, error: null }); },
+  }, { get: (t, k) => t[k] || (() => Promise.resolve({ data: {}, error: null })) });
+  const client = { auth, from: query, rpc: (n) => later(0, { data: n === 'my_access' && C.access ? C.access : null, error: null }) };
+  window.supabase = { createClient: () => client };
+})();`;
+}
 /* 主畫面 App(加到主畫面後開啟):每頁 head 的開機程式看 navigator.standalone */
 const STANDALONE = "Object.defineProperty(navigator, 'standalone', { get: () => true });";
 
@@ -124,10 +160,12 @@ async function open(B, o) {
     close: () => B.send('Target.closeTarget', { targetId }),
   };
   await send('Page.enable'); await send('Runtime.enable');
-  await send('Emulation.setDeviceMetricsOverride', o.app || o.touch ? { width: 375, height: 812, deviceScaleFactor: 1, mobile: true } : { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
+  const size = o.size || (o.app || o.touch ? { width: 375, height: 812 } : null);
+  await send('Emulation.setDeviceMetricsOverride', size ? { width: size.width, height: size.height, deviceScaleFactor: 1, mobile: true } : { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
   if (o.touch) await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });   // 觸控螢幕:(pointer: coarse) 成立
-  if (o.mode !== 'local') await send('Page.addScriptToEvaluateOnNewDocument', { source: fakeSdk(o.user || null, o.delay || 0) });
+  if (o.mode !== 'local') await send('Page.addScriptToEvaluateOnNewDocument', { source: o.sdk || fakeSdk(o.user || null, o.delay || 0) });
   if (o.app) await send('Page.addScriptToEvaluateOnNewDocument', { source: STANDALONE });
+  if (o.pre) await send('Page.addScriptToEvaluateOnNewDocument', { source: o.pre });
   await s.go('robots.txt');
   const seed = Object.assign({}, o.ls || {});
   const ss = Object.assign({}, o.ss || {});
@@ -569,6 +607,94 @@ T['本機「你是哪位？」的說明跟著畫面:還沒有檔案時請他建�
     await s.close();
     const ok = st.mask && (has ? /^選好你的檔案才能作答/.test(st.why) && list : /^建好你的檔案才能作答/.test(st.why) && !list);
     out.push({ has, ok, why: st.why, list });
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 第 2 輪審查 #1:沒登入按「播放全部」,播到一半從頭像選單登入。登入成功(CLOUD.user 有了)到頁面重載之間,這一頁的資料夾還是訪客的;
+   這時下一句開始播(第 1 句播完的 ended),不能寫進訪客資料夾、不能記進帳號的帳本。記了帳,灌資料時會把帳號在雲端的那一列當成
+   「本機比較新」,讀不到本機的值就上傳 null,把各裝置的「聽過幾句」整列清掉。教師查詢慢 1.5 秒,登入一定落在這段時間裡 */
+const AUDIO_HOOK = '(() => { const p = HTMLMediaElement.prototype.play; HTMLMediaElement.prototype.play = function () { window.__audio = this; return p.call(this); }; })();';
+T['播到一半登入:登入到重載之間下一句開始播,不寫訪客資料夾、不記帳,帳號雲端的「聽過幾句」不被蓋掉,重載後灌回帳號資料夾'] = async (B) => {
+  const heard = { 'dlg-02': [0, 1, 2, 3], 'dlg-05': [0, 1, 2, 3, 4, 5] };
+  const rows = [{ k: 'dlg_heard', v: heard, updated_at: '2026-10-20T00:00:00.000Z' }];
+  const s = await open(B, { url: 'dialogue.html?id=dlg-01', sdk: fakeCloud({ user: USER, teachersDelay: 1500 }), pre: AUDIO_HOOK, ss: { __fake_rows: J(rows) } });
+  const r = {};
+  try {
+    await click(s, '.reader-toolbar .btn.primary');   // 播放全部
+    r.playing = /停止/.test(await s.eval("document.querySelector('.reader-toolbar .btn.primary').textContent"));
+    await click(s, '.profile-btn');
+    await click(s, '.profile-menu .pm-item');          // 登入
+    await s.eval("document.querySelector('.modal-auth input[type=email]').focus(); true");
+    await s.send('Input.insertText', { text: USER.email });
+    await s.eval("document.querySelector('.modal-auth input[name=password]').focus(); true");
+    await s.send('Input.insertText', { text: 'password123' });
+    await s.eval('window.__old = 1; true');
+    await click(s, '.modal-auth .auth-submit');
+    for (let i = 0; i < 40 && !(await s.eval('!!CLOUD.user')); i++) await sleep(25);
+    r.window = await s.eval("!!CLOUD.user && !CLOUD.reloading && window.__PROFILE_ID === null && !!window.__audio");
+    await s.eval("window.__audio.dispatchEvent(new Event('ended')); true");   // 第 1 句播完,播放全部接著播第 2 句
+    const mid = JSON.parse(await s.eval(LS));
+    for (let i = 0; i < 100; i++) { await sleep(100); try { if ((await s.eval('!window.__old && document.readyState')) === 'complete') break; } catch (e) { /* 換頁中 */ } }
+    await s.eval('CLOUD.ready.then(() => true)');
+    await sleep(500);
+    const end = JSON.parse(await s.eval(LS));
+    const ups = JSON.parse(await s.eval("sessionStorage.getItem('__fake_up') || '[]'"));
+    const db = JSON.parse(await s.eval("sessionStorage.getItem('__fake_rows') || '[]'"));
+    const led = (x) => Object.keys(JSON.parse(x['tr_unsynced_' + UID] || '{}'));
+    r.guest = ['tr_dlg_heard' in mid, 'tr_dlg_heard' in end];
+    r.ledger = led(mid).concat(led(end));
+    r.uploaded = ups.filter((u) => u.k !== '_meta');
+    r.cloud = J((db.find((x) => x.k === 'dlg_heard') || {}).v);
+    r.local = J(JSON.parse(end['tr_u' + CPID + '_dlg_heard'] || 'null'));
+    r.reloaded = end.tr_current_profile === J(CPID);
+  } finally { await s.close(); }
+  const ok = r.playing && r.window && !r.guest[0] && !r.guest[1] && !r.ledger.includes('dlg_heard') && !r.uploaded.length
+    && r.cloud === J(heard) && r.local === J(heard) && r.reloaded;
+  return { ok, detail: J(r) };
+};
+
+/* 第 2 輪審查 #2:付費牆(PAID_UI 打開、試用結束)在 App 外殼裡跟登入視窗一樣露出頂欄和分頁列,分頁點得到(內容頁改成 on-action 之後也一樣) */
+T['付費牆:App 外殼裡內容頁與個人頁的遮罩都露出頂欄和分頁列,點分頁換得了頁'] = async (B) => {
+  const out = [];
+  SWAP = { '/js/plans-config.js': fs.readFileSync(path.join(REPO, 'js', 'plans-config.js'), 'utf8').replace(/window\.PAID_UI\s*=\s*false/, 'window.PAID_UI = true') };
+  const access = { active: false, source: 'trial', trial_until: '2026-10-20T00:00:00.000Z', server_now: new Date().toISOString(), is_owner: false, classes: [] };
+  try {
+    for (const url of ['grammar.html?u=ga-01', 'reading.html?id=art-1a', 'writing.html?level=l1&u=23', 'review.html']) {
+      const s = await open(B, { url, app: true, user: USER, sdk: fakeCloud({ user: USER, access }), ls: { [SB]: J({ access_token: 'x', user: USER }) } });
+      try {
+        await s.eval('CLOUD.accessReady.then(() => true)');
+        await sleep(400);
+        const m = await s.eval(`(() => { const r = (sel) => { const e = document.querySelector(sel); if (!e) return null; const b = e.getBoundingClientRect(); return [Math.round(b.top), Math.round(b.bottom)]; };
+          const tab = [...document.querySelectorAll('.app-tabbar a.app-tab')].find((a) => !location.pathname.endsWith('/' + a.getAttribute('href')));
+          const b = tab && tab.getBoundingClientRect(), x = b && b.x + b.width / 2, y = b && b.y + b.height / 2, hit = b && document.elementFromPoint(x, y);
+          return { mask: r('.pw-mask'), bar: r('.topbar'), tabs: r('.app-tabbar'), hit: !!(hit && hit.closest('.app-tabbar')), x, y, href: tab && tab.getAttribute('href') }; })()`);
+        if (m.x !== undefined && m.x !== null) { await mouse(s, m.x, m.y); await sleep(600); }
+        const went = await s.eval('location.pathname');
+        const ok = !!m.mask && !!m.bar && !!m.tabs && m.mask[0] >= m.bar[1] - 1 && m.mask[1] <= m.tabs[0] + 1 && m.hit && went === '/' + m.href;
+        out.push({ url, ok, mask: m.mask, bar: m.bar, tabs: m.tabs, hit: m.hit, went });
+      } finally { await s.close(); }
+    }
+  } finally { SWAP = null; }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 第 2 輪審查 #3:矮一點的手機(iPhone SE、mini 的 Safari、Android)上,作答跳出的登入卡(切到註冊更高)比畫面高時遮罩可以捲:
+   捲到最上面 X、標題、說明句都在畫面裡,捲到最下面看得到「已經有帳號？登入」那一列 */
+T['矮手機:作答跳出的登入卡、註冊卡比畫面高時可以捲,X、標題、說明句、最下面的切換列都看得到'] = async (B) => {
+  const out = [];
+  for (const c of [{ w: 375, h: 627, tab: 'signup' }, { w: 360, h: 640, tab: 'signup' }, { w: 375, h: 548, tab: 'login' }, { w: 375, h: 548, tab: 'signup' }]) {
+    const s = await open(B, { mode: 'cloud', url: 'grammar.html?u=ga-01', touch: true, size: { width: c.w, height: c.h } });
+    try {
+      await tap(s, '.q-block .opt');
+      if (c.tab === 'signup') { await s.eval("document.querySelector('.modal-auth .auth-switch .auth-link').click(); true"); await sleep(300); }
+      const m = await s.eval(`(() => { const mask = document.querySelector('.modal-mask'); if (!mask) return null;
+        const y = (sel, end) => { const e = mask.querySelector(sel); if (!e) return null; const b = e.getBoundingClientRect(); return Math.round(end ? b.bottom : b.top); };
+        mask.scrollTop = 0; const top = { x: y('.modal-close'), h2: y('h2'), why: y('.auth-why') };
+        mask.scrollTop = 1e6; return { top, end: y('.auth-switch', true), vh: innerHeight, title: (mask.querySelector('h2') || {}).textContent }; })()`);
+      const ok = !!m && m.top.x >= 0 && m.top.h2 >= 0 && m.top.why >= 0 && m.end !== null && m.end <= m.vh && (c.tab === 'signup' ? /註冊/ : /登入/).test(m.title);
+      out.push({ size: c.w + 'x' + c.h, tab: c.tab, ok, m });
+    } finally { await s.close(); }
   }
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };

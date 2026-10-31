@@ -145,22 +145,26 @@
   if (window.CLOUD && CLOUD.enabled) {
     /* 能不能作答(先看再登入用,同步回答)。雲端確認登入(CLOUD.ready)之前 CLOUD.user 一律是 null,
        已登入的人開頁頭一秒(離線又遇到登入憑證過期最多約 25 秒)看起來也像訪客:這段時間看這一頁的資料夾,
-       c 開頭就是登入著的帳號(寫入本來就寫進那個資料夾),跟以前一樣照常作答。確認完以 CLOUD.user 為準。 */
+       c 開頭就是登入著的帳號(寫入本來就寫進那個資料夾),跟以前一樣照常作答。
+       有 CLOUD.user 時還要這一頁的資料夾就是這個帳號的,而且頁面不是正要重載:剛在這一頁登入(登入卡、Google 回來)到重載之間,
+       資料夾還是訪客的,這時寫入會寫進訪客資料夾、又記進新帳號的帳本,灌資料時把帳號雲端那一列當成本機比較新,上傳空值蓋掉(第 2 輪審查 #1)。
+       灌完雲端資料要重載的那一下也一樣不寫(cloud.js 本來就不替它記帳,根據的是舊畫面)。 */
     let settled = false;
     Promise.resolve(CLOUD.ready).then(() => { settled = true; }, () => { settled = true; });
     const canAct = () => {
-      if (CLOUD.user) return true;
+      if (CLOUD.reloading) return false;
+      if (CLOUD.user) return typeof CLOUD.user.id === 'string' && 'c' + CLOUD.user.id.replace(/-/g, '') === window.__PROFILE_ID;
       if (settled) return false;
       const pid = window.__PROFILE_ID;
       return typeof pid === 'string' && pid.charAt(0) === 'c';
     };
-    /* 作答被攔下:開可以關的登入卡,多一句為什麼要登入 */
+    /* 作答被攔下:開可以關的登入卡,多一句為什麼要登入。頁面正要重載就只擋下,不開卡(馬上就換成登入後的畫面) */
     const askToAct = opener => {
-      if (canAct()) return;
+      if (canAct() || CLOUD.reloading) return;
       hideMenus();
       const close = showLogin('login', { why: true, opener });
       /* 還沒確認登入就按了,確認完其實是登入著的(而且這一頁不重載):卡片自己收掉,再按一次就照常作答 */
-      if (close && !settled) Promise.resolve(CLOUD.ready).then(() => { if (CLOUD.user && !CLOUD.reloading) close(); }, () => {});
+      if (close && !settled) Promise.resolve(CLOUD.ready).then(() => { if (canAct()) close(); }, () => {});
     };
 
     window.PROFILE = {

@@ -20,7 +20,8 @@
   /* 先看再登入:canKeepProgress 是 js/common.js 這次才有的。上線那幾分鐘瀏覽器可能還拿著快取裡上一版的 common.js(沒有這個函式),
      那時當作可以存,跟改動前一樣;不檢查就會丟錯,已登入的人寫的東西也存不起來 */
   const canKeep = () => typeof canKeepProgress !== 'function' || canKeepProgress();
-  /* 還沒登入、沒選學生(先看再登入,js/profile.js):播放照常,聽過哪幾句只記在這一頁,不寫進任何資料、不發點心 */
+  /* 還沒登入、沒選學生(先看再登入,js/profile.js):播放照常,聽過哪幾句只記在這一頁,不寫進任何資料、不發點心。
+     開始只記在這一頁之後就一直這樣到重載(登入、建檔後都會重載):pageHeard 是從訪客資料夾算出來的,不能中途改存進別的資料夾 */
   let pageHeard = null;
   const heardAll = () => pageHeard || store.get('dlg_heard', {});
   const heardOf = (id) => (heardAll()[id] || []);
@@ -29,7 +30,7 @@
     const list = all[id] || [];
     if (list.indexOf(i) > -1) return;
     const next = Object.assign({}, all, { [id]: list.concat(i).sort((a, b) => a - b) });
-    if (!canKeep()) { pageHeard = next; return; }
+    if (pageHeard || !canKeep()) { pageHeard = next; return; }
     store.set('dlg_heard', next);
   }
   const slangCount = (d) => d.lines.reduce((n, l) => n + (l.slang || []).length, 0);

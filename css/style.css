@@ -1084,13 +1084,17 @@ footer p { margin: 0; }
 .pm-item.big { border: 1px solid var(--line); margin-bottom: 6px; }
 .pm-sep { border-top: 1px solid var(--line); margin: 6px 4px; }
 
+/* 視窗比畫面高時(矮手機的註冊卡、手機橫放、鍵盤打開)遮罩可以捲,從頂端排,X 和標題才看得到;
+   放得下時 margin:auto 照舊上下左右置中,跟以前一模一樣(第 2 輪審查 #3:以前只有矮於 480 和 App 外殼才這樣) */
 .modal-mask {
   position: fixed; inset: 0;
   background: rgba(30, 40, 50, .45);
   z-index: 200;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: flex-start; justify-content: center;
+  overflow-y: auto;
   padding: 20px;
 }
+.modal-mask > .modal { margin: auto; }
 .modal {
   background: #fff;
   border-radius: 10px;
@@ -1098,11 +1102,6 @@ footer p { margin: 0; }
   max-width: 420px;
   width: 100%;
   box-shadow: 0 10px 40px rgba(20,30,40,.3);
-}
-/* 矮螢幕(手機橫放、鍵盤打開):視窗比畫面高時可以捲動看到全部,跟 App 外殼的 .modal-mask 一樣 */
-@media (max-height: 480px) {
-  .modal-mask { overflow-y: auto; align-items: flex-start; }
-  .modal-mask > .modal { margin: auto; }
 }
 .modal h2 { font-size: 20px; }
 .modal-sub { color: var(--ink-light); font-size: 13.5px; margin: 6px 0 14px; }
@@ -1814,7 +1813,10 @@ html.app-shell .app-back:active { background: var(--bg-soft); }
 html.app-shell .app-back:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
 html.app-shell .modal-mask { overflow-y: auto; align-items: flex-start; }
 html.app-shell .modal-mask > .modal { margin: auto; }
-html.app-shell body[data-require-profile]:not([data-require-profile="on-action"]) .modal-mask { top: calc(59px + env(safe-area-inset-top)); }
+/* 強制登入(個人頁)和付費牆的遮罩不蓋頂欄和分頁列。付費牆用自己的 class:內容頁是先看再登入(on-action),
+   不能靠 data-require-profile 認(第 2 輪審查 #2) */
+html.app-shell body[data-require-profile]:not([data-require-profile="on-action"]) .modal-mask,
+html.app-shell .modal-mask.pw-mask { top: calc(59px + env(safe-area-inset-top)); }
 /* 強制登入時頂欄露在遮罩上方:頂欄自己要疊在遮罩之上,寬視窗的選單下拉才點得到 */
 html.app-gate .topbar { z-index: 210; }
 html.app-gate .profile-widget { display: none; }   /* 登入卡上已經有登入和註冊,選單裡那兩項會重複而且按了沒反應 */
@@ -1870,12 +1872,14 @@ html.app-gate .profile-widget { display: none; }   /* 登入卡上已經有登�
   html.app-shell .app-tab.on .ico-f { display: inline; }
   html.app-shell.app-kb .app-tabbar, html.app-shell.app-kb.has-tabbar body::after { display: none; }
 
-  /* 強制登入的遮罩不蓋頂欄和分頁列,沒登入的學生還能點分頁離開 */
-  html.app-shell body[data-require-profile]:not([data-require-profile="on-action"]) .modal-mask {
+  /* 強制登入、付費牆的遮罩不蓋頂欄和分頁列,沒登入、到期的學生還能點分頁離開 */
+  html.app-shell body[data-require-profile]:not([data-require-profile="on-action"]) .modal-mask,
+  html.app-shell .modal-mask.pw-mask {
     top: calc(var(--app-bar-h) + 1px + env(safe-area-inset-top));
     bottom: calc(var(--app-tab-h) + env(safe-area-inset-bottom));
   }
-  html.app-shell.app-kb body[data-require-profile]:not([data-require-profile="on-action"]) .modal-mask { bottom: 0; }
+  html.app-shell.app-kb body[data-require-profile]:not([data-require-profile="on-action"]) .modal-mask,
+  html.app-shell.app-kb .modal-mask.pw-mask { bottom: 0; }
 }
 /* 大手機橫放(寬過 860,網站版的黏住欄位還在):黏住的文章框、文法路線扣掉分頁列的高度,最後幾行才不會壓在分頁列底下 */
 @media (min-width: 861px) and (pointer: coarse) and (max-height: 500px) {

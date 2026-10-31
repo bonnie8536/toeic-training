@@ -138,7 +138,7 @@
           (totalAnswered ? ' · 已作答 ' + totalAnswered + ' 題 · 正確率 ' + Math.round(totalCorrect / totalAnswered * 100) + '%' : '')),
         h('div', { class: 'cfg-rows' }, rows.map(r => r.row)),
         h('button', {
-          class: 'btn primary', style: 'margin-top:14px',
+          class: 'btn primary', style: 'margin-top:14px', 'data-gate': '',
           onclick: () => {
             const config = [];
             for (const r of rows) {
@@ -160,7 +160,7 @@
               h('span', null, DATA[p].title),
               h('b', { style: s.wrong ? 'color:var(--bad)' : 'color:var(--ok)' }, s.wrong + ' 題'),
               s.wrong
-                ? h('button', { class: 'btn', onclick: () => startReview(p) }, '複習')
+                ? h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(p) }, '複習')
                 : h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題'));
           }),
           window.LISTEN ? ['1', '2', '3', '4'].map(p => {
@@ -169,7 +169,7 @@
               h('span', null, '聽力 ' + LISTEN.PARTS[p].title),
               h('b', { style: s.wrong ? 'color:var(--bad)' : 'color:var(--ok)' }, s.wrong + ' 題'),
               s.wrong
-                ? h('button', { class: 'btn', onclick: () => { root.innerHTML = ''; LISTEN.startReview(root, p); window.scrollTo(0, 0); } }, '複習')
+                ? h('button', { class: 'btn', 'data-gate': '', onclick: () => { root.innerHTML = ''; LISTEN.startReview(root, p); window.scrollTo(0, 0); } }, '複習')
                 : h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題'));
           }) : null))));
 
@@ -196,7 +196,7 @@
         h('p', null, '每題最多播 2 次。'),
         h('div', { class: 'cfg-rows' }, lrows.map(r => r.row)),
         h('button', {
-          class: 'btn primary', style: 'margin-top:14px',
+          class: 'btn primary', style: 'margin-top:14px', 'data-gate': '',
           onclick: () => {
             const config = lrows.filter(r => r.cb.checked).map(r => ({ p: r.p, n: Number(r.sel.value) }));
             if (!config.length) return;
@@ -219,7 +219,7 @@
         else cls += ' plain';
       }
       opts.append(h('button', {
-        class: cls,
+        class: cls, 'data-gate': '',   // 錯題本作答(一點就存):沒登入時 js/profile.js 先攔下
         disabled: rec ? '' : null,
         onclick: () => onPick(oi),
       }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
@@ -261,7 +261,7 @@
     const opts = h('div', { class: 'opts' });
     q.options.forEach((opt, oi) => {
       opts.append(h('button', {
-        class: 'opt' + (rec && rec.c === oi ? ' picked' : ''),
+        class: 'opt' + (rec && rec.c === oi ? ' picked' : ''), 'data-gate': '',   // 選答案:?part= 深連結一打開就是題目,選的時候才請他登入
         onclick: () => onPick(oi),
       }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
     });
@@ -335,10 +335,10 @@
       const isLast = cur === units.length - 1;
       return h('div', { class: 'drill-nav-btns' },
         h('button', {
-          class: 'btn primary',
+          class: 'btn primary', 'data-gate': isLast ? '' : null,   // 「下一題」照常;最後一題的交卷要登入
           onclick: () => { if (isLast) submit(); else { cur++; draw(); window.scrollTo(0, 0); } },
         }, isLast ? '交卷對答案' : '下一' + DATA[units[cur + 1].p].unit + ' →'),
-        isLast ? null : h('button', { class: 'btn', onclick: submit }, '直接交卷'));
+        isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: submit }, '直接交卷'));
     }
 
     function drawP5() {
@@ -426,8 +426,8 @@
       });
       const wrongN = qTotal - qCorrect;
       const btns = () => h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', onclick: () => startQuiz(config) }, '再練一輪'),
-        wrongN && config.length === 1 ? h('button', { class: 'btn', onclick: () => startReview(config[0].p) }, '複習錯題') : null,
+        h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(config) }, '再練一輪'),
+        wrongN && config.length === 1 ? h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(config[0].p) }, '複習錯題') : null,
         h('a', { class: 'btn', href: 'practice.html' }, '回題庫'));
       root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
         h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),

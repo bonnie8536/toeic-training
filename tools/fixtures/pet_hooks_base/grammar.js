@@ -238,7 +238,7 @@
       const opts = h('div', { class: 'opts' });
       q.options.forEach((opt, oi) => {
         opts.append(h('button', {
-          class: 'opt',
+          class: 'opt', 'data-gate': '',   // 作答:沒登入時 js/profile.js 先攔下
           onclick: () => {
             if (answered) return;
             answered = true;

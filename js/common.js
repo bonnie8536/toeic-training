@@ -96,6 +96,20 @@ function storageKey(key) {
   return 'tr_' + (window.__PROFILE_ID ? 'u' + window.__PROFILE_ID + '_' : '') + key;
 }
 
+/* 先看再登入的內容頁(js/profile.js):沒登入、沒選學生的人可以看,作答那一下就被攔下、跳出登入卡。
+   這裡是最後一道:頁面載完之後還是有寫入跑到這裡(某個作答鈕漏了 data-gate),一律不寫,留一行警告方便找出漏的那一個。
+   頁面自己要分「存起來」或「只記在這一頁」(對話頁聽過哪幾句、發音頁的慢速)時呼叫 canKeepProgress()。
+   開頁時本來就會寫的東西(頁面載完之前)、學生檔案登錄表(RAW_KEYS,本機建檔要用)照舊。 */
+function canKeepProgress() {
+  const P = window.PROFILE;
+  try { return !(P && typeof P.blocksWrite === 'function' && P.blocksWrite()); } catch (e) { return true; }
+}
+function keepOrWarn(what) {
+  if (canKeepProgress()) return true;
+  try { console.warn('還沒登入，這一筆沒有存：' + what); } catch (e) { /* 沒有 console 也一樣不存 */ }
+  return false;
+}
+
 const store = {
   get(key, fallback) {
     try {
@@ -104,10 +118,12 @@ const store = {
     } catch (e) { return fallback; }
   },
   set(key, val) {
+    if (!RAW_KEYS.has(key) && !keepOrWarn(key)) return;
     try { localStorage.setItem(storageKey(key), JSON.stringify(val)); } catch (e) {}
     if (!RAW_KEYS.has(key) && window.CLOUD && CLOUD.enabled) CLOUD.push(key, val);
   },
   remove(key) {
+    if (!RAW_KEYS.has(key) && !keepOrWarn(key)) return;
     try { localStorage.removeItem(storageKey(key)); } catch (e) {}
     if (!RAW_KEYS.has(key) && window.CLOUD && CLOUD.enabled) CLOUD.push(key, null);
   },
@@ -178,6 +194,7 @@ function passTypeLabel(t) {
 const HIST_MAX = 1500;
 const HIST_DAYS = 60;
 function logAttempt(m, id, c, ok, extra) {
+  if (!keepOrWarn('hist')) return;   // 小雞也不跟著重算
   const rec = { m, id, c, ok: !!ok, t: Date.now() };
   if (extra) Object.assign(rec, extra);
   const cutoff = rec.t - HIST_DAYS * 864e5;

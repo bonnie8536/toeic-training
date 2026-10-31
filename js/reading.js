@@ -124,7 +124,7 @@
     const biBtn = h('button', { class: 'btn', onclick: toggleBilingual }, '對照翻譯');
     const hasBank = () => [].concat(store.get('vgame_banks', [])).some(b => b && b.id === 'art_' + a.id);
     const bankBtn = h('button', {
-      class: 'btn' + (hasBank() ? ' on' : ''),
+      class: 'btn' + (hasBank() ? ' on' : ''), 'data-gate': '',   // 存進自訂題庫:沒登入時先攔下
       onclick: () => importVocabToBank(a, bankBtn),
     }, hasBank() ? '更新題庫單字' : '單字存入題庫');
     bankBtnSync = () => {
@@ -190,7 +190,8 @@
     function makeWordSpan(surface, entry, idx) {
       const st = state[idx];
       // 本文永遠顯示原文英文;學生填的內容只出現在點開的內容卡裡
-      const span = h('span', { class: 'vw' + (st ? ' done' : '') }, surface);
+      /* 還沒填過的字:點下去就是作答(原位置變空格、開填空卡),沒登入時 js/profile.js 先攔下;填過的字點開只是看翻譯 */
+      const span = h('span', { class: 'vw' + (st ? ' done' : ''), 'data-gate': st ? null : '' }, surface);
       span.addEventListener('click', e => {
         e.stopPropagation();
         if (popTarget === span) { closePop(); return; }   // 再點同一個字=收起卡片
@@ -328,9 +329,9 @@
         h('div', { class: 'pop-zh' }, entry.zh, ' ', baseNote),
         h('div', { class: 'pop-hint' }, h('b', null, '英文釋義'), entry.hint),
         h('div', { class: 'pop-actions' },
-          h('button', { type: 'button', onclick: () => openFillPop(span, surface, entry, idx) }, '修改填答'),
+          h('button', { type: 'button', 'data-gate': '', onclick: () => openFillPop(span, surface, entry, idx) }, '修改填答'),
           h('button', {
-            type: 'button',
+            type: 'button', 'data-gate': '',
             onclick: () => {
               delete state[idx];
               store.set('vocab_' + a.id, state);
@@ -366,7 +367,7 @@
       const correct = a.questions.filter((q, qi) => answers[qi] === q.answer).length;
       const foot = h('div', { class: 'drill-nav-btns' },
         h('button', {
-          class: 'btn',
+          class: 'btn', 'data-gate': '',
           onclick: () => { answers = {}; store.set(key, answers); drawAll(); },
         }, '重做全部題目'),
         answered === a.questions.length
@@ -390,7 +391,7 @@
           else cls += ' plain';
         }
         opts.append(h('button', {
-          class: cls,
+          class: cls, 'data-gate': '',
           disabled: done ? '' : null,
           onclick: () => {
             answers[qi] = oi;
@@ -561,7 +562,7 @@
         const isUsed = used.has(word);
         const chip = h('button', {
           class: 'tq-chip' + (selected === word ? ' on' : '') + (isUsed ? ' used' : ''),
-          type: 'button',
+          type: 'button', 'data-gate': '',   // 點選、拖曳都是作答:沒登入時 js/profile.js 先攔下(拖曳靠 pointerdown)
           disabled: (submitted || isUsed) ? '' : null,
           onclick: () => {
             if (dragged) return;
@@ -590,7 +591,7 @@
             else { nodes.push(h('s', null, word || '（空）'), ' ' + answers[bi]); }
           } else nodes.push(word || '');
           const blankBtn = h('button', {
-            class: cls, type: 'button', 'data-bi': String(bi),
+            class: cls, type: 'button', 'data-bi': String(bi), 'data-gate': '',
             onclick: () => {
               if (submitted || dragged) return;
               if (selected) { place(bi, selected); selected = null; armed = null; }
@@ -611,7 +612,7 @@
       if (!submitted) {
         area.append(h('div', { class: 'drill-nav-btns' },
           h('button', {
-            class: 'btn primary', type: 'button',
+            class: 'btn primary', type: 'button', 'data-gate': '',
             disabled: filledN < answers.length ? '' : null,
             onclick: submit,
           }, filledN < answers.length ? '交卷對答案（還有 ' + (answers.length - filledN) + ' 格）' : '交卷對答案')));

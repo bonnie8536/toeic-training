@@ -45,7 +45,7 @@
           h('li', null, '28 題，約 20 分鐘。作答中不顯示對錯，交卷後有報告。'),
           h('li', null, '可以往回改答案；中途離開，進度會保留。')),
         h('button', {
-          class: 'btn primary', style: 'font-size:16px;padding:10px 26px',
+          class: 'btn primary', style: 'font-size:16px;padding:10px 26px', 'data-gate': '',   // 開始檢測:沒登入時 js/profile.js 先攔下
           onclick: () => {
             st = { answers: {}, done: false, startedAt: new Date().toISOString() };
             store.set(KEY, st);
@@ -102,7 +102,7 @@
     const opts = h('div', { class: 'opts' });
     it.options.forEach((opt, oi) => {
       opts.append(h('button', {
-        class: 'opt' + (chosen === oi ? ' sel' : ''),
+        class: 'opt' + (chosen === oi ? ' sel' : ''), 'data-gate': '',
         onclick: () => {
           st.answers[cur] = oi;
           store.set(KEY, st);
@@ -121,7 +121,7 @@
       h('button', { class: 'btn', disabled: cur === 0 ? '' : null, onclick: () => { cur--; renderTest(); } }, '← 上一題'),
       h('button', { class: 'btn', disabled: cur >= total - 1 ? '' : null, onclick: () => { cur++; renderTest(); } }, '下一題 →'),
       h('button', {
-        class: 'btn primary',
+        class: 'btn primary', 'data-gate': '',
         onclick: () => {
           if (unanswered > 0 && !confirm('還有 ' + unanswered + ' 題沒作答，未作答會列入「答錯」計算。確定交卷？')) return;
           st.done = true;
@@ -248,7 +248,7 @@
     root.append(h('div', { class: 'drill-nav-btns no-print' },
       h('button', { class: 'btn primary', onclick: () => window.print() }, '列印/存成 PDF'),
       h('button', {
-        class: 'btn',
+        class: 'btn', 'data-gate': '',
         onclick: () => {
           if (!confirm('重新檢測會清除這份報告（刷題與閱讀進度不受影響）。確定？')) return;
           store.remove(KEY);

@@ -1720,6 +1720,11 @@ h1, h2, h3, .brand { font-weight: 700; }
   color: var(--ink-light); cursor: pointer; border-radius: 10px;
 }
 .modal-close:hover { background: var(--bg-soft); color: var(--ink); }
+/* 內容頁作答被攔下時開的登入卡、本機的「你是哪位？」:標題下面一句為什麼要登入(js/profile.js) */
+.auth-why { font-size: 14px; color: var(--ink-soft); text-align: center; margin-top: -8px; }
+.modal-gate { position: relative; }
+.modal-gate h2 { padding-right: 34px; }
+.modal-why { font-size: 14.5px; margin: 8px 0 0; }
 
 /* signup.html:卡片居中,頁面其他東西都拿掉 */
 .auth-page { max-width: 400px; margin: 40px auto 60px; }
@@ -1807,7 +1812,7 @@ html.app-shell .app-back:active { background: var(--bg-soft); }
 html.app-shell .app-back:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
 html.app-shell .modal-mask { overflow-y: auto; align-items: flex-start; }
 html.app-shell .modal-mask > .modal { margin: auto; }
-html.app-shell body[data-require-profile] .modal-mask { top: calc(59px + env(safe-area-inset-top)); }
+html.app-shell body[data-require-profile]:not([data-require-profile="on-action"]) .modal-mask { top: calc(59px + env(safe-area-inset-top)); }
 /* 強制登入時頂欄露在遮罩上方:頂欄自己要疊在遮罩之上,寬視窗的選單下拉才點得到 */
 html.app-gate .topbar { z-index: 210; }
 html.app-gate .profile-widget { display: none; }   /* 登入卡上已經有登入和註冊,選單裡那兩項會重複而且按了沒反應 */
@@ -1864,11 +1869,11 @@ html.app-gate .profile-widget { display: none; }   /* 登入卡上已經有登�
   html.app-shell.app-kb .app-tabbar, html.app-shell.app-kb.has-tabbar body::after { display: none; }
 
   /* 強制登入的遮罩不蓋頂欄和分頁列,沒登入的學生還能點分頁離開 */
-  html.app-shell body[data-require-profile] .modal-mask {
+  html.app-shell body[data-require-profile]:not([data-require-profile="on-action"]) .modal-mask {
     top: calc(var(--app-bar-h) + 1px + env(safe-area-inset-top));
     bottom: calc(var(--app-tab-h) + env(safe-area-inset-bottom));
   }
-  html.app-shell.app-kb body[data-require-profile] .modal-mask { bottom: 0; }
+  html.app-shell.app-kb body[data-require-profile]:not([data-require-profile="on-action"]) .modal-mask { bottom: 0; }
 }
 /* 大手機橫放(寬過 860,網站版的黏住欄位還在):黏住的文章框、文法路線扣掉分頁列的高度,最後幾行才不會壓在分頁列底下 */
 @media (min-width: 861px) and (pointer: coarse) and (max-height: 500px) {

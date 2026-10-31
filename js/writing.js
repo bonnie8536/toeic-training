@@ -164,7 +164,7 @@
     });
     if (!readMap[les.id]) {
       const btn = h('button', {
-        class: 'btn primary', style: 'margin-top:6px',
+        class: 'btn primary', style: 'margin-top:6px', 'data-gate': '',   // 會記完成:沒登入時 js/profile.js 先攔下
         onclick: () => {
           readMap[les.id] = true;
           store.set(KEYS.read, readMap);
@@ -198,7 +198,7 @@
           h('div', { class: 'assembly done-line' }, s.answer),
           h('div', { class: 'explain' }, h('div', { class: 'verdict ok' }, '完成'), h('div', null, s.note)),
           h('div', { class: 'pop-btns', style: 'margin-top:8px' },
-            h('button', { class: 'pop-mini', type: 'button', onclick: () => { delete st[s.id]; store.set(KEY, st); draw(); } }, '重做一次')));
+            h('button', { class: 'pop-mini', type: 'button', 'data-gate': '', onclick: () => { delete st[s.id]; store.set(KEY, st); draw(); } }, '重做一次')));
         return;
       }
       let attempts = 0;
@@ -214,12 +214,12 @@
         assembly.innerHTML = '';
         if (!picked.length) assembly.append(h('span', { class: 'assembly-hint' }, '點下面的單字，排出句子'));
         picked.forEach((t, pi) => assembly.append(h('button', {
-          class: 'tile picked', type: 'button',
+          class: 'tile picked', type: 'button', 'data-gate': '',
           onclick: () => { pool.push(t); picked.splice(pi, 1); redraw(); },
         }, t.w)));
         tiles.innerHTML = '';
         pool.forEach((t, ti) => tiles.append(h('button', {
-          class: 'tile', type: 'button',
+          class: 'tile', type: 'button', 'data-gate': '',   // 排字塊就是作答
           onclick: () => { picked.push(t); pool.splice(ti, 1); redraw(); },
         }, t.w)));
       }
@@ -227,7 +227,7 @@
       block.append(assembly, tiles, msg,
         h('div', { class: 'pop-btns', style: 'margin-top:12px' },
           h('button', {
-            class: 'btn primary', style: 'padding:6px 22px', type: 'button',
+            class: 'btn primary', style: 'padding:6px 22px', type: 'button', 'data-gate': '',
             onclick: () => {
               if (pool.length) { msg.textContent = '還有單字沒用完。'; msg.style.color = 'var(--bad)'; return; }
               if (picked.map(t => t.w).join(' ') === s.answer) {
@@ -288,7 +288,7 @@
           h('div', null, h('b', null, '搬家時留下的另一份'), isFinite(t) ? '（' + new Date(t).toLocaleDateString('zh-TW') + ' 寫的）' : ''),
           h('div', { style: 'white-space:pre-wrap;margin:6px 0' }, a[field]),
           h('div', { class: 'pop-btns' },
-            h('button', { class: 'pop-mini', type: 'button', onclick: () => {
+            h('button', { class: 'pop-mini', type: 'button', 'data-gate': '', onclick: () => {
               let text = '';
               change(ai, (it, x) => {
                 const was = it[field] || '', wasAt = it.updatedAt;
@@ -300,7 +300,7 @@
               onSwap(text);
               draw();
             } }, '換成這一份'),
-            h('button', { class: 'pop-mini danger', type: 'button', onclick: () => {
+            h('button', { class: 'pop-mini danger', type: 'button', 'data-gate': '', onclick: () => {
               if (!confirm('這一份會刪掉，不能復原。確定不要這一份嗎？')) return;
               change(ai, (it, x) => { delete x[field]; });
               draw();
@@ -315,7 +315,7 @@
     const saved = (map[id] || {})[field] || '';
     const counter = h('span', { class: 'wc' });
     const savedNote = h('span', { class: 'wc', style: 'color:var(--ok)' });
-    const ta = h('textarea', { class: 'write-area', placeholder: placeholder || '', style: minH ? 'min-height:' + minH + 'px' : '' });
+    const ta = h('textarea', { class: 'write-area', placeholder: placeholder || '', style: minH ? 'min-height:' + minH + 'px' : '', 'data-gate': '' });   // 作答框:沒登入時打不進字、按鍵就請他登入
     ta.value = saved;
     function updateCount() {
       const n = wordCount(ta.value);
@@ -337,6 +337,7 @@
     });
     ta.addEventListener('blur', saveNow);
     function saveNow() {
+      if (!canKeepProgress()) return;   // 還沒登入(先看再登入):focus 再 blur、計時器都不存
       const m = store.get(storeKey, {});
       m[id] = m[id] || {};
       if (m[id][field] === ta.value) return;
@@ -415,7 +416,7 @@
       writeArea(KEYS.y, e.id, 'p' + oi, '', 74, OUTLINE_TARGETS[oi]));
     const mainWa = writeArea(KEYS.y, e.id, 'text', '完整短文', 210, { min: 200, max: 300 });
     const mergeBtn = h('button', {
-      class: 'btn', type: 'button', style: 'margin:10px 0',
+      class: 'btn', type: 'button', style: 'margin:10px 0', 'data-gate': '',
       onclick: () => {
         const parts = outlineAreas.map(a => a.value().trim()).filter(Boolean);
         if (!parts.length) return;

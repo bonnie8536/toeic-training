@@ -152,6 +152,9 @@
     try {
       const S = window.PET_STORE;
       if (!S || S.food !== true) return Promise.resolve(null);
+      /* 先看再登入的內容頁還沒登入、沒選學生(js/profile.js):作答在那一下就被攔下,走不到這裡;萬一走到了也不發點心(不寫 pet) */
+      const P = window.PROFILE;
+      if (P && typeof P.blocksWrite === 'function' && P.blocksWrite()) return Promise.resolve(null);
       const o = opt && typeof opt === 'object' ? opt : {};
       const p = slot(o.into, o.after);
       if (p && p.classList && p.classList.toggle('is-wait', !silent(id, o))) {

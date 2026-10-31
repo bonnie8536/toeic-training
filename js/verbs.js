@@ -76,7 +76,7 @@
             class: 'btn' + (masked ? ' on' : ''), type: 'button',
             onclick: () => { masked = !masked; render(); },
           }, masked ? '顯示答案' : '遮住自己想'),
-          h('button', { class: 'btn primary', type: 'button', onclick: () => startQuiz(list) }, '測驗這些字'),
+          h('button', { class: 'btn primary', type: 'button', 'data-gate': '', onclick: () => startQuiz(list) }, '測驗這些字'),   // 開始測驗:沒登入時 js/profile.js 先攔下
           h('span', { class: 'vb-count' }, list.length + ' 個字 · 測驗答對過 ' + learned + '/' + VERBS.length)),
         chips);
 

@@ -119,6 +119,7 @@
   }
 
   /* ---------- 路由(頁內狀態) ---------- */
+  let pageSrc = null;   // 還沒登入時「練哪些字」的選擇(不存)
   renderHome();
   /* 開了好幾天的 App 一進單字頁先跟雲端對齊(CLOUD.syncKey),之後的編輯才不是根據舊資料;
      有變(別台加的題庫合併進來)、或別的分頁改了題庫,畫面在首頁或編輯頁時重畫,遊戲中不打斷 */
@@ -162,13 +163,15 @@
         .map(([v, t]) => h('option', { value: v }, t)));
     const levelSel = h('select', { class: 'cfg-select' },
       ['全部', '初級', '中級', '中高級', '高級'].map(l => h('option', { value: l }, l === '全部' ? '全部級別' : l)));
-    const last = store.get('vgame_src', null);
+    const last = pageSrc || store.get('vgame_src', null);
     if (last && [...srcSel.options].some(o => o.value === last.mode)) srcSel.value = last.mode;
     if (last && [...levelSel.options].some(o => o.value === last.level)) levelSel.value = last.level;
     const gamesWrap = h('div', { class: 'part-cards vg-games' });
     function onSource() {
       levelSel.style.display = srcSel.value === 'word' ? '' : 'none';
-      store.set('vgame_src', { mode: srcSel.value, level: levelSel.value });
+      const src = { mode: srcSel.value, level: levelSel.value };
+      if (canKeepProgress()) store.set('vgame_src', src);
+      else pageSrc = src;   // 還沒登入(先看再登入):選了照樣換,只記在這一頁
       drawGames();
     }
     srcSel.addEventListener('change', onSource);
@@ -218,7 +221,7 @@
             h('h3', null, title),
             h('p', null, rule),
             bestText ? h('div', { class: 'p-stats' }, bestText) : null)),
-        h('div', { class: 'cfg-row' }, options, h('button', { class: 'btn primary', onclick: onStart }, '開始')));
+        h('div', { class: 'cfg-row' }, options, h('button', { class: 'btn primary', 'data-gate': '', onclick: onStart }, '開始')));   // 開始遊戲:沒登入時 js/profile.js 先攔下
     }
 
     function drawGames() {
@@ -251,7 +254,7 @@
     /* 我的題庫:只管建立與編輯;要練就「用這個題庫」回到上面選玩法 */
     host.append(h('div', { class: 'exercise-head' },
       h('h2', null, '我的題庫'),
-      h('button', { class: 'btn', style: 'margin-left:auto', onclick: () => renderBankEdit(null) }, '＋ 新增題庫')));
+      h('button', { class: 'btn', style: 'margin-left:auto', 'data-gate': '', onclick: () => renderBankEdit(null) }, '＋ 新增題庫')));
     if (!banks.length) {
       host.append(h('p', { class: 'result-note' }, '還沒有題庫。'));
     } else {
@@ -267,9 +270,9 @@
               class: 'btn primary', disabled: playable ? null : '',
               onclick: () => { srcSel.value = 'bank:' + b.id; onSource(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
             }, '用這個題庫'),
-            h('button', { class: 'btn', onclick: () => renderBankEdit(b.id) }, '編輯'),
+            h('button', { class: 'btn', 'data-gate': '', onclick: () => renderBankEdit(b.id) }, '編輯'),
             h('button', {
-              class: 'btn', onclick: () => {
+              class: 'btn', 'data-gate': '', onclick: () => {
                 if (!confirm('刪除題庫「' + b.name + '」？單字會一起刪掉。')) return;
                 removeBank(b.id);
                 renderHome();
@@ -314,7 +317,7 @@
         h('div', { class: 'p-stats' }, items.length + ' 條 · 已答對 ' + done),
         h('div', { class: 'bar' }, h('i', { style: 'width:' + pct + '%' })),
         h('div', { class: 'cfg-row' },
-          h('button', { class: 'btn primary', onclick: () => startDrill(g, items) }, '開始練習'),
+          h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startDrill(g, items) }, '開始練習'),
           toggleBtn),
         table));
     });

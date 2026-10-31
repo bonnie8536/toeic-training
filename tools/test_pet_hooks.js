@@ -16,8 +16,11 @@ const read = f => fs.readFileSync(path.join(REPO, f), 'utf8');
 const exists = f => fs.existsSync(path.join(REPO, f));
 const BASE = '27557eb';
 /* 27557eb 之後被別的功能改過的檔案,基準在 tools/fixtures/pet_hooks_base/:vocab、reading 是同步合併(2026-10-24);
-   daily-ui、grammar、phonics、ear、dialogue 與 reading 再加 SEO(2026-10-31,標題帶站名、setPageMeta 寫 canonical) */
-const LATER_BASE = ['js/vocab.js', 'js/reading.js', 'js/daily-ui.js', 'js/grammar.js', 'js/phonics.js', 'js/ear.js', 'js/dialogue.js'];
+   daily-ui、grammar、phonics、ear、dialogue 與 reading 再加 SEO(2026-10-31,標題帶站名、setPageMeta 寫 canonical);
+   內容頁先看再登入(2026-10-31,作答鈕標 data-gate、對話與發音與單字頁沒登入時只記在這一頁、寫作沒登入不自動存)
+   又改了 grammar、phonics、verbs、vocab、reading、practice、ear、dialogue、mock、diagnostic、writing */
+const LATER_BASE = ['js/vocab.js', 'js/reading.js', 'js/daily-ui.js', 'js/grammar.js', 'js/phonics.js', 'js/ear.js', 'js/dialogue.js',
+  'js/verbs.js', 'js/practice.js', 'js/mock.js', 'js/diagnostic.js', 'js/writing.js'];
 
 /* ---------- 小假 DOM(跟 test_daily.js 同一套做法,多了 isConnected) ---------- */
 function fakeDom() {

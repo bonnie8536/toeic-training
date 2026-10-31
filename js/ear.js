@@ -115,7 +115,7 @@
           h('div', { class: 'bar' }, h('i', { style: 'width:' + pct + '%' })),
           h('div', { class: 'cfg-row' }, lvSel,
             h('a', {
-              class: 'btn primary', href: 'listening.html?sec=' + k,
+              class: 'btn primary', href: 'listening.html?sec=' + k, 'data-gate': '',   // 開始一輪:沒登入時 js/profile.js 先攔下(不換頁);直接開 ?sec= 照樣看得到題目
               onclick: e => { e.currentTarget.href = 'listening.html?sec=' + k + '&lv=' + encodeURIComponent(lvSel.value); },
             }, '開始一輪 ' + d.per + ' 題')));
       })));
@@ -163,7 +163,7 @@
       let running = false;
       const stage = h('div', { class: 'shadow-stage' }, '聽完跟著唸');
       const result = h('div', null);
-      const startBtn = h('button', { class: 'btn primary player-btn', type: 'button', onclick: run }, '▶ 開始');
+      const startBtn = h('button', { class: 'btn primary player-btn', type: 'button', 'data-gate': '', onclick: run }, '▶ 開始');   // 跟讀做完會記完成:要登入
       const block = h('div', { class: 'q-block' },
         h('div', { class: 'meta', style: 'margin-bottom:8px' },
           h('span', { class: 'badge ' + (q.level === '初級' ? 'level-basic' : q.level === '進階' ? 'level-high' : 'level-mid') }, q.level)),
@@ -253,9 +253,9 @@
     }
     function drawDictation(q) {
       let checked = false;
-      const input = h('textarea', { class: 'write-area', style: 'min-height:60px', placeholder: '把聽到的句子打在這裡', autocapitalize: 'off', spellcheck: 'false' });
+      const input = h('textarea', { class: 'write-area', style: 'min-height:60px', placeholder: '把聽到的句子打在這裡', autocapitalize: 'off', spellcheck: 'false', 'data-gate': '' });
       const result = h('div', null);
-      const checkBtn = h('button', { class: 'btn primary', type: 'button', onclick: check }, '對答案');
+      const checkBtn = h('button', { class: 'btn primary', type: 'button', 'data-gate': '', onclick: check }, '對答案');
       const block = h('div', { class: 'q-block' },
         h('div', { class: 'meta', style: 'margin-bottom:8px' },
           h('span', { class: 'badge ' + (q.level === '初級' ? 'level-basic' : q.level === '進階' ? 'level-high' : 'level-mid') }, q.level)),
@@ -304,7 +304,7 @@
       const btns = h('div', { class: 'pair-row' });
       q.options.forEach((opt, oi) => {
         btns.append(h('button', {
-          class: 'pair-btn', type: 'button',
+          class: 'pair-btn', type: 'button', 'data-gate': '',
           onclick: e => {
             if (done) return;
             done = true;
@@ -338,7 +338,7 @@
       const opts = h('div', { class: 'opts', style: 'margin-top:8px' });
       q.options.forEach((opt, oi) => {
         opts.append(h('button', {
-          class: 'opt', type: 'button',
+          class: 'opt', type: 'button', 'data-gate': '',
           onclick: () => {
             if (done) return;
             done = true;

@@ -57,7 +57,7 @@
         h('p', null, s.desc),
         h('div', { class: 'p-stats' }, '限時 ' + s.mins + ' 分鐘'),
         h('div', { class: 'cfg-row' },
-          h('button', { class: 'btn primary', onclick: () => startExam(k) }, '開始'))));
+          h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startExam(k) }, '開始'))));   // 開始考試:沒登入時 js/profile.js 先攔下
     });
     root.append(cards);
 
@@ -342,7 +342,7 @@
           (timeUp ? '時間到，自動交卷。' : '') +
           '聽力 ' + lRaw + '/' + lTotal + '（約 ' + lScore + '）· 閱讀 ' + rRaw + '/' + rTotal + '（約 ' + rScore + '）。參考換算，非正式成績。')));
       root.append(h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', onclick: () => startExam(sizeKey) }, '再來一回'),
+        h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startExam(sizeKey) }, '再來一回'),
         h('a', { class: 'btn', href: 'mock.html' }, '回模擬考')));
 
       /* 逐題檢討 */

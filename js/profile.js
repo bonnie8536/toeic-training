@@ -34,10 +34,107 @@
     return h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; window.APP.install(); } }, '安裝到手機');
   }
 
+  const X_ICON = '<svg viewBox="0 0 22 22" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">'
+    + '<path d="M5 5 17 17M17 5 5 17"/></svg>';
+
+  /* ========================================================= */
+  /* 先看再登入(站長 2026-10-31)                                */
+  /* ========================================================= */
+  /* 照 Quizlet、Duolingo 網頁版的慣例:內容公開,要留下紀錄的動作才請登入。
+     - 內容頁(文法、發音、閱讀、對話、單字、聽力、寫作、刷題、檢測、模擬考)的 body 是 data-require-profile="on-action":
+       沒登入(雲端)、沒選學生(本機)也照常畫出內容。頁面程式在「作答、開始、送出、作答框」這類元素上標 data-gate,
+       第一次按下去時,這裡在動作生效之前攔下(不寫資料、畫面不變),跳出同一張登入卡或「你是哪位？」,可以關,關了再按又跳。
+     - 個人頁(學習記錄、能力分析、每日複習、教師後台)是不帶值的 data-require-profile:照舊一打開就要登入、關不掉。
+     舊版 profile.js 只看有沒有這個屬性,碰到帶值的也當成要登入:新舊檔案混在一起時只會退回以前的強制登入,不會比以前鬆。 */
+  function gateMode() {
+    const b = document.body;
+    const v = b && typeof b.getAttribute === 'function' ? b.getAttribute('data-require-profile') : null;
+    if (v === null || v === undefined) return '';
+    return v === 'on-action' ? 'action' : 'hard';
+  }
+
+  /* 攔截:document 的 capture 階段(比元素自己的 onclick、閱讀頁字卡的 pointerdown、文章單字的 stopPropagation 都早),
+     preventDefault + stopPropagation。不用 stopImmediatePropagation、不掛在 window:舊網址自動搬家(js/move-out.js)
+     在 window 的 capture 看使用者有沒有動作,一定要先看到這一下才會取消自動搬家;小雞(pet-roam2.js)也掛在 document 的 capture,照常收得到。
+     - click、Enter/空白鍵:開視窗。pointerdown、mousedown、輸入(beforeinput、paste、drop):靜默擋下(字卡拖不動、作答框打不進字),等 click 再開。
+     - 作答框:focus 進來(滑鼠、鍵盤 Tab、頁面自動 focus)就設 readonly,中文輸入法、手機鍵盤也進不來;按一個字才開視窗。登入、建檔後頁面會重載。 */
+  const NAV_KEYS = new Set(['Tab', 'Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Escape', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown', 'ContextMenu']);
+  function isTextField(el) { return el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && !/^(button|submit|reset|checkbox|radio|range|color|file|image|hidden)$/i.test(el.type || '')); }
+  function installActionGate(canAct, ask) {
+    const locked = new Set();   // 這裡設成 readonly 的作答框
+    function onGate(e) {
+      const t = e.target;
+      const el = t && typeof t.closest === 'function' ? t.closest('[data-gate]') : null;
+      if (!el) return;
+      if (canAct()) {
+        /* 雲端確認完其實是登入著的(這一頁沒有重載):之前鎖住的作答框打開 */
+        if (locked.has(el)) { el.readOnly = false; locked.delete(el); }
+        return;
+      }
+      const text = isTextField(el);
+      if (text && !el.readOnly) { el.readOnly = true; locked.add(el); }
+      if (e.type === 'focusin') return;
+      if (e.type === 'keydown') {
+        if (NAV_KEYS.has(e.key) || /^F\d+$/.test(e.key) || e.ctrlKey || e.metaKey || e.altKey) return;
+        if (!text && e.key !== 'Enter' && !(e.key === ' ' && el.tagName !== 'A')) return;   // 空白鍵在連結上是捲動頁面,不算按下去
+      }
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.type === 'click' || e.type === 'keydown') ask(el);
+    }
+    ['pointerdown', 'mousedown', 'click', 'keydown', 'beforeinput', 'paste', 'drop', 'focusin'].forEach(type => document.addEventListener(type, onGate, true));
+  }
+
+  /* 頭像選單開著時按到作答鈕:選單本來靠 document 的 click 收起來,這一下被攔了,這裡自己收 */
+  function hideMenus() {
+    Array.from(document.querySelectorAll('.profile-menu')).forEach(m => { m.style.display = 'none'; });
+  }
+
+  /* 視窗裡 Tab 只在視窗裡轉(本機的「你是哪位？」可關版本用;雲端登入卡有自己的一套,處理身分選項) */
+  function trapTab(box) {
+    box.addEventListener('keydown', e => {
+      if (e.key !== 'Tab') return;
+      const f = Array.from(box.querySelectorAll('button,input,a[href]')).filter(x => !x.disabled);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  }
+
+  /* 關掉視窗後焦點回到開視窗的那顆按鈕;它已經不在畫面上(收起的選單、重畫掉的題目)就退回頭像按鈕 */
+  function focusBack(opener) {
+    try { if (opener && opener.isConnected !== false && opener.focus) opener.focus(); } catch (e) {}
+    if (document.activeElement === document.body || !document.activeElement) {
+      const back = document.querySelector('.profile-btn');
+      if (back) back.focus();
+    }
+  }
+
   /* ========================================================= */
   /* 雲端模式                                                   */
   /* ========================================================= */
   if (window.CLOUD && CLOUD.enabled) {
+    /* 能不能作答(先看再登入用,同步回答)。雲端確認登入(CLOUD.ready)之前 CLOUD.user 一律是 null,
+       已登入的人開頁頭一秒(離線又遇到登入憑證過期最多約 25 秒)看起來也像訪客:這段時間看這一頁的資料夾,
+       c 開頭就是登入著的帳號(寫入本來就寫進那個資料夾),跟以前一樣照常作答。確認完以 CLOUD.user 為準。 */
+    let settled = false;
+    Promise.resolve(CLOUD.ready).then(() => { settled = true; }, () => { settled = true; });
+    const canAct = () => {
+      if (CLOUD.user) return true;
+      if (settled) return false;
+      const pid = window.__PROFILE_ID;
+      return typeof pid === 'string' && pid.charAt(0) === 'c';
+    };
+    /* 作答被攔下:開可以關的登入卡,多一句為什麼要登入 */
+    const askToAct = opener => {
+      if (canAct()) return;
+      hideMenus();
+      const close = showLogin('login', { why: true, opener });
+      /* 還沒確認登入就按了,確認完其實是登入著的(而且這一頁不重載):卡片自己收掉,再按一次就照常作答 */
+      if (close && !settled) Promise.resolve(CLOUD.ready).then(() => { if (CLOUD.user && !CLOUD.reloading) close(); }, () => {});
+    };
+
     window.PROFILE = {
       current() {
         if (!CLOUD.user) return null;
@@ -48,12 +145,18 @@
       showLogin,
       buildAuthCard,   // signup.html 直接把同一張卡畫在頁面上
       renderAccount,   // me.html 的帳號區
+      canAct,
+      askToAct,
+      /* store 與作答紀錄的最後一道(js/common.js canKeepProgress):內容頁、頁面載完之後、不能作答 → 不寫 */
+      blocksWrite: () => gateMode() === 'action' && document.readyState !== 'loading' && !canAct(),
     };
+
+    if (gateMode() === 'action') installActionGate(canAct, askToAct);
 
     document.addEventListener('DOMContentLoaded', async () => {
       await CLOUD.ready;
       buildCloudWidget();
-      if (document.body.hasAttribute('data-require-profile') && !CLOUD.user) showLogin();
+      if (gateMode() === 'hard' && !CLOUD.user) showLogin();
       else if (CLOUD.authError && !CLOUD.user && !document.body.hasAttribute('data-auth-page')) showLogin('login');
     });
 
@@ -68,8 +171,8 @@
       const menu = h('div', { class: 'profile-menu', style: 'display:none' });
       widget.append(btn, menu);
       bar.append(widget);
-      /* 要登入才能用的頁面會開登入視窗,這句話改寫在登入卡裡(buildAuthCard),不放頂欄 */
-      if (CLOUD.sessionExpired && !p && !document.body.hasAttribute('data-require-profile')) expiredNotice(bar.parentNode);
+      /* 一打開就要登入的頁面(個人頁)會開登入視窗,這句話改寫在登入卡裡(buildAuthCard),不放頂欄;先看再登入的內容頁跟一般頁一樣放頂欄 */
+      if (CLOUD.sessionExpired && !p && gateMode() !== 'hard') expiredNotice(bar.parentNode);
 
       btn.addEventListener('click', e => {
         e.stopPropagation();
@@ -202,9 +305,6 @@
       + '<path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.71H.96v2.34A8.997 8.997 0 0 0 9 18z"/>'
       + '<path fill="#FBBC05" d="M3.97 10.71A5.41 5.41 0 0 1 3.68 9c0-.59.1-1.17.29-1.71V4.96H.96A8.997 8.997 0 0 0 0 9c0 1.45.35 2.83.96 4.04l3.01-2.33z"/>'
       + '<path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.59C13.46.89 11.43 0 9 0A8.997 8.997 0 0 0 .96 4.96l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>';
-
-    const X_ICON = '<svg viewBox="0 0 22 22" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">'
-      + '<path d="M5 5 17 17M17 5 5 17"/></svg>';
 
     const EYE = '<svg viewBox="0 0 22 22" width="19" height="19" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
       + '<path d="M1.6 11S5.2 5.2 11 5.2 20.4 11 20.4 11 16.8 16.8 11 16.8 1.6 11 1.6 11z"/><circle cx="11" cy="11" r="2.9"/></svg>';
@@ -390,6 +490,11 @@
         return opts.onMode ? null : h('h2', { class: 'auth-h' }, text);
       }
 
+      /* 作答被攔下時開的卡(opts.why):標題下面一句為什麼要登入。其他時候一個節點都不多 */
+      function why(text) {
+        return opts.why && !opts.onMode ? h('p', { class: 'auth-why' }, text) : null;
+      }
+
       /* 底部一行切換。Engoo、Busuu、VoiceTube、均一都是這種做法:
          一個標題配一行「還沒有帳號?註冊」,不是兩個同級分頁。 */
       function switchLine(text, linkText, next) {
@@ -465,7 +570,7 @@
               if (r.needsConfirm) sent(email.value());
             } catch (e) { forgetIntent(); fail(e.message); unlock(); }
           }, name.el, email.el, pw.el);
-          put(heading('註冊'), role ? role.el : null, googleBtn(msg, role), orLine(), form, consentLine(),
+          put(heading('註冊'), why('註冊之後就能作答，練習紀錄會存在你的帳號。'), role ? role.el : null, googleBtn(msg, role), orLine(), form, consentLine(),
             switchLine('已經有帳號？', '登入', 'login'));
         } else {
           const email = authField({ label: 'Email', type: 'email', name: 'email', ac: 'username', inputmode: 'email' });
@@ -483,7 +588,7 @@
             try { await CLOUD.login(email.value(), pw.raw()); }   // 成功後 afterAuth 會 reload
             catch (e) { fail(e.message); unlock(); }
           }, email.el, pw.el);
-          put(heading('登入'), googleBtn(msg), orLine(), form, consentLine(),
+          put(heading('登入'), why('登入之後才能作答，練習紀錄會存在你的帳號。'), googleBtn(msg), orLine(), form, consentLine(),
             switchLine('還沒有帳號？', '註冊', 'signup'));
         }
       }
@@ -533,18 +638,21 @@
       }
     }
 
-    /* 登入視窗:data-require-profile 的頁面不給關 */
-    function showLogin(startTab) {
-      if (document.querySelector('.modal-mask')) return;
-      const required = document.body.hasAttribute('data-require-profile');
+    /* 登入視窗:一打開就要登入的頁面(不帶值的 data-require-profile)不給關;先看再登入的內容頁、一般頁可以關。
+       opts:{ why:作答被攔下時開的(卡上多一句為什麼要登入), opener:關掉後焦點回到哪裡(預設開視窗時的焦點) }。
+       回傳關掉視窗的函式(已經有別的視窗開著、這次沒開就回 null) */
+    function showLogin(startTab, opts) {
+      opts = opts || {};
+      if (document.querySelector('.modal-mask')) return null;
+      const required = gateMode() === 'hard';
       /* App 外殼裡,強制登入的遮罩刻意露出頂欄和分頁列(沒登入也能點分頁離開),就不算整頁鎖住:
          不標 aria-modal、不鎖 Tab,改把被遮住的內容設成 inert,鍵盤和 VoiceOver 才走得到返回鍵和分頁 */
       const shellGate = required && document.documentElement.classList.contains('app-shell');
-      const opener = document.activeElement;
+      const opener = opts.opener || document.activeElement;
       const mask = h('div', { class: 'modal-mask' });
       const box = h('div', { class: 'modal modal-auth', role: 'dialog', 'aria-modal': shellGate ? null : 'true', 'aria-label': '登入或註冊' });
       if (!required) box.append(h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }));
-      box.append(buildAuthCard({ mode: startTab }));
+      box.append(buildAuthCard({ mode: startTab, why: !!opts.why }));
       mask.append(box);
       document.body.append(mask);
       if (shellGate) {
@@ -572,15 +680,13 @@
 
       function onKey(e) { if (e.key === 'Escape') close(); }
       function close() {
+        if (!mask.parentNode) return;
         document.removeEventListener('keydown', onKey);
         mask.remove();
         /* 開視窗的那顆按鈕可能在已收起的選單裡(focus 會失效),退回頭像按鈕 */
-        try { if (opener && opener.focus) opener.focus(); } catch (e) {}
-        if (document.activeElement === document.body) {
-          const back = document.querySelector('.profile-btn');
-          if (back) back.focus();
-        }
+        focusBack(opener);
       }
+      return close;
     }
 
     return;   // 雲端模式到此為止,不載入本機檔案邏輯
@@ -696,9 +802,13 @@
     }
   }
 
-  /* ---------- 建檔視窗(gate) ---------- */
-  function showGate(voluntary) {
-    if (document.querySelector('.modal-mask')) return;
+  /* ---------- 建檔視窗(gate) ----------
+     voluntary:true =「＋ 新增學生」(有取消);false = 一打開就要選學生的個人頁(關不掉);
+     'act' = 內容頁作答被攔下(標題照舊「你是哪位？」,多一句為什麼,X、Esc、點遮罩都能關,關掉焦點回到 opener)。
+     回傳關掉視窗的函式('act' 才有;已經有別的視窗開著、這次沒開就回 null) */
+  function showGate(voluntary, opener) {
+    if (document.querySelector('.modal-mask')) return null;
+    const act = voluntary === 'act';
     const list = getProfiles();
     const input = h('input', { class: 'modal-input', type: 'text', placeholder: '輸入名字，例如：小安', maxlength: '20' });
     const createBtn = h('button', {
@@ -711,28 +821,57 @@
     }, '建立檔案，開始練習');
     input.addEventListener('keydown', e => { if (e.key === 'Enter') createBtn.click(); });
 
-    const mask = h('div', { class: 'modal-mask' },
-      h('div', { class: 'modal' },
-        h('h2', null, voluntary ? '新增學生' : '你是哪位？'),
-        h('p', { class: 'modal-sub' }, '每位學生有自己的進度、錯題與檢測報告，都只存在這台裝置上。'),
-        list.length ? h('div', { class: 'modal-list' },
-          h('div', { class: 'pm-head' }, '選擇既有檔案'),
-          list.map(pr => h('button', { class: 'pm-item big', type: 'button', onclick: () => switchTo(pr.id) },
-            h('span', { class: 'profile-dot' }, pr.name.slice(0, 1)), pr.name))) : null,
-        h('div', { class: 'pm-head', style: 'margin-top:14px' }, list.length ? '或建立新檔案' : '建立你的檔案'),
-        h('div', { class: 'modal-row' }, input, createBtn),
-        voluntary ? h('button', {
-          class: 'btn', style: 'margin-top:12px', type: 'button',
-          onclick: () => mask.remove(),
-        }, '取消') : null));
+    const box = h('div', act ? { class: 'modal modal-gate', role: 'dialog', 'aria-modal': 'true', 'aria-label': '你是哪位？' } : { class: 'modal' },
+      act ? h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }) : null,
+      h('h2', null, voluntary === true ? '新增學生' : '你是哪位？'),
+      act ? h('p', { class: 'modal-why' }, '選好你的檔案才能作答，練習紀錄會存在這個檔案裡。') : null,
+      h('p', { class: 'modal-sub' }, '每位學生有自己的進度、錯題與檢測報告，都只存在這台裝置上。'),
+      list.length ? h('div', { class: 'modal-list' },
+        h('div', { class: 'pm-head' }, '選擇既有檔案'),
+        list.map(pr => h('button', { class: 'pm-item big', type: 'button', onclick: () => switchTo(pr.id) },
+          h('span', { class: 'profile-dot' }, pr.name.slice(0, 1)), pr.name))) : null,
+      h('div', { class: 'pm-head', style: 'margin-top:14px' }, list.length ? '或建立新檔案' : '建立你的檔案'),
+      h('div', { class: 'modal-row' }, input, createBtn),
+      voluntary === true ? h('button', {
+        class: 'btn', style: 'margin-top:12px', type: 'button',
+        onclick: () => mask.remove(),
+      }, '取消') : null);
+    const mask = h('div', { class: 'modal-mask' }, box);
     document.body.append(mask);
     input.focus();
+    if (!act) return null;
+
+    trapTab(box);
+    mask.addEventListener('mousedown', e => { if (e.target === mask) close(); });
+    document.addEventListener('keydown', onKey);
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+      if (!mask.parentNode) return;
+      document.removeEventListener('keydown', onKey);
+      mask.remove();
+      focusBack(opener);
+    }
+    return close;
   }
 
-  window.PROFILE = { current: currentProfile, showGate };
+  /* 先看再登入:本機模式「能作答」= 選好了學生(檔案還在) */
+  const canAct = () => !!currentProfile();
+  const askToAct = opener => {
+    if (canAct()) return;
+    hideMenus();
+    showGate('act', opener || document.activeElement);
+  };
+
+  window.PROFILE = {
+    current: currentProfile, showGate, canAct, askToAct,
+    /* store 與作答紀錄的最後一道(js/common.js canKeepProgress):內容頁、頁面載完之後、不能作答 → 不寫 */
+    blocksWrite: () => gateMode() === 'action' && document.readyState !== 'loading' && !canAct(),
+  };
+
+  if (gateMode() === 'action') installActionGate(canAct, askToAct);
 
   document.addEventListener('DOMContentLoaded', () => {
     buildWidget();
-    if (document.body.hasAttribute('data-require-profile') && !currentProfile()) showGate(false);
+    if (gateMode() === 'hard' && !currentProfile()) showGate(false);
   });
 })();

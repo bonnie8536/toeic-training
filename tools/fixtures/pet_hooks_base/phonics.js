@@ -93,7 +93,7 @@
     const b = h('button', { class: 'ph-slow' + (slow ? ' on' : ''), type: 'button', 'aria-pressed': slow ? 'true' : 'false' }, '慢速');
     b.addEventListener('click', () => {
       slow = !slow;
-      store.set('ph_slow', slow);
+      if (canKeepProgress()) store.set('ph_slow', slow);   // 還沒登入(先看再登入):這一頁照樣變慢,不存
       $$('.ph-slow').forEach(x => { x.classList.toggle('on', slow); x.setAttribute('aria-pressed', slow ? 'true' : 'false'); });
     });
     return b;
@@ -308,7 +308,7 @@
       const isListen = q.type === 'listen';
       q.options.forEach((opt, oi) => {
         opts.append(h('button', {
-          class: 'opt',
+          class: 'opt', 'data-gate': '',   // 作答:沒登入時 js/profile.js 先攔下
           onclick: () => {
             if (answered) return;
             answered = true;

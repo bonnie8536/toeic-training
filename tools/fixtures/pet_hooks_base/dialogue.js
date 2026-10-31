@@ -17,12 +17,17 @@
   const pad2 = (n) => String(n).padStart(2, '0');
   const audioUrl = (d, i) => 'audio/dlg/' + d.id + '-' + pad2(i + 1) + '.mp3';
   const imageUrl = (d) => d.image || ('img/dialogues/' + d.id + '.jpg');   // 跟閱讀一樣的寫實配圖,載不到就整格拿掉
-  const heardOf = (id) => (store.get('dlg_heard', {})[id] || []);
+  /* 還沒登入、沒選學生(先看再登入,js/profile.js):播放照常,聽過哪幾句只記在這一頁,不寫進任何資料、不發點心 */
+  let pageHeard = null;
+  const heardAll = () => pageHeard || store.get('dlg_heard', {});
+  const heardOf = (id) => (heardAll()[id] || []);
   function markHeard(id, i) {
-    const all = store.get('dlg_heard', {});
+    const all = heardAll();
     const list = all[id] || [];
     if (list.indexOf(i) > -1) return;
-    store.set('dlg_heard', Object.assign({}, all, { [id]: list.concat(i).sort((a, b) => a - b) }));
+    const next = Object.assign({}, all, { [id]: list.concat(i).sort((a, b) => a - b) });
+    if (!canKeepProgress()) { pageHeard = next; return; }
+    store.set('dlg_heard', next);
   }
   const slangCount = (d) => d.lines.reduce((n, l) => n + (l.slang || []).length, 0);
 

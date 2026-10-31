@@ -115,12 +115,19 @@
   /* 這一頁已經要重載了(灌完雲端資料、改回訪客):舊網址的自動搬家(js/move-out.js)看到就不帶走,免得重載把換到新網址的那一下取消掉 */
   Object.defineProperty(window.CLOUD, 'reloading', { get: () => reloading, enumerable: true });
   const early = {};
+  const SEEN_PREFIX = 'tr_cloud_seen_';   // 「這台灌過這個帳號」記號(說明在下面「這一頁的寫入能不能記帳」那一段);開頁時就要用,放在這裡
   /* 這一頁的資料夾(雲端帳號的)開頁時是不是空的:cloud.js 載入當下就看,這時頁面程式還沒寫任何東西。
      afterAuth 判斷「帳號資料夾是空的」用(見 folderEmpty 上面的說明;第 2 輪審查 2026-10-31) */
   const emptyAtLoad = (function () {
     const pid = window.__PROFILE_ID;
     return typeof pid === 'string' && pid.charAt(0) === 'c' && folderEmpty('tr_u' + pid + '_', null);
   })();
+  /* 開頁時帳號資料夾是空的、這台也沒有「灌過這個帳號」的記號(seenPid):這一頁的畫面是照還沒灌過的資料夾畫的
+     (別的分頁登出把資料夾刪了、正在登回來灌資料)。確認登入時資料夾有東西了(別的分頁灌好了),這一頁要重灌重載(多分頁第 3 輪審查 #1) */
+  const unreadyAtLoad = emptyAtLoad && !seenPid(window.__PROFILE_ID);
+  /* 這一頁的畫面根據的是還沒灌過的資料夾,而且這一頁自己沒灌成(讀雲端失敗):之後就算別的分頁灌好、標記劃掉,這一頁也不能作答、不記帳,
+     要重新整理才換成灌好的資料夾(寫作頁這類照畫面整份寫回的鍵,不然會把雲端蓋成只剩這一頁的那幾筆) */
+  let pageUnhydrated = false;
 
   window.CLOUD.ready = init();
   /* 確認登入之後,等這一頁的 my_access 查完(沒查、失敗、逾時都是 null) */
@@ -218,15 +225,33 @@
         記著的時候每一頁都要灌(別的分頁之前灌過的旗標不算數),這段時間的寫入不記帳:讀雲端進度失敗(網路斷一下、Supabase 慢或休眠)時
         頁面拿到的是空資料夾,記了帳,下一頁灌資料會把只有新那幾筆的 hist、錯題本整份傳上去蓋掉雲端。
         資料夾不是空的(之前灌過、登入失效改回訪客留著的)不記,跟以前一樣:讀不到雲端時照常作答記帳,下次灌資料比新舊(離線也是這樣)。
-     平常登入著的頁面兩個條件都成立,行為不變。 */
+        這台灌過這個帳號(「灌過」記號 tr_cloud_seen_<帳號 id>,灌好時寫、登出刪掉、搬家不帶)也不記:雲端本來就沒有進度的帳號
+        (新註冊、只看後台的老師)灌完資料夾還是空的,不能因為這樣每開一個新分頁就把已經灌好的分頁擋下(多分頁第 3 輪審查 #4、#5)。
+        代價跟資料夾不是空的、只是舊了一樣(已知限制,整份上傳後傳的蓋掉先傳的):灌過之後別台才有進度,這台讀不到雲端時照常作答記帳。
+     3. 這一頁的畫面是照還沒灌過的資料夾畫的、自己又沒灌成(pageUnhydrated):別的分頁之後灌好、劃掉標記,這一頁一樣不記帳(多分頁第 3 輪審查 #1)。
+     平常登入著的頁面這些條件都成立,行為不變。 */
   function unhydratedKey(uid) { return 'tr_cloud_unhydrated_' + uid; }
   function unhydrated(uid) {
     try { return localStorage.getItem(unhydratedKey(uid)) !== null; } catch (e) { return true; }
   }
+  function seen(uid) {
+    try { return localStorage.getItem(SEEN_PREFIX + uid) !== null; } catch (e) { return false; }
+  }
+  /* 開頁時只知道資料夾名稱(c + 去掉 - 的帳號 id):找名稱對得上的「灌過」記號 */
+  function seenPid(pid) {
+    if (typeof pid !== 'string' || pid.charAt(0) !== 'c') return false;
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.indexOf(SEEN_PREFIX) === 0 && 'c' + k.slice(SEEN_PREFIX.length).replace(/-/g, '') === pid) return true;
+      }
+    } catch (e) {}
+    return false;
+  }
   function sameFolder() {
     try { return localStorage.getItem('tr_current_profile') === JSON.stringify(window.__PROFILE_ID); } catch (e) { return false; }
   }
-  function canRecord(uid) { return sameFolder() && !unhydrated(uid); }
+  function canRecord(uid) { return sameFolder() && !unhydrated(uid) && !pageUnhydrated; }
   /* 帳號資料夾有沒有東西;skip:這些鍵不算 */
   function folderEmpty(prefix, skip) {
     try {
@@ -266,14 +291,25 @@
        在同一個分頁用 Google 登回來,這個分頁之前灌過資料的旗標還在。旗標不算數,跟剛登入一樣灌資料、重載;
        不然這一頁的寫入進訪客資料夾,之後照帳號資料夾裡的舊值或空值上傳,會把雲端那一列蓋掉 */
     const otherFolder = window.__PROFILE_ID !== pid;
+    /* 這一頁在確認登入(查教師身分那一趟)的時候,別的分頁登出了(目前帳號、登入資料都刪了),或換成別的帳號:
+       不寫回目前帳號、不灌資料、不設旗標。以前照樣寫回,這一頁(和別的沒重載的分頁)的資料夾又對得上,拿被刪空的資料夾作答記帳,
+       這個帳號之後在這台登入時整份上傳蓋掉雲端(多分頁第 3 輪審查 #3,e49e444 就有)。這一頁照 folderGone 擋下、開「已在別的分頁登出」卡,
+       換頁後照 leaveStaleAccount 改回訪客。別的分頁登出又用同一個帳號登回來(登入資料是它)照常往下(情境 58);
+       這一頁本來就不是這個帳號的資料夾(訪客頁剛登入)才要主動改寫目前帳號 */
+    if (!otherFolder && !sameFolder() && storedUid() !== user.id) return;
     const prefix = 'tr_u' + pid + '_';
     const flagKey = 'tr_cloud_hydrated_' + user.id;
     const pendTry = 'tr_move_pending_tried_' + user.id;   // 搬家暫存區:這個分頁只為它重灌一次,載不到合併程式也不會一直重載
     const movePend = hasPending(user.id) && !sessionStorage.getItem(pendTry);
     const notYet = unhydrated(user.id);   // 這台這個帳號的資料夾還沒灌過:別的分頁之前灌過的旗標不算數
-    const hydrate = fresh || otherFolder || !sessionStorage.getItem(flagKey) || movePend || notYet;
-    /* 帳號資料夾是空的:先記「還沒灌過」再寫目前帳號,別的分頁一看到目前帳號是它,就知道資料夾還不能用 */
-    if (hydrate && !notYet && accountFolderEmpty(prefix, otherFolder)) { try { localStorage.setItem(unhydratedKey(user.id), '1'); } catch (e) { /* 寫不進去就跟以前一樣 */ } }
+    /* 開頁時照還沒灌過的(空)資料夾畫,確認登入前別的分頁灌好了(資料夾有這一頁沒寫過的鍵):畫面是舊的,要重灌重載(多分頁第 3 輪審查 #1) */
+    const filled = unreadyAtLoad && !otherFolder && !folderEmpty(prefix, early);
+    const hydrate = fresh || otherFolder || !sessionStorage.getItem(flagKey) || movePend || notYet || filled;
+    /* 帳號資料夾是空的、這台也沒灌過這個帳號:先記「還沒灌過」再寫目前帳號,別的分頁一看到目前帳號是它,就知道資料夾還不能用 */
+    const markNow = hydrate && !notYet && !seen(user.id) && accountFolderEmpty(prefix, otherFolder);
+    if (markNow) { try { localStorage.setItem(unhydratedKey(user.id), '1'); } catch (e) { /* 寫不進去就跟以前一樣 */ } }
+    /* 這一頁的畫面根據的是還沒灌過的資料夾:灌成了就重載;灌不成,這一頁之後都不能作答(標記被別的分頁劃掉也一樣) */
+    if (hydrate && (notYet || markNow || filled)) pageUnhydrated = true;
     localStorage.setItem('tr_current_profile', JSON.stringify(pid));
 
     if (hydrate) {
@@ -323,6 +359,7 @@
         if (r.k !== '_meta' && r.v !== null && !(r.k in keepLocal)) localStorage.setItem(prefix + r.k, JSON.stringify(r.v));
       });
       Object.keys(plan.save).forEach(k => localStorage.setItem(prefix + k, JSON.stringify(plan.save[k])));
+      try { localStorage.setItem(SEEN_PREFIX + user.id, '1'); } catch (e) { /* 寫不進去:之後資料夾空的時候照舊記標記 */ }   // 這台灌過這個帳號
       try { localStorage.removeItem(unhydratedKey(user.id)); } catch (e) { /* 劃不掉:下一頁再灌一次 */ }   // 資料夾灌好了
       /* 留下來的本機改動補傳上去;失敗也沒關係,帳本還在,下次再傳。合併說唯讀的不補傳 */
       await Promise.all(Object.keys(keepLocal).filter(k => !plan.hold[k]).map(k => upload(user, k, keepLocal[k])));
@@ -384,7 +421,7 @@
     if (user) {
       writeLedger(user.id, {});
       writeLocalOnly(user.id, {});
-      try { localStorage.removeItem(unhydratedKey(user.id)); } catch (e) {}
+      try { localStorage.removeItem(unhydratedKey(user.id)); localStorage.removeItem(SEEN_PREFIX + user.id); } catch (e) {}   // 資料夾要刪了,「灌過」也不算數
       sessionStorage.removeItem('tr_cloud_hydrated_' + user.id);
       const prefix = 'tr_u' + pidOf(user) + '_';
       for (let i = localStorage.length - 1; i >= 0; i--) {

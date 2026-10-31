@@ -122,6 +122,11 @@
   /* 先看再登入:canKeepProgress 是 js/common.js 這次才有的。上線那幾分鐘瀏覽器可能還拿著快取裡上一版的 common.js(沒有這個函式),
      那時當作可以存,跟改動前一樣;不檢查就會丟錯,已登入的人寫的東西也存不起來 */
   const canKeep = () => typeof canKeepProgress !== 'function' || canKeepProgress();
+  /* 題庫編輯器、遊戲裡的作答沒有 data-gate(進來的那一下「新增題庫」「編輯」「開始」才有)。進來之後才因為帳號那一邊存不進去
+     (別的分頁登出、換帳號,或這台的帳號資料夾還沒從雲端灌好、這一頁要重新整理):這一下不生效,開「重新整理」卡
+     (js/common.js holdForAccount,跟每日練習一樣;多分頁第 3 輪審查 #2)。以前 store.set 靜靜不寫,畫面卻寫「加入 3 個」、清空輸入框、照樣對答案。
+     舊版 common.js 沒有這個函式就照舊。回 true = 擋下了 */
+  const held = el => typeof holdForAccount === 'function' && holdForAccount(el);
   let pageSrc = null;   // 還沒登入時「練哪些字」的選擇(不存)
   renderHome();
   /* 開了好幾天的 App 一進單字頁先跟雲端對齊(CLOUD.syncKey),之後的編輯才不是根據舊資料;
@@ -349,12 +354,15 @@
        persist 就不寫名稱(題庫已經存在時),重畫時換成本機現在的名稱(別台改的名稱合併進來了)。
        以前每次 persist 都把輸入框的值寫回去:輸入框還停在合併前的舊名稱時,會把別台的改名蓋掉(而且 _nt 是新的,之後每台都用舊名稱) */
     let shownName = nameInput.value;
+    /* 回 false = 存不進去(held:開了「重新整理」卡),呼叫的地方就停下,輸入框照原樣留著 */
     function persist() {
       const typed = nameInput.value;
-      if (typed === shownName && bankOf(id)) return;
+      if (typed === shownName && bankOf(id)) return true;
+      if (held(nameInput)) return false;
       const name = typed.trim() || '未命名題庫';
       editBank(id, b => Object.assign({}, b, { name }));
       shownName = typed;
+      return true;
     }
     function syncName() {
       const b = bankOf(id);
@@ -374,23 +382,25 @@
       words.forEach(w => {
         const cb = h('input', { type: 'checkbox' });
         cb.checked = w.on !== false;
-        cb.addEventListener('change', () => { persist(); editWord(id, w, { on: cb.checked }); drawList(); });
+        cb.addEventListener('click', e => { if (held(cb)) e.preventDefault(); });   // 擋下時勾選不變(點文字、空白鍵也是走 click)
+        cb.addEventListener('change', () => { if (!persist()) return; editWord(id, w, { on: cb.checked }); drawList(); });
         const alt = Array.isArray(w.alt) ? w.alt.filter(a => typeof a === 'string' && a.trim()) : [];
         listWrap.append(h('div', { class: 'bank-word' + (alt.length ? ' has-alt' : '') },
           h('label', { class: 'bank-word-main' }, cb,
             h('b', null, w.en), h('span', { class: 'bank-word-zh' }, w.zh)),
           h('button', {
             class: 'bank-word-del', type: 'button', title: '刪除這個字',
-            onclick: () => { persist(); removeWord(id, w); drawList(); },
+            onclick: e => { if (held(e.currentTarget) || !persist()) return; removeWord(id, w); drawList(); },
           }, '✕'),
           /* 兩台同時改了這個字的中文:沒當主要的那個放在 alt(同步合併設計 3.7.3),可以換成它或刪掉 */
           alt.map(a => h('div', { class: 'bank-word-alt' },
             h('span', null, '另一台寫的：' + a),
-            h('button', { class: 'pop-mini', type: 'button', onclick: () => { editWord(id, w, { zh: a, alt: alt.filter(x => x !== a) }); drawList(); } }, '換成這個'),
-            h('button', { class: 'pop-mini', type: 'button', onclick: () => { editWord(id, w, { alt: alt.filter(x => x !== a) }); drawList(); } }, '刪掉')))));
+            h('button', { class: 'pop-mini', type: 'button', onclick: e => { if (held(e.currentTarget)) return; editWord(id, w, { zh: a, alt: alt.filter(x => x !== a) }); drawList(); } }, '換成這個'),
+            h('button', { class: 'pop-mini', type: 'button', onclick: e => { if (held(e.currentTarget)) return; editWord(id, w, { alt: alt.filter(x => x !== a) }); drawList(); } }, '刪掉')))));
       });
     }
-    function addBulk() {
+    function addBulk(e) {
+      if (held(e && e.currentTarget) || !persist()) return;   // 擋下時不清空輸入框、不寫「加入 N 個」
       const lines = bulkInput.value.split('\n');
       let added = 0, updated = 0, skipped = 0;
       const seen = new Set((current().words || []).filter(w => w && typeof w.en === 'string').map(w => norm(w.en)));
@@ -403,7 +413,6 @@
         else { seen.add(key); added++; }
         list.push({ en: p.en, zh: p.zh });
       });
-      persist();
       if (list.length) {
         editBank(id, b => {
           if (SM) return SM.addWords(b, list, Date.now());
@@ -426,7 +435,7 @@
     root.append(
       h('div', { class: 'drill-top', 'data-vview': 'edit' },
         h('h1', null, bankId ? '編輯題庫' : '新增題庫'),
-        h('a', { href: 'vocab.html', style: 'font-size:13.5px;margin-left:auto', onclick: e => { e.preventDefault(); persist(); renderHome(); } }, '← 完成，回單字訓練')),
+        h('a', { href: 'vocab.html', style: 'font-size:13.5px;margin-left:auto', onclick: e => { e.preventDefault(); if (persist()) renderHome(); } }, '← 完成，回單字訓練')),
       h('div', { class: 'q-block' },
         nameInput,
         bulkInput,
@@ -594,6 +603,7 @@
       /* 中文輸入法選字中的 Enter 不算送出 */
       if (e.isComposing || e.keyCode === 229) return;
       if (e.key !== 'Enter' || !running || over) return;
+      if (held(input)) { togglePause(); return; }   // 擋下時先暫停,打的字留著
       const raw = input.value.trim();
       const val = norm(raw);
       if (!val) return;
@@ -772,8 +782,8 @@
       p.quiz.options.forEach((opt, oi) => {
         opts.append(h('button', {
           class: 'opt',
-          onclick: () => {
-            if (doneQ) return;
+          onclick: e => {
+            if (doneQ || held(e.currentTarget)) return;
             doneQ = true;
             const ok = oi === p.quiz.answer;
             results[cur] = ok;
@@ -897,7 +907,7 @@
       h('p', { class: 'result-note' }, '翻兩張，英文配它的中文。'),
       grid);
     cards.forEach(c => {
-      c.el = h('button', { class: 'mem-card' + (c.en ? '' : ' zh'), type: 'button', onclick: () => flip(c) }, '?');
+      c.el = h('button', { class: 'mem-card' + (c.en ? '' : ' zh'), type: 'button', onclick: e => { if (!held(e.currentTarget)) flip(c); } }, '?');
       grid.append(c.el);
     });
     const tick = () => { timeEl.textContent = String(Math.round((Date.now() - startT) / 1000)); };
@@ -990,8 +1000,8 @@
         opts.forEach((o, oi) => {
           optsEl.append(h('button', {
             class: 'opt',
-            onclick: () => {
-              if (done) return;
+            onclick: e => {
+              if (done || held(e.currentTarget)) return;
               done = true;
               const ok = oi === ai;
               results.push({ it, ok });
@@ -1066,8 +1076,8 @@
       opts.forEach((o, oi) => {
         optsEl.append(h('button', {
           class: 'opt',
-          onclick: () => {
-            if (done) return;
+          onclick: e => {
+            if (done || held(e.currentTarget)) return;
             done = true;
             const ok = oi === ai;
             results[cur] = ok;

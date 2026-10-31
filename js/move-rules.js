@@ -29,9 +29,10 @@
   ]);
   /* 不在學生資料夾底下的全站鍵 */
   const GLOBAL = Object.freeze({ tr_profiles: 'profiles', tr_current_profile: 'currentProfile', tr_pet_hint: 'fillMissing' });
-  /* 不搬的 tr_ 鍵:暫時的、各網域自己的、跟登入有關的。tr_cloud_unhydrated_:js/cloud.js 的「這台帳號資料夾還沒灌過」標記(各網域自己的) */
+  /* 不搬的 tr_ 鍵:暫時的、各網域自己的、跟登入有關的。tr_cloud_unhydrated_:js/cloud.js 的「這台帳號資料夾還沒灌過」標記;
+     tr_cloud_seen_:「這台灌過這個帳號」記號(都是各網域自己的) */
   const EXCLUDE = [/^tr_access_/, /^tr_trial_note_closed$/, /^tr_signup_intent(_used)?$/, /^tr_pending_join$/, /^tr_move_/,
-    /^tr_unsynced_/, /^tr_localonly_/, /^tr_cloud_hydrated_/, /^tr_cloud_unhydrated_/, /^tr_auth_expired$/, /^tr_pw_recovery$/, /^tr_pay_last$/];
+    /^tr_unsynced_/, /^tr_localonly_/, /^tr_cloud_hydrated_/, /^tr_cloud_unhydrated_/, /^tr_cloud_seen_/, /^tr_auth_expired$/, /^tr_pw_recovery$/, /^tr_pay_last$/];
   const FOLDER = /^tr_u(p[0-9a-z]{4,20}|c[0-9a-f]{32})_([A-Za-z0-9_.-]{1,100})$/;
   const GUEST = /^tr_([A-Za-z0-9_.-]{1,100})$/;
   const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;

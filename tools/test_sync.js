@@ -97,6 +97,7 @@ function makeClient(w) {
             if (w.readError) return { data: null, error: { message: 'JWT expired', code: 'PGRST301' } };
             if (w.readNull) return { data: null, error: null };
           } else {   // 整批讀(灌資料):progressGate 只卡住下一次(還在讀);progressFail 打開時回 Failed to fetch(網路斷一下、Supabase 慢或休眠)
+            w.fullReads = (w.fullReads || 0) + 1;   // 整批讀了幾次(換頁有沒有多灌一次)
             if (w.progressGate) { const g = w.progressGate; w.progressGate = null; await g; }
             if (w.progressFail) return { data: null, error: { message: 'TypeError: Failed to fetch' } };
           }
@@ -1028,32 +1029,38 @@ const scenarios = {
   },
   /* 跟 56 同一條(不能把有資料的資料夾當成空的),這次是開頁時資料夾真的是空的:分頁 B 是這台第一次登入、正在讀雲端進度
      (資料夾空的、標記記著),這時開分頁 C;C 還在確認登入時 B 灌好了(資料夾有 hist、標記劃掉)。
-     C 確認登入時資料夾已經有東西,不能因為開頁那一刻是空的又記上標記;之後 C 讀雲端失敗,作答照常記帳,下一頁上雲 */
-  '57. 新分頁開頁時帳號資料夾是空的(別的分頁正在灌),確認登入前那個分頁灌好了:不能再記「還沒灌過」,讀雲端失敗時作答照常記帳、下一頁上雲': async src => {
+     C 確認登入時資料夾已經有東西,不能因為開頁那一刻是空的又記上標記:C 還在讀雲端進度的時候,灌好的 B 照常作答、上雲;
+     C 讀到之後灌資料重載,看得到 B 剛答的那一筆。
+     (多分頁第 3 輪審查 2026-11-01:以前這裡測的是 C 讀雲端失敗、照常記帳。C 的畫面是照空資料夾畫的,寫作頁這類照畫面整份寫回的鍵
+     會把雲端蓋掉,現在 C 自己讀失敗時不能作答,那條改在情境 60 測;這裡留 C 讀得到的那條,請求與儲存跟第 1 步那版逐位元組比) */
+  '57. 新分頁開頁時帳號資料夾是空的(別的分頁正在灌),確認登入前那個分頁灌好了:不能再記「還沒灌過」,新分頁讀雲端的時候灌好的分頁照常作答、上雲,新分頁讀到後看得到': async src => {
     const UNHYD = 'tr_cloud_unhydrated_' + USER.id;
-    {
-      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
-      w.db.push({ user_id: USER.id, k: 'hist', v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
-      const guest = loadPage(w, src); await guest.ready;             // 分頁 B:訪客頁
-      let go; w.progressGate = new Promise(r => { go = r; });
-      const loginP = guest.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e); await tick();
-      const markB = w.local.getItem(UNHYD);
-      w.session = makeStorage();                                     // 分頁 C
-      let release; w.authGate = new Promise(r => { release = r; });
-      const pg = loadPage(w, src); await tick();
-      const emptyAtOpen = lv(w, 'hist') === null;
-      go(); await loginP; await tick();                              // B 灌好了
-      w.progressFail = true;
-      release(); w.authGate = null; await pg.ready;
-      const mark = w.local.getItem(UNHYD), can = typeof pg.ctx.CLOUD.folderReady === 'function' ? pg.ctx.CLOUD.folderReady() : true;
-      studentWrites(pg, w, 'hist', (lv(w, 'hist') || []).concat(['c-ans'])); await pg.runTimers(); await pg.fire('win:pagehide');
-      const led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}'));
-      w.progressFail = false;
-      await settle(w, src);                                          // C 的下一頁
-      const want = FIVE.concat(['c-ans']);
-      return { ok: markB === '1' && emptyAtOpen && mark === null && can && led.includes('hist') && same(cv(w, 'hist'), want) && same(lv(w, 'hist'), want),
-               detail: 'B 讀的時候標記 ' + markB + ' / C 開頁時空的 ' + emptyAtOpen + ' / C 確認登入後標記 ' + mark + ' / 能作答 ' + can + ' / 帳本 ' + JSON.stringify(led) + ' / 下一頁雲端 ' + JSON.stringify(cv(w, 'hist')) };
-    }
+    const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+    w.db.push({ user_id: USER.id, k: 'hist', v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    const sB = w.session;
+    const guest = loadPage(w, src); await guest.ready;             // 分頁 B:訪客頁
+    let go; w.progressGate = new Promise(r => { go = r; });
+    const loginP = guest.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e); await tick();
+    const markB = w.local.getItem(UNHYD);
+    const sC = makeStorage(); w.session = sC;                      // 分頁 C
+    let release; w.authGate = new Promise(r => { release = r; });
+    const pgC = loadPage(w, src); await tick();
+    const emptyAtOpen = lv(w, 'hist') === null;
+    go(); await loginP; await tick();                              // B 灌好了、重載
+    let goC; w.progressGate = new Promise(r => { goC = r; });
+    release(); w.authGate = null; await tick(); await tick();      // C 確認登入,正在讀雲端進度
+    w.session = sB;
+    const pgB = loadPage(w, src); await pgB.ready;                 // B 重載後的頁面(灌過,不再讀)
+    const mark = w.local.getItem(UNHYD), canB = ready(pgB);
+    studentWrites(pgB, w, 'hist', (lv(w, 'hist') || []).concat(['b-ans'])); await pgB.runTimers();
+    const midCloud = cv(w, 'hist');
+    goC(); await pgC.ready;                                        // C 讀到了:灌資料、重載
+    w.session = sC;
+    const s = await settle(w, src);                                // C 重載後的頁面
+    const want = FIVE.concat(['b-ans']);
+    return { ok: markB === '1' && emptyAtOpen && mark === null && canB && same(midCloud, want) && same(cv(w, 'hist'), want) && same(lv(w, 'hist'), want) && !s.reloaded,
+             detail: 'B 讀的時候標記 ' + markB + ' / C 開頁時空的 ' + emptyAtOpen + ' / C 讀雲端時標記 ' + mark + ' / B 能作答 ' + canB + ' / B 作答後雲端 ' + JSON.stringify(midCloud) +
+               ' / C 重載後本機 ' + JSON.stringify(lv(w, 'hist')) + ' / C 再換頁又灌 ' + s.reloaded };
   },
   /* 跟 56、57 反過來:開頁時資料夾還有東西,確認登入之前別的分頁按了登出(資料夾刪光)、又用密碼登回來,登入資料存好了、
      但那個分頁還在查教師身分,還沒走到記「還沒灌過」。這一頁確認登入時資料夾已經空了,要當成空的記上標記,
@@ -1069,7 +1076,7 @@ const scenarios = {
     /* 別的分頁:登出(cloud.js logout 刪的那些),又登回來(登入資料存好了,afterAuth 還在查教師身分) */
     const folder = [];
     for (let i = 0; i < w.local.length; i++) { const k = w.local.key(i); if (k.startsWith(PREFIX)) folder.push(k); }
-    folder.concat([SB_KEY, LEDGER, 'tr_current_profile']).forEach(k => w.local.removeItem(k));
+    folder.concat([SB_KEY, LEDGER, SEEN, 'tr_current_profile']).forEach(k => w.local.removeItem(k));   // SEEN:第 3 輪起登出也刪「這台灌過」
     w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', expires_at: 1, user: USER }));
     w.progressFail = true;
     release(); w.authGate = null; await pg.ready;
@@ -1083,12 +1090,213 @@ const scenarios = {
              detail: '開頁時資料夾 ' + JSON.stringify(folder.map(k => k.slice(PREFIX.length))) + ' / 標記 ' + mark + ' / 能作答 ' + can + ' / 帳本 ' + JSON.stringify(led) +
                ' / 下一頁雲端 ' + JSON.stringify(cv(w, 'hist')) + ' / 本機 ' + JSON.stringify(lv(w, 'hist')) };
   },
+  /* 多分頁第 3 輪審查 #1(2026-11-01):分頁 A 灌過;分頁 B 登出(資料夾刪光)又用密碼登回來、正在讀雲端進度(標記記著、資料夾空的),
+     這時 A 換頁:A 的畫面照空資料夾畫(寫作頁的 readMap、作文框都是開頁時讀的)。A 確認登入前 B 先灌好、劃掉標記,
+     A 確認登入時標記不在、自己的旗標還在,以前就不灌資料:照空畫面按「標記讀完」整份寫回,雲端 writing_read 從三課變成只剩一課。
+     要的是:開頁時資料夾是空的、這台這個帳號也還沒灌過,確認登入時資料夾卻有東西了(別的分頁灌好了),這一頁要重灌重載。
+     - 卡在確認登入(authGate)、卡在查教師身分(teacherGate,比較接近真的時序):A 重灌重載,畫面換成灌好的資料夾
+     - A 自己讀雲端也失敗:不能作答、不記帳(畫面還是空的),下一頁照常
+     - B 第一次也讀失敗、A 換頁時灌不成;之後 B 重新整理灌好、劃掉標記:A 這一頁還是照空畫面,一樣不能作答(不能因為標記劃掉了就放行) */
+  '59. 別的分頁登出又登回來、正在灌資料時這個分頁換頁(開頁時帳號資料夾是空的),確認登入前或之後別的分頁先灌好:這一頁照空資料夾畫的,要重灌重載,自己讀不到雲端時不能作答,寫作紀錄不被蓋掉': async src => {
+    const READ3 = { l1: true, l2: true, l3: true };
+    const one = async how => {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      w.db.push({ user_id: USER.id, k: WR, v: READ3, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const sA = w.session;
+      await openLoggedIn(w, src);                                    // A 灌過(旗標在 A)
+      const sB = makeStorage(); w.session = sB;
+      let pgB = loadPage(w, src); await pgB.ready; pgB = loadPage(w, src); await pgB.ready;
+      await pgB.ctx.CLOUD.logout(); await tick();
+      pgB = loadPage(w, src); await pgB.ready;                       // B 訪客頁
+      const later = how === 'B 之後才灌好';
+      let goB = null;
+      if (later) w.progressFail = true; else w.progressGate = new Promise(r => { goB = r; });
+      const loginP = pgB.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e); await tick();
+      if (later) await loginP;
+      const markB = w.local.getItem(UNHYD);
+      w.session = sA;                                                // A 換頁
+      let release = null;
+      if (how === '卡在查教師身分') w.teacherGate = new Promise(r => { release = r; });
+      else if (!later) w.authGate = new Promise(r => { release = r; });
+      const pgA = loadPage(w, src); await tick();
+      const atLoad = lv(w, WR);                                      // A 的畫面照開頁時的資料夾畫
+      if (goB) { goB(); await loginP; await tick(); }                // B 灌好、重載
+      if (how === 'A 也讀失敗') w.progressFail = true;
+      const r1 = w.reloads;
+      if (release) { release(); w.authGate = null; w.teacherGate = null; }
+      await pgA.ready; await pgA.runTimers();
+      const aReloaded = w.reloads > r1;
+      if (later) { w.progressFail = false; w.session = sB; await settle(w, src); w.session = sA; }   // B 重新整理,這次灌好
+      const canA = ready(pgA);
+      const map = Object.assign({}, atLoad || {}, { l4: true });     // 寫作頁:readMap 是畫面時讀的,按「標記讀完」整份寫回
+      const wrote = storeSet(pgA, w, WR, map);
+      if (!wrote) pgA.ctx.CLOUD.push(WR, map);                       // common.js 擋下了,cloud.js 這一層也不能記帳
+      await pgA.runTimers(); await pgA.fire('win:pagehide');
+      const led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}'));
+      const mid = cv(w, WR);
+      w.progressFail = false;
+      const s = await settle(w, src);                                // A 的下一頁
+      const shown = lv(w, WR);
+      storeSet(s.pg, w, WR, Object.assign({}, shown || {}, { l4: true })); await s.pg.runTimers();
+      const end = cv(w, WR);
+      const want = Object.assign({}, READ3, { l4: true });
+      const okHow = how === 'A 也讀失敗' || later ? !canA && !wrote && !led.includes(WR) : aReloaded;
+      return { ok: markB === '1' && atLoad === null && okHow && same(mid, READ3) && same(shown, READ3) && same(end, want),
+               detail: how + ':B 讀的時候標記 ' + markB + ' / A 開頁時 ' + JSON.stringify(atLoad) + ' / A 重灌 ' + aReloaded + ' / A 能作答 ' + canA + ' / 寫進去 ' + wrote +
+                 ' / 帳本 ' + JSON.stringify(led) + ' / A 作答後雲端 ' + JSON.stringify(mid) + ' / 下一頁本機 ' + JSON.stringify(shown) + ' / 最後雲端 ' + JSON.stringify(end) };
+    };
+    const rs = [await one('卡在確認登入'), await one('卡在查教師身分'), await one('A 也讀失敗'), await one('B 之後才灌好')];
+    return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
+  },
+  /* 多分頁第 3 輪審查 #1 同一條,新分頁那一邊(以前情境 57 的後半):分頁 B 這台第一次登入、正在讀雲端進度時開新分頁 C(資料夾空的),
+     C 確認登入前 B 灌好了,C 自己讀雲端失敗。C 的畫面照空資料夾畫:以前照常作答記帳,寫作頁整份寫回,下一頁把雲端蓋成只剩 C 那一課。
+     要的是:C 不能作答、不記帳;不記「還沒灌過」標記,灌好的 B 照常作答上雲;C 網路好了重新整理,看得到全部 */
+  '60. 新分頁開頁時帳號資料夾是空的(別的分頁正在灌),確認登入前那個分頁灌好了、這個新分頁自己讀雲端失敗:新分頁不能作答、不記帳,灌好的分頁照常,寫作紀錄不被蓋掉': async src => {
+    const READ3 = { l1: true, l2: true, l3: true };
+    const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+    w.db.push({ user_id: USER.id, k: WR, v: READ3, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    const sB = w.session;
+    const guest = loadPage(w, src); await guest.ready;               // 分頁 B:訪客頁
+    let go; w.progressGate = new Promise(r => { go = r; });
+    const loginP = guest.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e); await tick();
+    const markB = w.local.getItem(UNHYD);
+    const sC = makeStorage(); w.session = sC;                        // 分頁 C
+    let release; w.authGate = new Promise(r => { release = r; });
+    const pgC = loadPage(w, src); await tick();
+    const atLoad = lv(w, WR);
+    go(); await loginP; await tick();                                // B 灌好了、重載
+    w.progressFail = true;
+    release(); w.authGate = null; await pgC.ready;                   // C 讀雲端失敗
+    w.session = sB;
+    const pgB = loadPage(w, src); await pgB.ready;                   // B 重載後的頁面(灌過,不再讀)
+    const mark = w.local.getItem(UNHYD), canC = ready(pgC), canB = ready(pgB);
+    const wroteB = storeSet(pgB, w, WR, Object.assign({}, lv(w, WR) || {}, { b1: true })); await pgB.runTimers();
+    await new Promise(r => setTimeout(r, 5));                       // C 按下去比 B 上傳晚(同一毫秒的話灌資料時雲端算新,看不出會不會蓋掉)
+    const map = Object.assign({}, atLoad || {}, { c1: true });
+    const wroteC = storeSet(pgC, w, WR, map);
+    if (!wroteC) pgC.ctx.CLOUD.push(WR, map);
+    await pgC.runTimers(); await pgC.fire('win:pagehide');
+    const led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}'));
+    const mid = cv(w, WR);
+    w.progressFail = false;
+    w.session = sC;
+    const s = await settle(w, src);                                  // C 重新整理(網路好了)
+    const shown = lv(w, WR);
+    storeSet(s.pg, w, WR, Object.assign({}, shown || {}, { c1: true })); await s.pg.runTimers();
+    const withB = Object.assign({}, READ3, { b1: true });
+    const ok = markB === '1' && atLoad === null && mark === null && !canC && canB && wroteB && !wroteC && !led.includes(WR)
+      && s.reloaded && same(mid, withB) && same(shown, withB) && same(cv(w, WR), Object.assign({}, withB, { c1: true }));   // C 自己沒灌成:重新整理時照樣重灌
+    return { ok, detail: 'B 讀的時候標記 ' + markB + ' / C 開頁時 ' + JSON.stringify(atLoad) + ' / C 讀失敗後標記 ' + mark + ' / C 能作答 ' + canC + ' / B 能作答 ' + canB +
+      ' / C 寫進去 ' + wroteC + ' / 帳本 ' + JSON.stringify(led) + ' / C 作答後雲端 ' + JSON.stringify(mid) + ' / C 重新整理重灌 ' + s.reloaded + ' / C 重新整理後本機 ' + JSON.stringify(shown) + ' / 最後雲端 ' + JSON.stringify(cv(w, WR)) };
+  },
+  /* 多分頁第 3 輪審查 #3(e49e444 就有):分頁 A 換頁,getSession 已經拿到 X、還在查教師身分;這時分頁 B 按登出(資料夾、帳本、目前帳號、登入資料全刪)。
+     以前 A 確認完照樣把目前帳號寫回 X:A 的資料夾對得上、folderReady 是 true,拿被刪空的資料夾作答、記帳(上傳被 RLS 擋下、帳本留著),
+     X 之後在這台登入時灌資料把帳本當成本機比較新,整份上傳把雲端錯題本蓋成只剩新那一題;別的沒重載的分頁 C 也跟著又能記帳。
+     要的是:A 不寫回目前帳號、不灌資料;A、C 都不能作答、不記帳;X 再登入後雲端還是 5 題 */
+  '61. 分頁還在確認登入(查教師身分)時別的分頁登出:確認完不能把目前帳號寫回去,這一頁和其他沒重載的分頁都不能作答、不記帳,原帳號之後在這台登入時雲端不能變少': async src => {
+    const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+    w.db.push({ user_id: USER.id, k: K, v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    const sA = w.session;
+    await openLoggedIn(w, src);                                      // A 灌過
+    w.session = makeStorage();
+    let pgC = loadPage(w, src); await pgC.ready; pgC = loadPage(w, src); await pgC.ready;   // C 灌過,之後一直沒重載
+    const sB = makeStorage(); w.session = sB;
+    let pgB = loadPage(w, src); await pgB.ready; pgB = loadPage(w, src); await pgB.ready;   // B 灌過
+    w.session = sA;
+    let release; w.teacherGate = new Promise(r => { release = r; });
+    const pgA = loadPage(w, src); await tick();                       // A 換頁,卡在查教師身分
+    const userA = !!pgA.ctx.CLOUD.user;
+    w.session = sB; await pgB.ctx.CLOUD.logout(); await tick();
+    pgB = loadPage(w, src); await pgB.ready;                         // B 重載成訪客
+    const r0 = w.reloads;
+    release(); w.teacherGate = null; await pgA.ready;
+    const cp = w.local.getItem('tr_current_profile'), aReloaded = w.reloads > r0;
+    const canA = ready(pgA), canC = ready(pgC);
+    studentWrites(pgA, w, K, (lv(w, K) || []).concat(['new-q'])); await pgA.runTimers(); await pgA.fire('win:pagehide');
+    studentWrites(pgC, w, K, (lv(w, K) || []).concat(['new-c'])); await pgC.runTimers(); await pgC.fire('win:pagehide');
+    const led = w.local.getItem(LEDGER);
+    w.session = sB;
+    pgB = loadPage(w, src); await pgB.ready;                         // B 換頁(還是訪客,或發現資料夾是登出的帳號改回訪客)
+    if (pgB.ctx.__PROFILE_ID) { pgB = loadPage(w, src); await pgB.ready; }
+    await pgB.ctx.CLOUD.login('s@x.com', 'test-only'); await tick();  // 原帳號之後在這台登入
+    await settle(w, src);
+    return { ok: userA && cp === null && !aReloaded && !canA && !canC && led === null && same(cv(w, K), FIVE) && same(lv(w, K), FIVE),
+             detail: '卡住時 A 已拿到帳號 ' + userA + ' / A 確認後目前帳號 ' + cp + ' / A 重載 ' + aReloaded + ' / A 能作答 ' + canA + ' / C 能作答 ' + canC +
+               ' / 帳本 ' + led + ' / 再登入後雲端 ' + JSON.stringify(cv(w, K)) + ' / 本機 ' + JSON.stringify(lv(w, K)) };
+  },
+  /* 多分頁第 3 輪審查 #4、#5(這個分支新加的回歸):雲端還沒有任何進度的帳號(新註冊、只看後台的老師)灌完資料夾還是空的。
+     以前開新分頁時「資料夾是空的」就記「還沒灌過」標記:別的分頁正在灌、或灌失敗時,早就灌好的分頁也被擋下(還說「還沒載入你的練習紀錄」),
+     換頁多讀一次、多重載一次;新分頁讀失敗後被關掉,原分頁一直被擋。要的是:這台灌過這個帳號(登出前)就不記標記,跟 e49e444 一樣 */
+  '62. 雲端還沒有任何進度的帳號(新註冊、老師帳號):灌好的分頁在別的分頁正在灌、或灌失敗時照常作答、上雲,換頁不多讀、不多重載': async src => {
+    const one = async (how, meta) => {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      if (meta) w.db.push({ user_id: USER.id, k: '_meta', v: { email: USER.email }, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const sA = w.session;
+      const pgA = await openLoggedIn(w, src);
+      const empty = (() => { for (let i = 0; i < w.local.length; i++) if (w.local.key(i).startsWith(PREFIX)) return false; return true; })();
+      const can0 = ready(pgA);
+      w.session = makeStorage();                                     // 分頁 B
+      let go = null;
+      if (how === '讀失敗') w.progressFail = true; else w.progressGate = new Promise(r => { go = r; });
+      const pgB = loadPage(w, src); await tick(); await tick();
+      const markMid = w.local.getItem(UNHYD), canMid = ready(pgA);
+      const wrote = storeSet(pgA, w, 'hist', ['A1']); await pgA.runTimers();
+      if (go) go();
+      await pgB.ready;
+      const markEnd = w.local.getItem(UNHYD), canEnd = ready(pgA);
+      w.progressFail = false;
+      w.session = sA;
+      const f0 = w.fullReads || 0;
+      const s = await settle(w, src);                                // A 換頁
+      const extra = (w.fullReads || 0) - f0;
+      return { ok: empty && can0 && markMid === null && canMid && wrote && markEnd === null && canEnd && !s.reloaded && extra === 0 && same(cv(w, 'hist'), ['A1']) && same(lv(w, 'hist'), ['A1']),
+               detail: (meta ? '只有 _meta' : '什麼都沒有') + '、B ' + how + ':A 灌好後資料夾空的 ' + empty + ' 能作答 ' + can0 + ' / B 讀的時候標記 ' + markMid + ' A 能作答 ' + canMid +
+                 ' / A 寫進去 ' + wrote + ' / B 讀完標記 ' + markEnd + ' A 能作答 ' + canEnd + ' / A 換頁重灌 ' + s.reloaded + ' 多讀 ' + extra + ' / 雲端 ' + JSON.stringify(cv(w, 'hist')) };
+    };
+    /* 開頁時資料夾空的(雲端本來就沒進度、這台灌過),確認登入前別的分頁寫了一筆:這一頁的畫面不是照「還沒灌過」的資料夾畫的,
+       不用重灌(不多讀、不重載);這時讀雲端又剛好會失敗,也不能被當成沒灌過擋下 */
+    const two = async () => {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      const sA = w.session;
+      await openLoggedIn(w, src);
+      const sD = makeStorage(); w.session = sD;                      // 分頁 D 也灌好了
+      let pgD = loadPage(w, src); await pgD.ready; pgD = loadPage(w, src); await pgD.ready;
+      w.session = sA;
+      let release; w.authGate = new Promise(r => { release = r; });
+      const f0 = w.fullReads || 0, r0 = w.reloads;
+      const pgA = loadPage(w, src); await tick();                     // A 換頁,還在確認登入
+      const wroteD = storeSet(pgD, w, 'hist', ['D1']); await pgD.runTimers();
+      w.progressFail = true;
+      release(); w.authGate = null; await pgA.ready; await pgA.runTimers();
+      const extra = (w.fullReads || 0) - f0, reloaded = w.reloads > r0, can = ready(pgA);
+      const wrote = storeSet(pgA, w, 'hist', (lv(w, 'hist') || []).concat(['A1'])); await pgA.runTimers();
+      w.progressFail = false;
+      return { ok: wroteD && extra === 0 && !reloaded && can && wrote && same(cv(w, 'hist'), ['D1', 'A1']),
+               detail: '這一頁確認登入時別的分頁寫了:多讀 ' + extra + ' / 重載 ' + reloaded + ' / A 能作答 ' + can + ' / 雲端 ' + JSON.stringify(cv(w, 'hist')) };
+    };
+    const rs = [await one('讀失敗', true), await one('還在讀', true), await one('讀失敗', false), await two()];
+    return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
+  },
 };
 const FIVE = ['q1', 'q2', 'q3', 'q4', 'q5'];
 const PID = 'c' + USER.id.replace(/-/g, '');
 const FLAG = 'tr_cloud_hydrated_' + USER.id;
 const OTHER_USER = { id: '9a9a9a9a-1111-4222-8333-444455556666', email: 'o@x.com', user_metadata: {} };
 const hasAll = (v, want) => Array.isArray(v) && want.every(x => v.includes(x));
+const UNHYD = 'tr_cloud_unhydrated_' + USER.id;   // 「這台帳號資料夾還沒灌過」標記
+const SEEN = 'tr_cloud_seen_' + USER.id;          // 「這台灌過這個帳號」(第 3 輪起,登出刪掉)
+const WR = 'writing_read';                        // 寫作頁:畫面時讀的 readMap,按「標記讀完」整份寫回(整份上傳的鍵)
+/* 這一頁能不能作答(js/cloud.js folderReady;舊版沒有這個函式就當成可以) */
+const ready = pg => (typeof pg.ctx.CLOUD.folderReady === 'function' ? pg.ctx.CLOUD.folderReady() : true);
+/* 跟 js/common.js 的 store.set 一樣先問 accountBlock:別的分頁登出、換帳號(folderGone),或已登入但 folderReady 說還不能用、頁面正要重載,
+   就不寫本機也不 push(回 false);不然跟 studentWrites 一樣寫本機再 push */
+function storeSet(pg, w, k, v) {
+  const C = pg.ctx.CLOUD, id = pg.ctx.__PROFILE_ID;
+  const gone = typeof id === 'string' && id.charAt(0) === 'c' && w.local.getItem('tr_current_profile') !== JSON.stringify(id);
+  if (gone || C.reloading || (C.user && typeof C.folderReady === 'function' && !C.folderReady())) return false;
+  studentWrites(pg, w, k, v);
+  return true;
+}
 /* 開一頁;這一頁灌了資料要重載就再開一次(重載後的那一頁)。回 { pg, reloaded } */
 async function settle(w, src) {
   const r0 = w.reloads;

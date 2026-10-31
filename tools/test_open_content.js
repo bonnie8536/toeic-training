@@ -1204,8 +1204,8 @@ T['別的分頁登出後沒重載的內容頁、帳號資料夾還沒灌過又�
   return { ok: !!a.ok && !!b.ok, detail: '別的分頁登出 ' + J(a) + ' | 還沒灌過又讀不到 ' + J(b) };
 };
 
-/* 別的分頁按登出:js/cloud.js logout 刪的那幾個鍵(登入資料、帳本、只在本機的標記、還沒灌過的標記、目前帳號、整個帳號資料夾) */
-const OTHER_TAB_LOGOUT = `(() => { [${J(SB)}, ${J(SB + '-user')}, ${J('tr_unsynced_' + UID)}, ${J('tr_localonly_' + UID)}, ${J('tr_cloud_unhydrated_' + UID)}, 'tr_current_profile'].forEach((k) => localStorage.removeItem(k));
+/* 別的分頁按登出:js/cloud.js logout 刪的那幾個鍵(登入資料、帳本、只在本機的標記、還沒灌過的標記、灌過的記號、目前帳號、整個帳號資料夾) */
+const OTHER_TAB_LOGOUT = `(() => { [${J(SB)}, ${J(SB + '-user')}, ${J('tr_unsynced_' + UID)}, ${J('tr_localonly_' + UID)}, ${J('tr_cloud_unhydrated_' + UID)}, ${J('tr_cloud_seen_' + UID)}, 'tr_current_profile'].forEach((k) => localStorage.removeItem(k));
   Object.keys(localStorage).filter((k) => k.indexOf(${J('tr_u' + CPID + '_')}) === 0).forEach((k) => localStorage.removeItem(k)); return true; })()`;
 const KEEP = "(typeof canKeepProgress === 'function' ? canKeepProgress() : null)";
 const accountKeys = (ls) => Object.keys(JSON.parse(ls)).filter((k) => k.indexOf('tr_u' + CPID + '_') === 0 || k === 'tr_unsynced_' + UID);
@@ -1398,6 +1398,141 @@ T['模擬考考到一半別的分頁登出、換帳號、登回來還沒灌好,�
       r.ok = r.started && shown && /還沒存/.test(r.result.note) && r.result.later === 1 && !r.wrote.length && r.ups === 0
         && (how !== '換帳號' || (r.ySettled && r.y.pid && r.y.has === three.length && r.y.later === 1))
         && r.settled && r.local === 4 && r.cloud === 4 && r.laterEnd === 0 && r.rows === 5;
+    } finally { await s.close(); }
+    out.push(r);
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 多分頁第 3 輪審查 #2(2026-11-01):單字頁的題庫編輯器(加入單字、勾選、刪字、改名)和遊戲、片語特訓的選項沒有 data-gate
+   (進來那一下的「新增題庫」「編輯」「開始練習」才有)。進來之後別的分頁登出,或這台的帳號資料夾還沒灌過(別的分頁正在灌、讀不到雲端):
+   以前 common.js 的 store 靜靜不寫,畫面卻寫「加入 3 個」、清空輸入框、清單 0 個字,選項照樣對答案,什麼提示都沒有(e49e444 則會寫進
+   被刪掉的資料夾、記帳)。要的是:跳「重新整理」卡,輸入框的字留著、勾選不變、字沒刪,什麼都不寫;照常的時候跟以前一樣 */
+const VOCAB_BANK = [{ id: 'b_old', name: '舊題庫', words: [{ en: 'apple', zh: '蘋果', on: true }, { en: 'pear', zh: '梨', on: true }] }];
+const BREAK_ACCOUNT = { '登出': OTHER_TAB_LOGOUT, '還沒灌過': `localStorage.setItem(${J('tr_cloud_unhydrated_' + UID)}, '1'); true` };
+async function vocabOpen(B, hash) {
+  const ls = { [SB]: J({ access_token: 'x', user: USER }), ['tr_u' + CPID + '_vgame_banks']: J(VOCAB_BANK) };
+  const rows = J([{ k: 'vgame_banks', v: VOCAB_BANK, updated_at: new Date(Date.now() - 864e5).toISOString() }]);
+  return open(B, { url: 'vocab.html' + (hash || ''), user: true, sdk: fakeCloud({ user: USER }), ls, ss: { __fake_rows: rows } });
+}
+async function pressText(s, sel, text) {
+  await s.eval(`(() => { const b = [...document.querySelectorAll(${J(sel)})].find((x) => x.textContent.indexOf(${J(text)}) > -1); if (!b) return false; b.id = '__press'; return true; })()`);
+  await click(s, '#__press');
+}
+T['單字頁:題庫編輯器的加入單字、勾選、刪字、改名,片語特訓的選項,在別的分頁登出、帳號資料夾還沒灌過時跳「重新整理」卡,輸入框的字留著、什麼都不寫;照常時照樣存'] = async (B) => {
+  const out = [];
+  const LINES = ['banana 香蕉', 'cherry 櫻桃', 'grape 葡萄'].join(String.fromCharCode(10));
+  for (const how of ['照常', '登出', '還沒灌過']) {
+    const r = { how };
+    let s = await vocabOpen(B);
+    try {
+      await pressText(s, 'button', '新增題庫');
+      r.editor = await s.eval(`!!document.querySelector('[data-vview="edit"]')`);
+      await s.eval(`(() => { const n = document.querySelector('input.game-input'); n.value = '第3課'; n.dispatchEvent(new Event('change')); return true; })()`);
+      await s.eval(`(() => { document.querySelector('textarea.write-area').value = ${J(LINES)}; return true; })()`);
+      await sleep(1300);   // 名稱存好(建了空的題庫)、0.8 秒後上傳完,帳本劃掉,再拍「之前」
+      if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
+      const before = await s.eval(LS);
+      await click(s, '.pop-btns .btn.primary');   // 加入單字
+      await sleep(800);
+      const st = await state(s);
+      r.card = { mask: st.mask, title: st.title };
+      r.status = await s.eval("(document.querySelector('.result-note') || {}).textContent || ''");
+      r.kept = (await s.eval("document.querySelector('textarea.write-area').value")) === LINES;
+      r.listed = await s.eval("document.querySelectorAll('.bank-word').length");
+      r.wrote = lsDiff(before, await s.eval(LS));
+      if (st.mask) await closeBy(s, 'esc');
+      /* 改名:擋下時名稱留在框裡、不存 */
+      const b2 = await s.eval(LS);
+      await s.eval(`(() => { const n = document.querySelector('input.game-input'); n.value = '第4課'; n.dispatchEvent(new Event('change')); return true; })()`);
+      await sleep(300);
+      r.renameCard = (await state(s)).mask;
+      r.renameWrote = lsDiff(b2, await s.eval(LS));
+      if (r.renameCard) await closeBy(s, 'esc');
+    } finally { await s.close(); }
+    /* 舊題庫:勾選、刪字 */
+    s = await vocabOpen(B);
+    try {
+      await pressText(s, '.btn', '編輯');
+      r.words0 = await s.eval("document.querySelectorAll('.bank-word').length");
+      if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
+      const before = await s.eval(LS);
+      await click(s, '.bank-word input[type=checkbox]');
+      await sleep(400);
+      r.checkCard = (await state(s)).mask;
+      r.stillOn = await s.eval("(() => { const c = document.querySelector('.bank-word input[type=checkbox]'); return c ? c.checked : null; })()");   // 清單被清空(會紅)時是 null
+      if (r.checkCard) await closeBy(s, 'esc');
+      if (await s.eval("!!document.querySelector('.bank-word-del')")) { await click(s, '.bank-word-del'); await sleep(400); }
+      r.delCard = (await state(s)).mask;
+      r.words1 = await s.eval("document.querySelectorAll('.bank-word').length");
+      if (r.delCard) await closeBy(s, 'esc');
+      r.wrote2 = lsDiff(before, await s.eval(LS));
+    } finally { await s.close(); }
+    /* 片語特訓:開始之後才擋下,按選項跳卡、不對答案 */
+    s = await vocabOpen(B, '#phrase');
+    try {
+      await pressText(s, '.part-card .btn.primary', '開始練習');   // data-gate,這時能作答
+      r.drill = await s.eval("document.querySelectorAll('.opts .opt').length");
+      if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
+      const before = await s.eval(LS);
+      await click(s, '.opts .opt');
+      await sleep(400);
+      r.drillCard = (await state(s)).mask;
+      r.drillPicked = await s.eval("document.querySelectorAll('.opts .opt.correct, .opts .opt.wrong').length");
+      await sleep(600);
+      r.wrote3 = lsDiff(before, await s.eval(LS));
+    } finally { await s.close(); }
+    const bank = 'tr_u' + CPID + '_vgame_banks';
+    if (how === '照常') {
+      r.ok = r.editor && !r.card.mask && /加入 3 個/.test(r.status) && r.listed === 3 && !r.kept && r.wrote.includes(bank)
+        && !r.renameCard && r.renameWrote.includes(bank) && r.words0 === 2 && !r.checkCard && !r.stillOn && !r.delCard && r.words1 === 1
+        && r.drill > 0 && !r.drillCard && r.drillPicked > 0;
+    } else {
+      const title = how === '登出' ? /登出/ : /還沒載入/;
+      r.ok = r.editor && r.card.mask && title.test(r.card.title) && !/加入/.test(r.status) && r.kept && r.listed === 0 && !r.wrote.length
+        && r.renameCard && !r.renameWrote.length && r.words0 === 2 && r.checkCard && r.stillOn && r.delCard && r.words1 === 2 && !r.wrote2.length
+        && r.drill > 0 && r.drillCard && r.drillPicked === 0 && !r.wrote3.length;
+    }
+    out.push(r);
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 多分頁第 3 輪審查 #1(2026-11-01):別的分頁登出又登回來、正在灌資料(「還沒灌過」標記記著、帳號資料夾空的)時,這個分頁換到寫作頁的技巧課。
+   寫作頁的 readMap 是畫面時讀的(開頁時是空的),按「標記讀完」整份寫回。這一頁確認登入(查教師身分)之前別的分頁先灌好、劃掉標記:
+   以前這一頁不灌資料,按下去雲端 writing_read 從三課變成只剩這一課。要的是:這一頁重灌重載,畫面換成灌好的資料夾,按下去四課都在;
+   這一頁自己讀雲端也失敗時,按下去跳「重新整理」卡、什麼都不寫,雲端三課還在 */
+T['寫作頁:開頁時帳號資料夾還沒灌過(別的分頁正在灌),確認登入前別的分頁先灌好:這一頁重灌重載,按「標記讀完」雲端原本的課都在;自己讀不到雲端時跳卡、不寫'] = async (B) => {
+  const READ3 = { 'w1-lesson-1': true, 'w1-lesson-3': true, 'w2-lesson-1': true };
+  const rows = J([{ k: 'writing_read', v: READ3, updated_at: new Date(Date.now() - 864e5).toISOString() }]);
+  const out = [];
+  for (const how of ['讀得到', '這一頁也讀不到']) {
+    const r = { how };
+    const ss = { __fake_rows: rows, ['tr_cloud_hydrated_' + UID]: '1' };
+    if (how !== '讀得到') ss.__fake_fail = '1';
+    const s = await open(B, { url: 'robots.txt', early: true, sdk: fakeCloud({ user: USER, teachersDelay: 2500 }),
+      ls: { [SB]: J({ access_token: 'x', user: USER }), tr_current_profile: J(CPID), ['tr_cloud_unhydrated_' + UID]: '1' }, ss });
+    try {
+      await s.go('writing.html?level=l1&u=8');
+      r.atLoad = await s.eval(`({ btn: !![...document.querySelectorAll('button')].find((b) => b.textContent === '標記讀完'), read: localStorage.getItem(${J('tr_u' + CPID + '_writing_read')}) })`);
+      /* 別的分頁灌好了:帳號資料夾寫進雲端那三課、記上「灌過」、劃掉「還沒灌過」(js/cloud.js afterAuth 灌好時做的) */
+      await s.eval(`window.__old = true; localStorage.setItem(${J('tr_u' + CPID + '_writing_read')}, ${J(J(READ3))}); localStorage.setItem(${J('tr_cloud_seen_' + UID)}, '1');
+        localStorage.removeItem(${J('tr_cloud_unhydrated_' + UID)}); true`);
+      for (let i = 0; i < 60; i++) { await sleep(150); try { if (await s.eval("document.readyState === 'complete' && !!window.CLOUD && CLOUD.ready.then(() => !CLOUD.reloading, () => !CLOUD.reloading)")) break; } catch (e) { /* 換頁中 */ } }
+      await sleep(1500);
+      r.reloaded = await s.eval('!window.__old');
+      r.canAct = await s.eval('PROFILE.canAct()');
+      await pressText(s, 'button', '標記讀完');
+      await sleep(1500);
+      const st = await state(s);
+      r.card = { mask: st.mask, title: st.title };
+      r.local = Object.keys(JSON.parse((await s.eval(`localStorage.getItem(${J('tr_u' + CPID + '_writing_read')})`)) || '{}')).sort();
+      const db = JSON.parse(await s.eval("sessionStorage.getItem('__fake_rows') || '[]'"));
+      r.cloud = Object.keys((db.find((x) => x.k === 'writing_read') || {}).v || {}).sort();
+      const keep3 = Object.keys(READ3).every((k) => r.cloud.includes(k));
+      r.ok = r.atLoad.btn && r.atLoad.read === null && keep3 && (how === '讀得到'
+        ? r.reloaded && r.canAct && !r.card.mask && r.cloud.length === 4 && r.local.length === 4
+        : !r.reloaded && !r.canAct && r.card.mask && /還沒載入/.test(r.card.title) && r.cloud.length === 3 && r.local.length === 3);
     } finally { await s.close(); }
     out.push(r);
   }

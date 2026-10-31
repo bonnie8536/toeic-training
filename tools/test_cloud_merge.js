@@ -461,7 +461,7 @@ const A = {
 async function mixed(src) {
   const w = makeWorld();
   const shots = [];
-  const shot = () => shots.push(otherState(w, true));
+  const shot = () => shots.push(otherState(w, true, src === NEW.cloud));
   cloudRow(w, 'hist', [1], w.clock.t - 2 * HOUR); cloudRow(w, 'pet', P(['a']), w.clock.t - 2 * HOUR); cloudRow(w, PLAIN, OLD_BANK, w.clock.t - 2 * HOUR);
   signedIn(w);
   w.local.setItem(PREFIX + 'hist', J([1, 2])); w.local.setItem(PREFIX + 'pet', J(P(['a', 'b']))); w.local.setItem(PREFIX + 'daily_done', J({ x: 1 }));
@@ -483,13 +483,18 @@ async function mixed(src) {
   await pg.ctx.CLOUD.logout(); await tick(); shot();
   return shots;
 }
-/* pet 以外的狀態(dropPet 時去掉 pet 的本機、帳本那一項、雲端那一列與請求) */
-function otherState(w, dropPet) {
+/* pet 以外的狀態(dropPet 時去掉 pet 的本機、帳本那一項、雲端那一列與請求)。
+   newSide:新版那一邊,比對前拿掉多分頁第 3 輪審查(2026-11-01)新加的「這台灌過這個帳號」記號 tr_cloud_seen_<帳號 id>(只拿這一個鍵):
+   灌好時寫、登出刪掉、常駐 localStorage,第 1 步那版沒有。它只決定資料夾空的時候要不要記「還沒灌過」標記,
+   改到的行為會出現在別的地方(標記、帳本、請求、重載),照樣逐位元組比 */
+const SEEN_KEY = /^tr_cloud_seen_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+function otherState(w, dropPet, newSide) {
   const isPet = k => k === PREFIX + 'pet' || k === 'tr_pet' || /^tr_u[0-9a-z]+_pet$/.test(k);
   const local = [];
   for (let i = 0; i < w.local.length; i++) {
     const k = w.local.key(i);
     if (dropPet && isPet(k)) continue;
+    if (newSide && SEEN_KEY.test(k)) continue;
     let v = w.local.getItem(k);
     if (k.indexOf('tr_unsynced_') === 0) { const l = JSON.parse(v); if (dropPet) delete l.pet; v = J(Object.keys(l).sort().map(x => [x, typeof l[x] === 'number' ? 'n' : l[x]])); }
     local.push([k, v]);
@@ -529,9 +534,16 @@ function syncScenarios() {
    - 55:釘住第 3 輪的「fresh 或 otherFolder 時先清掉灌過旗標」與 otherFolder 的新情境(第 1 步那版沒有這兩條,會紅),不比,只要新版通過
    第 2 輪審查(2026-10-31):「帳號資料夾是空的」改成看開頁當下(cloud.js 載入時)和確認登入時的資料夾,不再把確認登入前寫的鍵一律當成不算。
    - 56:資料夾本來就有資料、確認登入前每個鍵都重寫過:不記標記,跟第 1 步那版一樣照常記帳,照樣逐位元組比(不是例外)
-   - 57:另一個分頁正在灌(標記記著)時開的新分頁:那個分頁的標記本來就是 52~55 那一套改動,第 1 步那版沒有,不比,只要新版通過
+   - 57:另一個分頁正在灌(標記記著)時開的新分頁:那個分頁的標記本來就是 52~55 那一套改動,第 1 步那版沒有,前提檢查(B 讀的時候標記是 1)會紅;
+     請求與儲存要跟第 1 步那版逐位元組相同('state':只比 ## 後面的狀態,不比 ok/detail;新版照樣一定要過。多分頁第 3 輪審查 #6)
    - 58:確認登入前別的分頁登出又登回來、還沒記標記:要記上標記、不記帳(第 1 步那版會記帳,雲端被蓋成只有新那一筆),不比,只要新版通過
-   1~51 照樣逐位元組比(平常登入、重新整理、離線、兩台裝置、登出的請求與儲存都沒變) */
+   多分頁第 3 輪審查(2026-11-01):
+   - 59、60:開頁時照還沒灌過的空資料夾畫、確認登入前或之後別的分頁灌好了:要重灌重載,自己讀不到雲端時不能作答、不記帳
+     (第 1 步那版、e49e444 都會紅:照空畫面整份寫回,雲端寫作紀錄被蓋成只剩一課),不比,只要新版通過
+   - 61:確認登入(查教師身分)時別的分頁登出:不寫回目前帳號、不記帳(第 1 步那版、e49e444 會紅:雲端錯題本被蓋成只剩新那一題),不比,只要新版通過
+   - 62(不是例外):雲端沒有進度的帳號,另一個分頁正在灌或灌失敗,灌好的分頁照常作答;跟第 1 步那版逐位元組相同(這個分支 4ea2c29 會紅)
+   新版那一邊的 tr_cloud_seen_<帳號 id> 一律先拿掉再比(見 otherState)。
+   1~51、56、62 照樣逐位元組比(平常登入、重新整理、離線、兩台裝置、登出的請求與儲存都沒變) */
 function dropNullUpload(state, key) {
   const o = JSON.parse(state);
   const isNull = r => !!r && r.k === key && r.v === null;
@@ -539,7 +551,8 @@ function dropNullUpload(state, key) {
   o.ops = o.ops.filter(x => { const q = JSON.parse(x); return !(q.op === 'upsert' && q.k === key && isNull(q.row)); });
   return J(o);
 }
-const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null, '52': null, '53': null, '54': null, '55': null, '57': null, '58': null };
+const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null, '52': null, '53': null, '54': null, '55': null, '57': 'state', '58': null,
+  '59': null, '60': null, '61': null };
 const intended = name => Object.prototype.hasOwnProperty.call(INTENDED, name.split('.')[0]);
 async function replay(variant) {
   const make = syncScenarios();
@@ -555,16 +568,18 @@ async function replay(variant) {
       HOOK.worlds = [];
       let r;
       try { r = await fn(src); } catch (e) { r = { ok: false, detail: '例外 ' + e.message }; }
-      const fix = label === 'old' && intended(name) ? INTENDED[name.split('.')[0]] : null;
-      const state = HOOK.worlds.map(w => { const s = otherState(w, variant === 'fake'); return fix ? fix(s) : s; }).join('||');
+      const fix = label === 'old' && intended(name) && typeof INTENDED[name.split('.')[0]] === 'function' ? INTENDED[name.split('.')[0]] : null;
+      const state = HOOK.worlds.map(w => { const s = otherState(w, variant === 'fake', label === 'new'); return fix ? fix(s) : s; }).join('||');
       (got[name] = got[name] || {})[label] = J({ ok: r.ok, detail: norm(String(r.detail)) }) + '##' + state;
     }
   }
   const names = Object.keys(got);
-  const bad = names.filter(n => !(intended(n) && INTENDED[n.split('.')[0]] === null) && got[n].old !== got[n].new);
+  const mode = n => (intended(n) ? INTENDED[n.split('.')[0]] : undefined);
+  const body = x => x.slice(x.indexOf('##') + 2);   // ## 後面:本機、分頁暫存、雲端、請求、重載
+  const bad = names.filter(n => mode(n) !== null && (mode(n) === 'state' ? body(got[n].old) !== body(got[n].new) : got[n].old !== got[n].new));
   const newFail = names.filter(n => !JSON.parse(got[n].new.split('##')[0]).ok);
   return { ok: names.length >= 50 && !bad.length && !newFail.length,
-           detail: names.length + ' 個情境' + (bad.length ? ',不同:' + bad.map(n => n.split('.')[0]).join('、') : ',全部相同') + '(刻意改掉的:' + Object.keys(INTENDED).join('、') + ')' + (newFail.length ? ';新版沒通過:' + newFail.map(n => n.split('.')[0]).join('、') : '') };
+           detail: names.length + ' 個情境' + (bad.length ? ',不同:' + bad.map(n => n.split('.')[0]).join('、') : ',全部相同') + '(刻意改掉的:' + Object.keys(INTENDED).map(k => (INTENDED[k] === 'state' ? k + '只比狀態' : k)).join('、') + ')' + (newFail.length ? ';新版沒通過:' + newFail.map(n => n.split('.')[0]).join('、') : '') };
 }
 
 /* ---------- B 部分:真的 pet.js、pet-food.js、pet-store.js ---------- */

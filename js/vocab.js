@@ -119,6 +119,9 @@
   }
 
   /* ---------- 路由(頁內狀態) ---------- */
+  /* 先看再登入:canKeepProgress 是 js/common.js 這次才有的。上線那幾分鐘瀏覽器可能還拿著快取裡上一版的 common.js(沒有這個函式),
+     那時當作可以存,跟改動前一樣;不檢查就會丟錯,已登入的人寫的東西也存不起來 */
+  const canKeep = () => typeof canKeepProgress !== 'function' || canKeepProgress();
   let pageSrc = null;   // 還沒登入時「練哪些字」的選擇(不存)
   renderHome();
   /* 開了好幾天的 App 一進單字頁先跟雲端對齊(CLOUD.syncKey),之後的編輯才不是根據舊資料;
@@ -170,7 +173,7 @@
     function onSource() {
       levelSel.style.display = srcSel.value === 'word' ? '' : 'none';
       const src = { mode: srcSel.value, level: levelSel.value };
-      if (canKeepProgress()) store.set('vgame_src', src);
+      if (canKeep()) store.set('vgame_src', src);
       else pageSrc = src;   // 還沒登入(先看再登入):選了照樣換,只記在這一頁
       drawGames();
     }

@@ -33,6 +33,9 @@
   const player = new Audio();
   let playingBtn = null;
   let slow = !!store.get('ph_slow', false);
+  /* 先看再登入:canKeepProgress 是 js/common.js 這次才有的。上線那幾分鐘瀏覽器可能還拿著快取裡上一版的 common.js(沒有這個函式),
+     那時當作可以存,跟改動前一樣;不檢查就會丟錯,已登入的人寫的東西也存不起來 */
+  const canKeep = () => typeof canKeepProgress !== 'function' || canKeepProgress();
 
   function stopMark() {
     if (playingBtn) playingBtn.classList.remove('playing');
@@ -93,7 +96,7 @@
     const b = h('button', { class: 'ph-slow' + (slow ? ' on' : ''), type: 'button', 'aria-pressed': slow ? 'true' : 'false' }, '慢速');
     b.addEventListener('click', () => {
       slow = !slow;
-      if (canKeepProgress()) store.set('ph_slow', slow);   // 還沒登入(先看再登入):這一頁照樣變慢,不存
+      if (canKeep()) store.set('ph_slow', slow);   // 還沒登入(先看再登入):這一頁照樣變慢,不存
       $$('.ph-slow').forEach(x => { x.classList.toggle('on', slow); x.setAttribute('aria-pressed', slow ? 'true' : 'false'); });
     });
     return b;

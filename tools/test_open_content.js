@@ -4,6 +4,7 @@
    兩個本機伺服器:127.0.0.1:8961 雲端模式(js/cloud-config.js 換成假的設定,supabase-js 換成頁面裡的假元件,不連外網),
    127.0.0.1:8962 本機模式(cloud-config 是空的)。用真的滑鼠、鍵盤事件(CDP Input),比對每個動作前後的 localStorage 與畫面。
    用法:node tools/test_open_content.js [--tmp <放 Chrome 使用者資料的資料夾>] [--port <起始埠,預設 8961,用三個>] [--only <測試名稱的一段>]
+        [--old-common <上一版 js/common.js 的檔案>](「新舊檔混用」那一項用;沒給就拿現在的 common.js 把 canKeepProgress 改名,等於還沒有這個函式的上一版)
    每次一個新的使用者資料夾,跑完刪掉。 */
 'use strict';
 const fs = require('fs');
@@ -20,6 +21,7 @@ const BASE = Number(opt('--port')) || 8961;
 const CLOUD_PORT = BASE, LOCAL_PORT = BASE + 1, DEBUG = BASE + 2;
 const CLOUD = 'http://127.0.0.1:' + CLOUD_PORT, LOCAL = 'http://127.0.0.1:' + LOCAL_PORT;
 const ONLY = opt('--only') || '';
+const OLD_COMMON = opt('--old-common');
 const CHROME = ['C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
   'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'].find((p) => fs.existsSync(p));
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'application/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json',
@@ -31,12 +33,20 @@ const J = JSON.stringify;
 const UID = '11111111-2222-3333-4444-555555555555';
 const CPID = 'c' + UID.replace(/-/g, '');
 const LPID = 'ptest01';
+const USER = { id: UID, email: 'student@example.com', user_metadata: { name: '測試' }, app_metadata: { providers: ['email'] } };
+
+/* 換掉某幾個檔(網址路徑 → 內容):模擬上線那幾分鐘,瀏覽器 HTTP 快取還拿著上一版的檔、其他檔已經是新的 */
+let SWAP = null;
 
 function serve(port, cloud) {
   return new Promise((resolve, reject) => {
     const srv = http.createServer((req, res) => {
       let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
       if (p === '/') p = '/index.html';
+      if (SWAP && SWAP[p] !== undefined) {
+        res.writeHead(200, { 'Content-Type': TYPES[path.extname(p)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
+        return res.end(SWAP[p]);
+      }
       if (p === '/js/cloud-config.js') {
         res.writeHead(200, { 'Content-Type': TYPES['.js'], 'Cache-Control': 'no-store' });
         return res.end(cloud ? "window.CLOUD_CONFIG = { url: 'https://fakeproj.supabase.co', anonKey: 'x' };" : 'window.CLOUD_CONFIG = {};');
@@ -114,7 +124,8 @@ async function open(B, o) {
     close: () => B.send('Target.closeTarget', { targetId }),
   };
   await send('Page.enable'); await send('Runtime.enable');
-  await send('Emulation.setDeviceMetricsOverride', o.app ? { width: 375, height: 812, deviceScaleFactor: 1, mobile: true } : { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
+  await send('Emulation.setDeviceMetricsOverride', o.app || o.touch ? { width: 375, height: 812, deviceScaleFactor: 1, mobile: true } : { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
+  if (o.touch) await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });   // 觸控螢幕:(pointer: coarse) 成立
   if (o.mode !== 'local') await send('Page.addScriptToEvaluateOnNewDocument', { source: fakeSdk(o.user || null, o.delay || 0) });
   if (o.app) await send('Page.addScriptToEvaluateOnNewDocument', { source: STANDALONE });
   await s.go('robots.txt');
@@ -165,13 +176,29 @@ async function mouse(s, x, y) {
   await s.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', clickCount: 1 });
 }
 async function click(s, sel, i) { const p = await point(s, sel, i); await mouse(s, p.x, p.y); await sleep(350); }
-const KEYS = { Enter: { code: 'Enter', keyCode: 13, text: '\r' }, ' ': { code: 'Space', keyCode: 32, text: ' ' }, Escape: { code: 'Escape', keyCode: 27 }, a: { code: 'KeyA', keyCode: 65, text: 'a' } };
-async function key(s, k) {
+const KEYS = { Enter: { code: 'Enter', keyCode: 13, text: '\r' }, ' ': { code: 'Space', keyCode: 32, text: ' ' }, Escape: { code: 'Escape', keyCode: 27 }, a: { code: 'KeyA', keyCode: 65, text: 'a' },
+  Tab: { code: 'Tab', keyCode: 9 } };
+async function key(s, k, shift) {
   const d = KEYS[k];
-  await s.send('Input.dispatchKeyEvent', { type: d.text ? 'keyDown' : 'rawKeyDown', key: k, code: d.code, windowsVirtualKeyCode: d.keyCode, text: d.text });
-  await s.send('Input.dispatchKeyEvent', { type: 'keyUp', key: k, code: d.code, windowsVirtualKeyCode: d.keyCode });
-  await sleep(300);
+  const m = shift ? 8 : 0;
+  await s.send('Input.dispatchKeyEvent', { type: d.text ? 'keyDown' : 'rawKeyDown', key: k, code: d.code, windowsVirtualKeyCode: d.keyCode, text: d.text, modifiers: m });
+  await s.send('Input.dispatchKeyEvent', { type: 'keyUp', key: k, code: d.code, windowsVirtualKeyCode: d.keyCode, modifiers: m });
+  await sleep(shift || k === 'Tab' ? 80 : 300);
 }
+/* 觸控點一下(touchStart/touchEnd;瀏覽器自己補 pointer、click) */
+async function tap(s, sel, i) {
+  const p = await point(s, sel, i);
+  await s.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: p.x, y: p.y }] });
+  await s.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await sleep(400);
+}
+/* 焦點在哪:在不在視窗裡、是什麼;視窗的描述(aria-describedby 指到的字) */
+const FOCUS = `(() => {
+  const m = document.querySelector('.modal-mask'), a = document.activeElement, box = m && m.querySelector('[role=dialog]');
+  const ids = box ? (box.getAttribute('aria-describedby') || '').split(/\\s+/).filter(Boolean) : [];
+  return { inMask: !!(m && a && m.contains(a)), tag: a ? a.tagName + (a.className ? '.' + String(a.className).split(' ')[0] : '') + (a.name ? '[' + a.name + ']' : '') : '',
+    desc: ids.map((id) => (document.getElementById(id) || {}).textContent || '').join(' '), y: Math.round(scrollY) };
+})()`;
 const state = (s) => s.eval(STATE);
 
 /* 關掉視窗的三種方法 */
@@ -349,10 +376,11 @@ T['鍵盤:Enter、空白鍵按作答鈕也攔得到,畫面不變;Esc 關掉後�
       await key(s, k);
       const st = await state(s);
       const main = await s.eval(MAIN);
+      const into = await s.eval(FOCUS);   // 視窗一開焦點就要在視窗裡,「回到原按鈕」才有驗到東西
       const closed = await closeBy(s, 'esc');
       const back = await s.eval("document.activeElement === document.querySelectorAll('.q-block .opt')[1]");
       const ls = lsDiff(before.ls, (await snap(s)).ls);
-      out.push({ mode, k, ok: st.mask && st.x && main === before.main && closed && back && !ls.length, st: { mask: st.mask, x: st.x }, back, ls });
+      out.push({ mode, k, ok: st.mask && st.x && into.inMask && main === before.main && closed && back && !ls.length, st: { mask: st.mask, x: st.x }, into: into.tag, back, ls });
     }
     await s.close();
   }
@@ -362,7 +390,7 @@ T['鍵盤:Enter、空白鍵按作答鈕也攔得到,畫面不變;Esc 關掉後�
 /* 已登入、已選學生:跟以前一樣,打開不跳、作答生效、寫進自己的資料夾(包括開頁頭一秒雲端還沒確認登入時) */
 T['已登入(雲端)與已選學生(本機):打開不跳視窗,作答照常生效、寫進自己的資料夾;雲端還沒確認登入(頭幾秒)就作答也一樣'] = async (B) => {
   const out = [];
-  const user = { id: UID, email: 'student@example.com', user_metadata: { name: '測試' }, app_metadata: { providers: ['email'] } };
+  const user = USER;
   const runs = [
     { name: '雲端已登入', o: { mode: 'cloud', user }, prefix: 'tr_u' + CPID + '_' },
     { name: '雲端已登入、getSession 慢 4 秒', o: { mode: 'cloud', user, delay: 4000, early: true }, prefix: 'tr_u' + CPID + '_' },
@@ -411,6 +439,138 @@ T['App 外殼:內容頁沒登入打開不鎖畫面,作答跳出可關的全螢�
   const ok = a.shell && !a.mask && !a.inert && !a.gate && b.mask && b.x && !b.gate && !b.inert && b.top === 0 && main === before.main && closed
     && c.shell && c.mask && c.gate && c.inert > 0 && !c.x;
   return { ok, detail: J({ open: a, act: b, closed, personal: c }) };
+};
+
+/* 上線那幾分鐘:頁面程式已經是新的,common.js 還是瀏覽器快取裡的上一版(GitHub Pages max-age 600,script 沒帶版本參數)。
+   頁面程式用到 common.js 這次才有的 canKeepProgress 時要先看它在不在,不在就跟改動前一樣照存 */
+function oldCommon() {
+  if (OLD_COMMON) return fs.readFileSync(OLD_COMMON, 'utf8');
+  return fs.readFileSync(path.join(REPO, 'js', 'common.js'), 'utf8').replace(/\bcanKeepProgress\b/g, 'oldCommonHasNoCanKeepProgress');
+}
+T['新舊檔混用:common.js 還是上一版(沒有 canKeepProgress)時,已登入與已選學生的寫作照常自動存,慢速、換字庫、對話聽過也照常存,頁面沒有 JS 錯誤'] = async (B) => {
+  const out = [];
+  SWAP = { '/js/common.js': oldCommon() };
+  try {
+    for (const r of [{ name: '雲端已登入', o: { mode: 'cloud', user: USER }, prefix: 'tr_u' + CPID + '_' }, { name: '本機已選學生', o: { mode: 'local', profile: true }, prefix: 'tr_u' + LPID + '_' }]) {
+      const res = { name: r.name };
+      const w = await open(B, Object.assign({ url: 'writing.html?level=l1&u=23' }, r.o));
+      res.old = await w.eval('typeof canKeepProgress');
+      await click(w, 'textarea.write-area');
+      await w.send('Input.insertText', { text: 'I like it.' });
+      await sleep(1400);
+      await w.eval('document.activeElement && document.activeElement.blur(); true');
+      await sleep(200);
+      res.writing = /I like it/.test(JSON.parse(await w.eval(LS))[r.prefix + 'writing_b'] || '') && /已儲存/.test(await w.eval("(document.querySelector('.wc-bar') || {}).textContent || ''"));
+      await w.close();
+      const p = await open(B, Object.assign({ url: 'phonics.html?u=pa-01' }, r.o));
+      await click(p, 'button.ph-slow');
+      res.slow = (await p.eval("!!document.querySelector('button.ph-slow.on')")) && JSON.parse(await p.eval(LS))[r.prefix + 'ph_slow'] === 'true';
+      await p.close();
+      /* 換字庫:存起來,下面的遊戲卡片照新的字庫重畫(片語的最佳紀錄出現) */
+      const v = await open(B, Object.assign({ url: 'vocab.html' }, r.o, { ls: { [r.prefix + 'vgame_best']: J({ phrase: 12 }) } }));
+      await v.eval("(() => { const e = document.querySelector('.vg-source select'); e.value = 'phrase'; e.dispatchEvent(new Event('change')); return true; })()");
+      await sleep(300);
+      const src = JSON.parse(await v.eval(LS))[r.prefix + 'vgame_src'];
+      res.src = !!src && JSON.parse(src).mode === 'phrase' && /最佳 中翻英 12/.test(await v.eval("document.querySelector('.vg-games').textContent"));
+      await v.close();
+      const d = await open(B, Object.assign({ url: 'dialogue.html?id=dlg-01' }, r.o));
+      await click(d, '.dlg-bubble');
+      await sleep(300);
+      const heard = JSON.parse(await d.eval(LS))[r.prefix + 'dlg_heard'];
+      res.heard = /聽過 1\//.test(await d.eval("(document.querySelector('.vocab-progress') || {}).textContent || ''")) && /dlg-01/.test(heard || '');
+      await d.close();
+      res.ok = res.old === 'undefined' && res.writing && res.slow && res.src && res.heard;
+      out.push(res);
+    }
+  } finally { SWAP = null; }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 作答被攔下跳出的視窗:一開焦點就在視窗裡(滑鼠、Enter、作答框打字都一樣),Tab 在視窗裡轉,接著打的字進視窗的輸入框;
+   說明那一句是視窗的描述(aria-describedby),螢幕報讀會念。觸控螢幕停在視窗標題,不要一按作答就跳出鍵盤蓋住卡片 */
+T['焦點:作答跳出的視窗一開焦點就在視窗裡(滑鼠、作答框打字、觸控),Tab 不跑出去,打的字進視窗,說明是視窗的描述(雲端與本機)'] = async (B) => {
+  const out = [];
+  for (const mode of ['cloud', 'local']) {
+    let s = await open(B, { mode, url: 'grammar.html?u=ga-01' });
+    await click(s, '.q-block .opt', 1);
+    const f1 = await s.eval(FOCUS);
+    let tabsIn = true;
+    for (let k = 0; k < 5; k++) { await key(s, 'Tab'); if (!(await s.eval(FOCUS)).inMask) tabsIn = false; }
+    for (let k = 0; k < 5; k++) { await key(s, 'Tab', true); if (!(await s.eval(FOCUS)).inMask) tabsIn = false; }
+    await closeBy(s, 'esc');
+    await s.close();
+    out.push({ mode, how: '滑鼠', ok: f1.inMask && WHY[mode].test(f1.desc) && tabsIn, at: f1.tag, desc: f1.desc, tabsIn });
+
+    s = await open(B, { mode, url: 'writing.html?level=l1&u=23' });
+    await s.eval("document.querySelector('textarea.write-area').focus(); true");
+    await key(s, 'a');
+    const f2 = await s.eval(FOCUS);
+    await s.send('Input.insertText', { text: 'me@example.com' });
+    await sleep(200);
+    const got = await s.eval("({ field: document.activeElement ? document.activeElement.value : null, ta: document.querySelector('textarea.write-area').value })");
+    await closeBy(s, 'esc');
+    const back = await s.eval("document.activeElement === document.querySelector('textarea.write-area')");
+    await s.close();
+    out.push({ mode, how: '作答框打字', ok: f2.inMask && /^INPUT/.test(f2.tag) && got.field === 'me@example.com' && got.ta === '' && back, at: f2.tag, got, back });
+
+    s = await open(B, { mode, url: 'grammar.html?u=ga-01', touch: true });
+    const coarse = await s.eval("matchMedia('(pointer: coarse)').matches");
+    await tap(s, '.q-block .opt', 1);
+    const f3 = await s.eval(FOCUS);
+    await s.close();
+    out.push({ mode, how: '觸控', ok: coarse && f3.inMask && /^H2/.test(f3.tag) && WHY[mode].test(f3.desc), coarse, at: f3.tag });
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out.filter((x) => !x.ok).length ? out.filter((x) => !x.ok) : out.map((x) => x.mode + ' ' + x.how + ' → ' + x.at)) };
+};
+
+/* 關掉之後焦點回到被按的那個東西(閱讀頁文章裡的單字是 span,也一樣),不跑到頂欄的頭像按鈕;X、Esc、點遮罩都一樣,頁面不捲動;
+   焦點離開之後那個字不留下 tabindex(畫面一個字都不變) */
+T['焦點回原處:關掉作答跳出的視窗(X、Esc、點遮罩),焦點回到被按的按鈕或文章單字,不跑到頂欄、不捲動(雲端、本機、App 外殼)'] = async (B) => {
+  const out = [];
+  const W = '.article-body .vw[data-gate]';
+  const cases = [
+    { mode: 'cloud', url: 'reading.html?id=art-1a', sel: W, i: 9 },
+    { mode: 'local', url: 'reading.html?id=art-1a', sel: W, i: 9 },
+    { mode: 'cloud', url: 'reading.html?id=art-1a', sel: W, i: 9, app: true },
+    { mode: 'cloud', url: 'grammar.html?u=ga-01', sel: '.q-block .opt', i: 1 },
+    { mode: 'local', url: 'grammar.html?u=ga-01', sel: '.q-block .opt', i: 1 },
+  ];
+  for (const c of cases) {
+    const s = await open(B, { mode: c.mode, url: c.url, app: c.app });
+    const before = await s.eval(MAIN);
+    for (const how of c.app ? ['esc', 'x'] : ['esc', 'x', 'mask']) {
+      const p = await point(s, c.sel, c.i);
+      const y0 = await s.eval('Math.round(scrollY)');
+      await mouse(s, p.x, p.y);
+      await sleep(350);
+      const opened = (await state(s)).mask;
+      const closed = await closeBy(s, how);
+      const r = await s.eval(`(() => { const e = document.querySelectorAll(${J(c.sel)})[${c.i}], a = document.activeElement;
+        return { back: a === e, at: a ? a.tagName + '.' + String(a.className).split(' ')[0] : '', y: Math.round(scrollY) }; })()`);
+      await s.eval('document.activeElement && document.activeElement.blur && document.activeElement.blur(); true');
+      out.push({ page: c.url + (c.app ? ' App' : '') + ' ' + c.mode, how, ok: opened && closed && r.back && r.y === y0, at: r.at, y: [y0, r.y] });
+    }
+    const after = await s.eval(MAIN);
+    await s.close();
+    out.push({ page: c.url + (c.app ? ' App' : '') + ' ' + c.mode, how: '畫面不變', ok: after === before });
+  }
+  const bad = out.filter((x) => !x.ok);
+  return { ok: !bad.length, detail: J(bad.length ? bad : out.length + ' 項都對') };
+};
+
+/* 本機「你是哪位？」:還沒有任何檔案時畫面只有「建立你的檔案」,說明也請他建;已經有檔案時才請他選 */
+T['本機「你是哪位？」的說明跟著畫面:還沒有檔案時請他建一個,已經有檔案時請他選'] = async (B) => {
+  const out = [];
+  for (const has of [false, true]) {
+    const s = await open(B, { mode: 'local', url: 'grammar.html?u=ga-01', ls: has ? { tr_profiles: J([{ id: LPID, name: '小安', created: '2026-10-01' }]) } : {} });
+    await click(s, '.q-block .opt');
+    const st = await state(s);
+    const list = await s.eval("!!document.querySelector('.modal-mask .modal-list')");
+    await s.close();
+    const ok = st.mask && (has ? /^選好你的檔案才能作答/.test(st.why) && list : /^建好你的檔案才能作答/.test(st.why) && !list);
+    out.push({ has, ok, why: st.why, list });
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
 (async () => {

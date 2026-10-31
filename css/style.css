@@ -1725,6 +1725,8 @@ h1, h2, h3, .brand { font-weight: 700; }
 .modal-gate { position: relative; }
 .modal-gate h2 { padding-right: 34px; }
 .modal-why { font-size: 14.5px; margin: 8px 0 0; }
+/* 觸控螢幕開視窗時焦點先停在標題(不跳出鍵盤),標題不是按鈕,不畫框 */
+.modal-auth .auth-h:focus, .modal-gate h2:focus { outline: none; }
 
 /* signup.html:卡片居中,頁面其他東西都拿掉 */
 .auth-page { max-width: 400px; margin: 40px auto 60px; }

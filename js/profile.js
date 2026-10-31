@@ -102,13 +102,41 @@
     });
   }
 
-  /* 關掉視窗後焦點回到開視窗的那顆按鈕;它已經不在畫面上(收起的選單、重畫掉的題目)就退回頭像按鈕 */
-  function focusBack(opener) {
+  /* 關掉視窗後焦點回到開視窗的那顆按鈕;它已經不在畫面上(收起的選單、重畫掉的題目)就退回頭像按鈕。
+     place:作答被攔下開的視窗,回到被按的那個東西本身,不退回頭像按鈕(螢幕報讀讀到的位置會被帶到頂欄) */
+  function focusBack(opener, place) {
+    if (place && focusPlace(opener)) return;
     try { if (opener && opener.isConnected !== false && opener.focus) opener.focus(); } catch (e) {}
     if (document.activeElement === document.body || !document.activeElement) {
       const back = document.querySelector('.profile-btn');
       if (back) back.focus();
     }
+  }
+  /* 被按的東西本身不能拿焦點(閱讀頁文章裡的單字是 span):暫時給 tabindex="-1",焦點一離開就拿掉,畫面不留痕跡 */
+  function focusPlace(el) {
+    if (!el || el.isConnected === false || typeof el.focus !== 'function' || el === document.body) return false;
+    const go = () => { try { el.focus({ preventScroll: true }); } catch (e) { /* 照樣往下 */ } return document.activeElement === el; };
+    if (go()) return true;
+    if (typeof el.hasAttribute !== 'function' || el.hasAttribute('tabindex')) return false;
+    el.setAttribute('tabindex', '-1');
+    if (go()) { el.addEventListener('blur', () => el.removeAttribute('tabindex'), { once: true }); return true; }
+    el.removeAttribute('tabindex');
+    return false;
+  }
+
+  /* 視窗打開後把焦點移進去:電腦(滑鼠)到第一個輸入框;觸控螢幕停在標題(暫時能拿焦點、不畫框),
+     不要一按就跳出鍵盤蓋住卡片。螢幕報讀從這裡念出視窗的名字與說明(aria-describedby) */
+  function touchFirst() {
+    try { return typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches; } catch (e) { return false; }
+  }
+  function focusInto(box, field) {
+    try {
+      const head = box.querySelector('h2');
+      if (head && (touchFirst() || !field)) {
+        if (!head.hasAttribute('tabindex')) head.setAttribute('tabindex', '-1');
+        head.focus();
+      } else if (field) field.focus();
+    } catch (e) { /* 焦點移不進去只是鍵盤要多按幾下,視窗照樣開 */ }
   }
 
   /* ========================================================= */
@@ -490,9 +518,10 @@
         return opts.onMode ? null : h('h2', { class: 'auth-h' }, text);
       }
 
-      /* 作答被攔下時開的卡(opts.why):標題下面一句為什麼要登入。其他時候一個節點都不多 */
+      /* 作答被攔下時開的卡(opts.why):標題下面一句為什麼要登入。其他時候一個節點都不多。
+         id 給登入視窗的 aria-describedby(showLogin),螢幕報讀開視窗時會念這一句 */
       function why(text) {
-        return opts.why && !opts.onMode ? h('p', { class: 'auth-why' }, text) : null;
+        return opts.why && !opts.onMode ? h('p', { class: 'auth-why', id: 'auth-why' }, text) : null;
       }
 
       /* 底部一行切換。Engoo、Busuu、VoiceTube、均一都是這種做法:
@@ -650,7 +679,8 @@
       const shellGate = required && document.documentElement.classList.contains('app-shell');
       const opener = opts.opener || document.activeElement;
       const mask = h('div', { class: 'modal-mask' });
-      const box = h('div', { class: 'modal modal-auth', role: 'dialog', 'aria-modal': shellGate ? null : 'true', 'aria-label': '登入或註冊' });
+      const box = h('div', { class: 'modal modal-auth', role: 'dialog', 'aria-modal': shellGate ? null : 'true', 'aria-label': '登入或註冊',
+        'aria-describedby': opts.why ? 'auth-why' : null });
       if (!required) box.append(h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }));
       box.append(buildAuthCard({ mode: startTab, why: !!opts.why }));
       mask.append(box);
@@ -661,6 +691,8 @@
           if (el !== mask && !el.matches('.topbar, .app-tabbar, script')) el.inert = true;
         });
       }
+      /* 卡片是掛上畫面之前畫好的,那時候的 focus 沒有作用:掛上之後才把焦點移進來(不然鍵盤要先繞過背後整頁,打的字也進不來) */
+      focusInto(box, box.querySelector('.auth input'));
 
       box.addEventListener('keydown', e => {
         if (shellGate || e.key !== 'Tab') return;
@@ -674,7 +706,8 @@
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       });
       if (!required) {
-        mask.addEventListener('mousedown', e => { if (e.target === mask) close(); });
+        /* preventDefault:點遮罩的預設動作會把焦點拉到 body,蓋掉 close() 放回去的焦點 */
+        mask.addEventListener('mousedown', e => { if (e.target === mask) { e.preventDefault(); close(); } });
         document.addEventListener('keydown', onKey);
       }
 
@@ -683,8 +716,8 @@
         if (!mask.parentNode) return;
         document.removeEventListener('keydown', onKey);
         mask.remove();
-        /* 開視窗的那顆按鈕可能在已收起的選單裡(focus 會失效),退回頭像按鈕 */
-        focusBack(opener);
+        /* 開視窗的那顆按鈕可能在已收起的選單裡(focus 會失效),退回頭像按鈕;作答被攔下開的回到被按的那個東西 */
+        focusBack(opener, !!opts.why);
       }
       return close;
     }
@@ -821,10 +854,11 @@
     }, '建立檔案，開始練習');
     input.addEventListener('keydown', e => { if (e.key === 'Enter') createBtn.click(); });
 
-    const box = h('div', act ? { class: 'modal modal-gate', role: 'dialog', 'aria-modal': 'true', 'aria-label': '你是哪位？' } : { class: 'modal' },
+    const box = h('div', act ? { class: 'modal modal-gate', role: 'dialog', 'aria-modal': 'true', 'aria-label': '你是哪位？', 'aria-describedby': 'gate-why' } : { class: 'modal' },
       act ? h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }) : null,
       h('h2', null, voluntary === true ? '新增學生' : '你是哪位？'),
-      act ? h('p', { class: 'modal-why' }, '選好你的檔案才能作答，練習紀錄會存在這個檔案裡。') : null,
+      /* 說明跟著下面的畫面:還沒有任何檔案時只能建一個,有檔案時才是選 */
+      act ? h('p', { class: 'modal-why', id: 'gate-why' }, (list.length ? '選好' : '建好') + '你的檔案才能作答，練習紀錄會存在這個檔案裡。') : null,
       h('p', { class: 'modal-sub' }, '每位學生有自己的進度、錯題與檢測報告，都只存在這台裝置上。'),
       list.length ? h('div', { class: 'modal-list' },
         h('div', { class: 'pm-head' }, '選擇既有檔案'),
@@ -838,18 +872,19 @@
       }, '取消') : null);
     const mask = h('div', { class: 'modal-mask' }, box);
     document.body.append(mask);
-    input.focus();
-    if (!act) return null;
+    if (!act) { input.focus(); return null; }
 
+    focusInto(box, input);   // 作答被攔下:觸控螢幕不要一按就跳出鍵盤
     trapTab(box);
-    mask.addEventListener('mousedown', e => { if (e.target === mask) close(); });
+    /* preventDefault:點遮罩的預設動作會把焦點拉到 body,蓋掉 close() 放回去的焦點 */
+    mask.addEventListener('mousedown', e => { if (e.target === mask) { e.preventDefault(); close(); } });
     document.addEventListener('keydown', onKey);
     function onKey(e) { if (e.key === 'Escape') close(); }
     function close() {
       if (!mask.parentNode) return;
       document.removeEventListener('keydown', onKey);
       mask.remove();
-      focusBack(opener);
+      focusBack(opener, true);
     }
     return close;
   }

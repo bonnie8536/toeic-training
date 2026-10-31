@@ -13,6 +13,9 @@
     return;
   }
 
+  /* 先看再登入:canKeepProgress 是 js/common.js 這次才有的。上線那幾分鐘瀏覽器可能還拿著快取裡上一版的 common.js(沒有這個函式),
+     那時當作可以存,跟改動前一樣;不檢查就會丟錯,已登入的人寫的東西也存不起來 */
+  const canKeep = () => typeof canKeepProgress !== 'function' || canKeepProgress();
   const KEYS = { read: 'writing_read', s: 'writing_s', b: 'writing_b', e: 'writing_e', y: 'writing_y' };
   const OUTLINE_TARGETS = [{ min: 30, max: 50 }, { min: 60, max: 90 }, { min: 70, max: 100 }, { min: 30, max: 50 }];
 
@@ -337,7 +340,7 @@
     });
     ta.addEventListener('blur', saveNow);
     function saveNow() {
-      if (!canKeepProgress()) return;   // 還沒登入(先看再登入):focus 再 blur、計時器都不存
+      if (!canKeep()) return;   // 還沒登入(先看再登入):focus 再 blur、計時器都不存
       const m = store.get(storeKey, {});
       m[id] = m[id] || {};
       if (m[id][field] === ta.value) return;

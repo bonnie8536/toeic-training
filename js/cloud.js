@@ -225,7 +225,7 @@
         記著的時候每一頁都要灌(別的分頁之前灌過的旗標不算數),這段時間的寫入不記帳:讀雲端進度失敗(網路斷一下、Supabase 慢或休眠)時
         頁面拿到的是空資料夾,記了帳,下一頁灌資料會把只有新那幾筆的 hist、錯題本整份傳上去蓋掉雲端。
         資料夾不是空的(之前灌過、登入失效改回訪客留著的)不記,跟以前一樣:讀不到雲端時照常作答記帳,下次灌資料比新舊(離線也是這樣)。
-        這台灌過這個帳號(「灌過」記號 tr_cloud_seen_<帳號 id>,灌好時寫、登出刪掉、搬家不帶)也不記:雲端本來就沒有進度的帳號
+        這台灌過這個帳號(「灌過」記號 tr_cloud_seen_<帳號 id>,灌好時寫、登出刪掉、剛登入時先刪掉、搬家不帶)也不記:雲端本來就沒有進度的帳號
         (新註冊、只看後台的老師)灌完資料夾還是空的,不能因為這樣每開一個新分頁就把已經灌好的分頁擋下(多分頁第 3 輪審查 #4、#5)。
         代價跟資料夾不是空的、只是舊了一樣(已知限制,整份上傳後傳的蓋掉先傳的):灌過之後別台才有進度,這台讀不到雲端時照常作答記帳。
      3. 這一頁的畫面是照還沒灌過的資料夾畫的、自己又沒灌成(pageUnhydrated):別的分頁之後灌好、劃掉標記,這一頁一樣不記帳(多分頁第 3 輪審查 #1)。
@@ -297,6 +297,10 @@
        換頁後照 leaveStaleAccount 改回訪客。別的分頁登出又用同一個帳號登回來(登入資料是它)照常往下(情境 58);
        這一頁本來就不是這個帳號的資料夾(訪客頁剛登入)才要主動改寫目前帳號 */
     if (!otherFolder && !sameFolder() && storedUid() !== user.id) return;
+    /* 剛登入(fresh)、或這一頁的資料夾不是這個帳號的(訪客頁登入、Google 回來):「灌過」記號不算數,先刪掉,灌好再寫回。
+       部署前就開著的舊版分頁不認得這個記號,在那裡登出會把資料夾刪光、記號留著;照記號不記「還沒灌過」的話,讀雲端進度失敗時
+       學生在空資料夾上作答記帳,網路好了整份上傳蓋掉雲端。先刪掉,這段時間別的分頁開的頁面也照「還沒灌過」的資料夾看(unreadyAtLoad;審查 D 第 1 輪 #2) */
+    if (fresh || otherFolder) { try { localStorage.removeItem(SEEN_PREFIX + user.id); } catch (e) { /* 刪不掉:跟以前一樣 */ } }
     const prefix = 'tr_u' + pid + '_';
     const flagKey = 'tr_cloud_hydrated_' + user.id;
     const pendTry = 'tr_move_pending_tried_' + user.id;   // 搬家暫存區:這個分頁只為它重灌一次,載不到合併程式也不會一直重載
@@ -385,19 +389,24 @@
      - supabase-js 的登入資料是這個帳號的:別的分頁剛登入別人、還在確認登入,目前帳號還沒改的那一兩秒。
      登入資料不見了(被撤銷、別台按「登出所有裝置」)或格式認不得、目前帳號還是它:不算換人,照以前的路走
      (登出照常清掉這台、登出所有裝置照常說這台的登入已失效)。讀不到 localStorage 就分不出來,也照以前。
+     目前帳號和登入資料都不見了(別的分頁登出;或登入被撤銷後別的分頁照 leaveStaleAccount 改回訪客):這台沒有任何人登入著('nobody')。
+     這時一樣不送(請求會用沒有登入的身分送出),只有「登出」例外,見 logout(審查 D 第 1 輪 #1、#3)。
      平常登入著的頁面兩樣都對得上,行為不變。 */
   const GONE_MSG = '這個帳號已經在別的分頁登出，剛剛按的沒有送出。請重新整理這一頁。';
-  function accountShown() {
+  /* 這台現在的登入是誰的:'mine' 畫面上這個帳號、'nobody' 沒有任何人、'other' 別人(或這一頁沒有帳號) */
+  function loginOwner() {
     const u = window.CLOUD.user;
-    if (!u || typeof u.id !== 'string') return false;
+    if (!u || typeof u.id !== 'string') return 'other';
     let cp = null, saved = null;
-    try { cp = localStorage.getItem('tr_current_profile'); saved = localStorage.getItem(SB_KEY); } catch (e) { return true; }
+    try { cp = localStorage.getItem('tr_current_profile'); saved = localStorage.getItem(SB_KEY); } catch (e) { return 'mine'; }
     const mine = cp === JSON.stringify(pidOf(u));
-    if (cp !== null && !mine) return false;
+    if (cp !== null && !mine) return 'other';
     let id = null;
     try { const s = JSON.parse(saved); id = s && s.user && typeof s.user.id === 'string' ? s.user.id : null; } catch (e) { id = null; }
-    return id !== null ? id === u.id : mine;
+    if (id !== null) return id === u.id ? 'mine' : 'other';
+    return mine ? 'mine' : 'nobody';
   }
+  function accountShown() { return loginOwner() === 'mine'; }
   function goneError() {
     const e = new Error(GONE_MSG);
     e.code = 'account_gone';
@@ -430,15 +439,27 @@
     const user = window.CLOUD.user;
     const everywhere = !!(opts && opts.everywhere);
     const discard = !!(opts && opts.discard);   // 刪除帳號成功之後(deleteAccount 送出前已經確認過是畫面上這個帳號)
-    /* 別的分頁已經登出這個帳號、改登入別人:不登出(會把別的分頁登入的那個人登出、清掉目前帳號),什麼都不刪、不問(審查 D) */
-    if (user && !discard && !accountShown()) throw goneError();
+    /* 別的分頁已經登出這個帳號、改登入別人:不登出(會把別的分頁登入的那個人登出、清掉目前帳號),什麼都不刪、不問(審查 D)。
+       這台已經沒有任何人登入著('nobody',見 loginOwner):不會登出到別人,照以前清掉這個帳號留在這台的資料夾與帳本(共用電腦不留個資),
+       只是不呼叫 signOut、不動登入資料、目前帳號、註冊意向:別的分頁可能正要登入下一個人(審查 D 第 1 輪 #1、#3;31745ec 擋下,資料留在這台清不掉)。
+       「登出所有裝置」照樣擋:這台沒有登入資料,沒辦法登出其他裝置 */
+    const owner = () => (user && !discard ? loginOwner() : 'mine');
+    const stop = o => o === 'other' || (o === 'nobody' && everywhere);
+    if (stop(owner())) throw goneError();
     /* 這台已經沒有登入資料時 supabase-js 不會呼叫伺服器、直接回成功,別台其實沒被登出:先擋下來,什麼都不刪 */
     if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效，沒辦法登出其他裝置。請重新登入後再試一次。');
     if (user && !discard) {
       flushPetStore();   // 小雞還在等讀雲端的券和動作先寫下來(chick2 第一輪修正 #4)
       const left = await unsynced(user);
       if (left > 0 && !confirm('還有 ' + left + ' 項進度還沒同步到雲端（可能是網路不穩）。現在登出，這台裝置上的這些進度會刪除。確定要登出？')) return;
-      if (!accountShown()) throw goneError();   // 對帳、問的時候別的分頁換了人
+    }
+    /* 對帳、問的時候別的分頁換了人(或剛登入了下一個人):擋下。從這裡到刪完、重載都是同步的,中間不會再換 */
+    const now = owner();
+    if (stop(now)) throw goneError();
+    if (now === 'nobody') {
+      forgetAccount(user);
+      location.reload();
+      return;
     }
     /* 一般的登出只登出這台(共用電腦登出不會把學生自己手機上的登入一起踢掉)。
        everywhere:「我的」頁的「登出所有裝置」。連不上伺服器時 supabase-js 會先清掉這台的登入資料再回錯誤,
@@ -457,20 +478,22 @@
       try { await client.auth.signOut({ scope: 'local' }); } catch (e) { /* 雲端元件沒載到 */ }
     }
     try { [SB_KEY, SB_KEY + '-user', SB_KEY + '-code-verifier'].forEach(k => localStorage.removeItem(k)); } catch (e) {}
-    if (user) {
-      writeLedger(user.id, {});
-      writeLocalOnly(user.id, {});
-      try { localStorage.removeItem(unhydratedKey(user.id)); localStorage.removeItem(SEEN_PREFIX + user.id); } catch (e) {}   // 資料夾要刪了,「灌過」也不算數
-      sessionStorage.removeItem('tr_cloud_hydrated_' + user.id);
-      const prefix = 'tr_u' + pidOf(user) + '_';
-      for (let i = localStorage.length - 1; i >= 0; i--) {
-        const k = localStorage.key(i);
-        if (k && k.startsWith(prefix)) localStorage.removeItem(k);   // 共用電腦不留個資
-      }
-    }
+    if (user) forgetAccount(user);
     localStorage.removeItem('tr_current_profile');
     clearSignupIntent();   // 註冊時選老師的意向(前端計畫三.6):登出就作廢,下一個人用這台不會沿用
     location.reload();
+  }
+  /* 登出時清掉這個帳號留在這台的東西:帳本、只在本機的標記、還沒灌過的標記、灌過的記號、這個分頁的灌過旗標、整個帳號資料夾 */
+  function forgetAccount(user) {
+    writeLedger(user.id, {});
+    writeLocalOnly(user.id, {});
+    try { localStorage.removeItem(unhydratedKey(user.id)); localStorage.removeItem(SEEN_PREFIX + user.id); } catch (e) {}   // 資料夾要刪了,「灌過」也不算數
+    sessionStorage.removeItem('tr_cloud_hydrated_' + user.id);
+    const prefix = 'tr_u' + pidOf(user) + '_';
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(prefix)) localStorage.removeItem(k);   // 共用電腦不留個資
+    }
   }
 
   /* 顯示名稱:Email 註冊時填的暱稱(user_metadata.name);Google 登入沒填過暱稱,

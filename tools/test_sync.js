@@ -67,6 +67,7 @@ function makeClient(w) {
          - 憑證沒過期但連不上伺服器:先清掉這台的登入資料,再回 error。
          w.otherDevice:別台還登入著;w.signOuts:真的打到伺服器的 scope */
       signOut: async opts => {
+        w.signOutCalls = (w.signOutCalls || 0) + 1;   // 有沒有呼叫(這台沒有登入資料時也算;情境 63、64)
         const scope = (opts && opts.scope) || 'global';
         if (!w.local.getItem(SB_KEY)) { emit('SIGNED_OUT'); return { error: null }; }
         if (w.offline && w.tokenExpired) return { error: { message: 'TypeError: Failed to fetch' } };
@@ -1333,7 +1334,7 @@ const scenarios = {
     const run = async (how, act) => {
       const { w, pgA } = await setup(how);
       const n = k => (w[k] || []).length;
-      const n0 = { rpcs: n('rpcs'), authCalls: n('authCalls'), signOutAs: n('signOutAs'), fetches: n('fetches') };
+      const n0 = { rpcs: n('rpcs'), authCalls: n('authCalls'), signOutAs: n('signOutAs'), fetches: n('fetches'), signOutCalls: w.signOutCalls || 0 };
       const before = snapshot(w), r0 = w.reloads, c0 = w.confirms.length;
       let err = null;
       try { await ACTS[act](pgA.ctx.CLOUD); } catch (e) { err = e; }
@@ -1343,12 +1344,19 @@ const scenarios = {
         (w.authCalls || []).slice(n0.authCalls).map(x => x.op + '@' + who(x.as)),
         (w.signOutAs || []).slice(n0.signOutAs).map(x => 'signOut@' + who(x)),
         (w.fetches || []).slice(n0.fetches).map(x => 'checkout@' + who(x.as)));
-      return { how, act, err: err ? (err.code || '') + ':' + err.message : '', code: err && err.code, sent, same: snapshot(w) === before, reloaded: w.reloads > r0, asked: w.confirms.length > c0 };
+      return { how, act, err: err ? (err.code || '') + ':' + err.message : '', code: err && err.code, sent, same: snapshot(w) === before, reloaded: w.reloads > r0, asked: w.confirms.length > c0,
+        signOutCalls: (w.signOutCalls || 0) - n0.signOutCalls, cleared: xGone(w) };
     };
     const bad = [];
     for (const how of ['換帳號', '只登出', '剛登入 Y']) {
       for (const act of Object.keys(ACTS)) {
         const r = await run(how, act);
+        /* 只登出、按「登出」:這台已經沒有任何人登入著(目前帳號、登入資料都刪了),不會登出到別人。照 e49e444 清掉 X 留在這台的東西
+           (這裡 B 登出時已經刪光了,剩 A 這個分頁的灌過旗標)、重載,但不呼叫 signOut(審查 D 第 1 輪 #1、#3,情境 64) */
+        if (how === '只登出' && act === '登出') {
+          if (!(!r.err && !r.sent.length && !r.signOutCalls && r.cleared && r.reloaded && !r.asked)) bad.push(r);
+          continue;
+        }
         if (!(r.code === 'account_gone' && !r.sent.length && r.same && !r.reloaded && !r.asked)) bad.push(r);
       }
     }
@@ -1377,7 +1385,140 @@ const scenarios = {
       }
     }
     return { ok: !bad.length, detail: bad.length ? '不對的 ' + bad.length + ' 項:' + bad.map(r => r.how + '/' + r.act + ' 送了 ' + (r.sent.join(',') || '沒有') + ' 錯誤 ' + (r.err || '沒有') + ' 沒動 ' + r.same + ' 重載 ' + r.reloaded + ' 問了 ' + r.asked).join(' | ')
-      : '換帳號、只登出、剛登入 Y × 8 個動作都沒送、什麼都沒動;平常、登回 X 都照常送到 X' };
+      : '換帳號、只登出、剛登入 Y × 8 個動作都沒送、什麼都沒動(只登出時按登出:不呼叫 signOut,清掉 X 留在這台的、重載);平常、登回 X 都照常送到 X' };
+  },
+  /* 審查 D 第 1 輪 #1、#3(31745ec 新造成的):X 的登入被撤銷(別台按「登出所有裝置」、帳號刪除),supabase-js 清掉這台的登入資料;
+     別的分頁開頁照 leaveStaleAccount 改回訪客(目前帳號刪掉,X 的資料夾、帳本照設計留著)。沒重載的分頁 A 按「登出」:
+     31745ec 當成「別的分頁換人了」擋下(account_gone),X 的進度、自訂題庫、帳本留在這台(共用電腦),之後沒有按鈕能刪(訪客頁沒有登出)。
+     這時這台沒有任何人登入著,不會登出到別人。要的是:跟 e49e444 一樣清掉 X 留在這台的東西、重載,有沒同步的進度照樣先問、按取消什麼都不刪;
+     但不呼叫 signOut、不動登入資料與目前帳號(別的分頁可能正要登入別人)。問的時候別的分頁登入了 Y:照樣擋下(account_gone)、什麼都不刪。
+     「登出所有裝置」照樣擋(情境 63)。對照:沒有別的分頁改回訪客(目前帳號還是 X)時,跟 e49e444 一樣照常登出 */
+  '64. 登入被撤銷、別的分頁已經改回訪客之後,沒重載的分頁按「登出」:這台沒有任何人登入著,清掉這個帳號留在這台的資料夾與帳本、重載,不呼叫 signOut;有沒同步的先問,問的時候別人登入了就擋下': async src => {
+    const HIST = ['h1', 'h2'];
+    const yPid = 'c' + OTHER_USER.id.replace(/-/g, '');
+    const one = async how => {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      w.db.push({ user_id: USER.id, k: K, v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const sA = w.session;
+      const pgA = await openLoggedIn(w, src);
+      studentWrites(pgA, w, 'hist', HIST); await pgA.runTimers();   // 這台的作答紀錄(上傳完,帳本劃掉)
+      if (how !== '沒有沒同步的' && how !== '對照:沒有別的分頁') { w.offline = true; w.lieFi = true; studentWrites(pgA, w, K, FIVE.concat(['off-1'])); await pgA.runTimers(); w.offline = false; w.lieFi = false; }
+      w.local.removeItem(SB_KEY); w.revoked = true;                   // 別台按「登出所有裝置」:supabase-js 清掉這台的登入資料
+      if (how !== '對照:沒有別的分頁') {
+        w.session = makeStorage();
+        const pgB = loadPage(w, src); await pgB.ready;               // 分頁 B 開頁:leaveStaleAccount 刪掉目前帳號、重載成訪客
+        w.session = sA;
+      }
+      const cp0 = w.local.getItem('tr_current_profile'), folder0 = lv(w, 'hist'), led0 = w.local.getItem(LEDGER);
+      if (how === '有沒同步的、按取消') w.confirmAnswer = false;
+      if (how === '問的時候別人登入') w.onConfirm = () => { w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'b', user: OTHER_USER })); w.local.setItem('tr_current_profile', JSON.stringify(yPid)); };
+      const c0 = w.confirms.length, r0 = w.reloads, s0 = w.signOutCalls || 0;
+      let err = null;
+      try { await pgA.ctx.CLOUD.logout(); } catch (e) { err = e; }
+      await tick();
+      const hadLed = how !== '沒有沒同步的' && how !== '對照:沒有別的分頁';
+      const r = { how, cp0, had: same(folder0, HIST) && (hadLed ? led0 !== null : led0 === null), err: err ? (err.code || '') + ':' + err.message : '',
+        asked: w.confirms.length > c0, reloaded: w.reloads > r0, signOutCalls: (w.signOutCalls || 0) - s0, gone: xGone(w),
+        kept: same(lv(w, 'hist'), HIST) && w.local.getItem(LEDGER) === led0,
+        y: (storedUser(w) || {}).id === OTHER_USER.id && w.local.getItem('tr_current_profile') === JSON.stringify(yPid), sb: w.local.getItem(SB_KEY) };
+      const want = {
+        沒有沒同步的: !r.err && !r.asked && r.reloaded && !r.signOutCalls && r.gone && r.sb === null,
+        '有沒同步的、按確定': !r.err && r.asked && r.reloaded && !r.signOutCalls && r.gone && r.sb === null,
+        '有沒同步的、按取消': !r.err && r.asked && !r.reloaded && !r.signOutCalls && r.kept,
+        問的時候別人登入: !!err && err.code === 'account_gone' && r.asked && !r.reloaded && !r.signOutCalls && r.kept && r.y,
+        '對照:沒有別的分頁': !r.err && !r.asked && r.reloaded && r.gone && r.sb === null,
+      }[how];
+      r.ok = r.had && (how === '對照:沒有別的分頁' ? cp0 !== null : cp0 === null) && want;
+      return r;
+    };
+    const rs = [];
+    for (const how of ['沒有沒同步的', '有沒同步的、按確定', '有沒同步的、按取消', '問的時候別人登入', '對照:沒有別的分頁']) rs.push(await one(how));
+    return { ok: rs.every(r => r.ok), detail: rs.map(r => r.how + ':' + (r.ok ? '對' : '不對 ' + JSON.stringify(r))).join(' | ') };
+  },
+  /* 審查 D 第 1 輪 #2(e49e444 就有;這個分支 73900cf 加的「灌過」記號把 4ea2c29 已經擋住的又打開):部署前就開著的舊版分頁
+     (tools/fixtures/cloud_step1.js;e49e444 的登出一樣)不認得 tr_cloud_seen_<帳號 id>,在那裡按登出:資料夾、帳本、目前帳號刪光,記號留著。
+     之後 X 在這台用新版登入、讀雲端進度失敗(網路斷一下、Supabase 休眠):以前看到記號就不記「還沒灌過」,學生在空資料夾上作答、記帳,
+     網路好了下一頁整份上傳,雲端錯題本從五題變成只剩新那一題。要的是:剛登入(fresh)或這一頁的資料夾不是這個帳號的(Google 回來)時,
+     「灌過」記號不算數(先刪掉,灌好再寫),照樣記標記、不能作答、不記帳,雲端不變少。
+     丙:別的分頁正在登回來灌資料時這個分頁換頁(開頁時資料夾空的),確認登入前那個分頁灌好了:這一頁的畫面照空資料夾畫,要重灌重載(情境 59 那條,舊版登出之後也要成立) */
+  '65. 舊版分頁登出(留下「灌過」記號)之後,這個帳號在這台用新版登入、讀雲端進度失敗:照樣記「還沒灌過」、不能作答、不記帳,雲端不變少;那時換頁的分頁照空資料夾畫的要重灌': async src => {
+    const OLDSRC = fs.readFileSync(path.join(REPO, 'tools', 'fixtures', 'cloud_step1.js'), 'utf8');
+    const READ3 = { l1: true, l2: true, l3: true };
+    /* 舊版分頁 O、新版分頁 N 都灌好(N 寫下「灌過」記號),然後在 O 按登出。回 N 的工作階段與記號前後 */
+    const base = async () => {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      w.db.push({ user_id: USER.id, k: K, v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      w.db.push({ user_id: USER.id, k: WR, v: READ3, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const sO = w.session;
+      const pgO = await openLoggedIn(w, OLDSRC);
+      const sN = makeStorage(); w.session = sN;
+      let pgN = loadPage(w, src); await pgN.ready; pgN = loadPage(w, src); await pgN.ready;
+      const seen0 = w.local.getItem(SEEN);
+      w.session = sO; await pgO.ctx.CLOUD.logout(); await tick();
+      return { w, sN, seen0, seenLeft: w.local.getItem(SEEN), cpLeft: w.local.getItem('tr_current_profile') };
+    };
+    /* 讀不到雲端的那一頁(學生按「重新整理」)作答,網路好了再開一頁 */
+    const after = async (w, how, b) => {
+      const mark = w.local.getItem(UNHYD);
+      const pg = loadPage(w, src); await pg.ready;
+      const can = ready(pg);
+      const v = (lv(w, K) || []).concat(['new1']);
+      const wrote = storeSet(pg, w, K, v);
+      if (!wrote) pg.ctx.CLOUD.push(K, v);                          // common.js 擋下了,cloud.js 這一層也不能記帳
+      await pg.runTimers(); await pg.fire('win:pagehide');
+      const led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}'));
+      w.progressFail = false;
+      await settle(w, src);
+      const ok = b.seen0 === '1' && b.seenLeft === '1' && b.cpLeft === null && mark === '1' && !can && !wrote && !led.includes(K) && same(cv(w, K), FIVE) && same(lv(w, K), FIVE);
+      return { ok, detail: how + ':舊版登出後記號 ' + b.seenLeft + ' / 標記 ' + mark + ' / 能作答 ' + can + ' / 寫進去 ' + wrote + ' / 帳本 ' + JSON.stringify(led) + ' / 下一頁雲端 ' + JSON.stringify(cv(w, K)) };
+    };
+    /* 甲:訪客頁用密碼登入(fresh) */
+    const a = await (async () => {
+      const b = await base(); const w = b.w;
+      w.session = makeStorage();
+      const guest = loadPage(w, src); await guest.ready;
+      w.progressFail = true;
+      const err = await guest.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e);
+      const r = await after(w, '密碼登入', b);
+      return { ok: !!err && r.ok, detail: r.detail + ' / 登入丟錯 ' + !!err };
+    })();
+    /* 乙:Google 回來(開頁時登入資料已經是 X、資料夾是訪客的:otherFolder) */
+    const g = await (async () => {
+      const b = await base(); const w = b.w;
+      w.session = makeStorage();
+      w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'g', expires_at: 1, user: USER }));
+      w.progressFail = true;
+      const back = loadPage(w, src); await back.ready;
+      return after(w, 'Google 回來', b);
+    })();
+    /* 丙:分頁 B 密碼登入、正在讀雲端進度(標記記著、資料夾空的);N 換頁(N 自己的旗標還在),確認登入前 B 灌好了 */
+    const c = await (async () => {
+      const b = await base(); const w = b.w;
+      const sB = makeStorage(); w.session = sB;
+      const guest = loadPage(w, src); await guest.ready;
+      let goB; w.progressGate = new Promise(r => { goB = r; });
+      const loginP = guest.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e); await tick();
+      const markB = w.local.getItem(UNHYD);
+      w.session = b.sN;
+      let release; w.authGate = new Promise(r => { release = r; });
+      const pgN = loadPage(w, src); await tick();
+      const atLoad = lv(w, WR);
+      goB(); await loginP; await tick();                             // B 灌好、重載
+      const r1 = w.reloads;
+      release(); w.authGate = null; await pgN.ready; await pgN.runTimers();
+      const nReloaded = w.reloads > r1;
+      const map = Object.assign({}, atLoad || {}, { l4: true });     // 寫作頁:照畫面時讀的 readMap 整份寫回
+      const wrote = storeSet(pgN, w, WR, map);
+      if (!wrote) pgN.ctx.CLOUD.push(WR, map);
+      await pgN.runTimers(); await pgN.fire('win:pagehide');
+      const mid = cv(w, WR);
+      const s = await settle(w, src);
+      storeSet(s.pg, w, WR, Object.assign({}, lv(w, WR) || {}, { l4: true })); await s.pg.runTimers();
+      const want = Object.assign({}, READ3, { l4: true });
+      return { ok: b.seenLeft === '1' && markB === '1' && atLoad === null && nReloaded && same(mid, READ3) && same(cv(w, WR), want),
+               detail: '換頁:B 讀的時候標記 ' + markB + ' / N 開頁時 ' + JSON.stringify(atLoad) + ' / N 重灌 ' + nReloaded + ' / N 作答後雲端 ' + JSON.stringify(mid) + ' / 最後雲端 ' + JSON.stringify(cv(w, WR)) };
+    })();
+    return { ok: a.ok && g.ok && c.ok, detail: a.detail + ' | ' + g.detail + ' | ' + c.detail };
   },
 };
 const FIVE = ['q1', 'q2', 'q3', 'q4', 'q5'];
@@ -1398,6 +1539,11 @@ function storeSet(pg, w, k, v) {
   if (gone || C.reloading || (C.user && typeof C.folderReady === 'function' && !C.folderReady())) return false;
   studentWrites(pg, w, k, v);
   return true;
+}
+/* X 留在這台的東西都清掉了:帳號資料夾、帳本、只在本機的標記、灌過記號、還沒灌過標記,和現在這個分頁的灌過旗標(情境 63、64) */
+function xGone(w) {
+  for (let i = 0; i < w.local.length; i++) if (w.local.key(i).startsWith(PREFIX)) return false;
+  return [LEDGER, 'tr_localonly_' + USER.id, SEEN, UNHYD].every(k => w.local.getItem(k) === null) && w.session.getItem(FLAG) === null;
 }
 /* 開一頁;這一頁灌了資料要重載就再開一次(重載後的那一頁)。回 { pg, reloaded } */
 async function settle(w, src) {

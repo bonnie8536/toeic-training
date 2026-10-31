@@ -216,17 +216,24 @@
       const gone = !!account || (typeof accountBlock === 'function' && accountBlock() === 'gone');
       const title = gone ? '這個帳號已經在別的分頁登出' : '還沒載入你的練習紀錄';
       const btn = h('button', { class: 'btn primary', type: 'button', onclick: () => location.reload() }, '重新整理');
-      const box = h('div', { class: 'modal modal-gate modal-reload', role: 'dialog', 'aria-modal': 'true', 'aria-label': title, 'aria-describedby': 'reload-why' },
+      /* 重新整理會清掉這一頁還沒交出去的作答(刷題頁隨機練習的整份作答)、還沒加入的輸入(題庫編輯器打好的單字):卡上寫明,
+         別的分頁登出的那一種再說怎麼留著(登回原本的帳號,這一頁就能照常交;審查 D 第 1 輪 #6) */
+      const lose = '重新整理會清掉這一頁還沒存的作答和打好的字。';
+      const box = h('div', { class: 'modal modal-gate modal-reload', role: 'dialog', 'aria-modal': 'true', 'aria-label': title, 'aria-describedby': 'reload-why reload-sub' },
         h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }),
         h('h2', null, title),
         h('p', { class: 'modal-why', id: 'reload-why' }, gone
           ? '這一頁還是登出前的畫面，' + (account ? '剛剛按的沒有送出' : '先不能作答') + '。重新整理一次，就會換成這台現在的登入狀態。'
           : '你已經登入了，但這一頁還沒從雲端拿到你的練習紀錄，先不能作答。重新整理一次就會載入。'),
-        gone ? null : h('p', { class: 'modal-sub' }, '一直出現的話，請檢查網路連線。'),
+        h('p', { class: 'modal-sub', id: 'reload-sub' }, gone
+          ? lose + '要留著的話，先在別的分頁登回原本的帳號，再回來按一次。'
+          : lose + '一直出現的話，請檢查網路連線。'),
         h('div', { class: 'modal-row' }, btn));
       const mask = h('div', { class: 'modal-mask' }, box);
       document.body.append(mask);
-      focusInto(box, btn);   // 觸控螢幕停在標題
+      /* 焦點一律停在標題,不放在「重新整理」上:它會清掉還沒存的東西;卡片也可能在打字時跳出來(掉落消除的字掉到底),
+         順手按的 Enter 不能把頁面重新整理掉(審查 D 第 1 輪 #4、#6)。Tab 一下就到按鈕 */
+      focusInto(box, null);
       trapTab(box);
       /* preventDefault:點遮罩的預設動作會把焦點拉到 body,蓋掉 close() 放回去的焦點。按在遮罩的捲軸上不算 */
       mask.addEventListener('mousedown', e => { if (onMaskItself(mask, e)) { e.preventDefault(); close(); } });
@@ -354,10 +361,11 @@
     }
     const openerOf = e => (e && e.currentTarget && e.currentTarget.nodeType === 1 ? e.currentTarget : null);
 
-    /* 頭像選單、「我的」頁、signup.html 的「登出」。其他錯誤跟以前一樣不接 */
+    /* 頭像選單、「我的」頁、signup.html 的「登出」。不先問 accountCheck:js/cloud.js logout 一開頭(問「確定要登出？」之前)就確認,
+       換了人照樣丟 account_gone 開卡;這台已經沒有任何人登入著時,它照以前清掉這個帳號留在這台的東西、重載(審查 D 第 1 輪 #1、#3)。
+       其他錯誤跟以前一樣不接 */
     function logoutHere(e) {
       const opener = openerOf(e);
-      if (accountMoved()) { goneCard(opener); return; }
       CLOUD.logout().catch(err => { if (isGone(err)) goneCard(opener); else throw err; });
     }
 

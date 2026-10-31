@@ -546,6 +546,11 @@ function syncScenarios() {
    - 63:別的分頁登出、換帳號後沒重載的分頁按刪除帳號、登出、改暱稱、加入班級這些帳號層級的動作,不能作用在別的分頁登入的那個人身上
      (第 1 步那版、e49e444 都會紅:delete_own_account、signOut、updateUser 用的是 Y 的登入資料),不比,只要新版通過。
      情境裡「平常登入著」「登回同一個帳號」那幾項照常送,也要新版通過
+   審查 D 第 1 輪(2026-11-01):
+   - 64:登入被撤銷、別的分頁改回訪客之後(目前帳號、登入資料都沒了)按「登出」:清掉這個帳號留在這台的、重載,但不呼叫 signOut
+     (第 1 步那版、e49e444 會呼叫 signOut;31745ec 擋成 account_gone、資料留著),不比,只要新版通過
+   - 65:舊版分頁(tools/fixtures/cloud_step1.js)登出留下「灌過」記號,之後新版登入讀雲端失敗:照樣記標記、不記帳、雲端不變少
+     (第 1 步那版、e49e444、73900cf、31745ec 都會紅:雲端錯題本被蓋成只剩新那一題),不比,只要新版通過
    新版那一邊的 tr_cloud_seen_<帳號 id> 一律先拿掉再比(見 otherState)。
    1~51、56、62 照樣逐位元組比(平常登入、重新整理、離線、兩台裝置、登出的請求與儲存都沒變) */
 function dropNullUpload(state, key) {
@@ -556,7 +561,7 @@ function dropNullUpload(state, key) {
   return J(o);
 }
 const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null, '52': null, '53': null, '54': null, '55': null, '57': 'state', '58': null,
-  '59': null, '60': null, '61': null, '63': null };
+  '59': null, '60': null, '61': null, '63': null, '64': null, '65': null };
 const intended = name => Object.prototype.hasOwnProperty.call(INTENDED, name.split('.')[0]);
 async function replay(variant) {
   const make = syncScenarios();

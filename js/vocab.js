@@ -570,17 +570,23 @@
         spawn();
       }
       const H = field.clientHeight;
+      /* 字掉到底時存不進去(別的分頁登出、換帳號、帳號資料夾還沒灌好;held 開「重新整理」卡):先暫停,這個字留在底下、不扣命。
+         以前照樣扣命、漏接靜靜不存,最後寫「沒命了，分數 N（新紀錄）」其實什麼都沒存(審查 D 第 1 輪 #5) */
+      let stall = false;
       blocks = blocks.filter(b => {
         if (over) return false;
+        if (stall) return true;
         b.y += b.speed * dt;
         b.el.style.transform = 'translateY(' + b.y + 'px)';
         if (b.y + b.el.offsetHeight >= H) {
+          if (held(input)) { stall = true; return true; }
           miss(b);
           return false;
         }
         return true;
       });
       if (over) return;
+      if (stall) { togglePause(); return; }
       rafId = requestAnimationFrame(loop);
     }
 
@@ -603,7 +609,8 @@
       /* 中文輸入法選字中的 Enter 不算送出 */
       if (e.isComposing || e.keyCode === 229) return;
       if (e.key !== 'Enter' || !running || over) return;
-      if (held(input)) { togglePause(); return; }   // 擋下時先暫停,打的字留著
+      /* 擋下時先暫停,打的字留著。preventDefault:卡片一開焦點就移走,不取消的話同一下 Enter 的 keypress 會落到卡片上按下去(審查 D 第 1 輪 #4) */
+      if (held(input)) { e.preventDefault(); togglePause(); return; }
       const raw = input.value.trim();
       const val = norm(raw);
       if (!val) return;
@@ -1015,8 +1022,9 @@
                 b.classList.add(bi === ai ? 'correct' : bi === oi ? 'wrong' : 'plain');
               });
               const isLast = cur === order.length - 1;
+              /* 「看成績」要存最佳紀錄:答完最後一題才擋下的話,跳卡、不出成績(以前照樣寫「（新紀錄）」卻沒存;審查 D 第 1 輪 #5) */
               after.append(h('div', { class: 'drill-nav-btns' },
-                h('button', { class: 'btn primary', onclick: () => { if (isLast) summary(); else { cur++; draw(); } } },
+                h('button', { class: 'btn primary', onclick: e2 => { if (!isLast) { cur++; draw(); } else if (!held(e2.currentTarget)) summary(); } },
                   isLast ? '看成績' : '下一題 →')));
             },
           }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, o.zh)));

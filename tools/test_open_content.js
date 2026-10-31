@@ -1503,6 +1503,86 @@ T['單字頁:題庫編輯器的加入單字、勾選、刪字、改名,片語特
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
+/* 審查 D 第 1 輪 #4、#5、#6(73900cf 新加的擋下):
+   甲 掉落消除玩到一半擋下(別的分頁登出、帳號資料夾還沒灌過),學生在輸入框打字按 Enter:以前同一下 Enter 的 keypress 落到卡上的「重新整理」,
+      頁面馬上重載,打的字和這一局都沒了、卡片根本看不到。要的是:不重載,卡片在,打的字留著,遊戲暫停;卡片開著時再按一次 Enter 也不重載
+      (卡的焦點停在標題:重新整理會清掉這一頁還沒存的東西,不當預設按鈕),卡上寫明重新整理會清掉還沒存的。
+   乙 擋下之後不再打字:以前字照樣往下掉、扣命,最後「沒命了，分數 N（新紀錄）」,其實一筆都沒存。要的是:字掉到底時暫停、跳卡、不扣命、不結束。
+   丙 記憶吐司答完最後一題才擋下,按「看成績」:以前照樣寫「（新紀錄）」卻沒存。要的是:跳卡、不出成績、什麼都不寫。
+   照常的時候三樣都跟以前一樣 */
+T['單字頁遊戲:掉落消除擋下時按 Enter 不重新整理、字掉到底先暫停跳卡不扣命,記憶吐司「看成績」跳卡;卡上寫明重新整理會清掉還沒存的;照常時照樣玩'] = async (B) => {
+  const out = [];
+  const HUD = "({ lives: (document.querySelector('.hud-lives') || {}).textContent || '', pause: (document.querySelector('.game-hud .btn') || {}).textContent || '', over: !!document.querySelector('.game-over'), input: (document.querySelector('input.game-input') || {}).value })";
+  const CARD = `(() => { const m = document.querySelector('.modal-reload'); const a = document.activeElement;
+    return m ? { title: (m.querySelector('h2') || {}).textContent || '', sub: [...m.querySelectorAll('.modal-sub')].map((p) => p.textContent).join(' '),
+      desc: (m.getAttribute('aria-describedby') || '').split(/\\s+/).map((id) => (document.getElementById(id) || {}).textContent || '').join(' '), focus: a ? a.tagName : '' } : null; })()`;
+  for (const how of ['照常', '登出', '還沒灌過']) {
+    const r = { how };
+    /* 甲:Enter */
+    let s = await vocabOpen(B);
+    try {
+      await click(s, '.vg-games .btn.primary', 0);   // 掉落消除「開始」(data-gate,這時能作答)
+      await s.eval('window.__mark = 1; true');   // 重載了就不在
+      if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
+      const before = await s.eval(LS);
+      await s.eval("document.querySelector('input.game-input').focus(); true");
+      await s.send('Input.insertText', { text: 'zzqq' });
+      await key(s, 'Enter');
+      await sleep(1200);
+      r.stay = await s.eval('window.__mark === 1');
+      r.card = r.stay ? await s.eval(CARD) : null;
+      r.hud = r.stay ? await s.eval(HUD) : null;
+      if (r.card) { await key(s, 'Enter'); await sleep(900); r.stay2 = await s.eval('window.__mark === 1'); }
+      r.wrote = r.stay ? lsDiff(before, await s.eval(LS)).filter((k) => !/_pet$/.test(k)) : ['重載了'];
+    } finally { await s.close(); }
+    /* 乙:擋下之後不再打字,等字掉到底(遊戲區縮矮,字很快到底) */
+    s = await vocabOpen(B);
+    try {
+      await click(s, '.vg-games .btn.primary', 0);
+      await s.eval("document.querySelector('.game-field').style.height = '90px'; true");
+      if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
+      const before = await s.eval(LS);
+      const moved = "!!document.querySelector('.modal-mask') || (document.querySelector('.hud-lives') || {}).textContent !== '♥♥♥'";
+      for (let i = 0; i < 60 && !(await s.eval(moved)); i++) await sleep(250);
+      await sleep(1500);
+      r.fall = { hud: await s.eval(HUD), card: await s.eval(CARD) };
+      r.fallWrote = lsDiff(before, await s.eval(LS)).filter((k) => !/_pet$/.test(k));
+    } finally { await s.close(); }
+    /* 丙:記憶吐司答完 6 題,擋下,按「看成績」 */
+    s = await vocabOpen(B);
+    try {
+      await click(s, '.vg-games .btn.primary', 2);
+      await pressText(s, '.btn', '直接開考');
+      for (let i = 0; i < 6; i++) {
+        await click(s, '.q-block .opt');
+        if (i < 5) await pressText(s, '.q-block .btn', '下一題');
+      }
+      r.toastLast = await s.eval("[...document.querySelectorAll('.q-block .btn')].map((b) => b.textContent).join('/')");
+      await sleep(1300);   // 最後一題的作答紀錄 0.8 秒後上傳完、帳本劃掉,再擋下、拍「之前」
+      if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
+      const before = await s.eval(LS);
+      await pressText(s, '.q-block .btn', '看成績');
+      await sleep(600);
+      r.toast = { card: await s.eval(CARD), report: await s.eval("(document.querySelector('.report-head h2') || {}).textContent || ''") };
+      r.toastWrote = lsDiff(before, await s.eval(LS)).filter((k) => !/_pet$/.test(k));
+    } finally { await s.close(); }
+    if (how === '照常') {
+      r.ok = r.stay && !r.card && r.hud.input === 'zzqq' && r.hud.pause === '暫停' && !r.wrote.length
+        && !r.fall.card && r.fall.hud.lives !== '♥♥♥' && r.fallWrote.includes('tr_u' + CPID + '_vgame_miss')
+        && /看成績/.test(r.toastLast) && !r.toast.card && /記憶吐司/.test(r.toast.report);   // 新紀錄(答對幾題)看運氣,這裡只看成績出得來
+    } else {
+      const title = how === '登出' ? /已經在別的分頁登出/ : /還沒載入/;
+      const card = (c) => !!c && title.test(c.title) && /重新整理會清掉這一頁還沒存的/.test(c.sub) && /重新整理會清掉這一頁還沒存的/.test(c.desc) && c.focus === 'H2';
+      r.ok = r.stay && card(r.card) && r.stay2 && r.hud.input === 'zzqq' && r.hud.pause === '繼續' && !r.hud.over && !r.wrote.length
+        && card(r.fall.card) && r.fall.hud.lives === '♥♥♥' && r.fall.hud.pause === '繼續' && !r.fall.hud.over && !r.fallWrote.length
+        && /看成績/.test(r.toastLast) && card(r.toast.card) && !r.toast.report && !r.toastWrote.length
+        && (how !== '登出' || /先在別的分頁登回原本的帳號/.test(r.card.sub));
+    }
+    out.push(r);
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
 /* 多分頁第 3 輪審查 #1(2026-11-01):別的分頁登出又登回來、正在灌資料(「還沒灌過」標記記著、帳號資料夾空的)時,這個分頁換到寫作頁的技巧課。
    寫作頁的 readMap 是畫面時讀的(開頁時是空的),按「標記讀完」整份寫回。這一頁確認登入(查教師身分)之前別的分頁先灌好、劃掉標記:
    以前這一頁不灌資料,按下去雲端 writing_read 從三課變成只剩這一課。要的是:這一頁重灌重載,畫面換成灌好的資料夾,按下去四課都在;
@@ -1549,7 +1629,9 @@ T['寫作頁:開頁時帳號資料夾還沒灌過(別的分頁正在灌),確認�
    「改暱稱」改的是 Y,「加入班級」把 Y 加進班。要的是:「我的」頁、頭像選單的這些按鈕都不問、不送,跳「這個帳號已經在別的分頁登出」卡,
    說剛剛按的沒有送出;Y 的登入資料、目前帳號、資料夾都不動,這一頁不重載,X 的資料夾不會被建回來。
    問的時候換帳號:確認視窗、暱稱視窗開著時別的分頁才換成 Y,按確定之後 js/cloud.js 送出前那一次確認擋下,一樣跳卡、不跳 alert、不送。
-   平常登入著的「我的」頁:改暱稱、刪除帳號照常問、照常送到 X */
+   平常登入著的「我的」頁:改暱稱、刪除帳號照常問、照常送到 X。
+   審查 D 第 1 輪 #1、#3:這台已經沒有任何人登入著(只登出;或登入被撤銷、別的分頁照 leaveStaleAccount 改回訪客,X 的資料夾還留著)時按「登出」,
+   不會登出到別人:照 e49e444 清掉 X 留在這台的東西、重載,但不呼叫 signOut(31745ec 跳卡、X 的資料留在共用電腦上)。刪除帳號照樣擋 */
 T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出所有裝置、改暱稱、刪除帳號、加入班級都不問不送,跳「這個帳號已經在別的分頁登出」卡;平常登入著照常'] = async (B) => {
   const login = J({ access_token: 'x', user: USER });
   /* 確認視窗、輸入視窗記在 sessionStorage 的 __dlg(重載後還在):都回「確定」 */
@@ -1560,6 +1642,8 @@ T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出�
     換帳號: `(() => { ${OTHER_TAB_LOGOUT}; localStorage.setItem(${J(SB)}, ${J(J({ access_token: 'y', user: Y_USER }))}); localStorage.setItem('tr_current_profile', ${J(J(YPID))});
       localStorage.setItem(${J('tr_u' + YPID + '_hist')}, '[1]'); return true; })()`,
     只登出: OTHER_TAB_LOGOUT,
+    /* 登入被撤銷(supabase-js 清掉登入資料),別的分頁開頁改回訪客(刪掉目前帳號);X 的資料夾照設計留著 */
+    撤銷後改回訪客: `(() => { [${J(SB)}, ${J(SB + '-user')}, 'tr_current_profile'].forEach((k) => localStorage.removeItem(k)); return true; })()`,
   };
   const press = async (s, sel, text) => {
     const ok = await s.eval(`(() => { const old = document.getElementById('__press'); if (old) old.removeAttribute('id');
@@ -1588,7 +1672,7 @@ T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出�
   const who = (id) => (id === UID ? 'X' : id === Y_USER.id ? 'Y' : String(id));
   const run = async (how, name) => {
     const r = { how, name };
-    const s = await open(B, { url: 'me.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login } });
+    const s = await open(B, { url: 'me.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login, ['tr_u' + CPID + '_hist']: J([{ m: 'g', id: 'x-1', c: 0, ok: true, t: Date.now() - 864e5 }]) } });
     try {
       await s.eval(DLG);
       if (OTHER[how]) await s.eval(OTHER[how]);
@@ -1610,19 +1694,24 @@ T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出�
       const after = keys(await s.eval(LS));
       r.kept = how === '問的時候換帳號'
         ? after.cp === J(YPID) && JSON.parse(after.sb || '{}').user.id === Y_USER.id && after.y === '[1]' && after.x === 0
-        : J(before) === J(after) && after.x === 0;
+        : J(before) === J(after);
+      r.x0 = before.x; r.xLeft = after.x;
     } finally { await s.close(); }
     const asked = { '我的頁:改暱稱': ['prompt'], '我的頁:登出所有裝置': ['confirm'], '我的頁:刪除帳號': ['confirm', 'confirm'] };
-    r.ok = how === '平常'
+    const cleared = (how === '只登出' || how === '撤銷後改回訪客') && /登出$/.test(name) && !/所有裝置/.test(name);
+    r.ok = cleared
+      ? !r.stay && !/已經在別的分頁登出/.test(r.card.title) && !r.dlg.some((d) => /^(prompt|alert)/.test(d)) && !r.sent.length && r.xLeft === 0 && (how !== '撤銷後改回訪客' || r.x0 > 0)
+      : how === '平常'
       ? (name === '我的頁:改暱稱' ? J(r.dlg) === J(['prompt']) && J(r.sent) === J(['updateUser@X'])
         : J(r.dlg) === J(['confirm', 'confirm']) && J(r.sent) === J(['rpc:delete_own_account@X', 'signOut@X']))
       : r.stay && r.card.mask && /已經在別的分頁登出/.test(r.card.title) && /剛剛按的沒有送出/.test(r.card.why) && /重新整理/.test(r.card.why)
-        && (how === '問的時候換帳號' ? J(r.dlg) === J(asked[name]) : !r.dlg.length) && !r.sent.length && r.kept;
+        && (how === '問的時候換帳號' ? J(r.dlg) === J(asked[name]) : !r.dlg.length) && !r.sent.length && r.kept && (how === '撤銷後改回訪客' ? r.xLeft > 0 : r.xLeft === 0);
     return r;
   };
   const out = [];
   for (const name of Object.keys(ACTS)) out.push(await run('換帳號', name));
   for (const name of ['我的頁:刪除帳號', '頭像選單:登出']) out.push(await run('只登出', name));
+  for (const name of ['我的頁:登出', '頭像選單:登出', '我的頁:刪除帳號']) out.push(await run('撤銷後改回訪客', name));
   for (const name of ['我的頁:改暱稱', '我的頁:登出所有裝置', '我的頁:刪除帳號']) out.push(await run('問的時候換帳號', name));
   for (const name of ['我的頁:改暱稱', '我的頁:刪除帳號']) out.push(await run('平常', name));
   const bad = out.filter((r) => !r.ok);

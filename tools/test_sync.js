@@ -809,6 +809,21 @@ const scenarios = {
     const b = await pg.ctx.CLOUD.readKey('pet');
     return { ok: !!a && a.ok === false && !!b && b.ok === false, detail: '401 ' + JSON.stringify(a) + ' / data:null ' + JSON.stringify(b) };
   },
+  '51. 從訪客頁登入、灌資料途中有寫入(寫在訪客資料夾):不記進帳號的帳本,灌資料時不把帳號雲端那一列蓋成 null': async src => {
+    const w = makeWorld();
+    const row = { n: 7 };
+    w.db.push({ user_id: USER.id, k: 'verb_quiz', v: row, updated_at: new Date(Date.now() - HOUR).toISOString() });   // 帳號在雲端本來就有
+    w.revoked = true;                                              // 這台沒有登入資料
+    const pg = loadPage(w, src); await pg.ready;                   // 訪客
+    let release; w.teacherGate = new Promise(r => { release = r; });
+    const p = pg.ctx.CLOUD.login('s@x.com', 'test-only'); await tick();   // 剛登入、還沒灌資料
+    pageWrites(pg, w, 'verb_quiz', { n: 1 });                      // 這一頁的資料夾還是訪客的:寫進 tr_verb_quiz
+    release(); w.teacherGate = null; await p; await tick();
+    const led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}'));
+    const pg2 = loadPage(w, src); await pg2.ready; await pg2.runTimers();   // 重載後那一頁
+    return { ok: same(cv(w, 'verb_quiz'), row) && same(lv(w, 'verb_quiz'), row) && !led.includes('verb_quiz'),
+             detail: '雲端 ' + JSON.stringify(cv(w, 'verb_quiz')) + ' / 帳號資料夾 ' + JSON.stringify(lv(w, 'verb_quiz')) + ' / 帳本 ' + JSON.stringify(led) };
+  },
 };
 
 /* 本機、分頁暫存、雲端全部轉成字串(比對「什麼都沒寫」用) */

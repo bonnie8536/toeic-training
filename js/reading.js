@@ -562,7 +562,7 @@
         const isUsed = used.has(word);
         const chip = h('button', {
           class: 'tq-chip' + (selected === word ? ' on' : '') + (isUsed ? ' used' : ''),
-          type: 'button', 'data-gate': '',   // 點選、拖曳都是作答:沒登入時 js/profile.js 先攔下(拖曳靠 pointerdown)
+          type: 'button', 'data-gate': 'drag',   // 點選、拖曳都是作答:沒登入時 js/profile.js 先攔下(拖曳靠 pointerdown;"drag" = 拖了再放開也跳登入)
           disabled: (submitted || isUsed) ? '' : null,
           onclick: () => {
             if (dragged) return;
@@ -591,7 +591,7 @@
             else { nodes.push(h('s', null, word || '（空）'), ' ' + answers[bi]); }
           } else nodes.push(word || '');
           const blankBtn = h('button', {
-            class: cls, type: 'button', 'data-bi': String(bi), 'data-gate': '',
+            class: cls, type: 'button', 'data-bi': String(bi), 'data-gate': word && !submitted ? 'drag' : '',   // 填了字的空格可以拖
             onclick: () => {
               if (submitted || dragged) return;
               if (selected) { place(bi, selected); selected = null; armed = null; }

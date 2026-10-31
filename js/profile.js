@@ -56,12 +56,19 @@
   /* 攔截:document 的 capture 階段(比元素自己的 onclick、閱讀頁字卡的 pointerdown、文章單字的 stopPropagation 都早),
      preventDefault + stopPropagation。不用 stopImmediatePropagation、不掛在 window:舊網址自動搬家(js/move-out.js)
      在 window 的 capture 看使用者有沒有動作,一定要先看到這一下才會取消自動搬家;小雞(pet-roam2.js)也掛在 document 的 capture,照常收得到。
-     - click、Enter/空白鍵:開視窗。pointerdown、mousedown、輸入(beforeinput、paste、drop):靜默擋下(字卡拖不動、作答框打不進字),等 click 再開。
-     - 作答框:focus 進來(滑鼠、鍵盤 Tab、頁面自動 focus)就設 readonly,中文輸入法、手機鍵盤也進不來;按一個字才開視窗。登入、建檔後頁面會重載。 */
+     - click、Enter/空白鍵:開視窗。作答框的貼上(Ctrl+V)、把別處的文字拖進來(drop)也開視窗,跟打字一樣(第 3 輪審查 #4)。
+       pointerdown、mousedown、輸入法的 beforeinput:靜默擋下(字卡拖不動、作答框打不進字),等 click 再開。
+     - 可以拖的作答元素(閱讀頁的字卡、填了字的空格,標 data-gate="drag"):拖了 6px 以上(跟 reading.js 一樣的門檻)再放開,
+       瀏覽器不會在它身上補 click(觸控根本沒有 click,滑鼠的 click 落在共同的外層),放開那一下就開視窗(第 3 輪審查 #3)。
+       一般作答鈕按下去拖開再放是「取消這一下」的慣例,不開。
+     - 作答框:focus 進來(滑鼠、鍵盤 Tab、頁面自動 focus)就設 readonly,中文輸入法、手機鍵盤也進不來;按一個字才開視窗。
+       readonly 的框不收拖進來的文字(連 drop 都不發),dragover 先說「收」,drop 才攔得到。登入、建檔後頁面會重載。 */
   const NAV_KEYS = new Set(['Tab', 'Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Escape', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown', 'ContextMenu']);
+  const DRAG_PX = 6;
   function isTextField(el) { return el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && !/^(button|submit|reset|checkbox|radio|range|color|file|image|hidden)$/i.test(el.type || '')); }
   function installActionGate(canAct, ask) {
     const locked = new Set();   // 這裡設成 readonly 的作答框
+    let press = null;           // 靜默擋下的那一下 pointerdown(可以拖的作答元素):{ el, id, x, y }
     function onGate(e) {
       const t = e.target;
       const el = t && typeof t.closest === 'function' ? t.closest('[data-gate]') : null;
@@ -74,15 +81,35 @@
       const text = isTextField(el);
       if (text && !el.readOnly) { el.readOnly = true; locked.add(el); }
       if (e.type === 'focusin') return;
+      if (e.type === 'dragenter' || e.type === 'dragover') { if (text) e.preventDefault(); return; }
       if (e.type === 'keydown') {
         if (NAV_KEYS.has(e.key) || /^F\d+$/.test(e.key) || e.ctrlKey || e.metaKey || e.altKey) return;
         if (!text && e.key !== 'Enter' && !(e.key === ' ' && el.tagName !== 'A')) return;   // 空白鍵在連結上是捲動頁面,不算按下去
       }
       e.preventDefault();
       e.stopPropagation();
-      if (e.type === 'click' || e.type === 'keydown') ask(el);
+      if (e.type === 'pointerdown' && !text && el.getAttribute('data-gate') === 'drag' && (e.pointerType !== 'mouse' || e.button === 0)) press = { el, id: e.pointerId, x: e.clientX, y: e.clientY };
+      if (e.type === 'click' || e.type === 'keydown' || (text && (e.type === 'paste' || e.type === 'drop'))) ask(el);
     }
-    ['pointerdown', 'mousedown', 'click', 'keydown', 'beforeinput', 'paste', 'drop', 'focusin'].forEach(type => document.addEventListener(type, onGate, true));
+    /* 拖了再放開:開視窗。放開後要是又在它身上補了 click,那一下開視窗時已經有視窗開著,不會開第二個。
+       pointercancel(瀏覽器接手去捲動頁面)不算作答,不開 */
+    function onRelease(e) {
+      const p = press;
+      press = null;
+      if (!p || e.type !== 'pointerup' || e.pointerId !== p.id || canAct()) return;
+      if (Math.hypot(e.clientX - p.x, e.clientY - p.y) >= DRAG_PX) ask(p.el);
+    }
+    ['pointerdown', 'mousedown', 'click', 'keydown', 'beforeinput', 'paste', 'dragenter', 'dragover', 'drop', 'focusin'].forEach(type => document.addEventListener(type, onGate, true));
+    ['pointerup', 'pointercancel'].forEach(type => document.addEventListener(type, onRelease, true));
+  }
+
+  /* 按下去的是遮罩本身(卡片外面的空白):可以關的視窗靠這個關。桌機視窗比卡片矮時遮罩有自己的捲軸,
+     按住捲軸拖動是要捲動看下面,mousedown 的 target 一樣是遮罩,要排除,不然一按就關、打的字也沒了(第 3 輪審查 #2) */
+  function onMaskItself(mask, e) {
+    if (e.target !== mask) return false;
+    const r = mask.getBoundingClientRect();
+    const x = e.clientX - r.left - mask.clientLeft, y = e.clientY - r.top - mask.clientTop;
+    return x >= 0 && y >= 0 && x < mask.clientWidth && y < mask.clientHeight;
   }
 
   /* 頭像選單開著時按到作答鈕:選單本來靠 document 的 click 收起來,這一下被攔了,這裡自己收 */
@@ -158,9 +185,11 @@
       const pid = window.__PROFILE_ID;
       return typeof pid === 'string' && pid.charAt(0) === 'c';
     };
-    /* 作答被攔下:開可以關的登入卡,多一句為什麼要登入。頁面正要重載就只擋下,不開卡(馬上就換成登入後的畫面) */
+    /* 作答被攔下:開可以關的登入卡,多一句為什麼要登入。頁面正要重載就只擋下,不開卡(馬上就換成登入後的畫面)。
+       已經登入、雲端還在確認也只擋下:Google 回來的那一頁正在灌這個帳號的資料,灌完就重載(js/cloud.js afterAuth),
+       不能跟已經登入的人說「登入之後才能作答」(第 3 輪審查 #1) */
     const askToAct = opener => {
-      if (canAct() || CLOUD.reloading) return;
+      if (canAct() || CLOUD.reloading || (CLOUD.user && !settled)) return;
       hideMenus();
       const close = showLogin('login', { why: true, opener });
       /* 還沒確認登入就按了,確認完其實是登入著的(而且這一頁不重載):卡片自己收掉,再按一次就照常作答 */
@@ -710,8 +739,8 @@
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       });
       if (!required) {
-        /* preventDefault:點遮罩的預設動作會把焦點拉到 body,蓋掉 close() 放回去的焦點 */
-        mask.addEventListener('mousedown', e => { if (e.target === mask) { e.preventDefault(); close(); } });
+        /* preventDefault:點遮罩的預設動作會把焦點拉到 body,蓋掉 close() 放回去的焦點。按在遮罩的捲軸上不算 */
+        mask.addEventListener('mousedown', e => { if (onMaskItself(mask, e)) { e.preventDefault(); close(); } });
         document.addEventListener('keydown', onKey);
       }
 
@@ -880,8 +909,8 @@
 
     focusInto(box, input);   // 作答被攔下:觸控螢幕不要一按就跳出鍵盤
     trapTab(box);
-    /* preventDefault:點遮罩的預設動作會把焦點拉到 body,蓋掉 close() 放回去的焦點 */
-    mask.addEventListener('mousedown', e => { if (e.target === mask) { e.preventDefault(); close(); } });
+    /* preventDefault:點遮罩的預設動作會把焦點拉到 body,蓋掉 close() 放回去的焦點。按在遮罩的捲軸上不算 */
+    mask.addEventListener('mousedown', e => { if (onMaskItself(mask, e)) { e.preventDefault(); close(); } });
     document.addEventListener('keydown', onKey);
     function onKey(e) { if (e.key === 'Escape') close(); }
     function close() {

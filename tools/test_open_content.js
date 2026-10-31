@@ -3,7 +3,7 @@
    個人頁(學習記錄、能力分析、每日複習、教師後台)照舊一打開就要登入、關不掉。已登入、已選學生的人行為完全不變。
    兩個本機伺服器:127.0.0.1:8961 雲端模式(js/cloud-config.js 換成假的設定,supabase-js 換成頁面裡的假元件,不連外網),
    127.0.0.1:8962 本機模式(cloud-config 是空的)。用真的滑鼠、鍵盤事件(CDP Input),比對每個動作前後的 localStorage 與畫面。
-   用法:node tools/test_open_content.js [--tmp <放 Chrome 使用者資料的資料夾>] [--port <起始埠,預設 8961,用三個>] [--only <測試名稱的一段>]
+   用法:node tools/test_open_content.js [--tmp <放 Chrome 使用者資料的資料夾>] [--port <起始埠,預設 8961,用四個>] [--only <測試名稱的一段>]
         [--old-common <上一版 js/common.js 的檔案>](「新舊檔混用」那一項用;沒給就拿現在的 common.js 把 canKeepProgress 改名,等於還沒有這個函式的上一版)
    每次一個新的使用者資料夾,跑完刪掉。 */
 'use strict';
@@ -65,12 +65,14 @@ function serve(port, cloud) {
   });
 }
 
-async function launch() {
+/* scrollbars:不帶 --hide-scrollbars,畫面跟桌機一樣有捲軸(「桌機矮視窗」那一項另外開一個,用下一個埠) */
+async function launch(scrollbars) {
   const dir = fs.mkdtempSync(path.join(TMP, 'open-content-'));
-  const proc = spawn(CHROME, ['--headless=new', '--remote-debugging-port=' + DEBUG, '--user-data-dir=' + dir, '--no-first-run', '--no-default-browser-check',
-    '--disable-extensions', '--hide-scrollbars', '--autoplay-policy=no-user-gesture-required', '--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1', 'about:blank'], { stdio: 'ignore' });
+  const port = scrollbars ? DEBUG + 1 : DEBUG;
+  const proc = spawn(CHROME, ['--headless=new', '--remote-debugging-port=' + port, '--user-data-dir=' + dir, '--no-first-run', '--no-default-browser-check',
+    '--disable-extensions'].concat(scrollbars ? [] : ['--hide-scrollbars'], ['--autoplay-policy=no-user-gesture-required', '--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1', 'about:blank']), { stdio: 'ignore' });
   for (let i = 0; i < 60; i++) {
-    try { const r = await fetch('http://127.0.0.1:' + DEBUG + '/json/version'); if (r.ok) return { proc, dir, ws: (await r.json()).webSocketDebuggerUrl }; } catch (e) { /* 還沒好 */ }
+    try { const r = await fetch('http://127.0.0.1:' + port + '/json/version'); if (r.ok) return { proc, dir, ws: (await r.json()).webSocketDebuggerUrl }; } catch (e) { /* 還沒好 */ }
     await sleep(200);
   }
   throw new Error('Chrome 沒有啟動');
@@ -130,9 +132,18 @@ function fakeCloud(c) {
     return q;
   }
   const session = () => { try { return JSON.parse(localStorage.getItem(SB)); } catch (e) { return null; } };
+  /* Google 登入:先離開這一頁(到 robots.txt,當作 Google 的同意頁),測試再開 redirectTo#access_token=…;
+     回來那一頁 getSession 跟真的 supabase-js(detectSessionInUrl)一樣,把網址上的登入資料存起來、清掉網址 */
   const auth = new Proxy({
-    getSession: () => later(0, { data: { session: session() }, error: null }),
+    getSession: () => {
+      if (/[#&]access_token=/.test(location.hash)) {
+        localStorage.setItem(SB, JSON.stringify({ access_token: 'x', user: C.user }));
+        try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+      }
+      return later(0, { data: { session: session() }, error: null });
+    },
     signInWithPassword: () => { const s = { access_token: 'x', user: C.user }; localStorage.setItem(SB, JSON.stringify(s)); return later(0, { data: { user: C.user, session: s }, error: null }); },
+    signInWithOAuth: (o) => { sessionStorage.setItem('__fake_oauth_to', (o && o.options && o.options.redirectTo) || ''); setTimeout(() => location.assign('/robots.txt'), 0); return later(0, { data: {}, error: null }); },
   }, { get: (t, k) => t[k] || (() => Promise.resolve({ data: {}, error: null })) });
   const client = { auth, from: query, rpc: (n) => later(0, { data: n === 'my_access' && C.access ? C.access : null, error: null }) };
   window.supabase = { createClient: () => client };
@@ -161,7 +172,7 @@ async function open(B, o) {
   };
   await send('Page.enable'); await send('Runtime.enable');
   const size = o.size || (o.app || o.touch ? { width: 375, height: 812 } : null);
-  await send('Emulation.setDeviceMetricsOverride', size ? { width: size.width, height: size.height, deviceScaleFactor: 1, mobile: true } : { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
+  await send('Emulation.setDeviceMetricsOverride', size ? { width: size.width, height: size.height, deviceScaleFactor: 1, mobile: !o.desktop } : { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
   if (o.touch) await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });   // 觸控螢幕:(pointer: coarse) 成立
   if (o.mode !== 'local') await send('Page.addScriptToEvaluateOnNewDocument', { source: o.sdk || fakeSdk(o.user || null, o.delay || 0) });
   if (o.app) await send('Page.addScriptToEvaluateOnNewDocument', { source: STANDALONE });
@@ -238,6 +249,46 @@ const FOCUS = `(() => {
     desc: ids.map((id) => (document.getElementById(id) || {}).textContent || '').join(' '), y: Math.round(scrollY) };
 })()`;
 const state = (s) => s.eval(STATE);
+
+/* 閱讀頁單字考題的第一張字卡和第一個空格:捲一次讓兩個都在畫面裡,再一起量(分兩次量,第二次捲動會讓第一個的座標過時) */
+async function chipAndBlank(s) {
+  const r = await s.eval(`(() => { const c = document.querySelector('.tq-chip'), k = document.querySelector('.tq-blank'); if (!c || !k) return null;
+    const top = Math.min(c.getBoundingClientRect().top, k.getBoundingClientRect().top) + scrollY, bot = Math.max(c.getBoundingClientRect().bottom, k.getBoundingClientRect().bottom) + scrollY;
+    window.scrollTo({ top: Math.max(0, (top + bot) / 2 - innerHeight / 2), behavior: 'instant' });
+    const at = (e) => { const b = e.getBoundingClientRect(); const x = b.x + b.width / 2, y = b.y + b.height / 2, t = document.elementFromPoint(x, y); return { x, y, hit: !!t && (t === e || e.contains(t)) }; };
+    return { a: at(c), b: at(k) }; })()`);
+  if (!r) throw new Error('找不到字卡或空格');
+  if (!r.a.hit || !r.b.hit) throw new Error('字卡或空格不在畫面上 ' + J(r));
+  return r;
+}
+async function mouseDrag(s, a, b) {
+  await s.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: a.x, y: a.y });
+  await s.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: a.x, y: a.y, button: 'left', buttons: 1, clickCount: 1 });
+  for (let k = 1; k <= 12; k++) await s.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: a.x + (b.x - a.x) * k / 12, y: a.y + (b.y - a.y) * k / 12, button: 'left', buttons: 1 });
+  await s.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: b.x, y: b.y, button: 'left', buttons: 0, clickCount: 1 });
+  await sleep(400);
+}
+async function touchDrag(s, a, b) {
+  await s.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: a.x, y: a.y }] });
+  for (let k = 1; k <= 12; k++) await s.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: a.x + (b.x - a.x) * k / 12, y: a.y + (b.y - a.y) * k / 12 }] });
+  await s.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await sleep(400);
+}
+/* Ctrl+V(Windows、Linux 的貼上);頁面收到幾次 paste 記在 window.__pastes */
+async function ctrlV(s) {
+  await s.eval("if (window.__pastes === undefined) { window.__pastes = 0; addEventListener('paste', () => { window.__pastes++; }, true); } true");
+  await s.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'Control', code: 'ControlLeft', windowsVirtualKeyCode: 17, modifiers: 2 });
+  await s.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', key: 'v', code: 'KeyV', windowsVirtualKeyCode: 86, modifiers: 2 });
+  await s.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'v', code: 'KeyV', windowsVirtualKeyCode: 86, modifiers: 2 });
+  await s.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Control', code: 'ControlLeft', windowsVirtualKeyCode: 17, modifiers: 0 });
+  await sleep(300);
+}
+/* 從別的地方拖一段文字放進 (x, y) */
+async function dropText(s, x, y, text) {
+  const data = { items: [{ mimeType: 'text/plain', data: text }], dragOperationsMask: 1 };
+  for (const type of ['dragEnter', 'dragOver', 'drop']) await s.send('Input.dispatchDragEvent', { type, x, y, data });
+  await sleep(300);
+}
 
 /* 關掉視窗的三種方法 */
 async function closeBy(s, how) {
@@ -334,14 +385,13 @@ async function guestPage(B, mode, pg) {
       if (end.main !== before.main) bad.push(label + ' 關掉之後畫面變了');
     }
     if (pg.drag) {
-      /* 閱讀頁的單字考題:字卡拖進空格(pointerdown 起頭)也被擋下 */
+      /* 閱讀頁的單字考題:字卡拖進空格(pointerdown 起頭)也被擋下,放開時跳出視窗(第 3 輪審查 #3:以前不跳,看不出為什麼拖不動) */
       const before = await snap(s);
-      const a = await point(s, '.tq-chip', 0), b = await point(s, '.tq-blank', 0);
-      await s.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: a.x, y: a.y, button: 'left', clickCount: 1 });
-      for (let k = 1; k <= 6; k++) await s.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: a.x + (b.x - a.x) * k / 6, y: a.y + (b.y - a.y) * k / 6, button: 'left', buttons: 1 });
-      await s.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: b.x, y: b.y, button: 'left', clickCount: 1 });
-      await sleep(400);
-      if ((await state(s)).mask) await closeBy(s, 'esc');
+      const { a, b } = await chipAndBlank(s);
+      await mouseDrag(s, a, b);
+      const st = await state(s);
+      if (!st.mask || !st.x || !WHY[mode].test(st.why)) bad.push('字卡拖進空格:放開沒有跳出可關的視窗 ' + J(st));
+      if (st.mask) await closeBy(s, 'esc');
       const after = await snap(s);
       if (after.main !== before.main) bad.push('字卡拖進空格:畫面變了');
       if (lsDiff(before.ls, after.ls).length) bad.push('字卡拖進空格:寫了資料');
@@ -694,6 +744,205 @@ T['矮手機:作答跳出的登入卡、註冊卡比畫面高時可以捲,X、�
         mask.scrollTop = 1e6; return { top, end: y('.auth-switch', true), vh: innerHeight, title: (mask.querySelector('h2') || {}).textContent }; })()`);
       const ok = !!m && m.top.x >= 0 && m.top.h2 >= 0 && m.top.why >= 0 && m.end !== null && m.end <= m.vh && (c.tab === 'signup' ? /註冊/ : /登入/).test(m.title);
       out.push({ size: c.w + 'x' + c.h, tab: c.tab, ok, m });
+    } finally { await s.close(); }
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 第 3 輪審查 #1:登入失效(別台按「登出所有裝置」)改回訪客,或別的分頁登出(帳號資料夾刪掉了),這個分頁灌過資料的旗標還在。
+   在同一個分頁用 Google 登回來:這一頁的資料夾不是這個帳號的,要跟剛登入一樣灌資料、重載,之後作答照常寫進帳號資料夾、不跳登入卡,
+   上傳的是「雲端原本的 + 新的這一筆」,不能只剩新的這一筆(帳號資料夾是空的時候直接上傳,會把雲端整列蓋掉) */
+async function settleNav(s, ms) {
+  const end = Date.now() + (ms || 12000);
+  while (Date.now() < end) {
+    await sleep(150);
+    try {
+      if (await s.eval("!window.__old && document.readyState === 'complete' && !!window.CLOUD && CLOUD.ready.then(() => !CLOUD.reloading, () => !CLOUD.reloading)")) return true;
+    } catch (e) { /* 換頁中 */ }
+  }
+  return false;
+}
+T['登入失效或別的分頁登出之後,同一分頁用 Google 登回來:灌資料重載,作答照常寫進帳號資料夾、不跳登入卡,雲端原本的紀錄不被蓋掉'] = async (B) => {
+  const out = [];
+  const day = Date.now() - 864e5;
+  const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
+  for (const how of ['登入失效(帳號資料夾還在)', '別的分頁登出(帳號資料夾刪掉了)']) {
+    const ls = how.indexOf('還在') > -1 ? { ['tr_u' + CPID + '_hist']: J(oldHist) } : {};
+    const ss = { ['tr_cloud_hydrated_' + UID]: '1', __fake_rows: J([{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }]) };
+    /* 讀雲端 progress 慢 1.5 秒:Google 回來那一頁灌資料的這段時間看得到(這時作答只擋下、不跳登入卡) */
+    const s = await open(B, { url: 'grammar.html?u=ga-01', sdk: fakeCloud({ user: USER, progressDelay: 1500 }), ls, ss });
+    const r = { how };
+    try {
+      r.guest = await s.eval('!CLOUD.user && window.__PROFILE_ID === null');
+      await click(s, '.q-block .opt');
+      r.card = WHY.cloud.test((await state(s)).why);
+      await s.eval('window.__old = 1; true');
+      await click(s, '.modal-auth .btn-google');
+      for (let i = 0; i < 40 && (await s.eval('location.pathname').catch(() => '')) !== '/robots.txt'; i++) await sleep(100);   // 到了「Google」
+      const to = await s.eval("sessionStorage.getItem('__fake_oauth_to')");
+      await s.send('Page.navigate', { url: to + '#access_token=fakegoogle&token_type=bearer&expires_in=3600' });
+      /* 灌資料中(已經登入、資料夾還是訪客的、還沒要重載):作答只擋下,不跳「登入之後才能作答」 */
+      let busy = false;
+      for (let i = 0; i < 60 && !busy; i++) { await sleep(50); try { busy = await s.eval("document.readyState !== 'loading' && !!window.CLOUD && !!CLOUD.user && window.__PROFILE_ID === null && !CLOUD.reloading && !!document.querySelector('.q-block .opt')"); } catch (e) { /* 換頁中 */ } }
+      if (busy) {
+        await s.eval('window.__busy = 1; true');
+        try { await click(s, '.q-block .opt'); r.during = await s.eval('window.__busy === 1 ? !document.querySelector(".modal-mask") : "reloaded"'); } catch (e) { r.during = 'reloaded'; }
+      } else r.during = 'no-window';
+      r.settled = await settleNav(s);
+      await sleep(1300);
+      r.after = await s.eval(`({ user: !!CLOUD.user, pid: window.__PROFILE_ID === ${J(CPID)}, canAct: PROFILE.canAct() })`);
+      const before = await snap(s);
+      await click(s, '.q-block .opt');
+      const st = await state(s);
+      r.mask = st.mask;
+      r.answered = await s.eval("!!document.querySelector('.q-block .opt.correct')");
+      await sleep(1500);   // 上傳(0.8 秒去抖動)
+      const end = JSON.parse(await s.eval(LS));
+      const local = JSON.parse(end['tr_u' + CPID + '_hist'] || '[]');
+      const db = JSON.parse(await s.eval("sessionStorage.getItem('__fake_rows') || '[]'"));
+      const cloud = (db.find((x) => x.k === 'hist') || {}).v || [];
+      r.local = local.length;
+      r.cloud = cloud.length;
+      r.guestHist = 'tr_hist' in end;
+      r.screen = before.main !== (await s.eval(MAIN));
+      r.ok = r.guest && r.card && r.during === true && r.settled && r.after.user && r.after.pid && r.after.canAct && !r.mask && r.answered && r.screen
+        && r.local === oldHist.length + 1 && r.cloud === oldHist.length + 1 && !r.guestHist;
+    } finally { await s.close(); }
+    out.push(r);
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 第 3 輪審查 #2:桌機視窗比卡片矮(1366x768 的筆電、1920x1080 放大 125%)時遮罩有捲軸。按住捲軸拖是要捲動看下面,
+   不是點遮罩:視窗不能關、打的字要還在。點遮罩的空白處照樣關 */
+T['桌機矮視窗:按住登入卡、註冊卡、「你是哪位？」遮罩的捲軸拖動不會關掉視窗,打的字還在;點遮罩空白處照樣關'] = async () => {
+  const out = [];
+  const L = await launch(true);
+  const B = await connect(L.ws);
+  try {
+    const cases = [
+      { mode: 'cloud', w: 1280, h: 600, tab: 'signup' }, { mode: 'cloud', w: 1280, h: 560, tab: 'login' },
+      { mode: 'local', w: 1280, h: 300 },
+    ];
+    for (const c of cases) {
+      const s = await open(B, { mode: c.mode, url: 'grammar.html?u=ga-01', size: { width: c.w, height: c.h }, desktop: true });
+      const r = { case: c.mode + ' ' + c.w + 'x' + c.h + (c.tab ? ' ' + c.tab : '') };
+      try {
+        await click(s, '.q-block .opt');
+        if (c.tab === 'signup') { await s.eval("document.querySelector('.modal-auth .auth-switch .auth-link').click(); true"); await sleep(300); }
+        const field = c.mode === 'cloud' ? '.modal-mask .auth input.auth-input' : '.modal-mask .modal-input';
+        await s.eval(`document.querySelector(${J(field)}).focus(); true`);
+        await s.send('Input.insertText', { text: 'typed-by-user' });
+        const m = await s.eval(`(() => { const m = document.querySelector('.modal-mask'); if (!m) return null; const b = m.getBoundingClientRect();
+          return { left: b.left, top: b.top, cw: m.clientWidth, ow: m.offsetWidth, ch: m.clientHeight, sh: m.scrollHeight }; })()`);
+        r.bar = !!m && m.ow - m.cw > 0 && m.sh > m.ch;
+        if (r.bar) {
+          const x = m.left + m.cw + (m.ow - m.cw) / 2;
+          await s.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y: 60 });
+          await s.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y: 60, button: 'left', buttons: 1, clickCount: 1 });
+          await s.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y: Math.min(200, c.h - 40), button: 'left', buttons: 1 });
+          await s.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y: Math.min(200, c.h - 40), button: 'left', buttons: 0, clickCount: 1 });
+          await sleep(300);
+          r.still = (await state(s)).mask;
+          r.kept = await s.eval(`(document.querySelector(${J(field)}) || {}).value === 'typed-by-user'`);
+          /* 點遮罩左邊的空白處:照樣關 */
+          await s.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: 4, y: 100, button: 'left', buttons: 1, clickCount: 1 });
+          await s.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: 4, y: 100, button: 'left', buttons: 0, clickCount: 1 });
+          await sleep(300);
+          r.closed = !(await state(s)).mask;
+        }
+        r.ok = r.bar && r.still && r.kept && r.closed;
+      } finally { await s.close(); }
+      out.push(r);
+    }
+    if (B.errors.length) out.push({ ok: false, errors: B.errors.slice(0, 3) });
+  } finally {
+    try { await Promise.race([B.send('Browser.close'), sleep(3000)]); } catch (e) { /* 照樣往下 */ }
+    B.ws.close();
+    if (L.proc.exitCode === null) L.proc.kill();
+    await sleep(1500);
+    try { fs.rmSync(L.dir, { recursive: true, force: true }); } catch (e) { console.log('使用者資料夾沒刪掉:' + L.dir); }
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 第 3 輪審查 #3:閱讀頁單字考題說「字卡拖進空格」,拖曳是第一種作答方法。沒登入時拖不動,放開那一下要跳出視窗說明為什麼
+   (觸控:放開時根本沒有 click;滑鼠:click 落在字卡與空格共同的外層,不在作答元素上)。
+   一般作答鈕按下去拖開再放(取消點擊的慣例)不跳。已登入的人照樣拖得進去 */
+T['拖曳:閱讀頁字卡拖進空格(觸控)沒登入時放開就跳出視窗,畫面與資料不變;一般作答鈕按下去拖開不跳;已登入照樣拖得進去'] = async (B) => {
+  const out = [];
+  for (const mode of ['cloud', 'local']) {
+    const s = await open(B, { mode, url: 'reading.html?id=art-1a', touch: true });
+    try {
+      const before = await snap(s);
+      const { a, b } = await chipAndBlank(s);
+      await touchDrag(s, a, b);
+      const st = await state(s);
+      const after = await snap(s);
+      const ghost = await s.eval('!!document.querySelector(".tq-ghost")');
+      if (st.mask) await closeBy(s, 'esc');
+      out.push({ mode, how: '觸控拖字卡', ok: st.mask && st.x && WHY[mode].test(st.why) && after.main === before.main && !lsDiff(before.ls, after.ls).length && !ghost, st: { mask: st.mask, why: st.why } });
+    } finally { await s.close(); }
+    const g = await open(B, { mode, url: 'grammar.html?u=ga-01' });
+    try {
+      const p = await point(g, '.q-block .opt', 0);
+      await mouseDrag(g, p, { x: 10, y: p.y });   // 拖到頁面左邊的空白處再放
+      const st = await state(g);
+      out.push({ mode, how: '作答鈕按下去拖開', ok: !st.mask, mask: st.mask });
+    } finally { await g.close(); }
+  }
+  for (const o of [{ mode: 'cloud', user: USER }, { mode: 'local', profile: true }]) {
+    for (const how of ['mouse', 'touch']) {
+      const s = await open(B, Object.assign({ url: 'reading.html?id=art-1a', touch: how === 'touch' }, o));
+      try {
+        const { a, b } = await chipAndBlank(s);
+        if (how === 'touch') await touchDrag(s, a, b); else await mouseDrag(s, a, b);
+        const filled = await s.eval("document.querySelectorAll('.tq-blank.filled').length");
+        out.push({ mode: o.mode + ' 已登入', how, ok: filled === 1 && !(await state(s)).mask, filled });
+      } finally { await s.close(); }
+    }
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 第 3 輪審查 #4:作答框按 Ctrl+V 貼上、把別處的文字拖進來,跟打字一樣是作答:沒登入時跳出視窗、框裡什麼都沒進來、什麼都不寫。
+   已登入的人拖得進去 */
+T['貼上、拖文字進作答框:沒登入時跳出視窗,框裡沒有字、資料不變;關掉後再貼又跳;已登入的人拖得進去'] = async (B) => {
+  const out = [];
+  const TA = 'textarea.write-area';
+  for (const mode of ['cloud', 'local']) {
+    const s = await open(B, { mode, url: 'writing.html?level=l1&u=23' });
+    try {
+      const before = await snap(s);
+      await s.eval(`document.querySelector(${J(TA)}).focus(); true`);
+      await ctrlV(s);
+      const st1 = await state(s);
+      const pastes = await s.eval('window.__pastes');
+      await closeBy(s, 'esc');
+      const back = await s.eval(`document.activeElement === document.querySelector(${J(TA)})`);
+      await ctrlV(s);
+      const st2 = await state(s);
+      if (st2.mask) await closeBy(s, 'esc');
+      const p = await point(s, TA);
+      await dropText(s, p.x, p.y, 'Dropped draft.');
+      const st3 = await state(s);
+      if (st3.mask) await closeBy(s, 'esc');
+      await s.eval('document.activeElement && document.activeElement.blur && document.activeElement.blur(); true');
+      await sleep(1100);
+      const after = await snap(s);
+      const value = await s.eval(`document.querySelector(${J(TA)}).value`);
+      const ok = pastes >= 1 && st1.mask && WHY[mode].test(st1.why) && back && st2.mask && st3.mask && WHY[mode].test(st3.why) && value === ''
+        && after.main === before.main && !lsDiff(before.ls, after.ls).length;
+      out.push({ mode, ok, pastes, paste: st1.mask, again: st2.mask, back, drop: st3.mask, value, ls: lsDiff(before.ls, after.ls) });
+    } finally { await s.close(); }
+  }
+  for (const o of [{ mode: 'cloud', user: USER }, { mode: 'local', profile: true }]) {
+    const s = await open(B, Object.assign({ url: 'writing.html?level=l1&u=23' }, o));
+    try {
+      const p = await point(s, TA);
+      await dropText(s, p.x, p.y, 'Dropped draft.');
+      const value = await s.eval(`document.querySelector(${J(TA)}).value`);
+      out.push({ mode: o.mode + ' 已登入', ok: /Dropped draft/.test(value) && !(await state(s)).mask, value });
     } finally { await s.close(); }
   }
   return { ok: out.every((x) => x.ok), detail: J(out) };

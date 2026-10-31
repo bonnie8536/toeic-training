@@ -204,12 +204,17 @@
     if (serverAccess && typeof serverAccess.is_teacher === 'boolean') window.CLOUD.isTeacher = serverAccess.is_teacher;   // my_access 先回來了:以它為準
 
     const pid = pidOf(user);
+    /* 這一頁的資料夾不是這個帳號的(第 3 輪審查 #1):登入失效改回訪客、或別的分頁登出(帳號資料夾刪掉了)之後,
+       在同一個分頁用 Google 登回來,這個分頁之前灌過資料的旗標還在。旗標不算數,跟剛登入一樣灌資料、重載;
+       不然這一頁的寫入進訪客資料夾,之後照帳號資料夾裡的舊值或空值上傳,會把雲端那一列蓋掉 */
+    const otherFolder = window.__PROFILE_ID !== pid;
     localStorage.setItem('tr_current_profile', JSON.stringify(pid));
 
     const flagKey = 'tr_cloud_hydrated_' + user.id;
     const pendTry = 'tr_move_pending_tried_' + user.id;   // 搬家暫存區:這個分頁只為它重灌一次,載不到合併程式也不會一直重載
     const movePend = hasPending(user.id) && !sessionStorage.getItem(pendTry);
-    if (fresh || !sessionStorage.getItem(flagKey) || movePend) {
+    if (fresh || otherFolder || !sessionStorage.getItem(flagKey) || movePend) {
+      if (fresh || otherFolder) sessionStorage.removeItem(flagKey);   // 灌到一半連不上:下次開頁照樣重灌,不沿用舊旗標
       if (movePend) sessionStorage.setItem(pendTry, '1');
       hydrating = true;
       const { data: rows, error } = await client.from('progress').select('k,v,updated_at').eq('user_id', user.id);
@@ -1469,6 +1474,9 @@
     if (reloading) return;   // 剛灌完雲端資料、頁面要重載:這時的寫入根據的是舊畫面,不記帳
     const user = window.CLOUD.user;
     if (!user) return;
+    /* 這一頁的資料夾不是這個帳號的(剛在這一頁登入、灌資料重載之前):寫進的是訪客資料夾,不記進帳號的帳本。
+       記了帳,灌資料或補傳時會讀帳號資料夾裡的舊值或空值上傳,蓋掉雲端那一列 */
+    if (pidOf(user) !== window.__PROFILE_ID) return;
     const led = readLedger(user.id);
     led[key] = t;
     writeSeq++;

@@ -518,6 +518,20 @@ function syncScenarios() {
   patch('  vm.runInContext(src, ctx);\n', '  __HOOK.inject(ctx);\n  vm.runInContext(src, ctx);\n');
   return new Function('require', '__dirname', '__HOOK', txt + '\nreturn scenarios;');
 }
+/* 第 1 步之後刻意改掉的行為(其他照樣逐位元組比):
+   先看再登入第 3 輪審查(2026-10-31):從訪客頁登入、灌資料重載之前,寫進訪客資料夾的那一筆不再記進帳號的帳本(js/cloud.js push)。
+   第 1 步那版會記帳,灌資料時讀帳號資料夾(沒有這個鍵)上傳 null,把雲端那一列蓋掉。
+   - 32:比對前把第 1 步那版多出來的「verb_quiz 上傳 null」那一次請求、和它留在雲端的那一列拿掉,其他要一樣
+   - 51:就是測這個改動的情境(第 1 步那版會紅,雲端被蓋成 null),不比,只要新版通過 */
+function dropNullUpload(state, key) {
+  const o = JSON.parse(state);
+  const isNull = r => !!r && r.k === key && r.v === null;
+  o.db = o.db.filter(x => !isNull(JSON.parse(x)));
+  o.ops = o.ops.filter(x => { const q = JSON.parse(x); return !(q.op === 'upsert' && q.k === key && isNull(q.row)); });
+  return J(o);
+}
+const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null };
+const intended = name => Object.prototype.hasOwnProperty.call(INTENDED, name.split('.')[0]);
 async function replay(variant) {
   const make = syncScenarios();
   const got = {};
@@ -532,15 +546,16 @@ async function replay(variant) {
       HOOK.worlds = [];
       let r;
       try { r = await fn(src); } catch (e) { r = { ok: false, detail: '例外 ' + e.message }; }
-      const state = HOOK.worlds.map(w => otherState(w, variant === 'fake')).join('||');
+      const fix = label === 'old' && intended(name) ? INTENDED[name.split('.')[0]] : null;
+      const state = HOOK.worlds.map(w => { const s = otherState(w, variant === 'fake'); return fix ? fix(s) : s; }).join('||');
       (got[name] = got[name] || {})[label] = J({ ok: r.ok, detail: norm(String(r.detail)) }) + '##' + state;
     }
   }
   const names = Object.keys(got);
-  const bad = names.filter(n => got[n].old !== got[n].new);
+  const bad = names.filter(n => !(intended(n) && INTENDED[n.split('.')[0]] === null) && got[n].old !== got[n].new);
   const newFail = names.filter(n => !JSON.parse(got[n].new.split('##')[0]).ok);
   return { ok: names.length >= 50 && !bad.length && !newFail.length,
-           detail: names.length + ' 個情境' + (bad.length ? ',不同:' + bad.map(n => n.split('.')[0]).join('、') : ',全部相同') + (newFail.length ? ';新版沒通過:' + newFail.map(n => n.split('.')[0]).join('、') : '') };
+           detail: names.length + ' 個情境' + (bad.length ? ',不同:' + bad.map(n => n.split('.')[0]).join('、') : ',全部相同') + '(刻意改掉的:' + Object.keys(INTENDED).join('、') + ')' + (newFail.length ? ';新版沒通過:' + newFail.map(n => n.split('.')[0]).join('、') : '') };
 }
 
 /* ---------- B 部分:真的 pet.js、pet-food.js、pet-store.js ---------- */

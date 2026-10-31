@@ -215,7 +215,7 @@
   /* ================= 發音總表 ================= */
   function renderChart() {
     document.title = '發音總表|自然發音|衝衝英文';
-    setPageMeta('ref=chart');
+    setPageMeta('ref=chart', '自然發音總表：' + UNITS.length + ' 課的發音規則一頁看完，附 KK 音標與例字，點一下就播放。');
     widen();
     const done = store.get('phonics_done', {});
     const col = h('div', { class: 'gx-col' },

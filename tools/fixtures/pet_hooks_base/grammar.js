@@ -165,7 +165,7 @@
   /* ================= 查表頁:跟課程一樣在文法區裡,左邊路徑還在 ================= */
   function renderRef(k) {
     const r = REFS[k];
-    setPageMeta('ref=' + k);
+    setPageMeta('ref=' + k, r.title + '：' + r.sub + '。');
     widen();
     const host = h('div', null, h('p', { class: 'result-note', style: 'margin-top:30px' }, '載入中…'));
     root.append(h('div', { class: 'gx-layout' }, buildRail(r.stage, null, null, k), h('div', { class: 'gx-col' }, host)));

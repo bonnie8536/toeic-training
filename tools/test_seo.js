@@ -121,8 +121,8 @@ T['setPageMeta:canonical 與 og:url 用 og:url 的網域;單元只留參數;重�
 };
 T['四個單元頁的程式:每一種畫面都呼叫 setPageMeta,參數跟頁面上的連結格式一樣;單元標題帶站名'] = () => {
   const g = read('js/grammar.js'), p = read('js/phonics.js'), r = read('js/reading.js'), d = read('js/dialogue.js');
-  assert.match(g, /setPageMeta\(''\)/); assert.match(g, /setPageMeta\('u=' \+ encodeURIComponent\(u\.id\)/); assert.match(g, /setPageMeta\('ref=' \+ k\)/);
-  assert.match(p, /setPageMeta\(''\)/); assert.match(p, /setPageMeta\('u=' \+ encodeURIComponent\(u\.id\)/); assert.match(p, /setPageMeta\('ref=chart'\)/);
+  assert.match(g, /setPageMeta\(''\)/); assert.match(g, /setPageMeta\('u=' \+ encodeURIComponent\(u\.id\)/); assert.match(g, /setPageMeta\('ref=' \+ k, r\.title \+ /);
+  assert.match(p, /setPageMeta\(''\)/); assert.match(p, /setPageMeta\('u=' \+ encodeURIComponent\(u\.id\)/); assert.match(p, /setPageMeta\('ref=chart', '自然發音總表/);   /* 查表頁也要有自己的說明,不跟列表頁重複 */
   assert.match(r, /setPageMeta\(''\)/); assert.match(r, /setPageMeta\('id=' \+ encodeURIComponent\(a\.id\)/);
   assert.match(d, /setPageMeta\(''\)/); assert.match(d, /setPageMeta\('id=' \+ encodeURIComponent\(d\.id\)/);
   assert.match(g, /document\.title = u\.title \+ '\|衝衝英文'/);

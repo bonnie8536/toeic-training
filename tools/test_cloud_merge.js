@@ -522,7 +522,12 @@ function syncScenarios() {
    先看再登入第 3 輪審查(2026-10-31):從訪客頁登入、灌資料重載之前,寫進訪客資料夾的那一筆不再記進帳號的帳本(js/cloud.js push)。
    第 1 步那版會記帳,灌資料時讀帳號資料夾(沒有這個鍵)上傳 null,把雲端那一列蓋掉。
    - 32:比對前把第 1 步那版多出來的「verb_quiz 上傳 null」那一次請求、和它留在雲端的那一列拿掉,其他要一樣
-   - 51:就是測這個改動的情境(第 1 步那版會紅,雲端被蓋成 null),不比,只要新版通過 */
+   - 51:就是測這個改動的情境(第 1 步那版會紅,雲端被蓋成 null),不比,只要新版通過
+   同一台好幾個分頁、讀雲端進度失敗(2026-10-31 審查,main 130f330 就有):別的分頁登出或換帳號後沒重載的頁面、
+   帳號資料夾還沒灌過(「還沒灌過」標記)的頁面不記帳、不能作答;記著標記時每一頁都要灌。
+   - 52、53、54:就是測這些改動的新情境(第 1 步那版、e49e444 都會紅:雲端被只有新那幾筆的錯題本、hist 蓋掉),不比,只要新版通過
+   - 55:釘住第 3 輪的「fresh 或 otherFolder 時先清掉灌過旗標」與 otherFolder 的新情境(第 1 步那版沒有這兩條,會紅),不比,只要新版通過
+   1~51 照樣逐位元組比(平常登入、重新整理、離線、兩台裝置、登出的請求與儲存都沒變) */
 function dropNullUpload(state, key) {
   const o = JSON.parse(state);
   const isNull = r => !!r && r.k === key && r.v === null;
@@ -530,7 +535,7 @@ function dropNullUpload(state, key) {
   o.ops = o.ops.filter(x => { const q = JSON.parse(x); return !(q.op === 'upsert' && q.k === key && isNull(q.row)); });
   return J(o);
 }
-const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null };
+const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null, '52': null, '53': null, '54': null, '55': null };
 const intended = name => Object.prototype.hasOwnProperty.call(INTENDED, name.split('.')[0]);
 async function replay(variant) {
   const make = syncScenarios();

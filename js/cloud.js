@@ -76,7 +76,7 @@
     authReturning: enabled && authReturning, login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
     startCheckout, myCheckout, isOwner,
-    saveSignupIntent, takeSignupIntent, clearSignupIntent, markLocalOnly, clearLocalOnly, syncKey, flushForMove };
+    saveSignupIntent, takeSignupIntent, clearSignupIntent, markLocalOnly, clearLocalOnly, syncKey, flushForMove, folderReady };
   /* 先合併再上傳的鍵(同步合併設計 3.2)。merge() 用到時才找合併函式:頁面沒載到(pet.js、sync-merge.js)就是 null,
      這時不上傳、帳本留著,不會退回整份上傳。
      clock:合併前要對時(只有 pet:PET.cloudMerge 依日期裁切,慢的時鐘會丟掉別台的新日期)。
@@ -203,6 +203,40 @@
     return '';
   }
 
+  /* ---------- 這一頁的寫入能不能記帳(2026-10-31 審查,main 130f330 就有的三條掉資料路徑) ----------
+     1. 這一頁的資料夾還是不是這台目前的帳號:別的分頁登出(資料夾、帳本刪光)或換帳號之後,沒重載的頁面記憶體裡的
+        CLOUD.user、__PROFILE_ID 還是原帳號。照寫照記帳的話,寫入根據的是空的資料夾(或是下一個人的練習),
+        上傳因為登入不在了失敗、帳本留著,原帳號下次在這台登入時灌資料把它當成本機較新,整份上傳蓋掉雲端(js/pet-store.js profileGone 同一套判斷)。
+     2. 「還沒灌過」標記 tr_cloud_unhydrated_<帳號 id>(在帳號資料夾外面,跟帳本一樣):要灌資料時帳號資料夾是空的
+        (這台第一次登入、別的分頁登出把資料夾刪了;這一頁確認登入前寫的不算)就先記上,灌成功才劃掉,登出時清掉。
+        記著的時候每一頁都要灌(別的分頁之前灌過的旗標不算數),這段時間的寫入不記帳:讀雲端進度失敗(網路斷一下、Supabase 慢或休眠)時
+        頁面拿到的是空資料夾,記了帳,下一頁灌資料會把只有新那幾筆的 hist、錯題本整份傳上去蓋掉雲端。
+        資料夾不是空的(之前灌過、登入失效改回訪客留著的)不記,跟以前一樣:讀不到雲端時照常作答記帳,下次灌資料比新舊(離線也是這樣)。
+     平常登入著的頁面兩個條件都成立,行為不變。 */
+  function unhydratedKey(uid) { return 'tr_cloud_unhydrated_' + uid; }
+  function unhydrated(uid) {
+    try { return localStorage.getItem(unhydratedKey(uid)) !== null; } catch (e) { return true; }
+  }
+  function sameFolder() {
+    try { return localStorage.getItem('tr_current_profile') === JSON.stringify(window.__PROFILE_ID); } catch (e) { return false; }
+  }
+  function canRecord(uid) { return sameFolder() && !unhydrated(uid); }
+  /* 帳號資料夾有沒有東西;skip:這一頁確認登入前寫進去的鍵(early)不算 */
+  function folderEmpty(prefix, skip) {
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith(prefix) && !(skip && Object.prototype.hasOwnProperty.call(skip, k.slice(prefix.length)))) return false;
+      }
+    } catch (e) { return false; }
+    return true;
+  }
+  /* js/profile.js canAct 用:已登入、這一頁的資料夾就是這台目前的帳號、而且灌過雲端進度,才能作答(不然開「重新整理」卡) */
+  function folderReady() {
+    const u = window.CLOUD.user;
+    return !!(u && typeof u.id === 'string' && pidOf(u) === window.__PROFILE_ID && canRecord(u.id));
+  }
+
   async function afterAuth(user, fresh) {
     if (paidUi()) accessPromise = fetchAccess(user);   // 使用權跟教師身分同時查;不等它,登入與灌資料照舊
     try {
@@ -216,18 +250,22 @@
        在同一個分頁用 Google 登回來,這個分頁之前灌過資料的旗標還在。旗標不算數,跟剛登入一樣灌資料、重載;
        不然這一頁的寫入進訪客資料夾,之後照帳號資料夾裡的舊值或空值上傳,會把雲端那一列蓋掉 */
     const otherFolder = window.__PROFILE_ID !== pid;
-    localStorage.setItem('tr_current_profile', JSON.stringify(pid));
-
+    const prefix = 'tr_u' + pid + '_';
     const flagKey = 'tr_cloud_hydrated_' + user.id;
     const pendTry = 'tr_move_pending_tried_' + user.id;   // 搬家暫存區:這個分頁只為它重灌一次,載不到合併程式也不會一直重載
     const movePend = hasPending(user.id) && !sessionStorage.getItem(pendTry);
-    if (fresh || otherFolder || !sessionStorage.getItem(flagKey) || movePend) {
+    const notYet = unhydrated(user.id);   // 這台這個帳號的資料夾還沒灌過:別的分頁之前灌過的旗標不算數
+    const hydrate = fresh || otherFolder || !sessionStorage.getItem(flagKey) || movePend || notYet;
+    /* 帳號資料夾是空的:先記「還沒灌過」再寫目前帳號,別的分頁一看到目前帳號是它,就知道資料夾還不能用 */
+    if (hydrate && !notYet && folderEmpty(prefix, otherFolder ? null : early)) { try { localStorage.setItem(unhydratedKey(user.id), '1'); } catch (e) { /* 寫不進去就跟以前一樣 */ } }
+    localStorage.setItem('tr_current_profile', JSON.stringify(pid));
+
+    if (hydrate) {
       if (fresh || otherFolder) sessionStorage.removeItem(flagKey);   // 灌到一半連不上:下次開頁照樣重灌,不沿用舊旗標
       if (movePend) sessionStorage.setItem(pendTry, '1');
       hydrating = true;
       const { data: rows, error } = await client.from('progress').select('k,v,updated_at').eq('user_id', user.id);
-      if (error) throw error;   // 連不上就整段不做:本機一個都不刪
-      const prefix = 'tr_u' + pid + '_';
+      if (error) throw error;   // 連不上就整段不做:本機一個都不刪(「還沒灌過」標記留著)
       const cloud = {};
       (rows || []).forEach(r => { cloud[r.k] = r; });
       /* 要對時的鍵(pet)本機和雲端都有時,先對時;時鐘差太多就不合併(planMerged 照原本的規則,留本機也不補傳) */
@@ -269,6 +307,7 @@
         if (r.k !== '_meta' && r.v !== null && !(r.k in keepLocal)) localStorage.setItem(prefix + r.k, JSON.stringify(r.v));
       });
       Object.keys(plan.save).forEach(k => localStorage.setItem(prefix + k, JSON.stringify(plan.save[k])));
+      try { localStorage.removeItem(unhydratedKey(user.id)); } catch (e) { /* 劃不掉:下一頁再灌一次 */ }   // 資料夾灌好了
       /* 留下來的本機改動補傳上去;失敗也沒關係,帳本還在,下次再傳。合併說唯讀的不補傳 */
       await Promise.all(Object.keys(keepLocal).filter(k => !plan.hold[k]).map(k => upload(user, k, keepLocal[k])));
       sessionStorage.setItem(flagKey, '1');
@@ -329,6 +368,7 @@
     if (user) {
       writeLedger(user.id, {});
       writeLocalOnly(user.id, {});
+      try { localStorage.removeItem(unhydratedKey(user.id)); } catch (e) {}
       sessionStorage.removeItem('tr_cloud_hydrated_' + user.id);
       const prefix = 'tr_u' + pidOf(user) + '_';
       for (let i = localStorage.length - 1; i >= 0; i--) {
@@ -1490,6 +1530,8 @@
     /* 這一頁的資料夾不是這個帳號的(剛在這一頁登入、灌資料重載之前):寫進的是訪客資料夾,不記進帳號的帳本。
        記了帳,灌資料或補傳時會讀帳號資料夾裡的舊值或空值上傳,蓋掉雲端那一列 */
     if (pidOf(user) !== window.__PROFILE_ID) return;
+    /* 別的分頁登出、換了帳號(這一頁沒重載),或這台的帳號資料夾還沒灌過:寫入根據的是空的、或不是這個帳號的資料夾,不記帳 */
+    if (!canRecord(user.id)) return;
     const led = readLedger(user.id);
     led[key] = t;
     writeSeq++;
@@ -1504,7 +1546,7 @@
     const u = window.CLOUD.user;
     const uid = u && pidOf(u) === window.__PROFILE_ID ? u.id : storedUid();
     const keys = Object.keys(early);
-    if (!uid || !keys.length) return;
+    if (!uid || !keys.length || !canRecord(uid)) return;   // 跟 push 一樣:資料夾不是這台目前的帳號、或還沒灌過,不記帳
     const led = readLedger(uid);
     keys.forEach(k => { if (!(led[k] >= early[k])) led[k] = early[k]; });
     writeLedger(uid, led);

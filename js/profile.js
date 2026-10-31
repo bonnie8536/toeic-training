@@ -175,12 +175,15 @@
        c 開頭就是登入著的帳號(寫入本來就寫進那個資料夾),跟以前一樣照常作答。
        有 CLOUD.user 時還要這一頁的資料夾就是這個帳號的,而且頁面不是正要重載:剛在這一頁登入(登入卡、Google 回來)到重載之間,
        資料夾還是訪客的,這時寫入會寫進訪客資料夾、又記進新帳號的帳本,灌資料時把帳號雲端那一列當成本機比較新,上傳空值蓋掉(第 2 輪審查 #1)。
-       灌完雲端資料要重載的那一下也一樣不寫(cloud.js 本來就不替它記帳,根據的是舊畫面)。 */
+       灌完雲端資料要重載的那一下也一樣不寫(cloud.js 本來就不替它記帳,根據的是舊畫面)。
+       還要 cloud.js folderReady(2026-10-31 審查):別的分頁登出、換帳號之後沒重載的頁面(資料夾已經刪了、或是下一個人在用),
+       和這台帳號資料夾還沒灌過雲端進度(空的,讀雲端進度失敗)的頁面,一樣不寫,開「重新整理」卡。舊版 cloud.js 沒有這個函式就照舊 */
     let settled = false;
     Promise.resolve(CLOUD.ready).then(() => { settled = true; }, () => { settled = true; });
+    const folderReady = () => typeof CLOUD.folderReady !== 'function' || CLOUD.folderReady();
     const canAct = () => {
       if (CLOUD.reloading) return false;
-      if (CLOUD.user) return typeof CLOUD.user.id === 'string' && 'c' + CLOUD.user.id.replace(/-/g, '') === window.__PROFILE_ID;
+      if (CLOUD.user) return typeof CLOUD.user.id === 'string' && 'c' + CLOUD.user.id.replace(/-/g, '') === window.__PROFILE_ID && folderReady();
       if (settled) return false;
       const pid = window.__PROFILE_ID;
       return typeof pid === 'string' && pid.charAt(0) === 'c';

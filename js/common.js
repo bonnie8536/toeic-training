@@ -101,15 +101,31 @@ function storageKey(key) {
    頁面自己要分「存起來」或「只記在這一頁」(對話頁聽過哪幾句、發音頁的慢速)時呼叫 canKeepProgress()。
    開頁時本來就會寫的東西(頁面載完之前)、學生檔案登錄表(RAW_KEYS,本機建檔要用)照舊。 */
 function canKeepProgress() {
+  if (folderGone()) return false;
   const P = window.PROFILE;
   try { return !(P && typeof P.blocksWrite === 'function' && P.blocksWrite()); } catch (e) { return true; }
 }
+/* 這一頁的資料夾是雲端帳號的,可是這台目前的帳號已經不是它(別的分頁登出、換了帳號,這一頁沒重載):每一頁都不寫(內容頁 profile.js canAct 也擋)。
+   寫了會把登出時刪掉的帳號資料夾建回來,共用電腦上下一個人的練習也會留在前一個人的資料夾裡(2026-10-31 審查)。訪客、本機學生檔案不看這個 */
+function folderGone() {
+  const id = window.__PROFILE_ID;
+  if (typeof id !== 'string' || id.charAt(0) !== 'c') return false;
+  try { return localStorage.getItem('tr_current_profile') !== JSON.stringify(id); } catch (e) { return false; }
+}
 /* 剛灌完雲端資料、頁面正要重載(js/cloud.js 的 CLOUD.reloading)的那一下也不寫(根據的是舊畫面),但那是登入著的人,不是漏攔:
-   不留「還沒登入」的警告。已登入的人開新分頁的內容頁就會遇到(這個分頁還沒灌過,灌完重載前小雞照常同步一次) */
+   不留「還沒登入」的警告。已登入的人開新分頁的內容頁就會遇到(這個分頁還沒灌過,灌完重載前小雞照常同步一次)。
+   別的分頁登出、換帳號之後沒重載的頁面(folderGone),和已登入、但這台的帳號資料夾還沒灌過雲端進度的頁面(js/cloud.js folderReady,
+   小雞開頁同步一次會走到這裡)也一樣不是漏攔,不留警告 */
 function keepOrWarn(what) {
   if (canKeepProgress()) return true;
-  try { if (!(window.CLOUD && window.CLOUD.reloading)) console.warn('還沒登入，這一筆沒有存：' + what); } catch (e) { /* 沒有 console 也一樣不存 */ }
+  try { if (!quietBlock()) console.warn('還沒登入，這一筆沒有存：' + what); } catch (e) { /* 沒有 console 也一樣不存 */ }
   return false;
+}
+function quietBlock() {
+  const C = window.CLOUD;
+  if (C && C.reloading) return true;
+  if (folderGone()) return true;
+  return !!(C && C.user && typeof C.folderReady === 'function' && !C.folderReady());
 }
 
 const store = {

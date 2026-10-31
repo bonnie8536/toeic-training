@@ -47,14 +47,17 @@ function makeClient(w) {
         if (w.revoked) { w.local.removeItem(SB_KEY); emit('SIGNED_OUT'); return { data: { session: null }, error: null }; }
         if (w.noSession) return { data: { session: null }, error: null };
         if (w.sessionUser) return { data: { session: { user: w.sessionUser } } };   // supabase-js 手上是另一個帳號(或 null:沒有登入)
-        return w.offline && w.tokenExpired
-          ? { data: { session: null }, error: { message: 'TypeError: Failed to fetch' } }
-          : { data: { session: { user: USER } } };
+        if (w.offline && w.tokenExpired) return { data: { session: null }, error: { message: 'TypeError: Failed to fetch' } };
+        /* w.authFromStorage:跟真的 supabase-js 一樣看這台 localStorage 的登入資料(別的分頁登出清掉了就是沒登入) */
+        if (w.authFromStorage) { const u = storedUser(w); return { data: { session: u ? { user: u } : null }, error: null }; }
+        return { data: { session: { user: USER } } };
       },
+      /* w.loginAs:這次登入的是別的帳號(換帳號) */
       signInWithPassword: async () => {
         if (w.offline) return { data: {}, error: { message: 'TypeError: Failed to fetch' } };
-        w.revoked = false; w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', user: USER }));
-        return { data: { user: USER, session: { user: USER } }, error: null };
+        const u = w.loginAs || USER;
+        w.revoked = false; w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', user: u }));
+        return { data: { user: u, session: { user: u } }, error: null };
       },
       /* 跟真的一樣:登出、自動更新換不到憑證(被撤銷)、別的分頁登出,都會清掉 SB_KEY 並通知 SIGNED_OUT */
       onAuthStateChange(cb) { cbs.push(cb); return { data: { subscription: { unsubscribe() {} } } }; },
@@ -93,10 +96,15 @@ function makeClient(w) {
             if (w.offline) return { data: null, error: { message: 'TypeError: Failed to fetch' } };
             if (w.readError) return { data: null, error: { message: 'JWT expired', code: 'PGRST301' } };
             if (w.readNull) return { data: null, error: null };
+          } else {   // 整批讀(灌資料):progressGate 只卡住下一次(還在讀);progressFail 打開時回 Failed to fetch(網路斷一下、Supabase 慢或休眠)
+            if (w.progressGate) { const g = w.progressGate; w.progressGate = null; await g; }
+            if (w.progressFail) return { data: null, error: { message: 'TypeError: Failed to fetch' } };
           }
+          if (w.rls && !rlsOk(w, q.filters.user_id)) return { data: [], error: null };   // 沒有登入資料或不是這個帳號:只回空陣列
           return { data: w.db.filter(r => r.user_id === q.filters.user_id && (q.filters.k === undefined || r.k === q.filters.k)).map(r => JSON.parse(JSON.stringify(r))), error: null };
         }
         if (q.op === 'upsert') {
+          if (w.rls && !rlsOk(w, q.row.user_id)) return { data: null, error: { message: 'new row violates row-level security policy for table "progress"', code: '42501' } };
           const row = JSON.parse(JSON.stringify(q.row));
           const i = w.db.findIndex(r => r.user_id === row.user_id && r.k === row.k);
           if (i >= 0) w.db[i] = row; else w.db.push(row);
@@ -108,6 +116,10 @@ function makeClient(w) {
     },
   };
 }
+/* 這台 localStorage 裡 supabase-js 的登入資料是哪個帳號(沒有就是 null) */
+function storedUser(w) { try { const s = JSON.parse(w.local.getItem(SB_KEY)); return s && s.user ? s.user : null; } catch (e) { return null; } }
+/* w.rls:照 Supabase 的 RLS,請求帶的是這台現在的登入資料(supabase-js 每次都從 storage 讀);沒有、或不是這一列的帳號就擋下 */
+function rlsOk(w, uid) { const u = storedUser(w); return !!u && u.id === uid; }
 const tick = async () => { for (let i = 0; i < 5; i++) await new Promise(r => setImmediate(r)); };
 
 /* 開一次頁面。close() = 頁面被系統殺掉:排程中的上傳全部消失,而且不會觸發 pagehide */
@@ -824,7 +836,157 @@ const scenarios = {
     return { ok: same(cv(w, 'verb_quiz'), row) && same(lv(w, 'verb_quiz'), row) && !led.includes('verb_quiz'),
              detail: '雲端 ' + JSON.stringify(cv(w, 'verb_quiz')) + ' / 帳號資料夾 ' + JSON.stringify(lv(w, 'verb_quiz')) + ' / 帳本 ' + JSON.stringify(led) };
   },
+  /* ---------- 同一台好幾個分頁、讀雲端進度失敗(main 130f330 就有的掉資料路徑,2026-10-31 審查) ----------
+     下面幾個情境用 w.authFromStorage(登入看這台的登入資料)、w.rls(請求帶這台現在的登入資料,不是這個帳號就擋下),
+     兩個分頁共用 localStorage、各自一份 sessionStorage(換 w.session)。作答照 practice.js:寫入當下重讀本機、加一筆、整份寫回 */
+  '52. 同一台兩個分頁都登入,一個登出再登回來、讀雲端進度失敗或還在讀:另一個分頁換頁後要重灌,作答不能把錯題本(整份上傳)蓋掉雲端': async src => {
+    const one = async timing => {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      w.db.push({ user_id: USER.id, k: K, v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const sA = w.session;
+      const pgOld = await openLoggedIn(w, src);                      // 分頁 A 灌過
+      w.session = makeStorage();                                     // 分頁 B:新的工作階段,灌資料後重載
+      let pgB = loadPage(w, src); await pgB.ready;
+      pgB = loadPage(w, src); await pgB.ready;
+      await pgB.ctx.CLOUD.logout(); await tick();                    // B 登出:帳號資料夾、帳本刪光,只清 B 自己的旗標
+      pgB = loadPage(w, src); await pgB.ready;                       // B 重載成訪客
+      let release = null;
+      if (timing === 'inflight') w.progressGate = new Promise(r => { release = r; }); else w.progressFail = true;
+      const loginP = pgB.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e);
+      await tick();
+      if (timing !== 'inflight') await loginP;
+      w.session = sA;
+      let pgA = timing === 'stale' ? pgOld : (await settle(w, src)).pg;   // A 換頁;stale:A 用登出前就開著的那一頁
+      studentWrites(pgA, w, K, (lv(w, K) || []).concat(['new-q']));
+      await pgA.runTimers(); await pgA.fire('win:pagehide');
+      const mid = cv(w, K);
+      if (release) { release(); await loginP; await tick(); }
+      w.progressFail = false;
+      pgA = (await settle(w, src)).pg;                               // 網路恢復,A 再換一頁
+      const shown = lv(w, K) || [];
+      studentWrites(pgA, w, K, shown.concat(['new-q2']));
+      await pgA.runTimers();
+      const end = cv(w, K);
+      return { ok: hasAll(mid, FIVE) && hasAll(shown, FIVE) && hasAll(end, FIVE.concat(['new-q2'])),
+               detail: ({ fail: '讀失敗', inflight: '還在讀', stale: '讀失敗、A 沒換頁' })[timing] + ':A 作答後雲端 ' + JSON.stringify(mid) + ' / 下一頁本機 ' + JSON.stringify(shown) + ' / 最後雲端 ' + JSON.stringify(end) };
+    };
+    const rs = [await one('fail'), await one('inflight'), await one('stale')];
+    return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
+  },
+  '53. 同一台兩個分頁都登入,一個登出(或改登入別的帳號)後,另一個沒重載的分頁照常作答:不記進原帳號的帳本,原帳號之後在這台登入時雲端不能變少': async src => {
+    const one = async swap => {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      w.db.push({ user_id: USER.id, k: K, v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const pgA = await openLoggedIn(w, src);                        // 分頁 A 灌過,之後一直沒重載
+      w.session = makeStorage();
+      let pgB = loadPage(w, src); await pgB.ready;
+      pgB = loadPage(w, src); await pgB.ready;
+      await pgB.ctx.CLOUD.logout(); await tick();
+      pgB = loadPage(w, src); await pgB.ready;                       // B 重載成訪客
+      if (swap) {                                                    // B 改登入別的帳號
+        w.loginAs = OTHER_USER; await pgB.ctx.CLOUD.login('o@x.com', 'test-only'); await tick(); w.loginAs = null;
+        pgB = loadPage(w, src); await pgB.ready;
+      }
+      studentWrites(pgA, w, K, (lv(w, K) || []).concat(['only-one']));   // A:記憶體裡還是原帳號
+      await pgA.runTimers(); await pgA.fire('win:pagehide');
+      const led = w.local.getItem(LEDGER);
+      if (swap) { await pgB.ctx.CLOUD.logout(); await tick(); pgB = loadPage(w, src); await pgB.ready; }
+      await pgB.ctx.CLOUD.login('s@x.com', 'test-only'); await tick();   // 原帳號之後在這台登入
+      await settle(w, src);
+      return { ok: led === null && same(cv(w, K), FIVE) && same(lv(w, K), FIVE),
+               detail: (swap ? '換帳號' : '登出') + ':A 作答後帳本 ' + led + ' / 再登入後雲端 ' + JSON.stringify(cv(w, K)) + ' / 本機 ' + JSON.stringify(lv(w, K)) };
+    };
+    const a = await one(false), b = await one(true);
+    return { ok: a.ok && b.ok, detail: a.detail + ' | ' + b.detail };
+  },
+  '54. 資料夾已經是這個帳號、但這台還沒灌過(空的),這一頁讀雲端進度失敗:這一頁的作答不記帳,下一頁不能只拿新的那幾筆蓋掉雲端的 hist': async src => {
+    const after = async (w, pg, how) => {
+      const user = !!pg.ctx.CLOUD.user;
+      studentWrites(pg, w, 'hist', (lv(w, 'hist') || []).concat(['new1'])); await pg.runTimers();
+      studentWrites(pg, w, 'hist', (lv(w, 'hist') || []).concat(['new2'])); await pg.runTimers(); await pg.fire('win:pagehide');
+      const led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}'));
+      w.progressFail = false;
+      await settle(w, src);                                          // 網路恢復,下一頁
+      return { ok: user && !led.includes('hist') && same(cv(w, 'hist'), FIVE) && same(lv(w, 'hist'), FIVE),
+               detail: how + ':登入著 ' + user + ' / 帳本 ' + JSON.stringify(led) + ' / 下一頁雲端 ' + JSON.stringify(cv(w, 'hist')) + ' / 本機 ' + JSON.stringify(lv(w, 'hist')) };
+    };
+    /* 甲:開頁時資料夾已經是這個帳號、登入資料也在,資料夾是空的(審查的重現方式) */
+    const w1 = makeWorld(); w1.authFromStorage = true; w1.rls = true;
+    w1.db.push({ user_id: USER.id, k: 'hist', v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    w1.local.setItem('tr_current_profile', JSON.stringify(PID));
+    w1.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', expires_at: 1, user: USER }));
+    w1.progressFail = true;
+    const pg1 = loadPage(w1, src); await pg1.ready;
+    const a = await after(w1, pg1, '開在帳號資料夾');
+    /* 乙:這台第一次登入(訪客頁),讀不到 → 按「重新整理」 → 還是讀不到 → 作答 */
+    const w2 = makeWorld(); w2.authFromStorage = true; w2.rls = true;
+    w2.db.push({ user_id: USER.id, k: 'hist', v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    const guest = loadPage(w2, src); await guest.ready;
+    w2.progressFail = true;
+    const err = await guest.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e);
+    const pg2 = loadPage(w2, src); await pg2.ready;
+    const b = await after(w2, pg2, '第一次登入');
+    /* 丙:同甲,但還在確認登入時就作答了(確認登入前的寫入,讀不到雲端時也不記帳) */
+    const w3 = makeWorld(); w3.authFromStorage = true; w3.rls = true;
+    w3.db.push({ user_id: USER.id, k: 'hist', v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+    w3.local.setItem('tr_current_profile', JSON.stringify(PID));
+    w3.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', expires_at: 1, user: USER }));
+    w3.progressFail = true;
+    let release; w3.authGate = new Promise(r => { release = r; });
+    const pg3 = loadPage(w3, src); await tick();
+    studentWrites(pg3, w3, 'hist', ['early1']);
+    release(); w3.authGate = null; await pg3.ready;
+    const c = await after(w3, pg3, '確認登入前就作答');
+    return { ok: a.ok && !!err && b.ok && c.ok, detail: a.detail + ' | 登入丟錯 ' + !!err + ' / ' + b.detail + ' | ' + c.detail };
+  },
+  '55. 登入失效改回訪客後,在同一個分頁登回來(密碼、Google 回來)讀雲端進度失敗:下一頁要重灌,不能沿用失效前的「灌過」旗標拿舊值整份上傳': async src => {
+    const phone = [{ name: '我的題庫', words: ['from-phone'] }];
+    const one = async how => {
+      const w = makeWorld();
+      w.db.push({ user_id: USER.id, k: K, v: OLD_BANK, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      await openLoggedIn(w, src);                                    // 灌過 OLD_BANK,旗標在這個分頁
+      w.db[0] = { user_id: USER.id, k: K, v: phone, updated_at: new Date(Date.now() - 1 * HOUR).toISOString() };   // 別台改新
+      w.revoked = true;                                              // 同一個分頁:不換工作階段
+      let pg = loadPage(w, src); await pg.ready;                     // 改回訪客、重載
+      pg = loadPage(w, src); await pg.ready;                         // 訪客頁
+      const flagKept = w.session.getItem(FLAG) === '1';
+      let backReloaded = null;
+      if (how === '密碼') {
+        w.progressFail = true;
+        await pg.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e);
+      } else {                                                       // Google 回來:supabase-js 從網址拿到登入,這一頁的資料夾還是訪客的
+        w.revoked = false; w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', expires_at: 1, user: USER }));
+        if (how === 'Google 讀失敗') w.progressFail = true;
+        const r = w.reloads;
+        pg = loadPage(w, src); await pg.ready;
+        backReloaded = w.reloads > r;
+      }
+      w.progressFail = false;
+      const s = await settle(w, src);                                // 下一頁
+      const shown = lv(w, K);
+      studentWrites(s.pg, w, K, (shown || []).concat([{ name: '新題庫', words: ['x'] }]));
+      await s.pg.runTimers(); await s.pg.fire('win:pagehide');
+      const cloud = cv(w, K);
+      const ok = flagKept && (how === 'Google 讀到' ? backReloaded && !s.reloaded : s.reloaded) && same(shown, phone) && JSON.stringify(cloud).includes('from-phone');
+      return { ok, detail: how + ':' + (backReloaded === null ? '' : '回來那頁重載 ' + backReloaded + ' / ') + '下一頁重灌 ' + s.reloaded + ' / 下一頁本機 ' + JSON.stringify(shown) + ' / 寫入後雲端 ' + JSON.stringify(cloud) };
+    };
+    const rs = [await one('密碼'), await one('Google 讀失敗'), await one('Google 讀到')];
+    return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
+  },
 };
+const FIVE = ['q1', 'q2', 'q3', 'q4', 'q5'];
+const PID = 'c' + USER.id.replace(/-/g, '');
+const FLAG = 'tr_cloud_hydrated_' + USER.id;
+const OTHER_USER = { id: '9a9a9a9a-1111-4222-8333-444455556666', email: 'o@x.com', user_metadata: {} };
+const hasAll = (v, want) => Array.isArray(v) && want.every(x => v.includes(x));
+/* 開一頁;這一頁灌了資料要重載就再開一次(重載後的那一頁)。回 { pg, reloaded } */
+async function settle(w, src) {
+  const r0 = w.reloads;
+  let pg = loadPage(w, src); await pg.ready; await pg.runTimers();
+  const reloaded = w.reloads > r0;
+  if (reloaded) { pg.close(); pg = loadPage(w, src); await pg.ready; await pg.runTimers(); }
+  return { pg, reloaded };
+}
 
 /* 本機、分頁暫存、雲端全部轉成字串(比對「什麼都沒寫」用) */
 function snapshot(w) {

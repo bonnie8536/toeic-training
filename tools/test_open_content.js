@@ -1141,6 +1141,67 @@ T['已登入的人開新分頁的內容頁:灌資料重載前那一下不寫、�
   return { ok, detail: J(r) };
 };
 
+/* 2026-10-31 審查(main 130f330 就有,tools/test_sync.js 情境 52~54 測 cloud.js 的記帳;這裡測內容頁擋不擋得住、什麼都不寫):
+   甲:別的分頁按登出(帳號資料夾、帳本、登入資料、目前帳號都刪了),這一頁沒重載,記憶體裡還是原帳號:作答跳「重新整理」卡,
+       帳號資料夾不會被建回來、不記帳;非內容頁的寫入(store.set)也不寫。
+   乙:帳號資料夾是空的(這台還沒灌過)、讀雲端進度失敗:作答跳「重新整理」卡、什麼都不寫;網路好了重新整理,灌回雲端紀錄、照常作答,雲端原本的紀錄還在 */
+T['別的分頁登出後沒重載的內容頁、帳號資料夾還沒灌過又讀不到雲端的內容頁:作答跳「重新整理」卡,什麼都不寫'] = async (B) => {
+  const day = Date.now() - 864e5;
+  const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
+  const rows = J([{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }]);
+  const login = J({ access_token: 'x', user: USER });
+  const a = {}, b = {};
+  let s = await open(B, { url: 'grammar.html?u=ga-01', user: true, sdk: fakeCloud({ user: USER }),
+    ls: { [SB]: login, ['tr_u' + CPID + '_hist']: J(oldHist) }, ss: { __fake_rows: rows } });
+  try {
+    a.at = await s.eval('PROFILE.canAct()');
+    await s.eval(`(() => { [${J(SB)}, ${J(SB + '-user')}, 'tr_unsynced_' + ${J(UID)}, 'tr_current_profile'].forEach((k) => localStorage.removeItem(k));
+      Object.keys(localStorage).filter((k) => k.indexOf(${J('tr_u' + CPID + '_')}) === 0).forEach((k) => localStorage.removeItem(k)); return true; })()`);
+    const before = await snap(s);
+    await click(s, '.q-block .opt');
+    const st = await state(s);
+    a.card = { mask: st.mask, title: st.title, why: st.why };
+    await closeBy(s, 'esc');
+    await s.eval("store.set('verb_quiz', { n: 1 }); logAttempt('g', 'x', 0, true); true");
+    const mid = await snap(s);
+    a.wrote = lsDiff(before.ls, mid.ls);
+    a.same = mid.main === before.main;
+    a.picked = await s.eval(PICKED);
+    a.ok = a.at === true && a.card.mask && /還沒載入/.test(a.card.title) && !WHY.cloud.test(a.card.why) && !a.wrote.length && a.same && a.picked === 0;
+  } finally { await s.close(); }
+  s = await open(B, { url: 'robots.txt', early: true, sdk: fakeCloud({ user: USER }),
+    ls: { [SB]: login, tr_current_profile: J(CPID) }, ss: { __fake_rows: rows, __fake_fail: '1' } });
+  try {
+    await s.go('grammar.html?u=ga-01');
+    await s.eval('CLOUD.ready.then(() => true, () => true)');
+    await sleep(1300);
+    b.at = await s.eval(`({ user: !!CLOUD.user, pid: window.__PROFILE_ID === ${J(CPID)}, canAct: PROFILE.canAct(), mark: localStorage.getItem(${J('tr_cloud_unhydrated_' + UID)}) })`);
+    const before = await snap(s);
+    await click(s, '.q-block .opt');
+    const st = await state(s);
+    b.card = { mask: st.mask, title: st.title, why: st.why };
+    const mid = await snap(s);
+    b.wrote = lsDiff(before.ls, mid.ls);
+    b.picked = await s.eval(PICKED);
+    await s.eval("sessionStorage.removeItem('__fake_fail'); true");
+    if (await s.eval("!!document.querySelector('.modal-reload .btn.primary')")) await click(s, '.modal-reload .btn.primary');
+    else await s.eval('location.reload(); true');   // 沒跳卡(會紅):照樣重新整理,把之後的結果記下來
+    b.settled = await settleNav(s);
+    await sleep(1300);
+    b.after = await s.eval(`({ canAct: PROFILE.canAct(), mark: localStorage.getItem(${J('tr_cloud_unhydrated_' + UID)}) })`);
+    await click(s, '.q-block .opt');
+    b.answered = await s.eval("!!document.querySelector('.q-block .opt.correct, .q-block .opt.wrong')");
+    await sleep(1500);
+    const end = JSON.parse(await s.eval(LS));
+    const db = JSON.parse(await s.eval("sessionStorage.getItem('__fake_rows') || '[]'"));
+    b.local = JSON.parse(end['tr_u' + CPID + '_hist'] || '[]').length;
+    b.cloud = ((db.find((x) => x.k === 'hist') || {}).v || []).length;
+    b.ok = b.at.user && b.at.pid && !b.at.canAct && b.at.mark === '1' && b.card.mask && /還沒載入/.test(b.card.title) && !b.wrote.length && b.picked === 0
+      && b.settled && b.after.canAct && b.after.mark === null && b.answered && b.local === oldHist.length + 1 && b.cloud === oldHist.length + 1;
+  } finally { await s.close(); }
+  return { ok: !!a.ok && !!b.ok, detail: '別的分頁登出 ' + J(a) + ' | 還沒灌過又讀不到 ' + J(b) };
+};
+
 (async () => {
   if (!CHROME) { console.error('找不到 Chrome 或 Edge'); process.exit(2); }
   const srvs = [await serve(CLOUD_PORT, true), await serve(LOCAL_PORT, false)];

@@ -369,14 +369,17 @@
       CLOUD.logout().catch(err => { if (isGone(err)) goneCard(opener); else throw err; });
     }
 
-    /* 改暱稱、刪除帳號:頭像選單與「我的」頁(me.html)共用 */
+    /* 改暱稱、刪除帳號:頭像選單與「我的」頁(me.html)共用。
+       暱稱視窗開著時別的分頁換了人(按確定後才丟 account_gone):打的暱稱記在這一頁,登回原帳號再按「改暱稱」時預先填好
+       (卡上說登回原帳號再按一次就留得住;以前打的字直接不見,審查 D 第 2 輪 #3)。重新整理就沒了,跟卡上說的一樣 */
+    let unsentName = null;
     async function renameUser(e) {
       const opener = openerOf(e);
       if (accountMoved()) { goneCard(opener); return; }
-      const n = prompt('暱稱（老師會看到這個名字）', CLOUD.nameOf(CLOUD.user));
+      const n = prompt('暱稱（老師會看到這個名字）', unsentName !== null ? unsentName : CLOUD.nameOf(CLOUD.user));
       if (n === null) return;
       try { await CLOUD.updateName(n); location.reload(); }
-      catch (err) { if (isGone(err)) goneCard(opener); else alert(err.message); }
+      catch (err) { if (isGone(err)) { unsentName = n; goneCard(opener); } else alert(err.message); }
     }
 
     /* 照 Netflix、Spotify 帳號頁的作法:一般的登出只登出這台,「登出所有裝置」另外一列、先確認 */

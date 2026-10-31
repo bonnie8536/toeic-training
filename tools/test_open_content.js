@@ -1583,6 +1583,119 @@ T['單字頁遊戲:掉落消除擋下時按 Enter 不重新整理、字掉到底
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
+/* 帳號那一邊存不進去時的漏攔偵測(審查 D 第 2 輪 #2):js/common.js 的 keepOrWarn 在 accountBlock 時不印「還沒登入」
+   (小雞開頁同步也會走到,不是漏攔),最下面主程式那一道看不到。這裡把 keepOrWarn 包一層,記下「帳號那一邊靜靜擋下」的寫入(小雞的不算):
+   作答被 data-gate、holdForAccount 擋在前面時一筆都不會有;有的話就是某個作答漏攔,畫面照樣說存了。重載後要再裝一次 */
+const COUNT_SILENT = `(() => { if (window.__silent) return true; const f = window.keepOrWarn; window.__silent = [];
+  window.keepOrWarn = (what) => { const ok = f(what); if (!ok && !/^pet/.test(String(what)) && typeof accountBlock === 'function' && accountBlock()) window.__silent.push(what); return ok; }; return true; })()`;
+const SILENT = '(window.__silent || []).slice()';
+const UPS = "JSON.parse(sessionStorage.getItem('__fake_up') || '[]').map((u) => u.k).filter((k) => k !== 'pet' && k !== '_meta')";
+/* 審查 D 第 2 輪 #2:刷題頁的聽力隨機練習、聽力錯題複習(js/listening.js)和文法頁的動詞測驗(js/verbs.js)進來之後的作答、交卷沒有 data-gate
+   (進來那一下「開始聽力練習」「複習」「測驗這些字」才有)。開始之後別的分頁登出,或這台的帳號資料夾還沒灌過:
+   以前 common.js 靜靜不寫,畫面卻照樣選取、對答案,交卷後寫「答錯的題目已收進錯題本。」,其實一筆都沒存、也沒跳卡(e49e444 則寫進被刪掉的資料夾、記帳)。
+   要的是:跟同一頁的閱讀練習一樣跳「重新整理」卡,不選取、不對答案、不出成績,之前選好、打好的留著,什麼都不寫;照常的時候跟以前一樣存、上傳 */
+T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後別的分頁登出、帳號資料夾還沒灌過時,作答與交卷跳「重新整理」卡、不對答案、什麼都不寫;照常時照樣存'] = async (B) => {
+  const login = J({ access_token: 'x', user: USER });
+  const day = Date.now() - 864e5;
+  const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
+  const rows = J([{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }]);
+  const P2 = 'tr_u' + CPID + '_listen_p2', HIST = 'tr_u' + CPID + '_hist', VQ = 'tr_u' + CPID + '_verb_quiz';
+  const PICKED_L = "[...document.querySelectorAll('.letter-row .letter-big')].findIndex((b) => b.classList.contains('picked'))";
+  const page = (url) => open(B, { url, user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login, [HIST]: J(oldHist) }, ss: { __fake_rows: rows } });
+  const card = async (s) => { const st = await state(s); return st.mask ? st.title : ''; };
+  const out = [];
+  for (const how of ['照常', '登出', '還沒灌過']) {
+    const r = { how };
+    /* 甲:聽力隨機練習(交卷式:先選、交卷才對答案) */
+    let s = await page('practice.html');
+    try {
+      await pressText(s, '.practice-panel .btn.primary', '開始聽力練習');   // data-gate,這時能作答
+      r.letters = await s.eval("document.querySelectorAll('.letter-row .letter-big').length");
+      await click(s, '.letter-row .letter-big', 0);   // 能作答時先選 A
+      await s.eval(COUNT_SILENT);
+      if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
+      const before = await s.eval(LS), up0 = await s.eval(UPS);
+      await click(s, '.letter-row .letter-big', 1);   // 改選 B
+      r.pickCard = await card(s);
+      r.picked = await s.eval(PICKED_L);
+      if (r.pickCard) await closeBy(s, 'esc');
+      await s.eval('window.confirm = () => true; true');
+      await pressText(s, '.drill-nav-btns .btn', '直接交卷');
+      r.submitCard = await card(s);
+      r.report = await s.eval("(document.querySelector('.report-head') || {}).textContent || ''");
+      r.picked2 = await s.eval(PICKED_L);
+      await sleep(1300);
+      r.wrote = lsDiff(before, await s.eval(LS)).filter((k) => !/_pet$/.test(k));
+      r.ups = (await s.eval(UPS)).slice(up0.length);
+      r.silent = await s.eval(SILENT);
+    } finally { await s.close(); }
+    /* 乙:聽力錯題複習(即時對答,答對才移出錯題本) */
+    s = await page('practice.html');
+    try {
+      await s.eval(`window.__old = true; localStorage.setItem(${J(P2)}, JSON.stringify({ [TOEIC.listening.p2[0].id]: { c: (TOEIC.listening.p2[0].answer + 1) % 3, ok: false, t: 1 } })); location.reload(); true`);
+      r.revSettled = await settleNav(s);
+      await sleep(800);
+      await s.eval("(() => { const row = [...document.querySelectorAll('.review-row')].find((x) => /聽力 Part 2/.test(x.textContent)); const b = row && row.querySelector('.btn'); if (!b) return false; b.id = '__press'; return true; })()");
+      await click(s, '#__press');   // 複習(data-gate,這時能作答)
+      r.revLetters = await s.eval("document.querySelectorAll('.letter-row .letter-big').length");
+      await s.eval(COUNT_SILENT);
+      if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
+      const before = await s.eval(LS), up0 = await s.eval(UPS);
+      await click(s, '.letter-row .letter-big', await s.eval('TOEIC.listening.p2[0].answer'));   // 點正確答案
+      r.revCard = await card(s);
+      r.verdict = await s.eval("(document.querySelector('.verdict') || {}).textContent || ''");
+      await sleep(1300);
+      r.revWrote = lsDiff(before, await s.eval(LS)).filter((k) => !/_pet$/.test(k));
+      r.revUps = (await s.eval(UPS)).slice(up0.length);
+      r.revOk = await s.eval(`(() => { const st = JSON.parse(localStorage.getItem(${J(P2)}) || 'null'); return st ? !!st[TOEIC.listening.p2[0].id].ok : null; })()`);
+      r.revSilent = await s.eval(SILENT);
+    } finally { await s.close(); }
+    /* 丙:動詞測驗(打過去式、過去分詞,Enter 或「對答案」) */
+    s = await page('grammar.html?ref=verbs');
+    try {
+      await click(s, '.vb-bar .btn.primary');   // 測驗這些字(data-gate,這時能作答)
+      r.inputs = await s.eval("document.querySelectorAll('input.vb-input').length");
+      await s.eval("document.querySelectorAll('input.vb-input')[0].focus(); true");
+      await s.send('Input.insertText', { text: 'went' });   // 能作答時先打第一格
+      await s.eval(COUNT_SILENT);
+      if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
+      const before = await s.eval(LS), up0 = await s.eval(UPS);
+      await s.eval("document.querySelectorAll('input.vb-input')[1].focus(); true");
+      await key(s, 'a');   // 第二格打字
+      r.typeCard = await card(s);
+      if (r.typeCard) await closeBy(s, 'esc');
+      await s.eval("document.querySelectorAll('input.vb-input')[0].focus(); true");
+      await key(s, 'Enter');   // 在第一格按 Enter(第二格有字就是對答案)
+      r.enterCard = await card(s);
+      if (r.enterCard) await closeBy(s, 'esc');
+      if (how !== '照常') { await click(s, '.vb-inputs .btn.primary'); r.btnCard = await card(s); }   // 「對答案」
+      r.vals = await s.eval("[...document.querySelectorAll('input.vb-input')].map((x) => x.value)");
+      r.vbVerdict = await s.eval("(document.querySelector('.q-block .verdict') || {}).textContent || ''");
+      r.marked = await s.eval("document.querySelectorAll('.q-nav .ok, .q-nav .ng').length");
+      await sleep(1300);
+      r.vbWrote = lsDiff(before, await s.eval(LS)).filter((k) => !/_pet$/.test(k));
+      r.vbUps = (await s.eval(UPS)).slice(up0.length);
+      r.vbSilent = await s.eval(SILENT);
+    } finally { await s.close(); }
+    const has = (a, ks) => ks.every((k) => a.includes(k));
+    if (how === '照常') {
+      r.ok = r.letters === 3 && !r.pickCard && r.picked === 1 && !r.submitCard && /答對 \d+ \/ 10 題/.test(r.report) && has(r.wrote, [HIST, P2]) && has(r.ups, ['hist', 'listen_p2'])
+        && r.revSettled && r.revLetters === 3 && !r.revCard && /答對了/.test(r.verdict) && has(r.revWrote, [HIST, P2]) && has(r.revUps, ['hist', 'listen_p2']) && r.revOk === true
+        /* 照常按 Enter 對完答案,同一下 Enter 落到剛拿到焦點的「下一題」(main 就是這樣),畫面已經是下一題:只看題號列記了對錯、存了 */
+        && r.inputs === 2 && !r.typeCard && !r.enterCard && r.marked === 1 && has(r.vbWrote, [HIST, VQ]) && has(r.vbUps, ['hist', 'verb_quiz'])
+        && !r.silent.length && !r.revSilent.length && !r.vbSilent.length;
+    } else {
+      const title = how === '登出' ? /已經在別的分頁登出/ : /還沒載入/;
+      r.ok = r.letters === 3 && title.test(r.pickCard) && r.picked === 0 && title.test(r.submitCard) && !r.report && r.picked2 === 0 && !r.wrote.length && !r.ups.length
+        && r.revSettled && r.revLetters === 3 && title.test(r.revCard) && !r.verdict && !r.revWrote.length && !r.revUps.length && r.revOk === (how === '登出' ? null : false)
+        && r.inputs === 2 && title.test(r.typeCard) && title.test(r.enterCard) && title.test(r.btnCard) && J(r.vals) === J(['went', '']) && !r.vbVerdict && r.marked === 0
+        && !r.vbWrote.length && !r.vbUps.length && !r.silent.length && !r.revSilent.length && !r.vbSilent.length;
+    }
+    out.push(r);
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
 /* 多分頁第 3 輪審查 #1(2026-11-01):別的分頁登出又登回來、正在灌資料(「還沒灌過」標記記著、帳號資料夾空的)時,這個分頁換到寫作頁的技巧課。
    寫作頁的 readMap 是畫面時讀的(開頁時是空的),按「標記讀完」整份寫回。這一頁確認登入(查教師身分)之前別的分頁先灌好、劃掉標記:
    以前這一頁不灌資料,按下去雲端 writing_read 從三課變成只剩這一課。要的是:這一頁重灌重載,畫面換成灌好的資料夾,按下去四課都在;
@@ -1621,6 +1734,73 @@ T['寫作頁:開頁時帳號資料夾還沒灌過(別的分頁正在灌),確認�
     } finally { await s.close(); }
     out.push(r);
   }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 審查 D 第 2 輪 #3:加入班級視窗開著(自己按開的、邀請連結 ?join= 開的)、改暱稱視窗開著的時候,別的分頁登出 X、改登入 Y。
+   以前按「加入」:不送(對),但連視窗帶打好的邀請碼一起關掉、開卡;卡上說「要留著的話，先在別的分頁登回原本的帳號，再回來按一次」,
+   照做之後視窗是空的(?join= 的碼開頁時就從網址拿掉了)。改暱稱也一樣,打的暱稱不見了。
+   要的是:加入視窗不關,那句話寫在表單的訊息行,碼留在框裡;登回 X 再按一次「加入」照常送到 X。
+   改暱稱:跳卡、不送;登回 X 再按「改暱稱」,視窗裡預先填的是剛剛打的那個暱稱 */
+T['加入班級、改暱稱的視窗開著時別的分頁換帳號:按下去不送,邀請碼留在視窗裡、打的暱稱下次打開還在;登回原帳號再按一次照常送'] = async (B) => {
+  const login = J({ access_token: 'x', user: USER });
+  const TO_Y = `(() => { ${OTHER_TAB_LOGOUT}; localStorage.setItem(${J(SB)}, ${J(J({ access_token: 'y', user: Y_USER }))}); localStorage.setItem('tr_current_profile', ${J(J(YPID))}); return true; })()`;
+  const BACK_X = `(() => { localStorage.setItem(${J(SB)}, ${J(login)}); localStorage.setItem('tr_current_profile', ${J(J(CPID))}); return CLOUD.accountCheck() === ''; })()`;
+  const SENT = "JSON.parse(sessionStorage.getItem('__fake_calls') || '[]').map((c) => c.op + '@' + (c.as === " + J(UID) + " ? 'X' : c.as === " + J(Y_USER.id) + " ? 'Y' : c.as))";
+  const press = async (s, sel, text) => {
+    const ok = await s.eval(`(() => { const old = document.getElementById('__press'); if (old) old.removeAttribute('id');
+      const b = [...document.querySelectorAll(${J(sel)})].find((x) => x.textContent.trim() === ${J(text)}); if (!b) return false; b.id = '__press'; return true; })()`);
+    if (!ok) throw new Error('找不到 ' + sel + ' 「' + text + '」');
+    await click(s, '#__press');
+  };
+  const JOIN = "(() => { const m = document.querySelector('.modal-join'); return m ? { code: m.querySelector('.join-code').value, msg: (m.querySelector('.auth-msg') || {}).textContent || '' } : null; })()";
+  const out = [];
+  for (const how of ['自己開的視窗', '邀請連結']) {
+    const r = { how };
+    const s = await open(B, { url: how === '邀請連結' ? 'me.html?join=ABCD2345' : 'me.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login } });
+    try {
+      await s.eval('window.__mark = 1; true');
+      if (how !== '邀請連結') {
+        await press(s, '.me-row', '加入班級');
+        await s.eval("(() => { const i = document.querySelector('.modal-join .join-code'); i.value = 'ABCD2345'; i.dispatchEvent(new Event('input')); return true; })()");
+      }
+      r.open = await s.eval(JOIN);
+      await s.eval(TO_Y);
+      await press(s, '.modal-join .auth-submit', '加入');
+      await sleep(900);
+      r.sent = await s.eval(SENT);
+      r.after = await s.eval(JOIN);
+      r.card = (await state(s)).title;
+      r.reload = !!(await s.eval("document.querySelector('.modal-reload')"));
+      r.back = await s.eval(BACK_X);
+      if (r.after) { await press(s, '.modal-join .auth-submit', '加入'); await sleep(900); }
+      r.sent2 = (await s.eval(SENT)).slice(r.sent.length);
+      r.stay = await s.eval('window.__mark === 1');
+      r.ok = !!r.open && r.open.code === 'ABCD2345' && !r.sent.length && !!r.after && r.after.code === 'ABCD2345' && /已經在別的分頁登出/.test(r.after.msg) && !r.reload
+        && r.back && J(r.sent2) === J(['rpc:join_class@X']) && r.stay;
+    } finally { await s.close(); }
+    out.push(r);
+  }
+  /* 改暱稱:暱稱視窗開著的時候別的分頁換成 Y */
+  const r = { how: '改暱稱' };
+  const s = await open(B, { url: 'me.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login } });
+  try {
+    await s.eval(`(() => { window.__prompts = []; window.__mark = 1; window.alert = (m) => { window.__prompts.push('alert:' + m); };
+      window.prompt = (m, d) => { window.__prompts.push(d); if (window.__prompts.length === 1) ${TO_Y}; return window.__prompts.length === 1 ? '新暱稱' : null; }; return true; })()`);
+    await press(s, '.me-row', '改暱稱');
+    await sleep(900);
+    r.card = (await state(s)).title;
+    r.sent = await s.eval(SENT);
+    if ((await state(s)).mask) await closeBy(s, 'esc');
+    r.back = await s.eval(BACK_X);
+    await press(s, '.me-row', '改暱稱');   // 登回 X 之後再按一次:這次按取消
+    await sleep(500);
+    r.prompts = await s.eval('window.__prompts');
+    r.sent2 = (await s.eval(SENT)).slice(r.sent.length);
+    r.stay = await s.eval('window.__mark === 1');
+    r.ok = /已經在別的分頁登出/.test(r.card) && !r.sent.length && r.back && J(r.prompts) === J(['測試', '新暱稱']) && !r.sent2.length && r.stay;
+  } finally { await s.close(); }
+  out.push(r);
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 

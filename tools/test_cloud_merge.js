@@ -551,6 +551,10 @@ function syncScenarios() {
      (第 1 步那版、e49e444 會呼叫 signOut;31745ec 擋成 account_gone、資料留著),不比,只要新版通過
    - 65:舊版分頁(tools/fixtures/cloud_step1.js)登出留下「灌過」記號,之後新版登入讀雲端失敗:照樣記標記、不記帳、雲端不變少
      (第 1 步那版、e49e444、73900cf、31745ec 都會紅:雲端錯題本被蓋成只剩新那一題),不比,只要新版通過
+   審查 D 第 2 輪(2026-11-01,e49e444 就有):
+   - 66:灌過的分頁換頁、確認登入途中別的分頁登出又登回同一個帳號:這一頁照新分頁重灌,讀不到雲端不能作答、不記帳
+     (第 1 步那版、e49e444、be7104d 都會紅:雲端 hist 被蓋成 null 或只剩新那一筆),不比,只要新版通過。
+     情境裡「別的分頁沒動」那一項是平常換頁(不重灌、照常上雲),也要新版通過
    新版那一邊的 tr_cloud_seen_<帳號 id> 一律先拿掉再比(見 otherState)。
    1~51、56、62 照樣逐位元組比(平常登入、重新整理、離線、兩台裝置、登出的請求與儲存都沒變) */
 function dropNullUpload(state, key) {
@@ -561,7 +565,7 @@ function dropNullUpload(state, key) {
   return J(o);
 }
 const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null, '52': null, '53': null, '54': null, '55': null, '57': 'state', '58': null,
-  '59': null, '60': null, '61': null, '63': null, '64': null, '65': null };
+  '59': null, '60': null, '61': null, '63': null, '64': null, '65': null, '66': null };
 const intended = name => Object.prototype.hasOwnProperty.call(INTENDED, name.split('.')[0]);
 async function replay(variant) {
   const make = syncScenarios();

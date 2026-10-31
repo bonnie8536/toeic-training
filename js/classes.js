@@ -290,8 +290,8 @@
       closeBtn.disabled = false;
       submit.textContent = '加入';
       if (!r.ok) {
-        /* 審查 D:按加入的時候別的分頁登出、換了帳號:關掉這個視窗,開「這個帳號已經在別的分頁登出」卡 */
-        if (r.gone) { close(); goneCard(returnTo); return; }
+        /* 按加入的時候別的分頁登出、換了帳號(r.gone,審查 D):跟其他送不出去的一樣,那句話寫在表單的訊息行,視窗不關、碼留在框裡,
+           登回原本的帳號再按一次就送得出去(以前關掉視窗再開卡,打好的碼、邀請連結帶來的碼都丟了;審查 D 第 2 輪 #3) */
         if (r.field) bad(r.message); else fail(r.message);
         input.focus();
         return;

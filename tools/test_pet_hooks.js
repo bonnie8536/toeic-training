@@ -21,9 +21,10 @@ const BASE = '27557eb';
    又改了 grammar、phonics、verbs、vocab、reading、practice、ear、dialogue、mock、diagnostic、writing;
    多分頁同步第 2 輪審查(2026-10-31,帳號那一邊存不進去時作答跳「重新整理」卡、模擬考交卷存不進去先留在分頁)改了 daily-ui、mock、review;
    多分頁同步第 3 輪審查(2026-11-01,單字頁的題庫編輯器與遊戲、片語特訓作答前先問 holdForAccount)改了 vocab;
-   審查 D 第 1 輪(2026-11-01,掉落消除擋下時按 Enter 不落到卡上、字掉到底先暫停,記憶吐司「看成績」先問)又改了 vocab */
+   審查 D 第 1 輪(2026-11-01,掉落消除擋下時按 Enter 不落到卡上、字掉到底先暫停,記憶吐司「看成績」先問)又改了 vocab;
+   審查 D 第 2 輪(2026-11-01,聽力練習與錯題複習的作答、交卷,動詞測驗的作答框與「對答案」標 data-gate)改了 listening、verbs */
 const LATER_BASE = ['js/vocab.js', 'js/reading.js', 'js/daily-ui.js', 'js/grammar.js', 'js/phonics.js', 'js/ear.js', 'js/dialogue.js',
-  'js/verbs.js', 'js/practice.js', 'js/mock.js', 'js/diagnostic.js', 'js/writing.js', 'js/review.js'];
+  'js/verbs.js', 'js/practice.js', 'js/mock.js', 'js/diagnostic.js', 'js/writing.js', 'js/review.js', 'js/listening.js'];
 
 /* ---------- 小假 DOM(跟 test_daily.js 同一套做法,多了 isConnected) ---------- */
 function fakeDom() {

@@ -1520,6 +1520,70 @@ const scenarios = {
     })();
     return { ok: a.ok && g.ok && c.ok, detail: a.detail + ' | ' + g.detail + ' | ' + c.detail };
   },
+  /* 審查 D 第 2 輪 #1(e49e444 就有,情境 61 沒蓋到的那一條):分頁 A 灌過(旗標在 A),換到新的一頁 P,P 還在確認登入(查教師身分)。
+     這時分頁 B 登出 X(資料夾、帳本、灌過記號、目前帳號都刪掉),又用同一個帳號 X 登回來,B 也還在查教師身分、還沒記「還沒灌過」標記。
+     以前 P 確認完:登入資料是 X 就當成「登回同一個帳號」放行(情境 58 是沒有旗標的新分頁),旗標在、標記沒記,P 不灌資料、照常作答記帳:
+     - P 確認前作答過:early 那一筆照樣記帳,init 最後補傳讀到被刪掉的鍵,雲端 hist 被蓋成 null,B 灌資料也拿到 null
+     - P 確認後才作答:照被刪空的資料夾寫成只有新那一筆,上傳蓋掉雲端;B 看到資料夾不是空的不記標記,B 讀雲端失敗時下一頁也不擋
+     要的是:確認登入途中目前帳號被換過(登出又登回同一帳號),P 照新分頁的規則重灌:讀得到就重載(確認前那一筆作廢),
+     讀不到就不能作答、不記帳(B 之後灌好了也一樣);雲端 hist 一直是 5 筆。對照:別的分頁沒動,P 照常不重灌、能作答、上雲 */
+  '66. 灌過的分頁換頁、還在確認登入時別的分頁登出又登回同一個帳號:這一頁要照新分頁重灌,讀不到雲端時不能作答、不記帳,雲端練習紀錄不能被蓋成 null 或只剩新那一筆': async src => {
+    const one = async how => {
+      const relogin = how !== '別的分頁沒動', earlyWrite = /確認前/.test(how), pFail = /讀不到/.test(how), bFail = /B 也讀不到/.test(how);
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      w.db.push({ user_id: USER.id, k: 'hist', v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const sA = w.session;
+      await openLoggedIn(w, src);                                    // A 灌過(旗標在 A)
+      const sB = makeStorage(); w.session = sB;
+      let pgB = loadPage(w, src); await pgB.ready; pgB = loadPage(w, src); await pgB.ready;   // B 灌過
+      w.session = sA;
+      let relP; w.teacherGate = new Promise(r => { relP = r; });
+      const pgP = loadPage(w, src); await tick();                    // A 換頁成 P,卡在查教師身分
+      const early = earlyWrite ? storeSet(pgP, w, 'hist', (lv(w, 'hist') || []).concat(['early1'])) : null;
+      let relB = null, loginP = null;
+      if (relogin) {
+        w.session = sB; await pgB.ctx.CLOUD.logout(); await tick();
+        pgB = loadPage(w, src); await pgB.ready;                     // B 訪客頁
+        w.teacherGate = new Promise(r => { relB = r; });
+        loginP = pgB.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e); await tick();   // B 登回 X,還在查教師身分
+      }
+      w.session = sA;
+      if (pFail) w.progressFail = true;
+      const r0 = w.reloads;
+      relP(); if (!relogin) w.teacherGate = null;
+      await pgP.ready; await pgP.runTimers();
+      const pReloaded = w.reloads > r0, canP = ready(pgP);
+      let wrote = null;
+      if (!earlyWrite) {
+        const v = (lv(w, 'hist') || []).concat(['new1']);
+        wrote = storeSet(pgP, w, 'hist', v);
+        if (!wrote) pgP.ctx.CLOUD.push('hist', v);                   // common.js 擋下了,cloud.js 這一層也不能記帳
+      }
+      await pgP.runTimers(); await pgP.fire('win:pagehide');
+      const led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}'));
+      const mid = cv(w, 'hist');
+      let markB = null;
+      if (relB) {
+        if (!bFail) w.progressFail = false;
+        w.session = sB; relB(); w.teacherGate = null; await loginP; await tick();   // B 確認完、灌資料
+        markB = w.local.getItem(UNHYD);
+      }
+      const canPLater = ready(pgP);
+      w.progressFail = false;
+      w.session = relogin ? sB : sA;
+      await settle(w, src);                                          // 網路好了,下一頁
+      const end = cv(w, 'hist'), local = lv(w, 'hist');
+      let ok;
+      if (!relogin) ok = !pReloaded && canP && wrote === true && !led.includes('hist') && same(end, FIVE.concat(['new1'])) && same(local, end);
+      else if (pFail) ok = !pReloaded && !canP && !canPLater && wrote !== true && !led.includes('hist') && same(mid, FIVE) && (!bFail || markB === '1') && same(end, FIVE) && same(local, FIVE);
+      else ok = pReloaded && wrote !== true && same(mid, FIVE) && same(end, FIVE) && same(local, FIVE);
+      return { ok, detail: how + ':P 確認前寫進去 ' + early + ' / P 重灌 ' + pReloaded + ' / P 能作答 ' + canP + ' / 確認後寫進去 ' + wrote + ' / 帳本 ' + JSON.stringify(led) +
+        ' / P 之後雲端 ' + JSON.stringify(mid) + (relogin ? ' / B 灌完標記 ' + markB + ' / 那時 P 能作答 ' + canPLater : '') + ' / 最後雲端 ' + JSON.stringify(end) + ' / 本機 ' + JSON.stringify(local) };
+    };
+    const rs = [];
+    for (const how of ['別的分頁沒動', '確認前作答、P 讀得到', '確認前作答、P 讀不到', '確認後作答、P 讀得到', '確認後作答、P 讀不到、B 也讀不到']) rs.push(await one(how));
+    return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
+  },
 };
 const FIVE = ['q1', 'q2', 'q3', 'q4', 'q5'];
 const PID = 'c' + USER.id.replace(/-/g, '');

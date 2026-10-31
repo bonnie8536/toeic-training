@@ -294,9 +294,14 @@
     /* 這一頁在確認登入(查教師身分那一趟)的時候,別的分頁登出了(目前帳號、登入資料都刪了),或換成別的帳號:
        不寫回目前帳號、不灌資料、不設旗標。以前照樣寫回,這一頁(和別的沒重載的分頁)的資料夾又對得上,拿被刪空的資料夾作答記帳,
        這個帳號之後在這台登入時整份上傳蓋掉雲端(多分頁第 3 輪審查 #3,e49e444 就有)。這一頁照 folderGone 擋下、開「已在別的分頁登出」卡,
-       換頁後照 leaveStaleAccount 改回訪客。別的分頁登出又用同一個帳號登回來(登入資料是它)照常往下(情境 58);
+       換頁後照 leaveStaleAccount 改回訪客。別的分頁登出又用同一個帳號登回來(登入資料是它)照常往下(moved);
        這一頁本來就不是這個帳號的資料夾(訪客頁剛登入)才要主動改寫目前帳號 */
-    if (!otherFolder && !sameFolder() && storedUid() !== user.id) return;
+    const moved = !otherFolder && !sameFolder();
+    if (moved && storedUid() !== user.id) return;
+    /* 走到這裡 moved 就是「確認登入途中別的分頁登出又登回同一個帳號」:資料夾被刪過,這個分頁之前灌過的旗標不算數,
+       照新分頁的規則重灌(資料夾是空的就記「還沒灌過」、確認前寫的作廢;讀雲端失敗這一頁不能作答、不記帳)。
+       以前旗標在、標記又還沒記,這一頁不灌資料照常記帳:確認前寫的那一筆上傳被刪掉的鍵(雲端 hist 變 null),
+       或照被刪空的資料夾作答整份蓋掉雲端(審查 D 第 2 輪 #1,e49e444 就有;情境 58 是沒有旗標的新分頁、情境 66 是這一條) */
     /* 剛登入(fresh)、或這一頁的資料夾不是這個帳號的(訪客頁登入、Google 回來):「灌過」記號不算數,先刪掉,灌好再寫回。
        部署前就開著的舊版分頁不認得這個記號,在那裡登出會把資料夾刪光、記號留著;照記號不記「還沒灌過」的話,讀雲端進度失敗時
        學生在空資料夾上作答記帳,網路好了整份上傳蓋掉雲端。先刪掉,這段時間別的分頁開的頁面也照「還沒灌過」的資料夾看(unreadyAtLoad;審查 D 第 1 輪 #2) */
@@ -308,16 +313,16 @@
     const notYet = unhydrated(user.id);   // 這台這個帳號的資料夾還沒灌過:別的分頁之前灌過的旗標不算數
     /* 開頁時照還沒灌過的(空)資料夾畫,確認登入前別的分頁灌好了(資料夾有這一頁沒寫過的鍵):畫面是舊的,要重灌重載(多分頁第 3 輪審查 #1) */
     const filled = unreadyAtLoad && !otherFolder && !folderEmpty(prefix, early);
-    const hydrate = fresh || otherFolder || !sessionStorage.getItem(flagKey) || movePend || notYet || filled;
+    const hydrate = fresh || otherFolder || moved || !sessionStorage.getItem(flagKey) || movePend || notYet || filled;
     /* 帳號資料夾是空的、這台也沒灌過這個帳號:先記「還沒灌過」再寫目前帳號,別的分頁一看到目前帳號是它,就知道資料夾還不能用 */
     const markNow = hydrate && !notYet && !seen(user.id) && accountFolderEmpty(prefix, otherFolder);
     if (markNow) { try { localStorage.setItem(unhydratedKey(user.id), '1'); } catch (e) { /* 寫不進去就跟以前一樣 */ } }
     /* 這一頁的畫面根據的是還沒灌過的資料夾:灌成了就重載;灌不成,這一頁之後都不能作答(標記被別的分頁劃掉也一樣) */
-    if (hydrate && (notYet || markNow || filled)) pageUnhydrated = true;
+    if (hydrate && (notYet || markNow || filled || moved)) pageUnhydrated = true;
     localStorage.setItem('tr_current_profile', JSON.stringify(pid));
 
     if (hydrate) {
-      if (fresh || otherFolder) sessionStorage.removeItem(flagKey);   // 灌到一半連不上:下次開頁照樣重灌,不沿用舊旗標
+      if (fresh || otherFolder || moved) sessionStorage.removeItem(flagKey);   // 灌到一半連不上:下次開頁照樣重灌,不沿用舊旗標
       if (movePend) sessionStorage.setItem(pendTry, '1');
       hydrating = true;
       const { data: rows, error } = await client.from('progress').select('k,v,updated_at').eq('user_id', user.id);

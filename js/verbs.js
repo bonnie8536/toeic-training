@@ -170,8 +170,11 @@
         root.append(nav);
 
         const v = items[cur];
-        const past = h('input', { class: 'modal-input vb-input', type: 'text', placeholder: '過去式', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false' });
-        const pp = h('input', { class: 'modal-input vb-input', type: 'text', placeholder: '過去分詞', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false' });
+        /* 作答框、「對答案」標 data-gate(跟聽寫的作答框一樣):開始之後別的分頁登出、換帳號,或這台的帳號資料夾還沒灌過,
+           js/profile.js 讓作答框打不進字、按鍵(包括 Enter)就開「重新整理」卡,不對答案,打好的字留著。
+           以前沒標,common.js 靜靜不寫,畫面照樣對答案、跳下一題,什麼都沒存(審查 D 第 2 輪 #2) */
+        const past = h('input', { class: 'modal-input vb-input', type: 'text', placeholder: '過去式', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'data-gate': '' });
+        const pp = h('input', { class: 'modal-input vb-input', type: 'text', placeholder: '過去分詞', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'data-gate': '' });
         const after = h('div', null);
         let answered = false;
 
@@ -213,7 +216,7 @@
         root.append(h('div', { class: 'q-block' },
           h('div', { class: 'vb-stem' }, v.base, h('span', null, v.zh)),
           h('div', { class: 'vb-inputs' }, past, pp,
-            h('button', { class: 'btn primary', type: 'button', onclick: submit }, '對答案')),
+            h('button', { class: 'btn primary', type: 'button', 'data-gate': '', onclick: submit }, '對答案')),
           after));
         past.focus();
       }
@@ -230,7 +233,7 @@
             h('div', { class: 'vq-item bad' }, h('b', null, v.base), h('span', null, v.past + ' / ' + v.pp), h('i', null, v.zh)))));
         }
         root.append(h('div', { class: 'drill-nav-btns' },
-          h('button', { class: 'btn primary', type: 'button', onclick: () => startQuiz(list) }, '再測一輪'),
+          h('button', { class: 'btn primary', type: 'button', 'data-gate': '', onclick: () => startQuiz(list) }, '再測一輪'),   // 跟「測驗這些字」一樣
           h('button', { class: 'btn', type: 'button', onclick: () => render() }, '回動詞表')));
         window.scrollTo(0, 0);
         if (window.PET_HOOK) PET_HOOK.done('iv', { n: items.length, into: root.querySelector('.report-head') });

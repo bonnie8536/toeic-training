@@ -161,15 +161,18 @@
       else drawSet(u.p, u.item, state);
     }
 
+    /* 作答鈕、交卷鈕都標 data-gate(跟 js/practice.js 的閱讀練習一樣):開始之後別的分頁登出、換帳號,或這台的帳號資料夾還沒灌過,
+       js/profile.js 在按下去之前擋下、開「重新整理」卡,不選取、不對答案、不出成績,選好的留在這一頁。
+       以前沒標,common.js 靜靜不寫,交卷後照樣寫「答錯的題目已收進錯題本。」,其實一筆都沒存(審查 D 第 2 輪 #2)。「下一題」不寫東西,照常 */
     function nextRow(canNext) {
       const isLast = cur === units.length - 1;
       if (!instant) {
         return h('div', { class: 'drill-nav-btns' },
           h('button', {
-            class: 'btn primary',
+            class: 'btn primary', 'data-gate': isLast ? '' : null,
             onclick: () => { if (isLast) submit(); else { cur++; draw(); window.scrollTo(0, 0); } },
           }, isLast ? '交卷對答案' : '下一' + PARTS[units[cur + 1].p].unit + ' →'),
-          isLast ? null : h('button', { class: 'btn', onclick: submit }, '直接交卷'));
+          isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: submit }, '直接交卷'));
       }
       return h('div', { class: 'drill-nav-btns' },
         canNext
@@ -188,7 +191,7 @@
           if (i === answer) cls += ' correct';
           else if (i === rec.c) cls += ' wrong';
         }
-        row.append(h('button', { class: cls, disabled: rec ? '' : null, onclick: () => onPick(i) }, LETTERS[i]));
+        row.append(h('button', { class: cls, disabled: rec ? '' : null, 'data-gate': rec ? null : '', onclick: () => onPick(i) }, LETTERS[i]));
       }
       return row;
     }
@@ -198,7 +201,7 @@
       const row = h('div', { class: 'letter-row' });
       for (let i = 0; i < count; i++) {
         row.append(h('button', {
-          class: 'letter-big' + (chosen === i ? ' picked' : ''),
+          class: 'letter-big' + (chosen === i ? ' picked' : ''), 'data-gate': '',
           onclick: () => onPick(i),
         }, LETTERS[i]));
       }
@@ -277,7 +280,7 @@
             else cls += ' plain';
           } else if (!instant && chosen === oi) cls += ' picked';
           opts.append(h('button', {
-            class: cls, disabled: instant && done ? '' : null,
+            class: cls, disabled: instant && done ? '' : null, 'data-gate': instant && done ? null : '',
             onclick: () => {
               state.answers[qi] = oi;
               if (instant) {
@@ -353,7 +356,7 @@
         }
       });
       const btns = () => h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', onclick: () => startQuiz(root, config) }, '再練一輪'),
+        h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(root, config) }, '再練一輪'),   // 跟「開始聽力練習」一樣
         h('a', { class: 'btn', href: 'practice.html' }, '回題庫'));
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
         h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),
@@ -437,7 +440,7 @@
         h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),
         qTotal - qCorrect ? h('div', { class: 'band-note' }, '答錯的題目已收進錯題本。') : null));
       root.append(h('div', { class: 'drill-nav-btns' },
-        opts.wrongOnly ? null : h('button', { class: 'btn primary', onclick: () => startQuiz(root, config) }, '再練一輪'),
+        opts.wrongOnly ? null : h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(root, config) }, '再練一輪'),
         h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
       window.scrollTo(0, 0);
       if (window.PET_HOOK) PET_HOOK.done(opts.wrongOnly ? 'pr' : 'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: root.querySelector('.report-head') });

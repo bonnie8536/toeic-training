@@ -758,8 +758,11 @@ T['自動搬家的網址都不帶明文:帶著密文的那一站連不上(錯誤
   const got = await s.ls();
   await s.close();
   const done = !!(await oldLs(B)).tr_move_done;
-  const ok = /#auto=RU1E:/.test(current) && !plainInUrls && oldMid && JSON.parse(got.tr_vgame_banks)[0].name === '斷線也還在' && done;
-  return { ok, detail: J({ current: current.slice(0, 90), plainInUrls, oldMid, done }) };
+  /* 新網址的 service worker 已經在管這個分頁、收件頁存過一份時,斷線那一刻它直接給存好的收件頁,不會停在錯誤頁、當場就搬完(看那時 sw 有沒有接手,兩種都會發生) */
+  const stoppedAtError = /#auto=RU1E:/.test(current) && oldMid;
+  const swFinished = /\/vocab\.html$/.test(current) && !oldMid;
+  const ok = (stoppedAtError || swFinished) && !plainInUrls && JSON.parse(got.tr_vgame_banks)[0].name === '斷線也還在' && done;
+  return { ok, detail: J({ current: current.slice(0, 90), plainInUrls, oldMid, done, swFinished }) };
 };
 T['自動搬家:按「等一下再搬」不帶走、提示拿掉;在頁面上點了別的(作答、按開始)也不帶走,改顯示按鈕'] = async (B) => {
   PING = 'ok';

@@ -1884,6 +1884,129 @@ T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改�
     : J(out.map((x) => x.how + '/' + (x.page || x.act) + ' 問 ' + x.asked.join(','))) };
 };
 
+/* 跟 pressDialogs 一樣按一下、等原生視窗;第一個視窗按確定、滑鼠放開那一下回來之後馬上再按一次(交卷排在 50 毫秒後,這時還沒批改),
+   之後跳的視窗都按確定。during(第幾個視窗):按確定之前跑。回跳過的視窗種類 */
+async function pressTwice(B, s, sel, text, exact, during) {
+  const ok = await s.eval(`(() => { const old = document.getElementById('__press'); if (old) old.removeAttribute('id');
+    const b = [...document.querySelectorAll(${J(sel)})].find((x) => ${exact ? `x.textContent.trim() === ${J(text)}` : `x.textContent.indexOf(${J(text)}) > -1`}); if (!b) return false; b.id = '__press'; return true; })()`);
+  if (!ok) throw new Error('找不到 ' + sel + ' 「' + text + '」');
+  const p = await point(s, '#__press');
+  const queue = [], asked = [];
+  let wake = null;
+  const off = B.on((m) => { if (m.sessionId === s.sid && m.method === 'Page.javascriptDialogOpening') { queue.push(m.params); if (wake) wake(); } });
+  try {
+    await s.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p.x, y: p.y });
+    for (let n = 0; n < 2; n++) {
+      let done = false;
+      await s.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: p.x, y: p.y, button: 'left', clickCount: 1 });
+      const released = s.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: p.x, y: p.y, button: 'left', clickCount: 1 }).then(() => { done = true; if (wake) wake(); });
+      const end = Date.now() + 15000;
+      while (Date.now() < end) {
+        if (queue.length) {
+          const d = queue.shift();
+          asked.push(d.type);
+          if (during) await during(asked.length, d);
+          await sleep(300);
+          await s.send('Page.handleJavaScriptDialog', { accept: true });
+          if (n === 0) break;   // 第一下:按完確定就去按第二下
+          continue;
+        }
+        if (done) { if (n === 0) break; await sleep(400); if (!queue.length) break; continue; }
+        await Promise.race([new Promise((r) => { wake = r; }), sleep(500)]);
+        wake = null;
+      }
+      await released;
+    }
+  } finally { off(); }
+  await sleep(350);
+  return asked;
+}
+
+/* 8dbb805 之後:交卷的確認視窗按確定之後等 50 毫秒才批改,那 50 毫秒裡交卷鈕還按得到。以前再按一次又問一次、又排一次交卷,
+   批改、寫紀錄(錯題、hist、程度檢測)、小雞的 PET_HOOK.done 都跑兩次。這裡跳真的原生視窗:沒答完按交卷、按確定,
+   馬上(還在那 50 毫秒裡)再按一次,有視窗就按確定。要的是:第二下不算(不再問),只批改一次:PET_HOOK.done 一次、
+   每個紀錄鍵 store.set 一次、hist 只多答的那一筆。模擬考本來就有 over:只看存一次。
+   問的時候別的分頁登出(擋下跳卡),登回原帳號、關掉卡之後再按一次:照常問、照常交一次(擋下時不能把交卷鈕一直鎖住) */
+T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 毫秒):不再問、只批改只寫紀錄只叫小雞一次(隨機練習、聽力隨機練習、程度檢測;模擬考只存一次);問的時候擋下跳卡,登回來再按照常交'] = async (B) => {
+  const login = J({ access_token: 'x', user: USER });
+  const day = Date.now() - 864e5;
+  const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
+  const three = [1, 2, 3].map((n) => ({ d: new Date(day + n * 1000).toISOString(), size: 'quick', lRaw: n, lTotal: 12, rRaw: n, rTotal: 18, lScore: 5, rScore: 5 }));
+  const HIST = 'tr_u' + CPID + '_hist', MH = 'tr_u' + CPID + '_mock_history';
+  /* 小雞的掛勾換成只記次數的(js/app-shell.js 看到已經有 PET_HOOK 就不載 pet-hook.js) */
+  const HOOK = 'window.__done = []; window.PET_HOOK = { done: (id) => { window.__done.push(id); return null; } };';
+  /* 記下 store.set 寫了哪些鍵,每一下點擊點在哪個按鈕上、那時批改了沒 */
+  const WATCH = `(() => { window.__sets = []; const f = store.set; store.set = function (k, v) { window.__sets.push(k); return f.apply(this, arguments); };
+    window.__clicks = []; addEventListener('click', (e) => { const b = e.target.closest && e.target.closest('button');
+      window.__clicks.push({ txt: b ? b.textContent.trim() : '', done: window.__done.length, sets: window.__sets.length }); }, true); return true; })()`;
+  const COUNTS = "(() => { const n = {}; window.__sets.forEach((k) => { n[k] = (n[k] || 0) + 1; }); return { done: window.__done.slice(), sets: n, clicks: window.__clicks.slice() }; })()";
+  const N = (k) => `JSON.parse(localStorage.getItem(${J(k)}) || '[]').length`;
+  const BACK_X = `(() => { localStorage.setItem(${J(SB)}, ${J(login)}); localStorage.setItem('tr_current_profile', ${J(J(CPID))}); return true; })()`;
+  const PAGES = [
+    { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始練習'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '直接交卷'], sets: ['drill_p5', 'hist'], count: HIST, add: 1, report: /答對 \d+ \/ 10 題/ },
+    { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: ['.drill-nav-btns .btn', '直接交卷'], sets: ['listen_p2', 'hist'], count: HIST, add: 1, report: /答對 \d+ \/ 10 題/ },
+    { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始檢測'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷，看報告'], sets: ['diag'], count: HIST, add: 0, report: /./ },
+    { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.drill-top .btn', '交卷'], sets: ['mock_history'], count: MH, add: 1, report: /參考總分/, mock: true },
+  ];
+  const REPORT = (pg) => pg.mock ? "(document.querySelector('.report-head h2') || {}).textContent || ''" : "(document.querySelector('.report-head') || {}).textContent || ''";
+  const card = async (s) => { const st = await state(s); return st.mask ? st.title : ''; };
+  const o = await open(B, { url: 'robots.txt', early: true });   // 別的分頁(先開:A 開的時候會清空、灌好 localStorage)
+  const out = [];
+  try {
+    for (const how of ['照常', '擋下後登回']) {
+      for (const pg of PAGES) {
+        if (how !== '照常' && pg.mock) continue;   // 模擬考問完不跳卡(存不進去先留在分頁),上面那一項測過
+        const r = { how, page: pg.name };
+        const ls = { [SB]: login, [HIST]: J(oldHist) };
+        if (pg.mock) ls[MH] = J(three);
+        const rows = pg.mock ? [{ k: 'mock_history', v: three, updated_at: new Date(day + 10000).toISOString() }] : [{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }];
+        const s = await open(B, { url: pg.url, user: true, sdk: fakeCloud({ user: USER }), ls, ss: { __fake_rows: J(rows) }, pre: HOOK });
+        try {
+          await pressText(s, pg.start[0], pg.start[1]);
+          if (pg.pick) await click(s, pg.pick, 0);   // 答一題(其他沒答,交卷時會問)
+          await sleep(1000);
+          await s.eval(COUNT_SILENT);
+          await s.eval(WATCH);
+          const n0 = await s.eval(N(pg.count));
+          r.asked = await pressTwice(B, s, pg.submit[0], pg.submit[1], pg.mock, async (n) => { if (how !== '照常' && n === 1) r.broke = await o.eval(OTHER_TAB_LOGOUT); });
+          await sleep(900);
+          const c = await s.eval(COUNTS);
+          r.done = c.done.length; r.sets = c.sets;
+          /* 兩下都點在交卷鈕上,第二下的時候還沒批改(不然這一次不算數:第二下太晚,已經過了那 50 毫秒) */
+          r.inTime = c.clicks.length === 2 && c.clicks.every((x) => x.txt.indexOf(pg.submit[1]) > -1) && c.clicks[1].done === 0 && c.clicks[1].sets === 0;
+          r.card = await card(s);
+          r.report = await s.eval(REPORT(pg));
+          if (how === '照常') {
+            r.add = (await s.eval(N(pg.count))) - n0;
+            r.silent = await s.eval(SILENT);
+          } else {
+            r.back = await s.eval(BACK_X);
+            r.closed = await closeBy(s, 'esc');
+            r.asked2 = await pressDialogs(B, s, pg.submit[0], pg.submit[1], false);
+            await sleep(900);
+            const c2 = await s.eval(COUNTS);
+            r.done2 = c2.done.length; r.sets2 = c2.sets;
+            r.card2 = await card(s);
+            r.report2 = await s.eval(REPORT(pg));
+          }
+        } finally { await s.close(); }
+        const once = (sets) => pg.sets.every((k) => sets[k] === 1);
+        if (how === '照常') {
+          r.ok = r.inTime && r.done === 1 && once(r.sets) && r.add === pg.add && !r.card && pg.report.test(r.report) && !r.silent.length
+            && (pg.mock || J(r.asked) === J(['confirm']));
+        } else {
+          r.ok = r.broke === true && /已經在別的分頁登出/.test(r.card) && !r.report && r.done === 0 && !Object.keys(r.sets).length
+            && r.back && r.closed && J(r.asked2) === J(['confirm']) && r.done2 === 1 && once(r.sets2) && !r.card2 && pg.report.test(r.report2);
+        }
+        out.push(r);
+      }
+    }
+  } finally { await o.close(); }
+  const bad = out.filter((x) => !x.ok);
+  return { ok: !bad.length, detail: bad.length ? '不對的 ' + bad.length + ' / ' + out.length + ' 項:' + bad.map((x) => x.how + '/' + x.page).join('、') + ' | ' + J(bad)
+    : J(out.map((x) => x.how + '/' + x.page + ' 問 ' + x.asked.join(',') + (x.asked2 ? ' 再問 ' + x.asked2.join(',') : '') + ' 批改 ' + (x.done2 !== undefined ? x.done2 : x.done) + ' 次')) };
+};
+
 /* 多分頁第 3 輪審查 #1(2026-11-01):別的分頁登出又登回來、正在灌資料(「還沒灌過」標記記著、帳號資料夾空的)時,這個分頁換到寫作頁的技巧課。
    寫作頁的 readMap 是畫面時讀的(開頁時是空的),按「標記讀完」整份寫回。這一頁確認登入(查教師身分)之前別的分頁先灌好、劃掉標記:
    以前這一頁不灌資料,按下去雲端 writing_read 從三課變成只剩這一課。要的是:這一頁重灌重載,畫面換成灌好的資料夾,按下去四課都在;

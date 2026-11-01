@@ -28,6 +28,8 @@
   const KEY = 'diag';
   let st = store.get(KEY, null);   // {answers:{i:choice}, done, startedAt, finishedAt}
   let cur = 0;
+  /* 交卷的確認視窗按了確定、正在等那 50 毫秒(見 handIn):這時再按交卷不算。放這裡、不放 renderTest 裡:那 50 毫秒裡點選項、題號會重畫 */
+  let handing = false;
 
   if (st && st.done) renderReport();
   else if (st) renderTest();
@@ -118,11 +120,14 @@
     /* 導航 */
     const unanswered = total - Object.keys(st.answers).length;
     function handIn(opener, asked) {
+      /* 等那 50 毫秒的時候交卷鈕還按得到:以前再按一次又問、又排一次,存兩次、報告畫兩次、小雞的 PET_HOOK.done 跑兩次 */
+      if (handing && !asked) return;
       if (unanswered > 0 && !asked) {
         if (!confirm('還有 ' + unanswered + ' 題沒作答，未作答會列入「答錯」計算。確定交卷？')) return;
         /* 原生確認視窗開著的時候,別的分頁對 localStorage 的改動(登出、換帳號、記上「還沒灌過」)Chrome 不會送進這一頁,
            按確定之後要再過兩個工作(實測約 2 毫秒)才看得到,在那之前讀到的還是舊值,下面的查核都會放行:等 50 毫秒再往下(審查 D 第 4 輪 #3) */
-        setTimeout(() => handIn(opener, true), 50);
+        handing = true;
+        setTimeout(() => { handing = false; handIn(opener, true); }, 50);   // 往下才放開:holdForAccount 擋下跳卡時,之後還能再按交卷
         return;
       }
       /* 問的時候別的分頁登出、帳號資料夾變成還沒灌過:不交卷、不畫報告,開「重新整理」卡,答過的留著

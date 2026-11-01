@@ -26,7 +26,8 @@ const BASE = '27557eb';
    審查 D 第 3 輪(2026-11-01,交卷的確認視窗問完再問 holdForAccount,交卷鈕把自己傳給 submit 當卡片關掉後焦點回去的地方)
    改了 practice、listening、diagnostic(下面 SITES 的錨點跟著換成 submit(opener)、onclick: e => );
    審查 D 第 4 輪(2026-11-01,交卷的確認視窗按確定之後等 50 毫秒再查帳號、批改:原生視窗開著時別的分頁改的 localStorage 要過一下才看得到)
-   改了 practice、listening、diagnostic、mock(SITES 的錨點換成 submit(opener, asked)、submit(timeUp, asked),程度檢測的交卷搬進 handIn(opener, asked)) */
+   改了 practice、listening、diagnostic、mock(SITES 的錨點換成 submit(opener, asked)、submit(timeUp, asked),程度檢測的交卷搬進 handIn(opener, asked));
+   之後(2026-11-01,按確定之後那 50 毫秒裡再按交卷不算,不再批改兩次)又改了 practice、listening、diagnostic */
 const LATER_BASE = ['js/vocab.js', 'js/reading.js', 'js/daily-ui.js', 'js/grammar.js', 'js/phonics.js', 'js/ear.js', 'js/dialogue.js',
   'js/verbs.js', 'js/practice.js', 'js/mock.js', 'js/diagnostic.js', 'js/writing.js', 'js/review.js', 'js/listening.js'];
 

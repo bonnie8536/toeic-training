@@ -126,6 +126,7 @@
     const okFlags = [];
     let cur = 0;
     let player = null;
+    let handing = false;   // 交卷的確認視窗按了確定、正在等那 50 毫秒(見 submit):這時再按交卷不算
     draw();
 
     function unitAnswered(i) {
@@ -318,12 +319,15 @@
 
     /* 交卷:統一批改(未作答算錯,不寫入錯題紀錄) */
     function submit(opener, asked) {
+      /* 等那 50 毫秒的時候交卷鈕還按得到:以前再按一次又問、又排一次,批改、小雞的 PET_HOOK.done 都跑兩次,第二次還把沒答的(c: -1)寫進紀錄與錯題本 */
+      if (handing && !asked) return;
       const missing = units.filter((u, i) => !unitAnswered(i)).length;
       if (missing && !asked) {
         if (!confirm('還有 ' + missing + ' 個單元沒答完，確定要交卷嗎？未作答的算錯。')) return;
         /* 原生確認視窗開著的時候,別的分頁對 localStorage 的改動(登出、換帳號、記上「還沒灌過」)Chrome 不會送進這一頁,
            按確定之後要再過兩個工作(實測約 2 毫秒)才看得到,在那之前讀到的還是舊值,下面的查核都會放行:等 50 毫秒再往下(審查 D 第 4 輪 #3) */
-        setTimeout(() => submit(opener, true), 50);
+        handing = true;
+        setTimeout(() => { handing = false; submit(opener, true); }, 50);   // 往下才放開:holdForAccount 擋下跳卡時,之後還能再按交卷
         return;
       }
       /* 確認視窗開著的時候別的分頁登出、帳號資料夾變成還沒灌過:問完再查一次,擋下就開「重新整理」卡、不批改,選好的留著

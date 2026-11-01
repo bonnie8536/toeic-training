@@ -225,7 +225,7 @@
         記著的時候每一頁都要灌(別的分頁之前灌過的旗標不算數),這段時間的寫入不記帳:讀雲端進度失敗(網路斷一下、Supabase 慢或休眠)時
         頁面拿到的是空資料夾,記了帳,下一頁灌資料會把只有新那幾筆的 hist、錯題本整份傳上去蓋掉雲端。
         資料夾不是空的(之前灌過、登入失效改回訪客留著的)不記,跟以前一樣:讀不到雲端時照常作答記帳,下次灌資料比新舊(離線也是這樣)。
-        這台灌過這個帳號(「灌過」記號 tr_cloud_seen_<帳號 id>,灌好時寫、登出刪掉、剛登入時先刪掉、搬家不帶)也不記:雲端本來就沒有進度的帳號
+        這台灌過這個帳號(「灌過」記號 tr_cloud_seen_<帳號 id>,灌好時寫、登出刪掉、剛登入而且那時不是這台的目前帳號就先刪掉、搬家不帶)也不記:雲端本來就沒有進度的帳號
         (新註冊、只看後台的老師)灌完資料夾還是空的,不能因為這樣每開一個新分頁就把已經灌好的分頁擋下(多分頁第 3 輪審查 #4、#5)。
         代價跟資料夾不是空的、只是舊了一樣(已知限制,整份上傳後傳的蓋掉先傳的):灌過之後別台才有進度,這台讀不到雲端時照常作答記帳。
      3. 這一頁的畫面是照還沒灌過的資料夾畫的、自己又沒灌成(pageUnhydrated):別的分頁之後灌好、劃掉標記,這一頁一樣不記帳(多分頁第 3 輪審查 #1)。
@@ -304,15 +304,23 @@
        或照被刪空的資料夾作答整份蓋掉雲端(審查 D 第 2 輪 #1,e49e444 就有;情境 58 是沒有旗標的新分頁、情境 66 是這一條) */
     /* 剛登入(fresh)、或這一頁的資料夾不是這個帳號的(訪客頁登入、Google 回來):「灌過」記號不算數,先刪掉,灌好再寫回。
        部署前就開著的舊版分頁不認得這個記號,在那裡登出會把資料夾刪光、記號留著;照記號不記「還沒灌過」的話,讀雲端進度失敗時
-       學生在空資料夾上作答記帳,網路好了整份上傳蓋掉雲端。先刪掉,這段時間別的分頁開的頁面也照「還沒灌過」的資料夾看(unreadyAtLoad;審查 D 第 1 輪 #2) */
-    if (fresh || otherFolder) { try { localStorage.removeItem(SEEN_PREFIX + user.id); } catch (e) { /* 刪不掉:跟以前一樣 */ } }
+       學生在空資料夾上作答記帳,網路好了整份上傳蓋掉雲端。先刪掉,這段時間別的分頁開的頁面也照「還沒灌過」的資料夾看(unreadyAtLoad;審查 D 第 1 輪 #2)。
+       只有這個帳號這時不是這台的目前帳號才刪:舊版分頁登出會刪掉目前帳號,上面那一條照樣擋得到;還是目前帳號的話,別的分頁登入著、灌好了,
+       記號是對的。以前一律刪,在登入前就開著的訪客頁再登入同一個帳號,資料夾是空的(雲端沒有進度的帳號)就記上標記,
+       灌好的分頁跟著不能作答,讀雲端失敗時一直卡在「還沒載入」卡(審查 D 第 3 輪 #1,be7104d 造成;情境 67) */
+    let wasCurrent = false;
+    try { wasCurrent = localStorage.getItem('tr_current_profile') === JSON.stringify(pid); } catch (e) { /* 讀不到:照刪 */ }
+    if ((fresh || otherFolder) && !wasCurrent) { try { localStorage.removeItem(SEEN_PREFIX + user.id); } catch (e) { /* 刪不掉:跟以前一樣 */ } }
     const prefix = 'tr_u' + pid + '_';
     const flagKey = 'tr_cloud_hydrated_' + user.id;
     const pendTry = 'tr_move_pending_tried_' + user.id;   // 搬家暫存區:這個分頁只為它重灌一次,載不到合併程式也不會一直重載
     const movePend = hasPending(user.id) && !sessionStorage.getItem(pendTry);
     const notYet = unhydrated(user.id);   // 這台這個帳號的資料夾還沒灌過:別的分頁之前灌過的旗標不算數
-    /* 開頁時照還沒灌過的(空)資料夾畫,確認登入前別的分頁灌好了(資料夾有這一頁沒寫過的鍵):畫面是舊的,要重灌重載(多分頁第 3 輪審查 #1) */
-    const filled = unreadyAtLoad && !otherFolder && !folderEmpty(prefix, early);
+    /* 開頁時照還沒灌過的(空)資料夾畫,確認登入前別的分頁灌好了:畫面是舊的,要重灌重載(多分頁第 3 輪審查 #1)。
+       「灌好了」看兩樣:有「灌過」記號(開頁時沒有,別的分頁灌好一定會寫),或資料夾有這一頁沒寫過的鍵(舊版分頁灌的不寫記號)。
+       只看資料夾的話,雲端所有的鍵都是這一頁確認前照空畫面寫過的(只用過寫作頁的學生),就認不出來:這一頁不重灌,
+       照記憶體裡的空畫面整份寫回,蓋掉雲端(審查 D 第 3 輪 #2,e49e444 就有;情境 68) */
+    const filled = unreadyAtLoad && !otherFolder && (seen(user.id) || !folderEmpty(prefix, early));
     const hydrate = fresh || otherFolder || moved || !sessionStorage.getItem(flagKey) || movePend || notYet || filled;
     /* 帳號資料夾是空的、這台也沒灌過這個帳號:先記「還沒灌過」再寫目前帳號,別的分頁一看到目前帳號是它,就知道資料夾還不能用 */
     const markNow = hydrate && !notYet && !seen(user.id) && accountFolderEmpty(prefix, otherFolder);
@@ -322,7 +330,9 @@
     localStorage.setItem('tr_current_profile', JSON.stringify(pid));
 
     if (hydrate) {
-      if (fresh || otherFolder || moved) sessionStorage.removeItem(flagKey);   // 灌到一半連不上:下次開頁照樣重灌,不沿用舊旗標
+      /* 灌到一半連不上:下次開頁照樣重灌,不沿用舊旗標。filled:這一頁確認前照空畫面寫的可能已經蓋掉別的分頁灌好的本機那一份,
+         讀不到雲端時這個分頁的下一頁也要重灌,不然照被蓋掉的本機作答整份上傳(審查 D 第 3 輪 #2;情境 68) */
+      if (fresh || otherFolder || moved || filled) sessionStorage.removeItem(flagKey);
       if (movePend) sessionStorage.setItem(pendTry, '1');
       hydrating = true;
       const { data: rows, error } = await client.from('progress').select('k,v,updated_at').eq('user_id', user.id);

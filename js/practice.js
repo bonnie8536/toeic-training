@@ -336,9 +336,9 @@
       return h('div', { class: 'drill-nav-btns' },
         h('button', {
           class: 'btn primary', 'data-gate': isLast ? '' : null,   // 「下一題」照常;最後一題的交卷要登入
-          onclick: () => { if (isLast) submit(); else { cur++; draw(); window.scrollTo(0, 0); } },
+          onclick: e => { if (isLast) submit(e.currentTarget); else { cur++; draw(); window.scrollTo(0, 0); } },
         }, isLast ? '交卷對答案' : '下一' + DATA[units[cur + 1].p].unit + ' →'),
-        isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: submit }, '直接交卷'));
+        isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: e => submit(e.currentTarget) }, '直接交卷'));
     }
 
     function drawP5() {
@@ -381,9 +381,13 @@
       root.append(navRow());
     }
 
-    function submit() {
+    function submit(opener) {
       const missing = units.filter((u, i) => !unitAnswered(i)).length;
       if (missing && !confirm('還有 ' + missing + ' 個單元沒答完，確定要交卷嗎？未作答的算錯。')) return;
+      /* data-gate 只在按下去那一刻查。確認視窗開著的時候別的分頁登出、或這台的帳號資料夾變成還沒灌過:問完再查一次,
+         擋下就開「重新整理」卡,不批改、不出成績,作答留在這一頁(登回原帳號再按一次就能交)。
+         以前照樣批改,store.set 靜靜不寫,畫面卻寫「答錯的 N 題已收進錯題本。」(審查 D 第 3 輪 #3) */
+      if (typeof holdForAccount === 'function' && holdForAccount(opener)) return;
       /* 統一批改+寫入紀錄(只記有作答的) */
       units.forEach((u, i) => {
         if (u.p === '5') {

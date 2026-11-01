@@ -1584,6 +1584,105 @@ const scenarios = {
     for (const how of ['別的分頁沒動', '確認前作答、P 讀得到', '確認前作答、P 讀不到', '確認後作答、P 讀得到', '確認後作答、P 讀不到、B 也讀不到']) rs.push(await one(how));
     return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
   },
+  /* 審查 D 第 3 輪 #1(be7104d 造成,73900cf、31745ec 沒有):雲端還沒有進度的帳號(新註冊、只看後台的老師),分頁 A 登入、灌好
+     (資料夾還是空的)。分頁 B 是 A 登入之前就開著的訪客頁(頂欄還是「登入」),在 B 用密碼再登入同一個帳號。
+     be7104d 起「剛登入、訪客頁登入」一律先刪掉「灌過」記號,資料夾又是空的,就記上「還沒灌過」標記:
+     B 還在讀雲端時 A 不能作答;B 讀失敗時 A 一直卡在「還沒載入」卡,換頁也一樣,要等讀得到雲端才恢復(e49e444 照常作答、上雲)。
+     要的是:A 照常作答、上雲,換頁不多讀、不重載、照常作答,標記一直沒記。
+     情境 65(舊版分頁登出留下記號)那一條照樣要擋:舊版登出會刪掉目前帳號,所以確認登入那一刻這個帳號不是這台的目前帳號時才刪記號 */
+  '67. 雲端還沒有進度的帳號,灌好的分頁開著時,在登入前就開著的訪客頁再登入同一個帳號(還在讀雲端、或讀失敗):灌好的分頁照常作答、上雲,換頁不多讀、不重載': async src => {
+    const one = async how => {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      const pgB = loadPage(w, src); await pgB.ready;                 // B:A 登入之前就開著的訪客頁
+      const sA = makeStorage(); w.session = sA;
+      const guestA = loadPage(w, src); await guestA.ready;
+      await guestA.ctx.CLOUD.login('s@x.com', 'test-only');          // A 登入、灌資料(雲端沒有進度)、重載
+      guestA.close();
+      const pgA = loadPage(w, src); await pgA.ready; await pgA.runTimers();
+      const bGuest = pgB.ctx.CLOUD.user === null && pgB.ctx.__PROFILE_ID === null, can0 = ready(pgA);
+      let go = null;
+      if (how === '讀失敗') w.progressFail = true; else w.progressGate = new Promise(r => { go = r; });
+      const loginP = pgB.ctx.CLOUD.login('s@x.com', 'test-only').then(() => 'ok', () => 'err'); await tick();
+      const markMid = w.local.getItem(UNHYD), canMid = ready(pgA);
+      const wrote = storeSet(pgA, w, 'hist', ['a1']); await pgA.runTimers();
+      const mid = cv(w, 'hist');
+      if (go) go();
+      const res = await loginP; await tick();
+      const markEnd = w.local.getItem(UNHYD), canEnd = ready(pgA);
+      w.session = sA;
+      const f0 = w.fullReads || 0;
+      const s = await settle(w, src);                                // A 換頁(讀失敗那一種:雲端還是讀不到)
+      const extra = (w.fullReads || 0) - f0, canNav = ready(s.pg);
+      const wrote2 = storeSet(s.pg, w, 'hist', (lv(w, 'hist') || []).concat(['a2'])); await s.pg.runTimers();
+      w.progressFail = false;
+      const end = cv(w, 'hist');
+      return { ok: bGuest && can0 && markMid === null && canMid && wrote && same(mid, ['a1']) && markEnd === null && canEnd && !s.reloaded && extra === 0 && canNav && wrote2 && same(end, ['a1', 'a2']) && same(lv(w, 'hist'), end),
+               detail: 'B ' + how + ':B 是訪客頁 ' + bGuest + ' / A 能作答 ' + can0 + ' / B 登入後標記 ' + markMid + ' A 能作答 ' + canMid + ' / A 寫進去 ' + wrote + ' 雲端 ' + JSON.stringify(mid) +
+                 ' / B 登入 ' + res + ' 標記 ' + markEnd + ' A 能作答 ' + canEnd + ' / A 換頁重灌 ' + s.reloaded + ' 多讀 ' + extra + ' 能作答 ' + canNav + ' 寫進去 ' + wrote2 + ' / 雲端 ' + JSON.stringify(end) };
+    };
+    const rs = [await one('還在讀'), await one('讀失敗')];
+    return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
+  },
+  /* 審查 D 第 3 輪 #2(e49e444 就有,73900cf 的 59 沒有補完):帳號在雲端只有一個整份上傳的鍵(只用過寫作頁的新學生,雲端只有 writing_read={l1,l2,l3})。
+     分頁 A 灌過;分頁 B 登出又登回同一個帳號,正在讀雲端(標記記著、資料夾空的)。A 換頁成 P(開頁時資料夾空的、沒有「灌過」記號:照空資料夾畫),
+     P 還在確認登入(getSession)時學生按了「標記讀完」,寫作頁照開頁時的空畫面寫 {l4}(在 B 灌好之前或之後)。
+     以前 P 確認登入時,資料夾唯一的鍵是 P 自己確認前寫過的,不算「別的分頁灌好了」,P 不重灌:確認前那一筆記帳,
+     之後照記憶體裡的 {l4} 整份寫回 {l4,l5},雲端 {l1,l2,l3} 被蓋掉(P 是新分頁、自己讀雲端又失敗時一樣能作答、記帳)。
+     要的是:B 灌好一定會寫「灌過」記號,P 開頁時沒有、確認時有,就是別的分頁灌好了:P 重灌重載(確認前那一筆作廢),讀不到雲端時不能作答、不記帳;
+     而且 P 讀不到時這個分頁下一頁也要重灌(確認前那一筆可能已經蓋掉 B 灌好的本機那一份),學生在下一頁照常作答,雲端 l1~l3 都還在 */
+  '68. 雲端只有一個整份上傳的鍵,別的分頁登出又登回來、正在灌時換頁,確認登入前照空畫面寫過那個鍵:要重灌,讀不到雲端時不能作答、下一頁也重灌,雲端寫作紀錄不被蓋掉': async src => {
+    const READ3 = { l1: true, l2: true, l3: true };
+    const one = async (order, pFlag, pFail) => {
+      const w = makeWorld(); w.authFromStorage = true; w.rls = true;
+      w.db.push({ user_id: USER.id, k: WR, v: READ3, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
+      const sA = w.session;
+      await openLoggedIn(w, src);                                    // A 灌過(旗標在 A)
+      const sB = makeStorage(); w.session = sB;
+      let pgB = loadPage(w, src); await pgB.ready; pgB = loadPage(w, src); await pgB.ready;
+      await pgB.ctx.CLOUD.logout(); await tick();
+      pgB = loadPage(w, src); await pgB.ready;                       // B 訪客頁
+      let goB; w.progressGate = new Promise(r => { goB = r; });
+      const loginP = pgB.ctx.CLOUD.login('s@x.com', 'test-only').then(() => null, e => e); await tick();   // B 登回來,讀雲端卡住
+      const sP = pFlag ? sA : makeStorage();
+      w.session = sP;
+      let release; w.authGate = new Promise(r => { release = r; });
+      const pgP = loadPage(w, src); await tick();                    // P 卡在 getSession
+      const atLoad = lv(w, WR);
+      const map1 = Object.assign({}, atLoad || {}, { l4: true });    // 寫作頁:readMap 是開頁時讀的
+      let early;
+      if (order === 'P 先寫') { early = storeSet(pgP, w, WR, map1); goB(); await loginP; await tick(); }
+      else { goB(); await loginP; await tick(); early = storeSet(pgP, w, WR, map1); }
+      if (pFail) w.progressFail = true;
+      const r0 = w.reloads;
+      release(); w.authGate = null;
+      await pgP.ready; await pgP.runTimers();
+      const pReloaded = w.reloads > r0, canP = ready(pgP);
+      let wrote = null;
+      if (!pReloaded) {
+        const map2 = Object.assign({}, map1, { l5: true });          // 照記憶體整份寫回
+        wrote = storeSet(pgP, w, WR, map2);
+        if (!wrote) pgP.ctx.CLOUD.push(WR, map2);                    // common.js 擋下了,cloud.js 這一層也不能記帳
+      }
+      await pgP.runTimers(); await pgP.fire('win:pagehide');
+      const mid = cv(w, WR);
+      const led = Object.keys(JSON.parse(w.local.getItem(LEDGER) || '{}'));
+      w.progressFail = false;
+      w.session = sP;
+      const s = await settle(w, src);                                // 這個分頁的下一頁(網路好了)
+      const next = lv(w, WR);
+      const wrote3 = storeSet(s.pg, w, WR, Object.assign({}, next || {}, { l6: true })); await s.pg.runTimers();
+      const end = cv(w, WR), want = Object.assign({}, READ3, { l6: true });
+      const ok = early === true && atLoad === null && (pFail ? !pReloaded && !canP && wrote === false && !led.includes(WR) : pReloaded) && same(mid, READ3)
+        && same(next, READ3) && wrote3 && same(end, want);
+      return { ok, detail: [order, pFlag ? '有旗標' : '新分頁', pFail ? 'P 讀不到' : 'P 讀得到'].join('/') + ':P 開頁 ' + JSON.stringify(atLoad) + ' / 確認前寫進去 ' + early +
+        ' / P 重灌 ' + pReloaded + ' 能作答 ' + canP + ' / 再寫進去 ' + wrote + ' / 帳本 ' + JSON.stringify(led) + ' / P 之後雲端 ' + JSON.stringify(mid) +
+        ' / 下一頁重灌 ' + s.reloaded + ' 本機 ' + JSON.stringify(next) + ' / 最後雲端 ' + JSON.stringify(end) };
+    };
+    const rs = [];
+    for (const order of ['P 先寫', 'B 先灌'])
+      for (const [pFlag, pFail] of [[true, false], [true, true], [false, false], [false, true]]) rs.push(await one(order, pFlag, pFail));
+    return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
+  },
 };
 const FIVE = ['q1', 'q2', 'q3', 'q4', 'q5'];
 const PID = 'c' + USER.id.replace(/-/g, '');

@@ -22,7 +22,9 @@ const BASE = '27557eb';
    多分頁同步第 2 輪審查(2026-10-31,帳號那一邊存不進去時作答跳「重新整理」卡、模擬考交卷存不進去先留在分頁)改了 daily-ui、mock、review;
    多分頁同步第 3 輪審查(2026-11-01,單字頁的題庫編輯器與遊戲、片語特訓作答前先問 holdForAccount)改了 vocab;
    審查 D 第 1 輪(2026-11-01,掉落消除擋下時按 Enter 不落到卡上、字掉到底先暫停,記憶吐司「看成績」先問)又改了 vocab;
-   審查 D 第 2 輪(2026-11-01,聽力練習與錯題複習的作答、交卷,動詞測驗的作答框與「對答案」標 data-gate)改了 listening、verbs */
+   審查 D 第 2 輪(2026-11-01,聽力練習與錯題複習的作答、交卷,動詞測驗的作答框與「對答案」標 data-gate)改了 listening、verbs;
+   審查 D 第 3 輪(2026-11-01,交卷的確認視窗問完再問 holdForAccount,交卷鈕把自己傳給 submit 當卡片關掉後焦點回去的地方)
+   改了 practice、listening、diagnostic(下面 SITES 的錨點跟著換成 submit(opener)、onclick: e => ) */
 const LATER_BASE = ['js/vocab.js', 'js/reading.js', 'js/daily-ui.js', 'js/grammar.js', 'js/phonics.js', 'js/ear.js', 'js/dialogue.js',
   'js/verbs.js', 'js/practice.js', 'js/mock.js', 'js/diagnostic.js', 'js/writing.js', 'js/review.js', 'js/listening.js'];
 
@@ -579,20 +581,20 @@ const SITES = [
   ['js/reading.js', 'renderQuestions 選項 onclick', ['function renderQuestions(', 'function drawQuestion(', /onclick: \(\) => \{$/],
     "if (window.PET_HOOK && Object.keys(answers).length === a.questions.length) PET_HOOK.done('r:' + a.id, { into: list.querySelector('.drill-nav-btns') });"],
   ['js/reading.js', 'renderTransfer submit()', ['function renderTransfer(', 'function submit() {'], G + "'tq:' + a.id, { into: area, after: area.querySelector('.tq-result') });"],
-  ['js/practice.js', 'startQuiz submit()(交卷後的 review)', ['function startQuiz(', 'function submit() {'],
+  ['js/practice.js', 'startQuiz submit()(交卷後的 review)', ['function startQuiz(', 'function submit(opener) {'],
     G + "'p' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '5' ? [session.answers[i]] : u.item.questions.map((q, qi) => session.answers[i][qid(u.item, q, qi)])).filter(r => r && r.c > -1).length, 0), into: " + RH + ' });'],
   ['js/practice.js', 'startReview summary()', ['function startReview(', 'function summary() {'],
     G + "'pr', { n: Object.values(session).reduce((s, r) => s + (p === '5' ? 1 : Object.keys(r).length), 0), into: " + RH + ' });'],
   ['js/listening.js', 'startQuiz summary()(錯題複習)', ['function startQuiz(', 'function summary() {'],
     G + "opts.wrongOnly ? 'pr' : 'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: " + RH + ' });'],
-  ['js/listening.js', 'startQuiz submit()(一般練習交卷)', ['function startQuiz(', 'function submit() {'],
+  ['js/listening.js', 'startQuiz submit()(一般練習交卷)', ['function startQuiz(', 'function submit(opener) {'],
     G + "'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: " + RH + ' });'],
   ['js/ear.js', 'summary()', ['function startRound(', 'function summary() {'], G + "'e' + sec, { n: list.length, into: " + RH + ' });'],
   ['js/review.js', 'summary()', ['function summary() {'], G + "'rv', { n: list.length, into: " + RH + ' });'],
   ['js/dialogue.js', 'markHeard()', ['function markHeard('],
     "if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { after: root.querySelectorAll('.dlg-line')[i] });"],
   ['js/mock.js', 'submit()', ['function submit(timeUp) {'], G + "'mock', { into: " + RH + ' });'],
-  ['js/diagnostic.js', '「交卷，看報告」onclick', ['function renderTest(', "class: 'btn primary',", /onclick: \(\) => \{$/], G + "'diag', { into: " + RH + ' });'],
+  ['js/diagnostic.js', '「交卷，看報告」onclick', ['function renderTest(', "class: 'btn primary',", /onclick: e => \{$/], G + "'diag', { into: " + RH + ' });'],
   ['js/writing.js', '技巧課「標記讀完」onclick', ['function lessonView(', /onclick: \(\) => \{$/], "if (window.PET_HOOK && unitDone(units[idx])) PET_HOOK.done('wr:' + les.id, { into: wrap });"],
   ['js/writing.js', '句子重組答對', ['function scrambleBlock(', "if (picked.map(t => t.w).join(' ') === s.answer) {"], "if (window.PET_HOOK && unitDone({ t: 's', ref: s })) PET_HOOK.done('wr:' + s.id, { into: block });"],
   ['js/writing.js', '造句、回信、論述存檔 saveNow()', ['function writeArea(', 'function saveNow() {'], "if (window.PET_HOOK && !petWas && unitDone(petU)) PET_HOOK.done('wr:' + id, { into: savedNote.parentNode });"],

@@ -1696,6 +1696,61 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
+/* 審查 D 第 3 輪 #3:刷題頁的隨機練習、聽力隨機練習、程度檢測交卷時,沒答完會先問「還有 N 個單元沒答完，確定要交卷嗎？」。
+   data-gate 在按下去那一刻檢查(這時還能作答),確認視窗開著的時候別的分頁登出(或這台的帳號資料夾變成還沒灌過):
+   以前按確定之後照樣批改,store.set 被 common.js 的最後一道靜靜擋下,畫面卻寫「答錯的 N 題已收進錯題本。」、畫出檢測報告,
+   其實一筆都沒存、也沒跳卡(e49e444 則寫進被刪掉的資料夾、上傳)。要的是:問完之後再查一次,擋下就跳「重新整理」卡、不批改、不出成績,
+   作答留在畫面上(交卷鈕還在),什麼都不寫;照常的時候跟以前一樣存、上傳(模擬考是在問完之後才算 canSaveNow,見上面模擬考那一項) */
+T['刷題頁隨機練習、聽力隨機練習、程度檢測:交卷的確認視窗開著時別的分頁登出、帳號資料夾變成還沒灌過,按確定跳「重新整理」卡、不出成績、什麼都不寫;照常時照樣存'] = async (B) => {
+  const login = J({ access_token: 'x', user: USER });
+  const day = Date.now() - 864e5;
+  const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
+  const rows = J([{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }]);
+  const HIST = 'tr_u' + CPID + '_hist', P5 = 'tr_u' + CPID + '_drill_p5', P2 = 'tr_u' + CPID + '_listen_p2', DIAG = 'tr_u' + CPID + '_diag';
+  const card = async (s) => { const st = await state(s); return st.mask ? st.title : ''; };
+  const REPORT = "(document.querySelector('.report-head') || {}).textContent || ''";
+  const PAGES = [
+    { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始練習'], pick: '.q-block .opt', submit: '直接交卷', keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /答對 \d+ \/ 10 題/, kept: "document.querySelectorAll('.q-block .opt.picked').length" },
+    { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: '直接交卷', keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /答對 \d+ \/ 10 題/, kept: "document.querySelectorAll('.letter-row .letter-big.picked').length" },
+    { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始檢測'], pick: '.q-block .opt', submit: '交卷，看報告', keys: [DIAG], up: ['diag'], report: /./, kept: null },
+  ];
+  const out = [];
+  for (const how of ['照常', '登出', '還沒灌過']) {
+    for (const pg of PAGES) {
+      const r = { how, page: pg.name };
+      const s = await open(B, { url: pg.url, user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login, [HIST]: J(oldHist) }, ss: { __fake_rows: rows } });
+      try {
+        await pressText(s, pg.start[0], pg.start[1]);   // data-gate,這時能作答
+        await click(s, pg.pick, 0);                     // 答一題(其他沒答,交卷時會問)
+        await sleep(1000);                              // 程度檢測每答一題就存:等它 0.8 秒後上傳完,再拍「之前」
+        await s.eval(COUNT_SILENT);
+        await s.eval(`window.confirm = (m) => { window.__asked = String(m); ${BREAK_ACCOUNT[how] || 'true'}; return true; }; true`);
+        const before = await s.eval(LS), up0 = await s.eval(UPS);
+        await pressText(s, '.drill-nav-btns .btn', pg.submit);
+        r.asked = await s.eval("window.__asked || ''");
+        r.card = await card(s);
+        r.report = await s.eval(REPORT);
+        r.submitLeft = await s.eval(`[...document.querySelectorAll('.drill-nav-btns .btn')].some((b) => b.textContent.indexOf(${J(pg.submit)}) > -1)`);
+        r.kept = pg.kept ? await s.eval(pg.kept) : null;
+        await sleep(1300);
+        /* 「之前」是問之前拍的:別的分頁登出刪掉的、記上的標記不算,只看這一頁寫出來的(登出之後帳號資料夾的鍵又出現也算) */
+        const after = await s.eval(LS), a = JSON.parse(after);
+        r.wrote = lsDiff(before, after).filter((k) => a[k] !== undefined && !/_pet$/.test(k) && k !== 'tr_cloud_unhydrated_' + UID);
+        r.ups = (await s.eval(UPS)).slice(up0.length);
+        r.silent = await s.eval(SILENT);
+      } finally { await s.close(); }
+      const has = (a, ks) => ks.every((k) => a.includes(k));
+      if (how === '照常') r.ok = !!r.asked && !r.card && pg.report.test(r.report) && has(r.wrote, pg.keys) && has(r.ups, pg.up) && !r.silent.length;
+      else {
+        const title = how === '登出' ? /已經在別的分頁登出/ : /還沒載入/;
+        r.ok = !!r.asked && title.test(r.card) && !r.report && r.submitLeft && (pg.kept === null || r.kept === 1) && !r.wrote.length && !r.ups.length && !r.silent.length;
+      }
+      out.push(r);
+    }
+  }
+  return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
 /* 多分頁第 3 輪審查 #1(2026-11-01):別的分頁登出又登回來、正在灌資料(「還沒灌過」標記記著、帳號資料夾空的)時,這個分頁換到寫作頁的技巧課。
    寫作頁的 readMap 是畫面時讀的(開頁時是空的),按「標記讀完」整份寫回。這一頁確認登入(查教師身分)之前別的分頁先灌好、劃掉標記:
    以前這一頁不灌資料,按下去雲端 writing_read 從三課變成只剩這一課。要的是:這一頁重灌重載,畫面換成灌好的資料夾,按下去四課都在;

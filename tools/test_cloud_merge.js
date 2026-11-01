@@ -555,8 +555,13 @@ function syncScenarios() {
    - 66:灌過的分頁換頁、確認登入途中別的分頁登出又登回同一個帳號:這一頁照新分頁重灌,讀不到雲端不能作答、不記帳
      (第 1 步那版、e49e444、be7104d 都會紅:雲端 hist 被蓋成 null 或只剩新那一筆),不比,只要新版通過。
      情境裡「別的分頁沒動」那一項是平常換頁(不重灌、照常上雲),也要新版通過
+   審查 D 第 3 輪(2026-11-01):
+   - 67(不是例外):雲端沒有進度的帳號,灌好的分頁開著時,登入前就開著的訪客頁再登入同一個帳號:灌好的分頁照常作答、上雲;
+     跟第 1 步那版逐位元組相同(be7104d 會紅:「灌過」記號被刪、記上標記,灌好的分頁卡在「還沒載入」)
+   - 68:雲端只有一個整份上傳的鍵,別的分頁登出又登回來、正在灌時換頁,確認前照空畫面寫過那個鍵:要重灌,讀不到雲端時這一頁和下一頁都不照本機作答
+     (第 1 步那版、e49e444、73900cf、5aff2d5 都會紅:雲端寫作紀錄被蓋成只剩這一頁寫的),不比,只要新版通過
    新版那一邊的 tr_cloud_seen_<帳號 id> 一律先拿掉再比(見 otherState)。
-   1~51、56、62 照樣逐位元組比(平常登入、重新整理、離線、兩台裝置、登出的請求與儲存都沒變) */
+   1~51、56、62、67 照樣逐位元組比(平常登入、重新整理、離線、兩台裝置、登出的請求與儲存都沒變) */
 function dropNullUpload(state, key) {
   const o = JSON.parse(state);
   const isNull = r => !!r && r.k === key && r.v === null;
@@ -565,7 +570,7 @@ function dropNullUpload(state, key) {
   return J(o);
 }
 const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null, '52': null, '53': null, '54': null, '55': null, '57': 'state', '58': null,
-  '59': null, '60': null, '61': null, '63': null, '64': null, '65': null, '66': null };
+  '59': null, '60': null, '61': null, '63': null, '64': null, '65': null, '66': null, '68': null };
 const intended = name => Object.prototype.hasOwnProperty.call(INTENDED, name.split('.')[0]);
 async function replay(variant) {
   const make = syncScenarios();

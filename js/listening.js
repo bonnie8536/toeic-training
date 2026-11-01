@@ -170,9 +170,9 @@
         return h('div', { class: 'drill-nav-btns' },
           h('button', {
             class: 'btn primary', 'data-gate': isLast ? '' : null,
-            onclick: () => { if (isLast) submit(); else { cur++; draw(); window.scrollTo(0, 0); } },
+            onclick: e => { if (isLast) submit(e.currentTarget); else { cur++; draw(); window.scrollTo(0, 0); } },
           }, isLast ? '交卷對答案' : '下一' + PARTS[units[cur + 1].p].unit + ' →'),
-          isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: submit }, '直接交卷'));
+          isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: e => submit(e.currentTarget) }, '直接交卷'));
       }
       return h('div', { class: 'drill-nav-btns' },
         canNext
@@ -317,9 +317,12 @@
     }
 
     /* 交卷:統一批改(未作答算錯,不寫入錯題紀錄) */
-    function submit() {
+    function submit(opener) {
       const missing = units.filter((u, i) => !unitAnswered(i)).length;
       if (missing && !confirm('還有 ' + missing + ' 個單元沒答完，確定要交卷嗎？未作答的算錯。')) return;
+      /* 確認視窗開著的時候別的分頁登出、帳號資料夾變成還沒灌過:問完再查一次,擋下就開「重新整理」卡、不批改,選好的留著
+         (跟 js/practice.js 隨機練習的交卷一樣;以前照樣寫「答錯的題目已收進錯題本。」,審查 D 第 3 輪 #3) */
+      if (typeof holdForAccount === 'function' && holdForAccount(opener)) return;
       units.forEach((u, i) => {
         const state = sess[i];
         state.done = true;

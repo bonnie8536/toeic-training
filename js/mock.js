@@ -344,11 +344,14 @@
     }
 
     /* ---------- 交卷與結果 ---------- */
-    function submit(timeUp) {
+    function submit(timeUp, asked) {
       if (over) return;
-      if (!timeUp) {
+      if (!timeUp && !asked) {
         const missing = units.filter((u, i) => !unitAnswered(i)).length;
         if (missing && !confirm('還有 ' + missing + ' 個題組沒答完，確定交卷？未作答算錯。')) return;
+        /* 原生確認視窗開著的時候,別的分頁對 localStorage 的改動(登出、換帳號、記上「還沒灌過」)Chrome 不會送進這一頁,
+           按確定之後要再過兩個工作(實測約 2 毫秒)才看得到,在那之前讀到的還是舊值,下面的 canSaveNow 會照樣存:等 50 毫秒再往下(審查 D 第 4 輪 #3) */
+        if (missing) { setTimeout(() => submit(false, true), 50); return; }
       }
       over = true;
       delete document.body.dataset.leaveConfirm;

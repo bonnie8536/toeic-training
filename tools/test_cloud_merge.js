@@ -560,6 +560,11 @@ function syncScenarios() {
      跟第 1 步那版逐位元組相同(be7104d 會紅:「灌過」記號被刪、記上標記,灌好的分頁卡在「還沒載入」)
    - 68:雲端只有一個整份上傳的鍵,別的分頁登出又登回來、正在灌時換頁,確認前照空畫面寫過那個鍵:要重灌,讀不到雲端時這一頁和下一頁都不照本機作答
      (第 1 步那版、e49e444、73900cf、5aff2d5 都會紅:雲端寫作紀錄被蓋成只剩這一頁寫的),不比,只要新版通過
+   審查 D 第 4 輪(2026-11-01):
+   - 69:舊版分頁登出留下「灌過」記號,新版訪客頁登入同一個帳號、確認前別的分頁先把目前帳號寫回去(灌過的分頁換頁先確認完、舊版分頁換頁):
+     照樣記標記、換頁都不能作答(第 1 步那版、e49e444、49a5080 都會紅:雲端 hist 被蓋成只剩新的那兩筆),不比,只要新版通過
+   - 70:確認前照空畫面寫過、蓋掉別的分頁剛灌好的本機那一份,自己又讀不到雲端:記上標記,這個分頁的下一頁、灌好的那個分頁換頁都不照本機作答
+     (第 1 步那版、e49e444、49a5080 都會紅:雲端寫作紀錄被蓋成只剩這一頁寫的),不比,只要新版通過
    新版那一邊的 tr_cloud_seen_<帳號 id> 一律先拿掉再比(見 otherState)。
    1~51、56、62、67 照樣逐位元組比(平常登入、重新整理、離線、兩台裝置、登出的請求與儲存都沒變) */
 function dropNullUpload(state, key) {
@@ -570,7 +575,7 @@ function dropNullUpload(state, key) {
   return J(o);
 }
 const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null, '52': null, '53': null, '54': null, '55': null, '57': 'state', '58': null,
-  '59': null, '60': null, '61': null, '63': null, '64': null, '65': null, '66': null, '68': null };
+  '59': null, '60': null, '61': null, '63': null, '64': null, '65': null, '66': null, '68': null, '69': null, '70': null };
 const intended = name => Object.prototype.hasOwnProperty.call(INTENDED, name.split('.')[0]);
 async function replay(variant) {
   const make = syncScenarios();

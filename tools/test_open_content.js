@@ -81,15 +81,17 @@ async function launch(scrollbars) {
 function connect(wsUrl) {
   const ws = new WebSocket(wsUrl);
   let id = 0;
-  const waiting = new Map(), errors = [], warns = [];
+  const waiting = new Map(), errors = [], warns = [], subs = new Set();
   ws.onmessage = (m) => {
     const msg = JSON.parse(m.data);
     if (msg.id && waiting.has(msg.id)) { waiting.get(msg.id)(msg); waiting.delete(msg.id); return; }
+    if (msg.method) subs.forEach((f) => f(msg));   // on():事件(例如 Page.javascriptDialogOpening,flatten 時帶 sessionId)
     if (msg.method === 'Runtime.exceptionThrown') errors.push((msg.params.exceptionDetails.exception || {}).description || msg.params.exceptionDetails.text);
     if (msg.method === 'Runtime.consoleAPICalled' && msg.params.type === 'warning') warns.push(msg.params.args.map((a) => a.value || a.description || '').join(' '));
   };
   const send = (method, params, sessionId) => new Promise((res) => { const i = ++id; waiting.set(i, res); ws.send(J(Object.assign({ id: i, method, params: params || {} }, sessionId ? { sessionId } : {}))); });
-  return new Promise((resolve, reject) => { ws.onopen = () => resolve({ ws, send, errors, warns }); ws.onerror = reject; });
+  const on = (f) => { subs.add(f); return () => subs.delete(f); };
+  return new Promise((resolve, reject) => { ws.onopen = () => resolve({ ws, send, errors, warns, on }); ws.onerror = reject; });
 }
 
 /* 頁面裡的假 supabase-js:loadSdk 看到 window.supabase 就不去 CDN 載。user 是 null 就是沒登入;delay 毫秒之後 getSession 才回 */
@@ -171,7 +173,7 @@ async function open(B, o) {
   const sid = (await B.send('Target.attachToTarget', { targetId, flatten: true })).result.sessionId;
   const send = (m, p) => B.send(m, p, sid);
   const s = {
-    send, origin,
+    send, origin, sid,
     async eval(expr) {
       const r = await send('Runtime.evaluate', { expression: expr, awaitPromise: true, returnByValue: true });
       if (r.result && r.result.exceptionDetails) throw new Error('頁面錯誤:' + J(r.result.exceptionDetails).slice(0, 300));
@@ -1749,6 +1751,137 @@ T['刷題頁隨機練習、聽力隨機練習、程度檢測:交卷的確認視�
     }
   }
   return { ok: out.every((x) => x.ok), detail: J(out) };
+};
+
+/* 按下去會跳原生視窗(confirm、prompt)的按鈕(用文字找,exact:整段文字要一樣):滑鼠放開那一下不等 CDP 回應(視窗開著時不回),
+   等 Page.javascriptDialogOpening。每跳一個視窗先跑 during(第幾個視窗),再按確定(prompt 填 promptText)。回跳過的視窗種類 */
+async function pressDialogs(B, s, sel, text, exact, during, promptText) {
+  const ok = await s.eval(`(() => { const old = document.getElementById('__press'); if (old) old.removeAttribute('id');
+    const b = [...document.querySelectorAll(${J(sel)})].find((x) => ${exact ? `x.textContent.trim() === ${J(text)}` : `x.textContent.indexOf(${J(text)}) > -1`}); if (!b) return false; b.id = '__press'; return true; })()`);
+  if (!ok) throw new Error('找不到 ' + sel + ' 「' + text + '」');
+  const p = await point(s, '#__press');
+  const queue = [], asked = [];
+  let wake = null, done = false;
+  const off = B.on((m) => { if (m.sessionId === s.sid && m.method === 'Page.javascriptDialogOpening') { queue.push(m.params); if (wake) wake(); } });
+  try {
+    await s.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p.x, y: p.y });
+    await s.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: p.x, y: p.y, button: 'left', clickCount: 1 });
+    const released = s.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: p.x, y: p.y, button: 'left', clickCount: 1 }).then(() => { done = true; if (wake) wake(); });
+    const end = Date.now() + 15000;
+    while (Date.now() < end) {
+      if (!queue.length) {
+        if (done) { await sleep(400); if (!queue.length) break; continue; }
+        await Promise.race([new Promise((r) => { wake = r; }), sleep(500)]);
+        wake = null;
+        continue;
+      }
+      const d = queue.shift();
+      asked.push(d.type);
+      if (during) await during(asked.length, d);
+      await sleep(300);
+      await s.send('Page.handleJavaScriptDialog', d.type === 'prompt' ? { accept: true, promptText: promptText || '' } : { accept: true });
+    }
+    await released;
+  } finally { off(); }
+  await sleep(350);
+  return asked;
+}
+
+/* 審查 D 第 4 輪 #3(e49e444 就有;49a5080 那一項的確認視窗是同一頁裡的替身,抓不到):Chrome 的原生確認視窗開著的時候,
+   別的分頁對 localStorage 的改動不會送進這一頁,按確定之後同一段程式裡讀到的還是舊值(holdForAccount、canSaveNow、帳號動作的 mustBeShown 都放行)。
+   這裡真的開兩個分頁(A 是要測的頁面,O 是同網域的 robots.txt)、跳真的視窗:視窗開著時 O 登出 X(或記上「還沒灌過」、改登入 Y),再按確定。
+   以前:交卷照樣批改、出成績,把登出時刪掉的帳號資料夾寫回來、上傳;模擬考照樣存進紀錄;刪除帳號送出 delete_own_account
+   (真的 supabase-js 送出時讀的是 O 剛登入的 Y,刪掉的是 Y)、登出所有裝置送出 signOut、改暱稱送出 updateUser。
+   要的是:交卷跳「重新整理」卡、不出成績、什麼都不寫不傳(模擬考照樣給他看結果、寫明還沒存、成績留在分頁);
+   帳號動作跳「已經在別的分頁登出」卡、一個請求都不送。照常(O 什麼都沒做)時照樣存、上傳、送給 X */
+T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改登入別人:按確定後交卷(隨機練習、聽力隨機練習、程度檢測、模擬考)跳卡、不寫不傳,刪除帳號、登出所有裝置、改暱稱不送;照常時照樣'] = async (B) => {
+  const login = J({ access_token: 'x', user: USER });
+  const day = Date.now() - 864e5;
+  const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
+  const three = [1, 2, 3].map((n) => ({ d: new Date(day + n * 1000).toISOString(), size: 'quick', lRaw: n, lTotal: 12, rRaw: n, rTotal: 18, lScore: 5, rScore: 5 }));
+  const HIST = 'tr_u' + CPID + '_hist', P5 = 'tr_u' + CPID + '_drill_p5', P2 = 'tr_u' + CPID + '_listen_p2', DIAG = 'tr_u' + CPID + '_diag', MH = 'tr_u' + CPID + '_mock_history';
+  const TO_Y = `(() => { ${OTHER_TAB_LOGOUT}; localStorage.setItem(${J(SB)}, ${J(J({ access_token: 'y', user: Y_USER }))}); localStorage.setItem('tr_current_profile', ${J(J(YPID))}); return true; })()`;
+  const BREAK = { 登出: OTHER_TAB_LOGOUT, 還沒灌過: BREAK_ACCOUNT['還沒灌過'], 換帳號: TO_Y };
+  const REPORT = "(document.querySelector('.report-head') || {}).textContent || ''";
+  const LATER = "JSON.parse(sessionStorage.getItem('tr_mock_unsaved') || '[]').length";
+  const SENT = "JSON.parse(sessionStorage.getItem('__fake_calls') || '[]').map((c) => c.op)";
+  /* O:同網域的另一個分頁(先開:A 開的時候會清空、灌好 localStorage) */
+  const o = await open(B, { url: 'robots.txt', early: true });
+  const out = [];
+  try {
+    const PAGES = [
+      { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始練習'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '直接交卷'], keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /答對 \d+ \/ 10 題/ },
+      { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: ['.drill-nav-btns .btn', '直接交卷'], keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /答對 \d+ \/ 10 題/ },
+      { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始檢測'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷，看報告'], keys: [DIAG], up: ['diag'], report: /./ },
+      { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.drill-top .btn', '交卷'], keys: [MH], up: ['mock_history'], report: /參考總分/, mock: true },
+    ];
+    for (const how of ['照常', '登出', '還沒灌過']) {
+      for (const pg of PAGES) {
+        const r = { how, page: pg.name };
+        const ls = { [SB]: login, [HIST]: J(oldHist) };
+        if (pg.mock) ls[MH] = J(three);
+        const rows = pg.mock ? [{ k: 'mock_history', v: three, updated_at: new Date(day + 10000).toISOString() }] : [{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }];
+        const s = await open(B, { url: pg.url, user: true, sdk: fakeCloud({ user: USER }), ls, ss: { __fake_rows: J(rows) } });
+        try {
+          await pressText(s, pg.start[0], pg.start[1]);   // data-gate,這時能作答
+          if (pg.pick) await click(s, pg.pick, 0);        // 答一題(其他沒答,交卷時會問)
+          await sleep(1000);                              // 程度檢測每答一題就存:等它 0.8 秒後上傳完,再拍「之前」
+          await s.eval(COUNT_SILENT);
+          const before = await s.eval(LS), up0 = await s.eval(UPS);
+          r.asked = await pressDialogs(B, s, pg.submit[0], pg.submit[1], pg.mock, async () => { if (BREAK[how]) r.broke = await o.eval(BREAK[how]); });
+          await sleep(900);
+          const st = await state(s);
+          r.card = st.mask ? st.title : '';
+          r.report = pg.mock ? await s.eval("(document.querySelector('.report-head h2') || {}).textContent || ''") : await s.eval(REPORT);
+          if (pg.mock) r.note = await s.eval("(document.querySelector('.mock-unsaved') || {}).textContent || ''"), r.later = await s.eval(LATER);
+          await sleep(1300);
+          /* 只看這一頁寫出來的(O 刪掉的、記上的標記不算;登出之後帳號資料夾的鍵又出現也算) */
+          const after = await s.eval(LS), a = JSON.parse(after);
+          r.wrote = lsDiff(before, after).filter((k) => a[k] !== undefined && !/_pet$/.test(k) && k !== 'tr_cloud_unhydrated_' + UID);
+          r.ups = (await s.eval(UPS)).slice(up0.length);
+          r.silent = await s.eval(SILENT);
+        } finally { await s.close(); }
+        const has = (x, ks) => ks.every((k) => x.includes(k));
+        const asked = J(r.asked) === J(['confirm']);
+        if (how === '照常') r.ok = asked && !r.card && pg.report.test(r.report) && has(r.wrote, pg.keys) && has(r.ups, pg.up) && !r.silent.length && (!pg.mock || (!r.note && r.later === 0));
+        else if (pg.mock) r.ok = asked && r.broke === true && pg.report.test(r.report) && /還沒存/.test(r.note) && r.later === 1 && !r.wrote.length && !r.ups.length;
+        else {
+          const title = how === '登出' ? /已經在別的分頁登出/ : /還沒載入/;
+          r.ok = asked && r.broke === true && title.test(r.card) && !r.report && !r.wrote.length && !r.ups.length && !r.silent.length;
+        }
+        out.push(r);
+      }
+    }
+    /* 「我的」頁的帳號動作:刪除帳號問兩次(第二個視窗開著時 O 改登入 Y),登出所有裝置、改暱稱問一次 */
+    const ACTS = [
+      { name: '刪除帳號', sel: '.me-delete button', text: '刪除帳號', at: 2, sent: ['rpc:delete_own_account', 'signOut'] },
+      { name: '登出所有裝置', sel: '.me-row', text: '登出所有裝置', at: 1, sent: ['signOut'] },
+      { name: '改暱稱', sel: '.me-row', text: '改暱稱', at: 1, sent: ['updateUser'] },
+    ];
+    for (const how of ['照常', '換帳號']) {
+      for (const act of ACTS) {
+        const r = { how, act: act.name };
+        const s = await open(B, { url: 'me.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login, [HIST]: J(oldHist) } });
+        try {
+          await s.eval('window.__mark = 1; true');
+          const c0 = (await s.eval(SENT)).length;
+          r.asked = await pressDialogs(B, s, act.sel, act.text, true, async (n) => { if (how !== '照常' && n === act.at) r.broke = await o.eval(TO_Y); }, '新暱稱');
+          await sleep(900);
+          await s.loaded();
+          r.stay = await s.eval('window.__mark === 1');
+          const st = await state(s);
+          r.card = st.mask ? st.title : '';
+          r.sent = (await s.eval(SENT)).slice(c0);
+        } finally { await s.close(); }
+        r.ok = how === '照常' ? J(r.sent) === J(act.sent)
+          : r.broke === true && r.asked.length === act.at && r.stay && /已經在別的分頁登出/.test(r.card) && !r.sent.length;
+        out.push(r);
+      }
+    }
+  } finally { await o.close(); }
+  const bad = out.filter((x) => !x.ok);
+  return { ok: !bad.length, detail: bad.length ? '不對的 ' + bad.length + ' / ' + out.length + ' 項:' + bad.map((x) => x.how + '/' + (x.page || x.act)).join('、') + ' | ' + J(bad)
+    : J(out.map((x) => x.how + '/' + (x.page || x.act) + ' 問 ' + x.asked.join(','))) };
 };
 
 /* 多分頁第 3 輪審查 #1(2026-11-01):別的分頁登出又登回來、正在灌資料(「還沒灌過」標記記著、帳號資料夾空的)時,這個分頁換到寫作頁的技巧課。

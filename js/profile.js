@@ -378,6 +378,10 @@
       if (accountMoved()) { goneCard(opener); return; }
       const n = prompt('暱稱（老師會看到這個名字）', unsentName !== null ? unsentName : CLOUD.nameOf(CLOUD.user));
       if (n === null) return;
+      /* 輸入視窗、確認視窗開著的時候,別的分頁登出、改登入別人,Chrome 不會把 localStorage 的改動送進這一頁,
+         按確定之後要再過兩個工作(實測約 2 毫秒)才看得到,在那之前讀到的還是舊值:CLOUD 送出前的查核(mustBeShown)放行,送出時 supabase-js 拿的卻是別人的登入資料,
+         改到、登出、刪掉的是別的分頁登入的那個人。等 50 毫秒再送(審查 D 第 4 輪 #3;下面兩個一樣) */
+      await new Promise(r => setTimeout(r, 50));
       try { await CLOUD.updateName(n); location.reload(); }
       catch (err) { if (isGone(err)) { unsentName = n; goneCard(opener); } else alert(err.message); }
     }
@@ -387,7 +391,7 @@
       const opener = openerOf(e);
       if (accountMoved()) { goneCard(opener); return; }
       if (!confirm('要登出所有裝置嗎？這台會馬上登出，其他已登入的手機、電腦最晚約一小時內也會登出，下次要重新登入。')) return;
-      CLOUD.logout({ everywhere: true }).catch(err => { if (isGone(err)) goneCard(opener); else alert(err.message); });
+      setTimeout(() => CLOUD.logout({ everywhere: true }).catch(err => { if (isGone(err)) goneCard(opener); else alert(err.message); }), 50);
     }
 
     function deleteUser(e) {
@@ -395,7 +399,7 @@
       if (accountMoved()) { goneCard(opener); return; }
       if (!confirm('確定要刪除帳號？雲端上的所有進度、錯題與寫作內容都會永久刪除，無法復原。付款紀錄依法保留。')) return;
       if (!confirm('再確認一次：真的要刪除「' + CLOUD.user.email + '」？')) return;
-      CLOUD.deleteAccount().catch(err => { if (isGone(err)) goneCard(opener); else alert(err.message); });
+      setTimeout(() => CLOUD.deleteAccount().catch(err => { if (isGone(err)) goneCard(opener); else alert(err.message); }), 50);
     }
 
     /* 「我的」頁(me.html)的帳號區:由 js/me.js 在 CLOUD.ready 之後呼叫 */

@@ -225,7 +225,7 @@
         記著的時候每一頁都要灌(別的分頁之前灌過的旗標不算數),這段時間的寫入不記帳:讀雲端進度失敗(網路斷一下、Supabase 慢或休眠)時
         頁面拿到的是空資料夾,記了帳,下一頁灌資料會把只有新那幾筆的 hist、錯題本整份傳上去蓋掉雲端。
         資料夾不是空的(之前灌過、登入失效改回訪客留著的)不記,跟以前一樣:讀不到雲端時照常作答記帳,下次灌資料比新舊(離線也是這樣)。
-        這台灌過這個帳號(「灌過」記號 tr_cloud_seen_<帳號 id>,灌好時寫、登出刪掉、剛登入而且那時不是這台的目前帳號就先刪掉、搬家不帶)也不記:雲端本來就沒有進度的帳號
+        這台灌過這個帳號(「灌過」記號 tr_cloud_seen_<帳號 id>,灌好時寫、登出刪掉、開始登入或確認完的時候不是這台的目前帳號就先刪掉、搬家不帶)也不記:雲端本來就沒有進度的帳號
         (新註冊、只看後台的老師)灌完資料夾還是空的,不能因為這樣每開一個新分頁就把已經灌好的分頁擋下(多分頁第 3 輪審查 #4、#5)。
         代價跟資料夾不是空的、只是舊了一樣(已知限制,整份上傳後傳的蓋掉先傳的):灌過之後別台才有進度,這台讀不到雲端時照常作答記帳。
      3. 這一頁的畫面是照還沒灌過的資料夾畫的、自己又沒灌成(pageUnhydrated):別的分頁之後灌好、劃掉標記,這一頁一樣不記帳(多分頁第 3 輪審查 #1)。
@@ -247,6 +247,9 @@
       }
     } catch (e) {}
     return false;
+  }
+  function currentProfile() {
+    try { return localStorage.getItem('tr_current_profile'); } catch (e) { return null; }
   }
   function sameFolder() {
     try { return localStorage.getItem('tr_current_profile') === JSON.stringify(window.__PROFILE_ID); } catch (e) { return false; }
@@ -278,7 +281,8 @@
     return !!(u && typeof u.id === 'string' && pidOf(u) === window.__PROFILE_ID && canRecord(u.id));
   }
 
-  async function afterAuth(user, fresh) {
+  /* cpAtSend:剛登入(fresh)時,送出密碼那一刻這台的目前帳號(tr_current_profile 原樣,沒有是 null),見下面「灌過」記號那一段 */
+  async function afterAuth(user, fresh, cpAtSend) {
     if (paidUi()) accessPromise = fetchAccess(user);   // 使用權跟教師身分同時查;不等它,登入與灌資料照舊
     try {
       const { data } = await client.from('teachers').select('user_id').eq('user_id', user.id);
@@ -305,12 +309,18 @@
     /* 剛登入(fresh)、或這一頁的資料夾不是這個帳號的(訪客頁登入、Google 回來):「灌過」記號不算數,先刪掉,灌好再寫回。
        部署前就開著的舊版分頁不認得這個記號,在那裡登出會把資料夾刪光、記號留著;照記號不記「還沒灌過」的話,讀雲端進度失敗時
        學生在空資料夾上作答記帳,網路好了整份上傳蓋掉雲端。先刪掉,這段時間別的分頁開的頁面也照「還沒灌過」的資料夾看(unreadyAtLoad;審查 D 第 1 輪 #2)。
-       只有這個帳號這時不是這台的目前帳號才刪:舊版分頁登出會刪掉目前帳號,上面那一條照樣擋得到;還是目前帳號的話,別的分頁登入著、灌好了,
-       記號是對的。以前一律刪,在登入前就開著的訪客頁再登入同一個帳號,資料夾是空的(雲端沒有進度的帳號)就記上標記,
-       灌好的分頁跟著不能作答,讀雲端失敗時一直卡在「還沒載入」卡(審查 D 第 3 輪 #1,be7104d 造成;情境 67) */
-    let wasCurrent = false;
-    try { wasCurrent = localStorage.getItem('tr_current_profile') === JSON.stringify(pid); } catch (e) { /* 讀不到:照刪 */ }
-    if ((fresh || otherFolder) && !wasCurrent) { try { localStorage.removeItem(SEEN_PREFIX + user.id); } catch (e) { /* 刪不掉:跟以前一樣 */ } }
+       開始登入(送出密碼那一刻 cpAtSend;不是剛登入就是開頁時)和確認完的這一刻,這個帳號都是這台的目前帳號,記號才算數、不刪:
+       這段時間一直有別的分頁登入著它、灌好了,記號是對的。以前一律刪,在登入前就開著的訪客頁再登入同一個帳號,資料夾是空的
+       (雲端沒有進度的帳號)就記上標記,灌好的分頁跟著不能作答,讀雲端失敗時一直卡在「還沒載入」卡(審查 D 第 3 輪 #1,be7104d 造成;情境 67)。
+       只看確認那一刻不夠:舊版分頁登出之後、這一頁確認之前,別的分頁先把目前帳號寫回去(灌過的分頁換頁先確認完、舊版分頁換頁一律先寫),
+       記號就被當成對的,標記沒記,讀雲端失敗時照空資料夾作答整份上傳(審查 D 第 4 輪 #1,e49e444 就有,5aff2d5 擋得住、49a5080 又打開;情境 69)。
+       moved(確認途中有人登出又登回同一個帳號)時確認那一刻一定不是目前帳號,也照這條刪。
+       已知限制(部署過渡期):送出登入時已經有分頁登入著這個帳號,確認之前舊版分頁登出、另一個舊版分頁又換頁寫回目前帳號,分辨不出來 */
+    let wasCurrent = false, atStart = !otherFolder;
+    const me = JSON.stringify(pid);
+    try { wasCurrent = localStorage.getItem('tr_current_profile') === me; } catch (e) { /* 讀不到:照刪 */ }
+    if (fresh) atStart = cpAtSend === me;
+    if (!(atStart && wasCurrent)) { try { localStorage.removeItem(SEEN_PREFIX + user.id); } catch (e) { /* 刪不掉:跟以前一樣 */ } }
     const prefix = 'tr_u' + pid + '_';
     const flagKey = 'tr_cloud_hydrated_' + user.id;
     const pendTry = 'tr_move_pending_tried_' + user.id;   // 搬家暫存區:這個分頁只為它重灌一次,載不到合併程式也不會一直重載
@@ -324,7 +334,11 @@
     const hydrate = fresh || otherFolder || moved || !sessionStorage.getItem(flagKey) || movePend || notYet || filled;
     /* 帳號資料夾是空的、這台也沒灌過這個帳號:先記「還沒灌過」再寫目前帳號,別的分頁一看到目前帳號是它,就知道資料夾還不能用 */
     const markNow = hydrate && !notYet && !seen(user.id) && accountFolderEmpty(prefix, otherFolder);
-    if (markNow) { try { localStorage.setItem(unhydratedKey(user.id), '1'); } catch (e) { /* 寫不進去就跟以前一樣 */ } }
+    /* filled、而且這一頁確認前寫過:那幾筆是照開頁時的空畫面寫的,可能已經蓋掉別的分頁剛灌好的本機那一份。一樣記「還沒灌過」:
+       哪一頁灌成功(本機換回雲端那一份、劃掉標記)之前,所有分頁都不能作答、不記帳。只讓這個分頁的下一頁重灌不夠,讀不到雲端時
+       這個分頁的下一頁、灌好的那個分頁換頁都照被蓋掉的本機作答整份上傳(審查 D 第 4 輪 #2,e49e444 就有;情境 70) */
+    const overwrote = filled && Object.keys(early).length > 0;
+    if (markNow || overwrote) { try { localStorage.setItem(unhydratedKey(user.id), '1'); } catch (e) { /* 寫不進去就跟以前一樣 */ } }
     /* 這一頁的畫面根據的是還沒灌過的資料夾:灌成了就重載;灌不成,這一頁之後都不能作答(標記被別的分頁劃掉也一樣) */
     if (hydrate && (notYet || markNow || filled || moved)) pageUnhydrated = true;
     localStorage.setItem('tr_current_profile', JSON.stringify(pid));
@@ -438,6 +452,7 @@
   async function login(email, password) {
     await window.CLOUD.ready;
     if (!client) throw new Error('雲端元件尚未載入，請重新整理再試');
+    const cp = currentProfile();   // 送出登入這一刻的目前帳號(afterAuth 判斷「灌過」記號算不算數)
     const { data, error } = await client.auth.signInWithPassword({ email: String(email).trim(), password });
     if (error) {
       if (/Invalid login credentials/i.test(error.message)) throw new Error('帳號或密碼不對。當初用 Google 註冊的話，要按上面的 Google 登入。');
@@ -447,7 +462,7 @@
       throw new Error(error.message);
     }
     window.CLOUD.user = data.user;
-    await afterAuth(data.user, true);
+    await afterAuth(data.user, true, cp);
   }
 
   async function logout(opts) {
@@ -543,6 +558,7 @@
   async function signUp(email, password, name) {
     await window.CLOUD.ready;
     needClient();
+    const cp = currentProfile();   // 同 login
     const { data, error } = await client.auth.signUp({
       email: String(email).trim(), password,
       options: { data: { name: String(name || '').trim().slice(0, 20) }, emailRedirectTo: siteUrl('index.html') },
@@ -555,7 +571,7 @@
     bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(前端計畫三.6;沒有意向什麼都不做)
     if (data.session) {
       window.CLOUD.user = data.user;
-      await afterAuth(data.user, true);
+      await afterAuth(data.user, true, cp);
       return { needsConfirm: false };
     }
     return { needsConfirm: true };

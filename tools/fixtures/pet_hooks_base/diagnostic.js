@@ -117,22 +117,29 @@
 
     /* 導航 */
     const unanswered = total - Object.keys(st.answers).length;
+    function handIn(opener, asked) {
+      if (unanswered > 0 && !asked) {
+        if (!confirm('還有 ' + unanswered + ' 題沒作答，未作答會列入「答錯」計算。確定交卷？')) return;
+        /* 原生確認視窗開著的時候,別的分頁對 localStorage 的改動(登出、換帳號、記上「還沒灌過」)Chrome 不會送進這一頁,
+           按確定之後要再過兩個工作(實測約 2 毫秒)才看得到,在那之前讀到的還是舊值,下面的查核都會放行:等 50 毫秒再往下(審查 D 第 4 輪 #3) */
+        setTimeout(() => handIn(opener, true), 50);
+        return;
+      }
+      /* 問的時候別的分頁登出、帳號資料夾變成還沒灌過:不交卷、不畫報告,開「重新整理」卡,答過的留著
+         (跟刷題頁的交卷一樣;以前照樣畫出報告,其實沒存,審查 D 第 3 輪 #3) */
+      if (typeof holdForAccount === 'function' && holdForAccount(opener)) return;
+      st.done = true;
+      st.finishedAt = new Date().toISOString();
+      store.set(KEY, st);
+      window.scrollTo(0, 0);
+      renderReport();
+    }
     root.append(h('div', { class: 'drill-nav-btns' },
       h('button', { class: 'btn', disabled: cur === 0 ? '' : null, onclick: () => { cur--; renderTest(); } }, '← 上一題'),
       h('button', { class: 'btn', disabled: cur >= total - 1 ? '' : null, onclick: () => { cur++; renderTest(); } }, '下一題 →'),
       h('button', {
         class: 'btn primary', 'data-gate': '',
-        onclick: e => {
-          if (unanswered > 0 && !confirm('還有 ' + unanswered + ' 題沒作答，未作答會列入「答錯」計算。確定交卷？')) return;
-          /* 問的時候別的分頁登出、帳號資料夾變成還沒灌過:不交卷、不畫報告,開「重新整理」卡,答過的留著
-             (跟刷題頁的交卷一樣;以前照樣畫出報告,其實沒存,審查 D 第 3 輪 #3) */
-          if (typeof holdForAccount === 'function' && holdForAccount(e.currentTarget)) return;
-          st.done = true;
-          st.finishedAt = new Date().toISOString();
-          store.set(KEY, st);
-          window.scrollTo(0, 0);
-          renderReport();
-        },
+        onclick: e => handIn(e.currentTarget),
       }, '交卷，看報告')));
   }
 

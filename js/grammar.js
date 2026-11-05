@@ -122,7 +122,7 @@
 
   /* ================= 首頁 ================= */
   function renderHome() {
-    document.title = '文法基礎|衝衝英文';
+    document.title = '文法基礎 - 衝衝英文';
     setPageMeta('');
     widen();
     const done = store.get('grammar_done', {});
@@ -137,8 +137,8 @@
       layout.innerHTML = '';
       const list = UNITS.filter(u => stageOf(u) === stage);
       const doneN = list.filter(u => done[u.id]).length;
-      const col = h('div', { class: 'gx-col' },
-        h('div', { class: 'page-head' }, h('h1', null, '文法基礎')),
+      /* 課程清單包在 data-nosnippet 裡(建立時就帶,不事後加):Google 搜尋結果的摘要不拿課名清單,改用標題下那句介紹或頁面說明 */
+      const units = h('div', { 'data-nosnippet': '' },
         todo ? h('div', { class: 'gx-continue' },
           h('a', { class: 'btn primary', href: 'grammar.html?u=' + todo.id }, '繼續上課'),
           h('span', null, STAGES[stageOf(todo)].name.replace(/\s.*$/, '') + ' 第 ' +
@@ -146,14 +146,17 @@
         h('div', { class: 'exercise-head' },
           h('h2', null, STAGES[stage].name),
           h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + '/' + list.length)));
+      const col = h('div', { class: 'gx-col' },
+        h('div', { class: 'page-head' }, h('h1', null, '文法基礎'), h('p', null, UNITS.length + ' 個單元，從名詞冠詞、時態到子句與被動，一個單元講一件事，講完馬上練。')),
+        units);
       list.forEach((u, i) => {
-        col.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : '') + (todo && u.id === todo.id ? ' next' : ''), href: 'grammar.html?u=' + u.id },
+        units.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : '') + (todo && u.id === todo.id ? ' next' : ''), href: 'grammar.html?u=' + u.id },
           h('span', { class: 'n' }, String(i + 1)),
           h('span', { class: 't' }, u.title)));
       });
       /* 這一章的查表頁;最後一章後面接總整理 */
       refsOf(stage).concat(stage === 'h' ? refsOf('z') : []).forEach(([k, r]) => {
-        col.append(h('a', { class: 'gx-unit-row gx-appendix', href: 'grammar.html?ref=' + k },
+        units.append(h('a', { class: 'gx-unit-row gx-appendix', href: 'grammar.html?ref=' + k },
           h('span', { class: 'n' }, '表'),
           h('span', { class: 't' }, r.title, h('i', null, r.sub))));
       });
@@ -193,7 +196,7 @@
 
   /* ================= 單元 ================= */
   function renderUnit(u) {
-    document.title = u.title + '|衝衝英文';
+    document.title = u.title + ' - 衝衝英文';
     setPageMeta('u=' + encodeURIComponent(u.id), u.goal);
     const idx = UNITS.indexOf(u);
     widen();

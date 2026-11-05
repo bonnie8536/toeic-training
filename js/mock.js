@@ -86,7 +86,7 @@
   /* ================= 首頁 ================= */
   function renderHome() {
     onHome = true;
-    document.title = '模擬考|衝衝英文';
+    document.title = '模擬考 - 衝衝英文';
     root.innerHTML = '';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '模擬考'),
@@ -134,7 +134,7 @@
     pick(TOEIC.part6, cfg.r.p6).forEach(item => units.push({ sec: 'R', p: '6', item }));
     pick(TOEIC.part7, cfg.r.p7).forEach(item => units.push({ sec: 'R', p: '7', item }));
 
-    document.title = '模擬考進行中|衝衝英文';
+    document.title = '模擬考進行中 - 衝衝英文';
     document.body.dataset.leaveConfirm = '模擬考還沒交卷，離開後這次作答不會計分。確定離開？';
     const sess = units.map(() => ({ answers: {}, played: 0 }));
     let cur = 0;
@@ -401,7 +401,7 @@
     }
 
     function results(timeUp, lRaw, lTotal, rRaw, rTotal, lScore, rScore, unsaved) {
-      document.title = '模擬考結果|衝衝英文';
+      document.title = '模擬考結果 - 衝衝英文';
       root.innerHTML = '';
       root.append(h('div', { class: 'drill-top' }, h('h1', null, '模擬考結果'),
         h('a', { href: 'mock.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回模擬考')));

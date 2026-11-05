@@ -175,7 +175,7 @@
 
   /* ================= 首頁 ================= */
   function renderHome() {
-    document.title = '自然發音|衝衝英文';
+    document.title = '自然發音 - 衝衝英文';
     setPageMeta('');
     widen();
     const done = store.get('phonics_done', {});
@@ -190,8 +190,8 @@
       layout.innerHTML = '';
       const list = UNITS.filter(u => stageOf(u) === stage);
       const doneN = list.filter(u => done[u.id]).length;
-      const col = h('div', { class: 'gx-col' },
-        h('div', { class: 'page-head' }, h('h1', null, '自然發音')),
+      /* 課程清單包在 data-nosnippet 裡(建立時就帶,不事後加):Google 搜尋結果的摘要不拿「1 短母音 a：cat 的 a 唸 [æ]…」這串清單,改用標題下那句介紹或頁面說明 */
+      const units = h('div', { 'data-nosnippet': '' },
         todo ? h('div', { class: 'gx-continue' },
           h('a', { class: 'btn primary', href: 'phonics.html?u=' + todo.id }, '繼續上課'),
           h('span', null, STAGES[stageOf(todo)].name.replace(/\s.*$/, '') + ' 第 ' +
@@ -199,14 +199,17 @@
         h('div', { class: 'exercise-head' },
           h('h2', null, STAGES[stage].name),
           h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + '/' + list.length)));
+      const col = h('div', { class: 'gx-col' },
+        h('div', { class: 'page-head' }, h('h1', null, '自然發音'), h('p', null, stageKeys.length + ' 章 ' + UNITS.length + ' 課，從短母音到重音與弱讀，每個字都能點來聽。')),
+        units);
       list.forEach((u, i) => {
-        col.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : '') + (todo && u.id === todo.id ? ' next' : ''), href: 'phonics.html?u=' + u.id },
+        units.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : '') + (todo && u.id === todo.id ? ' next' : ''), href: 'phonics.html?u=' + u.id },
           h('span', { class: 'n' }, String(i + 1)),
           h('span', { class: 't' }, u.title),
           u.key && u.key.kk ? h('span', { class: 'ph-row-kk' }, '[' + u.key.kk + ']') : null));
       });
       if (stage === stageKeys[stageKeys.length - 1]) {
-        col.append(h('a', { class: 'gx-unit-row gx-appendix', href: 'phonics.html?ref=chart' },
+        units.append(h('a', { class: 'gx-unit-row gx-appendix', href: 'phonics.html?ref=chart' },
           h('span', { class: 'n' }, '表'),
           h('span', { class: 't' }, '發音總表', h('i', null, '每個音一個代表字，點了聽'))));
       }
@@ -217,7 +220,7 @@
 
   /* ================= 發音總表 ================= */
   function renderChart() {
-    document.title = '發音總表|自然發音|衝衝英文';
+    document.title = '發音總表 - 自然發音 - 衝衝英文';
     setPageMeta('ref=chart', '自然發音總表：' + UNITS.length + ' 課的發音規則一頁看完，附 KK 音標與例字，點一下就播放。');
     widen();
     const done = store.get('phonics_done', {});
@@ -247,7 +250,7 @@
 
   /* ================= 單元 ================= */
   function renderUnit(u) {
-    document.title = u.title + '|衝衝英文';
+    document.title = u.title + ' - 衝衝英文';
     setPageMeta('u=' + encodeURIComponent(u.id), u.goal);
     const idx = UNITS.indexOf(u);
     widen();

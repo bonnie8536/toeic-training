@@ -31,14 +31,15 @@
 
   /* ============ 文章列表 ============ */
   function renderList() {
-    document.title = '閱讀訓練|衝衝英文';
+    document.title = '閱讀訓練 - 衝衝英文';
     setPageMeta('');
     let levelFilter = '全部';
 
     const head = h('div', { class: 'page-head' },
-      h('h1', null, '閱讀訓練'));
-    const chips = h('div', { class: 'drill-filters', style: 'margin:14px 0 4px' });
-    const listWrap = h('div', { class: 'article-list' });
+      h('h1', null, '閱讀訓練'), h('p', null, articles.length + ' 篇分級短文，重點單字點一下就變填空，可以切英中對照。'));
+    /* 級別按鈕與文章清單建立時就帶 data-nosnippet:Google 搜尋結果的摘要不拿清單,改用上面那句介紹或頁面說明 */
+    const chips = h('div', { class: 'drill-filters', style: 'margin:14px 0 4px', 'data-nosnippet': '' });
+    const listWrap = h('div', { class: 'article-list', 'data-nosnippet': '' });
     root.append(head, chips, listWrap);
 
     ['全部', ...LEVEL_ORDER].forEach(name => {
@@ -94,8 +95,8 @@
 
   /* ============ 閱讀器 ============ */
   function renderReader(a) {
-    document.title = a.title + (a.titleZh ? '（' + a.titleZh + '）' : '') + '|衝衝英文';
-    setPageMeta('id=' + encodeURIComponent(a.id), a.titleZh ? '英文閱讀「' + a.title + '」（' + a.titleZh + '），' + (a.level || '') + '，看不懂的單字點一下練填空，可切英中對照。' : '');
+    document.title = a.title + (a.titleZh ? '（' + a.titleZh + '）' : '') + ' - 衝衝英文';
+    setPageMeta('id=' + encodeURIComponent(a.id), a.titleZh ? '英文閱讀「' + a.title + '」（' + a.titleZh + '），' + (a.level || '') + '，重點單字點一下就變填空，可以切英中對照。' : '');
     const vocabMap = {};
     (a.vocab || []).forEach(v => { vocabMap[v.word.toLowerCase()] = v; });
     /* state = {idx: {t: 學生填的內容}};不批改對錯,填了就算完成,之後可修改 */

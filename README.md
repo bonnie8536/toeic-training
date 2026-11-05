@@ -55,6 +55,14 @@ python tools/merge_data.py
 2. 想用照片:把 jpg/png 放進 `img/`,在 `data/raw/articles_b*.json` 該篇文章加一個欄位
    `"image": "img/我的圖.jpg"`,重跑 merge 即可(有 image 欄位就優先用它)。
 
+**換網站圖示(logo)**:準備正方形、有 viewBox 的 SVG(分頁小圖、App 圖示、maskable 可以各一張),執行
+
+```
+node tools/build_icons.js <favicon.svg> --app <App 圖示.svg> --maskable <maskable.svg>
+```
+
+會重產 `favicon.ico`、`img/favicon-48/96/192.png`、`img/favicon.svg`、`img/icon-180/192/512.png`、`img/icon-maskable-512.png`,檔名不變(Google 要求圖示網址固定)。只換分頁小圖加 `--only favicon`。跑完執行 `node tools/test_seo.js`。
+
 **清除某個學生的進度**:網站內各頁都有「清除紀錄」按鈕;或瀏覽器開發者工具清 localStorage(鍵以 `tr_` 開頭)。
 
 ## 給學生的使用方式

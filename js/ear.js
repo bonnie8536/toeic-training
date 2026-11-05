@@ -93,7 +93,7 @@
 
   /* ================= 首頁 ================= */
   function renderHome() {
-    document.title = '聽力訓練|衝衝英文';
+    document.title = '聽力訓練 - 衝衝英文';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '聽力訓練'),
       h('p', null, '答錯的下一輪會優先出現。')));
@@ -125,7 +125,7 @@
   function startRound(sec) {
     const d = SECTIONS[sec];
     const level = getParam('lv') || '全部';
-    document.title = d.title + '|聽力訓練|衝衝英文';
+    document.title = d.title + ' - 聽力訓練 - 衝衝英文';
     const list = pick(sec, d.per, level);
     if (!list.length) { renderHome(); return; }
     const results = [];

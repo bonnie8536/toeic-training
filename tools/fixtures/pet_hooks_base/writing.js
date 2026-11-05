@@ -71,7 +71,7 @@
 
   /* ================= 首頁 ================= */
   function renderHome() {
-    document.title = '寫作練習|衝衝英文';
+    document.title = '寫作練習 - 衝衝英文';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '寫作練習'),
       h('p', null, '寫的內容會自動保存，老師看得到。')));
@@ -91,7 +91,7 @@
   function renderMap(lv) {
     const L = W[lv];
     const units = unitsOf(lv);
-    document.title = L.title + '|衝衝英文';
+    document.title = L.title + ' - 衝衝英文';
     const done = units.filter(unitDone).length;
     const firstTodo = units.findIndex(u => !unitDone(u));
 
@@ -127,7 +127,7 @@
     const units = unitsOf(lv);
     if (!(idx >= 0 && idx < units.length)) { location.href = 'writing.html?level=' + lv; return; }
     const unit = units[idx];
-    document.title = unit.title + '|' + L.title;
+    document.title = unit.title + ' - ' + L.title + ' - 衝衝英文';
 
     root.append(h('div', { class: 'unit-head' },
       h('a', { href: 'writing.html?level=' + lv, class: 'unit-back' }, '← ' + LEVEL_NAME[lv] + ' 單元列表'),

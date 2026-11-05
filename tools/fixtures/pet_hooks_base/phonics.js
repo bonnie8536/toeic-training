@@ -117,8 +117,10 @@
   /* ================= 左側路徑(沿用文法區的樣式) ================= */
   function buildRail(activeStage, currentId, onPickStage) {
     const done = store.get('phonics_done', {});
-    const stations = h('div', { class: 'gx-stations' });
-    const pathWrap = h('div', { class: 'gx-pathwrap' });
+    /* 列表頁(能切章、會傳 onPickStage)的導覽列建立時就帶 data-nosnippet:裡面只有章號、課號和章名,
+       不給 Google 搜尋結果當摘要;nav 不能掛這個屬性,所以掛在裡面兩塊 div 上。單元頁、發音總表不帶 */
+    const stations = h('div', { class: 'gx-stations', 'data-nosnippet': onPickStage ? '' : null });
+    const pathWrap = h('div', { class: 'gx-pathwrap', 'data-nosnippet': onPickStage ? '' : null });
     const rail = h('nav', { class: 'gx-rail', 'aria-label': '章節' }, stations, pathWrap);
     const OFFS = [0, 16, 28, 16, 0, -16, -28, -16];
     stageKeys.forEach((sk, si) => {
@@ -190,7 +192,7 @@
       layout.innerHTML = '';
       const list = UNITS.filter(u => stageOf(u) === stage);
       const doneN = list.filter(u => done[u.id]).length;
-      /* 課程清單包在 data-nosnippet 裡(建立時就帶,不事後加):Google 搜尋結果的摘要不拿「1 短母音 a：cat 的 a 唸 [æ]…」這串清單,改用標題下那句介紹或頁面說明 */
+      /* 課程清單包在 data-nosnippet 裡(建立時就帶,不事後加):Google 搜尋結果的摘要不拿「1 短母音 a：cat 的 a 唸 [æ]…」這串清單,改用頁面說明 */
       const units = h('div', { 'data-nosnippet': '' },
         todo ? h('div', { class: 'gx-continue' },
           h('a', { class: 'btn primary', href: 'phonics.html?u=' + todo.id }, '繼續上課'),
@@ -200,7 +202,7 @@
           h('h2', null, STAGES[stage].name),
           h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + '/' + list.length)));
       const col = h('div', { class: 'gx-col' },
-        h('div', { class: 'page-head' }, h('h1', null, '自然發音'), h('p', null, stageKeys.length + ' 章 ' + UNITS.length + ' 課，從短母音到重音與弱讀，每個字都能點來聽。')),
+        h('div', { class: 'page-head' }, h('h1', null, '自然發音')),
         units);
       list.forEach((u, i) => {
         units.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : '') + (todo && u.id === todo.id ? ' next' : ''), href: 'phonics.html?u=' + u.id },

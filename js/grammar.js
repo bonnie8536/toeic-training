@@ -53,8 +53,10 @@
 
   function buildRail(activeStage, currentId, onPickStage, currentRef) {
     const done = store.get('grammar_done', {});
-    const stations = h('div', { class: 'gx-stations' });
-    const pathWrap = h('div', { class: 'gx-pathwrap' });
+    /* 列表頁(能切章、會傳 onPickStage)的導覽列建立時就帶 data-nosnippet:裡面只有章號、課號和「名詞、冠詞與代名詞 0 / 12」,
+       不給 Google 搜尋結果當摘要;nav 不能掛這個屬性,所以掛在裡面兩塊 div 上。單元頁、查表頁不帶 */
+    const stations = h('div', { class: 'gx-stations', 'data-nosnippet': onPickStage ? '' : null });
+    const pathWrap = h('div', { class: 'gx-pathwrap', 'data-nosnippet': onPickStage ? '' : null });
     const rail = h('nav', { class: 'gx-rail' }, stations, pathWrap);
     const OFFS = [0, 16, 28, 16, 0, -16, -28, -16];
     Object.entries(STAGES).forEach(([sk, sd], si) => {
@@ -137,7 +139,7 @@
       layout.innerHTML = '';
       const list = UNITS.filter(u => stageOf(u) === stage);
       const doneN = list.filter(u => done[u.id]).length;
-      /* 課程清單包在 data-nosnippet 裡(建立時就帶,不事後加):Google 搜尋結果的摘要不拿課名清單,改用標題下那句介紹或頁面說明 */
+      /* 課程清單包在 data-nosnippet 裡(建立時就帶,不事後加):Google 搜尋結果的摘要不拿課名清單,改用頁面說明 */
       const units = h('div', { 'data-nosnippet': '' },
         todo ? h('div', { class: 'gx-continue' },
           h('a', { class: 'btn primary', href: 'grammar.html?u=' + todo.id }, '繼續上課'),
@@ -147,7 +149,7 @@
           h('h2', null, STAGES[stage].name),
           h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + '/' + list.length)));
       const col = h('div', { class: 'gx-col' },
-        h('div', { class: 'page-head' }, h('h1', null, '文法基礎'), h('p', null, UNITS.length + ' 個單元，從名詞冠詞、時態到子句與被動，一個單元講一件事，講完馬上練。')),
+        h('div', { class: 'page-head' }, h('h1', null, '文法基礎')),
         units);
       list.forEach((u, i) => {
         units.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : '') + (todo && u.id === todo.id ? ' next' : ''), href: 'grammar.html?u=' + u.id },

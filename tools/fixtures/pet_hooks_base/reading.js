@@ -36,8 +36,8 @@
     let levelFilter = '全部';
 
     const head = h('div', { class: 'page-head' },
-      h('h1', null, '閱讀訓練'), h('p', null, articles.length + ' 篇分級短文，重點單字點一下就變填空，可以切英中對照。'));
-    /* 級別按鈕與文章清單建立時就帶 data-nosnippet:Google 搜尋結果的摘要不拿清單,改用上面那句介紹或頁面說明 */
+      h('h1', null, '閱讀訓練'));
+    /* 級別按鈕與文章清單建立時就帶 data-nosnippet:Google 搜尋結果的摘要不拿清單,改用頁面說明 */
     const chips = h('div', { class: 'drill-filters', style: 'margin:14px 0 4px', 'data-nosnippet': '' });
     const listWrap = h('div', { class: 'article-list', 'data-nosnippet': '' });
     root.append(head, chips, listWrap);

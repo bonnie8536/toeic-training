@@ -3,7 +3,8 @@
      (Google 常把直線換掉或拿掉,半形連字號前後空一格是官方列的分隔符號);noindex 的頁不寫 canonical(轉址用的 tenses、verbs 除外)。
    - 要收錄的頁:說明 24–70 字、每頁不一樣;閱讀的說法全站一致(重點單字點了才變填空,首頁、學習頁的卡片也算);og 一組(title/description/url/site_name/locale/image)＋twitter:card;og:title 跟 title 一樣;
      canonical 跟 og:url 一樣。文法、自然發音、閱讀、對話四頁的 canonical 由 js/common.js 的 setPageMeta 依網址寫,HTML 不寫死。
-   - 這四頁的列表模式:標題下有一句介紹,課程清單一建立就帶 data-nosnippet(不拿清單當搜尋結果的摘要);單元頁不帶。
+   - 這四頁的列表模式:標題下只有 h1,不掛介紹句(站長刪過兩次,3c18669、159e17d);課程清單,以及文法、自然發音列表頁左邊的章節導覽列,
+     一建立就帶 data-nosnippet(搜尋結果的摘要不拿清單和章號、課號,改用頁面說明);單元頁、查表頁不帶。
    - setPageMeta:網域取 og:url(所以舊網址代理時也指新網址),單元網址只留決定內容的參數,重複呼叫不會疊加。
    - 首頁:WebSite 與 OnlineBusiness(Organization 的子類型)結構化資料,alternateName 只有 Rushup;h1 有站名;沒有過期的日期公告。
    - sitemap.xml 跟 tools/build_sitemap.js 產生的一樣:每個要收錄的頁加上每個單元,沒有 noindex 的頁。
@@ -42,6 +43,27 @@ function fnBody(src, name) {
   const rest = src.slice(i + 10);
   const j = rest.search(/\n  (?:function |\/\* =)/);
   return j < 0 ? rest : rest.slice(0, j);
+}
+/* 一個函式每一次被呼叫的位置與參數(只切最外層的逗號),跳過 function 宣告那一處 */
+function callArgs(src, name) {
+  const out = [];
+  const re = new RegExp('(^|[^\\w.])' + name + '\\(', 'g');
+  let m;
+  while ((m = re.exec(src))) {
+    const at = m.index + m[1].length;
+    if (/function\s+$/.test(src.slice(Math.max(0, at - 12), at))) continue;
+    const args = [];
+    let depth = 0, cur = '';
+    for (let k = at + name.length; k < src.length; k++) {
+      const c = src[k];
+      if ('([{'.indexOf(c) > -1 && ++depth === 1) continue;
+      if (')]}'.indexOf(c) > -1 && --depth === 0) { args.push(cur.trim()); break; }
+      if (c === ',' && depth === 1) { args.push(cur.trim()); cur = ''; continue; }
+      cur += c;
+    }
+    out.push({ at, args });
+  }
+  return out;
 }
 
 const T = {};
@@ -108,18 +130,37 @@ T['法律頁照常收錄(藍新、Google 登入的同意畫面要連得到):不�
     if (f !== 'pricing.html') assert.match(read(f), /<p class="result-note">\d{4} 年 \d{1,2} 月 \d{1,2} 日起適用<\/p>/, f);
   });
 };
-T['列表頁(文法、自然發音、閱讀、對話):標題下一句介紹;課程清單一建立就帶 data-nosnippet,單元頁不帶;不用程式事後加或拿掉'] = () => {
+T['列表頁(文法、自然發音、閱讀、對話):標題下只有 h1、不掛介紹句;清單與文法、自然發音的章節導覽列一建立就帶 data-nosnippet,單元頁、查表頁不帶;不用程式事後加或拿掉'] = () => {
   const L = { grammar: 'renderHome', phonics: 'renderHome', reading: 'renderList', dialogue: 'renderList' };
+  const count = (s) => (s.match(/data-nosnippet/g) || []).length;
   Object.keys(L).forEach((n) => {
     const src = read('js/' + n + '.js');
     const body = fnBody(src, L[n]);
-    assert.match(body, /h\('div', \{ class: 'page-head' \},\s*h\('h1', null, '[^']+'\),\s*h\('p', null, /, n + ' 列表的標題下沒有介紹');
+    /* 站長刪過兩次列表標題下的說明句(3c18669、159e17d):page-head 裡只放 h1,摘要交給頁面說明 */
+    assert.match(body, /h\('div', \{ class: 'page-head' \},\s*h\('h1', null, '[^']+'\)\)[,;]/, n + ' 列表的標題下不能掛介紹句,page-head 裡只放 h1');
     assert.match(body, /h\('div', \{ [^}]*'data-nosnippet': ''/, n + ' 列表的清單沒有在建立時帶 data-nosnippet');
-    assert.equal((src.match(/data-nosnippet/g) || []).length, (body.match(/data-nosnippet/g) || []).length, n + ' 列表以外也有 data-nosnippet');
     assert.equal(/(?:set|remove|toggle)Attribute\('data-nosnippet'/.test(src), false, n + ' 不能事後用程式加或拿掉 data-nosnippet');
-    /* 介紹在 data-nosnippet 外面:page-head 那一段裡沒有 data-nosnippet */
-    const ph = /h\('div', \{ class: 'page-head' \},[\s\S]*?\)\)[,;]/.exec(body);
-    assert.ok(ph && ph[0].indexOf('data-nosnippet') < 0, n + ' 的介紹被包進 data-nosnippet');
+    let rail = '';
+    if (n === 'grammar' || n === 'phonics') {
+      /* h1 不能被包進 data-nosnippet:外面那層 gx-col 不帶 */
+      assert.match(body, /h\('div', \{ class: 'gx-col' \},/, n + ' 列表的 gx-col 不能帶 data-nosnippet');
+      /* 左邊的章節導覽列只有章號、課號和「名詞、冠詞與代名詞 0 / 12」:列表頁(能切章、會傳 onPickStage)畫的那一份,裡面兩塊 div 建立時就帶 */
+      rail = fnBody(src, 'buildRail');
+      assert.match(rail, /h\('nav', \{ class: 'gx-rail'[^}]*\}, stations, pathWrap\)/, n + ' 的導覽列裡應該只有 stations、pathWrap 兩塊');
+      assert.equal(/\brail\.(?:append|prepend|appendChild|insertBefore)\(/.test(rail), false, n + ' 的導覽列不能再直接加東西(會在 data-nosnippet 外面)');
+      ['gx-stations', 'gx-pathwrap'].forEach((c) => assert.match(rail,
+        new RegExp("h\\('div', \\{ class: '" + c + "', 'data-nosnippet': onPickStage \\? '' : null \\}\\)"), n + ' 的 .' + c + ' 沒有在列表頁建立時帶 data-nosnippet'));
+      /* 只有列表頁傳 onPickStage(切章的函式);單元頁、查表頁、發音總表傳 null,導覽列不帶 */
+      const from = src.indexOf(body), calls = callArgs(src, 'buildRail');
+      const inList = (c) => c.at >= from && c.at < from + body.length;
+      assert.equal(calls.filter(inList).length, 1, n + ' 列表頁應該畫一次導覽列');
+      calls.forEach((c) => {
+        if (inList(c)) assert.match(c.args[2] || '', /=>/, n + ' 列表頁的導覽列要傳切章的函式:buildRail(' + c.args.join(', ') + ')');
+        else assert.equal(c.args[2], 'null', n + ' 列表以外的導覽列不能帶 data-nosnippet:buildRail(' + c.args.join(', ') + ')');
+      });
+      assert.ok(calls.length > 1, n + ' 找不到單元頁的導覽列');
+    }
+    assert.equal(count(src), count(body) + count(rail), n + ' 列表與列表頁的導覽列以外也有 data-nosnippet');
   });
   PAGES.concat(fs.readdirSync(path.join(REPO, 'js')).map((f) => 'js/' + f)).forEach((f) => {
     Array.from(read(f).matchAll(/<(\w+)[^>]*\bdata-nosnippet\b/g)).forEach((m) => assert.ok(['span', 'div', 'section'].indexOf(m[1]) > -1, f + ' 的 data-nosnippet 只能放 span、div、section'));

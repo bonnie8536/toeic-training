@@ -44,10 +44,10 @@
     document.title = '對話練習 - 衝衝英文';
     setPageMeta('');
     let filter = '全部';
-    /* 分類按鈕與對話清單建立時就帶 data-nosnippet:Google 搜尋結果的摘要不拿清單,改用標題下那句介紹或頁面說明 */
+    /* 分類按鈕與對話清單建立時就帶 data-nosnippet:Google 搜尋結果的摘要不拿清單,改用頁面說明 */
     const chips = h('div', { class: 'drill-filters', style: 'margin:14px 0 4px', 'data-nosnippet': '' });
     const listWrap = h('div', { class: 'dlg-list', 'data-nosnippet': '' });
-    root.append(h('div', { class: 'page-head' }, h('h1', null, '對話練習'), h('p', null, dialogues.length + ' 段日常對話，點句子就播放，口語和俚語都有中文解釋。')), chips, listWrap);
+    root.append(h('div', { class: 'page-head' }, h('h1', null, '對話練習')), chips, listWrap);
 
     ['全部', ...CATS.filter((c) => dialogues.some((d) => d.cat === c))].forEach((name) => {
       chips.append(h('button', {

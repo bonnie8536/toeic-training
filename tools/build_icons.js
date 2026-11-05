@@ -8,6 +8,8 @@
      img/icon-180.png               apple-touch-icon:鋪滿底色、沒有透明通道(透明的地方在 iPhone 上會變黑)
      img/icon-192.png、icon-512.png  manifest 用,鋪滿底色
      img/icon-maskable-512.png      manifest 的 maskable:有給 --maskable 就用那張;沒給就把 App 圖縮進安全區(中間直徑 80% 的圓),四周補底色
+     App 圖示四張的 PNG 裡記同一個組合記號(App 圖、maskable、底色),tools/test_seo.js 用它確認四張是同一次產生的。
+   所有檔先在記憶體裡做好、檢查都過了才寫(先寫成暫存檔再改名蓋過去);maskable 安全區不過就整批不寫,網站上的圖示不會新舊混在一起。
    算圖用本機的 Chrome 無頭模式(跟 tools/check_layout.js 一樣不用裝套件),所有尺寸畫在同一頁、開一次 Chrome 再切開;
    每個尺寸直接用 Chrome 畫成那個大小,不是大圖縮小(跟瀏覽器分頁畫 SVG 的方式一樣)。Chrome 的使用者資料放在 --tmp 底下,用完就刪。
    用法:
@@ -130,8 +132,14 @@ function readSourceTag(buf) {
   return t ? t.data.toString('latin1').slice(7) : null;
 }
 /* 來源 SVG 的記號:換行統一成 \n 再算 sha256(Windows 取出來是 CRLF 也一樣) */
+const lf = (s) => String(s).replace(/\r\n/g, '\n');
 function sourceTag(svgText) {
-  return 'build_icons sha256:' + crypto.createHash('sha256').update(String(svgText).replace(/\r\n/g, '\n')).digest('hex');
+  return 'build_icons sha256:' + crypto.createHash('sha256').update(lf(svgText)).digest('hex');
+}
+/* App 圖示四張(180、192、512、maskable)共用的記號:App 圖、maskable(沒給是自動縮)、底色的組合。
+   tools/test_seo.js 用它確認四張是同一次產生的,不是新舊混在一起 */
+function appTag(appSvg, maskSvg, bg) {
+  return 'build_icons app sha256:' + crypto.createHash('sha256').update([lf(appSvg), maskSvg == null ? '(auto)' : lf(maskSvg), bg.join(',')].join('\0')).digest('hex');
 }
 
 /* ---------- ICO(每個尺寸一張 32 位元 BMP,加上 1 位元的透明遮罩) ---------- */
@@ -301,7 +309,8 @@ function readSvg(file) {
   svgSquare(text);
   return text;
 }
-function main(argv) {
+function main(argv, deps) {
+  const d = Object.assign({ render, log: console.log }, deps);
   const o = parseArgs(argv);
   const out = path.resolve(o.out || REPO), tmp = path.resolve(o.tmp || os.tmpdir());
   const fav = readSvg(o.svg);
@@ -313,10 +322,11 @@ function main(argv) {
   if (doApp) [180, 192, 512].forEach((n) => jobs.push({ key: 'a' + n, svg: app, size: n }));
   if (mask) jobs.push({ key: 'm512', svg: mask, size: 512 });
   const got = {};
-  render(jobs, tmp).forEach((im, k) => { got[jobs[k].key] = im; });
-  fs.mkdirSync(path.join(out, 'img'), { recursive: true });
-  const wrote = [];
-  const put = (rel, buf) => { fs.writeFileSync(path.join(out, rel), buf); wrote.push(rel + '(' + buf.length.toLocaleString('en-US') + ' bytes)'); };
+  d.render(jobs, tmp).forEach((im, k) => { got[jobs[k].key] = im; });
+  /* 每個檔先在記憶體裡做好、檢查都過了才寫:maskable 安全區不過時網站上的圖示一個都不動,不會新舊混在一起 */
+  const files = [];
+  const put = (rel, buf) => files.push({ rel, buf });
+  let bg = null;
   if (doFav) {
     const tag = sourceTag(fav);
     put('favicon.ico', writeIco(ICO_SIZES.map((n) => got['f' + n])));
@@ -326,18 +336,40 @@ function main(argv) {
   }
   if (doApp) {
     const a = got.a512, top = (2 * a.w + a.w / 2) * 4;
-    const bg = o.bg ? hex(o.bg) : a.data[top + 3] === 255 ? [a.data[top], a.data[top + 1], a.data[top + 2]] : [255, 255, 255];
-    [180, 192, 512].forEach((n) => put('img/icon-' + n + '.png', encodePng(flatten(got['a' + n], bg), { opaque: true })));
+    bg = o.bg ? hex(o.bg) : a.data[top + 3] === 255 ? [a.data[top], a.data[top + 1], a.data[top + 2]] : [255, 255, 255];
     const m = mask ? flatten(got.m512, bg) : maskable(a, bg);
     const bad = safeZoneProblem(m);
-    if (bad) throw new Error('maskable 安全區(中間直徑 80% 的圓)外有圖案:' + bad + '。換一張留好邊界的 --maskable,或拿掉 --maskable 讓程式自動縮');
-    put('img/icon-maskable-512.png', encodePng(m, { opaque: true }));
-    console.log('App 圖示底色 #' + bg.map((v) => v.toString(16).padStart(2, '0')).join(''));
+    if (bad) throw new Error('maskable 安全區(中間直徑 80% 的圓)外有圖案:' + bad + '。換一張留好邊界的 --maskable,或拿掉 --maskable 讓程式自動縮。沒有寫入任何檔案');
+    const tag = appTag(app, mask, bg);
+    [180, 192, 512].forEach((n) => put('img/icon-' + n + '.png', encodePng(flatten(got['a' + n], bg), { opaque: true, source: tag })));
+    put('img/icon-maskable-512.png', encodePng(m, { opaque: true, source: tag }));
   }
-  console.log('寫入 ' + out + ':\n  ' + wrote.join('\n  '));
+  writeAll(out, files);
+  if (bg) d.log('App 圖示底色 #' + bg.map((v) => v.toString(16).padStart(2, '0')).join(''));
+  d.log('寫入 ' + out + ':\n  ' + files.map((f) => f.rel + '(' + f.buf.length.toLocaleString('en-US') + ' bytes)').join('\n  '));
+}
+/* 先全部寫成同資料夾裡的暫存檔,都寫成功才改名蓋過去;寫到一半失敗就刪掉暫存檔,原本的圖示不動 */
+function writeAll(out, files) {
+  const stamp = '.build_icons-' + process.pid + '.tmp';
+  const list = files.map((f) => { const dest = path.join(out, f.rel); return { dest, tmp: dest + stamp, buf: f.buf }; });
+  /* 刪掉自己寫的暫存檔(不是檔案的不碰);回傳刪不掉的,寫進錯誤訊息 */
+  const clean = (js) => js.filter((j) => { try { if (fs.lstatSync(j.tmp).isFile()) fs.unlinkSync(j.tmp); return false; } catch (e) { return e.code !== 'ENOENT'; } });
+  const leftNote = (js) => { const left = clean(js); return left.length ? '(這些暫存檔刪不掉,要手動刪:' + left.map((j) => j.tmp).join('、') + ')' : ''; };
+  const started = [];
+  try {
+    list.forEach((j) => { fs.mkdirSync(path.dirname(j.dest), { recursive: true }); started.push(j); fs.writeFileSync(j.tmp, j.buf); });
+  } catch (e) {
+    throw new Error('寫暫存檔失敗,沒有換掉任何圖示:' + e.message + leftNote(started));
+  }
+  let k = 0;
+  try {
+    for (; k < list.length; k++) fs.renameSync(list[k].tmp, list[k].dest);
+  } catch (e) {
+    throw new Error('換 ' + path.relative(out, list[k].dest) + ' 時失敗(' + e.message + '),前面 ' + k + ' 個已經換掉,排除原因後重跑一次' + leftNote(list.slice(k)));
+  }
 }
 
 if (require.main === module) {
   try { main(process.argv.slice(2)); } catch (e) { console.error(e.message); process.exit(1); }
 }
-module.exports = { decodePng, encodePng, readSourceTag, sourceTag, writeIco, readIco, svgSquare, flatten, shrink, maskable, safeZoneProblem, parseArgs, render };
+module.exports = { main, appTag, decodePng, encodePng, readSourceTag, sourceTag, writeIco, readIco, svgSquare, flatten, shrink, maskable, safeZoneProblem, parseArgs, render };

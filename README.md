@@ -61,7 +61,7 @@ python tools/merge_data.py
 node tools/build_icons.js <favicon.svg> --app <App 圖示.svg> --maskable <maskable.svg>
 ```
 
-會重產 `favicon.ico`、`img/favicon-48/96/192.png`、`img/favicon.svg`、`img/icon-180/192/512.png`、`img/icon-maskable-512.png`,檔名不變(Google 要求圖示網址固定)。只換分頁小圖加 `--only favicon`。跑完執行 `node tools/test_seo.js`。
+會重產 `favicon.ico`、`img/favicon-48/96/192.png`、`img/favicon.svg`、`img/icon-180/192/512.png`、`img/icon-maskable-512.png`,檔名不變(Google 要求圖示網址固定)。只換分頁小圖加 `--only favicon`。全部做好、檢查過才寫,maskable 沒留好安全邊界就整批不寫,網站上的圖示不會新舊混在一起。跑完執行 `node tools/test_seo.js`。
 
 **清除某個學生的進度**:網站內各頁都有「清除紀錄」按鈕;或瀏覽器開發者工具清 localStorage(鍵以 `tr_` 開頭)。
 

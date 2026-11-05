@@ -1,7 +1,7 @@
 /* 搜尋引擎相關的檢查(2026-10-31 SEO 稽核;2026-11-05 搜尋結果外觀):每一頁的標題、說明、canonical、分享預覽、首頁結構化資料、sitemap、404、網站圖示。
    - 每頁:有 lang;標題是「頁名 - 衝衝英文」,首頁是「衝衝英文 - 說明」,全站(含程式改的標題)不用直線「|」
      (Google 常把直線換掉或拿掉,半形連字號前後空一格是官方列的分隔符號);noindex 的頁不寫 canonical(轉址用的 tenses、verbs 除外)。
-   - 要收錄的頁:說明 24–70 字、每頁不一樣;og 一組(title/description/url/site_name/locale/image)＋twitter:card;og:title 跟 title 一樣;
+   - 要收錄的頁:說明 24–70 字、每頁不一樣;閱讀的說法全站一致(重點單字點了才變填空,首頁、學習頁的卡片也算);og 一組(title/description/url/site_name/locale/image)＋twitter:card;og:title 跟 title 一樣;
      canonical 跟 og:url 一樣。文法、自然發音、閱讀、對話四頁的 canonical 由 js/common.js 的 setPageMeta 依網址寫,HTML 不寫死。
    - 這四頁的列表模式:標題下有一句介紹,課程清單一建立就帶 data-nosnippet(不拿清單當搜尋結果的摘要);單元頁不帶。
    - setPageMeta:網域取 og:url(所以舊網址代理時也指新網址),單元網址只留決定內容的參數,重複呼叫不會疊加。
@@ -10,10 +10,12 @@
    - 404.html:noindex、連結與樣式用 / 開頭(網址可能在任何一層)、不含 GitHub 的「Site not found」字樣(Worker 靠它判斷新網址掛了)。
    - 網站圖示(Google 搜尋結果不吃 SVG):每頁同一組 icon 連結(/favicon.ico、PNG、SVG、apple-touch-icon,/ 開頭);
      favicon.ico 有 16、32、48,favicon PNG 是 tools/build_icons.js 從 img/favicon.svg 產生的;App 圖示尺寸對、apple-touch-icon 不透明、
-     maskable 安全區外只有底色;manifest 的圖示都在、尺寸跟寫的一樣。
+     maskable 安全區外只有底色、四張 App 圖示是同一次產生的;manifest 的圖示都在、尺寸跟寫的一樣;
+     build_icons 全部做好、檢查過才寫,maskable 安全區不過時一個檔都不動。
    用法:node tools/test_seo.js */
 'use strict';
 const fs = require('fs');
+const os = require('os');
 const vm = require('vm');
 const path = require('path');
 const assert = require('assert');
@@ -71,7 +73,7 @@ T['程式改的標題:每一個 document.title 都是「… - 衝衝英文」,�
   });
   assert.ok(n >= 30, '找到的標題太少:' + n);
 };
-T['要收錄的頁:說明 24–70 字、每頁不一樣、不以日期開頭;單元頁的說明也各不相同;自然發音、文法說明裡的課數跟資料一樣'] = () => {
+T['要收錄的頁:說明 24–70 字、每頁不一樣、不以日期開頭;單元頁的說明也各不相同;自然發音、文法說明裡的課數跟資料一樣;全站不再寫「看不懂的單字點一下」'] = () => {
   const seen = {};
   indexable.forEach((f) => {
     const d = meta(head(f), 'name', 'description');
@@ -95,7 +97,10 @@ T['要收錄的頁:說明 24–70 字、每頁不一樣、不以日期開頭;單
   /* 閱讀、對話的單元說明由標題組出來,每篇不同 */
   assert.match(read('js/reading.js'), /setPageMeta\('id=' \+ encodeURIComponent\(a\.id\), a\.titleZh \? '英文閱讀「' \+ a\.title \+ '」/);
   assert.match(read('js/dialogue.js'), /setPageMeta\('id=' \+ encodeURIComponent\(d\.id\), d\.titleEn \? '英文對話「' \+ d\.titleEn \+ '」/);
-  assert.equal(/看不懂的單字點一下練填空/.test(read('js/reading.js') + read('reading.html')), false, '閱讀的說明照實際做法寫:重點單字點了才變填空');
+  /* 閱讀照實際做法寫(重點單字點了才變填空):全站的頁面與程式都不能再有舊說法(首頁、學習頁的閱讀卡片也算) */
+  const SITE = PAGES.concat(fs.readdirSync(path.join(REPO, 'js')).filter((f) => /\.js$/.test(f)).map((f) => 'js/' + f));
+  const old = SITE.filter((f) => /看不懂的單字點一下/.test(read(f)));
+  assert.deepEqual(old, [], '這些檔案還寫「看不懂的單字點一下」,閱讀只有重點單字點了才變填空');
 };
 T['法律頁照常收錄(藍新、Google 登入的同意畫面要連得到):不加 noindex、生效日期照寫'] = () => {
   ['terms.html', 'privacy.html', 'refund.html', 'pricing.html'].forEach((f) => {
@@ -295,6 +300,8 @@ const ICON_LINKS = [
    所以照舊只掛 img/favicon.svg;改它要連 Worker 一起部署 */
 const ICON_EXEMPT = REDIRECT_STUBS.concat(['move-out.html']);
 const png = (f) => IC.decodePng(fs.readFileSync(path.join(REPO, f)));
+const APP_ICONS = ['img/icon-180.png', 'img/icon-192.png', 'img/icon-512.png', 'img/icon-maskable-512.png'];
+const FAV_FILES = ['favicon.ico', 'img/favicon-48.png', 'img/favicon-96.png', 'img/favicon-192.png', 'img/favicon.svg'];
 T['每一頁的圖示連結都一樣:PNG、SVG、/favicon.ico、apple-touch-icon,都用 / 開頭;沒有別的 icon 連結'] = () => {
   PAGES.filter((f) => ICON_EXEMPT.indexOf(f) < 0).forEach((f) => {
     const s = head(f);
@@ -318,7 +325,7 @@ T['favicon.ico 有 16、32、48(32 位元);favicon-48/96/192.png 是 build_icons
   });
   assert.ok(png('img/favicon-48.png').data.equals(ico[2].data), 'favicon.ico 的 48 跟 favicon-48.png 不一樣');
 };
-T['App 圖示:apple-touch-icon 180 不透明;192、512 尺寸對;maskable 512 安全區(中間直徑 80% 的圓)外只有底色'] = () => {
+T['App 圖示:apple-touch-icon 180 不透明;192、512 尺寸對;maskable 512 安全區(中間直徑 80% 的圓)外只有底色;四張是同一次產生的,沒有新舊混在一起'] = () => {
   const t = png('img/icon-180.png');
   assert.deepEqual([t.w, t.h], [180, 180]);
   for (let i = 3; i < t.data.length; i += 4) assert.equal(t.data[i], 255, 'apple-touch-icon 有透明的地方,iPhone 上會變黑底');
@@ -327,6 +334,13 @@ T['App 圖示:apple-touch-icon 180 不透明;192、512 尺寸對;maskable 512 �
   const m = png('img/icon-maskable-512.png');
   assert.deepEqual([m.w, m.h], [512, 512]);
   assert.equal(IC.safeZoneProblem(m), null, 'maskable 安全區外有圖案');
+  /* 四張要是同一次 build_icons 產生的(PNG 裡記的 App 圖、maskable、底色組合一樣),不能新舊混在一起;
+     四張都沒有記號的是 build_icons 之前就有的舊圖 */
+  const tags = APP_ICONS.map((f) => IC.readSourceTag(fs.readFileSync(path.join(REPO, f))));
+  if (tags.some((t) => t)) {
+    assert.ok(tags.every((t) => t === tags[0]) && /^build_icons app sha256:/.test(tags[0]),
+      'App 圖示不是同一次產生的(' + APP_ICONS.map((f, k) => f + ' ' + (tags[k] || '沒有記號')).join(';') + '),重跑 node tools/build_icons.js … --only app');
+  }
 };
 T['manifest:圖示檔都在、尺寸跟寫的一樣;有 192、512 與 maskable'] = () => {
   const man = JSON.parse(read('manifest.json'));
@@ -369,6 +383,67 @@ T['build_icons:PNG、ICO 寫出去讀得回來;PNG 記得來源;SVG 要正方形
   assert.throws(() => IC.parseArgs([]), /用法/);
   assert.throws(() => IC.parseArgs(['a.svg', '--only', 'all']), /--only/);
   assert.throws(() => IC.parseArgs(['a.svg', '--bg', 'blue']), /--bg/);
+  /* App 圖示的組合記號:App 圖、maskable、底色任一個不同就不同 */
+  const t0 = IC.appTag('<svg/>', null, [1, 2, 3]);
+  assert.match(t0, /^build_icons app sha256:[0-9a-f]{64}$/);
+  assert.equal(IC.appTag('<svg/>\r\n', null, [1, 2, 3]), IC.appTag('<svg/>\n', null, [1, 2, 3]), '換行不同算同一張');
+  assert.equal(new Set([t0, IC.appTag('<svg />', null, [1, 2, 3]), IC.appTag('<svg/>', '<svg/>', [1, 2, 3]), IC.appTag('<svg/>', null, [1, 2, 4])]).size, 4);
+};
+T['build_icons:全部算好、檢查過才寫;maskable 安全區不過時一個檔都不動、不留暫存檔;寫的時候四張 App 圖示一起換、記號一樣'] = () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'test_seo-icons-'));
+  try {
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#22aa44"/></svg>';
+    const a = path.join(dir, 'app.svg'), bad = path.join(dir, 'bad_mask.svg'), out = path.join(dir, 'out');
+    fs.writeFileSync(a, svg);
+    fs.writeFileSync(bad, svg.replace('</svg>', '<rect width="15" height="15" fill="red"/></svg>'));
+    fs.mkdirSync(path.join(out, 'img'), { recursive: true });
+    FAV_FILES.concat(APP_ICONS).forEach((f) => fs.writeFileSync(path.join(out, f), 'old ' + f));
+    const snap = () => {
+      const o = {};
+      const walk = (d) => fs.readdirSync(path.join(out, d)).forEach((f) => {
+        const r = d ? d + '/' + f : f;
+        if (fs.statSync(path.join(out, r)).isDirectory()) walk(r); else o[r] = fs.readFileSync(path.join(out, r)).toString('base64');
+      });
+      walk('');
+      return o;
+    };
+    /* 不開 Chrome:綠色方塊;SVG 裡有紅色的那張在左上角畫紅色(maskable 安全區外有圖案) */
+    const render = (jobs) => jobs.map((j) => {
+      const n = j.size, im = { w: n, h: n, data: Buffer.alloc(n * n * 4, Buffer.from([34, 170, 68, 255])) };
+      if (/fill="red"/.test(j.svg)) for (let y = 0; y < 20; y++) for (let x = 0; x < 20; x++) im.data.set([255, 0, 0, 255], (y * n + x) * 4);
+      return im;
+    });
+    const run = (args) => IC.main([a].concat(args, ['--out', out]), { render, log: () => {} });
+    const before = snap();
+    assert.throws(() => run(['--maskable', bad]), /maskable 安全區/);
+    assert.deepEqual(snap(), before, '全套:maskable 安全區不過,還是先寫了別的檔');
+    assert.throws(() => run(['--only', 'app', '--maskable', bad]), /maskable 安全區/);
+    assert.deepEqual(snap(), before, '--only app:maskable 安全區不過,還是先寫了別的檔');
+    /* 暫存檔寫到一半失敗(icon-512 的暫存檔名被資料夾佔住):已寫的暫存檔刪掉,原本的檔不動 */
+    const block = path.join(out, 'img', 'icon-512.png.build_icons-' + process.pid + '.tmp');
+    fs.mkdirSync(block);
+    assert.throws(() => run(['--maskable', a]), /寫暫存檔失敗/);
+    fs.rmdirSync(block);
+    assert.deepEqual(snap(), before, '暫存檔寫到一半失敗,原本的檔被換掉或留下暫存檔');
+    /* 成功:--only app 只換四張 App 圖示,記號一樣;favicon 系列不動;沒有多出別的檔 */
+    run(['--only', 'app']);
+    const s1 = snap();
+    assert.deepEqual(Object.keys(s1).sort(), Object.keys(before).sort(), '多出或少了檔案');
+    FAV_FILES.forEach((f) => assert.equal(s1[f], before[f], '--only app 動到 ' + f));
+    APP_ICONS.forEach((f) => assert.notEqual(s1[f], before[f], f + ' 沒換'));
+    const tagsOf = (s) => APP_ICONS.map((f) => IC.readSourceTag(Buffer.from(s[f], 'base64')));
+    const t1 = tagsOf(s1);
+    assert.ok(t1.every((t) => t === t1[0]) && t1[0] === IC.appTag(svg, null, [34, 170, 68]), JSON.stringify(t1));
+    /* 成功:全套,另給 maskable;九個檔都換,App 圖示記號換成新的組合 */
+    run(['--maskable', a]);
+    const s2 = snap();
+    assert.deepEqual(Object.keys(s2).sort(), Object.keys(before).sort(), '多出或少了檔案');
+    FAV_FILES.concat(APP_ICONS).forEach((f) => assert.notEqual(s2[f], before[f], f + ' 沒換'));
+    const t2 = tagsOf(s2);
+    assert.ok(t2.every((t) => t === t2[0]) && t2[0] === IC.appTag(svg, svg, [34, 170, 68]) && t2[0] !== t1[0], JSON.stringify(t2));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 };
 
 let pass = 0;

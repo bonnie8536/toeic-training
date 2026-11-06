@@ -994,12 +994,12 @@ const cases = {
   },
 
   /* ---------- 頁面與文案 ---------- */
-  '價格頁:11 月 1 日起收費,不再寫免費開放;載入購買程式;同意句子一字不差': async () => {
+  '價格頁:跟首頁一樣寫目前全站免費、開始收費前會先公告(藍新新商店核准前不開賣,不寫過期的日期);載入購買程式;同意句子一字不差': async () => {
     const pr = html('pricing.html');
     const t = text('pricing.html');
     const order = ['js/cloud-config.js', 'js/plans-config.js', 'js/common.js', 'js/cloud.js', 'js/profile.js', 'js/checkout.js'].map(s => pr.indexOf('src="' + s + '"'));
     const checks = [
-      /11 月 1 日起收費。/.test(t), !/目前全站免費開放/.test(t), !/開始收費的日期/.test(t), !/線上付款準備中/.test(t),
+      /目前全站免費，開始收費前會先在這裡公告。/.test(t), !/11 月 1 日起收費/.test(t), !/目前全站免費開放/.test(t), !/開始收費的日期/.test(t), !/線上付款準備中/.test(t),
       order.every((x, i) => x > 0 && (i === 0 || x > order[i - 1])),
       CHECKOUT_SRC.includes("'" + CONSENT_TEXT + "'"),
     ];

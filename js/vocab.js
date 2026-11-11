@@ -131,8 +131,8 @@
   let pageSrc = null;   // 還沒登入時「練哪些字」的選擇(不存,格式跟 vgame_src 一樣)
 
   /* ---------- 練哪些字:可以勾好幾個(文章單字、片語、我的題庫)一起練 ----------
-     存在 vgame_src。勾 1 個時跟以前一字不差 { mode, level };勾 2 個以上多一個 modes(清單順序),mode 放第一個勾的題庫
-     (沒勾題庫才是清單第一個,理由見 srcValue):舊版頁面(service worker 快取、別台還沒更新)只看 mode,照常能玩。一個都沒勾不存(這一頁記在 pickNone)。
+     存在 vgame_src。勾 1 個時跟以前一字不差 { mode, level };勾 2 個以上多一個 modes(清單順序),mode 放第一個勾的、自己就夠玩的題庫
+     (沒有就放文章單字或片語,理由見 srcValue):舊版頁面(service worker 快取、別台還沒更新)只看 mode,照常能玩。一個都沒勾不存(這一頁記在 pickNone)。
      讀的時候不回寫:題庫可能是別台建的、開頁時雲端對齊還沒回來,回寫會把它從選擇裡弄丟。
      成績、通關、出過的字:單一來源的鍵跟以前一樣('word'、'phrase'、'bank:<id>');兩個以上用 srcKey 排序後的組合鍵
      (bank:b1+word、phrase+word:e2z、bank:b1+bank:b2:8)。js/move-merge.js 搬家換題庫 id 時用同一套規則重算組合鍵。
@@ -154,14 +154,20 @@
     const modes = srcOrder(banks || getBanks()).filter(m => picked.indexOf(m) > -1);
     return { modes: modes.length ? modes : ['word'], level: LEVELS.indexOf(o.level) > -1 ? o.level : '全部' };
   }
-  /* 勾 2 個以上時 mode 放第一個勾的題庫,沒勾題庫才放清單第一個(文章單字或片語)。
-     快取裡舊版的搬家(76b7850 的 js/move-merge.js)只換 mode 裡的題庫 id、不看 modes:mode 是題庫的話,id 換掉之後 mode 就不在 modes 裡,
-     readSrc 退回只勾 mode = 學生自己那個改了 id 的題庫。mode 是文章單字的話整個值原封不動,modes 裡的舊 id 會勾到新網址同 id 的另一個題庫。
+  /* 勾 2 個以上時 mode 放哪一個:舊版頁面只看 mode,它要自己就能玩;快取裡舊版的搬家也只換 mode。
+     ① 第一個勾的、自己就夠玩的題庫(soloOk,跟題庫卡片「只練這個」同一個門檻)。
+        快取裡舊版的搬家(76b7850 的 js/move-merge.js)只換 mode 裡的題庫 id、不看 modes:mode 是題庫的話,id 換掉之後 mode 就不在 modes 裡,
+        readSrc 退回只勾 mode = 學生自己那個改了 id 的題庫。mode 是文章單字的話整個值原封不動,modes 裡的舊 id 會勾到新網址同 id 的另一個題庫。
+     ② 勾的題庫都不夠單獨玩(1、2 個字、空的),有勾文章單字或片語就放它:舊版頁面停在一個不夠的題庫,「開始」沒反應或跳「字不夠」,
+        學生只好改舊版的選單,又把這台的多選蓋成單選。代價:這時碰到快取裡的舊版搬家、題庫 id 又跟新網址的撞到,會勾到新網址那個題庫。
+     ③ 都沒有(只勾了幾個不夠的題庫):第一個題庫。
      (勾了好幾個題庫、只有後面那個改了 id 的,舊版搬家還是會勾錯;要碰到快取裡的舊版搬家頁才會發生) */
   function srcValue(modes, level) {
     if (modes.length < 2) return { mode: modes[0], level };
-    const bank = modes.find(m => m.indexOf('bank:') === 0);
-    return { mode: bank || modes[0], level, modes: modes.slice() };
+    const banks = getBanks();
+    const isBank = m => m.indexOf('bank:') === 0;
+    const solo = modes.find(m => { const b = isBank(m) && banks.find(x => x && 'bank:' + x.id === m); return !!b && soloOk(b); });
+    return { mode: solo || modes.find(m => !isBank(m)) || modes[0], level, modes: modes.slice() };
   }
   function srcKey(modes) {
     const u = modes.filter((m, i) => modes.indexOf(m) === i);
@@ -174,7 +180,7 @@
     const b = banks.find(x => x && 'bank:' + x.id === m);
     return b ? String(b.name || '未命名題庫') : '';
   }
-  /* 框裡、遊戲標題寫的名稱:3 個以內全寫,4 個以上寫前兩個加「等 N 個」 */
+  /* 遊戲標題寫的名稱:3 個以內全寫,4 個以上寫前兩個加「等 N 個」(首頁的框列出全部名稱,數量另外寫在不會被切掉的那一段) */
   function pickLabel(modes, level, banks) {
     const names = modes.map(m => srcLabel(m, level, banks));
     return names.length <= 3 ? names.join('、') : names.slice(0, 2).join('、') + '等 ' + names.length + ' 個';
@@ -183,6 +189,7 @@
   /* 題庫練幾個字:清單那一列、題庫卡片用同一個數(bankPool:勾選的、英文 30 字以內)。有字沒練就寫「練 N 個」,跟卡片、編輯頁的說法一樣
      (只寫「N 個字」,學生看到比題庫的字少會以為字不見了) */
   const bankOn = b => bankPool(b).length;
+  const soloOk = b => bankOn(b) >= MIN_WORDS.fallBank;   // 這個題庫自己就能練(卡片「只練這個」能按;舊版頁面的掉落消除、翻牌也是 3 個)
   const bankCountText = b => (bankOn(b) < (b.words || []).length ? '練 ' + fmtN(bankOn(b)) + ' 個' : fmtN(bankOn(b)) + ' 個字');
   /* 勾的這些合起來的字。live:還在的來源(題庫被刪了就不算),key 照 live 算。
      單一來源跟以前一模一樣(題庫照 bankPool,不另外去重複);兩個以上同一個英文只留一個:
@@ -280,14 +287,16 @@
     const wordRow = pickRow('word', '文章單字', levelSel);
     const phraseRow = pickRow('phrase', '片語');
     const bankRows = banks.filter(b => b && typeof b.id === 'string').map(b => pickRow('bank:' + b.id, String(b.name || '未命名題庫')));
-    /* 框裡:勾了哪些(太長就省略號,點開看得到全名)+ 合起來幾個字(手機上也一直看得到)。
-       框的名稱(報讀軟體、語音控制)= 旁邊看得到的「練哪些字」+ 框裡的字:aria-labelledby 三段(WCAG 2.5.3 名稱要含看得到的標籤) */
-    const sumText = h('span', { class: 'vg-pick-sum-text', id: 'vg-pick-sum-text' });
-    const sumCount = h('span', { class: 'vg-pick-sum-n', id: 'vg-pick-sum-n' });
+    /* 框裡兩段:勾了哪些(全部名稱,太長就省略號,點開看得到全名)+ 勾了幾個、合起來幾個字(這段不切)。
+       老師按週出的題庫名稱很長,手機上常常只看得到第一個名稱,要靠後面的「N 個」才知道勾了幾個(跟常見的多選下拉一樣,名稱放不下時數量照樣看得到)。
+       框的名稱(報讀軟體、語音控制)從框裡的字來,開頭放一段只給報讀軟體的「練哪些字」(WCAG 2.5.3:名稱要含看得到的標籤)。
+       不用 aria-labelledby:那樣 Chrome 會把框裡的字再放進描述,報讀軟體唸兩次。旁邊看得到的「練哪些字」就 aria-hidden,瀏覽模式不重複唸 */
+    const sumText = h('span', { class: 'vg-pick-sum-text' });
+    const sumCount = h('span', { class: 'vg-pick-sum-n' });
     const note = h('p', { class: 'vg-pick-note', 'aria-live': 'polite' });
     /* 全選照常見的做法(Gmail、雲端硬碟的列表):是「我的題庫」那組的第一列,勾選框跟下面各列同一欄,小標題在它上面 */
     const picker = h('details', { class: 'vg-pick', open: pickOpen ? '' : null },
-      h('summary', { class: 'cfg-select vg-pick-sum', 'aria-labelledby': 'vg-pick-label vg-pick-sum-text vg-pick-sum-n' }, sumText, sumCount),
+      h('summary', { class: 'cfg-select vg-pick-sum' }, h('span', { class: 'vg-pick-legend' }, '練哪些字 '), sumText, sumCount),
       h('div', { class: 'vg-pick-panel' },
         h('fieldset', { class: 'vg-pick-list' },
           h('legend', { class: 'vg-pick-legend' }, '練哪些字'),
@@ -298,6 +307,14 @@
             bankRows) : null),
         note));
     picker.addEventListener('toggle', () => { pickOpen = picker.open; });
+    /* 開著按 Esc:收起來、焦點回到框上(框長得像下拉選單,下拉選單的慣例就是這樣;不然鍵盤只能 Shift+Tab 回框上再按 Enter)。
+       點外面不收:清單是推開下面的內容,不是浮在上面 */
+    picker.addEventListener('keydown', e => {
+      if (e.key !== 'Escape' || !picker.open) return;
+      e.preventDefault();
+      picker.open = false;
+      picker.querySelector('summary').focus();
+    });
     counts.phrase.textContent = fmtN(buildPhrasePool().length) + ' 個字';
     banks.filter(b => b && typeof b.id === 'string').forEach(b => { counts['bank:' + b.id].textContent = bankCountText(b); });
     /* 改級別 = 要練文章單字,順便勾起來(跟刷題頁改題數會勾起那一列一樣) */
@@ -314,7 +331,7 @@
       refreshPick();
     }
     const gamesWrap = h('div', { class: 'part-cards vg-games' });
-    host.append(h('div', { class: 'vg-source' }, h('span', { id: 'vg-pick-label' }, '練哪些字'), picker), gamesWrap);
+    host.append(h('div', { class: 'vg-source' }, h('span', { 'aria-hidden': 'true' }, '練哪些字'), picker), gamesWrap);
 
     /* 第二步:選玩法。四張卡同一層級,各自只帶自己需要的選項 */
     const speedSel = h('select', { class: 'cfg-select' },
@@ -393,8 +410,8 @@
       const src = srcPool(picked, level);
       const n = src.pool.length;
       counts.word.textContent = fmtN(buildWordPool(level).length) + ' 個字';
-      sumText.textContent = picked.length ? pickLabel(picked, level, banks) : '還沒勾';
-      sumCount.textContent = picked.length ? ' · 共 ' + fmtN(n) + ' 個字' : '';
+      sumText.textContent = picked.length ? picked.map(m => srcLabel(m, level, banks)).join('、') : '還沒勾';
+      sumCount.textContent = !picked.length ? '' : (picked.length > 1 ? ' · ' + picked.length + ' 個' : '') + ' · 共 ' + fmtN(n) + ' 個字';
       const few = picked.length && n < MIN_WORDS.pairs;
       note.textContent = !picked.length ? '至少勾一個。'
         : few ? '勾的這些加起來只有 ' + n + ' 個字，至少要 ' + MIN_WORDS.pairs + ' 個才能玩。' : '共 ' + fmtN(n) + ' 個字';
@@ -408,7 +425,7 @@
     }
     refreshPick();
 
-    /* 我的題庫:只管建立與編輯;要練就在上面勾,或按「只練這個題庫」 */
+    /* 我的題庫:只管建立與編輯;要練就在上面勾,或按卡片上的「只練這個」 */
     host.append(h('div', { class: 'exercise-head' },
       h('h2', null, '我的題庫'),
       h('button', { class: 'btn', style: 'margin-left:auto', 'data-gate': '', onclick: () => renderBankEdit(null) }, '＋ 新增題庫')));
@@ -418,13 +435,16 @@
       const bwrap = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });
       banks.forEach(b => {
         const onCount = bankOn(b);   // 跟上面清單那一列同一個數
-        const playable = onCount >= 3;
+        const playable = soloOk(b);
         bwrap.append(h('div', { class: 'part-card' },
           h('h3', null, b.name),
           /* 「練 N 個」:題庫編輯頁裡勾的字(跟上面「練哪些字」的勾選是兩回事,所以不寫「已勾選」) */
           h('div', { class: 'p-stats' }, (b.words || []).length + ' 個字 · 練 ' + onCount + ' 個' + (playable ? '' : '（要 3 個以上才能單獨練）')),
-          h('div', { class: 'cfg-row' },
-            /* 只練這個題庫 = 上面清單只勾它(跟以前「用這個題庫」一樣是換成它;要一起練就在上面清單多勾)。
+          h('div', { class: 'cfg-row vg-bank-btns' },
+            /* 只練這個 = 上面清單只勾它(跟以前「用這個題庫」一樣是換成它;要一起練就在上面清單多勾)。
+               只寫四個字:卡片在手機上是兩欄,「只練這個題庫」在 360、375 寬會斷成兩行、最後剩一個「庫」(以前「用這個題庫」是一行);
+               更窄的 320 寬靠 style.css 的 .vg-bank-btns 縮按鈕左右留白放成一行。
+               按鈕就在題庫名稱下面,「這個」指的是哪個題庫看得出來。
                焦點移到上面的框:鍵盤接著從這裡用(不然下一個 Tab 又跳回下面的「編輯」),報讀軟體唸出新的框名稱(清單收起來時 aria-live 的說明不會唸) */
             h('button', {
               class: 'btn primary', disabled: playable ? null : '',
@@ -435,7 +455,7 @@
                 picker.querySelector('summary').focus({ preventScroll: true });
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               },
-            }, '只練這個題庫'),
+            }, '只練這個'),
             h('button', { class: 'btn', 'data-gate': '', onclick: () => renderBankEdit(b.id) }, '編輯'),
             h('button', {
               class: 'btn', 'data-gate': '', onclick: () => {

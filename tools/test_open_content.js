@@ -1509,7 +1509,7 @@ T['單字頁「練哪些字」勾選清單:勾兩個題庫存起來、重新整�
     r.guest.after = await s.eval(VG_PICKED);
   } finally { await s.close(); }
   const mobileOk = (m) => m.sw <= m.iw && m.rows.length >= 4 && m.rows.every((x) => x >= 40) && !m.selInLabel && m.after === 'word,phrase';
-  const ok = r.first === 'word' && r.checked === 'bank:bA,bank:bB' && r.src === J({ mode: 'bank:bA', level: '全部', modes: ['bank:bA', 'bank:bB'] }) && /甲題庫、乙題庫 · 共 6 個字/.test(r.sum)
+  const ok = r.first === 'word' && r.checked === 'bank:bA,bank:bB' && r.src === J({ mode: 'bank:bA', level: '全部', modes: ['bank:bA', 'bank:bB'] }) && /甲題庫、乙題庫 · 2 個 · 共 6 個字/.test(r.sum)
     && r.reload.checked === 'bank:bA,bank:bB' && !r.reload.open && /甲題庫、乙題庫/.test(r.reload.sum)
     && r.toast === 'apple,grape,kiwi,lemon,mango,pear'
     && r.zero.checked === '' && /至少勾一個。/.test(r.zero.note) && r.zero.starts.length === 4 && r.zero.starts.every(Boolean) && /還沒勾/.test(r.zero.sum) && r.zero.cards
@@ -1523,7 +1523,7 @@ T['單字頁「練哪些字」勾選清單:勾兩個題庫存起來、重新整�
    手機寬(320、375、390):老師按週出的題庫名稱前面都一樣,點開清單每個名稱整個看得到(換行,不變省略號);窄螢幕清單佔滿一整行(「練哪些字」在上面)。
    框(summary)的無障礙名稱(Chrome 算的)開頭是旁邊看得到的「練哪些字」,後面是勾了哪些、共幾個字。
    全選的勾選框跟題庫的勾選框在同一欄;題庫有字沒勾時,清單那一列寫「練 N 個」,跟下面題庫卡片的數字一樣。
-   按「只練這個題庫」:只勾那一個、捲回上面,焦點在框上(鍵盤、報讀軟體從這裡接著用) */
+   按題庫卡片的「只練這個」:只勾那一個、捲回上面,焦點在框上(鍵盤、報讀軟體從這裡接著用) */
 const WEEK_BANKS = [1, 2, 3].map((n) => ({ id: 'bw' + n, name: '多益單字（老師上課補充）第 ' + n + ' 週',
   words: [['desk', '桌子'], ['chair', '椅子'], ['lamp', '檯燈'], ['sofa', '沙發']].map(([en, zh], i) => ({ en: en + n, zh: zh + n, on: !(n === 2 && i === 3) })) }));
 T['單字頁「練哪些字」:手機上長的題庫名稱整個看得到、框的名稱有「練哪些字」、全選對齊、題庫字數跟卡片一樣、只練這個題庫後焦點在框上'] = async (B) => {
@@ -1558,9 +1558,9 @@ T['單字頁「練哪些字」:手機上長的題庫名稱整個看得到、框�
       const row = (id) => document.querySelector('.vg-pick input[value="bank:' + id + '"]').closest('.vg-pick-row');
       return { all: x(document.querySelector('.vg-pick-all input')), banks: ['bw1', 'bw2', 'bw3'].map((id) => x(row(id).querySelector('input'))),
         n2: row('bw2').querySelector('.vg-pick-n').textContent,
-        card2: [...document.querySelectorAll('.part-card')].map((c) => c.textContent).filter((t) => t.indexOf('第 2 週') > -1 && t.indexOf('只練這個題庫') > -1).join('') };
+        card2: [...document.querySelectorAll('.part-card')].map((c) => c.textContent).filter((t) => t.indexOf('第 2 週') > -1 && t.indexOf('只練這個') > -1).join('') };
     })()`);
-    await pressText(s, '.part-card .btn.primary', '只練這個題庫');
+    await pressText(s, '.part-card .btn.primary', '只練這個');
     await sleep(900);
     r.only = await s.eval(`({ active: document.activeElement ? document.activeElement.tagName : '', inPick: !!document.activeElement.closest('.vg-pick'),
       y: Math.round(scrollY), picked: ${VG_PICKED} })`);
@@ -1570,6 +1570,68 @@ T['單字頁「練哪些字」:手機上長的題庫名稱整個看得到、框�
     && /^練哪些字\s*文章單字\s*· 共 [\d,]+ 個字$/.test(r.axName)
     && r.desk.banks.every((x) => x === r.desk.all) && r.desk.n2 === '練 3 個' && r.desk.card2.indexOf('4 個字 · 練 3 個') > -1
     && r.only.active === 'SUMMARY' && r.only.inPick && r.only.picked === 'bank:bw1' && r.only.y < 200;
+  return { ok, detail: J(r) };
+};
+/* 審查第 2 輪(2026-11-11):
+   手機寬(375、320)框收起來時:長的週題庫名稱可以被省略號切掉,但後面那段「N 個 · 共 X 個字」整個看得到(勾 5 個、只勾 3 個週題庫都一樣),框還是一行。
+   題庫卡片的「只練這個」在 320、360、375、390 寬都是一行(跟同一列的「編輯」一樣高),沒有超出卡片、沒有左右捲動。
+   框的無障礙名稱從框裡的字來(開頭是「練哪些字」),Chrome 不再把同一段字放進描述(以前報讀軟體會唸兩次)。
+   鍵盤:框按 Enter 打開、Tab 到「片語」按空白鍵勾起來、按 Esc:清單收起來、焦點回到框上、片語還是勾著;再按 Enter 又打開 */
+T['單字頁「練哪些字」:手機上框收起來看得到勾了幾個、只練這個不斷行、框的名稱不重複唸、Esc 收起清單'] = async (B) => {
+  const r = {};
+  const SUMM = `(() => { const sum = document.querySelector('.vg-pick > summary'), n = document.querySelector('.vg-pick-sum-n'), t = document.querySelector('.vg-pick-sum-text');
+    const sb = sum.getBoundingClientRect(), nb = n.getBoundingClientRect(), tb = t.getBoundingClientRect();
+    return { n: n.textContent, nCut: n.scrollWidth > n.clientWidth + 1, nIn: nb.left >= sb.left - 1 && nb.right <= sb.right + 1, tW: Math.round(tb.width),
+      open: document.querySelector('.vg-pick').open, h: Math.round(sb.height), sw: document.documentElement.scrollWidth, iw: innerWidth }; })()`;
+  for (const width of [375, 320]) {
+    const s = await pickOpen(B, { size: { width, height: 760 } }, WEEK_BANKS);
+    try {
+      await click(s, '.vg-pick > summary');
+      await click(s, '.vg-pick-all');                     // 全選三個週題庫(文章單字本來就勾著)
+      await click(s, '.vg-pick-row .vg-pick-name', 1);    // 片語
+      await click(s, '.vg-pick > summary');               // 收起來
+      const five = await s.eval(SUMM);
+      await click(s, '.vg-pick > summary');
+      await click(s, '.vg-pick-row .vg-pick-name', 0);    // 取消文章單字
+      await click(s, '.vg-pick-row .vg-pick-name', 1);    // 取消片語
+      await click(s, '.vg-pick > summary');
+      r['w' + width] = { five, three: await s.eval(SUMM), picked: await s.eval(VG_PICKED) };
+    } finally { await s.close(); }
+  }
+  for (const width of [320, 360, 375, 390]) {
+    const s = await pickOpen(B, { size: { width, height: 760 } }, WEEK_BANKS);
+    try {
+      r['b' + width] = await s.eval(`(() => ({ sw: document.documentElement.scrollWidth, iw: innerWidth,
+        cards: [...document.querySelectorAll('.part-card')].filter((c) => [...c.querySelectorAll('button')].some((b) => b.textContent === '編輯')).map((c) => {
+          const bs = [...c.querySelectorAll('button')], only = bs.find((b) => b.textContent === '只練這個'), edit = bs.find((b) => b.textContent === '編輯');
+          const cb = c.getBoundingClientRect(), ob = only ? only.getBoundingClientRect() : { height: 0, right: 0 };
+          return { has: !!only, h: Math.round(ob.height), eh: Math.round(edit.getBoundingClientRect().height), out: ob.right > cb.right + 1 };
+        }) }))()`);
+    } finally { await s.close(); }
+  }
+  const s = await pickOpen(B, null, WEEK_BANKS);
+  try {
+    const ref = await s.send('Runtime.evaluate', { expression: "document.querySelector('.vg-pick > summary')" });
+    const ax = await s.send('Accessibility.getPartialAXTree', { objectId: ref.result.result.objectId, fetchRelatives: false });
+    const node = ((ax.result || {}).nodes || [])[0] || {};
+    r.ax = { name: node.name ? node.name.value : '(沒有)', desc: node.description ? node.description.value : '' };
+    await s.eval("document.querySelector('.vg-pick > summary').focus(), true");
+    await key(s, 'Enter');
+    r.kb = { opened: await s.eval("document.querySelector('.vg-pick').open") };
+    await key(s, 'Tab'); await key(s, 'Tab'); await key(s, 'Tab');
+    r.kb.at = await s.eval('document.activeElement.value || document.activeElement.tagName');
+    await key(s, ' ');
+    await key(s, 'Escape');
+    Object.assign(r.kb, { open: await s.eval("document.querySelector('.vg-pick').open"), active: await s.eval('document.activeElement.tagName'), picked: await s.eval(VG_PICKED) });
+    await key(s, 'Enter');
+    r.kb.reopen = await s.eval("document.querySelector('.vg-pick').open");
+  } finally { await s.close(); }
+  const sumOk = (m, re) => re.test(m.n) && !m.nCut && m.nIn && m.tW >= 40 && !m.open && m.h <= 44 && m.sw <= m.iw;
+  const wOk = (w) => sumOk(w.five, /^ · 5 個 · 共 [\d,]+ 個字$/) && sumOk(w.three, /^ · 3 個 · 共 11 個字$/) && w.picked === 'bank:bw1,bank:bw2,bank:bw3';
+  const bOk = (b) => b.sw <= b.iw && b.cards.length === 3 && b.cards.every((c) => c.has && c.h === c.eh && !c.out);
+  const ok = wOk(r.w375) && wOk(r.w320) && bOk(r.b320) && bOk(r.b360) && bOk(r.b375) && bOk(r.b390)
+    && /^練哪些字\s*文章單字\s*· 共 [\d,]+ 個字$/.test(r.ax.name) && r.ax.desc === ''
+    && r.kb.opened && r.kb.at === 'phrase' && !r.kb.open && r.kb.active === 'SUMMARY' && r.kb.picked === 'word,phrase' && r.kb.reopen;
   return { ok, detail: J(r) };
 };
 T['單字頁:題庫編輯器的加入單字、勾選、刪字、改名,片語特訓的選項,在別的分頁登出、帳號資料夾還沒灌過時跳「重新整理」卡,輸入框的字留著、什麼都不寫;照常時照樣存'] = async (B) => {

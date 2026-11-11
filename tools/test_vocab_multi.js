@@ -1,10 +1,12 @@
 /* 單字遊戲「練哪些字」可以勾好幾個(文章單字、片語、我的題庫一起練)。真的 js/common.js、js/sync-merge.js、js/vocab.js 在很小的假 DOM 裡跑,
    搬家的部分用真的 js/move-*.js(tools/fixtures/move_kit.js)。
    用法:node tools/test_vocab_multi.js
-   - vgame_src 讀寫:勾 1 個時存的跟以前一字不差 { mode, level };勾 2 個以上多一個 modes(清單順序),mode 是第一個勾的。
+   - vgame_src 讀寫:勾 1 個時存的跟以前一字不差 { mode, level };勾 2 個以上多一個 modes(清單順序),mode 是第一個勾的題庫(沒勾題庫才是清單第一個)。
      舊格式照舊讀;壞資料、被刪的題庫不丟錯;讀的時候不回寫;一個都沒勾不存,四個「開始」不能按。
    - 取字:好幾個來源合起來,同一個英文只留一個(自己題庫寫的中文優先),級別只篩文章單字;單一來源的字跟以前一樣。
-   - 成績、通關、出過的字:單一來源的鍵跟以前一樣;好幾個用排序後的組合鍵(bank:b1+word、phrase+word:8…);vgame_done 的組合鍵最多留 10 個。
+   - 成績、通關、出過的字:單一來源的鍵跟以前一樣;好幾個用排序後的組合鍵(bank:b1+word、phrase+word:8…);vgame_done 的組合鍵最多留 10 個,
+     最近玩的記在 vgame_done['+recent'] 陣列(雲端 jsonb 存不住鍵的順序)。
+   - 清單:框的名稱有「練哪些字」(aria-labelledby);全選是「我的題庫」那組的第一列;題庫那一列的字數跟題庫卡片同一套;按「只練這個題庫」焦點移到框上。
    - 「只練這個題庫」:只勾這一個,存的跟以前「用這個題庫」一樣。沒登入:勾了照樣換,只記在這一頁。
    - 舊版頁面(76b7850 的 js/vocab.js)讀到新格式不壞,只看 mode;改了選單寫回舊格式,新版讀到就是單選。
    - 搬家:remapRelated 換 vgame_src.modes 與組合鍵裡的題庫 id(重新排序,跟 vocab.js 算的一樣);76b7850 的 move-merge.js 搬新格式不壞。 */
@@ -60,7 +62,7 @@ class El {
   removeEventListener() {}
   fire(ev, extra) { const e = Object.assign({ type: ev, target: this, currentTarget: this, preventDefault() {}, stopPropagation() {} }, extra || {}); (this.listeners[ev] || []).forEach(f => f(e)); }
   click() { this.fire('click'); }
-  focus() {} blur() {} scrollIntoView() {}
+  focus(o) { El.focused = this; El.focusOpts = o || null; } blur() {} scrollIntoView() {}
   closest(sel) { let e = this; while (e && e instanceof El) { if (e.matches(sel)) return e; e = e.parentNode; } return null; }
   set innerHTML(v) { this.children = []; this._html = String(v); }
   get innerHTML() { return this._html || ''; }
@@ -170,6 +172,8 @@ function openVocab(o) {
     allBox: () => { const l = root.querySelector('.vg-pick-all'); return l ? l.all().find(e => e.tagName === 'INPUT') : null; },
     levelSel: () => { const d = root.querySelector('.vg-pick'); return d ? d.all().find(e => e.tagName === 'SELECT') : null; },
     summary: () => textOf(root.querySelector('.vg-pick-sum')),
+    sumEl: () => root.querySelector('.vg-pick-sum'),
+    rowCount: m => textOf(pg.box(m).closest('.vg-pick-row').querySelector('.vg-pick-n')),
     note: () => textOf(root.querySelector('.vg-pick-note')),
     starts: () => { const g = root.querySelector('.vg-games'); return g ? g.all().filter(e => e.tagName === 'BUTTON' && textOf(e) === '開始') : []; },
     cards: () => { const g = root.querySelector('.vg-games'); return g ? g.children.filter(c => c instanceof El).map(textOf) : []; },
@@ -288,11 +292,14 @@ test('勾成 1 個:存的字串跟以前一模一樣(沒有 modes)', () => {
   pg.toggle('phrase'); pg.toggle('word');
   return { ok: pg.raw('vgame_src') === '{"mode":"phrase","level":"全部"}' && J(pg.checked()) === J(['phrase']), detail: pg.raw('vgame_src') };
 });
-test('勾 2 個以上:mode 是清單順序第一個勾的、modes 照清單順序(先勾 b2 再勾 b1 也一樣)', () => {
+test('勾 2 個以上:modes 照清單順序(先勾 b2 再勾 b1 也一樣),mode 是清單裡第一個勾的題庫;沒勾題庫時 mode 是清單第一個', () => {
   const pg = openVocab({ banks: [B1(), B2()] });
   pg.toggle('word'); pg.toggle('bank:b2'); pg.toggle('bank:b1'); pg.toggle('phrase');
   const v = pg.get('vgame_src');
-  return { ok: J(v) === J({ mode: 'phrase', level: '全部', modes: ['phrase', 'bank:b1', 'bank:b2'] }), detail: pg.raw('vgame_src') };
+  pg.toggle('bank:b1'); pg.toggle('bank:b2'); pg.toggle('word');
+  const noBank = pg.get('vgame_src');
+  const ok = J(v) === J({ mode: 'bank:b1', level: '全部', modes: ['phrase', 'bank:b1', 'bank:b2'] }) && J(noBank) === J({ mode: 'word', level: '全部', modes: ['word', 'phrase'] });
+  return { ok, detail: pg.raw('vgame_src') + ' ' + J(v) };
 });
 test('全部取消:不存、寫「至少勾一個。」、四個「開始」都不能按、卡片寫「先在上面勾要練的字」;再勾一個就恢復', () => {
   const pg = openVocab({ banks: [B1()], src: { mode: 'word', level: '全部', modes: ['word', 'phrase'] } });
@@ -340,8 +347,35 @@ test('每一列寫字數:文章單字照級別、片語、題庫只算勾選的�
   const n = m => textOf(pg.box(m).closest('.vg-pick-row').querySelector('.vg-pick-n'));
   const before = n('word');
   const sel = pg.levelSel(); sel.value = '高級'; sel.fire('change');
-  const ok = before === '11 個字' && n('word') === '3 個字' && n('phrase') === '10 個字' && n('bank:b1') === '3 個字' && n('bank:b2') === '3 個字';
+  const ok = before === '11 個字' && n('word') === '3 個字' && n('phrase') === '10 個字' && n('bank:b1') === '3 個字' && n('bank:b2') === '練 3 個';
   return { ok, detail: [before, n('word'), n('phrase'), n('bank:b1'), n('bank:b2')].join(' / ') };
+});
+test('題庫有字取消勾選:清單那一列寫「練 N 個」,跟下面題庫卡片「M 個字 · 練 N 個」是同一個數字;全部都練的寫「N 個字」', () => {
+  const B8 = { id: 'b8', name: '老師版', words: ['ant', 'bee', 'cat', 'dog', 'eel', 'fox', 'gnu', 'hen'].map((en, i) => W(en, '字' + i, i < 5)) };
+  const pg = openVocab({ banks: [B8, B1()] });
+  const stats = pg.root.all().filter(e => e.classList.contains('p-stats')).map(textOf);
+  const ok = pg.rowCount('bank:b8') === '練 5 個' && stats.indexOf('8 個字 · 練 5 個') > -1 && pg.rowCount('bank:b1') === '3 個字' && stats.indexOf('3 個字 · 練 3 個') > -1;
+  return { ok, detail: J({ b8: pg.rowCount('bank:b8'), b1: pg.rowCount('bank:b1'), stats }) };
+});
+
+test('框(summary)的名稱:aria-labelledby 指到看得到的「練哪些字」、勾了哪些、共幾個字;一個都沒勾時是「練哪些字 還沒勾」', () => {
+  const pg = openVocab({ banks: [B1(), B2()], src: { mode: 'bank:b1', level: '全部', modes: ['word', 'bank:b1'] } });
+  const nameOf = () => (pg.sumEl().getAttribute('aria-labelledby') || '').split(' ').filter(Boolean).map(id => { const e = pg.root.querySelector('#' + id); return e ? textOf(e) : '(沒有 ' + id + ')'; }).join(' ');
+  const label = pg.root.querySelector('.vg-source').children.find(c => c instanceof El && c.tagName === 'SPAN');
+  const a = nameOf();
+  pg.toggle('word'); pg.toggle('bank:b1');
+  const b = nameOf();
+  const ok = /^練哪些字 文章單字、第3課\s*· 共 13 個字$/.test(a) && /^練哪些字 還沒勾\s*$/.test(b) && !!label && textOf(label) === '練哪些字' && !!label.getAttribute('id');
+  return { ok, detail: J({ a, b }) };
+});
+test('全選:放在「我的題庫」那組的第一列(跟題庫的勾選框同一欄),小標題在它上面,不在標題列最右邊', () => {
+  const pg = openVocab({ banks: [B1(), B2(), BA()] });
+  const grp = pg.root.querySelector('.vg-pick-banks');
+  const kids = grp.children.filter(c => c instanceof El);
+  const allRow = pg.allBox().closest('.vg-pick-row');
+  const ok = !!allRow && kids[0].classList.contains('vg-pick-group') && !kids[0].querySelector('INPUT') && kids[1] === allRow
+    && kids[2] === pg.box('bank:b1').closest('.vg-pick-row') && textOf(allRow) === '全選' && !allRow.querySelector('.vg-pick-name');
+  return { ok, detail: J(kids.map(k => k.className + ':' + textOf(k))) };
 });
 
 /* ======================= 3. 取字與門檻 ======================= */
@@ -471,7 +505,7 @@ test('單一來源:四個玩法寫的鍵跟以前一樣(bank:b1、word:8、phras
     && J(Object.keys(pb)) === J(['word:8']) && J(Object.keys(tb)) === J(['phrase']) && /最佳 中翻英 12/.test(card) && pg.raw('vgame_src') === '{"mode":"phrase","level":"全部"}';
   return { ok, detail: J({ best, clr: Object.keys(clr), pb: Object.keys(pb), tb, card }) };
 });
-test('vgame_done 組合鍵最多留 10 個(最久沒玩的先刪);單一來源的鍵內容與順序不變', () => {
+test('vgame_done 組合鍵最多留 10 個(沒記在 +recent 的當成最久沒玩,照原本的順序先刪);單一來源的鍵內容與順序不變', () => {
   const done = { word: ['refund'], 'bank:b1': ['apple'] };
   for (let i = 0; i < 11; i++) done['bank:z' + i + '+word'] = ['x' + i];
   done.phrase = ['put off'];
@@ -479,11 +513,52 @@ test('vgame_done 組合鍵最多留 10 個(最久沒玩的先刪);單一來源�
   pg.starts()[0].click();
   playFall(pg, dictOf(pg, ['bank:b1', 'bank:b2']));
   const d = pg.get('vgame_done');
-  const combos = Object.keys(d).filter(k => k.indexOf('+') > -1);
+  const combos = Object.keys(d).filter(k => k.indexOf('+') > 0);
   const singles = Object.keys(d).filter(k => k.indexOf('+') < 0);
-  const ok = combos.length === 10 && combos[9] === 'bank:b1+bank:b2' && combos[0] === 'bank:z2+word' && !d['bank:z0+word'] && !d['bank:z1+word']
+  const ok = combos.length === 10 && combos.indexOf('bank:b1+bank:b2') > -1 && combos.indexOf('bank:z2+word') > -1 && !d['bank:z0+word'] && !d['bank:z1+word']
+    && J(d['+recent']) === J(['bank:b1+bank:b2'])
     && J(singles) === J(['word', 'bank:b1', 'phrase']) && J(d.word) === J(['refund']) && J(d['bank:b1']) === J(['apple']);
-  return { ok, detail: J({ combos, singles }) };
+  return { ok, detail: J({ combos, singles, recent: d['+recent'] }) };
+});
+/* 雲端 progress.v 是 jsonb:物件的鍵存不住順序,灌回來時照長度、再照位元組排(短的在前)。陣列的順序存得住 */
+const jsonbOrder = o => Object.fromEntries(Object.keys(o).sort((a, b) => Buffer.byteLength(a) - Buffer.byteLength(b) || Buffer.compare(Buffer.from(a), Buffer.from(b))).map(k => [k, o[k]]));
+test('換一台、重新登入(雲端灌回來鍵的順序變了)之後:最近玩的組合不會先被刪,刪的是最久沒玩的', () => {
+  const done = { word: ['refund'] };
+  for (let i = 0; i < 9; i++) done['bank:z' + i + '+word'] = ['x' + i];
+  const pg = openVocab({ banks: [B1(), B2()], src: { mode: 'word', level: '全部', modes: ['word', 'phrase'] }, ls: { vgame_done: done } });
+  pg.starts()[0].click();
+  playFall(pg, dictOf(pg, ['word', 'phrase']));   // 文章單字+片語:最近玩的
+  buttons(pg.root, '回單字訓練')[0].click();
+  const mid = pg.get('vgame_done');
+  pg.set('vgame_done', jsonbOrder(mid));   // 另一台登入:雲端灌回來,phrase+word(11 個字)排到所有組合鍵前面
+  const order = Object.keys(pg.get('vgame_done'));
+  pg.toggle('word'); pg.toggle('phrase'); pg.toggle('bank:b1'); pg.toggle('bank:b2');
+  pg.starts()[0].click();
+  playFall(pg, dictOf(pg, ['bank:b1', 'bank:b2']));
+  const d = pg.get('vgame_done');
+  const combos = Object.keys(d).filter(k => k.indexOf('+') > 0);
+  const ok = J(mid['+recent']) === J(['phrase+word']) && order.indexOf('phrase+word') < order.indexOf('bank:z0+word')
+    && combos.length === 10 && !!d['phrase+word'] && d['phrase+word'].length === 20 && !!d['bank:b1+bank:b2'] && !d['bank:z0+word'] && !!d['bank:z1+word']
+    && J(d['+recent']) === J(['phrase+word', 'bank:b1+bank:b2']) && J(d.word) === J(['refund']);
+  return { ok, detail: J({ order, combos, recent: d['+recent'] }) };
+});
+test('+recent 不會被當成組合鍵:搬家(新版、76b7850 的 move-merge)換題庫 id 時原樣留著;壞掉的 +recent(不是陣列、有不存在的鍵)不丟錯', () => {
+  const ov = { 'bank:b1+word': ['a'], '+recent': ['bank:b1+word'], 'bank:b1': ['b'] };
+  const r = require('./fixtures/move_kit.js').M.remapRelated('vgame_done', ov, { b1: 'N1' });   // 搬家那一段的 M 在下面才定義
+  const ro = oldMove().remapRelated('vgame_done', ov, { b1: 'N1' });
+  const bad = [];
+  [5, 'x', { a: 1 }, ['nope+word', 7, 'bank:b1+bank:b2']].forEach(rec => {
+    try {
+      const pg = openVocab({ banks: [B1(), B2()], src: { mode: 'bank:b1', level: '全部', modes: ['bank:b1', 'bank:b2'] }, ls: { vgame_done: { '+recent': rec } } });
+      pg.starts()[0].click();
+      playFall(pg, dictOf(pg, ['bank:b1', 'bank:b2']));
+      const d = pg.get('vgame_done');
+      if (J(d['+recent']) !== J(['bank:b1+bank:b2']) || !d['bank:b1+bank:b2']) bad.push(J(rec) + ' → ' + J(d));
+    } catch (e) { bad.push(J(rec) + ' 丟錯 ' + e.message); }
+  });
+  const ok = J(r['+recent']) === J(['bank:b1+word']) && J(r['bank:N1+word']) === J(['a']) && J(ro['+recent']) === J(['bank:b1+word']) && !bad.length
+    && Object.keys(r).filter(k => k.charAt(0) === '+').length === 1 && Object.keys(ro).filter(k => k.charAt(0) === '+').length === 1;
+  return { ok, detail: J({ r, ro, bad }) };
 });
 test('再挑戰時別的分頁刪了其中一個題庫:照剩下的玩;剩的不夠就回首頁', () => {
   const pg = openVocab({ banks: [B1(), B2()], src: { mode: 'bank:b1', level: '全部', modes: ['bank:b1', 'bank:b2'] } });
@@ -505,7 +580,8 @@ test('再挑戰時別的分頁刪了其中一個題庫:照剩下的玩;剩的不
 });
 
 /* ======================= 5. 只練這個題庫、題庫卡片 ======================= */
-test('「只練這個題庫」:只勾這一個,存的跟以前「用這個題庫」一樣,捲回上面;不到 3 個字不能按;卡片寫「練 N 個」', () => {
+test('「只練這個題庫」:只勾這一個,存的跟以前「用這個題庫」一樣,捲回上面、焦點移到框上(不另外捲);不到 3 個字不能按;卡片寫「練 N 個」', () => {
+  El.focused = null; El.focusOpts = null;
   const pg = openVocab({ banks: [B1(), BB(), B2()], src: { mode: 'word', level: '中級', modes: ['word', 'bank:b1'] } });
   const btns = buttons(pg.root, '只練這個題庫');
   const off = btns.map(isDisabled);
@@ -513,8 +589,9 @@ test('「只練這個題庫」:只勾這一個,存的跟以前「用這個題庫
   const bankCard = pg.root.all().filter(e => e.classList.contains('p-stats')).map(textOf).find(t => /^5 個字/.test(t));
   const small = pg.root.all().filter(e => e.classList.contains('p-stats')).map(textOf).find(t => /^2 個字/.test(t));
   const ok = J(off) === J([false, true, false]) && pg.raw('vgame_src') === '{"mode":"bank:b2","level":"中級"}' && J(pg.checked()) === J(['bank:b2'])
-    && pg.scrolls.length === 1 && bankCard === '5 個字 · 練 4 個' && small === '2 個字 · 練 2 個（要 3 個以上才能單獨練）' && /文章：遠距工作/.test(pg.summary());
-  return { ok, detail: J({ off, src: pg.raw('vgame_src'), checked: pg.checked(), bankCard, small }) };
+    && pg.scrolls.length === 1 && bankCard === '5 個字 · 練 3 個' && small === '2 個字 · 練 2 個（要 3 個以上才能單獨練）' && /文章：遠距工作/.test(pg.summary())
+    && El.focused === pg.sumEl() && !!El.focusOpts && El.focusOpts.preventScroll === true;
+  return { ok, detail: J({ off, src: pg.raw('vgame_src'), checked: pg.checked(), bankCard, small, focus: El.focused === pg.sumEl(), opts: El.focusOpts }) };
 });
 
 /* ======================= 6. 沒登入(先看再登入) ======================= */
@@ -600,6 +677,26 @@ test('搬家算的組合鍵跟 vocab.js 算的一樣(包含 id 裡有 + 和 : �
     if (r2[k(to) + ':8'] !== 1) bad.push(k(from) + ':8 → ' + J(Object.keys(r2)));
   });
   return { ok: !bad.length, detail: bad.join(' | ') };
+});
+test('76b7850 的 move-merge.js 搬新版存的「文章單字+題庫」:新網址同 id 的另一個題庫不會被勾到,退回只勾學生自己的題庫(改了 id 的那個)', () => {
+  /* 新版頁面勾文章單字+第3課 → 存的值;舊網址的 b1 跟新網址的 b1 內容不同,搬家改成 N1、名稱加「（舊網址）」 */
+  const pg = openVocab({ banks: [B1()] });
+  pg.toggle('bank:b1');
+  const v = pg.get('vgame_src');
+  const theirs = { id: 'b1', name: '新網址的第3課', words: [W('desk', '桌子'), W('chair', '椅子'), W('lamp', '檯燈')] };
+  const mine = Object.assign(B1(), { id: 'N1', name: '第3課（舊網址）' });
+  const r = oldMove().remapRelated('vgame_src', v, { b1: 'N1' });
+  const after = openVocab({ banks: [theirs, mine], src: r });
+  const rNew = M.remapRelated('vgame_src', v, { b1: 'N1' });
+  const afterNew = openVocab({ banks: [theirs, mine], src: rNew });
+  /* 舊版頁面(76b7850 的 vocab.js)讀這個值:下拉選單停在第3課 */
+  const oldPg = openVocab({ banks: [B1(), B2()], src: v, old: true, ls: { vgame_best: { 'bank:b1': 4, word: 9 } } });
+  const oldSel = oldPg.root.querySelector('.vg-source').all().filter(e => e.tagName === 'SELECT')[0];
+  const ok = J(v) === J({ mode: 'bank:b1', level: '全部', modes: ['word', 'bank:b1'] })
+    && J(after.checked()) === J(['bank:N1']) && /第3課（舊網址）/.test(after.summary())
+    && J(afterNew.checked()) === J(['word', 'bank:N1'])
+    && oldSel.value === 'bank:b1' && /最佳 中翻英 4/.test(oldPg.cards()[0]);
+  return { ok, detail: J({ v, r, after: after.checked(), sum: after.summary(), afterNew: afterNew.checked(), old: oldSel.value }) };
 });
 test('76b7850 的 move-merge.js(快取裡的舊版)搬新格式:不丟錯,vgame_src 只換 mode;新版讀到退回單選', () => {
   const OM = oldMove();

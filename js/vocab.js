@@ -131,14 +131,16 @@
   let pageSrc = null;   // 還沒登入時「練哪些字」的選擇(不存,格式跟 vgame_src 一樣)
 
   /* ---------- 練哪些字:可以勾好幾個(文章單字、片語、我的題庫)一起練 ----------
-     存在 vgame_src。勾 1 個時跟以前一字不差 { mode, level };勾 2 個以上多一個 modes(清單順序),mode 放清單裡第一個勾的:
-     舊版頁面(service worker 快取、別台還沒更新)只看 mode,照常能玩。一個都沒勾不存(這一頁記在 pickNone)。
+     存在 vgame_src。勾 1 個時跟以前一字不差 { mode, level };勾 2 個以上多一個 modes(清單順序),mode 放第一個勾的題庫
+     (沒勾題庫才是清單第一個,理由見 srcValue):舊版頁面(service worker 快取、別台還沒更新)只看 mode,照常能玩。一個都沒勾不存(這一頁記在 pickNone)。
      讀的時候不回寫:題庫可能是別台建的、開頁時雲端對齊還沒回來,回寫會把它從選擇裡弄丟。
      成績、通關、出過的字:單一來源的鍵跟以前一樣('word'、'phrase'、'bank:<id>');兩個以上用 srcKey 排序後的組合鍵
-     (bank:b1+word、phrase+word:e2z、bank:b1+bank:b2:8)。js/move-merge.js 搬家換題庫 id 時用同一套規則重算組合鍵。 */
+     (bank:b1+word、phrase+word:e2z、bank:b1+bank:b2:8)。js/move-merge.js 搬家換題庫 id 時用同一套規則重算組合鍵。
+     vgame_done 的組合鍵最多留 COMBO_DONE_MAX 個,最近玩的記在 vgame_done['+recent'](見 stopGame)。 */
   const LEVELS = ['全部', '初級', '中級', '中高級', '高級'];
   const MIN_WORDS = { fall: 8, fallBank: 3, pairs: 3, toast: 4, mcq: 4 };   // 掉落消除:有內建字庫要 8 個,全是自己的題庫 3 個
   const COMBO_DONE_MAX = 10;   // vgame_done 最多留幾個組合鍵(雲端每個鍵 256 KB;單一來源的鍵不算、不動)
+  const DONE_RECENT = '+recent';   // vgame_done 裡記「組合鍵最近玩的順序」的那一項(開頭是 +,不會跟真的鍵撞)
   let pickOpen = false;        // 清單點開著(雲端合併、別的分頁改題庫重畫首頁時不要自己收起來;重新整理就收起來)
   let pickNone = false;        // 這一頁全部取消了(不存;重畫時照樣一個都沒勾)
   function srcOrder(banks) {
@@ -152,8 +154,14 @@
     const modes = srcOrder(banks || getBanks()).filter(m => picked.indexOf(m) > -1);
     return { modes: modes.length ? modes : ['word'], level: LEVELS.indexOf(o.level) > -1 ? o.level : '全部' };
   }
+  /* 勾 2 個以上時 mode 放第一個勾的題庫,沒勾題庫才放清單第一個(文章單字或片語)。
+     快取裡舊版的搬家(76b7850 的 js/move-merge.js)只換 mode 裡的題庫 id、不看 modes:mode 是題庫的話,id 換掉之後 mode 就不在 modes 裡,
+     readSrc 退回只勾 mode = 學生自己那個改了 id 的題庫。mode 是文章單字的話整個值原封不動,modes 裡的舊 id 會勾到新網址同 id 的另一個題庫。
+     (勾了好幾個題庫、只有後面那個改了 id 的,舊版搬家還是會勾錯;要碰到快取裡的舊版搬家頁才會發生) */
   function srcValue(modes, level) {
-    return modes.length > 1 ? { mode: modes[0], level, modes: modes.slice() } : { mode: modes[0], level };
+    if (modes.length < 2) return { mode: modes[0], level };
+    const bank = modes.find(m => m.indexOf('bank:') === 0);
+    return { mode: bank || modes[0], level, modes: modes.slice() };
   }
   function srcKey(modes) {
     const u = modes.filter((m, i) => modes.indexOf(m) === i);
@@ -172,6 +180,10 @@
     return names.length <= 3 ? names.join('、') : names.slice(0, 2).join('、') + '等 ' + names.length + ' 個';
   }
   const fmtN = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  /* 題庫練幾個字:清單那一列、題庫卡片用同一個數(bankPool:勾選的、英文 30 字以內)。有字沒練就寫「練 N 個」,跟卡片、編輯頁的說法一樣
+     (只寫「N 個字」,學生看到比題庫的字少會以為字不見了) */
+  const bankOn = b => bankPool(b).length;
+  const bankCountText = b => (bankOn(b) < (b.words || []).length ? '練 ' + fmtN(bankOn(b)) + ' 個' : fmtN(bankOn(b)) + ' 個字');
   /* 勾的這些合起來的字。live:還在的來源(題庫被刪了就不算),key 照 live 算。
      單一來源跟以前一模一樣(題庫照 bankPool,不另外去重複);兩個以上同一個英文只留一個:
      自己的題庫優先(照「我的題庫」的順序,學生寫的中文是照課本或老師的),再來文章單字(級別只篩它)、片語 */
@@ -268,24 +280,26 @@
     const wordRow = pickRow('word', '文章單字', levelSel);
     const phraseRow = pickRow('phrase', '片語');
     const bankRows = banks.filter(b => b && typeof b.id === 'string').map(b => pickRow('bank:' + b.id, String(b.name || '未命名題庫')));
-    /* 框裡:勾了哪些(太長就省略號)+ 合起來幾個字(手機上也一直看得到) */
-    const sumText = h('span', { class: 'vg-pick-sum-text' });
-    const sumCount = h('span', { class: 'vg-pick-sum-n' });
+    /* 框裡:勾了哪些(太長就省略號,點開看得到全名)+ 合起來幾個字(手機上也一直看得到)。
+       框的名稱(報讀軟體、語音控制)= 旁邊看得到的「練哪些字」+ 框裡的字:aria-labelledby 三段(WCAG 2.5.3 名稱要含看得到的標籤) */
+    const sumText = h('span', { class: 'vg-pick-sum-text', id: 'vg-pick-sum-text' });
+    const sumCount = h('span', { class: 'vg-pick-sum-n', id: 'vg-pick-sum-n' });
     const note = h('p', { class: 'vg-pick-note', 'aria-live': 'polite' });
+    /* 全選照常見的做法(Gmail、雲端硬碟的列表):是「我的題庫」那組的第一列,勾選框跟下面各列同一欄,小標題在它上面 */
     const picker = h('details', { class: 'vg-pick', open: pickOpen ? '' : null },
-      h('summary', { class: 'cfg-select vg-pick-sum' }, sumText, sumCount),
+      h('summary', { class: 'cfg-select vg-pick-sum', 'aria-labelledby': 'vg-pick-label vg-pick-sum-text vg-pick-sum-n' }, sumText, sumCount),
       h('div', { class: 'vg-pick-panel' },
         h('fieldset', { class: 'vg-pick-list' },
           h('legend', { class: 'vg-pick-legend' }, '練哪些字'),
           wordRow, phraseRow,
-          bankRows.length ? h('div', { class: 'vg-pick-banks', role: 'group', 'aria-label': '我的題庫' },
-            h('div', { class: 'vg-pick-group' }, h('span', null, '我的題庫'),
-              allBox ? h('label', { class: 'vg-pick-check vg-pick-all' }, allBox, h('span', null, '全選')) : null),
+          bankRows.length ? h('div', { class: 'vg-pick-banks', role: 'group', 'aria-labelledby': 'vg-pick-banks-h' },
+            h('div', { class: 'vg-pick-group', id: 'vg-pick-banks-h' }, '我的題庫'),
+            allBox ? h('div', { class: 'vg-pick-row' }, h('label', { class: 'vg-pick-check vg-pick-all' }, allBox, h('span', null, '全選'))) : null,
             bankRows) : null),
         note));
     picker.addEventListener('toggle', () => { pickOpen = picker.open; });
     counts.phrase.textContent = fmtN(buildPhrasePool().length) + ' 個字';
-    banks.filter(b => b && typeof b.id === 'string').forEach(b => { counts['bank:' + b.id].textContent = fmtN(bankPool(b).length) + ' 個字'; });
+    banks.filter(b => b && typeof b.id === 'string').forEach(b => { counts['bank:' + b.id].textContent = bankCountText(b); });
     /* 改級別 = 要練文章單字,順便勾起來(跟刷題頁改題數會勾起那一列一樣) */
     levelSel.addEventListener('change', () => { boxes.word.checked = true; onPick(); });
     function onPick() {
@@ -300,7 +314,7 @@
       refreshPick();
     }
     const gamesWrap = h('div', { class: 'part-cards vg-games' });
-    host.append(h('div', { class: 'vg-source' }, h('span', null, '練哪些字'), picker), gamesWrap);
+    host.append(h('div', { class: 'vg-source' }, h('span', { id: 'vg-pick-label' }, '練哪些字'), picker), gamesWrap);
 
     /* 第二步:選玩法。四張卡同一層級,各自只帶自己需要的選項 */
     const speedSel = h('select', { class: 'cfg-select' },
@@ -403,20 +417,22 @@
     } else {
       const bwrap = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });
       banks.forEach(b => {
-        const onCount = (b.words || []).filter(w => w.on !== false).length;
+        const onCount = bankOn(b);   // 跟上面清單那一列同一個數
         const playable = onCount >= 3;
         bwrap.append(h('div', { class: 'part-card' },
           h('h3', null, b.name),
           /* 「練 N 個」:題庫編輯頁裡勾的字(跟上面「練哪些字」的勾選是兩回事,所以不寫「已勾選」) */
           h('div', { class: 'p-stats' }, (b.words || []).length + ' 個字 · 練 ' + onCount + ' 個' + (playable ? '' : '（要 3 個以上才能單獨練）')),
           h('div', { class: 'cfg-row' },
-            /* 只練這個題庫 = 上面清單只勾它(跟以前「用這個題庫」一樣是換成它;要一起練就在上面清單多勾) */
+            /* 只練這個題庫 = 上面清單只勾它(跟以前「用這個題庫」一樣是換成它;要一起練就在上面清單多勾)。
+               焦點移到上面的框:鍵盤接著從這裡用(不然下一個 Tab 又跳回下面的「編輯」),報讀軟體唸出新的框名稱(清單收起來時 aria-live 的說明不會唸) */
             h('button', {
               class: 'btn primary', disabled: playable ? null : '',
               onclick: () => {
                 if (!boxes['bank:' + b.id]) return;
                 order.forEach(m => { boxes[m].checked = m === 'bank:' + b.id; });
                 onPick();
+                picker.querySelector('summary').focus({ preventScroll: true });
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               },
             }, '只練這個題庫'),
@@ -587,6 +603,24 @@
         listWrap));
     drawList();
     if (!bankId) nameInput.focus();
+  }
+
+  /* vgame_done 的組合鍵(好幾個來源一起練)超過 COMBO_DONE_MAX 個,就刪最久沒玩的(只是「出過哪些字」的輪替,分數、通關不受影響)。
+     最近玩的順序記在 doneLog['+recent'](組合鍵的陣列,最近玩的在最後),不看物件裡鍵的順序:雲端 progress.v 是 jsonb,鍵的順序存不住
+     (灌回來時照長度、再照位元組排),換一台、重新登入就亂了;陣列的順序存得住。
+     沒記在 +recent 裡的組合鍵(例如搬家換了題庫 id 複製出來的)當成最久沒玩,照物件裡的順序先刪。
+     +recent 開頭是 +:真的組合鍵每一段都不是空的,不會撞;舊版頁面只讀寫自己的單一來源鍵,整份照原樣存回去;
+     搬家(新版、舊版 js/move-merge.js)換題庫 id 時不動它。單一來源的鍵順序、內容都不動 */
+  function trimCombos(doneLog, key) {
+    const isCombo = k => k.indexOf('+') > 0;
+    const had = Array.isArray(doneLog[DONE_RECENT]) ? doneLog[DONE_RECENT] : [];
+    const recent = had.filter((k, i) => typeof k === 'string' && k !== key && isCombo(k) && Array.isArray(doneLog[k]) && had.indexOf(k) === i).concat(key);
+    const combos = Object.keys(doneLog).filter(isCombo);
+    const drop = combos.map((k, i) => ({ k, at: recent.indexOf(k), i }))
+      .sort((a, b) => a.at - b.at || a.i - b.i)
+      .slice(0, Math.max(0, combos.length - COMBO_DONE_MAX)).map(x => x.k);
+    drop.forEach(k => { delete doneLog[k]; });
+    doneLog[DONE_RECENT] = recent.filter(k => drop.indexOf(k) < 0);
   }
 
   /* ================= 掉落遊戲 ================= */
@@ -804,12 +838,8 @@
       pauseBtn.disabled = true;
       /* 打對的字記下來,下一關先出別的字 */
       const log = (doneLog[bestKey] || []).filter(a => !cleared.has(a)).concat([...cleared]).slice(-300);
-      /* 組合鍵(好幾個來源一起練)移到最後,超過 COMBO_DONE_MAX 個就從最久沒玩的刪(只是「出過哪些字」的輪替,分數、通關不受影響);
-         單一來源的鍵順序、內容都不動 */
-      if (bestKey.indexOf('+') > -1) delete doneLog[bestKey];
       doneLog[bestKey] = log;
-      const combos = Object.keys(doneLog).filter(k => k.indexOf('+') > -1);
-      combos.slice(0, Math.max(0, combos.length - COMBO_DONE_MAX)).forEach(k => { delete doneLog[k]; });
+      if (bestKey.indexOf('+') > 0) trimCombos(doneLog, bestKey);
       store.set('vgame_done', doneLog);
     }
 

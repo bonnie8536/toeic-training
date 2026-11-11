@@ -5,6 +5,7 @@
      與指到它的 vgame_src 一起複製到 bank:<新 id>(js/vocab.js 用 bank:<id> 對應題庫)。
      單字遊戲勾了好幾個來源一起練時,vgame_src 多一個 modes 陣列、成績鍵是排序後的組合鍵(bank:b1+word、bank:b1+phrase:8):
      modes 裡的舊 id 一樣換新,組合鍵換 id 後重新排序(comboKey,跟 js/vocab.js srcKey 同一套規則)。
+     vgame_done['+recent'](組合鍵最近玩的順序,js/vocab.js trimCombos)不是成績鍵,原樣留著。
      新版頁面寫的題庫有同步的戳記(js/sync-merge.js:_r、_t、_p…,每改一次就變):只差戳記、看得到的內容一樣(名稱、字、中文、勾選、alt)
      就當成同一份;一份的 _p 記著另一份(另一份是它的舊版本)就用新的那份(舊網址的比較新:換成 SYNC_MERGE 合併的結果,原值先備份)。
      只有兩邊都真的改了才另存「（舊網址）」(同步合併設計 3.12:兩個網域沒有共同的同步紀錄,一次搬完就結束)。
@@ -471,6 +472,7 @@
     if (!isPlain(ov)) return ov;
     const out = Object.assign({}, ov);
     Object.keys(ov).forEach((k) => {
+      if (k.charAt(0) === '+') return;   // vgame_done['+recent']:不是成績鍵(真的組合鍵每一段都不是空的)
       if (k.indexOf('+') > -1) {
         const p = comboParts(k);
         if (!p) return;

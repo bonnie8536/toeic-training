@@ -1535,8 +1535,32 @@ table.cat-table td.num { white-space: nowrap; }
   .gx-node { flex: none; transform: none !important; width: 32px; height: 32px; font-size: 12.5px; }
 }
 
-/* 單字訓練首頁:先選字庫,再選玩法 */
-.vg-source { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 2px 0 16px; font-size: 14.5px; color: var(--ink-light); }
+/* 單字訓練首頁:先勾要練哪些字,再選玩法 */
+.vg-source { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 2px 0 16px; font-size: 14.5px; color: var(--ink-light); }
+/* 練哪些字:長得像下拉選單的框(summary),點開是一列一個的勾選清單,推開下面的內容(不浮在上面,手機上不會被切掉) */
+.vg-pick { flex: 1 1 260px; min-width: 0; max-width: 480px; }
+.vg-pick > summary { display: flex; align-items: center; min-height: 40px; cursor: pointer; list-style: none; color: var(--ink); }
+.vg-pick > summary::-webkit-details-marker { display: none; }
+.vg-pick > summary::after { content: ''; flex: none; margin-left: auto; width: 7px; height: 7px; border: solid var(--ink-light); border-width: 0 1.5px 1.5px 0; transform: translateY(-2px) rotate(45deg); }
+.vg-pick[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+.vg-pick > summary:hover { border-color: var(--primary); }
+.vg-pick > summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.vg-pick-sum-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vg-pick-sum-n { flex: none; white-space: pre; padding-right: 8px; }
+.vg-pick-panel { margin-top: 6px; padding: 4px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.vg-pick-list { border: 0; margin: 0; padding: 0; min-width: 0; }
+.vg-pick-legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.vg-pick-row { display: flex; align-items: center; gap: 8px; padding: 0 8px; border-radius: 6px; }
+.vg-pick-row:hover { background: var(--bg-soft); }
+.vg-pick-check { display: flex; align-items: center; gap: 9px; flex: 1 1 auto; min-width: 0; min-height: 40px; cursor: pointer; color: var(--ink); }
+.vg-pick-check input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--primary); cursor: pointer; }
+.vg-pick-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vg-pick-n { flex: none; margin-left: auto; font-size: 12.5px; color: var(--ink-light); }
+.vg-pick-row .cfg-select { flex: none; padding: 5px 8px; font-size: 14px; }
+.vg-pick-group { display: flex; align-items: center; gap: 8px; margin-top: 4px; padding: 6px 8px 0; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-light); }
+.vg-pick-group .vg-pick-check { flex: none; margin-left: auto; font-size: 13.5px; color: var(--ink-light); }
+.vg-pick-note { margin: 4px 8px 6px; font-size: 13px; color: var(--ink-light); }
+.vg-pick-note.warn { color: var(--bad); }
 .vg-games { grid-template-columns: 1fr 1fr; margin-top: 0; }
 .vg-games .part-card { display: flex; flex-direction: column; }
 .vg-games .part-card .cfg-row { margin-top: auto; padding-top: 12px; }

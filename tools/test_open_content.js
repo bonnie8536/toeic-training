@@ -262,6 +262,8 @@ const FOCUS = `(() => {
     desc: ids.map((id) => (document.getElementById(id) || {}).textContent || '').join(' '), y: Math.round(scrollY) };
 })()`;
 const state = (s) => s.eval(STATE);
+/* 單字頁「練哪些字」勾著的來源(清單順序) */
+const VG_PICKED = "[...document.querySelectorAll('.vg-pick input[type=checkbox][value]')].filter((e) => e.checked).map((e) => e.value).join(',')";
 
 /* 閱讀頁單字考題的第一張字卡和第一個空格:捲一次讓兩個都在畫面裡,再一起量(分兩次量,第二次捲動會讓第一個的座標過時) */
 async function chipAndBlank(s) {
@@ -326,7 +328,7 @@ const CONTENT = [
   { url: 'dialogue.html', see: 'a.dlg-card', free: [{ sel: '.drill-filters .chip', i: 1, then: '.drill-filters .chip.on' }] },
   { url: 'dialogue.html?id=dlg-01', see: '.dlg-bubble', free: [{ sel: '.dlg-bubble', thenText: ['.vocab-progress', /聽過 1\//] }, { sel: '.vw.dlg-sl', then: '.vocab-pop' }] },
   { url: 'vocab.html', see: '.vg-games .part-card', act: [{ sel: '.vg-games .btn.primary' }, { sel: '.vg-games .btn.primary', i: 3 }, { sel: '.exercise-head .btn' }],
-    free: [{ sel: '.hist-tabs .hist-tab', i: 1, then: '.hist-tabs .hist-tab.on' }], select: '.vg-source select' },
+    free: [{ sel: '.hist-tabs .hist-tab', i: 1, then: '.hist-tabs .hist-tab.on' }], pick: true },
   { url: 'vocab.html#phrase', see: '.phrase-table', act: [{ sel: '.part-card:has(.phrase-table) .btn.primary' }], free: [{ sel: '.part-card .pop-mini', thenText: ['.part-card .pop-mini', /收起/] }] },
   { url: 'listening.html', see: '.part-card', act: [{ sel: 'a.btn.primary[href^="listening.html?sec="]' }] },
   { url: 'listening.html?sec=n', see: '.player-btn', act: [{ sel: '.opts .opt' }], free: [{ sel: '.player-btn', thenText: ['.player-note', /已播 1 次|音檔|找不到/] }] },
@@ -410,15 +412,16 @@ async function guestPage(B, mode, pg) {
       if (lsDiff(before.ls, after.ls).length) bad.push('字卡拖進空格:寫了資料');
       if (await s.eval('!!document.querySelector(".tq-ghost")')) bad.push('字卡拖進空格:拖曳開始了');
     }
-    if (pg.select) {
-      /* 選字庫(看內容):選了照樣換,不跳視窗、不存 */
+    if (pg.pick) {
+      /* 練哪些字(看內容):點開清單,點「片語」那一列的名稱勾起來;照樣換,不跳視窗、不存 */
       const before = await snap(s);
-      await s.eval(`(() => { const e = document.querySelector(${J(pg.select)}); e.value = e.options[1].value; e.dispatchEvent(new Event('change')); return true; })()`);
-      await sleep(300);
-      const v = await s.eval(`document.querySelector(${J(pg.select)}).selectedIndex`);
-      if ((await state(s)).mask || v !== 1) bad.push('選字庫跳視窗或沒換');
+      await click(s, '.vg-pick > summary');
+      const opened = await s.eval("document.querySelector('.vg-pick').open");
+      await click(s, '.vg-pick-row .vg-pick-name', 1);
+      const on = await s.eval(VG_PICKED);
+      if ((await state(s)).mask || !opened || on !== 'word,phrase') bad.push('勾字庫跳視窗或沒換 ' + J({ opened, on }));
       const d = lsDiff(before.ls, (await snap(s)).ls);
-      if (d.length) bad.push('選字庫寫了 ' + d.join(','));
+      if (d.length) bad.push('勾字庫寫了 ' + d.join(','));
     }
     for (const f of pg.free || []) {
       const label = '看內容 ' + f.sel + '#' + (f.i || 0);
@@ -567,12 +570,13 @@ T['新舊檔混用:common.js 還是上一版(沒有 canKeepProgress)時,已登�
       await click(p, 'button.ph-slow');
       res.slow = (await p.eval("!!document.querySelector('button.ph-slow.on')")) && JSON.parse(await p.eval(LS))[r.prefix + 'ph_slow'] === 'true';
       await p.close();
-      /* 換字庫:存起來,下面的遊戲卡片照新的字庫重畫(片語的最佳紀錄出現) */
+      /* 換字庫(練哪些字的勾選清單:勾片語、取消文章單字):存起來,跟以前選單存的一字不差;下面的遊戲卡片照新的字庫重畫(片語的最佳紀錄出現) */
       const v = await open(B, Object.assign({ url: 'vocab.html' }, r.o, { ls: { [r.prefix + 'vgame_best']: J({ phrase: 12 }) } }));
-      await v.eval("(() => { const e = document.querySelector('.vg-source select'); e.value = 'phrase'; e.dispatchEvent(new Event('change')); return true; })()");
-      await sleep(300);
+      await click(v, '.vg-pick > summary');
+      await click(v, '.vg-pick-row .vg-pick-name', 1);
+      await click(v, '.vg-pick-row .vg-pick-name', 0);
       const src = JSON.parse(await v.eval(LS))[r.prefix + 'vgame_src'];
-      res.src = !!src && JSON.parse(src).mode === 'phrase' && /最佳 中翻英 12/.test(await v.eval("document.querySelector('.vg-games').textContent"));
+      res.src = src === '{"mode":"phrase","level":"全部"}' && /最佳 中翻英 12/.test(await v.eval("document.querySelector('.vg-games').textContent"));
       await v.close();
       const d = await open(B, Object.assign({ url: 'dialogue.html?id=dlg-01' }, r.o));
       await click(d, '.dlg-bubble');
@@ -1426,6 +1430,94 @@ async function pressText(s, sel, text) {
   await s.eval(`(() => { const b = [...document.querySelectorAll(${J(sel)})].find((x) => x.textContent.indexOf(${J(text)}) > -1); if (!b) return false; b.id = '__press'; return true; })()`);
   await click(s, '#__press');
 }
+
+/* 單字頁「練哪些字」改成勾選清單(站長 2026-11:「單字題庫可以改成用勾的」):
+   已登入:點開清單勾兩個題庫、取消文章單字 → 存起來(mode 是第一個、modes 照清單順序),重新整理還記得,記憶吐司烤的字就是兩個題庫的字;
+   全部取消:不存、寫「至少勾一個。」、四個「開始」都不能按(按了也不跳視窗);再勾回一個(3 個字):掉落、翻牌能按,吐司、選擇題不能,卡片寫要幾個。
+   手機寬(375、320):點開清單沒有左右捲動、每一列至少 40px 高、點名稱就能勾、級別選單不在 label 裡(點它不會切換勾選)。
+   沒登入:勾了照樣換、不跳視窗、不存,重新整理回到原本的(只記在這一頁) */
+const PICK_BANKS = [
+  { id: 'bA', name: '甲題庫', words: [{ en: 'apple', zh: '蘋果', on: true }, { en: 'pear', zh: '梨', on: true }, { en: 'kiwi', zh: '奇異果', on: true }] },
+  { id: 'bB', name: '乙題庫', words: [{ en: 'grape', zh: '葡萄', on: true }, { en: 'lemon', zh: '檸檬', on: true }, { en: 'mango', zh: '芒果', on: true }] },
+];
+async function pickOpen(B, extra) {
+  const ls = { [SB]: J({ access_token: 'x', user: USER }), ['tr_u' + CPID + '_vgame_banks']: J(PICK_BANKS) };
+  const rows = J([{ k: 'vgame_banks', v: PICK_BANKS, updated_at: new Date(Date.now() - 864e5).toISOString() }]);
+  return open(B, Object.assign({ url: 'vocab.html', user: true, sdk: fakeCloud({ user: USER }), ls, ss: { __fake_rows: rows } }, extra || {}));
+}
+async function reload(s) {
+  await s.go('vocab.html');
+  await s.eval('window.CLOUD && CLOUD.ready ? CLOUD.ready.then(() => true, () => true) : true');
+  await sleep(1000);
+}
+T['單字頁「練哪些字」勾選清單:勾兩個題庫存起來、重新整理還在、遊戲的字來自兩個題庫;全部取消不存、開始不能按;手機寬好點;沒登入只記在這一頁'] = async (B) => {
+  const r = {};
+  const SRCK = 'tr_u' + CPID + '_vgame_src';
+  const STARTS = "[...document.querySelectorAll('.vg-games .btn.primary')].map((b) => b.disabled)";
+  const SUM = "document.querySelector('.vg-pick > summary').textContent";
+  const noPet = (keys) => keys.filter((k) => !/_pet$/.test(k));
+  let s = await pickOpen(B);
+  try {
+    r.first = await s.eval(VG_PICKED);
+    await click(s, '.vg-pick > summary');
+    await click(s, '.vg-pick-row .vg-pick-name', 2);   // 甲題庫
+    await click(s, '.vg-pick-row .vg-pick-name', 3);   // 乙題庫
+    await click(s, '.vg-pick-row .vg-pick-name', 0);   // 取消文章單字
+    r.checked = await s.eval(VG_PICKED);
+    r.src = JSON.parse(await s.eval(LS))[SRCK];
+    r.sum = await s.eval(SUM);
+    await sleep(900);   // 0.8 秒後上傳雲端
+    await reload(s);
+    r.reload = { checked: await s.eval(VG_PICKED), open: await s.eval("document.querySelector('.vg-pick').open"), sum: await s.eval(SUM) };
+    await click(s, '.vg-games .btn.primary', 2);   // 記憶吐司
+    r.toast = await s.eval("[...document.querySelectorAll('.toast-card b')].map((e) => e.textContent).sort().join(',')");
+    await reload(s);
+    await click(s, '.vg-pick > summary');
+    await click(s, '.vg-pick-row .vg-pick-name', 2);   // 剩乙題庫(存了);再取消乙 = 0 個,不存
+    await sleep(900);
+    const before = await s.eval(LS);
+    await click(s, '.vg-pick-row .vg-pick-name', 3);
+    r.zero = { checked: await s.eval(VG_PICKED), note: await s.eval("document.querySelector('.vg-pick-note').textContent"), starts: await s.eval(STARTS), sum: await s.eval(SUM),
+      cards: await s.eval("[...document.querySelectorAll('.vg-games .part-card')].every((c) => /先在上面勾要練的字/.test(c.textContent))") };
+    await click(s, '.vg-games .btn.primary', 0);   // 不能按:不跳視窗、不開始
+    r.zero.mask = (await state(s)).mask;
+    r.zero.home = await s.eval("!!document.querySelector('[data-vview=home]')");
+    r.zero.wrote = noPet(lsDiff(before, await s.eval(LS)));
+    await click(s, '.vg-pick-row .vg-pick-name', 2);
+    r.one = { starts: await s.eval(STARTS), src: JSON.parse(await s.eval(LS))[SRCK], card: await s.eval("document.querySelectorAll('.vg-games .part-card')[2].textContent") };
+  } finally { await s.close(); }
+  for (const width of [375, 320]) {
+    s = await pickOpen(B, { size: { width, height: 760 } });
+    try {
+      await click(s, '.vg-pick > summary');
+      const m = await s.eval(`(() => ({ sw: document.documentElement.scrollWidth, iw: innerWidth,
+        rows: [...document.querySelectorAll('.vg-pick-check')].map((e) => Math.round(e.getBoundingClientRect().height)),
+        selInLabel: !!document.querySelector('.vg-pick select').closest('label') }))()`);
+      await click(s, '.vg-pick-row .vg-pick-name', 1);   // 點「片語」兩個字
+      m.after = await s.eval(VG_PICKED);
+      r['w' + width] = m;
+    } finally { await s.close(); }
+  }
+  s = await open(B, { url: 'vocab.html' });   // 沒登入
+  try {
+    const before = await s.eval(LS);
+    await click(s, '.vg-pick > summary');
+    await click(s, '.vg-pick-row .vg-pick-name', 1);
+    r.guest = { checked: await s.eval(VG_PICKED), mask: (await state(s)).mask, wrote: noPet(lsDiff(before, await s.eval(LS))) };
+    await reload(s);
+    r.guest.after = await s.eval(VG_PICKED);
+  } finally { await s.close(); }
+  const mobileOk = (m) => m.sw <= m.iw && m.rows.length >= 4 && m.rows.every((x) => x >= 40) && !m.selInLabel && m.after === 'word,phrase';
+  const ok = r.first === 'word' && r.checked === 'bank:bA,bank:bB' && r.src === J({ mode: 'bank:bA', level: '全部', modes: ['bank:bA', 'bank:bB'] }) && /甲題庫、乙題庫 · 共 6 個字/.test(r.sum)
+    && r.reload.checked === 'bank:bA,bank:bB' && !r.reload.open && /甲題庫、乙題庫/.test(r.reload.sum)
+    && r.toast === 'apple,grape,kiwi,lemon,mango,pear'
+    && r.zero.checked === '' && /至少勾一個。/.test(r.zero.note) && r.zero.starts.length === 4 && r.zero.starts.every(Boolean) && /還沒勾/.test(r.zero.sum) && r.zero.cards
+    && !r.zero.mask && r.zero.home && !r.zero.wrote.length
+    && J(r.one.starts) === J([false, false, true, true]) && r.one.src === '{"mode":"bank:bA","level":"全部"}' && /字不夠，要 4 個以上（現在 3 個）/.test(r.one.card)
+    && mobileOk(r.w375) && mobileOk(r.w320)
+    && r.guest.checked === 'word,phrase' && !r.guest.mask && !r.guest.wrote.length && r.guest.after === 'word';
+  return { ok, detail: J(r) };
+};
 T['單字頁:題庫編輯器的加入單字、勾選、刪字、改名,片語特訓的選項,在別的分頁登出、帳號資料夾還沒灌過時跳「重新整理」卡,輸入框的字留著、什麼都不寫;照常時照樣存'] = async (B) => {
   const out = [];
   const LINES = ['banana 香蕉', 'cherry 櫻桃', 'grape 葡萄'].join(String.fromCharCode(10));

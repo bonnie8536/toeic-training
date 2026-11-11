@@ -2,6 +2,7 @@
    ①掉落遊戲——中文往下掉,打出英文消除;字首+字數提示;三條命;
      單字庫=閱讀文章的標記單字(帶級別),片語庫=片語特訓的 120 條;
      漏接的字會記下來,下一場優先出現。
+     「練哪些字」可以勾好幾個(文章單字、片語、自己的題庫)一起練,四種玩法共用。
    ②片語特訓——分家族學習(put/take/look...)+填介系詞練習,錯的優先重出。 */
 (function () {
   const root = $('#vocab-root');
@@ -127,7 +128,79 @@
      (js/common.js holdForAccount,跟每日練習一樣;多分頁第 3 輪審查 #2)。以前 store.set 靜靜不寫,畫面卻寫「加入 3 個」、清空輸入框、照樣對答案。
      舊版 common.js 沒有這個函式就照舊。回 true = 擋下了 */
   const held = el => typeof holdForAccount === 'function' && holdForAccount(el);
-  let pageSrc = null;   // 還沒登入時「練哪些字」的選擇(不存)
+  let pageSrc = null;   // 還沒登入時「練哪些字」的選擇(不存,格式跟 vgame_src 一樣)
+
+  /* ---------- 練哪些字:可以勾好幾個(文章單字、片語、我的題庫)一起練 ----------
+     存在 vgame_src。勾 1 個時跟以前一字不差 { mode, level };勾 2 個以上多一個 modes(清單順序),mode 放清單裡第一個勾的:
+     舊版頁面(service worker 快取、別台還沒更新)只看 mode,照常能玩。一個都沒勾不存(這一頁記在 pickNone)。
+     讀的時候不回寫:題庫可能是別台建的、開頁時雲端對齊還沒回來,回寫會把它從選擇裡弄丟。
+     成績、通關、出過的字:單一來源的鍵跟以前一樣('word'、'phrase'、'bank:<id>');兩個以上用 srcKey 排序後的組合鍵
+     (bank:b1+word、phrase+word:e2z、bank:b1+bank:b2:8)。js/move-merge.js 搬家換題庫 id 時用同一套規則重算組合鍵。 */
+  const LEVELS = ['全部', '初級', '中級', '中高級', '高級'];
+  const MIN_WORDS = { fall: 8, fallBank: 3, pairs: 3, toast: 4, mcq: 4 };   // 掉落消除:有內建字庫要 8 個,全是自己的題庫 3 個
+  const COMBO_DONE_MAX = 10;   // vgame_done 最多留幾個組合鍵(雲端每個鍵 256 KB;單一來源的鍵不算、不動)
+  let pickOpen = false;        // 清單點開著(雲端合併、別的分頁改題庫重畫首頁時不要自己收起來;重新整理就收起來)
+  let pickNone = false;        // 這一頁全部取消了(不存;重畫時照樣一個都沒勾)
+  function srcOrder(banks) {
+    return ['word', 'phrase'].concat(banks.filter(b => b && typeof b.id === 'string').map(b => 'bank:' + b.id));
+  }
+  function readSrc(raw, banks) {
+    const o = raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+    const mode = typeof o.mode === 'string' ? o.mode : '';
+    /* modes 裡沒有 mode = 有人只改了 mode(舊版頁面改選單、快取裡舊版的搬家只換 mode):相信 mode */
+    const picked = Array.isArray(o.modes) && o.modes.indexOf(mode) > -1 ? o.modes : [mode];
+    const modes = srcOrder(banks || getBanks()).filter(m => picked.indexOf(m) > -1);
+    return { modes: modes.length ? modes : ['word'], level: LEVELS.indexOf(o.level) > -1 ? o.level : '全部' };
+  }
+  function srcValue(modes, level) {
+    return modes.length > 1 ? { mode: modes[0], level, modes: modes.slice() } : { mode: modes[0], level };
+  }
+  function srcKey(modes) {
+    const u = modes.filter((m, i) => modes.indexOf(m) === i);
+    if (u.length === 1) return u[0];
+    return u.map(m => (m.indexOf('bank:') === 0 ? 'bank:' + encodeURIComponent(m.slice(5)) : m)).sort().join('+');
+  }
+  function srcLabel(m, level, banks) {
+    if (m === 'word') return '文章單字' + (level !== '全部' ? '（' + level + '）' : '');
+    if (m === 'phrase') return '片語';
+    const b = banks.find(x => x && 'bank:' + x.id === m);
+    return b ? String(b.name || '未命名題庫') : '';
+  }
+  /* 框裡、遊戲標題寫的名稱:3 個以內全寫,4 個以上寫前兩個加「等 N 個」 */
+  function pickLabel(modes, level, banks) {
+    const names = modes.map(m => srcLabel(m, level, banks));
+    return names.length <= 3 ? names.join('、') : names.slice(0, 2).join('、') + '等 ' + names.length + ' 個';
+  }
+  const fmtN = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  /* 勾的這些合起來的字。live:還在的來源(題庫被刪了就不算),key 照 live 算。
+     單一來源跟以前一模一樣(題庫照 bankPool,不另外去重複);兩個以上同一個英文只留一個:
+     自己的題庫優先(照「我的題庫」的順序,學生寫的中文是照課本或老師的),再來文章單字(級別只篩它)、片語 */
+  function srcPool(modes, level) {
+    const banks = getBanks();
+    const live = srcOrder(banks).filter(m => modes.indexOf(m) > -1);
+    const out = { live, key: live.length ? srcKey(live) : '', banksOnly: !!live.length && live.every(m => m.indexOf('bank:') === 0), pool: [], name: '' };
+    const bankFor = m => banks.find(b => b && 'bank:' + b.id === m);
+    if (live.length === 1) {
+      const m = live[0];
+      if (m === 'word') { out.pool = buildWordPool(level); out.name = '單字' + (level !== '全部' ? ' · ' + level : ''); }
+      else if (m === 'phrase') { out.pool = buildPhrasePool(); out.name = '片語'; }
+      else { const b = bankFor(m); out.pool = bankPool(b); out.name = '題庫：' + b.name; }
+    } else if (live.length) {
+      const seen = new Set();
+      const add = list => list.forEach(p => { const k = norm(p.answer); if (!seen.has(k)) { seen.add(k); out.pool.push(p); } });
+      live.filter(m => m.indexOf('bank:') === 0).forEach(m => add(bankPool(bankFor(m))));
+      if (live.indexOf('word') > -1) add(buildWordPool(level));
+      if (live.indexOf('phrase') > -1) add(buildPhrasePool());
+      out.name = pickLabel(live, level, banks);
+    }
+    return out;
+  }
+  /* 唯讀,給測試與搬家對照組合鍵用(tools/test_vocab_multi.js) */
+  window.VOCAB_SRC = Object.freeze({
+    read: readSrc, value: srcValue, key: srcKey,
+    pool: (modes, level) => { const s = srcPool(modes, level); return { live: s.live.slice(), key: s.key, banksOnly: s.banksOnly, name: s.name, pool: s.pool.map(p => ({ answer: p.answer, zh: p.zh })) }; },
+  });
+
   renderHome();
   /* 開了好幾天的 App 一進單字頁先跟雲端對齊(CLOUD.syncKey),之後的編輯才不是根據舊資料;
      有變(別台加的題庫合併進來)、或別的分頁改了題庫,畫面在首頁或編輯頁時重畫,遊戲中不打斷 */
@@ -165,26 +238,69 @@
     const missCount = Object.keys(store.get('vgame_miss', {})).length;
     const banks = getBanks();
 
-    /* 第一步:選字庫(四種玩法共用,記住上次的選擇) */
-    const srcSel = h('select', { class: 'cfg-select' },
-      [['word', '文章單字'], ['phrase', '片語']].concat(banks.map(b => ['bank:' + b.id, '題庫：' + b.name]))
-        .map(([v, t]) => h('option', { value: v }, t)));
-    const levelSel = h('select', { class: 'cfg-select' },
-      ['全部', '初級', '中級', '中高級', '高級'].map(l => h('option', { value: l }, l === '全部' ? '全部級別' : l)));
-    const last = pageSrc || store.get('vgame_src', null);
-    if (last && [...srcSel.options].some(o => o.value === last.mode)) srcSel.value = last.mode;
-    if (last && [...levelSel.options].some(o => o.value === last.level)) levelSel.value = last.level;
-    const gamesWrap = h('div', { class: 'part-cards vg-games' });
-    function onSource() {
-      levelSel.style.display = srcSel.value === 'word' ? '' : 'none';
-      const src = { mode: srcSel.value, level: levelSel.value };
-      if (canKeep()) store.set('vgame_src', src);
-      else pageSrc = src;   // 還沒登入(先看再登入):選了照樣換,只記在這一頁
-      drawGames();
+    /* 第一步:勾要練哪些字(四種玩法共用,記住上次勾的)。外觀像下拉選單,點開是一列一個的勾選清單
+       (照 Anki 自訂學習、Quizlet 合併學習集:勾好幾個 = 一起練;樣式跟刷題頁的 cfg-part-row 同一套:勾選框+名稱,級別選單放同一列)。
+       用 <details>:鍵盤、報讀都是原生的,舊版 style.css 沒有新樣式時也照樣能開能勾。勾、取消馬上生效,沒有「套用」 */
+    const order = srcOrder(banks);
+    const saved = readSrc(pageSrc || store.get('vgame_src', null), banks);
+    let level = saved.level;
+    let picked = pickNone ? [] : saved.modes;
+    const levelSel = h('select', { class: 'cfg-select', 'aria-label': '文章單字的級別' },
+      LEVELS.map(l => h('option', { value: l }, l === '全部' ? '全部級別' : l)));
+    levelSel.value = level;
+    const boxes = {}, counts = {};
+    const pickRow = (m, name, extra) => {
+      const cb = h('input', { type: 'checkbox', value: m });
+      cb.checked = picked.indexOf(m) > -1;
+      cb.addEventListener('change', onPick);
+      boxes[m] = cb;
+      counts[m] = h('span', { class: 'vg-pick-n' });
+      /* 整列(勾選框、名稱、字數)都在 label 裡,點哪裡都能勾;級別選單在 label 外面,點它不會切換勾選 */
+      return h('div', { class: 'vg-pick-row' },
+        h('label', { class: 'vg-pick-check' }, cb, h('span', { class: 'vg-pick-name', title: name }, name), counts[m]), extra || null);
+    };
+    const bankModes = order.filter(m => m.indexOf('bank:') === 0);
+    let allBox = null;
+    if (bankModes.length > 1) {
+      allBox = h('input', { type: 'checkbox' });
+      allBox.addEventListener('change', () => { bankModes.forEach(m => { boxes[m].checked = allBox.checked; }); onPick(); });
     }
-    srcSel.addEventListener('change', onSource);
-    levelSel.addEventListener('change', onSource);
-    host.append(h('div', { class: 'vg-source' }, h('span', null, '練哪些字'), srcSel, levelSel), gamesWrap);
+    const wordRow = pickRow('word', '文章單字', levelSel);
+    const phraseRow = pickRow('phrase', '片語');
+    const bankRows = banks.filter(b => b && typeof b.id === 'string').map(b => pickRow('bank:' + b.id, String(b.name || '未命名題庫')));
+    /* 框裡:勾了哪些(太長就省略號)+ 合起來幾個字(手機上也一直看得到) */
+    const sumText = h('span', { class: 'vg-pick-sum-text' });
+    const sumCount = h('span', { class: 'vg-pick-sum-n' });
+    const note = h('p', { class: 'vg-pick-note', 'aria-live': 'polite' });
+    const picker = h('details', { class: 'vg-pick', open: pickOpen ? '' : null },
+      h('summary', { class: 'cfg-select vg-pick-sum' }, sumText, sumCount),
+      h('div', { class: 'vg-pick-panel' },
+        h('fieldset', { class: 'vg-pick-list' },
+          h('legend', { class: 'vg-pick-legend' }, '練哪些字'),
+          wordRow, phraseRow,
+          bankRows.length ? h('div', { class: 'vg-pick-banks', role: 'group', 'aria-label': '我的題庫' },
+            h('div', { class: 'vg-pick-group' }, h('span', null, '我的題庫'),
+              allBox ? h('label', { class: 'vg-pick-check vg-pick-all' }, allBox, h('span', null, '全選')) : null),
+            bankRows) : null),
+        note));
+    picker.addEventListener('toggle', () => { pickOpen = picker.open; });
+    counts.phrase.textContent = fmtN(buildPhrasePool().length) + ' 個字';
+    banks.filter(b => b && typeof b.id === 'string').forEach(b => { counts['bank:' + b.id].textContent = fmtN(bankPool(b).length) + ' 個字'; });
+    /* 改級別 = 要練文章單字,順便勾起來(跟刷題頁改題數會勾起那一列一樣) */
+    levelSel.addEventListener('change', () => { boxes.word.checked = true; onPick(); });
+    function onPick() {
+      picked = order.filter(m => boxes[m].checked);
+      level = levelSel.value;
+      pickNone = !picked.length;
+      if (picked.length) {
+        const v = srcValue(picked, level);
+        if (canKeep()) store.set('vgame_src', v);
+        else pageSrc = v;   // 還沒登入(先看再登入):勾了照樣換,只記在這一頁
+      }
+      refreshPick();
+    }
+    const gamesWrap = h('div', { class: 'part-cards vg-games' });
+    host.append(h('div', { class: 'vg-source' }, h('span', null, '練哪些字'), picker), gamesWrap);
 
     /* 第二步:選玩法。四張卡同一層級,各自只帶自己需要的選項 */
     const speedSel = h('select', { class: 'cfg-select' },
@@ -221,45 +337,64 @@
         + '<path d="M13 40l4 5l9-12"/></g>'),
     };
 
-    function gameCard(icon, title, rule, bestText, options, onStart) {
+    /* blocked:不能開始的原因(一個都沒勾、字不夠),寫在卡片上取代最佳紀錄,「開始」不能按 */
+    function gameCard(icon, title, rule, bestText, options, onStart, blocked) {
       return h('div', { class: 'part-card' },
         h('div', { class: 'vg-top' },
           h('div', { class: 'vg-icon', html: VG_ICON[icon] }),
           h('div', null,
             h('h3', null, title),
             h('p', null, rule),
-            bestText ? h('div', { class: 'p-stats' }, bestText) : null)),
-        h('div', { class: 'cfg-row' }, options, h('button', { class: 'btn primary', 'data-gate': '', onclick: onStart }, '開始')));   // 開始遊戲:沒登入時 js/profile.js 先攔下
+            blocked ? h('div', { class: 'p-stats vg-why' }, blocked) : bestText ? h('div', { class: 'p-stats' }, bestText) : null)),
+        h('div', { class: 'cfg-row' }, options, h('button', { class: 'btn primary', 'data-gate': '', disabled: blocked ? '' : null, onclick: onStart }, '開始')));   // 開始遊戲:沒登入時 js/profile.js 先攔下
     }
 
-    function drawGames() {
-      const mode = srcSel.value, level = levelSel.value;
-      const best = store.get('vgame_best', {});
-      const fallBest = [best[mode] ? '中翻英 ' + best[mode] : '', best[mode + ':e2z'] ? '英翻中 ' + best[mode + ':e2z'] : ''].filter(Boolean).join(' · ');
-      const clr = store.get('vgame_clear', {});
-      const fallClears = ((clr[mode] || {}).n || 0) + ((clr[mode + ':e2z'] || {}).n || 0);
-      const pb = Object.entries(store.get('vgame_pairs_best', {})).filter(([k]) => k.startsWith(mode + ':')).map(([, v]) => v)[0];
-      const tb = store.get('vgame_toast_best', {})[mode];
+    function drawGames(src) {
+      const key = src.key, n = src.pool.length, modes = src.live.slice();
+      const why = min => (!modes.length ? '先在上面勾要練的字' : n < min ? '字不夠，要 ' + min + ' 個以上（現在 ' + n + ' 個）' : '');
+      const best = key ? store.get('vgame_best', {}) : {};
+      const fallBest = [best[key] ? '中翻英 ' + best[key] : '', best[key + ':e2z'] ? '英翻中 ' + best[key + ':e2z'] : ''].filter(Boolean).join(' · ');
+      const clr = key ? store.get('vgame_clear', {}) : {};
+      const fallClears = ((clr[key] || {}).n || 0) + ((clr[key + ':e2z'] || {}).n || 0);
+      const pb = key ? Object.entries(store.get('vgame_pairs_best', {})).filter(([k]) => k.startsWith(key + ':')).map(([, v]) => v)[0] : null;
+      const tb = key ? store.get('vgame_toast_best', {})[key] : 0;
       gamesWrap.innerHTML = '';
       gamesWrap.append(
         gameCard('fall', '掉落消除',
           '打出翻譯消除掉下來的字，這一關的字全部打對就通關；漏接的字會再掉下來' + (missCount ? '，目前漏接 ' + missCount + ' 個' : '') + '。',
           [fallBest ? '最佳 ' + fallBest : '', fallClears ? '通關 ' + fallClears + ' 次' : ''].filter(Boolean).join(' · '),
           [dirSel, speedSel],
-          () => startGame(mode, level, speedSel.value, dirSel.value)),
+          () => startGame(modes, level, speedSel.value, dirSel.value), why(src.banksOnly ? MIN_WORDS.fallBank : MIN_WORDS.fall)),
         gameCard('pairs', '翻牌配對', '翻兩張，英文配它的中文。',
           pb ? '最佳 ' + pb.moves + ' 步 · ' + pb.secs + ' 秒' : '',
-          [], () => startPairs(mode, level)),
+          [], () => startPairs(modes, level), why(MIN_WORDS.pairs)),
         gameCard('toast', '記憶吐司', '15 秒內記住 6 個字，之後考中文意思。',
           tb ? '最佳 ' + tb + ' / 6' : '',
-          [], () => startToast(mode, level)),
+          [], () => startToast(modes, level), why(MIN_WORDS.toast)),
         gameCard('mcq', '單字選擇題', '四選一，一輪 10 題。', '',
-          [dirSel2], () => startMcq(mode, level, dirSel2.value)));
+          [dirSel2], () => startMcq(modes, level, dirSel2.value), why(MIN_WORDS.mcq)));
     }
-    levelSel.style.display = srcSel.value === 'word' ? '' : 'none';
-    drawGames();
+    /* 勾了什麼 → 框裡的字、清單下面的說明、全選的狀態、四張卡 */
+    function refreshPick() {
+      const src = srcPool(picked, level);
+      const n = src.pool.length;
+      counts.word.textContent = fmtN(buildWordPool(level).length) + ' 個字';
+      sumText.textContent = picked.length ? pickLabel(picked, level, banks) : '還沒勾';
+      sumCount.textContent = picked.length ? ' · 共 ' + fmtN(n) + ' 個字' : '';
+      const few = picked.length && n < MIN_WORDS.pairs;
+      note.textContent = !picked.length ? '至少勾一個。'
+        : few ? '勾的這些加起來只有 ' + n + ' 個字，至少要 ' + MIN_WORDS.pairs + ' 個才能玩。' : '共 ' + fmtN(n) + ' 個字';
+      note.classList.toggle('warn', !picked.length || !!few);
+      if (allBox) {
+        const on = bankModes.filter(m => boxes[m].checked).length;
+        allBox.checked = on === bankModes.length;
+        allBox.indeterminate = on > 0 && on < bankModes.length;
+      }
+      drawGames(src);
+    }
+    refreshPick();
 
-    /* 我的題庫:只管建立與編輯;要練就「用這個題庫」回到上面選玩法 */
+    /* 我的題庫:只管建立與編輯;要練就在上面勾,或按「只練這個題庫」 */
     host.append(h('div', { class: 'exercise-head' },
       h('h2', null, '我的題庫'),
       h('button', { class: 'btn', style: 'margin-left:auto', 'data-gate': '', onclick: () => renderBankEdit(null) }, '＋ 新增題庫')));
@@ -272,12 +407,19 @@
         const playable = onCount >= 3;
         bwrap.append(h('div', { class: 'part-card' },
           h('h3', null, b.name),
-          h('div', { class: 'p-stats' }, (b.words || []).length + ' 個字 · 已勾選 ' + onCount + (playable ? '' : '（至少勾 3 個才能玩）')),
+          /* 「練 N 個」:題庫編輯頁裡勾的字(跟上面「練哪些字」的勾選是兩回事,所以不寫「已勾選」) */
+          h('div', { class: 'p-stats' }, (b.words || []).length + ' 個字 · 練 ' + onCount + ' 個' + (playable ? '' : '（要 3 個以上才能單獨練）')),
           h('div', { class: 'cfg-row' },
+            /* 只練這個題庫 = 上面清單只勾它(跟以前「用這個題庫」一樣是換成它;要一起練就在上面清單多勾) */
             h('button', {
               class: 'btn primary', disabled: playable ? null : '',
-              onclick: () => { srcSel.value = 'bank:' + b.id; onSource(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-            }, '用這個題庫'),
+              onclick: () => {
+                if (!boxes['bank:' + b.id]) return;
+                order.forEach(m => { boxes[m].checked = m === 'bank:' + b.id; });
+                onPick();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              },
+            }, '只練這個題庫'),
             h('button', { class: 'btn', 'data-gate': '', onclick: () => renderBankEdit(b.id) }, '編輯'),
             h('button', {
               class: 'btn', 'data-gate': '', onclick: () => {
@@ -448,25 +590,19 @@
   }
 
   /* ================= 掉落遊戲 ================= */
-  function startGame(mode, levelName, speedKey, dir) {
+  /* modes:勾的來源(['word']、['bank:b1', 'phrase']…)。開始時再算一次(別的分頁可能剛刪了其中一個題庫:照剩下的玩,不夠就回首頁) */
+  function startGame(modes, levelName, speedKey, dir) {
     dir = dir === 'e2z' ? 'e2z' : 'z2e';
-    let pool, bankName = '';
-    if (mode.startsWith('bank:')) {
-      const bank = getBanks().find(b => 'bank:' + b.id === mode);
-      if (!bank) { renderHome(); return; }
-      bankName = bank.name;
-      pool = bankPool(bank);
-      if (pool.length < 3) { renderHome(); return; }
-    } else {
-      pool = mode === 'word' ? buildWordPool(levelName) : buildPhrasePool();
-      if (pool.length < 8) { renderHome(); return; }
-    }
+    const src = srcPool(modes, levelName);
+    const pool = src.pool;
+    const banksOnly = src.banksOnly;   // 全是自己的題庫:一關最多 30 個、至少 3 個,中文一樣的照樣都出
+    if (!src.live.length || pool.length < (banksOnly ? MIN_WORDS.fallBank : MIN_WORDS.fall)) { renderHome(); return; }
     document.title = '掉落消除 - 衝衝英文';
     root.innerHTML = '';
 
     const BASE_SPEED = { slow: 15, normal: 23, fast: 34 }[speedKey];
     const missPool = store.get('vgame_miss', {});
-    const bestKey = mode + (dir === 'e2z' ? ':e2z' : '');
+    const bestKey = src.key + (dir === 'e2z' ? ':e2z' : '');
     let score = 0, lives = 3, combo = 0;
     let blocks = [];
     let lastSpawn = 0, lastTime = 0, playMs = 0;
@@ -485,7 +621,7 @@
       return a;
     };
     const uniq = [...new Map(pool.map(p => [p.answer, p])).values()];
-    const ROUND_N = bankName ? Math.min(30, uniq.length) : Math.min(20, uniq.length);
+    const ROUND_N = banksOnly ? Math.min(30, uniq.length) : Math.min(20, uniq.length);
     const doneLog = store.get('vgame_done', {});
     const doneIdx = new Map((doneLog[bestKey] || []).map((a, i) => [a, i]));   // 越前面=越久沒出
     const missed = shuffle(uniq.filter(p => missPool[p.answer]));
@@ -498,7 +634,7 @@
     const roundItems = [];
     for (const p of [...missed, ...fresh, ...seen]) {
       if (roundItems.length >= ROUND_N) break;
-      if (!bankName && usedShown.has(shownOf(p))) continue;
+      if (!banksOnly && usedShown.has(shownOf(p))) continue;
       usedShown.add(shownOf(p));
       roundItems.push(p);
     }
@@ -530,8 +666,7 @@
     root.append(
       h('div', { class: 'drill-top' },
         h('h1', null, '掉落消除 ', h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' },
-          (bankName ? '題庫：' + bankName : mode === 'word' ? '單字' + (levelName !== '全部' ? ' · ' + levelName : '') : '片語') +
-          ' · ' + (dir === 'e2z' ? '英翻中' : '中翻英'))),
+          src.name + ' · ' + (dir === 'e2z' ? '英翻中' : '中翻英'))),
         h('a', { href: 'vocab.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回單字訓練')),
       h('div', { class: 'game-hud' },
         h('span', null, '分數 ', scoreEl), h('span', null, '進度 ', progEl), livesEl, pauseBtn),
@@ -669,11 +804,16 @@
       pauseBtn.disabled = true;
       /* 打對的字記下來,下一關先出別的字 */
       const log = (doneLog[bestKey] || []).filter(a => !cleared.has(a)).concat([...cleared]).slice(-300);
+      /* 組合鍵(好幾個來源一起練)移到最後,超過 COMBO_DONE_MAX 個就從最久沒玩的刪(只是「出過哪些字」的輪替,分數、通關不受影響);
+         單一來源的鍵順序、內容都不動 */
+      if (bestKey.indexOf('+') > -1) delete doneLog[bestKey];
       doneLog[bestKey] = log;
+      const combos = Object.keys(doneLog).filter(k => k.indexOf('+') > -1);
+      combos.slice(0, Math.max(0, combos.length - COMBO_DONE_MAX)).forEach(k => { delete doneLog[k]; });
       store.set('vgame_done', doneLog);
     }
 
-    const srcName = bankName ? '題庫：' + bankName : mode === 'word' ? '單字' + (levelName !== '全部' ? ' · ' + levelName : '') : '片語';
+    const srcName = src.name;
     const fmtTime = ms => { const sec = Math.round(ms / 1000); return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); };
 
     function gameOver() {
@@ -696,7 +836,7 @@
                 h('span', { class: 'miss-en' }, m.answer), h('span', null, m.zh))))
           : h('p', null, '沒有漏接。'),
         h('div', { class: 'drill-nav-btns', style: 'justify-content:center' },
-          h('button', { class: 'btn primary', onclick: () => startGame(mode, levelName, speedKey, dir) }, '再挑戰'),
+          h('button', { class: 'btn primary', onclick: () => startGame(modes, levelName, speedKey, dir) }, '再挑戰'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
       field.append(overlay);
     }
@@ -735,9 +875,9 @@
               back.map(m => h('div', { class: 'miss-item' },
                 h('span', { class: 'miss-en' }, m.answer), h('span', null, m.zh))))
           : null,
-        h('p', { class: 'clear-count' }, (bankName ? '這個題庫' : '這個字庫') + '已通關 ' + clears[bestKey].n + ' 次' + (prev.n && !fastest ? '，最快 ' + fmtTime(prev.secs * 1000) : '')),
+        h('p', { class: 'clear-count' }, (src.live.length > 1 ? '這個組合' : banksOnly ? '這個題庫' : '這個字庫') + '已通關 ' + clears[bestKey].n + ' 次' + (prev.n && !fastest ? '，最快 ' + fmtTime(prev.secs * 1000) : '')),
         h('div', { class: 'drill-nav-btns', style: 'justify-content:center' },
-          h('button', { class: 'btn primary', onclick: () => startGame(mode, levelName, speedKey, dir) }, '再挑戰一關'),
+          h('button', { class: 'btn primary', onclick: () => startGame(modes, levelName, speedKey, dir) }, '再挑戰一關'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
       field.append(overlay);
     }
@@ -846,15 +986,6 @@
   }
 
   /* ================= 更多玩法:共用工具 ================= */
-  function poolFor(mode, levelName) {
-    if (mode.startsWith('bank:')) {
-      const bank = getBanks().find(b => 'bank:' + b.id === mode);
-      if (!bank) return { pool: [], name: '' };
-      return { pool: bankPool(bank), name: '題庫：' + bank.name };
-    }
-    if (mode === 'phrase') return { pool: buildPhrasePool(), name: '片語' };
-    return { pool: buildWordPool(levelName), name: '單字' + (levelName !== '全部' ? ' · ' + levelName : '') };
-  }
   function shuffleArr(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
@@ -863,11 +994,23 @@
     }
     return a;
   }
-  /* 抽 n 個:漏接池裡的字優先(最多一半),其餘隨機 */
-  function pickN(pool, n) {
+  /* 抽 n 個:漏接池裡的字優先(最多一半),其餘隨機。
+     uniqZh:中文一樣的字(同事=co-worker、colleague)只放一個。好幾個來源一起練的翻牌用:兩張一樣的中文牌配不起來 */
+  function pickN(pool, n, uniqZh) {
     const missPool = store.get('vgame_miss', {});
-    const missed = shuffleArr(pool.filter(p => missPool[p.answer])).slice(0, Math.floor(n / 2));
-    const rest = shuffleArr(pool.filter(p => !missed.includes(p))).slice(0, n - missed.length);
+    const used = new Set();
+    const firstOf = (list, max) => {
+      const out = [];
+      for (const p of list) {
+        if (out.length >= max) break;
+        if (uniqZh && used.has(p.zh)) continue;
+        used.add(p.zh);
+        out.push(p);
+      }
+      return out;
+    };
+    const missed = firstOf(shuffleArr(pool.filter(p => missPool[p.answer])), Math.floor(n / 2));
+    const rest = firstOf(shuffleArr(pool.filter(p => !missed.includes(p))), n - missed.length);
     return shuffleArr([...missed, ...rest]);
   }
   /* 干擾選項:先從 prefer(同一盤的字)挑,不夠再從整個字池補;中英都不能與正解相同 */
@@ -898,10 +1041,12 @@
   }
 
   /* ================= 翻牌配對 ================= */
-  function startPairs(mode, levelName) {
-    const { pool, name } = poolFor(mode, levelName);
-    if (tooSmall(pool, 3)) return;
-    const items = pickN(pool, Math.min(8, pool.length));
+  function startPairs(modes, levelName) {
+    const src = srcPool(modes, levelName);
+    const { pool, name } = src;
+    if (tooSmall(pool, MIN_WORDS.pairs)) return;
+    let items = pickN(pool, Math.min(8, pool.length), src.live.length > 1);
+    if (items.length < MIN_WORDS.pairs) items = pickN(pool, Math.min(8, pool.length));   // 中文幾乎都一樣(不該發生):照舊抽
     document.title = '翻牌配對 - 衝衝英文';
     root.innerHTML = '';
     const cards = shuffleArr(items.flatMap((it, i) => [{ k: i, face: it.answer, en: true }, { k: i, face: it.zh, en: false }]));
@@ -947,7 +1092,7 @@
       clearInterval(timer);
       tick();
       const secs = Math.round((Date.now() - startT) / 1000);
-      const key = mode + ':' + items.length;
+      const key = src.key + ':' + items.length;
       const best = store.get('vgame_pairs_best', {});
       const prev = best[key];
       const isBest = !prev || moves < prev.moves || (moves === prev.moves && secs < prev.secs);
@@ -958,15 +1103,16 @@
         h('h2', null, '完成！' + moves + ' 步 · ' + secs + ' 秒' + (isBest ? '（新紀錄）' : '')),
         note ? h('div', { class: 'band-note' }, note) : null),
         h('div', { class: 'drill-nav-btns' },
-          h('button', { class: 'btn primary', onclick: () => startPairs(mode, levelName) }, '再玩一次'),
+          h('button', { class: 'btn primary', onclick: () => startPairs(modes, levelName) }, '再玩一次'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
     }
   }
 
   /* ================= 記憶吐司:限時記 6 個字,烤好後逐題考意思 ================= */
-  function startToast(mode, levelName) {
-    const { pool, name } = poolFor(mode, levelName);
-    if (tooSmall(pool, 4)) return;
+  function startToast(modes, levelName) {
+    const src = srcPool(modes, levelName);
+    const { pool, name } = src;
+    if (tooSmall(pool, MIN_WORDS.toast)) return;
     const items = pickN(pool, Math.min(6, pool.length));
     const SHOW_MS = 15000;
     document.title = '記憶吐司 - 衝衝英文';
@@ -1035,8 +1181,8 @@
         root.innerHTML = '';
         const okN = results.filter(r => r.ok).length;
         const best = store.get('vgame_toast_best', {});
-        const isBest = okN > (best[mode] || 0);
-        if (isBest) { best[mode] = okN; store.set('vgame_toast_best', best); }
+        const isBest = okN > (best[src.key] || 0);
+        if (isBest) { best[src.key] = okN; store.set('vgame_toast_best', best); }
         const note = okN === results.length ? '' : '記錯的字在掉落遊戲會優先出現。';
         root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
           h('h2', null, '記憶吐司：' + okN + ' / ' + results.length + (isBest && okN ? '（新紀錄）' : '')),
@@ -1044,7 +1190,7 @@
           h('div', { class: 'vq-list' }, results.map(r => h('div', { class: 'vq-item' + (r.ok ? '' : ' bad') },
             h('b', null, r.it.answer), h('span', null, r.it.zh), h('i', null, r.ok ? '✓' : '✗')))),
           h('div', { class: 'drill-nav-btns' },
-            h('button', { class: 'btn primary', onclick: () => startToast(mode, levelName) }, '再烤一盤'),
+            h('button', { class: 'btn primary', onclick: () => startToast(modes, levelName) }, '再烤一盤'),
             h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
         window.scrollTo(0, 0);
       }
@@ -1052,10 +1198,10 @@
   }
 
   /* ================= 單字選擇題 ================= */
-  function startMcq(mode, levelName, dir) {
+  function startMcq(modes, levelName, dir) {
     dir = dir === 'z2e' ? 'z2e' : 'e2z';
-    const { pool, name } = poolFor(mode, levelName);
-    if (tooSmall(pool, 4)) return;
+    const { pool, name } = srcPool(modes, levelName);
+    if (tooSmall(pool, MIN_WORDS.mcq)) return;
     const list = pickN(pool, Math.min(10, pool.length));
     const results = [];
     let cur = 0;
@@ -1122,7 +1268,7 @@
         wrong.length ? h('div', { class: 'band-note' }, '答錯的字在掉落遊戲會優先出現。') : null),
         wrong.length ? h('div', { class: 'vq-list' }, wrong.map(x => h('div', { class: 'vq-item bad' }, h('b', null, x.answer), h('span', null, x.zh), h('i', null, '✗')))) : null,
         h('div', { class: 'drill-nav-btns' },
-          h('button', { class: 'btn primary', onclick: () => startMcq(mode, levelName, dir) }, '再練一輪'),
+          h('button', { class: 'btn primary', onclick: () => startMcq(modes, levelName, dir) }, '再練一輪'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
       window.scrollTo(0, 0);
     }

@@ -3,6 +3,8 @@
    - 題庫(vgame_banks):用 id 合併,任何一個題庫都不會少;同 id 內容不同就改一個新 id、名稱加「（舊網址）」,
      並把 vgame_best、vgame_clear、vgame_pairs_best、vgame_toast_best、vgame_done 裡 bank:<舊 id> 那幾項
      與指到它的 vgame_src 一起複製到 bank:<新 id>(js/vocab.js 用 bank:<id> 對應題庫)。
+     單字遊戲勾了好幾個來源一起練時,vgame_src 多一個 modes 陣列、成績鍵是排序後的組合鍵(bank:b1+word、bank:b1+phrase:8):
+     modes 裡的舊 id 一樣換新,組合鍵換 id 後重新排序(comboKey,跟 js/vocab.js srcKey 同一套規則)。
      新版頁面寫的題庫有同步的戳記(js/sync-merge.js:_r、_t、_p…,每改一次就變):只差戳記、看得到的內容一樣(名稱、字、中文、勾選、alt)
      就當成同一份;一份的 _p 記著另一份(另一份是它的舊版本)就用新的那份(舊網址的比較新:換成 SYNC_MERGE 合併的結果,原值先備份)。
      只有兩邊都真的改了才另存「（舊網址）」(同步合併設計 3.12:兩個網域沒有共同的同步紀錄,一次搬完就結束)。
@@ -429,18 +431,55 @@
     out.forEach((x) => { if (keep.indexOf(bankId(x)) > -1) written[bankId(x)] = quickHash(canon(x)); });
     return { banks: out, remap, added, renamed, updated, skipped, written, replaced, sent };
   }
-  /* 改過 id 的題庫:舊網址那幾個成績鍵裡 bank:<舊 id> 的項目複製一份到 bank:<新 id> */
+  /* 單字遊戲好幾個來源一起練的組合鍵(js/vocab.js srcKey):每個來源 'word'、'phrase'、'bank:' + encodeURIComponent(id),去重複、排序、用 + 接;
+     只剩一個來源就是單一來源的鍵(題庫 id 不編碼)。後面可能接 ':e2z'(掉落消除英翻中)或 ':<對數>'(翻牌) */
+  function comboKey(modes) {
+    const u = modes.filter((m, i) => modes.indexOf(m) === i);
+    if (u.length === 1) return u[0];
+    return u.map((m) => (m.indexOf('bank:') === 0 ? 'bank:' + encodeURIComponent(m.slice(5)) : m)).sort().join('+');
+  }
+  /* 'bank:b1+word:e2z' → { modes: ['bank:b1', 'word'], suffix: ':e2z' };題庫 id 解碼回原本的。看不懂的回 null */
+  function comboParts(k) {
+    const toks = k.split('+');
+    const last = toks.pop().split(':');
+    const n = last[0] === 'bank' ? 2 : 1;
+    toks.push(last.slice(0, n).join(':'));
+    const modes = [];
+    for (const t of toks) {
+      if (t.indexOf('bank:') !== 0) { modes.push(t); continue; }
+      try { modes.push('bank:' + decodeURIComponent(t.slice(5))); } catch (e) { return null; }
+    }
+    return { modes, suffix: last.length > n ? ':' + last.slice(n).join(':') : '' };
+  }
+  /* 改過 id 的題庫:舊網址那幾個成績鍵裡 bank:<舊 id> 的項目複製一份到 bank:<新 id>;
+     組合鍵(有 +)裡的舊 id 換新、重新排序(新 id 換了位置,不排序的話新版頁面算出來的鍵對不上),舊鍵留著。
+     vgame_src:mode 與 modes(勾了好幾個時才有)裡的舊 id 都換新,順序不變 */
   function remapRelated(sub, ov, remap) {
     const olds = Object.keys(remap);
     if (!olds.length) return ov;
+    const swap = (m) => {
+      const x = typeof m === 'string' ? /^bank:(.+)$/.exec(m) : null;
+      return x && own(remap, x[1]) ? 'bank:' + remap[x[1]] : m;
+    };
     if (sub === 'vgame_src') {
       if (!isPlain(ov) || typeof ov.mode !== 'string') return ov;
-      const m = /^bank:(.+)$/.exec(ov.mode);
-      return m && own(remap, m[1]) ? Object.assign({}, ov, { mode: 'bank:' + remap[m[1]] }) : ov;
+      const mode = swap(ov.mode);
+      const modes = Array.isArray(ov.modes) ? ov.modes.map(swap) : null;
+      if (mode === ov.mode && !(modes && modes.some((m, i) => m !== ov.modes[i]))) return ov;
+      return Object.assign({}, ov, modes ? { mode, modes } : { mode });
     }
     if (!isPlain(ov)) return ov;
     const out = Object.assign({}, ov);
     Object.keys(ov).forEach((k) => {
+      if (k.indexOf('+') > -1) {
+        const p = comboParts(k);
+        if (!p) return;
+        const moved = p.modes.map(swap);
+        if (moved.every((m, i) => m === p.modes[i])) return;
+        const nk = comboKey(moved) + p.suffix;
+        if (!own(out, nk)) out[nk] = ov[k];
+        return;
+      }
       olds.forEach((o) => {
         const head = 'bank:' + o;
         if (k === head || k.indexOf(head + ':') === 0) {

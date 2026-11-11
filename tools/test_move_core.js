@@ -240,6 +240,34 @@ T['題庫:只有一邊有的都留;同 id 同內容跳過;不同 id 但內容一
   return nid;
 };
 
+/* 單字遊戲勾好幾個來源一起練(vgame_src 多了 modes,成績鍵有排序後的組合鍵 bank:b1+word…):題庫改 id 時 modes 跟組合鍵也跟著換,組合鍵重新排序 */
+T['題庫改 id:vgame_src.modes 裡的舊 id 換新;成績與通關的組合鍵(bank:b1+word、bank:b1+bank:b3:e2z、bank:b1+phrase:8)複製到新 id 並重新排序'] = async () => {
+  const ls = makeStorage(0, { tr_vgame_banks: J([bank('b1', '共同', ['a'])]) });
+  await moveInto(ls, {
+    tr_vgame_banks: J([bank('b1', '共同', ['a', 'z']), bank('b3', '舊網址自己的', ['o', 'p', 'q'])]),
+    tr_vgame_src: J({ mode: 'word', level: '中級', modes: ['word', 'bank:b1', 'bank:b3'] }),
+    tr_vgame_best: J({ 'bank:b1+word': 9, 'bank:b1+bank:b3:e2z': 4, 'phrase+word': 2 }),
+    tr_vgame_clear: J({ 'bank:b1+word': { n: 2, secs: 40 } }),
+    tr_vgame_pairs_best: J({ 'bank:b1+phrase:8': { moves: 12, secs: 30 } }),
+    tr_vgame_toast_best: J({ 'bank:b1+bank:b3': 5 }),
+    tr_vgame_done: J({ 'bank:b1+word': ['a'] }),
+  });
+  const banks = JSON.parse(ls.getItem('tr_vgame_banks'));
+  const nid = banks.find((b) => b.name === '共同（舊網址）').id;
+  const key = (modes) => modes.map((m) => (m.indexOf('bank:') === 0 ? 'bank:' + encodeURIComponent(m.slice(5)) : m)).sort().join('+');
+  assert.deepEqual(JSON.parse(ls.getItem('tr_vgame_src')), { mode: 'word', level: '中級', modes: ['word', 'bank:' + nid, 'bank:b3'] });
+  const best = JSON.parse(ls.getItem('tr_vgame_best'));
+  assert.equal(best[key(['bank:' + nid, 'word'])], 9);
+  assert.equal(best[key(['bank:' + nid, 'bank:b3']) + ':e2z'], 4);
+  assert.equal(best['bank:b1+word'], 9);   // 舊鍵留著(跟單一來源一樣是複製)
+  assert.equal(best['phrase+word'], 2);
+  assert.deepEqual(JSON.parse(ls.getItem('tr_vgame_clear'))[key(['bank:' + nid, 'word'])], { n: 2, secs: 40 });
+  assert.deepEqual(JSON.parse(ls.getItem('tr_vgame_pairs_best'))[key(['bank:' + nid, 'phrase']) + ':8'], { moves: 12, secs: 30 });
+  assert.equal(JSON.parse(ls.getItem('tr_vgame_toast_best'))[key(['bank:' + nid, 'bank:b3'])], 5);
+  assert.deepEqual(JSON.parse(ls.getItem('tr_vgame_done'))[key(['bank:' + nid, 'word'])], ['a']);
+  return nid;
+};
+
 T['題庫重搬:用同一個新 id,不會每搬一次多一份「（舊網址）」;新網址刪掉的題庫重搬會回來(確認畫面有寫)'] = async () => {
   const ls = makeStorage(0, { tr_vgame_banks: J([bank('b1', '共同', ['a'])]) });
   const old1 = { tr_vgame_banks: J([bank('b1', '共同', ['a', 'z'])]) };

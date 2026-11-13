@@ -7,6 +7,9 @@
      一建立就帶 data-nosnippet(搜尋結果的摘要不拿清單和章號、課號,改用頁面說明);單元頁、查表頁不帶。
    - setPageMeta:網域取 og:url(所以舊網址代理時也指新網址),單元網址只留決定內容的參數,重複呼叫不會疊加。
    - 首頁:WebSite 與 OnlineBusiness(Organization 的子類型)結構化資料,alternateName 只有 Rushup;h1 有站名;沒有過期的日期公告。
+   - 首頁搜尋結果的摘要(2026-11-13,Google 拿了導覽列文字當摘要):全站 .topbar-inner、首頁數字列、免費公告、每日練習、小雞卡一建立就帶 data-nosnippet,
+     h1、功能卡片、頁尾不帶,h1 下不掛介紹句;首頁說明第一句講是準備多益的練習網站,寫的題數不超過題庫,數字列照資料算(題庫含聽力、單字不重複);
+     標題、說明、h1、結構化資料、manifest 說明不寫會變假的字(免費、考古題、官方……),iPhone 安裝入口關著時也不寫 App、主畫面。
    - sitemap.xml 跟 tools/build_sitemap.js 產生的一樣:每個要收錄的頁加上每個單元,沒有 noindex 的頁。
    - 404.html:noindex、連結與樣式用 / 開頭(網址可能在任何一層)、不含 GitHub 的「Site not found」字樣(Worker 靠它判斷新網址掛了)。
    - 網站圖示(Google 搜尋結果不吃 SVG):每頁同一組 icon 連結(/favicon.ico、PNG、SVG、apple-touch-icon,/ 開頭);
@@ -292,6 +295,111 @@ T['首頁:h1 有站名;看得到英文名 Rushup;沒有寫死日期的免費公�
   assert.match(src, /<h1>衝衝英文[^<]*<\/h1>/);
   assert.ok(src.split('<body')[1].indexOf('Rushup') > -1, '頁面文字裡沒有 Rushup');
   assert.equal(/\d+ 月 \d+ 日以前全站免費/.test(src), false);
+};
+
+/* 一頁 body 裡的每個元素,記下它是不是在 data-nosnippet 裡面(自己帶或外層帶)。不用套件:script 內容與註解拿掉後照標籤開合算外層 */
+const VOID_TAGS = /^(?:area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/;
+function bodyElements(src) {
+  const body = src.split(/<body[^>]*>/)[1].split('</body>')[0].replace(/<script\b[\s\S]*?<\/script>/g, '').replace(/<!--[\s\S]*?-->/g, '');
+  const stack = [], els = [];
+  for (const m of body.matchAll(/<(\/?)([a-zA-Z][\w-]*)([^>]*)>/g)) {
+    const tag = m[2].toLowerCase();
+    if (m[1]) {
+      const i = stack.map((e) => e.tag).lastIndexOf(tag);
+      assert.ok(i > -1, '多出結尾標籤 </' + tag + '>');
+      stack.length = i;
+      continue;
+    }
+    const cls = (/\bclass="([^"]*)"/.exec(m[3]) || [])[1] || '';
+    const e = { tag, cls: cls.split(/\s+/), id: (/\bid="([^"]*)"/.exec(m[3]) || [])[1] || '', own: /\bdata-nosnippet\b/.test(m[3]) };
+    e.hidden = e.own || stack.some((p) => p.hidden);
+    els.push(e);
+    if (!VOID_TAGS.test(tag)) stack.push(e);
+  }
+  assert.deepEqual(stack.map((e) => e.tag), [], '有沒關的標籤');
+  return els;
+}
+/* 首頁說明與 App 說明不能寫的字(2026-11-13 定稿):會變假的(之後要收費、題目不是真題、跟 ETS 無關、音檔是合成語音……)與誇大字 */
+const HOME_BANNED = ['免費', '考古題', '官方', '真人', '口說', '離線', '免註冊', 'PDF', '下載', '神器', '首選', '保證', '990', '一站式', '全方位', '打造', '助你', '輕鬆', '高效', 'AI', '刷刷'];
+T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、免費公告、每日練習、小雞卡建立時就帶 data-nosnippet;h1、功能卡片、頁尾不帶;h1 下不掛介紹句'] = () => {
+  /* 11/13 Google 拿首頁的導覽列文字當摘要:有頂欄的每一頁,.topbar-inner 都帶(「登入▾」、App 的返回鍵與頁名是 JS 加進這一層的);header 本身不能帶 */
+  let bars = 0;
+  PAGES.forEach((f) => {
+    const s = read(f);
+    const all = (s.match(/class="topbar-inner"/g) || []).length;
+    bars += all;
+    assert.equal((s.match(/<div class="topbar-inner" data-nosnippet>/g) || []).length, all, f + ' 的 .topbar-inner 沒帶 data-nosnippet');
+    assert.equal(/<header\b[^>]*data-nosnippet/.test(s), false, f + ' 的 header 不能帶 data-nosnippet(只能放 span、div、section)');
+  });
+  assert.ok(bars >= 30, '有頂欄的頁太少:' + bars);
+  const src = read('index.html');
+  const els = bodyElements(src);
+  const one = (pred, name) => { const x = els.filter(pred); assert.equal(x.length, 1, '首頁找不到剛好一個 ' + name); return x[0]; };
+  /* 該擋的:數字列(JS 填的數字)、每日練習(個人進度)、免費公告(收費後就過期) */
+  assert.ok(one((e) => e.tag === 'div' && e.cls.indexOf('stats') > -1, '.stats').own, '數字列沒帶 data-nosnippet');
+  assert.ok(one((e) => e.id === 'daily-home', '#daily-home').own, '每日練習沒帶 data-nosnippet');
+  assert.match(src, /<p class="free-note"><span data-nosnippet>目前全站免費[^<]*<a href="pricing\.html">方案與價格<\/a><\/span><\/p>/, '免費公告要整句包在 span data-nosnippet 裡(p 不能帶)');
+  /* 小雞卡訪客也看得到,內容是「今天 0 / N 題」:js/pet-ui.js 的 card() 建立時就帶,不事後加 */
+  const pet = read('js/pet-ui.js');
+  assert.match(pet, /h\('section', \{ class: 'pet-card pet-' \+ kind, 'aria-labelledby': idp \+ '-h', 'data-nosnippet': '' \}\)/, '小雞卡建立時沒帶 data-nosnippet');
+  assert.equal(/(?:set|remove|toggle)Attribute\('data-nosnippet'/.test(pet + src), false, '不能事後用程式加或拿掉 data-nosnippet');
+  /* 不能擋的:h1、功能卡片(Google 不用說明時摘要靠這兩塊)、頁尾(有 Rushup 與「與 ETS 無關」) */
+  assert.equal(one((e) => e.tag === 'h1', 'h1').hidden, false, 'h1 被包進 data-nosnippet');
+  const cards = els.filter((e) => e.cls.indexOf('module-card') > -1);
+  assert.ok(cards.length >= 10, '功能卡片太少:' + cards.length);
+  cards.forEach((e) => assert.equal(e.hidden, false, '功能卡片被包進 data-nosnippet'));
+  assert.equal(one((e) => e.tag === 'footer', 'footer').hidden, false, '頁尾被包進 data-nosnippet');
+  /* 站長刪過三次首頁 h1 下的說明句(3c18669、159e17d、22c78df):hero 裡只有 h1 和數字列 */
+  assert.match(src, /<div class="hero-inner">\s*<h1>[^<]+<\/h1>\s*<div class="stats"/, '首頁 h1 下不掛介紹句');
+};
+T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的練習網站;數字列算的是實際資料;寫的題數是真的;不寫會變假的字'] = () => {
+  const src = read('index.html'), s = head('index.html');
+  const desc = meta(s, 'name', 'description');
+  const org = JSON.parse(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/.exec(src)[1])['@graph'].find((x) => x['@type'] === 'OnlineBusiness');
+  const man = JSON.parse(read('manifest.json'));
+  const h1 = /<h1>([^<]+)<\/h1>/.exec(src)[1];
+  assert.match(desc, /^衝衝英文是準備多益用的英文練習網站。/, '首頁說明第一句要講是什麼站:' + desc);
+  [titleOf(s), desc, h1, man.description].forEach((t) => assert.match(t, /多益/, t));
+  [titleOf(s), desc, h1].forEach((t) => assert.ok(/聽力/.test(t) && /閱讀/.test(t), '要寫出主要練聽力、閱讀:' + t));
+  /* 數字從資料數:題庫刷題的題目(閱讀 Part 5–7、聽力 Part 1–4)、文章的重點單字(不重複、不分大小寫) */
+  const c = {}; c.window = c; vm.createContext(c);
+  ['articles', 'part5', 'part6', 'part7', 'listening'].forEach((f) => vm.runInContext(read('data/' + f + '.js'), c));
+  const D = c.TOEIC, L = D.listening;
+  const sets = (a) => a.reduce((n, x) => n + x.questions.length, 0);
+  const total = D.part5.length + sets(D.part6) + sets(D.part7) + L.p1.length + L.p2.length + sets(L.p3) + sets(L.p4);
+  const words = new Set();
+  D.articles.forEach((a) => a.paragraphs.forEach((p) => (p.en.match(/\[\[(.+?)\]\]/g) || []).forEach((m) => words.add(m.slice(2, -2).trim().toLowerCase()))));
+  /* 首頁那段數字程式拿去跑:要載得到聽力題庫,跑出來的數字跟上面一樣 */
+  const scripts = Array.from(src.matchAll(/<script[^>]*\ssrc="([^"]+)"/g)).map((m) => m[1]);
+  assert.ok(scripts.indexOf('data/listening.js') > -1, '首頁沒載聽力題庫,刷題題數只會算到閱讀');
+  const out = {};
+  c.document = { getElementById: (id) => ({ set textContent(v) { out[id] = v; } }) };
+  vm.runInContext(Array.from(src.matchAll(/<script>([\s\S]*?)<\/script>/g)).map((m) => m[1]).find((b) => b.indexOf('stat-questions') > -1), c);
+  assert.deepEqual(out, { 'stat-articles': D.articles.length, 'stat-vocab': words.size, 'stat-questions': total });
+  /* 說明寫的「超過 N 題」不能比題庫多 */
+  [desc, org.description].forEach((t) => {
+    const m = /超過 (\d+) 題/.exec(t);
+    assert.ok(m && Number(m[1]) <= total, '說明的題數要寫、而且不能超過題庫的 ' + total + ' 題:' + t);
+  });
+  /* 會變假的字;iPhone 的安裝入口關著(js/app-shell.js 的 IOS_INSTALL = 'off')時也不寫 App、主畫面 */
+  const ios = /const IOS_INSTALL = '([\w-]+)'/.exec(read('js/app-shell.js'));
+  assert.ok(ios, 'js/app-shell.js 找不到 IOS_INSTALL');
+  const banned = HOME_BANNED.concat(ios[1] === 'off' ? ['App', 'app', '主畫面'] : []);
+  const texts = { 標題: titleOf(s), 說明: desc, og: meta(s, 'property', 'og:title') + meta(s, 'property', 'og:description'), h1, 結構化資料: org.description, manifest: man.description };
+  Object.keys(texts).forEach((k) => banned.forEach((w) => assert.equal(texts[k].indexOf(w), -1, '首頁' + k + '寫了「' + w + '」:' + texts[k])));
+  assert.ok(man.description.length >= 20 && man.description.length <= 80, 'manifest 說明 ' + man.description.length + ' 字(商店簡短說明上限 80)');
+  /* 首頁的功能卡片跟 App 的學習、刷題頁同名的卡片,說明要一樣(改一邊忘了另一邊會出現兩種說法) */
+  const cardsOf = (f) => Array.from(read(f).matchAll(/<a class="module-card" href="([^"]+)">\s*<h2>([^<]+)<\/h2>\s*<p>([^<]+)<\/p>/g)).map((m) => [m[1], m[2], m[3]]);
+  const home = cardsOf('index.html');
+  assert.ok(home.length >= 10, '首頁卡片太少:' + home.length);
+  ['learn.html', 'drill.html'].forEach((f) => {
+    const hub = cardsOf(f);
+    assert.ok(hub.length >= 2, f + ' 卡片太少');
+    hub.forEach(([href, name, text]) => {
+      const twin = home.find((c) => c[0] === href);
+      if (twin) assert.equal(text, twin[2], f + ' 的「' + name + '」卡片說明跟首頁不一樣');
+    });
+  });
 };
 T['sitemap.xml 跟 tools/build_sitemap.js 產生的一樣:要收錄的頁＋每個單元,沒有 noindex 的頁'] = () => {
   const cur = read('sitemap.xml').replace(/\r\n/g, '\n');

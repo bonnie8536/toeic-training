@@ -2,6 +2,7 @@
    用法:node tools/test_pet_ui_food.js
    - 開關都關:新的 pet-ui.js 跟第 1 步那版(tools/fixtures/pet_ui_step1.js)對同一組假 view() 畫出的卡片和面板,
      DOM 序列化後完全相同,焦點順序、掛的事件、呼叫 PET_STORE 與 ChickArt 的參數也相同。
+     之後刻意改的地方列在 STEP1_LATER,第 1 步那版照同樣改過再比(基準檔不動)。
    - 開關打開:托盤、格子狀態與標籤、鍵盤、提示、吃東西的流程、走動開關、卡片的「餵牠」。
    載入真的 js/pet-ui.js 與 js/common.js 的 h(),配很小的假 DOM、假的 PET_STORE、ChickArt、FoodArt、PET、計時器。 */
 const fs = require('fs');
@@ -13,7 +14,15 @@ const read = f => fs.readFileSync(path.join(REPO, f), 'utf8');
 const H_SRC = (read('js/common.js').match(/function h\(tag[\s\S]*?\r?\n\}\r?\n/) || [''])[0];
 if (!H_SRC) throw new Error('js/common.js 裡找不到 function h(tag, ...)');
 const NEW_SRC = read('js/pet-ui.js');
-const OLD_SRC = read('tools/fixtures/pet_ui_step1.js');
+/* 第 1 步之後刻意改的地方:[原本那一行, 改成]。2026-11-13 搜尋結果摘要:網站模式的小雞卡建立時就帶 data-nosnippet(test_seo 檢查) */
+const STEP1_LATER = [
+  ["const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h' });",
+    "const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h', 'data-nosnippet': '' });"],
+];
+const OLD_SRC = STEP1_LATER.reduce((src, [from, to]) => {
+  if (src.split(from).length !== 2) throw new Error('tools/fixtures/pet_ui_step1.js 裡找不到剛好一行:' + from);
+  return src.replace(from, () => to);
+}, read('tools/fixtures/pet_ui_step1.js'));
 
 const NAMES = { grain: '飼料', corn: '玉米', greens: '青江菜', pea: '豌豆', berry: '藍莓', tomato: '小番茄', melon: '西瓜', yam: '地瓜', worm: '麵包蟲' };
 const IDS = Object.keys(NAMES);

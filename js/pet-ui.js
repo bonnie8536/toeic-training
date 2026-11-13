@@ -747,7 +747,7 @@
   /* ---------- 網站模式:首頁一張卡、「我的」頁一區 ---------- */
   function card(kind) {
     const idp = 'pet-' + kind;
-    const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h' });
+    const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h', 'data-nosnippet': '' });   // 建立時就帶 data-nosnippet:訪客也看得到小雞卡,「今天 0 / N 題」這類進度不給搜尋結果當摘要
     const pic = h('button', { class: 'pet-pic', type: 'button', 'aria-haspopup': 'dialog' });
     const cv = h('canvas', { class: 'pet-cv' });
     pic.append(cv);

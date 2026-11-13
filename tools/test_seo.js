@@ -9,7 +9,8 @@
    - 首頁:WebSite 與 OnlineBusiness(Organization 的子類型)結構化資料,alternateName 只有 Rushup;h1 有站名;沒有過期的日期公告。
    - 首頁搜尋結果的摘要(2026-11-13,Google 拿了導覽列文字當摘要):全站 .topbar-inner、頁尾連結列(外包 div)、首頁數字列、免費公告、每日練習、小雞卡一建立就帶 data-nosnippet,
      h1、功能卡片、頁尾那句不帶,h1 下不掛介紹句;首頁說明第一句講是準備多益的線上練習網站,寫的題數不超過題庫,數字列照資料算(題庫含聽力、單字不重複);
-     定稿關鍵字表寫的位置真的有;每日複習接在題庫後面(模擬考錯題不進每日複習);h1 用 keep-all 只在「：」「、」後換行;
+     定稿關鍵字表分「原樣」「拆開」逐處核對,「多益練習」要原樣在標題或說明;每日複習接在題庫後面(模擬考錯題不進每日複習);h1 用 keep-all 只在「：」「、」後換行;
+     每日複習的卡片與說明只寫 js/review.js 真的收的(不寫全站錯題);單字、聽力頁的說明和首頁卡片列出頁上每一種玩法;
      標題、說明、h1、結構化資料、manifest 說明不寫會變假的字(免費、考古題、官方……),iPhone 安裝入口關著時也不寫 App、主畫面。
    - sitemap.xml 跟 tools/build_sitemap.js 產生的一樣:每個要收錄的頁加上每個單元,沒有 noindex 的頁。
    - 404.html:noindex、連結與樣式用 / 開頭(網址可能在任何一層)、不含 GitHub 的「Site not found」字樣(Worker 靠它判斷新網址掛了)。
@@ -375,12 +376,24 @@ T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上�
   assert.match(desc, /^衝衝英文是準備多益的線上英文練習網站。/, '首頁說明第一句要講是什麼站:' + desc);
   [titleOf(s), desc, h1, man.description].forEach((t) => assert.match(t, /多益/, t));
   [titleOf(s), desc, h1].forEach((t) => assert.ok(/聽力/.test(t) && /閱讀/.test(t), '要寫出主要練聽力、閱讀:' + t));
-  /* 定稿第六節關鍵字表寫的「放在哪」要真的放了:T 標題、D 說明、H h1、M manifest、J 結構化資料、C 首頁卡片 */
+  /* 定稿第六節關鍵字表:T 標題、D 說明、H h1、M manifest、J 結構化資料、C 首頁卡片。
+     「原樣」是整個詞一字不差出現的地方,要剛好是表上寫的那幾處(多了、少了都要回去改表);
+     「拆開」是沒有原樣、但同一段有「多益」也有詞的後半(C 首頁卡片上沒有「多益」兩字,只看後半)。
+     以前只查拆開的片段(「練習」「聽力」),表上寫「多益練習:T、D、H、J」,其實一處都沒有原樣(審查第 2 輪 #1) */
   const spot = { T: titleOf(s), D: desc, H: h1, M: man.description, J: org.description,
     C: Array.from(src.matchAll(/<a class="module-card"[^>]*>\s*<h2>([^<]+)<\/h2>\s*<p>([^<]+)<\/p>/g)).map((m) => m[1] + m[2]).join('|') };
-  [['練習', 'TDHJ'], ['線上', 'DJ'], ['聽力', 'TDHMJC'], ['閱讀', 'TDHMJC'], [/題庫|刷題/, 'TDHMJC'], ['單字', 'TDHMJC'], ['模擬考', 'TDMJC'], ['模擬試題', 'J'],
-    ['文法', 'DMJC'], ['Part 1–7', 'DMJ'], ['解析', 'DMJC'], ['每日複習', 'MJC'], ['自然發音', 'JC'], ['對話', 'JC'], ['寫作', 'JC'], ['TOEIC', 'J']].forEach(([w, at]) =>
-    at.split('').forEach((k) => assert.ok(w instanceof RegExp ? w.test(spot[k]) : spot[k].indexOf(w) > -1, '關鍵字表說「' + w + '」放在 ' + k + ',實際沒有:' + spot[k])));
+  const where = (w) => Object.keys(spot).filter((k) => spot[k].indexOf(w) > -1).sort().join('');
+  const sameSpots = (w, at) => assert.equal(where(w), at.split('').sort().join(''), '關鍵字表說「' + w + '」原樣出現在「' + at + '」,實際是「' + where(w) + '」');
+  assert.ok(spot.T.indexOf('多益練習') > -1 || spot.D.indexOf('多益練習') > -1, '主關鍵字「多益練習」要原樣出現在標題或說明:' + spot.T + ' / ' + spot.D);
+  [['多益練習', 'T', 'DHJ', ['練習']], ['多益線上練習', '', 'DJ', ['線上', '練習']], ['多益英文練習', '', 'DJ', ['英文練習']], ['多益練習網站', '', 'DJ', ['練習網站']],
+    ['多益聽力', 'HM', 'TDJC', ['聽力']], ['多益閱讀', '', 'TDHMJC', ['閱讀']], ['多益題庫', '', 'TDJC', ['題庫']], ['多益刷題', '', 'THMC', ['刷題']],
+    ['多益單字', '', 'TDHMJC', ['單字']], ['多益模擬考', '', 'TDMJC', ['模擬考']], ['多益模擬試題', '', 'J', ['模擬試題']], ['多益文法', '', 'DMJC', ['文法']]].forEach(([w, exact, split, parts]) => {
+    sameSpots(w, exact);
+    split.split('').forEach((k) => assert.ok((k === 'C' || spot[k].indexOf('多益') > -1) && parts.every((p) => spot[k].indexOf(p) > -1),
+      '關鍵字表說「' + w + '」拆開出現在 ' + k + ',實際沒有:' + spot[k]));
+  });
+  /* 次要的詞本身就是關鍵字,一樣要剛好出現在表上寫的那幾處 */
+  [['題庫刷題', 'TC'], ['Part 1–7', 'DMJ'], ['解析', 'DMJC'], ['每日複習', 'MJC'], ['自然發音', 'JC'], ['對話', 'JC'], ['寫作', 'JC'], ['TOEIC', 'J']].forEach(([w, at]) => sameSpots(w, at));
   assert.equal(spot.T.indexOf('寫作'), -1, '多益聽讀不考寫作,標題不放寫作');
   /* 模擬考只存 mock_history,錯題不會進每日複習(js/review.js 只收題庫刷題、片語、單字、文法、發音):講每日複習的那句要接在題庫後面,不能排在模擬考後面 */
   [spot.M, spot.J].forEach((t) => assert.ok(t.indexOf('每日複習') < t.indexOf('模擬考'), '每日複習要接在題庫刷題後面,不能接在模擬考後面:' + t));
@@ -424,6 +437,32 @@ T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上�
     hub.forEach(([href, name, text]) => {
       const twin = home.find((c) => c[0] === href);
       if (twin) assert.equal(text, twin[2], f + ' 的「' + name + '」卡片說明跟首頁不一樣');
+    });
+  });
+};
+T['首頁卡片與內頁說明寫的是真的、而且一致(2026-11-13 審查第 2 輪):每日複習只寫 js/review.js 真的收的;單字、聽力頁的說明和首頁卡片列出頁上每一種玩法'] = () => {
+  const cards = new Map(Array.from(read('index.html').matchAll(/<a class="module-card" href="([^"]+)">\s*<h2>[^<]+<\/h2>\s*<p>([^<]+)<\/p>/g)).map((m) => [m[1], m[2]]));
+  /* js/review.js 收的是題庫刷題(Part 5、聽力 P1/P2 直接出題,題組列出來連回刷題)、片語、單字遊戲漏接、文法和自然發音沒全對的課;
+     模擬考(只存 mock_history)、程度檢測、閱讀文章、聽寫這類聽力基本功的錯題都不會進去,所以不能寫「全站錯題」。
+     data-nosnippet 擋掉導覽列等之後,首頁卡片是 h1 下面第一段會被拿去當摘要的字 */
+  const rv = read('js/review.js');
+  const rvText = [cards.get('review.html'), meta(head('review.html'), 'name', 'description')];
+  rvText.forEach((t) => {
+    assert.ok(t, '找不到每日複習的卡片或說明');
+    ['全站', '模擬考', '程度檢測', '文章', '聽寫'].forEach((w) => assert.equal(t.indexOf(w), -1, '每日複習寫了「' + w + '」,js/review.js 沒有收這些:' + t));
+  });
+  [['刷題', "store.get('drill_p5'"], ['片語', "store.get('phrase_drill'"], ['單字', "store.get('vgame_miss'"], ['文法', "store.get('grammar_done'"]].forEach(([w, key]) => {
+    if (rvText[0].indexOf(w) > -1) assert.ok(rv.indexOf(key) > -1, '每日複習卡片寫了「' + w + '」,js/review.js 卻沒讀 ' + key);
+  });
+  /* 單字頁、聽力頁的說明(搜尋結果、分享預覽)和首頁卡片,都要列出頁上每一種玩法;以前首頁卡片加了記憶吐司、跟讀,內頁說明沒跟上 */
+  const games = Array.from(read('js/vocab.js').matchAll(/gameCard\('\w+', '([^']+)'/g)).map((m) => m[1].replace(/^單字/, ''));
+  const ears = Array.from(read('js/ear.js').matchAll(/\b\w+: \{ key: 'ear_\w+', title: '([^']+)'/g)).map((m) => m[1].replace(/^句子(?=跟讀)/, ''));
+  assert.ok(games.length >= 4 && ears.length >= 4, '找不到單字玩法或聽力基本功的名稱:' + games + ' / ' + ears);
+  [['vocab.html', games], ['listening.html', ears]].forEach(([f, names]) => {
+    const d = meta(head(f), 'name', 'description');
+    names.forEach((n) => {
+      assert.ok(d.indexOf(n) > -1, f + ' 的說明少了「' + n + '」:' + d);
+      assert.ok(cards.get(f).indexOf(n) > -1, '首頁「' + f + '」卡片少了「' + n + '」:' + cards.get(f));
     });
   });
 };

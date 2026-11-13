@@ -211,7 +211,9 @@ const cases = {
     const d = await openForm(L, '贈送');
     const until0 = field(d, 'until').value;
     await setVal(field(d, 'note'), '補償');
-    await setVal(field(d, 'until'), '2026-11-10');
+    /* 到期日原本寫死 2026-11-10,過了那天表單會擋「到期日要晚於今天」,這題就壞(11/13 發現)。改成從現在算 30 天後的台北日期 */
+    const until = new Date(Date.now() + 8 * 3600e3 + 30 * 864e5).toISOString().slice(0, 10);
+    await setVal(field(d, 'until'), until);
     w.next.owner_grant_comp = ['owner_grant_comp.student_with_end'];
     await ok(d);
     const a = w.calls('owner_grant_comp')[0];
@@ -220,8 +222,8 @@ const cases = {
     w.next.owner_grant_comp = ['owner_grant_comp.student_no_end'];
     await ok(d2);
     const b = w.calls('owner_grant_comp')[1];
-    const okk = until0 === '' && JSON.stringify(a) === JSON.stringify({ p_request_key: 'key-1', p_who: ACC.eve.email, p_kind: 'student', p_seats: null, p_ends_at: '2026-11-10T23:59:59+08:00', p_starts_at: null, p_note: '補償' })
-      && rl.some(x => /2026\/11\/10/.test(x)) && b.p_ends_at === null && b.p_note === null && b.p_request_key === 'key-2' && /已贈送/.test(lookMsg(L)) && onlyOwnerRpcs(w);
+    const okk = until0 === '' && JSON.stringify(a) === JSON.stringify({ p_request_key: 'key-1', p_who: ACC.eve.email, p_kind: 'student', p_seats: null, p_ends_at: until + 'T23:59:59+08:00', p_starts_at: null, p_note: '補償' })
+      && rl.some(x => x.indexOf(until.replace(/-/g, '/')) > -1) && b.p_ends_at === null && b.p_note === null && b.p_request_key === 'key-2' && /已贈送/.test(lookMsg(L)) && onlyOwnerRpcs(w);
     return { ok: okk, detail: JSON.stringify({ until0, a, b, rl }) };
   },
   '贈送老師方案:名額空白是不限(送 null);學生(包括被改成學生的前老師)不能用贈送變成老師,寫要用改角色,不送': async () => {

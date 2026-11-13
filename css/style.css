@@ -108,7 +108,8 @@ button { font-family: var(--font); cursor: pointer; }
   margin: 0 auto;
   padding: 52px 20px 56px;
 }
-.hero h1 { font-size: 32px; line-height: 1.35; letter-spacing: .5px; }
+/* 首頁 h1 只在「：」「、」後面換行,不把「刷題」「閱讀」拆成兩行(360、320 寬會拆);太窄放不下才照字斷 */
+.hero h1 { font-size: 32px; line-height: 1.35; letter-spacing: .5px; word-break: keep-all; overflow-wrap: anywhere; }
 .hero .stats { display: flex; gap: 28px; margin-top: 26px; flex-wrap: wrap; }
 .hero .stat b { font-size: 24px; color: var(--primary); font-weight: 700; }
 .hero .stat span { display: block; font-size: 13px; color: var(--ink-light); }

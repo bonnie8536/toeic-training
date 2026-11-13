@@ -7,8 +7,9 @@
      一建立就帶 data-nosnippet(搜尋結果的摘要不拿清單和章號、課號,改用頁面說明);單元頁、查表頁不帶。
    - setPageMeta:網域取 og:url(所以舊網址代理時也指新網址),單元網址只留決定內容的參數,重複呼叫不會疊加。
    - 首頁:WebSite 與 OnlineBusiness(Organization 的子類型)結構化資料,alternateName 只有 Rushup;h1 有站名;沒有過期的日期公告。
-   - 首頁搜尋結果的摘要(2026-11-13,Google 拿了導覽列文字當摘要):全站 .topbar-inner、首頁數字列、免費公告、每日練習、小雞卡一建立就帶 data-nosnippet,
-     h1、功能卡片、頁尾不帶,h1 下不掛介紹句;首頁說明第一句講是準備多益的練習網站,寫的題數不超過題庫,數字列照資料算(題庫含聽力、單字不重複);
+   - 首頁搜尋結果的摘要(2026-11-13,Google 拿了導覽列文字當摘要):全站 .topbar-inner、頁尾連結列(外包 div)、首頁數字列、免費公告、每日練習、小雞卡一建立就帶 data-nosnippet,
+     h1、功能卡片、頁尾那句不帶,h1 下不掛介紹句;首頁說明第一句講是準備多益的線上練習網站,寫的題數不超過題庫,數字列照資料算(題庫含聽力、單字不重複);
+     定稿關鍵字表寫的位置真的有;每日複習接在題庫後面(模擬考錯題不進每日複習);h1 用 keep-all 只在「：」「、」後換行;
      標題、說明、h1、結構化資料、manifest 說明不寫會變假的字(免費、考古題、官方……),iPhone 安裝入口關著時也不寫 App、主畫面。
    - sitemap.xml 跟 tools/build_sitemap.js 產生的一樣:每個要收錄的頁加上每個單元,沒有 noindex 的頁。
    - 404.html:noindex、連結與樣式用 / 開頭(網址可能在任何一層)、不含 GitHub 的「Site not found」字樣(Worker 靠它判斷新網址掛了)。
@@ -321,7 +322,7 @@ function bodyElements(src) {
 }
 /* 首頁說明與 App 說明不能寫的字(2026-11-13 定稿):會變假的(之後要收費、題目不是真題、跟 ETS 無關、音檔是合成語音……)與誇大字 */
 const HOME_BANNED = ['免費', '考古題', '官方', '真人', '口說', '離線', '免註冊', 'PDF', '下載', '神器', '首選', '保證', '990', '一站式', '全方位', '打造', '助你', '輕鬆', '高效', 'AI', '刷刷'];
-T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、免費公告、每日練習、小雞卡建立時就帶 data-nosnippet;h1、功能卡片、頁尾不帶;h1 下不掛介紹句'] = () => {
+T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、免費公告、每日練習、小雞卡建立時就帶 data-nosnippet,全站頁尾連結列包一層;h1、功能卡片、頁尾那句不帶;h1 下不掛介紹句'] = () => {
   /* 11/13 Google 拿首頁的導覽列文字當摘要:有頂欄的每一頁,.topbar-inner 都帶(「登入▾」、App 的返回鍵與頁名是 JS 加進這一層的);header 本身不能帶 */
   let bars = 0;
   PAGES.forEach((f) => {
@@ -348,19 +349,44 @@ T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、免費公告�
   const cards = els.filter((e) => e.cls.indexOf('module-card') > -1);
   assert.ok(cards.length >= 10, '功能卡片太少:' + cards.length);
   cards.forEach((e) => assert.equal(e.hidden, false, '功能卡片被包進 data-nosnippet'));
-  assert.equal(one((e) => e.tag === 'footer', 'footer').hidden, false, '頁尾被包進 data-nosnippet');
+  const foot = one((e) => e.tag === 'footer', 'footer'), after = els.slice(els.indexOf(foot));
+  assert.equal(foot.hidden, false, '頁尾被包進 data-nosnippet');
+  assert.equal(after.find((e) => e.tag === 'p').hidden, false, '頁尾那句(Rushup、與 ETS 無關)被包進 data-nosnippet');
+  /* 頁尾的連結列(方案、條款、隱私、退款、客服信箱)跟頂欄一樣是一串連結字;nav 不能帶,外面包一層 div。有連結列的每一頁都一樣 */
+  const links = after.find((e) => e.tag === 'nav' && e.cls.indexOf('foot-links') > -1);
+  assert.ok(links && links.hidden && !links.own, '首頁頁尾的連結列沒包進 div data-nosnippet');
+  let rows = 0;
+  PAGES.forEach((f) => {
+    const s = read(f);
+    const all = (s.match(/<nav class="foot-links" aria-label="網站資訊">/g) || []).length;
+    rows += all;
+    assert.equal((s.match(/<div data-nosnippet><nav class="foot-links" aria-label="網站資訊">[^\n]*?<\/nav><\/div>/g) || []).length, all, f + ' 的頁尾連結列沒包進 div data-nosnippet');
+  });
+  assert.ok(rows >= 25, '有頁尾連結列的頁太少:' + rows);
   /* 站長刪過三次首頁 h1 下的說明句(3c18669、159e17d、22c78df):hero 裡只有 h1 和數字列 */
   assert.match(src, /<div class="hero-inner">\s*<h1>[^<]+<\/h1>\s*<div class="stats"/, '首頁 h1 下不掛介紹句');
 };
-T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的練習網站;數字列算的是實際資料;寫的題數是真的;不寫會變假的字'] = () => {
+T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上練習網站;關鍵字表寫的位置真的有;每日複習不接在模擬考後面;h1 不把詞拆兩行;數字列算的是實際資料;寫的題數是真的;不寫會變假的字'] = () => {
   const src = read('index.html'), s = head('index.html');
   const desc = meta(s, 'name', 'description');
   const org = JSON.parse(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/.exec(src)[1])['@graph'].find((x) => x['@type'] === 'OnlineBusiness');
   const man = JSON.parse(read('manifest.json'));
   const h1 = /<h1>([^<]+)<\/h1>/.exec(src)[1];
-  assert.match(desc, /^衝衝英文是準備多益用的英文練習網站。/, '首頁說明第一句要講是什麼站:' + desc);
+  assert.match(desc, /^衝衝英文是準備多益的線上英文練習網站。/, '首頁說明第一句要講是什麼站:' + desc);
   [titleOf(s), desc, h1, man.description].forEach((t) => assert.match(t, /多益/, t));
   [titleOf(s), desc, h1].forEach((t) => assert.ok(/聽力/.test(t) && /閱讀/.test(t), '要寫出主要練聽力、閱讀:' + t));
+  /* 定稿第六節關鍵字表寫的「放在哪」要真的放了:T 標題、D 說明、H h1、M manifest、J 結構化資料、C 首頁卡片 */
+  const spot = { T: titleOf(s), D: desc, H: h1, M: man.description, J: org.description,
+    C: Array.from(src.matchAll(/<a class="module-card"[^>]*>\s*<h2>([^<]+)<\/h2>\s*<p>([^<]+)<\/p>/g)).map((m) => m[1] + m[2]).join('|') };
+  [['練習', 'TDHJ'], ['線上', 'DJ'], ['聽力', 'TDHMJC'], ['閱讀', 'TDHMJC'], [/題庫|刷題/, 'TDHMJC'], ['單字', 'TDHMJC'], ['模擬考', 'TDMJC'], ['模擬試題', 'J'],
+    ['文法', 'DMJC'], ['Part 1–7', 'DMJ'], ['解析', 'DMJC'], ['每日複習', 'MJC'], ['自然發音', 'JC'], ['對話', 'JC'], ['寫作', 'JC'], ['TOEIC', 'J']].forEach(([w, at]) =>
+    at.split('').forEach((k) => assert.ok(w instanceof RegExp ? w.test(spot[k]) : spot[k].indexOf(w) > -1, '關鍵字表說「' + w + '」放在 ' + k + ',實際沒有:' + spot[k])));
+  assert.equal(spot.T.indexOf('寫作'), -1, '多益聽讀不考寫作,標題不放寫作');
+  /* 模擬考只存 mock_history,錯題不會進每日複習(js/review.js 只收題庫刷題、片語、單字、文法、發音):講每日複習的那句要接在題庫後面,不能排在模擬考後面 */
+  [spot.M, spot.J].forEach((t) => assert.ok(t.indexOf('每日複習') < t.indexOf('模擬考'), '每日複習要接在題庫刷題後面,不能接在模擬考後面:' + t));
+  /* h1 只在「：」「、」後面換行(.hero h1 用 word-break: keep-all;原本 360 寬斷成「刷 / 題」、320 寬斷成「閱 / 讀」),每段要在 320 寬一行放得下(手機 24px,一行 11 字) */
+  assert.match(read('css/style.css'), /\n\.hero h1 \{[^}]*word-break: keep-all;[^}]*\}/, '.hero h1 沒設 word-break: keep-all');
+  h1.split(/(?<=[：、])/).forEach((seg) => assert.ok(seg.length <= 11, 'h1 這段在 320 寬放不進一行:' + seg));
   /* 數字從資料數:題庫刷題的題目(閱讀 Part 5–7、聽力 Part 1–4)、文章的重點單字(不重複、不分大小寫) */
   const c = {}; c.window = c; vm.createContext(c);
   ['articles', 'part5', 'part6', 'part7', 'listening'].forEach((f) => vm.runInContext(read('data/' + f + '.js'), c));

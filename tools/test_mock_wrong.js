@@ -1,4 +1,4 @@
-/* 模擬考錯題收進錯題本(mock_wrong)與錯題本分組(定稿設計 2026-11-18,第 4.1 節 M1–M13)。
+/* 模擬考錯題收進錯題本(mock_wrong)與錯題本分組(定稿設計 2026-11-18,第 4.1 節 M1–M13;審查 2026-11-19 加 M14 答案不截斷、M15 SINCE 不早於上線)。
    node + vm:載真題庫 data/*.js、js/sync-merge.js、js/move-rules.js、js/move-merge.js、js/wrongbook.js;
    store 用假的(記每個鍵 get、set 幾次);passTypeLabel 從 js/common.js 抄出來跑。
    用法:node tools/test_mock_wrong.js */
@@ -350,6 +350,41 @@ T['M13 分頁暫存相容:新版留的 { pid, rec, ans } 舊版 saveLater 的篩
   const ok = oldFilter(entry) === true && clean.length === 200 && J(clean[0]) === J(['p5-a', 1]) && clean.every((x) => Array.isArray(x) && x.length === 2 && typeof x[0] === 'string' && Number.isInteger(x[1]))
     && J(W.cleanAns('不是陣列')) === '[]';
   return { ok, detail: J({ old: oldFilter(entry), n: clean.length, first: clean.slice(0, 3) }) };
+};
+
+/* 審查(2026-11-19)#1:錯題本每列的「你的答案」「正解」整句列出,跟學習記錄(js/history.js)一樣不截斷。
+   以前截在 30 字,Part 7、聽力大半的正解看不完整(題庫裡最長的選項 109 字) */
+T['M14 optText:選項整句列出不截斷(真題庫每一個選項);選的不在範圍內、題目壞掉回空字串'] = () => {
+  const W = WB();
+  const qs = TOEIC.part5.concat(...TOEIC.part6.map((s) => s.questions), ...TOEIC.part7.map((s) => s.questions), L.p1, L.p2,
+    ...L.p3.map((s) => s.questions), ...L.p4.map((s) => s.questions));
+  const bad = [];
+  let n = 0, long = 0;
+  qs.forEach((q) => (q.options || []).forEach((o, i) => {
+    n++;
+    if (String(o).length > 30) long++;
+    const want = 'ABCD'[i] + '. ' + o;
+    if (W.optText(q, i) !== want) bad.push(want.slice(0, 50));
+  }));
+  const q0 = TOEIC.part5[0];
+  const edge = [W.optText(q0, -1), W.optText(q0, q0.options.length), W.optText(q0, 1.5), W.optText(q0, '1'), W.optText(null, 0), W.optText({}, 0)];
+  const ok = n > 3000 && long > 1000 && bad.length === 0 && edge.every((x) => x === '');
+  return { ok, detail: J({ n, long, bad: bad.length, sample: bad.slice(0, 3), edge }) };
+};
+
+/* 審查(2026-11-19)#2:SINCE(js/wrongbook.js)是這一版上線的時間,模擬考首頁靠它說「X/X 改版以前的模擬考補不回來」,寧可晚不要早。
+   還沒上線(origin/main 還沒有 js/wrongbook.js)時:SINCE 要是台灣時間某天 23:59:59、在現在之後、兩天以內。
+   上線拖過那一天,這一項就擋下來,要把 SINCE 改成上線當天台灣時間 23:59:59。上線之後 SINCE 是過去的時間,不再檢查 */
+T['M15 SINCE:還沒上線時是台灣時間某天 23:59:59、在現在之後兩天以內;已上線不檢查'] = () => {
+  const W = WB();
+  const git = (a) => spawnSync('git', ['-C', REPO].concat(a), { encoding: 'utf8' });
+  const ref = git(['rev-parse', '--verify', '-q', 'origin/main^{commit}']);
+  if (ref.error || ref.status !== 0) return { ok: true, detail: '沒有 origin/main,判斷不了上線了沒,不檢查' };
+  if (git(['cat-file', '-e', 'origin/main:js/wrongbook.js']).status === 0) return { ok: true, detail: 'origin/main 已經有 js/wrongbook.js(上線了),不檢查' };
+  const since = Date.parse(W.SINCE), now = Date.now();
+  const tw = (t) => new Date(t + 8 * 3600e3).toISOString().slice(0, 19).replace('T', ' ');
+  const ok = typeof W.SINCE === 'string' && /T15:59:59\.000Z$/.test(W.SINCE) && isFinite(since) && since > now && since - now <= 2 * 864e5;
+  return { ok, detail: J({ SINCE: W.SINCE, 台灣: isFinite(since) ? tw(since) : null, 現在台灣: tw(now), 還有幾小時: isFinite(since) ? Math.round((since - now) / 36e5 * 10) / 10 : null }) };
 };
 
 /* ================= M12:搬家規則、雲端合併表(讀原始碼) ================= */

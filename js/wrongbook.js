@@ -16,8 +16,8 @@
   const MAX = 1500;   // 跟 SYNC_MERGE.mockWrong 的上限一樣
   /* 這一版上線的時間(UTC ISO)。模擬考首頁:最近 8 筆紀錄有早於它的,就說明那幾次的錯題沒有收進來(說明裡的日期也從這裡來)。
      寧可晚不要早:比上線早的話,上線前用舊版交卷的那幾次不會被說明到;晚一點只是上線後當天交卷的也看到這行說明。
-     現在是上線當天台灣時間 23:59:59(11/18);上線日延到之後要跟著改 */
-  const SINCE = '2026-11-18T15:59:59.000Z';
+     現在是預定上線那天(11/19)台灣時間 23:59:59。上線拖過這個時間,tools/test_mock_wrong.js M15 會擋下來,要改成上線當天台灣時間 23:59:59 */
+  const SINCE = '2026-11-19T15:59:59.000Z';
   const PARTS = Object.freeze(['5', '6', '7', '1', '2', '3', '4']);
   const TITLE = Object.freeze({ '5': 'Part 5 單句填空', '6': 'Part 6 段落填空', '7': 'Part 7 閱讀理解',
     '1': '聽力 Part 1 照片描述', '2': '聽力 Part 2 應答', '3': '聽力 Part 3 簡短對話', '4': '聽力 Part 4 簡短獨白' });
@@ -203,7 +203,7 @@
     return { ok, wrong, cleared };
   }
 
-  /* 清單上的字(用字照學習記錄 js/history.js):題目最多 max 字,選項最多 30 字 */
+  /* 清單上的字(用字照學習記錄 js/history.js):題目最多 max 字;選項整句列出,跟學習記錄一樣不截(審查 2026-11-19:截在 30 字時 Part 7、聽力大半的正解看不完整) */
   const cut = (s, n) => { const t = String(s === undefined || s === null ? '' : s); return t.length > n ? t.slice(0, n) + '…' : t; };
   function stem(x, max) {
     const n = max || 90, q = x.q;
@@ -213,10 +213,10 @@
     if (x.p === '1') return cut(q.photoAlt ? cut(q.photoAlt, 40) : '照片描述題', n);
     return cut(q.q, n);
   }
-  function optText(q, c, max) {
+  function optText(q, c) {
     const L = typeof LETTERS !== 'undefined' && Array.isArray(LETTERS) ? LETTERS : ['A', 'B', 'C', 'D'];
     if (!q || !Number.isInteger(c) || c < 0 || !q.options || c >= q.options.length) return '';
-    return L[c] + '. ' + cut(q.options[c], max || 30);
+    return L[c] + '. ' + String(q.options[c]);
   }
 
   root.WRONGBOOK = Object.freeze({

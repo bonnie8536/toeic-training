@@ -2770,6 +2770,7 @@ T['錯題本 U11–U13、U15:聽力網址直接開、聽力 3 一段一組、聽
   /* U15:模擬考首頁(最近 8 筆有一筆早於上線 → 有那行;全部晚於 → 沒有) */
   const rec = (d) => ({ d, size: 'quick', lRaw: 3, lTotal: 12, rRaw: 4, rTotal: 18, lScore: 85, rScore: 85 });
   const SINCE = Date.parse(/const SINCE = '([^']+)'/.exec(fs.readFileSync(path.join(REPO, 'js/wrongbook.js'), 'utf8'))[1]);
+  r.sinceDay = (new Date(SINCE).getMonth() + 1) + '/' + new Date(SINCE).getDate();   // 說明開頭的日期就是 SINCE 那天(Chrome 跟 node 同一個時區)
   for (const [name, list] of [['old', [rec(new Date(SINCE - 864e5).toISOString()), rec(new Date(SINCE + 3600e3).toISOString())]], ['new', [rec(new Date(SINCE + 3600e3).toISOString())]]]) {
     s = await open(B, { url: 'mock.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login0(), [AK('mock_history')]: J(list) } });
     try { r['mock_' + name] = await s.eval("(document.querySelector('.mock-old-note') || {}).textContent || ''"); } finally { await s.close(); }
@@ -2781,7 +2782,7 @@ T['錯題本 U11–U13、U15:聽力網址直接開、聽力 3 一段一組、聽
       '8 題|查看>practice.html?mode=wrong&part=2', '2 題|查看>practice.html?mode=wrong&part=3', '2 題|查看>practice.html?mode=wrong&part=4'])
     && r.an.n > 9 && r.an.h3 && r.an.before === 'false' && r.an.after === 'true' && r.an.p7.length > 2 && r.an.p7.indexOf('多篇閱讀') === r.an.p7.length - 1 && !r.an.old
     && J(r.an.links) === J(['practice.html?mode=wrong&part=5', 'practice.html?mode=wrong&part=6', 'practice.html?mode=wrong&part=7'])
-    && /改版以前的模擬考只存了分數/.test(r.mock_old) && r.mock_new === '';
+    && r.mock_old.indexOf(r.sinceDay + ' 改版以前的模擬考只存了分數') === 0 && r.mock_new === '';
   return { ok, detail: J(r) };
 };
 
@@ -2876,7 +2877,8 @@ T['錯題本 U17:practice.html#wrongbook 捲到錯題本面板時,「錯題本�
 };
 
 /* 審查 #3:手機上「你的答案」「正解」各佔一行,標籤和答案不分開(以前「· 正⏎解：D. …」);桌機也不能把標籤拆開 */
-T['錯題本 U18:每列「你的答案：…」「正解：…」:手機(375、320)各佔一行、標籤和答案同一行;桌機標籤不拆開'] = async (B) => {
+/* 審查(2026-11-19)#1 加:答案整句列出,跟學習記錄一樣不截斷(以前截在 30 字,Part 7、聽力大半的正解看不完整);整句變長了手機照樣不出現橫向捲動 */
+T['錯題本 U18:每列「你的答案：…」「正解：…」整句列出不截斷;手機(375、320)各佔一行、標籤和答案同一行、不橫向捲動;桌機標籤不拆開'] = async (B) => {
   const st = wbStudent();
   const L1 = BANK.listening.p1, day = Date.now() - 864e5, l1 = {};
   L1.slice(0, 4).forEach((q, i) => { l1[q.id] = { c: wrongOf(q), ok: false, t: day + i }; });
@@ -2889,21 +2891,36 @@ T['錯題本 U18:每列「你的答案：…」「正解：…」:手機(375、3
     rows.forEach((a) => { const y = a.querySelector('.wb-you'), k = a.querySelector('.wb-key');
       if ((y && !line(y, '你的答案：'.length + 1)) || !line(k, '正解：'.length + 1)) split++;
       if (y && k.getClientRects()[0].top < y.getClientRects()[y.getClientRects().length - 1].bottom - 2) same++; });
-    return { rows: rows.length, split, same, sw: document.documentElement.scrollWidth };
+    const texts = rows.map((a) => [a.querySelector('.wb-you') ? a.querySelector('.wb-you').textContent : null, a.querySelector('.wb-key').textContent]);
+    return { rows: rows.length, split, same, sw: document.documentElement.scrollWidth, texts };
   })()`;
-  const out = {};
+  /* 每個 Part 題庫裡所有「字母. 選項全文」 */
+  const QS = { '7': BANK.part7.flatMap((x) => x.questions), '6': BANK.part6.flatMap((x) => x.questions), '1': L1, '2': BANK.listening.p2, '4': BANK.listening.p4.flatMap((x) => x.questions) };
+  const FULL = {};
+  Object.keys(QS).forEach((p) => { FULL[p] = new Set(QS[p].flatMap((q) => (q.options || []).map((o, i) => 'ABCD'[i] + '. ' + o))); });
+  const out = {}, cut = [];
+  let long = 0;
   for (const w of [375, 320, 1280]) {
     const s = await open(B, { url: 'practice.html?mode=wrong&part=7', user: true, sdk: fakeCloud({ user: USER }), ls, size: w === 1280 ? null : { width: w, height: 740 } });
     try {
-      for (const p of ['7', '1', '2', '4']) {
+      for (const p of ['7', '6', '1', '2', '4']) {
         if (p !== '7') { await s.go('practice.html?mode=wrong&part=' + p); await sleep(700); }
         await s.eval("document.querySelectorAll('.wb-toggle').forEach((b) => { if (b.getAttribute('aria-expanded') !== 'true') b.click(); }); true");
-        out[w + '/' + p] = await s.eval(CHECK);
+        const got = await s.eval(CHECK);
+        got.texts.forEach(([you, key]) => [[you, '你的答案：'], [key, '正解：']].forEach(([t, lab]) => {
+          if (t === null) return;
+          const a = t.indexOf(lab) === 0 ? t.slice(lab.length) : null;
+          if (a === null || !FULL[p].has(a)) cut.push(w + '/' + p + ' ' + t.slice(0, 60));
+          else if (a.length > 33) long++;
+        }));
+        delete got.texts;
+        out[w + '/' + p] = got;
       }
     } finally { await s.close(); }
   }
-  const ok = Object.keys(out).every((k) => out[k].rows > 0 && out[k].split === 0 && (/^1280/.test(k) || out[k].same === 0) && out[k].sw <= Number(k.split('/')[0]));
-  return { ok, detail: J(out) };
+  const ok = Object.keys(out).every((k) => out[k].rows > 0 && out[k].split === 0 && (/^1280/.test(k) || out[k].same === 0) && out[k].sw <= Number(k.split('/')[0]))
+    && cut.length === 0 && long > 0;
+  return { ok, detail: J({ cut: cut.length, long, sample: cut.slice(0, 4), out }) };
 };
 
 /* 第 i 題(第 i 個 .opts)的第 o 個選項,真的滑鼠點 */

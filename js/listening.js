@@ -1,5 +1,5 @@
 /* 聽力刷題引擎(掛在題庫刷題頁使用):
-   window.LISTEN = { PARTS, partStats, startQuiz(rootEl, config), startReview(rootEl, p) }
+   window.LISTEN = { PARTS, partStats, startQuiz(rootEl, config), startReview(rootEl, p, g) }(g:錯題本的組名,錯題本定稿 2026-11-18)
    - config = [{p:'1'|'2'|'3'|'4', n}] 可混合;作答前每題限播 2 次,答後解鎖+逐字稿。
    - 紀錄存 listen_p1~p4(雲端同步)。 */
 (function () {
@@ -106,20 +106,25 @@
   }
 
   /* ================= 混合聽力練習 ================= */
+  /* opts.units:直接給這一輪的單元 [{ p, item }](錯題本複習,js/wrongbook.js 的 round 算好的),不呼叫 pickPool。
+     opts.back:「回錯題本」的網址;opts.group:只複習的那一組(組名);opts.rest、opts.n:這一組還沒輪到幾題、這一回幾題 */
   function startQuiz(root, config, opts) {
     opts = opts || {};
     const units = [];
-    config.forEach(c => pickPool(c.p, c.n, opts.wrongOnly).forEach(item => units.push({ p: c.p, item })));
-    if (opts.wrongOnly) config.forEach(() => {});
+    if (Array.isArray(opts.units)) opts.units.forEach(u => units.push(u));
+    else config.forEach(c => pickPool(c.p, c.n, opts.wrongOnly).forEach(item => units.push({ p: c.p, item })));
+    const back = opts.back || 'practice.html';
     if (!units.length) {
       root.innerHTML = '';
-      root.append(h('div', { class: 'q-block', style: 'margin-top:20px' }, opts.wrongOnly ? '目前沒有聽力錯題。' : '沒有題目。'),
-        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
+      root.append(h('div', { class: 'q-block', style: 'margin-top:20px' }, opts.wrongOnly ? (opts.group ? '這一組已經沒有錯題。' : '目前沒有聽力錯題。') : '沒有題目。'),
+        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: back }, opts.back ? '回錯題本' : '回題庫')));
       return;
     }
+    const n = opts.n || units.reduce((k, u) => k + (u.p === '1' || u.p === '2' ? 1 : u.item.questions.length), 0);
     const sub = opts.wrongOnly
-      ? '錯題複習 · ' + units.length + ' 單元'
+      ? (opts.units ? (opts.group ? opts.group + ' · ' : '') + '這一回 ' + n + ' 題，答對就移出' : '錯題複習 · ' + units.length + ' 單元')
       : config.map(c => 'Part ' + c.p + ' × ' + c.n + ' ' + PARTS[c.p].unit).join(' · ');
+    const heading = opts.wrongOnly && opts.units ? '聽力 ' + PARTS[config[0].p].title + ' 錯題本 ' : '聽力練習 ';
     /* 一般練習=交卷式(答完全部才對答案);錯題複習=即時對答(答對才移出) */
     const instant = !!opts.wrongOnly;
     const sess = units.map(() => ({ done: false, answers: {}, plays: 0 }));
@@ -139,8 +144,8 @@
       if (player) player.stop();
       root.innerHTML = '';
       root.append(h('div', { class: 'drill-top' },
-        h('h1', null, '聽力練習 ', h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' }, sub)),
-        h('a', { href: 'practice.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回題庫')));
+        h('h1', null, heading, h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' }, sub)),
+        h('a', { href: back, style: 'font-size:13.5px;margin-left:auto' }, opts.back ? '← 回錯題本' : '← 回題庫')));
       const nav = h('div', { class: 'q-nav' });
       units.forEach((x, i) => {
         let cls = i === cur ? 'cur' : '';
@@ -449,19 +454,29 @@
           u.item.questions.forEach((q, qi) => { qTotal++; if (sess[i].answers[qi] === q.answer) qCorrect++; });
         }
       });
+      const rest = opts.wrongOnly && opts.units ? opts.rest || 0 : 0;
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
         h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),
-        qTotal - qCorrect ? h('div', { class: 'band-note' }, '答錯的題目已收進錯題本。') : null));
+        qTotal - qCorrect ? h('div', { class: 'band-note' }, '答錯的題目已收進錯題本。') : null,
+        rest > 0 ? h('div', { class: 'band-note' }, (opts.group ? '這一組' : '這個 Part') + '還有 ' + rest + ' 題還沒複習。') : null));
       root.append(h('div', { class: 'drill-nav-btns' },
         opts.wrongOnly ? null : h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(root, config) }, '再練一輪'),
-        h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
+        rest > 0 ? h('a', { class: 'btn primary', 'data-gate': '', href: 'practice.html?mode=review&part=' + config[0].p + (opts.group ? '&g=' + encodeURIComponent(opts.group) : '') }, '下一回') : null,
+        h('a', { class: 'btn', href: back }, opts.back ? '回錯題本' : '回題庫')));
       window.scrollTo(0, 0);
       if (window.PET_HOOK) PET_HOOK.done(opts.wrongOnly ? 'pr' : 'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: root.querySelector('.report-head') });
     }
   }
 
-  function startReview(root, p) {
-    startQuiz(root, [{ p, n: 999 }], { wrongOnly: true });
+  /* 錯題本複習(practice.html?mode=review&part=1~4&g=組名):單元從 js/wrongbook.js 的 round 來(含模擬考答錯的題,一回有上限,
+     題組裡任何一題錯就算,只答一半的題組也在);沒載到就照以前從刷題紀錄挑 */
+  function startReview(root, p, g) {
+    const W = window.WRONGBOOK;
+    if (!W) { startQuiz(root, [{ p, n: 999 }], { wrongOnly: true }); return; }
+    document.title = '聽力 ' + PARTS[p].title + ' 錯題本 - 衝衝英文';
+    const r = W.round(p, g || null);
+    startQuiz(root, [{ p, n: r.units.length }], { wrongOnly: true, units: r.units.map(item => ({ p, item })),
+      back: 'practice.html?mode=wrong&part=' + p, group: g || '', rest: r.rest, n: r.n });
   }
 
   window.LISTEN = { PARTS, partStats, startQuiz, startReview };

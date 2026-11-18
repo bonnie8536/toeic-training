@@ -1213,6 +1213,28 @@ table.cat-table td.num { white-space: nowrap; }
   margin: 4px 0;
 }
 
+/* 錯題本分組(js/wrongbook-ui.js,錯題本頁與能力分析共用):沿用上面的錯題分類列,組的標題列右邊多一個「複習」 */
+.wb-tools { margin: 4px 0 8px; }
+.wb-tools .btn { padding: 4px 14px; font-size: 13.5px; }
+.wb-start { margin: 0 0 18px; }
+.wb-head { display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--line); }
+.wb-head .wrong-cat-row { border-top: none; flex: 1; min-width: 0; justify-content: flex-start; gap: 8px; }
+.wb-h { margin: 0; font-size: inherit; font-weight: inherit; flex: 1; min-width: 0; }
+.wb-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.wb-head .wrong-cat-row b, .wb-go { flex: none; }
+.wb-head .wb-go { padding: 4px 14px; font-size: 13.5px; margin: 4px 0; }   /* 跟 .review-row .btn 一樣;要比檔案後面的 .btn 規則具體 */
+.wb-caret { flex: none; color: var(--ink-light); font-size: 12px; transition: transform .15s; }
+.wb-toggle[aria-expanded="true"] .wb-caret { transform: rotate(180deg); }
+.wb-toggle:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.wb-item { padding-top: 6px; padding-bottom: 6px; }
+.wb-meta { font-size: 12.5px; color: var(--ink-light); }
+.wb-stem { color: var(--ink); overflow-wrap: anywhere; margin: 2px 0; }
+.wb-ans { overflow-wrap: anywhere; }
+.wb-you { color: var(--bad); }
+.wb-key { color: var(--ok); }
+.wb-groups { margin-bottom: 40px; }
+.q-block .wb-groups { margin-bottom: 0; }
+
 @media print {
   .topbar, .drill-nav-btns, .no-print, footer { display: none !important; }
   body { font-size: 13px; }

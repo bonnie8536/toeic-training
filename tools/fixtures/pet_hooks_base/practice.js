@@ -67,10 +67,16 @@
     return [...shuffle(fresh), ...shuffle(wrong), ...shuffle(done)].slice(0, n);
   }
 
-  /* ---------- 路由 ---------- */
+  /* ---------- 路由 ----------
+     錯題本(錯題本定稿 2026-11-18):?mode=wrong&part=N 是那個 Part 的錯題本清單(js/wrongbook-ui.js);
+     ?mode=review&part=N(&g=組名)複習整個 Part 或只複習一組,一回有上限。聽力的 part(1–4)只有 window.LISTEN 在才走 */
   const mode = getParam('mode');
   const partParam = getParam('part');
-  if (mode === 'review' && DATA[partParam]) startReview(partParam);
+  const listenPart = p => !!window.LISTEN && ['1', '2', '3', '4'].indexOf(p) > -1;
+  const WB = window.WRONGBOOK || null;
+  if (mode === 'wrong' && (DATA[partParam] || listenPart(partParam))) renderWrong(partParam);
+  else if (mode === 'review' && DATA[partParam]) startReview(partParam, getParam('g'));
+  else if (mode === 'review' && listenPart(partParam)) { LISTEN.startReview(root, partParam, getParam('g')); }
   else if (partParam && DATA[partParam]) {
     // 相容程度檢測報告的深連結:直接開一輪隨機練習
     startQuiz([{ p: partParam, n: partParam === '5' ? 10 : 2, cat: getParam('cat') || 'all' }]);
@@ -151,27 +157,34 @@
             startQuiz(config);
           },
         }, '開始練習')),
-      h('div', { class: 'practice-panel' },
+      /* 錯題本面板:每個 Part 一列「N 題 + 查看」,查看連到那個 Part 的錯題本清單(一組一組,點開才看到題目)。
+         題數含模擬考答錯的題(js/wrongbook.js);沒載到就照以前只算刷題紀錄,按鈕照舊直接複習 */
+      h('div', { class: 'practice-panel', id: 'wrongbook' },
         h('h2', null, '錯題本'),
         h('div', { class: 'review-rows' },
           ['5', '6', '7'].map(p => {
-            const s = partStats(p);
+            const n = WB ? WB.count(p) : partStats(p).wrong;
             return h('div', { class: 'review-row' },
               h('span', null, DATA[p].title),
-              h('b', { style: s.wrong ? 'color:var(--bad)' : 'color:var(--ok)' }, s.wrong + ' 題'),
-              s.wrong
-                ? h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(p) }, '複習')
-                : h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題'));
+              h('b', { style: n ? 'color:var(--bad)' : 'color:var(--ok)' }, n + ' 題'),
+              !n ? h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題')
+                : WB ? h('a', { class: 'btn', href: 'practice.html?mode=wrong&part=' + p }, '查看')
+                  : h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(p) }, '複習'));
           }),
           window.LISTEN ? ['1', '2', '3', '4'].map(p => {
-            const s = LISTEN.partStats(p);
+            const n = WB ? WB.count(p) : LISTEN.partStats(p).wrong;
             return h('div', { class: 'review-row' },
               h('span', null, '聽力 ' + LISTEN.PARTS[p].title),
-              h('b', { style: s.wrong ? 'color:var(--bad)' : 'color:var(--ok)' }, s.wrong + ' 題'),
-              s.wrong
-                ? h('button', { class: 'btn', 'data-gate': '', onclick: () => { root.innerHTML = ''; LISTEN.startReview(root, p); window.scrollTo(0, 0); } }, '複習')
-                : h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題'));
+              h('b', { style: n ? 'color:var(--bad)' : 'color:var(--ok)' }, n + ' 題'),
+              !n ? h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題')
+                : WB ? h('a', { class: 'btn', href: 'practice.html?mode=wrong&part=' + p }, '查看')
+                  : h('button', { class: 'btn', 'data-gate': '', onclick: () => { root.innerHTML = ''; LISTEN.startReview(root, p); window.scrollTo(0, 0); } }, '複習'));
           }) : null))));
+    /* practice.html#wrongbook(模擬考結果、每日複習連過來):面板是 JS 畫的,瀏覽器自己不會捲過去 */
+    if (location.hash === '#wrongbook') {
+      const panel = document.getElementById('wrongbook');
+      if (panel) setTimeout(() => panel.scrollIntoView({ block: 'start' }), 0);
+    }
 
     /* 聽力隨機練習面板 */
     if (window.LISTEN) {
@@ -275,10 +288,19 @@
     logAttempt('p' + p, id, oi, ok);
   }
 
-  function topBar(title, sub) {
+  /* back:錯題本複習時給 Part,右邊的連結變成「← 回錯題本」(那個 Part 的錯題本清單) */
+  function topBar(title, sub, back) {
     return h('div', { class: 'drill-top' },
       h('h1', null, title, ' ', h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' }, sub || '')),
-      h('a', { href: 'practice.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回題庫'));
+      back ? h('a', { href: 'practice.html?mode=wrong&part=' + back, style: 'font-size:13.5px;margin-left:auto' }, '← 回錯題本')
+        : h('a', { href: 'practice.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回題庫'));
+  }
+
+  /* ================= 錯題本清單(?mode=wrong&part=N) ================= */
+  function renderWrong(p) {
+    if (window.WRONGBOOK_UI) { WRONGBOOK_UI.renderList(root, p); return; }
+    document.title = '錯題本 - 衝衝英文';
+    root.append(topBar('錯題本'), h('div', { class: 'q-block' }, '錯題本沒有載入完成，請重新整理。'));
   }
 
   function sessionDots(list, cur, results, onJump, answered) {
@@ -495,13 +517,23 @@
     }
   }
 
-  /* ================= 錯題本 ================= */
-  function startReview(p) {
+  /* ================= 錯題本 =================
+     g:只複習這一組(組名,js/wrongbook.js 的分組);不給就是整個 Part。一回有上限(WRONGBOOK.ROUND),最早錯的先出。
+     題目含模擬考答錯的題(mock_wrong);作答照舊寫 drill_p*(saveRec),答對那筆比模擬考那筆新,自然移出 */
+  function startReview(p, g) {
     const d = DATA[p];
     document.title = d.title + ' 錯題本 - 衝衝英文';
     const st = store.get(KEY(p), {});
     let units;                    // p5: 題;p6/7: {set, wrongKeys}
-    if (p === '5') {
+    let rest = 0, n = 0;          // 這一組還沒輪到幾題、這一回幾題
+    if (!WB && g) {               // 分組要 js/wrongbook.js;沒載到不要默默複習整個 Part
+      root.append(topBar(d.title + ' 錯題本', g, p), h('div', { class: 'q-block' }, '錯題本沒有載入完成，請重新整理。'));
+      return;
+    }
+    if (WB) {
+      const r = WB.round(p, g || null);
+      units = r.units; rest = r.rest; n = r.n;
+    } else if (p === '5') {
       units = DATA['5'].items.filter(q => st[q.id] && !st[q.id].ok);
     } else {
       units = [];
@@ -512,10 +544,13 @@
     }
     if (!units.length) {
       root.innerHTML = '';
-      root.append(topBar(d.title + ' 錯題本'), h('div', { class: 'q-block' }, '目前沒有錯題。'),
-        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
+      root.append(topBar(d.title + ' 錯題本', g || '', p), h('div', { class: 'q-block' }, g ? '這一組已經沒有錯題。' : '目前沒有錯題。'),
+        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: 'practice.html?mode=wrong&part=' + p }, '回錯題本')));
       return;
     }
+    const sub = WB
+      ? (g ? g + ' · ' : '') + '這一回 ' + (p === '5' ? n + ' 題' : units.length + ' 組（' + n + ' 題）') + '，答對就移出'
+      : '共 ' + units.length + ' ' + d.unit + '，答對就移出';
     const session = {};           // 單元 idx → {qKey:{c,ok}} (p5 用 {c,ok})
     const okFlags = [];
     let cur = 0, cleared = 0;
@@ -523,7 +558,7 @@
 
     function draw() {
       root.innerHTML = '';
-      root.append(topBar(d.title + ' 錯題本', '共 ' + units.length + ' ' + d.unit + '，答對就移出'));
+      root.append(topBar(d.title + ' 錯題本', sub, p));
       root.append(sessionDots(units, cur, okFlags));
       if (p === '5') drawP5(); else drawSet();
     }
@@ -604,12 +639,15 @@
 
     function summary() {
       root.innerHTML = '';
-      root.append(topBar(d.title + ' 錯題本'));
+      root.append(topBar(d.title + ' 錯題本', '', p));
+      const again = 'practice.html?mode=review&part=' + p + (g ? '&g=' + encodeURIComponent(g) : '');
       root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
         h('h2', null, '移出 ' + cleared + ' 題'),
-        h('div', { class: 'band-note' }, '沒答對的留在錯題本，隔天再試。')));
+        h('div', { class: 'band-note' }, '沒答對的留在錯題本，隔天再試。'),
+        rest > 0 ? h('div', { class: 'band-note' }, (g ? '這一組' : '這個 Part') + '還有 ' + rest + ' 題還沒複習。') : null));
       root.append(h('div', { class: 'drill-nav-btns' },
-        h('a', { class: 'btn primary', href: 'practice.html' }, '回題庫')));
+        rest > 0 ? h('a', { class: 'btn primary', 'data-gate': '', href: again }, '下一回') : null,
+        h('a', { class: rest > 0 ? 'btn' : 'btn primary', href: 'practice.html?mode=wrong&part=' + p }, '回錯題本')));
       window.scrollTo(0, 0);
     }
   }

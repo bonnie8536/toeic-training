@@ -1,7 +1,9 @@
 /* 模擬考:照正式節奏的計時測驗。
    - 從現有題庫隨機抽題(聽力+閱讀),全程倒數,時間到自動交卷。
    - 聽力每題音檔只能播一次(正式考規則);全部交卷後才對答案。
-   - 分數為參考換算(樣本小,僅供追蹤趨勢);紀錄存 mock_history(雲端同步)。 */
+   - 分數為參考換算(樣本小,僅供追蹤趨勢);紀錄存 mock_history(雲端同步)。
+   - 交卷時答錯的題收進錯題本(mock_wrong,js/wrongbook.js;錯題本定稿 2026-11-18)。沒作答的不收;原本在錯題本、這次答對的移出。
+     不寫 drill_p*、listen_p*、hist(那幾個鍵是整份上傳,模擬考頁寫它們會蓋掉別台在考試期間刷的題)。 */
 (function () {
   const root = $('#mock-root');
   const LDATA = (window.TOEIC && TOEIC.listening) || null;
@@ -66,6 +68,9 @@
     const m = S && typeof S.mock === 'function' ? S.mock(Array.isArray(hist) ? hist : [], recs) : null;   // 同一筆不會變兩筆,照日期排
     store.set('mock_history', (m && m.ok ? m.v : (Array.isArray(hist) ? hist : []).concat(recs)).slice(-30));
   }
+  /* 補存:分數照舊補進 mock_history;那一筆帶著作答(ans,錯題本定稿 2026-11-18)就順便把答錯的題補進錯題本(js/wrongbook.js)。
+     對錯在這裡用題庫重算,不信任暫存裡的東西;mock_wrong 同一題已經有比較新的,合併時留新的,重跑結果一樣。
+     分數和錯題都確認寫進去了才從暫存拿掉。舊版 mock.js 讀到帶 ans 的暫存只看 rec(分數照補、ans 丟掉) */
   function saveLater() {
     const all = laterList();
     const mine = all.filter(x => x && x.pid === window.__PROFILE_ID && x.rec && typeof x.rec.d === 'string');
@@ -74,6 +79,11 @@
     const after = store.get('mock_history', []);
     const kept = new Set((Array.isArray(after) ? after : []).map(r => r && r.d));
     if (!mine.every(x => kept.has(x.rec.d))) return false;   // 沒寫進去:留著下次再補
+    const wrongOk = mine.every(x => {
+      if (!Array.isArray(x.ans) || !window.WRONGBOOK) return true;
+      try { return WRONGBOOK.save(WRONGBOOK.fromAnswers(WRONGBOOK.cleanAns(x.ans), Date.parse(x.rec.d))).ok; } catch (e) { return false; }
+    });
+    if (!wrongOk) return false;   // 錯題沒寫進去:留著下次再補(分數已經在,同一筆合併時不會變兩筆)
     setLater(all.filter(x => mine.indexOf(x) < 0));
     return true;
   }
@@ -118,6 +128,13 @@
           h('td', { class: 'num' }, h('b', null, r.lScore + r.rScore))));
       });
       root.append(table);
+      /* 這一版以前交卷的只存了分數(沒有每題選什麼),答錯的題補不回錯題本:最近 8 筆裡有那種的就照實講。捲出最近 8 筆之後這行就不見 */
+      const W = window.WRONGBOOK;
+      if (W && typeof W.SINCE === 'string' && hist.slice(-8).some(r => r && typeof r.d === 'string' && r.d < W.SINCE)) {
+        const since = new Date(W.SINCE);
+        root.append(h('p', { class: 'result-note mock-old-note' },
+          (since.getMonth() + 1) + '/' + since.getDate() + ' 改版以前的模擬考只存了分數，答錯的題沒有收進錯題本；之後交卷的會自動收進去。'));
+      }
     }
   }
 
@@ -344,6 +361,19 @@
     }
 
     /* ---------- 交卷與結果 ---------- */
+    /* 這次作答了哪幾題:[[題目 key, 選的]](只收有作答的;key 跟刷題、聽力的紀錄一樣,js/wrongbook.js 用) */
+    function answered() {
+      const out = [];
+      units.forEach((u, i) => {
+        const a = sess[i].answers;
+        if (u.p === '5' || u.p === '1' || u.p === '2') { if (Number.isInteger(a.c)) out.push([u.item.id, a.c]); return; }
+        u.item.questions.forEach((q, qi) => {
+          const k = u.p === '6' ? q.num : qi;
+          if (Number.isInteger(a[k])) out.push([u.p === '6' ? u.item.id + ':' + q.num : qid(u.item, qi), a[k]]);
+        });
+      });
+      return out;
+    }
     function submit(timeUp, asked) {
       if (over) return;
       if (!timeUp && !asked) {
@@ -370,36 +400,53 @@
       const lScore = scaled(lTotal ? lRaw / lTotal : 0);
       const rScore = scaled(rTotal ? rRaw / rTotal : 0);
       const rec = { d: new Date().toISOString(), size: sizeKey, lRaw, lTotal, rRaw, rTotal, lScore, rScore };
-      let unsaved = '';
+      const ans = answered();
+      let unsaved = '', wb = null;
       if (canSaveNow()) {
         const hist = store.get('mock_history', []);
         hist.push(rec);
         store.set('mock_history', hist.slice(-30));
+        /* 答錯的題收進錯題本(mock_wrong,錯題本定稿 2026-11-18):t 跟這一筆 mock_history 同一毫秒。出錯不影響成績 */
+        if (window.WRONGBOOK) { try { wb = WRONGBOOK.save(WRONGBOOK.fromAnswers(ans, Date.parse(rec.d))); } catch (e) { wb = null; } }
       } else {
-        /* 存不進去:先放這個分頁,寫明原因(js/common.js accountBlock);放不進 sessionStorage 就只能請他記下分數 */
+        /* 存不進去:先放這個分頁,寫明原因(js/common.js accountBlock);放不進 sessionStorage 就只能請他記下分數。
+           作答(只有 [題目 key, 選的])一起放,補存時才用題庫算對錯、收進錯題本 */
         const why = typeof accountBlock === 'function' ? accountBlock() : '';
-        unsaved = !setLater(laterList().concat([{ pid: window.__PROFILE_ID, rec }])) ? 'lost' : why === 'gone' ? 'gone' : why === 'loading' ? 'loading' : 'other';
+        unsaved = !setLater(laterList().concat([{ pid: window.__PROFILE_ID, rec, ans }])) ? 'lost' : why === 'gone' ? 'gone' : why === 'loading' ? 'loading' : 'other';
       }
 
-      results(timeUp, lRaw, lTotal, rRaw, rTotal, lScore, rScore, unsaved);
+      results(timeUp, lRaw, lTotal, rRaw, rTotal, lScore, rScore, unsaved, wb, lTotal + rTotal - ans.length);
     }
 
     /* 這次成績還沒存進紀錄的說明(unsaved:'gone' 別的分頁登出或換帳號、'loading' 帳號資料夾還沒從雲端灌好、'other'、'lost' 連這個分頁都放不進去) */
     const UNSAVED = {
-      gone: '這個帳號在別的分頁登出或換了帳號，這次成績存不進去，先留在這個分頁。在這個分頁用原本的帳號登入、回到模擬考頁就會自動補存；關掉這個分頁就不會留。',
-      loading: '這一頁還沒從雲端拿到你的練習紀錄，這次成績先留在這個分頁。網路恢復後重新整理，就會自動補存；關掉這個分頁就不會留。',
-      other: '這次成績先留在這個分頁，在這個分頁回到交卷時的帳號或學生、再開模擬考頁就會自動補存；關掉這個分頁就不會留。',
-      lost: '這個瀏覽器不讓網頁暫存，這次成績沒辦法留下來，請先記下分數。',
+      gone: '這個帳號在別的分頁登出或換了帳號，這次成績和錯題存不進去，先留在這個分頁。在這個分頁用原本的帳號登入、回到模擬考頁就會自動補存；關掉這個分頁就不會留。',
+      loading: '這一頁還沒從雲端拿到你的練習紀錄，這次成績和錯題先留在這個分頁。網路恢復後重新整理，就會自動補存；關掉這個分頁就不會留。',
+      other: '這次成績和錯題先留在這個分頁，在這個分頁回到交卷時的帳號或學生、再開模擬考頁就會自動補存；關掉這個分頁就不會留。',
+      lost: '這個瀏覽器不讓網頁暫存，這次成績和錯題沒辦法留下來，請先記下分數。',
     };
     function unsavedNote(unsaved) {
       if (!unsaved) return null;
       return h('div', { class: 'mock-unsaved', role: 'status' },
-        h('b', null, '這次成績還沒存進紀錄'),
+        h('b', null, '這次成績和錯題還沒存進紀錄'),
         h('p', null, UNSAVED[unsaved] || UNSAVED.other),
         unsaved === 'lost' ? null : h('button', { class: 'btn', type: 'button', onclick: () => location.reload() }, '重新整理'));
     }
 
-    function results(timeUp, lRaw, lTotal, rRaw, rTotal, lScore, rScore, unsaved) {
+    /* 錯題收進錯題本的那一行:只有寫完讀回來確認過(wb.ok)才說「已收進」;存不進去時上面「還沒存」那一塊照舊說明 */
+    function wrongNote(wb, skipped) {
+      if (!wb || !wb.ok) return null;
+      const parts = [];
+      if (wb.wrong > 0) parts.push('答錯的 ' + wb.wrong + ' 題已收進錯題本。');
+      else if (skipped < units.reduce((n, u) => n + unitQs(u), 0)) parts.push('這次沒有答錯的題。');   // 有作答、沒有答錯
+      if (wb.cleared > 0) parts.push('原本在錯題本的 ' + wb.cleared + ' 題這次答對，已經移出。');
+      if (skipped > 0) parts.push('沒作答的 ' + skipped + ' 題不收。');
+      if (!parts.length) return null;
+      return h('div', { class: 'band-note mock-wb-note' }, parts.join(''),
+        wb.wrong + wb.cleared > 0 ? h('a', { href: 'practice.html#wrongbook', style: 'margin-left:6px' }, '看錯題本 →') : null);
+    }
+
+    function results(timeUp, lRaw, lTotal, rRaw, rTotal, lScore, rScore, unsaved, wb, skipped) {
       document.title = '模擬考結果 - 衝衝英文';
       root.innerHTML = '';
       root.append(h('div', { class: 'drill-top' }, h('h1', null, '模擬考結果'),
@@ -409,6 +456,7 @@
         h('div', { class: 'band-note' },
           (timeUp ? '時間到，自動交卷。' : '') +
           '聽力 ' + lRaw + '/' + lTotal + '（約 ' + lScore + '）· 閱讀 ' + rRaw + '/' + rTotal + '（約 ' + rScore + '）。參考換算，非正式成績。'),
+        unsaved ? null : wrongNote(wb, skipped || 0),
         unsavedNote(unsaved)));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startExam(sizeKey) }, '再來一回'),

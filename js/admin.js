@@ -95,7 +95,7 @@
       if (rec.ok) correct++;
       else wrong.push(id);
     });
-    return { answered, correct, wrong };
+    return { answered, correct, wrong, part: p, keys };
   }
 
   function diagSummary(keys) {
@@ -367,10 +367,18 @@
       box.append(h('p', { style: 'font-size:14px;color:var(--ink-light);margin-bottom:8px' }, name + ' 還沒做程度檢測。'));
     }
 
+    /* 錯題清單:有 js/wrongbook.js 就用它算(學生的刷題紀錄加模擬考答錯的題 mock_wrong,錯題本定稿 2026-11-18),
+       模擬考來的在描述後面加「(模擬考)」;已作答、正確率(drillStats)不變 */
     const wrongLine = (label, d, describe) => {
-      if (!d.wrong.length) return null;
+      let ids = d.wrong, mock = new Set();
+      if (window.WRONGBOOK && d.part) {
+        const list = WRONGBOOK.itemsFrom(String(d.part), d.keys['drill_p' + d.part], d.keys['mock_wrong']);
+        ids = list.map(x => x.key);
+        mock = new Set(list.filter(x => x.src === 'mock').map(x => x.key));
+      }
+      if (!ids.length) return null;
       return h('div', { style: 'font-size:13.5px;color:var(--ink-light);margin-bottom:6px' },
-        label + ' 錯題(' + d.wrong.length + ')：' + d.wrong.slice(0, 30).map(describe).join('、') + (d.wrong.length > 30 ? '…' : ''));
+        label + ' 錯題(' + ids.length + ')：' + ids.slice(0, 30).map(id => describe(id) + (mock.has(id) ? '（模擬考）' : '')).join('、') + (ids.length > 30 ? '…' : ''));
     };
     box.append(
       wrongLine('Part 5', d5, id => {

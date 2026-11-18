@@ -32,7 +32,8 @@ const BASE = '27557eb';
    搜尋結果外觀(2026-11-05,標題分隔從「|」改成「 - 」,文法、自然發音、閱讀、對話列表的清單帶 data-nosnippet)
    改了 daily-ui、dialogue、ear、grammar、mock、phonics、practice、reading、review、verbs、vocab、writing;
    同一天審查後拿掉這四個列表標題下加的介紹句,文法、自然發音列表頁的章節導覽列也帶 data-nosnippet,又改了 grammar、phonics、reading、dialogue;
-   單字遊戲「練哪些字」改成可以勾好幾個(2026-11-11,文章單字、片語、自己的題庫一起練)又改了 vocab */
+   單字遊戲「練哪些字」改成可以勾好幾個(2026-11-11,文章單字、片語、自己的題庫一起練)又改了 vocab;
+   錯題本分組、模擬考錯題收進錯題本(2026-11-18,mock_wrong、js/wrongbook.js)改了 mock、practice、listening、review */
 const LATER_BASE = ['js/vocab.js', 'js/reading.js', 'js/daily-ui.js', 'js/grammar.js', 'js/phonics.js', 'js/ear.js', 'js/dialogue.js',
   'js/verbs.js', 'js/practice.js', 'js/mock.js', 'js/diagnostic.js', 'js/writing.js', 'js/review.js', 'js/listening.js'];
 

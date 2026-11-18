@@ -343,6 +343,7 @@ const CONTENT = [
   { url: 'writing.html?level=l3&u=3', see: '.outline-grid textarea', act: [{ sel: '.outline-grid textarea', text: true }, { sel: 'textarea.write-area', i: 4, text: true }] },
   { url: 'practice.html', see: '.practice-panel', act: [{ sel: '.practice-panel .btn.primary' }, { sel: '.practice-panel .btn.primary', i: 1 }] },
   { url: 'practice.html?part=5', see: '.opts .opt', act: [{ sel: '.opts .opt' }], free: [{ sel: '.q-nav button', i: 1, then: '.q-nav button.cur' }] },
+  { url: 'practice.html?mode=wrong&part=5', see: '#practice-root .q-block' },   // 錯題本清單(錯題本定稿 2026-11-18):沒登入看得到「目前沒有錯題。」
   { url: 'diagnostic.html', see: '.diag-intro', act: [{ sel: '.diag-intro .btn.primary' }] },
   { url: 'mock.html', see: '.part-card', act: [{ sel: '.part-card .btn.primary' }, { sel: '.part-card .btn.primary', i: 1 }] },
 ];
@@ -1352,17 +1353,24 @@ const YPID = 'c' + Y_USER.id.replace(/-/g, '');
 T['模擬考考到一半別的分頁登出、換帳號、登回來還沒灌好,或時間到自動交卷:結果寫明還沒存,成績留在這個分頁,回到同一個帳號後補存;不寫進別人的資料夾'] = async (B) => {
   const day = Date.now() - 864e5;
   const three = [1, 2, 3].map((n) => ({ d: new Date(day + n * 1000).toISOString(), size: 'quick', lRaw: n, lTotal: 12, rRaw: n, rTotal: 18, lScore: 5, rScore: 5 }));
-  const rows = J([{ k: 'mock_history', v: three, updated_at: new Date(day + 10000).toISOString() }]);
+  /* 錯題本(錯題本定稿 2026-11-18,E2、E3):Part 5 前兩題答錯(抽題固定);第 2 題 mock_wrong 裡已經有一筆比這次交卷新的,補存後還是那一筆 */
+  const P5 = BANK.part5, newer = { [P5[1].id]: { c: P5[1].answer, ok: true, t: Date.now() + 600e3 } };
+  const rows = J([{ k: 'mock_history', v: three, updated_at: new Date(day + 10000).toISOString() }, { k: 'mock_wrong', v: newer, updated_at: new Date(day + 10000).toISOString() }]);
   const login = J({ access_token: 'x', user: USER });
   const LATER = "JSON.parse(sessionStorage.getItem('tr_mock_unsaved') || '[]').length";
+  const ANS = "(JSON.parse(sessionStorage.getItem('tr_mock_unsaved') || '[]')[0] || {}).ans || null";
+  const MW = (pid) => `JSON.parse(localStorage.getItem(${J('tr_u' + (pid || CPID) + '_mock_wrong')}) || 'null')`;
+  const mwOk = (v) => !!v && !!v[P5[0].id] && v[P5[0].id].ok === false && v[P5[0].id].c === wrongOf(P5[0]) && J(v[P5[1].id]) === J(newer[P5[1].id]);
   const out = [];
   for (const how of ['照常', '登出', '換帳號', '登回來還沒灌好', '時間到']) {
     const r = { how };
-    const s = await open(B, { url: 'mock.html', user: true, sdk: fakeCloud({ user: USER }),
-      ls: { [SB]: login, ['tr_u' + CPID + '_mock_history']: J(three) }, ss: { __fake_rows: rows } });
+    const s = await open(B, { url: 'mock.html', user: true, sdk: fakeCloud({ user: USER }), pre: FIXRAND,
+      ls: { [SB]: login, ['tr_u' + CPID + '_mock_history']: J(three), ['tr_u' + CPID + '_mock_wrong']: J(newer) }, ss: { __fake_rows: rows } });
     try {
       await click(s, '.part-card .btn.primary');   // 開始(這時登入著、能作答)
       r.started = await s.eval("!!document.querySelector('.drill-top .mock-timer') && PROFILE.canAct()");
+      await mockPick(s, 8, 0, wrongOf(P5[0]));
+      await mockPick(s, 9, 0, wrongOf(P5[1]));
       if (how !== '照常') await s.eval(OTHER_TAB_LOGOUT);
       if (how === '換帳號') await s.eval(`localStorage.setItem(${J(SB)}, ${J(J({ access_token: 'y', user: Y_USER }))}); localStorage.setItem('tr_current_profile', ${J(J(YPID))}); true`);
       if (how === '登回來還沒灌好') await s.eval(`localStorage.setItem(${J(SB)}, ${J(login)}); localStorage.setItem('tr_current_profile', ${J(J(CPID))}); localStorage.setItem(${J('tr_cloud_unhydrated_' + UID)}, '1'); true`);
@@ -1375,19 +1383,25 @@ T['模擬考考到一半別的分頁登出、換帳號、登回來還沒灌好,�
         note: (document.querySelector('.mock-unsaved') || {}).textContent || '', mask: !!document.querySelector('.modal-mask'), later: ${LATER} })`);
       r.wrote = lsDiff(before, await s.eval(LS)).filter((k) => /^tr_u|^tr_unsynced_/.test(k));
       r.ups = JSON.parse(await s.eval("sessionStorage.getItem('__fake_up') || '[]'")).filter((u) => u.k === 'mock_history').length;
+      r.mwUps = JSON.parse(await s.eval("sessionStorage.getItem('__fake_up') || '[]'")).filter((u) => u.k === 'mock_wrong').length;
       const shown = /模擬考結果/.test(r.result.title) && /參考總分/.test(r.result.head) && !r.result.mask;
       if (how === '照常') {
         const db = JSON.parse(await s.eval("sessionStorage.getItem('__fake_rows') || '[]'"));
         r.cloud = ((db.find((x) => x.k === 'mock_history') || {}).v || []).length;
-        r.ok = r.started && shown && !r.result.note && r.result.later === 0 && r.ups >= 1 && r.cloud === 4;
+        r.mw = mwOk(await s.eval(MW())) && mwOk((db.find((x) => x.k === 'mock_wrong') || {}).v);
+        r.ok = r.started && shown && !r.result.note && r.result.later === 0 && r.ups >= 1 && r.cloud === 4 && r.mw && r.mwUps === 1;
         out.push(r);
         continue;
       }
+      /* 存不進去:錯題沒寫、沒傳;分頁暫存那一筆帶著作答(只有 [題目 key, 選的]) */
+      r.ans = await s.eval(ANS);
+      r.ansOk = Array.isArray(r.ans) && J(r.ans) === J([[P5[0].id, wrongOf(P5[0])], [P5[1].id, wrongOf(P5[1])]]);
       if (how === '換帳號') {   // 這個分頁重新整理,變成別人的頁面:不能補存進他的資料夾
         await s.eval('location.reload(); true');
         r.ySettled = await settleNav(s);
         await sleep(1300);
-        r.y = await s.eval(`({ pid: window.__PROFILE_ID === ${J(YPID)}, has: (JSON.parse(localStorage.getItem(${J('tr_u' + YPID + '_mock_history')}) || '[]')).length, later: ${LATER} })`);
+        r.y = await s.eval(`({ pid: window.__PROFILE_ID === ${J(YPID)}, has: (JSON.parse(localStorage.getItem(${J('tr_u' + YPID + '_mock_history')}) || '[]')).length, later: ${LATER},
+          mw: localStorage.getItem(${J('tr_u' + YPID + '_mock_wrong')}) })`);
         await s.eval(`(() => { [${J(SB)}, 'tr_current_profile'].forEach((k) => localStorage.removeItem(k));
           Object.keys(localStorage).filter((k) => k.indexOf(${J('tr_u' + YPID + '_')}) === 0).forEach((k) => localStorage.removeItem(k)); return true; })()`);   // 別人登出
       }
@@ -1406,9 +1420,10 @@ T['模擬考考到一半別的分頁登出、換帳號、登回來還沒灌好,�
       r.cloud = ((db.find((x) => x.k === 'mock_history') || {}).v || []).length;
       r.laterEnd = await s.eval(LATER);
       r.rows = await s.eval("document.querySelectorAll('.cat-table tr').length");   // 歷次紀錄:表頭加 4 筆
-      r.ok = r.started && shown && /還沒存/.test(r.result.note) && r.result.later === 1 && !r.wrote.length && r.ups === 0
-        && (how !== '換帳號' || (r.ySettled && r.y.pid && r.y.has === three.length && r.y.later === 1))
-        && r.settled && r.local === 4 && r.cloud === 4 && r.laterEnd === 0 && r.rows === 5;
+      r.mw = mwOk(end['tr_u' + CPID + '_mock_wrong'] ? JSON.parse(end['tr_u' + CPID + '_mock_wrong']) : null) && mwOk((db.find((x) => x.k === 'mock_wrong') || {}).v);
+      r.ok = r.started && shown && /還沒存/.test(r.result.note) && r.result.later === 1 && !r.wrote.length && r.ups === 0 && r.mwUps === 0 && r.ansOk
+        && (how !== '換帳號' || (r.ySettled && r.y.pid && r.y.has === three.length && r.y.later === 1 && !(JSON.parse(r.y.mw || '{}') || {})[P5[0].id]))   // 假雲端不分帳號:別人灌下來的是雲端那份,沒有這次的錯題
+        && r.settled && r.local === 4 && r.cloud === 4 && r.laterEnd === 0 && r.rows === 5 && r.mw;
     } finally { await s.close(); }
     out.push(r);
   }
@@ -1845,8 +1860,14 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
       await s.eval(`window.__old = true; localStorage.setItem(${J(P2)}, JSON.stringify({ [TOEIC.listening.p2[0].id]: { c: (TOEIC.listening.p2[0].answer + 1) % 3, ok: false, t: 1 } })); location.reload(); true`);
       r.revSettled = await settleNav(s);
       await sleep(800);
+      /* 錯題本面板那一列的「查看」→ 聽力 Part 2 的錯題本清單 →「開始複習」(data-gate,這時能作答)(錯題本定稿 2026-11-18) */
       await s.eval("(() => { const row = [...document.querySelectorAll('.review-row')].find((x) => /聽力 Part 2/.test(x.textContent)); const b = row && row.querySelector('.btn'); if (!b) return false; b.id = '__press'; return true; })()");
-      await click(s, '#__press');   // 複習(data-gate,這時能作答)
+      await click(s, '#__press');   // 查看
+      r.listSettled = await settleNav(s);
+      await sleep(600);
+      await pressText(s, '.wb-start .btn.primary', '開始複習');
+      r.revSettled2 = await settleNav(s);
+      await sleep(600);
       r.revLetters = await s.eval("document.querySelectorAll('.letter-row .letter-big').length");
       await s.eval(COUNT_SILENT);
       if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
@@ -2022,6 +2043,9 @@ T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改�
       { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: ['.drill-nav-btns .btn', '直接交卷'], keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /答對 \d+ \/ 10 題/ },
       { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始檢測'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷，看報告'], keys: [DIAG], up: ['diag'], report: /./ },
       { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.drill-top .btn', '交卷'], keys: [MH], up: ['mock_history'], report: /參考總分/, mock: true },
+      /* 錯題本(定稿 E4):抽題固定,聽力 2 第 1 題答錯 → 照常時多寫、多傳 mock_wrong 各一次;擋下時一個鍵都不寫 */
+      { name: '模擬考(答一題錯)', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: '#mock-root .letter-row .letter-big', pickI: wrongOf(BANK.listening.p2[0]), pre: FIXRAND,
+        submit: ['.drill-top .btn', '交卷'], keys: [MH, 'tr_u' + CPID + '_mock_wrong'], up: ['mock_history', 'mock_wrong'], once: 'mock_wrong', report: /參考總分/, mock: true },
     ];
     for (const how of ['照常', '登出', '還沒灌過']) {
       for (const pg of PAGES) {
@@ -2029,10 +2053,10 @@ T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改�
         const ls = { [SB]: login, [HIST]: J(oldHist) };
         if (pg.mock) ls[MH] = J(three);
         const rows = pg.mock ? [{ k: 'mock_history', v: three, updated_at: new Date(day + 10000).toISOString() }] : [{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }];
-        const s = await open(B, { url: pg.url, user: true, sdk: fakeCloud({ user: USER }), ls, ss: { __fake_rows: J(rows) } });
+        const s = await open(B, { url: pg.url, user: true, sdk: fakeCloud({ user: USER }), ls, ss: { __fake_rows: J(rows) }, pre: pg.pre });
         try {
           await pressText(s, pg.start[0], pg.start[1]);   // data-gate,這時能作答
-          if (pg.pick) await click(s, pg.pick, 0);        // 答一題(其他沒答,交卷時會問)
+          if (pg.pick) await click(s, pg.pick, pg.pickI || 0);   // 答一題(其他沒答,交卷時會問)
           await sleep(1000);                              // 程度檢測每答一題就存:等它 0.8 秒後上傳完,再拍「之前」
           await s.eval(COUNT_SILENT);
           const before = await s.eval(LS), up0 = await s.eval(UPS);
@@ -2051,7 +2075,8 @@ T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改�
         } finally { await s.close(); }
         const has = (x, ks) => ks.every((k) => x.includes(k));
         const asked = J(r.asked) === J(['confirm']);
-        if (how === '照常') r.ok = asked && !r.card && pg.report.test(r.report) && has(r.wrote, pg.keys) && has(r.ups, pg.up) && !r.silent.length && (!pg.mock || (!r.note && r.later === 0));
+        if (how === '照常') r.ok = asked && !r.card && pg.report.test(r.report) && has(r.wrote, pg.keys) && has(r.ups, pg.up) && !r.silent.length && (!pg.mock || (!r.note && r.later === 0))
+          && (!pg.once || r.ups.filter((k) => k === pg.once).length === 1);
         else if (pg.mock) r.ok = asked && r.broke === true && pg.report.test(r.report) && /還沒存/.test(r.note) && r.later === 1 && !r.wrote.length && !r.ups.length;
         else {
           const title = how === '登出' ? /已經在別的分頁登出/ : /還沒載入/;
@@ -2155,6 +2180,9 @@ T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 
     { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: ['.drill-nav-btns .btn', '直接交卷'], sets: ['listen_p2', 'hist'], count: HIST, add: 1, report: /答對 \d+ \/ 10 題/ },
     { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始檢測'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷，看報告'], sets: ['diag'], count: HIST, add: 0, report: /./ },
     { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.drill-top .btn', '交卷'], sets: ['mock_history'], count: MH, add: 1, report: /參考總分/, mock: true },
+    /* 錯題本(定稿 E4):有作答時按兩下交卷,mock_wrong 也只寫一次 */
+    { name: '模擬考(答一題錯)', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: '#mock-root .letter-row .letter-big', pickI: wrongOf(BANK.listening.p2[0]), fix: FIXRAND,
+      submit: ['.drill-top .btn', '交卷'], sets: ['mock_history', 'mock_wrong'], count: MH, add: 1, report: /參考總分/, mock: true },
   ];
   const REPORT = (pg) => pg.mock ? "(document.querySelector('.report-head h2') || {}).textContent || ''" : "(document.querySelector('.report-head') || {}).textContent || ''";
   const card = async (s) => { const st = await state(s); return st.mask ? st.title : ''; };
@@ -2168,10 +2196,10 @@ T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 
         const ls = { [SB]: login, [HIST]: J(oldHist) };
         if (pg.mock) ls[MH] = J(three);
         const rows = pg.mock ? [{ k: 'mock_history', v: three, updated_at: new Date(day + 10000).toISOString() }] : [{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }];
-        const s = await open(B, { url: pg.url, user: true, sdk: fakeCloud({ user: USER }), ls, ss: { __fake_rows: J(rows) }, pre: HOOK });
+        const s = await open(B, { url: pg.url, user: true, sdk: fakeCloud({ user: USER }), ls, ss: { __fake_rows: J(rows) }, pre: HOOK + (pg.fix || '') });
         try {
           await pressText(s, pg.start[0], pg.start[1]);
-          if (pg.pick) await click(s, pg.pick, 0);   // 答一題(其他沒答,交卷時會問)
+          if (pg.pick) await click(s, pg.pick, pg.pickI || 0);   // 答一題(其他沒答,交卷時會問)
           await sleep(1000);
           await s.eval(COUNT_SILENT);
           await s.eval(WATCH);
@@ -2415,6 +2443,344 @@ T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出�
   for (const name of ['我的頁:改暱稱', '我的頁:刪除帳號']) out.push(await run('平常', name));
   const bad = out.filter((r) => !r.ok);
   return { ok: !bad.length, detail: bad.length ? '不對的 ' + bad.length + ' 項:' + J(bad) : J(out.map((r) => r.how + '/' + r.name + ' 送了 ' + (r.sent.join(',') || '沒有'))) };
+};
+
+/* ================= 錯題本:模擬考錯題收進錯題本、錯題本分組(錯題本定稿 2026-11-18 第 4.3 節) =================
+   題庫在 node 這邊也載一份(灌學生紀錄、算答案用)。模擬考抽題固定:開頁前把 Math.random 換成 () => 0.999,洗牌不換位置,
+   快速回合抽到的就是各 Part 題庫的前幾題(單元順序:聽力 2 ×6、聽力 3、聽力 4、閱讀 5 ×10、閱讀 6、閱讀 7) */
+const BANK = (() => {
+  const vm = require('vm');
+  const ctx = { window: {} }; ctx.window = ctx; vm.createContext(ctx);
+  ['data/part5.js', 'data/part6.js', 'data/part7.js', 'data/listening.js'].forEach((f) => vm.runInContext(fs.readFileSync(path.join(REPO, f), 'utf8'), ctx));
+  return ctx.TOEIC;
+})();
+const FIXRAND = 'Math.random = () => 0.999;';
+const AK = (k) => 'tr_u' + CPID + '_' + k;
+const wrongOf = (q) => (q.answer + 1) % q.options.length;
+const login0 = () => J({ access_token: 'x', user: USER });
+/* 點畫面上第 i 個符合 sel 的元素(先用 id 標記,真的滑鼠點) */
+async function clickNth(s, sel, i) {
+  const ok = await s.eval(`(() => { ${UNPRESS_JS} const e = document.querySelectorAll(${J(sel)})[${i}]; if (!e) return false; e.dataset.pressWas = e.id; e.id = '__press'; return true; })()`);
+  if (!ok) throw new Error('找不到 ' + sel + ' #' + i);
+  await click(s, '#__press');
+  await s.eval(UNPRESS);   // 不留著:pressText 找的也是 #__press(畫面沒重畫時會點到這個舊的);元素原本的 id 放回去
+}
+const UNPRESS_JS = "{ const o = document.getElementById('__press'); if (o) { if (o.dataset.pressWas) o.id = o.dataset.pressWas; else o.removeAttribute('id'); delete o.dataset.pressWas; } }";
+const UNPRESS = '(() => { ' + UNPRESS_JS + ' return true; })()';
+/* 模擬考第 u 個單元、題組裡第 b 題的第 o 個選項(聽力 1/2 是字母鈕) */
+async function mockPick(s, u, b, o) {
+  await clickNth(s, '.q-nav button', u);
+  const n = await s.eval(`(() => { const old = document.getElementById('__press'); if (old) old.removeAttribute('id');
+    const lr = document.querySelector('#mock-root .letter-row');
+    if (lr) { lr.querySelectorAll('.letter-big')[${o}].id = '__press'; return 1; }
+    const opts = document.querySelector('#mock-root .set-layout') ? [...document.querySelectorAll('#mock-root .set-layout .q-block')][${b}].querySelectorAll('.opt') : document.querySelectorAll('#mock-root .opts .opt');
+    opts[${o}].id = '__press'; return opts.length; })()`);
+  if (!n) throw new Error('找不到選項 ' + u + '/' + b + '/' + o);
+  await click(s, '#__press');
+  await s.eval(UNPRESS);
+}
+const WATCH_SETS = "(() => { if (window.__sets) return true; window.__sets = []; const f = store.set; store.set = function (k) { window.__sets.push(k); return f.apply(this, arguments); }; return true; })()";
+const SETS_OF = (k) => `(window.__sets || []).filter((x) => x === ${J(k)}).length`;
+const LSJ = (k) => `JSON.parse(localStorage.getItem(${J(AK(k))}) || 'null')`;
+
+T['錯題本 E1:模擬考交卷把答錯的題收進 mock_wrong(只寫一次、只傳一次),原本在錯題本答對的寫已訂正、沒作答的不收;其他鍵逐字不動;結果頁照實講;題庫首頁錯題數跟著變'] = async (B) => {
+  const P5 = BANK.part5, P6 = BANK.part6[0], L2 = BANK.listening.p2;
+  const day = Date.now() - 864e5;
+  const ls = {
+    [SB]: login0(),
+    [AK('drill_p5')]: J({ [P5[1].id]: { c: wrongOf(P5[1]), ok: false, t: day }, [P5[20].id]: { c: wrongOf(P5[20]), ok: false, t: day + 1 }, [P5[30].id]: { c: P5[30].answer, ok: true, t: day } }),
+    [AK('drill_p6')]: J({ [P6.id + ':' + P6.questions[3].num]: { c: 0, ok: P6.questions[3].answer === 0, t: day } }),
+    [AK('listen_p2')]: J({ [L2[9].id]: { c: wrongOf(L2[9]), ok: false, t: day } }),
+    [AK('hist')]: J([{ m: 'p5', id: P5[1].id, c: wrongOf(P5[1]), ok: false, t: day }]),
+    [AK('mock_history')]: J([{ d: new Date(day).toISOString(), size: 'quick', lRaw: 1, lTotal: 12, rRaw: 1, rTotal: 18, lScore: 5, rScore: 5 }]),
+  };
+  const s = await open(B, { url: 'mock.html', user: true, sdk: fakeCloud({ user: USER }), ls, pre: FIXRAND });
+  const r = {};
+  try {
+    await click(s, '.part-card .btn.primary');
+    await mockPick(s, 8, 0, wrongOf(P5[0]));             // Part 5 第 1 題:錯
+    await mockPick(s, 9, 0, P5[1].answer);              // Part 5 第 2 題:對(原本在錯題本)
+    await mockPick(s, 0, 0, wrongOf(L2[0]));            // 聽力 2 第 1 題:錯
+    await mockPick(s, 18, 0, P6.questions[0].answer);   // Part 6 第 1 格:對
+    await mockPick(s, 18, 1, wrongOf(P6.questions[1])); // Part 6 第 2 格:錯
+    await sleep(1200);
+    await s.eval(WATCH_SETS);
+    const before = await s.eval(LS), up0 = await s.eval(UPS);
+    await s.eval('window.confirm = () => true; true');
+    await click(s, '.drill-top .btn');
+    await sleep(1800);
+    const after = await s.eval(LS);
+    /* 小雞(pet-store)自己的「只在本機」標記、帳本不算 */
+    r.changed = lsDiff(before, after).filter((k) => !/_pet$/.test(k) && k !== AK('mock_history') && k !== AK('mock_wrong') && k !== 'tr_unsynced_' + UID && k !== 'tr_localonly_' + UID);
+    const mw = JSON.parse(JSON.parse(after)[AK('mock_wrong')] || 'null') || {};
+    const mh = JSON.parse(JSON.parse(after)[AK('mock_history')] || '[]');
+    const T0 = Date.parse(mh[mh.length - 1].d);
+    const want = { [P5[0].id]: false, [P5[1].id]: true, [L2[0].id]: false, [P6.id + ':' + P6.questions[1].num]: false };
+    r.mw = Object.keys(mw).sort();
+    r.right = J(r.mw) === J(Object.keys(want).sort()) && Object.keys(want).every((k) => mw[k].ok === want[k] && mw[k].t === T0);
+    r.sets = await s.eval(SETS_OF('mock_wrong'));
+    r.ups = (await s.eval(UPS)).slice(up0.length).filter((k) => k === 'mock_wrong').length;
+    r.note = await s.eval("(document.querySelector('.mock-wb-note') || {}).textContent || ''");
+    r.link = await s.eval("!!document.querySelector('.mock-wb-note a[href=\"practice.html#wrongbook\"]')");
+    await s.go('practice.html#wrongbook');
+    await sleep(1500);
+    r.p5 = await s.eval("(() => { const row = [...document.querySelectorAll('#wrongbook .review-row')].find((x) => /Part 5/.test(x.textContent)); return row ? row.querySelector('b').textContent : ''; })()");
+    r.scrolled = await s.eval("Math.abs(document.getElementById('wrongbook').getBoundingClientRect().top) < 80");
+  } finally { await s.close(); }
+  r.ok = !r.changed.length && r.right && r.sets === 1 && r.ups === 1 && /答錯的 3 題已收進錯題本/.test(r.note) && /原本在錯題本的 1 題這次答對/.test(r.note) && /沒作答的 \d+ 題不收/.test(r.note)
+    && r.link && r.p5 === '2 題' && r.scrolled;
+  return { ok: r.ok, detail: J(r) };
+};
+
+T['錯題本 E5:每日複習出現只在模擬考錯題裡的題;答對不動刷題紀錄、寫已訂正記號;答錯在刷題紀錄新加一筆、mock_wrong 不變,錯題本那題變成今天、不標模擬考'] = async (B) => {
+  const P5 = BANK.part5, day = Date.now() - 864e5;
+  const mw = { [P5[3].id]: { c: wrongOf(P5[3]), ok: false, t: day }, [P5[5].id]: { c: wrongOf(P5[5]), ok: false, t: day + 1 } };
+  const d5 = { [P5[50].id]: { c: P5[50].answer, ok: true, t: day } };
+  const s = await open(B, { url: 'review.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login0(), [AK('mock_wrong')]: J(mw), [AK('drill_p5')]: J(d5) } });
+  const r = {};
+  try {
+    r.todo = await s.eval("(document.querySelector('.part-card p') || {}).textContent || ''");
+    await s.eval(WATCH_SETS);
+    await pressText(s, '.part-card .btn.primary', '開始複習');
+    r.first = await s.eval("(document.querySelector('.q-text') || {}).textContent || ''");
+    await clickNth(s, '.q-block .opts .opt', P5[3].answer);
+    await sleep(300);
+    r.afterOk = { d5: await s.eval(LSJ('drill_p5')), mw: (await s.eval(LSJ('mock_wrong')))[P5[3].id], dsets: await s.eval(SETS_OF('drill_p5')) };
+    await pressText(s, '.drill-nav-btns .btn', '下一題');
+    await clickNth(s, '.q-block .opts .opt', wrongOf(P5[5]));
+    await sleep(300);
+    r.afterBad = { d5: (await s.eval(LSJ('drill_p5')))[P5[5].id], mw: (await s.eval(LSJ('mock_wrong')))[P5[5].id], dsets: await s.eval(SETS_OF('drill_p5')) };
+    await s.go('practice.html?mode=wrong&part=5');
+    await sleep(1200);
+    await s.eval("document.querySelectorAll('.wb-toggle').forEach((b) => { if (b.getAttribute('aria-expanded') !== 'true') b.click(); }); true");
+    r.rows = await s.eval("[...document.querySelectorAll('.wb-item')].map((x) => (x.querySelector('.wb-meta') || {}).textContent || '')");
+  } finally { await s.close(); }
+  const today = (new Date().getMonth() + 1) + '/' + new Date().getDate();
+  r.ok = /待複習 2 題/.test(r.todo) && r.first.indexOf(P5[3].question.slice(0, 20)) > -1 && J(r.afterOk.d5) === J(d5) && r.afterOk.dsets === 0
+    && r.afterOk.mw.ok === true && r.afterOk.mw.t > day + 1000 && !!r.afterBad.d5 && r.afterBad.d5.ok === false && r.afterBad.d5.c === wrongOf(P5[5]) && r.afterBad.dsets === 1
+    && J(r.afterBad.mw) === J(mw[P5[5].id]) && J(r.rows) === J([today]);
+  return { ok: r.ok, detail: J(r) };
+};
+
+/* 刷題時答對過、之後模擬考答錯(模擬考那筆比較新,所以在錯題本):每日複習答對不能刪掉刷題那筆答對紀錄(已作答數會少);
+   答錯不能只把那筆答對紀錄的時間改成現在(那樣它變成最新的一筆、還是答對,題目就從錯題本消失) */
+T['錯題本 E5b:每日複習刷題答對過、模擬考答錯的題:答對不刪刷題的答對紀錄、寫已訂正記號;答錯後刷題那筆變成這次的錯答,還留在錯題本'] = async (B) => {
+  const P5 = BANK.part5, day = Date.now() - 864e5;
+  const d5 = { [P5[3].id]: { c: P5[3].answer, ok: true, t: day }, [P5[5].id]: { c: P5[5].answer, ok: true, t: day } };
+  const mw = { [P5[3].id]: { c: wrongOf(P5[3]), ok: false, t: day + 10 }, [P5[5].id]: { c: wrongOf(P5[5]), ok: false, t: day + 11 } };
+  const s = await open(B, { url: 'review.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login0(), [AK('mock_wrong')]: J(mw), [AK('drill_p5')]: J(d5) } });
+  const r = {};
+  try {
+    r.todo = await s.eval("(document.querySelector('.part-card p') || {}).textContent || ''");
+    await pressText(s, '.part-card .btn.primary', '開始複習');
+    r.first = await s.eval("(document.querySelector('.q-text') || {}).textContent || ''");
+    await clickNth(s, '.q-block .opts .opt', P5[3].answer);
+    await sleep(300);
+    r.afterOk = { d5: (await s.eval(LSJ('drill_p5')))[P5[3].id], mw: (await s.eval(LSJ('mock_wrong')))[P5[3].id] };
+    await pressText(s, '.drill-nav-btns .btn', '下一題');
+    await clickNth(s, '.q-block .opts .opt', wrongOf(P5[5]));
+    await sleep(300);
+    r.afterBad = { d5: (await s.eval(LSJ('drill_p5')))[P5[5].id], mw: (await s.eval(LSJ('mock_wrong')))[P5[5].id] };
+    await s.go('practice.html?mode=wrong&part=5');
+    await sleep(1200);
+    await s.eval("document.querySelectorAll('.wb-toggle').forEach((b) => { if (b.getAttribute('aria-expanded') !== 'true') b.click(); }); true");
+    r.rows = await s.eval("[...document.querySelectorAll('.wb-item')].map((x) => (x.querySelector('.wb-meta') || {}).textContent || '')");
+  } finally { await s.close(); }
+  const today = (new Date().getMonth() + 1) + '/' + new Date().getDate();
+  r.ok = /待複習 2 題/.test(r.todo) && r.first.indexOf(P5[3].question.slice(0, 20)) > -1
+    && J(r.afterOk.d5) === J(d5[P5[3].id]) && !!r.afterOk.mw && r.afterOk.mw.ok === true && r.afterOk.mw.t > day + 1000
+    && !!r.afterBad.d5 && r.afterBad.d5.ok === false && r.afterBad.d5.c === wrongOf(P5[5]) && r.afterBad.d5.t > day + 1000
+    && J(r.afterBad.mw) === J(mw[P5[5].id]) && J(r.rows) === J([today]);
+  return { ok: r.ok, detail: J(r) };
+};
+
+T['錯題本 E6:錯題本複習答對只在模擬考錯題裡的題:刷題紀錄照舊多一筆答對、mock_wrong 不變,回清單少一題'] = async (B) => {
+  const P5 = BANK.part5, day = Date.now() - 864e5;
+  const q = P5.find((x) => x.category === P5[0].category && x !== P5[0]);
+  const mw = { [q.id]: { c: wrongOf(q), ok: false, t: day } };
+  const d5 = { [P5[0].id]: { c: wrongOf(P5[0]), ok: false, t: day - 5 } };
+  const s = await open(B, { url: 'practice.html?mode=review&part=5&g=' + encodeURIComponent(P5[0].category), user: true, sdk: fakeCloud({ user: USER }),
+    ls: { [SB]: login0(), [AK('mock_wrong')]: J(mw), [AK('drill_p5')]: J(d5) } });
+  const r = {};
+  try {
+    r.dots = await s.eval("document.querySelectorAll('.q-nav button').length");
+    r.top = await s.eval("(document.querySelector('.drill-top') || {}).textContent || ''");
+    await clickNth(s, '.q-block .opts .opt', P5[0].answer);     // 最早錯的先出:P5[0]
+    await pressText(s, '.drill-nav-btns .btn', '下一題');
+    r.second = await s.eval("(document.querySelector('.q-text') || {}).textContent || ''");
+    await clickNth(s, '.q-block .opts .opt', q.answer);
+    await sleep(300);
+    r.d5 = (await s.eval(LSJ('drill_p5')))[q.id];
+    r.mw = (await s.eval(LSJ('mock_wrong')))[q.id];
+    await pressText(s, '.drill-nav-btns .btn', '完成複習');
+    r.sum = await s.eval("(document.querySelector('.report-head') || {}).textContent || ''");
+    r.back = await s.eval("[...document.querySelectorAll('.drill-nav-btns a')].map((a) => a.textContent + '>' + a.getAttribute('href'))");
+    await s.go('practice.html?mode=wrong&part=5');
+    await sleep(1000);
+    r.after = await s.eval("(document.querySelector('.q-block') || {}).textContent || ''");
+  } finally { await s.close(); }
+  r.ok = r.dots === 2 && /回錯題本/.test(r.top) && r.second.indexOf(q.question.slice(0, 20)) > -1 && !!r.d5 && r.d5.ok === true && J(r.mw) === J(mw[q.id])
+    && /移出 2 題/.test(r.sum) && J(r.back) === J(['回錯題本>practice.html?mode=wrong&part=5']) && /目前沒有錯題/.test(r.after);
+  return { ok: r.ok, detail: J(r) };
+};
+
+/* 介面:一個學生,Part 5 刷題錯 60 題分在 8 個考點(第 3 個考點「字彙辨析」24 題,一回放不下)、模擬考錯 3 題(1 題在第 9 個考點);
+   Part 6、7、聽力 2、3、4(兩組機場廣播)各有幾題 */
+function wbStudent() {
+  const P5 = BANK.part5, L = BANK.listening, day = Date.now() - 864e5;
+  const cats = [...new Set(P5.map((q) => q.category))];
+  const by = (c) => P5.filter((q) => q.category === c);
+  const d5 = {}, mw = {};
+  let t = day - 1e6;
+  const take = [6, 6, 24, 6, 6, 4, 4, 4];
+  cats.slice(0, 8).forEach((c, i) => by(c).slice(0, take[i]).forEach((q) => { d5[q.id] = { c: wrongOf(q), ok: false, t: t += 1000 }; }));
+  const ninth = by(cats[8])[0];
+  mw[ninth.id] = { c: wrongOf(ninth), ok: false, t: day };
+  by(cats[1]).slice(10, 12).forEach((q) => { mw[q.id] = { c: wrongOf(q), ok: false, t: day + 5 }; });
+  const d6 = {}, d7 = {}, l2 = {}, l3 = {}, l4 = {};
+  BANK.part6.slice(0, 3).forEach((s, i) => { const q = s.questions[0]; d6[s.id + ':' + q.num] = { c: wrongOf(q), ok: false, t: day + i }; });
+  BANK.part7.slice(0, 30).forEach((s, i) => { d7[s.id + ':0'] = { c: wrongOf(s.questions[0]), ok: false, t: day + i }; });
+  L.p2.slice(0, 8).forEach((q, i) => { l2[q.id] = { c: wrongOf(q), ok: false, t: day + i }; });
+  L.p3.slice(0, 2).forEach((s, i) => { l3[s.id + ':0'] = { c: wrongOf(s.questions[0]), ok: false, t: day + i }; });
+  L.p4.filter((s) => s.type === '機場廣播').forEach((s, i) => { l4[s.id + ':1'] = { c: wrongOf(s.questions[1]), ok: false, t: day + i }; });
+  return { cats, ninth, ls: { [SB]: login0(), [AK('drill_p5')]: J(d5), [AK('mock_wrong')]: J(mw), [AK('drill_p6')]: J(d6), [AK('drill_p7')]: J(d7),
+    [AK('listen_p2')]: J(l2), [AK('listen_p3')]: J(l3), [AK('listen_p4')]: J(l4) } };
+}
+const WB_STATE = `(() => { const g = [...document.querySelectorAll('.wb-group')].map((x) => { const b = x.querySelector('.wb-toggle'), l = document.getElementById(b.getAttribute('aria-controls'));
+  return { name: x.querySelector('.wb-name').textContent, n: Number((b.querySelector('b').textContent.match(/\\d+/) || [0])[0]), open: b.getAttribute('aria-expanded'), hidden: !l || l.hidden,
+    items: l ? l.querySelectorAll('.wb-item').length : -1, mock: l ? [...l.querySelectorAll('.wb-meta')].filter((m) => /模擬考/.test(m.textContent)).length : 0 }; });
+  const all = document.querySelector('.wb-all'); return { g, all: all ? all.textContent + '|' + all.getAttribute('aria-expanded') : null }; })()`;
+
+T['錯題本 U1–U10:Part 5 清單分 9 組照題庫順序、預設收起、可同時開、鍵盤切換、結構對、全部展開、空組不出現、複習一組一回 20 題有「下一回」、答對回清單少一題開的組還開著、手機寬'] = async (B) => {
+  const st = wbStudent();
+  const r = {};
+  let s = await open(B, { url: 'practice.html?mode=wrong&part=5', user: true, sdk: fakeCloud({ user: USER }), ls: st.ls });
+  try {
+    const a = await s.eval(WB_STATE);
+    const names = a.g.map((x) => x.name);
+    r.u1 = { n: a.g.length, sum: a.g.reduce((k, x) => k + x.n, 0), order: J(names) === J(st.cats.filter((c) => names.includes(c))), sumLine: await s.eval("(document.querySelector('.wb-sum') || {}).textContent") };
+    r.u2 = a.g.every((x) => x.open === 'false' && x.hidden);
+    await clickNth(s, '.wb-toggle', 0);
+    await clickNth(s, '.wb-toggle', 1);
+    const b = await s.eval(WB_STATE);
+    r.u3 = b.g[0].open === 'true' && !b.g[0].hidden && b.g[0].items === b.g[0].n && b.g[1].open === 'true' && b.g[2].open === 'false';
+    r.u1mock = { g1: b.g[1].mock, g0: b.g[0].mock };
+    /* 鍵盤:焦點在「全部展開」,Tab 到第一組的展開鈕,Enter 收起、空白鍵打開 */
+    await s.eval("document.querySelector('.wb-all').focus(); true");
+    r.u4from = await s.eval("document.activeElement ? document.activeElement.className : ''");
+    await key(s, 'Tab');
+    r.u4focus = await s.eval("document.activeElement ? document.activeElement.id || document.activeElement.tagName + '.' + document.activeElement.className : ''");
+    await key(s, 'Enter');
+    const k1 = (await s.eval(WB_STATE)).g[0].open;
+    await key(s, ' ');
+    const k2 = (await s.eval(WB_STATE)).g[0].open;
+    r.u4 = r.u4focus === 'wb-b-5-0' && k1 === 'false' && k2 === 'true';
+    r.u5 = await s.eval(`(() => [...document.querySelectorAll('.wb-h')].every((h) => h.children.length === 1 && h.children[0].tagName === 'BUTTON' && h.tagName === 'H2')
+      && [...document.querySelectorAll('.wb-toggle')].every((b) => !!document.getElementById(b.getAttribute('aria-controls')))
+      && [...document.querySelectorAll('.wb-go')].every((g) => !g.closest('.wb-h') && /^複習「.+」\\d+ 題$/.test(g.getAttribute('aria-label')) && g.hasAttribute('data-gate'))
+      && !document.querySelector('[role=region]'))()`);
+    await click(s, '.wb-all');
+    const c = await s.eval(WB_STATE);
+    r.u6 = c.g.every((x) => x.open === 'true' && !x.hidden) && c.all === '全部收起|true';
+    r.u7 = !c.g.some((x) => x.n === 0);
+    /* 第 3 組(字彙辨析 24 題)的複習:一回 20 題,做完有「下一回」 */
+    await clickNth(s, '.wb-go', 2);
+    await sleep(800);
+    r.u8url = await s.eval('location.search');
+    r.u8dots = await s.eval("document.querySelectorAll('.q-nav button').length");
+    const cats = new Set();
+    for (let i = 0; i < r.u8dots; i++) {
+      cats.add(await s.eval("(document.querySelector('.q-block .badge.cat') || {}).textContent"));
+      const q = await s.eval("document.querySelector('.q-text').textContent");
+      const item = BANK.part5.find((x) => q.indexOf(x.question.slice(0, 30)) > -1);
+      await clickNth(s, '.q-block .opts .opt', i === 0 ? item.answer : wrongOf(item));   // 第一題答對,其他答錯
+      await pressText(s, '.drill-nav-btns .btn', i === r.u8dots - 1 ? '完成複習' : '下一題');
+    }
+    r.u8cats = [...cats];
+    r.u8sum = await s.eval("(document.querySelector('.report-head') || {}).textContent");
+    r.u8next = await s.eval("[...document.querySelectorAll('.drill-nav-btns a')].map((a) => a.textContent)");
+    r.u8 = /g=/.test(r.u8url) && r.u8dots === 20 && J(r.u8cats) === J([st.cats[2]]) && /這一組還有 4 題還沒複習/.test(r.u8sum) && J(r.u8next) === J(['下一回', '回錯題本']);
+    /* 回錯題本:那一組少一題,剛剛開的組(全部展開過)還開著 */
+    await pressText(s, '.drill-nav-btns a', '回錯題本');
+    await sleep(1000);
+    const d = await s.eval(WB_STATE);
+    r.u9 = d.g[2].n === 23 && d.g.every((x) => x.open === 'true');
+    /* 第 9 個考點只有模擬考那 1 題:答對之後那組不見 */
+    await s.go('practice.html?mode=review&part=5&g=' + encodeURIComponent(st.cats[8]));
+    await sleep(800);
+    await clickNth(s, '.q-block .opts .opt', st.ninth.answer);
+    await s.go('practice.html?mode=wrong&part=5');
+    await sleep(1000);
+    const e = await s.eval(WB_STATE);
+    r.u9b = e.g.length === 8 && !e.g.some((x) => x.name === st.cats[8]);
+    /* sessionStorage 讀不懂:頁面照常、全部收起 */
+    await s.eval("sessionStorage.setItem('tr_wb_open', '{壞掉'); true");
+    await s.go('practice.html?mode=wrong&part=5');
+    await sleep(1000);
+    const f = await s.eval(WB_STATE);
+    r.u9c = f.g.length === 8 && f.g.every((x) => x.open === 'false');
+  } finally { await s.close(); }
+  /* U10:手機 375 */
+  s = await open(B, { url: 'practice.html?mode=wrong&part=5', user: true, sdk: fakeCloud({ user: USER }), ls: st.ls, size: { width: 375, height: 812 } });
+  try {
+    r.u10 = await s.eval(`(() => { const g = document.querySelector('.wb-group'), name = g.querySelector('.wb-name').getBoundingClientRect(), go = g.querySelector('.wb-go').getBoundingClientRect();
+      return { sw: document.documentElement.scrollWidth, top: Math.round(g.getBoundingClientRect().top), same: Math.abs((name.top + name.bottom) / 2 - (go.top + go.bottom) / 2) < 12 }; })()`);
+    await s.eval("document.querySelectorAll('.wb-toggle').forEach((b) => b.click()); true");
+    r.u10open = await s.eval('document.documentElement.scrollWidth');
+  } finally { await s.close(); }
+  const ok = r.u1.n === 9 && r.u1.sum === 63 && r.u1.order && /63 題，分成 9 類/.test(r.u1.sumLine) && r.u2 && r.u3 && r.u1mock.g1 === 2 && r.u1mock.g0 === 0 && r.u4 && r.u5 && r.u6 && r.u7 && r.u8 && r.u9 && r.u9b && r.u9c
+    && r.u10.sw <= 375 && r.u10.top < 400 && r.u10.same && r.u10open <= 375;
+  return { ok, detail: J(r) };
+};
+
+T['錯題本 U11–U13、U15:聽力網址直接開、聽力 3 一段一組、聽力 4 同類併組;題庫首頁面板「查看」;能力分析同一套分組;模擬考首頁照實講舊的補不回來'] = async (B) => {
+  const st = wbStudent();
+  const r = {};
+  let s = await open(B, { url: 'practice.html?mode=wrong&part=2', user: true, sdk: fakeCloud({ user: USER }), ls: st.ls });
+  try {
+    r.l2 = (await s.eval(WB_STATE)).g.map((x) => x.name);
+    await s.go('practice.html?mode=wrong&part=3');
+    await sleep(900);
+    r.l3 = (await s.eval(WB_STATE)).g.map((x) => x.name + ':' + x.n);
+    r.l3sum = await s.eval("(document.querySelector('.wb-sum') || {}).textContent");
+    await s.go('practice.html?mode=wrong&part=4');
+    await sleep(900);
+    const l4 = await s.eval(WB_STATE);
+    r.l4 = l4.g.map((x) => x.name + ':' + x.n); r.l4all = l4.all;
+    await s.go('practice.html?mode=wrong&part=1');
+    await sleep(900);
+    r.l1 = await s.eval("(document.querySelector('.q-block') || {}).textContent || ''");
+    await s.go('practice.html?mode=review&part=2');
+    await sleep(900);
+    r.l2review = { letters: await s.eval("document.querySelectorAll('.letter-row .letter-big').length"), top: await s.eval("(document.querySelector('.drill-top') || {}).textContent") };
+    /* U12:題庫首頁面板 */
+    await s.go('practice.html');
+    await sleep(1000);
+    r.panel = await s.eval("[...document.querySelectorAll('#wrongbook .review-row')].map((x) => { const a = x.querySelector('a.btn'); return x.querySelector('b').textContent + '|' + (a ? a.textContent + '>' + a.getAttribute('href') : x.lastChild.textContent); })");
+    /* U13:能力分析 */
+    await s.go('analysis.html');
+    await sleep(1200);
+    r.an = await s.eval(`(() => { const t = [...document.querySelectorAll('.wb-toggle')]; const p7 = t.filter((b) => /^wb-b-7-/.test(b.id)).map((b) => b.querySelector('.wb-name').textContent);
+      const before = t[0] && t[0].getAttribute('aria-expanded'); if (t[0]) t[0].click(); const after = t[0] && t[0].getAttribute('aria-expanded');
+      return { n: t.length, h3: [...document.querySelectorAll('.wb-h')].every((h) => h.tagName === 'H3'), before, after, p7, old: /題組 25/.test(document.body.textContent),
+        links: [...document.querySelectorAll('a.btn')].filter((a) => a.textContent === '看錯題本').map((a) => a.getAttribute('href')) }; })()`);
+  } finally { await s.close(); }
+  /* U15:模擬考首頁(最近 8 筆有一筆早於上線 → 有那行;全部晚於 → 沒有) */
+  const rec = (d) => ({ d, size: 'quick', lRaw: 3, lTotal: 12, rRaw: 4, rTotal: 18, lScore: 85, rScore: 85 });
+  const SINCE = Date.parse(/const SINCE = '([^']+)'/.exec(fs.readFileSync(path.join(REPO, 'js/wrongbook.js'), 'utf8'))[1]);
+  for (const [name, list] of [['old', [rec(new Date(SINCE - 864e5).toISOString()), rec(new Date(SINCE + 3600e3).toISOString())]], ['new', [rec(new Date(SINCE + 3600e3).toISOString())]]]) {
+    s = await open(B, { url: 'mock.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login0(), [AK('mock_history')]: J(list) } });
+    try { r['mock_' + name] = await s.eval("(document.querySelector('.mock-old-note') || {}).textContent || ''"); } finally { await s.close(); }
+  }
+  const cats2 = [...new Set(BANK.listening.p2.slice(0, 8).map((q) => q.category))];
+  const ok = J(r.l2.slice().sort()) === J(cats2.slice().sort()) && J(r.l3) === J(BANK.listening.p3.slice(0, 2).map((x) => x.title + ':1')) && /2 題，在 2 段對話裡/.test(r.l3sum)
+    && J(r.l4) === J(['機場廣播:2']) && r.l4all === null && /目前沒有錯題/.test(r.l1) && r.l2review.letters === 3 && /回錯題本/.test(r.l2review.top)
+    && J(r.panel) === J(['63 題|查看>practice.html?mode=wrong&part=5', '3 題|查看>practice.html?mode=wrong&part=6', '30 題|查看>practice.html?mode=wrong&part=7', '0 題|沒有錯題',
+      '8 題|查看>practice.html?mode=wrong&part=2', '2 題|查看>practice.html?mode=wrong&part=3', '2 題|查看>practice.html?mode=wrong&part=4'])
+    && r.an.n > 9 && r.an.h3 && r.an.before === 'false' && r.an.after === 'true' && r.an.p7.length > 2 && r.an.p7.indexOf('多篇閱讀') === r.an.p7.length - 1 && !r.an.old
+    && J(r.an.links) === J(['practice.html?mode=wrong&part=5', 'practice.html?mode=wrong&part=6', 'practice.html?mode=wrong&part=7'])
+    && /改版以前的模擬考只存了分數/.test(r.mock_old) && r.mock_new === '';
+  return { ok, detail: J(r) };
 };
 
 (async () => {

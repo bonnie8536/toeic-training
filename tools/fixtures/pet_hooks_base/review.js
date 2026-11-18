@@ -6,7 +6,16 @@
   const T = window.TOEIC || {};
   const LD = T.listening || {};
 
+  /* Part 5、聽力 1/2 的錯題跟題組錯題數用 js/wrongbook.js 算(含模擬考答錯的題,錯題本定稿 2026-11-18);沒載到就照以前只看刷題紀錄 */
+  const WB = window.WRONGBOOK || null;
   function collect() {
+    if (WB) {
+      const items = [];
+      [['5', 'p5'], ['1', 'l1'], ['2', 'l2']].forEach(([p, kind]) => WB.items(p).forEach(x => items.push({ kind, q: x.q, t: x.t || 0 })));
+      const pd = store.get('phrase_drill', {});
+      (T.phrases || []).forEach(p => { const r = pd[p.id]; if (r && !r.ok) items.push({ kind: 'ph', q: p, t: r.t || 0 }); });
+      return items.sort((a, b) => a.t - b.t);
+    }
     const items = [];
     const d5 = store.get('drill_p5', {});
     (T.part5 || []).forEach(q => { const r = d5[q.id]; if (r && !r.ok) items.push({ kind: 'p5', q, t: r.t || 0 }); });
@@ -21,7 +30,10 @@
 
   function otherCounts() {
     const c = { sets: 0, lsets: 0, vocab: 0, grammar: 0, phonics: 0 };
-    ['6', '7'].forEach(p => {
+    if (WB) {
+      c.sets = WB.setCount('6') + WB.setCount('7');
+      c.lsets = WB.setCount('3') + WB.setCount('4');
+    } else ['6', '7'].forEach(p => {
       const st = store.get('drill_p' + p, {});
       (T['part' + p] || []).forEach(set => {
         if (set.questions.some((q, qi) => {
@@ -30,7 +42,7 @@
         })) c.sets++;
       });
     });
-    ['3', '4'].forEach(p => {
+    if (!WB) ['3', '4'].forEach(p => {
       const st = store.get('listen_p' + p, {});
       (LD['p' + p] || []).forEach(set => {
         if (set.questions.some((q, qi) => { const k = set.id + ':' + qi; return st[k] && !st[k].ok; })) c.lsets++;
@@ -65,8 +77,8 @@
           items.length ? h('button', { class: 'btn primary', onclick: () => runner(todo) }, '開始複習（' + todo.length + ' 題）') : null))));
 
     const links = [];
-    if (c.sets) links.push(['閱讀題組錯題 ' + c.sets + ' 組', 'practice.html']);
-    if (c.lsets) links.push(['聽力對話/獨白錯題 ' + c.lsets + ' 組', 'practice.html']);
+    if (c.sets) links.push(['閱讀題組錯題 ' + c.sets + ' 組', 'practice.html#wrongbook']);
+    if (c.lsets) links.push(['聽力對話/獨白錯題 ' + c.lsets + ' 組', 'practice.html#wrongbook']);
     if (c.vocab) links.push(['單字漏接 ' + c.vocab + ' 個（玩一場優先出）', 'vocab.html']);
     if (c.grammar) links.push(['文法課有錯題的單元 ' + c.grammar + ' 課', 'grammar.html']);
     if (c.phonics) links.push(['自然發音有錯題的課 ' + c.phonics + ' 課', 'phonics.html']);
@@ -114,15 +126,30 @@
         }, isLast ? '完成這一輪' : '下一題 →'));
     }
 
-    function settle(item, ok) {
+    /* c:這一下選的選項。題目可能是模擬考答錯才在錯題本(mock_wrong;錯題本定稿 1.6):
+       答對:刷題紀錄那筆是答錯的就照舊刪掉(答對過的紀錄不刪,已作答數不能少);mock_wrong 那筆是答錯的,寫一筆比較新的已訂正記號
+       (不然刪掉刷題紀錄後模擬考那筆會冒回來)。
+       答錯:刷題紀錄那筆是答錯的就照舊把時間改成現在;刷題紀錄沒有這題、或那筆是答對的(之後模擬考答錯才進錯題本),
+       刷題紀錄寫成這次 { c, ok: false, t: 現在 }(跟錯題本複習答錯時 saveRec 一樣;只改時間的話那筆答對紀錄變成最新的,題目會從錯題本消失)。
+       刷題紀錄那一份真的有改才寫(只動 mock_wrong 時不整份上傳) */
+    function settle(item, ok, c) {
       results[cur] = ok;
       const keyMap = { p5: 'drill_p5', l1: 'listen_p1', l2: 'listen_p2', ph: 'phrase_drill' };
       const key = keyMap[item.kind];
       const st = store.get(key, {});
       const id = item.q.id;
-      if (ok) { delete st[id]; cleared++; }
-      else if (st[id]) st[id].t = Date.now();
-      store.set(key, st);
+      const mw = WB && item.kind !== 'ph' ? store.get('mock_wrong', null) : null;
+      const m = mw && typeof mw === 'object' && !Array.isArray(mw) && mw[id] && typeof mw[id] === 'object' && !mw[id].ok ? mw[id] : null;
+      const r = st[id];
+      let changed = false;
+      if (ok) {
+        cleared++;
+        if (r && !r.ok) { delete st[id]; changed = true; }
+        if (m) WB.save({ [id]: { c, ok: true, t: Date.now() } });
+      } else if (r && !r.ok) { r.t = Date.now(); changed = true; }
+      else if (m && Number.isInteger(c)) { st[id] = { c, ok: false, t: Date.now() }; changed = true; }
+      else if (r) { r.t = Date.now(); changed = true; }
+      if (changed) store.set(key, st);
     }
 
     function optButtons(q, onPick, letterOnly) {
@@ -162,7 +189,7 @@
           optButtons(q, (oi, opts) => {
             if (done) return; done = true;
             const ok = grade(q, oi, opts);
-            settle(item, ok);
+            settle(item, ok, oi);
             result.append(h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了，移出錯題本' : '再想想，正確是 ' + LETTERS[q.answer]),
               h('div', null, q.explanation), h('div', { class: 'tr' }, '句意：' + q.translation)), next(isLast));
@@ -174,7 +201,7 @@
           optButtons(q.quiz, (oi, opts) => {
             if (done) return; done = true;
             const ok = grade(q.quiz, oi, opts);
-            settle(item, ok);
+            settle(item, ok, oi);
             result.append(h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了，移出錯題本' : '再想想，正確是 ' + LETTERS[q.quiz.answer]),
               h('div', null, q.quiz.explanation)),
@@ -204,7 +231,7 @@
           optButtons(q, (oi, opts) => {
             if (done) return; done = true;
             const ok = grade(q, oi, opts, true);
-            settle(item, ok);
+            settle(item, ok, oi);
             result.append(h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了，移出錯題本' : '再想想，正確是 ' + LETTERS[q.answer]),
               h('div', null, q.explanation)),

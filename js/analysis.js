@@ -209,10 +209,23 @@
         h('span', { class: 'verdict-pill good' }, '綠'), ' 80% 以上'));
   }
 
-  /* 3. 錯題分類 */
-  const wg = wrongGroups();
+  /* 3. 錯題分類:跟錯題本同一套分組(js/wrongbook.js、js/wrongbook-ui.js;含模擬考答錯的題,Part 7 依文章類型),
+     每組可以展開、有「複習」;每個 Part 的「看錯題本」連到那個 Part 的錯題本清單。沒載到就照以前 */
+  const WB = window.WRONGBOOK, WBUI = window.WRONGBOOK_UI;
+  const wbParts = WB && WBUI ? ['5', '6', '7'].map(p => ({ p, groups: WB.groups(p) })).filter(x => x.groups.length) : null;
+  const wg = wbParts ? [] : wrongGroups();
   root.append(h('div', { class: 'exercise-head' }, h('h2', null, '錯題')));
-  if (!wg.length) {
+  if (wbParts) {
+    if (!wbParts.length) root.append(h('p', { class: 'result-note' }, '目前沒有錯題。'));
+    wbParts.forEach(({ p, groups }) => {
+      const total = groups.reduce((n, g) => n + g.items.length, 0);
+      root.append(h('div', { class: 'q-block' },
+        h('div', { class: 'q-text', style: 'display:flex;align-items:center;gap:10px' },
+          h('b', null, WB.TITLE[p]), h('span', { style: 'color:var(--bad);font-weight:700' }, total + ' 題'),
+          h('a', { class: 'btn', style: 'margin-left:auto;padding:4px 14px;font-size:13.5px', href: 'practice.html?mode=wrong&part=' + p }, '看錯題本')),
+        WBUI.groupList(groups, { part: p, level: 3, remember: false })));
+    });
+  } else if (!wg.length) {
     root.append(h('p', { class: 'result-note' }, '目前沒有錯題。'));
   } else {
     wg.forEach(w => {

@@ -203,6 +203,18 @@
     return { ok, wrong, cleared };
   }
 
+  /* 開頁先跟雲端對齊 mock_wrong(審查 2026-11-19 #1;模擬考、每日複習、題庫、能力分析開頁時呼叫,跟單字頁、閱讀頁開頁對齊題庫一樣)。
+     部署前就開著、沒重新整理的舊版分頁(舊版 cloud.js 的合併表沒有 mock_wrong)會把帳本上的 mock_wrong 不讀雲端就整份上傳:
+     本機先有別台考的錯題,之後就算被它整份傳上去也還在(只剩對齊之後、交卷之前別台才傳的那段;js/cloud.js 已知限制 8)。
+     合併後本機有變,cloud.js 送 cloud:merged(js/wrongbook-ui.js keepFresh 收到就重畫)。
+     回 Promise<{ ok, changed }>,不會失敗;沒有雲端、沒登入、這一頁還沒灌過資料時什麼都不做(CLOUD.syncKey 的規則) */
+  function syncCloud() {
+    const none = { ok: false, changed: false };
+    const C = root.CLOUD;
+    if (!C || typeof C.syncKey !== 'function') return Promise.resolve(none);
+    try { return Promise.resolve(C.syncKey('mock_wrong')).then((r) => r || none, () => none); } catch (e) { return Promise.resolve(none); }
+  }
+
   /* 清單上的字(用字照學習記錄 js/history.js):題目最多 max 字;選項整句列出,跟學習記錄一樣不截(審查 2026-11-19:截在 30 字時 Part 7、聽力大半的正解看不完整) */
   const cut = (s, n) => { const t = String(s === undefined || s === null ? '' : s); return t.length > n ? t.slice(0, n) + '…' : t; };
   function stem(x, max) {
@@ -221,6 +233,6 @@
 
   root.WRONGBOOK = Object.freeze({
     ROUND, MAX, SINCE, PARTS, TITLE, MULTI, unit, isSetPart,
-    ref, pick, itemsFrom, items, count, setCount, groups, round, cleanAns, fromAnswers, put, save, stem, optText,
+    ref, pick, itemsFrom, items, count, setCount, groups, round, cleanAns, fromAnswers, put, save, syncCloud, stem, optText,
   });
 })(typeof window !== 'undefined' ? window : globalThis);

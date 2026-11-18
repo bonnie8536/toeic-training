@@ -37,10 +37,10 @@
         h('span', { class: 'wb-key' }, '正解：' + key)));
   }
 
-  /* 組的清單。opts:{ part, level(heading 層級 2 或 3), remember(記開了哪幾組), open(要開著的組名;重畫時用,沒給就看 remember) }。
+  /* 組的清單。opts:{ part, level(heading 層級 2、3 或 4:錯題本清單頁 2;能力分析 4,那裡 Part 名稱是 h3), remember(記開了哪幾組), open(要開著的組名;重畫時用,沒給就看 remember) }。
      組數 2 以上放「全部展開」(報讀名稱帶 Part,能力分析一頁有好幾顆)。聽力 Part 1 不分組(組名是空的):直接一張清單 */
   function groupList(groups, opts) {
-    const p = String(opts.part), level = opts.level === 3 ? 'h3' : 'h2';
+    const p = String(opts.part), level = opts.level === 3 || opts.level === 4 ? 'h' + opts.level : 'h2';
     const wrap = h('div', { class: 'wb-groups', 'data-part': p });
     if (groups.length === 1 && !groups[0].name) {
       wrap.append(h('div', { class: 'wrong-cat-list wb-list wb-flat' }, groups[0].items.map(itemRow)));
@@ -164,6 +164,8 @@
     window.addEventListener('pageshow', (e) => { if (e.persisted) check(); });
     /* 在別的分頁複習完切回來也一樣(js/daily-ui.js 的 visibilitychange) */
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
+    /* 開頁跟雲端對齊(WRONGBOOK.syncCloud)把別台考的錯題合併進本機時,js/cloud.js 送 cloud:merged:一樣看有沒有變再重畫 */
+    window.addEventListener('cloud:merged', (e) => { if (e && e.detail && e.detail.key === 'mock_wrong') check(); });
   }
 
   window.WRONGBOOK_UI = Object.freeze({ renderList, groupList, reviewUrl, listUrl, sig, keepFresh });

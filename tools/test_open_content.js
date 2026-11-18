@@ -2764,7 +2764,7 @@ T['錯題本 U11–U13、U15:聽力網址直接開、聽力 3 一段一組、聽
     await sleep(1200);
     r.an = await s.eval(`(() => { const t = [...document.querySelectorAll('.wb-toggle')]; const p7 = t.filter((b) => /^wb-b-7-/.test(b.id)).map((b) => b.querySelector('.wb-name').textContent);
       const before = t[0] && t[0].getAttribute('aria-expanded'); if (t[0]) t[0].click(); const after = t[0] && t[0].getAttribute('aria-expanded');
-      return { n: t.length, h3: [...document.querySelectorAll('.wb-h')].every((h) => h.tagName === 'H3'), before, after, p7, old: /題組 25/.test(document.body.textContent),
+      return { n: t.length, h4: [...document.querySelectorAll('.wb-h')].every((h) => h.tagName === 'H4'), before, after, p7, old: /題組 25/.test(document.body.textContent),
         links: [...document.querySelectorAll('a.btn')].filter((a) => a.textContent === '看錯題本').map((a) => a.getAttribute('href')) }; })()`);
   } finally { await s.close(); }
   /* U15:模擬考首頁(最近 8 筆有一筆早於上線 → 有那行;全部晚於 → 沒有) */
@@ -2780,7 +2780,7 @@ T['錯題本 U11–U13、U15:聽力網址直接開、聽力 3 一段一組、聽
     && J(r.l4) === J(['機場廣播:2']) && r.l4all === null && /目前沒有錯題/.test(r.l1) && r.l2review.letters === 3 && /回錯題本/.test(r.l2review.top)
     && J(r.panel) === J(['63 題|查看>practice.html?mode=wrong&part=5', '3 題|查看>practice.html?mode=wrong&part=6', '30 題|查看>practice.html?mode=wrong&part=7', '0 題|沒有錯題',
       '8 題|查看>practice.html?mode=wrong&part=2', '2 題|查看>practice.html?mode=wrong&part=3', '2 題|查看>practice.html?mode=wrong&part=4'])
-    && r.an.n > 9 && r.an.h3 && r.an.before === 'false' && r.an.after === 'true' && r.an.p7.length > 2 && r.an.p7.indexOf('多篇閱讀') === r.an.p7.length - 1 && !r.an.old
+    && r.an.n > 9 && r.an.h4 && r.an.before === 'false' && r.an.after === 'true' && r.an.p7.length > 2 && r.an.p7.indexOf('多篇閱讀') === r.an.p7.length - 1 && !r.an.old
     && J(r.an.links) === J(['practice.html?mode=wrong&part=5', 'practice.html?mode=wrong&part=6', 'practice.html?mode=wrong&part=7'])
     && r.mock_old.indexOf(r.sinceDay + ' 改版以前的模擬考只存了分數') === 0 && r.mock_new === '';
   return { ok, detail: J(r) };
@@ -2975,6 +2975,98 @@ T['錯題本 U20:題庫首頁「查看」、能力分析「看錯題本」「全
     r.all2 = await s.eval(NAMES('.wb-all'));
   } finally { await s.close(); }
   const ok = good(r.see) && r.see.every(([, a]) => /Part \d/.test(a)) && good(r.book) && good(r.all) && good(r.all2) && r.all2[0][0] === '全部收起' && r.all2[1][0] === '全部展開';
+  return { ok, detail: J(r) };
+};
+
+/* 審查(2026-11-19)#1:部署前就開著、沒重新整理的舊版分頁(合併表沒有 mock_wrong)會把帳本上的 mock_wrong 整份上傳。
+   會寫或顯示錯題本的頁面開頁先跟雲端對齊一次(CLOUD.syncKey('mock_wrong'),跟單字頁、閱讀頁開頁對齊題庫一樣):
+   別台考的錯題先進本機,之後就算被舊分頁整份傳上去也還在。本機多的合併後上傳;雲端跟本機一樣時不上傳;畫面照合併後的算 */
+T['錯題本 S1:模擬考、每日複習、題庫首頁、錯題本清單、能力分析開頁先跟雲端對齊 mock_wrong:別台的錯題進本機、畫面跟著算,本機多的合併上傳、一樣的不傳;其他鍵不動'] = async (B) => {
+  const P5 = BANK.part5, day = Date.now() - 864e5;
+  const mine = { [P5[3].id]: { c: wrongOf(P5[3]), ok: false, t: day } };
+  const other = { [P5[5].id]: { c: wrongOf(P5[5]), ok: false, t: day + 1000 } };
+  const both = Object.keys(Object.assign({}, mine, other)).sort();
+  const P5ROW = "(() => { const row = [...document.querySelectorAll('#wrongbook .review-row')].find((x) => /Part 5/.test(x.textContent)); return row ? row.querySelector('b').textContent : ''; })()";
+  const PAGES = [
+    { url: 'mock.html' },
+    { url: 'review.html', shown: "(document.querySelector('.part-card p') || {}).textContent || ''", want: /^待複習 2 題/ },
+    { url: 'practice.html', shown: P5ROW, want: /^2 題$/ },
+    { url: 'practice.html?mode=wrong&part=5', shown: "(document.querySelector('.wb-sum') || {}).textContent || ''", want: /^2 題/ },
+    { url: 'analysis.html', shown: "(() => { const b = document.querySelector('.q-block[data-part=\"5\"]'); return b ? b.firstElementChild.textContent : ''; })()", want: /^Part 5 單句填空2 題/ },
+    { url: 'mock.html', same: true },
+  ];
+  const out = [];
+  for (const pg of PAGES) {
+    const drill = J(Object.fromEntries(P5.slice(40, 50).map((q) => [q.id, { c: q.answer, ok: true, t: day }])));   // 能力分析滿 10 題才分析
+    const ls = { [SB]: login0(), [AK('mock_wrong')]: J(mine), [AK('drill_p5')]: drill };
+    const rows = [{ k: 'mock_wrong', v: pg.same ? mine : other, updated_at: new Date(day + 2000).toISOString() }];
+    const s = await open(B, { url: pg.url, user: true, sdk: fakeCloud({ user: USER }), ls, ss: { __fake_rows: J(rows) } });
+    const r = { url: pg.url + (pg.same ? '(雲端一樣)' : '') };
+    try {
+      await sleep(300);
+      const after = JSON.parse(await s.eval(LS));
+      r.local = Object.keys(JSON.parse(after[AK('mock_wrong')] || '{}')).sort();
+      r.up = JSON.parse(await s.eval("sessionStorage.getItem('__fake_up') || '[]'")).filter((u) => u.k === 'mock_wrong').map((u) => Object.keys(u.v || {}).sort());
+      r.drill = after[AK('drill_p5')] === drill;
+      r.led = JSON.parse(after['tr_unsynced_' + UID] || '{}');
+      if (pg.shown) r.shown = await s.eval(pg.shown);
+    } finally { await s.close(); }
+    r.ok = pg.same ? J(r.local) === J(Object.keys(mine)) && !r.up.length && r.drill && !('mock_wrong' in r.led)
+      : J(r.local) === J(both) && r.up.length === 1 && J(r.up[0]) === J(both) && r.drill && !('mock_wrong' in r.led) && (!pg.want || pg.want.test(r.shown));
+    out.push(r);
+  }
+  const bad = out.filter((r) => !r.ok);
+  return { ok: !bad.length, detail: bad.length ? '不對的:' + J(bad) : J(out.map((r) => r.url + ' ' + (r.shown || '')).join(' / ')) };
+};
+
+/* 審查(2026-11-19)#2、#3:能力分析的錯題區。
+   #2 每個 Part 的標題列(Part 名稱、題數、看錯題本)在 320 寬也各一行:數字和「題」不拆開、按鈕字不從中間斷(錯題本清單的組標題列同一套,css .wb-head)。
+   #3 Part 名稱是標題(h3)、組標題是 h4:報讀用標題跳讀時,從 Part 5 最後一組跳到 Part 6 第一組之前先聽到「Part 6 段落填空」
+   (APG Accordion:組標題的層級對應頁面結構;錯題本清單頁 Part 是 h1、組是 h2)。字級、粗細跟以前的 <b> 一樣 */
+T['錯題本 U21:能力分析錯題區:每個 Part 的標題列在 320、375、1280 寬三段各一行、不橫向捲動;Part 名稱是 h3、組是 h4,標題順序 h2 錯題 → h3 Part → h4 組;字級粗細跟以前一樣'] = async (B) => {
+  const st = wbStudent();
+  const LINES = `(() => { const lines = (e) => { const g = document.createRange(); g.selectNodeContents(e); return new Set([...g.getClientRects()].filter((x) => x.width > 0).map((x) => Math.round(x.top))).size; };
+    return { rows: [...document.querySelectorAll('#analysis-root .q-block[data-part]')].map((b) => [...b.firstElementChild.children].map((c) => c.textContent + ':' + lines(c))),
+      wide: document.documentElement.scrollWidth - document.documentElement.clientWidth }; })()`;
+  const HEADS = `(() => { const hs = [...document.querySelectorAll('#analysis-root h1, #analysis-root h2, #analysis-root h3, #analysis-root h4, #analysis-root h5, #analysis-root h6')];
+    const i = hs.findIndex((x) => x.tagName === 'H2' && x.textContent.trim() === '錯題'); const j = hs.findIndex((x, n) => n > i && x.tagName === 'H2');
+    const part = (x) => { const b = x.closest('[data-part]'); return b ? b.dataset.part : ''; };
+    const list = hs.slice(i, j < 0 ? hs.length : j);
+    let cur = '', sameParent = true;
+    list.forEach((x) => { if (x.tagName === 'H3') cur = part(x); else if (x.tagName === 'H4' && part(x) !== cur) sameParent = false; });
+    const h3 = list.filter((x) => x.tagName === 'H3');
+    const row = h3[0] && h3[0].parentElement;
+    return { tags: list.map((x) => x.tagName).join(' ').replace(/(H4 )*H4/g, 'H4…'), h3: h3.map((x) => x.textContent), sameParent,
+      wbh: [...document.querySelectorAll('#analysis-root .wb-h')].every((x) => x.tagName === 'H4' && x.children.length === 1 && x.children[0].tagName === 'BUTTON'),
+      font: h3.length && row ? [getComputedStyle(h3[0]).fontSize === getComputedStyle(row).fontSize, Number(getComputedStyle(h3[0]).fontWeight) >= 700, getComputedStyle(h3[0]).marginTop, getComputedStyle(h3[0]).marginBottom] : null }; })()`;
+  /* Part 名稱每個字(空格分開)各在一行裡:放不下時只在空格換行(「Part 5 / 單句填空」),不拆中文字 */
+  const WORDS = `(() => { const t = document.querySelector('#analysis-root .q-block[data-part="5"] h3'); if (!t || !t.firstChild) return null; const s = t.firstChild.textContent; let at = 0;
+    const tops = (a, b) => { const g = document.createRange(); g.setStart(t.firstChild, a); g.setEnd(t.firstChild, b); return new Set([...g.getClientRects()].filter((x) => x.width > 0).map((x) => Math.round(x.top))).size; };
+    return s.split(' ').map((w) => { const n = tops(at, at + w.length); at += w.length + 1; return w + ':' + n; }); })()`;
+  const r = {};
+  for (const w of [320, 375, 1280]) {
+    const s = await open(B, { url: 'analysis.html', user: true, sdk: fakeCloud({ user: USER }), ls: st.ls, size: { width: w, height: 800 }, desktop: w >= 1024 });
+    try {
+      r['w' + w] = await s.eval(LINES);
+      if (w === 375) r.heads = await s.eval(HEADS);
+    } finally { await s.close(); }
+  }
+  /* 三位數題數(Part 5 錯 152 題):320 寬題數、看錯題本照樣一行,Part 名稱只在空格換行;375 寬三段一行 */
+  const P5 = BANK.part5, day = Date.now() - 864e5;
+  const many = { [SB]: login0(), [AK('drill_p5')]: J(Object.fromEntries(P5.slice(0, 152).map((q, i) => [q.id, { c: wrongOf(q), ok: false, t: day + i }]))) };
+  for (const w of [320, 375]) {
+    const s = await open(B, { url: 'analysis.html', user: true, sdk: fakeCloud({ user: USER }), ls: many, size: { width: w, height: 800 } });
+    try { r['many' + w] = await s.eval(LINES); r['words' + w] = await s.eval(WORDS); } finally { await s.close(); }
+  }
+  const TITLES = ['Part 5 單句填空', 'Part 6 段落填空', 'Part 7 閱讀理解'];
+  const oneLine = (x, n) => x.rows.length === (n || 3) && x.rows.every((cells) => cells.length === 3 && cells.every((c) => /:1$/.test(c))) && x.wide <= 0;
+  const m320 = (r.many320 || { rows: [] }).rows[0] || [];
+  const hd = r.heads || {};
+  const ok = oneLine(r.w320) && oneLine(r.w375) && oneLine(r.w1280)
+    && hd.tags === 'H2 H3 H4… H3 H4… H3 H4…' && J(hd.h3) === J(TITLES) && hd.sameParent && hd.wbh
+    && J(hd.font) === J([true, true, '0px', '0px'])
+    && m320.length === 3 && /^152 題:1$/.test(m320[1]) && /^看錯題本:1$/.test(m320[2]) && /:[12]$/.test(m320[0]) && r.many320.wide <= 0
+    && J(r.words320) === J(['Part:1', '5:1', '單句填空:1']) && oneLine(r.many375, 1);
   return { ok, detail: J(r) };
 };
 

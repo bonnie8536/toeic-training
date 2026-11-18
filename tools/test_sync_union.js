@@ -1,4 +1,4 @@
-/* 同一個帳號多台裝置:自訂題庫(vgame_banks)、刪除標記(sync_del)、模擬考紀錄(mock_history)、模擬考錯題(mock_wrong,31–33)先合併再上傳(同步合併設計 3.2–3.6、5.2)。
+/* 同一個帳號多台裝置:自訂題庫(vgame_banks)、刪除標記(sync_del)、模擬考紀錄(mock_history)、模擬考錯題(mock_wrong,31–34)先合併再上傳(同步合併設計 3.2–3.6、5.2)。
    用法:node tools/test_sync_union.js
    假的 Supabase 與多台裝置在 tools/sync_harness.js;頁面載入真的 js/sync-merge.js 與 js/cloud.js。
    「舊版頁面」用 tools/fixtures/cloud_sync_base.js(main 4c823ec 的 cloud.js,沒有合併表)。
@@ -597,6 +597,44 @@ const scenarios = {
     const keys = Object.keys(cloudOf(w, 'mock_wrong') || {}).sort().join(',');
     const ok = got && untouched && keys === 'l1-01,p5-a,p6-y:2';
     return { ok, detail: '舊版灌下 ' + got + ' / 舊版沒動雲端 ' + untouched + ' / 雲端 ' + keys };
+  },
+  /* 審查 2026-11-19 #1:同一台還開著部署前的舊版分頁(舊版 cloud.js 的合併表沒有 mock_wrong,帳本上有就整份上傳,不讀雲端、不合併)。
+     學校電腦考完上傳、登出(本機刪掉),之後家裡新版的模擬考頁開頁先對齊(js/mock.js 呼叫 CLOUD.syncKey('mock_wrong')),
+     離線交卷、恢復連線兩個分頁同時補傳(誰先都一樣),或連線中交卷後馬上關掉舊分頁(pagehide 搶在新版 0.8 秒的上傳之前):學校那兩題都還在。
+     沒先對齊時本機沒有學校那兩題,舊分頁整份傳上去就只剩家裡那一題(cloud.js 已知限制 8 寫的剩下那段:對齊之後、交卷之前別台才傳的) */
+  '34. (審查 2026-11-19 #1)同一台還開著部署前的舊版分頁:新版模擬考頁開頁先對齊,離線交卷後兩個分頁一起恢復連線(兩種先後)、或交卷後馬上關掉舊分頁,別台已經登出的錯題都還在雲端': async () => {
+    const out = [];
+    for (const how of ['舊分頁先', '新分頁先', '關掉舊分頁']) {
+      const w = makeWorld(171);
+      const school = makeDevice(w, '學校'), home = makeDevice(w, '家裡');
+      await signIn(home);                                    // 家裡先登入灌資料,這時雲端還沒有錯題
+      const tab = makeDevice(w, '家裡舊分頁', { old: true });  // 同一台、同一個 localStorage 與分頁暫存的舊版分頁
+      tab.local = home.local; tab.session = home.session;
+      const oldPg = loadPage(tab); await oldPg.ready;
+      await signIn(school);
+      mockWrongSubmit(school, { 'p5-001': 1, 'p5-003': 2 }); await school.pg.runTimers();
+      school.confirmAnswer = true; await logout(school);     // 學校電腦:傳完就登出,本機刪掉
+      home.pg.close();
+      const newPg = loadPage(home); await newPg.ready;        // 家裡打開模擬考頁(同一個工作階段,不重灌)
+      const sk = await newPg.ctx.CLOUD.syncKey('mock_wrong');
+      if (how === '關掉舊分頁') {
+        mockWrongSubmit(home, { 'p5-002': 0 });
+        await oldPg.fire('win:pagehide');                    // 新版的 0.8 秒上傳還沒跑
+        await newPg.runTimers();
+      } else {
+        home.offline = tab.offline = true;
+        mockWrongSubmit(home, { 'p5-002': 0 });
+        await newPg.runTimers();                             // 離線:傳不上去,帳本留著
+        home.offline = tab.offline = false;
+        const [a, b] = how === '舊分頁先' ? [oldPg, newPg] : [newPg, oldPg];
+        await Promise.all([a.fire('win:online'), b.fire('win:online')]);
+      }
+      for (let i = 0; i < 3; i++) { await newPg.runTimers(); await tick(8); }
+      const c = Object.keys(cloudOf(w, 'mock_wrong') || {}).sort().join(','), l = Object.keys(localOf(home, 'mock_wrong') || {}).sort().join(',');
+      out.push({ how, sk: sk.ok && sk.changed, c, l, led: Object.keys(H.ledgerOf(home)).indexOf('mock_wrong') < 0 });
+    }
+    const ok = out.every(r => r.sk && r.c === 'p5-001,p5-002,p5-003' && r.l === r.c && r.led);
+    return { ok, detail: J(out) };
   },
 };
 

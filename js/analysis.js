@@ -224,16 +224,20 @@
       if (!parts.length) wbBox.append(h('p', { class: 'result-note' }, '目前沒有錯題。'));
       parts.forEach(({ p, groups }) => {
         const total = groups.reduce((n, g) => n + g.items.length, 0);
+        /* Part 名稱是 h3、底下的組是 h4(報讀用標題跳讀時聽得到換了 Part;審查 2026-11-19 #3),樣子跟以前的粗體字一樣。
+           題數、看錯題本不縮、不斷行,320 寬也各一行(css .wb-part-head;審查 2026-11-19 #2) */
         wbBox.append(h('div', { class: 'q-block', 'data-part': p },
-          h('div', { class: 'q-text', style: 'display:flex;align-items:center;gap:10px' },
-            h('b', null, WB.TITLE[p]), h('span', { style: 'color:var(--bad);font-weight:700' }, total + ' 題'),
-            h('a', { class: 'btn wb-book', style: 'margin-left:auto;padding:4px 14px;font-size:13.5px', href: 'practice.html?mode=wrong&part=' + p, 'aria-label': '看錯題本 ' + WB.TITLE[p] }, '看錯題本')),
-          WBUI.groupList(groups, { part: p, level: 3, remember: false, open: open && open[p] })));
+          h('div', { class: 'q-text wb-part-head' },
+            h('h3', { class: 'wb-part-title' }, WB.TITLE[p]), h('span', { class: 'wb-part-n' }, total + ' 題'),
+            h('a', { class: 'btn wb-book', href: 'practice.html?mode=wrong&part=' + p, 'aria-label': '看錯題本 ' + WB.TITLE[p] }, '看錯題本')),
+          WBUI.groupList(groups, { part: p, level: 4, remember: false, open: open && open[p] })));
       });
     };
     paintWrong(null);
     root.append(wbBox);
     WBUI.keepFresh(wbBox, () => WBUI.sig(['5', '6', '7']), paintWrong);
+    /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud;審查 2026-11-19 #1):別台考的錯題合併進來時 keepFresh 重畫這一區 */
+    if (typeof WB.syncCloud === 'function') WB.syncCloud();
   } else if (!wg.length) {
     root.append(h('p', { class: 'result-note' }, '目前沒有錯題。'));
   } else {

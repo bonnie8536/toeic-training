@@ -728,6 +728,28 @@ Object.assign(cases, {
     const plan = a.root.byClass('ac-plan');
     return { ok: plan.length === 1 && /方案 30\u00a0位以內/.test(plan[0].textContent) && /已用 3 人/.test(plan[0].textContent) && /到期日 2026\/11\/04/.test(plan[0].textContent), detail: plan.map(p => p.textContent).join() };
   },
+  /* 錯題本審查(2026-11-19)#4:每日複習答對「只在模擬考錯題裡的題」只寫 mock_wrong(js/review.js settle),
+     以前「本週動態」不認這個鍵:這週只做了這種複習的學生不會列出,可是學生表的「最近活動」是今天,兩邊對不上。
+     同一週考過模擬考(交卷同時寫 mock_history、mock_wrong)只標「模擬考」,不多標「模擬考錯題」(那次沒有複習) */
+  'admin.js 本週動態:只寫了 mock_wrong(每日複習答對模擬考錯題)的學生也列出、標「模擬考錯題」;同一週考過模擬考的只標「模擬考」': async () => {
+    const w = world();
+    const day = new Date(Date.now() - 864e5).toISOString(), old = new Date(Date.now() - 30 * 864e5).toISOString();
+    const rows = [
+      { user_id: S1, k: '_meta', v: { name: '王小明', email: 's1@example.com' }, updated_at: old },
+      { user_id: S1, k: 'drill_p5', v: { q1: { ok: true } }, updated_at: old },
+      { user_id: S1, k: 'mock_wrong', v: { 'p5-001': { c: 1, ok: true, t: Date.now() - 864e5 } }, updated_at: day },
+      { user_id: S2, k: '_meta', v: { name: '李小華', email: 's2@example.com' }, updated_at: old },
+      { user_id: S2, k: 'mock_history', v: [{ d: day, size: 'quick', lRaw: 1, lTotal: 12, rRaw: 1, rTotal: 18, lScore: 5, rScore: 5 }], updated_at: day },
+      { user_id: S2, k: 'mock_wrong', v: { 'p5-002': { c: 0, ok: false, t: Date.now() - 864e5 } }, updated_at: day },
+    ];
+    const a = loadAdmin(w, { paid: false, isTeacher: true, rows });
+    await settle();
+    const box = a.root.find(n => n.tagName === 'DIV' && n.children.some(c => c.tagName === 'H3' && c.textContent === '本週動態（近 7 天）'))[0];
+    const lines = box ? box.children.filter(c => c.tagName === 'DIV').map(c => c.textContent) : [];
+    const s1 = lines.find(l => /^王小明：/.test(l)) || '', s2 = lines.find(l => /^李小華：/.test(l)) || '';
+    const ok = lines.length === 2 && /^王小明：模擬考錯題（最近 /.test(s1) && /^李小華：模擬考（最近 /.test(s2);
+    return { ok, detail: JSON.stringify(lines) };
+  },
 });
 
 /* 某一項卡住(promise 永遠不回)時 node 會直接結束、看起來像沒事:這裡改成失敗 */

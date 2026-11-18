@@ -1,4 +1,4 @@
-/* 模擬考錯題收進錯題本(mock_wrong)與錯題本分組(定稿設計 2026-11-18,第 4.1 節 M1–M13;審查 2026-11-19 加 M14 答案不截斷、M15 SINCE 不早於上線)。
+/* 模擬考錯題收進錯題本(mock_wrong)與錯題本分組(定稿設計 2026-11-18,第 4.1 節 M1–M13;審查 2026-11-19 加 M14 答案不截斷、M15 SINCE 不早於上線、M16 開頁跟雲端對齊)。
    node + vm:載真題庫 data/*.js、js/sync-merge.js、js/move-rules.js、js/move-merge.js、js/wrongbook.js;
    store 用假的(記每個鍵 get、set 幾次);passTypeLabel 從 js/common.js 抄出來跑。
    用法:node tools/test_mock_wrong.js */
@@ -385,6 +385,33 @@ T['M15 SINCE:還沒上線時是台灣時間某天 23:59:59、在現在之後兩�
   const tw = (t) => new Date(t + 8 * 3600e3).toISOString().slice(0, 19).replace('T', ' ');
   const ok = typeof W.SINCE === 'string' && /T15:59:59\.000Z$/.test(W.SINCE) && isFinite(since) && since > now && since - now <= 2 * 864e5;
   return { ok, detail: J({ SINCE: W.SINCE, 台灣: isFinite(since) ? tw(since) : null, 現在台灣: tw(now), 還有幾小時: isFinite(since) ? Math.round((since - now) / 36e5 * 10) / 10 : null }) };
+};
+
+/* 審查 2026-11-19 #1:開頁跟雲端對齊(syncCloud)只叫 CLOUD.syncKey('mock_wrong') 一次、照它回的;沒有雲端、syncKey 丟錯或回失敗的 Promise 都回
+   { ok:false, changed:false },不丟錯、不碰 store。四個頁面開頁都有呼叫(模擬考、每日複習、題庫、能力分析),老師後台沒有(讀的是學生的資料) */
+T['M16 syncCloud:只叫一次 CLOUD.syncKey(\'mock_wrong\')、照它回;沒有雲端、丟錯、失敗都回 ok:false 不丟錯、不碰 store;四個頁面開頁有呼叫、老師後台沒有'] = async () => {
+  const run = async (cloud) => {
+    const ctx = sandbox();
+    if (cloud !== undefined) ctx.CLOUD = cloud;
+    ctx.store.reset();
+    const r = await ctx.WRONGBOOK.syncCloud();
+    return { r, touched: Object.keys(ctx.store.n.get).length + Object.keys(ctx.store.n.set).length };
+  };
+  const calls = [];
+  const got = {
+    none: await run(undefined),
+    noFn: await run({ enabled: true }),
+    ok: await run({ syncKey: (k) => { calls.push(k); return Promise.resolve({ ok: true, changed: true }); } }),
+    thrown: await run({ syncKey: () => { throw new Error('x'); } }),
+    rejected: await run({ syncKey: () => Promise.reject(new Error('x')) }),
+    empty: await run({ syncKey: () => Promise.resolve(null) }),
+  };
+  const NO = J({ ok: false, changed: false });
+  const pages = ['js/mock.js', 'js/review.js', 'js/practice.js', 'js/analysis.js'].filter((f) => !/\.syncCloud\(\)/.test(read(f)));
+  const ok = J(got.ok.r) === J({ ok: true, changed: true }) && J(calls) === J(['mock_wrong'])
+    && ['none', 'noFn', 'thrown', 'rejected', 'empty'].every((k) => J(got[k].r) === NO)
+    && Object.keys(got).every((k) => got[k].touched === 0) && !pages.length && !/syncCloud|syncKey/.test(read('js/admin.js'));
+  return { ok, detail: J({ got, calls, 沒呼叫的頁面: pages }) };
 };
 
 /* ================= M12:搬家規則、雲端合併表(讀原始碼) ================= */

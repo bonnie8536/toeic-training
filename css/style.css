@@ -1240,6 +1240,14 @@ table.cat-table td.num { white-space: nowrap; }
 }
 .wb-groups { margin-bottom: 40px; }
 .q-block .wb-groups { margin-bottom: 0; }
+/* 能力分析錯題區每個 Part 的標題列(js/analysis.js):Part 名稱是 h3,樣子跟以前的粗體字一樣;
+   題數、看錯題本跟上面 .wb-head 的題數、複習一樣不縮、不斷行(以前 320 寬三段都被擠成兩行,「63 / 題」「看錯題 / 本」)。
+   間距跟 .wb-head 一樣 8px(320 寬兩位數題數剛好一行);再放不下(三位數題數)只讓 Part 名稱在空格換行(「Part 5 / 單句填空」,不拆中文字) */
+.wb-part-head { display: flex; align-items: center; gap: 8px; }
+.wb-part-title { margin: 0; font-size: inherit; font-weight: 700; line-height: inherit; min-width: 0; word-break: keep-all; }
+.wb-part-n { color: var(--bad); font-weight: 700; }
+.wb-part-n, .wb-part-head .wb-book { flex: none; white-space: nowrap; }
+.wb-part-head .wb-book { margin-left: auto; padding: 4px 14px; font-size: 13.5px; }
 
 @media print {
   .topbar, .drill-nav-btns, .no-print, footer { display: none !important; }

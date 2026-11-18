@@ -81,6 +81,9 @@
     // 相容程度檢測報告的深連結:直接開一輪隨機練習
     startQuiz([{ p: partParam, n: partParam === '5' ? 10 : 2, cat: getParam('cat') || 'all' }]);
   } else renderHome();
+  /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud;審查 2026-11-19 #1):別台考的錯題合併進本機,
+     錯題本面板、錯題本清單由 js/wrongbook-ui.js keepFresh 收到 cloud:merged 重畫 */
+  if (WB && typeof WB.syncCloud === 'function') WB.syncCloud();
 
   /* ================= 首頁 ================= */
   function renderHome() {

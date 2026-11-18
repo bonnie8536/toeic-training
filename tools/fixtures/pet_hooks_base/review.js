@@ -56,9 +56,13 @@
     return c;
   }
 
+  let onHome = false;
   renderHome();
+  /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud;審查 2026-11-19 #1):別台考的錯題合併進來時,還在首頁就重畫題數 */
+  if (WB && typeof WB.syncCloud === 'function') WB.syncCloud().then(r => { if (r.changed && onHome) renderHome(); });
 
   function renderHome() {
+    onHome = true;
     document.title = '每日複習 - 衝衝英文';
     root.innerHTML = '';
     root.append(h('div', { class: 'page-head' },
@@ -96,6 +100,7 @@
 
   /* ================= 複習輪 ================= */
   function runner(list) {
+    onHome = false;
     let cur = 0, cleared = 0;
     let player = null;
     const results = [];

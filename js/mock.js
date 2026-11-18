@@ -92,6 +92,9 @@
   renderHome();
   /* 確認登入之後(這一頁不重載、能作答):之前存不進去的成績補存,首頁的紀錄表跟著重畫 */
   Promise.resolve(window.CLOUD ? CLOUD.ready : null).then(() => { if (saveLater() && onHome) renderHome(); }, () => {});
+  /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud;審查 2026-11-19 #1):部署前就開著的舊版分頁會把帳本上的 mock_wrong 整份上傳,
+     本機先有別台考的錯題,交卷後就算被它整份傳上去也還在 */
+  if (window.WRONGBOOK && typeof WRONGBOOK.syncCloud === 'function') WRONGBOOK.syncCloud();
 
   /* ================= 首頁 ================= */
   function renderHome() {

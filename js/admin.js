@@ -274,11 +274,13 @@
       }));
     }
 
-    /* 本週動態:近 7 天各學生動過哪些區域 */
+    /* 本週動態:近 7 天各學生動過哪些區域。
+       mock_wrong(模擬考答錯的題):每日複習答對只在模擬考錯題裡的題時只寫這個鍵(js/review.js),這週只做了這種複習的學生也要列出,
+       不然學生表的「最近活動」是今天、這裡卻沒有他(審查 2026-11-19 #4)。模擬考交卷也會寫它,同一週有「模擬考」就不多標「模擬考錯題」 */
     const AREA = [
       [/^drill_p/, '刷題'], [/^listen_p/, '聽力刷題'], [/^grammar_done/, '文法'], [/^phonics_done/, '自然發音'],
       [/^(vocab_|vgame_|phrase_)/, '單字片語'], [/^writing_/, '寫作'],
-      [/^ear_/, '聽力訓練'], [/^mock_history/, '模擬考'], [/^diag/, '檢測'],
+      [/^ear_/, '聽力訓練'], [/^mock_history/, '模擬考'], [/^mock_wrong/, '模擬考錯題'], [/^diag/, '檢測'],
     ];
     const weekAgo = new Date(Date.now() - 7 * 864e5).toISOString();
     const weekRows = ids.map(uid => {
@@ -287,6 +289,7 @@
       Object.entries(s.kt).forEach(([k, t]) => {
         if (t > weekAgo) { const hit = AREA.find(([re]) => re.test(k)); if (hit) areas.add(hit[1]); }
       });
+      if (areas.has('模擬考')) areas.delete('模擬考錯題');
       return { uid, areas: [...areas], last: s.last };
     }).filter(r => r.areas.length);
     if (ids.length) {

@@ -110,10 +110,10 @@
         return h('div', { class: 'part-card' },
           h('h3', null, d.title),
           d.desc ? h('p', null, d.desc) : null,
-          h('div', { class: 'p-stats' }, '完成 ' + s.done + '/' + s.total +
+          h('div', { class: 'p-stats', 'data-nosnippet': '' }, '完成 ' + s.done + '/' + s.total +
             (s.done ? ' · 一次答對率 ' + Math.round(s.ok / s.done * 100) + '%' : '')),
           h('div', { class: 'bar' }, h('i', { style: 'width:' + pct + '%' })),
-          h('div', { class: 'cfg-row' }, lvSel,
+          h('div', { class: 'cfg-row', 'data-nosnippet': '' }, lvSel,
             h('a', {
               class: 'btn primary', href: 'listening.html?sec=' + k, 'data-gate': '',   // 開始一輪:沒登入時 js/profile.js 先攔下(不換頁);直接開 ?sec= 照樣看得到題目
               onclick: e => { e.currentTarget.href = 'listening.html?sec=' + k + '&lv=' + encodeURIComponent(lvSel.value); },

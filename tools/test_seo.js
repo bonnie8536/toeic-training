@@ -7,7 +7,7 @@
      一建立就帶 data-nosnippet(搜尋結果的摘要不拿清單和章號、課號,改用頁面說明);單元頁、查表頁不帶。
    - setPageMeta:網域取 og:url(所以舊網址代理時也指新網址),單元網址只留決定內容的參數,重複呼叫不會疊加。
    - 首頁:WebSite 與 OnlineBusiness(Organization 的子類型)結構化資料,alternateName 只有 Rushup;h1 有站名;沒有過期的日期公告。
-   - 首頁搜尋結果的摘要(2026-11-13,Google 拿了導覽列文字當摘要):全站 .topbar-inner、頁尾連結列(外包 div)、首頁數字列、免費公告、每日練習、小雞卡一建立就帶 data-nosnippet,
+   - 首頁搜尋結果的摘要(2026-11-13,Google 拿了導覽列文字當摘要):全站 .topbar-inner、頁尾連結列(外包 div)、首頁數字列、每日練習、小雞卡、聽力訓練頁的進度數字與級別選單一建立就帶 data-nosnippet(首頁、價格頁不寫全站免費公告,2026-11-17 站長拿掉),
      h1、功能卡片、頁尾那句不帶,h1 下不掛介紹句;首頁說明第一句講是準備多益的線上練習網站,寫的題數不超過題庫,數字列照資料算(題庫含聽力、單字不重複);
      定稿關鍵字表分「原樣」「拆開」逐處核對,「多益練習」要原樣在標題或說明;每日複習接在題庫後面(模擬考錯題不進每日複習);h1 用 keep-all 只在「：」「、」後換行;
      每日複習的卡片與說明只寫 js/review.js 真的收的(不寫全站錯題);單字、聽力頁的說明和首頁卡片列出頁上每一種玩法;
@@ -323,7 +323,7 @@ function bodyElements(src) {
 }
 /* 首頁說明與 App 說明不能寫的字(2026-11-13 定稿):會變假的(之後要收費、題目不是真題、跟 ETS 無關、音檔是合成語音……)與誇大字 */
 const HOME_BANNED = ['免費', '考古題', '官方', '真人', '口說', '離線', '免註冊', 'PDF', '下載', '神器', '首選', '保證', '990', '一站式', '全方位', '打造', '助你', '輕鬆', '高效', 'AI', '刷刷'];
-T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、免費公告、每日練習、小雞卡建立時就帶 data-nosnippet,全站頁尾連結列包一層;h1、功能卡片、頁尾那句不帶;h1 下不掛介紹句'] = () => {
+T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、每日練習、小雞卡、聽力頁進度與級別選單建立時就帶 data-nosnippet,全站頁尾連結列包一層;h1、功能卡片、頁尾那句不帶;h1 下不掛介紹句;首頁、價格頁不寫全站免費公告;聽力頁說明不寫這頁沒有的題組'] = () => {
   /* 11/13 Google 拿首頁的導覽列文字當摘要:有頂欄的每一頁,.topbar-inner 都帶(「登入▾」、App 的返回鍵與頁名是 JS 加進這一層的);header 本身不能帶 */
   let bars = 0;
   PAGES.forEach((f) => {
@@ -337,10 +337,19 @@ T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、免費公告�
   const src = read('index.html');
   const els = bodyElements(src);
   const one = (pred, name) => { const x = els.filter(pred); assert.equal(x.length, 1, '首頁找不到剛好一個 ' + name); return x[0]; };
-  /* 該擋的:數字列(JS 填的數字)、每日練習(個人進度)、免費公告(收費後就過期) */
+  /* 該擋的:數字列(JS 填的數字)、每日練習(個人進度)。免費公告 11/17 拿掉了(站長:「不用特別寫全站免費什麼的,要收錢我們就收」) */
   assert.ok(one((e) => e.tag === 'div' && e.cls.indexOf('stats') > -1, '.stats').own, '數字列沒帶 data-nosnippet');
   assert.ok(one((e) => e.id === 'daily-home', '#daily-home').own, '每日練習沒帶 data-nosnippet');
-  assert.match(src, /<p class="free-note"><span data-nosnippet>目前全站免費[^<]*<a href="pricing\.html">方案與價格<\/a><\/span><\/p>/, '免費公告要整句包在 span data-nosnippet 裡(p 不能帶)');
+  assert.equal(/全站免費|free-note/.test(src), false, '首頁不再寫全站免費公告');
+  assert.equal(/全站免費/.test(read('pricing.html')), false, '價格頁不再寫全站免費公告');
+  /* 聽力訓練頁:四張卡的「完成 0/140」與級別選單是介面字,建立時就帶 data-nosnippet;玩法名稱與說明不擋 */
+  const ear = read('js/ear.js');
+  assert.ok(ear.includes("h('div', { class: 'p-stats', 'data-nosnippet': '' }"), '聽力頁進度數字沒帶 data-nosnippet');
+  assert.ok(ear.includes("h('div', { class: 'cfg-row', 'data-nosnippet': '' }, lvSel"), '聽力頁級別選單沒帶 data-nosnippet');
+  /* 聽力訓練頁只有聽力基本功(js/ear.js);Part 1–4 題組在題庫刷題(js/listening.js)。說明不能寫這頁沒有的題組 */
+  const lh = read('listening.html');
+  const lhDesc = ((/<meta name="description" content="([^"]*)"/.exec(lh) || [])[1] || '') + ((/<meta property="og:description" content="([^"]*)"/.exec(lh) || [])[1] || '');
+  if (lh.indexOf('js/listening.js') < 0) assert.equal(/照片描述|應答|獨白|題組/.test(lhDesc), false, '聽力頁說明寫了這頁沒有的題組');
   /* 小雞卡訪客也看得到,內容是「今天 0 / N 題」:js/pet-ui.js 的 card() 建立時就帶,不事後加 */
   const pet = read('js/pet-ui.js');
   assert.match(pet, /h\('section', \{ class: 'pet-card pet-' \+ kind, 'aria-labelledby': idp \+ '-h', 'data-nosnippet': '' \}\)/, '小雞卡建立時沒帶 data-nosnippet');

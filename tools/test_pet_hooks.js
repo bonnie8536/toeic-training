@@ -19,6 +19,7 @@ const BASE = '27557eb';
    daily-ui、grammar、phonics、ear、dialogue 與 reading 再加 SEO(2026-10-31,標題帶站名、setPageMeta 寫 canonical);
    內容頁先看再登入(2026-10-31,作答鈕標 data-gate、對話與發音與單字頁沒登入時只記在這一頁、寫作沒登入不自動存)
    又改了 grammar、phonics、verbs、vocab、reading、practice、ear、dialogue、mock、diagnostic、writing;
+   搜尋摘要(2026-11-18,聽力訓練頁的進度數字與級別選單建立時帶 data-nosnippet)改了 ear;
    多分頁同步第 2 輪審查(2026-10-31,帳號那一邊存不進去時作答跳「重新整理」卡、模擬考交卷存不進去先留在分頁)改了 daily-ui、mock、review;
    多分頁同步第 3 輪審查(2026-11-01,單字頁的題庫編輯器與遊戲、片語特訓作答前先問 holdForAccount)改了 vocab;
    審查 D 第 1 輪(2026-11-01,掉落消除擋下時按 Enter 不落到卡上、字掉到底先暫停,記憶吐司「看成績」先問)又改了 vocab;

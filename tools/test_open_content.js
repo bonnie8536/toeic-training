@@ -37,6 +37,8 @@ const USER = { id: UID, email: 'student@example.com', user_metadata: { name: '�
 
 /* 換掉某幾個檔(網址路徑 → 內容):模擬上線那幾分鐘,瀏覽器 HTTP 快取還拿著上一版的檔、其他檔已經是新的 */
 let SWAP = null;
+/* true 時 .html 送 no-cache(不是 no-store):頁面進得了 bfcache,跟 GitHub Pages 一樣,按上一頁是原樣拿回來(錯題本 U16 用) */
+let BFCACHE = false;
 
 function serve(port, cloud) {
   return new Promise((resolve, reject) => {
@@ -56,7 +58,7 @@ function serve(port, cloud) {
       if (!path.resolve(file).startsWith(REPO)) { res.writeHead(403); return res.end(); }
       fs.readFile(file, (err, buf) => {
         if (err) { res.writeHead(404); return res.end(); }
-        res.writeHead(200, { 'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
+        res.writeHead(200, { 'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream', 'Cache-Control': BFCACHE && path.extname(file) === '.html' ? 'no-cache' : 'no-store' });
         res.end(buf);
       });
     });
@@ -2780,6 +2782,182 @@ T['錯題本 U11–U13、U15:聽力網址直接開、聽力 3 一段一組、聽
     && r.an.n > 9 && r.an.h3 && r.an.before === 'false' && r.an.after === 'true' && r.an.p7.length > 2 && r.an.p7.indexOf('多篇閱讀') === r.an.p7.length - 1 && !r.an.old
     && J(r.an.links) === J(['practice.html?mode=wrong&part=5', 'practice.html?mode=wrong&part=6', 'practice.html?mode=wrong&part=7'])
     && /改版以前的模擬考只存了分數/.test(r.mock_old) && r.mock_new === '';
+  return { ok, detail: J(r) };
+};
+
+/* 審查(2026-11-18 介面第 1 輪)#1:從複習按瀏覽器上一頁(手機返回鍵、iPhone 右滑)回來。網站真的上線時 .html 不是 no-store,
+   頁面從 bfcache 原樣拿回來:以前題數沒變、剛答對的題還列著。window.__mark 還在＝真的是 bfcache 拿回來的(不是重新載入) */
+async function back(s) { await s.eval('history.back(); true'); await sleep(900); await s.loaded(); await sleep(300); }
+const QTEXT_ITEM = async (s) => { const q = await s.eval("document.querySelector('.q-text').textContent"); return BANK.part5.find((x) => q.indexOf(x.question.slice(0, 30)) > -1); };
+const WB_ITEMS = "[...document.querySelectorAll('.wb-group')].map((g) => [...g.querySelectorAll('.wb-stem')].map((x) => x.textContent))";
+
+T['錯題本 U16:從複習按上一頁回來(bfcache 原樣拿回來):錯題本清單、題庫首頁面板、能力分析都跟著變,剛答對的題不在、題數少一題,開的組還開著、焦點回到同一組的「複習」;只剩 1 題的組答對後不見;別的分頁答完、叫回前景也重畫'] = async (B) => {
+  const st = wbStudent();
+  const r = {};
+  BFCACHE = true;
+  let s = null;
+  try {
+    s = await open(B, { url: 'practice.html?mode=wrong&part=5', user: true, sdk: fakeCloud({ user: USER }), ls: st.ls });
+    /* 清單頁:開第 1 組,鍵盤在這組的「複習」按 Enter,答對第 1 題,上一頁 */
+    await clickNth(s, '.wb-toggle', 0);
+    const a = await s.eval(WB_STATE);
+    await s.eval("window.__mark = 1; document.querySelectorAll('.wb-go')[0].focus(); true");
+    await key(s, 'Enter');
+    await s.loaded(); await sleep(500);
+    const it = await QTEXT_ITEM(s);
+    await clickNth(s, '.q-block .opts .opt', it.answer);
+    await back(s);
+    const b = await s.eval(WB_STATE);
+    const stems = await s.eval(WB_ITEMS);
+    r.list = { bf: await s.eval('window.__mark === 1'), n: [a.g[0].n, b.g[0].n], open: b.g[0].open, shown: b.g[0].items, sum: await s.eval("document.querySelector('.wb-sum').textContent"),
+      gone: !stems[0].some((t) => t.indexOf(it.question.slice(0, 30)) > -1), focus: await s.eval("document.activeElement === document.querySelectorAll('.wb-go')[0]") };
+    /* 只剩 1 題的組(第 9 個考點,模擬考那 1 題):答對後上一頁,那組不見 */
+    await s.eval('window.__mark = 2; true');
+    await s.go('practice.html?mode=review&part=5&g=' + encodeURIComponent(st.cats[8]));
+    await sleep(600);
+    await clickNth(s, '.q-block .opts .opt', st.ninth.answer);
+    await back(s);
+    const c = await s.eval(WB_STATE);
+    r.one = { bf: await s.eval('window.__mark === 2'), n: c.g.length, gone: !c.g.some((x) => x.name === st.cats[8]) };
+    /* 題庫首頁面板 */
+    await s.go('practice.html');
+    await sleep(900);
+    const P5ROW = "(() => { const row = [...document.querySelectorAll('#wrongbook .review-row')].find((x) => /Part 5/.test(x.textContent)); return row ? row.querySelector('b').textContent : ''; })()";
+    const h0 = await s.eval(P5ROW);
+    await s.eval('window.__mark = 3; true');
+    await s.go('practice.html?mode=review&part=5&g=' + encodeURIComponent(st.cats[0]));
+    await sleep(600);
+    await clickNth(s, '.q-block .opts .opt', (await QTEXT_ITEM(s)).answer);
+    await back(s);
+    r.home = { bf: await s.eval('window.__mark === 3'), n: [h0, await s.eval(P5ROW)] };
+    /* 能力分析:開 Part 5 第 1 組,按它的「複習」(滑鼠),答對,上一頁 */
+    await s.go('analysis.html');
+    await sleep(1200);
+    await click(s, '#wb-b-5-0');
+    const AN = "(() => { const b = document.getElementById('wb-b-5-0'); return b ? b.querySelector('b').textContent + '|' + b.getAttribute('aria-expanded') + '|' + document.getElementById(b.getAttribute('aria-controls')).querySelectorAll('.wb-item').length : ''; })()";
+    const an0 = await s.eval(AN);
+    await s.eval('window.__mark = 4; true');
+    await clickNth(s, '.wb-go', 0);
+    await s.loaded(); await sleep(500);
+    await clickNth(s, '.q-block .opts .opt', (await QTEXT_ITEM(s)).answer);
+    await back(s);
+    r.an = { bf: await s.eval('window.__mark === 4'), v: [an0, await s.eval(AN)] };
+    /* 別的分頁把第 1 組剩下的題都答對了,這頁叫回前景(visibilitychange):那組不見 */
+    const left = BANK.part5.filter((q) => q.category === st.cats[0]).slice(0, 6).map((q) => [q.id, q.answer]);
+    await s.eval(`(() => { const k = ${J(AK('drill_p5'))}, v = JSON.parse(localStorage.getItem(k)); ${J(left)}.forEach(([id, a]) => { v[id] = { c: a, ok: true, t: Date.now() }; });
+      localStorage.setItem(k, JSON.stringify(v)); document.dispatchEvent(new Event('visibilitychange')); return true; })()`);
+    r.vis = { state: await s.eval('document.visibilityState'), names: await s.eval(`[...document.querySelectorAll('[data-part="5"] .wb-name')].map((x) => x.textContent)`) };
+  } finally { BFCACHE = false; if (s) await s.close(); }
+  const ok = r.list.bf && r.list.n[1] === r.list.n[0] - 1 && r.list.open === 'true' && r.list.shown === r.list.n[1] && /^62 題/.test(r.list.sum) && r.list.gone && r.list.focus
+    && r.one.bf && r.one.n === 8 && r.one.gone
+    && r.home.bf && r.home.n[0] === '61 題' && r.home.n[1] === '60 題'   // 63 − 清單頁那題 − 第 9 組那題 = 61
+    && r.an.bf && r.an.v[0] === '4 題|true|4' && r.an.v[1] === '3 題|true|3'
+    && r.vis.names.length === 7 && r.vis.names.indexOf(st.cats[0]) < 0;
+  return { ok, detail: J(r) };
+};
+
+/* 審查 #2:模擬考結果「看錯題本 →」、每日複習「前往」連到 practice.html#wrongbook:標題、第一列不能被固定的頂欄蓋住
+   (桌機頂欄一列、手機兩列,320 可能更高,所以照頂欄實際的高度算) */
+T['錯題本 U17:practice.html#wrongbook 捲到錯題本面板時,「錯題本」標題和第一列在頂欄下面、沒被蓋住(1280、375、320)'] = async (B) => {
+  const st = wbStudent();
+  const out = {};
+  for (const w of [1280, 375, 320]) {
+    const s = await open(B, { url: 'practice.html#wrongbook', user: true, sdk: fakeCloud({ user: USER }), ls: st.ls, size: w === 1280 ? null : { width: w, height: 740 } });
+    try {
+      await sleep(400);
+      out[w] = await s.eval(`(() => { const bar = Math.round(document.querySelector('.topbar').getBoundingClientRect().bottom), p = document.getElementById('wrongbook'),
+        h = p.querySelector('h2').getBoundingClientRect(), row = p.querySelector('.review-row').getBoundingClientRect(), hit = document.elementFromPoint(h.left + 8, (h.top + h.bottom) / 2);
+        return { bar, panel: Math.round(p.getBoundingClientRect().top), h2: Math.round(h.top), row: Math.round(row.top), hit: !!hit && !!hit.closest('#wrongbook h2'), y: Math.round(scrollY) }; })()`);
+    } finally { await s.close(); }
+  }
+  /* 面板上緣在頂欄下面一點點(真的捲過去了、沒有留一大段空白) */
+  const ok = [1280, 375, 320].every((w) => out[w].y > 0 && out[w].hit && out[w].panel >= out[w].bar && out[w].panel - out[w].bar < 30 && out[w].h2 >= out[w].bar && out[w].row >= out[w].bar);
+  return { ok, detail: J(out) };
+};
+
+/* 審查 #3:手機上「你的答案」「正解」各佔一行,標籤和答案不分開(以前「· 正⏎解：D. …」);桌機也不能把標籤拆開 */
+T['錯題本 U18:每列「你的答案：…」「正解：…」:手機(375、320)各佔一行、標籤和答案同一行;桌機標籤不拆開'] = async (B) => {
+  const st = wbStudent();
+  const L1 = BANK.listening.p1, day = Date.now() - 864e5, l1 = {};
+  L1.slice(0, 4).forEach((q, i) => { l1[q.id] = { c: wrongOf(q), ok: false, t: day + i }; });
+  const ls = Object.assign({}, st.ls, { [AK('listen_p1')]: J(l1) });
+  const CHECK = `(() => {
+    const line = (el, n) => { const t = el.firstChild; if (!t || t.nodeType !== 3) return false; const rg = document.createRange(); rg.setStart(t, 0); rg.setEnd(t, Math.min(t.length, n));
+      const c = [...rg.getClientRects()].filter((x) => x.width > 0).map((x) => (x.top + x.bottom) / 2); return c.length > 0 && c.every((y) => Math.abs(y - c[0]) < 6); };
+    const rows = [...document.querySelectorAll('.wb-ans')];
+    let split = 0, same = 0;
+    rows.forEach((a) => { const y = a.querySelector('.wb-you'), k = a.querySelector('.wb-key');
+      if ((y && !line(y, '你的答案：'.length + 1)) || !line(k, '正解：'.length + 1)) split++;
+      if (y && k.getClientRects()[0].top < y.getClientRects()[y.getClientRects().length - 1].bottom - 2) same++; });
+    return { rows: rows.length, split, same, sw: document.documentElement.scrollWidth };
+  })()`;
+  const out = {};
+  for (const w of [375, 320, 1280]) {
+    const s = await open(B, { url: 'practice.html?mode=wrong&part=7', user: true, sdk: fakeCloud({ user: USER }), ls, size: w === 1280 ? null : { width: w, height: 740 } });
+    try {
+      for (const p of ['7', '1', '2', '4']) {
+        if (p !== '7') { await s.go('practice.html?mode=wrong&part=' + p); await sleep(700); }
+        await s.eval("document.querySelectorAll('.wb-toggle').forEach((b) => { if (b.getAttribute('aria-expanded') !== 'true') b.click(); }); true");
+        out[w + '/' + p] = await s.eval(CHECK);
+      }
+    } finally { await s.close(); }
+  }
+  const ok = Object.keys(out).every((k) => out[k].rows > 0 && out[k].split === 0 && (/^1280/.test(k) || out[k].same === 0) && out[k].sw <= Number(k.split('/')[0]));
+  return { ok, detail: J(out) };
+};
+
+/* 第 i 題(第 i 個 .opts)的第 o 個選項,真的滑鼠點 */
+async function pickIn(s, i, o) {
+  const ok = await s.eval(`(() => { ${UNPRESS_JS} const g = document.querySelectorAll('.q-block .opts')[${i}]; const e = g && g.querySelectorAll('.opt')[${o}]; if (!e) return false; e.id = '__press'; return true; })()`);
+  if (!ok) throw new Error('找不到第 ' + i + ' 題的選項');
+  await click(s, '#__press');
+  await s.eval(UNPRESS);
+}
+
+/* 審查 #4、#6:聽力 3、4 複習整組重答,頂部要寫「這一回 X 組（N 題）」,N 是整組的題數,跟成績頁的分母一樣 */
+T['錯題本 U19:聽力 3、4 錯題本複習:頂部「這一回 X 組（N 題）」,X 是上排編號數、N 跟成績頁「答對 x / N 題」一樣'] = async (B) => {
+  const st = wbStudent();
+  const L = BANK.listening;
+  const sets4 = L.p4.filter((x) => x.type === '機場廣播'), sets3 = L.p3.slice(0, 2);
+  const out = {};
+  const s = await open(B, { url: 'practice.html?mode=review&part=4&g=' + encodeURIComponent('機場廣播'), user: true, sdk: fakeCloud({ user: USER }), ls: st.ls });
+  try {
+    for (const [name, url, sets] of [['l4', null, sets4], ['l3', 'practice.html?mode=review&part=3', sets3]]) {
+      if (url) { await s.go(url); await sleep(700); }
+      const top = await s.eval("(document.querySelector('.drill-top h1 span') || {}).textContent || ''");
+      const dots = await s.eval("document.querySelectorAll('.q-nav button').length");
+      for (let u = 0; u < dots; u++) {
+        const nq = await s.eval("document.querySelectorAll('.q-block .opts').length");
+        for (let i = 0; i < nq; i++) await pickIn(s, i, 0);   // 每一題都點 A(畫面每點一下重畫一次)
+        await pressText(s, '.drill-nav-btns .btn', u === dots - 1 ? '看本輪成績' : '下一組');
+      }
+      const sum = await s.eval("(document.querySelector('.report-head h2') || {}).textContent || ''");
+      const m = /這一回 (\d+) 組（(\d+) 題）/.exec(top), q = /答對 \d+ \/ (\d+) 題/.exec(sum);
+      out[name] = { top, dots, sum, want: [sets.length, sets.reduce((k, x) => k + x.questions.length, 0)], m: m ? [Number(m[1]), Number(m[2])] : null, q: q ? Number(q[1]) : null };
+    }
+  } finally { await s.close(); }
+  const ok = ['l4', 'l3'].every((k) => { const o = out[k]; return o.m && o.m[0] === o.dots && o.m[0] === o.want[0] && o.m[1] === o.want[1] && o.q === o.m[1]; })
+    && /^機場廣播 · /.test(out.l4.top);
+  return { ok, detail: J(out) };
+};
+
+/* 審查 #5:同名的「查看」「看錯題本」「全部展開」,讀螢幕要分得出是哪個 Part(aria-label 開頭是畫面上的字,WCAG 2.5.3) */
+T['錯題本 U20:題庫首頁「查看」、能力分析「看錯題本」「全部展開」的報讀名稱都帶 Part、不重複,開頭是畫面上的字;全部展開按下去名稱跟著變'] = async (B) => {
+  const st = wbStudent();
+  const r = {};
+  const NAMES = (sel) => `[...document.querySelectorAll(${J(sel)})].map((e) => [e.textContent.trim(), e.getAttribute('aria-label') || ''])`;
+  const good = (list) => list.length > 1 && list.every(([t, a]) => a.indexOf(t) === 0 && a.length > t.length) && new Set(list.map((x) => x[1])).size === list.length;
+  const s = await open(B, { url: 'practice.html', user: true, sdk: fakeCloud({ user: USER }), ls: st.ls });
+  try {
+    r.see = await s.eval(NAMES('#wrongbook a.btn'));
+    await s.go('analysis.html');
+    await sleep(1200);
+    r.book = await s.eval(`[...document.querySelectorAll('a.btn')].filter((a) => a.textContent === '看錯題本').map((e) => [e.textContent.trim(), e.getAttribute('aria-label') || ''])`);
+    r.all = await s.eval(NAMES('.wb-all'));
+    await clickNth(s, '.wb-all', 0);
+    r.all2 = await s.eval(NAMES('.wb-all'));
+  } finally { await s.close(); }
+  const ok = good(r.see) && r.see.every(([, a]) => /Part \d/.test(a)) && good(r.book) && good(r.all) && good(r.all2) && r.all2[0][0] === '全部收起' && r.all2[1][0] === '全部展開';
   return { ok, detail: J(r) };
 };
 

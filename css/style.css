@@ -1230,8 +1230,14 @@ table.cat-table td.num { white-space: nowrap; }
 .wb-meta { font-size: 12.5px; color: var(--ink-light); }
 .wb-stem { color: var(--ink); overflow-wrap: anywhere; margin: 2px 0; }
 .wb-ans { overflow-wrap: anywhere; }
+/* 「你的答案：…」「正解：…」各自是一整段:放不下就整段換到下一行,標籤和答案不拆開(以前「· 正⏎解：D. …」) */
+.wb-you, .wb-key { display: inline-block; max-width: 100%; }
 .wb-you { color: var(--bad); }
 .wb-key { color: var(--ok); }
+@media (max-width: 600px) {
+  .wb-you, .wb-key { display: block; }   /* 手機各佔一行(定稿 2.8 線框),中間的「 · 」不要 */
+  .wb-sep { display: none; }
+}
 .wb-groups { margin-bottom: 40px; }
 .q-block .wb-groups { margin-bottom: 0; }
 

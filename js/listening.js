@@ -107,7 +107,7 @@
 
   /* ================= 混合聽力練習 ================= */
   /* opts.units:直接給這一輪的單元 [{ p, item }](錯題本複習,js/wrongbook.js 的 round 算好的),不呼叫 pickPool。
-     opts.back:「回錯題本」的網址;opts.group:只複習的那一組(組名);opts.rest、opts.n:這一組還沒輪到幾題、這一回幾題 */
+     opts.back:「回錯題本」的網址;opts.group:只複習的那一組(組名);opts.rest:這一組還沒輪到幾題(答錯的題數) */
   function startQuiz(root, config, opts) {
     opts = opts || {};
     const units = [];
@@ -120,9 +120,11 @@
         h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: back }, opts.back ? '回錯題本' : '回題庫')));
       return;
     }
-    const n = opts.n || units.reduce((k, u) => k + (u.p === '1' || u.p === '2' ? 1 : u.item.questions.length), 0);
+    /* 這一回要答幾題:聽力 3、4 整組重答,算整組的題數(跟成績頁「答對 x / N 題」的 N 一樣),寫「X 組（N 題）」,跟 Part 6、7 同一種寫法 */
+    const n = units.reduce((k, u) => k + (u.p === '1' || u.p === '2' ? 1 : u.item.questions.length), 0);
+    const roundText = units.some(u => u.p === '3' || u.p === '4') ? units.length + ' 組（' + n + ' 題）' : n + ' 題';
     const sub = opts.wrongOnly
-      ? (opts.units ? (opts.group ? opts.group + ' · ' : '') + '這一回 ' + n + ' 題，答對就移出' : '錯題複習 · ' + units.length + ' 單元')
+      ? (opts.units ? (opts.group ? opts.group + ' · ' : '') + '這一回 ' + roundText + '，答對就移出' : '錯題複習 · ' + units.length + ' 單元')
       : config.map(c => 'Part ' + c.p + ' × ' + c.n + ' ' + PARTS[c.p].unit).join(' · ');
     const heading = opts.wrongOnly && opts.units ? '聽力 ' + PARTS[config[0].p].title + ' 錯題本 ' : '聽力練習 ';
     /* 一般練習=交卷式(答完全部才對答案);錯題複習=即時對答(答對才移出) */
@@ -476,7 +478,7 @@
     document.title = '聽力 ' + PARTS[p].title + ' 錯題本 - 衝衝英文';
     const r = W.round(p, g || null);
     startQuiz(root, [{ p, n: r.units.length }], { wrongOnly: true, units: r.units.map(item => ({ p, item })),
-      back: 'practice.html?mode=wrong&part=' + p, group: g || '', rest: r.rest, n: r.n });
+      back: 'practice.html?mode=wrong&part=' + p, group: g || '', rest: r.rest });
   }
 
   window.LISTEN = { PARTS, partStats, startQuiz, startReview };

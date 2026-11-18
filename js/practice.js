@@ -137,6 +137,28 @@
     const totalAnswered = s5.answered + s6.answered + s7.answered;
     const totalCorrect = s5.correct + s6.correct + s7.correct;
 
+    /* 錯題本面板的各列(data-part、wb-see:從 bfcache 回來重畫時,焦點放回同一列的「查看」)。「查看」的報讀名稱帶 Part,7 顆才分得出來 */
+    function wbRows() {
+      return ['5', '6', '7'].map(p => {
+        const n = WB ? WB.count(p) : partStats(p).wrong;
+        return h('div', { class: 'review-row', 'data-part': p },
+          h('span', null, DATA[p].title),
+          h('b', { style: n ? 'color:var(--bad)' : 'color:var(--ok)' }, n + ' 題'),
+          !n ? h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題')
+            : WB ? h('a', { class: 'btn wb-see', href: 'practice.html?mode=wrong&part=' + p, 'aria-label': '查看 ' + WB.TITLE[p] + ' 錯題本' }, '查看')
+              : h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(p) }, '複習'));
+      }).concat(window.LISTEN ? ['1', '2', '3', '4'].map(p => {
+        const n = WB ? WB.count(p) : LISTEN.partStats(p).wrong;
+        return h('div', { class: 'review-row', 'data-part': p },
+          h('span', null, '聽力 ' + LISTEN.PARTS[p].title),
+          h('b', { style: n ? 'color:var(--bad)' : 'color:var(--ok)' }, n + ' 題'),
+          !n ? h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題')
+            : WB ? h('a', { class: 'btn wb-see', href: 'practice.html?mode=wrong&part=' + p, 'aria-label': '查看 ' + WB.TITLE[p] + ' 錯題本' }, '查看')
+              : h('button', { class: 'btn', 'data-gate': '', onclick: () => { root.innerHTML = ''; LISTEN.startReview(root, p); window.scrollTo(0, 0); } }, '複習'));
+      }) : []);
+    }
+    const wbRowsBox = h('div', { class: 'review-rows' }, wbRows());
+
     root.append(h('div', { class: 'practice-panels' },
       h('div', { class: 'practice-panel' },
         h('h2', null, '隨機練習'),
@@ -161,29 +183,18 @@
          題數含模擬考答錯的題(js/wrongbook.js);沒載到就照以前只算刷題紀錄,按鈕照舊直接複習 */
       h('div', { class: 'practice-panel', id: 'wrongbook' },
         h('h2', null, '錯題本'),
-        h('div', { class: 'review-rows' },
-          ['5', '6', '7'].map(p => {
-            const n = WB ? WB.count(p) : partStats(p).wrong;
-            return h('div', { class: 'review-row' },
-              h('span', null, DATA[p].title),
-              h('b', { style: n ? 'color:var(--bad)' : 'color:var(--ok)' }, n + ' 題'),
-              !n ? h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題')
-                : WB ? h('a', { class: 'btn', href: 'practice.html?mode=wrong&part=' + p }, '查看')
-                  : h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(p) }, '複習'));
-          }),
-          window.LISTEN ? ['1', '2', '3', '4'].map(p => {
-            const n = WB ? WB.count(p) : LISTEN.partStats(p).wrong;
-            return h('div', { class: 'review-row' },
-              h('span', null, '聽力 ' + LISTEN.PARTS[p].title),
-              h('b', { style: n ? 'color:var(--bad)' : 'color:var(--ok)' }, n + ' 題'),
-              !n ? h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題')
-                : WB ? h('a', { class: 'btn', href: 'practice.html?mode=wrong&part=' + p }, '查看')
-                  : h('button', { class: 'btn', 'data-gate': '', onclick: () => { root.innerHTML = ''; LISTEN.startReview(root, p); window.scrollTo(0, 0); } }, '複習'));
-          }) : null))));
-    /* practice.html#wrongbook(模擬考結果、每日複習連過來):面板是 JS 畫的,瀏覽器自己不會捲過去 */
+        wbRowsBox)));
+    /* 從錯題本複習按上一頁回來(bfcache 原樣拿回來):題數變了就重畫這幾列(js/wrongbook-ui.js keepFresh) */
+    if (WB && window.WRONGBOOK_UI) WRONGBOOK_UI.keepFresh(wbRowsBox, () => WRONGBOOK_UI.sig(WB.PARTS), () => wbRowsBox.replaceChildren(...wbRows()));
+    /* practice.html#wrongbook(模擬考結果、每日複習連過來):面板是 JS 畫的,瀏覽器自己不會捲過去。
+       頂欄是固定的(sticky),要扣掉它的高度(.me-sec 的 scroll-margin-top 同一個意思);桌機一列、手機兩列、更窄還會更高,照實際高度算 */
     if (location.hash === '#wrongbook') {
       const panel = document.getElementById('wrongbook');
-      if (panel) setTimeout(() => panel.scrollIntoView({ block: 'start' }), 0);
+      if (panel) setTimeout(() => {
+        const bar = document.querySelector('.topbar');
+        panel.style.scrollMarginTop = (bar ? Math.ceil(bar.getBoundingClientRect().height) : 0) + 14 + 'px';
+        panel.scrollIntoView({ block: 'start' });
+      }, 0);
     }
 
     /* 聽力隨機練習面板 */

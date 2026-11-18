@@ -4,7 +4,8 @@
      包在 heading 裡、heading 裡只有它;「複習」連結放在 heading 外面同一列的右邊(所以不用 <details>)。可以同時開好幾組;
      組數 2 以上有「全部展開／全部收起」(GOV.UK accordion)。不加 role=region(組多的時候 APG 建議不要每組都加)。
    - 開了哪幾組記在 sessionStorage tr_wb_open(只在這個分頁,不同步):從複習按上一頁回來,剛剛開的組還開著。讀寫丟錯就全部收起。
-   - 每一列:日期(模擬考來的接「 · 模擬考」)、題目、你的答案 · 正解。列不能再點開,要看解析按這一組的「複習」。
+   - 每一列:日期(模擬考來的接「 · 模擬考」)、題目、你的答案 · 正解(手機各佔一行,css/style.css .wb-sep)。列不能再點開,要看解析按這一組的「複習」。
+   - 從複習按上一頁回來:網站上線時頁面從 bfcache 原樣拿回來、程式不會重跑,錯題本變了要自己重畫(keepFresh;js/daily-ui.js 同一招)。
    - 不呼叫 PET_HOOK(小雞的掛勾在各個練習的結尾) */
 (function () {
   const W = window.WRONGBOOK;
@@ -32,26 +33,26 @@
       h('div', { class: 'wb-stem' }, W.stem(x)),
       h('div', { class: 'wb-ans' },
         you ? h('span', { class: 'wb-you' }, '你的答案：' + you) : null,
-        you ? ' · ' : null,
+        you ? h('span', { class: 'wb-sep' }, ' · ') : null,
         h('span', { class: 'wb-key' }, '正解：' + key)));
   }
 
-  /* 組的清單。opts:{ part, level(heading 層級 2 或 3), remember(記開了哪幾組) }。組數 2 以上放「全部展開」。
-     聽力 Part 1 不分組(組名是空的):直接一張清單 */
+  /* 組的清單。opts:{ part, level(heading 層級 2 或 3), remember(記開了哪幾組), open(要開著的組名;重畫時用,沒給就看 remember) }。
+     組數 2 以上放「全部展開」(報讀名稱帶 Part,能力分析一頁有好幾顆)。聽力 Part 1 不分組(組名是空的):直接一張清單 */
   function groupList(groups, opts) {
     const p = String(opts.part), level = opts.level === 3 ? 'h3' : 'h2';
-    const wrap = h('div', { class: 'wb-groups' });
+    const wrap = h('div', { class: 'wb-groups', 'data-part': p });
     if (groups.length === 1 && !groups[0].name) {
       wrap.append(h('div', { class: 'wrong-cat-list wb-list wb-flat' }, groups[0].items.map(itemRow)));
       return wrap;
     }
-    const was = opts.remember ? readOpen()[p] : null;
+    const was = Array.isArray(opts.open) ? opts.open : opts.remember ? readOpen()[p] : null;
     const openSet = new Set(Array.isArray(was) ? was.filter((x) => typeof x === 'string') : []);
     const rows = [];
     let allBtn = null;
     const sync = () => {
-      const all = rows.every((r) => r.open);
-      if (allBtn) { allBtn.textContent = all ? '全部收起' : '全部展開'; allBtn.setAttribute('aria-expanded', all ? 'true' : 'false'); }
+      const all = rows.every((r) => r.open), text = all ? '全部收起' : '全部展開';
+      if (allBtn) { allBtn.textContent = text; allBtn.setAttribute('aria-label', text + ' ' + W.TITLE[p]); allBtn.setAttribute('aria-expanded', all ? 'true' : 'false'); }
       if (opts.remember) writeOpen(p, rows.filter((r) => r.open).map((r) => r.name));
     };
     const set = (r, open) => {
@@ -74,7 +75,7 @@
       btn.addEventListener('click', () => { set(r, !r.open); sync(); });
       if (openSet.has(g.name)) set(r, true);
       rows.push(r);
-      wrap.append(h('div', { class: 'wb-group' },
+      wrap.append(h('div', { class: 'wb-group', 'data-g': g.name },
         h('div', { class: 'wb-head' },
           h(level, { class: 'wb-h' }, btn),
           h('a', { class: 'btn wb-go', 'data-gate': '', href: reviewUrl(p, g.name), 'aria-label': '複習「' + g.name + '」' + n + ' 題' }, '複習')),
@@ -94,8 +95,8 @@
     return n + ' 題，分成 ' + groups.length + ' 類。答對就移出。';
   }
 
-  /* 清單頁 */
-  function renderList(root, p) {
+  /* 清單頁:畫一次,之後從 bfcache 回來、錯題本變了再重畫 */
+  function paintList(root, p, open) {
     document.title = W.TITLE[p] + ' 錯題本 - 衝衝英文';
     root.innerHTML = '';
     root.append(h('div', { class: 'drill-top' },
@@ -110,9 +111,60 @@
     const first = W.round(p);
     root.append(h('p', { class: 'result-note wb-sum' }, summaryLine(p, groups)),
       h('div', { class: 'wb-start' },
-        h('a', { class: 'btn primary', 'data-gate': '', href: reviewUrl(p) }, '開始複習（' + first.units.length + ' ' + W.unit(p) + '）')),
-      groupList(groups, { part: p, level: 2, remember: true }));
+        h('a', { class: 'btn primary wb-begin', 'data-gate': '', href: reviewUrl(p) }, '開始複習（' + first.units.length + ' ' + W.unit(p) + '）')),
+      groupList(groups, { part: p, level: 2, remember: true, open: open && open[p] }));
+  }
+  function renderList(root, p) {
+    paintList(root, p, null);
+    keepFresh(root, () => sig([p]), (open) => paintList(root, p, open));
   }
 
-  window.WRONGBOOK_UI = Object.freeze({ renderList, groupList, reviewUrl, listUrl });
+  /* ---------- 從複習按上一頁回來(手機返回鍵、iPhone 往右滑) ----------
+     網站上線時(GitHub Pages 不是 no-store)頁面會從 bfcache 原樣拿回來,程式不會重跑,畫面停在去複習之前。
+     pageshow 的 persisted 是 true 時(或分頁叫回前景時)看錯題本有沒有變(sig),變了才叫 paint(open) 重畫 box:
+     open 是重畫前開著的組({ Part: [組名] }),焦點放回同一個 Part、同一組的同一顆(展開鈕、複習、全部展開、開始複習、查看),
+     那一組沒了就算了。沒變就不動(焦點、捲動位置都照舊) */
+  function sig(parts) {
+    return parts.map((p) => W.items(p).map((x) => x.key + ':' + x.src + ':' + x.c + ':' + x.t).join(',')).join('|');
+  }
+  const KINDS = ['wb-toggle', 'wb-go', 'wb-all', 'wb-begin', 'wb-see', 'wb-book'];
+  function openNow(box) {
+    const o = {};
+    box.querySelectorAll('.wb-groups').forEach((w) => {
+      o[w.dataset.part] = [...w.querySelectorAll('.wb-group')].filter((g) => { const b = g.querySelector('.wb-toggle'); return b && b.getAttribute('aria-expanded') === 'true'; })
+        .map((g) => g.dataset.g);
+    });
+    return o;
+  }
+  function focusSpot(box) {
+    const a = document.activeElement;
+    if (!a || !a.classList || !box.contains(a)) return null;
+    const kind = KINDS.find((c) => a.classList.contains(c));
+    if (!kind) return null;
+    const pe = a.closest('[data-part]'), ge = a.closest('[data-g]');
+    return { kind, p: pe && box.contains(pe) ? pe.dataset.part : null, g: ge && box.contains(ge) ? ge.dataset.g : null };
+  }
+  function refocus(box, x) {
+    let scope = x.p === null ? box : [...box.querySelectorAll('[data-part]')].find((e) => e.dataset.part === x.p);
+    if (scope && x.g !== null) scope = [...scope.querySelectorAll('[data-g]')].find((e) => e.dataset.g === x.g);
+    const el = scope && scope.querySelector('.' + x.kind);
+    if (el) el.focus({ preventScroll: true });
+  }
+  function keepFresh(box, sigNow, paint) {
+    let last = sigNow();
+    const check = () => {
+      if (!box.isConnected) return;   // 題庫首頁開始練習之後面板已經不在畫面上
+      const now = sigNow();
+      if (now === last) return;
+      last = now;
+      const spot = focusSpot(box), open = openNow(box);
+      paint(open);
+      if (spot) refocus(box, spot);
+    };
+    window.addEventListener('pageshow', (e) => { if (e.persisted) check(); });
+    /* 在別的分頁複習完切回來也一樣(js/daily-ui.js 的 visibilitychange) */
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
+  }
+
+  window.WRONGBOOK_UI = Object.freeze({ renderList, groupList, reviewUrl, listUrl, sig, keepFresh });
 })();

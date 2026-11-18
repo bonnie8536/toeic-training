@@ -1,11 +1,11 @@
-/* 同一個帳號多台裝置:自訂題庫(vgame_banks)、刪除標記(sync_del)、模擬考紀錄(mock_history)先合併再上傳(同步合併設計 3.2–3.6、5.2)。
+/* 同一個帳號多台裝置:自訂題庫(vgame_banks)、刪除標記(sync_del)、模擬考紀錄(mock_history)、模擬考錯題(mock_wrong,31–33)先合併再上傳(同步合併設計 3.2–3.6、5.2)。
    用法:node tools/test_sync_union.js
    假的 Supabase 與多台裝置在 tools/sync_harness.js;頁面載入真的 js/sync-merge.js 與 js/cloud.js。
    「舊版頁面」用 tools/fixtures/cloud_sync_base.js(main 4c823ec 的 cloud.js,沒有合併表)。
    隨機的長序列在 tools/test_sync_fuzz.js。 */
 const H = require('./sync_harness');
 const { J, tick, makeWorld, makeDevice, open, signIn, newSession, logout, banksOf, tombsOf, localOf, cloudOf, ledgerOf, setCloud,
-  storeSet, newBank, addWords, setWord, rename, deleteWord, deleteBank, oldEdit, oldOpenEditor, mockSubmit, wordKeys, PREFIX, loadPage } = H;
+  storeSet, newBank, addWords, setWord, rename, deleteWord, deleteBank, oldEdit, oldOpenEditor, mockSubmit, mockWrongSubmit, wordKeys, PREFIX, loadPage } = H;
 
 const has = (banks, id, en) => wordKeys(banks).has(id + '|' + en);
 const ids = banks => (Array.isArray(banks) ? banks : []).map(b => b && b.id).filter(Boolean);
@@ -550,6 +550,53 @@ const scenarios = {
       out.push({ ok, d: '改過再刪的字:雲端 ' + J(gate(cloudOf(w, 'vgame_banks')) || null) + ' A ' + J(gate(banksOf(A)) || null) });
     }
     return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
+  },
+  '31. 模擬考錯題(mock_wrong):兩台各考一次(手機的分頁開了很久沒重灌),兩台答錯的題都在雲端與兩台;同一題留時間新的': async () => {
+    const { w, phone, pc } = await twoDevices(149);
+    mockWrongSubmit(pc, { 'p5-a': 1, 'p5-b': 2 }); await pc.pg.runTimers();
+    w.clock.t += 60e3;
+    mockWrongSubmit(phone, { 'p5-b': 3, 'l2-01': 0 }); await phone.pg.runTimers();   // 手機那個分頁沒重灌過,本機沒有電腦那兩題
+    await newSession(pc);
+    const keys = x => Object.keys(x || {}).sort().join(',');
+    const want = 'l2-01,p5-a,p5-b';
+    const c = cloudOf(w, 'mock_wrong') || {};
+    const ok = keys(c) === want && keys(localOf(phone, 'mock_wrong')) === want && keys(localOf(pc, 'mock_wrong')) === want && c['p5-b'].c === 3
+      && J(localOf(pc, 'mock_wrong')) === J(c) && !Object.keys(ledgerOf(phone)).length;
+    return { ok, detail: '雲端 ' + keys(c) + ' / 手機 ' + keys(localOf(phone, 'mock_wrong')) + ' / 電腦 ' + keys(localOf(pc, 'mock_wrong')) + ' p5-b=' + J(c['p5-b']) };
+  },
+  '32. 模擬考錯題:讀不到雲端時不上傳、本機不丟、帳本留著;恢復連線後跟雲端(別台的)合併上傳': async () => {
+    const { w, phone, pc } = await twoDevices(151);
+    mockWrongSubmit(pc, { 'p5-a': 1 }); await pc.pg.runTimers();
+    phone.readError = true; phone.ops = [];
+    mockWrongSubmit(phone, { 'p7-x:0': 2 });
+    const local = J(localOf(phone, 'mock_wrong'));
+    await phone.pg.runTimers();
+    const held = J(localOf(phone, 'mock_wrong')) === local && 'mock_wrong' in ledgerOf(phone) && writes(phone, 'mock_wrong').length === 0
+      && J(Object.keys(cloudOf(w, 'mock_wrong') || {})) === J(['p5-a']);
+    phone.readError = false;
+    await phone.pg.fire('win:online');
+    const keys = Object.keys(cloudOf(w, 'mock_wrong') || {}).sort().join(',');
+    const ok = held && keys === 'p5-a,p7-x:0' && !Object.keys(ledgerOf(phone)).length && J(localOf(phone, 'mock_wrong')) === J(cloudOf(w, 'mock_wrong'));
+    return { ok, detail: '讀不到時留著 ' + held + ' / 恢復後雲端 ' + keys + ' 帳本 ' + J(Object.keys(ledgerOf(phone))) };
+  },
+  '33. 模擬考錯題:舊版 cloud.js(沒有 mock_wrong 的合併表)的裝置登入時整份灌下、自己不上傳它、登出不動雲端那一列;新版之後再考,兩次的都在': async () => {
+    const w = makeWorld(157);
+    const phone = makeDevice(w, '手機'), old = makeDevice(w, '舊版', { old: true });
+    await signIn(phone);
+    mockWrongSubmit(phone, { 'p5-a': 1, 'l1-01': 2 }); await phone.pg.runTimers();
+    await signIn(old);
+    const got = J(localOf(old, 'mock_wrong')) === J(cloudOf(w, 'mock_wrong'));
+    old.ops = [];
+    mockSubmit(old, 5); await old.pg.runTimers();         // 舊版只存分數
+    const before = J(w.db.find(r => r.k === 'mock_wrong'));
+    old.confirmAnswer = true;
+    await logout(old);
+    const untouched = J(w.db.find(r => r.k === 'mock_wrong')) === before && writes(old, 'mock_wrong').length === 0;
+    w.clock.t += 60e3;
+    mockWrongSubmit(phone, { 'p6-y:2': 0 }); await phone.pg.runTimers();
+    const keys = Object.keys(cloudOf(w, 'mock_wrong') || {}).sort().join(',');
+    const ok = got && untouched && keys === 'l1-01,p5-a,p6-y:2';
+    return { ok, detail: '舊版灌下 ' + got + ' / 舊版沒動雲端 ' + untouched + ' / 雲端 ' + keys };
   },
 };
 

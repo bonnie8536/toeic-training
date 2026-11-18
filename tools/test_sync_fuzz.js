@@ -1,7 +1,7 @@
 /* 多台裝置隨機操作的模糊測試(同步合併設計第五節):證明「任何一台曾經同步上去的自訂題目,除非被使用者刪除,不會從雲端或任何裝置消失」。
    用法:node tools/test_sync_fuzz.js              (N=序列數 SEED=種子 可以換;預設 2000 組依序 + 300 組搶時間 + 300 組混舊版)
    頁面是真的 js/sync-merge.js 與 js/cloud.js(假的 Supabase 在 tools/sync_harness.js)。每一組:2 到 3 台裝置、10 到 16 個隨機操作
-   (加字、改中文、勾選、改名、刪字、刪題庫、存入文章題庫、模擬考交卷、上傳、關頁補傳、斷線、恢復連線、App 重開(灌資料)、換頁、
+   (加字、改中文、勾選、改名、刪字、刪題庫、存入文章題庫、模擬考交卷(同時把答錯的題寫進 mock_wrong)、上傳、關頁補傳、斷線、恢復連線、App 重開(灌資料)、換頁、
    開單字頁(syncKey)、登出、重新登入、App 被殺),最後全部連上、各自重開一次再開一次單字頁。
    有三成的序列一開始雲端就有一個部署前的舊題庫,裡面同一個英文出現兩次(run/跑、Run/經營,舊資料可能有);有它時會把第一個 run 的中文
    在 跑/跑步/慢跑 之間換來換去(含改回原本的)、刪 alt、把 alt 換成主要的。新版改內容會換 _r,這些操作做不出「跟以前某一版一模一樣」的字;
@@ -17,7 +17,7 @@
        雲端:曾經在雲端出現過、沒被使用者刪掉的字都還在;
        本機:每台登入中的裝置,曾經在它本機出現過、沒被刪掉的字都還在;
        登出:沒問就登出的,那一刻它本機的字雲端都有;
-     最後雲端與每台登入中的裝置題庫一樣(stateKey)、模擬考紀錄一樣而且一筆不少。
+     最後雲端與每台登入中的裝置題庫一樣(stateKey)、模擬考紀錄一樣而且一筆不少;模擬考錯題(mock_wrong)曾經在雲端出現過的題一直都在、最後每台跟雲端一樣。
    - B 搶時間(兩台的上傳同時讀雲端、同時寫,後到的蓋掉先到的;已知限制 1):本機每一步都不少;最後收斂、雲端一個都不少。
    - C 混一台舊版頁面(main 4c823ec 的 cloud.js、編輯頁開著時記住的整份陣列寫回;已知限制 2):新版裝置本機每一步都不少;
      最後每台還登入中的新版裝置出現過的字雲端都有、新版裝置跟雲端一樣。已經登出的新版裝置傳上去的字可能被舊版整份上傳蓋掉
@@ -31,7 +31,7 @@
    出現過就一直在;A、B 最後,只有一台的使用者改過的勾選、題庫名稱,每台和雲端都是那台最後改的樣子(兩台都改過的是衝突,看時鐘,不斷言)。 */
 const H = require('./sync_harness');
 const { J, makeWorld, makeDevice, signIn, newSession, open, logout, loggedIn, banksOf, localOf, cloudOf, storeSet, setCloud,
-  newBank, addWords, setWord, rename, deleteWord, deleteBank, oldEdit, oldOpenEditor, mockSubmit, idents, PID } = H;
+  newBank, addWords, setWord, rename, deleteWord, deleteBank, oldEdit, oldOpenEditor, mockSubmit, mockWrongSubmit, idents, PID } = H;
 
 const N = Number(process.env.N || 2000), NB = Number(process.env.NB || 300), NC = Number(process.env.NC || 300);
 const SEED = Number(process.env.SEED || 20261024);
@@ -78,6 +78,7 @@ function runOne(seed, mode) {
      protZCloud、protZDev 記每個中文從哪一步起要保護(拿到它那一刻的 firstZ);不見了、而且是被刪掉或換掉的,就不再保護,之後又出現再從那時的 firstZ 算 */
   const firstZ = new Map(), supZ = new Map(), protZCloud = new Map(), protZDev = new Map();
   const mocks = new Set();
+  const mwCloud = new Set();   // 曾經在雲端出現過的模擬考錯題(題目 key);沒有刪除,一直都要在
   const seenVer = new Map();   // 裝置 → bLegacy 的 run、refund 在它本機出現過的每一版(內容)
   let restoredAny = false, restores = 0, restoredSame = 0;
   const log = [];
@@ -154,6 +155,7 @@ function runOne(seed, mode) {
     if (mode === 'A') guardZ(protZCloud, zhItems(cloudOf(w, 'vgame_banks')));
     const cm = cloudOf(w, 'mock_history');
     (Array.isArray(cm) ? cm : []).forEach(r => mocks.add(r.d + '|' + r.lRaw));
+    if (mode !== 'C') Object.keys(cloudOf(w, 'mock_wrong') || {}).forEach(k => mwCloud.add(k));
   }
   function check(where) {
     fresh.forEach(d => {
@@ -178,6 +180,8 @@ function runOne(seed, mode) {
       protZCloud.forEach((f, it) => { if (!exemptZ(it, f) && !zc.has(it)) fail(where + ':雲端中文不見了 ' + it); });
       const cm = (cloudOf(w, 'mock_history') || []).map(r => r.d + '|' + r.lRaw);
       mocks.forEach(m => { if (cm.indexOf(m) < 0) fail(where + ':雲端模擬考少了 ' + m); });
+      const cw = cloudOf(w, 'mock_wrong') || {};
+      mwCloud.forEach(k => { if (!cw[k]) fail(where + ':雲端模擬考錯題少了 ' + k); });
     }
   }
   /* 刪除:記下刪除那一步,這一步之前就有的同一個字都算刪掉 */
@@ -291,7 +295,13 @@ function runOne(seed, mode) {
       if (!banksOf(d).find(b => b.id === aid).name) { editName(d, aid, '文章：' + aid); rename(d, aid, '文章：' + aid); }
       log.push(d.name + ' 單字存入題庫 ' + aid); return;
     }
-    if (r < 0.58 && mocks.size < 20) { mockSubmit(d, Math.floor(rnd() * 10)); log.push(d.name + ' 模擬考交卷'); return; }
+    if (r < 0.58 && mocks.size < 20) {
+      mockSubmit(d, Math.floor(rnd() * 10));
+      /* 交卷時答錯的題收進錯題本(新版 js/mock.js);題目和選的由步數決定,不多用亂數(其他操作的序列跟以前一樣) */
+      const wrong = { ['p5-f' + (step % 6)]: step % 4, ['l2-f' + ((step * 3) % 5)]: (step + 1) % 3 };
+      mockWrongSubmit(d, wrong);
+      log.push(d.name + ' 模擬考交卷 錯題 ' + J(wrong)); return;
+    }
     if (r < 0.70) { await pg.runTimers(); log.push(d.name + ' 上傳'); return; }
     if (r < 0.74) { await pg.fire('win:pagehide'); log.push(d.name + ' 關頁補傳'); return; }
     if (r < 0.80) { d.offline = !d.offline; log.push(d.name + (d.offline ? ' 斷線' : ' 連上')); if (!d.offline) await pg.fire('win:online'); return; }
@@ -356,7 +366,7 @@ function runOne(seed, mode) {
     devs.forEach(d => { d.offline = false; d.readError = false; });
     for (const d of devs) if (d.old && loggedIn(d)) { await d.pg.fire('win:online'); }
     for (let round = 0; round < (restoredAny ? 3 : 2); round++) {
-      for (const d of fresh) if (loggedIn(d)) { if (round === 0) await newSession(d); else { await d.pg.ctx.CLOUD.syncKey('vgame_banks'); await d.pg.ctx.CLOUD.syncKey('mock_history'); await d.pg.fire('win:pagehide'); } }
+      for (const d of fresh) if (loggedIn(d)) { if (round === 0) await newSession(d); else { await d.pg.ctx.CLOUD.syncKey('vgame_banks'); await d.pg.ctx.CLOUD.syncKey('mock_history'); await d.pg.ctx.CLOUD.syncKey('mock_wrong'); await d.pg.fire('win:pagehide'); } }
       observe();
       check('最後第 ' + (round + 1) + ' 輪');
     }
@@ -368,9 +378,12 @@ function runOne(seed, mode) {
     live.forEach(d => {
       if (w.SM.stateKey(banksOf(d)) !== w.SM.stateKey(c || [])) fail('最後:' + d.name + ' 跟雲端不一樣 ' + J(banksOf(d)).slice(0, 300) + ' ≠ ' + J(c).slice(0, 300));
       if (J(localOf(d, 'mock_history') || []) !== J(cloudOf(w, 'mock_history') || [])) fail('最後:' + d.name + ' 模擬考紀錄跟雲端不一樣');
+      if (w.SM.canon(localOf(d, 'mock_wrong') || {}) !== w.SM.canon(cloudOf(w, 'mock_wrong') || {})) fail('最後:' + d.name + ' 模擬考錯題跟雲端不一樣');
     });
     const cm = (cloudOf(w, 'mock_history') || []).map(r => r.d + '|' + r.lRaw);
     if (mode !== 'C') mocks.forEach(m => { if (cm.indexOf(m) < 0) fail('最後:雲端模擬考少了 ' + m); });
+    const cwEnd = cloudOf(w, 'mock_wrong') || {};
+    mwCloud.forEach(k => { if (!cwEnd[k]) fail('最後:雲端模擬考錯題少了 ' + k); });
     /* 勾選、名稱、重複英文的 run/Run(C 不看:舊版頁面整份上傳會把雲端蓋成舊的,改的那台登出了就救不回,已知限制 2、6) */
     if (mode !== 'C') {
       const lc = legacyEns(c);

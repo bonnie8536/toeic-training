@@ -16,7 +16,10 @@
        合併函式在 js/sync-merge.js(SYNC_MERGE,每一頁都在 cloud.js 之前載入)。題庫「少了不算刪除」,只有刪除標記對得上的才刪;
        題庫上傳時跟 sync_del 一次查詢讀兩列、一次 upsert 傳兩列。單字頁、閱讀頁開頁時呼叫 syncKey 跟雲端對齊一次;
        登出前多一輪對帳(雲端比本機少就先合併上傳再刪本機);搬家離開舊網址前(flushForMove)也對帳,傳不上去、讀不到雲端的放進搬家包。
-       寫作、hist、錯題本還是整份上傳(下一輪)。
+       寫作、hist、錯題本(drill_p*、listen_p*)還是整份上傳(下一輪)。
+     · mock_wrong(模擬考答錯的題,錯題本定稿 2026-11-18):合併函式 SYNC_MERGE.mockWrong,同一題留 t 新的、其他都留(聯集)。
+       跟 mock_history 一樣先讀雲端、合併、再上傳;搬家暫存區(takePending → takeSynced)也照 SYNC_FN 合併。
+       舊快取的 sync-merge.js 沒有 mockWrong:merge() 是 null,照上面的規則不上傳、帳本留著。
        帳本上沒有這個鍵(本機上次對齊之後沒改過)時合併給 localClean:舊版頁面就地改的名稱、勾選、中文用雲端那份(r2 #1、#4;
        名稱不看 _t:這台之前在同一個題庫改過別的字、已經上傳也一樣,r3b #1)。
        合併後上傳失敗時,帳本上沒有的鍵補記(開單字頁、對帳的 pull 原本帳本是空的,失敗後不會重傳、離線登出也不問;r2 #3);pet 不補記(r3 #3)。
@@ -90,6 +93,7 @@
     sync_del: { merge: SMF('tombs'), reconcile: true, queue: 'vgame_banks' },
     vgame_banks: { merge: SMF('banks'), tombs: true, reconcile: true },
     mock_history: { merge: SMF('mock'), reconcile: true },
+    mock_wrong: { merge: SMF('mockWrong'), reconcile: true },
   };
   const spec = k => (typeof k === 'string' && Object.prototype.hasOwnProperty.call(MERGED, k) ? MERGED[k] : null);
   window.CLOUD.mergedKeys = Object.freeze(Object.keys(MERGED));   // pet-store 用它判斷這一版 cloud.js 會先合併 pet 再上傳
@@ -1490,15 +1494,19 @@
     [pv, local, cv].forEach(x => { if (x !== undefined && !same(x, keep) && !drop.some(d => same(d, x))) drop.push(x); });
     return { use, drop };
   }
-  /* 暫存區裡合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄):本機、雲端、暫存三份用 SYNC_MERGE 合併(同步合併設計 3.12)。
+  /* 暫存區裡合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄、模擬考錯題):本機、雲端、暫存三份用 SYNC_MERGE 合併(同步合併設計 3.12)。
      標記先合(三份聯集),題庫套合併後的標記。先合雲端和暫存那份(暫存那份比雲端新就在分不出先後時偏它),再合本機
      (本機帳本上的改動不比暫存那份新就偏剛合好的那份);結果吸收過雲端那份,下面 planMerged 再跟雲端合併時不會又被改回去。
+     鍵清單跟著 MERGED 走(takePending 也是看 MERGED 把鍵交過來);每個鍵用哪個合併函式寫在 SYNC_FN。
+     MERGED 上有、SYNC_FN 沒有的鍵(以後加進合併表卻忘了這裡):暫存那份一律放進備份,不准當成題庫合併、也不准略過(略過的話暫存區照樣刪掉)。
      回 { sets: [[鍵, 原字串]], backup: [[鍵, 原字串]] };合併不了的鍵暫存那份放進備份,本機不動 */
+  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong' };
   function takeSynced(syncItems, led, cloud, prefix, now) {
     const S = window.SYNC_MERGE, sets = [], backup = [];
     const val = (raw) => { try { return raw === null || raw === undefined ? null : JSON.parse(raw); } catch (e) { return undefined; } };
     const local = {}, cv = {};
-    ['sync_del', 'vgame_banks', 'mock_history'].forEach((k) => {
+    const KEYS = Object.keys(MERGED).filter((k) => !MERGED[k].clock);
+    KEYS.forEach((k) => {
       try { local[k] = val(localStorage.getItem(prefix + k)); } catch (e) { local[k] = undefined; }
       const c = cloud[k];
       cv[k] = c && c.v !== null && c.v !== undefined ? c.v : null;
@@ -1511,9 +1519,11 @@
     const byKey = new Map(syncItems.map((x) => [x.k, x]));
     const pt = byKey.get('sync_del');
     if (pt) { const t1 = run(() => S.tombs(T, pt.pv, now)); if (ok(t1)) T = t1.v; }
-    ['sync_del', 'vgame_banks', 'mock_history'].forEach((k) => {
+    KEYS.forEach((k) => {
       const x = byKey.get(k);
       if (!x) return;
+      const fn = Object.prototype.hasOwnProperty.call(SYNC_FN, k) ? SYNC_FN[k] : null;
+      if (!fn) { backup.push([k, x.raw]); return; }
       const c = cloud[k], cloudT = c ? Date.parse(c.updated_at) : NaN;
       const pendNewer = !(cloudT >= x.t);
       const lv = local[k];
@@ -1521,8 +1531,8 @@
       const base = lv === undefined ? null : lv;
       const localNewer = led[k] !== undefined && led[k] >= x.t;
       let m = null;
-      if (k === 'sync_del') m = T === null ? null : run(() => S.tombs(base, T, now));
-      else if (k === 'mock_history') { const a = run(() => S.mock(cv[k], x.pv)); m = ok(a) ? run(() => S.mock(base, a.v)) : null; }
+      if (fn === 'tombs') m = T === null ? null : run(() => S.tombs(base, T, now));
+      else if (fn === 'mock' || fn === 'mockWrong') { const a = run(() => S[fn](cv[k], x.pv)); m = ok(a) ? run(() => S[fn](base, a.v)) : null; }
       else {
         const a = run(() => (pendNewer ? S.banks(cv[k], x.pv, { now, tombs: T, localClean: true }) : S.banks(x.pv, cv[k], { now, tombs: T, localClean: cv[k] !== null })));
         m = ok(a) ? run(() => S.banks(base, a.v, { now, tombs: T, localClean: !localNewer })) : null;

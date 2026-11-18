@@ -32,14 +32,14 @@ const cloudSrc = read('js/cloud.js');
 const block = /const MERGED = \{([\s\S]*?)\n  \};/.exec(cloudSrc);
 const merged = block ? (block[1].match(/^\s{4}(\w+):/gm) || []).map(s => s.trim().slice(0, -1)) : [];
 const needed = merged.filter(k => k !== 'pet');
-check('js/cloud.js 的合併表有題庫、刪除標記、模擬考紀錄', ['vgame_banks', 'sync_del', 'mock_history'].every(k => needed.indexOf(k) >= 0), JSON.stringify(merged));
+check('js/cloud.js 的合併表有題庫、刪除標記、模擬考紀錄、模擬考錯題', ['vgame_banks', 'sync_del', 'mock_history', 'mock_wrong'].every(k => needed.indexOf(k) >= 0), JSON.stringify(merged));
 
 const ctx = { console: { log() {}, warn() {}, error() {} } };
 ctx.window = ctx;
 vm.createContext(ctx);
 vm.runInContext(read('js/sync-merge.js'), ctx);
 const SM = ctx.SYNC_MERGE;
-check('SYNC_MERGE 有題庫、刪除標記、模擬考紀錄的合併函式', !!SM && ['banks', 'tombs', 'mock'].every(f => typeof SM[f] === 'function'), '');
+check('SYNC_MERGE 有題庫、刪除標記、模擬考紀錄、模擬考錯題的合併函式', !!SM && ['banks', 'tombs', 'mock', 'mockWrong'].every(f => typeof SM[f] === 'function'), '');
 
 const moving = has('js/move-rules.js') || has('js/move-merge.js');
 if (!moving) {

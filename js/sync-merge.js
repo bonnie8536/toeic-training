@@ -1,5 +1,5 @@
 /* 同一個帳號多台裝置的合併規則(同步合併設計 3.7–3.9)。純計算,不讀寫儲存,window.SYNC_MERGE。
-   js/cloud.js 的 MERGED 表用它:vgame_banks(自訂題庫)、sync_del(刪除標記)、mock_history(模擬考紀錄)上傳前先讀雲端、合併、再上傳;
+   js/cloud.js 的 MERGED 表用它:vgame_banks(自訂題庫)、sync_del(刪除標記)、mock_history(模擬考紀錄)、mock_wrong(模擬考錯題)上傳前先讀雲端、合併、再上傳;
    灌雲端資料時本機和雲端都有就存合併結果。每一頁都要在 cloud.js 之前載入(tools/test_sync_union.js 檢查)。
    合併函式的約定跟 PET.cloudMerge 一樣:回 { ok, v, sameAsLocal, sameAsCloud };形狀認不得回 { ok: false }(唯讀:不合併、不上傳、帳本留著)。
    原則:
@@ -466,6 +466,43 @@
     return { ok: true, v: sameAsLocal ? a : v, sameAsLocal, sameAsCloud };
   }
 
+  /* ---------- 模擬考錯題(mock_wrong,錯題本定稿 2026-11-18) ----------
+     { 題目 key: { c: 選的, ok: false 答錯 / true 已訂正, t: 毫秒 } },每題一筆,跟 drill_p*、listen_p* 一樣的形狀(js/wrongbook.js 讀)。
+     取聯集:一份有、另一份沒有的一律留;同一題形狀對(一般物件、t 是有限數字)的贏形狀不對的,都對時 t 大的贏,
+     t 一樣或都不對時取 canon 字串小的(兩台合出來一樣)。沒有刪除,不用標記。
+     超過 MOCK_WRONG_MAX 筆(題庫超過 1500 題才會碰到):照「ok:false 在前、t 新的在前、key 字典序」留前面的;先丟的是最舊的已訂正記號
+     (丟了只會讓一題冒回錯題本)。輸出的 key 照字典序排。第三個參數(cloud.js 給的 now)不用 */
+  const MOCK_WRONG_MAX = 1500;
+  function mockWrong(a, b) {
+    const okShape = x => x === null || x === undefined || isPlain(x);
+    if (!okShape(a) || !okShape(b)) return { ok: false };
+    const A = a || {}, B = b || {};
+    const good = r => isPlain(r) && isNum(r.t);
+    const win = (x, y) => {
+      const gx = good(x), gy = good(y);
+      if (gx !== gy) return gx ? x : y;
+      if (gx && x.t !== y.t) return x.t > y.t ? x : y;
+      return canon(x) <= canon(y) ? x : y;
+    };
+    const out = new Map();
+    keysOf(A).forEach(k => out.set(k, A[k]));
+    keysOf(B).forEach(k => out.set(k, out.has(k) ? win(out.get(k), B[k]) : B[k]));
+    let ks = Array.from(out.keys());
+    if (ks.length > MOCK_WRONG_MAX) {
+      const bucket = r => (good(r) ? (r.ok === false ? 0 : 1) : 2);
+      ks = ks.sort((x, y) => {
+        const rx = out.get(x), ry = out.get(y);
+        return bucket(rx) - bucket(ry) || (good(rx) && good(ry) ? ry.t - rx.t : 0) || cmp(x, y);
+      }).slice(0, MOCK_WRONG_MAX);
+    }
+    const v = {};
+    ks.sort(cmp).forEach(k => { v[k] = out.get(k); });
+    const s = canon(v);
+    const sameAsLocal = isPlain(a) && s === canon(a);
+    const sameAsCloud = isPlain(b) && s === canon(b);
+    return { ok: true, v: sameAsLocal ? a : v, sameAsLocal, sameAsCloud };
+  }
+
   /* ---------- 新版頁面寫入時用的(js/vocab.js、js/reading.js) ----------
      都回新的物件或陣列,不改輸入。改到內容才蓋戳記:改前的雜湊放進 _p、_t 換成現在;沒改到就回原本那一份(不用寫、不上傳) */
   function newBankId(now) { return 'b' + Math.floor(now).toString(36) + rnd(3); }
@@ -574,7 +611,7 @@
 
   root.SYNC_MERGE = Object.freeze({
     canon, quickHash, norm, stateKey, bankHash, wordHash, tombHit, zhDiffers,
-    banks, tombs, mock,
+    banks, tombs, mock, mockWrong,
     newBankId, newBank, newWord, reviseWord, reviseBank, editBank, addWords, setWord, deleteWord, deleteBank,
   });
 })(typeof window !== 'undefined' ? window : globalThis);

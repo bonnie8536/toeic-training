@@ -448,6 +448,39 @@ T['暫存區(帳號還沒上傳的)再搬一次:題庫、刪除標記、模擬�
   return 'ok';
 };
 
+/* ---------- 模擬考錯題 mock_wrong(錯題本定稿 2026-11-18) ---------- */
+T['mock_wrong:暫存區(帳號還沒上傳的)再搬一次,兩包的模擬考錯題取聯集(同一題留 t 新的),不整份換掉'] = async () => {
+  const ls = makeStorage(0, {});
+  const k = (s) => 'tr_u' + CPID + '_' + s;
+  await moveInto(ls, { ['tr_unsynced_' + UID]: J({ mock_wrong: NOW - 9000 }),
+    [k('mock_wrong')]: J({ 'p5-a': { c: 1, ok: false, t: NOW - 9000 }, 'p5-b': { c: 0, ok: false, t: NOW - 9000 } }) });
+  await moveInto(ls, { ['tr_unsynced_' + UID]: J({ mock_wrong: NOW - 5000 }),
+    [k('mock_wrong')]: J({ 'p5-a': { c: 2, ok: true, t: NOW - 6000 }, 'l2-01': { c: 2, ok: false, t: NOW - 6000 } }) }, {}, { device: DEV_B });
+  const items = JSON.parse(ls.getItem('tr_move_pending_' + UID)).items;
+  const e = items.find((x) => x[0] === 'mock_wrong');
+  const v = JSON.parse(e[1]);
+  assert.deepEqual(Object.keys(v), ['l2-01', 'p5-a', 'p5-b']);
+  assert.deepEqual(v['p5-a'], { c: 2, ok: true, t: NOW - 6000 });
+  assert.equal(e[2], NOW - 5000);
+  return 'ok';
+};
+T['mock_wrong:新版收件頁收得下含 mock_wrong 的包(訪客、本機學生),同一題留 t 新的、其他都留;規則是 pool、有中文標籤'] = async () => {
+  assert.equal(R.ruleOf('mock_wrong'), 'pool');
+  assert.equal(M.labelOf('mock_wrong'), '模擬考錯題');
+  const ls = makeStorage(0, {
+    tr_mock_wrong: J({ 'p5-a': { c: 1, ok: false, t: NOW - 100 }, 'p5-z': { c: 3, ok: false, t: NOW - 100 } }),
+  });
+  await moveInto(ls, {
+    tr_mock_wrong: J({ 'p5-a': { c: 0, ok: false, t: NOW - 9000 }, 'p6-x:2': { c: 1, ok: false, t: NOW - 9000 } }),
+    tr_profiles: J([{ id: 'pabc123', name: '小明' }]), tr_upabc123_mock_wrong: J({ 'l1-01': { c: 2, ok: false, t: NOW - 50 } }),
+  });
+  const g = JSON.parse(ls.getItem('tr_mock_wrong'));
+  assert.deepEqual(Object.keys(g).sort(), ['p5-a', 'p5-z', 'p6-x:2']);
+  assert.equal(g['p5-a'].c, 1);   // 新網址的比較新
+  assert.deepEqual(JSON.parse(ls.getItem('tr_upabc123_mock_wrong')), { 'l1-01': { c: 2, ok: false, t: NOW - 50 } });
+  return 'ok';
+};
+
 /* ---------- 再搬一次:舊網址的題庫從上次搬家後沒變過(第二輪審查 #1、#2) ----------
    舊網址這份上次已經送到新網址(加進去、合併、或另存「（舊網址）」),那個題庫還在,就不再另存一份:
    不靠 _p(最多 8 個舊版本,新網址改 9 次以上就認不出來),靠 tr_move_log 記的「這台上次送的那份」的雜湊與它落在哪個題庫 */

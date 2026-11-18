@@ -9,9 +9,10 @@
 
   /* 模組鍵 → 合併規則(規則的意思在 js/move-merge.js)。
      sync_del:自訂題庫的刪除標記(js/sync-merge.js,只有雲端帳號的資料夾會寫)。tombs = 兩份標記聯集(SYNC_MERGE.tombs),
-     不能是 single(整份換掉):少了別台的標記,刪掉的題庫和字會回來;沒有規則時搬家包整包被 validate 拒絕。 */
+     不能是 single(整份換掉):少了別台的標記,刪掉的題庫和字會回來;沒有規則時搬家包整包被 validate 拒絕。
+     mock_wrong:模擬考答錯的題(js/wrongbook.js,錯題本定稿 2026-11-18),每題 { c, ok, t },跟錯題本一樣用 pool(同一題留 t 新的)。 */
   const EXACT = Object.freeze({
-    hist: 'hist', mock_history: 'mock', pet: 'pet', daily_done: 'daily', vgame_banks: 'banks', sync_del: 'tombs',
+    hist: 'hist', mock_history: 'mock', mock_wrong: 'pool', pet: 'pet', daily_done: 'daily', vgame_banks: 'banks', sync_del: 'tombs',
     vgame_best: 'best', vgame_toast_best: 'best', vgame_pairs_best: 'pairsBest', vgame_clear: 'clear',
     vgame_done: 'idmap', vgame_miss: 'pool', phrase_drill: 'pool', verb_quiz: 'pool',
     grammar_done: 'idmap', phonics_done: 'idmap', dlg_heard: 'idmap',

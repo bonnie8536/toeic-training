@@ -33,7 +33,7 @@
   const SUFFIX = '（舊網址）';
   const BANK_KEYS = ['vgame_best', 'vgame_clear', 'vgame_pairs_best', 'vgame_toast_best', 'vgame_done'];
   const LABELS = {
-    hist: '練習紀錄', mock_history: '模擬考紀錄', pet: '小雞', daily_done: '每日練習', vgame_banks: '自訂單字題庫', sync_del: '自訂題庫的刪除紀錄',
+    hist: '練習紀錄', mock_history: '模擬考紀錄', mock_wrong: '模擬考錯題', pet: '小雞', daily_done: '每日練習', vgame_banks: '自訂單字題庫', sync_del: '自訂題庫的刪除紀錄',
     vgame_best: '單字遊戲最佳分數', vgame_toast_best: '單字快問快答最佳', vgame_pairs_best: '翻牌配對最佳', vgame_clear: '單字遊戲通關',
     vgame_done: '單字遊戲出過的字', vgame_miss: '單字錯題', phrase_drill: '片語錯題', verb_quiz: '不規則動詞紀錄',
     grammar_done: '文法完成紀錄', phonics_done: '自然發音完成紀錄', dlg_heard: '對話聽過的句子',
@@ -639,10 +639,11 @@
     res.writes.push(['tr_move_log', JSON.stringify(res.log), 'replace']);
     return res;
   }
-  /* 同一個帳號的暫存區已經有一包、又搬來一包(例如別台用搬家碼帶來的):js/cloud.js 的 MERGED 表上的鍵(題庫、刪除標記、模擬考紀錄)
+  /* 同一個帳號的暫存區已經有一包、又搬來一包(例如別台用搬家碼帶來的):js/cloud.js 的 MERGED 表上的鍵(題庫、刪除標記、模擬考紀錄、模擬考錯題)
      兩包用 SYNC_MERGE 合併,不是時間晚的整份換掉(另一包可能有這包沒有的題庫、標記、考試)。標記先合併,題庫用合併後的標記;
-     分不出先後的名稱、勾選用時間晚的那包。讀不懂、合併不了的鍵不放進來(照原本的規則)。回 Map(鍵 → [鍵, 原字串, 兩包裡比較晚的時間]) */
-  const SYNC_SUBS = ['sync_del', 'vgame_banks', 'mock_history'];
+     分不出先後的名稱、勾選用時間晚的那包。讀不懂、合併不了的鍵不放進來(照原本的規則;舊快取的 sync-merge.js 沒有 mockWrong 也一樣)。
+     回 Map(鍵 → [鍵, 原字串, 兩包裡比較晚的時間]) */
+  const SYNC_SUBS = ['sync_del', 'vgame_banks', 'mock_history', 'mock_wrong'];
   function joinPending(have, items, now) {
     const out = new Map();
     const S = sync();
@@ -659,7 +660,8 @@
       const [older, newer] = a[2] > b[2] ? [vb, va] : [va, vb];
       let m = null;
       try {
-        m = sub === 'sync_del' ? S.tombs(va, vb, now) : sub === 'vgame_banks' ? S.banks(older, newer, { now, tombs: T, localClean: true }) : S.mock(va, vb);
+        m = sub === 'sync_del' ? S.tombs(va, vb, now) : sub === 'vgame_banks' ? S.banks(older, newer, { now, tombs: T, localClean: true })
+          : sub === 'mock_wrong' ? S.mockWrong(va, vb) : S.mock(va, vb);
       } catch (e) { m = null; }
       if (!m || m.ok !== true || m.v === null) return;
       out.set(sub, [sub, JSON.stringify(m.v), Math.max(a[2], b[2])]);

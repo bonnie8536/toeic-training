@@ -272,6 +272,17 @@ function mockSubmit(dev, score) {
   storeSet(dev, 'mock_history', h.slice(-30));
 }
 
+/* 模擬考交卷時把答錯的題收進錯題本(新版 js/mock.js → js/wrongbook.js save:讀本機 mock_wrong、用 SYNC_MERGE.mockWrong 合併、有變才寫)。
+   entries:{ 題目 key: 選的 } 或 { 題目 key: { c, ok, t } };只給選的時記成答錯,t 是這台現在的時間 */
+function mockWrongSubmit(dev, entries) {
+  const t = now(dev), add = {};
+  Object.keys(entries).forEach(k => { const e = entries[k]; add[k] = e && typeof e === 'object' ? e : { c: e, ok: false, t }; });
+  const S = dev.pg.ctx.SYNC_MERGE;
+  const m = S.mockWrong(localOf(dev, 'mock_wrong'), add);
+  if (m.ok && !m.sameAsLocal) storeSet(dev, 'mock_wrong', m.v);
+  return m;
+}
+
 /* 題庫裡有哪些字(題庫 id|norm(en)|字的 _r) */
 function idents(banks) {
   const out = new Set();
@@ -286,5 +297,5 @@ const wordKeys = banks => new Set([...idents(banks)].map(s => s.split('|').slice
 module.exports = {
   USER, PID, PREFIX, LEDGER, SB_KEY, T0, J, clone, tick, makeRand, makeStorage, makeWorld, makeDevice, loadPage, open, signIn, newSession, logout, loggedIn,
   banksOf, tombsOf, localOf, cloudOf, ledgerOf, setCloud, storeSet, now, edit, newBank, addWords, setWord, rename, deleteWord, deleteBank,
-  oldEdit, oldOpenEditor, mockSubmit, idents, wordKeys, read,
+  oldEdit, oldOpenEditor, mockSubmit, mockWrongSubmit, idents, wordKeys, read,
 };

@@ -101,7 +101,7 @@ function loadPage(w, opt) {
   Object.assign(ctx, { PET_ON: true, PET_FOOD: true, PET_FOOD_FROM: '2026-10-20' });
   vm.runInContext(SRC.pet, ctx); vm.runInContext(SRC.food, ctx); vm.runInContext(SRC.sync, ctx);
   if (opt.movers !== 'fail') { vm.runInContext(SRC.rules, ctx); vm.runInContext(SRC.merge, ctx); vm.runInContext(SRC.daily, ctx); }
-  vm.runInContext(SRC.cloud, ctx);
+  vm.runInContext(opt.cloudSrc || SRC.cloud, ctx);   // opt.cloudSrc:改過的 cloud.js(測試合併表多一個鍵)
   return {
     ctx,
     ready: ctx.CLOUD.ready.then(tick),
@@ -513,6 +513,34 @@ T['flushForMove:題庫跟雲端一樣、帳本空的:讀一次雲端就好,不�
   const reads = w.ops.filter((o) => o.op === 'select').length;
   const ok = r.left === 0 && J(r.accounts) === '{}' && reads === 1 && ups(w).length === 0 && J(cv(w, 'vgame_banks')) === J([A]);
   return { ok, detail: J({ left: r.left, reads, ups: ups(w) }) };
+};
+
+/* ---------- 模擬考錯題 mock_wrong(錯題本定稿 2026-11-18) ---------- */
+const mw = (k, c, ok, t) => ({ [k]: { c, ok, t } });
+T['暫存區:模擬考錯題(mock_wrong)搬家暫存區、本機、雲端各一份:三份聯集(同一題留 t 新的),上傳到雲端,不進備份、暫存區刪掉'] = async () => {
+  const w = makeWorld();
+  cloudRow(w, 'mock_wrong', Object.assign(mw('p5-a', 1, false, T0 - 5 * HOUR), mw('p5-s', 2, false, T0 - 5 * HOUR)), T0 - HOUR);
+  signedIn(w);
+  w.local.setItem(PREFIX + 'mock_wrong', J(Object.assign(mw('p5-b', 0, false, T0 - 4 * HOUR), mw('p5-s', 3, true, T0 - 2 * HOUR))));
+  w.local.setItem(LEDGER, J({ mock_wrong: T0 - 2 * HOUR }));
+  w.local.setItem(PEND, J({ items: [['mock_wrong', J(Object.assign(mw('l2-01', 2, false, T0 - 3 * HOUR), mw('p5-a', 3, false, T0 - 6 * HOUR))), T0 - 3 * HOUR]] }));
+  await openLoggedIn(w);
+  const want = { 'l2-01': { c: 2, ok: false, t: T0 - 3 * HOUR }, 'p5-a': { c: 1, ok: false, t: T0 - 5 * HOUR }, 'p5-b': { c: 0, ok: false, t: T0 - 4 * HOUR }, 'p5-s': { c: 3, ok: true, t: T0 - 2 * HOUR } };
+  const bk = Object.keys(w.local.dump()).filter((k) => /^tr_move_backup_/.test(k));
+  const ok = J(lv(w, 'mock_wrong')) === J(want) && J(cv(w, 'mock_wrong')) === J(want) && !bk.length && w.local.getItem(PEND) === null && ups(w).includes('mock_wrong');
+  return { ok, detail: J({ local: lv(w, 'mock_wrong'), cloud: cv(w, 'mock_wrong'), bk, ups: ups(w) }) };
+};
+T['暫存區:合併表上有、takeSynced 對照表(SYNC_FN)沒有的鍵:暫存那份放進備份,不當成題庫合併、不默默略過'] = async () => {
+  const src = SRC.cloud.replace(/(\r?\n    mock_wrong: \{ merge: SMF\('mockWrong'\), reconcile: true \},)/, '$1\n    vgame_miss: { merge: SMF(\'mock\'), reconcile: true },');
+  if (src === SRC.cloud) return { ok: false, detail: '改不到 cloud.js 的 MERGED' };
+  const w = makeWorld();
+  const raw = J({ apple: 3 });
+  w.local.setItem(PEND, J({ items: [['vgame_miss', raw, T0 - 2 * HOUR]] }));
+  await openLoggedIn(w, { cloudSrc: src });
+  const bk = Object.keys(w.local.dump()).filter((k) => /^tr_move_backup_/.test(k)).map((k) => JSON.parse(w.local.getItem(k)));
+  const kept = bk.some((b) => (b.keys || []).some((e) => e[0] === 'vgame_miss' && e[1] === raw));
+  const ok = kept && w.local.getItem(PEND) === null && lv(w, 'vgame_miss') === null;
+  return { ok, detail: J({ bk, local: lv(w, 'vgame_miss') }) };
 };
 
 (async () => {

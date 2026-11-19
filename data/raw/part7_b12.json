@@ -69,7 +69,7 @@
         "q": "How much does the main dish that Mr. Herrera's sister ordered cost on the menu?",
         "options": ["$17", "$21", "$24", "$28"],
         "answer": 1,
-        "explanation": "跨文件整合題。評論第二段說「She then chose the lemon chicken」，再回到菜單 MAIN DISHES 表格查 Lemon chicken 的價格為 $21。$24 是他本人點的 grilled fish，屬混淆選項。"
+        "explanation": "跨文件整合題。評論第二段說 She then chose the lemon chicken，再到菜單 MAIN DISHES 表格查 Lemon chicken 為 $21，故選 (B)。(A) $17 是蔬菜義大利麵，兩人都沒有點；(C) $24 是 Herrera 先生自己點的炭烤魚；(D) $28 是炭烤牛排，評論沒有提到。"
       },
       {
         "q": "How much did Mr. Herrera and his sister pay in total for their starters and main dishes?",
@@ -92,7 +92,7 @@
         "q": "The word \"warm\" in paragraph 3 of the review is closest in meaning to",
         "options": ["hot", "careful", "friendly", "recent"],
         "answer": 2,
-        "explanation": "字義題。原句「Our server ... was warm without being slow」描述的是人的態度，不是溫度，因此 warm 等於 friendly（親切的）。(A) hot 是字面義誘答。"
+        "explanation": "字義題。評論第三段 Our server ... was warm without being slow 描述的是服務生的待客態度，不是溫度，warm 在此等於 friendly（親切的），故選 (C)。(A) hot 是 warm 描述食物溫度時的意思，第五段 the apple cake, which was warm 才是這個用法；(B) careful 是「小心謹慎」，與親切不同義；(D) recent 是「最近的」，套回句子不通。"
       }
     ],
     "translation": [
@@ -159,7 +159,7 @@
           "The train she booked is now full"
         ],
         "answer": 2,
-        "explanation": "定位句在信件第一段：「My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train.」原因是會議改期。"
+        "explanation": "定位信件第一段：My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train，原因是早上的會議改了時間，故選 (C)。(A) 第二段說演講 cannot be moved，並沒有取消；(B) 她仍持有訂位編號 R-88204，沒有提到車票遺失；(D) 是她自己趕不上那班車，並沒有說原班次客滿。"
       },
       {
         "q": "How much extra will Ms. Otero have to pay for the change?",
@@ -182,7 +182,7 @@
         "q": "The word \"reach\" in paragraph 1 of the e-mail is closest in meaning to",
         "options": ["get to", "contact", "hold", "call"],
         "answer": 0,
-        "explanation": "字義題。原句「I can no longer reach the station in time」的受詞是地點（車站），故 reach 意為「抵達」＝ get to。(B) contact、(D) call 是 reach 用於「聯絡某人」時的意思，在此語境不成立。"
+        "explanation": "字義題。原句 I can no longer reach the station in time 的受詞是地點（車站），reach 意為「抵達」，等於 get to，故選 (A)。(B) contact 與 (D) call 是 reach 用在「聯絡某人」時的意思，受詞要是人；(C) hold 是「握住、持有」，套回句子不通。"
       }
     ],
     "translation": [
@@ -250,7 +250,7 @@
           "To ask for a second visit from a technician"
         ],
         "answer": 0,
-        "explanation": "定位句在信件第一段末：「Before I pay, however, I would like to raise one point about the bill.」第二段接著要求刪掉某一項費用。她在第一段明說水槽與開關都沒問題，故 (B) 錯。"
+        "explanation": "定位信件第一段末：Before I pay, however, I would like to raise one point about the bill，第二段接著要求刪掉週末到府費那一項，故選 (A)。(B) 她在第一段說水槽之後沒再出問題、新開關也運作良好；(C) 她只說收到回覆後會付清其餘款項，沒有要求改變付款方式；(D) 第四段只是預先詢問三月若再漏水怎麼計費，並沒有要求技師再來一趟。"
       },
       {
         "q": "How much is the charge that Ms. Nasser objects to?",
@@ -267,7 +267,7 @@
           "It will be removed when the invoice is corrected"
         ],
         "answer": 1,
-        "explanation": "跨文件推論題。信件第三段說該工作只花約十分鐘卻被記為半小時；發票下方備註寫明「Labor is charged in half-hour blocks, and half an hour is the smallest amount charged」，可知這是公司的計時方式，並非誤植。新開關的零件費另列在 Small parts and materials 一項，故 (C) 錯。"
+        "explanation": "跨文件推論題。信件第三段說浴室工作只花約十分鐘，帳單卻記半小時；發票備註寫 Labor is charged in half-hour blocks, and half an hour is the smallest amount charged，可知這是公司一貫的計時方式，故選 (B)。(A) 依備註的規則記半小時是正確的，不是誤植；(C) 這一行是 Labor, bathroom light switch，只算工資，不含開關本身的費用；(D) 文中沒有任何地方說會刪除這一項，她要求刪除的是週末到府費。"
       },
       {
         "q": "What will most likely happen if the repaired pipe leaks again in March?",
@@ -278,13 +278,13 @@
           "A weekend visit charge will be added to the new bill"
         ],
         "answer": 0,
-        "explanation": "跨文件推論題。發票的服務日期為 11 月 2 日，備註寫「Labor is under warranty for six months from the service date」，六個月保固到隔年 5 月初，三月仍在期限內，因此工資免費。"
+        "explanation": "跨文件推論題。發票的服務日期為 11 月 2 日，備註寫 Labor is under warranty for six months from the service date，保固到隔年 5 月初，三月仍在期限內，同一段管線再漏水時工資不另收費，故選 (A)。(B) 正好與工資保固相反；(C) 備註只說零件依製造商自己的保固處理，沒有說製造商會派技師；(D) 週末到府費只在週六或週日施工時收取，文中沒有說三月的維修會排在週末。"
       },
       {
         "q": "The word \"raise\" in paragraph 1 of the e-mail is closest in meaning to",
         "options": ["lift", "increase", "mention", "collect"],
         "answer": 2,
-        "explanation": "字義題。「raise one point about the bill」中的 raise 意為「提出（一個問題／看法）」＝ mention。(A) lift 與 (B) increase 都是 raise 的常見字面義誘答，但在此搭配 point 並不合理。"
+        "explanation": "字義題。raise one point about the bill 中的 raise 意為「提出（一個問題或看法）」，等於 mention，故選 (C)。(A) lift「抬起」與 (B) increase「增加」都是 raise 的常見字面義，搭配 point 不通；(D) collect 是「收集、收取」，雖然 raise money 有「募款」的意思，但這裡的受詞是 point，不是錢。"
       }
     ],
     "translation": [
@@ -339,15 +339,15 @@
     "questions": [
       {
         "q": "Which plan will Mr. Balogun most likely move to?",
-        "options": ["He will stay on his present plan", "Basic", "Active", "Complete"],
+        "options": ["He will cancel his membership", "Basic", "Active", "Complete"],
         "answer": 3,
-        "explanation": "跨文件整合題。他晚上九點下班後才要游泳，比較表顯示 Active 只開放到 20:00，唯有 Complete 是 24 小時；他另提到每月要兩次教練課，Complete 正好含每月兩次免費課程。兩項條件都指向 Complete。"
+        "explanation": "跨文件整合題。電子郵件第二段說他現在只有晚上有空，而且很少早於九點，仍想去游泳；比較表 Access hours 一列顯示 Basic 只開到下午 3 點、Active 只開到晚上 8 點，只有 Complete 是 24 小時，第三段他又請俱樂部把他改到那個時段能用游泳池的方案，故選 (D)。(A) 他是要求換方案，不是退出會員；(B) Basic 不能用游泳池，也只開到下午 3 點；(C) Active 是他目前的方案，只開到晚上 8 點，晚上九點後無法使用。"
       },
       {
-        "q": "How much more will Mr. Balogun pay each month after the change?",
+        "q": "After the change, how much more will Mr. Balogun pay each month for his membership fee and locker combined?",
         "options": ["$8", "$15", "$23", "$68"],
         "answer": 1,
-        "explanation": "跨文件計算題。他目前 Active 月費 $45，另付置物櫃 $8，合計 $53；Complete 月費 $68 且置物櫃已含在內。$68 − $53 ＝ $15。(C) $23 是只算月費差額、忘了扣掉置物櫃費用的誘答。"
+        "explanation": "跨文件計算題。電子郵件第一段說他目前是 Active 方案，第四段說他每月另付 8 美元置物櫃費；比較表顯示 Active 月費 $45，加上置物櫃 $8，合計 $53。他要改到晚上九點後仍能游泳的 Complete 方案，月費 $68，Locker rental 一列標示 Included，置物櫃不另收費。$68 − $53 ＝ $15，故選 (B)。(A) $8 是他目前的置物櫃費，換方案後這筆不必再付，不是多付的金額；(C) $23 是只算月費差額（$68 − $45）、忘了扣掉置物櫃費用的誘答；(D) $68 是 Complete 的整筆月費，不是比現在多付的差額。"
       },
       {
         "q": "What is indicated about the visit by Mr. Balogun's sister?",
@@ -358,7 +358,7 @@
           "She must be added to his membership first"
         ],
         "answer": 2,
-        "explanation": "跨文件整合題。信件第四段說妹妹想在同一週來兩次；比較表 Guest passes each month 一列顯示 Complete 每月三張來賓券，兩次在額度之內，故不需另外購票。"
+        "explanation": "跨文件整合題。信件第四段說妹妹八月想在同一週跟他來兩次；他七月起改為 Complete 方案，比較表 Guest passes each month 一列顯示 Complete 每月有 3 張來賓券，兩次在額度內，故選 (C)。(A) 文中沒有提到單日票；(B) 每月只有 1 張來賓券的是 Active 方案，他換方案後就不受此限；(D) 文中沒有說來賓要先加入他的會籍。"
       },
       {
         "q": "According to the comparison chart, what is NOT included in the Active plan?",
@@ -380,7 +380,7 @@
     ],
     "translation": [
       "海爾伍德運動俱樂部 會員方案比較（2 月 1 日起適用價格）\n．月費：基本 $29／進階 $45／全享 $68\n．健身區與器材：三種方案皆可使用\n．每月團體課程：基本 2 堂／進階 8 堂／全享 無上限\n．游泳池：基本 不可／進階 可／全享 可\n．開放時段：基本 06:00-15:00／進階 06:00-20:00／全享 24 小時\n．每月來賓券：基本 0 張／進階 1 張／全享 3 張\n．置物櫃租金：基本、進階每月 $8／全享 已含\n．教練課程：基本每堂 $55／進階每堂 $48／全享 每月兩堂免費，之後每堂 $40\n．更改方案方式：來信 members@halewoodclub.com 或洽櫃檯；每月 20 日前提出者，自次月 1 日生效；降級另需提前三十天書面通知；各方案自入會日起至少須維持三個月\n．備註：$40 入會費僅收取一次，更改方案時不再收取；來賓券不得保留至次月",
-      "收件者：members@halewoodclub.com\n寄件者：y.balogun@quillmail.com\n日期：6 月 12 日\n主旨：更改我的方案\n\n親愛的布雷格曼女士：\n\n我三月入會，選的是進階方案，每週來三到四次，幾乎都是上班前的清晨時段。\n\n現在有兩件事變了。我姪子這學年住在我這裡，父母不在身邊由我照顧，早上送他上學占掉了我原本的時段，我已經沒辦法在上班前過來。我固定有空的時間只剩晚上，很少早於九點，比起就此放棄，我寧可改在那個時候游泳。另外我開始為十月的一場路跑受訓，教練建議我每月安排兩堂教練課。\n\n可以幫我改到那個時段仍能使用游泳池的方案嗎？我希望從七月一日起生效，而且我提出的時間遠早於貴會規定的日期，希望能夠辦到。\n\n另有兩個問題。第一，我目前每月支付八美元的置物櫃費用，更改方案後帳單上還會有這筆嗎？第二，我妹妹八月會從國外來訪，想在同一週跟我來兩次，新方案是否允許？\n\n最後，也請確認我不必再付第二次入會費。\n\n謝謝，\n\n尤瑟夫．巴洛貢"
+      "收件者：members@halewoodclub.com\n寄件者：y.balogun@quillmail.com\n日期：6 月 12 日\n主旨：更改我的方案\n\n親愛的布雷格曼女士：\n\n我三月入會，選的是進階方案，每週來三到四次，幾乎都是上班前的清晨時段。\n\n現在有兩件事變了。我姪子這學年住在我這裡，父母不在身邊由我照顧，早上送他上學占掉了我原本的時段，我已經沒辦法在上班前過來。我固定有空的時間只剩晚上，很少早於九點，比起就此放棄，我寧可改在那個時候游泳。另外我開始為十月的一場比賽受訓，教練建議我每月安排兩堂教練課。\n\n可以幫我改到那個時段仍能使用游泳池的方案嗎？我希望從七月一日起生效，而且我提出的時間遠早於貴會規定的日期，希望能夠辦到。\n\n另有兩個問題。第一，我目前每月支付八美元的置物櫃費用，更改方案後帳單上還會有這筆嗎？第二，我妹妹八月會從國外來訪，想在同一週跟我來兩次，新方案是否允許？\n\n最後，也請確認我不必再付第二次入會費。\n\n謝謝，\n\n尤瑟夫．巴洛貢"
     ]
   }
 ]

@@ -103,10 +103,10 @@
           "The Hillsdale Property Group owns several buildings on Market Street.",
           "Today the bakery employs more than thirty people and supplies bread to a dozen local restaurants.",
           "Most of the bakery's ovens were sold to a factory in another city.",
-          "Mr. Ferraro studied engineering before he moved to Hillsdale."
+          "Mr. Ferraro bought five new ovens when he first opened the shop."
         ],
         "answer": 1,
-        "explanation": "空格前一句把時間拉回九年前開店的起點，只有一台二手烤箱和兩名員工；空格後一句轉到第二家店要賣什麼。中間需要一句說明這家店後來做到多大規模，選項 B 說如今員工超過三十人、還供應麵包給十多家在地餐廳，正好與「一台烤箱、兩名員工」形成對照，也交代了為什麼開得起第二家店。選項 A 講房產集團在市場街還有好幾棟樓，話題轉到房東身上，接不上這家店的發展；選項 C 說烤箱多半賣給別的城市的工廠，與擴店的敘述矛盾；選項 D 提到店主過去念工程，只是背景細節，前後兩句都接不上。"
+        "explanation": "空格前一句把時間拉回九年前開店的起點，只有一台二手烤箱和兩名員工；空格後一句轉到第二家店要賣什麼。中間需要一句說明這家店後來做到多大規模，選項 B 說如今員工超過三十人、還供應麵包給十多家在地餐廳，正好與「一台烤箱、兩名員工」形成對照，也交代了為什麼開得起第二家店。選項 A 講房產集團在市場街還有好幾棟樓，話題轉到房東身上，接不上這家店的發展；選項 C 說烤箱多半賣給別的城市的工廠，與擴店的敘述矛盾；選項 D 說店主開店時買了五台新烤箱，與前一句「一台二手烤箱」直接矛盾。"
       },
       {
         "num": 3,
@@ -123,7 +123,7 @@
         "explanation": "空格後面是 its hours，extend one's hours 是「延長營業時間」的標準說法，和後半句「週五營業到九點」正好互相呼應。attend 是「出席」，受詞是會議或活動；prevent 是「防止」，受詞是不希望發生的事；remove 是「移除」，用在把東西拿走，三者都無法和營業時間搭配。"
       }
     ],
-    "translation": "HILLSDALE（9 月 25 日）- Stone Oven 麵包店計劃十一月在市場街開設第二家店。新店將設在一棟由 Hillsdale 房產集團今年春天整修完成的建築內。店主 Daniel Ferraro 九年前以一台二手烤箱和兩名員工創立這家店。如今這家麵包店員工超過三十人，並供應麵包給十多家在地餐廳。第二家店將販售與原店相同的麵包與蛋糕，另外還有以距離鎮上三十公里以內農場的蔬菜製作的三明治。Ferraro 先生說，他看過十多個地點才選定市場街，因為這裡離火車站很近。原店將於十二月延長營業時間，週五營業到晚上九點。"
+    "translation": "HILLSDALE（9 月 25 日）- Stone Oven 麵包店計劃十一月在市場街開設第二家店。新店將設在一棟由 Hillsdale 房產集團今年春天整修完成的建築內。店主 Daniel Ferraro 九年前以一台二手烤箱和兩名員工創立這家店。如今這家麵包店員工超過三十人，並供應麵包給十多家在地餐廳。第二家店將販售與原店相同的麵包與蛋糕，另外還有以距離鎮上三十公里以內農場的蔬菜製作的三明治。Ferraro 先生說，他看過十多個地點，才選定離火車站很近的市場街。原店將於十二月延長營業時間，週五營業到晚上九點。"
   },
   {
     "id": "p6-b9-4",

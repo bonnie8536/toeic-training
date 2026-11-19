@@ -40,7 +40,7 @@ TOEIC.part6 = [
      "Please submit your travel reimbursement forms to the accounting team."
     ],
     "answer": 1,
-    "explanation": "考前後文銜接。空格前一句說明工程預計 4 月 10 日前完工，空格後以 Until then（在那之前）開頭，代表中間必須先出現一個「之後會有後續動作」的參照點，選項 B 承諾樓層重新開放時會再發出通知，正好提供 then 所指的時間點。選項 A 說專案無限期延後，與前句明確的完工日期矛盾；選項 C 說二樓三月全面關閉，與前段安排同仁暫遷二樓辦公直接抵觸；選項 D 談差旅核銷表單，與整封信的整修主題無關。"
+    "explanation": "考前後文銜接。空格前一句說明工程預計 4 月 10 日前完工，空格後以 Until then（在那之前）交代完工前的暫時安排，因此空格句要延續「完工、重新開放」這條時間線。選項 B 說四樓重新開放時會再發通知，正好接在完工日期之後，then 即指四樓重新開放之時。選項 A 說專案無限期延後，與前句明確的完工日期矛盾；選項 C 說二樓三月全面關閉，與前段安排同仁暫遷二樓辦公直接抵觸；選項 D 談差旅核銷表單，與整封信的整修主題無關。"
    },
    {
     "num": 4,
@@ -93,11 +93,11 @@ TOEIC.part6 = [
     "options": [
      "The finance department will move to the third floor next quarter.",
      "Paper submissions remain the preferred method for most employees.",
-     "Please therefore confirm that every receipt is clear before uploading it.",
+     "To avoid delays, please make sure each claim includes all required receipts.",
      "Reimbursements are issued to clients rather than to employees."
     ],
     "answer": 2,
-    "explanation": "考前後文銜接。空格前一句指出缺少佐證文件的申請會被退回不予處理，空格後段落轉入教育訓練資訊，因此空格需要一句承接前句後果、提醒同仁事先自我檢查的話。選項 C 以 therefore 明確扣住前句的因果關係，且 receipt 也呼應前文的收據上傳規定。選項 A 談部門搬遷，與核銷主題無關；選項 B 說紙本仍是多數人偏好的方式，與第一段「10 月 1 日起不再受理紙本」直接矛盾；選項 D 說核銷對象是客戶，與本備忘錄發給業務同仁的前提抵觸。"
+    "explanation": "考前後文銜接。空格前一句指出缺少佐證文件的申請會被退回不予處理，空格後段落轉入教育訓練資訊，因此空格需要一句承接前句後果、提醒同仁事先自我檢查的話。選項 C 以 To avoid delays 承接前句退件的後果，並提醒附齊收據，呼應前文的收據上傳規定。選項 A 談部門搬遷，與核銷主題無關；選項 B 說紙本仍是多數人偏好的方式，與第一段「10 月 1 日起不再受理紙本」直接矛盾；選項 D 說核銷對象是客戶，與本備忘錄發給業務同仁的前提抵觸。"
    },
    {
     "num": 4,
@@ -112,7 +112,7 @@ TOEIC.part6 = [
     "explanation": "考連接詞。空格後 employees can practice using the system 是含主詞與限定動詞的完整子句，且表達舉辦訓練的目的，須用連接詞 so that。in order to 後面只能接原形動詞；such as 與 as well as 都是後接名詞或名詞片語的用法，皆無法引導完整子句。"
    }
   ],
-  "translation": "備忘錄\n\n致：區域業務團隊\n發文者：財務部主管 Priya Raghunathan\n日期：9 月 5 日\n主旨：差旅費核銷流程修訂\n\n自 10 月 1 日起，所有差旅費用一律須透過本公司新的線上系統 ExpenseTrack 送出。該日之後將不再受理紙本表單。同仁須於出差返回後十個工作天內上傳每張收據的電子檔，方可辦理核銷。\n\n未附佐證文件的申請將原件退回，不予處理。因此，上傳前請先確認每張收據都清晰可辨。\n\n系統操作說明會將於 9 月 18 日在 B 會議室舉行，讓同仁能實際演練操作。請回覆本備忘錄以保留座位。\n\nPriya Raghunathan\n財務部"
+  "translation": "備忘錄\n\n致：區域業務團隊\n發文者：財務部主管 Priya Raghunathan\n日期：9 月 5 日\n主旨：差旅費核銷流程修訂\n\n自 10 月 1 日起，所有差旅費用一律須透過本公司新的線上系統 ExpenseTrack 送出。該日之後將不再受理紙本表單。同仁須於出差返回後十個工作天內上傳每張收據的電子檔，方可辦理核銷。\n\n未附佐證文件的申請將原件退回，不予處理。為避免延誤，請確認每份申請都附上所有必要的收據。\n\n系統操作說明會將於 9 月 18 日在 B 會議室舉行，讓同仁能實際演練操作。請回覆本備忘錄以保留座位。\n\nPriya Raghunathan\n財務部"
  },
  {
   "id": "p6-b1-3",
@@ -289,7 +289,7 @@ TOEIC.part6 = [
   "id": "p6-b10-1",
   "passageType": "letter",
   "title": "Change to Monthly Membership Rates",
-  "passage": "Fernbrook Fitness Center\n88 Ridgeway Avenue\n\n15 September\n\nDear Ms. Alvarez,\n\nThank you for your three years of membership at Fernbrook Fitness Center. We are writing to let you know that monthly membership rates {{1}} on 1 November. The standard plan will rise from $42 to $47 per month.\n\nThis is our first price change since 2022. {{2}} Over the summer we replaced all of the treadmills, added a second locker room, and extended our weekend hours.\n\nMembers who renew before 25 October may keep the current rate for another twelve months. To do so, please return the enclosed form with your {{3}}. {{4}} you have any questions, feel free to call the front desk.\n\nSincerely,\nMarcus Delaney\nMembership Manager",
+  "passage": "Fernbrook Fitness Center\n88 Ridgeway Avenue\n\n15 September\n\nDear Ms. Alvarez,\n\nThank you for your three years of membership at Fernbrook Fitness Center. We are writing to let you know that monthly membership rates {{1}} on 1 November. The standard plan will rise from $42 to $47 per month.\n\nThis is our first price change since 2022. {{2}} Over the coming months, we will replace all of the treadmills, add a second locker room, and extend our weekend hours.\n\nMembers who renew before 25 October may keep the current rate for another twelve months. To do so, please return the enclosed form with your {{3}}. {{4}} you have any questions, feel free to call the front desk.\n\nSincerely,\nMarcus Delaney\nMembership Manager",
   "questions": [
    {
     "num": 1,
@@ -313,7 +313,7 @@ TOEIC.part6 = [
      "The extra income will go directly into new equipment and services for members."
     ],
     "answer": 3,
-    "explanation": "空格前一句說這是 2022 年以來第一次調價，空格後一句則列出夏天換跑步機、增設更衣室、延長週末營業時間。中間需要一句把「調價」和「這些改善」連起來，選項 D 說多出來的收入會直接投入新設備與會員服務，正好扮演這個橋樑。選項 A 講私人教練課要提前一天預約，和調價或設備更新都無關；選項 B 說分店去年冬天結束營業，與整封信「持續投資、值得續約」的語氣相反；選項 C 是給新會員的到店提醒，但收件人已是三年的老會員。"
+    "explanation": "空格前一句說這是 2022 年以來第一次調價，空格後一句則列出接下來要汰換跑步機、增設更衣室、延長週末營業時間。中間需要一句把「調價」和「這些改善」連起來，選項 D 說多出來的收入會直接投入新設備與會員服務，正好扮演這個橋樑。選項 A 講私人教練課要提前一天預約，和調價或設備更新都無關；選項 B 說分店去年冬天結束營業，與整封信「持續投資、值得續約」的語氣相反；選項 C 是給新會員的到店提醒，但收件人已是三年的老會員。"
    },
    {
     "num": 3,
@@ -340,7 +340,7 @@ TOEIC.part6 = [
     "explanation": "空格後面接的是完整子句 you have any questions，後面再接祈使句 feel free to call，形成「如果……就……」的條件句，要用連接詞 If。Despite 是介系詞，後面只能接名詞或動名詞，不能直接接主詞加動詞；Whether 表示「是否」，放在這裡語意不通；Even 是副詞，本身不能連接兩個子句，要寫成 even if 才行。"
    }
   ],
-  "translation": "芬布魯克健身中心\n瑞奇威大道 88 號\n\n9 月 15 日\n\n親愛的艾爾瓦雷茲女士：\n\n感謝您三年來在芬布魯克健身中心的會員支持。我們寫這封信是要通知您，每月會費將於 11 月 1 日調漲。標準方案將從每月 42 美元調升為 47 美元。\n\n這是我們自 2022 年以來第一次調整價格。多出來的收入會直接投入新設備與會員服務。今年夏天我們汰換了所有跑步機、增設第二間更衣室，並延長了週末的營業時間。\n\n在 10 月 25 日前續約的會員，可以再以現行費率使用十二個月。若要續約，請將隨信附上的表格簽名後寄回。如有任何疑問，歡迎致電櫃檯。\n\n謹啟\n會員部經理\n馬可斯・德蘭尼"
+  "translation": "芬布魯克健身中心\n瑞奇威大道 88 號\n\n9 月 15 日\n\n親愛的艾爾瓦雷茲女士：\n\n感謝您三年來在芬布魯克健身中心的會員支持。我們寫這封信是要通知您，每月會費將於 11 月 1 日調漲。標準方案將從每月 42 美元調升為 47 美元。\n\n這是我們自 2022 年以來第一次調整價格。多出來的收入會直接投入新設備與會員服務。接下來幾個月，我們將汰換所有跑步機、增設第二間更衣室，並延長週末的營業時間。\n\n在 10 月 25 日前續約的會員，可以再以現行費率使用十二個月。若要續約，請將隨信附上的表格簽名後寄回。如有任何疑問，歡迎致電櫃檯。\n\n謹啟\n會員部經理\n馬可斯・德蘭尼"
  },
  {
   "id": "p6-b10-2",
@@ -460,7 +460,7 @@ TOEIC.part6 = [
   "id": "p6-b10-4",
   "passageType": "instructions",
   "title": "How to Reserve a Meeting Room",
-  "passage": "How to Reserve a Meeting Room\n\nDelmar Landscaping now books all meeting rooms through the company intranet. Paper sign-up sheets outside each room {{1}} on 30 June.\n\n1. Log in to the intranet and click \"Rooms\" at the top of the page.\n2. Choose a date, then select a room from the list of {{2}} spaces. Rooms already taken appear in gray.\n3. Enter the start time, the end time, and the number of people attending.\n4. Click \"Confirm.\" A message will be sent to your work address within a few minutes. {{3}}\n\nIf your plans change, please cancel the booking right away so another team can use the room. Rooms {{4}} for more than three hours must be approved by a manager. Contact Alan Petrov with any questions.",
+  "passage": "How to Reserve a Meeting Room\n\nDelmar Landscaping now books all meeting rooms through the company intranet. Paper sign-up sheets outside each room {{1}} on 30 June.\n\n1. Log in to the intranet and click \"Rooms\" at the top of the page.\n2. Choose a date, then select a room from the list of {{2}} spaces. Rooms already taken on that date are not listed.\n3. Enter the start time, the end time, and the number of people attending.\n4. Click \"Confirm.\" A message will be sent to your work address within a few minutes. {{3}}\n\nIf your plans change, please cancel the booking right away so another team can use the room. Rooms {{4}} for more than three hours must be approved by a manager. Contact Alan Petrov with any questions.",
   "questions": [
    {
     "num": 1,
@@ -480,11 +480,11 @@ TOEIC.part6 = [
     "options": [
      "available",
      "capable",
-     "possible",
+     "occupied",
      "prepared"
     ],
     "answer": 0,
-    "explanation": "這一步是要從清單裡挑一間還沒被借走的會議室，available 指「可使用、還空著的」，available spaces 是描述空間能否使用的標準說法，下一句 Rooms already taken appear in grey 也呼應這個對比。capable 用來說人或設備有能力做某事，不能形容空間能不能預約；possible 指事情有可能發生，不能直接修飾 spaces；prepared 是「已準備好的」，強調的是布置完成，而不是有沒有被預約。"
+    "explanation": "這一步是要從清單裡挑一間還沒被借走的會議室，available 指「可使用、還空著的」，available spaces 是描述空間能否使用的標準說法，下一句 Rooms already taken on that date are not listed 也說明清單只列出還沒被借走的會議室。capable 用來說人或設備有能力做某事，不能形容空間能不能預約；occupied 是「已被占用的」，從已占用的空間裡挑房間預約，和這一步的目的相反；prepared 是「已準備好的」，強調的是布置完成，而不是有沒有被預約。"
    },
    {
     "num": 3,
@@ -511,7 +511,7 @@ TOEIC.part6 = [
     "explanation": "這句的主要動詞是後面的 must be approved，空格只需要一個修飾主詞 Rooms 的成分。會議室是「被預約」的一方，用過去分詞 booked 形成 Rooms booked for more than three hours（借用超過三小時的會議室），相當於省略了 which are 的關係子句。booking 是現在分詞，會變成會議室主動去預約別人；to book 是不定詞，放在名詞後面表示「要拿來做某事」，語意不通；book 是原形動詞，會讓整句出現兩個主要動詞。"
    }
   ],
-  "translation": "會議室預約方式\n\n德爾瑪園藝公司現在一律透過公司內部網站預約會議室。各會議室門口的紙本登記表將於 6 月 30 日撤除。\n\n1. 登入內部網站，點選頁面上方的「Rooms」。\n2. 選擇日期，再從可預約的空間清單中挑選一間會議室。已被借走的會議室會顯示為灰色。\n3. 輸入開始時間、結束時間以及出席人數。\n4. 點選「Confirm」。幾分鐘內系統會寄一封通知信到您的公司信箱。如果沒有收到，請檢查個人資料裡的信箱是否正確。\n\n若行程有變，請盡快取消預約，好讓其他團隊可以使用該會議室。借用超過三小時的會議室，另需經主管核准。有任何問題請洽艾倫・佩卓夫。"
+  "translation": "會議室預約方式\n\n德爾瑪園藝公司現在一律透過公司內部網站預約會議室。各會議室門口的紙本登記表將於 6 月 30 日撤除。\n\n1. 登入內部網站，點選頁面上方的「Rooms」。\n2. 選擇日期，再從可預約的空間清單中挑選一間會議室。當天已被借走的會議室不會列在清單上。\n3. 輸入開始時間、結束時間以及出席人數。\n4. 點選「Confirm」。幾分鐘內系統會寄一封通知信到您的公司信箱。如果沒有收到，請檢查個人資料裡的信箱是否正確。\n\n若行程有變，請盡快取消預約，好讓其他團隊可以使用該會議室。借用超過三小時的會議室，另需經主管核准。有任何問題請洽艾倫・佩卓夫。"
  },
  {
   "id": "p6-b2-1",
@@ -553,7 +553,7 @@ TOEIC.part6 = [
      "which"
     ],
     "answer": 3,
-    "explanation": "考關係代名詞。逗號後為非限定關係子句，先行詞是前面「箱子將由承包商代為搬運」這整件事，只有 which 可以指涉整個子句。(C) that 不能用於逗號後的非限定子句；(B) what 本身已含先行詞，不能再接在既有子句之後；(A) it 是代名詞不是連接詞，會造成兩個子句沒有連接詞的錯誤。"
+    "explanation": "考關係代名詞。逗號後為非限定關係子句，先行詞是前面「未打包的物品將由承包商代為搬運」這整件事，只有 which 可以指涉整個子句。(C) that 不能用於逗號後的非限定子句；(B) what 本身已含先行詞，不能再接在既有子句之後；(A) it 是代名詞不是連接詞，會造成兩個子句沒有連接詞的錯誤。"
    },
    {
     "num": 4,
@@ -688,7 +688,7 @@ TOEIC.part6 = [
   "id": "p6-b2-4",
   "passageType": "notice",
   "title": "Annual Elevator Inspection",
-  "passage": "NOTICE TO ALL RESIDENTS\nAnnual Elevator Inspection\n\nPlease be advised that the elevators in both towers will be inspected on Thursday, September 18, from 8:00 A.M. until approximately 4:00 P.M. Elevator A will be serviced first, {{1}} Elevator B remains available for general use. {{2}} Residents who need help moving large items should contact the front desk in {{3}}, as additional staff will be on hand throughout the day. We apologize for any inconvenience this may {{4}} and thank you for your understanding. Normal service will resume on Friday morning.\n\nRosalind Whitcomb\nBuilding Manager, Camden Court Apartments",
+  "passage": "NOTICE TO ALL RESIDENTS\nAnnual Elevator Inspection\n\nPlease be advised that the two elevators in the North Tower will be inspected on Thursday, September 18, from 8:00 A.M. until approximately 4:00 P.M. Elevator A will be serviced first, {{1}} Elevator B remains available for general use. {{2}} Residents who need help moving large items should contact the front desk in {{3}}, as additional staff will be on hand throughout the day. We apologize for any inconvenience this may {{4}} and thank you for your understanding. Normal service will resume on Friday morning.\n\nRosalind Whitcomb\nBuilding Manager, Camden Court Apartments",
   "questions": [
    {
     "num": 1,
@@ -708,11 +708,11 @@ TOEIC.part6 = [
     "options": [
      "Rent payments are due on the first day of each month.",
      "At no point will both elevators be out of service at the same time.",
-     "The lobby floor will be repainted later this autumn.",
+     "Both elevators will be unavailable for the entire inspection period.",
      "Pets are not permitted in the common areas of either tower."
     ],
     "answer": 1,
-    "explanation": "前句說明先檢修 A 梯、B 梯照常使用，後句則請需要搬運大型物品的住戶事先聯繫櫃檯。(B) 保證兩部電梯不會同時停用，既承接前句的分批施工邏輯，也讓住戶知道當天仍有電梯可搭，才有後句安排搬運的可能。(A) 房租繳納、(C) 大廳地板重新粉刷、(D) 寵物規定都與電梯檢修無關，插入後前後文會斷裂。"
+    "explanation": "前句說明先檢修 A 梯、B 梯照常使用，後句則請需要搬運大型物品的住戶事先聯繫櫃檯。(B) 保證兩部電梯不會同時停用，既承接前句的分批施工邏輯，也讓住戶知道當天仍有電梯可搭，才有後句安排搬運的可能。(C) 說兩部電梯在整個檢修期間都無法使用，與前句「B 梯照常使用」直接矛盾。(A) 房租繳納、(D) 寵物規定都與電梯檢修無關，插入後前後文會斷裂。"
    },
    {
     "num": 3,
@@ -739,7 +739,7 @@ TOEIC.part6 = [
     "explanation": "考助動詞後的動詞形式。情態助動詞 may 之後必須接原形動詞，且此處 this（指這次檢修）是造成不便的一方，屬主動語態，故選 cause。(A) causing 是現在分詞、(B) caused 是過去式或過去分詞，都不能直接接在 may 之後；(C) be caused 雖然形式上可接在 may 後，但本句 this 是動作發出者、any inconvenience 是受詞，改成被動會使句子缺少受詞而不成立。"
    }
   ],
-  "translation": "全體住戶公告\n年度電梯檢修\n\n謹此通知，兩棟大樓的電梯將於 9 月 18 日星期四上午 8 時至下午 4 時左右進行檢修。A 梯將先行檢修，此時 B 梯仍可正常使用。兩部電梯絕不會同時停止運轉。需要協助搬運大型物品的住戶，請事先與服務櫃檯聯繫，當日將有額外人力於現場支援。造成不便之處敬請見諒，並感謝您的體諒。正常服務將於週五上午恢復。\n\nRosalind Whitcomb\nCamden Court 公寓大樓管理員"
+  "translation": "全體住戶公告\n年度電梯檢修\n\n謹此通知，北棟的兩部電梯將於 9 月 18 日星期四上午 8 時至下午 4 時左右進行檢修。A 梯將先行檢修，此時 B 梯仍可正常使用。兩部電梯絕不會同時停止運轉。需要協助搬運大型物品的住戶，請事先與服務櫃檯聯繫，當日將有額外人力於現場支援。造成不便之處敬請見諒，並感謝您的體諒。正常服務將於週五上午恢復。\n\nRosalind Whitcomb\nCamden Court 公寓大樓管理員"
  },
  {
   "id": "p6-b2-5",
@@ -778,10 +778,10 @@ TOEIC.part6 = [
      "Sales targets for the fourth quarter will be announced next month.",
      "Company credit cards will be reissued in January.",
      "The annual sales conference will take place in Bergstrom.",
-     "The finance team will no longer accept printed receipts of any kind."
+     "The finance team will no longer accept paper claim forms or mailed receipts."
     ],
     "answer": 3,
-    "explanation": "空格前說明報帳改走線上平台、不再使用紙本表單並規定上傳期限，空格後要求尚未啟用帳號者盡快啟用。(D) 明確指出財務部不再收任何紙本收據，既延續前文全面數位化的脈絡，也讓後句「請先啟用帳號」有了必要性。(A) 第四季業績目標、(B) 信用卡換發、(C) 年度業務大會都與報帳流程改為線上無關，插入後無法連接前後文。"
+    "explanation": "空格前說明報帳改走線上平台、不再使用紙本表單並規定上傳期限，空格後要求尚未啟用帳號者盡快啟用。(D) 明確指出財務部不再受理紙本申請表或郵寄的收據，既延續前文全面數位化的脈絡，也讓後句「請先啟用帳號」有了必要性。(A) 第四季業績目標、(B) 信用卡換發、(C) 年度業務大會都與報帳流程改為線上無關，插入後無法連接前後文。"
    },
    {
     "num": 4,
@@ -796,7 +796,7 @@ TOEIC.part6 = [
     "explanation": "考名詞字彙。hands-on demonstration 指「實際動手操作的示範」，與前文舉辦教育訓練、讓同仁在季末前熟悉系統的語意相符。(A) declaration 指宣告或申報；(C) dedication 指奉獻或落成儀式；(D) description 指文字說明，與 hands-on（實際操作）互相牴觸，也不是訓練課程提供的內容形式。"
    }
   ],
-  "translation": "內部通知\n\n收件者：業務部\n寄件者：Yolanda Prescott，業務總監\n日期：10 月 2 日\n主旨：季度費用報帳\n\n自本月起，所有差旅費用必須透過新的 Vertex 系統平台申請，不再使用紙本表單。收據應於返回後七日內上傳。逾期提出的申請將不予核銷，除非部門主管以書面核准例外處理。財務部將不再接受任何形式的紙本收據。若您尚未啟用帳號，請於本週五前完成。週二與週三將舉辦教育訓練，供希望在本季結束前實際操作系統的同仁參加。\n\nYolanda Prescott\n業務總監"
+  "translation": "內部通知\n\n收件者：業務部\n寄件者：Yolanda Prescott，業務總監\n日期：10 月 2 日\n主旨：季度費用報帳\n\n自本月起，所有差旅費用必須透過新的 Vertex 系統平台申請，不再使用紙本表單。收據應於返回後七日內上傳。逾期提出的申請將不予核銷，除非部門主管以書面核准例外處理。財務部將不再受理紙本申請表或郵寄的收據。若您尚未啟用帳號，請於本週五前完成。週二與週三將舉辦教育訓練，供希望在本季結束前實際操作系統的同仁參加。\n\nYolanda Prescott\n業務總監"
  },
  {
   "id": "p6-b3-1",
@@ -865,13 +865,13 @@ TOEIC.part6 = [
     "num": 1,
     "type": "文法",
     "options": [
-     "relocates",
+     "relocating",
      "has relocated",
      "will be relocated",
      "was relocating"
     ],
     "answer": 2,
-    "explanation": "考時態與語態。主詞 the print room 是「被搬遷」的對象，須用被動語態；句首 Beginning Monday, September 15 指向未來的時間，故答案為未來被動 will be relocated。(A) relocates 是現在式主動；(B) has relocated 是現在完成式主動，時態與語態都不合；(D) was relocating 是過去進行式主動，與未來時間點衝突。"
+    "explanation": "考動詞形式與時態。空格是句子的主要動詞，句首 Beginning Monday, September 15 是公告日（9 月 3 日）之後的時間，要用未來式，故選 will be relocated（將遷至）。(A) relocating 是分詞，不能單獨當主要動詞，句子會缺少述語；(B) has relocated 是現在完成式，表示已經完成，與未來的時間點衝突；(D) was relocating 是過去進行式，同樣與未來的時間點衝突。"
    },
    {
     "num": 2,
@@ -916,7 +916,7 @@ TOEIC.part6 = [
   "id": "p6-b3-3",
   "passageType": "advertisement",
   "title": "Job Advertisement: Logistics Coordinator",
-  "passage": "KESTREL FREIGHT SOLUTIONS\nNow Hiring: Logistics Coordinator\n\nKestrel Freight Solutions is looking for a full-time logistics coordinator at our Riverton distribution center. The person selected will schedule outbound shipments, monitor carrier performance, and {{1}} daily reports for the operations manager.\n\nApplicants should have at least three years of experience in a warehouse or transportation setting. Familiarity with inventory management software is {{2}}, but candidates without it will still be considered.\n\n{{3}} Those who are willing to work an occasional weekend shift will be given priority.\n\nTo apply, send a resume and a short cover letter to careers@kestrelfreight.com {{4}} October 30. Interviews will begin the following week.",
+  "passage": "KESTREL FREIGHT SOLUTIONS\nNow Hiring: Logistics Coordinator\n\nKestrel Freight Solutions is looking for a full-time logistics coordinator at our Riverton distribution center. The person selected will schedule outbound shipments, monitor carrier performance, and {{1}} daily reports for the operations manager.\n\nApplicants should have at least three years of experience in a warehouse or transportation setting. Familiarity with inventory management software is {{2}}, but candidates without it will still be considered.\n\n{{3}} Those who are willing to work an occasional weekend shift will be given priority.\n\nTo apply, send a resume and a short cover letter to careers@example.com {{4}} October 30. Interviews will begin the following week.",
   "questions": [
    {
     "num": 1,
@@ -967,7 +967,7 @@ TOEIC.part6 = [
     "explanation": "考介系詞。by + 時間點表示「最晚在某時間之前完成」，符合投遞履歷的截止期限。(A) until 表示動作或狀態「持續到」某時點，但 send 是瞬間動作，不能用 until；(B) since 表示自某時點起算，須搭配完成式；(D) during 後面必須接一段期間（如 during October），不能接 October 30 這樣的特定日期。"
    }
   ],
-  "translation": "科斯特爾貨運解決方案\n誠徵：物流協調專員\n\n科斯特爾貨運解決方案正在為河頓配送中心徵求一名全職物流協調專員。獲選者將負責安排出貨排程、追蹤承運商的表現，並為營運經理製作每日報表。\n\n應徵者須具備至少三年倉儲或運輸相關領域的工作經驗。熟悉庫存管理軟體者尤佳，但不具備此項經驗的應徵者仍會列入考量。\n\n本職務採輪班制，每週工作四天，每天十小時。願意配合偶爾週末班者將優先錄用。\n\n應徵請於10月30日前將履歷與簡短的求職信寄至 careers@kestrelfreight.com。面試將於次週展開。"
+  "translation": "科斯特爾貨運解決方案\n誠徵：物流協調專員\n\n科斯特爾貨運解決方案正在為河頓配送中心徵求一名全職物流協調專員。獲選者將負責安排出貨排程、追蹤承運商的表現，並為營運經理製作每日報表。\n\n應徵者須具備至少三年倉儲或運輸相關領域的工作經驗。熟悉庫存管理軟體者尤佳，但不具備此項經驗的應徵者仍會列入考量。\n\n本職務採輪班制，每週工作四天，每天十小時。願意配合偶爾週末班者將優先錄用。\n\n應徵請於10月30日前將履歷與簡短的求職信寄至 careers@example.com。面試將於次週展開。"
  },
  {
   "id": "p6-b3-4",
@@ -1030,7 +1030,7 @@ TOEIC.part6 = [
   "id": "p6-b3-5",
   "passageType": "article",
   "title": "Verano Textiles Opens Second Plant",
-  "passage": "Verano Textiles Opens Second Plant\nby Marisol Okafor, Business Weekly\n\nMARBURY — Verano Textiles announced on Tuesday that it has opened a second manufacturing plant just outside Marbury. The 40,000-square-meter facility {{1}} by a local construction firm and now employs about 180 people, most of whom were hired from the surrounding area.\n\nCompany president Elena Corriveau said the expansion was prompted by growing European demand for recycled fabrics. {{2}} The Marbury plant will produce those fabrics exclusively, while the original factory in Denton continues to make traditional cotton goods.\n\nConstruction took slightly more than two years and cost an {{3}} 90 million dollars. Verano expects the new plant to reach full {{4}} by the middle of next year.",
+  "passage": "Verano Textiles Opens Second Plant\nby Marisol Okafor, Tri-County Business Review\n\nMARBURY — Verano Textiles announced on Tuesday that it has opened a second manufacturing plant just outside Marbury. The 40,000-square-meter facility {{1}} by a local construction firm and now employs about 180 people, most of whom were hired from the surrounding area.\n\nCompany president Elena Corriveau said the expansion was prompted by growing European demand for recycled fabrics. {{2}} The Marbury plant will produce those fabrics exclusively, while the original factory in Denton continues to make traditional cotton goods.\n\nConstruction took slightly more than two years and cost an {{3}} 90 million dollars. Verano expects the new plant to reach full {{4}} by the middle of next year.",
   "questions": [
    {
     "num": 1,
@@ -1081,7 +1081,7 @@ TOEIC.part6 = [
     "explanation": "考詞性判斷。形容詞 full 之後必須接名詞，reach full production 意為「達到滿載生產」，是產業報導的常見搭配。(A) produce 作動詞不能接在形容詞後，作名詞時意為「農產品」，語意不合；(B) produced 是過去分詞，不能當 reach 的受詞；(C) productive 是形容詞，兩個形容詞無法在此並列成為受詞。"
    }
   ],
-  "translation": "維拉諾紡織開設第二座廠房\n《商業週刊》記者 瑪莉索．歐卡佛 報導\n\n馬布里訊——維拉諾紡織於週二宣布，已在馬布里近郊開設第二座製造廠。這座四萬平方公尺的廠房由當地一家營造公司興建，目前雇用約180名員工，其中大多數來自周邊地區。\n\n公司總裁艾蓮娜．柯瑞沃表示，這次擴廠是因應歐洲對再生布料日益增加的需求。過去三年來，這類材料的訂單已成長一倍。馬布里廠將專門生產這類布料，丹頓的原廠則繼續生產傳統棉製品。\n\n工程歷時兩年多，造價估計約9,000萬美元。維拉諾預期新廠將於明年年中達到滿載生產。"
+  "translation": "維拉諾紡織開設第二座廠房\n《三郡商業評論》記者 瑪莉索．歐卡佛 報導\n\n馬布里訊：維拉諾紡織於週二宣布，已在馬布里近郊開設第二座製造廠。這座四萬平方公尺的廠房由當地一家營造公司興建，目前雇用約180名員工，其中大多數來自周邊地區。\n\n公司總裁艾蓮娜．柯瑞沃表示，這次擴廠是因應歐洲對再生布料日益增加的需求。過去三年來，這類材料的訂單已成長一倍。馬布里廠將專門生產這類布料，丹頓的原廠則繼續生產傳統棉製品。\n\n工程歷時兩年多，造價估計約9,000萬美元。維拉諾預期新廠將於明年年中達到滿載生產。"
  },
  {
   "id": "p6-b4-1",
@@ -1294,7 +1294,7 @@ TOEIC.part6 = [
      "In case"
     ],
     "answer": 1,
-    "explanation": "考連接用語的詞性與邏輯。空格後接名詞片語 the success of this year's event，且與主句「明年春天再辦一次」構成因果關係，故用介系詞片語 (B) Given（有鑑於）。(A) Despite 雖可接名詞片語，但表讓步，與「因為成功所以再辦」的邏輯相反；(C) Whereas 與 (D) In case 都是連接詞，後面必須接完整子句，不能直接接名詞片語。"
+    "explanation": "考連接用語的詞性與邏輯。空格後接名詞片語 the success of this year's event，且與主句「明年春天再辦一次」構成因果關係，故用介系詞 (B) Given（有鑑於）。(A) Despite 雖可接名詞片語，但表讓步，與「因為成功所以再辦」的邏輯相反；(C) Whereas 與 (D) In case 都是連接詞，後面必須接完整子句，不能直接接名詞片語。"
    },
    {
     "num": 4,
@@ -1351,7 +1351,7 @@ TOEIC.part6 = [
      "during"
     ],
     "answer": 3,
-    "explanation": "考介系詞與連接詞的區別。空格後接名詞片語 the sale，需要介系詞，且語意是「在特賣期間」，故選 (D) during。(A) while 是連接詞，後面必須接子句；(B) since 表「自從某時間點以來」，須搭配完成式並指起點，與本句現在式的 earn 不合；(C) among 用於三者以上的群體之中，語意不通。"
+    "explanation": "考介系詞與連接詞的區別。空格後接名詞片語 the sale，需要介系詞，且語意是「在特賣期間」，故選 (D) during。(A) while 是連接詞，後面必須接子句；(B) since 表「自從某時間點以來」，since the sale 指從特賣那時起一直到現在，不是限定在特賣期間，與雙倍點數只適用於特賣期間的語意不合；(C) among 用於三者以上的群體之中，語意不通。"
    },
    {
     "num": 4,
@@ -1372,7 +1372,7 @@ TOEIC.part6 = [
   "id": "p6-b5-1",
   "passageType": "notice",
   "title": "2026 Harborline Charity Fun Run",
-  "passage": "NOTICE: 2026 Harborline Charity Fun Run\n\nHarborline Logistics is pleased to announce that our annual Charity Fun Run will be held on Saturday, 12 September, at Westbrook Park. All employees and their family members are {{1}} to take part. Participants may choose either the three-kilometre walk or the eight-kilometre run. {{2}} Registration closes on 28 August, and late entries cannot be {{3}}. Every participant will receive a T-shirt and a refreshment voucher on the morning of the event, and all proceeds will go to the Westbrook Children's Hospital. {{4}} you have questions about transport to the park, please contact the Employee Services desk on extension 240.\n\nEmployee Services Committee\nHarborline Logistics",
+  "passage": "NOTICE: 2026 Harborline Charity Fun Run\n\nHarborline Logistics is pleased to announce that our annual Charity Fun Run will be held on Saturday, 12 September, at Westbrook Park. All employees and their family members are {{1}} to take part. Participants may choose either the three-kilometer walk or the eight-kilometer run. {{2}} Registration closes on 28 August, and late entries cannot be {{3}}. Every participant will receive a T-shirt and a refreshment voucher on the morning of the event, and all proceeds will go to the Westbrook Children's Hospital. {{4}} you have questions about transport to the park, please contact the Employee Services desk at extension 240.\n\nEmployee Services Committee\nHarborline Logistics",
   "questions": [
    {
     "num": 1,
@@ -1453,7 +1453,7 @@ TOEIC.part6 = [
      "whom"
     ],
     "answer": 2,
-    "explanation": "空格後緊接 name is Mr. Sato，說明的是「司機的名字」，屬於所有格關係，必須用關係代名詞所有格 whose。who 是主格、whom 是受格，兩者後面都不能直接接名詞再加動詞；which 用於事物，且同樣不表所有格。"
+    "explanation": "空格後緊接 name is Kenji Sato，說明的是「司機的名字」，屬於所有格關係，必須用關係代名詞所有格 whose。who 是主格、whom 是受格，兩者後面都不能直接接名詞再加動詞；which 用於事物，且同樣不表所有格。"
    },
    {
     "num": 3,
@@ -1620,7 +1620,7 @@ TOEIC.part6 = [
     "options": [
      "Our head office relocated to Fairview Business Park last spring.",
      "Unfortunately, we no longer offer courses in the manufacturing sector.",
-     "Enrolment figures have fallen steadily since our platform was launched.",
+     "Enrollment figures have fallen steadily since our platform was launched.",
      "The Halden Institute, meanwhile, is widely respected for its research on workplace safety."
     ],
     "answer": 3,
@@ -1714,7 +1714,7 @@ TOEIC.part6 = [
   "id": "p6-b6-2",
   "passageType": "notice",
   "title": "Notice to All Staff: Parking Lot Repairs",
-  "passage": "NOTICE TO ALL STAFF: Parking Lot Repairs\n\nThe main parking lot behind Building C {{1}} from 3 March through 20 March while the surface is repaired and new lines are painted. During this period, staff who normally park there should use the visitor lot on Cedar Street, which will be open to employees at no {{2}}. {{3}} Anyone who arrives after 8:30 A.M. may find the visitor lot full, so please allow extra travel time. Vehicles left in the closed area will be removed at the owner's expense. We apologize for the inconvenience and thank you for your {{4}} while the work is finished.\n\nFacilities Management",
+  "passage": "NOTICE TO ALL STAFF: Parking Lot Repairs\n\nThe main parking lot behind Building C {{1}} from 3 March through 20 March while the surface is repaired and new lines are painted. During this period, staff who normally park there should use the visitor lot on Cedar Street, which will be open to employees at no {{2}}. {{3}} Anyone who arrives after 8:30 A.M. may find the visitor lot full, so please allow extra travel time. Vehicles left in the closed area will be removed at the owner's expense. We apologize for the inconvenience and thank you for your {{4}} while the work is carried out.\n\nFacilities Management",
   "questions": [
    {
     "num": 1,
@@ -1726,7 +1726,7 @@ TOEIC.part6 = [
      "to close"
     ],
     "answer": 1,
-    "explanation": "主詞 The main parking lot 是「被關閉」的對象，動作由施工單位執行，因此要用被動語態；而 from 3 March through 20 March 指向尚未到來的期間，時態要用未來式，故選 B will be closed。選項 A closing 是現在分詞，前面沒有 be 動詞，整句會缺少完整的動詞；選項 C has closed 是主動的現在完成式，語意變成停車場自己把別的東西關掉，且與未來的時間不合；選項 D to close 是不定詞，不能當句子的主要動詞。"
+    "explanation": "主詞 The main parking lot 是「被關閉」的對象，動作由施工單位執行，因此要用被動語態；而 from 3 March through 20 March 指向尚未到來的期間，時態要用未來式，故選 B will be closed。選項 A closing 是現在分詞，前面沒有 be 動詞，整句會缺少完整的動詞；選項 C has closed 是現在完成式，表示關閉已經發生，與 3 月 3 日到 20 日這段尚未開始的施工期間不合，也不能搭配 from ... through 的起訖期間；選項 D to close 是不定詞，不能當句子的主要動詞。"
    },
    {
     "num": 2,
@@ -1783,7 +1783,7 @@ TOEIC.part6 = [
      "received"
     ],
     "answer": 3,
-    "explanation": "句尾的 at a ceremony held on Thursday evening 指出頒獎典禮已於上週四晚上舉行，後文的 Judges praised 也是過去式，整段敘述都是已發生的事，因此動詞要用過去式 received，故選 D。選項 A receives 是現在簡單式，用於習慣或不變的事實；選項 B is receiving 是現在進行式，表示此刻正在發生；選項 C will receive 是未來式，與典禮已經結束的事實矛盾。"
+    "explanation": "句尾的 at a ceremony held on Thursday evening 指出頒獎典禮已於週四晚上舉行，後文的 Judges praised 也是過去式，整段敘述都是已發生的事，因此動詞要用過去式 received，故選 D。選項 A receives 是現在簡單式，用於習慣或不變的事實；選項 B is receiving 是現在進行式，表示此刻正在發生；選項 C will receive 是未來式，與典禮已經結束的事實矛盾。"
    },
    {
     "num": 2,
@@ -1896,7 +1896,7 @@ TOEIC.part6 = [
      "restore",
      "remind"
     ],
-    "answer": 1,
+    "answer": 0,
     "explanation": "「續約」的固定搭配是 renew the contract，renew 也常用於 renew a subscription（續訂）、renew a license（換發執照）。reserve 是預訂座位或房間，restore 是把東西恢復原狀，remind 是提醒某人，三者都無法接 the contract 表示延長合約期限。"
    },
    {
@@ -1908,7 +1908,7 @@ TOEIC.part6 = [
      "Please attach a copy of your business license to the form.",
      "The model you ordered is no longer in production."
     ],
-    "answer": 1,
+    "answer": 0,
     "explanation": "空格前一句在講維修費用可享九折，空格後又用 In addition 補上另一項好處，可見中間這句應該仍在說明續約優惠。選項一說折扣也適用於更換的零件，和前句的費用主題直接相連。其餘三個選項分別談公休、營業執照與停產，都跳出了續約通知的主題。"
    },
    {
@@ -1920,7 +1920,7 @@ TOEIC.part6 = [
      "enclosing",
      "encloses"
     ],
-    "answer": 2,
+    "answer": 1,
     "explanation": "空格夾在冠詞 the 和名詞 form 之間，要用具形容詞功能的分詞。表格是「被隨函附上的」，屬被動概念，因此用過去分詞 enclosed，the enclosed form 是商業書信的常見說法。enclose 與 encloses 是動詞原形和第三人稱單數，不能修飾名詞；enclosing 表主動附上，語意不合。"
    },
    {
@@ -1929,11 +1929,11 @@ TOEIC.part6 = [
     "options": [
      "will appreciate",
      "appreciating",
-     "appreciate",
+     "appreciation",
      "have appreciated"
     ],
     "answer": 3,
-    "explanation": "句尾的 over the past three years 指從過去某時延續到現在的一段期間，必須搭配現在完成式，故選 have appreciated。will appreciate 指未來才會發生，單純現在式 appreciate 無法涵蓋這三年，appreciating 是分詞，不能單獨當句子的動詞。"
+    "explanation": "句尾的 over the past three years 指從過去某時延續到現在的一段期間，要搭配現在完成式，故選 have appreciated。will appreciate 指未來才會發生；appreciating 是分詞，appreciation 是名詞，兩者都不能當句子的主要動詞。"
    }
   ],
   "translation": "親愛的 Fowler 女士：\n\n本公司紀錄顯示，您與 Brightline Services 簽訂的設備維護合約將於 9 月 30 日到期，我們希望您能續約一年。\n\n9 月 15 日前簽約的客戶，所有維修費用可享九折優惠。此折扣也適用於我們更換的任何零件。此外，您每月的巡檢服務將不會中斷。\n\n如欲確認，請在隨函附上的表格簽名，並以我們提供的信封寄回。屆時本公司帳務部門會再寄給您一份更新後的發票。\n\n若您對合約條款有任何疑問，請撥打服務專線 555-0182。這三年來承蒙惠顧，我們深表感謝。\n\n此致\n\nDaniel Ortega\n客戶經理"
@@ -1942,7 +1942,7 @@ TOEIC.part6 = [
   "id": "p6-b7-2",
   "passageType": "advertisement",
   "title": "Improve Your Business Writing Online",
-  "passage": "Improve Your Business Writing Online\n\nDo you spend hours writing e-mails that nobody answers? Westport Learning now offers a six-week online course {{1}} for busy office workers. The lessons are short, practical, and available at any hour of the day.\n\nEach week you watch one video lesson and complete one writing task. A trainer reviews your work and replies {{2}} two business days. {{3}}\n\nThe fee is $120 per person, and groups of five or more receive a special {{4}}. Visit www.westportlearning.com to try a free sample lesson before you decide.",
+  "passage": "Improve Your Business Writing Online\n\nDo you spend hours writing e-mails that nobody answers? Westport Learning now offers a six-week online course {{1}} for busy office workers. The lessons are short, practical, and available at any hour of the day.\n\nEach week you watch one video lesson and complete one writing task. A trainer reviews your work and replies {{2}} two business days. {{3}}\n\nThe fee is $120 per person, and groups of five or more receive a special {{4}}. Visit www.example.com to try a free sample lesson before you decide.",
   "questions": [
    {
     "num": 1,
@@ -1953,7 +1953,7 @@ TOEIC.part6 = [
      "to design",
      "designing"
     ],
-    "answer": 2,
+    "answer": 1,
     "explanation": "句子已經有主要動詞 offers，空格處只能用分詞片語來修飾前面的 course。課程是「被設計」出來的，所以用過去分詞 designed，designed for 表示專為某對象設計。design 是原形動詞，會造成一句兩個動詞；to design 表目的，語意不通；designing 表主動設計，課程本身不會去設計別人。"
    },
    {
@@ -1977,7 +1977,7 @@ TOEIC.part6 = [
      "You can also join a live question-and-answer session every Friday.",
      "Applicants should bring two forms of identification."
     ],
-    "answer": 3,
+    "answer": 2,
     "explanation": "空格前一段在說明每週的上課方式與講師回覆，空格後才轉入費用，因此這裡適合再補一項課程提供的服務。選項三提到每週五的線上問答時段，正好延續學習支援的內容，also 也呼應前面已列的項目。其他選項談紙本教科書歸還、辦公室搬遷與應徵證件，與線上課程廣告無關。"
    },
    {
@@ -1989,17 +1989,17 @@ TOEIC.part6 = [
      "decision",
      "delivery"
     ],
-    "answer": 1,
+    "answer": 0,
     "explanation": "前句剛提到每人 120 美元的費用，五人以上團報自然是給「折扣」，discount 與價格主題相呼應，a special discount 也是廣告常見說法。direction 是方向或指示，decision 是決定，delivery 是遞送，都無法說明團報的好處。"
    }
   ],
-  "translation": "線上提升你的商務寫作力\n\n你是否花好幾個小時寫電子郵件，卻沒有人回覆？Westport Learning 現在推出一門為期六週的線上課程，專為忙碌的上班族設計。課程單元簡短、實用，而且一天當中任何時段都能上。\n\n每週你會看一支教學影片，並完成一項寫作作業。講師會批改你的作業，並在兩個工作天內回覆。你也可以參加每週五的線上問答時段。\n\n費用為每人 120 美元，五人以上團報可享特別折扣。請上 www.westportlearning.com 試看免費的試聽單元，再決定是否報名。"
+  "translation": "線上提升你的商務寫作力\n\n你是否花好幾個小時寫電子郵件，卻沒有人回覆？Westport Learning 現在推出一門為期六週的線上課程，專為忙碌的上班族設計。課程單元簡短、實用，而且一天當中任何時段都能上。\n\n每週你會看一支教學影片，並完成一項寫作作業。講師會批改你的作業，並在兩個工作天內回覆。你也可以參加每週五的線上問答時段。\n\n費用為每人 120 美元，五人以上團報可享特別折扣。請上 www.example.com 試看免費的試聽單元，再決定是否報名。"
  },
  {
   "id": "p6-b7-3",
   "passageType": "email",
   "title": "Interview Invitation",
-  "passage": "To: Karen Liu <k.liu@mailnet.com>\nFrom: Marcus Webb <m.webb@holbrookgroup.com>\nDate: 14 October\nSubject: Interview Invitation\n\nDear Ms. Liu,\n\nThank you for applying for the position of marketing assistant at Holbrook Group. After reviewing your application, we would like {{1}} you for an interview at our head office on Tuesday, 21 October, at 10:00 A.M.\n\nThe interview will {{2}} about forty minutes. You will speak with two managers from the marketing team, who will ask about the projects listed on your application. {{3}}\n\nPlease reply to this message by Friday to confirm the time. If that morning is not {{4}} for you, we are happy to arrange another date.\n\nBest regards,\n\nMarcus Webb\nHuman Resources",
+  "passage": "To: Karen Liu <k.liu@example.net>\nFrom: Marcus Webb <m.webb@example.com>\nDate: 14 October\nSubject: Interview Invitation\n\nDear Ms. Liu,\n\nThank you for applying for the position of marketing assistant at Holbrook Group. After reviewing your application, we would like {{1}} you for an interview at our head office on Tuesday, 21 October, at 10:00 A.M.\n\nThe interview will {{2}} about forty minutes. You will speak with two managers from the marketing team, who will ask about the projects listed on your application. {{3}}\n\nPlease reply to this message by Friday to confirm the time. If that morning is not {{4}} for you, we are happy to arrange another date.\n\nBest regards,\n\nMarcus Webb\nHuman Resources",
   "questions": [
    {
     "num": 1,
@@ -2010,7 +2010,7 @@ TOEIC.part6 = [
      "met",
      "meets"
     ],
-    "answer": 1,
+    "answer": 0,
     "explanation": "would like 後面固定接不定詞 to + 原形動詞，would like to meet you 表示「我們想與您見面」。meeting 是動名詞或現在分詞，met 是過去式或過去分詞，meets 是第三人稱單數，都不能直接放在 would like 之後。"
    },
    {
@@ -2022,7 +2022,7 @@ TOEIC.part6 = [
      "last",
      "remain"
     ],
-    "answer": 3,
+    "answer": 2,
     "explanation": "要表達某項活動「持續多久」用 last，last about forty minutes 是標準說法。stay 指人或物停留在某個地點，remain 指維持某種狀態，hold 是及物動詞，意思是舉行或握住，後面接時間長度都不通順。"
    },
    {
@@ -2046,11 +2046,11 @@ TOEIC.part6 = [
      "convenience",
      "conveniences"
     ],
-    "answer": 2,
+    "answer": 1,
     "explanation": "空格前是 be 動詞 is（否定形 is not），後面要接形容詞當主詞補語，故選 convenient。conveniently 是副詞，不能當主詞補語；convenience 與 conveniences 是名詞，接在 is not 後面會變成「那個早上不是便利性」，語意不通。"
    }
   ],
-  "translation": "收件者：Karen Liu <k.liu@mailnet.com>\n寄件者：Marcus Webb <m.webb@holbrookgroup.com>\n日期：10 月 14 日\n主旨：面試邀請\n\n親愛的 Liu 女士：\n\n感謝您應徵 Holbrook Group 行銷助理一職。在審閱您的應徵資料後，我們希望與您見面，時間訂在 10 月 21 日星期二上午 10 點，地點在本公司總部。\n\n面試約需四十分鐘。您將與行銷團隊的兩位主管會談，他們會詢問您在應徵資料中所列的專案。請隨身攜帶一份您的作品集。\n\n請於星期五前回覆本信確認時間。若當天上午對您不方便，我們也很樂意另約時間。\n\n敬祝順心\n\nMarcus Webb\n人力資源部"
+  "translation": "收件者：Karen Liu <k.liu@example.net>\n寄件者：Marcus Webb <m.webb@example.com>\n日期：10 月 14 日\n主旨：面試邀請\n\n親愛的 Liu 女士：\n\n感謝您應徵 Holbrook Group 行銷助理一職。在審閱您的應徵資料後，我們希望與您見面，時間訂在 10 月 21 日星期二上午 10 點，地點在本公司總部。\n\n面試約需四十分鐘。您將與行銷團隊的兩位主管會談，他們會詢問您在應徵資料中所列的專案。請隨身攜帶一份您的作品集。\n\n請於星期五前回覆本信確認時間。若當天上午對您不方便，我們也很樂意另約時間。\n\n敬祝順心\n\nMarcus Webb\n人力資源部"
  },
  {
   "id": "p6-b7-4",
@@ -2079,7 +2079,7 @@ TOEIC.part6 = [
      "The cafeteria will offer a new lunch menu on Monday.",
      "All visitors must wear a badge in the parking area."
     ],
-    "answer": 2,
+    "answer": 1,
     "explanation": "空格前兩句依序說明登入網站、輸入序號，空格後說確認信會寄達，中間應該是登記流程的下一個步驟。選項二用 Then 承接，要求選擇預計歸還日期，順序與語氣都吻合。付款方式、餐廳菜單與訪客識別證都不屬於設備登記的操作步驟。"
    },
    {
@@ -2091,7 +2091,7 @@ TOEIC.part6 = [
      "by",
      "from"
     ],
-    "answer": 3,
+    "answer": 2,
     "explanation": "表示某動作必須「在某時間點之前完成」用 by，by the date you chose 即在你所選的日期前歸還。until 強調動作一直持續到那個時間，會變成「一直歸還到那天」；since 接過去時間點並搭配完成式；from 表示起點，皆不符合期限的語意。"
    },
    {
@@ -2103,7 +2103,7 @@ TOEIC.part6 = [
      "additional",
      "automatic"
     ],
-    "answer": 3,
+    "answer": 2,
     "explanation": "借用超過兩週屬於例外情況，需要「額外的」核准，additional approval 最符合語意，也與前面的一般登記流程形成對比。available 是可取得的，accurate 是精確的，automatic 是自動的，都無法說明主管核准是多出來的要求。"
    }
   ],
@@ -2291,12 +2291,12 @@ TOEIC.part6 = [
     "type": "句子插入",
     "options": [
      "The downtown store will close at the end of the month.",
-     "The company has no plans to hire more workers this year.",
+     "The company will open the new store next spring instead.",
      "Cooking classes at the store must be booked two weeks in advance.",
      "Most of the new employees have already begun training downtown."
     ],
     "answer": 3,
-    "explanation": "空格前一句提到新分店會雇用約四十名當地居民，空格後開始由店經理說明選址原因。中間插入一句延續「新進員工」這個話題最自然，選項 D 說多數新員工已在市中心分店展開訓練，正好承接前一句。選項 A 說市中心分店月底歇業，與文中把它當成現有分店拿來比較大小的敘述矛盾；選項 B 說公司今年不打算增聘人力，與「雇用四十人」直接衝突；選項 C 講烹飪課要提前預約，文章從未提到烹飪課。"
+    "explanation": "空格前一句提到新分店會雇用約四十名當地居民，空格後開始由店經理說明選址原因。中間插入一句延續「新進員工」這個話題最自然，選項 D 說多數新員工已在市中心分店展開訓練，正好承接前一句。選項 A 說市中心分店月底歇業，與文中把它當成現有分店拿來比較大小、並說新店會和「另外兩家」一樣成功的敘述矛盾；選項 B 說新店改到明年春天才開，與第一句「下週一開幕」直接衝突；選項 C 講烹飪課要提前預約，文章從未提到烹飪課。"
    },
    {
     "num": 2,
@@ -2476,10 +2476,10 @@ TOEIC.part6 = [
      "The Hillsdale Property Group owns several buildings on Market Street.",
      "Today the bakery employs more than thirty people and supplies bread to a dozen local restaurants.",
      "Most of the bakery's ovens were sold to a factory in another city.",
-     "Mr. Ferraro studied engineering before he moved to Hillsdale."
+     "Mr. Ferraro bought five new ovens when he first opened the shop."
     ],
     "answer": 1,
-    "explanation": "空格前一句把時間拉回九年前開店的起點，只有一台二手烤箱和兩名員工；空格後一句轉到第二家店要賣什麼。中間需要一句說明這家店後來做到多大規模，選項 B 說如今員工超過三十人、還供應麵包給十多家在地餐廳，正好與「一台烤箱、兩名員工」形成對照，也交代了為什麼開得起第二家店。選項 A 講房產集團在市場街還有好幾棟樓，話題轉到房東身上，接不上這家店的發展；選項 C 說烤箱多半賣給別的城市的工廠，與擴店的敘述矛盾；選項 D 提到店主過去念工程，只是背景細節，前後兩句都接不上。"
+    "explanation": "空格前一句把時間拉回九年前開店的起點，只有一台二手烤箱和兩名員工；空格後一句轉到第二家店要賣什麼。中間需要一句說明這家店後來做到多大規模，選項 B 說如今員工超過三十人、還供應麵包給十多家在地餐廳，正好與「一台烤箱、兩名員工」形成對照，也交代了為什麼開得起第二家店。選項 A 講房產集團在市場街還有好幾棟樓，話題轉到房東身上，接不上這家店的發展；選項 C 說烤箱多半賣給別的城市的工廠，與擴店的敘述矛盾；選項 D 說店主開店時買了五台新烤箱，與前一句「一台二手烤箱」直接矛盾。"
    },
    {
     "num": 3,
@@ -2506,7 +2506,7 @@ TOEIC.part6 = [
     "explanation": "空格後面是 its hours，extend one's hours 是「延長營業時間」的標準說法，和後半句「週五營業到九點」正好互相呼應。attend 是「出席」，受詞是會議或活動；prevent 是「防止」，受詞是不希望發生的事；remove 是「移除」，用在把東西拿走，三者都無法和營業時間搭配。"
    }
   ],
-  "translation": "HILLSDALE（9 月 25 日）- Stone Oven 麵包店計劃十一月在市場街開設第二家店。新店將設在一棟由 Hillsdale 房產集團今年春天整修完成的建築內。店主 Daniel Ferraro 九年前以一台二手烤箱和兩名員工創立這家店。如今這家麵包店員工超過三十人，並供應麵包給十多家在地餐廳。第二家店將販售與原店相同的麵包與蛋糕，另外還有以距離鎮上三十公里以內農場的蔬菜製作的三明治。Ferraro 先生說，他看過十多個地點才選定市場街，因為這裡離火車站很近。原店將於十二月延長營業時間，週五營業到晚上九點。"
+  "translation": "HILLSDALE（9 月 25 日）- Stone Oven 麵包店計劃十一月在市場街開設第二家店。新店將設在一棟由 Hillsdale 房產集團今年春天整修完成的建築內。店主 Daniel Ferraro 九年前以一台二手烤箱和兩名員工創立這家店。如今這家麵包店員工超過三十人，並供應麵包給十多家在地餐廳。第二家店將販售與原店相同的麵包與蛋糕，另外還有以距離鎮上三十公里以內農場的蔬菜製作的三明治。Ferraro 先生說，他看過十多個地點，才選定離火車站很近的市場街。原店將於十二月延長營業時間，週五營業到晚上九點。"
  },
  {
   "id": "p6-b9-4",

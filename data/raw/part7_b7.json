@@ -291,12 +291,12 @@
         "q": "What will Ms. Feld most likely have to do on Friday?",
         "options": [
           "Bring her own lunch",
-          "Attend the meeting on Saturday as well",
-          "Park in a lot outside the center",
+          "Arrive in time for the opening remarks",
+          "Pay for parking in the east lot",
           "Pay a fee for two guests"
         ],
         "answer": 0,
-        "explanation": "整合題：日程表註記要求十月十日前告知素食需求，而郵件日期是十月十三日，已超過期限；她自己也寫「If it is too late to change the order, I am happy to bring my own lunch.」故最可能自備午餐。(B)錯：星期六出席只是她提出的另一個選項，兩場工作坊當天都會重辦，無須兩天都到。(C)(D) 文中皆無根據。"
+        "explanation": "整合題：日程表註記要求十月十日前告知素食需求，而郵件日期是十月十三日，已超過期限；她自己也寫「If it is too late to change the order, I am happy to bring my own lunch.」故最可能要自備午餐。(B)錯：她星期五上午要拜訪供應商，中午才到會場，趕不上上午九時半的開場致詞。(C)錯：日程表註記寫明東側停車場免費停車，不必付費。(D)錯：文中沒有任何費用，她只問兩位銷售同仁能否參加分組討論。"
       },
       {
         "q": "What does Ms. Feld ask about her vehicle?",

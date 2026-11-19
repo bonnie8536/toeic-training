@@ -17,7 +17,7 @@
     "options": ["are", "were", "is", "being"],
     "answer": 2,
     "translation": "Trellis Media 的部門主管與營運總監都無法出席週四的預算會議。",
-    "explanation": "考點：neither A nor B 的主謂一致。此結構採「就近原則」，動詞與最靠近的主詞一致；最近的主詞 the operations director 為單數，且陳述目前狀況用現在式，故 (C) is 正確。(A) are 是複數動詞，誤把前面的 supervisors 當成主詞。(B) were 既是複數又是過去式，與週四這項尚未發生的安排不合。(D) being 為分詞，不能單獨充當句子的主要動詞。"
+    "explanation": "考點：neither A nor B 的主謂一致。此結構採「就近原則」，動詞與最靠近的主詞一致；最近的主詞 the operations director 為單數，故 (C) is 正確。(A) are 是複數動詞，誤把前面的 supervisors 當成主詞。(B) were 是複數動詞，同樣與就近的單數主詞 the operations director 不一致。(D) being 為分詞，不能單獨充當句子的主要動詞。"
   },
   {
     "id": "p5-b4-03",
@@ -28,16 +28,6 @@
     "answer": 0,
     "translation": "Harborline Logistics 的每位新進實習生在受訓第一週都會獲得指定導師的指導。",
     "explanation": "考點：each of + 複數名詞的主謂一致。此結構的主詞核心是 Each，視為單數，現在式動詞須加 -s，故 (A) receives 正確。(B) receive 是複數動詞形式，誤把 interns 當主詞。(C) have received 為複數的現在完成式，主詞單數時應作 has received。(D) receiving 是分詞，沒有助動詞就不能當主要動詞。"
-  },
-  {
-    "id": "p5-b4-04",
-    "difficulty": "進階",
-    "category": "主謂一致",
-    "question": "A revised set of safety procedures ------- distributed to all warehouse employees at Bramley Distribution before the new shift system takes effect.",
-    "options": ["have been", "has been", "were", "are"],
-    "answer": 1,
-    "translation": "在新輪班制度生效前，一套修訂後的安全作業程序已發送給 Bramley Distribution 的所有倉庫員工。",
-    "explanation": "考點：set of + 複數名詞的主謂一致與被動語態。主詞核心是單數的 a revised set，of safety procedures 僅為修飾語；搭配過去分詞 distributed 構成被動，且動作須在 takes effect 之前完成，用現在完成式最恰當，故 (B) has been 正確。(A) have been 是複數形式。(C) were 為複數，且過去式與後半句的現在式 takes 時態不搭。(D) are 同樣是複數動詞，與單數主詞不合。"
   },
   {
     "id": "p5-b4-05",
@@ -66,7 +56,7 @@
     "question": "Of the three shipping options that Ferrolane Freight offers, express air delivery is by far the ------- costly.",
     "options": ["most", "more", "very", "much"],
     "answer": 0,
-    "translation": "在 Ferrolane Freight 提供的三種運送方式中，空運快遞的費用遠遠最高。",
+    "translation": "在 Ferrolane Freight 提供的三種運送方式中，空運快遞的費用最高，而且遠高於另外兩種。",
     "explanation": "考點：最高級與 by far 的搭配。三者以上互相比較，且前有 the 與強調用語 by far，須用最高級，故 (A) most 正確，the most costly 表示三種方式中最貴。(B) more 是比較級，通常用於兩者之間並搭配 than。(C) very 雖可修飾原級形容詞，但放在 the 之後無法構成最高級語意。(D) much 用來修飾比較級或不可數名詞，不能修飾原級形容詞 costly。"
   },
   {
@@ -97,7 +87,7 @@
     "options": ["take", "hand", "fill", "put"],
     "answer": 2,
     "translation": "請以藍筆或黑筆填寫隨附的報到表格，並在您於 Marlow Wellness Center 看診前交回櫃檯。",
-    "explanation": "考點：片語動詞 fill out（填寫表格）。受詞是 registration form，且句中 in blue or black ink（以藍筆或黑筆）只可能搭配「填寫」的動作，故 (C) fill 正確。(A) take out「取出」——文法上可以先取出再交回，但「用藍黑筆取出表格」語意不成立。(B) hand out 意為「分發」，是發給別人，與自己填完交回櫃檯矛盾。(D) put out 常指「熄滅、對外發布」，不與表格搭配。"
+    "explanation": "考點：片語動詞 fill out（填寫表格）。受詞是 registration form，且句中 in blue or black ink（以藍筆或黑筆）只可能搭配「填寫」的動作，故 (C) fill 正確。(A) take out 意為「取出」，雖然文法上可以先取出再交回，但「用藍筆或黑筆取出表格」語意不成立。(B) hand out 意為「分發」，是發給別人，與自己填完交回櫃檯矛盾。(D) put out 常指「熄滅、對外發布」，不與表格搭配。"
   },
   {
     "id": "p5-b4-11",
@@ -128,16 +118,6 @@
     "answer": 1,
     "translation": "Solvane Cosmetics 的設計部門被要求在週五客戶簡報前提出三個替代包裝方案。",
     "explanation": "考點：片語動詞 come up with（想出、提出構想）。設計部門被要求提出三個包裝方案，故 (B) come 正確。(A) catch up with 意為「趕上」。(C) keep up with 意為「跟上速度或進度」。(D) make up with 意為「與某人和好」，三者語意都不符合提出構想。"
-  },
-  {
-    "id": "p5-b4-14",
-    "difficulty": "基礎",
-    "category": "片語動詞",
-    "question": "Delegates should ------- in their completed evaluation forms at the registration desk before leaving the Riverton Trade Expo.",
-    "options": ["give", "bring", "hand", "take"],
-    "answer": 2,
-    "translation": "與會代表離開 Riverton 商展前，應在報到櫃檯繳交填妥的意見回饋表。",
-    "explanation": "考點：片語動詞 hand in（繳交文件）。與會者須在櫃檯交回填妥的表格，故 (C) hand 正確。(A) give in 意為「屈服、讓步」。(B) bring in 意為「引進、帶來收益」。(D) take in 意為「理解、收容」，都無法表示繳交文件。"
   },
   {
     "id": "p5-b4-15",

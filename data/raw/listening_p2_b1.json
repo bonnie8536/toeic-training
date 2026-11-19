@@ -15,21 +15,6 @@
     "transcriptZh": "問：訓練課程在哪裡舉行？\n(A) 在 B 會議室。\n(B) 是的，一週兩次。\n(C) 他是很棒的訓練講師。"
   },
   {
-    "id": "l2-02",
-    "difficulty": "基礎",
-    "category": "Yes/No問句",
-    "accent": "GB",
-    "question": "Did you send the invoice to Mr. Feldman?",
-    "options": [
-      "He has a really deep voice.",
-      "I'll do it this afternoon.",
-      "Yes, he's a new client."
-    ],
-    "answer": 1,
-    "explanation": "(B) 正解：間接回應，沒有說 Yes／No，而是用「下午會處理」暗示還沒寄出。\n(A) invoice／voice 相似音誘答，講的是聲音，完全沒回答有沒有寄。\n(C) Yes 之後接的內容答非所問，只重複了人名相關資訊。",
-    "transcriptZh": "問：你把發票寄給 Feldman 先生了嗎？\n(A) 他的聲音很低沉。\n(B) 我下午會處理。\n(C) 是的，他是新客戶。"
-  },
-  {
     "id": "l2-03",
     "difficulty": "中級",
     "category": "附加/否定問句",
@@ -45,21 +30,6 @@
     "transcriptZh": "問：你已經見過我們的新主管了吧？\n(A) 會議室在樓上。\n(B) 是的，我設法修好了。\n(C) 其實還沒。"
   },
   {
-    "id": "l2-04",
-    "difficulty": "中級",
-    "category": "選擇問句",
-    "accent": "US",
-    "question": "Would you rather take the train or drive to the plant?",
-    "options": [
-      "Whichever gets us there faster.",
-      "The train was late again.",
-      "The plants need watering."
-    ],
-    "answer": 0,
-    "explanation": "(A) 正解：選擇問句可以回「哪個都行」，Whichever… 是標準答法。\n(B) 重複 train，但講的是過去誤點，答非所問。\n(C) plant 一字多義（工廠／植物）的誘答，語意完全無關。",
-    "transcriptZh": "問：你比較想搭火車還是開車去工廠？\n(A) 哪個比較快就哪個。\n(B) 火車又誤點了。\n(C) 植物該澆水了。"
-  },
-  {
     "id": "l2-05",
     "difficulty": "基礎",
     "category": "陳述句",
@@ -71,7 +41,7 @@
       "Yes, I printed it yesterday."
     ],
     "answer": 1,
-    "explanation": "(B) 正解：對方陳述問題，最自然的回應是提出處理方式。\n(A) 回答數量，與「印表機卡紙」無關。\n(C) printer／printed 相似音，而且時態錯位，陳述句一般也不會用 Yes 回應。",
+    "explanation": "(B) 正解：對方陳述問題（印表機一直卡紙），最自然的回應是提出處理方式「我來叫維修人員」。\n(A) 回答數量「大約兩百份」，與卡紙無關。\n(C) printer／printed 相似音誘答。Yes 可以用來附和陳述句，但後面「我昨天印的」沒有回應卡紙的問題，it 也沒有對應的東西。",
     "transcriptZh": "問：這台印表機一直卡紙。\n(A) 大約兩百份。\n(B) 我來叫維修人員。\n(C) 是的，我昨天印的。"
   },
   {
@@ -210,21 +180,6 @@
     "transcriptZh": "問：你會跟我們一起吃午餐吧？\n(A) 很好吃，謝謝。\n(B) 菜單在櫃檯上。\n(C) 我中午有電話會議。"
   },
   {
-    "id": "l2-15",
-    "difficulty": "進階",
-    "category": "陳述句",
-    "accent": "AU",
-    "question": "I thought Ms. Okada was presenting today.",
-    "options": [
-      "She's presenting the sales figures.",
-      "They switched the order around.",
-      "It was a lovely present."
-    ],
-    "answer": 1,
-    "explanation": "(B) 正解：間接回應，說明順序被調換，解釋了為何與對方預期不同。\n(A) 重複 presenting，但沒有回應對方的疑惑。\n(C) present／presenting 相似音誘答，語意完全無關。",
-    "transcriptZh": "問：我還以為今天是 Okada 小姐報告。\n(A) 她要報告銷售數字。\n(B) 他們把順序調換了。\n(C) 那是很棒的禮物。"
-  },
-  {
     "id": "l2-16",
     "difficulty": "中級",
     "category": "WH問句",
@@ -267,7 +222,7 @@
     ],
     "answer": 0,
     "explanation": "(A) 正解：否定問句照事實回答，Yes 表示有訂，but 補充「很快就用完了」。\n(B) 重複 order，但回答的是表單在哪裡。\n(C) toner／tone 相似音誘答。",
-    "transcriptZh": "問：我們上個月不是有多訂碳粉嗎？\n(A) 有，可是我們很快就用完了。\n(B) 訂購單在網路上。\n(C) 不會，語氣沒問題。"
+    "transcriptZh": "問：我們上個月不是有多訂碳粉嗎？\n(A) 有，可是我們很快就用完了。\n(B) 訂購單在網路上。\n(C) 沒有，語氣沒問題。"
   },
   {
     "id": "l2-19",

@@ -45,14 +45,14 @@
     "id": "p6-b6-2",
     "passageType": "notice",
     "title": "Notice to All Staff: Parking Lot Repairs",
-    "passage": "NOTICE TO ALL STAFF: Parking Lot Repairs\n\nThe main parking lot behind Building C {{1}} from 3 March through 20 March while the surface is repaired and new lines are painted. During this period, staff who normally park there should use the visitor lot on Cedar Street, which will be open to employees at no {{2}}. {{3}} Anyone who arrives after 8:30 A.M. may find the visitor lot full, so please allow extra travel time. Vehicles left in the closed area will be removed at the owner's expense. We apologize for the inconvenience and thank you for your {{4}} while the work is finished.\n\nFacilities Management",
+    "passage": "NOTICE TO ALL STAFF: Parking Lot Repairs\n\nThe main parking lot behind Building C {{1}} from 3 March through 20 March while the surface is repaired and new lines are painted. During this period, staff who normally park there should use the visitor lot on Cedar Street, which will be open to employees at no {{2}}. {{3}} Anyone who arrives after 8:30 A.M. may find the visitor lot full, so please allow extra travel time. Vehicles left in the closed area will be removed at the owner's expense. We apologize for the inconvenience and thank you for your {{4}} while the work is carried out.\n\nFacilities Management",
     "questions": [
       {
         "num": 1,
         "type": "文法",
         "options": ["closing", "will be closed", "has closed", "to close"],
         "answer": 1,
-        "explanation": "主詞 The main parking lot 是「被關閉」的對象，動作由施工單位執行，因此要用被動語態；而 from 3 March through 20 March 指向尚未到來的期間，時態要用未來式，故選 B will be closed。選項 A closing 是現在分詞，前面沒有 be 動詞，整句會缺少完整的動詞；選項 C has closed 是主動的現在完成式，語意變成停車場自己把別的東西關掉，且與未來的時間不合；選項 D to close 是不定詞，不能當句子的主要動詞。"
+        "explanation": "主詞 The main parking lot 是「被關閉」的對象，動作由施工單位執行，因此要用被動語態；而 from 3 March through 20 March 指向尚未到來的期間，時態要用未來式，故選 B will be closed。選項 A closing 是現在分詞，前面沒有 be 動詞，整句會缺少完整的動詞；選項 C has closed 是現在完成式，表示關閉已經發生，與 3 月 3 日到 20 日這段尚未開始的施工期間不合，也不能搭配 from ... through 的起訖期間；選項 D to close 是不定詞，不能當句子的主要動詞。"
       },
       {
         "num": 2,
@@ -94,7 +94,7 @@
         "type": "文法",
         "options": ["receives", "is receiving", "will receive", "received"],
         "answer": 3,
-        "explanation": "句尾的 at a ceremony held on Thursday evening 指出頒獎典禮已於上週四晚上舉行，後文的 Judges praised 也是過去式，整段敘述都是已發生的事，因此動詞要用過去式 received，故選 D。選項 A receives 是現在簡單式，用於習慣或不變的事實；選項 B is receiving 是現在進行式，表示此刻正在發生；選項 C will receive 是未來式，與典禮已經結束的事實矛盾。"
+        "explanation": "句尾的 at a ceremony held on Thursday evening 指出頒獎典禮已於週四晚上舉行，後文的 Judges praised 也是過去式，整段敘述都是已發生的事，因此動詞要用過去式 received，故選 D。選項 A receives 是現在簡單式，用於習慣或不變的事實；選項 B is receiving 是現在進行式，表示此刻正在發生；選項 C will receive 是未來式，與典禮已經結束的事實矛盾。"
       },
       {
         "num": 2,

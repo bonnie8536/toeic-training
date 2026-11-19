@@ -436,21 +436,6 @@ TOEIC.part5 = [
   "explanation": "考點：表示「在…期間之內」的介系詞。within 加上一段時間表示不超過該範圍，句中說估價單要在開立日起三十天內簽回，故 (B) 正確。(A) among 表示在群體之中，不能接時間長度。(C) onto 表示移動到某物的表面，與時間無關。(D) against 表示「對抗、靠著」，同樣不能接時間長度。"
  },
  {
-  "id": "p5-b10-05",
-  "difficulty": "進階",
-  "category": "介系詞",
-  "question": "The espresso machine at Marchetti Cafe is still ------- warranty, so the shop will not be charged for the repair.",
-  "options": [
-   "beneath",
-   "below",
-   "within",
-   "under"
-  ],
-  "answer": 3,
-  "translation": "Marchetti Cafe 的義式咖啡機仍在保固期內，因此這次維修不會向店家收費。",
-  "explanation": "考點：固定用法 under warranty（在保固期內）。表示「受某種規定或狀態涵蓋」時要用 under，類似說法還有 under construction、under review，故 (D) 正確。(A) beneath 與 (B) below 都只表示實際位置在下方，不能引申為「在保固範圍內」。(C) within 必須接明確的範圍名詞，例如 within the warranty period，直接接 warranty 不成立。"
- },
- {
   "id": "p5-b10-06",
   "difficulty": "進階",
   "category": "介系詞",
@@ -658,7 +643,7 @@ TOEIC.part5 = [
   ],
   "answer": 1,
   "translation": "因為訂單晚了兩天才送到，Kirkwood Bakery 的經理同意免收運費。",
-  "explanation": "考點：與費用搭配的動詞。waive 指「（依規定）免收、放棄收取」，waive a fee 或 waive a charge 是商業書信常見用法，故 (B) 正確。(A) reject 指退回不合格的物品或否決提案，不用於自己收取的費用。(C) refuse 與 (D) decline 都是拒絕對方提出的要求或邀請，主詞若是收費的一方，寫成 refuse the charge 反而變成拒收自己該收的錢，語意不通。"
+  "explanation": "考點：與費用搭配的動詞。waive 指「（依規定）免收、放棄收取」，waive a fee 或 waive a charge 是商業書信常見用法，經理因訂單延遲而同意不收運費，故 (B) 正確。(A) reject 指退回不合格的物品或否決提案，受詞不會是自己要收的費用。(C) refuse 與 (D) decline 都是拒絕別人提出的要求、邀請，或加在自己身上的東西；refuse the charge、decline the charge 聽起來像是付款的一方拒付這筆費用，不能表達收費的一方「免收」。"
  },
  {
   "id": "p5-b10-20",
@@ -838,7 +823,7 @@ TOEIC.part5 = [
   ],
   "answer": 3,
   "translation": "在核准這批海報的印製之前，歐卡佛小姐向印刷廠索取一份總費用的書面估價。",
-  "explanation": "考點：商業名詞辨析。estimate 指「估價、報價」，是開工前先提出的費用預估，和 Before approving（核准之前）以及 of the total cost（總費用）完全吻合，故 (D) 正確。(A) receipt 是「收據」，付款之後才會拿到。(B) balance 指帳目上的「餘額、未付款項」。(C) account 指「帳戶、帳目」，不是費用預估。"
+  "explanation": "考點：商業名詞辨析。estimate 指「估價、報價」，是開工前先提出的費用預估，和 Before approving（核准之前）以及 of the total cost（總費用）完全吻合，故 (D) 正確。(A) receipt 是「收據」，付款之後才會拿到。(B) balance 指帳目上的「餘額、未付款項」，要等交易發生後才有。(C) account 指「帳戶、帳目」；a written account 也可以解作「書面說明」，但說明的是已經發生的事情，這時工作還沒核准、費用也還沒產生，要的是事前的估價，不是事後的說明。"
  },
  {
   "id": "p5-b11-07",
@@ -958,7 +943,7 @@ TOEIC.part5 = [
   ],
   "answer": 1,
   "translation": "這間麵包店的老闆很驚訝，新烤箱這麼快就把成本賺了回來。",
-  "explanation": "考點：情緒動詞的分詞用法。surprise 的本意是「使人感到驚訝」，當主詞是人並且自己感到驚訝時，要用過去分詞當形容詞，故 (B) surprised 正確，後面再用 by 帶出原因。(A) surprising 是現在分詞，用來形容令人驚訝的事物，例如 a surprising result；用在人身上會變成「這兩位老闆很令人驚訝」，也無法和 by 搭配。(C) surprise 是原形動詞，were 後面不能再接原形。(D) to surprise 是不定詞，會變成「為了使人驚訝」，語意不通。"
+  "explanation": "考點：情緒動詞的分詞用法。surprise 的本意是「使人感到驚訝」，當主詞是人並且自己感到驚訝時，要用過去分詞當形容詞，故 (B) surprised 正確，後面再用 by 帶出原因。(A) surprising 是現在分詞，用來形容令人驚訝的事物，例如 a surprising result；用在人身上會變成「這些老闆很令人驚訝」，也無法和 by 搭配。(C) surprise 是原形動詞，were 後面不能再接原形。(D) to surprise 是不定詞，會變成「為了使人驚訝」，語意不通。"
  },
  {
   "id": "p5-b11-15",
@@ -1063,7 +1048,7 @@ TOEIC.part5 = [
   ],
   "answer": 2,
   "translation": "由於一場風暴正朝海岸移動，露營區的管理員把所有出租帳篷都收進了倉庫。",
-  "explanation": "考點：「with＋受詞＋分詞」的附帶狀況結構。with 後面的 a storm 和 move 之間是主動關係——風暴自己在移動，而且是正在進行的狀態，所以要用現在分詞 (C) moving。(A) moves 是限定動詞，with 後面不能接一個完整子句。(B) moved 是過去分詞，表被動，會變成風暴「被移動」。(D) to move 是不定詞，這個結構不用不定詞來描述同時發生的狀況。"
+  "explanation": "考點：「with＋受詞＋分詞」的附帶狀況結構。with 後面的 a storm 和 move 之間是主動關係，風暴自己在移動，而且是正在進行的狀態，所以要用現在分詞 (C) moving。(A) moves 是限定動詞，with 後面不能接一個完整子句。(B) moved 是過去分詞，表被動，會變成風暴「被移動」。(D) to move 是不定詞，這個結構不用不定詞來描述同時發生的狀況。"
  },
  {
   "id": "p5-b11-22",
@@ -1093,7 +1078,7 @@ TOEIC.part5 = [
   ],
   "answer": 3,
   "translation": "在五金行櫃檯站了十年，諾瓦克先生早已習慣同時應付好幾位顧客。",
-  "explanation": "考點：be used to 與 used to 的差別。be used to 裡的 to 是介系詞，意思是「習慣於」，後面要接動名詞，故 (D) dealing 正確。(A) deal 是原形動詞，只有 used to＋原形（過去經常）才這樣用，但句中的 is 已經排除這個可能。(B) be dealt 是原形的被動式，介系詞後不能接原形，而且應付顧客的人是諾瓦克先生，語意上該用主動。(C) have dealt 同樣是原形形式，不能放在介系詞後面。"
+  "explanation": "考點：be used to＋動名詞（習慣於）、used to＋原形（過去經常）與 be used to＋原形（被用來）的差別。句首 After ten years behind the counter 說明他已經做了十年，重點是「已經習慣」；這裡的 to 是介系詞，後面要接動名詞，故 (D) dealing 正確。(A) deal 接在 is used to 後面，只能理解成「諾瓦克先生被拿來應付顧客」的被動說法，把人當成工具，和十年經驗帶出的「習慣」語意不合；表示過去經常的 used to＋原形，前面也不會有 is。(B) be dealt 是原形的被動式，介系詞後不能接原形，而且應付顧客的人是諾瓦克先生，語意上該用主動。(C) have dealt 同樣是原形形式，不能放在介系詞後面。"
  },
  {
   "id": "p5-b11-24",
@@ -1273,7 +1258,7 @@ TOEIC.part5 = [
   ],
   "answer": 3,
   "translation": "Danforth 眼鏡行的員工必須在一個工作天內追蹤處理每一筆維修詢問。",
-  "explanation": "考點：follow up on（後續追蹤、跟進）。句中受詞是單筆的維修詢問，要在時限內回頭處理，故 (D) follow 正確。(A) catch up on 是「補做累積下來的事」，例如 catch up on paperwork，受詞是積壓的工作而非個別詢問。(B) keep up 要搭配的介系詞是 with(keep up with)，不是 on。(C) get up 是「起床、站起來」，沒有 get up on 表示追蹤的用法。"
+  "explanation": "考點：follow up on（後續追蹤、跟進）。句中受詞是每一筆維修詢問，要在一個工作天內回頭處理，故 (D) follow 正確。(A) catch up on 是「補做累積下來的事」，例如 catch up on paperwork，前提是事情已經積壓，和「每筆詢問都在時限內處理」的服務標準不合。(B) keep up on 在美式英文是「隨時掌握（消息）」，指持續留意，不是把詢問處理完，和 within one business day 的時限不搭。(C) get up 是「起床、站起來」，沒有 get up on 表示追蹤的用法。"
  },
  {
   "id": "p5-b12-11",
@@ -1486,19 +1471,184 @@ TOEIC.part5 = [
   "explanation": "考點：拼法相近的形容詞辨析。confidential 是「機密的」，和後半句「絕不外流」相互呼應，故 (C) 正確。(A) confident 是「有自信的」，用來形容人，例如 a confident speaker。(B) convenient 是「方便的」，說的是使用上的便利。(D) conventional 是「傳統的、按慣例的」，和是否保密無關。"
  },
  {
-  "id": "p5-b12-25",
-  "difficulty": "進階",
-  "category": "字彙辨析",
-  "question": "To ------- that every online order is packed the same day, Castleton Bookshop hired two seasonal workers.",
+  "id": "p5-b13-01",
+  "difficulty": "中級",
+  "category": "代名詞",
+  "question": "The two interns at Corvell Labs organized the entire product launch -------, without any help from their supervisors.",
   "options": [
-   "ensure",
-   "assure",
-   "insure",
-   "secure"
+   "them",
+   "themselves",
+   "ourselves",
+   "their"
+  ],
+  "answer": 1,
+  "translation": "Corvell Labs 的兩名實習生自己籌辦了整場產品發表會，完全沒有靠主管幫忙。",
+  "explanation": "考點：反身代名詞的強調用法。主詞、動詞、受詞（The two interns organized the entire product launch）已經完整，空格在句尾，後面又有 without any help（沒有任何人幫忙），要表達「他們自己做的」，須用與主詞同指的反身代名詞，故 (B) themselves 正確。(A) them 是受格，受詞位置已經有 the entire product launch，句尾不能再多放一個受格代名詞。(C) ourselves 指「我們自己」，與第三人稱複數的主詞 The two interns 不一致。(D) their 是所有格，後面必須接名詞。"
+ },
+ {
+  "id": "p5-b13-02",
+  "difficulty": "進階",
+  "category": "主謂一致",
+  "question": "The box of spare keys for the meeting rooms ------- kept in the top drawer of the reception desk.",
+  "options": [
+   "are",
+   "were",
+   "have been",
+   "is"
+  ],
+  "answer": 3,
+  "translation": "裝會議室備用鑰匙的盒子放在接待櫃檯最上層的抽屜裡。",
+  "explanation": "考點：主詞與動詞的一致。主詞的核心是單數的 The box，of spare keys for the meeting rooms 只是修飾它的介系詞片語；空格前緊鄰的 rooms 雖是複數，卻不是主詞，動詞要跟單數的 box 一致，故 (D) is 正確，is kept 表示「被存放」。(A) are 是複數動詞，誤把 keys 或 rooms 當成主詞。(B) were 也是複數動詞，同樣與單數主詞 The box 不一致。(C) have been 是複數形式，單數主詞要用 has been。"
+ },
+ {
+  "id": "p5-b13-03",
+  "difficulty": "基礎",
+  "category": "片語動詞",
+  "question": "Sales staff must ------- in their monthly mileage logs to the accounting office by the fifth of each month.",
+  "options": [
+   "hand",
+   "settle",
+   "cave",
+   "sink"
   ],
   "answer": 0,
-  "translation": "為確保每筆網路訂單都能當天包裝出貨，Castleton 書店僱用了兩名季節性員工。",
-  "explanation": "考點：拼法相近的動詞辨析與受詞型態。ensure 後面可以直接接 that 子句，表示「確保某件事會發生」，故 (A) 正確。(B) assure 的受詞必須是人，要寫成 assure customers that…，不能像本句一樣直接接 that 子句。(C) insure 是「為…投保」，受詞是投保的財物。(D) secure 當動詞是「取得、確保拿到（合約、名額）」，受詞是具體的東西，沒有 secure that 子句的用法。"
+  "translation": "業務人員必須在每月五日前，把當月的里程紀錄交給會計室。",
+  "explanation": "考點：片語動詞 hand in（繳交文件）。空格後是 in 加上受詞 their monthly mileage logs，再接 to the accounting office（交給會計室），要表達「把紀錄交出去」，故 (A) hand 正確。(B) settle in 是「安頓下來、適應新環境」，是不及物用法，後面不能接紀錄當受詞。(C) cave in 是「倒塌」或「讓步」，同樣不接受詞。(D) sink in 是「（道理、消息）慢慢被理解」，主詞是被理解的事情，不能接受詞，也沒有繳交的意思。"
+ },
+ {
+  "id": "p5-b13-04",
+  "difficulty": "中級",
+  "category": "字彙辨析",
+  "question": "Because of a power outage, Brennick Foods had to ------- operations at its packing plant for six hours yesterday.",
+  "options": [
+   "resume",
+   "preserve",
+   "suspend",
+   "prevent"
+  ],
+  "answer": 2,
+  "translation": "由於停電，Brennick Foods 昨天不得不讓包裝廠暫停運作六小時。",
+  "explanation": "考點：動詞語意辨析。停電是原因，for six hours 說明影響持續的時間，可知工廠是「暫時停止」運作，suspend operations 是常見搭配，故 (C) suspend 正確。(A) resume 是「恢復」，停電只會讓工廠停工，不會是恢復運作的原因，語意相反。(B) preserve 是「保存、維護」，受詞通常是食物、建築或傳統，不能表達停電造成的停工。(D) prevent 是「防止、阻止某事發生」，主詞通常是造成阻礙的事物，例如 The outage prevented the plant from operating；公司不會「不得不防止」自己的運作。"
+ },
+ {
+  "id": "p5-b13-05",
+  "difficulty": "中級",
+  "category": "字彙辨析",
+  "question": "The registration fee for the two-day design conference in Lisbon ------- lunch and all workshop materials.",
+  "options": [
+   "covers",
+   "charges",
+   "spends",
+   "earns"
+  ],
+  "answer": 0,
+  "translation": "里斯本兩天設計研討會的報名費涵蓋午餐與所有工作坊教材。",
+  "explanation": "考點：動詞語意辨析。cover 表示費用、保險或保固「涵蓋、支付」某些項目，報名費涵蓋午餐與教材是常見說法，故 (A) covers 正確。(B) charges 是「收取費用」，主詞要是收錢的人或機構，例如 The organizer charges a fee，報名費本身不會去收費。(C) spends 是「花費」，主詞要是花錢的人，受詞是金錢或時間。(D) earns 是「賺取」，主詞要是賺錢的人或投資，受詞是收入，與午餐、教材搭不起來。"
+ },
+ {
+  "id": "p5-b13-06",
+  "difficulty": "中級",
+  "category": "字彙辨析",
+  "question": "The two warehouse managers at Pembury Supply talk every morning to ------- their delivery schedules.",
+  "options": [
+   "cooperate",
+   "compete",
+   "consist",
+   "coordinate"
+  ],
+  "answer": 3,
+  "translation": "Pembury Supply 的兩位倉庫經理每天早上都會談一談，協調彼此的出貨時程。",
+  "explanation": "考點：動詞語意與及物、不及物用法。空格後直接接受詞 their delivery schedules，要找能接受詞、意思是「協調、使互相配合」的及物動詞，故 (D) coordinate 正確。(A) cooperate 意思相近，是「合作」，但它是不及物動詞，要寫成 cooperate with each other 或 cooperate on the schedules，不能直接接受詞。(B) compete 是「競爭」，不及物，而且與兩人每天商量配合的語意相反。(C) consist 要寫成 consist of，意思是「由……組成」，不能直接接受詞，語意也不合。"
+ },
+ {
+  "id": "p5-b13-07",
+  "difficulty": "中級",
+  "category": "介系詞",
+  "question": "The new flexible-hours policy has been especially popular ------- younger employees at Renwick Insurance.",
+  "options": [
+   "between",
+   "among",
+   "beside",
+   "onto"
+  ],
+  "answer": 1,
+  "translation": "新的彈性工時制度特別受到 Renwick Insurance 年輕員工的歡迎。",
+  "explanation": "考點：介系詞 among 的用法。be popular among＋一群人，表示「在某個群體中受歡迎」，younger employees 是一整群人，故 (B) among 正確（也可以說 popular with）。(A) between 要接兩個或可以逐一列出的幾個對象，例如 between the two offices；younger employees 是不分個體的一群人，不能用 between。(C) beside 是「在……旁邊」，只表示位置，不能表示在某群人當中受歡迎。(D) onto 表示移動到某物的表面上，例如 climb onto the stage，與 popular 搭不起來。"
+ },
+ {
+  "id": "p5-b13-08",
+  "difficulty": "基礎",
+  "category": "不定詞與動名詞",
+  "question": "Mr. Haddad arrived at the convention center an hour early in order ------- the projector before his talk.",
+  "options": [
+   "to test",
+   "testing",
+   "test",
+   "tested"
+  ],
+  "answer": 0,
+  "translation": "Haddad 先生提早一小時抵達會議中心，為的是在演講前測試投影機。",
+  "explanation": "考點：in order to 表目的。in order 後面固定接不定詞 to＋原形動詞，表示「為了……」，說明提早到場的目的，故 (A) to test 正確。(B) testing 是動名詞或現在分詞，in order 後面不能接 V-ing。(C) test 是原形動詞，少了 to，in order test 不成立。(D) tested 是過去式或過去分詞，同樣不能接在 in order 後面。"
+ },
+ {
+  "id": "p5-b13-09",
+  "difficulty": "基礎",
+  "category": "動詞時態與語態",
+  "question": "Hollisford Coach Lines ------- free Wi-Fi on all of its intercity routes since last March.",
+  "options": [
+   "offers",
+   "offered",
+   "has offered",
+   "is offering"
+  ],
+  "answer": 2,
+  "translation": "Hollisford Coach Lines 從去年三月起，在所有城際路線上提供免費無線網路。",
+  "explanation": "考點：現在完成式與 since 的搭配。since last March 表示從過去某個時間點一直延續到現在，主要動詞要用現在完成式，故 (C) has offered 正確。(A) offers 是現在簡單式，只描述現在的狀況，不能和 since 帶出的起點連用。(B) offered 是過去式，只說過去的事，不能表達從去年三月延續到現在。(D) is offering 是現在進行式，同樣不能搭配 since 表示從過去持續到現在。"
+ },
+ {
+  "id": "p5-b13-10",
+  "difficulty": "中級",
+  "category": "字彙辨析",
+  "question": "After fuel costs rose sharply, Grantley Couriers had to ------- its delivery fees for overnight packages.",
+  "options": [
+   "admit",
+   "adjust",
+   "adhere",
+   "attend"
+  ],
+  "answer": 1,
+  "translation": "燃料成本大幅上漲後，Grantley Couriers 不得不調整隔夜包裹的運費。",
+  "explanation": "考點：動詞語意辨析。成本上漲後更動原本的收費，用 adjust（調整），adjust its fees 是常見搭配，故 (B) adjust 正確。(A) admit 是「承認」或「准許進入」，受詞是錯誤、事實或人，不能表示更動費用。(C) adhere 是不及物動詞，要寫成 adhere to（遵守），後面不能直接接 its delivery fees。(D) attend 是「出席、參加」，受詞是會議、課程等活動，與費用搭不起來。"
+ },
+ {
+  "id": "p5-b13-11",
+  "difficulty": "中級",
+  "category": "介系詞",
+  "question": "The east wing of the Morland Public Library is still ------- renovation, so visitors should use the north entrance.",
+  "options": [
+   "beneath",
+   "below",
+   "over",
+   "under"
+  ],
+  "answer": 3,
+  "translation": "Morland 公立圖書館的東翼仍在整修中，訪客請改走北側入口。",
+  "explanation": "考點：介系詞 under 表示「正在進行某個過程」。under renovation 表示「整修中」，同類說法還有 under construction、under review，故 (D) under 正確。(A) beneath 與 (B) below 都只表示位置在下方，沒有「正在進行某個過程」的用法。(C) over 可以表示「在上方、越過」或「在……期間」（例如 over the weekend），但沒有 over renovation 這種說法。"
+ },
+ {
+  "id": "p5-b13-12",
+  "difficulty": "中級",
+  "category": "字彙辨析",
+  "question": "Ms. Nakashima called the caterer on Thursday morning to ------- that lunch would arrive before the noon seminar.",
+  "options": [
+   "ensure",
+   "endure",
+   "secure",
+   "enrich"
+  ],
+  "answer": 0,
+  "translation": "Nakashima 小姐週四早上打電話給外燴業者，確保午餐會在中午的研討會開始前送到。",
+  "explanation": "考點：形近動詞的語意與後接結構。ensure that＋子句表示「確保某件事會發生」，打電話給外燴業者是為了確定午餐準時送達，故 (A) ensure 正確。(B) endure 是「忍受、承受」，受詞是困難或痛苦，不能接 that 子句表示確保。(C) secure 是「取得、確保拿到」，受詞是名額、合約、資金等具體的東西，例如 secure a contract，不接 that 子句。(D) enrich 是「使豐富、充實」，受詞是內容或經驗，不能接 that 子句。"
  },
  {
   "id": "p5-b2-01",
@@ -1741,21 +1891,6 @@ TOEIC.part5 = [
   "explanation": "考點：比較句中代替前述名詞的指示代名詞。than 之後代替的是複數名詞 chairs，且後面帶有省略關係代名詞的修飾子句，故 (D) those 正確。(A) them 是受格代名詞，不能被後面的子句修飾。(B) that 只能代替單數或不可數名詞，與複數的 chairs 不一致。(C) which 是關係代名詞，不能單獨作為 than 之後的比較對象。"
  },
  {
-  "id": "p5-b2-17",
-  "difficulty": "中級",
-  "category": "代名詞",
-  "question": "The department heads agreed among ------- that the submission deadline should be extended by two weeks.",
-  "options": [
-   "them",
-   "their",
-   "themselves",
-   "theirs"
-  ],
-  "answer": 2,
-  "translation": "各部門主管彼此達成共識，認為送件期限應延後兩週。",
-  "explanation": "考點：介系詞後的反身代名詞。agree among themselves 表「彼此之間取得共識」，介系詞的受詞與主詞 The department heads 是同一群人，故須用反身代名詞，(C) themselves 正確。(A) them 會指涉主詞以外的其他人，語意不符。(B) their 是所有格形容詞，後面必須接名詞。(D) theirs 是所有格代名詞，語意上無所指。"
- },
- {
   "id": "p5-b2-18",
   "difficulty": "進階",
   "category": "代名詞",
@@ -1828,7 +1963,7 @@ TOEIC.part5 = [
   ],
   "answer": 1,
   "translation": "標準保固不涵蓋因安裝不當所造成的損壞。",
-  "explanation": "考點：動詞語意辨析。保固「涵蓋」某項損害用 cover，故 (B) cover 正確。(A) protect 的受詞應為受保護的人或物，而非損害本身，如 protect the device。(C) insure 表投保，受詞為人或財產。(D) guarantee 表保證某項結果會發生，與「涵蓋損害」的語意相反。"
+  "explanation": "考點：動詞語意辨析。保固「涵蓋」某項損害用 cover，cover damage 是保固與保險條款的固定說法，故 (B) cover 正確。(A) protect 的受詞應為受保護的人或物，如 protect the device，不能接損害本身。(C) insure 表為人或財產投保，要表示對損害提供保障須寫成 insure against damage。(D) guarantee 表保證某件事會發生或保證某項品質，guarantee damage 會變成保證發生損壞，語意不通。"
  },
  {
   "id": "p5-b2-23",
@@ -2008,7 +2143,7 @@ TOEIC.part5 = [
   ],
   "answer": 2,
   "translation": "由於提前三週完成併購文件，布蘭特利與沃斯公司的法務團隊獲得一天額外的有薪假。",
-  "explanation": "考點：分詞構句的語態與時序。主要子句的主詞 the legal team 是完成文件的一方，且該動作發生在獲得假期之前，故用完成式現在分詞 (C) Having completed。(A) Complete 是原形動詞或形容詞，無法引導分詞構句。(B) Completed 為過去分詞表被動，會誤指法務團隊「被完成」。(D) To have completed 是完成式不定詞，用於表達目的或未實現的動作，與此處的因果時序不符。"
+  "explanation": "考點：分詞構句的語態與時序。主要子句的主詞 the legal team 是完成文件的一方，且完成文件發生在獲得假期之前，故用完成式現在分詞 (C) Having completed，表「因為已經完成…」。(A) Complete 是原形動詞，放句首會變成祈使句，不能用逗號接另一個完整子句。(B) Completed 為過去分詞表被動，後面卻還接著受詞 the merger paperwork，且法務團隊是完成文件的人，不是被完成的對象。(D) To have completed 是完成式不定詞，放句首不能表原因，無法表達「因提前完成而獲得假期」的因果關係。"
  },
  {
   "id": "p5-b3-10",
@@ -2098,7 +2233,7 @@ TOEIC.part5 = [
   ],
   "answer": 0,
   "translation": "特里利斯軟體的資訊部門為未在伺服器離線前向全體員工公告維護時段一事致歉。",
-  "explanation": "考點：介系詞後的動名詞及其否定形式。apologize for 的 for 是介系詞，後面須接動名詞，而動名詞的否定是把 not 直接放在動名詞之前，故選 (A) not announcing。(B) not to announce 是不定詞，不能接在介系詞之後。(C) not announced 是過去分詞，此處需要的是名詞性成分而非被動修飾語。(D) to not announce 除了同樣不能接在介系詞後，這種分裂不定詞的寫法在正式商業英文中也不適用。"
+  "explanation": "考點：介系詞後的動名詞及其否定形式。apologize for 的 for 是介系詞，後面須接動名詞，而動名詞的否定是把 not 直接放在動名詞之前，故選 (A) not announcing。(B) not to announce 是不定詞，不能接在介系詞之後。(C) not announced 是過去分詞，此處需要的是名詞性成分而非被動修飾語。(D) to not announce 也是不定詞，同樣不能接在介系詞 for 之後。"
  },
  {
   "id": "p5-b3-16",
@@ -2188,7 +2323,7 @@ TOEIC.part5 = [
   ],
   "answer": 0,
   "translation": "科蒙特工業的財務部已要求所有主管，使差旅支出符合員工手冊所訂的額度上限。",
-  "explanation": "考點：形容詞與介系詞的搭配 be consistent with（與……一致、符合）。空格後有 with，句意為支出須符合規定，故選 (A) consistent。(B) constant 指固定不變的，語意上並非要求金額永遠不動。(C) continuous 指不間斷的，用於時間或動作的連續性。(D) considerate 指體貼他人的，只能用來形容人。"
+  "explanation": "考點：形容詞與介系詞的搭配 be consistent with（與……一致、符合）。空格後有 with，句意為支出須符合規定，故選 (A) consistent。(B) constant 指固定不變的，語意上並非要求金額永遠不動。(C) continuous 指不間斷的，用於時間或動作的連續性。(D) considerate 指體貼他人的，用來形容人或人的舉動，不能形容差旅支出。"
  },
  {
   "id": "p5-b3-22",
@@ -2278,7 +2413,7 @@ TOEIC.part5 = [
   ],
   "answer": 2,
   "translation": "Trellis Media 的部門主管與營運總監都無法出席週四的預算會議。",
-  "explanation": "考點：neither A nor B 的主謂一致。此結構採「就近原則」，動詞與最靠近的主詞一致；最近的主詞 the operations director 為單數，且陳述目前狀況用現在式，故 (C) is 正確。(A) are 是複數動詞，誤把前面的 supervisors 當成主詞。(B) were 既是複數又是過去式，與週四這項尚未發生的安排不合。(D) being 為分詞，不能單獨充當句子的主要動詞。"
+  "explanation": "考點：neither A nor B 的主謂一致。此結構採「就近原則」，動詞與最靠近的主詞一致；最近的主詞 the operations director 為單數，故 (C) is 正確。(A) are 是複數動詞，誤把前面的 supervisors 當成主詞。(B) were 是複數動詞，同樣與就近的單數主詞 the operations director 不一致。(D) being 為分詞，不能單獨充當句子的主要動詞。"
  },
  {
   "id": "p5-b4-03",
@@ -2294,21 +2429,6 @@ TOEIC.part5 = [
   "answer": 0,
   "translation": "Harborline Logistics 的每位新進實習生在受訓第一週都會獲得指定導師的指導。",
   "explanation": "考點：each of + 複數名詞的主謂一致。此結構的主詞核心是 Each，視為單數，現在式動詞須加 -s，故 (A) receives 正確。(B) receive 是複數動詞形式，誤把 interns 當主詞。(C) have received 為複數的現在完成式，主詞單數時應作 has received。(D) receiving 是分詞，沒有助動詞就不能當主要動詞。"
- },
- {
-  "id": "p5-b4-04",
-  "difficulty": "進階",
-  "category": "主謂一致",
-  "question": "A revised set of safety procedures ------- distributed to all warehouse employees at Bramley Distribution before the new shift system takes effect.",
-  "options": [
-   "have been",
-   "has been",
-   "were",
-   "are"
-  ],
-  "answer": 1,
-  "translation": "在新輪班制度生效前，一套修訂後的安全作業程序已發送給 Bramley Distribution 的所有倉庫員工。",
-  "explanation": "考點：set of + 複數名詞的主謂一致與被動語態。主詞核心是單數的 a revised set，of safety procedures 僅為修飾語；搭配過去分詞 distributed 構成被動，且動作須在 takes effect 之前完成，用現在完成式最恰當，故 (B) has been 正確。(A) have been 是複數形式。(C) were 為複數，且過去式與後半句的現在式 takes 時態不搭。(D) are 同樣是複數動詞，與單數主詞不合。"
  },
  {
   "id": "p5-b4-05",
@@ -2352,7 +2472,7 @@ TOEIC.part5 = [
    "much"
   ],
   "answer": 0,
-  "translation": "在 Ferrolane Freight 提供的三種運送方式中，空運快遞的費用遠遠最高。",
+  "translation": "在 Ferrolane Freight 提供的三種運送方式中，空運快遞的費用最高，而且遠高於另外兩種。",
   "explanation": "考點：最高級與 by far 的搭配。三者以上互相比較，且前有 the 與強調用語 by far，須用最高級，故 (A) most 正確，the most costly 表示三種方式中最貴。(B) more 是比較級，通常用於兩者之間並搭配 than。(C) very 雖可修飾原級形容詞，但放在 the 之後無法構成最高級語意。(D) much 用來修飾比較級或不可數名詞，不能修飾原級形容詞 costly。"
  },
  {
@@ -2398,7 +2518,7 @@ TOEIC.part5 = [
   ],
   "answer": 2,
   "translation": "請以藍筆或黑筆填寫隨附的報到表格，並在您於 Marlow Wellness Center 看診前交回櫃檯。",
-  "explanation": "考點：片語動詞 fill out（填寫表格）。受詞是 registration form，且句中 in blue or black ink（以藍筆或黑筆）只可能搭配「填寫」的動作，故 (C) fill 正確。(A) take out「取出」——文法上可以先取出再交回，但「用藍黑筆取出表格」語意不成立。(B) hand out 意為「分發」，是發給別人，與自己填完交回櫃檯矛盾。(D) put out 常指「熄滅、對外發布」，不與表格搭配。"
+  "explanation": "考點：片語動詞 fill out（填寫表格）。受詞是 registration form，且句中 in blue or black ink（以藍筆或黑筆）只可能搭配「填寫」的動作，故 (C) fill 正確。(A) take out 意為「取出」，雖然文法上可以先取出再交回，但「用藍筆或黑筆取出表格」語意不成立。(B) hand out 意為「分發」，是發給別人，與自己填完交回櫃檯矛盾。(D) put out 常指「熄滅、對外發布」，不與表格搭配。"
  },
  {
   "id": "p5-b4-11",
@@ -2444,21 +2564,6 @@ TOEIC.part5 = [
   "answer": 1,
   "translation": "Solvane Cosmetics 的設計部門被要求在週五客戶簡報前提出三個替代包裝方案。",
   "explanation": "考點：片語動詞 come up with（想出、提出構想）。設計部門被要求提出三個包裝方案，故 (B) come 正確。(A) catch up with 意為「趕上」。(C) keep up with 意為「跟上速度或進度」。(D) make up with 意為「與某人和好」，三者語意都不符合提出構想。"
- },
- {
-  "id": "p5-b4-14",
-  "difficulty": "基礎",
-  "category": "片語動詞",
-  "question": "Delegates should ------- in their completed evaluation forms at the registration desk before leaving the Riverton Trade Expo.",
-  "options": [
-   "give",
-   "bring",
-   "hand",
-   "take"
-  ],
-  "answer": 2,
-  "translation": "與會代表離開 Riverton 商展前，應在報到櫃檯繳交填妥的意見回饋表。",
-  "explanation": "考點：片語動詞 hand in（繳交文件）。與會者須在櫃檯交回填妥的表格，故 (C) hand 正確。(A) give in 意為「屈服、讓步」。(B) bring in 意為「引進、帶來收益」。(D) take in 意為「理解、收容」，都無法表示繳交文件。"
  },
  {
   "id": "p5-b4-15",
@@ -2866,36 +2971,6 @@ TOEIC.part5 = [
   "explanation": "考點：動詞語意辨析。冒號後說明「只要按兩下綠色按鈕」，講的是使用機器的方式，故 (B) operate 正確。(A) repair 意為「修理」，與按鈕啟動的說明無關。(C) produce 意為「生產」，主詞應是工廠或公司。(D) instruct 意為「指示、教導」，受詞須是人。"
  },
  {
-  "id": "p5-b5-17",
-  "difficulty": "中級",
-  "category": "字彙辨析",
-  "question": "Ferndale Motors will ------- production at its oldest plant until demand for the model recovers.",
-  "options": [
-   "prevent",
-   "preserve",
-   "postpone",
-   "suspend"
-  ],
-  "answer": 3,
-  "translation": "Ferndale Motors 將暫停最舊廠區的生產，直到該車款的需求回升為止。",
-  "explanation": "考點：動詞與受詞的搭配及語意。until demand recovers 表示需求回升後就會恢復，可知目前是「暫停」生產，suspend production 為固定搭配，故 (D) suspend 正確。(A) prevent 意為「防止」，語意是不讓某事發生。(B) preserve 意為「保存、維護」。(C) postpone 意為「延期」，受詞須是有預定時間的活動，不用於持續運作中的生產作業。"
- },
- {
-  "id": "p5-b5-18",
-  "difficulty": "中級",
-  "category": "字彙辨析",
-  "question": "The warranty on Ridgefield Home Products appliances does not ------- damage caused by improper use.",
-  "options": [
-   "cover",
-   "contain",
-   "protect",
-   "include"
-  ],
-  "answer": 0,
-  "translation": "Ridgefield Home Products 家電的保固不涵蓋因使用不當造成的損壞。",
-  "explanation": "考點：保固條款的慣用動詞。保固「涵蓋、理賠」某項損壞的說法是 cover，故 (A) cover 正確。(B) contain 意為「內含」，主詞須是容器或文件本身。(C) protect 的受詞是被保護的人或物，不會是 damage（損壞）。(D) include 用來說明清單或組合中含有哪些項目，無法表達保固是否負責賠償。"
- },
- {
   "id": "p5-b5-19",
   "difficulty": "中級",
   "category": "字彙辨析",
@@ -2939,21 +3014,6 @@ TOEIC.part5 = [
   "answer": 3,
   "translation": "Harrowgate Logistics 所有倉庫人員都必須出席週五的安全宣導，不接受任何例外。",
   "explanation": "考點：形容詞語意辨析。分號後強調「不會有例外」，表示全體倉庫人員都得出席，故 (D) mandatory 正確。(A) flexible 意為「有彈性的」，與不容例外相反。(B) optional 意為「可自由選擇的」，同樣與強制出席矛盾。(C) temporary 意為「暫時的」，說的是持續期間，與是否強制無關。"
- },
- {
-  "id": "p5-b5-22",
-  "difficulty": "中級",
-  "category": "字彙辨析",
-  "question": "Because the two departments share a single budget, the directors at Calderon Group meet monthly to ------- their spending plans.",
-  "options": [
-   "coordinate",
-   "combine",
-   "compete",
-   "cooperate"
-  ],
-  "answer": 0,
-  "translation": "由於兩個部門共用同一筆預算，Calderon Group 的主管每月開會協調各自的支出計畫。",
-  "explanation": "考點：動詞語意與句型。兩個部門共用一筆預算，主管每月開會是為了讓各自的支出計畫「相互配合」，故 (A) coordinate 正確。(B) combine 意為「合併為一」，但兩部門仍各有計畫，並非併成一份。(C) compete 意為「競爭」，與共同協調的語意相反。(D) cooperate 是不及物動詞，須寫成 cooperate with somebody，不能直接接 their spending plans。"
  },
  {
   "id": "p5-b5-23",
@@ -3241,21 +3301,6 @@ TOEIC.part5 = [
   "explanation": "考點是動詞語意與及物性。exceed expectations 是固定搭配，意為「超出預期」，故選 exceeded。pass 指通過考試、經過地點或遞交物品，不用於超越預期值。rise 是不及物動詞，後面不能直接接受詞 expectations。grow 表示成長時同樣不及物，若當及物動詞則是「種植、拓展（事業）」，語意不合。"
  },
  {
-  "id": "p5-b6-17",
-  "difficulty": "中級",
-  "category": "介系詞",
-  "question": "The company distributed the annual training budget ------- the three regional offices based on staff size.",
-  "options": [
-   "between",
-   "among",
-   "within",
-   "throughout"
-  ],
-  "answer": 1,
-  "translation": "公司依各地人數，把年度訓練預算分配給三個區域辦公室。",
-  "explanation": "考點是分配對象數量所對應的介系詞。分配的對象是三個辦公室，屬三者以上，要用 among，故選 among。between 用於兩者之間的分配或關係（between the two teams）。within 表示「在某範圍之內」，強調界線而非分配動作（within the department）。throughout 表示遍及整個範圍，指散布各處，不用於在特定幾個對象之間分配。"
- },
- {
   "id": "p5-b6-18",
   "difficulty": "基礎",
   "category": "字彙辨析",
@@ -3511,21 +3556,6 @@ TOEIC.part5 = [
   "explanation": "考點：分詞構句的語態。主要子句的主詞 the shipment 是被大雪耽擱的一方，兩者為被動關係，故用過去分詞 (B) Delayed，等同 Because it was delayed。(A) Delaying 是現在分詞表主動，會變成貨件去耽擱大雪，語意顛倒。(C) Having delayed 是完成式的現在分詞，同樣表主動。(D) To delay 表目的，貨件延後抵達並不是為了耽擱什麼。"
  },
  {
-  "id": "p5-b7-10",
-  "difficulty": "基礎",
-  "category": "不定詞與動名詞",
-  "question": "Ms. Alvarez stayed at the office until nine o'clock ------- the budget report before Monday's meeting.",
-  "options": [
-   "finish",
-   "finishing",
-   "to finish",
-   "finished"
-  ],
-  "answer": 2,
-  "translation": "Alvarez 女士在辦公室待到九點，以便在週一會議前完成預算報告。",
-  "explanation": "考點：不定詞表目的。空格說明留在辦公室的目的，須用不定詞 (C) to finish，等同 in order to finish。(A) finish 是原形動詞，句中已有主要動詞 stayed，不能再出現未經連接的第二個動詞。(B) finishing 是動名詞或現在分詞，若無介系詞引導，無法單獨表達目的。(D) finished 為過去式或過去分詞，同樣不具表目的的功能。"
- },
- {
   "id": "p5-b7-11",
   "difficulty": "中級",
   "category": "不定詞與動名詞",
@@ -3748,7 +3778,7 @@ TOEIC.part5 = [
   ],
   "answer": 3,
   "translation": "以個人信用卡支付客戶餐費的員工，待收據核准後即可全額獲得償付。",
-  "explanation": "考點：費用核銷情境的固定用詞。公司把員工先行墊付的錢還給員工，固定說法是 reimburse someone for something，故選 (D) reimbursed。(A) refunded 用於消費者退貨或取消服務時退還貨款，慣用結構是 refund the amount 或 refund the customer，不會寫成 be refunded for，且員工並未向公司購買任何東西。(B) returned 指歸還物品或返回原處，著重把原物送回，不用於費用核銷。(C) recovered 指自行取回損失或恢復狀態，主動方是取回的一方，與公司主動償付的語意不合。"
+  "explanation": "考點：費用核銷情境的固定用詞。公司把員工先行墊付的錢還給員工，固定說法是 reimburse someone for something，故選 (D) reimbursed。(A) refunded 指收款的一方把對方付給自己的錢退回，例如退貨或取消服務時退款；員工並沒有付錢給公司，公司歸還的是員工替公司代墊的費用，因此不用 refund。(B) returned 指歸還物品或返回原處，著重把原物送回，不用於費用核銷。(C) recovered 指自行取回損失或恢復狀態，主動方是取回的一方，與公司主動償付的語意不合。"
  },
  {
   "id": "p5-b8-01",
@@ -4048,7 +4078,7 @@ TOEIC.part5 = [
   ],
   "answer": 1,
   "translation": "Tanabe 女士介紹該產品的短片被大量分享後，線上訂單大幅成長主要歸功於她。",
-  "explanation": "考點：字形相近的形容詞辨析。be responsible for 除了表示負責，也可表示「是造成某結果的原因」，符合訂單成長源自她的影片，故 (B) responsible 正確。(A) reliable 是可靠的，用來形容人或設備本身，不能接 for 帶出造成的結果。(C) reasonable 是合理的、價格公道的，語意不合。(D) remarkable 是出色的，同樣無法與 for 搭配表達因果。"
+  "explanation": "考點：字形相近的形容詞辨析。be responsible for 除了表示負責，也可表示「是造成某結果的原因」，常與 largely、partly 連用，符合訂單成長主要源自她的影片，故 (B) responsible 正確。(A) reliable 是可靠的，用來形容人或設備本身的特質，不能接 for 帶出由某人促成的結果。(C) reasonable 是合理的、價格公道的，語意不合。(D) remarkable for 雖然是常見說法，但 for 後面接的是主詞本身令人注目的特點，例如 remarkable for her energy；訂單成長不是 Tanabe 女士本身的特點，無法表達「訂單成長是她促成的」。"
  },
  {
   "id": "p5-b8-21",
@@ -4231,21 +4261,6 @@ TOEIC.part5 = [
   "explanation": "考點：副詞修飾分詞形容詞。priced 是修飾 membership plan 的過去分詞，空格要說明「價格訂得如何」，修飾分詞須用副詞，reasonably priced（定價合理的）也是固定說法，故 (A) 正確。(B) reasonable 是形容詞，只能修飾名詞，無法修飾 priced，兩個修飾語連用也缺少逗號或連接詞。(C) reason 是名詞，放在所有格與 priced 之間不成結構。(D) reasoned 是過去分詞，與 priced 並列同樣缺連接詞，語意上也無法解釋。"
  },
  {
-  "id": "p5-b9-08",
-  "difficulty": "基礎",
-  "category": "動詞時態與語態",
-  "question": "Ms. Adeyemi ------- fresh bread at the Saturday farmers market for more than ten years.",
-  "options": [
-   "sells",
-   "sold",
-   "has sold",
-   "is selling"
-  ],
-  "answer": 2,
-  "translation": "阿德耶米女士在週六農夫市集賣新鮮麵包已超過十年。",
-  "explanation": "考點：現在完成式與 for + 一段時間 的搭配。for more than ten years 表示動作從過去持續到現在並可能延續下去，須用現在完成式，故 (C) has sold 正確。(A) sells 是現在簡單式，只描述現在的習慣，無法涵蓋長達十年的持續期間。(B) sold 是過去式，會暗示這件事已經結束，且過去式需搭配明確的過去時間點。(D) is selling 是現在進行式，強調此刻正在進行的短暫動作，不能與這種長時間的期間副詞連用。"
- },
- {
   "id": "p5-b9-09",
   "difficulty": "基礎",
   "category": "動詞時態與語態",
@@ -4409,21 +4424,6 @@ TOEIC.part5 = [
   "answer": 0,
   "translation": "請提供準確的箱數估計，好讓工班帶來大小合適的貨車。",
   "explanation": "考點：名詞語意辨析。空格要表達事前概算的數量，estimate 指「估計值、估價」，故 (A) 正確。(B) expense 指「費用、開銷」，與箱子的數量無關。(C) outline 指「大綱、輪廓」，用於文件或計畫的架構，不用於數量。(D) outcome 指「結果」，是事情發生之後才有的，無法在搬運前先提供。"
- },
- {
-  "id": "p5-b9-20",
-  "difficulty": "中級",
-  "category": "字彙辨析",
-  "question": "Because the cost of flour rose sharply this spring, the bakery had to ------- its prices for large cake orders.",
-  "options": [
-   "admit",
-   "adopt",
-   "adjust",
-   "advance"
-  ],
-  "answer": 2,
-  "translation": "由於今年春天麵粉成本大幅上漲，這家烘焙坊不得不調整大量蛋糕訂單的價格。",
-  "explanation": "考點：動詞語意辨析。因成本上升而更動既有價格，用 adjust（調整）最貼切，故 (C) 正確。(A) admit 意為「承認」或「准許進入」，不能拿來搭配 prices 表示改動價格。(B) adopt 意為「採用（新政策、新做法）」，若要使用須說 adopt new prices，直接接 its prices（既有價格）並不通。(D) advance 作動詞是「推進」或「預付」，不用於價格的調高或調低。"
  },
  {
   "id": "p5-b9-21",

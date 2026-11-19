@@ -35,7 +35,7 @@
           "Close the other programs he is using",
           "Restart his computer",
           "Come into the office",
-          "Call the technical support desk"
+          "Call the technical support desk for help"
         ],
         "answer": 0,
         "explanation": "定位在女子第三次發言：Why don't you close the other programs you have open?（要不要把你開著的其他程式關掉？）Why don't you 是提出建議的常見句型，選 (A)。(B) 男子只重開了相機，沒有重開電腦；(C) 女子只是問他今天在不在辦公室，沒有叫他進公司；(D) 對話中沒有提到技術支援。"
@@ -49,7 +49,7 @@
           "Send an email to a client"
         ],
         "answer": 1,
-        "explanation": "定位在男子最後一句：let's start with the budget and leave the schedule until he's here（我們先從預算開始，行程表等他來再談），女子回 Sounds good（好啊）。兩人已經談定下一步先討論預算，選 (B)。(C) 正好相反，他們決定不等 Mr. Okada；(A) 沒有要提早結束；(D) 打電話給客戶的是 Mr. Okada，不是這兩人要做的事。"
+        "explanation": "定位在男子最後一次發言：let's start with the budget and leave the schedule until he's here（我們先從預算開始，行程表等他來再談），女子回 Sounds good（好啊）。兩人已經談定下一步先討論預算，選 (B)。(A) 沒有人要提早結束，只是把行程表延後到 Mr. Okada 進來再談；(C) 正好相反，他們決定不等 Mr. Okada 就先開始；(D) 女子說要寄的是會議紀錄，對象是與會的大家，而且是會議結束後才寄；對話中和客戶有關的只有 Mr. Okada 正在跟客戶通電話。"
       }
     ],
     "transcriptZh": "男：Karen，聽得到我說話嗎？我的麥克風好像有問題。\n女：我聽得很清楚，但你的畫面卡住了，大概一分鐘前就不動了。\n男：不好意思。我把相機關掉再打開看看。\n女：試試看。你今天是用公司的網路，還是在家？\n男：我今天在家工作，網路一整個早上都很慢。\n女：那大概就是原因了。要不要把你開著的其他程式關掉？通常會有幫助。\n男：好，我剛把信箱和正在看的檔案關掉了。現在呢？\n女：好多了，我可以清楚看到你。\n男：太好了。那我們要等 Okada 先生嗎？他還沒進來。\n女：他傳訊息給我了，他還在跟客戶通電話，大概會晚十分鐘。\n男：那我們先從預算開始，行程表等他來再談。\n女：好啊。我來做紀錄，結束後再寄給大家。"
@@ -148,12 +148,12 @@
           "It does not sell printer paper"
         ],
         "answer": 1,
-        "explanation": "定位在男子第一次發言：Weston Office Direct is cheaper on paper and folders, but delivery takes about a week（Weston 的紙和資料夾比較便宜，但到貨要一星期），女子隨即說公司常在那之前就把影印紙用完。缺點在於出貨太慢，選 (B)。(A) 恰好相反，Weston 比較便宜；(C) 沒有最低訂購量的是 Nakamura，選項把兩家的資訊對調；(D) Weston 有賣紙，只是送得慢。"
+        "explanation": "定位在男子第一次發言：Weston Office Direct is cheaper on paper and folders, but delivery takes about a week（Weston 的紙和資料夾比較便宜，但到貨要一星期），女子隨即說公司常在那之前就把影印紙用完，後面也一直圍繞到貨時間在比較。主要缺點是出貨太慢，選 (B)。(A) 恰好相反，Weston 比較便宜；(C) 男子只說 Nakamura 沒有最低訂購量，從頭到尾沒有說 Weston 要求最低訂購量，更沒有說數量很大，題目問的是兩人在意的主要缺點，不能只靠對比去推；(D) Weston 有賣紙，只是送得慢。"
       },
       {
         "q": "What will the man most likely do next?",
         "options": [
-          "Telephone Ms. Bennett",
+          "Telephone Ms. Bennett about the order",
           "Visit the supplier's office",
           "Order more printer paper",
           "Prepare a document for the woman"
@@ -265,11 +265,11 @@
         "options": [
           "To explain why he wants to be told about unusual figures",
           "To show that sales have gone up",
-          "To ask for a correction to an earlier report",
+          "To ask the woman for a correction to an earlier report",
           "To suggest changing to a different system"
         ],
         "answer": 0,
-        "explanation": "定位在男子最後第二次發言：please point out anything unusual when you send me the figures. Last time I found a large return in the March numbers after I'd already written half the summary（給我數字時請標出異常的部分，上次我摘要寫到一半才發現三月有一筆大額退貨）。他提三月的數字是為了說明前一句的要求，選 (A)。(B) 大額退貨不是業績成長；(C) 他沒有要求更正舊報告，只希望這次先被提醒；(D) 換系統的討論是關於兩個辦公室用電子郵件送資料，不是他提三月數字的用意。"
+        "explanation": "定位在男子倒數第二次發言：please point out anything unusual when you send me the figures. Last time I found a large return in the March numbers after I'd already written half the summary（給我數字時請標出異常的部分，上次我摘要寫到一半才發現三月有一筆大額退貨）。他提三月的數字是為了說明前一句的要求，選 (A)。(B) 大額退貨不是業績成長；(C) 他沒有要求更正舊報告，只希望這次先被提醒；(D) 換系統的討論是關於兩個辦公室用電子郵件送資料，不是他提三月數字的用意。"
       }
     ],
     "transcriptZh": "女：你現在有空嗎？我想把季報告誰做哪一部分講定。\n男：現在可以。截止日是十二號吧？\n女：定稿是十八號，但 Alvarez 女士希望十二號前拿到初稿，這樣她能在董事會之前先看過。\n男：所以其實只有一個半星期。上一季是我做業績數字，你寫摘要。\n女：我在想這次我們換一下。新的追蹤系統我現在自己就能處理，而且你寫得比我快。\n男：有道理，不過摘要一向比較花時間。如果由我寫，我最晚七號要拿到數字。\n女：這我做得到。現在大部分資料系統會自動抓。比較花時間的是各地區的數字，因為還有兩個辦公室是用電子郵件寄過來。\n男：可以請他們直接輸入系統嗎？這樣你可以省一天。\n女：我問過兩次了。他們主管說十月軟體更新之後才會改。\n男：好吧，這一季就先這樣。不過有一件事，你把數字寄給我的時候，請把異常的地方標出來。上次我摘要都寫一半了，才發現三月有一筆大額退貨。\n女：我會另外寫一張註記標起來。還有，摘要可以控制在四頁以內嗎？上一份 Alvarez 女士刪掉了兩頁。\n男：了解。我會寫短一點，細節放在附件裡。"

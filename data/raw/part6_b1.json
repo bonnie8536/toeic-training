@@ -29,7 +29,7 @@
           "Please submit your travel reimbursement forms to the accounting team."
         ],
         "answer": 1,
-        "explanation": "考前後文銜接。空格前一句說明工程預計 4 月 10 日前完工，空格後以 Until then（在那之前）開頭，代表中間必須先出現一個「之後會有後續動作」的參照點，選項 B 承諾樓層重新開放時會再發出通知，正好提供 then 所指的時間點。選項 A 說專案無限期延後，與前句明確的完工日期矛盾；選項 C 說二樓三月全面關閉，與前段安排同仁暫遷二樓辦公直接抵觸；選項 D 談差旅核銷表單，與整封信的整修主題無關。"
+        "explanation": "考前後文銜接。空格前一句說明工程預計 4 月 10 日前完工，空格後以 Until then（在那之前）交代完工前的暫時安排，因此空格句要延續「完工、重新開放」這條時間線。選項 B 說四樓重新開放時會再發通知，正好接在完工日期之後，then 即指四樓重新開放之時。選項 A 說專案無限期延後，與前句明確的完工日期矛盾；選項 C 說二樓三月全面關閉，與前段安排同仁暫遷二樓辦公直接抵觸；選項 D 談差旅核銷表單，與整封信的整修主題無關。"
       },
       {
         "num": 4,
@@ -67,11 +67,11 @@
         "options": [
           "The finance department will move to the third floor next quarter.",
           "Paper submissions remain the preferred method for most employees.",
-          "Please therefore confirm that every receipt is clear before uploading it.",
+          "To avoid delays, please make sure each claim includes all required receipts.",
           "Reimbursements are issued to clients rather than to employees."
         ],
         "answer": 2,
-        "explanation": "考前後文銜接。空格前一句指出缺少佐證文件的申請會被退回不予處理，空格後段落轉入教育訓練資訊，因此空格需要一句承接前句後果、提醒同仁事先自我檢查的話。選項 C 以 therefore 明確扣住前句的因果關係，且 receipt 也呼應前文的收據上傳規定。選項 A 談部門搬遷，與核銷主題無關；選項 B 說紙本仍是多數人偏好的方式，與第一段「10 月 1 日起不再受理紙本」直接矛盾；選項 D 說核銷對象是客戶，與本備忘錄發給業務同仁的前提抵觸。"
+        "explanation": "考前後文銜接。空格前一句指出缺少佐證文件的申請會被退回不予處理，空格後段落轉入教育訓練資訊，因此空格需要一句承接前句後果、提醒同仁事先自我檢查的話。選項 C 以 To avoid delays 承接前句退件的後果，並提醒附齊收據，呼應前文的收據上傳規定。選項 A 談部門搬遷，與核銷主題無關；選項 B 說紙本仍是多數人偏好的方式，與第一段「10 月 1 日起不再受理紙本」直接矛盾；選項 D 說核銷對象是客戶，與本備忘錄發給業務同仁的前提抵觸。"
       },
       {
         "num": 4,
@@ -81,7 +81,7 @@
         "explanation": "考連接詞。空格後 employees can practice using the system 是含主詞與限定動詞的完整子句，且表達舉辦訓練的目的，須用連接詞 so that。in order to 後面只能接原形動詞；such as 與 as well as 都是後接名詞或名詞片語的用法，皆無法引導完整子句。"
       }
     ],
-    "translation": "備忘錄\n\n致：區域業務團隊\n發文者：財務部主管 Priya Raghunathan\n日期：9 月 5 日\n主旨：差旅費核銷流程修訂\n\n自 10 月 1 日起，所有差旅費用一律須透過本公司新的線上系統 ExpenseTrack 送出。該日之後將不再受理紙本表單。同仁須於出差返回後十個工作天內上傳每張收據的電子檔，方可辦理核銷。\n\n未附佐證文件的申請將原件退回，不予處理。因此，上傳前請先確認每張收據都清晰可辨。\n\n系統操作說明會將於 9 月 18 日在 B 會議室舉行，讓同仁能實際演練操作。請回覆本備忘錄以保留座位。\n\nPriya Raghunathan\n財務部"
+    "translation": "備忘錄\n\n致：區域業務團隊\n發文者：財務部主管 Priya Raghunathan\n日期：9 月 5 日\n主旨：差旅費核銷流程修訂\n\n自 10 月 1 日起，所有差旅費用一律須透過本公司新的線上系統 ExpenseTrack 送出。該日之後將不再受理紙本表單。同仁須於出差返回後十個工作天內上傳每張收據的電子檔，方可辦理核銷。\n\n未附佐證文件的申請將原件退回，不予處理。為避免延誤，請確認每份申請都附上所有必要的收據。\n\n系統操作說明會將於 9 月 18 日在 B 會議室舉行，讓同仁能實際演練操作。請回覆本備忘錄以保留座位。\n\nPriya Raghunathan\n財務部"
   },
   {
     "id": "p6-b1-3",

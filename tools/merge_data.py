@@ -2,13 +2,17 @@
 """合併 data/raw/*.json → data/*.js,並做機械驗證。
 用法: python tools/merge_data.py
 硬錯誤(缺欄位/JSON 壞/對應不上)會列出並以 exit code 1 結束;警告不擋。
+淘汰的題(多益題庫 Part 1-7):從 data/raw 的批次檔整筆移走,在 data/retired.json 記一筆(id、part、date、reason、replacedBy);
+這裡檢查淘汰的 id 不在題庫裡、替代題在題庫裡、題庫 id 不重複(七個 Part 一起看)、批次檔名照格式(不照格式的檔也會被 glob 載進題庫)。
+測試用環境變數(tools/test_retired.js):MERGE_RAW_DIR、MERGE_OUT_DIR、MERGE_RETIRED、MERGE_INDEX 換掉 data/raw、data、data/retired.json、index.html。
 """
 import json, re, sys, glob, os
 from collections import Counter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RAW = os.path.join(ROOT, 'data', 'raw')
-OUT = os.path.join(ROOT, 'data')
+RAW = os.environ.get('MERGE_RAW_DIR') or os.path.join(ROOT, 'data', 'raw')
+OUT = os.environ.get('MERGE_OUT_DIR') or os.path.join(ROOT, 'data')
+RETIRED = os.environ.get('MERGE_RETIRED') or os.path.join(ROOT, 'data', 'retired.json')
 
 errors, warnings = [], []
 
@@ -611,6 +615,88 @@ for kind, items in [('part5', p5), ('part6', p6), ('part7', p7), ('articles', ar
         if n > 1:
             errors.append(f'{kind}: id 重複 {dup} ×{n}')
 
+# ---------- 多益題庫:批次檔名、id 格式、聽力 id 重複、淘汰名單 ----------
+# 作答紀錄的鍵就是這些 id(Part 6 加 :空格號,Part 3/4/7 加 :第幾題),所以 id 一上線就不改、不重複使用
+BANK = {  # part: (題目, glob, 檔名格式, id 格式)
+    '5': (p5, 'part5_b*.json', r'part5_b\d+\.json', r'p5-b\d+-\d+'),
+    '6': (p6, 'part6_b*.json', r'part6_b\d+\.json', r'p6-b\d+-\d+'),
+    '7': (p7, 'part7_b*.json', r'part7_b\d+\.json', r'p7-b\d+-\d+'),
+    '1': (lp1, 'listening_p1*.json', r'listening_p1(_b\d+)?\.json', r'l1-\d+'),
+    '2': (lp2, 'listening_p2_b*.json', r'listening_p2_b\d+\.json', r'l2-\d+'),
+    '3': (lp3, 'listening_p3_b*.json', r'listening_p3_b\d+\.json', r'l3-\d+'),
+    '4': (lp4, 'listening_p4_b*.json', r'listening_p4_b\d+\.json', r'l4-\d+'),
+}
+bank_part = {}  # id → part
+for part, (items, pattern, file_re, id_re) in BANK.items():
+    for path in sorted(glob.glob(os.path.join(RAW, pattern))):
+        name = os.path.basename(path)
+        if not re.fullmatch(file_re, name):
+            errors.append(f'{name}: 檔名不是批次格式({file_re}),但會被當成 Part {part} 題庫載入;'
+                          '淘汰的題不要另存在 data/raw,記在 data/retired.json')
+        try:
+            if read_json(path) == []:
+                warnings.append(f'{name}: 空的批次檔(題都淘汰了),可以刪掉')
+        except Exception:
+            pass  # JSON 壞掉上面已經報過
+    for x in items:
+        xid = x.get('id')
+        if not isinstance(xid, str) or not re.fullmatch(id_re, xid):
+            errors.append(f'Part {part} {xid!r}: id 格式需為 {id_re}')
+            continue
+        if part in ('1', '2', '3', '4') and xid in bank_part:
+            errors.append(f'Part {part}: id 重複 {xid}')
+        bank_part[xid] = part
+
+retired = []
+if os.path.exists(RETIRED):
+    try:
+        rdoc = read_json(RETIRED)
+        retired = rdoc.get('retired') if isinstance(rdoc, dict) else None
+        if not isinstance(retired, list):
+            errors.append('retired.json: 需為 {"retired": [...]}')
+            retired = []
+    except Exception as e:
+        errors.append(f'retired.json: JSON 解析失敗 — {e}')
+seen_ret = set()
+for i, r in enumerate(retired):
+    w = f"retired.json 第{i + 1}筆 {r.get('id', '?') if isinstance(r, dict) else '?'}"
+    if not isinstance(r, dict) or not need(r, ['id', 'part', 'date', 'reason'], w):
+        continue
+    rid, part = r['id'], str(r['part'])
+    if part not in BANK:
+        errors.append(f'{w}: part 需為 1-7,實得 {r["part"]!r}'); continue
+    if not isinstance(rid, str) or not re.fullmatch(BANK[part][3], rid):
+        errors.append(f'{w}: id 不是 Part {part} 的格式(整組淘汰寫題組 id,不寫 :小題)'); continue
+    if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', str(r['date'])):
+        errors.append(f'{w}: date 需為 YYYY-MM-DD')
+    if rid in seen_ret:
+        errors.append(f'{w}: 重複記了兩次')
+    seen_ret.add(rid)
+    if rid in bank_part:
+        errors.append(f'{w}: 已淘汰的 id 還在題庫(沒從 data/raw 移走,或新題重複用了舊 id)')
+    rep = r.get('replacedBy')
+    if rep is not None:
+        if not isinstance(rep, str) or not rep:
+            errors.append(f'{w}: replacedBy 需為題目 id 或 null')
+        elif bank_part.get(rep) != part:
+            errors.append(f'{w}: 替代題 {rep} 不在 Part {part} 題庫')
+    scan_zh_punct(r, w, {'reason'})
+    scan_simplified(r, w)
+for i, r in enumerate(retired):
+    rep = r.get('replacedBy') if isinstance(r, dict) else None
+    if isinstance(rep, str) and rep in seen_ret:
+        errors.append(f"retired.json 第{i + 1}筆: 替代題 {rep} 自己也淘汰了,改寫成現在的替代題")
+
+# 首頁 index.html 的說明文字(description、og:description、JSON-LD)寫死「超過 N 題」;淘汰到不超過 N 題時要先改那三處
+# (首頁的「刷題題數」數字是 js 從題庫算的,不用改)
+bank_total = len(p5) + p6_qs + p7_qs + len(lp1) + len(lp2) + sum(len(s.get('questions') or []) for s in lp3 + lp4)
+_index = os.environ.get('MERGE_INDEX') or os.path.join(ROOT, 'index.html')
+if os.path.exists(_index):
+    with open(_index, encoding='utf-8') as f:
+        for claim in sorted(set(int(n) for n in re.findall(r'題庫超過 (\d+) 題', f.read()))):
+            if bank_total <= claim:
+                errors.append(f'index.html 寫「題庫超過 {claim} 題」,題庫現在 {bank_total} 題:改 index.html 那三處說明文字')
+
 # ---------- 輸出 ----------
 def write_js(fname, varname, data):
     path = os.path.join(OUT, fname)
@@ -624,6 +710,9 @@ def write_js(fname, varname, data):
 print('=== 驗證結果 ===')
 print(f'Part 5: {len(p5)} 題 | Part 6: {len(p6)} 組 {p6_qs} 題 | Part 7: {len(p7)} 組 {p7_qs} 題(結構化 {p7_blocks_sets} 組) | 文章: {len(arts)} 篇 {total_vocab} 個標記單字(移轉考題 {len(seen_tr)} 篇) | 檢測卷: {n_diag} 題 | 文法: {len(gx)} 單元 | 不規則動詞: {len(verbs)} 個 | 時態總整理: {len(tenses["tenses"]) if tenses else 0} 式 {len(tenses["pairs"]) if tenses else 0} 夥伴字 | 自然發音: {len(phonics)} 課')
 print(f'Part 5 答案分布: {dict(sorted(dist5.items()))}')
+_sq = lambda sets: sum(len(s.get('questions') or []) for s in sets)
+print(f'聽力: Part 1 {len(lp1)} 題 | Part 2 {len(lp2)} 題 | Part 3 {len(lp3)} 組 {_sq(lp3)} 題 | Part 4 {len(lp4)} 組 {_sq(lp4)} 題'
+      f' | 多益題庫合計 {len(p5) + p6_qs + p7_qs + len(lp1) + len(lp2) + _sq(lp3) + _sq(lp4)} 題 | 已淘汰 {len(retired)} 筆(data/retired.json)')
 if errors:
     print(f'\n-- 硬錯誤 {len(errors)} 筆 --')
     for e in errors: print('  [E]', e)

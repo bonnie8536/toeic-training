@@ -131,7 +131,7 @@
       "It arrived in good condition."
     ],
     "answer": 1,
-    "explanation": "正解 (B)：否定問句在確認貨是不是今天到，「供應商把出貨延到星期四」說明沒到並給了新日期。\n(A) 重複 shelf，講的是自己把東西放上架，與到貨無關。\n(C) 重複 arrive，卻用過去式說貨況良好，時態與事實都對不上。",
+    "explanation": "正解 (B)：否定問句在確認貨是不是今天到，「供應商把出貨延到星期四」說明沒到並給了新日期。\n(A) 重複 shelf，them 指的是新層架，「把層架放到架子上」說不通，也沒有回答貨到了沒。\n(C) 重複 arrive，但主詞 It 是單數，對不上複數的 shelves，前面也沒有可以指的單數名詞，接不上問句。",
     "transcriptZh": "問：新的層架不是今天要到嗎？\n(A) 對，我把它們放上架了。\n(B) 供應商把出貨延到星期四了。\n(C) 送到的時候狀況很好。"
   },
   {
@@ -223,21 +223,6 @@
     "answer": 2,
     "explanation": "正解 (C)：Who 問的是誰上課，「Marcus 代 Dana 的班」直接點出人。\n(A) 「六點半」回答的是時間，屬於 When 的答案。\n(B) 「在二號教室」回答的是地點，屬於 Where 的答案。",
     "transcriptZh": "問：這週早上的課是誰教？\n(A) 六點半。\n(B) 在二號教室。\n(C) Marcus 代 Dana 的班。"
-  },
-  {
-    "id": "l2-91",
-    "difficulty": "進階",
-    "category": "附加/否定問句",
-    "accent": "US",
-    "question": "You didn't throw out that box of used books, did you?",
-    "options": [
-      "You'd have to ask Teresa.",
-      "Yes, I've read most of them.",
-      "The store closes at seven."
-    ],
-    "answer": 0,
-    "explanation": "正解 (A)：間接回應。自己不清楚那箱書的去向，把問題轉給 Teresa。\n(B) 順著 books 講自己讀過大半，與那箱書的去向無關。\n(C) 「書店七點打烊」回答的是營業時間，答非所問。",
-    "transcriptZh": "問：你該不會把那箱二手書丟掉了吧？\n(A) 這你得問 Teresa。\n(B) 對，我大部分都讀過了。\n(C) 書店七點打烊。"
   },
   {
     "id": "l2-92",
@@ -358,20 +343,5 @@
     "answer": 0,
     "explanation": "正解 (A)：間接回應。用 Actually 修正對方的預設，說車子剛保養完，等於否定「下個月才到期」。\n(B) 重複 service，卻變成稱讚服務好，屬於一字多義誘答。\n(C) 重複 next，把時間詞聽成位置詞，答的是地點。",
     "transcriptZh": "問：那台廂型車下個月要保養了吧？\n(A) 其實我們剛做完。\n(B) 這個服務很好，謝謝。\n(C) 就在修車廠旁邊。"
-  },
-  {
-    "id": "l2-100",
-    "difficulty": "進階",
-    "category": "Yes/No問句",
-    "accent": "US",
-    "question": "Do you have any more of these in the back?",
-    "options": [
-      "What's on the shelf is all we have.",
-      "Yes, I'll be right back.",
-      "They're two for ten dollars."
-    ],
-    "answer": 0,
-    "explanation": "正解 (A)：間接回應。「架上有的就是全部」等於告訴客人倉庫裡沒有存貨了。\n(B) 重複 back，但 be right back 是「馬上回來」，與倉庫無關。\n(C) 「兩個十元」回答的是價格，屬於 How much 的答案。",
-    "transcriptZh": "問：這個後面還有貨嗎？\n(A) 架上有的就是全部了。\n(B) 好，我馬上回來。\n(C) 兩個十元。"
   }
 ]

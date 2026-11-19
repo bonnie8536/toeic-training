@@ -29,7 +29,7 @@
         "type": "文法",
         "options": ["it", "what", "that", "which"],
         "answer": 3,
-        "explanation": "考關係代名詞。逗號後為非限定關係子句，先行詞是前面「箱子將由承包商代為搬運」這整件事，只有 which 可以指涉整個子句。(C) that 不能用於逗號後的非限定子句；(B) what 本身已含先行詞，不能再接在既有子句之後；(A) it 是代名詞不是連接詞，會造成兩個子句沒有連接詞的錯誤。"
+        "explanation": "考關係代名詞。逗號後為非限定關係子句，先行詞是前面「未打包的物品將由承包商代為搬運」這整件事，只有 which 可以指涉整個子句。(C) that 不能用於逗號後的非限定子句；(B) what 本身已含先行詞，不能再接在既有子句之後；(A) it 是代名詞不是連接詞，會造成兩個子句沒有連接詞的錯誤。"
       },
       {
         "num": 4,
@@ -129,7 +129,7 @@
     "id": "p6-b2-4",
     "passageType": "notice",
     "title": "Annual Elevator Inspection",
-    "passage": "NOTICE TO ALL RESIDENTS\nAnnual Elevator Inspection\n\nPlease be advised that the elevators in both towers will be inspected on Thursday, September 18, from 8:00 A.M. until approximately 4:00 P.M. Elevator A will be serviced first, {{1}} Elevator B remains available for general use. {{2}} Residents who need help moving large items should contact the front desk in {{3}}, as additional staff will be on hand throughout the day. We apologize for any inconvenience this may {{4}} and thank you for your understanding. Normal service will resume on Friday morning.\n\nRosalind Whitcomb\nBuilding Manager, Camden Court Apartments",
+    "passage": "NOTICE TO ALL RESIDENTS\nAnnual Elevator Inspection\n\nPlease be advised that the two elevators in the North Tower will be inspected on Thursday, September 18, from 8:00 A.M. until approximately 4:00 P.M. Elevator A will be serviced first, {{1}} Elevator B remains available for general use. {{2}} Residents who need help moving large items should contact the front desk in {{3}}, as additional staff will be on hand throughout the day. We apologize for any inconvenience this may {{4}} and thank you for your understanding. Normal service will resume on Friday morning.\n\nRosalind Whitcomb\nBuilding Manager, Camden Court Apartments",
     "questions": [
       {
         "num": 1,
@@ -144,11 +144,11 @@
         "options": [
           "Rent payments are due on the first day of each month.",
           "At no point will both elevators be out of service at the same time.",
-          "The lobby floor will be repainted later this autumn.",
+          "Both elevators will be unavailable for the entire inspection period.",
           "Pets are not permitted in the common areas of either tower."
         ],
         "answer": 1,
-        "explanation": "前句說明先檢修 A 梯、B 梯照常使用，後句則請需要搬運大型物品的住戶事先聯繫櫃檯。(B) 保證兩部電梯不會同時停用，既承接前句的分批施工邏輯，也讓住戶知道當天仍有電梯可搭，才有後句安排搬運的可能。(A) 房租繳納、(C) 大廳地板重新粉刷、(D) 寵物規定都與電梯檢修無關，插入後前後文會斷裂。"
+        "explanation": "前句說明先檢修 A 梯、B 梯照常使用，後句則請需要搬運大型物品的住戶事先聯繫櫃檯。(B) 保證兩部電梯不會同時停用，既承接前句的分批施工邏輯，也讓住戶知道當天仍有電梯可搭，才有後句安排搬運的可能。(C) 說兩部電梯在整個檢修期間都無法使用，與前句「B 梯照常使用」直接矛盾。(A) 房租繳納、(D) 寵物規定都與電梯檢修無關，插入後前後文會斷裂。"
       },
       {
         "num": 3,
@@ -165,7 +165,7 @@
         "explanation": "考助動詞後的動詞形式。情態助動詞 may 之後必須接原形動詞，且此處 this（指這次檢修）是造成不便的一方，屬主動語態，故選 cause。(A) causing 是現在分詞、(B) caused 是過去式或過去分詞，都不能直接接在 may 之後；(C) be caused 雖然形式上可接在 may 後，但本句 this 是動作發出者、any inconvenience 是受詞，改成被動會使句子缺少受詞而不成立。"
       }
     ],
-    "translation": "全體住戶公告\n年度電梯檢修\n\n謹此通知，兩棟大樓的電梯將於 9 月 18 日星期四上午 8 時至下午 4 時左右進行檢修。A 梯將先行檢修，此時 B 梯仍可正常使用。兩部電梯絕不會同時停止運轉。需要協助搬運大型物品的住戶，請事先與服務櫃檯聯繫，當日將有額外人力於現場支援。造成不便之處敬請見諒，並感謝您的體諒。正常服務將於週五上午恢復。\n\nRosalind Whitcomb\nCamden Court 公寓大樓管理員"
+    "translation": "全體住戶公告\n年度電梯檢修\n\n謹此通知，北棟的兩部電梯將於 9 月 18 日星期四上午 8 時至下午 4 時左右進行檢修。A 梯將先行檢修，此時 B 梯仍可正常使用。兩部電梯絕不會同時停止運轉。需要協助搬運大型物品的住戶，請事先與服務櫃檯聯繫，當日將有額外人力於現場支援。造成不便之處敬請見諒，並感謝您的體諒。正常服務將於週五上午恢復。\n\nRosalind Whitcomb\nCamden Court 公寓大樓管理員"
   },
   {
     "id": "p6-b2-5",
@@ -194,10 +194,10 @@
           "Sales targets for the fourth quarter will be announced next month.",
           "Company credit cards will be reissued in January.",
           "The annual sales conference will take place in Bergstrom.",
-          "The finance team will no longer accept printed receipts of any kind."
+          "The finance team will no longer accept paper claim forms or mailed receipts."
         ],
         "answer": 3,
-        "explanation": "空格前說明報帳改走線上平台、不再使用紙本表單並規定上傳期限，空格後要求尚未啟用帳號者盡快啟用。(D) 明確指出財務部不再收任何紙本收據，既延續前文全面數位化的脈絡，也讓後句「請先啟用帳號」有了必要性。(A) 第四季業績目標、(B) 信用卡換發、(C) 年度業務大會都與報帳流程改為線上無關，插入後無法連接前後文。"
+        "explanation": "空格前說明報帳改走線上平台、不再使用紙本表單並規定上傳期限，空格後要求尚未啟用帳號者盡快啟用。(D) 明確指出財務部不再受理紙本申請表或郵寄的收據，既延續前文全面數位化的脈絡，也讓後句「請先啟用帳號」有了必要性。(A) 第四季業績目標、(B) 信用卡換發、(C) 年度業務大會都與報帳流程改為線上無關，插入後無法連接前後文。"
       },
       {
         "num": 4,
@@ -207,6 +207,6 @@
         "explanation": "考名詞字彙。hands-on demonstration 指「實際動手操作的示範」，與前文舉辦教育訓練、讓同仁在季末前熟悉系統的語意相符。(A) declaration 指宣告或申報；(C) dedication 指奉獻或落成儀式；(D) description 指文字說明，與 hands-on（實際操作）互相牴觸，也不是訓練課程提供的內容形式。"
       }
     ],
-    "translation": "內部通知\n\n收件者：業務部\n寄件者：Yolanda Prescott，業務總監\n日期：10 月 2 日\n主旨：季度費用報帳\n\n自本月起，所有差旅費用必須透過新的 Vertex 系統平台申請，不再使用紙本表單。收據應於返回後七日內上傳。逾期提出的申請將不予核銷，除非部門主管以書面核准例外處理。財務部將不再接受任何形式的紙本收據。若您尚未啟用帳號，請於本週五前完成。週二與週三將舉辦教育訓練，供希望在本季結束前實際操作系統的同仁參加。\n\nYolanda Prescott\n業務總監"
+    "translation": "內部通知\n\n收件者：業務部\n寄件者：Yolanda Prescott，業務總監\n日期：10 月 2 日\n主旨：季度費用報帳\n\n自本月起，所有差旅費用必須透過新的 Vertex 系統平台申請，不再使用紙本表單。收據應於返回後七日內上傳。逾期提出的申請將不予核銷，除非部門主管以書面核准例外處理。財務部將不再受理紙本申請表或郵寄的收據。若您尚未啟用帳號，請於本週五前完成。週二與週三將舉辦教育訓練，供希望在本季結束前實際操作系統的同仁參加。\n\nYolanda Prescott\n業務總監"
   }
 ]

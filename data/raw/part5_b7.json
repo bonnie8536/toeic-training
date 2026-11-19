@@ -90,16 +90,6 @@
     "explanation": "考點：分詞構句的語態。主要子句的主詞 the shipment 是被大雪耽擱的一方，兩者為被動關係，故用過去分詞 (B) Delayed，等同 Because it was delayed。(A) Delaying 是現在分詞表主動，會變成貨件去耽擱大雪，語意顛倒。(C) Having delayed 是完成式的現在分詞，同樣表主動。(D) To delay 表目的，貨件延後抵達並不是為了耽擱什麼。"
   },
   {
-    "id": "p5-b7-10",
-    "difficulty": "基礎",
-    "category": "不定詞與動名詞",
-    "question": "Ms. Alvarez stayed at the office until nine o'clock ------- the budget report before Monday's meeting.",
-    "options": ["finish", "finishing", "to finish", "finished"],
-    "answer": 2,
-    "translation": "Alvarez 女士在辦公室待到九點，以便在週一會議前完成預算報告。",
-    "explanation": "考點：不定詞表目的。空格說明留在辦公室的目的，須用不定詞 (C) to finish，等同 in order to finish。(A) finish 是原形動詞，句中已有主要動詞 stayed，不能再出現未經連接的第二個動詞。(B) finishing 是動名詞或現在分詞，若無介系詞引導，無法單獨表達目的。(D) finished 為過去式或過去分詞，同樣不具表目的的功能。"
-  },
-  {
     "id": "p5-b7-11",
     "difficulty": "中級",
     "category": "不定詞與動名詞",
@@ -247,6 +237,6 @@
     "options": ["refunded", "returned", "recovered", "reimbursed"],
     "answer": 3,
     "translation": "以個人信用卡支付客戶餐費的員工，待收據核准後即可全額獲得償付。",
-    "explanation": "考點：費用核銷情境的固定用詞。公司把員工先行墊付的錢還給員工，固定說法是 reimburse someone for something，故選 (D) reimbursed。(A) refunded 用於消費者退貨或取消服務時退還貨款，慣用結構是 refund the amount 或 refund the customer，不會寫成 be refunded for，且員工並未向公司購買任何東西。(B) returned 指歸還物品或返回原處，著重把原物送回，不用於費用核銷。(C) recovered 指自行取回損失或恢復狀態，主動方是取回的一方，與公司主動償付的語意不合。"
+    "explanation": "考點：費用核銷情境的固定用詞。公司把員工先行墊付的錢還給員工，固定說法是 reimburse someone for something，故選 (D) reimbursed。(A) refunded 指收款的一方把對方付給自己的錢退回，例如退貨或取消服務時退款；員工並沒有付錢給公司，公司歸還的是員工替公司代墊的費用，因此不用 refund。(B) returned 指歸還物品或返回原處，著重把原物送回，不用於費用核銷。(C) recovered 指自行取回損失或恢復狀態，主動方是取回的一方，與公司主動償付的語意不合。"
   }
 ]

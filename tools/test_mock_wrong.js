@@ -321,9 +321,11 @@ T['M10 save:沒有題時一個鍵都不碰;有題時只寫一次;本機是看不
   if (r3.ok) bad.push('寫不進去還說 ok');
   return { ok: !bad.length, detail: bad.join(' | ') || 'ok' };
 };
-T['M11 大小:960 題全錯 < 50 KB;1500 筆長 key < 100 KB'] = () => {
+/* 題數照題庫算(全審淘汰、新增題後不用改這裡);每一題的 key 都不一樣(n 等於題數) */
+T['M11 大小:題庫全錯 < 50 KB;1500 筆長 key < 100 KB'] = () => {
   const all = {};
-  const put = (k, q) => { all[k] = { c: wrongC(q), ok: false, t: NOW + Object.keys(all).length }; };
+  let total = 0;
+  const put = (k, q) => { total++; all[k] = { c: wrongC(q), ok: false, t: NOW + Object.keys(all).length }; };
   TOEIC.part5.forEach((q) => put(q.id, q));
   TOEIC.part6.forEach((s) => s.questions.forEach((q) => put(s.id + ':' + q.num, q)));
   TOEIC.part7.forEach((s) => s.questions.forEach((q, qi) => put(s.id + ':' + qi, q)));
@@ -335,7 +337,7 @@ T['M11 大小:960 題全錯 < 50 KB;1500 筆長 key < 100 KB'] = () => {
   const big = {};
   for (let i = 0; i < 1500; i++) big[('p7-b' + String(i).padStart(4, '0') + '-' + 'x'.repeat(longest)).slice(0, longest + 4) + ':' + (i % 5)] = { c: 3, ok: false, t: 1763450000000 + i };
   const size2 = Buffer.byteLength(J(MW(null, big).v));
-  return { ok: n === 960 && size < 50 * 1024 && size2 < 100 * 1024, detail: n + ' 題 ' + size + ' B;1500 筆 ' + size2 + ' B' };
+  return { ok: n === total && n > 0 && size < 50 * 1024 && size2 < 100 * 1024, detail: n + ' 題 ' + size + ' B;1500 筆 ' + size2 + ' B' };
 };
 T['M13 分頁暫存相容:新版留的 { pid, rec, ans } 舊版 saveLater 的篩選照樣認得;清理 ans 只留 [字串, 整數]、最多 200 對'] = () => {
   const r = spawnSync('git', ['-C', REPO, 'show', '23b8ca9:js/mock.js'], { encoding: 'utf8' });

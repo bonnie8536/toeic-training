@@ -40,13 +40,13 @@
       {
         "q": "What is true about the coupon?",
         "options": [
-          "It cannot be used with the half-price cup offer.",
+          "It excludes the reusable-cup discount.",
           "It can be used only on Sunday.",
           "It gives a discount on bags of beans.",
           "It must be signed at the counter."
         ],
         "answer": 0,
-        "explanation": "定位優惠券小字：It cannot be used together with the half-price cup offer，故選 (A)。(B) 優惠券效期是 10 月 5 日至 11 日整週，週日限定的是豆子八折；(C) 折扣豆子的是週日優惠，不是這張券；(D) 要到櫃檯登記的是週六的參觀導覽名額，與優惠券無關。"
+        "explanation": "定位優惠券小字：It cannot be used together with the half-price cup offer。half-price cup offer 指項目列表第一點「自備杯子，熱飲半價」的優惠，excludes 就是「不適用、不得合併使用」，故選 (A)。(B) 優惠券效期是 10 月 5 日至 11 日整週，週日限定的是豆子八折；(C) 折扣豆子的是週日優惠，不是這張券；(D) 要到櫃檯登記的是週六的參觀導覽名額，與優惠券無關。"
       },
       {
         "q": "In the list of offers, the word \"limited\" is closest in meaning to",
@@ -113,13 +113,13 @@
       {
         "q": "What is suggested about the water bottles in this order?",
         "options": [
-          "Only four of them will be added to the customer's supply.",
+          "Eight of them will be exchanged for empty bottles.",
           "They will arrive on a different day from the paper cups.",
           "They must be washed before they are collected.",
           "They are cheaper than they were last year."
         ],
         "answer": 0,
-        "explanation": "推論題，須整合表格與下方段落。表格中 Spring water 一列訂了 12 桶，但 Deposit on new bottles 只收 4 個押金；段落又說司機會回收門外的空桶來換桶，可知其中 8 桶是拿客戶原有的空桶交換，真正新增的只有 4 桶，故選 (A)。(B) 表單只有一個指定送達時間，所有品項同批送達；(C) 段落只要求把空桶放在門外，未提清洗；(D) 表單沒有去年的價格可資比較。"
+        "explanation": "推論題，須整合表格與下方段落。表格中 Spring water 一列訂了 12 桶，但 Deposit on new bottles 只收 4 個押金；段落又說司機會回收門外的空桶來換桶，可知其中 8 桶是拿客戶原有的空桶交換，只有 4 桶是新增，故選 (A)。(B) 表單只有一個指定送達時間，所有品項同批送達；(C) 段落只要求把空桶放在門外，未提清洗；(D) 表單沒有去年的價格可資比較。"
       },
       {
         "q": "What must the customer do on the morning of the delivery?",
@@ -226,7 +226,7 @@
           "require"
         ],
         "answer": 0,
-        "explanation": "定位表格上方說明：Only the trips marked below can take cars，指這些班次可以載運汽車上船，故選 (A) accept；同句前一行的 carry passengers 也提供了平行線索。take 另有「奪取」（take by force）、「挑選」（take this one）、「需要／花費」（it takes two hours）等義，(B) seize、(C) choose、(D) require 即據此設計的誘答，但都不合本句「船班可載車」的語境。"
+        "explanation": "定位表格上方說明：Only the trips marked below can take cars，指這些班次可以讓汽車上船，故選 (A) accept；表格備註欄的 Cars accepted 正是同一件事的說法，前一句的 carry passengers 也提供平行線索。take 另有「奪取」（take by force）、「挑選」（take this one）、「需要／花費」（it takes two hours）等義，(B) seize、(C) choose、(D) require 即據此設計的誘答，但都不合本句「船班可載車」的語境。"
       }
     ],
     "translation": [
@@ -249,7 +249,7 @@
             { "who": "Bea Cardoso", "time": "12:01 P.M.", "text": "Which interview? I thought the design candidates were all coming on Thursday." },
             { "who": "Miriam Nowak", "time": "12:03 P.M.", "text": "One of them asked to move to today. His name is Peter Vance. Sign him in, then call Jonah at extension 214." },
             { "who": "Jonah Adeyemi", "time": "12:05 P.M.", "text": "I should be out of the meeting by three. If I am not, put him in the small meeting room with a glass of water and I will come down as soon as I can." },
-            { "who": "Bea Cardoso", "time": "12:07 P.M.", "text": "Understood. Is there a key for the front door at the desk? Last week it was locked when I came back from lunch and I had to wait outside." },
+            { "who": "Bea Cardoso", "time": "12:07 P.M.", "text": "Understood. Is there a key for the front door at the desk? Last week the door was locked when I came back from lunch, and nobody could find the key, so I had to wait outside." },
             { "who": "Miriam Nowak", "time": "12:09 P.M.", "text": "The key is in the top drawer, on the blue tag. Please do not leave it on the desk when you step away." },
             { "who": "Bea Cardoso", "time": "12:11 P.M.", "text": "Got it. I will bring my laptop and answer e-mail between calls." },
             { "who": "Miriam Nowak", "time": "12:12 P.M.", "text": "Thank you both. I will be back before four and I owe you a coffee." }
@@ -300,11 +300,11 @@
           "It must be returned to Ms. Nowak every evening."
         ],
         "answer": 0,
-        "explanation": "推論題。定位 12:07 P.M.：Last week it was locked when I came back from lunch and I had to wait outside，可知上週已因大門上鎖出過狀況，Miriam 也才提醒別把鑰匙留在桌上，故選 (A)。(B) 鑰匙放在櫃檯最上層抽屜、掛藍色吊牌；(C)(D) 對話中未提。"
+        "explanation": "推論題。定位 12:07 P.M. Bea 的訊息：Last week the door was locked when I came back from lunch, and nobody could find the key, so I had to wait outside，可知這把鑰匙之前就因為找不到而造成麻煩，Miriam 隨後也提醒她離開座位時別把鑰匙留在櫃檯上，故選 (A)。(B) 12:09 P.M. 說鑰匙放在最上層抽屜、掛藍色吊牌，不是樓下的警衛室；(C) 對話沒有提到這把鑰匙能開小會議室；(D) 對話沒有提到每晚要把鑰匙交還給 Miriam。"
       }
     ],
     "translation": [
-      "Miriam Nowak（上午 11:52）：Bea、Jonah，我需要幫忙。牙醫剛打來，這個月只剩今天下午 2:30 有空檔，所以我大約 2 點到 4 點得離開櫃檯。你們兩位有人可以幫我代班嗎？\n\nJonah Adeyemi（上午 11:55）：我 2 點要跟 Beaumont 女士開預算會議，通常要一個小時，有時候更久。\n\nBea Cardoso（上午 11:57）：我下午整個都空著。你要我幾點到櫃檯？\n\nMiriam Nowak（上午 11:58）：一點五十最好。工作沒什麼難的，就是接電話，還有一位訪客 3 點要來面試。\n\nBea Cardoso（下午 12:01）：哪一場面試？我以為設計職缺的應徵者都排在星期四。\n\nMiriam Nowak（下午 12:03）：其中一位要求改到今天。他叫 Peter Vance。幫他登記後，打分機 214 找 Jonah。\n\nJonah Adeyemi（下午 12:05）：我三點前應該就開完會了。如果還沒開完，請先帶他到小會議室、倒杯水給他，我會盡快下去。\n\nBea Cardoso（下午 12:07）：了解。櫃檯有大門的鑰匙嗎？上禮拜我吃完午餐回來，門是鎖著的，只能在外面等。\n\nMiriam Nowak（下午 12:09）：鑰匙在最上層抽屜裡，掛著藍色吊牌。離開座位時請不要把它留在櫃檯上。\n\nBea Cardoso（下午 12:11）：知道了。我會帶筆電過去，接電話的空檔順便回信。\n\nMiriam Nowak（下午 12:12）：謝謝你們兩位。我四點前會回來，欠你們一杯咖啡。"
+      "Miriam Nowak（上午 11:52）：Bea、Jonah，我需要幫忙。牙醫剛打來，這個月只剩今天下午 2:30 有空檔，所以我大約 2 點到 4 點得離開櫃檯。你們兩位有人可以幫我代班嗎？\n\nJonah Adeyemi（上午 11:55）：我 2 點要跟 Beaumont 女士開預算會議，通常要一個小時，有時候更久。\n\nBea Cardoso（上午 11:57）：我下午整個都空著。你要我幾點到櫃檯？\n\nMiriam Nowak（上午 11:58）：一點五十最好。工作沒什麼難的，就是接電話，還有一位訪客 3 點要來面試。\n\nBea Cardoso（下午 12:01）：哪一場面試？我以為設計職缺的應徵者都排在星期四。\n\nMiriam Nowak（下午 12:03）：其中一位要求改到今天。他叫 Peter Vance。幫他登記後，打分機 214 找 Jonah。\n\nJonah Adeyemi（下午 12:05）：我三點前應該就開完會了。如果還沒開完，請先帶他到小會議室、倒杯水給他，我會盡快下去。\n\nBea Cardoso（下午 12:07）：了解。櫃檯有大門的鑰匙嗎？上禮拜我吃完午餐回來，門是鎖著的，又沒有人找得到鑰匙，我只能在外面等。\n\nMiriam Nowak（下午 12:09）：鑰匙在最上層抽屜裡，掛著藍色吊牌。離開座位時請不要把它留在櫃檯上。\n\nBea Cardoso（下午 12:11）：知道了。我會帶筆電過去，接電話的空檔順便回信。\n\nMiriam Nowak（下午 12:12）：謝謝你們兩位。我四點前會回來，欠你們一杯咖啡。"
     ]
   }
 ]

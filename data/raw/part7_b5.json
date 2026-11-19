@@ -13,7 +13,7 @@
       {
         "q": "What is the article mainly about?",
         "options": [
-          "A dispute over a proposed rail line",
+          "A dispute among residents over a proposed rail line",
           "The conversion of a vacant building into workspace",
           "The closing of a textile manufacturer",
           "A change to a city parking regulation"
@@ -27,7 +27,7 @@
           "Membership in a merchants association",
           "Rents that decrease each year",
           "Equipment that small firms cannot afford individually",
-          "Long-term contracts with local clients"
+          "Long-term contracts with clients in the local area"
         ],
         "answer": 2,
         "explanation": "定位：第三段引言「What they lack is not floor area but equipment they could never buy on their own」，呼應第二段列出的木工房與攝影棚等共用設施。(A)錯：商家協會出現在最後一段，是估算來客數的單位，與租戶福利無關。(B)錯：文中只提租金起價 520 美元，未提逐年調降。(D)錯：文中未承諾為租戶帶來客戶合約。"
@@ -47,7 +47,7 @@
         "q": "What is NOT mentioned as a feature of the renovated building?",
         "options": [
           "A café",
-          "A photography stage",
+          "A stage for photography",
           "A woodshop",
           "A conference auditorium"
         ],
@@ -66,7 +66,7 @@
       {
         "type": "webpage",
         "label": "",
-        "content": "www.lanternfieldevents.com/rentals\n\nHome | Our Venues | Equipment Rental | Rates | Contact Us\n\nEQUIPMENT RENTAL — FREQUENTLY ASKED QUESTIONS\n\nLanternfield Events rents audiovisual and staging equipment to organizations throughout the Tri-County area, whether or not your event is held at one of our venues.\n\nHow do I place an order?\nComplete the request form on this page at least ten business days before your event. A coordinator will call you within two working days to confirm availability and arrange a delivery window. Orders placed with less than ten business days' notice are accepted by telephone only and carry a rush fee of $75.\n\nIs delivery included?\nDelivery and pickup are free within twenty miles of our Fairmont Road warehouse. Beyond that distance, we charge $1.40 per mile each way. Our drivers will carry equipment into the room where it will be used, but they are not permitted to mount screens or speakers on walls or ceilings.\n\nCan I operate the equipment myself?\nYes. Every order includes an illustrated setup guide. Clients hosting more than 150 guests, however, are strongly advised to hire a technician ($240 for a four-hour shift), since our larger sound systems take some practice to adjust properly.\n\nWhat happens if something is damaged?\nReport any fault by calling the number printed on your delivery receipt before your event ends. Items returned damaged are billed at replacement cost unless you have purchased the optional protection plan, which adds ten percent to the cost of the order."
+        "content": "www.example.com/rentals\n\nHome | Our Venues | Equipment Rental | Rates | Contact Us\n\nEQUIPMENT RENTAL — FREQUENTLY ASKED QUESTIONS\n\nLanternfield Events rents audiovisual and staging equipment to organizations throughout the Tri-County area, whether or not your event is held at one of our venues.\n\nHow do I place an order?\nComplete the request form on this page at least ten business days before your event. A coordinator will call you within two working days to confirm availability and arrange a delivery window. Orders placed with less than ten business days' notice are accepted by telephone only and carry a rush fee of $75.\n\nIs delivery included?\nDelivery and pickup are free within twenty miles of our Fairmont Road warehouse. Beyond that distance, we charge $1.40 per mile each way. Our drivers will carry equipment into the room where it will be used, but they are not permitted to mount screens or speakers on walls or ceilings.\n\nCan I operate the equipment myself?\nYes. Every order includes an illustrated setup guide. Clients hosting more than 150 guests, however, are strongly advised to hire a technician ($240 for a four-hour shift), since our larger sound systems take some practice to adjust properly.\n\nWhat happens if something is damaged?\nReport any fault by calling the number printed on your delivery receipt before your event ends. Items returned damaged are billed at replacement cost unless you have purchased the optional protection plan, which adds ten percent to the cost of the order."
       }
     ],
     "questions": [
@@ -90,7 +90,7 @@
           "They require the protection plan."
         ],
         "answer": 1,
-        "explanation": "定位：「How do I place an order?」段末句「Orders placed with less than ten days' notice are accepted by telephone only and carry a rush fee of $75」。(A)錯：仍然受理，只是限電話並加收急件費。(C)錯：150 人是建議另聘技術人員的門檻，與下訂時間無關。(D)錯：保障方案是選購項目，與急件無關。"
+        "explanation": "定位：「How do I place an order?」段末句「Orders placed with less than ten business days' notice are accepted by telephone only and carry a rush fee of $75」。(A)錯：仍然受理，只是限電話並加收急件費。(C)錯：150 人是建議另聘技術人員的門檻，與下訂時間無關。(D)錯：保障方案是選購項目，與急件無關。"
       },
       {
         "q": "What will the company's drivers NOT do?",
@@ -116,7 +116,7 @@
       }
     ],
     "translation": [
-      "www.lanternfieldevents.com/rentals\n\n首頁｜場地介紹｜設備租賃｜費率｜聯絡我們\n\n設備租賃－常見問題\n\n蘭登菲活動公司為三郡地區的各類機構出租視聽與舞台設備，無論您的活動是否在本公司場地舉辦皆可承租。\n\n如何下訂？\n請於活動前至少十個工作天填妥本頁的申請表。專員會在兩個工作天內來電確認庫存並安排送貨時段。距活動不足十個工作天才提出的訂單僅接受電話受理，並須加收七十五美元的急件費。\n\n含運嗎？\n以費爾蒙路倉庫為中心二十英里內，送貨與收回免費。超出此範圍者，去回程各按每英里一點四美元計費。司機會將設備搬進使用的房間，但不得將螢幕或喇叭安裝於牆面或天花板。\n\n我可以自己操作設備嗎？\n可以。每筆訂單皆附圖解安裝說明。不過，賓客超過一百五十人的客戶，我們強烈建議另聘技術人員（四小時班次二百四十美元），因為本公司較大型的音響設備需要一定的操作經驗才能調得恰當。\n\n設備損壞怎麼辦？\n請在活動結束前撥打送貨單上印的電話回報故障。歸還時已損壞的品項將按重置成本計價，除非您已購買選購的保障方案（費用為訂單金額加收一成）。"
+      "www.example.com/rentals\n\n首頁｜場地介紹｜設備租賃｜費率｜聯絡我們\n\n設備租賃－常見問題\n\n蘭登菲活動公司為三郡地區的各類機構出租視聽與舞台設備，無論您的活動是否在本公司場地舉辦皆可承租。\n\n如何下訂？\n請於活動前至少十個工作天填妥本頁的申請表。專員會在兩個工作天內來電確認庫存並安排送貨時段。距活動不足十個工作天才提出的訂單僅接受電話受理，並須加收七十五美元的急件費。\n\n含運嗎？\n以費爾蒙路倉庫為中心二十英里內，送貨與收回免費。超出此範圍者，去回程各按每英里一點四美元計費。司機會將設備搬進使用的房間，但不得將螢幕或喇叭安裝於牆面或天花板。\n\n我可以自己操作設備嗎？\n可以。每筆訂單皆附圖解安裝說明。不過，賓客超過一百五十人的客戶，我們強烈建議另聘技術人員（四小時班次二百四十美元），因為本公司較大型的音響設備需要一定的操作經驗才能調得恰當。\n\n設備損壞怎麼辦？\n請在活動結束前撥打送貨單上印的電話回報故障。歸還時已損壞的品項將按重置成本計價，除非您已購買選購的保障方案（費用為訂單金額加收一成）。"
     ]
   },
   {
@@ -156,7 +156,7 @@
         "q": "What are employees NO LONGER required to do?",
         "options": [
           "Keep receipts for meals",
-          "Submit claims within thirty days",
+          "Submit claims within thirty days of the expense",
           "Obtain a signature before submitting a claim",
           "Attend a training session"
         ],
@@ -167,7 +167,7 @@
         "q": "Who must attend a training session?",
         "options": [
           "All members of the Human Resources department",
-          "Employees hired within the past year",
+          "Employees who joined the company within the past year",
           "Department heads",
           "Employees who submitted an expense claim in the past year"
         ],
@@ -186,12 +186,12 @@
       {
         "type": "notice",
         "label": "Notice",
-        "content": "HALVERSON INSTITUTE OF PROFESSIONAL DEVELOPMENT\nFall Certificate Workshops — Kestrel Business Park Campus\n\nRegistration is now open for the workshops listed below. All sessions run from 9:00 A.M. to 4:00 P.M. and include lunch.\n\nManaging Remote Teams — Friday, October 3 — $310\nNegotiation for Purchasing Staff — Tuesday, October 14 — $340\nFinancial Reporting Essentials — Thursday, October 23 — $340\nPresenting with Data — Saturday, November 8 — $290\n\nNotes for participants:\n\n- Organizations enrolling three or more employees in the same workshop receive a fifteen percent reduction on each registration.\n- Fees must be paid no later than ten days before the workshop date. Registrations that remain unpaid after that point are released to the waiting list.\n- Each workshop is limited to eighteen participants so that every attendee can take part in the afternoon practice exercises.\n- Anyone who completes two workshops within a twelve-month period may apply the value of a third workshop toward our Certificate in Operations Management.\n- Saturday sessions meet in the Willowbank Annex, a ten-minute walk from the main building. Parking at the Annex is limited, and we recommend the shuttle from Kestrel Station.\n\nTo register, contact Delia Ambrose at d.ambrose@halversoninstitute.org or 555-0142."
+        "content": "HALVERSON INSTITUTE OF PROFESSIONAL DEVELOPMENT\nFall Certificate Workshops — Kestrel Business Park Campus\n\nRegistration is now open for the workshops listed below. All sessions run from 9:00 A.M. to 4:00 P.M. and include lunch.\n\nManaging Remote Teams — Friday, October 3 — $310\nNegotiation for Purchasing Staff — Tuesday, October 14 — $340\nFinancial Reporting Essentials — Thursday, October 23 — $340\nPresenting with Data — Saturday, November 8 — $290\n\nNotes for participants:\n\n- Organizations enrolling three or more employees in the same workshop receive a fifteen percent reduction on each registration.\n- Fees must be paid no later than ten days before the workshop date. Registrations that remain unpaid after that point are released to the waiting list.\n- Each workshop is limited to eighteen participants so that every attendee can take part in the afternoon practice exercises.\n- Anyone who completes two workshops within a twelve-month period may apply the value of a third workshop toward our Certificate in Operations Management.\n- Saturday sessions meet in the Willowbank Annex, a ten-minute walk from the main building. Parking at the Annex is limited, and we recommend the shuttle from Kestrel Station.\n\nTo register, contact Delia Ambrose at d.ambrose@example.org or 555-0142."
       },
       {
         "type": "email",
         "label": "E-mail",
-        "content": "To: Delia Ambrose <d.ambrose@halversoninstitute.org>\nFrom: Marcus Tiley <m.tiley@brightwaterdairy.com>\nDate: September 12\nSubject: Fall workshops\n\nDear Ms. Ambrose,\n\nI saw your notice at the Kestrel Business Park reception desk and would like to enroll four members of my purchasing department in the session you are offering for that group. Could you confirm that places are still available and tell me the total cost once the group reduction has been applied?\n\nTwo further questions. First, one of my colleagues, Renata Voss, attended a workshop with you last November and another this past March. Would she be able to put the value of a third workshop toward the certificate you mention, or has too much time passed?\n\nSecond, I would also like to send two staff members to the November session. None of them drives, so could you tell me how often the shuttle you refer to runs on weekends?\n\nFinally, we would prefer to settle the invoice by bank transfer. Our accounts department processes transfers on the last working day of each month, and I hope that will still leave us inside your payment window.\n\nKind regards,\n\nMarcus Tiley\nPurchasing Manager\nBrightwater Dairy"
+        "content": "To: Delia Ambrose <d.ambrose@example.org>\nFrom: Marcus Tiley <m.tiley@example.com>\nDate: September 12\nSubject: Fall workshops\n\nDear Ms. Ambrose,\n\nI saw your notice at the Kestrel Business Park reception desk and would like to enroll four members of my purchasing department in the session you are offering for that group. Could you confirm that places are still available and tell me the total cost once the group reduction has been applied?\n\nTwo further questions. First, one of my colleagues, Renata Voss, attended a workshop with you last November and another this past March. Would she be able to put the value of a third workshop toward the certificate you mention, or has too much time passed?\n\nSecond, I would also like to send two staff members to the November session. Neither of them drives, so could you tell me how often the shuttle you refer to runs on weekends?\n\nFinally, we would prefer to settle the invoice by bank transfer. Our accounts department processes transfers on the last working day of each month, and I hope that will still leave us inside your payment window.\n\nKind regards,\n\nMarcus Tiley\nPurchasing Manager\nBrightwater Dairy"
       }
     ],
     "questions": [
@@ -252,8 +252,8 @@
       }
     ],
     "translation": [
-      "哈佛森職能發展學院\n秋季證書工作坊－凱斯楚商業園區校區\n\n下列工作坊即日起開放報名。所有場次皆自上午九時進行至下午四時，並含午餐。\n\n遠距團隊管理－十月三日（星期五）－三一○美元\n採購人員談判技巧－十月十四日（星期二）－三四○美元\n財務報表基礎－十月二十三日（星期四）－三四○美元\n以數據做簡報－十一月八日（星期六）－二九○美元\n\n參加者須知：\n\n－ 同一機構於同一場工作坊報名三人以上者，每一名額均可享八五折優惠。\n－ 費用最遲須於工作坊日期前十天繳清。逾期未繳者，其名額將釋出給候補名單。\n－ 每場工作坊人數上限十八人，以確保每位學員都能參與下午的實作演練。\n－ 於十二個月內完成兩場工作坊者，可將第三場的費用抵充本院的營運管理證書學程。\n－ 星期六場次於威洛班克別館舉行，自主建築步行約十分鐘。別館停車位有限，建議搭乘凱斯楚車站發車的接駁車。\n\n報名請洽戴莉亞・安布羅斯，電子郵件 d.ambrose@halversoninstitute.org 或電話 555-0142。",
-      "收件者：戴莉亞・安布羅斯 <d.ambrose@halversoninstitute.org>\n寄件者：馬可斯・泰利 <m.tiley@brightwaterdairy.com>\n日期：九月十二日\n主旨：秋季工作坊\n\n安布羅斯女士您好：\n\n我在凱斯楚商業園區的服務櫃檯看到貴院的公告，想為採購部門的四位同仁報名貴院專為該職務開設的那場課程。可否確認名額是否仍有空缺，並告知套用團體折扣後的總費用？\n\n另有兩個問題。第一，我的同事芮娜塔・沃斯去年十一月上過貴院一場工作坊，今年三月又上了一場。她是否還能把第三場的費用抵充您提到的證書學程，還是時間已經超過了？\n\n第二，我也想派兩位同仁參加十一月的場次。他們都不開車，可否告知您提到的接駁車在週末的班次密度？\n\n最後，我們希望以銀行匯款支付。本公司帳務部門固定在每月最後一個工作日處理匯款，希望這樣仍在貴院的繳費期限之內。\n\n謹此\n布萊特沃乳品公司\n採購經理 馬可斯・泰利"
+      "哈佛森職能發展學院\n秋季證書工作坊－凱斯楚商業園區校區\n\n下列工作坊即日起開放報名。所有場次皆自上午九時進行至下午四時，並含午餐。\n\n遠距團隊管理－十月三日（星期五）－三一○美元\n採購人員談判技巧－十月十四日（星期二）－三四○美元\n財務報表基礎－十月二十三日（星期四）－三四○美元\n以數據做簡報－十一月八日（星期六）－二九○美元\n\n參加者須知：\n\n－ 同一機構於同一場工作坊報名三人以上者，每一名額均可享八五折優惠。\n－ 費用最遲須於工作坊日期前十天繳清。逾期未繳者，其名額將釋出給候補名單。\n－ 每場工作坊人數上限十八人，以確保每位學員都能參與下午的實作演練。\n－ 於十二個月內完成兩場工作坊者，可將第三場的費用抵充本院的營運管理證書學程。\n－ 星期六場次於威洛班克別館舉行，自主建築步行約十分鐘。別館停車位有限，建議搭乘凱斯楚車站發車的接駁車。\n\n報名請洽戴莉亞・安布羅斯，電子郵件 d.ambrose@example.org 或電話 555-0142。",
+      "收件者：戴莉亞・安布羅斯 <d.ambrose@example.org>\n寄件者：馬可斯・泰利 <m.tiley@example.com>\n日期：九月十二日\n主旨：秋季工作坊\n\n安布羅斯女士您好：\n\n我在凱斯楚商業園區的服務櫃檯看到貴院的公告，想為採購部門的四位同仁報名貴院專為該職務開設的那場課程。可否確認名額是否仍有空缺，並告知套用團體折扣後的總費用？\n\n另有兩個問題。第一，我的同事芮娜塔・沃斯去年十一月上過貴院一場工作坊，今年三月又上了一場。她是否還能把第三場的費用抵充您提到的證書學程，還是時間已經超過了？\n\n第二，我也想派兩位同仁參加十一月的場次。他們都不開車，可否告知您提到的接駁車在週末的班次密度？\n\n最後，我們希望以銀行匯款支付。本公司帳務部門固定在每月最後一個工作日處理匯款，希望這樣仍在貴院的繳費期限之內。\n\n謹此\n布萊特沃乳品公司\n採購經理 馬可斯・泰利"
     ]
   },
   {
@@ -365,7 +365,7 @@
       {
         "type": "email",
         "label": "E-mail",
-        "content": "To: travel@pellworthgray.com\nFrom: i.sato@pellworthgray.com\nDate: April 1\nSubject: Trip reference PG-40718 — two changes\n\nHello,\n\nTwo things have come up since the itinerary was issued.\n\nFirst, Owen Achebe has asked whether the budget planning session could be moved to Tuesday morning, since his finance team is being audited on Wednesday. The suppliers are willing to meet me on Wednesday instead, but only in the afternoon, which means I would have to leave Larkspur later than planned. The next flight I can find departs at 18:05. Could you check whether that change still falls inside the free change window?\n\nSecond, the presentation on Tuesday has grown from twelve attendees to about thirty, and the room currently reserved seats twenty. Could you ask the hotel whether the Kingsley Room on the ground floor is available that afternoon? If it is not, I would rather move the session to the distribution center, which has a training room of the right size.\n\nOne last point: because I will now be in the city for an extra afternoon, please confirm that the hotel will not bill me for a late checkout.\n\nThank you,\n\nIngrid Sato"
+        "content": "To: travel@example.com\nFrom: i.sato@example.com\nDate: April 1\nSubject: Trip reference PG-40718 — two changes\n\nHello,\n\nTwo things have come up since the itinerary was issued.\n\nFirst, Owen Achebe has asked whether the budget planning session could be moved to Tuesday morning, since his finance team is being audited on Wednesday. The suppliers are willing to meet me on Wednesday instead, but only in the afternoon, which means I would have to leave Larkspur later than planned. The next flight I can find departs at 18:05. Could you check whether that change still falls inside the free change window?\n\nSecond, the presentation on Tuesday has grown from twelve attendees to about thirty, and the room currently reserved seats twenty. Could you ask the hotel whether the Kingsley Room on the ground floor is available that afternoon? If it is not, I would rather move the session to the distribution center, which has a training room of the right size.\n\nOne last point: because I will now be in the city for an extra afternoon, please confirm that the hotel will not bill me for a late checkout.\n\nThank you,\n\nIngrid Sato"
       }
     ],
     "questions": [
@@ -397,7 +397,7 @@
           "Tour the distribution center",
           "Discuss budget planning with Mr. Achebe",
           "Meet with suppliers",
-          "Present to regional managers"
+          "Give a presentation to the regional managers"
         ],
         "answer": 1,
         "explanation": "定位：須整合兩篇。行程表原訂週二上午 09:00-12:00 為供應商檢討會議、週三上午 09:30-11:00 為預算規劃會議；電子郵件第二段請求把預算規劃會議移到週二上午，供應商則改到週三下午。兩相對照，週二上午將改為與阿契貝先生的預算規劃會議。(A)錯：配送中心參訪在週一下午。(C)錯：供應商會議依請求已挪到週三下午。(D)錯：對區域經理簡報排在週二下午 13:30。"
@@ -426,8 +426,8 @@
       }
     ],
     "translation": [
-      "佩爾沃斯與葛雷公司－差旅行程表\n出行人：區域營運部 英格麗・佐藤 女士\n製表：企業差旅櫃檯\n行程編號：PG-40718\n\n四月六日（星期一）\n07:40 自艾許康國際機場出發（VN 216 班機）\n09:55 抵達拉克斯珀市\n11:30 入住哈特菲爾套房飯店，貝克特街十二號\n14:00-17:00 參訪拉克斯珀配送中心（接待人：歐文・阿契貝）\n\n四月七日（星期二）\n09:00-12:00 供應商檢討會議，拉克斯珀配送中心\n13:30-15:00 對區域經理進行簡報，哈特菲爾套房飯店愛默生廳\n19:00 與拉克斯珀管理團隊晚宴，卡薩瓦燒烤餐廳\n\n四月八日（星期三）\n09:30-11:00 與阿契貝先生及財務同仁進行預算規劃會議\n15:15 自拉克斯珀市出發（VN 341 班機）\n17:20 抵達艾許康國際機場\n\n附註\n抵達時將有車輛至機場接您。房費由公司直接支付；除星期二晚宴外的餐費請以費用申請方式核銷。以本公司企業票價訂購的機票可免費更改一次，惟須於起飛前至少七十二小時通知差旅櫃檯。",
-      "收件者：travel@pellworthgray.com\n寄件者：i.sato@pellworthgray.com\n日期：四月一日\n主旨：行程編號 PG-40718－兩項異動\n\n您好：\n\n行程表發出後有兩件事有了變化。\n\n第一，歐文・阿契貝詢問預算規劃會議能否改到星期二上午，因為他的財務團隊星期三要接受稽核。供應商願意改在星期三與我碰面，但只能約下午，這代表我得比原訂時間更晚離開拉克斯珀。我查到最近的一班是十八點零五分起飛。可否幫我確認這樣的更改是否仍在免費更改的期限內？\n\n第二，星期二的簡報出席人數已從十二人增加到約三十人，而目前預訂的會議室只能容納二十人。可否請您向飯店詢問一樓的金斯利廳當天下午是否有空？若無，我寧可把場地改到配送中心，那裡有一間大小合適的訓練教室。\n\n最後一點：由於我將在當地多待一個下午，請確認飯店不會向我收取延遲退房的費用。\n\n謝謝\n英格麗・佐藤"
+      "佩爾沃斯與葛雷公司－差旅行程表\n行程對象：區域營運部 英格麗・佐藤 女士\n製表：企業差旅櫃檯\n行程編號：PG-40718\n\n四月六日（星期一）\n07:40 自艾許康國際機場出發（VN 216 班機）\n09:55 抵達拉克斯珀市\n11:30 入住哈特菲爾套房飯店，貝克特街十二號\n14:00-17:00 參訪拉克斯珀配送中心（接待人：歐文・阿契貝）\n\n四月七日（星期二）\n09:00-12:00 供應商檢討會議，拉克斯珀配送中心\n13:30-15:00 對區域經理進行簡報，哈特菲爾套房飯店愛默生廳\n19:00 與拉克斯珀管理團隊晚宴，卡薩瓦燒烤餐廳\n\n四月八日（星期三）\n09:30-11:00 與阿契貝先生及財務同仁進行預算規劃會議\n15:15 自拉克斯珀市出發（VN 341 班機）\n17:20 抵達艾許康國際機場\n\n附註\n抵達時將有車輛至機場接您。房費由公司直接支付；除星期二晚宴外的餐費請以費用申請方式核銷。以本公司企業票價訂購的機票可免費更改一次，惟須於起飛前至少七十二小時通知差旅櫃檯。",
+      "收件者：travel@example.com\n寄件者：i.sato@example.com\n日期：四月一日\n主旨：行程編號 PG-40718－兩項異動\n\n您好：\n\n行程表發出後有兩件事有了變化。\n\n第一，歐文・阿契貝詢問預算規劃會議能否改到星期二上午，因為他的財務團隊星期三要接受稽核。供應商願意改在星期三與我碰面，但只能約下午，這代表我得比原訂時間更晚離開拉克斯珀。我查到最近的一班是十八點零五分起飛。可否幫我確認這樣的更改是否仍在免費更改的期限內？\n\n第二，星期二的簡報出席人數已從十二人增加到約三十人，而目前預訂的會議室只能容納二十人。可否請您向飯店詢問一樓的金斯利廳當天下午是否有空？若無，我寧可把場地改到配送中心，那裡有一間大小合適的訓練教室。\n\n最後一點：由於我將在當地多待一個下午，請確認飯店不會向我收取延遲退房的費用。\n\n謝謝\n英格麗・佐藤"
     ]
   }
 ]

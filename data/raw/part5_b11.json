@@ -57,7 +57,7 @@
     "options": ["receipt", "balance", "account", "estimate"],
     "answer": 3,
     "translation": "在核准這批海報的印製之前，歐卡佛小姐向印刷廠索取一份總費用的書面估價。",
-    "explanation": "考點：商業名詞辨析。estimate 指「估價、報價」，是開工前先提出的費用預估，和 Before approving（核准之前）以及 of the total cost（總費用）完全吻合，故 (D) 正確。(A) receipt 是「收據」，付款之後才會拿到。(B) balance 指帳目上的「餘額、未付款項」。(C) account 指「帳戶、帳目」，不是費用預估。"
+    "explanation": "考點：商業名詞辨析。estimate 指「估價、報價」，是開工前先提出的費用預估，和 Before approving（核准之前）以及 of the total cost（總費用）完全吻合，故 (D) 正確。(A) receipt 是「收據」，付款之後才會拿到。(B) balance 指帳目上的「餘額、未付款項」，要等交易發生後才有。(C) account 指「帳戶、帳目」；a written account 也可以解作「書面說明」，但說明的是已經發生的事情，這時工作還沒核准、費用也還沒產生，要的是事前的估價，不是事後的說明。"
   },
   {
     "id": "p5-b11-07",
@@ -137,7 +137,7 @@
     "options": ["surprising", "surprised", "surprise", "to surprise"],
     "answer": 1,
     "translation": "這間麵包店的老闆很驚訝，新烤箱這麼快就把成本賺了回來。",
-    "explanation": "考點：情緒動詞的分詞用法。surprise 的本意是「使人感到驚訝」，當主詞是人並且自己感到驚訝時，要用過去分詞當形容詞，故 (B) surprised 正確，後面再用 by 帶出原因。(A) surprising 是現在分詞，用來形容令人驚訝的事物，例如 a surprising result；用在人身上會變成「這兩位老闆很令人驚訝」，也無法和 by 搭配。(C) surprise 是原形動詞，were 後面不能再接原形。(D) to surprise 是不定詞，會變成「為了使人驚訝」，語意不通。"
+    "explanation": "考點：情緒動詞的分詞用法。surprise 的本意是「使人感到驚訝」，當主詞是人並且自己感到驚訝時，要用過去分詞當形容詞，故 (B) surprised 正確，後面再用 by 帶出原因。(A) surprising 是現在分詞，用來形容令人驚訝的事物，例如 a surprising result；用在人身上會變成「這些老闆很令人驚訝」，也無法和 by 搭配。(C) surprise 是原形動詞，were 後面不能再接原形。(D) to surprise 是不定詞，會變成「為了使人驚訝」，語意不通。"
   },
   {
     "id": "p5-b11-15",
@@ -207,7 +207,7 @@
     "options": ["moves", "moved", "moving", "to move"],
     "answer": 2,
     "translation": "由於一場風暴正朝海岸移動，露營區的管理員把所有出租帳篷都收進了倉庫。",
-    "explanation": "考點：「with＋受詞＋分詞」的附帶狀況結構。with 後面的 a storm 和 move 之間是主動關係——風暴自己在移動，而且是正在進行的狀態，所以要用現在分詞 (C) moving。(A) moves 是限定動詞，with 後面不能接一個完整子句。(B) moved 是過去分詞，表被動，會變成風暴「被移動」。(D) to move 是不定詞，這個結構不用不定詞來描述同時發生的狀況。"
+    "explanation": "考點：「with＋受詞＋分詞」的附帶狀況結構。with 後面的 a storm 和 move 之間是主動關係，風暴自己在移動，而且是正在進行的狀態，所以要用現在分詞 (C) moving。(A) moves 是限定動詞，with 後面不能接一個完整子句。(B) moved 是過去分詞，表被動，會變成風暴「被移動」。(D) to move 是不定詞，這個結構不用不定詞來描述同時發生的狀況。"
   },
   {
     "id": "p5-b11-22",
@@ -227,7 +227,7 @@
     "options": ["deal", "be dealt", "have dealt", "dealing"],
     "answer": 3,
     "translation": "在五金行櫃檯站了十年，諾瓦克先生早已習慣同時應付好幾位顧客。",
-    "explanation": "考點：be used to 與 used to 的差別。be used to 裡的 to 是介系詞，意思是「習慣於」，後面要接動名詞，故 (D) dealing 正確。(A) deal 是原形動詞，只有 used to＋原形（過去經常）才這樣用，但句中的 is 已經排除這個可能。(B) be dealt 是原形的被動式，介系詞後不能接原形，而且應付顧客的人是諾瓦克先生，語意上該用主動。(C) have dealt 同樣是原形形式，不能放在介系詞後面。"
+    "explanation": "考點：be used to＋動名詞（習慣於）、used to＋原形（過去經常）與 be used to＋原形（被用來）的差別。句首 After ten years behind the counter 說明他已經做了十年，重點是「已經習慣」；這裡的 to 是介系詞，後面要接動名詞，故 (D) dealing 正確。(A) deal 接在 is used to 後面，只能理解成「諾瓦克先生被拿來應付顧客」的被動說法，把人當成工具，和十年經驗帶出的「習慣」語意不合；表示過去經常的 used to＋原形，前面也不會有 is。(B) be dealt 是原形的被動式，介系詞後不能接原形，而且應付顧客的人是諾瓦克先生，語意上該用主動。(C) have dealt 同樣是原形形式，不能放在介系詞後面。"
   },
   {
     "id": "p5-b11-24",

@@ -37,7 +37,7 @@
           "It can be used at any time."
         ],
         "answer": 3,
-        "explanation": "定位在 just use the drop box by the side entrance. It's open all day。all day 就是全天都能用，對應選項 D。原文說還書箱在側門 (side entrance) 旁邊，選項 A 把地點換成前面櫃檯，聽到 front desk 就選會中招——那個字出現在第一段的還書指示裡。"
+        "explanation": "定位在 just use the drop box by the side entrance. It's open all day。all day 就是全天都能用，對應選項 D。原文說還書箱在側門（side entrance）旁邊，選項 A 把地點換成前面櫃檯；front desk 出現在廣播第一句，是請大家把要借的書拿去櫃檯，跟還書箱無關。選項 B 的搬移、選項 C 的只收雜誌，原文都沒提。"
       }
     ],
     "transcriptZh": "各位讀者請注意，本館再二十分鐘就要閉館了，想借的書請現在拿到前面櫃檯來。\n如果你人在樓上的自習室，離開時別忘了把東西帶走，我們沒辦法幫忙保管過夜。\n還有一件事。明天早上全館同仁要上電腦教育訓練，所以會晚一點開門，要到下午一點才開放。如果你在那之前要還書，可以用側門旁邊的還書箱，那個箱子全天都能用。\n謝謝大家，明天見。"
@@ -118,12 +118,12 @@
         "q": "According to the speaker, what will stay the same?",
         "options": [
           "Ticket prices",
-          "How often buses run",
+          "The route through downtown",
           "The times buses reach the station",
           "The number of stops on the route"
         ],
         "answer": 2,
-        "explanation": "定位在最後一句 The change doesn't affect our times, so buses should still reach the station on schedule。doesn't affect our times 加上 on schedule，不變的就是抵達時間，對應選項 C。選項 D 剛好相反——郵局那站停用三個星期，停靠站數是有變的；票價和班次密度全篇沒提。"
+        "explanation": "定位在最後一句 The change doesn't affect our times, so buses should still reach the station on schedule。doesn't affect our times 加上 on schedule，不變的是抵達火車站的時間，對應選項 C。選項 B 正好講反，開頭就說市中心這段要改走別的路線（taking a different route through the downtown area）。選項 D 不成立，郵局那站要停用約三週，說話者沒有說停靠站數不變。選項 A 的票價全篇沒提。"
       }
     ],
     "transcriptZh": "這是給搭乘八號公車乘客的服務通知。從下週一開始，我們在市中心這一段會改走別的路線，因為市政府要整修 Market 街。\n所以我們不會在 Market 街轉彎，而是直接沿著 Pine 街走，到火車站再接回原本的路線。也就是說，郵局前面那一站大概三個星期不會停靠。如果你平常在那站上下車，最近的一站在 Pine 街，就在銀行旁邊。\n造成不便，我們很抱歉。這次改道不會影響時間，公車還是會照原本的時刻抵達火車站。"

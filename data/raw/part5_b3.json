@@ -87,7 +87,7 @@
     "options": ["Complete", "Completed", "Having completed", "To have completed"],
     "answer": 2,
     "translation": "由於提前三週完成併購文件，布蘭特利與沃斯公司的法務團隊獲得一天額外的有薪假。",
-    "explanation": "考點：分詞構句的語態與時序。主要子句的主詞 the legal team 是完成文件的一方，且該動作發生在獲得假期之前，故用完成式現在分詞 (C) Having completed。(A) Complete 是原形動詞或形容詞，無法引導分詞構句。(B) Completed 為過去分詞表被動，會誤指法務團隊「被完成」。(D) To have completed 是完成式不定詞，用於表達目的或未實現的動作，與此處的因果時序不符。"
+    "explanation": "考點：分詞構句的語態與時序。主要子句的主詞 the legal team 是完成文件的一方，且完成文件發生在獲得假期之前，故用完成式現在分詞 (C) Having completed，表「因為已經完成…」。(A) Complete 是原形動詞，放句首會變成祈使句，不能用逗號接另一個完整子句。(B) Completed 為過去分詞表被動，後面卻還接著受詞 the merger paperwork，且法務團隊是完成文件的人，不是被完成的對象。(D) To have completed 是完成式不定詞，放句首不能表原因，無法表達「因提前完成而獲得假期」的因果關係。"
   },
   {
     "id": "p5-b3-10",
@@ -147,7 +147,7 @@
     "options": ["not announcing", "not to announce", "not announced", "to not announce"],
     "answer": 0,
     "translation": "特里利斯軟體的資訊部門為未在伺服器離線前向全體員工公告維護時段一事致歉。",
-    "explanation": "考點：介系詞後的動名詞及其否定形式。apologize for 的 for 是介系詞，後面須接動名詞，而動名詞的否定是把 not 直接放在動名詞之前，故選 (A) not announcing。(B) not to announce 是不定詞，不能接在介系詞之後。(C) not announced 是過去分詞，此處需要的是名詞性成分而非被動修飾語。(D) to not announce 除了同樣不能接在介系詞後，這種分裂不定詞的寫法在正式商業英文中也不適用。"
+    "explanation": "考點：介系詞後的動名詞及其否定形式。apologize for 的 for 是介系詞，後面須接動名詞，而動名詞的否定是把 not 直接放在動名詞之前，故選 (A) not announcing。(B) not to announce 是不定詞，不能接在介系詞之後。(C) not announced 是過去分詞，此處需要的是名詞性成分而非被動修飾語。(D) to not announce 也是不定詞，同樣不能接在介系詞 for 之後。"
   },
   {
     "id": "p5-b3-16",
@@ -207,7 +207,7 @@
     "options": ["consistent", "constant", "continuous", "considerate"],
     "answer": 0,
     "translation": "科蒙特工業的財務部已要求所有主管，使差旅支出符合員工手冊所訂的額度上限。",
-    "explanation": "考點：形容詞與介系詞的搭配 be consistent with（與……一致、符合）。空格後有 with，句意為支出須符合規定，故選 (A) consistent。(B) constant 指固定不變的，語意上並非要求金額永遠不動。(C) continuous 指不間斷的，用於時間或動作的連續性。(D) considerate 指體貼他人的，只能用來形容人。"
+    "explanation": "考點：形容詞與介系詞的搭配 be consistent with（與……一致、符合）。空格後有 with，句意為支出須符合規定，故選 (A) consistent。(B) constant 指固定不變的，語意上並非要求金額永遠不動。(C) continuous 指不間斷的，用於時間或動作的連續性。(D) considerate 指體貼他人的，用來形容人或人的舉動，不能形容差旅支出。"
   },
   {
     "id": "p5-b3-22",

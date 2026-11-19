@@ -180,7 +180,7 @@
         "q": "What kind of business is Greenholt?",
         "options": [
           "A company that manufactures cotton fabric",
-          "A company that supplies and cleans work clothing",
+          "A business that rents and washes uniforms",
           "A store that sells laundry machines",
           "An agency that finds staff for restaurants"
         ],
@@ -373,7 +373,7 @@
           "delay"
         ],
         "answer": 2,
-        "explanation": "定位：電子郵件第五段最後一句「does that leave us enough time?」，受詞是 us 與 enough time，問的是這樣是否還來得及，即「留給我們足夠的時間」。(A)錯：leave 作「離開」時後面接地點，不接雙受詞。(B)(D)錯：兩者都不是 leave 的字義，句中也沒有忘記或延後的語意。"
+        "explanation": "定位：電子郵件第五段最後一句「does that leave us enough time?」，受詞是 us 與 enough time，問的是這樣是否還來得及，即「留給我們足夠的時間」，與 give 同義。(A)錯：leave 作「離開」時後面接地點，不接雙受詞。(B)錯：leave 雖可指出門時忘了帶走某物，但此處的受詞是時間，不是被遺落的物品。(D)錯：leave 沒有「延後」的意思，句中也沒有延後的語意。"
       },
       {
         "q": "How much will the assembly work requested by Ms. Okafor add to the order?",
@@ -387,7 +387,7 @@
         "explanation": "定位：須整合兩篇。電子郵件第四段說要請師傅組裝「the desks and the meeting tables」；報價單品項顯示書桌 24 張、會議桌 2 張，共 26 件，而條款第二點規定桌類每件 18 美元，26 × 18 = 468。(A)錯：432 只算了 24 張書桌。(C)錯：504 是把件數誤算為 28。(D)錯：738 是多加了三十張椅子的組裝費 270 美元，但她並未要求組裝椅子。"
       },
       {
-        "q": "If Ms. Okafor returns the signed quotation on August 11, when will the furniture most likely be delivered?",
+        "q": "If Ms. Okafor's signed quotation and deposit reach Meridian on August 11, when will the furniture most likely be delivered?",
         "options": [
           "On August 25",
           "On September 1",
@@ -395,7 +395,7 @@
           "On September 15"
         ],
         "answer": 2,
-        "explanation": "定位：須整合兩篇。報價單條款第四點寫明交期為收到簽署文件與訂金後四週；電子郵件第五段說她八月十一日寄回，八月十一日加四週即九月八日。(A)錯：八月二十五日只過了兩週。(B)錯：九月一日只過了三週。(D)錯：郵件只說希望九月八日那一週結束前家具就定位，並未提到九月十五日，依四週交期算出的也是九月八日。"
+        "explanation": "定位：須整合兩篇。報價單條款第四點寫明交期為收到簽署之報價單與三成訂金當日起算四週；題目設定兩者都在八月十一日送達，八月十一日加四週即九月八日。(A)錯：八月二十五日只過了兩週。(B)錯：九月一日只過了三週。(D)錯：九月十五日已是五週後；郵件只說希望九月八日那一週結束前家具就定位，並未提到九月十五日。"
       }
     ],
     "translation": [

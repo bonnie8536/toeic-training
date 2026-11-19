@@ -50,9 +50,9 @@
       {
         "num": 1,
         "type": "文法",
-        "options": ["relocates", "has relocated", "will be relocated", "was relocating"],
+        "options": ["relocating", "has relocated", "will be relocated", "was relocating"],
         "answer": 2,
-        "explanation": "考時態與語態。主詞 the print room 是「被搬遷」的對象，須用被動語態；句首 Beginning Monday, September 15 指向未來的時間，故答案為未來被動 will be relocated。(A) relocates 是現在式主動；(B) has relocated 是現在完成式主動，時態與語態都不合；(D) was relocating 是過去進行式主動，與未來時間點衝突。"
+        "explanation": "考動詞形式與時態。空格是句子的主要動詞，句首 Beginning Monday, September 15 是公告日（9 月 3 日）之後的時間，要用未來式，故選 will be relocated（將遷至）。(A) relocating 是分詞，不能單獨當主要動詞，句子會缺少述語；(B) has relocated 是現在完成式，表示已經完成，與未來的時間點衝突；(D) was relocating 是過去進行式，同樣與未來的時間點衝突。"
       },
       {
         "num": 2,
@@ -87,7 +87,7 @@
     "id": "p6-b3-3",
     "passageType": "advertisement",
     "title": "Job Advertisement: Logistics Coordinator",
-    "passage": "KESTREL FREIGHT SOLUTIONS\nNow Hiring: Logistics Coordinator\n\nKestrel Freight Solutions is looking for a full-time logistics coordinator at our Riverton distribution center. The person selected will schedule outbound shipments, monitor carrier performance, and {{1}} daily reports for the operations manager.\n\nApplicants should have at least three years of experience in a warehouse or transportation setting. Familiarity with inventory management software is {{2}}, but candidates without it will still be considered.\n\n{{3}} Those who are willing to work an occasional weekend shift will be given priority.\n\nTo apply, send a resume and a short cover letter to careers@kestrelfreight.com {{4}} October 30. Interviews will begin the following week.",
+    "passage": "KESTREL FREIGHT SOLUTIONS\nNow Hiring: Logistics Coordinator\n\nKestrel Freight Solutions is looking for a full-time logistics coordinator at our Riverton distribution center. The person selected will schedule outbound shipments, monitor carrier performance, and {{1}} daily reports for the operations manager.\n\nApplicants should have at least three years of experience in a warehouse or transportation setting. Familiarity with inventory management software is {{2}}, but candidates without it will still be considered.\n\n{{3}} Those who are willing to work an occasional weekend shift will be given priority.\n\nTo apply, send a resume and a short cover letter to careers@example.com {{4}} October 30. Interviews will begin the following week.",
     "questions": [
       {
         "num": 1,
@@ -123,7 +123,7 @@
         "explanation": "考介系詞。by + 時間點表示「最晚在某時間之前完成」，符合投遞履歷的截止期限。(A) until 表示動作或狀態「持續到」某時點，但 send 是瞬間動作，不能用 until；(B) since 表示自某時點起算，須搭配完成式；(D) during 後面必須接一段期間（如 during October），不能接 October 30 這樣的特定日期。"
       }
     ],
-    "translation": "科斯特爾貨運解決方案\n誠徵：物流協調專員\n\n科斯特爾貨運解決方案正在為河頓配送中心徵求一名全職物流協調專員。獲選者將負責安排出貨排程、追蹤承運商的表現，並為營運經理製作每日報表。\n\n應徵者須具備至少三年倉儲或運輸相關領域的工作經驗。熟悉庫存管理軟體者尤佳，但不具備此項經驗的應徵者仍會列入考量。\n\n本職務採輪班制，每週工作四天，每天十小時。願意配合偶爾週末班者將優先錄用。\n\n應徵請於10月30日前將履歷與簡短的求職信寄至 careers@kestrelfreight.com。面試將於次週展開。"
+    "translation": "科斯特爾貨運解決方案\n誠徵：物流協調專員\n\n科斯特爾貨運解決方案正在為河頓配送中心徵求一名全職物流協調專員。獲選者將負責安排出貨排程、追蹤承運商的表現，並為營運經理製作每日報表。\n\n應徵者須具備至少三年倉儲或運輸相關領域的工作經驗。熟悉庫存管理軟體者尤佳，但不具備此項經驗的應徵者仍會列入考量。\n\n本職務採輪班制，每週工作四天，每天十小時。願意配合偶爾週末班者將優先錄用。\n\n應徵請於10月30日前將履歷與簡短的求職信寄至 careers@example.com。面試將於次週展開。"
   },
   {
     "id": "p6-b3-4",
@@ -171,7 +171,7 @@
     "id": "p6-b3-5",
     "passageType": "article",
     "title": "Verano Textiles Opens Second Plant",
-    "passage": "Verano Textiles Opens Second Plant\nby Marisol Okafor, Business Weekly\n\nMARBURY — Verano Textiles announced on Tuesday that it has opened a second manufacturing plant just outside Marbury. The 40,000-square-meter facility {{1}} by a local construction firm and now employs about 180 people, most of whom were hired from the surrounding area.\n\nCompany president Elena Corriveau said the expansion was prompted by growing European demand for recycled fabrics. {{2}} The Marbury plant will produce those fabrics exclusively, while the original factory in Denton continues to make traditional cotton goods.\n\nConstruction took slightly more than two years and cost an {{3}} 90 million dollars. Verano expects the new plant to reach full {{4}} by the middle of next year.",
+    "passage": "Verano Textiles Opens Second Plant\nby Marisol Okafor, Tri-County Business Review\n\nMARBURY — Verano Textiles announced on Tuesday that it has opened a second manufacturing plant just outside Marbury. The 40,000-square-meter facility {{1}} by a local construction firm and now employs about 180 people, most of whom were hired from the surrounding area.\n\nCompany president Elena Corriveau said the expansion was prompted by growing European demand for recycled fabrics. {{2}} The Marbury plant will produce those fabrics exclusively, while the original factory in Denton continues to make traditional cotton goods.\n\nConstruction took slightly more than two years and cost an {{3}} 90 million dollars. Verano expects the new plant to reach full {{4}} by the middle of next year.",
     "questions": [
       {
         "num": 1,
@@ -207,6 +207,6 @@
         "explanation": "考詞性判斷。形容詞 full 之後必須接名詞，reach full production 意為「達到滿載生產」，是產業報導的常見搭配。(A) produce 作動詞不能接在形容詞後，作名詞時意為「農產品」，語意不合；(B) produced 是過去分詞，不能當 reach 的受詞；(C) productive 是形容詞，兩個形容詞無法在此並列成為受詞。"
       }
     ],
-    "translation": "維拉諾紡織開設第二座廠房\n《商業週刊》記者 瑪莉索．歐卡佛 報導\n\n馬布里訊——維拉諾紡織於週二宣布，已在馬布里近郊開設第二座製造廠。這座四萬平方公尺的廠房由當地一家營造公司興建，目前雇用約180名員工，其中大多數來自周邊地區。\n\n公司總裁艾蓮娜．柯瑞沃表示，這次擴廠是因應歐洲對再生布料日益增加的需求。過去三年來，這類材料的訂單已成長一倍。馬布里廠將專門生產這類布料，丹頓的原廠則繼續生產傳統棉製品。\n\n工程歷時兩年多，造價估計約9,000萬美元。維拉諾預期新廠將於明年年中達到滿載生產。"
+    "translation": "維拉諾紡織開設第二座廠房\n《三郡商業評論》記者 瑪莉索．歐卡佛 報導\n\n馬布里訊：維拉諾紡織於週二宣布，已在馬布里近郊開設第二座製造廠。這座四萬平方公尺的廠房由當地一家營造公司興建，目前雇用約180名員工，其中大多數來自周邊地區。\n\n公司總裁艾蓮娜．柯瑞沃表示，這次擴廠是因應歐洲對再生布料日益增加的需求。過去三年來，這類材料的訂單已成長一倍。馬布里廠將專門生產這類布料，丹頓的原廠則繼續生產傳統棉製品。\n\n工程歷時兩年多，造價估計約9,000萬美元。維拉諾預期新廠將於明年年中達到滿載生產。"
   }
 ]

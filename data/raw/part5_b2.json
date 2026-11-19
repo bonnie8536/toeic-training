@@ -160,16 +160,6 @@
     "explanation": "考點：比較句中代替前述名詞的指示代名詞。than 之後代替的是複數名詞 chairs，且後面帶有省略關係代名詞的修飾子句，故 (D) those 正確。(A) them 是受格代名詞，不能被後面的子句修飾。(B) that 只能代替單數或不可數名詞，與複數的 chairs 不一致。(C) which 是關係代名詞，不能單獨作為 than 之後的比較對象。"
   },
   {
-    "id": "p5-b2-17",
-    "difficulty": "中級",
-    "category": "代名詞",
-    "question": "The department heads agreed among ------- that the submission deadline should be extended by two weeks.",
-    "options": ["them", "their", "themselves", "theirs"],
-    "answer": 2,
-    "translation": "各部門主管彼此達成共識，認為送件期限應延後兩週。",
-    "explanation": "考點：介系詞後的反身代名詞。agree among themselves 表「彼此之間取得共識」，介系詞的受詞與主詞 The department heads 是同一群人，故須用反身代名詞，(C) themselves 正確。(A) them 會指涉主詞以外的其他人，語意不符。(B) their 是所有格形容詞，後面必須接名詞。(D) theirs 是所有格代名詞，語意上無所指。"
-  },
-  {
     "id": "p5-b2-18",
     "difficulty": "進階",
     "category": "代名詞",
@@ -217,7 +207,7 @@
     "options": ["protect", "cover", "insure", "guarantee"],
     "answer": 1,
     "translation": "標準保固不涵蓋因安裝不當所造成的損壞。",
-    "explanation": "考點：動詞語意辨析。保固「涵蓋」某項損害用 cover，故 (B) cover 正確。(A) protect 的受詞應為受保護的人或物，而非損害本身，如 protect the device。(C) insure 表投保，受詞為人或財產。(D) guarantee 表保證某項結果會發生，與「涵蓋損害」的語意相反。"
+    "explanation": "考點：動詞語意辨析。保固「涵蓋」某項損害用 cover，cover damage 是保固與保險條款的固定說法，故 (B) cover 正確。(A) protect 的受詞應為受保護的人或物，如 protect the device，不能接損害本身。(C) insure 表為人或財產投保，要表示對損害提供保障須寫成 insure against damage。(D) guarantee 表保證某件事會發生或保證某項品質，guarantee damage 會變成保證發生損壞，語意不通。"
   },
   {
     "id": "p5-b2-23",

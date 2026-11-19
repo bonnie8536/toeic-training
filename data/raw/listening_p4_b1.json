@@ -58,7 +58,7 @@
           "On a tour bus"
         ],
         "answer": 2,
-        "explanation": "場景題看關鍵字群：passengers on Pacific Air flight 226、gate、boarding、escalator 全部指向機場航廈。火車站不會用 gate 加 flight 的組合，飯店櫃檯與遊覽車更不會有登機程序。"
+        "explanation": "場景題看關鍵字群：passengers on Pacific Air flight 226、gate change、boarding 都指向機場航廈，選 C。A 火車站雖然也有乘客與廣播，但不會用 flight 加 gate 的組合；B 飯店櫃檯與 D 遊覽車都不會有更換登機門與登機程序。"
       },
       {
         "q": "What information does the speaker mainly give?",
@@ -80,7 +80,7 @@
           "Boarding will begin"
         ],
         "answer": 3,
-        "explanation": "定位在 we'll start boarding in about twenty minutes。twenty minutes 這個數字只出現一次，前面的 ten-minute walk 講的是走到新登機門要花的時間，兩個數字容易混淆，要聽後面接的動作是 walk 還是 boarding。"
+        "explanation": "定位在 we'll start boarding in about twenty minutes，二十分鐘後開始登機，選 D。前面的 ten-minute walk 講的是走到新登機門要花的時間，兩個數字容易混淆，要聽數字後面接的是 walk 還是 boarding。A 降落不對，飛機都還沒起飛；B 供餐、C 開始售票在廣播中都沒有提到。"
       }
     ],
     "transcriptZh": "各位旅客午安。這裡為搭乘太平洋航空 226 號班機前往溫哥華的旅客廣播。我們的登機門有異動，請仔細聆聽。您的班機現在改由 C14 登機門起飛，不是 B7 登機門，再說一次是 C14 登機門。步行過去大約要十分鐘，請現在就前往。好消息是班機仍然準點，我們大約二十分鐘後開始登機。如果您需要協助前往，手扶梯旁的地勤人員很樂意帶您過去。再重複一次，太平洋航空 226 號班機飛往溫哥華，現在改從 C14 登機門起飛。謝謝各位。"
@@ -98,10 +98,10 @@
           "A new company policy",
           "Sales results from the past quarter",
           "A change in office hours",
-          "Plans for a store opening"
+          "Plans for opening a new downtown store"
         ],
         "answer": 1,
-        "explanation": "開場 I want to go over how we did last quarter 就點出主旨，接著 sales were up about eight percent 具體講業績。go over 是「檢視、逐項說明」的口語用法。後段雖然提到預算調整，但那是根據業績做的後續決定，不是整段的主題。"
+        "explanation": "開場 I want to go over how we did last quarter 就點出主旨，接著 sales were up about eight percent 具體講業績，選 B。go over 是「檢視、逐項說明」的口語用法。A 後段把門市預算移去投網路廣告，是看完業績後的安排，不是宣布公司政策，也不是整段主題；C 獨白沒提到上班時間；D 提到市中心門市是說業績持平、來客數下滑，沒有要開新店。"
       },
       {
         "q": "What does the speaker say about the downtown shops?",
@@ -155,7 +155,7 @@
           "Cleaning supplies"
         ],
         "answer": 1,
-        "explanation": "定位在 All fresh fruit and vegetables are thirty percent off until closing。烘焙區是免費試吃 lemon cake，不是打折；購物袋是滿額贈品，本身不販售。這題的干擾就在於三個選項都在獨白裡出現過，但只有生鮮蔬果是 off（折扣）。"
+        "explanation": "定位在 All fresh fruit and vegetables are thirty percent off until closing，打折的是生鮮蔬果，選 B。A 烘焙區是免費試吃 lemon cake，不是打折；C 購物袋是消費滿五十元的贈品，本身不販售；D 清潔用品在廣播中完全沒有出現。A、C 的干擾在於它們都在獨白裡出現過，但只有生鮮蔬果是 off（折扣）。"
       },
       {
         "q": "What does the speaker suggest about the free bags?",

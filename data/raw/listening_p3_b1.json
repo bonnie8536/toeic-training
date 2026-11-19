@@ -32,7 +32,7 @@
       {
         "q": "Why is the woman concerned about the time?",
         "options": [
-          "She has to leave the office early.",
+          "She has to leave the office early today.",
           "The technician is on vacation.",
           "The building closes at one o'clock.",
           "She needs copies for a two o'clock meeting."
@@ -134,7 +134,7 @@
           "How to get paid back for a business expense",
           "How to book a meeting room",
           "Where to take a client for lunch",
-          "When a new employee will start"
+          "When the new employee will start working in marketing"
         ],
         "answer": 0,
         "explanation": "男子第二句就點題：I took a client to lunch yesterday, and I'm not sure how to get my money back（不知道怎麼把錢請回來），之後全段都在講上傳收據、主管核准、撥款時間，主旨即報帳流程。午餐與到職日只是背景資訊。"
@@ -252,7 +252,7 @@
       {
         "q": "Why did the woman book the early morning flight?",
         "options": [
-          "It was the cheapest option.",
+          "It was the least expensive flight that was available.",
           "The hotel allows early check-in.",
           "The man asked for a window seat.",
           "A later flight would arrive after a meeting begins."
@@ -266,7 +266,7 @@
           "Look for an earlier return flight",
           "Reserve a rental car",
           "Cancel the hotel booking",
-          "Reschedule the factory tour"
+          "Reschedule the factory tour again"
         ],
         "answer": 0,
         "explanation": "男子說 the tour got moved to Thursday. So Friday morning's free now，女子隨即回 let me see what's available earlier（我看看有沒有更早的），男子又說 Go ahead，可見她會去查更早的回程班機。工廠參觀是「已經被改期」，不是她要去改。"

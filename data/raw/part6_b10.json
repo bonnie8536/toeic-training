@@ -3,7 +3,7 @@
     "id": "p6-b10-1",
     "passageType": "letter",
     "title": "Change to Monthly Membership Rates",
-    "passage": "Fernbrook Fitness Center\n88 Ridgeway Avenue\n\n15 September\n\nDear Ms. Alvarez,\n\nThank you for your three years of membership at Fernbrook Fitness Center. We are writing to let you know that monthly membership rates {{1}} on 1 November. The standard plan will rise from $42 to $47 per month.\n\nThis is our first price change since 2022. {{2}} Over the summer we replaced all of the treadmills, added a second locker room, and extended our weekend hours.\n\nMembers who renew before 25 October may keep the current rate for another twelve months. To do so, please return the enclosed form with your {{3}}. {{4}} you have any questions, feel free to call the front desk.\n\nSincerely,\nMarcus Delaney\nMembership Manager",
+    "passage": "Fernbrook Fitness Center\n88 Ridgeway Avenue\n\n15 September\n\nDear Ms. Alvarez,\n\nThank you for your three years of membership at Fernbrook Fitness Center. We are writing to let you know that monthly membership rates {{1}} on 1 November. The standard plan will rise from $42 to $47 per month.\n\nThis is our first price change since 2022. {{2}} Over the coming months, we will replace all of the treadmills, add a second locker room, and extend our weekend hours.\n\nMembers who renew before 25 October may keep the current rate for another twelve months. To do so, please return the enclosed form with your {{3}}. {{4}} you have any questions, feel free to call the front desk.\n\nSincerely,\nMarcus Delaney\nMembership Manager",
     "questions": [
       {
         "num": 1,
@@ -22,7 +22,7 @@
           "The extra income will go directly into new equipment and services for members."
         ],
         "answer": 3,
-        "explanation": "空格前一句說這是 2022 年以來第一次調價，空格後一句則列出夏天換跑步機、增設更衣室、延長週末營業時間。中間需要一句把「調價」和「這些改善」連起來，選項 D 說多出來的收入會直接投入新設備與會員服務，正好扮演這個橋樑。選項 A 講私人教練課要提前一天預約，和調價或設備更新都無關；選項 B 說分店去年冬天結束營業，與整封信「持續投資、值得續約」的語氣相反；選項 C 是給新會員的到店提醒，但收件人已是三年的老會員。"
+        "explanation": "空格前一句說這是 2022 年以來第一次調價，空格後一句則列出接下來要汰換跑步機、增設更衣室、延長週末營業時間。中間需要一句把「調價」和「這些改善」連起來，選項 D 說多出來的收入會直接投入新設備與會員服務，正好扮演這個橋樑。選項 A 講私人教練課要提前一天預約，和調價或設備更新都無關；選項 B 說分店去年冬天結束營業，與整封信「持續投資、值得續約」的語氣相反；選項 C 是給新會員的到店提醒，但收件人已是三年的老會員。"
       },
       {
         "num": 3,
@@ -39,7 +39,7 @@
         "explanation": "空格後面接的是完整子句 you have any questions，後面再接祈使句 feel free to call，形成「如果……就……」的條件句，要用連接詞 If。Despite 是介系詞，後面只能接名詞或動名詞，不能直接接主詞加動詞；Whether 表示「是否」，放在這裡語意不通；Even 是副詞，本身不能連接兩個子句，要寫成 even if 才行。"
       }
     ],
-    "translation": "芬布魯克健身中心\n瑞奇威大道 88 號\n\n9 月 15 日\n\n親愛的艾爾瓦雷茲女士：\n\n感謝您三年來在芬布魯克健身中心的會員支持。我們寫這封信是要通知您，每月會費將於 11 月 1 日調漲。標準方案將從每月 42 美元調升為 47 美元。\n\n這是我們自 2022 年以來第一次調整價格。多出來的收入會直接投入新設備與會員服務。今年夏天我們汰換了所有跑步機、增設第二間更衣室，並延長了週末的營業時間。\n\n在 10 月 25 日前續約的會員，可以再以現行費率使用十二個月。若要續約，請將隨信附上的表格簽名後寄回。如有任何疑問，歡迎致電櫃檯。\n\n謹啟\n會員部經理\n馬可斯・德蘭尼"
+    "translation": "芬布魯克健身中心\n瑞奇威大道 88 號\n\n9 月 15 日\n\n親愛的艾爾瓦雷茲女士：\n\n感謝您三年來在芬布魯克健身中心的會員支持。我們寫這封信是要通知您，每月會費將於 11 月 1 日調漲。標準方案將從每月 42 美元調升為 47 美元。\n\n這是我們自 2022 年以來第一次調整價格。多出來的收入會直接投入新設備與會員服務。接下來幾個月，我們將汰換所有跑步機、增設第二間更衣室，並延長週末的營業時間。\n\n在 10 月 25 日前續約的會員，可以再以現行費率使用十二個月。若要續約，請將隨信附上的表格簽名後寄回。如有任何疑問，歡迎致電櫃檯。\n\n謹啟\n會員部經理\n馬可斯・德蘭尼"
   },
   {
     "id": "p6-b10-2",
@@ -129,7 +129,7 @@
     "id": "p6-b10-4",
     "passageType": "instructions",
     "title": "How to Reserve a Meeting Room",
-    "passage": "How to Reserve a Meeting Room\n\nDelmar Landscaping now books all meeting rooms through the company intranet. Paper sign-up sheets outside each room {{1}} on 30 June.\n\n1. Log in to the intranet and click \"Rooms\" at the top of the page.\n2. Choose a date, then select a room from the list of {{2}} spaces. Rooms already taken appear in gray.\n3. Enter the start time, the end time, and the number of people attending.\n4. Click \"Confirm.\" A message will be sent to your work address within a few minutes. {{3}}\n\nIf your plans change, please cancel the booking right away so another team can use the room. Rooms {{4}} for more than three hours must be approved by a manager. Contact Alan Petrov with any questions.",
+    "passage": "How to Reserve a Meeting Room\n\nDelmar Landscaping now books all meeting rooms through the company intranet. Paper sign-up sheets outside each room {{1}} on 30 June.\n\n1. Log in to the intranet and click \"Rooms\" at the top of the page.\n2. Choose a date, then select a room from the list of {{2}} spaces. Rooms already taken on that date are not listed.\n3. Enter the start time, the end time, and the number of people attending.\n4. Click \"Confirm.\" A message will be sent to your work address within a few minutes. {{3}}\n\nIf your plans change, please cancel the booking right away so another team can use the room. Rooms {{4}} for more than three hours must be approved by a manager. Contact Alan Petrov with any questions.",
     "questions": [
       {
         "num": 1,
@@ -141,9 +141,9 @@
       {
         "num": 2,
         "type": "字彙",
-        "options": ["available", "capable", "possible", "prepared"],
+        "options": ["available", "capable", "occupied", "prepared"],
         "answer": 0,
-        "explanation": "這一步是要從清單裡挑一間還沒被借走的會議室，available 指「可使用、還空著的」，available spaces 是描述空間能否使用的標準說法，下一句 Rooms already taken appear in grey 也呼應這個對比。capable 用來說人或設備有能力做某事，不能形容空間能不能預約；possible 指事情有可能發生，不能直接修飾 spaces；prepared 是「已準備好的」，強調的是布置完成，而不是有沒有被預約。"
+        "explanation": "這一步是要從清單裡挑一間還沒被借走的會議室，available 指「可使用、還空著的」，available spaces 是描述空間能否使用的標準說法，下一句 Rooms already taken on that date are not listed 也說明清單只列出還沒被借走的會議室。capable 用來說人或設備有能力做某事，不能形容空間能不能預約；occupied 是「已被占用的」，從已占用的空間裡挑房間預約，和這一步的目的相反；prepared 是「已準備好的」，強調的是布置完成，而不是有沒有被預約。"
       },
       {
         "num": 3,
@@ -165,6 +165,6 @@
         "explanation": "這句的主要動詞是後面的 must be approved，空格只需要一個修飾主詞 Rooms 的成分。會議室是「被預約」的一方，用過去分詞 booked 形成 Rooms booked for more than three hours（借用超過三小時的會議室），相當於省略了 which are 的關係子句。booking 是現在分詞，會變成會議室主動去預約別人；to book 是不定詞，放在名詞後面表示「要拿來做某事」，語意不通；book 是原形動詞，會讓整句出現兩個主要動詞。"
       }
     ],
-    "translation": "會議室預約方式\n\n德爾瑪園藝公司現在一律透過公司內部網站預約會議室。各會議室門口的紙本登記表將於 6 月 30 日撤除。\n\n1. 登入內部網站，點選頁面上方的「Rooms」。\n2. 選擇日期，再從可預約的空間清單中挑選一間會議室。已被借走的會議室會顯示為灰色。\n3. 輸入開始時間、結束時間以及出席人數。\n4. 點選「Confirm」。幾分鐘內系統會寄一封通知信到您的公司信箱。如果沒有收到，請檢查個人資料裡的信箱是否正確。\n\n若行程有變，請盡快取消預約，好讓其他團隊可以使用該會議室。借用超過三小時的會議室，另需經主管核准。有任何問題請洽艾倫・佩卓夫。"
+    "translation": "會議室預約方式\n\n德爾瑪園藝公司現在一律透過公司內部網站預約會議室。各會議室門口的紙本登記表將於 6 月 30 日撤除。\n\n1. 登入內部網站，點選頁面上方的「Rooms」。\n2. 選擇日期，再從可預約的空間清單中挑選一間會議室。當天已被借走的會議室不會列在清單上。\n3. 輸入開始時間、結束時間以及出席人數。\n4. 點選「Confirm」。幾分鐘內系統會寄一封通知信到您的公司信箱。如果沒有收到，請檢查個人資料裡的信箱是否正確。\n\n若行程有變，請盡快取消預約，好讓其他團隊可以使用該會議室。借用超過三小時的會議室，另需經主管核准。有任何問題請洽艾倫・佩卓夫。"
   }
 ]

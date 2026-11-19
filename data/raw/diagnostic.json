@@ -207,7 +207,7 @@
       "options": ["put", "take", "hand", "fill"],
       "answer": 3,
       "translation": "請以黑筆填妥隨函附上的表格，並於 9 月 30 日前連同款項寄回。",
-      "explanation": "fill out a form 是「填寫表格」的固定片語，且 in black ink（以黑筆）只可能搭配填寫的動作，故選 fill。選 take 的人想到 take out「取出」——文法上可以先取出再寄回，但取出用不到黑筆，而且寄回一張沒填的空白表格也失去這句話的目的；選 hand 的人想到 hand out「分發」，但後文是自己填完寄回，不是發給別人；選 put 的人想到 put out「熄滅/對外發布」，受詞不會是表格。"
+      "explanation": "fill out a form 是「填寫表格」的固定片語，且 in black ink（以黑筆）只可能搭配填寫的動作，故選 fill。選 take 的人想到 take out「取出」，但取出表格用不到黑筆，而且寄回一張沒填的空白表格不合這句話的目的；選 hand 的人想到 hand out「分發」，但後文是自己填完寄回，不是發給別人；選 put 的人想到 put out「熄滅、對外發布」，受詞不會是表格，也和黑筆無關。"
     },
     {
       "id": "d5-20",

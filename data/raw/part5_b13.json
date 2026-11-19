@@ -1,0 +1,122 @@
+[
+  {
+    "id": "p5-b13-01",
+    "difficulty": "中級",
+    "category": "代名詞",
+    "question": "The two interns at Corvell Labs organized the entire product launch -------, without any help from their supervisors.",
+    "options": ["them", "themselves", "ourselves", "their"],
+    "answer": 1,
+    "translation": "Corvell Labs 的兩名實習生自己籌辦了整場產品發表會，完全沒有靠主管幫忙。",
+    "explanation": "考點：反身代名詞的強調用法。主詞、動詞、受詞（The two interns organized the entire product launch）已經完整，空格在句尾，後面又有 without any help（沒有任何人幫忙），要表達「他們自己做的」，須用與主詞同指的反身代名詞，故 (B) themselves 正確。(A) them 是受格，受詞位置已經有 the entire product launch，句尾不能再多放一個受格代名詞。(C) ourselves 指「我們自己」，與第三人稱複數的主詞 The two interns 不一致。(D) their 是所有格，後面必須接名詞。"
+  },
+  {
+    "id": "p5-b13-02",
+    "difficulty": "進階",
+    "category": "主謂一致",
+    "question": "The box of spare keys for the meeting rooms ------- kept in the top drawer of the reception desk.",
+    "options": ["are", "were", "have been", "is"],
+    "answer": 3,
+    "translation": "裝會議室備用鑰匙的盒子放在接待櫃檯最上層的抽屜裡。",
+    "explanation": "考點：主詞與動詞的一致。主詞的核心是單數的 The box，of spare keys for the meeting rooms 只是修飾它的介系詞片語；空格前緊鄰的 rooms 雖是複數，卻不是主詞，動詞要跟單數的 box 一致，故 (D) is 正確，is kept 表示「被存放」。(A) are 是複數動詞，誤把 keys 或 rooms 當成主詞。(B) were 也是複數動詞，同樣與單數主詞 The box 不一致。(C) have been 是複數形式，單數主詞要用 has been。"
+  },
+  {
+    "id": "p5-b13-03",
+    "difficulty": "基礎",
+    "category": "片語動詞",
+    "question": "Sales staff must ------- in their monthly mileage logs to the accounting office by the fifth of each month.",
+    "options": ["hand", "settle", "cave", "sink"],
+    "answer": 0,
+    "translation": "業務人員必須在每月五日前，把當月的里程紀錄交給會計室。",
+    "explanation": "考點：片語動詞 hand in（繳交文件）。空格後是 in 加上受詞 their monthly mileage logs，再接 to the accounting office（交給會計室），要表達「把紀錄交出去」，故 (A) hand 正確。(B) settle in 是「安頓下來、適應新環境」，是不及物用法，後面不能接紀錄當受詞。(C) cave in 是「倒塌」或「讓步」，同樣不接受詞。(D) sink in 是「（道理、消息）慢慢被理解」，主詞是被理解的事情，不能接受詞，也沒有繳交的意思。"
+  },
+  {
+    "id": "p5-b13-04",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Because of a power outage, Brennick Foods had to ------- operations at its packing plant for six hours yesterday.",
+    "options": ["resume", "preserve", "suspend", "prevent"],
+    "answer": 2,
+    "translation": "由於停電，Brennick Foods 昨天不得不讓包裝廠暫停運作六小時。",
+    "explanation": "考點：動詞語意辨析。停電是原因，for six hours 說明影響持續的時間，可知工廠是「暫時停止」運作，suspend operations 是常見搭配，故 (C) suspend 正確。(A) resume 是「恢復」，停電只會讓工廠停工，不會是恢復運作的原因，語意相反。(B) preserve 是「保存、維護」，受詞通常是食物、建築或傳統，不能表達停電造成的停工。(D) prevent 是「防止、阻止某事發生」，主詞通常是造成阻礙的事物，例如 The outage prevented the plant from operating；公司不會「不得不防止」自己的運作。"
+  },
+  {
+    "id": "p5-b13-05",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The registration fee for the two-day design conference in Lisbon ------- lunch and all workshop materials.",
+    "options": ["covers", "charges", "spends", "earns"],
+    "answer": 0,
+    "translation": "里斯本兩天設計研討會的報名費涵蓋午餐與所有工作坊教材。",
+    "explanation": "考點：動詞語意辨析。cover 表示費用、保險或保固「涵蓋、支付」某些項目，報名費涵蓋午餐與教材是常見說法，故 (A) covers 正確。(B) charges 是「收取費用」，主詞要是收錢的人或機構，例如 The organizer charges a fee，報名費本身不會去收費。(C) spends 是「花費」，主詞要是花錢的人，受詞是金錢或時間。(D) earns 是「賺取」，主詞要是賺錢的人或投資，受詞是收入，與午餐、教材搭不起來。"
+  },
+  {
+    "id": "p5-b13-06",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "The two warehouse managers at Pembury Supply talk every morning to ------- their delivery schedules.",
+    "options": ["cooperate", "compete", "consist", "coordinate"],
+    "answer": 3,
+    "translation": "Pembury Supply 的兩位倉庫經理每天早上都會談一談，協調彼此的出貨時程。",
+    "explanation": "考點：動詞語意與及物、不及物用法。空格後直接接受詞 their delivery schedules，要找能接受詞、意思是「協調、使互相配合」的及物動詞，故 (D) coordinate 正確。(A) cooperate 意思相近，是「合作」，但它是不及物動詞，要寫成 cooperate with each other 或 cooperate on the schedules，不能直接接受詞。(B) compete 是「競爭」，不及物，而且與兩人每天商量配合的語意相反。(C) consist 要寫成 consist of，意思是「由……組成」，不能直接接受詞，語意也不合。"
+  },
+  {
+    "id": "p5-b13-07",
+    "difficulty": "中級",
+    "category": "介系詞",
+    "question": "The new flexible-hours policy has been especially popular ------- younger employees at Renwick Insurance.",
+    "options": ["between", "among", "beside", "onto"],
+    "answer": 1,
+    "translation": "新的彈性工時制度特別受到 Renwick Insurance 年輕員工的歡迎。",
+    "explanation": "考點：介系詞 among 的用法。be popular among＋一群人，表示「在某個群體中受歡迎」，younger employees 是一整群人，故 (B) among 正確（也可以說 popular with）。(A) between 要接兩個或可以逐一列出的幾個對象，例如 between the two offices；younger employees 是不分個體的一群人，不能用 between。(C) beside 是「在……旁邊」，只表示位置，不能表示在某群人當中受歡迎。(D) onto 表示移動到某物的表面上，例如 climb onto the stage，與 popular 搭不起來。"
+  },
+  {
+    "id": "p5-b13-08",
+    "difficulty": "基礎",
+    "category": "不定詞與動名詞",
+    "question": "Mr. Haddad arrived at the convention center an hour early in order ------- the projector before his talk.",
+    "options": ["to test", "testing", "test", "tested"],
+    "answer": 0,
+    "translation": "Haddad 先生提早一小時抵達會議中心，為的是在演講前測試投影機。",
+    "explanation": "考點：in order to 表目的。in order 後面固定接不定詞 to＋原形動詞，表示「為了……」，說明提早到場的目的，故 (A) to test 正確。(B) testing 是動名詞或現在分詞，in order 後面不能接 V-ing。(C) test 是原形動詞，少了 to，in order test 不成立。(D) tested 是過去式或過去分詞，同樣不能接在 in order 後面。"
+  },
+  {
+    "id": "p5-b13-09",
+    "difficulty": "基礎",
+    "category": "動詞時態與語態",
+    "question": "Hollisford Coach Lines ------- free Wi-Fi on all of its intercity routes since last March.",
+    "options": ["offers", "offered", "has offered", "is offering"],
+    "answer": 2,
+    "translation": "Hollisford Coach Lines 從去年三月起，在所有城際路線上提供免費無線網路。",
+    "explanation": "考點：現在完成式與 since 的搭配。since last March 表示從過去某個時間點一直延續到現在，主要動詞要用現在完成式，故 (C) has offered 正確。(A) offers 是現在簡單式，只描述現在的狀況，不能和 since 帶出的起點連用。(B) offered 是過去式，只說過去的事，不能表達從去年三月延續到現在。(D) is offering 是現在進行式，同樣不能搭配 since 表示從過去持續到現在。"
+  },
+  {
+    "id": "p5-b13-10",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "After fuel costs rose sharply, Grantley Couriers had to ------- its delivery fees for overnight packages.",
+    "options": ["admit", "adjust", "adhere", "attend"],
+    "answer": 1,
+    "translation": "燃料成本大幅上漲後，Grantley Couriers 不得不調整隔夜包裹的運費。",
+    "explanation": "考點：動詞語意辨析。成本上漲後更動原本的收費，用 adjust（調整），adjust its fees 是常見搭配，故 (B) adjust 正確。(A) admit 是「承認」或「准許進入」，受詞是錯誤、事實或人，不能表示更動費用。(C) adhere 是不及物動詞，要寫成 adhere to（遵守），後面不能直接接 its delivery fees。(D) attend 是「出席、參加」，受詞是會議、課程等活動，與費用搭不起來。"
+  },
+  {
+    "id": "p5-b13-11",
+    "difficulty": "中級",
+    "category": "介系詞",
+    "question": "The east wing of the Morland Public Library is still ------- renovation, so visitors should use the north entrance.",
+    "options": ["beneath", "below", "over", "under"],
+    "answer": 3,
+    "translation": "Morland 公立圖書館的東翼仍在整修中，訪客請改走北側入口。",
+    "explanation": "考點：介系詞 under 表示「正在進行某個過程」。under renovation 表示「整修中」，同類說法還有 under construction、under review，故 (D) under 正確。(A) beneath 與 (B) below 都只表示位置在下方，沒有「正在進行某個過程」的用法。(C) over 可以表示「在上方、越過」或「在……期間」（例如 over the weekend），但沒有 over renovation 這種說法。"
+  },
+  {
+    "id": "p5-b13-12",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "Ms. Nakashima called the caterer on Thursday morning to ------- that lunch would arrive before the noon seminar.",
+    "options": ["ensure", "endure", "secure", "enrich"],
+    "answer": 0,
+    "translation": "Nakashima 小姐週四早上打電話給外燴業者，確保午餐會在中午的研討會開始前送到。",
+    "explanation": "考點：形近動詞的語意與後接結構。ensure that＋子句表示「確保某件事會發生」，打電話給外燴業者是為了確定午餐準時送達，故 (A) ensure 正確。(B) endure 是「忍受、承受」，受詞是困難或痛苦，不能接 that 子句表示確保。(C) secure 是「取得、確保拿到」，受詞是名額、合約、資金等具體的東西，例如 secure a contract，不接 that 子句。(D) enrich 是「使豐富、充實」，受詞是內容或經驗，不能接 that 子句。"
+  }
+]

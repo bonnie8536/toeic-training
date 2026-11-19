@@ -60,21 +60,6 @@
     "transcriptZh": "問：你見過我們新來的設計師了吧？\n(A) 其實還沒有。\n(B) 那是我自己設計的。\n(C) 當然，會議是三點。"
   },
   {
-    "id": "l2-30",
-    "difficulty": "基礎",
-    "category": "選擇問句",
-    "accent": "GB",
-    "question": "Would you like coffee or tea?",
-    "options": [
-      "Yes, please.",
-      "In the break room.",
-      "Tea would be great, thanks."
-    ],
-    "answer": 2,
-    "explanation": "正解 (C)：選擇問句要挑其中一項，「茶就好」直接選定。\n(A) 選擇問句不能用 Yes／No 回答，這是最典型的陷阱。\n(B) 回答地點，屬於 Where 的答案。",
-    "transcriptZh": "問：你要咖啡還是茶？\n(A) 好啊，麻煩了。\n(B) 在茶水間。\n(C) 茶就好，謝謝。"
-  },
-  {
     "id": "l2-31",
     "difficulty": "中級",
     "category": "陳述句回應",
@@ -117,7 +102,7 @@
     ],
     "answer": 0,
     "explanation": "正解 (A)：間接回應。沒有講 No，而是說「我那時候會不在城裡」，等於婉轉表示不會去。\n(B) 重複 dinner，而且用過去式評論，與尚未發生的週五餐會時態不符。\n(C) 「我已經吃過了」把 dinner 誤解成當下用餐，答非所問。",
-    "transcriptZh": "問：你星期五會去公司聚餐嗎？\n(A) 我那時候會出差不在。\n(B) 那頓晚餐很棒。\n(C) 有，我已經吃過了。"
+    "transcriptZh": "問：你星期五會去公司聚餐嗎？\n(A) 我那時候人在外地。\n(B) 那頓晚餐很棒。\n(C) 有，我已經吃過了。"
   },
   {
     "id": "l2-34",
@@ -225,21 +210,6 @@
     "transcriptZh": "陳述：我以為跟客戶的會議取消了。\n(A) 本來是，不過他們改到星期四了。\n(B) 對，我見過那位客戶。\n(C) 大約十五位客戶。"
   },
   {
-    "id": "l2-41",
-    "difficulty": "進階",
-    "category": "附加/否定問句",
-    "accent": "US",
-    "question": "You didn't order more paper, did you?",
-    "options": [
-      "I think it's on the shelf.",
-      "Wasn't that Kevin's job this month?",
-      "Yes, they're all in order."
-    ],
-    "answer": 1,
-    "explanation": "正解 (B)：間接回應。以反問「這個月不是 Kevin 負責嗎？」暗示自己沒訂、責任不在我，符合真實對話邏輯。\n(A) 回答東西放在架上，答的是地點。\n(C) 利用 order 的另一個意思（整齊、就緒）製造同字誘答。",
-    "transcriptZh": "問：你沒有再訂紙吧？\n(A) 我想它在架子上。\n(B) 這個月不是 Kevin 負責嗎？\n(C) 是的，全都準備好了。"
-  },
-  {
     "id": "l2-42",
     "difficulty": "中級",
     "category": "WH問句",
@@ -296,7 +266,7 @@
       "The contract is nine pages."
     ],
     "answer": 0,
-    "explanation": "正解 (A)：間接回應。兩個選項都不挑，把決定權交給法務部門，是選擇問句常見的「第三種答案」。\n(B) 選擇問句不能用 Yes 回答，且時態是已完成，與詢問未來安排不符。\n(C) 重複 contract，回答的卻是頁數。",
+    "explanation": "正解 (A)：間接回應。兩個選項都不挑，把決定權交給法務部門，是選擇問句常見的「第三種答案」。\n(B) 問的是今天還是明天早上，用 Yes 接不上；而且用過去式說已經簽了，沒有回答之後要什麼時候看合約。\n(C) 重複 contract，回答的卻是頁數。",
     "transcriptZh": "問：你想今天還是明天早上看合約？\n(A) 看法務部門什麼時候方便都行。\n(B) 有，我簽了。\n(C) 這份合約有九頁。"
   },
   {
@@ -311,7 +281,7 @@
       "He had to take a call."
     ],
     "answer": 2,
-    "explanation": "正解 (C)：間接回應。不用 Yes／No，直接說明「他得去接一通電話」，解釋了人為什麼沒來。\n(A) 是在餐廳訂位的話，情境相關但沒回答問題。\n(B) 用過去式評論食物，時態與尚未開始的午餐不符。",
+    "explanation": "正解 (C)：間接回應。不用 Yes／No，直接說明「他得去接一通電話」，解釋了他為什麼沒有一起來。\n(A) 是在餐廳向店員訂位的話，由 lunch 聯想而來，沒有回答林先生的事。\n(B) 由 lunch 聯想到食物，評論的是餐點好不好吃，沒有回應林先生有沒有說要一起來。",
     "transcriptZh": "問：林先生不是說他要跟我們一起吃午餐嗎？\n(A) 麻煩四位的位子。\n(B) 對，食物很棒。\n(C) 他得去接一通電話。"
   },
   {

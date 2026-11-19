@@ -136,12 +136,12 @@
         "type": "句子插入",
         "options": [
           "The downtown store will close at the end of the month.",
-          "The company has no plans to hire more workers this year.",
+          "The company will open the new store next spring instead.",
           "Cooking classes at the store must be booked two weeks in advance.",
           "Most of the new employees have already begun training downtown."
         ],
         "answer": 3,
-        "explanation": "空格前一句提到新分店會雇用約四十名當地居民，空格後開始由店經理說明選址原因。中間插入一句延續「新進員工」這個話題最自然，選項 D 說多數新員工已在市中心分店展開訓練，正好承接前一句。選項 A 說市中心分店月底歇業，與文中把它當成現有分店拿來比較大小的敘述矛盾；選項 B 說公司今年不打算增聘人力，與「雇用四十人」直接衝突；選項 C 講烹飪課要提前預約，文章從未提到烹飪課。"
+        "explanation": "空格前一句提到新分店會雇用約四十名當地居民，空格後開始由店經理說明選址原因。中間插入一句延續「新進員工」這個話題最自然，選項 D 說多數新員工已在市中心分店展開訓練，正好承接前一句。選項 A 說市中心分店月底歇業，與文中把它當成現有分店拿來比較大小、並說新店會和「另外兩家」一樣成功的敘述矛盾；選項 B 說新店改到明年春天才開，與第一句「下週一開幕」直接衝突；選項 C 講烹飪課要提前預約，文章從未提到烹飪課。"
       },
       {
         "num": 2,

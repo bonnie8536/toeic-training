@@ -11,23 +11,8 @@
       "Some men are cleaning the office."
     ],
     "answer": 2,
-    "explanation": "正解 (C)：照片中男子正在操作影印機、出紙匣已有印好的紙，make copies 就是「影印」，動作與主詞都吻合。\n(A) 陷阱＝發音相近詞：copy 與 coffee 開頭音節相似，但畫面裡沒有咖啡壺或杯子。\n(B) 陷阱＝物件在但動作錯：影印機確實在畫面中，可是他是在按按鈕使用機器，不是在維修 (fixing)。\n(D) 陷阱＝主詞數量錯：畫面只有一個人，Some men 是複數，而且沒有人在打掃。",
+    "explanation": "正解 (C)：照片中男子站在影印機前按操作面板，機身出紙處有一疊紙，make copies 就是「影印」，動作與主詞都吻合。\n(A) 陷阱＝發音相近詞：copy 與 coffee 開頭音節相似，但畫面裡沒有咖啡壺或杯子。\n(B) 陷阱＝物件在但動作錯：影印機確實在畫面中，可是機器沒有開蓋、他手上也沒有工具，他是在按按鈕使用機器，不是在維修 (fixing)。\n(D) 陷阱＝動作錯：前景只有他一人，後方的同事都坐在座位上工作，沒有人在打掃辦公室。",
     "transcriptZh": "(A) 一名男子正在倒一杯咖啡。\n(B) 一名男子正在修理機器。\n(C) 一名男子正在影印。\n(D) 幾名男子正在打掃辦公室。"
-  },
-  {
-    "id": "l1-02",
-    "difficulty": "基礎",
-    "photoPrompt": "A photorealistic candid documentary photograph of a female restaurant server in a dark apron pouring water from a metal pitcher into a glass on a wooden table. The table is set with clean white plates and folded napkins. The dining room around her is empty, with no customers seated. Warm natural light through tall windows, candid documentary style, shallow depth of field, no text or logos.",
-    "photoAlt": "餐廳內場，女服務生穿深色圍裙，正用金屬水壺把水倒進桌上的玻璃杯；木桌上有白盤與餐巾，四周座位無客人。",
-    "options": [
-      "A woman is pouring a drink.",
-      "A woman is washing some dishes.",
-      "Some customers are ordering food.",
-      "The table is being wiped down."
-    ],
-    "answer": 0,
-    "explanation": "正解 (A)：她正把水從水壺倒進杯子，pour a drink 是最能涵蓋畫面的說法，主詞與動作都對。\n(B) 陷阱＝物件在但動作錯：桌上確實有盤子 (dishes)，但沒有人在洗。\n(C) 陷阱＝畫面無此人物：餐廳裡沒有客人，也就不可能有人在點餐。\n(D) 陷阱＝動作錯：桌子在畫面中，但沒有人在擦桌子，被動語態的動作並未發生。",
-    "transcriptZh": "(A) 一名女子正在倒飲料。\n(B) 一名女子正在洗碗盤。\n(C) 幾位客人正在點餐。\n(D) 桌子正被擦拭。"
   },
   {
     "id": "l1-03",

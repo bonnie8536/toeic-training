@@ -67,7 +67,7 @@ TOEIC.part7 = [
    {
     "type": "advertisement",
     "label": "",
-    "content": "THE LOFT AT CANTER STREET\nFlexible Workspace for Growing Teams\n\nOpening 3 March in the heart of the Westbrook business district, The Loft at Canter Street offers 2,400 square metres of thoughtfully designed office space, just two blocks from the Westbrook Metro station.\n\nMEMBERSHIP OPTIONS\n\nDrop-In Desk - $28 per day\nAccess to the open work floor, high-speed internet, and unlimited coffee. No reservation required.\n\nDedicated Desk - $310 per month\nYour own desk in a shared studio, a locking cabinet, and eight hours of meeting-room credit every month.\n\nPrivate Suite - from $980 per month\nAn enclosed office for teams of three to ten, with a company name plate at the entrance and twenty-four-hour building access.\n\nAll members enjoy the rooftop terrace, showers and secure bicycle storage, and a programme of evening workshops led by business owners from the neighbourhood.\n\nFOUNDING MEMBER OFFER\nSign a twelve-month agreement before 28 February and pay nothing for your first month. This offer cannot be combined with the referral credit described on our website.\n\nTours run on weekdays between 9:00 A.M. and 6:00 P.M. To arrange one, call 555-0142 or write to hello@loftcanterstreet.com and ask for Marisol Fenn, our community manager."
+    "content": "THE LOFT AT CANTER STREET\nFlexible Workspace for Growing Teams\n\nOpening 3 March in the heart of the Westbrook business district, The Loft at Canter Street offers 2,400 square meters of thoughtfully designed office space, just two blocks from the Westbrook Metro station.\n\nMEMBERSHIP OPTIONS\n\nDrop-In Desk - $28 per day\nAccess to the open work floor, high-speed internet, and unlimited coffee. No reservation required.\n\nDedicated Desk - $310 per month\nYour own desk in a shared studio, a locking cabinet, and eight hours of meeting-room credit every month.\n\nPrivate Suite - from $980 per month\nAn enclosed office for teams of three to ten, with a company name plate at the entrance and twenty-four-hour building access.\n\nAll members enjoy the rooftop terrace, showers and secure bicycle storage, and a program of evening workshops led by business owners from the neighborhood.\n\nFOUNDING MEMBER OFFER\nSign a twelve-month agreement before 28 February and pay nothing for your first month. This offer cannot be combined with the referral credit described on our website.\n\nTours run on weekdays between 9:00 A.M. and 6:00 P.M. To arrange one, call 555-0142 or write to hello@loftcanterstreet.com and ask for Marisol Fenn, our community manager."
    }
   ],
   "questions": [
@@ -80,12 +80,12 @@ TOEIC.part7 = [
      "Students applying for internships"
     ],
     "answer": 1,
-    "explanation": "定位：標題下方「Flexible Workspace for Growing Teams」與內文「2,400 square metres of thoughtfully designed office space」，並列出座位與套間的月租方案，訴求對象顯然是需要辦公空間的公司或團隊。(A) 錯：全篇租的是辦公空間，不是住宅。(C) 錯：廣告是招租，不是發包工程。(D) 錯：文中沒有任何實習或徵才資訊。"
+    "explanation": "定位：標題下方「Flexible Workspace for Growing Teams」與內文「2,400 square meters of thoughtfully designed office space」，並列出座位與套間的月租方案，訴求對象是需要辦公空間的公司或團隊。(A) 錯：全篇租的是辦公空間，不是住宅。(C) 錯：廣告是招租，不是發包工程。(D) 錯：文中沒有任何實習或徵才資訊。"
    },
    {
     "q": "What is stated about the Dedicated Desk option?",
     "options": [
-     "It is limited to newly founded businesses.",
+     "It is available only to newly founded businesses.",
      "It may be used only during business hours.",
      "It includes a monthly allowance of meeting-room time.",
      "It costs twenty-eight dollars per day."
@@ -102,7 +102,7 @@ TOEIC.part7 = [
      "Entry to the building at any hour"
     ],
     "answer": 3,
-    "explanation": "定位：「All members enjoy the rooftop terrace, showers and secure bicycle storage, and a programme of evening workshops」一句已涵蓋 (A)(B)(C)。(D) 的二十四小時大樓出入權限只列在 Private Suite 條目底下，屬該方案專屬，並非全體會員都有，故為正解。"
+    "explanation": "定位：「All members enjoy the rooftop terrace, showers and secure bicycle storage, and a program of evening workshops」一句已涵蓋 (A)(B)(C)。(D) 的二十四小時大樓出入權限只列在 Private Suite 條目底下，屬該方案專屬，並非全體會員都有，故為正解。"
    },
    {
     "q": "What is indicated about the founding member offer?",
@@ -117,7 +117,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "CANTER 街閣樓工作空間\n為成長中的團隊打造的彈性辦公室\n\nCanter 街閣樓將於 3 月 3 日在 Westbrook 商業區的核心地段開幕，提供 2,400 平方公尺精心規劃的辦公空間，距離 Westbrook 捷運站僅兩個街區。\n\n會員方案\n\n臨時座位 — 每日 28 美元\n可使用開放式工作區、高速網路，以及無限量咖啡。無須預約。\n\n固定座位 — 每月 310 美元\n在共用工作室中擁有專屬座位、一個附鎖置物櫃，以及每月八小時的會議室使用額度。\n\n獨立套間 — 每月 980 美元起\n可容納三至十人團隊的封閉式辦公室，門口設有公司名牌，並享二十四小時大樓出入權限。\n\n所有會員均可使用頂樓露臺、淋浴間與自行車安全停放區，並可參加由在地企業主帶領的夜間工作坊系列課程。\n\n創始會員優惠\n2 月 28 日前簽訂十二個月合約，首月免費。本優惠不得與本網站所述的推薦回饋合併使用。\n\n參觀導覽於平日上午 9 時至下午 6 時進行。欲預約請撥 555-0142，或來信 hello@loftcanterstreet.com 洽社群經理 Marisol Fenn。"
+   "CANTER 街閣樓工作空間\n為成長中的團隊打造的彈性辦公室\n\nCanter 街閣樓將於 3 月 3 日在 Westbrook 商業區的核心地段開幕，提供 2,400 平方公尺精心規劃的辦公空間，距離 Westbrook 捷運站僅兩個街區。\n\n會員方案\n\n臨時座位：每日 28 美元\n可使用開放式工作區、高速網路，以及無限量咖啡。無須預約。\n\n固定座位：每月 310 美元\n在共用工作室中擁有專屬座位、一個附鎖置物櫃，以及每月八小時的會議室使用額度。\n\n獨立套間：每月 980 美元起\n可容納三至十人團隊的封閉式辦公室，門口設有公司名牌，並享二十四小時大樓出入權限。\n\n所有會員均可使用頂樓露臺、淋浴間與自行車安全停放區，並可參加由在地企業主帶領的夜間工作坊系列課程。\n\n創始會員優惠\n2 月 28 日前簽訂十二個月合約，首月免費。本優惠不得與本網站所述的推薦回饋合併使用。\n\n參觀導覽於平日上午 9 時至下午 6 時進行。欲預約請撥 555-0142，或來信 hello@loftcanterstreet.com 洽社群經理 Marisol Fenn。"
   ]
  },
  {
@@ -194,7 +194,7 @@ TOEIC.part7 = [
        {
         "who": "Deirdre Nakamura",
         "time": "9:42 A.M.",
-        "text": "Morning, Tomas. I'm at the convention centre. Our booth panels arrived, but the crate with the display monitors isn't here. Have you heard anything from the shipper?"
+        "text": "Morning, Tomas. I'm at the convention center. Our booth panels arrived, but the crate with the display monitors isn't here. Have you heard anything from the shipper?"
        },
        {
         "who": "Tomas Reyes",
@@ -246,7 +246,7 @@ TOEIC.part7 = [
      "At a rental agency"
     ],
     "answer": 1,
-    "explanation": "定位：9:42 訊息「I'm at the convention centre」，加上 10:03 提到布展時間與「the hall opens to visitors at nine tomorrow」，可知她人在展覽會場。(A) 錯：對話中沒有印刷業務。(C) 錯：倉庫只出現在追蹤紀錄裡，是貨物的所在地而非她的位置。(D) 錯：Halvorsen 租賃行在三條街外，是 Reyes 先生提議去訂螢幕的地方。"
+    "explanation": "定位：9:42 訊息「I'm at the convention center」，加上 10:03 提到布展時間與「the hall opens to visitors at nine tomorrow」，可知她人在展覽會場。(A) 錯：對話中沒有印刷業務。(C) 錯：倉庫只出現在追蹤紀錄裡，是貨物的所在地而非她的位置。(D) 錯：Halvorsen 租賃行在三條街外，是 Reyes 先生提議去訂螢幕的地方。"
    },
    {
     "q": "What problem does Ms. Nakamura report?",
@@ -263,7 +263,7 @@ TOEIC.part7 = [
     "q": "At 10:15 A.M., what does Ms. Nakamura most likely mean when she writes, \"Let's not put all our eggs in one basket\"?",
     "options": [
      "She wants to compare prices at several rental firms.",
-     "She thinks the booth design should be simplified.",
+     "She thinks the booth design should be simplified before tomorrow.",
      "She prefers to arrange a backup instead of relying on the delivery.",
      "She is certain the shipment will arrive before noon."
     ],
@@ -275,7 +275,7 @@ TOEIC.part7 = [
     "options": [
      "It will deliver the screens to the booth.",
      "It requires payment in advance.",
-     "It is located inside the convention centre.",
+     "It is located inside the convention center.",
      "It accepts returns of unused items without a fee."
     ],
     "answer": 3,
@@ -293,7 +293,7 @@ TOEIC.part7 = [
    {
     "type": "article",
     "label": "",
-    "content": "Regional Grocery Chain Bets on Smaller Stores\nBy Priya Anand, Business Desk\n\nFAIRHAVEN - For three decades, Coastline Markets built its reputation on huge suburban supermarkets stocked with more than forty thousand items. Last month the company opened something rather different: a 400-square-metre shop on Bellweather Street, in a neighbourhood where few residents own a car.\n\nThe Bellweather branch carries roughly six thousand products, most of them fresh food and everyday household goods. Prepared meals occupy an entire wall near the entrance, and a small counter sells coffee to commuters heading for the bus stop outside.\n\n\"We were not winning new customers by adding another aisle of cereal,\" said chief operating officer Lena Brightwater. \"The households we want to reach shop three or four times a week, on foot, for whatever they will eat that evening.\"\n\nThe shift reflects a wider trend. Urban populations across the region have risen steadily since 2019, while the average grocery basket has shrunk. Analysts note that smaller shops are also cheaper and faster to open: a compact branch can open for business within five months, compared with roughly two years for a full-sized supermarket.\n\nNot everyone is convinced. Retail consultant Dev Okonjo warns that small shops operate on thin profit margins and rely heavily on foot traffic, which can disappear when a nearby office closes. Coastline nevertheless plans six more compact branches by next autumn, two of them in Fairhaven's harbour district."
+    "content": "Regional Grocery Chain Bets on Smaller Stores\nBy Priya Anand, Business Desk\n\nFAIRHAVEN - For three decades, Coastline Markets built its reputation on huge suburban supermarkets stocked with more than forty thousand items. Last month the company opened something rather different: a 400-square-meter shop on Bellweather Street, in a neighborhood where few residents own a car.\n\nThe Bellweather branch carries roughly six thousand products, most of them fresh food and everyday household goods. Prepared meals occupy an entire wall near the entrance, and a small counter sells coffee to commuters heading for the bus stop outside.\n\n\"We were not winning new customers by adding another aisle of cereal,\" said chief operating officer Lena Brightwater. \"The households we want to reach shop three or four times a week, on foot, for whatever they will eat that evening.\"\n\nThe shift reflects a wider trend. Urban populations across the region have risen steadily since 2019, while the average grocery basket has shrunk. Analysts note that smaller shops are also cheaper and faster to open: a compact branch can open for business within five months, compared with roughly two years for a full-sized supermarket.\n\nNot everyone is convinced. Retail consultant Dev Okonjo warns that small shops operate on thin profit margins and rely heavily on foot traffic, which can disappear when a nearby office closes. Coastline nevertheless plans six more compact branches by next autumn, two of them in Fairhaven's harbor district."
    }
   ],
   "questions": [
@@ -306,7 +306,7 @@ TOEIC.part7 = [
      "A merger between two competing grocery chains"
     ],
     "answer": 0,
-    "explanation": "定位：標題「Regional Grocery Chain Bets on Smaller Stores」與第一段末句「the company opened something rather different: a 400-square-metre shop」，全文環繞 Coastline Markets 改開小型門市的策略。(B) 錯：文中完全沒提到生鮮供應短缺。(C) 錯：郊區大型超市只是對照背景，並未說明任何一家關店。(D) 錯：全文只有一家公司，無合併情事。"
+    "explanation": "定位：標題「Regional Grocery Chain Bets on Smaller Stores」與第一段末句「the company opened something rather different: a 400-square-meter shop」，全文環繞 Coastline Markets 改開小型門市的策略。(B) 錯：文中完全沒提到生鮮供應短缺。(C) 錯：郊區大型超市只是對照背景，並未說明任何一家關店。(D) 錯：全文只有一家公司，無合併情事。"
    },
    {
     "q": "According to the article, what is one advantage of compact branches?",
@@ -314,10 +314,10 @@ TOEIC.part7 = [
      "They employ fewer part-time workers.",
      "They can begin operating sooner than large stores.",
      "They stock a wider selection of products.",
-     "They are usually built beside major motorways."
+     "They are usually built beside major highways."
     ],
     "answer": 1,
-    "explanation": "定位：第四段「a compact branch can open for business within five months, compared with roughly two years for a full-sized supermarket」，開店時間短得多。(A) 錯：文章從未提及人力配置或工讀生人數。(C) 錯：Bellweather 分店約六千項商品，遠少於大型店的四萬項。(D) 錯：新店選在少有人開車的社區，緊鄰電車站，與高速公路無關。"
+    "explanation": "定位：第四段「a compact branch can open for business within five months, compared with roughly two years for a full-sized supermarket」，開店時間短得多。(A) 錯：文章從未提及人力配置或工讀生人數。(C) 錯：Bellweather 分店約六千項商品，遠少於大型店的四萬項。(D) 錯：新店選在少有人開車的社區，門外是公車站，文中沒有提到高速公路。"
    },
    {
     "q": "What concern does Mr. Okonjo express?",
@@ -325,7 +325,7 @@ TOEIC.part7 = [
      "That prepared meals spoil too quickly",
      "That the company has expanded too slowly",
      "That the stores depend on passing pedestrians",
-     "That rents in the harbour district are rising"
+     "That rents in the harbor district are rising"
     ],
     "answer": 2,
     "explanation": "定位：第五段「small shops operate on thin profit margins and rely heavily on foot traffic, which can disappear when a nearby office closes」，他擔心的正是對人流的高度依賴。(A) 錯：調理食品只在第二段作為商品描述出現，未涉及保存問題。(B) 錯：他的疑慮是擴張的風險，而非速度太慢；公司反而還要再開六家。(D) 錯：港區只在末句提到將設兩家分店，未談租金。"
@@ -343,7 +343,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "區域連鎖超市押注小型門市\n商業組記者 Priya Anand\n\nFairhaven 訊——三十年來，Coastline Markets 靠著郊區大型超市建立名聲，架上商品逾四萬項。上個月，這家公司開出的門市卻相當不同：一間位於 Bellweather 街、面積 400 平方公尺的店面，而該社區的居民鮮少擁有汽車。\n\nBellweather 分店約陳列六千項商品，多為生鮮食品與家庭日用品。入口附近整面牆擺放調理食品，一旁小櫃臺則向前往店外公車站的通勤族販售咖啡。\n\n「再加一排麥片走道並不會為我們帶來新顧客，」營運長 Lena Brightwater 表示。「我們想觸及的家庭每週步行採買三到四次，買的是當天晚上要吃的東西。」\n\n這項轉變呼應了更大的趨勢。本區都市人口自 2019 年以來穩定成長，平均每次採買的份量卻縮減。分析師指出，小型門市的開店成本較低、籌備也較快：小型分店五個月內即可開始營業，全尺寸超市則約需兩年。\n\n並非所有人都被說服。零售顧問 Dev Okonjo 提醒，小型店面的利潤空間微薄，且高度倚賴人流，而一旦附近的辦公室關閉，人流可能瞬間消失。儘管如此，Coastline 仍計畫在明年秋天前再開六家小型分店，其中兩家設在 Fairhaven 的港區。"
+   "區域連鎖超市押注小型門市\n商業組記者 Priya Anand\n\n（Fairhaven 訊）三十年來，Coastline Markets 靠著郊區大型超市建立名聲，架上商品逾四萬項。上個月，這家公司開出的門市卻相當不同：一間位於 Bellweather 街、面積 400 平方公尺的店面，而該社區的居民鮮少擁有汽車。\n\nBellweather 分店約陳列六千項商品，多為生鮮食品與家庭日用品。入口附近整面牆擺放調理食品，一旁小櫃臺則向前往店外公車站的通勤族販售咖啡。\n\n「再加一排麥片走道並不會為我們帶來新顧客，」營運長 Lena Brightwater 表示。「我們想觸及的家庭每週步行採買三到四次，買的是當天晚上要吃的東西。」\n\n這項轉變呼應了更大的趨勢。本區都市人口自 2019 年以來穩定成長，平均每次採買的份量卻縮減。分析師指出，小型門市的開店成本較低、籌備也較快：小型分店五個月內即可開始營業，全尺寸超市則約需兩年。\n\n並非所有人都被說服。零售顧問 Dev Okonjo 提醒，小型店面的利潤空間微薄，且高度倚賴人流，而一旦附近的辦公室關閉，人流可能隨之消失。儘管如此，Coastline 仍計畫在明年秋天前再開六家小型分店，其中兩家設在 Fairhaven 的港區。"
   ]
  },
  {
@@ -540,7 +540,7 @@ TOEIC.part7 = [
      },
      {
       "t": "sub",
-      "text": "Adult Evening Classes - Autumn Term (September 8 - November 14)"
+      "text": "Adult Classes - Autumn Term (September 8 - November 14)"
      },
      {
       "t": "p",
@@ -666,7 +666,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "NORTHGATE 社區音樂教室\n成人夜間課程－秋季班（9 月 8 日至 11 月 14 日）\n每門課每週上一次，共十週。\n\n吉他入門｜週一 18:30-20:00｜2 教室｜Oscar Lund｜180 美元\n團體歌唱｜週二 19:00-20:30｜大廳｜Priya Ramesh｜150 美元\n鋼琴（第二級）｜週三 18:00-19:30｜5 教室｜Oscar Lund｜210 美元\n爵士鼓入門｜週四 19:00-20:30｜地下室琴房｜Ken Abara｜195 美元\n吉他入門（第二班）｜週六 10:00-11:30｜2 教室｜Ken Abara｜180 美元\n\n注意事項\n＊每班以十二人為限。人數少於五人的班級不開課。\n＊學員可在開學後前兩週內，改到同一科目的另一個班級。請寫信給辦公室；請勿逕自去上新的班級。\n＊於前四週內退出者，退還一半學費；之後恕不退費。\n＊樂器可在辦公室租借，每學期 25 美元。",
+   "NORTHGATE 社區音樂教室\n成人課程－秋季班（9 月 8 日至 11 月 14 日）\n每門課每週上一次，共十週。\n\n吉他入門｜週一 18:30-20:00｜2 教室｜Oscar Lund｜180 美元\n團體歌唱｜週二 19:00-20:30｜大廳｜Priya Ramesh｜150 美元\n鋼琴（第二級）｜週三 18:00-19:30｜5 教室｜Oscar Lund｜210 美元\n爵士鼓入門｜週四 19:00-20:30｜地下室琴房｜Ken Abara｜195 美元\n吉他入門（第二班）｜週六 10:00-11:30｜2 教室｜Ken Abara｜180 美元\n\n注意事項\n＊每班以十二人為限。人數少於五人的班級不開課。\n＊學員可在開學後前兩週內，改到同一科目的另一個班級。請寫信給辦公室；請勿逕自去上新的班級。\n＊於前四週內退出者，退還一半學費；之後恕不退費。\n＊樂器可在辦公室租借，每學期 25 美元。",
    "收件者：office@northgatemusic.org\n寄件者：helen.duarte@mailcove.com\n日期：9 月 16 日\n主旨：我的週一課程\n\n親愛的 Okafor 女士：\n\n我想請教本學期我報名的吉他入門課。到目前為止兩次週一的課我都有上，也很喜歡，但公司剛把我調到晚班，週一與週三從晚上 6 點開始上班。本學期接下來的時間，我都無法在那個時段到課。\n\n我從課表上看到，同一門課週六早上也有開。我可以改到那一班嗎？我知道學費相同，所以應該不需要再補繳費用。如果週六班已經額滿，請盡快告訴我，因為那樣我可能只好退出，明年春天再重修這門課。\n\n還有一件事：我在第一週向辦公室租了一把吉他。若我換班，可以繼續留用嗎？\n\n感謝您的協助。\n\nHelen Duarte"
   ]
  },
@@ -732,13 +732,13 @@ TOEIC.part7 = [
    {
     "q": "What is true about the coupon?",
     "options": [
-     "It cannot be used with the half-price cup offer.",
+     "It excludes the reusable-cup discount.",
      "It can be used only on Sunday.",
      "It gives a discount on bags of beans.",
      "It must be signed at the counter."
     ],
     "answer": 0,
-    "explanation": "定位優惠券小字：It cannot be used together with the half-price cup offer，故選 (A)。(B) 優惠券效期是 10 月 5 日至 11 日整週，週日限定的是豆子八折；(C) 折扣豆子的是週日優惠，不是這張券；(D) 要到櫃檯登記的是週六的參觀導覽名額，與優惠券無關。"
+    "explanation": "定位優惠券小字：It cannot be used together with the half-price cup offer。half-price cup offer 指項目列表第一點「自備杯子，熱飲半價」的優惠，excludes 就是「不適用、不得合併使用」，故選 (A)。(B) 優惠券效期是 10 月 5 日至 11 日整週，週日限定的是豆子八折；(C) 折扣豆子的是週日優惠，不是這張券；(D) 要到櫃檯登記的是週六的參觀導覽名額，與優惠券無關。"
    },
    {
     "q": "In the list of offers, the word \"limited\" is closest in meaning to",
@@ -885,13 +885,13 @@ TOEIC.part7 = [
    {
     "q": "What is suggested about the water bottles in this order?",
     "options": [
-     "Only four of them will be added to the customer's supply.",
+     "Eight of them will be exchanged for empty bottles.",
      "They will arrive on a different day from the paper cups.",
      "They must be washed before they are collected.",
      "They are cheaper than they were last year."
     ],
     "answer": 0,
-    "explanation": "推論題，須整合表格與下方段落。表格中 Spring water 一列訂了 12 桶，但 Deposit on new bottles 只收 4 個押金；段落又說司機會回收門外的空桶來換桶，可知其中 8 桶是拿客戶原有的空桶交換，真正新增的只有 4 桶，故選 (A)。(B) 表單只有一個指定送達時間，所有品項同批送達；(C) 段落只要求把空桶放在門外，未提清洗；(D) 表單沒有去年的價格可資比較。"
+    "explanation": "推論題，須整合表格與下方段落。表格中 Spring water 一列訂了 12 桶，但 Deposit on new bottles 只收 4 個押金；段落又說司機會回收門外的空桶來換桶，可知其中 8 桶是拿客戶原有的空桶交換，只有 4 桶是新增，故選 (A)。(B) 表單只有一個指定送達時間，所有品項同批送達；(C) 段落只要求把空桶放在門外，未提清洗；(D) 表單沒有去年的價格可資比較。"
    },
    {
     "q": "What must the customer do on the morning of the delivery?",
@@ -1049,7 +1049,7 @@ TOEIC.part7 = [
      "require"
     ],
     "answer": 0,
-    "explanation": "定位表格上方說明：Only the trips marked below can take cars，指這些班次可以載運汽車上船，故選 (A) accept；同句前一行的 carry passengers 也提供了平行線索。take 另有「奪取」（take by force）、「挑選」（take this one）、「需要／花費」（it takes two hours）等義，(B) seize、(C) choose、(D) require 即據此設計的誘答，但都不合本句「船班可載車」的語境。"
+    "explanation": "定位表格上方說明：Only the trips marked below can take cars，指這些班次可以讓汽車上船，故選 (A) accept；表格備註欄的 Cars accepted 正是同一件事的說法，前一句的 carry passengers 也提供平行線索。take 另有「奪取」（take by force）、「挑選」（take this one）、「需要／花費」（it takes two hours）等義，(B) seize、(C) choose、(D) require 即據此設計的誘答，但都不合本句「船班可載車」的語境。"
    }
   ],
   "translation": [
@@ -1105,7 +1105,7 @@ TOEIC.part7 = [
        {
         "who": "Bea Cardoso",
         "time": "12:07 P.M.",
-        "text": "Understood. Is there a key for the front door at the desk? Last week it was locked when I came back from lunch and I had to wait outside."
+        "text": "Understood. Is there a key for the front door at the desk? Last week the door was locked when I came back from lunch, and nobody could find the key, so I had to wait outside."
        },
        {
         "who": "Miriam Nowak",
@@ -1170,11 +1170,11 @@ TOEIC.part7 = [
      "It must be returned to Ms. Nowak every evening."
     ],
     "answer": 0,
-    "explanation": "推論題。定位 12:07 P.M.：Last week it was locked when I came back from lunch and I had to wait outside，可知上週已因大門上鎖出過狀況，Miriam 也才提醒別把鑰匙留在桌上，故選 (A)。(B) 鑰匙放在櫃檯最上層抽屜、掛藍色吊牌；(C)(D) 對話中未提。"
+    "explanation": "推論題。定位 12:07 P.M. Bea 的訊息：Last week the door was locked when I came back from lunch, and nobody could find the key, so I had to wait outside，可知這把鑰匙之前就因為找不到而造成麻煩，Miriam 隨後也提醒她離開座位時別把鑰匙留在櫃檯上，故選 (A)。(B) 12:09 P.M. 說鑰匙放在最上層抽屜、掛藍色吊牌，不是樓下的警衛室；(C) 對話沒有提到這把鑰匙能開小會議室；(D) 對話沒有提到每晚要把鑰匙交還給 Miriam。"
    }
   ],
   "translation": [
-   "Miriam Nowak（上午 11:52）：Bea、Jonah，我需要幫忙。牙醫剛打來，這個月只剩今天下午 2:30 有空檔，所以我大約 2 點到 4 點得離開櫃檯。你們兩位有人可以幫我代班嗎？\n\nJonah Adeyemi（上午 11:55）：我 2 點要跟 Beaumont 女士開預算會議，通常要一個小時，有時候更久。\n\nBea Cardoso（上午 11:57）：我下午整個都空著。你要我幾點到櫃檯？\n\nMiriam Nowak（上午 11:58）：一點五十最好。工作沒什麼難的，就是接電話，還有一位訪客 3 點要來面試。\n\nBea Cardoso（下午 12:01）：哪一場面試？我以為設計職缺的應徵者都排在星期四。\n\nMiriam Nowak（下午 12:03）：其中一位要求改到今天。他叫 Peter Vance。幫他登記後，打分機 214 找 Jonah。\n\nJonah Adeyemi（下午 12:05）：我三點前應該就開完會了。如果還沒開完，請先帶他到小會議室、倒杯水給他，我會盡快下去。\n\nBea Cardoso（下午 12:07）：了解。櫃檯有大門的鑰匙嗎？上禮拜我吃完午餐回來，門是鎖著的，只能在外面等。\n\nMiriam Nowak（下午 12:09）：鑰匙在最上層抽屜裡，掛著藍色吊牌。離開座位時請不要把它留在櫃檯上。\n\nBea Cardoso（下午 12:11）：知道了。我會帶筆電過去，接電話的空檔順便回信。\n\nMiriam Nowak（下午 12:12）：謝謝你們兩位。我四點前會回來，欠你們一杯咖啡。"
+   "Miriam Nowak（上午 11:52）：Bea、Jonah，我需要幫忙。牙醫剛打來，這個月只剩今天下午 2:30 有空檔，所以我大約 2 點到 4 點得離開櫃檯。你們兩位有人可以幫我代班嗎？\n\nJonah Adeyemi（上午 11:55）：我 2 點要跟 Beaumont 女士開預算會議，通常要一個小時，有時候更久。\n\nBea Cardoso（上午 11:57）：我下午整個都空著。你要我幾點到櫃檯？\n\nMiriam Nowak（上午 11:58）：一點五十最好。工作沒什麼難的，就是接電話，還有一位訪客 3 點要來面試。\n\nBea Cardoso（下午 12:01）：哪一場面試？我以為設計職缺的應徵者都排在星期四。\n\nMiriam Nowak（下午 12:03）：其中一位要求改到今天。他叫 Peter Vance。幫他登記後，打分機 214 找 Jonah。\n\nJonah Adeyemi（下午 12:05）：我三點前應該就開完會了。如果還沒開完，請先帶他到小會議室、倒杯水給他，我會盡快下去。\n\nBea Cardoso（下午 12:07）：了解。櫃檯有大門的鑰匙嗎？上禮拜我吃完午餐回來，門是鎖著的，又沒有人找得到鑰匙，我只能在外面等。\n\nMiriam Nowak（下午 12:09）：鑰匙在最上層抽屜裡，掛著藍色吊牌。離開座位時請不要把它留在櫃檯上。\n\nBea Cardoso（下午 12:11）：知道了。我會帶筆電過去，接電話的空檔順便回信。\n\nMiriam Nowak（下午 12:12）：謝謝你們兩位。我四點前會回來，欠你們一杯咖啡。"
   ]
  },
  {
@@ -1317,7 +1317,7 @@ TOEIC.part7 = [
      "$28"
     ],
     "answer": 1,
-    "explanation": "跨文件整合題。評論第二段說「She then chose the lemon chicken」，再回到菜單 MAIN DISHES 表格查 Lemon chicken 的價格為 $21。$24 是他本人點的 grilled fish，屬混淆選項。"
+    "explanation": "跨文件整合題。評論第二段說 She then chose the lemon chicken，再到菜單 MAIN DISHES 表格查 Lemon chicken 為 $21，故選 (B)。(A) $17 是蔬菜義大利麵，兩人都沒有點；(C) $24 是 Herrera 先生自己點的炭烤魚；(D) $28 是炭烤牛排，評論沒有提到。"
    },
    {
     "q": "How much did Mr. Herrera and his sister pay in total for their starters and main dishes?",
@@ -1350,7 +1350,7 @@ TOEIC.part7 = [
      "recent"
     ],
     "answer": 2,
-    "explanation": "字義題。原句「Our server ... was warm without being slow」描述的是人的態度，不是溫度，因此 warm 等於 friendly（親切的）。(A) hot 是字面義誘答。"
+    "explanation": "字義題。評論第三段 Our server ... was warm without being slow 描述的是服務生的待客態度，不是溫度，warm 在此等於 friendly（親切的），故選 (C)。(A) hot 是 warm 描述食物溫度時的意思，第五段 the apple cake, which was warm 才是這個用法；(B) careful 是「小心謹慎」，與親切不同義；(D) recent 是「最近的」，套回句子不通。"
    }
   ],
   "translation": [
@@ -1482,7 +1482,7 @@ TOEIC.part7 = [
      "The train she booked is now full"
     ],
     "answer": 2,
-    "explanation": "定位句在信件第一段：「My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train.」原因是會議改期。"
+    "explanation": "定位信件第一段：My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train，原因是早上的會議改了時間，故選 (C)。(A) 第二段說演講 cannot be moved，並沒有取消；(B) 她仍持有訂位編號 R-88204，沒有提到車票遺失；(D) 是她自己趕不上那班車，並沒有說原班次客滿。"
    },
    {
     "q": "How much extra will Ms. Otero have to pay for the change?",
@@ -1515,7 +1515,7 @@ TOEIC.part7 = [
      "call"
     ],
     "answer": 0,
-    "explanation": "字義題。原句「I can no longer reach the station in time」的受詞是地點（車站），故 reach 意為「抵達」＝ get to。(B) contact、(D) call 是 reach 用於「聯絡某人」時的意思，在此語境不成立。"
+    "explanation": "字義題。原句 I can no longer reach the station in time 的受詞是地點（車站），reach 意為「抵達」，等於 get to，故選 (A)。(B) contact 與 (D) call 是 reach 用在「聯絡某人」時的意思，受詞要是人；(C) hold 是「握住、持有」，套回句子不通。"
    }
   ],
   "translation": [
@@ -1649,7 +1649,7 @@ TOEIC.part7 = [
      "To ask for a second visit from a technician"
     ],
     "answer": 0,
-    "explanation": "定位句在信件第一段末：「Before I pay, however, I would like to raise one point about the bill.」第二段接著要求刪掉某一項費用。她在第一段明說水槽與開關都沒問題，故 (B) 錯。"
+    "explanation": "定位信件第一段末：Before I pay, however, I would like to raise one point about the bill，第二段接著要求刪掉週末到府費那一項，故選 (A)。(B) 她在第一段說水槽之後沒再出問題、新開關也運作良好；(C) 她只說收到回覆後會付清其餘款項，沒有要求改變付款方式；(D) 第四段只是預先詢問三月若再漏水怎麼計費，並沒有要求技師再來一趟。"
    },
    {
     "q": "How much is the charge that Ms. Nasser objects to?",
@@ -1671,7 +1671,7 @@ TOEIC.part7 = [
      "It will be removed when the invoice is corrected"
     ],
     "answer": 1,
-    "explanation": "跨文件推論題。信件第三段說該工作只花約十分鐘卻被記為半小時；發票下方備註寫明「Labor is charged in half-hour blocks, and half an hour is the smallest amount charged」，可知這是公司的計時方式，並非誤植。新開關的零件費另列在 Small parts and materials 一項，故 (C) 錯。"
+    "explanation": "跨文件推論題。信件第三段說浴室工作只花約十分鐘，帳單卻記半小時；發票備註寫 Labor is charged in half-hour blocks, and half an hour is the smallest amount charged，可知這是公司一貫的計時方式，故選 (B)。(A) 依備註的規則記半小時是正確的，不是誤植；(C) 這一行是 Labor, bathroom light switch，只算工資，不含開關本身的費用；(D) 文中沒有任何地方說會刪除這一項，她要求刪除的是週末到府費。"
    },
    {
     "q": "What will most likely happen if the repaired pipe leaks again in March?",
@@ -1682,7 +1682,7 @@ TOEIC.part7 = [
      "A weekend visit charge will be added to the new bill"
     ],
     "answer": 0,
-    "explanation": "跨文件推論題。發票的服務日期為 11 月 2 日，備註寫「Labor is under warranty for six months from the service date」，六個月保固到隔年 5 月初，三月仍在期限內，因此工資免費。"
+    "explanation": "跨文件推論題。發票的服務日期為 11 月 2 日，備註寫 Labor is under warranty for six months from the service date，保固到隔年 5 月初，三月仍在期限內，同一段管線再漏水時工資不另收費，故選 (A)。(B) 正好與工資保固相反；(C) 備註只說零件依製造商自己的保固處理，沒有說製造商會派技師；(D) 週末到府費只在週六或週日施工時收取，文中沒有說三月的維修會排在週末。"
    },
    {
     "q": "The word \"raise\" in paragraph 1 of the e-mail is closest in meaning to",
@@ -1693,7 +1693,7 @@ TOEIC.part7 = [
      "collect"
     ],
     "answer": 2,
-    "explanation": "字義題。「raise one point about the bill」中的 raise 意為「提出（一個問題／看法）」＝ mention。(A) lift 與 (B) increase 都是 raise 的常見字面義誘答，但在此搭配 point 並不合理。"
+    "explanation": "字義題。raise one point about the bill 中的 raise 意為「提出（一個問題或看法）」，等於 mention，故選 (C)。(A) lift「抬起」與 (B) increase「增加」都是 raise 的常見字面義，搭配 point 不通；(D) collect 是「收集、收取」，雖然 raise money 有「募款」的意思，但這裡的受詞是 point，不是錢。"
    }
   ],
   "translation": [
@@ -1806,16 +1806,16 @@ TOEIC.part7 = [
    {
     "q": "Which plan will Mr. Balogun most likely move to?",
     "options": [
-     "He will stay on his present plan",
+     "He will cancel his membership",
      "Basic",
      "Active",
      "Complete"
     ],
     "answer": 3,
-    "explanation": "跨文件整合題。他晚上九點下班後才要游泳，比較表顯示 Active 只開放到 20:00，唯有 Complete 是 24 小時；他另提到每月要兩次教練課，Complete 正好含每月兩次免費課程。兩項條件都指向 Complete。"
+    "explanation": "跨文件整合題。電子郵件第二段說他現在只有晚上有空，而且很少早於九點，仍想去游泳；比較表 Access hours 一列顯示 Basic 只開到下午 3 點、Active 只開到晚上 8 點，只有 Complete 是 24 小時，第三段他又請俱樂部把他改到那個時段能用游泳池的方案，故選 (D)。(A) 他是要求換方案，不是退出會員；(B) Basic 不能用游泳池，也只開到下午 3 點；(C) Active 是他目前的方案，只開到晚上 8 點，晚上九點後無法使用。"
    },
    {
-    "q": "How much more will Mr. Balogun pay each month after the change?",
+    "q": "After the change, how much more will Mr. Balogun pay each month for his membership fee and locker combined?",
     "options": [
      "$8",
      "$15",
@@ -1823,7 +1823,7 @@ TOEIC.part7 = [
      "$68"
     ],
     "answer": 1,
-    "explanation": "跨文件計算題。他目前 Active 月費 $45，另付置物櫃 $8，合計 $53；Complete 月費 $68 且置物櫃已含在內。$68 − $53 ＝ $15。(C) $23 是只算月費差額、忘了扣掉置物櫃費用的誘答。"
+    "explanation": "跨文件計算題。電子郵件第一段說他目前是 Active 方案，第四段說他每月另付 8 美元置物櫃費；比較表顯示 Active 月費 $45，加上置物櫃 $8，合計 $53。他要改到晚上九點後仍能游泳的 Complete 方案，月費 $68，Locker rental 一列標示 Included，置物櫃不另收費。$68 − $53 ＝ $15，故選 (B)。(A) $8 是他目前的置物櫃費，換方案後這筆不必再付，不是多付的金額；(C) $23 是只算月費差額（$68 − $45）、忘了扣掉置物櫃費用的誘答；(D) $68 是 Complete 的整筆月費，不是比現在多付的差額。"
    },
    {
     "q": "What is indicated about the visit by Mr. Balogun's sister?",
@@ -1834,7 +1834,7 @@ TOEIC.part7 = [
      "She must be added to his membership first"
     ],
     "answer": 2,
-    "explanation": "跨文件整合題。信件第四段說妹妹想在同一週來兩次；比較表 Guest passes each month 一列顯示 Complete 每月三張來賓券，兩次在額度之內，故不需另外購票。"
+    "explanation": "跨文件整合題。信件第四段說妹妹八月想在同一週跟他來兩次；他七月起改為 Complete 方案，比較表 Guest passes each month 一列顯示 Complete 每月有 3 張來賓券，兩次在額度內，故選 (C)。(A) 文中沒有提到單日票；(B) 每月只有 1 張來賓券的是 Active 方案，他換方案後就不受此限；(D) 文中沒有說來賓要先加入他的會籍。"
    },
    {
     "q": "According to the comparison chart, what is NOT included in the Active plan?",
@@ -1861,7 +1861,7 @@ TOEIC.part7 = [
   ],
   "translation": [
    "海爾伍德運動俱樂部 會員方案比較（2 月 1 日起適用價格）\n．月費：基本 $29／進階 $45／全享 $68\n．健身區與器材：三種方案皆可使用\n．每月團體課程：基本 2 堂／進階 8 堂／全享 無上限\n．游泳池：基本 不可／進階 可／全享 可\n．開放時段：基本 06:00-15:00／進階 06:00-20:00／全享 24 小時\n．每月來賓券：基本 0 張／進階 1 張／全享 3 張\n．置物櫃租金：基本、進階每月 $8／全享 已含\n．教練課程：基本每堂 $55／進階每堂 $48／全享 每月兩堂免費，之後每堂 $40\n．更改方案方式：來信 members@halewoodclub.com 或洽櫃檯；每月 20 日前提出者，自次月 1 日生效；降級另需提前三十天書面通知；各方案自入會日起至少須維持三個月\n．備註：$40 入會費僅收取一次，更改方案時不再收取；來賓券不得保留至次月",
-   "收件者：members@halewoodclub.com\n寄件者：y.balogun@quillmail.com\n日期：6 月 12 日\n主旨：更改我的方案\n\n親愛的布雷格曼女士：\n\n我三月入會，選的是進階方案，每週來三到四次，幾乎都是上班前的清晨時段。\n\n現在有兩件事變了。我姪子這學年住在我這裡，父母不在身邊由我照顧，早上送他上學占掉了我原本的時段，我已經沒辦法在上班前過來。我固定有空的時間只剩晚上，很少早於九點，比起就此放棄，我寧可改在那個時候游泳。另外我開始為十月的一場路跑受訓，教練建議我每月安排兩堂教練課。\n\n可以幫我改到那個時段仍能使用游泳池的方案嗎？我希望從七月一日起生效，而且我提出的時間遠早於貴會規定的日期，希望能夠辦到。\n\n另有兩個問題。第一，我目前每月支付八美元的置物櫃費用，更改方案後帳單上還會有這筆嗎？第二，我妹妹八月會從國外來訪，想在同一週跟我來兩次，新方案是否允許？\n\n最後，也請確認我不必再付第二次入會費。\n\n謝謝，\n\n尤瑟夫．巴洛貢"
+   "收件者：members@halewoodclub.com\n寄件者：y.balogun@quillmail.com\n日期：6 月 12 日\n主旨：更改我的方案\n\n親愛的布雷格曼女士：\n\n我三月入會，選的是進階方案，每週來三到四次，幾乎都是上班前的清晨時段。\n\n現在有兩件事變了。我姪子這學年住在我這裡，父母不在身邊由我照顧，早上送他上學占掉了我原本的時段，我已經沒辦法在上班前過來。我固定有空的時間只剩晚上，很少早於九點，比起就此放棄，我寧可改在那個時候游泳。另外我開始為十月的一場比賽受訓，教練建議我每月安排兩堂教練課。\n\n可以幫我改到那個時段仍能使用游泳池的方案嗎？我希望從七月一日起生效，而且我提出的時間遠早於貴會規定的日期，希望能夠辦到。\n\n另有兩個問題。第一，我目前每月支付八美元的置物櫃費用，更改方案後帳單上還會有這筆嗎？第二，我妹妹八月會從國外來訪，想在同一週跟我來兩次，新方案是否允許？\n\n最後，也請確認我不必再付第二次入會費。\n\n謝謝，\n\n尤瑟夫．巴洛貢"
   ]
  },
  {
@@ -1953,7 +1953,7 @@ TOEIC.part7 = [
   ],
   "questions": [
    {
-    "q": "According to the Web page, what is NOT available at the Weatherby Inn?",
+    "q": "What does the Web page NOT mention about the Weatherby Inn?",
     "options": [
      "A cafe that serves breakfast",
      "Internet service at no extra cost",
@@ -2223,7 +2223,7 @@ TOEIC.part7 = [
     "q": "According to the memo, what will happen if an employee does not activate the login credentials promptly?",
     "options": [
      "The employee's claims will be rejected by Accounting.",
-     "The employee will be charged an administrative fee.",
+     "The employee will be charged an administrative fee for new credentials.",
      "The employee must attend both training sessions.",
      "The employee will have to submit a written request to the IT service desk."
     ],
@@ -2294,7 +2294,7 @@ TOEIC.part7 = [
     "q": "What is suggested about the Enterprise plan?",
     "options": [
      "Vehicles do not have to be brought to a Meridian branch.",
-     "It requires a minimum commitment of two years.",
+     "It requires customers to sign a contract of at least two years.",
      "It is offered only in selected cities.",
      "It costs $65 per vehicle each month."
     ],
@@ -2815,7 +2815,7 @@ TOEIC.part7 = [
     "options": [
      "It is the company's smallest location.",
      "It will be renovated again next fall.",
-     "It earns more from prepared meals than older stores do.",
+     "Prepared food is a larger part of its sales.",
      "It was converted from a restaurant."
     ],
     "answer": 2,
@@ -2845,7 +2845,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "區域型超市重新思考午間人潮\n托馬斯・維切雷克撰，《子午線商業週刊》\n\n去年春天卡博與凡恩超市在北原鎮開設第九家分店時，做了一件不尋常的事：廚房蓋成標準格局的兩倍大，包裝零食走道則縮減一半。九個月過去，這場豪賭看來下得精準。現做熟食如今佔北原店營收的百分之二十八，約為該公司舊有分店的兩倍。\n\n這樣的轉向反映出中型超市競爭方式的整體改變。由於無法在價格上與全國連鎖抗衡，區域型業者轉而發展現做餐點——利潤較高，而且不容易靠橫跨全國的倉庫遠距訂購取代。「進來吃頓熱午餐的客人，通常也會順手帶走生鮮，」該公司商品部副總裁伊內絲・德拉克魯瓦說，「廚房就是一道門。」\n\n並非每次嘗試都成功。同區的兩家競爭對手去年擴大了熟食櫃檯，後來發現人事成本超過所增加的營收，便悄悄縮回原狀。分析師指出，熟食需要的是廚師而非理貨員，而整個產業在這個職類的招募始終不易。\n\n卡博與凡恩計畫在明年秋天前再改裝三家分店。公司也已開始訓練收銀人員到廚房支援部分班次，德拉克魯瓦女士表示，這種做法能在不增加人力編制的情況下，紓解午餐時段的壓力。"
+   "區域型超市重新思考午間人潮\n托馬斯・維切雷克撰，《子午線商業週刊》\n\n去年春天卡博與凡恩超市在北原鎮開設第九家分店時，做了一件不尋常的事：廚房蓋成標準格局的兩倍大，包裝零食走道則縮減一半。九個月過去，這場豪賭看來下得精準。現做熟食如今佔北原店營收的百分之二十八，約為該公司舊有分店的兩倍。\n\n這樣的轉向反映出中型超市競爭方式的整體改變。由於無法在價格上與全國連鎖抗衡，區域型業者轉而發展現做餐點，這類餐點利潤較高，而且不容易靠橫跨全國的倉庫遠距訂購取代。「進來吃頓熱午餐的客人，通常也會順手帶走生鮮，」該公司商品部副總裁伊內絲・德拉克魯瓦說，「廚房就是一道門。」\n\n並非每次嘗試都成功。同區的兩家競爭對手去年擴大了熟食櫃檯，後來發現人事成本超過所增加的營收，便悄悄縮回原狀。分析師指出，熟食需要的是廚師而非理貨員，而整個產業在這個職類的招募始終不易。\n\n卡博與凡恩計畫在明年秋天前再改裝三家分店。公司也已開始訓練收銀人員到廚房支援部分班次，德拉克魯瓦女士表示，這種做法能在不增加人力編制的情況下，紓解午餐時段的壓力。"
   ]
  },
  {
@@ -3088,7 +3088,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "收件者：t.abernathy@crestwoodinteriors.com\n寄件者：n.ferreira@vantagepointsupply.com\n日期：3月3日\n主旨：訂單 48219 — 修訂後的送達日期\n\n親愛的 Abernathy 先生：\n\n我來信是關於 Crestwood Interiors 於 2 月 20 日訂購的十八組可調式桌架。這筆訂單原訂本週四送達貴公司的 Fairview 倉庫，但恐怕我們無法如期達成。\n\n這些桌架在我們位於 Bellhaven 的廠區製造，該廠的鍋爐故障使塗裝線停擺了六天。生產已於週一恢復，積壓的訂單正依收件先後順序陸續消化。您的貨現在預計 3 月 11 日出廠，3 月 14 日送達。\n\n由於延誤完全是我方責任，我已安排將 260 美元的運費從您的發票中扣除。我也請倉儲團隊從展示間備品中保留了六組桌架。除了表面顏色略深之外，這些桌架與您訂購的完全相同；若您在 14 日之前需要現場先有貨可用，我可以明天免費寄出。\n\n請於週五前告知您是否需要這批展示間的桌架。若未收到您的回覆，我將視為您希望等待完整出貨。\n\n造成不便，敬請見諒，並感謝您的耐心。\n\n敬上\n\nNadia Ferreira\n客戶服務部\nVantage Point Supply"
+   "收件者：t.abernathy@crestwoodinteriors.com\n寄件者：n.ferreira@vantagepointsupply.com\n日期：3月3日\n主旨：訂單 48219：修訂後的送達日期\n\n親愛的 Abernathy 先生：\n\n我來信是關於 Crestwood Interiors 於 2 月 20 日訂購的十八組可調式桌架。這筆訂單原訂本週四送達貴公司的 Fairview 倉庫，但恐怕我們無法如期達成。\n\n這些桌架在我們位於 Bellhaven 的廠區製造，該廠的鍋爐故障使塗裝線停擺了六天。生產已於週一恢復，積壓的訂單正依收件先後順序陸續消化。您的貨現在預計 3 月 11 日出廠，3 月 14 日送達。\n\n由於延誤完全是我方責任，我已安排將 260 美元的運費從您的發票中扣除。我也請倉儲團隊從展示間備品中保留了六組桌架。除了表面顏色略深之外，這些桌架與您訂購的完全相同；若您在 14 日之前需要現場先有貨可用，我可以明天免費寄出。\n\n請於週五前告知您是否需要這批展示間的桌架。若未收到您的回覆，我將視為您希望等待完整出貨。\n\n造成不便，敬請見諒，並感謝您的耐心。\n\n敬上\n\nNadia Ferreira\n客戶服務部\nVantage Point Supply"
   ]
  },
  {
@@ -3178,10 +3178,10 @@ TOEIC.part7 = [
    {
     "q": "At 10:15 A.M., what does Mr. Hale most likely mean when he writes, \"we'll have to think about renting\"?",
     "options": [
-     "He may need to obtain display screens from another source",
-     "He believes the booth space is too small",
-     "He wants to lease a larger delivery vehicle",
-     "He plans to look for a different storage facility"
+     "He may need to obtain display screens from another source.",
+     "He believes the booth space is too small.",
+     "He wants to lease a larger delivery vehicle.",
+     "He plans to look for a different storage facility."
     ],
     "answer": 0,
     "explanation": "定位：該句緊接在「If those screens aren't here by noon」之後，條件句指向的缺件就是展示螢幕，因此 renting 指改用租借方式取得螢幕。(B)錯：攤位大小從未被討論。(C)錯：卡車是貨運業者的事，他們不需要自己租車。(D)錯：全篇沒有倉儲需求的線索。"
@@ -3189,13 +3189,13 @@ TOEIC.part7 = [
    {
     "q": "What is suggested about Ms. Oyelaran?",
     "options": [
-     "She has already spoken with the carrier",
-     "She designed the booth panels herself",
-     "She is free until an appointment later in the day",
-     "She has worked at the company longer than Mr. Hale"
+     "She has already spoken with the carrier.",
+     "She designed the booth panels herself.",
+     "She is free until an appointment later in the day.",
+     "She has worked at the company longer than Mr. Hale."
     ],
     "answer": 2,
-    "explanation": "定位：9:58 她說「I can rearrange my morning if that helps. I'm not due at the client lunch until one.」可推知她在下午一點之前有空。(A)錯：與貨運業者聯絡的是 Raghavan（問了裝卸區主管）與 Hale（說要再去催）。(B)錯：沒有任何人提及展板是誰設計的。(D)錯：對話中沒有任何資歷或職級的比較。"
+    "explanation": "定位：9:58 她說「I can rearrange my morning if that helps. I'm not due at the client lunch until one.」可推知她在下午一點之前有空，故 (C) 正確。(A)錯：全文沒有她聯絡貨運業者的訊息；10:15 說要再去催貨運業者的是 Hale，Raghavan 問的則是會展中心的裝卸區主管。(B)錯：沒有任何人提及展板是誰設計的。(D)錯：對話中沒有任何資歷或職級的比較。"
    }
   ],
   "translation": [
@@ -3209,7 +3209,7 @@ TOEIC.part7 = [
    {
     "type": "notice",
     "label": "",
-    "content": "NOTICE TO ALL TENANTS\nKingsway Business Center — Elevator Modernization\nPosted: 5 June\n\nBeginning Monday, 22 June, the building's three passenger elevators will be modernized one at a time. The work has been scheduled in response to the tenant survey conducted last fall, in which waiting times were the most frequently raised concern.\n\nEach elevator will be out of service for approximately four weeks. Car 1 will be taken out of service first, followed by Car 2 in late July and Car 3 in late August. The two remaining cars will operate normally throughout, although tenants on the upper floors should expect longer waits between 8:30 and 9:30 A.M.\n\nThe service elevator at the rear of the lobby will be available to all tenants for the duration of the project. Please note that it does not stop on the third floor. Tenants expecting large deliveries are asked to reserve the service elevator through the management office at least two business days in advance.\n\nNoise from drilling will be limited to weekdays between 9:00 A.M. and 4:00 P.M. No work will be carried out on weekends.\n\nDetailed floor-by-floor schedules will be posted in the lobby and sent by e-mail at the start of each phase. Questions may be directed to Owen Brackley, Building Manager, at extension 4120 or obrackley@kingswaycenter.com.\n\nWe thank you for your cooperation."
+    "content": "NOTICE TO ALL TENANTS\nKingsway Business Center — Elevator Modernization\nPosted: 5 June\n\nBeginning Monday, 22 June, the building's three passenger elevators will be modernized one at a time. The work has been scheduled in response to the tenant survey conducted last fall, in which waiting times were the most frequently raised concern.\n\nEach elevator will be out of service for approximately four weeks. Car 1 will be taken out of service first, followed by Car 2 in late July and Car 3 in late August. The two remaining cars will operate normally throughout, although tenants on the upper floors should expect longer waits between 8:30 and 9:30 A.M.\n\nThe service elevator at the rear of the lobby will be available to all tenants for the duration of the project. Please note that it does not stop on the third floor. Tenants expecting large deliveries are asked to reserve the service elevator through the management office at least two business days in advance.\n\nNoise from drilling will be limited to weekdays between 9:00 A.M. and 4:00 P.M. No work will be carried out on weekends.\n\nDetailed floor-by-floor schedules will be posted in the lobby and sent by e-mail at the start of each phase. Questions may be directed to Owen Brackley, Building Manager, at extension 4120 or obrackley@example.com.\n\nWe thank you for your cooperation."
    }
   ],
   "questions": [
@@ -3219,7 +3219,7 @@ TOEIC.part7 = [
      "To describe work that will affect a building's facilities",
      "To announce an increase in monthly rent",
      "To invite tenants to complete a survey",
-     "To introduce a newly appointed building manager"
+     "To introduce a newly appointed building manager to tenants"
     ],
     "answer": 0,
     "explanation": "定位：第一段第一句「the building's three passenger elevators will be modernized one at a time」，全文說明施工期程與對租戶的影響。(B)錯：通知完全沒有提到租金或任何費用。(C)錯：第一段的問卷是去年秋天已完成的，不是邀請填寫。(D)錯：Brackley 只是文末列出的聯絡窗口，並未被介紹為新任人員。"
@@ -3259,7 +3259,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "全體租戶通知\nKingsway 商務中心 — 電梯更新工程\n公告日期：6 月 5 日\n\n自 6 月 22 日（星期一）起，本大樓三部載客電梯將逐一進行更新。此項工程是依據去年秋季租戶問卷的結果安排的，問卷中被提及次數最多的問題即為等候時間。\n\n每部電梯停用時間約四週。第 1 號梯最先施工，第 2 號梯於 7 月下旬接續，第 3 號梯則於 8 月下旬進行。施工期間其餘兩部電梯照常運轉，惟高樓層租戶在上午 8:30 至 9:30 之間應預期等候時間較長。\n\n工程期間，大廳後方的貨梯開放全體租戶使用。請注意，該梯不停靠三樓。預期有大批貨物送達的租戶，請至少於兩個工作天前透過管理室預約貨梯。\n\n鑽孔噪音將限於平日上午 9:00 至下午 4:00，週末不施工。\n\n各樓層的詳細施工時程將於每階段開始時張貼於大廳並以電子郵件寄送。如有疑問，請洽大樓管理員 Owen Brackley，分機 4120，或來信 obrackley@kingswaycenter.com。\n\n感謝您的配合。"
+   "全體租戶通知\nKingsway 商務中心：電梯更新工程\n公告日期：6 月 5 日\n\n自 6 月 22 日（星期一）起，本大樓三部載客電梯將逐一進行更新。此項工程是依據去年秋季租戶問卷的結果安排的，問卷中被提及次數最多的問題即為等候時間。\n\n每部電梯停用時間約四週。第 1 號梯最先施工，第 2 號梯於 7 月下旬接續，第 3 號梯則於 8 月下旬進行。施工期間其餘兩部電梯照常運轉，惟高樓層租戶在上午 8:30 至 9:30 之間應預期等候時間較長。\n\n工程期間，大廳後方的貨梯開放全體租戶使用。請注意，該梯不停靠三樓。預期有大批貨物送達的租戶，請至少於兩個工作天前透過管理室預約貨梯。\n\n鑽孔噪音將限於平日上午 9:00 至下午 4:00，週末不施工。\n\n各樓層的詳細施工時程將於每階段開始時張貼於大廳並以電子郵件寄送。如有疑問，請洽大樓經理 Owen Brackley，分機 4120，或來信 obrackley@example.com。\n\n感謝您的配合。"
   ]
  },
  {
@@ -3269,12 +3269,12 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "E-mail 1",
-    "content": "To: inquiries@lumenfieldtraining.com\nFrom: h.castellanos@brightwaterfoods.com\nDate: 8 January\nSubject: Workshops for supervisory staff\n\nHello,\n\nI am the human resources manager at Brightwater Foods, a regional distributor with processing sites in Ardmore and Selby. I was given your details by a colleague who attended your negotiation workshop last year.\n\nWe are planning a development program for thirty-two newly promoted supervisors. Most of them have never managed a team before, and the areas we would most like to address are giving feedback, handling scheduling conflicts and running short daily meetings.\n\nTwo things make our situation a little awkward. First, our supervisors work rotating shifts, so we cannot release more than half of them at any one time. Second, our Selby site has no room large enough for a group of that size; the Ardmore site does.\n\nCould you tell me which of your programs would suit us, what a session would cost, and how far in advance we would need to book? We would like to begin in March if at all possible.\n\nThank you,\n\nHelena Castellanos\nHuman Resources Manager\nBrightwater Foods"
+    "content": "To: inquiries@example.org\nFrom: h.castellanos@example.com\nDate: 8 January\nSubject: Workshops for supervisory staff\n\nHello,\n\nI am the human resources manager at Brightwater Foods, a regional distributor with processing sites in Ardmore and Selby. I was given your details by a colleague who attended your negotiation workshop last year.\n\nWe are planning a development program for thirty-two newly promoted supervisors. Most of them have never managed a team before, and the areas we would most like to address are giving feedback, handling scheduling conflicts and running short daily meetings.\n\nTwo things make our situation a little awkward. First, our supervisors work rotating shifts, so we cannot release more than half of them at any one time. Second, our Selby site has no room large enough for a group of that size; the Ardmore site does.\n\nCould you tell me which of your programs would suit us, what a session would cost, and how far in advance we would need to book? We would like to begin in March if at all possible.\n\nThank you,\n\nHelena Castellanos\nHuman Resources Manager\nBrightwater Foods"
    },
    {
     "type": "email",
     "label": "E-mail 2",
-    "content": "To: h.castellanos@brightwaterfoods.com\nFrom: r.okonjo@lumenfieldtraining.com\nDate: 9 January\nSubject: RE: Workshops for supervisory staff\n\nDear Ms. Castellanos,\n\nThank you for getting in touch. Our First-Line Leadership program covers all three of the topics you listed, and it is the one we recommend for supervisors in their first year.\n\nThe program runs as two full days, normally two weeks apart. Given the shift pattern you describe, I would suggest running each of those days twice, so that no more than sixteen people are away from the floor at once. We can deliver everything at your Ardmore site, which spares you the cost of hiring a venue.\n\nOur fee is $2,400 per delivered day for groups of up to twenty participants. Running each of the two days twice therefore comes to four delivered days. Materials and workbooks are included; travel is charged separately at a flat $180 per visit.\n\nMarch is realistic, though our calendar fills quickly after the new year. If you can confirm by 25 January, I can hold the last week of March for you.\n\nI would be glad to arrange a call to go through the outline in more detail.\n\nBest regards,\n\nRachel Okonjo\nProgram Director\nLumenfield Training"
+    "content": "To: h.castellanos@example.com\nFrom: r.okonjo@example.org\nDate: 9 January\nSubject: RE: Workshops for supervisory staff\n\nDear Ms. Castellanos,\n\nThank you for getting in touch. Our First-Line Leadership program covers all three of the topics you listed, and it is the one we recommend for supervisors in their first year.\n\nThe program runs as two full days, normally two weeks apart. Given the shift pattern you describe, I would suggest running each of those days twice, so that no more than sixteen people are away from the floor at once. We can deliver everything at your Ardmore site, which spares you the cost of hiring a venue.\n\nOur fee is $2,400 per delivered day for groups of up to twenty participants. Running each of the two days twice therefore comes to four delivered days. Materials and workbooks are included; travel is charged separately at a flat $180 per visit.\n\nMarch is realistic, though our calendar fills quickly after the new year. If you can confirm by 25 January, I can hold the last week of March for you.\n\nI would be glad to arrange a call to go through the outline in more detail.\n\nBest regards,\n\nRachel Okonjo\nProgram Director\nLumenfield Training"
    }
   ],
   "questions": [
@@ -3282,7 +3282,7 @@ TOEIC.part7 = [
     "q": "Why did Ms. Castellanos write the first e-mail?",
     "options": [
      "To inquire about training for a group of employees",
-     "To complain about a workshop she attended",
+     "To complain about a workshop she attended last year",
      "To confirm a booking made by a colleague",
      "To request a copy of a workbook"
     ],
@@ -3298,7 +3298,7 @@ TOEIC.part7 = [
      "They attended a negotiation workshop last year"
     ],
     "answer": 2,
-    "explanation": "定位：第一封信第二段「Most of them have never managed a team before」。(A)錯：公司有 Ardmore 與 Selby 兩個廠區，且輪班安排顯示人員分散。(B)錯：全文未提及薪資。(D)錯：去年參加談判課程的是推薦這家顧問公司的那位同事，不是這批主管。"
+    "explanation": "定位：第一封信第二段「Most of them have never managed a team before」。(A)錯：信中只說公司在 Ardmore 與 Selby 都有廠區，從未表示這批主管都在同一廠區工作。(B)錯：全文未提及薪資。(D)錯：去年參加談判課程的是推薦這家顧問公司的那位同事，不是這批主管。"
    },
    {
     "q": "Why does Ms. Okonjo suggest running each day of the program twice?",
@@ -3335,8 +3335,8 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "收件者：inquiries@lumenfieldtraining.com\n寄件者：h.castellanos@brightwaterfoods.com\n日期：1 月 8 日\n主旨：主管階層的培訓課程\n\n您好：\n\n我是 Brightwater Foods 的人力資源經理，本公司是區域型食品經銷商，在 Ardmore 與 Selby 設有加工廠。是一位去年參加過貴公司談判課程的同事把您的聯絡方式給我的。\n\n我們正在為三十二位新升任的主管規劃一套培訓計畫。他們大多從未帶過團隊，我們最希望處理的面向是給予回饋、處理班表衝突，以及主持簡短的每日會議。\n\n有兩件事讓我們的情況有點棘手。第一，我們的主管採輪班制，因此任何時候都不能同時抽離超過一半的人。第二，Selby 廠沒有容納得下這種規模團體的場地，Ardmore 廠則有。\n\n能否請您告知哪一項課程適合我們、單場費用多少，以及需要提前多久預約？若情況允許，我們希望三月開始。\n\n謝謝您。\n\nHelena Castellanos\n人力資源經理\nBrightwater Foods",
-   "收件者：h.castellanos@brightwaterfoods.com\n寄件者：r.okonjo@lumenfieldtraining.com\n日期：1 月 9 日\n主旨：回覆：主管階層的培訓課程\n\n親愛的 Castellanos 女士：\n\n感謝您的來信。我們的「基層領導」課程涵蓋您列出的三個主題，也是我們最推薦給任職第一年主管的課程。\n\n這套課程為兩個整天，通常相隔兩週。考量您所描述的輪班型態，我建議每一天各開兩梯次，如此同一時間離開現場的人不會超過十六位。所有課程都可以在貴公司 Ardmore 廠進行，替您省下租借場地的費用。\n\n我們的收費為每個授課日 2,400 美元，適用於二十人以內的班級。兩天各開兩梯次，合計為四個授課日。教材與學員手冊已包含在內；差旅費另計，每趟固定 180 美元。\n\n三月是可行的，不過我們的行事曆在年後很快就會排滿。若您能於 1 月 25 日前確認，我可以為您保留三月最後一週。\n\n我很樂意安排一次通話，詳細說明課程大綱。\n\n敬上\n\nRachel Okonjo\n課程總監\nLumenfield Training"
+   "收件者：inquiries@example.org\n寄件者：h.castellanos@example.com\n日期：1 月 8 日\n主旨：主管階層的培訓課程\n\n您好：\n\n我是 Brightwater Foods 的人力資源經理，本公司是區域型食品經銷商，在 Ardmore 與 Selby 設有加工廠。是一位去年參加過貴公司談判課程的同事把您的聯絡方式給我的。\n\n我們正在為三十二位新升任的主管規劃一套培訓計畫。他們大多從未帶過團隊，我們最希望處理的面向是給予回饋、處理班表衝突，以及主持簡短的每日會議。\n\n有兩件事讓我們的情況有點棘手。第一，我們的主管採輪班制，因此任何時候都不能同時抽離超過一半的人。第二，Selby 廠沒有容納得下這種規模團體的場地，Ardmore 廠則有。\n\n能否請您告知哪一項課程適合我們、單場費用多少，以及需要提前多久預約？若情況允許，我們希望三月開始。\n\n謝謝您。\n\nHelena Castellanos\n人力資源經理\nBrightwater Foods",
+   "收件者：h.castellanos@example.com\n寄件者：r.okonjo@example.org\n日期：1 月 9 日\n主旨：回覆：主管階層的培訓課程\n\n親愛的 Castellanos 女士：\n\n感謝您的來信。我們的「基層領導」課程涵蓋您列出的三個主題，也是我們最推薦給任職第一年主管的課程。\n\n這套課程為兩個整天，通常相隔兩週。考量您所描述的輪班型態，我建議每一天各開兩梯次，如此同一時間離開現場的人不會超過十六位。所有課程都可以在貴公司 Ardmore 廠進行，替您省下租借場地的費用。\n\n我們的收費為每個授課日 2,400 美元，適用於二十人以內的班級。兩天各開兩梯次，合計為四個授課日。教材與學員手冊已包含在內；差旅費另計，每趟固定 180 美元。\n\n三月是可行的，不過我們的行事曆在年後很快就會排滿。若您能於 1 月 25 日前確認，我可以為您保留三月最後一週。\n\n我很樂意安排一次通話，詳細說明課程大綱。\n\n敬上\n\nRachel Okonjo\n課程總監\nLumenfield Training"
   ]
  },
  {
@@ -3346,7 +3346,7 @@ TOEIC.part7 = [
    {
     "type": "advertisement",
     "label": "Advertisement",
-    "content": "THORNBURY WORKWEAR\nDurable uniforms for cafés, hotels and restaurants\n\nOur garments are built for long shifts and frequent washing. All of our garments are stocked in sizes XS through 3XL.\n\nClassic apron (item A-12) — $18 each\nChef's jacket, long sleeve (item C-30) — $46 each\nService shirt, unisex (item S-07) — $29 each\nNon-slip work shoes (item F-55) — $72 per pair\n\nVOLUME DISCOUNT\nOrders of 25 items or more receive 10% off the merchandise total.\n\nLOGO PRINTING\n$6 per garment, minimum order of ten garments. A one-time set-up fee of $50 applies to each new logo.\n\nDELIVERY\nStandard delivery within five business days. Free on merchandise totals over $600; otherwise $35.\n\nSPRING PROMOTION\nQuote code SPRING14 before 30 April and we will waive the printing set-up fee.\n\nThornbury Workwear\n41 Halloway Road, Denton\nTel: 555-0148 | orders@thornburyworkwear.com"
+    "content": "THORNBURY WORKWEAR\nDurable uniforms for cafés, hotels and restaurants\n\nOur garments are built for long shifts and frequent washing. All of our garments are stocked in sizes XS through 3XL.\n\nClassic apron (item A-12) — $18 each\nChef's jacket, long sleeve (item C-30) — $46 each\nService shirt, unisex (item S-07) — $29 each\nNon-slip work shoes (item F-55) — $72 per pair\n\nVOLUME DISCOUNT\nOrders of 25 items or more receive 10% off the merchandise total.\n\nLOGO PRINTING\n$6 per garment, minimum order of ten garments. A one-time set-up fee of $50 applies to each new logo.\n\nDELIVERY\nStandard delivery within five business days. Free on merchandise totals over $600; otherwise $35.\n\nSPRING PROMOTION\nQuote code SPRING14 before 30 April and we will waive the printing set-up fee.\n\nThornbury Workwear\n41 Halloway Road, Denton\nTel: 555-0148 | orders@example.com"
    },
    {
     "type": "order form",
@@ -3505,12 +3505,12 @@ TOEIC.part7 = [
      "It has moved its offices to Halloway Road"
     ],
     "answer": 1,
-    "explanation": "定位：訂購單最後的 Customer notes「We would like delivery before 24 April, as our second location opens that weekend.」第二家分店即將開幕。(A)錯：文件未提及任何前一家供應商。(C)錯：訂購件數（含 12 件襯衫）反而暗示員工不只十人，且商標印製最低訂量為十件。(D)錯：Halloway Road 是 Thornbury Workwear 的地址，顧客地址為 Pinecrest Way。"
+    "explanation": "定位：訂購單最後的 Customer notes「We would like delivery before 24 April, as our second location opens that weekend.」第二家分店即將開幕。(A)錯：文件未提及任何前一家供應商。(C)錯：兩份文件都沒有提到員工人數，訂購件數也無法推出公司規模。(D)錯：Halloway Road 是 Thornbury Workwear 的地址，顧客地址為 Pinecrest Way。"
    }
   ],
   "translation": [
-   "THORNBURY 工作服\n專為咖啡館、旅館與餐廳打造的耐用制服\n\n我們的服飾專為長工時與頻繁清洗而設計，我們所有的服飾皆備有 XS 到 3XL 尺碼。\n\n經典圍裙（品號 A-12）— 每件 18 美元\n長袖廚師服（品號 C-30）— 每件 46 美元\n中性服務生襯衫（品號 S-07）— 每件 29 美元\n防滑工作鞋（品號 F-55）— 每雙 72 美元\n\n數量折扣\n訂購 25 件以上，商品總額享 9 折。\n\n商標印製\n每件 6 美元，最低訂量十件。每個新商標另收一次性製版費 50 美元。\n\n配送\n標準配送五個工作天內送達。商品總額超過 600 美元免運費，未達則收取 35 美元。\n\n春季優惠\n4 月 30 日前報上代碼 SPRING14，即可免除印製製版費。\n\nThornbury 工作服\nDenton 市 Halloway 路 41 號\n電話：555-0148 | orders@thornburyworkwear.com",
-   "THORNBURY 工作服 — 訂購單\n\n客戶：Ridgemont 咖啡館\n聯絡人：Julian Mbeki，營運經理\n地址：Denton 市 Pinecrest 路 208 號\n訂購日期：4 月 12 日\n優惠代碼：SPRING14\n\n品項 / 品號 / 數量 / 單價 / 小計\n經典圍裙 / A-12 / 14 / 18 美元 / 252 美元\n中性服務生襯衫 / S-07 / 12 / 29 美元 / 348 美元\n防滑工作鞋 / F-55 / 4 / 72 美元 / 288 美元\n\n商品小計：888.00 美元\n數量折扣(10%)：-88.80 美元\n商標印製，12 件每件 6 美元：72.00 美元\n印製製版費：免收\n運費：免費\n應付總額：871.20 美元\n\n客戶備註：請只在服務生襯衫上印上我們的商標，圍裙維持素面。希望能在 4 月 24 日前送達，因為我們的第二家門市將於該週末開幕。"
+   "THORNBURY 工作服\n專為咖啡館、旅館與餐廳打造的耐用制服\n\n我們的服飾專為長工時與頻繁清洗而設計，我們所有的服飾皆備有 XS 到 3XL 尺碼。\n\n經典圍裙（品號 A-12）：每件 18 美元\n長袖廚師服（品號 C-30）：每件 46 美元\n中性服務生襯衫（品號 S-07）：每件 29 美元\n防滑工作鞋（品號 F-55）：每雙 72 美元\n\n數量折扣\n訂購 25 件以上，商品總額享 9 折。\n\n商標印製\n每件 6 美元，最低訂量十件。每個新商標另收一次性製版費 50 美元。\n\n配送\n標準配送五個工作天內送達。商品總額超過 600 美元免運費，未達則收取 35 美元。\n\n春季優惠\n4 月 30 日前報上代碼 SPRING14，即可免除印製製版費。\n\nThornbury 工作服\nDenton 市 Halloway 路 41 號\n電話：555-0148 | orders@example.com",
+   "THORNBURY 工作服：訂購單\n\n客戶：Ridgemont 咖啡館\n聯絡人：Julian Mbeki，營運經理\n地址：Denton 市 Pinecrest 路 208 號\n訂購日期：4 月 12 日\n優惠代碼：SPRING14\n\n品項 / 品號 / 數量 / 單價 / 小計\n經典圍裙 / A-12 / 14 / 18 美元 / 252 美元\n中性服務生襯衫 / S-07 / 12 / 29 美元 / 348 美元\n防滑工作鞋 / F-55 / 4 / 72 美元 / 288 美元\n\n商品小計：888.00 美元\n數量折扣（10%）：-88.80 美元\n商標印製，12 件每件 6 美元：72.00 美元\n印製製版費：免收\n運費：免費\n應付總額：871.20 美元\n\n客戶備註：請只在服務生襯衫上印上我們的商標，圍裙維持素面。希望能在 4 月 24 日前送達，因為我們的第二家門市將於該週末開幕。"
   ]
  },
  {
@@ -3527,7 +3527,7 @@ TOEIC.part7 = [
    {
     "q": "What is the article mainly about?",
     "options": [
-     "A dispute over a proposed rail line",
+     "A dispute among residents over a proposed rail line",
      "The conversion of a vacant building into workspace",
      "The closing of a textile manufacturer",
      "A change to a city parking regulation"
@@ -3541,7 +3541,7 @@ TOEIC.part7 = [
      "Membership in a merchants association",
      "Rents that decrease each year",
      "Equipment that small firms cannot afford individually",
-     "Long-term contracts with local clients"
+     "Long-term contracts with clients in the local area"
     ],
     "answer": 2,
     "explanation": "定位：第三段引言「What they lack is not floor area but equipment they could never buy on their own」，呼應第二段列出的木工房與攝影棚等共用設施。(A)錯：商家協會出現在最後一段，是估算來客數的單位，與租戶福利無關。(B)錯：文中只提租金起價 520 美元，未提逐年調降。(D)錯：文中未承諾為租戶帶來客戶合約。"
@@ -3561,7 +3561,7 @@ TOEIC.part7 = [
     "q": "What is NOT mentioned as a feature of the renovated building?",
     "options": [
      "A café",
-     "A photography stage",
+     "A stage for photography",
      "A woodshop",
      "A conference auditorium"
     ],
@@ -3580,7 +3580,7 @@ TOEIC.part7 = [
    {
     "type": "webpage",
     "label": "",
-    "content": "www.lanternfieldevents.com/rentals\n\nHome | Our Venues | Equipment Rental | Rates | Contact Us\n\nEQUIPMENT RENTAL — FREQUENTLY ASKED QUESTIONS\n\nLanternfield Events rents audiovisual and staging equipment to organizations throughout the Tri-County area, whether or not your event is held at one of our venues.\n\nHow do I place an order?\nComplete the request form on this page at least ten business days before your event. A coordinator will call you within two working days to confirm availability and arrange a delivery window. Orders placed with less than ten business days' notice are accepted by telephone only and carry a rush fee of $75.\n\nIs delivery included?\nDelivery and pickup are free within twenty miles of our Fairmont Road warehouse. Beyond that distance, we charge $1.40 per mile each way. Our drivers will carry equipment into the room where it will be used, but they are not permitted to mount screens or speakers on walls or ceilings.\n\nCan I operate the equipment myself?\nYes. Every order includes an illustrated setup guide. Clients hosting more than 150 guests, however, are strongly advised to hire a technician ($240 for a four-hour shift), since our larger sound systems take some practice to adjust properly.\n\nWhat happens if something is damaged?\nReport any fault by calling the number printed on your delivery receipt before your event ends. Items returned damaged are billed at replacement cost unless you have purchased the optional protection plan, which adds ten percent to the cost of the order."
+    "content": "www.example.com/rentals\n\nHome | Our Venues | Equipment Rental | Rates | Contact Us\n\nEQUIPMENT RENTAL — FREQUENTLY ASKED QUESTIONS\n\nLanternfield Events rents audiovisual and staging equipment to organizations throughout the Tri-County area, whether or not your event is held at one of our venues.\n\nHow do I place an order?\nComplete the request form on this page at least ten business days before your event. A coordinator will call you within two working days to confirm availability and arrange a delivery window. Orders placed with less than ten business days' notice are accepted by telephone only and carry a rush fee of $75.\n\nIs delivery included?\nDelivery and pickup are free within twenty miles of our Fairmont Road warehouse. Beyond that distance, we charge $1.40 per mile each way. Our drivers will carry equipment into the room where it will be used, but they are not permitted to mount screens or speakers on walls or ceilings.\n\nCan I operate the equipment myself?\nYes. Every order includes an illustrated setup guide. Clients hosting more than 150 guests, however, are strongly advised to hire a technician ($240 for a four-hour shift), since our larger sound systems take some practice to adjust properly.\n\nWhat happens if something is damaged?\nReport any fault by calling the number printed on your delivery receipt before your event ends. Items returned damaged are billed at replacement cost unless you have purchased the optional protection plan, which adds ten percent to the cost of the order."
    }
   ],
   "questions": [
@@ -3604,7 +3604,7 @@ TOEIC.part7 = [
      "They require the protection plan."
     ],
     "answer": 1,
-    "explanation": "定位：「How do I place an order?」段末句「Orders placed with less than ten days' notice are accepted by telephone only and carry a rush fee of $75」。(A)錯：仍然受理，只是限電話並加收急件費。(C)錯：150 人是建議另聘技術人員的門檻，與下訂時間無關。(D)錯：保障方案是選購項目，與急件無關。"
+    "explanation": "定位：「How do I place an order?」段末句「Orders placed with less than ten business days' notice are accepted by telephone only and carry a rush fee of $75」。(A)錯：仍然受理，只是限電話並加收急件費。(C)錯：150 人是建議另聘技術人員的門檻，與下訂時間無關。(D)錯：保障方案是選購項目，與急件無關。"
    },
    {
     "q": "What will the company's drivers NOT do?",
@@ -3630,7 +3630,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "www.lanternfieldevents.com/rentals\n\n首頁｜場地介紹｜設備租賃｜費率｜聯絡我們\n\n設備租賃－常見問題\n\n蘭登菲活動公司為三郡地區的各類機構出租視聽與舞台設備，無論您的活動是否在本公司場地舉辦皆可承租。\n\n如何下訂？\n請於活動前至少十個工作天填妥本頁的申請表。專員會在兩個工作天內來電確認庫存並安排送貨時段。距活動不足十個工作天才提出的訂單僅接受電話受理，並須加收七十五美元的急件費。\n\n含運嗎？\n以費爾蒙路倉庫為中心二十英里內，送貨與收回免費。超出此範圍者，去回程各按每英里一點四美元計費。司機會將設備搬進使用的房間，但不得將螢幕或喇叭安裝於牆面或天花板。\n\n我可以自己操作設備嗎？\n可以。每筆訂單皆附圖解安裝說明。不過，賓客超過一百五十人的客戶，我們強烈建議另聘技術人員（四小時班次二百四十美元），因為本公司較大型的音響設備需要一定的操作經驗才能調得恰當。\n\n設備損壞怎麼辦？\n請在活動結束前撥打送貨單上印的電話回報故障。歸還時已損壞的品項將按重置成本計價，除非您已購買選購的保障方案（費用為訂單金額加收一成）。"
+   "www.example.com/rentals\n\n首頁｜場地介紹｜設備租賃｜費率｜聯絡我們\n\n設備租賃－常見問題\n\n蘭登菲活動公司為三郡地區的各類機構出租視聽與舞台設備，無論您的活動是否在本公司場地舉辦皆可承租。\n\n如何下訂？\n請於活動前至少十個工作天填妥本頁的申請表。專員會在兩個工作天內來電確認庫存並安排送貨時段。距活動不足十個工作天才提出的訂單僅接受電話受理，並須加收七十五美元的急件費。\n\n含運嗎？\n以費爾蒙路倉庫為中心二十英里內，送貨與收回免費。超出此範圍者，去回程各按每英里一點四美元計費。司機會將設備搬進使用的房間，但不得將螢幕或喇叭安裝於牆面或天花板。\n\n我可以自己操作設備嗎？\n可以。每筆訂單皆附圖解安裝說明。不過，賓客超過一百五十人的客戶，我們強烈建議另聘技術人員（四小時班次二百四十美元），因為本公司較大型的音響設備需要一定的操作經驗才能調得恰當。\n\n設備損壞怎麼辦？\n請在活動結束前撥打送貨單上印的電話回報故障。歸還時已損壞的品項將按重置成本計價，除非您已購買選購的保障方案（費用為訂單金額加收一成）。"
   ]
  },
  {
@@ -3670,7 +3670,7 @@ TOEIC.part7 = [
     "q": "What are employees NO LONGER required to do?",
     "options": [
      "Keep receipts for meals",
-     "Submit claims within thirty days",
+     "Submit claims within thirty days of the expense",
      "Obtain a signature before submitting a claim",
      "Attend a training session"
     ],
@@ -3681,7 +3681,7 @@ TOEIC.part7 = [
     "q": "Who must attend a training session?",
     "options": [
      "All members of the Human Resources department",
-     "Employees hired within the past year",
+     "Employees who joined the company within the past year",
      "Department heads",
      "Employees who submitted an expense claim in the past year"
     ],
@@ -3700,12 +3700,12 @@ TOEIC.part7 = [
    {
     "type": "notice",
     "label": "Notice",
-    "content": "HALVERSON INSTITUTE OF PROFESSIONAL DEVELOPMENT\nFall Certificate Workshops — Kestrel Business Park Campus\n\nRegistration is now open for the workshops listed below. All sessions run from 9:00 A.M. to 4:00 P.M. and include lunch.\n\nManaging Remote Teams — Friday, October 3 — $310\nNegotiation for Purchasing Staff — Tuesday, October 14 — $340\nFinancial Reporting Essentials — Thursday, October 23 — $340\nPresenting with Data — Saturday, November 8 — $290\n\nNotes for participants:\n\n- Organizations enrolling three or more employees in the same workshop receive a fifteen percent reduction on each registration.\n- Fees must be paid no later than ten days before the workshop date. Registrations that remain unpaid after that point are released to the waiting list.\n- Each workshop is limited to eighteen participants so that every attendee can take part in the afternoon practice exercises.\n- Anyone who completes two workshops within a twelve-month period may apply the value of a third workshop toward our Certificate in Operations Management.\n- Saturday sessions meet in the Willowbank Annex, a ten-minute walk from the main building. Parking at the Annex is limited, and we recommend the shuttle from Kestrel Station.\n\nTo register, contact Delia Ambrose at d.ambrose@halversoninstitute.org or 555-0142."
+    "content": "HALVERSON INSTITUTE OF PROFESSIONAL DEVELOPMENT\nFall Certificate Workshops — Kestrel Business Park Campus\n\nRegistration is now open for the workshops listed below. All sessions run from 9:00 A.M. to 4:00 P.M. and include lunch.\n\nManaging Remote Teams — Friday, October 3 — $310\nNegotiation for Purchasing Staff — Tuesday, October 14 — $340\nFinancial Reporting Essentials — Thursday, October 23 — $340\nPresenting with Data — Saturday, November 8 — $290\n\nNotes for participants:\n\n- Organizations enrolling three or more employees in the same workshop receive a fifteen percent reduction on each registration.\n- Fees must be paid no later than ten days before the workshop date. Registrations that remain unpaid after that point are released to the waiting list.\n- Each workshop is limited to eighteen participants so that every attendee can take part in the afternoon practice exercises.\n- Anyone who completes two workshops within a twelve-month period may apply the value of a third workshop toward our Certificate in Operations Management.\n- Saturday sessions meet in the Willowbank Annex, a ten-minute walk from the main building. Parking at the Annex is limited, and we recommend the shuttle from Kestrel Station.\n\nTo register, contact Delia Ambrose at d.ambrose@example.org or 555-0142."
    },
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: Delia Ambrose <d.ambrose@halversoninstitute.org>\nFrom: Marcus Tiley <m.tiley@brightwaterdairy.com>\nDate: September 12\nSubject: Fall workshops\n\nDear Ms. Ambrose,\n\nI saw your notice at the Kestrel Business Park reception desk and would like to enroll four members of my purchasing department in the session you are offering for that group. Could you confirm that places are still available and tell me the total cost once the group reduction has been applied?\n\nTwo further questions. First, one of my colleagues, Renata Voss, attended a workshop with you last November and another this past March. Would she be able to put the value of a third workshop toward the certificate you mention, or has too much time passed?\n\nSecond, I would also like to send two staff members to the November session. None of them drives, so could you tell me how often the shuttle you refer to runs on weekends?\n\nFinally, we would prefer to settle the invoice by bank transfer. Our accounts department processes transfers on the last working day of each month, and I hope that will still leave us inside your payment window.\n\nKind regards,\n\nMarcus Tiley\nPurchasing Manager\nBrightwater Dairy"
+    "content": "To: Delia Ambrose <d.ambrose@example.org>\nFrom: Marcus Tiley <m.tiley@example.com>\nDate: September 12\nSubject: Fall workshops\n\nDear Ms. Ambrose,\n\nI saw your notice at the Kestrel Business Park reception desk and would like to enroll four members of my purchasing department in the session you are offering for that group. Could you confirm that places are still available and tell me the total cost once the group reduction has been applied?\n\nTwo further questions. First, one of my colleagues, Renata Voss, attended a workshop with you last November and another this past March. Would she be able to put the value of a third workshop toward the certificate you mention, or has too much time passed?\n\nSecond, I would also like to send two staff members to the November session. Neither of them drives, so could you tell me how often the shuttle you refer to runs on weekends?\n\nFinally, we would prefer to settle the invoice by bank transfer. Our accounts department processes transfers on the last working day of each month, and I hope that will still leave us inside your payment window.\n\nKind regards,\n\nMarcus Tiley\nPurchasing Manager\nBrightwater Dairy"
    }
   ],
   "questions": [
@@ -3766,8 +3766,8 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "哈佛森職能發展學院\n秋季證書工作坊－凱斯楚商業園區校區\n\n下列工作坊即日起開放報名。所有場次皆自上午九時進行至下午四時，並含午餐。\n\n遠距團隊管理－十月三日（星期五）－三一○美元\n採購人員談判技巧－十月十四日（星期二）－三四○美元\n財務報表基礎－十月二十三日（星期四）－三四○美元\n以數據做簡報－十一月八日（星期六）－二九○美元\n\n參加者須知：\n\n－ 同一機構於同一場工作坊報名三人以上者，每一名額均可享八五折優惠。\n－ 費用最遲須於工作坊日期前十天繳清。逾期未繳者，其名額將釋出給候補名單。\n－ 每場工作坊人數上限十八人，以確保每位學員都能參與下午的實作演練。\n－ 於十二個月內完成兩場工作坊者，可將第三場的費用抵充本院的營運管理證書學程。\n－ 星期六場次於威洛班克別館舉行，自主建築步行約十分鐘。別館停車位有限，建議搭乘凱斯楚車站發車的接駁車。\n\n報名請洽戴莉亞・安布羅斯，電子郵件 d.ambrose@halversoninstitute.org 或電話 555-0142。",
-   "收件者：戴莉亞・安布羅斯 <d.ambrose@halversoninstitute.org>\n寄件者：馬可斯・泰利 <m.tiley@brightwaterdairy.com>\n日期：九月十二日\n主旨：秋季工作坊\n\n安布羅斯女士您好：\n\n我在凱斯楚商業園區的服務櫃檯看到貴院的公告，想為採購部門的四位同仁報名貴院專為該職務開設的那場課程。可否確認名額是否仍有空缺，並告知套用團體折扣後的總費用？\n\n另有兩個問題。第一，我的同事芮娜塔・沃斯去年十一月上過貴院一場工作坊，今年三月又上了一場。她是否還能把第三場的費用抵充您提到的證書學程，還是時間已經超過了？\n\n第二，我也想派兩位同仁參加十一月的場次。他們都不開車，可否告知您提到的接駁車在週末的班次密度？\n\n最後，我們希望以銀行匯款支付。本公司帳務部門固定在每月最後一個工作日處理匯款，希望這樣仍在貴院的繳費期限之內。\n\n謹此\n布萊特沃乳品公司\n採購經理 馬可斯・泰利"
+   "哈佛森職能發展學院\n秋季證書工作坊－凱斯楚商業園區校區\n\n下列工作坊即日起開放報名。所有場次皆自上午九時進行至下午四時，並含午餐。\n\n遠距團隊管理－十月三日（星期五）－三一○美元\n採購人員談判技巧－十月十四日（星期二）－三四○美元\n財務報表基礎－十月二十三日（星期四）－三四○美元\n以數據做簡報－十一月八日（星期六）－二九○美元\n\n參加者須知：\n\n－ 同一機構於同一場工作坊報名三人以上者，每一名額均可享八五折優惠。\n－ 費用最遲須於工作坊日期前十天繳清。逾期未繳者，其名額將釋出給候補名單。\n－ 每場工作坊人數上限十八人，以確保每位學員都能參與下午的實作演練。\n－ 於十二個月內完成兩場工作坊者，可將第三場的費用抵充本院的營運管理證書學程。\n－ 星期六場次於威洛班克別館舉行，自主建築步行約十分鐘。別館停車位有限，建議搭乘凱斯楚車站發車的接駁車。\n\n報名請洽戴莉亞・安布羅斯，電子郵件 d.ambrose@example.org 或電話 555-0142。",
+   "收件者：戴莉亞・安布羅斯 <d.ambrose@example.org>\n寄件者：馬可斯・泰利 <m.tiley@example.com>\n日期：九月十二日\n主旨：秋季工作坊\n\n安布羅斯女士您好：\n\n我在凱斯楚商業園區的服務櫃檯看到貴院的公告，想為採購部門的四位同仁報名貴院專為該職務開設的那場課程。可否確認名額是否仍有空缺，並告知套用團體折扣後的總費用？\n\n另有兩個問題。第一，我的同事芮娜塔・沃斯去年十一月上過貴院一場工作坊，今年三月又上了一場。她是否還能把第三場的費用抵充您提到的證書學程，還是時間已經超過了？\n\n第二，我也想派兩位同仁參加十一月的場次。他們都不開車，可否告知您提到的接駁車在週末的班次密度？\n\n最後，我們希望以銀行匯款支付。本公司帳務部門固定在每月最後一個工作日處理匯款，希望這樣仍在貴院的繳費期限之內。\n\n謹此\n布萊特沃乳品公司\n採購經理 馬可斯・泰利"
   ]
  },
  {
@@ -3879,7 +3879,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: travel@pellworthgray.com\nFrom: i.sato@pellworthgray.com\nDate: April 1\nSubject: Trip reference PG-40718 — two changes\n\nHello,\n\nTwo things have come up since the itinerary was issued.\n\nFirst, Owen Achebe has asked whether the budget planning session could be moved to Tuesday morning, since his finance team is being audited on Wednesday. The suppliers are willing to meet me on Wednesday instead, but only in the afternoon, which means I would have to leave Larkspur later than planned. The next flight I can find departs at 18:05. Could you check whether that change still falls inside the free change window?\n\nSecond, the presentation on Tuesday has grown from twelve attendees to about thirty, and the room currently reserved seats twenty. Could you ask the hotel whether the Kingsley Room on the ground floor is available that afternoon? If it is not, I would rather move the session to the distribution center, which has a training room of the right size.\n\nOne last point: because I will now be in the city for an extra afternoon, please confirm that the hotel will not bill me for a late checkout.\n\nThank you,\n\nIngrid Sato"
+    "content": "To: travel@example.com\nFrom: i.sato@example.com\nDate: April 1\nSubject: Trip reference PG-40718 — two changes\n\nHello,\n\nTwo things have come up since the itinerary was issued.\n\nFirst, Owen Achebe has asked whether the budget planning session could be moved to Tuesday morning, since his finance team is being audited on Wednesday. The suppliers are willing to meet me on Wednesday instead, but only in the afternoon, which means I would have to leave Larkspur later than planned. The next flight I can find departs at 18:05. Could you check whether that change still falls inside the free change window?\n\nSecond, the presentation on Tuesday has grown from twelve attendees to about thirty, and the room currently reserved seats twenty. Could you ask the hotel whether the Kingsley Room on the ground floor is available that afternoon? If it is not, I would rather move the session to the distribution center, which has a training room of the right size.\n\nOne last point: because I will now be in the city for an extra afternoon, please confirm that the hotel will not bill me for a late checkout.\n\nThank you,\n\nIngrid Sato"
    }
   ],
   "questions": [
@@ -3911,7 +3911,7 @@ TOEIC.part7 = [
      "Tour the distribution center",
      "Discuss budget planning with Mr. Achebe",
      "Meet with suppliers",
-     "Present to regional managers"
+     "Give a presentation to the regional managers"
     ],
     "answer": 1,
     "explanation": "定位：須整合兩篇。行程表原訂週二上午 09:00-12:00 為供應商檢討會議、週三上午 09:30-11:00 為預算規劃會議；電子郵件第二段請求把預算規劃會議移到週二上午，供應商則改到週三下午。兩相對照，週二上午將改為與阿契貝先生的預算規劃會議。(A)錯：配送中心參訪在週一下午。(C)錯：供應商會議依請求已挪到週三下午。(D)錯：對區域經理簡報排在週二下午 13:30。"
@@ -3940,8 +3940,8 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "佩爾沃斯與葛雷公司－差旅行程表\n出行人：區域營運部 英格麗・佐藤 女士\n製表：企業差旅櫃檯\n行程編號：PG-40718\n\n四月六日（星期一）\n07:40 自艾許康國際機場出發（VN 216 班機）\n09:55 抵達拉克斯珀市\n11:30 入住哈特菲爾套房飯店，貝克特街十二號\n14:00-17:00 參訪拉克斯珀配送中心（接待人：歐文・阿契貝）\n\n四月七日（星期二）\n09:00-12:00 供應商檢討會議，拉克斯珀配送中心\n13:30-15:00 對區域經理進行簡報，哈特菲爾套房飯店愛默生廳\n19:00 與拉克斯珀管理團隊晚宴，卡薩瓦燒烤餐廳\n\n四月八日（星期三）\n09:30-11:00 與阿契貝先生及財務同仁進行預算規劃會議\n15:15 自拉克斯珀市出發（VN 341 班機）\n17:20 抵達艾許康國際機場\n\n附註\n抵達時將有車輛至機場接您。房費由公司直接支付；除星期二晚宴外的餐費請以費用申請方式核銷。以本公司企業票價訂購的機票可免費更改一次，惟須於起飛前至少七十二小時通知差旅櫃檯。",
-   "收件者：travel@pellworthgray.com\n寄件者：i.sato@pellworthgray.com\n日期：四月一日\n主旨：行程編號 PG-40718－兩項異動\n\n您好：\n\n行程表發出後有兩件事有了變化。\n\n第一，歐文・阿契貝詢問預算規劃會議能否改到星期二上午，因為他的財務團隊星期三要接受稽核。供應商願意改在星期三與我碰面，但只能約下午，這代表我得比原訂時間更晚離開拉克斯珀。我查到最近的一班是十八點零五分起飛。可否幫我確認這樣的更改是否仍在免費更改的期限內？\n\n第二，星期二的簡報出席人數已從十二人增加到約三十人，而目前預訂的會議室只能容納二十人。可否請您向飯店詢問一樓的金斯利廳當天下午是否有空？若無，我寧可把場地改到配送中心，那裡有一間大小合適的訓練教室。\n\n最後一點：由於我將在當地多待一個下午，請確認飯店不會向我收取延遲退房的費用。\n\n謝謝\n英格麗・佐藤"
+   "佩爾沃斯與葛雷公司－差旅行程表\n行程對象：區域營運部 英格麗・佐藤 女士\n製表：企業差旅櫃檯\n行程編號：PG-40718\n\n四月六日（星期一）\n07:40 自艾許康國際機場出發（VN 216 班機）\n09:55 抵達拉克斯珀市\n11:30 入住哈特菲爾套房飯店，貝克特街十二號\n14:00-17:00 參訪拉克斯珀配送中心（接待人：歐文・阿契貝）\n\n四月七日（星期二）\n09:00-12:00 供應商檢討會議，拉克斯珀配送中心\n13:30-15:00 對區域經理進行簡報，哈特菲爾套房飯店愛默生廳\n19:00 與拉克斯珀管理團隊晚宴，卡薩瓦燒烤餐廳\n\n四月八日（星期三）\n09:30-11:00 與阿契貝先生及財務同仁進行預算規劃會議\n15:15 自拉克斯珀市出發（VN 341 班機）\n17:20 抵達艾許康國際機場\n\n附註\n抵達時將有車輛至機場接您。房費由公司直接支付；除星期二晚宴外的餐費請以費用申請方式核銷。以本公司企業票價訂購的機票可免費更改一次，惟須於起飛前至少七十二小時通知差旅櫃檯。",
+   "收件者：travel@example.com\n寄件者：i.sato@example.com\n日期：四月一日\n主旨：行程編號 PG-40718－兩項異動\n\n您好：\n\n行程表發出後有兩件事有了變化。\n\n第一，歐文・阿契貝詢問預算規劃會議能否改到星期二上午，因為他的財務團隊星期三要接受稽核。供應商願意改在星期三與我碰面，但只能約下午，這代表我得比原訂時間更晚離開拉克斯珀。我查到最近的一班是十八點零五分起飛。可否幫我確認這樣的更改是否仍在免費更改的期限內？\n\n第二，星期二的簡報出席人數已從十二人增加到約三十人，而目前預訂的會議室只能容納二十人。可否請您向飯店詢問一樓的金斯利廳當天下午是否有空？若無，我寧可把場地改到配送中心，那裡有一間大小合適的訓練教室。\n\n最後一點：由於我將在當地多待一個下午，請確認飯店不會向我收取延遲退房的費用。\n\n謝謝\n英格麗・佐藤"
   ]
  },
  {
@@ -4125,7 +4125,7 @@ TOEIC.part7 = [
     "q": "What kind of business is Greenholt?",
     "options": [
      "A company that manufactures cotton fabric",
-     "A company that supplies and cleans work clothing",
+     "A business that rents and washes uniforms",
      "A store that sells laundry machines",
      "An agency that finds staff for restaurants"
     ],
@@ -4318,7 +4318,7 @@ TOEIC.part7 = [
      "delay"
     ],
     "answer": 2,
-    "explanation": "定位：電子郵件第五段最後一句「does that leave us enough time?」，受詞是 us 與 enough time，問的是這樣是否還來得及，即「留給我們足夠的時間」。(A)錯：leave 作「離開」時後面接地點，不接雙受詞。(B)(D)錯：兩者都不是 leave 的字義，句中也沒有忘記或延後的語意。"
+    "explanation": "定位：電子郵件第五段最後一句「does that leave us enough time?」，受詞是 us 與 enough time，問的是這樣是否還來得及，即「留給我們足夠的時間」，與 give 同義。(A)錯：leave 作「離開」時後面接地點，不接雙受詞。(B)錯：leave 雖可指出門時忘了帶走某物，但此處的受詞是時間，不是被遺落的物品。(D)錯：leave 沒有「延後」的意思，句中也沒有延後的語意。"
    },
    {
     "q": "How much will the assembly work requested by Ms. Okafor add to the order?",
@@ -4332,7 +4332,7 @@ TOEIC.part7 = [
     "explanation": "定位：須整合兩篇。電子郵件第四段說要請師傅組裝「the desks and the meeting tables」；報價單品項顯示書桌 24 張、會議桌 2 張，共 26 件，而條款第二點規定桌類每件 18 美元，26 × 18 = 468。(A)錯：432 只算了 24 張書桌。(C)錯：504 是把件數誤算為 28。(D)錯：738 是多加了三十張椅子的組裝費 270 美元，但她並未要求組裝椅子。"
    },
    {
-    "q": "If Ms. Okafor returns the signed quotation on August 11, when will the furniture most likely be delivered?",
+    "q": "If Ms. Okafor's signed quotation and deposit reach Meridian on August 11, when will the furniture most likely be delivered?",
     "options": [
      "On August 25",
      "On September 1",
@@ -4340,7 +4340,7 @@ TOEIC.part7 = [
      "On September 15"
     ],
     "answer": 2,
-    "explanation": "定位：須整合兩篇。報價單條款第四點寫明交期為收到簽署文件與訂金後四週；電子郵件第五段說她八月十一日寄回，八月十一日加四週即九月八日。(A)錯：八月二十五日只過了兩週。(B)錯：九月一日只過了三週。(D)錯：郵件只說希望九月八日那一週結束前家具就定位，並未提到九月十五日，依四週交期算出的也是九月八日。"
+    "explanation": "定位：須整合兩篇。報價單條款第四點寫明交期為收到簽署之報價單與三成訂金當日起算四週；題目設定兩者都在八月十一日送達，八月十一日加四週即九月八日。(A)錯：八月二十五日只過了兩週。(B)錯：九月一日只過了三週。(D)錯：九月十五日已是五週後；郵件只說希望九月八日那一週結束前家具就定位，並未提到九月十五日。"
    }
   ],
   "translation": [
@@ -4640,12 +4640,12 @@ TOEIC.part7 = [
     "q": "What will Ms. Feld most likely have to do on Friday?",
     "options": [
      "Bring her own lunch",
-     "Attend the meeting on Saturday as well",
-     "Park in a lot outside the center",
+     "Arrive in time for the opening remarks",
+     "Pay for parking in the east lot",
      "Pay a fee for two guests"
     ],
     "answer": 0,
-    "explanation": "整合題：日程表註記要求十月十日前告知素食需求，而郵件日期是十月十三日，已超過期限；她自己也寫「If it is too late to change the order, I am happy to bring my own lunch.」故最可能自備午餐。(B)錯：星期六出席只是她提出的另一個選項，兩場工作坊當天都會重辦，無須兩天都到。(C)(D) 文中皆無根據。"
+    "explanation": "整合題：日程表註記要求十月十日前告知素食需求，而郵件日期是十月十三日，已超過期限；她自己也寫「If it is too late to change the order, I am happy to bring my own lunch.」故最可能要自備午餐。(B)錯：她星期五上午要拜訪供應商，中午才到會場，趕不上上午九時半的開場致詞。(C)錯：日程表註記寫明東側停車場免費停車，不必付費。(D)錯：文中沒有任何費用，她只問兩位銷售同仁能否參加分組討論。"
    },
    {
     "q": "What does Ms. Feld ask about her vehicle?",
@@ -5068,7 +5068,7 @@ TOEIC.part7 = [
      "delay"
     ],
     "answer": 1,
-    "explanation": "定位廣告 Duties 第二項 Keep records of every delivery, return, and damaged item。keep records 是「建立並持續更新紀錄」，故選 (B) maintain。keep 也有「保留、保護、拖住」等義，但此處受詞是 records，(A)(C)(D) 都無法搭配成自然的英文。"
+    "explanation": "定位廣告 Duties 第二項 Keep records of every delivery, return, and damaged item。keep records 是「持續記錄、隨時更新紀錄」，也就是 maintain records，故選 (B) maintain。(A) hold records 雖然也是英文說法，但意思是「存放、持有」已經存在的紀錄，這裡是協調專員的職責，要把每一筆送貨、退貨與破損逐一記下來並更新，重點在「持續記錄」而不是「存放」；(C) protect「保護」紀錄不是職責內容；(D) delay「延誤」與記錄無關。"
    },
    {
     "q": "How did Mr. Okafor learn about the opening?",

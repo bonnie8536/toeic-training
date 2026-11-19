@@ -25,7 +25,7 @@
         "q": "According to the memo, what will happen if an employee does not activate the login credentials promptly?",
         "options": [
           "The employee's claims will be rejected by Accounting.",
-          "The employee will be charged an administrative fee.",
+          "The employee will be charged an administrative fee for new credentials.",
           "The employee must attend both training sessions.",
           "The employee will have to submit a written request to the IT service desk."
         ],
@@ -96,7 +96,7 @@
         "q": "What is suggested about the Enterprise plan?",
         "options": [
           "Vehicles do not have to be brought to a Meridian branch.",
-          "It requires a minimum commitment of two years.",
+          "It requires customers to sign a contract of at least two years.",
           "It is offered only in selected cities.",
           "It costs $65 per vehicle each month."
         ],

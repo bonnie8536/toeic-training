@@ -345,21 +345,6 @@
     "transcriptZh": "問：哪一把鑰匙可以開文具櫃？\n(A) 大約三十美元。\n(B) 對，我昨晚鎖了。\n(C) 那把銀色的小鑰匙。"
   },
   {
-    "id": "l2-74",
-    "difficulty": "中級",
-    "category": "附加/否定問句",
-    "accent": "AU",
-    "question": "The staff directory's been updated, hasn't it?",
-    "options": [
-      "Yes, we hired three people last month.",
-      "I'm still waiting on two departments.",
-      "My computer updates itself overnight."
-    ],
-    "answer": 1,
-    "explanation": "正解 (B)：間接回應。「我還在等兩個部門給資料」等於說明還沒更新完，比直接說 No 更接近真實對話。\n(A) 由 staff 聯想到招募，講的是上個月錄取幾個人，沒有回答通訊錄更新了沒。\n(C) 重複 update，但主詞換成自己的電腦，與員工通訊錄無關。",
-    "transcriptZh": "問：員工通訊錄已經更新了吧？\n(A) 對，我們上個月錄取了三個人。\n(B) 我還在等兩個部門給資料。\n(C) 我的電腦會在半夜自己更新。"
-  },
-  {
     "id": "l2-75",
     "difficulty": "進階",
     "category": "Yes/No問句",

@@ -32,7 +32,7 @@
       {
         "q": "According to the woman, what caused the problem?",
         "options": [
-          "A computer system error",
+          "An error in the ordering system",
           "A shortage of materials",
           "Bad weather",
           "An issue with the delivery company"
@@ -87,10 +87,10 @@
       {
         "q": "What does the woman say about Peter Nakamura?",
         "options": [
-          "He does not have enough years of experience",
-          "He asked for a higher salary than expected",
-          "He arrived late for his interview",
-          "He is not familiar with social media"
+          "He does not have enough years of experience.",
+          "He asked for a higher salary than expected.",
+          "He arrived late for his interview.",
+          "He is not familiar with social media."
         ],
         "answer": 0,
         "explanation": "定位在女子第三次發言：he's only been working two years, and the job posting said five.（他只工作兩年，職缺公告寫的是五年）。年資不符要求，選 (A)。(D) 剛好講反：男子說 he had great ideas about social media，他社群這塊很強；(C) 是把 the guy who came in last（最後一位進來面試的人）誤聽成遲到。"
@@ -100,7 +100,7 @@
         "options": [
           "Call Karen's former manager",
           "Rewrite the job posting",
-          "Interview two more candidates",
+          "Interview two more job candidates",
           "Arrange a meeting with the director"
         ],
         "answer": 3,
@@ -208,10 +208,10 @@
       {
         "q": "What does the woman say about the computers?",
         "options": [
-          "They will be replaced at the new office",
-          "They should be packed with the labels provided",
-          "The IT team will take care of them",
-          "They must be unplugged on Friday"
+          "They will be replaced at the new office.",
+          "They should be packed with the labels provided.",
+          "The IT team will take care of them.",
+          "They must be unplugged on Friday."
         ],
         "answer": 2,
         "explanation": "定位在女子第五次發言：The IT team handles those. Don't unplug anything yourself.（電腦由資訊部處理，不要自己拔線）。選 (C)。(D) 剛好是女子明講不要做的事；(B) 的 labels 是給紙箱用的，不是給電腦。"
@@ -241,10 +241,10 @@
       {
         "q": "What problem are the speakers discussing?",
         "options": [
-          "A speaker canceled at the last minute",
-          "The catering company raised its prices",
-          "More guests are coming than the room can hold",
-          "The product is not ready for the launch"
+          "A speaker canceled at the last minute.",
+          "The catering company raised its prices.",
+          "More guests are coming than the room can hold.",
+          "The product is not ready for the launch."
         ],
         "answer": 2,
         "explanation": "問題點在前兩句：男子說 A hundred and eighty people have confirmed，女子回 We booked the hall for a hundred and fifty.（我們訂的場地是一百五十人）。報名人數超過場地容量，選 (C)。(B) 加價的是飯店的大場地（another six hundred），不是餐飲公司；餐飲只是需要跟著改人數。"
@@ -252,10 +252,10 @@
       {
         "q": "Why does the woman think Mr. Duval will approve the change?",
         "options": [
-          "He suggested the larger room himself",
-          "He will be speaking at the launch",
-          "The department's budget was increased",
-          "He approved a similar request before"
+          "He suggested the larger room himself.",
+          "He will be speaking at the launch.",
+          "The department's budget was increased.",
+          "He approved a similar request before."
         ],
         "answer": 3,
         "explanation": "推論題定位在女子倒數第二次發言：He signed off on a similar change last spring, so probably.（他去年春天批准過類似的變更，所以應該會）。她的判斷依據是前例，選 (D)。sign off on 就是核准的口語說法。(C) 是反向：女子說 That's more than I wanted to spend，預算是吃緊而非增加。"
@@ -272,6 +272,6 @@
         "explanation": "定位在最後一句：send me the new floor plan when you get it. I want to see where the demo tables go.（拿到新的平面圖就寄給我，我想看展示桌要擺哪裡）。選 (B)。(D) 的報價男子早就問過了（I already asked），女子沒有再要一份。"
       }
     ],
-    "transcriptZh": "男：Sofia，產品發表會的人數統計出來了，有一百八十人確認出席。\n女：一百八十？我們訂的場地是一百五十人的。\n男：我知道，所以我先來找你。\n女：嗯。飯店二樓有一間比較大的，不過我猜會比較貴。\n男：我已經問過了。要多六百塊，而且他們星期五前要答覆。\n女：六百。比我原本想花的多，不過把人擋在外面更難看。\n男：我也是這麼想。還有餐飲那邊，他們也是照一百五十人準備的。\n女：對，那邊也要打電話。好，就換大的那間，我去跟 Duval 先生報備。\n男：你覺得他會答應嗎？\n女：他去年春天批准過類似的變更，應該會。我今天下午找他談。\n男：好。你那邊有消息，我就跟飯店確認，順便改餐飲的訂單。\n女：還有，拿到新的平面圖就寄給我，我想看展示桌要擺在哪裡。"
+    "transcriptZh": "男：Sofia，產品發表會的人數統計出來了，有一百八十人確認出席。\n女：一百八十？我們訂的場地是一百五十人的。\n男：我知道，所以我先來找你。\n女：嗯。飯店二樓有一間比較大的，不過我猜會比較貴。\n男：我已經問過了。要多六百塊，而且他們星期五前要答覆。\n女：六百。比我原本想花的多，不過把人擋在外面更難看。\n男：我也是這麼想。還有餐飲那邊，他們也是照一百五十人準備的。\n女：對，那邊也要打電話。好，就換大的那間，我去請 Duval 先生核准。\n男：你覺得他會答應嗎？\n女：他去年春天批准過類似的變更，應該會。我今天下午找他談。\n男：好。你那邊有消息，我就跟飯店確認，順便改餐飲的訂單。\n女：還有，拿到新的平面圖就寄給我，我想看展示桌要擺在哪裡。"
   }
 ]

@@ -155,7 +155,7 @@
         "type": "文法",
         "options": ["Despite", "Given", "Whereas", "In case"],
         "answer": 1,
-        "explanation": "考連接用語的詞性與邏輯。空格後接名詞片語 the success of this year's event，且與主句「明年春天再辦一次」構成因果關係，故用介系詞片語 (B) Given（有鑑於）。(A) Despite 雖可接名詞片語，但表讓步，與「因為成功所以再辦」的邏輯相反；(C) Whereas 與 (D) In case 都是連接詞，後面必須接完整子句，不能直接接名詞片語。"
+        "explanation": "考連接用語的詞性與邏輯。空格後接名詞片語 the success of this year's event，且與主句「明年春天再辦一次」構成因果關係，故用介系詞 (B) Given（有鑑於）。(A) Despite 雖可接名詞片語，但表讓步，與「因為成功所以再辦」的邏輯相反；(C) Whereas 與 (D) In case 都是連接詞，後面必須接完整子句，不能直接接名詞片語。"
       },
       {
         "num": 4,
@@ -197,7 +197,7 @@
         "type": "文法",
         "options": ["while", "since", "among", "during"],
         "answer": 3,
-        "explanation": "考介系詞與連接詞的區別。空格後接名詞片語 the sale，需要介系詞，且語意是「在特賣期間」，故選 (D) during。(A) while 是連接詞，後面必須接子句；(B) since 表「自從某時間點以來」，須搭配完成式並指起點，與本句現在式的 earn 不合；(C) among 用於三者以上的群體之中，語意不通。"
+        "explanation": "考介系詞與連接詞的區別。空格後接名詞片語 the sale，需要介系詞，且語意是「在特賣期間」，故選 (D) during。(A) while 是連接詞，後面必須接子句；(B) since 表「自從某時間點以來」，since the sale 指從特賣那時起一直到現在，不是限定在特賣期間，與雙倍點數只適用於特賣期間的語意不合；(C) among 用於三者以上的群體之中，語意不通。"
       },
       {
         "num": 4,

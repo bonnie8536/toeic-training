@@ -160,26 +160,6 @@
     "explanation": "考點：動詞語意辨析。冒號後說明「只要按兩下綠色按鈕」，講的是使用機器的方式，故 (B) operate 正確。(A) repair 意為「修理」，與按鈕啟動的說明無關。(C) produce 意為「生產」，主詞應是工廠或公司。(D) instruct 意為「指示、教導」，受詞須是人。"
   },
   {
-    "id": "p5-b5-17",
-    "difficulty": "中級",
-    "category": "字彙辨析",
-    "question": "Ferndale Motors will ------- production at its oldest plant until demand for the model recovers.",
-    "options": ["prevent", "preserve", "postpone", "suspend"],
-    "answer": 3,
-    "translation": "Ferndale Motors 將暫停最舊廠區的生產，直到該車款的需求回升為止。",
-    "explanation": "考點：動詞與受詞的搭配及語意。until demand recovers 表示需求回升後就會恢復，可知目前是「暫停」生產，suspend production 為固定搭配，故 (D) suspend 正確。(A) prevent 意為「防止」，語意是不讓某事發生。(B) preserve 意為「保存、維護」。(C) postpone 意為「延期」，受詞須是有預定時間的活動，不用於持續運作中的生產作業。"
-  },
-  {
-    "id": "p5-b5-18",
-    "difficulty": "中級",
-    "category": "字彙辨析",
-    "question": "The warranty on Ridgefield Home Products appliances does not ------- damage caused by improper use.",
-    "options": ["cover", "contain", "protect", "include"],
-    "answer": 0,
-    "translation": "Ridgefield Home Products 家電的保固不涵蓋因使用不當造成的損壞。",
-    "explanation": "考點：保固條款的慣用動詞。保固「涵蓋、理賠」某項損壞的說法是 cover，故 (A) cover 正確。(B) contain 意為「內含」，主詞須是容器或文件本身。(C) protect 的受詞是被保護的人或物，不會是 damage（損壞）。(D) include 用來說明清單或組合中含有哪些項目，無法表達保固是否負責賠償。"
-  },
-  {
     "id": "p5-b5-19",
     "difficulty": "中級",
     "category": "字彙辨析",
@@ -208,16 +188,6 @@
     "answer": 3,
     "translation": "Harrowgate Logistics 所有倉庫人員都必須出席週五的安全宣導，不接受任何例外。",
     "explanation": "考點：形容詞語意辨析。分號後強調「不會有例外」，表示全體倉庫人員都得出席，故 (D) mandatory 正確。(A) flexible 意為「有彈性的」，與不容例外相反。(B) optional 意為「可自由選擇的」，同樣與強制出席矛盾。(C) temporary 意為「暫時的」，說的是持續期間，與是否強制無關。"
-  },
-  {
-    "id": "p5-b5-22",
-    "difficulty": "中級",
-    "category": "字彙辨析",
-    "question": "Because the two departments share a single budget, the directors at Calderon Group meet monthly to ------- their spending plans.",
-    "options": ["coordinate", "combine", "compete", "cooperate"],
-    "answer": 0,
-    "translation": "由於兩個部門共用同一筆預算，Calderon Group 的主管每月開會協調各自的支出計畫。",
-    "explanation": "考點：動詞語意與句型。兩個部門共用一筆預算，主管每月開會是為了讓各自的支出計畫「相互配合」，故 (A) coordinate 正確。(B) combine 意為「合併為一」，但兩部門仍各有計畫，並非併成一份。(C) compete 意為「競爭」，與共同協調的語意相反。(D) cooperate 是不及物動詞，須寫成 cooperate with somebody，不能直接接 their spending plans。"
   },
   {
     "id": "p5-b5-23",

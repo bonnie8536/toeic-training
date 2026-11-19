@@ -97,7 +97,7 @@
     "options": ["catch", "keep", "get", "follow"],
     "answer": 3,
     "translation": "Danforth 眼鏡行的員工必須在一個工作天內追蹤處理每一筆維修詢問。",
-    "explanation": "考點：follow up on（後續追蹤、跟進）。句中受詞是單筆的維修詢問，要在時限內回頭處理，故 (D) follow 正確。(A) catch up on 是「補做累積下來的事」，例如 catch up on paperwork，受詞是積壓的工作而非個別詢問。(B) keep up 要搭配的介系詞是 with(keep up with)，不是 on。(C) get up 是「起床、站起來」，沒有 get up on 表示追蹤的用法。"
+    "explanation": "考點：follow up on（後續追蹤、跟進）。句中受詞是每一筆維修詢問，要在一個工作天內回頭處理，故 (D) follow 正確。(A) catch up on 是「補做累積下來的事」，例如 catch up on paperwork，前提是事情已經積壓，和「每筆詢問都在時限內處理」的服務標準不合。(B) keep up on 在美式英文是「隨時掌握（消息）」，指持續留意，不是把詢問處理完，和 within one business day 的時限不搭。(C) get up 是「起床、站起來」，沒有 get up on 表示追蹤的用法。"
   },
   {
     "id": "p5-b12-11",
@@ -238,15 +238,5 @@
     "answer": 2,
     "translation": "Oakhaven 寵物美容所蒐集的顧客地址均予保密，絕不提供給外部公司。",
     "explanation": "考點：拼法相近的形容詞辨析。confidential 是「機密的」，和後半句「絕不外流」相互呼應，故 (C) 正確。(A) confident 是「有自信的」，用來形容人，例如 a confident speaker。(B) convenient 是「方便的」，說的是使用上的便利。(D) conventional 是「傳統的、按慣例的」，和是否保密無關。"
-  },
-  {
-    "id": "p5-b12-25",
-    "difficulty": "進階",
-    "category": "字彙辨析",
-    "question": "To ------- that every online order is packed the same day, Castleton Bookshop hired two seasonal workers.",
-    "options": ["ensure", "assure", "insure", "secure"],
-    "answer": 0,
-    "translation": "為確保每筆網路訂單都能當天包裝出貨，Castleton 書店僱用了兩名季節性員工。",
-    "explanation": "考點：拼法相近的動詞辨析與受詞型態。ensure 後面可以直接接 that 子句，表示「確保某件事會發生」，故 (A) 正確。(B) assure 的受詞必須是人，要寫成 assure customers that…，不能像本句一樣直接接 that 子句。(C) insure 是「為…投保」，受詞是投保的財物。(D) secure 當動詞是「取得、確保拿到（合約、名額）」，受詞是具體的東西，沒有 secure that 子句的用法。"
   }
 ]

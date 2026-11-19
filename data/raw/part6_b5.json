@@ -3,7 +3,7 @@
     "id": "p6-b5-1",
     "passageType": "notice",
     "title": "2026 Harborline Charity Fun Run",
-    "passage": "NOTICE: 2026 Harborline Charity Fun Run\n\nHarborline Logistics is pleased to announce that our annual Charity Fun Run will be held on Saturday, 12 September, at Westbrook Park. All employees and their family members are {{1}} to take part. Participants may choose either the three-kilometre walk or the eight-kilometre run. {{2}} Registration closes on 28 August, and late entries cannot be {{3}}. Every participant will receive a T-shirt and a refreshment voucher on the morning of the event, and all proceeds will go to the Westbrook Children's Hospital. {{4}} you have questions about transport to the park, please contact the Employee Services desk on extension 240.\n\nEmployee Services Committee\nHarborline Logistics",
+    "passage": "NOTICE: 2026 Harborline Charity Fun Run\n\nHarborline Logistics is pleased to announce that our annual Charity Fun Run will be held on Saturday, 12 September, at Westbrook Park. All employees and their family members are {{1}} to take part. Participants may choose either the three-kilometer walk or the eight-kilometer run. {{2}} Registration closes on 28 August, and late entries cannot be {{3}}. Every participant will receive a T-shirt and a refreshment voucher on the morning of the event, and all proceeds will go to the Westbrook Children's Hospital. {{4}} you have questions about transport to the park, please contact the Employee Services desk at extension 240.\n\nEmployee Services Committee\nHarborline Logistics",
     "questions": [
       {
         "num": 1,
@@ -59,7 +59,7 @@
         "type": "文法",
         "options": ["who", "which", "whose", "whom"],
         "answer": 2,
-        "explanation": "空格後緊接 name is Mr. Sato，說明的是「司機的名字」，屬於所有格關係，必須用關係代名詞所有格 whose。who 是主格、whom 是受格，兩者後面都不能直接接名詞再加動詞；which 用於事物，且同樣不表所有格。"
+        "explanation": "空格後緊接 name is Kenji Sato，說明的是「司機的名字」，屬於所有格關係，必須用關係代名詞所有格 whose。who 是主格、whom 是受格，兩者後面都不能直接接名詞再加動詞；which 用於事物，且同樣不表所有格。"
       },
       {
         "num": 3,
@@ -186,7 +186,7 @@
         "options": [
           "Our head office relocated to Fairview Business Park last spring.",
           "Unfortunately, we no longer offer courses in the manufacturing sector.",
-          "Enrolment figures have fallen steadily since our platform was launched.",
+          "Enrollment figures have fallen steadily since our platform was launched.",
           "The Halden Institute, meanwhile, is widely respected for its research on workplace safety."
         ],
         "answer": 3,

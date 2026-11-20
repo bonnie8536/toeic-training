@@ -1,0 +1,44 @@
+{
+  "_說明": "Azure 語音的聲音池與分配規則。只有聲音名稱與數字，沒有任何金鑰。聽力 Part 1-4 的口音與性別由規則算出（每類依 id 排序後的名次），同口音同性別有多個聲音時用 id 的雜湊挑，結果固定、和檔案載入順序無關。要指定某個檔的聲音，寫進 overrides。聲音名稱在拿到金鑰後用 node tools/gen_audio_azure.js --list-voices 確認。",
+  "version": 1,
+  "engine": "azure-neural-tts",
+  "pricePerMillionChars": 15,
+  "accents": ["US", "GB", "AU", "CA"],
+  "listeningPools": {
+    "US": { "M": ["en-US-AndrewMultilingualNeural", "en-US-BrianMultilingualNeural"], "F": ["en-US-AvaMultilingualNeural", "en-US-EmmaMultilingualNeural"] },
+    "GB": { "M": ["en-GB-RyanNeural"], "F": ["en-GB-SoniaNeural"] },
+    "AU": { "M": ["en-AU-WilliamMultilingualNeural"], "F": ["en-AU-NatashaNeural"] },
+    "CA": { "M": ["en-CA-LiamNeural"], "F": ["en-CA-ClaraNeural"] }
+  },
+  "legacy": {
+    "_說明": "英語耳、中文翻譯、對話練習、自然發音沿用現在的聲音，學生聽起來不會換人。",
+    "US": { "M": "en-US-AndrewMultilingualNeural", "F": "en-US-AvaMultilingualNeural" },
+    "US2": { "M": "en-US-BrianMultilingualNeural", "F": "en-US-EmmaMultilingualNeural" },
+    "GB": { "M": "en-GB-RyanNeural", "F": "en-GB-SoniaNeural" },
+    "AU": { "M": "en-AU-WilliamMultilingualNeural", "F": "en-AU-NatashaNeural" },
+    "shadowAccents": ["US", "GB", "AU", "US2"],
+    "zh": "zh-TW-HsiaoChenNeural",
+    "phonics": "en-US-AriaNeural",
+    "phonicsAlt": "en-US-JennyNeural",
+    "phonicsAltWords": ["ago", "bets", "cat", "chore", "fin", "keep"],
+    "phonicsAltText": { "ago": "ago." }
+  },
+  "rates": { "default": "-4%", "phonicsWord": "-8%", "phonicsSentence": "-6%" },
+  "gapsMs": { "p1Option": 700, "p2AfterQuestion": 800, "p2Option": 700, "p3Turn": 400 },
+  "quota": { "accentTargetPct": 25, "accentTolerancePct": 5, "genderTargetPct": 50, "genderTolerancePct": 10 },
+  "speed": {
+    "_說明": "整檔口徑：字數 ÷ 整檔秒數 × 60。只校 Part 3、4，其他類別維持固定語速。每一回內各檔的目標值在 mean 附近 ±spreadPct 內分散（由 id 雜湊決定）。偏離 min-max 就調語速重產，最多 maxRetries 次；語速限制在 rateMinPct 到 rateMaxPct，超過就不硬調，紀錄標 speedOk=false 並提示換聲音。",
+    "targets": {
+      "聽力P3": { "min": 165, "max": 185, "mean": 172 },
+      "聽力P4": { "min": 160, "max": 200, "mean": 181 }
+    },
+    "spreadPct": 8,
+    "maxRetries": 2,
+    "rateMinPct": -10,
+    "rateMaxPct": 25,
+    "naturalWpm": {}
+  },
+  "request": { "intervalMs": 250, "concurrency": 2, "maxRetries": 5, "backoffBaseMs": 1500, "backoffMaxMs": 30000, "timeoutMs": 60000, "maxCharsPerRun": 400000 },
+  "output": { "format": "riff-24khz-16bit-mono-pcm", "sampleRate": 24000, "channels": 1, "mp3Kbps": 48 },
+  "overrides": {}
+}

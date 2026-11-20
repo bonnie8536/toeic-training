@@ -16,6 +16,14 @@ const FIX = process.argv.includes('--fix');
 const git = (cmd) => execSync('git ' + cmd, { cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
 const vOf = (src) => { const m = /const V = '([^']+)';/.exec(src || ''); return m ? m[1] : null; };
 
+/* 金鑰外洩檢查(repo 公開):追蹤的檔案裡不得出現像金鑰的字串(32 個以上連續十六進位、Azure 金鑰格式),例外列在 tools/secret_scan_allow.json */
+const secretHits = require('./secret_scan.js').scanRepo(REPO, require('./secret_scan.js').loadAllow());
+if (secretHits.length) {
+  secretHits.slice(0, 10).forEach((h) => console.log('像金鑰的字串:' + h.file + ':' + h.line + '(' + h.rule + ')'));
+  console.log('追蹤的檔案裡有 ' + secretHits.length + ' 處像金鑰。真的是金鑰就拿掉並重新產生;是公開的假值就寫進 tools/secret_scan_allow.json(要寫理由)。');
+  process.exit(1);
+}
+
 /* 網域開關(tools/domain.json,搬家計畫 7.1、7.2):檔案跟它不一致就不能上線 */
 const dom = require('./apply_domain.js').run(REPO, true);
 if (dom.changed.length) {

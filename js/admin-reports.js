@@ -1,6 +1,7 @@
 /* 教師後台的「題目回報」區(window.ADMIN_REPORTS):只有站長掛上。
    資料:admin.js 已經讀回的 progress 列裡 k === 'q_reports' 的那些(學生用 js/report.js 回報,每人一鍵);
    資料庫政策只讓站長讀到自己班上學生的列,所以這裡看到的是「班上學生」的回報,不在班的人走客服信箱。
+   同一個政策也讓任何老師讀得到自己班上學生的 q_reports(含補充說明),回報視窗已寫明。
    一題一列,依回報人數、最近日期排序;展開看每位回報者的類型、補充說明、日期,可看題目、複製題號、標已處理、下載 CSV。
    已處理標記存在站長自己的 progress 列 rreview(跟 tnote_ 一樣只有站長用,不進搬家規則),不碰學生的列。
    補充說明是學生打的任意字:一律 textContent,CSV 的儲存格防公式。 */
@@ -22,13 +23,13 @@
     if (window.REPORT && typeof REPORT.normalize === 'function') return REPORT.normalize(v);
     const out = {};
     if (!isPlain(v)) return out;
-    Object.keys(v).forEach(k => { const e = v[k]; if (isPlain(e) && TYPE[e.c] && typeof e.t === 'number') out[k] = { c: e.c, n: String(e.n || '').slice(0, 200), t: e.t, f: e.f }; });
+    Object.keys(v).forEach(k => { if (!/^[a-z0-9]{1,4}:[A-Za-z0-9_.:-]{1,80}$/.test(k)) return; const e = v[k]; if (isPlain(e) && TYPE[e.c] && typeof e.t === 'number') out[k] = { c: e.c, n: String(e.n || '').slice(0, 200), t: e.t, f: e.f }; });
     return out;
   }
 
   /* 把所有學生的 q_reports 合成「一題一列」:[{ key, m, id, list: [{ uid, name, c, n, t }], count, lastT }],人數多的在前、同人數近的在前 */
   function aggregate(rows, nameOf) {
-    const by = {};
+    const by = Object.create(null);
     (rows || []).forEach(r => {
       if (!r || r.k !== 'q_reports' || r.v === null || r.v === undefined) return;
       const ent = entriesOf(r.v);
@@ -108,7 +109,12 @@
 
     const rows = o.rows || [];
     const nameOf = o.nameOf || (uid => String(uid).slice(0, 8));
-    const groups = aggregate(rows, nameOf);
+    let groups;
+    try { groups = aggregate(rows, nameOf); } catch (e) {
+      const bad = h('section', { class: 'q-block rpa', style: 'margin-top:20px' }, h('p', { class: 'rpa-note', role: 'alert' }, '題目回報載入失敗'));
+      root.append(bad);
+      return { el: bad, groups: [], redraw() {} };
+    }
     const mine = rows.find(r => r && r.user_id === (C.user && C.user.id) && r.k === 'rreview');
     let review = mine && isPlain(mine.v) ? Object.assign({}, mine.v) : {};
     let showClosed = false;

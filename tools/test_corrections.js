@@ -16,17 +16,19 @@ const RETIRED = readJson('data/retired.json').retired;
 const MD = 'D:/claudecode/刷刷英文開發/題庫研究/全審/更正紀錄.md';
 const T = {};
 
-T['建置結果與檔案一致,共 331 列(12 答案更正、296 文字修正、23 淘汰)'] = () => {
+T['建置結果與檔案一致,共 181 列(12 答案更正、146 文字修正、23 淘汰)'] = () => {
   const r = spawnSync(process.execPath, [path.join(__dirname, 'build_corrections.js'), '--check'], { encoding: 'utf8' });
   const by = (k) => DATA.rows.filter((x) => x.k === k).length;
   const sum = by('answer') + '/' + by('text') + '/' + by('retired');
-  return { ok: r.status === 0 && DATA.rows.length === 331 && sum === '12/296/23', detail: 'exit ' + r.status + ',' + DATA.rows.length + ' 列(' + sum + ')' };
+  return { ok: r.status === 0 && DATA.rows.length === 181 && sum === '12/146/23', detail: 'exit ' + r.status + ',' + DATA.rows.length + ' 列(' + sum + ')' };
 };
 T['筆數對得上全審的更正紀錄(研究資料夾在才比)'] = () => {
   if (!fs.existsSync(MD)) return { ok: true, detail: '略過(沒有研究資料夾)' };
   const md = fs.readFileSync(MD, 'utf8').split(/\r?\n/);
   const rows = md.slice(6, 408).filter((l) => /^\| 2026-/.test(l)).length;   // 第一到第八節(第九節在別的分支)
-  return { ok: rows === DATA.rows.length, detail: 'md ' + rows + ' 列,json ' + DATA.rows.length + ' 列' };
+  const src = readJson('tools/corrections/source.json').rows.filter((r) => r.k === 'text').length;
+  const minor = src - DATA.rows.filter((x) => x.k === 'text').length;   // 輕微項不上公開頁
+  return { ok: rows === DATA.rows.length + minor && minor === 150, detail: 'md ' + rows + ' 列,json ' + DATA.rows.length + ' 列,輕微項 ' + minor + ' 列' };
 };
 T['淘汰題全部列出,替代題對得上,日期與原因照 retired.json'] = () => {
   const out = DATA.rows.filter((x) => x.k === 'retired');
@@ -39,7 +41,7 @@ T['替代題都在題庫'] = () => {
   return { ok: miss.length === 0 && ids.size > 1000, detail: '題庫 id ' + ids.size + ',缺 ' + miss.length };
 };
 T['每列只有規定欄位,不放題目原文'] = () => {
-  const ok = DATA.rows.every((x) => Object.keys(x).every((k) => ['d', 'id', 'a', 'k', 'p', 'r', 'n'].includes(k)) && (x.k === 'retired' || !('n' in x)));
+  const ok = DATA.rows.every((x) => Object.keys(x).every((k) => ['d', 'id', 'a', 'k', 'p', 'r', 'i', 'n'].includes(k)) && (x.k === 'retired' || !('n' in x)) && typeof x.i === 'string' && x.i.length > 0);
   const eng = DATA.rows.filter((x) => /[A-Za-z]+(?:[ ,.'-]+[A-Za-z]+){3,}/.test(x.p + ' ' + x.r));
   const q = DATA.rows.filter((x) => /[?？]/.test(x.p + x.r));
   return { ok: ok && !eng.length && !q.length, detail: '欄位 ' + ok + ',英文句子 ' + eng.length + ',問號 ' + q.length + (eng[0] ? ' ' + eng[0].id : '') };
@@ -47,7 +49,7 @@ T['每列只有規定欄位,不放題目原文'] = () => {
 T['文案規則:無半形標點、破折號、emoji、人名,每句不超過 60 字'] = () => {
   const bad = [];
   DATA.rows.forEach((x) => {
-    B.lintText(x.p).concat(B.lintText(x.r)).forEach((b) => bad.push(x.id + b));
+    B.lintText(x.p).concat(B.lintText(x.r), B.lintText(x.i)).forEach((b) => bad.push(x.id + b));
     if (/審過|專家|審訂|人工/.test(x.p + x.r)) bad.push(x.id + '字樣');
   });
   return { ok: bad.length === 0, detail: bad.length + ' 處 ' + bad.slice(0, 3) };
@@ -101,7 +103,7 @@ T['頁面:三組小標與筆數,答案更正與淘汰預設展開、文字修正
   const ds = detailsOf(p.root);
   const names = ds.map((d) => d.find((n) => n.tagName === 'SUMMARY')[0].textContent);
   const open = ds.map((d) => d.hasAttribute('open'));
-  return { ok: names.join() === '答案更正(12),淘汰換新(23),題目文字修正(296)' && open.join() === 'true,true,false', detail: names.join(' / ') + ' ' + open };
+  return { ok: names.join() === '答案更正(12),淘汰換新(23),題目文字修正(146)' && open.join() === 'true,true,false', detail: names.join(' / ') + ' ' + open };
 };
 T['頁面:篩選 P5 只剩 P5 的列'] = async () => {
   const p = page(); await p.C.load(p.root, okFetch, '');
@@ -128,10 +130,17 @@ T['頁面:?q=p7-b4-2:1 標出整組淘汰那一列;q 指到文字修正會展開
   const d2 = detailsOf(p2.root)[2];
   return { ok: hit.length === 1 && hit[0].children[1].textContent === 'p7-b4-2' && hit[0].getAttribute('aria-current') === 'true' && d2.hasAttribute('open'), detail: hit.length + ' 列;文字組展開 ' + d2.hasAttribute('open') };
 };
+T['公開頁用語:問題欄只有學生看得懂的類別,沒有猜題訣竅與內部術語;三組都有「影響」,答案更正與淘汰寫明尚未自動排除'] = () => {
+  const text = DATA.rows.filter((x) => x.k === 'text');
+  const cats = new Set(text.map((x) => x.p));
+  const leak = DATA.rows.filter((x) => /最長|猜中|猜得|逐字|字面|真實|網域|英式|拼法|不聽也|不看文章/.test(x.p + x.r + x.i));
+  const imp = (k) => DATA.rows.filter((x) => x.k === k).every((x) => x.i === B.IMPACT[k]);
+  return { ok: leak.length === 0 && imp('answer') && imp('retired') && imp('text') && /尚未自動排除/.test(B.IMPACT.answer) && /尚未自動排除/.test(B.IMPACT.retired) && Array.from(cats).every((c) => ['不只一個答案', '題目內容有誤', '英文用字有誤', '題意不清楚'].includes(c)), detail: Array.from(cats).join('、') + ';洩漏 ' + leak.length };
+};
 T['頁面:處理欄文案(答案更正寫明不重算)'] = async () => {
   const p = page(); await p.C.load(p.root, okFetch, '');
   const t = p.root.textContent;
-  return { ok: t.includes('答案改為 A。以前的作答紀錄與模擬考分數不重算。') && t.includes('淘汰，換新題 p5-b13-01') && t.includes('淘汰，替代題之後補'), detail: '三種處理句都在' };
+  return { ok: t.includes('答案改為 A') && t.includes('以前的作答紀錄與模擬考分數不重算，能力統計尚未自動排除。') && t.includes('淘汰，換新題 p5-b13-01') && t.includes('淘汰，替代題之後補'), detail: '三種處理句都在' };
 };
 T['頁面:載入失敗(網路錯、非 200、格式不對)顯示錯誤句,不丟錯'] = async () => {
   const outs = [];

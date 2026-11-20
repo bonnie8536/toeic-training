@@ -2,7 +2,7 @@
    來源:
    - tools/corrections/source.json  答案更正與題目文字修正,每列 { d, id, a, k, p, r }
    - data/retired.json              淘汰換新(直接當來源,不重抄一份)
-   只放題號、區域、問題一句、處理一句,不放題目原文、選項、詳解。
+   只放題號、區域、問題一句、處理一句、影響一句,不放題目原文、選項、詳解。
    新增更正:改 source.json 或 data/retired.json,再跑這支。
    用法:
      node tools/build_corrections.js          重新產生 data/corrections.json
@@ -17,6 +17,27 @@ const OUT = 'data/corrections.json';
 const AREAS = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', '文法', '文章', '片語', '英語耳'];
 const KINDS = ['answer', 'text', 'retired'];
 const MAX_LEN = 60;
+/* 影響欄:規格 8.5 的實況。能力統計、模擬考目前都沒有自動排除或重算的程式,照實寫 */
+const IMPACT = {
+  answer: '以前的作答紀錄與模擬考分數不重算，能力統計尚未自動排除。',
+  retired: '這題已不再出現。以前的作答紀錄與模擬考分數不重算，能力統計尚未自動排除。',
+  text: '以前的作答紀錄不重算。',
+};
+/* 題目文字修正(source.json 的 text 組)公開頁只列學生看得懂、影響作答的那幾類:
+   猜題線索(最長選項、不看文章也猜得中)、換成範例網域與刊物名、改美式拼法、調整選項長度,屬輕微項(規格 8.6),不上公開頁。
+   source.json 的原因與處理句是內部用語,公開頁用下面的類別與處理句。 */
+const REAL_ERROR = /有兩個答案|說得通|也成立|兩種讀法|重疊|同一件事|矛盾|對不上|互相衝突|不自然|文法錯誤|算不出|沒有依據|推不出|含糊|不夠明確|沒有交代|沒提到|沒有寫到|有文章支持|沒說計算範圍/;
+function textCategory(p) {
+  if (!REAL_ERROR.test(p)) return null;
+  if (/兩個答案|說得通|也成立|兩種讀法|重疊|同一件事/.test(p)) return '不只一個答案';
+  if (/矛盾|對不上|互相衝突/.test(p)) return '題目內容有誤';
+  if (/不自然|文法錯誤/.test(p)) return '英文用字有誤';
+  return '題意不清楚';
+}
+function textAction(r) {
+  const what = /題幹|題目/.test(r) && !/選項/.test(r) ? '修正題幹' : /文章|標題|日期|空格後/.test(r) && !/選項/.test(r) ? '修正文章' : '修正選項';
+  return what + (/詳解/.test(r) ? '與詳解' : '');
+}
 const readJson = (root, rel) => JSON.parse(fs.readFileSync(path.join(root, rel), 'utf8').replace(/^﻿/, ''));
 
 /* 題庫裡所有 id(替代題存在檢查用) */
@@ -52,6 +73,7 @@ function build(root) {
   const src = readJson(root, 'tools/corrections/source.json').rows;
   const ret = readJson(root, 'data/retired.json').retired;
   const rows = [];
+  let minor = 0;
   src.forEach((r, i) => {
     const tag = '來源第 ' + (i + 1) + ' 列(' + r.id + ')';
     if (Object.keys(r).sort().join() !== 'a,d,id,k,p,r') errors.push(tag + ' 欄位不對');
@@ -59,7 +81,11 @@ function build(root) {
     if (AREAS.indexOf(r.a) < 0) errors.push(tag + ' 區域不對:' + r.a);
     if (r.k !== 'answer' && r.k !== 'text') errors.push(tag + ' 種類不對:' + r.k);
     if (r.k === 'answer' && !/^答案改為 [A-D]$/.test(r.r)) errors.push(tag + ' 答案更正的處理句格式不對');
-    rows.push({ d: r.d, id: r.id, a: r.a, k: r.k, p: r.p, r: r.r });
+    if (r.k === 'text') {
+      const cat = textCategory(r.p);
+      if (cat) rows.push({ d: r.d, id: r.id, a: r.a, k: 'text', p: cat, r: textAction(r.r), i: IMPACT.text });
+      else minor++;
+    } else rows.push({ d: r.d, id: r.id, a: r.a, k: r.k, p: r.p, r: r.r, i: IMPACT.answer });
   });
   const ids = bankIds(root);
   ret.forEach((x) => {
@@ -67,19 +93,19 @@ function build(root) {
     const a = 'P' + x.part;
     if (AREAS.indexOf(a) < 0) errors.push(tag + ' part 不對');
     if (x.replacedBy && !ids.has(x.replacedBy)) errors.push(tag + ' 的替代題 ' + x.replacedBy + ' 不在題庫');
-    const row = { d: x.date, id: x.id, a, k: 'retired', p: x.reason, r: x.replacedBy ? '淘汰，換新題 ' + x.replacedBy : '淘汰，替代題之後補' };
+    const row = { d: x.date, id: x.id, a, k: 'retired', p: x.reason, r: x.replacedBy ? '淘汰，換新題 ' + x.replacedBy : '淘汰，替代題之後補', i: IMPACT.retired };
     if (x.replacedBy) row.n = x.replacedBy;
     rows.push(row);
   });
   const seen = new Set();
   rows.forEach((r) => {
-    const key = r.id + '|' + r.k + '|' + r.d + '|' + r.p;
+    const key = r.id + '|' + r.k + '|' + r.d + '|' + r.p + '|' + r.r;
     if (seen.has(key)) errors.push('重複:' + key);
     seen.add(key);
-    ['p', 'r'].forEach((f) => lintText(r[f]).forEach((b) => errors.push(r.id + ' 的 ' + f + ':' + b)));
+    ['p', 'r', 'i'].forEach((f) => lintText(r[f]).forEach((b) => errors.push(r.id + ' 的 ' + f + ':' + b)));
   });
   const updated = rows.reduce((m, r) => (r.d > m ? r.d : m), '0000-00-00');
-  return { errors, data: { updated, rows } };
+  return { errors, minor, data: { updated, rows } };
 }
 
 const render = (data) => '{\n "updated": ' + JSON.stringify(data.updated) + ',\n "rows": [\n' +
@@ -99,4 +125,4 @@ if (require.main === module) {
   else { fs.writeFileSync(file, next); console.log(OUT + ' 已更新:' + res.data.rows.length + ' 列'); }
 }
 
-module.exports = { build, render, bankIds, lintText, AREAS };
+module.exports = { IMPACT, textCategory, build, render, bankIds, lintText, AREAS };

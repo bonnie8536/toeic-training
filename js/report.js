@@ -1,7 +1,8 @@
 /* 回報題目(window.REPORT):每題詳解方塊底部的「回報題目」按鈕、回報視窗、存進 q_reports。
    題號 key 一律是 模組:題目 id(跟學習記錄的 rec.m、rec.id 同一套),例如 p5:p5-b3-04、p6:p6-b7-1:2、g:ga-02:6。
    存放:每人一個鍵 q_reports(走 store 與雲端 progress 表,不動資料表),形狀 { key: { c 類型, n 補充說明, t 最近送出, f 第一次回報 } }。
-   站長讀得到的只有自己班上學生的列(資料庫政策),所以不在班的人,結果畫面多一顆「寄給客服」(mailto)。
+   站長讀得到的只有自己班上學生的列(資料庫政策),而且任何老師都讀得到自己班上學生的全部列(含補充說明),所以視窗寫明老師看得到;
+   學生看不出自己的班是不是站長的,送出後一律請他寄信給客服(mailto),不寫「已收到」。
    這支要在 common.js(h、store)與 cloud.js 之後載入;各頁呼叫時都包 window.REPORT &&,沒載到也不會壞。 */
 (function () {
   'use strict';
@@ -20,6 +21,8 @@
     { c: 'other', label: '其他' },
   ];
   const CODES = TYPES.map(t => t.c);
+  /* 正常寫入的鍵一定是 模組:題目 id;學生可以繞過介面直接寫自己的列,constructor、toString 這類名字要擋在外面 */
+  const KEY_RE = /^[a-z0-9]{1,4}:[A-Za-z0-9_.:-]{1,80}$/;
   const labelOf = c => (TYPES.find(t => t.c === c) || {}).label || '';
   const X_ICON = '<svg viewBox="0 0 22 22" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l12 12M17 5L5 17"/></svg>';
 
@@ -32,6 +35,7 @@
     const out = {};
     if (!isPlain(v)) return out;
     Object.keys(v).forEach(k => {
+      if (!KEY_RE.test(k)) return;
       const e = v[k];
       if (!isPlain(e) || CODES.indexOf(e.c) < 0 || typeof e.t !== 'number' || !isFinite(e.t)) return;
       out[k] = { c: e.c, n: cleanNote(e.n), t: e.t, f: typeof e.f === 'number' && isFinite(e.f) ? e.f : e.t };
@@ -78,23 +82,6 @@
     return url;
   }
 
-  /* ---------- 班級:同一頁只查一次 ---------- */
-  let classState = null;
-  function inClass() {
-    if (classState) return classState;
-    classState = (async () => {
-      const C = window.CLOUD;
-      if (!C || !C.enabled || !C.client) return false;
-      try { await Promise.race([C.ready, new Promise(r => setTimeout(r, 6000))]); } catch (e) { return false; }
-      if (!C.user) return false;
-      try {
-        const { data, error } = await C.client.from('memberships').select('class_id').eq('student_id', C.user.id);
-        return !error && Array.isArray(data) && data.length > 0;
-      } catch (e) { return false; }
-    })();
-    return classState;
-  }
-
   const online = () => !(typeof navigator !== 'undefined' && navigator.onLine === false);
   const dateText = t => { const d = new Date(t); return (d.getMonth() + 1) + '/' + d.getDate(); };
 
@@ -116,7 +103,6 @@
     }
     const key = keyOf(ctx.m, ctx.id);
     const prev = normalize(store.get('q_reports', {}))[key] || null;
-    const membership = inClass();   // 先查,送出時才不用等
     const types = TYPES.filter(t => !t.audioOnly || ctx.audio);
     let chosen = prev && types.some(t => t.c === prev.c) ? prev.c : '';
 
@@ -133,7 +119,8 @@
     const set = h('fieldset', { class: 'buy-opts' }, legend, h('div', { class: 'buy-opt-list' }, radios));
     const note = h('textarea', { class: 'auth-input rp-note', id: 'rp-note', name: 'note', rows: '3', maxlength: String(MAX_NOTE), autocomplete: 'off' });
     note.value = prev ? prev.n : '';
-    const field = h('div', { class: 'auth-field' }, h('label', { for: 'rp-note' }, '補充說明（可不填）'), note);
+    const field = h('div', { class: 'auth-field' }, h('label', { for: 'rp-note' }, '補充說明（可不填）'), note,
+      h('p', { class: 'auth-fine' }, '補充說明會存在你的帳號資料裡，班上的老師看得到。'));
     const msg = h('p', { class: 'auth-msg', role: 'alert' });
     const submit = h('button', { class: 'btn primary auth-submit', type: 'submit' }, '送出');
     submit.disabled = !chosen;
@@ -158,31 +145,23 @@
         msg.textContent = '存不進去，請重新整理後再試。'; msg.className = 'auth-msg bad';
         return;
       }
-      const joined = await membership;
       busy = false; closeBtn.disabled = false;
-      result(rec, joined);
+      result(rec);
     });
 
-    function result(rec, joined) {
-      const lines = [];
-      let heading;
-      if (joined) heading = online() ? '已收到回報' : '已存在這台裝置，連上網路後會自動送出。';
-      else heading = '已記下回報';
-      title.textContent = heading;
+    /* 站長只讀得到自己班上學生的列,而學生看不出自己的班是不是站長的,所以一律請對方寄信,不說「已收到」 */
+    function result(rec) {
+      title.textContent = '請寄信給客服';
       box.replaceChildren(closeBtn, title);
-      if (!joined) {
-        const addr = h('span', { class: 'rp-addr' }, SUPPORT);
-        const copy = h('button', { class: 'btn', type: 'button' }, '複製地址');
-        copy.addEventListener('click', async () => {
-          try { await navigator.clipboard.writeText(SUPPORT); copy.textContent = '已複製'; } catch (e) { copy.textContent = '請手動複製'; }
-        });
-        lines.push(h('p', { class: 'auth-fine' }, '寄出信件後，客服才收得到。'),
-          h('a', { class: 'btn primary auth-submit rp-mail', href: mailto(rec, ctx) }, '寄給客服'),
-          h('p', { class: 'auth-fine' }, addr), copy);
-      }
+      const addr = h('span', { class: 'rp-addr' }, SUPPORT);
+      const copy = h('button', { class: 'btn', type: 'button' }, '複製地址');
+      copy.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(SUPPORT); copy.textContent = '已複製'; } catch (e) { copy.textContent = '請手動複製'; }
+      });
       const done = h('button', { class: 'btn auth-submit', type: 'button', onclick: () => close() }, '關閉');
-      lines.push(done);
-      box.append(...lines);
+      box.append(h('p', { class: 'auth-fine' }, (online() ? '回報已存在你的帳號。' : '回報已存在這台裝置。') + '寄出信件後，客服才收得到。'),
+        h('a', { class: 'btn primary auth-submit rp-mail', href: mailto(rec, ctx) }, '寄給客服'),
+        h('p', { class: 'auth-fine' }, addr), copy, done);
       try { title.focus(); } catch (e) { /* 沒焦點也不影響 */ }
     }
 
@@ -197,7 +176,10 @@
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
     document.addEventListener('keydown', onKey);
-    mask.addEventListener('mousedown', e => { if (e.target === mask && !busy) close(); });
+    /* 點背景關閉要等 click:mousedown 就關的話,瀏覽器之後的預設行為會把焦點搶到 body。按下與放開都在背景才算 */
+    let downOnMask = false;
+    mask.addEventListener('mousedown', e => { downOnMask = e.target === mask; });
+    mask.addEventListener('click', e => { if (downOnMask && e.target === mask && !busy) close(); downOnMask = false; });
     try { title.focus(); } catch (e) { /* 略 */ }
 
     function close() {
@@ -220,5 +202,5 @@
     return row;
   }
 
-  window.REPORT = { attach, open, keyOf, mailto, normalize, record, TYPES, MAX_NOTE, MAX_ITEMS, SUPPORT, KEY };
+  window.REPORT = { attach, open, keyOf, mailto, normalize, record, KEY_RE, TYPES, MAX_NOTE, MAX_ITEMS, SUPPORT, KEY };
 })();

@@ -76,6 +76,21 @@ T['彙整:三個學生回報同一題只有一列、人數 3,依人數排序;展
   return { ok: items.length === 2 && head(items[0]).textContent.includes('p5-b1-01') && head(items[0]).textContent.includes('3 人') && head(items[1]).textContent.includes('1 人')
     && ['小安', '小宏', '小美', '答案有誤', '不只一個答案', '題目或選項有錯字', '我覺得是 B', 'A 也可以', '第二行有錯字'].every((s) => text.includes(s)), detail: items.length + ' 列;' + head(items[0]).textContent.slice(0, 60) };
 };
+T['資料安全:學生繞過介面寫 constructor、toString、hasOwnProperty、__proto__ 等鍵,其他人的回報照樣顯示,不丟錯'] = async () => {
+  const bad = JSON.parse('{"constructor":{"c":"typo","n":"","t":' + NOW + '},"toString":{"c":"typo","n":"","t":' + NOW + '},"hasOwnProperty":{"c":"typo","n":"","t":' + NOW + '},"__proto__":{"c":"typo","n":"","t":' + NOW + '},"p5:p5-b1-02":{"c":"typo","n":"好的","t":' + NOW + '}}');
+  const rows = BASE.concat(rep(S1, bad), rep(S2, { [KEY]: E('wrong_key', '真的', NOW - 5) }));
+  const A = await open(rows);
+  const agg = A.ctx.ADMIN_REPORTS.aggregate(rows, () => 'x');
+  const keys = agg.map((g) => g.key).sort();
+  return { ok: !!A.section() && A.items().length === 2 && J(keys) === J(['p5:p5-b1-01', 'p5:p5-b1-02']), detail: J(keys) + ' / ' + A.items().length + ' 列' };
+};
+T['載入失敗:彙整出錯時顯示一行「題目回報載入失敗」,後台其他部分照常'] = async () => {
+  const A = await open(BASE);
+  const box = new A.dom.Node('div'); A.dom.body.append(box);
+  await A.ctx.ADMIN_REPORTS.mount(box, { rows: BASE.concat(rep(S1, { [KEY]: E('typo', '', NOW) })), nameOf: () => { throw new Error('boom'); } });
+  const sec = box.byClass('rpa')[0];
+  return { ok: !!sec && sec.textContent.includes('題目回報載入失敗') && A.items().length === 0, detail: sec ? sec.textContent : '沒有區塊' };
+};
 T['純文字:補充說明含 <img onerror> 時畫面是文字,沒有 img 節點'] = async () => {
   const evil = '<img src=x onerror=alert(1)><script>alert(2)</script>';
   const A = await open(BASE.concat(rep(S1, { [KEY]: E('other', evil, NOW) })));

@@ -133,13 +133,19 @@ T['沒登入:按鈕有 data-gate;canKeepProgress 為假時不開視窗、不寫�
   await btn.fire('click');
   return { ok: btn.hasAttribute('data-gate') && !modal(E) && E.log.sets === 0 && E.log.asked === 1 && !('q_reports' in E.stored()) && Object.keys(E.stored()).length === 0, detail: 'asked ' + E.log.asked + ',sets ' + E.log.sets };
 };
-T['在班:結果標題「已收到回報」,沒有寄信鈕'] = async () => {
-  const E = env({ joined: true });
-  const { m } = await openAndSend(E, CTX, 'wrong_key', 'x');
-  ALL_TEXT.push(m.textContent);
-  return { ok: title(m) === '已收到回報' && !m.find((n) => n.tagName === 'A').length && E.log.memberQueries === 1, detail: title(m) };
+T['結果畫面:在班、不在班、查詢失敗都一樣,標題「請寄信給客服」,寄信是主要動作,不寫「已收到」「已記下」'] = async () => {
+  const outs = [];
+  for (const joined of [true, false, 'error']) {
+    const E = env({ joined });
+    const { m } = await openAndSend(E, CTX, 'wrong_key', 'x');
+    ALL_TEXT.push(m.textContent);
+    const a = m.find((n) => n.tagName === 'A');
+    const primary = a.length === 1 && /primary/.test(a[0].className || '') && !/primary/.test(m.find((n) => n.tagName === 'BUTTON' && n.textContent === '關閉')[0].className || '');
+    outs.push({ t: title(m), primary, no: !/已收到|已記下|已送出/.test(m.textContent), q: E.log.memberQueries });
+  }
+  return { ok: outs.every((x) => x.t === '請寄信給客服' && x.primary && x.no && x.q === 0), detail: J(outs) };
 };
-T['不在班與查詢失敗:「已記下回報」,有寄信鈕與地址,mailto 內容與編碼正確、長度小於 1500'] = async () => {
+T['不在班與查詢失敗:「請寄信給客服」,有寄信鈕與地址,mailto 內容與編碼正確、長度小於 1500'] = async () => {
   const outs = [];
   for (const joined of [false, 'error']) {
     const E = env({ joined });
@@ -152,7 +158,7 @@ T['不在班與查詢失敗:「已記下回報」,有寄信鈕與地址,mailto �
     const params = {}; q.split('&').forEach((p) => { const i = p.indexOf('='); params[p.slice(0, i)] = decodeURIComponent(p.slice(i + 1)); });
     outs.push({ t: title(m), href, params, hasAddr: m.textContent.includes('rushuplanguage@gmail.com'), line: m.textContent.includes('寄出信件後，客服才收得到。') });
   }
-  const ok = outs.every((x) => x.t === '已記下回報' && x.href.startsWith('mailto:rushuplanguage@gmail.com?') && x.href.length < 1500 && x.hasAddr && x.line
+  const ok = outs.every((x) => x.t === '請寄信給客服' && x.href.startsWith('mailto:rushuplanguage@gmail.com?') && x.href.length < 1500 && x.hasAddr && x.line
     && x.params.subject === '題目回報 p5-b3-04（Part 5）不只一個答案' && x.params.body.includes('題號：p5-b3-04') && x.params.body.includes('Part：5')
     && x.params.body.includes('回報類型：不只一個答案') && x.params.body.includes('補充說明：他說 A&B #1 第二行，') && x.params.body.includes('頁面：practice.html'));
   return { ok, detail: outs.map((x) => x.t + ' ' + (x.href || '').length).join(' / ') };
@@ -162,11 +168,11 @@ T['mailto:補充說明很長時整段網址仍小於 1500'] = () => {
   const url = E.R.mailto({ c: 'other', n: '字'.repeat(200) }, { m: 'p6', id: 'p6-b10-4:2' });
   return { ok: url.length < 1500 && url.length > 300 && decodeURIComponent(url).includes('Part：6'), detail: url.length + ' 字元' };
 };
-T['離線(在班):寫「已存在這台裝置，連上網路後會自動送出。」,不寫「已收到」,store 照樣寫入'] = async () => {
+T['離線:寫「回報已存在這台裝置。」,不寫自動送出或已收到,store 照樣寫入'] = async () => {
   const E = env({ joined: true, online: false });
   const { m } = await openAndSend(E, CTX, 'typo', '');
   ALL_TEXT.push(m.textContent);
-  return { ok: title(m) === '已存在這台裝置，連上網路後會自動送出。' && !m.textContent.includes('已收到') && !!E.stored()['p5:p5-b3-04'], detail: title(m) };
+  return { ok: title(m) === '請寄信給客服' && m.textContent.includes('回報已存在這台裝置。') && !/已收到|自動送出/.test(m.textContent) && !!E.stored()['p5:p5-b3-04'], detail: title(m) };
 };
 T['寫入失敗:顯示錯誤句,視窗不關,輸入留著'] = async () => {
   const E = env({ storeFails: true });
@@ -207,18 +213,39 @@ T['視窗:Esc 關、焦點回原按鈕、已有視窗時不開第二個、Tab �
   const back = E.dom.document.activeElement === btn;
   return { ok: one && prevented && wrapped && closed && back && items.length > 0 && last.length > 0, detail: J({ one, prevented, wrapped, closed, back }) };
 };
-T['視窗:送出中不能關(等班級查詢回來才有結果)'] = async () => {
-  const E = env({ joined: true, hold: true });
+T['視窗:點背景關閉後焦點回到「回報題目」按鈕(mousedown 不關,click 才關;從視窗內拖到背景不關)'] = async () => {
+  const E = env();
+  const ex = E.explain(); E.R.attach(ex, CTX);
+  const btn = ex.byClass('report-btn')[0];
+  btn.focus();
+  await btn.fire('click');
+  const m = modal(E);
+  await m.fire('mousedown');
+  const openAfterDown = !!modal(E);
+  E.dom.document.body.focus();   // 瀏覽器的預設行為:mousedown 之後把焦點移到 body
+  await m.fire('click');
+  const closed = !modal(E);
+  const back = E.dom.document.activeElement === btn;
+  await btn.fire('click');
+  const m2 = modal(E);
+  await m2.byClass('modal')[0].fire('mousedown', { target: m2.byClass('modal')[0] });
+  await m2.fire('click');
+  const dragKept = !!modal(E);
+  return { ok: openAfterDown && closed && back && dragKept, detail: J({ openAfterDown, closed, back, dragKept }) };
+};
+T['視窗:補充說明旁寫明帳號資料裡班上老師看得到'] = async () => {
+  const E = env();
   const ex = E.explain(); E.R.attach(ex, CTX);
   await ex.byClass('report-btn')[0].fire('click');
-  const m = modal(E);
-  const r = radios(m)[0]; r.checked = true; await r.fire('change');
-  const p = m.find((n) => n.tagName === 'FORM')[0].fire('submit');
-  await K.settle();
-  E.dom.document.key({ key: 'Escape' });
-  const stillOpen = !!modal(E);
-  E.release(); await p; await K.settle();
-  return { ok: stillOpen && title(modal(E)) === '已收到回報', detail: 'stillOpen ' + stillOpen };
+  const t = modal(E).textContent;
+  return { ok: t.includes('補充說明會存在你的帳號資料裡，班上的老師看得到。'), detail: '' };
+};
+T['資料安全:normalize 只收「模組:id」形狀的鍵,constructor、toString、hasOwnProperty、__proto__ 丟掉;record 不受影響'] = () => {
+  const E = env();
+  const src = JSON.parse('{"constructor":{"c":"typo","t":1},"toString":{"c":"typo","t":1},"hasOwnProperty":{"c":"typo","t":1},"__proto__":{"c":"typo","t":1},"p5:p5-b1-01":{"c":"typo","t":1},"p6:p6-b7-1:2":{"c":"typo","t":2},"ear:n-01":{"c":"other","t":3}}');
+  const out = E.R.normalize(src);
+  const next = E.R.record(src, 'p5:new', 'typo', '', 9);
+  return { ok: J(Object.keys(out).sort()) === '["ear:n-01","p5:p5-b1-01","p6:p6-b7-1:2"]' && Object.getPrototypeOf(next) !== null && !!next['p5:new'], detail: J(Object.keys(out)) };
 };
 T['按鈕:同一個詳解方塊只加一次;aria-label 帶 Part 與題號;缺題號不加'] = () => {
   const E = env();
@@ -232,10 +259,10 @@ T['按鈕:同一個詳解方塊只加一次;aria-label 帶 Part 與題號;缺題
 };
 T['normalize:不是物件當空的,壞掉的單筆丟掉,不改傳進來的'] = () => {
   const E = env();
-  const src = { a: { c: 'typo', n: ' x ', t: 5 }, b: { c: 'nope', t: 1 }, c: 'junk', d: { c: 'other', t: 'x' } };
+  const src = { 'p5:a': { c: 'typo', n: ' x ', t: 5 }, 'p5:b': { c: 'nope', t: 1 }, 'p5:c': 'junk', 'p5:d': { c: 'other', t: 'x' } };
   const before = J(src);
   const out = E.R.normalize(src);
-  return { ok: J(Object.keys(out)) === '["a"]' && out.a.f === 5 && J(E.R.normalize('x')) === '{}' && J(E.R.normalize([1])) === '{}' && J(E.R.normalize(null)) === '{}' && J(src) === before, detail: J(out) };
+  return { ok: J(Object.keys(out)) === '["p5:a"]' && out['p5:a'].f === 5 && J(E.R.normalize('x')) === '{}' && J(E.R.normalize([1])) === '{}' && J(E.R.normalize(null)) === '{}' && J(src) === before, detail: J(out) };
 };
 T['不改既有鍵:report.js 只讀寫 q_reports'] = () => {
   const src = read('js/report.js');

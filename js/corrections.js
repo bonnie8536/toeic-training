@@ -9,8 +9,7 @@
     { k: 'retired', title: '淘汰換新' },
     { k: 'text', title: '題目文字修正' },
   ];
-  var HEADS = ['日期', '題號', 'Part', '問題', '處理'];
-  var ANSWER_NOTE = '。以前的作答紀錄與模擬考分數不重算。';
+  var HEADS = ['日期', '題號', 'Part', '問題', '處理', '影響'];
   var LOAD_FAIL = '更正紀錄載入失敗，請稍後再試。';
 
   function el(tag, cls, text) {
@@ -27,7 +26,7 @@
   }
 
   function processText(row) {
-    return row.k === 'answer' ? row.r + ANSWER_NOTE : row.r;
+    return row.r;
   }
 
   function cell(tag, label, text) {
@@ -48,7 +47,7 @@
       var tr = el('tr', isTarget(row, q) ? 'is-target' : '');
       if (isTarget(row, q)) { tr.setAttribute('aria-current', 'true'); if (!first) first = tr; }
       tr.append(cell('td', HEADS[0], row.d.replace(/-/g, '/')), cell('td', HEADS[1], row.id),
-        cell('td', HEADS[2], row.a), cell('td', HEADS[3], row.p), cell('td', HEADS[4], processText(row)));
+        cell('td', HEADS[2], row.a), cell('td', HEADS[3], row.p), cell('td', HEADS[4], processText(row)), cell('td', HEADS[5], row.i || ''));
       tbody.append(tr);
     });
     t.append(thead, tbody);

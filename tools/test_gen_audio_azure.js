@@ -79,11 +79,13 @@ const allText = (st, d) => st.logs.join('\n') + '\n' + listFiles(d).filter((f) =
   const p1 = a.filter((i) => i.category === '聽力P1');
   const combos = new Set(p1.flatMap((i) => i.slots.map((s) => s.accent + s.gender)));
   check('Part 1：口音與性別拆開（每種口音男女聲都出現）', combos.size === 8, [...combos].join(','));
+  /* 性別照設定檔的聲音池判斷，聲音池加新聲音時不用改測試 */
+  const genderOfVoice = (v) => { for (const acc of Object.keys(cfg.listeningPools)) for (const g of ['M', 'F']) if (cfg.listeningPools[acc][g].includes(v)) return g; return '?'; };
   const p3 = a.filter((i) => i.category === '聽力P3');
   check('Part 3：兩人兩個口音、一男一女、整組同一說話者同一個聲音', p3.every((i) => {
     const byGender = {};
     let ok = true;
-    i.segments.filter((s) => s.text).forEach((s) => { const g = /^en-[A-Z]{2}-(Andrew|Brian|Ryan|William|Liam)/.test(s.voice) ? 'M' : 'F'; byGender[g] = byGender[g] || s.voice; if (byGender[g] !== s.voice) ok = false; });
+    i.segments.filter((s) => s.text).forEach((s) => { const g = genderOfVoice(s.voice); byGender[g] = byGender[g] || s.voice; if (byGender[g] !== s.voice) ok = false; });
     return ok && i.voices.length === 2 && i.slots[0].accent !== i.slots[1].accent;
   }));
   const p2 = a.filter((i) => i.category === '聽力P2');

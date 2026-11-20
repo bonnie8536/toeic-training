@@ -109,10 +109,13 @@
       return;
     }
     const first = W.round(p);
+    const total = groups.reduce((a, g) => a + g.items.length, 0);
+    /* 摘要行已經寫了同樣的題數(單位是題、這一輪就是全部)時,按鈕旁不再重複 */
+    const dupCount = W.unit(p) === '題' && first.units.length === total;
     root.append(h('p', { class: 'result-note wb-sum' }, summaryLine(p, groups)),
       h('div', { class: 'wb-start' },
         h('a', { class: 'btn primary wb-begin', 'data-gate': '', href: reviewUrl(p) }, '開始'),
-        h('span', { class: 'result-note' }, ' ' + first.units.length + ' ' + W.unit(p))),
+        dupCount ? null : h('span', { class: 'result-note' }, ' ' + first.units.length + ' ' + W.unit(p))),
       groupList(groups, { part: p, level: 2, remember: true, open: open && open[p] }));
   }
   function renderList(root, p) {

@@ -324,7 +324,7 @@
             });
             result.append(
               withReport(h('div', { class: 'explain' },
-                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了，是 ' + q.options[q.answer]),
+                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯 · 正解 ' + q.options[q.answer]),
                 h('div', null, q.note),
                 h('div', { class: 'tr' }, q.audioText + '\n' + q.zh)), q.id),
               nextRow(true));

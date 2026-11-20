@@ -1112,7 +1112,6 @@
     const grid = h('div', { class: 'mem-grid' });
     root.append(gameTop('翻牌配對', name + ' · ' + items.length + ' 對'),
       h('div', { class: 'game-hud' }, h('span', null, '步數 ', movesEl), h('span', null, '秒數 ', timeEl)),
-      h('p', { class: 'result-note' }, '翻兩張，英文配它的中文。'),
       grid);
     cards.forEach(c => {
       c.el = h('button', { class: 'mem-card' + (c.en ? '' : ' zh'), type: 'button', onclick: e => { if (!held(e.currentTarget)) flip(c); } }, '?');

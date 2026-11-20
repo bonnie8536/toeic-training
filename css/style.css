@@ -2871,3 +2871,25 @@ html.pet-roam2.pet-roam2-wide .pet-card .pet-pic {
   .pet-tip, .pet-tile-fly { display: none !important; }
 }
 /* ======== 小雞第二階段:ui 結束 ======== */
+
+/* ======== 題目更正紀錄頁(corrections.html、js/corrections.js) ======== */
+.corr .corr-filters { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 10px; }
+.corr .chip { min-height: 36px; cursor: pointer; }
+.corr .chip:focus-visible, .corr-search:focus-visible, .corr-group > summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.corr-search { width: 100%; max-width: 320px; min-height: 44px; padding: 8px 12px; font: inherit; font-size: 16px; border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink); }
+.corr-group { margin-top: 18px; }
+.corr-group > summary { font-size: 18px; font-weight: 700; cursor: pointer; padding: 6px 0; }
+.corr-table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin-top: 6px; }
+.corr-table th, .corr-table td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+.corr-table th { font-size: 12.5px; color: var(--ink-soft); font-weight: 700; }
+.corr-table td:nth-child(1) { white-space: nowrap; }
+.corr-table td:nth-child(2) { overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.corr-table tr.is-target td { background: var(--highlight); }
+.corr-msg { margin-top: 14px; color: var(--ink-soft); }
+@media (max-width: 640px) {
+  .corr-table thead { display: none; }
+  .corr-table, .corr-table tbody, .corr-table tr, .corr-table td { display: block; width: 100%; }
+  .corr-table tr { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; margin-top: 10px; }
+  .corr-table td { border: 0; padding: 2px 0; }
+  .corr-table td::before { content: attr(data-label); display: inline-block; min-width: 3.5em; margin-right: 8px; font-size: 12.5px; color: var(--ink-soft); }
+}

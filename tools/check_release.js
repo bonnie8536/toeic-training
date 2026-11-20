@@ -29,6 +29,14 @@ if (fs.readFileSync(path.join(REPO, 'sitemap.xml'), 'utf8').replace(/\r\n/g, '\n
   process.exit(1);
 }
 
+/* 題目更正紀錄(data/corrections.json)要跟 tools/corrections/source.json 與 data/retired.json 產生的一樣 */
+const corrBuild = require('./build_corrections.js');
+const corr = corrBuild.build(REPO);
+if (corr.errors.length || fs.readFileSync(path.join(REPO, 'data/corrections.json'), 'utf8').replace(/\r\n/g, '\n') !== corrBuild.render(corr.data)) {
+  console.log('data/corrections.json 跟來源對不上。執行 node tools/build_corrections.js' + (corr.errors.length ? '(' + corr.errors[0] + ')' : ''));
+  process.exit(1);
+}
+
 let baseSw = null;
 try { baseSw = git('show origin/main:sw.js'); } catch (e) { /* 線上還沒有 service worker */ }
 const changed = new Set([

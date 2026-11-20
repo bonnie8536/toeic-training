@@ -2974,5 +2974,97 @@
   "aria": null,
   "bodyH": 250,
   "shell": 0
+ },
+ "375 corrections.html": {
+  "cls": "",
+  "topbar": [
+   0,
+   0,
+   375,
+   37
+  ],
+  "inner": [
+   0,
+   0,
+   375,
+   36
+  ],
+  "brand": [
+   14,
+   8,
+   347,
+   28
+  ],
+  "topnav": null,
+  "profile": null,
+  "main": [
+   0,
+   67,
+   375,
+   7156
+  ],
+  "h1": [
+   31,
+   86,
+   313,
+   43
+  ],
+  "footer": [
+   0,
+   7273,
+   375,
+   146
+  ],
+  "mask": null,
+  "modal": null,
+  "aria": null,
+  "bodyH": 7419,
+  "shell": 0
+ },
+ "1280 corrections.html": {
+  "cls": "",
+  "topbar": [
+   0,
+   0,
+   1280,
+   59
+  ],
+  "inner": [
+   100,
+   0,
+   1080,
+   58
+  ],
+  "brand": [
+   120,
+   14,
+   68,
+   30
+  ],
+  "topnav": null,
+  "profile": null,
+  "main": [
+   235,
+   89,
+   810,
+   2762
+  ],
+  "h1": [
+   290,
+   120,
+   700,
+   43
+  ],
+  "footer": [
+   0,
+   2901,
+   1280,
+   109
+  ],
+  "mask": null,
+  "modal": null,
+  "aria": null,
+  "bodyH": 3009,
+  "shell": 0
  }
 }

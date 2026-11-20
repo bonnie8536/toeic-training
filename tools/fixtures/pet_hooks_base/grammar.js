@@ -255,10 +255,13 @@
               else if (bi === oi) btn.classList.add('wrong');
               else btn.classList.add('plain');
             });
-            result.append(h('div', { class: 'explain' },
+            const box = h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (results[qi] ? 'ok' : 'bad') },
                 results[qi] ? '答對了' : '答錯了，正確答案是 ' + LETTERS[q.answer]),
-              h('div', null, q.explanation)));
+              h('div', null, q.explanation));
+            /* 回報題目(js/report.js):題號跟上面 logAttempt('g') 同一套 */
+            if (window.REPORT) REPORT.attach(box, { m: 'g', id: u.id + ':' + qi });
+            result.append(box);
             if (results.filter(x => x !== undefined).length === u.quiz.length) finish();
           },
         }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));

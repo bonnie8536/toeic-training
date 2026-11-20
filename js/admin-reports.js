@@ -138,7 +138,8 @@
     function download() {
       const blob = new Blob([toCsv(groups)], { type: 'text/csv;charset=utf-8' });
       const url = URL.createObjectURL(blob);
-      const a = h('a', { href: url, download: '題目回報_' + day(Date.now()) + '.csv' });
+      const a = h('a', { href: url });
+      a.download = '題目回報_' + day(Date.now()) + '.csv';
       document.body.append(a);
       a.click();
       a.remove();

@@ -268,7 +268,8 @@
     '詞性變化': ['gf-04', '形容詞還是副詞'],
   };
 
-  function explainBox(q, rec, extraTr) {
+  /* ctx = { m, id }:有給就在詳解方塊底部加「回報題目」(js/report.js);id 跟 saveRec 記的題號同一套 */
+  function explainBox(q, rec, extraTr, ctx) {
     if (!rec) return null;
     const box = h('div', { class: 'explain' },
       h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
@@ -280,6 +281,7 @@
       box.append(h('div', { class: 'tr' },
         h('a', { href: 'grammar.html?u=' + gl[0] }, '文法基礎「' + gl[1] + '」→')));
     }
+    if (ctx && window.REPORT) REPORT.attach(box, ctx);
     return box;
   }
 
@@ -494,7 +496,7 @@
               h('span', { class: 'badge cat' }, q.category)),
             h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, (i + 1) + '.'), q.question),
             optionButtons(q, rec, () => {}),
-            explainBox(q, rec, q.translation)));
+            explainBox(q, rec, q.translation, { m: 'p5', id: q.id })));
         } else {
           const set = u.item;
           const sess = session.answers[i];
@@ -520,7 +522,7 @@
             qCol.append(h('div', { class: 'q-block' },
               h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, label), text),
               optionButtons(q, sess[id], () => {}),
-              explainBox(q, sess[id])));
+              explainBox(q, sess[id], null, { m: 'p' + u.p, id })));
           });
           layout.append(qCol);
           root.append(layout);
@@ -603,7 +605,7 @@
           saveRec(p, q.id, oi, ok);
           draw();
         }),
-        explainBox(q, rec, rec ? q.translation : null),
+        explainBox(q, rec, rec ? q.translation : null, { m: 'p' + p, id: q.id }),
         rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已答對，移出錯題本。') : null));
       root.append(nextRow(!!rec, cur === units.length - 1));
     }
@@ -635,7 +637,7 @@
             if (done) okFlags[cur] = wrongKeys.every(k => sess[k].ok);
             draw();
           }),
-          explainBox(q, rec),
+          explainBox(q, rec, null, { m: 'p' + p, id }),
           rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已答對，移出錯題本。') : null));
       });
       layout.append(qCol);

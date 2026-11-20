@@ -22,15 +22,6 @@
   function warn(e) {
     try { console.warn('小雞獎勵失敗：', e); } catch (x) { /* 連 console 都沒有就算了 */ }
   }
-  function chickName(S) {
-    try {
-      const v = S.view();
-      const n = v && v.status && v.status.name;
-      return typeof n === 'string' && n ? n : '小雞';
-    } catch (e) {
-      return '小雞';
-    }
-  }
   function foodName(code) {
     try {
       const P = window.PET;

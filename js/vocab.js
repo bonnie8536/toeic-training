@@ -1031,10 +1031,8 @@
     function summary() {
       root.innerHTML = '';
       const ok = results.filter(Boolean).length;
-      const note = '';
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-        h('h2', null, groupName + '：' + ok + ' / ' + list.length),
-        note ? h('div', { class: 'band-note' }, note) : null));
+        h('h2', null, groupName + '：' + ok + ' / ' + list.length)));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', onclick: () => startDrill(groupName, items) }, '再做一次'),
         h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
@@ -1241,10 +1239,8 @@
         const best = store.get('vgame_toast_best', {});
         const isBest = okN > (best[src.key] || 0);
         if (isBest) { best[src.key] = okN; store.set('vgame_toast_best', best); }
-        const note = '';
         root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-          h('h2', null, '記憶吐司：' + okN + ' / ' + results.length + (isBest && okN ? '（新紀錄）' : '')),
-          note ? h('div', { class: 'band-note' }, note) : null),
+          h('h2', null, '記憶吐司：' + okN + ' / ' + results.length + (isBest && okN ? '（新紀錄）' : ''))),
           h('div', { class: 'vq-list' }, results.map(r => h('div', { class: 'vq-item' + (r.ok ? '' : ' bad') },
             h('b', null, r.it.answer), h('span', null, r.it.zh), h('i', null, r.ok ? '✓' : '✗')))),
           h('div', { class: 'drill-nav-btns' },

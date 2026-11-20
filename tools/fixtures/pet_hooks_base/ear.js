@@ -324,7 +324,7 @@
             });
             result.append(
               withReport(h('div', { class: 'explain' },
-                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了，是 ' + q.options[q.answer]),
+                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯 · 正解 ' + q.options[q.answer]),
                 h('div', null, q.note),
                 h('div', { class: 'tr' }, q.audioText + '\n' + q.zh)), q.id),
               nextRow(true));
@@ -376,10 +376,8 @@
       if (player) player.stop();
       root.innerHTML = '';
       const ok = results.filter(Boolean).length;
-      const note = '';
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-        h('h2', null, d.title + '：' + ok + ' / ' + list.length),
-        note ? h('div', { class: 'band-note' }, note) : null));
+        h('h2', null, d.title + '：' + ok + ' / ' + list.length)));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', onclick: () => startRound(sec) }, '再做一次'),
         h('a', { class: 'btn', href: 'listening.html' }, '回聽力訓練')));

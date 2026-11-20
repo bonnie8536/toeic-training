@@ -376,10 +376,8 @@
       if (player) player.stop();
       root.innerHTML = '';
       const ok = results.filter(Boolean).length;
-      const note = '';
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-        h('h2', null, d.title + '：' + ok + ' / ' + list.length),
-        note ? h('div', { class: 'band-note' }, note) : null));
+        h('h2', null, d.title + '：' + ok + ' / ' + list.length)));
       root.append(h('div', { class: 'drill-nav-btns' },
         h('button', { class: 'btn primary', onclick: () => startRound(sec) }, '再做一次'),
         h('a', { class: 'btn', href: 'listening.html' }, '回聽力訓練')));

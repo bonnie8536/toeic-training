@@ -16,10 +16,10 @@
     }
 
     const TYPES = [
-      { k: 'AAA', name: '三態同形', hint: '三態相同' },
+      { k: 'AAA', name: '三態同形', hint: '' },
       { k: 'ABB', name: '後兩個同形', hint: '過去式與過去分詞相同' },
       { k: 'ABA', name: '頭尾同形', hint: '過去分詞與原形相同' },
-      { k: 'ABC', name: '三態都不同', hint: '三態都不同' },
+      { k: 'ABC', name: '三態都不同', hint: '' },
     ];
     const LEVELS = ['全部', '初級', '中級', '進階'];
 
@@ -103,7 +103,7 @@
         box.append(h('div', { class: 'exercise-head', style: 'margin-top:26px' },
           h('h2', null, t.name, h('span', { class: 'vb-code' }, t.k)),
           h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, items.length + ' 個')));
-        box.append(h('p', { class: 'result-note', style: 'margin:0 0 10px' }, t.hint));
+        if (t.hint) box.append(h('p', { class: 'result-note', style: 'margin:0 0 10px' }, t.hint));
 
         const tbl = h('table', { class: 'gx-table vb-table' },
           h('tr', null, h('th', null, '原形'), h('th', null, '過去式'), h('th', null, '過去分詞'), h('th', null, '意思')));

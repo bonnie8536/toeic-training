@@ -181,6 +181,221 @@
     "en-CA-Emma:DragonLatestNeural",
     "en-GB-OliverNeural"
    ]
+  },
+  "d-74.mp3": {
+   "voices": [
+    "en-US-BrianMultilingualNeural"
+   ],
+   "rate": "-4%"
+  },
+  "d-97.mp3": {
+   "voices": [
+    "en-US-AvaMultilingualNeural"
+   ],
+   "rate": "-14%"
+  },
+  "d-119.mp3": {
+   "voices": [
+    "en-US-AvaMultilingualNeural"
+   ],
+   "rate": "-14%"
+  },
+  "mp-03.mp3": {
+   "voices": [
+    "en-US-BrianMultilingualNeural"
+   ],
+   "rate": "-4%"
+  },
+  "s-01.mp3": {
+   "voices": [
+    "en-US-BrianMultilingualNeural"
+   ],
+   "rate": "-4%"
+  },
+  "s-21.mp3": {
+   "voices": [
+    "en-US-BrianMultilingualNeural"
+   ],
+   "rate": "-4%"
+  },
+  "s-109.mp3": {
+   "voices": [
+    "en-US-BrianMultilingualNeural"
+   ],
+   "rate": "-4%"
+  },
+  "s-111.mp3": {
+   "voices": [
+    "en-AU-DarrenNeural"
+   ],
+   "rate": "-4%"
+  },
+  "s-193.mp3": {
+   "voices": [
+    "en-AU-DarrenNeural"
+   ],
+   "rate": "-4%"
+  },
+  "dlg/dlg-14-06.mp3": {
+   "inline": [
+    {
+     "find": "going to",
+     "before": "<emphasis level=\"strong\">",
+     "after": "</emphasis>"
+    }
+   ]
+  },
+  "dlg/dlg-01-12.mp3": {
+   "inline": [
+    {
+     "find": "put it",
+     "before": "<emphasis level=\"strong\">",
+     "after": "</emphasis>"
+    }
+   ],
+   "rate": "-10%"
+  },
+  "dlg/dlg-07-12.mp3": {
+   "inline": [
+    {
+     "find": "And",
+     "before": "<emphasis level=\"strong\">",
+     "after": "</emphasis>"
+    }
+   ]
+  },
+  "dlg/dlg-08-10.mp3": {
+   "inline": [
+    {
+     "find": "mid",
+     "before": "<phoneme alphabet=\"ipa\" ph=\"mɪd\">",
+     "after": "</phoneme>"
+    }
+   ]
+  },
+  "dlg/dlg-09-04.mp3": {
+   "inline": [
+    {
+     "find": "bought it",
+     "before": "<emphasis level=\"strong\">",
+     "after": "</emphasis>"
+    },
+    {
+     "find": "looked",
+     "before": "<emphasis level=\"strong\">",
+     "after": "</emphasis>"
+    }
+   ],
+   "rate": "-10%"
+  },
+  "dlg/dlg-12-02.mp3": {
+   "inline": [
+    {
+     "find": "Doc",
+     "before": "<phoneme alphabet=\"ipa\" ph=\"dɑk\">",
+     "after": "</phoneme>"
+    }
+   ]
+  },
+  "dlg/dlg-13-07.mp3": {
+   "inline": [
+    {
+     "find": "can",
+     "before": "<phoneme alphabet=\"ipa\" ph=\"kæn\">",
+     "after": "</phoneme>"
+    }
+   ]
+  },
+  "dlg/dlg-15-14.mp3": {
+   "inline": [
+    {
+     "find": "suite",
+     "before": "<phoneme alphabet=\"ipa\" ph=\"swiːt\">",
+     "after": "</phoneme>"
+    }
+   ]
+  },
+  "l2-46.mp3": {
+   "voices": [
+    "en-US-BrianMultilingualNeural"
+   ]
+  },
+  "l2-62.mp3": {
+   "voices": [
+    "en-US-BrianMultilingualNeural"
+   ]
+  },
+  "l2-75.mp3": {
+   "voices": [
+    null,
+    "en-CA-LiamNeural"
+   ]
+  },
+  "l3-31.mp3": {
+   "rate": "+13%",
+   "voices": [
+    null,
+    "en-US-EmmaMultilingualNeural"
+   ]
+  },
+  "ph-bat.mp3": {
+   "rate": "-20%"
+  },
+  "ph-bitter.mp3": {
+   "inline": [
+    {
+     "find": "bitter",
+     "before": "<phoneme alphabet=\"ipa\" ph=\"bɪtɚ\">",
+     "after": "</phoneme>"
+    }
+   ]
+  },
+  "ph-bear.mp3": {
+   "inline": [
+    {
+     "find": "bear",
+     "before": "<phoneme alphabet=\"ipa\" ph=\"bɛɹ\">",
+     "after": "</phoneme>"
+    }
+   ]
+  },
+  "ph-buck.mp3": {
+   "rate": "-20%"
+  },
+  "ph-backed.mp3": {
+   "voices": [
+    "en-US-JennyNeural"
+   ]
+  },
+  "ph-bank.mp3": {
+   "voices": [
+    "en-US-JennyNeural"
+   ]
+  },
+  "ph-braid.mp3": {
+   "voices": [
+    "en-US-JennyNeural"
+   ]
+  },
+  "ph-bride.mp3": {
+   "voices": [
+    "en-US-JennyNeural"
+   ]
+  },
+  "ph-budge.mp3": {
+   "voices": [
+    "en-US-JennyNeural"
+   ]
+  },
+  "ph-duck.mp3": {
+   "voices": [
+    "en-US-JennyNeural"
+   ]
+  },
+  "ph-grad.mp3": {
+   "voices": [
+    "en-US-JennyNeural"
+   ]
   }
  }
 }

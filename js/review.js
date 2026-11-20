@@ -180,6 +180,12 @@
       return oi === q.answer;
     }
 
+    /* 詳解方塊底部加「回報題目」(js/report.js);id 跟 settle 記的題號同一套 */
+    function withReport(box, m, id, audio) {
+      if (window.REPORT) REPORT.attach(box, { m, id, audio: !!audio });
+      return box;
+    }
+
     function drawItem(item) {
       let done = false;
       const isLast = cur === list.length - 1;
@@ -195,9 +201,9 @@
             if (done) return; done = true;
             const ok = grade(q, oi, opts);
             settle(item, ok, oi);
-            result.append(h('div', { class: 'explain' },
+            result.append(withReport(h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了，移出錯題本' : '再想想，正確是 ' + LETTERS[q.answer]),
-              h('div', null, q.explanation), h('div', { class: 'tr' }, '句意：' + q.translation)), next(isLast));
+              h('div', null, q.explanation), h('div', { class: 'tr' }, '句意：' + q.translation)), 'p5', q.id), next(isLast));
           }), result);
       } else if (item.kind === 'ph') {
         block.append(
@@ -207,9 +213,9 @@
             if (done) return; done = true;
             const ok = grade(q.quiz, oi, opts);
             settle(item, ok, oi);
-            result.append(h('div', { class: 'explain' },
+            result.append(withReport(h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了，移出錯題本' : '再想想，正確是 ' + LETTERS[q.quiz.answer]),
-              h('div', null, q.quiz.explanation)),
+              h('div', null, q.quiz.explanation)), 'ph', q.id),
               h('div', { class: 'phrase-card' },
                 h('div', { class: 'pc-head' }, h('b', null, q.phrase), h('span', null, q.zh)),
                 h('div', { class: 'pc-ex' }, q.example), h('div', { class: 'pc-exzh' }, q.exampleZh)),
@@ -237,9 +243,9 @@
             if (done) return; done = true;
             const ok = grade(q, oi, opts, true);
             settle(item, ok, oi);
-            result.append(h('div', { class: 'explain' },
+            result.append(withReport(h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了，移出錯題本' : '再想想，正確是 ' + LETTERS[q.answer]),
-              h('div', null, q.explanation)),
+              h('div', null, q.explanation)), item.kind, q.id, true),
               h('div', { class: 'transcript-box' }, h('b', null, '逐字稿'),
                 h('div', { class: 'tr-en' }, (q.question ? q.question + '\n' : '') + q.options.map((o, oi2) => LETTERS[oi2] + '. ' + o).join('\n')),
                 h('div', { class: 'tr-zh' }, q.transcriptZh)),

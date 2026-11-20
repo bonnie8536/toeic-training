@@ -2908,3 +2908,8 @@ html.pet-roam2.pet-roam2-wide .pet-card .pet-pic {
 .modal-report .rp-addr { overflow-wrap: anywhere; user-select: all; }
 .modal-report > .btn { margin-top: 8px; }
 .modal-report > .auth-fine { margin-top: 8px; }
+.hist-corr { font-size: 13.5px; margin-top: 8px; }
+.hist-corr:empty { display: none; }
+.hist-row > .hist-corr { padding: 0 14px 10px; margin-top: 0; }
+.modal-report > .auth-fine { text-align: center; }
+.modal-report > .btn:not(.auth-submit) { display: block; margin: 8px auto 0; }

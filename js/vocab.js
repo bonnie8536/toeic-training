@@ -973,6 +973,12 @@
       drawQuestion(list[cur]);
     }
 
+    /* 詳解方塊底部加「回報題目」(js/report.js);id 是片語 id,跟 logAttempt 的 ph 同一套 */
+    function withReport(box, m, id) {
+      if (window.REPORT) REPORT.attach(box, { m, id });
+      return box;
+    }
+
     function drawQuestion(p) {
       let doneQ = false;
       const result = h('div', null);
@@ -997,10 +1003,10 @@
             });
             const isLast = cur === list.length - 1;
             result.append(
-              h('div', { class: 'explain' },
+              withReport(h('div', { class: 'explain' },
                 h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') },
                   ok ? '答對了' : '答錯了，正確是 ' + p.quiz.options[p.quiz.answer]),
-                h('div', null, p.quiz.explanation)),
+                h('div', null, p.quiz.explanation)), 'ph', p.id),
               h('div', { class: 'phrase-card' },
                 h('div', { class: 'pc-head' }, h('b', null, p.phrase), h('span', null, p.zh)),
                 p.tip ? h('div', { class: 'pc-tip' }, p.tip) : null,

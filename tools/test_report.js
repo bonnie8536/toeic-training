@@ -243,4 +243,66 @@ T['不改既有鍵:report.js 只讀寫 q_reports'] = () => {
   return { ok: keys.length > 0 && keys.every((k) => k === 'q_reports') && !/localStorage|sessionStorage/.test(src), detail: J(Array.from(new Set(keys))) };
 };
 
+
+/* ---------- 各頁掛上 ---------- */
+const { historyEnv } = require('./history_kit.js');
+const PAGES = [
+  ['js/practice.js', ['REPORT.attach(box, ctx)', "{ m: 'p5', id: q.id }", "{ m: 'p' + u.p, id }", "{ m: 'p' + p, id: q.id }", "{ m: 'p' + p, id }"]],
+  ['js/listening.js', ['REPORT.attach(box, { m, id, audio: true })', "'l1'", "'l2'", "'l' + p, qid(set, qi)", "'l' + u.p, qid(set, qi)"]],
+  ['js/mock.js', ["{ m: 'p5', id: u.item.id }", "{ m: 'l' + u.p, id: q.id, audio: true }", "{ m: 'l' + u.p, id: set.id + ':' + qi, audio: true }", "{ m: 'p' + u.p, id: set.id + ':' + key }"]],
+  ['js/review.js', ["'p5', q.id", "'ph', q.id", 'item.kind, q.id, true']],
+  ['js/grammar.js', ["{ m: 'g', id: u.id + ':' + qi }"]],
+  ['js/reading.js', ["{ m: 'r', id: a.id + ':' + qi }"]],
+  ['js/vocab.js', ["'ph', p.id"]],
+  ['js/ear.js', ["{ m: 'ear', id, audio: true }", 'q.id)']],
+];
+T['各頁掛上:八支程式都在詳解方塊加按鈕,題號組法跟各頁的學習記錄一致(P6 組id:空格號、P7 組id:索引、聽力 l1 到 l4)'] = () => {
+  const bad = [];
+  PAGES.forEach(([f, needles]) => { const s = read(f); needles.forEach((n) => { if (!s.includes(n)) bad.push(f + ' 缺 ' + n); }); });
+  return { ok: bad.length === 0, detail: bad.length ? bad.slice(0, 3).join(';') : PAGES.length + ' 支程式、' + PAGES.reduce((a, p) => a + p[1].length, 0) + ' 處' };
+};
+T['各頁掛上:每一頁 html 在 common.js、cloud.js、profile.js 之後載入 report.js;程式都包 window.REPORT,沒載到不會壞'] = () => {
+  const pages = ['practice', 'listening', 'mock', 'review', 'grammar', 'reading', 'vocab', 'history'];
+  const bad = pages.filter((p) => {
+    const s = read(p + '.html'), i = s.indexOf('js/report.js');
+    return !(i > s.indexOf('js/common.js') && i > s.indexOf('js/cloud.js') && i > s.indexOf('js/profile.js') && s.split('js/report.js').length === 2);
+  });
+  const unguarded = PAGES.map((p) => p[0]).filter((f) => { const s = read(f); return s.includes('REPORT.attach') && !s.includes('window.REPORT'); });
+  return { ok: !bad.length && !unguarded.length, detail: '漏載 ' + bad + ';沒包 window.REPORT ' + unguarded };
+};
+T['practice 的 explainBox:有 ctx 就加按鈕,沒給 ctx 或沒載 REPORT 都不壞'] = () => {
+  const src = read('js/practice.js').replace(/\r\n/g, '\n');
+  const fn = /  function explainBox\(q, rec, extraTr, ctx\) \{[\s\S]*?\n  \}\n/.exec(src)[0];
+  const outs = [];
+  [true, false].forEach((withReport) => {
+    const E = env();
+    if (!withReport) vm.runInContext('window.REPORT = undefined;', E.ctx);
+    E.ctx.LETTERS = ['A', 'B', 'C', 'D']; E.ctx.GRAMMAR_LINK = {};
+    vm.runInContext(fn + '; this.__eb = explainBox;', E.ctx);
+    const q = { answer: 1, explanation: '詳解', translation: '翻譯' };
+    const a = E.ctx.__eb(q, { ok: true, c: 1 }, null, { m: 'p6', id: 'p6-b1-1:2' });
+    const b = E.ctx.__eb(q, { ok: true, c: 1 }, null);
+    const n = E.ctx.__eb(q, null, null, { m: 'p5', id: 'x' });
+    const btn = a.byClass('report-btn')[0];
+    outs.push([a.byClass('report-btn').length, b.byClass('report-btn').length, n, btn ? btn.attrs['aria-label'] : null]);
+  });
+  return { ok: outs[0][0] === 1 && outs[0][1] === 0 && outs[0][2] === null && outs[0][3] === '回報題目，Part 6，p6-b1-1:2' && outs[1][0] === 0, detail: J(outs) };
+};
+T['學習記錄:展開的詳解有按鈕,題號是各模組自己的 id(P5、P6 組id:空格號、P7、聽力 P1 與 P3、文法、文章題、片語);自然發音沒有'] = async () => {
+  const list = [['p5', 'p5-b1-01'], ['p6', 'p6-b1-1:2'], ['p7', 'p7-b1-1:0'], ['l1', 'l1-01'], ['l3', 'l3-11:1'], ['g', 'ga-01:3'], ['r', 'art-1a:1'], ['ph', 'ph-101'], ['pn', 'ph-a:0']];
+  const now = Date.now();
+  const recs = list.map(([m, id], i) => ({ m, id, c: 0, ok: false, t: now - (list.length - i) * 1000 }));
+  const H = await historyEnv(recs, { report: true });
+  const labels = [];
+  // 畫面新的在前:第 0 列是最後一筆(pn)
+  for (let i = 0; i < recs.length; i++) {
+    const body = await H.open(i);
+    const b = body.byClass('report-btn')[0];
+    labels.push(b ? b.attrs['aria-label'] : null);
+  }
+  const want = list.slice(0, 8).reverse().map((x) => x[1]);
+  const got = labels.slice(1).map((l) => (l ? l.split('，')[2] : null));
+  return { ok: H.rows().length === 9 && labels[0] === null && J(got) === J(want), detail: J(labels) };
+};
+
 K.run(T);

@@ -25,6 +25,36 @@
   };
   const GROUPS = [['all', '全部'], ['drill', '刷題'], ['listen', '聽力'], ['grammar', '文法'], ['read', '閱讀'], ['vocab', '單字片語']];
 
+  /* 題目更正紀錄(data/corrections.json):背景讀一次,讀不到(離線、檔案壞掉)就當沒有,不影響學習記錄。
+     已淘汰的題與被更正過的題旁邊加連結到 corrections.html?q=題號(整組淘汰的題組編號也對得到) */
+  let CORR = null;
+  const corrWaiting = [];
+  function corrHit(id) {
+    if (!CORR) return null;
+    const s = String(id);
+    return CORR.find(r => s === r.id || s.indexOf(r.id + ':') === 0) || null;
+  }
+  function corrSlot(rec, text) {
+    const slot = h('div', { class: 'hist-corr' });
+    const fill = () => {
+      if (!corrHit(rec.id)) return;
+      slot.append(h('a', { href: 'corrections.html?q=' + encodeURIComponent(String(rec.id)) }, text));
+    };
+    if (CORR) fill(); else corrWaiting.push(fill);
+    return slot;
+  }
+  try {
+    if (typeof fetch === 'function') {
+      Promise.resolve(fetch('data/corrections.json')).then(r => (r && r.ok ? r.json() : null)).then(d => {
+        if (!d || !Array.isArray(d.rows)) return;
+        CORR = d.rows;
+        corrWaiting.splice(0).forEach(f => f());
+      }).catch(() => {});
+    }
+  } catch (e) { /* 沒有 fetch 就沒有更正連結 */ }
+  /* 有詳解方塊、可以回報的模組(題號跟 js/report.js 的 key 同一套) */
+  const REPORTABLE = { p5: 1, p6: 1, p7: 1, l1: 1, l2: 1, l3: 1, l4: 1, g: 1, r: 1, ph: 1 };
+
   const byId = (list, id) => (list || []).find(x => x.id === id);
   function setQ(list, id) {
     const [sid, num] = String(id).split(':');
@@ -215,6 +245,7 @@
       info ? h('span', { class: 'hist-caret', 'aria-hidden': 'true' }, '▾') : null);
     const body = h('div', { class: 'hist-row-body', style: 'display:none' });
     const wrap = h('div', { class: 'hist-row' + (rec.ok ? '' : ' wrong') }, head, body);
+    if (!info) wrap.append(corrSlot(rec, '題目更正紀錄'));
     if (info) {
       /* 用 role/tabindex 讓它跟一般的可展開列一樣能用鍵盤操作 */
       head.setAttribute('role', 'button');
@@ -273,9 +304,14 @@
       box.append(h('p', { class: 'result-note' }, (info.pickedLabel || '你的答案：') + info.picked +
         (rec.ok || info.answer === undefined || info.answer === null ? '' : ' · 正解：' + info.answer)));
     }
-    if (info.explanation) box.append(h('div', { class: 'explain' }, h('div', null, info.explanation)));
+    if (info.explanation) {
+      const ex = h('div', { class: 'explain' }, h('div', null, info.explanation));
+      if (window.REPORT && REPORTABLE[rec.m]) REPORT.attach(ex, { m: rec.m, id: rec.id, audio: /^l\d$/.test(rec.m) });
+      box.append(ex);
+    }
     if (info.zh) box.append(h('div', { class: 'transcript-box' }, h('b', null, '逐字稿'), h('div', { class: 'tr-zh' }, info.zh)));
     if (info.link) box.append(h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: info.link }, '回到出處')));
+    if (REPORTABLE[rec.m]) box.append(corrSlot(rec, '這題曾更正，看更正紀錄'));
     return box;
   }
 })();

@@ -142,4 +142,46 @@ T['頁面:載入失敗(網路錯、非 200、格式不對)顯示錯誤句,不丟
 };
 T['頁面:文字一律 textContent,不用 innerHTML'] = () => ({ ok: !/innerHTML|insertAdjacentHTML|document\.write/.test(read('js/corrections.js')), detail: '沒有 innerHTML' });
 
+/* ---------- 學習記錄的更正連結 ---------- */
+const { historyEnv } = require('./history_kit.js');
+const corrFetch = () => Promise.resolve({ ok: true, json: () => Promise.resolve(DATA) });
+const linksIn = (el) => el.find((n) => n.tagName === 'A' && /corrections\.html/.test(n.attrs.href || ''));
+const recsOf = (ids) => ids.map(([m, id], i) => ({ m, id, c: 0, ok: false, t: Date.now() - (ids.length - i) * 1000 }));
+/* 畫面新的在前,所以列的順序是反的 */
+const rowOf = (H, ids, m, id) => ids.slice().reverse().findIndex((x) => x[0] === m && x[1] === id);
+
+T['學習記錄:指向已淘汰的題出現「題目更正紀錄」連結(單題、整組淘汰的小題都對得到)'] = async () => {
+  const ids = [['p5', 'p5-b2-17'], ['p7', 'p7-b4-2:1'], ['l2', 'l2-02']];
+  const H = await historyEnv(recsOf(ids), { fetch: corrFetch });
+  const out = ids.map(([m, id]) => { const r = H.rows()[rowOf(H, ids, m, id)]; const a = linksIn(r)[0]; return a && [a.textContent, a.attrs.href]; });
+  const want = ids.map(([, id]) => ['題目更正紀錄', 'corrections.html?q=' + encodeURIComponent(id)]);
+  return { ok: JSON.stringify(out) === JSON.stringify(want), detail: JSON.stringify(out) };
+};
+T['學習記錄:題目還在但被更正過的,展開後有連結;沒更正過的沒有'] = async () => {
+  const ids = [['g', 'ga-02:6'], ['p6', 'p6-b7-1:2'], ['p5', 'p5-b1-01']];
+  const H = await historyEnv(recsOf(ids), { fetch: corrFetch });
+  const res = [];
+  for (const [m, id] of ids) {
+    const body = await H.open(rowOf(H, ids, m, id));
+    const a = linksIn(body)[0];
+    res.push(a ? a.textContent + '|' + a.attrs.href : null);
+  }
+  return { ok: res[0] === '這題曾更正，看更正紀錄|corrections.html?q=ga-02%3A6' && res[1] === '這題曾更正，看更正紀錄|corrections.html?q=p6-b7-1%3A2' && res[2] === null, detail: JSON.stringify(res) };
+};
+T['學習記錄:更正紀錄晚到也會補上連結;fetch 失敗、壞掉、沒有 fetch 都不報錯、不出連結'] = async () => {
+  const ids = [['p5', 'p5-b2-17']];
+  let release;
+  const slow = () => new Promise((r) => { release = () => r({ ok: true, json: () => Promise.resolve(DATA) }); });
+  const H1 = await historyEnv(recsOf(ids), { fetch: slow });
+  const before = linksIn(H1.root).length;
+  release(); await K.settle();
+  const after = linksIn(H1.root).length;
+  const outs = [];
+  for (const f of [() => Promise.reject(new Error('x')), () => Promise.resolve({ ok: false }), () => Promise.resolve({ ok: true, json: () => Promise.resolve({ bad: 1 }) }), () => { throw new Error('sync'); }, undefined]) {
+    const H = await historyEnv(recsOf(ids), { fetch: f });
+    outs.push(linksIn(H.root).length + '/' + H.rows().length);
+  }
+  return { ok: before === 0 && after === 1 && outs.every((x) => x === '0/1'), detail: before + ' → ' + after + ';失敗情境 ' + outs };
+};
+
 K.run(T);

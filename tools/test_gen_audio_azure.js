@@ -216,6 +216,31 @@ const allText = (st, d) => st.logs.join('\n') + '\n' + listFiles(d).filter((f) =
     void slow;
   }
 
+  /* ---------- 8b. overrides 的 rates 與 inline ---------- */
+  {
+    const c2 = JSON.parse(JSON.stringify(cfg));
+    const em = { before: '<emphasis level="strong">', after: '</emphasis>' };
+    c2.overrides = {
+      'l2-46.mp3': { rates: ['-14%', null], inline: [Object.assign({ find: "Didn't" }, em)] },
+      'dlg/dlg-14-06.mp3': { inline: [Object.assign({ find: 'going to' }, em), { find: 'sister', before: '<phoneme alphabet="ipa" ph="sɪstɚ">', after: '</phoneme>' }] },
+    };
+    const items = W.build(W.REPO, c2);
+    const p2 = items.find((i) => i.id === 'l2-46'), d = items.find((i) => i.id === 'dlg-14-06');
+    const base2 = W.build(W.REPO, cfg).find((i) => i.id === 'l2-46');
+    check('rates：依說話順序只改第一個聲音的段落，其他段落維持', p2.segments[0].rate === '-14%' && p2.segments.filter((s) => s.text !== undefined).slice(1).every((s) => s.rate === base2.segments[0].rate));
+    check('inline：只加在含 find 的段落，find 的文字照常跳脫', W.ssmlFor(p2.segments[0]).includes('<emphasis level="strong">Didn&apos;t</emphasis> Mr.') && !p2.segments[2].inline);
+    check('inline：多條規則、前後標記都寫進 SSML', /<emphasis level="strong">going to<\/emphasis> my <phoneme alphabet="ipa" ph="sɪstɚ">sister<\/phoneme>&apos;s/.test(W.ssmlFor(d.segments[0])));
+    check('inline：標記字元數計入 SSML 標記數', d.ssmlChars > W.build(W.REPO, cfg).find((i) => i.id === 'dlg-14-06').ssmlChars);
+    const bad = JSON.parse(JSON.stringify(cfg)); bad.overrides = { 's-01.mp3': { inline: [{ find: 'small', before: '<audio src="x"/>', after: '' }] } };
+    let threw = false; try { W.build(W.REPO, bad); } catch (e) { threw = true; }
+    check('inline：不在白名單的標記會被拒絕', threw);
+    const st = makeEnv();
+    const od = outDir('inline');
+    const tmpCfg = path.join(TMP, 'inline_cfg.json'); fs.writeFileSync(tmpCfg, JSON.stringify(c2));
+    await G.run(['--only', 'dlg-14-06', '--out', od, '--voices-config', tmpCfg], st.deps);
+    check('inline：實際送出的請求含標記', st.calls.length === 1 && st.calls[0].body.includes('<emphasis level="strong">going to</emphasis>'));
+  }
+
   /* ---------- 9. 預算上限 ---------- */
   {
     const st = makeEnv();

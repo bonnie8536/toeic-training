@@ -37,9 +37,31 @@ function escXml(s) {
   return String(s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
+/* 段落內的局部標記：seg.inline = [{ find, before, after }]，把文字裡的 find（每處都套）前後加上 SSML 標記。
+   find 的文字照一般規則跳脫；before/after 只允許 emphasis、phoneme、break、prosody 標籤。 */
+const INLINE_MARKUP = /^(?:<\/?(?:emphasis|phoneme|break|prosody)(?:\s[^<>]*)?\/?>)*$/;
+function bodyOf(seg) {
+  const text = String(seg.text);
+  const rules = seg.inline || [];
+  if (!rules.length) return escXml(text);
+  const hits = [];
+  rules.forEach((r) => {
+    if (!r.find) return;
+    for (let at = text.indexOf(r.find); at >= 0; at = text.indexOf(r.find, at + r.find.length)) hits.push({ at, end: at + r.find.length, r });
+  });
+  hits.sort((a, b) => a.at - b.at || b.end - a.end);
+  let out = '', pos = 0;
+  for (const h of hits) {
+    if (h.at < pos) continue;
+    out += escXml(text.slice(pos, h.at)) + (h.r.before || '') + escXml(h.r.find) + (h.r.after || '');
+    pos = h.end;
+  }
+  return out + escXml(text.slice(pos));
+}
+function markupLen(seg) { return bodyOf(seg).length - escXml(String(seg.text)).length; }
 function ssmlFor(seg) {
   return '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="' + localeOf(seg.voice) + '">'
-    + '<voice name="' + seg.voice + '"><prosody rate="' + seg.rate + '">' + escXml(seg.text) + '</prosody></voice></speak>';
+    + '<voice name="' + seg.voice + '"><prosody rate="' + seg.rate + '">' + bodyOf(seg) + '</prosody></voice></speak>';
 }
 const prosodyLen = (rate) => ('<prosody rate="' + rate + '">').length + '</prosody>'.length;
 
@@ -187,8 +209,10 @@ function addPhonics(L, cfg, add) {
   });
 }
 
-/* overrides：{ "l3-11.mp3": { "voices": [說話順序的聲音...], "rate": "+8%" } }
-   voices 依「這個檔裡第一次出現的聲音」依序替換；rate 套用到全部段落 */
+/* overrides：{ "l3-11.mp3": { "voices": [說話順序的聲音...], "rate": "+8%", "rates": [說話順序的語速，null 表示不改],
+     "inline": [{ "find": "chairs", "before": "<emphasis level=\"strong\">", "after": "</emphasis>" }] } }
+   voices、rates 依「這個檔裡第一次出現的聲音」依序對應；rate 套用到全部段落（rates 優先）；
+   inline 只加在文字含 find 的段落，標記只允許 emphasis、phoneme、break、prosody。 */
 function applyOverrides(items, cfg) {
   const ov = cfg.overrides || {};
   for (const it of items) {
@@ -196,10 +220,17 @@ function applyOverrides(items, cfg) {
     if (!o) continue;
     const order = [];
     it.segments.forEach((s) => { if (s.text !== undefined && !order.includes(s.voice)) order.push(s.voice); });
+    (o.inline || []).forEach((r) => {
+      if (!r.find || !INLINE_MARKUP.test(r.before || '') || !INLINE_MARKUP.test(r.after || '')) throw new Error('overrides 的 inline 設定不合法：' + it.file);
+    });
     it.segments.forEach((s) => {
       if (s.text === undefined) return;
-      if (o.voices && o.voices[order.indexOf(s.voice)]) s.voice = o.voices[order.indexOf(s.voice)];
+      const vi = order.indexOf(s.voice);
+      if (o.voices && o.voices[vi]) s.voice = o.voices[vi];
       if (o.rate) s.rate = o.rate;
+      if (o.rates && o.rates[vi]) s.rate = o.rates[vi];
+      const rules = (o.inline || []).filter((r) => s.text.includes(r.find));
+      if (rules.length) s.inline = rules;
     });
     it.overridden = true;
   }
@@ -245,7 +276,7 @@ function recount(it) {
   it.requests = texts.length;
   it.chars = texts.reduce((a, s) => a + [...s.text].length, 0);
   it.billChars = texts.reduce((a, s) => a + azureChars(s.text), 0);
-  it.ssmlChars = texts.reduce((a, s) => a + prosodyLen(s.rate), 0);
+  it.ssmlChars = texts.reduce((a, s) => a + prosodyLen(s.rate) + markupLen(s), 0);
   it.escExtraChars = texts.reduce((a, s) => a + azureChars(escXml(s.text)) - azureChars(s.text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')), 0);
   it.voices = [...new Set(texts.map((s) => s.voice))];
   return it;

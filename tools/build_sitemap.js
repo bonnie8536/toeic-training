@@ -29,7 +29,7 @@ const UNIT_PAGES = {
 
 /* 首頁排第一,其他照網站導覽的順序;沒列到的頁照檔名排在後面 */
 const ORDER = ['index.html', 'diagnostic.html', 'grammar.html', 'phonics.html', 'vocab.html', 'listening.html', 'reading.html',
-  'dialogue.html', 'writing.html', 'practice.html', 'mock.html', 'daily.html', 'signup.html', 'pricing.html', 'terms.html', 'privacy.html', 'refund.html'];
+  'dialogue.html', 'writing.html', 'practice.html', 'mock.html', 'daily.html', 'signup.html', 'pricing.html', 'terms.html', 'privacy.html', 'refund.html', 'corrections.html'];
 
 function indexablePages(root) {
   return fs.readdirSync(root).filter((f) => /\.html$/.test(f) && f !== '404.html' && !NOINDEX.test(read(root, f)))
@@ -57,7 +57,9 @@ function contentFiles(root, page) {
   /* js/<資料名>.js 只有這一頁真的載入時才算(daily.html 載入 data/ear.js 但不載入 js/ear.js;2026-11-18 審查) */
   const own = [page.replace(/\.html$/, '')].concat(data.map((d) => path.basename(d, '.js')))
     .map((n) => 'js/' + n + '.js').filter((f, i) => fs.existsSync(path.join(root, f)) && (i === 0 || html.includes('src="' + f + '"')));
-  return [page].concat(data, own).filter((f, i, a) => a.indexOf(f) === i);
+  /* 更正紀錄頁的內容在 data/corrections.json,頁面用 fetch 讀,不是 script 標籤 */
+  const extra = page === 'corrections.html' ? ['data/corrections.json'] : [];
+  return [page].concat(data, own, extra).filter((f, i, a) => a.indexOf(f) === i);
 }
 
 function today() {

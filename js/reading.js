@@ -405,10 +405,13 @@
       });
       block.append(opts);
       if (done) {
-        block.append(h('div', { class: 'explain' },
+        const box = h('div', { class: 'explain' },
           h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
             chosen === q.answer ? '答對了' : '答錯了，正確答案是 ' + LETTERS[q.answer]),
-          h('div', null, q.explanation)));
+          h('div', null, q.explanation));
+        /* 回報題目(js/report.js):題號跟上面 logAttempt('r') 同一套 */
+        if (window.REPORT) REPORT.attach(box, { m: 'r', id: a.id + ':' + qi });
+        block.append(box);
       }
       return block;
     }

@@ -216,12 +216,18 @@
       return row;
     }
 
-    function reveal(q, rec, transcript) {
+    /* 詳解方塊底部加「回報題目」(js/report.js);m 是模組('l1'…'l4'),id 是學習記錄用的題號 */
+    function withReport(box, m, id) {
+      if (window.REPORT) REPORT.attach(box, { m, id, audio: true });
+      return box;
+    }
+
+    function reveal(q, rec, transcript, m) {
       return h('div', null,
-        h('div', { class: 'explain' },
+        withReport(h('div', { class: 'explain' },
           h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
             rec.ok ? '答對了' : (rec.c === -1 ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
-          h('div', null, q.explanation)),
+          h('div', null, q.explanation)), m, q.id),
         h('div', { class: 'transcript-box' },
           h('b', null, '逐字稿'),
           h('div', { class: 'tr-en' }, transcript),
@@ -248,7 +254,7 @@
               draw();
             })
           : letterPick(4, state.answers.c, oi => { state.answers.c = oi; draw(); }),
-        instant && rec ? reveal(q, rec, q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n')) : null));
+        instant && rec ? reveal(q, rec, q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n'), 'l1') : null));
       root.append(nextRow(state.done));
     }
 
@@ -267,7 +273,7 @@
               draw();
             })
           : letterPick(3, state.answers.c, oi => { state.answers.c = oi; draw(); }),
-        instant && rec ? reveal(q, rec, q.question + '\n' + q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n')) : null));
+        instant && rec ? reveal(q, rec, q.question + '\n' + q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n'), 'l2') : null));
       root.append(nextRow(state.done));
     }
 
@@ -306,10 +312,10 @@
         block.append(h('div', { style: 'margin-top:14px' },
           h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), q.q),
           opts,
-          instant && done ? h('div', { class: 'explain' },
+          instant && done ? withReport(h('div', { class: 'explain' },
             h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
               chosen === q.answer ? '答對了' : '答錯了，正確答案是 ' + LETTERS[q.answer]),
-            h('div', null, q.explanation)) : null));
+            h('div', null, q.explanation)), 'l' + p, qid(set, qi)) : null));
       });
       if (instant && complete) {
         const transcript = p === '3'
@@ -396,14 +402,14 @@
             })),
             rp.el,
             letterButtons(4, state.answers, q.answer, () => {}),
-            reveal(q, state.answers, q.options.map((o, oi) => LETTERS[oi] + '. ' + o).join('\n'))));
+            reveal(q, state.answers, q.options.map((o, oi) => LETTERS[oi] + '. ' + o).join('\n'), 'l1')));
         } else if (u.p === '2') {
           const q = u.item;
           root.append(h('div', { class: 'q-block', style: 'margin-top:18px' },
             h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 2 應答')),
             rp.el,
             letterButtons(3, state.answers, q.answer, () => {}),
-            reveal(q, state.answers, q.question + '\n' + q.options.map((o, oi) => LETTERS[oi] + '. ' + o).join('\n'))));
+            reveal(q, state.answers, q.question + '\n' + q.options.map((o, oi) => LETTERS[oi] + '. ' + o).join('\n'), 'l2')));
         } else {
           const set = u.item;
           const block = h('div', { class: 'q-block', style: 'margin-top:18px' },
@@ -424,10 +430,10 @@
             block.append(h('div', { style: 'margin-top:14px' },
               h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), q.q),
               opts,
-              h('div', { class: 'explain' },
+              withReport(h('div', { class: 'explain' },
                 h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
                   rec.ok ? '答對了' : (rec.c === -1 ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
-                h('div', null, q.explanation))));
+                h('div', null, q.explanation)), 'l' + u.p, qid(set, qi))));
           });
           const transcript = u.p === '3'
             ? set.dialogue.map(t => (t.s === 'M' ? '男：' : '女：') + t.text).join('\n')

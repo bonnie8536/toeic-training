@@ -484,13 +484,18 @@
           });
           return opts;
         };
-        const verdict = (q, chosen) => h('div', { class: 'explain' },
-          h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
-            chosen === q.answer ? '答對了' : (chosen === undefined ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
-          h('div', null, q.explanation));
+        /* ctx = { m, id }:詳解方塊底部加「回報題目」(js/report.js),id 跟刷題、聽力的學習記錄同一套 */
+        const verdict = (q, chosen, ctx) => {
+          const box = h('div', { class: 'explain' },
+            h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
+              chosen === q.answer ? '答對了' : (chosen === undefined ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
+            h('div', null, q.explanation));
+          if (ctx && window.REPORT) REPORT.attach(box, ctx);
+          return box;
+        };
 
         if (u.p === '5') {
-          block.append(h('div', { class: 'q-text' }, u.item.question), gradeOpts(u.item, st.answers.c), verdict(u.item, st.answers.c),
+          block.append(h('div', { class: 'q-text' }, u.item.question), gradeOpts(u.item, st.answers.c), verdict(u.item, st.answers.c, { m: 'p5', id: u.item.id }),
             h('div', { class: 'explain' }, h('div', { class: 'tr' }, u.item.translation)));
         } else if (u.p === '1' || u.p === '2') {
           if (u.p === '1') block.append(h('div', { class: 'listen-photo' }, h('img', {
@@ -499,7 +504,7 @@
           })));
           const q = u.item;
           block.append(gradeOpts({ options: q.options.map((o, oi) => LETTERS[oi] + '. ' + o), answer: q.answer, explanation: q.explanation }, st.answers.c),
-            verdict(q, st.answers.c),
+            verdict(q, st.answers.c, { m: 'l' + u.p, id: q.id, audio: true }),
             h('div', { class: 'transcript-box' }, h('b', null, '逐字稿'),
               h('div', { class: 'tr-en' }, (q.question ? q.question + '\n' : '') + q.options.map((o, oi) => LETTERS[oi] + '. ' + o).join('\n')),
               h('div', { class: 'tr-zh' }, q.transcriptZh)));
@@ -507,7 +512,7 @@
           const set = u.item;
           set.questions.forEach((q, qi) => {
             block.append(h('div', { class: 'q-text', style: 'margin-top:10px' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), q.q),
-              gradeOpts(q, st.answers[qi]), verdict(q, st.answers[qi]));
+              gradeOpts(q, st.answers[qi]), verdict(q, st.answers[qi], { m: 'l' + u.p, id: set.id + ':' + qi, audio: true }));
           });
           const transcript = u.p === '3'
             ? set.dialogue.map(t => (t.s === 'M' ? '男：' : '女：') + t.text).join('\n')
@@ -527,7 +532,7 @@
             block.append(h('div', { class: 'q-text', style: 'margin-top:10px' },
               h('span', { class: 'q-no' }, u.p === '6' ? '(' + q.num + ')' : 'Q' + (qi + 1)),
               u.p === '6' ? '空格 (' + q.num + ')' : q.q),
-              gradeOpts(q, st.answers[key]), verdict(q, st.answers[key]));
+              gradeOpts(q, st.answers[key]), verdict(q, st.answers[key], { m: 'p' + u.p, id: set.id + ':' + key }));
           });
         }
         root.append(block);

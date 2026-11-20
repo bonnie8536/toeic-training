@@ -2871,3 +2871,64 @@ html.pet-roam2.pet-roam2-wide .pet-card .pet-pic {
   .pet-tip, .pet-tile-fly { display: none !important; }
 }
 /* ======== 小雞第二階段:ui 結束 ======== */
+
+/* ======== 題目更正紀錄頁(corrections.html、js/corrections.js) ======== */
+.corr .corr-filters { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 10px; }
+.corr .chip { min-height: 36px; cursor: pointer; }
+.corr .chip:focus-visible, .corr-search:focus-visible, .corr-group > summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.corr-search { width: 100%; max-width: 320px; min-height: 44px; padding: 8px 12px; font: inherit; font-size: 16px; border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink); }
+.corr-group { margin-top: 18px; }
+.corr-group > summary { font-size: 18px; font-weight: 700; cursor: pointer; padding: 6px 0; }
+.corr-table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin-top: 6px; }
+.corr-table th, .corr-table td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+.corr-table th { font-size: 12.5px; color: var(--ink-soft); font-weight: 700; }
+.corr-table td:nth-child(1) { white-space: nowrap; }
+.corr-table td:nth-child(2) { overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.corr-table tr.is-target td { background: var(--highlight); }
+.corr-msg { margin-top: 14px; color: var(--ink-soft); }
+@media (max-width: 640px) {
+  .corr-table thead { display: none; }
+  .corr-table, .corr-table tbody, .corr-table tr, .corr-table td { display: block; width: 100%; }
+  .corr-table tr { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; margin-top: 10px; }
+  .corr-table td { border: 0; padding: 2px 0; }
+  .corr-table td::before { content: attr(data-label); display: inline-block; min-width: 3.5em; margin-right: 8px; font-size: 12.5px; color: var(--ink-soft); }
+}
+
+/* ======== 回報題目(js/report.js):詳解方塊底部的按鈕與視窗,選項列沿用 .buy-opt ======== */
+.report-row { margin-top: 10px; text-align: right; }
+.report-btn { min-height: 36px; padding: 4px 14px; font-size: 13.5px; font-weight: 400; color: var(--ink-soft); }
+.report-btn:focus-visible, .modal-report .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.modal-report { max-height: calc(100vh - 32px); overflow-y: auto; }
+.modal-report .auth-h { padding: 0 34px; }
+.modal-report .auth-h:focus { outline: none; }
+.modal-report .rp-sub { text-align: center; margin-top: -4px; }
+.modal-report .auth-fine + .auth-form { margin-top: 12px; }
+.rp-note { min-height: 80px; resize: vertical; line-height: 1.6; }
+.modal-report .rp-mail { display: flex; align-items: center; justify-content: center; margin-top: 10px; text-decoration: none; }
+.modal-report .rp-addr { overflow-wrap: anywhere; user-select: all; }
+.modal-report > .btn { margin-top: 8px; }
+.modal-report > .auth-fine { margin-top: 8px; }
+.hist-corr { font-size: 13.5px; margin-top: 8px; }
+.hist-corr:empty { display: none; }
+.hist-row > .hist-corr { padding: 0 14px 10px; margin-top: 0; }
+.modal-report > .auth-fine { text-align: center; }
+.modal-report > .btn:not(.auth-submit) { display: block; margin: 8px auto 0; }
+
+/* ======== 教師後台:題目回報(js/admin-reports.js,只有站長) ======== */
+.rpa-item { border-top: 1px solid var(--line); }
+.rpa-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; width: 100%; min-height: 44px; padding: 8px 4px; border: 0; background: none; text-align: left; font: inherit; font-size: 14px; color: var(--ink); cursor: pointer; }
+.rpa-head:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.rpa-id { font-weight: 700; overflow-wrap: anywhere; }
+.rpa-count { font-weight: 700; color: var(--primary-dark); }
+.rpa-types { color: var(--ink-soft); }
+.rpa-date { margin-left: auto; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.rpa-body { padding: 4px 4px 14px; }
+.rpa-who { list-style: none; font-size: 14px; }
+.rpa-who li + li { margin-top: 6px; }
+.rpa-note-text { color: var(--ink-soft); white-space: pre-wrap; overflow-wrap: anywhere; }
+.rpa-note { font-size: 14px; color: var(--ink-soft); }
+.rpa-status { font-size: 13px; color: var(--bad); align-self: center; }
+.rpa-q { margin-top: 10px; }
+.rpa-opts { margin: 6px 0 0 1.4em; font-size: 14.5px; }
+.rpa-opts .is-answer { font-weight: 700; color: var(--ok); }
+.rpa-item.is-closed .rpa-id { color: var(--ink-soft); font-weight: 400; }

@@ -286,15 +286,21 @@
         save('d', q.id, perfect, { text: input.value });
         checkBtn.disabled = true;
         result.append(
-          h('div', { class: 'explain' },
+          withReport(h('div', { class: 'explain' },
             h('div', { class: 'verdict ' + (perfect ? 'ok' : 'bad') },
               perfect ? '完全正確！' : '對了 ' + hits + '/' + ansWords.length + ' 個字'),
             h('div', { class: 'dict-diff' },
               diff.map(x => h('span', { class: 'dict-word ' + (x.hit ? 'hit' : 'miss') }, x.w))),
             q.note && q.note !== '無' ? h('div', { class: 'tr' }, q.note) : null,
-            h('div', { class: 'tr' }, q.zh)),
+            h('div', { class: 'tr' }, q.zh)), q.id),
           nextRow(true));
       }
+    }
+
+    /* 詳解方塊底部加「回報題目」(js/report.js);題目 id 就是題號,三種練習共用 */
+    function withReport(box, id) {
+      if (window.REPORT) REPORT.attach(box, { m: 'ear', id, audio: true });
+      return box;
     }
 
     /* --- 相似音 --- */
@@ -317,10 +323,10 @@
               else if (bi === oi) b.classList.add('wrong');
             });
             result.append(
-              h('div', { class: 'explain' },
+              withReport(h('div', { class: 'explain' },
                 h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了，是 ' + q.options[q.answer]),
                 h('div', null, q.note),
-                h('div', { class: 'tr' }, q.audioText + '\n' + q.zh)),
+                h('div', { class: 'tr' }, q.audioText + '\n' + q.zh)), q.id),
               nextRow(true));
           },
         }, opt));
@@ -352,10 +358,10 @@
               else b.classList.add('plain');
             });
             result.append(
-              h('div', { class: 'explain' },
+              withReport(h('div', { class: 'explain' },
                 h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了，正確是 ' + q.options[q.answer]),
                 h('div', null, q.note),
-                h('div', { class: 'tr' }, q.audioText + '\n' + q.zh)),
+                h('div', { class: 'tr' }, q.audioText + '\n' + q.zh)), q.id),
               nextRow(true));
           },
         }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));

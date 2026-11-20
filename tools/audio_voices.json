@@ -163,5 +163,24 @@
   "channels": 1,
   "mp3Kbps": 48
  },
- "overrides": {}
+ "overrides": {
+  "l3-12.mp3": {
+   "voices": [
+    "en-GB-OllieMultilingualNeural",
+    "en-AU-CarlyNeural"
+   ]
+  },
+  "l3-13.mp3": {
+   "voices": [
+    "en-AU-WilliamMultilingualNeural",
+    "en-CA-Emma:DragonLatestNeural"
+   ]
+  },
+  "l3-24.mp3": {
+   "voices": [
+    "en-CA-Emma:DragonLatestNeural",
+    "en-GB-OliverNeural"
+   ]
+  }
+ }
 }

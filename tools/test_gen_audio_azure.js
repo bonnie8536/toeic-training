@@ -171,6 +171,23 @@ const allText = (st, d) => st.logs.join('\n') + '\n' + listFiles(d).filter((f) =
     check('只有金鑰沒有區域也停下', (await G.run(['--only', 'd-01', '--out', outDir('noreg')], stR.deps)) === 3);
   }
 
+  /* ---------- 6b. 區域驗證與轉址 ---------- */
+  {
+    for (const bad of ['evil.com/x#', 'a@b', 'east.us', 'EastUS', 'a/b', 'x#y']) {
+      const stB = makeEnv({ env: { AZURE_SPEECH_KEY: FAKE_KEY, AZURE_SPEECH_REGION: bad } });
+      const codeB = await G.run(['--only', 'd-01', '--out', outDir('badreg')], stB.deps);
+      check('區域值不合法（' + bad + '）：停下、不連線、不外洩金鑰', codeB !== 0 && stB.calls.length === 0 && !allText(stB, outDir('badreg')).includes(FAKE_KEY));
+    }
+    const stL = makeEnv({ env: { AZURE_SPEECH_KEY: FAKE_KEY, AZURE_SPEECH_REGION: 'eastus' } });
+    const stLc = makeEnv({ env: { AZURE_SPEECH_KEY: FAKE_KEY, AZURE_SPEECH_REGION: 'eastus' } });
+    let seen = null;
+    const orig = stLc.deps.fetch;
+    stLc.deps.fetch = async (u, i) => { seen = i; return orig(u, i); };
+    await G.run(['--only', 'd-01', '--out', outDir('redir')], stLc.deps);
+    check('請求不跟隨轉址（redirect: error）', seen && seen.redirect === 'error');
+    void stL;
+  }
+
   /* ---------- 7. 聲音清單 ---------- */
   {
     const st = makeEnv(); const vo = path.join(TMP, 'voices.json');

@@ -100,6 +100,7 @@ const MP3_ARGS = ['-hide_banner', '-loglevel', 'error', '-f', 's16le', '-ar', '2
 /* ---------- Azure 呼叫 ---------- */
 function makeClient(ctx) {
   const { deps, cfg, key, region, redact } = ctx;
+  if (!/^[a-z0-9]+$/.test(String(region))) throw new Error('區域值不合法');
   const base = 'https://' + region + '.tts.speech.microsoft.com/cognitiveservices/';
   let fatalErr = null, lastStart = 0, chain = Promise.resolve();
   /* 每次請求之間至少隔 intervalMs（所有工作共用） */
@@ -120,7 +121,7 @@ function makeClient(ctx) {
       await throttle();
       if (fatalErr) throw fatalErr;
       try {
-        const res = await deps.fetch(url, Object.assign({ signal: AbortSignal.timeout(r.timeoutMs) }, init));
+        const res = await deps.fetch(url, Object.assign({ signal: AbortSignal.timeout(r.timeoutMs), redirect: 'error' }, init));
         if (res.ok) return res;
         const body = redact(String(await res.text().catch(() => '')).slice(0, 200));
         const err = new Error(what + ' 失敗：HTTP ' + res.status + (body ? ' ' + body : ''));
@@ -306,6 +307,7 @@ async function run(argv, depsIn) {
   if (args['dry-run']) { dryRun(args, cfg, deps, outDir); return 0; }
   const creds = loadCredentials(deps.env, deps.readRegistry);
   if (!creds.key || !creds.region) { deps.log(MISSING_MSG); return 3; }
+  if (!/^[a-z0-9]+$/.test(creds.region)) { deps.log('AZURE_SPEECH_REGION 的值不合法（只能是小寫英文與數字，例如 eastus、southeastasia），已停止，沒有連線。'); return 3; }
   const redact = makeRedactor([creds.key]);
   try {
     if (args['list-voices']) { await listVoices(args, cfg, deps, creds, redact); return 0; }

@@ -25,6 +25,9 @@ check('AZURE_SPEECH_KEY 賦值被抓到', S.scanText('set AZURE_SPEECH_KEY=Zq' +
 check('佔位寫法不報', S.scanText('AZURE_SPEECH_KEY=<你的金鑰>\nAZURE_SPEECH_KEY=$KEY\nconst k = process.env.AZURE_SPEECH_KEY;', 'a.md', none).length === 0);
 check('允許的路徑不報（資料夾與單檔）', S.scanText(hex32, 'tools/fixtures/x.json', { paths: ['tools/fixtures/'], tokens: new Set() }).length === 0
   && S.scanText(hex32, 'tools/m.json', { paths: ['tools/m.json'], tokens: new Set() }).length === 0 && S.scanText(hex32, 'tools/n.json', { paths: ['tools/m.json'], tokens: new Set() }).length === 1);
+check('路徑豁免只管十六進位規則：目錄與單檔內的 84 字元金鑰、金鑰賦值仍被抓到',
+  S.scanText(az84, 'tools/fixtures/x.json', { paths: ['tools/fixtures/'], tokens: new Set() }).length === 1
+  && S.scanText('AZURE_SPEECH_KEY=Zq' + 'w'.repeat(20), 'tools/m.json', { paths: ['tools/m.json'], tokens: new Set() }).length === 1);
 check('允許的 token 不報，其他照報', S.scanText(hex32, 'a.js', { paths: [], tokens: new Set([hex32]) }).length === 0 && S.scanText(hex32 + 'b', 'a.js', { paths: [], tokens: new Set([hex32]) }).length === 1);
 check('回報內容不含完整金鑰', !JSON.stringify(S.scanText(hex32, 'a.js', none)).includes(hex32));
 {

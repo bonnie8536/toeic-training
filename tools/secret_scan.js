@@ -10,7 +10,7 @@ const { execFileSync } = require('child_process');
 
 const REPO = path.join(__dirname, '..');
 const PATTERNS = [
-  { name: '32 個以上連續十六進位字元', re: /(?<![0-9A-Za-z])[0-9a-fA-F]{32,}(?![0-9A-Za-z])/g },
+  { name: '32 個以上連續十六進位字元', hexOnly: true, re: /(?<![0-9A-Za-z])[0-9a-fA-F]{32,}(?![0-9A-Za-z])/g },
   { name: 'Azure 新式金鑰格式（84 字元英數）', re: /(?<![0-9A-Za-z])(?=[A-Za-z0-9]{84}(?![0-9A-Za-z]))(?=[A-Za-z0-9]*[A-Z])(?=[A-Za-z0-9]*[a-z])(?=[A-Za-z0-9]*[0-9])[A-Za-z0-9]{84}/g },
   { name: '把金鑰寫進檔案的賦值', re: /AZURE_SPEECH_KEY\s*[=:]\s*['"]?(?!<|\$|%|process|your|xxx|\.\.\.)[A-Za-z0-9]{16,}/g },
 ];
@@ -22,8 +22,9 @@ function loadAllow(file) {
 }
 function scanText(text, rel, allow) {
   const hits = [];
-  if (allow.paths.some((p) => rel === p || (p.endsWith('/') && rel.startsWith(p)))) return hits;
+  const pathAllowed = allow.paths.some((p) => rel === p || (p.endsWith('/') && rel.startsWith(p)));
   for (const p of PATTERNS) {
+    if (pathAllowed && p.hexOnly) continue; /* 路徑豁免只略過十六進位規則，金鑰格式與賦值規則一律照掃 */
     p.re.lastIndex = 0;
     let m;
     while ((m = p.re.exec(text))) {

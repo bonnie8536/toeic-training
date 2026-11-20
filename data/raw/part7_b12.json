@@ -140,7 +140,7 @@
       {
         "type": "email",
         "label": "E-mail",
-        "content": "To: bookings@ashvalerail.com\nFrom: m.otero@quillmail.com\nDate: 14 September\nSubject: Booking R-88204\n\nHello,\n\nI hold a ticket on the 08:20 service from Ashvale Central to Portmere this Friday, 18 September, booking number R-88204. My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train.\n\nI must be in Portmere by two o'clock, when I am giving a short talk at a client's office beside the station. The talk cannot be moved. I would therefore like the latest train that still brings me in with about an hour to spare. Looking at your timetable, only one service seems to fit. Please put me on it if a seat is free.\n\nI would rather not take a train that stops along the way, but I understand that I may have no choice on this occasion.\n\nTwo further questions. My original ticket cost thirty-four dollars. Am I right that nothing will be returned to me if the new fare is lower? Also, I bought the ticket on your website three weeks ago. Does that mean I can still make the change myself, or must your office do it for me?\n\nThank you for your help,\n\nMarcela Otero"
+        "content": "To: bookings@example.com\nFrom: m.otero@example.org\nDate: 14 September\nSubject: Booking R-88204\n\nHello,\n\nI hold a ticket on the 08:20 service from Ashvale Central to Portmere this Friday, 18 September, booking number R-88204. My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train.\n\nI must be in Portmere by two o'clock, when I am giving a short talk at a client's office beside the station. The talk cannot be moved. I would therefore like the latest train that still brings me in with about an hour to spare. Looking at your timetable, only one service seems to fit. Please put me on it if a seat is free.\n\nI would rather not take a train that stops along the way, but I understand that I may have no choice on this occasion.\n\nTwo further questions. My original ticket cost thirty-four dollars. Am I right that nothing will be returned to me if the new fare is lower? Also, I bought the ticket on your website three weeks ago. Does that mean I can still make the change myself, or must your office do it for me?\n\nThank you for your help,\n\nMarcela Otero"
       }
     ],
     "questions": [
@@ -187,7 +187,7 @@
     ],
     "translation": [
       "阿什維爾鐵路 平日班次｜阿什維爾中央站往波特米爾｜9 月 1 日起實施\n．A102：06:15 發車，07:40 抵達，直達，$34\n．A126：08:20 發車，09:45 抵達，直達，$34\n．A140：09:30 發車，11:30 抵達，停靠多恩、巴威克，$26\n．A155：10:40 發車，12:50 抵達，停靠多恩、巴威克、米爾蓋特，$22\n．A168：11:50 發車，13:55 抵達，停靠多恩、巴威克，$26\n．A180：12:15 發車，13:40 抵達，直達，$34\n．A192：14:30 發車，15:55 抵達，直達，$34\n．備註：直達車兩城之間不停站；表列票價為預訂之普通座位價格\n．更改訂位規定：可於發車前兩小時之前在官網辦理；每次更改收取 $8 手續費；新班次較貴須補差額，較便宜則差額不退；當日購買的車票不得更改",
-      "收件者：bookings@ashvalerail.com\n寄件者：m.otero@quillmail.com\n日期：9 月 14 日\n主旨：訂位編號 R-88204\n\n您好：\n\n我持有本週五（9 月 18 日）從阿什維爾中央站往波特米爾、08:20 那班車的車票，訂位編號 R-88204。我早上的會議被改期，十點以前不會結束，因此已來不及趕到車站搭那班車。\n\n我必須在兩點以前抵達波特米爾，屆時要在車站旁的客戶辦公室做一場簡短演講，這場演講無法更動。因此我想改搭仍能讓我提早約一小時抵達的最晚班次。我看過貴公司的時刻表，似乎只有一班符合，若還有空位請幫我改到那班。\n\n我其實不太想搭沿途停靠的班次，但我明白這次可能別無選擇。\n\n另有兩個問題。我原本的車票是三十四美元，若新票價較低，是否確實不會退還差額？另外，我是三週前在貴公司網站上購票的，這樣我是否仍可自行更改，還是必須由貴單位代為處理？\n\n感謝協助，\n\n瑪塞拉．歐特羅"
+      "收件者：bookings@example.com\n寄件者：m.otero@example.org\n日期：9 月 14 日\n主旨：訂位編號 R-88204\n\n您好：\n\n我持有本週五（9 月 18 日）從阿什維爾中央站往波特米爾、08:20 那班車的車票，訂位編號 R-88204。我早上的會議被改期，十點以前不會結束，因此已來不及趕到車站搭那班車。\n\n我必須在兩點以前抵達波特米爾，屆時要在車站旁的客戶辦公室做一場簡短演講，這場演講無法更動。因此我想改搭仍能讓我提早約一小時抵達的最晚班次。我看過貴公司的時刻表，似乎只有一班符合，若還有空位請幫我改到那班。\n\n我其實不太想搭沿途停靠的班次，但我明白這次可能別無選擇。\n\n另有兩個問題。我原本的車票是三十四美元，若新票價較低，是否確實不會退還差額？另外，我是三週前在貴公司網站上購票的，這樣我是否仍可自行更改，還是必須由貴單位代為處理？\n\n感謝協助，\n\n瑪塞拉．歐特羅"
     ]
   },
   {
@@ -199,7 +199,7 @@
         "label": "Invoice",
         "blocks": [
           { "t": "h", "text": "BELLAMY PLUMBING AND ELECTRIC" },
-          { "t": "sub", "text": "26 Sandhill Road, Fairgate | 555-0193 | billing@bellamyservice.com" },
+          { "t": "sub", "text": "26 Sandhill Road, Fairgate | 555-0193 | billing@example.com" },
           {
             "t": "kv",
             "items": [
@@ -237,7 +237,7 @@
       {
         "type": "email",
         "label": "E-mail",
-        "content": "To: billing@bellamyservice.com\nFrom: f.nasser@quillmail.com\nDate: 10 November\nSubject: Invoice BP-5512\n\nDear Sir or Madam,\n\nThank you for sending Mr. Okoye out so quickly. The sink has given us no trouble since, and the new switch works well. Before I pay, however, I would like to raise one point about the bill.\n\nWhen I telephoned your office on Thursday, 30 October, I asked for the first weekday appointment you had. I was told that nobody was free until the following Thursday and that a technician could come on Sunday instead. I agreed to the Sunday visit, but the person I spoke with never told me that coming at the weekend would add a further charge to my total. Had I known, I would have waited. I would like that line taken off the bill.\n\nI have a second, smaller question. The bathroom job took Mr. Okoye about ten minutes, yet the bill shows half an hour of labor. Could you explain how the time is counted?\n\nI should also plan ahead. If the same pipe begins to leak again in March, will I have to pay for that work a second time?\n\nI will settle the rest of the invoice as soon as I hear from you.\n\nKind regards,\n\nFarida Nasser\n9 Weaver Lane"
+        "content": "To: billing@example.com\nFrom: f.nasser@example.org\nDate: 10 November\nSubject: Invoice BP-5512\n\nDear Sir or Madam,\n\nThank you for sending Mr. Okoye out so quickly. The sink has given us no trouble since, and the new switch works well. Before I pay, however, I would like to raise one point about the bill.\n\nWhen I telephoned your office on Thursday, 30 October, I asked for the first weekday appointment you had. I was told that nobody was free until the following Thursday and that a technician could come on Sunday instead. I agreed to the Sunday visit, but the person I spoke with never told me that coming at the weekend would add a further charge to my total. Had I known, I would have waited. I would like that line taken off the bill.\n\nI have a second, smaller question. The bathroom job took Mr. Okoye about ten minutes, yet the bill shows half an hour of labor. Could you explain how the time is counted?\n\nI should also plan ahead. If the same pipe begins to leak again in March, will I have to pay for that work a second time?\n\nI will settle the rest of the invoice as soon as I hear from you.\n\nKind regards,\n\nFarida Nasser\n9 Weaver Lane"
       }
     ],
     "questions": [
@@ -288,8 +288,8 @@
       }
     ],
     "translation": [
-      "貝拉米水電行\n地址：費爾蓋特桑德希爾路 26 號｜電話 555-0193｜billing@bellamyservice.com\n．發票號碼：BP-5512；發票日期：11 月 6 日；施工日期：11 月 2 日（週日）\n．客戶：法麗達．納塞爾女士，威弗巷 9 號；技師：D. 奧科耶；付款期限：12 月 6 日\n．明細：廚房水槽管線維修工資 2.0 小時，每小時 $85.00，計 $170.00；更換管件（料號 P-14）1 件 $46.00；浴室電燈開關工資 0.5 小時，每小時 $85.00，計 $42.50；週末到府費 1 次 $120.00；零星材料 1 式 $18.00\n．小計 $396.50；稅金（5%）$19.83；應付總額 $416.33\n．備註：工資以半小時為單位計費，最低以半小時起算；凡於週六或週日施作皆收取週末到府費；工資自施工日起保固六個月，零件則依製造商自身保固辦理；逾三十日未付款者，每月加收 1.5% 利息",
-      "收件者：billing@bellamyservice.com\n寄件者：f.nasser@quillmail.com\n日期：11 月 10 日\n主旨：發票 BP-5512\n\n敬啟者：\n\n感謝貴公司這麼快就派奧科耶先生前來。水槽自那之後都沒再出問題，新的開關也運作良好。不過在付款之前，我想針對帳單提出一點疑問。\n\n我在 10 月 30 日（週四）致電貴公司時，要求安排最近的平日時段。當時我被告知直到下週四都沒有人有空，可以改在週日前來。我同意了週日這個時間，但和我通話的人從未告訴我，週末到府會讓總額再多出一筆費用。早知如此，我寧可等。我希望這一項從帳單上刪除。\n\n我還有第二個比較小的問題。浴室那項工作，奧科耶先生大約只花了十分鐘，帳單上卻記為半小時工資。可以說明時間是如何計算的嗎？\n\n我也想先做打算：如果同一段管線在三月再度漏水，我是否得再付一次費用？\n\n收到回覆後，我會立即支付發票其餘款項。\n\n謹啟，\n\n法麗達．納塞爾\n威弗巷 9 號"
+      "貝拉米水電行\n地址：費爾蓋特桑德希爾路 26 號｜電話 555-0193｜billing@example.com\n．發票號碼：BP-5512；發票日期：11 月 6 日；施工日期：11 月 2 日（週日）\n．客戶：法麗達．納塞爾女士，威弗巷 9 號；技師：D. 奧科耶；付款期限：12 月 6 日\n．明細：廚房水槽管線維修工資 2.0 小時，每小時 $85.00，計 $170.00；更換管件（料號 P-14）1 件 $46.00；浴室電燈開關工資 0.5 小時，每小時 $85.00，計 $42.50；週末到府費 1 次 $120.00；零星材料 1 式 $18.00\n．小計 $396.50；稅金（5%）$19.83；應付總額 $416.33\n．備註：工資以半小時為單位計費，最低以半小時起算；凡於週六或週日施作皆收取週末到府費；工資自施工日起保固六個月，零件則依製造商自身保固辦理；逾三十日未付款者，每月加收 1.5% 利息",
+      "收件者：billing@example.com\n寄件者：f.nasser@example.org\n日期：11 月 10 日\n主旨：發票 BP-5512\n\n敬啟者：\n\n感謝貴公司這麼快就派奧科耶先生前來。水槽自那之後都沒再出問題，新的開關也運作良好。不過在付款之前，我想針對帳單提出一點疑問。\n\n我在 10 月 30 日（週四）致電貴公司時，要求安排最近的平日時段。當時我被告知直到下週四都沒有人有空，可以改在週日前來。我同意了週日這個時間，但和我通話的人從未告訴我，週末到府會讓總額再多出一筆費用。早知如此，我寧可等。我希望這一項從帳單上刪除。\n\n我還有第二個比較小的問題。浴室那項工作，奧科耶先生大約只花了十分鐘，帳單上卻記為半小時工資。可以說明時間是如何計算的嗎？\n\n我也想先做打算：如果同一段管線在三月再度漏水，我是否得再付一次費用？\n\n收到回覆後，我會立即支付發票其餘款項。\n\n謹啟，\n\n法麗達．納塞爾\n威弗巷 9 號"
     ]
   },
   {
@@ -321,7 +321,7 @@
           {
             "t": "list",
             "items": [
-              "Write to members@halewoodclub.com or speak to the front desk.",
+              "Write to members@example.com or speak to the front desk.",
               "A request that reaches us before the twentieth of the month takes effect on the first day of the following month.",
               "Moving to a lower plan also requires thirty days' written notice.",
               "Every plan runs for at least three months from the day you join."
@@ -333,7 +333,7 @@
       {
         "type": "email",
         "label": "E-mail",
-        "content": "To: members@halewoodclub.com\nFrom: y.balogun@quillmail.com\nDate: 12 June\nSubject: Changing my plan\n\nDear Ms. Bregman,\n\nI joined the club in March on the Active plan and have been coming three or four times a week, almost always early in the morning before work.\n\nTwo things have changed. My nephew is staying with me for the school year while his parents are away, and taking him to school has taken over my mornings, so I can no longer come here before work. The only time I am reliably free is late in the evening, rarely before nine o'clock, and I would much rather swim then than give it up. I have also begun training for a race in October, and my coach suggests two sessions a month with a trainer.\n\nCould you move me to the plan that lets me use the pool at that hour? I would like the change to start on the first of July, and I am writing well before the date given in your rules, so I hope that is possible.\n\nTwo questions. First, I now pay eight dollars a month for a locker. Will that still appear on my bill after the change? Second, my sister is visiting from abroad in August and would like to come with me twice in the same week. Will my new plan allow that?\n\nFinally, please confirm that I do not have to pay the joining fee a second time.\n\nThank you,\n\nYusuf Balogun"
+        "content": "To: members@example.com\nFrom: y.balogun@example.org\nDate: 12 June\nSubject: Changing my plan\n\nDear Ms. Bregman,\n\nI joined the club in March on the Active plan and have been coming three or four times a week, almost always early in the morning before work.\n\nTwo things have changed. My nephew is staying with me for the school year while his parents are away, and taking him to school has taken over my mornings, so I can no longer come here before work. The only time I am reliably free is late in the evening, rarely before nine o'clock, and I would much rather swim then than give it up. I have also begun training for a race in October, and my coach suggests two sessions a month with a trainer.\n\nCould you move me to the plan that lets me use the pool at that hour? I would like the change to start on the first of July, and I am writing well before the date given in your rules, so I hope that is possible.\n\nTwo questions. First, I now pay eight dollars a month for a locker. Will that still appear on my bill after the change? Second, my sister is visiting from abroad in August and would like to come with me twice in the same week. Will my new plan allow that?\n\nFinally, please confirm that I do not have to pay the joining fee a second time.\n\nThank you,\n\nYusuf Balogun"
       }
     ],
     "questions": [
@@ -375,12 +375,12 @@
         "q": "The word \"suggests\" in paragraph 2 of the e-mail is closest in meaning to",
         "options": ["orders", "proves", "doubts", "recommends"],
         "answer": 3,
-        "explanation": "字義題。「my coach suggests two sessions a month with a trainer」是教練提出的建議，故 suggests ＝ recommends。(A) orders 語氣過強，教練並非下令；(B)(C) 與語意不符。"
+        "explanation": "字義題。電子郵件第二段「my coach suggests two sessions a month with a trainer」是教練向他提出的訓練建議，suggests 在這裡是「建議」，故選 (D) recommends。(A) orders 是「命令」，語氣過強，教練只是給建議，不是下令；(B) proves 是「證明」，suggest 雖然也有「顯示、暗示」的意思，但這裡主詞是教練、受詞是要安排的課程，句意是提建議，不是證明某件事；(C) doubts 是「懷疑」，與教練主張安排課程的意思相反。"
       }
     ],
     "translation": [
-      "海爾伍德運動俱樂部 會員方案比較（2 月 1 日起適用價格）\n．月費：基本 $29／進階 $45／全享 $68\n．健身區與器材：三種方案皆可使用\n．每月團體課程：基本 2 堂／進階 8 堂／全享 無上限\n．游泳池：基本 不可／進階 可／全享 可\n．開放時段：基本 06:00-15:00／進階 06:00-20:00／全享 24 小時\n．每月來賓券：基本 0 張／進階 1 張／全享 3 張\n．置物櫃租金：基本、進階每月 $8／全享 已含\n．教練課程：基本每堂 $55／進階每堂 $48／全享 每月兩堂免費，之後每堂 $40\n．更改方案方式：來信 members@halewoodclub.com 或洽櫃檯；每月 20 日前提出者，自次月 1 日生效；降級另需提前三十天書面通知；各方案自入會日起至少須維持三個月\n．備註：$40 入會費僅收取一次，更改方案時不再收取；來賓券不得保留至次月",
-      "收件者：members@halewoodclub.com\n寄件者：y.balogun@quillmail.com\n日期：6 月 12 日\n主旨：更改我的方案\n\n親愛的布雷格曼女士：\n\n我三月入會，選的是進階方案，每週來三到四次，幾乎都是上班前的清晨時段。\n\n現在有兩件事變了。我姪子這學年住在我這裡，父母不在身邊由我照顧，早上送他上學占掉了我原本的時段，我已經沒辦法在上班前過來。我固定有空的時間只剩晚上，很少早於九點，比起就此放棄，我寧可改在那個時候游泳。另外我開始為十月的一場比賽受訓，教練建議我每月安排兩堂教練課。\n\n可以幫我改到那個時段仍能使用游泳池的方案嗎？我希望從七月一日起生效，而且我提出的時間遠早於貴會規定的日期，希望能夠辦到。\n\n另有兩個問題。第一，我目前每月支付八美元的置物櫃費用，更改方案後帳單上還會有這筆嗎？第二，我妹妹八月會從國外來訪，想在同一週跟我來兩次，新方案是否允許？\n\n最後，也請確認我不必再付第二次入會費。\n\n謝謝，\n\n尤瑟夫．巴洛貢"
+      "海爾伍德運動俱樂部 會員方案比較（2 月 1 日起適用價格）\n．月費：基本 $29／進階 $45／全享 $68\n．健身區與器材：三種方案皆可使用\n．每月團體課程：基本 2 堂／進階 8 堂／全享 無上限\n．游泳池：基本 不可／進階 可／全享 可\n．開放時段：基本 06:00-15:00／進階 06:00-20:00／全享 24 小時\n．每月來賓券：基本 0 張／進階 1 張／全享 3 張\n．置物櫃租金：基本、進階每月 $8／全享 已含\n．教練課程：基本每堂 $55／進階每堂 $48／全享 每月兩堂免費，之後每堂 $40\n．更改方案方式：來信 members@example.com 或洽櫃檯；每月 20 日前提出者，自次月 1 日生效；降級另需提前三十天書面通知；各方案自入會日起至少須維持三個月\n．備註：$40 入會費僅收取一次，更改方案時不再收取；來賓券不得保留至次月",
+      "收件者：members@example.com\n寄件者：y.balogun@example.org\n日期：6 月 12 日\n主旨：更改我的方案\n\n親愛的布雷格曼女士：\n\n我三月入會，選的是進階方案，每週來三到四次，幾乎都是上班前的清晨時段。\n\n現在有兩件事變了。我姪子這學年住在我這裡，父母不在身邊由我照顧，早上送他上學占掉了我原本的時段，我已經沒辦法在上班前過來。我固定有空的時間只剩晚上，很少早於九點，比起就此放棄，我寧可改在那個時候游泳。另外我開始為十月的一場比賽受訓，教練建議我每月安排兩堂教練課。\n\n可以幫我改到那個時段仍能使用游泳池的方案嗎？我希望從七月一日起生效，而且我提出的時間遠早於貴會規定的日期，希望能夠辦到。\n\n另有兩個問題。第一，我目前每月支付八美元的置物櫃費用，更改方案後帳單上還會有這筆嗎？第二，我妹妹八月會從國外來訪，想在同一週跟我來兩次，新方案是否允許？\n\n最後，也請確認我不必再付第二次入會費。\n\n謝謝，\n\n尤瑟夫．巴洛貢"
     ]
   }
 ]

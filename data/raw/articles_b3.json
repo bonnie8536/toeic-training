@@ -26,7 +26,7 @@
       },
       {
         "en": "His solution was a compromise. Meridian Bay [[negotiated]] a revised agreement that extended the [[warranty]] on the machines while reducing the number of units from twelve to five. Hsu then hired four experienced clerks and gave them an unusual instruction: handle nothing routine. Their single [[duty]] was to manage exceptions—the delayed flights, the disputed charges, the burst pipes.",
-        "zh": "他的解方是一種折衷。梅里迪安灣重新談成一份修訂協議，延長機器的保固期，同時把機台數量從十二台減到五台。接著許先生聘了四名資深櫃檯人員，並給了他們一個不尋常的指示：例行工作一律不要做。他們唯一的職責就是處理例外——誤點的班機、有爭議的帳款、爆裂的水管。"
+        "zh": "他的解方是一種折衷。梅里迪安灣重新談成一份修訂協議，延長機器的保固期，同時把機台數量從十二台減到五台。接著許先生聘了四名資深櫃檯人員，並給了他們一個不尋常的指示：例行工作一律不要做。他們唯一的職責就是處理例外：誤點的班機、有爭議的帳款、爆裂的水管。"
       },
       {
         "en": "Two years later, the arrangement is still working. Robots still complete roughly eighty percent of check-ins, and [[payroll]] remains lower than at [[comparable]] properties, but guest satisfaction has reached its highest level since opening. Hsu now advises other operators to treat technology as a way of removing [[repetitive]] work rather than removing people. \"The robot buys you time,\" he says. \"How you spend that time is still a human decision.\"",
@@ -190,13 +190,13 @@
       {
         "q": "According to the article, what happened to the hotel's business during its first year?",
         "options": [
-          "Quarterly revenue rose steadily and occupancy stayed above ninety percent.",
+          "Income kept climbing, and nearly every room stayed full even in winter.",
           "Revenue fell even though occupancy remained unusually high.",
           "The hotel won an award but failed to fill its rooms in winter.",
           "Occupancy dropped sharply as soon as the slow winter season began."
         ],
         "answer": 0,
-        "explanation": "定位：第二段第二句。原文為「季營收穩定成長，住房率即使在淡季的冬天仍維持在九成以上」，與 A 完全對應。B 說營收下滑，與「穩定成長」相反；C 的前半（獲頒創新獎）雖屬實，但後半「冬天房間住不滿」與原文相反；D 說淡季一開始住房率就大跌，同樣與原文相反。"
+        "explanation": "定位：第二段第二句「quarterly revenue rose steadily and occupancy stayed above ninety percent through a slow winter」。營收穩定成長，住房率即使在淡季的冬天仍維持在九成以上，對應 A「收入持續成長，冬天也幾乎客滿」。B 說營收下滑，與「穩定成長」相反；C 的前半（獲頒創新獎）雖屬實，但後半「冬天房間住不滿」與原文相反；D 說淡季一開始住房率就大跌，同樣與原文相反。"
       },
       {
         "q": "What can be inferred about the four clerks Hsu hired?",
@@ -424,7 +424,7 @@
           "Why office workers around the world dislike open floor plans."
         ],
         "answer": 0,
-        "explanation": "定位：全文結構。第一段的「訂購蕨類」只是她最不起眼的雜務，第二段是轉折，第四、五段寫她辭職創業並擴張，主軸是一份雜務變成一門生意。B、C、D 都只是文中的細節或背景，撐不起全文。"
+        "explanation": "定位：全文結構。第一段說幫接待區訂購盆栽是她最不起眼的雜務，第二、三段寫她用植物改善辦公環境並開始接案，第四、五段寫她辭職創立 Verdant Works 並擴大規模，主軸是一份小雜務變成一門生意，故選 A。B：文中談的是養護與承擔風險，從未提到空氣品質。C：翻修只是第二段的轉折背景，全文不是在談會計事務所怎麼省錢。D：第二段只提到這家事務所的員工抱怨開放空間又冷又吵，沒有談全世界的上班族。"
       },
       {
         "q": "What did Whitfield do during the 2019 renovation?",
@@ -451,10 +451,10 @@
       {
         "q": "In the final paragraph, the word \"straightforward\" most nearly means",
         "options": [
-          "hard for beginners to follow.",
-          "surprisingly costly to put into practice.",
-          "widely ignored by other companies.",
-          "simple and easy to understand."
+          "hard for beginners to follow",
+          "surprisingly costly to put into practice",
+          "widely ignored by other companies",
+          "simple and easy to understand"
         ],
         "answer": 3,
         "explanation": "定位：第七段。這個字後面接的建議是「找出一筆持續發生的支出、衡量它實際換來什麼、為結果負責」，三個步驟講得清楚直接，故 D 最貼近。A（對新手來說很難跟著做）與這個字的意思正好相反；B（執行起來意外昂貴）與字義無關；C 說「其他公司普遍忽略」講的是採用情形，而非這個字用來形容建議本身的性質。"

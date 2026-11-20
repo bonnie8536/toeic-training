@@ -69,7 +69,7 @@ TOEIC.phrases = [
   "zh": "熄滅；撲滅；發布（消息、聲明）",
   "group": "put 家族",
   "type": "動詞片語",
-  "tip": "把東西往外送出去——火送走就滅了，消息送出去就是發布",
+  "tip": "把東西往外送出去：火送走就滅了，消息送出去就是發布",
   "example": "Firefighters put out the warehouse blaze in less than an hour.",
   "exampleZh": "消防員在一小時內撲滅了倉庫大火。",
   "quiz": {
@@ -162,10 +162,10 @@ TOEIC.phrases = [
     "off",
     "forward",
     "away",
-    "up"
+    "on"
    ],
    "answer": 1,
-   "explanation": "put forward=提出（想法、方案），幾位工程師提出降低生產成本的點子。put off=延後；put away=收好；put up=張貼/搭建，語意皆不通。"
+   "explanation": "put forward=提出（想法、方案），幾位工程師提出降低生產成本的點子。put off=延後；put away=收好；put on=穿上/舉辦，語意皆不通。"
   }
  },
  {
@@ -539,11 +539,11 @@ TOEIC.phrases = [
    "options": [
     "over",
     "along",
-    "through",
+    "off",
     "ahead"
    ],
    "answer": 0,
-   "explanation": "get over=克服（恐懼），克服上台恐懼後簡報就變輕鬆。get along=相處融洽；get through=做完工作/電話接通；get ahead=出人頭地，語意皆不通。"
+   "explanation": "get over=克服（恐懼），克服上台恐懼後簡報就變輕鬆。get along=相處融洽；get off=下車/下班；get ahead=出人頭地，語意皆不通。"
   }
  },
  {
@@ -579,13 +579,13 @@ TOEIC.phrases = [
   "quiz": {
    "q": "Let me check the stock and get ___ to you this afternoon.",
    "options": [
-    "over",
+    "off",
     "back",
     "along",
-    "through"
+    "away"
    ],
    "answer": 1,
-   "explanation": "get back to someone=稍後回覆對方，查完庫存下午回覆你。get over=克服；get along=相處融洽；get through=完成/接通，語意皆不通。"
+   "explanation": "get back to someone=稍後回覆對方，查完庫存下午回覆你。get off=下車/下班；get along=相處融洽；get away=離開/脫身，語意皆不通。"
   }
  },
  {
@@ -621,13 +621,13 @@ TOEIC.phrases = [
   "quiz": {
    "q": "He works extra hours because he wants to get ___ in the company.",
    "options": [
-    "along",
+    "across",
     "over",
     "ahead",
     "through"
    ],
    "answer": 2,
-   "explanation": "get ahead=在公司裡往上爬，他加班是為了求升遷。get along=相處融洽；get over=克服；get through=完成/接通，語意皆不通。"
+   "explanation": "get ahead=在公司裡往上爬，他加班是為了求升遷。get across=把意思傳達出去；get over=克服；get through=完成/接通，語意皆不通。"
   }
  },
  {
@@ -811,12 +811,12 @@ TOEIC.phrases = [
    "q": "The proposal didn't go ___ because two board members voted against it.",
    "options": [
     "through",
-    "over",
+    "along",
     "up",
     "in"
    ],
    "answer": 0,
-   "explanation": "go through=（提案）通過，有兩位董事反對所以沒過關。go over 當「檢查」解時主詞是人；若要說提案「反應好不好」得寫成 go over well/badly，不能單獨用；go up=上升；go in=走進去，語意皆不通。"
+   "explanation": "go through=（提案）通過，有兩位董事反對所以沒過關。go along=一起去/進行，要接 with 才表示贊同，不能表示提案過關；go up=上升；go in=走進去，語意皆不通。"
   }
  },
  {
@@ -892,15 +892,15 @@ TOEIC.phrases = [
   "example": "The intern came up with a simple way to cut printing costs.",
   "exampleZh": "那位實習生想出一個減少列印成本的簡單方法。",
   "quiz": {
-   "q": "We need to come ___ with a new slogan before the campaign launches.",
+   "q": "We still have to come ___ with a way to cover the repair costs by Friday.",
    "options": [
     "out",
     "up",
-    "across",
+    "down",
     "along"
    ],
    "answer": 1,
-   "explanation": "come up with=想出（新點子），固定用 up 再接 with。come out=（產品）推出、（真相）公開；come across=偶然遇到；come along=一起來、有進展，這三個都不能接 with 表示「想出」。"
+   "explanation": "come up with=想出（辦法、點子），固定用 up 再接 with，這裡是要想出支付修繕費的辦法。come out with=推出（產品）或脫口說出（話），不用來表示想出辦法；come down with=染上（疾病）；come along with=跟著某人一起來，語意都不通。"
   }
  },
  {
@@ -1102,7 +1102,7 @@ TOEIC.phrases = [
   "example": "She's in a meeting now, but she'll call you back this afternoon.",
   "exampleZh": "她現在在開會，不過下午會回電給你。",
   "quiz": {
-   "q": "I left him a message this morning; could you ask him to call me ___ when he returns to the office?",
+   "q": "I left him a message this morning; could you ask him to give me a call ___ when he returns to the office?",
    "options": [
     "off",
     "up",
@@ -1110,7 +1110,7 @@ TOEIC.phrases = [
     "back"
    ],
    "answer": 3,
-   "explanation": "call back=回電，請他回辦公室後回撥給我。call off=取消；call up=主動打電話給某人（不含「回撥」的意思）；call in=打電話進公司請假、請人來處理，語意皆不通。"
+   "explanation": "give me a call back=回我電話，前一句已經留言，請他回辦公室後回撥。動詞片語 call off=取消、call up=打電話給某人、call in=打電話進公司或叫人進來，但 a call 後面不能接 off、up、in，這三個都不成立。"
   }
  },
  {
@@ -1257,7 +1257,7 @@ TOEIC.phrases = [
     "up"
    ],
    "answer": 2,
-   "explanation": "figure out=靠自己推敲想通，會計師要弄清楚多出來的費用是哪來的。figure in=把某項因素算進去(figure in the shipping cost)；figure on=預計、打算（美式口語，figure on staying two nights）；figure up 罕用，美式口語偶爾指把數字加總。另外要分辨 figure out 是自己想出來，find out 多半是向外打聽到。"
+   "explanation": "figure out=靠自己推敲想通，會計師要弄清楚多出來的費用是哪來的。figure in=把某項因素算進去（figure in the shipping cost）；figure on=預計、打算（美式口語，figure on staying two nights）；figure up 罕用，美式口語偶爾指把數字加總。另外要分辨 figure out 是自己想出來，find out 多半是向外打聽到。"
   }
  },
  {
@@ -1274,11 +1274,11 @@ TOEIC.phrases = [
    "options": [
     "about",
     "for",
-    "with",
+    "on",
     "of"
    ],
    "answer": 0,
-   "explanation": "concerned about=擔心某件事，客戶擔心的是出貨延誤。concerned for 多用在擔心某人的安危；be concerned with 是「與…有關、涉及」，主詞通常是報告或內容；concerned of 不成立。"
+   "explanation": "concerned about=擔心某件事，客戶擔心的是出貨延誤。concerned for 多用在擔心某人的安危或前途，不接延誤這類事件；concerned on、concerned of 都不是英文的搭配。"
   }
  },
  {
@@ -1299,7 +1299,7 @@ TOEIC.phrases = [
     "to"
    ],
    "answer": 2,
-   "explanation": "interested in 後面接名詞或動名詞=對…有興趣。interested to 只接原形動詞且語氣是「很想知道」(interested to hear the result)，接 joining 不通；on 常配 based；for 常配 responsible、eligible，都不與 interested 連用。"
+   "explanation": "interested in 後面接名詞或動名詞=對…有興趣。interested to 只接原形動詞且語氣是「很想知道」（interested to hear the result），接 joining 不通；on 常配 based；for 常配 responsible、eligible，都不與 interested 連用。"
   }
  },
  {
@@ -1320,7 +1320,7 @@ TOEIC.phrases = [
     "to"
    ],
    "answer": 1,
-   "explanation": "responsible for=負責某項工作。responsible to 後面要接「向誰報告」(responsible to the manager)，接動名詞不通；of 常配 aware、proud；with 常配 familiar、satisfied，都無法帶出負責的事項。"
+   "explanation": "responsible for=負責某項工作。responsible to 後面要接「向誰報告」（responsible to the manager），接動名詞不通；of 常配 aware、proud；with 常配 familiar、satisfied，都無法帶出負責的事項。"
   }
  },
  {
@@ -1341,7 +1341,7 @@ TOEIC.phrases = [
     "with"
    ],
    "answer": 3,
-   "explanation": "（人）be familiar with（事物）=熟悉某事物。be familiar to 要把主詞換成事物，表示「對某人而言很熟悉」(The name is familiar to me)；in 常配 interested、involved；of 常配 aware，都不能表達「某人熟悉某事」。"
+   "explanation": "（人）be familiar with（事物）=熟悉某事物。be familiar to 要把主詞換成事物，表示「對某人而言很熟悉」（The name is familiar to me）；in 常配 interested、involved；of 常配 aware，都不能表達「某人熟悉某事」。"
   }
  },
  {
@@ -1442,11 +1442,11 @@ TOEIC.phrases = [
    "options": [
     "for",
     "with",
-    "to",
+    "at",
     "in"
    ],
    "answer": 0,
-   "explanation": "suitable for=適合某用途或某對象。with 常配 familiar、equipped；to 常配 similar、related；in 常配 involved、interested，都無法表達「適合」。"
+   "explanation": "suitable for=適合某用途或某對象。with 常配 familiar、equipped；at 常配 good、surprised；in 常配 involved、interested，都無法表達「適合」。"
   }
  },
  {
@@ -1677,7 +1677,7 @@ TOEIC.phrases = [
     "in"
    ],
    "answer": 0,
-   "explanation": "pleased with=對某個結果感到滿意。pleased to 後面只接原形動詞(pleased to meet you)；for 常配 grateful、famous；of 常配 proud；in 常配 interested。"
+   "explanation": "pleased with=對某個結果感到滿意。pleased to 後面只接原形動詞（pleased to meet you）；for 常配 grateful、famous；of 常配 proud；in 常配 interested。"
   }
  },
  {
@@ -1777,12 +1777,12 @@ TOEIC.phrases = [
    "q": "The exhibition is open ___ the public from Tuesday through Sunday.",
    "options": [
     "to",
-    "for",
+    "at",
     "with",
     "on"
    ],
    "answer": 0,
-   "explanation": "open to=對…開放、願意接受。open for 後面接的是用途或營業狀態（open for business、open for registration），接「人」不通；with 常配 familiar、equipped；on 常配 based，語意都不通。"
+   "explanation": "open to=對…開放、願意接受，open to the public 是「對大眾開放」的固定說法。at 接時間（open at 9 a.m.）；with 常配 familiar、equipped；on 接日子（open on Sundays）。這三個都不能接 the public。"
   }
  },
  {
@@ -1921,7 +1921,7 @@ TOEIC.phrases = [
   "example": "Over three hundred people applied for the marketing manager position.",
   "exampleZh": "超過三百人應徵這個行銷經理職位。",
   "quiz": {
-   "q": "If you want the scholarship, you must apply ___ it before the end of May.",
+   "q": "Customers who return a damaged item can apply ___ a full refund within 30 days.",
    "options": [
     "to",
     "on",
@@ -1929,7 +1929,7 @@ TOEIC.phrases = [
     "for"
    ],
    "answer": 3,
-   "explanation": "apply for=申請某樣東西，獎學金就是想爭取的目標。apply to 後面接的是機構(apply to a university)或表示「適用於」；on 用在 depend on（取決於）；with 用在 comply with（遵守），都不能接在 apply 後面。"
+   "explanation": "apply for=申請想拿到的東西，全額退款就是顧客想拿到的。apply to 後面接申請的機構（apply to a university）或表示「適用於」；apply on 後面接申請的管道（apply on the website）；apply with 後面接附上的資料（apply with a resume）。這三個都不能帶出想拿到的退款。"
   }
  },
  {
@@ -2259,13 +2259,13 @@ TOEIC.phrases = [
   "quiz": {
    "q": "Staff members who wish to attend must register ___ the seminar by Friday.",
    "options": [
-    "in",
+    "on",
     "with",
     "to",
     "for"
    ],
    "answer": 3,
-   "explanation": "register for=報名某項活動或課程，想參加的員工必須在週五前完成報名。register with 是「向某機構登記」(register with an agency)，後面接的是單位不是活動；in 用在 participate in（參與）；to 用在 refer to（參閱），都不能接在 register 後面。"
+   "explanation": "register for=報名某項活動或課程，想參加的員工必須在週五前完成報名。register with 後面接登記的機構（register with an agency），不是活動；register on 後面接登記的網站或平台（register on the website），不接活動本身；register to 後面接動詞（register to vote），不接名詞。這三個都不能帶出要報名的研討會。"
   }
  },
  {
@@ -2409,10 +2409,10 @@ TOEIC.phrases = [
     "at",
     "on",
     "in",
-    "to"
+    "for"
    ],
    "answer": 1,
-   "explanation": "on schedule=按預定進度，整修如期完成，商店上週一重新開幕。at 出現在 at present（目前）；in 出現在 in advance（事先）；to 是 respond to（回應）的搭配，都不能接 schedule 表示「準時」。"
+   "explanation": "on schedule=按預定進度，整修如期完成，商店上週一重新開幕。at 出現在 at present（目前）；in 出現在 in advance（事先）；for 出現在 for example（例如）。這三個都不能和 schedule 組成「按進度」的意思。"
   }
  },
  {

@@ -151,7 +151,7 @@
           "be"
         ],
         "answer": 2,
-        "explanation": "my mother 是一個人，等於 she，所以配 is。are 要兩個以上的人才用，am 只配 I。中文說「我媽媽是護士」跟英文一樣有「是」，這句反而不容易漏掉 be 動詞。"
+        "explanation": "my mother 是一個人，等於 she，所以配 is。are 是給 you 或兩個以上的人用的，am 只配 I，be 是原本的樣子，不能直接放在主詞後面當句子的動詞。中文說「我媽媽是護士」跟英文一樣有「是」，這句反而不容易漏掉 be 動詞。"
       },
       {
         "q": "You ___ my best friend.",
@@ -162,7 +162,7 @@
           "be"
         ],
         "answer": 0,
-        "explanation": "you 不管是一個人還是一群人，都配 are。很多人看到「你」只有一個人就想用 is，但 you 這個字在英文永遠配 are。"
+        "explanation": "you 不管是一個人還是一群人，都配 are。很多人看到「你」只有一個人就想用 is，但 you 這個字在英文永遠配 are；am 只配 I；be 是原本的樣子，不能直接放在主詞後面當句子的動詞。"
       },
       {
         "q": "She's 是哪兩個字縮起來的？",
@@ -195,7 +195,7 @@
           "be"
         ],
         "answer": 0,
-        "explanation": "Tom and Mary 是兩個人，配 are。很多人只看到最靠近的 Mary 就寫 is，但決定用哪一個的是整個主詞，兩個人加起來就要用 are。"
+        "explanation": "Tom and Mary 是兩個人，配 are。很多人只看到最靠近的 Mary 就寫 is，但決定用哪一個的是整個主詞，兩個人加起來就要用 are。am 只配 I；be 是原本的樣子，不能直接放在主詞後面當句子的動詞。"
       },
       {
         "q": "___ a nice day today.",
@@ -342,7 +342,7 @@
           "no is"
         ],
         "answer": 0,
-        "explanation": "she 是一個人，配 is，否定就是 isn't。aren't 是給兩個以上的人用的；amn't 這個寫法在英文不存在；no is 是把中文的「不」直接搬過來，英文用的是 not 而且要放在 be 動詞後面。"
+        "explanation": "she 是一個人，配 is，否定就是 isn't。aren't 是給 you、we、they 或兩個以上的人用的；amn't 不是標準英文的寫法，而且 am 只配 I，跟 she 對不起來；no is 是把中文的「不」直接搬過來，英文用的是 not 而且要放在 be 動詞後面。"
       },
       {
         "q": "___ you tired?",
@@ -364,7 +364,7 @@
           "be"
         ],
         "answer": 2,
-        "explanation": "they 是兩個以上的人，配 are，not 放在 are 後面。加了 not 也不會改變配對的規則，該用哪個 be 動詞還是看主詞。"
+        "explanation": "they 是兩個以上的人，配 are，not 放在 are 後面。加了 not 也不會改變配對的規則，該用哪個 be 動詞還是看主詞：is 是給一個人或一樣東西用的，am 只配 I，be 是原本的樣子，不能直接放在主詞後面當句子的動詞。"
       },
       {
         "q": "Is Tom your brother? 最自然的否定回答是？",
@@ -375,7 +375,7 @@
           "No, isn't he."
         ],
         "answer": 1,
-        "explanation": "問句用 Is 開頭，回答就用 isn't，而且 Tom 要換成 he。not 一定跟在 be 動詞後面，不能放前面；回答的時候主詞在前、be 動詞在後，不用像問句那樣顛倒。"
+        "explanation": "問句用 Is 開頭，回答就用 isn't，而且 Tom 要換成 he。not 一定跟在 be 動詞後面，不能放前面，所以 he not is 不對；英文否定用 not，不用 no，所以 he no is 也不對；回答的時候主詞在前、be 動詞在後，不用像問句那樣顛倒，所以 isn't he 不對。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -386,7 +386,7 @@
           "I am no ready."
         ],
         "answer": 2,
-        "explanation": "am not 沒有 amn't 這種縮寫，只能寫成 I'm not。第二句把 not 放到 be 動詞前面，順序錯了；第四句用了 no，英文否定句用的是 not。"
+        "explanation": "標準英文裡 am not 不縮成 amn't，只能寫成 I'm not。第二句把 not 放到 be 動詞前面，順序錯了；第四句用了 no，英文否定句用的是 not。"
       },
       {
         "q": "___ your parents at home?",
@@ -397,7 +397,7 @@
           "Be"
         ],
         "answer": 0,
-        "explanation": "your parents 是爸爸媽媽兩個人，配 are。看到 parents 後面有 s 就知道不只一個，這時候用 Is 是把主詞看成一個人了。"
+        "explanation": "your parents 是爸爸媽媽兩個人，配 are。看到 parents 後面有 s 就知道不只一個，這時候用 Is 是把主詞看成一個人了；Am 只配 I；Be 是原本的樣子，不能拿來開頭問問題。"
       },
       {
         "q": "Are you a student? 的肯定回答是？",
@@ -408,7 +408,7 @@
           "Yes, am I."
         ],
         "answer": 1,
-        "explanation": "用 Are 問就用 am 回答，主詞換成 I。Yes 的回答不能縮寫成 Yes, I'm.，這是很多人會寫的錯；Yes, am I. 順序顛倒了，回答不用倒裝。"
+        "explanation": "用 Are 問就用 am 回答，主詞換成 I。Yes 的回答不能縮寫成 Yes, I'm.，這是很多人會寫的錯；Yes, I do. 是回答 Do 開頭的問句用的，這裡問句用的是 Are；Yes, am I. 順序顛倒了，回答不用倒裝。"
       },
       {
         "q": "「這些書不是新的。」哪一句對？",
@@ -518,7 +518,7 @@
           "It has"
         ],
         "answer": 1,
-        "explanation": "a cat 只有一隻，用 There is。There are 要後面兩個以上才用；英文沒有 there have 這種說法；It has 是在講某個東西擁有什麼，跟「椅子底下有一隻貓」的意思不一樣。"
+        "explanation": "a cat 只有一隻，用 There is。There are 要後面兩個以上才用；表示某個地方有什麼時，there 後面不直接接 have，There have a cat 不成立；It has 是在講某個東西擁有什麼，這句的 it 沒有指誰，也不是「椅子底下有一隻貓」的意思。"
       },
       {
         "q": "There ___ many students in the classroom.",
@@ -529,7 +529,7 @@
           "are"
         ],
         "answer": 3,
-        "explanation": "many students 是很多學生，兩個以上要用 are。決定用 is 還是 are 的是後面那個名詞，不是前面的 there；have 和 has 都不能接在 there 後面。"
+        "explanation": "many students 是很多學生，兩個以上要用 are。決定用 is 還是 are 的是後面那個名詞，不是前面的 there；表示「有」的時候，there 後面不直接接 have 或 has 再接名詞。"
       },
       {
         "q": "___ there any milk in the fridge?",
@@ -551,7 +551,7 @@
           "There two windows are in my room."
         ],
         "answer": 2,
-        "explanation": "two windows 是兩扇，用 are，而且 are 要緊接在 there 後面。第一句用了英文沒有的 there have；第二句沒有跟著後面的名詞改；第四句把 are 移到名詞後面，順序不對。"
+        "explanation": "two windows 是兩扇，用 are，接在 there 後面。第一句用 there have 加名詞表示「有」，英文不這樣說；第二句沒有跟著後面的名詞改；第四句把 are 移到名詞後面，順序不對。"
       },
       {
         "q": "There ___ a lot of water in the bottle.",
@@ -562,7 +562,7 @@
           "is"
         ],
         "answer": 3,
-        "explanation": "water 是沒辦法一個一個數的東西，用 is。are 要後面數得出兩個以上才用；have 不能接在 there 後面；many 是拿來接數得出來的東西，不能放在這個位置當動詞。"
+        "explanation": "water 是沒辦法一個一個數的東西，用 is。are 要後面數得出兩個以上才用；表示「有」的時候，have 不能直接接在 there 後面；many 是拿來接數得出來的東西，不能放在這個位置當動詞。"
       },
       {
         "q": "「我有兩個哥哥。」哪一句對？",
@@ -573,7 +573,7 @@
           "I am two brothers."
         ],
         "answer": 1,
-        "explanation": "這句在講哥哥是我的，屬於誰要用 have。There are two brothers. 只是說某個地方有兩個哥哥，沒有講是誰的；第四句用 be 動詞會變成「我是兩個哥哥」，意思整個跑掉。"
+        "explanation": "這句在講哥哥是我的，屬於誰要用 have。There are two brothers. 只是說某個地方有兩個哥哥，沒有講是誰的；There is two brothers of me. 的兩個哥哥要配 are 卻用了 is，而且英文不用 of me 表示「我的」；第四句用 be 動詞會變成「我是兩個哥哥」，意思整個跑掉。"
       },
       {
         "q": "「教室裡沒有學生。」哪一句對？",
@@ -584,7 +584,7 @@
           "There no students in the classroom."
         ],
         "answer": 2,
-        "explanation": "students 是兩個以上，用 aren't。第一句沒有跟著後面的名詞改成 aren't；第二句用了英文沒有的 there have；第四句只放了 no，句子裡少了 be 動詞。"
+        "explanation": "students 是兩個以上，用 aren't。第一句沒有跟著後面的名詞改成 aren't；第二句用 there haven't 表示「沒有」，英文不這樣說；第四句只放了 no，句子裡少了 be 動詞。"
       },
       {
         "q": "Is there a post office near here? 的否定回答是？",
@@ -595,7 +595,7 @@
           "No, there isn't."
         ],
         "answer": 3,
-        "explanation": "問句用 Is there 開頭，回答就照樣用 there is 的否定，寫成 No, there isn't.。回答的時候不要把 there 換成 it；a post office 只有一間，也不會用 aren't。"
+        "explanation": "問句用 Is there 開頭，回答就照樣用 there is 的否定，寫成 No, there isn't.。回答的時候不要把 there 換成 it；a post office 只有一間，也不會用 aren't；問句用的是 be 動詞 is，回答也不能換成 hasn't。"
       }
     ]
   },
@@ -695,7 +695,7 @@
           "明天才要做的事"
         ],
         "answer": 1,
-        "explanation": "現在簡單式管的是天天都這樣的習慣，還有不會改變的事實和長期的狀態。此刻正在做到一半的事有另外一種說法，後面的單元會教。"
+        "explanation": "現在簡單式管的是天天都這樣的習慣，還有不會改變的事實和長期的狀態。此刻正在做到一半的事有另外一種說法；昨天已經發生的事要用過去式；明天才要做的事通常用表示未來的說法，這些後面的單元會教。"
       },
       {
         "q": "「我們每天早上喝牛奶。」哪一句對？",
@@ -717,7 +717,7 @@
           "lives"
         ],
         "answer": 0,
-        "explanation": "這句在講一件本來就成立的事實，用現在簡單式，而且 fish 這裡指的是所有的魚不只一條，動詞維持原形 live。living 前面沒有 be 動詞；are live 兩個動詞擠在一起；lives 是主詞只有一個的時候才用。"
+        "explanation": "這句在講一件本來就成立的事實，用現在簡單式，而且 fish 這裡指的是所有的魚不只一條，動詞維持原形 live。living 前面沒有 be 動詞；are live 兩個動詞擠在一起；lives 要主詞是 he、she、it 這類單一的人或東西才用，這裡的 fish 是很多條，不能用。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -761,7 +761,7 @@
           "I read English every day."
         ],
         "answer": 3,
-        "explanation": "英文的順序是主詞、動詞、受詞，講時間的說法放在最後面。前三句都是照中文的語序搬過去的，把 every day 卡在主詞和動詞中間，或是把動詞丟到句尾，英文都不會這樣說。"
+        "explanation": "英文的順序是主詞、動詞、受詞，every day 這種講時間的說法通常放在句尾（也可以放句首）。第一句照中文的語序把 every day 卡在主詞和動詞中間；第二句把 every day 塞在動詞 read 和受詞 English 中間，動詞和受詞被拆開；第三句把動詞 read 丟到句尾，變成主詞、受詞、動詞的順序。"
       }
     ]
   },
@@ -926,7 +926,7 @@
           "going"
         ],
         "answer": 1,
-        "explanation": "Tom and his sister 是兩個人，不是單數，動詞維持原形 go。看到最靠近的 sister 就寫 goes 是很常見的錯，決定加不加 s 的是整個主詞。"
+        "explanation": "Tom and his sister 是兩個人，不是單數，動詞維持原形 go。看到最靠近的 sister 就寫 goes 是很常見的錯，決定加不加 s 的是整個主詞；gos 是錯的拼法，就算要加也要寫成 goes；going 前面少了 be 動詞，不能單獨當動詞用。"
       },
       {
         "q": "My mother ___ a new phone.",
@@ -1064,7 +1064,7 @@
           "not"
         ],
         "answer": 2,
-        "explanation": "we 是兩個以上的人，用 don't。doesn't 是給一個人用的；have 是一般動詞，不能用 be 動詞的 isn't 否定；只寫 not 沒有助動詞撐著，句子不成立。"
+        "explanation": "we 是兩個以上的人，用 don't。doesn't 是給第三人稱單數（he、she、it 這類）用的；have 是一般動詞，不能用 be 動詞的 isn't 否定；只寫 not 沒有助動詞撐著，句子不成立。"
       },
       {
         "q": "下面哪一句沒有錯？",
@@ -1072,7 +1072,7 @@
           "They don't like rain.",
           "He don't like rain.",
           "She doesn't likes rain.",
-          "I am not like rain."
+          "I am not likes rain."
         ],
         "answer": 0,
         "explanation": "they 配 don't，後面接動詞原形 like，完全正確。he 是一個人要用 doesn't；doesn't 後面不能接 likes；like 是一般動詞，不能用 am not 來否定。"
@@ -1091,7 +1091,7 @@
       {
         "q": "下面哪一句是對的？",
         "options": [
-          "My sister isn't like fish.",
+          "My sister isn't likes fish.",
           "My sister not like fish.",
           "My sister don't likes fish.",
           "My sister doesn't like fish."
@@ -1224,7 +1224,7 @@
           "Is he like dogs?"
         ],
         "answer": 2,
-        "explanation": "he 用 Does 開頭，而且 Does 後面的動詞要回到原形 like。第一句在動詞上又加了一次 s；第二句沒有配合第三人稱單數；第四句把 be 動詞和一般動詞湊在一起。"
+        "explanation": "he 用 Does 開頭，而且 Does 後面的動詞要回到原形 like。第一句在動詞上又加了一次 s；第二句沒有配合第三人稱單數；第四句的 like 只能當介系詞「像」，意思變成「他像狗嗎？」，不是在問喜不喜歡。"
       },
       {
         "q": "Do you go to school by bike? 最自然的肯定回答是？",
@@ -1257,7 +1257,7 @@
           "Is"
         ],
         "answer": 2,
-        "explanation": "這句裡沒有一般動詞，是在問身分，用的是 be 動詞，把 Are 搬到最前面就好。Do 是給一般動詞用的，寫成 Do you a student? 整句就沒有動詞了；Is 不配 you。"
+        "explanation": "這句裡沒有一般動詞，是在問身分，用的是 be 動詞，把 Are 搬到最前面就好。Do 和 Does 是給一般動詞用的，寫成 Do you a student? 整句就沒有動詞了，而且 Does 也不配 you；Is 不配 you。"
       },
       {
         "q": "___ your brothers play baseball?",
@@ -1454,7 +1454,7 @@
           "I am waitting for the bus."
         ],
         "answer": 0,
-        "explanation": "wait 裡面有 a 和 i 兩個母音字母，不用重複最後一個字母，直接加 ing 寫成 waiting，前面配 am。第一句少了 be 動詞；第三句少了 ing；第四句多寫了一個 t。"
+        "explanation": "wait 裡面有 a 和 i 兩個母音字母，不用重複最後一個字母，直接加 ing 寫成 waiting，前面配 am。第二句少了 be 動詞；第三句少了 ing；第四句多寫了一個 t。"
       },
       {
         "q": "She ___ a letter to her friend right now.",
@@ -1651,7 +1651,7 @@
           "My sister working in a hospital."
         ],
         "answer": 2,
-        "explanation": "在哪裡上班是長期不變的狀態，用現在簡單式，主詞是一個人所以動詞加 s。第一句會變成她此刻人在醫院裡做事，跟講職業不一樣；第二句漏掉 s；第四句少了 be 動詞。"
+        "explanation": "在哪裡上班是長期不變的狀態，用現在簡單式，主詞是一個人所以動詞加 s。第一句文法沒錯，但進行式表示這陣子暫時在醫院工作，中文沒有「最近、暫時」的意思，講職業用現在簡單式最自然；第二句漏掉 s；第四句少了 be 動詞。"
       },
       {
         "q": "The train ___ at eight every morning.",
@@ -1767,7 +1767,7 @@
           "want"
         ],
         "answer": 0,
-        "explanation": "want 是狀態動詞，就算句子裡有 now 也不加 ing，主詞 she 是第三人稱單數所以用 wants。看到 now 就反射性寫成進行式，是這一課最容易掉進去的坑。"
+        "explanation": "want 是狀態動詞，就算句子裡有 now 也不用進行式，主詞 she 是第三人稱單數所以用 wants。is wanting 是看到 now 就反射性寫成進行式，這一課最容易掉進去的坑；wanting 前面少了 be 動詞；want 漏掉了第三人稱單數的 s。"
       },
       {
         "q": "下面哪一句是錯的？",
@@ -1800,7 +1800,7 @@
           "has"
         ],
         "answer": 3,
-        "explanation": "這裡的 have 是表示擁有，屬於狀態不加 ing，而且 my brother 是一個人，要換成 has。is having 用在吃飯開派對那種真的在做的事上；have 漏掉了第三人稱單數的變化。"
+        "explanation": "這裡的 have 是表示擁有，屬於狀態不加 ing，而且 my brother 是一個人，要換成 has。is having 用在吃飯開派對那種真的在做的事上；have 漏掉了第三人稱單數的變化；having 前面少了 be 動詞，而且擁有也不用進行式。"
       },
       {
         "q": "Look! He ___ a book.",
@@ -1822,7 +1822,7 @@
           "am like"
         ],
         "answer": 1,
-        "explanation": "like 是狀態動詞，不管什麼時候都不加 ing，主詞 I 用原形 like。am liking 是把中文的「正在喜歡」硬翻過去；liking 前面少了 be 動詞；am like 是 be 動詞和一般動詞擠在一起。"
+        "explanation": "like 是狀態動詞，習慣上不用進行式，主詞 I 用原形 like。am liking 是把中文的「正在喜歡」硬翻過去；liking 前面少了 be 動詞；am like 是 be 動詞和一般動詞擠在一起。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -1965,7 +1965,7 @@
           "does sometimes"
         ],
         "answer": 1,
-        "explanation": "late 是描述狀態的字，句子需要 be 動詞，主詞 he 配 is，頻率副詞再放在 is 後面。are 配錯主詞；只放 sometimes 整句就沒有動詞了；does 是助動詞，只在否定和問句裡出現。"
+        "explanation": "late 是描述狀態的形容詞，句子需要 be 動詞，主詞 he 配 is，頻率副詞再放在 is 後面。are 配錯主詞；只放 sometimes 整句就沒有動詞了；does 是助動詞，後面要接動詞原形，late 不是動詞，不能接在 does 後面。"
       },
       {
         "q": "下面哪一句是對的？",

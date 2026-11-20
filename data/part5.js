@@ -188,12 +188,12 @@ TOEIC.part5 = [
   "options": [
    "is being serviced",
    "services",
-   "is servicing",
+   "is currently servicing",
    "has serviced"
   ],
   "answer": 0,
   "translation": "謹此通知，Merrion 辦公大樓東側電梯正在進行保養，至週四下午前無法使用。",
-  "explanation": "考點：現在進行式被動語態。電梯是被保養的對象，且動作正在進行中，故用 (A) is being serviced。(B) services 是主動的現在簡單式，語意變成電梯替別的東西做保養。(C) is servicing 是主動進行式，語態錯誤。(D) has serviced 是主動的現在完成式，語態與語意皆不合。"
+  "explanation": "考點：現在進行式被動語態。電梯是被保養的對象，且動作正在進行中，故用 (A) is being serviced。(B) services 是主動的現在簡單式，語意變成電梯替別的東西做保養。(C) is currently servicing 是主動進行式，語態錯誤。(D) has serviced 是主動的現在完成式，語態與語意皆不合。"
  },
  {
   "id": "p5-b1-14",
@@ -218,12 +218,12 @@ TOEIC.part5 = [
   "options": [
    "operates",
    "will have operated",
-   "had operated",
+   "had been operating",
    "has operated"
   ],
   "answer": 1,
   "translation": "到明年四月，Harrowgate Foods 經營其區域配送中心就滿十年了。",
-  "explanation": "考點：未來完成式。By next April 是未來的時間基準點，搭配 for ten years 表示到那時為止已累積十年，須用 (B) will have operated。(A) operates 是現在簡單式，無法表達累積到未來某時點。(C) had operated 是過去完成式，基準點落在過去。(D) has operated 是現在完成式，累積到現在為止，與 next April 衝突。"
+  "explanation": "考點：未來完成式。By next April 是未來的時間基準點，搭配 for ten years 表示到那時為止已累積十年，須用 (B) will have operated。(A) operates 是現在簡單式，無法表達累積到未來某時點。(C) had been operating 是過去完成進行式，基準點落在過去。(D) has operated 是現在完成式，累積到現在為止，與 next April 衝突。"
  },
  {
   "id": "p5-b1-16",
@@ -763,7 +763,7 @@ TOEIC.part5 = [
   ],
   "answer": 1,
   "translation": "早上十點前送到晴日洗衣店櫃檯的衣物，當天下午五點前就可以取件。",
-  "explanation": "考點：過去分詞作後位修飾。items 與 drop off（送件）之間是被動關係——衣物是被顧客送來的；而且句子的主要動詞已經是 will be ready，空格不能再放一個主要動詞，因此要用過去分詞 (B) dropped off 修飾前面的 items。(A) dropping off 是現在分詞，表主動，會變成衣物自己去送件，語意不通。(C) drop off 是原形動詞，一個子句不能有兩個主要動詞。(D) to drop off 是不定詞，放在名詞後面會變成「用來送件的物品」，與句意不符。"
+  "explanation": "考點：過去分詞作後位修飾。items 與 drop off（送件）之間是被動關係：衣物是被顧客送來的；而且句子的主要動詞已經是 will be ready，空格不能再放一個主要動詞，因此要用過去分詞 (B) dropped off 修飾前面的 items。(A) dropping off 是現在分詞，表主動，會變成衣物自己去送件，語意不通。(C) drop off 是原形動詞，一個子句不能有兩個主要動詞。(D) to drop off 是不定詞，放在名詞後面會變成「用來送件的物品」，與句意不符。"
  },
  {
   "id": "p5-b11-03",
@@ -989,21 +989,6 @@ TOEIC.part5 = [
   "answer": 1,
   "translation": "工坊主管無法說明是什麼原因，讓上一批椅子的油漆乾得這麼不均勻。",
   "explanation": "考點：名詞子句中的複合關係代名詞 what。explain 後面需要一個名詞子句當受詞，而空格同時要擔任該子句的主詞；前面沒有先行詞，因此要用本身含有先行詞的 (B) what（等於 the thing that）。(A) which 用在有明確選擇範圍或有先行詞的時候，本句都沒有。(C) that 引導名詞子句時，後面必須是結構完整的句子，但這裡子句缺主詞。(D) whose 是所有格，後面要接名詞，不能直接接動詞 had caused。"
- },
- {
-  "id": "p5-b11-18",
-  "difficulty": "中級",
-  "category": "字彙辨析",
-  "question": "Every water heater installed by Halstead Plumbing comes with a two-year ------- that covers both parts and labor.",
-  "options": [
-   "permit",
-   "receipt",
-   "warranty",
-   "deposit"
-  ],
-  "answer": 2,
-  "translation": "凡是由霍斯泰德水電行安裝的熱水器，都附有兩年保固，零件與工資都涵蓋在內。",
-  "explanation": "考點：商業名詞辨析。warranty 指「保固」，說明廠商在一定期間內免費維修或更換，和 two-year 以及 covers both parts and labor 相符，故 (C) 正確。(A) permit 是「許可證」，由主管機關核發。(B) receipt 是「收據」，只證明款項已付。(D) deposit 是「訂金、押金」，指事先支付的部分金額。"
  },
  {
   "id": "p5-b11-19",
@@ -1649,6 +1634,21 @@ TOEIC.part5 = [
   "answer": 0,
   "translation": "Nakashima 小姐週四早上打電話給外燴業者，確保午餐會在中午的研討會開始前送到。",
   "explanation": "考點：形近動詞的語意與後接結構。ensure that＋子句表示「確保某件事會發生」，打電話給外燴業者是為了確定午餐準時送達，故 (A) ensure 正確。(B) endure 是「忍受、承受」，受詞是困難或痛苦，不能接 that 子句表示確保。(C) secure 是「取得、確保拿到」，受詞是名額、合約、資金等具體的東西，例如 secure a contract，不接 that 子句。(D) enrich 是「使豐富、充實」，受詞是內容或經驗，不能接 that 子句。"
+ },
+ {
+  "id": "p5-b13-13",
+  "difficulty": "中級",
+  "category": "字彙辨析",
+  "question": "To reserve the banquet room at the Calloway Hotel, guests must pay a ------- of $200, which will be subtracted from the final bill.",
+  "options": [
+   "refund",
+   "warranty",
+   "deposit",
+   "receipt"
+  ],
+  "answer": 2,
+  "translation": "預訂 Calloway 飯店的宴會廳時，客人須先付 200 美元的訂金，這筆錢之後會從最後的帳單中扣除。",
+  "explanation": "考點：商業名詞辨析。空格是 pay a ------- of $200 的受詞，後面的 which will be subtracted from the final bill（之後會從最後的帳單中扣除）說明這是訂位時先付的一部分費用，也就是「訂金」，故 (C) deposit 正確。(A) refund 是「退款」，是商家退還給客人的錢，不是客人為了訂位付出的錢。(B) warranty 是「保固」，指商品在一定期間內免費維修的保證，與預訂場地無關，也不會從帳單中扣除。(D) receipt 是「收據」，是付款後拿到的憑證，不能拿來「付」。"
  },
  {
   "id": "p5-b2-01",
@@ -2903,12 +2903,12 @@ TOEIC.part5 = [
   "options": [
    "returned",
    "are returning",
-   "had returned",
+   "had been returning",
    "have been returned"
   ],
   "answer": 3,
   "translation": "自上週宣布召回以來，已有超過兩千台產品被送回 Stanwick Appliances 檢驗。",
-  "explanation": "考點：現在完成式的被動語態。since 子句設定了起點，主詞 units 是「被送回」的對象，須用 have been + 過去分詞，故 (D) have been returned 正確。(A) returned 是主動的過去式，語意變成產品自己回去。(B) are returning 為主動的現在進行式。(C) had returned 既是主動、又是過去完成式，與 since 所要求的現在完成語意不符。"
+  "explanation": "考點：現在完成式的被動語態。since 子句設定了起點，主詞 units 是「被送回」的對象，須用 have been + 過去分詞，故 (D) have been returned 正確。(A) returned 是主動的過去式，語意變成產品自己回去。(B) are returning 為主動的現在進行式。(C) had been returning 既是主動、又是過去完成進行式，與 since 所要求的現在完成語意不符。"
  },
  {
   "id": "p5-b5-13",
@@ -4283,12 +4283,12 @@ TOEIC.part5 = [
   "options": [
    "produced",
    "will have produced",
-   "has produced",
+   "has already produced",
    "will produce"
   ],
   "answer": 1,
   "translation": "到週六手工藝市集開幕時，雷恩菲爾陶藝工作室將已為該活動做出超過四百個馬克杯。",
-  "explanation": "考點：未來完成式。By the time 引導的時間子句用現在式代替未來式，主要子句描述「到那個未來時間點為止已經完成」的事，須用未來完成式，故 (B) will have produced 正確。(A) produced 是過去式，與週六這個未來時間點衝突。(C) has produced 是現在完成式，計算的截止點是「現在」，無法涵蓋到週六為止的產量。(D) will produce 只表示未來會做，無法表達在該時間點之前已累積完成的數量。"
+  "explanation": "考點：未來完成式。By the time 引導的時間子句用現在式代替未來式，主要子句描述「到那個未來時間點為止已經完成」的事，須用未來完成式，故 (B) will have produced 正確。(A) produced 是過去式，與週六這個未來時間點衝突。(C) has already produced 是現在完成式，計算的截止點是「現在」，無法涵蓋到週六為止的產量。(D) will produce 只表示未來會做，無法表達在該時間點之前已累積完成的數量。"
  },
  {
   "id": "p5-b9-11",

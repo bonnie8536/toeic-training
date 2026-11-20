@@ -301,10 +301,10 @@
           "His boss gave him the wrong room number.",
           "He wanted to meet the manager there.",
           "The elevator stopped on the wrong floor.",
-          "He was nervous and turned the wrong way."
+          "He was nervous and in a hurry."
         ],
         "answer": 3,
-        "explanation": "第一段說主管叫他去 502，但他很緊張、走得很快、出電梯往左轉，才走錯門，故選第四項。"
+        "explanation": "細節題。第一段說主管叫他去 502，但他很緊張、走得很快，結果開了 520 的門，可見走錯是因為他又緊張又匆忙，故選 D。A：第一段說主管給的是 502，沒有給錯。B：他不知道房裡是誰，進去後才靜靜坐下。C：他在五樓出電梯，房號也在五樓，文中沒有說電梯停錯樓層。"
       },
       {
         "q": "What problem did the team in Room 520 have?",

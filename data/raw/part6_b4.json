@@ -171,7 +171,7 @@
     "id": "p6-b4-5",
     "passageType": "advertisement",
     "title": "Copperline Kitchenware Fifteenth Anniversary Sale",
-    "passage": "COPPERLINE KITCHENWARE\nFifteenth Anniversary Sale | 3-17 November\n\nFor fifteen years, Copperline Kitchenware has supplied home cooks and professional chefs with cookware built to last. To celebrate, we are {{1}} every item in our showroom and on our website by at least 25 percent for two weeks only.\n\nShoppers who spend $150 or more will also receive a free set of bamboo utensils. {{2}} Members of the Copperline Club earn double points on all purchases made {{3}} the sale.\n\nVisit us at 400 Whitfield Road, or shop online at www.copperlinekitchen.com. Quantities are {{4}}, so please come early for the best selection.",
+    "passage": "COPPERLINE KITCHENWARE\nFifteenth Anniversary Sale | 3-17 November\n\nFor fifteen years, Copperline Kitchenware has supplied home cooks and professional chefs with cookware built to last. To celebrate, we are {{1}} every item in our showroom and on our website by at least 25 percent for two weeks only.\n\nShoppers who spend $150 or more will also receive a free set of bamboo utensils. {{2}} Members of the Copperline Club earn double points on all purchases made {{3}} the sale.\n\nVisit us at 400 Whitfield Road, or shop online at www.example.com. Quantities are {{4}}, so please come early for the best selection.",
     "questions": [
       {
         "num": 1,
@@ -207,6 +207,6 @@
         "explanation": "考詞性與句型。空格接在 be 動詞 are 之後，需要形容詞（分詞形容詞）當主詞補語，(A) limited（有限的）正確，也與後句「請提早前來以獲得最佳選擇」呼應。(B) limit 是原形動詞或單數名詞，與複數主詞 Quantities 皆不搭配；(C) limiting 表「造成限制的」，語意不合；(D) limitation 是名詞，說「數量是限制」不通。"
       }
     ],
-    "translation": "COPPERLINE 廚具\n十五週年慶特賣｜11 月 3 日至 17 日\n\n十五年來，Copperline 廚具持續為居家料理者與專業廚師提供耐用的鍋具。為了慶祝週年，我們將展示間與網站上的所有商品降價至少 25%，為期僅兩週。\n\n消費滿 150 美元的顧客還可獲贈竹製餐具組一份。此贈品每位顧客限領一份，送完為止。Copperline 俱樂部會員於特賣期間的所有消費均可獲得雙倍點數。\n\n歡迎蒞臨 Whitfield 路 400 號門市，或上網選購：www.copperlinekitchen.com。數量有限，敬請提早前來選購。"
+    "translation": "COPPERLINE 廚具\n十五週年慶特賣｜11 月 3 日至 17 日\n\n十五年來，Copperline 廚具持續為居家料理者與專業廚師提供耐用的鍋具。為了慶祝週年，我們將展示間與網站上的所有商品降價至少 25%，為期僅兩週。\n\n消費滿 150 美元的顧客還可獲贈竹製餐具組一份。此贈品每位顧客限領一份，送完為止。Copperline 俱樂部會員於特賣期間的所有消費均可獲得雙倍點數。\n\n歡迎蒞臨 Whitfield 路 400 號門市，或上網選購：www.example.com。數量有限，敬請提早前來選購。"
   }
 ]

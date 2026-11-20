@@ -81,7 +81,7 @@
         "explanation": "這一段說歡迎顧客把不看的書拿來賣，店家當天就會給價，make you a fair offer 是「開一個公道的價錢給你」的固定說法，offer 指出價。receipt 是收據，收書時給的是報價而不是收據；order 是訂單，用在下單購買的情境；amount 是金額數字本身，不能和 make 搭配成 make you an amount。"
       }
     ],
-    "translation": "二章書屋 —— 楓樹街新店開幕\n\n經過兩年籌備，二章書屋終於在楓樹街開幕了。我們的書架上有超過兩萬本二手書，從食譜、旅遊指南到兒童繪本都有，而且幾乎每一本的定價都在 8 美元以下。\n\n想找的書店裡沒有嗎？我們的店員會把它列入待調書單，一有書進來就通知您。\n\n歡迎在 4 月 4 日與 5 日的開幕週末來逛逛。消費滿 20 美元即贈帆布袋一只。在地作家吉娜・魯伊茲也會在週六下午到店簽書。\n\n我們同時收書。把您不再閱讀的書帶來，我們當天就給您一個公道的價錢。\n\n楓樹街 41 號，每日上午 10 點至晚間 7 點營業。"
+    "translation": "二章書屋：楓樹街新店開幕\n\n經過兩年籌備，二章書屋終於在楓樹街開幕了。我們的書架上有超過兩萬本二手書，從食譜、旅遊指南到兒童繪本都有，而且幾乎每一本的定價都在 8 美元以下。\n\n想找的書店裡沒有嗎？我們的店員會把它列入待調書單，一有書進來就通知您。\n\n歡迎在 4 月 4 日與 5 日的開幕週末來逛逛。消費滿 20 美元即贈帆布袋一只。在地作家吉娜・魯伊茲也會在週六下午到店簽書。\n\n我們同時收書。把您不再閱讀的書帶來，我們當天就給您一個公道的價錢。\n\n楓樹街 41 號，每日上午 10 點至晚間 7 點營業。"
   },
   {
     "id": "p6-b10-3",
@@ -95,8 +95,8 @@
         "options": [
           "The workshop has been postponed until the autumn.",
           "Train tickets can be bought at the station office.",
-          "Copies of last year's program are kept in the file room.",
-          "Anyone who arrives after the bus has left will need to travel to the center on their own."
+          "Copies of last year's program are still kept in the file room.",
+          "Anyone arriving after the bus leaves must travel to the center alone."
         ],
         "answer": 3,
         "explanation": "空格前一句說交通車七點十五分發車、請七點前抵達，空格這句要延續交通這件事。選項 D 說車子開走之後才到的人得自己想辦法前往會場，正好強調準時的重要，語意銜接自然。選項 A 說研習延到秋天，和信件開頭「下週一開始」直接矛盾；選項 B 提到火車票在車站購買，但本文安排的是公司交通車，沒有搭火車的規劃；選項 C 講去年的議程放在檔案室，和行前提醒無關。"
@@ -134,9 +134,9 @@
       {
         "num": 1,
         "type": "文法",
-        "options": ["removing", "will be removed", "have removed", "will remove"],
+        "options": ["removing", "will be removed", "have already removed", "will remove"],
         "answer": 1,
-        "explanation": "主詞是 paper sign-up sheets（紙本登記表），紙本不會自己撤掉，而是被公司撤掉，所以要用被動語態；加上 30 June 是未來的日期，答案是未來被動 will be removed。removing 不是有時態的動詞；have removed 是主動的現在完成式，語態和時間都不對；will remove 是未來主動，會變成登記表要去撤掉別的東西，主詞和動作對不上。"
+        "explanation": "主詞是 paper sign-up sheets（紙本登記表），紙本不會自己撤掉，而是被公司撤掉，所以要用被動語態；加上 30 June 是未來的日期，答案是未來被動 will be removed。removing 不是有時態的動詞；have already removed 是主動的現在完成式，語態和時間都不對；will remove 是未來主動，會變成登記表要去撤掉別的東西，主詞和動作對不上。"
       },
       {
         "num": 2,

@@ -53,7 +53,7 @@
     "zh": "熄滅；撲滅；發布（消息、聲明）",
     "group": "put 家族",
     "type": "動詞片語",
-    "tip": "把東西往外送出去——火送走就滅了，消息送出去就是發布",
+    "tip": "把東西往外送出去：火送走就滅了，消息送出去就是發布",
     "example": "Firefighters put out the warehouse blaze in less than an hour.",
     "exampleZh": "消防員在一小時內撲滅了倉庫大火。",
     "quiz": {
@@ -122,9 +122,9 @@
     "exampleZh": "團隊提出了改善客服的新方案。",
     "quiz": {
       "q": "Several engineers put ___ ideas for cutting production costs.",
-      "options": ["off", "forward", "away", "up"],
+      "options": ["off", "forward", "away", "on"],
       "answer": 1,
-      "explanation": "put forward=提出（想法、方案），幾位工程師提出降低生產成本的點子。put off=延後；put away=收好；put up=張貼/搭建，語意皆不通。"
+      "explanation": "put forward=提出（想法、方案），幾位工程師提出降低生產成本的點子。put off=延後；put away=收好；put on=穿上/舉辦，語意皆不通。"
     }
   },
   {
@@ -410,9 +410,9 @@
     "exampleZh": "他花了一個月才從流感中康復。",
     "quiz": {
       "q": "Once you get ___ your fear of public speaking, presenting becomes easy.",
-      "options": ["over", "along", "through", "ahead"],
+      "options": ["over", "along", "off", "ahead"],
       "answer": 0,
-      "explanation": "get over=克服（恐懼），克服上台恐懼後簡報就變輕鬆。get along=相處融洽；get through=做完工作/電話接通；get ahead=出人頭地，語意皆不通。"
+      "explanation": "get over=克服（恐懼），克服上台恐懼後簡報就變輕鬆。get along=相處融洽；get off=下車/下班；get ahead=出人頭地，語意皆不通。"
     }
   },
   {
@@ -442,9 +442,9 @@
     "exampleZh": "我會在週四前把報價回覆給你。",
     "quiz": {
       "q": "Let me check the stock and get ___ to you this afternoon.",
-      "options": ["over", "back", "along", "through"],
+      "options": ["off", "back", "along", "away"],
       "answer": 1,
-      "explanation": "get back to someone=稍後回覆對方，查完庫存下午回覆你。get over=克服；get along=相處融洽；get through=完成/接通，語意皆不通。"
+      "explanation": "get back to someone=稍後回覆對方，查完庫存下午回覆你。get off=下車/下班；get along=相處融洽；get away=離開/脫身，語意皆不通。"
     }
   },
   {
@@ -474,9 +474,9 @@
     "exampleZh": "學第二外語有助於你在職場更上一層樓。",
     "quiz": {
       "q": "He works extra hours because he wants to get ___ in the company.",
-      "options": ["along", "over", "ahead", "through"],
+      "options": ["across", "over", "ahead", "through"],
       "answer": 2,
-      "explanation": "get ahead=在公司裡往上爬，他加班是為了求升遷。get along=相處融洽；get over=克服；get through=完成/接通，語意皆不通。"
+      "explanation": "get ahead=在公司裡往上爬，他加班是為了求升遷。get across=把意思傳達出去；get over=克服；get through=完成/接通，語意皆不通。"
     }
   }
 ]

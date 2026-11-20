@@ -163,9 +163,9 @@
         "q": "According to the article, why do companies place scooters near stations?",
         "options": [
           "To help riders finish the last part of a trip.",
-          "To keep the sidewalk clear for walkers.",
-          "To replace buses and trains completely.",
-          "To make riders pay one fixed daily price."
+          "To keep the sidewalk clear for people walking by.",
+          "To replace the city's buses and trains completely.",
+          "To make riders pay one fixed price for the whole day."
         ],
         "answer": 0,
         "explanation": "第二段說公車和火車無法抵達每個角落，滑板車補上最後一小段路。"
@@ -173,9 +173,9 @@
       {
         "q": "Which group does the article say suffers most from badly parked scooters?",
         "options": [
-          "Taxi drivers",
-          "Scooter company workers",
-          "Train passengers",
+          "Taxi drivers working near stations",
+          "Scooter company workers and managers",
+          "Train passengers on their way to work",
           "Older people and wheelchair users"
         ],
         "answer": 3,
@@ -195,10 +195,10 @@
       {
         "q": "What does the writer suggest in the last paragraph?",
         "options": [
-          "Cities should stop testing any new technology.",
-          "Delivery robots will never appear on city streets.",
+          "Cities should stop testing any new technology until every rule is ready.",
+          "Delivery robots and drones will never be used in any real city.",
           "A city's scooter rules can hint at how it will meet future changes.",
-          "Scooters will disappear once buses become faster."
+          "Scooters will disappear from city streets once buses become faster."
         ],
         "answer": 2,
         "explanation": "推論題。第六段說新科技出現得比規則快，並以外送機器人、無人機類比，暗示今天的處理方式預示未來。"
@@ -369,9 +369,9 @@
       {
         "q": "According to the article, what does the brain do with new information at night?",
         "options": [
-          "It sends all of it to other people.",
-          "It deletes everything from the day.",
-          "It stops receiving any information at all.",
+          "It stores every small detail of the day for many years.",
+          "It deletes everything it learned during the day at once.",
+          "It leaves all the new information untouched until morning.",
           "It keeps the important parts and lets useless details fade."
         ],
         "answer": 3,
@@ -381,20 +381,20 @@
         "q": "What does the article compare sleep to?",
         "options": [
           "A night cleaning crew",
-          "A busy classroom",
-          "A long journey",
-          "A sports match"
+          "A long pause for the whole body",
+          "A night shift for tired workers",
+          "A morning alarm for the brain"
         ],
         "answer": 0,
-        "explanation": "第三段第一句直接把睡眠比作夜間的清潔班。"
+        "explanation": "第三段第一句說睡眠的作用 something like a night cleaning crew，直接把睡眠比作夜間的清潔班，選 A。B：第一段反而說睡眠不只是一段長長的暫停（not simply a long pause），是被否定的說法；C：夜間輪班在第五段是讓人睡不夠的原因，不是拿來比喻睡眠；D：第五段的早上鬧鐘是把睡眠切短的東西，同樣不是比喻。"
       },
       {
         "q": "Which of the following does the article name as a reason for short sleep?",
         "options": [
-          "Noisy neighbors",
-          "Cold weather",
+          "Noisy neighbors at night",
+          "Cold winter weather outside",
           "Screens and night shifts",
-          "Long holidays"
+          "Long summer holidays"
         ],
         "answer": 2,
         "explanation": "第五段列出螢幕、夜間輪班和長時間讀書，把就寢時間往後推。"

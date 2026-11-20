@@ -6,7 +6,7 @@
       {
         "type": "letter",
         "label": "",
-        "content": "Trellborg Office Supplies\n44 Kingsway Road, Lansdale, OH 44112\n\nMarch 14\n\nMs. Daniela Requena\nOperations Manager\nCavendish Marketing Group\n1820 Pinehurst Avenue, Suite 300\nLansdale, OH 44115\n\nDear Ms. Requena,\n\nI am writing to inform you of an adjustment to our wholesale pricing that will take effect on May 1. Rising costs in raw materials and freight have made it necessary to raise the unit price of our printer paper, filing supplies, and packaging materials by an average of six percent. Prices for office furniture and technology accessories will remain unchanged.\n\nBecause Cavendish Marketing Group has ordered from us continuously since 2016, your account qualifies for our Preferred Partner program. Under that program, the increase applied to your orders will be capped at three percent, and you will continue to receive complimentary next-day delivery on any order above $250.\n\nI recognize that a change of this kind requires planning on your side. If you wish to place a large order at the current rates, we can hold existing prices for any purchase order we receive before April 25. Our warehouse can also arrange several smaller shipments so that you do not have to store an entire quarter's supplies at once.\n\nAn updated catalog with the revised figures is enclosed. If you have questions about specific items, please contact your account representative, Mr. Owen Baptiste, at 555-0142 or obaptiste@trellborgsupplies.com.\n\nThank you for your continued business.\n\nSincerely,\n\nMarguerite Vandeleur\nDirector of Sales"
+        "content": "Trellborg Office Supplies\n44 Kingsway Road, Lansdale, OH 44112\n\nMarch 14\n\nMs. Daniela Requena\nOperations Manager\nCavendish Marketing Group\n1820 Pinehurst Avenue, Suite 300\nLansdale, OH 44115\n\nDear Ms. Requena,\n\nI am writing to inform you of an adjustment to our wholesale pricing that will take effect on May 1. Rising costs in raw materials and freight have made it necessary to raise the unit price of our printer paper, filing supplies, and packaging materials by an average of six percent. Prices for office furniture and technology accessories will remain unchanged.\n\nBecause Cavendish Marketing Group has ordered from us continuously since 2016, your account qualifies for our Preferred Partner program. Under that program, the increase applied to your orders will be capped at three percent, and you will continue to receive complimentary next-day delivery on any order above $250.\n\nI recognize that a change of this kind requires planning on your side. If you wish to place a large order at the current rates, we can hold existing prices for any purchase order we receive before April 25. Our warehouse can also arrange several smaller shipments so that you do not have to store an entire quarter's supplies at once.\n\nAn updated catalog with the revised figures is enclosed. If you have questions about specific items, please contact your account representative, Mr. Owen Baptiste, at 555-0142 or obaptiste@example.com.\n\nThank you for your continued business.\n\nSincerely,\n\nMarguerite Vandeleur\nDirector of Sales"
       }
     ],
     "questions": [
@@ -56,7 +56,7 @@
       }
     ],
     "translation": [
-      "特雷爾堡辦公用品\n俄亥俄州蘭斯代爾市金斯威路44號 44112\n\n3月14日\n\n丹妮耶拉・雷奎納女士\n營運經理\n卡文迪西行銷集團\n俄亥俄州蘭斯代爾市松赫斯特大道1820號300室 44115\n\n親愛的雷奎納女士：\n\n謹此通知您，本公司的批發價格將自5月1日起調整。原物料與運費成本上漲，使我們不得不將印表機用紙、檔案用品與包裝材料的單價平均調高百分之六。辦公家具與科技配件的價格則維持不變。\n\n由於卡文迪西行銷集團自2016年起持續向本公司訂貨，貴公司的帳戶符合本公司「優先合作夥伴」方案的資格。在該方案下，貴公司訂單的漲幅上限為百分之三，且金額超過250美元的訂單仍可享免費隔日到貨。\n\n我理解這樣的變動需要貴公司預作規劃。若您希望以現行價格下大筆訂單，凡我們在4月25日前收到的採購單，都可以維持現行價格。本公司倉庫也可以安排分批出貨，讓貴公司不必一次存放整季的用品。\n\n隨函附上載有新價格的目錄。若您對特定品項有疑問，請聯絡您的客戶專員歐文・巴普提斯特先生，電話555-0142，或來信 obaptiste@trellborgsupplies.com。\n\n感謝您長期以來的惠顧。\n\n謹啟\n\n瑪格麗特・范德勒\n業務總監"
+      "特雷爾堡辦公用品\n俄亥俄州蘭斯代爾市金斯威路44號 44112\n\n3月14日\n\n丹妮耶拉・雷奎納女士\n營運經理\n卡文迪西行銷集團\n俄亥俄州蘭斯代爾市松赫斯特大道1820號300室 44115\n\n親愛的雷奎納女士：\n\n謹此通知您，本公司的批發價格將自5月1日起調整。原物料與運費成本上漲，使我們不得不將印表機用紙、檔案用品與包裝材料的單價平均調高百分之六。辦公家具與科技配件的價格則維持不變。\n\n由於卡文迪西行銷集團自2016年起持續向本公司訂貨，貴公司的帳戶符合本公司「優先合作夥伴」方案的資格。在該方案下，貴公司訂單的漲幅上限為百分之三，且金額超過250美元的訂單仍可享免費隔日到貨。\n\n我理解這樣的變動需要貴公司預作規劃。若您希望以現行價格下大筆訂單，凡我們在4月25日前收到的採購單，都可以維持現行價格。本公司倉庫也可以安排分批出貨，讓貴公司不必一次存放整季的用品。\n\n隨函附上載有新價格的目錄。若您對特定品項有疑問，請聯絡您的客戶專員歐文・巴普提斯特先生，電話555-0142，或來信 obaptiste@example.com。\n\n感謝您長期以來的惠顧。\n\n謹啟\n\n瑪格麗特・范德勒\n業務總監"
     ]
   },
   {
@@ -66,7 +66,7 @@
       {
         "type": "advertisement",
         "label": "",
-        "content": "THE FILBERT WORKS\nFlexible Meeting and Event Space in Downtown Ashgrove\nOpening September 6\n\nTired of squeezing your quarterly review into a hotel lobby? The Filbert Works has turned a 1920s textile mill into four bright, soundproof rooms designed for teams of every size.\n\nOUR SPACES\n- The Loom (seats 8) ........ $35 per hour\n- The Spindle (seats 20) .... $60 per hour\n- The Dye House (seats 45) .. $95 per hour\n- The Rooftop Terrace (standing reception, up to 120) .. $150 per hour\n\nEvery booking, whatever the room, includes high-speed wireless internet, a wall-mounted display with wireless screen sharing, filtered water and coffee service, and a full whiteboard wall. On-site parking is available separately at $8 per vehicle per day.\n\nCATERING\nOur neighbors at Ferrand & Daughters Bakery supply breakfast trays ($9 per person) and boxed lunches ($16 per person). Catering orders must be placed at least 48 hours before your event.\n\nOPENING OFFER\nReserve any space before August 31 and receive 25 percent off your first three bookings. Simply mention code MILL25 when you reserve.\n\nRooms may be viewed in person Monday through Friday, 9:00 A.M. to 4:00 P.M. No appointment is necessary.\n\nBookings: filbertworks.com/reserve\nQuestions: Ms. Priya Chandrasekhar, 555-0176\nAddress: 210 Carding Street, Ashgrove"
+        "content": "THE FILBERT WORKS\nFlexible Meeting and Event Space in Downtown Ashgrove\nOpening September 6\n\nTired of squeezing your quarterly review into a hotel lobby? The Filbert Works has turned a 1920s textile mill into four bright, soundproof rooms designed for teams of every size.\n\nOUR SPACES\n- The Loom (seats 8) ........ $35 per hour\n- The Spindle (seats 20) .... $60 per hour\n- The Dye House (seats 45) .. $95 per hour\n- The Rooftop Terrace (standing reception, up to 120) .. $150 per hour\n\nEvery booking, whatever the room, includes high-speed wireless internet, a wall-mounted display with wireless screen sharing, filtered water and coffee service, and a full whiteboard wall. On-site parking is available separately at $8 per vehicle per day.\n\nCATERING\nOur neighbors at Ferrand & Daughters Bakery supply breakfast trays ($9 per person) and boxed lunches ($16 per person). Catering orders must be placed at least 48 hours before your event.\n\nOPENING OFFER\nReserve any space before August 31 and receive 25 percent off your first three bookings. Simply mention code MILL25 when you reserve.\n\nRooms may be viewed in person Monday through Friday, 9:00 A.M. to 4:00 P.M. No appointment is necessary.\n\nBookings: example.com/reserve\nQuestions: Ms. Priya Chandrasekhar, 555-0176\nAddress: 210 Carding Street, Ashgrove"
       }
     ],
     "questions": [
@@ -116,7 +116,7 @@
       }
     ],
     "translation": [
-      "菲爾伯特工坊\n阿什格羅夫市中心的彈性會議與活動空間\n9月6日開幕\n\n還在把季度檢討會擠在飯店大廳裡開嗎？菲爾伯特工坊已將一座1920年代的紡織廠改造成四間明亮、具隔音效果的空間，適合各種規模的團隊。\n\n我們的空間\n－織機廳（可坐8人）........每小時35美元\n－紡錘廳（可坐20人）......每小時60美元\n－染坊廳（可坐45人）......每小時95美元\n－屋頂露台（站立式酒會，最多120人）..每小時150美元\n\n無論租用哪一間，每筆訂位都包含高速無線網路、可無線投影的壁掛顯示器、過濾飲水與咖啡服務，以及一整面白板牆。館內停車須另行付費，每車每日8美元。\n\n餐飲服務\n本館鄰居費朗父女烘焙坊提供早餐餐盤（每人9美元）與餐盒（每人16美元）。餐飲訂單須於活動前至少48小時提出。\n\n開幕優惠\n8月31日前訂位，前三次租用可享七五折。訂位時報上代碼 MILL25 即可。\n\n週一至週五上午9時至下午4時可現場看場地，無須預約。\n\n訂位：filbertworks.com/reserve\n洽詢：普里雅・錢德拉塞卡女士，555-0176\n地址：阿什格羅夫市卡丁街210號"
+      "菲爾伯特工坊\n阿什格羅夫市中心的彈性會議與活動空間\n9月6日開幕\n\n還在把季度檢討會擠在飯店大廳裡開嗎？菲爾伯特工坊已將一座1920年代的紡織廠改造成四間明亮、具隔音效果的空間，適合各種規模的團隊。\n\n我們的空間\n．織機廳（可坐8人）........每小時35美元\n．紡錘廳（可坐20人）......每小時60美元\n．染坊廳（可坐45人）......每小時95美元\n．屋頂露台（站立式酒會，最多120人）..每小時150美元\n\n無論租用哪一間，每筆訂位都包含高速無線網路、可無線投影的壁掛顯示器、過濾飲水與咖啡服務，以及一整面白板牆。館內停車須另行付費，每車每日8美元。\n\n餐飲服務\n本館鄰居費朗父女烘焙坊提供早餐餐盤（每人9美元）與餐盒（每人16美元）。餐飲訂單須於活動前至少48小時提出。\n\n開幕優惠\n8月31日前訂位，前三次租用可享七五折。訂位時報上代碼 MILL25 即可。\n\n週一至週五上午9時至下午4時可現場看場地，無須預約。\n\n訂位：example.com/reserve\n洽詢：普里雅・錢德拉塞卡女士，555-0176\n地址：阿什格羅夫市卡丁街210號"
     ]
   },
   {
@@ -176,7 +176,7 @@
       }
     ],
     "translation": [
-      "全體承租戶公告\n貝爾威瑟大樓－地下二樓停車場地坪重鋪工程\n公告日期：10月3日\n\n自10月20日（星期一）起，瑞吉林鋪面工程公司將重鋪停車場地下二樓的混凝土地坪。工程預計需時九個工作天，應可於10月30日（星期四）前完工。\n\n這對您有何影響\n地下二樓在工程期間將全面封閉。10月17日（星期五）下午6時後仍停放於該樓層的車輛，將由車主自費拖吊。原本停放於地下二樓的承租戶，已改配至地下一樓及裝卸區後方的平面停車場。替換用的停車證須於10月13日至10月17日間至一樓管理室領取。臨時車位不另收費。\n\n地下一樓與地下三樓全程照常開放。惟貨梯於平日上午7時至下午3時保留給承包商使用，因此有家具或設備要送達的承租戶，請將時間安排在上述時段之外。\n\n另請注意，施工前三天，C 樓梯間可能會聞到新地坪的刺鼻氣味。辦公室鄰近該樓梯間的承租戶，建議將走廊門保持關閉。\n\n如有疑問，請洽大樓管理員霍利斯・中川先生，分機4180。\n\n感謝您的耐心配合。"
+      "全體承租戶公告\n貝爾威瑟大樓：地下二樓停車場地坪重鋪工程\n公告日期：10月3日\n\n自10月20日（星期一）起，瑞吉林鋪面工程公司將重鋪停車場地下二樓的混凝土地坪。工程預計需時九個工作天，應可於10月30日（星期四）前完工。\n\n這對您有何影響\n地下二樓在工程期間將全面封閉。10月17日（星期五）下午6時後仍停放於該樓層的車輛，將由車主自費拖吊。原本停放於地下二樓的承租戶，已改配至地下一樓及裝卸區後方的平面停車場。替換用的停車證須於10月13日至10月17日間至一樓管理室領取。臨時車位不另收費。\n\n地下一樓與地下三樓全程照常開放。惟貨梯於平日上午7時至下午3時保留給承包商使用，因此有家具或設備要送達的承租戶，請將時間安排在上述時段之外。\n\n另請注意，施工前三天，C 樓梯間可能會聞到新地坪的刺鼻氣味。辦公室鄰近該樓梯間的承租戶，建議將走廊門保持關閉。\n\n如有疑問，請洽大樓管理員霍利斯・中川先生，分機4180。\n\n感謝您的耐心配合。"
     ]
   },
   {
@@ -367,7 +367,7 @@
           },
           {
             "t": "p",
-            "text": "Payment may be made by check or bank transfer. A late fee of 1.5 percent of the outstanding balance is added each month after the due date. Questions about this invoice should be directed to billing@granthampell.com."
+            "text": "Payment may be made by check or bank transfer. A late fee of 1.5 percent of the outstanding balance is added each month after the due date. Questions about this invoice should be directed to billing@example.com."
           }
         ]
       }
@@ -419,7 +419,7 @@
       }
     ],
     "translation": [
-      "格蘭瑟姆與佩爾設備服務公司\n賓州鄧莫爾市羅文工業園區17號 18512\n\n發票號碼 #GP-40218\n開立日期：6月12日\n付款期限：7月12日\n\n收費對象：\n設施協調員 由紀・艾希沃斯女士\n展望嶺牙醫聯合診所\n賓州鄧莫爾市飛燕草大道88號 18510\n\n服務日期：6月9日        技師：R. 歐孔喬\n\n項目說明                                數量      金額\n年度檢查，牙科用空氣壓縮機               1      180.00美元\n更換空氣濾網（零件編號 #AC-77）          2       64.00美元\n工資，壓縮機皮帶更換                   1.5小時   135.00美元\n緊急服務附加費                          1       95.00美元\n                                    小計      474.00美元\n                                    稅（6%）    28.44美元\n                                    總計      502.44美元\n\n附註\n本次出勤之所以收取緊急附加費，是因為該次到府服務是在既定保養時段之外提出的。加入本公司銀級或金級服務方案的客戶可免收此項費用；貴診所目前加入的是基本方案。\n\n6月9日安裝的壓縮機皮帶享有十二個月的零件與工資保固。空氣濾網視為耗材，不在任何保固範圍內。\n\n檢查過程中，技師發現水分分離器有生鏽情形。我們建議在六個月內更換該零件。本公司可免費提供書面報價。\n\n付款方式可採支票或銀行轉帳。逾期後，未付餘額每月加收百分之一點五的滯納金。關於本發票的疑問，請寄至 billing@granthampell.com。"
+      "格蘭瑟姆與佩爾設備服務公司\n賓州鄧莫爾市羅文工業園區17號 18512\n\n發票號碼 #GP-40218\n開立日期：6月12日\n付款期限：7月12日\n\n收費對象：\n設施協調員 由紀・艾希沃斯女士\n展望嶺牙醫聯合診所\n賓州鄧莫爾市飛燕草大道88號 18510\n\n服務日期：6月9日        技師：R. 歐孔喬\n\n項目說明                                數量      金額\n年度檢查，牙科用空氣壓縮機               1      180.00美元\n更換空氣濾網（零件編號 #AC-77）          2       64.00美元\n工資，壓縮機皮帶更換                   1.5小時   135.00美元\n緊急服務附加費                          1       95.00美元\n                                    小計      474.00美元\n                                    稅（6%）    28.44美元\n                                    總計      502.44美元\n\n附註\n本次出勤之所以收取緊急附加費，是因為該次到府服務是在既定保養時段之外提出的。加入本公司銀級或金級服務方案的客戶可免收此項費用；貴診所目前加入的是基本方案。\n\n6月9日安裝的壓縮機皮帶享有十二個月的零件與工資保固。空氣濾網視為耗材，不在任何保固範圍內。\n\n檢查過程中，技師發現水分分離器有生鏽情形。我們建議在六個月內更換該零件。本公司可免費提供書面報價。\n\n付款方式可採支票或銀行轉帳。逾期後，未付餘額每月加收百分之一點五的滯納金。關於本發票的疑問，請寄至 billing@example.com。"
     ]
   }
 ]

@@ -189,7 +189,7 @@
           "manes"
         ],
         "answer": 1,
-        "explanation": "man 的複數是 men，整個字換掉，換完就已經是複數了，後面不再加 s。mans 是把加 s 的規則硬套在不規則的字上，mens 是換完又多加一個 s，這兩個都是很常見的錯。"
+        "explanation": "man 的複數是 men，整個字換掉，換完就已經是複數了，後面不再加 s。mans 是把加 s 的規則硬套在不規則的字上，mens 是換完又多加一個 s，這兩個都是很常見的錯。manes 是另一個字 mane（馬的鬃毛）的複數，跟「男人」無關。"
       },
       {
         "q": "下面哪一句沒有錯？",
@@ -211,7 +211,7 @@
           "man"
         ],
         "answer": 0,
-        "explanation": "person 的複數是 people，這個字本身就是複數，前面配 many 剛剛好，不用再加 s，所以 peoples 是錯的。person 和 man 都是單數，跟 many 對不起來，要講很多人可以用 people，man 則要先變成 men。"
+        "explanation": "person 的複數是 people，這個字本身就是複數，前面配 many 剛剛好，不用再加 s。peoples 是另一個意思，指好幾個民族，不是「很多人」，放在公園這句不對。person 和 man 都是單數，跟 many 對不起來，要講很多人可以用 people，man 則要先變成 men。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -222,7 +222,7 @@
           "I see two fishs and three sheeps."
         ],
         "answer": 1,
-        "explanation": "fish 和 sheep 這兩個字單數複數長得一樣，前面就算加了數字也不用改。台灣學生看到 two、three 就反射加 s，這裡剛好要忍住不加。"
+        "explanation": "fish 和 sheep 的複數通常跟單數長得一樣，前面就算加了數字也不用改，所以寫 two fish、three sheep。sheep 的複數一定是 sheep，沒有 sheeps 這個寫法，所以第一、三、四句都錯；第四句的 fishs 也不是英文的拼法。fishes 只在講好幾種不同的魚時才用，一般說幾條魚用 fish。台灣學生看到 two、three 就反射加 s，這裡剛好要忍住不加。"
       }
     ]
   },
@@ -370,7 +370,7 @@
           "pieces"
         ],
         "answer": 3,
-        "explanation": "要加 s 的是前面的單位 piece，後面的 paper 不動，所以是 two pieces of paper。很多人會寫成 two piece of papers，剛好兩邊都弄反了。"
+        "explanation": "要加 s 的是前面的單位 piece，後面的 paper 不動，所以是 two pieces of paper。piece 是單位，前面有 two 就要變複數，寫 two piece 不對；空格要放的是單位，填 paper 或 papers 會變成 two paper of paper、two papers of paper，同一個字重複，意思也不通。很多人會寫成 two piece of papers，剛好兩邊都弄反了。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -386,13 +386,13 @@
       {
         "q": "下面哪一句沒有錯？",
         "options": [
-          "There are two waters on the table.",
+          "There are two water on the table.",
           "There are two glass of water on the table.",
           "There are two waters glass on the table.",
           "There are two glasses of water on the table."
         ],
         "answer": 3,
-        "explanation": "water 不加 s，要數就借容器，而且加 s 的是容器 glass，所以寫成 two glasses of water。two waters 把不可數名詞當可數用；two glass of water 則是容器該加 s 卻沒加。"
+        "explanation": "water 不加 s，也不能直接配數字，要數就借容器，而且加 s 的是容器 glass，所以寫成 two glasses of water。two water 把數字直接放在不可數名詞前面，少了容器；two glass of water 是容器該加 s 卻沒加；two waters glass 把 s 加錯地方，字序也不對。"
       },
       {
         "q": "下面哪一個字是不可數名詞？",
@@ -529,10 +529,10 @@
           "a",
           "many",
           "an",
-          "some"
+          "two"
         ],
         "answer": 2,
-        "explanation": "old 的第一個聲音是母音，所以用 an，寫成 a old 唸起來會卡住。many 後面要接可數名詞的複數，some 後面接複數或不可數名詞，這兩個都跟單數的 old car 對不起來。"
+        "explanation": "old 的第一個聲音是母音，所以用 an，寫成 a old 唸起來會卡住。many 和 two 後面都要接複數名詞，得寫成 many old cars、two old cars，跟單數的 old car 對不起來。"
       },
       {
         "q": "I wait for ___ hour every day.",
@@ -572,11 +572,11 @@
         "options": [
           "an",
           "a",
-          "some",
+          "two",
           "many"
         ],
         "answer": 1,
-        "explanation": "useful 的 u 唸起來是 y 的聲音，不是母音，所以用 a。看到 u 就反射寫 an 是這一課最常出錯的地方；some 和 many 後面接的是複數或不可數名詞，跟單數的 book 對不起來。"
+        "explanation": "useful 的 u 唸起來是 y 的聲音，不是母音，所以用 a。看到 u 就反射寫 an 是這一課最常出錯的地方；two 和 many 後面要接複數名詞，而且主詞 This 是單數，都跟單數的 book 對不起來。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -592,13 +592,13 @@
       {
         "q": "下面哪一句沒有錯？",
         "options": [
-          "I want a water.",
+          "I want a bread.",
           "I want a rice.",
           "I want a cup of coffee.",
           "I want an information."
         ],
         "answer": 2,
-        "explanation": "a 和 an 後面只能接單數的可數名詞，water、rice、information 都是不可數名詞，前面不能加。要講一杯咖啡就借容器，寫成 a cup of coffee。"
+        "explanation": "a 和 an 後面只能接單數的可數名詞，bread、rice、information 都是不可數名詞，前面不能加。要講一個就借單位，像 a loaf of bread、a bowl of rice、a piece of information；一杯咖啡也是借容器，寫成 a cup of coffee。"
       },
       {
         "q": "下面哪一句的冠詞和單複數都對？",
@@ -703,10 +703,10 @@
           "The"
         ],
         "answer": 3,
-        "explanation": "第一句已經提過這台腳踏車，第二句再講同一台，你跟對方都知道是哪一台了，所以用 The。第一次提到才用 a；an 用在母音開頭的字前面；some 後面接複數或不可數名詞。"
+        "explanation": "第一句已經提過這台腳踏車，第二句再講同一台，你跟對方都知道是哪一台了，所以用 The。A 用在第一次提到；An 用在母音開頭的字前面，bike 不是；Some 加單數名詞是「某一台（不知道是哪台）」的意思，跟前面已經講過的那台對不起來。"
       },
       {
-        "q": "Please close ___ window. It is cold.",
+        "q": "This room has only one window. Please close ___ window. It is cold.",
         "options": [
           "a",
           "the",
@@ -714,7 +714,7 @@
           "some"
         ],
         "answer": 1,
-        "explanation": "現場就那一扇窗，講的人和聽的人都知道是哪一扇，用 the。寫成 a window 會變成「隨便關一扇窗」，聽起來很奇怪。"
+        "explanation": "第一句說這個房間只有一扇窗，講的人和聽的人都知道是哪一扇，用 the。寫成 a window 會變成「隨便關一扇窗」，好像房間裡有好幾扇；an 要接母音開頭的字，window 不是；some 加單數名詞是「某一扇不知道是哪扇」，跟只有一扇窗對不起來。"
       },
       {
         "q": "___ sun is very hot today.",
@@ -728,7 +728,7 @@
         "explanation": "太陽在這世界上只有一個，不可能認錯，前面固定用 The。這一類的字還有 the moon、the sky，直接當固定寫法記起來就好。"
       },
       {
-        "q": "___ book on my desk is very old.",
+        "q": "There is only one book on my desk. ___ book is very old.",
         "options": [
           "Some",
           "A",
@@ -736,7 +736,7 @@
           "The"
         ],
         "answer": 3,
-        "explanation": "後面的 on my desk 已經把是哪一本書指出來了，這時候前面要用 The。如果只說 a book，聽的人根本不知道是哪一本，也就不會再接一串字去限定它。"
+        "explanation": "第一句說桌上只有一本書，第二句講的就是那一本，你跟對方都知道是哪一本，所以用 The。A 用在第一次提到、對方還不知道是哪一本的時候；An 要接母音開頭的字，book 不是；Some 加單數名詞是「某一本不知道是哪本」，跟桌上唯一那本對不起來。"
       },
       {
         "q": "你肚子餓，想吃一顆蘋果，對方還不知道你指的是哪一顆。下面哪一句最合適？",
@@ -1093,21 +1093,21 @@
           "any",
           "a",
           "much",
-          "some"
+          "a lot"
         ],
         "answer": 0,
-        "explanation": "單純在問有沒有，問句用 any。some 主要用在肯定句；a 後面只能接單數，這裡是複數的 questions；question 可以一個一個數，不能配只接不可數名詞的 much。"
+        "explanation": "單純在問有沒有，問句用 any。a 後面只能接單數，這裡是複數的 questions；question 可以一個一個數，不能配只接不可數名詞的 much；a lot 後面少了 of，要寫成 a lot of questions 才接得上名詞。"
       },
       {
-        "q": "Would you like ___ coffee?",
+        "q": "Here, have ___ cookies. I just made them.",
         "options": [
           "some",
-          "any",
+          "every",
           "a",
-          "many"
+          "much"
         ],
         "answer": 0,
-        "explanation": "問句原則上用 any，但這一句是在請對方喝咖啡，講的人預期答案是好，這種請人吃喝或幫忙的問句習慣用 some。coffee 在這裡是不可數名詞，所以 a 和 many 都接不上。"
+        "explanation": "這一句是在請對方吃餅乾，請人吃東西、給人東西的肯定邀請句用 some，聽起來是真心要給對方。every 後面要接單數名詞（every cookie），不能接複數的 cookies；a 只能接單數，跟複數的 cookies 對不起來；much 只接不可數名詞，cookie 可以一個一個數。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -1261,7 +1261,7 @@
           "a many"
         ],
         "answer": 1,
-        "explanation": "money 是不可數名詞，要配 much，而且這是否定句，正好是 much 最自然的位置。many 只能接可數名詞的複數，如果硬寫成 many moneys 就錯得更徹底了。"
+        "explanation": "money 是不可數名詞，要配 much，而且這是否定句，正好是 much 最自然的位置。many 只能接可數名詞的複數；many of 後面要先接 the、my 這類的字才能接名詞，而且同樣只配可數名詞；a many 這種寫法不存在。"
       },
       {
         "q": "How ___ students do you have in your class?",
@@ -1272,7 +1272,7 @@
           "lot of"
         ],
         "answer": 2,
-        "explanation": "student 可以一個一個數，問數量用 How many，後面接複數。How much 是問數不出來的東西，像 How much water；a lot of 是在陳述「很多」，不能拿來問問題。"
+        "explanation": "student 可以一個一個數，問數量用 How many，後面接複數。How much 是問數不出來的東西，像 How much water；How 後面不能接 a lot of，英文沒有 How a lot of 這種問法；lot of 前面少了 a，本身就不成立。"
       },
       {
         "q": "How ___ water do you drink every day?",
@@ -1283,7 +1283,7 @@
           "much"
         ],
         "answer": 3,
-        "explanation": "water 是不可數名詞，問數量用 How much。How many 後面要接可數名詞的複數，而 water 加不了 s，所以接不上；few 也是只配可數名詞。"
+        "explanation": "water 是不可數名詞，問數量用 How much。How many 後面要接可數名詞的複數，而 water 加不了 s，所以接不上；few 也是只配可數名詞；How 後面不能接 a lot of，英文沒有 How a lot of 這種問法。"
       },
       {
         "q": "下面哪一句聽起來最自然？",
@@ -1437,10 +1437,10 @@
           "little of"
         ],
         "answer": 0,
-        "explanation": "water 是不可數名詞，而且是開口要一點水，語氣正面，所以用 a little。a few 只接可數名詞的複數；如果寫成 little water，語氣會變成「幾乎沒有水」，跟請對方給你水的意思剛好相反。"
+        "explanation": "water 是不可數名詞，而且是開口要一點水，語氣正面，所以用 a little。a few 只接可數名詞的複數；a many 這種寫法不存在；little of 後面要先接 the、my 這類的字才能接名詞，而且沒有 a 的 little 是「幾乎沒有」，跟請對方給你水的意思剛好相反。"
       },
       {
-        "q": "We have ___ time. Hurry up!",
+        "q": "你想說「我們幾乎沒時間了，快一點！」We have ___ time. Hurry up!",
         "options": [
           "a little",
           "a few",
@@ -1448,10 +1448,10 @@
           "little"
         ],
         "answer": 3,
-        "explanation": "後面叫人快一點，表示時間快不夠了，要用沒有 a 的 little，意思是幾乎沒時間。a little time 是「還有一點時間」，語氣不合；time 在這裡是不可數名詞，所以 a few 和 few 都接不上。"
+        "explanation": "題目要說的是幾乎沒時間，要用沒有 a 的 little。a little time 是「還有一點時間」，跟「幾乎沒時間」不合；time 在這裡是不可數名詞，所以 a few 和 few 都接不上。"
       },
       {
-        "q": "She has ___ money. She cannot buy the book.",
+        "q": "你想說「她幾乎沒有錢，買不起那本書」。She has ___ money. She cannot buy the book.",
         "options": [
           "a little",
           "little",
@@ -1459,7 +1459,7 @@
           "few"
         ],
         "answer": 1,
-        "explanation": "後面說她買不起，表示錢幾乎沒有，用沒有 a 的 little。a little money 是「還有一點錢」，語氣不合；money 是不可數名詞，a few 和 few 只接可數名詞的複數。"
+        "explanation": "題目要說的是錢幾乎沒有，用沒有 a 的 little。a little money 是「還有一點錢」，跟「幾乎沒有錢」不合；money 是不可數名詞，a few 和 few 只接可數名詞的複數。"
       },
       {
         "q": "你想說「我有幾個問題想問你」。I have ___ questions for you.",
@@ -1470,7 +1470,7 @@
           "a few"
         ],
         "answer": 3,
-        "explanation": "想問幾個問題是正面的語氣，而且 question 可以數，所以用 a few。如果寫成 few questions，聽起來會變成「我幾乎沒有問題」，那就不用問了。"
+        "explanation": "想問幾個問題是正面的語氣，而且 question 可以數，所以用 a few。如果寫成 few questions，聽起來會變成「我幾乎沒有問題」，那就不用問了。little 和 a little 只接不可數名詞，question 可以數，兩個都接不上。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -1656,7 +1656,7 @@
           "I love her."
         ],
         "answer": 3,
-        "explanation": "愛這個動作落在她身上，要用受格 her。I love she 是照中文「我愛她」的順序直接搬過去的錯句；Me 是受格不能當主角；hers 是「她的東西」，跟這裡的意思不合。"
+        "explanation": "愛這個動作落在她身上，要用受格 her。I love she 把主格 she 放在動作後面，中文的「她」不分主格受格，英文放在這個位置就要換成 her；Me 是受格不能當主角；hers 是「她的東西」，跟這裡的意思不合。"
       },
       {
         "q": "My mother gives the book to ___.",
@@ -1863,7 +1863,7 @@
           "its"
         ],
         "answer": 3,
-        "explanation": "這裡要說「牠的」，用 its，沒有撇號。it's 是 it is 縮起來的，放進去整句會變成 My cat likes it is new bed，根本讀不通；its' 這種寫法不存在。"
+        "explanation": "這裡要說「牠的」，用 its，沒有撇號。it's 是 it is 縮起來的，放進去整句會變成 My cat likes it is new bed，讀不通；it 只是「它」本身，不能直接放在 new bed 前面表示「牠的」；its' 這種寫法不存在。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -2174,18 +2174,18 @@
         "explanation": "這是肯定句，用 something。anything 主要出現在否定句和問句；nothing 是「什麼都沒有」，跟肚子餓想吃東西的意思相反；everything 是「每樣東西」，講的是全部，語氣太誇張。"
       },
       {
-        "q": "Do you know ___ here?",
+        "q": "Did ___ call me this morning?（今天早上有人打電話給我嗎？）",
         "options": [
-          "everyone",
-          "someone",
-          "no one",
+          "anything",
+          "anywhere",
+          "nothing",
           "anyone"
         ],
         "answer": 3,
-        "explanation": "單純在問有沒有，問句用 any 這一排，所以是 anyone。someone 用在肯定句；no one 是「沒有人」，放進問句意思講不通；everyone 是「每個人」，跟這裡想問的不一樣。"
+        "explanation": "要問「有沒有人」，用指人的 anyone，問句用 any 這一排。anything 指東西，東西不會打電話；anywhere 指地方，不能放在 call 前面當主詞；nothing 也是指東西，而且是「什麼都沒有」，放進來句子講不通。"
       },
       {
-        "q": "I do not have ___ in my bag.",
+        "q": "I do not have ___ in my bag.（我的包包裡什麼都沒有。）",
         "options": [
           "something",
           "anything",
@@ -2193,7 +2193,7 @@
           "everything"
         ],
         "answer": 1,
-        "explanation": "否定句用 any 這一排，寫成 do not have anything。如果用 nothing，句子裡就同時有 not 和 nothing，變成否定兩次；something 用在肯定句。"
+        "explanation": "要說「什麼都沒有」，否定句用 any 這一排，寫成 do not have anything。用 nothing 的話，句子裡同時有 not 和 nothing，變成否定兩次；something 放進這句是「有某樣東西沒帶」，不是什麼都沒有；everything 放進否定句是「不是每樣東西都在」，意思也不一樣。"
       },
       {
         "q": "「家裡沒有人」要寫哪一句？",
@@ -2204,7 +2204,7 @@
           "Anybody is at home."
         ],
         "answer": 0,
-        "explanation": "要說一個人都沒有，直接用 Nobody 當主角最乾淨。anybody 不能放在句子最前面當肯定的主角；Not anybody 不是英文的講法；Somebody is not at home 是說某一個人不在家，跟一個人都沒有差很多。"
+        "explanation": "要說一個人都沒有，直接用 Nobody 當主詞最乾淨。Not anybody 不是英文的講法，not 不會這樣放在主詞最前面；Somebody is not at home 是說某一個人不在家，跟一個人都沒有差很多；anybody 放在肯定句是「隨便哪個人都」的意思，Anybody is at home 變成「隨便誰都在家」，講不通。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -2215,7 +2215,7 @@
           "I do not know something about it."
         ],
         "answer": 0,
-        "explanation": "nothing 本身已經是否定，直接寫 I know nothing 就好。第二句 not 和 nothing 疊在一起是否定兩次；第三句肯定句不用 anything；第四句是否定句，該用 anything 而不是 something。"
+        "explanation": "nothing 本身已經是否定，直接寫 I know nothing about it 就好。第二句 not 和 nothing 疊在一起，否定了兩次；第三句是肯定句，英文不這樣用 anything；第四句要說「什麼都不知道」，否定句要用 anything，not 配 something 只有在講某一件特定的事不知道時才用，單獨這樣講不自然。"
       },
       {
         "q": "___ waiting for you outside.",
@@ -2226,7 +2226,7 @@
           "Anyone is"
         ],
         "answer": 1,
-        "explanation": "someone 當主角時算單數，後面要配單數的 is。Someone are 前後對不起來；some one 中間不能分開寫；肯定句的主角也不用 anyone。"
+        "explanation": "someone 當主詞時算單數，後面要配單數的 is。Someone are 前後對不起來；some one 在這裡要連起來寫成一個字；anyone 放在肯定句是「隨便哪個人都」的意思，Anyone is waiting for you outside 變成「隨便誰都在外面等你」，講不通。"
       },
       {
         "q": "I want ___ to drink. It is very hot today.",
@@ -2237,7 +2237,7 @@
           "cold something"
         ],
         "answer": 0,
-        "explanation": "描述 something 的字要放在它後面，寫成 something cold，這跟一般名詞把描述的字放前面剛好相反。cold something 是照中文「冰的東西」順序直接搬過去的錯句；肯定句也不用 anything。"
+        "explanation": "描述 something 的字要放在它後面，寫成 something cold，這跟一般名詞把描述的字放前面剛好相反。cold something 是照中文「冰的東西」順序直接搬過去的錯句；a cold something 除了順序錯，前面還多了 a；cold anything 順序一樣錯，而且這裡是想要一樣東西，要用 something。"
       },
       {
         "q": "下面哪一句的 something 用得對？",
@@ -2248,7 +2248,7 @@
           "Nobody does not have anything."
         ],
         "answer": 2,
-        "explanation": "肯定句用 something，所以第三句對。第一句在 something 前面多加了一個 a，這一家人本來就不跟冠詞連用；第二句是否定句，該用 anything；第四句的 Nobody 已經是否定，後面又加 does not，變成否定兩次。"
+        "explanation": "肯定句用 something，所以第三句對。第一句在 something 前面多加了一個 a，這一家人一般不加 a；第二句要說手上什麼都沒有，否定句用 anything，not 配 something 只有在講某一樣特定的東西時才用，這裡不自然；第四句的 Nobody 已經是否定，後面又加 does not，變成否定兩次。"
       }
     ]
   }

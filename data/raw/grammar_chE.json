@@ -297,7 +297,7 @@
           "You bought what yesterday?"
         ],
         "answer": 0,
-        "explanation": "疑問詞放句首，後面接 did 加主詞加動詞原形。第二句漏了助動詞；第三句的 did 已經表示過去了，動詞不能再變成 bought；第四句照著中文語序把 what 留在句中，英文不能這樣排。"
+        "explanation": "疑問詞放句首，後面接 did 加主詞加動詞原形。第二句漏了助動詞；第三句的 did 已經表示過去了，動詞不能再變成 bought；第四句照著中文語序把 what 留在句中，只有在沒聽清楚或表示驚訝、重複對方的話時才會這樣說，一般的問句要把 what 搬到句首。"
       },
       {
         "q": "___ is your new office? — On Minsheng Road.",
@@ -457,7 +457,7 @@
           "Who does"
         ],
         "answer": 2,
-        "explanation": "空格後面有主詞 you，代表 who 問的是被邀請的人，是受詞，所以要借助動詞。婚禮已經辦過了，用 did，後面的動詞維持原形 invite。Who does 的時態對不上；前兩個選項把 who 當成主詞，後面就不該再出現 you。"
+        "explanation": "空格後面有主詞 you，代表 who 問的是被邀請的人，是受詞，所以要借助動詞，後面的動詞維持原形 invite。Who does 的 does 是配第三人稱單數的，跟主詞 you 對不上；Who invited 和 Who invites 把 who 當成主詞，後面就不該再出現 you。"
       },
       {
         "q": "Who wants to join the trip? 這一句為什麼不用 do？",
@@ -468,7 +468,7 @@
           "因為問句太短"
         ],
         "answer": 1,
-        "explanation": "who 站在主詞的位置上，句子本來就是主詞加動詞的順序，沒有東西要調開，所以不需要助動詞。wants 加 s 是這件事的結果，不是原因。"
+        "explanation": "who 站在主詞的位置上，句子本來就是主詞加動詞的順序，沒有東西要調開，所以不需要助動詞。wants 加 s 是這件事的結果，不是原因；who 確實是拿來問人，但 Who did you meet? 一樣在問人，卻要用 did，所以這不是理由；句子長短跟要不要用 do 無關，Do you like it? 很短也要用 do。"
       },
       {
         "q": "「誰教你英文？」哪一句對？",
@@ -512,7 +512,7 @@
           "她跟誰結婚"
         ],
         "answer": 3,
-        "explanation": "who 後面接著主詞 she，代表 who 是受詞，問的是「她嫁給誰」。如果要問「誰結婚了」，who 要當主詞，句子會變成 Who got married?，中間不會出現 did。"
+        "explanation": "who 後面接著主詞 she，代表 who 是受詞，問的是「她嫁給誰」。如果要問「誰結婚了」，who 要當主詞，句子會變成 Who got married?，中間不會出現 did。「她是誰」要說 Who is she?，「她為什麼結婚」要用 Why 開頭，都不是這句的意思。"
       },
       {
         "q": "Which bus ___ to the train station?",
@@ -627,7 +627,7 @@
           "How long"
         ],
         "answer": 3,
-        "explanation": "For six years 講的是一段時間的長度，要用 how long。how often 問的是次數多不多；how far 問距離；how many 後面一定要接可以數的名詞。"
+        "explanation": "For six years 講的是一段時間的長度，要用 how long。how often 問的是次數多不多；how far 問距離；how many 問的是數量，通常接可以數的名詞，回答會是一個數字，對不上一段時間。"
       },
       {
         "q": "___ do you go to the gym? — Twice a week.",
@@ -638,7 +638,7 @@
           "How many"
         ],
         "answer": 1,
-        "explanation": "Twice a week 是在講一週幾次，屬於頻率，用 how often。how long 問的是持續多久，回答會是 For an hour 這種；how much 問的是量或價錢；how many 後面一定要接可以數的名詞。"
+        "explanation": "Twice a week 是在講一週幾次，屬於頻率，用 how often。how long 問的是持續多久，回答會是 For an hour 這種；how much 問的是量或價錢；how many 問的是數量，通常接可以數的名詞，回答會是 Three books 這種數量，不是頻率。"
       },
       {
         "q": "___ students are there in your class?",
@@ -674,7 +674,7 @@
         "explanation": "問種類的固定說法是 what kind of 加名詞，of 不能省略，後面也不加冠詞 the。how kind 意思完全不一樣，是在說一個人很好心。"
       },
       {
-        "q": "___ is it from here to the station?",
+        "q": "___ is the station from here? — About two kilometers.",
         "options": [
           "How long",
           "How much",
@@ -682,18 +682,18 @@
           "How many"
         ],
         "answer": 2,
-        "explanation": "從這裡到車站問的是距離，用 how far。how long 問的是時間長度，如果想問走過去要多久，句子會變成 How long does it take to walk there?；how much 問的是量或價錢，how many 後面要接可以數的名詞。"
+        "explanation": "回答是大約兩公里，問的是距離，用 how far。how long 問的是時間長度或東西本身有多長，「車站離這裡多遠」不能用它問；想問走過去要多久，會說 How long does it take to walk there? 這種句子。how much 問的是量或價錢，how many 問的是數量，都對不上距離。"
       },
       {
         "q": "菜單上只有三種湯，服務生要問你選哪一種，最自然的問法是？",
         "options": [
-          "What soup would you like?",
+          "What kind soup would you like?",
           "Which soup would you like?",
           "How much soup would you like?",
           "Who soup would you like?"
         ],
         "answer": 1,
-        "explanation": "選擇的範圍有限、東西就印在菜單上，用 which 最自然。what 用在範圍沒有限制的時候；how much 問的是量不是種類；who 只能拿來問人。"
+        "explanation": "選擇的範圍有限、東西就印在菜單上，用 which soup 最貼切。what kind soup 少了 of，問種類要說 what kind of soup；how much 問的是份量，不是選哪一種；who 只能拿來問人，不能放在名詞前面。"
       },
       {
         "q": "___ time does your flight leave?",
@@ -704,7 +704,7 @@
           "How long"
         ],
         "answer": 0,
-        "explanation": "問幾點的固定組合是 what time。how 不能直接接 time；how long 問的是飛行要花多久，不是幾點起飛；which time 也不是英文的說法。"
+        "explanation": "問幾點的固定組合是 what time。how 不能直接接 time；how long 問的是飛行要花多久，不是幾點起飛；which time 要在有幾個時間可以挑的時候才用，這裡單純問班機幾點起飛，不用 which time。"
       }
     ]
   },
@@ -816,7 +816,7 @@
           "do he"
         ],
         "answer": 2,
-        "explanation": "前面是否定句，後面要用肯定；前面用的助動詞是 doesn't，後面就借它變回 does。doesn't he 沒有把肯定否定倒過來；is he 借錯了字，前面根本沒有 be 動詞。"
+        "explanation": "前面是否定句，後面要用肯定；前面用的助動詞是 doesn't，後面就借它變回 does。doesn't he 沒有把肯定否定倒過來；is he 借錯了字，前面根本沒有 be 動詞；do he 的主詞是第三人稱單數 he，助動詞要用 does，不能用 do。"
       },
       {
         "q": "「我們去看電影吧，好嗎？」哪一句對？",
@@ -827,7 +827,7 @@
           "Let's go to a movie, aren't we?"
         ],
         "answer": 1,
-        "explanation": "Let's 開頭的提議，後面固定用 shall we。will you 是接在祈使句後面的；don't we 和 aren't we 都不用在提議上。"
+        "explanation": "Let's 開頭的提議，附加問句用 shall we。will we 不接在 Let's 的提議後面（will you 才是接在祈使句後面的）；don't we 和 aren't we 都不用在提議上。"
       },
       {
         "q": "Close the window, ___?",
@@ -838,7 +838,7 @@
           "do you"
         ],
         "answer": 0,
-        "explanation": "這是祈使句，句子裡本來就沒有主詞和助動詞可以借，後面固定用 will you，順便讓語氣客氣一點。don't you、do you、aren't you 都是從前面那句借字來的做法，這句沒有東西可以借。"
+        "explanation": "這是祈使句，句子裡本來就沒有主詞和助動詞可以借，最常用的是 will you，順便讓語氣客氣一點（也可以說 would you 或 can you）。don't you、do you、aren't you 都是從前面那句借字來的做法，這句沒有東西可以借。"
       },
       {
         "q": "They have finished the project, ___?",
@@ -1004,7 +1004,7 @@
           "who"
         ],
         "answer": 1,
-        "explanation": "原本的問題是「到了沒」，屬於只能回答 yes 或 no 的問句，放進句子裡要用 if 或 whether 接。that 是拿來接肯定敘述的，後面再加 or not 就不通了；原本的問題沒有要問東西也沒有要問人，用不到 what 和 who。"
+        "explanation": "原本的問題是「到了沒」，屬於只能回答 yes 或 no 的問句，放進句子裡要用 if 或 whether 接（後面有 or not 時，whether 比較正式）。that 帶出的是陳述一件確定的事，不能帶出「到了沒有」這種還不確定的問題，後面再加 or not 就不通了；原本的問題沒有要問東西也沒有要問人，用不到 what 和 who。"
       },
       {
         "q": "Do you know how much the new printer ___?",
@@ -1231,18 +1231,18 @@
           "Not I can help you."
         ],
         "answer": 1,
-        "explanation": "not 一定要跟在 be 動詞或助動詞後面，這句的助動詞是 can，所以 not 放在 can 的後面（習慣寫成一個字 cannot）。其他三句都把 not 放在沒有靠山的位置。"
+        "explanation": "否定句子的動詞時，not 要跟在 be 動詞或助動詞後面。這句的助動詞是 can，所以 not 放在 can 的後面（習慣寫成一個字 cannot）。其他三句都把 not 放在沒有靠山的位置。"
       },
       {
         "q": "I don't have any money. 和 I have no money. 的差別是？",
         "options": [
-          "兩句都通，只是否定的字放的位置不同",
-          "前一句文法錯",
-          "後一句文法錯",
-          "兩句意思相反"
+          "兩句都通，否定的方式不同",
+          "前一句文法錯，不能這樣講",
+          "後一句文法錯，不能這樣講",
+          "兩句都通，但意思相反"
         ],
         "answer": 0,
-        "explanation": "英文否定「我沒有錢」有兩條路，一條是助動詞加 not 再配 any，一條是直接用 no 否定名詞，兩句都對。錯的是把兩條路混在一起寫成 I don't have no money，一句話裡放兩個否定的字意思會亂掉。"
+        "explanation": "英文否定「我沒有錢」有兩條路：一條是助動詞加 not 再配 any，一條是直接用 no 否定名詞。兩句都對，意思也一樣，差別在否定的方式。所以說前一句或後一句文法錯都不對，說兩句意思相反也不對。要避免的是把兩條路混在一起寫成 I don't have no money，標準英文不這樣用。"
       }
     ]
   },
@@ -1340,13 +1340,13 @@
       {
         "q": "「請把門關上。」哪一句對？",
         "options": [
-          "You close the door, please.",
+          "Please you close the door.",
           "Closes the door, please.",
           "Please close the door.",
           "Please closing the door."
         ],
         "answer": 2,
-        "explanation": "祈使句直接從動詞原形開始，前面不放主詞 you。closes 多加了 s；closing 是 V-ing，前面少了 be 動詞，祈使句也不用 ing。"
+        "explanation": "祈使句用動詞原形開頭，please 放句首或句尾都可以。Please you close 是照中文「請你」直翻，please 後面不能插進 you；closes 多加了 s；closing 是 V-ing，祈使句不用 ing。"
       },
       {
         "q": "___ touch the wet paint.",
@@ -1371,7 +1371,7 @@
         "explanation": "mind 後面的動詞要加 ing，所以要用 leaving。前面多一個 to 的 to leave、原形 leave 和過去式 left 都接不上 mind。"
       },
       {
-        "q": "「我們今天不要加班了。」哪一句對？",
+        "q": "「我們今天不要加班了。」標準的寫法是哪一句？",
         "options": [
           "Let's don't work overtime today.",
           "Let's not work overtime today.",
@@ -1379,7 +1379,7 @@
           "Let's not to work overtime today."
         ],
         "answer": 1,
-        "explanation": "Let's 的否定固定寫成 Let's not，後面直接接動詞原形。這裡不會用 don't；not 後面也不加 to。"
+        "explanation": "Let's 的否定標準寫法是 Let's not，後面直接接動詞原形。Let's don't 只在美式口語偶爾聽到，Don't let's 是英式口語、比較老派的說法，考試和正式書寫都不算標準；Let's not to 在 not 後面多加了 to，不成立。"
       },
       {
         "q": "同事在講電話，你想請他小聲一點，最不會得罪人的說法是？",
@@ -1390,7 +1390,7 @@
           "You speak quietly, please."
         ],
         "answer": 2,
-        "explanation": "改寫成 Could you 開頭的問句，是把命令變成請求，語氣最軟。前兩句都是直接的祈使句，對同事講有點硬；第四句多放了主詞 you，不合祈使句的規則。"
+        "explanation": "改寫成 Could you 開頭的問句，是把命令變成請求，語氣最軟。Speak quietly. 和 Don't speak so loud. 都是直接的祈使句，對同事講有點硬；You speak quietly, please. 在祈使句前面加上 you，口氣像在指定對方照做，加了 please 也不會比問句客氣。"
       },
       {
         "q": "有人問你 Would you mind opening the window?，你願意開窗，最合適的回答是？",
@@ -1401,7 +1401,7 @@
           "Of course I mind."
         ],
         "answer": 2,
-        "explanation": "這句字面上問的是「你介意嗎」，願意幫忙就要回答「不介意」，所以說 Not at all 或 Of course not。回 Yes 反而變成「我介意」，等於拒絕了對方。"
+        "explanation": "這句字面上問的是「你介意嗎」，願意幫忙就要回答「不介意」，所以說 Not at all 或 Of course not。Yes, I would. 是「我會介意」，等於拒絕；Yes, please. 是接受別人提供東西時的回答，在這裡答非所問；Of course I mind. 是明白說「我當然介意」，也是拒絕。"
       },
       {
         "q": "Never ___ your password with anyone.",
@@ -1571,7 +1571,7 @@
           "My sister either works there."
         ],
         "answer": 2,
-        "explanation": "too 放在句尾是最自然的位置。第一句 too 和 also 意思重複；第二句 too 不會插在主詞和動詞中間；either 只用在否定句。"
+        "explanation": "too 放在句尾是最自然的位置。第一句 too 和 also 意思重複；第二句 too 要放在主詞後面，得用逗號隔開寫成 My sister, too, works there.，而且是很正式的寫法，沒有逗號不成立；either 只用在否定句。"
       },
       {
         "q": "A: I've already had lunch. B: ___",
@@ -1593,7 +1593,7 @@
           "前面那句是錯的"
         ],
         "answer": 1,
-        "explanation": "要表達「我也一樣」一定要倒裝成 So do I.。沒有倒裝的 So I do. 是另一個意思，用來附和對方剛剛說的話確實如此，兩句不能互換。"
+        "explanation": "So do I. 是倒裝句，意思是「我也一樣」，是正確的句子。沒有倒裝的 So I do. 是另一個意思，用來附和對方剛剛說的話確實如此，例如對方說 You work too much.，回 So I do. 是「我確實是」。兩句意思不同，不能互換；兩句也都是直述句，不是問句。"
       },
       {
         "q": "A: I can't eat peanuts. B: ___",
@@ -1748,7 +1748,7 @@
           "How beautiful voice she has!"
         ],
         "answer": 2,
-        "explanation": "核心是名詞 voice，用 What 加 a 加形容詞加名詞。第一句和第四句用 How 卻接了名詞；第二句要讚嘆的是唱歌的樣子，開頭要換成 How 而且用副詞。"
+        "explanation": "核心是名詞 voice，用 What 加 a 加形容詞加名詞。第一句的 a 不能緊跟在 How 後面；第四句用 How 帶名詞時要寫成 How beautiful a voice she has!（比較正式），少了 a 不成立；第二句要讚嘆的是唱歌的樣子，開頭要換成 How 而且用副詞，寫成 How beautifully she sings!。"
       },
       {
         "q": "What a mess! 和 How messy! 這兩句",

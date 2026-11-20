@@ -50,9 +50,9 @@
       {
         "num": 1,
         "type": "文法",
-        "options": ["relocating", "has relocated", "will be relocated", "was relocating"],
+        "options": ["relocating", "has already relocated", "will be relocated", "was relocating"],
         "answer": 2,
-        "explanation": "考動詞形式與時態。空格是句子的主要動詞，句首 Beginning Monday, September 15 是公告日（9 月 3 日）之後的時間，要用未來式，故選 will be relocated（將遷至）。(A) relocating 是分詞，不能單獨當主要動詞，句子會缺少述語；(B) has relocated 是現在完成式，表示已經完成，與未來的時間點衝突；(D) was relocating 是過去進行式，同樣與未來的時間點衝突。"
+        "explanation": "考動詞形式與時態。空格是句子的主要動詞，句首 Beginning Monday, September 15 是公告日（9 月 3 日）之後的時間，要用未來式，故選 will be relocated（將遷至）。(A) relocating 是分詞，不能單獨當主要動詞，句子會缺少述語；(B) has already relocated 是現在完成式，表示已經完成，與未來的時間點衝突；(D) was relocating 是過去進行式，同樣與未來的時間點衝突。"
       },
       {
         "num": 2,
@@ -113,7 +113,7 @@
           "Salary information will not be provided to applicants at any stage."
         ],
         "answer": 1,
-        "explanation": "考前後文銜接。空格後一句提到「願意配合偶爾週末班者優先錄用」，主題是工作班表；正解先交代本職務採輪班制、每週四天、每天十小時，讓後句對週末班的要求有前提可依附，整段自成「工時制度—班別偏好」的完整說明。(A) 公司創立歷史與班表無關，接不上後句；(C) 十一月整月停工與廣告中「面試將於次週（即十一月初）開始」矛盾，也接不上後句的班表主題；(D) 徵才廣告聲明全程不談薪資不合常理，也與後句的週末班主題無關。"
+        "explanation": "考前後文銜接。空格後一句提到「願意配合偶爾週末班者優先錄用」，主題是工作班表；正解先交代本職務採輪班制、每週四天、每天十小時，讓後句對週末班的要求有前提可依附，整段自成「工時制度與班別偏好」的完整說明。(A) 公司創立歷史與班表無關，接不上後句；(C) 十一月整月停工與廣告中「面試將於次週（即十一月初）開始」矛盾，也接不上後句的班表主題；(D) 徵才廣告聲明全程不談薪資不合常理，也與後句的週末班主題無關。"
       },
       {
         "num": 4,
@@ -145,7 +145,7 @@
           "The lobby floor will be repainted the following weekend.",
           "Both passenger elevators will be out of service for the entire month.",
           "Moving furniture into the building is not permitted on any day.",
-          "Access to that elevator requires a key card, which may be borrowed from the front desk."
+          "Access to that elevator requires a key card, available at the front desk."
         ],
         "answer": 3,
         "explanation": "考前後文銜接。前一句要求當天有搬運需求的租戶改用大廳後方的貨梯，正解緊接著補充使用該貨梯的實際做法（需門禁卡、可向櫃檯借用），資訊承接自然，也符合公告「告知替代方案」的功能。(A) 大廳粉刷與電梯使用無關，且時間點另在下週末；(B) 說兩部客梯整月停用，與公告中僅十月十八日一天檢修、且輪流檢修矛盾；(C) 說任何日子都禁止搬運家具，與前一句允許改用貨梯直接衝突。"
@@ -190,7 +190,7 @@
           "Ms. Corriveau will step down as president at the end of December."
         ],
         "answer": 2,
-        "explanation": "考前後文銜接。前一句指出擴廠是因應歐洲對再生布料日益增加的需求，正解以具體數據（近三年訂單成長一倍）佐證這項說法，後一句再說新廠將專門生產這類布料，三句構成「原因—佐證—因應」的完整脈絡；正解中的 those materials 也正好回指前句的 recycled fabrics。(A) 說今年沒有增聘人力的計畫，既無法佐證前句的需求成長，也與整篇擴廠、在地大量招募的基調相牴觸；(B) 人口減少與擴廠理由無關，且與大量在地招募的敘述不合；(D) 總裁請辭在全文中毫無依據，也打斷了段落主題。"
+        "explanation": "考前後文銜接。前一句指出擴廠是因應歐洲對再生布料日益增加的需求，正解以具體數據（近三年訂單成長一倍）佐證這項說法，後一句再說新廠將專門生產這類布料，三句構成「原因、佐證、因應」的完整脈絡；正解中的 those materials 也正好回指前句的 recycled fabrics。(A) 說今年沒有增聘人力的計畫，既無法佐證前句的需求成長，也與整篇擴廠、在地大量招募的基調相牴觸；(B) 人口減少與擴廠理由無關，且與大量在地招募的敘述不合；(D) 總裁請辭在全文中毫無依據，也打斷了段落主題。"
       },
       {
         "num": 3,

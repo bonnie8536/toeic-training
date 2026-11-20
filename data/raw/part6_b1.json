@@ -92,9 +92,9 @@
       {
         "num": 1,
         "type": "文法",
-        "options": ["will be towed", "will tow", "are towing", "have towed"],
+        "options": ["will be towed", "will tow", "have been towing", "have towed"],
         "answer": 0,
-        "explanation": "考語態。主詞 Vehicles 是「被拖吊」的對象，須用被動語態；封閉期間屬於未來時間，故選 will be towed，其後的 at the owner's expense 也印證車主是承受方。will tow、are towing、have towed 都是主動語態，語意會變成車輛去拖吊別的東西，不合常理。"
+        "explanation": "考語態。主詞 Vehicles 是「被拖吊」的對象，須用被動語態；封閉期間屬於未來時間，故選 will be towed，其後的 at the owner's expense 也印證車主是承受方。will tow、have been towing、have towed 都是主動語態，語意會變成車輛去拖吊別的東西，不合常理。"
       },
       {
         "num": 2,
@@ -202,9 +202,9 @@
       {
         "num": 4,
         "type": "文法",
-        "options": ["can be arranged", "can arrange", "arranging", "to arrange"],
+        "options": ["can be arranged", "can then arrange", "arranging", "to arrange"],
         "answer": 0,
-        "explanation": "考語態。so that 子句的主詞 an alternative appointment 是「被安排」的對象，須用被動語態 can be arranged。can arrange 是主動語態，語意變成預約時段自己去安排別的事，不合邏輯；arranging 與 to arrange 都是非限定形式，填入後 so that 子句便缺少限定動詞，句構不完整。"
+        "explanation": "考語態。so that 子句的主詞 an alternative appointment 是「被安排」的對象，須用被動語態 can be arranged。can then arrange 是主動語態，語意變成預約時段自己去安排別的事，不合邏輯；arranging 與 to arrange 都是非限定形式，填入後 so that 子句便缺少限定動詞，句構不完整。"
       }
     ],
     "translation": "Kestrel 家電\nAshcombe 市 Fenwick 路 48 號\n\n11 月 3 日\n\nDana Okonjo 女士\nAshcombe 市 Larkspur 巷 17 號\n\nOkonjo 女士 您好：\n\n感謝您就 6 月於本公司 Ashcombe 展示中心所購買的洗碗機與我們聯繫。經查，該機仍在兩年保固期內。\n\n技師將於 11 月 12 日（星期四）上午 9 時至中午之間到府，查明您所描述的排水問題。屆時請確保有年滿十八歲的人員在場。到府服務與所需零件均不另行收費。\n\n若該日期不便，請於星期五前致電本公司服務專線，以便另行安排時段。\n\n敬祝 商安\n\n客戶服務部經理 Elliot Sung 敬上"

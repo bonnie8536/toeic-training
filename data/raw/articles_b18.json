@@ -184,34 +184,34 @@
         "q": "What is the article mainly about?",
         "options": [
           "How AI tools are changing office work, and what workers hope and fear about them",
-          "Why most companies have decided to ban AI tools completely",
-          "A step-by-step guide to writing instructions for AI tools",
-          "The history of office equipment from the typewriter to the printer"
+          "Why most companies have now decided to ban AI tools from the office completely",
+          "A step-by-step guide to typing clear instructions into AI tools at work",
+          "How earlier office tools such as spreadsheets and email changed working life"
         ],
         "answer": 0,
-        "explanation": "主旨題。全文從第一段的現象（AI 工具進入日常工作）開始，接著談哪些工作改變、期待（第三段）與擔憂（第四至六段），最後給讀者建議，主軸就是職場改變與正反看法。"
+        "explanation": "主旨題。第一段寫 AI 工具走進日常工作，第二段寫哪些工作改變最多，第三段是主管與雇主的期待，第四至六段是就業、正確性與隱私的擔憂，第七段給工作者建議，故選 A。B：第六段只說許多雇主禁止把客戶資料貼進公開工具，有些組織核准工具清單或要求先受訓，沒有說多數公司全面禁用。C：全文沒有教寫指令的步驟，第七段反而說需要的能力不是把指令打進對話框。D：試算表與電子郵件只在第四段拿來對照，不是全文主旨。"
       },
       {
         "q": "According to the article, which kind of task has been affected the most?",
         "options": [
-          "Tasks that require moving heavy equipment",
-          "Tasks that only senior managers are allowed to do",
-          "Tasks that must be finished outside the office",
+          "Tasks that involve making the final decision",
+          "Tasks that involve training a new colleague",
+          "Tasks that involve planning the company's future",
           "Tasks built on repeated writing and searching"
         ],
         "answer": 3,
-        "explanation": "細節題。第二段第二句明確寫著 Tasks built on repeated writing and searching have shifted the most，後面客服、行銷、會計與律師的例子都屬於這一類。"
+        "explanation": "細節題。第二段第二句 Tasks built on repeated writing and searching have shifted the most，後面的客服、行銷、會計與律師都是這一類，故選 D。A：第二段末句說工具不做決定，只拿掉決定之前的慢工，做最後決定的工作沒有被取代。B：第三段把帶新同事列為機器做不到、省下的時間要轉去做的工作。C：決定公司下一步同樣在第三段被列為機器做不到的工作。"
       },
       {
         "q": "Why do many employers forbid staff from pasting customer data into public AI tools?",
         "options": [
-          "Because the tools charge extra money for long text",
-          "Because customers prefer replies written by hand",
+          "Because staff must finish training before they may use any tool",
+          "Because a named person must check everything the tool writes",
           "Because the text leaves the company's own network",
-          "Because the tools are unable to read numbers"
+          "Because the tools often leave out the one condition that mattered"
         ],
         "answer": 2,
-        "explanation": "細節題。第六段第二句說明原因：輸入外部服務的文字會離開公司網路（Text typed into an outside service leaves the company network），所以雇主才會設下限制。"
+        "explanation": "細節題。第六段第二句 Text typed into an outside service leaves the company network, so many employers forbid staff from pasting customer data，so 前面就是原因：文字輸入外部服務就離開公司網路，故選 C。A：先受訓才能使用是第六段另一條規定，不是禁止貼資料的原因。B：指定人員檢查機器寫的內容是第五段為了正確性的做法。D：摘要漏掉關鍵條件是第五段講的正確性問題，與隱私無關。"
       },
       {
         "q": "What does the article suggest about mistakes made by AI tools?",
@@ -415,13 +415,13 @@
       {
         "q": "What is the main point of the article?",
         "options": [
-          "Microplastics come mainly from medical equipment",
+          "Microplastics come mainly from car tires and clothes made from synthetic fibers",
           "Microplastics come from many everyday sources and are extremely difficult to remove",
-          "Cleaning machines have already solved most of the ocean problem",
-          "Plastic breaks down into natural material soon after it reaches the sea"
+          "Scientists have now proved that microplastics cause serious harm to human health",
+          "Collecting microplastics after they spread is more realistic than preventing them"
         ],
         "answer": 1,
-        "explanation": "主旨題。第一段最後提出兩個問題（來源與清除），第二、三段回答來源，第四、五段解釋為何難以清除，全文正是圍繞這兩點。"
+        "explanation": "主旨題。第一段最後提出兩個問題：從哪裡來、為什麼難以清除；第二、三段回答來源，第四、五段解釋為何難清除，故選 B。A：第二段說多數微塑膠來自瓶子、包裝等物品碎裂，輪胎與合成纖維只是第三段的其他來源。C：第六段說還沒有明確結論，發現物質不等於證明有害。D：第七段說預防比事後收集實際得多，與選項相反。"
       },
       {
         "q": "According to the article, where do most microplastics come from?",
@@ -437,13 +437,13 @@
       {
         "q": "Why is filtering microplastics out of the ocean a problem?",
         "options": [
-          "Filters stop working in cold water",
-          "Filters are banned in most parts of the ocean",
+          "Filters would need to be replaced so often that the cost would be too high",
+          "Water treatment plants have already removed most of the particles",
           "A filter fine enough would also trap tiny living things",
-          "Filters make the plastic pieces grow larger"
+          "The particles stay in one deep place that filters cannot reach"
         ],
         "answer": 2,
-        "explanation": "細節題。第四段指出，細到能攔住微塑膠的濾網也會攔下浮游生物，而那正是海洋食物鏈依賴的小生物。"
+        "explanation": "細節題。第四段第三句 Any filter fine enough to trap microplastics would also trap plankton，細到能攔住微塑膠的濾網也會攔下浮游生物，故選 C。A：文中沒有提到更換濾網或成本。B：第三段只說沒有一座處理廠能攔下每一條纖維，沒有說已經清掉大部分，也不是海洋過濾困難的原因。D：第四段說顆粒同時存在於水中、沉積物與空氣，沒有單一地點，與選項相反。"
       },
       {
         "q": "What can be inferred about plastic being durable?",
@@ -459,13 +459,13 @@
       {
         "q": "What does the writer suggest about the health effects of microplastics?",
         "options": [
-          "Research has already proved that they are completely safe",
+          "Research has already shown that they are completely safe in food and drinking water",
           "The evidence is not complete, and that uncertainty should not be read as good news",
-          "They make everyone who eats fish become ill",
-          "Scientists have decided to stop studying the question"
+          "Finding them in food and water already shows that they harm human health",
+          "Scientists have decided to stop studying the question because it cannot be answered"
         ],
         "answer": 1,
-        "explanation": "推論題。第六段說結論尚未明確，並指出「檢出物質不等於證明有害」，最後一句更點明這種謹慎有時被誤讀成好消息，暗示讀者不該把不確定當成安全保證。"
+        "explanation": "推論題。第六段說結論尚未明確，並指出檢出物質不等於證明有害；末句說這種謹慎有時被報導成好消息，which it is not，可推知作者認為不確定不能當成安全的保證，故選 B。A：文中說還沒有明確結論，沒有證明安全。C：第六段明說發現物質不等於證明它有害，與選項相反。D：第六段說研究者正在研究人體吸收後的影響，沒有說要停止。"
       }
     ],
     "image": "img/articles/art-18b.jpg"

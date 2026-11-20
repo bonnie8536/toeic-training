@@ -21,10 +21,10 @@
       {
         "q": "What is the problem at the beginning of the conversation?",
         "options": [
-          "The woman cannot find the meeting link",
-          "The meeting room is being used by another team",
-          "The man has not prepared his materials",
-          "The man's video is not working properly"
+          "The woman cannot find the meeting link.",
+          "The meeting room is being used by another team.",
+          "The man has not prepared his materials.",
+          "The man's video is not working properly."
         ],
         "answer": 3,
         "explanation": "定位在前兩句：男子說 something's wrong with my microphone（我的麥克風好像有問題），女子回 I can hear you fine, but your video is frozen（我聽得很清楚，但你的畫面卡住了）。聲音其實沒問題，真正出狀況的是畫面，選 (D)。(A) 兩人已經在同一個會議中，沒有找不到連結的問題；(B) 全程沒有提到會議室；(C) 男子只關掉正在看的檔案，不是沒準備資料。"
@@ -142,10 +142,10 @@
       {
         "q": "What is the main disadvantage of Weston Office Direct?",
         "options": [
-          "It charges more than the other company",
-          "Its deliveries take too long",
-          "It requires a large minimum order",
-          "It does not sell printer paper"
+          "It charges more than the other company.",
+          "Its deliveries take too long.",
+          "It requires a large minimum order.",
+          "It does not sell printer paper."
         ],
         "answer": 1,
         "explanation": "定位在男子第一次發言：Weston Office Direct is cheaper on paper and folders, but delivery takes about a week（Weston 的紙和資料夾比較便宜，但到貨要一星期），女子隨即說公司常在那之前就把影印紙用完，後面也一直圍繞到貨時間在比較。主要缺點是出貨太慢，選 (B)。(A) 恰好相反，Weston 比較便宜；(C) 男子只說 Nakamura 沒有最低訂購量，從頭到尾沒有說 Weston 要求最低訂購量，更沒有說數量很大，題目問的是兩人在意的主要缺點，不能只靠對比去推；(D) Weston 有賣紙，只是送得慢。"

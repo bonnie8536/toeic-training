@@ -3,7 +3,7 @@
     "id": "p6-b6-1",
     "passageType": "email",
     "title": "Apology for Shipping Delay (Order MS-4820)",
-    "passage": "To: Daniel Whitcomb <d.whitcomb@brightpath-retail.com>\nFrom: Carla Nunes <c.nunes@meridiansupply.com>\nDate: 14 October\nSubject: Order MS-4820\n\nDear Mr. Whitcomb,\n\nI am writing to apologize for the delay in {{1}} your order MS-4820. The office chairs you ordered were scheduled to leave our warehouse last Friday, but a problem with our supplier in Taichung has held up production. {{2}} We now expect the chairs to reach your Riverside office on 22 October.\n\nBecause the delay was our fault, we have removed the shipping charge from your invoice and applied a ten percent discount to your next order. If the new date is not {{3}}, please call me directly and I {{4}} a partial shipment instead.\n\nSincerely,\nCarla Nunes\nCustomer Accounts, Meridian Supply",
+    "passage": "To: Daniel Whitcomb <d.whitcomb@example.com>\nFrom: Carla Nunes <c.nunes@example.org>\nDate: 14 October\nSubject: Order MS-4820\n\nDear Mr. Whitcomb,\n\nI am writing to apologize for the delay in {{1}} your order MS-4820. The office chairs you ordered were scheduled to leave our warehouse last Friday, but a problem with our supplier in Taichung has held up production. {{2}} We now expect the chairs to reach your Riverside office on 22 October.\n\nBecause the delay was our fault, we have removed the shipping charge from your invoice and applied a ten percent discount to your next order. If the new date is not {{3}}, please call me directly and I {{4}} a partial shipment instead.\n\nSincerely,\nCarla Nunes\nCustomer Accounts, Meridian Supply",
     "questions": [
       {
         "num": 1,
@@ -39,7 +39,7 @@
         "explanation": "整句是 If 引導的條件句，主要子句 please call me directly and I ___ 說的是「若您來電，我方之後會怎麼處理」，屬於尚未發生的安排，要用未來式 will arrange，故選 B。選項 A arranged 是過去式，但分批出貨還沒安排；選項 C have arranged 是現在完成式，表示動作已完成，與「先來電、我再處理」的先後順序不合；選項 D arranging 是現在分詞，前面沒有助動詞，無法單獨當句子的動詞。"
       }
     ],
-    "translation": "收件者：Daniel Whitcomb <d.whitcomb@brightpath-retail.com>\n寄件者：Carla Nunes <c.nunes@meridiansupply.com>\n日期：10 月 14 日\n主旨：訂單 MS-4820\n\nWhitcomb 先生您好：\n\n來信是為了訂單 MS-4820 出貨延誤一事向您致歉。您訂購的辦公椅原訂上週五自本公司倉庫出貨，但我們台中的供應商發生問題，導致生產進度受阻。我們等待的零件昨天終於送達。目前預計這批椅子會在 10 月 22 日送抵貴公司 Riverside 辦公室。\n\n由於這次延誤是我方的疏失，我們已將運費自您的帳單中扣除，並在您下次訂購時提供九折優惠。若這個新日期您無法接受，請直接來電給我，我會改以分批出貨的方式處理。\n\n謹此\nCarla Nunes\nMeridian Supply 客戶帳務部"
+    "translation": "收件者：Daniel Whitcomb <d.whitcomb@example.com>\n寄件者：Carla Nunes <c.nunes@example.org>\n日期：10 月 14 日\n主旨：訂單 MS-4820\n\nWhitcomb 先生您好：\n\n來信是為了訂單 MS-4820 出貨延誤一事向您致歉。您訂購的辦公椅原訂上週五自本公司倉庫出貨，但我們台中的供應商發生問題，導致生產進度受阻。我們等待的零件昨天終於送達。目前預計這批椅子會在 10 月 22 日送抵貴公司 Riverside 辦公室。\n\n由於這次延誤是我方的疏失，我們已將運費自您的帳單中扣除，並在您下次訂購時提供九折優惠。若這個新日期您無法接受，請直接來電給我，我會改以分批出貨的方式處理。\n\n謹此\nCarla Nunes\nMeridian Supply 客戶帳務部"
   },
   {
     "id": "p6-b6-2",
@@ -50,9 +50,9 @@
       {
         "num": 1,
         "type": "文法",
-        "options": ["closing", "will be closed", "has closed", "to close"],
+        "options": ["closing", "will be closed", "has just closed", "to close"],
         "answer": 1,
-        "explanation": "主詞 The main parking lot 是「被關閉」的對象，動作由施工單位執行，因此要用被動語態；而 from 3 March through 20 March 指向尚未到來的期間，時態要用未來式，故選 B will be closed。選項 A closing 是現在分詞，前面沒有 be 動詞，整句會缺少完整的動詞；選項 C has closed 是現在完成式，表示關閉已經發生，與 3 月 3 日到 20 日這段尚未開始的施工期間不合，也不能搭配 from ... through 的起訖期間；選項 D to close 是不定詞，不能當句子的主要動詞。"
+        "explanation": "主詞 The main parking lot 是「被關閉」的對象，動作由施工單位執行，因此要用被動語態；而 from 3 March through 20 March 指向尚未到來的期間，時態要用未來式，故選 B will be closed。選項 A closing 是現在分詞，前面沒有 be 動詞，整句會缺少完整的動詞；選項 C has just closed 是現在完成式，表示關閉已經發生，與 3 月 3 日到 20 日這段尚未開始的施工期間不合，也不能搭配 from ... through 的起訖期間；選項 D to close 是不定詞，不能當句子的主要動詞。"
       },
       {
         "num": 2,

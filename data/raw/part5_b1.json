@@ -124,10 +124,10 @@
     "difficulty": "中級",
     "category": "動詞時態與語態",
     "question": "Please be advised that the elevator on the east side of Merrion Office Tower ------- and will not be available until Thursday afternoon.",
-    "options": ["is being serviced", "services", "is servicing", "has serviced"],
+    "options": ["is being serviced", "services", "is currently servicing", "has serviced"],
     "answer": 0,
     "translation": "謹此通知，Merrion 辦公大樓東側電梯正在進行保養，至週四下午前無法使用。",
-    "explanation": "考點：現在進行式被動語態。電梯是被保養的對象，且動作正在進行中，故用 (A) is being serviced。(B) services 是主動的現在簡單式，語意變成電梯替別的東西做保養。(C) is servicing 是主動進行式，語態錯誤。(D) has serviced 是主動的現在完成式，語態與語意皆不合。"
+    "explanation": "考點：現在進行式被動語態。電梯是被保養的對象，且動作正在進行中，故用 (A) is being serviced。(B) services 是主動的現在簡單式，語意變成電梯替別的東西做保養。(C) is currently servicing 是主動進行式，語態錯誤。(D) has serviced 是主動的現在完成式，語態與語意皆不合。"
   },
   {
     "id": "p5-b1-14",
@@ -144,10 +144,10 @@
     "difficulty": "進階",
     "category": "動詞時態與語態",
     "question": "By next April, Harrowgate Foods ------- its regional distribution center for ten years.",
-    "options": ["operates", "will have operated", "had operated", "has operated"],
+    "options": ["operates", "will have operated", "had been operating", "has operated"],
     "answer": 1,
     "translation": "到明年四月，Harrowgate Foods 經營其區域配送中心就滿十年了。",
-    "explanation": "考點：未來完成式。By next April 是未來的時間基準點，搭配 for ten years 表示到那時為止已累積十年，須用 (B) will have operated。(A) operates 是現在簡單式，無法表達累積到未來某時點。(C) had operated 是過去完成式，基準點落在過去。(D) has operated 是現在完成式，累積到現在為止，與 next April 衝突。"
+    "explanation": "考點：未來完成式。By next April 是未來的時間基準點，搭配 for ten years 表示到那時為止已累積十年，須用 (B) will have operated。(A) operates 是現在簡單式，無法表達累積到未來某時點。(C) had been operating 是過去完成進行式，基準點落在過去。(D) has operated 是現在完成式，累積到現在為止，與 next April 衝突。"
   },
   {
     "id": "p5-b1-16",

@@ -1015,7 +1015,7 @@ TOEIC.ear = {
     "forty"
    ],
    "answer": 0,
-   "note": "最可靠的線索是字尾：fourteen 一定聽得到 n，-teen 也拉得比較長；forty 沒有 n，第二音節短促。重音別太依賴——fourteen 後面接名詞時，重音常會往前移到 four。",
+   "note": "最可靠的線索是字尾：fourteen 一定聽得到 n，-teen 也拉得比較長；forty 沒有 n，第二音節短促。重音別太依賴，fourteen 後面接名詞時，重音常會往前移到 four。",
    "zh": "明天的訓練課程我們需要十四張椅子。",
    "level": "初級"
   },
@@ -1135,7 +1135,7 @@ TOEIC.ear = {
     "extensive"
    ],
    "answer": 1,
-   "note": "expensive 第二音節是 pen，p 是雙唇爆破音；extensive 是 ten，前面還卡了一段 ks 的擠壓音。",
+   "note": "兩個字開頭都是 ex（唸成 ik 再接 s），差別只在 s 後面的子音：expensive 是 p（-pen-），雙唇先閉起再放開；extensive 是 t（-ten-），舌尖抵住上齒齦再放開。這個 p、t 緊跟在 s 後面，幾乎不送氣，要專心聽是嘴唇還是舌尖在動。",
    "zh": "他們在進入當地市場前做了廣泛的研究。",
    "level": "進階"
   },
@@ -1147,7 +1147,7 @@ TOEIC.ear = {
     "assistance"
    ],
    "answer": 0,
-   "note": "assistant 字尾收在 t，聲音戛然而止；assistance 字尾是 s 摩擦音，氣流會拉出一小段。",
+   "note": "這句的關鍵在連音：後面接的是母音開頭的 available。assistant 字尾的 t 會直接連過去，聽起來像 assistan-tavailable，中間有舌尖輕彈一下的 t；assistance 字尾是 s，連起來像 assistan-savailable，中間是一段嘶嘶的摩擦音。",
    "zh": "今天辦公室裡沒有助理可以幫忙。",
    "level": "進階"
   },
@@ -1279,7 +1279,7 @@ TOEIC.ear = {
     "photographer"
    ],
    "answer": 0,
-   "note": "photograph 重音在第一音節，三個音節長度差不多，字尾是 f 的摩擦音；photographer 重音移到第二音節 -tog，前後音節都被壓扁，尾巴多一個捲舌的 -er。",
+   "note": "photograph 重音在第一音節 pho-，中間的 to 輕輕帶過，最後的 -graph 母音完整、收在 f 的摩擦音；photographer 重音移到第二音節 -tog，第一音節被壓成輕音，尾巴還多一個捲舌的 -er。",
    "zh": "他們要求週五前提供那張照片。",
    "level": "進階"
   },
@@ -1339,7 +1339,7 @@ TOEIC.ear = {
     "employer"
    ],
    "answer": 1,
-   "note": "employee 重音在最後的 -ee，尾音又長又高，嘴角往兩側拉；employer 重音落在中間的 -ploy，尾巴只是一個輕輕的捲舌 -er，音高往下掉。",
+   "note": "最可靠的線索是字尾：employer 收在輕輕的捲舌 -er，音高往下掉；employee 收在長而清楚的 ee（像 eat 的母音），嘴角往兩側拉。employee 的重音有人放在 -ploy、也有人放在最後的 -ee，所以別只靠重音判斷。",
    "zh": "資方沒有任何討論就同意了新條件。",
    "level": "進階"
   },
@@ -1551,7 +1551,7 @@ TOEIC.ear = {
     "16 年"
    ],
    "answer": 2,
-   "note": "seventeen 重音落在 -TEEN，整個字有三拍且尾音上揚；seventy 重音在 SEV-，尾音輕輕帶過。",
+   "note": "seventeen 唸成 sev-en-TEEN，重音在最後的 -teen，母音拉長，尾音有清楚的 /n/；seventy 唸成 SEV-en-ty，重音在第一音節，字尾 -ty 輕短。兩個字都是三個音節，要靠重音位置和尾音分辨。",
    "zh": "她在這家公司已經待了十七年。",
    "level": "初級"
   },
@@ -1611,7 +1611,7 @@ TOEIC.ear = {
     "$299"
    ],
    "answer": 1,
-   "note": "口語報價常省略 dollars 和 cents，two ninety-nine 就是 $2.99；前半是元、後半是分。",
+   "note": "口語報價常省略 dollars 和 cents，前半是元、後半是分，two ninety-nine 就是 $2.99。同樣的唸法用在家電等高價商品上也可能是 $299，所以要看情境：一份三明治用折價券後不會是兩百多元。$2.90 少了尾數 nine，$2.09 則要聽到 two oh nine。",
    "zh": "用折價券的話，三明治是 2.99 元。",
    "level": "中級"
   },
@@ -1836,7 +1836,7 @@ TOEIC.ear = {
     "9 月 29 日"
    ],
    "answer": 2,
-   "note": "twenty-ninth 和 nineteenth 尾音都是 -ninth，要靠前面的 twenty- 分辨；日期在前、月份在後，別把 29 和 June 的順序對調。",
+   "note": "twenty-ninth 是 29 日；只抓到後半的 ninth 會誤選 9 日。nineteenth（19 日）唸成 nine-TEENTH，結尾是 -teenth，和 twenty-ninth 的開頭也不同。月份是 June（6 月），別因為聽到 ninth 的「九」就選成 9 月。",
    "zh": "工作坊在六月二十九日。",
    "level": "初級"
   },
@@ -1866,8 +1866,8 @@ TOEIC.ear = {
     "952"
    ],
    "answer": 2,
-   "note": "說話者中途更正號碼，sorry / make that 之後的才算數，記下第一次聽到的 527 就會答錯。另外兩個誘答是把末兩碼或整組順序聽顛倒。",
-   "zh": "帳務請撥分機五二七——抱歉，應該是五二九。",
+   "note": "說話者中途更正號碼，sorry 和 make that 之後的 five two nine 才算數，記下第一次聽到的 527 就會答錯。572 是把 527 的後兩碼聽顛倒，952 是把 9 錯放到最前面，順序都和更正後的 529 不同。",
+   "zh": "帳務請撥分機五二七，抱歉，應該是五二九。",
    "level": "進階"
   },
   {
@@ -2031,7 +2031,7 @@ TOEIC.ear = {
     "G1306"
    ],
    "answer": 3,
-   "note": "thirteen oh six 是 13＋0＋6＝1306。thirteen 重音在後，聽成 thirty 就會寫成 3006；oh 一定要記成 0 而不是漏掉。",
+   "note": "thirteen oh six 是 13、0、6 依序連起來，也就是 1306。thirteen 重音在後，聽成 thirty 就會寫成 3006；oh 一定要記成 0，不能漏掉，也不要把後兩碼寫反成 1360。",
    "zh": "請記一下訂單編號 G 一三〇六。",
    "level": "進階"
   },

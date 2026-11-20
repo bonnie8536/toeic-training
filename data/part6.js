@@ -126,11 +126,11 @@ TOEIC.part6 = [
     "options": [
      "will be towed",
      "will tow",
-     "are towing",
+     "have been towing",
      "have towed"
     ],
     "answer": 0,
-    "explanation": "考語態。主詞 Vehicles 是「被拖吊」的對象，須用被動語態；封閉期間屬於未來時間，故選 will be towed，其後的 at the owner's expense 也印證車主是承受方。will tow、are towing、have towed 都是主動語態，語意會變成車輛去拖吊別的東西，不合常理。"
+    "explanation": "考語態。主詞 Vehicles 是「被拖吊」的對象，須用被動語態；封閉期間屬於未來時間，故選 will be towed，其後的 at the owner's expense 也印證車主是承受方。will tow、have been towing、have towed 都是主動語態，語意會變成車輛去拖吊別的東西，不合常理。"
    },
    {
     "num": 2,
@@ -275,12 +275,12 @@ TOEIC.part6 = [
     "type": "文法",
     "options": [
      "can be arranged",
-     "can arrange",
+     "can then arrange",
      "arranging",
      "to arrange"
     ],
     "answer": 0,
-    "explanation": "考語態。so that 子句的主詞 an alternative appointment 是「被安排」的對象，須用被動語態 can be arranged。can arrange 是主動語態，語意變成預約時段自己去安排別的事，不合邏輯；arranging 與 to arrange 都是非限定形式，填入後 so that 子句便缺少限定動詞，句構不完整。"
+    "explanation": "考語態。so that 子句的主詞 an alternative appointment 是「被安排」的對象，須用被動語態 can be arranged。can then arrange 是主動語態，語意變成預約時段自己去安排別的事，不合邏輯；arranging 與 to arrange 都是非限定形式，填入後 so that 子句便缺少限定動詞，句構不完整。"
    }
   ],
   "translation": "Kestrel 家電\nAshcombe 市 Fenwick 路 48 號\n\n11 月 3 日\n\nDana Okonjo 女士\nAshcombe 市 Larkspur 巷 17 號\n\nOkonjo 女士 您好：\n\n感謝您就 6 月於本公司 Ashcombe 展示中心所購買的洗碗機與我們聯繫。經查，該機仍在兩年保固期內。\n\n技師將於 11 月 12 日（星期四）上午 9 時至中午之間到府，查明您所描述的排水問題。屆時請確保有年滿十八歲的人員在場。到府服務與所需零件均不另行收費。\n\n若該日期不便，請於星期五前致電本公司服務專線，以便另行安排時段。\n\n敬祝 商安\n\n客戶服務部經理 Elliot Sung 敬上"
@@ -397,7 +397,7 @@ TOEIC.part6 = [
     "explanation": "這一段說歡迎顧客把不看的書拿來賣，店家當天就會給價，make you a fair offer 是「開一個公道的價錢給你」的固定說法，offer 指出價。receipt 是收據，收書時給的是報價而不是收據；order 是訂單，用在下單購買的情境；amount 是金額數字本身，不能和 make 搭配成 make you an amount。"
    }
   ],
-  "translation": "二章書屋 —— 楓樹街新店開幕\n\n經過兩年籌備，二章書屋終於在楓樹街開幕了。我們的書架上有超過兩萬本二手書，從食譜、旅遊指南到兒童繪本都有，而且幾乎每一本的定價都在 8 美元以下。\n\n想找的書店裡沒有嗎？我們的店員會把它列入待調書單，一有書進來就通知您。\n\n歡迎在 4 月 4 日與 5 日的開幕週末來逛逛。消費滿 20 美元即贈帆布袋一只。在地作家吉娜・魯伊茲也會在週六下午到店簽書。\n\n我們同時收書。把您不再閱讀的書帶來，我們當天就給您一個公道的價錢。\n\n楓樹街 41 號，每日上午 10 點至晚間 7 點營業。"
+  "translation": "二章書屋：楓樹街新店開幕\n\n經過兩年籌備，二章書屋終於在楓樹街開幕了。我們的書架上有超過兩萬本二手書，從食譜、旅遊指南到兒童繪本都有，而且幾乎每一本的定價都在 8 美元以下。\n\n想找的書店裡沒有嗎？我們的店員會把它列入待調書單，一有書進來就通知您。\n\n歡迎在 4 月 4 日與 5 日的開幕週末來逛逛。消費滿 20 美元即贈帆布袋一只。在地作家吉娜・魯伊茲也會在週六下午到店簽書。\n\n我們同時收書。把您不再閱讀的書帶來，我們當天就給您一個公道的價錢。\n\n楓樹街 41 號，每日上午 10 點至晚間 7 點營業。"
  },
  {
   "id": "p6-b10-3",
@@ -411,8 +411,8 @@ TOEIC.part6 = [
     "options": [
      "The workshop has been postponed until the autumn.",
      "Train tickets can be bought at the station office.",
-     "Copies of last year's program are kept in the file room.",
-     "Anyone who arrives after the bus has left will need to travel to the center on their own."
+     "Copies of last year's program are still kept in the file room.",
+     "Anyone arriving after the bus leaves must travel to the center alone."
     ],
     "answer": 3,
     "explanation": "空格前一句說交通車七點十五分發車、請七點前抵達，空格這句要延續交通這件事。選項 D 說車子開走之後才到的人得自己想辦法前往會場，正好強調準時的重要，語意銜接自然。選項 A 說研習延到秋天，和信件開頭「下週一開始」直接矛盾；選項 B 提到火車票在車站購買，但本文安排的是公司交通車，沒有搭火車的規劃；選項 C 講去年的議程放在檔案室，和行前提醒無關。"
@@ -468,11 +468,11 @@ TOEIC.part6 = [
     "options": [
      "removing",
      "will be removed",
-     "have removed",
+     "have already removed",
      "will remove"
     ],
     "answer": 1,
-    "explanation": "主詞是 paper sign-up sheets（紙本登記表），紙本不會自己撤掉，而是被公司撤掉，所以要用被動語態；加上 30 June 是未來的日期，答案是未來被動 will be removed。removing 不是有時態的動詞；have removed 是主動的現在完成式，語態和時間都不對；will remove 是未來主動，會變成登記表要去撤掉別的東西，主詞和動作對不上。"
+    "explanation": "主詞是 paper sign-up sheets（紙本登記表），紙本不會自己撤掉，而是被公司撤掉，所以要用被動語態；加上 30 June 是未來的日期，答案是未來被動 will be removed。removing 不是有時態的動詞；have already removed 是主動的現在完成式，語態和時間都不對；will remove 是未來主動，會變成登記表要去撤掉別的東西，主詞和動作對不上。"
    },
    {
     "num": 2,
@@ -524,12 +524,12 @@ TOEIC.part6 = [
     "type": "文法",
     "options": [
      "relocating",
-     "have relocated",
+     "have all relocated",
      "will be relocated",
      "to relocate"
     ],
     "answer": 2,
-    "explanation": "考動詞語態與時態。主詞 personnel（人員）是被公司安排搬遷的對象，且時間點是 4 月 6 日起的未來事件，故用未來被動 will be relocated。(A) relocating 是現在分詞，前面沒有 be 動詞，整句會缺少主要動詞；(B) have relocated 是主動完成式，語意變成人員自己已經搬完，與 Beginning Monday, April 6 的未來時間互相矛盾；(D) to relocate 是不定詞，同樣無法充當句子的主要動詞。"
+    "explanation": "考動詞語態與時態。主詞 personnel（人員）是被公司安排搬遷的對象，且時間點是 4 月 6 日起的未來事件，故用未來被動 will be relocated。(A) relocating 是現在分詞，前面沒有 be 動詞，整句會缺少主要動詞；(B) have all relocated 是主動完成式，語意變成人員自己已經搬完，與 Beginning Monday, April 6 的未來時間互相矛盾；(D) to relocate 是不定詞，同樣無法充當句子的主要動詞。"
    },
    {
     "num": 2,
@@ -625,7 +625,7 @@ TOEIC.part6 = [
     "explanation": "考名詞字彙與搭配。advantage over 是固定搭配，指「勝過某對象的優勢」，符合零售商認為到貨更快因而勝過網路賣家的語意。(A) profit 指利潤、(B) progress 指進展、(D) achievement 指成就，三者都不與介系詞 over 搭配，語意上也無法表達「相較於競爭者的優勢」。"
    }
   ],
-  "translation": "Callister 貨運開設北部轉運中心\n\n里弗頓（6 月 3 日）——Callister 貨運解決方案公司上週在 Harlow 路啟用新的物流配送中心。該設施預計可將公司在北部地區的運能提升近四成。中心雇用 180 名員工，其中多數為在地招募。廠區內另設有一條全自動分揀線。營運長 Denise Aguilar 表示，這套系統將可讓下午 2 點前收到的訂單當日處理完畢。當地零售商對此消息表示歡迎。「更快的配送讓我們相較於網路賣家有了實質優勢，」在鄰近 Fenwick 經營五金行的 Peter Nkosi 說。"
+  "translation": "Callister 貨運開設北部轉運中心\n\n里弗頓（6 月 3 日）：Callister 貨運解決方案公司上週在 Harlow 路啟用新的物流配送中心。該設施預計可將公司在北部地區的運能提升近四成。中心雇用 180 名員工，其中多數為在地招募。廠區內另設有一條全自動分揀線。營運長 Denise Aguilar 表示，這套系統將可讓下午 2 點前收到的訂單當日處理完畢。當地零售商對此消息表示歡迎。「更快的配送讓我們相較於網路賣家有了實質優勢，」在鄰近 Fenwick 經營五金行的 Peter Nkosi 說。"
  },
  {
   "id": "p6-b2-3",
@@ -682,7 +682,7 @@ TOEIC.part6 = [
     "explanation": "考形容詞字彙。水箱裡沒有水、需要加水，用 empty 描述容器裡空無一物。(B) vacant 用於無人使用的房間、座位或職缺；(C) blank 指未填寫的表格或空白畫面；(D) open 指容器蓋子開著、未關閉的狀態，三者都不用來說明容器缺少液體。"
    }
   ],
-  "translation": "BrewMaster 300 — 快速入門指南\n\n感謝您購買 BrewMaster 300 咖啡機。首次使用前，請徹底沖洗水箱，並將水注至最高水位線。請將機器放置在平坦乾燥的檯面上，並與牆面保持至少十公分的距離。接著插上電源線，讓機器預熱約兩分鐘。待指示燈轉為綠色後，放入膠囊並按下沖煮鍵。若十五分鐘內未使用，機器會自動進入待機模式。若指示燈閃紅燈，表示水箱已空，必須加水後才能繼續沖煮。"
+  "translation": "BrewMaster 300：快速入門指南\n\n感謝您購買 BrewMaster 300 咖啡機。首次使用前，請徹底沖洗水箱，並將水注至最高水位線。請將機器放置在平坦乾燥的檯面上，並與牆面保持至少十公分的距離。接著插上電源線，讓機器預熱約兩分鐘。待指示燈轉為綠色後，放入膠囊並按下沖煮鍵。若十五分鐘內未使用，機器會自動進入待機模式。若指示燈閃紅燈，表示水箱已空，必須加水後才能繼續沖煮。"
  },
  {
   "id": "p6-b2-4",
@@ -866,12 +866,12 @@ TOEIC.part6 = [
     "type": "文法",
     "options": [
      "relocating",
-     "has relocated",
+     "has already relocated",
      "will be relocated",
      "was relocating"
     ],
     "answer": 2,
-    "explanation": "考動詞形式與時態。空格是句子的主要動詞，句首 Beginning Monday, September 15 是公告日（9 月 3 日）之後的時間，要用未來式，故選 will be relocated（將遷至）。(A) relocating 是分詞，不能單獨當主要動詞，句子會缺少述語；(B) has relocated 是現在完成式，表示已經完成，與未來的時間點衝突；(D) was relocating 是過去進行式，同樣與未來的時間點衝突。"
+    "explanation": "考動詞形式與時態。空格是句子的主要動詞，句首 Beginning Monday, September 15 是公告日（9 月 3 日）之後的時間，要用未來式，故選 will be relocated（將遷至）。(A) relocating 是分詞，不能單獨當主要動詞，句子會缺少述語；(B) has already relocated 是現在完成式，表示已經完成，與未來的時間點衝突；(D) was relocating 是過去進行式，同樣與未來的時間點衝突。"
    },
    {
     "num": 2,
@@ -952,7 +952,7 @@ TOEIC.part6 = [
      "Salary information will not be provided to applicants at any stage."
     ],
     "answer": 1,
-    "explanation": "考前後文銜接。空格後一句提到「願意配合偶爾週末班者優先錄用」，主題是工作班表；正解先交代本職務採輪班制、每週四天、每天十小時，讓後句對週末班的要求有前提可依附，整段自成「工時制度—班別偏好」的完整說明。(A) 公司創立歷史與班表無關，接不上後句；(C) 十一月整月停工與廣告中「面試將於次週（即十一月初）開始」矛盾，也接不上後句的班表主題；(D) 徵才廣告聲明全程不談薪資不合常理，也與後句的週末班主題無關。"
+    "explanation": "考前後文銜接。空格後一句提到「願意配合偶爾週末班者優先錄用」，主題是工作班表；正解先交代本職務採輪班制、每週四天、每天十小時，讓後句對週末班的要求有前提可依附，整段自成「工時制度與班別偏好」的完整說明。(A) 公司創立歷史與班表無關，接不上後句；(C) 十一月整月停工與廣告中「面試將於次週（即十一月初）開始」矛盾，也接不上後句的班表主題；(D) 徵才廣告聲明全程不談薪資不合常理，也與後句的週末班主題無關。"
    },
    {
     "num": 4,
@@ -994,7 +994,7 @@ TOEIC.part6 = [
      "The lobby floor will be repainted the following weekend.",
      "Both passenger elevators will be out of service for the entire month.",
      "Moving furniture into the building is not permitted on any day.",
-     "Access to that elevator requires a key card, which may be borrowed from the front desk."
+     "Access to that elevator requires a key card, available at the front desk."
     ],
     "answer": 3,
     "explanation": "考前後文銜接。前一句要求當天有搬運需求的租戶改用大廳後方的貨梯，正解緊接著補充使用該貨梯的實際做法（需門禁卡、可向櫃檯借用），資訊承接自然，也符合公告「告知替代方案」的功能。(A) 大廳粉刷與電梯使用無關，且時間點另在下週末；(B) 說兩部客梯整月停用，與公告中僅十月十八日一天檢修、且輪流檢修矛盾；(C) 說任何日子都禁止搬運家具，與前一句允許改用貨梯直接衝突。"
@@ -1054,7 +1054,7 @@ TOEIC.part6 = [
      "Ms. Corriveau will step down as president at the end of December."
     ],
     "answer": 2,
-    "explanation": "考前後文銜接。前一句指出擴廠是因應歐洲對再生布料日益增加的需求，正解以具體數據（近三年訂單成長一倍）佐證這項說法，後一句再說新廠將專門生產這類布料，三句構成「原因—佐證—因應」的完整脈絡；正解中的 those materials 也正好回指前句的 recycled fabrics。(A) 說今年沒有增聘人力的計畫，既無法佐證前句的需求成長，也與整篇擴廠、在地大量招募的基調相牴觸；(B) 人口減少與擴廠理由無關，且與大量在地招募的敘述不合；(D) 總裁請辭在全文中毫無依據，也打斷了段落主題。"
+    "explanation": "考前後文銜接。前一句指出擴廠是因應歐洲對再生布料日益增加的需求，正解以具體數據（近三年訂單成長一倍）佐證這項說法，後一句再說新廠將專門生產這類布料，三句構成「原因、佐證、因應」的完整脈絡；正解中的 those materials 也正好回指前句的 recycled fabrics。(A) 說今年沒有增聘人力的計畫，既無法佐證前句的需求成長，也與整篇擴廠、在地大量招募的基調相牴觸；(B) 人口減少與擴廠理由無關，且與大量在地招募的敘述不合；(D) 總裁請辭在全文中毫無依據，也打斷了段落主題。"
    },
    {
     "num": 3,
@@ -1315,7 +1315,7 @@ TOEIC.part6 = [
   "id": "p6-b4-5",
   "passageType": "advertisement",
   "title": "Copperline Kitchenware Fifteenth Anniversary Sale",
-  "passage": "COPPERLINE KITCHENWARE\nFifteenth Anniversary Sale | 3-17 November\n\nFor fifteen years, Copperline Kitchenware has supplied home cooks and professional chefs with cookware built to last. To celebrate, we are {{1}} every item in our showroom and on our website by at least 25 percent for two weeks only.\n\nShoppers who spend $150 or more will also receive a free set of bamboo utensils. {{2}} Members of the Copperline Club earn double points on all purchases made {{3}} the sale.\n\nVisit us at 400 Whitfield Road, or shop online at www.copperlinekitchen.com. Quantities are {{4}}, so please come early for the best selection.",
+  "passage": "COPPERLINE KITCHENWARE\nFifteenth Anniversary Sale | 3-17 November\n\nFor fifteen years, Copperline Kitchenware has supplied home cooks and professional chefs with cookware built to last. To celebrate, we are {{1}} every item in our showroom and on our website by at least 25 percent for two weeks only.\n\nShoppers who spend $150 or more will also receive a free set of bamboo utensils. {{2}} Members of the Copperline Club earn double points on all purchases made {{3}} the sale.\n\nVisit us at 400 Whitfield Road, or shop online at www.example.com. Quantities are {{4}}, so please come early for the best selection.",
   "questions": [
    {
     "num": 1,
@@ -1366,7 +1366,7 @@ TOEIC.part6 = [
     "explanation": "考詞性與句型。空格接在 be 動詞 are 之後，需要形容詞（分詞形容詞）當主詞補語，(A) limited（有限的）正確，也與後句「請提早前來以獲得最佳選擇」呼應。(B) limit 是原形動詞或單數名詞，與複數主詞 Quantities 皆不搭配；(C) limiting 表「造成限制的」，語意不合；(D) limitation 是名詞，說「數量是限制」不通。"
    }
   ],
-  "translation": "COPPERLINE 廚具\n十五週年慶特賣｜11 月 3 日至 17 日\n\n十五年來，Copperline 廚具持續為居家料理者與專業廚師提供耐用的鍋具。為了慶祝週年，我們將展示間與網站上的所有商品降價至少 25%，為期僅兩週。\n\n消費滿 150 美元的顧客還可獲贈竹製餐具組一份。此贈品每位顧客限領一份，送完為止。Copperline 俱樂部會員於特賣期間的所有消費均可獲得雙倍點數。\n\n歡迎蒞臨 Whitfield 路 400 號門市，或上網選購：www.copperlinekitchen.com。數量有限，敬請提早前來選購。"
+  "translation": "COPPERLINE 廚具\n十五週年慶特賣｜11 月 3 日至 17 日\n\n十五年來，Copperline 廚具持續為居家料理者與專業廚師提供耐用的鍋具。為了慶祝週年，我們將展示間與網站上的所有商品降價至少 25%，為期僅兩週。\n\n消費滿 150 美元的顧客還可獲贈竹製餐具組一份。此贈品每位顧客限領一份，送完為止。Copperline 俱樂部會員於特賣期間的所有消費均可獲得雙倍點數。\n\n歡迎蒞臨 Whitfield 路 400 號門市，或上網選購：www.example.com。數量有限，敬請提早前來選購。"
  },
  {
   "id": "p6-b5-1",
@@ -1459,13 +1459,13 @@ TOEIC.part6 = [
     "num": 3,
     "type": "句子插入",
     "options": [
-     "We are still waiting for the branch manager to approve the trip.",
-     "The hotel is a ten-minute walk from the branch office, so you will not need ground transport during the week.",
+     "We are still waiting for the branch manager to approve the trip, which may take days.",
+     "The hotel is only a ten-minute walk from the branch office.",
      "Please arrange your own accommodation once you arrive in Osaka.",
      "Unfortunately, no flights were available on the dates you requested."
     ],
     "answer": 1,
-    "explanation": "空格前一句提到司機會送他到北濱花園飯店，選項 B 接著補充飯店與分公司只距十分鐘路程、因此這一週不必另外安排地面交通，緊扣前句的飯店資訊，是唯一自然的銜接。選項 A 說還在等分公司主管核准出差，與信件開頭「我已敲定行程」矛盾；選項 C 要收件者自行訂住宿，與飯店已訂妥矛盾；選項 D 說沒有可用班機，與前面已明確列出去回程時間互相牴觸。"
+    "explanation": "空格前一句提到司機會送他到北濱花園飯店，選項 B 接著補充飯店離分公司步行只要十分鐘，緊扣前句的飯店資訊，是唯一自然的銜接。選項 A 說還在等分公司主管核准出差，與信件開頭「我已敲定行程」矛盾；選項 C 要收件者自行訂住宿，與飯店已訂妥矛盾；選項 D 說沒有可用班機，與前面已明確列出去回程時間互相牴觸。"
    },
    {
     "num": 4,
@@ -1480,7 +1480,7 @@ TOEIC.part6 = [
     "explanation": "within two weeks of your return 意為「返國後兩週內」，within 表示在某期限之內完成，是說明報帳期限的固定用法。during 後面須接一段特定期間（如 during the trip），不能說 during two weeks of...；among 用於三者以上之中；throughout 強調「整段期間自始至終」，與「在期限內送出」的語意不合。"
    }
   ],
-  "translation": "收件者：Daniel Ortega，產品工程部\n寄件者：Priya Raman，差旅協調專員\n主旨：3 月 17 至 21 日大阪據點出差\n日期：3 月 3 日\n\nDaniel 您好：\n\n我已經敲定您即將前往大阪分公司的差旅安排。您的班機於 3 月 17 日上午 8 點 40 分自第二航廈起飛，回程班機則於 3 月 21 日晚上 9 點 15 分抵達。一位名叫佐藤健二的司機會在入境大廳接您，並送您到北濱花園飯店。飯店距離分公司步行只需十分鐘，因此您這一週不需要另外安排地面交通。請注意，餐費收據必須在您返國後兩週內送出；財務部不會受理逾期的請款。若行程確認無誤，直接回覆這封信即可，我會著手開票。\n\n祝好\nPriya"
+  "translation": "收件者：Daniel Ortega，產品工程部\n寄件者：Priya Raman，差旅協調專員\n主旨：3 月 17 至 21 日大阪據點出差\n日期：3 月 3 日\n\nDaniel 您好：\n\n我已經敲定您即將前往大阪分公司的差旅安排。您的班機於 3 月 17 日上午 8 點 40 分自第二航廈起飛，回程班機則於 3 月 21 日晚上 9 點 15 分抵達。一位名叫佐藤健二的司機會在入境大廳接您，並送您到北濱花園飯店。飯店距離分公司步行只需十分鐘。請注意，餐費收據必須在您返國後兩週內送出；財務部不會受理逾期的請款。若行程確認無誤，直接回覆這封信即可，我會著手開票。\n\n祝好\nPriya"
  },
  {
   "id": "p6-b5-3",
@@ -1504,13 +1504,13 @@ TOEIC.part6 = [
     "num": 2,
     "type": "句子插入",
     "options": [
-     "The aim is to hold inventory within a short drive of the customers who order it.",
+     "The aim is to keep stock close to the customers who order it.",
      "Port authorities have consequently lowered their handling charges.",
      "Most of these operators began as family-owned trucking companies.",
      "Frozen food must be kept at eighteen degrees below zero."
     ],
     "answer": 0,
-    "explanation": "空格前說明業者改在住宅區周邊開設小型據點，空格後引用分析師的話，指配送時間平均縮短四小時。選項 A 點出這麼做的目的是把庫存放在離下單顧客車程很短的地方，既解釋前句的做法，也讓後句的成效有了因果依據。選項 B 說港務單位因此調降裝卸費，前文推不出這個結論；選項 C 談業者的家族貨運出身，與段落論述無關；選項 D 只是冷凍溫度的常識，未承接前後文。"
+    "explanation": "空格前說明業者改在住宅區周邊開設小型據點，空格後引用分析師的話，指配送時間平均縮短四小時。選項 A 點出這麼做的目的是把庫存放在靠近下單顧客的地方，既解釋前句的做法，也讓後句的成效有了因果依據。選項 B 說港務單位因此調降裝卸費，前文推不出這個結論；選項 C 談業者的家族貨運出身，與段落論述無關；選項 D 只是冷凍溫度的常識，未承接前後文。"
    },
    {
     "num": 3,
@@ -1564,7 +1564,7 @@ TOEIC.part6 = [
      "All claims filed in September have already been reimbursed.",
      "The current system will remain in use until the end of the fiscal year.",
      "Please contact the payroll office if your bank details have changed.",
-     "The work has been scheduled for a weekend so that disruption to daily operations is kept to a minimum."
+     "The work is scheduled for a weekend to minimize disruption to daily operations."
     ],
     "answer": 3,
     "explanation": "空格前說明停機期間無法送出或審核請款單，空格後轉而介紹升級完成後的新功能。選項 D 說明把作業排在週末是為了把對日常營運的干擾降到最低，既回應前句造成的不便，也讓語氣自然轉向正面。選項 A 談九月請款已撥付，與升級無關；選項 B 說現行系統會沿用到會計年度結束，與整份備忘錄的升級安排矛盾；選項 C 要同仁聯絡薪資部門更新帳戶資料，屬於另一件事。"
@@ -1619,9 +1619,9 @@ TOEIC.part6 = [
     "type": "句子插入",
     "options": [
      "Our head office relocated to Fairview Business Park last spring.",
-     "Unfortunately, we no longer offer courses in the manufacturing sector.",
-     "Enrollment figures have fallen steadily since our platform was launched.",
-     "The Halden Institute, meanwhile, is widely respected for its research on workplace safety."
+     "Unfortunately, we no longer offer any courses in the manufacturing sector.",
+     "Enrollment figures have fallen steadily ever since our platform was launched.",
+     "The Halden Institute, meanwhile, is widely respected for its workplace safety research."
     ],
     "answer": 3,
     "explanation": "空格前介紹自家公司的課程實績與平台規模，空格後說「把貴院的研究與本公司平台結合」。選項 D 先點出 Halden 研究院在職場安全研究上的聲譽，補上合作對象的長處，後句的 pairing your research with our platform 才有兩邊可以配對，銜接最完整。選項 A 談自家總部搬遷，與提案無關；選項 B 說不再提供製造業課程，反而削弱自己的賣點；選項 C 說招生人數持續下滑，與前一句「每月約四萬名活躍學員」自相矛盾。"
@@ -1657,7 +1657,7 @@ TOEIC.part6 = [
   "id": "p6-b6-1",
   "passageType": "email",
   "title": "Apology for Shipping Delay (Order MS-4820)",
-  "passage": "To: Daniel Whitcomb <d.whitcomb@brightpath-retail.com>\nFrom: Carla Nunes <c.nunes@meridiansupply.com>\nDate: 14 October\nSubject: Order MS-4820\n\nDear Mr. Whitcomb,\n\nI am writing to apologize for the delay in {{1}} your order MS-4820. The office chairs you ordered were scheduled to leave our warehouse last Friday, but a problem with our supplier in Taichung has held up production. {{2}} We now expect the chairs to reach your Riverside office on 22 October.\n\nBecause the delay was our fault, we have removed the shipping charge from your invoice and applied a ten percent discount to your next order. If the new date is not {{3}}, please call me directly and I {{4}} a partial shipment instead.\n\nSincerely,\nCarla Nunes\nCustomer Accounts, Meridian Supply",
+  "passage": "To: Daniel Whitcomb <d.whitcomb@example.com>\nFrom: Carla Nunes <c.nunes@example.org>\nDate: 14 October\nSubject: Order MS-4820\n\nDear Mr. Whitcomb,\n\nI am writing to apologize for the delay in {{1}} your order MS-4820. The office chairs you ordered were scheduled to leave our warehouse last Friday, but a problem with our supplier in Taichung has held up production. {{2}} We now expect the chairs to reach your Riverside office on 22 October.\n\nBecause the delay was our fault, we have removed the shipping charge from your invoice and applied a ten percent discount to your next order. If the new date is not {{3}}, please call me directly and I {{4}} a partial shipment instead.\n\nSincerely,\nCarla Nunes\nCustomer Accounts, Meridian Supply",
   "questions": [
    {
     "num": 1,
@@ -1708,7 +1708,7 @@ TOEIC.part6 = [
     "explanation": "整句是 If 引導的條件句，主要子句 please call me directly and I ___ 說的是「若您來電，我方之後會怎麼處理」，屬於尚未發生的安排，要用未來式 will arrange，故選 B。選項 A arranged 是過去式，但分批出貨還沒安排；選項 C have arranged 是現在完成式，表示動作已完成，與「先來電、我再處理」的先後順序不合；選項 D arranging 是現在分詞，前面沒有助動詞，無法單獨當句子的動詞。"
    }
   ],
-  "translation": "收件者：Daniel Whitcomb <d.whitcomb@brightpath-retail.com>\n寄件者：Carla Nunes <c.nunes@meridiansupply.com>\n日期：10 月 14 日\n主旨：訂單 MS-4820\n\nWhitcomb 先生您好：\n\n來信是為了訂單 MS-4820 出貨延誤一事向您致歉。您訂購的辦公椅原訂上週五自本公司倉庫出貨，但我們台中的供應商發生問題，導致生產進度受阻。我們等待的零件昨天終於送達。目前預計這批椅子會在 10 月 22 日送抵貴公司 Riverside 辦公室。\n\n由於這次延誤是我方的疏失，我們已將運費自您的帳單中扣除，並在您下次訂購時提供九折優惠。若這個新日期您無法接受，請直接來電給我，我會改以分批出貨的方式處理。\n\n謹此\nCarla Nunes\nMeridian Supply 客戶帳務部"
+  "translation": "收件者：Daniel Whitcomb <d.whitcomb@example.com>\n寄件者：Carla Nunes <c.nunes@example.org>\n日期：10 月 14 日\n主旨：訂單 MS-4820\n\nWhitcomb 先生您好：\n\n來信是為了訂單 MS-4820 出貨延誤一事向您致歉。您訂購的辦公椅原訂上週五自本公司倉庫出貨，但我們台中的供應商發生問題，導致生產進度受阻。我們等待的零件昨天終於送達。目前預計這批椅子會在 10 月 22 日送抵貴公司 Riverside 辦公室。\n\n由於這次延誤是我方的疏失，我們已將運費自您的帳單中扣除，並在您下次訂購時提供九折優惠。若這個新日期您無法接受，請直接來電給我，我會改以分批出貨的方式處理。\n\n謹此\nCarla Nunes\nMeridian Supply 客戶帳務部"
  },
  {
   "id": "p6-b6-2",
@@ -1722,11 +1722,11 @@ TOEIC.part6 = [
     "options": [
      "closing",
      "will be closed",
-     "has closed",
+     "has just closed",
      "to close"
     ],
     "answer": 1,
-    "explanation": "主詞 The main parking lot 是「被關閉」的對象，動作由施工單位執行，因此要用被動語態；而 from 3 March through 20 March 指向尚未到來的期間，時態要用未來式，故選 B will be closed。選項 A closing 是現在分詞，前面沒有 be 動詞，整句會缺少完整的動詞；選項 C has closed 是現在完成式，表示關閉已經發生，與 3 月 3 日到 20 日這段尚未開始的施工期間不合，也不能搭配 from ... through 的起訖期間；選項 D to close 是不定詞，不能當句子的主要動詞。"
+    "explanation": "主詞 The main parking lot 是「被關閉」的對象，動作由施工單位執行，因此要用被動語態；而 from 3 March through 20 March 指向尚未到來的期間，時態要用未來式，故選 B will be closed。選項 A closing 是現在分詞，前面沒有 be 動詞，整句會缺少完整的動詞；選項 C has just closed 是現在完成式，表示關閉已經發生，與 3 月 3 日到 20 日這段尚未開始的施工期間不合，也不能搭配 from ... through 的起訖期間；選項 D to close 是不定詞，不能當句子的主要動詞。"
    },
    {
     "num": 2,
@@ -2201,12 +2201,12 @@ TOEIC.part6 = [
     "type": "文法",
     "options": [
      "serving",
-     "will serve",
+     "will also serve",
      "have served",
      "will be served"
     ],
     "answer": 3,
-    "explanation": "主詞 cold drinks 是「被供應」的一方，而且活動還沒舉行，所以要用未來式的被動語態 will be served。serving 是現在分詞，不能單獨當句子的主要動詞；will serve 是主動語態，會變成「冷飲招待別人」，不合邏輯；have served 是現在完成式主動，時態與語態都不對。"
+    "explanation": "主詞 cold drinks 是「被供應」的一方，而且活動還沒舉行，所以要用未來式的被動語態 will be served。serving 是現在分詞，不能單獨當句子的主要動詞；will also serve 是主動語態，會變成「冷飲招待別人」，不合邏輯；have served 是現在完成式主動，時態與語態都不對。"
    },
    {
     "num": 4,
@@ -2227,7 +2227,7 @@ TOEIC.part6 = [
   "id": "p6-b8-3",
   "passageType": "email",
   "title": "Invitation to Complete a Customer Survey",
-  "passage": "To: Marcus Delaney, m.delaney@brightpath.com\nFrom: Customer Care Team, care@northgateappliances.com\nDate: 18 October\nSubject: A few minutes of your time\n\nDear Mr. Delaney,\n\nThank you for buying a Northgate dishwasher last month. We would like to invite you to complete a short survey about your experience. The survey has twelve questions and takes about five minutes {{1}}. {{2}} Your answers will be kept private and will be used only to improve our products and service. The survey link, along with a set of simple instructions, {{3}} at the bottom of this message. As a thank-you, all customers who take part will {{4}} a coupon worth ten dollars off their next order.\n\nSincerely,\n\nHelena Ford\nCustomer Care Manager",
+  "passage": "To: Marcus Delaney, m.delaney@example.com\nFrom: Customer Care Team, care@example.org\nDate: 18 October\nSubject: A few minutes of your time\n\nDear Mr. Delaney,\n\nThank you for buying a Northgate dishwasher last month. We would like to invite you to complete a short survey about your experience. The survey has twelve questions and takes about five minutes {{1}}. {{2}} Your answers will be kept private and will be used only to improve our products and service. The survey link, along with a set of simple instructions, {{3}} at the bottom of this message. As a thank-you, all customers who take part will {{4}} a coupon worth ten dollars off their next order.\n\nSincerely,\n\nHelena Ford\nCustomer Care Manager",
   "questions": [
    {
     "num": 1,
@@ -2278,7 +2278,7 @@ TOEIC.part6 = [
     "explanation": "空格後面是 a coupon，需要一個表示「拿到、獲得」的及物動詞，receive 正好說明參加問卷的顧客可以得到折價券。remind 是提醒，用法為 remind somebody of something，受詞必須是人；reserve 是預訂，折價券是回饋而非預訂項目；remove 是移除，語意正好相反。"
    }
   ],
-  "translation": "收件者：Marcus Delaney，m.delaney@brightpath.com\n寄件者：客戶服務團隊，care@northgateappliances.com\n日期：10 月 18 日\n主旨：耽誤您幾分鐘\n\n親愛的 Delaney 先生：\n\n感謝您上個月選購 Northgate 洗碗機。我們想邀請您填寫一份簡短問卷，分享您的使用經驗。問卷共十二題，大約五分鐘即可完成。問卷最後也留有欄位，供您填寫任何想補充的意見。您的回答將予以保密，且僅用於改善我們的產品與服務。問卷連結與簡單的填答說明，都放在這封信的最下方。為表達謝意，每位參與填答的顧客都將獲得一張折價券，下次訂購可折抵十美元。\n\n敬祝 順心\n\n客戶服務經理\nHelena Ford"
+  "translation": "收件者：Marcus Delaney，m.delaney@example.com\n寄件者：客戶服務團隊，care@example.org\n日期：10 月 18 日\n主旨：耽誤您幾分鐘\n\n親愛的 Delaney 先生：\n\n感謝您上個月選購 Northgate 洗碗機。我們想邀請您填寫一份簡短問卷，分享您的使用經驗。問卷共十二題，大約五分鐘即可完成。問卷最後也留有欄位，供您填寫任何想補充的意見。您的回答將予以保密，且僅用於改善我們的產品與服務。問卷連結與簡單的填答說明，都放在這封信的最下方。為表達謝意，每位參與填答的顧客都將獲得一張折價券，下次訂購可折抵十美元。\n\n敬祝 順心\n\n客戶服務經理\nHelena Ford"
  },
  {
   "id": "p6-b8-4",
@@ -2455,7 +2455,7 @@ TOEIC.part6 = [
   "id": "p6-b9-3",
   "passageType": "article",
   "title": "Stone Oven Bakery to Open a Second Shop on Market Street",
-  "passage": "HILLSDALE (25 September) - Stone Oven Bakery plans to open a second shop on Market Street in November. The new store will be in a building {{1}} last spring by the Hillsdale Property Group. Owner Daniel Ferraro started the business nine years ago with one used oven and two employees. {{2}} The second shop will sell the same bread and cakes as the original store, along with sandwiches made with vegetables from farms {{3}} thirty kilometers of the town. Mr. Ferraro said that he had looked at more than ten locations before choosing Market Street, which is close to the train station. The original store will {{4}} its hours in December and will stay open until nine o'clock on Fridays.",
+  "passage": "HILLSDALE (25 September) — Stone Oven Bakery plans to open a second shop on Market Street in November. The new store will be in a building {{1}} last spring by the Hillsdale Property Group. Owner Daniel Ferraro started the business nine years ago with one used oven and two employees. {{2}} The second shop will sell the same bread and cakes as the original store, along with sandwiches made with vegetables from farms {{3}} thirty kilometers of the town. Mr. Ferraro said that he had looked at more than ten locations before choosing Market Street, which is close to the train station. The original store will {{4}} its hours in December and will stay open until nine o'clock on Fridays.",
   "questions": [
    {
     "num": 1,
@@ -2474,12 +2474,12 @@ TOEIC.part6 = [
     "type": "句子插入",
     "options": [
      "The Hillsdale Property Group owns several buildings on Market Street.",
-     "Today the bakery employs more than thirty people and supplies bread to a dozen local restaurants.",
+     "Today the bakery has over thirty employees and supplies a dozen local restaurants.",
      "Most of the bakery's ovens were sold to a factory in another city.",
      "Mr. Ferraro bought five new ovens when he first opened the shop."
     ],
     "answer": 1,
-    "explanation": "空格前一句把時間拉回九年前開店的起點，只有一台二手烤箱和兩名員工；空格後一句轉到第二家店要賣什麼。中間需要一句說明這家店後來做到多大規模，選項 B 說如今員工超過三十人、還供應麵包給十多家在地餐廳，正好與「一台烤箱、兩名員工」形成對照，也交代了為什麼開得起第二家店。選項 A 講房產集團在市場街還有好幾棟樓，話題轉到房東身上，接不上這家店的發展；選項 C 說烤箱多半賣給別的城市的工廠，與擴店的敘述矛盾；選項 D 說店主開店時買了五台新烤箱，與前一句「一台二手烤箱」直接矛盾。"
+    "explanation": "空格前一句把時間拉回九年前開店的起點，只有一台二手烤箱和兩名員工；空格後一句轉到第二家店要賣什麼。中間需要一句說明這家店後來做到多大規模，選項 B 說如今員工超過三十人、還供應十多家在地餐廳，正好與「一台烤箱、兩名員工」形成對照，也交代了為什麼開得起第二家店。選項 A 講房產集團在市場街還有好幾棟樓，話題轉到房東身上，接不上這家店的發展；選項 C 說烤箱多半賣給別的城市的工廠，與擴店的敘述矛盾；選項 D 說店主開店時買了五台新烤箱，與前一句「一台二手烤箱」直接矛盾。"
    },
    {
     "num": 3,
@@ -2506,7 +2506,7 @@ TOEIC.part6 = [
     "explanation": "空格後面是 its hours，extend one's hours 是「延長營業時間」的標準說法，和後半句「週五營業到九點」正好互相呼應。attend 是「出席」，受詞是會議或活動；prevent 是「防止」，受詞是不希望發生的事；remove 是「移除」，用在把東西拿走，三者都無法和營業時間搭配。"
    }
   ],
-  "translation": "HILLSDALE（9 月 25 日）- Stone Oven 麵包店計劃十一月在市場街開設第二家店。新店將設在一棟由 Hillsdale 房產集團今年春天整修完成的建築內。店主 Daniel Ferraro 九年前以一台二手烤箱和兩名員工創立這家店。如今這家麵包店員工超過三十人，並供應麵包給十多家在地餐廳。第二家店將販售與原店相同的麵包與蛋糕，另外還有以距離鎮上三十公里以內農場的蔬菜製作的三明治。Ferraro 先生說，他看過十多個地點，才選定離火車站很近的市場街。原店將於十二月延長營業時間，週五營業到晚上九點。"
+  "translation": "【Hillsdale 訊，9 月 25 日】Stone Oven 麵包店計劃十一月在市場街開設第二家店。新店將設在一棟由 Hillsdale 房產集團今年春天整修完成的建築內。店主 Daniel Ferraro 九年前以一台二手烤箱和兩名員工創立這家店。如今這家麵包店員工超過三十人，並供應麵包給十多家在地餐廳。第二家店將販售與原店相同的麵包與蛋糕，另外還有以距離鎮上三十公里以內農場的蔬菜製作的三明治。Ferraro 先生說，他看過十多個地點，才選定離火車站很近的市場街。原店將於十二月延長營業時間，週五營業到晚上九點。"
  },
  {
   "id": "p6-b9-4",

@@ -240,7 +240,7 @@
           "Operating results depend mainly on advertising spending."
         ],
         "answer": 0,
-        "explanation": "推論題，定位第七段：一年二十萬美元的樸素措施，換來離職率減半與利潤率上升一個百分點，可推知投入不高的條件改善其實划算。"
+        "explanation": "推論題，定位最後一段：Harper 的措施一年約花二十萬美元，內容只是提早公布班表、滿一年的小額獎金、主管可自行核准換班、外部人員做離職面談。十八個月後，離職比例從三成四降到一成九，第二年員工的留任率幾乎翻倍，營業利潤率還上升一個百分點，可推知花費不高的工作條件改善，回收的比投入的多，所以選 A。B 措施裡沒有加薪，也沒說加薪是唯一辦法；C 十八個月是看成效的時間點，文中沒有要換主管；D 第一段說廣告費只是帳面上的一小項，成效來自工作條件，與廣告支出無關。"
       }
     ],
     "image": "img/articles/art-14a.jpg"
@@ -436,10 +436,10 @@
       {
         "q": "What does the article identify as the central problem with boxes like Harvest Crate?",
         "options": [
-          "Customers dislike receiving food through the post.",
+          "Customers dislike receiving food through the post, so most of them cancel after the first box.",
           "The cost of winning a member is repaid only after several months, and most members leave first.",
-          "Investors refuse to put money into this kind of company.",
-          "Food products are too heavy to be sold online at all."
+          "Investors refuse to put money into this kind of company, so the warehouse was never expanded.",
+          "Food products are too heavy to be sold online at all, so carriers refuse to deliver them."
         ],
         "answer": 1,
         "explanation": "定位第二、三段：首箱虧約二十美元，要留住客戶五個月才開始獲利，但到第四個月已有一半取消。主旨即在這個時間差。"
@@ -459,9 +459,9 @@
         "q": "What changed in Harvest Crate's relationship with its suppliers as the company grew?",
         "options": [
           "They stopped treating the box as free promotion and began charging normal prices.",
-          "They asked for a share of the monthly membership fees.",
-          "They refused to work with food companies of any kind.",
-          "They moved their goods to a competing box instead."
+          "They asked for a share of the monthly membership fees once the subscriber list grew.",
+          "They stopped supplying her altogether and sold only to large grocery chains in the region.",
+          "They moved their goods to a competing box service that offered them a higher fee."
         ],
         "answer": 0,
         "explanation": "定位第五段：箱子還算免費宣傳時供應商樂意送樣品，等到她需要穩定數量，對方就報一般批發價。"
@@ -469,10 +469,10 @@
       {
         "q": "Why does the writer mention coffee, razor blades and pet food?",
         "options": [
-          "They are cheaper to send than jars of jam.",
-          "They were the products Harvest Crate refused to carry.",
+          "They are cheaper to send than jars of jam, which is why Nadia chose them for her first box.",
+          "They were the products Harvest Crate refused to carry because suppliers would not sell them.",
           "They are bought again and again out of need, so members have little reason to stop.",
-          "They can be produced without any suppliers."
+          "They can be produced without any suppliers, so a company keeps the whole maker's share."
         ],
         "answer": 2,
         "explanation": "推論題，定位第三段：這些例子是用來對比「探索型」箱子，說明補貨型商品的需求持續，客戶不會因為新鮮感消失而取消。"
@@ -480,9 +480,9 @@
       {
         "q": "What does the closing idea — that the box was never the product — suggest?",
         "options": [
-          "Buyers care more about package design than about the goods inside.",
-          "A successful service depends on careful selection and surprise.",
-          "A company should offer as many product lines as it can manage.",
+          "Buyers care more about how the package looks than about the goods inside it.",
+          "A successful service depends on careful selection and a fresh surprise in every box.",
+          "A company should offer as many product lines as it can manage at the same time.",
           "A subscription works when it supplies something the buyer would keep purchasing anyway."
         ],
         "answer": 3,

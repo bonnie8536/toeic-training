@@ -1,0 +1,118 @@
+[
+  {
+    "id": "p7-b14-1",
+    "format": "single",
+    "passages": [
+      {
+        "type": "text message chain",
+        "label": "",
+        "blocks": [
+          {
+            "t": "chat",
+            "msgs": [
+              {
+                "who": "Rosa Calvo",
+                "time": "1:05 P.M.",
+                "text": "Quick update on tonight's book signing. Ms. Petrova just called. Her train has been stopped outside Dunmere for over an hour, so she won't get here until about 7:15."
+              },
+              {
+                "who": "Tunde Bakare",
+                "time": "1:08 P.M.",
+                "text": "But the signing starts at 6:30, and we've sold more than eighty tickets."
+              },
+              {
+                "who": "Rosa Calvo",
+                "time": "1:10 P.M.",
+                "text": "I know. Tunde, could you e-mail all the ticket holders this afternoon and tell them we'll now begin at 7:30?"
+              },
+              {
+                "who": "Tunde Bakare",
+                "time": "1:12 P.M.",
+                "text": "Sure. I'll put the new time on our Web site, too."
+              },
+              {
+                "who": "Mei Takahashi",
+                "time": "1:15 P.M.",
+                "text": "Not everyone checks e-mail, though."
+              },
+              {
+                "who": "Rosa Calvo",
+                "time": "1:17 P.M.",
+                "text": "Good point. Mei, could you still open the reading corner at 6:30 and serve coffee and pastries to anyone who comes before Ms. Petrova does?"
+              },
+              {
+                "who": "Mei Takahashi",
+                "time": "1:19 P.M.",
+                "text": "Of course. The pastries are being delivered at five, so that's no problem."
+              },
+              {
+                "who": "Tunde Bakare",
+                "time": "1:24 P.M.",
+                "text": "One more thing. A few customers have asked whether they can buy signed copies without attending."
+              },
+              {
+                "who": "Rosa Calvo",
+                "time": "1:27 P.M.",
+                "text": "Ms. Petrova has agreed to sign extra copies after the event. Make a list of their names, and we'll hold the books at the front counter."
+              },
+              {
+                "who": "Mei Takahashi",
+                "time": "1:30 P.M.",
+                "text": "I'll put up a sign by the register so people know."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "q": "What are the writers mainly discussing?",
+        "options": [
+          "A change to a store's opening hours",
+          "The cost of tickets for an event",
+          "A delay affecting a scheduled event",
+          "A problem with a food delivery"
+        ],
+        "answer": 2,
+        "explanation": "定位：1:05 Calvo 說作者的火車停在 Dunmere 外面一個多小時，要到 7:15 左右才會到；之後的訊息都在處理簽書會延後的安排（通知購票的人、招待提早到的人、想買簽名書的客人），故 (C) 正確。(A)錯：改的是簽書會的開始時間，不是書店的營業時間。(B)錯：1:08 只提到已經賣出八十多張票，沒有討論票價。(D)錯：1:19 Takahashi 說點心五點會送到，送貨沒有問題。"
+      },
+      {
+        "q": "What does Ms. Calvo ask Mr. Bakare to do?",
+        "options": [
+          "Contact people who bought tickets",
+          "Pick up Ms. Petrova at the station",
+          "Order more copies of the book",
+          "Open the reading corner at 6:30"
+        ],
+        "answer": 0,
+        "explanation": "定位：1:10 Calvo 寫「Tunde, could you e-mail all the ticket holders this afternoon and tell them we'll now begin at 7:30?」，請他寫信通知所有購票的人，也就是聯絡買了票的人，故 (A) 正確。(B)錯：作者自己搭火車來，沒有人提到要去車站接她。(C)錯：對話沒有提到要多訂書。(D)錯：請人在 6:30 照常開放閱讀區，是 1:17 Calvo 對 Takahashi 的請求，不是對 Bakare。"
+      },
+      {
+        "q": "At 1:15 P.M., what does Ms. Takahashi most likely mean when she writes, \"Not everyone checks e-mail, though\"?",
+        "options": [
+          "She has not received an e-mail from the author.",
+          "She thinks the store's Web site is out of date.",
+          "She wants Mr. Bakare to send the message twice.",
+          "She expects some guests to arrive at 6:30 anyway."
+        ],
+        "answer": 3,
+        "explanation": "定位：Bakare 說要寄信通知並在網站公告新時間後，Takahashi 寫「Not everyone checks e-mail, though」（不過不是每個人都會看電子郵件）；1:17 Calvo 回「Good point」，並請她 6:30 照常開放閱讀區，招待在作者到達之前就來的人。可知她擔心有些客人沒看到通知，仍會照原本的 6:30 到場，故 (D) 正確。(A)錯：作者是打電話來，她說的 e-mail 指的是要寄給購票者的通知信。(B)錯：她沒有評論網站的內容。(C)錯：她沒有要求重寄，Calvo 接著安排的是現場招待。"
+      },
+      {
+        "q": "What is indicated about Ms. Petrova?",
+        "options": [
+          "She plans to arrive before the original start time.",
+          "She has agreed to sign books for people not attending.",
+          "She asked the store to serve coffee and pastries.",
+          "She will be speaking at another store later tonight."
+        ],
+        "answer": 1,
+        "explanation": "定位：1:24 Bakare 說有客人想買簽名書但不來參加活動；1:27 Calvo 回「Ms. Petrova has agreed to sign extra copies after the event」，並請他記下這些客人的名字、把書保留在櫃台，可知作者答應替不來參加的人簽書，故 (B) 正確。(A)錯：1:05 說她 7:15 左右才會到，晚於原訂的 6:30。(C)錯：咖啡和點心是 Calvo 請 Takahashi 招待的，不是作者要求的。(D)錯：對話沒有提到她今晚還要去別家書店。"
+      }
+    ],
+    "translation": [
+      "Rosa Calvo（下午 1:05）\n跟大家更新一下今晚簽書會的狀況。Petrova 女士剛剛打電話來，她的火車在 Dunmere 外面停了一個多小時，所以她大概要到 7:15 才會到。\n\nTunde Bakare（下午 1:08）\n可是簽書會 6:30 就開始了，而且我們已經賣出八十多張票。\n\nRosa Calvo（下午 1:10）\n我知道。Tunde，你今天下午可以寫電子郵件給所有購票的人，告訴他們活動改成 7:30 開始嗎？\n\nTunde Bakare（下午 1:12）\n沒問題。我也會把新的時間公告在我們的網站上。\n\nMei Takahashi（下午 1:15）\n不過不是每個人都會看電子郵件。\n\nRosa Calvo（下午 1:17）\n說得對。Mei，你可以照樣在 6:30 開放閱讀區，請在 Petrova 女士到達之前就來的人喝咖啡、吃點心嗎？\n\nMei Takahashi（下午 1:19）\n當然可以。點心五點會送到，所以沒問題。\n\nTunde Bakare（下午 1:24）\n還有一件事。有幾位客人問，不參加活動的話能不能買簽名書。\n\nRosa Calvo（下午 1:27）\nPetrova 女士已經答應活動結束後多簽一些書。把他們的名字列成一張清單，我們會把書保留在前面的櫃台。\n\nMei Takahashi（下午 1:30）\n那我在收銀台旁邊貼個告示，讓大家知道。"
+    ]
+  }
+]

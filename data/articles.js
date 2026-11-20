@@ -224,10 +224,10 @@ TOEIC.articles = [
      "It offers free refills in the middle of the day.",
      "It earns income by renting a room to groups.",
      "It prohibits laptop use during all of its opening hours.",
-     "It serves its lunch customers more quickly than it once did."
+     "It guarantees lunchtime customers a place to sit."
     ],
     "answer": 2,
-    "explanation": "定位：第六段「for the rest of the day laptops are permitted without limit」。禁令只在十一點到三點之間，並非全天，故第三個選項與文意不符。其餘三項在第六段均有明確依據。"
+    "explanation": "定位：第六段「Between eleven and three, customers get a guaranteed seat, faster service and free refills; for the rest of the day laptops are permitted without limit」。禁令只在十一點到三點之間，其餘時段不限制使用筆電，所以 C「整個營業時間都禁用筆電」與文意不符，是答案。A：第六段說十一點到三點有免費續杯，屬實。B：第六段說常客預訂後方包廂開客戶會議，店家按小時出租，屬實。D：第六段說十一點到三點保證有位，屬實。"
    }
   ],
   "image": "img/articles/art-1a.jpg",
@@ -531,7 +531,7 @@ TOEIC.articles = [
   "image": "img/articles/art-1b.jpg",
   "transfer": {
    "passage": "The Harborlight Hotel could not fill its front-desk [[vacancy]] for months. The manager, Daniel Weiss, received only three [[applications]], and two of them came from Emily Carter and Grace Lane, who proposed sharing one position: each would work half the week for half the [[wages]].\n\nDaniel agreed to test the idea during a three-month [[trial]] period. He [[staggered]] their start times by one hour so the desk was never empty during the morning rush, and he added a clause allowing either side to [[terminate]] the contract early. To [[comply]] with local labor rules, he recorded every extra hour, and any [[overtime]] was paid at a higher rate.\n\nAt the next staff meeting, the results were the first item on the [[agenda]]. The new schedule had clearly improved [[efficiency]]: guests waited less, and no shift was ever missed. Daniel made the job-sharing plan [[permanent]], and he now hopes to [[recruit]] a similar pair for the night desk.",
-   "passageZh": "海港燈飯店的櫃檯職缺懸了好幾個月都補不上。經理 Daniel Weiss 只收到三份應徵，其中兩份來自 Emily Carter 和 Grace Lane——她們提議兩人共享一個職位：各自工作半週，領一半的工資。\n\nDaniel 同意用三個月的試行期來測試這個構想。他把兩人的上班時間錯開一小時，讓櫃檯在早晨尖峰時段不會沒人，並加入一項條款，允許任何一方提前終止合約。為了遵守當地勞動法規，他記錄每一小時的額外工時，所有加班都以較高的費率支付。\n\n在下一次員工會議上，這項結果被列為議程的第一項。新班表明顯提升了效率：客人等待的時間變短了，也從來沒有漏掉任何一個班。Daniel 把這個職位共享方案改為永久實施，現在還希望為夜間櫃檯再招募一對類似的搭檔。",
+   "passageZh": "海港燈飯店的櫃檯職缺懸了好幾個月都補不上。經理 Daniel Weiss 只收到三份應徵，其中兩份來自 Emily Carter 和 Grace Lane，她們提議兩人共享一個職位：各自工作半週，領一半的工資。\n\nDaniel 同意用三個月的試行期來測試這個構想。他把兩人的上班時間錯開一小時，讓櫃檯在早晨尖峰時段不會沒人，並加入一項條款，允許任何一方提前終止合約。為了遵守當地勞動法規，他記錄每一小時的額外工時，所有加班都以較高的費率支付。\n\n在下一次員工會議上，這項結果被列為議程的第一項。新班表明顯提升了效率：客人等待的時間變短了，也從來沒有漏掉任何一個班。Daniel 把這個職位共享方案改為永久實施，現在還希望為夜間櫃檯再招募一對類似的搭檔。",
    "words": [
     {
      "word": "vacancy",
@@ -737,7 +737,7 @@ TOEIC.articles = [
      "She wanted to raise the price."
     ],
     "answer": 1,
-    "explanation": "細節題。第二段：He did not want to lose money."
+    "explanation": "細節題。第二段：She did not want to lose money."
    },
    {
     "q": "What will Ms. Kuo probably do next month?",
@@ -753,8 +753,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-10a.jpg",
   "transfer": {
-   "passage": "Ms. Wu started her own [[business]]: a small flower shop near some offices. One morning she [[noticed]] that office workers often bought birthday flowers for a co-worker.\n\nThis gave her an idea. She decided to [[offer]] a weekly flower plan to offices. A company could place [[orders]] once, and fresh flowers would arrive every Monday. Some companies came back month after month. She gave these [[regular]] buyers a small [[discount]] off the normal price. She also put up a big [[poster]] near the door of an office building.\n\nSoon new [[customers]] from other companies called to join the plan. Ms. Wu hired two more [[staff]] members to help her. Total [[sales]] went up fast. After paying for flowers and rent, she still had a good [[profit]] each month.",
-   "passageZh": "吳小姐開了自己的生意：一家小花店，開在幾間辦公室附近。一天早上，她注意到上班族常常買生日花送給同事。\n\n這給了她一個想法。她決定提供辦公室每週鮮花方案。公司只要下一次訂單，每週一就會收到新鮮的花。有些公司月復一月地回頭光顧。她給這些固定回購的買家一個原價之外的小折扣。她還在一棟辦公大樓門口貼了一張大海報。\n\n不久，其他公司的新顧客打電話來加入方案。吳小姐多僱了兩名員工來幫忙。總銷售額快速上升。付完花材和房租之後，她每個月仍然有不錯的利潤。",
+   "passage": "Ms. Wu started her own [[business]]: a small flower shop near some offices. One morning she [[noticed]] that office workers often bought birthday flowers for a co-worker.\n\nThis gave her an idea. She decided to [[offer]] a weekly flower plan to offices. A company could place [[orders]] for a whole month at once, and fresh flowers would arrive every Monday. Some companies came back month after month. She gave these [[regular]] buyers a small [[discount]] off the normal price. She also put up a big [[poster]] near the door of an office building.\n\nSoon new [[customers]] from other companies called to join the plan. Ms. Wu hired two more [[staff]] members to help her. Total [[sales]], or all the money the shop took in from selling flowers, went up fast. After paying for flowers and rent, she still had a good [[profit]] each month.",
+   "passageZh": "吳小姐開了自己的生意：一家小花店，開在幾間辦公室附近。一天早上，她注意到上班族常常買生日花送給同事。\n\n這給了她一個想法。她決定提供辦公室每週鮮花方案。公司可以一次下好整個月的訂單，每週一就會收到新鮮的花。有些公司月復一月地回頭光顧。她給這些固定回購的買家打個小折扣，比原價便宜一些。她還在一棟辦公大樓門口貼了一張大海報。\n\n不久，其他公司的新顧客打電話來加入方案。吳小姐多僱了兩名員工來幫忙。總銷售額，也就是花店賣花收進來的全部金額，快速上升。付完花材和房租之後，她每個月仍然有不錯的利潤。",
    "words": [
     {
      "word": "business",
@@ -941,7 +941,7 @@ TOEIC.articles = [
      "It was too short.",
      "It had no title.",
      "It went to the wrong client.",
-     "The numbers in the budget table were wrong."
+     "The budget numbers were wrong."
     ],
     "answer": 3,
     "explanation": "細節題。第三段：I put the wrong numbers in the budget table."
@@ -971,8 +971,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-10b.jpg",
   "transfer": {
-   "passage": "I work at a toy company in Tainan. My [[co-worker]], Amy, sits next to me. We do the same job and help each other. Our [[team]] has five people. We are working on a big [[project]]: a picture book about animals. The [[client]], a bookstore owner, will pay us next month.\n\nThe [[deadline]] is next Friday, so we must finish soon. Amy made a [[schedule]] to show what we will do each day. The [[budget]] is small, so we cannot spend money on extra pictures. Yesterday I found a [[mistake]] in the prices and fixed it. Then I wrote a short [[report]] about the things we finished. Our [[manager]], Mr. Yang, read it and gave us more time. The office is quiet, so I can [[focus]] on my work.",
-   "passageZh": "我在台南一家玩具公司上班。我的同事 Amy 坐在我旁邊。我們做一樣的工作，會互相幫忙。我們的團隊有五個人。我們正在進行一個大專案：一本關於動物的圖畫書。客戶是一位書店老闆，下個月會付錢給我們。\n\n截止期限是下星期五，所以我們必須快點完成。Amy 做了一張時程表，列出我們每天要做的事。預算很少，所以我們不能花錢加畫額外的圖。昨天我在價格裡發現一個錯誤，馬上把它改好。然後我寫了一份簡短的報告，說明我們完成的事情。我們的主管楊先生看了報告，多給了我們一些時間。辦公室很安靜，所以我可以專心工作。",
+   "passage": "I work at a toy company in Tainan. My [[co-worker]], Amy, sits next to me. We do the same job and help each other. Our [[team]] has five people. We are working on a big [[project]]: a picture book about animals. The [[client]], a bookstore owner, will pay us next month.\n\nThe [[deadline]] is next Friday, so we must finish soon. Amy made a [[schedule]] to show what we will do each day. The [[budget]] is small, so we cannot spend money on extra pictures. Yesterday I found a [[mistake]] in the prices and fixed it. Then I wrote a short [[report]] about the things we finished. Our [[manager]], Mr. Yang, who is in charge of everyone in our office, read it and gave us more time. The office is quiet, so I can [[focus]] on my work.",
+   "passageZh": "我在台南一家玩具公司上班。我的同事 Amy 坐在我旁邊。我們做一樣的工作，會互相幫忙。我們的團隊有五個人。我們正在進行一個大專案：一本關於動物的圖畫書。客戶是一位書店老闆，下個月會付錢給我們。\n\n截止期限是下星期五，所以我們必須快點完成。Amy 做了一張時程表，列出我們每天要做的事。預算很少，所以我們不能花錢加畫額外的圖。昨天我在價格裡發現一個錯誤，馬上把它改好。然後我寫了一份簡短的報告，說明我們完成的事情。我們的主管楊先生負責管理辦公室裡的每一個人，他看了報告，多給了我們一些時間。辦公室很安靜，所以我可以專心工作。",
    "words": [
     {
      "word": "co-worker",
@@ -1231,16 +1231,16 @@ TOEIC.articles = [
      "Customers should always receive a discount when service is slow.",
      "Only large firms can promise fast service.",
      "A company should never admit a mistake.",
-     "Telling customers about a delay matters as much as being fast."
+     "Keeping customers informed about delays matters more than speed."
     ],
     "answer": 3,
-    "explanation": "定位最後一段：解決不了也要回信，說明延遲原因並給明確期限；「Customers can accept a slow repair... They can never accept silence.」可推論她認為「讓客戶知道狀況」和速度一樣重要。折扣、公司規模文中都沒提。"
+    "explanation": "推論題。定位最後一段：Lin 說真正的祕訣不是速度，而是誠實；解決不了也要回信，說明延遲原因並給明確期限，「顧客可以接受修得慢，卻無法接受沒有回音」。可推論她認為讓客戶知道狀況比速度更重要，故選 D。A：文中沒有說慢就要給折扣。B：她的公司只有六名員工，文中沒有說只有大公司能保證快速回覆。C：她主張的是說明延遲的原因，不是不能認錯。"
    }
   ],
   "image": "img/articles/art-11a.jpg",
   "transfer": {
-   "passage": "Mr. Bai runs a small moving [[firm]] on the south side of the city. Three trucks, eight workers, and a lot of heavy furniture. Last spring he [[hired]] two extra helpers for the busy season. Before their first job, every new helper receives a full week of [[training]] on how to pack plates and glass safely. Each morning, the boxes are [[sorted]] into groups by room: kitchen, bedroom, office.\n\nCarrying a piano down narrow stairs is the most [[complicated]] task, so senior workers always lead it. The men work in two [[shifts]], one starting at seven and one at noon, and Mr. Bai pays his [[staff]] extra for weekend hours.\n\nTo the families who pay for a move, he made one clear [[promise]]: if the trucks arrive late, half the money comes back. Since then, [[complaints]] about late trucks have almost disappeared. [[Customers]] who have paid for one move usually stay [[loyal]]: they call again the next time they move and [[recommend]] the company to their neighbors.",
-   "passageZh": "白先生在城市南邊經營一家小型搬家公司。三輛卡車、八名工人，還有搬不完的重家具。去年春天，他為旺季僱用了兩名額外的幫手。在第一次出工之前，每位新幫手都要接受整整一週的訓練，學習如何安全打包盤子和玻璃。每天早上，箱子會依照房間分類成幾組：廚房、臥室、辦公室。\n\n把鋼琴搬下狹窄的樓梯是最複雜的工作，所以總是由資深工人帶頭。工人分成兩個班次，一班早上七點開始，一班中午開始；而白先生也會為週末工時多付員工薪水。\n\n對每一個付錢搬家的家庭，他許下一個明確的承諾：如果卡車遲到，退還一半費用。從那之後，關於卡車遲到的抱怨幾乎消失了。付過一次搬家費用的顧客通常會保持忠實：下次搬家時再次來電，並把這家公司推薦給鄰居。",
+   "passage": "Mr. Bai runs a small moving [[firm]] on the south side of the city. Three trucks, eight workers, and a lot of heavy furniture. Last spring he [[hired]] two extra helpers for the busy season. Before their first job, every new helper receives a full week of [[training]] on how to pack plates and glass safely. Each morning, the boxes are [[sorted]] into groups by room: kitchen, bedroom, office.\n\nCarrying a piano down narrow stairs is the most [[complicated]] task, so senior workers always lead it. The men work in two [[shifts]], one starting at seven and one at noon, and Mr. Bai pays his [[staff]] extra for weekend hours.\n\nTo the families who pay for a move, he made one clear [[promise]]: if the trucks arrive late, half the money comes back. Since then, [[complaints]] about late trucks have almost disappeared. Most [[customers]] who have paid for one move stay [[loyal]]: they call again the next time they move and [[recommend]] the company to their neighbors.",
+   "passageZh": "白先生在城市南邊經營一家小型搬家公司。三輛卡車、八名工人，還有搬不完的重家具。去年春天，他為旺季僱用了兩名額外的幫手。在第一次出工之前，每位新幫手都要接受整整一週的訓練，學習如何安全打包盤子和玻璃。每天早上，箱子會依照房間分類成幾組：廚房、臥室、辦公室。\n\n把鋼琴搬下狹窄的樓梯是最複雜的工作，所以總是由資深工人帶頭。工人分成兩個班次，一班早上七點開始，一班中午開始；而白先生也會為週末工時多付員工薪水。\n\n對每一個付錢搬家的家庭，他許下一個明確的承諾：如果卡車遲到，退還一半費用。從那之後，關於卡車遲到的抱怨幾乎消失了。大多數付過一次搬家費用的顧客會保持忠實：下次搬家時再次來電，並把這家公司推薦給鄰居。",
    "words": [
     {
      "word": "firm",
@@ -1288,7 +1288,7 @@ TOEIC.articles = [
      "zh": "抱怨；客訴"
     },
     {
-     "word": "Customers",
+     "word": "customers",
      "base": "customer",
      "zh": "顧客；客戶"
     },
@@ -1507,7 +1507,7 @@ TOEIC.articles = [
      "They believe office workers should not wear suits."
     ],
     "answer": 0,
-    "explanation": "定位最後一段：反對的人說借來的衣服 never fit perfectly，也不喜歡穿陌生人穿過的東西。可推論他們在意的是合身度和衛生感受。費用太低、外國公司文中都沒提到。"
+    "explanation": "推論題，定位最後一段：反對的人有兩種說法，一是借來的衣服 never fit perfectly（穿起來不會完全合身），二是不喜歡穿陌生人穿過的衣服。兩句合起來，可推論他們在意的是合身度，以及穿別人衣服的感受，所以選 A。B 文中沒有人提到月費，反對的理由也與費用無關；C 文中沒有提到外國公司；D 反對的人沒有談上班該不該穿套裝，第一段的套裝是主角自己衣櫃裡的衣服。"
    }
   ],
   "image": "img/articles/art-11b.jpg",
@@ -2024,7 +2024,7 @@ TOEIC.articles = [
      "He renamed the box and added a story about each vegetable."
     ],
     "answer": 3,
-    "explanation": "定位第三段最後兩句與第四段第一句：他把箱子改名為「The Ugly Harvest」，在盒蓋印上故事，說明每樣蔬菜被退的理由。價格是往下調三成（第四段），選項 A 錯。"
+    "explanation": "定位第三段最後兩句與第四段第一句：他把箱子改名為「The Ugly Harvest」，在盒蓋印上故事，說明每樣蔬菜被退的理由。價格方面，文中只說他把價格訂在一般農產品零售價的七折，沒有說調高，所以選項 A 錯；停止網路販售與請她改種也都沒提到，選項 B、C 錯。"
    },
    {
     "q": "What can be inferred about the first label, \"second-class produce\"?",
@@ -2340,7 +2340,7 @@ TOEIC.articles = [
      "It cooperated readily on returns but was slow to put problems right."
     ],
     "answer": 3,
-    "explanation": "推論題。第三段寫維瑟金屬「從不為退貨爭執，每次都退款，也二話不說補寄」，態度是配合的；但補寄要三週才到，凱托比因此卡貨。兩件事合起來可推得「態度好、速度慢」。A 與原文直接矛盾。"
+    "explanation": "推論題，定位第三段：維瑟金屬「從不為退貨爭執，每次都退款，也照樣補寄替換零件」，態度是配合的；但替換件要三週才過得了邊境，這段期間凱托比的半成品堆在倉庫出不了貨。兩件事合起來，可推得它「肯配合、但補救很慢」，所以選 D。A 與第三段直接矛盾，它從沒拒絕負責；B 文中只提到退貨零件的運費，沒有和其他供應商比較；C 替換件要越過邊境，看不出它比較近，文中也沒寫原供應商在哪裡。"
    },
    {
     "q": "What did Kettleby change about the way it chooses a supplier?",
@@ -2642,7 +2642,7 @@ TOEIC.articles = [
      "The woman pays a fee for the chance to speak to the class.",
      "No one else is available to teach that part of the course.",
      "She believes that more bakeries opening helps her more than one rival hurts her.",
-     "The woman's business sells goods that Ostrander does not carry."
+     "The woman's business sells goods that Nadia does not carry."
     ],
     "answer": 2,
     "explanation": "推論題。第六段擺出「同業講師」這個矛盾，第七段給出解釋：生意是靠烘焙坊變多才長大的。把兩段合起來看，可推得她算的是整體市場，而不是單一對手的得失。A、B、D 文中都沒有依據。"
@@ -2662,7 +2662,7 @@ TOEIC.articles = [
   "image": "img/articles/art-13b.jpg",
   "transfer": {
    "passage": "When Marcus Hale opened his first language school, he signed a five-year [[lease]] on an old building downtown. Today his [[chain]] has six schools, and the sixth [[branch]] opened last month in a small coastal town.\n\nStudents [[enroll]] online and attend evening classes twice a week. To keep prices low, Hale buys textbooks from publishers at a [[wholesale]] price. Finding teachers is harder than finding students. Local [[competitors]] had already hired the most experienced instructors, so Hale travels to universities abroad to [[recruit]] new ones. He now manages a [[staff]] of forty, and he pays for online [[advertising]] aimed at adults who need English for their careers.\n\nHis [[strategy]] is simple: open schools only in towns that bigger companies ignore. Each new location is expensive at first, but Hale treats every building as a long-term [[investment]]. Most of his schools begin to earn a steady [[profit]] within two years.",
-   "passageZh": "馬可斯・海爾開設第一間語言學校時，簽下一份五年的租約，租了市中心一棟老建築。如今他的連鎖企業已有六間學校，第六間分店上個月在一個小海濱小鎮開幕。\n\n學生在線上報名，每週兩個晚上來上課。為了壓低價格，海爾直接向出版社以批發價購買教科書。找老師比找學生還難。當地的同業早就聘走了最有經驗的講師，所以海爾親自前往國外的大學招募新血。他現在管理四十名員工，並花錢投放網路廣告，鎖定需要用英語發展職涯的成年人。\n\n他的策略很簡單：只在大公司忽略的城鎮開學校。每個新據點一開始都花費不小，但海爾把每一棟建築都視為長期投資。他旗下多數學校在兩年內就開始賺進穩定的利潤。",
+   "passageZh": "馬可斯・海爾開設第一間語言學校時，簽下一份五年的租約，租了市中心一棟老建築。如今他的連鎖企業已有六間學校，第六間分店上個月在一個海濱小鎮開幕。\n\n學生在線上報名，每週兩個晚上來上課。為了壓低價格，海爾直接向出版社以批發價購買教科書。找老師比找學生還難。當地的同業早就聘走了最有經驗的講師，所以海爾親自前往國外的大學招募新血。他現在管理四十名員工，並花錢投放網路廣告，鎖定需要用英語發展職涯的成年人。\n\n他的策略很簡單：只在大公司忽略的城鎮開學校。每個新據點一開始都花費不小，但海爾把每一棟建築都視為長期投資。他旗下多數學校在兩年內就開始賺進穩定的利潤。",
    "words": [
     {
      "word": "lease",
@@ -2968,13 +2968,13 @@ TOEIC.articles = [
      "Operating results depend mainly on advertising spending."
     ],
     "answer": 0,
-    "explanation": "推論題，定位第七段：一年二十萬美元的樸素措施，換來離職率減半與利潤率上升一個百分點，可推知投入不高的條件改善其實划算。"
+    "explanation": "推論題，定位最後一段：Harper 的措施一年約花二十萬美元，內容只是提早公布班表、滿一年的小額獎金、主管可自行核准換班、外部人員做離職面談。十八個月後，離職比例從三成四降到一成九，第二年員工的留任率幾乎翻倍，營業利潤率還上升一個百分點，可推知花費不高的工作條件改善，回收的比投入的多，所以選 A。B 措施裡沒有加薪，也沒說加薪是唯一辦法；C 十八個月是看成效的時間點，文中沒有要換主管；D 第一段說廣告費只是帳面上的一小項，成效來自工作條件，與廣告支出無關。"
    }
   ],
   "image": "img/articles/art-14a.jpg",
   "transfer": {
    "passage": "When Dana Park became housekeeping manager at the Bayview Hotel, she inherited a department where [[turnover]] was out of control: cleaners kept quitting, and every departure set off a costly cycle.\n\nEach time someone handed in a [[resignation]], Dana had to post the [[vacancy]] online and read forms from dozens of [[applicants]]. While the position sat empty, the remaining cleaners covered extra [[shifts]], and paying [[overtime]] for those hours cost more than a normal hourly [[wage]]. The number of rooms made ready each day, the department's measure of [[productivity]], fell when the hotel was busiest.\n\nDana paid a small [[bonus]] on top of regular pay to anyone who completed a full year, and she trained a senior cleaner as a floor [[supervisor]] so new workers had someone to guide them. The change in [[morale]] came first: cleaners joked at lunch again and told her they felt valued. What followed was, quite simply, [[retention]]: people stayed. By the second summer, so few cleaners quit that Dana rarely needed to advertise.",
-   "passageZh": "當 Dana Park 成為 Bayview 飯店的房務部經理時，她接手了一個人員流動率完全失控的部門：清潔人員不斷離職，而每一次有人離開，都會啟動一輪代價高昂的循環。\n\n每當有人遞出辭呈，Dana 就得把職缺刊登到網路上，並閱讀數十位應徵者的表格。在職位懸空的期間，留下來的清潔人員得多輪好幾個班次，而為那些時數支付的加班費，比正常的時薪工資還要高。每天整理完成的房間數，也就是部門衡量生產力的指標，在飯店最忙的時候不斷下滑。\n\nDana 開始在正常薪資之外，發給做滿一整年的人一筆小額獎金，也培訓一位資深清潔人員擔任樓層督導，讓新進人員隨時有人帶領。士氣最先出現轉變：清潔人員午餐時又開始說笑，並告訴她自己終於覺得被重視。接著出現的，說穿了就是留任：大家留了下來。到了第二年夏天，離職的清潔人員少到 Dana 幾乎不再需要刊登徵人廣告。",
+   "passageZh": "當 Dana Park 成為 Bayview 飯店的房務部經理時，她接手了一個人員流動率完全失控的部門：清潔人員不斷離職，而每一次有人離開，都會啟動一輪代價高昂的循環。\n\n每當有人遞出辭呈，Dana 就得把職缺刊登到網路上，並閱讀數十位應徵者的表格。在職位懸空的期間，留下來的清潔人員得多代好幾個班次，而為那些時數支付的加班費，比正常的時薪工資還要高。每天整理完成的房間數，也就是部門衡量生產力的指標，在飯店最忙的時候不斷下滑。\n\nDana 開始在正常薪資之外，發給做滿一整年的人一筆小額獎金，也培訓一位資深清潔人員擔任樓層督導，讓新進人員隨時有人帶領。士氣最先出現轉變：清潔人員午餐時又開始說笑，並告訴她自己終於覺得被重視。接著出現的，說穿了就是留任：大家留了下來。到了第二年夏天，離職的清潔人員少到 Dana 幾乎不再需要刊登徵人廣告。",
    "words": [
     {
      "word": "turnover",
@@ -3230,10 +3230,10 @@ TOEIC.articles = [
    {
     "q": "What does the article identify as the central problem with boxes like Harvest Crate?",
     "options": [
-     "Customers dislike receiving food through the post.",
+     "Customers dislike receiving food through the post, so most of them cancel after the first box.",
      "The cost of winning a member is repaid only after several months, and most members leave first.",
-     "Investors refuse to put money into this kind of company.",
-     "Food products are too heavy to be sold online at all."
+     "Investors refuse to put money into this kind of company, so the warehouse was never expanded.",
+     "Food products are too heavy to be sold online at all, so carriers refuse to deliver them."
     ],
     "answer": 1,
     "explanation": "定位第二、三段：首箱虧約二十美元，要留住客戶五個月才開始獲利，但到第四個月已有一半取消。主旨即在這個時間差。"
@@ -3253,9 +3253,9 @@ TOEIC.articles = [
     "q": "What changed in Harvest Crate's relationship with its suppliers as the company grew?",
     "options": [
      "They stopped treating the box as free promotion and began charging normal prices.",
-     "They asked for a share of the monthly membership fees.",
-     "They refused to work with food companies of any kind.",
-     "They moved their goods to a competing box instead."
+     "They asked for a share of the monthly membership fees once the subscriber list grew.",
+     "They stopped supplying her altogether and sold only to large grocery chains in the region.",
+     "They moved their goods to a competing box service that offered them a higher fee."
     ],
     "answer": 0,
     "explanation": "定位第五段：箱子還算免費宣傳時供應商樂意送樣品，等到她需要穩定數量，對方就報一般批發價。"
@@ -3263,10 +3263,10 @@ TOEIC.articles = [
    {
     "q": "Why does the writer mention coffee, razor blades and pet food?",
     "options": [
-     "They are cheaper to send than jars of jam.",
-     "They were the products Harvest Crate refused to carry.",
+     "They are cheaper to send than jars of jam, which is why Nadia chose them for her first box.",
+     "They were the products Harvest Crate refused to carry because suppliers would not sell them.",
      "They are bought again and again out of need, so members have little reason to stop.",
-     "They can be produced without any suppliers."
+     "They can be produced without any suppliers, so a company keeps the whole maker's share."
     ],
     "answer": 2,
     "explanation": "推論題，定位第三段：這些例子是用來對比「探索型」箱子，說明補貨型商品的需求持續，客戶不會因為新鮮感消失而取消。"
@@ -3274,9 +3274,9 @@ TOEIC.articles = [
    {
     "q": "What does the closing idea — that the box was never the product — suggest?",
     "options": [
-     "Buyers care more about package design than about the goods inside.",
-     "A successful service depends on careful selection and surprise.",
-     "A company should offer as many product lines as it can manage.",
+     "Buyers care more about how the package looks than about the goods inside it.",
+     "A successful service depends on careful selection and a fresh surprise in every box.",
+     "A company should offer as many product lines as it can manage at the same time.",
      "A subscription works when it supplies something the buyer would keep purchasing anyway."
     ],
     "answer": 3,
@@ -3497,9 +3497,9 @@ TOEIC.articles = [
    {
     "q": "Your friend yawns, and you yawn right after. What does the article suggest about this?",
     "options": [
-     "You are getting sick.",
-     "You do not like your friend.",
-     "You need to eat something.",
+     "You are getting sick and need to rest soon.",
+     "You do not like your friend very much.",
+     "You need to eat something right away.",
      "A yawn can pass from one person to another."
     ],
     "answer": 3,
@@ -3700,10 +3700,10 @@ TOEIC.articles = [
    {
     "q": "Why are plastic bags a problem in nature?",
     "options": [
-     "They cost stores too much money.",
-     "They are too heavy to carry home.",
+     "They cost stores too much money to buy each year.",
+     "They are too heavy for shoppers to carry home.",
      "They stay in the environment for a very long time.",
-     "They are very hard to open."
+     "They are very hard for most shoppers to open."
     ],
     "answer": 2,
     "explanation": "第二段提到塑膠不容易分解，袋子會在自然環境裡留存非常久。"
@@ -3712,9 +3712,9 @@ TOEIC.articles = [
     "q": "According to the article, what is one cost of paper bags?",
     "options": [
      "Making them uses a lot of water and energy.",
-     "They break easily in the rain.",
-     "They cannot hold any food.",
-     "They are made from sea animals."
+     "They are sold only in a few large stores.",
+     "They cannot hold any kind of food at all.",
+     "They give off a smell that harms sea animals."
     ],
     "answer": 0,
     "explanation": "第三段說造紙要用掉大量的水和能源，而且紙袋較重會多燒燃料。"
@@ -3722,9 +3722,9 @@ TOEIC.articles = [
    {
     "q": "What would the writer most likely tell a shopper to do?",
     "options": [
-     "Always ask for a paper bag.",
-     "Always ask for a plastic bag.",
-     "Buy a new cloth bag every week.",
+     "Always ask for a paper bag at every store you visit.",
+     "Always ask for a plastic bag when you shop for food.",
+     "Buy a new cloth bag every week to help the planet.",
      "Bring a bag you already have and use it again."
     ],
     "answer": 3,
@@ -3733,8 +3733,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-15b.jpg",
   "transfer": {
-   "passage": "Green Hill is a small weekend market by the sea. Many [[shoppers]] come to buy fruit and flowers. Last spring, sellers found old cups on the beach. Some were made of [[plastic]]. It does not [[break down]] in nature for years. Birds can eat small pieces [[by mistake]]. This does great [[harm]] to sea animals.\n\nThe sellers asked [[experts]] on sea life for help. Paper cups are not perfect either, they said. Making paper takes trees from [[forests]]. It also uses a lot of [[energy]], often from burning [[fuel]]. The best choice [[depends on]] how you use a cup. So the plan is simple. Bring your own cup and [[recycle]] it later. Now the beach is clean, and the [[environment]] is healthy again.",
-   "passageZh": "綠丘是海邊一個小型的週末市集。許多購物者來買水果和花。去年春天，攤商在海灘上發現了舊杯子。有些是塑膠做的。它在自然中好幾年都不會分解。鳥可能不小心吃下小碎片。這對海洋動物造成很大的傷害。\n\n攤商向研究海洋生物的專家求助。他們說，紙杯也不完美。造紙要用森林裡的樹。它也要用很多能源，而且常常來自燃燒燃料。最好的選擇取決於你怎麼使用杯子。所以計畫很簡單。自備杯子，之後再回收。現在海灘乾淨了，環境也再次恢復健康。",
+   "passage": "Green Hill is a small weekend market by the sea. Many [[shoppers]] come to buy fruit and flowers. Last spring, sellers found old cups on the beach. Some were made of [[plastic]]. It does not [[break down]] in nature for years. Birds can eat small pieces [[by mistake]]. This does great [[harm]] to sea animals.\n\nThe sellers asked [[experts]] on sea life for help. Paper cups are not perfect either, they said. Making paper takes trees from [[forests]]. It also uses a lot of [[energy]], often from burning [[fuel]]. The best choice [[depends on]] how you use a cup. So the plan is simple. Bring your own cup, use it again and again, and [[recycle]] it only when it cracks. Now the beach is clean, and the [[environment]] is healthy again.",
+   "passageZh": "綠丘是海邊一個小型的週末市集。許多購物者來買水果和花。去年春天，攤商在海灘上發現了舊杯子。有些是塑膠做的。它在自然中好幾年都不會分解。鳥可能不小心吃下小碎片。這對海洋動物造成很大的傷害。\n\n攤商向研究海洋生物的專家求助。他們說，紙杯也不完美。造紙要用森林裡的樹。它也要用很多能源，而且常常來自燃燒燃料。最好的選擇取決於你怎麼使用杯子。所以計畫很簡單。自備杯子，一用再用，等杯子裂了才回收。現在海灘乾淨了，環境也再次恢復健康。",
    "words": [
     {
      "word": "shoppers",
@@ -3963,9 +3963,9 @@ TOEIC.articles = [
     "q": "According to the article, why do companies place scooters near stations?",
     "options": [
      "To help riders finish the last part of a trip.",
-     "To keep the sidewalk clear for walkers.",
-     "To replace buses and trains completely.",
-     "To make riders pay one fixed daily price."
+     "To keep the sidewalk clear for people walking by.",
+     "To replace the city's buses and trains completely.",
+     "To make riders pay one fixed price for the whole day."
     ],
     "answer": 0,
     "explanation": "第二段說公車和火車無法抵達每個角落，滑板車補上最後一小段路。"
@@ -3973,9 +3973,9 @@ TOEIC.articles = [
    {
     "q": "Which group does the article say suffers most from badly parked scooters?",
     "options": [
-     "Taxi drivers",
-     "Scooter company workers",
-     "Train passengers",
+     "Taxi drivers working near stations",
+     "Scooter company workers and managers",
+     "Train passengers on their way to work",
      "Older people and wheelchair users"
     ],
     "answer": 3,
@@ -3995,10 +3995,10 @@ TOEIC.articles = [
    {
     "q": "What does the writer suggest in the last paragraph?",
     "options": [
-     "Cities should stop testing any new technology.",
-     "Delivery robots will never appear on city streets.",
+     "Cities should stop testing any new technology until every rule is ready.",
+     "Delivery robots and drones will never be used in any real city.",
      "A city's scooter rules can hint at how it will meet future changes.",
-     "Scooters will disappear once buses become faster."
+     "Scooters will disappear from city streets once buses become faster."
     ],
     "answer": 2,
     "explanation": "推論題。第六段說新科技出現得比規則快，並以外送機器人、無人機類比，暗示今天的處理方式預示未來。"
@@ -4006,8 +4006,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-16a.jpg",
   "transfer": {
-   "passage": "Bramble Toys makes ride-on toys for children. Its best sellers are small two-wheeled [[scooters]], which a child stands on and pushes with one foot. Last winter, the company received bad news. After three [[accidents]] in which children fell because a wheel came loose, safety [[officials]] visited the factory. They [[banned]] sales of the old model at once and [[required]] the company to fix every unit already sold.\n\nParents can type the wheel code into the company's free phone [[app]] to check if their toy needs a new part, or mail it back at no cost. The company also sent ten large [[vehicles]], each with a driver and a repair team, to smaller towns. That week, the repair centers were [[crowded]] with worried families.\n\nThe new wheels use a stronger locking [[technology]] and passed every safety test. Last month, the city government gave the factory a new [[permit]] to sell the model again. [[Supporters]] of strict toy laws say quick action brings two lasting [[benefits]]: safer products and stronger customer trust.",
-   "passageZh": "布蘭堡玩具生產兒童騎乘玩具。他們最暢銷的產品是小型兩輪滑板車，孩子站在上面、用單腳推動前進。去年冬天，公司收到了壞消息。三起孩童因輪子鬆脫而跌倒的事故發生後，安全官員造訪了工廠。他們立即禁止舊款的銷售，並要求公司修復每一台已售出的產品。\n\n家長可以把輪組編號輸入公司免費的手機應用程式，查看玩具是否需要更換零件，也可以免費把玩具寄回。公司還派出十輛大型車輛，每輛都配有司機與維修小組，前往較小的城鎮。那一週，各維修中心擠滿了憂心的家庭。\n\n新輪組採用更堅固的鎖定科技，通過了所有安全測試。上個月，市政府發給工廠新的許可證，讓這款產品重新上市。支持嚴格玩具法規的人士說，迅速的行動帶來兩項長遠的好處：更安全的產品，以及更強的顧客信任。",
+   "passage": "Bramble Toys makes ride-on toys for children. Its best sellers are small two-wheeled kick [[scooters]], which a child stands on and pushes with one foot. Last winter, the company received bad news. After three [[accidents]] in which children fell because a wheel came loose, safety [[officials]] visited the factory. They [[banned]] sales of the old model at once and [[required]] the company to fix every unit already sold.\n\nParents can type the wheel code into the company's free phone [[app]] to check if their toy needs a new part, or mail it back at no cost. The company also sent ten large [[vehicles]], each with a driver and a repair team, to smaller towns. That week, the repair centers were [[crowded]] with worried families.\n\nThe new wheels use a stronger locking [[technology]] and passed every safety test. Last month, the city government gave the factory a new [[permit]] to sell the model again. Many [[supporters]] of strict toy laws say quick action brings two lasting [[benefits]]: safer products and stronger customer trust.",
+   "passageZh": "布蘭堡玩具生產兒童騎乘玩具。他們最暢銷的產品是小型兩輪滑板車，孩子站在上面、用單腳推動前進。去年冬天，公司收到了壞消息。三起孩童因輪子鬆脫而跌倒的事故發生後，安全官員造訪了工廠。他們立即禁止舊款的銷售，並要求公司修復每一台已售出的產品。\n\n家長可以把輪組編號輸入公司免費的手機應用程式，查看玩具是否需要更換零件，也可以免費把玩具寄回。公司還派出十輛大型車輛，每輛都配有司機與維修小組，前往較小的城鎮。那一週，各維修中心擠滿了憂心的家庭。\n\n新輪組採用更堅固的鎖定科技，通過了所有安全測試。上個月，市政府發給工廠新的許可證，讓這款產品重新上市。許多支持嚴格玩具法規的人士說，迅速的行動帶來兩項長遠的好處：更安全的產品，以及更強的顧客信任。",
    "words": [
     {
      "word": "scooters",
@@ -4060,7 +4060,7 @@ TOEIC.articles = [
      "zh": "許可證"
     },
     {
-     "word": "Supporters",
+     "word": "supporters",
      "base": "supporter",
      "zh": "支持者"
     },
@@ -4235,9 +4235,9 @@ TOEIC.articles = [
    {
     "q": "According to the article, what does the brain do with new information at night?",
     "options": [
-     "It sends all of it to other people.",
-     "It deletes everything from the day.",
-     "It stops receiving any information at all.",
+     "It stores every small detail of the day for many years.",
+     "It deletes everything it learned during the day at once.",
+     "It leaves all the new information untouched until morning.",
      "It keeps the important parts and lets useless details fade."
     ],
     "answer": 3,
@@ -4247,20 +4247,20 @@ TOEIC.articles = [
     "q": "What does the article compare sleep to?",
     "options": [
      "A night cleaning crew",
-     "A busy classroom",
-     "A long journey",
-     "A sports match"
+     "A long pause for the whole body",
+     "A night shift for tired workers",
+     "A morning alarm for the brain"
     ],
     "answer": 0,
-    "explanation": "第三段第一句直接把睡眠比作夜間的清潔班。"
+    "explanation": "第三段第一句說睡眠的作用 something like a night cleaning crew，直接把睡眠比作夜間的清潔班，選 A。B：第一段反而說睡眠不只是一段長長的暫停（not simply a long pause），是被否定的說法；C：夜間輪班在第五段是讓人睡不夠的原因，不是拿來比喻睡眠；D：第五段的早上鬧鐘是把睡眠切短的東西，同樣不是比喻。"
    },
    {
     "q": "Which of the following does the article name as a reason for short sleep?",
     "options": [
-     "Noisy neighbors",
-     "Cold weather",
+     "Noisy neighbors at night",
+     "Cold winter weather outside",
      "Screens and night shifts",
-     "Long holidays"
+     "Long summer holidays"
     ],
     "answer": 2,
     "explanation": "第五段列出螢幕、夜間輪班和長時間讀書，把就寢時間往後推。"
@@ -4279,8 +4279,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-16b.jpg",
   "transfer": {
-   "passage": "Lin Wei-Ming works at a busy call center that runs three [[shifts]] around the clock. For years he sat all day, ate at his desk, and drove home tired. He often lost focus during long calls and made small [[mistakes]] when typing order numbers.\n\nHis doctor gave him simple advice: walk for thirty minutes every day. Studies have long [[linked]] regular walking to better health, she explained. Movement sends more blood to the [[brain]], carries [[waste]] out of the body, and helps it [[repair]] the tiny tears in tired muscles.\n\nSix months later, Wei-Ming feels like a new man. His [[immune]] system is stronger, and he catches fewer colds. Names and numbers stay in his [[memory]] longer. He can hold his [[attention]] through an hour-long call without drifting. At lunch he now [[rests]] under the trees for twenty minutes instead of looking at his phone. His team leader says the [[quality]] of his work has never been higher. One simple habit, he tells new workers, [[improves]] almost every part of the day.",
-   "passageZh": "林偉明在一間全天候排三個班次的忙碌客服中心工作。多年來，他整天坐著、在座位上吃飯、下班開車回家時總是疲憊不堪。長時間通話時他常常失去專注，輸入訂單號碼時也會犯下小錯誤。\n\n醫生給了他簡單的建議：每天走路三十分鐘。她解釋，研究早已把規律步行和更好的健康連結在一起。運動會把更多血液送到大腦，把廢物帶出身體，也幫助身體修復疲勞肌肉裡的細微撕裂。\n\n六個月後，偉明覺得自己煥然一新。他的免疫系統更強了，感冒次數變少。名字和數字能在他的記憶裡留得更久。他可以在一小時的通話中保持注意力不渙散。午休時，他現在會在樹下休息二十分鐘，而不是滑手機。組長說他的工作品質從來沒有這麼好過。他告訴新同事：一個簡單的習慣，幾乎能改善一天中的每一個部分。",
+   "passage": "Lin Wei-Ming works at a busy call center that runs three [[shifts]] around the clock. For years he sat all day, ate at his desk, and drove home tired. He often lost focus during long calls and made small [[mistakes]] when typing order numbers.\n\nHis doctor gave him simple advice: walk for thirty minutes every day. Studies have long [[linked]] regular walking to better health, she explained. Movement sends more blood to the [[brain]], carries [[waste]] out of the body, and helps it [[repair]] the tiny tears in tired muscles.\n\nSix months later, Wei-Ming feels like a new man. His [[immune]] system is stronger, and he catches fewer colds. His short-term [[memory]] is better, too: names and numbers stay with him longer. He can hold his [[attention]] through an hour-long call without drifting. At lunch he now [[rests]] under the trees for twenty minutes instead of looking at his phone. His team leader says the [[quality]] of his work has never been higher. One simple habit, he tells new workers, [[improves]] almost every part of the day.",
+   "passageZh": "林偉明在一間全天候排三個班次的忙碌客服中心工作。多年來，他整天坐著、在座位上吃飯、下班開車回家時總是疲憊不堪。長時間通話時他常常失去專注，輸入訂單號碼時也會犯下小錯誤。\n\n醫生給了他簡單的建議：每天走路三十分鐘。她解釋，研究早已把規律步行和更好的健康連結在一起。運動會把更多血液送到大腦，把廢物帶出身體，也幫助身體修復疲勞肌肉裡的細微撕裂。\n\n六個月後，偉明覺得自己煥然一新。他的免疫系統更強了，感冒次數變少。他的短期記憶力也變好了：名字和數字能記得更久。他可以在一小時的通話中保持注意力不渙散。午休時，他現在會在樹下休息二十分鐘，而不是滑手機。組長說他的工作品質從來沒有這麼好過。他告訴新同事：一個簡單的習慣，幾乎能改善一天中的每一個部分。",
    "words": [
     {
      "word": "shifts",
@@ -4530,10 +4530,10 @@ TOEIC.articles = [
    {
     "q": "What can we infer about ordering directly from a restaurant?",
     "options": [
-     "It is always cheaper for the customer.",
+     "It is always cheaper for the customer than an app order.",
      "It leaves the shop with more of the money you pay.",
-     "It always takes longer than app delivery.",
-     "It is not allowed in most cities."
+     "It always takes much longer than an app delivery would.",
+     "It is not allowed in most large cities today."
     ],
     "answer": 1,
     "explanation": "第二段提到平台每筆訂單都抽費用，末段又說直接打電話或內用「對老闆幫助更大」，兩者合起來可推論店家實際留下的錢比較多。"
@@ -4542,9 +4542,9 @@ TOEIC.articles = [
     "q": "What does the article say about delivery riders?",
     "options": [
      "Their income often depends on how many orders they finish.",
-     "Restaurants set the pay for each of their trips.",
-     "They work only when the weather is good.",
-     "They also cook the food in ghost kitchens."
+     "Restaurants decide how much they are paid for each trip.",
+     "They only work on days when the weather is dry and calm.",
+     "They also cook the food sold in ghost kitchens at night."
     ],
     "answer": 0,
     "explanation": "第五段明說外送員的收入常取決於完成的訂單數，且他們在車陣與雨中工作，餐廳幾乎無法控制這段服務。"
@@ -4552,8 +4552,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-17a.jpg",
   "transfer": {
-   "passage": "Mr. Osman runs a small curry house on a quiet street, far from the train station. Few people walk past his door, and empty tables were common. Last year the landlord raised the [[rent]], and Osman knew the shop could not [[survive]] on walk-in [[customers]] alone.\n\nHis daughter suggested joining two online food [[platforms]]. She photographed every meal and rewrote the [[menus]] for phone screens, with short names and clear prices. Each of them charges a service [[fee]] of thirty percent per order, so Osman also hired three [[riders]] who carry nearby orders to homes by motorcycle. That way, more of the money stays as [[profits]] after costs are paid.\n\nToday the kitchen [[staff]] begin cooking at ten each morning, and warm boxes leave the shop every few minutes. The [[dining room]] holds only six tables now, but many guests say eating at home is more [[convenient]] than driving across town. Home [[delivery]] saved a business that the quiet street could not.",
-   "passageZh": "Osman 先生在一條安靜的街上經營一家小咖哩餐館，離火車站很遠。路過店門的人不多，空桌是常態。去年房東調漲租金，Osman 明白這家店光靠上門的顧客撐不下去。\n\n他的女兒建議加入兩個線上訂餐平台。她替每道餐點拍照，並重寫了適合手機畫面的菜單，名稱簡短、價格清楚。每個平台每筆訂單都收取三成服務費，所以 Osman 又僱了三名外送員，騎機車把附近的餐點送到府。這樣一來，扣掉成本之後留下的利潤就更多。\n\n現在廚房員工每天早上十點開始煮餐，溫熱的餐盒每隔幾分鐘就送出店門。內用區如今只剩六張桌子，但許多客人說，在家吃飯比開車橫越城區方便得多。外送救回了這家安靜街道救不回的店。",
+   "passage": "Mr. Osman runs a small curry house on a quiet street, far from the train station. Few people walk past his door, and empty tables were common. Last year the landlord raised the [[rent]], and Osman knew the shop could not [[survive]] on walk-in [[customers]] alone.\n\nHis daughter suggested joining two online food [[platforms]]. She photographed every meal and rewrote the [[menus]] for phone screens, with short names and clear prices. Each of them charges a service [[fee]] of thirty percent per order, so Osman also hired three motorcycle [[riders]] to carry nearby orders to homes. That way, more of the money stays as [[profits]] after costs are paid.\n\nToday the kitchen [[staff]] begin cooking at ten each morning, and warm boxes leave the shop every few minutes. The [[dining room]] holds only six tables now, but many guests say eating at home is more [[convenient]] than driving across town. Home [[delivery]] saved a business that the quiet street could not.",
+   "passageZh": "Osman 先生在一條安靜的街上經營一家小咖哩餐館，離火車站很遠。路過店門的人不多，空桌是常態。去年房東調漲租金，Osman 明白這家店光靠上門的顧客撐不下去。\n\n他的女兒建議加入兩個線上訂餐平台。她替每道餐點拍照，並重寫了適合手機畫面的菜單，名稱簡短、價格清楚。每個平台每筆訂單都收取三成服務費，所以 Osman 又僱了三名騎機車的外送員，把附近的餐點送到府。這樣一來，扣掉成本之後留下的利潤就更多。\n\n現在廚房員工每天早上十點開始煮餐，溫熱的餐盒每隔幾分鐘就送出店門。內用區如今只剩六張桌子，但許多客人說，在家吃飯比開車橫越城區方便得多。外送救回了這家安靜街道救不回的店。",
    "words": [
     {
      "word": "rent",
@@ -4782,9 +4782,9 @@ TOEIC.articles = [
     "q": "What does a vaccine give the body?",
     "options": [
      "A safe sample, such as a weak form or a small piece of a germ.",
-     "A strong living germ that causes serious illness.",
-     "A set of antibodies collected from animals.",
-     "A medicine that kills every germ in the body."
+     "A strong living germ that is able to make a healthy person seriously ill.",
+     "A set of ready-made antibodies that were collected from the blood of animals.",
+     "A medicine that kills every single germ that is already inside the body."
     ],
     "answer": 0,
     "explanation": "第二段說疫苗讓身體看見一份安全的樣本，可能是減弱或已死的形式，也可能只是外層的一小塊。"
@@ -4826,7 +4826,7 @@ TOEIC.articles = [
   "image": "img/articles/art-17b.jpg",
   "transfer": {
    "passage": "Next month, the sales team at Harper Trading will attend a trade fair overseas. Their manager, Ms. Lin, booked a clinic visit before the trip.\n\nThe nurse explained that illness abroad may come from a [[virus]] that copies itself inside the body, or from [[bacteria]] that grow in badly cooked street food. Colds also [[spread]] fast in crowded airports.\n\nThe [[vaccines]] she gives today teach the body to fight a disease before the real one arrives. Afterward, the body makes its own [[antibodies]], which [[stick to]] the surface of the invader and mark it for attack. In this way the [[immune system]], the body's inner network of defenses, remembers the enemy for years.\n\nEach traveler gets one shot today and returns for a second [[dose]] four weeks later. A few people notice minor [[side effects]], such as a sore arm or a [[mild]] [[fever]] that passes within a day. Full [[protection]] arrives about two weeks after the final shot, in time for the fair.",
-   "passageZh": "下個月，哈波貿易公司的業務團隊將到海外參加一場商展。出發前，他們的經理林小姐預約了一次診所看診。\n\n護理師說明，在國外生病可能來自一種會在體內自我複製的病毒，也可能來自在未煮熟街頭食物中滋生的細菌。感冒也會在擁擠的機場快速傳播。\n\n她今天施打的疫苗，會在身體遇到真正的疾病之前，先教身體如何對抗它。之後，身體會製造自己的抗體；抗體會黏附於入侵者的表面，把它標記出來以便攻擊。透過這種方式，免疫系統——也就是身體內部的防禦網路——會把敵人記住很多年。\n\n每位旅客今天先打一針，四週後回診接種第二劑。少數人會出現輕微的副作用，例如手臂痠痛，或一天內就會退去的輕微發燒。完整的保護力大約在最後一針的兩週後產生，正好趕上商展。",
+   "passageZh": "下個月，哈波貿易公司的業務團隊將到海外參加一場商展。出發前，他們的經理林小姐預約了一次診所看診。\n\n護理師說明，在國外生病可能來自一種會在體內自我複製的病毒，也可能來自在未煮熟街頭食物中滋生的細菌。感冒也會在擁擠的機場快速傳播。\n\n她今天施打的疫苗，會在身體遇到真正的疾病之前，先教身體如何對抗它。之後，身體會製造自己的抗體；抗體會黏附於入侵者的表面，把它標記出來以便攻擊。透過這種方式，免疫系統（也就是身體內部的防禦網路）會把敵人記住很多年。\n\n每位旅客今天先打一針，四週後回診接種第二劑。少數人會出現輕微的副作用，例如手臂痠痛，或一天內就會退去的輕微發燒。完整的保護力大約在最後一針的兩週後產生，正好趕上商展。",
    "words": [
     {
      "word": "virus",
@@ -5076,34 +5076,34 @@ TOEIC.articles = [
     "q": "What is the article mainly about?",
     "options": [
      "How AI tools are changing office work, and what workers hope and fear about them",
-     "Why most companies have decided to ban AI tools completely",
-     "A step-by-step guide to writing instructions for AI tools",
-     "The history of office equipment from the typewriter to the printer"
+     "Why most companies have now decided to ban AI tools from the office completely",
+     "A step-by-step guide to typing clear instructions into AI tools at work",
+     "How earlier office tools such as spreadsheets and email changed working life"
     ],
     "answer": 0,
-    "explanation": "主旨題。全文從第一段的現象（AI 工具進入日常工作）開始，接著談哪些工作改變、期待（第三段）與擔憂（第四至六段），最後給讀者建議，主軸就是職場改變與正反看法。"
+    "explanation": "主旨題。第一段寫 AI 工具走進日常工作，第二段寫哪些工作改變最多，第三段是主管與雇主的期待，第四至六段是就業、正確性與隱私的擔憂，第七段給工作者建議，故選 A。B：第六段只說許多雇主禁止把客戶資料貼進公開工具，有些組織核准工具清單或要求先受訓，沒有說多數公司全面禁用。C：全文沒有教寫指令的步驟，第七段反而說需要的能力不是把指令打進對話框。D：試算表與電子郵件只在第四段拿來對照，不是全文主旨。"
    },
    {
     "q": "According to the article, which kind of task has been affected the most?",
     "options": [
-     "Tasks that require moving heavy equipment",
-     "Tasks that only senior managers are allowed to do",
-     "Tasks that must be finished outside the office",
+     "Tasks that involve making the final decision",
+     "Tasks that involve training a new colleague",
+     "Tasks that involve planning the company's future",
      "Tasks built on repeated writing and searching"
     ],
     "answer": 3,
-    "explanation": "細節題。第二段第二句明確寫著 Tasks built on repeated writing and searching have shifted the most，後面客服、行銷、會計與律師的例子都屬於這一類。"
+    "explanation": "細節題。第二段第二句 Tasks built on repeated writing and searching have shifted the most，後面的客服、行銷、會計與律師都是這一類，故選 D。A：第二段末句說工具不做決定，只拿掉決定之前的慢工，做最後決定的工作沒有被取代。B：第三段把帶新同事列為機器做不到、省下的時間要轉去做的工作。C：決定公司下一步同樣在第三段被列為機器做不到的工作。"
    },
    {
     "q": "Why do many employers forbid staff from pasting customer data into public AI tools?",
     "options": [
-     "Because the tools charge extra money for long text",
-     "Because customers prefer replies written by hand",
+     "Because staff must finish training before they may use any tool",
+     "Because a named person must check everything the tool writes",
      "Because the text leaves the company's own network",
-     "Because the tools are unable to read numbers"
+     "Because the tools often leave out the one condition that mattered"
     ],
     "answer": 2,
-    "explanation": "細節題。第六段第二句說明原因：輸入外部服務的文字會離開公司網路（Text typed into an outside service leaves the company network），所以雇主才會設下限制。"
+    "explanation": "細節題。第六段第二句 Text typed into an outside service leaves the company network, so many employers forbid staff from pasting customer data，so 前面就是原因：文字輸入外部服務就離開公司網路，故選 C。A：先受訓才能使用是第六段另一條規定，不是禁止貼資料的原因。B：指定人員檢查機器寫的內容是第五段為了正確性的做法。D：摘要漏掉關鍵條件是第五段講的正確性問題，與隱私無關。"
    },
    {
     "q": "What does the article suggest about mistakes made by AI tools?",
@@ -5373,13 +5373,13 @@ TOEIC.articles = [
    {
     "q": "What is the main point of the article?",
     "options": [
-     "Microplastics come mainly from medical equipment",
+     "Microplastics come mainly from car tires and clothes made from synthetic fibers",
      "Microplastics come from many everyday sources and are extremely difficult to remove",
-     "Cleaning machines have already solved most of the ocean problem",
-     "Plastic breaks down into natural material soon after it reaches the sea"
+     "Scientists have now proved that microplastics cause serious harm to human health",
+     "Collecting microplastics after they spread is more realistic than preventing them"
     ],
     "answer": 1,
-    "explanation": "主旨題。第一段最後提出兩個問題（來源與清除），第二、三段回答來源，第四、五段解釋為何難以清除，全文正是圍繞這兩點。"
+    "explanation": "主旨題。第一段最後提出兩個問題：從哪裡來、為什麼難以清除；第二、三段回答來源，第四、五段解釋為何難清除，故選 B。A：第二段說多數微塑膠來自瓶子、包裝等物品碎裂，輪胎與合成纖維只是第三段的其他來源。C：第六段說還沒有明確結論，發現物質不等於證明有害。D：第七段說預防比事後收集實際得多，與選項相反。"
    },
    {
     "q": "According to the article, where do most microplastics come from?",
@@ -5395,13 +5395,13 @@ TOEIC.articles = [
    {
     "q": "Why is filtering microplastics out of the ocean a problem?",
     "options": [
-     "Filters stop working in cold water",
-     "Filters are banned in most parts of the ocean",
+     "Filters would need to be replaced so often that the cost would be too high",
+     "Water treatment plants have already removed most of the particles",
      "A filter fine enough would also trap tiny living things",
-     "Filters make the plastic pieces grow larger"
+     "The particles stay in one deep place that filters cannot reach"
     ],
     "answer": 2,
-    "explanation": "細節題。第四段指出，細到能攔住微塑膠的濾網也會攔下浮游生物，而那正是海洋食物鏈依賴的小生物。"
+    "explanation": "細節題。第四段第三句 Any filter fine enough to trap microplastics would also trap plankton，細到能攔住微塑膠的濾網也會攔下浮游生物，故選 C。A：文中沒有提到更換濾網或成本。B：第三段只說沒有一座處理廠能攔下每一條纖維，沒有說已經清掉大部分，也不是海洋過濾困難的原因。D：第四段說顆粒同時存在於水中、沉積物與空氣，沒有單一地點，與選項相反。"
    },
    {
     "q": "What can be inferred about plastic being durable?",
@@ -5417,19 +5417,19 @@ TOEIC.articles = [
    {
     "q": "What does the writer suggest about the health effects of microplastics?",
     "options": [
-     "Research has already proved that they are completely safe",
+     "Research has already shown that they are completely safe in food and drinking water",
      "The evidence is not complete, and that uncertainty should not be read as good news",
-     "They make everyone who eats fish become ill",
-     "Scientists have decided to stop studying the question"
+     "Finding them in food and water already shows that they harm human health",
+     "Scientists have decided to stop studying the question because it cannot be answered"
     ],
     "answer": 1,
-    "explanation": "推論題。第六段說結論尚未明確，並指出「檢出物質不等於證明有害」，最後一句更點明這種謹慎有時被誤讀成好消息，暗示讀者不該把不確定當成安全保證。"
+    "explanation": "推論題。第六段說結論尚未明確，並指出檢出物質不等於證明有害；末句說這種謹慎有時被報導成好消息，which it is not，可推知作者認為不確定不能當成安全的保證，故選 B。A：文中說還沒有明確結論，沒有證明安全。C：第六段明說發現物質不等於證明它有害，與選項相反。D：第六段說研究者正在研究人體吸收後的影響，沒有說要停止。"
    }
   ],
   "image": "img/articles/art-18b.jpg",
   "transfer": {
-   "passage": "Ms. Porter runs the water plant beside Gray Lake. Last month, under a [[microscope]], every drop she tested showed plastic bits beside the [[plankton]], the tiny floating creatures that young fish eat.\n\nShe found three sources. Years of sun had turned the old dock's plastic boards [[brittle]]; they cracked into sharp [[fragments]] when boats hit them, and heavy pieces sank into the [[sediment]] at the bottom. Sports clothes are made of [[synthetic]] cloth, not natural cotton or wool, and every wash pulls tiny [[fibers]], short threads of that cloth, down the drain. When cars brake on the lake road, their [[tires]] leave rubber dust that rain washes into the lake.\n\nThis plastic [[resists]] the bacteria that break down dead leaves, so it never rots, yet it [[absorbs]] oily chemicals and carries them into the fish that swallow it. Ms. Porter has fitted a fine [[filter]] on the plant's main water pipe to trap the pieces, and she tells residents with [[caution]] that the water is safe.",
-   "passageZh": "波特小姐負責管理灰湖旁的淨水廠。上個月，在顯微鏡下，她檢測的每一滴水裡，都出現了塑膠小碎屑，就漂在浮游生物旁邊——那些是幼魚賴以為食的微小漂浮生物。\n\n她找出了三個來源。多年的日曬讓舊碼頭的塑膠板變得脆化；船隻一撞上，它們就裂成尖銳的碎片，較重的碎塊沉入湖底的沉積物中。運動服是用合成布料製成的，而不是天然的棉或羊毛，每次洗衣都會把細小的纖維——也就是那種布料的短線頭——沖進排水管。汽車在湖邊道路上煞車時，輪胎會留下橡膠粉塵，再被雨水沖進湖裡。\n\n這種塑膠能抵抗分解落葉的細菌，所以永遠不會腐爛；但它同時會吸收水中的油性化學物質，把它們帶進吞下塑膠的魚體內。波特小姐已經在淨水廠的主水管上加裝了細密的濾網，攔住這些碎屑，並謹慎地告訴居民：自來水仍是安全的。",
+   "passage": "Ms. Porter runs the water plant beside Gray Lake. Last month, under a [[microscope]], every drop she tested showed plastic bits beside the [[plankton]], the tiny floating creatures that young fish eat.\n\nShe found three sources. Years of sun had turned the old dock's plastic boards [[brittle]]; they cracked into sharp [[fragments]] when boats hit them, and heavy pieces sank into the [[sediment]] at the bottom. Sports clothes are made of [[synthetic]] cloth, not natural cotton or wool, and every wash pulls tiny [[fibers]], short threads of that cloth, down the drain. When cars brake on the lake road, their [[tires]] leave rubber dust that rain washes into the lake.\n\nThis plastic [[resists]] the bacteria that break down dead leaves, so it never rots, yet it [[absorbs]] oily chemicals and carries them into the fish that swallow it. Ms. Porter has fitted a fine [[filter]] on the plant's main water pipe to trap the pieces, and she tells residents that the water is safe but urges [[caution]] near the old dock.",
+   "passageZh": "波特小姐負責管理灰湖旁的淨水廠。上個月，在顯微鏡下，她檢測的每一滴水裡，都出現了塑膠小碎屑，就漂在浮游生物（幼魚賴以為食的微小漂浮生物）旁邊。\n\n她找出了三個來源。多年的日曬讓舊碼頭的塑膠板變得脆化；船隻一撞上，它們就裂成尖銳的碎片，較重的碎塊沉入湖底的沉積物中。運動服是用合成布料製成的，而不是天然的棉或羊毛，每次洗衣都會把細小的纖維（也就是那種布料的短線頭）沖進排水管。汽車在湖邊道路上煞車時，輪胎會留下橡膠粉塵，再被雨水沖進湖裡。\n\n這種塑膠能抵抗分解落葉的細菌，所以永遠不會腐爛；但它同時會吸收水中的油性化學物質，把它們帶進吞下塑膠的魚體內。波特小姐已經在淨水廠的主水管上加裝了細密的濾網，攔住這些碎屑，並告訴居民自來水是安全的，但也呼籲他們在舊碼頭附近要小心。",
    "words": [
     {
      "word": "microscope",
@@ -5671,63 +5671,63 @@ TOEIC.articles = [
    {
     "q": "What is the main idea of the article?",
     "options": [
-     "Cities should replace air conditioning with trees.",
-     "Trees grow faster in cities than in the countryside.",
+     "Cities should replace air conditioning with trees, since trees cool streets better and cost almost nothing to keep.",
+     "Trees grow faster in cities than in the countryside, so planners can plant them and then leave them alone.",
      "Cities are planting trees because trees cool streets and improve daily life, although the work is long and costly.",
-     "Most city trees die because planners always choose the wrong species."
+     "Most city trees die because planners always choose the wrong species, so cities should stop planting trees."
     ],
     "answer": 2,
-    "explanation": "主旨題。第一段點出熱島與種樹，中間段落談降溫、空氣、心理效益，第五、六段談成本與選種，第七段談公平，C 完整涵蓋全文走向。"
+    "explanation": "主旨題。第一段點出熱島效應與種樹，第二至四段談降溫、空氣、排水與心理上的好處，第五、六段談長年維護與選種的成本，第七段談公平，C 完整涵蓋全文走向。A：第五段說樹要長年花錢照顧，文中也沒有主張用樹取代冷氣。B：文中沒有比較城市與鄉村的生長速度，第五段還說新樹頭幾個夏天都要澆水。D：第六段只說選錯樹會造成損害，所以現在刻意混種，沒有說多數樹因此死掉或該停止種樹。"
    },
    {
     "q": "According to the article, how do leaves help cool the air around them?",
     "options": [
      "Water from the leaves turns into vapor and carries heat away.",
-     "Leaves push hot air upward into the sky.",
-     "Leaves store rainwater inside the trunk overnight.",
-     "Leaves reflect heat back down onto the pavement."
+     "Leaves push the hot air upward and away into the open sky.",
+     "Leaves store rainwater inside the trunk to keep the roots cool.",
+     "Leaves reflect the heat back down onto the hot pavement below."
     ],
     "answer": 0,
-    "explanation": "細節題。第二段說明第二種降溫方式：葉子散出水分，水變成水蒸氣時帶走熱量。"
+    "explanation": "細節題。第二段說明第二種降溫方式：Leaves give off water, and as that water turns into vapor it takes heat with it，葉子散出水分，水變成水蒸氣時帶走熱量，故選 A。B：文中沒有說葉子把熱空氣往上推。C：第三段說留住雨水的是樹根與土壤，作用是減少淹水。D：第二段說樹葉擋住陽光形成樹蔭，沒有說把熱反射回路面。"
    },
    {
     "q": "Why do planners now put several different kinds of trees on the same street?",
     "options": [
-     "Because mixed trees grow faster than a single kind.",
-     "Because residents prefer streets with many colors.",
-     "Because different trees need much less water.",
+     "Because mixed trees grow faster and need far less care than one kind.",
+     "Because residents have asked for streets with many colors and shapes.",
+     "Because one kind of tree would block too much sunlight from the shops.",
      "Because one disease or insect could destroy a whole street of identical trees."
     ],
     "answer": 3,
-    "explanation": "細節題。第六段最後一句：若整條街的樹都相同，一種病害或蟲害就可能讓它們全數消失。"
+    "explanation": "細節題。第六段末句 Planners now tend to mix many species on purpose, since a single disease or insect can wipe out an entire street if every tree on it is the same，since 後面就是混種的原因，故選 D。A：文中沒有說混種的樹長得較快或較好照顧。B：文中沒有提到居民要求多種顏色。C：文中沒有說單一樹種會擋住店面的陽光；樹根掀起人行道、侵入水管是同段講選錯樹的後果，不是混種的理由。"
    },
    {
     "q": "What does the article suggest about a city that pays for planting but not for the years that follow?",
     "options": [
-     "It will still enjoy exactly the same benefits.",
+     "It will still enjoy exactly the same benefits as a city that pays for care.",
      "It risks losing many young trees and wasting the money it has already spent.",
-     "It will be forced to plant fewer species.",
-     "It will get cleaner air but hotter streets."
+     "It will be forced to plant fewer species and to cut down its older trees.",
+     "It will get cleaner air, but its streets will become hotter than before."
     ],
     "answer": 1,
-    "explanation": "推論題。第五段說新樹頭幾個夏天需要澆水、第二年死掉等於把錢丟掉，且預算要涵蓋數年維護；由此可推論只付種植費的城市會白花錢。"
+    "explanation": "推論題。第五段說新樹頭幾個夏天需要澆水，第二年死掉的樹等於把錢丟掉，所以預算要涵蓋多年維護；由此可推論只付種植費的城市可能失去新樹、白花錢，故選 B。A：樹可能死掉，不會有同樣的好處。C：文中沒有把維護經費和樹種數量或砍老樹連在一起。D：樹死了就得不到空氣與樹蔭的好處，文中也沒有說街道會比原本更熱。"
    },
    {
     "q": "Why is tree planting now discussed as a question of fairness?",
     "options": [
      "Because the hottest and barest streets are often home to people who can least afford air conditioning.",
-     "Because every neighborhood is required by law to plant the same number of trees.",
-     "Because trees are shared property in most cities.",
-     "Because richer neighborhoods pay higher taxes for public parks."
+     "Because every neighborhood is required by law to plant the same number of trees each year.",
+     "Because trees on city streets are shared property that belongs to every single resident.",
+     "Because richer neighborhoods pay much higher taxes for public parks and for street trees."
     ],
     "answer": 0,
-    "explanation": "細節題。第七段指出較富裕社區樹蔭較多，最熱最光禿的街道往往住著最負擔不起冷氣的人。"
+    "explanation": "細節題。第七段說較富裕的社區樹蔭較多，最熱、最光禿的街道往往住著最負擔不起冷氣的人，接著 That is why 說明種樹因此被當成公平問題，故選 A。B：文中沒有法律規定各社區要種一樣多的樹。C：文中沒有說街樹是全體居民的共有財產。D：第七段只說富裕社區樹蔭較多，沒有談稅金或公園經費。"
    }
   ],
   "image": "img/articles/art-19a.jpg",
   "transfer": {
    "passage": "When Golden Plaza opened thirty years ago, its wide concrete roof had a single job: keeping the rain out. Last spring, the mall turned it into a garden for practical reasons. The building sits in a dense [[urban]] center, where summer heat makes cooling costs painful. Now a thick layer of soil covers the roof. It [[absorbs]] rainwater like a sponge, which helps [[reduce]] the risk of flooding on nearby roads after storms. Water rising from the plants through [[evaporation]] also cools the air, and visitors can eat lunch in the [[shade]] of small trees instead of behind hot glass.\n\nThe benefits reach beyond the mall's own walls into the [[surrounding]] streets. The leaves [[trap]] dust from passing trucks, so the air feels cleaner. Birds and bees now have a safe [[habitat]] there, and local [[residents]] may visit for free. Office workers say a quiet half hour in the garden lowers their [[stress]] and helps them [[recover]] before afternoon meetings. The garden is not free: [[maintenance]] takes two gardeners and steady spending.",
-   "passageZh": "金光廣場開幕三十年來，它寬闊的水泥屋頂只有一個功能：擋雨。去年春天，這座購物中心基於實際考量，把屋頂改造成花園。這棟建築位於密集的都市中心，夏天的高溫讓冷氣費用相當可觀。現在屋頂鋪上了厚厚的一層土壤。它像海綿一樣吸收雨水，有助於減少暴雨後附近道路淹水的風險。植物透過蒸發釋出的水氣也能替空氣降溫，訪客可以在小樹的樹蔭下吃午餐，而不必躲在發燙的玻璃後面。\n\n好處不只停留在商場本身，還延伸到周圍的街道。樹葉攔住了過往卡車揚起的灰塵，空氣感覺更乾淨。鳥和蜜蜂如今在屋頂上有了安全的棲地，當地居民可以免費參觀。上班族說，在花園裡安靜待上半小時能降低他們的壓力，幫助他們在下午開會前恢復精神。這座花園並非零成本：維護需要兩名園丁和持續的開銷。",
+   "passageZh": "金光廣場三十年前開幕時，它寬闊的水泥屋頂只有一個功能：擋雨。去年春天，這座購物中心基於實際考量，把屋頂改造成花園。這棟建築位於密集的都市中心，夏天的高溫讓冷氣費用相當可觀。現在屋頂鋪上了厚厚的一層土壤。它像海綿一樣吸收雨水，有助於減少暴雨後附近道路淹水的風險。植物透過蒸發釋出的水氣也能替空氣降溫，訪客可以在小樹的樹蔭下吃午餐，而不必躲在發燙的玻璃後面。\n\n好處不只停留在商場本身，還延伸到周圍的街道。樹葉攔住了過往卡車揚起的灰塵，空氣感覺更乾淨。鳥和蜜蜂如今在屋頂上有了安全的棲地，當地居民可以免費參觀。上班族說，在花園裡安靜待上半小時能降低他們的壓力，幫助他們在下午開會前恢復精神。這座花園並非零成本：維護需要兩名園丁和持續的開銷。",
    "words": [
     {
      "word": "urban",
@@ -5976,24 +5976,24 @@ TOEIC.articles = [
    {
     "q": "What is the main point of the article?",
     "options": [
-     "Coffee is the healthiest drink available to most adults.",
+     "Coffee is the healthiest drink available to most adults, and it gives the brain extra energy.",
      "Caffeine works by blocking a sleepy signal in the brain, and its effects differ from person to person.",
-     "People should never drink anything containing caffeine after lunch.",
-     "Energy drinks are far more powerful than coffee."
+     "People should never drink anything containing caffeine after lunch, because it keeps them awake.",
+     "Energy drinks are far more powerful than coffee, and they also last much longer in the body."
     ],
     "answer": 1,
-    "explanation": "主旨題。第二段說明咖啡因擋住想睡訊號的機制，第四、五段說明個別差異的原因，B 同時涵蓋這兩條主線。"
+    "explanation": "主旨題。第二段說明咖啡因擋住想睡訊號的機制，第三段說疲倦只是被延後，第四、五段說明為什麼每個人反應不同，B 同時涵蓋這兩條主線。A：第六段只說適量對多數健康成人似乎沒問題，第二段更明說咖啡因不會給你能量。C：第六段只說對特別敏感的人，午餐後的咖啡到睡前還在作用，沒有要所有人都不喝。D：第一段只說能量飲料也含咖啡因，沒有比較強弱。"
    },
    {
     "q": "According to the article, what happens when caffeine wears off?",
     "options": [
-     "The brain stops producing the sleepy chemical.",
-     "The drinker feels hungry instead of tired.",
-     "The effect slowly changes into a feeling of calm.",
+     "The brain stops producing the sleepy chemical for the rest of the day.",
+     "The drinker feels hungry and a little dizzy instead of tired.",
+     "The effect slowly fades into a steady feeling of calm and rest.",
      "The tiredness that built up in the meantime arrives all at once."
     ],
     "answer": 3,
-    "explanation": "細節題。第三段：咖啡因只是延後消息，作用消退時累積的睡眠壓力會一次湧上來。"
+    "explanation": "細節題。第三段 When the caffeine finally wears off, all the sleep pressure that has built up in the meantime arrives at once，咖啡因消退時，這段時間累積的睡眠壓力會一次湧上來，故選 D。A：第二段說想睡的物質在清醒時持續累積，文中沒有說大腦停止製造。B：文中沒有提到飢餓或頭暈。C：第三段說午後的低潮可能比單純疲倦更糟，不是變得平靜。"
    },
    {
     "q": "Why does the same cup of coffee do less for a daily drinker than it once did?",
@@ -6012,10 +6012,10 @@ TOEIC.articles = [
      "drinks far more coffee than the average person",
      "produces very little of the sleepy chemical",
      "breaks caffeine down slowly",
-     "has never tasted coffee before"
+     "clears caffeine from the body very quickly"
     ],
     "answer": 2,
-    "explanation": "推論題。第四段提到代謝慢的人下午一份劑量就會半夜睡不著，第六段又說咖啡因會在體內停留數小時；合起來可推得 C。"
+    "explanation": "推論題。第四段說肝臟分解咖啡因的速度因人而異，代謝慢的人下午一份劑量就會讓他們半夜盯著天花板睡不著；第六段也說咖啡因會在體內停留好幾個小時，午餐後的一杯到就寢時仍在作用，合起來可推得 C。A：第五段說的是天天喝咖啡的長期習慣會產生耐受性，同一杯的效果變小，文中沒有說喝的份量多就會睡不著，無法推出 A。B：文中沒有提到每個人產生的想睡物質有多有少，第四段把個人差異歸到肝臟分解咖啡因的速度，B 沒有文本依據。D：第四段說代謝快的人連晚上喝濃縮咖啡都睡得好，與題目情況相反。"
    },
    {
     "q": "What does the writer mean by saying that the bill always arrives?",
@@ -6031,8 +6031,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-19b.jpg",
   "transfer": {
-   "passage": "Rita Moreno works as a hotel night manager. To stay awake, she used to drink three energy drinks every shift. Each can holds a high [[dose]] of [[caffeine]], a [[habit]] she picked up during her first month on the job. In the beginning, one can was enough. Then her body developed a [[tolerance]], and she needed two, then three, to feel the same lift. Worse, the effect [[wears off]] within a few hours, so by four in the morning she found it hard to [[concentrate]] on the front-desk reports. She also began to feel [[anxious]] over small problems, worrying long after they were solved. When she tried to quit suddenly, a pounding [[headache]] lasted two days.\n\nHer doctor explained that some people are simply more [[sensitive]] to the drug than others and advised a [[moderate]] amount instead: one small cup of tea early in the shift. Rita also decided to [[replace]] her late-night can with a short walk outside. A month later, her [[alertness]] through the night was steadier than it had been in years.",
-   "passageZh": "麗塔・莫雷諾是一家飯店的夜班經理。為了保持清醒，她以前每個班要喝三罐能量飲料。每一罐都含有高劑量的咖啡因，這是她上班第一個月養成的習慣。一開始，一罐就夠了。後來她的身體產生了耐受性，需要兩罐、三罐才能有同樣的提神感。更糟的是，效果幾個小時內就會消退，所以到了凌晨四點，她發現自己很難專注在櫃檯報表上。她也開始為小問題感到焦慮，事情解決了很久還在擔心。當她試著突然戒掉時，劇烈的頭痛持續了兩天。\n\n醫生解釋，有些人就是比別人對這種藥物更敏感，並建議改採適量：在班次開始時喝一小杯茶就好。麗塔也決定用到外面短暫散步來取代深夜的那一罐。一個月後，她整夜的清醒度比多年來都更穩定。",
+   "passage": "Rita Moreno works as a hotel night manager. To stay awake, she used to drink three energy drinks every shift. Each can holds a high [[dose]] of [[caffeine]]. She picked up the [[habit]] during her first month on the job. In the beginning, one can was enough. Then her body developed a [[tolerance]], and she needed two, then three, to feel the same lift. Worse, the effect [[wears off]] within a few hours, so by four in the morning she found it hard to [[concentrate]] on the front-desk reports. She also began to feel [[anxious]] over small problems, worrying long after they were solved. When she tried to quit suddenly, a pounding [[headache]] lasted two days.\n\nHer doctor explained that some people are simply more [[sensitive]] to the drug than others and advised a [[moderate]] amount instead: one small cup of tea early in the shift. Rita also decided to [[replace]] her late-night can with a short walk outside. A month later, her [[alertness]] through the night was steadier than it had been in years.",
+   "passageZh": "麗塔・莫雷諾是一家飯店的夜班經理。為了保持清醒，她以前每個班要喝三罐能量飲料。每一罐都含有高劑量的咖啡因。她是在上班第一個月養成這個習慣的。一開始，一罐就夠了。後來她的身體產生了耐受性，需要兩罐、三罐才能有同樣的提神感。更糟的是，效果幾個小時內就會消退，所以到了凌晨四點，她發現自己很難專注在櫃檯報表上。她也開始為小問題感到焦慮，事情解決了很久還在擔心。當她試著突然戒掉時，劇烈的頭痛持續了兩天。\n\n醫生解釋，有些人就是比別人對這種藥物更敏感，並建議改採適量：在班次開始時喝一小杯茶就好。麗塔也決定用到外面短暫散步來取代深夜的那一罐。一個月後，她整夜的清醒度比多年來都更穩定。",
    "words": [
     {
      "word": "dose",
@@ -6399,7 +6399,7 @@ TOEIC.articles = [
   "paragraphs": [
    {
     "en": "The Halvorsen Museum of Fine Art had an unusual problem: nearly everyone in the city admired it, and hardly anyone visited it. Weekday [[attendance]] had been [[declining]] for six consecutive years, and the average visitor was fifty-eight years old. When Nadia Fournier was hired as marketing manager, the director gave her one instruction and very little else — attract a younger audience without lowering the ticket price.",
-    "zh": "哈佛森美術館有個罕見的問題：全城幾乎人人都推崇它，卻幾乎沒有人去。平日參觀人數已經連續六年下滑，參觀者的平均年齡是五十八歲。娜迪雅．傅尼耶受聘為行銷經理時，館長只給了她一項指示，其他什麼也沒給——在不調降票價的前提下，把年輕觀眾拉進來。"
+    "zh": "哈佛森美術館有個罕見的問題：全城幾乎人人都推崇它，卻幾乎沒有人去。平日參觀人數已經連續六年下滑，參觀者的平均年齡是五十八歲。娜迪雅．傅尼耶受聘為行銷經理時，館長只給了她一項指示，其他什麼也沒給：在不調降票價的前提下，把年輕觀眾拉進來。"
    },
    {
     "en": "Fournier began by listening. A short online [[survey]] of two thousand residents under thirty-five produced [[feedback]] she had not [[anticipated]]. The barrier was neither the price nor a lack of interest in art; it was the clock. Most respondents finished work after six, by which time the galleries had closed, and they reserved their weekends for family and rest.",
@@ -6620,8 +6620,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-2b.jpg",
   "transfer": {
-   "passage": "For sixty years, the Riverside soccer club filled its small stadium every weekend. Recently, though, [[attendance]] had been [[declining]] for five seasons; whole rows of seats sat empty.\n\nNew marketing director Elena Vargas began with a [[survey]] of local families. The answers pointed to one problem: parents thought a match was not an evening for children. Her response was an [[initiative]] called Family Night. The club [[launched]] it in March, moving one match a month to Saturday afternoon, with face painting outside the gates. To cover the extra cost, Vargas won [[sponsorship]] from a local supermarket chain, and she [[recruited]] forty student volunteers to run the activities.\n\nNobody had [[anticipated]] the result. The first Family Night sold out the stadium's full [[capacity]] of eight thousand seats. Sales of [[merchandise]], mostly children's shirts and scarves, tripled at the club shop, and with tickets and food counted together, matchday [[revenue]] reached its highest level in a decade. Other teams ask to hire the ground as a [[venue]] for their own family events.",
-   "passageZh": "六十年來，河濱足球俱樂部的小球場每個週末都座無虛席。但近來，出席人數已經連續下滑了五個球季；整排整排的座位空著。\n\n新任行銷總監艾蓮娜・瓦爾加斯先從一份針對當地家庭的問卷調查著手。答案指向一個問題：家長認為球賽不是適合帶孩子去的夜晚活動。她的回應是一項名為「家庭之夜」的新計畫。俱樂部在三月推出這項計畫，把每月一場比賽移到週六下午，並在大門外安排臉部彩繪。為了支應額外開銷，瓦爾加斯爭取到一家本地連鎖超市的贊助，還招募了四十名學生志工來帶活動。\n\n沒有人預料到後來的結果。第一場家庭之夜就把球場八千個座位的容納量全部賣光。商品——主要是童裝球衣和圍巾——在俱樂部商店的銷量成長為三倍；把門票和餐飲加總起來，比賽日收入創下十年來的新高。其他球隊也來詢問，想租這座球場作為自家家庭活動的場地。",
+   "passage": "For sixty years, the Riverside soccer club filled its small stadium every weekend. Recently, though, [[attendance]] had been [[declining]] for five seasons; whole rows of seats sat empty.\n\nNew marketing director Elena Vargas began with a [[survey]] of local families. The answers pointed to one problem: parents thought a match was not an evening for children. Her response was an [[initiative]] called Family Night. The club [[launched]] it in March, moving one match a month to Saturday afternoon, with face painting outside the gates. To cover the extra cost, Vargas won [[sponsorship]] from a local supermarket chain, and she [[recruited]] forty student volunteers to run the activities.\n\nNobody had [[anticipated]] the result. The first Family Night sold out the stadium's full [[capacity]] of eight thousand seats. Sales of [[merchandise]], mostly children's shirts and scarves, tripled at the club shop, and with tickets and food counted together, matchday [[revenue]] reached its highest level in a decade. Other teams have since asked to rent the stadium as a [[venue]] for their own family events.",
+   "passageZh": "六十年來，河濱足球俱樂部的小球場每個週末都座無虛席。但近來，出席人數已經連續下滑了五個球季；整排整排的座位空著。\n\n新任行銷總監艾蓮娜・瓦爾加斯先從一份針對當地家庭的問卷調查著手。答案指向一個問題：家長認為球賽不是適合帶孩子去的夜晚活動。她的回應是一項名為「家庭之夜」的新計畫。俱樂部在三月推出這項計畫，把每月一場比賽移到週六下午，並在大門外安排臉部彩繪。為了支應額外開銷，瓦爾加斯爭取到一家本地連鎖超市的贊助，還招募了四十名學生志工來帶活動。\n\n沒有人預料到後來的結果。第一場家庭之夜就把球場八千個座位的容納量全部賣光。商品（主要是童裝球衣和圍巾）在俱樂部商店的銷量成長為三倍；把門票和餐飲加總起來，比賽日收入創下十年來的新高。之後，其他球隊也陸續來詢問，想租這座球場作為自家家庭活動的場地。",
    "words": [
     {
      "word": "attendance",
@@ -6713,7 +6713,7 @@ TOEIC.articles = [
    },
    {
     "en": "Ordering habits turned a tight market into a crisis. For decades, [[efficiency]] has meant keeping [[inventory]] low and having parts arrive just before they are needed, which works beautifully until deliveries stop. During the pandemic, carmakers expected sales to collapse and canceled orders while home electronics buyers ordered more than ever, so chip lines were reassigned. When car sales recovered sooner than [[forecast]], the companies that had left the queue rejoined at the back, and nervous buyers began ordering double, which made the [[backlog]] look worse still.",
-    "zh": "下單習慣把緊繃的市場推成危機。幾十年來，效率的定義就是庫存壓到最低、零件在需要的前一刻才到貨——這套做法漂亮得很，直到送貨停了為止。疫情期間，車廠預期銷量會崩而取消訂單，家用電子產品的買家卻買得比以往都多，晶片產線因此被重新分配。等到車市復甦得比預測還快，離開隊伍的公司只能重新排到最後面；心慌的買家又開始下兩倍的量，讓積壓的訂單看起來更嚇人。"
+    "zh": "下單習慣把緊繃的市場推成危機。幾十年來，效率的定義就是庫存壓到最低、零件在需要的前一刻才到貨，這套做法漂亮得很，直到送貨停了為止。疫情期間，車廠預期銷量會崩而取消訂單，家用電子產品的買家卻買得比以往都多，晶片產線因此被重新分配。等到車市復甦得比預測還快，離開隊伍的公司只能重新排到最後面；心慌的買家又開始下兩倍的量，讓積壓的訂單看起來更嚇人。"
    },
    {
     "en": "For ordinary people the [[consequences]] arrived as waiting and higher prices. A new car took months rather than weeks, and some arrived with features removed. Workers on [[assembly]] lines lost shifts while finished cars stood in parking lots waiting for one missing part. Hospitals and small firms competed for the same limited supply with far less bargaining power.",
@@ -6883,7 +6883,7 @@ TOEIC.articles = [
      "Phone makers are largely responsible for the difficulties that carmakers now face."
     ],
     "answer": 2,
-    "explanation": "全文三個主軸：第三段講建廠與製程慢、第四段講產能集中、第五段講低庫存下單習慣，第七段收束為「只追求最低成本的系統很脆弱」。選項三把這三點合起來說。"
+    "explanation": "主旨題。第三段講建廠與製程很慢，第四段講產能集中在少數地區，第五段講低庫存與恐慌下單讓短缺惡化，第七段收在只追求最低成本的系統一出事就崩，C 把這三點合起來說。A：文中沒有談駕駛人自己修車，第二段只說車子裝了很多小電腦。B：第七段只說政府用補貼吸引晶片廠，並指出備援都有成本，沒有主張政府停止補貼。D：第二段說車用晶片利潤低，所以晶片廠先做手機的訂單，沒有說手機廠該負責。"
    },
    {
     "q": "According to the article, why do carmakers' orders often wait when capacity is tight?",
@@ -7021,7 +7021,7 @@ TOEIC.articles = [
    },
    {
     "en": "One response is to lengthen working life. Several countries have raised the age at which a state pension begins, and firms now offer part-time contracts, [[flexible]] hours or a gradual exit instead of a single [[retirement]] date. The policy is fair only up to a point. An accountant may happily work into her late sixties; a nurse, or a roofer whose body has taken decades of strain, may have no such choice, so a uniform rule pushes the heaviest burden onto the most physical jobs.",
-    "zh": "一個回應方式是拉長工作年限。若干國家已調高開始請領年金的年齡，企業也提供部分工時、彈性工時，或以漸進式退場取代單一的退休日期。但這套政策只在一定範圍內公平。會計師也許樂意做到六十好幾；一名護理師，或身體已被數十年勞動磨過的屋頂工人，可能沒有這種選擇——一體適用的規定，會把最重的負擔推給最耗體力的工作。"
+    "zh": "一個回應方式是拉長工作年限。若干國家已調高開始請領年金的年齡，企業也提供部分工時、彈性工時，或以漸進式退場取代單一的退休日期。但這套政策只在一定範圍內公平。會計師也許樂意做到六十好幾；一名護理師，或身體已被數十年勞動磨過的屋頂工人，可能沒有這種選擇，而一體適用的規定，會把最重的負擔推給最耗體力的工作。"
    },
    {
     "en": "Two other answers attract most attention. [[Automation]] can take over repetitive tasks in warehouses, factories and offices, but it is costly to install and still weak at the personal, unpredictable work that caring for older people demands. [[Immigration]] fills gaps quickly, yet it is politically contested, and because many countries are aging at once, they increasingly compete for the same [[skilled]] workers rather than drawing on an endless pool.",
@@ -7029,7 +7029,7 @@ TOEIC.articles = [
    },
    {
     "en": "Employers face a quieter problem: experience walking out the door. When long-serving staff retire, they take with them knowledge that was never written down — which [[supplier]] is reliable, why a rule exists, how to calm a difficult customer. Companies that handle this well pair older and younger [[colleagues]], pay for [[retraining]] at any age, and drop the old assumption that training someone in their fifties is money wasted. If a career can run for fifty years, that assumption never made much sense.",
-    "zh": "雇主還面對一個比較安靜的問題：經驗正走出大門。資深員工退休時，帶走的是從沒被寫下來的知識——哪一家供應商靠得住、某條規定為什麼會存在、怎麼安撫難搞的客戶。處理得好的公司，會讓資深與年輕的同事配對、在任何年齡都願意付錢做再訓練，並丟掉那個老觀念：訓練五十幾歲的人是浪費錢。如果一份職業生涯現在可以長達五十年，這個觀念從來就站不住腳。"
+    "zh": "雇主還面對一個比較安靜的問題：經驗正走出大門。資深員工退休時，帶走的是從沒被寫下來的知識：哪一家供應商靠得住、某條規定為什麼會存在、怎麼安撫難搞的客戶。處理得好的公司，會讓資深與年輕的同事配對、在任何年齡都願意付錢做再訓練，並丟掉那個老觀念：訓練五十幾歲的人是浪費錢。如果一份職業生涯現在可以長達五十年，這個觀念從來就站不住腳。"
    },
    {
     "en": "For anyone starting out today, the practical lesson is straightforward. Working lives will probably be longer and less straight, with more changes of [[occupation]] and more returns to study in the middle of a career. [[Demand]] should grow fastest in health, care, and the services and devices that help people live independently at home. The public argument about pensions and hours is not really about age; it is about who is asked to pay for a change that every country can already see coming.",
@@ -7244,7 +7244,7 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-20b.jpg",
   "transfer": {
-   "passage": "Harborline Transit runs buses in three coastal cities. Nearly half of its [[workforce]] of 300 drivers and mechanics is over fifty-eight, and forty of them will reach [[retirement]] within five years. The company posted twenty-five [[vacancies]] last year; most are still unfilled. Employers in [[sectors]] such as construction, nursing, and transport are chasing the same small pool of younger workers, and the resulting [[shortage]] of drivers has forced Harborline to cut evening routes.\n\nManagement has tried several fixes. It raised hourly [[wages]] by ten percent and introduced [[flexible]] schedules so that parents can drive only during school hours. It visits job fairs in nearby towns to [[recruit]] candidates directly. It is also testing [[automation]]: ticket machines now sell and check fares, so drivers can focus on the road. Because those machines need [[skilled]] technicians to maintain them, the company pays for [[retraining]] so that senior drivers can move into repair jobs instead of leaving. [[Demand]] for bus travel keeps rising as the cities grow, so none of these efforts can wait.",
+   "passage": "Harborline Transit runs buses in three coastal cities. Nearly half of its [[workforce]] of 300 drivers and mechanics is over fifty-eight, and forty of them will reach [[retirement]] within five years. The company posted twenty-five [[vacancies]] last year; most are still unfilled. Employers in [[sectors]] such as construction, nursing, and transport are chasing the same small pool of younger workers, and the resulting [[shortage]] of drivers has forced Harborline to cut evening routes.\n\nManagement has tried several fixes. It raised hourly [[wages]] by ten percent and introduced [[flexible]] schedules so that parents can drive only during school hours. It visits job fairs in nearby towns to [[recruit]] candidates directly. It is also testing [[automation]]: ticket machines now sell and check fares, so drivers can focus on the road. Because those machines need [[skilled]] technicians to maintain them, the company pays for [[retraining]] so that senior drivers can move into repair jobs instead of leaving. As the cities grow, [[demand]] for bus travel keeps rising, so none of these efforts can wait.",
    "passageZh": "Harborline Transit 在三座濱海城市經營公車。旗下由三百名司機與技師組成的全體員工中，將近一半已超過五十八歲，其中四十人將於五年內屆齡退休。公司去年刊登了二十五個職缺，大多至今仍無人填補。營建、護理與運輸等產業部門的雇主，都在爭搶同一小群年輕勞動力，隨之而來的司機短缺，已迫使 Harborline 削減夜間路線。\n\n管理層嘗試了幾種對策。它將時薪工資調高一成，並推出彈性班表，讓家長可以只在上課時段出勤開車。它也到鄰近城鎮的就業博覽會直接招募人選。公司同時在測試自動化：售票機如今負責售票與查票，司機因此能專心看路。由於這些機器仍需要有技術的技師維護，公司出資提供再訓練，讓資深司機能轉任維修工作，而不必離職。隨著城市持續成長，公車出行的需求不斷上升，這些措施沒有一項能再等。",
    "words": [
     {
@@ -7303,7 +7303,7 @@ TOEIC.articles = [
      "zh": "再訓練、轉職訓練"
     },
     {
-     "word": "Demand",
+     "word": "demand",
      "base": "demand",
      "zh": "需求"
     }
@@ -7337,7 +7337,7 @@ TOEIC.articles = [
    },
    {
     "en": "His solution was a compromise. Meridian Bay [[negotiated]] a revised agreement that extended the [[warranty]] on the machines while reducing the number of units from twelve to five. Hsu then hired four experienced clerks and gave them an unusual instruction: handle nothing routine. Their single [[duty]] was to manage exceptions—the delayed flights, the disputed charges, the burst pipes.",
-    "zh": "他的解方是一種折衷。梅里迪安灣重新談成一份修訂協議，延長機器的保固期，同時把機台數量從十二台減到五台。接著許先生聘了四名資深櫃檯人員，並給了他們一個不尋常的指示：例行工作一律不要做。他們唯一的職責就是處理例外——誤點的班機、有爭議的帳款、爆裂的水管。"
+    "zh": "他的解方是一種折衷。梅里迪安灣重新談成一份修訂協議，延長機器的保固期，同時把機台數量從十二台減到五台。接著許先生聘了四名資深櫃檯人員，並給了他們一個不尋常的指示：例行工作一律不要做。他們唯一的職責就是處理例外：誤點的班機、有爭議的帳款、爆裂的水管。"
    },
    {
     "en": "Two years later, the arrangement is still working. Robots still complete roughly eighty percent of check-ins, and [[payroll]] remains lower than at [[comparable]] properties, but guest satisfaction has reached its highest level since opening. Hsu now advises other operators to treat technology as a way of removing [[repetitive]] work rather than removing people. \"The robot buys you time,\" he says. \"How you spend that time is still a human decision.\"",
@@ -7501,13 +7501,13 @@ TOEIC.articles = [
    {
     "q": "According to the article, what happened to the hotel's business during its first year?",
     "options": [
-     "Quarterly revenue rose steadily and occupancy stayed above ninety percent.",
+     "Income kept climbing, and nearly every room stayed full even in winter.",
      "Revenue fell even though occupancy remained unusually high.",
      "The hotel won an award but failed to fill its rooms in winter.",
      "Occupancy dropped sharply as soon as the slow winter season began."
     ],
     "answer": 0,
-    "explanation": "定位：第二段第二句。原文為「季營收穩定成長，住房率即使在淡季的冬天仍維持在九成以上」，與 A 完全對應。B 說營收下滑，與「穩定成長」相反；C 的前半（獲頒創新獎）雖屬實，但後半「冬天房間住不滿」與原文相反；D 說淡季一開始住房率就大跌，同樣與原文相反。"
+    "explanation": "定位：第二段第二句「quarterly revenue rose steadily and occupancy stayed above ninety percent through a slow winter」。營收穩定成長，住房率即使在淡季的冬天仍維持在九成以上，對應 A「收入持續成長，冬天也幾乎客滿」。B 說營收下滑，與「穩定成長」相反；C 的前半（獲頒創新獎）雖屬實，但後半「冬天房間住不滿」與原文相反；D 說淡季一開始住房率就大跌，同樣與原文相反。"
    },
    {
     "q": "What can be inferred about the four clerks Hsu hired?",
@@ -7801,7 +7801,7 @@ TOEIC.articles = [
      "Why office workers around the world dislike open floor plans."
     ],
     "answer": 0,
-    "explanation": "定位：全文結構。第一段的「訂購蕨類」只是她最不起眼的雜務，第二段是轉折，第四、五段寫她辭職創業並擴張，主軸是一份雜務變成一門生意。B、C、D 都只是文中的細節或背景，撐不起全文。"
+    "explanation": "定位：全文結構。第一段說幫接待區訂購盆栽是她最不起眼的雜務，第二、三段寫她用植物改善辦公環境並開始接案，第四、五段寫她辭職創立 Verdant Works 並擴大規模，主軸是一份小雜務變成一門生意，故選 A。B：文中談的是養護與承擔風險，從未提到空氣品質。C：翻修只是第二段的轉折背景，全文不是在談會計事務所怎麼省錢。D：第二段只提到這家事務所的員工抱怨開放空間又冷又吵，沒有談全世界的上班族。"
    },
    {
     "q": "What did Whitfield do during the 2019 renovation?",
@@ -7828,10 +7828,10 @@ TOEIC.articles = [
    {
     "q": "In the final paragraph, the word \"straightforward\" most nearly means",
     "options": [
-     "hard for beginners to follow.",
-     "surprisingly costly to put into practice.",
-     "widely ignored by other companies.",
-     "simple and easy to understand."
+     "hard for beginners to follow",
+     "surprisingly costly to put into practice",
+     "widely ignored by other companies",
+     "simple and easy to understand"
     ],
     "answer": 3,
     "explanation": "定位：第七段。這個字後面接的建議是「找出一筆持續發生的支出、衡量它實際換來什麼、為結果負責」，三個步驟講得清楚直接，故 D 最貼近。A（對新手來說很難跟著做）與這個字的意思正好相反；B（執行起來意外昂貴）與字義無關；C 說「其他公司普遍忽略」講的是採用情形，而非這個字用來形容建議本身的性質。"
@@ -7938,8 +7938,8 @@ TOEIC.articles = [
     "zh": "大衛去找說明書，可是箱子裡沒有。於是他打了客服專線求助。客服人員向他要收據上的號碼。只有林先生有那張紙，而他人在台北。"
    },
    {
-    "en": "For two days, nobody in the office drank any coffee. People walked to a small shop across the street. The line was long, and the coffee was not cheap. Some workers started to [[complain]] about the new machine.",
-    "zh": "有兩天，辦公室裡沒有人喝到咖啡。大家走到對街的一家小店買。隊伍很長，咖啡也不便宜。有些同事開始抱怨這台新機器。"
+    "en": "For two days, nobody in the office drank any coffee from the machine. People walked to a small shop across the street. The line was long, and the coffee was not cheap. Some workers started to [[complain]] about the new machine.",
+    "zh": "有兩天，辦公室裡沒有人喝到機器煮的咖啡。大家走到對街的一家小店買。隊伍很長，咖啡也不便宜。有些同事開始抱怨這台新機器。"
    },
    {
     "en": "Then a new [[intern]] came to work on Wednesday morning. Her name was Mia. She looked at the machine and turned it around. A small piece of paper was taped on the back of the machine. It was the [[instructions]] page from the box. Mia read it and pressed two buttons.",
@@ -8068,7 +8068,7 @@ TOEIC.articles = [
      "She does not like to drink coffee."
     ],
     "answer": 2,
-    "explanation": "推論題。定位第五段：她先看機器、再把機器轉過來，才發現背面的紙，可見她觀察得很仔細。文中從未說她用過同款機器，也沒提到她和老闆的關係。"
+    "explanation": "推論題。定位第五段：她先看機器、再把機器轉過來，才發現背面的紙，可見她觀察得很仔細，故選 C。A：文中從未說她用過同款機器，她也是讀了說明才會操作。B：文中沒有提到她和老闆的關係。D：文中沒有說她不喜歡喝咖啡。"
    },
    {
     "q": "Where was the instructions page?",
@@ -8084,8 +8084,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-4a.jpg",
   "transfer": {
-   "passage": "Amy [[arrived]] at the gym at nine. At the front desk she showed her [[receipt]] for the month's payment. All the [[employees]] wore blue shirts. A summer [[intern]] named Lily gave her a towel and a key. Lily was still learning the job.\n\nAmy walked to a running [[machine]]. It had many buttons. She felt [[confused]] and did not know how to start it. The small screen showed three short [[instructions]], but they did not help. So she went to the [[customer]] service desk. A service [[agent]] named Ken came with her. He took a thin paper [[manual]] from the desk and found the right page.\n\nAmy did not want to [[complain]]. Ken said the gym had [[ordered]] ten new bikes from a shop. They would come next week.",
-   "passageZh": "艾咪九點抵達了健身房。在櫃檯，她出示了本月付款的收據。所有員工都穿著藍色襯衫。一位名叫莉莉的暑期實習生給了她一條毛巾和一把鑰匙。莉莉還在學習這份工作。\n\n艾咪走向一台跑步機器。它有很多按鈕。她感到困惑，不知道怎麼啟動它。小螢幕顯示了三條簡短的使用說明，但沒有幫助。於是她去了顧客服務櫃檯。一位名叫肯的服務人員跟她一起過來。他從櫃檯拿了一本薄薄的紙本說明書，找到了正確的那一頁。\n\n艾咪不想抱怨。肯說健身房已經向一家商店訂購了十台新的腳踏車。它們下週會到。",
+   "passage": "Amy [[arrived]] at the gym at nine. At the front desk she showed her [[receipt]] for the month's payment. All the [[employees]] wore blue shirts. A summer [[intern]] named Lily gave her a towel and a key. Lily was still learning the job.\n\nAmy walked to an exercise [[machine]]. It had many buttons. She felt [[confused]] and did not know how to start it. The small screen showed three short [[instructions]], but they did not help. So she went to the [[customer]] service desk. A service [[agent]] named Ken came with her. He took a thin paper [[manual]] from the desk and found the right page.\n\nAmy did not want to [[complain]]. Ken said the gym had [[ordered]] ten new bikes from a shop. They would come next week.",
+   "passageZh": "艾咪九點抵達了健身房。在櫃檯，她出示了本月付款的收據。所有員工都穿著藍色襯衫。一位名叫莉莉的暑期實習生給了她一條毛巾和一把鑰匙。莉莉還在學習這份工作。\n\n艾咪走向一台健身器材。它有很多按鈕。她感到困惑，不知道怎麼啟動它。小螢幕顯示了三條簡短的使用說明，但沒有幫助。於是她去了顧客服務櫃檯。一位名叫肯的服務人員跟她一起過來。他從櫃檯拿了一本薄薄的紙本說明書，找到了正確的那一頁。\n\n艾咪不想抱怨。肯說健身房已經向一家商店訂購了十台新的腳踏車。它們下週會到。",
    "words": [
     {
      "word": "arrived",
@@ -8291,7 +8291,7 @@ TOEIC.articles = [
      "An old man who lives alone in Chiayi."
     ],
     "answer": 2,
-    "explanation": "主旨題。從第二段包裹不見、第三段查出地址錯誤，到第四、五段在別人家找到箱子，全文都圍繞著「包裹被送到錯的房子」。其他選項都只是故事裡的一個小片段。"
+    "explanation": "主旨題。從第二段包裹不見、第三段查出標籤上地址錯一個字，到第四、五段在別人家找到箱子，全文都圍繞著「包裹被送到錯的房子」。「買給自己」不對，第一段說相機是要送爸爸的生日禮物；「店家停止網路賣相機」文中沒有提到；「獨居老先生」只是第五段的一個細節，不是全文主旨。"
    },
    {
     "q": "What can we learn about Mr. Wu?",
@@ -8307,9 +8307,9 @@ TOEIC.articles = [
    {
     "q": "Why did Lily say no to the refund?",
     "options": [
-     "The money was too little for her.",
-     "Her boss told her to wait one week.",
-     "She did not believe Sam at all.",
+     "The refund would take too long to reach her bank.",
+     "Her boss told her to wait for one more week.",
+     "She did not believe what Sam said about the box.",
      "She still wanted the camera for her father."
     ],
     "answer": 3,
@@ -8505,9 +8505,9 @@ TOEIC.articles = [
     "q": "What is the article mainly about?",
     "options": [
      "How a small shop used one lunch plan to get more customers.",
-     "Why office workers do not like to eat out.",
-     "How to cook soup and rice at home.",
-     "Why a big restaurant closed last year."
+     "How a daughter opened her own restaurant near an office building.",
+     "Why office workers want long menus and slow, relaxing lunches.",
+     "Why a busy restaurant had to close after one slow year."
     ],
     "answer": 0,
     "explanation": "全文主線是林先生生意變差（第一段）→ Amy 推出午間特餐（第三段）→ 客人變多（第五段），講的是一家小店靠一套午餐留住顧客。"
@@ -8537,19 +8537,19 @@ TOEIC.articles = [
    {
     "q": "Why can the food come so fast now?",
     "options": [
-     "Because the shop hired ten new cooks.",
-     "Because customers cook the food themselves.",
-     "Because the shop only sells drinks.",
+     "Because the shop hired ten new cooks for the lunch hour.",
+     "Because the shop moved its kitchen next to the front door.",
+     "Because the shop now sells only drinks and cold snacks.",
      "Because the shop makes only one kind of meal each day."
     ],
     "answer": 3,
-    "explanation": "第三段說每天只供應一道主菜、一碗湯、一杯飲料，而且廚師中午前就備好料；由此可推論出餐快是因為每天只做一套餐點。"
+    "explanation": "細節題。第三段說每天只供應一道主菜、一碗湯、一杯飲料，沒有冗長的菜單，而且廚師中午前就備好大部分食材；第四段客人在門口點餐、當場付款，兩點合起來讓出餐變快，其中選項 D 對應「每天只做一套餐點」，故選 D。A：文中沒有提到請新廚師。B：文中沒有說廚房搬位置，只說客人在門口點餐。C：店裡供應的是一道主菜、一碗湯和一杯飲料，不是只賣飲料。"
    }
   ],
   "image": "img/articles/art-5a.jpg",
   "transfer": {
-   "passage": "Mrs. Yang has a strawberry farm near the city. At first she was [[worried]] that no one would come. Now many [[customers]] visit every weekend. The farm [[offers]] free parking and picnic tables.\n\nFamilies must [[book]] a visit early because weekends are full. The tour [[schedule]] is online: ten in the morning, two in the afternoon. Each morning, workers [[prepare]] clean baskets and put them by the gate. The [[price]] of a basket depends on its weight. Guests pay, get a [[receipt]], and show it on the way out.\n\nThe food stand has a short [[menu]]: milk, cake, and jam toast. Guests [[order]] drinks and cakes at the stand and pay. The jam is the most [[popular]] item. On Sundays, Mrs. Yang is too [[busy]] to answer the phone.",
-   "passageZh": "楊太太在城市近郊有一座草莓農場。起初她很擔心沒有人會來。現在每個週末都有很多顧客造訪。農場提供免費停車位和野餐桌。\n\n因為週末總是客滿，家庭必須提早預訂參觀。導覽時程表放在網站上：早上十點一場、下午兩點一場。每天早上，工作人員會準備乾淨的籃子，放在大門旁。一籃的價格取決於重量。客人付款後拿到一張收據，離場時出示。\n\n小吃攤的菜單很簡短：牛奶、蛋糕和果醬吐司。客人在攤位點飲料和蛋糕並付款。果醬是最受歡迎的品項。週日時，楊太太忙得沒空接電話。",
+   "passage": "Mrs. Yang has a strawberry farm near the city. At first she was [[worried]] that no one would come. Now many [[customers]] visit every weekend. The farm [[offers]] free parking and picnic tables.\n\nFamilies must [[book]] a spot on a tour early because weekends are full. The tour [[schedule]] is online: ten in the morning, two in the afternoon. Each morning, workers [[prepare]] clean baskets and put them by the gate. The [[price]] of a basket depends on its weight. Guests pay, get a [[receipt]], and show it on the way out.\n\nThe food stand has a short [[menu]]: milk, cake, and jam toast. Guests [[order]] drinks and cakes at the stand and pay. The jam is the most [[popular]] item. On Sundays, Mrs. Yang is too [[busy]] to answer the phone.",
+   "passageZh": "楊太太在城市近郊有一座草莓農場。起初她很擔心沒有人會來。現在每個週末都有很多顧客造訪。農場提供免費停車位和野餐桌。\n\n因為週末總是客滿，家庭必須提早預約導覽名額。導覽時程表放在網站上：早上十點一場、下午兩點一場。每天早上，工作人員會準備乾淨的籃子，放在大門旁。一籃的價格取決於重量。客人付款後拿到一張收據，離場時出示。\n\n小吃攤的菜單很簡短：牛奶、蛋糕和果醬吐司。客人在攤位點飲料和蛋糕並付款。果醬是最受歡迎的品項。週日時，楊太太忙得沒空接電話。",
    "words": [
     {
      "word": "worried",
@@ -8734,7 +8734,7 @@ TOEIC.articles = [
    {
     "q": "What is the story mainly about?",
     "options": [
-     "A worker who lost his job in Osaka.",
+     "A worker who lost his job after a trip to Osaka.",
      "A new worker's first trip for his company.",
      "How to buy a cheap plane ticket.",
      "A boss who never travels for work."
@@ -8778,8 +8778,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-5b.jpg",
   "transfer": {
-   "passage": "Anna works at a furniture store. Last week, her boss was away on a [[business trip]]. He went to a wood factory in Vietnam to check new chairs. His [[flight]] left the airport three hours late. He [[arrived]] there at night.\n\nAt the store, an important [[client]] called Anna. He asked about the [[delivery]] of his two tables. The truck was [[delayed]] by two days, so Anna felt [[nervous]]. She opened the daily [[report]] on her computer. It listed every truck. Then she found the [[problem]]: the driver had the wrong street name.\n\nLater, the boss called. The chairs were good. He was ready to [[sign]] a two-year [[contract]] with the factory. He also asked Anna to set up a [[meeting]] with the table buyer for Monday.",
-   "passageZh": "Anna 在一家家具店工作。上週，她的老闆出差不在。他去了越南的一間木工廠檢查新椅子。他的班機比預定晚了三小時才離開機場。他在夜裡才抵達那裡。\n\n在店裡，一位重要的客戶打電話給 Anna。他詢問他那兩張桌子的送貨情況。貨車延誤了兩天，所以 Anna 很緊張。她在電腦上打開每日報告。上面列出了每一輛貨車。接著她找到了問題：司機記錯了街道名稱。\n\n稍後，老闆打電話來。椅子的品質很好。他準備和工廠簽署一份兩年的合約。他也請 Anna 安排週一與那位桌子買家的會議。",
+   "passage": "Anna works at a furniture store. Last week, her boss was away on a [[business trip]]. He went to a furniture factory in Vietnam to check new chairs. His [[flight]] left the airport three hours late. He [[arrived]] there at night.\n\nAt the store, an important [[client]] called Anna. He asked about the [[delivery]] of his two tables. The truck was [[delayed]] by two days, so Anna felt [[nervous]]. She opened the daily [[report]] on her computer. It listed every truck. Then she found the [[problem]]: the driver had the wrong street name.\n\nLater, the boss called. The chairs were good. He was ready to [[sign]] a two-year [[contract]] with the factory. He also asked Anna to set up a [[meeting]] with the table buyer for Monday.",
+   "passageZh": "Anna 在一家家具店工作。上週，她的老闆出差不在。他去了越南的一間家具工廠檢查新椅子。他的班機比預定晚了三小時才離開機場。他在夜裡才抵達那裡。\n\n在店裡，一位重要的客戶打電話給 Anna。他詢問他那兩張桌子的送貨情況。貨車延誤了兩天，所以 Anna 很緊張。她在電腦上打開每日報告。上面列出了每一輛貨車。接著她找到了問題：司機記錯了街道名稱。\n\n稍後，老闆打電話來。椅子的品質很好。他準備和工廠簽署一份兩年的合約。他也請 Anna 安排週一與那位桌子買家的會議。",
    "words": [
     {
      "word": "business trip",
@@ -8983,9 +8983,9 @@ TOEIC.articles = [
     "q": "What is the main idea of the article?",
     "options": [
      "A bookstore did well because it was odd, secret, and open for only 90 days.",
-     "Bookstores in Taipei are closing because of online shopping.",
-     "Brown paper is the cheapest way to protect old books.",
-     "Most pop-up stores lose money in their first month."
+     "Many bookstores in Taipei are closing because of online shopping and high rent.",
+     "Brown paper is the cheapest and safest way to wrap and protect old books.",
+     "Most pop-up stores lose money in their first month and then close early."
     ],
     "answer": 0,
     "explanation": "全文主軸是「只開九十天＋盲選包書」讓小書店爆紅，第三段講神秘包裝，第五段講期限帶動買氣，第六段老闆自己說「快閃店本來就要結束」。B、C、D 都只是枝節或文中沒說的推測。"
@@ -9004,10 +9004,10 @@ TOEIC.articles = [
    {
     "q": "Why did customers not know which book they were buying?",
     "options": [
-     "The staff refused to talk to customers.",
+     "The staff refused to answer any questions about the books.",
      "Each book was wrapped, with only three hints on the outside.",
-     "The titles were printed in a foreign language.",
-     "The lights inside the shop were too dark."
+     "The titles were printed in a foreign language on the covers.",
+     "The lights inside the shop were too dark to read any title."
     ],
     "answer": 1,
     "explanation": "細節題。第三段說店員用牛皮紙把每本書包起來，正面只寫三個關於故事的短提示，客人要回到家才知道書名。"
@@ -9015,8 +9015,8 @@ TOEIC.articles = [
    {
     "q": "Why did Miriam most likely refuse to stay open after day 90?",
     "options": [
-     "She could no longer pay her staff.",
-     "The landlord sold the building to a bank.",
+     "She could no longer pay the two extra staff she hired.",
+     "The landlord sold the building to a bank last month.",
      "She had to move to Tainan that same week.",
      "She believed the time limit was the main attraction."
     ],
@@ -9027,8 +9027,8 @@ TOEIC.articles = [
     "q": "According to the article, what first brought crowds to the shop?",
     "options": [
      "A student's photos and video shared online",
-     "A large newspaper advertisement",
-     "A discount of fifty percent",
+     "A large advertisement in a daily newspaper",
+     "A discount of fifty percent on every book",
      "A visit from a famous author"
     ],
     "answer": 0,
@@ -9282,8 +9282,8 @@ TOEIC.articles = [
     "q": "Why did Kenji take the first nap himself, with the door open?",
     "options": [
      "To show his staff that the new rule was real and safe to use",
-     "To prove that he was more tired than everyone else",
-     "To test whether the six chairs were comfortable",
+     "To prove that he was more tired than everyone else in the office",
+     "To test whether the six new chairs were comfortable enough",
      "To stop two workers from missing their deadlines"
     ],
     "answer": 0,
@@ -9298,7 +9298,7 @@ TOEIC.articles = [
      "A sleep room will fail if there is no trust at work."
     ],
     "answer": 3,
-    "explanation": "推論題。第六段說光有睡眠室救不了有毒的職場文化，只有帶著信任一起做才會有效。第五段也顯示他不處罰睡過頭的員工，所以 C 不對。"
+    "explanation": "推論題。第六段說光有睡眠室，救不了不好的公司文化，要公司同時建立信任才有效。第五段也顯示他不處罰睡過頭的員工，所以 C 不對。"
    }
   ],
   "image": "img/articles/art-6b.jpg",
@@ -9514,7 +9514,7 @@ TOEIC.articles = [
    {
     "q": "What is the article mainly about?",
     "options": [
-     "A hotel that rebuilt its walls to block street noise",
+     "A hotel that rebuilt its walls to block train and street noise",
      "A cheap plan that turned quiet into a selling point for a hotel",
      "A new city law about noise in Taipei hotels",
      "A manager who left her job for a quieter hotel chain"
@@ -9559,8 +9559,8 @@ TOEIC.articles = [
     "q": "What can we infer about the three other branches?",
     "options": [
      "They believe the same idea can work in their own hotels",
-     "They plan to close their family floors this year",
-     "They have much larger budgets than the Merrow Hotel",
+     "They plan to close all of their family floors this year",
+     "They have much larger budgets than the Merrow Hotel does",
      "They now charge lower prices than before"
     ],
     "answer": 0,
@@ -9569,8 +9569,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-7a.jpg",
   "transfer": {
-   "passage": "The Seabreeze Guesthouse sits on a quiet beach in the south. For years, guests loved the view but not the rooms. One online [[review]] after another said the same thing: old beds, weak showers, thin towels. The owner, Mr. Tsai, chose not to [[ignore]] these voices. He could not [[afford]] to rebuild the whole building at once, so he set aside a small [[budget]] and started an [[experiment]]. He would [[renovate]] just four rooms and watch what happened.\n\nThe new rooms were [[booked]] out within days, even though guests were [[charged]] thirty percent more for them. Six months later, [[occupancy]] across the whole guesthouse was higher than ever, because happy visitors kept coming back with friends. Mr. Tsai used the extra money to fix the rest of the rooms and to hire more [[staff]], including a full-time [[housekeeping]] team to keep everything spotless. Next year, he plans to open two [[branches]] farther up the coast.",
-   "passageZh": "海風民宿坐落在南部一處安靜的海灘上。多年來，房客喜歡這裡的景色，卻不喜歡房間。一則又一則的網路評價都說著同樣的事：床鋪老舊、水壓不足、毛巾太薄。老闆蔡先生選擇不忽視這些聲音。他負擔不起一次改建整棟建築，於是撥出一小筆預算，開始一項實驗：他只翻修四間房，看看會發生什麼事。\n\n新房間幾天內就被訂滿，即使房客要為它們多付百分之三十的收費。六個月後，整間民宿的住房率創下新高，因為滿意的旅客不斷帶著朋友回訪。蔡先生用多賺的錢整修其餘房間，並增聘員工，包括一組全職的房務團隊，把每個角落打掃得一塵不染。明年，他計畫沿著海岸再往北開設兩間分店。",
+   "passage": "The Seabreeze Guesthouse sits on a quiet beach in the south. For years, guests loved the view but not the rooms. One online [[review]] after another said the same thing: old beds, weak showers, thin towels. The owner, Mr. Tsai, chose not to [[ignore]] these voices. He could not [[afford]] to rebuild the whole building at once, so he set aside a small [[budget]] and started an [[experiment]]. He would [[renovate]] just four rooms and watch what happened.\n\nThe new rooms were [[booked]] up within days, even though guests were [[charged]] thirty percent more for them. Six months later, [[occupancy]] across the whole guesthouse was higher than ever, because happy visitors kept coming back with friends. Mr. Tsai used the extra money to fix the rest of the rooms and to hire more [[staff]], including a full-time team that does the [[housekeeping]] and keeps every room spotless. Next year, he plans to open two [[branches]] farther up the coast.",
+   "passageZh": "海風民宿坐落在南部一處安靜的海灘上。多年來，房客喜歡這裡的景色，卻不喜歡房間。一則又一則的網路評價都說著同樣的事：床鋪老舊、水壓不足、毛巾太薄。老闆蔡先生選擇不忽視這些聲音。他負擔不起一次改建整棟建築，於是撥出一小筆預算，開始一項實驗：他只翻修四間房，看看會發生什麼事。\n\n新房間幾天內就被訂滿，即使房客要為它們多付百分之三十的收費。六個月後，整間民宿的住房率創下新高，因為滿意的旅客不斷帶著朋友回訪。蔡先生用多賺的錢整修其餘房間，並增聘員工，包括一組負責房務的全職團隊，把每間房打掃得一塵不染。明年，他計畫沿著海岸再往北開設兩間分店。",
    "words": [
     {
      "word": "review",
@@ -9773,7 +9773,7 @@ TOEIC.articles = [
    {
     "q": "What is the main point of the article?",
     "options": [
-     "Office workers in Taipei like rice boxes more than salad",
+     "Office workers in Taipei like rice boxes much more than they like salad",
      "Growing lettuce at home costs less than buying it",
      "A startup found its real market after it launched a salad machine",
      "Vending machines are replacing office kitchens all over Taiwan"
@@ -9806,10 +9806,10 @@ TOEIC.articles = [
    {
     "q": "Why did office managers want the machines?",
     "options": [
-     "Because lettuce was cheaper than lunch boxes",
+     "Because the lettuce was much cheaper than buying lunch boxes every day",
      "Because the machines made the office look attractive to job seekers",
-     "Because workers kept complaining about the empty fridge",
-     "Because the law required fresh food in every office"
+     "Because workers kept complaining about the empty fridge at night",
+     "Because the city law required fresh food in every office building"
     ],
     "answer": 1,
     "explanation": "推論題。定位第四段：機器幫公司招募年輕工程師、在辦公室照片裡看起來很新潮，可推論主管看中的是對求職者的吸引力，而不是沙拉本身。"
@@ -10093,12 +10093,12 @@ TOEIC.articles = [
     "q": "What is the central argument of the article?",
     "options": [
      "Self-checkout technology is unreliable and should be avoided by every retailer.",
-     "The true cost of an automation decision can lie in effects that the original financial model never measured.",
+     "The real cost of automation can lie in effects a financial model never measured.",
      "Grocery chains should raise cashier wages in order to reduce staff turnover.",
      "Customer surveys are a more accurate forecasting tool than five-year cost projections."
     ],
     "answer": 1,
-    "explanation": "主旨題。第一段末句點出「試算表抓不到的部分」，第七段結尾雷斯特雷波再次收束到「量得出來的成本，永遠會比量不出來的成本更像真的」，前後呼應的正是這個論點。選項 A 與 D 都被第五、七段明確否定（技術本身無罪、公司仍看重財務數字），選項 C 只是文中的手段之一，不是全文主張。"
+    "explanation": "主旨題。第一段末句點出「試算表抓不到的部分」，第七段結尾雷斯特雷波再次收束到「量得出來的成本，永遠會比量不出來的成本更像真的」，前後呼應的正是 B 的論點。A：第七段她明說這從來不是對技術的評判。C：第六段加薪只是手段之一，不是全文主張。D：文中沒有拿顧客調查與成本預測比較準確度，顧客調查只是第四段發現的問題之一。"
    },
    {
     "q": "What happened to Halbrook's rate of inventory loss after self-checkout was installed?",
@@ -10438,7 +10438,7 @@ TOEIC.articles = [
     "q": "What can be inferred about why cutting the value of miles appeals to airline executives in the short term?",
     "options": [
      "It persuades members to redeem their miles more quickly.",
-     "It cuts a balance-sheet obligation and lifts reported profit without an announcement customers will notice.",
+     "It quietly shrinks a liability and makes reported profit look better.",
      "It lets the airline raise ticket prices without approval from regulators.",
      "It transfers the cost of the program to the partner bank."
     ],
@@ -10448,13 +10448,13 @@ TOEIC.articles = [
    {
     "q": "What lesson does the international rival's experience suggest?",
     "options": [
-     "Damage to a loyalty program may show up in card revenue long before it shows up in ticket sales.",
+     "A loyalty program can be damaged even while ticket sales hold steady.",
      "Raising elite status thresholds always reduces passenger bookings.",
      "Banks cancel partner card contracts whenever an airline changes its rules.",
      "Elite members are the least profitable segment of an airline's customer base."
     ],
     "answer": 0,
-    "explanation": "推論題。定位在第六段：拉高門檻後「訂位確實沒掉」，但八個月內辦卡申請掉了一成九、銀行要求重談合約，最後「守住了看得見的營收，卻放掉利潤高得多的營收」。選項 B 正好被「訂位沒掉」否定；選項 C 過度概括（銀行是重啟談判而非解約）；選項 D 與第五、六段所述的高消費會員價值相反。"
+    "explanation": "推論題。定位第六段：國際對手把菁英門檻拉高六成後，訂位沒掉（Bookings held），但八個月內辦卡申請掉了一成九、發卡銀行要求重談合約，最後守住了看得見的營收，卻放掉利潤高得多的營收。可推知忠誠計畫的損害可能在機票銷售仍持平時就已出現在別處，故選 A。B：訂位沒掉，與「一定讓訂位減少」相反。C：銀行只是重新談合約，沒有取消。D：文中沒有說菁英會員獲利最低，只說最高消費的會員以為無處可去。"
    }
   ],
   "image": "img/articles/art-8b.jpg",
@@ -10689,8 +10689,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-9a.jpg",
   "transfer": {
-   "passage": "Mr. Abe has [[owned]] a small soap shop for eight years. The shop sits on a [[busy]] corner near a school. But last year, [[sales]] went down month after month. His monthly [[report]] showed fewer and fewer buyers.\n\nHe began to write a thank-you [[message]] on every box. He wrote each one [[by hand]]. One day, a young woman bought ten soaps. She [[shared]] a photo of the boxes online. Many people loved the warm words.\n\nNew buyers came the next week. [[Customers]] now ask for special words on their gifts. A company near the shop [[ordered]] two hundred soaps. Mr. Abe [[delivers]] the boxes to their [[office]] himself. He also hung a new [[sign]] outside the shop. It says, 'Every box comes with a little card.'",
-   "passageZh": "Abe 先生經營一家小肥皂店已經八年了。店面位在學校附近一個熱鬧的街角。但去年，銷售額一個月比一個月低。他的月報表顯示，買東西的人越來越少。\n\n他開始在每個盒子上寫一段感謝訊息。每一張都是親手寫的。有一天，一位年輕女士買了十塊肥皂。她把盒子的照片分享到網路上。許多人喜歡那些溫暖的字句。\n\n隔週就有新買家上門。顧客現在會請他在禮物上寫特別的話。附近一家公司訂購了兩百塊肥皂。Abe 先生親自把盒子送到他們的辦公室。他還在店外掛了一塊新招牌，上面寫著：「每個盒子都附一張小卡」。",
+   "passage": "Mr. Abe has [[owned]] a small soap shop for eight years. The shop sits on a [[busy]] corner near a school. But last year, [[sales]] went down month after month. Each month he filled out a [[report]] that showed fewer and fewer buyers.\n\nHe began to write a thank-you [[message]] on a little card for every box. He wrote each one [[by hand]]. One day, a young woman bought ten soaps. She [[shared]] a photo of the boxes online. Many people loved the warm words.\n\nNew buyers came the next week. [[Customers]] now ask for special words on their gifts. A company near the shop [[ordered]] two hundred soaps, and it now buys more every month. Mr. Abe [[delivers]] the boxes to its [[office]] himself. He also hung a new [[sign]] outside the shop. It says, \"Every box comes with a little card.\"",
+   "passageZh": "Abe 先生經營一家小肥皂店已經八年了。店面位在學校附近一個熱鬧的街角。但去年，銷售額一個月比一個月低。他每個月填寫的報表都顯示，買東西的人越來越少。\n\n他開始為每個盒子寫一張小卡，上面是感謝的話。每一張都是親手寫的。有一天，一位年輕女士買了十塊肥皂。她把盒子的照片分享到網路上。許多人喜歡那些溫暖的字句。\n\n隔週就有新買家上門。顧客現在會請他在禮物上寫特別的話。附近一家公司訂購了兩百塊肥皂，現在每個月都會再買。Abe 先生親自把盒子送到那家公司的辦公室。他還在店外掛了一塊新招牌，上面寫著：「每個盒子都附一張小卡。」",
    "words": [
     {
      "word": "owned",
@@ -10893,10 +10893,10 @@ TOEIC.articles = [
      "His boss gave him the wrong room number.",
      "He wanted to meet the manager there.",
      "The elevator stopped on the wrong floor.",
-     "He was nervous and turned the wrong way."
+     "He was nervous and in a hurry."
     ],
     "answer": 3,
-    "explanation": "第一段說主管叫他去 502，但他很緊張、走得很快、出電梯往左轉，才走錯門，故選第四項。"
+    "explanation": "細節題。第一段說主管叫他去 502，但他很緊張、走得很快，結果開了 520 的門，可見走錯是因為他又緊張又匆忙，故選 D。A：第一段說主管給的是 502，沒有給錯。B：他不知道房裡是誰，進去後才靜靜坐下。C：他在五樓出電梯，房號也在五樓，文中沒有說電梯停錯樓層。"
    },
    {
     "q": "What problem did the team in Room 520 have?",
@@ -10923,8 +10923,8 @@ TOEIC.articles = [
   ],
   "image": "img/articles/art-9b.jpg",
   "transfer": {
-   "passage": "Lisa owns a small bike shop. Mr. Chen is the store [[manager]]. He got the [[job]] ten years ago. He put a box by the door. Anyone could write a [[suggestion]] and drop it inside. One note said, \"Sell a rain cover for bike seats.\"\n\nEvery Monday the shop team holds a short [[meeting]]. There, they said yes to the idea. The cover became a team [[project]]. Lisa [[tested]] it in heavy rain for a week. Then she found a small [[mistake]]. The cover was too small for big seats. She made a larger size too. The [[cost]] to make each one is about two dollars. Now the shop has a new [[product]] line: seat covers in five colors. Many [[customers]] buy one with a new bike.",
-   "passageZh": "麗莎開了一家小小的自行車店。陳先生是店經理。他十年前得到這份工作。他在門邊放了一個箱子。任何人都可以寫下建議，投進去。有一張紙條寫著：「賣自行車座墊的雨罩吧。」\n\n每週一，店裡的團隊會開一場簡短的會議。在會議上，他們同意了這個想法。這個雨罩成了團隊專案。麗莎在大雨中測試它一個星期。接著她發現一個小錯誤。雨罩對大座墊來說太小了。她也做了一個較大的尺寸。每一個的製作成本大約兩元。現在店裡有了新的產品線：五種顏色的座墊雨罩。很多顧客買新車時會一起買一個。",
+   "passage": "Lisa owns a small bike shop. Mr. Chen is the store [[manager]]. He applied for the [[job]] ten years ago and has worked there ever since. He put a box by the door. Anyone could write a [[suggestion]] and drop it inside. One note said, \"Sell a rain cover for bike seats.\"\n\nEvery Monday the shop team holds a short [[meeting]]. One Monday, they said yes to the idea. The cover became a team [[project]]. Lisa [[tested]] it in heavy rain for a week. Then she found a [[mistake]] in the design: the cover did not fit big seats, so she made a larger size too. The [[cost]] to make each one is about two dollars. Now the shop has a new [[product]] line: seat covers in five colors. Many [[customers]] buy one with a new bike.",
+   "passageZh": "麗莎開了一家小小的自行車店。陳先生是店經理。他十年前應徵這份工作，從那時起就一直在店裡工作。他在門邊放了一個箱子。任何人都可以寫下建議，投進去。有一張紙條寫著：「賣自行車座墊的雨罩吧。」\n\n每週一，店裡的團隊會開一場簡短的會議。某個星期一，他們同意了這個想法。這個雨罩成了團隊專案。麗莎在大雨中測試它一個星期。接著她發現設計上有個錯誤：雨罩套不進大座墊，所以她也做了一個較大的尺寸。每一個的製作成本大約兩元。現在店裡有了新的產品線：五種顏色的座墊雨罩。很多顧客買新車時會一起買一個。",
    "words": [
     {
      "word": "manager",

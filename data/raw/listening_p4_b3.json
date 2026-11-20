@@ -40,7 +40,7 @@
         "explanation": "定位在最後一句 don't worry about bringing the guide back to this floor — just drop it off at the gift shop before you leave。drop it off 就是歸還。說話者明講「不必回這層樓」，所以選項 C 正好講反，是最常被選走的誘答。"
       }
     ],
-    "transcriptZh": "哈囉，謝謝你在 Riverside 美術館拿了一台語音導覽。我是 Karen，接下來由我帶你走一趟主展廳。\n你現在站的位置，前面就是本館最有名的那幅畫——畫著藍色小船的那一幅。這幅畫大約五十年前由一個在地家族贈送給我們。\n準備好之後，按機器上的 2，就會播下一件作品的介紹。走動的時候請把包包背在身前，週末展間人比較多。還有，導覽機不用特地拿回這一層——離館前放在禮品店就可以了。"
+    "transcriptZh": "哈囉，謝謝你在 Riverside 美術館拿了一台語音導覽。我是 Karen，接下來由我帶你走一趟主展廳。\n你現在站的位置，前面就是本館最有名的那幅畫，畫著藍色小船的那一幅。這幅畫大約五十年前由一個在地家族贈送給我們。\n準備好之後，按機器上的 2，就會播下一件作品的介紹。走動的時候請把包包背在身前，週末展間人比較多。還有，導覽機不用特地拿回這一層，離館前放在禮品店就可以了。"
   },
   {
     "id": "l4-32",
@@ -83,7 +83,7 @@
         "explanation": "定位在 if your bag doesn't fit, we'll check it at the door for you at no charge。at no charge 就是免費，對應 for free。廣播沒提秤重、件數限制或放座位底下，選項 A、C、D 都是常見的機場情境聯想，不是本篇內容。"
       }
     ],
-    "transcriptZh": "各位晚安。這是 Skyline 航空 402 班機飛往溫哥華的登機廣播。我們大約十分鐘後在 14 號登機門開始登機。這裡有更動——先前顯示的是 12 號門，所以請確認你站對地方了。\n我們會先請需要多一點時間的旅客登機，接著是商務艙，然後是第二十排以後的旅客。輪到你的時候，請先把登機證和有照片的證件拿在手上。\n另外提醒行李。今晚這架飛機的置物架比平常小一些，如果你的行李放不進去，我們會在登機門幫你託運，不另外收費。"
+    "transcriptZh": "各位晚安。這是 Skyline 航空 402 班機飛往溫哥華的登機廣播。我們大約十分鐘後在 14 號登機門開始登機。這裡有更動：先前顯示的是 12 號門，所以請確認你站對地方了。\n我們會先請需要多一點時間的旅客登機，接著是商務艙，然後是第二十排以後的旅客。輪到你的時候，請先把登機證和有照片的證件拿在手上。\n另外提醒行李。今晚這架飛機的置物架比平常小一些，如果你的行李放不進去，我們會在登機門幫你託運，不另外收費。"
   },
   {
     "id": "l4-33",
@@ -144,7 +144,7 @@
           "Rain will start around midday."
         ],
         "answer": 3,
-        "explanation": "定位在 the rain should move in around noon and last through the evening。move in 在氣象用語裡是「雨帶移入」，noon 對應 midday。選項 C 描述的是 Tomorrow looks a lot better — sunny 講的明天，是時間點陷阱。"
+        "explanation": "定位在 the rain should move in around noon and last through the evening。move in 在氣象用語裡是「雨帶移入」，noon 對應 midday。選項 C 描述的是 Tomorrow looks a lot better：sunny 講的明天，是時間點陷阱。"
       },
       {
         "q": "What is causing the delay on Fifth Street?",
@@ -169,7 +169,7 @@
         "explanation": "定位在 If you can, take Park Avenue instead。instead 表示改走另一條路，對應 Use a different road。number nine 那句是講公車加開班次，對象是 bus riders 不是開車的人，選項 A 是把不同族群的資訊混在一起。"
       }
     ],
-    "transcriptZh": "接下來是今天早上的天氣和路況。現在外頭多雲、有點涼，不過雨大概中午前後會進來，一路下到晚上。出門前記得帶把傘。明天會好很多——出太陽，也比今天暖。\n路況方面，第五街橋上還在施工，目前只剩一個車道。現在開到那裡大概要卡二十分鐘。可以的話，改走 Park 大道。\n搭公車的乘客，今天早上沒有延誤，不過九號公車這一整週都會加開幾班車。"
+    "transcriptZh": "接下來是今天早上的天氣和路況。現在外頭多雲、有點涼，不過雨大概中午前後會進來，一路下到晚上。出門前記得帶把傘。明天會好很多：出太陽，也比今天暖。\n路況方面，第五街橋上還在施工，目前只剩一個車道。現在開到那裡大概要卡二十分鐘。可以的話，改走 Park 大道。\n搭公車的乘客，今天早上沒有延誤，不過九號公車這一整週都會加開幾班車。"
   },
   {
     "id": "l4-35",
@@ -212,6 +212,6 @@
         "explanation": "定位在 We won't be taking any orders today; the store version ships in October。won't be taking orders 就是今天不接單，市售版要等十月才出貨，所以現場買不到。試喝反而是有的（do stay for the tasting），選項 B 正好講反。"
       }
     ],
-    "transcriptZh": "午安，今天下雨還特地過來，謝謝各位。我是 Elena Ruiz，Nova Home 的產品負責人。再過幾分鐘，我同事 Tom 會把機器推出來，不過在那之前，我想先說說我們為什麼做這台。\n兩年前，我們問顧客：你對現在的咖啡機哪一點最不滿意？幾乎每個人的答案都一樣——清洗。所以我們就從這裡下手。各位今天下午看到的一切，都是從那些對話裡長出來的。\n今天我們不接訂單，市售版本十月出貨。不過 Tom 講完之後有試喝，請各位務必留下來。"
+    "transcriptZh": "午安，今天下雨還特地過來，謝謝各位。我是 Elena Ruiz，Nova Home 的產品負責人。再過幾分鐘，我同事 Tom 會把機器推出來，不過在那之前，我想先說說我們為什麼做這台。\n兩年前，我們問顧客：你對現在的咖啡機哪一點最不滿意？幾乎每個人的答案都一樣：清洗。所以我們就從這裡下手。各位今天下午看到的一切，都是從那些對話裡長出來的。\n今天我們不接訂單，市售版本十月出貨。不過 Tom 講完之後有試喝，請各位務必留下來。"
   }
 ]

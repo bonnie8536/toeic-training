@@ -138,9 +138,9 @@
         "q": "What is the main idea of the article?",
         "options": [
           "A bookstore did well because it was odd, secret, and open for only 90 days.",
-          "Bookstores in Taipei are closing because of online shopping.",
-          "Brown paper is the cheapest way to protect old books.",
-          "Most pop-up stores lose money in their first month."
+          "Many bookstores in Taipei are closing because of online shopping and high rent.",
+          "Brown paper is the cheapest and safest way to wrap and protect old books.",
+          "Most pop-up stores lose money in their first month and then close early."
         ],
         "answer": 0,
         "explanation": "全文主軸是「只開九十天＋盲選包書」讓小書店爆紅，第三段講神秘包裝，第五段講期限帶動買氣，第六段老闆自己說「快閃店本來就要結束」。B、C、D 都只是枝節或文中沒說的推測。"
@@ -159,10 +159,10 @@
       {
         "q": "Why did customers not know which book they were buying?",
         "options": [
-          "The staff refused to talk to customers.",
+          "The staff refused to answer any questions about the books.",
           "Each book was wrapped, with only three hints on the outside.",
-          "The titles were printed in a foreign language.",
-          "The lights inside the shop were too dark."
+          "The titles were printed in a foreign language on the covers.",
+          "The lights inside the shop were too dark to read any title."
         ],
         "answer": 1,
         "explanation": "細節題。第三段說店員用牛皮紙把每本書包起來，正面只寫三個關於故事的短提示，客人要回到家才知道書名。"
@@ -170,8 +170,8 @@
       {
         "q": "Why did Miriam most likely refuse to stay open after day 90?",
         "options": [
-          "She could no longer pay her staff.",
-          "The landlord sold the building to a bank.",
+          "She could no longer pay the two extra staff she hired.",
+          "The landlord sold the building to a bank last month.",
           "She had to move to Tainan that same week.",
           "She believed the time limit was the main attraction."
         ],
@@ -182,8 +182,8 @@
         "q": "According to the article, what first brought crowds to the shop?",
         "options": [
           "A student's photos and video shared online",
-          "A large newspaper advertisement",
-          "A discount of fifty percent",
+          "A large advertisement in a daily newspaper",
+          "A discount of fifty percent on every book",
           "A visit from a famous author"
         ],
         "answer": 0,
@@ -371,8 +371,8 @@
         "q": "Why did Kenji take the first nap himself, with the door open?",
         "options": [
           "To show his staff that the new rule was real and safe to use",
-          "To prove that he was more tired than everyone else",
-          "To test whether the six chairs were comfortable",
+          "To prove that he was more tired than everyone else in the office",
+          "To test whether the six new chairs were comfortable enough",
           "To stop two workers from missing their deadlines"
         ],
         "answer": 0,
@@ -387,7 +387,7 @@
           "A sleep room will fail if there is no trust at work."
         ],
         "answer": 3,
-        "explanation": "推論題。第六段說光有睡眠室救不了有毒的職場文化，只有帶著信任一起做才會有效。第五段也顯示他不處罰睡過頭的員工，所以 C 不對。"
+        "explanation": "推論題。第六段說光有睡眠室，救不了不好的公司文化，要公司同時建立信任才有效。第五段也顯示他不處罰睡過頭的員工，所以 C 不對。"
       }
     ],
     "image": "img/articles/art-6b.jpg"

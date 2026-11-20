@@ -145,9 +145,9 @@
       {
         "q": "Your friend yawns, and you yawn right after. What does the article suggest about this?",
         "options": [
-          "You are getting sick.",
-          "You do not like your friend.",
-          "You need to eat something.",
+          "You are getting sick and need to rest soon.",
+          "You do not like your friend very much.",
+          "You need to eat something right away.",
           "A yawn can pass from one person to another."
         ],
         "answer": 3,
@@ -287,10 +287,10 @@
       {
         "q": "Why are plastic bags a problem in nature?",
         "options": [
-          "They cost stores too much money.",
-          "They are too heavy to carry home.",
+          "They cost stores too much money to buy each year.",
+          "They are too heavy for shoppers to carry home.",
           "They stay in the environment for a very long time.",
-          "They are very hard to open."
+          "They are very hard for most shoppers to open."
         ],
         "answer": 2,
         "explanation": "第二段提到塑膠不容易分解，袋子會在自然環境裡留存非常久。"
@@ -299,9 +299,9 @@
         "q": "According to the article, what is one cost of paper bags?",
         "options": [
           "Making them uses a lot of water and energy.",
-          "They break easily in the rain.",
-          "They cannot hold any food.",
-          "They are made from sea animals."
+          "They are sold only in a few large stores.",
+          "They cannot hold any kind of food at all.",
+          "They give off a smell that harms sea animals."
         ],
         "answer": 0,
         "explanation": "第三段說造紙要用掉大量的水和能源，而且紙袋較重會多燒燃料。"
@@ -309,9 +309,9 @@
       {
         "q": "What would the writer most likely tell a shopper to do?",
         "options": [
-          "Always ask for a paper bag.",
-          "Always ask for a plastic bag.",
-          "Buy a new cloth bag every week.",
+          "Always ask for a paper bag at every store you visit.",
+          "Always ask for a plastic bag when you shop for food.",
+          "Buy a new cloth bag every week to help the planet.",
           "Bring a bag you already have and use it again."
         ],
         "answer": 3,

@@ -138,9 +138,9 @@
     "exampleZh": "公司在失去主要客戶後度過了艱難的一年。",
     "quiz": {
       "q": "The proposal didn't go ___ because two board members voted against it.",
-      "options": ["through", "over", "up", "in"],
+      "options": ["through", "along", "up", "in"],
       "answer": 0,
-      "explanation": "go through=（提案）通過，有兩位董事反對所以沒過關。go over 當「檢查」解時主詞是人；若要說提案「反應好不好」得寫成 go over well/badly，不能單獨用；go up=上升；go in=走進去，語意皆不通。"
+      "explanation": "go through=（提案）通過，有兩位董事反對所以沒過關。go along=一起去/進行，要接 with 才表示贊同，不能表示提案過關；go up=上升；go in=走進去，語意皆不通。"
     }
   },
   {
@@ -201,10 +201,10 @@
     "example": "The intern came up with a simple way to cut printing costs.",
     "exampleZh": "那位實習生想出一個減少列印成本的簡單方法。",
     "quiz": {
-      "q": "We need to come ___ with a new slogan before the campaign launches.",
-      "options": ["out", "up", "across", "along"],
+      "q": "We still have to come ___ with a way to cover the repair costs by Friday.",
+      "options": ["out", "up", "down", "along"],
       "answer": 1,
-      "explanation": "come up with=想出（新點子），固定用 up 再接 with。come out=（產品）推出、（真相）公開；come across=偶然遇到；come along=一起來、有進展，這三個都不能接 with 表示「想出」。"
+      "explanation": "come up with=想出（辦法、點子），固定用 up 再接 with，這裡是要想出支付修繕費的辦法。come out with=推出（產品）或脫口說出（話），不用來表示想出辦法；come down with=染上（疾病）；come along with=跟著某人一起來，語意都不通。"
     }
   },
   {
@@ -361,10 +361,10 @@
     "example": "She's in a meeting now, but she'll call you back this afternoon.",
     "exampleZh": "她現在在開會，不過下午會回電給你。",
     "quiz": {
-      "q": "I left him a message this morning; could you ask him to call me ___ when he returns to the office?",
+      "q": "I left him a message this morning; could you ask him to give me a call ___ when he returns to the office?",
       "options": ["off", "up", "in", "back"],
       "answer": 3,
-      "explanation": "call back=回電，請他回辦公室後回撥給我。call off=取消；call up=主動打電話給某人（不含「回撥」的意思）；call in=打電話進公司請假、請人來處理，語意皆不通。"
+      "explanation": "give me a call back=回我電話，前一句已經留言，請他回辦公室後回撥。動詞片語 call off=取消、call up=打電話給某人、call in=打電話進公司或叫人進來，但 a call 後面不能接 off、up、in，這三個都不成立。"
     }
   },
   {
@@ -476,7 +476,7 @@
       "q": "The accountant is trying to figure ___ where the extra charge came from.",
       "options": ["in", "on", "out", "up"],
       "answer": 2,
-      "explanation": "figure out=靠自己推敲想通，會計師要弄清楚多出來的費用是哪來的。figure in=把某項因素算進去(figure in the shipping cost)；figure on=預計、打算（美式口語，figure on staying two nights）；figure up 罕用，美式口語偶爾指把數字加總。另外要分辨 figure out 是自己想出來，find out 多半是向外打聽到。"
+      "explanation": "figure out=靠自己推敲想通，會計師要弄清楚多出來的費用是哪來的。figure in=把某項因素算進去（figure in the shipping cost）；figure on=預計、打算（美式口語，figure on staying two nights）；figure up 罕用，美式口語偶爾指把數字加總。另外要分辨 figure out 是自己想出來，find out 多半是向外打聽到。"
     }
   }
 ]

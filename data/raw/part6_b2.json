@@ -8,9 +8,9 @@
       {
         "num": 1,
         "type": "文法",
-        "options": ["relocating", "have relocated", "will be relocated", "to relocate"],
+        "options": ["relocating", "have all relocated", "will be relocated", "to relocate"],
         "answer": 2,
-        "explanation": "考動詞語態與時態。主詞 personnel（人員）是被公司安排搬遷的對象，且時間點是 4 月 6 日起的未來事件，故用未來被動 will be relocated。(A) relocating 是現在分詞，前面沒有 be 動詞，整句會缺少主要動詞；(B) have relocated 是主動完成式，語意變成人員自己已經搬完，與 Beginning Monday, April 6 的未來時間互相矛盾；(D) to relocate 是不定詞，同樣無法充當句子的主要動詞。"
+        "explanation": "考動詞語態與時態。主詞 personnel（人員）是被公司安排搬遷的對象，且時間點是 4 月 6 日起的未來事件，故用未來被動 will be relocated。(A) relocating 是現在分詞，前面沒有 be 動詞，整句會缺少主要動詞；(B) have all relocated 是主動完成式，語意變成人員自己已經搬完，與 Beginning Monday, April 6 的未來時間互相矛盾；(D) to relocate 是不定詞，同樣無法充當句子的主要動詞。"
       },
       {
         "num": 2,
@@ -81,7 +81,7 @@
         "explanation": "考名詞字彙與搭配。advantage over 是固定搭配，指「勝過某對象的優勢」，符合零售商認為到貨更快因而勝過網路賣家的語意。(A) profit 指利潤、(B) progress 指進展、(D) achievement 指成就，三者都不與介系詞 over 搭配，語意上也無法表達「相較於競爭者的優勢」。"
       }
     ],
-    "translation": "Callister 貨運開設北部轉運中心\n\n里弗頓（6 月 3 日）——Callister 貨運解決方案公司上週在 Harlow 路啟用新的物流配送中心。該設施預計可將公司在北部地區的運能提升近四成。中心雇用 180 名員工，其中多數為在地招募。廠區內另設有一條全自動分揀線。營運長 Denise Aguilar 表示，這套系統將可讓下午 2 點前收到的訂單當日處理完畢。當地零售商對此消息表示歡迎。「更快的配送讓我們相較於網路賣家有了實質優勢，」在鄰近 Fenwick 經營五金行的 Peter Nkosi 說。"
+    "translation": "Callister 貨運開設北部轉運中心\n\n里弗頓（6 月 3 日）：Callister 貨運解決方案公司上週在 Harlow 路啟用新的物流配送中心。該設施預計可將公司在北部地區的運能提升近四成。中心雇用 180 名員工，其中多數為在地招募。廠區內另設有一條全自動分揀線。營運長 Denise Aguilar 表示，這套系統將可讓下午 2 點前收到的訂單當日處理完畢。當地零售商對此消息表示歡迎。「更快的配送讓我們相較於網路賣家有了實質優勢，」在鄰近 Fenwick 經營五金行的 Peter Nkosi 說。"
   },
   {
     "id": "p6-b2-3",
@@ -123,7 +123,7 @@
         "explanation": "考形容詞字彙。水箱裡沒有水、需要加水，用 empty 描述容器裡空無一物。(B) vacant 用於無人使用的房間、座位或職缺；(C) blank 指未填寫的表格或空白畫面；(D) open 指容器蓋子開著、未關閉的狀態，三者都不用來說明容器缺少液體。"
       }
     ],
-    "translation": "BrewMaster 300 — 快速入門指南\n\n感謝您購買 BrewMaster 300 咖啡機。首次使用前，請徹底沖洗水箱，並將水注至最高水位線。請將機器放置在平坦乾燥的檯面上，並與牆面保持至少十公分的距離。接著插上電源線，讓機器預熱約兩分鐘。待指示燈轉為綠色後，放入膠囊並按下沖煮鍵。若十五分鐘內未使用，機器會自動進入待機模式。若指示燈閃紅燈，表示水箱已空，必須加水後才能繼續沖煮。"
+    "translation": "BrewMaster 300：快速入門指南\n\n感謝您購買 BrewMaster 300 咖啡機。首次使用前，請徹底沖洗水箱，並將水注至最高水位線。請將機器放置在平坦乾燥的檯面上，並與牆面保持至少十公分的距離。接著插上電源線，讓機器預熱約兩分鐘。待指示燈轉為綠色後，放入膠囊並按下沖煮鍵。若十五分鐘內未使用，機器會自動進入待機模式。若指示燈閃紅燈，表示水箱已空，必須加水後才能繼續沖煮。"
   },
   {
     "id": "p6-b2-4",

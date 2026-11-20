@@ -6,7 +6,7 @@
       {
         "type": "email",
         "label": "E-mail",
-        "content": "To: s.doyle@brightmail.net\nFrom: v.ortega@maplestreetcycles.com\nDate: March 12\nSubject: Repair order #4417\n\nDear Ms. Doyle,\n\nThank you for bringing your touring bicycle to Maple Street Cycles last Thursday. Our technician has finished checking it, and I would like to explain what he found before we do any work.\n\nThe rear wheel is bent and cannot be repaired safely. A new wheel costs $118, plus $30 for labor. The brake cables are also worn and should be changed at the same time, which adds $24. Your bicycle is still under our two-year warranty, but the warranty applies only to the frame, so these parts are not included.\n\nWe have the brake cables in stock, but the wheel must be ordered from our supplier in Portland. It usually arrives within four business days. If you approve the full estimate today, we expect to have the bicycle ready by Wednesday, March 18.\n\nPlease note that our shop will be closed on Monday, March 16, while the floor is being replaced. Phone messages left that day will be returned on Tuesday morning.\n\nYou can approve the estimate by replying to this message or by calling me at 555-0164. If you would rather not replace the wheel, we will return the bicycle at no charge, since the inspection itself is free.\n\nSincerely,\n\nVictor Ortega\nService Manager, Maple Street Cycles"
+        "content": "To: s.doyle@example.com\nFrom: v.ortega@example.org\nDate: March 12\nSubject: Repair order #4417\n\nDear Ms. Doyle,\n\nThank you for bringing your touring bicycle to Maple Street Cycles last Thursday. Our technician has finished checking it, and I would like to explain what he found before we do any work.\n\nThe rear wheel is bent and cannot be repaired safely. A new wheel costs $118, plus $30 for labor. The brake cables are also worn and should be changed at the same time, which adds $24. Your bicycle is still under our two-year warranty, but the warranty applies only to the frame, so these parts are not included.\n\nWe have the brake cables in stock, but the wheel must be ordered from our supplier in Portland. It usually arrives within four business days. If you approve the full estimate today, we expect to have the bicycle ready by Wednesday, March 18.\n\nPlease note that our shop will be closed on Monday, March 16, while the floor is being replaced. Phone messages left that day will be returned on Tuesday morning.\n\nYou can approve the estimate by replying to this message or by calling me at 555-0164. If you would rather not replace the wheel, we will return the bicycle at no charge, since the inspection itself is free.\n\nSincerely,\n\nVictor Ortega\nService Manager, Maple Street Cycles"
       }
     ],
     "questions": [
@@ -56,7 +56,7 @@
       }
     ],
     "translation": [
-      "收件者：s.doyle@brightmail.net\n寄件者：v.ortega@maplestreetcycles.com\n日期：3 月 12 日\n主旨：維修單 #4417\n\n親愛的 Doyle 女士：\n\n感謝您上週四把您的旅行車送到 Maple Street 自行車行。我們的技師已經檢查完畢，在動工之前，我想先向您說明他發現的狀況。\n\n後輪已經變形，無法安全修復。新輪組要價 118 美元，另加 30 美元工資。煞車線也已磨損，建議一併更換，費用再加 24 美元。您的自行車仍在我們的兩年保固期內，但保固僅適用於車架，因此上述零件不包含在內。\n\n煞車線我們有現貨，輪組則必須向波特蘭的供應商訂購，通常四個工作天內會到。若您今天同意這份完整估價，我們預計可在 3 月 18 日（星期三）前把車修好。\n\n另外要提醒您，本店 3 月 16 日（星期一）因更換地板而暫停營業。當天的電話留言，我們會在星期二上午回覆。\n\n您可以直接回覆這封信，或撥 555-0164 給我，以確認這份估價。若您不打算更換輪組，我們會免費把車還給您，因為檢查本身不收費。\n\n順頌時祺\n\nVictor Ortega\nMaple Street 自行車行 服務部經理"
+      "收件者：s.doyle@example.com\n寄件者：v.ortega@example.org\n日期：3 月 12 日\n主旨：維修單 #4417\n\n親愛的 Doyle 女士：\n\n感謝您上週四把您的旅行車送到 Maple Street 自行車行。我們的技師已經檢查完畢，在動工之前，我想先向您說明他發現的狀況。\n\n後輪已經變形，無法安全修復。新輪組要價 118 美元，另加 30 美元工資。煞車線也已磨損，建議一併更換，費用再加 24 美元。您的自行車仍在我們的兩年保固期內，但保固僅適用於車架，因此上述零件不包含在內。\n\n煞車線我們有現貨，輪組則必須向波特蘭的供應商訂購，通常四個工作天內會到。若您今天同意這份完整估價，我們預計可在 3 月 18 日（星期三）前把車修好。\n\n另外要提醒您，本店 3 月 16 日（星期一）因更換地板而暫停營業。當天的電話留言，我們會在星期二上午回覆。\n\n您可以直接回覆這封信，或撥 555-0164 給我，以確認這份估價。若您不打算更換輪組，我們會免費把車還給您，因為檢查本身不收費。\n\n順頌時祺\n\nVictor Ortega\nMaple Street 自行車行 服務部經理"
     ]
   },
   {
@@ -177,7 +177,7 @@
       {
         "type": "advertisement",
         "label": "Advertisement",
-        "content": "RIDGEWAY MUSIC STUDIO\nSpring term registration is now open\n\nFor eleven years, families in the Ridgeway area have trusted us with their children's first music lessons. Every teacher at our studio holds a degree in music and has taught for at least five years.\n\nWHAT WE OFFER\n- Private lessons in piano, guitar, violin, and drums, 30 or 45 minutes, once a week\n- Small group classes for children ages four to six (six students at most)\n- An evening singing class for adults, Thursdays at 7:00 P.M.\n- Free practice rooms for our students, open until 9:00 P.M. every day\n\nSpring term runs from April 6 to June 26. Private lessons cost $32 for 30 minutes and $45 for 45 minutes. A group class costs $210 for the whole term.\n\nSPECIAL OFFER\nRegister before March 20 and pay no registration fee, which is normally $40. Families who sign up two or more students receive 10 percent off every lesson for the entire term. This discount cannot be used together with any other offer.\n\nNot sure where to begin? Visit our open house on Saturday, March 14, from 10:00 A.M. to 2:00 P.M. Teachers will be there to answer your questions, and visitors may try any instrument in the building. No appointment is necessary, but seats for the 11:00 A.M. student concert must be reserved by telephone.\n\nRidgeway Music Studio | 42 Chapel Road | 555-0198 | www.ridgewaymusic.com"
+        "content": "RIDGEWAY MUSIC STUDIO\nSpring term registration is now open\n\nFor eleven years, families in the Ridgeway area have trusted us with their children's first music lessons. Every teacher at our studio holds a degree in music and has taught for at least five years.\n\nWHAT WE OFFER\n- Private lessons in piano, guitar, violin, and drums, 30 or 45 minutes, once a week\n- Small group classes for children ages four to six (six students at most)\n- An evening singing class for adults, Thursdays at 7:00 P.M.\n- Free practice rooms for our students, open until 9:00 P.M. every day\n\nSpring term runs from April 6 to June 26. Private lessons cost $32 for 30 minutes and $45 for 45 minutes. A group class costs $210 for the whole term.\n\nSPECIAL OFFER\nRegister before March 20 and pay no registration fee, which is normally $40. Families who sign up two or more students receive 10 percent off every lesson for the entire term. This discount cannot be used together with any other offer.\n\nNot sure where to begin? Visit our open house on Saturday, March 14, from 10:00 A.M. to 2:00 P.M. Teachers will be there to answer your questions, and visitors may try any instrument in the building. No appointment is necessary, but seats for the 11:00 A.M. student concert must be reserved by telephone.\n\nRidgeway Music Studio | 42 Chapel Road | 555-0198 | www.example.com"
       }
     ],
     "questions": [
@@ -227,7 +227,7 @@
       }
     ],
     "translation": [
-      "RIDGEWAY 音樂教室\n春季班報名開始\n\n十一年來，Ridgeway 地區的家庭都把孩子的第一堂音樂課交給我們。本教室每位老師都具備音樂相關學位，且教學資歷至少五年。\n\n我們提供的課程\n－鋼琴、吉他、小提琴、爵士鼓個別課，每次 30 或 45 分鐘，每週一堂\n－四到六歲兒童小班課（每班最多六人）\n－成人晚間歌唱班，每週四晚上 7:00\n－本教室學生可免費使用練習室，每天開放至晚上 9:00\n\n春季班自 4 月 6 日起至 6 月 26 日止。個別課 30 分鐘 32 美元，45 分鐘 45 美元；小班課整期 210 美元。\n\n優惠方案\n3 月 20 日前報名，免收原價 40 美元的報名費。同一家庭報名兩人（含）以上，整期每堂課皆享九折。本優惠不得與其他優惠合併使用。\n\n不知道從哪裡開始嗎？歡迎參加 3 月 14 日（星期六）上午 10:00 至下午 2:00 的開放參觀日。當天老師都在場，可以回答您的問題，來賓也可以試奏館內任何一項樂器。參觀不需預約，但上午 11:00 學生音樂會的座位必須先來電預約。\n\nRidgeway 音樂教室｜Chapel 路 42 號｜555-0198｜www.ridgewaymusic.com"
+      "RIDGEWAY 音樂教室\n春季班報名開始\n\n十一年來，Ridgeway 地區的家庭都把孩子的第一堂音樂課交給我們。本教室每位老師都具備音樂相關學位，且教學資歷至少五年。\n\n我們提供的課程\n．鋼琴、吉他、小提琴、爵士鼓個別課，每次 30 或 45 分鐘，每週一堂\n．四到六歲兒童小班課（每班最多六人）\n．成人晚間歌唱班，每週四晚上 7:00\n．本教室學生可免費使用練習室，每天開放至晚上 9:00\n\n春季班自 4 月 6 日起至 6 月 26 日止。個別課 30 分鐘 32 美元，45 分鐘 45 美元；小班課整期 210 美元。\n\n優惠方案\n3 月 20 日前報名，免收原價 40 美元的報名費。同一家庭報名兩人（含）以上，整期每堂課皆享九折。本優惠不得與其他優惠合併使用。\n\n不知道從哪裡開始嗎？歡迎參加 3 月 14 日（星期六）上午 10:00 至下午 2:00 的開放參觀日。當天老師都在場，可以回答您的問題，來賓也可以試奏館內任何一項樂器。參觀不需預約，但上午 11:00 學生音樂會的座位必須先來電預約。\n\nRidgeway 音樂教室｜Chapel 路 42 號｜555-0198｜www.example.com"
     ]
   },
   {
@@ -288,24 +288,24 @@
           },
           {
             "t": "note",
-            "text": "Harborview Deli | 15 Cobb Street | 555-0142 | orders@harborviewdeli.com"
+            "text": "Harborview Deli | 15 Cobb Street | 555-0142 | orders@example.com"
           }
         ]
       },
       {
         "type": "email",
         "label": "E-mail",
-        "content": "To: orders@harborviewdeli.com\nFrom: r.vidal@brookfieldanimalclinic.com\nDate: October 2\nSubject: Lunch for October 9\n\nHello,\n\nMy name is Rafael Vidal, and I am the office manager at Brookfield Animal Clinic on Grant Street. On Thursday, October 9, we are holding a training day for our own staff and for six visiting nurses. I would like to order lunch for twenty-two people.\n\nWe would prefer your hot package. The training runs until five o'clock, and I am afraid a light meal would not be enough. Two of the nurses cannot eat milk products, so those two meals should be prepared separately. Everyone else will have the regular menu.\n\nOur clinic is about twelve kilometers from your shop, so I understand that there may be an added charge for bringing the food to us. Please include it in the price you send me.\n\nWe do not need anyone to serve the meal, as our own staff will do that. We do need the food to arrive no later than 11:45 A.M., because the afternoon sessions begin at 12:30.\n\nCould you send me a written estimate by Monday? If the total is higher than our budget allows, we may choose the sandwich package instead.\n\nThank you,\n\nRafael Vidal\nOffice Manager, Brookfield Animal Clinic"
+        "content": "To: orders@example.com\nFrom: r.vidal@example.org\nDate: October 2\nSubject: Lunch for October 9\n\nHello,\n\nMy name is Rafael Vidal, and I am the office manager at Brookfield Animal Clinic on Grant Street. On Thursday, October 9, we are holding a training day for our own staff and for six visiting nurses. I would like to order lunch for twenty-two people.\n\nWe would prefer your hot package. The training runs until five o'clock, and I am afraid a light meal would not be enough. Two of the nurses cannot eat milk products, so those two meals should be prepared separately. Everyone else will have the regular menu.\n\nOur clinic is about twelve kilometers from your shop, so I understand that there may be an added charge for bringing the food to us. Please include it in the price you send me.\n\nWe do not need anyone to serve the meal, as our own staff will do that. We do need the food to arrive no later than 11:45 A.M., because the afternoon sessions begin at 12:30.\n\nCould you send me a written estimate by Monday? If the total is higher than our budget allows, we may choose the sandwich package instead.\n\nThank you,\n\nRafael Vidal\nOffice Manager, Brookfield Animal Clinic"
       }
     ],
     "questions": [
       {
         "q": "According to the menu, what is NOT included in the price of a package?",
         "options": [
-          "Cups",
-          "Plates",
-          "Napkins",
-          "Workers to serve the food"
+          "Cups for the guests",
+          "Plates for each meal",
+          "Napkins for every guest",
+          "Staff to serve the food"
         ],
         "answer": 3,
         "explanation": "NOT 題定位菜單 PLEASE NOTE 第三點：Plates, cups, and napkins are included at no extra cost. Servers cost $22 an hour.，前半句直接刪掉 (A)(B)(C)，後半句說服務人員另計時薪，故選 (D)。"
@@ -347,7 +347,7 @@
         "q": "What will the deli most likely do for two of the guests?",
         "options": [
           "Give them a free dessert",
-          "Charge two dollars more for each of their meals",
+          "Charge two dollars more per meal",
           "Deliver their food after 12:30",
           "Serve them Package B instead"
         ],
@@ -356,8 +356,8 @@
       }
     ],
     "translation": [
-      "HARBORVIEW 熟食店－外燴菜單\n適用十人以上團體\n\nA 餐－早餐桌　每人 9 美元\n新鮮水果、三種麵包、奶油與果醬、咖啡與茶\n\nB 餐－三明治午餐　每人 14 美元\n四種三明治、生菜沙拉、洋芋片、瓶裝水\n\nC 餐－熱食午餐　每人 19 美元\n烤雞或烤魚、白飯、兩道蔬菜、麵包、冰紅茶\n\nD 餐－晚餐桌　每人 26 美元\n湯品、烤牛肉或炙烤蔬菜、馬鈴薯、沙拉、每日甜點\n\n注意事項\n－訂餐請至少提前四個工作天。\n－本店八公里範圍內免運費；超出部分每公里加收 1.5 美元。\n－盤子、杯子與餐巾紙皆已含在價格內，不另收費；服務人員則以每小時 22 美元計費。\n－訂餐時請告知食物過敏情形。我們可另行準備不含堅果或乳製品的餐點，每人加收 2 美元。\n－C 餐與 D 餐週日不供應，本店廚房週日中午即打烊。\n\nHarborview 熟食店｜Cobb 街 15 號｜555-0142｜orders@harborviewdeli.com",
-      "收件者：orders@harborviewdeli.com\n寄件者：r.vidal@brookfieldanimalclinic.com\n日期：10 月 2 日\n主旨：10 月 9 日的午餐\n\n您好：\n\n我是 Rafael Vidal，Grant 街上 Brookfield 動物診所的行政經理。10 月 9 日（星期四）我們要為自家員工與六位來訪的護理師舉辦教育訓練，想訂 22 人份的午餐。\n\n我們想選你們的熱食餐。訓練會進行到五點，我擔心太輕的餐點不夠吃。其中兩位護理師不能吃乳製品，這兩份餐請另外處理，其他人吃一般菜色即可。\n\n我們診所距離貴店大約十二公里，所以我知道送餐可能要另外加費用，請把這筆費用一併列進報價裡。\n\n我們不需要人員在現場服務，這部分由我們自己的同仁負責。但餐點務必在上午 11:45 前送達，因為下午的課程 12:30 就開始。\n\n可以請您在星期一前寄一份書面估價給我嗎？如果總金額超出我們的預算，我們可能會改選三明治餐。\n\n謝謝您。\n\nRafael Vidal\nBrookfield 動物診所 行政經理"
+      "HARBORVIEW 熟食店：外燴菜單\n適用十人以上團體\n\nA 餐：早餐桌　每人 9 美元\n新鮮水果、三種麵包、奶油與果醬、咖啡與茶\n\nB 餐：三明治午餐　每人 14 美元\n四種三明治、生菜沙拉、洋芋片、瓶裝水\n\nC 餐：熱食午餐　每人 19 美元\n烤雞或烤魚、白飯、兩道蔬菜、麵包、冰紅茶\n\nD 餐：晚餐桌　每人 26 美元\n湯品、烤牛肉或炙烤蔬菜、馬鈴薯、沙拉、每日甜點\n\n注意事項\n．訂餐請至少提前四個工作天。\n．本店八公里範圍內免運費；超出部分每公里加收 1.5 美元。\n．盤子、杯子與餐巾紙皆已含在價格內，不另收費；服務人員則以每小時 22 美元計費。\n．訂餐時請告知食物過敏情形。我們可另行準備不含堅果或乳製品的餐點，每人加收 2 美元。\n．C 餐與 D 餐週日不供應，本店廚房週日中午即打烊。\n\nHarborview 熟食店｜Cobb 街 15 號｜555-0142｜orders@example.com",
+      "收件者：orders@example.com\n寄件者：r.vidal@example.org\n日期：10 月 2 日\n主旨：10 月 9 日的午餐\n\n您好：\n\n我是 Rafael Vidal，Grant 街上 Brookfield 動物診所的行政經理。10 月 9 日（星期四）我們要為自家員工與六位來訪的護理師舉辦教育訓練，想訂 22 人份的午餐。\n\n我們想選你們的熱食餐。訓練會進行到五點，我擔心太輕的餐點不夠吃。其中兩位護理師不能吃乳製品，這兩份餐請另外處理，其他人吃一般菜色即可。\n\n我們診所距離貴店大約十二公里，所以我知道送餐可能要另外加費用，請把這筆費用一併列進報價裡。\n\n我們不需要人員在現場服務，這部分由我們自己的同仁負責。但餐點務必在上午 11:45 前送達，因為下午的課程 12:30 就開始。\n\n可以請您在星期一前寄一份書面估價給我嗎？如果總金額超出我們的預算，我們可能會改選三明治餐。\n\n謝謝您。\n\nRafael Vidal\nBrookfield 動物診所 行政經理"
     ]
   }
 ]

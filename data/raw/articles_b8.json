@@ -198,12 +198,12 @@
         "q": "What is the central argument of the article?",
         "options": [
           "Self-checkout technology is unreliable and should be avoided by every retailer.",
-          "The true cost of an automation decision can lie in effects that the original financial model never measured.",
+          "The real cost of automation can lie in effects a financial model never measured.",
           "Grocery chains should raise cashier wages in order to reduce staff turnover.",
           "Customer surveys are a more accurate forecasting tool than five-year cost projections."
         ],
         "answer": 1,
-        "explanation": "主旨題。第一段末句點出「試算表抓不到的部分」，第七段結尾雷斯特雷波再次收束到「量得出來的成本，永遠會比量不出來的成本更像真的」，前後呼應的正是這個論點。選項 A 與 D 都被第五、七段明確否定（技術本身無罪、公司仍看重財務數字），選項 C 只是文中的手段之一，不是全文主張。"
+        "explanation": "主旨題。第一段末句點出「試算表抓不到的部分」，第七段結尾雷斯特雷波再次收束到「量得出來的成本，永遠會比量不出來的成本更像真的」，前後呼應的正是 B 的論點。A：第七段她明說這從來不是對技術的評判。C：第六段加薪只是手段之一，不是全文主張。D：文中沒有拿顧客調查與成本預測比較準確度，顧客調查只是第四段發現的問題之一。"
       },
       {
         "q": "What happened to Halbrook's rate of inventory loss after self-checkout was installed?",
@@ -477,7 +477,7 @@
         "q": "What can be inferred about why cutting the value of miles appeals to airline executives in the short term?",
         "options": [
           "It persuades members to redeem their miles more quickly.",
-          "It cuts a balance-sheet obligation and lifts reported profit without an announcement customers will notice.",
+          "It quietly shrinks a liability and makes reported profit look better.",
           "It lets the airline raise ticket prices without approval from regulators.",
           "It transfers the cost of the program to the partner bank."
         ],
@@ -487,13 +487,13 @@
       {
         "q": "What lesson does the international rival's experience suggest?",
         "options": [
-          "Damage to a loyalty program may show up in card revenue long before it shows up in ticket sales.",
+          "A loyalty program can be damaged even while ticket sales hold steady.",
           "Raising elite status thresholds always reduces passenger bookings.",
           "Banks cancel partner card contracts whenever an airline changes its rules.",
           "Elite members are the least profitable segment of an airline's customer base."
         ],
         "answer": 0,
-        "explanation": "推論題。定位在第六段：拉高門檻後「訂位確實沒掉」，但八個月內辦卡申請掉了一成九、銀行要求重談合約，最後「守住了看得見的營收，卻放掉利潤高得多的營收」。選項 B 正好被「訂位沒掉」否定；選項 C 過度概括（銀行是重啟談判而非解約）；選項 D 與第五、六段所述的高消費會員價值相反。"
+        "explanation": "推論題。定位第六段：國際對手把菁英門檻拉高六成後，訂位沒掉（Bookings held），但八個月內辦卡申請掉了一成九、發卡銀行要求重談合約，最後守住了看得見的營收，卻放掉利潤高得多的營收。可推知忠誠計畫的損害可能在機票銷售仍持平時就已出現在別處，故選 A。B：訂位沒掉，與「一定讓訂位減少」相反。C：銀行只是重新談合約，沒有取消。D：文中沒有說菁英會員獲利最低，只說最高消費的會員以為無處可去。"
       }
     ],
     "image": "img/articles/art-8b.jpg"

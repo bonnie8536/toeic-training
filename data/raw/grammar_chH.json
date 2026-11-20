@@ -81,7 +81,7 @@
     ],
     "quiz": [
       {
-        "q": "All the windows ___ before the shop closes.",
+        "q": "All the windows ___ by the guard before the shop closes.",
         "options": [
           "lock",
           "are locking",
@@ -122,7 +122,7 @@
           "is stolen"
         ],
         "answer": 1,
-        "explanation": "皮夾是被偷的，用被動；this morning 已經過去了，所以是 was stolen。was stole 是把過去式當成過去分詞用，這是很常見的錯，steal 的過去分詞是 stolen。"
+        "explanation": "皮夾是被偷的，用被動；this morning 已經過去了，所以是 was stolen。stole 是主動過去式，變成皮夾去偷東西；is stolen 是現在式，跟已經過去的 this morning 不合；was stole 是把過去式當成過去分詞用，這是很常見的錯，steal 的過去分詞是 stolen。"
       },
       {
         "q": "The kitchen floor ___ every evening.",
@@ -133,7 +133,7 @@
           "cleans"
         ],
         "answer": 2,
-        "explanation": "地板是被拖的，用被動 is cleaned。寫 cleans 會變成地板去打掃別人；is cleaning 是地板正在打掃東西，兩個都不合常理。"
+        "explanation": "地板是被打掃的，用被動 is cleaned。cleans 會變成地板去打掃別人；is cleaning 是地板正在打掃東西，兩個都不合常理；clean 是原形，沒有 be 動詞，單數主詞也配不上，不成句。"
       },
       {
         "q": "Our teacher ___ the test papers at the end of class.",
@@ -144,7 +144,7 @@
           "were collected"
         ],
         "answer": 1,
-        "explanation": "這一題主詞是老師，老師會自己收考卷，是動作的執行者，所以用主動 collected。被動的 was collected 會變成老師被收走。"
+        "explanation": "這一題主詞是老師，老師會自己收考卷，是動作的執行者，所以用主動 collected。was collected、is collected、were collected 都是被動，會變成老師被收走，而且被動句後面不會再接 the test papers 這種受詞。"
       },
       {
         "q": "Who ___ this cake? It's really good.",
@@ -155,7 +155,7 @@
           "made"
         ],
         "answer": 3,
-        "explanation": "問的是「誰做的」，who 就是那個執行者，所以用主動 made。was made 是蛋糕被做，主詞不對；made by 後面應該接人，接 this cake 不通。"
+        "explanation": "問的是「誰做的」，who 就是那個執行者，所以用主動 made。was made 和 is made 都是被動，會變成 who 被做出來，意思不通，後面的 this cake 也沒有動詞可以接；made by 後面應該接人，接 this cake 不通。"
       },
       {
         "q": "The tickets ___ two weeks ago, so we can't change them now.",
@@ -281,7 +281,7 @@
         "explanation": "has 後面要接過去分詞，被動的話是 been 加過去分詞，所以是 has been repaired。has repaired 是主動，會變成筆電去修別的東西；been repair 少了過去分詞的變化；has was 這種兩個動詞湊在一起的寫法不存在。"
       },
       {
-        "q": "This gate must ___ at all times.",
+        "q": "This gate must ___ by the security staff every night.",
         "options": [
           "be locked",
           "lock",
@@ -289,7 +289,7 @@
           "locked"
         ],
         "answer": 0,
-        "explanation": "must 後面接原形動詞，被動的原形就是 be locked。lock 是主動，變成大門去鎖別人；be locking 是進行的意思，跟這裡的規定語氣不合。"
+        "explanation": "must 後面接原形動詞，被動的原形就是 be locked。門是被警衛鎖上的，後面的 by the security staff 點出動作者，所以要用被動。lock 是主動，主詞變成門自己去鎖，後面不能再接 by 動作者；be locking 是主動進行式，同樣不能接 by 動作者；locked 前面少了 be，不能直接接在 must 後面。"
       },
       {
         "q": "Dinner ___ served in ten minutes.",
@@ -311,7 +311,7 @@
           "by"
         ],
         "answer": 3,
-        "explanation": "要點出是誰寫的，用 by。with 是用什麼工具，寫成 written with a pen 才對；in 通常接地點或語言，像 written in Japanese。"
+        "explanation": "要點出是誰寫的，用 by。with 是用什麼工具，寫成 written with a pen 才對；in 通常接地點或語言，像 written in Japanese；from 是來源或出處，像 a gift from a friend，不用來帶出動作的執行者。"
       },
       {
         "q": "昨天晚上那家店被搶了，可是沒有人知道是誰做的。下面哪一句最自然？",
@@ -322,10 +322,10 @@
           "The store robbed last night."
         ],
         "answer": 0,
-        "explanation": "不知道是誰做的時候，英文就直接不寫 by，這正是被動語態好用的地方。by someone、by a person 等於什麼都沒說，母語者不會這樣寫；最後一句少了 be 動詞，變成店去搶別人。"
+        "explanation": "不知道是誰做的時候，英文通常直接不寫 by，這正是被動語態好用的地方。by someone、by a person 文法沒錯，但只說「有人做的」，沒有多給任何資訊，讀起來多餘，所以不是最自然的寫法；最後一句少了 be 動詞，變成店去搶別人。"
       },
       {
-        "q": "The report ___ yet, so please wait a little longer.",
+        "q": "The report ___ by the team yet, so please wait a little longer.",
         "options": [
           "hasn't finished",
           "isn't finish",
@@ -344,7 +344,7 @@
           "was build"
         ],
         "answer": 1,
-        "explanation": "two years ago 是講死的過去時間，用過去被動 was built。有明確的過去時間點就不能用現在完成式，所以 has been built 不行；was build 少了過去分詞的變化。"
+        "explanation": "two years ago 是講死的過去時間，用過去被動 was built。有明確的過去時間點就不能用現在完成式，所以 has been built 不行；is built 是現在式，跟 two years ago 不合；was build 少了過去分詞的變化。"
       }
     ]
   },
@@ -479,18 +479,18 @@
           "are living"
         ],
         "answer": 1,
-        "explanation": "who 代替前面的 a friend，是單數第三人稱，現在簡單式的動詞要加 s，所以是 lives。living 沒有 be 動詞不成句；are 跟單數主詞不合。"
+        "explanation": "who 代替前面的 a friend，是單數第三人稱，現在簡單式的動詞要加 s，所以是 lives。live 是原形，少了 s；living 沒有 be 動詞不成句；are 跟單數主詞不合。"
       },
       {
         "q": "My brother has a phone ___ takes really good photos.",
         "options": [
-          "and",
+          "whose",
           "who",
           "it",
           "that"
         ],
         "answer": 3,
-        "explanation": "phone 是東西，用 that 或 which 接說明。and 後面要接一個有自己主詞的完整句子，takes really good photos 沒有主詞；直接放 it 是把中文「它拍照很好」搬過來，英文接說明一定要用關係代名詞；who 只給人用。"
+        "explanation": "phone 是東西，用 that 或 which 接說明，that 在子句裡當主詞。whose 表示「誰的」，後面要接名詞，這裡後面直接是動詞 takes，接不上；直接放 it 是把中文「它拍照很好」搬過來，英文接說明一定要用關係代名詞；who 只給人用。"
       },
       {
         "q": "I know several people ___ in that hospital.",
@@ -628,7 +628,7 @@
           "arrived"
         ],
         "answer": 2,
-        "explanation": "空格後面到句尾只剩 this morning，需要有人來當 arrived 的主詞，所以用 that arrived。前兩個選項都多了一個 it；只寫 arrived 會讓一個句子出現兩個動詞卻沒有東西接起來。"
+        "explanation": "空格後面的 is still in my inbox 才是整句的動詞，所以空格要放一段說明 the email 的話。that arrived 的 that 當 arrived 的主詞，意思是今天早上寄到的那封信。I sent it、which I sent it 也是在說明 the email，sent 的受詞就是 the email，後面再放 it 就重複了（正確寫法是 The email I sent this morning）；只寫 arrived 會讓 The email arrived this morning 自己成一句，後面的 is 接不上，句中變成兩個主要動詞。"
       },
       {
         "q": "下面哪一句是錯的？",
@@ -661,7 +661,7 @@
           "it"
         ],
         "answer": 2,
-        "explanation": "接在 everything 這種字後面習慣用 that，而且它是 said 的受詞。what 本身就含有「所說的事」，前面不能再放名詞；who 給人用。"
+        "explanation": "接在 everything 這種字後面習慣用 that，而且它是 said 的受詞。what 本身就含有「所說的事」，前面不能再放名詞；who 給人用；it 是代名詞，不能把前面的 everything 和後面的句子接起來。"
       },
       {
         "q": "下面哪一句少了字？",
@@ -683,7 +683,7 @@
           "that"
         ],
         "answer": 3,
-        "explanation": "後面的 my father works with 已經有主詞了，所以空格是受詞的位置，用 that 或 who 都可以，整個省略也通。who is 會多一個動詞；which 給東西用。"
+        "explanation": "後面的 my father works with 已經有主詞了，所以空格是受詞的位置，用 that 或 who 都可以，整個省略也通。who is 會多一個動詞；which 給東西用；what 不能接在名詞後面說明它。"
       }
     ]
   },
@@ -794,7 +794,7 @@
           "when"
         ],
         "answer": 3,
-        "explanation": "the day 是時間，用 when。where 只給地點用；whose 後面要接名詞說明屬於誰。"
+        "explanation": "the day 是時間，後面 I do my laundry 主詞、受詞都不缺，用 when。where 只給地點用；which 的話後面必須缺東西，或寫成 on which，這裡句子已經完整；whose 後面要接名詞說明屬於誰。"
       },
       {
         "q": "The woman ___ bag was stolen called the police.",
@@ -962,12 +962,12 @@
         "q": "「我覺得他不會答應」最自然的英文是？",
         "options": [
           "I don't think he will agree.",
-          "I think he will not agree.",
+          "I not think he will agree.",
           "I think not he will agree.",
           "I don't think he will not agree."
         ],
         "answer": 0,
-        "explanation": "英文習慣把否定往前搬到 think 上面。第二句文法上通但很少人這樣講；第三句語序錯了；第四句兩邊都否定，意思整個相反。"
+        "explanation": "英文習慣把否定往前搬到 think 上面，用 don't 來否定，所以 I don't think he will agree 最自然。第二句少了 do，not 不能直接放在 think 前面；第三句語序錯了；第四句兩邊都否定，意思變成「我覺得他會答應」，整個相反。"
       },
       {
         "q": "My parents don't know ___ I changed my job last month.",
@@ -1003,7 +1003,7 @@
         "explanation": "主要動詞 said 是過去式，後面 that 子句裡的動詞通常跟著往回退一格用 was。is being 的意思是暫時表現得怎麼樣，跟這裡不合；be 不能單獨當動詞；are 跟主詞 he 不合。"
       },
       {
-        "q": "「我希望你來」有兩種講法，下面哪一個是錯的？",
+        "q": "下面四句想表達「我希望你來」或「我要你來」，哪一句的文法是錯的？",
         "options": [
           "I hope you can come.",
           "I hope that you can come.",
@@ -1011,7 +1011,7 @@
           "I want you to come."
         ],
         "answer": 2,
-        "explanation": "hope 後面接的是一整句話，不能用「hope 人 to 原形動詞」這個句型。要用「人加 to 加原形動詞」的是 want、ask、tell 這些字。"
+        "explanation": "hope 後面接的是一整句話，前面的 that 可以省略，所以第一句和第二句都對；hope 不能用「hope 人 to 原形動詞」這個句型，第三句是錯的。第四句的 want 可以接「人加 to 加原形動詞」，意思是「我要你來」，文法正確。"
       }
     ]
   },
@@ -1118,7 +1118,7 @@
         "explanation": "後面沒有接人，直接接內容，用 said。told 後面一定要先接人；told to 是把中文「跟我說」硬翻過來；says 是現在式，跟後面的 would 時態對不上。"
       },
       {
-        "q": "原話是 I am hungry. 轉述成 Tom said that he ___ hungry.",
+        "q": "原話是 I am hungry.（Tom 昨天說的，現在他已經吃飽了）轉述成 Tom said that he ___ hungry.",
         "options": [
           "is",
           "has",
@@ -1126,7 +1126,7 @@
           "were"
         ],
         "answer": 2,
-        "explanation": "said 是過去式，被轉述的動詞要退一格，am 退成 was。is 沒有退格；were 跟主詞 he 不合；has 意思不通。"
+        "explanation": "said 是過去式，原話講的是當時的狀態，現在已經不成立，所以 am 要退成 was。說話的內容到現在還成立時，口語也可以不退格留 is，但這一題他已經吃飽了，用 is 意思就錯了；were 跟主詞 he 不合；has 後面不能直接接形容詞 hungry。"
       },
       {
         "q": "Mary told ___ that she liked the gift.",
@@ -1151,7 +1151,7 @@
         "explanation": "原話的 will 在轉述時要退成 would。will 沒有退格；can 意思變成「能夠」；is going to 是現在式，跟 said 對不上。"
       },
       {
-        "q": "原話是 I can help you. 轉述成 He said he ___ help me.",
+        "q": "原話是 I can help you.（他上週說的，現在他已經沒空了）轉述成 He said he ___ help me.",
         "options": [
           "could",
           "can",
@@ -1159,7 +1159,7 @@
           "should"
         ],
         "answer": 0,
-        "explanation": "can 退一格是 could。can 留在原地沒有配合前面的 said；will 和 should 都換掉了原話的意思。"
+        "explanation": "said 是過去式，can 退一格是 could。說話的內容到現在還成立時，口語也可以留 can，但這一題他現在已經沒空了，用 can 意思就不對；will 和 should 都換掉了原話「能夠」的意思。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -1173,7 +1173,7 @@
         "explanation": "tell 後面先接人再接內容，所以 told me the answer 是對的。said 不能直接接人；told 後面不加 to；第三句把 to 放錯位置，變成沒有聽話的人。"
       },
       {
-        "q": "My sister always says that she ___ too busy to cook.",
+        "q": "My sister says that she ___ too busy to cook these days.",
         "options": [
           "was",
           "were",
@@ -1181,7 +1181,7 @@
           "had been"
         ],
         "answer": 2,
-        "explanation": "主要動詞 says 是現在式，後面就不用退格，直接用 is。退一格只發生在主要動詞是過去式的時候，這一題不需要。"
+        "explanation": "主要動詞 says 是現在式，these days 也指現在，不需要退格，直接用 is。退一格是主要動詞為過去式時才要考慮的事。was 是過去式，跟 these days 對不上；were 跟主詞 she 不合；had been 是過去完成式，講的是更早以前，也跟 these days 對不上。"
       }
     ]
   },
@@ -1279,7 +1279,7 @@
         "explanation": "if 那邊用了 were，表示跟事實相反，另外半句要配 would 加原形動詞。will 是給真的有可能發生的情況用的；knew 是過去式，兩半都用過去式就沒有主要句子了。"
       },
       {
-        "q": "If I ___ you, I wouldn't say anything.",
+        "q": "依正式寫法填空：If I ___ you, I wouldn't say anything.",
         "options": [
           "were",
           "was",
@@ -1287,7 +1287,7 @@
           "be"
         ],
         "answer": 0,
-        "explanation": "跟事實相反的假設，be 動詞一律用 were，就算主詞是 I 也一樣。If I was you 在考試裡算錯；am 是現在式，跟後面的 wouldn't 不搭。"
+        "explanation": "跟現在事實相反的假設，正式寫法裡 be 動詞用 were，就算主詞是 I 也一樣。口語常聽到 If I was you，但正式寫作和考試都以 were 為準。am 是現在式，跟後面的 wouldn't 不搭；be 是原形，不能直接放在 if 後面當動詞。"
       },
       {
         "q": "If we had a bigger kitchen, we ___ more often.",
@@ -1325,13 +1325,13 @@
       {
         "q": "「如果你早點睡，你早上就不會這麼累」，這是在勸人，而且做得到。哪一句最合適？",
         "options": [
-          "If you went to bed earlier, you wouldn't be so tired.",
+          "If you went to bed earlier, you won't be so tired.",
           "If you go to bed earlier, you won't be so tired.",
           "If you would go to bed earlier, you don't be tired.",
           "If you go to bed earlier, you wouldn't be tired."
         ],
         "answer": 1,
-        "explanation": "早點睡是做得到的事，用現在簡單式配 will。第一句用過去式配 would，會變成在說這件事不可能發生；第三句在 if 那半句放了 would；第四句兩半的時態沒有配好。"
+        "explanation": "早點睡是做得到的事，用現在簡單式配 will，所以第二句最合適。第一句 if 那半句用過去式，另外半句卻用 won't，兩半的時態沒有配好；第三句在 if 那半句放了 would，而且 don't be 文法也錯；第四句 if 那半句是現在式，另外半句卻用 wouldn't，也沒有配好。"
       },
       {
         "q": "If my brother ___ how to swim, he would come to the beach with us.",
@@ -1445,7 +1445,7 @@
         "explanation": "if 那邊是 had left，屬於跟過去相反，另外半句要用 would have 加過去分詞。would catch 是跟現在相反的形式；would catching 沒有這種寫法。"
       },
       {
-        "q": "If you had told me, I ___ you.",
+        "q": "If you had told me, I ___ you yesterday.",
         "options": [
           "will help",
           "helped",
@@ -1453,7 +1453,7 @@
           "would have helped"
         ],
         "answer": 3,
-        "explanation": "兩半都要講過去，had told 配 would have helped。would help 是講現在做得到的假設，跟前半的時態對不上。"
+        "explanation": "yesterday 表示事情已經過去，had told 配 would have helped，講的是跟過去事實相反的假設。would help 講的是跟現在事實相反，跟 yesterday 對不上；will help 是真的可能發生的未來；helped 是單純的過去式，沒有假設的意思，都配不上 had told。"
       },
       {
         "q": "If she ___ harder, she would have won the game.",
@@ -1486,7 +1486,7 @@
           "am"
         ],
         "answer": 0,
-        "explanation": "講的是現在的身高，屬於跟現在事實相反，用過去式的 were 配 would join。had been 是講過去的事，可是身高是現在的狀態。"
+        "explanation": "I'm short 說的是現在的身高，屬於跟現在事實相反，用過去式的 were 配 would join。had been 講的是過去的事，可是身高是現在的狀態；would 不能放在 if 那半句，所以 would be 不行；am 是現在式，表示真的情況，跟 I'm short 矛盾。"
       },
       {
         "q": "We missed the flight. If we ___ a taxi, we would have arrived on time.",
@@ -1640,7 +1640,7 @@
           "hope"
         ],
         "answer": 3,
-        "explanation": "祝福別人早點好起來，是還有可能實現的事，後面又接了一整句話 you get well soon，所以用 hope 加現在式。wish 接句子會暗示這件事不會發生，時態也不對；wish 要祝福只能接名詞，像 I wish you a quick recovery。"
+        "explanation": "祝別人早日康復，是還有可能實現的事，後面又接了一整句 you get well soon，所以用 hope 加現在式。wish 後面接句子要退一格時態，表示這件事不太可能發生，不能拿來祝福；wished 和 am wishing 也一樣不能接這個句子。想用 wish 祝福，常見的寫法是 wish 加人再加名詞，像 I wish you a quick recovery。"
       },
       {
         "q": "He wishes he ___ more free time on weekends.",
@@ -1970,7 +1970,7 @@
           "crying"
         ],
         "answer": 3,
-        "explanation": "all night 表示那段時間一直在哭，強調進行中的狀態，用 crying。感官動詞後面只接原形動詞或 V-ing，不加 to，也不會用過去式 cried 或三單的 cries。"
+        "explanation": "all night 表示那段時間一直在哭，強調持續進行的狀態，用 crying；原形 cry 也通，但不在選項裡。感官動詞加受詞表示對方主動在做的事時，後面接原形動詞或 V-ing，不加 to，所以 to cry 不行；cried 是過去式、cries 是三單現在式，都是帶時態的動詞，不能放在受詞後面。"
       },
       {
         "q": "We saw the plane ___ off and disappear into the clouds.",
@@ -1984,7 +1984,7 @@
         "explanation": "整個起飛的過程都看到了，用原形動詞 take。see 後面不加 to；taken 是過去分詞，這裡飛機是自己起飛，不是被起飛。"
       },
       {
-        "q": "She watched her son ___ the whole race from start to finish.",
+        "q": "She watched her son ___ the last lap and cross the finish line.",
         "options": [
           "running",
           "to run",
@@ -1992,10 +1992,10 @@
           "runs"
         ],
         "answer": 2,
-        "explanation": "from start to finish 表示整場都看完了，用原形動詞 run。running 只強調進行中的一段，跟後面那句話矛盾。"
+        "explanation": "watch 後面的動作從頭到尾看完，用原形動詞，而且 and 連接的兩個動詞要同形，cross 是原形，所以前面也用原形 run。running 和 cross 形式不一致，不能並列；to run 的 watch 後面不接 to；runs 多了 s。"
       },
       {
-        "q": "When I walked past the classroom, I saw the teacher ___ on the board.",
+        "q": "When I walked past the classroom, I saw the teacher still ___ on the board, so I knew the class had not ended.",
         "options": [
           "write",
           "writing",
@@ -2003,7 +2003,7 @@
           "wrote"
         ],
         "answer": 1,
-        "explanation": "走過去只是一瞬間，看到的是老師正在寫的那個畫面，用 writing 最自然。用 write 會變成從頭到尾看她寫完，跟 walked past 不合。"
+        "explanation": "走過去只是一瞬間，still 表示老師還在寫，看到的是進行中的畫面，用 writing。write 是看完整個動作，跟 still 和 walked past 都不合；to write 的 saw 後面不接 to；wrote 是過去式，不能放在 saw 後面。"
       },
       {
         "q": "Did you hear him ___ my name just now?",
@@ -2041,13 +2041,13 @@
       {
         "q": "「我剛剛經過的時候，看到他在等人」是哪一句？",
         "options": [
-          "I saw him wait for someone.",
+          "I saw him waited for someone.",
           "I see him waiting for someone.",
           "I saw him waiting for someone.",
           "I saw him to wait for someone."
         ],
         "answer": 2,
-        "explanation": "經過的那一瞬間他正在等，用 saw 加 waiting。第一句的原形會變成你看著他等完全程；第二句用了現在式，跟「剛剛」不合；第四句多了 to。"
+        "explanation": "經過的那一瞬間他正在等，用 saw 加 waiting。第一句的 waited 是過去式，saw 後面要接原形或 V-ing；第二句用了現在式，跟「剛剛」不合；第四句多了 to。"
       }
     ]
   },
@@ -2153,12 +2153,12 @@
         "q": "It is difficult ___ a new language after thirty.",
         "options": [
           "learn",
-          "learning",
+          "to learning",
           "learned",
           "to learn"
         ],
         "answer": 3,
-        "explanation": "It is 加形容詞後面接 to 加原形動詞。learning 是動名詞，要放在句首當主詞才對，像 Learning a new language is difficult。"
+        "explanation": "It is 加形容詞後面接 to 加原形動詞，所以是 to learn。to learning 把 to 和 V-ing 混在一起；learn 前面少了 to；learned 是過去式，不能放在這裡。"
       },
       {
         "q": "It ___ me two hours to clean the whole house yesterday.",
@@ -2180,7 +2180,7 @@
           "for"
         ],
         "answer": 3,
-        "explanation": "要點出「對誰來說」，用 for 加那個人，後面再接 to 加原形動詞。of 和 to 都不能用在這個位置。"
+        "explanation": "要點出「對誰來說」，用 for 加那個人，後面再接 to 加原形動詞。of 和 to 都不能用在這個位置；that 後面要接完整子句，children to drink 不是子句。"
       },
       {
         "q": "___ are many people waiting outside, so ___ is hard to find a seat.",

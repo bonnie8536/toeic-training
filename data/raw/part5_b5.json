@@ -114,10 +114,10 @@
     "difficulty": "中級",
     "category": "動詞時態與語態",
     "question": "Since the recall was announced last week, more than 2,000 units ------- to Stanwick Appliances for inspection.",
-    "options": ["returned", "are returning", "had returned", "have been returned"],
+    "options": ["returned", "are returning", "had been returning", "have been returned"],
     "answer": 3,
     "translation": "自上週宣布召回以來，已有超過兩千台產品被送回 Stanwick Appliances 檢驗。",
-    "explanation": "考點：現在完成式的被動語態。since 子句設定了起點，主詞 units 是「被送回」的對象，須用 have been + 過去分詞，故 (D) have been returned 正確。(A) returned 是主動的過去式，語意變成產品自己回去。(B) are returning 為主動的現在進行式。(C) had returned 既是主動、又是過去完成式，與 since 所要求的現在完成語意不符。"
+    "explanation": "考點：現在完成式的被動語態。since 子句設定了起點，主詞 units 是「被送回」的對象，須用 have been + 過去分詞，故 (D) have been returned 正確。(A) returned 是主動的過去式，語意變成產品自己回去。(B) are returning 為主動的現在進行式。(C) had been returning 既是主動、又是過去完成進行式，與 since 所要求的現在完成語意不符。"
   },
   {
     "id": "p5-b5-13",

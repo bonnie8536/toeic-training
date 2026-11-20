@@ -76,10 +76,10 @@
       {
         "q": "What problem are the speakers discussing?",
         "options": [
-          "A delivery has not arrived",
-          "A room is too small for the staff",
-          "A machine is not working properly",
-          "A bill was paid twice"
+          "A delivery has not arrived.",
+          "A room is too small for the staff.",
+          "A machine is not working properly.",
+          "A bill was paid twice."
         ],
         "answer": 2,
         "explanation": "定位在第一句：It's leaking water all over the counter（水漏得整個檯面都是），加上 the light on the front keeps flashing red（前面那個燈一直閃紅色）。咖啡機故障漏水就是全篇的問題，選 (C)。(A) 沒有提到任何送貨；(B) 只提到這層樓約四十人，不是空間太小；(D) 提到發票是為了查保固，不是重複付款。"

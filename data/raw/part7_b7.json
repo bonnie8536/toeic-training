@@ -6,7 +6,7 @@
       {
         "type": "notice",
         "label": "",
-        "content": "NOTICE TO ALL TENANTS\nRiverbend Business Center — Building Management Office\nPosted: March 3\n\nStarting Monday, March 16, the two elevators in the north lobby will be taken out of service for a scheduled upgrade. The work is expected to last three weeks. During this period, tenants and their visitors should use the south lobby elevators, which will run on an extended schedule from 6:00 a.m. to 10:00 p.m.\n\nBecause the south lobby is likely to be crowded between 8:30 and 9:30 a.m., we encourage staff on floors two through four to take the stairs whenever possible. Delivery workers carrying heavy items should contact the front desk at extension 210, and a staff member will open the service elevator at the rear of the building for them.\n\nThe upgrade will not affect water, heating, or internet service. However, the north lobby will be closed while the new equipment is being installed, so the mail room will move temporarily to Room 118, next to the tenant lounge.\n\nWe understand that this project will cause some inconvenience, and we thank you for your patience. Tenants who want to know more may attend a short information session on Thursday, March 12, at 5:30 p.m. in the third-floor conference room. Written questions can also be sent to management@riverbendcenter.com."
+        "content": "NOTICE TO ALL TENANTS\nRiverbend Business Center — Building Management Office\nPosted: March 3\n\nStarting Monday, March 16, the two elevators in the north lobby will be taken out of service for a scheduled upgrade. The work is expected to last three weeks. During this period, tenants and their visitors should use the south lobby elevators, which will run on an extended schedule from 6:00 a.m. to 10:00 p.m.\n\nBecause the south lobby is likely to be crowded between 8:30 and 9:30 a.m., we encourage staff on floors two through four to take the stairs whenever possible. Delivery workers carrying heavy items should contact the front desk at extension 210, and a staff member will open the service elevator at the rear of the building for them.\n\nThe upgrade will not affect water, heating, or internet service. However, the north lobby will be closed while the new equipment is being installed, so the mail room will move temporarily to Room 118, next to the tenant lounge.\n\nWe understand that this project will cause some inconvenience, and we thank you for your patience. Tenants who want to know more may attend a short information session on Thursday, March 12, at 5:30 p.m. in the third-floor conference room. Written questions can also be sent to management@example.com."
       }
     ],
     "questions": [
@@ -56,7 +56,7 @@
       }
     ],
     "translation": [
-      "全體租戶公告\n河灣商務中心 — 大樓管理室\n公告日期：三月三日\n\n自三月十六日（星期一）起，北側大廳的兩部電梯將停止使用，進行預定的設備更新工程，預計為期三週。這段期間，租戶與訪客請改用南側大廳的電梯；該側電梯將延長運行時間，自上午六點至晚間十點。\n\n由於南側大廳在上午八點半至九點半之間可能相當擁擠，我們建議二樓至四樓的員工盡量走樓梯。搬運重物的送貨人員請撥分機 210 聯絡櫃檯，將有專人為您開啟大樓後方的貨梯。\n\n本次工程不會影響供水、暖氣或網路服務。惟施工期間北側大廳將封閉，收發室因此暫時移至一一八室，位置在租戶休息室隔壁。\n\n我們明白這項工程會造成一些不便，感謝各位的耐心配合。想進一步了解的租戶，可於三月十二日（星期四）下午五點半到三樓會議室參加簡短的說明會。也歡迎將書面問題寄至 management@riverbendcenter.com。"
+      "全體租戶公告\n河灣商務中心：大樓管理室\n公告日期：三月三日\n\n自三月十六日（星期一）起，北側大廳的兩部電梯將停止使用，進行預定的設備更新工程，預計為期三週。這段期間，租戶與訪客請改用南側大廳的電梯；該側電梯將延長運行時間，自上午六點至晚間十點。\n\n由於南側大廳在上午八點半至九點半之間可能相當擁擠，我們建議二樓至四樓的員工盡量走樓梯。搬運重物的送貨人員請撥分機 210 聯絡櫃檯，將有專人為您開啟大樓後方的貨梯。\n\n本次工程不會影響供水、暖氣或網路服務。惟施工期間北側大廳將封閉，收發室因此暫時移至一一八室，位置在租戶休息室隔壁。\n\n我們明白這項工程會造成一些不便，感謝各位的耐心配合。想進一步了解的租戶，可於三月十二日（星期四）下午五點半到三樓會議室參加簡短的說明會。也歡迎將書面問題寄至 management@example.com。"
     ]
   },
   {
@@ -126,7 +126,7 @@
       {
         "type": "webpage",
         "label": "",
-        "content": "www.cedarlinetools.com/rentals\n\nHOME  |  RENTALS  |  REPAIRS  |  STORE HOURS  |  CONTACT\n\nCedarline Tool Rental — How It Works\n\nStep 1: Choose your equipment.\nOur catalog lists more than 400 items, from small hand tools to large floor cleaning machines. Daily, weekly, and monthly rates appear on each item page. The weekly rate is the best value for any job that lasts longer than four days.\n\nStep 2: Reserve online.\nSelect a pickup date and a store location. A reservation holds your item for 24 hours after the pickup time you choose. We do not ask for a deposit on orders under $200, but a valid driver's license must be shown at the counter.\n\nStep 3: Pick up and go.\nBring your reservation number to the rental desk. Our staff will show you how to operate the equipment and answer any questions. Safety equipment such as gloves and eye protection is included at no extra charge with all power tools.\n\nStep 4: Return.\nEquipment must be returned to the same store by 6:00 p.m. on the due date. A late return is charged as one additional day. Please clean the equipment before you bring it back; a fee of $25 applies to items that arrive covered in paint or dirt.\n\nNot sure what you need? Call 555-0148 or use the chat button at the bottom of this page."
+        "content": "www.example.com/rentals\n\nHOME  |  RENTALS  |  REPAIRS  |  STORE HOURS  |  CONTACT\n\nCedarline Tool Rental — How It Works\n\nStep 1: Choose your equipment.\nOur catalog lists more than 400 items, from small hand tools to large floor cleaning machines. Daily, weekly, and monthly rates appear on each item page. The weekly rate is the best value for any job that lasts longer than four days.\n\nStep 2: Reserve online.\nSelect a pickup date and a store location. A reservation holds your item for 24 hours after the pickup time you choose. We do not ask for a deposit on orders under $200, but a valid driver's license must be shown at the counter.\n\nStep 3: Pick up and go.\nBring your reservation number to the rental desk. Our staff will show you how to operate the equipment and answer any questions. Safety equipment such as gloves and eye protection is included at no extra charge with all power tools.\n\nStep 4: Return.\nEquipment must be returned to the same store by 6:00 p.m. on the due date. A late return is charged as one additional day. Please clean the equipment before you bring it back; a fee of $25 applies to items that arrive covered in paint or dirt.\n\nNot sure what you need? Call 555-0148 or use the chat button at the bottom of this page."
       }
     ],
     "questions": [
@@ -176,7 +176,7 @@
       }
     ],
     "translation": [
-      "www.cedarlinetools.com/rentals\n\n首頁 | 租借 | 維修 | 營業時間 | 聯絡我們\n\n雪松工具租借 — 租借流程\n\n步驟一：挑選設備。\n我們的型錄收錄超過四百項商品，從小型手工具到大型地板清潔機都有。每項商品頁面均標示日租、週租與月租價格。工程若需時超過四天，以週租最划算。\n\n步驟二：線上預約。\n請選擇取件日期與門市地點。預約成立後，商品會自您選定的取件時間起為您保留二十四小時。訂單金額未滿兩百美元不需支付押金，但取件時必須在櫃檯出示有效駕照。\n\n步驟三：取件出發。\n請攜帶預約編號至租借櫃檯。門市人員會示範設備的操作方式，並回答您的問題。租借電動工具時，手套、護目鏡等安全裝備一律免費提供。\n\n步驟四：歸還。\n設備必須於到期日下午六點前歸還至同一家門市。逾期歸還將加收一日租金。歸還前請先清潔設備；沾滿油漆或泥土的商品將酌收二十五美元清潔費。\n\n不確定該租哪一項？請撥 555-0148，或使用本頁下方的線上客服按鈕。"
+      "www.example.com/rentals\n\n首頁 | 租借 | 維修 | 營業時間 | 聯絡我們\n\n雪松工具租借：租借流程\n\n步驟一：挑選設備。\n我們的型錄收錄超過四百項商品，從小型手工具到大型地板清潔機都有。每項商品頁面均標示日租、週租與月租價格。工程若需時超過四天，以週租最划算。\n\n步驟二：線上預約。\n請選擇取件日期與門市地點。預約成立後，商品會自您選定的取件時間起為您保留二十四小時。訂單金額未滿兩百美元不需支付押金，但取件時必須在櫃檯出示有效駕照。\n\n步驟三：取件出發。\n請攜帶預約編號至租借櫃檯。門市人員會示範設備的操作方式，並回答您的問題。租借電動工具時，手套、護目鏡等安全裝備一律免費提供。\n\n步驟四：歸還。\n設備必須於到期日下午六點前歸還至同一家門市。逾期歸還將加收一日租金。歸還前請先清潔設備；沾滿油漆或泥土的商品將酌收二十五美元清潔費。\n\n不確定該租哪一項？請撥 555-0148，或使用本頁下方的線上客服按鈕。"
     ]
   },
   {
@@ -250,7 +250,7 @@
       {
         "type": "email",
         "label": "E-mail",
-        "content": "To: events@quintanasupply.com\nFrom: m.feld@quintanasupply.com\nDate: October 13\nSubject: Questions about Friday's program\n\nHello,\n\nI manage the Bridgeport store and plan to attend the meeting this Friday. I have three questions before I confirm my travel.\n\nFirst, I must visit a supplier on Friday morning and will not reach the center until noon. Will I still be able to hear the session on shipping delays, or should I come the following morning instead?\n\nSecond, two members of my sales staff would like to join the afternoon discussion groups. They are not managers, so I want to be sure they are welcome before I ask them to make the trip.\n\nThird, I will be driving a company van rather than my own car. Will my badge be accepted at the gate for a vehicle of that size, or do I need a separate pass?\n\nOne last note: I do not eat meat, and I know I am writing after the date given in the program. If it is too late to change the order, I am happy to bring my own lunch.\n\nThank you,\nMarta Feld\nStore Manager, Bridgeport"
+        "content": "To: events@example.com\nFrom: m.feld@example.com\nDate: October 13\nSubject: Questions about Friday's program\n\nHello,\n\nI manage the Bridgeport store and plan to attend the meeting this Friday. I have three questions before I confirm my travel.\n\nFirst, I must visit a supplier on Friday morning and will not reach the center until noon. Will I still be able to hear the session on shipping delays, or should I come the following morning instead?\n\nSecond, two members of my sales staff would like to join the afternoon discussion groups. They are not managers, so I want to be sure they are welcome before I ask them to make the trip.\n\nThird, I will be driving a company van rather than my own car. Will my badge be accepted at the gate for a vehicle of that size, or do I need a separate pass?\n\nOne last note: I do not eat meat, and I know I am writing after the date given in the program. If it is too late to change the order, I am happy to bring my own lunch.\n\nThank you,\nMarta Feld\nStore Manager, Bridgeport"
       }
     ],
     "questions": [
@@ -263,7 +263,7 @@
           "To report a problem with a delivery"
         ],
         "answer": 1,
-        "explanation": "定位：郵件第一段「I plan to attend the meeting this Friday. I have three questions before I confirm my travel.」，之後三段分別問時間、參加資格與停車，故目的是詢問與會安排。(A)錯：工作坊照常舉行。(C)錯：她沒有推薦講者。(D)錯：出貨延誤是工作坊主題，不是她要申訴的問題。"
+        "explanation": "定位：郵件第一段「I manage the Bridgeport store and plan to attend the meeting this Friday. I have three questions before I confirm my travel.」，之後三段分別問時間、參加資格與停車，故目的是詢問與會安排。(A)錯：工作坊照常舉行。(C)錯：她沒有推薦講者。(D)錯：出貨延誤是工作坊主題，不是她要申訴的問題。"
       },
       {
         "q": "According to the program, what will NOT take place on Friday afternoon?",
@@ -311,8 +311,8 @@
       }
     ],
     "translation": [
-      "昆塔納供應公司\n門市經理會議 — 議程\n十月十七日（星期五）| 費爾蓮會議中心 B 室\n\n上午 9:00-9:30   咖啡與報到（大廳）\n上午 9:30-10:15   開場致詞 — 營運副總 泰瑞莎・莫利納\n上午 10:30-11:45   工作坊 A：減少出貨延誤 — 努爾・巴克希\n中午 12:00-下午 1:00   午餐（花園廳）\n下午 1:15-2:30   工作坊 B：季節性人員的訓練 — 漢娜・伊藤\n下午 2:45-4:00   門市經理分組討論\n下午 4:15   總結與服務獎頒發\n\n請注意：\n- 兩場工作坊將於星期六上午再辦一次，供星期五無法出席的經理參加。\n- 東側停車場免費停車，請於閘門出示員工識別證。\n- 講義將於會議結束一週後上傳公司網站，現場不提供紙本。\n- 需要素食餐點者，請於十月十日前告知服務台。",
-      "收件者：events@quintanasupply.com\n寄件者：m.feld@quintanasupply.com\n日期：十月十三日\n主旨：關於星期五議程的幾個問題\n\n您好：\n\n我負責布里奇波特門市，預計出席本週五的會議。在確認行程之前，有三個問題想請教。\n\n第一，我星期五上午必須拜訪一家供應商，中午才能抵達會場。我還來得及聽出貨延誤那一場嗎？還是改到隔天早上出席比較好？\n\n第二，我門市有兩位銷售同仁想參加下午的分組討論。他們並不是經理，所以在請他們跑這一趟之前，我想先確認他們是否也能參加。\n\n第三，我這次開的是公司廂型車，不是自用車。這種車型在閘門出示識別證即可通行嗎？還是需要另外申請通行證？\n\n最後補充一點：我不吃肉，也知道自己是在議程所訂日期之後才來信。若已來不及更改餐點，我自備午餐也沒問題。\n\n謝謝您。\n\n瑪塔・費爾德\n布里奇波特門市經理"
+      "昆塔納供應公司\n門市經理會議：議程\n十月十七日（星期五）| 費爾蓮會議中心 B 室\n\n上午 9:00-9:30   咖啡與報到（大廳）\n上午 9:30-10:15   開場致詞，營運副總 泰瑞莎・莫利納\n上午 10:30-11:45   工作坊 A：減少出貨延誤，努爾・巴克希\n中午 12:00-下午 1:00   午餐（花園廳）\n下午 1:15-2:30   工作坊 B：季節性人員的訓練，漢娜・伊藤\n下午 2:45-4:00   門市經理分組討論\n下午 4:15   總結與服務獎頒發\n\n請注意：\n- 兩場工作坊將於星期六上午再辦一次，供星期五無法出席的經理參加。\n- 東側停車場免費停車，請於閘門出示員工識別證。\n- 講義將於會議結束一週後上傳公司網站，現場不提供紙本。\n- 需要素食餐點者，請於十月十日前告知服務台。",
+      "收件者：events@example.com\n寄件者：m.feld@example.com\n日期：十月十三日\n主旨：關於星期五議程的幾個問題\n\n您好：\n\n我負責布里奇波特門市，預計出席本週五的會議。在確認行程之前，有三個問題想請教。\n\n第一，我星期五上午必須拜訪一家供應商，中午才能抵達會場。我還來得及聽出貨延誤那一場嗎？還是改到隔天早上出席比較好？\n\n第二，我門市有兩位銷售同仁想參加下午的分組討論。他們並不是經理，所以在請他們跑這一趟之前，我想先確認他們是否也能參加。\n\n第三，我這次開的是公司廂型車，不是自用車。這種車型在閘門出示識別證即可通行嗎？還是需要另外申請通行證？\n\n最後補充一點：我不吃肉，也知道自己是在議程所訂日期之後才來信。若已來不及更改餐點，我自備午餐也沒問題。\n\n謝謝您。\n\n瑪塔・費爾德\n布里奇波特門市經理"
     ]
   }
 ]

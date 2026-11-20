@@ -6,7 +6,7 @@
       {
         "type": "email",
         "label": "",
-        "content": "To: t.abernathy@crestwoodinteriors.com\nFrom: n.ferreira@vantagepointsupply.com\nDate: 3 March\nSubject: Order 48219 — revised delivery date\n\nDear Mr. Abernathy,\n\nI am writing about the eighteen adjustable desk frames that Crestwood Interiors ordered on 20 February. The order was scheduled to reach your Fairview warehouse this Thursday, but I am afraid that we will not be able to meet that date.\n\nThe frames are manufactured at our plant in Bellhaven, where a boiler failure halted the painting line for six days. Production resumed on Monday, and the backlog is being cleared in the order in which requests were received. Your shipment is now expected to leave the plant on 11 March and to arrive on 14 March.\n\nBecause the delay is entirely ours, I have arranged for the freight charge of $260 to be removed from your invoice. I have also asked our warehouse team to set aside six frames from the stock we keep for showroom displays. These are identical to the ones you ordered apart from a slightly darker finish, and I can have them sent to you tomorrow at no cost if you need something on site before the fourteenth.\n\nPlease let me know by Friday whether you would like the showroom units. If I do not hear from you, I will assume that you prefer to wait for the full shipment.\n\nI apologize for the inconvenience and appreciate your patience.\n\nSincerely,\n\nNadia Ferreira\nClient Services\nVantage Point Supply"
+        "content": "To: t.abernathy@example.com\nFrom: n.ferreira@example.org\nDate: 3 March\nSubject: Order 48219 — revised delivery date\n\nDear Mr. Abernathy,\n\nI am writing about the eighteen adjustable desk frames that Crestwood Interiors ordered on 20 February. The order was scheduled to reach your Fairview warehouse this Thursday, but I am afraid that we will not be able to meet that date.\n\nThe frames are manufactured at our plant in Bellhaven, where a boiler failure halted the painting line for six days. Production resumed on Monday, and the backlog is being cleared in the order in which requests were received. Your shipment is now expected to leave the plant on 11 March and to arrive on 14 March.\n\nBecause the delay is entirely ours, I have arranged for the freight charge of $260 to be removed from your invoice. I have also asked our warehouse team to set aside six frames from the stock we keep for showroom displays. These are identical to the ones you ordered apart from a slightly darker finish, and I can have them sent to you tomorrow at no cost if you need something on site before the fourteenth.\n\nPlease let me know by Friday whether you would like the showroom units. If I do not hear from you, I will assume that you prefer to wait for the full shipment.\n\nI apologize for the inconvenience and appreciate your patience.\n\nSincerely,\n\nNadia Ferreira\nClient Services\nVantage Point Supply"
       }
     ],
     "questions": [
@@ -56,118 +56,7 @@
       }
     ],
     "translation": [
-      "收件者：t.abernathy@crestwoodinteriors.com\n寄件者：n.ferreira@vantagepointsupply.com\n日期：3月3日\n主旨：訂單 48219：修訂後的送達日期\n\n親愛的 Abernathy 先生：\n\n我來信是關於 Crestwood Interiors 於 2 月 20 日訂購的十八組可調式桌架。這筆訂單原訂本週四送達貴公司的 Fairview 倉庫，但恐怕我們無法如期達成。\n\n這些桌架在我們位於 Bellhaven 的廠區製造，該廠的鍋爐故障使塗裝線停擺了六天。生產已於週一恢復，積壓的訂單正依收件先後順序陸續消化。您的貨現在預計 3 月 11 日出廠，3 月 14 日送達。\n\n由於延誤完全是我方責任，我已安排將 260 美元的運費從您的發票中扣除。我也請倉儲團隊從展示間備品中保留了六組桌架。除了表面顏色略深之外，這些桌架與您訂購的完全相同；若您在 14 日之前需要現場先有貨可用，我可以明天免費寄出。\n\n請於週五前告知您是否需要這批展示間的桌架。若未收到您的回覆，我將視為您希望等待完整出貨。\n\n造成不便，敬請見諒，並感謝您的耐心。\n\n敬上\n\nNadia Ferreira\n客戶服務部\nVantage Point Supply"
-    ]
-  },
-  {
-    "id": "p7-b4-2",
-    "format": "single",
-    "passages": [
-      {
-        "type": "text message chain",
-        "label": "",
-        "blocks": [
-          {
-            "t": "chat",
-            "msgs": [
-              {
-                "who": "Priya Raghavan",
-                "time": "9:42 A.M.",
-                "text": "Morning, both. I've just reached the convention center. The booth panels are here, but the crate with the display screens hasn't turned up."
-              },
-              {
-                "who": "Dominic Hale",
-                "time": "9:47 A.M.",
-                "text": "That's not good. The carrier promised everything would be unloaded by eight."
-              },
-              {
-                "who": "Priya Raghavan",
-                "time": "9:51 A.M.",
-                "text": "I spoke to the loading dock supervisor. He says a second truck is still on the road and should reach us around eleven."
-              },
-              {
-                "who": "Marta Oyelaran",
-                "time": "9:58 A.M.",
-                "text": "I can rearrange my morning if that helps. I'm not due at the client lunch until one."
-              },
-              {
-                "who": "Dominic Hale",
-                "time": "10:03 A.M.",
-                "text": "Marta, could you go straight to the hall instead of the office? Priya shouldn't be assembling the frame on her own."
-              },
-              {
-                "who": "Marta Oyelaran",
-                "time": "10:07 A.M.",
-                "text": "On my way. Priya, I have a box of the printed brochures in my car — shall I bring those in as well?"
-              },
-              {
-                "who": "Priya Raghavan",
-                "time": "10:11 A.M.",
-                "text": "Yes, please. One box will be plenty for the first day."
-              },
-              {
-                "who": "Dominic Hale",
-                "time": "10:15 A.M.",
-                "text": "I'll chase the carrier again. If those screens aren't here by noon, we'll have to think about renting."
-              },
-              {
-                "who": "Marta Oyelaran",
-                "time": "10:19 A.M.",
-                "text": "Let's hope it doesn't come to that. See you both shortly."
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "questions": [
-      {
-        "q": "What are the writers mainly discussing?",
-        "options": [
-          "A change to a client's lunch reservation",
-          "A missing part of a delivery",
-          "The design of a new company brochure",
-          "A complaint received from a convention center"
-        ],
-        "answer": 1,
-        "explanation": "定位：9:42 Raghavan 表示「the crate with the display screens hasn't turned up」，後續訊息全繞著這批未送達的螢幕與應變安排展開。(A)錯：午餐約會只在 9:58 被順帶提到，用來說明 Oyelaran 上午有空。(C)錯：手冊只是要順便帶進會場的物品，不是討論主題。(D)錯：對話中沒有任何來自會展中心的抱怨；三人不滿的對象是未依約卸貨的貨運業者。"
-      },
-      {
-        "q": "What does Ms. Oyelaran offer to bring to the hall?",
-        "options": [
-          "A set of display screens",
-          "A crate of booth panels",
-          "A list of clients",
-          "Some printed materials"
-        ],
-        "answer": 3,
-        "explanation": "定位：10:07 Oyelaran 寫道「I have a box of the printed brochures in my car — shall I bring those in as well?」，即印刷品。(A)錯：螢幕在第二輛卡車上，不在她手上。(B)錯：展板已經送到會場了。(C)錯：全篇未提到任何客戶名單。"
-      },
-      {
-        "q": "At 10:15 A.M., what does Mr. Hale most likely mean when he writes, \"we'll have to think about renting\"?",
-        "options": [
-          "He may need to obtain display screens from another source.",
-          "He believes the booth space is too small.",
-          "He wants to lease a larger delivery vehicle.",
-          "He plans to look for a different storage facility."
-        ],
-        "answer": 0,
-        "explanation": "定位：該句緊接在「If those screens aren't here by noon」之後，條件句指向的缺件就是展示螢幕，因此 renting 指改用租借方式取得螢幕。(B)錯：攤位大小從未被討論。(C)錯：卡車是貨運業者的事，他們不需要自己租車。(D)錯：全篇沒有倉儲需求的線索。"
-      },
-      {
-        "q": "What is suggested about Ms. Oyelaran?",
-        "options": [
-          "She has already spoken with the carrier.",
-          "She designed the booth panels herself.",
-          "She is free until an appointment later in the day.",
-          "She has worked at the company longer than Mr. Hale."
-        ],
-        "answer": 2,
-        "explanation": "定位：9:58 她說「I can rearrange my morning if that helps. I'm not due at the client lunch until one.」可推知她在下午一點之前有空，故 (C) 正確。(A)錯：全文沒有她聯絡貨運業者的訊息；10:15 說要再去催貨運業者的是 Hale，Raghavan 問的則是會展中心的裝卸區主管。(B)錯：沒有任何人提及展板是誰設計的。(D)錯：對話中沒有任何資歷或職級的比較。"
-      }
-    ],
-    "translation": [
-      "Priya Raghavan（上午 9:42）\n兩位早。我剛到會展中心。展板已經到了，但裝展示螢幕的木箱沒出現。\n\nDominic Hale（上午 9:47）\n這下麻煩了。貨運業者保證八點前全部卸完的。\n\nPriya Raghavan（上午 9:51）\n我問過裝卸區的主管。他說第二輛卡車還在路上，大概十一點左右會到。\n\nMarta Oyelaran（上午 9:58）\n有需要的話我可以調整上午的行程。我到一點才要去和客戶吃午餐。\n\nDominic Hale（上午 10:03）\nMarta，你可以直接去會場、不用進辦公室嗎？不該讓 Priya 一個人組框架。\n\nMarta Oyelaran（上午 10:07）\n我出發了。Priya，我車上有一箱印好的手冊，要不要一起帶進去？\n\nPriya Raghavan（上午 10:11）\n麻煩你了。第一天一箱就很夠了。\n\nDominic Hale（上午 10:15）\n我再去催貨運業者。如果那些螢幕中午還沒到，我們就得考慮用租的了。\n\nMarta Oyelaran（上午 10:19）\n希望不至於走到那一步。待會見。"
+      "收件者：t.abernathy@example.com\n寄件者：n.ferreira@example.org\n日期：3月3日\n主旨：訂單 48219：修訂後的送達日期\n\n親愛的 Abernathy 先生：\n\n我來信是關於 Crestwood Interiors 於 2 月 20 日訂購的十八組可調式桌架。這筆訂單原訂本週四送達貴公司的 Fairview 倉庫，但恐怕我們無法如期達成。\n\n這些桌架在我們位於 Bellhaven 的廠區製造，該廠的鍋爐故障使塗裝線停擺了六天。生產已於週一恢復，積壓的訂單正依收件先後順序陸續消化。您的貨現在預計 3 月 11 日出廠，3 月 14 日送達。\n\n由於延誤完全是我方責任，我已安排將 260 美元的運費從您的發票中扣除。我也請倉儲團隊從展示間備品中保留了六組桌架。除了表面顏色略深之外，這些桌架與您訂購的完全相同；若您在 14 日之前需要現場先有貨可用，我可以明天免費寄出。\n\n請於週五前告知您是否需要這批展示間的桌架。若未收到您的回覆，我將視為您希望等待完整出貨。\n\n造成不便，敬請見諒，並感謝您的耐心。\n\n敬上\n\nNadia Ferreira\n客戶服務部\nVantage Point Supply"
     ]
   },
   {

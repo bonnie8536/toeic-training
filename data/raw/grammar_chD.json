@@ -113,11 +113,11 @@
         "options": [
           "We don't going to eat out today.",
           "We are not going to eat out today.",
-          "We are going not to eat out today.",
+          "We are not going eat out today.",
           "We not are going to eat out today."
         ],
         "answer": 1,
-        "explanation": "句子裡已經有 be 動詞 are，not 直接放在它後面就好。don't 是給一般動詞用的，這裡用不上；not 放在 going 後面或 are 前面都不是英文的順序。"
+        "explanation": "句子裡已經有 be 動詞 are，not 直接放在它後面就好。don't 是給一般動詞用的，這裡用不上；are not going eat 漏掉了 to，going 和動詞原形中間一定要有 to；not 放在 are 前面不是英文的順序。"
       },
       {
         "q": "___ you going to take the bus?",
@@ -144,13 +144,13 @@
       {
         "q": "下面哪一句在講已經計畫好的事？",
         "options": [
-          "She drinks coffee every morning.",
-          "She is drinking coffee now.",
-          "She drank coffee yesterday.",
-          "She is going to drink less coffee from next week."
+          "She drinks a cup of coffee every morning.",
+          "She is drinking a cup of coffee right now.",
+          "She drank two cups of coffee yesterday.",
+          "She is going to drink less coffee next month."
         ],
         "answer": 3,
-        "explanation": "只有 is going to drink 這句在講還沒發生的打算。drinks 是現在簡單式，講的是每天的習慣；is drinking 是現在進行式，講此刻正在做；drank 講的是昨天已經發生的事。"
+        "explanation": "只有 is going to drink 這句在講還沒發生的打算。drinks 是現在簡單式，講的是每天的習慣；is drinking 是現在進行式，配 right now 講此刻正在做；drank 講的是昨天已經發生的事。"
       },
       {
         "q": "下面哪一句有錯？",
@@ -270,11 +270,11 @@
         "options": [
           "I carry it for you.",
           "I'll carry it for you.",
-          "I am going to carry it for you.",
+          "I will carrying it for you.",
           "I carrying it for you."
         ],
         "answer": 1,
-        "explanation": "看到對方提袋子才臨時決定要幫忙，這種當場的決定用 will。I carry 是講習慣；be going to 聽起來像早就計畫好要幫忙，跟情境不合；carrying 前面少了 be 動詞。"
+        "explanation": "看到對方提袋子才臨時決定要幫忙，這種當場的決定用 will，後面接原形動詞。I carry 是現在簡單式，講的是習慣或事實，不是當場的提議；I will carrying 在 will 後面又加了 ing，will 後面只能接原形；I carrying 前面少了 be 動詞。"
       },
       {
         "q": "___ you be free tomorrow afternoon?",
@@ -422,24 +422,24 @@
       {
         "q": "A: I forgot my wallet. B: Don't worry. ___",
         "options": [
-          "I am going to pay for you.",
+          "I going to pay for you.",
           "I pay for you.",
           "I paying for you.",
           "I will pay for you."
         ],
         "answer": 3,
-        "explanation": "聽到對方說沒帶錢包才決定要付，是當場的決定，用 will。be going to 聽起來像出門前就打算好要替他付；I pay 講的是習慣；paying 前面少了 be 動詞。"
+        "explanation": "聽到對方說沒帶錢包才決定要付，是當場的決定，用 will。I pay 是現在簡單式，講的是習慣，不是當場決定的說法；I going to 少了 be 動詞；paying 前面也少了 be 動詞。"
       },
       {
         "q": "I ___ study abroad next year. I have already sent my application.",
         "options": [
-          "will",
+          "am will",
           "am going to",
           "going to",
           "will to"
         ],
         "answer": 1,
-        "explanation": "申請都送出去了，表示這是早就決定好的計畫，用 be going to。will 給人的感覺是剛剛才想到；going to 前面漏了 be 動詞；will 後面也不加 to。"
+        "explanation": "申請都送出去了，表示這是早就決定好的計畫，用 be going to。am will 把 be 動詞和 will 擠在一起，英文沒有這種寫法；going to 前面漏了 be 動詞；will 後面也不加 to。"
       },
       {
         "q": "Look! That dog ___ jump into the water.",
@@ -598,10 +598,10 @@
           "We are play basketball with them on Saturday.",
           "We playing basketball with them on Saturday.",
           "We are playing basketball with them on Saturday.",
-          "We play basketball with them on Saturday."
+          "We played basketball with them on Saturday."
         ],
         "answer": 2,
-        "explanation": "場地訂好了就是排定好的安排，用 are playing。are play 少了 ing；playing 前面少了 be 動詞；play 這種現在簡單式講的是每個星期六都打球的習慣。"
+        "explanation": "場地訂好了就是排定好的安排，用 are playing。are play 少了 ing；playing 前面少了 be 動詞；played 是過去式，跟星期六才要打的安排對不上。"
       },
       {
         "q": "下面哪一件事不能用現在進行式講未來？",
@@ -618,12 +618,12 @@
         "q": "She ___ the early train next Friday. She booked her seat last week.",
         "options": [
           "is taking",
-          "takes",
+          "took",
           "take",
           "is take"
         ],
         "answer": 0,
-        "explanation": "位子都訂好了，是排定好的安排，用 is taking。takes 講的是每個星期五都搭這班車；take 沒有配合主詞；is take 少了 ing。"
+        "explanation": "位子都訂好了，是排定好的安排，用 is taking。took 是過去式，跟 next Friday 對不上；take 沒有配合主詞；is take 少了 ing。"
       },
       {
         "q": "___ you doing anything tonight?",
@@ -772,7 +772,7 @@
           "Could"
         ],
         "answer": 3,
-        "explanation": "請人幫忙用 Could 最客氣，把它搬到主詞前面就成問句。Do 和 Does 是給一般動詞用的；Are 後面接不了原形動詞 help。"
+        "explanation": "請人幫忙用 Could 最客氣，把它搬到主詞前面就成問句。Do you help me 問的是平常會不會幫忙，不是在請對方幫忙，跟句尾的 please 不合；Does 配第三人稱單數，主詞 you 不能用；Are 是 be 動詞，後面接不了原形動詞 help。"
       },
       {
         "q": "He ___ swim when he was five years old.",
@@ -941,7 +941,7 @@
         "explanation": "助動詞的否定是在它後面加 not，而且後面的動詞維持原形。not 不能放在 may 前面；comes 多加了 s；doesn't 是給一般動詞用的。"
       },
       {
-        "q": "___ I ask you a question?",
+        "q": "（客氣地徵求對方同意）___ I ask you a question?",
         "options": [
           "Do",
           "Am",
@@ -949,7 +949,7 @@
           "Will"
         ],
         "answer": 2,
-        "explanation": "客氣地問對方可不可以，用 May 開頭。Do 是給一般動詞用的；Am 後面接不了原形動詞 ask；Will I ask 變成在問自己未來會不會問，語意不對。"
+        "explanation": "客氣地問對方可不可以，用 May 開頭。Do I ask 是在問自己平常會不會問，不是徵求同意；Am 後面接不了原形動詞 ask；Will I ask 變成在問自己未來會不會問，語意不對。"
       },
       {
         "q": "I'm not sure yet, but I ___ go to the party tonight.",
@@ -1115,7 +1115,7 @@
           "Have"
         ],
         "answer": 1,
-        "explanation": "have to 的問句要找 do 幫忙，主詞 I 配 Do。Does 是給第三人稱單數的；Am 後面接不了 have to；Have I to sign 是很舊的說法，現在不這樣講。"
+        "explanation": "have to 的問句要找 do 幫忙，主詞 I 配 Do。Does 是給第三人稱單數的，I 不能配；Am 後面接不了 have to；填 Have 會變成 Have I have to sign，同一句出現兩個 have，不成句。"
       },
       {
         "q": "「我昨天必須早起。」哪一句對？",
@@ -1126,7 +1126,7 @@
           "I musted get up early yesterday."
         ],
         "answer": 0,
-        "explanation": "must 沒有過去式，講以前非做不可的事要用 had to。must 本身只能講現在；must to 中間多了 to；musted 這個變化不存在。"
+        "explanation": "must 沒有過去式，不能拿來講已經過去的事，講以前非做不可的事要用 had to。I must get up early yesterday 用 must 配 yesterday，時間對不上；must to 中間多了 to；musted 這個變化不存在。"
       },
       {
         "q": "He ___ to finish the report before Friday.",
@@ -1148,7 +1148,7 @@
           "I must call her."
         ],
         "answer": 2,
-        "explanation": "he 是第三人稱單數，要寫 He has to go now。have to 的 have 跟一般動詞一樣會變化，這一點跟 must 完全不同。"
+        "explanation": "he 是第三人稱單數，要寫 He has to go now。have to 的 have 跟一般動詞一樣會變化，這一點跟 must 完全不同。其他三句都正確：must 後面接原形 be、call，主詞是誰都不變；they 配 have to 沒有問題。"
       },
       {
         "q": "「他明天必須加班，因為班表早就排好了。」最貼切的說法是？",
@@ -1336,7 +1336,7 @@
           "She doesn't have to stay."
         ],
         "answer": 1,
-        "explanation": "must 和 mustn't 後面一律接動詞原形，中間不加 to，要寫 He mustn't go。have to 後面才有 to，兩套規則不要混在一起。"
+        "explanation": "must 和 mustn't 後面一律接動詞原形，中間不加 to，要寫 He mustn't go。have to 後面才有 to，兩套規則不要混在一起。其他三句都正確：mustn't park 直接接原形；we 配 don't have to、she 配 doesn't have to，都有跟著主詞變。"
       }
     ]
   },
@@ -1441,24 +1441,24 @@
       {
         "q": "___ I open the window?",
         "options": [
-          "Do",
+          "Have",
           "Should",
           "Am",
           "Does"
         ],
         "answer": 1,
-        "explanation": "問對方意見用 Should 開頭，把助動詞搬到主詞前面。Do 和 Does 是給一般動詞用的；Am 後面接不了原形動詞 open。"
+        "explanation": "問對方的意見、請對方給建議，用 Should 開頭，把助動詞搬到主詞前面，後面接原形 open。Have 當助動詞時後面要接過去分詞，接不了原形 open；Am 後面也接不了原形動詞；Does 是給第三人稱單數用的，主詞 I 不能配。"
       },
       {
         "q": "I'm always tired in class. Maybe I ___ go to bed earlier.",
         "options": [
           "must",
           "can't",
-          "will",
+          "shouldn't",
           "should"
         ],
         "answer": 3,
-        "explanation": "前面的 Maybe 已經把語氣放軟了，後面接 should 給自己一個建議最合適。must 是非做不可，語氣太重；can't 變成不能早睡；will 只是講未來會這樣做，不是建議。"
+        "explanation": "前面的 Maybe 已經把語氣放軟了，後面接 should 給自己一個建議最合適。must 是非做不可，跟 Maybe 放軟的語氣互相衝突；can't 變成不能早睡，shouldn't 變成不該早睡，都跟上課總是很累的前半句接不起來。"
       },
       {
         "q": "老闆對員工說「這份報告星期五以前一定要交」，用哪個字最合適？",
@@ -1480,7 +1480,7 @@
           "Should we wait here?"
         ],
         "answer": 2,
-        "explanation": "should 後面一律接動詞原形，主詞是 he 也不會讓動詞加 s，要寫 He should go now。助動詞已經扛下了配合主詞的工作，動詞就不必再變。"
+        "explanation": "should 後面一律接動詞原形，主詞是 he 也不會讓動詞加 s，要寫 He should go now。助動詞已經扛下了配合主詞的工作，動詞就不必再變。其他三句都正確：should rest 接原形；否定把 not 放在 should 後面；問句把 Should 搬到主詞前面。"
       },
       {
         "q": "It's only a ten-minute walk, so we ___ get there before noon.",
@@ -1502,7 +1502,7 @@
           "could、might"
         ],
         "answer": 1,
-        "explanation": "第一句是給對方許可，用 can；第二句是給建議，用 should。must 是規定對方一定要帶，語氣太重；might 只是說可能會帶，不是在建議。"
+        "explanation": "第一句是給對方許可，用 can；第二句是給建議，用 should，所以是 can、should。should、can 把兩個字的位置放反了；can、must 的 must 是規定對方一定要帶，語氣太重；could、might 的 could 雖然也能表示可以，但 might 只是說可能會帶，不是在建議。"
       }
     ]
   },
@@ -1646,7 +1646,7 @@
           "would like、would like"
         ],
         "answer": 0,
-        "explanation": "前半講的是平常就喜歡巧克力，用 like；後半有 right now，講的是此刻想要水果，用 would like。兩個位置對調就變成現在想要巧克力、平常喜歡水果，跟句意不合。"
+        "explanation": "前半講的是平常就喜歡巧克力，用 like；後半有 right now，講的是此刻想要水果，用 would like。would like、like 把兩個位置對調，變成現在想要巧克力、平常喜歡水果，跟 right now 對不上；like、like 的後半用 like 講此刻想要，like 表達不出「現在想要」；would like、would like 的前半變成現在也想要巧克力，跟 but 前後的對比接不起來。"
       },
       {
         "q": "下面哪一句有錯？",
@@ -1787,15 +1787,15 @@
         "explanation": "How about 後面接的是名詞的位置，動詞要先加 ing 變成 watching。watch 和 to watch 都站不住；watches 是配合第三人稱單數的形式。"
       },
       {
-        "q": "「我們今天不要加班了吧。」哪一句對？",
+        "q": "「我們今天不要加班了吧。」標準的寫法是哪一句？",
         "options": [
           "Let's don't work late today.",
           "Let's not work late today.",
-          "Don't let's work late today.",
+          "Let's not working late today.",
           "Let's not to work late today."
         ],
         "answer": 1,
-        "explanation": "Let's 的否定是在後面加 not，再接動詞原形。Let's don't 是很常見的錯句；Don't let's 的順序不對；not 後面也不加 to。"
+        "explanation": "Let's 的否定標準寫法是 Let's not，後面直接接動詞原形。Let's don't 只在美式口語偶爾聽到，不是標準寫法；Let's not working 在 not 後面多加了 ing；Let's not to 在 not 後面多加了 to。"
       },
       {
         "q": "下面哪一句是在提議一起做，不是在叫人做？",
@@ -1839,7 +1839,7 @@
           "Let's、Shall we"
         ],
         "answer": 0,
-        "explanation": "第一句是問對方要不要，焦點在對方身上，用 Would you like to；第二句是提議大家一起，用 Let's。兩個對調就變成邀請跟提議互換，語氣整個跑掉。"
+        "explanation": "第一句是問對方要不要加入，焦點在對方身上，用 Would you like to；第二句是提議大家一起做，用 Let's。第二組把兩個對調了，邀請和提議互換；第三組的 Shall we 是「我們一起……好嗎」，問的是大家要不要一起做，不是問對方要不要加入我們，後面的 Would you like to 也不是提議大家一起；第四組第一句用 Let's，變成直接提議，沒有在問對方要不要。"
       }
     ]
   },
@@ -1967,24 +1967,24 @@
       {
         "q": "You ___ take an umbrella. It might rain later.",
         "options": [
-          "must",
+          "mustn't",
           "can't",
           "would like",
           "should"
         ],
         "answer": 3,
-        "explanation": "後面說可能會下雨，前面是給對方一個建議，用 should。must 把建議變成規定，語氣太重；can't 是不能帶；would like 講的是說話的人自己想要什麼。"
+        "explanation": "後面說可能會下雨，前面是給對方一個建議，用 should。mustn't 是不准帶，跟可能下雨的建議對不上；can't 是不能帶；would like 後面少了 to，而且講的是想要什麼，不是建議。"
       },
       {
-        "q": "Everyone ___ show a ticket at the gate.",
+        "q": "Everyone ___ show a ticket at the gate. No one can get in without one.",
         "options": [
           "must",
-          "should",
+          "may",
           "might",
           "could"
         ],
         "answer": 0,
-        "explanation": "入口驗票是規定，用 must。should 只是建議，不驗也沒關係；might 是可能會出示；could 是有辦法出示，強度都不夠。"
+        "explanation": "入口驗票是規定，沒有票就不能進，用表示一定要的 must。may 和 might 講的是許可或可能，could 是有辦法出示，都不是規定的語氣。"
       },
       {
         "q": "___ you play the guitar when you were in high school?",
@@ -2028,7 +2028,7 @@
           "She has to leave early."
         ],
         "answer": 2,
-        "explanation": "助動詞後面一律接動詞原形，主詞是 she 也不會讓動詞加 s，要寫 She can play the piano。有了助動詞，配合主詞的工作就由它扛，動詞不必再變。"
+        "explanation": "助動詞後面一律接動詞原形，主詞是 she 也不會讓動詞加 s，要寫 She can play the piano。有了助動詞，配合主詞的工作就由它扛，動詞不必再變。其他三句都對：should 和 might 後面接原形 practice、be；has to 是 have to 配合主詞 she 的形式，後面一樣接原形 leave。"
       },
       {
         "q": "圖書館貼著「禁止飲食」，最接近的英文說法是？",
@@ -2050,7 +2050,7 @@
           "I should be late tomorrow, but I may be there."
         ],
         "answer": 0,
-        "explanation": "前半沒有把握用 might，後半很確定用 will，強度剛好一弱一強。其他三句都把弱的擺在確定的位置，或把 must 用在猜測上，語氣全反了。"
+        "explanation": "前半沒有把握用 might，後半很確定用 will，強度剛好一弱一強。I will be late tomorrow, but I might be there 把兩邊對調，變成確定會遲到、卻不確定會不會到；I must be late tomorrow 聽起來像非遲到不可，後半的 can 講的是能力，都不是「可能」和「一定會」；I should be late tomorrow 是照理說會遲到，後半的 may 只是可能會到，沒有「一定會到」的意思。"
       }
     ]
   }

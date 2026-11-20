@@ -144,7 +144,7 @@
       {
         "q": "What is the article mainly about?",
         "options": [
-          "A hotel that rebuilt its walls to block street noise",
+          "A hotel that rebuilt its walls to block train and street noise",
           "A cheap plan that turned quiet into a selling point for a hotel",
           "A new city law about noise in Taipei hotels",
           "A manager who left her job for a quieter hotel chain"
@@ -189,8 +189,8 @@
         "q": "What can we infer about the three other branches?",
         "options": [
           "They believe the same idea can work in their own hotels",
-          "They plan to close their family floors this year",
-          "They have much larger budgets than the Merrow Hotel",
+          "They plan to close all of their family floors this year",
+          "They have much larger budgets than the Merrow Hotel does",
           "They now charge lower prices than before"
         ],
         "answer": 0,
@@ -337,7 +337,7 @@
       {
         "q": "What is the main point of the article?",
         "options": [
-          "Office workers in Taipei like rice boxes more than salad",
+          "Office workers in Taipei like rice boxes much more than they like salad",
           "Growing lettuce at home costs less than buying it",
           "A startup found its real market after it launched a salad machine",
           "Vending machines are replacing office kitchens all over Taiwan"
@@ -370,10 +370,10 @@
       {
         "q": "Why did office managers want the machines?",
         "options": [
-          "Because lettuce was cheaper than lunch boxes",
+          "Because the lettuce was much cheaper than buying lunch boxes every day",
           "Because the machines made the office look attractive to job seekers",
-          "Because workers kept complaining about the empty fridge",
-          "Because the law required fresh food in every office"
+          "Because workers kept complaining about the empty fridge at night",
+          "Because the city law required fresh food in every office building"
         ],
         "answer": 1,
         "explanation": "推論題。定位第四段：機器幫公司招募年輕工程師、在辦公室照片裡看起來很新潮，可推論主管看中的是對求職者的吸引力，而不是沙拉本身。"

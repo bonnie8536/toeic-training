@@ -69,9 +69,9 @@
       {
         "num": 3,
         "type": "文法",
-        "options": ["serving", "will serve", "have served", "will be served"],
+        "options": ["serving", "will also serve", "have served", "will be served"],
         "answer": 3,
-        "explanation": "主詞 cold drinks 是「被供應」的一方，而且活動還沒舉行，所以要用未來式的被動語態 will be served。serving 是現在分詞，不能單獨當句子的主要動詞；will serve 是主動語態，會變成「冷飲招待別人」，不合邏輯；have served 是現在完成式主動，時態與語態都不對。"
+        "explanation": "主詞 cold drinks 是「被供應」的一方，而且活動還沒舉行，所以要用未來式的被動語態 will be served。serving 是現在分詞，不能單獨當句子的主要動詞；will also serve 是主動語態，會變成「冷飲招待別人」，不合邏輯；have served 是現在完成式主動，時態與語態都不對。"
       },
       {
         "num": 4,
@@ -87,7 +87,7 @@
     "id": "p6-b8-3",
     "passageType": "email",
     "title": "Invitation to Complete a Customer Survey",
-    "passage": "To: Marcus Delaney, m.delaney@brightpath.com\nFrom: Customer Care Team, care@northgateappliances.com\nDate: 18 October\nSubject: A few minutes of your time\n\nDear Mr. Delaney,\n\nThank you for buying a Northgate dishwasher last month. We would like to invite you to complete a short survey about your experience. The survey has twelve questions and takes about five minutes {{1}}. {{2}} Your answers will be kept private and will be used only to improve our products and service. The survey link, along with a set of simple instructions, {{3}} at the bottom of this message. As a thank-you, all customers who take part will {{4}} a coupon worth ten dollars off their next order.\n\nSincerely,\n\nHelena Ford\nCustomer Care Manager",
+    "passage": "To: Marcus Delaney, m.delaney@example.com\nFrom: Customer Care Team, care@example.org\nDate: 18 October\nSubject: A few minutes of your time\n\nDear Mr. Delaney,\n\nThank you for buying a Northgate dishwasher last month. We would like to invite you to complete a short survey about your experience. The survey has twelve questions and takes about five minutes {{1}}. {{2}} Your answers will be kept private and will be used only to improve our products and service. The survey link, along with a set of simple instructions, {{3}} at the bottom of this message. As a thank-you, all customers who take part will {{4}} a coupon worth ten dollars off their next order.\n\nSincerely,\n\nHelena Ford\nCustomer Care Manager",
     "questions": [
       {
         "num": 1,
@@ -123,7 +123,7 @@
         "explanation": "空格後面是 a coupon，需要一個表示「拿到、獲得」的及物動詞，receive 正好說明參加問卷的顧客可以得到折價券。remind 是提醒，用法為 remind somebody of something，受詞必須是人；reserve 是預訂，折價券是回饋而非預訂項目；remove 是移除，語意正好相反。"
       }
     ],
-    "translation": "收件者：Marcus Delaney，m.delaney@brightpath.com\n寄件者：客戶服務團隊，care@northgateappliances.com\n日期：10 月 18 日\n主旨：耽誤您幾分鐘\n\n親愛的 Delaney 先生：\n\n感謝您上個月選購 Northgate 洗碗機。我們想邀請您填寫一份簡短問卷，分享您的使用經驗。問卷共十二題，大約五分鐘即可完成。問卷最後也留有欄位，供您填寫任何想補充的意見。您的回答將予以保密，且僅用於改善我們的產品與服務。問卷連結與簡單的填答說明，都放在這封信的最下方。為表達謝意，每位參與填答的顧客都將獲得一張折價券，下次訂購可折抵十美元。\n\n敬祝 順心\n\n客戶服務經理\nHelena Ford"
+    "translation": "收件者：Marcus Delaney，m.delaney@example.com\n寄件者：客戶服務團隊，care@example.org\n日期：10 月 18 日\n主旨：耽誤您幾分鐘\n\n親愛的 Delaney 先生：\n\n感謝您上個月選購 Northgate 洗碗機。我們想邀請您填寫一份簡短問卷，分享您的使用經驗。問卷共十二題，大約五分鐘即可完成。問卷最後也留有欄位，供您填寫任何想補充的意見。您的回答將予以保密，且僅用於改善我們的產品與服務。問卷連結與簡單的填答說明，都放在這封信的最下方。為表達謝意，每位參與填答的顧客都將獲得一張折價券，下次訂購可折抵十美元。\n\n敬祝 順心\n\n客戶服務經理\nHelena Ford"
   },
   {
     "id": "p6-b8-4",

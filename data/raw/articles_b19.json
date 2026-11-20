@@ -176,57 +176,57 @@
       {
         "q": "What is the main idea of the article?",
         "options": [
-          "Cities should replace air conditioning with trees.",
-          "Trees grow faster in cities than in the countryside.",
+          "Cities should replace air conditioning with trees, since trees cool streets better and cost almost nothing to keep.",
+          "Trees grow faster in cities than in the countryside, so planners can plant them and then leave them alone.",
           "Cities are planting trees because trees cool streets and improve daily life, although the work is long and costly.",
-          "Most city trees die because planners always choose the wrong species."
+          "Most city trees die because planners always choose the wrong species, so cities should stop planting trees."
         ],
         "answer": 2,
-        "explanation": "主旨題。第一段點出熱島與種樹，中間段落談降溫、空氣、心理效益，第五、六段談成本與選種，第七段談公平，C 完整涵蓋全文走向。"
+        "explanation": "主旨題。第一段點出熱島效應與種樹，第二至四段談降溫、空氣、排水與心理上的好處，第五、六段談長年維護與選種的成本，第七段談公平，C 完整涵蓋全文走向。A：第五段說樹要長年花錢照顧，文中也沒有主張用樹取代冷氣。B：文中沒有比較城市與鄉村的生長速度，第五段還說新樹頭幾個夏天都要澆水。D：第六段只說選錯樹會造成損害，所以現在刻意混種，沒有說多數樹因此死掉或該停止種樹。"
       },
       {
         "q": "According to the article, how do leaves help cool the air around them?",
         "options": [
           "Water from the leaves turns into vapor and carries heat away.",
-          "Leaves push hot air upward into the sky.",
-          "Leaves store rainwater inside the trunk overnight.",
-          "Leaves reflect heat back down onto the pavement."
+          "Leaves push the hot air upward and away into the open sky.",
+          "Leaves store rainwater inside the trunk to keep the roots cool.",
+          "Leaves reflect the heat back down onto the hot pavement below."
         ],
         "answer": 0,
-        "explanation": "細節題。第二段說明第二種降溫方式：葉子散出水分，水變成水蒸氣時帶走熱量。"
+        "explanation": "細節題。第二段說明第二種降溫方式：Leaves give off water, and as that water turns into vapor it takes heat with it，葉子散出水分，水變成水蒸氣時帶走熱量，故選 A。B：文中沒有說葉子把熱空氣往上推。C：第三段說留住雨水的是樹根與土壤，作用是減少淹水。D：第二段說樹葉擋住陽光形成樹蔭，沒有說把熱反射回路面。"
       },
       {
         "q": "Why do planners now put several different kinds of trees on the same street?",
         "options": [
-          "Because mixed trees grow faster than a single kind.",
-          "Because residents prefer streets with many colors.",
-          "Because different trees need much less water.",
+          "Because mixed trees grow faster and need far less care than one kind.",
+          "Because residents have asked for streets with many colors and shapes.",
+          "Because one kind of tree would block too much sunlight from the shops.",
           "Because one disease or insect could destroy a whole street of identical trees."
         ],
         "answer": 3,
-        "explanation": "細節題。第六段最後一句：若整條街的樹都相同，一種病害或蟲害就可能讓它們全數消失。"
+        "explanation": "細節題。第六段末句 Planners now tend to mix many species on purpose, since a single disease or insect can wipe out an entire street if every tree on it is the same，since 後面就是混種的原因，故選 D。A：文中沒有說混種的樹長得較快或較好照顧。B：文中沒有提到居民要求多種顏色。C：文中沒有說單一樹種會擋住店面的陽光；樹根掀起人行道、侵入水管是同段講選錯樹的後果，不是混種的理由。"
       },
       {
         "q": "What does the article suggest about a city that pays for planting but not for the years that follow?",
         "options": [
-          "It will still enjoy exactly the same benefits.",
+          "It will still enjoy exactly the same benefits as a city that pays for care.",
           "It risks losing many young trees and wasting the money it has already spent.",
-          "It will be forced to plant fewer species.",
-          "It will get cleaner air but hotter streets."
+          "It will be forced to plant fewer species and to cut down its older trees.",
+          "It will get cleaner air, but its streets will become hotter than before."
         ],
         "answer": 1,
-        "explanation": "推論題。第五段說新樹頭幾個夏天需要澆水、第二年死掉等於把錢丟掉，且預算要涵蓋數年維護；由此可推論只付種植費的城市會白花錢。"
+        "explanation": "推論題。第五段說新樹頭幾個夏天需要澆水，第二年死掉的樹等於把錢丟掉，所以預算要涵蓋多年維護；由此可推論只付種植費的城市可能失去新樹、白花錢，故選 B。A：樹可能死掉，不會有同樣的好處。C：文中沒有把維護經費和樹種數量或砍老樹連在一起。D：樹死了就得不到空氣與樹蔭的好處，文中也沒有說街道會比原本更熱。"
       },
       {
         "q": "Why is tree planting now discussed as a question of fairness?",
         "options": [
           "Because the hottest and barest streets are often home to people who can least afford air conditioning.",
-          "Because every neighborhood is required by law to plant the same number of trees.",
-          "Because trees are shared property in most cities.",
-          "Because richer neighborhoods pay higher taxes for public parks."
+          "Because every neighborhood is required by law to plant the same number of trees each year.",
+          "Because trees on city streets are shared property that belongs to every single resident.",
+          "Because richer neighborhoods pay much higher taxes for public parks and for street trees."
         ],
         "answer": 0,
-        "explanation": "細節題。第七段指出較富裕社區樹蔭較多，最熱最光禿的街道往往住著最負擔不起冷氣的人。"
+        "explanation": "細節題。第七段說較富裕的社區樹蔭較多，最熱、最光禿的街道往往住著最負擔不起冷氣的人，接著 That is why 說明種樹因此被當成公平問題，故選 A。B：文中沒有法律規定各社區要種一樣多的樹。C：文中沒有說街樹是全體居民的共有財產。D：第七段只說富裕社區樹蔭較多，沒有談稅金或公園經費。"
       }
     ],
     "image": "img/articles/art-19a.jpg"
@@ -415,24 +415,24 @@
       {
         "q": "What is the main point of the article?",
         "options": [
-          "Coffee is the healthiest drink available to most adults.",
+          "Coffee is the healthiest drink available to most adults, and it gives the brain extra energy.",
           "Caffeine works by blocking a sleepy signal in the brain, and its effects differ from person to person.",
-          "People should never drink anything containing caffeine after lunch.",
-          "Energy drinks are far more powerful than coffee."
+          "People should never drink anything containing caffeine after lunch, because it keeps them awake.",
+          "Energy drinks are far more powerful than coffee, and they also last much longer in the body."
         ],
         "answer": 1,
-        "explanation": "主旨題。第二段說明咖啡因擋住想睡訊號的機制，第四、五段說明個別差異的原因，B 同時涵蓋這兩條主線。"
+        "explanation": "主旨題。第二段說明咖啡因擋住想睡訊號的機制，第三段說疲倦只是被延後，第四、五段說明為什麼每個人反應不同，B 同時涵蓋這兩條主線。A：第六段只說適量對多數健康成人似乎沒問題，第二段更明說咖啡因不會給你能量。C：第六段只說對特別敏感的人，午餐後的咖啡到睡前還在作用，沒有要所有人都不喝。D：第一段只說能量飲料也含咖啡因，沒有比較強弱。"
       },
       {
         "q": "According to the article, what happens when caffeine wears off?",
         "options": [
-          "The brain stops producing the sleepy chemical.",
-          "The drinker feels hungry instead of tired.",
-          "The effect slowly changes into a feeling of calm.",
+          "The brain stops producing the sleepy chemical for the rest of the day.",
+          "The drinker feels hungry and a little dizzy instead of tired.",
+          "The effect slowly fades into a steady feeling of calm and rest.",
           "The tiredness that built up in the meantime arrives all at once."
         ],
         "answer": 3,
-        "explanation": "細節題。第三段：咖啡因只是延後消息，作用消退時累積的睡眠壓力會一次湧上來。"
+        "explanation": "細節題。第三段 When the caffeine finally wears off, all the sleep pressure that has built up in the meantime arrives at once，咖啡因消退時，這段時間累積的睡眠壓力會一次湧上來，故選 D。A：第二段說想睡的物質在清醒時持續累積，文中沒有說大腦停止製造。B：文中沒有提到飢餓或頭暈。C：第三段說午後的低潮可能比單純疲倦更糟，不是變得平靜。"
       },
       {
         "q": "Why does the same cup of coffee do less for a daily drinker than it once did?",
@@ -451,10 +451,10 @@
           "drinks far more coffee than the average person",
           "produces very little of the sleepy chemical",
           "breaks caffeine down slowly",
-          "has never tasted coffee before"
+          "clears caffeine from the body very quickly"
         ],
         "answer": 2,
-        "explanation": "推論題。第四段提到代謝慢的人下午一份劑量就會半夜睡不著，第六段又說咖啡因會在體內停留數小時；合起來可推得 C。"
+        "explanation": "推論題。第四段說肝臟分解咖啡因的速度因人而異，代謝慢的人下午一份劑量就會讓他們半夜盯著天花板睡不著；第六段也說咖啡因會在體內停留好幾個小時，午餐後的一杯到就寢時仍在作用，合起來可推得 C。A：第五段說的是天天喝咖啡的長期習慣會產生耐受性，同一杯的效果變小，文中沒有說喝的份量多就會睡不著，無法推出 A。B：文中沒有提到每個人產生的想睡物質有多有少，第四段把個人差異歸到肝臟分解咖啡因的速度，B 沒有文本依據。D：第四段說代謝快的人連晚上喝濃縮咖啡都睡得好，與題目情況相反。"
       },
       {
         "q": "What does the writer mean by saying that the bill always arrives?",

@@ -65,13 +65,13 @@
         "num": 3,
         "type": "句子插入",
         "options": [
-          "We are still waiting for the branch manager to approve the trip.",
-          "The hotel is a ten-minute walk from the branch office, so you will not need ground transport during the week.",
+          "We are still waiting for the branch manager to approve the trip, which may take days.",
+          "The hotel is only a ten-minute walk from the branch office.",
           "Please arrange your own accommodation once you arrive in Osaka.",
           "Unfortunately, no flights were available on the dates you requested."
         ],
         "answer": 1,
-        "explanation": "空格前一句提到司機會送他到北濱花園飯店，選項 B 接著補充飯店與分公司只距十分鐘路程、因此這一週不必另外安排地面交通，緊扣前句的飯店資訊，是唯一自然的銜接。選項 A 說還在等分公司主管核准出差，與信件開頭「我已敲定行程」矛盾；選項 C 要收件者自行訂住宿，與飯店已訂妥矛盾；選項 D 說沒有可用班機，與前面已明確列出去回程時間互相牴觸。"
+        "explanation": "空格前一句提到司機會送他到北濱花園飯店，選項 B 接著補充飯店離分公司步行只要十分鐘，緊扣前句的飯店資訊，是唯一自然的銜接。選項 A 說還在等分公司主管核准出差，與信件開頭「我已敲定行程」矛盾；選項 C 要收件者自行訂住宿，與飯店已訂妥矛盾；選項 D 說沒有可用班機，與前面已明確列出去回程時間互相牴觸。"
       },
       {
         "num": 4,
@@ -81,7 +81,7 @@
         "explanation": "within two weeks of your return 意為「返國後兩週內」，within 表示在某期限之內完成，是說明報帳期限的固定用法。during 後面須接一段特定期間（如 during the trip），不能說 during two weeks of...；among 用於三者以上之中；throughout 強調「整段期間自始至終」，與「在期限內送出」的語意不合。"
       }
     ],
-    "translation": "收件者：Daniel Ortega，產品工程部\n寄件者：Priya Raman，差旅協調專員\n主旨：3 月 17 至 21 日大阪據點出差\n日期：3 月 3 日\n\nDaniel 您好：\n\n我已經敲定您即將前往大阪分公司的差旅安排。您的班機於 3 月 17 日上午 8 點 40 分自第二航廈起飛，回程班機則於 3 月 21 日晚上 9 點 15 分抵達。一位名叫佐藤健二的司機會在入境大廳接您，並送您到北濱花園飯店。飯店距離分公司步行只需十分鐘，因此您這一週不需要另外安排地面交通。請注意，餐費收據必須在您返國後兩週內送出；財務部不會受理逾期的請款。若行程確認無誤，直接回覆這封信即可，我會著手開票。\n\n祝好\nPriya"
+    "translation": "收件者：Daniel Ortega，產品工程部\n寄件者：Priya Raman，差旅協調專員\n主旨：3 月 17 至 21 日大阪據點出差\n日期：3 月 3 日\n\nDaniel 您好：\n\n我已經敲定您即將前往大阪分公司的差旅安排。您的班機於 3 月 17 日上午 8 點 40 分自第二航廈起飛，回程班機則於 3 月 21 日晚上 9 點 15 分抵達。一位名叫佐藤健二的司機會在入境大廳接您，並送您到北濱花園飯店。飯店距離分公司步行只需十分鐘。請注意，餐費收據必須在您返國後兩週內送出；財務部不會受理逾期的請款。若行程確認無誤，直接回覆這封信即可，我會著手開票。\n\n祝好\nPriya"
   },
   {
     "id": "p6-b5-3",
@@ -100,13 +100,13 @@
         "num": 2,
         "type": "句子插入",
         "options": [
-          "The aim is to hold inventory within a short drive of the customers who order it.",
+          "The aim is to keep stock close to the customers who order it.",
           "Port authorities have consequently lowered their handling charges.",
           "Most of these operators began as family-owned trucking companies.",
           "Frozen food must be kept at eighteen degrees below zero."
         ],
         "answer": 0,
-        "explanation": "空格前說明業者改在住宅區周邊開設小型據點，空格後引用分析師的話，指配送時間平均縮短四小時。選項 A 點出這麼做的目的是把庫存放在離下單顧客車程很短的地方，既解釋前句的做法，也讓後句的成效有了因果依據。選項 B 說港務單位因此調降裝卸費，前文推不出這個結論；選項 C 談業者的家族貨運出身，與段落論述無關；選項 D 只是冷凍溫度的常識，未承接前後文。"
+        "explanation": "空格前說明業者改在住宅區周邊開設小型據點，空格後引用分析師的話，指配送時間平均縮短四小時。選項 A 點出這麼做的目的是把庫存放在靠近下單顧客的地方，既解釋前句的做法，也讓後句的成效有了因果依據。選項 B 說港務單位因此調降裝卸費，前文推不出這個結論；選項 C 談業者的家族貨運出身，與段落論述無關；選項 D 只是冷凍溫度的常識，未承接前後文。"
       },
       {
         "num": 3,
@@ -145,7 +145,7 @@
           "All claims filed in September have already been reimbursed.",
           "The current system will remain in use until the end of the fiscal year.",
           "Please contact the payroll office if your bank details have changed.",
-          "The work has been scheduled for a weekend so that disruption to daily operations is kept to a minimum."
+          "The work is scheduled for a weekend to minimize disruption to daily operations."
         ],
         "answer": 3,
         "explanation": "空格前說明停機期間無法送出或審核請款單，空格後轉而介紹升級完成後的新功能。選項 D 說明把作業排在週末是為了把對日常營運的干擾降到最低，既回應前句造成的不便，也讓語氣自然轉向正面。選項 A 談九月請款已撥付，與升級無關；選項 B 說現行系統會沿用到會計年度結束，與整份備忘錄的升級安排矛盾；選項 C 要同仁聯絡薪資部門更新帳戶資料，屬於另一件事。"
@@ -185,9 +185,9 @@
         "type": "句子插入",
         "options": [
           "Our head office relocated to Fairview Business Park last spring.",
-          "Unfortunately, we no longer offer courses in the manufacturing sector.",
-          "Enrollment figures have fallen steadily since our platform was launched.",
-          "The Halden Institute, meanwhile, is widely respected for its research on workplace safety."
+          "Unfortunately, we no longer offer any courses in the manufacturing sector.",
+          "Enrollment figures have fallen steadily ever since our platform was launched.",
+          "The Halden Institute, meanwhile, is widely respected for its workplace safety research."
         ],
         "answer": 3,
         "explanation": "空格前介紹自家公司的課程實績與平台規模，空格後說「把貴院的研究與本公司平台結合」。選項 D 先點出 Halden 研究院在職場安全研究上的聲譽，補上合作對象的長處，後句的 pairing your research with our platform 才有兩邊可以配對，銜接最完整。選項 A 談自家總部搬遷，與提案無關；選項 B 說不再提供製造業課程，反而削弱自己的賣點；選項 C 說招生人數持續下滑，與前一句「每月約四萬名活躍學員」自相矛盾。"

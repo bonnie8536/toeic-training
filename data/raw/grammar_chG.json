@@ -118,13 +118,13 @@
       {
         "q": "I usually read ___ night.",
         "options": [
-          "in the",
+          "on the",
           "at",
           "on",
           "in"
         ],
         "answer": 1,
-        "explanation": "早上是 in the morning，晚上卻是 at night，這一組不照規則走，硬記就好。in the night 就是照 in the morning 推出來的錯。"
+        "explanation": "早上是 in the morning，晚上卻是 at night，這一組不照規則走，硬記就好。on the night 要接特定的某一晚（on the night of the party），不能泛指每天晚上；in 單獨放在 night 前面也不成立。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -146,7 +146,7 @@
           "from"
         ],
         "answer": 0,
-        "explanation": "年份範圍大，用 in。from 是講起點，要配 to 一起用，像 from 2021 to 2023，單獨放在這裡意思不完整。"
+        "explanation": "年份範圍大，用 in。from 是講起點，但 started 本身已經有起點的意思，後面再放 from 2021 不自然；on 留給某一天，at 留給某個時刻。"
       },
       {
         "q": "The class starts ___ 8:30 ___ Monday.",
@@ -314,7 +314,7 @@
           "to"
         ],
         "answer": 1,
-        "explanation": "計程車空間小、人是坐進去的，用 in the taxi。跟上一題的 on the train 剛好相反，大車配 on、小車配 in。"
+        "explanation": "計程車空間小、人是坐進去的，用 in the taxi。大車配 on（像 on the train），小車配 in。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -437,10 +437,10 @@
           "between"
         ],
         "answer": 0,
-        "explanation": "躲在桌子底下，用 under。to 和 from 是講方向的，between 要夾在兩樣東西中間，而且後面一定要有 and。"
+        "explanation": "躲在桌子底下，用 under。to 和 from 是講方向的，between 要夾在兩樣（或一群）東西中間，這裡只有一張桌子，放不進去。"
       },
       {
-        "q": "This package is ___ my sister in Canada.",
+        "q": "I received this package ___ my sister in Canada.",
         "options": [
           "to",
           "under",
@@ -453,27 +453,27 @@
       {
         "q": "The bookstore is ___ the coffee shop and the bank.",
         "options": [
-          "next to",
+          "to",
           "between",
           "under",
           "from"
         ],
         "answer": 1,
-        "explanation": "夾在兩家店中間，用 between，而且中間那個 and 不能少。next to 只講緊鄰著一邊，後面不會接兩個地方。"
+        "explanation": "夾在兩家店中間，用 between，而且中間那個 and 不能少。to 單獨放在這裡不能表示位置關係；under 是在下面；from 是從哪裡來，都對不上。"
       },
       {
         "q": "The convenience store is ___ my apartment.",
         "options": [
           "between",
-          "under",
+          "to",
           "from",
           "next to"
         ],
         "answer": 3,
-        "explanation": "就在我公寓旁邊，用 next to，兩個字要一起寫。只寫 next my apartment 少了 to，是很常見的錯。"
+        "explanation": "就在我公寓旁邊，用 next to，兩個字要一起寫。只寫 next my apartment 少了 to 是很常見的錯；to 單獨放在這裡看不出位置關係；between 要接兩個地點；from 是從哪裡來，都對不上。"
       },
       {
-        "q": "We flew ___ Taipei ___ Tokyo.",
+        "q": "Our trip started in Taipei and ended in Tokyo. We flew ___ Taipei ___ Tokyo.",
         "options": [
           "to / from",
           "from / at",
@@ -671,21 +671,21 @@
           "with",
           "by",
           "for",
-          "in"
+          "at"
         ],
         "answer": 1,
-        "explanation": "用電子郵件寄是一種方式，用 by，中間也不放冠詞。with 後面通常是看得到、拿得到的工具。"
+        "explanation": "用電子郵件寄是一種方式，用 by，中間也不放冠詞。with 後面通常是看得到、拿得到的工具；for 後面接目的或對象（for you、for the meeting），不能表示用什麼方式寄送；at 後面接地點或時間點，不是方式。"
       },
       {
         "q": "We stayed in Tainan ___ three days.",
         "options": [
           "in",
           "at",
-          "about",
+          "with",
           "for"
         ],
         "answer": 3,
-        "explanation": "講持續多久用 for，後面接一段時間。in three days 的意思是「三天後」，講的是時間點不是長度。"
+        "explanation": "講持續多久用 for，後面接一段時間。in three days 的意思是「三天後」，講的是時間點不是長度；at 用在時間點或地點，不接一段時間；with 後面接的是伴隨的人或東西，不是時間長度。"
       },
       {
         "q": "He fixed the door ___ a hammer, and then he sent me the photos ___ email.",
@@ -843,7 +843,7 @@
           "learns"
         ],
         "answer": 1,
-        "explanation": "in 是介系詞，後面用動名詞 learning。interested to learn 是台灣學生很常寫的組合，但 in 後面只能接動名詞。"
+        "explanation": "in 是介系詞，後面的動作要用動名詞 learning。learn 是原形動詞，learns 是第三人稱單數的動詞形，to learn 是不定詞，三個都不能直接放在介系詞後面。interested to learn 本身是正確的英文，意思是「很想知道、很樂意得知」，但這一題空格前已經有 in，只能接動名詞。"
       },
       {
         "q": "Please turn off your computer before ___ the office.",
@@ -1006,15 +1006,15 @@
         "explanation": "listen 後面固定配 to。中文說「聽音樂」動詞後面直接接東西，英文少了 to 就不對，這是很常見的漏字。"
       },
       {
-        "q": "She is waiting ___ the bus.",
+        "q": "She is waiting ___ the bus to come.",
         "options": [
           "for",
           "to",
           "at",
-          "on"
+          "of"
         ],
         "answer": 0,
-        "explanation": "wait 後面固定配 for。wait the bus 是照中文「等公車」直接搬過來的，英文不能這樣寫。"
+        "explanation": "等某人或某樣東西，wait 後面接 for，wait for the bus to come 是「等公車來」。wait the bus 是照中文「等公車」直接搬過來的，英文中間要有 for。wait to 後面接的是原形動詞（wait to see），不接名詞；at 後面接地點（wait at the bus stop），at the bus to come 講不通；of 不跟 wait 搭配。"
       },
       {
         "q": "He is looking ___ his phone. He can't find it.",
@@ -1030,13 +1030,13 @@
       {
         "q": "Please look ___ the picture on page 10.",
         "options": [
-          "for",
+          "with",
           "to",
           "at",
           "about"
         ],
         "answer": 2,
-        "explanation": "叫對方把眼睛放到圖片上，用 look at。look for 是在找不見的東西，這裡圖片就在書上，不用找。"
+        "explanation": "叫對方把眼睛放到圖片上看，用 look at。look with 不是英文的說法；look to 是指望、依靠某人，或朝某個方向望，不用在叫人看一張圖；look about 是四處張望，不是盯著一樣東西看。另外要分清楚 look for 是「找」，東西還沒找到時才用。"
       },
       {
         "q": "The price depends ___ the size.",
@@ -1229,7 +1229,7 @@
           "for"
         ],
         "answer": 1,
-        "explanation": "interested 後面固定配 in，而且 in 是介系詞，後面的動作要變成 joining。interested to join 是台灣學生很常寫錯的組合。"
+        "explanation": "要說對某件事有興趣、想去做，用 interested in 加動名詞，所以填 in，後面是 joining。on、for 都不跟 interested 搭配；填 to 會變成 interested to joining，to 後面不能接 joining。interested to 加原形動詞只用在 hear、learn、know 這類「得知消息」的動詞，例如 I'd be interested to hear your ideas.，想參加活動要說 interested in joining。"
       },
       {
         "q": "This city is famous ___ its hot springs.",
@@ -1247,11 +1247,11 @@
         "options": [
           "with",
           "from",
-          "to",
+          "at",
           "of"
         ],
         "answer": 1,
-        "explanation": "different 後面配 from。中文說「跟他的不一樣」有一個「跟」，很多人就寫成 different with，那是照中文推出來的錯。"
+        "explanation": "different 後面配 from。中文說「跟他的不一樣」有一個「跟」，很多人就寫成 different with，那是照中文推出來的錯；at 和 of 也都不跟 different 搭配。（英式英語另有 different to 的說法，這裡以標準的 from 為準。）"
       },
       {
         "q": "下面哪一句是對的？",
@@ -1368,16 +1368,16 @@
       {
         "q": "I called her, ___ she didn't answer.",
         "options": [
-          "and",
+          "if",
           "or",
           "so",
           "but"
         ],
         "answer": 3,
-        "explanation": "打了電話卻沒接，前後是相反的，用 but。and 是兩邊同方向，so 後面要接結果，or 是二選一，三個都對不上。"
+        "explanation": "打了電話卻沒接，前後是相反的，用 but。or 是二選一，打電話和沒接不是兩個選項；so 後面要接前一句造成的結果，打電話不會造成對方不接；if 帶出的是條件，這一句講的是已經發生的事，放 if 句子講不通。"
       },
       {
-        "q": "Would you like tea ___ coffee?",
+        "q": "Which would you like, tea ___ coffee?",
         "options": [
           "and",
           "but",
@@ -1404,21 +1404,21 @@
           "because",
           "so",
           "but",
-          "and"
+          "or"
         ],
         "answer": 0,
-        "explanation": "下雨是待在家的原因，原因放在 because 後面。如果要用 so，順序得換成 It was raining, so we stayed home.。"
+        "explanation": "下雨是待在家的原因，原因放在 because 後面。如果要用 so，順序得換成 It was raining, so we stayed home.。but 是轉折，跟原因對不上；or 是二選一，這裡沒有選擇。"
       },
       {
         "q": "This job pays well, ___ the hours are long.",
         "options": [
-          "and",
+          "then",
           "but",
           "so",
           "or"
         ],
         "answer": 1,
-        "explanation": "薪水好是好事，工時長是壞事，前後相反，要用 but。用 and 會讓聽的人以為兩件事是同一個方向。"
+        "explanation": "薪水好是好事，工時長是壞事，前後相反，要用 but。so 後面要接前一句造成的結果，薪水好不會造成工時長；or 是二選一，這兩件事不是讓人挑一個；then 是副詞，不能在逗號後面把兩個完整的句子接起來。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -1443,7 +1443,7 @@
         "explanation": "後面只有 the heavy rain 這個名詞，沒有動詞，要用介系詞 because of。because 是連接詞，後面得接一整句，像 because it rained heavily。"
       },
       {
-        "q": "You can pay in cash ___ by credit card.",
+        "q": "How would you like to pay, in cash ___ by credit card?",
         "options": [
           "but",
           "and",
@@ -1588,7 +1588,7 @@
         "explanation": "到辦公室是一個一定會到的時間點，用 when。until 會變成一直寄到我進辦公室為止，語意不合理。"
       },
       {
-        "q": "She locked the door ___ everyone left the office.",
+        "q": "Everyone left the office at 6:00. She locked the door at 6:15, ___ they left.",
         "options": [
           "after",
           "until",
@@ -1596,7 +1596,7 @@
           "while"
         ],
         "answer": 0,
-        "explanation": "大家先走，她最後才鎖門，用 after 帶出先發生的那件事。用 before 會變成人還在裡面就先鎖門，講不通；until 是一直持續到某個時間點，while 是兩件事同時進行，都對不上。"
+        "explanation": "大家六點就離開了，她六點十五分才鎖門，鎖門在後，用 after 帶出先發生的那件事。用 before 會變成鎖門比大家離開早，跟時間對不上；until 是一直持續到某個時間點，鎖門是一下子的動作，時間也對不上；while 是兩件事同時進行，可是兩件事差了十五分鐘。"
       },
       {
         "q": "I will call you when I ___ home.",
@@ -1718,7 +1718,7 @@
           "leaving"
         ],
         "answer": 1,
-        "explanation": "牛奶放在冰箱外面就會壞，這是每次都成立的事實，屬於第 0 型，前後兩句都用現在簡單式。if 那一句永遠不放 will；left 是過去式，跟這種每次都成立的事對不上；leaving 前面沒有 be 動詞，不能單獨當動詞用。"
+        "explanation": "牛奶放在冰箱外面就會壞，這是每次都成立的事實，屬於第 0 型，前後兩句都用現在簡單式。if 那一句通常不放 will；left 是過去式，跟這種每次都成立的事對不上；leaving 前面沒有 be 動詞，不能單獨當動詞用。"
       },
       {
         "q": "If it ___ tomorrow, we will cancel the picnic.",
@@ -1740,7 +1740,7 @@
           "will pass"
         ],
         "answer": 3,
-        "explanation": "下週的考試是還沒發生的事，屬於第 1 型，另外那一句要用 will 加原形動詞 will pass。if 那一句已經用了現在簡單式 study，兩邊分工很清楚；只寫 pass 會變成在講每次都這樣的規律，跟 next week 對不起來。"
+        "explanation": "下週的考試是還沒發生的事，屬於第 1 型，另外那一句要用 will 加原形動詞 will pass。if 那一句已經用了現在簡單式 study，兩邊分工很清楚；只寫 pass 會變成在講每次都這樣的規律，跟 next week 對不起來。passed 是過去式，跟下週對不上；will 後面要接原形動詞，will passing 是錯的。"
       },
       {
         "q": "If I ___ late, please start without me.",
@@ -1751,7 +1751,7 @@
           "being"
         ],
         "answer": 0,
-        "explanation": "if 那一句用現在簡單式，主詞是 I，be 動詞用 am。把 will be 放在 if 後面是最常見的錯。"
+        "explanation": "if 那一句用現在簡單式，主詞是 I，be 動詞用 am。把 will be 放在 if 後面是最常見的錯。was 是過去式，可是遲到是還沒發生的事，後面又是請對方到時候先開始，用過去式對不上；being 前面沒有 be 動詞，不能單獨當動詞用。"
       },
       {
         "q": "___ you press this button, the machine stops.",
@@ -2159,7 +2159,7 @@
           "She enjoy cooking."
         ],
         "answer": 1,
-        "explanation": "主詞 she 是第三人稱單數，動詞用 enjoys，後面接動名詞 cooking。第三句把 be 動詞和一般動詞放在一起，第四句漏掉第三人稱單數的 s。"
+        "explanation": "主詞 she 是第三人稱單數，動詞用 enjoys，後面接動名詞 cooking。第一句 enjoys to cook 把不定詞接在 enjoy 後面，enjoy 不接不定詞；第三句把 be 動詞和一般動詞放在一起；第四句漏掉第三人稱單數的 s。"
       },
       {
         "q": "He wants ___ English, so he practices ___ every day.",
@@ -2344,7 +2344,7 @@
         "explanation": "護照還沒帶，這句在提醒明天要記得帶，用不定詞 to bring。forget bringing 是忘了自己帶過，意思不一樣。"
       },
       {
-        "q": "The window was stuck. She tried ___ it with both hands, but it didn't move.",
+        "q": "The window was stuck. She tried as hard as she could ___ it, but it wouldn't move.",
         "options": [
           "opening",
           "to open",
@@ -2352,29 +2352,29 @@
           "opened"
         ],
         "answer": 1,
-        "explanation": "窗戶卡住了，開窗這件事本身有難度，她在努力做，用不定詞 to open。try opening 是換個方法試試看，語氣輕鬆得多，跟這裡的情境不合。"
+        "explanation": "窗戶卡住了，她盡了全力想把它打開，用不定詞 to open 表示努力要做到。opening 前面接在 as hard as she could 後面不通順；open 是原形，前面少了 to；opened 是過去式，不能放在這裡。"
       },
       {
         "q": "The printer isn't working. Try ___ it off and on again.",
         "options": [
-          "to turn",
+          "to turning",
           "turn",
           "turned",
           "turning"
         ],
         "answer": 3,
-        "explanation": "這是提供一個方法讓對方試試看，用動名詞 turning。try to turn 會變成連按開關都很吃力，不是這句想講的。"
+        "explanation": "這是提供一個方法讓對方試試看，用動名詞 turning（try 加 V-ing 是試試看這個做法）。to turning 把不定詞和動名詞混在一起，不能這樣寫；turn 是原形，turned 是過去式，後面都不能這樣接在 try 後面。"
       },
       {
         "q": "下面哪一句在說事情已經做過了？",
         "options": [
-          "I remembered to send the email.",
+          "Please remember to send the email before noon.",
           "Don't forget to call the client.",
-          "I forgot mailing the letter last week.",
-          "She stopped to check her phone."
+          "I remember mailing the letter last week.",
+          "He forgot to bring his key."
         ],
         "answer": 2,
-        "explanation": "forget 加動名詞講的是已經做過的事，第三句是信寄了但自己忘了。第一句和第二句用不定詞，講的都是還沒做的事；第四句是停下來去看手機，看手機是後來才發生的動作。"
+        "explanation": "remember 加動名詞講的是已經做過的事，第三句是記得自己上週把信寄了，所以是已經做過。第一句和第二句用不定詞，講的都是還沒做的事；第四句 forgot to bring 是忘了帶，帶鑰匙這件事根本沒做。"
       }
     ]
   }

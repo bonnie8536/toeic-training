@@ -184,10 +184,10 @@
       {
         "q": "What can we infer about ordering directly from a restaurant?",
         "options": [
-          "It is always cheaper for the customer.",
+          "It is always cheaper for the customer than an app order.",
           "It leaves the shop with more of the money you pay.",
-          "It always takes longer than app delivery.",
-          "It is not allowed in most cities."
+          "It always takes much longer than an app delivery would.",
+          "It is not allowed in most large cities today."
         ],
         "answer": 1,
         "explanation": "第二段提到平台每筆訂單都抽費用，末段又說直接打電話或內用「對老闆幫助更大」，兩者合起來可推論店家實際留下的錢比較多。"
@@ -196,9 +196,9 @@
         "q": "What does the article say about delivery riders?",
         "options": [
           "Their income often depends on how many orders they finish.",
-          "Restaurants set the pay for each of their trips.",
-          "They work only when the weather is good.",
-          "They also cook the food in ghost kitchens."
+          "Restaurants decide how much they are paid for each trip.",
+          "They only work on days when the weather is dry and calm.",
+          "They also cook the food sold in ghost kitchens at night."
         ],
         "answer": 0,
         "explanation": "第五段明說外送員的收入常取決於完成的訂單數，且他們在車陣與雨中工作，餐廳幾乎無法控制這段服務。"
@@ -370,9 +370,9 @@
         "q": "What does a vaccine give the body?",
         "options": [
           "A safe sample, such as a weak form or a small piece of a germ.",
-          "A strong living germ that causes serious illness.",
-          "A set of antibodies collected from animals.",
-          "A medicine that kills every germ in the body."
+          "A strong living germ that is able to make a healthy person seriously ill.",
+          "A set of ready-made antibodies that were collected from the blood of animals.",
+          "A medicine that kills every single germ that is already inside the body."
         ],
         "answer": 0,
         "explanation": "第二段說疫苗讓身體看見一份安全的樣本，可能是減弱或已死的形式，也可能只是外層的一小塊。"

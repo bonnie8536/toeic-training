@@ -120,9 +120,9 @@
         "q": "What is the article mainly about?",
         "options": [
           "How a small shop used one lunch plan to get more customers.",
-          "Why office workers do not like to eat out.",
-          "How to cook soup and rice at home.",
-          "Why a big restaurant closed last year."
+          "How a daughter opened her own restaurant near an office building.",
+          "Why office workers want long menus and slow, relaxing lunches.",
+          "Why a busy restaurant had to close after one slow year."
         ],
         "answer": 0,
         "explanation": "全文主線是林先生生意變差（第一段）→ Amy 推出午間特餐（第三段）→ 客人變多（第五段），講的是一家小店靠一套午餐留住顧客。"
@@ -152,13 +152,13 @@
       {
         "q": "Why can the food come so fast now?",
         "options": [
-          "Because the shop hired ten new cooks.",
-          "Because customers cook the food themselves.",
-          "Because the shop only sells drinks.",
+          "Because the shop hired ten new cooks for the lunch hour.",
+          "Because the shop moved its kitchen next to the front door.",
+          "Because the shop now sells only drinks and cold snacks.",
           "Because the shop makes only one kind of meal each day."
         ],
         "answer": 3,
-        "explanation": "第三段說每天只供應一道主菜、一碗湯、一杯飲料，而且廚師中午前就備好料；由此可推論出餐快是因為每天只做一套餐點。"
+        "explanation": "細節題。第三段說每天只供應一道主菜、一碗湯、一杯飲料，沒有冗長的菜單，而且廚師中午前就備好大部分食材；第四段客人在門口點餐、當場付款，兩點合起來讓出餐變快，其中選項 D 對應「每天只做一套餐點」，故選 D。A：文中沒有提到請新廚師。B：文中沒有說廚房搬位置，只說客人在門口點餐。C：店裡供應的是一道主菜、一碗湯和一杯飲料，不是只賣飲料。"
       }
     ],
     "image": "img/articles/art-5a.jpg"
@@ -283,7 +283,7 @@
       {
         "q": "What is the story mainly about?",
         "options": [
-          "A worker who lost his job in Osaka.",
+          "A worker who lost his job after a trip to Osaka.",
           "A new worker's first trip for his company.",
           "How to buy a cheap plane ticket.",
           "A boss who never travels for work."

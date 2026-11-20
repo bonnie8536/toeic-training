@@ -106,7 +106,7 @@
           "clean two rooms"
         ],
         "answer": 2,
-        "explanation": "形容詞放在名詞前面，而且不會跟著加 s，s 只加在 rooms 上。中文說「兩間乾淨的房間」，英文也是先講乾淨再講房間，寫成 two clean rooms。"
+        "explanation": "形容詞放在名詞前面，而且不會跟著加 s，s 只加在 rooms 上。數字要放在形容詞前面，順序是數字、形容詞、名詞，寫成 two clean rooms。two rooms clean 把形容詞放到名詞後面；two cleans rooms 在形容詞上加了 s；clean two rooms 把數字和形容詞的順序弄反，讀起來像是「打掃兩間房間」。"
       },
       {
         "q": "Would you like something ___ to drink?",
@@ -128,7 +128,7 @@
           "big"
         ],
         "answer": 3,
-        "explanation": "be 動詞後面直接放形容詞 big，兩個形容詞並列時用 and 接起來。形容詞不加 s，bigly 這個字不存在，a big 後面還少一個名詞。"
+        "explanation": "be 動詞後面直接放形容詞 big，兩個形容詞並列時用 and 接起來。形容詞不加 s，所以 bigs 不成立；bigly 是很少用的副詞，不能放在 be 動詞後面描述房間；a big 後面還少一個名詞。"
       },
       {
         "q": "The cake ___ good.",
@@ -288,7 +288,7 @@
           "interests"
         ],
         "answer": 2,
-        "explanation": "講自己的感覺用 -ed，而且 be interested in 是整組固定的用法。說 I am interesting 會變成「我這個人很有趣」，意思完全跑掉。"
+        "explanation": "講自己的感覺用 -ed，而且 be interested in 是整組固定的用法。說 I am interesting 會變成「我這個人很有趣」，意思完全跑掉；interest 和 interests 是名詞或動詞，不能放在 am 後面描述自己的感覺。"
       },
       {
         "q": "The instructions were ___, so nobody knew what to do.",
@@ -299,7 +299,7 @@
           "confuses"
         ],
         "answer": 0,
-        "explanation": "說明是讓人搞不懂的那一方，用 confusing。confused 是人覺得混亂，後半句 nobody knew what to do 剛好證明問題出在說明本身。"
+        "explanation": "說明是讓人搞不懂的那一方，用 confusing。confused 是人覺得混亂，後半句 nobody knew what to do 剛好證明問題出在說明本身。confuse 和 confuses 是動詞，不能放在 were 後面當形容詞。"
       },
       {
         "q": "She looked ___ when she saw the price.",
@@ -310,7 +310,7 @@
           "shocks"
         ],
         "answer": 2,
-        "explanation": "主詞是 She，look 後面接形容詞描述她的狀態，用 shocked。shocking 是形容那個價格很嚇人，不是形容她。"
+        "explanation": "主詞是 She，look 後面接形容詞描述她的狀態，用 shocked。shocking 是形容那個價格很嚇人，不是形容她；shock 和 shocks 是名詞或動詞，不能放在 look 後面描述她的樣子。"
       },
       {
         "q": "The movie was ___, so we were ___.",
@@ -332,7 +332,7 @@
           "annoyance"
         ],
         "answer": 1,
-        "explanation": "這裡是說他讓別人心煩，他是造成感覺的那一方，用 annoying。annoyed 是說他自己覺得心煩，跟前面那句在描述的行為對不起來。"
+        "explanation": "這裡是說他讓別人心煩，他是造成感覺的那一方，用 annoying。annoyed 是說他自己覺得心煩，跟前面那句在描述的行為對不起來；annoy 是動詞，annoyance 是名詞，都不能放在 really 後面描述他這個人。"
       },
       {
         "q": "We were ___ by the sudden change of plan.",
@@ -343,7 +343,7 @@
           "surprises"
         ],
         "answer": 1,
-        "explanation": "主詞 We 是被弄得意外的一方，用 surprised，後面再用 by 帶出讓我們意外的來源。surprising 是形容那個改變本身很讓人意外。"
+        "explanation": "主詞 We 是被弄得意外的一方，用 surprised，後面再用 by 帶出讓我們意外的來源。surprising 是形容那個改變本身很讓人意外；surprise 和 surprises 是名詞或動詞，不能放在 were 後面描述我們的感受。"
       }
     ]
   },
@@ -452,7 +452,7 @@
           "politely"
         ],
         "answer": 3,
-        "explanation": "answered 是動作，要用副詞 politely 說明他回答得怎麼樣。polite 是形容詞只能描述人，politeness 是名詞，politer 是兩個人相比時才用的形式。"
+        "explanation": "answered 是動作，要用副詞 politely 說明他回答得怎麼樣。polite 是形容詞，用來修飾名詞，例如 a polite answer，不能直接修飾動作；politeness 是名詞；politer 是形容詞的比較級，同樣不能修飾動作，句子裡也沒有比較的對象。"
       },
       {
         "q": "She finished the report very ___.",
@@ -474,7 +474,7 @@
           "happiness"
         ],
         "answer": 0,
-        "explanation": "字尾是子音加 y 的形容詞，y 要改成 i 再加 -ly，所以是 happily。happyly 是最常見的拼錯，happiness 是名詞不是副詞。"
+        "explanation": "字尾是子音加 y 的形容詞，y 要改成 i 再加 -ly，所以是 happily。happyly 沒有把 y 改成 i，是常見的拼錯；happyfully 多塞了 -ful，英文沒有這個字；happiness 是名詞，不是副詞。"
       },
       {
         "q": "___, we found a parking space right away.",
@@ -507,7 +507,7 @@
           "friendily"
         ],
         "answer": 1,
-        "explanation": "neighbor 是名詞，前面要放形容詞。friendly 雖然是 -ly 結尾，它其實是形容詞不是副詞，而且沒有 friendlily 這種形式。friend 是名詞，不能拿來描述人。"
+        "explanation": "neighbor 是名詞，前面要放形容詞。friendly 雖然是 -ly 結尾，它其實是形容詞，不是副詞。friendlily 是 friendly 極少用的副詞形式，副詞不能修飾名詞；friendily 拼法不存在；friend 是名詞，放在 neighbor 前面不是英文的說法。"
       },
       {
         "q": "The doors open ___ when you walk in.",
@@ -628,7 +628,7 @@
           "very good"
         ],
         "answer": 0,
-        "explanation": "sings 是動作，要用副詞 well。good 是形容詞只能描述人或東西，sings good 和 sings very good 都是很常聽到的錯句，goodly 這個字則不存在。"
+        "explanation": "sings 是動作，要用副詞 well。good 是形容詞，用來描述人或東西，sings good 和 sings very good 都是很常聽到的錯句；goodly 是少見的形容詞，意思是「相當多的」，不是 good 的副詞，也不能修飾 sings。"
       },
       {
         "q": "He is a ___ runner, and he runs very ___.",
@@ -661,7 +661,7 @@
           "well"
         ],
         "answer": 1,
-        "explanation": "taste 跟 be 動詞一樣，後面接形容詞描述麵包本身，所以用 good。well 是講動作做得好，用在 She sings well 那種句子；nicely 是副詞，goodly 不存在。"
+        "explanation": "taste 跟 be 動詞一樣，後面接形容詞描述麵包本身，所以用 good。well 當副詞是講動作做得好，用在 She sings well 那種句子；當形容詞時指身體健康，不能用來描述食物；nicely 是副詞，不能接在 tastes 後面；goodly 是少見的形容詞，意思是「相當多的」，不能描述味道。"
       },
       {
         "q": "I ___ know anyone at this party.",
@@ -672,7 +672,7 @@
           "not hard"
         ],
         "answer": 0,
-        "explanation": "這句要表達「我幾乎不認識這裡的人」，用 hardly。hard 是努力，填進去意思不通；hardly 本身已經帶否定，不需要再加 not。"
+        "explanation": "這句要表達「我幾乎不認識這裡的人」，用 hardly，它放在一般動詞 know 前面，本身就帶否定。hard 是「努力地」，填進去意思不通；hardily 是「大膽地、強健地」，也講不通；not hard 夾在主詞和動詞中間不合文法，英文否定一般動詞要用 don't，不會這樣寫。"
       },
       {
         "q": "「他很努力工作」和「他幾乎不工作」對應到哪一組？",
@@ -683,7 +683,7 @@
           "He hard works. / He works hardly."
         ],
         "answer": 2,
-        "explanation": "hard 是努力，hardly 是幾乎不，而 hardly 通常放在一般動詞前面。He works hardly 這種寫法會讓人搞不清楚你想講什麼，He hard works 則是位置錯了。"
+        "explanation": "hard 是努力，hardly 是幾乎不，而 hardly 通常放在一般動詞前面，所以照順序是 He works hard. / He hardly works.。第一組的 He works hardly 這種寫法會讓人搞不清楚你想講什麼；第二組兩句本身都對，但順序反了，第一句變成「他幾乎不工作」；第四組的 He hard works 是 hard 的位置錯了，後一句也同樣有問題。"
       },
       {
         "q": "Have you talked to him ___?",
@@ -705,7 +705,7 @@
           "badly"
         ],
         "answer": 1,
-        "explanation": "講身體舒不舒服用 well，這是 well 當形容詞的那個意思。nicely 和 badly 是副詞，不能放在 feel 後面描述狀態，goodly 這個字不存在。"
+        "explanation": "講身體舒不舒服用 well，這是 well 當形容詞的那個意思。badly 填進去變成 didn't feel badly，美式英文的 feel badly 多半是「感到過意不去」，說她不覺得過意不去，跟前面臉色蒼白對不起來；nicely 是副詞，不用在 feel 後面描述身體狀態；goodly 是少見的形容詞，意思是「相當多的」，和身體狀況無關。"
       }
     ]
   },
@@ -824,7 +824,7 @@
           "heaviest"
         ],
         "answer": 1,
-        "explanation": "heavy 是子音加 y 結尾的字，這種字跟短字一樣加 -er，而且 y 要先改成 i，寫成 heavier，不用 more。heaviest 是三個以上挑第一名才用的形式，這裡有 than 所以是兩個在比。"
+        "explanation": "heavy 是子音加 y 結尾的字，這種字跟短字一樣加 -er，而且 y 要先改成 i，寫成 heavier，不用 more，所以 more heavy 不對。這裡有 than，表示兩個在比，要用比較級，原級 heavy 不能接 than；heaviest 是三個以上挑第一名才用的形式。"
       },
       {
         "q": "The new system is ___ than the old one.",
@@ -835,7 +835,7 @@
           "more efficienter"
         ],
         "answer": 0,
-        "explanation": "efficient 是長字，前面加 more，字本身不變。長字不會在字尾加 -er，而 more 跟 -er 也不能同時出現。"
+        "explanation": "efficient 是長字，比較級是前面加 more，字本身不變。長字不會在字尾加 -er，所以 efficienter 不對；more 跟 -er 也不能同時出現，more efficienter 是重複；most efficient 是最高級，三個以上挑第一名才用，不能接 than。"
       },
       {
         "q": "My new apartment is ___ than my old one.",
@@ -868,7 +868,7 @@
           "too"
         ],
         "answer": 2,
-        "explanation": "要加強比較級用 much、a lot 或 far。very 只能放在沒變形的形容詞前面，說 very better 是錯的；so 和 too 也不能拿來修飾比較級。"
+        "explanation": "要加強比較級用 much、a lot 或 far，much better 是「好很多」。very 可以修飾原級的形容詞或副詞，例如 very good、very quickly，但不能直接放在比較級前面，very better 是錯的；so 和 too 也不能直接修飾比較級。"
       },
       {
         "q": "hot 的比較級是哪一個？",
@@ -1084,7 +1084,7 @@
         "explanation": "範圍是一個團體或地方的時候用 in。of 後面接的是一群人事物本身，像 the tallest of the three girls；on 和 at 不用來表示這種範圍。"
       },
       {
-        "q": "This road is ___ than that one, but Highway 1 is ___.",
+        "q": "This road is ___ than that one, but Highway 1 is ___ of all.",
         "options": [
           "the longest / longer",
           "longer / longer",
@@ -1214,7 +1214,7 @@
           "possible"
         ],
         "answer": 3,
-        "explanation": "as soon as possible 是整組固定用法，最後一個字是 possible。改成 possibly 或其他寫法都不通，這種固定說法只能照原樣背下來。"
+        "explanation": "as soon as possible 是固定用法，意思是盡快，最後一個字要用形容詞 possible。possibly 是副詞，不能放在這裡；you possible 是主詞直接接形容詞，少了動詞；it can 的 it 沒有指涉對象，要回覆的人是對方，不是 it。另一種正確說法是 as soon as you can，但選項裡沒有。"
       },
       {
         "q": "She has ___ books as I do.",
@@ -1225,7 +1225,7 @@
           "so many"
         ],
         "answer": 1,
-        "explanation": "books 是能一個一個數的東西，用 as many，而句子後面已經有一個 as，所以前面只要 as many。as much 是給不能數的東西用的，so many 不能跟 as 搭。"
+        "explanation": "books 是能一個一個數的東西，要用 as many。句子後面已經有第二個 as，所以空格只放 as many；填 as many as 會變成三個 as。as much 是給不能數的東西用的。so many...as 只會出現在否定句，例如 She doesn't have so many books as I do，這句是肯定句，要用 as many。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -1258,7 +1258,7 @@
           "新手機是最貴的。"
         ],
         "answer": 0,
-        "explanation": "not as...as 表示主詞那一方比較少，所以新手機比較便宜。沒有 not 的 as...as 才是一樣貴，要說比較貴會用 more expensive than。"
+        "explanation": "not as...as 表示主詞那一方比較少，所以新手機比較便宜。沒有 not 的 as...as 才是一樣貴；要說比較貴會用 more expensive than；最貴要用 the most expensive，句子沒有這個意思。"
       }
     ]
   },
@@ -1343,15 +1343,15 @@
         "q": "The coffee is ___ hot to drink.",
         "options": [
           "so",
-          "very",
+          "such",
           "enough",
           "too"
         ],
         "answer": 3,
-        "explanation": "配上後面的 to drink，這是 too...to 的句型，表示燙到不能喝，要用 too。very 只是很燙但沒說喝不喝得下，enough 位置不對，so 後面通常接 that 子句。"
+        "explanation": "配上後面的 to drink，這是 too...to 的句型，表示燙到不能喝，要用 too。such 後面要接名詞（such a hot drink），不能直接接形容詞 hot；enough 位置不對，so 後面通常接 that 子句。"
       },
       {
-        "q": "This room isn't ___ for ten people.",
+        "q": "This room isn't ___ for ten people, so we need a bigger one.",
         "options": [
           "enough big",
           "big enough",
@@ -1381,7 +1381,7 @@
           "enough / to"
         ],
         "answer": 0,
-        "explanation": "too...to 是固定搭配，意思是太累以至於沒辦法寫完。so 要搭 that 加一整句，enough 要放在形容詞後面，都不能填進這兩格。"
+        "explanation": "too...to 是固定搭配，意思是太累以至於沒辦法寫完。too...that 後面要接完整句子，不能接原形動詞 finish；so 要搭 that 加一整句，enough 要放在形容詞後面，都不能填進這兩格。"
       },
       {
         "q": "She is old ___ to drive.",
@@ -1392,7 +1392,7 @@
           "enough"
         ],
         "answer": 3,
-        "explanation": "形容詞後面接 enough 表示條件夠了，old enough to drive 是年紀夠大可以開車。too old to drive 意思會變成年紀太大不能開車，語氣完全相反。"
+        "explanation": "形容詞後面接 enough 表示條件夠了，old enough to drive 是年紀夠大可以開車。too、very、so 都要放在形容詞前面，放在 old 後面不成句；而且 too old to drive 的意思是年紀太大不能開車，語氣完全相反。"
       },
       {
         "q": "There is ___ noise in this office.",
@@ -1400,10 +1400,10 @@
           "too many",
           "too much",
           "enough too",
-          "very much"
+          "much too"
         ],
         "answer": 1,
-        "explanation": "noise 不能一個一個數，所以用 too much。too many 是給能數的名詞用的，像 too many people；enough too 這種排法不存在。"
+        "explanation": "noise 不能一個一個數，所以用 too much。too many 是給能數的名詞用的，像 too many people；enough too 這種排法不存在；much too 後面要接形容詞或副詞（much too loud），不能直接接名詞 noise。"
       },
       {
         "q": "The soup is very hot. 和 The soup is too hot. 差在哪裡？",
@@ -1557,7 +1557,7 @@
           "such a many"
         ],
         "answer": 1,
-        "explanation": "people 是能一個一個數的名詞，講數量多用 so many。so much 是給不能數的東西用的，而 such many 這種搭配不存在。"
+        "explanation": "people 是能一個一個數的名詞，講數量多用 so many。so much 是給不能數的東西用的，such many 這種搭配不存在，such a many 的 a 也不能放在 many 前面。"
       },
       {
         "q": "The book was ___ interesting that I read it twice.",
@@ -1739,7 +1739,7 @@
           "as the same"
         ],
         "answer": 0,
-        "explanation": "句子已經把兩張票都講出來了，不需要再說跟誰一樣，直接用 the same。要接比較對象才會加 as，而 same 前面一定要有 the。"
+        "explanation": "句子已經把兩張票都講出來了，不需要再說跟誰一樣，直接用 the same。要接比較對象才會加 as，所以 the same as 後面會懸空；same 前面一定要有 the；as the same 的順序也不通。"
       },
       {
         "q": "My schedule this week is ___ last week's.",
@@ -1757,11 +1757,11 @@
         "options": [
           "As",
           "Like",
-          "Same as",
+          "Such as",
           "Alike"
         ],
         "answer": 1,
-        "explanation": "後面接的是名詞 many people，要用 like。as 在這種位置後面要接一整句話，Same as 前面漏了 the，alike 不能放在句首帶名詞。"
+        "explanation": "後面接的是名詞 many people，要用 like，意思是「像…一樣」。As 放句首接名詞時是「身為」的意思（As a teacher, ...），「身為許多人」句意不通；Such as 是「例如」，放在句首後面沒有東西可以舉例；alike 不能放在句首帶名詞。"
       },
       {
         "q": "下面哪一句是對的？",
@@ -1921,11 +1921,11 @@
         "options": [
           "a plastic black round tray",
           "a round plastic black tray",
-          "a black round plastic tray",
+          "a black plastic round tray",
           "a round black plastic tray"
         ],
         "answer": 3,
-        "explanation": "形狀在顏色前面，材質放最後，所以是 round black plastic tray。plastic 是材質，只要它沒有緊貼著名詞，那個排法就不對。"
+        "explanation": "順序是形狀、顏色、材質，所以是 a round black plastic tray。a black plastic round tray 把形狀放到材質後面；a plastic black round tray 把材質放在最前面；a round plastic black tray 把材質放在顏色前面，三個順序都不對。"
       },
       {
         "q": "「一家很棒的新義大利餐廳」的英文是哪一個？",

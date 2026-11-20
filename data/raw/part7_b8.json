@@ -77,7 +77,7 @@
           },
           {
             "t": "sub",
-            "text": "Phone (253) 555-0147 | orders@greenfieldsupply.com"
+            "text": "Phone (253) 555-0147 | orders@example.com"
           },
           {
             "t": "kv",
@@ -248,7 +248,7 @@
       }
     ],
     "translation": [
-      "GREENFIELD 辦公用品\nHarbor 路 118 號，Tacoma, WA 98402\n電話 (253) 555-0147｜orders@greenfieldsupply.com\n\n發票號碼：GF-40219\n開立日期：5 月 8 日\n訂購日期：5 月 2 日\n採購單號：PO-7734\n\n帳單寄送：\nNadia Ferreira，辦公室協調專員\nHalloran 設計集團\nWicker 街 620 號 300 室\nTacoma, WA 98405\n\n品號　　說明　　　　　　　　　數量　　單價　　　金額\nA-220　辦公椅，灰色布面　　　　6　　$148.00　$888.00\nB-115　三層檔案櫃　　　　　　　2　　$210.00　$420.00\nC-303　白板，120 公分　　　　　4　　 $62.00　$248.00\nD-009　麥克筆組，八色　　　　 10　　　$9.50　 $95.00\n\n　　　　小計　　　　　　　$1,651.00\n　　　　數量折扣（5%）　　 -$82.55\n　　　　運費　　　　　　　　　$0.00\n　　　　應付總額　　　　　$1,568.45\n\n備註\n單筆訂購滿二十件（含）以上，享 5% 數量折扣。訂單小計超過 $1,500 者免運費。貨款請於發票開立日起 30 天內支付。\n\n白板於 5 月 2 日缺貨，已於 5 月 7 日自本公司西雅圖倉庫寄出，預計 5 月 12 日前送達。本發票其餘品項均已於 5 月 5 日送達。\n\n商品如有損壞或不需要，可於送達後 14 天內退回。寄回前請先致電本公司服務台索取退貨編號。未附退貨編號的商品恕無法辦理退款。"
+      "GREENFIELD 辦公用品\nHarbor 路 118 號，Tacoma, WA 98402\n電話 (253) 555-0147｜orders@example.com\n\n發票號碼：GF-40219\n開立日期：5 月 8 日\n訂購日期：5 月 2 日\n採購單號：PO-7734\n\n帳單寄送：\nNadia Ferreira，辦公室協調專員\nHalloran 設計集團\nWicker 街 620 號 300 室\nTacoma, WA 98405\n\n品號　　說明　　　　　　　　　數量　　單價　　　金額\nA-220　辦公椅，灰色布面　　　　6　　$148.00　$888.00\nB-115　三層檔案櫃　　　　　　　2　　$210.00　$420.00\nC-303　白板，120 公分　　　　　4　　 $62.00　$248.00\nD-009　麥克筆組，八色　　　　 10　　　$9.50　 $95.00\n\n　　　　小計　　　　　　　$1,651.00\n　　　　數量折扣（5%）　　 -$82.55\n　　　　運費　　　　　　　　　$0.00\n　　　　應付總額　　　　　$1,568.45\n\n備註\n單筆訂購滿二十件（含）以上，享 5% 數量折扣。訂單小計超過 $1,500 者免運費。貨款請於發票開立日起 30 天內支付。\n\n白板於 5 月 2 日缺貨，已於 5 月 7 日自本公司西雅圖倉庫寄出，預計 5 月 12 日前送達。本發票其餘品項均已於 5 月 5 日送達。\n\n商品如有損壞或不需要，可於送達後 14 天內退回。寄回前請先致電本公司服務台索取退貨編號。未附退貨編號的商品恕無法辦理退款。"
     ]
   },
   {
@@ -374,12 +374,12 @@
       {
         "type": "advertisement",
         "label": "Advertisement",
-        "content": "BRIGHTPATH LOGISTICS\nNow hiring: Warehouse Operations Coordinator\n\nBrightpath Logistics moves goods for more than four hundred retail clients across the Pacific Northwest. We are filling this position at three of our sites: Eugene, Bend, and Medford. The Bend site runs a night shift only; the other two sites operate during the day.\n\nDuties\n- Plan the daily shipping schedule and assign drivers\n- Keep records of every delivery, return, and damaged item\n- Prepare a monthly report for the site manager\n- Train seasonal staff during the busy autumn season\n\nRequirements\n- At least four years of experience in a warehouse or a shipping company\n- Experience with inventory software\n- A valid license to drive a forklift\n- Willingness to work an occasional Saturday\n\nTo apply, send a resume and a cover letter to careers@brightpathlog.com by June 30. In your letter, please tell us which site you prefer and when you could start. Applicants invited to an interview will also be asked to complete a short practical test at the site. We do not accept applications by mail."
+        "content": "BRIGHTPATH LOGISTICS\nNow hiring: Warehouse Operations Coordinator\n\nBrightpath Logistics moves goods for more than four hundred retail clients across the Pacific Northwest. We are filling this position at three of our sites: Eugene, Bend, and Medford. The Bend site runs a night shift only; the other two sites operate during the day.\n\nDuties\n- Plan the daily shipping schedule and assign drivers\n- Keep records of every delivery, return, and damaged item\n- Prepare a monthly report for the site manager\n- Train seasonal staff during the busy autumn season\n\nRequirements\n- At least four years of experience in a warehouse or a shipping company\n- Experience with inventory software\n- A valid license to drive a forklift\n- Willingness to work an occasional Saturday\n\nTo apply, send a resume and a cover letter to careers@example.com by June 30. In your letter, please tell us which site you prefer and when you could start. Applicants invited to an interview will also be asked to complete a short practical test at the site. We do not accept applications by mail."
       },
       {
         "type": "email",
         "label": "E-mail",
-        "content": "To: careers@brightpathlog.com\nFrom: d.okafor@mailbridge.net\nDate: June 19\nSubject: Warehouse Operations Coordinator\n\nDear Hiring Manager,\n\nI saw your advertisement in last week's Willamette Business Weekly and would like to apply for the coordinator position.\n\nFor the past five years I have worked at Correa Distribution in Salem, where I plan routes for twelve drivers and handle all of the paperwork for returns. Last year I moved our records from paper files into Stockline, an inventory program, and I then trained six seasonal workers to use it in under three weeks.\n\nI would prefer your Bend site, as my family is moving to that area in August. I understand that the hours there are not the usual office hours, and that suits me well. Working an occasional Saturday is no problem either.\n\nI should mention one thing. My forklift test is scheduled for July 8. I have finished the training course and my instructor expects no difficulty. I could start work on August 3.\n\nMy resume is attached. Thank you for your time.\n\nSincerely,\nDaniel Okafor"
+        "content": "To: careers@example.com\nFrom: d.okafor@example.org\nDate: June 19\nSubject: Warehouse Operations Coordinator\n\nDear Hiring Manager,\n\nI saw your advertisement in last week's Willamette Business Weekly and would like to apply for the coordinator position.\n\nFor the past five years I have worked at Correa Distribution in Salem, where I plan routes for twelve drivers and handle all of the paperwork for returns. Last year I moved our records from paper files into Stockline, an inventory program, and I then trained six seasonal workers to use it in under three weeks.\n\nI would prefer your Bend site, as my family is moving to that area in August. I understand that the hours there are not the usual office hours, and that suits me well. Working an occasional Saturday is no problem either.\n\nI should mention one thing. My forklift test is scheduled for July 8. I have finished the training course and my instructor expects no difficulty. I could start work on August 3.\n\nMy resume is attached. Thank you for your time.\n\nSincerely,\nDaniel Okafor"
       }
     ],
     "questions": [
@@ -440,8 +440,8 @@
       }
     ],
     "translation": [
-      "BRIGHTPATH 物流\n誠徵：倉儲營運協調專員\n\nBrightpath 物流為太平洋西北地區四百多家零售客戶運送貨物。本次於三個據點徵才：Eugene、Bend 與 Medford。Bend 據點只有夜班，另外兩個據點為日間營運。\n\n工作內容\n－ 規劃每日出貨排程並派任司機\n－ 建檔管理每一筆送貨、退貨與破損品紀錄\n－ 每月為據點主管製作報表\n－ 秋季旺季期間訓練季節性人員\n\n應徵條件\n－ 具倉儲或運輸公司四年以上經驗\n－ 具庫存管理軟體使用經驗\n－ 持有有效的堆高機駕駛執照\n－ 願意偶爾於週六上班\n\n有意應徵者請於 6 月 30 日前將履歷與求職信寄至 careers@brightpathlog.com。請在信中告知您偏好的據點與可到職時間。獲邀面試者另需在該據點完成一項簡短的實作測驗。本公司不受理紙本郵寄的應徵資料。",
-      "收件者：careers@brightpathlog.com\n寄件者：d.okafor@mailbridge.net\n日期：6 月 19 日\n主旨：倉儲營運協調專員\n\n敬啟者：\n\n我在上週的《Willamette 商業週刊》上看到貴公司的徵才廣告，希望應徵協調專員一職。\n\n過去五年我任職於 Salem 的 Correa 配送公司，負責為十二位司機規劃路線，並處理所有退貨文件。去年我把公司的紙本紀錄全面轉入庫存管理軟體 Stockline，並在三週內訓練六名季節性人員上手使用。\n\n我偏好貴公司的 Bend 據點，因為我的家人八月要搬到那一帶。我已得知該據點的工時並非一般辦公時間，這對我來說反而合適。偶爾週六上班也沒有問題。\n\n有一件事需要說明：我的堆高機考照日期排在 7 月 8 日。訓練課程我已修畢，教練認為應該不會有問題。我最快可於 8 月 3 日到職。\n\n履歷如附件，感謝您撥冗閱讀。\n\n此致\nDaniel Okafor 敬上"
+      "BRIGHTPATH 物流\n誠徵：倉儲營運協調專員\n\nBrightpath 物流為太平洋西北地區四百多家零售客戶運送貨物。本次於三個據點徵才：Eugene、Bend 與 Medford。Bend 據點只有夜班，另外兩個據點為日間營運。\n\n工作內容\n．規劃每日出貨排程並派任司機\n．建檔管理每一筆送貨、退貨與破損品紀錄\n．每月為據點主管製作報表\n．秋季旺季期間訓練季節性人員\n\n應徵條件\n．具倉儲或運輸公司四年以上經驗\n．具庫存管理軟體使用經驗\n．持有有效的堆高機駕駛執照\n．願意偶爾於週六上班\n\n有意應徵者請於 6 月 30 日前將履歷與求職信寄至 careers@example.com。請在信中告知您偏好的據點與可到職時間。獲邀面試者另需在該據點完成一項簡短的實作測驗。本公司不受理紙本郵寄的應徵資料。",
+      "收件者：careers@example.com\n寄件者：d.okafor@example.org\n日期：6 月 19 日\n主旨：倉儲營運協調專員\n\n敬啟者：\n\n我在上週的《Willamette 商業週刊》上看到貴公司的徵才廣告，希望應徵協調專員一職。\n\n過去五年我任職於 Salem 的 Correa 配送公司，負責為十二位司機規劃路線，並處理所有退貨文件。去年我把公司的紙本紀錄全面轉入庫存管理軟體 Stockline，並在三週內訓練六名季節性人員上手使用。\n\n我偏好貴公司的 Bend 據點，因為我的家人八月要搬到那一帶。我已得知該據點的工時並非一般辦公時間，這對我來說反而合適。偶爾週六上班也沒有問題。\n\n有一件事需要說明：我的堆高機考照日期排在 7 月 8 日。訓練課程我已修畢，教練認為應該不會有問題。我最快可於 8 月 3 日到職。\n\n履歷如附件，感謝您撥冗閱讀。\n\n此致\nDaniel Okafor 敬上"
     ]
   }
 ]

@@ -21,8 +21,8 @@
         "zh": "大衛去找說明書，可是箱子裡沒有。於是他打了客服專線求助。客服人員向他要收據上的號碼。只有林先生有那張紙，而他人在台北。"
       },
       {
-        "en": "For two days, nobody in the office drank any coffee. People walked to a small shop across the street. The line was long, and the coffee was not cheap. Some workers started to [[complain]] about the new machine.",
-        "zh": "有兩天，辦公室裡沒有人喝到咖啡。大家走到對街的一家小店買。隊伍很長，咖啡也不便宜。有些同事開始抱怨這台新機器。"
+        "en": "For two days, nobody in the office drank any coffee from the machine. People walked to a small shop across the street. The line was long, and the coffee was not cheap. Some workers started to [[complain]] about the new machine.",
+        "zh": "有兩天，辦公室裡沒有人喝到機器煮的咖啡。大家走到對街的一家小店買。隊伍很長，咖啡也不便宜。有些同事開始抱怨這台新機器。"
       },
       {
         "en": "Then a new [[intern]] came to work on Wednesday morning. Her name was Mia. She looked at the machine and turned it around. A small piece of paper was taped on the back of the machine. It was the [[instructions]] page from the box. Mia read it and pressed two buttons.",
@@ -151,7 +151,7 @@
           "She does not like to drink coffee."
         ],
         "answer": 2,
-        "explanation": "推論題。定位第五段：她先看機器、再把機器轉過來，才發現背面的紙，可見她觀察得很仔細。文中從未說她用過同款機器，也沒提到她和老闆的關係。"
+        "explanation": "推論題。定位第五段：她先看機器、再把機器轉過來，才發現背面的紙，可見她觀察得很仔細，故選 C。A：文中從未說她用過同款機器，她也是讀了說明才會操作。B：文中沒有提到她和老闆的關係。D：文中沒有說她不喜歡喝咖啡。"
       },
       {
         "q": "Where was the instructions page?",
@@ -308,7 +308,7 @@
           "An old man who lives alone in Chiayi."
         ],
         "answer": 2,
-        "explanation": "主旨題。從第二段包裹不見、第三段查出地址錯誤，到第四、五段在別人家找到箱子，全文都圍繞著「包裹被送到錯的房子」。其他選項都只是故事裡的一個小片段。"
+        "explanation": "主旨題。從第二段包裹不見、第三段查出標籤上地址錯一個字，到第四、五段在別人家找到箱子，全文都圍繞著「包裹被送到錯的房子」。「買給自己」不對，第一段說相機是要送爸爸的生日禮物；「店家停止網路賣相機」文中沒有提到；「獨居老先生」只是第五段的一個細節，不是全文主旨。"
       },
       {
         "q": "What can we learn about Mr. Wu?",
@@ -324,9 +324,9 @@
       {
         "q": "Why did Lily say no to the refund?",
         "options": [
-          "The money was too little for her.",
-          "Her boss told her to wait one week.",
-          "She did not believe Sam at all.",
+          "The refund would take too long to reach her bank.",
+          "Her boss told her to wait for one more week.",
+          "She did not believe what Sam said about the box.",
           "She still wanted the camera for her father."
         ],
         "answer": 3,

@@ -118,5 +118,15 @@
     "answer": 0,
     "translation": "Nakashima 小姐週四早上打電話給外燴業者，確保午餐會在中午的研討會開始前送到。",
     "explanation": "考點：形近動詞的語意與後接結構。ensure that＋子句表示「確保某件事會發生」，打電話給外燴業者是為了確定午餐準時送達，故 (A) ensure 正確。(B) endure 是「忍受、承受」，受詞是困難或痛苦，不能接 that 子句表示確保。(C) secure 是「取得、確保拿到」，受詞是名額、合約、資金等具體的東西，例如 secure a contract，不接 that 子句。(D) enrich 是「使豐富、充實」，受詞是內容或經驗，不能接 that 子句。"
+  },
+  {
+    "id": "p5-b13-13",
+    "difficulty": "中級",
+    "category": "字彙辨析",
+    "question": "To reserve the banquet room at the Calloway Hotel, guests must pay a ------- of $200, which will be subtracted from the final bill.",
+    "options": ["refund", "warranty", "deposit", "receipt"],
+    "answer": 2,
+    "translation": "預訂 Calloway 飯店的宴會廳時，客人須先付 200 美元的訂金，這筆錢之後會從最後的帳單中扣除。",
+    "explanation": "考點：商業名詞辨析。空格是 pay a ------- of $200 的受詞，後面的 which will be subtracted from the final bill（之後會從最後的帳單中扣除）說明這是訂位時先付的一部分費用，也就是「訂金」，故 (C) deposit 正確。(A) refund 是「退款」，是商家退還給客人的錢，不是客人為了訂位付出的錢。(B) warranty 是「保固」，指商品在一定期間內免費維修的保證，與預訂場地無關，也不會從帳單中扣除。(D) receipt 是「收據」，是付款後拿到的憑證，不能拿來「付」。"
   }
 ]

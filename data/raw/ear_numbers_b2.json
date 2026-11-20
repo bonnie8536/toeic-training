@@ -70,7 +70,7 @@
       "9 月 29 日"
     ],
     "answer": 2,
-    "note": "twenty-ninth 和 nineteenth 尾音都是 -ninth，要靠前面的 twenty- 分辨；日期在前、月份在後，別把 29 和 June 的順序對調。",
+    "note": "twenty-ninth 是 29 日；只抓到後半的 ninth 會誤選 9 日。nineteenth（19 日）唸成 nine-TEENTH，結尾是 -teenth，和 twenty-ninth 的開頭也不同。月份是 June（6 月），別因為聽到 ninth 的「九」就選成 9 月。",
     "zh": "工作坊在六月二十九日。",
     "level": "初級"
   },
@@ -100,8 +100,8 @@
       "952"
     ],
     "answer": 2,
-    "note": "說話者中途更正號碼，sorry / make that 之後的才算數，記下第一次聽到的 527 就會答錯。另外兩個誘答是把末兩碼或整組順序聽顛倒。",
-    "zh": "帳務請撥分機五二七——抱歉，應該是五二九。",
+    "note": "說話者中途更正號碼，sorry 和 make that 之後的 five two nine 才算數，記下第一次聽到的 527 就會答錯。572 是把 527 的後兩碼聽顛倒，952 是把 9 錯放到最前面，順序都和更正後的 529 不同。",
+    "zh": "帳務請撥分機五二七，抱歉，應該是五二九。",
     "level": "進階"
   },
   {
@@ -265,7 +265,7 @@
       "G1306"
     ],
     "answer": 3,
-    "note": "thirteen oh six 是 13＋0＋6＝1306。thirteen 重音在後，聽成 thirty 就會寫成 3006；oh 一定要記成 0 而不是漏掉。",
+    "note": "thirteen oh six 是 13、0、6 依序連起來，也就是 1306。thirteen 重音在後，聽成 thirty 就會寫成 3006；oh 一定要記成 0，不能漏掉，也不要把後兩碼寫反成 1360。",
     "zh": "請記一下訂單編號 G 一三〇六。",
     "level": "進階"
   },

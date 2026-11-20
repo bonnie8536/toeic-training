@@ -190,7 +190,7 @@ TOEIC.grammar = [
      "manes"
     ],
     "answer": 1,
-    "explanation": "man 的複數是 men，整個字換掉，換完就已經是複數了，後面不再加 s。mans 是把加 s 的規則硬套在不規則的字上，mens 是換完又多加一個 s，這兩個都是很常見的錯。"
+    "explanation": "man 的複數是 men，整個字換掉，換完就已經是複數了，後面不再加 s。mans 是把加 s 的規則硬套在不規則的字上，mens 是換完又多加一個 s，這兩個都是很常見的錯。manes 是另一個字 mane（馬的鬃毛）的複數，跟「男人」無關。"
    },
    {
     "q": "下面哪一句沒有錯？",
@@ -212,7 +212,7 @@ TOEIC.grammar = [
      "man"
     ],
     "answer": 0,
-    "explanation": "person 的複數是 people，這個字本身就是複數，前面配 many 剛剛好，不用再加 s，所以 peoples 是錯的。person 和 man 都是單數，跟 many 對不起來，要講很多人可以用 people，man 則要先變成 men。"
+    "explanation": "person 的複數是 people，這個字本身就是複數，前面配 many 剛剛好，不用再加 s。peoples 是另一個意思，指好幾個民族，不是「很多人」，放在公園這句不對。person 和 man 都是單數，跟 many 對不起來，要講很多人可以用 people，man 則要先變成 men。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -223,7 +223,7 @@ TOEIC.grammar = [
      "I see two fishs and three sheeps."
     ],
     "answer": 1,
-    "explanation": "fish 和 sheep 這兩個字單數複數長得一樣，前面就算加了數字也不用改。台灣學生看到 two、three 就反射加 s，這裡剛好要忍住不加。"
+    "explanation": "fish 和 sheep 的複數通常跟單數長得一樣，前面就算加了數字也不用改，所以寫 two fish、three sheep。sheep 的複數一定是 sheep，沒有 sheeps 這個寫法，所以第一、三、四句都錯；第四句的 fishs 也不是英文的拼法。fishes 只在講好幾種不同的魚時才用，一般說幾條魚用 fish。台灣學生看到 two、three 就反射加 s，這裡剛好要忍住不加。"
    }
   ]
  },
@@ -371,7 +371,7 @@ TOEIC.grammar = [
      "pieces"
     ],
     "answer": 3,
-    "explanation": "要加 s 的是前面的單位 piece，後面的 paper 不動，所以是 two pieces of paper。很多人會寫成 two piece of papers，剛好兩邊都弄反了。"
+    "explanation": "要加 s 的是前面的單位 piece，後面的 paper 不動，所以是 two pieces of paper。piece 是單位，前面有 two 就要變複數，寫 two piece 不對；空格要放的是單位，填 paper 或 papers 會變成 two paper of paper、two papers of paper，同一個字重複，意思也不通。很多人會寫成 two piece of papers，剛好兩邊都弄反了。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -387,13 +387,13 @@ TOEIC.grammar = [
    {
     "q": "下面哪一句沒有錯？",
     "options": [
-     "There are two waters on the table.",
+     "There are two water on the table.",
      "There are two glass of water on the table.",
      "There are two waters glass on the table.",
      "There are two glasses of water on the table."
     ],
     "answer": 3,
-    "explanation": "water 不加 s，要數就借容器，而且加 s 的是容器 glass，所以寫成 two glasses of water。two waters 把不可數名詞當可數用；two glass of water 則是容器該加 s 卻沒加。"
+    "explanation": "water 不加 s，也不能直接配數字，要數就借容器，而且加 s 的是容器 glass，所以寫成 two glasses of water。two water 把數字直接放在不可數名詞前面，少了容器；two glass of water 是容器該加 s 卻沒加；two waters glass 把 s 加錯地方，字序也不對。"
    },
    {
     "q": "下面哪一個字是不可數名詞？",
@@ -530,10 +530,10 @@ TOEIC.grammar = [
      "a",
      "many",
      "an",
-     "some"
+     "two"
     ],
     "answer": 2,
-    "explanation": "old 的第一個聲音是母音，所以用 an，寫成 a old 唸起來會卡住。many 後面要接可數名詞的複數，some 後面接複數或不可數名詞，這兩個都跟單數的 old car 對不起來。"
+    "explanation": "old 的第一個聲音是母音，所以用 an，寫成 a old 唸起來會卡住。many 和 two 後面都要接複數名詞，得寫成 many old cars、two old cars，跟單數的 old car 對不起來。"
    },
    {
     "q": "I wait for ___ hour every day.",
@@ -573,11 +573,11 @@ TOEIC.grammar = [
     "options": [
      "an",
      "a",
-     "some",
+     "two",
      "many"
     ],
     "answer": 1,
-    "explanation": "useful 的 u 唸起來是 y 的聲音，不是母音，所以用 a。看到 u 就反射寫 an 是這一課最常出錯的地方；some 和 many 後面接的是複數或不可數名詞，跟單數的 book 對不起來。"
+    "explanation": "useful 的 u 唸起來是 y 的聲音，不是母音，所以用 a。看到 u 就反射寫 an 是這一課最常出錯的地方；two 和 many 後面要接複數名詞，而且主詞 This 是單數，都跟單數的 book 對不起來。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -593,13 +593,13 @@ TOEIC.grammar = [
    {
     "q": "下面哪一句沒有錯？",
     "options": [
-     "I want a water.",
+     "I want a bread.",
      "I want a rice.",
      "I want a cup of coffee.",
      "I want an information."
     ],
     "answer": 2,
-    "explanation": "a 和 an 後面只能接單數的可數名詞，water、rice、information 都是不可數名詞，前面不能加。要講一杯咖啡就借容器，寫成 a cup of coffee。"
+    "explanation": "a 和 an 後面只能接單數的可數名詞，bread、rice、information 都是不可數名詞，前面不能加。要講一個就借單位，像 a loaf of bread、a bowl of rice、a piece of information；一杯咖啡也是借容器，寫成 a cup of coffee。"
    },
    {
     "q": "下面哪一句的冠詞和單複數都對？",
@@ -704,10 +704,10 @@ TOEIC.grammar = [
      "The"
     ],
     "answer": 3,
-    "explanation": "第一句已經提過這台腳踏車，第二句再講同一台，你跟對方都知道是哪一台了，所以用 The。第一次提到才用 a；an 用在母音開頭的字前面；some 後面接複數或不可數名詞。"
+    "explanation": "第一句已經提過這台腳踏車，第二句再講同一台，你跟對方都知道是哪一台了，所以用 The。A 用在第一次提到；An 用在母音開頭的字前面，bike 不是；Some 加單數名詞是「某一台（不知道是哪台）」的意思，跟前面已經講過的那台對不起來。"
    },
    {
-    "q": "Please close ___ window. It is cold.",
+    "q": "This room has only one window. Please close ___ window. It is cold.",
     "options": [
      "a",
      "the",
@@ -715,7 +715,7 @@ TOEIC.grammar = [
      "some"
     ],
     "answer": 1,
-    "explanation": "現場就那一扇窗，講的人和聽的人都知道是哪一扇，用 the。寫成 a window 會變成「隨便關一扇窗」，聽起來很奇怪。"
+    "explanation": "第一句說這個房間只有一扇窗，講的人和聽的人都知道是哪一扇，用 the。寫成 a window 會變成「隨便關一扇窗」，好像房間裡有好幾扇；an 要接母音開頭的字，window 不是；some 加單數名詞是「某一扇不知道是哪扇」，跟只有一扇窗對不起來。"
    },
    {
     "q": "___ sun is very hot today.",
@@ -729,7 +729,7 @@ TOEIC.grammar = [
     "explanation": "太陽在這世界上只有一個，不可能認錯，前面固定用 The。這一類的字還有 the moon、the sky，直接當固定寫法記起來就好。"
    },
    {
-    "q": "___ book on my desk is very old.",
+    "q": "There is only one book on my desk. ___ book is very old.",
     "options": [
      "Some",
      "A",
@@ -737,7 +737,7 @@ TOEIC.grammar = [
      "The"
     ],
     "answer": 3,
-    "explanation": "後面的 on my desk 已經把是哪一本書指出來了，這時候前面要用 The。如果只說 a book，聽的人根本不知道是哪一本，也就不會再接一串字去限定它。"
+    "explanation": "第一句說桌上只有一本書，第二句講的就是那一本，你跟對方都知道是哪一本，所以用 The。A 用在第一次提到、對方還不知道是哪一本的時候；An 要接母音開頭的字，book 不是；Some 加單數名詞是「某一本不知道是哪本」，跟桌上唯一那本對不起來。"
    },
    {
     "q": "你肚子餓，想吃一顆蘋果，對方還不知道你指的是哪一顆。下面哪一句最合適？",
@@ -1094,21 +1094,21 @@ TOEIC.grammar = [
      "any",
      "a",
      "much",
-     "some"
+     "a lot"
     ],
     "answer": 0,
-    "explanation": "單純在問有沒有，問句用 any。some 主要用在肯定句；a 後面只能接單數，這裡是複數的 questions；question 可以一個一個數，不能配只接不可數名詞的 much。"
+    "explanation": "單純在問有沒有，問句用 any。a 後面只能接單數，這裡是複數的 questions；question 可以一個一個數，不能配只接不可數名詞的 much；a lot 後面少了 of，要寫成 a lot of questions 才接得上名詞。"
    },
    {
-    "q": "Would you like ___ coffee?",
+    "q": "Here, have ___ cookies. I just made them.",
     "options": [
      "some",
-     "any",
+     "every",
      "a",
-     "many"
+     "much"
     ],
     "answer": 0,
-    "explanation": "問句原則上用 any，但這一句是在請對方喝咖啡，講的人預期答案是好，這種請人吃喝或幫忙的問句習慣用 some。coffee 在這裡是不可數名詞，所以 a 和 many 都接不上。"
+    "explanation": "這一句是在請對方吃餅乾，請人吃東西、給人東西的肯定邀請句用 some，聽起來是真心要給對方。every 後面要接單數名詞（every cookie），不能接複數的 cookies；a 只能接單數，跟複數的 cookies 對不起來；much 只接不可數名詞，cookie 可以一個一個數。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -1262,7 +1262,7 @@ TOEIC.grammar = [
      "a many"
     ],
     "answer": 1,
-    "explanation": "money 是不可數名詞，要配 much，而且這是否定句，正好是 much 最自然的位置。many 只能接可數名詞的複數，如果硬寫成 many moneys 就錯得更徹底了。"
+    "explanation": "money 是不可數名詞，要配 much，而且這是否定句，正好是 much 最自然的位置。many 只能接可數名詞的複數；many of 後面要先接 the、my 這類的字才能接名詞，而且同樣只配可數名詞；a many 這種寫法不存在。"
    },
    {
     "q": "How ___ students do you have in your class?",
@@ -1273,7 +1273,7 @@ TOEIC.grammar = [
      "lot of"
     ],
     "answer": 2,
-    "explanation": "student 可以一個一個數，問數量用 How many，後面接複數。How much 是問數不出來的東西，像 How much water；a lot of 是在陳述「很多」，不能拿來問問題。"
+    "explanation": "student 可以一個一個數，問數量用 How many，後面接複數。How much 是問數不出來的東西，像 How much water；How 後面不能接 a lot of，英文沒有 How a lot of 這種問法；lot of 前面少了 a，本身就不成立。"
    },
    {
     "q": "How ___ water do you drink every day?",
@@ -1284,7 +1284,7 @@ TOEIC.grammar = [
      "much"
     ],
     "answer": 3,
-    "explanation": "water 是不可數名詞，問數量用 How much。How many 後面要接可數名詞的複數，而 water 加不了 s，所以接不上；few 也是只配可數名詞。"
+    "explanation": "water 是不可數名詞，問數量用 How much。How many 後面要接可數名詞的複數，而 water 加不了 s，所以接不上；few 也是只配可數名詞；How 後面不能接 a lot of，英文沒有 How a lot of 這種問法。"
    },
    {
     "q": "下面哪一句聽起來最自然？",
@@ -1438,10 +1438,10 @@ TOEIC.grammar = [
      "little of"
     ],
     "answer": 0,
-    "explanation": "water 是不可數名詞，而且是開口要一點水，語氣正面，所以用 a little。a few 只接可數名詞的複數；如果寫成 little water，語氣會變成「幾乎沒有水」，跟請對方給你水的意思剛好相反。"
+    "explanation": "water 是不可數名詞，而且是開口要一點水，語氣正面，所以用 a little。a few 只接可數名詞的複數；a many 這種寫法不存在；little of 後面要先接 the、my 這類的字才能接名詞，而且沒有 a 的 little 是「幾乎沒有」，跟請對方給你水的意思剛好相反。"
    },
    {
-    "q": "We have ___ time. Hurry up!",
+    "q": "你想說「我們幾乎沒時間了，快一點！」We have ___ time. Hurry up!",
     "options": [
      "a little",
      "a few",
@@ -1449,10 +1449,10 @@ TOEIC.grammar = [
      "little"
     ],
     "answer": 3,
-    "explanation": "後面叫人快一點，表示時間快不夠了，要用沒有 a 的 little，意思是幾乎沒時間。a little time 是「還有一點時間」，語氣不合；time 在這裡是不可數名詞，所以 a few 和 few 都接不上。"
+    "explanation": "題目要說的是幾乎沒時間，要用沒有 a 的 little。a little time 是「還有一點時間」，跟「幾乎沒時間」不合；time 在這裡是不可數名詞，所以 a few 和 few 都接不上。"
    },
    {
-    "q": "She has ___ money. She cannot buy the book.",
+    "q": "你想說「她幾乎沒有錢，買不起那本書」。She has ___ money. She cannot buy the book.",
     "options": [
      "a little",
      "little",
@@ -1460,7 +1460,7 @@ TOEIC.grammar = [
      "few"
     ],
     "answer": 1,
-    "explanation": "後面說她買不起，表示錢幾乎沒有，用沒有 a 的 little。a little money 是「還有一點錢」，語氣不合；money 是不可數名詞，a few 和 few 只接可數名詞的複數。"
+    "explanation": "題目要說的是錢幾乎沒有，用沒有 a 的 little。a little money 是「還有一點錢」，跟「幾乎沒有錢」不合；money 是不可數名詞，a few 和 few 只接可數名詞的複數。"
    },
    {
     "q": "你想說「我有幾個問題想問你」。I have ___ questions for you.",
@@ -1471,7 +1471,7 @@ TOEIC.grammar = [
      "a few"
     ],
     "answer": 3,
-    "explanation": "想問幾個問題是正面的語氣，而且 question 可以數，所以用 a few。如果寫成 few questions，聽起來會變成「我幾乎沒有問題」，那就不用問了。"
+    "explanation": "想問幾個問題是正面的語氣，而且 question 可以數，所以用 a few。如果寫成 few questions，聽起來會變成「我幾乎沒有問題」，那就不用問了。little 和 a little 只接不可數名詞，question 可以數，兩個都接不上。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -1657,7 +1657,7 @@ TOEIC.grammar = [
      "I love her."
     ],
     "answer": 3,
-    "explanation": "愛這個動作落在她身上，要用受格 her。I love she 是照中文「我愛她」的順序直接搬過去的錯句；Me 是受格不能當主角；hers 是「她的東西」，跟這裡的意思不合。"
+    "explanation": "愛這個動作落在她身上，要用受格 her。I love she 把主格 she 放在動作後面，中文的「她」不分主格受格，英文放在這個位置就要換成 her；Me 是受格不能當主角；hers 是「她的東西」，跟這裡的意思不合。"
    },
    {
     "q": "My mother gives the book to ___.",
@@ -1864,7 +1864,7 @@ TOEIC.grammar = [
      "its"
     ],
     "answer": 3,
-    "explanation": "這裡要說「牠的」，用 its，沒有撇號。it's 是 it is 縮起來的，放進去整句會變成 My cat likes it is new bed，根本讀不通；its' 這種寫法不存在。"
+    "explanation": "這裡要說「牠的」，用 its，沒有撇號。it's 是 it is 縮起來的，放進去整句會變成 My cat likes it is new bed，讀不通；it 只是「它」本身，不能直接放在 new bed 前面表示「牠的」；its' 這種寫法不存在。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -2175,18 +2175,18 @@ TOEIC.grammar = [
     "explanation": "這是肯定句，用 something。anything 主要出現在否定句和問句；nothing 是「什麼都沒有」，跟肚子餓想吃東西的意思相反；everything 是「每樣東西」，講的是全部，語氣太誇張。"
    },
    {
-    "q": "Do you know ___ here?",
+    "q": "Did ___ call me this morning?（今天早上有人打電話給我嗎？）",
     "options": [
-     "everyone",
-     "someone",
-     "no one",
+     "anything",
+     "anywhere",
+     "nothing",
      "anyone"
     ],
     "answer": 3,
-    "explanation": "單純在問有沒有，問句用 any 這一排，所以是 anyone。someone 用在肯定句；no one 是「沒有人」，放進問句意思講不通；everyone 是「每個人」，跟這裡想問的不一樣。"
+    "explanation": "要問「有沒有人」，用指人的 anyone，問句用 any 這一排。anything 指東西，東西不會打電話；anywhere 指地方，不能放在 call 前面當主詞；nothing 也是指東西，而且是「什麼都沒有」，放進來句子講不通。"
    },
    {
-    "q": "I do not have ___ in my bag.",
+    "q": "I do not have ___ in my bag.（我的包包裡什麼都沒有。）",
     "options": [
      "something",
      "anything",
@@ -2194,7 +2194,7 @@ TOEIC.grammar = [
      "everything"
     ],
     "answer": 1,
-    "explanation": "否定句用 any 這一排，寫成 do not have anything。如果用 nothing，句子裡就同時有 not 和 nothing，變成否定兩次；something 用在肯定句。"
+    "explanation": "要說「什麼都沒有」，否定句用 any 這一排，寫成 do not have anything。用 nothing 的話，句子裡同時有 not 和 nothing，變成否定兩次；something 放進這句是「有某樣東西沒帶」，不是什麼都沒有；everything 放進否定句是「不是每樣東西都在」，意思也不一樣。"
    },
    {
     "q": "「家裡沒有人」要寫哪一句？",
@@ -2205,7 +2205,7 @@ TOEIC.grammar = [
      "Anybody is at home."
     ],
     "answer": 0,
-    "explanation": "要說一個人都沒有，直接用 Nobody 當主角最乾淨。anybody 不能放在句子最前面當肯定的主角；Not anybody 不是英文的講法；Somebody is not at home 是說某一個人不在家，跟一個人都沒有差很多。"
+    "explanation": "要說一個人都沒有，直接用 Nobody 當主詞最乾淨。Not anybody 不是英文的講法，not 不會這樣放在主詞最前面；Somebody is not at home 是說某一個人不在家，跟一個人都沒有差很多；anybody 放在肯定句是「隨便哪個人都」的意思，Anybody is at home 變成「隨便誰都在家」，講不通。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -2216,7 +2216,7 @@ TOEIC.grammar = [
      "I do not know something about it."
     ],
     "answer": 0,
-    "explanation": "nothing 本身已經是否定，直接寫 I know nothing 就好。第二句 not 和 nothing 疊在一起是否定兩次；第三句肯定句不用 anything；第四句是否定句，該用 anything 而不是 something。"
+    "explanation": "nothing 本身已經是否定，直接寫 I know nothing about it 就好。第二句 not 和 nothing 疊在一起，否定了兩次；第三句是肯定句，英文不這樣用 anything；第四句要說「什麼都不知道」，否定句要用 anything，not 配 something 只有在講某一件特定的事不知道時才用，單獨這樣講不自然。"
    },
    {
     "q": "___ waiting for you outside.",
@@ -2227,7 +2227,7 @@ TOEIC.grammar = [
      "Anyone is"
     ],
     "answer": 1,
-    "explanation": "someone 當主角時算單數，後面要配單數的 is。Someone are 前後對不起來；some one 中間不能分開寫；肯定句的主角也不用 anyone。"
+    "explanation": "someone 當主詞時算單數，後面要配單數的 is。Someone are 前後對不起來；some one 在這裡要連起來寫成一個字；anyone 放在肯定句是「隨便哪個人都」的意思，Anyone is waiting for you outside 變成「隨便誰都在外面等你」，講不通。"
    },
    {
     "q": "I want ___ to drink. It is very hot today.",
@@ -2238,7 +2238,7 @@ TOEIC.grammar = [
      "cold something"
     ],
     "answer": 0,
-    "explanation": "描述 something 的字要放在它後面，寫成 something cold，這跟一般名詞把描述的字放前面剛好相反。cold something 是照中文「冰的東西」順序直接搬過去的錯句；肯定句也不用 anything。"
+    "explanation": "描述 something 的字要放在它後面，寫成 something cold，這跟一般名詞把描述的字放前面剛好相反。cold something 是照中文「冰的東西」順序直接搬過去的錯句；a cold something 除了順序錯，前面還多了 a；cold anything 順序一樣錯，而且這裡是想要一樣東西，要用 something。"
    },
    {
     "q": "下面哪一句的 something 用得對？",
@@ -2249,7 +2249,7 @@ TOEIC.grammar = [
      "Nobody does not have anything."
     ],
     "answer": 2,
-    "explanation": "肯定句用 something，所以第三句對。第一句在 something 前面多加了一個 a，這一家人本來就不跟冠詞連用；第二句是否定句，該用 anything；第四句的 Nobody 已經是否定，後面又加 does not，變成否定兩次。"
+    "explanation": "肯定句用 something，所以第三句對。第一句在 something 前面多加了一個 a，這一家人一般不加 a；第二句要說手上什麼都沒有，否定句用 anything，not 配 something 只有在講某一樣特定的東西時才用，這裡不自然；第四句的 Nobody 已經是否定，後面又加 does not，變成否定兩次。"
    }
   ]
  },
@@ -2405,7 +2405,7 @@ TOEIC.grammar = [
      "be"
     ],
     "answer": 2,
-    "explanation": "my mother 是一個人，等於 she，所以配 is。are 要兩個以上的人才用，am 只配 I。中文說「我媽媽是護士」跟英文一樣有「是」，這句反而不容易漏掉 be 動詞。"
+    "explanation": "my mother 是一個人，等於 she，所以配 is。are 是給 you 或兩個以上的人用的，am 只配 I，be 是原本的樣子，不能直接放在主詞後面當句子的動詞。中文說「我媽媽是護士」跟英文一樣有「是」，這句反而不容易漏掉 be 動詞。"
    },
    {
     "q": "You ___ my best friend.",
@@ -2416,7 +2416,7 @@ TOEIC.grammar = [
      "be"
     ],
     "answer": 0,
-    "explanation": "you 不管是一個人還是一群人，都配 are。很多人看到「你」只有一個人就想用 is，但 you 這個字在英文永遠配 are。"
+    "explanation": "you 不管是一個人還是一群人，都配 are。很多人看到「你」只有一個人就想用 is，但 you 這個字在英文永遠配 are；am 只配 I；be 是原本的樣子，不能直接放在主詞後面當句子的動詞。"
    },
    {
     "q": "She's 是哪兩個字縮起來的？",
@@ -2449,7 +2449,7 @@ TOEIC.grammar = [
      "be"
     ],
     "answer": 0,
-    "explanation": "Tom and Mary 是兩個人，配 are。很多人只看到最靠近的 Mary 就寫 is，但決定用哪一個的是整個主詞，兩個人加起來就要用 are。"
+    "explanation": "Tom and Mary 是兩個人，配 are。很多人只看到最靠近的 Mary 就寫 is，但決定用哪一個的是整個主詞，兩個人加起來就要用 are。am 只配 I；be 是原本的樣子，不能直接放在主詞後面當句子的動詞。"
    },
    {
     "q": "___ a nice day today.",
@@ -2596,7 +2596,7 @@ TOEIC.grammar = [
      "no is"
     ],
     "answer": 0,
-    "explanation": "she 是一個人，配 is，否定就是 isn't。aren't 是給兩個以上的人用的；amn't 這個寫法在英文不存在；no is 是把中文的「不」直接搬過來，英文用的是 not 而且要放在 be 動詞後面。"
+    "explanation": "she 是一個人，配 is，否定就是 isn't。aren't 是給 you、we、they 或兩個以上的人用的；amn't 不是標準英文的寫法，而且 am 只配 I，跟 she 對不起來；no is 是把中文的「不」直接搬過來，英文用的是 not 而且要放在 be 動詞後面。"
    },
    {
     "q": "___ you tired?",
@@ -2618,7 +2618,7 @@ TOEIC.grammar = [
      "be"
     ],
     "answer": 2,
-    "explanation": "they 是兩個以上的人，配 are，not 放在 are 後面。加了 not 也不會改變配對的規則，該用哪個 be 動詞還是看主詞。"
+    "explanation": "they 是兩個以上的人，配 are，not 放在 are 後面。加了 not 也不會改變配對的規則，該用哪個 be 動詞還是看主詞：is 是給一個人或一樣東西用的，am 只配 I，be 是原本的樣子，不能直接放在主詞後面當句子的動詞。"
    },
    {
     "q": "Is Tom your brother? 最自然的否定回答是？",
@@ -2629,7 +2629,7 @@ TOEIC.grammar = [
      "No, isn't he."
     ],
     "answer": 1,
-    "explanation": "問句用 Is 開頭，回答就用 isn't，而且 Tom 要換成 he。not 一定跟在 be 動詞後面，不能放前面；回答的時候主詞在前、be 動詞在後，不用像問句那樣顛倒。"
+    "explanation": "問句用 Is 開頭，回答就用 isn't，而且 Tom 要換成 he。not 一定跟在 be 動詞後面，不能放前面，所以 he not is 不對；英文否定用 not，不用 no，所以 he no is 也不對；回答的時候主詞在前、be 動詞在後，不用像問句那樣顛倒，所以 isn't he 不對。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -2640,7 +2640,7 @@ TOEIC.grammar = [
      "I am no ready."
     ],
     "answer": 2,
-    "explanation": "am not 沒有 amn't 這種縮寫，只能寫成 I'm not。第二句把 not 放到 be 動詞前面，順序錯了；第四句用了 no，英文否定句用的是 not。"
+    "explanation": "標準英文裡 am not 不縮成 amn't，只能寫成 I'm not。第二句把 not 放到 be 動詞前面，順序錯了；第四句用了 no，英文否定句用的是 not。"
    },
    {
     "q": "___ your parents at home?",
@@ -2651,7 +2651,7 @@ TOEIC.grammar = [
      "Be"
     ],
     "answer": 0,
-    "explanation": "your parents 是爸爸媽媽兩個人，配 are。看到 parents 後面有 s 就知道不只一個，這時候用 Is 是把主詞看成一個人了。"
+    "explanation": "your parents 是爸爸媽媽兩個人，配 are。看到 parents 後面有 s 就知道不只一個，這時候用 Is 是把主詞看成一個人了；Am 只配 I；Be 是原本的樣子，不能拿來開頭問問題。"
    },
    {
     "q": "Are you a student? 的肯定回答是？",
@@ -2662,7 +2662,7 @@ TOEIC.grammar = [
      "Yes, am I."
     ],
     "answer": 1,
-    "explanation": "用 Are 問就用 am 回答，主詞換成 I。Yes 的回答不能縮寫成 Yes, I'm.，這是很多人會寫的錯；Yes, am I. 順序顛倒了，回答不用倒裝。"
+    "explanation": "用 Are 問就用 am 回答，主詞換成 I。Yes 的回答不能縮寫成 Yes, I'm.，這是很多人會寫的錯；Yes, I do. 是回答 Do 開頭的問句用的，這裡問句用的是 Are；Yes, am I. 順序顛倒了，回答不用倒裝。"
    },
    {
     "q": "「這些書不是新的。」哪一句對？",
@@ -2772,7 +2772,7 @@ TOEIC.grammar = [
      "It has"
     ],
     "answer": 1,
-    "explanation": "a cat 只有一隻，用 There is。There are 要後面兩個以上才用；英文沒有 there have 這種說法；It has 是在講某個東西擁有什麼，跟「椅子底下有一隻貓」的意思不一樣。"
+    "explanation": "a cat 只有一隻，用 There is。There are 要後面兩個以上才用；表示某個地方有什麼時，there 後面不直接接 have，There have a cat 不成立；It has 是在講某個東西擁有什麼，這句的 it 沒有指誰，也不是「椅子底下有一隻貓」的意思。"
    },
    {
     "q": "There ___ many students in the classroom.",
@@ -2783,7 +2783,7 @@ TOEIC.grammar = [
      "are"
     ],
     "answer": 3,
-    "explanation": "many students 是很多學生，兩個以上要用 are。決定用 is 還是 are 的是後面那個名詞，不是前面的 there；have 和 has 都不能接在 there 後面。"
+    "explanation": "many students 是很多學生，兩個以上要用 are。決定用 is 還是 are 的是後面那個名詞，不是前面的 there；表示「有」的時候，there 後面不直接接 have 或 has 再接名詞。"
    },
    {
     "q": "___ there any milk in the fridge?",
@@ -2805,7 +2805,7 @@ TOEIC.grammar = [
      "There two windows are in my room."
     ],
     "answer": 2,
-    "explanation": "two windows 是兩扇，用 are，而且 are 要緊接在 there 後面。第一句用了英文沒有的 there have；第二句沒有跟著後面的名詞改；第四句把 are 移到名詞後面，順序不對。"
+    "explanation": "two windows 是兩扇，用 are，接在 there 後面。第一句用 there have 加名詞表示「有」，英文不這樣說；第二句沒有跟著後面的名詞改；第四句把 are 移到名詞後面，順序不對。"
    },
    {
     "q": "There ___ a lot of water in the bottle.",
@@ -2816,7 +2816,7 @@ TOEIC.grammar = [
      "is"
     ],
     "answer": 3,
-    "explanation": "water 是沒辦法一個一個數的東西，用 is。are 要後面數得出兩個以上才用；have 不能接在 there 後面；many 是拿來接數得出來的東西，不能放在這個位置當動詞。"
+    "explanation": "water 是沒辦法一個一個數的東西，用 is。are 要後面數得出兩個以上才用；表示「有」的時候，have 不能直接接在 there 後面；many 是拿來接數得出來的東西，不能放在這個位置當動詞。"
    },
    {
     "q": "「我有兩個哥哥。」哪一句對？",
@@ -2827,7 +2827,7 @@ TOEIC.grammar = [
      "I am two brothers."
     ],
     "answer": 1,
-    "explanation": "這句在講哥哥是我的，屬於誰要用 have。There are two brothers. 只是說某個地方有兩個哥哥，沒有講是誰的；第四句用 be 動詞會變成「我是兩個哥哥」，意思整個跑掉。"
+    "explanation": "這句在講哥哥是我的，屬於誰要用 have。There are two brothers. 只是說某個地方有兩個哥哥，沒有講是誰的；There is two brothers of me. 的兩個哥哥要配 are 卻用了 is，而且英文不用 of me 表示「我的」；第四句用 be 動詞會變成「我是兩個哥哥」，意思整個跑掉。"
    },
    {
     "q": "「教室裡沒有學生。」哪一句對？",
@@ -2838,7 +2838,7 @@ TOEIC.grammar = [
      "There no students in the classroom."
     ],
     "answer": 2,
-    "explanation": "students 是兩個以上，用 aren't。第一句沒有跟著後面的名詞改成 aren't；第二句用了英文沒有的 there have；第四句只放了 no，句子裡少了 be 動詞。"
+    "explanation": "students 是兩個以上，用 aren't。第一句沒有跟著後面的名詞改成 aren't；第二句用 there haven't 表示「沒有」，英文不這樣說；第四句只放了 no，句子裡少了 be 動詞。"
    },
    {
     "q": "Is there a post office near here? 的否定回答是？",
@@ -2849,7 +2849,7 @@ TOEIC.grammar = [
      "No, there isn't."
     ],
     "answer": 3,
-    "explanation": "問句用 Is there 開頭，回答就照樣用 there is 的否定，寫成 No, there isn't.。回答的時候不要把 there 換成 it；a post office 只有一間，也不會用 aren't。"
+    "explanation": "問句用 Is there 開頭，回答就照樣用 there is 的否定，寫成 No, there isn't.。回答的時候不要把 there 換成 it；a post office 只有一間，也不會用 aren't；問句用的是 be 動詞 is，回答也不能換成 hasn't。"
    }
   ]
  },
@@ -2949,7 +2949,7 @@ TOEIC.grammar = [
      "明天才要做的事"
     ],
     "answer": 1,
-    "explanation": "現在簡單式管的是天天都這樣的習慣，還有不會改變的事實和長期的狀態。此刻正在做到一半的事有另外一種說法，後面的單元會教。"
+    "explanation": "現在簡單式管的是天天都這樣的習慣，還有不會改變的事實和長期的狀態。此刻正在做到一半的事有另外一種說法；昨天已經發生的事要用過去式；明天才要做的事通常用表示未來的說法，這些後面的單元會教。"
    },
    {
     "q": "「我們每天早上喝牛奶。」哪一句對？",
@@ -2971,7 +2971,7 @@ TOEIC.grammar = [
      "lives"
     ],
     "answer": 0,
-    "explanation": "這句在講一件本來就成立的事實，用現在簡單式，而且 fish 這裡指的是所有的魚不只一條，動詞維持原形 live。living 前面沒有 be 動詞；are live 兩個動詞擠在一起；lives 是主詞只有一個的時候才用。"
+    "explanation": "這句在講一件本來就成立的事實，用現在簡單式，而且 fish 這裡指的是所有的魚不只一條，動詞維持原形 live。living 前面沒有 be 動詞；are live 兩個動詞擠在一起；lives 要主詞是 he、she、it 這類單一的人或東西才用，這裡的 fish 是很多條，不能用。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -3015,7 +3015,7 @@ TOEIC.grammar = [
      "I read English every day."
     ],
     "answer": 3,
-    "explanation": "英文的順序是主詞、動詞、受詞，講時間的說法放在最後面。前三句都是照中文的語序搬過去的，把 every day 卡在主詞和動詞中間，或是把動詞丟到句尾，英文都不會這樣說。"
+    "explanation": "英文的順序是主詞、動詞、受詞，every day 這種講時間的說法通常放在句尾（也可以放句首）。第一句照中文的語序把 every day 卡在主詞和動詞中間；第二句把 every day 塞在動詞 read 和受詞 English 中間，動詞和受詞被拆開；第三句把動詞 read 丟到句尾，變成主詞、受詞、動詞的順序。"
    }
   ]
  },
@@ -3180,7 +3180,7 @@ TOEIC.grammar = [
      "going"
     ],
     "answer": 1,
-    "explanation": "Tom and his sister 是兩個人，不是單數，動詞維持原形 go。看到最靠近的 sister 就寫 goes 是很常見的錯，決定加不加 s 的是整個主詞。"
+    "explanation": "Tom and his sister 是兩個人，不是單數，動詞維持原形 go。看到最靠近的 sister 就寫 goes 是很常見的錯，決定加不加 s 的是整個主詞；gos 是錯的拼法，就算要加也要寫成 goes；going 前面少了 be 動詞，不能單獨當動詞用。"
    },
    {
     "q": "My mother ___ a new phone.",
@@ -3318,7 +3318,7 @@ TOEIC.grammar = [
      "not"
     ],
     "answer": 2,
-    "explanation": "we 是兩個以上的人，用 don't。doesn't 是給一個人用的；have 是一般動詞，不能用 be 動詞的 isn't 否定；只寫 not 沒有助動詞撐著，句子不成立。"
+    "explanation": "we 是兩個以上的人，用 don't。doesn't 是給第三人稱單數（he、she、it 這類）用的；have 是一般動詞，不能用 be 動詞的 isn't 否定；只寫 not 沒有助動詞撐著，句子不成立。"
    },
    {
     "q": "下面哪一句沒有錯？",
@@ -3326,7 +3326,7 @@ TOEIC.grammar = [
      "They don't like rain.",
      "He don't like rain.",
      "She doesn't likes rain.",
-     "I am not like rain."
+     "I am not likes rain."
     ],
     "answer": 0,
     "explanation": "they 配 don't，後面接動詞原形 like，完全正確。he 是一個人要用 doesn't；doesn't 後面不能接 likes；like 是一般動詞，不能用 am not 來否定。"
@@ -3345,7 +3345,7 @@ TOEIC.grammar = [
    {
     "q": "下面哪一句是對的？",
     "options": [
-     "My sister isn't like fish.",
+     "My sister isn't likes fish.",
      "My sister not like fish.",
      "My sister don't likes fish.",
      "My sister doesn't like fish."
@@ -3478,7 +3478,7 @@ TOEIC.grammar = [
      "Is he like dogs?"
     ],
     "answer": 2,
-    "explanation": "he 用 Does 開頭，而且 Does 後面的動詞要回到原形 like。第一句在動詞上又加了一次 s；第二句沒有配合第三人稱單數；第四句把 be 動詞和一般動詞湊在一起。"
+    "explanation": "he 用 Does 開頭，而且 Does 後面的動詞要回到原形 like。第一句在動詞上又加了一次 s；第二句沒有配合第三人稱單數；第四句的 like 只能當介系詞「像」，意思變成「他像狗嗎？」，不是在問喜不喜歡。"
    },
    {
     "q": "Do you go to school by bike? 最自然的肯定回答是？",
@@ -3511,7 +3511,7 @@ TOEIC.grammar = [
      "Is"
     ],
     "answer": 2,
-    "explanation": "這句裡沒有一般動詞，是在問身分，用的是 be 動詞，把 Are 搬到最前面就好。Do 是給一般動詞用的，寫成 Do you a student? 整句就沒有動詞了；Is 不配 you。"
+    "explanation": "這句裡沒有一般動詞，是在問身分，用的是 be 動詞，把 Are 搬到最前面就好。Do 和 Does 是給一般動詞用的，寫成 Do you a student? 整句就沒有動詞了，而且 Does 也不配 you；Is 不配 you。"
    },
    {
     "q": "___ your brothers play baseball?",
@@ -3708,7 +3708,7 @@ TOEIC.grammar = [
      "I am waitting for the bus."
     ],
     "answer": 0,
-    "explanation": "wait 裡面有 a 和 i 兩個母音字母，不用重複最後一個字母，直接加 ing 寫成 waiting，前面配 am。第一句少了 be 動詞；第三句少了 ing；第四句多寫了一個 t。"
+    "explanation": "wait 裡面有 a 和 i 兩個母音字母，不用重複最後一個字母，直接加 ing 寫成 waiting，前面配 am。第二句少了 be 動詞；第三句少了 ing；第四句多寫了一個 t。"
    },
    {
     "q": "She ___ a letter to her friend right now.",
@@ -3905,7 +3905,7 @@ TOEIC.grammar = [
      "My sister working in a hospital."
     ],
     "answer": 2,
-    "explanation": "在哪裡上班是長期不變的狀態，用現在簡單式，主詞是一個人所以動詞加 s。第一句會變成她此刻人在醫院裡做事，跟講職業不一樣；第二句漏掉 s；第四句少了 be 動詞。"
+    "explanation": "在哪裡上班是長期不變的狀態，用現在簡單式，主詞是一個人所以動詞加 s。第一句文法沒錯，但進行式表示這陣子暫時在醫院工作，中文沒有「最近、暫時」的意思，講職業用現在簡單式最自然；第二句漏掉 s；第四句少了 be 動詞。"
    },
    {
     "q": "The train ___ at eight every morning.",
@@ -4021,7 +4021,7 @@ TOEIC.grammar = [
      "want"
     ],
     "answer": 0,
-    "explanation": "want 是狀態動詞，就算句子裡有 now 也不加 ing，主詞 she 是第三人稱單數所以用 wants。看到 now 就反射性寫成進行式，是這一課最容易掉進去的坑。"
+    "explanation": "want 是狀態動詞，就算句子裡有 now 也不用進行式，主詞 she 是第三人稱單數所以用 wants。is wanting 是看到 now 就反射性寫成進行式，這一課最容易掉進去的坑；wanting 前面少了 be 動詞；want 漏掉了第三人稱單數的 s。"
    },
    {
     "q": "下面哪一句是錯的？",
@@ -4054,7 +4054,7 @@ TOEIC.grammar = [
      "has"
     ],
     "answer": 3,
-    "explanation": "這裡的 have 是表示擁有，屬於狀態不加 ing，而且 my brother 是一個人，要換成 has。is having 用在吃飯開派對那種真的在做的事上；have 漏掉了第三人稱單數的變化。"
+    "explanation": "這裡的 have 是表示擁有，屬於狀態不加 ing，而且 my brother 是一個人，要換成 has。is having 用在吃飯開派對那種真的在做的事上；have 漏掉了第三人稱單數的變化；having 前面少了 be 動詞，而且擁有也不用進行式。"
    },
    {
     "q": "Look! He ___ a book.",
@@ -4076,7 +4076,7 @@ TOEIC.grammar = [
      "am like"
     ],
     "answer": 1,
-    "explanation": "like 是狀態動詞，不管什麼時候都不加 ing，主詞 I 用原形 like。am liking 是把中文的「正在喜歡」硬翻過去；liking 前面少了 be 動詞；am like 是 be 動詞和一般動詞擠在一起。"
+    "explanation": "like 是狀態動詞，習慣上不用進行式，主詞 I 用原形 like。am liking 是把中文的「正在喜歡」硬翻過去；liking 前面少了 be 動詞；am like 是 be 動詞和一般動詞擠在一起。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -4219,7 +4219,7 @@ TOEIC.grammar = [
      "does sometimes"
     ],
     "answer": 1,
-    "explanation": "late 是描述狀態的字，句子需要 be 動詞，主詞 he 配 is，頻率副詞再放在 is 後面。are 配錯主詞；只放 sometimes 整句就沒有動詞了；does 是助動詞，只在否定和問句裡出現。"
+    "explanation": "late 是描述狀態的形容詞，句子需要 be 動詞，主詞 he 配 is，頻率副詞再放在 is 後面。are 配錯主詞；只放 sometimes 整句就沒有動詞了；does 是助動詞，後面要接動詞原形，late 不是動詞，不能接在 does 後面。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -4363,7 +4363,7 @@ TOEIC.grammar = [
      "did"
     ],
     "answer": 2,
-    "explanation": "my brother 是一個人，現在會用 is，換到過去就是 was。were 是給兩個以上的人用的；sick 講的是狀態不是動作，前面要接 be 動詞，不能用 did。"
+    "explanation": "my brother 是一個人，現在會用 is，換到過去就是 was。were 是配 you、we、they 這種主詞的；are 是現在的樣子，主詞也對不上，跟 last week 更對不上；sick 講的是狀態不是動作，前面要接 be 動詞，不能用 did。"
    },
    {
     "q": "「他們昨天不在家。」哪一句對？",
@@ -4407,7 +4407,7 @@ TOEIC.grammar = [
      "were"
     ],
     "answer": 2,
-    "explanation": "five years ago 是過去，主詞 she 是一個人，所以用 was。前半句的 is 是現在的狀態，後半句時間變了，be 動詞就要跟著換；were 是給兩個以上的人用的。"
+    "explanation": "five years ago 是過去，主詞 she 是一個人，所以用 was。前半句的 is 是現在的狀態，後半句時間變了，be 動詞就要跟著換，所以不能再用 is；are 是現在的樣子，也不能配一個人；were 是配 you、we、they 這種主詞的。"
    },
    {
     "q": "The children ___ in the park an hour ago.",
@@ -4571,7 +4571,7 @@ TOEIC.grammar = [
      "stopping"
     ],
     "answer": 1,
-    "explanation": "stop 是很短的動詞，要把最後一個字母 p 寫兩次再加 ed，變成 stopped。stoped 少寫了一個 p；stopd 漏掉了 e；stopping 是加 ing 的樣子，不是過去式。"
+    "explanation": "stop 只有一個音節，字尾是「一個母音字母 o 加一個子音字母 p」，這種動詞要把最後的 p 寫兩次再加 ed，變成 stopped，判斷方式跟加 ing 時一樣（stop 變成 stopping）。look、need 雖然也很短，但子音前面是兩個母音字母，就直接加 ed。stoped 少寫了一個 p；stopd 沒有把 p 寫兩次，也漏掉了 e；stopping 是加 ing 的樣子，不是過去式。"
    },
    {
     "q": "下面哪一個 ed 唸起來會多一個音節？",
@@ -4593,7 +4593,7 @@ TOEIC.grammar = [
      "opening"
     ],
     "answer": 2,
-    "explanation": "後面的 looked 已經是過去的樣子，兩個動作發生在同一個時間，所以 open 也要加 ed 變成 opened。opens 是現在簡單式；opening 前面少了 be 動詞。"
+    "explanation": "and 連接的 opened 和 looked 是先後發生的兩個動作，後面的 looked 已經是過去的樣子，前面的動詞也要用過去式，所以 open 要加 ed 變成 opened。open 是原本的樣子，沒有換成過去；opens 是現在簡單式；opening 前面少了 be 動詞。"
    },
    {
     "q": "過去簡單式的動詞，主詞換成 he 的時候要怎麼變？",
@@ -4604,7 +4604,7 @@ TOEIC.grammar = [
      "要變回最原本的樣子"
     ],
     "answer": 0,
-    "explanation": "加 s 只發生在現在簡單式的第三人稱單數。過去簡單式不管主詞是誰，動詞都長一樣，worked 就是 worked，不會變成 workeds。"
+    "explanation": "加 s 或 es 只發生在現在簡單式的第三人稱單數。過去簡單式不管主詞是誰，動詞都長一樣，worked 就是 worked，不會變成 workeds 或 workedes；主詞換成 he 也不會退回原本的 work，句子還是 He worked."
    },
    {
     "q": "下面哪一句是對的？",
@@ -5044,7 +5044,7 @@ TOEIC.grammar = [
      "don't"
     ],
     "answer": 0,
-    "explanation": "last year 是過去，而且後面接了一般動詞 drive，所以用 didn't。後半句的 does 是現在的習慣，前半句時間不同，不能也用 doesn't；wasn't 後面不能直接接 drive。"
+    "explanation": "last year 是過去，而且後面接了一般動詞 drive，所以用 didn't。後半句的 does 是現在的習慣，前半句時間不同，不能也用 doesn't；don't 也是現在的，而且主詞 my father 是一個人，配不起來；wasn't 是 be 動詞的否定，後面不能直接接 drive。"
    }
   ]
  },
@@ -5204,13 +5204,13 @@ TOEIC.grammar = [
    {
     "q": "At nine last night I ___ my homework; I finished it at ten.",
     "options": [
-     "did",
+     "were doing",
      "was doing",
      "do",
      "am doing"
     ],
     "answer": 1,
-    "explanation": "後半句說十點才寫完，表示九點的時候還在寫，要用過去進行式 was doing。did 會變成九點就做完了，跟後半句矛盾；do 和 am doing 都是現在的樣子。"
+    "explanation": "後半句說十點才寫完，表示九點的時候還在寫，要用過去進行式 was doing。were doing 的 were 配的是 you、we、they 或複數主詞，跟 I 配不起來；do 和 am doing 都是現在的樣子，跟 last night 對不上。"
    }
   ]
  },
@@ -5298,7 +5298,7 @@ TOEIC.grammar = [
   ],
   "quiz": [
    {
-    "q": "I ___ dinner when the phone rang.",
+    "q": "I ___ dinner when the phone rang.（電話響的時候，我正在煮晚餐。）",
     "options": [
      "cook",
      "cooked",
@@ -5306,7 +5306,7 @@ TOEIC.grammar = [
      "were cooking"
     ],
     "answer": 2,
-    "explanation": "電話響是突然發生的短事件，煮飯是當時的背景，背景要用過去進行式 was cooking。cooked 會變成兩件事一前一後發生；were 跟主詞 I 配不起來。"
+    "explanation": "中文說「正在煮」，電話響是突然發生的短事件，煮飯是當時的背景，背景要用過去進行式 was cooking。cooked 只說煮了這件事，放在這裡會變成電話響了才去煮，不是「正在煮」；cook 是現在的原形，跟 rang 對不上；were 跟主詞 I 配不起來。"
    },
    {
     "q": "She ___ the door and walked in.",
@@ -5317,29 +5317,29 @@ TOEIC.grammar = [
      "open"
     ],
     "answer": 0,
-    "explanation": "開門和走進去是一件做完再做下一件，按順序排的動作都用過去簡單式。後面的 walked 已經定調了，前面也要用 opened。"
+    "explanation": "開門和走進去是一件做完再做下一件，按順序排的動作都用過去簡單式。後面的 walked 已經定調了，前面也要用 opened。was opening 表示門還在開、還沒開完，接不上開完才走進去的 walked in；opens 是現在式，open 連第三人稱的 s 都沒加，兩個都跟 walked 的時態對不上。"
    },
    {
     "q": "While we ___ in the park, it started to rain.",
     "options": [
      "walk",
-     "walked",
+     "walking",
      "was walking",
      "were walking"
     ],
     "answer": 3,
-    "explanation": "while 後面接的是當背景的長事件，用過去進行式；主詞 we 配 were。was 只配一個人一個東西；walked 沒有表現出「正在進行中被打斷」。"
+    "explanation": "while 後面接當背景、正在進行的長事件，最常用過去進行式；主詞 we 配 were，所以是 were walking。was 只配 I、he、she、it 這類單數主詞；walking 前面少了 be 動詞，不成句；walk 是現在的原形，跟 started 的過去時態對不上。"
    },
    {
     "q": "When I ___ home, my father was watching TV.",
     "options": [
-     "was getting",
+     "were getting",
      "got",
      "get",
      "gets"
     ],
     "answer": 1,
-    "explanation": "回到家是一瞬間的短事件，用過去簡單式 got；看電視才是當時的背景，所以後半句用過去進行式。兩件事的分工不能對調。"
+    "explanation": "回到家是一瞬間的短事件，用過去簡單式 got；看電視才是當時的背景，所以後半句用過去進行式。were getting 的 were 跟主詞 I 配不起來；get 是現在式，gets 還是配第三人稱的形式，兩個都跟後半句的 was watching 時態對不上。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -5372,7 +5372,7 @@ TOEIC.grammar = [
      "brush"
     ],
     "answer": 0,
-    "explanation": "三個動作照順序一個接一個做完，全部用過去簡單式。前後的 got 和 left 已經定調，中間也要用 brushed。"
+    "explanation": "三個動作照順序一個接一個做完，全部用過去簡單式。前後的 got 和 left 已經定調，中間也要用 brushed。was brushing 表示正在刷、還沒刷完，放在一串依序做完的動作中間說不通；brushes 和 brush 是現在的樣子，跟 got、left 的時態對不上。"
    },
    {
     "q": "「昨天晚上七點我正在吃晚餐。」哪一句對？",
@@ -5488,13 +5488,13 @@ TOEIC.grammar = [
    {
     "q": "「我以前不喜歡狗。」哪一句對？",
     "options": [
-     "I didn't used to like dogs.",
+     "I don't use to like dogs.",
      "I not used to like dogs.",
      "I wasn't use to like dogs.",
      "I didn't use to like dogs."
     ],
     "answer": 3,
-    "explanation": "否定要用 didn't use to，did 一出場 used 就得把 d 拿掉。didn't used to 等於講了兩次過去；I not 少了助動詞；wasn't 是 be 動詞的否定，這裡用不到。"
+    "explanation": "否定要用 didn't use to，did 已經表示過去，後面的 use 不加 d。don't 是現在式，講不出「以前」；I not used to 少了助動詞 did；wasn't 是 be 動詞的否定，這裡用不到。口語和網路上也看得到 didn't used to，但考試和正式寫作用 didn't use to。"
    },
    {
     "q": "___ you use to walk to school?",
@@ -5535,10 +5535,10 @@ TOEIC.grammar = [
      "used to go",
      "went",
      "use to go",
-     "was going"
+     "were going"
     ],
     "answer": 1,
-    "explanation": "last summer 講的是只發生一次的事，要用過去簡單式 went。used to go 會變成「以前常去、現在不去了」，跟句子的意思不合；was going 是當時正在進行的畫面。"
+    "explanation": "last summer 講的是只發生一次的事，要用過去簡單式 went。used to go 會變成「以前常去、現在不去了」，不能搭 last summer 這種特定時間；use to go 少了 d，肯定句不能這樣寫；were going 的 were 跟主詞 I 配不起來。"
    },
    {
     "q": "We used to ___ TV after dinner, but now we read books.",
@@ -5840,10 +5840,10 @@ TOEIC.grammar = [
      "yet",
      "just",
      "ago",
-     "now"
+     "soon"
     ],
     "answer": 1,
-    "explanation": "後面說現在可以看電視了，表示功課剛寫完，用 just 夾在 have 和過去分詞中間。yet 不能用在肯定句；ago 要跟一段時間連用，而且放在那段時間後面；now 講的是此刻，說不出「剛剛才寫完」的意思，何況句尾已經有一個 now 了。"
+    "explanation": "後面說現在可以看電視了，表示功課剛寫完，用 just 夾在 have 和過去分詞中間。yet 不用在這種肯定句；ago 要接在一段時間後面（two days ago），也不能跟現在完成式一起用；soon 講的是不久以後，跟已經完成的 have finished 對不上。"
    },
    {
     "q": "She hasn't called me ___.",
@@ -5870,24 +5870,24 @@ TOEIC.grammar = [
    {
     "q": "Have you cleaned your room ___?",
     "options": [
-     "already",
+     "ago",
      "just",
-     "now",
+     "last week",
      "yet"
     ],
     "answer": 3,
-    "explanation": "疑問句問「了沒」，用 yet 放句尾。already 主要用在肯定句，而且要夾在 have 後面；just 也只能夾在中間，擺到句尾就不成句；now 不能這樣問。"
+    "explanation": "疑問句問「做了沒」，用 yet 放句尾。ago 要接在一段時間後面（two days ago），不能單獨放句尾；just 只能夾在 have 和過去分詞中間，擺到句尾不成句；last week 是過去的明確時間，不能跟現在完成式一起用。already 也能放在問句句尾，帶有「這麼快就做好了？」的驚訝語氣，單純問做了沒用 yet。"
    },
    {
-    "q": "just 通常放在句子的哪個位置？",
+    "q": "在現在完成式的句子裡，just 通常放在哪個位置？",
     "options": [
      "句子最前面",
      "句子最後面",
      "have 或 has 和過去分詞中間",
-     "主詞前面"
+     "過去分詞後面"
     ],
     "answer": 2,
-    "explanation": "just 夾在助動詞 have 或 has 跟過去分詞之間，像 I have just eaten。放句尾是 yet 的位置，不是 just 的。"
+    "explanation": "just 夾在助動詞 have 或 has 跟過去分詞之間，像 I have just eaten。放在句子最前面，就離開了 have 和過去分詞中間；放句尾是 yet 的位置，不是 just 的；放在過去分詞後面（I have eaten just）也不對，just 要在過去分詞前面。"
    },
    {
     "q": "下面哪一句是錯的？",
@@ -5909,7 +5909,7 @@ TOEIC.grammar = [
      "was"
     ],
     "answer": 0,
-    "explanation": "the bus 是一個東西，用 has，後面接過去分詞 left。have 配不上單數主詞；did 後面要接原形動詞；was 是 be 動詞，不能這樣接過去分詞。"
+    "explanation": "the bus 是一個東西，用 has，後面接過去分詞 left。have 配不上單數主詞；did 後面要接原形動詞；was 加 left 會變成被動，意思變成公車被別人留下，講不出「公車剛離開」。"
    },
    {
     "q": "「我剛剛把那本書看完。」哪一句對？",
@@ -5917,10 +5917,10 @@ TOEIC.grammar = [
      "I have just finished that book yesterday.",
      "I have just finished that book.",
      "I have just finish that book.",
-     "I just have finished that book."
+     "I have finished that book just."
     ],
     "answer": 1,
-    "explanation": "just 夾在 have 和過去分詞 finished 中間。第一句多了 yesterday，把時間釘死在昨天就不能用現在完成式；第三句的 finish 沒變成過去分詞；第四句把 just 放到 have 前面，位置錯了。"
+    "explanation": "just 夾在 have 和過去分詞 finished 中間。第一句多了 yesterday，把時間釘死在昨天就不能用現在完成式；第三句的 finish 沒變成過去分詞；第四句把 just 放到句尾，不成句，要說「剛剛」，just 得放在 have 和 finished 中間。"
    }
   ]
  },
@@ -6006,7 +6006,7 @@ TOEIC.grammar = [
   ],
   "quiz": [
    {
-    "q": "Have you ___ ridden a horse?",
+    "q": "「你有沒有騎過馬？」Have you ___ ridden a horse?",
     "options": [
      "never",
      "ever",
@@ -6014,10 +6014,10 @@ TOEIC.grammar = [
      "yet"
     ],
     "answer": 1,
-    "explanation": "問經驗用 ever，夾在主詞和過去分詞中間。never 是「從來沒有」，是自己回答時用的，不是拿來問人有沒有做過；already 和 yet 講的是事情做完沒有，不是問經驗。"
+    "explanation": "問別人有沒有做過某件事，用 ever，夾在主詞和過去分詞中間。填 never 會變成「你從來沒騎過馬嗎？」，是帶著驚訝的反問，跟中文的意思不合；填 already 是問「你已經騎過馬了嗎？」，講的是事情做完沒有，不是問經驗；yet 在問句裡要放句尾，不放在主詞和過去分詞中間。"
    },
    {
-    "q": "I have ___ been to Kenting.",
+    "q": "「我從來沒去過墾丁。」I have ___ been to Kenting.",
     "options": [
      "never",
      "ever",
@@ -6025,7 +6025,7 @@ TOEIC.grammar = [
      "just"
     ],
     "answer": 0,
-    "explanation": "要表達「我從來沒去過墾丁」用 never。ever 幾乎只用在問句；yet 只用在否定句和疑問句而且放句尾；just 是剛剛的意思，跟這句話不合。"
+    "explanation": "「從來沒有」用 never，夾在 have 和過去分詞 been 中間。ever 是「曾經」，不能這樣用在肯定句裡；yet 是「還沒、了沒」，用在否定句和問句，而且通常放句尾，不能表示「從來沒有」；just 是「剛剛」，I have just been to Kenting. 是「我剛去過墾丁」，跟中文的意思不合。"
    },
    {
     "q": "「她從來沒吃過壽司。」哪一句對？",
@@ -6036,7 +6036,7 @@ TOEIC.grammar = [
      "She has never ate sushi."
     ],
     "answer": 2,
-    "explanation": "never 放在 has 和過去分詞 eaten 中間。第一句 hasn't 和 never 兩個否定打架；第二句 never 位置錯了而且用了過去式；第四句的 ate 是過去式，不是過去分詞。"
+    "explanation": "never 放在 has 和過去分詞 eaten 中間。第一句 hasn't 和 never 兩個否定打架；第二句的 ate 是過去式，不能接在 has 後面，而且 never 一般放在 has 後面，放到前面是少見的強調說法；第四句的 ate 是過去式，不是過去分詞。"
    },
    {
     "q": "Have you ever ___ this movie?",
@@ -6196,7 +6196,7 @@ TOEIC.grammar = [
      "at"
     ],
     "answer": 0,
-    "explanation": "Monday 是一個起點，回答的是「從什麼時候開始」，所以用 since。for 後面要接一段長度，像 for three days。"
+    "explanation": "Monday 是一個起點，回答的是「從什麼時候開始」，所以用 since。for 後面要接一段長度，像 for three days；in 和 at 都沒有「從那時一直到現在」的意思，而且星期幾前面習慣用 on，不用 in 或 at。"
    },
    {
     "q": "「我們認識十年了。」哪一句對？",
@@ -6229,7 +6229,7 @@ TOEIC.grammar = [
      "for"
     ],
     "answer": 3,
-    "explanation": "a long time 雖然沒有數字，但講的還是一段長度，所以用 for。since 要配得出來的起點；in 和 from 都不能這樣用。"
+    "explanation": "a long time 雖然沒有數字，但講的還是一段長度，所以用 for。since 要配指得出來的起點；in 和 from 都不能接一段長度來表示「一直持續到現在」。"
    },
    {
     "q": "下面哪一個時間要接 for？",
@@ -6358,7 +6358,7 @@ TOEIC.grammar = [
      "have finish"
     ],
     "answer": 1,
-    "explanation": "two hours ago 把時間釘死在兩小時前，要用過去簡單式 finished。有明確的過去時間就不能用現在完成式；has 也跟主詞 I 配不起來。"
+    "explanation": "two hours ago 把時間釘死在兩小時前，要用過去簡單式 finished。有明確的過去時間就不能用現在完成式，所以 have finished 不行；has 跟主詞 I 配不起來；have finish 的 finish 不是過去分詞，本身就是錯的。"
    },
    {
     "q": "「我已經看過那部電影了。」哪一句對？",
@@ -6413,7 +6413,7 @@ TOEIC.grammar = [
      "do"
     ],
     "answer": 0,
-    "explanation": "When 就是在問確切的時間點，答案一定是過去某一刻，所以用 did 加原形動詞。用 have 問等於一邊問時間一邊說不知道什麼時候，自相矛盾；do 跟已經買了的事對不上。"
+    "explanation": "When 問的是確切的時間點，買這支手機的事已經發生，所以用 did 加原形動詞 buy。現在完成式不能跟問確切時間的 When 連用，所以 have 不行；has 除了這個問題，還跟主詞 you 配不起來；do 是問習慣或常態，跟已經買了的這支手機對不上。"
    },
    {
     "q": "下面哪一句是錯的？",
@@ -6431,7 +6431,7 @@ TOEIC.grammar = [
     "options": [
      "Yes, I did have.",
      "Yes, I have ate.",
-     "Yes, I have at twelve.",
+     "Yes, I have had it at twelve o'clock.",
      "Yes, I have. I ate at twelve."
     ],
     "answer": 3,
@@ -6553,11 +6553,11 @@ TOEIC.grammar = [
     "options": [
      "We don't going to eat out today.",
      "We are not going to eat out today.",
-     "We are going not to eat out today.",
+     "We are not going eat out today.",
      "We not are going to eat out today."
     ],
     "answer": 1,
-    "explanation": "句子裡已經有 be 動詞 are，not 直接放在它後面就好。don't 是給一般動詞用的，這裡用不上；not 放在 going 後面或 are 前面都不是英文的順序。"
+    "explanation": "句子裡已經有 be 動詞 are，not 直接放在它後面就好。don't 是給一般動詞用的，這裡用不上；are not going eat 漏掉了 to，going 和動詞原形中間一定要有 to；not 放在 are 前面不是英文的順序。"
    },
    {
     "q": "___ you going to take the bus?",
@@ -6584,13 +6584,13 @@ TOEIC.grammar = [
    {
     "q": "下面哪一句在講已經計畫好的事？",
     "options": [
-     "She drinks coffee every morning.",
-     "She is drinking coffee now.",
-     "She drank coffee yesterday.",
-     "She is going to drink less coffee from next week."
+     "She drinks a cup of coffee every morning.",
+     "She is drinking a cup of coffee right now.",
+     "She drank two cups of coffee yesterday.",
+     "She is going to drink less coffee next month."
     ],
     "answer": 3,
-    "explanation": "只有 is going to drink 這句在講還沒發生的打算。drinks 是現在簡單式，講的是每天的習慣；is drinking 是現在進行式，講此刻正在做；drank 講的是昨天已經發生的事。"
+    "explanation": "只有 is going to drink 這句在講還沒發生的打算。drinks 是現在簡單式，講的是每天的習慣；is drinking 是現在進行式，配 right now 講此刻正在做；drank 講的是昨天已經發生的事。"
    },
    {
     "q": "下面哪一句有錯？",
@@ -6710,11 +6710,11 @@ TOEIC.grammar = [
     "options": [
      "I carry it for you.",
      "I'll carry it for you.",
-     "I am going to carry it for you.",
+     "I will carrying it for you.",
      "I carrying it for you."
     ],
     "answer": 1,
-    "explanation": "看到對方提袋子才臨時決定要幫忙，這種當場的決定用 will。I carry 是講習慣；be going to 聽起來像早就計畫好要幫忙，跟情境不合；carrying 前面少了 be 動詞。"
+    "explanation": "看到對方提袋子才臨時決定要幫忙，這種當場的決定用 will，後面接原形動詞。I carry 是現在簡單式，講的是習慣或事實，不是當場的提議；I will carrying 在 will 後面又加了 ing，will 後面只能接原形；I carrying 前面少了 be 動詞。"
    },
    {
     "q": "___ you be free tomorrow afternoon?",
@@ -6862,24 +6862,24 @@ TOEIC.grammar = [
    {
     "q": "A: I forgot my wallet. B: Don't worry. ___",
     "options": [
-     "I am going to pay for you.",
+     "I going to pay for you.",
      "I pay for you.",
      "I paying for you.",
      "I will pay for you."
     ],
     "answer": 3,
-    "explanation": "聽到對方說沒帶錢包才決定要付，是當場的決定，用 will。be going to 聽起來像出門前就打算好要替他付；I pay 講的是習慣；paying 前面少了 be 動詞。"
+    "explanation": "聽到對方說沒帶錢包才決定要付，是當場的決定，用 will。I pay 是現在簡單式，講的是習慣，不是當場決定的說法；I going to 少了 be 動詞；paying 前面也少了 be 動詞。"
    },
    {
     "q": "I ___ study abroad next year. I have already sent my application.",
     "options": [
-     "will",
+     "am will",
      "am going to",
      "going to",
      "will to"
     ],
     "answer": 1,
-    "explanation": "申請都送出去了，表示這是早就決定好的計畫，用 be going to。will 給人的感覺是剛剛才想到；going to 前面漏了 be 動詞；will 後面也不加 to。"
+    "explanation": "申請都送出去了，表示這是早就決定好的計畫，用 be going to。am will 把 be 動詞和 will 擠在一起，英文沒有這種寫法；going to 前面漏了 be 動詞；will 後面也不加 to。"
    },
    {
     "q": "Look! That dog ___ jump into the water.",
@@ -7038,10 +7038,10 @@ TOEIC.grammar = [
      "We are play basketball with them on Saturday.",
      "We playing basketball with them on Saturday.",
      "We are playing basketball with them on Saturday.",
-     "We play basketball with them on Saturday."
+     "We played basketball with them on Saturday."
     ],
     "answer": 2,
-    "explanation": "場地訂好了就是排定好的安排，用 are playing。are play 少了 ing；playing 前面少了 be 動詞；play 這種現在簡單式講的是每個星期六都打球的習慣。"
+    "explanation": "場地訂好了就是排定好的安排，用 are playing。are play 少了 ing；playing 前面少了 be 動詞；played 是過去式，跟星期六才要打的安排對不上。"
    },
    {
     "q": "下面哪一件事不能用現在進行式講未來？",
@@ -7058,12 +7058,12 @@ TOEIC.grammar = [
     "q": "She ___ the early train next Friday. She booked her seat last week.",
     "options": [
      "is taking",
-     "takes",
+     "took",
      "take",
      "is take"
     ],
     "answer": 0,
-    "explanation": "位子都訂好了，是排定好的安排，用 is taking。takes 講的是每個星期五都搭這班車；take 沒有配合主詞；is take 少了 ing。"
+    "explanation": "位子都訂好了，是排定好的安排，用 is taking。took 是過去式，跟 next Friday 對不上；take 沒有配合主詞；is take 少了 ing。"
    },
    {
     "q": "___ you doing anything tonight?",
@@ -7212,7 +7212,7 @@ TOEIC.grammar = [
      "Could"
     ],
     "answer": 3,
-    "explanation": "請人幫忙用 Could 最客氣，把它搬到主詞前面就成問句。Do 和 Does 是給一般動詞用的；Are 後面接不了原形動詞 help。"
+    "explanation": "請人幫忙用 Could 最客氣，把它搬到主詞前面就成問句。Do you help me 問的是平常會不會幫忙，不是在請對方幫忙，跟句尾的 please 不合；Does 配第三人稱單數，主詞 you 不能用；Are 是 be 動詞，後面接不了原形動詞 help。"
    },
    {
     "q": "He ___ swim when he was five years old.",
@@ -7381,7 +7381,7 @@ TOEIC.grammar = [
     "explanation": "助動詞的否定是在它後面加 not，而且後面的動詞維持原形。not 不能放在 may 前面；comes 多加了 s；doesn't 是給一般動詞用的。"
    },
    {
-    "q": "___ I ask you a question?",
+    "q": "（客氣地徵求對方同意）___ I ask you a question?",
     "options": [
      "Do",
      "Am",
@@ -7389,7 +7389,7 @@ TOEIC.grammar = [
      "Will"
     ],
     "answer": 2,
-    "explanation": "客氣地問對方可不可以，用 May 開頭。Do 是給一般動詞用的；Am 後面接不了原形動詞 ask；Will I ask 變成在問自己未來會不會問，語意不對。"
+    "explanation": "客氣地問對方可不可以，用 May 開頭。Do I ask 是在問自己平常會不會問，不是徵求同意；Am 後面接不了原形動詞 ask；Will I ask 變成在問自己未來會不會問，語意不對。"
    },
    {
     "q": "I'm not sure yet, but I ___ go to the party tonight.",
@@ -7555,7 +7555,7 @@ TOEIC.grammar = [
      "Have"
     ],
     "answer": 1,
-    "explanation": "have to 的問句要找 do 幫忙，主詞 I 配 Do。Does 是給第三人稱單數的；Am 後面接不了 have to；Have I to sign 是很舊的說法，現在不這樣講。"
+    "explanation": "have to 的問句要找 do 幫忙，主詞 I 配 Do。Does 是給第三人稱單數的，I 不能配；Am 後面接不了 have to；填 Have 會變成 Have I have to sign，同一句出現兩個 have，不成句。"
    },
    {
     "q": "「我昨天必須早起。」哪一句對？",
@@ -7566,7 +7566,7 @@ TOEIC.grammar = [
      "I musted get up early yesterday."
     ],
     "answer": 0,
-    "explanation": "must 沒有過去式，講以前非做不可的事要用 had to。must 本身只能講現在；must to 中間多了 to；musted 這個變化不存在。"
+    "explanation": "must 沒有過去式，不能拿來講已經過去的事，講以前非做不可的事要用 had to。I must get up early yesterday 用 must 配 yesterday，時間對不上；must to 中間多了 to；musted 這個變化不存在。"
    },
    {
     "q": "He ___ to finish the report before Friday.",
@@ -7588,7 +7588,7 @@ TOEIC.grammar = [
      "I must call her."
     ],
     "answer": 2,
-    "explanation": "he 是第三人稱單數，要寫 He has to go now。have to 的 have 跟一般動詞一樣會變化，這一點跟 must 完全不同。"
+    "explanation": "he 是第三人稱單數，要寫 He has to go now。have to 的 have 跟一般動詞一樣會變化，這一點跟 must 完全不同。其他三句都正確：must 後面接原形 be、call，主詞是誰都不變；they 配 have to 沒有問題。"
    },
    {
     "q": "「他明天必須加班，因為班表早就排好了。」最貼切的說法是？",
@@ -7776,7 +7776,7 @@ TOEIC.grammar = [
      "She doesn't have to stay."
     ],
     "answer": 1,
-    "explanation": "must 和 mustn't 後面一律接動詞原形，中間不加 to，要寫 He mustn't go。have to 後面才有 to，兩套規則不要混在一起。"
+    "explanation": "must 和 mustn't 後面一律接動詞原形，中間不加 to，要寫 He mustn't go。have to 後面才有 to，兩套規則不要混在一起。其他三句都正確：mustn't park 直接接原形；we 配 don't have to、she 配 doesn't have to，都有跟著主詞變。"
    }
   ]
  },
@@ -7881,24 +7881,24 @@ TOEIC.grammar = [
    {
     "q": "___ I open the window?",
     "options": [
-     "Do",
+     "Have",
      "Should",
      "Am",
      "Does"
     ],
     "answer": 1,
-    "explanation": "問對方意見用 Should 開頭，把助動詞搬到主詞前面。Do 和 Does 是給一般動詞用的；Am 後面接不了原形動詞 open。"
+    "explanation": "問對方的意見、請對方給建議，用 Should 開頭，把助動詞搬到主詞前面，後面接原形 open。Have 當助動詞時後面要接過去分詞，接不了原形 open；Am 後面也接不了原形動詞；Does 是給第三人稱單數用的，主詞 I 不能配。"
    },
    {
     "q": "I'm always tired in class. Maybe I ___ go to bed earlier.",
     "options": [
      "must",
      "can't",
-     "will",
+     "shouldn't",
      "should"
     ],
     "answer": 3,
-    "explanation": "前面的 Maybe 已經把語氣放軟了，後面接 should 給自己一個建議最合適。must 是非做不可，語氣太重；can't 變成不能早睡；will 只是講未來會這樣做，不是建議。"
+    "explanation": "前面的 Maybe 已經把語氣放軟了，後面接 should 給自己一個建議最合適。must 是非做不可，跟 Maybe 放軟的語氣互相衝突；can't 變成不能早睡，shouldn't 變成不該早睡，都跟上課總是很累的前半句接不起來。"
    },
    {
     "q": "老闆對員工說「這份報告星期五以前一定要交」，用哪個字最合適？",
@@ -7920,7 +7920,7 @@ TOEIC.grammar = [
      "Should we wait here?"
     ],
     "answer": 2,
-    "explanation": "should 後面一律接動詞原形，主詞是 he 也不會讓動詞加 s，要寫 He should go now。助動詞已經扛下了配合主詞的工作，動詞就不必再變。"
+    "explanation": "should 後面一律接動詞原形，主詞是 he 也不會讓動詞加 s，要寫 He should go now。助動詞已經扛下了配合主詞的工作，動詞就不必再變。其他三句都正確：should rest 接原形；否定把 not 放在 should 後面；問句把 Should 搬到主詞前面。"
    },
    {
     "q": "It's only a ten-minute walk, so we ___ get there before noon.",
@@ -7942,7 +7942,7 @@ TOEIC.grammar = [
      "could、might"
     ],
     "answer": 1,
-    "explanation": "第一句是給對方許可，用 can；第二句是給建議，用 should。must 是規定對方一定要帶，語氣太重；might 只是說可能會帶，不是在建議。"
+    "explanation": "第一句是給對方許可，用 can；第二句是給建議，用 should，所以是 can、should。should、can 把兩個字的位置放反了；can、must 的 must 是規定對方一定要帶，語氣太重；could、might 的 could 雖然也能表示可以，但 might 只是說可能會帶，不是在建議。"
    }
   ]
  },
@@ -8086,7 +8086,7 @@ TOEIC.grammar = [
      "would like、would like"
     ],
     "answer": 0,
-    "explanation": "前半講的是平常就喜歡巧克力，用 like；後半有 right now，講的是此刻想要水果，用 would like。兩個位置對調就變成現在想要巧克力、平常喜歡水果，跟句意不合。"
+    "explanation": "前半講的是平常就喜歡巧克力，用 like；後半有 right now，講的是此刻想要水果，用 would like。would like、like 把兩個位置對調，變成現在想要巧克力、平常喜歡水果，跟 right now 對不上；like、like 的後半用 like 講此刻想要，like 表達不出「現在想要」；would like、would like 的前半變成現在也想要巧克力，跟 but 前後的對比接不起來。"
    },
    {
     "q": "下面哪一句有錯？",
@@ -8227,15 +8227,15 @@ TOEIC.grammar = [
     "explanation": "How about 後面接的是名詞的位置，動詞要先加 ing 變成 watching。watch 和 to watch 都站不住；watches 是配合第三人稱單數的形式。"
    },
    {
-    "q": "「我們今天不要加班了吧。」哪一句對？",
+    "q": "「我們今天不要加班了吧。」標準的寫法是哪一句？",
     "options": [
      "Let's don't work late today.",
      "Let's not work late today.",
-     "Don't let's work late today.",
+     "Let's not working late today.",
      "Let's not to work late today."
     ],
     "answer": 1,
-    "explanation": "Let's 的否定是在後面加 not，再接動詞原形。Let's don't 是很常見的錯句；Don't let's 的順序不對；not 後面也不加 to。"
+    "explanation": "Let's 的否定標準寫法是 Let's not，後面直接接動詞原形。Let's don't 只在美式口語偶爾聽到，不是標準寫法；Let's not working 在 not 後面多加了 ing；Let's not to 在 not 後面多加了 to。"
    },
    {
     "q": "下面哪一句是在提議一起做，不是在叫人做？",
@@ -8279,7 +8279,7 @@ TOEIC.grammar = [
      "Let's、Shall we"
     ],
     "answer": 0,
-    "explanation": "第一句是問對方要不要，焦點在對方身上，用 Would you like to；第二句是提議大家一起，用 Let's。兩個對調就變成邀請跟提議互換，語氣整個跑掉。"
+    "explanation": "第一句是問對方要不要加入，焦點在對方身上，用 Would you like to；第二句是提議大家一起做，用 Let's。第二組把兩個對調了，邀請和提議互換；第三組的 Shall we 是「我們一起……好嗎」，問的是大家要不要一起做，不是問對方要不要加入我們，後面的 Would you like to 也不是提議大家一起；第四組第一句用 Let's，變成直接提議，沒有在問對方要不要。"
    }
   ]
  },
@@ -8407,24 +8407,24 @@ TOEIC.grammar = [
    {
     "q": "You ___ take an umbrella. It might rain later.",
     "options": [
-     "must",
+     "mustn't",
      "can't",
      "would like",
      "should"
     ],
     "answer": 3,
-    "explanation": "後面說可能會下雨，前面是給對方一個建議，用 should。must 把建議變成規定，語氣太重；can't 是不能帶；would like 講的是說話的人自己想要什麼。"
+    "explanation": "後面說可能會下雨，前面是給對方一個建議，用 should。mustn't 是不准帶，跟可能下雨的建議對不上；can't 是不能帶；would like 後面少了 to，而且講的是想要什麼，不是建議。"
    },
    {
-    "q": "Everyone ___ show a ticket at the gate.",
+    "q": "Everyone ___ show a ticket at the gate. No one can get in without one.",
     "options": [
      "must",
-     "should",
+     "may",
      "might",
      "could"
     ],
     "answer": 0,
-    "explanation": "入口驗票是規定，用 must。should 只是建議，不驗也沒關係；might 是可能會出示；could 是有辦法出示，強度都不夠。"
+    "explanation": "入口驗票是規定，沒有票就不能進，用表示一定要的 must。may 和 might 講的是許可或可能，could 是有辦法出示，都不是規定的語氣。"
    },
    {
     "q": "___ you play the guitar when you were in high school?",
@@ -8468,7 +8468,7 @@ TOEIC.grammar = [
      "She has to leave early."
     ],
     "answer": 2,
-    "explanation": "助動詞後面一律接動詞原形，主詞是 she 也不會讓動詞加 s，要寫 She can play the piano。有了助動詞，配合主詞的工作就由它扛，動詞不必再變。"
+    "explanation": "助動詞後面一律接動詞原形，主詞是 she 也不會讓動詞加 s，要寫 She can play the piano。有了助動詞，配合主詞的工作就由它扛，動詞不必再變。其他三句都對：should 和 might 後面接原形 practice、be；has to 是 have to 配合主詞 she 的形式，後面一樣接原形 leave。"
    },
    {
     "q": "圖書館貼著「禁止飲食」，最接近的英文說法是？",
@@ -8490,7 +8490,7 @@ TOEIC.grammar = [
      "I should be late tomorrow, but I may be there."
     ],
     "answer": 0,
-    "explanation": "前半沒有把握用 might，後半很確定用 will，強度剛好一弱一強。其他三句都把弱的擺在確定的位置，或把 must 用在猜測上，語氣全反了。"
+    "explanation": "前半沒有把握用 might，後半很確定用 will，強度剛好一弱一強。I will be late tomorrow, but I might be there 把兩邊對調，變成確定會遲到、卻不確定會不會到；I must be late tomorrow 聽起來像非遲到不可，後半的 can 講的是能力，都不是「可能」和「一定會」；I should be late tomorrow 是照理說會遲到，後半的 may 只是可能會到，沒有「一定會到」的意思。"
    }
   ]
  },
@@ -8792,7 +8792,7 @@ TOEIC.grammar = [
      "You bought what yesterday?"
     ],
     "answer": 0,
-    "explanation": "疑問詞放句首，後面接 did 加主詞加動詞原形。第二句漏了助動詞；第三句的 did 已經表示過去了，動詞不能再變成 bought；第四句照著中文語序把 what 留在句中，英文不能這樣排。"
+    "explanation": "疑問詞放句首，後面接 did 加主詞加動詞原形。第二句漏了助動詞；第三句的 did 已經表示過去了，動詞不能再變成 bought；第四句照著中文語序把 what 留在句中，只有在沒聽清楚或表示驚訝、重複對方的話時才會這樣說，一般的問句要把 what 搬到句首。"
    },
    {
     "q": "___ is your new office? — On Minsheng Road.",
@@ -8952,7 +8952,7 @@ TOEIC.grammar = [
      "Who does"
     ],
     "answer": 2,
-    "explanation": "空格後面有主詞 you，代表 who 問的是被邀請的人，是受詞，所以要借助動詞。婚禮已經辦過了，用 did，後面的動詞維持原形 invite。Who does 的時態對不上；前兩個選項把 who 當成主詞，後面就不該再出現 you。"
+    "explanation": "空格後面有主詞 you，代表 who 問的是被邀請的人，是受詞，所以要借助動詞，後面的動詞維持原形 invite。Who does 的 does 是配第三人稱單數的，跟主詞 you 對不上；Who invited 和 Who invites 把 who 當成主詞，後面就不該再出現 you。"
    },
    {
     "q": "Who wants to join the trip? 這一句為什麼不用 do？",
@@ -8963,7 +8963,7 @@ TOEIC.grammar = [
      "因為問句太短"
     ],
     "answer": 1,
-    "explanation": "who 站在主詞的位置上，句子本來就是主詞加動詞的順序，沒有東西要調開，所以不需要助動詞。wants 加 s 是這件事的結果，不是原因。"
+    "explanation": "who 站在主詞的位置上，句子本來就是主詞加動詞的順序，沒有東西要調開，所以不需要助動詞。wants 加 s 是這件事的結果，不是原因；who 確實是拿來問人，但 Who did you meet? 一樣在問人，卻要用 did，所以這不是理由；句子長短跟要不要用 do 無關，Do you like it? 很短也要用 do。"
    },
    {
     "q": "「誰教你英文？」哪一句對？",
@@ -9007,7 +9007,7 @@ TOEIC.grammar = [
      "她跟誰結婚"
     ],
     "answer": 3,
-    "explanation": "who 後面接著主詞 she，代表 who 是受詞，問的是「她嫁給誰」。如果要問「誰結婚了」，who 要當主詞，句子會變成 Who got married?，中間不會出現 did。"
+    "explanation": "who 後面接著主詞 she，代表 who 是受詞，問的是「她嫁給誰」。如果要問「誰結婚了」，who 要當主詞，句子會變成 Who got married?，中間不會出現 did。「她是誰」要說 Who is she?，「她為什麼結婚」要用 Why 開頭，都不是這句的意思。"
    },
    {
     "q": "Which bus ___ to the train station?",
@@ -9122,7 +9122,7 @@ TOEIC.grammar = [
      "How long"
     ],
     "answer": 3,
-    "explanation": "For six years 講的是一段時間的長度，要用 how long。how often 問的是次數多不多；how far 問距離；how many 後面一定要接可以數的名詞。"
+    "explanation": "For six years 講的是一段時間的長度，要用 how long。how often 問的是次數多不多；how far 問距離；how many 問的是數量，通常接可以數的名詞，回答會是一個數字，對不上一段時間。"
    },
    {
     "q": "___ do you go to the gym? — Twice a week.",
@@ -9133,7 +9133,7 @@ TOEIC.grammar = [
      "How many"
     ],
     "answer": 1,
-    "explanation": "Twice a week 是在講一週幾次，屬於頻率，用 how often。how long 問的是持續多久，回答會是 For an hour 這種；how much 問的是量或價錢；how many 後面一定要接可以數的名詞。"
+    "explanation": "Twice a week 是在講一週幾次，屬於頻率，用 how often。how long 問的是持續多久，回答會是 For an hour 這種；how much 問的是量或價錢；how many 問的是數量，通常接可以數的名詞，回答會是 Three books 這種數量，不是頻率。"
    },
    {
     "q": "___ students are there in your class?",
@@ -9169,7 +9169,7 @@ TOEIC.grammar = [
     "explanation": "問種類的固定說法是 what kind of 加名詞，of 不能省略，後面也不加冠詞 the。how kind 意思完全不一樣，是在說一個人很好心。"
    },
    {
-    "q": "___ is it from here to the station?",
+    "q": "___ is the station from here? — About two kilometers.",
     "options": [
      "How long",
      "How much",
@@ -9177,18 +9177,18 @@ TOEIC.grammar = [
      "How many"
     ],
     "answer": 2,
-    "explanation": "從這裡到車站問的是距離，用 how far。how long 問的是時間長度，如果想問走過去要多久，句子會變成 How long does it take to walk there?；how much 問的是量或價錢，how many 後面要接可以數的名詞。"
+    "explanation": "回答是大約兩公里，問的是距離，用 how far。how long 問的是時間長度或東西本身有多長，「車站離這裡多遠」不能用它問；想問走過去要多久，會說 How long does it take to walk there? 這種句子。how much 問的是量或價錢，how many 問的是數量，都對不上距離。"
    },
    {
     "q": "菜單上只有三種湯，服務生要問你選哪一種，最自然的問法是？",
     "options": [
-     "What soup would you like?",
+     "What kind soup would you like?",
      "Which soup would you like?",
      "How much soup would you like?",
      "Who soup would you like?"
     ],
     "answer": 1,
-    "explanation": "選擇的範圍有限、東西就印在菜單上，用 which 最自然。what 用在範圍沒有限制的時候；how much 問的是量不是種類；who 只能拿來問人。"
+    "explanation": "選擇的範圍有限、東西就印在菜單上，用 which soup 最貼切。what kind soup 少了 of，問種類要說 what kind of soup；how much 問的是份量，不是選哪一種；who 只能拿來問人，不能放在名詞前面。"
    },
    {
     "q": "___ time does your flight leave?",
@@ -9199,7 +9199,7 @@ TOEIC.grammar = [
      "How long"
     ],
     "answer": 0,
-    "explanation": "問幾點的固定組合是 what time。how 不能直接接 time；how long 問的是飛行要花多久，不是幾點起飛；which time 也不是英文的說法。"
+    "explanation": "問幾點的固定組合是 what time。how 不能直接接 time；how long 問的是飛行要花多久，不是幾點起飛；which time 要在有幾個時間可以挑的時候才用，這裡單純問班機幾點起飛，不用 which time。"
    }
   ]
  },
@@ -9311,7 +9311,7 @@ TOEIC.grammar = [
      "do he"
     ],
     "answer": 2,
-    "explanation": "前面是否定句，後面要用肯定；前面用的助動詞是 doesn't，後面就借它變回 does。doesn't he 沒有把肯定否定倒過來；is he 借錯了字，前面根本沒有 be 動詞。"
+    "explanation": "前面是否定句，後面要用肯定；前面用的助動詞是 doesn't，後面就借它變回 does。doesn't he 沒有把肯定否定倒過來；is he 借錯了字，前面根本沒有 be 動詞；do he 的主詞是第三人稱單數 he，助動詞要用 does，不能用 do。"
    },
    {
     "q": "「我們去看電影吧，好嗎？」哪一句對？",
@@ -9322,7 +9322,7 @@ TOEIC.grammar = [
      "Let's go to a movie, aren't we?"
     ],
     "answer": 1,
-    "explanation": "Let's 開頭的提議，後面固定用 shall we。will you 是接在祈使句後面的；don't we 和 aren't we 都不用在提議上。"
+    "explanation": "Let's 開頭的提議，附加問句用 shall we。will we 不接在 Let's 的提議後面（will you 才是接在祈使句後面的）；don't we 和 aren't we 都不用在提議上。"
    },
    {
     "q": "Close the window, ___?",
@@ -9333,7 +9333,7 @@ TOEIC.grammar = [
      "do you"
     ],
     "answer": 0,
-    "explanation": "這是祈使句，句子裡本來就沒有主詞和助動詞可以借，後面固定用 will you，順便讓語氣客氣一點。don't you、do you、aren't you 都是從前面那句借字來的做法，這句沒有東西可以借。"
+    "explanation": "這是祈使句，句子裡本來就沒有主詞和助動詞可以借，最常用的是 will you，順便讓語氣客氣一點（也可以說 would you 或 can you）。don't you、do you、aren't you 都是從前面那句借字來的做法，這句沒有東西可以借。"
    },
    {
     "q": "They have finished the project, ___?",
@@ -9499,7 +9499,7 @@ TOEIC.grammar = [
      "who"
     ],
     "answer": 1,
-    "explanation": "原本的問題是「到了沒」，屬於只能回答 yes 或 no 的問句，放進句子裡要用 if 或 whether 接。that 是拿來接肯定敘述的，後面再加 or not 就不通了；原本的問題沒有要問東西也沒有要問人，用不到 what 和 who。"
+    "explanation": "原本的問題是「到了沒」，屬於只能回答 yes 或 no 的問句，放進句子裡要用 if 或 whether 接（後面有 or not 時，whether 比較正式）。that 帶出的是陳述一件確定的事，不能帶出「到了沒有」這種還不確定的問題，後面再加 or not 就不通了；原本的問題沒有要問東西也沒有要問人，用不到 what 和 who。"
    },
    {
     "q": "Do you know how much the new printer ___?",
@@ -9726,18 +9726,18 @@ TOEIC.grammar = [
      "Not I can help you."
     ],
     "answer": 1,
-    "explanation": "not 一定要跟在 be 動詞或助動詞後面，這句的助動詞是 can，所以 not 放在 can 的後面（習慣寫成一個字 cannot）。其他三句都把 not 放在沒有靠山的位置。"
+    "explanation": "否定句子的動詞時，not 要跟在 be 動詞或助動詞後面。這句的助動詞是 can，所以 not 放在 can 的後面（習慣寫成一個字 cannot）。其他三句都把 not 放在沒有靠山的位置。"
    },
    {
     "q": "I don't have any money. 和 I have no money. 的差別是？",
     "options": [
-     "兩句都通，只是否定的字放的位置不同",
-     "前一句文法錯",
-     "後一句文法錯",
-     "兩句意思相反"
+     "兩句都通，否定的方式不同",
+     "前一句文法錯，不能這樣講",
+     "後一句文法錯，不能這樣講",
+     "兩句都通，但意思相反"
     ],
     "answer": 0,
-    "explanation": "英文否定「我沒有錢」有兩條路，一條是助動詞加 not 再配 any，一條是直接用 no 否定名詞，兩句都對。錯的是把兩條路混在一起寫成 I don't have no money，一句話裡放兩個否定的字意思會亂掉。"
+    "explanation": "英文否定「我沒有錢」有兩條路：一條是助動詞加 not 再配 any，一條是直接用 no 否定名詞。兩句都對，意思也一樣，差別在否定的方式。所以說前一句或後一句文法錯都不對，說兩句意思相反也不對。要避免的是把兩條路混在一起寫成 I don't have no money，標準英文不這樣用。"
    }
   ]
  },
@@ -9835,13 +9835,13 @@ TOEIC.grammar = [
    {
     "q": "「請把門關上。」哪一句對？",
     "options": [
-     "You close the door, please.",
+     "Please you close the door.",
      "Closes the door, please.",
      "Please close the door.",
      "Please closing the door."
     ],
     "answer": 2,
-    "explanation": "祈使句直接從動詞原形開始，前面不放主詞 you。closes 多加了 s；closing 是 V-ing，前面少了 be 動詞，祈使句也不用 ing。"
+    "explanation": "祈使句用動詞原形開頭，please 放句首或句尾都可以。Please you close 是照中文「請你」直翻，please 後面不能插進 you；closes 多加了 s；closing 是 V-ing，祈使句不用 ing。"
    },
    {
     "q": "___ touch the wet paint.",
@@ -9866,7 +9866,7 @@ TOEIC.grammar = [
     "explanation": "mind 後面的動詞要加 ing，所以要用 leaving。前面多一個 to 的 to leave、原形 leave 和過去式 left 都接不上 mind。"
    },
    {
-    "q": "「我們今天不要加班了。」哪一句對？",
+    "q": "「我們今天不要加班了。」標準的寫法是哪一句？",
     "options": [
      "Let's don't work overtime today.",
      "Let's not work overtime today.",
@@ -9874,7 +9874,7 @@ TOEIC.grammar = [
      "Let's not to work overtime today."
     ],
     "answer": 1,
-    "explanation": "Let's 的否定固定寫成 Let's not，後面直接接動詞原形。這裡不會用 don't；not 後面也不加 to。"
+    "explanation": "Let's 的否定標準寫法是 Let's not，後面直接接動詞原形。Let's don't 只在美式口語偶爾聽到，Don't let's 是英式口語、比較老派的說法，考試和正式書寫都不算標準；Let's not to 在 not 後面多加了 to，不成立。"
    },
    {
     "q": "同事在講電話，你想請他小聲一點，最不會得罪人的說法是？",
@@ -9885,7 +9885,7 @@ TOEIC.grammar = [
      "You speak quietly, please."
     ],
     "answer": 2,
-    "explanation": "改寫成 Could you 開頭的問句，是把命令變成請求，語氣最軟。前兩句都是直接的祈使句，對同事講有點硬；第四句多放了主詞 you，不合祈使句的規則。"
+    "explanation": "改寫成 Could you 開頭的問句，是把命令變成請求，語氣最軟。Speak quietly. 和 Don't speak so loud. 都是直接的祈使句，對同事講有點硬；You speak quietly, please. 在祈使句前面加上 you，口氣像在指定對方照做，加了 please 也不會比問句客氣。"
    },
    {
     "q": "有人問你 Would you mind opening the window?，你願意開窗，最合適的回答是？",
@@ -9896,7 +9896,7 @@ TOEIC.grammar = [
      "Of course I mind."
     ],
     "answer": 2,
-    "explanation": "這句字面上問的是「你介意嗎」，願意幫忙就要回答「不介意」，所以說 Not at all 或 Of course not。回 Yes 反而變成「我介意」，等於拒絕了對方。"
+    "explanation": "這句字面上問的是「你介意嗎」，願意幫忙就要回答「不介意」，所以說 Not at all 或 Of course not。Yes, I would. 是「我會介意」，等於拒絕；Yes, please. 是接受別人提供東西時的回答，在這裡答非所問；Of course I mind. 是明白說「我當然介意」，也是拒絕。"
    },
    {
     "q": "Never ___ your password with anyone.",
@@ -10066,7 +10066,7 @@ TOEIC.grammar = [
      "My sister either works there."
     ],
     "answer": 2,
-    "explanation": "too 放在句尾是最自然的位置。第一句 too 和 also 意思重複；第二句 too 不會插在主詞和動詞中間；either 只用在否定句。"
+    "explanation": "too 放在句尾是最自然的位置。第一句 too 和 also 意思重複；第二句 too 要放在主詞後面，得用逗號隔開寫成 My sister, too, works there.，而且是很正式的寫法，沒有逗號不成立；either 只用在否定句。"
    },
    {
     "q": "A: I've already had lunch. B: ___",
@@ -10088,7 +10088,7 @@ TOEIC.grammar = [
      "前面那句是錯的"
     ],
     "answer": 1,
-    "explanation": "要表達「我也一樣」一定要倒裝成 So do I.。沒有倒裝的 So I do. 是另一個意思，用來附和對方剛剛說的話確實如此，兩句不能互換。"
+    "explanation": "So do I. 是倒裝句，意思是「我也一樣」，是正確的句子。沒有倒裝的 So I do. 是另一個意思，用來附和對方剛剛說的話確實如此，例如對方說 You work too much.，回 So I do. 是「我確實是」。兩句意思不同，不能互換；兩句也都是直述句，不是問句。"
    },
    {
     "q": "A: I can't eat peanuts. B: ___",
@@ -10243,7 +10243,7 @@ TOEIC.grammar = [
      "How beautiful voice she has!"
     ],
     "answer": 2,
-    "explanation": "核心是名詞 voice，用 What 加 a 加形容詞加名詞。第一句和第四句用 How 卻接了名詞；第二句要讚嘆的是唱歌的樣子，開頭要換成 How 而且用副詞。"
+    "explanation": "核心是名詞 voice，用 What 加 a 加形容詞加名詞。第一句的 a 不能緊跟在 How 後面；第四句用 How 帶名詞時要寫成 How beautiful a voice she has!（比較正式），少了 a 不成立；第二句要讚嘆的是唱歌的樣子，開頭要換成 How 而且用副詞，寫成 How beautifully she sings!。"
    },
    {
     "q": "What a mess! 和 How messy! 這兩句",
@@ -10376,7 +10376,7 @@ TOEIC.grammar = [
      "clean two rooms"
     ],
     "answer": 2,
-    "explanation": "形容詞放在名詞前面，而且不會跟著加 s，s 只加在 rooms 上。中文說「兩間乾淨的房間」，英文也是先講乾淨再講房間，寫成 two clean rooms。"
+    "explanation": "形容詞放在名詞前面，而且不會跟著加 s，s 只加在 rooms 上。數字要放在形容詞前面，順序是數字、形容詞、名詞，寫成 two clean rooms。two rooms clean 把形容詞放到名詞後面；two cleans rooms 在形容詞上加了 s；clean two rooms 把數字和形容詞的順序弄反，讀起來像是「打掃兩間房間」。"
    },
    {
     "q": "Would you like something ___ to drink?",
@@ -10398,7 +10398,7 @@ TOEIC.grammar = [
      "big"
     ],
     "answer": 3,
-    "explanation": "be 動詞後面直接放形容詞 big，兩個形容詞並列時用 and 接起來。形容詞不加 s，bigly 這個字不存在，a big 後面還少一個名詞。"
+    "explanation": "be 動詞後面直接放形容詞 big，兩個形容詞並列時用 and 接起來。形容詞不加 s，所以 bigs 不成立；bigly 是很少用的副詞，不能放在 be 動詞後面描述房間；a big 後面還少一個名詞。"
    },
    {
     "q": "The cake ___ good.",
@@ -10558,7 +10558,7 @@ TOEIC.grammar = [
      "interests"
     ],
     "answer": 2,
-    "explanation": "講自己的感覺用 -ed，而且 be interested in 是整組固定的用法。說 I am interesting 會變成「我這個人很有趣」，意思完全跑掉。"
+    "explanation": "講自己的感覺用 -ed，而且 be interested in 是整組固定的用法。說 I am interesting 會變成「我這個人很有趣」，意思完全跑掉；interest 和 interests 是名詞或動詞，不能放在 am 後面描述自己的感覺。"
    },
    {
     "q": "The instructions were ___, so nobody knew what to do.",
@@ -10569,7 +10569,7 @@ TOEIC.grammar = [
      "confuses"
     ],
     "answer": 0,
-    "explanation": "說明是讓人搞不懂的那一方，用 confusing。confused 是人覺得混亂，後半句 nobody knew what to do 剛好證明問題出在說明本身。"
+    "explanation": "說明是讓人搞不懂的那一方，用 confusing。confused 是人覺得混亂，後半句 nobody knew what to do 剛好證明問題出在說明本身。confuse 和 confuses 是動詞，不能放在 were 後面當形容詞。"
    },
    {
     "q": "She looked ___ when she saw the price.",
@@ -10580,7 +10580,7 @@ TOEIC.grammar = [
      "shocks"
     ],
     "answer": 2,
-    "explanation": "主詞是 She，look 後面接形容詞描述她的狀態，用 shocked。shocking 是形容那個價格很嚇人，不是形容她。"
+    "explanation": "主詞是 She，look 後面接形容詞描述她的狀態，用 shocked。shocking 是形容那個價格很嚇人，不是形容她；shock 和 shocks 是名詞或動詞，不能放在 look 後面描述她的樣子。"
    },
    {
     "q": "The movie was ___, so we were ___.",
@@ -10602,7 +10602,7 @@ TOEIC.grammar = [
      "annoyance"
     ],
     "answer": 1,
-    "explanation": "這裡是說他讓別人心煩，他是造成感覺的那一方，用 annoying。annoyed 是說他自己覺得心煩，跟前面那句在描述的行為對不起來。"
+    "explanation": "這裡是說他讓別人心煩，他是造成感覺的那一方，用 annoying。annoyed 是說他自己覺得心煩，跟前面那句在描述的行為對不起來；annoy 是動詞，annoyance 是名詞，都不能放在 really 後面描述他這個人。"
    },
    {
     "q": "We were ___ by the sudden change of plan.",
@@ -10613,7 +10613,7 @@ TOEIC.grammar = [
      "surprises"
     ],
     "answer": 1,
-    "explanation": "主詞 We 是被弄得意外的一方，用 surprised，後面再用 by 帶出讓我們意外的來源。surprising 是形容那個改變本身很讓人意外。"
+    "explanation": "主詞 We 是被弄得意外的一方，用 surprised，後面再用 by 帶出讓我們意外的來源。surprising 是形容那個改變本身很讓人意外；surprise 和 surprises 是名詞或動詞，不能放在 were 後面描述我們的感受。"
    }
   ]
  },
@@ -10722,7 +10722,7 @@ TOEIC.grammar = [
      "politely"
     ],
     "answer": 3,
-    "explanation": "answered 是動作，要用副詞 politely 說明他回答得怎麼樣。polite 是形容詞只能描述人，politeness 是名詞，politer 是兩個人相比時才用的形式。"
+    "explanation": "answered 是動作，要用副詞 politely 說明他回答得怎麼樣。polite 是形容詞，用來修飾名詞，例如 a polite answer，不能直接修飾動作；politeness 是名詞；politer 是形容詞的比較級，同樣不能修飾動作，句子裡也沒有比較的對象。"
    },
    {
     "q": "She finished the report very ___.",
@@ -10744,7 +10744,7 @@ TOEIC.grammar = [
      "happiness"
     ],
     "answer": 0,
-    "explanation": "字尾是子音加 y 的形容詞，y 要改成 i 再加 -ly，所以是 happily。happyly 是最常見的拼錯，happiness 是名詞不是副詞。"
+    "explanation": "字尾是子音加 y 的形容詞，y 要改成 i 再加 -ly，所以是 happily。happyly 沒有把 y 改成 i，是常見的拼錯；happyfully 多塞了 -ful，英文沒有這個字；happiness 是名詞，不是副詞。"
    },
    {
     "q": "___, we found a parking space right away.",
@@ -10777,7 +10777,7 @@ TOEIC.grammar = [
      "friendily"
     ],
     "answer": 1,
-    "explanation": "neighbor 是名詞，前面要放形容詞。friendly 雖然是 -ly 結尾，它其實是形容詞不是副詞，而且沒有 friendlily 這種形式。friend 是名詞，不能拿來描述人。"
+    "explanation": "neighbor 是名詞，前面要放形容詞。friendly 雖然是 -ly 結尾，它其實是形容詞，不是副詞。friendlily 是 friendly 極少用的副詞形式，副詞不能修飾名詞；friendily 拼法不存在；friend 是名詞，放在 neighbor 前面不是英文的說法。"
    },
    {
     "q": "The doors open ___ when you walk in.",
@@ -10898,7 +10898,7 @@ TOEIC.grammar = [
      "very good"
     ],
     "answer": 0,
-    "explanation": "sings 是動作，要用副詞 well。good 是形容詞只能描述人或東西，sings good 和 sings very good 都是很常聽到的錯句，goodly 這個字則不存在。"
+    "explanation": "sings 是動作，要用副詞 well。good 是形容詞，用來描述人或東西，sings good 和 sings very good 都是很常聽到的錯句；goodly 是少見的形容詞，意思是「相當多的」，不是 good 的副詞，也不能修飾 sings。"
    },
    {
     "q": "He is a ___ runner, and he runs very ___.",
@@ -10931,7 +10931,7 @@ TOEIC.grammar = [
      "well"
     ],
     "answer": 1,
-    "explanation": "taste 跟 be 動詞一樣，後面接形容詞描述麵包本身，所以用 good。well 是講動作做得好，用在 She sings well 那種句子；nicely 是副詞，goodly 不存在。"
+    "explanation": "taste 跟 be 動詞一樣，後面接形容詞描述麵包本身，所以用 good。well 當副詞是講動作做得好，用在 She sings well 那種句子；當形容詞時指身體健康，不能用來描述食物；nicely 是副詞，不能接在 tastes 後面；goodly 是少見的形容詞，意思是「相當多的」，不能描述味道。"
    },
    {
     "q": "I ___ know anyone at this party.",
@@ -10942,7 +10942,7 @@ TOEIC.grammar = [
      "not hard"
     ],
     "answer": 0,
-    "explanation": "這句要表達「我幾乎不認識這裡的人」，用 hardly。hard 是努力，填進去意思不通；hardly 本身已經帶否定，不需要再加 not。"
+    "explanation": "這句要表達「我幾乎不認識這裡的人」，用 hardly，它放在一般動詞 know 前面，本身就帶否定。hard 是「努力地」，填進去意思不通；hardily 是「大膽地、強健地」，也講不通；not hard 夾在主詞和動詞中間不合文法，英文否定一般動詞要用 don't，不會這樣寫。"
    },
    {
     "q": "「他很努力工作」和「他幾乎不工作」對應到哪一組？",
@@ -10953,7 +10953,7 @@ TOEIC.grammar = [
      "He hard works. / He works hardly."
     ],
     "answer": 2,
-    "explanation": "hard 是努力，hardly 是幾乎不，而 hardly 通常放在一般動詞前面。He works hardly 這種寫法會讓人搞不清楚你想講什麼，He hard works 則是位置錯了。"
+    "explanation": "hard 是努力，hardly 是幾乎不，而 hardly 通常放在一般動詞前面，所以照順序是 He works hard. / He hardly works.。第一組的 He works hardly 這種寫法會讓人搞不清楚你想講什麼；第二組兩句本身都對，但順序反了，第一句變成「他幾乎不工作」；第四組的 He hard works 是 hard 的位置錯了，後一句也同樣有問題。"
    },
    {
     "q": "Have you talked to him ___?",
@@ -10975,7 +10975,7 @@ TOEIC.grammar = [
      "badly"
     ],
     "answer": 1,
-    "explanation": "講身體舒不舒服用 well，這是 well 當形容詞的那個意思。nicely 和 badly 是副詞，不能放在 feel 後面描述狀態，goodly 這個字不存在。"
+    "explanation": "講身體舒不舒服用 well，這是 well 當形容詞的那個意思。badly 填進去變成 didn't feel badly，美式英文的 feel badly 多半是「感到過意不去」，說她不覺得過意不去，跟前面臉色蒼白對不起來；nicely 是副詞，不用在 feel 後面描述身體狀態；goodly 是少見的形容詞，意思是「相當多的」，和身體狀況無關。"
    }
   ]
  },
@@ -11094,7 +11094,7 @@ TOEIC.grammar = [
      "heaviest"
     ],
     "answer": 1,
-    "explanation": "heavy 是子音加 y 結尾的字，這種字跟短字一樣加 -er，而且 y 要先改成 i，寫成 heavier，不用 more。heaviest 是三個以上挑第一名才用的形式，這裡有 than 所以是兩個在比。"
+    "explanation": "heavy 是子音加 y 結尾的字，這種字跟短字一樣加 -er，而且 y 要先改成 i，寫成 heavier，不用 more，所以 more heavy 不對。這裡有 than，表示兩個在比，要用比較級，原級 heavy 不能接 than；heaviest 是三個以上挑第一名才用的形式。"
    },
    {
     "q": "The new system is ___ than the old one.",
@@ -11105,7 +11105,7 @@ TOEIC.grammar = [
      "more efficienter"
     ],
     "answer": 0,
-    "explanation": "efficient 是長字，前面加 more，字本身不變。長字不會在字尾加 -er，而 more 跟 -er 也不能同時出現。"
+    "explanation": "efficient 是長字，比較級是前面加 more，字本身不變。長字不會在字尾加 -er，所以 efficienter 不對；more 跟 -er 也不能同時出現，more efficienter 是重複；most efficient 是最高級，三個以上挑第一名才用，不能接 than。"
    },
    {
     "q": "My new apartment is ___ than my old one.",
@@ -11138,7 +11138,7 @@ TOEIC.grammar = [
      "too"
     ],
     "answer": 2,
-    "explanation": "要加強比較級用 much、a lot 或 far。very 只能放在沒變形的形容詞前面，說 very better 是錯的；so 和 too 也不能拿來修飾比較級。"
+    "explanation": "要加強比較級用 much、a lot 或 far，much better 是「好很多」。very 可以修飾原級的形容詞或副詞，例如 very good、very quickly，但不能直接放在比較級前面，very better 是錯的；so 和 too 也不能直接修飾比較級。"
    },
    {
     "q": "hot 的比較級是哪一個？",
@@ -11354,7 +11354,7 @@ TOEIC.grammar = [
     "explanation": "範圍是一個團體或地方的時候用 in。of 後面接的是一群人事物本身，像 the tallest of the three girls；on 和 at 不用來表示這種範圍。"
    },
    {
-    "q": "This road is ___ than that one, but Highway 1 is ___.",
+    "q": "This road is ___ than that one, but Highway 1 is ___ of all.",
     "options": [
      "the longest / longer",
      "longer / longer",
@@ -11484,7 +11484,7 @@ TOEIC.grammar = [
      "possible"
     ],
     "answer": 3,
-    "explanation": "as soon as possible 是整組固定用法，最後一個字是 possible。改成 possibly 或其他寫法都不通，這種固定說法只能照原樣背下來。"
+    "explanation": "as soon as possible 是固定用法，意思是盡快，最後一個字要用形容詞 possible。possibly 是副詞，不能放在這裡；you possible 是主詞直接接形容詞，少了動詞；it can 的 it 沒有指涉對象，要回覆的人是對方，不是 it。另一種正確說法是 as soon as you can，但選項裡沒有。"
    },
    {
     "q": "She has ___ books as I do.",
@@ -11495,7 +11495,7 @@ TOEIC.grammar = [
      "so many"
     ],
     "answer": 1,
-    "explanation": "books 是能一個一個數的東西，用 as many，而句子後面已經有一個 as，所以前面只要 as many。as much 是給不能數的東西用的，so many 不能跟 as 搭。"
+    "explanation": "books 是能一個一個數的東西，要用 as many。句子後面已經有第二個 as，所以空格只放 as many；填 as many as 會變成三個 as。as much 是給不能數的東西用的。so many...as 只會出現在否定句，例如 She doesn't have so many books as I do，這句是肯定句，要用 as many。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -11528,7 +11528,7 @@ TOEIC.grammar = [
      "新手機是最貴的。"
     ],
     "answer": 0,
-    "explanation": "not as...as 表示主詞那一方比較少，所以新手機比較便宜。沒有 not 的 as...as 才是一樣貴，要說比較貴會用 more expensive than。"
+    "explanation": "not as...as 表示主詞那一方比較少，所以新手機比較便宜。沒有 not 的 as...as 才是一樣貴；要說比較貴會用 more expensive than；最貴要用 the most expensive，句子沒有這個意思。"
    }
   ]
  },
@@ -11613,15 +11613,15 @@ TOEIC.grammar = [
     "q": "The coffee is ___ hot to drink.",
     "options": [
      "so",
-     "very",
+     "such",
      "enough",
      "too"
     ],
     "answer": 3,
-    "explanation": "配上後面的 to drink，這是 too...to 的句型，表示燙到不能喝，要用 too。very 只是很燙但沒說喝不喝得下，enough 位置不對，so 後面通常接 that 子句。"
+    "explanation": "配上後面的 to drink，這是 too...to 的句型，表示燙到不能喝，要用 too。such 後面要接名詞（such a hot drink），不能直接接形容詞 hot；enough 位置不對，so 後面通常接 that 子句。"
    },
    {
-    "q": "This room isn't ___ for ten people.",
+    "q": "This room isn't ___ for ten people, so we need a bigger one.",
     "options": [
      "enough big",
      "big enough",
@@ -11651,7 +11651,7 @@ TOEIC.grammar = [
      "enough / to"
     ],
     "answer": 0,
-    "explanation": "too...to 是固定搭配，意思是太累以至於沒辦法寫完。so 要搭 that 加一整句，enough 要放在形容詞後面，都不能填進這兩格。"
+    "explanation": "too...to 是固定搭配，意思是太累以至於沒辦法寫完。too...that 後面要接完整句子，不能接原形動詞 finish；so 要搭 that 加一整句，enough 要放在形容詞後面，都不能填進這兩格。"
    },
    {
     "q": "She is old ___ to drive.",
@@ -11662,7 +11662,7 @@ TOEIC.grammar = [
      "enough"
     ],
     "answer": 3,
-    "explanation": "形容詞後面接 enough 表示條件夠了，old enough to drive 是年紀夠大可以開車。too old to drive 意思會變成年紀太大不能開車，語氣完全相反。"
+    "explanation": "形容詞後面接 enough 表示條件夠了，old enough to drive 是年紀夠大可以開車。too、very、so 都要放在形容詞前面，放在 old 後面不成句；而且 too old to drive 的意思是年紀太大不能開車，語氣完全相反。"
    },
    {
     "q": "There is ___ noise in this office.",
@@ -11670,10 +11670,10 @@ TOEIC.grammar = [
      "too many",
      "too much",
      "enough too",
-     "very much"
+     "much too"
     ],
     "answer": 1,
-    "explanation": "noise 不能一個一個數，所以用 too much。too many 是給能數的名詞用的，像 too many people；enough too 這種排法不存在。"
+    "explanation": "noise 不能一個一個數，所以用 too much。too many 是給能數的名詞用的，像 too many people；enough too 這種排法不存在；much too 後面要接形容詞或副詞（much too loud），不能直接接名詞 noise。"
    },
    {
     "q": "The soup is very hot. 和 The soup is too hot. 差在哪裡？",
@@ -11827,7 +11827,7 @@ TOEIC.grammar = [
      "such a many"
     ],
     "answer": 1,
-    "explanation": "people 是能一個一個數的名詞，講數量多用 so many。so much 是給不能數的東西用的，而 such many 這種搭配不存在。"
+    "explanation": "people 是能一個一個數的名詞，講數量多用 so many。so much 是給不能數的東西用的，such many 這種搭配不存在，such a many 的 a 也不能放在 many 前面。"
    },
    {
     "q": "The book was ___ interesting that I read it twice.",
@@ -12009,7 +12009,7 @@ TOEIC.grammar = [
      "as the same"
     ],
     "answer": 0,
-    "explanation": "句子已經把兩張票都講出來了，不需要再說跟誰一樣，直接用 the same。要接比較對象才會加 as，而 same 前面一定要有 the。"
+    "explanation": "句子已經把兩張票都講出來了，不需要再說跟誰一樣，直接用 the same。要接比較對象才會加 as，所以 the same as 後面會懸空；same 前面一定要有 the；as the same 的順序也不通。"
    },
    {
     "q": "My schedule this week is ___ last week's.",
@@ -12027,11 +12027,11 @@ TOEIC.grammar = [
     "options": [
      "As",
      "Like",
-     "Same as",
+     "Such as",
      "Alike"
     ],
     "answer": 1,
-    "explanation": "後面接的是名詞 many people，要用 like。as 在這種位置後面要接一整句話，Same as 前面漏了 the，alike 不能放在句首帶名詞。"
+    "explanation": "後面接的是名詞 many people，要用 like，意思是「像…一樣」。As 放句首接名詞時是「身為」的意思（As a teacher, ...），「身為許多人」句意不通；Such as 是「例如」，放在句首後面沒有東西可以舉例；alike 不能放在句首帶名詞。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -12191,11 +12191,11 @@ TOEIC.grammar = [
     "options": [
      "a plastic black round tray",
      "a round plastic black tray",
-     "a black round plastic tray",
+     "a black plastic round tray",
      "a round black plastic tray"
     ],
     "answer": 3,
-    "explanation": "形狀在顏色前面，材質放最後，所以是 round black plastic tray。plastic 是材質，只要它沒有緊貼著名詞，那個排法就不對。"
+    "explanation": "順序是形狀、顏色、材質，所以是 a round black plastic tray。a black plastic round tray 把形狀放到材質後面；a plastic black round tray 把材質放在最前面；a round plastic black tray 把材質放在顏色前面，三個順序都不對。"
    },
    {
     "q": "「一家很棒的新義大利餐廳」的英文是哪一個？",
@@ -12351,13 +12351,13 @@ TOEIC.grammar = [
    {
     "q": "I usually read ___ night.",
     "options": [
-     "in the",
+     "on the",
      "at",
      "on",
      "in"
     ],
     "answer": 1,
-    "explanation": "早上是 in the morning，晚上卻是 at night，這一組不照規則走，硬記就好。in the night 就是照 in the morning 推出來的錯。"
+    "explanation": "早上是 in the morning，晚上卻是 at night，這一組不照規則走，硬記就好。on the night 要接特定的某一晚（on the night of the party），不能泛指每天晚上；in 單獨放在 night 前面也不成立。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -12379,7 +12379,7 @@ TOEIC.grammar = [
      "from"
     ],
     "answer": 0,
-    "explanation": "年份範圍大，用 in。from 是講起點，要配 to 一起用，像 from 2021 to 2023，單獨放在這裡意思不完整。"
+    "explanation": "年份範圍大，用 in。from 是講起點，但 started 本身已經有起點的意思，後面再放 from 2021 不自然；on 留給某一天，at 留給某個時刻。"
    },
    {
     "q": "The class starts ___ 8:30 ___ Monday.",
@@ -12547,7 +12547,7 @@ TOEIC.grammar = [
      "to"
     ],
     "answer": 1,
-    "explanation": "計程車空間小、人是坐進去的，用 in the taxi。跟上一題的 on the train 剛好相反，大車配 on、小車配 in。"
+    "explanation": "計程車空間小、人是坐進去的，用 in the taxi。大車配 on（像 on the train），小車配 in。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -12670,10 +12670,10 @@ TOEIC.grammar = [
      "between"
     ],
     "answer": 0,
-    "explanation": "躲在桌子底下，用 under。to 和 from 是講方向的，between 要夾在兩樣東西中間，而且後面一定要有 and。"
+    "explanation": "躲在桌子底下，用 under。to 和 from 是講方向的，between 要夾在兩樣（或一群）東西中間，這裡只有一張桌子，放不進去。"
    },
    {
-    "q": "This package is ___ my sister in Canada.",
+    "q": "I received this package ___ my sister in Canada.",
     "options": [
      "to",
      "under",
@@ -12686,27 +12686,27 @@ TOEIC.grammar = [
    {
     "q": "The bookstore is ___ the coffee shop and the bank.",
     "options": [
-     "next to",
+     "to",
      "between",
      "under",
      "from"
     ],
     "answer": 1,
-    "explanation": "夾在兩家店中間，用 between，而且中間那個 and 不能少。next to 只講緊鄰著一邊，後面不會接兩個地方。"
+    "explanation": "夾在兩家店中間，用 between，而且中間那個 and 不能少。to 單獨放在這裡不能表示位置關係；under 是在下面；from 是從哪裡來，都對不上。"
    },
    {
     "q": "The convenience store is ___ my apartment.",
     "options": [
      "between",
-     "under",
+     "to",
      "from",
      "next to"
     ],
     "answer": 3,
-    "explanation": "就在我公寓旁邊，用 next to，兩個字要一起寫。只寫 next my apartment 少了 to，是很常見的錯。"
+    "explanation": "就在我公寓旁邊，用 next to，兩個字要一起寫。只寫 next my apartment 少了 to 是很常見的錯；to 單獨放在這裡看不出位置關係；between 要接兩個地點；from 是從哪裡來，都對不上。"
    },
    {
-    "q": "We flew ___ Taipei ___ Tokyo.",
+    "q": "Our trip started in Taipei and ended in Tokyo. We flew ___ Taipei ___ Tokyo.",
     "options": [
      "to / from",
      "from / at",
@@ -12904,21 +12904,21 @@ TOEIC.grammar = [
      "with",
      "by",
      "for",
-     "in"
+     "at"
     ],
     "answer": 1,
-    "explanation": "用電子郵件寄是一種方式，用 by，中間也不放冠詞。with 後面通常是看得到、拿得到的工具。"
+    "explanation": "用電子郵件寄是一種方式，用 by，中間也不放冠詞。with 後面通常是看得到、拿得到的工具；for 後面接目的或對象（for you、for the meeting），不能表示用什麼方式寄送；at 後面接地點或時間點，不是方式。"
    },
    {
     "q": "We stayed in Tainan ___ three days.",
     "options": [
      "in",
      "at",
-     "about",
+     "with",
      "for"
     ],
     "answer": 3,
-    "explanation": "講持續多久用 for，後面接一段時間。in three days 的意思是「三天後」，講的是時間點不是長度。"
+    "explanation": "講持續多久用 for，後面接一段時間。in three days 的意思是「三天後」，講的是時間點不是長度；at 用在時間點或地點，不接一段時間；with 後面接的是伴隨的人或東西，不是時間長度。"
    },
    {
     "q": "He fixed the door ___ a hammer, and then he sent me the photos ___ email.",
@@ -13076,7 +13076,7 @@ TOEIC.grammar = [
      "learns"
     ],
     "answer": 1,
-    "explanation": "in 是介系詞，後面用動名詞 learning。interested to learn 是台灣學生很常寫的組合，但 in 後面只能接動名詞。"
+    "explanation": "in 是介系詞，後面的動作要用動名詞 learning。learn 是原形動詞，learns 是第三人稱單數的動詞形，to learn 是不定詞，三個都不能直接放在介系詞後面。interested to learn 本身是正確的英文，意思是「很想知道、很樂意得知」，但這一題空格前已經有 in，只能接動名詞。"
    },
    {
     "q": "Please turn off your computer before ___ the office.",
@@ -13239,15 +13239,15 @@ TOEIC.grammar = [
     "explanation": "listen 後面固定配 to。中文說「聽音樂」動詞後面直接接東西，英文少了 to 就不對，這是很常見的漏字。"
    },
    {
-    "q": "She is waiting ___ the bus.",
+    "q": "She is waiting ___ the bus to come.",
     "options": [
      "for",
      "to",
      "at",
-     "on"
+     "of"
     ],
     "answer": 0,
-    "explanation": "wait 後面固定配 for。wait the bus 是照中文「等公車」直接搬過來的，英文不能這樣寫。"
+    "explanation": "等某人或某樣東西，wait 後面接 for，wait for the bus to come 是「等公車來」。wait the bus 是照中文「等公車」直接搬過來的，英文中間要有 for。wait to 後面接的是原形動詞（wait to see），不接名詞；at 後面接地點（wait at the bus stop），at the bus to come 講不通；of 不跟 wait 搭配。"
    },
    {
     "q": "He is looking ___ his phone. He can't find it.",
@@ -13263,13 +13263,13 @@ TOEIC.grammar = [
    {
     "q": "Please look ___ the picture on page 10.",
     "options": [
-     "for",
+     "with",
      "to",
      "at",
      "about"
     ],
     "answer": 2,
-    "explanation": "叫對方把眼睛放到圖片上，用 look at。look for 是在找不見的東西，這裡圖片就在書上，不用找。"
+    "explanation": "叫對方把眼睛放到圖片上看，用 look at。look with 不是英文的說法；look to 是指望、依靠某人，或朝某個方向望，不用在叫人看一張圖；look about 是四處張望，不是盯著一樣東西看。另外要分清楚 look for 是「找」，東西還沒找到時才用。"
    },
    {
     "q": "The price depends ___ the size.",
@@ -13462,7 +13462,7 @@ TOEIC.grammar = [
      "for"
     ],
     "answer": 1,
-    "explanation": "interested 後面固定配 in，而且 in 是介系詞，後面的動作要變成 joining。interested to join 是台灣學生很常寫錯的組合。"
+    "explanation": "要說對某件事有興趣、想去做，用 interested in 加動名詞，所以填 in，後面是 joining。on、for 都不跟 interested 搭配；填 to 會變成 interested to joining，to 後面不能接 joining。interested to 加原形動詞只用在 hear、learn、know 這類「得知消息」的動詞，例如 I'd be interested to hear your ideas.，想參加活動要說 interested in joining。"
    },
    {
     "q": "This city is famous ___ its hot springs.",
@@ -13480,11 +13480,11 @@ TOEIC.grammar = [
     "options": [
      "with",
      "from",
-     "to",
+     "at",
      "of"
     ],
     "answer": 1,
-    "explanation": "different 後面配 from。中文說「跟他的不一樣」有一個「跟」，很多人就寫成 different with，那是照中文推出來的錯。"
+    "explanation": "different 後面配 from。中文說「跟他的不一樣」有一個「跟」，很多人就寫成 different with，那是照中文推出來的錯；at 和 of 也都不跟 different 搭配。（英式英語另有 different to 的說法，這裡以標準的 from 為準。）"
    },
    {
     "q": "下面哪一句是對的？",
@@ -13601,16 +13601,16 @@ TOEIC.grammar = [
    {
     "q": "I called her, ___ she didn't answer.",
     "options": [
-     "and",
+     "if",
      "or",
      "so",
      "but"
     ],
     "answer": 3,
-    "explanation": "打了電話卻沒接，前後是相反的，用 but。and 是兩邊同方向，so 後面要接結果，or 是二選一，三個都對不上。"
+    "explanation": "打了電話卻沒接，前後是相反的，用 but。or 是二選一，打電話和沒接不是兩個選項；so 後面要接前一句造成的結果，打電話不會造成對方不接；if 帶出的是條件，這一句講的是已經發生的事，放 if 句子講不通。"
    },
    {
-    "q": "Would you like tea ___ coffee?",
+    "q": "Which would you like, tea ___ coffee?",
     "options": [
      "and",
      "but",
@@ -13637,21 +13637,21 @@ TOEIC.grammar = [
      "because",
      "so",
      "but",
-     "and"
+     "or"
     ],
     "answer": 0,
-    "explanation": "下雨是待在家的原因，原因放在 because 後面。如果要用 so，順序得換成 It was raining, so we stayed home.。"
+    "explanation": "下雨是待在家的原因，原因放在 because 後面。如果要用 so，順序得換成 It was raining, so we stayed home.。but 是轉折，跟原因對不上；or 是二選一，這裡沒有選擇。"
    },
    {
     "q": "This job pays well, ___ the hours are long.",
     "options": [
-     "and",
+     "then",
      "but",
      "so",
      "or"
     ],
     "answer": 1,
-    "explanation": "薪水好是好事，工時長是壞事，前後相反，要用 but。用 and 會讓聽的人以為兩件事是同一個方向。"
+    "explanation": "薪水好是好事，工時長是壞事，前後相反，要用 but。so 後面要接前一句造成的結果，薪水好不會造成工時長；or 是二選一，這兩件事不是讓人挑一個；then 是副詞，不能在逗號後面把兩個完整的句子接起來。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -13676,7 +13676,7 @@ TOEIC.grammar = [
     "explanation": "後面只有 the heavy rain 這個名詞，沒有動詞，要用介系詞 because of。because 是連接詞，後面得接一整句，像 because it rained heavily。"
    },
    {
-    "q": "You can pay in cash ___ by credit card.",
+    "q": "How would you like to pay, in cash ___ by credit card?",
     "options": [
      "but",
      "and",
@@ -13821,7 +13821,7 @@ TOEIC.grammar = [
     "explanation": "到辦公室是一個一定會到的時間點，用 when。until 會變成一直寄到我進辦公室為止，語意不合理。"
    },
    {
-    "q": "She locked the door ___ everyone left the office.",
+    "q": "Everyone left the office at 6:00. She locked the door at 6:15, ___ they left.",
     "options": [
      "after",
      "until",
@@ -13829,7 +13829,7 @@ TOEIC.grammar = [
      "while"
     ],
     "answer": 0,
-    "explanation": "大家先走，她最後才鎖門，用 after 帶出先發生的那件事。用 before 會變成人還在裡面就先鎖門，講不通；until 是一直持續到某個時間點，while 是兩件事同時進行，都對不上。"
+    "explanation": "大家六點就離開了，她六點十五分才鎖門，鎖門在後，用 after 帶出先發生的那件事。用 before 會變成鎖門比大家離開早，跟時間對不上；until 是一直持續到某個時間點，鎖門是一下子的動作，時間也對不上；while 是兩件事同時進行，可是兩件事差了十五分鐘。"
    },
    {
     "q": "I will call you when I ___ home.",
@@ -13951,7 +13951,7 @@ TOEIC.grammar = [
      "leaving"
     ],
     "answer": 1,
-    "explanation": "牛奶放在冰箱外面就會壞，這是每次都成立的事實，屬於第 0 型，前後兩句都用現在簡單式。if 那一句永遠不放 will；left 是過去式，跟這種每次都成立的事對不上；leaving 前面沒有 be 動詞，不能單獨當動詞用。"
+    "explanation": "牛奶放在冰箱外面就會壞，這是每次都成立的事實，屬於第 0 型，前後兩句都用現在簡單式。if 那一句通常不放 will；left 是過去式，跟這種每次都成立的事對不上；leaving 前面沒有 be 動詞，不能單獨當動詞用。"
    },
    {
     "q": "If it ___ tomorrow, we will cancel the picnic.",
@@ -13973,7 +13973,7 @@ TOEIC.grammar = [
      "will pass"
     ],
     "answer": 3,
-    "explanation": "下週的考試是還沒發生的事，屬於第 1 型，另外那一句要用 will 加原形動詞 will pass。if 那一句已經用了現在簡單式 study，兩邊分工很清楚；只寫 pass 會變成在講每次都這樣的規律，跟 next week 對不起來。"
+    "explanation": "下週的考試是還沒發生的事，屬於第 1 型，另外那一句要用 will 加原形動詞 will pass。if 那一句已經用了現在簡單式 study，兩邊分工很清楚；只寫 pass 會變成在講每次都這樣的規律，跟 next week 對不起來。passed 是過去式，跟下週對不上；will 後面要接原形動詞，will passing 是錯的。"
    },
    {
     "q": "If I ___ late, please start without me.",
@@ -13984,7 +13984,7 @@ TOEIC.grammar = [
      "being"
     ],
     "answer": 0,
-    "explanation": "if 那一句用現在簡單式，主詞是 I，be 動詞用 am。把 will be 放在 if 後面是最常見的錯。"
+    "explanation": "if 那一句用現在簡單式，主詞是 I，be 動詞用 am。把 will be 放在 if 後面是最常見的錯。was 是過去式，可是遲到是還沒發生的事，後面又是請對方到時候先開始，用過去式對不上；being 前面沒有 be 動詞，不能單獨當動詞用。"
    },
    {
     "q": "___ you press this button, the machine stops.",
@@ -14392,7 +14392,7 @@ TOEIC.grammar = [
      "She enjoy cooking."
     ],
     "answer": 1,
-    "explanation": "主詞 she 是第三人稱單數，動詞用 enjoys，後面接動名詞 cooking。第三句把 be 動詞和一般動詞放在一起，第四句漏掉第三人稱單數的 s。"
+    "explanation": "主詞 she 是第三人稱單數，動詞用 enjoys，後面接動名詞 cooking。第一句 enjoys to cook 把不定詞接在 enjoy 後面，enjoy 不接不定詞；第三句把 be 動詞和一般動詞放在一起；第四句漏掉第三人稱單數的 s。"
    },
    {
     "q": "He wants ___ English, so he practices ___ every day.",
@@ -14577,7 +14577,7 @@ TOEIC.grammar = [
     "explanation": "護照還沒帶，這句在提醒明天要記得帶，用不定詞 to bring。forget bringing 是忘了自己帶過，意思不一樣。"
    },
    {
-    "q": "The window was stuck. She tried ___ it with both hands, but it didn't move.",
+    "q": "The window was stuck. She tried as hard as she could ___ it, but it wouldn't move.",
     "options": [
      "opening",
      "to open",
@@ -14585,29 +14585,29 @@ TOEIC.grammar = [
      "opened"
     ],
     "answer": 1,
-    "explanation": "窗戶卡住了，開窗這件事本身有難度，她在努力做，用不定詞 to open。try opening 是換個方法試試看，語氣輕鬆得多，跟這裡的情境不合。"
+    "explanation": "窗戶卡住了，她盡了全力想把它打開，用不定詞 to open 表示努力要做到。opening 前面接在 as hard as she could 後面不通順；open 是原形，前面少了 to；opened 是過去式，不能放在這裡。"
    },
    {
     "q": "The printer isn't working. Try ___ it off and on again.",
     "options": [
-     "to turn",
+     "to turning",
      "turn",
      "turned",
      "turning"
     ],
     "answer": 3,
-    "explanation": "這是提供一個方法讓對方試試看，用動名詞 turning。try to turn 會變成連按開關都很吃力，不是這句想講的。"
+    "explanation": "這是提供一個方法讓對方試試看，用動名詞 turning（try 加 V-ing 是試試看這個做法）。to turning 把不定詞和動名詞混在一起，不能這樣寫；turn 是原形，turned 是過去式，後面都不能這樣接在 try 後面。"
    },
    {
     "q": "下面哪一句在說事情已經做過了？",
     "options": [
-     "I remembered to send the email.",
+     "Please remember to send the email before noon.",
      "Don't forget to call the client.",
-     "I forgot mailing the letter last week.",
-     "She stopped to check her phone."
+     "I remember mailing the letter last week.",
+     "He forgot to bring his key."
     ],
     "answer": 2,
-    "explanation": "forget 加動名詞講的是已經做過的事，第三句是信寄了但自己忘了。第一句和第二句用不定詞，講的都是還沒做的事；第四句是停下來去看手機，看手機是後來才發生的動作。"
+    "explanation": "remember 加動名詞講的是已經做過的事，第三句是記得自己上週把信寄了，所以是已經做過。第一句和第二句用不定詞，講的都是還沒做的事；第四句 forgot to bring 是忘了帶，帶鑰匙這件事根本沒做。"
    }
   ]
  },
@@ -14693,7 +14693,7 @@ TOEIC.grammar = [
   ],
   "quiz": [
    {
-    "q": "All the windows ___ before the shop closes.",
+    "q": "All the windows ___ by the guard before the shop closes.",
     "options": [
      "lock",
      "are locking",
@@ -14734,7 +14734,7 @@ TOEIC.grammar = [
      "is stolen"
     ],
     "answer": 1,
-    "explanation": "皮夾是被偷的，用被動；this morning 已經過去了，所以是 was stolen。was stole 是把過去式當成過去分詞用，這是很常見的錯，steal 的過去分詞是 stolen。"
+    "explanation": "皮夾是被偷的，用被動；this morning 已經過去了，所以是 was stolen。stole 是主動過去式，變成皮夾去偷東西；is stolen 是現在式，跟已經過去的 this morning 不合；was stole 是把過去式當成過去分詞用，這是很常見的錯，steal 的過去分詞是 stolen。"
    },
    {
     "q": "The kitchen floor ___ every evening.",
@@ -14745,7 +14745,7 @@ TOEIC.grammar = [
      "cleans"
     ],
     "answer": 2,
-    "explanation": "地板是被拖的，用被動 is cleaned。寫 cleans 會變成地板去打掃別人；is cleaning 是地板正在打掃東西，兩個都不合常理。"
+    "explanation": "地板是被打掃的，用被動 is cleaned。cleans 會變成地板去打掃別人；is cleaning 是地板正在打掃東西，兩個都不合常理；clean 是原形，沒有 be 動詞，單數主詞也配不上，不成句。"
    },
    {
     "q": "Our teacher ___ the test papers at the end of class.",
@@ -14756,7 +14756,7 @@ TOEIC.grammar = [
      "were collected"
     ],
     "answer": 1,
-    "explanation": "這一題主詞是老師，老師會自己收考卷，是動作的執行者，所以用主動 collected。被動的 was collected 會變成老師被收走。"
+    "explanation": "這一題主詞是老師，老師會自己收考卷，是動作的執行者，所以用主動 collected。was collected、is collected、were collected 都是被動，會變成老師被收走，而且被動句後面不會再接 the test papers 這種受詞。"
    },
    {
     "q": "Who ___ this cake? It's really good.",
@@ -14767,7 +14767,7 @@ TOEIC.grammar = [
      "made"
     ],
     "answer": 3,
-    "explanation": "問的是「誰做的」，who 就是那個執行者，所以用主動 made。was made 是蛋糕被做，主詞不對；made by 後面應該接人，接 this cake 不通。"
+    "explanation": "問的是「誰做的」，who 就是那個執行者，所以用主動 made。was made 和 is made 都是被動，會變成 who 被做出來，意思不通，後面的 this cake 也沒有動詞可以接；made by 後面應該接人，接 this cake 不通。"
    },
    {
     "q": "The tickets ___ two weeks ago, so we can't change them now.",
@@ -14893,7 +14893,7 @@ TOEIC.grammar = [
     "explanation": "has 後面要接過去分詞，被動的話是 been 加過去分詞，所以是 has been repaired。has repaired 是主動，會變成筆電去修別的東西；been repair 少了過去分詞的變化；has was 這種兩個動詞湊在一起的寫法不存在。"
    },
    {
-    "q": "This gate must ___ at all times.",
+    "q": "This gate must ___ by the security staff every night.",
     "options": [
      "be locked",
      "lock",
@@ -14901,7 +14901,7 @@ TOEIC.grammar = [
      "locked"
     ],
     "answer": 0,
-    "explanation": "must 後面接原形動詞，被動的原形就是 be locked。lock 是主動，變成大門去鎖別人；be locking 是進行的意思，跟這裡的規定語氣不合。"
+    "explanation": "must 後面接原形動詞，被動的原形就是 be locked。門是被警衛鎖上的，後面的 by the security staff 點出動作者，所以要用被動。lock 是主動，主詞變成門自己去鎖，後面不能再接 by 動作者；be locking 是主動進行式，同樣不能接 by 動作者；locked 前面少了 be，不能直接接在 must 後面。"
    },
    {
     "q": "Dinner ___ served in ten minutes.",
@@ -14923,7 +14923,7 @@ TOEIC.grammar = [
      "by"
     ],
     "answer": 3,
-    "explanation": "要點出是誰寫的，用 by。with 是用什麼工具，寫成 written with a pen 才對；in 通常接地點或語言，像 written in Japanese。"
+    "explanation": "要點出是誰寫的，用 by。with 是用什麼工具，寫成 written with a pen 才對；in 通常接地點或語言，像 written in Japanese；from 是來源或出處，像 a gift from a friend，不用來帶出動作的執行者。"
    },
    {
     "q": "昨天晚上那家店被搶了，可是沒有人知道是誰做的。下面哪一句最自然？",
@@ -14934,10 +14934,10 @@ TOEIC.grammar = [
      "The store robbed last night."
     ],
     "answer": 0,
-    "explanation": "不知道是誰做的時候，英文就直接不寫 by，這正是被動語態好用的地方。by someone、by a person 等於什麼都沒說，母語者不會這樣寫；最後一句少了 be 動詞，變成店去搶別人。"
+    "explanation": "不知道是誰做的時候，英文通常直接不寫 by，這正是被動語態好用的地方。by someone、by a person 文法沒錯，但只說「有人做的」，沒有多給任何資訊，讀起來多餘，所以不是最自然的寫法；最後一句少了 be 動詞，變成店去搶別人。"
    },
    {
-    "q": "The report ___ yet, so please wait a little longer.",
+    "q": "The report ___ by the team yet, so please wait a little longer.",
     "options": [
      "hasn't finished",
      "isn't finish",
@@ -14956,7 +14956,7 @@ TOEIC.grammar = [
      "was build"
     ],
     "answer": 1,
-    "explanation": "two years ago 是講死的過去時間，用過去被動 was built。有明確的過去時間點就不能用現在完成式，所以 has been built 不行；was build 少了過去分詞的變化。"
+    "explanation": "two years ago 是講死的過去時間，用過去被動 was built。有明確的過去時間點就不能用現在完成式，所以 has been built 不行；is built 是現在式，跟 two years ago 不合；was build 少了過去分詞的變化。"
    }
   ]
  },
@@ -15091,18 +15091,18 @@ TOEIC.grammar = [
      "are living"
     ],
     "answer": 1,
-    "explanation": "who 代替前面的 a friend，是單數第三人稱，現在簡單式的動詞要加 s，所以是 lives。living 沒有 be 動詞不成句；are 跟單數主詞不合。"
+    "explanation": "who 代替前面的 a friend，是單數第三人稱，現在簡單式的動詞要加 s，所以是 lives。live 是原形，少了 s；living 沒有 be 動詞不成句；are 跟單數主詞不合。"
    },
    {
     "q": "My brother has a phone ___ takes really good photos.",
     "options": [
-     "and",
+     "whose",
      "who",
      "it",
      "that"
     ],
     "answer": 3,
-    "explanation": "phone 是東西，用 that 或 which 接說明。and 後面要接一個有自己主詞的完整句子，takes really good photos 沒有主詞；直接放 it 是把中文「它拍照很好」搬過來，英文接說明一定要用關係代名詞；who 只給人用。"
+    "explanation": "phone 是東西，用 that 或 which 接說明，that 在子句裡當主詞。whose 表示「誰的」，後面要接名詞，這裡後面直接是動詞 takes，接不上；直接放 it 是把中文「它拍照很好」搬過來，英文接說明一定要用關係代名詞；who 只給人用。"
    },
    {
     "q": "I know several people ___ in that hospital.",
@@ -15240,7 +15240,7 @@ TOEIC.grammar = [
      "arrived"
     ],
     "answer": 2,
-    "explanation": "空格後面到句尾只剩 this morning，需要有人來當 arrived 的主詞，所以用 that arrived。前兩個選項都多了一個 it；只寫 arrived 會讓一個句子出現兩個動詞卻沒有東西接起來。"
+    "explanation": "空格後面的 is still in my inbox 才是整句的動詞，所以空格要放一段說明 the email 的話。that arrived 的 that 當 arrived 的主詞，意思是今天早上寄到的那封信。I sent it、which I sent it 也是在說明 the email，sent 的受詞就是 the email，後面再放 it 就重複了（正確寫法是 The email I sent this morning）；只寫 arrived 會讓 The email arrived this morning 自己成一句，後面的 is 接不上，句中變成兩個主要動詞。"
    },
    {
     "q": "下面哪一句是錯的？",
@@ -15273,7 +15273,7 @@ TOEIC.grammar = [
      "it"
     ],
     "answer": 2,
-    "explanation": "接在 everything 這種字後面習慣用 that，而且它是 said 的受詞。what 本身就含有「所說的事」，前面不能再放名詞；who 給人用。"
+    "explanation": "接在 everything 這種字後面習慣用 that，而且它是 said 的受詞。what 本身就含有「所說的事」，前面不能再放名詞；who 給人用；it 是代名詞，不能把前面的 everything 和後面的句子接起來。"
    },
    {
     "q": "下面哪一句少了字？",
@@ -15295,7 +15295,7 @@ TOEIC.grammar = [
      "that"
     ],
     "answer": 3,
-    "explanation": "後面的 my father works with 已經有主詞了，所以空格是受詞的位置，用 that 或 who 都可以，整個省略也通。who is 會多一個動詞；which 給東西用。"
+    "explanation": "後面的 my father works with 已經有主詞了，所以空格是受詞的位置，用 that 或 who 都可以，整個省略也通。who is 會多一個動詞；which 給東西用；what 不能接在名詞後面說明它。"
    }
   ]
  },
@@ -15406,7 +15406,7 @@ TOEIC.grammar = [
      "when"
     ],
     "answer": 3,
-    "explanation": "the day 是時間，用 when。where 只給地點用；whose 後面要接名詞說明屬於誰。"
+    "explanation": "the day 是時間，後面 I do my laundry 主詞、受詞都不缺，用 when。where 只給地點用；which 的話後面必須缺東西，或寫成 on which，這裡句子已經完整；whose 後面要接名詞說明屬於誰。"
    },
    {
     "q": "The woman ___ bag was stolen called the police.",
@@ -15574,12 +15574,12 @@ TOEIC.grammar = [
     "q": "「我覺得他不會答應」最自然的英文是？",
     "options": [
      "I don't think he will agree.",
-     "I think he will not agree.",
+     "I not think he will agree.",
      "I think not he will agree.",
      "I don't think he will not agree."
     ],
     "answer": 0,
-    "explanation": "英文習慣把否定往前搬到 think 上面。第二句文法上通但很少人這樣講；第三句語序錯了；第四句兩邊都否定，意思整個相反。"
+    "explanation": "英文習慣把否定往前搬到 think 上面，用 don't 來否定，所以 I don't think he will agree 最自然。第二句少了 do，not 不能直接放在 think 前面；第三句語序錯了；第四句兩邊都否定，意思變成「我覺得他會答應」，整個相反。"
    },
    {
     "q": "My parents don't know ___ I changed my job last month.",
@@ -15615,7 +15615,7 @@ TOEIC.grammar = [
     "explanation": "主要動詞 said 是過去式，後面 that 子句裡的動詞通常跟著往回退一格用 was。is being 的意思是暫時表現得怎麼樣，跟這裡不合；be 不能單獨當動詞；are 跟主詞 he 不合。"
    },
    {
-    "q": "「我希望你來」有兩種講法，下面哪一個是錯的？",
+    "q": "下面四句想表達「我希望你來」或「我要你來」，哪一句的文法是錯的？",
     "options": [
      "I hope you can come.",
      "I hope that you can come.",
@@ -15623,7 +15623,7 @@ TOEIC.grammar = [
      "I want you to come."
     ],
     "answer": 2,
-    "explanation": "hope 後面接的是一整句話，不能用「hope 人 to 原形動詞」這個句型。要用「人加 to 加原形動詞」的是 want、ask、tell 這些字。"
+    "explanation": "hope 後面接的是一整句話，前面的 that 可以省略，所以第一句和第二句都對；hope 不能用「hope 人 to 原形動詞」這個句型，第三句是錯的。第四句的 want 可以接「人加 to 加原形動詞」，意思是「我要你來」，文法正確。"
    }
   ]
  },
@@ -15730,7 +15730,7 @@ TOEIC.grammar = [
     "explanation": "後面沒有接人，直接接內容，用 said。told 後面一定要先接人；told to 是把中文「跟我說」硬翻過來；says 是現在式，跟後面的 would 時態對不上。"
    },
    {
-    "q": "原話是 I am hungry. 轉述成 Tom said that he ___ hungry.",
+    "q": "原話是 I am hungry.（Tom 昨天說的，現在他已經吃飽了）轉述成 Tom said that he ___ hungry.",
     "options": [
      "is",
      "has",
@@ -15738,7 +15738,7 @@ TOEIC.grammar = [
      "were"
     ],
     "answer": 2,
-    "explanation": "said 是過去式，被轉述的動詞要退一格，am 退成 was。is 沒有退格；were 跟主詞 he 不合；has 意思不通。"
+    "explanation": "said 是過去式，原話講的是當時的狀態，現在已經不成立，所以 am 要退成 was。說話的內容到現在還成立時，口語也可以不退格留 is，但這一題他已經吃飽了，用 is 意思就錯了；were 跟主詞 he 不合；has 後面不能直接接形容詞 hungry。"
    },
    {
     "q": "Mary told ___ that she liked the gift.",
@@ -15763,7 +15763,7 @@ TOEIC.grammar = [
     "explanation": "原話的 will 在轉述時要退成 would。will 沒有退格；can 意思變成「能夠」；is going to 是現在式，跟 said 對不上。"
    },
    {
-    "q": "原話是 I can help you. 轉述成 He said he ___ help me.",
+    "q": "原話是 I can help you.（他上週說的，現在他已經沒空了）轉述成 He said he ___ help me.",
     "options": [
      "could",
      "can",
@@ -15771,7 +15771,7 @@ TOEIC.grammar = [
      "should"
     ],
     "answer": 0,
-    "explanation": "can 退一格是 could。can 留在原地沒有配合前面的 said；will 和 should 都換掉了原話的意思。"
+    "explanation": "said 是過去式，can 退一格是 could。說話的內容到現在還成立時，口語也可以留 can，但這一題他現在已經沒空了，用 can 意思就不對；will 和 should 都換掉了原話「能夠」的意思。"
    },
    {
     "q": "下面哪一句是對的？",
@@ -15785,7 +15785,7 @@ TOEIC.grammar = [
     "explanation": "tell 後面先接人再接內容，所以 told me the answer 是對的。said 不能直接接人；told 後面不加 to；第三句把 to 放錯位置，變成沒有聽話的人。"
    },
    {
-    "q": "My sister always says that she ___ too busy to cook.",
+    "q": "My sister says that she ___ too busy to cook these days.",
     "options": [
      "was",
      "were",
@@ -15793,7 +15793,7 @@ TOEIC.grammar = [
      "had been"
     ],
     "answer": 2,
-    "explanation": "主要動詞 says 是現在式，後面就不用退格，直接用 is。退一格只發生在主要動詞是過去式的時候，這一題不需要。"
+    "explanation": "主要動詞 says 是現在式，these days 也指現在，不需要退格，直接用 is。退一格是主要動詞為過去式時才要考慮的事。was 是過去式，跟 these days 對不上；were 跟主詞 she 不合；had been 是過去完成式，講的是更早以前，也跟 these days 對不上。"
    }
   ]
  },
@@ -15891,7 +15891,7 @@ TOEIC.grammar = [
     "explanation": "if 那邊用了 were，表示跟事實相反，另外半句要配 would 加原形動詞。will 是給真的有可能發生的情況用的；knew 是過去式，兩半都用過去式就沒有主要句子了。"
    },
    {
-    "q": "If I ___ you, I wouldn't say anything.",
+    "q": "依正式寫法填空：If I ___ you, I wouldn't say anything.",
     "options": [
      "were",
      "was",
@@ -15899,7 +15899,7 @@ TOEIC.grammar = [
      "be"
     ],
     "answer": 0,
-    "explanation": "跟事實相反的假設，be 動詞一律用 were，就算主詞是 I 也一樣。If I was you 在考試裡算錯；am 是現在式，跟後面的 wouldn't 不搭。"
+    "explanation": "跟現在事實相反的假設，正式寫法裡 be 動詞用 were，就算主詞是 I 也一樣。口語常聽到 If I was you，但正式寫作和考試都以 were 為準。am 是現在式，跟後面的 wouldn't 不搭；be 是原形，不能直接放在 if 後面當動詞。"
    },
    {
     "q": "If we had a bigger kitchen, we ___ more often.",
@@ -15937,13 +15937,13 @@ TOEIC.grammar = [
    {
     "q": "「如果你早點睡，你早上就不會這麼累」，這是在勸人，而且做得到。哪一句最合適？",
     "options": [
-     "If you went to bed earlier, you wouldn't be so tired.",
+     "If you went to bed earlier, you won't be so tired.",
      "If you go to bed earlier, you won't be so tired.",
      "If you would go to bed earlier, you don't be tired.",
      "If you go to bed earlier, you wouldn't be tired."
     ],
     "answer": 1,
-    "explanation": "早點睡是做得到的事，用現在簡單式配 will。第一句用過去式配 would，會變成在說這件事不可能發生；第三句在 if 那半句放了 would；第四句兩半的時態沒有配好。"
+    "explanation": "早點睡是做得到的事，用現在簡單式配 will，所以第二句最合適。第一句 if 那半句用過去式，另外半句卻用 won't，兩半的時態沒有配好；第三句在 if 那半句放了 would，而且 don't be 文法也錯；第四句 if 那半句是現在式，另外半句卻用 wouldn't，也沒有配好。"
    },
    {
     "q": "If my brother ___ how to swim, he would come to the beach with us.",
@@ -16057,7 +16057,7 @@ TOEIC.grammar = [
     "explanation": "if 那邊是 had left，屬於跟過去相反，另外半句要用 would have 加過去分詞。would catch 是跟現在相反的形式；would catching 沒有這種寫法。"
    },
    {
-    "q": "If you had told me, I ___ you.",
+    "q": "If you had told me, I ___ you yesterday.",
     "options": [
      "will help",
      "helped",
@@ -16065,7 +16065,7 @@ TOEIC.grammar = [
      "would have helped"
     ],
     "answer": 3,
-    "explanation": "兩半都要講過去，had told 配 would have helped。would help 是講現在做得到的假設，跟前半的時態對不上。"
+    "explanation": "yesterday 表示事情已經過去，had told 配 would have helped，講的是跟過去事實相反的假設。would help 講的是跟現在事實相反，跟 yesterday 對不上；will help 是真的可能發生的未來；helped 是單純的過去式，沒有假設的意思，都配不上 had told。"
    },
    {
     "q": "If she ___ harder, she would have won the game.",
@@ -16098,7 +16098,7 @@ TOEIC.grammar = [
      "am"
     ],
     "answer": 0,
-    "explanation": "講的是現在的身高，屬於跟現在事實相反，用過去式的 were 配 would join。had been 是講過去的事，可是身高是現在的狀態。"
+    "explanation": "I'm short 說的是現在的身高，屬於跟現在事實相反，用過去式的 were 配 would join。had been 講的是過去的事，可是身高是現在的狀態；would 不能放在 if 那半句，所以 would be 不行；am 是現在式，表示真的情況，跟 I'm short 矛盾。"
    },
    {
     "q": "We missed the flight. If we ___ a taxi, we would have arrived on time.",
@@ -16252,7 +16252,7 @@ TOEIC.grammar = [
      "hope"
     ],
     "answer": 3,
-    "explanation": "祝福別人早點好起來，是還有可能實現的事，後面又接了一整句話 you get well soon，所以用 hope 加現在式。wish 接句子會暗示這件事不會發生，時態也不對；wish 要祝福只能接名詞，像 I wish you a quick recovery。"
+    "explanation": "祝別人早日康復，是還有可能實現的事，後面又接了一整句 you get well soon，所以用 hope 加現在式。wish 後面接句子要退一格時態，表示這件事不太可能發生，不能拿來祝福；wished 和 am wishing 也一樣不能接這個句子。想用 wish 祝福，常見的寫法是 wish 加人再加名詞，像 I wish you a quick recovery。"
    },
    {
     "q": "He wishes he ___ more free time on weekends.",
@@ -16582,7 +16582,7 @@ TOEIC.grammar = [
      "crying"
     ],
     "answer": 3,
-    "explanation": "all night 表示那段時間一直在哭，強調進行中的狀態，用 crying。感官動詞後面只接原形動詞或 V-ing，不加 to，也不會用過去式 cried 或三單的 cries。"
+    "explanation": "all night 表示那段時間一直在哭，強調持續進行的狀態，用 crying；原形 cry 也通，但不在選項裡。感官動詞加受詞表示對方主動在做的事時，後面接原形動詞或 V-ing，不加 to，所以 to cry 不行；cried 是過去式、cries 是三單現在式，都是帶時態的動詞，不能放在受詞後面。"
    },
    {
     "q": "We saw the plane ___ off and disappear into the clouds.",
@@ -16596,7 +16596,7 @@ TOEIC.grammar = [
     "explanation": "整個起飛的過程都看到了，用原形動詞 take。see 後面不加 to；taken 是過去分詞，這裡飛機是自己起飛，不是被起飛。"
    },
    {
-    "q": "She watched her son ___ the whole race from start to finish.",
+    "q": "She watched her son ___ the last lap and cross the finish line.",
     "options": [
      "running",
      "to run",
@@ -16604,10 +16604,10 @@ TOEIC.grammar = [
      "runs"
     ],
     "answer": 2,
-    "explanation": "from start to finish 表示整場都看完了，用原形動詞 run。running 只強調進行中的一段，跟後面那句話矛盾。"
+    "explanation": "watch 後面的動作從頭到尾看完，用原形動詞，而且 and 連接的兩個動詞要同形，cross 是原形，所以前面也用原形 run。running 和 cross 形式不一致，不能並列；to run 的 watch 後面不接 to；runs 多了 s。"
    },
    {
-    "q": "When I walked past the classroom, I saw the teacher ___ on the board.",
+    "q": "When I walked past the classroom, I saw the teacher still ___ on the board, so I knew the class had not ended.",
     "options": [
      "write",
      "writing",
@@ -16615,7 +16615,7 @@ TOEIC.grammar = [
      "wrote"
     ],
     "answer": 1,
-    "explanation": "走過去只是一瞬間，看到的是老師正在寫的那個畫面，用 writing 最自然。用 write 會變成從頭到尾看她寫完，跟 walked past 不合。"
+    "explanation": "走過去只是一瞬間，still 表示老師還在寫，看到的是進行中的畫面，用 writing。write 是看完整個動作，跟 still 和 walked past 都不合；to write 的 saw 後面不接 to；wrote 是過去式，不能放在 saw 後面。"
    },
    {
     "q": "Did you hear him ___ my name just now?",
@@ -16653,13 +16653,13 @@ TOEIC.grammar = [
    {
     "q": "「我剛剛經過的時候，看到他在等人」是哪一句？",
     "options": [
-     "I saw him wait for someone.",
+     "I saw him waited for someone.",
      "I see him waiting for someone.",
      "I saw him waiting for someone.",
      "I saw him to wait for someone."
     ],
     "answer": 2,
-    "explanation": "經過的那一瞬間他正在等，用 saw 加 waiting。第一句的原形會變成你看著他等完全程；第二句用了現在式，跟「剛剛」不合；第四句多了 to。"
+    "explanation": "經過的那一瞬間他正在等，用 saw 加 waiting。第一句的 waited 是過去式，saw 後面要接原形或 V-ing；第二句用了現在式，跟「剛剛」不合；第四句多了 to。"
    }
   ]
  },
@@ -16765,12 +16765,12 @@ TOEIC.grammar = [
     "q": "It is difficult ___ a new language after thirty.",
     "options": [
      "learn",
-     "learning",
+     "to learning",
      "learned",
      "to learn"
     ],
     "answer": 3,
-    "explanation": "It is 加形容詞後面接 to 加原形動詞。learning 是動名詞，要放在句首當主詞才對，像 Learning a new language is difficult。"
+    "explanation": "It is 加形容詞後面接 to 加原形動詞，所以是 to learn。to learning 把 to 和 V-ing 混在一起；learn 前面少了 to；learned 是過去式，不能放在這裡。"
    },
    {
     "q": "It ___ me two hours to clean the whole house yesterday.",
@@ -16792,7 +16792,7 @@ TOEIC.grammar = [
      "for"
     ],
     "answer": 3,
-    "explanation": "要點出「對誰來說」，用 for 加那個人，後面再接 to 加原形動詞。of 和 to 都不能用在這個位置。"
+    "explanation": "要點出「對誰來說」，用 for 加那個人，後面再接 to 加原形動詞。of 和 to 都不能用在這個位置；that 後面要接完整子句，children to drink 不是子句。"
    },
    {
     "q": "___ are many people waiting outside, so ___ is hard to find a seat.",

@@ -10,9 +10,9 @@
     "exampleZh": "許多員工對新的加班政策變動感到擔心。",
     "quiz": {
       "q": "Our clients are concerned ___ the long delay in the shipping schedule.",
-      "options": ["about", "for", "with", "of"],
+      "options": ["about", "for", "on", "of"],
       "answer": 0,
-      "explanation": "concerned about=擔心某件事，客戶擔心的是出貨延誤。concerned for 多用在擔心某人的安危；be concerned with 是「與…有關、涉及」，主詞通常是報告或內容；concerned of 不成立。"
+      "explanation": "concerned about=擔心某件事，客戶擔心的是出貨延誤。concerned for 多用在擔心某人的安危或前途，不接延誤這類事件；concerned on、concerned of 都不是英文的搭配。"
     }
   },
   {
@@ -28,7 +28,7 @@
       "q": "If you are interested ___ joining the training program, please sign up online.",
       "options": ["on", "for", "in", "to"],
       "answer": 2,
-      "explanation": "interested in 後面接名詞或動名詞=對…有興趣。interested to 只接原形動詞且語氣是「很想知道」(interested to hear the result)，接 joining 不通；on 常配 based；for 常配 responsible、eligible，都不與 interested 連用。"
+      "explanation": "interested in 後面接名詞或動名詞=對…有興趣。interested to 只接原形動詞且語氣是「很想知道」（interested to hear the result），接 joining 不通；on 常配 based；for 常配 responsible、eligible，都不與 interested 連用。"
     }
   },
   {
@@ -44,7 +44,7 @@
       "q": "Who is responsible ___ checking the inventory before the store opens?",
       "options": ["of", "for", "with", "to"],
       "answer": 1,
-      "explanation": "responsible for=負責某項工作。responsible to 後面要接「向誰報告」(responsible to the manager)，接動名詞不通；of 常配 aware、proud；with 常配 familiar、satisfied，都無法帶出負責的事項。"
+      "explanation": "responsible for=負責某項工作。responsible to 後面要接「向誰報告」（responsible to the manager），接動名詞不通；of 常配 aware、proud；with 常配 familiar、satisfied，都無法帶出負責的事項。"
     }
   },
   {
@@ -60,7 +60,7 @@
       "q": "Are you familiar ___ the software we use for monthly expense reports?",
       "options": ["to", "in", "of", "with"],
       "answer": 3,
-      "explanation": "（人）be familiar with（事物）=熟悉某事物。be familiar to 要把主詞換成事物，表示「對某人而言很熟悉」(The name is familiar to me)；in 常配 interested、involved；of 常配 aware，都不能表達「某人熟悉某事」。"
+      "explanation": "（人）be familiar with（事物）=熟悉某事物。be familiar to 要把主詞換成事物，表示「對某人而言很熟悉」（The name is familiar to me）；in 常配 interested、involved；of 常配 aware，都不能表達「某人熟悉某事」。"
     }
   },
   {
@@ -138,9 +138,9 @@
     "exampleZh": "這支訓練影片適合新進人員與現職員工觀看。",
     "quiz": {
       "q": "The small meeting room is not suitable ___ a presentation to forty people.",
-      "options": ["for", "with", "to", "in"],
+      "options": ["for", "with", "at", "in"],
       "answer": 0,
-      "explanation": "suitable for=適合某用途或某對象。with 常配 familiar、equipped；to 常配 similar、related；in 常配 involved、interested，都無法表達「適合」。"
+      "explanation": "suitable for=適合某用途或某對象。with 常配 familiar、equipped；at 常配 good、surprised；in 常配 involved、interested，都無法表達「適合」。"
     }
   },
   {
@@ -316,7 +316,7 @@
       "q": "Everyone was pleased ___ the new office layout after the renovation.",
       "options": ["with", "for", "of", "in"],
       "answer": 0,
-      "explanation": "pleased with=對某個結果感到滿意。pleased to 後面只接原形動詞(pleased to meet you)；for 常配 grateful、famous；of 常配 proud；in 常配 interested。"
+      "explanation": "pleased with=對某個結果感到滿意。pleased to 後面只接原形動詞（pleased to meet you）；for 常配 grateful、famous；of 常配 proud；in 常配 interested。"
     }
   },
   {
@@ -394,9 +394,9 @@
     "exampleZh": "委員會歡迎大家對新回收方案提出建議。",
     "quiz": {
       "q": "The exhibition is open ___ the public from Tuesday through Sunday.",
-      "options": ["to", "for", "with", "on"],
+      "options": ["to", "at", "with", "on"],
       "answer": 0,
-      "explanation": "open to=對…開放、願意接受。open for 後面接的是用途或營業狀態（open for business、open for registration），接「人」不通；with 常配 familiar、equipped；on 常配 based，語意都不通。"
+      "explanation": "open to=對…開放、願意接受，open to the public 是「對大眾開放」的固定說法。at 接時間（open at 9 a.m.）；with 常配 familiar、equipped；on 接日子（open on Sundays）。這三個都不能接 the public。"
     }
   },
   {

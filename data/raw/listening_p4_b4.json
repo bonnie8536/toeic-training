@@ -76,14 +76,14 @@
         "options": [
           "To point out what is in the food",
           "To collect payment",
-          "To show the class schedule",
+          "To show the class schedule for six weeks",
           "To ask for feedback"
         ],
         "answer": 0,
         "explanation": "定位在 take a look at the sheet in front of you. It lists what's in tonight's dishes, so if you can't eat something, tell me now。提那張單子是要讓學員確認食材，對應選項 A。這是「為何提及」的意圖題，線索在 so 之後的目的句，不在 sheet 這個字本身；講者提過 six-week course，但那張單子跟課表無關，選項 C 是把兩件事湊在一起。"
       }
     ],
-    "transcriptZh": "各位晚安，歡迎來到 Corner Kitchen 上第一堂課。我是 Daniel，這六週的課都由我來帶。\n今天晚上我們先做簡單的——煮湯，還有現做的麵包。需要的東西都已經放在你的桌上了，所以不用自己帶工具來。\n開始之前，頭髮長的請先綁起來，然後到後面的水槽洗手。另外，看一下你面前那張單子，上面寫了今晚兩道菜的材料。如果有你不能吃的東西，現在跟我說，我幫你換掉。"
+    "transcriptZh": "各位晚安，歡迎來到 Corner Kitchen 上第一堂課。我是 Daniel，這六週的課都由我來帶。\n今天晚上我們先做簡單的：煮湯，還有現做的麵包。需要的東西都已經放在你的桌上了，所以不用自己帶工具來。\n開始之前，頭髮長的請先綁起來，然後到後面的水槽洗手。另外，看一下你面前那張單子，上面寫了今晚兩道菜的材料。如果有你不能吃的東西，現在跟我說，我幫你換掉。"
   },
   {
     "id": "l4-43",
@@ -101,7 +101,7 @@
           "The bus company is moving."
         ],
         "answer": 1,
-        "explanation": "定位在 because the city is repairing Market Street。repairing a street 就是道路施工，對應選項 B 的 Road work。選項 C 的「加新站」把後面的「取消一站」聽反了。"
+        "explanation": "定位在 because the city is repairing Market Street。repairing a street 就是道路施工，對應選項 B 的 Road work。A 遊行全篇沒有提到，改道的原因是修路；C 的「加新站」把後面的「郵局那站暫停停靠」聽反了，獨白沒有說要增設站點；D 公車公司搬遷也沒有提到，說話者只說公車改走 Pine 街。"
       },
       {
         "q": "Which stop will be closed?",
@@ -150,7 +150,7 @@
         "q": "Where will the health checks take place?",
         "options": [
           "In a room on the second floor",
-          "At a nearby clinic",
+          "At a clinic a few blocks from the office",
           "In the company cafeteria",
           "In the front lobby"
         ],
@@ -169,7 +169,7 @@
         "explanation": "定位在 Don't eat anything for eight hours before your visit, so most people sign up for a morning time。so 之前是原因：檢查前八小時不能進食，挑早上的時段比較好安排，對應選項 B。這題要把因果兩句串起來，不是單句聽寫。"
       }
     ],
-    "transcriptZh": "在今天的會議結束之前，我想說明一下公司下個月要辦的健康檢查。\n會有一組護理人員在四號和五號到公司來，地點在二樓的教育訓練室。整個檢查大概半小時，全體同仁都免費。\n這裡有個大家常常漏掉的部分——你必須在這個星期五之前上網登記。過了就沒辦法再加名單了，因為護理人員要照我們報的人數帶器材過來。\n還有一點。檢查前八小時不能吃東西，所以大部分的人都會挑早上的時段。"
+    "transcriptZh": "在今天的會議結束之前，我想說明一下公司下個月要辦的健康檢查。\n會有一組護理人員在四號和五號到公司來，地點在二樓的教育訓練室。整個檢查大概半小時，全體同仁都免費。\n這裡有個大家常常漏掉的部分：你必須在這個星期五之前上網登記。過了就沒辦法再加名單了，因為護理人員要照我們報的人數帶器材過來。\n還有一點。檢查前八小時不能吃東西，所以大部分的人都會挑早上的時段。"
   },
   {
     "id": "l4-45",
@@ -193,7 +193,7 @@
         "q": "Why does the speaker mention last night's rain?",
         "options": [
           "To warn that one path may be hard to walk on",
-          "To explain why a field is closed",
+          "To explain why part of the field is closed",
           "To suggest bringing an umbrella",
           "To say the tour will be shorter"
         ],
@@ -212,6 +212,6 @@
         "explanation": "定位在最後一句 They're friendly, but please don't feed them anything from your bag。don't feed 就是不要餵食，對應選項 D。前半句說山羊很親人、會自己靠過來，所以選項 A 的「不要碰」與語氣正好相反。"
       }
     ],
-    "transcriptZh": "各位早安，歡迎來到 Hillside 農場。我是 Paula，接下來兩個小時由我帶大家參觀。\n我們先從穀倉開始，接著走到田裡，最後在農場商店結束，你們可以在那邊試吃我們自己做的起司。\n這邊我要先提醒一下——穀倉後面那條小路下過雨會很泥濘，昨天晚上雨下得滿大的。如果你不想走那條，還有一條比較遠的路可以繞過去，走大馬路，等一下到了我會指給大家看。\n喔對了，山羊會直接靠過來。牠們很親人，不過請不要拿包包裡的東西餵牠們。"
+    "transcriptZh": "各位早安，歡迎來到 Hillside 農場。我是 Paula，接下來兩個小時由我帶大家參觀。\n我們先從穀倉開始，接著走到田裡，最後在農場商店結束，你們可以在那邊試吃我們自己做的起司。\n這邊我要先提醒一下：穀倉後面那條小路下過雨會很泥濘，昨天晚上雨下得滿大的。如果你不想走那條，還有一條比較遠的路可以繞過去，走大馬路，等一下到了我會指給大家看。\n喔對了，山羊會直接靠過來。牠們很親人，不過請不要拿包包裡的東西餵牠們。"
   }
 ]

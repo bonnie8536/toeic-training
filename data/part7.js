@@ -7,7 +7,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "",
-    "content": "To: r.delacruz@harborlinelogistics.com\nFrom: s.whitfield@meridianofficesolutions.com\nDate: 14 September\nSubject: Your service agreement renewal\nAttachment: Renewal_Terms_2026.pdf\n\nDear Ms. Delacruz,\n\nOur records indicate that Harborline Logistics' maintenance agreement with Meridian Office Solutions is scheduled to expire on 31 October. As your account representative, I want to make sure that moving into a new term is as smooth as possible for your staff.\n\nI have attached a summary of the plans available to you. The standard plan remains unchanged at $1,850 annually and covers quarterly inspections of every copier and printer at your Riverside Avenue location. I would nonetheless encourage you to look at our Premium plan this year. For an additional $400, it extends coverage to your two satellite offices and guarantees a technician on site within four hours of a reported malfunction, rather than on the following business day.\n\nI understand that your team has grown considerably since we last spoke, so the wider coverage may well prove worthwhile. If you would like to talk the options through, I am free for a call any afternoon next week. Please also note that agreements renewed before 15 October qualify for a five percent discount, which is applied automatically when we issue the invoice.\n\nShould you prefer to keep your current arrangement exactly as it is, simply reply to this message and I will process the paperwork on your behalf.\n\nBest regards,\n\nSimon Whitfield\nAccount Representative\nMeridian Office Solutions"
+    "content": "To: r.delacruz@example.com\nFrom: s.whitfield@example.org\nDate: 14 September\nSubject: Your service agreement renewal\nAttachment: Renewal_Terms_2026.pdf\n\nDear Ms. Delacruz,\n\nOur records indicate that Harborline Logistics' maintenance agreement with Meridian Office Solutions is scheduled to expire on 31 October. As your account representative, I want to make sure that moving into a new term is as smooth as possible for your staff.\n\nI have attached a summary of the plans available to you. The standard plan remains unchanged at $1,850 annually and covers quarterly inspections of every copier and printer at your Riverside Avenue location. I would nonetheless encourage you to look at our Premium plan this year. For an additional $400, it extends coverage to your two satellite offices and guarantees a technician on site within four hours of a reported malfunction, rather than on the following business day.\n\nI understand that your team has grown considerably since we last spoke, so the wider coverage may well prove worthwhile. If you would like to talk the options through, I am free for a call any afternoon next week. Please also note that agreements renewed before 15 October qualify for a five percent discount, which is applied automatically when we issue the invoice.\n\nShould you prefer to keep your current arrangement exactly as it is, simply reply to this message and I will process the paperwork on your behalf.\n\nBest regards,\n\nSimon Whitfield\nAccount Representative\nMeridian Office Solutions"
    }
   ],
   "questions": [
@@ -57,7 +57,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "收件人：r.delacruz@harborlinelogistics.com\n寄件人：s.whitfield@meridianofficesolutions.com\n日期：9 月 14 日\n主旨：您的服務合約續約事宜\n附件：Renewal_Terms_2026.pdf\n\n親愛的 Delacruz 女士：\n\n根據本公司紀錄，Harborline Logistics 與 Meridian Office Solutions 之間的維護合約預計於 10 月 31 日到期。身為您的客戶專員，我希望讓貴公司同仁在換約時盡可能順利。\n\n隨信附上可供您選擇的方案摘要。標準方案價格維持不變，每年 1,850 美元，涵蓋貴公司 Riverside 大道據點所有影印機與印表機的季度檢修。不過我仍建議您今年看看我們的高級方案。只要再加 400 美元，服務範圍即可延伸到貴公司的兩處分處辦公室，並保證在接獲故障通報後四小時內派技師到場，而不是等到下一個工作日。\n\n我了解貴團隊自我們上次洽談以來已大幅成長，因此較大的服務範圍很可能相當值得。若您想討論這些方案，我下週任何一天下午都能通話。另請留意，10 月 15 日前完成續約者可享百分之五折扣，開立發票時將自動折抵。\n\n若您希望完全維持現行的合約內容，只需回覆本信，我會代為處理相關文件。\n\n謹致問候\n\nSimon Whitfield\n客戶專員\nMeridian Office Solutions"
+   "收件人：r.delacruz@example.com\n寄件人：s.whitfield@example.org\n日期：9 月 14 日\n主旨：您的服務合約續約事宜\n附件：Renewal_Terms_2026.pdf\n\n親愛的 Delacruz 女士：\n\n根據本公司紀錄，Harborline Logistics 與 Meridian Office Solutions 之間的維護合約預計於 10 月 31 日到期。身為您的客戶專員，我希望讓貴公司同仁在換約時盡可能順利。\n\n隨信附上可供您選擇的方案摘要。標準方案價格維持不變，每年 1,850 美元，涵蓋貴公司 Riverside 大道據點所有影印機與印表機的季度檢修。不過我仍建議您今年看看我們的高級方案。只要再加 400 美元，服務範圍即可延伸到貴公司的兩處分處辦公室，並保證在接獲故障通報後四小時內派技師到場，而不是等到下一個工作日。\n\n我了解貴團隊自我們上次洽談以來已大幅成長，因此較大的服務範圍很可能相當值得。若您想討論這些方案，我下週任何一天下午都能通話。另請留意，10 月 15 日前完成續約者可享百分之五折扣，開立發票時將自動折抵。\n\n若您希望完全維持現行的合約內容，只需回覆本信，我會代為處理相關文件。\n\n謹致問候\n\nSimon Whitfield\n客戶專員\nMeridian Office Solutions"
   ]
  },
  {
@@ -67,7 +67,7 @@ TOEIC.part7 = [
    {
     "type": "advertisement",
     "label": "",
-    "content": "THE LOFT AT CANTER STREET\nFlexible Workspace for Growing Teams\n\nOpening 3 March in the heart of the Westbrook business district, The Loft at Canter Street offers 2,400 square meters of thoughtfully designed office space, just two blocks from the Westbrook Metro station.\n\nMEMBERSHIP OPTIONS\n\nDrop-In Desk - $28 per day\nAccess to the open work floor, high-speed internet, and unlimited coffee. No reservation required.\n\nDedicated Desk - $310 per month\nYour own desk in a shared studio, a locking cabinet, and eight hours of meeting-room credit every month.\n\nPrivate Suite - from $980 per month\nAn enclosed office for teams of three to ten, with a company name plate at the entrance and twenty-four-hour building access.\n\nAll members enjoy the rooftop terrace, showers and secure bicycle storage, and a program of evening workshops led by business owners from the neighborhood.\n\nFOUNDING MEMBER OFFER\nSign a twelve-month agreement before 28 February and pay nothing for your first month. This offer cannot be combined with the referral credit described on our website.\n\nTours run on weekdays between 9:00 A.M. and 6:00 P.M. To arrange one, call 555-0142 or write to hello@loftcanterstreet.com and ask for Marisol Fenn, our community manager."
+    "content": "THE LOFT AT CANTER STREET\nFlexible Workspace for Growing Teams\n\nOpening 3 March in the heart of the Westbrook business district, The Loft at Canter Street offers 2,400 square meters of thoughtfully designed office space, just two blocks from the Westbrook Metro station.\n\nMEMBERSHIP OPTIONS\n\nDrop-In Desk - $28 per day\nAccess to the open work floor, high-speed internet, and unlimited coffee. No reservation required.\n\nDedicated Desk - $310 per month\nYour own desk in a shared studio, a locking cabinet, and eight hours of meeting-room credit every month.\n\nPrivate Suite - from $980 per month\nAn enclosed office for teams of three to ten, with a company name plate at the entrance and twenty-four-hour building access.\n\nAll members enjoy the rooftop terrace, showers and secure bicycle storage, and a program of evening workshops led by business owners from the neighborhood.\n\nFOUNDING MEMBER OFFER\nSign a twelve-month agreement before 28 February and pay nothing for your first month. This offer cannot be combined with the referral credit described on our website.\n\nTours run on weekdays between 9:00 A.M. and 6:00 P.M. To arrange one, call 555-0142 or write to hello@example.com and ask for Marisol Fenn, our community manager."
    }
   ],
   "questions": [
@@ -117,7 +117,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "CANTER 街閣樓工作空間\n為成長中的團隊打造的彈性辦公室\n\nCanter 街閣樓將於 3 月 3 日在 Westbrook 商業區的核心地段開幕，提供 2,400 平方公尺精心規劃的辦公空間，距離 Westbrook 捷運站僅兩個街區。\n\n會員方案\n\n臨時座位：每日 28 美元\n可使用開放式工作區、高速網路，以及無限量咖啡。無須預約。\n\n固定座位：每月 310 美元\n在共用工作室中擁有專屬座位、一個附鎖置物櫃，以及每月八小時的會議室使用額度。\n\n獨立套間：每月 980 美元起\n可容納三至十人團隊的封閉式辦公室，門口設有公司名牌，並享二十四小時大樓出入權限。\n\n所有會員均可使用頂樓露臺、淋浴間與自行車安全停放區，並可參加由在地企業主帶領的夜間工作坊系列課程。\n\n創始會員優惠\n2 月 28 日前簽訂十二個月合約，首月免費。本優惠不得與本網站所述的推薦回饋合併使用。\n\n參觀導覽於平日上午 9 時至下午 6 時進行。欲預約請撥 555-0142，或來信 hello@loftcanterstreet.com 洽社群經理 Marisol Fenn。"
+   "CANTER 街閣樓工作空間\n為成長中的團隊打造的彈性辦公室\n\nCanter 街閣樓將於 3 月 3 日在 Westbrook 商業區的核心地段開幕，提供 2,400 平方公尺精心規劃的辦公空間，距離 Westbrook 捷運站僅兩個街區。\n\n會員方案\n\n臨時座位：每日 28 美元\n可使用開放式工作區、高速網路，以及無限量咖啡。無須預約。\n\n固定座位：每月 310 美元\n在共用工作室中擁有專屬座位、一個附鎖置物櫃，以及每月八小時的會議室使用額度。\n\n獨立套間：每月 980 美元起\n可容納三至十人團隊的封閉式辦公室，門口設有公司名牌，並享二十四小時大樓出入權限。\n\n所有會員均可使用頂樓露臺、淋浴間與自行車安全停放區，並可參加由在地企業主帶領的夜間工作坊系列課程。\n\n創始會員優惠\n2 月 28 日前簽訂十二個月合約，首月免費。本優惠不得與本網站所述的推薦回饋合併使用。\n\n參觀導覽於平日上午 9 時至下午 6 時進行。欲預約請撥 555-0142，或來信 hello@example.com 洽社群經理 Marisol Fenn。"
   ]
  },
  {
@@ -403,7 +403,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "顧客公告\n\nLarkspur 洗衣店－Milton 路 88 號\n張貼日期：4 月 2 日\n\n自 4 月 13 日（星期一）起，我們將改變完成訂單交還顧客的方式。\n\n店門入口內側將裝設一整排取件櫃。當您的衣物整理完成，我們會傳一則含四位數密碼的簡訊。請在取件櫃旁的螢幕輸入密碼，放置您衣物的櫃門就會打開。取件櫃每天上午 6 點至晚上 11 點皆可使用，一週七天，連櫃檯沒開的時段也能取件。放在櫃內超過五天的訂單，會被移回櫃檯後方。\n\n偏好在櫃檯取件的顧客當然可以照舊。櫃檯營業時間維持週一至週六上午 8 點至晚上 7 點。\n\n請注意，4 月 10 日（星期五）本店將於下午 1 點提早打烊，以便安裝取件櫃。原訂當天下午取件的訂單將保留至星期六早上，不另收費。\n\n要使用取件櫃，我們必須有您目前在用的手機號碼。請在 4 月 10 日前到櫃檯，請店員確認我們建檔的號碼。不希望收到簡訊的顧客請一併告知，我們會繼續只在櫃檯交還您的衣物。\n\n有疑問嗎？請撥 555-0139 找 Dana。"
+   "顧客公告\n\nLarkspur 洗衣店：Milton 路 88 號\n張貼日期：4 月 2 日\n\n自 4 月 13 日（星期一）起，我們將改變完成訂單交還顧客的方式。\n\n店門入口內側將裝設一整排取件櫃。當您的衣物整理完成，我們會傳一則含四位數密碼的簡訊。請在取件櫃旁的螢幕輸入密碼，放置您衣物的櫃門就會打開。取件櫃每天上午 6 點至晚上 11 點皆可使用，一週七天，連櫃檯沒開的時段也能取件。放在櫃內超過五天的訂單，會被移回櫃檯後方。\n\n偏好在櫃檯取件的顧客當然可以照舊。櫃檯營業時間維持週一至週六上午 8 點至晚上 7 點。\n\n請注意，4 月 10 日（星期五）本店將於下午 1 點提早打烊，以便安裝取件櫃。原訂當天下午取件的訂單將保留至星期六早上，不另收費。\n\n要使用取件櫃，我們必須有您目前在用的手機號碼。請在 4 月 10 日前到櫃檯，請店員確認我們建檔的號碼。不希望收到簡訊的顧客請一併告知，我們會繼續只在櫃檯交還您的衣物。\n\n有疑問嗎？請撥 555-0139 找 Dana。"
   ]
  },
  {
@@ -463,7 +463,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "Bellworth 週報－商業版\n\nGreen Ladder 園藝新增週末配送\n\nBELLWORTH（5 月 6 日）－位於 9 號公路旁的園藝用品公司 Green Ladder Gardens，將於本月稍晚開始在週六與週日把植栽與土壤送到府。\n\n該公司提供平日配送已有九年，但老闆 Marta Feld 說，她多數的顧客平日並不在家。「客人星期六早上買了一棵樹，卻得等到星期二才等到貨車，」她說。「等到那時候，興頭早就過了，樹還泡在我店裡的水桶中。」\n\n依新做法，中午前下的訂單，鎮內當天送達，鄰近六個鄉鎮則隔天送達。運費並未調整，超過 60 美元的訂單仍免運。\n\nFeld 女士為週末班聘了四名司機，並添購第二輛卡車。她說，在鎮公所通過河東側興建約三百戶住宅的計畫後，這筆成本比較容易接受。「那三百戶人家，每一戶都會想要一片草坪，」她說。\n\n並非所有人都樂見其成。當地兩家較小的店家表示，他們做不到同樣水準的週末新服務，擔心在春季旺季流失顧客。Feld 女士回應說，只要顧客需要有人代為栽種，她的店仍會把工作轉介給在地的園丁。"
+   "Bellworth 週報：商業版\n\nGreen Ladder 園藝新增週末配送\n\nBELLWORTH（5 月 6 日）：位於 9 號公路旁的園藝用品公司 Green Ladder Gardens，將於本月稍晚開始在週六與週日把植栽與土壤送到府。\n\n該公司提供平日配送已有九年，但老闆 Marta Feld 說，她多數的顧客平日並不在家。「客人星期六早上買了一棵樹，卻得等到星期二才等到貨車，」她說。「等到那時候，興頭早就過了，樹還泡在我店裡的水桶中。」\n\n依新做法，中午前下的訂單，鎮內當天送達，鄰近六個鄉鎮則隔天送達。運費並未調整，超過 60 美元的訂單仍免運。\n\nFeld 女士為週末班聘了四名司機，並添購第二輛卡車。她說，在鎮公所通過河東側興建約三百戶住宅的計畫後，這筆成本比較容易接受。「那三百戶人家，每一戶都會想要一片草坪，」她說。\n\n並非所有人都樂見其成。當地兩家較小的店家表示，他們做不到同樣水準的週末新服務，擔心在春季旺季流失顧客。Feld 女士回應說，只要顧客需要有人代為栽種，她的店仍會把工作轉介給在地的園丁。"
   ]
  },
  {
@@ -473,7 +473,7 @@ TOEIC.part7 = [
    {
     "type": "webpage",
     "label": "Web Page",
-    "content": "www.havenridgevet.com/visit\n\nHAVENRIDGE ANIMAL CLINIC\nHome | Our Team | Plan Your Visit | Fees | Contact\n\nPLAN YOUR VISIT\n\nHavenridge Animal Clinic has cared for pets in the Havenridge area since 1998. We treat dogs, cats, rabbits, and birds. We are not able to treat horses, cows, or other farm animals; for those, please call the Weston Large Animal Center at 555-0176.\n\nBooking\nRegular appointments can be booked on this page or by phone. Please arrive ten minutes early so that our staff can weigh your pet before the doctor sees it. If you have to cancel, let us know at least four hours ahead. A visit cancelled later than that is charged half the normal fee.\n\nHours\nMonday-Friday: 8:00 A.M. - 6:00 P.M.\nSaturday: 9:00 A.M. - 1:00 P.M.\nClosed Sunday\n\nEmergencies\nAn animal that has been hit by a car, cannot breathe easily, or has eaten something dangerous should be brought in at once. Do not book online. Call 555-0142 first so that a room is ready when you arrive. After 6:00 P.M. the same number reaches the doctor on duty at home.\n\nYour first visit\nPlease bring any records from your previous clinic. If your pet is nervous around other animals, tell us when you book and we will put you in the quiet room at the back of the building.\n\nPayment is due on the day of the visit. We accept cash and cards."
+    "content": "www.example.com/visit\n\nHAVENRIDGE ANIMAL CLINIC\nHome | Our Team | Plan Your Visit | Fees | Contact\n\nPLAN YOUR VISIT\n\nHavenridge Animal Clinic has cared for pets in the Havenridge area since 1998. We treat dogs, cats, rabbits, and birds. We are not able to treat horses, cows, or other farm animals; for those, please call the Weston Large Animal Center at 555-0176.\n\nBooking\nRegular appointments can be booked on this page or by phone. Please arrive ten minutes early so that our staff can weigh your pet before the doctor sees it. If you have to cancel, let us know at least four hours ahead. A visit cancelled later than that is charged half the normal fee.\n\nHours\nMonday-Friday: 8:00 A.M. - 6:00 P.M.\nSaturday: 9:00 A.M. - 1:00 P.M.\nClosed Sunday\n\nEmergencies\nAn animal that has been hit by a car, cannot breathe easily, or has eaten something dangerous should be brought in at once. Do not book online. Call 555-0142 first so that a room is ready when you arrive. After 6:00 P.M. the same number reaches the doctor on duty at home.\n\nYour first visit\nPlease bring any records from your previous clinic. If your pet is nervous around other animals, tell us when you book and we will put you in the quiet room at the back of the building.\n\nPayment is due on the day of the visit. We accept cash and cards."
    }
   ],
   "questions": [
@@ -523,7 +523,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "www.havenridgevet.com/visit\n\nHAVENRIDGE 動物醫院\n首頁｜醫療團隊｜就診須知｜收費｜聯絡我們\n\n就診須知\n\nHavenridge 動物醫院自 1998 年起為 Havenridge 地區的寵物看診。我們看狗、貓、兔子與鳥類。我們無法診治馬、牛或其他農場動物；這類動物請致電 Weston 大動物中心 555-0176。\n\n預約\n一般門診可在本頁或以電話預約。請提早十分鐘到診，以便我們的人員在醫師看診前為您的寵物量體重。若需取消，請至少提前四小時告知。晚於此時限才取消者，將收取一半的門診費用。\n\n門診時間\n週一至週五：上午 8 點至下午 6 點\n週六：上午 9 點至下午 1 點\n週日休診\n\n急診\n遭車撞擊、呼吸困難，或誤食危險物品的動物，請立即送醫。請勿線上預約。請先撥 555-0142，我們才能在您抵達前備好診間。晚上 6 點以後，同一支電話會轉接到值班醫師家中。\n\n初次就診\n請攜帶前一家診所的任何病歷紀錄。若您的寵物在其他動物旁邊會緊張，請於預約時告知，我們會安排在建築後方的安靜診間。\n\n費用須於就診當天付清。本院收現金與信用卡。"
+   "www.example.com/visit\n\nHAVENRIDGE 動物醫院\n首頁｜醫療團隊｜就診須知｜收費｜聯絡我們\n\n就診須知\n\nHavenridge 動物醫院自 1998 年起為 Havenridge 地區的寵物看診。我們看狗、貓、兔子與鳥類。我們無法診治馬、牛或其他農場動物；這類動物請致電 Weston 大動物中心 555-0176。\n\n預約\n一般門診可在本頁或以電話預約。請提早十分鐘到診，以便我們的人員在醫師看診前為您的寵物量體重。若需取消，請至少提前四小時告知。晚於此時限才取消者，將收取一半的門診費用。\n\n門診時間\n週一至週五：上午 8 點至下午 6 點\n週六：上午 9 點至下午 1 點\n週日休診\n\n急診\n遭車撞擊、呼吸困難，或誤食危險物品的動物，請立即送醫。請勿線上預約。請先撥 555-0142，我們才能在您抵達前備好診間。晚上 6 點以後，同一支電話會轉接到值班醫師家中。\n\n初次就診\n請攜帶前一家診所的任何病歷紀錄。若您的寵物在其他動物旁邊會緊張，請於預約時告知，我們會安排在建築後方的安靜診間。\n\n費用須於就診當天付清。本院收現金與信用卡。"
   ]
  },
  {
@@ -540,7 +540,7 @@ TOEIC.part7 = [
      },
      {
       "t": "sub",
-      "text": "Adult Classes - Autumn Term (September 8 - November 14)"
+      "text": "Adult Classes - Autumn Term (September 8 - November 15)"
      },
      {
       "t": "p",
@@ -605,7 +605,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: office@northgatemusic.org\nFrom: helen.duarte@mailcove.com\nDate: September 16\nSubject: My Monday class\n\nDear Ms. Okafor,\n\nI am writing about the beginners' guitar class I joined this term. I have been to both Monday sessions so far and I enjoy them very much, but my company has just moved me to an evening shift that starts at 6:00 P.M. on Mondays and Wednesdays. I will not be able to come at that hour for the rest of the term.\n\nI see from the term schedule that the same course is also offered on Saturday mornings. Could I move into that group instead? I understand that the fee is the same, so I hope there is nothing more to pay. If the Saturday group is already full, please tell me as soon as you can, because I may then have to leave the school and take the course again next spring.\n\nOne more thing: I rented a guitar from the office during the first week. May I keep it if I change groups?\n\nThank you for your help.\n\nHelen Duarte"
+    "content": "To: office@example.com\nFrom: helen.duarte@example.org\nDate: September 16\nSubject: My Monday class\n\nDear Ms. Okafor,\n\nI am writing about the beginners' guitar class I joined this term. I have been to both Monday sessions so far and I enjoy them very much, but my company has just moved me to an evening shift that starts at 6:00 P.M. on Mondays and Wednesdays. I will not be able to come at that hour for the rest of the term.\n\nI see from the term schedule that the same course is also offered on Saturday mornings. Could I move into that group instead? I understand that the fee is the same, so I hope there is nothing more to pay. If the Saturday group is already full, please tell me as soon as you can, because I may then have to leave the school and take the course again next spring.\n\nOne more thing: I rented a guitar from the office during the first week. May I keep it if I change groups?\n\nThank you for your help.\n\nHelen Duarte"
    }
   ],
   "questions": [
@@ -656,18 +656,18 @@ TOEIC.part7 = [
    {
     "q": "In the e-mail, the word \"full\" in paragraph 2 is closest in meaning to",
     "options": [
-     "complete",
+     "detailed",
      "satisfied",
      "filled",
      "wide"
     ],
     "answer": 2,
-    "explanation": "定位郵件第二段 If the Saturday group is already full, please tell me as soon as you can，主詞是 group（班級），且課表 Notes 註明每班上限十二人，可知 full 指「人數已滿」，故選 (C) filled。full 另有「完整的」與「吃飽的」之義，(A) complete 與 (B) satisfied 分別針對這兩義設計，套回本句皆不通；(D) 語意不合。"
+    "explanation": "定位郵件第二段 If the Saturday group is already full, please tell me as soon as you can，主詞是 group（班級），且課表 Notes 註明每班上限十二人，可知 full 指「人數已滿」，故選 (C) filled。full 另有「詳盡的」（如 a full report）與「吃飽的」之義，(A) detailed 與 (B) satisfied 分別針對這兩義設計，套回本句皆不通；(D) wide 只表示寬度，與人數無關。"
    }
   ],
   "translation": [
-   "NORTHGATE 社區音樂教室\n成人課程－秋季班（9 月 8 日至 11 月 14 日）\n每門課每週上一次，共十週。\n\n吉他入門｜週一 18:30-20:00｜2 教室｜Oscar Lund｜180 美元\n團體歌唱｜週二 19:00-20:30｜大廳｜Priya Ramesh｜150 美元\n鋼琴（第二級）｜週三 18:00-19:30｜5 教室｜Oscar Lund｜210 美元\n爵士鼓入門｜週四 19:00-20:30｜地下室琴房｜Ken Abara｜195 美元\n吉他入門（第二班）｜週六 10:00-11:30｜2 教室｜Ken Abara｜180 美元\n\n注意事項\n＊每班以十二人為限。人數少於五人的班級不開課。\n＊學員可在開學後前兩週內，改到同一科目的另一個班級。請寫信給辦公室；請勿逕自去上新的班級。\n＊於前四週內退出者，退還一半學費；之後恕不退費。\n＊樂器可在辦公室租借，每學期 25 美元。",
-   "收件者：office@northgatemusic.org\n寄件者：helen.duarte@mailcove.com\n日期：9 月 16 日\n主旨：我的週一課程\n\n親愛的 Okafor 女士：\n\n我想請教本學期我報名的吉他入門課。到目前為止兩次週一的課我都有上，也很喜歡，但公司剛把我調到晚班，週一與週三從晚上 6 點開始上班。本學期接下來的時間，我都無法在那個時段到課。\n\n我從課表上看到，同一門課週六早上也有開。我可以改到那一班嗎？我知道學費相同，所以應該不需要再補繳費用。如果週六班已經額滿，請盡快告訴我，因為那樣我可能只好退出，明年春天再重修這門課。\n\n還有一件事：我在第一週向辦公室租了一把吉他。若我換班，可以繼續留用嗎？\n\n感謝您的協助。\n\nHelen Duarte"
+   "NORTHGATE 社區音樂教室\n成人課程：秋季班（9 月 8 日至 11 月 15 日）\n每門課每週上一次，共十週。\n\n吉他入門｜週一 18:30-20:00｜2 教室｜Oscar Lund｜180 美元\n團體歌唱｜週二 19:00-20:30｜大廳｜Priya Ramesh｜150 美元\n鋼琴（第二級）｜週三 18:00-19:30｜5 教室｜Oscar Lund｜210 美元\n爵士鼓入門｜週四 19:00-20:30｜地下室琴房｜Ken Abara｜195 美元\n吉他入門（第二班）｜週六 10:00-11:30｜2 教室｜Ken Abara｜180 美元\n\n注意事項\n＊每班以十二人為限。人數少於五人的班級不開課。\n＊學員可在開學後前兩週內，改到同一科目的另一個班級。請寫信給辦公室；請勿逕自去上新的班級。\n＊於前四週內退出者，退還一半學費；之後恕不退費。\n＊樂器可在辦公室租借，每學期 25 美元。",
+   "收件者：office@example.com\n寄件者：helen.duarte@example.org\n日期：9 月 16 日\n主旨：我的週一課程\n\n親愛的 Okafor 女士：\n\n我想請教本學期我報名的吉他入門課。到目前為止兩次週一的課我都有上，也很喜歡，但公司剛把我調到晚班，週一與週三從晚上 6 點開始上班。本學期接下來的時間，我都無法在那個時段到課。\n\n我從課表上看到，同一門課週六早上也有開。我可以改到那一班嗎？我知道學費相同，所以應該不需要再補繳費用。如果週六班已經額滿，請盡快告訴我，因為那樣我可能只好退出，明年春天再重修這門課。\n\n還有一件事：我在第一週向辦公室租了一把吉他。若我換班，可以繼續留用嗎？\n\n感謝您的協助。\n\nHelen Duarte"
   ]
  },
  {
@@ -1458,7 +1458,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: bookings@ashvalerail.com\nFrom: m.otero@quillmail.com\nDate: 14 September\nSubject: Booking R-88204\n\nHello,\n\nI hold a ticket on the 08:20 service from Ashvale Central to Portmere this Friday, 18 September, booking number R-88204. My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train.\n\nI must be in Portmere by two o'clock, when I am giving a short talk at a client's office beside the station. The talk cannot be moved. I would therefore like the latest train that still brings me in with about an hour to spare. Looking at your timetable, only one service seems to fit. Please put me on it if a seat is free.\n\nI would rather not take a train that stops along the way, but I understand that I may have no choice on this occasion.\n\nTwo further questions. My original ticket cost thirty-four dollars. Am I right that nothing will be returned to me if the new fare is lower? Also, I bought the ticket on your website three weeks ago. Does that mean I can still make the change myself, or must your office do it for me?\n\nThank you for your help,\n\nMarcela Otero"
+    "content": "To: bookings@example.com\nFrom: m.otero@example.org\nDate: 14 September\nSubject: Booking R-88204\n\nHello,\n\nI hold a ticket on the 08:20 service from Ashvale Central to Portmere this Friday, 18 September, booking number R-88204. My morning meeting has been moved and will not finish before ten o'clock, so I can no longer reach the station in time for that train.\n\nI must be in Portmere by two o'clock, when I am giving a short talk at a client's office beside the station. The talk cannot be moved. I would therefore like the latest train that still brings me in with about an hour to spare. Looking at your timetable, only one service seems to fit. Please put me on it if a seat is free.\n\nI would rather not take a train that stops along the way, but I understand that I may have no choice on this occasion.\n\nTwo further questions. My original ticket cost thirty-four dollars. Am I right that nothing will be returned to me if the new fare is lower? Also, I bought the ticket on your website three weeks ago. Does that mean I can still make the change myself, or must your office do it for me?\n\nThank you for your help,\n\nMarcela Otero"
    }
   ],
   "questions": [
@@ -1520,7 +1520,7 @@ TOEIC.part7 = [
   ],
   "translation": [
    "阿什維爾鐵路 平日班次｜阿什維爾中央站往波特米爾｜9 月 1 日起實施\n．A102：06:15 發車，07:40 抵達，直達，$34\n．A126：08:20 發車，09:45 抵達，直達，$34\n．A140：09:30 發車，11:30 抵達，停靠多恩、巴威克，$26\n．A155：10:40 發車，12:50 抵達，停靠多恩、巴威克、米爾蓋特，$22\n．A168：11:50 發車，13:55 抵達，停靠多恩、巴威克，$26\n．A180：12:15 發車，13:40 抵達，直達，$34\n．A192：14:30 發車，15:55 抵達，直達，$34\n．備註：直達車兩城之間不停站；表列票價為預訂之普通座位價格\n．更改訂位規定：可於發車前兩小時之前在官網辦理；每次更改收取 $8 手續費；新班次較貴須補差額，較便宜則差額不退；當日購買的車票不得更改",
-   "收件者：bookings@ashvalerail.com\n寄件者：m.otero@quillmail.com\n日期：9 月 14 日\n主旨：訂位編號 R-88204\n\n您好：\n\n我持有本週五（9 月 18 日）從阿什維爾中央站往波特米爾、08:20 那班車的車票，訂位編號 R-88204。我早上的會議被改期，十點以前不會結束，因此已來不及趕到車站搭那班車。\n\n我必須在兩點以前抵達波特米爾，屆時要在車站旁的客戶辦公室做一場簡短演講，這場演講無法更動。因此我想改搭仍能讓我提早約一小時抵達的最晚班次。我看過貴公司的時刻表，似乎只有一班符合，若還有空位請幫我改到那班。\n\n我其實不太想搭沿途停靠的班次，但我明白這次可能別無選擇。\n\n另有兩個問題。我原本的車票是三十四美元，若新票價較低，是否確實不會退還差額？另外，我是三週前在貴公司網站上購票的，這樣我是否仍可自行更改，還是必須由貴單位代為處理？\n\n感謝協助，\n\n瑪塞拉．歐特羅"
+   "收件者：bookings@example.com\n寄件者：m.otero@example.org\n日期：9 月 14 日\n主旨：訂位編號 R-88204\n\n您好：\n\n我持有本週五（9 月 18 日）從阿什維爾中央站往波特米爾、08:20 那班車的車票，訂位編號 R-88204。我早上的會議被改期，十點以前不會結束，因此已來不及趕到車站搭那班車。\n\n我必須在兩點以前抵達波特米爾，屆時要在車站旁的客戶辦公室做一場簡短演講，這場演講無法更動。因此我想改搭仍能讓我提早約一小時抵達的最晚班次。我看過貴公司的時刻表，似乎只有一班符合，若還有空位請幫我改到那班。\n\n我其實不太想搭沿途停靠的班次，但我明白這次可能別無選擇。\n\n另有兩個問題。我原本的車票是三十四美元，若新票價較低，是否確實不會退還差額？另外，我是三週前在貴公司網站上購票的，這樣我是否仍可自行更改，還是必須由貴單位代為處理？\n\n感謝協助，\n\n瑪塞拉．歐特羅"
   ]
  },
  {
@@ -1537,7 +1537,7 @@ TOEIC.part7 = [
      },
      {
       "t": "sub",
-      "text": "26 Sandhill Road, Fairgate | 555-0193 | billing@bellamyservice.com"
+      "text": "26 Sandhill Road, Fairgate | 555-0193 | billing@example.com"
      },
      {
       "t": "kv",
@@ -1636,7 +1636,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: billing@bellamyservice.com\nFrom: f.nasser@quillmail.com\nDate: 10 November\nSubject: Invoice BP-5512\n\nDear Sir or Madam,\n\nThank you for sending Mr. Okoye out so quickly. The sink has given us no trouble since, and the new switch works well. Before I pay, however, I would like to raise one point about the bill.\n\nWhen I telephoned your office on Thursday, 30 October, I asked for the first weekday appointment you had. I was told that nobody was free until the following Thursday and that a technician could come on Sunday instead. I agreed to the Sunday visit, but the person I spoke with never told me that coming at the weekend would add a further charge to my total. Had I known, I would have waited. I would like that line taken off the bill.\n\nI have a second, smaller question. The bathroom job took Mr. Okoye about ten minutes, yet the bill shows half an hour of labor. Could you explain how the time is counted?\n\nI should also plan ahead. If the same pipe begins to leak again in March, will I have to pay for that work a second time?\n\nI will settle the rest of the invoice as soon as I hear from you.\n\nKind regards,\n\nFarida Nasser\n9 Weaver Lane"
+    "content": "To: billing@example.com\nFrom: f.nasser@example.org\nDate: 10 November\nSubject: Invoice BP-5512\n\nDear Sir or Madam,\n\nThank you for sending Mr. Okoye out so quickly. The sink has given us no trouble since, and the new switch works well. Before I pay, however, I would like to raise one point about the bill.\n\nWhen I telephoned your office on Thursday, 30 October, I asked for the first weekday appointment you had. I was told that nobody was free until the following Thursday and that a technician could come on Sunday instead. I agreed to the Sunday visit, but the person I spoke with never told me that coming at the weekend would add a further charge to my total. Had I known, I would have waited. I would like that line taken off the bill.\n\nI have a second, smaller question. The bathroom job took Mr. Okoye about ten minutes, yet the bill shows half an hour of labor. Could you explain how the time is counted?\n\nI should also plan ahead. If the same pipe begins to leak again in March, will I have to pay for that work a second time?\n\nI will settle the rest of the invoice as soon as I hear from you.\n\nKind regards,\n\nFarida Nasser\n9 Weaver Lane"
    }
   ],
   "questions": [
@@ -1697,8 +1697,8 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "貝拉米水電行\n地址：費爾蓋特桑德希爾路 26 號｜電話 555-0193｜billing@bellamyservice.com\n．發票號碼：BP-5512；發票日期：11 月 6 日；施工日期：11 月 2 日（週日）\n．客戶：法麗達．納塞爾女士，威弗巷 9 號；技師：D. 奧科耶；付款期限：12 月 6 日\n．明細：廚房水槽管線維修工資 2.0 小時，每小時 $85.00，計 $170.00；更換管件（料號 P-14）1 件 $46.00；浴室電燈開關工資 0.5 小時，每小時 $85.00，計 $42.50；週末到府費 1 次 $120.00；零星材料 1 式 $18.00\n．小計 $396.50；稅金（5%）$19.83；應付總額 $416.33\n．備註：工資以半小時為單位計費，最低以半小時起算；凡於週六或週日施作皆收取週末到府費；工資自施工日起保固六個月，零件則依製造商自身保固辦理；逾三十日未付款者，每月加收 1.5% 利息",
-   "收件者：billing@bellamyservice.com\n寄件者：f.nasser@quillmail.com\n日期：11 月 10 日\n主旨：發票 BP-5512\n\n敬啟者：\n\n感謝貴公司這麼快就派奧科耶先生前來。水槽自那之後都沒再出問題，新的開關也運作良好。不過在付款之前，我想針對帳單提出一點疑問。\n\n我在 10 月 30 日（週四）致電貴公司時，要求安排最近的平日時段。當時我被告知直到下週四都沒有人有空，可以改在週日前來。我同意了週日這個時間，但和我通話的人從未告訴我，週末到府會讓總額再多出一筆費用。早知如此，我寧可等。我希望這一項從帳單上刪除。\n\n我還有第二個比較小的問題。浴室那項工作，奧科耶先生大約只花了十分鐘，帳單上卻記為半小時工資。可以說明時間是如何計算的嗎？\n\n我也想先做打算：如果同一段管線在三月再度漏水，我是否得再付一次費用？\n\n收到回覆後，我會立即支付發票其餘款項。\n\n謹啟，\n\n法麗達．納塞爾\n威弗巷 9 號"
+   "貝拉米水電行\n地址：費爾蓋特桑德希爾路 26 號｜電話 555-0193｜billing@example.com\n．發票號碼：BP-5512；發票日期：11 月 6 日；施工日期：11 月 2 日（週日）\n．客戶：法麗達．納塞爾女士，威弗巷 9 號；技師：D. 奧科耶；付款期限：12 月 6 日\n．明細：廚房水槽管線維修工資 2.0 小時，每小時 $85.00，計 $170.00；更換管件（料號 P-14）1 件 $46.00；浴室電燈開關工資 0.5 小時，每小時 $85.00，計 $42.50；週末到府費 1 次 $120.00；零星材料 1 式 $18.00\n．小計 $396.50；稅金（5%）$19.83；應付總額 $416.33\n．備註：工資以半小時為單位計費，最低以半小時起算；凡於週六或週日施作皆收取週末到府費；工資自施工日起保固六個月，零件則依製造商自身保固辦理；逾三十日未付款者，每月加收 1.5% 利息",
+   "收件者：billing@example.com\n寄件者：f.nasser@example.org\n日期：11 月 10 日\n主旨：發票 BP-5512\n\n敬啟者：\n\n感謝貴公司這麼快就派奧科耶先生前來。水槽自那之後都沒再出問題，新的開關也運作良好。不過在付款之前，我想針對帳單提出一點疑問。\n\n我在 10 月 30 日（週四）致電貴公司時，要求安排最近的平日時段。當時我被告知直到下週四都沒有人有空，可以改在週日前來。我同意了週日這個時間，但和我通話的人從未告訴我，週末到府會讓總額再多出一筆費用。早知如此，我寧可等。我希望這一項從帳單上刪除。\n\n我還有第二個比較小的問題。浴室那項工作，奧科耶先生大約只花了十分鐘，帳單上卻記為半小時工資。可以說明時間是如何計算的嗎？\n\n我也想先做打算：如果同一段管線在三月再度漏水，我是否得再付一次費用？\n\n收到回覆後，我會立即支付發票其餘款項。\n\n謹啟，\n\n法麗達．納塞爾\n威弗巷 9 號"
   ]
  },
  {
@@ -1784,7 +1784,7 @@ TOEIC.part7 = [
      {
       "t": "list",
       "items": [
-       "Write to members@halewoodclub.com or speak to the front desk.",
+       "Write to members@example.com or speak to the front desk.",
        "A request that reaches us before the twentieth of the month takes effect on the first day of the following month.",
        "Moving to a lower plan also requires thirty days' written notice.",
        "Every plan runs for at least three months from the day you join."
@@ -1799,7 +1799,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: members@halewoodclub.com\nFrom: y.balogun@quillmail.com\nDate: 12 June\nSubject: Changing my plan\n\nDear Ms. Bregman,\n\nI joined the club in March on the Active plan and have been coming three or four times a week, almost always early in the morning before work.\n\nTwo things have changed. My nephew is staying with me for the school year while his parents are away, and taking him to school has taken over my mornings, so I can no longer come here before work. The only time I am reliably free is late in the evening, rarely before nine o'clock, and I would much rather swim then than give it up. I have also begun training for a race in October, and my coach suggests two sessions a month with a trainer.\n\nCould you move me to the plan that lets me use the pool at that hour? I would like the change to start on the first of July, and I am writing well before the date given in your rules, so I hope that is possible.\n\nTwo questions. First, I now pay eight dollars a month for a locker. Will that still appear on my bill after the change? Second, my sister is visiting from abroad in August and would like to come with me twice in the same week. Will my new plan allow that?\n\nFinally, please confirm that I do not have to pay the joining fee a second time.\n\nThank you,\n\nYusuf Balogun"
+    "content": "To: members@example.com\nFrom: y.balogun@example.org\nDate: 12 June\nSubject: Changing my plan\n\nDear Ms. Bregman,\n\nI joined the club in March on the Active plan and have been coming three or four times a week, almost always early in the morning before work.\n\nTwo things have changed. My nephew is staying with me for the school year while his parents are away, and taking him to school has taken over my mornings, so I can no longer come here before work. The only time I am reliably free is late in the evening, rarely before nine o'clock, and I would much rather swim then than give it up. I have also begun training for a race in October, and my coach suggests two sessions a month with a trainer.\n\nCould you move me to the plan that lets me use the pool at that hour? I would like the change to start on the first of July, and I am writing well before the date given in your rules, so I hope that is possible.\n\nTwo questions. First, I now pay eight dollars a month for a locker. Will that still appear on my bill after the change? Second, my sister is visiting from abroad in August and would like to come with me twice in the same week. Will my new plan allow that?\n\nFinally, please confirm that I do not have to pay the joining fee a second time.\n\nThank you,\n\nYusuf Balogun"
    }
   ],
   "questions": [
@@ -1856,12 +1856,12 @@ TOEIC.part7 = [
      "recommends"
     ],
     "answer": 3,
-    "explanation": "字義題。「my coach suggests two sessions a month with a trainer」是教練提出的建議，故 suggests ＝ recommends。(A) orders 語氣過強，教練並非下令；(B)(C) 與語意不符。"
+    "explanation": "字義題。電子郵件第二段「my coach suggests two sessions a month with a trainer」是教練向他提出的訓練建議，suggests 在這裡是「建議」，故選 (D) recommends。(A) orders 是「命令」，語氣過強，教練只是給建議，不是下令；(B) proves 是「證明」，suggest 雖然也有「顯示、暗示」的意思，但這裡主詞是教練、受詞是要安排的課程，句意是提建議，不是證明某件事；(C) doubts 是「懷疑」，與教練主張安排課程的意思相反。"
    }
   ],
   "translation": [
-   "海爾伍德運動俱樂部 會員方案比較（2 月 1 日起適用價格）\n．月費：基本 $29／進階 $45／全享 $68\n．健身區與器材：三種方案皆可使用\n．每月團體課程：基本 2 堂／進階 8 堂／全享 無上限\n．游泳池：基本 不可／進階 可／全享 可\n．開放時段：基本 06:00-15:00／進階 06:00-20:00／全享 24 小時\n．每月來賓券：基本 0 張／進階 1 張／全享 3 張\n．置物櫃租金：基本、進階每月 $8／全享 已含\n．教練課程：基本每堂 $55／進階每堂 $48／全享 每月兩堂免費，之後每堂 $40\n．更改方案方式：來信 members@halewoodclub.com 或洽櫃檯；每月 20 日前提出者，自次月 1 日生效；降級另需提前三十天書面通知；各方案自入會日起至少須維持三個月\n．備註：$40 入會費僅收取一次，更改方案時不再收取；來賓券不得保留至次月",
-   "收件者：members@halewoodclub.com\n寄件者：y.balogun@quillmail.com\n日期：6 月 12 日\n主旨：更改我的方案\n\n親愛的布雷格曼女士：\n\n我三月入會，選的是進階方案，每週來三到四次，幾乎都是上班前的清晨時段。\n\n現在有兩件事變了。我姪子這學年住在我這裡，父母不在身邊由我照顧，早上送他上學占掉了我原本的時段，我已經沒辦法在上班前過來。我固定有空的時間只剩晚上，很少早於九點，比起就此放棄，我寧可改在那個時候游泳。另外我開始為十月的一場比賽受訓，教練建議我每月安排兩堂教練課。\n\n可以幫我改到那個時段仍能使用游泳池的方案嗎？我希望從七月一日起生效，而且我提出的時間遠早於貴會規定的日期，希望能夠辦到。\n\n另有兩個問題。第一，我目前每月支付八美元的置物櫃費用，更改方案後帳單上還會有這筆嗎？第二，我妹妹八月會從國外來訪，想在同一週跟我來兩次，新方案是否允許？\n\n最後，也請確認我不必再付第二次入會費。\n\n謝謝，\n\n尤瑟夫．巴洛貢"
+   "海爾伍德運動俱樂部 會員方案比較（2 月 1 日起適用價格）\n．月費：基本 $29／進階 $45／全享 $68\n．健身區與器材：三種方案皆可使用\n．每月團體課程：基本 2 堂／進階 8 堂／全享 無上限\n．游泳池：基本 不可／進階 可／全享 可\n．開放時段：基本 06:00-15:00／進階 06:00-20:00／全享 24 小時\n．每月來賓券：基本 0 張／進階 1 張／全享 3 張\n．置物櫃租金：基本、進階每月 $8／全享 已含\n．教練課程：基本每堂 $55／進階每堂 $48／全享 每月兩堂免費，之後每堂 $40\n．更改方案方式：來信 members@example.com 或洽櫃檯；每月 20 日前提出者，自次月 1 日生效；降級另需提前三十天書面通知；各方案自入會日起至少須維持三個月\n．備註：$40 入會費僅收取一次，更改方案時不再收取；來賓券不得保留至次月",
+   "收件者：members@example.com\n寄件者：y.balogun@example.org\n日期：6 月 12 日\n主旨：更改我的方案\n\n親愛的布雷格曼女士：\n\n我三月入會，選的是進階方案，每週來三到四次，幾乎都是上班前的清晨時段。\n\n現在有兩件事變了。我姪子這學年住在我這裡，父母不在身邊由我照顧，早上送他上學占掉了我原本的時段，我已經沒辦法在上班前過來。我固定有空的時間只剩晚上，很少早於九點，比起就此放棄，我寧可改在那個時候游泳。另外我開始為十月的一場比賽受訓，教練建議我每月安排兩堂教練課。\n\n可以幫我改到那個時段仍能使用游泳池的方案嗎？我希望從七月一日起生效，而且我提出的時間遠早於貴會規定的日期，希望能夠辦到。\n\n另有兩個問題。第一，我目前每月支付八美元的置物櫃費用，更改方案後帳單上還會有這筆嗎？第二，我妹妹八月會從國外來訪，想在同一週跟我來兩次，新方案是否允許？\n\n最後，也請確認我不必再付第二次入會費。\n\n謝謝，\n\n尤瑟夫．巴洛貢"
   ]
  },
  {
@@ -1878,7 +1878,7 @@ TOEIC.part7 = [
      },
      {
       "t": "sub",
-      "text": "www.weatherbyinn.com  |  Rooms and Rates  |  The Corner Room  |  Getting Here"
+      "text": "www.example.com  |  Rooms and Rates  |  The Corner Room  |  Getting Here"
      },
      {
       "t": "p",
@@ -1943,7 +1943,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: c.restrepo@bellamyprint.com\nFrom: bookings@weatherbyinn.com\nDate: April 9\nSubject: Booking WB-2078\n\nDear Ms. Restrepo,\n\nThank you for booking with us directly. Your reservation is confirmed as shown below, and the room will be held for you until midnight on the day you arrive.\n\nArrival: Tuesday, April 14\nDeparture: Friday, April 17\nRoom: Courtyard Twin, one guest\nRate: $139 per night\nRoom total: $417\n\nOur driver can meet you at the airport if you send us your flight number at least one day ahead. Please note that this service is not part of the rate for the room you have chosen; the current price for it is on the Rooms and Rates page.\n\nBreakfast is included each morning. Anything else you use during your stay, such as the car, the cafe, or the meeting room, is added to your room account, and the whole account is paid at the front desk on the morning you leave.\n\nWe look forward to welcoming you to Calderfield.\n\nHugo Lindqvist\nBookings, The Weatherby Inn"
+    "content": "To: c.restrepo@example.org\nFrom: bookings@example.com\nDate: April 9\nSubject: Booking WB-2078\n\nDear Ms. Restrepo,\n\nThank you for booking with us directly. Your reservation is confirmed as shown below, and the room will be held for you until midnight on the day you arrive.\n\nArrival: Tuesday, April 14\nDeparture: Friday, April 17\nRoom: Courtyard Twin, one guest\nRate: $139 per night\nRoom total: $417\n\nOur driver can meet you at the airport if you send us your flight number at least one day ahead. Please note that this service is not part of the rate for the room you have chosen; the current price for it is on the Rooms and Rates page.\n\nBreakfast is included each morning. Anything else you use during your stay, such as the car, the cafe, or the meeting room, is added to your room account, and the whole account is paid at the front desk on the morning you leave.\n\nWe look forward to welcoming you to Calderfield.\n\nHugo Lindqvist\nBookings, The Weatherby Inn"
    },
    {
     "type": "review",
@@ -2009,9 +2009,9 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "THE WEATHERBY INN（飯店網頁）\nwww.weatherbyinn.com｜房型與房價｜Corner Room 餐廳｜交通資訊\n\nWeatherby Inn 是一間位於 Calderfield 市 Sefton 路的飯店，共二十八間客房，步行十分鐘可達港口，開車至機場約二十五分鐘。下列每一種房價都已含 Corner Room 的早餐；該餐廳位於一樓，供餐時間為上午 7:00 至 9:30。\n\n房型表重點：\n．Sefton Single（單人房）：可住 1 人，每晚 104 美元，附書桌\n．Courtyard Twin（庭園雙床房）：可住 2 人，每晚 139 美元，附書桌、花園景觀\n．Harbor View（港景房）：可住 2 人，每晚 168 美元，附陽台、機場接送\n．Loft Room（樓中樓房）：可住 3 人，每晚 210 美元，附陽台、機場接送、可延至下午 2:00 退房\n＊各房價以整間客房計算，不是按人數計價。加床每晚 20 美元，且只有 Loft Room 可以加床。\n\n住滿三晚（含）以上的旅客，可獲得 Corner Room 餐廳 25 美元的抵用額度。額度於入住當日記入房帳，不得兌換現金。\n\n．全館客房與大廳皆有無線網路，房客免費使用\n．櫃檯出借自行車供房客使用，上午 7:00 起至天黑\n．Ardley 室為最多容納八人的會議室，半天 45 美元\n．機場接送由本館車輛提供：Harbor View 與 Loft 房型已包含；其他房客單程 26 美元\n．櫃檯二十四小時服務；退房時間為上午 11:00 前",
-   "收件者：c.restrepo@bellamyprint.com\n寄件者：bookings@weatherbyinn.com\n日期：4 月 9 日\n主旨：訂房編號 WB-2078\n\n親愛的 Restrepo 女士：\n\n感謝您直接向本館訂房。您的訂房確認如下，客房將為您保留至入住當日午夜。\n\n入住：4 月 14 日（星期二）\n退房：4 月 17 日（星期五）\n房型：Courtyard Twin，一位住客\n房價：每晚 139 美元\n房費合計：417 美元\n\n若您至少提前一天告知班機號碼，本館司機可到機場接您。請注意，這項服務並未包含在您所選房型的房價中，目前的收費請見「房型與房價」頁面。\n\n每日早餐已含在房價內。住宿期間使用的其他項目，例如接送車、餐廳或會議室，都會記入您的房帳，並於您離開當天早上在櫃檯一併結清。\n\n期待在 Calderfield 迎接您的到來。\n\nHugo Lindqvist\nThe Weatherby Inn 訂房組",
-   "住客評論：Calderfield 的 The Weatherby Inn\n4 月 20 日由 Camila Restrepo 張貼－五顆星中的四顆\n\n我一年會到 Calderfield 兩次，去拜訪一位辦公室就在港邊的印刷業客戶，而這是我第一次住 Weatherby。飯店自己的司機拿著寫有我名字的牌子在機場等我，最後一天早上也是同一位司機載我回機場，讓我從容趕上一早的班機。兩趟車資都記在我的房帳上，這一點櫃檯人員事先就跟我說過了。\n\n唯一讓我不高興的是自行車。我之所以捨棄車站旁比較便宜的旅館而選這裡，就是因為房型頁面寫著提供房客自行車，而我喜歡在一天工作結束後沿著水邊騎車。櫃檯人員語氣很客氣地解釋，最後兩台在二月就賣掉了，只是一直沒有人把網頁上那一行拿掉。這件事不大，卻正是我訂房的理由。\n\n不過真正讓我記住的，是第二天晚上。客戶把會議改成晚上八點的視訊通話，而我房間太吵，因為花園被一場婚宴包下了。經理打開大廳旁的會議室讓我使用，還端來一壺茶，而且完全沒有收費。我在更大的飯店花過更多錢，得到的服務卻遠不如此。\n\n另外兩點提供其他旅客參考。早餐九點半就結束，對加班晚睡的人來說太早；還有，花園景觀的房間看出去是一整面花牆而不是水景，訂房前請把房型名稱看仔細。"
+   "THE WEATHERBY INN（飯店網頁）\nwww.example.com｜房型與房價｜Corner Room 餐廳｜交通資訊\n\nWeatherby Inn 是一間位於 Calderfield 市 Sefton 路的飯店，共二十八間客房，步行十分鐘可達港口，開車至機場約二十五分鐘。下列每一種房價都已含 Corner Room 的早餐；該餐廳位於一樓，供餐時間為上午 7:00 至 9:30。\n\n房型表重點：\n．Sefton Single（單人房）：可住 1 人，每晚 104 美元，附書桌\n．Courtyard Twin（庭園雙床房）：可住 2 人，每晚 139 美元，附書桌、花園景觀\n．Harbor View（港景房）：可住 2 人，每晚 168 美元，附陽台、機場接送\n．Loft Room（樓中樓房）：可住 3 人，每晚 210 美元，附陽台、機場接送、可延至下午 2:00 退房\n＊各房價以整間客房計算，不是按人數計價。加床每晚 20 美元，且只有 Loft Room 可以加床。\n\n住滿三晚（含）以上的旅客，可獲得 Corner Room 餐廳 25 美元的抵用額度。額度於入住當日記入房帳，不得兌換現金。\n\n．全館客房與大廳皆有無線網路，房客免費使用\n．櫃檯出借自行車供房客使用，上午 7:00 起至天黑\n．Ardley 室為最多容納八人的會議室，半天 45 美元\n．機場接送由本館車輛提供：Harbor View 與 Loft 房型已包含；其他房客單程 26 美元\n．櫃檯二十四小時服務；退房時間為上午 11:00 前",
+   "收件者：c.restrepo@example.org\n寄件者：bookings@example.com\n日期：4 月 9 日\n主旨：訂房編號 WB-2078\n\n親愛的 Restrepo 女士：\n\n感謝您直接向本館訂房。您的訂房確認如下，客房將為您保留至入住當日午夜。\n\n入住：4 月 14 日（星期二）\n退房：4 月 17 日（星期五）\n房型：Courtyard Twin，一位住客\n房價：每晚 139 美元\n房費合計：417 美元\n\n若您至少提前一天告知班機號碼，本館司機可到機場接您。請注意，這項服務並未包含在您所選房型的房價中，目前的收費請見「房型與房價」頁面。\n\n每日早餐已含在房價內。住宿期間使用的其他項目，例如接送車、餐廳或會議室，都會記入您的房帳，並於您離開當天早上在櫃檯一併結清。\n\n期待在 Calderfield 迎接您的到來。\n\nHugo Lindqvist\nThe Weatherby Inn 訂房組",
+   "住客評論：Calderfield 的 The Weatherby Inn\n4 月 20 日由 Camila Restrepo 張貼：五顆星中的四顆\n\n我一年會到 Calderfield 兩次，去拜訪一位辦公室就在港邊的印刷業客戶，而這是我第一次住 Weatherby。飯店自己的司機拿著寫有我名字的牌子在機場等我，最後一天早上也是同一位司機載我回機場，讓我從容趕上一早的班機。兩趟車資都記在我的房帳上，這一點櫃檯人員事先就跟我說過了。\n\n唯一讓我不高興的是自行車。我之所以捨棄車站旁比較便宜的旅館而選這裡，就是因為房型頁面寫著提供房客自行車，而我喜歡在一天工作結束後沿著水邊騎車。櫃檯人員語氣很客氣地解釋，最後兩台在二月就賣掉了，只是一直沒有人把網頁上那一行拿掉。這件事不大，卻正是我訂房的理由。\n\n不過真正讓我記住的，是第二天晚上。客戶把會議改成晚上八點的視訊通話，而我房間太吵，因為花園被一場婚宴包下了。經理打開大廳旁的會議室讓我使用，還端來一壺茶，而且完全沒有收費。我在更大的飯店花過更多錢，得到的服務卻遠不如此。\n\n另外兩點提供其他旅客參考。早餐九點半就結束，對加班晚睡的人來說太早；還有，花園景觀的房間看出去是一整面花牆而不是水景，訂房前請把房型名稱看仔細。"
   ]
  },
  {
@@ -2046,7 +2046,7 @@ TOEIC.part7 = [
      },
      {
       "t": "p",
-      "text": "Would you like a stall of your own? Application forms are at the library desk and at www.briarwoodmarket.org. Forms must reach us by May 2, and we write to every applicant during the week of May 4."
+      "text": "Would you like a stall of your own? Application forms are at the library desk and at www.example.com. Forms must reach us by May 2, and we write to every applicant during the week of May 4."
      },
      {
       "t": "coupon",
@@ -2090,7 +2090,7 @@ TOEIC.part7 = [
        ],
        [
         "E-mail",
-        "yusra@olivelanekitchen.com"
+        "yusra@example.org"
        ],
        [
         "Goods for sale",
@@ -2131,7 +2131,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: yusra@olivelanekitchen.com\nFrom: t.rahman@briarwoodmarket.org\nDate: May 7\nSubject: Your stall on May 24\n\nDear Ms. Halabi,\n\nThank you for your form. We are pleased to offer you a stall at the spring market, and yours will be one of the eleven kitchens taking part this year.\n\nBecause you will be cooking, you cannot be on the Green itself. You have stall 10 in the walkway beside the library, where the water tap and the power outlets are. Please look at the hours on the flyer once more before May 24: the part of the market you are in does not close when the Green does, and the form you sent me shows that you had the shorter day in mind.\n\nYou may drive onto the Green to unload from 7:00 A.M., but your van must be in the Dalton Street lot by the time printed at the foot of the flyer. Anyone still unloading after that hour holds up every seller behind them.\n\nI have marked your stall for power. One charge covers both the grill and the refrigerator, so the amount you owe is the table fee plus that single charge. Please bring it in cash on the day, since the market office keeps very little change.\n\nWe have no tents to lend. Your form says that you do not have one, so please bring something to keep the rain off: the roof over the walkway stops short of the last two stalls, and yours is one of them.\n\nTanvir Rahman\nMarket Coordinator, Briarwood Neighborhood Association"
+    "content": "To: yusra@example.org\nFrom: t.rahman@example.com\nDate: May 7\nSubject: Your stall on May 24\n\nDear Ms. Halabi,\n\nThank you for your form. We are pleased to offer you a stall at the spring market, and yours will be one of the eleven kitchens taking part this year.\n\nBecause you will be cooking, you cannot be on the Green itself. You have stall 10 in the walkway beside the library, where the water tap and the power outlets are. Please look at the hours on the flyer once more before May 24: the part of the market you are in does not close when the Green does, and the form you sent me shows that you had the shorter day in mind.\n\nYou may drive onto the Green to unload from 7:00 A.M., but your van must be in the Dalton Street lot by the time printed at the foot of the flyer. Anyone still unloading after that hour holds up every seller behind them.\n\nI have marked your stall for power. One charge covers both the grill and the refrigerator, so the amount you owe is the table fee plus that single charge. Please bring it in cash on the day, since the market office keeps very little change.\n\nWe have no tents to lend. Your form says that you do not have one, so please bring something to keep the rain off: the roof over the walkway stops short of the last two stalls, and yours is one of them.\n\nTanvir Rahman\nMarket Coordinator, Briarwood Neighborhood Association"
    }
   ],
   "questions": [
@@ -2192,9 +2192,125 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "BRIARWOOD 春季社區市集（傳單）\n5 月 24 日（星期日）·Dalton 廣場·購物民眾免費入場\n\n四十五個攤位、現場音樂表演，以及十一家社區廚房帶來的餐飲。市集範圍涵蓋 Dalton 廣場與圖書館旁的有頂走廊。\n\n．廣場上的攤位營業時間為上午 9:00 至下午 4:00\n．有頂走廊的餐飲攤位供餐時間為上午 9:00 至下午 6:00\n．兒童手作桌，上午 10:00 至下午 1:00，位於舞台旁\n．舞台現場音樂表演，下午 2:00 開始\n．6 號與 19 號公車停靠圖書館門口；攤商車輛可停放於 Dalton 街停車場\n\n想要有自己的攤位嗎？申請表可至圖書館服務台索取，或至 www.briarwoodmarket.org 下載。申請表必須在 5 月 2 日前送達，我們會在 5 月 4 日那一週回信給每一位申請人。\n\n【優惠券】Briarwood 圖書館電影之夜　買一張送一張\n請於 6 月 30 日前持本傳單至圖書館服務台使用。每戶限用一次。\n\n＊攤商可自上午 7:00 起進場布置。所有車輛必須在上午 8:30 前駛離廣場。",
-   "BRIARWOOD 春季社區市集\n攤位申請表－請於 5 月 2 日前送回圖書館服務台\n\n．攤商姓名：Yusra Halabi\n．商號名稱：Olive Lane Kitchen\n．電話：555-0193\n．電子郵件：yusra@olivelanekitchen.com\n．販售商品：熱三明治與沙拉，以小型烤爐現場烹調\n．攤位桌長：2 公尺\n．是否需要電力：是－一台烤爐與一台小冰箱\n．是否自備帳篷：否\n．可到場時段：上午 9:00 至下午 4:00\n．是否曾在 Briarwood 市集擺攤：否\n．車輛：小型廂型車\n\n＊當日攤位費用：2 公尺 35 美元、3 公尺 45 美元、4 公尺 60 美元；用電當日另計 15 美元。費用於到場時在 Dalton 街的市集辦公室繳交，不隨本表繳付。",
-   "收件者：yusra@olivelanekitchen.com\n寄件者：t.rahman@briarwoodmarket.org\n日期：5 月 7 日\n主旨：您 5 月 24 日的攤位\n\n親愛的 Halabi 女士：\n\n感謝您寄回申請表。很高興通知您，我們可以提供攤位給您，您也將是今年參與的十一家廚房之一。\n\n由於您需要現場烹調，無法安排在廣場上。您的位置是圖書館旁走廊的 10 號攤位，那裡有水龍頭與電源插座。請在 5 月 24 日之前再看一次傳單上的時間：您所在的這一區並不會跟著廣場一起收攤，而您寄來的表格顯示，您原本設想的是比較短的營業時間。\n\n您可以在上午 7:00 起把車開進廣場卸貨，但廂型車必須在傳單最下方所印的時間之前停到 Dalton 街停車場。超過那個時間還在卸貨的人，會耽誤到後面每一位攤商。\n\n我已經註記您的攤位需要用電。烤爐與小冰箱共計一筆電費，因此您要繳的金額就是桌位費加上那一筆電費。請當天備妥現金，因為市集辦公室能找的零錢很少。\n\n另外，我們沒有帳篷可以外借。您的表格上寫著沒有自備帳篷，所以請帶些能遮雨的東西：走廊的屋頂並未延伸到最後兩個攤位，而您的攤位正是其中之一。\n\nTanvir Rahman\nBriarwood 社區協會 市集主辦人"
+   "BRIARWOOD 春季社區市集（傳單）\n5 月 24 日（星期日）·Dalton 廣場·購物民眾免費入場\n\n四十五個攤位、現場音樂表演，以及十一家社區廚房帶來的餐飲。市集範圍涵蓋 Dalton 廣場與圖書館旁的有頂走廊。\n\n．廣場上的攤位營業時間為上午 9:00 至下午 4:00\n．有頂走廊的餐飲攤位供餐時間為上午 9:00 至下午 6:00\n．兒童手作桌，上午 10:00 至下午 1:00，位於舞台旁\n．舞台現場音樂表演，下午 2:00 開始\n．6 號與 19 號公車停靠圖書館門口；攤商車輛可停放於 Dalton 街停車場\n\n想要有自己的攤位嗎？申請表可至圖書館服務台索取，或至 www.example.com 下載。申請表必須在 5 月 2 日前送達，我們會在 5 月 4 日那一週回信給每一位申請人。\n\n【優惠券】Briarwood 圖書館電影之夜　買一張送一張\n請於 6 月 30 日前持本傳單至圖書館服務台使用。每戶限用一次。\n\n＊攤商可自上午 7:00 起進場布置。所有車輛必須在上午 8:30 前駛離廣場。",
+   "BRIARWOOD 春季社區市集\n攤位申請表：請於 5 月 2 日前送回圖書館服務台\n\n．攤商姓名：Yusra Halabi\n．商號名稱：Olive Lane Kitchen\n．電話：555-0193\n．電子郵件：yusra@example.org\n．販售商品：熱三明治與沙拉，以小型烤爐現場烹調\n．攤位桌長：2 公尺\n．是否需要電力：是，一台烤爐與一台小冰箱\n．是否自備帳篷：否\n．可到場時段：上午 9:00 至下午 4:00\n．是否曾在 Briarwood 市集擺攤：否\n．車輛：小型廂型車\n\n＊當日攤位費用：2 公尺 35 美元、3 公尺 45 美元、4 公尺 60 美元；用電當日另計 15 美元。費用於到場時在 Dalton 街的市集辦公室繳交，不隨本表繳付。",
+   "收件者：yusra@example.org\n寄件者：t.rahman@example.com\n日期：5 月 7 日\n主旨：您 5 月 24 日的攤位\n\n親愛的 Halabi 女士：\n\n感謝您寄回申請表。很高興通知您，我們可以提供攤位給您，您也將是今年參與的十一家廚房之一。\n\n由於您需要現場烹調，無法安排在廣場上。您的位置是圖書館旁走廊的 10 號攤位，那裡有水龍頭與電源插座。請在 5 月 24 日之前再看一次傳單上的時間：您所在的這一區並不會跟著廣場一起收攤，而您寄來的表格顯示，您原本設想的是比較短的營業時間。\n\n您可以在上午 7:00 起把車開進廣場卸貨，但廂型車必須在傳單最下方所印的時間之前停到 Dalton 街停車場。超過那個時間還在卸貨的人，會耽誤到後面每一位攤商。\n\n我已經註記您的攤位需要用電。烤爐與小冰箱共計一筆電費，因此您要繳的金額就是桌位費加上那一筆電費。請當天備妥現金，因為市集辦公室能找的零錢很少。\n\n另外，我們沒有帳篷可以外借。您的表格上寫著沒有自備帳篷，所以請帶些能遮雨的東西：走廊的屋頂並未延伸到最後兩個攤位，而您的攤位正是其中之一。\n\nTanvir Rahman\nBriarwood 社區協會 市集主辦人"
+  ]
+ },
+ {
+  "id": "p7-b14-1",
+  "format": "single",
+  "passages": [
+   {
+    "type": "text message chain",
+    "label": "",
+    "blocks": [
+     {
+      "t": "chat",
+      "msgs": [
+       {
+        "who": "Rosa Calvo",
+        "time": "1:05 P.M.",
+        "text": "Quick update on tonight's book signing. Ms. Petrova just called. Her train has been stopped outside Dunmere for over an hour, so she won't get here until about 7:15."
+       },
+       {
+        "who": "Tunde Bakare",
+        "time": "1:08 P.M.",
+        "text": "But the signing starts at 6:30, and we've sold more than eighty tickets."
+       },
+       {
+        "who": "Rosa Calvo",
+        "time": "1:10 P.M.",
+        "text": "I know. Tunde, could you e-mail all the ticket holders this afternoon and tell them we'll now begin at 7:30?"
+       },
+       {
+        "who": "Tunde Bakare",
+        "time": "1:12 P.M.",
+        "text": "Sure. I'll put the new time on our Web site, too."
+       },
+       {
+        "who": "Mei Takahashi",
+        "time": "1:15 P.M.",
+        "text": "Not everyone checks e-mail, though."
+       },
+       {
+        "who": "Rosa Calvo",
+        "time": "1:17 P.M.",
+        "text": "Good point. Mei, could you still open the reading corner at 6:30 and serve coffee and pastries to anyone who comes before Ms. Petrova does?"
+       },
+       {
+        "who": "Mei Takahashi",
+        "time": "1:19 P.M.",
+        "text": "Of course. The pastries are being delivered at five, so that's no problem."
+       },
+       {
+        "who": "Tunde Bakare",
+        "time": "1:24 P.M.",
+        "text": "One more thing. A few customers have asked whether they can buy signed copies without attending."
+       },
+       {
+        "who": "Rosa Calvo",
+        "time": "1:27 P.M.",
+        "text": "Ms. Petrova has agreed to sign extra copies after the event. Make a list of their names, and we'll hold the books at the front counter."
+       },
+       {
+        "who": "Mei Takahashi",
+        "time": "1:30 P.M.",
+        "text": "I'll put up a sign by the register so people know."
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "questions": [
+   {
+    "q": "What are the writers mainly discussing?",
+    "options": [
+     "A change to a store's opening hours",
+     "The cost of tickets for an event",
+     "A delay affecting a scheduled event",
+     "A problem with a food delivery"
+    ],
+    "answer": 2,
+    "explanation": "定位：1:05 Calvo 說作者的火車停在 Dunmere 外面一個多小時，要到 7:15 左右才會到；之後的訊息都在處理簽書會延後的安排（通知購票的人、招待提早到的人、想買簽名書的客人），故 (C) 正確。(A)錯：改的是簽書會的開始時間，不是書店的營業時間。(B)錯：1:08 只提到已經賣出八十多張票，沒有討論票價。(D)錯：1:19 Takahashi 說點心五點會送到，送貨沒有問題。"
+   },
+   {
+    "q": "What does Ms. Calvo ask Mr. Bakare to do?",
+    "options": [
+     "Contact people who bought tickets",
+     "Pick up Ms. Petrova at the station",
+     "Order more copies of the book",
+     "Open the reading corner at 6:30"
+    ],
+    "answer": 0,
+    "explanation": "定位：1:10 Calvo 寫「Tunde, could you e-mail all the ticket holders this afternoon and tell them we'll now begin at 7:30?」，請他寫信通知所有購票的人，也就是聯絡買了票的人，故 (A) 正確。(B)錯：作者自己搭火車來，沒有人提到要去車站接她。(C)錯：對話沒有提到要多訂書。(D)錯：請人在 6:30 照常開放閱讀區，是 1:17 Calvo 對 Takahashi 的請求，不是對 Bakare。"
+   },
+   {
+    "q": "At 1:15 P.M., what does Ms. Takahashi most likely mean when she writes, \"Not everyone checks e-mail, though\"?",
+    "options": [
+     "She has not received an e-mail from the author.",
+     "She thinks the store's Web site is out of date.",
+     "She wants Mr. Bakare to send the message twice.",
+     "She expects some guests to arrive at 6:30 anyway."
+    ],
+    "answer": 3,
+    "explanation": "定位：Bakare 說要寄信通知並在網站公告新時間後，Takahashi 寫「Not everyone checks e-mail, though」（不過不是每個人都會看電子郵件）；1:17 Calvo 回「Good point」，並請她 6:30 照常開放閱讀區，招待在作者到達之前就來的人。可知她擔心有些客人沒看到通知，仍會照原本的 6:30 到場，故 (D) 正確。(A)錯：作者是打電話來，她說的 e-mail 指的是要寄給購票者的通知信。(B)錯：她沒有評論網站的內容。(C)錯：她沒有要求重寄，Calvo 接著安排的是現場招待。"
+   },
+   {
+    "q": "What is indicated about Ms. Petrova?",
+    "options": [
+     "She plans to arrive before the original start time.",
+     "She has agreed to sign books for people not attending.",
+     "She asked the store to serve coffee and pastries.",
+     "She will be speaking at another store later tonight."
+    ],
+    "answer": 1,
+    "explanation": "定位：1:24 Bakare 說有客人想買簽名書但不來參加活動；1:27 Calvo 回「Ms. Petrova has agreed to sign extra copies after the event」，並請他記下這些客人的名字、把書保留在櫃台，可知作者答應替不來參加的人簽書，故 (B) 正確。(A)錯：1:05 說她 7:15 左右才會到，晚於原訂的 6:30。(C)錯：咖啡和點心是 Calvo 請 Takahashi 招待的，不是作者要求的。(D)錯：對話沒有提到她今晚還要去別家書店。"
+   }
+  ],
+  "translation": [
+   "Rosa Calvo（下午 1:05）\n跟大家更新一下今晚簽書會的狀況。Petrova 女士剛剛打電話來，她的火車在 Dunmere 外面停了一個多小時，所以她大概要到 7:15 才會到。\n\nTunde Bakare（下午 1:08）\n可是簽書會 6:30 就開始了，而且我們已經賣出八十多張票。\n\nRosa Calvo（下午 1:10）\n我知道。Tunde，你今天下午可以寫電子郵件給所有購票的人，告訴他們活動改成 7:30 開始嗎？\n\nTunde Bakare（下午 1:12）\n沒問題。我也會把新的時間公告在我們的網站上。\n\nMei Takahashi（下午 1:15）\n不過不是每個人都會看電子郵件。\n\nRosa Calvo（下午 1:17）\n說得對。Mei，你可以照樣在 6:30 開放閱讀區，請在 Petrova 女士到達之前就來的人喝咖啡、吃點心嗎？\n\nMei Takahashi（下午 1:19）\n當然可以。點心五點會送到，所以沒問題。\n\nTunde Bakare（下午 1:24）\n還有一件事。有幾位客人問，不參加活動的話能不能買簽名書。\n\nRosa Calvo（下午 1:27）\nPetrova 女士已經答應活動結束後多簽一些書。把他們的名字列成一張清單，我們會把書保留在前面的櫃台。\n\nMei Takahashi（下午 1:30）\n那我在收銀台旁邊貼個告示，讓大家知道。"
   ]
  },
  {
@@ -2264,7 +2380,7 @@ TOEIC.part7 = [
    {
     "type": "web page",
     "label": "",
-    "content": "www.meridianfleetcare.com/plans\n\nHOME | SERVICES | PLANS | LOCATIONS | CONTACT\n\nMeridian Fleet Care: Maintenance Plans for Business Vehicles\n\nFor more than twenty years, Meridian Fleet Care has kept delivery vans, service trucks, and company cars on the road for businesses throughout the region. Whatever the size of your fleet, we have a plan that fits.\n\nESSENTIAL - $39 per vehicle each month\nTwo scheduled inspections a year, oil and filter changes, and tire rotation. Best suited to fleets of fewer than ten vehicles.\n\nPROFESSIONAL - $65 per vehicle each month\nEverything in the Essential plan, plus brake servicing, battery replacement, and a 15 percent discount on all parts. Roadside assistance is included within 50 kilometers of any Meridian branch.\n\nENTERPRISE - Custom pricing\nDesigned for fleets of thirty vehicles or more. Includes servicing performed at your own premises, a dedicated account manager, and replacement vehicles during extended repairs.\n\nEvery plan includes free towing to the nearest Meridian branch. Customers who enroll before June 30 will have the one-time registration fee of $120 waived.\n\nTo arrange a consultation, call 555-0147 or complete the form on our Contact page. Consultations last about forty-five minutes and carry no obligation."
+    "content": "www.example.com/plans\n\nHOME | SERVICES | PLANS | LOCATIONS | CONTACT\n\nMeridian Fleet Care: Maintenance Plans for Business Vehicles\n\nFor more than twenty years, Meridian Fleet Care has kept delivery vans, service trucks, and company cars on the road for businesses throughout the region. Whatever the size of your fleet, we have a plan that fits.\n\nESSENTIAL - $39 per vehicle each month\nTwo scheduled inspections a year, oil and filter changes, and tire rotation. Best suited to fleets of fewer than ten vehicles.\n\nPROFESSIONAL - $65 per vehicle each month\nEverything in the Essential plan, plus brake servicing, battery replacement, and a 15 percent discount on all parts. Roadside assistance is included within 50 kilometers of any Meridian branch.\n\nENTERPRISE - Custom pricing\nDesigned for fleets of thirty vehicles or more. Includes servicing performed at your own premises, a dedicated account manager, and replacement vehicles during extended repairs.\n\nEvery plan includes free towing to the nearest Meridian branch. Customers who enroll before June 30 will have the one-time registration fee of $120 waived.\n\nTo arrange a consultation, call 555-0147 or complete the form on our Contact page. Consultations last about forty-five minutes and carry no obligation."
    }
   ],
   "questions": [
@@ -2314,7 +2430,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "www.meridianfleetcare.com/plans\n\n首頁 | 服務項目 | 方案 | 服務據點 | 聯絡我們\n\n美利迪安車隊保養：企業車輛保養方案\n\n二十多年來，美利迪安車隊保養一直為本地區各行各業維持送貨廂型車、工程車與公務車的正常運作。無論您的車隊規模多大，我們都有合適的方案。\n\n基本方案：每車每月 39 美元\n每年兩次定期檢查、更換機油與濾芯，以及輪胎調位。最適合車輛數少於十輛的車隊。\n\n專業方案：每車每月 65 美元\n包含基本方案的所有項目，另加煞車保養、電瓶更換，以及所有零件八五折優惠。在任一美利迪安據點方圓 50 公里內提供道路救援。\n\n企業方案：價格另議\n專為三十輛以上的車隊設計。包含到府保養、專屬客戶經理，以及維修時間較長期間的代步車。\n\n所有方案皆含免費拖吊至最近的美利迪安據點。6 月 30 日前加入的客戶，可免繳 120 美元的一次性註冊費。\n\n欲安排諮詢，請撥 555-0147 或填寫「聯絡我們」頁面上的表單。諮詢約需四十五分鐘，且不含任何購買義務。"
+   "www.example.com/plans\n\n首頁 | 服務項目 | 方案 | 服務據點 | 聯絡我們\n\n美利迪安車隊保養：企業車輛保養方案\n\n二十多年來，美利迪安車隊保養一直為本地區各行各業維持送貨廂型車、工程車與公務車的正常運作。無論您的車隊規模多大，我們都有合適的方案。\n\n基本方案：每車每月 39 美元\n每年兩次定期檢查、更換機油與濾芯，以及輪胎調位。最適合車輛數少於十輛的車隊。\n\n專業方案：每車每月 65 美元\n包含基本方案的所有項目，另加煞車保養、電瓶更換，以及所有零件八五折優惠。在任一美利迪安據點方圓 50 公里內提供道路救援。\n\n企業方案：價格另議\n專為三十輛以上的車隊設計。包含到府保養、專屬客戶經理，以及維修時間較長期間的代步車。\n\n所有方案皆含免費拖吊至最近的美利迪安據點。6 月 30 日前加入的客戶，可免繳 120 美元的一次性註冊費。\n\n欲安排諮詢，請撥 555-0147 或填寫「聯絡我們」頁面上的表單。諮詢約需四十五分鐘，且不含任何購買義務。"
   ]
  },
  {
@@ -2439,7 +2555,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "",
-    "content": "To: Priya Ranganathan <p.ranganathan@calderwoodinteriors.com>\nFrom: Marcus Deng <m.deng@quillfeatherpaper.com>\nDate: November 4\nSubject: Order QF-88214\n\nDear Ms. Ranganathan,\n\nThank you for your order of 3,000 sheets of Heritage Linen cardstock in ivory, which you placed with us on October 28.\n\nI am writing with an update that I hope will not inconvenience you. Our ivory stock ran out more quickly than expected after a large order from a stationery chain, and the next production run will not be finished until November 19. Shipping after that date would mean delivery around November 24, about two weeks later than the date we originally quoted.\n\nI would like to offer you two alternatives. First, we can ship 3,000 sheets of Heritage Linen in a shade called antique cream, which is very close to ivory and is available immediately. I have sent samples of both shades to your office, and they should arrive Thursday. Second, if the ivory is essential, we can send 1,200 sheets from our reserve stock on Friday and forward the remainder once production resumes, at no additional shipping cost.\n\nPlease let me know your preference by Monday, November 10. If I have not heard from you by then, I will hold the order until the new stock arrives rather than substitute a color without your approval.\n\nI apologize for the inconvenience and appreciate your patience.\n\nSincerely,\n\nMarcus Deng\nAccount Manager, Quillfeather Paper Company"
+    "content": "To: Priya Ranganathan <p.ranganathan@example.com>\nFrom: Marcus Deng <m.deng@example.org>\nDate: November 4\nSubject: Order QF-88214\n\nDear Ms. Ranganathan,\n\nThank you for your order of 3,000 sheets of Heritage Linen cardstock in ivory, which you placed with us on October 28.\n\nI am writing with an update that I hope will not inconvenience you. Our ivory stock ran out more quickly than expected after a large order from a stationery chain, and the next production run will not be finished until November 19. Shipping after that date would mean delivery around November 24, about two weeks later than the date we originally quoted.\n\nI would like to offer you two alternatives. First, we can ship 3,000 sheets of Heritage Linen in a shade called antique cream, which is very close to ivory and is available immediately. I have sent samples of both shades to your office, and they should arrive Thursday. Second, if the ivory is essential, we can send 1,200 sheets from our reserve stock on Friday and forward the remainder once production resumes, at no additional shipping cost.\n\nPlease let me know your preference by Monday, November 10. If I have not heard from you by then, I will hold the order until the new stock arrives rather than substitute a color without your approval.\n\nI apologize for the inconvenience and appreciate your patience.\n\nSincerely,\n\nMarcus Deng\nAccount Manager, Quillfeather Paper Company"
    }
   ],
   "questions": [
@@ -2489,7 +2605,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "收件人：普莉雅．蘭加納坦 <p.ranganathan@calderwoodinteriors.com>\n寄件人：馬可仕．鄧 <m.deng@quillfeatherpaper.com>\n日期：11 月 4 日\n主旨：訂單 QF-88214\n\n蘭加納坦女士您好：\n\n感謝您於 10 月 28 日向本公司訂購 3,000 張象牙白的 Heritage Linen 卡紙。\n\n這封信是要向您說明最新狀況，希望不會造成您的不便。某文具連鎖下了一筆大量訂單之後，我們的象牙白庫存比預期更快耗盡，下一批生產要到 11 月 19 日才會完成。若在那之後才出貨，送達時間大約落在 11 月 24 日，比原先報給您的日期晚了約兩週。\n\n我想提供您兩個替代方案。第一，我們可以改出 3,000 張名為「古典米白」的 Heritage Linen，此色與象牙白相當接近，且現貨即可出貨。我已將兩種色號的樣張寄到貴公司，預計週四送達。第二，若您非用象牙白不可，我們可以在週五先從備用庫存寄出 1,200 張，其餘等生產恢復後再補寄，且不加收運費。\n\n請於 11 月 10 日星期一前告知您的選擇。若屆時仍未收到您的回覆，我會先保留訂單、等新貨到齊，而不會未經您同意就擅自更換顏色。\n\n造成不便，敬請見諒，也感謝您的耐心。\n\n敬上\n\n馬可仕．鄧\n羽翎紙業公司　客戶經理"
+   "收件人：普莉雅．蘭加納坦 <p.ranganathan@example.com>\n寄件人：馬可仕．鄧 <m.deng@example.org>\n日期：11 月 4 日\n主旨：訂單 QF-88214\n\n蘭加納坦女士您好：\n\n感謝您於 10 月 28 日向本公司訂購 3,000 張象牙白的 Heritage Linen 卡紙。\n\n這封信是要向您說明最新狀況，希望不會造成您的不便。某文具連鎖下了一筆大量訂單之後，我們的象牙白庫存比預期更快耗盡，下一批生產要到 11 月 19 日才會完成。若在那之後才出貨，送達時間大約落在 11 月 24 日，比原先報給您的日期晚了約兩週。\n\n我想提供您兩個替代方案。第一，我們可以改出 3,000 張名為「古典米白」的 Heritage Linen，此色與象牙白相當接近，且現貨即可出貨。我已將兩種色號的樣張寄到貴公司，預計週四送達。第二，若您非用象牙白不可，我們可以在週五先從備用庫存寄出 1,200 張，其餘等生產恢復後再補寄，且不加收運費。\n\n請於 11 月 10 日星期一前告知您的選擇。若屆時仍未收到您的回覆，我會先保留訂單、等新貨到齊，而不會未經您同意就擅自更換顏色。\n\n造成不便，敬請見諒，也感謝您的耐心。\n\n敬上\n\n馬可仕．鄧\n羽翎紙業公司　客戶經理"
   ]
  },
  {
@@ -2615,7 +2731,7 @@ TOEIC.part7 = [
    {
     "type": "letter",
     "label": "",
-    "content": "Trellborg Office Supplies\n44 Kingsway Road, Lansdale, OH 44112\n\nMarch 14\n\nMs. Daniela Requena\nOperations Manager\nCavendish Marketing Group\n1820 Pinehurst Avenue, Suite 300\nLansdale, OH 44115\n\nDear Ms. Requena,\n\nI am writing to inform you of an adjustment to our wholesale pricing that will take effect on May 1. Rising costs in raw materials and freight have made it necessary to raise the unit price of our printer paper, filing supplies, and packaging materials by an average of six percent. Prices for office furniture and technology accessories will remain unchanged.\n\nBecause Cavendish Marketing Group has ordered from us continuously since 2016, your account qualifies for our Preferred Partner program. Under that program, the increase applied to your orders will be capped at three percent, and you will continue to receive complimentary next-day delivery on any order above $250.\n\nI recognize that a change of this kind requires planning on your side. If you wish to place a large order at the current rates, we can hold existing prices for any purchase order we receive before April 25. Our warehouse can also arrange several smaller shipments so that you do not have to store an entire quarter's supplies at once.\n\nAn updated catalog with the revised figures is enclosed. If you have questions about specific items, please contact your account representative, Mr. Owen Baptiste, at 555-0142 or obaptiste@trellborgsupplies.com.\n\nThank you for your continued business.\n\nSincerely,\n\nMarguerite Vandeleur\nDirector of Sales"
+    "content": "Trellborg Office Supplies\n44 Kingsway Road, Lansdale, OH 44112\n\nMarch 14\n\nMs. Daniela Requena\nOperations Manager\nCavendish Marketing Group\n1820 Pinehurst Avenue, Suite 300\nLansdale, OH 44115\n\nDear Ms. Requena,\n\nI am writing to inform you of an adjustment to our wholesale pricing that will take effect on May 1. Rising costs in raw materials and freight have made it necessary to raise the unit price of our printer paper, filing supplies, and packaging materials by an average of six percent. Prices for office furniture and technology accessories will remain unchanged.\n\nBecause Cavendish Marketing Group has ordered from us continuously since 2016, your account qualifies for our Preferred Partner program. Under that program, the increase applied to your orders will be capped at three percent, and you will continue to receive complimentary next-day delivery on any order above $250.\n\nI recognize that a change of this kind requires planning on your side. If you wish to place a large order at the current rates, we can hold existing prices for any purchase order we receive before April 25. Our warehouse can also arrange several smaller shipments so that you do not have to store an entire quarter's supplies at once.\n\nAn updated catalog with the revised figures is enclosed. If you have questions about specific items, please contact your account representative, Mr. Owen Baptiste, at 555-0142 or obaptiste@example.com.\n\nThank you for your continued business.\n\nSincerely,\n\nMarguerite Vandeleur\nDirector of Sales"
    }
   ],
   "questions": [
@@ -2665,7 +2781,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "特雷爾堡辦公用品\n俄亥俄州蘭斯代爾市金斯威路44號 44112\n\n3月14日\n\n丹妮耶拉・雷奎納女士\n營運經理\n卡文迪西行銷集團\n俄亥俄州蘭斯代爾市松赫斯特大道1820號300室 44115\n\n親愛的雷奎納女士：\n\n謹此通知您，本公司的批發價格將自5月1日起調整。原物料與運費成本上漲，使我們不得不將印表機用紙、檔案用品與包裝材料的單價平均調高百分之六。辦公家具與科技配件的價格則維持不變。\n\n由於卡文迪西行銷集團自2016年起持續向本公司訂貨，貴公司的帳戶符合本公司「優先合作夥伴」方案的資格。在該方案下，貴公司訂單的漲幅上限為百分之三，且金額超過250美元的訂單仍可享免費隔日到貨。\n\n我理解這樣的變動需要貴公司預作規劃。若您希望以現行價格下大筆訂單，凡我們在4月25日前收到的採購單，都可以維持現行價格。本公司倉庫也可以安排分批出貨，讓貴公司不必一次存放整季的用品。\n\n隨函附上載有新價格的目錄。若您對特定品項有疑問，請聯絡您的客戶專員歐文・巴普提斯特先生，電話555-0142，或來信 obaptiste@trellborgsupplies.com。\n\n感謝您長期以來的惠顧。\n\n謹啟\n\n瑪格麗特・范德勒\n業務總監"
+   "特雷爾堡辦公用品\n俄亥俄州蘭斯代爾市金斯威路44號 44112\n\n3月14日\n\n丹妮耶拉・雷奎納女士\n營運經理\n卡文迪西行銷集團\n俄亥俄州蘭斯代爾市松赫斯特大道1820號300室 44115\n\n親愛的雷奎納女士：\n\n謹此通知您，本公司的批發價格將自5月1日起調整。原物料與運費成本上漲，使我們不得不將印表機用紙、檔案用品與包裝材料的單價平均調高百分之六。辦公家具與科技配件的價格則維持不變。\n\n由於卡文迪西行銷集團自2016年起持續向本公司訂貨，貴公司的帳戶符合本公司「優先合作夥伴」方案的資格。在該方案下，貴公司訂單的漲幅上限為百分之三，且金額超過250美元的訂單仍可享免費隔日到貨。\n\n我理解這樣的變動需要貴公司預作規劃。若您希望以現行價格下大筆訂單，凡我們在4月25日前收到的採購單，都可以維持現行價格。本公司倉庫也可以安排分批出貨，讓貴公司不必一次存放整季的用品。\n\n隨函附上載有新價格的目錄。若您對特定品項有疑問，請聯絡您的客戶專員歐文・巴普提斯特先生，電話555-0142，或來信 obaptiste@example.com。\n\n感謝您長期以來的惠顧。\n\n謹啟\n\n瑪格麗特・范德勒\n業務總監"
   ]
  },
  {
@@ -2675,7 +2791,7 @@ TOEIC.part7 = [
    {
     "type": "advertisement",
     "label": "",
-    "content": "THE FILBERT WORKS\nFlexible Meeting and Event Space in Downtown Ashgrove\nOpening September 6\n\nTired of squeezing your quarterly review into a hotel lobby? The Filbert Works has turned a 1920s textile mill into four bright, soundproof rooms designed for teams of every size.\n\nOUR SPACES\n- The Loom (seats 8) ........ $35 per hour\n- The Spindle (seats 20) .... $60 per hour\n- The Dye House (seats 45) .. $95 per hour\n- The Rooftop Terrace (standing reception, up to 120) .. $150 per hour\n\nEvery booking, whatever the room, includes high-speed wireless internet, a wall-mounted display with wireless screen sharing, filtered water and coffee service, and a full whiteboard wall. On-site parking is available separately at $8 per vehicle per day.\n\nCATERING\nOur neighbors at Ferrand & Daughters Bakery supply breakfast trays ($9 per person) and boxed lunches ($16 per person). Catering orders must be placed at least 48 hours before your event.\n\nOPENING OFFER\nReserve any space before August 31 and receive 25 percent off your first three bookings. Simply mention code MILL25 when you reserve.\n\nRooms may be viewed in person Monday through Friday, 9:00 A.M. to 4:00 P.M. No appointment is necessary.\n\nBookings: filbertworks.com/reserve\nQuestions: Ms. Priya Chandrasekhar, 555-0176\nAddress: 210 Carding Street, Ashgrove"
+    "content": "THE FILBERT WORKS\nFlexible Meeting and Event Space in Downtown Ashgrove\nOpening September 6\n\nTired of squeezing your quarterly review into a hotel lobby? The Filbert Works has turned a 1920s textile mill into four bright, soundproof rooms designed for teams of every size.\n\nOUR SPACES\n- The Loom (seats 8) ........ $35 per hour\n- The Spindle (seats 20) .... $60 per hour\n- The Dye House (seats 45) .. $95 per hour\n- The Rooftop Terrace (standing reception, up to 120) .. $150 per hour\n\nEvery booking, whatever the room, includes high-speed wireless internet, a wall-mounted display with wireless screen sharing, filtered water and coffee service, and a full whiteboard wall. On-site parking is available separately at $8 per vehicle per day.\n\nCATERING\nOur neighbors at Ferrand & Daughters Bakery supply breakfast trays ($9 per person) and boxed lunches ($16 per person). Catering orders must be placed at least 48 hours before your event.\n\nOPENING OFFER\nReserve any space before August 31 and receive 25 percent off your first three bookings. Simply mention code MILL25 when you reserve.\n\nRooms may be viewed in person Monday through Friday, 9:00 A.M. to 4:00 P.M. No appointment is necessary.\n\nBookings: example.com/reserve\nQuestions: Ms. Priya Chandrasekhar, 555-0176\nAddress: 210 Carding Street, Ashgrove"
    }
   ],
   "questions": [
@@ -2725,7 +2841,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "菲爾伯特工坊\n阿什格羅夫市中心的彈性會議與活動空間\n9月6日開幕\n\n還在把季度檢討會擠在飯店大廳裡開嗎？菲爾伯特工坊已將一座1920年代的紡織廠改造成四間明亮、具隔音效果的空間，適合各種規模的團隊。\n\n我們的空間\n－織機廳（可坐8人）........每小時35美元\n－紡錘廳（可坐20人）......每小時60美元\n－染坊廳（可坐45人）......每小時95美元\n－屋頂露台（站立式酒會，最多120人）..每小時150美元\n\n無論租用哪一間，每筆訂位都包含高速無線網路、可無線投影的壁掛顯示器、過濾飲水與咖啡服務，以及一整面白板牆。館內停車須另行付費，每車每日8美元。\n\n餐飲服務\n本館鄰居費朗父女烘焙坊提供早餐餐盤（每人9美元）與餐盒（每人16美元）。餐飲訂單須於活動前至少48小時提出。\n\n開幕優惠\n8月31日前訂位，前三次租用可享七五折。訂位時報上代碼 MILL25 即可。\n\n週一至週五上午9時至下午4時可現場看場地，無須預約。\n\n訂位：filbertworks.com/reserve\n洽詢：普里雅・錢德拉塞卡女士，555-0176\n地址：阿什格羅夫市卡丁街210號"
+   "菲爾伯特工坊\n阿什格羅夫市中心的彈性會議與活動空間\n9月6日開幕\n\n還在把季度檢討會擠在飯店大廳裡開嗎？菲爾伯特工坊已將一座1920年代的紡織廠改造成四間明亮、具隔音效果的空間，適合各種規模的團隊。\n\n我們的空間\n．織機廳（可坐8人）........每小時35美元\n．紡錘廳（可坐20人）......每小時60美元\n．染坊廳（可坐45人）......每小時95美元\n．屋頂露台（站立式酒會，最多120人）..每小時150美元\n\n無論租用哪一間，每筆訂位都包含高速無線網路、可無線投影的壁掛顯示器、過濾飲水與咖啡服務，以及一整面白板牆。館內停車須另行付費，每車每日8美元。\n\n餐飲服務\n本館鄰居費朗父女烘焙坊提供早餐餐盤（每人9美元）與餐盒（每人16美元）。餐飲訂單須於活動前至少48小時提出。\n\n開幕優惠\n8月31日前訂位，前三次租用可享七五折。訂位時報上代碼 MILL25 即可。\n\n週一至週五上午9時至下午4時可現場看場地，無須預約。\n\n訂位：example.com/reserve\n洽詢：普里雅・錢德拉塞卡女士，555-0176\n地址：阿什格羅夫市卡丁街210號"
   ]
  },
  {
@@ -2785,7 +2901,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "全體承租戶公告\n貝爾威瑟大樓－地下二樓停車場地坪重鋪工程\n公告日期：10月3日\n\n自10月20日（星期一）起，瑞吉林鋪面工程公司將重鋪停車場地下二樓的混凝土地坪。工程預計需時九個工作天，應可於10月30日（星期四）前完工。\n\n這對您有何影響\n地下二樓在工程期間將全面封閉。10月17日（星期五）下午6時後仍停放於該樓層的車輛，將由車主自費拖吊。原本停放於地下二樓的承租戶，已改配至地下一樓及裝卸區後方的平面停車場。替換用的停車證須於10月13日至10月17日間至一樓管理室領取。臨時車位不另收費。\n\n地下一樓與地下三樓全程照常開放。惟貨梯於平日上午7時至下午3時保留給承包商使用，因此有家具或設備要送達的承租戶，請將時間安排在上述時段之外。\n\n另請注意，施工前三天，C 樓梯間可能會聞到新地坪的刺鼻氣味。辦公室鄰近該樓梯間的承租戶，建議將走廊門保持關閉。\n\n如有疑問，請洽大樓管理員霍利斯・中川先生，分機4180。\n\n感謝您的耐心配合。"
+   "全體承租戶公告\n貝爾威瑟大樓：地下二樓停車場地坪重鋪工程\n公告日期：10月3日\n\n自10月20日（星期一）起，瑞吉林鋪面工程公司將重鋪停車場地下二樓的混凝土地坪。工程預計需時九個工作天，應可於10月30日（星期四）前完工。\n\n這對您有何影響\n地下二樓在工程期間將全面封閉。10月17日（星期五）下午6時後仍停放於該樓層的車輛，將由車主自費拖吊。原本停放於地下二樓的承租戶，已改配至地下一樓及裝卸區後方的平面停車場。替換用的停車證須於10月13日至10月17日間至一樓管理室領取。臨時車位不另收費。\n\n地下一樓與地下三樓全程照常開放。惟貨梯於平日上午7時至下午3時保留給承包商使用，因此有家具或設備要送達的承租戶，請將時間安排在上述時段之外。\n\n另請注意，施工前三天，C 樓梯間可能會聞到新地坪的刺鼻氣味。辦公室鄰近該樓梯間的承租戶，建議將走廊門保持關閉。\n\n如有疑問，請洽大樓管理員霍利斯・中川先生，分機4180。\n\n感謝您的耐心配合。"
   ]
  },
  {
@@ -2976,7 +3092,7 @@ TOEIC.part7 = [
      },
      {
       "t": "p",
-      "text": "Payment may be made by check or bank transfer. A late fee of 1.5 percent of the outstanding balance is added each month after the due date. Questions about this invoice should be directed to billing@granthampell.com."
+      "text": "Payment may be made by check or bank transfer. A late fee of 1.5 percent of the outstanding balance is added each month after the due date. Questions about this invoice should be directed to billing@example.com."
      }
     ]
    }
@@ -3028,7 +3144,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "格蘭瑟姆與佩爾設備服務公司\n賓州鄧莫爾市羅文工業園區17號 18512\n\n發票號碼 #GP-40218\n開立日期：6月12日\n付款期限：7月12日\n\n收費對象：\n設施協調員 由紀・艾希沃斯女士\n展望嶺牙醫聯合診所\n賓州鄧莫爾市飛燕草大道88號 18510\n\n服務日期：6月9日        技師：R. 歐孔喬\n\n項目說明                                數量      金額\n年度檢查，牙科用空氣壓縮機               1      180.00美元\n更換空氣濾網（零件編號 #AC-77）          2       64.00美元\n工資，壓縮機皮帶更換                   1.5小時   135.00美元\n緊急服務附加費                          1       95.00美元\n                                    小計      474.00美元\n                                    稅（6%）    28.44美元\n                                    總計      502.44美元\n\n附註\n本次出勤之所以收取緊急附加費，是因為該次到府服務是在既定保養時段之外提出的。加入本公司銀級或金級服務方案的客戶可免收此項費用；貴診所目前加入的是基本方案。\n\n6月9日安裝的壓縮機皮帶享有十二個月的零件與工資保固。空氣濾網視為耗材，不在任何保固範圍內。\n\n檢查過程中，技師發現水分分離器有生鏽情形。我們建議在六個月內更換該零件。本公司可免費提供書面報價。\n\n付款方式可採支票或銀行轉帳。逾期後，未付餘額每月加收百分之一點五的滯納金。關於本發票的疑問，請寄至 billing@granthampell.com。"
+   "格蘭瑟姆與佩爾設備服務公司\n賓州鄧莫爾市羅文工業園區17號 18512\n\n發票號碼 #GP-40218\n開立日期：6月12日\n付款期限：7月12日\n\n收費對象：\n設施協調員 由紀・艾希沃斯女士\n展望嶺牙醫聯合診所\n賓州鄧莫爾市飛燕草大道88號 18510\n\n服務日期：6月9日        技師：R. 歐孔喬\n\n項目說明                                數量      金額\n年度檢查，牙科用空氣壓縮機               1      180.00美元\n更換空氣濾網（零件編號 #AC-77）          2       64.00美元\n工資，壓縮機皮帶更換                   1.5小時   135.00美元\n緊急服務附加費                          1       95.00美元\n                                    小計      474.00美元\n                                    稅（6%）    28.44美元\n                                    總計      502.44美元\n\n附註\n本次出勤之所以收取緊急附加費，是因為該次到府服務是在既定保養時段之外提出的。加入本公司銀級或金級服務方案的客戶可免收此項費用；貴診所目前加入的是基本方案。\n\n6月9日安裝的壓縮機皮帶享有十二個月的零件與工資保固。空氣濾網視為耗材，不在任何保固範圍內。\n\n檢查過程中，技師發現水分分離器有生鏽情形。我們建議在六個月內更換該零件。本公司可免費提供書面報價。\n\n付款方式可採支票或銀行轉帳。逾期後，未付餘額每月加收百分之一點五的滯納金。關於本發票的疑問，請寄至 billing@example.com。"
   ]
  },
  {
@@ -3038,7 +3154,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "",
-    "content": "To: t.abernathy@crestwoodinteriors.com\nFrom: n.ferreira@vantagepointsupply.com\nDate: 3 March\nSubject: Order 48219 — revised delivery date\n\nDear Mr. Abernathy,\n\nI am writing about the eighteen adjustable desk frames that Crestwood Interiors ordered on 20 February. The order was scheduled to reach your Fairview warehouse this Thursday, but I am afraid that we will not be able to meet that date.\n\nThe frames are manufactured at our plant in Bellhaven, where a boiler failure halted the painting line for six days. Production resumed on Monday, and the backlog is being cleared in the order in which requests were received. Your shipment is now expected to leave the plant on 11 March and to arrive on 14 March.\n\nBecause the delay is entirely ours, I have arranged for the freight charge of $260 to be removed from your invoice. I have also asked our warehouse team to set aside six frames from the stock we keep for showroom displays. These are identical to the ones you ordered apart from a slightly darker finish, and I can have them sent to you tomorrow at no cost if you need something on site before the fourteenth.\n\nPlease let me know by Friday whether you would like the showroom units. If I do not hear from you, I will assume that you prefer to wait for the full shipment.\n\nI apologize for the inconvenience and appreciate your patience.\n\nSincerely,\n\nNadia Ferreira\nClient Services\nVantage Point Supply"
+    "content": "To: t.abernathy@example.com\nFrom: n.ferreira@example.org\nDate: 3 March\nSubject: Order 48219 — revised delivery date\n\nDear Mr. Abernathy,\n\nI am writing about the eighteen adjustable desk frames that Crestwood Interiors ordered on 20 February. The order was scheduled to reach your Fairview warehouse this Thursday, but I am afraid that we will not be able to meet that date.\n\nThe frames are manufactured at our plant in Bellhaven, where a boiler failure halted the painting line for six days. Production resumed on Monday, and the backlog is being cleared in the order in which requests were received. Your shipment is now expected to leave the plant on 11 March and to arrive on 14 March.\n\nBecause the delay is entirely ours, I have arranged for the freight charge of $260 to be removed from your invoice. I have also asked our warehouse team to set aside six frames from the stock we keep for showroom displays. These are identical to the ones you ordered apart from a slightly darker finish, and I can have them sent to you tomorrow at no cost if you need something on site before the fourteenth.\n\nPlease let me know by Friday whether you would like the showroom units. If I do not hear from you, I will assume that you prefer to wait for the full shipment.\n\nI apologize for the inconvenience and appreciate your patience.\n\nSincerely,\n\nNadia Ferreira\nClient Services\nVantage Point Supply"
    }
   ],
   "questions": [
@@ -3088,118 +3204,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "收件者：t.abernathy@crestwoodinteriors.com\n寄件者：n.ferreira@vantagepointsupply.com\n日期：3月3日\n主旨：訂單 48219：修訂後的送達日期\n\n親愛的 Abernathy 先生：\n\n我來信是關於 Crestwood Interiors 於 2 月 20 日訂購的十八組可調式桌架。這筆訂單原訂本週四送達貴公司的 Fairview 倉庫，但恐怕我們無法如期達成。\n\n這些桌架在我們位於 Bellhaven 的廠區製造，該廠的鍋爐故障使塗裝線停擺了六天。生產已於週一恢復，積壓的訂單正依收件先後順序陸續消化。您的貨現在預計 3 月 11 日出廠，3 月 14 日送達。\n\n由於延誤完全是我方責任，我已安排將 260 美元的運費從您的發票中扣除。我也請倉儲團隊從展示間備品中保留了六組桌架。除了表面顏色略深之外，這些桌架與您訂購的完全相同；若您在 14 日之前需要現場先有貨可用，我可以明天免費寄出。\n\n請於週五前告知您是否需要這批展示間的桌架。若未收到您的回覆，我將視為您希望等待完整出貨。\n\n造成不便，敬請見諒，並感謝您的耐心。\n\n敬上\n\nNadia Ferreira\n客戶服務部\nVantage Point Supply"
-  ]
- },
- {
-  "id": "p7-b4-2",
-  "format": "single",
-  "passages": [
-   {
-    "type": "text message chain",
-    "label": "",
-    "blocks": [
-     {
-      "t": "chat",
-      "msgs": [
-       {
-        "who": "Priya Raghavan",
-        "time": "9:42 A.M.",
-        "text": "Morning, both. I've just reached the convention center. The booth panels are here, but the crate with the display screens hasn't turned up."
-       },
-       {
-        "who": "Dominic Hale",
-        "time": "9:47 A.M.",
-        "text": "That's not good. The carrier promised everything would be unloaded by eight."
-       },
-       {
-        "who": "Priya Raghavan",
-        "time": "9:51 A.M.",
-        "text": "I spoke to the loading dock supervisor. He says a second truck is still on the road and should reach us around eleven."
-       },
-       {
-        "who": "Marta Oyelaran",
-        "time": "9:58 A.M.",
-        "text": "I can rearrange my morning if that helps. I'm not due at the client lunch until one."
-       },
-       {
-        "who": "Dominic Hale",
-        "time": "10:03 A.M.",
-        "text": "Marta, could you go straight to the hall instead of the office? Priya shouldn't be assembling the frame on her own."
-       },
-       {
-        "who": "Marta Oyelaran",
-        "time": "10:07 A.M.",
-        "text": "On my way. Priya, I have a box of the printed brochures in my car — shall I bring those in as well?"
-       },
-       {
-        "who": "Priya Raghavan",
-        "time": "10:11 A.M.",
-        "text": "Yes, please. One box will be plenty for the first day."
-       },
-       {
-        "who": "Dominic Hale",
-        "time": "10:15 A.M.",
-        "text": "I'll chase the carrier again. If those screens aren't here by noon, we'll have to think about renting."
-       },
-       {
-        "who": "Marta Oyelaran",
-        "time": "10:19 A.M.",
-        "text": "Let's hope it doesn't come to that. See you both shortly."
-       }
-      ]
-     }
-    ]
-   }
-  ],
-  "questions": [
-   {
-    "q": "What are the writers mainly discussing?",
-    "options": [
-     "A change to a client's lunch reservation",
-     "A missing part of a delivery",
-     "The design of a new company brochure",
-     "A complaint received from a convention center"
-    ],
-    "answer": 1,
-    "explanation": "定位：9:42 Raghavan 表示「the crate with the display screens hasn't turned up」，後續訊息全繞著這批未送達的螢幕與應變安排展開。(A)錯：午餐約會只在 9:58 被順帶提到，用來說明 Oyelaran 上午有空。(C)錯：手冊只是要順便帶進會場的物品，不是討論主題。(D)錯：對話中沒有任何來自會展中心的抱怨；三人不滿的對象是未依約卸貨的貨運業者。"
-   },
-   {
-    "q": "What does Ms. Oyelaran offer to bring to the hall?",
-    "options": [
-     "A set of display screens",
-     "A crate of booth panels",
-     "A list of clients",
-     "Some printed materials"
-    ],
-    "answer": 3,
-    "explanation": "定位：10:07 Oyelaran 寫道「I have a box of the printed brochures in my car — shall I bring those in as well?」，即印刷品。(A)錯：螢幕在第二輛卡車上，不在她手上。(B)錯：展板已經送到會場了。(C)錯：全篇未提到任何客戶名單。"
-   },
-   {
-    "q": "At 10:15 A.M., what does Mr. Hale most likely mean when he writes, \"we'll have to think about renting\"?",
-    "options": [
-     "He may need to obtain display screens from another source.",
-     "He believes the booth space is too small.",
-     "He wants to lease a larger delivery vehicle.",
-     "He plans to look for a different storage facility."
-    ],
-    "answer": 0,
-    "explanation": "定位：該句緊接在「If those screens aren't here by noon」之後，條件句指向的缺件就是展示螢幕，因此 renting 指改用租借方式取得螢幕。(B)錯：攤位大小從未被討論。(C)錯：卡車是貨運業者的事，他們不需要自己租車。(D)錯：全篇沒有倉儲需求的線索。"
-   },
-   {
-    "q": "What is suggested about Ms. Oyelaran?",
-    "options": [
-     "She has already spoken with the carrier.",
-     "She designed the booth panels herself.",
-     "She is free until an appointment later in the day.",
-     "She has worked at the company longer than Mr. Hale."
-    ],
-    "answer": 2,
-    "explanation": "定位：9:58 她說「I can rearrange my morning if that helps. I'm not due at the client lunch until one.」可推知她在下午一點之前有空，故 (C) 正確。(A)錯：全文沒有她聯絡貨運業者的訊息；10:15 說要再去催貨運業者的是 Hale，Raghavan 問的則是會展中心的裝卸區主管。(B)錯：沒有任何人提及展板是誰設計的。(D)錯：對話中沒有任何資歷或職級的比較。"
-   }
-  ],
-  "translation": [
-   "Priya Raghavan（上午 9:42）\n兩位早。我剛到會展中心。展板已經到了，但裝展示螢幕的木箱沒出現。\n\nDominic Hale（上午 9:47）\n這下麻煩了。貨運業者保證八點前全部卸完的。\n\nPriya Raghavan（上午 9:51）\n我問過裝卸區的主管。他說第二輛卡車還在路上，大概十一點左右會到。\n\nMarta Oyelaran（上午 9:58）\n有需要的話我可以調整上午的行程。我到一點才要去和客戶吃午餐。\n\nDominic Hale（上午 10:03）\nMarta，你可以直接去會場、不用進辦公室嗎？不該讓 Priya 一個人組框架。\n\nMarta Oyelaran（上午 10:07）\n我出發了。Priya，我車上有一箱印好的手冊，要不要一起帶進去？\n\nPriya Raghavan（上午 10:11）\n麻煩你了。第一天一箱就很夠了。\n\nDominic Hale（上午 10:15）\n我再去催貨運業者。如果那些螢幕中午還沒到，我們就得考慮用租的了。\n\nMarta Oyelaran（上午 10:19）\n希望不至於走到那一步。待會見。"
+   "收件者：t.abernathy@example.com\n寄件者：n.ferreira@example.org\n日期：3月3日\n主旨：訂單 48219：修訂後的送達日期\n\n親愛的 Abernathy 先生：\n\n我來信是關於 Crestwood Interiors 於 2 月 20 日訂購的十八組可調式桌架。這筆訂單原訂本週四送達貴公司的 Fairview 倉庫，但恐怕我們無法如期達成。\n\n這些桌架在我們位於 Bellhaven 的廠區製造，該廠的鍋爐故障使塗裝線停擺了六天。生產已於週一恢復，積壓的訂單正依收件先後順序陸續消化。您的貨現在預計 3 月 11 日出廠，3 月 14 日送達。\n\n由於延誤完全是我方責任，我已安排將 260 美元的運費從您的發票中扣除。我也請倉儲團隊從展示間備品中保留了六組桌架。除了表面顏色略深之外，這些桌架與您訂購的完全相同；若您在 14 日之前需要現場先有貨可用，我可以明天免費寄出。\n\n請於週五前告知您是否需要這批展示間的桌架。若未收到您的回覆，我將視為您希望等待完整出貨。\n\n造成不便，敬請見諒，並感謝您的耐心。\n\n敬上\n\nNadia Ferreira\n客戶服務部\nVantage Point Supply"
   ]
  },
  {
@@ -3570,7 +3575,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "北門週報｜商業版\n\n芬戴爾舊紡織廠將重生為設計基地\n柯琳・艾爾索普 撰\n\n芬戴爾訊（三月八日）——開發商亞倫地產集團於週二宣布，運河街上那座自二○○九年起便閒置的舊紡織廠，將於九月重新開放，作為小型設計公司的共用工作空間。\n\n這棟四萬平方英尺的建築將隔成二十八個工作室單位，另設木工房、攝影棚，以及一樓對外開放的咖啡館。租金起價每月五百二十美元，遠低於市中心同等空間平均八百九十美元的行情。\n\n「我們是刻意把單位做小的，」專案總監娜歐蜜・佩特羅席恩表示。「我們接觸過的業者多半僱用不到六個人。他們缺的不是坪數，而是自己絕對買不起的設備。」\n\n這項計畫並非全無反對聲音。一月的公聽會上，周邊社區數名居民主張，新增車流會讓運河街不堪負荷，該路北端縮減為單線道。亞倫地產因此同意出資開辦接駁車，連接基地與芬戴爾火車站，並將基地內停車位上限訂為四十格。\n\n施工團隊二月已開始拆除舊隔熱材，內部工程預定五月動工。佩特羅席恩表示，已有十一個單位被本郡其他地方目前暫用臨時辦公室的公司預訂。\n\n芬戴爾商家協會估計，咖啡館加上前來工作室洽公的客戶，每週可為運河街帶來數百名額外的來客。"
+   "北門週報｜商業版\n\n芬戴爾舊紡織廠將重生為設計基地\n柯琳・艾爾索普 撰\n\n芬戴爾訊（三月八日）：開發商亞倫地產集團於週二宣布，運河街上那座自二○○九年起便閒置的舊紡織廠，將於九月重新開放，作為小型設計公司的共用工作空間。\n\n這棟四萬平方英尺的建築將隔成二十八個工作室單位，另設木工房、攝影棚，以及一樓對外開放的咖啡館。租金起價每月五百二十美元，遠低於市中心同等空間平均八百九十美元的行情。\n\n「我們是刻意把單位做小的，」專案總監娜歐蜜・佩特羅席恩表示。「我們接觸過的業者多半僱用不到六個人。他們缺的不是坪數，而是自己絕對買不起的設備。」\n\n這項計畫並非全無反對聲音。一月的公聽會上，周邊社區數名居民主張，新增車流會讓運河街不堪負荷，該路北端縮減為單線道。亞倫地產因此同意出資開辦接駁車，連接基地與芬戴爾火車站，並將基地內停車位上限訂為四十格。\n\n施工團隊二月已開始拆除舊隔熱材，內部工程預定五月動工。佩特羅席恩表示，已有十一個單位被本郡其他地方目前暫用臨時辦公室的公司預訂。\n\n芬戴爾商家協會估計，咖啡館加上前來工作室洽公的客戶，每週可為運河街帶來數百名額外的來客。"
   ]
  },
  {
@@ -3630,7 +3635,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "www.example.com/rentals\n\n首頁｜場地介紹｜設備租賃｜費率｜聯絡我們\n\n設備租賃－常見問題\n\n蘭登菲活動公司為三郡地區的各類機構出租視聽與舞台設備，無論您的活動是否在本公司場地舉辦皆可承租。\n\n如何下訂？\n請於活動前至少十個工作天填妥本頁的申請表。專員會在兩個工作天內來電確認庫存並安排送貨時段。距活動不足十個工作天才提出的訂單僅接受電話受理，並須加收七十五美元的急件費。\n\n含運嗎？\n以費爾蒙路倉庫為中心二十英里內，送貨與收回免費。超出此範圍者，去回程各按每英里一點四美元計費。司機會將設備搬進使用的房間，但不得將螢幕或喇叭安裝於牆面或天花板。\n\n我可以自己操作設備嗎？\n可以。每筆訂單皆附圖解安裝說明。不過，賓客超過一百五十人的客戶，我們強烈建議另聘技術人員（四小時班次二百四十美元），因為本公司較大型的音響設備需要一定的操作經驗才能調得恰當。\n\n設備損壞怎麼辦？\n請在活動結束前撥打送貨單上印的電話回報故障。歸還時已損壞的品項將按重置成本計價，除非您已購買選購的保障方案（費用為訂單金額加收一成）。"
+   "www.example.com/rentals\n\n首頁｜場地介紹｜設備租賃｜費率｜聯絡我們\n\n設備租賃：常見問題\n\n蘭登菲活動公司為三郡地區的各類機構出租視聽與舞台設備，無論您的活動是否在本公司場地舉辦皆可承租。\n\n如何下訂？\n請於活動前至少十個工作天填妥本頁的申請表。專員會在兩個工作天內來電確認庫存並安排送貨時段。距活動不足十個工作天才提出的訂單僅接受電話受理，並須加收七十五美元的急件費。\n\n含運嗎？\n以費爾蒙路倉庫為中心二十英里內，送貨與收回免費。超出此範圍者，去回程各按每英里一點四美元計費。司機會將設備搬進使用的房間，但不得將螢幕或喇叭安裝於牆面或天花板。\n\n我可以自己操作設備嗎？\n可以。每筆訂單皆附圖解安裝說明。不過，賓客超過一百五十人的客戶，我們強烈建議另聘技術人員（四小時班次二百四十美元），因為本公司較大型的音響設備需要一定的操作經驗才能調得恰當。\n\n設備損壞怎麼辦？\n請在活動結束前撥打送貨單上印的電話回報故障。歸還時已損壞的品項將按重置成本計價，除非您已購買選購的保障方案（費用為訂單金額加收一成）。"
   ]
  },
  {
@@ -3690,7 +3695,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "備忘錄\n\n致：全體業務與行銷同仁\n發文者：財務部主任 普莉雅・拉斯穆森\n日期：六月二日\n主旨：改用 Voyance 費用系統\n\n自七月一日起，所有差旅與交際費用一律須透過 Voyance 線上系統提交；該系統自三月起由東北區業務團隊試用。該日之後不再受理紙本表單，七月收到的紙本申請一律退回原申請人。\n\n試用結果有兩項明確成效。過去平均需十九天的核銷款項，如今六天即可入帳；因文件不全而被退件的申請則減少約半數。這多半得力於行動應用程式，讓各位可在消費當下拍下收據，不必事後幾週再翻找。\n\n幾點提醒：\n\n－ 申請須於費用發生日起三十天內提出。此期限並非新規定，但 Voyance 會自動控管；逾期申請須取得所屬部門主管的書面同意。\n－ 單筆超過二十五美元的品項皆須檢附收據，餐費亦同。\n－ 主管將直接在系統內核准申請。提交前不必再取得簽名。\n\n教育訓練為期四十五分鐘，將於六月十日、十二日、十七日上午九時在 B 會議室舉行。過去一年內曾提出費用申請者一律必須參加。請透過人資部發送的連結報名；每場名額上限二十五人。\n\n系統本身的問題請洽服務台，勿逕洽財務部。"
+   "備忘錄\n\n致：全體業務與行銷同仁\n發文者：財務部主任 普莉雅・拉斯穆森\n日期：六月二日\n主旨：改用 Voyance 費用系統\n\n自七月一日起，所有差旅與交際費用一律須透過 Voyance 線上系統提交；該系統自三月起由東北區業務團隊試用。該日之後不再受理紙本表單，七月收到的紙本申請一律退回原申請人。\n\n試用結果有兩項明確成效。過去平均需十九天的核銷款項，如今六天即可入帳；因文件不全而被退件的申請則減少約半數。這多半得力於行動應用程式，讓各位可在消費當下拍下收據，不必事後幾週再翻找。\n\n幾點提醒：\n\n．申請須於費用發生日起三十天內提出。此期限並非新規定，但 Voyance 會自動控管；逾期申請須取得所屬部門主管的書面同意。\n．單筆超過二十五美元的品項皆須檢附收據，餐費亦同。\n．主管將直接在系統內核准申請。提交前不必再取得簽名。\n\n教育訓練為期四十五分鐘，將於六月十日、十二日、十七日上午九時在 B 會議室舉行。過去一年內曾提出費用申請者一律必須參加。請透過人資部發送的連結報名；每場名額上限二十五人。\n\n系統本身的問題請洽服務台，勿逕洽財務部。"
   ]
  },
  {
@@ -3766,7 +3771,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "哈佛森職能發展學院\n秋季證書工作坊－凱斯楚商業園區校區\n\n下列工作坊即日起開放報名。所有場次皆自上午九時進行至下午四時，並含午餐。\n\n遠距團隊管理－十月三日（星期五）－三一○美元\n採購人員談判技巧－十月十四日（星期二）－三四○美元\n財務報表基礎－十月二十三日（星期四）－三四○美元\n以數據做簡報－十一月八日（星期六）－二九○美元\n\n參加者須知：\n\n－ 同一機構於同一場工作坊報名三人以上者，每一名額均可享八五折優惠。\n－ 費用最遲須於工作坊日期前十天繳清。逾期未繳者，其名額將釋出給候補名單。\n－ 每場工作坊人數上限十八人，以確保每位學員都能參與下午的實作演練。\n－ 於十二個月內完成兩場工作坊者，可將第三場的費用抵充本院的營運管理證書學程。\n－ 星期六場次於威洛班克別館舉行，自主建築步行約十分鐘。別館停車位有限，建議搭乘凱斯楚車站發車的接駁車。\n\n報名請洽戴莉亞・安布羅斯，電子郵件 d.ambrose@example.org 或電話 555-0142。",
+   "哈佛森職能發展學院\n秋季證書工作坊：凱斯楚商業園區校區\n\n下列工作坊即日起開放報名。所有場次皆自上午九時進行至下午四時，並含午餐。\n\n遠距團隊管理，十月三日（星期五），三一○美元\n採購人員談判技巧，十月十四日（星期二），三四○美元\n財務報表基礎，十月二十三日（星期四），三四○美元\n以數據做簡報，十一月八日（星期六），二九○美元\n\n參加者須知：\n\n．同一機構於同一場工作坊報名三人以上者，每一名額均可享八五折優惠。\n．費用最遲須於工作坊日期前十天繳清。逾期未繳者，其名額將釋出給候補名單。\n．每場工作坊人數上限十八人，以確保每位學員都能參與下午的實作演練。\n．於十二個月內完成兩場工作坊者，可將第三場的費用抵充本院的營運管理證書學程。\n．星期六場次於威洛班克別館舉行，自主建築步行約十分鐘。別館停車位有限，建議搭乘凱斯楚車站發車的接駁車。\n\n報名請洽戴莉亞・安布羅斯，電子郵件 d.ambrose@example.org 或電話 555-0142。",
    "收件者：戴莉亞・安布羅斯 <d.ambrose@example.org>\n寄件者：馬可斯・泰利 <m.tiley@example.com>\n日期：九月十二日\n主旨：秋季工作坊\n\n安布羅斯女士您好：\n\n我在凱斯楚商業園區的服務櫃檯看到貴院的公告，想為採購部門的四位同仁報名貴院專為該職務開設的那場課程。可否確認名額是否仍有空缺，並告知套用團體折扣後的總費用？\n\n另有兩個問題。第一，我的同事芮娜塔・沃斯去年十一月上過貴院一場工作坊，今年三月又上了一場。她是否還能把第三場的費用抵充您提到的證書學程，還是時間已經超過了？\n\n第二，我也想派兩位同仁參加十一月的場次。他們都不開車，可否告知您提到的接駁車在週末的班次密度？\n\n最後，我們希望以銀行匯款支付。本公司帳務部門固定在每月最後一個工作日處理匯款，希望這樣仍在貴院的繳費期限之內。\n\n謹此\n布萊特沃乳品公司\n採購經理 馬可斯・泰利"
   ]
  },
@@ -3940,8 +3945,8 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "佩爾沃斯與葛雷公司－差旅行程表\n行程對象：區域營運部 英格麗・佐藤 女士\n製表：企業差旅櫃檯\n行程編號：PG-40718\n\n四月六日（星期一）\n07:40 自艾許康國際機場出發（VN 216 班機）\n09:55 抵達拉克斯珀市\n11:30 入住哈特菲爾套房飯店，貝克特街十二號\n14:00-17:00 參訪拉克斯珀配送中心（接待人：歐文・阿契貝）\n\n四月七日（星期二）\n09:00-12:00 供應商檢討會議，拉克斯珀配送中心\n13:30-15:00 對區域經理進行簡報，哈特菲爾套房飯店愛默生廳\n19:00 與拉克斯珀管理團隊晚宴，卡薩瓦燒烤餐廳\n\n四月八日（星期三）\n09:30-11:00 與阿契貝先生及財務同仁進行預算規劃會議\n15:15 自拉克斯珀市出發（VN 341 班機）\n17:20 抵達艾許康國際機場\n\n附註\n抵達時將有車輛至機場接您。房費由公司直接支付；除星期二晚宴外的餐費請以費用申請方式核銷。以本公司企業票價訂購的機票可免費更改一次，惟須於起飛前至少七十二小時通知差旅櫃檯。",
-   "收件者：travel@example.com\n寄件者：i.sato@example.com\n日期：四月一日\n主旨：行程編號 PG-40718－兩項異動\n\n您好：\n\n行程表發出後有兩件事有了變化。\n\n第一，歐文・阿契貝詢問預算規劃會議能否改到星期二上午，因為他的財務團隊星期三要接受稽核。供應商願意改在星期三與我碰面，但只能約下午，這代表我得比原訂時間更晚離開拉克斯珀。我查到最近的一班是十八點零五分起飛。可否幫我確認這樣的更改是否仍在免費更改的期限內？\n\n第二，星期二的簡報出席人數已從十二人增加到約三十人，而目前預訂的會議室只能容納二十人。可否請您向飯店詢問一樓的金斯利廳當天下午是否有空？若無，我寧可把場地改到配送中心，那裡有一間大小合適的訓練教室。\n\n最後一點：由於我將在當地多待一個下午，請確認飯店不會向我收取延遲退房的費用。\n\n謝謝\n英格麗・佐藤"
+   "佩爾沃斯與葛雷公司：差旅行程表\n行程對象：區域營運部 英格麗・佐藤 女士\n製表：企業差旅櫃檯\n行程編號：PG-40718\n\n四月六日（星期一）\n07:40 自艾許康國際機場出發（VN 216 班機）\n09:55 抵達拉克斯珀市\n11:30 入住哈特菲爾套房飯店，貝克特街十二號\n14:00-17:00 參訪拉克斯珀配送中心（接待人：歐文・阿契貝）\n\n四月七日（星期二）\n09:00-12:00 供應商檢討會議，拉克斯珀配送中心\n13:30-15:00 對區域經理進行簡報，哈特菲爾套房飯店愛默生廳\n19:00 與拉克斯珀管理團隊晚宴，卡薩瓦燒烤餐廳\n\n四月八日（星期三）\n09:30-11:00 與阿契貝先生及財務同仁進行預算規劃會議\n15:15 自拉克斯珀市出發（VN 341 班機）\n17:20 抵達艾許康國際機場\n\n附註\n抵達時將有車輛至機場接您。房費由公司直接支付；除星期二晚宴外的餐費請以費用申請方式核銷。以本公司企業票價訂購的機票可免費更改一次，惟須於起飛前至少七十二小時通知差旅櫃檯。",
+   "收件者：travel@example.com\n寄件者：i.sato@example.com\n日期：四月一日\n主旨：行程編號 PG-40718：兩項異動\n\n您好：\n\n行程表發出後有兩件事有了變化。\n\n第一，歐文・阿契貝詢問預算規劃會議能否改到星期二上午，因為他的財務團隊星期三要接受稽核。供應商願意改在星期三與我碰面，但只能約下午，這代表我得比原訂時間更晚離開拉克斯珀。我查到最近的一班是十八點零五分起飛。可否幫我確認這樣的更改是否仍在免費更改的期限內？\n\n第二，星期二的簡報出席人數已從十二人增加到約三十人，而目前預訂的會議室只能容納二十人。可否請您向飯店詢問一樓的金斯利廳當天下午是否有空？若無，我寧可把場地改到配送中心，那裡有一間大小合適的訓練教室。\n\n最後一點：由於我將在當地多待一個下午，請確認飯店不會向我收取延遲退房的費用。\n\n謝謝\n英格麗・佐藤"
   ]
  },
  {
@@ -3951,7 +3956,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "",
-    "content": "To: Harriet Kwan <h.kwan@lindmarkclinic.com>\nFrom: Owen Brasher <o.brasher@quillpressprinting.com>\nDate: June 4\nSubject: Order 44821\n\nDear Ms. Kwan,\n\nThank you for the order we received from Lindmark Clinic on Monday. Your 5,000 appointment cards are already being printed and will leave our shop on Tuesday, June 9, exactly as promised.\n\nI am writing about the other half of the order. The gray folders you chose are printed on a paper that our supplier has stopped producing, and we used the last of it two weeks ago. A replacement paper will not reach us before June 22, which is ten days after the date you asked for.\n\nThere are two ways forward. We can hold the folders until the new paper arrives, or we can print them this week on a slightly heavier white paper. The second choice costs us more, but we will not pass that difference on to you, and I have sent a sample of the white paper by courier so that you can see it before you decide.\n\nWhichever you choose, we will cover the delivery charge on the folders, since the delay is ours.\n\nCould you let me know by Friday afternoon? After that I cannot promise you a place on next week's schedule.\n\nBest regards,\n\nOwen Brasher\nAccount Manager, Quill Press Printing\n555-0178"
+    "content": "To: Harriet Kwan <h.kwan@example.com>\nFrom: Owen Brasher <o.brasher@example.org>\nDate: June 4\nSubject: Order 44821\n\nDear Ms. Kwan,\n\nThank you for the order we received from Lindmark Clinic on Monday. Your 5,000 appointment cards are already being printed and will leave our shop on Tuesday, June 9, exactly as promised.\n\nI am writing about the other half of the order. The gray folders you chose are printed on a paper that our supplier has stopped producing, and we used the last of it two weeks ago. A replacement paper will not reach us before June 22, which is ten days after the date you asked for.\n\nThere are two ways forward. We can hold the folders until the new paper arrives, or we can print them this week on a slightly heavier white paper. The second choice costs us more, but we will not pass that difference on to you, and I have sent a sample of the white paper by courier so that you can see it before you decide.\n\nWhichever you choose, we will cover the delivery charge on the folders, since the delay is ours.\n\nCould you let me know by Friday afternoon? After that I cannot promise you a place on next week's schedule.\n\nBest regards,\n\nOwen Brasher\nAccount Manager, Quill Press Printing\n555-0178"
    }
   ],
   "questions": [
@@ -4001,7 +4006,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "收件者：哈莉葉・關 <h.kwan@lindmarkclinic.com>\n寄件者：歐文・布拉舍 <o.brasher@quillpressprinting.com>\n日期：六月四日\n主旨：第 44821 號訂單\n\n關女士您好：\n\n感謝林馬克診所週一交給本廠的訂單。您的五千張預約卡已在印製中，會如約於六月九日星期二出貨。\n\n我來信是要說明訂單另一半的狀況。您選的灰色資料夾所用的紙，供應商已經停產，本廠最後一批也在兩週前用完。替代用紙要到六月二十二日才會送達，比您指定的日期晚了十天。\n\n目前有兩種作法。一是把資料夾押後，等新紙到貨；二是本週就改用略厚的白紙印製。第二種作法本廠成本較高，但差額不會轉嫁給您，而且我已用快遞寄出白紙樣張，讓您決定前先看過實品。\n\n無論您選哪一種，資料夾的運費都由我們負擔，畢竟延誤是我們造成的。\n\n可否請您在週五下午前回覆？超過這個時間，我無法保證還排得進下週的產程。\n\n謹此\n奎爾印刷公司\n業務專員 歐文・布拉舍\n555-0178"
+   "收件者：哈莉葉・關 <h.kwan@example.com>\n寄件者：歐文・布拉舍 <o.brasher@example.org>\n日期：六月四日\n主旨：第 44821 號訂單\n\n關女士您好：\n\n感謝林馬克診所週一交給本廠的訂單。您的五千張預約卡已在印製中，會如約於六月九日星期二出貨。\n\n我來信是要說明訂單另一半的狀況。您選的灰色資料夾所用的紙，供應商已經停產，本廠最後一批也在兩週前用完。替代用紙要到六月二十二日才會送達，比您指定的日期晚了十天。\n\n目前有兩種作法。一是把資料夾押後，等新紙到貨；二是本週就改用略厚的白紙印製。第二種作法本廠成本較高，但差額不會轉嫁給您，而且我已用快遞寄出白紙樣張，讓您決定前先看過實品。\n\n無論您選哪一種，資料夾的運費都由我們負擔，畢竟延誤是我們造成的。\n\n可否請您在週五下午前回覆？超過這個時間，我無法保證還排得進下週的產程。\n\n謹此\n奎爾印刷公司\n業務專員 歐文・布拉舍\n555-0178"
   ]
  },
  {
@@ -4117,7 +4122,7 @@ TOEIC.part7 = [
    {
     "type": "advertisement",
     "label": "",
-    "content": "GREENHOLT UNIFORM SERVICE\nClean uniforms, delivered. No machines to buy, no laundry to run.\n\nFor more than twenty years, Greenholt has supplied and cleaned work clothing for restaurants, garages, clinics, and hotels across the Marlow Valley. Tell us how many staff you have and how often you would like a delivery. We do the rest.\n\nWHAT YOU GET\n- A free visit to measure your staff at your workplace, usually within three working days of your call\n- Pickup and delivery once or twice a week by our own drivers\n- Repairs at no extra cost, including buttons, pockets, and small tears\n- A spare set for every employee, so that nobody is ever left without a clean uniform\n- Monthly billing, with a single invoice covering all of your locations\n\nPRICES\nStandard cotton shirts and pants start at $6.40 per employee each week. Chef coats and safety jackets are priced separately, since the cost depends on the fabric.\n\nPLEASE NOTE\nWe do not sell uniforms. Every garment remains the property of Greenholt and must be returned to us when an employee leaves your company.\n\nTRY US\nNew customers who sign a twelve-month agreement before September 30 pay half price for the first four weeks. Mention code VALLEY24 when you call.\n\nGreenholt Uniform Service\nUnit 9, Denton Trade Park\n555-0193 | greenholtuniform.com\nOffice hours: Monday to Friday, 7:00 A.M. to 5:00 P.M."
+    "content": "GREENHOLT UNIFORM SERVICE\nClean uniforms, delivered. No machines to buy, no laundry to run.\n\nFor more than twenty years, Greenholt has supplied and cleaned work clothing for restaurants, garages, clinics, and hotels across the Marlow Valley. Tell us how many staff you have and how often you would like a delivery. We do the rest.\n\nWHAT YOU GET\n- A free visit to measure your staff at your workplace, usually within three working days of your call\n- Pickup and delivery once or twice a week by our own drivers\n- Repairs at no extra cost, including buttons, pockets, and small tears\n- A spare set for every employee, so that nobody is ever left without a clean uniform\n- Monthly billing, with a single invoice covering all of your locations\n\nPRICES\nStandard cotton shirts and pants start at $6.40 per employee each week. Chef coats and safety jackets are priced separately, since the cost depends on the fabric.\n\nPLEASE NOTE\nWe do not sell uniforms. Every garment remains the property of Greenholt and must be returned to us when an employee leaves your company.\n\nTRY US\nNew customers who sign a twelve-month agreement before September 30 pay half price for the first four weeks. Mention code VALLEY24 when you call.\n\nGreenholt Uniform Service\nUnit 9, Denton Trade Park\n555-0193 | example.com\nOffice hours: Monday to Friday, 7:00 A.M. to 5:00 P.M."
    }
   ],
   "questions": [
@@ -4167,7 +4172,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "格林霍特制服服務\n乾淨制服，送到您手上。不必買設備，也不必自己洗。\n\n二十多年來，格林霍特為馬洛谷地一帶的餐廳、汽車修理廠、診所與旅館提供工作服並負責清洗。只要告訴我們您有多少員工、希望多久送一次，其餘的交給我們。\n\n服務內容\n－ 到府免費量身，通常在您來電後三個工作天內完成\n－ 由本公司司機每週一次或兩次收送\n－ 免費修補，含鈕扣、口袋與小破損\n－ 每位員工都配備一套備用制服，不會有人沒有乾淨衣服可穿\n－ 按月結帳，所有據點合開一張帳單\n\n價格\n標準棉質上衣與長褲，每位員工每週六・四美元起。廚師服與安全外套另行報價，費用視布料而定。\n\n請注意\n本公司不販售制服。所有衣物均為格林霍特所有，員工離職時必須歸還。\n\n歡迎試用\n新客戶於九月三十日前簽訂十二個月合約，前四週半價。來電時請提供代碼 VALLEY24。\n\n格林霍特制服服務\n丹頓工業園區 9 號廠房\n555-0193 | greenholtuniform.com\n辦公時間：週一至週五上午七時至下午五時"
+   "格林霍特制服服務\n乾淨制服，送到您手上。不必買設備，也不必自己洗。\n\n二十多年來，格林霍特為馬洛谷地一帶的餐廳、汽車修理廠、診所與旅館提供工作服並負責清洗。只要告訴我們您有多少員工、希望多久送一次，其餘的交給我們。\n\n服務內容\n．到府免費量身，通常在您來電後三個工作天內完成\n．由本公司司機每週一次或兩次收送\n．免費修補，含鈕扣、口袋與小破損\n．每位員工都配備一套備用制服，不會有人沒有乾淨衣服可穿\n．按月結帳，所有據點合開一張帳單\n\n價格\n標準棉質上衣與長褲，每位員工每週六・四美元起。廚師服與安全外套另行報價，費用視布料而定。\n\n請注意\n本公司不販售制服。所有衣物均為格林霍特所有，員工離職時必須歸還。\n\n歡迎試用\n新客戶於九月三十日前簽訂十二個月合約，前四週半價。來電時請提供代碼 VALLEY24。\n\n格林霍特制服服務\n丹頓工業園區 9 號廠房\n555-0193 | example.com\n辦公時間：週一至週五上午七時至下午五時"
   ]
  },
  {
@@ -4283,7 +4288,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: Devin Marsh <d.marsh@meridiancf.com>\nFrom: Talia Okafor <t.okafor@bexleyanalytics.com>\nDate: August 7\nSubject: Quotation Q-7719\n\nDear Mr. Marsh,\n\nThank you for the quotation, which our director approved this morning with two changes.\n\nFirst, we would like six more of the same task chairs, for a total of thirty. Two people are joining the analysis team this fall, and I would rather order the extra chairs now than pay for a second delivery later. Please confirm that the reduction described in your third term still applies at the larger quantity.\n\nSecond, please remove the file cabinets. All of our records are being scanned this month, so we no longer need them.\n\nWe would also like your crews to put the desks and the meeting tables together for us. Nobody here has the time to do it. Please add that cost to the revised total.\n\nOne more point, about timing. Our lease on the new floor begins on September 8, and I would like the furniture in place before the end of that week. If I return the signed quotation on August 11, does that leave us enough time?\n\nKind regards,\n\nTalia Okafor\nOffice Manager, Bexley Analytics"
+    "content": "To: Devin Marsh <d.marsh@example.com>\nFrom: Talia Okafor <t.okafor@example.org>\nDate: August 7\nSubject: Quotation Q-7719\n\nDear Mr. Marsh,\n\nThank you for the quotation, which our director approved this morning with two changes.\n\nFirst, we would like six more of the same task chairs, for a total of thirty. Two people are joining the analysis team this fall, and I would rather order the extra chairs now than pay for a second delivery later. Please confirm that the reduction described in your third term still applies at the larger quantity.\n\nSecond, please remove the file cabinets. All of our records are being scanned this month, so we no longer need them.\n\nWe would also like your crews to put the desks and the meeting tables together for us. Nobody here has the time to do it. Please add that cost to the revised total.\n\nOne more point, about timing. Our lease on the new floor begins on September 8, and I would like the furniture in place before the end of that week. If I return the signed quotation on August 11, does that leave us enough time?\n\nKind regards,\n\nTalia Okafor\nOffice Manager, Bexley Analytics"
    }
   ],
   "questions": [
@@ -4344,8 +4349,8 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "梅里迪安辦公家具公司\n蘇德柏里市阿德路 1140 號\n報價單編號 Q-7719\n\n報價對象：貝斯利分析公司 辦公室主任 塔莉亞・奧卡佛\n日期：八月三日\n本報價單自上列日期起三十天內有效。\n\n品項 — 數量 — 單價 — 小計\n可調式辦公桌，140 公分，木質桌面 — 24 — 415 美元 — 9,960 美元\n辦公椅，TR-5 型 — 24 — 228 美元 — 5,472 美元\n雙抽屜檔案櫃 — 12 — 140 美元 — 1,680 美元\n八人座會議桌 — 2 — 690 美元 — 1,380 美元\n\n小計：18,492 美元\n運費：0 美元\n總計：18,492 美元\n\n條款\n1. 訂單金額逾一萬美元者，蘇德柏里市區內免運費。\n2. 不含組裝。本公司師傅可代為組裝，桌類每件 18 美元，椅子每張 9 美元。\n3. 同型號椅子訂購二十張以上者享九五折，上表價格已扣除此折扣。\n4. 交期為本公司收到簽署之報價單與三成訂金當日起算四週。\n5. 商品送達後十四天內，未拆封者可辦理退貨。\n\n如有疑問，請電洽戴文・馬許，555-0166。",
-   "收件者：戴文・馬許 <d.marsh@meridiancf.com>\n寄件者：塔莉亞・奧卡佛 <t.okafor@bexleyanalytics.com>\n日期：八月七日\n主旨：報價單 Q-7719\n\n馬許先生您好：\n\n感謝您的報價單，我們主管今天早上已核准，但有兩處要調整。\n\n第一，同型號的辦公椅想再加訂六張，合計三十張。分析團隊秋天會有兩位新同事報到，與其之後再付一次運費，不如現在一次訂足。請確認貴公司條款第三點的折扣在加量後仍然適用。\n\n第二，請刪除檔案櫃。本公司所有紙本資料這個月都會掃描建檔，已經用不到了。\n\n另外，想請貴公司師傅代為組裝辦公桌與會議桌，我們這邊實在沒有人手。請把這筆費用加進修正後的總價。\n\n還有一點關於時間。新樓層的租約自九月八日起算，我希望家具能在那一週結束前全部就定位。若我在八月十一日把簽好的報價單寄回，時間還來得及嗎？\n\n謹此\n貝斯利分析公司\n辦公室主任 塔莉亞・奧卡佛"
+   "梅里迪安辦公家具公司\n蘇德柏里市阿德路 1140 號\n報價單編號 Q-7719\n\n報價對象：貝斯利分析公司 辦公室主任 塔莉亞・奧卡佛\n日期：八月三日\n本報價單自上列日期起三十天內有效。\n\n品項（數量、單價、小計）\n可調式辦公桌，140 公分，木質桌面（數量 24，單價 415 美元，小計 9,960 美元）\n辦公椅，TR-5 型（數量 24，單價 228 美元，小計 5,472 美元）\n雙抽屜檔案櫃（數量 12，單價 140 美元，小計 1,680 美元）\n八人座會議桌（數量 2，單價 690 美元，小計 1,380 美元）\n\n小計：18,492 美元\n運費：0 美元\n總計：18,492 美元\n\n條款\n1. 訂單金額逾一萬美元者，蘇德柏里市區內免運費。\n2. 不含組裝。本公司師傅可代為組裝，桌類每件 18 美元，椅子每張 9 美元。\n3. 同型號椅子訂購二十張以上者享九五折，上表價格已扣除此折扣。\n4. 交期為本公司收到簽署之報價單與三成訂金當日起算四週。\n5. 商品送達後十四天內，未拆封者可辦理退貨。\n\n如有疑問，請電洽戴文・馬許，555-0166。",
+   "收件者：戴文・馬許 <d.marsh@example.com>\n寄件者：塔莉亞・奧卡佛 <t.okafor@example.org>\n日期：八月七日\n主旨：報價單 Q-7719\n\n馬許先生您好：\n\n感謝您的報價單，我們主管今天早上已核准，但有兩處要調整。\n\n第一，同型號的辦公椅想再加訂六張，合計三十張。分析團隊秋天會有兩位新同事報到，與其之後再付一次運費，不如現在一次訂足。請確認貴公司條款第三點的折扣在加量後仍然適用。\n\n第二，請刪除檔案櫃。本公司所有紙本資料這個月都會掃描建檔，已經用不到了。\n\n另外，想請貴公司師傅代為組裝辦公桌與會議桌，我們這邊實在沒有人手。請把這筆費用加進修正後的總價。\n\n還有一點關於時間。新樓層的租約自九月八日起算，我希望家具能在那一週結束前全部就定位。若我在八月十一日把簽好的報價單寄回，時間還來得及嗎？\n\n謹此\n貝斯利分析公司\n辦公室主任 塔莉亞・奧卡佛"
   ]
  },
  {
@@ -4355,7 +4360,7 @@ TOEIC.part7 = [
    {
     "type": "notice",
     "label": "",
-    "content": "NOTICE TO ALL TENANTS\nRiverbend Business Center — Building Management Office\nPosted: March 3\n\nStarting Monday, March 16, the two elevators in the north lobby will be taken out of service for a scheduled upgrade. The work is expected to last three weeks. During this period, tenants and their visitors should use the south lobby elevators, which will run on an extended schedule from 6:00 a.m. to 10:00 p.m.\n\nBecause the south lobby is likely to be crowded between 8:30 and 9:30 a.m., we encourage staff on floors two through four to take the stairs whenever possible. Delivery workers carrying heavy items should contact the front desk at extension 210, and a staff member will open the service elevator at the rear of the building for them.\n\nThe upgrade will not affect water, heating, or internet service. However, the north lobby will be closed while the new equipment is being installed, so the mail room will move temporarily to Room 118, next to the tenant lounge.\n\nWe understand that this project will cause some inconvenience, and we thank you for your patience. Tenants who want to know more may attend a short information session on Thursday, March 12, at 5:30 p.m. in the third-floor conference room. Written questions can also be sent to management@riverbendcenter.com."
+    "content": "NOTICE TO ALL TENANTS\nRiverbend Business Center — Building Management Office\nPosted: March 3\n\nStarting Monday, March 16, the two elevators in the north lobby will be taken out of service for a scheduled upgrade. The work is expected to last three weeks. During this period, tenants and their visitors should use the south lobby elevators, which will run on an extended schedule from 6:00 a.m. to 10:00 p.m.\n\nBecause the south lobby is likely to be crowded between 8:30 and 9:30 a.m., we encourage staff on floors two through four to take the stairs whenever possible. Delivery workers carrying heavy items should contact the front desk at extension 210, and a staff member will open the service elevator at the rear of the building for them.\n\nThe upgrade will not affect water, heating, or internet service. However, the north lobby will be closed while the new equipment is being installed, so the mail room will move temporarily to Room 118, next to the tenant lounge.\n\nWe understand that this project will cause some inconvenience, and we thank you for your patience. Tenants who want to know more may attend a short information session on Thursday, March 12, at 5:30 p.m. in the third-floor conference room. Written questions can also be sent to management@example.com."
    }
   ],
   "questions": [
@@ -4405,7 +4410,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "全體租戶公告\n河灣商務中心 — 大樓管理室\n公告日期：三月三日\n\n自三月十六日（星期一）起，北側大廳的兩部電梯將停止使用，進行預定的設備更新工程，預計為期三週。這段期間，租戶與訪客請改用南側大廳的電梯；該側電梯將延長運行時間，自上午六點至晚間十點。\n\n由於南側大廳在上午八點半至九點半之間可能相當擁擠，我們建議二樓至四樓的員工盡量走樓梯。搬運重物的送貨人員請撥分機 210 聯絡櫃檯，將有專人為您開啟大樓後方的貨梯。\n\n本次工程不會影響供水、暖氣或網路服務。惟施工期間北側大廳將封閉，收發室因此暫時移至一一八室，位置在租戶休息室隔壁。\n\n我們明白這項工程會造成一些不便，感謝各位的耐心配合。想進一步了解的租戶，可於三月十二日（星期四）下午五點半到三樓會議室參加簡短的說明會。也歡迎將書面問題寄至 management@riverbendcenter.com。"
+   "全體租戶公告\n河灣商務中心：大樓管理室\n公告日期：三月三日\n\n自三月十六日（星期一）起，北側大廳的兩部電梯將停止使用，進行預定的設備更新工程，預計為期三週。這段期間，租戶與訪客請改用南側大廳的電梯；該側電梯將延長運行時間，自上午六點至晚間十點。\n\n由於南側大廳在上午八點半至九點半之間可能相當擁擠，我們建議二樓至四樓的員工盡量走樓梯。搬運重物的送貨人員請撥分機 210 聯絡櫃檯，將有專人為您開啟大樓後方的貨梯。\n\n本次工程不會影響供水、暖氣或網路服務。惟施工期間北側大廳將封閉，收發室因此暫時移至一一八室，位置在租戶休息室隔壁。\n\n我們明白這項工程會造成一些不便，感謝各位的耐心配合。想進一步了解的租戶，可於三月十二日（星期四）下午五點半到三樓會議室參加簡短的說明會。也歡迎將書面問題寄至 management@example.com。"
   ]
  },
  {
@@ -4475,7 +4480,7 @@ TOEIC.part7 = [
    {
     "type": "webpage",
     "label": "",
-    "content": "www.cedarlinetools.com/rentals\n\nHOME  |  RENTALS  |  REPAIRS  |  STORE HOURS  |  CONTACT\n\nCedarline Tool Rental — How It Works\n\nStep 1: Choose your equipment.\nOur catalog lists more than 400 items, from small hand tools to large floor cleaning machines. Daily, weekly, and monthly rates appear on each item page. The weekly rate is the best value for any job that lasts longer than four days.\n\nStep 2: Reserve online.\nSelect a pickup date and a store location. A reservation holds your item for 24 hours after the pickup time you choose. We do not ask for a deposit on orders under $200, but a valid driver's license must be shown at the counter.\n\nStep 3: Pick up and go.\nBring your reservation number to the rental desk. Our staff will show you how to operate the equipment and answer any questions. Safety equipment such as gloves and eye protection is included at no extra charge with all power tools.\n\nStep 4: Return.\nEquipment must be returned to the same store by 6:00 p.m. on the due date. A late return is charged as one additional day. Please clean the equipment before you bring it back; a fee of $25 applies to items that arrive covered in paint or dirt.\n\nNot sure what you need? Call 555-0148 or use the chat button at the bottom of this page."
+    "content": "www.example.com/rentals\n\nHOME  |  RENTALS  |  REPAIRS  |  STORE HOURS  |  CONTACT\n\nCedarline Tool Rental — How It Works\n\nStep 1: Choose your equipment.\nOur catalog lists more than 400 items, from small hand tools to large floor cleaning machines. Daily, weekly, and monthly rates appear on each item page. The weekly rate is the best value for any job that lasts longer than four days.\n\nStep 2: Reserve online.\nSelect a pickup date and a store location. A reservation holds your item for 24 hours after the pickup time you choose. We do not ask for a deposit on orders under $200, but a valid driver's license must be shown at the counter.\n\nStep 3: Pick up and go.\nBring your reservation number to the rental desk. Our staff will show you how to operate the equipment and answer any questions. Safety equipment such as gloves and eye protection is included at no extra charge with all power tools.\n\nStep 4: Return.\nEquipment must be returned to the same store by 6:00 p.m. on the due date. A late return is charged as one additional day. Please clean the equipment before you bring it back; a fee of $25 applies to items that arrive covered in paint or dirt.\n\nNot sure what you need? Call 555-0148 or use the chat button at the bottom of this page."
    }
   ],
   "questions": [
@@ -4525,7 +4530,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "www.cedarlinetools.com/rentals\n\n首頁 | 租借 | 維修 | 營業時間 | 聯絡我們\n\n雪松工具租借 — 租借流程\n\n步驟一：挑選設備。\n我們的型錄收錄超過四百項商品，從小型手工具到大型地板清潔機都有。每項商品頁面均標示日租、週租與月租價格。工程若需時超過四天，以週租最划算。\n\n步驟二：線上預約。\n請選擇取件日期與門市地點。預約成立後，商品會自您選定的取件時間起為您保留二十四小時。訂單金額未滿兩百美元不需支付押金，但取件時必須在櫃檯出示有效駕照。\n\n步驟三：取件出發。\n請攜帶預約編號至租借櫃檯。門市人員會示範設備的操作方式，並回答您的問題。租借電動工具時，手套、護目鏡等安全裝備一律免費提供。\n\n步驟四：歸還。\n設備必須於到期日下午六點前歸還至同一家門市。逾期歸還將加收一日租金。歸還前請先清潔設備；沾滿油漆或泥土的商品將酌收二十五美元清潔費。\n\n不確定該租哪一項？請撥 555-0148，或使用本頁下方的線上客服按鈕。"
+   "www.example.com/rentals\n\n首頁 | 租借 | 維修 | 營業時間 | 聯絡我們\n\n雪松工具租借：租借流程\n\n步驟一：挑選設備。\n我們的型錄收錄超過四百項商品，從小型手工具到大型地板清潔機都有。每項商品頁面均標示日租、週租與月租價格。工程若需時超過四天，以週租最划算。\n\n步驟二：線上預約。\n請選擇取件日期與門市地點。預約成立後，商品會自您選定的取件時間起為您保留二十四小時。訂單金額未滿兩百美元不需支付押金，但取件時必須在櫃檯出示有效駕照。\n\n步驟三：取件出發。\n請攜帶預約編號至租借櫃檯。門市人員會示範設備的操作方式，並回答您的問題。租借電動工具時，手套、護目鏡等安全裝備一律免費提供。\n\n步驟四：歸還。\n設備必須於到期日下午六點前歸還至同一家門市。逾期歸還將加收一日租金。歸還前請先清潔設備；沾滿油漆或泥土的商品將酌收二十五美元清潔費。\n\n不確定該租哪一項？請撥 555-0148，或使用本頁下方的線上客服按鈕。"
   ]
  },
  {
@@ -4599,7 +4604,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: events@quintanasupply.com\nFrom: m.feld@quintanasupply.com\nDate: October 13\nSubject: Questions about Friday's program\n\nHello,\n\nI manage the Bridgeport store and plan to attend the meeting this Friday. I have three questions before I confirm my travel.\n\nFirst, I must visit a supplier on Friday morning and will not reach the center until noon. Will I still be able to hear the session on shipping delays, or should I come the following morning instead?\n\nSecond, two members of my sales staff would like to join the afternoon discussion groups. They are not managers, so I want to be sure they are welcome before I ask them to make the trip.\n\nThird, I will be driving a company van rather than my own car. Will my badge be accepted at the gate for a vehicle of that size, or do I need a separate pass?\n\nOne last note: I do not eat meat, and I know I am writing after the date given in the program. If it is too late to change the order, I am happy to bring my own lunch.\n\nThank you,\nMarta Feld\nStore Manager, Bridgeport"
+    "content": "To: events@example.com\nFrom: m.feld@example.com\nDate: October 13\nSubject: Questions about Friday's program\n\nHello,\n\nI manage the Bridgeport store and plan to attend the meeting this Friday. I have three questions before I confirm my travel.\n\nFirst, I must visit a supplier on Friday morning and will not reach the center until noon. Will I still be able to hear the session on shipping delays, or should I come the following morning instead?\n\nSecond, two members of my sales staff would like to join the afternoon discussion groups. They are not managers, so I want to be sure they are welcome before I ask them to make the trip.\n\nThird, I will be driving a company van rather than my own car. Will my badge be accepted at the gate for a vehicle of that size, or do I need a separate pass?\n\nOne last note: I do not eat meat, and I know I am writing after the date given in the program. If it is too late to change the order, I am happy to bring my own lunch.\n\nThank you,\nMarta Feld\nStore Manager, Bridgeport"
    }
   ],
   "questions": [
@@ -4612,7 +4617,7 @@ TOEIC.part7 = [
      "To report a problem with a delivery"
     ],
     "answer": 1,
-    "explanation": "定位：郵件第一段「I plan to attend the meeting this Friday. I have three questions before I confirm my travel.」，之後三段分別問時間、參加資格與停車，故目的是詢問與會安排。(A)錯：工作坊照常舉行。(C)錯：她沒有推薦講者。(D)錯：出貨延誤是工作坊主題，不是她要申訴的問題。"
+    "explanation": "定位：郵件第一段「I manage the Bridgeport store and plan to attend the meeting this Friday. I have three questions before I confirm my travel.」，之後三段分別問時間、參加資格與停車，故目的是詢問與會安排。(A)錯：工作坊照常舉行。(C)錯：她沒有推薦講者。(D)錯：出貨延誤是工作坊主題，不是她要申訴的問題。"
    },
    {
     "q": "According to the program, what will NOT take place on Friday afternoon?",
@@ -4660,8 +4665,8 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "昆塔納供應公司\n門市經理會議 — 議程\n十月十七日（星期五）| 費爾蓮會議中心 B 室\n\n上午 9:00-9:30   咖啡與報到（大廳）\n上午 9:30-10:15   開場致詞 — 營運副總 泰瑞莎・莫利納\n上午 10:30-11:45   工作坊 A：減少出貨延誤 — 努爾・巴克希\n中午 12:00-下午 1:00   午餐（花園廳）\n下午 1:15-2:30   工作坊 B：季節性人員的訓練 — 漢娜・伊藤\n下午 2:45-4:00   門市經理分組討論\n下午 4:15   總結與服務獎頒發\n\n請注意：\n- 兩場工作坊將於星期六上午再辦一次，供星期五無法出席的經理參加。\n- 東側停車場免費停車，請於閘門出示員工識別證。\n- 講義將於會議結束一週後上傳公司網站，現場不提供紙本。\n- 需要素食餐點者，請於十月十日前告知服務台。",
-   "收件者：events@quintanasupply.com\n寄件者：m.feld@quintanasupply.com\n日期：十月十三日\n主旨：關於星期五議程的幾個問題\n\n您好：\n\n我負責布里奇波特門市，預計出席本週五的會議。在確認行程之前，有三個問題想請教。\n\n第一，我星期五上午必須拜訪一家供應商，中午才能抵達會場。我還來得及聽出貨延誤那一場嗎？還是改到隔天早上出席比較好？\n\n第二，我門市有兩位銷售同仁想參加下午的分組討論。他們並不是經理，所以在請他們跑這一趟之前，我想先確認他們是否也能參加。\n\n第三，我這次開的是公司廂型車，不是自用車。這種車型在閘門出示識別證即可通行嗎？還是需要另外申請通行證？\n\n最後補充一點：我不吃肉，也知道自己是在議程所訂日期之後才來信。若已來不及更改餐點，我自備午餐也沒問題。\n\n謝謝您。\n\n瑪塔・費爾德\n布里奇波特門市經理"
+   "昆塔納供應公司\n門市經理會議：議程\n十月十七日（星期五）| 費爾蓮會議中心 B 室\n\n上午 9:00-9:30   咖啡與報到（大廳）\n上午 9:30-10:15   開場致詞，營運副總 泰瑞莎・莫利納\n上午 10:30-11:45   工作坊 A：減少出貨延誤，努爾・巴克希\n中午 12:00-下午 1:00   午餐（花園廳）\n下午 1:15-2:30   工作坊 B：季節性人員的訓練，漢娜・伊藤\n下午 2:45-4:00   門市經理分組討論\n下午 4:15   總結與服務獎頒發\n\n請注意：\n- 兩場工作坊將於星期六上午再辦一次，供星期五無法出席的經理參加。\n- 東側停車場免費停車，請於閘門出示員工識別證。\n- 講義將於會議結束一週後上傳公司網站，現場不提供紙本。\n- 需要素食餐點者，請於十月十日前告知服務台。",
+   "收件者：events@example.com\n寄件者：m.feld@example.com\n日期：十月十三日\n主旨：關於星期五議程的幾個問題\n\n您好：\n\n我負責布里奇波特門市，預計出席本週五的會議。在確認行程之前，有三個問題想請教。\n\n第一，我星期五上午必須拜訪一家供應商，中午才能抵達會場。我還來得及聽出貨延誤那一場嗎？還是改到隔天早上出席比較好？\n\n第二，我門市有兩位銷售同仁想參加下午的分組討論。他們並不是經理，所以在請他們跑這一趟之前，我想先確認他們是否也能參加。\n\n第三，我這次開的是公司廂型車，不是自用車。這種車型在閘門出示識別證即可通行嗎？還是需要另外申請通行證？\n\n最後補充一點：我不吃肉，也知道自己是在議程所訂日期之後才來信。若已來不及更改餐點，我自備午餐也沒問題。\n\n謝謝您。\n\n瑪塔・費爾德\n布里奇波特門市經理"
   ]
  },
  {
@@ -4742,7 +4747,7 @@ TOEIC.part7 = [
      },
      {
       "t": "sub",
-      "text": "Phone (253) 555-0147 | orders@greenfieldsupply.com"
+      "text": "Phone (253) 555-0147 | orders@example.com"
      },
      {
       "t": "kv",
@@ -4913,7 +4918,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "GREENFIELD 辦公用品\nHarbor 路 118 號，Tacoma, WA 98402\n電話 (253) 555-0147｜orders@greenfieldsupply.com\n\n發票號碼：GF-40219\n開立日期：5 月 8 日\n訂購日期：5 月 2 日\n採購單號：PO-7734\n\n帳單寄送：\nNadia Ferreira，辦公室協調專員\nHalloran 設計集團\nWicker 街 620 號 300 室\nTacoma, WA 98405\n\n品號　　說明　　　　　　　　　數量　　單價　　　金額\nA-220　辦公椅，灰色布面　　　　6　　$148.00　$888.00\nB-115　三層檔案櫃　　　　　　　2　　$210.00　$420.00\nC-303　白板，120 公分　　　　　4　　 $62.00　$248.00\nD-009　麥克筆組，八色　　　　 10　　　$9.50　 $95.00\n\n　　　　小計　　　　　　　$1,651.00\n　　　　數量折扣（5%）　　 -$82.55\n　　　　運費　　　　　　　　　$0.00\n　　　　應付總額　　　　　$1,568.45\n\n備註\n單筆訂購滿二十件（含）以上，享 5% 數量折扣。訂單小計超過 $1,500 者免運費。貨款請於發票開立日起 30 天內支付。\n\n白板於 5 月 2 日缺貨，已於 5 月 7 日自本公司西雅圖倉庫寄出，預計 5 月 12 日前送達。本發票其餘品項均已於 5 月 5 日送達。\n\n商品如有損壞或不需要，可於送達後 14 天內退回。寄回前請先致電本公司服務台索取退貨編號。未附退貨編號的商品恕無法辦理退款。"
+   "GREENFIELD 辦公用品\nHarbor 路 118 號，Tacoma, WA 98402\n電話 (253) 555-0147｜orders@example.com\n\n發票號碼：GF-40219\n開立日期：5 月 8 日\n訂購日期：5 月 2 日\n採購單號：PO-7734\n\n帳單寄送：\nNadia Ferreira，辦公室協調專員\nHalloran 設計集團\nWicker 街 620 號 300 室\nTacoma, WA 98405\n\n品號　　說明　　　　　　　　　數量　　單價　　　金額\nA-220　辦公椅，灰色布面　　　　6　　$148.00　$888.00\nB-115　三層檔案櫃　　　　　　　2　　$210.00　$420.00\nC-303　白板，120 公分　　　　　4　　 $62.00　$248.00\nD-009　麥克筆組，八色　　　　 10　　　$9.50　 $95.00\n\n　　　　小計　　　　　　　$1,651.00\n　　　　數量折扣（5%）　　 -$82.55\n　　　　運費　　　　　　　　　$0.00\n　　　　應付總額　　　　　$1,568.45\n\n備註\n單筆訂購滿二十件（含）以上，享 5% 數量折扣。訂單小計超過 $1,500 者免運費。貨款請於發票開立日起 30 天內支付。\n\n白板於 5 月 2 日缺貨，已於 5 月 7 日自本公司西雅圖倉庫寄出，預計 5 月 12 日前送達。本發票其餘品項均已於 5 月 5 日送達。\n\n商品如有損壞或不需要，可於送達後 14 天內退回。寄回前請先致電本公司服務台索取退貨編號。未附退貨編號的商品恕無法辦理退款。"
   ]
  },
  {
@@ -5039,12 +5044,12 @@ TOEIC.part7 = [
    {
     "type": "advertisement",
     "label": "Advertisement",
-    "content": "BRIGHTPATH LOGISTICS\nNow hiring: Warehouse Operations Coordinator\n\nBrightpath Logistics moves goods for more than four hundred retail clients across the Pacific Northwest. We are filling this position at three of our sites: Eugene, Bend, and Medford. The Bend site runs a night shift only; the other two sites operate during the day.\n\nDuties\n- Plan the daily shipping schedule and assign drivers\n- Keep records of every delivery, return, and damaged item\n- Prepare a monthly report for the site manager\n- Train seasonal staff during the busy autumn season\n\nRequirements\n- At least four years of experience in a warehouse or a shipping company\n- Experience with inventory software\n- A valid license to drive a forklift\n- Willingness to work an occasional Saturday\n\nTo apply, send a resume and a cover letter to careers@brightpathlog.com by June 30. In your letter, please tell us which site you prefer and when you could start. Applicants invited to an interview will also be asked to complete a short practical test at the site. We do not accept applications by mail."
+    "content": "BRIGHTPATH LOGISTICS\nNow hiring: Warehouse Operations Coordinator\n\nBrightpath Logistics moves goods for more than four hundred retail clients across the Pacific Northwest. We are filling this position at three of our sites: Eugene, Bend, and Medford. The Bend site runs a night shift only; the other two sites operate during the day.\n\nDuties\n- Plan the daily shipping schedule and assign drivers\n- Keep records of every delivery, return, and damaged item\n- Prepare a monthly report for the site manager\n- Train seasonal staff during the busy autumn season\n\nRequirements\n- At least four years of experience in a warehouse or a shipping company\n- Experience with inventory software\n- A valid license to drive a forklift\n- Willingness to work an occasional Saturday\n\nTo apply, send a resume and a cover letter to careers@example.com by June 30. In your letter, please tell us which site you prefer and when you could start. Applicants invited to an interview will also be asked to complete a short practical test at the site. We do not accept applications by mail."
    },
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: careers@brightpathlog.com\nFrom: d.okafor@mailbridge.net\nDate: June 19\nSubject: Warehouse Operations Coordinator\n\nDear Hiring Manager,\n\nI saw your advertisement in last week's Willamette Business Weekly and would like to apply for the coordinator position.\n\nFor the past five years I have worked at Correa Distribution in Salem, where I plan routes for twelve drivers and handle all of the paperwork for returns. Last year I moved our records from paper files into Stockline, an inventory program, and I then trained six seasonal workers to use it in under three weeks.\n\nI would prefer your Bend site, as my family is moving to that area in August. I understand that the hours there are not the usual office hours, and that suits me well. Working an occasional Saturday is no problem either.\n\nI should mention one thing. My forklift test is scheduled for July 8. I have finished the training course and my instructor expects no difficulty. I could start work on August 3.\n\nMy resume is attached. Thank you for your time.\n\nSincerely,\nDaniel Okafor"
+    "content": "To: careers@example.com\nFrom: d.okafor@example.org\nDate: June 19\nSubject: Warehouse Operations Coordinator\n\nDear Hiring Manager,\n\nI saw your advertisement in last week's Willamette Business Weekly and would like to apply for the coordinator position.\n\nFor the past five years I have worked at Correa Distribution in Salem, where I plan routes for twelve drivers and handle all of the paperwork for returns. Last year I moved our records from paper files into Stockline, an inventory program, and I then trained six seasonal workers to use it in under three weeks.\n\nI would prefer your Bend site, as my family is moving to that area in August. I understand that the hours there are not the usual office hours, and that suits me well. Working an occasional Saturday is no problem either.\n\nI should mention one thing. My forklift test is scheduled for July 8. I have finished the training course and my instructor expects no difficulty. I could start work on August 3.\n\nMy resume is attached. Thank you for your time.\n\nSincerely,\nDaniel Okafor"
    }
   ],
   "questions": [
@@ -5105,8 +5110,8 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "BRIGHTPATH 物流\n誠徵：倉儲營運協調專員\n\nBrightpath 物流為太平洋西北地區四百多家零售客戶運送貨物。本次於三個據點徵才：Eugene、Bend 與 Medford。Bend 據點只有夜班，另外兩個據點為日間營運。\n\n工作內容\n－ 規劃每日出貨排程並派任司機\n－ 建檔管理每一筆送貨、退貨與破損品紀錄\n－ 每月為據點主管製作報表\n－ 秋季旺季期間訓練季節性人員\n\n應徵條件\n－ 具倉儲或運輸公司四年以上經驗\n－ 具庫存管理軟體使用經驗\n－ 持有有效的堆高機駕駛執照\n－ 願意偶爾於週六上班\n\n有意應徵者請於 6 月 30 日前將履歷與求職信寄至 careers@brightpathlog.com。請在信中告知您偏好的據點與可到職時間。獲邀面試者另需在該據點完成一項簡短的實作測驗。本公司不受理紙本郵寄的應徵資料。",
-   "收件者：careers@brightpathlog.com\n寄件者：d.okafor@mailbridge.net\n日期：6 月 19 日\n主旨：倉儲營運協調專員\n\n敬啟者：\n\n我在上週的《Willamette 商業週刊》上看到貴公司的徵才廣告，希望應徵協調專員一職。\n\n過去五年我任職於 Salem 的 Correa 配送公司，負責為十二位司機規劃路線，並處理所有退貨文件。去年我把公司的紙本紀錄全面轉入庫存管理軟體 Stockline，並在三週內訓練六名季節性人員上手使用。\n\n我偏好貴公司的 Bend 據點，因為我的家人八月要搬到那一帶。我已得知該據點的工時並非一般辦公時間，這對我來說反而合適。偶爾週六上班也沒有問題。\n\n有一件事需要說明：我的堆高機考照日期排在 7 月 8 日。訓練課程我已修畢，教練認為應該不會有問題。我最快可於 8 月 3 日到職。\n\n履歷如附件，感謝您撥冗閱讀。\n\n此致\nDaniel Okafor 敬上"
+   "BRIGHTPATH 物流\n誠徵：倉儲營運協調專員\n\nBrightpath 物流為太平洋西北地區四百多家零售客戶運送貨物。本次於三個據點徵才：Eugene、Bend 與 Medford。Bend 據點只有夜班，另外兩個據點為日間營運。\n\n工作內容\n．規劃每日出貨排程並派任司機\n．建檔管理每一筆送貨、退貨與破損品紀錄\n．每月為據點主管製作報表\n．秋季旺季期間訓練季節性人員\n\n應徵條件\n．具倉儲或運輸公司四年以上經驗\n．具庫存管理軟體使用經驗\n．持有有效的堆高機駕駛執照\n．願意偶爾於週六上班\n\n有意應徵者請於 6 月 30 日前將履歷與求職信寄至 careers@example.com。請在信中告知您偏好的據點與可到職時間。獲邀面試者另需在該據點完成一項簡短的實作測驗。本公司不受理紙本郵寄的應徵資料。",
+   "收件者：careers@example.com\n寄件者：d.okafor@example.org\n日期：6 月 19 日\n主旨：倉儲營運協調專員\n\n敬啟者：\n\n我在上週的《Willamette 商業週刊》上看到貴公司的徵才廣告，希望應徵協調專員一職。\n\n過去五年我任職於 Salem 的 Correa 配送公司，負責為十二位司機規劃路線，並處理所有退貨文件。去年我把公司的紙本紀錄全面轉入庫存管理軟體 Stockline，並在三週內訓練六名季節性人員上手使用。\n\n我偏好貴公司的 Bend 據點，因為我的家人八月要搬到那一帶。我已得知該據點的工時並非一般辦公時間，這對我來說反而合適。偶爾週六上班也沒有問題。\n\n有一件事需要說明：我的堆高機考照日期排在 7 月 8 日。訓練課程我已修畢，教練認為應該不會有問題。我最快可於 8 月 3 日到職。\n\n履歷如附件，感謝您撥冗閱讀。\n\n此致\nDaniel Okafor 敬上"
   ]
  },
  {
@@ -5116,7 +5121,7 @@ TOEIC.part7 = [
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: s.doyle@brightmail.net\nFrom: v.ortega@maplestreetcycles.com\nDate: March 12\nSubject: Repair order #4417\n\nDear Ms. Doyle,\n\nThank you for bringing your touring bicycle to Maple Street Cycles last Thursday. Our technician has finished checking it, and I would like to explain what he found before we do any work.\n\nThe rear wheel is bent and cannot be repaired safely. A new wheel costs $118, plus $30 for labor. The brake cables are also worn and should be changed at the same time, which adds $24. Your bicycle is still under our two-year warranty, but the warranty applies only to the frame, so these parts are not included.\n\nWe have the brake cables in stock, but the wheel must be ordered from our supplier in Portland. It usually arrives within four business days. If you approve the full estimate today, we expect to have the bicycle ready by Wednesday, March 18.\n\nPlease note that our shop will be closed on Monday, March 16, while the floor is being replaced. Phone messages left that day will be returned on Tuesday morning.\n\nYou can approve the estimate by replying to this message or by calling me at 555-0164. If you would rather not replace the wheel, we will return the bicycle at no charge, since the inspection itself is free.\n\nSincerely,\n\nVictor Ortega\nService Manager, Maple Street Cycles"
+    "content": "To: s.doyle@example.com\nFrom: v.ortega@example.org\nDate: March 12\nSubject: Repair order #4417\n\nDear Ms. Doyle,\n\nThank you for bringing your touring bicycle to Maple Street Cycles last Thursday. Our technician has finished checking it, and I would like to explain what he found before we do any work.\n\nThe rear wheel is bent and cannot be repaired safely. A new wheel costs $118, plus $30 for labor. The brake cables are also worn and should be changed at the same time, which adds $24. Your bicycle is still under our two-year warranty, but the warranty applies only to the frame, so these parts are not included.\n\nWe have the brake cables in stock, but the wheel must be ordered from our supplier in Portland. It usually arrives within four business days. If you approve the full estimate today, we expect to have the bicycle ready by Wednesday, March 18.\n\nPlease note that our shop will be closed on Monday, March 16, while the floor is being replaced. Phone messages left that day will be returned on Tuesday morning.\n\nYou can approve the estimate by replying to this message or by calling me at 555-0164. If you would rather not replace the wheel, we will return the bicycle at no charge, since the inspection itself is free.\n\nSincerely,\n\nVictor Ortega\nService Manager, Maple Street Cycles"
    }
   ],
   "questions": [
@@ -5166,7 +5171,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "收件者：s.doyle@brightmail.net\n寄件者：v.ortega@maplestreetcycles.com\n日期：3 月 12 日\n主旨：維修單 #4417\n\n親愛的 Doyle 女士：\n\n感謝您上週四把您的旅行車送到 Maple Street 自行車行。我們的技師已經檢查完畢，在動工之前，我想先向您說明他發現的狀況。\n\n後輪已經變形，無法安全修復。新輪組要價 118 美元，另加 30 美元工資。煞車線也已磨損，建議一併更換，費用再加 24 美元。您的自行車仍在我們的兩年保固期內，但保固僅適用於車架，因此上述零件不包含在內。\n\n煞車線我們有現貨，輪組則必須向波特蘭的供應商訂購，通常四個工作天內會到。若您今天同意這份完整估價，我們預計可在 3 月 18 日（星期三）前把車修好。\n\n另外要提醒您，本店 3 月 16 日（星期一）因更換地板而暫停營業。當天的電話留言，我們會在星期二上午回覆。\n\n您可以直接回覆這封信，或撥 555-0164 給我，以確認這份估價。若您不打算更換輪組，我們會免費把車還給您，因為檢查本身不收費。\n\n順頌時祺\n\nVictor Ortega\nMaple Street 自行車行 服務部經理"
+   "收件者：s.doyle@example.com\n寄件者：v.ortega@example.org\n日期：3 月 12 日\n主旨：維修單 #4417\n\n親愛的 Doyle 女士：\n\n感謝您上週四把您的旅行車送到 Maple Street 自行車行。我們的技師已經檢查完畢，在動工之前，我想先向您說明他發現的狀況。\n\n後輪已經變形，無法安全修復。新輪組要價 118 美元，另加 30 美元工資。煞車線也已磨損，建議一併更換，費用再加 24 美元。您的自行車仍在我們的兩年保固期內，但保固僅適用於車架，因此上述零件不包含在內。\n\n煞車線我們有現貨，輪組則必須向波特蘭的供應商訂購，通常四個工作天內會到。若您今天同意這份完整估價，我們預計可在 3 月 18 日（星期三）前把車修好。\n\n另外要提醒您，本店 3 月 16 日（星期一）因更換地板而暫停營業。當天的電話留言，我們會在星期二上午回覆。\n\n您可以直接回覆這封信，或撥 555-0164 給我，以確認這份估價。若您不打算更換輪組，我們會免費把車還給您，因為檢查本身不收費。\n\n順頌時祺\n\nVictor Ortega\nMaple Street 自行車行 服務部經理"
   ]
  },
  {
@@ -5287,7 +5292,7 @@ TOEIC.part7 = [
    {
     "type": "advertisement",
     "label": "Advertisement",
-    "content": "RIDGEWAY MUSIC STUDIO\nSpring term registration is now open\n\nFor eleven years, families in the Ridgeway area have trusted us with their children's first music lessons. Every teacher at our studio holds a degree in music and has taught for at least five years.\n\nWHAT WE OFFER\n- Private lessons in piano, guitar, violin, and drums, 30 or 45 minutes, once a week\n- Small group classes for children ages four to six (six students at most)\n- An evening singing class for adults, Thursdays at 7:00 P.M.\n- Free practice rooms for our students, open until 9:00 P.M. every day\n\nSpring term runs from April 6 to June 26. Private lessons cost $32 for 30 minutes and $45 for 45 minutes. A group class costs $210 for the whole term.\n\nSPECIAL OFFER\nRegister before March 20 and pay no registration fee, which is normally $40. Families who sign up two or more students receive 10 percent off every lesson for the entire term. This discount cannot be used together with any other offer.\n\nNot sure where to begin? Visit our open house on Saturday, March 14, from 10:00 A.M. to 2:00 P.M. Teachers will be there to answer your questions, and visitors may try any instrument in the building. No appointment is necessary, but seats for the 11:00 A.M. student concert must be reserved by telephone.\n\nRidgeway Music Studio | 42 Chapel Road | 555-0198 | www.ridgewaymusic.com"
+    "content": "RIDGEWAY MUSIC STUDIO\nSpring term registration is now open\n\nFor eleven years, families in the Ridgeway area have trusted us with their children's first music lessons. Every teacher at our studio holds a degree in music and has taught for at least five years.\n\nWHAT WE OFFER\n- Private lessons in piano, guitar, violin, and drums, 30 or 45 minutes, once a week\n- Small group classes for children ages four to six (six students at most)\n- An evening singing class for adults, Thursdays at 7:00 P.M.\n- Free practice rooms for our students, open until 9:00 P.M. every day\n\nSpring term runs from April 6 to June 26. Private lessons cost $32 for 30 minutes and $45 for 45 minutes. A group class costs $210 for the whole term.\n\nSPECIAL OFFER\nRegister before March 20 and pay no registration fee, which is normally $40. Families who sign up two or more students receive 10 percent off every lesson for the entire term. This discount cannot be used together with any other offer.\n\nNot sure where to begin? Visit our open house on Saturday, March 14, from 10:00 A.M. to 2:00 P.M. Teachers will be there to answer your questions, and visitors may try any instrument in the building. No appointment is necessary, but seats for the 11:00 A.M. student concert must be reserved by telephone.\n\nRidgeway Music Studio | 42 Chapel Road | 555-0198 | www.example.com"
    }
   ],
   "questions": [
@@ -5337,7 +5342,7 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "RIDGEWAY 音樂教室\n春季班報名開始\n\n十一年來，Ridgeway 地區的家庭都把孩子的第一堂音樂課交給我們。本教室每位老師都具備音樂相關學位，且教學資歷至少五年。\n\n我們提供的課程\n－鋼琴、吉他、小提琴、爵士鼓個別課，每次 30 或 45 分鐘，每週一堂\n－四到六歲兒童小班課（每班最多六人）\n－成人晚間歌唱班，每週四晚上 7:00\n－本教室學生可免費使用練習室，每天開放至晚上 9:00\n\n春季班自 4 月 6 日起至 6 月 26 日止。個別課 30 分鐘 32 美元，45 分鐘 45 美元；小班課整期 210 美元。\n\n優惠方案\n3 月 20 日前報名，免收原價 40 美元的報名費。同一家庭報名兩人（含）以上，整期每堂課皆享九折。本優惠不得與其他優惠合併使用。\n\n不知道從哪裡開始嗎？歡迎參加 3 月 14 日（星期六）上午 10:00 至下午 2:00 的開放參觀日。當天老師都在場，可以回答您的問題，來賓也可以試奏館內任何一項樂器。參觀不需預約，但上午 11:00 學生音樂會的座位必須先來電預約。\n\nRidgeway 音樂教室｜Chapel 路 42 號｜555-0198｜www.ridgewaymusic.com"
+   "RIDGEWAY 音樂教室\n春季班報名開始\n\n十一年來，Ridgeway 地區的家庭都把孩子的第一堂音樂課交給我們。本教室每位老師都具備音樂相關學位，且教學資歷至少五年。\n\n我們提供的課程\n．鋼琴、吉他、小提琴、爵士鼓個別課，每次 30 或 45 分鐘，每週一堂\n．四到六歲兒童小班課（每班最多六人）\n．成人晚間歌唱班，每週四晚上 7:00\n．本教室學生可免費使用練習室，每天開放至晚上 9:00\n\n春季班自 4 月 6 日起至 6 月 26 日止。個別課 30 分鐘 32 美元，45 分鐘 45 美元；小班課整期 210 美元。\n\n優惠方案\n3 月 20 日前報名，免收原價 40 美元的報名費。同一家庭報名兩人（含）以上，整期每堂課皆享九折。本優惠不得與其他優惠合併使用。\n\n不知道從哪裡開始嗎？歡迎參加 3 月 14 日（星期六）上午 10:00 至下午 2:00 的開放參觀日。當天老師都在場，可以回答您的問題，來賓也可以試奏館內任何一項樂器。參觀不需預約，但上午 11:00 學生音樂會的座位必須先來電預約。\n\nRidgeway 音樂教室｜Chapel 路 42 號｜555-0198｜www.example.com"
   ]
  },
  {
@@ -5398,24 +5403,24 @@ TOEIC.part7 = [
      },
      {
       "t": "note",
-      "text": "Harborview Deli | 15 Cobb Street | 555-0142 | orders@harborviewdeli.com"
+      "text": "Harborview Deli | 15 Cobb Street | 555-0142 | orders@example.com"
      }
     ]
    },
    {
     "type": "email",
     "label": "E-mail",
-    "content": "To: orders@harborviewdeli.com\nFrom: r.vidal@brookfieldanimalclinic.com\nDate: October 2\nSubject: Lunch for October 9\n\nHello,\n\nMy name is Rafael Vidal, and I am the office manager at Brookfield Animal Clinic on Grant Street. On Thursday, October 9, we are holding a training day for our own staff and for six visiting nurses. I would like to order lunch for twenty-two people.\n\nWe would prefer your hot package. The training runs until five o'clock, and I am afraid a light meal would not be enough. Two of the nurses cannot eat milk products, so those two meals should be prepared separately. Everyone else will have the regular menu.\n\nOur clinic is about twelve kilometers from your shop, so I understand that there may be an added charge for bringing the food to us. Please include it in the price you send me.\n\nWe do not need anyone to serve the meal, as our own staff will do that. We do need the food to arrive no later than 11:45 A.M., because the afternoon sessions begin at 12:30.\n\nCould you send me a written estimate by Monday? If the total is higher than our budget allows, we may choose the sandwich package instead.\n\nThank you,\n\nRafael Vidal\nOffice Manager, Brookfield Animal Clinic"
+    "content": "To: orders@example.com\nFrom: r.vidal@example.org\nDate: October 2\nSubject: Lunch for October 9\n\nHello,\n\nMy name is Rafael Vidal, and I am the office manager at Brookfield Animal Clinic on Grant Street. On Thursday, October 9, we are holding a training day for our own staff and for six visiting nurses. I would like to order lunch for twenty-two people.\n\nWe would prefer your hot package. The training runs until five o'clock, and I am afraid a light meal would not be enough. Two of the nurses cannot eat milk products, so those two meals should be prepared separately. Everyone else will have the regular menu.\n\nOur clinic is about twelve kilometers from your shop, so I understand that there may be an added charge for bringing the food to us. Please include it in the price you send me.\n\nWe do not need anyone to serve the meal, as our own staff will do that. We do need the food to arrive no later than 11:45 A.M., because the afternoon sessions begin at 12:30.\n\nCould you send me a written estimate by Monday? If the total is higher than our budget allows, we may choose the sandwich package instead.\n\nThank you,\n\nRafael Vidal\nOffice Manager, Brookfield Animal Clinic"
    }
   ],
   "questions": [
    {
     "q": "According to the menu, what is NOT included in the price of a package?",
     "options": [
-     "Cups",
-     "Plates",
-     "Napkins",
-     "Workers to serve the food"
+     "Cups for the guests",
+     "Plates for each meal",
+     "Napkins for every guest",
+     "Staff to serve the food"
     ],
     "answer": 3,
     "explanation": "NOT 題定位菜單 PLEASE NOTE 第三點：Plates, cups, and napkins are included at no extra cost. Servers cost $22 an hour.，前半句直接刪掉 (A)(B)(C)，後半句說服務人員另計時薪，故選 (D)。"
@@ -5457,7 +5462,7 @@ TOEIC.part7 = [
     "q": "What will the deli most likely do for two of the guests?",
     "options": [
      "Give them a free dessert",
-     "Charge two dollars more for each of their meals",
+     "Charge two dollars more per meal",
      "Deliver their food after 12:30",
      "Serve them Package B instead"
     ],
@@ -5466,8 +5471,8 @@ TOEIC.part7 = [
    }
   ],
   "translation": [
-   "HARBORVIEW 熟食店－外燴菜單\n適用十人以上團體\n\nA 餐－早餐桌　每人 9 美元\n新鮮水果、三種麵包、奶油與果醬、咖啡與茶\n\nB 餐－三明治午餐　每人 14 美元\n四種三明治、生菜沙拉、洋芋片、瓶裝水\n\nC 餐－熱食午餐　每人 19 美元\n烤雞或烤魚、白飯、兩道蔬菜、麵包、冰紅茶\n\nD 餐－晚餐桌　每人 26 美元\n湯品、烤牛肉或炙烤蔬菜、馬鈴薯、沙拉、每日甜點\n\n注意事項\n－訂餐請至少提前四個工作天。\n－本店八公里範圍內免運費；超出部分每公里加收 1.5 美元。\n－盤子、杯子與餐巾紙皆已含在價格內，不另收費；服務人員則以每小時 22 美元計費。\n－訂餐時請告知食物過敏情形。我們可另行準備不含堅果或乳製品的餐點，每人加收 2 美元。\n－C 餐與 D 餐週日不供應，本店廚房週日中午即打烊。\n\nHarborview 熟食店｜Cobb 街 15 號｜555-0142｜orders@harborviewdeli.com",
-   "收件者：orders@harborviewdeli.com\n寄件者：r.vidal@brookfieldanimalclinic.com\n日期：10 月 2 日\n主旨：10 月 9 日的午餐\n\n您好：\n\n我是 Rafael Vidal，Grant 街上 Brookfield 動物診所的行政經理。10 月 9 日（星期四）我們要為自家員工與六位來訪的護理師舉辦教育訓練，想訂 22 人份的午餐。\n\n我們想選你們的熱食餐。訓練會進行到五點，我擔心太輕的餐點不夠吃。其中兩位護理師不能吃乳製品，這兩份餐請另外處理，其他人吃一般菜色即可。\n\n我們診所距離貴店大約十二公里，所以我知道送餐可能要另外加費用，請把這筆費用一併列進報價裡。\n\n我們不需要人員在現場服務，這部分由我們自己的同仁負責。但餐點務必在上午 11:45 前送達，因為下午的課程 12:30 就開始。\n\n可以請您在星期一前寄一份書面估價給我嗎？如果總金額超出我們的預算，我們可能會改選三明治餐。\n\n謝謝您。\n\nRafael Vidal\nBrookfield 動物診所 行政經理"
+   "HARBORVIEW 熟食店：外燴菜單\n適用十人以上團體\n\nA 餐：早餐桌　每人 9 美元\n新鮮水果、三種麵包、奶油與果醬、咖啡與茶\n\nB 餐：三明治午餐　每人 14 美元\n四種三明治、生菜沙拉、洋芋片、瓶裝水\n\nC 餐：熱食午餐　每人 19 美元\n烤雞或烤魚、白飯、兩道蔬菜、麵包、冰紅茶\n\nD 餐：晚餐桌　每人 26 美元\n湯品、烤牛肉或炙烤蔬菜、馬鈴薯、沙拉、每日甜點\n\n注意事項\n．訂餐請至少提前四個工作天。\n．本店八公里範圍內免運費；超出部分每公里加收 1.5 美元。\n．盤子、杯子與餐巾紙皆已含在價格內，不另收費；服務人員則以每小時 22 美元計費。\n．訂餐時請告知食物過敏情形。我們可另行準備不含堅果或乳製品的餐點，每人加收 2 美元。\n．C 餐與 D 餐週日不供應，本店廚房週日中午即打烊。\n\nHarborview 熟食店｜Cobb 街 15 號｜555-0142｜orders@example.com",
+   "收件者：orders@example.com\n寄件者：r.vidal@example.org\n日期：10 月 2 日\n主旨：10 月 9 日的午餐\n\n您好：\n\n我是 Rafael Vidal，Grant 街上 Brookfield 動物診所的行政經理。10 月 9 日（星期四）我們要為自家員工與六位來訪的護理師舉辦教育訓練，想訂 22 人份的午餐。\n\n我們想選你們的熱食餐。訓練會進行到五點，我擔心太輕的餐點不夠吃。其中兩位護理師不能吃乳製品，這兩份餐請另外處理，其他人吃一般菜色即可。\n\n我們診所距離貴店大約十二公里，所以我知道送餐可能要另外加費用，請把這筆費用一併列進報價裡。\n\n我們不需要人員在現場服務，這部分由我們自己的同仁負責。但餐點務必在上午 11:45 前送達，因為下午的課程 12:30 就開始。\n\n可以請您在星期一前寄一份書面估價給我嗎？如果總金額超出我們的預算，我們可能會改選三明治餐。\n\n謝謝您。\n\nRafael Vidal\nBrookfield 動物診所 行政經理"
   ]
  }
 ];

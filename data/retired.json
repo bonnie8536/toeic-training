@@ -1,152 +1,166 @@
 {
- "說明": "已淘汰的多益題（Part 1-7）。題目從 data/raw 的批次檔整筆移走後在這裡記一筆；網站不讀這個檔，tools/merge_data.py 檢查淘汰的 id 不在題庫、替代題在題庫。id 永遠不再使用。欄位：id（單題 id 或整組的題組 id）、part（\"1\"-\"7\"）、date（YYYY-MM-DD）、reason（缺陷代碼加一句原因）、replacedBy（替代題 id，沒有就 null）。",
+ "說明": "已淘汰的多益題（Part 1-7）。題目從 data/raw 的批次檔整筆移走後在這裡記一筆；網站不讀這個檔，tools/merge_data.py 檢查淘汰的 id 不在題庫、替代題在題庫。id 永遠不再使用。欄位：id（單題 id 或整組的題組 id）、part（\"1\"-\"7\"）、date（YYYY-MM-DD）、reason（給一般讀者看的一句原因）、replacedBy（替代題 id，沒有就 null）。",
  "retired": [
   {
    "id": "l1-02",
    "part": "1",
    "date": "2026-11-19",
-   "reason": "multi_key：女服務生左手按在桌面的布巾上，選項 D「桌子正被擦拭」也說得通；照片不能就地更換。",
+   "reason": "照片裡的動作讓另一個選項也說得通。",
    "replacedBy": null
   },
   {
    "id": "l2-02",
    "part": "2",
    "date": "2026-11-19",
-   "reason": "multi_key：選項 C 先答 Yes 再補充對方是新客戶，也能接上問句。",
+   "reason": "有兩個回答都能接上問句。",
    "replacedBy": null
   },
   {
    "id": "l2-04",
    "part": "2",
    "date": "2026-11-19",
-   "reason": "multi_key：選項 B「火車又誤點了」可當成選擇開車的理由，與正解同樣成立。",
+   "reason": "有兩個回答都能接上問句。",
    "replacedBy": null
   },
   {
    "id": "l2-15",
    "part": "2",
    "date": "2026-11-19",
-   "reason": "multi_key：選項 A 可視為確認她今天要報告並補充內容，與正解同樣能接話。",
+   "reason": "有兩個回答都能接上問句。",
    "replacedBy": null
   },
   {
    "id": "l2-30",
    "part": "2",
    "date": "2026-11-19",
-   "reason": "multi_key：coffee or tea 也能讀成一般問句，語音語調無法保證，選項 A 也成立。",
+   "reason": "問句的語調可以有兩種理解，兩個回答都說得通。",
    "replacedBy": null
   },
   {
    "id": "l2-41",
    "part": "2",
    "date": "2026-11-19",
-   "reason": "multi_key：選項 A 的 it 可指紙，「架上還有」也能接上問句。",
+   "reason": "有兩個回答都能接上問句。",
    "replacedBy": null
   },
   {
    "id": "l2-74",
    "part": "2",
    "date": "2026-11-19",
-   "reason": "multi_key：選項 A 先答 Yes 再說上個月錄取三人，可理解為因此已更新。",
+   "reason": "有兩個回答都能接上問句。",
    "replacedBy": null
   },
   {
    "id": "l2-91",
    "part": "2",
    "date": "2026-11-19",
-   "reason": "multi_key：選項 B 先答 Yes 再說大部分都讀過了，可理解為已經丟掉。",
+   "reason": "有兩個回答都能接上問句。",
    "replacedBy": null
   },
   {
    "id": "l2-100",
    "part": "2",
    "date": "2026-11-19",
-   "reason": "multi_key：選項 B「好，我馬上回來」在店內可理解為去後面拿貨，與正解同樣成立。",
+   "reason": "有兩個回答都能接上問句。",
    "replacedBy": null
   },
   {
    "id": "p5-b2-17",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "multi_key：介系詞片語中的受格代名詞也可與主詞同指，第二個選項無法明確排除。",
+   "reason": "有兩個選項都說得通。",
    "replacedBy": "p5-b13-01"
   },
   {
    "id": "p5-b4-04",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "unnatural：題幹時態組合不自然，詳解的時態理由也不成立。",
+   "reason": "題目句子的時態不自然，詳解的說明也不正確。",
    "replacedBy": "p5-b13-02"
   },
   {
    "id": "p5-b4-14",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "multi_key：英式英語的另一個片語動詞也有繳交的意思，第二個選項無法明確排除。",
+   "reason": "有兩個選項都說得通。",
    "replacedBy": "p5-b13-03"
   },
   {
    "id": "p5-b5-17",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "multi_key：表示延期的選項在題幹中同樣成立。",
+   "reason": "有兩個選項都說得通。",
    "replacedBy": "p5-b13-04"
   },
   {
    "id": "p5-b5-18",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "multi_key：表示包含的選項在保固條款中同樣成立。",
+   "reason": "有兩個選項都說得通。",
    "replacedBy": "p5-b13-05"
   },
   {
    "id": "p5-b5-22",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "multi_key：表示合併的選項在共用預算的語境中同樣成立。",
+   "reason": "有兩個選項都說得通。",
    "replacedBy": "p5-b13-06"
   },
   {
    "id": "p5-b6-17",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "multi_key：三個個別對象之間的分配也可用 between，第二個選項無法明確排除。",
+   "reason": "有兩個選項都說得通。",
    "replacedBy": "p5-b13-07"
   },
   {
    "id": "p5-b7-10",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "multi_key：表示伴隨動作的分詞在題幹中同樣成立。",
+   "reason": "有兩個選項都說得通。",
    "replacedBy": "p5-b13-08"
   },
   {
    "id": "p5-b9-08",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "multi_key：題幹沒有延續到現在的線索，過去式同樣成立。",
+   "reason": "有兩個選項都說得通。",
    "replacedBy": "p5-b13-09"
   },
   {
    "id": "p5-b9-20",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "multi_key：表示調漲價格的另一個動詞在題幹中同樣成立。",
+   "reason": "有兩個選項都說得通。",
    "replacedBy": "p5-b13-10"
   },
   {
    "id": "p5-b10-05",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "multi_key：另一個介系詞與 warranty 搭配同樣成立。",
+   "reason": "有兩個選項都說得通。",
    "replacedBy": "p5-b13-11"
   },
   {
    "id": "p5-b12-25",
    "part": "5",
    "date": "2026-11-19",
-   "reason": "multi_key：美式用法中另一個形近動詞也可表示確保，第二個選項無法明確排除。",
+   "reason": "有兩個選項都說得通。",
    "replacedBy": "p5-b13-12"
+  },
+  {
+   "id": "p5-b11-18",
+   "part": "5",
+   "date": "2026-11-20",
+   "reason": "和另一題幾乎相同。",
+   "replacedBy": "p5-b13-13"
+  },
+  {
+   "id": "p7-b4-2",
+   "part": "7",
+   "date": "2026-11-20",
+   "reason": "和另一組題目的情境幾乎相同。",
+   "replacedBy": "p7-b14-1"
   }
  ]
 }

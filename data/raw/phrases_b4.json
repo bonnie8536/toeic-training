@@ -25,10 +25,10 @@
     "example": "Over three hundred people applied for the marketing manager position.",
     "exampleZh": "超過三百人應徵這個行銷經理職位。",
     "quiz": {
-      "q": "If you want the scholarship, you must apply ___ it before the end of May.",
+      "q": "Customers who return a damaged item can apply ___ a full refund within 30 days.",
       "options": ["to", "on", "with", "for"],
       "answer": 3,
-      "explanation": "apply for=申請某樣東西，獎學金就是想爭取的目標。apply to 後面接的是機構(apply to a university)或表示「適用於」；on 用在 depend on（取決於）；with 用在 comply with（遵守），都不能接在 apply 後面。"
+      "explanation": "apply for=申請想拿到的東西，全額退款就是顧客想拿到的。apply to 後面接申請的機構（apply to a university）或表示「適用於」；apply on 後面接申請的管道（apply on the website）；apply with 後面接附上的資料（apply with a resume）。這三個都不能帶出想拿到的退款。"
     }
   },
   {
@@ -282,9 +282,9 @@
     "exampleZh": "你可以透過公司內部網站報名這場工作坊。",
     "quiz": {
       "q": "Staff members who wish to attend must register ___ the seminar by Friday.",
-      "options": ["in", "with", "to", "for"],
+      "options": ["on", "with", "to", "for"],
       "answer": 3,
-      "explanation": "register for=報名某項活動或課程，想參加的員工必須在週五前完成報名。register with 是「向某機構登記」(register with an agency)，後面接的是單位不是活動；in 用在 participate in（參與）；to 用在 refer to（參閱），都不能接在 register 後面。"
+      "explanation": "register for=報名某項活動或課程，想參加的員工必須在週五前完成報名。register with 後面接登記的機構（register with an agency），不是活動；register on 後面接登記的網站或平台（register on the website），不接活動本身；register to 後面接動詞（register to vote），不接名詞。這三個都不能帶出要報名的研討會。"
     }
   },
   {
@@ -394,9 +394,9 @@
     "exampleZh": "儘管有暴風雨，這項工程仍照進度進行。",
     "quiz": {
       "q": "The renovation finished ___ schedule, so the store reopened last Monday.",
-      "options": ["at", "on", "in", "to"],
+      "options": ["at", "on", "in", "for"],
       "answer": 1,
-      "explanation": "on schedule=按預定進度，整修如期完成，商店上週一重新開幕。at 出現在 at present（目前）；in 出現在 in advance（事先）；to 是 respond to（回應）的搭配，都不能接 schedule 表示「準時」。"
+      "explanation": "on schedule=按預定進度，整修如期完成，商店上週一重新開幕。at 出現在 at present（目前）；in 出現在 in advance（事先）；for 出現在 for example（例如）。這三個都不能和 schedule 組成「按進度」的意思。"
     }
   },
   {

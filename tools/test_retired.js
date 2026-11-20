@@ -1,8 +1,8 @@
-/* 淘汰題(全審 2026-11-19):題目從 data/raw 的批次檔移走、記在 data/retired.json 之後,
+/* 淘汰題(題庫檢查 2026-11-19):題目從 data/raw 的批次檔移走、記在 data/retired.json 之後,
    學生已經作答過那些題,網站各頁照樣畫得出來、不丟錯;答案就地改(answer 索引)也一樣。
    A. tools/merge_data.py:在暫存資料夾複製 data/raw,每個 Part 淘汰一題(或一組)、一題 Part 5 改答案,合併要過;
       淘汰的 id 還在題庫、替代題不在題庫、批次檔名不對、聽力 id 重複、新題重複用舊 id,合併要擋下來。
-      需要 Python 3:先看環境變數 PYTHON,再試 python3、python、py;都沒有就跳過 A,B 改在記憶體裡把那幾題拿掉。
+      需要 Python 3:先看環境變數 PYTHON,再試 python3、python、py;都沒有就跳過 A(印出原因、結尾列出略過幾項),B 改在記憶體裡把那幾題拿掉照跑。
    B. 用合併出來的題庫(淘汰後)和含有淘汰題紀錄的作答資料(刷題、聽力、模擬考錯題、學習記錄),
       在 node vm + 最小 DOM 裡跑學習記錄、錯題本(刷題頁)、每日複習、能力分析、教師後台、模擬考、題庫刷題、聽力刷題;
       每日練習不讀多益題庫(只檢查程式沒有讀)。
@@ -54,7 +54,7 @@ fs.writeFileSync(path.join(RAW, p5file), J([changed].concat(p5arr.slice(1))));
 /* Part 5 的替代題:新批次 b99,新 id */
 const newP5 = Object.assign({}, retired['5'], { id: 'p5-b99-01' });
 fs.writeFileSync(path.join(RAW, 'part5_b99.json'), J([newP5]));
-const retiredList = Object.keys(retired).map((p) => ({ id: retired[p].id, part: p, date: '2026-11-20', reason: 'multi_key：測試用',
+const retiredList = Object.keys(retired).map((p) => ({ id: retired[p].id, part: p, date: '2026-11-20', reason: '測試用。',
   replacedBy: p === '5' ? 'p5-b99-01' : null }));
 fs.writeFileSync(RET, J({ retired: retiredList }));
 
@@ -67,6 +67,8 @@ function findPython() {
   }
   return null;
 }
+const PY_TRIED = [process.env.PYTHON, 'python3', 'python', 'py'].filter(Boolean);
+const SKIPPED = [];
 const PY = findPython();
 function merge(env) {
   const r = spawnSync(PY, [path.join(REPO, 'tools', 'merge_data.py')], { encoding: 'utf8',
@@ -83,7 +85,8 @@ const writeTmp = (f, data) => { const p = path.join(RAW, f); const old = fs.exis
 
 let usedMerged = false;
 if (!PY) {
-  console.log('SKIP A(找不到 Python 3,設 PYTHON=python 執行檔路徑可以跑):merge_data.py 的淘汰檢查');
+  SKIPPED.push('A1-A8 merge_data.py 的淘汰檢查(8 項)');
+  console.log('SKIP A1-A8(8 項):找不到可用的 Python 3(試過 ' + PY_TRIED.join('、') + '),設 PYTHON=python 執行檔路徑可以跑;B 改在記憶體裡拿掉淘汰題照跑');
 } else {
   const ok = merge();
   const total = /多益題庫合計 (\d+) 題/.exec(ok.out);
@@ -134,10 +137,13 @@ const RET_IDS = new Set(retiredList.map((r) => r.id));
 /* 作答紀錄用的題庫(有些頁不載聽力題庫,紀錄照樣要有聽力的) */
 function fullBank() { const c = {}; c.window = c; vm.createContext(c); ["part5", "part6", "part7", "listening"].forEach((n) => vm.runInContext(SRC["data/" + n + ".js"], c)); trimBank(c.TOEIC); return c.TOEIC; }
 function trimBank(T) {
-  if (usedMerged) return;
-  const L = T.listening, drop = (a) => a.filter((x) => !RET_IDS.has(x.id));
-  T.part5 = drop(T.part5).map((q) => (q.id === changed.id ? changed : q)); T.part6 = drop(T.part6); T.part7 = drop(T.part7);
-  ['p1', 'p2', 'p3', 'p4'].forEach((k) => { L[k] = drop(L[k]); });
+  if (usedMerged || !T) return;
+  /* 頁面只載部分題庫時(例如沒載 data/listening.js),只處理有載到的 */
+  const drop = (a) => (Array.isArray(a) ? a.filter((x) => !RET_IDS.has(x.id)) : a);
+  if (Array.isArray(T.part5)) T.part5 = drop(T.part5).map((q) => (q.id === changed.id ? changed : q));
+  T.part6 = drop(T.part6); T.part7 = drop(T.part7);
+  const L = T.listening;
+  if (L) ['p1', 'p2', 'p3', 'p4'].forEach((k) => { L[k] = drop(L[k]); });
 }
 
 /* 作答紀錄:每個 Part 一筆淘汰題的錯題、幾筆還在的題;Part 5 改了答案那題「選的剛好是新答案、當時判錯」 */
@@ -357,6 +363,6 @@ async function main() {
 main().catch((e) => { check('沒有預期外的錯誤', false, e && e.stack); }).finally(() => {
   try { fs.rmSync(TMP, { recursive: true, force: true }); } catch (e) { /* 暫存檔刪不掉不影響結果 */ }
   const pass = results.filter((r) => r.ok).length;
-  console.log(pass + ' / ' + results.length + ' 通過');
+  console.log(pass + ' / ' + results.length + ' 通過' + (SKIPPED.length ? ';略過 ' + SKIPPED.join('、') + '(找不到 Python 3)' : ''));
   process.exitCode = pass === results.length ? 0 : 1;
 });

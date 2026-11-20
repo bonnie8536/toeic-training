@@ -226,8 +226,7 @@
   }
   /* 訪客的小雞不會搬到帳號裡(cloud.js 不搬訪客資料);網站沒開雲端時沒有登入,不提 */
   function notes(v, full) {
-    return [full && v.status.streak > 0 && v.status.shields > 0 ? h('p', { class: 'pet-note' }, '漏掉一天會自動用掉一張保護卡。') : null,
-      v.guest && v.cloud ? h('p', { class: 'pet-note' }, '登入後換成帳號裡的小雞。') : null].filter(Boolean);
+    return [full && v.status.streak > 0 && v.status.shields > 0 ? h('p', { class: 'pet-note' }, '漏掉一天會自動用掉一張保護卡。') : null].filter(Boolean);
   }
   /* 重畫一塊內容,焦點原本在裡面的話放回同一個 data-focus;找不到就放到 fallback(例如首頁卡片的小雞) */
   function paint(box, nodes, fallback) {
@@ -259,7 +258,7 @@
 
   /* ---------- 餵食區(PET_FOOD;規格第 3 節、契約第 6 節) ---------- */
   const F = window.FoodArt;
-  const HINT_KEY = 'tr_pet_hint', HINT_TIMES = 3, MAX_STOCK = 9;    // HINT_KEY:「點一下就餵」出現過幾次(前 3 次打開面板才出現)
+  const HINT_KEY = 'tr_pet_hint', HINT_TIMES = 3, MAX_STOCK = 9;    // HINT_KEY:「點一下餵食」出現過幾次(前 3 次打開面板才出現)
   const FLY_MS = 300, EAT_MS = 1200, NOPE_MS = 750, STILL_MS = 1000, LONG_MS = 500, TIP_MS = 1200;
   const LAND_Q = '(orientation: landscape) and (max-height: 500px)';
   /* 舞台上的位置,跟 css 那一塊對齊:食物在小雞嘴前(對舞台中線的位移、上緣),愛心從頭頂冒出來 */
@@ -272,7 +271,7 @@
     try { const n = P.foodName && P.foodName(id); if (n) return n; } catch (e) { /* 舊版 pet.js */ } return F && F.info && F.info[id] ? F.info[id].name : '';
   }
   /* 常識提示只用規格那兩句,其他食物等查證來源(契約 12 第 10 條) */
-  function tipOf(id) { return id === 'grain' ? '' : id === 'corn' ? '玉米要壓碎再給小雞，整顆太大。' : '點心只占一小部分，主食還是飼料。'; }
+  function tipOf(id) { return id === 'grain' ? '' : id === 'corn' ? '玉米要壓碎再給小雞，整顆太大。' : ''; }
   function hintTurn() {
     try {
       const n = parseInt(localStorage.getItem(HINT_KEY), 10) || 0;
@@ -446,7 +445,7 @@
       if (line.textContent !== lt) line.textContent = lt;
       const stocked = (p.order || []).some((id) => ((p.stock && p.stock[id]) || 0) > 0);
       const grain = !feeding && v.status.food > 0;
-      const ht = v.readOnly ? roText(v) : !p.practiced && stocked ? LOCK : hintOn && (grain || (stocked && !ateAll(p))) ? '點一下就餵' : '';   // 點心餵滿、飼料也沒了就不叫學生點(上一行已經寫明天再餵)
+      const ht = v.readOnly ? roText(v) : !p.practiced && stocked ? LOCK : hintOn && (grain || (stocked && !ateAll(p))) ? '點一下餵食' : '';   // 點心餵滿、飼料也沒了就不叫學生點(上一行已經寫明天再餵)
       if (hint.textContent !== ht) hint.textContent = ht;
       const none = !v.readOnly && !feeding && !grain && !stocked;
       if (none && !empty) {

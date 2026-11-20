@@ -192,13 +192,13 @@ T['pet-hook.js 存在,定義 window.PET_HOOK.done'] = () => {
   const e = hookEnv();
   return { ok: !!e.H && typeof e.H.done === 'function', detail: String(e.H) };
 };
-T['拿到:當下在 into 最後加空的 p.pet-earn[role=status],結果回來寫「小黃拿到 1 份小番茄。」'] = async () => {
+T['拿到:當下在 into 最後加空的 p.pet-earn[role=status],結果回來寫「+1 小番茄」'] = async () => {
   const e = hookEnv();
   const pr = e.H.done('r:a1', { into: e.head });
   const p0 = earnP(e)[0];
   const sync = !!p0 && p0.tagName === 'P' && p0.getAttribute('role') === 'status' && p0.textContent === '' && e.head.childNodes[e.head.childNodes.length - 1] === p0;
   const r = await pr;
-  return { ok: sync && p0.textContent === '小黃拿到 1 份小番茄。' && r && r.result === 'got' && e.calls.length === 1 && e.calls[0].id === 'r:a1',
+  return { ok: sync && p0.textContent === '+1 小番茄' && r && r.result === 'got' && e.calls.length === 1 && e.calls[0].id === 'r:a1',
     detail: [sync, p0 && p0.textContent, JSON.stringify(r), JSON.stringify(e.calls)].join(' | ') };
 };
 T['讀螢幕念得到:空的那一行先進畫面,至少隔 150 毫秒(另一個 task)才寫字;earn 早就回來也一樣'] = async () => {
@@ -215,7 +215,7 @@ T['讀螢幕念得到:空的那一行先進畫面,至少隔 150 毫秒(另一個
   const stillEmpty = !!p && p.textContent === '';
   e.fire(t ? t.ms : 150);
   await settle();
-  return { ok: emptyAfterEarn && !!t && stillEmpty && p.textContent === '小黃拿到 1 份小番茄。' && r && r.result === 'got',
+  return { ok: emptyAfterEarn && !!t && stillEmpty && p.textContent === '+1 小番茄' && r && r.result === 'got',
     detail: [emptyAfterEarn, t && t.ms, stillEmpty, p && p.textContent, JSON.stringify(r)].join(' | ') };
 };
 T['earn 比 150 毫秒慢才回來:回來就寫,不再多等'] = async () => {
@@ -227,7 +227,7 @@ T['earn 比 150 毫秒慢才回來:回來就寫,不再多等'] = async () => {
   res({ result: 'got', food: 'melon', id: 'mock' });
   await pr;
   const p = earnP(e)[0];
-  return { ok: !!p && p.textContent === '小黃拿到 1 份西瓜。', detail: p && p.textContent };
+  return { ok: !!p && p.textContent === '+1 西瓜', detail: p && p.textContent };
 };
 T['等那 150 毫秒時那一行離開畫面:不寫字'] = async () => {
   const e = hookEnv({ manual: true });
@@ -245,14 +245,14 @@ T['今天的 3 份都拿了(cap):「今天的 3 份點心都拿到了，明天�
   const p = earnP(e)[0];
   return { ok: !!p && p.textContent === '今天的 3 份點心都拿到了，明天再來。', detail: p && p.textContent };
 };
-T['拿到而且知道今天還能拿幾份:「小黃拿到 1 份小番茄。今天還能拿 2 份。」;拿到第 3 份:「小黃拿到 1 份小番茄。今天的 3 份點心都拿到了。」'] = async () => {
+T['拿到:只寫 +1 食物:「+1 小番茄」;拿到第 3 份加註拿滿:「+1 小番茄 · 今日點心已拿滿」'] = async () => {
   const e = hookEnv({ result: { result: 'got', food: 'tomato', id: 'p5', left: 2 } });
   await e.H.done('p5', { n: 10, into: e.head });
   const a = earnP(e)[0];
   const e2 = hookEnv({ result: { result: 'got', food: 'tomato', id: 'p5', left: 0 } });
   await e2.H.done('p5', { n: 10, into: e2.head });
   const b = earnP(e2)[0];
-  return { ok: !!a && a.textContent === '小黃拿到 1 份小番茄。今天還能拿 2 份。' && !!b && b.textContent === '小黃拿到 1 份小番茄。今天的 3 份點心都拿到了。', detail: [a && a.textContent, b && b.textContent].join(' / ') };
+  return { ok: !!a && a.textContent === '+1 小番茄' && !!b && b.textContent === '+1 小番茄 · 今日點心已拿滿', detail: [a && a.textContent, b && b.textContent].join(' / ') };
 };
 T['同一個練習今天拿過了(dup):「這個練習今天拿過點心了，換別的練習還能拿 2 份。」;沒有 left 時只說前半句'] = async () => {
   const e = hookEnv({ result: { result: 'dup', food: null, id: null, left: 2 } });
@@ -363,7 +363,7 @@ T['小雞還沒取名:用「小雞」'] = async () => {
   const e = hookEnv({ name: '', result: { result: 'got', food: 'corn', id: 'd' } });
   await e.H.done('d', { into: e.head });
   const p = earnP(e)[0];
-  return { ok: !!p && p.textContent === '小雞拿到 1 份玉米。', detail: p && p.textContent };
+  return { ok: !!p && p.textContent === '+1 玉米', detail: p && p.textContent };
 };
 T['off、once、short、bad、later、不認得的結果、不認得的食物:不寫字,也不丟錯'] = async () => {
   const bad = [];
@@ -430,7 +430,7 @@ T['view() 丟錯時名字用「小雞」,不影響'] = async () => {
   let threw = false;
   try { await e.H.done('d', { into: e.head }); } catch (x) { threw = true; }
   const p = earnP(e)[0];
-  return { ok: !threw && !!p && p.textContent === '小雞拿到 1 份小番茄。', detail: p && p.textContent };
+  return { ok: !threw && !!p && p.textContent === '+1 小番茄', detail: p && p.textContent };
 };
 T['PET_STORE 不在、food 不是 true(false、"true"、1、沒有):回 null,不碰 DOM、不呼叫 earn'] = async () => {
   const bad = [];
@@ -475,7 +475,7 @@ T['等結果的時候先留一行的高度(.is-wait),寫上字時拿掉;沒有�
   const p = earnP(e)[0];
   const waiting = !!p && p.classList.contains('is-wait') && p.textContent === '';
   await pr;
-  out.push(['拿到', waiting && p.textContent === '小黃拿到 1 份小番茄。' && !p.classList.contains('is-wait')]);
+  out.push(['拿到', waiting && p.textContent === '+1 小番茄' && !p.classList.contains('is-wait')]);
   const l = hookEnv({ result: { result: 'later' } });
   await l.H.done('d', { into: l.head });
   const lp = earnP(l)[0];
@@ -504,7 +504,7 @@ T['留過高度的那一行,結果沒有字(once、later、off、出錯)時保�
   const g = hookEnv();
   await g.H.done('r:a1', { into: g.head });
   const gp = earnP(g)[0];
-  out.push(['拿到', gp.textContent === '小黃拿到 1 份小番茄。' && !gp.classList.contains('is-held') && !gp.classList.contains('is-wait')]);
+  out.push(['拿到', gp.textContent === '+1 小番茄' && !gp.classList.contains('is-held') && !gp.classList.contains('is-wait')]);
   return { ok: out.every(x => x[1]), detail: JSON.stringify(out) };
 };
 T['看得出一定沒有字的(題數少於一回合、不認得的練習):一開始就不留高度'] = async () => {
@@ -528,7 +528,7 @@ T['after:那一行放在指定元素的正後面(不是 into 的最後);同一�
   await e.H.done('tq:a1', { into: area, after: res });
   const kids = area.children.map(c => c.className);
   const p = area.children[1];
-  return { ok: JSON.stringify(kids) === JSON.stringify(['tq-result', 'pet-earn', 'tq-zh']) && p.textContent === '小黃拿到 1 份小番茄。' && p.getAttribute('role') === 'status',
+  return { ok: JSON.stringify(kids) === JSON.stringify(['tq-result', 'pet-earn', 'tq-zh']) && p.textContent === '+1 小番茄' && p.getAttribute('role') === 'status',
     detail: JSON.stringify(kids) };
 };
 T['after 不是畫面上的元素時改放進 into'] = async () => {
@@ -780,7 +780,7 @@ T['每日練習頁:沒有掛勾、或開關關著(PET_STORE.food false),成績�
   return { ok: !a.threw && !b.threw && /答對 4 \/ 5/.test(a.root.textContent) && sa === sb && !/pet-earn/.test(sb) && called === 0,
     detail: [a.threw && a.threw.message, b.threw && b.threw.message, sa === sb, called].join(' | ') };
 };
-T['每日練習頁:開關打開時成績頁的 .report-head 裡多一行「小黃拿到 1 份玉米。」,其他不變,只寫了 pet 以外的什麼都沒有'] = async () => {
+T['每日練習頁:開關打開時成績頁的 .report-head 裡多一行「+1 玉米」,其他不變,只寫了 pet 以外的什麼都沒有'] = async () => {
   const calls = [];
   const base = dailyRun({ hook: 'none' });
   const r = dailyRun({ store: { food: true, view: () => ({ status: { name: '小黃' } }), earn: a => { calls.push(a); return Promise.resolve({ result: 'got', food: 'corn', id: 'd' }); } } });
@@ -789,7 +789,7 @@ T['每日練習頁:開關打開時成績頁的 .report-head 裡多一行「小�
   const head = r.root.querySelector('.report-head');
   const p = head && head.querySelectorAll('p').find(x => x.classList.contains('pet-earn'));
   const same = dropEarn(ser(r.root).replace(/<P \.pet-earn role="status">"[^"]*"<\/P>/, '<P .pet-earn role="status"></P>')) === ser(base.root);
-  return { ok: !r.threw && !!p && p.textContent === '小黃拿到 1 份玉米。' && calls.length === 1 && calls[0].id === 'd' && !('n' in calls[0]) && same
+  return { ok: !r.threw && !!p && p.textContent === '+1 玉米' && calls.length === 1 && calls[0].id === 'd' && !('n' in calls[0]) && same
     && JSON.stringify([...r.ctx.__ls]) === r.lsBefore,
     detail: [r.threw && r.threw.message, p && p.textContent, JSON.stringify(calls), same].join(' | ') };
 };

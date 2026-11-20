@@ -138,8 +138,6 @@
       /* ---- 夥伴字 ---- */
       if (PAIRS.length) {
         root.append(h('div', { class: 'exercise-head', style: 'margin-top:34px' }, h('h2', null, '時態的夥伴字')));
-        root.append(h('p', { class: 'result-note', style: 'margin:0 0 14px' },
-          '一個句子裡有兩件事的時候，是這些詞在決定兩邊各用什麼時態。'));
         const groups = {};
         PAIRS.forEach(p => (groups[p.group || '其他'] = groups[p.group || '其他'] || []).push(p));
         Object.entries(groups).forEach(([g, items]) => {

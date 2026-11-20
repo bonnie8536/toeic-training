@@ -89,10 +89,10 @@
   function summaryLine(p, groups) {
     const all = groups.reduce((a, g) => a.concat(g.items), []);
     const n = all.length, sets = new Set(all.map((x) => (x.set ? x.set.id : x.key))).size;
-    if (p === '1') return n + ' 題。答對就移出。';
-    if (p === '3') return n + ' 題，在 ' + sets + ' 段對話裡。答對就移出。';
-    if (W.isSetPart(p)) return n + ' 題，在 ' + sets + ' 個題組裡，分成 ' + groups.length + ' 類。答對就移出。';
-    return n + ' 題，分成 ' + groups.length + ' 類。答對就移出。';
+    if (p === '1') return n + ' 題';
+    if (p === '3') return n + ' 題 · ' + sets + ' 段對話';
+    if (W.isSetPart(p)) return n + ' 題 · ' + sets + ' 個題組 · ' + groups.length + ' 類';
+    return n + ' 題 · ' + groups.length + ' 類';
   }
 
   /* 清單頁:畫一次,之後從 bfcache 回來、錯題本變了再重畫 */
@@ -111,7 +111,8 @@
     const first = W.round(p);
     root.append(h('p', { class: 'result-note wb-sum' }, summaryLine(p, groups)),
       h('div', { class: 'wb-start' },
-        h('a', { class: 'btn primary wb-begin', 'data-gate': '', href: reviewUrl(p) }, '開始複習（' + first.units.length + ' ' + W.unit(p) + '）')),
+        h('a', { class: 'btn primary wb-begin', 'data-gate': '', href: reviewUrl(p) }, '開始'),
+        h('span', { class: 'result-note' }, ' ' + first.units.length + ' ' + W.unit(p))),
       groupList(groups, { part: p, level: 2, remember: true, open: open && open[p] }));
   }
   function renderList(root, p) {

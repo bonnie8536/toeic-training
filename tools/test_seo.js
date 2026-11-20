@@ -445,7 +445,16 @@ T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上�
     assert.ok(hub.length >= 2, f + ' 卡片太少');
     hub.forEach(([href, name, text]) => {
       const twin = home.find((c) => c[0] === href);
-      if (twin) assert.equal(text, twin[2], f + ' 的「' + name + '」卡片說明跟首頁不一樣');
+      if (!twin) return;
+      if (f === 'learn.html' || f === 'drill.html') {
+        /* 學習頁與刷題選單的卡片只留一行事實標籤,字數比首頁短;兩邊都寫了同一種單位(章、課、組、級)的數字就不能不同 */
+        const units = (t) => Array.from(t.matchAll(/(\d+) ?([章課組級題])/g)).map((m) => [m[2], m[1]]);
+        const homeU = units(twin[2]);
+        units(text).forEach(([u, n]) => homeU.filter((x) => x[0] === u).forEach((x) => assert.equal(n, x[1], f + ' 的「' + name + '」卡片寫的' + u + '數跟首頁不一樣')));
+        assert.ok(text.length > 0, f + ' 的「' + name + '」卡片沒有標籤');
+        return;
+      }
+      assert.equal(text, twin[2], f + ' 的「' + name + '」卡片說明跟首頁不一樣');
     });
   });
 };

@@ -245,12 +245,12 @@
   function showJoinDialog(prefill, returnTo, onJoined) {
     if (document.querySelector('.modal-mask')) return;
     const id = 'join-code';
-    const input = h('input', { class: 'auth-input join-code', id, type: 'text', name: 'class-code', autocomplete: 'off',
+    const input = h('input', { class: 'auth-input join-code', id, type: 'text', name: 'class-code', placeholder: '8 碼', autocomplete: 'off',
       autocapitalize: 'characters', spellcheck: 'false', maxlength: '20', enterkeyhint: 'go' });
     input.value = normalize(prefill);
     const note = h('p', { class: 'auth-note', role: 'alert' });
     const field = h('div', { class: 'auth-field' },
-      h('label', { for: id }, '邀請碼'), input, h('p', { class: 'auth-hint' }, '向老師拿 8 碼的邀請碼'), note);
+      h('label', { for: id }, '邀請碼'), input, note);
     /* 碼的格式不對:標在欄位上。伺服器或網路的錯誤:放在表單的訊息行,欄位不標紅(跟登入視窗一樣) */
     const msg = h('p', { class: 'auth-msg', role: 'alert' });
     const bad = m => {

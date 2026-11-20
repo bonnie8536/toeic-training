@@ -30,7 +30,7 @@
     return ol;
   }
   function doneLine(pr) {
-    return h('p', { class: 'daily-done', hidden: pr.complete ? null : '' }, '今天的三項都做完了，明天換新題。');
+    return h('p', { class: 'daily-done', hidden: pr.complete ? null : '' }, '今日練習已完成');
   }
   /* 做完以後題數就不重講,只留完成那一行 */
   function count(pr) {
@@ -220,7 +220,7 @@
               b.classList.add(bi === answer ? 'correct' : bi === oi ? 'wrong' : 'plain');
             });
             result.append(h('div', { class: 'explain' },
-              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了，正確答案是 ' + LETTERS[answer]),
+              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯 · 正解 ' + LETTERS[answer]),
               after), nextBtn());
           },
         }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));

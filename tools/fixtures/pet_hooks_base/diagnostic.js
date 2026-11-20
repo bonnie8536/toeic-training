@@ -44,8 +44,8 @@
         h('h1', null, '程度檢測')),
       h('div', { class: 'diag-intro' },
         h('ul', { style: 'margin-top:0' },
-          h('li', null, '28 題，約 20 分鐘。作答中不顯示對錯，交卷後有報告。'),
-          h('li', null, '可以往回改答案；中途離開，進度會保留。')),
+          h('li', null, '28 題 · 約 20 分鐘 · 交卷後看報告'),
+          h('li', null, '可往回改答案 · 進度自動保留')),
         h('button', {
           class: 'btn primary', style: 'font-size:16px;padding:10px 26px', 'data-gate': '',   // 開始檢測:沒登入時 js/profile.js 先攔下
           onclick: () => {
@@ -54,7 +54,7 @@
             cur = 0;
             renderTest();
           },
-        }, '開始檢測')));
+        }, '開始')));
   }
 
   /* ============ 作答 ============ */
@@ -65,7 +65,7 @@
     const it = items[cur];
 
     root.append(h('div', { class: 'page-head' }, h('h1', null, '程度檢測')));
-    root.append(h('div', { class: 'diag-count' }, '第 ', h('b', null, String(cur + 1)), ' / ' + total + ' 題 · 已作答 ' + answered + ' 題'));
+    root.append(h('div', { class: 'diag-count' }, '第 ', h('b', null, String(cur + 1)), ' / ' + total + ' 題'));
     root.append(h('div', { class: 'diag-bar' }, h('i', { style: 'width:' + Math.round(answered / total * 100) + '%' })));
 
     /* 題號導覽 */
@@ -145,7 +145,7 @@
       h('button', {
         class: 'btn primary', 'data-gate': '',
         onclick: e => handIn(e.currentTarget),
-      }, '交卷，看報告')));
+      }, '交卷')));
   }
 
   /* ============ 報告 ============ */
@@ -197,7 +197,7 @@
         h('div', { class: 'item' }, h('b', null, Math.round(aB * 100) + '%'), h('span', null, '基礎題正確率')),
         h('div', { class: 'item' }, h('b', null, Math.round(aM * 100) + '%'), h('span', null, '中級題正確率')),
         h('div', { class: 'item' }, h('b', null, Math.round(aA * 100) + '%'), h('span', null, '進階題正確率'))),
-      h('div', { class: 'band-note' }, '28 題為小樣本，級距僅供安排練習順序，與正式成績可能有落差。')));
+      h('div', { class: 'band-note' }, '級距為估算，非正式成績')));
 
     /* 考點總表 */
     root.append(h('div', { class: 'exercise-head' }, h('h2', null, '各考點掌握度')));
@@ -206,11 +206,8 @@
       h('tr', null, h('th', null, '考點'), h('th', null, '答對'), h('th', null, '判定'), h('th', { class: 'no-print' }, '')));
     sorted.forEach(([cat, c]) => {
       const [cls, label] = judge(c.correct / c.total);
-      const skills = cls === 'good'
-        ? c.items.filter(i => st.answers[i] === items[i].answer).map(i => items[i].skill).filter(Boolean).slice(0, 2).join('；')
-        : '';
       table.append(h('tr', null,
-        h('td', null, cat, skills ? h('div', { style: 'font-size:12px;color:var(--ink-light)' }, skills) : null),
+        h('td', null, cat),
         h('td', { class: 'num' }, c.correct + ' / ' + c.total),
         h('td', null, h('span', { class: 'verdict-pill ' + cls }, label), c.total === 1 ? h('span', { class: 'cat-few' }, '（僅1題）') : null),
         h('td', { class: 'no-print' }, cls !== 'good' ? h('a', { href: catLink(cat, c.kind), style: 'font-size:13px' }, '去刷這類題 →') : '')));
@@ -239,7 +236,6 @@
             : h('span', null, '你選 ', h('span', { class: 'you' }, LETTERS[chosen] + '. ' + it.options[chosen])),
           '  ',
           h('span', null, '正解 ', h('span', { class: 'right' }, LETTERS[it.answer] + '. ' + it.options[it.answer]))),
-        it.skill ? h('div', { class: 'w-skill' }, it.skill) : null,
         h('div', { class: 'w-exp' }, it.explanation)));
     });
 
@@ -249,13 +245,13 @@
     weak.slice(0, 4).forEach(([cat, c]) => {
       stepList.append(h('li', null,
         h('a', { href: catLink(cat, c.kind) }, cat),
-        '（答對 ' + c.correct + '/' + c.total + '），先刷 15–20 題，錯的隔天在錯題本重做。'));
+        ' 答對 ' + c.correct + ' / ' + c.total + '。先刷 15–20 題，錯題隔天到錯題本重做。'));
     });
     if (score / total < 0.5) {
       stepList.append(h('li', null, h('a', { href: 'grammar.html' }, '文法基礎'),
-        '分數未過半，先從第一章照順序走。'));
+        ' 從第 1 章依序學。'));
     }
-    stepList.append(h('li', null, h('a', { href: 'reading.html' }, '閱讀訓練'), '每週 2 篇，先不看翻譯讀完並做題，再開翻譯逐段核對。'));
+    stepList.append(h('li', null, h('a', { href: 'reading.html' }, '閱讀訓練'), ' 每週 2 篇，讀完再對照翻譯。'));
     root.append(h('div', { class: 'next-steps' }, h('p', null, advice + (readNote ? ' ' + readNote : '')), stepList));
 
     /* 動作 */
@@ -264,11 +260,11 @@
       h('button', {
         class: 'btn', 'data-gate': '',
         onclick: () => {
-          if (!confirm('重新檢測會清除這份報告（刷題與閱讀進度不受影響）。確定？')) return;
+          if (!confirm('再測一次會清除這份報告（刷題與閱讀進度不受影響）。確定？')) return;
           store.remove(KEY);
           st = null; cur = 0;
           renderIntro();
         },
-      }, '重新檢測')));
+      }, '再測一次')));
   }
 })();

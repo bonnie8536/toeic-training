@@ -124,7 +124,7 @@
     const n = units.reduce((k, u) => k + (u.p === '1' || u.p === '2' ? 1 : u.item.questions.length), 0);
     const roundText = units.some(u => u.p === '3' || u.p === '4') ? units.length + ' 組（' + n + ' 題）' : n + ' 題';
     const sub = opts.wrongOnly
-      ? (opts.units ? (opts.group ? opts.group + ' · ' : '') + '這一回 ' + roundText + '，答對就移出' : '錯題複習 · ' + units.length + ' 單元')
+      ? (opts.units ? (opts.group ? opts.group + ' · ' : '') + '這一回 ' + roundText : '錯題複習 · ' + units.length + ' 單元')
       : config.map(c => 'Part ' + c.p + ' × ' + c.n + ' ' + PARTS[c.p].unit).join(' · ');
     const heading = opts.wrongOnly && opts.units ? '聽力 ' + PARTS[config[0].p].title + ' 錯題本 ' : '聽力練習 ';
     /* 一般練習=交卷式(答完全部才對答案);錯題複習=即時對答(答對才移出) */
@@ -179,8 +179,8 @@
           h('button', {
             class: 'btn primary', 'data-gate': isLast ? '' : null,
             onclick: e => { if (isLast) submit(e.currentTarget); else { cur++; draw(); window.scrollTo(0, 0); } },
-          }, isLast ? '交卷對答案' : '下一' + PARTS[units[cur + 1].p].unit + ' →'),
-          isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: e => submit(e.currentTarget) }, '直接交卷'));
+          }, isLast ? '交卷' : '下一' + PARTS[units[cur + 1].p].unit + ' →'),
+          isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: e => submit(e.currentTarget) }, '交卷'));
       }
       return h('div', { class: 'drill-nav-btns' },
         canNext
@@ -226,7 +226,7 @@
       return h('div', null,
         withReport(h('div', { class: 'explain' },
           h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-            rec.ok ? '答對了' : (rec.c === -1 ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
+            rec.ok ? '答對了' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
           h('div', null, q.explanation)), m, q.id),
         h('div', { class: 'transcript-box' },
           h('b', null, '逐字稿'),
@@ -314,7 +314,7 @@
           opts,
           instant && done ? withReport(h('div', { class: 'explain' },
             h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
-              chosen === q.answer ? '答對了' : '答錯了，正確答案是 ' + LETTERS[q.answer]),
+              chosen === q.answer ? '答對了' : '答錯 · 正解 ' + LETTERS[q.answer]),
             h('div', null, q.explanation)), 'l' + p, qid(set, qi)) : null));
       });
       if (instant && complete) {
@@ -381,7 +381,7 @@
         }
       });
       const btns = () => h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(root, config) }, '再練一輪'),   // 跟「開始聽力練習」一樣
+        h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(root, config) }, '再做一次'),   // 跟「開始聽力練習」一樣
         h('a', { class: 'btn', href: 'practice.html' }, '回題庫'));
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
         h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),
@@ -432,7 +432,7 @@
               opts,
               withReport(h('div', { class: 'explain' },
                 h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-                  rec.ok ? '答對了' : (rec.c === -1 ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
+                  rec.ok ? '答對了' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
                 h('div', null, q.explanation)), 'l' + u.p, qid(set, qi))));
           });
           const transcript = u.p === '3'
@@ -467,7 +467,7 @@
         qTotal - qCorrect ? h('div', { class: 'band-note' }, '答錯的題目已收進錯題本。') : null,
         rest > 0 ? h('div', { class: 'band-note' }, (opts.group ? '這一組' : '這個 Part') + '還有 ' + rest + ' 題還沒複習。') : null));
       root.append(h('div', { class: 'drill-nav-btns' },
-        opts.wrongOnly ? null : h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(root, config) }, '再練一輪'),
+        opts.wrongOnly ? null : h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(root, config) }, '再做一次'),
         rest > 0 ? h('a', { class: 'btn primary', 'data-gate': '', href: 'practice.html?mode=review&part=' + config[0].p + (opts.group ? '&g=' + encodeURIComponent(opts.group) : '') }, '下一回') : null,
         h('a', { class: 'btn', href: back }, opts.back ? '回錯題本' : '回題庫')));
       window.scrollTo(0, 0);

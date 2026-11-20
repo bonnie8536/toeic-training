@@ -16,10 +16,10 @@
     }
 
     const TYPES = [
-      { k: 'AAA', name: '三態同形', hint: '原形、過去式、過去分詞長得一樣，只能從句子判斷時態。' },
-      { k: 'ABB', name: '後兩個同形', hint: '過去式與過去分詞相同，是數量最多的一類。' },
-      { k: 'ABA', name: '頭尾同形', hint: '過去分詞變回原形的樣子，只有過去式不同。' },
-      { k: 'ABC', name: '三態都不同', hint: '三個形態各不相同，要一組一組記。' },
+      { k: 'AAA', name: '三態同形', hint: '三態相同' },
+      { k: 'ABB', name: '後兩個同形', hint: '過去式與過去分詞相同' },
+      { k: 'ABA', name: '頭尾同形', hint: '過去分詞與原形相同' },
+      { k: 'ABC', name: '三態都不同', hint: '三態都不同' },
     ];
     const LEVELS = ['全部', '初級', '中級', '進階'];
 
@@ -77,7 +77,7 @@
             onclick: () => { masked = !masked; render(); },
           }, masked ? '顯示答案' : '遮住自己想'),
           h('button', { class: 'btn primary', type: 'button', 'data-gate': '', onclick: () => startQuiz(list) }, '測驗這些字'),   // 開始測驗:沒登入時 js/profile.js 先攔下
-          h('span', { class: 'vb-count' }, list.length + ' 個字 · 測驗答對過 ' + learned + '/' + VERBS.length)),
+          h('span', { class: 'vb-count' }, list.length + ' 個字 · 已答對 ' + learned + ' / ' + VERBS.length)),
         chips);
 
       const body = h('div', null);
@@ -88,7 +88,7 @@
         const l = pool();
         body.innerHTML = '';
         drawTables(body, l);
-        root.querySelector('.vb-count').textContent = l.length + ' 個字 · 測驗答對過 ' + learned + '/' + VERBS.length;
+        root.querySelector('.vb-count').textContent = l.length + ' 個字 · 已答對 ' + learned + ' / ' + VERBS.length;
       }
     }
 
@@ -197,7 +197,7 @@
           after.append(
             h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') },
-                ok ? '答對了' : '正確是 ' + v.past + ' / ' + v.pp),
+                ok ? '答對了' : '答錯 · 正解 ' + v.past + ' / ' + v.pp),
               h('div', null, v.base + ' ' + v.zh + (v.note ? '。' + v.note : '')),
               v.example ? h('div', { class: 'tr' }, v.example) : null),
             h('div', { class: 'drill-nav-btns' },
@@ -226,8 +226,7 @@
         const ok = results.filter(Boolean).length;
         const wrongList = items.filter((x, i) => !results[i]);
         root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-          h('h2', null, '答對 ' + ok + ' / ' + items.length),
-          wrongList.length ? h('div', { class: 'band-note' }, '答錯的下一輪優先出現。') : null));
+          h('h2', null, '答對 ' + ok + ' / ' + items.length)));
         if (wrongList.length) {
           root.append(h('div', { class: 'vq-list' }, wrongList.map(v =>
             h('div', { class: 'vq-item bad' }, h('b', null, v.base), h('span', null, v.past + ' / ' + v.pp), h('i', null, v.zh)))));

@@ -69,7 +69,7 @@
         class: 'gx-station' + (active ? ' on' : '') + (doneN === list.length ? ' full' : ''),
         type: onPickStage ? 'button' : null,
         href: onPickStage ? null : 'grammar.html?ch=' + sk,
-        title: sd.name + '（' + doneN + '/' + list.length + '）',
+        title: sd.name + '（' + doneN + ' / ' + list.length + '）',
         onclick: onPickStage ? () => onPickStage(sk) : null,
       },
         h('span', { class: 'gx-ring', style: 'background:conic-gradient(var(--ok) ' + pct + '%, var(--line) 0)' },
@@ -147,7 +147,7 @@
             (UNITS.filter(u => stageOf(u) === stageOf(todo)).indexOf(todo) + 1) + ' 課')) : null,
         h('div', { class: 'exercise-head' },
           h('h2', null, STAGES[stage].name),
-          h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + '/' + list.length)));
+          h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + ' / ' + list.length)));
       const col = h('div', { class: 'gx-col' },
         h('div', { class: 'page-head' }, h('h1', null, '文法基礎')),
         units);
@@ -257,7 +257,7 @@
             });
             const box = h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (results[qi] ? 'ok' : 'bad') },
-                results[qi] ? '答對了' : '答錯了，正確答案是 ' + LETTERS[q.answer]),
+                results[qi] ? '答對了' : '答錯 · 正解 ' + LETTERS[q.answer]),
               h('div', null, q.explanation));
             /* 回報題目(js/report.js):題號跟上面 logAttempt('g') 同一套 */
             if (window.REPORT) REPORT.attach(box, { m: 'g', id: u.id + ':' + qi });

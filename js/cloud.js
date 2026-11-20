@@ -466,7 +466,7 @@
     const cp = currentProfile();   // 送出登入這一刻的目前帳號(afterAuth 判斷「灌過」記號算不算數)
     const { data, error } = await client.auth.signInWithPassword({ email: String(email).trim(), password });
     if (error) {
-      if (/Invalid login credentials/i.test(error.message)) throw new Error('帳號或密碼不對。當初用 Google 註冊的話，要按上面的 Google 登入。');
+      if (/Invalid login credentials/i.test(error.message)) throw new Error('帳號或密碼錯誤。用 Google 註冊的帳號請點 Google 登入。');
       if (/Email not confirmed/i.test(error.message)) throw new Error('信箱還沒驗證：請到信箱點驗證連結（找不到信可以到「註冊」分頁重寄）');
       if (/rate limit|too many/i.test(error.message)) throw new Error('請求太頻繁，請幾分鐘後再試');
       if (/fetch|network/i.test(error.message)) throw new Error('連不上雲端伺服器：請檢查網路；若持續發生，請老師確認 Supabase 專案沒有休眠');
@@ -612,7 +612,7 @@
     await window.CLOUD.ready;
     needClient();
     const n = String(name || '').trim().slice(0, 20);
-    if (!n) throw new Error('暱稱還沒填。');
+    if (!n) throw new Error('請輸入暱稱。');
     mustBeShown();   // 改的是這台現在登入的帳號:不是畫面上這個就不送(審查 D)
     const { data, error } = await client.auth.updateUser({ data: { name: n } });
     if (error) throw new Error(friendly(error));

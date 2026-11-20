@@ -375,7 +375,7 @@
           h('div', { class: 'vg-icon', html: VG_ICON[icon] }),
           h('div', null,
             h('h3', null, title),
-            h('p', null, rule),
+            rule ? h('p', null, rule) : null,
             blocked ? h('div', { class: 'p-stats vg-why' }, blocked) : bestText ? h('div', { class: 'p-stats' }, bestText) : null)),
         h('div', { class: 'cfg-row' }, options, h('button', { class: 'btn primary', 'data-gate': '', disabled: blocked ? '' : null, onclick: onStart }, '開始')));   // 開始遊戲:沒登入時 js/profile.js 先攔下
     }
@@ -392,17 +392,17 @@
       gamesWrap.innerHTML = '';
       gamesWrap.append(
         gameCard('fall', '掉落消除',
-          '打出翻譯消除掉下來的字，這一關的字全部打對就通關；漏接的字會再掉下來' + (missCount ? '，目前漏接 ' + missCount + ' 個' : '') + '。',
+          '輸入翻譯消除掉落的字。全部打對就通關。' + (missCount ? '目前漏接 ' + missCount + ' 個。' : ''),
           [fallBest ? '最佳 ' + fallBest : '', fallClears ? '通關 ' + fallClears + ' 次' : ''].filter(Boolean).join(' · '),
           [dirSel, speedSel],
           () => startGame(modes, level, speedSel.value, dirSel.value), why(src.banksOnly ? MIN_WORDS.fallBank : MIN_WORDS.fall)),
-        gameCard('pairs', '翻牌配對', '翻兩張，英文配它的中文。',
+        gameCard('pairs', '翻牌配對', '',
           pb ? '最佳 ' + pb.moves + ' 步 · ' + pb.secs + ' 秒' : '',
           [], () => startPairs(modes, level), why(MIN_WORDS.pairs)),
-        gameCard('toast', '記憶吐司', '15 秒內記住 6 個字，之後考中文意思。',
+        gameCard('toast', '記憶吐司', '15 秒記 6 個字 · 考中文意思',
           tb ? '最佳 ' + tb + ' / 6' : '',
           [], () => startToast(modes, level), why(MIN_WORDS.toast)),
-        gameCard('mcq', '單字選擇題', '四選一，一輪 10 題。', '',
+        gameCard('mcq', '單字選擇題', '四選一 · 10 題', '',
           [dirSel2], () => startMcq(modes, level, dirSel2.value), why(MIN_WORDS.mcq)));
     }
     /* 勾了什麼 → 框裡的字、清單下面的說明、全選的狀態、四張卡 */
@@ -503,7 +503,7 @@
         h('div', { class: 'p-stats' }, items.length + ' 條 · 已答對 ' + done),
         h('div', { class: 'bar' }, h('i', { style: 'width:' + pct + '%' })),
         h('div', { class: 'cfg-row' },
-          h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startDrill(g, items) }, '開始練習'),
+          h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startDrill(g, items) }, '開始'),
           toggleBtn),
         table));
     });
@@ -613,7 +613,7 @@
     root.append(
       h('div', { class: 'drill-top', 'data-vview': 'edit' },
         h('h1', null, bankId ? '編輯題庫' : '新增題庫'),
-        h('a', { href: 'vocab.html', style: 'font-size:13.5px;margin-left:auto', onclick: e => { e.preventDefault(); if (persist()) renderHome(); } }, '← 完成，回單字訓練')),
+        h('a', { href: 'vocab.html', style: 'font-size:13.5px;margin-left:auto', onclick: e => { e.preventDefault(); if (persist()) renderHome(); } }, '← 回單字訓練')),
       h('div', { class: 'q-block' },
         nameInput,
         bulkInput,
@@ -1005,7 +1005,7 @@
             result.append(
               withReport(h('div', { class: 'explain' },
                 h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') },
-                  ok ? '答對了' : '答錯了，正確是 ' + p.quiz.options[p.quiz.answer]),
+                  ok ? '答對了' : '答錯 · 正解 ' + p.quiz.options[p.quiz.answer]),
                 h('div', null, p.quiz.explanation)), 'ph', p.id),
               h('div', { class: 'phrase-card' },
                 h('div', { class: 'pc-head' }, h('b', null, p.phrase), h('span', null, p.zh)),
@@ -1031,12 +1031,12 @@
     function summary() {
       root.innerHTML = '';
       const ok = results.filter(Boolean).length;
-      const note = ok === list.length ? '' : '答錯的下一輪優先出現。';
+      const note = '';
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
         h('h2', null, groupName + '：' + ok + ' / ' + list.length),
         note ? h('div', { class: 'band-note' }, note) : null));
       root.append(h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', onclick: () => startDrill(groupName, items) }, '再練一輪'),
+        h('button', { class: 'btn primary', onclick: () => startDrill(groupName, items) }, '再做一次'),
         h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
       window.scrollTo(0, 0);
       if (window.PET_HOOK) PET_HOOK.done('ph', { n: list.length, into: root.querySelector('.report-head') });
@@ -1180,7 +1180,7 @@
     const grid = h('div', { class: 'toast-grid' },
       items.map(it => h('div', { class: 'toast-card' }, h('b', null, it.answer), h('span', null, it.zh))));
     root.append(gameTop('記憶吐司', name),
-      h('p', { class: 'result-note' }, '15 秒內記住這 ' + items.length + ' 個字，之後考中文意思。'),
+      h('p', { class: 'result-note' }, '記住這 ' + items.length + ' 個字，15 秒後考中文意思。'),
       h('div', { class: 'toast-timer' }, bar), grid,
       h('div', { class: 'drill-nav-btns' }, h('button', { class: 'btn primary', type: 'button', onclick: () => quiz() }, '直接開考')));
     const t0 = Date.now();
@@ -1242,7 +1242,7 @@
         const best = store.get('vgame_toast_best', {});
         const isBest = okN > (best[src.key] || 0);
         if (isBest) { best[src.key] = okN; store.set('vgame_toast_best', best); }
-        const note = okN === results.length ? '' : '記錯的字在掉落遊戲會優先出現。';
+        const note = '';
         root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
           h('h2', null, '記憶吐司：' + okN + ' / ' + results.length + (isBest && okN ? '（新紀錄）' : '')),
           note ? h('div', { class: 'band-note' }, note) : null),
@@ -1304,7 +1304,7 @@
             const isLast = cur === list.length - 1;
             after.append(
               h('div', { class: 'explain' },
-                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了，正確是 ' + face(it)),
+                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯 · 正解 ' + face(it)),
                 h('div', null, h('b', null, it.answer), ' ', h('span', null, it.zh))),
               h('div', { class: 'drill-nav-btns' },
                 h('button', {
@@ -1324,11 +1324,10 @@
       const okN = results.filter(Boolean).length;
       const wrong = list.filter((x, i) => !results[i]);
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-        h('h2', null, '單字選擇題：' + okN + ' / ' + list.length),
-        wrong.length ? h('div', { class: 'band-note' }, '答錯的字在掉落遊戲會優先出現。') : null),
+        h('h2', null, '單字選擇題：' + okN + ' / ' + list.length)),
         wrong.length ? h('div', { class: 'vq-list' }, wrong.map(x => h('div', { class: 'vq-item bad' }, h('b', null, x.answer), h('span', null, x.zh), h('i', null, '✗')))) : null,
         h('div', { class: 'drill-nav-btns' },
-          h('button', { class: 'btn primary', onclick: () => startMcq(modes, levelName, dir) }, '再練一輪'),
+          h('button', { class: 'btn primary', onclick: () => startMcq(modes, levelName, dir) }, '再做一次'),
           h('button', { class: 'btn', onclick: renderHome }, '回單字訓練')));
       window.scrollTo(0, 0);
       if (window.PET_HOOK) PET_HOOK.done('mcq', { n: list.length, into: root.querySelector('.report-head') });

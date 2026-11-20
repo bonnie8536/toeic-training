@@ -53,8 +53,7 @@
     const f = foodName(r.food);
     if (!f) return '';
     if (r.result === 'got') {
-      const more = !isLeft(r.left) ? '' : r.left > 0 ? '今天還能拿 ' + r.left + ' 份。' : '今天的 ' + perDay() + ' 份點心都拿到了。';
-      return chickName(S) + '拿到 1 份' + f + '。' + more;
+      return '+1 ' + f + (isLeft(r.left) && r.left === 0 ? ' · 今日點心已拿滿' : '');
     }
     if (r.result === 'full') return f + '已經存滿 9 份，先餵掉一些再來拿。';
     return '';

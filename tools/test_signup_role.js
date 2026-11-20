@@ -934,9 +934,9 @@ cases['強制登入視窗選了老師:Shift+Tab 從身分選項往回繞到視�
   return { ok: prevented && dom.document.activeElement === f[f.length - 1], detail: '擋下 ' + prevented + ' 焦點 ' + norm(dom.document.activeElement.textContent || dom.document.activeElement.tagName) };
 };
 
-cases['選老師時暱稱下面「老師會看到這個名字」藏起來,改回學生再出現'] = async () => {
+cases['選老師時暱稱下面「老師可見」藏起來,改回學生再出現'] = async () => {
   const { card } = loadCard({ paid: true });
-  const hint = () => card.byClass('auth-hint').find(n => norm(n.textContent) === '老師會看到這個名字');
+  const hint = () => card.byClass('auth-hint').find(n => norm(n.textContent) === '老師可見');
   const a = hint().shown;
   await pick(card, 'teacher');
   const b = hint().shown;

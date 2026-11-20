@@ -305,8 +305,8 @@
         [Object.assign({ primary: true }, PRICING), ME], 'bad');
       case 'refunded': return v('已退款', [line, '這筆付款已經退款。'], [ME]);
       case 'missing': return v('找不到這筆訂單', ['目前登入的帳號查不到這筆訂單，請確認是付款時用的帳號。'], [PRICING]);
-      case 'noorder': return v('沒有付款資料', ['這一頁沒有收到訂單編號。付款紀錄可以在「我的」頁的方案與付款查看。'], [Object.assign({ primary: true }, ME)]);
-      case 'login': return v('請先登入', ['登入付款時用的帳號，才能查看付款結果。'], [{ text: '登入', login: true, primary: true }]);
+      case 'noorder': return v('沒有付款資料', ['沒有收到訂單編號。'], [Object.assign({ primary: true }, ME)]);
+      case 'login': return v('請先登入', ['請用付款時的帳號登入。'], [{ text: '登入', login: true, primary: true }]);
       default: return v('沒辦法查詢', ['這個網站沒有開雲端帳號。'], [PRICING]);
     }
   }

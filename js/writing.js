@@ -74,7 +74,7 @@
     document.title = '寫作練習 - 衝衝英文';
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '寫作練習'),
-      h('p', null, '寫的內容會自動保存，老師看得到。')));
+      h('p', null, '自動儲存 · 老師可見')));
     root.append(h('div', { class: 'part-cards' },
       ['l1', 'l2', 'l3'].map(k => {
         const units = unitsOf(k);
@@ -98,7 +98,7 @@
     root.append(h('div', { class: 'page-head' },
       h('div', { class: 'meta', style: 'margin-bottom:4px' }, h('a', { href: 'writing.html' }, '← 回寫作練習')),
       h('h1', null, LEVEL_NAME[lv]),
-      h('p', null, '共 ' + units.length + ' 個單元 · 已完成 ' + done)));
+      h('p', null, LEVEL_WHAT[lv] + ' · ' + units.length + ' 個單元 · 已完成 ' + done)));
 
     root.append(h('div', { class: 'diag-bar', style: 'margin-top:4px' },
       h('i', { style: 'width:' + Math.round(done / units.length * 100) + '%' })));
@@ -130,7 +130,7 @@
     document.title = unit.title + ' - ' + L.title + ' - 衝衝英文';
 
     root.append(h('div', { class: 'unit-head' },
-      h('a', { href: 'writing.html?level=' + lv, class: 'unit-back' }, '← ' + LEVEL_NAME[lv] + ' 單元列表'),
+      h('a', { href: 'writing.html?level=' + lv, class: 'unit-back' }, '← 回單元列表'),
       h('div', { class: 'diag-count', style: 'margin-top:8px' },
         '單元 ', h('b', null, String(idx + 1)), ' / ' + units.length,
         h('span', { class: 'badge ' + TYPE_BADGE[unit.t][1], style: 'margin-left:10px' }, TYPE_BADGE[unit.t][0])),
@@ -390,7 +390,7 @@
     return h('div', { class: 'q-block unit-block' },
       h('h2', { class: 'unit-title-lg' }, title),
       h('div', { class: 'q-text' }, b.scenario),
-      h('div', { class: 'kw-row' }, '必須用到：', b.keywords.map(k => h('span', { class: 'kw-chip' }, k))),
+      h('div', { class: 'kw-row' }, '必須用到', b.keywords.map(k => h('span', { class: 'kw-chip' }, k))),
       wa.ta, wa.bar, rBtn, rBody);
   }
 

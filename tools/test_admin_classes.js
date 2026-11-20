@@ -670,7 +670,7 @@ Object.assign(cases, {
   'admin.js:PAID_UI 沒開、不是老師:畫面還是原本那句,不呼叫任何函式、不查班級': async () => {
     const w = world(); const a = loadAdmin(w, { paid: false, isTeacher: false });
     await settle();
-    const ok = a.root.textContent === '這個帳號沒有教師權限。請用教師帳號登入（教師帳號=已加入 teachers 表的帳號，見指南步驟 D）。' && w.calls.length === 0 && w.rpcs.length === 0;
+    const ok = a.root.textContent === '這個帳號沒有教師權限。請改用教師帳號登入。' && w.calls.length === 0 && w.rpcs.length === 0;
     return { ok, detail: a.root.textContent + ' / 查詢 ' + w.calls.length };
   },
   'admin.js:老師(PAID_UI 沒開):原本的備份按鈕、學生表、讀進度一次照舊;多一個班級區,沒有方案那一列': async () => {

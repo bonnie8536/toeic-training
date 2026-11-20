@@ -263,7 +263,7 @@ const legacy = () => [{ id: 'b1', name: '第一課', words: [{ en: 'apple', zh: 
       [{ en: 'apple', zh: '蘋果' }, { en: 'pear', zh: '梨' }], Date.now() - 60e3));
     const renamedBy = (banks, name) => SM.editBank(banks, 'b1', Date.now() - 5e3, b => Object.assign({}, b, { name }));   // 手機的改名(比現在早)
     const inputOf = pg => pg.root.all().find(e => e.tagName === 'INPUT' && e.attrs.type === 'text');
-    const doneLink = pg => pg.root.all().find(e => e.tagName === 'A' && /完成/.test(textOf(e)));
+    const doneLink = pg => pg.root.all().find(e => e.tagName === 'A' && /回單字訓練/.test(textOf(e)));
     const out = [];
     /* A. 開單字頁後 syncKey 還沒回來就點「編輯」,syncKey 帶回別台的改名;學生什麼都沒改,直接按「← 完成」 */
     {

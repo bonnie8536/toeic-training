@@ -376,7 +376,7 @@
     async function renameUser(e) {
       const opener = openerOf(e);
       if (accountMoved()) { goneCard(opener); return; }
-      const n = prompt('暱稱（老師會看到這個名字）', unsentName !== null ? unsentName : CLOUD.nameOf(CLOUD.user));
+      const n = prompt('暱稱，老師可見', unsentName !== null ? unsentName : CLOUD.nameOf(CLOUD.user));
       if (n === null) return;
       /* 輸入視窗、確認視窗開著的時候,別的分頁登出、改登入別人,Chrome 不會把 localStorage 的改動送進這一頁,
          按確定之後要再過兩個工作(實測約 2 毫秒)才看得到,在那之前讀到的還是舊值:CLOUD 送出前的查核(mustBeShown)放行,送出時 supabase-js 拿的卻是別人的登入資料,
@@ -556,7 +556,7 @@
     }
 
     let roleSeq = 0;
-    /* onRole(身分):換身分時通知註冊卡(選老師時藏起暱稱下面「老師會看到這個名字」) */
+    /* onRole(身分):換身分時通知註冊卡(選老師時藏起暱稱下面「老師可見」) */
     function rolePicker(onRole) {
       const seq = ++roleSeq;
       let role = 'student', seats = SEAT_OPTIONS[0];
@@ -692,7 +692,7 @@
 
       function drawMain(msg) {
         if (mode === 'signup') {
-          const name = authField({ label: '暱稱', type: 'text', name: 'nickname', ac: 'nickname', max: 20, hint: '老師會看到這個名字' });
+          const name = authField({ label: '暱稱', type: 'text', name: 'nickname', ac: 'nickname', max: 20, hint: '老師可見' });
           const email = authField({ label: 'Email', type: 'email', name: 'email', ac: 'email', inputmode: 'email' });
           const pw = authField({ label: '密碼', type: 'password', name: 'password', ac: 'new-password', hint: '至少 8 碼' });
           email.input.addEventListener('blur', () => {
@@ -702,13 +702,13 @@
             const fix = typoFix(v);
             if (fix) email.tipFix('是不是要打 ', fix);
           });
-          /* 身分選擇:PAID_UI 沒開時一個節點都不多。選老師時藏起暱稱的「老師會看到這個名字」(老師帳號的暱稱學生看不到) */
+          /* 身分選擇:PAID_UI 沒開時一個節點都不多。選老師時藏起暱稱的「老師可見」(老師帳號的暱稱學生看不到) */
           const nameHint = name.el.querySelector('.auth-hint');
           const role = paidUi() ? rolePicker(r => { if (nameHint) nameHint.hidden = r === 'teacher'; }) : null;
           const btn = submitBtn('註冊');
           const form = formOf(btn, msg, async ({ lock, unlock, fail }) => {
             let ok = true;
-            ok = name.bad(name.value() ? '' : '暱稱還沒填。') && ok;
+            ok = name.bad(name.value() ? '' : '請輸入暱稱。') && ok;
             ok = email.bad(EMAIL_RE.test(email.value()) ? '' : 'Email 格式不對。') && ok;
             ok = pw.bad(pw.raw().length >= 8 ? '' : '密碼至少 8 碼。') && ok;
             if (!ok) { const b = card.querySelector('.is-bad input'); if (b) b.focus(); return; }
@@ -721,7 +721,7 @@
               if (r.needsConfirm) sent(email.value());
             } catch (e) { forgetIntent(); fail(e.message); unlock(); }
           }, name.el, email.el, pw.el);
-          put(heading('註冊'), why('註冊之後就能作答，練習紀錄會存在你的帳號。'), role ? role.el : null, googleBtn(msg, role), orLine(), form, consentLine(),
+          put(heading('註冊'), why('註冊之後就能作答。'), role ? role.el : null, googleBtn(msg, role), orLine(), form, consentLine(),
             switchLine('已經有帳號？', '登入', 'login'));
         } else {
           const email = authField({ label: 'Email', type: 'email', name: 'email', ac: 'username', inputmode: 'email' });
@@ -732,14 +732,14 @@
           const form = formOf(btn, msg, async ({ lock, unlock, fail }) => {
             let ok = true;
             ok = email.bad(EMAIL_RE.test(email.value()) ? '' : 'Email 格式不對。') && ok;
-            ok = pw.bad(pw.raw() ? '' : '密碼還沒填。') && ok;
+            ok = pw.bad(pw.raw() ? '' : '請輸入密碼。') && ok;
             if (!ok) { const b = card.querySelector('.is-bad input'); if (b) b.focus(); return; }
             lock('登入中');
             forgetIntent();   // 登入既有帳號:註冊時選老師的意向作廢
             try { await CLOUD.login(email.value(), pw.raw()); }   // 成功後 afterAuth 會 reload
             catch (e) { fail(e.message); unlock(); }
           }, email.el, pw.el);
-          put(heading('登入'), why('登入之後才能作答，練習紀錄會存在你的帳號。'), googleBtn(msg), orLine(), form, consentLine(),
+          put(heading('登入'), why('登入之後才能作答。'), googleBtn(msg), orLine(), form, consentLine(),
             switchLine('還沒有帳號？', '註冊', 'signup'));
         }
       }
@@ -754,7 +754,7 @@
           catch (e) { fail(e.message); unlock(); }
         }, email.el);
         put(heading('重設密碼'), form,
-          h('p', { class: 'auth-fine' }, '用 Google 登入的帳號沒有密碼，直接按 Google 登入就好。'),
+          h('p', { class: 'auth-fine' }, '這個帳號請用 Google 登入。'),
           switchLine(null, '回登入', 'login'));
       }
 

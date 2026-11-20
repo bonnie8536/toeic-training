@@ -70,7 +70,7 @@
           h('div', { class: 'dlg-card-en' }, d.titleEn),
           h('p', { class: 'dlg-card-scene' }, d.scene),
           h('div', { class: 'progress-note' },
-            d.lines.length + ' 句 · 口語 ' + slangCount(d) + ' 個' + (heard ? ' · 聽過 ' + heard + '/' + d.lines.length : '')))));
+            d.lines.length + ' 句 · 口語 ' + slangCount(d) + ' 個' + (heard ? ' · 聽過 ' + heard + ' / ' + d.lines.length : '')))));
       });
     }
     draw();
@@ -102,7 +102,7 @@
     const progressEl = h('span', { class: 'vocab-progress' });
     const msgEl = h('span', { class: 'dlg-msg', role: 'status' });
     const toolbar = h('div', { class: 'reader-toolbar' }, allBtn, biBtn, slowBtn,
-      h('span', { class: 'toolbar-note' }, '點句子播放，虛線字可以點'), progressEl, msgEl);
+      h('span', { class: 'toolbar-note' }, '點句子播放。點虛線字看解釋。'), progressEl, msgEl);
 
     const linesEl = h('div', { class: 'dlg-lines' });
     const bubbles = d.lines.map((l, i) => {
@@ -198,7 +198,7 @@
     }
     function updateProgress() {
       progressEl.innerHTML = '';
-      progressEl.append('聽過 ', h('b', null, String(heardOf(d.id).length)), '/' + d.lines.length + ' 句');
+      progressEl.append('聽過 ', h('b', null, String(heardOf(d.id).length)), ' / ' + d.lines.length + ' 句');
     }
     window.addEventListener('pagehide', () => { try { audio.pause(); } catch (e) {} });
   }

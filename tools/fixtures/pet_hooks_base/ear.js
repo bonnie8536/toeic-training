@@ -14,10 +14,10 @@
   }
 
   const SECTIONS = {
-    s: { key: 'ear_s', title: '句子跟讀', items: E.shadow || E.dictation, desc: '聽完跟著唸出來，每句兩遍。', per: 5 },
+    s: { key: 'ear_s', title: '句子跟讀', items: E.shadow || E.dictation, desc: '每句 2 遍', per: 5 },
     d: { key: 'ear_d', title: '句子聽寫', items: E.dictation, desc: '', per: 5 },
     mp: { key: 'ear_mp', title: '相似音辨析', items: E.pairs, desc: '', per: 10 },
-    n: { key: 'ear_n', title: '數字與價格', items: E.numbers, desc: 'thirteen 還是 thirty；時間、金額、分機。', per: 10 },
+    n: { key: 'ear_n', title: '數字與價格', items: E.numbers, desc: 'thirteen / thirty', per: 10 },
   };
 
   function stats(sec) {
@@ -95,8 +95,7 @@
   function renderHome() {
     document.title = '聽力訓練 - 衝衝英文';
     root.append(h('div', { class: 'page-head' },
-      h('h1', null, '聽力訓練'),
-      h('p', null, '答錯的下一輪會優先出現。')));
+      h('h1', null, '聽力訓練')));
     root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
       Object.entries(SECTIONS).map(([k, d]) => {
         const s = stats(k);
@@ -110,14 +109,15 @@
         return h('div', { class: 'part-card' },
           h('h3', null, d.title),
           d.desc ? h('p', null, d.desc) : null,
-          h('div', { class: 'p-stats', 'data-nosnippet': '' }, '完成 ' + s.done + '/' + s.total +
+          h('div', { class: 'p-stats', 'data-nosnippet': '' }, '完成 ' + s.done + ' / ' + s.total +
             (s.done ? ' · 一次答對率 ' + Math.round(s.ok / s.done * 100) + '%' : '')),
           h('div', { class: 'bar' }, h('i', { style: 'width:' + pct + '%' })),
           h('div', { class: 'cfg-row', 'data-nosnippet': '' }, lvSel,
             h('a', {
               class: 'btn primary', href: 'listening.html?sec=' + k, 'data-gate': '',   // 開始一輪:沒登入時 js/profile.js 先攔下(不換頁);直接開 ?sec= 照樣看得到題目
               onclick: e => { e.currentTarget.href = 'listening.html?sec=' + k + '&lv=' + encodeURIComponent(lvSel.value); },
-            }, '開始一輪 ' + d.per + ' 題')));
+            }, '開始'),
+            h('span', { class: 'toolbar-note', style: 'align-self:center' }, d.per + ' 題')));
       })));
   }
 
@@ -288,7 +288,7 @@
         result.append(
           withReport(h('div', { class: 'explain' },
             h('div', { class: 'verdict ' + (perfect ? 'ok' : 'bad') },
-              perfect ? '完全正確！' : '對了 ' + hits + '/' + ansWords.length + ' 個字'),
+              perfect ? '完全正確！' : '對了 ' + hits + ' / ' + ansWords.length + ' 個字'),
             h('div', { class: 'dict-diff' },
               diff.map(x => h('span', { class: 'dict-word ' + (x.hit ? 'hit' : 'miss') }, x.w))),
             q.note && q.note !== '無' ? h('div', { class: 'tr' }, q.note) : null,
@@ -359,7 +359,7 @@
             });
             result.append(
               withReport(h('div', { class: 'explain' },
-                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯了，正確是 ' + q.options[q.answer]),
+                h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對了' : '答錯 · 正解 ' + q.options[q.answer]),
                 h('div', null, q.note),
                 h('div', { class: 'tr' }, q.audioText + '\n' + q.zh)), q.id),
               nextRow(true));
@@ -376,12 +376,12 @@
       if (player) player.stop();
       root.innerHTML = '';
       const ok = results.filter(Boolean).length;
-      const note = ok === list.length ? '' : '答錯的下一輪優先出現。';
+      const note = '';
       root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
         h('h2', null, d.title + '：' + ok + ' / ' + list.length),
         note ? h('div', { class: 'band-note' }, note) : null));
       root.append(h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', onclick: () => startRound(sec) }, '再來一輪'),
+        h('button', { class: 'btn primary', onclick: () => startRound(sec) }, '再做一次'),
         h('a', { class: 'btn', href: 'listening.html' }, '回聽力訓練')));
       window.scrollTo(0, 0);
     }

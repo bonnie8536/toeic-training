@@ -20,7 +20,7 @@
     },
     half: {
       name: '標準半回', mins: 47,
-      desc: '聽力 36 題，閱讀約 39 題，配速比照正式考。',
+      desc: '聽力 36 題 · 閱讀約 39 題',
       l: { p1: 3, p2: 12, p3: 4, p4: 3 }, r: { p5: 15, p6: 2, p7: 4 },
     },
   };
@@ -126,8 +126,8 @@
         table.append(h('tr', null,
           h('td', null, (r.d || '').slice(0, 10)),
           h('td', null, (SIZES[r.size] || {}).name || r.size),
-          h('td', { class: 'num' }, r.lRaw + '/' + r.lTotal + ' · ' + r.lScore),
-          h('td', { class: 'num' }, r.rRaw + '/' + r.rTotal + ' · ' + r.rScore),
+          h('td', { class: 'num' }, r.lRaw + ' / ' + r.lTotal + ' · ' + r.lScore),
+          h('td', { class: 'num' }, r.rRaw + ' / ' + r.rTotal + ' · ' + r.rScore),
           h('td', { class: 'num' }, h('b', null, r.lScore + r.rScore))));
       });
       root.append(table);
@@ -136,7 +136,7 @@
       if (W && typeof W.SINCE === 'string' && hist.slice(-8).some(r => r && typeof r.d === 'string' && r.d < W.SINCE)) {
         const since = new Date(W.SINCE);
         root.append(h('p', { class: 'result-note mock-old-note' },
-          (since.getMonth() + 1) + '/' + since.getDate() + ' 改版以前的模擬考只存了分數，答錯的題沒有收進錯題本；之後交卷的會自動收進去。'));
+          (since.getMonth() + 1) + '/' + since.getDate() + ' 以前的模擬考錯題沒有收進錯題本。'));
       }
     }
   }
@@ -440,12 +440,12 @@
     function wrongNote(wb, skipped) {
       if (!wb || !wb.ok) return null;
       const parts = [];
-      if (wb.wrong > 0) parts.push('答錯的 ' + wb.wrong + ' 題已收進錯題本。');
-      else if (skipped < units.reduce((n, u) => n + unitQs(u), 0)) parts.push('這次沒有答錯的題。');   // 有作答、沒有答錯
-      if (wb.cleared > 0) parts.push('原本在錯題本的 ' + wb.cleared + ' 題這次答對，已經移出。');
-      if (skipped > 0) parts.push('沒作答的 ' + skipped + ' 題不收。');
+      if (wb.wrong > 0) parts.push('收進錯題本 ' + wb.wrong + ' 題');
+      else if (skipped < units.reduce((n, u) => n + unitQs(u), 0)) parts.push('這次沒有答錯的題');   // 有作答、沒有答錯
+      if (wb.cleared > 0) parts.push('移出 ' + wb.cleared + ' 題');
+      if (skipped > 0) parts.push('未作答 ' + skipped + ' 題不收');
       if (!parts.length) return null;
-      return h('div', { class: 'band-note mock-wb-note' }, parts.join(''),
+      return h('div', { class: 'band-note mock-wb-note' }, parts.join(' · '),
         wb.wrong + wb.cleared > 0 ? h('a', { href: 'practice.html#wrongbook', style: 'margin-left:6px' }, '看錯題本 →') : null);
     }
 
@@ -458,11 +458,11 @@
         h('h2', null, '參考總分 ' + (lScore + rScore)),
         h('div', { class: 'band-note' },
           (timeUp ? '時間到，自動交卷。' : '') +
-          '聽力 ' + lRaw + '/' + lTotal + '（約 ' + lScore + '）· 閱讀 ' + rRaw + '/' + rTotal + '（約 ' + rScore + '）。參考換算，非正式成績。'),
+          '聽力 ' + lRaw + ' / ' + lTotal + ' 約 ' + lScore + ' 分 · 閱讀 ' + rRaw + ' / ' + rTotal + ' 約 ' + rScore + ' 分 · 參考換算，非正式成績'),
         unsaved ? null : wrongNote(wb, skipped || 0),
         unsavedNote(unsaved)));
       root.append(h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startExam(sizeKey) }, '再來一回'),
+        h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startExam(sizeKey) }, '再做一次'),
         h('a', { class: 'btn', href: 'mock.html' }, '回模擬考')));
 
       /* 逐題檢討 */
@@ -487,7 +487,7 @@
         const verdict = (q, chosen, ctx) => {
           const box = h('div', { class: 'explain' },
             h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
-              chosen === q.answer ? '答對了' : (chosen === undefined ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
+              chosen === q.answer ? '答對了' : (chosen === undefined ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
             h('div', null, q.explanation));
           if (ctx && window.REPORT) REPORT.attach(box, ctx);
           return box;

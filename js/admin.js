@@ -44,7 +44,7 @@
         root.append(h('div', { class: 'page-head' }, h('h1', null, '教師後台')), AC.trialBlock(info));
         return;
       }
-      note('這個帳號沒有教師權限。請用教師帳號登入（教師帳號=已加入 teachers 表的帳號，見指南步驟 D）。');
+      note('這個帳號沒有教師權限。請改用教師帳號登入。');
       return;
     }
     load();

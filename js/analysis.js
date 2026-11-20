@@ -54,7 +54,7 @@
     });
     rec.total += n5; rec.correct += ok5;
     rec.parts['5'] = { n: n5, ok: ok5 };
-    if (n5) rec.sources.push('Part 5 刷題 ' + n5 + ' 題');
+    if (n5) rec.sources.push('Part 5 ' + n5 + ' 題');
 
     /* 刷題 P6(依題型)與 P7 */
     for (const p of ['6', '7']) {
@@ -68,7 +68,7 @@
       }));
       rec.total += n; rec.correct += ok;
       rec.parts[p] = { n, ok };
-      if (n) rec.sources.push('Part ' + p + ' 刷題 ' + n + ' 題');
+      if (n) rec.sources.push('Part ' + p + ' ' + n + ' 題');
     }
     return rec;
   }
@@ -172,7 +172,7 @@
   const est = bandEstimate(aB0 === null ? 1 : aB0, aM0 === null ? overall : aM0, aA0 === null ? overall : aA0, overall);
   const accCls = r => r < 0.4 ? 'weak' : r < 0.6 ? 'mid' : '';
   root.append(h('div', { class: 'report-head' },
-    h('div', { class: 'who' }, '依據：' + rec.sources.join('、')),
+    h('div', { class: 'who' }, '資料來源 ' + rec.sources.join('、')),
     h('h2', null, '預測級距（閱讀）'),
     bandScale(est.band),
     h('div', { style: 'margin-top:18px' },
@@ -185,7 +185,7 @@
             Math.round(rec.parts[pp].ok / rec.parts[pp].n * 100) + '% · ' + rec.parts[pp].n + ' 題',
             accCls(rec.parts[pp].ok / rec.parts[pp].n))
         : null)),
-    h('div', { class: 'band-note' }, '級距由練習紀錄推估，與正式成績會有落差。')));
+    h('div', { class: 'band-note' }, '級距為估算，非正式成績')));
 
   /* 2. 強弱項(長條圖,弱→強) */
   const catRows = Object.entries(rec.cats).filter(([, c]) => c.t >= 3)
@@ -199,7 +199,7 @@
       const a = c.c / c.t;
       const cls = a >= 0.8 ? 'ok' : a >= 0.4 ? 'mid' : 'weak';
       const link = c.go ? 'practice.html?part=' + c.go.part + (c.go.cat ? '&cat=' + encodeURIComponent(c.go.cat) : '') : null;
-      wrap.append(bar(cat, a, c.c + '/' + c.t, cls,
+      wrap.append(bar(cat, a, c.c + ' / ' + c.t, cls,
         cls !== 'ok' && link ? h('a', { class: 'bar-go', href: link }, '去練') : h('span', { class: 'bar-go', style: 'visibility:hidden' }, '去練')));
     });
     root.append(wrap,
@@ -270,8 +270,8 @@
     + (TOEIC.part7 || []).reduce((n, s) => n + s.questions.length, 0);
   const readQTotal = (TOEIC.articles || []).reduce((n, a) => n + a.questions.length, 0);
   root.append(h('div', { style: 'margin:6px 0 40px' },
-    bar('刷題', drillTotal ? drillN / drillTotal : 0, drillN + '/' + drillTotal),
-    bar('互動單字', v.vocabTotal ? v.vocab / v.vocabTotal : 0, v.vocab + '/' + v.vocabTotal),
-    bar('文章題', readQTotal ? v.readQ / readQTotal : 0, v.readQ + '/' + readQTotal),
-    bar('寫作單元', v.wTotal ? v.wDone / v.wTotal : 0, v.wDone + '/' + v.wTotal)));
+    bar('刷題', drillTotal ? drillN / drillTotal : 0, drillN + ' / ' + drillTotal),
+    bar('互動單字', v.vocabTotal ? v.vocab / v.vocabTotal : 0, v.vocab + ' / ' + v.vocabTotal),
+    bar('文章題', readQTotal ? v.readQ / readQTotal : 0, v.readQ + ' / ' + readQTotal),
+    bar('寫作單元', v.wTotal ? v.wDone / v.wTotal : 0, v.wDone + ' / ' + v.wTotal)));
 })();

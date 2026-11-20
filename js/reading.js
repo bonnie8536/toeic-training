@@ -79,8 +79,8 @@
             h('h3', null, a.title),
             h('div', { class: 'zh' }, a.titleZh),
             (doneCount || qDone || tqRes)
-              ? h('div', { class: 'progress-note' }, '單字 ' + doneCount + '/' + total + ' · 題目已作答 ' + qDone + '/' + a.questions.length
-                  + (tqRes ? ' · 單字考題 ' + tqRes.score + '/' + tqRes.total : ''))
+              ? h('div', { class: 'progress-note' }, '單字 ' + doneCount + ' / ' + total + ' · 題目已作答 ' + qDone + ' / ' + a.questions.length
+                  + (tqRes ? ' · 單字考題 ' + tqRes.score + ' / ' + tqRes.total : ''))
               : null)));
       });
     }
@@ -135,7 +135,7 @@
     };
     const toolbar = h('div', { class: 'reader-toolbar' },
       biBtn, bankBtn,
-      h('span', { class: 'toolbar-note' }, '虛線單字可以點'),
+      h('span', { class: 'toolbar-note' }, '點虛線字填空'),
       progressEl);
 
     const bodyEl = h('div', { class: 'article-body' });
@@ -216,7 +216,7 @@
       const total = countVocabInstances(a);
       const done = Object.keys(state).length;
       progressEl.innerHTML = '';
-      progressEl.append(h('b', null, String(done)), '/' + total + ' 個單字已完成');
+      progressEl.append('已完成 ', h('b', null, String(done)), ' / ' + total + ' 個字');
     }
 
     /* ============ 浮動卡片 ============ */
@@ -370,10 +370,10 @@
         h('button', {
           class: 'btn', 'data-gate': '',
           onclick: () => { answers = {}; store.set(key, answers); drawAll(); },
-        }, '重做全部題目'),
+        }, '再做一次'),
         answered === a.questions.length
           ? h('span', { class: 'result-note', style: 'align-self:center' },
-              '本篇成績：' + correct + '/' + a.questions.length)
+              '本篇成績：' + correct + ' / ' + a.questions.length)
           : null);
       list.append(foot);
     }
@@ -407,7 +407,7 @@
       if (done) {
         const box = h('div', { class: 'explain' },
           h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
-            chosen === q.answer ? '答對了' : '答錯了，正確答案是 ' + LETTERS[q.answer]),
+            chosen === q.answer ? '答對了' : '答錯 · 正解 ' + LETTERS[q.answer]),
           h('div', null, q.explanation));
         /* 回報題目(js/report.js):題號跟上面 logAttempt('r') 同一套 */
         if (window.REPORT) REPORT.attach(box, { m: 'r', id: a.id + ':' + qi });
@@ -470,7 +470,7 @@
     wrap.append(
       h('p', { class: 'result-note' },
         '同一批單字換一篇文章。字卡拖進空格，或先點字卡再點空格。'
-        + (last ? '上次成績 ' + last.score + '/' + last.total + '。' : '')),
+        + (last ? '上次成績 ' + last.score + ' / ' + last.total + '。' : '')),
       area);
 
     let placed = {}, selected = null, armed = null, submitted = false;
@@ -619,10 +619,10 @@
             class: 'btn primary', type: 'button', 'data-gate': '',
             disabled: filledN < answers.length ? '' : null,
             onclick: submit,
-          }, filledN < answers.length ? '交卷對答案（還有 ' + (answers.length - filledN) + ' 格）' : '交卷對答案')));
+          }, filledN < answers.length ? '交卷（還有 ' + (answers.length - filledN) + ' 格）' : '交卷')));
       } else {
         const score = answers.filter((w, bi) => placed[bi] === w).length;
-        area.append(h('div', { class: 'tq-result' }, '成績：' + score + '/' + answers.length));
+        area.append(h('div', { class: 'tq-result' }, '成績：' + score + ' / ' + answers.length));
         const zhWrap = h('div', { class: 'tq-zh' });
         String(tr.passageZh).split(/\n{2,}/).forEach(z => zhWrap.append(h('p', null, z)));
         const words = h('div', { class: 'tq-review' });

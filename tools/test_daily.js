@@ -552,7 +552,7 @@ T['畫面:三項都做完的成績頁也沒有 null'] = () => {
   const ui = uiEnv({ search: '?part=g', now: NOW, before: preset({ d: { n: 5, wrong: 0 }, v: { n: 5, wrong: 0 }, g: { n: 5, wrong: 2 } }) });
   const t = seen(ui.root);
   const g = D.itemsFor(DATA, '2026-10-12').g[0];
-  return { ok: !/null|undefined/.test(t) && /明天換新題/.test(t) && t.includes(g.options[g.answer]), detail: JSON.stringify(t) };
+  return { ok: !/null|undefined/.test(t) && /今日練習已完成/.test(t) && t.includes(g.options[g.answer]), detail: JSON.stringify(t) };
 };
 T['畫面:聽寫沒打字時對答案按不下去,按 Enter 也不記;打了字才可以'] = () => {
   const ui = uiEnv({ search: '?part=d', now: NOW });
@@ -622,7 +622,7 @@ T['畫面:首頁過了午夜回到前景,換成新的一天'] = () => {
   ui.clock.t = tp('2026-10-13 07:00:00');
   ui.dom.fire('visibilitychange');
   const t2 = seen(ui.root);
-  return { ok: /明天換新題/.test(t1) && !/明天換新題/.test(t2) && /0 \/ 5/.test(t2), detail: JSON.stringify(t2) };
+  return { ok: /今日練習已完成/.test(t1) && !/今日練習已完成/.test(t2) && /0 \/ 5/.test(t2), detail: JSON.stringify(t2) };
 };
 
 function cloudPreset(local, res) {

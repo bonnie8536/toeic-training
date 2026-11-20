@@ -328,7 +328,7 @@ const CONTENT = [
     act: [{ sel: '.article-body .vw' }, { sel: '.reader-toolbar .btn', i: 1 }, { sel: '#reading-root .q-block .opt' }, { sel: '.tq-chip' }, { sel: '.tq-blank' }],
     free: [{ sel: '.reader-toolbar .btn', i: 0, then: '.article-body.bilingual' }] },
   { url: 'dialogue.html', see: 'a.dlg-card', free: [{ sel: '.drill-filters .chip', i: 1, then: '.drill-filters .chip.on' }] },
-  { url: 'dialogue.html?id=dlg-01', see: '.dlg-bubble', free: [{ sel: '.dlg-bubble', thenText: ['.vocab-progress', /聽過 1\//] }, { sel: '.vw.dlg-sl', then: '.vocab-pop' }] },
+  { url: 'dialogue.html?id=dlg-01', see: '.dlg-bubble', free: [{ sel: '.dlg-bubble', thenText: ['.vocab-progress', /聽過 1 \//] }, { sel: '.vw.dlg-sl', then: '.vocab-pop' }] },
   { url: 'vocab.html', see: '.vg-games .part-card', act: [{ sel: '.vg-games .btn.primary' }, { sel: '.vg-games .btn.primary', i: 3 }, { sel: '.exercise-head .btn' }],
     free: [{ sel: '.hist-tabs .hist-tab', i: 1, then: '.hist-tabs .hist-tab.on' }], pick: true },
   { url: 'vocab.html#phrase', see: '.phrase-table', act: [{ sel: '.part-card:has(.phrase-table) .btn.primary' }], free: [{ sel: '.part-card .pop-mini', thenText: ['.part-card .pop-mini', /收起/] }] },
@@ -585,7 +585,7 @@ T['新舊檔混用:common.js 還是上一版(沒有 canKeepProgress)時,已登�
       await click(d, '.dlg-bubble');
       await sleep(300);
       const heard = JSON.parse(await d.eval(LS))[r.prefix + 'dlg_heard'];
-      res.heard = /聽過 1\//.test(await d.eval("(document.querySelector('.vocab-progress') || {}).textContent || ''")) && /dlg-01/.test(heard || '');
+      res.heard = /聽過 1 \//.test(await d.eval("(document.querySelector('.vocab-progress') || {}).textContent || ''")) && /dlg-01/.test(heard || '');
       await d.close();
       res.ok = res.old === 'undefined' && res.writing && res.slow && res.src && res.heard;
       out.push(res);
@@ -1703,7 +1703,7 @@ T['單字頁:題庫編輯器的加入單字、勾選、刪字、改名,片語特
     /* 片語特訓:開始之後才擋下,按選項跳卡、不對答案 */
     s = await vocabOpen(B, '#phrase');
     try {
-      await pressText(s, '.part-card .btn.primary', '開始練習');   // data-gate,這時能作答
+      await pressText(s, '.part-card:has(.p-stats) .btn.primary', '開始');   // data-gate,這時能作答
       r.drill = await s.eval("document.querySelectorAll('.opts .opt').length");
       if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
       const before = await s.eval(LS);
@@ -1847,7 +1847,7 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
       r.picked = await s.eval(PICKED_L);
       if (r.pickCard) await closeBy(s, 'esc');
       await s.eval('window.confirm = () => true; true');
-      await pressText(s, '.drill-nav-btns .btn', '直接交卷');
+      await pressText(s, '.drill-nav-btns .btn', '交卷');
       r.submitCard = await card(s);
       r.report = await s.eval("(document.querySelector('.report-head') || {}).textContent || ''");
       r.picked2 = await s.eval(PICKED_L);
@@ -1867,7 +1867,7 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
       await click(s, '#__press');   // 查看
       r.listSettled = await settleNav(s);
       await sleep(600);
-      await pressText(s, '.wb-start .btn.primary', '開始複習');
+      await pressText(s, '.wb-start .btn.primary', '開始');
       r.revSettled2 = await settleNav(s);
       await sleep(600);
       r.revLetters = await s.eval("document.querySelectorAll('.letter-row .letter-big').length");
@@ -1943,9 +1943,9 @@ T['刷題頁隨機練習、聽力隨機練習、程度檢測:交卷的確認視�
   const card = async (s) => { const st = await state(s); return st.mask ? st.title : ''; };
   const REPORT = "(document.querySelector('.report-head') || {}).textContent || ''";
   const PAGES = [
-    { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始練習'], pick: '.q-block .opt', submit: '直接交卷', keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /答對 \d+ \/ 10 題/, kept: "document.querySelectorAll('.q-block .opt.picked').length" },
-    { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: '直接交卷', keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /答對 \d+ \/ 10 題/, kept: "document.querySelectorAll('.letter-row .letter-big.picked').length" },
-    { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始檢測'], pick: '.q-block .opt', submit: '交卷，看報告', keys: [DIAG], up: ['diag'], report: /./, kept: null },
+    { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: '交卷', keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /答對 \d+ \/ 10 題/, kept: "document.querySelectorAll('.q-block .opt.picked').length" },
+    { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: '交卷', keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /答對 \d+ \/ 10 題/, kept: "document.querySelectorAll('.letter-row .letter-big.picked').length" },
+    { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: '交卷', keys: [DIAG], up: ['diag'], report: /./, kept: null },
   ];
   const out = [];
   for (const how of ['照常', '登出', '還沒灌過']) {
@@ -2041,9 +2041,9 @@ T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改�
   const out = [];
   try {
     const PAGES = [
-      { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始練習'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '直接交卷'], keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /答對 \d+ \/ 10 題/ },
-      { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: ['.drill-nav-btns .btn', '直接交卷'], keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /答對 \d+ \/ 10 題/ },
-      { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始檢測'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷，看報告'], keys: [DIAG], up: ['diag'], report: /./ },
+      { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷'], keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /答對 \d+ \/ 10 題/ },
+      { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: ['.drill-nav-btns .btn', '交卷'], keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /答對 \d+ \/ 10 題/ },
+      { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷'], keys: [DIAG], up: ['diag'], report: /./ },
       { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.drill-top .btn', '交卷'], keys: [MH], up: ['mock_history'], report: /參考總分/, mock: true },
       /* 錯題本(定稿 E4):抽題固定,聽力 2 第 1 題答錯 → 照常時多寫、多傳 mock_wrong 各一次;擋下時一個鍵都不寫 */
       { name: '模擬考(答一題錯)', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: '#mock-root .letter-row .letter-big', pickI: wrongOf(BANK.listening.p2[0]), pre: FIXRAND,
@@ -2178,9 +2178,9 @@ T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 
   const N = (k) => `JSON.parse(localStorage.getItem(${J(k)}) || '[]').length`;
   const BACK_X = `(() => { localStorage.setItem(${J(SB)}, ${J(login)}); localStorage.setItem('tr_current_profile', ${J(J(CPID))}); return true; })()`;
   const PAGES = [
-    { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始練習'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '直接交卷'], sets: ['drill_p5', 'hist'], count: HIST, add: 1, report: /答對 \d+ \/ 10 題/ },
-    { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: ['.drill-nav-btns .btn', '直接交卷'], sets: ['listen_p2', 'hist'], count: HIST, add: 1, report: /答對 \d+ \/ 10 題/ },
-    { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始檢測'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷，看報告'], sets: ['diag'], count: HIST, add: 0, report: /./ },
+    { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷'], sets: ['drill_p5', 'hist'], count: HIST, add: 1, report: /答對 \d+ \/ 10 題/ },
+    { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: ['.drill-nav-btns .btn', '交卷'], sets: ['listen_p2', 'hist'], count: HIST, add: 1, report: /答對 \d+ \/ 10 題/ },
+    { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷'], sets: ['diag'], count: HIST, add: 0, report: /./ },
     { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.drill-top .btn', '交卷'], sets: ['mock_history'], count: MH, add: 1, report: /參考總分/, mock: true },
     /* 錯題本(定稿 E4):有作答時按兩下交卷,mock_wrong 也只寫一次 */
     { name: '模擬考(答一題錯)', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: '#mock-root .letter-row .letter-big', pickI: wrongOf(BANK.listening.p2[0]), fix: FIXRAND,
@@ -2529,7 +2529,7 @@ T['錯題本 E1:模擬考交卷把答錯的題收進 mock_wrong(只寫一次、�
     r.p5 = await s.eval("(() => { const row = [...document.querySelectorAll('#wrongbook .review-row')].find((x) => /Part 5/.test(x.textContent)); return row ? row.querySelector('b').textContent : ''; })()");
     r.scrolled = await s.eval("Math.abs(document.getElementById('wrongbook').getBoundingClientRect().top) < 80");
   } finally { await s.close(); }
-  r.ok = !r.changed.length && r.right && r.sets === 1 && r.ups === 1 && /答錯的 3 題已收進錯題本/.test(r.note) && /原本在錯題本的 1 題這次答對/.test(r.note) && /沒作答的 \d+ 題不收/.test(r.note)
+  r.ok = !r.changed.length && r.right && r.sets === 1 && r.ups === 1 && /收進錯題本 3 題/.test(r.note) && /移出 1 題/.test(r.note) && /未作答 \d+ 題不收/.test(r.note)
     && r.link && r.p5 === '2 題' && r.scrolled;
   return { ok: r.ok, detail: J(r) };
 };
@@ -2543,7 +2543,7 @@ T['錯題本 E5:每日複習出現只在模擬考錯題裡的題;答對不動刷
   try {
     r.todo = await s.eval("(document.querySelector('.part-card p') || {}).textContent || ''");
     await s.eval(WATCH_SETS);
-    await pressText(s, '.part-card .btn.primary', '開始複習');
+    await pressText(s, '.part-card .btn.primary', '開始');
     r.first = await s.eval("(document.querySelector('.q-text') || {}).textContent || ''");
     await clickNth(s, '.q-block .opts .opt', P5[3].answer);
     await sleep(300);
@@ -2574,7 +2574,7 @@ T['錯題本 E5b:每日複習刷題答對過、模擬考答錯的題:答對不�
   const r = {};
   try {
     r.todo = await s.eval("(document.querySelector('.part-card p') || {}).textContent || ''");
-    await pressText(s, '.part-card .btn.primary', '開始複習');
+    await pressText(s, '.part-card .btn.primary', '開始');
     r.first = await s.eval("(document.querySelector('.q-text') || {}).textContent || ''");
     await clickNth(s, '.q-block .opts .opt', P5[3].answer);
     await sleep(300);
@@ -2730,7 +2730,7 @@ T['錯題本 U1–U10:Part 5 清單分 9 組照題庫順序、預設收起、可
     await s.eval("document.querySelectorAll('.wb-toggle').forEach((b) => b.click()); true");
     r.u10open = await s.eval('document.documentElement.scrollWidth');
   } finally { await s.close(); }
-  const ok = r.u1.n === 9 && r.u1.sum === 63 && r.u1.order && /63 題，分成 9 類/.test(r.u1.sumLine) && r.u2 && r.u3 && r.u1mock.g1 === 2 && r.u1mock.g0 === 0 && r.u4 && r.u5 && r.u6 && r.u7 && r.u8 && r.u9 && r.u9b && r.u9c
+  const ok = r.u1.n === 9 && r.u1.sum === 63 && r.u1.order && /63 題 · 9 類/.test(r.u1.sumLine) && r.u2 && r.u3 && r.u1mock.g1 === 2 && r.u1mock.g0 === 0 && r.u4 && r.u5 && r.u6 && r.u7 && r.u8 && r.u9 && r.u9b && r.u9c
     && r.u10.sw <= 375 && r.u10.top < 400 && r.u10.same && r.u10open <= 375;
   return { ok, detail: J(r) };
 };
@@ -2776,13 +2776,13 @@ T['錯題本 U11–U13、U15:聽力網址直接開、聽力 3 一段一組、聽
     try { r['mock_' + name] = await s.eval("(document.querySelector('.mock-old-note') || {}).textContent || ''"); } finally { await s.close(); }
   }
   const cats2 = [...new Set(BANK.listening.p2.slice(0, 8).map((q) => q.category))];
-  const ok = J(r.l2.slice().sort()) === J(cats2.slice().sort()) && J(r.l3) === J(BANK.listening.p3.slice(0, 2).map((x) => x.title + ':1')) && /2 題，在 2 段對話裡/.test(r.l3sum)
+  const ok = J(r.l2.slice().sort()) === J(cats2.slice().sort()) && J(r.l3) === J(BANK.listening.p3.slice(0, 2).map((x) => x.title + ':1')) && /2 題 · 2 段對話/.test(r.l3sum)
     && J(r.l4) === J(['機場廣播:2']) && r.l4all === null && /目前沒有錯題/.test(r.l1) && r.l2review.letters === 3 && /回錯題本/.test(r.l2review.top)
     && J(r.panel) === J(['63 題|查看>practice.html?mode=wrong&part=5', '3 題|查看>practice.html?mode=wrong&part=6', '30 題|查看>practice.html?mode=wrong&part=7', '0 題|沒有錯題',
       '8 題|查看>practice.html?mode=wrong&part=2', '2 題|查看>practice.html?mode=wrong&part=3', '2 題|查看>practice.html?mode=wrong&part=4'])
     && r.an.n > 9 && r.an.h4 && r.an.before === 'false' && r.an.after === 'true' && r.an.p7.length > 2 && r.an.p7.indexOf('多篇閱讀') === r.an.p7.length - 1 && !r.an.old
     && J(r.an.links) === J(['practice.html?mode=wrong&part=5', 'practice.html?mode=wrong&part=6', 'practice.html?mode=wrong&part=7'])
-    && r.mock_old.indexOf(r.sinceDay + ' 改版以前的模擬考只存了分數') === 0 && r.mock_new === '';
+    && r.mock_old.indexOf(r.sinceDay + ' 以前的模擬考錯題沒有收進錯題本。') === 0 && r.mock_new === '';
   return { ok, detail: J(r) };
 };
 

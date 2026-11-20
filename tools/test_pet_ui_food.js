@@ -16,6 +16,7 @@ if (!H_SRC) throw new Error('js/common.js 裡找不到 function h(tag, ...)');
 const NEW_SRC = read('js/pet-ui.js');
 /* 第 1 步之後刻意改的地方:[原本那一行, 改成]。2026-11-13 搜尋結果摘要:網站模式的小雞卡建立時就帶 data-nosnippet(test_seo 檢查) */
 const STEP1_LATER = [
+  ["    if (v.guest && v.cloud) out.push(h('p', { class: 'pet-note' }, '登入後換成帳號裡的小雞。'));", ''],
   ["const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h' });",
     "const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h', 'data-nosnippet': '' });"],
 ];
@@ -345,7 +346,7 @@ T['格子:button[type=button]、圖只畫一張(render size 40 variant 0,不 mou
   return { ok: b.tagName === 'BUTTON' && b.getAttribute('type') === 'button' && !!b.querySelector('canvas.pet-tile-cv') && b.querySelector('.pet-tile-n').textContent === '玉米' &&
     pg.count('corn') === '2 份' && pg.count('grain') === '4 顆' && b.getAttribute('aria-describedby') === 'pet-tip-corn' && g.getAttribute('aria-describedby') === null &&
     !!sr && sr.classList.contains('pet-sr') && sr.textContent === '玉米要壓碎再給小雞，整顆太大。' &&
-    pg.doc.getElementById('pet-tip-yam').textContent === '點心只占一小部分，主食還是飼料。' &&
+    pg.doc.getElementById('pet-tip-yam') === null && pg.tile('yam').getAttribute('aria-describedby') === null &&
     renders.length === 4 && renders.every(r => r[1].variant === 0) && trayMounts.length === 0,
     detail: JSON.stringify({ renders: renders.map(r => r[0] + JSON.stringify(r[1])), mounts: trayMounts.length, c: pg.count('corn'), g: pg.count('grain') }) };
 };
@@ -461,23 +462,23 @@ T['點心那一行:達標(m)沒有結束畫面,補寫給的地瓜、麵包蟲記
   const other = t({ pantry: one('y_mx', 'yam') });
   return { ok: y === '今天拿到 1 份地瓜。' && ws === '今天拿到 1 份麵包蟲。' && wa === ws && second === y && other === '', detail: JSON.stringify([y, ws, wa, second, other]) };
 };
-T['「點一下就餵」只在現在餵得下去時出現:今天的 3 份點心都餵過、飼料 0 顆時不出現(審查第 1 輪 #6);飼料還有、或點心還能餵時照樣出現'] = async () => {
+T['「點一下餵食」只在現在餵得下去時出現:今天的 3 份點心都餵過、飼料 0 顆時不出現(審查第 1 輪 #6);飼料還有、或點心還能餵時照樣出現'] = async () => {
   const hintOf = over => { const pg = load({ view: foodView(over), food: true }); pg.open(); return pg.sheet.querySelector('.pet-hint').textContent; };
   const all = { ateToday: true, ateCount: 3, canSnack: false };
   const done0 = hintOf({ pantry: all, status: { food: 0 } }), doneGrain = hintOf({ pantry: all, status: { food: 4 } });
   const one = hintOf({ pantry: { ateToday: true, ateCount: 1 }, status: { food: 0 } }), fresh = hintOf({ status: { food: 0 } });
-  return { ok: done0 === '' && doneGrain === '點一下就餵' && one === '點一下就餵' && fresh === '點一下就餵', detail: JSON.stringify([done0, doneGrain, one, fresh]) };
+  return { ok: done0 === '' && doneGrain === '點一下餵食' && one === '點一下餵食' && fresh === '點一下餵食', detail: JSON.stringify([done0, doneGrain, one, fresh]) };
 };
-T['「點一下就餵」前 3 次打開才出現,次數存在 tr_pet_hint'] = async () => {
+T['「點一下餵食」前 3 次打開才出現,次數存在 tr_pet_hint'] = async () => {
   const pg = load({ view: foodView(), food: true });
   const seen = [];
   for (let i = 0; i < 5; i++) { pg.open(); seen.push(pg.sheet.querySelector('.pet-hint').textContent); pg.doc.key('Escape'); pg.timers.advance(1000); }
-  return { ok: JSON.stringify(seen) === JSON.stringify(['點一下就餵', '點一下就餵', '點一下就餵', '', '']) && pg.log.storage.tr_pet_hint === '3', detail: JSON.stringify([seen, pg.log.storage]) };
+  return { ok: JSON.stringify(seen) === JSON.stringify(['點一下餵食', '點一下餵食', '點一下餵食', '', '']) && pg.log.storage.tr_pet_hint === '3', detail: JSON.stringify([seen, pg.log.storage]) };
 };
-T['localStorage 讀不到時照樣顯示「點一下就餵」,不丟錯'] = async () => {
+T['localStorage 讀不到時照樣顯示「點一下餵食」,不丟錯'] = async () => {
   const pg = load({ view: foodView(), food: true, noStorage: true });
   pg.open();
-  return { ok: pg.sheet.querySelector('.pet-hint').textContent === '點一下就餵', detail: pg.sheet.querySelector('.pet-hint').textContent };
+  return { ok: pg.sheet.querySelector('.pet-hint').textContent === '點一下餵食', detail: pg.sheet.querySelector('.pet-hint').textContent };
 };
 T['今天還沒練習而且有存點心:提示那一行是「今天練習一下，就可以餵點心。」'] = async () => {
   const pg = load({ view: foodView({ pantry: { practiced: false, canSnack: false, gotToday: null } }), food: true });
@@ -552,16 +553,19 @@ T['常識提示:滑鼠停住出現、離開收起;飼料沒有提示;點滑鼠�
   const pg = load({ view: foodView(), food: true });
   pg.open();
   pg.tile('yam').fire('pointerenter', { pointerType: 'mouse' });
+  const noTip = pg.doc.body.querySelector('.pet-tip');
+  pg.tile('yam').fire('pointerleave', { pointerType: 'mouse' });
+  pg.tile('corn').fire('pointerenter', { pointerType: 'mouse' });
   const a = pg.doc.body.querySelector('.pet-tip');
   const ta = a && a.textContent;
-  pg.tile('yam').fire('pointerleave', { pointerType: 'mouse' });
+  pg.tile('corn').fire('pointerleave', { pointerType: 'mouse' });
   const b = pg.doc.body.querySelector('.pet-tip');
   pg.tile('grain').fire('pointerenter', { pointerType: 'mouse' });
   const c = pg.doc.body.querySelector('.pet-tip');
   pg.doc.body.querySelector('.pet-mask').fire('pointerdown', { pointerType: 'mouse' });
   pg.tile('corn').focus();
   const d = pg.doc.body.querySelector('.pet-tip');
-  return { ok: ta === '點心只占一小部分，主食還是飼料。' && !b && !c && !d, detail: JSON.stringify({ ta, b: !!b, c: !!c, d: !!d }) };
+  return { ok: !noTip && ta === '玉米要壓碎再給小雞，整顆太大。' && !b && !c && !d, detail: JSON.stringify({ ta, b: !!b, c: !!c, d: !!d }) };
 };
 T['常識提示:長按 500 毫秒出現,這次放開不算點(不吃)'] = async () => {
   const pg = load({ view: foodView(), food: true });

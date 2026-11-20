@@ -181,7 +181,7 @@
             if (!config.length) return;
             startQuiz(config);
           },
-        }, '開始練習')),
+        }, '開始')),
       /* 錯題本面板:每個 Part 一列「N 題 + 查看」,查看連到那個 Part 的錯題本清單(一組一組,點開才看到題目)。
          題數含模擬考答錯的題(js/wrongbook.js);沒載到就照以前只算刷題紀錄,按鈕照舊直接複習 */
       h('div', { class: 'practice-panel', id: 'wrongbook' },
@@ -215,7 +215,7 @@
           h('label', { class: 'cfg-part-check' }, cb, h('span', null, d.title)),
           sel,
           h('span', { style: 'font-size:12.5px;color:var(--ink-light)' },
-            '已作答 ' + s.answered + '/' + s.total + (s.answered ? ' · ' + Math.round(s.correct / s.answered * 100) + '%' : '')));
+            '已作答 ' + s.answered + ' / ' + s.total + (s.answered ? ' · ' + Math.round(s.correct / s.answered * 100) + '%' : '')));
         return { p, cb, sel, row };
       });
       root.append(h('div', { class: 'practice-panel', style: 'margin-bottom:50px' },
@@ -273,7 +273,7 @@
     if (!rec) return null;
     const box = h('div', { class: 'explain' },
       h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-        rec.ok ? '答對了' : (rec.c === -1 ? '未作答，正確答案是 ' : '答錯了，正確答案是 ') + LETTERS[q.answer]),
+        rec.ok ? '答對了' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
       h('div', null, q.explanation));
     if (extraTr) box.append(h('div', { class: 'tr' }, extraTr));
     const gl = q.category && GRAMMAR_LINK[q.category];
@@ -376,8 +376,8 @@
         h('button', {
           class: 'btn primary', 'data-gate': isLast ? '' : null,   // 「下一題」照常;最後一題的交卷要登入
           onclick: e => { if (isLast) submit(e.currentTarget); else { cur++; draw(); window.scrollTo(0, 0); } },
-        }, isLast ? '交卷對答案' : '下一' + DATA[units[cur + 1].p].unit + ' →'),
-        isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: e => submit(e.currentTarget) }, '直接交卷'));
+        }, isLast ? '交卷' : '下一' + DATA[units[cur + 1].p].unit + ' →'),
+        isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: e => submit(e.currentTarget) }, '交卷'));
     }
 
     function drawP5() {
@@ -477,12 +477,12 @@
       });
       const wrongN = qTotal - qCorrect;
       const btns = () => h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(config) }, '再練一輪'),
+        h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(config) }, '再做一次'),
         wrongN && config.length === 1 ? h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(config[0].p) }, '複習錯題') : null,
         h('a', { class: 'btn', href: 'practice.html' }, '回題庫'));
       root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
         h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),
-        wrongN ? h('div', { class: 'band-note' }, '答錯的 ' + wrongN + ' 題已收進錯題本。') : null));
+        wrongN ? h('div', { class: 'band-note' }, '收進錯題本 ' + wrongN + ' 題') : null));
       root.append(btns());
 
       /* 逐題檢討 */
@@ -565,8 +565,8 @@
       return;
     }
     const sub = WB
-      ? (g ? g + ' · ' : '') + '這一回 ' + (p === '5' ? n + ' 題' : units.length + ' 組（' + n + ' 題）') + '，答對就移出'
-      : '共 ' + units.length + ' ' + d.unit + '，答對就移出';
+      ? (g ? g + ' · ' : '') + '這一回 ' + (p === '5' ? n + ' 題' : units.length + ' 組（' + n + ' 題）')
+      : '共 ' + units.length + ' ' + d.unit;
     const session = {};           // 單元 idx → {qKey:{c,ok}} (p5 用 {c,ok})
     const okFlags = [];
     let cur = 0, cleared = 0;
@@ -606,7 +606,7 @@
           draw();
         }),
         explainBox(q, rec, rec ? q.translation : null, { m: 'p' + p, id: q.id }),
-        rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已答對，移出錯題本。') : null));
+        rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已移出錯題本') : null));
       root.append(nextRow(!!rec, cur === units.length - 1));
     }
 
@@ -638,7 +638,7 @@
             draw();
           }),
           explainBox(q, rec, null, { m: 'p' + p, id }),
-          rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已答對，移出錯題本。') : null));
+          rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已移出錯題本') : null));
       });
       layout.append(qCol);
       root.append(layout);

@@ -132,7 +132,7 @@
         class: 'gx-station' + (active ? ' on' : '') + (doneN === list.length ? ' full' : ''),
         type: onPickStage ? 'button' : null,
         href: onPickStage ? null : 'phonics.html?ch=' + sk,
-        title: STAGES[sk].name + '（' + doneN + '/' + list.length + '）',
+        title: STAGES[sk].name + '（' + doneN + ' / ' + list.length + '）',
         onclick: onPickStage ? () => onPickStage(sk) : null,
       },
         h('span', { class: 'gx-ring', style: 'background:conic-gradient(var(--ok) ' + pct + '%, var(--line) 0)' },
@@ -160,7 +160,7 @@
       href: 'phonics.html?ref=chart', title: '發音總表',
     }, h('span', { class: 'gx-ring' }, h('span', null, '總'))));
     if (sumOn) {
-      pathWrap.append(h('div', { class: 'gx-path-title' }, h('b', null, '發音總表'), h('i', null, '每個音一個代表字')),
+      pathWrap.append(h('div', { class: 'gx-path-title' }, h('b', null, '發音總表')),
         h('div', { class: 'gx-path' }, h('a', { class: 'gx-node gx-node-ref cur', href: 'phonics.html?ref=chart', title: '發音總表' }, '表')));
     }
 
@@ -200,7 +200,7 @@
             (UNITS.filter(u => stageOf(u) === stageOf(todo)).indexOf(todo) + 1) + ' 課')) : null,
         h('div', { class: 'exercise-head' },
           h('h2', null, STAGES[stage].name),
-          h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + '/' + list.length)));
+          h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + ' / ' + list.length)));
       const col = h('div', { class: 'gx-col' },
         h('div', { class: 'page-head' }, h('h1', null, '自然發音')),
         units);
@@ -213,7 +213,7 @@
       if (stage === stageKeys[stageKeys.length - 1]) {
         units.append(h('a', { class: 'gx-unit-row gx-appendix', href: 'phonics.html?ref=chart' },
           h('span', { class: 'n' }, '表'),
-          h('span', { class: 't' }, '發音總表', h('i', null, '每個音一個代表字，點了聽'))));
+          h('span', { class: 't' }, '發音總表')));
       }
       col.append(h('div', { style: 'height:40px' }));
       layout.append(buildRail(stage, null, sk => { stage = sk; draw(); window.scrollTo(0, 0); }), col);
@@ -332,7 +332,7 @@
             const words = q.options.filter(o => /^[A-Za-z][A-Za-z'-]*$/.test(o));
             result.append(h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (results[qi] ? 'ok' : 'bad') },
-                results[qi] ? '答對了' : '答錯了，正確答案是 ' + LETTERS[q.answer]),
+                results[qi] ? '答對了' : '答錯 · 正解 ' + LETTERS[q.answer]),
               h('div', null, q.explanation),
               words.length === q.options.length
                 ? h('div', { class: 'ph-compare' }, words.map(w => wordBtn(w, null, null, 'ph-card-sm')))

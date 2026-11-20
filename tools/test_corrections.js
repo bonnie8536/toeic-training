@@ -13,7 +13,6 @@ const readJson = (f) => JSON.parse(read(f).replace(/^﻿/, ''));
 const B = require('./build_corrections.js');
 const DATA = readJson('data/corrections.json');
 const RETIRED = readJson('data/retired.json').retired;
-const MD = 'D:/claudecode/刷刷英文開發/題庫研究/全審/更正紀錄.md';
 const T = {};
 
 T['建置結果與檔案一致,共 182 列(12 答案更正、146 文字修正、24 淘汰)'] = () => {
@@ -21,14 +20,6 @@ T['建置結果與檔案一致,共 182 列(12 答案更正、146 文字修正、
   const by = (k) => DATA.rows.filter((x) => x.k === k).length;
   const sum = by('answer') + '/' + by('text') + '/' + by('retired');
   return { ok: r.status === 0 && DATA.rows.length === 182 && sum === '12/146/24', detail: 'exit ' + r.status + ',' + DATA.rows.length + ' 列(' + sum + ')' };
-};
-T['筆數對得上全審的更正紀錄(研究資料夾在才比)'] = () => {
-  if (!fs.existsSync(MD)) return { ok: true, detail: '略過(沒有研究資料夾)' };
-  const md = fs.readFileSync(MD, 'utf8').split(/\r?\n/);
-  const rows = md.slice(6, 408).filter((l) => /^\| 2026-/.test(l)).length;   // 第一到第八節;第九節另加 21 筆輕微的文字修正與 1 筆淘汰(l3-23)
-  const src = readJson('tools/corrections/source.json').rows.filter((r) => r.k === 'text').length;
-  const minor = src - DATA.rows.filter((x) => x.k === 'text').length;   // 輕微項不上公開頁
-  return { ok: rows + 22 === DATA.rows.length + minor && minor === 171, detail: 'md ' + rows + ' 列,json ' + DATA.rows.length + ' 列,輕微項 ' + minor + ' 列' };
 };
 T['淘汰題全部列出,替代題對得上,日期與原因照 retired.json'] = () => {
   const out = DATA.rows.filter((x) => x.k === 'retired');

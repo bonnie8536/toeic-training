@@ -6,63 +6,63 @@
    "part": "1",
    "date": "2026-11-19",
    "reason": "照片裡的動作讓另一個選項也說得通。",
-   "replacedBy": null
+   "replacedBy": "l1-26"
   },
   {
    "id": "l2-02",
    "part": "2",
    "date": "2026-11-19",
    "reason": "有兩個回答都能接上問句。",
-   "replacedBy": null
+   "replacedBy": "l2-101"
   },
   {
    "id": "l2-04",
    "part": "2",
    "date": "2026-11-19",
    "reason": "有兩個回答都能接上問句。",
-   "replacedBy": null
+   "replacedBy": "l2-102"
   },
   {
    "id": "l2-15",
    "part": "2",
    "date": "2026-11-19",
    "reason": "有兩個回答都能接上問句。",
-   "replacedBy": null
+   "replacedBy": "l2-103"
   },
   {
    "id": "l2-30",
    "part": "2",
    "date": "2026-11-19",
    "reason": "問句的語調可以有兩種理解，兩個回答都說得通。",
-   "replacedBy": null
+   "replacedBy": "l2-104"
   },
   {
    "id": "l2-41",
    "part": "2",
    "date": "2026-11-19",
    "reason": "有兩個回答都能接上問句。",
-   "replacedBy": null
+   "replacedBy": "l2-105"
   },
   {
    "id": "l2-74",
    "part": "2",
    "date": "2026-11-19",
    "reason": "有兩個回答都能接上問句。",
-   "replacedBy": null
+   "replacedBy": "l2-106"
   },
   {
    "id": "l2-91",
    "part": "2",
    "date": "2026-11-19",
    "reason": "有兩個回答都能接上問句。",
-   "replacedBy": null
+   "replacedBy": "l2-107"
   },
   {
    "id": "l2-100",
    "part": "2",
    "date": "2026-11-19",
    "reason": "有兩個回答都能接上問句。",
-   "replacedBy": null
+   "replacedBy": "l2-108"
   },
   {
    "id": "p5-b2-17",
@@ -161,6 +161,13 @@
    "date": "2026-11-20",
    "reason": "和另一組題目的情境幾乎相同。",
    "replacedBy": "p7-b14-1"
+  },
+  {
+   "id": "l3-23",
+   "part": "3",
+   "date": "2026-11-20",
+   "reason": "對話內容涉及用藥說明，改成領藥的行政手續後換成新的一組。",
+   "replacedBy": "l3-51"
   }
  ]
 }

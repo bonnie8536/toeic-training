@@ -1,0 +1,17 @@
+[
+  {
+    "id": "l1-26",
+    "difficulty": "基礎",
+    "photoPrompt": "A photorealistic candid documentary photograph of a female restaurant server in a dark apron pouring water from a metal pitcher into a glass on a wooden table. The table is set with clean white plates and folded napkins. The dining room around her is empty, with no customers seated. Warm natural light through tall windows, candid documentary style, shallow depth of field, no text or logos.",
+    "photoAlt": "餐廳內場，女服務生穿深色圍裙，右手拿金屬水壺把水倒進桌上的玻璃杯，左手扶在桌緣；木桌上有白盤、餐巾與刀叉，椅子都靠在桌邊放在地上，四周座位沒有客人。",
+    "options": [
+      "Some chairs have been stacked on the tables.",
+      "A woman is filling a glass with water.",
+      "Some customers are reading their menus.",
+      "A woman is washing dishes in a sink."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：她正拿水壺把水倒進玻璃杯，fill a glass with water 就是「把杯子倒滿水」，主詞與動作都對。\n(A) 陷阱＝狀態相反：椅子都靠在桌邊、四腳著地，桌面上只有盤子、餐巾和杯子，沒有椅子被疊在桌上。\n(C) 陷阱＝畫面無此人物：餐廳裡一位客人也沒有，桌上也看不到菜單。\n(D) 陷阱＝物件在但動作錯：桌上確實有盤子，但畫面裡沒有水槽，她是在倒水，不是在洗碗。",
+    "transcriptZh": "(A) 有些椅子被疊放在桌上。\n(B) 一名女子正在把杯子倒滿水。\n(C) 幾位客人正在看菜單。\n(D) 一名女子正在水槽洗碗。"
+  }
+]

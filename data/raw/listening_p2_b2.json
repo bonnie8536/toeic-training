@@ -33,16 +33,16 @@
     "id": "l2-28",
     "difficulty": "中級",
     "category": "WH問句",
-    "accent": "AU",
+    "accent": "US",
     "question": "When are we moving to the new office?",
     "options": [
-      "It's a nice office, isn't it?",
+      "It's a really nice office, isn't it?",
       "About ten boxes.",
       "Didn't you get the email from Ms. Kwan?"
     ],
     "answer": 2,
     "explanation": "正解 (C)：間接回應。不直接講日期，而是反問「你沒收到 Kwan 小姐的信嗎？」暗示答案已經在信裡，這是 Part 2 高頻的反問型正解。\n(A) 重複 office，只是在稱讚辦公室，沒有回答時間。\n(B) 「大約十箱」回答的是數量，與 When 不符。",
-    "transcriptZh": "問：我們什麼時候要搬到新辦公室？\n(A) 這辦公室很不錯，對吧？\n(B) 大約十箱。\n(C) 你沒收到 Kwan 小姐寄的信嗎？"
+    "transcriptZh": "問：我們什麼時候要搬到新辦公室？\n(A) 這辦公室真的很不錯，對吧？\n(B) 大約十箱。\n(C) 你沒收到 Kwan 小姐寄的信嗎？"
   },
   {
     "id": "l2-29",
@@ -138,16 +138,16 @@
     "id": "l2-36",
     "difficulty": "中級",
     "category": "WH問句",
-    "accent": "GB",
+    "accent": "CA",
     "question": "How long will the renovation take?",
     "options": [
       "The contractor said about six weeks.",
-      "It's a long hallway.",
+      "That hallway is very long and narrow.",
       "Yes, they're renovating."
     ],
     "answer": 0,
     "explanation": "正解 (A)：How long 問期間，「承包商說大約六週」直接給時間長度。\n(B) 重複 long，但講的是走廊很長，屬於同字不同義的誘答。\n(C) WH 問句不能用 Yes 回答，且只是重複 renovate。",
-    "transcriptZh": "問：整修要花多久時間？\n(A) 承包商說大約六個星期。\n(B) 那條走廊很長。\n(C) 對，他們正在整修。"
+    "transcriptZh": "問：整修要花多久時間？\n(A) 承包商說大約六個星期。\n(B) 那條走廊又長又窄。\n(C) 對，他們正在整修。"
   },
   {
     "id": "l2-37",
@@ -198,31 +198,31 @@
     "id": "l2-40",
     "difficulty": "中級",
     "category": "陳述句回應",
-    "accent": "AU",
+    "accent": "CA",
     "question": "I thought the client meeting was cancelled.",
     "options": [
       "It was, but they rescheduled it for Thursday.",
       "Yes, I met the client.",
-      "Around fifteen clients."
+      "We have around fifteen clients in that region."
     ],
     "answer": 0,
-    "explanation": "正解 (A)：先確認「原本是取消了」再補上「改到星期四」，正好修正對方的認知，訊息完整。\n(B) 重複 client 與 meet，但講的是自己見過客戶，沒回應取消一事。\n(C) 回答人數，與陳述內容無關。",
-    "transcriptZh": "陳述：我以為跟客戶的會議取消了。\n(A) 本來是，不過他們改到星期四了。\n(B) 對，我見過那位客戶。\n(C) 大約十五位客戶。"
+    "explanation": "正解 (A)：先確認「原本是取消了」再補上「改到星期四」，正好修正對方的認知，訊息完整。\n(B) 重複 client 與 meet，但講的是自己見過客戶，沒回應取消一事。\n(C) 重複 client，講的是客戶人數，與會議取消一事無關。",
+    "transcriptZh": "陳述：我以為跟客戶的會議取消了。\n(A) 本來是，不過他們改到星期四了。\n(B) 對，我見過那位客戶。\n(C) 我們在那個地區大約有十五位客戶。"
   },
   {
     "id": "l2-42",
     "difficulty": "中級",
     "category": "WH問句",
-    "accent": "GB",
+    "accent": "US",
     "question": "Where can I find the updated price list?",
     "options": [
       "I'll email it to you right now.",
       "I don't mind waiting.",
-      "Last Thursday, I think."
+      "It was updated last Thursday, I think."
     ],
     "answer": 0,
-    "explanation": "正解 (A)：間接回應。沒有講地點，而是直接說「我現在就寄給你」，一樣解決了對方的需求。\n(B) mind 與 find 是相似音誘答，內容講的是不介意等。\n(C) 回答時間，屬於 When 的答案。",
-    "transcriptZh": "問：我在哪裡可以找到最新的價目表？\n(A) 我現在馬上用電子郵件寄給你。\n(B) 我不介意等。\n(C) 我想是上星期四。"
+    "explanation": "正解 (A)：間接回應。沒有講地點，而是直接說「我現在就寄給你」，一樣解決了對方的需求。\n(B) mind 與 find 是相似音誘答，內容講的是不介意等。\n(C) 重複 updated，回答的是更新時間，屬於 When 的答案。",
+    "transcriptZh": "問：我在哪裡可以找到最新的價目表？\n(A) 我現在馬上用電子郵件寄給你。\n(B) 我不介意等。\n(C) 我想是上星期四更新的。"
   },
   {
     "id": "l2-43",
@@ -288,16 +288,16 @@
     "id": "l2-47",
     "difficulty": "進階",
     "category": "陳述句回應",
-    "accent": "US",
+    "accent": "GB",
     "question": "These sales figures don't match the ones in my file.",
     "options": [
-      "The sale ends on Friday.",
+      "The big summer sale ends this Friday.",
       "Are you looking at last quarter's version?",
       "Yes, I filed them already."
     ],
     "answer": 1,
     "explanation": "正解 (B)：間接回應。以反問找出數字對不起來的可能原因（你看的是不是上一季的版本），是解決問題的合理接話。\n(A) sales 與 sale 是相似音誘答，講的是特賣結束時間。\n(C) file 當名詞與當動詞的同字誘答，答的是歸檔動作。",
-    "transcriptZh": "陳述：這些銷售數字跟我檔案裡的對不起來。\n(A) 特賣到星期五結束。\n(B) 你看的是上一季的版本嗎？\n(C) 對，我已經歸檔了。"
+    "transcriptZh": "陳述：這些銷售數字跟我檔案裡的對不起來。\n(A) 夏季大特賣這星期五結束。\n(B) 你看的是上一季的版本嗎？\n(C) 對，我已經歸檔了。"
   },
   {
     "id": "l2-48",

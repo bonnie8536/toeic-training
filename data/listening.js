@@ -39,12 +39,12 @@ TOEIC.listening = {
    "options": [
     "Some people are buying tickets.",
     "Some people are waiting on the platform.",
-    "A train is being repaired.",
+    "A train is being repaired on the tracks.",
     "The platform is empty."
    ],
    "answer": 1,
    "explanation": "正解 (B)：一群人站在月台等車，wait on the platform 精準描述整體狀態。\n(A) 陷阱＝物件在但動作錯：遠處確實有售票機，但沒有人在買票。\n(C) 陷阱＝畫面無此物：月台上根本沒有列車，更談不上維修。\n(D) 陷阱＝狀態相反：月台上明明有一群人，empty 與畫面相牴觸。",
-   "transcriptZh": "(A) 有些人正在買車票。\n(B) 有些人正在月台上等車。\n(C) 一列火車正在維修。\n(D) 月台上空無一人。"
+   "transcriptZh": "(A) 有些人正在買車票。\n(B) 有些人正在月台上等車。\n(C) 一列火車正在軌道上接受維修。\n(D) 月台上空無一人。"
   },
   {
    "id": "l1-05",
@@ -360,6 +360,21 @@ TOEIC.listening = {
    "answer": 2,
    "explanation": "正解 (C)：畫作早已掛在牆上，現在完成被動 have been hung 表示「已被掛上」的結果狀態，正是描述這種畫面的標準句型。\n(A) 陷阱＝時態語態錯：are being hung 是「正被掛上」的進行動作，但畫面裡沒有人動手掛畫，也看不到工具。它與正解只差一個時態，是本題最容易被騙的選項。\n(B) 陷阱＝狀態相反：三個人都站著看畫，中央的長椅是空的，seated 與畫面牴觸。\n(D) 陷阱＝畫面無此人物：現場沒有導覽人員，三個人的手都垂在身側，沒有人伸手指著任何一幅畫。",
    "transcriptZh": "(A) 有些畫正被掛上牆。\n(B) 參觀者們坐在長椅上。\n(C) 有些畫已被掛在牆上。\n(D) 一名導覽員正指著一幅畫。"
+  },
+  {
+   "id": "l1-26",
+   "difficulty": "基礎",
+   "photoPrompt": "A photorealistic candid documentary photograph of a female restaurant server in a dark apron pouring water from a metal pitcher into a glass on a wooden table. The table is set with clean white plates and folded napkins. The dining room around her is empty, with no customers seated. Warm natural light through tall windows, candid documentary style, shallow depth of field, no text or logos.",
+   "photoAlt": "餐廳內場，女服務生穿深色圍裙，右手拿金屬水壺把水倒進桌上的玻璃杯，左手扶在桌緣；木桌上有白盤、餐巾與刀叉，椅子都靠在桌邊放在地上，四周座位沒有客人。",
+   "options": [
+    "Some chairs have been stacked on the tables.",
+    "A woman is filling a glass with water.",
+    "Some customers are reading their menus.",
+    "A woman is washing dishes in a sink."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：她正拿水壺把水倒進玻璃杯，fill a glass with water 就是「把杯子倒滿水」，主詞與動作都對。\n(A) 陷阱＝狀態相反：椅子都靠在桌邊、四腳著地，桌面上只有盤子、餐巾和杯子，沒有椅子被疊在桌上。\n(C) 陷阱＝畫面無此人物：餐廳裡一位客人也沒有，桌上也看不到菜單。\n(D) 陷阱＝物件在但動作錯：桌上確實有盤子，但畫面裡沒有水槽，她是在倒水，不是在洗碗。",
+   "transcriptZh": "(A) 有些椅子被疊放在桌上。\n(B) 一名女子正在把杯子倒滿水。\n(C) 幾位客人正在看菜單。\n(D) 一名女子正在水槽洗碗。"
   }
  ],
  "p2": [
@@ -412,16 +427,16 @@ TOEIC.listening = {
    "id": "l2-06",
    "difficulty": "中級",
    "category": "WH問句",
-   "accent": "AU",
+   "accent": "CA",
    "question": "Who's covering the front desk while Diane's away?",
    "options": [
     "It's a nice cover.",
-    "She's away until Friday.",
+    "She's away on business until next Friday.",
     "Didn't you get the schedule I posted?"
    ],
    "answer": 2,
-   "explanation": "(C) 正解：間接回應，用反問把對方導向班表，等於「答案寫在班表上」。\n(A) cover 一字多義的相似音誘答（代班／封面）。\n(B) 重複 away，但回答的是「多久」而不是「誰」。",
-   "transcriptZh": "問：Diane 不在的時候誰顧櫃檯？\n(A) 那個封面很好看。\n(B) 她要到星期五才回來。\n(C) 你沒看到我貼的班表嗎？"
+   "explanation": "(C) 正解：間接回應，用反問把對方導向班表，等於「答案寫在班表上」。\n(A) cover 一字多義的相似音誘答（代班／封面）。\n(B) 重複 away，但回答的是她出差到什麼時候，不是誰來代班。",
+   "transcriptZh": "問：Diane 不在的時候誰顧櫃檯？\n(A) 那個封面很好看。\n(B) 她出差到下星期五才回來。\n(C) 你沒看到我貼的班表嗎？"
   },
   {
    "id": "l2-07",
@@ -532,16 +547,16 @@ TOEIC.listening = {
    "id": "l2-14",
    "difficulty": "中級",
    "category": "附加/否定問句",
-   "accent": "GB",
+   "accent": "CA",
    "question": "You're joining us for lunch, aren't you?",
    "options": [
     "It was delicious, thanks.",
-    "The menu's on the counter.",
+    "The lunch menu's on the front counter.",
     "I've got a conference call at noon."
    ],
    "answer": 2,
-   "explanation": "(C) 正解：間接回應，中午有電話會議＝婉拒，等於 No 但沒明說。\n(A) 時態錯位，午餐還沒吃就說好吃。\n(B) 用 lunch→menu 的情境聯想誘答。",
-   "transcriptZh": "問：你會跟我們一起吃午餐吧？\n(A) 很好吃，謝謝。\n(B) 菜單在櫃檯上。\n(C) 我中午有電話會議。"
+   "explanation": "(C) 正解：間接回應，中午有電話會議＝婉拒，等於 No 但沒明說。\n(A) 時態錯位，午餐還沒吃就說好吃。\n(B) 重複 lunch，由午餐聯想到菜單誘答，講的是菜單放在哪裡，沒有回答要不要一起去。",
+   "transcriptZh": "問：你會跟我們一起吃午餐吧？\n(A) 很好吃，謝謝。\n(B) 午餐菜單在前面櫃檯上。\n(C) 我中午有電話會議。"
   },
   {
    "id": "l2-16",
@@ -581,12 +596,12 @@ TOEIC.listening = {
    "question": "Didn't we order more toner last month?",
    "options": [
     "Yes, but we went through it fast.",
-    "The order form's online.",
+    "The order form is on the company website.",
     "No, the tone was fine."
    ],
    "answer": 0,
    "explanation": "(A) 正解：否定問句照事實回答，Yes 表示有訂，but 補充「很快就用完了」。\n(B) 重複 order，但回答的是表單在哪裡。\n(C) toner／tone 相似音誘答。",
-   "transcriptZh": "問：我們上個月不是有多訂碳粉嗎？\n(A) 有，可是我們很快就用完了。\n(B) 訂購單在網路上。\n(C) 沒有，語氣沒問題。"
+   "transcriptZh": "問：我們上個月不是有多訂碳粉嗎？\n(A) 有，可是我們很快就用完了。\n(B) 訂購單在公司網站上。\n(C) 沒有，語氣沒問題。"
   },
   {
    "id": "l2-19",
@@ -622,16 +637,16 @@ TOEIC.listening = {
    "id": "l2-21",
    "difficulty": "中級",
    "category": "WH問句",
-   "accent": "AU",
+   "accent": "GB",
    "question": "How much do these folders cost?",
    "options": [
     "There's a price list by the door.",
     "About two hours.",
-    "In the supply closet."
+    "In the supply closet down the hall."
    ],
    "answer": 0,
    "explanation": "(A) 正解：間接回應，不直接報價，改指向價目表。\n(B) 回答時間長度，是 How long 的答案。\n(C) 回答地點，是 Where 的答案。",
-   "transcriptZh": "問：這些資料夾多少錢？\n(A) 門邊有價目表。\n(B) 大約兩小時。\n(C) 在文具櫃裡。"
+   "transcriptZh": "問：這些資料夾多少錢？\n(A) 門邊有價目表。\n(B) 大約兩小時。\n(C) 在走廊那頭的文具櫃裡。"
   },
   {
    "id": "l2-22",
@@ -727,16 +742,16 @@ TOEIC.listening = {
    "id": "l2-28",
    "difficulty": "中級",
    "category": "WH問句",
-   "accent": "AU",
+   "accent": "US",
    "question": "When are we moving to the new office?",
    "options": [
-    "It's a nice office, isn't it?",
+    "It's a really nice office, isn't it?",
     "About ten boxes.",
     "Didn't you get the email from Ms. Kwan?"
    ],
    "answer": 2,
    "explanation": "正解 (C)：間接回應。不直接講日期，而是反問「你沒收到 Kwan 小姐的信嗎？」暗示答案已經在信裡，這是 Part 2 高頻的反問型正解。\n(A) 重複 office，只是在稱讚辦公室，沒有回答時間。\n(B) 「大約十箱」回答的是數量，與 When 不符。",
-   "transcriptZh": "問：我們什麼時候要搬到新辦公室？\n(A) 這辦公室很不錯，對吧？\n(B) 大約十箱。\n(C) 你沒收到 Kwan 小姐寄的信嗎？"
+   "transcriptZh": "問：我們什麼時候要搬到新辦公室？\n(A) 這辦公室真的很不錯，對吧？\n(B) 大約十箱。\n(C) 你沒收到 Kwan 小姐寄的信嗎？"
   },
   {
    "id": "l2-29",
@@ -832,16 +847,16 @@ TOEIC.listening = {
    "id": "l2-36",
    "difficulty": "中級",
    "category": "WH問句",
-   "accent": "GB",
+   "accent": "CA",
    "question": "How long will the renovation take?",
    "options": [
     "The contractor said about six weeks.",
-    "It's a long hallway.",
+    "That hallway is very long and narrow.",
     "Yes, they're renovating."
    ],
    "answer": 0,
    "explanation": "正解 (A)：How long 問期間，「承包商說大約六週」直接給時間長度。\n(B) 重複 long，但講的是走廊很長，屬於同字不同義的誘答。\n(C) WH 問句不能用 Yes 回答，且只是重複 renovate。",
-   "transcriptZh": "問：整修要花多久時間？\n(A) 承包商說大約六個星期。\n(B) 那條走廊很長。\n(C) 對，他們正在整修。"
+   "transcriptZh": "問：整修要花多久時間？\n(A) 承包商說大約六個星期。\n(B) 那條走廊又長又窄。\n(C) 對，他們正在整修。"
   },
   {
    "id": "l2-37",
@@ -892,31 +907,31 @@ TOEIC.listening = {
    "id": "l2-40",
    "difficulty": "中級",
    "category": "陳述句回應",
-   "accent": "AU",
+   "accent": "CA",
    "question": "I thought the client meeting was cancelled.",
    "options": [
     "It was, but they rescheduled it for Thursday.",
     "Yes, I met the client.",
-    "Around fifteen clients."
+    "We have around fifteen clients in that region."
    ],
    "answer": 0,
-   "explanation": "正解 (A)：先確認「原本是取消了」再補上「改到星期四」，正好修正對方的認知，訊息完整。\n(B) 重複 client 與 meet，但講的是自己見過客戶，沒回應取消一事。\n(C) 回答人數，與陳述內容無關。",
-   "transcriptZh": "陳述：我以為跟客戶的會議取消了。\n(A) 本來是，不過他們改到星期四了。\n(B) 對，我見過那位客戶。\n(C) 大約十五位客戶。"
+   "explanation": "正解 (A)：先確認「原本是取消了」再補上「改到星期四」，正好修正對方的認知，訊息完整。\n(B) 重複 client 與 meet，但講的是自己見過客戶，沒回應取消一事。\n(C) 重複 client，講的是客戶人數，與會議取消一事無關。",
+   "transcriptZh": "陳述：我以為跟客戶的會議取消了。\n(A) 本來是，不過他們改到星期四了。\n(B) 對，我見過那位客戶。\n(C) 我們在那個地區大約有十五位客戶。"
   },
   {
    "id": "l2-42",
    "difficulty": "中級",
    "category": "WH問句",
-   "accent": "GB",
+   "accent": "US",
    "question": "Where can I find the updated price list?",
    "options": [
     "I'll email it to you right now.",
     "I don't mind waiting.",
-    "Last Thursday, I think."
+    "It was updated last Thursday, I think."
    ],
    "answer": 0,
-   "explanation": "正解 (A)：間接回應。沒有講地點，而是直接說「我現在就寄給你」，一樣解決了對方的需求。\n(B) mind 與 find 是相似音誘答，內容講的是不介意等。\n(C) 回答時間，屬於 When 的答案。",
-   "transcriptZh": "問：我在哪裡可以找到最新的價目表？\n(A) 我現在馬上用電子郵件寄給你。\n(B) 我不介意等。\n(C) 我想是上星期四。"
+   "explanation": "正解 (A)：間接回應。沒有講地點，而是直接說「我現在就寄給你」，一樣解決了對方的需求。\n(B) mind 與 find 是相似音誘答，內容講的是不介意等。\n(C) 重複 updated，回答的是更新時間，屬於 When 的答案。",
+   "transcriptZh": "問：我在哪裡可以找到最新的價目表？\n(A) 我現在馬上用電子郵件寄給你。\n(B) 我不介意等。\n(C) 我想是上星期四更新的。"
   },
   {
    "id": "l2-43",
@@ -982,16 +997,16 @@ TOEIC.listening = {
    "id": "l2-47",
    "difficulty": "進階",
    "category": "陳述句回應",
-   "accent": "US",
+   "accent": "GB",
    "question": "These sales figures don't match the ones in my file.",
    "options": [
-    "The sale ends on Friday.",
+    "The big summer sale ends this Friday.",
     "Are you looking at last quarter's version?",
     "Yes, I filed them already."
    ],
    "answer": 1,
    "explanation": "正解 (B)：間接回應。以反問找出數字對不起來的可能原因（你看的是不是上一季的版本），是解決問題的合理接話。\n(A) sales 與 sale 是相似音誘答，講的是特賣結束時間。\n(C) file 當名詞與當動詞的同字誘答，答的是歸檔動作。",
-   "transcriptZh": "陳述：這些銷售數字跟我檔案裡的對不起來。\n(A) 特賣到星期五結束。\n(B) 你看的是上一季的版本嗎？\n(C) 對，我已經歸檔了。"
+   "transcriptZh": "陳述：這些銷售數字跟我檔案裡的對不起來。\n(A) 夏季大特賣這星期五結束。\n(B) 你看的是上一季的版本嗎？\n(C) 對，我已經歸檔了。"
   },
   {
    "id": "l2-48",
@@ -1042,16 +1057,16 @@ TOEIC.listening = {
    "id": "l2-51",
    "difficulty": "基礎",
    "category": "WH問句",
-   "accent": "US",
+   "accent": "GB",
    "question": "How do I get to the loading dock from here?",
    "options": [
     "It closes at five.",
     "Go through the double doors and turn right.",
-    "The truck's already been loaded."
+    "The truck has already been loaded with boxes."
    ],
    "answer": 1,
    "explanation": "正解 (B)：How do I get to... 是問路線，「穿過那道雙開門後右轉」直接給出指引。\n(A) 回答的是關閉時間，屬於 When 的答案。\n(C) 用 loaded 呼應 loading dock 的同源字誘答，講的卻是貨車已經裝好，並沒有指路。",
-   "transcriptZh": "問：請問從這裡怎麼去卸貨區？\n(A) 它五點關。\n(B) 穿過那道雙開門後右轉。\n(C) 貨車已經裝好了。"
+   "transcriptZh": "問：請問從這裡怎麼去卸貨區？\n(A) 它五點關。\n(B) 穿過那道雙開門後右轉。\n(C) 貨車已經裝好箱子了。"
   },
   {
    "id": "l2-52",
@@ -1091,12 +1106,12 @@ TOEIC.listening = {
    "question": "What did you think of the new logo?",
    "options": [
     "The colors are a bit dark for me.",
-    "On the second floor.",
+    "It's on the second floor, near the lobby.",
     "I'll think it over."
    ],
    "answer": 0,
    "explanation": "正解 (A)：What did you think of...? 是問感想，「顏色對我來說有點暗」給出具體評價。\n(B) 回答的是地點，屬於 Where 的答案。\n(C) 重複 think，但 think it over 是「再考慮看看」，並沒有講出任何評價。",
-   "transcriptZh": "問：你覺得新的標誌怎麼樣？\n(A) 顏色對我來說有點暗。\n(B) 在二樓。\n(C) 我再考慮看看。"
+   "transcriptZh": "問：你覺得新的標誌怎麼樣？\n(A) 顏色對我來說有點暗。\n(B) 在二樓，大廳附近。\n(C) 我再考慮看看。"
   },
   {
    "id": "l2-55",
@@ -1177,16 +1192,16 @@ TOEIC.listening = {
    "id": "l2-60",
    "difficulty": "中級",
    "category": "WH問句",
-   "accent": "US",
+   "accent": "AU",
    "question": "Where should I put the samples the client sent?",
    "options": [
-    "They sent them last Tuesday.",
+    "They sent them by courier last Tuesday.",
     "Yes, go ahead.",
     "Anywhere on the back counter is fine."
    ],
    "answer": 2,
    "explanation": "正解 (C)：Where 問地點，「放後面檯面上哪裡都行」雖然講得寬鬆，仍確實指出了位置。\n(A) 重複 sent，答的是寄出時間，屬於 When。\n(B) Where 開頭的問句不能用 Yes 回答，這是格式上的錯誤。",
-   "transcriptZh": "問：客戶寄來的樣品我該放哪裡？\n(A) 他們上週二寄的。\n(B) 好啊，你去吧。\n(C) 放後面檯面上哪裡都行。"
+   "transcriptZh": "問：客戶寄來的樣品我該放哪裡？\n(A) 他們上週二用快遞寄來的。\n(B) 好啊，你去吧。\n(C) 放後面檯面上哪裡都行。"
   },
   {
    "id": "l2-61",
@@ -1312,16 +1327,16 @@ TOEIC.listening = {
    "id": "l2-69",
    "difficulty": "中級",
    "category": "WH問句",
-   "accent": "US",
+   "accent": "CA",
    "question": "What's the fastest way to the train station from the hotel?",
    "options": [
-    "The train leaves at eight.",
+    "The train leaves at eight every morning.",
     "The hotel runs a shuttle every hour.",
     "Two nights, please."
    ],
    "answer": 1,
    "explanation": "正解 (B)：問最快的方式，「飯店每小時有接駁車」提供了具體交通方式，回答合理。\n(A) 重複 train，答的是發車時間，屬於 When。\n(C) 由 hotel 聯想到訂房，「兩晚，麻煩了」是辦入住時才會說的話。",
-   "transcriptZh": "問：從飯店到火車站最快的方式是什麼？\n(A) 火車八點開。\n(B) 飯店每小時有接駁車。\n(C) 兩晚，麻煩了。"
+   "transcriptZh": "問：從飯店到火車站最快的方式是什麼？\n(A) 火車每天早上八點開。\n(B) 飯店每小時有接駁車。\n(C) 兩晚，麻煩了。"
   },
   {
    "id": "l2-70",
@@ -1357,16 +1372,16 @@ TOEIC.listening = {
    "id": "l2-72",
    "difficulty": "基礎",
    "category": "陳述句回應",
-   "accent": "US",
+   "accent": "AU",
    "question": "I'm heading out to lunch.",
    "options": [
     "Could you bring me back a sandwich?",
-    "Yes, the meeting went well.",
+    "Yes, the meeting went really well today.",
     "It was a long lunch."
    ],
    "answer": 0,
    "explanation": "正解 (A)：同事說要出去吃午餐，順口請對方幫忙帶一份三明治，是最自然的接話。\n(B) 回答的是會議狀況，與對方要出門吃飯無關。\n(C) 重複 lunch，卻用過去式講「那頓午餐吃很久」，時態與情境都錯位。",
-   "transcriptZh": "陳述：我要出去吃午餐了。\n(A) 可以幫我帶個三明治回來嗎？\n(B) 對，會議進行得很順利。\n(C) 那頓午餐吃很久。"
+   "transcriptZh": "陳述：我要出去吃午餐了。\n(A) 可以幫我帶個三明治回來嗎？\n(B) 對，今天的會議進行得很順利。\n(C) 那頓午餐吃很久。"
   },
   {
    "id": "l2-73",
@@ -1432,16 +1447,16 @@ TOEIC.listening = {
    "id": "l2-78",
    "difficulty": "中級",
    "category": "附加/否定問句",
-   "accent": "AU",
+   "accent": "CA",
    "question": "You've already watered the plants out front, haven't you?",
    "options": [
-    "The water bill's due Friday.",
+    "The water bill has to be paid by Friday.",
     "They're beautiful plants.",
     "I was just heading out to do that."
    ],
    "answer": 2,
    "explanation": "正解 (C)：間接回應。不直接說 No，而是說「我正要出去弄」，等於表示還沒澆。\n(A) 重複 water，講的是水費帳單，與有沒有澆水無關。\n(B) 重複 plants，只是稱讚植物漂亮，沒有回答問題。",
-   "transcriptZh": "問：你已經幫前面那些植物澆過水了吧？\n(A) 水費帳單星期五要繳。\n(B) 那些植物很漂亮。\n(C) 我正要出去弄。"
+   "transcriptZh": "問：你已經幫前面那些植物澆過水了吧？\n(A) 水費帳單星期五前要繳。\n(B) 那些植物很漂亮。\n(C) 我正要出去弄。"
   },
   {
    "id": "l2-79",
@@ -1492,16 +1507,16 @@ TOEIC.listening = {
    "id": "l2-82",
    "difficulty": "中級",
    "category": "WH問句",
-   "accent": "US",
+   "accent": "CA",
    "question": "How many students signed up for the guitar class?",
    "options": [
     "Sign-ups don't close until Friday.",
-    "Every Tuesday evening.",
+    "Classes are held every Tuesday evening.",
     "He teaches piano, actually."
    ],
    "answer": 0,
    "explanation": "正解 (A)：間接回應。報名到星期五才截止，等於表示現在還給不出確切人數。\n(B) 「每週二晚上」回答的是上課時間，屬於 When 的答案。\n(C) 把 guitar 換成 piano 混淆，講的是教什麼樂器，不是人數。",
-   "transcriptZh": "問：吉他班報名的學生有多少人？\n(A) 報名到星期五才截止。\n(B) 每週二晚上。\n(C) 他其實是教鋼琴的。"
+   "transcriptZh": "問：吉他班報名的學生有多少人？\n(A) 報名到星期五才截止。\n(B) 每週二晚上上課。\n(C) 他其實是教鋼琴的。"
   },
   {
    "id": "l2-83",
@@ -1537,16 +1552,16 @@ TOEIC.listening = {
    "id": "l2-85",
    "difficulty": "基礎",
    "category": "WH問句",
-   "accent": "US",
+   "accent": "AU",
    "question": "Where should I deliver these flowers?",
    "options": [
-    "They're mostly roses.",
+    "They're mostly roses and tulips.",
     "There's an address on the card.",
     "She really liked them."
    ],
    "answer": 1,
    "explanation": "正解 (B)：Where 問送花地點，「卡片上有寫地址」把地點指向卡片，回應成立。\n(A) 回答的是花的種類，屬於 What 的答案。\n(C) 「她很喜歡」講的是收花人的反應，沒有回答送到哪裡。",
-   "transcriptZh": "問：這些花要送到哪裡？\n(A) 大部分是玫瑰。\n(B) 卡片上有寫地址。\n(C) 她很喜歡。"
+   "transcriptZh": "問：這些花要送到哪裡？\n(A) 大部分是玫瑰和鬱金香。\n(B) 卡片上有寫地址。\n(C) 她很喜歡。"
   },
   {
    "id": "l2-86",
@@ -1612,16 +1627,16 @@ TOEIC.listening = {
    "id": "l2-90",
    "difficulty": "基礎",
    "category": "WH問句",
-   "accent": "AU",
+   "accent": "CA",
    "question": "Who's teaching the morning class this week?",
    "options": [
-    "At six thirty.",
+    "It starts at six thirty every morning.",
     "In studio two.",
     "Marcus is filling in for Dana."
    ],
    "answer": 2,
-   "explanation": "正解 (C)：Who 問的是誰上課，「Marcus 代 Dana 的班」直接點出人。\n(A) 「六點半」回答的是時間，屬於 When 的答案。\n(B) 「在二號教室」回答的是地點，屬於 Where 的答案。",
-   "transcriptZh": "問：這週早上的課是誰教？\n(A) 六點半。\n(B) 在二號教室。\n(C) Marcus 代 Dana 的班。"
+   "explanation": "正解 (C)：Who 問的是誰上課，「Marcus 代 Dana 的班」直接點出人。\n(A) 「每天早上六點半開始」回答的是時間，屬於 When 的答案。\n(B) 「在二號教室」回答的是地點，屬於 Where 的答案。",
+   "transcriptZh": "問：這週早上的課是誰教？\n(A) 每天早上六點半開始。\n(B) 在二號教室。\n(C) Marcus 代 Dana 的班。"
   },
   {
    "id": "l2-92",
@@ -1742,6 +1757,126 @@ TOEIC.listening = {
    "answer": 0,
    "explanation": "正解 (A)：間接回應。用 Actually 修正對方的預設，說車子剛保養完，等於否定「下個月才到期」。\n(B) 重複 service，卻變成稱讚服務好，屬於一字多義誘答。\n(C) 重複 next，把時間詞聽成位置詞，答的是地點。",
    "transcriptZh": "問：那台廂型車下個月要保養了吧？\n(A) 其實我們剛做完。\n(B) 這個服務很好，謝謝。\n(C) 就在修車廠旁邊。"
+  },
+  {
+   "id": "l2-101",
+   "difficulty": "基礎",
+   "category": "Yes/No問句",
+   "accent": "US",
+   "question": "Have you booked the meeting room for Thursday?",
+   "options": [
+    "Ms. Patel said she'd handle that.",
+    "Room service is available until ten.",
+    "I just finished reading that book."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：間接回應。沒有說 Yes／No，而是說「Patel 小姐說她會處理」，表示訂會議室的事交給別人，自己沒有訂。\n(B) 重複 room，但 room service 是飯店的客房服務，講的是供應到幾點，和訂會議室無關。\n(C) book／booked 一字多義誘答，這裡的 book 是「書」，講的是自己剛讀完一本書，沒有回答訂了沒。",
+   "transcriptZh": "問：你訂好星期四的會議室了嗎？\n(A) Patel 小姐說她會處理。\n(B) 客房服務供應到十點。\n(C) 我剛讀完那本書。"
+  },
+  {
+   "id": "l2-102",
+   "difficulty": "中級",
+   "category": "選擇問句",
+   "accent": "GB",
+   "question": "Would you rather take the train or drive to the conference?",
+   "options": [
+    "It's a two-hour training session.",
+    "The conference room is upstairs.",
+    "Driving gives us more flexibility."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：選擇問句直接挑一項。「開車比較有彈性」表示選開車，並說明理由。\n(A) train／training 相似音誘答，講的是一場兩小時的訓練課程，沒有選要怎麼去。\n(B) 重複 conference，但 conference room 是會議室，講的是會議室在樓上，和交通方式無關。",
+   "transcriptZh": "問：你比較想搭火車還是開車去研討會？\n(A) 那是兩小時的訓練課程。\n(B) 會議室在樓上。\n(C) 開車比較有彈性。"
+  },
+  {
+   "id": "l2-103",
+   "difficulty": "進階",
+   "category": "陳述句",
+   "accent": "AU",
+   "question": "I thought the budget meeting started at two.",
+   "options": [
+    "It got pushed back to three thirty.",
+    "Two copies should be enough.",
+    "The budget file is on the shared drive."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：對方說出自己以為的時間，回應「延到三點半了」直接更正開會時間。\n(B) 重複 two，但講的是要印幾份，沒有回應會議幾點開始。\n(C) 重複 budget，講的是預算檔案放在哪裡，沒有回應會議時間。",
+   "transcriptZh": "問：我以為預算會議是兩點開始。\n(A) 延到三點半了。\n(B) 印兩份應該就夠了。\n(C) 預算檔案在共用雲端硬碟裡。"
+  },
+  {
+   "id": "l2-104",
+   "difficulty": "基礎",
+   "category": "選擇問句",
+   "accent": "CA",
+   "question": "Which would you like with your lunch, coffee or tea?",
+   "options": [
+    "Yes, please.",
+    "Tea would be great, thanks.",
+    "The break room is down the hall."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：Which 開頭的問句要從咖啡和茶之中挑一個，「茶就好」直接選定。\n(A) 問的是「哪一個」，回答 Yes 沒有選任何一項，接不上。\n(C) 回答茶水間在哪裡，屬於 Where 的答案，沒有選咖啡或茶。",
+   "transcriptZh": "問：午餐要配咖啡還是茶？\n(A) 好啊，麻煩了。\n(B) 茶就好，謝謝。\n(C) 茶水間在走廊那頭。"
+  },
+  {
+   "id": "l2-105",
+   "difficulty": "進階",
+   "category": "附加/否定問句",
+   "accent": "US",
+   "question": "You haven't sent the contract to the client yet, have you?",
+   "options": [
+    "I'm waiting for Mr. Lee to sign it first.",
+    "The contractor starts work on Monday.",
+    "Our client list is saved on the server."
+   ],
+   "answer": 0,
+   "explanation": "正解 (A)：間接回應。「我在等 Lee 先生先簽」說明還沒寄出，也交代了原因。\n(B) contract／contractor 相似音誘答，講的是承包商星期一開工，沒有回答合約寄了沒。\n(C) 重複 client，講的是客戶名單存在哪裡，沒有回答合約寄了沒。",
+   "transcriptZh": "問：你還沒把合約寄給客戶吧？\n(A) 我在等 Lee 先生先簽名。\n(B) 承包商星期一開工。\n(C) 我們的客戶名單存在伺服器上。"
+  },
+  {
+   "id": "l2-106",
+   "difficulty": "中級",
+   "category": "附加/否定問句",
+   "accent": "GB",
+   "question": "The new parking rules start next week, don't they?",
+   "options": [
+    "The park closes at sunset every day.",
+    "Actually, they've been postponed until June.",
+    "There's a space next to the main entrance."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：用 Actually 修正對方的預設，說明新規定延到六月，等於「下週不會開始」。\n(A) park／parking 相似音誘答，講的是公園每天傍晚關門，和停車規定無關。\n(C) 重複 next，講的是哪裡有空車位，屬於 Where 的答案，沒有回答規定什麼時候開始。",
+   "transcriptZh": "問：新的停車規定下週開始，對吧？\n(A) 公園每天日落就關門。\n(B) 其實已經延到六月了。\n(C) 正門旁邊有一個車位。"
+  },
+  {
+   "id": "l2-107",
+   "difficulty": "進階",
+   "category": "附加/否定問句",
+   "accent": "AU",
+   "question": "You didn't throw away last month's receipts, did you?",
+   "options": [
+    "We received a new shipment today.",
+    "This month ends on a Sunday.",
+    "They're in the top drawer of my desk."
+   ],
+   "answer": 2,
+   "explanation": "正解 (C)：間接回應。說出收據放在書桌最上層的抽屜，等於「沒有丟，還留著」。\n(A) receipts／received 相似音誘答，講的是今天到了一批新貨，沒有回答收據丟了沒。\n(B) 重複 month，講的是這個月的最後一天是星期日，和收據無關。",
+   "transcriptZh": "問：你沒有把上個月的收據丟掉吧？\n(A) 我們今天收到一批新貨。\n(B) 這個月的最後一天是星期日。\n(C) 在我書桌最上層的抽屜裡。"
+  },
+  {
+   "id": "l2-108",
+   "difficulty": "中級",
+   "category": "Yes/No問句",
+   "accent": "CA",
+   "question": "Do you have any more of these mugs in the back?",
+   "options": [
+    "My back has been sore since the weekend.",
+    "Sorry, what's on display is all we have.",
+    "Those mugs are on sale for twelve dollars."
+   ],
+   "answer": 1,
+   "explanation": "正解 (B)：間接回應。「架上展示的就是全部了」等於告訴客人後面沒有存貨。\n(A) back 一字多義誘答，問句的 in the back 指店後面的倉庫，這裡的 back 是「背」，講的是自己背痛。\n(C) 重複 mugs，講的是價格，屬於 How much 的答案，沒有回答還有沒有貨。",
+   "transcriptZh": "問：這種馬克杯後面還有貨嗎？\n(A) 我從週末就一直背痛。\n(B) 抱歉，展示的就是全部了。\n(C) 那些馬克杯特價十二美元。"
   }
  ],
  "p3": [
@@ -2381,97 +2516,6 @@ TOEIC.listening = {
     }
    ],
    "transcriptZh": "女：嘿 Marcus，有空嗎？我想談一下行銷職缺的面試。\n男：好啊。我們昨天看了四個人，對吧？\n女：對。老實說，我覺得就是 Karen Wu 跟最後進來的那位在比。\n男：Peter Nakamura。對，他對社群媒體的想法很不錯。\n女：確實。可是他才工作兩年，職缺公告寫的是五年。\n男：也是。Karen 資歷夠，不過她在面試裡看起來有點安靜。\n女：我也注意到了。所以我今天早上打給她其中一位推薦人。\n男：喔？他們怎麼說？\n女：非常正面。她以前的主管說她帶六個人的團隊，還負責大客戶。\n男：那她可能只是緊張而已。我們要不要請她回來進行第二輪面試？\n女：要，這次讓總監一起。你可以查一下他的行事曆，約在下週嗎？\n男：沒問題。我下午把邀請寄給你們兩位。"
-  },
-  {
-   "id": "l3-23",
-   "difficulty": "基礎",
-   "title": "藥局取藥與用藥諮詢",
-   "dialogue": [
-    {
-     "s": "M",
-     "text": "Hi, I'm here to pick up a prescription. The name is Alan Reyes."
-    },
-    {
-     "s": "W",
-     "text": "Let me check. Reyes. Yes, here it is. It was ready this morning."
-    },
-    {
-     "s": "M",
-     "text": "Great. Actually, can I ask you something? My doctor didn't really explain how to take it."
-    },
-    {
-     "s": "W",
-     "text": "Sure, go ahead."
-    },
-    {
-     "s": "M",
-     "text": "How many do I take a day?"
-    },
-    {
-     "s": "W",
-     "text": "One tablet twice a day, once in the morning and once at night. And take it with food."
-    },
-    {
-     "s": "M",
-     "text": "With food? Okay. What happens if I forget one?"
-    },
-    {
-     "s": "W",
-     "text": "Just take it when you remember. But if it's almost time for the next one, skip it. Don't take two at once."
-    },
-    {
-     "s": "M",
-     "text": "Got it. And can I take this with the cold medicine I bought here last week?"
-    },
-    {
-     "s": "W",
-     "text": "Let me look that up. You should be fine, but wait about four hours between them."
-    },
-    {
-     "s": "M",
-     "text": "Perfect. Oh, and how much is it?"
-    },
-    {
-     "s": "W",
-     "text": "With your insurance, it's twelve dollars. You can pay at the register over there."
-    }
-   ],
-   "questions": [
-    {
-     "q": "Where does the conversation most likely take place?",
-     "options": [
-      "At a pharmacy",
-      "At a doctor's office",
-      "At a hospital cafeteria",
-      "At an insurance company"
-     ],
-     "answer": 0,
-     "explanation": "場景題：男子開口就說 I'm here to pick up a prescription（我來領處方藥），女子後面提到 tablet、cold medicine、pay at the register，是藥局的典型情境，選 (A)。(B) 醫生只是被提到 my doctor didn't really explain，人不在現場；(D) insurance 只出現在結帳時的 With your insurance。"
-    },
-    {
-     "q": "What does the woman tell the man to do if he misses a dose?",
-     "options": [
-      "Call his doctor right away",
-      "Take two tablets the next time",
-      "Skip it if the next dose is coming soon",
-      "Stop taking the medicine for one day"
-     ],
-     "answer": 2,
-     "explanation": "定位在女子第四次發言：if it's almost time for the next one, skip it. Don't take two at once.（如果快到下一次的時間就跳過，不要一次吃兩顆）。選 (C)。(B) 正是女子明確否定的做法，屬於直接反向陷阱。"
-    },
-    {
-     "q": "What will the man most likely do next?",
-     "options": [
-      "Return the cold medicine",
-      "Go to the register to pay",
-      "Make an appointment with his doctor",
-      "Wait four hours before leaving"
-     ],
-     "answer": 1,
-     "explanation": "下一步題看結尾：女子說 it's twelve dollars. You can pay at the register over there.（十二美元，可以到那邊的櫃檯結帳）。所以他接著會去付錢，選 (B)。(D) 的四小時是指兩種藥之間要間隔，不是要在現場等。"
-    }
-   ],
-   "transcriptZh": "男：您好，我來領處方藥，名字是 Alan Reyes。\n女：我查一下。Reyes。有，在這裡，今天早上就配好了。\n男：太好了。其實我想問一下，我的醫生沒有很清楚說明要怎麼吃。\n女：好啊，您問。\n男：一天要吃幾顆？\n女：一天兩次，一次一顆，早上一次、晚上一次。要跟食物一起吃。\n男：跟食物一起？好。那如果忘了吃一次呢？\n女：想起來的時候補吃就好。但如果快到下一次的時間了就跳過，不要一次吃兩顆。\n男：了解。還有，這個可以跟我上週在這裡買的感冒藥一起吃嗎？\n女：我查一下。應該沒問題，不過兩種之間要間隔大約四小時。\n男：太好了。喔對，這個多少錢？\n女：用您的保險是十二美元。可以到那邊的櫃檯結帳。"
   },
   {
    "id": "l3-24",
@@ -3564,6 +3608,97 @@ TOEIC.listening = {
     }
    ],
    "transcriptZh": "女：Tom，員工旅遊的問卷結果你看了嗎？\n男：看了。海邊飯店排第一，山上的度假村緊追在後。\n女：差多少？\n男：三十一個人選海邊，二十八個人選山上，只有九個人選市區導覽。\n女：所以前兩名幾乎打平。價差呢？\n男：海邊飯店每個人大概貴二十元，但含早餐，山上那間早餐要另外付錢。\n女：這樣算下來海邊反而比較便宜。\n男：我也是這樣想。唯一的問題是車程，坐遊覽車要四個小時，山上只要兩個小時。\n女：四個小時是久了點，不過那天是禮拜五。我們中午出發，晚餐前還是到得了。\n男：也對。那我先請海邊飯店保留三十間房？\n女：麻煩你，但先不要付訂金。預算要 Alvarado 女士核准，她禮拜三才回來。\n男：我先把數字寄給她，讓她在那之前可以先看。"
+  },
+  {
+   "id": "l3-51",
+   "difficulty": "基礎",
+   "title": "藥局取藥與代領手續",
+   "dialogue": [
+    {
+     "s": "M",
+     "text": "Hi, I'm here to pick up a prescription. The name is Alan Reyes."
+    },
+    {
+     "s": "W",
+     "text": "Let me check. Reyes. Yes, here it is. It was ready this morning."
+    },
+    {
+     "s": "M",
+     "text": "Great. Before I pay, can I ask you a couple of quick questions?"
+    },
+    {
+     "s": "W",
+     "text": "Sure, go ahead."
+    },
+    {
+     "s": "M",
+     "text": "Does my insurance cover this one? Last time I had to pay the full price."
+    },
+    {
+     "s": "W",
+     "text": "It does now. Your plan was updated last month, so you only pay the copay."
+    },
+    {
+     "s": "M",
+     "text": "Good to hear. I'll need a refill next month. Can my wife pick it up for me?"
+    },
+    {
+     "s": "W",
+     "text": "Yes, as long as she brings her ID and knows your date of birth."
+    },
+    {
+     "s": "M",
+     "text": "Got it. And what time do you close on Saturdays? I usually work late on weekdays."
+    },
+    {
+     "s": "W",
+     "text": "We're open until six on Saturdays, but we're closed on Sundays."
+    },
+    {
+     "s": "M",
+     "text": "Perfect. Oh, and how much is it today?"
+    },
+    {
+     "s": "W",
+     "text": "With your insurance, it's twelve dollars. You can pay at the register over there."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Where does the conversation most likely take place?",
+     "options": [
+      "At a pharmacy",
+      "At a doctor's office",
+      "At a hospital cafeteria",
+      "At an insurance company"
+     ],
+     "answer": 0,
+     "explanation": "場景題：男子開口就說 I'm here to pick up a prescription（我來領處方藥），女子說藥今天早上就配好了，接著回答保險給付、家人代領與星期六營業時間的問題，最後請他到 register（櫃檯）結帳，是藥局的典型情境，選 (A)。(B) 男子是來領已經配好的藥，對話沒有提到看診，也沒有醫生在場；(C) 對話沒有提到任何餐點；(D) insurance 是在談這次的藥有沒有給付、要付多少，女子是配藥、收錢的人，對話地點不是保險公司。"
+    },
+    {
+     "q": "What does the woman say about picking up the next refill?",
+     "options": [
+      "It will be ready on Saturday morning.",
+      "The man needs a new note from his doctor.",
+      "His wife can pick it up for him with her ID.",
+      "It can be mailed to the man's home."
+     ],
+     "answer": 2,
+     "explanation": "定位在男子第四次發言與女子的回答：Can my wife pick it up for me?（我太太可以幫我領嗎？）女子說 Yes, as long as she brings her ID and knows your date of birth.（可以，只要她帶證件、知道您的生日）。選 (C)。(A) Saturday 是男子問營業時間時才出現，女子沒有說續領的藥星期六早上好；(B) 女子沒有提到要醫生再開什麼文件；(D) 對話沒有提到郵寄。"
+    },
+    {
+     "q": "What will the man most likely do next?",
+     "options": [
+      "Call his wife about the refill",
+      "Go to the register to pay",
+      "Make an appointment with his doctor",
+      "Come back to the store on Saturday"
+     ],
+     "answer": 1,
+     "explanation": "下一步題看結尾：女子說 it's twelve dollars. You can pay at the register over there.（十二美元，可以到那邊的櫃檯結帳）。所以他接著會去付錢，選 (B)。(A) 續領是下個月的事，對話沒有說他現在要打電話給太太；(C) 對話沒有提到要看醫生；(D) 星期六只是在問營業時間，他今天就要把藥領走，不用再回來。"
+    }
+   ],
+   "transcriptZh": "男：您好，我來領處方藥，名字是 Alan Reyes。\n女：我查一下。Reyes。有，在這裡，今天早上就配好了。\n男：太好了。付錢之前，我可以問幾個簡單的問題嗎？\n女：好啊，您問。\n男：這次的藥保險有給付嗎？上次我是付全額。\n女：現在有了。您的保險方案上個月更新過，所以您只要付部分負擔。\n男：那太好了。我下個月還要續領，可以請我太太幫我領嗎？\n女：可以，只要她帶自己的證件，並且知道您的出生日期。\n男：了解。還有，你們星期六幾點關門？我平日通常加班到很晚。\n女：星期六開到六點，不過星期日公休。\n男：太好了。喔對，今天這個多少錢？\n女：用您的保險是十二美元。可以到那邊的櫃檯結帳。"
   }
  ],
  "p4": [

@@ -1,0 +1,122 @@
+[
+  {
+    "id": "l2-101",
+    "difficulty": "基礎",
+    "category": "Yes/No問句",
+    "accent": "US",
+    "question": "Have you booked the meeting room for Thursday?",
+    "options": [
+      "Ms. Patel said she'd handle that.",
+      "Room service is available until ten.",
+      "I just finished reading that book."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：間接回應。沒有說 Yes／No，而是說「Patel 小姐說她會處理」，表示訂會議室的事交給別人，自己沒有訂。\n(B) 重複 room，但 room service 是飯店的客房服務，講的是供應到幾點，和訂會議室無關。\n(C) book／booked 一字多義誘答，這裡的 book 是「書」，講的是自己剛讀完一本書，沒有回答訂了沒。",
+    "transcriptZh": "問：你訂好星期四的會議室了嗎？\n(A) Patel 小姐說她會處理。\n(B) 客房服務供應到十點。\n(C) 我剛讀完那本書。"
+  },
+  {
+    "id": "l2-102",
+    "difficulty": "中級",
+    "category": "選擇問句",
+    "accent": "GB",
+    "question": "Would you rather take the train or drive to the conference?",
+    "options": [
+      "It's a two-hour training session.",
+      "The conference room is upstairs.",
+      "Driving gives us more flexibility."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：選擇問句直接挑一項。「開車比較有彈性」表示選開車，並說明理由。\n(A) train／training 相似音誘答，講的是一場兩小時的訓練課程，沒有選要怎麼去。\n(B) 重複 conference，但 conference room 是會議室，講的是會議室在樓上，和交通方式無關。",
+    "transcriptZh": "問：你比較想搭火車還是開車去研討會？\n(A) 那是兩小時的訓練課程。\n(B) 會議室在樓上。\n(C) 開車比較有彈性。"
+  },
+  {
+    "id": "l2-103",
+    "difficulty": "進階",
+    "category": "陳述句",
+    "accent": "AU",
+    "question": "I thought the budget meeting started at two.",
+    "options": [
+      "It got pushed back to three thirty.",
+      "Two copies should be enough.",
+      "The budget file is on the shared drive."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：對方說出自己以為的時間，回應「延到三點半了」直接更正開會時間。\n(B) 重複 two，但講的是要印幾份，沒有回應會議幾點開始。\n(C) 重複 budget，講的是預算檔案放在哪裡，沒有回應會議時間。",
+    "transcriptZh": "問：我以為預算會議是兩點開始。\n(A) 延到三點半了。\n(B) 印兩份應該就夠了。\n(C) 預算檔案在共用雲端硬碟裡。"
+  },
+  {
+    "id": "l2-104",
+    "difficulty": "基礎",
+    "category": "選擇問句",
+    "accent": "CA",
+    "question": "Which would you like with your lunch, coffee or tea?",
+    "options": [
+      "Yes, please.",
+      "Tea would be great, thanks.",
+      "The break room is down the hall."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：Which 開頭的問句要從咖啡和茶之中挑一個，「茶就好」直接選定。\n(A) 問的是「哪一個」，回答 Yes 沒有選任何一項，接不上。\n(C) 回答茶水間在哪裡，屬於 Where 的答案，沒有選咖啡或茶。",
+    "transcriptZh": "問：午餐要配咖啡還是茶？\n(A) 好啊，麻煩了。\n(B) 茶就好，謝謝。\n(C) 茶水間在走廊那頭。"
+  },
+  {
+    "id": "l2-105",
+    "difficulty": "進階",
+    "category": "附加/否定問句",
+    "accent": "US",
+    "question": "You haven't sent the contract to the client yet, have you?",
+    "options": [
+      "I'm waiting for Mr. Lee to sign it first.",
+      "The contractor starts work on Monday.",
+      "Our client list is saved on the server."
+    ],
+    "answer": 0,
+    "explanation": "正解 (A)：間接回應。「我在等 Lee 先生先簽」說明還沒寄出，也交代了原因。\n(B) contract／contractor 相似音誘答，講的是承包商星期一開工，沒有回答合約寄了沒。\n(C) 重複 client，講的是客戶名單存在哪裡，沒有回答合約寄了沒。",
+    "transcriptZh": "問：你還沒把合約寄給客戶吧？\n(A) 我在等 Lee 先生先簽名。\n(B) 承包商星期一開工。\n(C) 我們的客戶名單存在伺服器上。"
+  },
+  {
+    "id": "l2-106",
+    "difficulty": "中級",
+    "category": "附加/否定問句",
+    "accent": "GB",
+    "question": "The new parking rules start next week, don't they?",
+    "options": [
+      "The park closes at sunset every day.",
+      "Actually, they've been postponed until June.",
+      "There's a space next to the main entrance."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：用 Actually 修正對方的預設，說明新規定延到六月，等於「下週不會開始」。\n(A) park／parking 相似音誘答，講的是公園每天傍晚關門，和停車規定無關。\n(C) 重複 next，講的是哪裡有空車位，屬於 Where 的答案，沒有回答規定什麼時候開始。",
+    "transcriptZh": "問：新的停車規定下週開始，對吧？\n(A) 公園每天日落就關門。\n(B) 其實已經延到六月了。\n(C) 正門旁邊有一個車位。"
+  },
+  {
+    "id": "l2-107",
+    "difficulty": "進階",
+    "category": "附加/否定問句",
+    "accent": "AU",
+    "question": "You didn't throw away last month's receipts, did you?",
+    "options": [
+      "We received a new shipment today.",
+      "This month ends on a Sunday.",
+      "They're in the top drawer of my desk."
+    ],
+    "answer": 2,
+    "explanation": "正解 (C)：間接回應。說出收據放在書桌最上層的抽屜，等於「沒有丟，還留著」。\n(A) receipts／received 相似音誘答，講的是今天到了一批新貨，沒有回答收據丟了沒。\n(B) 重複 month，講的是這個月的最後一天是星期日，和收據無關。",
+    "transcriptZh": "問：你沒有把上個月的收據丟掉吧？\n(A) 我們今天收到一批新貨。\n(B) 這個月的最後一天是星期日。\n(C) 在我書桌最上層的抽屜裡。"
+  },
+  {
+    "id": "l2-108",
+    "difficulty": "中級",
+    "category": "Yes/No問句",
+    "accent": "CA",
+    "question": "Do you have any more of these mugs in the back?",
+    "options": [
+      "My back has been sore since the weekend.",
+      "Sorry, what's on display is all we have.",
+      "Those mugs are on sale for twelve dollars."
+    ],
+    "answer": 1,
+    "explanation": "正解 (B)：間接回應。「架上展示的就是全部了」等於告訴客人後面沒有存貨。\n(A) back 一字多義誘答，問句的 in the back 指店後面的倉庫，這裡的 back 是「背」，講的是自己背痛。\n(C) 重複 mugs，講的是價格，屬於 How much 的答案，沒有回答還有沒有貨。",
+    "transcriptZh": "問：這種馬克杯後面還有貨嗎？\n(A) 我從週末就一直背痛。\n(B) 抱歉，展示的就是全部了。\n(C) 那些馬克杯特價十二美元。"
+  }
+]

@@ -3,16 +3,16 @@
     "id": "l2-51",
     "difficulty": "基礎",
     "category": "WH問句",
-    "accent": "US",
+    "accent": "GB",
     "question": "How do I get to the loading dock from here?",
     "options": [
       "It closes at five.",
       "Go through the double doors and turn right.",
-      "The truck's already been loaded."
+      "The truck has already been loaded with boxes."
     ],
     "answer": 1,
     "explanation": "正解 (B)：How do I get to... 是問路線，「穿過那道雙開門後右轉」直接給出指引。\n(A) 回答的是關閉時間，屬於 When 的答案。\n(C) 用 loaded 呼應 loading dock 的同源字誘答，講的卻是貨車已經裝好，並沒有指路。",
-    "transcriptZh": "問：請問從這裡怎麼去卸貨區？\n(A) 它五點關。\n(B) 穿過那道雙開門後右轉。\n(C) 貨車已經裝好了。"
+    "transcriptZh": "問：請問從這裡怎麼去卸貨區？\n(A) 它五點關。\n(B) 穿過那道雙開門後右轉。\n(C) 貨車已經裝好箱子了。"
   },
   {
     "id": "l2-52",
@@ -52,12 +52,12 @@
     "question": "What did you think of the new logo?",
     "options": [
       "The colors are a bit dark for me.",
-      "On the second floor.",
+      "It's on the second floor, near the lobby.",
       "I'll think it over."
     ],
     "answer": 0,
     "explanation": "正解 (A)：What did you think of...? 是問感想，「顏色對我來說有點暗」給出具體評價。\n(B) 回答的是地點，屬於 Where 的答案。\n(C) 重複 think，但 think it over 是「再考慮看看」，並沒有講出任何評價。",
-    "transcriptZh": "問：你覺得新的標誌怎麼樣？\n(A) 顏色對我來說有點暗。\n(B) 在二樓。\n(C) 我再考慮看看。"
+    "transcriptZh": "問：你覺得新的標誌怎麼樣？\n(A) 顏色對我來說有點暗。\n(B) 在二樓，大廳附近。\n(C) 我再考慮看看。"
   },
   {
     "id": "l2-55",
@@ -138,16 +138,16 @@
     "id": "l2-60",
     "difficulty": "中級",
     "category": "WH問句",
-    "accent": "US",
+    "accent": "AU",
     "question": "Where should I put the samples the client sent?",
     "options": [
-      "They sent them last Tuesday.",
+      "They sent them by courier last Tuesday.",
       "Yes, go ahead.",
       "Anywhere on the back counter is fine."
     ],
     "answer": 2,
     "explanation": "正解 (C)：Where 問地點，「放後面檯面上哪裡都行」雖然講得寬鬆，仍確實指出了位置。\n(A) 重複 sent，答的是寄出時間，屬於 When。\n(B) Where 開頭的問句不能用 Yes 回答，這是格式上的錯誤。",
-    "transcriptZh": "問：客戶寄來的樣品我該放哪裡？\n(A) 他們上週二寄的。\n(B) 好啊，你去吧。\n(C) 放後面檯面上哪裡都行。"
+    "transcriptZh": "問：客戶寄來的樣品我該放哪裡？\n(A) 他們上週二用快遞寄來的。\n(B) 好啊，你去吧。\n(C) 放後面檯面上哪裡都行。"
   },
   {
     "id": "l2-61",
@@ -273,16 +273,16 @@
     "id": "l2-69",
     "difficulty": "中級",
     "category": "WH問句",
-    "accent": "US",
+    "accent": "CA",
     "question": "What's the fastest way to the train station from the hotel?",
     "options": [
-      "The train leaves at eight.",
+      "The train leaves at eight every morning.",
       "The hotel runs a shuttle every hour.",
       "Two nights, please."
     ],
     "answer": 1,
     "explanation": "正解 (B)：問最快的方式，「飯店每小時有接駁車」提供了具體交通方式，回答合理。\n(A) 重複 train，答的是發車時間，屬於 When。\n(C) 由 hotel 聯想到訂房，「兩晚，麻煩了」是辦入住時才會說的話。",
-    "transcriptZh": "問：從飯店到火車站最快的方式是什麼？\n(A) 火車八點開。\n(B) 飯店每小時有接駁車。\n(C) 兩晚，麻煩了。"
+    "transcriptZh": "問：從飯店到火車站最快的方式是什麼？\n(A) 火車每天早上八點開。\n(B) 飯店每小時有接駁車。\n(C) 兩晚，麻煩了。"
   },
   {
     "id": "l2-70",
@@ -318,16 +318,16 @@
     "id": "l2-72",
     "difficulty": "基礎",
     "category": "陳述句回應",
-    "accent": "US",
+    "accent": "AU",
     "question": "I'm heading out to lunch.",
     "options": [
       "Could you bring me back a sandwich?",
-      "Yes, the meeting went well.",
+      "Yes, the meeting went really well today.",
       "It was a long lunch."
     ],
     "answer": 0,
     "explanation": "正解 (A)：同事說要出去吃午餐，順口請對方幫忙帶一份三明治，是最自然的接話。\n(B) 回答的是會議狀況，與對方要出門吃飯無關。\n(C) 重複 lunch，卻用過去式講「那頓午餐吃很久」，時態與情境都錯位。",
-    "transcriptZh": "陳述：我要出去吃午餐了。\n(A) 可以幫我帶個三明治回來嗎？\n(B) 對，會議進行得很順利。\n(C) 那頓午餐吃很久。"
+    "transcriptZh": "陳述：我要出去吃午餐了。\n(A) 可以幫我帶個三明治回來嗎？\n(B) 對，今天的會議進行得很順利。\n(C) 那頓午餐吃很久。"
   },
   {
     "id": "l2-73",

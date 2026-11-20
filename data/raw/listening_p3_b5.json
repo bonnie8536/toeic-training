@@ -1,0 +1,93 @@
+[
+  {
+    "id": "l3-51",
+    "difficulty": "基礎",
+    "title": "藥局取藥與代領手續",
+    "dialogue": [
+      {
+        "s": "M",
+        "text": "Hi, I'm here to pick up a prescription. The name is Alan Reyes."
+      },
+      {
+        "s": "W",
+        "text": "Let me check. Reyes. Yes, here it is. It was ready this morning."
+      },
+      {
+        "s": "M",
+        "text": "Great. Before I pay, can I ask you a couple of quick questions?"
+      },
+      {
+        "s": "W",
+        "text": "Sure, go ahead."
+      },
+      {
+        "s": "M",
+        "text": "Does my insurance cover this one? Last time I had to pay the full price."
+      },
+      {
+        "s": "W",
+        "text": "It does now. Your plan was updated last month, so you only pay the copay."
+      },
+      {
+        "s": "M",
+        "text": "Good to hear. I'll need a refill next month. Can my wife pick it up for me?"
+      },
+      {
+        "s": "W",
+        "text": "Yes, as long as she brings her ID and knows your date of birth."
+      },
+      {
+        "s": "M",
+        "text": "Got it. And what time do you close on Saturdays? I usually work late on weekdays."
+      },
+      {
+        "s": "W",
+        "text": "We're open until six on Saturdays, but we're closed on Sundays."
+      },
+      {
+        "s": "M",
+        "text": "Perfect. Oh, and how much is it today?"
+      },
+      {
+        "s": "W",
+        "text": "With your insurance, it's twelve dollars. You can pay at the register over there."
+      }
+    ],
+    "questions": [
+      {
+        "q": "Where does the conversation most likely take place?",
+        "options": [
+          "At a pharmacy",
+          "At a doctor's office",
+          "At a hospital cafeteria",
+          "At an insurance company"
+        ],
+        "answer": 0,
+        "explanation": "場景題：男子開口就說 I'm here to pick up a prescription（我來領處方藥），女子說藥今天早上就配好了，接著回答保險給付、家人代領與星期六營業時間的問題，最後請他到 register（櫃檯）結帳，是藥局的典型情境，選 (A)。(B) 男子是來領已經配好的藥，對話沒有提到看診，也沒有醫生在場；(C) 對話沒有提到任何餐點；(D) insurance 是在談這次的藥有沒有給付、要付多少，女子是配藥、收錢的人，對話地點不是保險公司。"
+      },
+      {
+        "q": "What does the woman say about picking up the next refill?",
+        "options": [
+          "It will be ready on Saturday morning.",
+          "The man needs a new note from his doctor.",
+          "His wife can pick it up for him with her ID.",
+          "It can be mailed to the man's home."
+        ],
+        "answer": 2,
+        "explanation": "定位在男子第四次發言與女子的回答：Can my wife pick it up for me?（我太太可以幫我領嗎？）女子說 Yes, as long as she brings her ID and knows your date of birth.（可以，只要她帶證件、知道您的生日）。選 (C)。(A) Saturday 是男子問營業時間時才出現，女子沒有說續領的藥星期六早上好；(B) 女子沒有提到要醫生再開什麼文件；(D) 對話沒有提到郵寄。"
+      },
+      {
+        "q": "What will the man most likely do next?",
+        "options": [
+          "Call his wife about the refill",
+          "Go to the register to pay",
+          "Make an appointment with his doctor",
+          "Come back to the store on Saturday"
+        ],
+        "answer": 1,
+        "explanation": "下一步題看結尾：女子說 it's twelve dollars. You can pay at the register over there.（十二美元，可以到那邊的櫃檯結帳）。所以他接著會去付錢，選 (B)。(A) 續領是下個月的事，對話沒有說他現在要打電話給太太；(C) 對話沒有提到要看醫生；(D) 星期六只是在問營業時間，他今天就要把藥領走，不用再回來。"
+      }
+    ],
+    "transcriptZh": "男：您好，我來領處方藥，名字是 Alan Reyes。\n女：我查一下。Reyes。有，在這裡，今天早上就配好了。\n男：太好了。付錢之前，我可以問幾個簡單的問題嗎？\n女：好啊，您問。\n男：這次的藥保險有給付嗎？上次我是付全額。\n女：現在有了。您的保險方案上個月更新過，所以您只要付部分負擔。\n男：那太好了。我下個月還要續領，可以請我太太幫我領嗎？\n女：可以，只要她帶自己的證件，並且知道您的出生日期。\n男：了解。還有，你們星期六幾點關門？我平日通常加班到很晚。\n女：星期六開到六點，不過星期日公休。\n男：太好了。喔對，今天這個多少錢？\n女：用您的保險是十二美元。可以到那邊的櫃檯結帳。"
+  }
+]

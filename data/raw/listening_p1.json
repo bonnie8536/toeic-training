@@ -37,12 +37,12 @@
     "options": [
       "Some people are buying tickets.",
       "Some people are waiting on the platform.",
-      "A train is being repaired.",
+      "A train is being repaired on the tracks.",
       "The platform is empty."
     ],
     "answer": 1,
     "explanation": "正解 (B)：一群人站在月台等車，wait on the platform 精準描述整體狀態。\n(A) 陷阱＝物件在但動作錯：遠處確實有售票機，但沒有人在買票。\n(C) 陷阱＝畫面無此物：月台上根本沒有列車，更談不上維修。\n(D) 陷阱＝狀態相反：月台上明明有一群人，empty 與畫面相牴觸。",
-    "transcriptZh": "(A) 有些人正在買車票。\n(B) 有些人正在月台上等車。\n(C) 一列火車正在維修。\n(D) 月台上空無一人。"
+    "transcriptZh": "(A) 有些人正在買車票。\n(B) 有些人正在月台上等車。\n(C) 一列火車正在軌道上接受維修。\n(D) 月台上空無一人。"
   },
   {
     "id": "l1-05",

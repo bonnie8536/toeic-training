@@ -151,7 +151,7 @@
   },
   {
     "id": "n-31",
-    "audioText": "Training is held on the thirteenth floor, in room three oh nine.",
+    "audioText": "Training is held on the thirteenth floor, in room thirteen oh nine.",
     "question": "教育訓練在幾樓？",
     "options": [
       "30 樓",
@@ -160,8 +160,8 @@
       "13 樓"
     ],
     "answer": 3,
-    "note": "thirteenth 重音在後，thirtieth 重音在前；問的是樓層不是房號，room three oh nine 的 3 和 9 都是干擾。",
-    "zh": "教育訓練在十三樓的三〇九室。",
+    "note": "thirteenth 重音在後，thirtieth 重音在前，聽成 thirtieth 會選 30 樓；把 thirteenth 聽成 third 會選 3 樓。問的是樓層不是房號，room thirteen oh nine（1309 室）結尾的 nine 是干擾。",
+    "zh": "教育訓練在十三樓的一三〇九室。",
     "level": "中級"
   },
   {
@@ -196,7 +196,7 @@
   },
   {
     "id": "n-34",
-    "audioText": "A couple of trucks arrived this morning, and each one carried fifteen boxes.",
+    "audioText": "Two trucks arrived this morning, and each one carried fifteen boxes.",
     "question": "今天早上總共送來幾箱？",
     "options": [
       "15 箱",
@@ -205,7 +205,7 @@
       "50 箱"
     ],
     "answer": 1,
-    "note": "a couple of 是兩台，每台十五箱要相乘成三十箱；直接答 15 是只聽到單台的數字，fifteen 聽成 fifty 則會變成 50。",
+    "note": "兩台貨車、每台十五箱，要相乘成三十箱；直接答 15 是只聽到單台的數字，答 2 是把貨車台數當成箱數，fifteen 聽成 fifty 則會變成 50。",
     "zh": "今天早上來了兩台貨車，每台載十五箱。",
     "level": "進階"
   },

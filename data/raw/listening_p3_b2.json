@@ -4,18 +4,54 @@
     "difficulty": "基礎",
     "title": "出貨延誤的客訴電話",
     "dialogue": [
-      { "s": "M", "text": "Hi, this is Daniel Foster from Brightway Furniture. I'm calling about our order. It was supposed to arrive on Monday, and it's still not here." },
-      { "s": "W", "text": "I'm sorry about that, Mr. Foster. Let me pull up your account. Can you give me the order number?" },
-      { "s": "M", "text": "Sure. It's four seven two nine zero." },
-      { "s": "W", "text": "Thanks. Okay, I see it. Well, it looks like the shipment left our warehouse late. There was a problem with our delivery company last week." },
-      { "s": "M", "text": "That's a real problem for us. We've got customers waiting on those chairs." },
-      { "s": "W", "text": "I understand. The good news is it's on the truck now. It should get to you Thursday morning." },
-      { "s": "M", "text": "Thursday? That's three days late. Can you do anything about the shipping cost?" },
-      { "s": "W", "text": "Actually, yes. I can take the shipping fee off your invoice. That's about ninety dollars." },
-      { "s": "M", "text": "Okay, that helps. And can you send me something in writing?" },
-      { "s": "W", "text": "Of course. I'll email you the updated invoice and the tracking number this afternoon." },
-      { "s": "M", "text": "Great. One more thing. Next time, could someone call us if there's a delay?" },
-      { "s": "W", "text": "Absolutely. I'll add a note to your account so you get a call right away." }
+      {
+        "s": "M",
+        "text": "Hi, this is Daniel Foster from Brightway Furniture. I'm calling about our order. It was supposed to arrive on Monday, and it's still not here."
+      },
+      {
+        "s": "W",
+        "text": "I'm sorry about that, Mr. Foster. Let me pull up your account. Can you give me the order number?"
+      },
+      {
+        "s": "M",
+        "text": "Sure. It's four seven two nine zero."
+      },
+      {
+        "s": "W",
+        "text": "Thanks. Okay, I see it. Well, it looks like the shipment left our warehouse late. There was a problem with our delivery company last week."
+      },
+      {
+        "s": "M",
+        "text": "That's a real problem for us. We've got customers waiting on those chairs."
+      },
+      {
+        "s": "W",
+        "text": "I understand. The good news is it's on the truck now. It should get to you Thursday morning."
+      },
+      {
+        "s": "M",
+        "text": "Thursday? That's three days late. Can you do anything about the shipping cost?"
+      },
+      {
+        "s": "W",
+        "text": "Actually, yes. I can take the shipping fee off your invoice. That's about ninety dollars."
+      },
+      {
+        "s": "M",
+        "text": "Okay, that helps. And can you send me something in writing?"
+      },
+      {
+        "s": "W",
+        "text": "Of course. I'll email you the updated invoice and the tracking number this afternoon."
+      },
+      {
+        "s": "M",
+        "text": "Great. One more thing. Next time, could someone call us if there's a delay?"
+      },
+      {
+        "s": "W",
+        "text": "Absolutely. I'll add a note to your account so you get a call right away."
+      }
     ],
     "questions": [
       {
@@ -59,18 +95,54 @@
     "difficulty": "中級",
     "title": "同事討論行銷職缺的面試人選",
     "dialogue": [
-      { "s": "W", "text": "Hey Marcus, got a minute? I want to talk about the interviews for the marketing position." },
-      { "s": "M", "text": "Sure. We saw four people yesterday, right?" },
-      { "s": "W", "text": "Right. Honestly, I think it's between Karen Wu and the guy who came in last." },
-      { "s": "M", "text": "Peter Nakamura. Yeah, he had great ideas about social media." },
-      { "s": "W", "text": "He did. But he's only been working two years, and the job posting said five." },
-      { "s": "M", "text": "True. Karen has the experience, but she seemed a little quiet in the interview." },
-      { "s": "W", "text": "I noticed that too. So I called one of her references this morning." },
-      { "s": "M", "text": "Oh? What did they say?" },
-      { "s": "W", "text": "Very positive. Her old manager said she leads a team of six and handles big clients." },
-      { "s": "M", "text": "Then maybe she was just nervous. Should we bring her back for a second round?" },
-      { "s": "W", "text": "Yes, with the director this time. Can you check his calendar and set something up for next week?" },
-      { "s": "M", "text": "No problem. I'll send you both an invitation this afternoon." }
+      {
+        "s": "W",
+        "text": "Hey Marcus, got a minute? I want to talk about the interviews for the marketing position."
+      },
+      {
+        "s": "M",
+        "text": "Sure. We saw four people yesterday, right?"
+      },
+      {
+        "s": "W",
+        "text": "Right. Honestly, I think it's between Karen Wu and the guy who came in last."
+      },
+      {
+        "s": "M",
+        "text": "Peter Nakamura. Yeah, he had great ideas about social media."
+      },
+      {
+        "s": "W",
+        "text": "He did. But he's only been working two years, and the job posting said five."
+      },
+      {
+        "s": "M",
+        "text": "True. Karen has the experience, but she seemed a little quiet in the interview."
+      },
+      {
+        "s": "W",
+        "text": "I noticed that too. So I called one of her references this morning."
+      },
+      {
+        "s": "M",
+        "text": "Oh? What did they say?"
+      },
+      {
+        "s": "W",
+        "text": "Very positive. Her old manager said she leads a team of six and handles big clients."
+      },
+      {
+        "s": "M",
+        "text": "Then maybe she was just nervous. Should we bring her back for a second round?"
+      },
+      {
+        "s": "W",
+        "text": "Yes, with the director this time. Can you check his calendar and set something up for next week?"
+      },
+      {
+        "s": "M",
+        "text": "No problem. I'll send you both an invitation this afternoon."
+      }
     ],
     "questions": [
       {
@@ -110,77 +182,58 @@
     "transcriptZh": "女：嘿 Marcus，有空嗎？我想談一下行銷職缺的面試。\n男：好啊。我們昨天看了四個人，對吧？\n女：對。老實說，我覺得就是 Karen Wu 跟最後進來的那位在比。\n男：Peter Nakamura。對，他對社群媒體的想法很不錯。\n女：確實。可是他才工作兩年，職缺公告寫的是五年。\n男：也是。Karen 資歷夠，不過她在面試裡看起來有點安靜。\n女：我也注意到了。所以我今天早上打給她其中一位推薦人。\n男：喔？他們怎麼說？\n女：非常正面。她以前的主管說她帶六個人的團隊，還負責大客戶。\n男：那她可能只是緊張而已。我們要不要請她回來進行第二輪面試？\n女：要，這次讓總監一起。你可以查一下他的行事曆，約在下週嗎？\n男：沒問題。我下午把邀請寄給你們兩位。"
   },
   {
-    "id": "l3-23",
-    "difficulty": "基礎",
-    "title": "藥局取藥與用藥諮詢",
-    "dialogue": [
-      { "s": "M", "text": "Hi, I'm here to pick up a prescription. The name is Alan Reyes." },
-      { "s": "W", "text": "Let me check. Reyes. Yes, here it is. It was ready this morning." },
-      { "s": "M", "text": "Great. Actually, can I ask you something? My doctor didn't really explain how to take it." },
-      { "s": "W", "text": "Sure, go ahead." },
-      { "s": "M", "text": "How many do I take a day?" },
-      { "s": "W", "text": "One tablet twice a day, once in the morning and once at night. And take it with food." },
-      { "s": "M", "text": "With food? Okay. What happens if I forget one?" },
-      { "s": "W", "text": "Just take it when you remember. But if it's almost time for the next one, skip it. Don't take two at once." },
-      { "s": "M", "text": "Got it. And can I take this with the cold medicine I bought here last week?" },
-      { "s": "W", "text": "Let me look that up. You should be fine, but wait about four hours between them." },
-      { "s": "M", "text": "Perfect. Oh, and how much is it?" },
-      { "s": "W", "text": "With your insurance, it's twelve dollars. You can pay at the register over there." }
-    ],
-    "questions": [
-      {
-        "q": "Where does the conversation most likely take place?",
-        "options": [
-          "At a pharmacy",
-          "At a doctor's office",
-          "At a hospital cafeteria",
-          "At an insurance company"
-        ],
-        "answer": 0,
-        "explanation": "場景題：男子開口就說 I'm here to pick up a prescription（我來領處方藥），女子後面提到 tablet、cold medicine、pay at the register，是藥局的典型情境，選 (A)。(B) 醫生只是被提到 my doctor didn't really explain，人不在現場；(D) insurance 只出現在結帳時的 With your insurance。"
-      },
-      {
-        "q": "What does the woman tell the man to do if he misses a dose?",
-        "options": [
-          "Call his doctor right away",
-          "Take two tablets the next time",
-          "Skip it if the next dose is coming soon",
-          "Stop taking the medicine for one day"
-        ],
-        "answer": 2,
-        "explanation": "定位在女子第四次發言：if it's almost time for the next one, skip it. Don't take two at once.（如果快到下一次的時間就跳過，不要一次吃兩顆）。選 (C)。(B) 正是女子明確否定的做法，屬於直接反向陷阱。"
-      },
-      {
-        "q": "What will the man most likely do next?",
-        "options": [
-          "Return the cold medicine",
-          "Go to the register to pay",
-          "Make an appointment with his doctor",
-          "Wait four hours before leaving"
-        ],
-        "answer": 1,
-        "explanation": "下一步題看結尾：女子說 it's twelve dollars. You can pay at the register over there.（十二美元，可以到那邊的櫃檯結帳）。所以他接著會去付錢，選 (B)。(D) 的四小時是指兩種藥之間要間隔，不是要在現場等。"
-      }
-    ],
-    "transcriptZh": "男：您好，我來領處方藥，名字是 Alan Reyes。\n女：我查一下。Reyes。有，在這裡，今天早上就配好了。\n男：太好了。其實我想問一下，我的醫生沒有很清楚說明要怎麼吃。\n女：好啊，您問。\n男：一天要吃幾顆？\n女：一天兩次，一次一顆，早上一次、晚上一次。要跟食物一起吃。\n男：跟食物一起？好。那如果忘了吃一次呢？\n女：想起來的時候補吃就好。但如果快到下一次的時間了就跳過，不要一次吃兩顆。\n男：了解。還有，這個可以跟我上週在這裡買的感冒藥一起吃嗎？\n女：我查一下。應該沒問題，不過兩種之間要間隔大約四小時。\n男：太好了。喔對，這個多少錢？\n女：用您的保險是十二美元。可以到那邊的櫃檯結帳。"
-  },
-  {
     "id": "l3-24",
     "difficulty": "中級",
     "title": "辦公室搬遷的準備工作",
     "dialogue": [
-      { "s": "W", "text": "Ken, did you see the email about the office move?" },
-      { "s": "M", "text": "I saw it, but I only read half of it. We're moving next month, right?" },
-      { "s": "W", "text": "The weekend of the fifteenth. The moving company comes in Saturday morning." },
-      { "s": "M", "text": "So we just leave everything on our desks?" },
-      { "s": "W", "text": "No, that's why I wanted to talk to you. Everyone has to pack their own boxes by Friday." },
-      { "s": "M", "text": "Okay. Where do we get boxes?" },
-      { "s": "W", "text": "They're in the supply room now. Take as many as you need, and there are labels too." },
-      { "s": "M", "text": "Got it. What about the computers?" },
-      { "s": "W", "text": "The IT team handles those. Don't unplug anything yourself. They'll come by on Thursday to tag them." },
-      { "s": "M", "text": "Good, because I really didn't want to do that. What's the new place like?" },
-      { "s": "W", "text": "It's on Sherman Avenue, about ten minutes from here. More meeting rooms, and there's parking underneath." },
-      { "s": "M", "text": "Parking? That alone makes it worth it." }
+      {
+        "s": "W",
+        "text": "Ken, did you see the email about the office move?"
+      },
+      {
+        "s": "M",
+        "text": "I saw it, but I only read half of it. We're moving next month, right?"
+      },
+      {
+        "s": "W",
+        "text": "The weekend of the fifteenth. The moving company comes in Saturday morning."
+      },
+      {
+        "s": "M",
+        "text": "So we just leave everything on our desks?"
+      },
+      {
+        "s": "W",
+        "text": "No, that's why I wanted to talk to you. Everyone has to pack their own boxes by Friday."
+      },
+      {
+        "s": "M",
+        "text": "Okay. Where do we get boxes?"
+      },
+      {
+        "s": "W",
+        "text": "They're in the supply room now. Take as many as you need, and there are labels too."
+      },
+      {
+        "s": "M",
+        "text": "Got it. What about the computers?"
+      },
+      {
+        "s": "W",
+        "text": "The IT team handles those. Don't unplug anything yourself. They'll come by on Thursday to tag them."
+      },
+      {
+        "s": "M",
+        "text": "Good, because I really didn't want to do that. What's the new place like?"
+      },
+      {
+        "s": "W",
+        "text": "It's on Sherman Avenue, about ten minutes from here. More meeting rooms, and there's parking underneath."
+      },
+      {
+        "s": "M",
+        "text": "Parking? That alone makes it worth it."
+      }
     ],
     "questions": [
       {
@@ -224,18 +277,54 @@
     "difficulty": "進階",
     "title": "產品發表會的場地與人數調整",
     "dialogue": [
-      { "s": "M", "text": "Sofia, I just got the numbers back for the product launch. A hundred and eighty people have confirmed." },
-      { "s": "W", "text": "A hundred and eighty? We booked the hall for a hundred and fifty." },
-      { "s": "M", "text": "I know. That's why I came to you first." },
-      { "s": "W", "text": "Hmm. Well, the hotel has a bigger room on the second floor, but I'd guess it costs more." },
-      { "s": "M", "text": "I already asked. It's another six hundred, and they need an answer by Friday." },
-      { "s": "W", "text": "Six hundred. That's more than I wanted to spend, but turning people away looks worse." },
-      { "s": "M", "text": "My thought exactly. And there's the catering. They're planning for a hundred and fifty too." },
-      { "s": "W", "text": "Right, we'd have to call them as well. Okay, let's take the bigger room. I'll clear it with Mr. Duval." },
-      { "s": "M", "text": "Do you think he'll say yes?" },
-      { "s": "W", "text": "He signed off on a similar change last spring, so probably. I'll talk to him this afternoon." },
-      { "s": "M", "text": "Great. Once you hear back, I'll confirm with the hotel and update the catering order." },
-      { "s": "W", "text": "And send me the new floor plan when you get it. I want to see where the demo tables go." }
+      {
+        "s": "M",
+        "text": "Sofia, I just got the numbers back for the product launch. A hundred and eighty people have confirmed."
+      },
+      {
+        "s": "W",
+        "text": "A hundred and eighty? We booked the hall for a hundred and fifty."
+      },
+      {
+        "s": "M",
+        "text": "I know. That's why I came to you first."
+      },
+      {
+        "s": "W",
+        "text": "Hmm. Well, the hotel has a bigger room on the second floor, but I'd guess it costs more."
+      },
+      {
+        "s": "M",
+        "text": "I already asked. It's another six hundred, and they need an answer by Friday."
+      },
+      {
+        "s": "W",
+        "text": "Six hundred. That's more than I wanted to spend, but turning people away looks worse."
+      },
+      {
+        "s": "M",
+        "text": "My thought exactly. And there's the catering. They're planning for a hundred and fifty too."
+      },
+      {
+        "s": "W",
+        "text": "Right, we'd have to call them as well. Okay, let's take the bigger room. I'll clear it with Mr. Duval."
+      },
+      {
+        "s": "M",
+        "text": "Do you think he'll say yes?"
+      },
+      {
+        "s": "W",
+        "text": "He signed off on a similar change last spring, so probably. I'll talk to him this afternoon."
+      },
+      {
+        "s": "M",
+        "text": "Great. Once you hear back, I'll confirm with the hotel and update the catering order."
+      },
+      {
+        "s": "W",
+        "text": "And send me the new floor plan when you get it. I want to see where the demo tables go."
+      }
     ],
     "questions": [
       {

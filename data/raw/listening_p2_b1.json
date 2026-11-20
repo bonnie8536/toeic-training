@@ -48,16 +48,16 @@
     "id": "l2-06",
     "difficulty": "中級",
     "category": "WH問句",
-    "accent": "AU",
+    "accent": "CA",
     "question": "Who's covering the front desk while Diane's away?",
     "options": [
       "It's a nice cover.",
-      "She's away until Friday.",
+      "She's away on business until next Friday.",
       "Didn't you get the schedule I posted?"
     ],
     "answer": 2,
-    "explanation": "(C) 正解：間接回應，用反問把對方導向班表，等於「答案寫在班表上」。\n(A) cover 一字多義的相似音誘答（代班／封面）。\n(B) 重複 away，但回答的是「多久」而不是「誰」。",
-    "transcriptZh": "問：Diane 不在的時候誰顧櫃檯？\n(A) 那個封面很好看。\n(B) 她要到星期五才回來。\n(C) 你沒看到我貼的班表嗎？"
+    "explanation": "(C) 正解：間接回應，用反問把對方導向班表，等於「答案寫在班表上」。\n(A) cover 一字多義的相似音誘答（代班／封面）。\n(B) 重複 away，但回答的是她出差到什麼時候，不是誰來代班。",
+    "transcriptZh": "問：Diane 不在的時候誰顧櫃檯？\n(A) 那個封面很好看。\n(B) 她出差到下星期五才回來。\n(C) 你沒看到我貼的班表嗎？"
   },
   {
     "id": "l2-07",
@@ -168,16 +168,16 @@
     "id": "l2-14",
     "difficulty": "中級",
     "category": "附加/否定問句",
-    "accent": "GB",
+    "accent": "CA",
     "question": "You're joining us for lunch, aren't you?",
     "options": [
       "It was delicious, thanks.",
-      "The menu's on the counter.",
+      "The lunch menu's on the front counter.",
       "I've got a conference call at noon."
     ],
     "answer": 2,
-    "explanation": "(C) 正解：間接回應，中午有電話會議＝婉拒，等於 No 但沒明說。\n(A) 時態錯位，午餐還沒吃就說好吃。\n(B) 用 lunch→menu 的情境聯想誘答。",
-    "transcriptZh": "問：你會跟我們一起吃午餐吧？\n(A) 很好吃，謝謝。\n(B) 菜單在櫃檯上。\n(C) 我中午有電話會議。"
+    "explanation": "(C) 正解：間接回應，中午有電話會議＝婉拒，等於 No 但沒明說。\n(A) 時態錯位，午餐還沒吃就說好吃。\n(B) 重複 lunch，由午餐聯想到菜單誘答，講的是菜單放在哪裡，沒有回答要不要一起去。",
+    "transcriptZh": "問：你會跟我們一起吃午餐吧？\n(A) 很好吃，謝謝。\n(B) 午餐菜單在前面櫃檯上。\n(C) 我中午有電話會議。"
   },
   {
     "id": "l2-16",
@@ -217,12 +217,12 @@
     "question": "Didn't we order more toner last month?",
     "options": [
       "Yes, but we went through it fast.",
-      "The order form's online.",
+      "The order form is on the company website.",
       "No, the tone was fine."
     ],
     "answer": 0,
     "explanation": "(A) 正解：否定問句照事實回答，Yes 表示有訂，but 補充「很快就用完了」。\n(B) 重複 order，但回答的是表單在哪裡。\n(C) toner／tone 相似音誘答。",
-    "transcriptZh": "問：我們上個月不是有多訂碳粉嗎？\n(A) 有，可是我們很快就用完了。\n(B) 訂購單在網路上。\n(C) 沒有，語氣沒問題。"
+    "transcriptZh": "問：我們上個月不是有多訂碳粉嗎？\n(A) 有，可是我們很快就用完了。\n(B) 訂購單在公司網站上。\n(C) 沒有，語氣沒問題。"
   },
   {
     "id": "l2-19",
@@ -258,16 +258,16 @@
     "id": "l2-21",
     "difficulty": "中級",
     "category": "WH問句",
-    "accent": "AU",
+    "accent": "GB",
     "question": "How much do these folders cost?",
     "options": [
       "There's a price list by the door.",
       "About two hours.",
-      "In the supply closet."
+      "In the supply closet down the hall."
     ],
     "answer": 0,
     "explanation": "(A) 正解：間接回應，不直接報價，改指向價目表。\n(B) 回答時間長度，是 How long 的答案。\n(C) 回答地點，是 Where 的答案。",
-    "transcriptZh": "問：這些資料夾多少錢？\n(A) 門邊有價目表。\n(B) 大約兩小時。\n(C) 在文具櫃裡。"
+    "transcriptZh": "問：這些資料夾多少錢？\n(A) 門邊有價目表。\n(B) 大約兩小時。\n(C) 在走廊那頭的文具櫃裡。"
   },
   {
     "id": "l2-22",

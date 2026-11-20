@@ -33,16 +33,16 @@
     "id": "l2-78",
     "difficulty": "中級",
     "category": "附加/否定問句",
-    "accent": "AU",
+    "accent": "CA",
     "question": "You've already watered the plants out front, haven't you?",
     "options": [
-      "The water bill's due Friday.",
+      "The water bill has to be paid by Friday.",
       "They're beautiful plants.",
       "I was just heading out to do that."
     ],
     "answer": 2,
     "explanation": "正解 (C)：間接回應。不直接說 No，而是說「我正要出去弄」，等於表示還沒澆。\n(A) 重複 water，講的是水費帳單，與有沒有澆水無關。\n(B) 重複 plants，只是稱讚植物漂亮，沒有回答問題。",
-    "transcriptZh": "問：你已經幫前面那些植物澆過水了吧？\n(A) 水費帳單星期五要繳。\n(B) 那些植物很漂亮。\n(C) 我正要出去弄。"
+    "transcriptZh": "問：你已經幫前面那些植物澆過水了吧？\n(A) 水費帳單星期五前要繳。\n(B) 那些植物很漂亮。\n(C) 我正要出去弄。"
   },
   {
     "id": "l2-79",
@@ -93,16 +93,16 @@
     "id": "l2-82",
     "difficulty": "中級",
     "category": "WH問句",
-    "accent": "US",
+    "accent": "CA",
     "question": "How many students signed up for the guitar class?",
     "options": [
       "Sign-ups don't close until Friday.",
-      "Every Tuesday evening.",
+      "Classes are held every Tuesday evening.",
       "He teaches piano, actually."
     ],
     "answer": 0,
     "explanation": "正解 (A)：間接回應。報名到星期五才截止，等於表示現在還給不出確切人數。\n(B) 「每週二晚上」回答的是上課時間，屬於 When 的答案。\n(C) 把 guitar 換成 piano 混淆，講的是教什麼樂器，不是人數。",
-    "transcriptZh": "問：吉他班報名的學生有多少人？\n(A) 報名到星期五才截止。\n(B) 每週二晚上。\n(C) 他其實是教鋼琴的。"
+    "transcriptZh": "問：吉他班報名的學生有多少人？\n(A) 報名到星期五才截止。\n(B) 每週二晚上上課。\n(C) 他其實是教鋼琴的。"
   },
   {
     "id": "l2-83",
@@ -138,16 +138,16 @@
     "id": "l2-85",
     "difficulty": "基礎",
     "category": "WH問句",
-    "accent": "US",
+    "accent": "AU",
     "question": "Where should I deliver these flowers?",
     "options": [
-      "They're mostly roses.",
+      "They're mostly roses and tulips.",
       "There's an address on the card.",
       "She really liked them."
     ],
     "answer": 1,
     "explanation": "正解 (B)：Where 問送花地點，「卡片上有寫地址」把地點指向卡片，回應成立。\n(A) 回答的是花的種類，屬於 What 的答案。\n(C) 「她很喜歡」講的是收花人的反應，沒有回答送到哪裡。",
-    "transcriptZh": "問：這些花要送到哪裡？\n(A) 大部分是玫瑰。\n(B) 卡片上有寫地址。\n(C) 她很喜歡。"
+    "transcriptZh": "問：這些花要送到哪裡？\n(A) 大部分是玫瑰和鬱金香。\n(B) 卡片上有寫地址。\n(C) 她很喜歡。"
   },
   {
     "id": "l2-86",
@@ -213,16 +213,16 @@
     "id": "l2-90",
     "difficulty": "基礎",
     "category": "WH問句",
-    "accent": "AU",
+    "accent": "CA",
     "question": "Who's teaching the morning class this week?",
     "options": [
-      "At six thirty.",
+      "It starts at six thirty every morning.",
       "In studio two.",
       "Marcus is filling in for Dana."
     ],
     "answer": 2,
-    "explanation": "正解 (C)：Who 問的是誰上課，「Marcus 代 Dana 的班」直接點出人。\n(A) 「六點半」回答的是時間，屬於 When 的答案。\n(B) 「在二號教室」回答的是地點，屬於 Where 的答案。",
-    "transcriptZh": "問：這週早上的課是誰教？\n(A) 六點半。\n(B) 在二號教室。\n(C) Marcus 代 Dana 的班。"
+    "explanation": "正解 (C)：Who 問的是誰上課，「Marcus 代 Dana 的班」直接點出人。\n(A) 「每天早上六點半開始」回答的是時間，屬於 When 的答案。\n(B) 「在二號教室」回答的是地點，屬於 Where 的答案。",
+    "transcriptZh": "問：這週早上的課是誰教？\n(A) 每天早上六點半開始。\n(B) 在二號教室。\n(C) Marcus 代 Dana 的班。"
   },
   {
     "id": "l2-92",

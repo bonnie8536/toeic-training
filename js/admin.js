@@ -59,7 +59,9 @@
     ? [...TOEIC.diagnostic.p5, ...TOEIC.diagnostic.p6.questions, ...TOEIC.diagnostic.p7.questions]
     : [];
 
+  let loadGen = 0;   // 重新整理時讓上一次還沒畫完的題目回報區不要掛上去
   async function load() {
+    const gen = ++loadGen;
     note('載入學生資料中…');
     let rows;
     try {
@@ -79,10 +81,22 @@
       const s = students[r.user_id] = students[r.user_id] || { keys: {}, kt: {}, last: '' };
       if (r.v !== null) s.keys[r.k] = r.v;
       s.kt[r.k] = r.updated_at;
-      if (r.updated_at > s.last) s.last = r.updated_at;
+      /* 學生回報題目(q_reports)不算「最近活動」:只回報、沒練習的學生不會被當成今天有練 */
+      if (r.k !== 'q_reports' && r.updated_at > s.last) s.last = r.updated_at;
     });
 
     render(students);
+    /* 題目回報區(js/admin-reports.js):只有站長掛得上,不是站長時什麼節點都不加 */
+    if (window.ADMIN_REPORTS) {
+      const tn = (students[CLOUD.user.id] || { keys: {} }).keys;
+      const nameOf = uid => {
+        const s = students[uid];
+        const meta = (s && s.keys['_meta']) || {};
+        const t = tn['tnote_' + uid] || {};
+        return t.nick || meta.name || meta.email || String(uid).slice(0, 8);
+      };
+      ADMIN_REPORTS.mount(root, { rows, nameOf, alive: () => gen === loadGen }).catch(() => { /* 回報區掛不上不影響後台 */ });
+    }
   }
 
   function drillStats(keys, p) {

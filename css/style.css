@@ -2913,3 +2913,22 @@ html.pet-roam2.pet-roam2-wide .pet-card .pet-pic {
 .hist-row > .hist-corr { padding: 0 14px 10px; margin-top: 0; }
 .modal-report > .auth-fine { text-align: center; }
 .modal-report > .btn:not(.auth-submit) { display: block; margin: 8px auto 0; }
+
+/* ======== 教師後台:題目回報(js/admin-reports.js,只有站長) ======== */
+.rpa-item { border-top: 1px solid var(--line); }
+.rpa-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; width: 100%; min-height: 44px; padding: 8px 4px; border: 0; background: none; text-align: left; font: inherit; font-size: 14px; color: var(--ink); cursor: pointer; }
+.rpa-head:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.rpa-id { font-weight: 700; overflow-wrap: anywhere; }
+.rpa-count { font-weight: 700; color: var(--primary-dark); }
+.rpa-types { color: var(--ink-soft); }
+.rpa-date { margin-left: auto; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.rpa-body { padding: 4px 4px 14px; }
+.rpa-who { list-style: none; font-size: 14px; }
+.rpa-who li + li { margin-top: 6px; }
+.rpa-note-text { color: var(--ink-soft); white-space: pre-wrap; overflow-wrap: anywhere; }
+.rpa-note { font-size: 14px; color: var(--ink-soft); }
+.rpa-status { font-size: 13px; color: var(--bad); align-self: center; }
+.rpa-q { margin-top: 10px; }
+.rpa-opts { margin: 6px 0 0 1.4em; font-size: 14.5px; }
+.rpa-opts .is-answer { font-weight: 700; color: var(--ok); }
+.rpa-item.is-closed .rpa-id { color: var(--ink-soft); font-weight: 400; }

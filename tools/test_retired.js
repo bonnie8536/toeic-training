@@ -314,11 +314,15 @@ async function main() {
     const leaked = ids.filter((id) => p.text.includes(id));
     check('B3 題庫刷題 ' + label + ':畫得出來、不丟錯、畫面沒有淘汰題的 id', !p.errors.length && p.text.length > 20 && !leaked.length, p.errors.join(' / ') + leaked.join(','));
   }
-  /* B4 每日複習 */
+  /* B4 錯題本(js/review.js 用 js/ui.js 的專心模式與結算卡;這個最小 DOM 放不下 ui.js,換成替身) */
   {
+    const node = (ctx, cls) => { const n = ctx.document.createElement('div'); n.className = cls; return n; };
     const p = await openPage({ page: 'review.html', rootId: 'review-root', scripts: DATA('part5', 'part6', 'part7', 'listening', 'phrases', 'grammar', 'phonics').concat(['js/common.js', 'js/sync-merge.js', 'js/wrongbook.js', 'js/review.js']),
+      extra: (ctx) => ({ UI: { doodle() {}, empty: (o) => { const n = node(ctx, 'ui-empty'); n.textContent = o.text; return n; },
+        focus: { enter: () => ({ progress() {}, foot() {}, feedback() {}, leave() {} }) },
+        result: () => ({ el: node(ctx, 'result-card'), reward: node(ctx, 'result-reward'), heading: node(ctx, 'result-score'), destroy() {} }) } }),
       act: async (ctx, root) => { const b = root.find((n) => n.tagName === 'BUTTON' && /開始/.test(n.textContent))[0]; if (b) await b.click(); } });
-    check('B4 每日複習:待複習題數不算淘汰題,開始複習畫得出來、不丟錯', !p.errors.length && p.text.includes('每日複習'), p.errors.join(' / '));
+    check('B4 錯題本:待複習題數不算淘汰題,開始複習畫得出來、不丟錯', !p.errors.length && p.text.includes('錯題本'), p.errors.join(' / '));
   }
   /* B5 能力分析 */
   {

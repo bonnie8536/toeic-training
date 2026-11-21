@@ -181,12 +181,49 @@ function uiEnv(o) {
     play() { return Promise.resolve(); }
     pause() {}
   };
+  ctx.UI = fakeUI(dom);
+  FOOT = null;
   if (o.before) o.before(env);
   vm.runInContext(read('js/daily.js'), ctx);
   vm.runInContext(read('js/daily-ui.js'), ctx);
   return Object.assign(env, { dom, root, audios, D: ctx.DAILY });
 }
-function btnByText(root, re) { return root.querySelectorAll('button').concat(root.querySelectorAll('a')).find(b => re.test(b.textContent)); }
+/* 按鈕在頁面裡或專心模式的底部列(js/ui.js 把底部列放在頁面外面) */
+function btnByText(root, re) {
+  const els = [root].concat(FOOT ? [FOOT] : []);
+  return els.reduce((a, e) => a.concat(e.querySelectorAll('button'), e.querySelectorAll('a')), []).find(b => re.test(b.textContent));
+}
+/* js/ui.js 的替身(只做 daily-ui.js 用到的部分):專心模式的底部列、結算卡、逐題收合、空狀態都用假 DOM 元素畫出來,按鈕點得到 */
+let FOOT = null;
+function fakeUI(dom) {
+  const mk = (tag, cls, ...kids) => { const e = dom.createElement(tag); e.className = cls || ''; e.append(...kids.filter(k => k !== null && k !== undefined)); return e; };
+  const link = (a, cls) => { const e = mk(a.href ? 'a' : 'button', cls, a.label); if (a.href) e.setAttribute('href', a.href); if (a.onClick) e.addEventListener('click', a.onClick); return e; };
+  return {
+    doodle: () => Promise.resolve(false),
+    chick: () => ({ destroy() {} }),
+    focus: {
+      enter() {
+        const slot = mk('div', 'quiz-foot-in');
+        FOOT = mk('div', 'quiz-foot', slot);
+        const api = {
+          progress(n) { api.at = n; }, setTotal() {}, dirty() {}, action() {}, leave() { FOOT = null; },
+          foot(nodes) { slot.replaceChildren(...[].concat(nodes || [])); },
+          feedback(f) { const b = mk('button', 'btn primary quiz-next', f.next || '下一題'); b.addEventListener('click', f.onNext); slot.replaceChildren(b); return b; },
+        };
+        return api;
+      },
+    },
+    result(o) {
+      const reward = mk('div', 'result-reward');
+      const heading = mk('h2', 'result-score', o.score + ' / ' + o.total + (o.flag ? ' ' + o.flag : ''));
+      const el = mk('section', 'result-card', o.kicker ? mk('p', 'result-kicker', o.kicker) : null, heading, reward,
+        o.primary ? link(o.primary, 'btn primary result-go') : null, ...(o.links || []).map(l => link(l, 'btn-text result-link')));
+      return { el, reward, heading, destroy() {} };
+    },
+    detail: (title, nodes) => mk('details', 'result-detail', mk('summary', 'result-detail-sum', title), mk('div', 'result-detail-body', ...nodes)),
+    empty: o => mk('div', 'ui-empty', mk('p', 'ui-empty-text', o.text), o.action ? link(o.action, 'btn ui-empty-go') : null),
+  };
+}
 
 const T = {};
 
@@ -552,7 +589,7 @@ T['畫面:三項都做完的成績頁也沒有 null'] = () => {
   const ui = uiEnv({ search: '?part=g', now: NOW, before: preset({ d: { n: 5, wrong: 0 }, v: { n: 5, wrong: 0 }, g: { n: 5, wrong: 2 } }) });
   const t = seen(ui.root);
   const g = D.itemsFor(DATA, '2026-10-12').g[0];
-  return { ok: !/null|undefined/.test(t) && /今日練習已完成/.test(t) && t.includes(g.options[g.answer]), detail: JSON.stringify(t) };
+  return { ok: !/null|undefined/.test(t) && /今日完成/.test(t) && t.includes(g.options[g.answer]), detail: JSON.stringify(t) };
 };
 T['畫面:聽寫沒打字時對答案按不下去,按 Enter 也不記;打了字才可以'] = () => {
   const ui = uiEnv({ search: '?part=d', now: NOW });
@@ -581,8 +618,9 @@ T['畫面:音檔載不到時說要重新整理,可以跳過這句,不記成答�
   const t = seen(ui.root);
   const skip = btnByText(ui.root, /跳過這句/);
   if (skip) skip.click();
-  const cur = ui.root.querySelectorAll('.q-nav button').findIndex(b => b.classList.contains('cur'));
-  return { ok: /音檔載入失敗，請重新整理頁面。/.test(t) && !!skip && cur === 1 && !ui.ls.has('tr_daily_done'), detail: JSON.stringify(t.slice(0, 160)) + ' cur ' + cur };
+  const cur = ui.audios[ui.audios.length - 1].src;
+  const it = D.itemsFor(DATA, '2026-10-12').d;
+  return { ok: /音檔載入失敗/.test(t) && /請重新整理頁面/.test(t) && !!skip && cur === 'audio/' + it[1].id + '.mp3' && !ui.ls.has('tr_daily_done'), detail: JSON.stringify(t.slice(0, 160)) + ' cur ' + cur };
 };
 T['畫面:跳過的那句,做完後面的會再回來'] = () => {
   const ui = uiEnv({ search: '?part=d', now: NOW });
@@ -598,8 +636,8 @@ T['畫面:跳過的那句,做完後面的會再回來'] = () => {
     if (i === 4 && /看成績/.test(next.textContent)) return { ok: false, detail: '跳過的那句沒有回來' };
     next.click();
   }
-  const cur = ui.root.querySelectorAll('.q-nav button').findIndex(b => b.classList.contains('cur'));
-  return { ok: cur === 0, detail: 'cur ' + cur };
+  const cur = ui.audios[ui.audios.length - 1].src;
+  return { ok: cur === 'audio/' + it[0].id + '.mp3', detail: 'cur ' + cur };
 };
 T['畫面:聽寫選的速度下一句還在,下一句時焦點在播放鍵'] = () => {
   const ui = uiEnv({ search: '?part=d', now: NOW });
@@ -640,7 +678,7 @@ T['畫面:登入的人打開 daily.html 會併入雲端那一份,清單跟著更
   await tick(); await tick();
   const done = JSON.parse(ui.ls.get('tr_uabc_daily_done'));
   const t = seen(ui.root);
-  return { ok: Object.keys(done['2026-10-12'].v).length === 5 && Object.keys(done['2026-10-12'].d).length === 5 && /做完 2 \/ 3 項/.test(t) && ui.pushed.includes('daily_done'),
+  return { ok: Object.keys(done['2026-10-12'].v).length === 5 && Object.keys(done['2026-10-12'].d).length === 5 && /2 \/ 3/.test(t) && ui.pushed.includes('daily_done'),
     detail: JSON.stringify(t) };
 };
 T['畫面:雲端讀不到(ok:false)或內容一樣就不寫、不上傳;訪客不去讀雲端'] = async () => {

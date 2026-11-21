@@ -1,6 +1,6 @@
-/* 每日複習:把全站錯過的東西集中成一份今日功課。
-   - 可即練:P5 錯題、聽力 P1/P2 錯題、片語錯題(答對就從錯題池移出,越早錯的越先出)。
-   - 題組類(P6/P7/聽力對話)與單字漏接、文法待補,導向各自的複習入口。 */
+/* 錯題本:把題庫刷題、片語、單字、文法與自然發音錯過的東西集中起來複習。
+   - 可即練:P5 錯題、聽力 P1/P2 錯題、片語錯題(答對就從錯題池移出,越早錯的越先出),用專心模式一題一題做。
+   - 題組類(P6/P7/聽力對話)與單字漏接、文法待補、自然發音待補,導向各自的複習入口。 */
 (function () {
   const root = $('#review-root');
   const T = window.TOEIC || {};
@@ -61,41 +61,46 @@
   /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud;審查 2026-11-19 #1):別台考的錯題合併進來時,還在首頁就重畫題數 */
   if (WB && typeof WB.syncCloud === 'function') WB.syncCloud().then(r => { if (r.changed && onHome) renderHome(); });
 
+  /* 動態放進頁面的圖示:頁面還在載入時由 js/ui.js 在載入完成那一下統一畫,之後重畫的自己叫 */
+  function art(box) {
+    if (window.UI && document.readyState !== 'loading') UI.doodle(box);
+  }
+
   function renderHome() {
     onHome = true;
-    document.title = '每日複習 - 衝衝英文';
-    root.innerHTML = '';
-    root.append(h('div', { class: 'page-head' },
-      h('h1', null, '每日複習')));
+    document.title = '錯題本 - 衝衝英文';
+    root.replaceChildren(h('div', { class: 'page-head' },
+      h('canvas', { class: 'hub-art', 'data-doodle': 'wrongbook', 'data-size': '40', 'aria-hidden': 'true' }),
+      h('h1', null, '錯題本')));
 
     const items = collect();
     const c = otherCounts();
     const todo = items.slice(0, 20);
 
-    root.append(h('div', { class: 'part-cards', style: 'grid-template-columns:1fr' },
-      h('div', { class: 'part-card' },
-        h('p', null, items.length
-          ? '待複習 ' + items.length + ' 題'
-          : '目前沒有待複習的單題。'),
-        h('div', { class: 'cfg-row' },
-          items.length ? h('button', { class: 'btn primary', onclick: () => runner(todo) }, '開始') : null))));
-
     const links = [];
-    if (c.sets) links.push(['閱讀題組錯題 ' + c.sets + ' 組', 'practice.html#wrongbook']);
-    if (c.lsets) links.push(['聽力對話/獨白錯題 ' + c.lsets + ' 組', 'practice.html#wrongbook']);
-    if (c.vocab) links.push(['單字漏接 ' + c.vocab + ' 個', 'vocab.html']);
-    if (c.grammar) links.push(['文法課有錯題的單元 ' + c.grammar + ' 課', 'grammar.html']);
-    if (c.phonics) links.push(['自然發音有錯題的課 ' + c.phonics + ' 課', 'phonics.html']);
-    if (links.length) {
-      root.append(h('div', { class: 'exercise-head' }, h('h2', null, '其他待複習')));
-      const grid = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });
-      links.forEach(([txt, href]) => {
-        grid.append(h('div', { class: 'part-card' },
-          h('p', { style: 'margin-bottom:10px' }, txt),
-          h('a', { class: 'btn', href }, '前往')));
-      });
-      root.append(grid);
+    if (c.sets) links.push(['閱讀題組', c.sets + ' 組', 'practice.html#wrongbook']);
+    if (c.lsets) links.push(['聽力題組', c.lsets + ' 組', 'practice.html#wrongbook']);
+    if (c.vocab) links.push(['單字漏接', c.vocab + ' 個', 'vocab.html']);
+    if (c.grammar) links.push(['文法', c.grammar + ' 課', 'grammar.html']);
+    if (c.phonics) links.push(['自然發音', c.phonics + ' 課', 'phonics.html']);
+
+    /* 什麼都沒有:整頁一個空狀態 */
+    if (!items.length && !links.length) {
+      root.append(UI.empty({ pose: 'sleep', text: '沒有錯題', action: { label: '去刷題', href: 'practice.html' } }));
+      art(root);
+      return;
     }
+    if (items.length) {
+      root.append(h('section', { class: 'part-card review-todo' },
+        h('p', { class: 'review-todo-t' }, '待複習 ', h('b', null, String(items.length)), ' 題'),
+        h('button', { class: 'btn primary', type: 'button', onclick: () => runner(todo) }, '開始')));
+    }
+    if (links.length) {
+      root.append(h('h2', { class: 'rv-group-h' }, '其他待複習'),
+        h('ul', { class: 'rv-list' }, links.map(([name, num, href]) => h('li', null,
+          h('a', { class: 'rv-row', href }, h('span', { class: 'rv-name' }, name), h('span', { class: 'rv-num' }, num))))));
+    }
+    art(root);
   }
 
   /* ================= 複習輪 ================= */
@@ -103,33 +108,32 @@
     onHome = false;
     let cur = 0, cleared = 0;
     let player = null;
-    const results = [];
+    /* 每題一答完就記下來,中途離開不會丟東西,所以關閉不再問確認;離開回錯題本首頁 */
+    const f = UI.focus.enter({ total: list.length, confirmExit: false, onExit: () => { stopAudio(); renderHome(); window.scrollTo(0, 0); } });
     draw();
 
+    function stopAudio() { if (player) { player.pause(); player = null; } }
     function draw() {
-      if (player) { player.pause(); player = null; }
-      root.innerHTML = '';
-      root.append(h('div', { class: 'drill-top' },
-        h('h1', null, '每日複習'),
-        h('a', { href: 'review.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回每日複習')));
-      const nav = h('div', { class: 'q-nav' });
-      list.forEach((x, i) => {
-        let cls = i === cur ? 'cur' : '';
-        if (results[i] === true) cls += ' ok';
-        if (results[i] === false) cls += ' ng';
-        nav.append(h('button', { class: cls.trim(), disabled: '' }, String(i + 1)));
-      });
-      root.append(nav);
+      stopAudio();
+      root.replaceChildren(h('h1', { class: 'rv-sr' }, '錯題本'));
+      f.progress(cur + 1);
+      f.foot(null);
       drawItem(list[cur]);
+      const first = root.querySelector('.opt, .letter-big');
+      if (first && cur > 0) first.focus({ preventScroll: true });
     }
 
-    function next(isLast) {
-      return h('div', { class: 'drill-nav-btns' },
-        h('button', {
-          class: 'btn primary',
-          onclick: () => { if (isLast) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
-        }, isLast ? '完成這一輪' : '下一題 →'));
+    /* 答完一題:底部換成回饋條,右邊是下一題(最後一題是看成績);解析放在選項下面 */
+    function after(ok, q, result) {
+      const last = cur === list.length - 1;
+      f.feedback({
+        ok, answer: LETTERS[q.answer] + '. ' + q.options[q.answer], next: last ? '看成績' : '下一題',
+        onNext: () => { if (last) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
+      });
+      if (typeof result.scrollIntoView === 'function') result.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
+    /* 答對才有的一行:這題已經不在錯題本裡 */
+    function moved(ok) { return ok ? h('div', { class: 'verdict ok' }, '已移出錯題本') : null; }
 
     /* c:這一下選的選項。題目可能是模擬考答錯才在錯題本(mock_wrong;錯題本定稿 1.6):
        答對:刷題紀錄那筆是答錯的就照舊刪掉(答對過的紀錄不刪,已作答數不能少);mock_wrong 那筆是答錯的,寫一筆比較新的已訂正記號
@@ -138,7 +142,6 @@
        刷題紀錄寫成這次 { c, ok: false, t: 現在 }(跟錯題本複習答錯時 saveRec 一樣;只改時間的話那筆答對紀錄變成最新的,題目會從錯題本消失)。
        刷題紀錄那一份真的有改才寫(只動 mock_wrong 時不整份上傳) */
     function settle(item, ok, c) {
-      results[cur] = ok;
       const keyMap = { p5: 'drill_p5', l1: 'listen_p1', l2: 'listen_p2', ph: 'phrase_drill' };
       const key = keyMap[item.kind];
       const st = store.get(key, {});
@@ -188,7 +191,6 @@
 
     function drawItem(item) {
       let done = false;
-      const isLast = cur === list.length - 1;
       const result = h('div', null);
       const q = item.q;
       const block = h('div', { class: 'q-block' });
@@ -196,14 +198,14 @@
       if (item.kind === 'p5') {
         block.append(
           h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 5 · ' + q.category)),
-          h('div', { class: 'q-text', style: 'font-size:17px' }, q.question),
+          h('div', { class: 'q-text' }, q.question),
           optButtons(q, (oi, opts) => {
             if (done) return; done = true;
             const ok = grade(q, oi, opts);
             settle(item, ok, oi);
-            result.append(withReport(h('div', { class: 'explain' },
-              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對 · 已移出錯題本' : '答錯 · 正解 ' + LETTERS[q.answer]),
-              h('div', null, q.explanation), h('div', { class: 'tr' }, '句意：' + q.translation)), 'p5', q.id), next(isLast));
+            result.append(withReport(h('div', { class: 'explain' }, moved(ok),
+              h('div', null, q.explanation), h('div', { class: 'tr' }, '句意：' + q.translation)), 'p5', q.id));
+            after(ok, q, result);
           }), result);
       } else if (item.kind === 'ph') {
         block.append(
@@ -213,13 +215,12 @@
             if (done) return; done = true;
             const ok = grade(q.quiz, oi, opts);
             settle(item, ok, oi);
-            result.append(withReport(h('div', { class: 'explain' },
-              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對 · 已移出錯題本' : '答錯 · 正解 ' + LETTERS[q.quiz.answer]),
+            result.append(withReport(h('div', { class: 'explain' }, moved(ok),
               h('div', null, q.quiz.explanation)), 'ph', q.id),
               h('div', { class: 'phrase-card' },
                 h('div', { class: 'pc-head' }, h('b', null, q.phrase), h('span', null, q.zh)),
-                h('div', { class: 'pc-ex' }, q.example), h('div', { class: 'pc-exzh' }, q.exampleZh)),
-              next(isLast));
+                h('div', { class: 'pc-ex' }, q.example), h('div', { class: 'pc-exzh' }, q.exampleZh)));
+            after(ok, q.quiz, result);
           }), result);
       } else {
         /* 聽力 P1/P2:可重複播放(複習情境) */
@@ -243,28 +244,29 @@
             if (done) return; done = true;
             const ok = grade(q, oi, opts, true);
             settle(item, ok, oi);
-            result.append(withReport(h('div', { class: 'explain' },
-              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') }, ok ? '答對 · 已移出錯題本' : '答錯 · 正解 ' + LETTERS[q.answer]),
+            result.append(withReport(h('div', { class: 'explain' }, moved(ok),
               h('div', null, q.explanation)), item.kind, q.id, true),
               h('div', { class: 'transcript-box' }, h('b', null, '逐字稿'),
                 h('div', { class: 'tr-en' }, (q.question ? q.question + '\n' : '') + q.options.map((o, oi2) => LETTERS[oi2] + '. ' + o).join('\n')),
-                h('div', { class: 'tr-zh' }, q.transcriptZh)),
-              next(isLast));
+                h('div', { class: 'tr-zh' }, q.transcriptZh)));
+            after(ok, q, result);
           }, true), result);
       }
       root.append(block);
     }
 
     function summary() {
-      if (player) player.pause();
-      root.innerHTML = '';
-      root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-        h('h2', null, '這一輪清掉 ' + cleared + ' / ' + list.length + ' 題')));
-      root.append(h('div', { class: 'drill-nav-btns' },
-        h('a', { class: 'btn primary', href: 'review.html' }, '回每日複習'),
-        h('a', { class: 'btn', href: 'index.html' }, '回首頁')));
+      stopAudio();
+      f.leave();
+      const card = UI.result({
+        score: cleared, total: list.length, kicker: '清掉錯題', earnId: 'rv',
+        primary: { label: '回錯題本', href: 'review.html' },
+        links: [{ label: '回首頁', href: 'index.html' }],
+      });
+      root.replaceChildren(h('h1', { class: 'rv-sr' }, '錯題本'), card.el);
       window.scrollTo(0, 0);
-      if (window.PET_HOOK) PET_HOOK.done('rv', { n: list.length, into: root.querySelector('.report-head') });
+      card.heading.focus();
+      if (window.PET_HOOK) PET_HOOK.done('rv', { n: list.length, into: card.reward });
     }
   }
 })();

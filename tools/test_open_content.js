@@ -2601,7 +2601,7 @@ T['錯題本 E5:每日複習出現只在模擬考錯題裡的題;答對不動刷
     await clickNth(s, '.q-block .opts .opt', P5[3].answer);
     await sleep(300);
     r.afterOk = { d5: await s.eval(LSJ('drill_p5')), mw: (await s.eval(LSJ('mock_wrong')))[P5[3].id], dsets: await s.eval(SETS_OF('drill_p5')) };
-    await pressText(s, '.drill-nav-btns .btn', '下一題');
+    await pressText(s, '.quiz-foot .btn.primary', '下一題');
     await clickNth(s, '.q-block .opts .opt', wrongOf(P5[5]));
     await sleep(300);
     r.afterBad = { d5: (await s.eval(LSJ('drill_p5')))[P5[5].id], mw: (await s.eval(LSJ('mock_wrong')))[P5[5].id], dsets: await s.eval(SETS_OF('drill_p5')) };
@@ -2632,7 +2632,7 @@ T['錯題本 E5b:每日複習刷題答對過、模擬考答錯的題:答對不�
     await clickNth(s, '.q-block .opts .opt', P5[3].answer);
     await sleep(300);
     r.afterOk = { d5: (await s.eval(LSJ('drill_p5')))[P5[3].id], mw: (await s.eval(LSJ('mock_wrong')))[P5[3].id] };
-    await pressText(s, '.drill-nav-btns .btn', '下一題');
+    await pressText(s, '.quiz-foot .btn.primary', '下一題');
     await clickNth(s, '.q-block .opts .opt', wrongOf(P5[5]));
     await sleep(300);
     r.afterBad = { d5: (await s.eval(LSJ('drill_p5')))[P5[5].id], mw: (await s.eval(LSJ('mock_wrong')))[P5[5].id] };

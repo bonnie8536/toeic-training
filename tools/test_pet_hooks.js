@@ -582,7 +582,7 @@ const RH = "root.querySelector('.report-head')";
 /* 題庫、聽力的結算是結算卡(UI.result):點心那一行放進卡片的 .result-reward */
 const RR = "root.querySelector('.result-reward')";
 const SITES = [
-  ['js/daily-ui.js', 'runPart summary()', ['function runPart(', 'function summary() {'], G + "'d', { into: " + RH + ' });'],
+  ['js/daily-ui.js', 'runPart summary()', ['function runPart(', 'function summary() {'], G + "'d', { into: card.reward });"],
   ['js/grammar.js', 'finish()', ['function finish() {'], G + "'g:' + u.id, { n: u.quiz.length, into: tail.querySelector('.report-head') });"],
   ['js/phonics.js', 'finish()', ['function finish() {'], G + "'pn:' + u.id, { n: u.quiz.length, into: tail.querySelector('.report-head') });"],
   ['js/verbs.js', 'startQuiz summary()', ['function startQuiz(', 'function summary() {'], G + "'iv', { n: items.length, into: " + RH + ' });'],
@@ -603,7 +603,7 @@ const SITES = [
   ['js/listening.js', 'startQuiz submit()(一般練習交卷)', ['function startQuiz(', 'function submit(opener, asked) {'],
     G + "'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: " + RR + ' });'],
   ['js/ear.js', 'summary()', ['function startRound(', 'function summary() {'], G + "'e' + sec, { n: list.length, into: " + RH + ' });'],
-  ['js/review.js', 'summary()', ['function summary() {'], G + "'rv', { n: list.length, into: " + RH + ' });'],
+  ['js/review.js', 'summary()', ['function summary() {'], G + "'rv', { n: list.length, into: card.reward });"],
   ['js/dialogue.js', 'markHeard()', ['function markHeard('],
     "if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { after: root.querySelectorAll('.dlg-line')[i] });"],
   ['js/mock.js', 'submit()', ['function submit(timeUp, asked) {'], G + "'mock', { into: card.reward });"],
@@ -750,11 +750,29 @@ const DATA = (function () {
   return ctx.TOEIC;
 })();
 const NOW = Date.parse('2026-10-12T10:00:00+08:00');
+/* js/ui.js 的替身(只做 daily-ui.js 用到的部分):結算卡的點心列是 .result-reward,專心模式的底部列放在頁面外面 */
+function fakeUI(dom) {
+  const mk = (tag, cls, ...kids) => { const e = dom.createElement(tag); e.className = cls || ''; e.append(...kids.filter(k => k !== null && k !== undefined)); return e; };
+  return {
+    doodle: () => Promise.resolve(false),
+    chick: () => ({ destroy() {} }),
+    focus: { enter: () => ({ progress() {}, setTotal() {}, dirty() {}, action() {}, foot() {}, feedback() {}, leave() {} }) },
+    result(o) {
+      const reward = mk('div', 'result-reward');
+      const heading = mk('h2', 'result-score', o.score + ' / ' + o.total + (o.flag ? ' ' + o.flag : ''));
+      const links = [o.primary].concat(o.links || []).filter(Boolean).map(a => { const e = mk(a.href ? 'a' : 'button', 'btn', a.label); if (a.href) e.setAttribute('href', a.href); return e; });
+      return { el: mk('section', 'result-card', heading, reward, ...links), reward, heading, destroy() {} };
+    },
+    detail: (title, nodes) => mk('details', 'result-detail', mk('summary', 'result-detail-sum', title), mk('div', 'result-detail-body', ...nodes)),
+    empty: o => mk('div', 'ui-empty', mk('p', 'ui-empty-text', o.text)),
+  };
+}
 /* hook:'none' 不載入 pet-hook.js;其他載入真的 pet-hook.js,配上 store 指定的假 PET_STORE */
 function dailyRun(o) {
   const dom = fakeDom();
   const root = dom.mount('daily-root');
   const ctx = commonCtx(dom, NOW, null);
+  ctx.UI = fakeUI(dom);
   ctx.TOEIC = DATA;
   vm.createContext(ctx);
   vm.runInContext(read('js/common.js') + '\n;globalThis.__store = store;', ctx);
@@ -779,16 +797,16 @@ T['每日練習頁:沒有掛勾、或開關關著(PET_STORE.food false),成績�
   const b = dailyRun({ store: { food: false, view: () => ({}), earn: () => { called++; return Promise.resolve({ result: 'off' }); } } });
   await settle();
   const sa = ser(a.root), sb = ser(b.root);
-  return { ok: !a.threw && !b.threw && /答對 4 \/ 5/.test(a.root.textContent) && sa === sb && !/pet-earn/.test(sb) && called === 0,
+  return { ok: !a.threw && !b.threw && /4 \/ 5/.test(a.root.textContent) && sa === sb && !/pet-earn/.test(sb) && called === 0,
     detail: [a.threw && a.threw.message, b.threw && b.threw.message, sa === sb, called].join(' | ') };
 };
-T['每日練習頁:開關打開時成績頁的 .report-head 裡多一行「+1 玉米」,其他不變,只寫了 pet 以外的什麼都沒有'] = async () => {
+T['每日練習頁:開關打開時成績頁的點心列(.result-reward)裡多一行「+1 玉米」,其他不變,只寫了 pet 以外的什麼都沒有'] = async () => {
   const calls = [];
   const base = dailyRun({ hook: 'none' });
   const r = dailyRun({ store: { food: true, view: () => ({ status: { name: '小黃' } }), earn: a => { calls.push(a); return Promise.resolve({ result: 'got', food: 'corn', id: 'd' }); } } });
   await new Promise(res => setTimeout(res, 40));   // 寫字前等的 150 毫秒在這個假頁面縮成 5 毫秒
   await settle();
-  const head = r.root.querySelector('.report-head');
+  const head = r.root.querySelector('.result-reward');
   const p = head && head.querySelectorAll('p').find(x => x.classList.contains('pet-earn'));
   const same = dropEarn(ser(r.root).replace(/<P \.pet-earn role="status">"[^"]*"<\/P>/, '<P .pet-earn role="status"></P>')) === ser(base.root);
   return { ok: !r.threw && !!p && p.textContent === '+1 玉米' && calls.length === 1 && calls[0].id === 'd' && !('n' in calls[0]) && same

@@ -476,10 +476,10 @@
     await afterAuth(data.user, true, cp);
   }
 
-  /* 還有進度沒同步就登出:先問(UI.confirm,Promise)。共用元件沒載到就不登出,免得悄悄刪掉進度 */
+  /* 還有進度沒同步就登出:先問(UI.confirm,Promise)。共用元件沒載到就不登出(免得悄悄刪掉進度),丟錯讓呼叫的地方顯示原因 */
   function askLogout(left) {
     const U = window.UI;
-    if (!U || typeof U.confirm !== 'function') return Promise.resolve(false);
+    if (!U || typeof U.confirm !== 'function') return Promise.reject(new Error('共用元件沒載到\n請重新整理再試'));
     return U.confirm({ title: '有 ' + left + ' 項進度還沒同步', body: '現在登出會刪除這台裝置上的這些進度', ok: '登出', cancel: '取消', danger: true });
   }
 
@@ -664,7 +664,7 @@
     needClient();
     mustBeShown();   // 審查 D:delete_own_account 刪的是這台現在登入的帳號,不是畫面上這個就不送
     const { error } = await client.rpc('delete_own_account');
-    if (error) throw new Error('刪除失敗：' + error.message + '。請寫信給站長要求刪除。');
+    if (error) throw new Error('刪除失敗：' + error.message + '\n請寫信給客服要求刪除');
     await logout({ discard: true });
   }
 

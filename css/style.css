@@ -522,7 +522,7 @@ button { font-family: var(--font); cursor: pointer; }
 .part-card .bar i { display: block; height: 100%; background: var(--primary); border-radius: 3px; }
 
 /* 刷題首頁面板 */
-.practice-panels { display: grid; grid-template-columns: 1.15fr 1fr; gap: 22px; margin: 24px 0 50px; }
+.practice-panels { display: grid; grid-template-columns: 1.15fr 1fr; gap: 22px; align-items: start; margin: 24px 0 50px; }
 .practice-panel {
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -2235,7 +2235,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 .ph-sent-zh { font-size: 13.5px; color: var(--ink-light); }
 .ph-listen-row { margin-top: 12px; }
 .ph-listen { display: inline-flex; align-items: center; gap: 8px; }
-.ph-listen .ph-spk { color: #fff; }
+.ph-listen .ph-spk { color: currentColor; }
 .ph-compare { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
 .ph-row-kk { margin-left: auto; padding-left: 10px; color: var(--ink-light); font-size: 14px; white-space: nowrap; font-family: "Segoe UI", "Lucida Sans Unicode", "Noto Sans", sans-serif; }
 .ph-chart-h { font-size: 16px; font-family: var(--round); margin: 22px 0 8px; }
@@ -3491,6 +3491,18 @@ a.result-go:hover { text-decoration: none; }
 .ui-empty-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 8px; margin-top: 8px; }
 .ui-empty-extra { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; margin-top: 16px; }
 .ui-empty-extra:empty { display: none; }
+/* 共用元件沒載到(js/common.js uiReady):main 最前面一塊,說發生什麼加兩個出口 */
+.ui-missing { margin: 16px 0; padding: 16px; border: 1px solid var(--line); border-radius: var(--r-md); background: #fff; }
+.ui-missing p { margin: 0 0 12px; font-weight: 700; }
+.ui-missing-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.ui-missing-acts .btn { min-height: 44px; }
+html.no-ui .home-hero .hero-pic { display: none; }
+/* 沒有開 JavaScript:由 JS 畫內容的頁面在 main 最前面說一聲 */
+.noscript-msg { margin: 24px 0; padding: 16px; border: 1px solid var(--line); border-radius: var(--r-md); font-weight: 700; }
+/* 跳到內容(js/common.js 加):平常藏起來,鍵盤聚焦時出現在左上角 */
+.skip-link { position: absolute; left: 8px; top: -60px; z-index: 300; padding: 10px 16px; border-radius: var(--r-sm); background: #fff; color: var(--primary-dark); font-weight: 700; box-shadow: 0 2px 8px rgba(0, 0, 0, .18); }
+.skip-link:focus { top: 8px; }
+main:focus { outline: none; }
 
 /* ---------- 確認與輸入視窗(沿用 .modal-mask、.modal) ---------- */
 /* 強制登入頁的遮罩規則會讓開頂欄與分頁列;這兩個視窗一律蓋滿整頁,疊在所有東西上面 */
@@ -3587,6 +3599,9 @@ html:not(.authed) .pet-me .pet-open.btn.primary:hover { color: var(--primary); b
 html.is-quiz main .set-layout { margin-top: 16px; }
 @media (min-width: 900px) {
   html.is-quiz main.container:has(.set-layout) { max-width: 1040px; }
+  /* 作答列與底部列跟兩欄內容同寬:關閉鈕對齊文章欄左緣、「交卷」「下一題」對齊題目欄右緣 */
+  html.is-quiz:has(main.container .set-layout) .quiz-bar { max-width: 1040px; padding-left: 20px; padding-right: 20px; }
+  html.is-quiz:has(main.container .set-layout) .quiz-foot-row { max-width: 1000px; }
 }
 
 /* ---- */
@@ -3873,7 +3888,7 @@ tr.is-open .ad-caret-ico { transform: translateY(2px) rotate(-135deg); }
 }
 /* 作答列右邊可以點開題號面板的「3 / 75」(模擬考、程度檢測):淡底膠囊加向下的小箭頭,看得出是按鈕 */
 html.is-quiz .quiz-bar button.quiz-count {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 40px; margin: 0; padding: 0 12px;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin: 0; padding: 0 12px;
   border-radius: var(--r-full); background: var(--bg-soft); color: var(--ink);
 }
 html.is-quiz .quiz-bar button.quiz-count::after {
@@ -3881,6 +3896,12 @@ html.is-quiz .quiz-bar button.quiz-count::after {
   transform: translateY(-2px) rotate(45deg);
 }
 html.is-quiz .quiz-bar button.quiz-count:hover { background: var(--line); }
+/* 很窄的手機(320 到 360):計時器、題號鈕、交卷擠在同一列時,間距縮小,進度條留得下來 */
+@media (max-width: 360px) {
+  html.is-quiz .quiz-bar { gap: 6px; }
+  html.is-quiz .quiz-bar button.quiz-count { gap: 4px; padding: 0 8px; }
+  .quiz-act.btn-text { padding: 0 6px; }
+}
 /* 錯題本磚沒有待複習時數字那一行是空的:不佔高度 */
 .module-card.tile p:empty { display: none; }
 /* 寫作首頁:標題(左邊有圖示)下面一行標籤 */

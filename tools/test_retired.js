@@ -274,8 +274,8 @@ async function main() {
   /* B1 學習記錄 */
   {
     const p = await openPage({ page: 'history.html', rootId: 'history-root', scripts: DATA('part5', 'part6', 'part7', 'listening', 'phrases', 'grammar', 'phonics', 'verbs', 'articles').concat(['js/common.js', 'js/history.js']) });
-    const gone = (p.text.match(/這題已從題庫移除/g) || []).length;
-    check('B1 學習記錄:淘汰題的紀錄照列、寫「這題已從題庫移除」(7 個 Part 各一筆)、不能展開;其他照常、不丟錯', !p.errors.length && gone === 7 && p.text.includes('學習記錄'), '移除 ' + gone + ' 筆 ' + p.errors.join(' / '));
+    const gone = (p.text.match(/題目已移除/g) || []).length;
+    check('B1 學習記錄:淘汰題的紀錄照列、寫「題目已移除」(7 個 Part 各一筆)、不能展開;其他照常、不丟錯', !p.errors.length && gone === 7 && p.text.includes('學習記錄'), '移除 ' + gone + ' 筆 ' + p.errors.join(' / '));
   }
   /* B2 錯題本資料(js/wrongbook.js):每個 Part 的錯題、分組、一回、題組數、模擬考交卷收錯題 */
   {
@@ -299,7 +299,7 @@ async function main() {
   const UI_STUB = (ctx) => {
     const mk = (cls, ...kids) => { const n = ctx.document.createElement('div'); n.className = cls; n.append(...kids); return n; };
     return { UI: {
-      focus: { enter: () => ({ bar: mk('quiz-bar'), progress() {}, setTotal() {}, dirty() {}, foot() {}, action() {}, feedback() { return null; }, leave() {} }) },
+      focus: { enter: () => ({ bar: mk('quiz-bar'), progress() {}, setTotal() {}, dirty() {}, foot() {}, action() {}, feedback() { return null; }, leave() {}, keep(fn) { fn(); }, focusMain() {}, say() {} }) },   // keep、focusMain、say:重畫後放回焦點、讀屏播報(這裡只要不丟錯)
       result: (o) => { const el = mk('result-card', String(o.kicker || ''), ' ', String(o.score !== undefined ? o.score : o.big)); return { el, reward: mk('result-reward'), heading: el, destroy() {} }; },
       detail: (title, nodes) => mk('result-detail', title, ...nodes),
       empty: (o) => mk('ui-empty', o.text),

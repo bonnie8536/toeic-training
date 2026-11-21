@@ -261,7 +261,7 @@
       const box = h('div', { class: 'q-block' },
         h('div', { class: 'q-text', style: 'display:flex;align-items:center;gap:10px' },
           h('b', null, w.title), h('span', { style: 'color:var(--bad);font-weight:700' }, total + ' 題'),
-          h('a', { class: 'btn', style: 'margin-left:auto;padding:4px 14px;font-size:13.5px', href: 'practice.html?mode=review&part=' + w.part }, '去複習')));
+          h('a', { class: 'btn', style: 'margin-left:auto;padding:4px 14px;font-size:13.5px', href: 'practice.html?mode=review&part=' + w.part }, '開始')));
       Object.entries(w.groups).forEach(([g, arr]) => {
         const list = h('div', { class: 'wrong-cat-list', style: 'display:none' },
           arr.map(q => h('div', { class: 'wrong-cat-item' }, String(q.question).slice(0, 80))));

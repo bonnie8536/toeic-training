@@ -679,7 +679,7 @@ T['畫面:登入的人打開 daily.html 會併入雲端那一份,清單跟著更
   await tick(); await tick();
   const done = JSON.parse(ui.ls.get('tr_uabc_daily_done'));
   const t = seen(ui.root);
-  return { ok: Object.keys(done['2026-10-12'].v).length === 5 && Object.keys(done['2026-10-12'].d).length === 5 && /2 \/ 3/.test(t) && ui.pushed.includes('daily_done'),
+  return { ok: Object.keys(done['2026-10-12'].v).length === 5 && Object.keys(done['2026-10-12'].d).length === 5 && /^2 \/ 3$/.test(((ui.root.querySelector('.daily-count') || {}).textContent || '').trim()) && ui.pushed.includes('daily_done'),
     detail: JSON.stringify(t) };
 };
 T['畫面:雲端讀不到(ok:false)或內容一樣就不寫、不上傳;訪客不去讀雲端'] = async () => {

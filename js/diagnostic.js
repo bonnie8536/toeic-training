@@ -65,6 +65,7 @@
             store.set(KEY, st);
             cur = 0;
             renderTest();
+            focus.focusMain();
           },
         }, '開始')));
   }
@@ -78,7 +79,7 @@
       nav.append(h('button', {
         class: ((i === cur ? 'cur' : '') + (done ? ' ans' : '')).trim(), type: 'button', 'aria-current': i === cur ? 'true' : null,
         'aria-label': '第 ' + (i + 1) + ' 題' + (done ? ' 已作答' : ''),
-        onclick: () => { closePanel(false); cur = i; renderTest(); window.scrollTo(0, 0); },
+        onclick: () => { closePanel(false); go(i); },
       }, String(i + 1)));
     });
     /* 焦點先到目前那一題(aria-current);Esc、點遮罩、關閉鈕由 UI.sheet 處理 */
@@ -92,7 +93,10 @@
   function closePanel(back) { if (panel) panel.close(back); }
 
   /* ============ 作答 ============ */
+  /* 換題:焦點到新題的題幹(按鈕整段重畫,不然焦點掉回頁面) */
+  function go(i) { cur = i; renderTest(); window.scrollTo(0, 0); focus.focusMain(); }
   function renderTest() {
+    if (!uiReady()) return;   // 共用元件沒載到:說一聲、給重新整理,不在這裡丟錯
     dropCard();
     root.replaceChildren();
     const total = items.length;
@@ -136,12 +140,13 @@
     const opts = h('div', { class: 'opts' });
     it.options.forEach((opt, oi) => {
       opts.append(h('button', {
-        class: 'opt' + (chosen === oi ? ' sel' : ''), 'data-gate': '',
+        class: 'opt' + (chosen === oi ? ' sel' : ''), 'data-gate': '', 'aria-pressed': chosen === oi ? 'true' : 'false',
         onclick: () => {
           st.answers[cur] = oi;
           store.set(KEY, st);
-          if (cur < total - 1) cur++;
-          renderTest();
+          /* 選完自動到下一題(焦點到新題的題幹);最後一題留在原地,焦點回到剛選的那顆 */
+          if (cur < total - 1) go(cur + 1); else focus.keep(renderTest);
+          focus.say('已選 ' + LETTERS[oi]);
         },
       }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
     });
@@ -176,10 +181,10 @@
     const isLast = cur >= total - 1;
     focus.action(isLast ? null : { label: '交卷', onClick: handler, attrs: GATE });
     focus.foot([
-      cur > 0 ? h('button', { class: 'btn-text', type: 'button', onclick: () => { cur--; renderTest(); window.scrollTo(0, 0); } }, '上一題') : null,
+      cur > 0 ? h('button', { class: 'btn-text', type: 'button', onclick: () => go(cur - 1) }, '上一題') : null,
       h('button', {
         class: 'btn primary', type: 'button', 'data-gate': isLast ? '' : null,
-        onclick: isLast ? handler : () => { cur++; renderTest(); window.scrollTo(0, 0); },
+        onclick: isLast ? handler : () => go(cur + 1),
       }, isLast ? '交卷' : '下一題'),
     ]);
   }
@@ -225,7 +230,7 @@
     const est = bandEstimate(aB, aM, aA, score / total);
     const band = est.band, advice = est.advice;
     const readNote = (readT && (readC / readT) < Math.min(aB, aM) - 0.2)
-      ? '篇章題正確率明顯低於單句題。先做閱讀訓練。' : '';
+      ? ['篇章題正確率明顯低於單句題', '先做閱讀訓練'] : [];
 
     root.append(h('div', { class: 'page-head' }, h('h1', null, '檢測報告')));
 
@@ -251,7 +256,7 @@
     sorted.forEach(([cat, c]) => {
       const [cls, label] = judge(c.correct / c.total);
       table.append(h('tr', null,
-        h('td', null, cat),
+        h('td', null, catLabel(cat)),
         h('td', { class: 'num' }, c.correct + ' / ' + c.total),
         h('td', null, h('span', { class: 'verdict-pill ' + cls }, label), c.total === 1 ? h('span', { class: 'cat-few' }, '僅 1 題') : null),
         h('td', { class: 'no-print' }, cls !== 'good' ? h('a', { href: catLink(cat, c.kind), style: 'font-size:13px' }, '去刷這類題 →') : '')));
@@ -261,15 +266,16 @@
     /* 還不會 */
     const weak = sorted.filter(([, c]) => c.correct / c.total < 0.8);
 
-    root.append(h('div', { class: 'exercise-head' }, h('h2', null, '錯題分析')));
+    /* 錯題分析:逐題內容放進預設收合的 UI.detail(20 幾題全部展開時手機上整頁很長) */
     const wrongs = items.map((it, i) => ({ it, i })).filter(x => st.answers[x.i] !== x.it.answer);
-    if (!wrongs.length) root.append(UI.empty({ pose: 'happy', text: '全部答對' }));
-    wrongs.forEach(({ it, i }) => {
+    if (!wrongs.length) root.append(h('div', { class: 'exercise-head' }, h('h2', null, '錯題分析')), UI.empty({ pose: 'happy', text: '全部答對' }));
+    else root.append(UI.detail('錯題分析 ' + wrongs.length + ' 題', wrongs.map(({ it, i }) => wrongBlock(it, i))));
+    function wrongBlock(it, i) {
       const chosen = st.answers[i];
-      root.append(h('div', { class: 'wrong-item' },
+      return h('div', { class: 'wrong-item' },
         h('div', { class: 'w-meta' },
           h('span', { class: 'q-no' }, 'Q' + (i + 1)),
-          h('span', { class: 'badge cat' }, it.category),
+          h('span', { class: 'badge cat' }, catLabel(it.category)),
           h('span', { class: 'badge ' + (it.difficulty === '基礎' ? 'level-basic' : it.difficulty === '進階' ? 'level-adv' : 'level-mid') }, it.difficulty)),
         h('div', { class: 'w-q' }, it.kind === 'p6' ? '空格 (' + it.num + ')' : it.text),
         h('div', { class: 'w-ans' },
@@ -278,15 +284,15 @@
             : h('span', null, '你選 ', h('span', { class: 'you' }, LETTERS[chosen] + '. ' + it.options[chosen])),
           '  ',
           h('span', null, '正解 ', h('span', { class: 'right' }, LETTERS[it.answer] + '. ' + it.options[it.answer]))),
-        h('div', { class: 'w-exp' }, it.explanation)));
-    });
+        h('div', { class: 'w-exp' }, it.explanation));
+    }
 
     /* 建議 */
     root.append(h('div', { class: 'exercise-head' }, h('h2', null, '建議的練習順序')));
     const stepList = h('ol', null);
     weak.slice(0, 4).forEach(([cat, c]) => {
       stepList.append(h('li', null,
-        h('a', { href: catLink(cat, c.kind) }, cat),
+        h('a', { href: catLink(cat, c.kind) }, catLabel(cat)),
         ' 答對 ' + c.correct + ' / ' + c.total + ' · 先刷 15–20 題 · 錯題隔天到錯題本重做'));
     });
     if (score / total < 0.5) {
@@ -294,7 +300,7 @@
         ' 從第 1 章依序學'));
     }
     stepList.append(h('li', null, h('a', { href: 'reading.html' }, '閱讀訓練'), ' 每週 2 篇'));
-    root.append(h('div', { class: 'next-steps' }, h('p', null, advice + (readNote ? ' ' + readNote : '')), stepList));
+    root.append(h('div', { class: 'next-steps' }, [].concat(advice, readNote).map(t => h('p', null, t)), stepList));
 
     /* 重測:清掉這份報告回到開始前 */
     function retest() {

@@ -165,15 +165,27 @@ const store = {
 };
 
 /* 程度檢測的級距推估(檢測頁與教師後台共用)。
-   以總分為主、難度輪廓為輔;28 題小樣本,級距刻意放寬且僅供定位。 */
+   以總分為主、難度輪廓為輔;28 題小樣本,級距刻意放寬且僅供定位。
+   advice 是兩行:[現況, 建議],各一句短語(不用逗號、不加句號),頁面各畫成一行 */
 function bandEstimate(aB, aM, aA, overall) {
   if (overall === undefined) overall = (aB + aM + aA) / 3;
-  if (aB < 0.6) return { band: '300–500', advice: '先練文法基礎與初級閱讀，再開始刷題。' };
-  if (overall >= 0.9) return { band: '850+', advice: '文法與閱讀都很穩。維持手感即可，把重心放在限時練習與錯題複盤。' };
-  if (overall >= 0.8) return { band: '750–880', advice: '各層考點大致掌握，失分多在細節。針對答錯的考點各刷一輪，並練 Part 7 雙篇的速度。' };
-  if (overall >= 0.65) return { band: '650–780', advice: '中級考點穩定，進階題型是下一個目標。優先刷答錯的類別，再加強長篇閱讀。' };
-  if (overall >= 0.5) return { band: '550–680', advice: '基礎在，但中級考點（介系詞、連接詞、關係詞）還會失分。優先刷列出的弱點類別。' };
-  return { band: '400–580', advice: '先集中火力在答錯最多的兩三個基礎考點，搭配初級與中級文章練閱讀。' };
+  if (aB < 0.6) return { band: '300–500', advice: ['基礎題還不穩', '先練文法基礎與初級閱讀再刷題'] };
+  if (overall >= 0.9) return { band: '850+', advice: ['文法與閱讀都很穩', '重心放在限時練習與錯題本'] };
+  if (overall >= 0.8) return { band: '750–880', advice: ['各層考點大致掌握 · 失分多在細節', '答錯的考點各刷一輪 · 加練 Part 7 雙篇速度'] };
+  if (overall >= 0.65) return { band: '650–780', advice: ['中級考點穩定 · 下一步是進階題型', '先刷答錯的類別 · 再加強長篇閱讀'] };
+  if (overall >= 0.5) return { band: '550–680', advice: ['中級考點還會失分', '先刷下面列出的弱點類別'] };
+  return { band: '400–580', advice: ['先補答錯最多的基礎考點', '搭配初級與中級文章練閱讀'] };
+}
+
+/* 考點名稱顯示用:題庫裡的「連接詞vs介系詞」中英之間補空格(資料不動) */
+function catLabel(cat) {
+  return String(cat || '').replace(/\s*vs\s*/g, ' vs ');
+}
+
+/* 文章級別顯示用:「初級 (TOEIC 400-550)」寫成「初級 · TOEIC 400–550」(不用括號補充;資料不動) */
+function levelLabel(level) {
+  const m = /^(.*?)\s*\(([^)]*)\)\s*$/.exec(String(level || ''));
+  return m ? m[1] + ' · ' + m[2].replace(/(\d)-(\d)/g, '$1–$2') : String(level || '');
 }
 
 function levelBadgeClass(level) {
@@ -241,4 +253,41 @@ function logAttempt(m, id, c, ok, extra) {
   if (window.PET_STORE && typeof window.PET_STORE.afterAnswer === 'function') {
     try { window.PET_STORE.afterAnswer(); } catch (e) { /* 小雞出錯不影響作答紀錄 */ }
   }
+}
+
+/* 共用元件(js/ui.js)沒載到(請求被擋、網路斷):作答、結算卡、視窗都靠它。
+   在 main 最前面放一塊「共用元件沒載到」加「重新整理」與回首頁(只放一次),回傳 false;載到了回 true。
+   各模組的入口(開始作答、改暱稱等)先問這裡,不在按下去時丟錯、畫面沒反應 */
+function uiReady() {
+  if (window.UI) return true;
+  let box = document.querySelector('.ui-missing');
+  if (!box) {
+    box = h('div', { class: 'ui-missing', role: 'alert' },
+      h('p', null, '共用元件沒載到'),
+      h('div', { class: 'ui-missing-acts' },
+        h('button', { class: 'btn primary', type: 'button', onclick: () => location.reload() }, '重新整理'),
+        h('a', { class: 'btn-text', href: 'index.html' }, '回首頁')));
+    (document.querySelector('main') || document.body).prepend(box);
+  }
+  document.documentElement.classList.add('no-ui');   // css:首屏等著畫角色的空畫布收起來
+  const b = box.querySelector('button');
+  if (b) { box.scrollIntoView({ block: 'center' }); b.focus({ preventScroll: true }); }
+  return false;
+}
+/* 「跳到內容」:頁首導覽與下拉選單有十幾個連結,鍵盤使用者第一下 Tab 就能跳過(只在聚焦時看得到) */
+(function () {
+  if (typeof document === 'undefined' || !document.body || typeof document.querySelector !== 'function') return;
+  try {
+    const main = document.querySelector('main');
+    if (!main || document.querySelector('.skip-link')) return;
+    if (!main.id) main.id = 'main';
+    if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+    document.body.prepend(h('a', { class: 'skip-link', href: '#' + main.id }, '跳到內容'));
+  } catch (e) { /* 很舊的頁面:沒有也能用 */ }
+})();
+/* 頁面有載 js/ui.js 卻沒有 window.UI:一進頁面就先說,不等按下去 */
+if (typeof document !== 'undefined' && typeof document.addEventListener === 'function') {
+  document.addEventListener('DOMContentLoaded', () => {
+    try { if (!window.UI && document.querySelector('script[src$="js/ui.js"]')) uiReady(); } catch (e) { /* 量不到就算了,入口還會再問 */ }
+  });
 }

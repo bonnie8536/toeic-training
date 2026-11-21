@@ -78,7 +78,7 @@
       wrap.append(h('div', { class: 'wb-group', 'data-g': g.name },
         h('div', { class: 'wb-head' },
           h(level, { class: 'wb-h' }, btn),
-          h('a', { class: 'btn wb-go', 'data-gate': '', href: reviewUrl(p, g.name), 'aria-label': '複習「' + g.name + '」' + n + ' 題' }, '複習')),
+          h('a', { class: 'btn wb-go', 'data-gate': '', href: reviewUrl(p, g.name), 'aria-label': '開始複習「' + g.name + '」' + n + ' 題' }, '開始')),
         list));
     });
     sync();

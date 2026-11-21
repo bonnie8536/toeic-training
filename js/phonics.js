@@ -203,7 +203,7 @@
       /* 課程清單包在 data-nosnippet 裡(建立時就帶,不事後加):Google 搜尋結果的摘要不拿「1 短母音 a：cat 的 a 唸 [æ]…」這串清單,改用頁面說明 */
       const units = h('div', { 'data-nosnippet': '' },
         todo ? h('div', { class: 'gx-continue' },
-          h('a', { class: 'btn primary', href: 'phonics.html?u=' + todo.id }, '繼續上課'),
+          h('a', { class: 'btn primary', href: 'phonics.html?u=' + todo.id }, UNITS.some(u => done[u.id]) ? '繼續上課' : '開始'),   // 一課都還沒上過:「開始」
           h('span', null, STAGES[stageOf(todo)].name.replace(/\s.*$/, '') + ' 第 ' +
             (UNITS.filter(u => stageOf(u) === stageOf(todo)).indexOf(todo) + 1) + ' 課')) : null,
         h('div', { class: 'exercise-head' },
@@ -347,7 +347,7 @@
             const words = q.options.filter(o => /^[A-Za-z][A-Za-z'-]*$/.test(o));
             result.append(h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (results[qi] ? 'ok' : 'bad') },
-                results[qi] ? '答對了' : '答錯 · 正解 ' + LETTERS[q.answer]),
+                results[qi] ? '答對' : '答錯 · 正解 ' + LETTERS[q.answer]),
               h('div', null, q.explanation),
               words.length === q.options.length
                 ? h('div', { class: 'ph-compare' }, words.map(w => wordBtn(w, null, null, 'ph-card-sm')))
@@ -358,7 +358,7 @@
       });
       let head;
       if (isListen) {
-        const pb = h('button', { class: 'btn primary ph-listen', type: 'button' }, h('span', { class: 'ph-spk', html: SPEAKER }), '播放');
+        const pb = h('button', { class: 'btn ph-listen', type: 'button' }, h('span', { class: 'ph-spk', html: SPEAKER }), '播放');
         pb.addEventListener('click', () => playWord(q.word, pb));
         head = h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), '聽音選字', h('div', { class: 'ph-listen-row' }, pb));
       } else {

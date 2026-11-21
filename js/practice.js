@@ -117,11 +117,11 @@
     const rows = ['5', '6', '7'].map(p => {
       const cb = h('input', { type: 'checkbox' });
       if (p === '5') cb.checked = true;
-      const sizeSel = h('select', { class: 'cfg-select' });
+      const sizeSel = h('select', { class: 'cfg-select', 'aria-label': DATA[p].title + ' 題數' });
       DATA[p].sizes.forEach(n => sizeSel.append(h('option', { value: n }, sizeLabel(p, n))));
       sizeSel.append(h('option', { value: 'custom' }, '自訂…'));
       if (p === '5') sizeSel.value = '10';
-      const customInput = h('input', { class: 'cfg-select', type: 'number', min: '1', style: 'width:84px;display:none', placeholder: '數量' });
+      const customInput = h('input', { class: 'cfg-select', type: 'number', min: '1', style: 'width:84px;display:none', placeholder: '數量', 'aria-label': DATA[p].title + ' 自訂數量' });
       sizeSel.addEventListener('change', () => {
         cb.checked = true;
         customInput.style.display = sizeSel.value === 'custom' ? '' : 'none';
@@ -130,9 +130,9 @@
       customInput.addEventListener('input', () => { cb.checked = true; });
       let catSel = null;
       if (p === '5') {
-        catSel = h('select', { class: 'cfg-select' },
+        catSel = h('select', { class: 'cfg-select', 'aria-label': '考點' },
           h('option', { value: 'all' }, '全部考點'),
-          cats.map(c => h('option', { value: c }, c)));
+          cats.map(c => h('option', { value: c }, catLabel(c))));
         if (initCat && cats.includes(initCat)) catSel.value = initCat;
         catSel.addEventListener('change', () => { cb.checked = true; });
       }
@@ -150,7 +150,7 @@
       return Math.min(n, max);
     }
 
-    /* 開始鈕:這一頁唯一的實色按鈕。錯題本沒有錯題時的出口「去刷題」把焦點帶到這裡 */
+    /* 開始鈕:這一頁唯一的實色按鈕 */
     const startBtn = h('button', {
       class: 'btn primary practice-start', 'data-gate': '',
       onclick: () => {
@@ -167,7 +167,7 @@
     }, '開始');
 
     /* 錯題本面板的各列(data-part、wb-see:從 bfcache 回來重畫時,焦點放回同一列的「查看」)。「查看」的報讀名稱帶 Part,7 顆才分得出來。
-       0 題的 Part 不列;全部都是 0 題時整個換成空狀態 */
+       0 題的 Part 不列;全部都是 0 題時整個面板不顯示(人已經在刷題頁,空狀態的出口只會回到同一頁) */
     function wbRows() {
       const list = [];
       ['5', '6', '7'].forEach(p => {
@@ -177,7 +177,7 @@
           h('span', null, DATA[p].title),
           h('b', { style: 'color:var(--bad)' }, n + ' 題'),
           WB ? h('a', { class: 'btn wb-see', href: listUrl(p), 'aria-label': '查看 ' + WB.TITLE[p] + ' 錯題本' }, '查看')
-            : h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(p) }, '複習')));
+            : h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(p) }, '開始')));
       });
       if (window.LISTEN) ['1', '2', '3', '4'].forEach(p => {
         const n = WB ? WB.count(p) : LISTEN.partStats(p).wrong;
@@ -186,29 +186,35 @@
           h('span', null, '聽力 ' + LISTEN.PARTS[p].title),
           h('b', { style: 'color:var(--bad)' }, n + ' 題'),
           WB ? h('a', { class: 'btn wb-see', href: listUrl(p), 'aria-label': '查看 ' + WB.TITLE[p] + ' 錯題本' }, '查看')
-            : h('button', { class: 'btn', 'data-gate': '', onclick: () => { root.innerHTML = ''; LISTEN.startReview(root, p); window.scrollTo(0, 0); } }, '複習')));
+            : h('button', { class: 'btn', 'data-gate': '', onclick: () => { root.innerHTML = ''; LISTEN.startReview(root, p); window.scrollTo(0, 0); } }, '開始')));
       });
-      return list.length ? list : [UI.empty({ pose: 'sleep', text: '沒有錯題', action: { label: '去刷題', onClick: () => { startBtn.scrollIntoView({ block: 'center' }); startBtn.focus(); } } })];
+      return list;
     }
     const wbRowsBox = h('div', { class: 'review-rows' }, wbRows());
 
-    root.append(h('div', { class: 'practice-panels' },
+    /* 三塊面板排在同一個格線裡:桌機兩欄、手機一欄,間距都一樣。錯題本沒有錯題時不顯示,聽力面板遞補到右欄 */
+    const panels = h('div', { class: 'practice-panels' },
       h('div', { class: 'practice-panel' },
         h('h2', null, '隨機練習'),
         h('div', { class: 'cfg-rows' }, rows.map(r => r.row)),
         startBtn),
       /* 錯題本面板:每個 Part 一列「N 題 + 查看」,查看連到那個 Part 的錯題本清單(一組一組,點開才看到題目)。
          題數含模擬考答錯的題(js/wrongbook.js);沒載到就照以前只算刷題紀錄,按鈕照舊直接複習 */
-      h('div', { class: 'practice-panel', id: 'wrongbook' },
+      h('div', { class: 'practice-panel', id: 'wrongbook', hidden: wbRowsBox.childElementCount ? null : '' },
         h('h2', null, '錯題本'),
-        wbRowsBox)));
+        wbRowsBox));
+    root.append(panels);
     /* 從錯題本複習按上一頁回來(bfcache 原樣拿回來):題數變了就重畫這幾列(js/wrongbook-ui.js keepFresh) */
-    if (WB && window.WRONGBOOK_UI) WRONGBOOK_UI.keepFresh(wbRowsBox, () => WRONGBOOK_UI.sig(WB.PARTS), () => wbRowsBox.replaceChildren(...wbRows()));
+    if (WB && window.WRONGBOOK_UI) WRONGBOOK_UI.keepFresh(wbRowsBox, () => WRONGBOOK_UI.sig(WB.PARTS), () => {
+      wbRowsBox.replaceChildren(...wbRows());
+      const panel = document.getElementById('wrongbook');
+      if (panel) panel.hidden = !wbRowsBox.childElementCount;
+    });
     /* practice.html#wrongbook(從錯題本、模擬考結果連過來):面板是 JS 畫的,瀏覽器自己不會捲過去。
        頂欄是固定的(sticky),要扣掉它的高度(.me-sec 的 scroll-margin-top 同一個意思);桌機一列、手機兩列、更窄還會更高,照實際高度算 */
     if (location.hash === '#wrongbook') {
       const panel = document.getElementById('wrongbook');
-      if (panel) setTimeout(() => {
+      if (panel && !panel.hidden) setTimeout(() => {
         const bar = document.querySelector('.topbar');
         panel.style.scrollMarginTop = (bar ? Math.ceil(bar.getBoundingClientRect().height) : 0) + 14 + 'px';
         panel.scrollIntoView({ block: 'start' });
@@ -221,7 +227,7 @@
         const d = LISTEN.PARTS[p];
         const cb = h('input', { type: 'checkbox' });
         if (p === '2') cb.checked = true;
-        const sel = h('select', { class: 'cfg-select' },
+        const sel = h('select', { class: 'cfg-select', 'aria-label': '聽力 ' + d.title + ' 題數' },
           d.sizes.map(n => h('option', { value: n }, n + ' ' + d.unit)));
         if (p === '2') sel.value = '10';
         sel.addEventListener('change', () => { cb.checked = true; });
@@ -232,7 +238,7 @@
           h('span', { class: 'cfg-done' }, '已作答 ' + s.answered + ' / ' + s.total));
         return { p, cb, sel, row };
       });
-      root.append(h('div', { class: 'practice-panel', style: 'margin-bottom:50px' },
+      panels.append(h('div', { class: 'practice-panel' },
         h('h2', null, '聽力隨機練習'),
         h('div', { class: 'cfg-rows' }, lrows.map(r => r.row)),
         h('button', {
@@ -246,7 +252,7 @@
           },
         }, '開始')));
     }
-    UI.doodle(root);
+    if (window.UI) UI.doodle(root);
   }
 
   /* ================= 共用:選項與解析 ================= */
@@ -287,7 +293,7 @@
     if (!rec) return null;
     const box = h('div', { class: 'explain' },
       h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-        rec.ok ? '答對了' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
+        rec.ok ? '答對' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
       h('div', null, q.explanation));
     if (extraTr) box.append(h('div', { class: 'tr' }, extraTr));
     const gl = q.category && GRAMMAR_LINK[q.category];
@@ -305,12 +311,13 @@
     return box;
   }
 
-  /* 作答期間的選項(交卷式:只選不對答,可改選) */
+  /* 作答期間的選項(交卷式:只選不對答,可改選)。選到的那顆 aria-pressed=true,讀屏聽得出選了哪個 */
   function pickButtons(q, rec, onPick) {
     const opts = h('div', { class: 'opts' });
     q.options.forEach((opt, oi) => {
       opts.append(h('button', {
         class: 'opt' + (rec && rec.c === oi ? ' picked' : ''), 'data-gate': '',   // 選答案:?part= 深連結一打開就是題目,選的時候才請他登入
+        'aria-pressed': rec && rec.c === oi ? 'true' : 'false',
         onclick: () => onPick(oi),
       }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
     });
@@ -353,6 +360,7 @@
 
   /* ================= 隨機練習(config=[{p,n,cat}],可混合多個 Part) ================= */
   function startQuiz(config) {
+    if (!uiReady()) return;   // 共用元件沒載到:說一聲、給重新整理,不在這裡丟錯
     document.title = '隨機練習 - 衝衝英文';
     const units = [];   // {p, item}:p5 的 item=題目,p6/7 的 item=題組
     config.forEach(c => pickPool(c.p, c.n, c.cat).forEach(item => units.push({ p: c.p, item })));
@@ -366,6 +374,7 @@
     let handing = false;   // 交卷的確認視窗開著:這時再按交卷不算
     const f = UI.focus.enter({ total: units.length, onExit: () => { location.href = HOME; }, body: '還沒交卷的作答不會計分' });
     draw();
+    f.focusMain();
 
     function unitAnswered(i) {
       const u = units[i];
@@ -374,14 +383,16 @@
       return u.item.questions.every((q, qi) => sess[qid(u.item, q, qi)]);
     }
 
-    function go(i) { cur = i; draw(); window.scrollTo(0, 0); }
+    /* 換題:焦點到新題的題幹(按鈕整段重畫,不然焦點掉回頁面) */
+    function go(i) { cur = i; draw(); window.scrollTo(0, 0); f.focusMain(); }
 
-    /* 選了答案:重畫但捲動位置留著 */
-    function picked() {
+    /* 選了答案:重畫但捲動位置留著,焦點回到剛選的那顆,讀屏念「已選 B」 */
+    function picked(oi) {
       f.dirty(true);
       const y = window.scrollY;
-      draw();
+      f.keep(draw);
       window.scrollTo(0, y);
+      f.say('已選 ' + LETTERS[oi]);
     }
 
     function draw() {
@@ -403,10 +414,10 @@
       root.append(h('div', { class: 'q-block' },
         h('div', { class: 'meta', style: 'display:flex;gap:8px;margin-bottom:10px' },
           h('span', { class: 'badge cat' }, 'Part 5'),
-          h('span', { class: 'badge cat' }, q.category),
+          h('span', { class: 'badge cat' }, catLabel(q.category)),
           h('span', { class: 'badge ' + (q.difficulty === '基礎' ? 'level-basic' : q.difficulty === '進階' ? 'level-adv' : 'level-mid') }, q.difficulty)),
         h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, (cur + 1) + '.'), q.question),
-        pickButtons(q, rec, oi => { session.answers[cur] = { c: oi }; picked(); })));
+        pickButtons(q, rec, oi => { session.answers[cur] = { c: oi }; picked(oi); })));
     }
 
     function drawSet() {
@@ -415,7 +426,7 @@
       const sess = session.answers[cur] = session.answers[cur] || {};
       const layout = h('div', { class: 'set-layout' });
 
-      const passCol = h('div', { class: 'passage-sticky-wrap' });
+      const passCol = h('div', { class: 'passage-sticky-wrap', role: 'region', 'aria-label': '文章' });   // 可以捲動的文章區會成為 Tab 停點:給它名字
       if (p === '6') passCol.append(part6Passage(set, sess, false));
       else set.passages.forEach(ps => passCol.append(part7Passage(ps)));
       layout.append(h('div', null, passCol));
@@ -428,7 +439,7 @@
         const text = p === '6' ? '' : q.q;   // 段落填空:空格編號標在選項上方,不另寫題幹
         qCol.append(h('div', { class: 'q-block' },
           h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, label), text),
-          pickButtons(q, sess[id], oi => { sess[id] = { c: oi }; picked(); })));
+          pickButtons(q, sess[id], oi => { sess[id] = { c: oi }; picked(oi); })));
       });
       layout.append(qCol);
       root.append(layout);
@@ -512,7 +523,7 @@
           return h('div', { class: 'q-block' },
             h('div', { class: 'meta', style: 'display:flex;gap:8px;margin-bottom:10px' },
               h('span', { class: 'badge cat' }, 'Part 5'),
-              h('span', { class: 'badge cat' }, q.category)),
+              h('span', { class: 'badge cat' }, catLabel(q.category))),
             h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, (i + 1) + '.'), q.question),
             optionButtons(q, rec, () => {}),
             explainBox(q, rec, q.translation, { m: 'p5', id: q.id }));
@@ -554,6 +565,7 @@
      題目含模擬考答錯的題(mock_wrong);作答照舊寫 drill_p*(saveRec),答對那筆比模擬考那筆新,自然移出。
      每題作答當下就存、就給回饋(底部回饋條),所以離開不用確認 */
   function startReview(p, g) {
+    if (!uiReady()) return;   // 共用元件沒載到:說一聲、給重新整理,不在這裡丟錯
     const d = DATA[p];
     document.title = d.title + ' 錯題本 - 衝衝英文';
     const st = store.get(KEY(p), {});
@@ -601,7 +613,7 @@
       const isLast = cur === units.length - 1;
       root.append(h('div', { class: 'q-block' },
         h('div', { class: 'meta', style: 'display:flex;gap:8px;margin-bottom:10px' },
-          h('span', { class: 'badge cat' }, q.category),
+          h('span', { class: 'badge cat' }, catLabel(q.category)),
           h('span', { class: 'badge level-mid' }, q.difficulty)),
         h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, (cur + 1) + '.'), q.question),
         optionButtons(q, rec, oi => {
@@ -621,7 +633,7 @@
       const { set, wrongKeys } = units[cur];
       const sess = session[cur] = session[cur] || {};
       const layout = h('div', { class: 'set-layout' });
-      const passCol = h('div', { class: 'passage-sticky-wrap' });
+      const passCol = h('div', { class: 'passage-sticky-wrap', role: 'region', 'aria-label': '文章' });   // 可以捲動的文章區會成為 Tab 停點:給它名字
       if (p === '6') passCol.append(part6Passage(set, wholeRecord(set)));
       else set.passages.forEach(ps => passCol.append(part7Passage(ps)));
       layout.append(h('div', null, passCol));

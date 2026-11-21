@@ -1407,6 +1407,65 @@ T['UI.mount(root):掛上 root 底下的圖示、鵜鶘、小雞;掛過的不重�
   assert.strictEqual(pe.made.length, 1, '不重掛鵜鶘');
 };
 
+T['連點兩下不穿過:視窗打開後 400 毫秒內滑鼠點到確定不算(刪除帳號的兩層確認),鍵盤與程式呼叫照常'] = async () => {
+  const p = loadPage();
+  /* 滑鼠或手指的 click:detail 是點了幾下(1 以上);鍵盤 Enter、element.click() 是 0 */
+  const tap = (n) => { const ev = { type: 'click', target: n, detail: 1, defaultPrevented: false, preventDefault() { this.defaultPrevented = true; } };
+    for (let q = n; q; q = q.parentNode) (q.on && q.on.click || []).slice().forEach((f) => f(ev)); return ev; };
+  /* 真的瀏覽器裡,確定的 click 沒被擋才會送 submit */
+  const press = (dlg) => { const ev = tap(dlg.querySelector('.ui-dialog-ok')); if (!ev.defaultPrevented) submit(dlg); return ev; };
+  const opener = p.doc.createElement('button'); p.doc.body.append(opener); opener.focus();
+  /* 照 js/profile.js 刪除帳號的寫法:第一層確定之後馬上開第二層 */
+  let second = null;
+  const first = p.UI.confirm({ title: '刪除帳號？', ok: '刪除', danger: true }).then((yes) => {
+    if (yes) second = p.UI.confirm({ title: '刪除這個帳號？', ok: '刪除帳號', danger: true });
+    return yes;
+  });
+  let dlg = p.doc.querySelector('.ui-dialog');
+  assert.ok(press(dlg).defaultPrevented, '剛打開就點到:不算');
+  assert.ok(p.doc.querySelector('.ui-dialog'), '視窗還開著');
+  p.runTimers();
+  assert.ok(!press(dlg).defaultPrevented, '過了 400 毫秒:照常');
+  assert.strictEqual(await first, true);
+  await settle();
+  assert.ok(second, '第二層開了');
+  dlg = p.doc.querySelector('.ui-dialog');
+  assert.strictEqual(dlg.querySelector('.ui-dialog-ok').textContent, '刪除帳號');
+  const ev = press(dlg);   // 連點兩下的第二下落在第二層的確定上
+  assert.ok(ev.defaultPrevented, '第二層剛打開:滑鼠的第二下不算');
+  assert.ok(p.doc.querySelector('.ui-dialog'), '第二層還開著,帳號沒有被刪');
+  /* 鍵盤或程式呼叫(detail 0)不受影響 */
+  const kb = click(dlg.querySelector('.ui-dialog-ok'));
+  assert.ok(!kb.defaultPrevented, 'detail 0 照常');
+  submit(dlg);
+  assert.strictEqual(await second, true);
+};
+
+T['同時只開一個視窗:再開一個先把前一個當取消收掉;結束專心模式時收掉它自己開的離開確認'] = async () => {
+  const p = loadPage();
+  const a = p.UI.confirm({ title: 'A' });
+  const b = p.UI.confirm({ title: 'B' });
+  assert.strictEqual(await a, false, '前一個當取消');
+  assert.strictEqual(p.doc.body.all().filter((n) => n.classList.contains('ui-dialog')).length, 1, '畫面上只有一個視窗');
+  key(p.doc, 'Escape');
+  assert.strictEqual(await b, false);
+  assert.strictEqual((p.doc.listeners.keydown || []).length, 0, '兩個都收乾淨,沒有留下鍵盤監聽');
+  /* 可以從外面收掉:cancel() 等於按取消 */
+  const c = p.UI.prompt({ title: 'C', value: 'x' });
+  c.cancel();
+  assert.strictEqual(await c, null);
+  assert.strictEqual(p.doc.querySelector('.ui-mask'), null);
+  /* 專心模式的離開確認開著時,時間到(模擬考)結束專心模式:確認一起收掉,不會留在結算卡上 */
+  let exited = 0;
+  const f = p.UI.focus.enter({ total: 3, confirmExit: true, dirty: true, onExit: () => { exited++; } });
+  click(p.doc.querySelector('.quiz-close'));
+  assert.ok(p.doc.querySelector('.ui-dialog'), '作答中按關閉:先問');
+  f.leave();
+  await settle();
+  assert.strictEqual(p.doc.querySelector('.ui-mask'), null, '離開專心模式時確認視窗一起收掉');
+  assert.strictEqual(exited, 0, '收掉等於取消,不呼叫 onExit');
+};
+
 /* ---------- 執行 ---------- */
 (async () => {
   let pass = 0, fail = 0;

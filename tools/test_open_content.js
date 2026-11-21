@@ -2739,7 +2739,7 @@ T['錯題本 U1–U10:Part 5 清單分 9 組照題庫順序、預設收起、可
     r.u4 = r.u4focus === 'wb-b-5-0' && k1 === 'false' && k2 === 'true';
     r.u5 = await s.eval(`(() => [...document.querySelectorAll('.wb-h')].every((h) => h.children.length === 1 && h.children[0].tagName === 'BUTTON' && h.tagName === 'H2')
       && [...document.querySelectorAll('.wb-toggle')].every((b) => !!document.getElementById(b.getAttribute('aria-controls')))
-      && [...document.querySelectorAll('.wb-go')].every((g) => !g.closest('.wb-h') && /^複習「.+」\\d+ 題$/.test(g.getAttribute('aria-label')) && g.hasAttribute('data-gate'))
+      && [...document.querySelectorAll('.wb-go')].every((g) => !g.closest('.wb-h') && /^開始複習「.+」\\d+ 題$/.test(g.getAttribute('aria-label')) && g.hasAttribute('data-gate'))
       && !document.querySelector('[role=region]'))()`);
     await click(s, '.wb-all');
     const c = await s.eval(WB_STATE);
@@ -2842,7 +2842,7 @@ T['錯題本 U11–U13、U15:聽力網址直接開、聽力 3 一段一組、聽
       '8 題|查看>practice.html?mode=wrong&part=2', '2 題|查看>practice.html?mode=wrong&part=3', '2 題|查看>practice.html?mode=wrong&part=4'])
     && r.an.n > 9 && r.an.h4 && r.an.before === 'false' && r.an.after === 'true' && r.an.p7.length > 2 && r.an.p7.indexOf('多篇閱讀') === r.an.p7.length - 1 && !r.an.old
     && J(r.an.links) === J(['practice.html?mode=wrong&part=5', 'practice.html?mode=wrong&part=6', 'practice.html?mode=wrong&part=7'])
-    && r.mock_old.indexOf(r.sinceDay + ' 以前的模擬考錯題沒有收進錯題本。') === 0 && r.mock_new === '';
+    && r.mock_old.indexOf(r.sinceDay + ' 前的模擬考錯題未收進錯題本') === 0 && r.mock_new === '';
   return { ok, detail: J(r) };
 };
 

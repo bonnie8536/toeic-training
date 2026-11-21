@@ -604,6 +604,10 @@ async function replay(variant) {
   const body = x => x.slice(x.indexOf('##') + 2);   // ## 後面:本機、分頁暫存、雲端、請求、重載
   const bad = names.filter(n => mode(n) !== null && (mode(n) === 'state' ? body(got[n].old) !== body(got[n].new) : got[n].old !== got[n].new));
   const newFail = names.filter(n => !JSON.parse(got[n].new.split('##')[0]).ok);
+  /* 42 只比狀態:新版的錯誤訊息另外釘住(兩行:發生什麼、怎麼辦) */
+  const n42 = names.find(n => n.split('.')[0] === '42');
+  const msg42 = !!n42 && JSON.parse(got[n42].new.split('##')[0]).detail.indexOf('這台的登入已失效\n請重新登入後再登出其他裝置') > -1;
+  if (!msg42) newFail.push('42 的錯誤訊息');
   return { ok: names.length >= 50 && !bad.length && !newFail.length,
            detail: names.length + ' 個情境' + (bad.length ? ',不同:' + bad.map(n => n.split('.')[0]).join('、') : ',全部相同') + '(刻意改掉的:' + Object.keys(INTENDED).map(k => (INTENDED[k] === 'state' ? k + '只比狀態' : k)).join('、') + ')' + (newFail.length ? ';新版沒通過:' + newFail.map(n => n.split('.')[0]).join('、') : '') };
 }

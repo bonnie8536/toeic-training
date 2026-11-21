@@ -135,7 +135,14 @@
     if (!window.UI || typeof window.UI.confirm !== 'function') return Promise.resolve(window.confirm(msg));
     leaving = true;
     return window.UI.confirm({ title: '離開這次練習？', body: msg, ok: '離開', cancel: '繼續作答', danger: true })
-      .then(function (yes) { leaving = false; return !!yes; }, function () { leaving = false; return false; });
+      .then(function (yes) { leaving = false; if (!yes) stayFocus(); return !!yes; }, function () { leaving = false; return false; });
+  }
+  /* 取消之後繼續作答:打開視窗的分頁列在作答中是藏起來的,焦點回不去,改放到作答列的關閉鈕 */
+  function stayFocus() {
+    const a = doc.activeElement;
+    if (a && a !== doc.body && a.offsetParent !== null) return;
+    const c = doc.querySelector('.quiz-close');
+    if (c) c.focus();
   }
   function goBack() {
     const ask = doc.body && doc.body.dataset.leaveConfirm;

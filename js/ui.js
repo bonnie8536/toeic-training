@@ -21,6 +21,7 @@
   const STILL_POSES = ['happy'];
   const HOP_MS = 640;
   const KB_PX = 120;                           // 可視高度比視窗少這麼多:當作鍵盤彈出來了
+  const DLG_ARM_MS = 400;                      // 視窗打開後這段時間內,滑鼠或手指點到確定不算(連點兩下的第二下)
   const ART_FILES = { PelicanArt: 'pelican-art.js', ChickArt: 'chick-art.js', FoodArt: 'food-art.js', DoodleArt: 'doodle-art.js' };
   const ART_ALIAS = { pelican: 'PelicanArt', chick: 'ChickArt', food: 'FoodArt', doodle: 'DoodleArt' };
   const ICON = { close: ['M6 6l12 12', 'M18 6 6 18'], ok: ['m5 12.5 4.5 4.5L19 7.5'], bad: ['M7 7l10 10', 'M17 7 7 17'] };
@@ -362,9 +363,13 @@
   }
 
   /* ---------- 確認、輸入、通知視窗 ---------- */
+  /* 同時只開一個視窗:再開一個時先把前一個當取消收掉(兩個都開著時 Esc 會一起關、焦點鎖會互搶) */
+  let dlgOpen = null;
   function dialog(kind, opt) {
     const o = opt || {};
-    return new Promise(function (resolve) {
+    if (dlgOpen) dlgOpen();
+    let cancelIt = null;
+    const done = new Promise(function (resolve) {
       const opener = doc.activeElement;
       const id = uid('dlg');
       const title = el('h2', { class: 'ui-dialog-h', id: id + '-h' }, [o.title || '']);
@@ -392,6 +397,7 @@
       function finish(v) {
         if (closed) return;
         closed = true;
+        if (dlgOpen === no) dlgOpen = null;
         off();
         mask.remove();
         if (opener && typeof opener.focus === 'function' && opener !== doc.body) safe(function () { opener.focus(); });
@@ -399,6 +405,12 @@
       }
       /* 取消、Esc、點遮罩:確認回 false、輸入回 null、通知回 true(通知只是看過) */
       const no = function () { finish(kind === 'prompt' ? null : kind === 'alert'); };
+      cancelIt = no;
+      /* 打開後一小段時間內,滑鼠或手指點到確定不算:前一個視窗的確定與這個視窗的確定位置幾乎一樣,連點兩下時第二下會落在這裡
+         (例如刪除帳號的兩層確認)。鍵盤 Enter、程式呼叫的 click 的 detail 是 0,照常 */
+      let armed = false;
+      setTimeout(function () { armed = true; }, DLG_ARM_MS);
+      ok.addEventListener('click', function (e) { if (!armed && e && e.detail > 0) e.preventDefault(); });
       box.addEventListener('submit', function (e) {
         e.preventDefault();
         if (kind !== 'prompt') { finish(true); return; }
@@ -410,10 +422,14 @@
       syncOk();
       doc.body.append(mask);
       off = holdFocus(mask, items, no);
+      dlgOpen = no;
       /* 起始焦點:輸入框;危險的確認停在取消上(按錯 Enter 不會刪東西);其他停在確定 */
       if (input) { input.focus(); safe(function () { input.select(); }); }
       else (o.danger && cancel ? cancel : ok).focus();
     });
+    /* 打開它的程式要收掉時(例如作答結束)呼叫:等於按取消 */
+    done.cancel = function () { if (cancelIt) cancelIt(); };
+    return done;
   }
   function confirmBox(opt) { return dialog('confirm', opt); }
   function promptBox(opt) { return dialog('prompt', opt); }
@@ -423,11 +439,11 @@
      手機從底部升起,600 以上置中。標題、一行小字(opt.note)、右上「關閉」;內容是 opt.nodes。
      焦點鎖在面板裡、Esc 與點遮罩關閉、關閉後焦點回到打開它的按鈕(close(false) 不回,例如點了題號要換題)。
      起始焦點:opt.focus,沒給時第一個 [aria-current],再沒有就是「關閉」。同時只開一個 */
-  let sheetOpen = null;
+  let sheetOpen = null, countBtn = null;   // countBtn:從作答列的題號鈕打開時就是它(Safari 點按鈕不給焦點,不能只看 activeElement)
   function sheet(opt) {
     const o = opt || {};
     if (sheetOpen) sheetOpen.close(false);
-    const opener = doc.activeElement;
+    const opener = countBtn || doc.activeElement;
     const id = uid('sheet');
     const close = el('button', { class: 'btn-text ui-sheet-close', type: 'button' }, [o.closeLabel || '關閉']);
     const box = el('div', { class: 'modal ui-sheet' + (o.class ? ' ' + o.class : ''), role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': id + '-h' }, [
@@ -445,6 +461,7 @@
       off();
       mask.remove();
       if (sheetOpen === api) sheetOpen = null;
+      if (opener && opener.getAttribute && opener.getAttribute('aria-expanded') === 'true') opener.setAttribute('aria-expanded', 'false');
       if (back !== false && opener && typeof opener.focus === 'function' && opener !== doc.body && opener.isConnected !== false) safe(function () { opener.focus(); });
       if (typeof o.onClose === 'function') safe(function () { o.onClose(); });
     }
@@ -453,6 +470,7 @@
     const off = holdFocus(mask, items, function () { shut(true); });
     const api = { el: box, close: shut, get open() { return !closed; } };
     sheetOpen = api;
+    if (opener && opener.getAttribute && opener.getAttribute('aria-expanded') === 'false') opener.setAttribute('aria-expanded', 'true');   // 作答列的「題號 3 / 20」
     const first = (o.focus && o.focus.nodeType && box.contains(o.focus) && o.focus) || box.querySelector('[aria-current]') || close;
     safe(function () { first.focus(); });
     return api;
@@ -470,9 +488,9 @@
     const fill = el('i', { class: 'quiz-fill' });
     const track = el('span', { class: 'quiz-track', role: 'progressbar', 'aria-label': '進度', 'aria-valuemin': '0', 'aria-valuemax': String(total), 'aria-valuenow': '0' }, [fill]);
     const count = typeof o.onCount === 'function'
-      ? el('button', { class: 'quiz-count', type: 'button', 'aria-haspopup': 'dialog' })
+      ? el('button', { class: 'quiz-count', type: 'button', 'aria-haspopup': 'dialog', 'aria-expanded': 'false' })
       : el('span', { class: 'quiz-count' });
-    if (typeof o.onCount === 'function') count.addEventListener('click', function (e) { o.onCount(e); });
+    if (typeof o.onCount === 'function') count.addEventListener('click', function (e) { countBtn = count; try { o.onCount(e); } finally { countBtn = null; } });
     /* 計數左邊的位置(f.slot):模擬考的倒數 */
     const lead = el('span', { class: 'quiz-slot' });
     /* 作答列右邊的文字按鈕(交卷才對答案的模式放「交卷」):底部列就只有「上一題」一個文字按鈕 */
@@ -530,6 +548,7 @@
         myConfirm = null;
       }
     }
+    function choices() { return qsa(doc, 'main .opt, main .letter-big'); }
     function syncFoot() {
       const empty = !slot.firstChild && !foot.classList.contains('is-fb');
       foot.classList.toggle('is-empty', empty);
@@ -539,6 +558,7 @@
       const r = total > 0 ? Math.min(1, Math.max(0, cur / total)) : 0;
       fill.style.transform = 'scaleX(' + r + ')';
       count.textContent = total > 0 ? cur + ' / ' + total : '';
+      if (count.tagName === 'BUTTON') count.setAttribute('aria-label', '題號 ' + count.textContent);   // 讀屏念「題號 3 / 20」,聽得出是開題號面板
       track.setAttribute('aria-valuemax', String(total));
       track.setAttribute('aria-valuenow', String(cur));
     }
@@ -552,13 +572,12 @@
       if (typeof o.onExit === 'function') { o.onExit(); return; }
       if (window.history && history.length > 1) history.back(); else location.href = 'index.html';
     }
-    let asking = false;   // 確認視窗開著時再按關閉不再開第二個
+    let asking = null;   // 確認視窗開著時再按關閉不再開第二個;結束專心模式時一起收掉
     close.addEventListener('click', function () {
       if (!(o.confirmExit && isDirty)) { exit(); return; }
       if (asking) return;
-      asking = true;
-      confirmBox({ title: '離開這次練習？', body: o.body, ok: '離開', cancel: '繼續作答', danger: true })
-        .then(function (yes) { asking = false; if (yes && !gone) exit(); });
+      asking = confirmBox({ title: '離開這次練習？', body: o.body, ok: '離開', cancel: '繼續作答', danger: true });
+      asking.then(function (yes) { asking = null; if (yes && !gone) exit(); });
     });
 
     const api = {
@@ -572,6 +591,22 @@
         slot.replaceChildren.apply(slot, [].concat(nodes || []).filter(Boolean));
         syncFoot();
       },
+      /* 鍵盤作答:選了答案整段重畫時,焦點回到同一顆選項(重畫前記住是第幾顆);焦點不在選項上時不動 */
+      keep: function (redraw) {
+        const before = choices(), i = before.indexOf(doc.activeElement);
+        redraw();
+        const n = i > -1 ? choices()[i] : null;
+        if (n) safe(function () { n.focus({ preventScroll: true }); });
+      },
+      /* 換題(下一題、上一題、跳題、開始)之後焦點放到新題的題幹,不掉回頁面最上面 */
+      focusMain: function () {
+        const t = doc.querySelector('main .q-text, main .mock-gap-no, main .q-block');
+        if (!t) return;
+        if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+        safe(function () { t.focus({ preventScroll: true }); });
+      },
+      /* 讀屏播一句(「已選 B」) */
+      say: function (text) { live.textContent = ''; live.textContent = String(text || ''); },
       /* 計數左邊放一個元素(模擬考的倒數);傳 null 拿掉 */
       slot: function (node) { lead.replaceChildren.apply(lead, node && node.nodeType ? [node] : []); },
       /* 交卷才對答案的模式:作答列右邊的「交卷」;最後一題主按鈕變交卷時傳 null 拿掉 */
@@ -600,6 +635,7 @@
       leave: function () {
         if (gone) return;
         gone = true;
+        if (asking) asking.cancel();
         syncLeave();
         html.classList.remove('is-quiz', 'has-quiz-foot', 'ui-kb');
         safe(function () { html.style.removeProperty('--quiz-foot-h'); });

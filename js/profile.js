@@ -41,8 +41,10 @@
 
   /* 確認、輸入與通知視窗:js/ui.js 的 UI.confirm、UI.prompt、UI.alert(回 Promise,取消是 false、null)。
      每一頁都載了 ui.js;萬一沒載到就當作按了取消,什麼都不做 */
-  function askConfirm(o) { return window.UI && typeof UI.confirm === 'function' ? UI.confirm(o) : Promise.resolve(false); }
-  function askText(o) { return window.UI && typeof UI.prompt === 'function' ? UI.prompt(o) : Promise.resolve(null); }
+  /* 共用元件沒載到:不默默不動,先說一聲、給重新整理(js/common.js uiReady) */
+  const noUi = () => { try { if (typeof uiReady === 'function') uiReady(); } catch (e) { /* 頁面上沒有 main 之類:照舊不動 */ } };
+  function askConfirm(o) { if (window.UI && typeof UI.confirm === 'function') return UI.confirm(o); noUi(); return Promise.resolve(false); }
+  function askText(o) { if (window.UI && typeof UI.prompt === 'function') return UI.prompt(o); noUi(); return Promise.resolve(null); }
   function tell(o) { return window.UI && typeof UI.alert === 'function' ? UI.alert(o) : Promise.resolve(true); }
   const pause = ms => new Promise(r => setTimeout(r, ms));
 
@@ -424,7 +426,7 @@
       clearNotice();
       const mail = CLOUD.user.email || '';
       if (!await askConfirm({ title: '刪除帳號？', body: '雲端上的進度、錯題與寫作內容會永久刪除。付款紀錄依法保留。', ok: '刪除', cancel: '取消', danger: true })) return;
-      if (!await askConfirm({ title: '真的要刪除這個帳號？', body: mail, ok: '刪除帳號', cancel: '取消', danger: true })) return;
+      if (!await askConfirm({ title: '刪除這個帳號？', body: mail, ok: '刪除帳號', cancel: '取消', danger: true })) return;
       if (!await stillMine(opener)) return;
       CLOUD.deleteAccount().catch(err => { if (isGone(err)) goneCard(opener); else notice('帳號沒有刪除', err.message); });
     }
@@ -539,7 +541,7 @@
           note.append(document.createTextNode(text));
           const b = h('button', { class: 'auth-link tip', type: 'button' }, fix);
           b.addEventListener('click', () => { input.value = fix; api.tip(''); input.focus(); });
-          note.append(b, document.createTextNode('？'));
+          note.append(b);
         },
       };
       input.addEventListener('input', () => api.bad(''));
@@ -573,13 +575,13 @@
 
     const SEAT_OPTIONS = [10, 30, 60];
     const NB = ' ';   // 數字與單位之間不換行
-    /* 名額選項的字:「10 位以內」「每月 390 元」(名額的寫法跟價格頁一樣),價錢照 window.PLANS(js/plans-config.js);沒有價錢就只寫人數 */
+    /* 名額選項的字:「10 位以內」「每月 NT$ 390」(名額的寫法跟價格頁一樣),價錢照 window.PLANS(js/plans-config.js);沒有價錢就只寫人數 */
     function seatChoices(plans) {
       const t = (plans && plans.teacher) || {};
       return SEAT_OPTIONS.map(n => ({
         seats: n,
         count: n + NB + '位以內',
-        price: typeof t[n] === 'number' ? '每月 ' + String(t[n]).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + NB + '元' : '',
+        price: typeof t[n] === 'number' ? '每月 NT$' + NB + String(t[n]).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '',
       }));
     }
 
@@ -728,7 +730,7 @@
             if (!v) return;
             if (!EMAIL_RE.test(v)) return email.bad('Email 格式不對。');
             const fix = typoFix(v);
-            if (fix) email.tipFix('是不是要打 ', fix);
+            if (fix) email.tipFix('改成 ', fix);   // 點了就換成建議的網址
           });
           /* 身分選擇:PAID_UI 沒開時一個節點都不多。選老師時藏起暱稱的「老師可見」(老師帳號的暱稱學生看不到) */
           const nameHint = name.el.querySelector('.auth-hint');

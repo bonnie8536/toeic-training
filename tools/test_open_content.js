@@ -2587,7 +2587,8 @@ T['錯題本 E1:模擬考交卷把答錯的題收進 mock_wrong(只寫一次、�
     await s.go('practice.html#wrongbook');
     await sleep(1500);
     r.p5 = await s.eval("(() => { const row = [...document.querySelectorAll('#wrongbook .review-row')].find((x) => /Part 5/.test(x.textContent)); return row ? row.querySelector('b').textContent : ''; })()");
-    r.scrolled = await s.eval("Math.abs(document.getElementById('wrongbook').getBoundingClientRect().top) < 80");
+    /* 捲到面板:面板頂端貼近視窗上緣;頁面比視窗只高一點、已經捲到底時,面板整個在視窗內也算(頁面變短之後頂端貼不到上緣) */
+    r.scrolled = await s.eval("(() => { const p = document.getElementById('wrongbook').getBoundingClientRect(); const e = document.scrollingElement; return Math.abs(p.top) < 80 || (scrollY >= e.scrollHeight - innerHeight - 1 && p.top >= 0 && p.bottom <= innerHeight); })()");
   } finally { await s.close(); }
   r.ok = !r.changed.length && r.right && r.sets === 1 && r.ups === 1 && /收進錯題本 3 題/.test(r.note) && /移出 1 題/.test(r.note) && /未作答 \d+ 題不收/.test(r.note)
     && r.link && r.p5 === '2 題' && r.scrolled;
@@ -2928,11 +2929,11 @@ T['錯題本 U17:practice.html#wrongbook 捲到錯題本面板時,「錯題本�
       await sleep(400);
       out[w] = await s.eval(`(() => { const bar = Math.round(document.querySelector('.topbar').getBoundingClientRect().bottom), p = document.getElementById('wrongbook'),
         h = p.querySelector('h2').getBoundingClientRect(), row = p.querySelector('.review-row').getBoundingClientRect(), hit = document.elementFromPoint(h.left + 8, (h.top + h.bottom) / 2);
-        return { bar, panel: Math.round(p.getBoundingClientRect().top), h2: Math.round(h.top), row: Math.round(row.top), hit: !!hit && !!hit.closest('#wrongbook h2'), y: Math.round(scrollY) }; })()`);
+        return { bar, panel: Math.round(p.getBoundingClientRect().top), h2: Math.round(h.top), row: Math.round(row.top), hit: !!hit && !!hit.closest('#wrongbook h2'), y: Math.round(scrollY), end: scrollY >= document.scrollingElement.scrollHeight - innerHeight - 1 }; })()`);
     } finally { await s.close(); }
   }
-  /* 面板上緣在頂欄下面一點點(真的捲過去了、沒有留一大段空白) */
-  const ok = [1280, 375, 320].every((w) => out[w].y > 0 && out[w].hit && out[w].panel >= out[w].bar && out[w].panel - out[w].bar < 30 && out[w].h2 >= out[w].bar && out[w].row >= out[w].bar);
+  /* 面板上緣在頂欄下面一點點(真的捲過去了、沒有留一大段空白);頁面比視窗只高一點、已經捲到底時,面板上緣離頂欄較遠也算(捲不動了) */
+  const ok = [1280, 375, 320].every((w) => out[w].y > 0 && out[w].hit && out[w].panel >= out[w].bar && (out[w].panel - out[w].bar < 30 || out[w].end) && out[w].h2 >= out[w].bar && out[w].row >= out[w].bar);
   return { ok, detail: J(out) };
 };
 

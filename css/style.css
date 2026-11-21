@@ -2932,3 +2932,539 @@ html.pet-roam2.pet-roam2-wide .pet-card .pet-pic {
 .rpa-opts { margin: 6px 0 0 1.4em; font-size: 14.5px; }
 .rpa-opts .is-answer { font-weight: 700; color: var(--ok); }
 .rpa-item.is-closed .rpa-id { color: var(--ink-soft); font-weight: 400; }
+
+/* ======== 共用元件(js/ui.js)與新版導覽、首頁、分組頁 ========
+   字級只用 --fs-xs 到 --fs-3xl 七級,圓角只用 --r-sm 到 --r-full 四級。一個畫面只有一顆實色主按鈕(.btn.primary)。
+   動畫只動 transform 與 opacity;減少動態時全部拿掉。灰字一律用 --ink-soft(白底 5.8:1),--ink-light 在白底不到 4.5:1。
+   舊樣式不刪,這一段用新類別蓋過;每條都掛在新類別或新結構底下,舊頁面的元素不會吃到。 */
+:root {
+  --fs-xs: 12px; --fs-sm: 14px; --fs-md: 16px; --fs-lg: 18px; --fs-xl: 22px; --fs-2xl: 28px; --fs-3xl: 44px;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-full: 999px;
+  --ok-ink: #2b6b3c;     /* 綠底上的綠字 5.9:1 */
+  --bad-ink: #a83232;    /* 紅底上的紅字 5.7:1 */
+  --bad-dark: #a83232;
+  --snack-tint: #fff6cc; /* 點心膠囊的淡黃底 */
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+}
+
+/* ---------- 文字按鈕:第二個動作(交卷、取消、回題庫) ---------- */
+.btn-text {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px; padding: 0 12px; border: 0; border-radius: var(--r-md); background: none;
+  font-family: var(--round); font-size: var(--fs-md); font-weight: 700; line-height: 1.2; color: var(--primary);
+  cursor: pointer; text-decoration: none; -webkit-tap-highlight-color: transparent; transition: transform .1s;
+}
+.btn-text:hover { background: var(--primary-tint); text-decoration: none; }
+.btn-text:active { transform: scale(.97); }
+.btn-text:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+/* 新元件裡的按鈕:44 以上的觸控高度、鍵盤聚焦外框 */
+.tile-go, .daily-go, .hero-cta .btn, .quiz-foot .btn, .result-card .btn, .ui-dialog .btn, .ui-empty .btn, .home-review {
+  -webkit-tap-highlight-color: transparent;
+}
+.daily-go:focus-visible, .hero-cta .btn:focus-visible, .quiz-foot .btn:focus-visible, .result-card .btn:focus-visible,
+.ui-dialog .btn:focus-visible, .ui-empty .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.btn.primary.is-danger { background: var(--bad); border-color: var(--bad); }
+.btn.primary.is-danger:hover { background: var(--bad-dark); border-color: var(--bad-dark); }
+.btn.primary.is-danger:focus-visible { outline-color: var(--bad); }
+
+/* ---------- 頂欄:四個都是連結(.nav-btn 是 <a>),滑過展開分組選單,點下去到分組頁 ---------- */
+.topnav a.nav-btn { display: inline-flex; align-items: center; }
+.topnav a.nav-btn:hover { text-decoration: none; }
+.topnav a.nav-btn:focus-visible, .topnav > a:focus-visible, .nav-menu a:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+@media (max-width: 860px) {
+  /* 第一列品牌與頭像,第二列四個連結排一列,不出現下拉(觸控裝置點了直接到分組頁) */
+  .topnav:has(> .nav-group > a.nav-btn) { flex-wrap: nowrap; gap: 4px; padding: 2px 0 6px; }
+  .topnav:has(> .nav-group > a.nav-btn) > a, .topnav a.nav-btn {
+    min-height: 44px; padding: 0 12px; font-size: 15px; border-radius: var(--r-md);
+  }
+  .topnav:has(> .nav-group > a.nav-btn) > a { display: inline-flex; align-items: center; }
+  .topnav a.nav-btn::after { content: none; }
+  .topnav a.nav-btn + .nav-menu { display: none; }
+}
+@media (max-width: 360px) {
+  .topnav:has(> .nav-group > a.nav-btn) > a, .topnav a.nav-btn { padding: 0 8px; font-size: var(--fs-sm); }
+}
+
+/* ---------- 圖示磚 ----------
+   一般磚(全站同一種長相):圖 64 在上、名稱 18、一行數字 14。手機 2 欄、600 以上 3 欄、900 以上 4 欄。
+   有主打磚(.tile-featured)的格子(首頁三組目錄、分組頁)也是同一套,不分頁面另外覆寫:
+   - 手機:主打磚是一張卡(圖 88 在左、文字在右、按鈕在下方整寬),其餘接成一個四角圓角的清單
+     (每列圖 48 在左、名稱 18 與數字 14、最右一個 ›)
+   - 600 到 1079:3 欄。主打磚橫跨整列,按鈕緊接在文字右邊(不推到最右);一般磚 3 塊一列
+   - 1080 以上(內容欄滿寬 1040,跟頂欄同寬):5 欄。主打磚占 2 欄(圖 96 在左、文字、按鈕靠右),一般磚 3 塊各占 1 欄,一列四塊同高
+   主打磚的按鈕:分組頁上它是唯一的實色主按鈕(.btn.primary);首頁的實色按鈕在首屏,目錄裡的主打磚用描邊(.btn) */
+.tile-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; }
+@media (min-width: 600px) { .tile-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 900px) { .tile-grid:not(:has(> .tile-featured)) { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1080px) { .tile-grid:has(> .tile-featured) { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.module-card.tile {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start;
+  min-width: 0; padding: 16px; border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff;
+  color: var(--ink); font-family: inherit; text-decoration: none; box-shadow: none;
+  transition: transform .15s var(--ease-out);
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+/* 寫作練習的排字塊也叫 .tile(滑過變淡藍底):新磚滑過只換邊線色,底色維持白 */
+.module-card.tile:hover { background: #fff; text-decoration: none; box-shadow: none; }
+@media (hover: hover) {
+  .module-card.tile:hover { z-index: 1; border-color: var(--primary); transform: translateY(-2px); }
+}
+.module-card.tile:active { transform: scale(.98); }
+.module-card.tile:focus-visible { z-index: 1; outline: 2px solid var(--primary); outline-offset: 2px; }
+.tile-art { display: block; flex: none; width: 64px !important; height: 64px !important; margin: 0 0 12px; }
+.module-card.tile h2 { margin: 0; font-family: var(--round); font-size: var(--fs-lg); line-height: 1.35; }
+.module-card.tile p { margin: 4px 0 0; font-size: var(--fs-sm); line-height: 1.4; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+/* 圖沒載到(或不認得的圖示):不留空位。磚改成名稱在上、數字在下、貼底對齊,高度降到 96 */
+html:not(.doodle-ready) .tile-art, html:not(.doodle-ready) .daily-art, html:not(.doodle-ready) .home-review-art,
+html:not(.doodle-ready) .tile-group-art, html:not(.doodle-ready) .hub-art, canvas.is-noart { display: none !important; }
+html:not(.doodle-ready) .module-card.tile:not(.tile-featured), .module-card.tile:not(.tile-featured):has(> .tile-art.is-noart) {
+  min-height: 96px; justify-content: flex-end;
+}
+
+/* 主打磚 */
+.module-card.tile-featured {
+  grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: "art name" "art num" "go go"; align-items: center; column-gap: 16px;
+  padding: 20px;
+}
+.tile-featured .tile-art { grid-area: art; width: 88px !important; height: 88px !important; margin: 0; }
+.module-card.tile-featured h2 { grid-area: name; align-self: end; font-size: var(--fs-xl); }
+.module-card.tile-featured p { grid-area: num; align-self: start; font-size: var(--fs-md); }
+.tile-featured .tile-go {
+  grid-area: go; display: flex; align-items: center; justify-content: center;
+  min-height: 48px; margin-top: 16px; padding: 0 24px; font-size: var(--fs-md); border-radius: var(--r-md); white-space: nowrap;
+}
+.tile-featured .tile-go:not(.primary) { background: #fff; color: var(--primary); border-color: var(--line); }
+@media (hover: hover) {
+  .tile-featured:hover .tile-go.primary { background: var(--primary-dark); border-color: var(--primary-dark); }
+  .tile-featured:hover .tile-go:not(.primary) { border-color: var(--primary); background: var(--primary-tint); }
+}
+html:not(.doodle-ready) .module-card.tile-featured, .module-card.tile-featured:has(> .tile-art.is-noart) {
+  grid-template-columns: minmax(0, 1fr); grid-template-areas: "name" "num" "go";
+}
+@media (min-width: 600px) {
+  .module-card.tile-featured {
+    grid-template-columns: auto minmax(0, max-content) auto; grid-template-areas: "art name go" "art num go";
+    justify-content: start; column-gap: 24px; padding: 24px;
+  }
+  .tile-featured .tile-go { margin: 0 0 0 8px; }
+  html:not(.doodle-ready) .module-card.tile-featured, .module-card.tile-featured:has(> .tile-art.is-noart) {
+    grid-template-columns: minmax(0, max-content) auto; grid-template-areas: "name go" "num go";
+  }
+}
+@media (min-width: 1080px) {
+  .module-card.tile-featured { grid-column: span 2; grid-template-columns: auto minmax(0, 1fr) auto; justify-content: stretch; column-gap: 20px; }
+  .tile-featured .tile-art { width: 96px !important; height: 96px !important; }
+  .tile-featured .tile-go { margin: 0; }
+  html:not(.doodle-ready) .module-card.tile-featured, .module-card.tile-featured:has(> .tile-art.is-noart) { grid-template-columns: minmax(0, 1fr) auto; }
+}
+
+/* 手機:主打磚是卡,其餘接成一個清單。清單沒有外層元素:第一列與最後一列自己帶圓角,四角都是 16 */
+@media (max-width: 599px) {
+  .tile-grid:has(> .tile-featured) { display: flex; flex-direction: column; gap: 0; }
+  .tile-grid > .tile-featured { margin-bottom: 12px; }
+  .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured) {
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "art name go" "art num go"; align-items: center;
+    min-height: 76px; margin-top: -1px; padding: 12px 16px; border-radius: 0;
+  }
+  .tile-grid:has(> .tile-featured) > .tile-featured + .module-card.tile { margin-top: 0; border-top-left-radius: var(--r-lg); border-top-right-radius: var(--r-lg); }
+  .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured):last-child { border-bottom-left-radius: var(--r-lg); border-bottom-right-radius: var(--r-lg); }
+  .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured) .tile-art { grid-area: art; width: 48px !important; height: 48px !important; margin: 0 14px 0 0; }
+  .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured) h2 { grid-area: name; align-self: end; }
+  .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured) p { grid-area: num; align-self: start; margin-top: 2px; }
+  .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured)::after {
+    content: '›'; grid-area: go; justify-self: end; margin-left: 12px; font-size: 22px; line-height: 1; color: var(--ink-soft);
+  }
+  .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured) > .tile-badge { position: static; grid-area: go; justify-self: end; margin-right: 24px; }
+  html:not(.doodle-ready) .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured) { min-height: 64px; }
+  @media (hover: hover) { .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured):hover { transform: none; } }
+}
+
+/* 右上角數字徽章(錯題本) */
+.tile-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 24px; height: 24px; padding: 0 7px; border-radius: var(--r-full);
+  background: var(--bad); color: #fff; font-size: var(--fs-xs); font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums;
+}
+.module-card.tile > .tile-badge { position: absolute; top: 12px; right: 12px; }
+/* 分組小標題:前面一個 24px 的分組圖示,把三組分開 */
+.tile-group-h { display: flex; align-items: center; gap: 8px; margin: 28px 0 12px; font-family: var(--round); font-size: var(--fs-md); line-height: 1.4; }
+.tile-group-art { display: block; flex: none; width: 24px; height: 24px; }
+@media (min-width: 900px) { .tile-group-h { margin-top: 40px; } }
+@media (prefers-reduced-motion: reduce) {
+  .module-card.tile, .btn-text { transition: none; }
+  .module-card.tile:hover, .module-card.tile:active { transform: none; }
+}
+
+/* ---------- 分組頁(日常學習、練練手感、刷刷題目):h1 左邊一個分組圖示,下面直接是磚,沒有說明句 ----------
+   內容跟頂欄同一個容器(.container),磚的區域撐滿容器寬,左右緣對齊品牌字與頭像。
+   頁首有圖示的 h1(分組頁、錯題本等):圖示在左,螢光筆只畫在字底下,不會伸到螢幕邊 */
+.page-head:has(> .hub-art) { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.hub-art { display: block; flex: none; width: 40px; height: 40px; }
+.hub .tile-grid { margin-bottom: 48px; }
+
+/* ---------- 首頁 ---------- */
+/* <html class="authed">:已登入(開機程式依本機登入紀錄先加,雲端確認後校正)。藏首屏與目錄,每日練習卡當主角 */
+html.authed .home-hero, html.authed .home-dir { display: none; }
+/* 未登入首屏。DOM 順序 h1、.stats、.hero-cta、小雞。
+   桌機:左欄 h1、主按鈕與文字連結、統計一排小字;小雞 180 緊跟在左欄右邊(間距 48),垂直置中,不飄到畫面最右。
+   手機:h1 與小雞(88)並排,小雞頂端對齊 h1,h1 排成兩行;按鈕與統計在下面整寬 */
+.home-hero .hero-inner {
+  display: grid; grid-template-columns: minmax(0, max-content) auto; justify-content: start; column-gap: 48px;
+  grid-template-areas: "h1 chick" "cta chick" "stats chick";
+  padding-top: 48px; padding-bottom: 44px;
+}
+.home-hero h1 { grid-area: h1; }
+.home-hero .hero-cta { grid-area: cta; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 28px; }
+.hero-cta .btn.primary {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 52px; padding: 0 36px; font-size: var(--fs-lg); border-radius: var(--r-md); text-decoration: none;
+}
+.home-hero .stats { grid-area: stats; flex-wrap: nowrap; gap: 4px 20px; margin-top: 20px; }
+.home-hero .stat { display: flex; align-items: baseline; gap: 6px; white-space: nowrap; }
+.home-hero .stat b { font-size: var(--fs-md); color: var(--ink); font-variant-numeric: tabular-nums; }
+.home-hero .stat span { display: inline; font-size: var(--fs-sm); color: var(--ink-soft); }
+.hero-chick { grid-area: chick; align-self: center; display: block; }
+@media (max-width: 600px) {
+  .home-hero .hero-inner {
+    grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "h1 chick" "cta cta" "stats stats"; column-gap: 8px;
+    padding-top: 28px; padding-bottom: 28px;
+  }
+  .home-hero h1 { font-size: 24px; align-self: start; }
+  /* 小雞畫布上方留有跳起來的空間:往上疊,讓看得到的頭頂跟 h1 第一行對齊 */
+  .hero-chick { align-self: start; width: 88px !important; height: 103px !important; margin: -22px -6px -6px 0; }
+  .home-hero .hero-cta { margin-top: 20px; }
+  .hero-cta .btn.primary { padding: 0 28px; }
+  .home-hero .stats { gap: 12px; margin-top: 16px; }
+  .home-hero .stat { gap: 4px; }
+  .home-hero .stat span { font-size: var(--fs-xs); }
+}
+
+.home .home-grid { margin-top: 28px; }
+.home .home-grid > .daily-home { margin-top: 0; }
+html.authed .home .home-grid { margin-top: 24px; }
+/* 每日練習卡與小雞卡用同一套內距:手機 20、600 以上 24 */
+.home .daily-card { border-radius: var(--r-lg); padding: 20px 20px 20px; }
+.home .daily-head h2 { font-size: var(--fs-xl); }
+.home .daily-count { font-size: var(--fs-sm); color: var(--ink-soft); }
+.daily-row.has-art { grid-template-columns: 40px minmax(0, 1fr) auto; column-gap: 12px; row-gap: 6px; padding: 14px 0; }
+.daily-row.has-art .daily-art { grid-row: span 2; align-self: center; }
+.daily-row.has-art .daily-bar { grid-column: 2 / -1; }
+/* 沒有圖示時名稱直接靠左,不留 40px 空位 */
+html:not(.doodle-ready) .daily-row.has-art, .daily-row.has-art:has(> .is-noart) { grid-template-columns: minmax(0, 1fr) auto; }
+html:not(.doodle-ready) .daily-row.has-art .daily-bar, .daily-row.has-art:has(> .is-noart) .daily-bar { grid-column: 1 / -1; }
+.daily-art { display: block; width: 40px; height: 40px; }
+.home .daily-st { color: var(--ink-soft); }
+.home .daily-row.is-done .daily-st { color: var(--ok-ink); }
+.daily-go {
+  display: flex; align-items: center; justify-content: center; width: 100%;
+  min-height: 48px; margin-top: 16px; font-size: var(--fs-md); border-radius: var(--r-md); text-decoration: none;
+}
+.daily-go:hover { text-decoration: none; }
+/* 未登入:首屏已經有「開始練習」通往同一頁,卡片不再放按鈕(三列本身就是連結) */
+html:not(.authed) .home .daily-go { display: none; }
+html:not(.authed) .home .daily-card { padding-bottom: 8px; }
+/* 全做完:不放按鈕,換成開心的小雞與一行字 */
+.daily-fin { display: none; }
+.daily-card.is-done .daily-go { display: none; }
+.daily-card.is-done .daily-fin { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+.daily-fin canvas { display: block; margin: -16px 0 -6px; }
+.daily-fin p { font-family: var(--round); font-size: var(--fs-lg); font-weight: 700; color: var(--ok-ink); }
+/* 小雞卡:內距跟每日練習卡一樣;「餵牠」在內距之內、上方留 16。這一頁的實色按鈕只有每日練習那一顆,「餵牠」改描邊 */
+.home .pet-home {
+  grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; row-gap: 0;
+  padding: 20px; border-radius: var(--r-lg);
+}
+.home .pet-home .pet-pic { grid-row: auto; align-self: center; }
+.home .pet-home .pet-cv { width: 80px !important; height: 93px !important; margin: -12px 0 -4px; }
+.home .pet-home .pet-act { grid-row: auto; grid-column: 1 / -1; margin-top: 16px; }
+.home .pet-home .pet-act .btn { width: 100%; min-height: 44px; margin: 0; border-radius: var(--r-md); }
+.home .pet-home .pet-more, .home .pet-home .pet-msg { padding-left: 0; }
+.home .pet-home .btn.primary { background: #fff; color: var(--ink); border-color: var(--line); }
+.home .pet-home .btn.primary:hover { color: var(--primary); border-color: var(--primary); background: #fff; }
+.home .pet-home .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.home .pet-streak { color: var(--ink-soft); }
+.home .daily-home + .pet-home { margin-top: 16px; }
+html:not(.authed) .home .pet-home { display: none; }   /* 未登入時小雞在首屏 */
+@media (min-width: 600px) {
+  .home .daily-card { padding: 24px; }
+  html:not(.authed) .home .daily-card { padding-bottom: 12px; }
+  .home .pet-home { padding: 24px; }
+}
+/* 錯題本那一列:有待複習的錯題才出現 */
+.home-review {
+  display: flex; align-items: center; gap: 12px; min-height: 64px; margin-top: 16px; padding: 12px 20px;
+  border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff; color: var(--ink); text-decoration: none;
+  transition: transform .15s var(--ease-out);
+}
+.home-review[hidden] { display: none; }
+.home-review:hover { text-decoration: none; }
+@media (hover: hover) { .home-review:hover { border-color: var(--primary); } }
+.home-review:active { transform: scale(.98); }
+.home-review:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.home-review-art { display: block; flex: none; width: 40px; height: 40px; }
+.home-review-t { flex: 1; min-width: 0; font-family: var(--round); font-size: var(--fs-md); font-weight: 700; }
+.home-review::after { content: '›'; font-size: 22px; line-height: 1; color: var(--ink-soft); }
+@media (min-width: 600px) { .home-review { padding: 12px 24px; } }
+/* 桌機:每日練習在左,小雞卡與錯題本在右(小雞卡由 js/pet-ui.js 插在每日練習卡後面,所以用格線排位置,不另包一層) */
+@media (min-width: 900px) {
+  html.authed .home-grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); grid-auto-rows: min-content; gap: 16px 24px; align-items: start; }
+  html.authed .home-grid > .daily-home { grid-column: 1; grid-row: 1 / span 3; }
+  html.authed .home-grid > :not(.daily-home) { grid-column: 2; margin-top: 0; }
+  html.authed .home .daily-home .daily-list { display: block; }
+  html.authed .home .daily-home .daily-list li + li { border-top: 1px solid var(--line); }
+}
+/* 三組目錄(未登入) */
+.home-dir { margin-top: 8px; }
+.home-dir:last-of-type { margin-bottom: 48px; }
+@media (prefers-reduced-motion: reduce) { .home-review { transition: none; } .home-review:active { transform: none; } }
+
+/* ---------- App 分頁列:圖示改成 canvas(DoodleArt),沒載到時只顯示文字,不留空框 ---------- */
+.app-tab-art { display: none; }
+@media (max-width: 860px), (pointer: coarse) and (max-height: 500px) {
+  html.app-shell .app-tab { color: #5f6770; }
+  html.app-shell .app-tab.on { color: var(--primary); font-weight: 700; }
+  html.app-shell.doodle-ready .app-tab .app-tab-art { display: block; width: 26px; height: 26px; }
+  html.app-shell:not(.doodle-ready) .app-tab span { font-size: 13px; }
+  /* 頁尾最後一行跟分頁列之間留 24,連結底線不貼著分頁列 */
+  html.app-shell.has-tabbar body { padding-bottom: calc(var(--app-tab-h) + env(safe-area-inset-bottom) + 24px); }
+  html.app-shell.has-tabbar.has-pet body { padding-bottom: calc(var(--app-tab-h) + var(--pet-h) + env(safe-area-inset-bottom) + 24px); }
+}
+
+/* ---------- 專心模式(作答中):html.is-quiz ----------
+   - 藏網頁頂欄的導覽與頭像(整個 .topbar-inner)、App 分頁列、走動的小雞;頂欄裡換成作答列 .quiz-bar。
+   - 作答列放在原本的 .topbar 裡(js/ui.js):頂欄是 sticky,App 外殼裡頂欄的安全區照舊。
+   - 付費牆與登入卡(html.app-gate、.pw-mask):App 外殼裡那兩種遮罩本來就讓開頂欄,頂欄疊在遮罩上面(app-gate 時頂欄的 z-index 210
+     照舊,下面專心模式的頂欄規則避開 app-gate,不把它壓回 50),
+     付費牆設 inert 時也跳過 .topbar,所以作答列的關閉鈕一直按得到,學生可以離開;分頁列藏起來了,遮罩改蓋到底。
+     底部固定列(z-index 90)在遮罩(200)下面,被蓋住、按不到。網站模式的遮罩照舊蓋滿整頁。
+   - body::after 是分頁列後面的白底墊片,跟分頁列一起藏;底部的留白改成底部固定列的高度(js 量好寫在 --quiz-foot-h)。
+   - 鍵盤打開(html.app-kb):底部固定列改回內容後面(js 把它放在 main 後面),不蓋住輸入框。 */
+.quiz-bar, .quiz-foot { display: none; }
+html.is-quiz .topbar-inner { display: none; }
+html.is-quiz .topbar { position: sticky; top: 0; }
+html.is-quiz:not(.app-gate) .topbar { z-index: 50; }
+html.is-quiz .quiz-bar {
+  display: flex; align-items: center; gap: 12px; height: 52px; max-width: 760px; margin: 0 auto;
+  padding: 0 max(16px, env(safe-area-inset-right)) 0 max(6px, env(safe-area-inset-left));
+}
+/* 右邊的「交卷」:灰字的文字按鈕,緊接在「3 / 10」後面 */
+.quiz-side:empty { display: none; }
+.quiz-side { display: flex; flex: none; margin-right: -8px; }
+.quiz-bar.has-act .quiz-count { min-width: 0; }
+.quiz-act.btn-text { padding: 0 10px; font-size: var(--fs-sm); color: var(--ink-soft); }
+.quiz-act.btn-text:hover { color: var(--ink); background: var(--bg-soft); }
+.quiz-close {
+  display: inline-flex; align-items: center; justify-content: center; flex: none; width: 44px; height: 44px; padding: 0;
+  border: 0; border-radius: var(--r-md); background: none; color: var(--ink-soft); cursor: pointer;
+  -webkit-tap-highlight-color: transparent; transition: transform .1s;
+}
+.quiz-close:hover { background: var(--bg-soft); color: var(--ink); }
+.quiz-close:active { transform: scale(.94); }
+.quiz-close:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.quiz-track { position: relative; flex: 1; height: 6px; border-radius: var(--r-full); background: var(--line); overflow: hidden; }
+.quiz-fill { position: absolute; inset: 0; border-radius: var(--r-full); background: var(--primary); transform-origin: 0 50%; transform: scaleX(0); transition: transform .3s var(--ease-out); }
+.quiz-count {
+  flex: none; min-width: 52px; text-align: right; font-size: var(--fs-sm); font-weight: 700; color: var(--ink-soft);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+button.quiz-count { min-height: 44px; padding: 0 8px; margin-right: -8px; border: 0; border-radius: var(--r-md); background: none; font-family: inherit; cursor: pointer; }
+button.quiz-count:hover { background: var(--bg-soft); color: var(--ink); }
+button.quiz-count:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+/* 導覽與小雞都收起來 */
+html.is-quiz.app-shell .app-tabbar, html.is-quiz .pet-roam, html.is-quiz div.pet-roam2 { display: none !important; }
+html.is-quiz.app-shell.has-tabbar body::after { display: none; }
+/* 底部留白:分頁列、小雞的留白都換成底部固定列(那幾條選擇器比較長,用 !important 一次蓋過) */
+html.is-quiz body { padding-bottom: env(safe-area-inset-bottom) !important; }
+html.is-quiz.has-quiz-foot body { padding-bottom: var(--quiz-foot-h, calc(76px + env(safe-area-inset-bottom))) !important; }
+html.is-quiz { scroll-padding-top: 60px; scroll-padding-bottom: calc(var(--quiz-foot-h, 76px) + 12px); }
+html.is-quiz.app-shell body[data-require-profile]:not([data-require-profile="on-action"]) .modal-mask,
+html.is-quiz.app-shell .modal-mask.pw-mask { bottom: 0; }
+/* 內容欄最寬 720 置中;作答中不畫題目外框,選項加高好按 */
+html.is-quiz main.container, html.is-quiz main.container-narrow { max-width: 760px; }
+/* 頁尾留著(條款連結每頁都要有),但推到第一屏外面,作答時畫面上只有題目 */
+html.is-quiz main { min-height: calc(100vh - 53px - var(--quiz-foot-h, 76px)); }
+html.is-quiz main .q-block { border: 0; padding: 24px 0 8px; margin-bottom: 0; background: none; }
+html.is-quiz main .q-block .q-text { font-size: var(--fs-lg); line-height: 1.6; margin-bottom: 20px; }
+@media (min-width: 600px) { html.is-quiz main .q-block .q-text { font-size: var(--fs-xl); margin-bottom: 24px; } }
+html.is-quiz main .opts { gap: 10px; }
+html.is-quiz main .opt { min-height: 52px; align-items: center; padding: 12px 16px; font-size: var(--fs-md); border-radius: var(--r-md); }
+html.is-quiz main .opt .letter { margin-top: 0; width: 26px; height: 26px; font-size: var(--fs-sm); }
+html.is-quiz main .opt:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+html.is-quiz main .explain { margin-top: 16px; padding: 14px 16px; border-radius: 0 var(--r-sm) var(--r-sm) 0; font-size: 15px; line-height: 1.7; }
+
+/* 底部固定列 */
+html.is-quiz .quiz-foot {
+  display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+  padding: 12px max(16px, env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  background: #fff; border-top: 1px solid var(--line);
+}
+html.is-quiz .quiz-foot.is-empty { display: none; }
+html.is-quiz.app-kb .quiz-foot { position: static; padding-bottom: 12px; }
+html.is-quiz.app-kb body { padding-bottom: 0 !important; }
+/* 兩種模式同一套對齊:內層最寬 720 置中(跟題目同寬);手機上文字按鈕在左、主按鈕撐滿剩下的寬度,
+   600 以上主按鈕固定 240 靠右,文字按鈕(上一題)或回饋文字靠左 */
+.quiz-foot-row { max-width: 720px; margin: 0 auto; }
+.quiz-foot-in { display: flex; align-items: center; gap: 8px; }
+.quiz-foot-in .btn.primary { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 48px; font-size: var(--fs-md); border-radius: var(--r-md); }
+.quiz-foot-in .btn-text { flex: none; padding: 0 16px; margin-left: -12px; font-size: var(--fs-sm); color: var(--ink-soft); }
+.quiz-foot-in .btn-text:hover { color: var(--ink); background: var(--bg-soft); }
+@media (min-width: 600px) {
+  .quiz-foot-in .btn.primary { flex: none; width: 240px; margin-left: auto; }
+}
+/* 讀屏的播報區(role=status):一直在頁面上,視覺上藏起來 */
+.quiz-live { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+/* 回饋條:淡綠或淡紅底,左邊圖示與字,右邊一顆跟著回饋顏色的實色按鈕(答對綠、答錯紅;仍然只有一顆實色按鈕) */
+.quiz-fb { display: none; }
+html.is-quiz .quiz-foot.is-fb { padding-top: 16px; border-top-color: transparent; animation: ui-rise .22s var(--ease-out); }
+html.is-quiz .quiz-foot.is-ok { background: var(--ok-tint); }
+html.is-quiz .quiz-foot.is-bad { background: var(--bad-tint); }
+.quiz-foot.is-fb .quiz-foot-row { display: flex; flex-direction: column; gap: 12px; }
+.quiz-foot.is-fb .quiz-fb { display: flex; align-items: center; gap: 10px; }
+.quiz-foot.is-ok .btn.primary { background: var(--ok); border-color: var(--ok); }
+.quiz-foot.is-ok .btn.primary:hover { background: var(--ok-ink); border-color: var(--ok-ink); }
+.quiz-foot.is-ok .btn.primary:focus-visible { outline-color: var(--ok-ink); }
+.quiz-foot.is-bad .btn.primary { background: var(--bad); border-color: var(--bad); }
+.quiz-foot.is-bad .btn.primary:hover { background: var(--bad-dark); border-color: var(--bad-dark); }
+.quiz-foot.is-bad .btn.primary:focus-visible { outline-color: var(--bad-ink); }
+.quiz-fb-icon { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 32px; height: 32px; border-radius: var(--r-full); background: #fff; }
+.quiz-fb-icon:empty { display: none; }
+.quiz-fb-text { font-family: var(--round); font-size: var(--fs-lg); font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
+.quiz-foot.is-ok .quiz-fb-icon, .quiz-foot.is-ok .quiz-fb-text { color: var(--ok-ink); }
+.quiz-foot.is-bad .quiz-fb-icon, .quiz-foot.is-bad .quiz-fb-text { color: var(--bad-ink); }
+@media (min-width: 600px) {
+  .quiz-foot.is-fb .quiz-foot-row { flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; }
+  .quiz-foot.is-fb .quiz-fb { flex: 1; min-width: 0; }
+  .quiz-foot.is-fb .quiz-foot-in { flex: none; }
+}
+@keyframes ui-rise { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .quiz-fill, .quiz-close { transition: none; }
+  html.is-quiz .quiz-foot.is-fb { animation: none; }
+}
+@media print {
+  .quiz-bar, .quiz-foot { display: none !important; }
+  html.is-quiz .topbar-inner { display: flex; }
+}
+
+/* ---------- 結算卡 ----------
+   置中直排,最寬 480,上下內距一樣 32(手機 24)。分數是整張卡最大的字(44)。
+   小雞畫布上面約 1/4、下面約 1/16 是空的(給跳躍與影子留的):用負的上下邊距抵掉,看得到的小雞才跟卡片內距對齊。
+   happy 進場跳一次(.is-hop):只動 transform,以腳底為基準,壓扁不超過 0.92。 */
+.result-card {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  max-width: 480px; margin: 24px auto 0; padding: 32px 24px;
+  border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff;
+}
+.result-chick { display: block; flex: none; margin: -41px auto -10px; }   /* 140:畫布高 163 */
+@media (min-width: 900px) { .result-card:not(.is-compact) .result-chick { margin: -47px auto -11px; } }   /* 160:畫布高 187 */
+canvas.is-hop { transform-origin: 50% 100%; animation: ui-hop .6s var(--ease-out) both; }
+@keyframes ui-hop {
+  0% { transform: none; }
+  16% { transform: scale(1.08, .92); }
+  42% { transform: translateY(-22px) scale(.96, 1.06); }
+  58% { transform: translateY(-26px) scale(1, 1); }
+  82% { transform: translateY(0) scale(1.06, .94); }
+  100% { transform: none; }
+}
+.result-kicker { margin-top: 12px; font-size: var(--fs-sm); font-weight: 700; color: var(--ink-soft); }
+.result-card .result-score { margin: 2px 0 0; font-size: var(--fs-md); font-family: var(--round); font-weight: 700; line-height: 1.15; color: var(--ink); font-variant-numeric: tabular-nums; }
+.result-score:focus { outline: none; }
+.result-score b { font-size: var(--fs-3xl); font-weight: 900; }
+.result-of, .result-unit { font-size: var(--fs-xl); color: var(--ink-soft); }
+.result-flag {
+  display: inline-block; margin-left: 4px; padding: 2px 10px; vertical-align: 10px;
+  border-radius: var(--r-full); background: var(--marker); font-size: var(--fs-xs); font-weight: 700; color: var(--ink); line-height: 1.6;
+}
+.result-stats { display: flex; justify-content: center; margin: 20px 0 0; padding: 0; width: 100%; }
+.result-stat { display: flex; flex-direction: column-reverse; flex: 1; max-width: 140px; padding: 0 12px; }
+.result-stat + .result-stat { border-left: 1px solid var(--line); }
+.result-stat dd { margin: 0; font-family: var(--round); font-size: var(--fs-xl); font-weight: 700; color: var(--ink); line-height: 1.3; font-variant-numeric: tabular-nums; }
+.result-stat dt { font-size: var(--fs-xs); color: var(--ink-soft); }
+/* 點心列:掛勾寫的那行字放在這裡。
+   - 拿到點心(食物圖畫上了,.has-food):淡黃膠囊高 48,左邊食物 56 冒出膠囊上下緣;分數到膠囊 24、膠囊到按鈕 24。
+     膠囊用淡底(不用螢光筆黃),面積與顏色都不搶分數
+   - 只有字(今天的點心拿滿了、存滿了等):14 灰字一行,沒有底色,上下各 8;不像在發獎勵
+   - 沒拿到、也沒有字時不佔高度 */
+.result-reward { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 0; }
+.result-reward:not(.has-food):has(> .pet-earn:not(:empty)), .result-reward:not(.has-food):has(> .pet-earn.is-wait),
+.result-reward:not(.has-food):has(> .pet-earn.is-held) {
+  margin-top: 8px; padding: 8px 0;
+}
+.result-reward > .pet-earn { margin: 0; min-height: 0; font-size: var(--fs-sm); font-weight: 400; line-height: 1.5; color: var(--ink-soft); }
+.result-reward.has-food {
+  min-height: 48px; margin-top: 24px; padding: 0 20px 0 6px; border-radius: var(--r-full); background: var(--snack-tint);
+}
+.result-reward.has-food > .pet-earn { font-family: var(--round); font-size: var(--fs-md); font-weight: 700; color: var(--ink); }
+.result-food { display: block; flex: none; margin: -12px 0 -4px; }
+.result-reward:not(.has-food) > .result-food { display: none; }   /* 食物圖還沒畫上時不佔位 */
+.result-actions { display: grid; justify-items: center; gap: 8px; width: 100%; margin-top: 28px; }
+.result-reward.has-food + .result-actions { margin-top: 24px; }
+.result-go {
+  display: flex; align-items: center; justify-content: center; width: 100%; max-width: 320px;
+  min-height: 48px; font-size: var(--fs-md); border-radius: var(--r-md); text-decoration: none;
+}
+a.result-go:hover { text-decoration: none; }
+.result-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 8px; }
+/* 各練習頁原本也有 .result-note(14 灰、下邊距 18):這裡只管結算卡裡的那一行 */
+.result-card .result-note { margin: 12px 0 0; font-size: var(--fs-xs); color: var(--ink-soft); }
+/* 緊湊版:遊戲浮層裡用。小雞縮成 96,其他照一般版(分數 44、主按鈕整寬最寬 320);高度跟著內容走。
+   最寬 400 置中:桌機的遊戲區很寬,卡片不跟著拉寬(一般版最寬 480,緊湊版比它窄) */
+.result-card.is-compact { width: 100%; max-width: 400px; margin: auto; padding: 24px; border: 0; background: none; }   /* 外框是遊戲區本身 */
+.result-card.is-compact .result-chick { margin: -28px auto -7px; }   /* 96:畫布高 112 */
+.result-card.is-compact .result-kicker { margin-top: 8px; }
+.result-card.is-compact .result-actions { margin-top: 24px; }
+@media (max-width: 600px) {
+  .result-card { margin-top: 16px; padding: 24px 16px; }
+}
+@media (prefers-reduced-motion: reduce) { canvas.is-hop { animation: none; } }
+@media print {
+  .result-chick, .result-food, .result-actions { display: none; }
+  .result-card { border: 0; }
+}
+
+/* 逐題收合:跟結算卡同寬(480)、同一條中線 */
+.result-detail { max-width: 480px; margin: 32px auto 48px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.result-detail-sum {
+  display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 4px;
+  font-family: var(--round); font-size: var(--fs-md); font-weight: 700; color: var(--ink);
+  list-style: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.result-detail-sum::-webkit-details-marker { display: none; }
+.result-detail-sum::after {
+  content: ''; flex: none; width: 9px; height: 9px; margin: 0 4px 4px 0;
+  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg);
+  transition: transform .2s var(--ease-out);
+}
+.result-detail[open] > .result-detail-sum::after { transform: translateY(3px) rotate(225deg); }
+.result-detail-t { flex: 1; min-width: 0; }
+.result-detail-bad { font-size: var(--fs-sm); color: var(--bad-ink); }
+.result-detail-sum:hover { color: var(--primary); }
+.result-detail-sum:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: var(--r-sm); }
+.result-detail-body { padding: 4px 0 16px; }
+@media (prefers-reduced-motion: reduce) { .result-detail-sum::after { transition: none; } }
+@media print { .result-detail-body { display: block; } }
+
+/* ---------- 空狀態:小雞一張、一行字、一個出口 ----------
+   小雞畫布 136(睡覺的小雞看得到的部分約 92 寬);畫布上方 1/3 是空的,往上疊。圖到字 16、字到按鈕 20 */
+.ui-empty { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 40px 16px 64px; }
+.ui-empty-art { display: block; margin: -44px 0 6px; }
+.ui-empty-text { margin: 0; font-size: var(--fs-md); color: var(--ink-soft); }
+.ui-empty-go { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 20px; padding: 0 24px; border-radius: var(--r-md); text-decoration: none; }
+.ui-empty-go:hover { text-decoration: none; }
+
+/* ---------- 確認與輸入視窗(沿用 .modal-mask、.modal) ---------- */
+/* 強制登入頁的遮罩規則會讓開頂欄與分頁列;這兩個視窗一律蓋滿整頁,疊在所有東西上面 */
+.modal-mask.ui-mask { inset: 0 !important; z-index: 220; align-items: center; animation: ui-fade .16s ease-out; }
+.ui-dialog { position: relative; max-width: 400px; padding: 24px 24px 16px; border-radius: var(--r-lg); animation: ui-rise .2s var(--ease-out); }
+.ui-dialog-h { font-size: var(--fs-lg); line-height: 1.5; color: var(--ink); }
+.ui-dialog-body { margin-top: 8px; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-soft); }
+.ui-dialog-field { margin-top: 16px; }
+.ui-dialog-input { display: block; width: 100%; min-height: 44px; font-size: var(--fs-md); border-radius: var(--r-sm); }
+.ui-dialog-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-tint); }
+.ui-dialog-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 24px; }
+.ui-dialog-actions .btn.primary { min-height: 44px; min-width: 88px; padding: 0 20px; font-size: var(--fs-md); border-radius: var(--r-md); }
+.ui-dialog-actions .btn-text { color: var(--ink-soft); }
+.ui-dialog-actions .btn-text:hover { color: var(--ink); background: var(--bg-soft); }
+@keyframes ui-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .modal-mask.ui-mask, .ui-dialog { animation: none; } }

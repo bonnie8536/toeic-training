@@ -111,6 +111,7 @@ function openVocab(pid, local, opt) {
     TOEIC: { articles: opt.reading ? [opt.reading] : [], phrases: [] },
   };
   ctx.window = ctx;
+  ctx.UI = require('./fake_ui')(ctx.document);   // js/ui.js 的替身(單字頁的確認視窗、空狀態、專心模式、結算卡)
   ctx.addEventListener = (ev, fn) => { (winListeners[ev] = winListeners[ev] || []).push(fn); };
   ctx.removeEventListener = () => {};
   ctx.CLOUD = {
@@ -330,14 +331,14 @@ const legacy = () => [{ id: 'b1', name: '第一課', words: [{ en: 'apple', zh: 
       const b1 = home.banks()[0];
       out.push(['E', b1.name === '期末考' && b1._nt === merged[0]._nt, '存的 ' + b1.name]);
     }
-    /* D. 新增題庫:名稱沒填按「加入單字」照舊存成「未命名題庫」 */
+    /* D. 新增題庫:名稱沒填按「加入單字」照舊存成「未命名單字本」 */
     {
       const local = makeStorage();
       const home = openVocab(CID, local);
-      button(home.root, '＋ 新增題庫').click();
+      button(home.root, '新增單字本').click();
       home.root.all().find(e => e.tagName === 'TEXTAREA').value = 'grape 葡萄'; button(home.root, '加入單字').click();
       const b = home.banks();
-      out.push(['D', b.length === 1 && b[0].name === '未命名題庫' && b[0].words.length === 1, J(b.map(x => x.name))]);
+      out.push(['D', b.length === 1 && b[0].name === '未命名單字本' && b[0].words.length === 1, J(b.map(x => x.name))]);
     }
     check('編輯頁開著時別台改了題庫名稱:名稱欄位跟著更新,勾選、刪字、加字、按完成都不會把別台的改名蓋回舊名稱;學生自己打的名稱照樣存',
       out.every(x => x[1]), out.map(x => x[0] + (x[1] ? ' ok' : ' 壞:' + x[2])).join(' / '));

@@ -143,6 +143,7 @@ function openVocab(o) {
     TOEIC: { articles: ARTICLES, phrases: PHRASES },
   };
   ctx.window = ctx;
+  ctx.UI = require('./fake_ui')(ctx.document);   // js/ui.js 的替身(新版 vocab.js 的專心模式、結算卡、確認視窗;舊版 vocab.js 用不到)
   ctx.addEventListener = (ev, fn) => { (winListeners[ev] = winListeners[ev] || []).push(fn); };
   ctx.removeEventListener = () => {};
   ctx.CLOUD = { enabled: true, push() {}, syncKey: () => new Promise(() => {}) };
@@ -175,7 +176,17 @@ function openVocab(o) {
     sumEl: () => root.querySelector('.vg-pick-sum'),
     rowCount: m => textOf(pg.box(m).closest('.vg-pick-row').querySelector('.vg-pick-n')),
     note: () => textOf(root.querySelector('.vg-pick-note')),
-    starts: () => { const g = root.querySelector('.vg-games'); return g ? g.all().filter(e => e.tagName === 'BUTTON' && textOf(e) === '開始') : []; },
+    starts: () => {
+      const g = root.querySelector('.vg-games');
+      if (!g) return [];
+      const tiles = g.children.filter(c => c instanceof El && c.classList.contains('vg-tile'));
+      if (!tiles.length) return g.all().filter(e => e.tagName === 'BUTTON' && textOf(e) === '開始');   // 舊版頁面:每張卡一顆「開始」
+      return tiles.map(t => ({
+        get disabled() { return t.classList.contains('is-blocked'); },
+        hasAttribute: a => (a === 'data-gate' ? root.querySelector('.vg-go').hasAttribute('data-gate') : t.classList.contains('is-blocked')),
+        click() { t.click(); root.querySelector('.vg-go').click(); },
+      }));
+    },
     cards: () => { const g = root.querySelector('.vg-games'); return g ? g.children.filter(c => c instanceof El).map(textOf) : []; },
   };
   pg.toggle = m => { const cb = pg.box(m); cb.checked = !cb.checked; cb.fire('change'); };
@@ -228,7 +239,7 @@ function playToast(pg, dict) {
     const opt = pg.root.all().find(e => e.classList.contains('opt') && textOf(e.children[1]) === dict[stem]);
     if (!opt) break;
     opt.click();
-    const next = buttons(pg.root, '下一題 →')[0] || buttons(pg.root, '看成績')[0];
+    const next = buttons(pg.root, '下一題')[0] || buttons(pg.root, '看成績')[0];
     if (!next) break;
     next.click();
   }
@@ -301,7 +312,7 @@ test('勾 2 個以上:modes 照清單順序(先勾 b2 再勾 b1 也一樣),mode 
   const ok = J(v) === J({ mode: 'bank:b1', level: '全部', modes: ['phrase', 'bank:b1', 'bank:b2'] }) && J(noBank) === J({ mode: 'word', level: '全部', modes: ['word', 'phrase'] });
   return { ok, detail: pg.raw('vgame_src') + ' ' + J(v) };
 });
-test('全部取消:不存、寫「至少勾一個。」、四個「開始」都不能按、卡片寫「先在上面勾要練的字」;再勾一個就恢復', () => {
+test('全部取消:不存、寫「至少勾一個」、四塊玩法磚都不能玩、磚上寫「先在上面勾要練的字」;再勾一個就恢復', () => {
   const pg = openVocab({ banks: [B1()], src: { mode: 'word', level: '全部', modes: ['word', 'phrase'] } });
   pg.toggle('word');
   const raw = pg.raw('vgame_src');   // 剩片語(存了);再取消片語 = 0 個,不存
@@ -309,7 +320,7 @@ test('全部取消:不存、寫「至少勾一個。」、四個「開始」都�
   const zero = { saved: pg.raw('vgame_src') === raw, note: pg.note(), sum: pg.summary(), off: pg.starts().map(isDisabled), why: pg.cards().every(c => /先在上面勾要練的字/.test(c)) };
   pg.toggle('phrase');
   const back = { off: pg.starts().map(isDisabled), saved: pg.raw('vgame_src') };
-  const ok = zero.saved && /至少勾一個。/.test(zero.note) && /還沒勾/.test(zero.sum) && zero.off.length === 4 && zero.off.every(Boolean) && zero.why
+  const ok = zero.saved && /至少勾一個/.test(zero.note) && /還沒勾/.test(zero.sum) && zero.off.length === 4 && zero.off.every(Boolean) && zero.why
     && back.off.every(x => !x) && back.saved === '{"mode":"phrase","level":"全部"}';
   return { ok, detail: J({ zero, back }) };
 });
@@ -439,7 +450,7 @@ test('單一來源的字跟以前一樣:文章單字照文章順序、片語照�
   const ph = pg.VS.pool(['phrase'], '全部').pool.map(x => x.answer);
   const b5 = pg.VS.pool(['bank:b5'], '全部').pool.map(x => x.answer + ':' + x.zh);
   const ok = J(w) === J(ARTICLES[0].vocab.map(v => v.word)) && J(ph) === J(PHRASES.map(p => p.phrase)) && J(b5) === J(['apple:蘋果', 'apple:紅蘋果', 'plum:李子'])
-    && pg.VS.pool(['word'], '全部').name === '單字' && pg.VS.pool(['word'], '高級').name === '單字 · 高級' && pg.VS.pool(['phrase'], '全部').name === '片語' && pg.VS.pool(['bank:b5'], '全部').name === '題庫：重複的字';
+    && pg.VS.pool(['word'], '全部').name === '單字' && pg.VS.pool(['word'], '高級').name === '單字 · 高級' && pg.VS.pool(['phrase'], '全部').name === '片語' && pg.VS.pool(['bank:b5'], '全部').name === '單字本：重複的字';
   return { ok, detail: J({ w, ph, b5 }) };
 });
 test('門檻:掉落消除有內建字庫要 8 個、全是題庫要 3 個,翻牌 3、吐司 4、選擇題 4;不夠的「開始」不能按,卡片寫要幾個', () => {
@@ -447,13 +458,13 @@ test('門檻:掉落消除有內建字庫要 8 個、全是題庫要 3 個,翻牌
   const out = [];
   /* 文章單字(高級)3 + 題庫 3 = 6:掉落不能按(要 8),其他都能 */
   let r = run([B1()], { mode: 'word', level: '高級', modes: ['word', 'bank:b1'] });
-  out.push(['內建+題庫 6', J(r.off) === J([true, false, false, false]) && /字不夠，要 8 個以上（現在 6 個）/.test(r.cards[0])]);
+  out.push(['內建+題庫 6', J(r.off) === J([true, false, false, false]) && /字不夠 · 要 8 個以上/.test(r.cards[0])]);
   /* 題庫 1 + 題庫 2 = 3:掉落、翻牌剛好能按,吐司、選擇題不能 */
   r = run([BA(), BB()], { mode: 'bank:bA', level: '全部', modes: ['bank:bA', 'bank:bB'] });
-  out.push(['兩個題庫 3', J(r.off) === J([false, false, true, true]) && /字不夠，要 4 個以上（現在 3 個）/.test(r.cards[2]) && /字不夠，要 4 個以上（現在 3 個）/.test(r.cards[3]) && /共 3 個字/.test(r.note)]);
+  out.push(['兩個題庫 3', J(r.off) === J([false, false, true, true]) && /字不夠 · 要 4 個以上/.test(r.cards[2]) && /字不夠 · 要 4 個以上/.test(r.cards[3]) && /共 3 個字/.test(r.note)]);
   /* 題庫 1 + 題庫 1 = 2:全部不能,清單下面說明 */
   r = run([BA(), BC()], { mode: 'bank:bA', level: '全部', modes: ['bank:bA', 'bank:bC'] });
-  out.push(['兩個題庫 2', r.off.every(Boolean) && /勾的這些加起來只有 2 個字，至少要 3 個才能玩。/.test(r.note) && /要 3 個以上（現在 2 個）/.test(r.cards[1])]);
+  out.push(['兩個題庫 2', r.off.every(Boolean) && /只有 2 個字 · 至少要 3 個才能玩/.test(r.note) && /要 3 個以上/.test(r.cards[1])]);
   /* 題庫 3 + 題庫 1 = 4:四個都能 */
   r = run([B1(), BA()], { mode: 'bank:b1', level: '全部', modes: ['bank:b1', 'bank:bA'] });
   out.push(['兩個題庫 4', r.off.every(x => !x)]);
@@ -484,9 +495,9 @@ test('掉落消除(題庫+文章單字)中翻英、英翻中通關:最佳、通�
   pg.starts()[0].click();
   const title = textOf(pg.root.querySelector('h1'));
   const shown = playFall(pg, dict);
-  const clearText = textOf(pg.root.querySelector('.clear-count'));
+  const clearText = textOf(pg.root.querySelector('.result-note'));   // 結算卡最下面一行:這個組合已通關 N 次
   buttons(pg.root, '回單字訓練')[0].click();
-  const dirSel = pg.root.querySelector('.vg-games').all().find(e => e.tagName === 'SELECT' && e.options.some(o => o._value === 'e2z') && e.options[0]._value === 'z2e');
+  const dirSel = pg.root.querySelector('.vg-play').all().find(e => e.tagName === 'SELECT' && e.options.some(o => o._value === 'e2z') && e.options[0]._value === 'z2e');
   dirSel.value = 'e2z';
   pg.starts()[0].click();
   const shown2 = playFall(pg, dict);
@@ -497,18 +508,18 @@ test('掉落消除(題庫+文章單字)中翻英、英翻中通關:最佳、通�
     && best['bank:b1+word'] > 0 && best['bank:b1+word:e2z'] > 0 && best.word === 3 && best['bank:b1'] === 4
     && clr['bank:b1+word'].n === 1 && clr['bank:b1+word:e2z'].n === 1 && done['bank:b1+word'].length === 13 && done['bank:b1+word:e2z'].length === 13
     && /這個組合已通關 1 次/.test(clearText)
-    && new RegExp('最佳 中翻英 ' + best['bank:b1+word'] + ' · 英翻中 ' + best['bank:b1+word:e2z']).test(pg.cards()[0]) && /通關 2 次/.test(pg.cards()[0]);
+    && new RegExp('最佳 中翻英 ' + best['bank:b1+word'] + ' · 英翻中 ' + best['bank:b1+word:e2z']).test(pg.cards()[0]);   // 通關次數不在磚上了,上面 clr 已經對過
   return { ok, detail: J({ title, n: shown.length, best, clr: Object.keys(clr), clearText, card: pg.cards()[0] }) };
 });
 test('翻牌配對(片語+文章單字):紀錄寫在 phrase+word:8;首頁顯示它,不會抓到 phrase:8', () => {
   const pg = openVocab({ banks: [B1()], src: { mode: 'word', level: '全部', modes: ['word', 'phrase'] }, ls: { vgame_pairs_best: { 'phrase:8': { moves: 99, secs: 99 } } } });
   pg.starts()[1].click();
   playPairs(pg, dictOf(pg, ['word', 'phrase']));
-  const report = textOf(pg.root.querySelector('.report-head'));
+  const report = textOf(pg.root.querySelector('.result-card'));
   buttons(pg.root, '回單字訓練')[0].click();
   const pb = pg.get('vgame_pairs_best');
   const mine = pb['phrase+word:8'];
-  const ok = /完成/.test(report) && !!mine && J(pb['phrase:8']) === J({ moves: 99, secs: 99 }) && new RegExp('最佳 ' + mine.moves + ' 步').test(pg.cards()[1]) && !/99 步/.test(pg.cards()[1]);
+  const ok = /\d+ 步/.test(report) && !!mine && J(pb['phrase:8']) === J({ moves: 99, secs: 99 }) && new RegExp('最佳 ' + mine.moves + ' 步').test(pg.cards()[1]) && !/99 步/.test(pg.cards()[1]);
   return { ok, detail: J({ report, pb, card: pg.cards()[1] }) };
 });
 test('記憶吐司(兩個題庫):烤的字來自兩個題庫,紀錄寫在 bank:b1+bank:b2', () => {
@@ -598,16 +609,16 @@ test('再挑戰時別的分頁刪了其中一個題庫:照剩下的玩;剩的不
   pg.starts()[0].click();
   playFall(pg, dictOf(pg, ['bank:b1', 'bank:b2']));
   pg.set('vgame_banks', [B1()]);
-  buttons(pg.root, '再挑戰一關')[0].click();
+  buttons(pg.root, '再做一次')[0].click();
   const title = textOf(pg.root.querySelector('h1'));
   const shown = playFall(pg, dictOf(pg, ['bank:b1']));
-  const singleOk = /題庫：第3課/.test(title) && shown.length === 3 && pg.get('vgame_clear')['bank:b1'].n === 1;
+  const singleOk = /單字本：第3課/.test(title) && shown.length === 3 && pg.get('vgame_clear')['bank:b1'].n === 1;
   /* 吐司:一個字的題庫 + 第3課 = 4,刪掉第3課再烤一盤 → 剩 1 個字,跳說明回首頁 */
   const p2 = openVocab({ banks: [BA(), B1()], src: { mode: 'bank:bA', level: '全部', modes: ['bank:bA', 'bank:b1'] } });
   p2.starts()[2].click();
   playToast(p2, dictOf(p2, ['bank:bA', 'bank:b1']));
   p2.set('vgame_banks', [BA()]);
-  buttons(p2.root, '再烤一盤')[0].click();
+  buttons(p2.root, '再做一次')[0].click();
   const home = !!p2.root.querySelector('[data-vview="home"]');
   return { ok: singleOk && home && p2.alerts.length === 1, detail: J({ title, n: shown.length, home, alerts: p2.alerts }) };
 });
@@ -622,7 +633,7 @@ test('題庫卡片的「只練這個」:只勾這一個,存的跟以前「用這
   const bankCard = pg.root.all().filter(e => e.classList.contains('p-stats')).map(textOf).find(t => /^5 個字/.test(t));
   const small = pg.root.all().filter(e => e.classList.contains('p-stats')).map(textOf).find(t => /^2 個字/.test(t));
   const ok = J(off) === J([false, true, false]) && pg.raw('vgame_src') === '{"mode":"bank:b2","level":"中級"}' && J(pg.checked()) === J(['bank:b2'])
-    && pg.scrolls.length === 1 && bankCard === '5 個字 · 練 3 個' && small === '2 個字 · 練 2 個（要 3 個以上才能單獨練）' && /文章：遠距工作/.test(pg.summary())
+    && pg.scrolls.length === 1 && bankCard === '5 個字 · 練 3 個' && small === '2 個字 · 練 2 個 · 要 3 個以上才能單獨練' && /文章：遠距工作/.test(pg.summary())
     && El.focused === pg.sumEl() && !!El.focusOpts && El.focusOpts.preventScroll === true;
   return { ok, detail: J({ off, src: pg.raw('vgame_src'), checked: pg.checked(), bankCard, small, focus: El.focused === pg.sumEl(), opts: El.focusOpts }) };
 });

@@ -499,7 +499,7 @@ T['首頁卡片與內頁說明寫的是真的、而且一致(2026-11-13 審查�
   });
   /* 單字頁、聽力頁的說明(搜尋結果、分享預覽)要列出頁上每一種玩法;以前首頁卡片加了記憶吐司、跟讀,內頁說明沒跟上。
      首頁卡片改成圖示磚之後只寫數字(「4 種遊戲」「4 種練習」):數字要跟頁上的玩法數一樣 */
-  const games = Array.from(read('js/vocab.js').matchAll(/gameCard\('\w+', '([^']+)'/g)).map((m) => m[1].replace(/^單字/, ''));
+  const games = Array.from(read('js/vocab.js').matchAll(/\{ k: '\w+', name: '([^']+)'/g)).map((m) => m[1].replace(/^單字/, ''));
   const ears = Array.from(read('js/ear.js').matchAll(/\b\w+: \{ key: 'ear_\w+', title: '([^']+)'/g)).map((m) => m[1].replace(/^句子(?=跟讀)/, ''));
   assert.ok(games.length >= 4 && ears.length >= 4, '找不到單字玩法或聽力基本功的名稱:' + games + ' / ' + ears);
   [['vocab.html', games], ['listening.html', ears]].forEach(([f, names]) => {

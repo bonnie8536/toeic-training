@@ -329,9 +329,10 @@ const CONTENT = [
     free: [{ sel: '.reader-toolbar .btn', i: 0, then: '.article-body.bilingual' }] },
   { url: 'dialogue.html', see: 'a.dlg-card', free: [{ sel: '.drill-filters .chip', i: 1, then: '.drill-filters .chip.on' }] },
   { url: 'dialogue.html?id=dlg-01', see: '.dlg-bubble', free: [{ sel: '.dlg-bubble', thenText: ['.vocab-progress', /聽過 1 \//] }, { sel: '.vw.dlg-sl', then: '.vocab-pop' }] },
-  { url: 'vocab.html', see: '.vg-games .part-card', act: [{ sel: '.vg-games .btn.primary' }, { sel: '.vg-games .btn.primary', i: 3 }, { sel: '.exercise-head .btn' }],
-    free: [{ sel: '.hist-tabs .hist-tab', i: 1, then: '.hist-tabs .hist-tab.on' }], pick: true },
-  { url: 'vocab.html#phrase', see: '.phrase-table', act: [{ sel: '.part-card:has(.phrase-table) .btn.primary' }], free: [{ sel: '.part-card .pop-mini', thenText: ['.part-card .pop-mini', /收起/] }] },
+  { url: 'vocab.html', see: '.vg-games .vg-tile', act: [{ sel: '.vg-play .btn.primary' }, { sel: '.exercise-head .btn' }],
+    free: [{ sel: '.vg-games .vg-tile', i: 1, then: '.vg-games .vg-tile.on' }, { sel: '.vg-phrase-tile', then: '.phrase-table' }], pick: true },
+  { url: 'vocab.html', see: '.vg-games .vg-tile', pre: [{ sel: '.vg-games .vg-tile', i: 3 }], act: [{ sel: '.vg-play .btn.primary' }] },   // 先選第四塊磚(單字選擇題),再按「開始」
+  { url: 'vocab.html#phrase', see: '.phrase-table', act: [{ sel: '.part-card:has(.phrase-table) .btn:not(.pop-mini)' }], free: [{ sel: '.part-card .pop-mini', thenText: ['.part-card .pop-mini', /收起/] }] },
   { url: 'listening.html', see: '.part-card', act: [{ sel: 'a.btn.primary[href^="listening.html?sec="]' }] },
   { url: 'listening.html?sec=n', see: '.player-btn', act: [{ sel: '.opts .opt' }], free: [{ sel: '.player-btn', thenText: ['.player-note', /已播 1 次|音檔|找不到/] }] },
   { url: 'listening.html?sec=mp', see: '.pair-btn', act: [{ sel: '.pair-btn' }] },
@@ -362,6 +363,7 @@ async function guestPage(B, mode, pg) {
     const who = await s.eval("(document.querySelector('.profile-btn') || {}).textContent || ''");
     if (st0.mask || st0.inert || st0.gate) bad.push('一打開就有視窗或 inert ' + J(st0));
     if (!seen) bad.push('內容沒畫出來:' + pg.see);
+    for (const a of pg.pre || []) await click(s, a.sel, a.i);   // 作答前要先做的選擇(選磚)
     if (!/登入|選擇學生/.test(who)) bad.push('頂欄不是訪客:' + who);
     for (const a of pg.act || []) {
       const label = a.sel + '#' + (a.i || 0);
@@ -1438,6 +1440,8 @@ T['模擬考考到一半別的分頁登出、換帳號、登回來還沒灌好,�
    被刪掉的資料夾、記帳)。要的是:跳「重新整理」卡,輸入框的字留著、勾選不變、字沒刪,什麼都不寫;照常的時候跟以前一樣 */
 const VOCAB_BANK = [{ id: 'b_old', name: '舊題庫', words: [{ en: 'apple', zh: '蘋果', on: true }, { en: 'pear', zh: '梨', on: true }] }];
 const BREAK_ACCOUNT = { '登出': OTHER_TAB_LOGOUT, '還沒灌過': `localStorage.setItem(${J('tr_cloud_unhydrated_' + UID)}, '1'); true` };
+/* 單字頁:先選第 i 塊玩法磚(0 掉落消除、1 翻牌配對、2 記憶吐司、3 單字選擇題),再按唯一的主按鈕「開始」 */
+async function pickGame(s, i) { await click(s, '.vg-games .vg-tile', i); await click(s, '.vg-play .btn.primary'); }
 async function vocabOpen(B, hash) {
   const ls = { [SB]: J({ access_token: 'x', user: USER }), ['tr_u' + CPID + '_vgame_banks']: J(VOCAB_BANK) };
   const rows = J([{ k: 'vgame_banks', v: VOCAB_BANK, updated_at: new Date(Date.now() - 864e5).toISOString() }]);
@@ -1483,7 +1487,7 @@ async function reload(s) {
 T['單字頁「練哪些字」勾選清單:勾兩個題庫存起來、重新整理還在、遊戲的字來自兩個題庫;全部取消不存、開始不能按;手機寬好點;沒登入只記在這一頁'] = async (B) => {
   const r = {};
   const SRCK = 'tr_u' + CPID + '_vgame_src';
-  const STARTS = "[...document.querySelectorAll('.vg-games .btn.primary')].map((b) => b.disabled)";
+  const STARTS = "[...document.querySelectorAll('.vg-games .vg-tile')].map((b) => b.classList.contains('is-blocked'))";   // 四塊玩法磚能不能玩(不能玩的磚不給按「開始」)
   const SUM = "document.querySelector('.vg-pick > summary').textContent";
   const noPet = (keys) => keys.filter((k) => !/_pet$/.test(k));
   let s = await pickOpen(B);
@@ -1499,7 +1503,7 @@ T['單字頁「練哪些字」勾選清單:勾兩個題庫存起來、重新整�
     await sleep(900);   // 0.8 秒後上傳雲端
     await reload(s);
     r.reload = { checked: await s.eval(VG_PICKED), open: await s.eval("document.querySelector('.vg-pick').open"), sum: await s.eval(SUM) };
-    await click(s, '.vg-games .btn.primary', 2);   // 記憶吐司
+    await pickGame(s, 2);   // 記憶吐司
     r.toast = await s.eval("[...document.querySelectorAll('.toast-card b')].map((e) => e.textContent).sort().join(',')");
     await reload(s);
     await click(s, '.vg-pick > summary');
@@ -1508,13 +1512,13 @@ T['單字頁「練哪些字」勾選清單:勾兩個題庫存起來、重新整�
     const before = await s.eval(LS);
     await click(s, '.vg-pick-row .vg-pick-name', 3);
     r.zero = { checked: await s.eval(VG_PICKED), note: await s.eval("document.querySelector('.vg-pick-note').textContent"), starts: await s.eval(STARTS), sum: await s.eval(SUM),
-      cards: await s.eval("[...document.querySelectorAll('.vg-games .part-card')].every((c) => /先在上面勾要練的字/.test(c.textContent))") };
-    await click(s, '.vg-games .btn.primary', 0);   // 不能按:不跳視窗、不開始
+      cards: await s.eval("[...document.querySelectorAll('.vg-games .vg-tile')].every((c) => /先在上面勾要練的字/.test(c.textContent))") };
+    await click(s, '.vg-play .btn.primary');   // 不能按:不跳視窗、不開始
     r.zero.mask = (await state(s)).mask;
     r.zero.home = await s.eval("!!document.querySelector('[data-vview=home]')");
     r.zero.wrote = noPet(lsDiff(before, await s.eval(LS)));
     await click(s, '.vg-pick-row .vg-pick-name', 2);
-    r.one = { starts: await s.eval(STARTS), src: JSON.parse(await s.eval(LS))[SRCK], card: await s.eval("document.querySelectorAll('.vg-games .part-card')[2].textContent") };
+    r.one = { starts: await s.eval(STARTS), src: JSON.parse(await s.eval(LS))[SRCK], card: await s.eval("document.querySelectorAll('.vg-games .vg-tile')[2].textContent") };
   } finally { await s.close(); }
   for (const width of [375, 320]) {
     s = await pickOpen(B, { size: { width, height: 760 } });
@@ -1541,9 +1545,9 @@ T['單字頁「練哪些字」勾選清單:勾兩個題庫存起來、重新整�
   const ok = r.first === 'word' && r.checked === 'bank:bA,bank:bB' && r.src === J({ mode: 'bank:bA', level: '全部', modes: ['bank:bA', 'bank:bB'] }) && /甲題庫、乙題庫 · 2 個 · 共 6 個字/.test(r.sum)
     && r.reload.checked === 'bank:bA,bank:bB' && !r.reload.open && /甲題庫、乙題庫/.test(r.reload.sum)
     && r.toast === 'apple,grape,kiwi,lemon,mango,pear'
-    && r.zero.checked === '' && /至少勾一個。/.test(r.zero.note) && r.zero.starts.length === 4 && r.zero.starts.every(Boolean) && /還沒勾/.test(r.zero.sum) && r.zero.cards
+    && r.zero.checked === '' && /至少勾一個/.test(r.zero.note) && r.zero.starts.length === 4 && r.zero.starts.every(Boolean) && /還沒勾/.test(r.zero.sum) && r.zero.cards
     && !r.zero.mask && r.zero.home && !r.zero.wrote.length
-    && J(r.one.starts) === J([false, false, true, true]) && r.one.src === '{"mode":"bank:bA","level":"全部"}' && /字不夠，要 4 個以上（現在 3 個）/.test(r.one.card)
+    && J(r.one.starts) === J([false, false, true, true]) && r.one.src === '{"mode":"bank:bA","level":"全部"}' && /字不夠 · 要 4 個以上/.test(r.one.card)
     && mobileOk(r.w375) && mobileOk(r.w320)
     && r.guest.checked === 'word,phrase' && !r.guest.mask && !r.guest.wrote.length && r.guest.after === 'word';
   return { ok, detail: J(r) };
@@ -1589,7 +1593,7 @@ T['單字頁「練哪些字」:手機上長的題庫名稱整個看得到、框�
         n2: row('bw2').querySelector('.vg-pick-n').textContent,
         card2: [...document.querySelectorAll('.part-card')].map((c) => c.textContent).filter((t) => t.indexOf('第 2 週') > -1 && t.indexOf('只練這個') > -1).join('') };
     })()`);
-    await pressText(s, '.part-card .btn.primary', '只練這個');
+    await pressText(s, '.part-card .btn', '只練這個');
     await sleep(900);
     r.only = await s.eval(`({ active: document.activeElement ? document.activeElement.tagName : '', inPick: !!document.activeElement.closest('.vg-pick'),
       y: Math.round(scrollY), picked: ${VG_PICKED} })`);
@@ -1670,7 +1674,7 @@ T['單字頁:題庫編輯器的加入單字、勾選、刪字、改名,片語特
     const r = { how };
     let s = await vocabOpen(B);
     try {
-      await pressText(s, 'button', '新增題庫');
+      await pressText(s, 'button', '新增單字本');
       r.editor = await s.eval(`!!document.querySelector('[data-vview="edit"]')`);
       await s.eval(`(() => { const n = document.querySelector('input.game-input'); n.value = '第3課'; n.dispatchEvent(new Event('change')); return true; })()`);
       await s.eval(`(() => { document.querySelector('textarea.write-area').value = ${J(LINES)}; return true; })()`);
@@ -1715,7 +1719,7 @@ T['單字頁:題庫編輯器的加入單字、勾選、刪字、改名,片語特
     /* 片語特訓:開始之後才擋下,按選項跳卡、不對答案 */
     s = await vocabOpen(B, '#phrase');
     try {
-      await pressText(s, '.part-card:has(.p-stats) .btn.primary', '開始');   // data-gate,這時能作答
+      await pressText(s, '.part-card:has(.p-stats) .btn', '開始');   // data-gate,這時能作答
       r.drill = await s.eval("document.querySelectorAll('.opts .opt').length");
       if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
       const before = await s.eval(LS);
@@ -1760,7 +1764,7 @@ T['單字頁遊戲:掉落消除擋下時按 Enter 不重新整理、字掉到底
     /* 甲:Enter */
     let s = await vocabOpen(B);
     try {
-      await click(s, '.vg-games .btn.primary', 0);   // 掉落消除「開始」(data-gate,這時能作答)
+      await click(s, '.vg-play .btn.primary');   // 掉落消除「開始」(data-gate,這時能作答;預設選著第一塊磚)
       await s.eval('window.__mark = 1; true');   // 重載了就不在
       if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
       const before = await s.eval(LS);
@@ -1777,7 +1781,7 @@ T['單字頁遊戲:掉落消除擋下時按 Enter 不重新整理、字掉到底
     /* 乙:擋下之後不再打字,等字掉到底(遊戲區縮矮,字很快到底) */
     s = await vocabOpen(B);
     try {
-      await click(s, '.vg-games .btn.primary', 0);
+      await click(s, '.vg-play .btn.primary');
       await s.eval("document.querySelector('.game-field').style.height = '90px'; true");
       if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
       const before = await s.eval(LS);
@@ -1790,7 +1794,7 @@ T['單字頁遊戲:掉落消除擋下時按 Enter 不重新整理、字掉到底
     /* 丙:記憶吐司答完 6 題,擋下,按「看成績」 */
     s = await vocabOpen(B);
     try {
-      await click(s, '.vg-games .btn.primary', 2);
+      await pickGame(s, 2);
       await pressText(s, '.btn', '直接開考');
       for (let i = 0; i < 6; i++) {
         await click(s, '.q-block .opt');
@@ -1802,7 +1806,7 @@ T['單字頁遊戲:掉落消除擋下時按 Enter 不重新整理、字掉到底
       const before = await s.eval(LS);
       await pressText(s, '.q-block .btn', '看成績');
       await sleep(600);
-      r.toast = { card: await s.eval(CARD), report: await s.eval("(document.querySelector('.report-head h2') || {}).textContent || ''") };
+      r.toast = { card: await s.eval(CARD), report: await s.eval("(document.querySelector('.result-card .result-kicker') || {}).textContent || ''") };
       r.toastWrote = lsDiff(before, await s.eval(LS)).filter((k) => !/_pet$/.test(k));
     } finally { await s.close(); }
     if (how === '照常') {
@@ -1915,10 +1919,10 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
       await key(s, 'Enter');   // 在第一格按 Enter(第二格有字就是對答案)
       r.enterCard = await card(s);
       if (r.enterCard) await closeBy(s, 'esc');
-      if (how !== '照常') { await click(s, '.vb-inputs .btn.primary'); r.btnCard = await card(s); }   // 「對答案」
+      if (how !== '照常') { await click(s, '.quiz-foot .btn.primary'); r.btnCard = await card(s); }   // 「對答案」(專心模式底部)
       r.vals = await s.eval("[...document.querySelectorAll('input.vb-input')].map((x) => x.value)");
-      r.vbVerdict = await s.eval("(document.querySelector('.q-block .verdict') || {}).textContent || ''");
-      r.marked = await s.eval("document.querySelectorAll('.q-nav .ok, .q-nav .ng').length");
+      r.vbVerdict = await s.eval("(document.querySelector('.quiz-fb-text') || {}).textContent || ''");
+      r.marked = await s.eval("(document.querySelector('.quiz-count') || {}).textContent || ''");   // 作答列右邊「第幾題 / 共幾題」:答完往下是 2 / 10
       await sleep(1300);
       r.vbWrote = lsDiff(before, await s.eval(LS)).filter((k) => !/_pet$/.test(k));
       r.vbUps = (await s.eval(UPS)).slice(up0.length);
@@ -1928,14 +1932,14 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
     if (how === '照常') {
       r.ok = r.letters === 3 && !r.pickCard && r.picked === 1 && !r.submitCard && /^\d+ \/ 10$/.test(r.report) && has(r.wrote, [HIST, P2]) && has(r.ups, ['hist', 'listen_p2'])
         && r.revSettled && r.revLetters === 3 && !r.revCard && /答對/.test(r.verdict) && has(r.revWrote, [HIST, P2]) && has(r.revUps, ['hist', 'listen_p2']) && r.revOk === true
-        /* 照常按 Enter 對完答案,同一下 Enter 落到剛拿到焦點的「下一題」(main 就是這樣),畫面已經是下一題:只看題號列記了對錯、存了 */
-        && r.inputs === 2 && !r.typeCard && !r.enterCard && r.marked === 1 && has(r.vbWrote, [HIST, VQ]) && has(r.vbUps, ['hist', 'verb_quiz'])
+        /* 照常按 Enter 對完答案,同一下 Enter 落到剛拿到焦點的「下一題」(main 就是這樣),畫面已經是下一題:只看作答列的題號往下一題、存了 */
+        && r.inputs === 2 && !r.typeCard && !r.enterCard && r.marked === '2 / 10' && has(r.vbWrote, [HIST, VQ]) && has(r.vbUps, ['hist', 'verb_quiz'])
         && !r.silent.length && !r.revSilent.length && !r.vbSilent.length;
     } else {
       const title = how === '登出' ? /已經在別的分頁登出/ : /還沒載入/;
       r.ok = r.letters === 3 && title.test(r.pickCard) && r.picked === 0 && title.test(r.submitCard) && !r.report && r.picked2 === 0 && !r.wrote.length && !r.ups.length
         && r.revSettled && r.revLetters === 3 && title.test(r.revCard) && !r.verdict && !r.revWrote.length && !r.revUps.length && r.revOk === (how === '登出' ? null : false)
-        && r.inputs === 2 && title.test(r.typeCard) && title.test(r.enterCard) && title.test(r.btnCard) && J(r.vals) === J(['went', '']) && !r.vbVerdict && r.marked === 0
+        && r.inputs === 2 && title.test(r.typeCard) && title.test(r.enterCard) && title.test(r.btnCard) && J(r.vals) === J(['went', '']) && !r.vbVerdict && r.marked === '1 / 10'
         && !r.vbWrote.length && !r.vbUps.length && !r.silent.length && !r.revSilent.length && !r.vbSilent.length;
     }
     out.push(r);

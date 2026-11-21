@@ -86,15 +86,16 @@
       h('canvas', { class: 'hub-art', 'data-doodle': 'writing', 'data-size': '40', 'aria-hidden': 'true' }),
       h('h1', null, '寫作練習')),
     h('p', { class: 'wr-home-tag' }, '自動儲存 · 老師可見'));
-    root.append(h('div', { class: 'part-cards' },
+    /* 三個級別:跟聽力訓練的入口同一個樣子(名稱、完成數、進度條) */
+    root.append(h('div', { class: 'tile-grid ear-tiles wr-tiles' },
       ['l1', 'l2', 'l3'].map(k => {
         const units = unitsOf(k);
         const done = units.filter(unitDone).length;
         const pct = Math.round(done / units.length * 100);
-        return h('a', { class: 'part-card', href: 'writing.html?level=' + k, style: 'display:block' },
-          h('h3', null, LEVEL_NAME[k]),
-          h('div', { class: 'p-stats' }, LEVEL_WHAT[k] + ' · ' + units.length + ' 個單元 · 已完成 ' + done),
-          h('div', { class: 'bar' }, h('i', { style: 'width:' + pct + '%' })));
+        return h('a', { class: 'module-card tile part-card ear-tile', href: 'writing.html?level=' + k },
+          h('h2', null, LEVEL_NAME[k]),
+          h('p', null, done + ' / ' + units.length + ' 個單元'),
+          h('span', { class: 'ear-bar', 'aria-hidden': 'true' }, h('i', { style: 'width:' + pct + '%' })));
       })));
   }
 

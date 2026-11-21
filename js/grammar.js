@@ -71,7 +71,7 @@
        不給 Google 搜尋結果當摘要;nav 不能掛這個屬性,所以掛在裡面兩塊 div 上。單元頁、查表頁不帶 */
     const stations = h('div', { class: 'gx-stations', 'data-nosnippet': onPickStage ? '' : null });
     const pathWrap = h('div', { class: 'gx-pathwrap', 'data-nosnippet': onPickStage ? '' : null });
-    const rail = h('nav', { class: 'gx-rail' }, stations, pathWrap);
+    const rail = h('nav', { class: 'gx-rail', 'aria-label': '章與課' }, stations, pathWrap);
     const OFFS = [0, 16, 28, 16, 0, -16, -28, -16];
     Object.entries(STAGES).forEach(([sk, sd], si) => {
       const list = UNITS.filter(u => stageOf(u) === sk);
@@ -227,12 +227,14 @@
     const idx = UNITS.indexOf(u);
     widen();
     const col = h('div', { class: 'gx-col' });
-    root.append(h('div', { class: 'gx-layout' }, buildRail(stageOf(u), u.id, null), col));
     const parts = splitTitle(u.title);
-    col.append(h('div', { class: 'drill-top' },
-      h('h1', null, parts.topic),
-      h('a', { href: 'grammar.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回文法基礎')));
-    if (parts.sub) col.append(h('p', { class: 'gx-sub' }, parts.sub));
+    /* 標題在路徑前面:手機上先看到課名,章與課的圓圈排在下面;電腦版標題仍在右欄上方(css .gx-layout.is-unit) */
+    const head = h('div', { class: 'gx-head' },
+      h('div', { class: 'drill-top' },
+        h('h1', null, parts.topic),
+        h('a', { href: 'grammar.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回文法基礎')),
+      parts.sub ? h('p', { class: 'gx-sub' }, parts.sub) : null);
+    root.append(h('div', { class: 'gx-layout is-unit' }, head, buildRail(stageOf(u), u.id, null), col));
 
     /* 講解 */
     const lesson = h('div', { class: 'lesson-view' });

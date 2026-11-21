@@ -192,7 +192,8 @@
     }
     const wbRowsBox = h('div', { class: 'review-rows' }, wbRows());
 
-    /* 三塊面板排在同一個格線裡:桌機兩欄、手機一欄,間距都一樣。錯題本沒有錯題時不顯示,聽力面板遞補到右欄 */
+    /* 三塊面板在同一個格線裡,間距都一樣:桌機左欄是隨機練習、聽力隨機練習,右欄是錯題本(佔兩列,css);手機一欄。
+       錯題本沒有錯題時不顯示,聽力面板遞補到右欄 */
     const panels = h('div', { class: 'practice-panels' },
       h('div', { class: 'practice-panel' },
         h('h2', null, '隨機練習'),
@@ -238,7 +239,7 @@
           h('span', { class: 'cfg-done' }, '已作答 ' + s.answered + ' / ' + s.total));
         return { p, cb, sel, row };
       });
-      panels.append(h('div', { class: 'practice-panel' },
+      panels.append(h('div', { class: 'practice-panel listen-panel' },
         h('h2', null, '聽力隨機練習'),
         h('div', { class: 'cfg-rows' }, lrows.map(r => r.row)),
         h('button', {

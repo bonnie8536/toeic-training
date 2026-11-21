@@ -272,12 +272,14 @@
     const idx = UNITS.indexOf(u);
     widen();
     const col = h('div', { class: 'gx-col' });
-    root.append(h('div', { class: 'gx-layout' }, buildRail(stageOf(u), u.id, null), col));
     const parts = splitTitle(u.title);
-    col.append(h('div', { class: 'drill-top' },
-      h('h1', null, parts.topic),
-      h('a', { href: 'phonics.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回自然發音')));
-    if (parts.sub) col.append(h('p', { class: 'gx-sub' }, parts.sub));
+    /* 標題在路徑前面(同文法單課):手機上先看到課名 */
+    const head = h('div', { class: 'gx-head' },
+      h('div', { class: 'drill-top' },
+        h('h1', null, parts.topic),
+        h('a', { href: 'phonics.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回自然發音')),
+      parts.sub ? h('p', { class: 'gx-sub' }, parts.sub) : null);
+    root.append(h('div', { class: 'gx-layout is-unit' }, head, buildRail(stageOf(u), u.id, null), col));
 
     /* 這課的音:KK+代表字 */
     const k = u.key || {};

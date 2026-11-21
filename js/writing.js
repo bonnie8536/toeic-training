@@ -59,20 +59,13 @@
   const LEVEL_WHAT = { l1: '句子重組與造句', l2: 'Email 回信', l3: '短文論述' };
   const TYPE_BADGE = { lesson: ['技巧課', 'level-mid'], s: ['重組', 'level-basic'], b: ['造句', 'level-basic'], e: ['Email', 'level-adv'], y: ['論述', 'level-high'] };
 
-  /* 結算小卡(緊湊版結算卡):標記讀完、答對、存檔的那一刻放在該處,不蓋住內容;拿到的點心畫在卡裡的點心列。
-     after 給了就放在 host 後面,否則放進 host 最後。共用元件沒載到時退回只有點心列的替身,掛勾照樣有地方寫 */
-  function rewardCard(host, word, after) {
-    if (!window.UI || typeof UI.result !== 'function') {
-      const reward = h('div', { class: 'result-reward' });
-      if (after) host.after(reward); else host.append(reward);
-      return { reward };
-    }
-    const card = UI.result({ compact: true, big: word, ratio: 1 });
-    /* 標題只放一個詞時,UI.result 會多接兩個 "null" 文字節點:拿掉 */
-    Array.from(card.heading.childNodes).forEach(n => { if (n.nodeType === 3 && n.nodeValue === 'null') n.remove(); });
-    card.el.classList.add('rd-done', 'rd-word');
-    if (after) host.after(card.el); else host.append(card.el);
-    return card;
+  /* 點心列(UI.rewardRow):標記讀完、答對、存檔的那一刻放在該處,不蓋住內容;拿到的點心畫在這一列。
+     after 給了就放在 host 後面,否則放進 host 最後;earnId 跟掛勾同一個來源 id。共用元件沒載到時退回一個空的點心列,掛勾照樣有地方寫 */
+  function snackRow(host, after, earnId) {
+    const row = window.UI && typeof UI.rewardRow === 'function' ? UI.rewardRow({ earnId }) : { el: h('div', { class: 'result-reward' }) };
+    if (!row.reward) row.reward = row.el;
+    if (after) host.after(row.el); else host.append(row.el);
+    return row;
   }
 
   function wordCount(text) {
@@ -189,7 +182,7 @@
           readMap[les.id] = true;
           store.set(KEYS.read, readMap);
           btn.replaceWith(h('span', { class: 'result-note', style: 'color:var(--ok)' }, '已標記讀完'));
-          if (window.PET_HOOK && unitDone(units[idx])) PET_HOOK.done('wr:' + les.id, { into: rewardCard(wrap, '完成').reward });
+          if (window.PET_HOOK && unitDone(units[idx])) PET_HOOK.done('wr:' + les.id, { into: snackRow(wrap, false, 'wr:' + les.id).reward });
         },
       }, '標記讀完');
       wrap.append(btn);
@@ -254,7 +247,7 @@
                 st[s.id] = { ok: true };
                 store.set(KEY, st);
                 draw();
-                if (window.PET_HOOK && unitDone({ t: 's', ref: s })) PET_HOOK.done('wr:' + s.id, { into: rewardCard(block, '答對').reward });
+                if (window.PET_HOOK && unitDone({ t: 's', ref: s })) PET_HOOK.done('wr:' + s.id, { into: snackRow(block, false, 'wr:' + s.id).reward });
               } else {
                 attempts++;
                 msg.textContent = '順序不對';
@@ -373,7 +366,7 @@
       const petU = window.PET_HOOK ? { t: Object.keys(KEYS).find(k => KEYS[k] === storeKey), ref: { id } } : null, petWas = !petU || unitDone(petU);
       store.set(storeKey, m);
       savedNote.textContent = '已儲存';
-      if (window.PET_HOOK && !petWas && unitDone(petU)) PET_HOOK.done('wr:' + id, { into: rewardCard(savedNote.parentNode, '已儲存', true).reward });
+      if (window.PET_HOOK && !petWas && unitDone(petU)) PET_HOOK.done('wr:' + id, { into: snackRow(savedNote.parentNode, true, 'wr:' + id).reward });
     }
     /* 搬家留下的另一份(js/move-merge.js 的 alt)放在輸入框下面 */
     const alt = altBox(storeKey, id, field, (text) => { ta.value = text; updateCount(); savedNote.textContent = '已儲存'; });

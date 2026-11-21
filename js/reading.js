@@ -16,14 +16,10 @@
     if (window.UI && typeof UI.empty === 'function') return UI.empty({ text, action });
     return h('div', { class: 'q-block' }, text);
   }
-  /* 結算小卡(緊湊版結算卡),放進文章頁;拿到點心時食物圖出現在卡裡的點心列。
+  /* 結算小卡(結算卡的內嵌版),放進文章頁;拿到點心時食物圖出現在卡裡的點心列。
      共用元件沒載到時回傳只有點心列的替身,掛勾照樣有地方寫 */
   function miniCard(opt) {
-    if (window.UI && typeof UI.result === 'function') {
-      const c = UI.result(Object.assign({ compact: true }, opt));
-      c.el.classList.add('rd-done');
-      return c;
-    }
+    if (window.UI && typeof UI.result === 'function') return UI.result(Object.assign({ inline: true }, opt));
     const reward = h('div', { class: 'result-reward' });
     return { el: reward, reward, destroy() {} };
   }
@@ -386,7 +382,7 @@
       const answered = Object.keys(answers).length;
       const correct = a.questions.filter((q, qi) => answers[qi] === q.answer).length;
       if (answered === a.questions.length) {
-        card = miniCard({ score: correct, total: a.questions.length, kicker: '抓重點' });
+        card = miniCard({ score: correct, total: a.questions.length, kicker: '抓重點', earnId: 'r:' + a.id });
         list.append(card.el);
       }
       const foot = h('div', { class: 'drill-nav-btns' },
@@ -643,7 +639,7 @@
           filledN < answers.length ? h('span', { class: 'tq-left' }, '還有 ' + (answers.length - filledN) + ' 格') : null));
       } else {
         const score = answers.filter((w, bi) => placed[bi] === w).length;
-        card = miniCard({ score, total: answers.length, kicker: '單字考題' });
+        card = miniCard({ score, total: answers.length, kicker: '單字考題', earnId: 'tq:' + a.id });
         card.el.classList.add('tq-result');
         area.append(card.el);
         const zhWrap = h('div', { class: 'tq-zh' });

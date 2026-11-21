@@ -35,7 +35,9 @@ const BASE = '27557eb';
    單字遊戲「練哪些字」改成可以勾好幾個(2026-11-11,文章單字、片語、自己的題庫一起練)又改了 vocab;
    錯題本分組、模擬考錯題收進錯題本(2026-11-18,mock_wrong、js/wrongbook.js)改了 mock、practice、listening、review;
    同一天介面審查(上一頁從 bfcache 回來重畫錯題本面板、#wrongbook 扣掉頂欄、聽力 3/4 複習頂部寫組數和整組題數)又改了 practice、listening;
-   錯題本審查(2026-11-19,模擬考、每日複習、題庫開頁先跟雲端對齊 mock_wrong:WRONGBOOK.syncCloud)又改了 mock、practice、review */
+   錯題本審查(2026-11-19,模擬考、每日複習、題庫開頁先跟雲端對齊 mock_wrong:WRONGBOOK.syncCloud)又改了 mock、practice、review;
+   共用元件第二版(2026-11-21,結算卡帶 earnId 與按鈕屬性、題號面板改 UI.sheet、對話與寫作改 UI.rewardRow)改了全部 14 個模組,
+   對話與寫作的呼叫點只換了放點心的那一列(heardRow、snackRow),位置與 id 不變 */
 const LATER_BASE = ['js/vocab.js', 'js/reading.js', 'js/daily-ui.js', 'js/grammar.js', 'js/phonics.js', 'js/ear.js', 'js/dialogue.js',
   'js/verbs.js', 'js/practice.js', 'js/mock.js', 'js/diagnostic.js', 'js/writing.js', 'js/review.js', 'js/listening.js'];
 
@@ -605,12 +607,12 @@ const SITES = [
   ['js/ear.js', 'summary()', ['function startRound(', 'function summary() {'], G + "'e' + sec, { n: list.length, into: card.reward });"],
   ['js/review.js', 'summary()', ['function summary() {'], G + "'rv', { n: list.length, into: card.reward });"],
   ['js/dialogue.js', 'markHeard()', ['function markHeard('],
-    "if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { into: heardCard(cur).reward });"],
+    "if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { into: heardRow('dlg:' + id).reward });"],
   ['js/mock.js', 'submit()', ['function submit(timeUp, asked) {'], G + "'mock', { into: card.reward });"],
   ['js/diagnostic.js', '「交卷，看報告」handIn()', ['function renderTest(', 'function handIn(opener, asked) {'], G + "'diag', { into: card.reward });"],
-  ['js/writing.js', '技巧課「標記讀完」onclick', ['function lessonView(', /onclick: \(\) => \{$/], "if (window.PET_HOOK && unitDone(units[idx])) PET_HOOK.done('wr:' + les.id, { into: rewardCard(wrap, '完成').reward });"],
-  ['js/writing.js', '句子重組答對', ['function scrambleBlock(', "if (picked.map(t => t.w).join(' ') === s.answer) {"], "if (window.PET_HOOK && unitDone({ t: 's', ref: s })) PET_HOOK.done('wr:' + s.id, { into: rewardCard(block, '答對').reward });"],
-  ['js/writing.js', '造句、回信、論述存檔 saveNow()', ['function writeArea(', 'function saveNow() {'], "if (window.PET_HOOK && !petWas && unitDone(petU)) PET_HOOK.done('wr:' + id, { into: rewardCard(savedNote.parentNode, '已儲存', true).reward });"],
+  ['js/writing.js', '技巧課「標記讀完」onclick', ['function lessonView(', /onclick: \(\) => \{$/], "if (window.PET_HOOK && unitDone(units[idx])) PET_HOOK.done('wr:' + les.id, { into: snackRow(wrap, false, 'wr:' + les.id).reward });"],
+  ['js/writing.js', '句子重組答對', ['function scrambleBlock(', "if (picked.map(t => t.w).join(' ') === s.answer) {"], "if (window.PET_HOOK && unitDone({ t: 's', ref: s })) PET_HOOK.done('wr:' + s.id, { into: snackRow(block, false, 'wr:' + s.id).reward });"],
+  ['js/writing.js', '造句、回信、論述存檔 saveNow()', ['function writeArea(', 'function saveNow() {'], "if (window.PET_HOOK && !petWas && unitDone(petU)) PET_HOOK.done('wr:' + id, { into: snackRow(savedNote.parentNode, true, 'wr:' + id).reward });"],
 ];
 /* 寫作存檔要先記下寫入前是不是已經完成,所以 saveNow 在 store.set 前多一行 */
 const WRITE_BEFORE = "const petU = window.PET_HOOK ? { t: Object.keys(KEYS).find(k => KEYS[k] === storeKey), ref: { id } } : null, petWas = !petU || unitDone(petU);";

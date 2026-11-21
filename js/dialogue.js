@@ -34,25 +34,21 @@
     const next = Object.assign({}, all, { [id]: list.concat(i).sort((a, b) => a - b) });
     if (pageHeard || !canKeep()) { pageHeard = next; return; }
     store.set('dlg_heard', next);
-    if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { into: heardCard(cur).reward });
+    if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { into: heardRow('dlg:' + id).reward });
   }
-  /* 整段每句都聽過:在對話下面放結算小卡(緊湊版結算卡,不蓋住對話),拿到的點心畫在卡裡的點心列。
-     只在剛好聽完的那一刻放;已經全部聽過的對話重新打開不放 */
-  function heardCard(d) {
+  /* 整段每句都聽過:在對話下面放點心列(UI.rewardRow,不蓋住對話),拿到的點心畫在這一列。
+     只在剛好聽完的那一刻放;已經全部聽過的對話重新打開不放。共用元件沒載到時退回一個空的點心列 */
+  function heardRow(earnId) {
     const lines = root.querySelector('.dlg-lines');
-    const total = d.lines.length;
-    if (!window.UI || typeof UI.result !== 'function' || !lines) {
-      const reward = h('div', { class: 'result-reward' });
-      if (lines) lines.after(reward);
-      return { reward };
-    }
-    const card = UI.result({ compact: true, score: total, total, kicker: '全部聽過' });
-    card.el.classList.add('rd-done');
-    lines.after(card.el);
+    const row = window.UI && typeof UI.rewardRow === 'function' ? UI.rewardRow({ earnId }) : { el: h('div', { class: 'result-reward' }) };
+    if (!row.reward) row.reward = row.el;
+    if (!lines) return row;
+    row.el.classList.add('dlg-snack');
+    lines.after(row.el);
     if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-      try { card.el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) { /* 捲不到就算了 */ }
+      try { row.el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) { /* 捲不到就算了 */ }
     }
-    return card;
+    return row;
   }
   const slangCount = (d) => d.lines.reduce((n, l) => n + (l.slang || []).length, 0);
 

@@ -1596,9 +1596,11 @@ table.cat-table td.num { white-space: nowrap; }
   .vg-source { row-gap: 6px; }
   .vg-pick { flex-basis: 100%; max-width: none; }
 }
-/* 我的題庫卡片在手機上也是兩欄:320 寬一張卡片裡只有 91px,按鈕左右留白縮小,「只練這個」才是一行(不然斷成「只練這／個」) */
-@media (max-width: 359px) {
-  .vg-bank-btns .btn { padding-left: 12px; padding-right: 12px; }
+/* 我的單字本卡片:桌機兩欄;600 以下一欄整寬,三顆按鈕排一行、字數那行不折 */
+.vg-bank-cards { grid-template-columns: 1fr 1fr; }
+@media (max-width: 600px) {
+  .vg-bank-cards { grid-template-columns: 1fr; gap: 12px; margin-top: 16px; }
+  .vg-bank-cards .vg-bank-btns { flex-wrap: nowrap; }
 }
 .vg-games { grid-template-columns: 1fr 1fr; margin-top: 0; }
 .vg-games .part-card { display: flex; flex-direction: column; }
@@ -3629,6 +3631,7 @@ html.is-quiz #mock-root .passage-sticky-wrap { position: static; max-height: non
 .mock-after .mock-wb-note { margin: 0; font-size: var(--fs-sm); }
 .mock-after .mock-unsaved { margin-top: 0; text-align: left; }
 .mock-after .mock-unsaved p { margin: 4px 0 12px; }
+.mock-unsaved p.mock-unsaved-fine { margin-top: -8px; font-size: var(--fs-xs); color: var(--ink-soft); }
 .mock-after .mock-unsaved .btn { min-height: 44px; padding: 0 20px; border-radius: var(--r-md); }
 #mock-root .result-detail, #diag-root .result-detail { max-width: 720px; }
 .diag-levels { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 20px; margin: 16px 0 0; font-size: var(--fs-sm); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
@@ -3748,6 +3751,9 @@ html.is-quiz main .game-hud { margin: 8px 0; }
 /* 動詞表。測驗進行中(專心模式)不顯示文法頁的章節導覽 */
 .vb-bar .btn.primary:disabled { opacity: .5; cursor: not-allowed; }
 html.vb-quizzing .gx-rail { display: none; }
+/* 章節導覽收起來時(作答中與結算畫面)內容欄置中 */
+html.vb-quizzing .gx-layout { display: block; }
+html.vb-quizzing .gx-col { margin-inline: auto; }
 
 /* ---- */
 
@@ -3849,5 +3855,31 @@ tr.is-open .ad-caret-ico { transform: translateY(2px) rotate(-135deg); }
 .ad-line { display: block; }
 .ui-empty .ac-msg { margin: 0; text-align: center; }
 @media (prefers-reduced-motion: reduce) { .ad-caret-ico { transition: none; } }
+
+/* ---- */
+
+/* ==== 收尾:題組文章、作答列題號 ==== */
+/* 手機(860 以下文章與題目上下排):專心模式裡題組的文章區最高佔可視高度的一半,在框裡捲動,題目留在下面看得到 */
+@media (max-width: 860px) {
+  html.is-quiz main .set-layout .passage-sticky-wrap,
+  html.is-quiz #mock-root .set-layout .passage-sticky-wrap {
+    position: relative; top: auto; max-height: 50vh; max-height: 50dvh; overflow-y: auto; overscroll-behavior: contain;
+    border-radius: var(--radius);
+  }
+}
+/* 作答列右邊可以點開題號面板的「3 / 75」(模擬考、程度檢測):淡底膠囊加向下的小箭頭,看得出是按鈕 */
+html.is-quiz .quiz-bar button.quiz-count {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 40px; margin: 0; padding: 0 12px;
+  border-radius: var(--r-full); background: var(--bg-soft); color: var(--ink);
+}
+html.is-quiz .quiz-bar button.quiz-count::after {
+  content: ""; width: 6px; height: 6px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+html.is-quiz .quiz-bar button.quiz-count:hover { background: var(--line); }
+/* 錯題本磚沒有待複習時數字那一行是空的:不佔高度 */
+.module-card.tile p:empty { display: none; }
+/* 寫作首頁:標題(左邊有圖示)下面一行標籤 */
+.wr-home-tag { margin: -12px 0 0; color: var(--ink-light); font-size: var(--fs-sm); }
 
 /* ---- */

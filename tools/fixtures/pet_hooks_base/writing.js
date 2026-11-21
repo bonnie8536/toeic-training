@@ -83,8 +83,9 @@
   function renderHome() {
     document.title = '寫作練習 - 衝衝英文';
     root.append(h('div', { class: 'page-head' },
-      h('h1', null, '寫作練習'),
-      h('p', null, '自動儲存 · 老師可見')));
+      h('canvas', { class: 'hub-art', 'data-doodle': 'writing', 'data-size': '40', 'aria-hidden': 'true' }),
+      h('h1', null, '寫作練習')),
+    h('p', { class: 'wr-home-tag' }, '自動儲存 · 老師可見'));
     root.append(h('div', { class: 'part-cards' },
       ['l1', 'l2', 'l3'].map(k => {
         const units = unitsOf(k);
@@ -154,12 +155,13 @@
     if (unit.t === 'e') content.append(emailBlock(unit.ref, unit.title));
     if (unit.t === 'y') content.append(essayBlock(unit.ref, unit.title));
 
-    /* 上一步/下一步 */
+    /* 上一步/下一步。一個畫面只有一顆實色按鈕:技巧課還沒標記讀完、句子重組還沒答對時,實色留給單元裡的「標記讀完」「檢查」,這裡用描邊 */
+    const nextCls = (unit.t === 'lesson' || unit.t === 's') && !unitDone(unit) ? 'btn' : 'btn primary';
     root.append(h('div', { class: 'drill-nav-btns', style: 'margin-top:24px' },
       idx > 0 ? h('a', { class: 'btn', href: 'writing.html?level=' + lv + '&u=' + (idx - 1) }, '← 上一步') : null,
       idx < units.length - 1
-        ? h('a', { class: 'btn primary', href: 'writing.html?level=' + lv + '&u=' + (idx + 1) }, '下一步 →')
-        : h('a', { class: 'btn primary', href: 'writing.html?level=' + lv }, '回單元列表')));
+        ? h('a', { class: nextCls, href: 'writing.html?level=' + lv + '&u=' + (idx + 1) }, '下一步 →')
+        : h('a', { class: nextCls, href: 'writing.html?level=' + lv }, '回單元列表')));
   }
 
   /* ---------- 技巧課(整頁,寬鬆排版) ---------- */
@@ -303,7 +305,7 @@
       list().forEach(([a, ai]) => {
         const t = Date.parse(a.updatedAt || '');
         box.append(h('div', { class: 'explain', style: 'margin-top:8px' },
-          h('div', null, h('b', null, '搬家時留下的另一份'), isFinite(t) ? '（' + new Date(t).toLocaleDateString('zh-TW') + ' 寫的）' : ''),
+          h('div', null, h('b', null, '搬家時留下的另一份'), isFinite(t) ? ' · ' + new Date(t).toLocaleDateString('zh-TW') + ' 寫的' : ''),
           h('div', { style: 'white-space:pre-wrap;margin:6px 0' }, a[field]),
           h('div', { class: 'pop-btns' },
             h('button', { class: 'pop-mini', type: 'button', 'data-gate': '', onclick: () => {

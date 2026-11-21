@@ -458,7 +458,7 @@
     if (!banks.length) {
       root.append(emptyBox('還沒有單字本'));
     } else {
-      const bwrap = h('div', { class: 'part-cards', style: 'grid-template-columns:1fr 1fr' });
+      const bwrap = h('div', { class: 'part-cards vg-bank-cards' });
       banks.forEach(b => {
         const onCount = bankOn(b);   // 跟上面清單那一列同一個數
         const playable = soloOk(b);
@@ -468,7 +468,7 @@
           h('div', { class: 'p-stats' }, (b.words || []).length + ' 個字 · 練 ' + onCount + ' 個' + (playable ? '' : ' · 要 3 個以上才能單獨練')),
           h('div', { class: 'cfg-row vg-bank-btns' },
             /* 只練這個 = 上面清單只勾它(跟以前「用這個題庫」一樣是換成它;要一起練就在上面清單多勾)。
-               只寫四個字:卡片在手機上是兩欄,太長會斷成兩行;更窄的 320 寬靠 style.css 的 .vg-bank-btns 縮按鈕左右留白放成一行。
+               只寫四個字:三顆按鈕排一行(手機上卡片是一欄整寬,style.css 的 .vg-bank-cards)。
                焦點移到上面的框:鍵盤接著從這裡用,報讀軟體唸出新的框名稱(清單收起來時 aria-live 的說明不會唸) */
             h('button', {
               class: 'btn', disabled: playable ? null : '',
@@ -968,6 +968,11 @@
   }
 
   /* ================= 片語特訓 ================= */
+  /* 片語結算的「回單字訓練」:先清掉網址的 #phrase,才會回到單字訓練首頁而不是片語清單 */
+  function backHome() {
+    history.replaceState(null, '', location.pathname + location.search);
+    renderHome();
+  }
   function startDrill(groupName, items) {
     document.title = '片語特訓 - 衝衝英文';
     const st = store.get('phrase_drill', {});
@@ -1058,7 +1063,7 @@
         earnId: 'ph',   // 跟掛勾同一個來源 id
         score: ok, total: list.length, kicker: '片語特訓 · ' + groupName,
         primary: { label: '再做一次', onClick: () => startDrill(groupName, items) },
-        links: [{ label: '回單字訓練', onClick: renderHome }],
+        links: [{ label: '回單字訓練', onClick: backHome }],
       });
       window.scrollTo(0, 0);
     }
@@ -1114,8 +1119,9 @@
   }
   function tooSmall(pool, min) {
     if (pool.length >= min) return false;
-    alert('字不夠 · 這個字池只有 ' + pool.length + ' 個字 · 要 ' + min + ' 個以上');
+    /* 別的分頁剛刪了單字本才會碰到(首頁磚已經擋掉字不夠的情況):站內通知視窗,回單字訓練首頁 */
     renderHome();
+    if (window.UI && typeof UI.alert === 'function') UI.alert({ title: '字不夠', body: '要 ' + min + ' 個以上' });
     return true;
   }
 

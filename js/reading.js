@@ -48,6 +48,7 @@
     let levelFilter = '全部';
 
     const head = h('div', { class: 'page-head' },
+      h('canvas', { class: 'hub-art', 'data-doodle': 'reading', 'data-size': '40', 'aria-hidden': 'true' }),
       h('h1', null, '閱讀訓練'));
     /* 級別按鈕與文章清單建立時就帶 data-nosnippet:Google 搜尋結果的摘要不拿清單,改用頁面說明 */
     const chips = h('div', { class: 'drill-filters', style: 'margin:14px 0 4px', 'data-nosnippet': '' });

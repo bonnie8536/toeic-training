@@ -64,7 +64,7 @@
     /* 分類按鈕與對話清單建立時就帶 data-nosnippet:Google 搜尋結果的摘要不拿清單,改用頁面說明 */
     const chips = h('div', { class: 'drill-filters', style: 'margin:14px 0 4px', 'data-nosnippet': '' });
     const listWrap = h('div', { class: 'dlg-list', 'data-nosnippet': '' });
-    root.append(h('div', { class: 'page-head' }, h('h1', null, '對話練習')), chips, listWrap);
+    root.append(h('div', { class: 'page-head' }, h('canvas', { class: 'hub-art', 'data-doodle': 'dialogue', 'data-size': '40', 'aria-hidden': 'true' }), h('h1', null, '對話練習')), chips, listWrap);
 
     ['全部', ...CATS.filter((c) => dialogues.some((d) => d.cat === c))].forEach((name) => {
       chips.append(h('button', {

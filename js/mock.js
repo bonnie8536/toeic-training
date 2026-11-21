@@ -106,7 +106,9 @@
     dropCard();
     document.title = '模擬考 - 衝衝英文';
     root.replaceChildren();
-    root.append(h('div', { class: 'page-head' }, h('h1', null, '模擬考')));
+    const head = h('div', { class: 'page-head' }, h('canvas', { class: 'hub-art', 'data-doodle': 'mock', 'data-size': '40', 'aria-hidden': 'true' }), h('h1', null, '模擬考'));
+    root.append(head);
+    if (window.UI && typeof UI.mount === 'function' && document.readyState !== 'loading') UI.mount(head);   // 標題左邊的圖示(頁面載入那一下 js/ui.js 會畫,之後重畫的自己掛)
 
     /* 一個畫面只有一顆實色主按鈕:第一張(快速回合)是主按鈕,第二張是描邊按鈕 */
     const cards = h('div', { class: 'part-cards mock-sizes' });
@@ -467,18 +469,19 @@
     }
 
     /* 這次成績還沒存進紀錄的說明(unsaved:'gone' 別的分頁登出或換帳號、'loading' 帳號資料夾還沒從雲端灌好、'other'、'lost' 連這個分頁都放不進去)。
-       第一行寫發生什麼,第二行寫怎麼辦 */
+       第一行寫發生什麼,第二行只寫怎麼辦;成績先留在分頁的,另起一行小字提醒關掉分頁就不會留 */
     const UNSAVED = {
-      gone: '帳號在別的分頁登出了。登入後回到這一頁會補存。關掉分頁就不會留。',
-      loading: '還沒從雲端拿到練習紀錄。網路恢復後重新整理會補存。關掉分頁就不會留。',
-      other: '先留在這個分頁。回到交卷時的帳號再開這一頁會補存。關掉分頁就不會留。',
-      lost: '這個瀏覽器不讓網頁暫存。請先記下分數。',
+      gone: '登入後回到這一頁會補存',
+      loading: '網路恢復後重新整理會補存',
+      other: '回到交卷時的帳號再開這一頁會補存',
+      lost: '請先記下分數',
     };
     function unsavedNote(unsaved) {
       if (!unsaved) return null;
       return h('div', { class: 'mock-unsaved', role: 'status' },
         h('b', null, '這次成績和錯題還沒存進紀錄'),
         h('p', null, UNSAVED[unsaved] || UNSAVED.other),
+        unsaved === 'lost' ? null : h('p', { class: 'mock-unsaved-fine' }, '關掉分頁就不會留'),
         unsaved === 'lost' ? null : h('button', { class: 'btn', type: 'button', onclick: () => location.reload() }, '重新整理'));
     }
 
@@ -502,7 +505,7 @@
         kicker: '參考總分', big: String(lScore + rScore), unit: '分', ratio: (lRaw + rRaw) / Math.max(1, lTotal + rTotal),
         flag: timeUp ? '時間到' : null,
         stats: [['聽力', String(lScore)], ['閱讀', String(rScore)]],
-        note: '參考換算，非正式成績',
+        note: '參考換算 · 非正式成績',
         primary: { label: '再做一次', onClick: () => startExam(sizeKey), attrs: { 'data-gate': '' } },   // 沒登入時 js/profile.js 先攔下
         links: [{ label: '看錯題本', href: 'review.html' }, { label: '回模擬考', href: 'mock.html' }],
         earnId: 'mock',

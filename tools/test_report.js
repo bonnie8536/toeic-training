@@ -255,7 +255,7 @@ T['按鈕:同一個詳解方塊只加一次;aria-label 帶 Part 與題號;缺題
   const label = ex.byClass('report-btn')[0].attrs['aria-label'];
   const ex2 = E.explain();
   const none = E.R.attach(ex2, { m: 'p5', id: '' }) === null && ex2.byClass('report-btn').length === 0 && E.R.attach(null, CTX) === null;
-  return { ok: n === 1 && label === '回報題目，Part 5，p5-b3-04' && none, detail: n + ' 顆;' + label };
+  return { ok: n === 1 && label === '回報題目 Part 5 p5-b3-04' && none, detail: n + ' 顆;' + label };
 };
 T['normalize:不是物件當空的,壞掉的單筆丟掉,不改傳進來的'] = () => {
   const E = env();
@@ -313,7 +313,7 @@ T['practice 的 explainBox:有 ctx 就加按鈕,沒給 ctx 或沒載 REPORT 都�
     const btn = a.byClass('report-btn')[0];
     outs.push([a.byClass('report-btn').length, b.byClass('report-btn').length, n, btn ? btn.attrs['aria-label'] : null]);
   });
-  return { ok: outs[0][0] === 1 && outs[0][1] === 0 && outs[0][2] === null && outs[0][3] === '回報題目，Part 6，p6-b1-1:2' && outs[1][0] === 0, detail: J(outs) };
+  return { ok: outs[0][0] === 1 && outs[0][1] === 0 && outs[0][2] === null && outs[0][3] === '回報題目 Part 6 p6-b1-1:2' && outs[1][0] === 0, detail: J(outs) };
 };
 T['學習記錄:展開的詳解有按鈕,題號是各模組自己的 id(P5、P6 組id:空格號、P7、聽力 P1 與 P3、文法、文章題、片語);自然發音沒有'] = async () => {
   const list = [['p5', 'p5-b1-01'], ['p6', 'p6-b1-1:2'], ['p7', 'p7-b1-1:0'], ['l1', 'l1-01'], ['l3', 'l3-11:1'], ['g', 'ga-01:3'], ['r', 'art-1a:1'], ['ph', 'ph-101'], ['pn', 'ph-a:0']];
@@ -328,7 +328,7 @@ T['學習記錄:展開的詳解有按鈕,題號是各模組自己的 id(P5、P6 
     labels.push(b ? b.attrs['aria-label'] : null);
   }
   const want = list.slice(0, 8).reverse().map((x) => x[1]);
-  const got = labels.slice(1).map((l) => (l ? l.split('，')[2] : null));
+  const got = labels.slice(1).map((l) => (l ? l.split(' ').pop() : null));
   return { ok: H.rows().length === 9 && labels[0] === null && J(got) === J(want), detail: J(labels) };
 };
 

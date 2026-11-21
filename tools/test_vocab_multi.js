@@ -620,7 +620,9 @@ test('再挑戰時別的分頁刪了其中一個題庫:照剩下的玩;剩的不
   p2.set('vgame_banks', [BA()]);
   buttons(p2.root, '再做一次')[0].click();
   const home = !!p2.root.querySelector('[data-vview="home"]');
-  return { ok: singleOk && home && p2.alerts.length === 1, detail: J({ title, n: shown.length, home, alerts: p2.alerts }) };
+  /* 跳一次說明(站內通知視窗,不是原生 alert)再回首頁 */
+  const told = p2.ctx.UI.alerts.length === 1 && /字不夠/.test(p2.ctx.UI.alerts[0]) && !p2.alerts.length;
+  return { ok: singleOk && home && told, detail: J({ title, n: shown.length, home, alerts: p2.alerts, uiAlerts: p2.ctx.UI.alerts }) };
 });
 
 /* ======================= 5. 只練這個、題庫卡片 ======================= */
@@ -699,7 +701,7 @@ test('勾文章單字(或片語)+不夠單獨玩的題庫(1 個字、空的):mod
   const fallStarted = !oldFall.root.querySelector('[data-vview="home"]');
   const oldPairs = openVocab({ banks: banks(), src: empty, old: true });
   oldPairs.starts()[1].click();
-  const pairsStarted = !!oldPairs.root.querySelector('.mem-grid') && !oldPairs.alerts.length;
+  const pairsStarted = !!oldPairs.root.querySelector('.mem-grid') && !oldPairs.alerts.length && !oldPairs.ctx.UI.alerts.length;
   const ok = J(one) === J({ mode: 'word', level: '全部', modes: ['word', 'bank:bA'] })
     && J(empty) === J({ mode: 'word', level: '全部', modes: ['word', 'bank:bE'] })
     && J(withOk) === J({ mode: 'bank:b1', level: '全部', modes: ['word', 'bank:bE', 'bank:bA', 'bank:b1'] })

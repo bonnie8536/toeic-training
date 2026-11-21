@@ -408,18 +408,27 @@
         kicker: parts.length === 1 ? '聽力 ' + PARTS[parts[0]].title : '聽力 Part ' + parts.join('、'),
         score: qCorrect, total: qTotal,
         stats: wrongN ? [['收進錯題本', wrongN + ' 題']] : null,
-        primary: { label: '再做一次', onClick: () => { card.destroy(); startQuiz(root, config); }, attrs: GATE },   // 跟「開始」一樣
+        primary: { label: '再做一次', onClick: () => { stopReview(); card.destroy(); startQuiz(root, config); }, attrs: GATE },   // 跟「開始」一樣
         links: [wrongN ? { label: '看錯題本', href: wbHref } : null, { label: '回題庫刷題', href: 'practice.html' }],
         earnId: 'l' + config[0].p,
       });
-      showResult(card, UI.detail('逐題解析 ' + qTotal + ' 題', reviewBlocks(), { wrong: wrongN }));
+      const detail = UI.detail('逐題解析 ' + qTotal + ' 題', reviewBlocks(), { wrong: wrongN });
+      /* 逐題解析收起來、離開這一頁(含從快取還原前的 pagehide)時,裡面正在播的音檔一起停 */
+      detail.addEventListener('toggle', () => { if (!detail.open) stopReview(); });
+      window.addEventListener('pagehide', stopReview);
+      showResult(card, detail);
     }
 
-    /* 逐題檢討(音檔解鎖重聽) */
+    /* 逐題檢討(音檔解鎖重聽)。每個播放器的 stop 收在 reviewStops,收合、再做一次、離開頁面時一起停 */
+    let reviewStops = [];
+    function stopReview() { reviewStops.forEach(s => s()); }
     function reviewBlocks() {
+      stopReview();
+      reviewStops = [];
       return units.map((u, i) => {
         const state = sess[i];
         const rp = makePlayer(u.item.id, state);
+        reviewStops.push(rp.stop);
         if (u.p === '1') {
           const q = u.item;
           return h('div', { class: 'q-block' },

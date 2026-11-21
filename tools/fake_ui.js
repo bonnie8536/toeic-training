@@ -1,6 +1,6 @@
 /* 假的 window.UI(js/ui.js):給在很小的假 DOM 裡跑 js/vocab.js 的測試用(tools/test_vocab_banks.js、tools/test_vocab_multi.js)。
    只做 vocab.js 呼叫到的那幾個函式,畫面上的字(結算卡的標題、數字、按鈕、逐字清單)照真的 js/ui.js 放進元素裡,測試才讀得到。
-   確認視窗(confirm)同步回 true,方便測試一路往下跑。
+   確認視窗(confirm)同步回 true,方便測試一路往下跑;通知視窗(alert)記在 UI.alerts。
    用法:ctx.UI = require('./fake_ui')(ctx.document);
    UI.last.next 是專心模式回饋條上「下一題」或「看成績」的按鈕(按一下就是答完這題往下),UI.last.fb 是那一次回饋的內容,UI.last.focus 是目前的專心模式。 */
 module.exports = function fakeUI(doc) {
@@ -28,6 +28,9 @@ module.exports = function fakeUI(doc) {
       return box;
     },
     confirm() { return { then(f) { f(true); return this; } }; },
+    /* 通知視窗:記下標題與內文(UI.alerts),同步回 true */
+    alerts: [],
+    alert(o) { UI.alerts.push(String(o && o.title || '') + ' · ' + String(o && o.body || '')); return { then(f) { f(true); return this; } }; },
     prompt() { return { then(f) { f(null); return this; } }; },
     focus: {
       enter(opt) {

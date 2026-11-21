@@ -186,7 +186,7 @@
   const accCls = r => r < 0.4 ? 'weak' : r < 0.6 ? 'mid' : '';
   root.append(h('div', { class: 'report-head' },
     h('div', { class: 'who' }, '資料來源 ' + rec.sources.join('、')),
-    h('h2', null, '預測級距（閱讀）'),
+    h('h2', null, '閱讀預測級距'),
     bandScale(est.band),
     h('div', { style: 'margin-top:18px' },
       bar('整體正確率', overall, Math.round(overall * 100) + '% · ' + rec.total + ' 題', accCls(overall)),

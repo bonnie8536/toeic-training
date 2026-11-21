@@ -50,6 +50,12 @@
   if (unit) renderUnit(unit);
   else if (REFS[ref]) renderRef(ref);
   else renderHome();
+  /* 頂欄:不規則動詞表的入口在「練練手感」選單,目前頁的標記從「文法基礎」換到那一項(分組高亮照舊是日常學習) */
+  if (!unit && ref === 'verbs') {
+    const mark = (a, on) => { if (!a) return; a.classList.toggle('active', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); };
+    mark(document.querySelector('.topnav .nav-menu a[href="grammar.html"]'), false);
+    mark(document.querySelector('.topnav .nav-menu a[href="grammar.html?ref=verbs"]'), true);
+  }
 
   /* ================= 左側路徑導引 =================
      八章各一個站點(圓環=完成度);目前這章展開成一串蜿蜒的小圈,一課一顆。

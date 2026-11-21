@@ -111,7 +111,7 @@
 
     function sizeLabel(p, n) {
       if (p === '5') return n + ' 題';
-      return n + ' 組（' + (p === '6' ? n * 4 + ' 題' : '約 ' + n * 4 + '-' + n * 5 + ' 題') + '）';
+      return n + ' 組 · ' + (p === '6' ? n * 4 + ' 題' : '約 ' + n * 4 + '–' + n * 5 + ' 題');
     }
 
     const rows = ['5', '6', '7'].map(p => {

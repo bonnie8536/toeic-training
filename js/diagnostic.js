@@ -48,9 +48,12 @@
     leaveFocus();
     dropCard();
     root.replaceChildren();
+    const head = h('div', { class: 'page-head' },
+      h('canvas', { class: 'hub-art', 'data-doodle': 'diagnostic', 'data-size': '40', 'aria-hidden': 'true' }),
+      h('h1', null, '程度檢測'));
+    if (window.UI && typeof UI.mount === 'function' && document.readyState !== 'loading') UI.mount(head);   // 標題左邊的圖示(頁面載入那一下 js/ui.js 會畫,之後重畫的自己掛)
     root.append(
-      h('div', { class: 'page-head' },
-        h('h1', null, '程度檢測')),
+      head,
       h('div', { class: 'diag-intro' },
         h('p', { class: 'mock-tags' },
           h('span', { class: 'mock-tag' }, items.length + ' 題'),
@@ -231,7 +234,7 @@
       kicker: (p ? p.name + ' · ' : '') + (st.finishedAt || '').slice(0, 10),
       score, total,
       stats: [['參考級距', band]],
-      note: '級距為估算，非正式成績',
+      note: '級距為估算 · 非正式成績',
       primary: { label: '去刷題', href: 'practice.html' },
       links: [{ label: '列印 / 存成 PDF', onClick: () => window.print() }, { label: '再測一次', onClick: retest, attrs: GATE }],   // 再測一次:沒登入時先攔下
       earnId: 'diag',

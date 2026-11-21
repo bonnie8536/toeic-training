@@ -45,6 +45,7 @@
 
     function render() {
       document.title = '不規則動詞表 - 衝衝英文';
+      document.documentElement.classList.remove('vb-quizzing');   // 回到動詞表:章節導覽回來
       root.innerHTML = '';
       root.append(h('div', { class: 'page-head' },
         h('canvas', { class: 'hub-art', 'data-doodle': 'verbs', 'data-size': '40', 'aria-hidden': 'true' }), h('h1', null, '不規則動詞表')));
@@ -55,7 +56,7 @@
 
       /* 工具列:搜尋、級別、變化型、遮住、測驗 */
       const search = h('input', {
-        class: 'modal-input', type: 'search', value: keyword, placeholder: '找動詞（英文或中文）',
+        class: 'modal-input', type: 'search', value: keyword, placeholder: '找動詞',
         style: 'max-width:200px;flex:none',
       });
       search.addEventListener('input', () => { keyword = search.value; redraw(); });
@@ -137,7 +138,7 @@
     }
 
     /* ================= 測驗:給原形與中文,填過去式與過去分詞 ================= */
-    /* 測驗進行中在 <html> 加 vb-quizzing:文法頁左邊的章節導覽收起來(style.css) */
+    /* 測驗進行中與結算畫面在 <html> 加 vb-quizzing:文法頁左邊的章節導覽收起來(style.css),結算卡才會置中;回動詞表(render)時拿掉 */
     const quizClass = on => document.documentElement.classList.toggle('vb-quizzing', on);
     function startQuiz(list) {
       if (list.length < QUIZ_MIN) return;
@@ -220,7 +221,6 @@
 
       function summary() {
         f.leave();
-        quizClass(false);
         root.innerHTML = '';
         const ok = results.filter(Boolean).length;
         const wrongList = items.filter((x, i) => !results[i]);

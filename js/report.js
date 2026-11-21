@@ -195,7 +195,7 @@
     if (!explainEl || !ctx || ctx.m === undefined || ctx.id === undefined || ctx.id === null || ctx.id === '') return null;
     const have = explainEl.querySelectorAll ? explainEl.querySelectorAll('.report-row') : [];
     if (have && have.length) return have[0];
-    const btn = h('button', { class: 'btn report-btn', type: 'button', 'data-gate': '', 'aria-label': '回報題目，' + partOf(ctx) + '，' + ctx.id }, '回報題目');
+    const btn = h('button', { class: 'btn report-btn', type: 'button', 'data-gate': '', 'aria-label': '回報題目 ' + partOf(ctx) + ' ' + ctx.id }, '回報題目');
     btn.addEventListener('click', () => open(ctx, btn));
     const row = h('div', { class: 'report-row' }, btn);
     explainEl.append(row);

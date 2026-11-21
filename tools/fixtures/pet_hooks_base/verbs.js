@@ -11,15 +11,15 @@
     const VERBS = (window.TOEIC && TOEIC.verbs) || [];
 
     if (!VERBS.length) {
-      root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '動詞表準備中，稍後再來。'));
+      root.append(UI.empty({ pose: 'sleep', text: '動詞表準備中', action: { label: '重新整理', onClick: () => location.reload() } }));
       return;
     }
 
     const TYPES = [
-      { k: 'AAA', name: '三態同形', hint: '' },
-      { k: 'ABB', name: '後兩個同形', hint: '過去式與過去分詞相同' },
-      { k: 'ABA', name: '頭尾同形', hint: '過去分詞與原形相同' },
-      { k: 'ABC', name: '三態都不同', hint: '' },
+      { k: 'AAA', name: '三態同形' },
+      { k: 'ABB', name: '後兩個同形' },
+      { k: 'ABA', name: '頭尾同形' },
+      { k: 'ABC', name: '三態都不同' },
     ];
     const LEVELS = ['全部', '初級', '中級', '進階'];
 
@@ -27,6 +27,7 @@
     const forms = s => String(s).split('/').map(x => x.trim().toLowerCase()).filter(Boolean);
     const hit = (input, answer) => forms(answer).includes(String(input).trim().toLowerCase());
 
+    const QUIZ_MIN = 4;   // 測驗至少要有幾個字
     let level = '全部';
     let type = '全部';
     let keyword = '';
@@ -45,7 +46,8 @@
     function render() {
       document.title = '不規則動詞表 - 衝衝英文';
       root.innerHTML = '';
-      root.append(h('div', { class: 'page-head' }, h('h1', null, '不規則動詞表')));
+      root.append(h('div', { class: 'page-head' },
+        h('canvas', { class: 'hub-art', 'data-doodle': 'verbs', 'data-size': '40', 'aria-hidden': 'true' }), h('h1', null, '不規則動詞表')));
 
       const list = pool();
       const st = store.get('verb_quiz', {});
@@ -76,25 +78,30 @@
             class: 'btn' + (masked ? ' on' : ''), type: 'button',
             onclick: () => { masked = !masked; render(); },
           }, masked ? '顯示答案' : '遮住自己想'),
-          h('button', { class: 'btn primary', type: 'button', 'data-gate': '', onclick: () => startQuiz(list) }, '測驗這些字'),   // 開始測驗:沒登入時 js/profile.js 先攔下
+          h('button', { class: 'btn primary vb-quiz-go', type: 'button', 'data-gate': '', disabled: list.length < QUIZ_MIN ? '' : null, onclick: () => startQuiz(pool()) }, '測驗這些字'),   // 開始測驗:沒登入時 js/profile.js 先攔下;不到 4 個字不能按
           h('span', { class: 'vb-count' }, list.length + ' 個字 · 已答對 ' + learned + ' / ' + VERBS.length)),
         chips);
 
       const body = h('div', null);
       root.append(body, h('div', { style: 'height:40px' }));
       drawTables(body, list);
+      UI.doodle(root);
 
       function redraw() {
         const l = pool();
         body.innerHTML = '';
         drawTables(body, l);
         root.querySelector('.vb-count').textContent = l.length + ' 個字 · 已答對 ' + learned + ' / ' + VERBS.length;
+        root.querySelector('.vb-quiz-go').disabled = l.length < QUIZ_MIN;
       }
     }
 
     function drawTables(box, list) {
       if (!list.length) {
-        box.append(h('p', { class: 'result-note' }, '沒有符合的動詞。'));
+        box.append(UI.empty({
+          pose: 'sleep', text: '沒有符合的動詞',
+          action: { label: '清除篩選', onClick: () => { level = '全部'; type = '全部'; keyword = ''; render(); } },
+        }));
         return;
       }
       TYPES.forEach(t => {
@@ -103,7 +110,6 @@
         box.append(h('div', { class: 'exercise-head', style: 'margin-top:26px' },
           h('h2', null, t.name, h('span', { class: 'vb-code' }, t.k)),
           h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, items.length + ' 個')));
-        if (t.hint) box.append(h('p', { class: 'result-note', style: 'margin:0 0 10px' }, t.hint));
 
         const tbl = h('table', { class: 'gx-table vb-table' },
           h('tr', null, h('th', null, '原形'), h('th', null, '過去式'), h('th', null, '過去分詞'), h('th', null, '意思')));
@@ -131,8 +137,10 @@
     }
 
     /* ================= 測驗:給原形與中文,填過去式與過去分詞 ================= */
+    /* 測驗進行中在 <html> 加 vb-quizzing:文法頁左邊的章節導覽收起來(style.css) */
+    const quizClass = on => document.documentElement.classList.toggle('vb-quizzing', on);
     function startQuiz(list) {
-      if (list.length < 4) { alert('至少要有 4 個字才能測驗，先放寬篩選條件。'); return; }
+      if (list.length < QUIZ_MIN) return;
       const st = store.get('verb_quiz', {});
       const shuffle = arr => {
         const a = [...arr];
@@ -150,25 +158,15 @@
       const results = [];
       let cur = 0;
       document.title = '動詞測驗 - 衝衝英文';
+      /* 專心模式加即時回饋條:答完底部變成「答對」或「答錯 · 正解 …」加「下一題」。第一次作答後關閉才要確認 */
+      const f = UI.focus.enter({ total: items.length, onExit: () => { quizClass(false); render(); }, confirmExit: true });
+      f.dirty(false);
+      quizClass(true);
       draw();
 
       function draw() {
         root.innerHTML = '';
-        root.append(h('div', { class: 'drill-top' },
-          h('h1', null, '動詞測驗 ', h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' }, '第 ' + (cur + 1) + ' / ' + items.length + ' 題')),
-          h('a', {
-            href: 'grammar.html?ref=verbs', style: 'font-size:13.5px;margin-left:auto',
-            onclick: e => { e.preventDefault(); render(); },
-          }, '← 回動詞表')));
-        const nav = h('div', { class: 'q-nav' });
-        items.forEach((x, i) => {
-          let cls = i === cur ? 'cur' : '';
-          if (results[i] === true) cls += ' ok';
-          if (results[i] === false) cls += ' ng';
-          nav.append(h('button', { class: cls.trim(), disabled: '' }, String(i + 1)));
-        });
-        root.append(nav);
-
+        f.progress(cur + 1);
         const v = items[cur];
         /* 作答框、「對答案」標 data-gate(跟聽寫的作答框一樣):開始之後別的分頁登出、換帳號,或這台的帳號資料夾還沒灌過,
            js/profile.js 讓作答框打不進字、按鍵(包括 Enter)就開「重新整理」卡,不對答案,打好的字留著。
@@ -189,6 +187,7 @@
           st2[v.id] = { ok, t: Date.now() };
           store.set('verb_quiz', st2);
           logAttempt('iv', v.id, ok ? 1 : 0, ok, { q: v.base, x: past.value + ' / ' + pp.value, a: v.past + ' / ' + v.pp });
+          f.dirty(true);
           [past, pp].forEach((inp, i) => {
             inp.disabled = true;
             inp.classList.add((i === 0 ? okPast : okPp) ? 'vb-ok' : 'vb-no');
@@ -196,16 +195,13 @@
           const isLast = cur === items.length - 1;
           after.append(
             h('div', { class: 'explain' },
-              h('div', { class: 'verdict ' + (ok ? 'ok' : 'bad') },
-                ok ? '答對了' : '答錯 · 正解 ' + v.past + ' / ' + v.pp),
-              h('div', null, v.base + ' ' + v.zh + (v.note ? '。' + v.note : '')),
-              v.example ? h('div', { class: 'tr' }, v.example) : null),
-            h('div', { class: 'drill-nav-btns' },
-              h('button', {
-                class: 'btn primary', type: 'button',
-                onclick: () => { if (isLast) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
-              }, isLast ? '看本輪成績' : '下一題 →')));
-          after.querySelector('.btn').focus();
+              h('div', null, v.base + ' ' + v.zh),
+              v.note ? h('div', { class: 'vb-note' }, v.note) : null,
+              v.example ? h('div', { class: 'tr' }, v.example) : null));
+          f.feedback({
+            ok, answer: v.past + ' / ' + v.pp, next: isLast ? '看成績' : '下一題',
+            onNext: () => { if (isLast) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
+          });
         };
         [past, pp].forEach(inp => inp.addEventListener('keydown', e => {
           if (e.key !== 'Enter') return;
@@ -214,26 +210,32 @@
         }));
 
         root.append(h('div', { class: 'q-block' },
+          h('div', { class: 'vg-tag' }, '不規則動詞'),
           h('div', { class: 'vb-stem' }, v.base, h('span', null, v.zh)),
-          h('div', { class: 'vb-inputs' }, past, pp,
-            h('button', { class: 'btn primary', type: 'button', 'data-gate': '', onclick: submit }, '對答案')),
+          h('div', { class: 'vb-inputs' }, past, pp),
           after));
+        f.foot([h('button', { class: 'btn primary', type: 'button', 'data-gate': '', onclick: submit }, '對答案')]);
         past.focus();
       }
 
       function summary() {
+        f.leave();
+        quizClass(false);
         root.innerHTML = '';
         const ok = results.filter(Boolean).length;
         const wrongList = items.filter((x, i) => !results[i]);
-        root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-          h('h2', null, '答對 ' + ok + ' / ' + items.length)));
+        const card = UI.result({
+          score: ok, total: items.length, kicker: '不規則動詞',
+          primary: { label: '再做一次', onClick: () => startQuiz(list) },
+          links: [{ label: '回動詞表', onClick: () => render() }],
+        });
+        root.append(card.el);
+        card.el.querySelector('.result-go').setAttribute('data-gate', '');   // 跟「測驗這些字」一樣
         if (wrongList.length) {
-          root.append(h('div', { class: 'vq-list' }, wrongList.map(v =>
-            h('div', { class: 'vq-item bad' }, h('b', null, v.base), h('span', null, v.past + ' / ' + v.pp), h('i', null, v.zh)))));
+          root.append(UI.detail('答錯的動詞 ' + wrongList.length + ' 個', [h('div', { class: 'vq-list' }, wrongList.map(v =>
+            h('div', { class: 'vq-item bad' }, h('b', null, v.base), h('span', null, v.past + ' / ' + v.pp), h('i', null, v.zh))))], { wrong: 0 }));
         }
-        root.append(h('div', { class: 'drill-nav-btns' },
-          h('button', { class: 'btn primary', type: 'button', 'data-gate': '', onclick: () => startQuiz(list) }, '再測一輪'),   // 跟「測驗這些字」一樣
-          h('button', { class: 'btn', type: 'button', onclick: () => render() }, '回動詞表')));
+        try { card.heading.focus({ preventScroll: true }); } catch (e) { /* 沒有焦點也照常顯示 */ }
         window.scrollTo(0, 0);
       }
     }

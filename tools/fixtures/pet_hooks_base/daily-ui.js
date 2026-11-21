@@ -94,11 +94,12 @@
 
   /* 只有標題給讀屏用的 h1(專心模式與結算卡上沒有頁首) */
   function srTitle(text) { return h('h1', { class: 'daily-sr' }, text); }
-  /* 題目拿不到:整頁一個空狀態,出口是重新整理 */
+  /* 題目拿不到:整頁一個空狀態,出口是重新整理。共用元件沒載到時換成 uiReady 那一塊(重新整理、回首頁) */
   function failView() {
     root.replaceChildren(srTitle('每日練習'), window.UI
-      ? UI.empty({ pose: 'sleep', text: '題目載入失敗', action: { label: '重新整理', onClick: () => location.reload() } })
+      ? UI.empty({ pose: 'sleep', text: '題目載入失敗', action: { label: '重新整理', onClick: () => location.reload() }, links: [{ label: '回首頁', href: 'index.html' }] })
       : h('p', { class: 'daily-sub' }, '題目載入失敗'));
+    if (!window.UI) uiReady();
   }
 
   /* ---------- daily.html 沒有指定項目:同一張卡 ---------- */
@@ -173,7 +174,9 @@
       const foot = document.querySelector('.quiz-foot');
       const footTop = foot ? foot.getBoundingClientRect().top : window.innerHeight;
       const need = el.getBoundingClientRect().bottom + 12 - footTop;
-      const room = stem.getBoundingClientRect().top - 64;   // 作答列高 52,再留一點
+      /* 題目最上面那一行(題型標籤)不捲到作答列底下:照作答列實際的下緣算,再留 8 */
+      const head = box.firstElementChild || stem, bar = document.querySelector('.topbar');
+      const room = head.getBoundingClientRect().top - (bar ? bar.getBoundingClientRect().bottom : 52) - 8;
       const by = Math.min(need, room);
       if (by > 0) window.scrollBy({ top: by, behavior: 'smooth' });
     }

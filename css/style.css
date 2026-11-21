@@ -3079,6 +3079,8 @@ html:not(.doodle-ready) .module-card.tile-featured, .module-card.tile-featured:h
   .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured) .tile-art { grid-area: art; width: 48px !important; height: 48px !important; margin: 0 14px 0 0; }
   .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured) h2 { grid-area: name; align-self: end; }
   .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured) p { grid-area: num; align-self: start; margin-top: 2px; }
+  /* 沒有數字那一行(錯題本沒有待複習):名稱在列裡垂直置中,跟其他兩行字的列對齊 */
+  .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured):has(> p:empty) h2 { grid-row: 1 / span 2; align-self: center; }
   .tile-grid:has(> .tile-featured) > .module-card.tile:not(.tile-featured)::after {
     content: '›'; grid-area: go; justify-self: end; margin-left: 12px; font-size: 22px; line-height: 1; color: var(--ink-soft);
   }
@@ -3443,6 +3445,8 @@ a.result-go:hover { text-decoration: none; }
 .result-card.is-inline .result-chick.is-pelican { margin: -11px auto -5px; }
 .result-card.is-inline .result-kicker { margin-top: 8px; }
 .result-card.is-inline .result-actions { margin-top: 20px; }
+/* 閱讀:內嵌結算卡後面那一列「再做一次」跟卡片一樣置中(卡片的鵜鶘、分數、點心都置中) */
+.result-card.is-inline + .drill-nav-btns { justify-content: center; margin-top: 16px; }
 .result-card .result-actions:empty { display: none; }
 /* 只有點心列(UI.rewardRow):對話、寫作。拿到點心時是膠囊,只有字時是一行灰字,都沒有時不佔高度 */
 .ui-reward-row { display: flex; justify-content: center; }
@@ -3906,5 +3910,21 @@ html.is-quiz .quiz-bar button.quiz-count:hover { background: var(--line); }
 .module-card.tile p:empty { display: none; }
 /* 寫作首頁:標題(左邊有圖示)下面一行標籤 */
 .wr-home-tag { margin: -12px 0 0; color: var(--ink-light); font-size: var(--fs-sm); }
+html:not(.authed) .wr-home-tag { display: none; }   /* 訪客沒有自動儲存也沒有老師:不顯示 */
 
 /* ---- */
+
+/* 觸控裝置的點擊範圍至少 44×44(滑鼠不影響):頂欄品牌與頭像、頭像選單、頁尾連結、練習設定的按鈕與下拉、每日目標 */
+@media (pointer: coarse) {
+  .brand, .profile-btn { min-height: 44px; }
+  .pm-item { min-height: 44px; }
+  .foot-links { row-gap: 0; }
+  .foot-links a { display: inline-flex; align-items: center; min-height: 44px; }
+  .practice-panel .btn, .practice-panel .cfg-select, .review-row .btn { min-height: 44px; }
+  .cfg-part-check { min-height: 44px; }
+  .pet-seg-b { min-height: 44px; }
+}
+/* 欄位旁的「選填」小標籤(題目回報的補充說明) */
+.auth-opt { margin-left: 4px; padding: 1px 8px; border-radius: var(--r-full); background: var(--bg-soft); font-size: var(--fs-xs); font-weight: 400; color: var(--ink-soft); }
+/* 404:空狀態的樣子,文字是 h1(頁面唯一的標題) */
+.nf-empty h1.ui-empty-text { font-size: var(--fs-xl); font-family: var(--round); color: var(--ink); }

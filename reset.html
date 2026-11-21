@@ -86,8 +86,8 @@ if (/type=recovery/.test(location.hash)) sessionStorage.setItem('tr_pw_recovery'
     return;
   }
 
-  const pw = h('input', { class: 'modal-input', type: 'password', placeholder: '新密碼（至少 8 碼）', autocomplete: 'new-password' });
-  const pw2 = h('input', { class: 'modal-input', type: 'password', placeholder: '再輸入一次', autocomplete: 'new-password' });
+  const pw = h('input', { class: 'modal-input', type: 'password', placeholder: '新密碼 · 至少 8 碼', 'aria-label': '新密碼', autocomplete: 'new-password' });
+  const pw2 = h('input', { class: 'modal-input', type: 'password', placeholder: '再輸入一次', 'aria-label': '再輸入一次新密碼', autocomplete: 'new-password' });
   const msg = h('div', { style: 'color:var(--bad);font-size:13.5px;margin-top:8px;min-height:20px' });
   const btn = h('button', { class: 'btn primary', type: 'button', onclick: async () => {
     msg.textContent = '';
@@ -98,7 +98,7 @@ if (/type=recovery/.test(location.hash)) sessionStorage.setItem('tr_pw_recovery'
       await CLOUD.updatePassword(pw.value);
       sessionStorage.removeItem('tr_pw_recovery');
       draw(h('p', { class: 'result-note' }, '密碼已更新'),
-        h('a', { class: 'btn primary', href: 'index.html' }, '回首頁開始練習'));
+        h('a', { class: 'btn primary', href: 'index.html' }, '回首頁'));
     } catch (e) { msg.textContent = e.message; btn.disabled = false; }
   } }, '更新密碼');
   draw(h('p', { class: 'result-note' }, '帳號：' + (CLOUD.user.email || '')),

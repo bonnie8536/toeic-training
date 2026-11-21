@@ -422,9 +422,9 @@ const cases = {
     const views = ['checking', 'pending', 'slow', 'failed', 'refunded', 'missing', 'noorder', 'login', 'error'].map(s => v(s));
     const all = [paid, year, five, test].concat(views);
     const checks = [
-      paid.title === '付款成功' && paid.lines[0] === '學生方案 一個月 · 199' + NB + '元',
-      year.lines[0] === '老師方案 30' + NB + '位以內 一年 · 8,900' + NB + '元',
-      five.lines[0] === '寫作批改 5' + NB + '篇 · 650' + NB + '元',
+      paid.title === '付款成功' && paid.lines[0] === '學生方案 一個月 · NT$' + NB + '199',
+      year.lines[0] === '老師方案 30' + NB + '位以內 一年 · NT$' + NB + '8,900',
+      five.lines[0] === '寫作批改 5' + NB + '篇 · NT$' + NB + '650',
       test.title === '測試付款成功' && /退款/.test(test.lines.join('')),
       v('pending').title === '處理中', v('slow').title === '處理中', v('failed').title === '付款沒有完成',
       v('slow').actions.some(a => a.retry), v('login').actions.some(a => a.login),
@@ -563,7 +563,7 @@ const cases = {
   '老師方案按鈕:被站長改成學生的寫聯絡站長;無期限的既有或贈送老師寫不用買;站長與讀不到使用權不放;沒登入照樣放': async () => {
     const { K } = load(makeWorld());
     const s = (a, signedIn) => K.slotFor('teacher', { signedIn: signedIn !== false, access: a });
-    const ASK = '老師方案請寫信到 ' + CONTACT_EMAIL + ' 聯絡站長';
+    const ASK = '老師方案請寫信到 ' + CONTACT_EMAIL + ' 聯絡客服';
     const demoted = { teacher_purchase_allowed: false, is_owner: false, teacher_source: null };
     const legacyT = { teacher_purchase_allowed: true, is_owner: false, teacher_source: 'legacy', teacher_until: null, seats: null };
     const compT = { teacher_purchase_allowed: true, is_owner: false, teacher_source: 'comp', teacher_until: null, seats: 30 };
@@ -689,7 +689,7 @@ const cases = {
     const mask = box.parentNode;
     const checks = [
       /* 這裡開的是老師方案的視窗:第二輪複審起寫老師方案自己的定義(學生方案、批改的視窗照舊,見第二輪複審的案例) */
-      !!def && def.textContent === '老師方案開始計算後，用過任何一項需要方案的練習功能、有學生用邀請碼加入你的班級，或在教師後台查看過班上學生的練習進度，就算開始使用。',
+      !!def && def.textContent === '老師方案開始計算後，下列任一項就算開始使用：用過任何一項需要方案的練習功能、有學生用邀請碼加入你的班級、在教師後台查看過班上學生的練習進度。',
       /* 被拒絕後焦點回到視窗裡(第一輪複審) */
       inBox === box && D.dom.document.activeElement === submit,
       /* 視窗比畫面高時可以捲動(第一輪複審) */
@@ -809,7 +809,7 @@ const cases = {
     const norm = x => x.split(NB).join(' ');
     const checks = [
       !!s && refund.includes(norm(s)) && /需要方案的練習功能/.test(s) && !/批改/.test(s),
-      !!c && refund.includes(norm(c)) && /5 篇批改服務批改過其中一篇，就算開始使用。/.test(norm(c)) && !/練習功能/.test(c),
+      !!c && refund.includes(norm(c)) && /5 篇批改服務批改過其中一篇就算開始使用。/.test(norm(c)) && !/練習功能/.test(c),
       copyProblems(s).length === 0 && copyProblems(c).length === 0,
     ];
     return { ok: checks.every(Boolean), detail: checks.map(x => (x ? 'o' : 'x')).join('') + ' ' + JSON.stringify([s, c]) };
@@ -904,10 +904,10 @@ const cases = {
     const slowW = v('slow', null, { waited: true }), slowN = v('slow', { status: 'paid', item: 'student', months: 1, amount: 199, via: 'billing' });
     const all = [stu, tea, cre, un, back, back0, slowW, slowN, later, today];
     const checks = [
-      stu.lines[0] === '學生方案 一年 · 1,990' + NB + '元' && stu.lines[1] === '已經開通 · 使用到 2027/11/16',
-      tea.lines[0] === '老師方案 30' + NB + '位以內 一個月 · 890' + NB + '元' && tea.lines[1] === '已經開通 · 使用到 2026/12/01',
+      stu.lines[0] === '學生方案 一年 · NT$' + NB + '1,990' && stu.lines[1] === '已經開通 · 使用到 2027/11/16',
+      tea.lines[0] === '老師方案 30' + NB + '位以內 一個月 · NT$' + NB + '890' && tea.lines[1] === '已經開通 · 使用到 2026/12/01',
       cre.lines[1] === '已經加入 1' + NB + '篇批改。',   // 第三輪複審:以前寫「已經開通。」
-      un.title === '已收到付款' && un.lines.includes('開通需要站長處理') && un.lines.includes('站長會寫信給你') && !un.lines.some(l => /^已收到付款/.test(l))
+      un.title === '已收到付款' && un.lines.includes('開通需要客服處理') && un.lines.includes('客服會寫信給你') && !un.lines.some(l => /^已收到付款/.test(l))
         && !/我們/.test(un.lines.join('')) && !/已經開通/.test(un.lines.join('')),
       later.lines[1] === '已經開通 · 2026/11/17 開始 · 使用到 2026/12/17',
       today.lines[1] === '已經開通 · 使用到 2026/11/17',

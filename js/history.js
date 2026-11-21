@@ -245,7 +245,7 @@
   function row(rec, openNow) {
     const mod = MOD[rec.m] || { label: rec.m };
     const info = resolve(rec);
-    const stem = info ? info.stem : '（這題已從題庫移除）';
+    const stem = info ? info.stem : '題目已移除';
     const isScore = info && info.score !== undefined;
     const pickedText = !info ? '' : info.short !== undefined ? info.short : isScore ? info.score + ' / ' + info.n
       : info.options ? (rec.c === -1 || rec.c === undefined ? '未作答' : (rec.c >= 0 && info.options[rec.c] !== undefined ? LETTERS[rec.c] : String(info.picked || rec.c)))

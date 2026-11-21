@@ -15,9 +15,10 @@
   /* 「開始使用」的判定(跟 refund.html「怎樣算開始使用」同一件事),放在勾選框正下方。
      老師方案的功能(班級、學生進度)不是練習功能,所以老師方案另外寫一句(2026-10-17 第二輪複審)。
      學生方案與寫作批改各寫自己那一句,跟退款政策一字不差(第三輪複審:以前兩種共用一句,批改的視窗沒寫 5 篇的規則) */
-  const CONSENT_DEF = '方案開始計算後，登入並使用過任何一項需要方案的練習功能，就算開始使用。';
-  const CONSENT_DEF_CREDITS = '寫作真人批改以一篇為單位，批改完成的那一篇就算使用。5' + NB + '篇批改服務批改過其中一篇，就算開始使用。';
-  const CONSENT_DEF_TEACHER = '老師方案開始計算後，用過任何一項需要方案的練習功能、有學生用邀請碼加入你的班級，或在教師後台查看過班上學生的練習進度，就算開始使用。';
+  /* 每句最多一個逗號:條件用頓號列在冒號後面(退款政策 refund.html 同步改成同一句,意思不變) */
+  const CONSENT_DEF = '方案開始計算後，登入並使用過任何一項需要方案的練習功能就算開始使用。';
+  const CONSENT_DEF_CREDITS = '寫作真人批改以一篇為單位。批改完成的那一篇就算使用。5' + NB + '篇批改服務批改過其中一篇就算開始使用。';
+  const CONSENT_DEF_TEACHER = '老師方案開始計算後，下列任一項就算開始使用：用過任何一項需要方案的練習功能、有學生用邀請碼加入你的班級、在教師後台查看過班上學生的練習進度。';
   const GATEWAYS = Object.freeze({ S: 'https://core.newebpay.com/MPG/mpg_gateway', T: 'https://ccore.newebpay.com/MPG/mpg_gateway' });
   const FIELD_KEYS = ['MerchantID', 'TradeInfo', 'TradeSha', 'Version'];
   const LAST_KEY = 'tr_pay_last';            // 這個分頁最後建立的訂單 { o, at }(sessionStorage;藍新的「返回商店」不帶訂單編號)
@@ -37,7 +38,7 @@
     /* 無期限但有名額上限(例如站長送的 10 位):只賣名額比它多的方案 */
     moreSeats: n => '你的老師方案沒有期限\n' + (typeof n === 'number' ? '名額 ' + n + NB + '位以內\n' : '') + '需要更多名額再購買',
     today: '這次買的方案從今天開始',
-    askTeacher: '老師方案請寫信到 ' + MAIL + ' 聯絡站長',
+    askTeacher: '老師方案請寫信到 ' + MAIL + ' 聯絡客服',
     upgrade: '改買人數較多的方案從今天開始\n原本的方案剩下的天數不退差額',
     sending: '正在前往付款頁…',
     submit: '前往付款',
@@ -108,7 +109,7 @@
   }
 
   /* 價格頁某一組的購買區要放什麼。o = { signedIn, access };回 { button, note } 或 null(什麼都不放)。
-     沒登入時照樣放按鈕(按下去開登入)。老師方案:讀不到使用權、站長不放;被站長改成學生的人寫聯絡站長。 */
+     沒登入時照樣放按鈕(按下去開登入)。老師方案:讀不到使用權、網站擁有者不放;被改成學生的人寫聯絡客服。 */
   function slotFor(group, o) {
     const signedIn = !!(o && o.signedIn === true);
     const a = o && isObj(o.access) ? o.access : null;
@@ -242,7 +243,7 @@
   }
 
   function digits(n) { return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
-  function money(n) { return digits(n) + NB + '元'; }
+  function money(n) { return 'NT$' + NB + digits(n); }   // 跟價格頁同一個寫法
   /* 購買視窗裡的價格:跟價格頁的價格表同一個寫法(小字 NT$ 加數字) */
   function priceEl(n) { return h('span', { class: 'buy-opt-amt' }, h('small', null, 'NT$' + NB), digits(n)); }
   /* 期間的寫法跟價格頁一樣:一個月、一年 */
@@ -299,7 +300,7 @@
         '刷卡成功後會出現在「我的」頁的方案與付款', ASK_LINE],
         [{ text: '再查一次', retry: true, primary: true }, ME], 'wait');
       case 'paid': return v('付款成功', [line, paidLine(row)], [nextAction(row), ME], 'ok');
-      case 'unapplied': return v('已收到付款', [line, '開通需要站長處理', '站長會寫信給你', ASK_LINE],
+      case 'unapplied': return v('已收到付款', [line, '開通需要客服處理', '客服會寫信給你', ASK_LINE],
         [Object.assign({ primary: true }, ME)], 'wait');
       case 'test': return v('測試付款成功', [line, '沒有開通任何東西', '請到藍新後台退款', '再到站長後台記下退款'],
         [{ text: '前往站長後台', href: 'admin.html', primary: true }], 'ok');
@@ -471,7 +472,7 @@
       head,
       h('p', { class: 'trial-who' }, (C && C.user && C.user.email) || ''),
       form,
-      h('p', { class: 'auth-fine' }, '只接受信用卡。按「前往付款」後到藍新金流的付款頁刷卡。'),
+      h('p', { class: 'auth-fine' }, '只接受信用卡。點「前往付款」後到藍新金流的付款頁刷卡。'),
       h('p', { class: 'auth-fine' }, '勾選的說明見',
         h('a', { href: 'terms.html', target: '_blank', rel: 'noopener' }, '服務條款'), '、退款的條件見',
         h('a', { href: 'refund.html', target: '_blank', rel: 'noopener' }, '退款政策')));

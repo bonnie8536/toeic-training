@@ -86,7 +86,7 @@
 
     /* 什麼都沒有:整頁一個空狀態 */
     if (!items.length && !links.length) {
-      root.append(UI.empty({ pose: 'sleep', text: '沒有錯題', action: { label: '去刷題', href: 'practice.html' } }));
+      root.append(window.UI ? UI.empty({ pose: 'sleep', text: '沒有錯題', action: { label: '去刷題', href: 'practice.html' } }) : h('p', null, '沒有錯題'));
       art(root);
       return;
     }
@@ -105,6 +105,7 @@
 
   /* ================= 複習輪 ================= */
   function runner(list) {
+    if (!uiReady()) return;   // 共用元件沒載到:說一聲、給重新整理,不在這裡丟錯
     onHome = false;
     let cur = 0, cleared = 0;
     let player = null;
@@ -144,7 +145,9 @@
       const foot = document.querySelector('.quiz-foot');
       const footTop = foot ? foot.getBoundingClientRect().top : window.innerHeight;
       const need = el.getBoundingClientRect().bottom + 12 - footTop;
-      const room = stem.getBoundingClientRect().top - 64;   // 作答列高 52,再留一點
+      /* 題目最上面那一行(題型標籤)不捲到作答列底下:照作答列實際的下緣算,再留 8 */
+      const head = box.firstElementChild || stem, bar = document.querySelector('.topbar');
+      const room = head.getBoundingClientRect().top - (bar ? bar.getBoundingClientRect().bottom : 52) - 8;
       const by = Math.min(need, room);
       if (by > 0) window.scrollBy({ top: by, behavior: 'smooth' });
     }
@@ -211,7 +214,7 @@
 
       if (item.kind === 'p5') {
         block.append(
-          h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 5 · ' + q.category)),
+          h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 5 · ' + catLabel(q.category))),
           h('div', { class: 'q-text' }, q.question),
           optButtons(q, (oi, opts) => {
             if (done) return; done = true;

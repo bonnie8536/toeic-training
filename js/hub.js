@@ -1,6 +1,6 @@
 /* 分組頁(learn.html、warmup.html、drill.html)的進度數字。
    只讀不寫:從目前這個學生資料夾(js/common.js 的 store)讀完成紀錄,把磚上的總數換成進度。
-   - 文法基礎:上過幾課。主打磚改成「上到第 N 課」,按鈕改成「繼續上課」。
+   - 文法基礎:上過幾課。主打磚改成「N / 總數 課」,按鈕改成「繼續上課」。
    - 自然發音:「上過 N / 總數 課」。
    - 錯題本:待複習的題數,畫成磚右上角的數字徽章;0 題就不畫徽章,第二行維持空白。
    總課數讀磚上原本寫的數字(不載入課程資料),讀不到的就維持靜態文字。
@@ -77,7 +77,7 @@
     if (g) {
       const p = g.querySelector('p'), total = totalOf(g, p), n = doneCount('grammar_done', total);
       if (p && n > 0) {
-        p.textContent = g.classList.contains('tile-featured') ? '上到第 ' + n + ' 課' : '上過 ' + n + ' / ' + total + ' 課';
+        p.textContent = n + ' / ' + total + ' 課';   // 進度一律寫「上過的課數 / 總數 課」(兩塊磚同一種說法)
         const go = g.querySelector('.tile-go');
         if (go && g.classList.contains('tile-featured')) go.textContent = '繼續上課';
       }
@@ -85,7 +85,7 @@
     const ph = tile('phonics.html');
     if (ph) {
       const p = ph.querySelector('p'), total = totalOf(ph, p), n = doneCount('phonics_done', total);
-      if (p && n > 0) p.textContent = '上過 ' + n + ' / ' + total + ' 課';
+      if (p && n > 0) p.textContent = n + ' / ' + total + ' 課';
     }
   }
 

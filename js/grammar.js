@@ -156,7 +156,7 @@
       /* 課程清單包在 data-nosnippet 裡(建立時就帶,不事後加):Google 搜尋結果的摘要不拿課名清單,改用頁面說明 */
       const units = h('div', { 'data-nosnippet': '' },
         todo ? h('div', { class: 'gx-continue' },
-          h('a', { class: 'btn primary', href: 'grammar.html?u=' + todo.id }, '繼續上課'),
+          h('a', { class: 'btn primary', href: 'grammar.html?u=' + todo.id }, UNITS.some(u => done[u.id]) ? '繼續上課' : '開始'),   // 一課都還沒上過:「開始」(跟分組頁的磚同一個說法)
           h('span', null, STAGES[stageOf(todo)].name.replace(/\s.*$/, '') + ' 第 ' +
             (UNITS.filter(u => stageOf(u) === stageOf(todo)).indexOf(todo) + 1) + ' 課')) : null,
         h('div', { class: 'exercise-head' },
@@ -282,7 +282,7 @@
             });
             const box = h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (results[qi] ? 'ok' : 'bad') },
-                results[qi] ? '答對了' : '答錯 · 正解 ' + LETTERS[q.answer]),
+                results[qi] ? '答對' : '答錯 · 正解 ' + LETTERS[q.answer]),
               h('div', null, q.explanation));
             /* 回報題目(js/report.js):題號跟上面 logAttempt('g') 同一套 */
             if (window.REPORT) REPORT.attach(box, { m: 'g', id: u.id + ':' + qi });
@@ -319,8 +319,8 @@
         inline: true, score: ok, total: u.quiz.length, kicker: '小試身手', earnId: 'g:' + u.id,
         primary: next ? { label: '下一課', href: 'grammar.html?u=' + next.id } : back,
         links: [
-          cat ? { label: '刷這個考點的題目', href: 'practice.html?part=5&cat=' + encodeURIComponent(cat) } : null,
-          VERB_UNITS.includes(u.id) ? { label: '查不規則動詞表', href: 'grammar.html?ref=verbs' } : null,
+          cat ? { label: '去刷題', href: 'practice.html?part=5&cat=' + encodeURIComponent(cat) } : null,
+          VERB_UNITS.includes(u.id) ? { label: '看動詞表', href: 'grammar.html?ref=verbs' } : null,
           next ? back : null,
         ],
       });

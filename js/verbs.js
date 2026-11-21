@@ -194,13 +194,17 @@
             inp.classList.add((i === 0 ? okPast : okPp) ? 'vb-ok' : 'vb-no');
           });
           const isLast = cur === items.length - 1;
+          /* 回饋條只放最常見的那一組(showed / shown);有兩種寫法時完整的放在解析裡 */
+          const first = (x) => String(x).split(/\s*\/\s*/)[0];
+          const many = /\//.test(v.past) || /\//.test(v.pp);
           after.append(
             h('div', { class: 'explain' },
               h('div', null, v.base + ' ' + v.zh),
+              many ? h('div', null, '過去式 ' + v.past + ' · 過去分詞 ' + v.pp) : null,
               v.note ? h('div', { class: 'vb-note' }, v.note) : null,
               v.example ? h('div', { class: 'tr' }, v.example) : null));
           f.feedback({
-            ok, answer: v.past + ' / ' + v.pp, next: isLast ? '看成績' : '下一題',
+            ok, answer: first(v.past) + ' / ' + first(v.pp), next: isLast ? '看成績' : '下一題',
             onNext: () => { if (isLast) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
           });
         };

@@ -956,7 +956,7 @@
         earnId: 'fall',   // 跟掛勾同一個來源 id
         compact: true, big: String(score), unit: '分', flag: isBest ? '新紀錄' : '', pose: 'happy',
         stats: [['用時', fmtTime(playMs) + (fastest && prev.n ? ' 最快' : '')], ['一次打對', firstTry + ' / ' + total]],
-        note: (src.live.length > 1 ? '這個組合' : banksOnly ? '這個單字本' : '這個字庫') + '已通關 ' + times + ' 次' + (prev.n && !fastest ? ' · 最快 ' + fmtTime(prev.secs * 1000) : ''),
+        note: (src.live.length > 1 ? '這個組合' : banksOnly ? '這個單字本' : '這組字') + '已通關 ' + times + ' 次' + (prev.n && !fastest ? ' · 最快 ' + fmtTime(prev.secs * 1000) : ''),
         primary: { label: '再做一次', onClick: () => startGame(modes, levelName, speedKey, dir) },
         links: [{ label: '回單字訓練', onClick: renderHome }],
       }, '漏接後補回來的字 ' + back.length + ' 個', back.length ? [wordRows(back, false)] : []);

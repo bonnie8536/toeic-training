@@ -88,7 +88,7 @@
           h('div', { class: 'body' },
             h('div', { class: 'meta' },
               h('span', { class: 'badge cat' }, a.category),
-              h('span', { class: 'badge ' + levelBadgeClass(a.level) }, a.level),
+              h('span', { class: 'badge ' + levelBadgeClass(a.level) }, levelLabel(a.level)),
               h('span', null, '約 ' + a.readTime + ' 分鐘')),
             h('h3', null, a.title),
             h('div', { class: 'zh' }, a.titleZh),
@@ -127,7 +127,7 @@
       h('div', { class: 'meta' },
         h('a', { href: 'reading.html' }, '← 回閱讀訓練'),
         h('span', { class: 'badge cat' }, a.category),
-        h('span', { class: 'badge ' + levelBadgeClass(a.level) }, a.level),
+        h('span', { class: 'badge ' + levelBadgeClass(a.level) }, levelLabel(a.level)),
         h('span', null, '約 ' + a.readTime + ' 分鐘')),
       h('h1', null, a.title),
       h('div', { class: 'zh-title' }, a.titleZh));

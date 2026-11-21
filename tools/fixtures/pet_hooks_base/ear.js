@@ -247,7 +247,7 @@
         save('s', q.id, true);
         f.dirty(true);
         startBtn.disabled = false;
-        startBtn.textContent = '▶ 再來一次';
+        startBtn.textContent = '▶ 再做一次';
         startBtn.classList.remove('primary');
         running = false;
         if (!result.children.length) {

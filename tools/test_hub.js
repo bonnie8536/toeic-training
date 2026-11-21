@@ -91,7 +91,7 @@ T['沒有 store 或讀不到:磚維持靜態數字、不丟錯'] = async () => {
   assert.equal(text(b.tiles.p), '8 章 54 課');
   assert.equal(b.tiles.w.querySelector('.tile-badge'), null);
 };
-T['文法上過幾課:主打磚「上到第 N 課」加按鈕「繼續上課」;沒上過就維持「8 章 94 課」與「開始」'] = async () => {
+T['文法上過幾課:主打磚「N / 總數 課」加按鈕「繼續上課」;沒上過就維持「8 章 94 課」與「開始」'] = async () => {
   const none = boot({ tiles: LEARN, store: makeStore({}) });
   await none.ctx.HUB.paint();
   assert.equal(text(none.tiles.g), '8 章 94 課');
@@ -99,19 +99,19 @@ T['文法上過幾課:主打磚「上到第 N 課」加按鈕「繼續上課」;
   const st = makeStore({ grammar_done: obj(12, (i) => 'ga-' + i) });
   const h = boot({ tiles: LEARN, store: st });
   await h.ctx.HUB.paint();
-  assert.equal(text(h.tiles.g), '上到第 12 課');
+  assert.equal(text(h.tiles.g), '12 / 94 課');
   assert.equal(h.tiles.g.querySelector('.tile-go').textContent, '繼續上課');
   assert.ok(h.tiles.g.querySelector('.tile-go').classList.contains('primary'), '主按鈕還是實色');
   assert.equal(text(h.tiles.r), '40 篇文章', '沒有進度的磚不動');
 };
-T['自然發音「上過 N / 總數 課」;記錄比總數多時最多顯示總數;重畫不會把總數讀成進度'] = async () => {
+T['自然發音「N / 總數 課」(跟文法同一種說法);記錄比總數多時最多顯示總數;重畫不會把總數讀成進度'] = async () => {
   const st = makeStore({ phonics_done: obj(7, (i) => 'pa-' + i), grammar_done: obj(120, (i) => 'g-' + i) });
   const h = boot({ tiles: LEARN, store: st });
   await h.ctx.HUB.paint();
-  assert.equal(text(h.tiles.p), '上過 7 / 54 課');
-  assert.equal(text(h.tiles.g), '上到第 94 課');
+  assert.equal(text(h.tiles.p), '7 / 54 課');
+  assert.equal(text(h.tiles.g), '94 / 94 課');
   await h.ctx.HUB.paint();
-  assert.equal(text(h.tiles.p), '上過 7 / 54 課');
+  assert.equal(text(h.tiles.p), '7 / 54 課');
   assert.equal(h.tiles.p.dataset.total, '54');
 };
 T['錯題本徽章:Part 5、聽力 1、2、片語答錯的才算;模擬考答錯的那筆比較新就算、比較舊不算;題組的鍵不算;0 題不畫徽章、第二行維持空白'] = async () => {

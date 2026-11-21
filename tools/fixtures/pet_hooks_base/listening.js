@@ -126,6 +126,7 @@
   /* opts.units:直接給這一輪的單元 [{ p, item }](錯題本複習,js/wrongbook.js 的 round 算好的),不呼叫 pickPool。
      opts.back:「回錯題本」的網址;opts.group:只複習的那一組(組名);opts.rest:這一組還沒輪到幾題(答錯的題數) */
   function startQuiz(root, config, opts) {
+    if (!uiReady()) return;   // 共用元件沒載到:說一聲、給重新整理,不在這裡丟錯
     opts = opts || {};
     const units = [];
     if (Array.isArray(opts.units)) opts.units.forEach(u => units.push(u));
@@ -145,6 +146,7 @@
     let handing = false;   // 交卷的確認視窗開著:這時再按交卷不算
     const f = UI.focus.enter({ total: units.length, onExit: () => { location.href = back; }, confirmExit: !instant, body: '還沒交卷的作答不會計分' });
     draw();
+    f.focusMain();
 
     function unitAnswered(i) {
       const u = units[i];
@@ -152,22 +154,26 @@
       return u.item.questions.every((q, qi) => sess[i].answers[qi] !== undefined);
     }
 
-    function go(i) { cur = i; draw(); window.scrollTo(0, 0); }
+    /* 換題:焦點到新題的題幹(按鈕整段重畫,不然焦點掉回頁面) */
+    function go(i) { cur = i; draw(); window.scrollTo(0, 0); f.focusMain(); }
 
-    /* 選了答案:重畫但捲動位置留著 */
-    function repaint() {
+    /* 交卷式選了答案:重畫但捲動位置留著、播放器照用同一個(正在播的不停),焦點回到剛選的那顆,讀屏念「已選 B」 */
+    function repaint(oi) {
       const y = window.scrollY;
-      draw();
+      f.keep(() => draw(true));
       window.scrollTo(0, y);
+      f.say('已選 ' + LETTERS[oi]);
     }
 
-    function draw() {
-      if (player) player.stop();
+    function draw(keepPlayer) {
       root.replaceChildren();
       f.progress(cur + 1);
       const u = units[cur];
       const state = sess[cur];
-      player = makePlayer(u.item.id, state);
+      if (!keepPlayer || !player) {
+        if (player) player.stop();
+        player = makePlayer(u.item.id, state);
+      }
       if (u.p === '1') drawP1(u.item, state);
       else if (u.p === '2') drawP2(u.item, state);
       else drawSet(u.p, u.item, state);
@@ -216,7 +222,7 @@
       const row = h('div', { class: 'letter-row' });
       for (let i = 0; i < count; i++) {
         row.append(h('button', {
-          class: 'letter-big' + (chosen === i ? ' picked' : ''), 'data-gate': '',
+          class: 'letter-big' + (chosen === i ? ' picked' : ''), 'data-gate': '', 'aria-pressed': chosen === i ? 'true' : 'false',
           onclick: () => onPick(i),
         }, LETTERS[i]));
       }
@@ -229,12 +235,12 @@
       return box;
     }
 
-    /* verdict:false 時不寫「答對了」「答錯 · 正解」那一行(作答當下由底部回饋條寫) */
+    /* verdict:false 時不寫「答對」「答錯 · 正解」那一行(作答當下由底部回饋條寫) */
     function reveal(q, rec, transcript, m, verdict) {
       return h('div', null,
         withReport(h('div', { class: 'explain' },
           verdict === false ? null : h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-            rec.ok ? '答對了' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
+            rec.ok ? '答對' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
           h('div', null, q.explanation)), m, q.id),
         h('div', { class: 'transcript-box' },
           h('b', null, '逐字稿'),
@@ -260,7 +266,7 @@
               saveRec('1', q.id, oi, state.answers.ok);
               draw();
             })
-          : letterPick(4, state.answers.c, oi => { state.answers.c = oi; f.dirty(true); repaint(); }),
+          : letterPick(4, state.answers.c, oi => { state.answers.c = oi; f.dirty(true); repaint(oi); }),
         instant && rec ? reveal(q, rec, q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n'), 'l1', false) : null));
       if (instant && rec) drawFeedback(q, rec); else drawFoot(state.done);
     }
@@ -278,7 +284,7 @@
               saveRec('2', q.id, oi, state.answers.ok);
               draw();
             })
-          : letterPick(3, state.answers.c, oi => { state.answers.c = oi; f.dirty(true); repaint(); }),
+          : letterPick(3, state.answers.c, oi => { state.answers.c = oi; f.dirty(true); repaint(oi); }),
         instant && rec ? reveal(q, rec, q.question + '\n' + q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n'), 'l2', false) : null));
       if (instant && rec) drawFeedback(q, rec); else drawFoot(state.done);
     }
@@ -300,7 +306,7 @@
             else cls += ' plain';
           } else if (!instant && chosen === oi) cls += ' picked';
           opts.append(h('button', {
-            class: cls, disabled: instant && done ? '' : null, 'data-gate': instant && done ? null : '',
+            class: cls, disabled: instant && done ? '' : null, 'data-gate': instant && done ? null : '', 'aria-pressed': instant ? null : chosen === oi ? 'true' : 'false',
             onclick: () => {
               state.answers[qi] = oi;
               if (instant) {
@@ -310,7 +316,7 @@
                 draw();
               } else {
                 f.dirty(true);
-                repaint();
+                repaint(oi);
               }
             },
           }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
@@ -320,7 +326,7 @@
           opts,
           instant && done ? withReport(h('div', { class: 'explain' },
             h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
-              chosen === q.answer ? '答對了' : '答錯 · 正解 ' + LETTERS[q.answer]),
+              chosen === q.answer ? '答對' : '答錯 · 正解 ' + LETTERS[q.answer]),
             h('div', null, q.explanation)), 'l' + p, qid(set, qi)) : null));
       });
       if (instant && complete) {
@@ -408,7 +414,7 @@
         kicker: parts.length === 1 ? '聽力 ' + PARTS[parts[0]].title : '聽力 Part ' + parts.join('、'),
         score: qCorrect, total: qTotal,
         stats: wrongN ? [['收進錯題本', wrongN + ' 題']] : null,
-        primary: { label: '再做一次', onClick: () => { stopReview(); card.destroy(); startQuiz(root, config); }, attrs: GATE },   // 跟「開始」一樣
+        primary: { label: '再做一次', onClick: () => { stopReview(); window.removeEventListener('pagehide', stopReview); card.destroy(); startQuiz(root, config); }, attrs: GATE },   // 跟「開始」一樣;這一輪的 pagehide 監聽一起拿掉,多做幾次不會累積
         links: [wrongN ? { label: '看錯題本', href: wbHref } : null, { label: '回題庫刷題', href: 'practice.html' }],
         earnId: 'l' + config[0].p,
       });
@@ -470,7 +476,7 @@
             opts,
             withReport(h('div', { class: 'explain' },
               h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-                rec.ok ? '答對了' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
+                rec.ok ? '答對' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
               h('div', null, q.explanation)), 'l' + u.p, qid(set, qi))));
         });
         const transcript = u.p === '3'

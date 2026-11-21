@@ -119,7 +119,7 @@
     const set = h('fieldset', { class: 'buy-opts' }, legend, h('div', { class: 'buy-opt-list' }, radios));
     const note = h('textarea', { class: 'auth-input rp-note', id: 'rp-note', name: 'note', rows: '3', maxlength: String(MAX_NOTE), autocomplete: 'off' });
     note.value = prev ? prev.n : '';
-    const field = h('div', { class: 'auth-field' }, h('label', { for: 'rp-note' }, '補充說明（可不填）'), note,
+    const field = h('div', { class: 'auth-field' }, h('label', { for: 'rp-note' }, '補充說明 ', h('span', { class: 'auth-opt' }, '選填')), note,
       h('p', { class: 'auth-fine' }, '補充說明會存在你的帳號資料裡\n班上的老師看得到'));
     const msg = h('p', { class: 'auth-msg', role: 'alert' });
     const submit = h('button', { class: 'btn primary auth-submit', type: 'submit' }, '送出');

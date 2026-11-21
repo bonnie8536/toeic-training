@@ -225,8 +225,8 @@ cases['選老師:名額三選一只有數字(從 PLANS 來)、選填的班級名
     name: !!nameIn && nameIn.attrs.maxlength,
     texts,
   };
-  const allowed = new Set(['名額', '10 位以內', '30 位以內', '60 位以內', '每月 390 元', '每月 890 元', '每月 1,490 元', '班級名稱', '空白就用「我的班級」', '方案說明']);
-  const ok = r.shown === true && seats.join('|') === '10 位以內 每月 390 元|30 位以內 每月 890 元|60 位以內 每月 1,490 元'
+  const allowed = new Set(['名額', '10 位以內', '30 位以內', '60 位以內', '每月 NT$ 390', '每月 NT$ 890', '每月 NT$ 1,490', '班級名稱', '空白就用「我的班級」', '方案說明']);
+  const ok = r.shown === true && seats.join('|') === '10 位以內 每月 NT$ 390|30 位以內 每月 NT$ 890|60 位以內 每月 NT$ 1,490'
     && r.def === 'true,false,false' && r.values === '10,30,60' && r.link === '方案說明 pricing.html _blank' && r.name === '30'
     && texts.every(t => allowed.has(t));
   return { ok, detail: JSON.stringify(r) };
@@ -236,7 +236,7 @@ cases['名額的價錢照 window.PLANS 畫(改價只改 plans-config)'] = async 
   const { card } = loadCard({ paid: true, plans: { student: { month: 199, year: 1990 }, teacher: { 10: 400, 30: 900, 60: 1500 }, teacherYearMonths: 10 } });
   await pick(card, 'teacher');
   const seats = card.byClass('auth-seat').map(l => norm(l.textContent).trim());
-  return { ok: seats.join('|') === '10 位以內 每月 400 元|30 位以內 每月 900 元|60 位以內 每月 1,500 元', detail: seats.join('|') };
+  return { ok: seats.join('|') === '10 位以內 每月 NT$ 400|30 位以內 每月 NT$ 900|60 位以內 每月 NT$ 1,500', detail: seats.join('|') };
 };
 
 cases['Email 註冊選老師:驗證過了、呼叫 signUp 之前存意向 {名額, 班名, Email};signUp 照舊只傳三個參數(不帶意向)'] = async () => {

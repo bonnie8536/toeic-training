@@ -286,14 +286,14 @@ const cases = {
     const r = P.billingLines(b, Date.parse('2026-10-08T03:30:00Z'));
     const g = r.grants.map(x => x.text), p = r.payments.map(x => x.text);
     const all = JSON.stringify(r);
-    /* 數字與單位、「到」與後面的日期用不換行空白(U+00A0),窄螢幕不會把「元」或日期單獨擠到下一行;付款紀錄新的在上面 */
+    /* 數字與單位、「NT$」與金額、「到」與後面的日期用不換行空白(U+00A0),窄螢幕不會把金額或日期單獨擠到下一行;付款紀錄新的在上面 */
     const ok = g[0] === '學生方案 既有帳號 2026/10/07 起 無期限'
       && g[1] === '學生方案 付費 2026/10/11 到' + NB + '2027/10/11'
       && g[2] === '老師試用 30' + NB + '位以內 2026/10/07 到' + NB + '2026/10/14 已撤銷'
       && g[3] === '學生方案 贈送 2026/10/07 到' + NB + '2026/12/07'
-      && p[0] === '2026/10/08 寫作批改 5' + NB + '篇 650' + NB + '元 尚未完成付款'
-      && p[1] === '2026/10/07 老師方案 30' + NB + '位以內 一個月 890' + NB + '元 已退款 890' + NB + '元'
-      && p[2] === '2026/10/07 學生方案 一年 1,990' + NB + '元'
+      && p[0] === '2026/10/08 寫作批改 5' + NB + '篇 NT$' + NB + '650 尚未完成付款'
+      && p[1] === '2026/10/07 老師方案 30' + NB + '位以內 一個月 NT$' + NB + '890 已退款 NT$' + NB + '890'
+      && p[2] === '2026/10/07 學生方案 一年 NT$' + NB + '1,990'
       && b.payments[0].item === 'student'
       && !/點數|儲值/.test(all) && P.billingLines(null).grants.length === 0 && P.billingLines({}).payments.length === 0;
     return { ok, detail: JSON.stringify({ g, p }) };
@@ -323,7 +323,7 @@ const cases = {
     ] };
     /* 新的在上面:處理中的、已付款的、手動記的失敗 */
     const p = P.billingLines(b, T).payments.map(x => x.text);
-    const ok = p.length === 3 && !p.some(x => /199/.test(x)) && /尚未完成付款$/.test(p[0]) && /150 元$/.test(p[1].split(NB).join(' '))
+    const ok = p.length === 3 && !p.some(x => /199/.test(x)) && /尚未完成付款$/.test(p[0]) && /NT\$ 150$/.test(p[1].split(NB).join(' '))
       && /未完成$/.test(p[2]) && !/未付款/.test(p.join());
     return { ok, detail: JSON.stringify(p) };
   },
@@ -423,6 +423,17 @@ const cases = {
     const ok = now === 1 && during === 1 && stillDuring === 1 && after === 2 && shown === 2 && mo.on === false
       && mo.t === exam && !!mo.o && mo.o.attributes === true && JSON.stringify(mo.o.attributeFilter) === '["data-leave-confirm"]';
     return { ok, detail: JSON.stringify({ now, during, stillDuring, after, end: shown, observing: mo && mo.on }) };
+  },
+  '一般練習作答中(專心模式作答過,js/ui.js 掛的 data-leave-confirm):遮罩一樣等作答結束才出現': () => {
+    const observers = [];
+    class MO { constructor(cb) { this.cb = cb; this.on = false; observers.push(this); } observe(t, o) { this.on = true; this.t = t; this.o = o; } disconnect() { this.on = false; } }
+    const { P } = load({ paid: true, MutationObserver: MO });
+    let shown = 0;
+    const quiz = { dataset: { leaveConfirm: '還沒交卷的作答不會計分' } };   // 題庫、聽力的 UI.focus body
+    P.whenNoExam(quiz, () => shown++);
+    const during = shown;
+    delete quiz.dataset.leaveConfirm; observers[observers.length - 1].cb([]);   // 交卷:f.leave() 清掉
+    return { ok: during === 0 && shown === 1, detail: JSON.stringify({ during, after: shown }) };
   },
   '全形標點:paywall.js 的中文字串裡沒有半形逗號、冒號、括號、問號、驚嘆號': () => {
     const strs = (PAYWALL_SRC.match(/'[^'\n]*'/g) || []).filter(s => /[一-鿿]/.test(s));

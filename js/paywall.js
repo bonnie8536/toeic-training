@@ -66,7 +66,7 @@
     return n && n.y === p.y ? fmtDay(iso) : fmtDate(iso);
   }
   const NB = ' ';   // 數字與單位、「到」與日期之間不換行
-  function money(n) { return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + NB + '元'; }
+  function money(n) { return 'NT$' + NB + String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }   // 跟價格頁同一個寫法
 
   function classesOf(a) { return Array.isArray(a.classes) ? a.classes.filter(isObj) : []; }
 
@@ -233,8 +233,8 @@
   /* 最新的使用權看得出老師試用已經開始(開通的回應在路上遺失時用) */
   function trialStarted(a) { return isObj(a) && a.is_owner !== true && a.teacher_source === 'trial'; }
 
-  /* 模擬考進行中(mock.js 在 body 掛 data-leave-confirm,交卷時拿掉):等交卷再做 fn,遮罩不蓋在計時中的考試上,
-     考試照常交卷、照常記一筆真的成績。沒在考試就馬上做。 */
+  /* 作答中(專心模式作答過,js/ui.js 在 body 掛 data-leave-confirm,交卷或離開時拿掉;模擬考一開考就算):
+     等作答結束再做 fn,遮罩不蓋在作答中的畫面上,照常交卷、照常記一筆真的成績。沒在作答就馬上做。 */
   function whenNoExam(body, fn) {
     const busy = () => !!(body && body.dataset && body.dataset.leaveConfirm);
     if (!busy() || typeof window.MutationObserver !== 'function') return fn();
@@ -442,8 +442,8 @@
     /* 班名在上、「班級邀請碼」緊貼在碼的上面 */
     let codeBox = null;
     if (code) codeBox = h('div', { class: 'trial-code-box' }, nameEl, h('span', { class: 'trial-code-label' }, '班級邀請碼'), h('div', { class: 'trial-code-row' }, codeEl, copy));
-    else if (o.closed) codeBox = h('div', { class: 'trial-code-box' }, nameEl, h('p', { class: 'trial-code-note' }, '這個班已停用\n邀請碼不能用來加入\n請聯絡站長'));
-    else if (lost) codeBox = h('div', { class: 'trial-code-box' }, h('p', { class: 'trial-code-note' }, '沒有收到班級邀請碼\n請聯絡站長'));
+    else if (o.closed) codeBox = h('div', { class: 'trial-code-box' }, nameEl, h('p', { class: 'trial-code-note' }, '這個班已停用\n邀請碼不能用來加入\n請聯絡客服'));
+    else if (lost) codeBox = h('div', { class: 'trial-code-box' }, h('p', { class: 'trial-code-note' }, '沒有收到班級邀請碼\n請聯絡客服'));
     box.append(closeBtn,
       h('h2', { class: 'auth-h', id: 'trial-h' }, '老師試用已開始'),
       day ? h('p', { class: 'trial-who' }, '試用到 ' + day) : null,

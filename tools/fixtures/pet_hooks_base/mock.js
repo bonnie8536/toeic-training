@@ -141,13 +141,14 @@
       if (W && typeof W.SINCE === 'string' && hist.slice(-8).some(r => r && typeof r.d === 'string' && r.d < W.SINCE)) {
         const since = new Date(W.SINCE);
         root.append(h('p', { class: 'result-note mock-old-note' },
-          (since.getMonth() + 1) + '/' + since.getDate() + ' 以前的模擬考錯題沒有收進錯題本。'));
+          (since.getMonth() + 1) + '/' + since.getDate() + ' 前的模擬考錯題未收進錯題本'));   // 狀態說明做成一行短標籤
       }
     }
   }
 
   /* ================= 考試 ================= */
   function startExam(sizeKey) {
+    if (!uiReady()) return;   // 共用元件沒載到:說一聲、給重新整理,不在這裡丟錯
     onHome = false;
     const cfg = SIZES[sizeKey];
     const units = [];
@@ -169,7 +170,7 @@
     let asking = false;     // 「還有題組沒答完」的確認視窗開著
     let actionOn = true;    // 作答列右邊的「交卷」在不在(最後一題換成底部的主按鈕)
     const deadline = Date.now() + cfg.mins * 60 * 1000;
-    const timerEl = h('span', { class: 'mock-timer', role: 'timer' });
+    const timerEl = h('span', { class: 'mock-timer', role: 'timer', 'aria-label': '剩餘時間' });
     /* 專心模式:離開提醒(body.dataset.leaveConfirm,付費牆與搬家頁會讀)一開考就算作答中,所以一進來就 dirty。
        倒數放在作答列的計數左邊(f.slot),一直看得到。
        交卷沒有 data-gate:開始那一下已經擋過登入;考到一半登出的情況由上面「交卷時存不進去的成績」處理 */
@@ -201,10 +202,13 @@
       return u.item.questions.every((q, qi) => sess[i].answers[qi] !== undefined);
     }
 
-    function go(i) { cur = i; draw(); window.scrollTo(0, 0); }
+    /* 換題:焦點到新題的題幹(按鈕整段重畫,不然焦點掉回頁面) */
+    function go(i) { cur = i; draw(); window.scrollTo(0, 0); f.focusMain(); }
+    /* 選了答案:重畫但不停正在播的音檔(聽力題組邊聽邊答),焦點回到剛選的那顆,讀屏念「已選 B」 */
+    function chose(n) { const y = window.scrollY; f.keep(() => draw(true)); window.scrollTo(0, y); f.say('已選 ' + LETTERS[n]); }
 
-    function draw() {
-      stopAudio();
+    function draw(keepAudio) {
+      if (!keepAudio) stopAudio();
       root.replaceChildren();
       const u = units[cur];
       f.progress(cur + 1);
@@ -284,8 +288,8 @@
         const row = h('div', { class: 'letter-row' });
         for (let i = 0; i < nOpt; i++) {
           row.append(h('button', {
-            class: 'letter-big' + (state.answers.c === i ? ' picked' : ''),
-            onclick: () => { state.answers.c = i; draw(); },
+            class: 'letter-big' + (state.answers.c === i ? ' picked' : ''), 'aria-pressed': state.answers.c === i ? 'true' : 'false',
+            onclick: () => { state.answers.c = i; chose(i); },
           }, LETTERS[i]));
         }
         block.append(h('div', { class: 'q-text', style: 'margin-top:10px' },
@@ -295,8 +299,8 @@
           const opts = h('div', { class: 'opts', style: 'margin-top:6px' });
           q.options.forEach((opt, oi) => {
             opts.append(h('button', {
-              class: 'opt' + (state.answers[qi] === oi ? ' picked' : ''),
-              onclick: () => { state.answers[qi] = oi; draw(); },
+              class: 'opt' + (state.answers[qi] === oi ? ' picked' : ''), 'aria-pressed': state.answers[qi] === oi ? 'true' : 'false',
+              onclick: () => { state.answers[qi] = oi; chose(oi); },
             }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
           });
           block.append(h('div', { style: 'margin-top:14px' },
@@ -312,8 +316,8 @@
       const opts = h('div', { class: 'opts' });
       q.options.forEach((opt, oi) => {
         opts.append(h('button', {
-          class: 'opt' + (state.answers.c === oi ? ' picked' : ''),
-          onclick: () => { state.answers.c = oi; draw(); },
+          class: 'opt' + (state.answers.c === oi ? ' picked' : ''), 'aria-pressed': state.answers.c === oi ? 'true' : 'false',
+          onclick: () => { state.answers.c = oi; chose(oi); },
         }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
       });
       root.append(h('div', { class: 'q-block' },
@@ -326,7 +330,7 @@
       const set = u.item;
       const state = sess[cur];
       const layout = h('div', { class: 'set-layout' });
-      const passCol = h('div', { class: 'passage-sticky-wrap' });
+      const passCol = h('div', { class: 'passage-sticky-wrap', role: 'region', 'aria-label': '文章' });   // 可以捲動的文章區會成為 Tab 停點:給它名字
       if (u.p === '6') {
         const box = h('div', { class: 'passage-box' });
         const frag = document.createDocumentFragment();
@@ -353,8 +357,8 @@
         const opts = h('div', { class: 'opts' });
         q.options.forEach((opt, oi) => {
           opts.append(h('button', {
-            class: 'opt' + (state.answers[key] === oi ? ' picked' : ''),
-            onclick: () => { state.answers[key] = oi; draw(); },
+            class: 'opt' + (state.answers[key] === oi ? ' picked' : ''), 'aria-pressed': state.answers[key] === oi ? 'true' : 'false',
+            onclick: () => { state.answers[key] = oi; chose(oi); },
           }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
         });
         qCol.append(h('div', { class: 'q-block' },
@@ -537,7 +541,7 @@
         const verdict = (q, chosen, ctx) => {
           const box = h('div', { class: 'explain' },
             h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
-              chosen === q.answer ? '答對了' : (chosen === undefined ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
+              chosen === q.answer ? '答對' : (chosen === undefined ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
             h('div', null, q.explanation));
           if (ctx && window.REPORT) REPORT.attach(box, ctx);
           return box;
@@ -593,5 +597,6 @@
     }
 
     draw();
+    f.focusMain();
   }
 })();

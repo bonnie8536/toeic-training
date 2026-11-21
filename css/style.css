@@ -2743,7 +2743,7 @@ div.pet-roam2.is-air { position: absolute; z-index: 49; top: 0; height: 0; }
 html.pet-roam2:not(.app-shell) div.pet-roam2 {
   padding: 0 calc(16px + env(safe-area-inset-right)) 0 calc(16px + env(safe-area-inset-left));
 }
-html.pet-roam2:not(.app-shell) div.pet-roam2.is-ground { bottom: calc(4px + env(safe-area-inset-bottom)); z-index: 49; }
+html.pet-roam2:not(.app-shell) div.pet-roam2.is-ground { bottom: calc(4px + var(--pet2-lift, 0px) + env(safe-area-inset-bottom)); z-index: 49; }   /* --pet2-lift:頁面比視窗矮時抬到頁尾下面那一條(js/pet-roam2.js) */
 html.pet-roam2.has-pet:not(.app-shell) body { padding-bottom: calc(var(--pet2-h) + 8px + env(safe-area-inset-bottom)); }
 html.pet-roam2.has-pet:not(.app-shell) { scroll-padding-bottom: calc(var(--pet2-h) + 12px); }
 /* App 模式:腳踩分頁列上緣(跟 pet-roam.js 相同);分頁列藏起來的寬視窗不放 */

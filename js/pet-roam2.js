@@ -209,9 +209,9 @@
       const cs = getComputedStyle(layer), W = html.clientWidth;
       lane = [Math.ceil(parseFloat(cs.paddingLeft) || 0), Math.floor(W - (parseFloat(cs.paddingRight) || 0) - S)];
       if (lane[1] < lane[0]) lane[1] = lane[0];
-      if (!APP && mode === 'ground' && !off) { const b = layer.getBoundingClientRect().bottom; if (b > 0) groundOff = innerHeight - b; }
+      if (!APP) liftCheck(); if (!APP && mode === 'ground' && !off) { const b = layer.getBoundingClientRect().bottom; if (b > 0) groundOff = innerHeight - b; }
     }
-    const clampLane = (v) => Math.max(lane[0], Math.min(lane[1], v));
+    const clampLane = (v) => Math.max(lane[0], Math.min(lane[1], v)); let lift = 0; function liftCheck() { const b = doc.body && doc.body.getBoundingClientRect ? doc.body.getBoundingClientRect().bottom : NaN, v = Number.isFinite(b) && b > 0 ? Math.max(0, Math.floor(innerHeight - b)) : 0; if (v !== lift && layer.style && typeof layer.style.setProperty === 'function') { lift = v; layer.style.setProperty('--pet2-lift', v + 'px'); } }   // 網站模式、頁面比視窗矮:地面抬到頁尾下面替小雞留的那一條(body 的下緣,css 的 --pet2-lift),不站在頁尾以下的空白裡;頁面夠長時是 0
     const groundLine = () => (APP ? tabbar.getBoundingClientRect().top : innerHeight - groundOff);
     function topLimit() { const t = doc.querySelector('.topbar'); return t ? Math.max(0, t.getBoundingClientRect().bottom) : 0; }
     let range = null;

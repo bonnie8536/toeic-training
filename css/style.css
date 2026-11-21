@@ -3828,7 +3828,6 @@ html.is-quiz #ear-root .write-area { font-size: 16px; min-height: 96px; }
 .verdict-pill.an-swatch.mid { background: var(--hint-orange); }
 .verdict-pill.an-swatch.good { background: var(--ok); }
 #analysis-root .ui-empty { padding-bottom: 32px; }
-#analysis-root .ui-empty .btn-text { margin-top: 4px; }
 
 /* 教師後台:學生列的展開箭頭與最後同步時間 */
 .ad-sync { display: block; margin-top: 2px; font-size: var(--fs-xs); font-weight: 400; color: var(--ink-light); }
@@ -3841,10 +3840,10 @@ table.cat-table th.ad-caret-th, table.cat-table td.ad-caret-td { position: stick
 .ad-caret:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
 .ad-caret-ico { width: 8px; height: 8px; border-right: 2px solid var(--ink-light); border-bottom: 2px solid var(--ink-light); transform: translateY(-2px) rotate(45deg); transition: transform .15s; }
 tr.is-open .ad-caret-ico { transform: translateY(2px) rotate(-135deg); }
-.ad-picks { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
+.ad-picks { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .ad-picks:empty { display: none; }
 .ad-line { display: block; }
-.ui-empty .ac-msg { text-align: center; }
+.ui-empty .ac-msg { margin: 0; text-align: center; }
 @media (prefers-reduced-motion: reduce) { .ad-caret-ico { transition: none; } }
 
 /* ---- */

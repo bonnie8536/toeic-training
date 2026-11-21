@@ -125,12 +125,24 @@
   }
 
   /* ---------- App 外殼(只在主畫面開啟時) ---------- */
+  /* 作答中(body.dataset.leaveConfirm 有字)要換頁:先擋下,用站內確認視窗(UI.confirm)問,確定了才換。
+     回傳 Promise<boolean>。共用元件沒載到時退回原生 confirm */
+  let leaving = false;   // 確認視窗開著:再按返回或分頁不再開第二個
   function okToLeave() {
     const msg = doc.body && doc.body.dataset.leaveConfirm;
-    return !msg || window.confirm(msg);
+    if (!msg) return Promise.resolve(true);
+    if (leaving) return Promise.resolve(false);
+    if (!window.UI || typeof window.UI.confirm !== 'function') return Promise.resolve(window.confirm(msg));
+    leaving = true;
+    return window.UI.confirm({ title: '離開這次練習？', body: msg, ok: '離開', cancel: '繼續作答', danger: true })
+      .then(function (yes) { leaving = false; return !!yes; }, function () { leaving = false; return false; });
   }
   function goBack() {
-    if (!okToLeave()) return;
+    const ask = doc.body && doc.body.dataset.leaveConfirm;
+    if (ask) { okToLeave().then(function (yes) { if (yes) backNow(); }); return; }
+    backNow();
+  }
+  function backNow() {
     let same = false;
     try { same = !!doc.referrer && new URL(doc.referrer).origin === location.origin; } catch (e) { same = false; }
     if (same && history.length > 1) { history.back(); return; }
@@ -156,7 +168,10 @@
           catch (err) { window.scrollTo(0, 0); }
           return;
         }
-        if (!okToLeave()) e.preventDefault();
+        /* 作答中:先擋下,問完確定才換頁(新分頁、另開視窗的點法不攔) */
+        if (!(doc.body && doc.body.dataset.leaveConfirm) || e.ctrlKey || e.metaKey || e.shiftKey || e.button > 0) return;
+        e.preventDefault();
+        okToLeave().then(function (yes) { if (yes) location.href = a.href; });
       });
       nav.appendChild(a);
     });

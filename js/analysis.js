@@ -151,11 +151,12 @@
   }
 
   /* ---------- 畫面 ---------- */
-  /* 空狀態用共用元件(UI.empty);沒載到時退回一行字 */
+  /* 空狀態用共用元件(UI.empty);沒載到時退回一行字加出口 */
   function emptyState(opt) {
     if (window.UI && typeof UI.empty === 'function') return UI.empty(opt);
     const box = h('div', { class: 'q-block' }, opt.text);
     if (opt.action) box.append(h('a', { class: 'btn', href: opt.action.href }, opt.action.label));
+    (opt.links || []).forEach(l => box.append(h('a', { class: 'btn-text', href: l.href }, l.label)));
     return box;
   }
 
@@ -167,11 +168,11 @@
 
   if (rec.total < 10) {
     /* 還不夠分析:累計題數、一顆主按鈕、一個文字連結 */
-    const box = emptyState({ pose: 'read', text: '累計作答 ' + rec.total + ' / 10 題', action: { label: '去刷題', href: 'practice.html' } });
-    const go = box.querySelector && box.querySelector('.ui-empty-go');
-    if (go) go.classList.add('primary');
-    box.append(h('a', { class: 'btn-text', href: 'diagnostic.html' }, '程度檢測'));
-    root.append(box);
+    root.append(emptyState({
+      pose: 'read', text: '累計作答 ' + rec.total + ' / 10 題',
+      action: { label: '去刷題', href: 'practice.html', primary: true },
+      links: [{ label: '程度檢測', href: 'diagnostic.html' }],
+    }));
     return;
   }
 

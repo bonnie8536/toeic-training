@@ -39,16 +39,17 @@
   const X_ICON = '<svg viewBox="0 0 22 22" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">'
     + '<path d="M5 5 17 17M17 5 5 17"/></svg>';
 
-  /* 確認與輸入視窗:js/ui.js 的 UI.confirm、UI.prompt(回 Promise,取消是 false、null)。
+  /* 確認、輸入與通知視窗:js/ui.js 的 UI.confirm、UI.prompt、UI.alert(回 Promise,取消是 false、null)。
      每一頁都載了 ui.js;萬一沒載到就當作按了取消,什麼都不做 */
   function askConfirm(o) { return window.UI && typeof UI.confirm === 'function' ? UI.confirm(o) : Promise.resolve(false); }
   function askText(o) { return window.UI && typeof UI.prompt === 'function' ? UI.prompt(o) : Promise.resolve(null); }
+  function tell(o) { return window.UI && typeof UI.alert === 'function' ? UI.alert(o) : Promise.resolve(true); }
   const pause = ms => new Promise(r => setTimeout(r, ms));
 
-  /* 「我的」頁帳號動作的結果:寫在頁面上那一行(.me-msg),第一行發生什麼、第二行原因或怎麼辦。不在「我的」頁時用確認視窗顯示 */
+  /* 「我的」頁帳號動作的結果:寫在頁面上那一行(.me-msg),第一行發生什麼、第二行原因或怎麼辦。不在「我的」頁時用通知視窗(一顆按鈕)顯示 */
   function notice(text, detail) {
     const box = document.querySelector('.me-msg');
-    if (!box) { askConfirm({ title: text, body: detail || '', ok: '知道了', cancel: '關閉' }); return; }
+    if (!box) { tell({ title: text, body: detail || '' }); return; }
     box.replaceChildren(document.createTextNode(text || ''));
     if (detail) box.append(h('br'), document.createTextNode(detail));
     box.classList.toggle('bad', !!text);
@@ -399,7 +400,7 @@
       const opener = openerOf(e);
       if (accountMoved()) { goneCard(opener); return; }
       clearNotice();
-      const n = await askText({ title: '改暱稱', body: '老師可見', label: '暱稱', value: unsentName !== null ? unsentName : CLOUD.nameOf(CLOUD.user), ok: '儲存', maxLength: 20 });
+      const n = await askText({ title: '改暱稱', hint: '老師可見', label: '暱稱', value: unsentName !== null ? unsentName : CLOUD.nameOf(CLOUD.user), ok: '儲存', maxLength: 20 });
       if (n === null) return;
       if (!await stillMine(opener)) { unsentName = n; return; }
       try { await CLOUD.updateName(n); location.reload(); }

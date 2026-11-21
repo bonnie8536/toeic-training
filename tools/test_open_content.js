@@ -844,7 +844,7 @@ T['桌機矮視窗:按住登入卡、註冊卡、「你是哪位？」遮罩的�
   try {
     const cases = [
       { mode: 'cloud', w: 1280, h: 600, tab: 'signup' }, { mode: 'cloud', w: 1280, h: 560, tab: 'login' },
-      { mode: 'local', w: 1280, h: 300 },
+      { mode: 'local', w: 1280, h: 220 },
     ];
     for (const c of cases) {
       const s = await open(B, { mode: c.mode, url: 'grammar.html?u=ga-01', size: { width: c.w, height: c.h }, desktop: true });

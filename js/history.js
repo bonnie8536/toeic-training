@@ -106,7 +106,7 @@
       if (!q) return null;
       const slug = w => String(w).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
       return {
-        stem: q.type === 'listen' ? '聽聽看，是哪一個字？' : q.q, options: q.options, answer: q.answer, explanation: q.explanation,
+        stem: q.type === 'listen' ? '聽音選字' : q.q, options: q.options, answer: q.answer, explanation: q.explanation,
         tag: u.title, link: 'phonics.html?u=' + u.id, audio: q.type === 'listen' ? 'ph-' + slug(q.word) : null,
       };
     }
@@ -159,6 +159,16 @@
     return key;
   }
 
+  /* 空狀態用共用元件(UI.empty);沒載到時退回一行字 */
+  function emptyState(opt) {
+    if (window.UI && typeof UI.empty === 'function') return UI.empty(opt);
+    return h('div', { class: 'q-block' }, opt.text);
+  }
+  /* 標題前面的圖示(canvas[data-doodle]):頁面上的 canvas 交給 DoodleArt 畫 */
+  function paintIcons() {
+    if (window.UI && typeof UI.doodle === 'function') UI.doodle(root);
+  }
+
   let filter = 'all';
   let wrongOnly = false;
   let shown = 150;
@@ -169,11 +179,12 @@
     root.innerHTML = '';
     const all = store.get('hist', []).slice().reverse();   // 新的在前
     root.append(h('div', { class: 'page-head' },
+      h('canvas', { class: 'hub-art', 'data-doodle': 'history', 'data-size': '40', 'aria-hidden': 'true' }),
       h('h1', null, '學習記錄')));
+    paintIcons();
 
     if (!all.length) {
-      root.append(h('div', { class: 'q-block' }, '還沒有作答紀錄。'),
-        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn primary', href: 'practice.html' }, '去題庫刷題')));
+      root.append(emptyState({ pose: 'read', text: '還沒有作答紀錄', action: { label: '去刷題', href: 'practice.html' } }));
       return;
     }
 
@@ -206,7 +217,9 @@
 
     const list = all.filter(r => (filter === 'all' || (MOD[r.m] || {}).group === filter) && (!wrongOnly || !r.ok));
     if (!list.length) {
-      root.append(h('div', { class: 'q-block' }, wrongOnly ? '這個分類沒有答錯的紀錄。' : '這個分類還沒有紀錄。'));
+      root.append(emptyState(wrongOnly
+        ? { pose: 'sleep', text: '沒有答錯的紀錄' }
+        : { pose: 'read', text: '還沒有紀錄', action: { label: '去刷題', href: 'practice.html' } }));
       return;
     }
 
@@ -224,7 +237,7 @@
     });
     if (list.length > shown) {
       root.append(h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn', onclick: () => { shown += 150; render(); } }, '載入更早的紀錄（還有 ' + (list.length - shown) + ' 筆）')));
+        h('button', { class: 'btn', onclick: () => { shown += 150; render(); } }, '載入更早的紀錄 · 還有 ' + (list.length - shown) + ' 筆')));
     }
     root.append(h('div', { style: 'height:30px' }));
   }
@@ -234,7 +247,7 @@
     const info = resolve(rec);
     const stem = info ? info.stem : '（這題已從題庫移除）';
     const isScore = info && info.score !== undefined;
-    const pickedText = !info ? '' : info.short !== undefined ? info.short : isScore ? info.score + '/' + info.n
+    const pickedText = !info ? '' : info.short !== undefined ? info.short : isScore ? info.score + ' / ' + info.n
       : info.options ? (rec.c === -1 || rec.c === undefined ? '未作答' : (rec.c >= 0 && info.options[rec.c] !== undefined ? LETTERS[rec.c] : String(info.picked || rec.c)))
       : String(info.picked !== undefined ? info.picked : rec.c);
     const head = h('div', { class: 'hist-row-head', style: info ? null : 'cursor:default' },
@@ -284,7 +297,7 @@
         }, '▶ 重聽')));
     }
     if (info.score !== undefined) {
-      box.append(h('p', { class: 'result-note' }, '成績 ' + info.score + '/' + info.n + '。'),
+      box.append(h('p', { class: 'result-note' }, '成績 ' + info.score + ' / ' + info.n),
         info.link ? h('a', { class: 'btn', href: info.link }, '再做一次') : null);
       return box;
     }
@@ -299,7 +312,7 @@
       });
       box.append(opts);
     } else if (info.typed !== undefined) {
-      box.append(h('p', { class: 'result-note' }, info.typed ? '你打的是 ' + info.typed : '這句沒有作答。'));
+      box.append(h('p', { class: 'result-note' }, info.typed ? '你打的是 ' + info.typed : '這句沒有作答'));
     } else if (info.picked !== undefined) {
       box.append(h('p', { class: 'result-note' }, (info.pickedLabel || '你的答案：') + info.picked +
         (rec.ok || info.answer === undefined || info.answer === null ? '' : ' · 正解：' + info.answer)));
@@ -311,7 +324,7 @@
     }
     if (info.zh) box.append(h('div', { class: 'transcript-box' }, h('b', null, '逐字稿'), h('div', { class: 'tr-zh' }, info.zh)));
     if (info.link) box.append(h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: info.link }, '回到出處')));
-    if (REPORTABLE[rec.m]) box.append(corrSlot(rec, '這題曾更正，看更正紀錄'));
+    if (REPORTABLE[rec.m]) box.append(corrSlot(rec, '這題有更正紀錄'));
     return box;
   }
 })();

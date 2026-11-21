@@ -166,6 +166,48 @@
     }
   }
 
+  /* 刪上課紀錄前的確認(UI.confirm);共用元件沒載到就不刪 */
+  function askDelete(log) {
+    if (!window.UI || typeof UI.confirm !== 'function') return Promise.resolve(false);
+    return UI.confirm({ title: '刪除這筆紀錄？', body: log.d + ' 的上課紀錄', ok: '刪除', cancel: '取消', danger: true });
+  }
+
+  /* 學生端最後同步的時間(本機時區):月/日 時:分 */
+  function syncText(iso) {
+    const d = new Date(iso);
+    if (!iso || isNaN(d.getTime())) return '—';
+    const p2 = n => String(n).padStart(2, '0');
+    return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + p2(d.getHours()) + ':' + p2(d.getMinutes());
+  }
+
+  /* 沒有學生資料:一句加一顆按鈕「複製邀請碼」(複製班級的邀請碼;有幾個班就讓老師選) */
+  function emptyStudents() {
+    const msg = h('p', { class: 'ac-msg', role: 'status' });
+    const picks = h('div', { class: 'ad-picks' });
+    const say = (t, kind) => { msg.replaceChildren(); msg.className = 'ac-msg' + (kind ? ' ' + kind : ''); (Array.isArray(t) ? t : [t]).filter(Boolean).forEach(x => msg.append(h('span', { class: 'ad-line' }, x))); };
+    async function copy(c) {
+      try { await navigator.clipboard.writeText(c.code); say('已複製 ' + (c.name ? c.name + ' ' : '') + c.code, 'ok'); }
+      catch (e) { say(['沒辦法自動複製', '請手動抄下 ' + c.code], 'bad'); }
+    }
+    async function onCopy() {
+      picks.replaceChildren(); say('');
+      const r = AC && AC.api ? await AC.api.list() : { ok: false, message: '', classes: [] };
+      if (!r.ok) { say(r.message || '讀取失敗', 'bad'); return; }
+      const on = (r.classes || []).filter(c => c.active !== false && c.code);
+      if (!on.length) { say(['還沒有班級', '請先新增班級']); return; }
+      if (on.length === 1) { copy(on[0]); return; }
+      on.forEach(c => picks.append(h('button', { class: 'btn', type: 'button', onclick: () => copy(c) }, c.name || c.code)));
+    }
+    const label = '複製邀請碼';
+    const text = '還沒有學生資料';
+    if (window.UI && typeof UI.empty === 'function') {
+      const box = UI.empty({ pose: 'read', text, action: { label, onClick: onCopy } });
+      box.append(picks, msg);
+      return box;
+    }
+    return h('div', { class: 'q-block' }, text, h('button', { class: 'btn', type: 'button', onclick: onCopy }, label), picks, msg);
+  }
+
   function noteSection(uid, tnote, onNick) {
     const wrap = h('div', { style: 'margin-top:14px;border-top:1px solid var(--line);padding-top:12px' });
     const status = h('span', { class: 'player-note', style: 'margin-left:10px' });
@@ -202,8 +244,8 @@
             h('span', { style: 'white-space:pre-line' }, log.text)),
           h('button', {
             class: 'bank-word-del', type: 'button', title: '刪除這筆紀錄',
-            onclick: () => {
-              if (!confirm('刪除 ' + log.d + ' 的紀錄？')) return;
+            onclick: async () => {
+              if (!(await askDelete(log))) return;
               tnote.logs = tnote.logs.filter(x => x !== log);
               saveNote(uid, tnote, status);
               drawLogs();
@@ -263,7 +305,6 @@
     backupMsg = own ? h('p', { class: 'ow-msg', role: 'status' }) : null;
     root.append(h('div', { class: 'page-head' },
       h('h1', null, '教師後台'),
-      h('p', null, '點任一列展開該學生的檢測報告摘要、錯題與上課紀錄。資料為學生端最後同步的狀態。'),
       h('div', { class: 'modal-row' },
         h('button', { class: 'btn', type: 'button', onclick: downloadBackup },
           '下載全部備份（' + allRows.length + ' 列）')),
@@ -324,7 +365,7 @@
     }
     if (!ids.length) {
       /* 老師方案過了寬限時讀不到學生進度,但資料都還在(方案那一列已經寫了),不說「還沒有學生資料」 */
-      if (!(plan && plan.kind === 'expired')) root.append(h('div', { class: 'q-block' }, '還沒有學生資料。學生用邀請碼加入班級、開始作答後，這裡會出現他們的進度。'));
+      if (!(plan && plan.kind === 'expired')) root.append(emptyStudents());
       return;
     }
     ids.sort((a, b) => (students[b].last || '').localeCompare(students[a].last || ''));
@@ -332,7 +373,8 @@
     const table = h('table', { class: 'cat-table' },
       h('tr', null,
         h('th', null, '學生'), h('th', null, '最近活動'), h('th', null, '檢測結果'),
-        h('th', null, 'Part 5'), h('th', null, 'Part 6'), h('th', null, 'Part 7'), h('th', null, '單字')));
+        h('th', null, 'Part 5'), h('th', null, 'Part 6'), h('th', null, 'Part 7'), h('th', null, '單字'),
+        h('th', { class: 'ad-caret-th' }, h('span', { class: 'ad-sr' }, '展開'))));
 
     ids.forEach(uid => {
       const s = students[uid];
@@ -345,21 +387,31 @@
       const fmt = d => d.answered ? d.answered + ' 題 · ' + Math.round(d.correct / d.answered * 100) + '%' : '—';
 
       const nameEl = h('b', null, name);
+      const caret = h('button', { class: 'ad-caret', type: 'button', 'aria-expanded': 'false', 'aria-label': '展開 ' + name + ' 的資料' },
+        h('span', { class: 'ad-caret-ico', 'aria-hidden': 'true' }));
       const row = h('tr', { style: 'cursor:pointer' },
-        h('td', null, nameEl, meta.email && meta.email !== name ? h('span', { style: 'color:var(--ink-light);font-size:12.5px' }, ' ' + meta.email) : null),
+        h('td', null, nameEl, meta.email && meta.email !== name ? h('span', { style: 'color:var(--ink-light);font-size:12.5px' }, ' ' + meta.email) : null,
+          h('span', { class: 'ad-sync' }, '最後同步 ' + syncText(s.last))),
         h('td', { class: 'num' }, (s.last || '').slice(0, 10) || '—'),
         h('td', { class: 'num' }, diag ? diag.score + '/' + diag.total + ' · ' + diag.band : '未檢測'),
         h('td', { class: 'num' }, fmt(d5)), h('td', { class: 'num' }, fmt(d6)), h('td', { class: 'num' }, fmt(d7)),
-        h('td', { class: 'num' }, vo.done + '/' + vo.total));
+        h('td', { class: 'num' }, vo.done + '/' + vo.total),
+        h('td', { class: 'ad-caret-td' }, caret));
 
       const wb = ownerOn() ? OW.billing.writingBlock({ uid, keys: s.keys }) : null;
       const detailRow = h('tr', { style: 'display:none' },
-        h('td', { colspan: '7', style: 'background:var(--bg-soft)' }, detail(name, diag, d5, d6, d7), wb ? wb.el : null,
+        h('td', { colspan: '8', style: 'background:var(--bg-soft)' }, detail(name, diag, d5, d6, d7), wb ? wb.el : null,
           noteSection(uid, tnote0, n => { nameEl.textContent = n || meta.name || meta.email || uid.slice(0, 8); })));
-      row.addEventListener('click', () => {
+      const toggle = () => {
         detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
-        if (wb && detailRow.style.display === '') wb.open();
-      });
+        const open = detailRow.style.display === '';
+        caret.setAttribute('aria-expanded', open ? 'true' : 'false');
+        row.classList.toggle('is-open', open);
+        if (wb && open) wb.open();
+      };
+      /* 整列都能點;按鈕自己的點擊不重複觸發 */
+      row.addEventListener('click', e => { if (e.target === caret || (caret.contains && caret.contains(e.target))) return; toggle(); });
+      caret.addEventListener('click', toggle);
       table.append(row, detailRow);
     });
     root.append(table);

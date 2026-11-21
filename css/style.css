@@ -3783,5 +3783,44 @@ html.is-quiz.ear-kb body { padding-bottom: 0 !important; }
 
 /* ==== 學習記錄、能力分析、帳號周邊 ==== */
 
-/* ---- */
+/* 兩行訊息:程式用換行字元把「發生什麼」和「怎麼辦」分成兩行,這裡讓換行顯示出來 */
+.auth-msg, .me-class-msg, .me-bill-msg, .trial-fail, .trial-code-note, .pw-msg, .corr-msg, .buy-note, .pricing-buy-note,
+.modal-report .auth-fine, .reset-msg { white-space: pre-line; }
 
+/* 付費牆遮罩:登出失敗的訊息 */
+.pw-msg { margin: 12px 0 0; font-size: var(--fs-sm); color: var(--bad-ink); text-align: center; }
+.pw-msg:empty { display: none; }
+
+/* 標題前的圖示:學習記錄、能力分析 */
+.page-head:has(> .hub-art) + .ui-empty { padding-top: 24px; }
+
+/* 能力分析 */
+.an-tags { margin: 8px 0 18px; }
+.an-tag { display: inline-block; padding: 4px 12px; border: 1px solid var(--line); border-radius: var(--r-full); background: var(--bg-soft); font-size: var(--fs-xs); color: var(--ink-soft); }
+.an-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 10px 0 0; font-size: var(--fs-sm); color: var(--ink-soft); }
+.an-legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.verdict-pill.an-swatch { display: inline-block; width: 22px; height: 10px; padding: 0; border-radius: var(--r-full); }
+.verdict-pill.an-swatch.weak { background: var(--bad); }
+.verdict-pill.an-swatch.mid { background: var(--hint-orange); }
+.verdict-pill.an-swatch.good { background: var(--ok); }
+#analysis-root .ui-empty { padding-bottom: 32px; }
+#analysis-root .ui-empty .btn-text { margin-top: 4px; }
+
+/* 教師後台:學生列的展開箭頭與最後同步時間 */
+.ad-sync { display: block; margin-top: 2px; font-size: var(--fs-xs); font-weight: 400; color: var(--ink-light); }
+.ad-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+table.cat-table th.ad-caret-th, table.cat-table td.ad-caret-td { width: 44px; padding: 0; text-align: center; }
+/* 手機上表格可以左右捲:箭頭那一欄固定在右邊,不用捲就看得到 */
+table.cat-table th.ad-caret-th, table.cat-table td.ad-caret-td { position: sticky; right: 0; background: #fff; box-shadow: -8px 0 8px -8px rgba(0,0,0,.12); }
+.ad-caret { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: var(--r-sm); background: none; cursor: pointer; }
+.ad-caret:hover { background: var(--bg-soft); }
+.ad-caret:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.ad-caret-ico { width: 8px; height: 8px; border-right: 2px solid var(--ink-light); border-bottom: 2px solid var(--ink-light); transform: translateY(-2px) rotate(45deg); transition: transform .15s; }
+tr.is-open .ad-caret-ico { transform: translateY(2px) rotate(-135deg); }
+.ad-picks { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
+.ad-picks:empty { display: none; }
+.ad-line { display: block; }
+.ui-empty .ac-msg { text-align: center; }
+@media (prefers-reduced-motion: reduce) { .ad-caret-ico { transition: none; } }
+
+/* ---- */

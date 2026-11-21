@@ -151,15 +151,27 @@
   }
 
   /* ---------- 畫面 ---------- */
+  /* 空狀態用共用元件(UI.empty);沒載到時退回一行字 */
+  function emptyState(opt) {
+    if (window.UI && typeof UI.empty === 'function') return UI.empty(opt);
+    const box = h('div', { class: 'q-block' }, opt.text);
+    if (opt.action) box.append(h('a', { class: 'btn', href: opt.action.href }, opt.action.label));
+    return box;
+  }
+
   const rec = collect();
   root.append(h('div', { class: 'page-head' },
+    h('canvas', { class: 'hub-art', 'data-doodle': 'analysis', 'data-size': '40', 'aria-hidden': 'true' }),
     h('h1', null, '能力分析')));
+  if (window.UI && typeof UI.doodle === 'function') UI.doodle(root);
 
   if (rec.total < 10) {
-    root.append(h('div', { class: 'q-block' },
-      '累計作答 ' + rec.total + ' 題，滿 10 題才會分析。先做',
-      h('a', { href: 'diagnostic.html' }, '程度檢測'), '或到',
-      h('a', { href: 'practice.html' }, '題庫'), '刷題。'));
+    /* 還不夠分析:累計題數、一顆主按鈕、一個文字連結 */
+    const box = emptyState({ pose: 'read', text: '累計作答 ' + rec.total + ' / 10 題', action: { label: '去刷題', href: 'practice.html' } });
+    const go = box.querySelector && box.querySelector('.ui-empty-go');
+    if (go) go.classList.add('primary');
+    box.append(h('a', { class: 'btn-text', href: 'diagnostic.html' }, '程度檢測'));
+    root.append(box);
     return;
   }
 
@@ -185,14 +197,14 @@
             Math.round(rec.parts[pp].ok / rec.parts[pp].n * 100) + '% · ' + rec.parts[pp].n + ' 題',
             accCls(rec.parts[pp].ok / rec.parts[pp].n))
         : null)),
-    h('div', { class: 'band-note' }, '級距為估算，非正式成績')));
+    h('div', { class: 'band-note' }, '參考換算 · 非正式成績')));
 
   /* 2. 強弱項(長條圖,弱→強) */
   const catRows = Object.entries(rec.cats).filter(([, c]) => c.t >= 3)
     .sort((a, b) => a[1].c / a[1].t - b[1].c / b[1].t);
   root.append(h('div', { class: 'exercise-head' }, h('h2', null, '考點強弱項')));
   if (!catRows.length) {
-    root.append(h('p', { class: 'result-note' }, '每類滿 3 題才列入。'));
+    root.append(h('p', { class: 'an-tags' }, h('span', { class: 'an-tag' }, '每類滿 3 題才列入')));
   } else {
     const wrap = h('div', { class: 'cat-bars' });
     catRows.forEach(([cat, c]) => {
@@ -202,11 +214,13 @@
       wrap.append(bar(cat, a, c.c + ' / ' + c.t, cls,
         cls !== 'ok' && link ? h('a', { class: 'bar-go', href: link }, '去練') : h('span', { class: 'bar-go', style: 'visibility:hidden' }, '去練')));
     });
+    /* 圖例:無字的色塊加文字說明;色塊用 aria-label 說出顏色,色盲或讀屏的人也讀得到 */
+    const swatch = (cls, color) => h('span', { class: 'verdict-pill an-swatch ' + cls, role: 'img', 'aria-label': color, title: color });
     root.append(wrap,
-      h('p', { class: 'result-note', style: 'margin-top:8px' },
-        h('span', { class: 'verdict-pill weak' }, '紅'), ' 低於 40% ',
-        h('span', { class: 'verdict-pill mid' }, '橘'), ' 40–79% ',
-        h('span', { class: 'verdict-pill good' }, '綠'), ' 80% 以上'));
+      h('p', { class: 'an-legend' },
+        h('span', { class: 'an-legend-item' }, swatch('weak', '紅色'), '低於 40%'),
+        h('span', { class: 'an-legend-item' }, swatch('mid', '橘色'), '40–79%'),
+        h('span', { class: 'an-legend-item' }, swatch('good', '綠色'), '80% 以上')));
   }
 
   /* 3. 錯題分類:跟錯題本同一套分組(js/wrongbook.js、js/wrongbook-ui.js;含模擬考答錯的題,Part 7 依文章類型),
@@ -221,7 +235,7 @@
     const paintWrong = (open) => {
       const parts = ['5', '6', '7'].map(p => ({ p, groups: WB.groups(p) })).filter(x => x.groups.length);
       wbBox.replaceChildren();
-      if (!parts.length) wbBox.append(h('p', { class: 'result-note' }, '目前沒有錯題。'));
+      if (!parts.length) wbBox.append(emptyState({ pose: 'sleep', text: '沒有錯題' }));
       parts.forEach(({ p, groups }) => {
         const total = groups.reduce((n, g) => n + g.items.length, 0);
         /* Part 名稱是 h3、底下的組是 h4(報讀用標題跳讀時聽得到換了 Part;審查 2026-11-19 #3),樣子跟以前的粗體字一樣。
@@ -239,7 +253,7 @@
     /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud;審查 2026-11-19 #1):別台考的錯題合併進來時 keepFresh 重畫這一區 */
     if (typeof WB.syncCloud === 'function') WB.syncCloud();
   } else if (!wg.length) {
-    root.append(h('p', { class: 'result-note' }, '目前沒有錯題。'));
+    root.append(emptyState({ pose: 'sleep', text: '沒有錯題' }));
   } else {
     wg.forEach(w => {
       const total = Object.values(w.groups).reduce((n, arr) => n + arr.length, 0);

@@ -581,7 +581,7 @@ const cases = {
     const okk = new Set(labels).size === labels.length && labels.includes('移出 刷刷英文（' + ACC.ben.email + '）') && labels.includes('搬到別班 Gwen 讀書會（' + ACC.ben.email + '）');
     return { ok: okk, detail: JSON.stringify(labels) };
   },
-  'admin.js 站長模式:分頁上面只留標題,說明與下載備份放進學生進度;讀不到學生資料時分頁上面也有標題': async () => {
+  'admin.js 站長模式:分頁上面只留標題,下載備份放進學生進度、不再有說明句;讀不到學生資料時分頁上面也有標題': async () => {
     const w = world();
     const A = loadAdmin(w, { paid: true });
     await settle();
@@ -594,9 +594,9 @@ const cases = {
     const C = loadAdmin(w3, { paid: false });
     await settle();
     const okk = head.className === 'page-head' && head.children.length === 1 && head.children[0].tagName === 'H1' && A.root.children[1].className.includes('ow-tabs')
-      && /點任一列展開/.test(ps.children[0].textContent) && /下載全部備份/.test(ps.children[0].textContent)
+      && !/點任一列展開/.test(ps.children[0].textContent) && /下載全部備份/.test(ps.children[0].textContent)
       && B.root.children[0].find(n => n.tagName === 'H1').length === 1 && /讀取失敗/.test(B.root.byClass('ow-students')[0].textContent)
-      && C.root.children[0].children.length === 3;
+      && C.root.children[0].children.length === 2;
     return { ok: okk, detail: JSON.stringify({ first: A.root.children.map(c => c.className), b: B.root.children.map(c => c.className) }) };
   },
 

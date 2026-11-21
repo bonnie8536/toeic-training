@@ -714,11 +714,11 @@ Object.assign(cases, {
     const t = a.root.textContent;
     return { ok: /學生資料都還在/.test(t) && !/還沒有學生資料/.test(t) && a.root.byClass('ac-class').length === 2, detail: t.slice(0, 200) };
   },
-  'admin.js:還沒有學生資料時,說明學生要用邀請碼加入班級才會出現': async () => {
+  'admin.js:還沒有學生資料時,只有一句加一顆按鈕「複製邀請碼」,沒有說明句': async () => {
     const w = world(); const a = loadAdmin(w, { paid: false, isTeacher: true, rows: [] });
     await settle();
     const t = a.root.textContent;
-    return { ok: /還沒有學生資料。學生用邀請碼加入班級、開始作答後，這裡會出現他們的進度。/.test(t) && !/學生第一次登入/.test(t), detail: t.slice(-80) };
+    return { ok: /還沒有學生資料/.test(t) && !/學生用邀請碼加入班級/.test(t) && !/學生第一次登入/.test(t) && a.root.byText('複製邀請碼').length === 1, detail: t.slice(-80) };
   },
   'admin.js:PAID_UI 打開、老師方案期內:方案那一列出現在班級區上方': async () => {
     const w = world();

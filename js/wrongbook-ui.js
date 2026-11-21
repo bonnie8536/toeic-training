@@ -1,4 +1,4 @@
-/* 錯題本的畫面(錯題本定稿 2026-11-18 第 2 節):一個 Part 一頁(practice.html?mode=wrong&part=N),裡面一組一組,點組名才展開。
+/* 錯題本的畫面:一個 Part 一頁(practice.html?mode=wrong&part=N),裡面一組一組,點組名才展開。
    資料都從 js/wrongbook.js(WRONGBOOK)來;能力分析(js/analysis.js)也用這裡的 groupList。window.WRONGBOOK_UI。
    - 慣例:每組是一顆展開鈕(button + aria-expanded + aria-controls,收起用 hidden;APG Disclosure/Accordion 的寫法),
      包在 heading 裡、heading 裡只有它;「複習」連結放在 heading 外面同一列的右邊(所以不用 <details>)。可以同時開好幾組;
@@ -99,13 +99,15 @@
   function paintList(root, p, open) {
     document.title = W.TITLE[p] + ' 錯題本 - 衝衝英文';
     root.innerHTML = '';
-    root.append(h('div', { class: 'drill-top' },
+    root.append(h('div', { class: 'page-head wb-top' },
+      h('canvas', { class: 'hub-art', 'data-doodle': 'wrongbook', 'data-size': '40', 'aria-hidden': 'true' }),
       h('h1', null, W.TITLE[p] + ' 錯題本'),
-      h('a', { href: 'practice.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回題庫')));
+      h('a', { class: 'wb-back', href: 'practice.html' }, '← 回題庫刷題')));
     const groups = W.groups(p);
     if (!groups.length) {
-      root.append(h('div', { class: 'q-block' }, '目前沒有錯題。'),
-        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
+      root.append(window.UI ? UI.empty({ pose: 'sleep', text: '沒有錯題', action: { label: '去刷題', href: 'practice.html' } })
+        : h('div', { class: 'q-block' }, '沒有錯題'));
+      if (window.UI) UI.doodle(root);
       return;
     }
     const first = W.round(p);
@@ -117,6 +119,7 @@
         h('a', { class: 'btn primary wb-begin', 'data-gate': '', href: reviewUrl(p) }, '開始'),
         dupCount ? null : h('span', { class: 'result-note' }, ' ' + first.units.length + ' ' + W.unit(p))),
       groupList(groups, { part: p, level: 2, remember: true, open: open && open[p] }));
+    if (window.UI) UI.doodle(root);
   }
   function renderList(root, p) {
     paintList(root, p, null);

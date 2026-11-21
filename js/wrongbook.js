@@ -1,6 +1,6 @@
-/* 錯題本的資料(錯題本定稿 2026-11-18):哪些題在錯題本、怎麼分組、一回複習出哪些、模擬考答錯的題怎麼收進來。不碰 DOM,window.WRONGBOOK。
+/* 錯題本的資料:哪些題在錯題本、怎麼分組、一回複習出哪些、模擬考答錯的題怎麼收進來。不碰 DOM,window.WRONGBOOK。
    - 錯題本由作答紀錄即時推導:刷題 drill_p5/p6/p7(js/practice.js)、聽力 listen_p1~p4(js/listening.js),
-     加上模擬考答錯的題 mock_wrong(這個檔寫;js/mock.js 交卷、js/review.js 每日複習答對時呼叫 save)。
+     加上模擬考答錯的題 mock_wrong(這個檔寫;js/mock.js 交卷、js/review.js 錯題本複習答對時呼叫 save)。
      mock_wrong 是 { 題目 key: { c: 選的, ok: false 答錯 / true 已訂正, t: 毫秒 } },形狀跟刷題紀錄一樣,題目 key 也一樣
      (Part 5、聽力 1/2 是題目 id;Part 6 是題組 id + ':' + 空格號;Part 7、聽力 3/4 是題組 id + ':' + 第幾題)。
    - 一題的「最後一次」是刷題紀錄和 mock_wrong 裡 t 比較大的那一筆(一樣大用刷題的);最後一次答錯就在錯題本(pick,全站只有這一份規則)。
@@ -11,7 +11,7 @@
    - 同步:mock_wrong 在 js/cloud.js 的合併表上,搬家規則是 pool(js/move-rules.js)。 */
 (function (root) {
   'use strict';
-  /* 一回最多:Part 5、聽力 1/2 跟每日複習一輪一樣 20 題;Part 6/7 跟隨機練習一樣最多 8 組;聽力 3/4 跟聽力隨機練習一樣最多 5 組 */
+  /* 一回最多:Part 5、聽力 1/2 跟錯題本複習一輪一樣 20 題;Part 6/7 跟隨機練習一樣最多 8 組;聽力 3/4 跟聽力隨機練習一樣最多 5 組 */
   const ROUND = Object.freeze({ '5': 20, '1': 20, '2': 20, '6': 8, '7': 8, '3': 5, '4': 5 });
   const MAX = 1500;   // 跟 SYNC_MERGE.mockWrong 的上限一樣
   /* 這一版上線的時間(UTC ISO)。模擬考首頁:最近 8 筆紀錄有早於它的,就說明那幾次的錯題沒有收進來(說明裡的日期也從這裡來)。
@@ -127,7 +127,7 @@
     return groupOrder(p).map((name) => ({ name, items: newestFirst(all.filter((x) => x.group === name)) })).filter((g) => g.items.length);
   }
 
-  /* 一回複習:最早錯的先出(每日複習的慣例),一回有上限。g 是組名(不給就是整個 Part)。
+  /* 一回複習:最早錯的先出(錯題本複習的慣例),一回有上限。g 是組名(不給就是整個 Part)。
      回 { units, n: 這一回幾題, rest: 這一組還沒輪到幾題, total };units 的形狀跟各自的複習一樣:
      Part 5、聽力 1/2 是題目;Part 6/7 是 { set, wrongKeys }(只重做這一組的題);聽力 3/4 是題組(整組重答) */
   function round(p, g) {
@@ -203,7 +203,7 @@
     return { ok, wrong, cleared };
   }
 
-  /* 開頁先跟雲端對齊 mock_wrong(審查 2026-11-19 #1;模擬考、每日複習、題庫、能力分析開頁時呼叫,跟單字頁、閱讀頁開頁對齊題庫一樣)。
+  /* 開頁先跟雲端對齊 mock_wrong(模擬考、錯題本、題庫、能力分析開頁時呼叫,跟單字頁、閱讀頁開頁對齊題庫一樣)。
      部署前就開著、沒重新整理的舊版分頁(舊版 cloud.js 的合併表沒有 mock_wrong)會把帳本上的 mock_wrong 不讀雲端就整份上傳:
      本機先有別台考的錯題,之後就算被它整份傳上去也還在(只剩對齊之後、交卷之前別台才傳的那段;js/cloud.js 已知限制 8)。
      合併後本機有變,cloud.js 送 cloud:merged(js/wrongbook-ui.js keepFresh 收到就重畫)。

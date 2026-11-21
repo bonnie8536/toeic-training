@@ -33,9 +33,30 @@
     if (!window.APP || !window.APP.canOfferInstall()) return null;
     return h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; window.APP.install(); } }, '安裝到手機');
   }
+  /* 頭像選單裡換頁的那幾項 */
+  function goItem(label, href) { return h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = href; } }, label); }
 
   const X_ICON = '<svg viewBox="0 0 22 22" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">'
     + '<path d="M5 5 17 17M17 5 5 17"/></svg>';
+
+  /* 確認與輸入視窗:js/ui.js 的 UI.confirm、UI.prompt(回 Promise,取消是 false、null)。
+     每一頁都載了 ui.js;萬一沒載到就當作按了取消,什麼都不做 */
+  function askConfirm(o) { return window.UI && typeof UI.confirm === 'function' ? UI.confirm(o) : Promise.resolve(false); }
+  function askText(o) { return window.UI && typeof UI.prompt === 'function' ? UI.prompt(o) : Promise.resolve(null); }
+  const pause = ms => new Promise(r => setTimeout(r, ms));
+
+  /* 「我的」頁帳號動作的結果:寫在頁面上那一行(.me-msg),第一行發生什麼、第二行原因或怎麼辦。不在「我的」頁時用確認視窗顯示 */
+  function notice(text, detail) {
+    const box = document.querySelector('.me-msg');
+    if (!box) { askConfirm({ title: text, body: detail || '', ok: '知道了', cancel: '關閉' }); return; }
+    box.replaceChildren(document.createTextNode(text || ''));
+    if (detail) box.append(h('br'), document.createTextNode(detail));
+    box.classList.toggle('bad', !!text);
+  }
+  function clearNotice() { const box = document.querySelector('.me-msg'); if (box) { box.replaceChildren(); box.classList.remove('bad'); } }
+
+  /* <html class="authed">:首頁靠它決定畫已登入還是未登入的版面。index.html 的開機程式先照本機紀錄加,這裡確認後校正 */
+  function markAuthed(on) { try { document.documentElement.classList.toggle('authed', !!on); } catch (e) { /* 只是版面 */ } }
 
   /* ========================================================= */
   /* 先看再登入(站長 2026-10-31)                                */
@@ -223,11 +244,11 @@
         h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }),
         h('h2', null, title),
         h('p', { class: 'modal-why', id: 'reload-why' }, gone
-          ? '這一頁還是登出前的畫面，' + (account ? '剛剛按的沒有送出' : '先不能作答') + '。重新整理一次，就會換成這台現在的登入狀態。'
-          : '你已經登入了，但這一頁還沒從雲端拿到你的練習紀錄，先不能作答。重新整理一次就會載入。'),
+          ? '這一頁還是登出前的畫面。' + (account ? '剛剛按的沒有送出' : '先不能作答') + '。重新整理就會換成這台現在的登入狀態。'
+          : '你已經登入了。這一頁還沒從雲端拿到你的練習紀錄，先不能作答。重新整理一次就會載入。'),
         h('p', { class: 'modal-sub', id: 'reload-sub' }, gone
-          ? lose + '要留著的話，先在別的分頁登回原本的帳號，再回來按一次。'
-          : lose + '一直出現的話，請檢查網路連線。'),
+          ? lose + '要留著的話先在別的分頁登回原本的帳號，再回來按一次。'
+          : lose + '一直出現的話請檢查網路連線。'),
         h('div', { class: 'modal-row' }, btn));
       const mask = h('div', { class: 'modal-mask' }, box);
       document.body.append(mask);
@@ -271,6 +292,7 @@
 
     document.addEventListener('DOMContentLoaded', async () => {
       await CLOUD.ready;
+      markAuthed(PROFILE.current());
       buildCloudWidget();
       if (gateMode() === 'hard' && !CLOUD.user) showLogin();
       else if (CLOUD.authError && !CLOUD.user && !document.body.hasAttribute('data-auth-page')) showLogin('login');
@@ -304,25 +326,16 @@
         if (!cur) {
           menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; showLogin('login'); } }, '登入'));
           menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; showLogin('signup'); } }, '註冊帳號'));
-          const inst = installItem(menu);
-          if (inst) menu.append(h('div', { class: 'pm-sep' }), inst);
           return;
         }
+        /* 選單只放去哪裡:加入班級、匯出備份、改暱稱、刪除帳號都在「我的」頁,不重複 */
         menu.append(h('div', { class: 'pm-head' }, CLOUD.user.email));
-        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'analysis.html'; } }, '能力分析'));
-          menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'review.html'; } }, '每日複習'));
-        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'history.html'; } }, '學習記錄'));
-        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; location.href = 'me.html?join='; } }, '加入班級'));   // 「我的」頁打開加入視窗
-        if (CLOUD.isTeacher) {
-          menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'admin.html'; } }, '教師後台'));
-        }
-        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => exportData(cur.id, cur.name) }, '匯出進度備份'));
-        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: renameUser }, '改暱稱'));
+        menu.append(goItem('我的', 'me.html'), goItem('能力分析', 'analysis.html'), goItem('學習記錄', 'history.html'));
+        if (CLOUD.isTeacher) menu.append(goItem('教師後台', 'admin.html'));
         const inst = installItem(menu);
         if (inst) menu.append(inst);
         menu.append(h('div', { class: 'pm-sep' }));
         menu.append(h('button', { class: 'pm-item danger', type: 'button', onclick: logoutHere }, '登出'));
-        menu.append(h('button', { class: 'pm-item danger', type: 'button', onclick: deleteUser }, '刪除帳號'));
       }
     }
 
@@ -342,7 +355,7 @@
         if (back) back.focus();
       };
       note.append(
-        h('span', null, '登入已失效，請重新登入'),
+        h('span', null, '登入已失效'),
         h('button', { class: 'auth-expired-login', type: 'button', onclick: () => { close(); showLogin('login'); } }, '登入'),
         h('button', { class: 'auth-expired-x', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: close }));
       topbar.append(note);
@@ -373,33 +386,46 @@
        暱稱視窗開著時別的分頁換了人(按確定後才丟 account_gone):打的暱稱記在這一頁,登回原帳號再按「改暱稱」時預先填好
        (卡上說登回原帳號再按一次就留得住;以前打的字直接不見,審查 D 第 2 輪 #3)。重新整理就沒了,跟卡上說的一樣 */
     let unsentName = null;
+    /* 視窗(js/ui.js)開著的時候別的分頁可能登出、改登入別人:按確定之後先等 50 毫秒(以前原生視窗開著時 Chrome 不送 localStorage 的改動,
+       按確定後約 2 毫秒才看得到;審查 D 第 4 輪 #3),再看一次這台現在的登入是不是畫面上這個帳號,不是就開卡、不送。
+       js/cloud.js 送出前那一次確認照舊(丟 account_gone 也開卡)。取消、空白(確定鈕按不下去)都不送 */
+    async function stillMine(opener) {
+      await pause(50);
+      if (!accountMoved() && CLOUD.user) return true;
+      goneCard(opener);
+      return false;
+    }
     async function renameUser(e) {
       const opener = openerOf(e);
       if (accountMoved()) { goneCard(opener); return; }
-      const n = prompt('暱稱，老師可見', unsentName !== null ? unsentName : CLOUD.nameOf(CLOUD.user));
+      clearNotice();
+      const n = await askText({ title: '改暱稱', body: '老師可見', label: '暱稱', value: unsentName !== null ? unsentName : CLOUD.nameOf(CLOUD.user), ok: '儲存', maxLength: 20 });
       if (n === null) return;
-      /* 輸入視窗、確認視窗開著的時候,別的分頁登出、改登入別人,Chrome 不會把 localStorage 的改動送進這一頁,
-         按確定之後要再過兩個工作(實測約 2 毫秒)才看得到,在那之前讀到的還是舊值:CLOUD 送出前的查核(mustBeShown)放行,送出時 supabase-js 拿的卻是別人的登入資料,
-         改到、登出、刪掉的是別的分頁登入的那個人。等 50 毫秒再送(審查 D 第 4 輪 #3;下面兩個一樣) */
-      await new Promise(r => setTimeout(r, 50));
+      if (!await stillMine(opener)) { unsentName = n; return; }
       try { await CLOUD.updateName(n); location.reload(); }
-      catch (err) { if (isGone(err)) { unsentName = n; goneCard(opener); } else alert(err.message); }
+      catch (err) { if (isGone(err)) { unsentName = n; goneCard(opener); } else notice('暱稱沒有改', err.message); }
     }
 
     /* 照 Netflix、Spotify 帳號頁的作法:一般的登出只登出這台,「登出所有裝置」另外一列、先確認 */
-    function logoutEverywhere(e) {
+    async function logoutEverywhere(e) {
       const opener = openerOf(e);
       if (accountMoved()) { goneCard(opener); return; }
-      if (!confirm('要登出所有裝置嗎？這台會馬上登出，其他已登入的手機、電腦最晚約一小時內也會登出，下次要重新登入。')) return;
-      setTimeout(() => CLOUD.logout({ everywhere: true }).catch(err => { if (isGone(err)) goneCard(opener); else alert(err.message); }), 50);
+      clearNotice();
+      if (!await askConfirm({ title: '登出所有裝置？', body: '這台馬上登出。其他裝置最晚約一小時內登出。', ok: '登出', cancel: '取消' })) return;
+      if (!await stillMine(opener)) return;
+      CLOUD.logout({ everywhere: true }).catch(err => { if (isGone(err)) goneCard(opener); else notice('沒有登出', err.message); });
     }
 
-    function deleteUser(e) {
+    /* 問兩次:第二次寫出帳號的 Email。兩次都按確定才送 */
+    async function deleteUser(e) {
       const opener = openerOf(e);
       if (accountMoved()) { goneCard(opener); return; }
-      if (!confirm('確定要刪除帳號？雲端上的所有進度、錯題與寫作內容都會永久刪除，無法復原。付款紀錄依法保留。')) return;
-      if (!confirm('再確認一次：真的要刪除「' + CLOUD.user.email + '」？')) return;
-      setTimeout(() => CLOUD.deleteAccount().catch(err => { if (isGone(err)) goneCard(opener); else alert(err.message); }), 50);
+      clearNotice();
+      const mail = CLOUD.user.email || '';
+      if (!await askConfirm({ title: '刪除帳號？', body: '雲端上的進度、錯題與寫作內容會永久刪除。付款紀錄依法保留。', ok: '刪除', cancel: '取消', danger: true })) return;
+      if (!await askConfirm({ title: '真的要刪除這個帳號？', body: mail, ok: '刪除帳號', cancel: '取消', danger: true })) return;
+      if (!await stillMine(opener)) return;
+      CLOUD.deleteAccount().catch(err => { if (isGone(err)) goneCard(opener); else notice('帳號沒有刪除', err.message); });
     }
 
     /* 「我的」頁(me.html)的帳號區:由 js/me.js 在 CLOUD.ready 之後呼叫 */
@@ -437,6 +463,7 @@
         window.CLASSES ? CLASSES.section(classOpts) : null,   // 班級(js/classes.js,只有 me.html 載入)
         list(row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }), row('改暱稱', { run: renameUser })),
         list(row('登出', { run: logoutHere, danger: true }), row('登出所有裝置', { run: logoutEverywhere, danger: true })),
+        h('p', { class: 'me-msg', role: 'status' }),
         h('p', { class: 'me-delete' }, h('button', { type: 'button', onclick: deleteUser }, '刪除帳號')));
       /* 老師試用開通後:重新查使用權(教師後台那一列、老師方案那一列才會出現)再整頁重畫 */
       if (paid) plans = PAYWALL.account({ who, after: links, onTrial: () => { Promise.resolve(CLOUD.refreshAccess()).then(() => renderAccount(root), () => renderAccount(root)); } });
@@ -625,7 +652,7 @@
         if (opts.onMode) opts.onMode(mode);
         const msg = h('p', { class: 'auth-msg', role: 'alert' });
         if (CLOUD.authError) { msg.textContent = CLOUD.authError; msg.className = 'auth-msg bad'; CLOUD.authError = ''; }
-        else if (CLOUD.sessionExpired && !CLOUD.user && mode === 'login') { msg.textContent = '登入已失效，請重新登入'; CLOUD.sessionExpired = false; }
+        else if (CLOUD.sessionExpired && !CLOUD.user && mode === 'login') { msg.textContent = '登入已失效。請重新登入。'; CLOUD.sessionExpired = false; }
 
         if (mode === 'forgot') drawForgot(msg);
         else drawMain(msg);
@@ -750,7 +777,7 @@
         const form = formOf(btn, msg, async ({ lock, unlock, fail, ok }) => {
           if (!email.bad(EMAIL_RE.test(email.value()) ? '' : 'Email 格式不對。')) { email.input.focus(); return; }
           lock('寄送中');
-          try { await CLOUD.resetPassword(email.value()); ok('重設信已寄出，到信箱點連結設新密碼。'); }
+          try { await CLOUD.resetPassword(email.value()); ok('重設信已寄出。到信箱點連結設新密碼。'); }
           catch (e) { fail(e.message); unlock(); }
         }, email.el);
         put(heading('重設密碼'), form,
@@ -783,7 +810,7 @@
         });
         put(
           opts.onMode ? null : h('h2', { class: 'auth-h' }, '驗證信已寄出'),
-          h('p', { class: 'auth-sent' }, '寄到 ', h('b', null, email), '，點信裡的連結就完成註冊並登入。沒收到先看垃圾郵件。'),
+          h('p', { class: 'auth-sent' }, '寄到 ', h('b', null, email), '。點信裡的連結就完成註冊並登入。沒收到先看垃圾郵件。'),
           again,
           msg);
       }
@@ -892,7 +919,7 @@
         }
         switchTo(id);
       } catch (e) {
-        alert('匯入失敗：' + e.message);
+        notice('匯入失敗', e.message);
       }
     };
     reader.readAsText(file, 'utf-8');
@@ -930,31 +957,42 @@
           onclick: () => switchTo(pr.id),
         }, pr.name, cur && pr.id === cur.id ? ' ✓' : ''));
       });
-      if (cur) {
-        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'analysis.html'; } }, '能力分析'));
-          menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'review.html'; } }, '每日複習'));
-        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { location.href = 'history.html'; } }, '學習記錄'));
-      }
+      /* 選單只放切換學生與去哪裡:匯出、匯入、刪除檔案都在「我的」頁 */
+      if (cur) menu.append(goItem('我的', 'me.html'), goItem('能力分析', 'analysis.html'), goItem('學習記錄', 'history.html'));
       menu.append(h('div', { class: 'pm-sep' }));
       menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => { menu.style.display = 'none'; showGate(true); } }, '＋ 新增學生'));
-      if (cur) {
-        menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => exportData(cur.id, cur.name) }, '匯出進度（給老師或換電腦）'));
-      }
-      const fileInput = h('input', { type: 'file', accept: '.json', style: 'display:none' });
-      fileInput.addEventListener('change', () => { if (fileInput.files[0]) importProfile(fileInput.files[0]); });
-      menu.append(h('button', { class: 'pm-item', type: 'button', onclick: () => fileInput.click() }, '匯入進度檔'), fileInput);
       const inst = installItem(menu);
       if (inst) menu.append(inst);
-      if (cur) {
-        menu.append(h('div', { class: 'pm-sep' }));
-        menu.append(h('button', {
-          class: 'pm-item danger', type: 'button',
-          onclick: () => {
-            if (confirm('確定刪除「' + cur.name + '」的檔案？這位學生的所有進度與錯題紀錄都會消失，無法復原。')) deleteProfile(cur.id);
-          },
-        }, '刪除這個檔案'));
-      }
     }
+  }
+
+  async function removeProfile(cur) {
+    clearNotice();
+    const yes = await askConfirm({ title: '刪除「' + cur.name + '」的檔案？', body: '這位學生的進度與錯題紀錄會消失。無法復原。', ok: '刪除', cancel: '取消', danger: true });
+    if (yes && currentProfile() && currentProfile().id === cur.id) deleteProfile(cur.id);
+  }
+
+  /* 「我的」頁(me.html,js/me.js 呼叫):目前的學生、能力分析與學習記錄、匯出匯入、切換學生、刪除這個檔案 */
+  function renderLocal(root) {
+    root.replaceChildren();
+    const cur = currentProfile();
+    const row = (label, opt) => h('li', null, opt.href
+      ? h('a', { class: 'me-row', href: opt.href }, label)
+      : h('button', { class: 'me-row' + (opt.danger ? ' danger' : ''), type: 'button', onclick: opt.run }, label));
+    const list = (...rows) => h('ul', { class: 'me-list' }, rows.filter(Boolean));
+    const fileInput = h('input', { type: 'file', accept: '.json', style: 'display:none' });
+    fileInput.addEventListener('change', () => { if (fileInput.files[0]) importProfile(fileInput.files[0]); });
+    root.append(...[
+      h('div', { class: 'me-head' },
+        h('span', { class: 'profile-dot me-dot', 'aria-hidden': 'true' }, cur ? cur.name.slice(0, 1) : '?'),
+        cur ? h('div', { class: 'me-who' }, h('b', { class: 'me-name' }, cur.name)) : h('div', { class: 'me-actions' },
+          h('button', { class: 'btn primary', type: 'button', onclick: () => showGate(true) }, '建立檔案'))),
+      cur ? list(row('能力分析', { href: 'analysis.html' }), row('學習記錄', { href: 'history.html' })) : null,
+      list(cur ? row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }) : null, row('匯入進度檔', { run: () => fileInput.click() }),
+        row('切換學生', { run: () => showGate(true) })),
+      fileInput,
+      h('p', { class: 'me-msg', role: 'status' }),
+      cur ? h('p', { class: 'me-delete' }, h('button', { type: 'button', onclick: () => removeProfile(cur) }, '刪除這個檔案')) : null].filter(Boolean));
   }
 
   /* ---------- 建檔視窗(gate) ----------
@@ -965,7 +1003,7 @@
     if (document.querySelector('.modal-mask')) return null;
     const act = voluntary === 'act';
     const list = getProfiles();
-    const input = h('input', { class: 'modal-input', type: 'text', placeholder: '輸入名字，例如：小安', maxlength: '20' });
+    const input = h('input', { class: 'modal-input', type: 'text', placeholder: '例如：小安', maxlength: '20' });
     const createBtn = h('button', {
       class: 'btn primary', type: 'button',
       onclick: () => {
@@ -973,15 +1011,15 @@
         if (id) switchTo(id);
         else input.focus();
       },
-    }, '建立檔案，開始練習');
+    }, '建立並開始');
     input.addEventListener('keydown', e => { if (e.key === 'Enter') createBtn.click(); });
 
     const box = h('div', act ? { class: 'modal modal-gate', role: 'dialog', 'aria-modal': 'true', 'aria-label': '你是哪位？', 'aria-describedby': 'gate-why' } : { class: 'modal' },
       act ? h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }) : null,
       h('h2', null, voluntary === true ? '新增學生' : '你是哪位？'),
       /* 說明跟著下面的畫面:還沒有任何檔案時只能建一個,有檔案時才是選 */
-      act ? h('p', { class: 'modal-why', id: 'gate-why' }, (list.length ? '選好' : '建好') + '你的檔案才能作答，練習紀錄會存在這個檔案裡。') : null,
-      h('p', { class: 'modal-sub' }, '每位學生有自己的進度、錯題與檢測報告，都只存在這台裝置上。'),
+      act ? h('p', { class: 'modal-why', id: 'gate-why' }, (list.length ? '選好' : '建好') + '你的檔案才能作答。') : null,
+      h('p', { class: 'modal-sub' }, '每位學生的進度、錯題與檢測報告只存在這台裝置上。'),
       list.length ? h('div', { class: 'modal-list' },
         h('div', { class: 'pm-head' }, '選擇既有檔案'),
         list.map(pr => h('button', { class: 'pm-item big', type: 'button', onclick: () => switchTo(pr.id) },
@@ -1021,6 +1059,7 @@
 
   window.PROFILE = {
     current: currentProfile, showGate, canAct, askToAct,
+    renderAccount: renderLocal,   // me.html 的帳號區
     /* store 與作答紀錄的最後一道(js/common.js canKeepProgress):內容頁、頁面載完之後、不能作答 → 不寫 */
     blocksWrite: () => gateMode() === 'action' && document.readyState !== 'loading' && !canAct(),
   };
@@ -1028,6 +1067,7 @@
   if (gateMode() === 'action') installActionGate(canAct, askToAct);
 
   document.addEventListener('DOMContentLoaded', () => {
+    markAuthed(currentProfile());
     buildWidget();
     if (gateMode() === 'hard' && !currentProfile()) showGate(false);
   });

@@ -1984,7 +1984,12 @@ T['刷題頁隨機練習、聽力隨機練習、程度檢測:交卷的確認視�
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 按下去會跳原生視窗(confirm、prompt)的按鈕(用文字找,exact:整段文字要一樣):滑鼠放開那一下不等 CDP 回應(視窗開著時不回),
+/* 站內視窗(js/ui.js):開著而且還沒記過的那一個,回 'prompt'(有輸入框)或 'confirm',記過就標上;按確定時 prompt 先填字 */
+const UI_DLG_OPEN = "!!document.querySelector('.ui-mask .ui-dialog:not([data-seen])')";
+const UI_DLG_SEEN = "(() => { const d = document.querySelector('.ui-mask .ui-dialog:not([data-seen])'); if (!d) return ''; d.setAttribute('data-seen', '1'); return d.querySelector('.ui-dialog-input') ? 'prompt' : 'confirm'; })()";
+const UI_DLG_OK = "(text) => { const d = document.querySelector('.ui-mask .ui-dialog'); if (!d) return false; const i = d.querySelector('.ui-dialog-input');"
+  + " if (i) { i.value = text; i.dispatchEvent(new Event('input')); } d.querySelector('.ui-dialog-ok').click(); return true; }";
+/* 按下去會跳原生視窗(confirm、prompt)或站內視窗的按鈕(用文字找,exact:整段文字要一樣):滑鼠放開那一下不等 CDP 回應(視窗開著時不回),
    等 Page.javascriptDialogOpening。每跳一個視窗先跑 during(第幾個視窗),再按確定(prompt 填 promptText)。回跳過的視窗種類 */
 async function pressDialogs(B, s, sel, text, exact, during, promptText) {
   const ok = await s.eval(`(() => { const old = document.getElementById('__press'); if (old) old.removeAttribute('id');
@@ -2000,8 +2005,20 @@ async function pressDialogs(B, s, sel, text, exact, during, promptText) {
     const released = s.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: p.x, y: p.y, button: 'left', clickCount: 1 }).then(() => { done = true; if (wake) wake(); });
     const end = Date.now() + 15000;
     while (Date.now() < end) {
+      /* 站內的確認與輸入視窗(js/ui.js UI.confirm、UI.prompt):跟原生視窗一樣記下種類、先跑 during,再填字(prompt)、按確定 */
       if (!queue.length) {
-        if (done) { await sleep(400); if (!queue.length) break; continue; }
+        const ui = await s.eval(UI_DLG_SEEN).catch(() => '');   // 按確定後換頁中讀不到就當沒有
+        if (ui) {
+          asked.push(ui);
+          if (during) await during(asked.length, { type: ui });
+          await sleep(300);
+          await s.eval(`(${UI_DLG_OK})(${J(promptText || '')})`).catch(() => false);
+          await sleep(100);
+          continue;
+        }
+      }
+      if (!queue.length) {
+        if (done) { await sleep(400); if (!queue.length && !(await s.eval(UI_DLG_OPEN).catch(() => false))) break; continue; }
         await Promise.race([new Promise((r) => { wake = r; }), sleep(500)]);
         wake = null;
         continue;
@@ -2334,8 +2351,9 @@ T['加入班級、改暱稱的視窗開著時別的分頁換帳號:按下去不�
   const r = { how: '改暱稱' };
   const s = await open(B, { url: 'me.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login } });
   try {
+    /* 改暱稱是站內的輸入視窗(UI.prompt,回 Promise):換成替身,記下預先填的字;第一次開著的時候換成 Y、回「新暱稱」,第二次按取消(null) */
     await s.eval(`(() => { window.__prompts = []; window.__mark = 1; window.alert = (m) => { window.__prompts.push('alert:' + m); };
-      window.prompt = (m, d) => { window.__prompts.push(d); if (window.__prompts.length === 1) ${TO_Y}; return window.__prompts.length === 1 ? '新暱稱' : null; }; return true; })()`);
+      UI.prompt = (o) => { window.__prompts.push(o.value); if (window.__prompts.length === 1) ${TO_Y}; return Promise.resolve(window.__prompts.length === 1 ? '新暱稱' : null); }; return true; })()`);
     await press(s, '.me-row', '改暱稱');
     await sleep(900);
     r.card = (await state(s)).title;
@@ -2363,9 +2381,10 @@ T['加入班級、改暱稱的視窗開著時別的分頁換帳號:按下去不�
    不會登出到別人:照 e49e444 清掉 X 留在這台的東西、重載,但不呼叫 signOut(31745ec 跳卡、X 的資料留在共用電腦上)。刪除帳號照樣擋 */
 T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出所有裝置、改暱稱、刪除帳號、加入班級都不問不送,跳「這個帳號已經在別的分頁登出」卡;平常登入著照常'] = async (B) => {
   const login = J({ access_token: 'x', user: USER });
-  /* 確認視窗、輸入視窗記在 sessionStorage 的 __dlg(重載後還在):都回「確定」 */
+  /* 確認視窗、輸入視窗記在 sessionStorage 的 __dlg(重載後還在):都回「確定」。「我的」頁的帳號動作用站內視窗(UI.confirm、UI.prompt,回 Promise),一樣換成替身 */
   const DLG = `(() => { const rec = (x) => { const d = JSON.parse(sessionStorage.getItem('__dlg') || '[]'); d.push(x); sessionStorage.setItem('__dlg', JSON.stringify(d)); };
     window.confirm = () => { rec('confirm'); return true; }; window.prompt = () => { rec('prompt'); return '新暱稱'; }; window.alert = (m) => { rec('alert:' + m); };
+    UI.confirm = () => { rec('confirm'); return Promise.resolve(true); }; UI.prompt = () => { rec('prompt'); return Promise.resolve('新暱稱'); };
     window.__mark = 1; return true; })()`;
   const OTHER = {
     換帳號: `(() => { ${OTHER_TAB_LOGOUT}; localStorage.setItem(${J(SB)}, ${J(J({ access_token: 'y', user: Y_USER }))}); localStorage.setItem('tr_current_profile', ${J(J(YPID))});
@@ -2393,9 +2412,8 @@ T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出�
         await press(s, '.modal-join .auth-submit', '加入');
       }
     },
+    /* 頭像選單收斂成「去哪裡」加登出:改暱稱、刪除帳號只在「我的」頁(上面兩項),選單裡沒有了 */
     '頭像選單:登出': async (s) => { await click(s, '.profile-btn'); await press(s, '.profile-menu .pm-item', '登出'); },
-    '頭像選單:改暱稱': async (s) => { await click(s, '.profile-btn'); await press(s, '.profile-menu .pm-item', '改暱稱'); },
-    '頭像選單:刪除帳號': async (s) => { await click(s, '.profile-btn'); await press(s, '.profile-menu .pm-item', '刪除帳號'); },
   };
   const keys = (ls) => { const o = JSON.parse(ls); return { sb: o[SB] || null, cp: o.tr_current_profile || null, y: o['tr_u' + YPID + '_hist'] || null, x: accountKeys(ls).length }; };
   const who = (id) => (id === UID ? 'X' : id === Y_USER.id ? 'Y' : String(id));
@@ -2408,7 +2426,8 @@ T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出�
       /* 第一個確認視窗、暱稱視窗開著的時候,別的分頁換成 Y */
       if (how === '問的時候換帳號') {
         await s.eval(`(() => { const sw = () => { if (!window.__switched) { window.__switched = 1; ${OTHER['換帳號']}; } };
-          const c = window.confirm, p = window.prompt; window.confirm = (m) => { sw(); return c(m); }; window.prompt = (m, d) => { sw(); return p(m, d); }; return true; })()`);
+          const c = window.confirm, p = window.prompt; window.confirm = (m) => { sw(); return c(m); }; window.prompt = (m, d) => { sw(); return p(m, d); };
+          const uc = UI.confirm, up = UI.prompt; UI.confirm = (o) => { sw(); return uc(o); }; UI.prompt = (o) => { sw(); return up(o); }; return true; })()`);
       }
       const before = keys(await s.eval(LS));
       const c0 = JSON.parse(await s.eval("sessionStorage.getItem('__fake_calls') || '[]'")).length;

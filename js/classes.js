@@ -9,7 +9,7 @@
 (function () {
   /* 邀請碼的字母表跟資料庫的 gen_class_code 一樣:沒有 0、1、I、O */
   const CODE_RE = /^[A-HJ-NP-Z2-9]{8}$/;
-  const NET_MSG = '連不上雲端伺服器，請檢查網路後再試。';
+  const NET_MSG = '連不上雲端伺服器。請檢查網路後再試。';
   const PENDING_KEY = 'tr_pending_join';
   const PENDING_TTL_MS = 24 * 3600e3;
 
@@ -22,8 +22,8 @@
   function formatError(code) {
     if (!code) return '請輸入邀請碼。';
     if (/[^A-Z0-9]/.test(code)) return '邀請碼只有英文字母和數字。';
-    if (code.length !== 8) return '邀請碼是 8 碼，現在是 ' + code.length + ' 碼。';
-    if (!CODE_RE.test(code)) return '邀請碼裡沒有 0、1、I、O，請再對一次。';
+    if (code.length !== 8) return '邀請碼是 8 碼。現在是 ' + code.length + ' 碼。';
+    if (!CODE_RE.test(code)) return '邀請碼沒有 0、1、I、O。請再對一次。';
     return '';
   }
 
@@ -35,7 +35,7 @@
   function messageOf(err) {
     if (isNetwork(err)) return NET_MSG;
     const m = String((err && err.message) || '');
-    return m ? sentence(m) : '發生錯誤，請稍後再試。';
+    return m ? sentence(m) : '發生錯誤。請稍後再試。';
   }
 
   /* 可以呼叫雲端:回 { client, user };不行就回 { message }。
@@ -208,7 +208,11 @@
       btn.setAttribute('aria-label', '退出' + label);
       btn.addEventListener('click', async () => {
         if (accountMoved()) { goneCard(btn); return; }
-        if (!confirm('要退出「' + label + '」嗎？要回來得再輸入一次邀請碼。')) return;
+        const yes = window.UI && typeof UI.confirm === 'function'
+          ? await UI.confirm({ title: '退出「' + label + '」？', body: '要回來得再輸入一次邀請碼', ok: '退出', cancel: '取消', danger: true }) : false;
+        if (!yes) return;
+        /* 視窗開著時別的分頁可能換了帳號:按確定後再看一次(送出時 session(true) 也會擋) */
+        if (accountMoved()) { goneCard(btn); return; }
         btn.disabled = true;
         const r = await leave(c.id);
         if (!r.ok) { btn.disabled = false; say(r.message, 'bad'); if (r.gone) goneCard(btn); return; }
@@ -269,7 +273,7 @@
       closeBtn,
       h('h2', { class: 'auth-h', id: 'join-h' }, '加入班級'),
       form,
-      h('p', { class: 'auth-fine' }, '加入後，這個班的老師看得到你的暱稱、Email 和學習記錄。'));
+      h('p', { class: 'auth-fine' }, '加入後這個班的老師看得到你的暱稱、Email 和學習記錄。'));
     mask.append(box);
     document.body.append(mask);
 

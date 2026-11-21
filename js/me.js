@@ -1,15 +1,7 @@
-/* 「我的」頁:雲端模式交給 PROFILE.renderAccount;本機模式只放連結與切換學生 */
+/* 「我的」頁:內容由 PROFILE.renderAccount 畫(js/profile.js)。雲端模式等登入狀態確認之後再畫;本機模式直接畫 */
 document.addEventListener('DOMContentLoaded', async () => {
   const root = $('#me-root');
-  if (!root || !window.PROFILE) return;
-  if (window.CLOUD && CLOUD.enabled) {
-    await CLOUD.ready;
-    if (PROFILE.renderAccount) PROFILE.renderAccount(root);
-    return;
-  }
-  const cur = PROFILE.current();
-  root.append(h('ul', { class: 'me-list' },
-    cur ? h('li', null, h('a', { class: 'me-row', href: 'analysis.html' }, '能力分析')) : null,
-    cur ? h('li', null, h('a', { class: 'me-row', href: 'history.html' }, '學習記錄')) : null,
-    h('li', null, h('button', { class: 'me-row', type: 'button', onclick: () => PROFILE.showGate(true) }, '切換學生'))));
+  if (!root || !window.PROFILE || typeof PROFILE.renderAccount !== 'function') return;
+  if (window.CLOUD && CLOUD.enabled) await CLOUD.ready;
+  PROFILE.renderAccount(root);
 });

@@ -9,8 +9,8 @@
    - 首頁:WebSite 與 OnlineBusiness(Organization 的子類型)結構化資料,alternateName 只有 Rushup;h1 有站名;沒有過期的日期公告。
    - 首頁搜尋結果的摘要(2026-11-13,Google 拿了導覽列文字當摘要):全站 .topbar-inner、頁尾連結列(外包 div)、首頁數字列、每日練習、小雞卡、聽力訓練頁的進度數字與級別選單一建立就帶 data-nosnippet(首頁、價格頁不寫全站免費公告,2026-11-17 站長拿掉),
      h1、功能卡片、頁尾那句不帶,h1 下不掛介紹句;首頁說明第一句講是準備多益的線上練習網站,寫的題數不超過題庫,數字列照資料算(題庫含聽力、單字不重複);
-     定稿關鍵字表分「原樣」「拆開」逐處核對,「多益練習」要原樣在標題或說明;每日複習接在題庫後面(模擬考錯題不進每日複習);h1 用 keep-all 只在「：」「、」後換行;
-     每日複習的卡片與說明只寫 js/review.js 真的收的(不寫全站錯題);單字、聽力頁的說明和首頁卡片列出頁上每一種玩法;
+     定稿關鍵字表分「原樣」「拆開」逐處核對,「多益練習」要原樣在標題或說明;錯題本接在題庫後面(模擬考錯題不進錯題本);h1 用 keep-all 只在「：」「、」後換行;
+     錯題本的卡片與說明只寫 js/review.js 真的收的(不寫全站錯題);單字、聽力頁的說明和首頁卡片列出頁上每一種玩法;
      標題、說明、h1、結構化資料、manifest 說明不寫會變假的字(免費、考古題、官方……),iPhone 安裝入口關著時也不寫 App、主畫面。
    - sitemap.xml 跟 tools/build_sitemap.js 產生的一樣:每個要收錄的頁加上每個單元,沒有 noindex 的頁。
    - 404.html:noindex、連結與樣式用 / 開頭(網址可能在任何一層)、不含 GitHub 的「Site not found」字樣(Worker 靠它判斷新網址掛了)。
@@ -376,7 +376,7 @@ T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、每日練習�
   /* 站長刪過三次首頁 h1 下的說明句(3c18669、159e17d、22c78df):hero 裡只有 h1 和數字列 */
   assert.match(src, /<div class="hero-inner">\s*<h1>[^<]+<\/h1>\s*<div class="stats"/, '首頁 h1 下不掛介紹句');
 };
-T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上練習網站;關鍵字表寫的位置真的有;每日複習不接在模擬考後面;h1 不把詞拆兩行;數字列算的是實際資料;寫的題數是真的;不寫會變假的字'] = () => {
+T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上練習網站;關鍵字表寫的位置真的有;錯題本不接在模擬考後面;h1 不把詞拆兩行;數字列算的是實際資料;寫的題數是真的;不寫會變假的字'] = () => {
   const src = read('index.html'), s = head('index.html');
   const desc = meta(s, 'name', 'description');
   const org = JSON.parse(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/.exec(src)[1])['@graph'].find((x) => x['@type'] === 'OnlineBusiness');
@@ -390,7 +390,8 @@ T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上�
      「拆開」是沒有原樣、但同一段有「多益」也有詞的後半(C 首頁卡片上沒有「多益」兩字,只看後半)。
      以前只查拆開的片段(「練習」「聽力」),表上寫「多益練習:T、D、H、J」,其實一處都沒有原樣(審查第 2 輪 #1) */
   const spot = { T: titleOf(s), D: desc, H: h1, M: man.description, J: org.description,
-    C: Array.from(src.matchAll(/<a class="module-card"[^>]*>\s*<h2>([^<]+)<\/h2>\s*<p>([^<]+)<\/p>/g)).map((m) => m[1] + m[2]).join('|') };
+    /* 首頁卡片的名稱換成「錯題本」之前,舊名「每日複習」也算同一個詞(關鍵字表只看「錯題本」出現在哪幾處) */
+    C: Array.from(src.matchAll(/<a class="module-card[^"]*"[^>]*>\s*(?:<canvas[^>]*><\/canvas>\s*)?<h2>([^<]+)<\/h2>\s*<p>([^<]*)<\/p>/g)).map((m) => m[1] + m[2]).join('|').replace(/每日複習/g, '錯題本') };
   const where = (w) => Object.keys(spot).filter((k) => spot[k].indexOf(w) > -1).sort().join('');
   const sameSpots = (w, at) => assert.equal(where(w), at.split('').sort().join(''), '關鍵字表說「' + w + '」原樣出現在「' + at + '」,實際是「' + where(w) + '」');
   assert.ok(spot.T.indexOf('多益練習') > -1 || spot.D.indexOf('多益練習') > -1, '主關鍵字「多益練習」要原樣出現在標題或說明:' + spot.T + ' / ' + spot.D);
@@ -402,10 +403,10 @@ T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上�
       '關鍵字表說「' + w + '」拆開出現在 ' + k + ',實際沒有:' + spot[k]));
   });
   /* 次要的詞本身就是關鍵字,一樣要剛好出現在表上寫的那幾處 */
-  [['題庫刷題', 'TC'], ['Part 1–7', 'DMJ'], ['解析', 'DMJC'], ['每日複習', 'MJC'], ['自然發音', 'JC'], ['對話', 'JC'], ['寫作', 'JC'], ['TOEIC', 'J']].forEach(([w, at]) => sameSpots(w, at));
+  [['題庫刷題', 'TC'], ['Part 1–7', 'DMJ'], ['解析', 'DMJC'], ['錯題本', 'MJC'], ['自然發音', 'JC'], ['對話', 'JC'], ['寫作', 'JC'], ['TOEIC', 'J']].forEach(([w, at]) => sameSpots(w, at));
   assert.equal(spot.T.indexOf('寫作'), -1, '多益聽讀不考寫作,標題不放寫作');
-  /* 模擬考只存 mock_history,錯題不會進每日複習(js/review.js 只收題庫刷題、片語、單字、文法、發音):講每日複習的那句要接在題庫後面,不能排在模擬考後面 */
-  [spot.M, spot.J].forEach((t) => assert.ok(t.indexOf('每日複習') < t.indexOf('模擬考'), '每日複習要接在題庫刷題後面,不能接在模擬考後面:' + t));
+  /* 模擬考只存 mock_history,錯題不會進錯題本(js/review.js 只收題庫刷題、片語、單字、文法、發音):講錯題本的那句要接在題庫後面,不能排在模擬考後面 */
+  [spot.M, spot.J].forEach((t) => assert.ok(t.indexOf('錯題本') < t.indexOf('模擬考'), '錯題本要接在題庫刷題後面,不能接在模擬考後面:' + t));
   /* h1 只在「：」「、」後面換行(.hero h1 用 word-break: keep-all;原本 360 寬斷成「刷 / 題」、320 寬斷成「閱 / 讀」),每段要在 320 寬一行放得下(手機 24px,一行 11 字) */
   assert.match(read('css/style.css'), /\n\.hero h1 \{[^}]*word-break: keep-all;[^}]*\}/, '.hero h1 沒設 word-break: keep-all');
   h1.split(/(?<=[：、])/).forEach((seg) => assert.ok(seg.length <= 11, 'h1 這段在 320 寬放不進一行:' + seg));
@@ -437,40 +438,41 @@ T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上�
   Object.keys(texts).forEach((k) => banned.forEach((w) => assert.equal(texts[k].indexOf(w), -1, '首頁' + k + '寫了「' + w + '」:' + texts[k])));
   assert.ok(man.description.length >= 20 && man.description.length <= 80, 'manifest 說明 ' + man.description.length + ' 字(商店簡短說明上限 80)');
   /* 首頁的功能卡片跟 App 的學習、刷題頁同名的卡片,說明要一樣(改一邊忘了另一邊會出現兩種說法) */
-  const cardsOf = (f) => Array.from(read(f).matchAll(/<a class="module-card" href="([^"]+)">\s*<h2>([^<]+)<\/h2>\s*<p>([^<]+)<\/p>/g)).map((m) => [m[1], m[2], m[3]]);
+  /* 卡片可以帶 tile 類別與圖示(<canvas> 在 h2 前面);圖示磚的數字行可以是空的(錯題本的數字是徽章) */
+  const cardsOf = (f) => Array.from(read(f).matchAll(/<a class="module-card[^"]*" href="([^"]+)">\s*(?:<canvas[^>]*><\/canvas>\s*)?<h2>([^<]+)<\/h2>\s*<p>([^<]*)<\/p>/g)).map((m) => [m[1], m[2], m[3]]);
   const home = cardsOf('index.html');
   assert.ok(home.length >= 10, '首頁卡片太少:' + home.length);
-  ['learn.html', 'drill.html'].forEach((f) => {
+  ['learn.html', 'warmup.html', 'drill.html'].forEach((f) => {
     const hub = cardsOf(f);
-    assert.ok(hub.length >= 2, f + ' 卡片太少');
+    assert.ok(hub.length >= 4, f + ' 卡片太少');
     hub.forEach(([href, name, text]) => {
       const twin = home.find((c) => c[0] === href);
       if (!twin) return;
-      if (f === 'learn.html' || f === 'drill.html') {
+      if (f === 'learn.html' || f === 'warmup.html' || f === 'drill.html') {
         /* 學習頁與刷題選單的卡片只留一行事實標籤,字數比首頁短;兩邊都寫了同一種單位(章、課、組、級)的數字就不能不同 */
         const units = (t) => Array.from(t.matchAll(/(\d+) ?([章課組級題])/g)).map((m) => [m[2], m[1]]);
         const homeU = units(twin[2]);
         units(text).forEach(([u, n]) => homeU.filter((x) => x[0] === u).forEach((x) => assert.equal(n, x[1], f + ' 的「' + name + '」卡片寫的' + u + '數跟首頁不一樣')));
-        assert.ok(text.length > 0, f + ' 的「' + name + '」卡片沒有標籤');
+        if (href !== 'review.html') assert.ok(text.length > 0, f + ' 的「' + name + '」卡片沒有標籤');
         return;
       }
       assert.equal(text, twin[2], f + ' 的「' + name + '」卡片說明跟首頁不一樣');
     });
   });
 };
-T['首頁卡片與內頁說明寫的是真的、而且一致(2026-11-13 審查第 2 輪):每日複習只寫 js/review.js 真的收的;單字、聽力頁的說明和首頁卡片列出頁上每一種玩法'] = () => {
-  const cards = new Map(Array.from(read('index.html').matchAll(/<a class="module-card" href="([^"]+)">\s*<h2>[^<]+<\/h2>\s*<p>([^<]+)<\/p>/g)).map((m) => [m[1], m[2]]));
+T['首頁卡片與內頁說明寫的是真的、而且一致(2026-11-13 審查第 2 輪):錯題本只寫 js/review.js 真的收的;單字、聽力頁的說明和首頁卡片列出頁上每一種玩法'] = () => {
+  const cards = new Map(Array.from(read('index.html').matchAll(/<a class="module-card[^"]*" href="([^"]+)">\s*(?:<canvas[^>]*><\/canvas>\s*)?<h2>[^<]+<\/h2>\s*<p>([^<]*)<\/p>/g)).map((m) => [m[1], m[2]]));
   /* js/review.js 收的是題庫刷題(Part 5、聽力 P1/P2 直接出題,題組列出來連回刷題)、片語、單字遊戲漏接、文法和自然發音沒全對的課;
      模擬考(只存 mock_history)、程度檢測、閱讀文章、聽寫這類聽力基本功的錯題都不會進去,所以不能寫「全站錯題」。
      data-nosnippet 擋掉導覽列等之後,首頁卡片是 h1 下面第一段會被拿去當摘要的字 */
   const rv = read('js/review.js');
   const rvText = [cards.get('review.html'), meta(head('review.html'), 'name', 'description')];
   rvText.forEach((t) => {
-    assert.ok(t, '找不到每日複習的卡片或說明');
-    ['全站', '模擬考', '程度檢測', '文章', '聽寫'].forEach((w) => assert.equal(t.indexOf(w), -1, '每日複習寫了「' + w + '」,js/review.js 沒有收這些:' + t));
+    assert.ok(t, '找不到錯題本的卡片或說明');
+    ['全站', '模擬考', '程度檢測', '文章', '聽寫'].forEach((w) => assert.equal(t.indexOf(w), -1, '錯題本寫了「' + w + '」,js/review.js 沒有收這些:' + t));
   });
   [['刷題', "store.get('drill_p5'"], ['片語', "store.get('phrase_drill'"], ['單字', "store.get('vgame_miss'"], ['文法', "store.get('grammar_done'"]].forEach(([w, key]) => {
-    if (rvText[0].indexOf(w) > -1) assert.ok(rv.indexOf(key) > -1, '每日複習卡片寫了「' + w + '」,js/review.js 卻沒讀 ' + key);
+    if (rvText[0].indexOf(w) > -1) assert.ok(rv.indexOf(key) > -1, '錯題本卡片寫了「' + w + '」,js/review.js 卻沒讀 ' + key);
   });
   /* 單字頁、聽力頁的說明(搜尋結果、分享預覽)和首頁卡片,都要列出頁上每一種玩法;以前首頁卡片加了記憶吐司、跟讀,內頁說明沒跟上 */
   const games = Array.from(read('js/vocab.js').matchAll(/gameCard\('\w+', '([^']+)'/g)).map((m) => m[1].replace(/^單字/, ''));
@@ -483,6 +485,85 @@ T['首頁卡片與內頁說明寫的是真的、而且一致(2026-11-13 審查�
       assert.ok(cards.get(f).indexOf(n) > -1, '首頁「' + f + '」卡片少了「' + n + '」:' + cards.get(f));
     });
   });
+};
+T['頂欄與分組頁:20 頁的頂欄是同一份(首頁加三個分組連結),目前頁亮的是歸屬那一格,我的、學習記錄、能力分析、教師後台都不亮;新頁登記在分頁列、開機清單、版面檢查;「每日複習」改成「錯題本」'] = () => {
+  const NAV = /<nav class="topnav" aria-label="主要導覽">[\s\S]*?<\/nav>/;
+  const plain = (n) => n.replace(/\r/g, '').replace(/ class="active" aria-current="page"/g, '').replace(/ active/g, '').replace(/ aria-current="page"/g, '');
+  const withNav = PAGES.filter((f) => /class="topnav"/.test(read(f)));
+  assert.equal(withNav.length, 20, '有導覽的頁數:' + withNav.length);
+  const base = plain(NAV.exec(read('index.html'))[0]);
+  const GROUPS = { 'learn.html': ['grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'], 'warmup.html': ['vocab.html', 'listening.html', 'writing.html', 'grammar.html?ref=verbs'],
+    'drill.html': ['practice.html', 'mock.html', 'diagnostic.html', 'review.html'] };
+  const tops = [['index.html', '首頁']].concat(Array.from(base.matchAll(/<a class="nav-btn" href="([^"]+)">([^<]+)<\/a>/g)).map((m) => [m[1], m[2]]));
+  assert.deepEqual(tops.map((t) => t[0]), ['index.html', 'learn.html', 'warmup.html', 'drill.html'], '頂欄四個連結:' + JSON.stringify(tops));
+  assert.deepEqual(['首頁', '日常學習', '練練手感', '刷刷題目'], tops.map((t) => t[1]));
+  assert.equal(/<button class="nav-btn/.test(read('index.html')), false, '.nav-btn 要是連結,不是按鈕');
+  Object.keys(GROUPS).forEach((g) => {
+    const menu = new RegExp('<a class="nav-btn(?: active)?" href="' + g + '"[^>]*>[^<]+</a>\\s*<div class="nav-menu">([\\s\\S]*?)</div>').exec(base);
+    assert.ok(menu, g + ' 的選單');
+    assert.deepEqual(Array.from(menu[1].matchAll(/href="([^"]+)"/g)).map((m) => m[1]), GROUPS[g]);
+    GROUPS[g].forEach((h) => assert.ok(fs.existsSync(path.join(REPO, h.split('?')[0])), h));
+  });
+  /* 目前頁亮哪一格:每一頁屬於哪一格的歸屬表 */
+  const OWNER = { home: ['index.html', 'daily.html'], 'learn.html': ['learn.html', 'grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'],
+    'warmup.html': ['warmup.html', 'vocab.html', 'listening.html', 'writing.html'], 'drill.html': ['drill.html', 'practice.html', 'mock.html', 'diagnostic.html', 'review.html'],
+    none: ['me.html', 'history.html', 'analysis.html', 'admin.html'] };
+  const all = Object.keys(OWNER).reduce((a, k) => a.concat(OWNER[k]), []);
+  assert.deepEqual(all.slice().sort(), withNav.slice().sort(), '歸屬表要剛好涵蓋有導覽的頁');
+  withNav.forEach((f) => {
+    const nav = NAV.exec(read(f));
+    assert.ok(nav, f + ' 沒有新頂欄');
+    assert.equal(plain(nav[0]), base, f + ' 的頂欄跟首頁的不是同一份');
+    const homeOn = /<a href="index\.html" class="active" aria-current="page">/.test(nav[0]);
+    const grp = (/<a class="nav-btn active" href="([^"]+)"/.exec(nav[0]) || [])[1] || null;
+    const want = Object.keys(OWNER).find((k) => OWNER[k].indexOf(f) > -1);
+    assert.equal(homeOn, want === 'home', f + ' 首頁那格');
+    assert.equal(grp, want === 'home' || want === 'none' ? null : want, f + ' 亮的分組');
+    assert.equal((nav[0].match(/class="[^"]*\bactive\b/g) || []).length - (homeOn ? 1 : 0) - (grp ? 1 : 0) <= 1, true, f + ' 亮太多格');
+    if (want === 'none') assert.equal(/\bactive\b/.test(nav[0]), false, f + ' 這一頁頂欄不該亮');
+  });
+  /* 開機程式的分頁根頁清單、分頁列的五格、手機版不再有點 .nav-btn 展開的程式 */
+  const shell = read('js/app-shell.js');
+  const tabHrefs = Array.from(shell.matchAll(/\{ key: '(\w+)', label: '([^']+)', href: '([^']+)'/g)).map((m) => m[3]);
+  assert.deepEqual(tabHrefs, ['index.html', 'learn.html', 'warmup.html', 'drill.html', 'me.html']);
+  const ROOTS = "['index.html', 'learn.html', 'warmup.html', 'drill.html', 'me.html']";
+  let boots = 0;
+  PAGES.forEach((f) => {
+    const m = /d\.classList\.add\('is-tab-root'\)/.test(read(f));
+    if (!m) return;
+    boots++;
+    assert.ok(read(f).indexOf(ROOTS + '.indexOf(p) > -1') > -1, f + ' 的分頁根頁清單不是五格');
+  });
+  assert.ok(boots >= 27, '有開機程式的頁:' + boots);
+  assert.equal(/nav-btn/.test(read('js/common.js')), false, 'js/common.js 還在處理 .nav-btn 的點擊');
+  /* 新頁 warmup.html 登記:分頁列、版面檢查頁清單、sitemap 建置工具(noindex 的頁不收錄) */
+  assert.ok(/'warmup\.html'/.test(shell.split('const TITLES')[0]), '分頁列沒有練練手感');
+  assert.ok(/warmup\.html/.test(read('tools/check_layout.js')), 'check_layout 的頁清單沒有 warmup.html');
+  assert.match(read('warmup.html'), /<title>練練手感 - 衝衝英文<\/title>/);
+  ['learn.html:日常學習', 'warmup.html:練練手感', 'drill.html:刷刷題目', 'review.html:錯題本'].forEach((x) => {
+    const [f, name] = x.split(':');
+    assert.match(read(f), new RegExp('<title>' + name + ' - 衝衝英文</title>'), f);
+    if (f !== 'review.html') assert.match(read(f), new RegExp('<h1>' + name + '</h1>'), f);
+    const d = meta(head(f), 'name', 'description');
+    assert.ok(d && d.length >= 24 && d.length <= 70, f + ' 說明 ' + (d || '').length + ' 字');
+  });
+  const descs = ['learn.html', 'warmup.html', 'drill.html', 'review.html'].map((f) => meta(head(f), 'name', 'description'));
+  assert.equal(new Set(descs).size, 4, '四頁說明要各不相同');
+  /* 分組頁:磚沒有說明句(數字行不超過 12 字、沒有句號與逗號),主打磚的實色按鈕剛好一顆 */
+  Object.keys(GROUPS).forEach((f) => {
+    const src = read(f);
+    assert.equal((src.match(/class="btn primary tile-go"/g) || []).length, 1, f + ' 實色主按鈕要剛好一顆');
+    assert.equal((src.match(/class="module-card tile/g) || []).length, 4, f + ' 要一塊主打磚加三塊一般磚');
+    Array.from(src.matchAll(/<p>([^<]*)<\/p>/g)).filter((m) => m.index > src.indexOf('<main')).filter((m) => m.index < src.indexOf('</main>'))
+      .forEach((m) => assert.ok(m[1].length <= 12 && !/[，。；]/.test(m[1]), f + ' 的磚數字行太長或有標點:' + m[1]));
+    assert.equal(/<main[\s\S]*?<\/h1>\s*<p/.test(src), false, f + ' 標題下面不放說明句');
+  });
+  assert.ok(read('js/hub.js').length > 0 && /<script src="js\/hub\.js"><\/script>/.test(read('learn.html')) && /<script src="js\/hub\.js"><\/script>/.test(read('drill.html')));
+  /* 「每日複習」全站改叫「錯題本」(首頁內容區之外) */
+  PAGES.forEach((f) => assert.equal(/每日複習/.test(read(f).replace(/<main[\s\S]*?<\/main>/, '')), false, f + ' 還有「每日複習」'));
+  assert.equal(/每日複習/.test(read('manifest.json')), false, 'manifest 還有「每日複習」');
+  const man = JSON.parse(read('manifest.json'));
+  assert.deepEqual(man.shortcuts.map((x) => [x.name, x.url]), [['錯題本', './review.html'], ['題庫刷題', './practice.html'], ['每日練習', './daily.html']]);
 };
 T['sitemap.xml 跟 tools/build_sitemap.js 產生的一樣:要收錄的頁＋每個單元,沒有 noindex 的頁'] = () => {
   const cur = read('sitemap.xml').replace(/\r\n/g, '\n');

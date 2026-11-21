@@ -3477,7 +3477,31 @@ a.result-go:hover { text-decoration: none; }
 
 
 /* ==== 首頁、我的、價格 ==== */
+/* 首頁:錯題本那一列只給已登入的人(未登入時錯題本在目錄裡) */
+html:not(.authed) .home-review { display: none; }
+.home-review .tile-badge:empty { display: none; }
+/* 首屏小雞外面包一層 div(data-nosnippet 只能放在 div、span、section):格線位置跟著外層 */
+.home-hero .hero-pic { grid-area: chick; align-self: center; }
+@media (max-width: 600px) { .home-hero .hero-pic { align-self: start; } }
 
+/* 我的:帳號動作的結果一行(發生什麼、第二行原因);沒有字時不佔位 */
+.me-msg { margin: 12px 0 0; font-size: var(--fs-sm); line-height: 1.6; color: var(--ink-soft); }
+.me-msg.bad { color: var(--bad); }
+.me-msg:empty { display: none; }
+/* 未登入時這一頁的實色按鈕是「登入」,小雞卡的「餵牠」改描邊 */
+html:not(.authed) .pet-me .pet-open.btn.primary { background: #fff; color: var(--ink); border-color: var(--line); }
+html:not(.authed) .pet-me .pet-open.btn.primary:hover { color: var(--primary); border-color: var(--primary); background: #fff; }
+
+/* 價格:價格前面的幣別小一號;學生方案包含的練習一項一行,前面一個勾,窄螢幕兩欄 */
+.pricing-opt b small, .pricing-table td.num small { margin-right: 2px; color: var(--ink-soft); }
+.pricing-check { list-style: none; padding-left: 0; display: grid; grid-template-columns: repeat(2, minmax(0, max-content)); gap: 6px 32px; margin: 0 0 14px; }
+.pricing-check li + li { margin-top: 0; }
+.pricing-check li { position: relative; padding-left: 24px; }
+.pricing-check li::before {
+  content: ''; position: absolute; left: 3px; top: .45em; width: 11px; height: 6px;
+  border-left: 2px solid var(--primary); border-bottom: 2px solid var(--primary); transform: rotate(-45deg);
+}
+@media (min-width: 600px) { .pricing-check { grid-template-columns: repeat(3, minmax(0, max-content)); } }
 /* ---- */
 
 

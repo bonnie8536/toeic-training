@@ -10,6 +10,11 @@
   window.__bip = null;
   window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; });
   window.addEventListener('appinstalled', function () { window.__bip = null; });
+  /* 首頁:本機有登入紀錄(雲端帳號的資料夾,或本機模式還在的學生檔案)先加 authed,畫面不會先閃一下未登入的樣子;js/profile.js 確認後校正。只讀不寫 */
+  try {
+    var cp = JSON.parse(localStorage.getItem('tr_current_profile'));
+    if (typeof cp === 'string' && (cp.charAt(0) === 'c' || (JSON.parse(localStorage.getItem('tr_profiles')) || []).some(function (x) { return x && x.id === cp; }))) d.classList.add('authed');
+  } catch (e) { /* 讀不到就照未登入畫 */ }
   var sa = false;
   try { sa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; } catch (e) { sa = false; }
   if (!sa) return;
@@ -89,73 +94,112 @@
   </div>
 </header>
 
-<section class="hero">
+<section class="hero home-hero">
   <div class="hero-inner">
-    <h1>衝衝英文：多益聽力、閱讀刷題與單字練習</h1>
+    <h1>衝衝英文：多益聽力、閱讀刷題與<wbr>單字練習</h1>
     <div class="stats" data-nosnippet>
       <div class="stat"><b id="stat-articles">—</b><span>訓練文章</span></div>
       <div class="stat"><b id="stat-vocab">—</b><span>互動單字</span></div>
       <div class="stat"><b id="stat-questions">—</b><span>刷題題數</span></div>
     </div>
+    <div class="hero-cta" data-nosnippet><a class="btn primary" href="daily.html">開始練習</a><a class="btn-text" href="diagnostic.html">先測程度</a></div>
+    <div class="hero-pic" data-nosnippet><canvas class="hero-chick" data-chick="read" data-size="180" aria-hidden="true"></canvas></div>
   </div>
 </section>
 
-<main class="container">
-  <section class="daily-card daily-home" id="daily-home" aria-labelledby="daily-h" data-nosnippet>
-    <div class="daily-head"><h2 id="daily-h">每日練習</h2><span class="daily-count">做完 0 / 3 項</span></div>
-    <ol class="daily-list">
-      <li><a class="daily-row" href="daily.html?part=d"><span class="daily-name">聽寫 5 句</span><span class="daily-st">0 / 5</span><span class="daily-bar" aria-hidden="true"><i style="width:0%"></i></span></a></li>
-      <li><a class="daily-row" href="daily.html?part=v"><span class="daily-name">單字 5 題</span><span class="daily-st">0 / 5</span><span class="daily-bar" aria-hidden="true"><i style="width:0%"></i></span></a></li>
-      <li><a class="daily-row" href="daily.html?part=g"><span class="daily-name">文法 5 題</span><span class="daily-st">0 / 5</span><span class="daily-bar" aria-hidden="true"><i style="width:0%"></i></span></a></li>
-    </ol>
-    <p class="daily-done" hidden>今日練習已完成</p>
-  </section>
-  <div class="module-cards">
-    <a class="module-card" href="review.html">
-      <h2>每日複習</h2>
-      <p>刷題、片語、單字、文法答錯的，集中在這裡複習。</p>
-    </a>
-    <a class="module-card" href="diagnostic.html">
-      <h2>程度檢測</h2>
-      <p>28 題，約 20 分鐘。</p>
-    </a>
-    <a class="module-card" href="grammar.html">
-      <h2>文法基礎</h2>
-      <p>8 章 94 課，從名詞複數到假設語氣。</p>
-    </a>
-    <a class="module-card" href="phonics.html">
-      <h2>自然發音</h2>
-      <p>8 章 54 課，看拼字就會唸，每個字都能點來聽。</p>
-    </a>
-    <a class="module-card" href="vocab.html">
-      <h2>單字訓練</h2>
-      <p>掉落消除、翻牌配對、記憶吐司、選擇題，加片語練習。</p>
-    </a>
-    <a class="module-card" href="listening.html">
-      <h2>聽力訓練</h2>
-      <p>句子聽寫、跟讀、相似音辨析、數字與價格。</p>
-    </a>
-    <a class="module-card" href="reading.html">
-      <h2>閱讀訓練</h2>
-      <p>分級文章。重點單字點一下就變填空，可以切英中對照。</p>
-    </a>
-    <a class="module-card" href="dialogue.html">
-      <h2>對話練習</h2>
-      <p>兩個人的日常對話，點句子就播放；口語和俚語都有中文解釋。</p>
-    </a>
-    <a class="module-card" href="practice.html">
-      <h2>題庫刷題</h2>
-      <p>閱讀 Part 5、6、7 與聽力 Part 1–4 隨機出題，附解析。</p>
-    </a>
-    <a class="module-card" href="mock.html">
-      <h2>模擬考</h2>
-      <p>全程倒數、聽力只播一次、交卷才對答案，附參考分數換算。</p>
-    </a>
-    <a class="module-card" href="writing.html">
-      <h2>寫作練習</h2>
-      <p>句子、Email、短文三級，寫的內容老師可見。</p>
-    </a>
+<main class="container home">
+  <div class="home-grid">
+    <section class="daily-card daily-home" id="daily-home" aria-labelledby="daily-h" data-nosnippet>
+      <div class="daily-head"><h2 id="daily-h">每日練習</h2><span class="daily-count">0 / 3</span></div>
+      <ol class="daily-list">
+        <li><a class="daily-row has-art" href="daily.html?part=d"><canvas class="daily-art" data-doodle="listening" data-size="40" aria-hidden="true"></canvas><span class="daily-name">聽寫 5 句</span><span class="daily-st">0 / 5</span><span class="daily-bar" aria-hidden="true"><i style="width:0%"></i></span></a></li>
+        <li><a class="daily-row has-art" href="daily.html?part=v"><canvas class="daily-art" data-doodle="vocab" data-size="40" aria-hidden="true"></canvas><span class="daily-name">單字 5 題</span><span class="daily-st">0 / 5</span><span class="daily-bar" aria-hidden="true"><i style="width:0%"></i></span></a></li>
+        <li><a class="daily-row has-art" href="daily.html?part=g"><canvas class="daily-art" data-doodle="grammar" data-size="40" aria-hidden="true"></canvas><span class="daily-name">文法 5 題</span><span class="daily-st">0 / 5</span><span class="daily-bar" aria-hidden="true"><i style="width:0%"></i></span></a></li>
+      </ol>
+      <a class="btn primary daily-go" href="daily.html?part=d">開始</a>
+      <div class="daily-fin"><canvas data-chick="happy" data-size="72" aria-hidden="true"></canvas><p>今日練習已完成</p></div>
+    </section>
+    <a class="home-review" href="review.html" hidden><canvas class="home-review-art" data-doodle="wrongbook" data-size="40" aria-hidden="true"></canvas><span class="home-review-t" data-nosnippet>錯題本</span><span class="tile-badge" data-nosnippet></span></a>
   </div>
+
+  <section class="home-dir" aria-labelledby="dir-learn">
+    <h2 class="tile-group-h" id="dir-learn"><canvas class="tile-group-art" data-doodle="learn" data-size="24" aria-hidden="true"></canvas>日常學習</h2>
+    <div class="tile-grid">
+      <a class="module-card tile tile-featured" href="grammar.html">
+        <canvas class="tile-art" data-doodle="grammar" data-size="96" aria-hidden="true"></canvas>
+        <h2>文法基礎</h2>
+        <p>8 章 94 課</p>
+        <span class="btn tile-go">開始</span>
+      </a>
+      <a class="module-card tile" href="phonics.html">
+        <canvas class="tile-art" data-doodle="phonics" data-size="64" aria-hidden="true"></canvas>
+        <h2>自然發音</h2>
+        <p>8 章 54 課</p>
+      </a>
+      <a class="module-card tile" href="reading.html">
+        <canvas class="tile-art" data-doodle="reading" data-size="64" aria-hidden="true"></canvas>
+        <h2>閱讀訓練</h2>
+        <p>40 篇文章</p>
+      </a>
+      <a class="module-card tile" href="dialogue.html">
+        <canvas class="tile-art" data-doodle="dialogue" data-size="64" aria-hidden="true"></canvas>
+        <h2>對話練習</h2>
+        <p>24 組對話</p>
+      </a>
+    </div>
+  </section>
+  <section class="home-dir" aria-labelledby="dir-warmup">
+    <h2 class="tile-group-h" id="dir-warmup"><canvas class="tile-group-art" data-doodle="warmup" data-size="24" aria-hidden="true"></canvas>練練手感</h2>
+    <div class="tile-grid">
+      <a class="module-card tile tile-featured" href="vocab.html">
+        <canvas class="tile-art" data-doodle="vocab" data-size="96" aria-hidden="true"></canvas>
+        <h2>單字訓練</h2>
+        <p>4 種遊戲</p>
+        <span class="btn tile-go">開始</span>
+      </a>
+      <a class="module-card tile" href="listening.html">
+        <canvas class="tile-art" data-doodle="listening" data-size="64" aria-hidden="true"></canvas>
+        <h2>聽力訓練</h2>
+        <p>4 種練習</p>
+      </a>
+      <a class="module-card tile" href="writing.html">
+        <canvas class="tile-art" data-doodle="writing" data-size="64" aria-hidden="true"></canvas>
+        <h2>寫作練習</h2>
+        <p>3 級</p>
+      </a>
+      <a class="module-card tile" href="grammar.html?ref=verbs">
+        <canvas class="tile-art" data-doodle="verbs" data-size="64" aria-hidden="true"></canvas>
+        <h2>不規則動詞</h2>
+        <p>118 個動詞</p>
+      </a>
+    </div>
+  </section>
+  <section class="home-dir" aria-labelledby="dir-drill">
+    <h2 class="tile-group-h" id="dir-drill"><canvas class="tile-group-art" data-doodle="drill" data-size="24" aria-hidden="true"></canvas>刷刷題目</h2>
+    <div class="tile-grid">
+      <a class="module-card tile tile-featured" href="practice.html">
+        <canvas class="tile-art" data-doodle="practice" data-size="96" aria-hidden="true"></canvas>
+        <h2>題庫刷題</h2>
+        <p>Part 1–7</p>
+        <span class="btn tile-go">開始</span>
+      </a>
+      <a class="module-card tile" href="mock.html">
+        <canvas class="tile-art" data-doodle="mock" data-size="64" aria-hidden="true"></canvas>
+        <h2>模擬考</h2>
+        <p>約 75 題</p>
+      </a>
+      <a class="module-card tile" href="diagnostic.html">
+        <canvas class="tile-art" data-doodle="diagnostic" data-size="64" aria-hidden="true"></canvas>
+        <h2>程度檢測</h2>
+        <p>28 題</p>
+      </a>
+      <a class="module-card tile" href="review.html">
+        <canvas class="tile-art" data-doodle="wrongbook" data-size="64" aria-hidden="true"></canvas>
+        <h2>錯題本</h2>
+        <p></p>
+      </a>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -173,6 +217,7 @@
 <script src="data/part7.js"></script>
 <script src="data/listening.js"></script>
 <script src="js/common.js"></script>
+<script src="js/doodle-art.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/sync-merge.js"></script>
 <script src="js/pet-config.js"></script>
@@ -200,6 +245,28 @@
   document.getElementById('stat-articles').textContent = articles.length || '—';
   document.getElementById('stat-vocab').textContent = words.size || '—';
   document.getElementById('stat-questions').textContent = qs || '—';
+})();
+</script>
+<script src="js/hub.js"></script>
+<script>
+(function () {
+  /* 閱讀訓練那塊磚的篇數照資料算(沒載到資料就留原本寫的) */
+  const n = ((window.TOEIC || {}).articles || []).length;
+  const p = document.querySelector('.home-dir a.tile[href="reading.html"] p');
+  if (p && n) p.textContent = n + ' 篇文章';
+  /* 已登入時每日練習下面的「錯題本」那一列:待複習的題數跟目錄裡錯題本磚的徽章同一個算法(js/hub.js),0 題就不出現 */
+  const row = document.querySelector('.home-review');
+  const sync = () => {
+    const src = document.querySelector('.home-dir a.tile[href="review.html"] .tile-badge');
+    const badge = row.querySelector('.tile-badge');
+    const text = src ? src.textContent : '';
+    row.hidden = !text;
+    badge.textContent = text;
+    if (src) badge.setAttribute('aria-label', src.getAttribute('aria-label') || ''); else badge.removeAttribute('aria-label');
+  };
+  const paint = () => { if (row && window.HUB) Promise.resolve(window.HUB.paint()).then(sync, sync); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', paint); else paint();
+  window.addEventListener('pageshow', (e) => { if (e && e.persisted) paint(); });
 })();
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "753df33a812d44c78d22641c5063e4d3"}'></script><!-- End Cloudflare Web Analytics -->

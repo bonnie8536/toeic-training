@@ -344,10 +344,10 @@ T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、每日練習�
   assert.ok(one((e) => e.id === 'daily-home', '#daily-home').own, '每日練習沒帶 data-nosnippet');
   assert.equal(/全站免費|free-note/.test(src), false, '首頁不再寫全站免費公告');
   assert.equal(/全站免費/.test(read('pricing.html')), false, '價格頁不再寫全站免費公告');
-  /* 聽力訓練頁:四張卡的「完成 0/140」與級別選單是介面字,建立時就帶 data-nosnippet;玩法名稱與說明不擋 */
+  /* 聽力訓練頁:四張卡的「0 / 140 題」與級別選單是介面字,建立時就帶 data-nosnippet;玩法名稱與說明不擋 */
   const ear = read('js/ear.js');
-  assert.ok(ear.includes("h('div', { class: 'p-stats', 'data-nosnippet': '' }"), '聽力頁進度數字沒帶 data-nosnippet');
-  assert.ok(ear.includes("h('div', { class: 'cfg-row', 'data-nosnippet': '' }, lvSel"), '聽力頁級別選單沒帶 data-nosnippet');
+  assert.ok(ear.includes("h('span', { 'data-nosnippet': '' }, s.done"),'聽力頁進度數字沒帶 data-nosnippet');
+  assert.ok(ear.includes("h('div', { class: 'drill-filters ear-levels', 'data-nosnippet': ''"), '聽力頁級別選單沒帶 data-nosnippet');
   /* 聽力訓練頁只有聽力基本功(js/ear.js);Part 1–4 題組在題庫刷題(js/listening.js)。說明不能寫這頁沒有的題組 */
   const lh = read('listening.html');
   const lhDesc = ((/<meta name="description" content="([^"]*)"/.exec(lh) || [])[1] || '') + ((/<meta property="og:description" content="([^"]*)"/.exec(lh) || [])[1] || '');

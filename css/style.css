@@ -3729,6 +3729,36 @@ html.vb-quizzing .gx-rail { display: none; }
   .tn-corner .tn-axis-t, .tn-corner .tn-axis-a { align-self: center; }
 }
 
+/* 聽力訓練首頁:級別一排小圓鈕,四個入口是名稱加一行數字 */
+.ear-levels { margin: 4px 0 18px; }
+.ear-levels .chip { min-height: 36px; padding: 4px 16px; font-size: var(--fs-sm); cursor: pointer; }
+.ear-tiles { margin-bottom: 48px; }
+@media (min-width: 600px) and (max-width: 899px) { .ear-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.module-card.tile.ear-tile { min-height: 112px; justify-content: flex-start; }
+.module-card.tile.ear-tile p { margin-bottom: 16px; }
+.ear-bar { display: block; width: 100%; height: 6px; margin-top: auto; border-radius: var(--r-full); background: var(--line); overflow: hidden; }
+.ear-bar i { display: block; height: 100%; border-radius: inherit; background: var(--ok); }
+.module-card.tile.ear-tile.is-off { opacity: .55; cursor: default; }
+.module-card.tile.ear-tile.is-off:hover { border-color: var(--line); transform: none; }
+
+/* 聽力訓練作答(專心模式) */
+html.is-quiz #ear-root .drill-top { margin: 14px 0 0; }
+html.is-quiz #ear-root .drill-top h1 { font-size: var(--fs-md); color: var(--ink-soft); }
+html.is-quiz #ear-root .q-block { padding-top: 12px; }
+.ear-lv { margin-left: 10px; font-size: var(--fs-sm); font-weight: 400; color: var(--ink-soft); }
+.ear-lv::before { content: '· '; }
+html.is-quiz #ear-root .player { gap: 12px; margin: 4px 0 8px; flex-wrap: wrap; }
+html.is-quiz #ear-root .player-btn { min-height: 48px; padding: 0 24px; font-size: var(--fs-md); border-radius: var(--r-md); }
+html.is-quiz #ear-root .shadow-stage { border-radius: var(--r-md); }
+html.is-quiz #ear-root .pair-row { gap: 12px; }
+html.is-quiz #ear-root .pair-btn { min-height: 64px; border-radius: var(--r-md); }
+html.is-quiz #ear-root .write-area { font-size: 16px; min-height: 96px; }
+.ear-hit { font-weight: 700; color: var(--ink-soft); font-size: var(--fs-sm); }
+.ear-hit + .dict-diff { margin-top: 4px; }
+/* 手機鍵盤跳出來時,底部固定列改回內容後面(js/ear.js 偵測),不蓋住輸入框 */
+html.is-quiz.ear-kb .quiz-foot { position: static; padding-bottom: 12px; }
+html.is-quiz.ear-kb body { padding-bottom: 0 !important; }
+
 /* ---- */
 
 

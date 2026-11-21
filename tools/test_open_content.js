@@ -333,10 +333,10 @@ const CONTENT = [
     free: [{ sel: '.vg-games .vg-tile', i: 1, then: '.vg-games .vg-tile.on' }, { sel: '.vg-phrase-tile', then: '.phrase-table' }], pick: true },
   { url: 'vocab.html', see: '.vg-games .vg-tile', pre: [{ sel: '.vg-games .vg-tile', i: 3 }], act: [{ sel: '.vg-play .btn.primary' }] },   // 先選第四塊磚(單字選擇題),再按「開始」
   { url: 'vocab.html#phrase', see: '.phrase-table', act: [{ sel: '.part-card:has(.phrase-table) .btn:not(.pop-mini)' }], free: [{ sel: '.part-card .pop-mini', thenText: ['.part-card .pop-mini', /收起/] }] },
-  { url: 'listening.html', see: '.part-card', act: [{ sel: 'a.btn.primary[href^="listening.html?sec="]' }] },
+  { url: 'listening.html', see: '.part-card', act: [{ sel: 'a.tile[href^="listening.html?sec="]' }] },
   { url: 'listening.html?sec=n', see: '.player-btn', act: [{ sel: '.opts .opt' }], free: [{ sel: '.player-btn', thenText: ['.player-note', /已播 1 次|音檔|找不到/] }] },
   { url: 'listening.html?sec=mp', see: '.pair-btn', act: [{ sel: '.pair-btn' }] },
-  { url: 'listening.html?sec=d', see: 'textarea.write-area', act: [{ sel: 'textarea.write-area', text: true }, { sel: '.pop-btns .btn.primary' }] },
+  { url: 'listening.html?sec=d', see: 'textarea.write-area', act: [{ sel: 'textarea.write-area', text: true }, { sel: '.quiz-foot .btn.primary' }] },
   { url: 'listening.html?sec=s', see: '.shadow-stage', act: [{ sel: '.player .player-btn' }] },
   { url: 'writing.html', see: 'a.part-card' },
   { url: 'writing.html?level=l1', see: 'a.unit-row', free: [{ sel: 'a.unit-row', i: 2, nav: /u=2/ }] },

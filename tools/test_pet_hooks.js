@@ -602,7 +602,7 @@ const SITES = [
     G + "opts.wrongOnly ? 'pr' : 'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: " + RR + ' });'],
   ['js/listening.js', 'startQuiz submit()(一般練習交卷)', ['function startQuiz(', 'function submit(opener, asked) {'],
     G + "'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: " + RR + ' });'],
-  ['js/ear.js', 'summary()', ['function startRound(', 'function summary() {'], G + "'e' + sec, { n: list.length, into: " + RH + ' });'],
+  ['js/ear.js', 'summary()', ['function startRound(', 'function summary() {'], G + "'e' + sec, { n: list.length, into: card.reward });"],
   ['js/review.js', 'summary()', ['function summary() {'], G + "'rv', { n: list.length, into: card.reward });"],
   ['js/dialogue.js', 'markHeard()', ['function markHeard('],
     "if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { after: root.querySelectorAll('.dlg-line')[i] });"],

@@ -19,6 +19,8 @@ const STEP1_LATER = [
   ["    if (v.guest && v.cloud) out.push(h('p', { class: 'pet-note' }, '登入後換成帳號裡的小雞。'));", ''],
   ["const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h' });",
     "const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h', 'data-nosnippet': '' });"],
+  /* 2026-11-21 文字精簡:保護卡的說明 */
+  ["'漏掉一天會自動用掉一張保護卡。'", "'漏掉一天會用掉 1 張保護卡。'"],
 ];
 const OLD_SRC = STEP1_LATER.reduce((src, [from, to]) => {
   if (src.split(from).length !== 2) throw new Error('tools/fixtures/pet_ui_step1.js 裡找不到剛好一行:' + from);
@@ -948,7 +950,8 @@ T['走動開關:存不了時用 saveMsg 說「設定沒有改…」;「我的」
   await flush(); await flush();
   return { ok: has && pg.live() === '設定沒有改，這台先不能改小雞的資料。', detail: pg.live() };
 };
-T['卡片(食物模式):.pet-act 一律放 button.btn.primary.pet-open「餵牠」,按了打開面板、關掉焦點回到它;唯讀說明照放'] = async () => {
+/* 首頁的實色按鈕只留每日練習那一顆:首頁卡片的「餵牠」是描邊(沒有 primary),「我的」頁照舊實色 */
+T['卡片(食物模式):.pet-act 一律放 button.btn.pet-open「餵牠」(首頁描邊、「我的」實色),按了打開面板、關掉焦點回到它;唯讀說明照放'] = async () => {
   const bad = [];
   for (const where of ['home', 'me']) {
     for (const ro of [false, true]) {
@@ -956,7 +959,7 @@ T['卡片(食物模式):.pet-act 一律放 button.btn.primary.pet-open「餵牠�
       const card = pg.doc.body.querySelector('.pet-card');
       const act = card.querySelector('.pet-act');
       const b = act.querySelector('button.pet-open');
-      const ok1 = !!b && b.classList.contains('btn') && b.classList.contains('primary') && b.textContent === '餵牠' && b.getAttribute('aria-haspopup') === 'dialog' && b.getAttribute('type') === 'button' &&
+      const ok1 = !!b && b.classList.contains('btn') && b.classList.contains('primary') === (where === 'me') && b.textContent === '餵牠' && b.getAttribute('aria-haspopup') === 'dialog' && b.getAttribute('type') === 'button' &&
         !act.querySelector('.pet-feed') && !act.querySelector('.pet-go') && (!ro || (act.querySelector('.pet-note') && act.querySelector('.pet-note').textContent === RO_TEXT.readOnly));
       b.focus(); b.fire('click');
       const sheet = pg.doc.body.querySelector('.pet-sheet');

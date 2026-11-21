@@ -1,4 +1,4 @@
-/* 塗鴉鵜鶘的圖(主要吉祥物)。原檔與預覽不在這個 repo(第五版)。要改圖先改原檔、在預覽看過,再整份複製過來(保留這段開頭)。
+/* 塗鴉鵜鶘的圖(主要吉祥物)。原檔與預覽不在這個 repo(第六版)。要改圖先改原檔、在預覽看過,再整份複製過來(保留這段開頭)。
    這裡只畫圖,不讀寫任何儲存;畫法跟塗鴉小雞(js/chick-art.js)同一套,兩隻要看起來是同一個人畫的。
    第一版:本體定型 + 待機(idle)。
    - 長相照選定的草圖:圓滾滾的身體、往左伸的長直嘴(上嘴是一條細長三角、尖端很尖;嘴的下緣一條直線),
@@ -50,6 +50,22 @@
      慢慢吸氣吐氣,嘴袋跟著鼓一下,頭上冒出墨線畫的 z(一個變兩個、往右上飄)。7 格,每秒 3 張(最慢)。
    - 頭往下低(嘴往下)的格子,整隻往右挪一點,長嘴的尖端才不會超出畫布;身體壓扁時幾乎不變寬(左右只剩嘴尖到翅膀尖的空間)。
    - 新的特效(線團、汗、嘆氣、z、得意的短線、落地的煙、影子線)都用同一支墨線畫,每格重抖;畫得很小時一樣加粗。
+   第六版(version 3,審查後;姿勢清單不變):
+   - 本體小修:腿短約 15%(身體整隻往下放 3.5,地面線不動)、腿線粗約 20%、三根腳趾扇形散開;
+     翅膀往下移約 6% 身高、羽毛尖往內收、內側線往下拉成比較深的 U;嘴袋的黃色改成密一點的掃筆,
+     中間的白洞改成順著筆觸的細長白縫,左下那段弧線外面補一圈短短的黃色毛邊,右上角的黃色收回框內;
+     眼睛改成直立的橢圓、放大約 15%,跟眉毛之間留一條縫;嘴的下緣越往右越往下(右端低約 4.4)、加粗約 20%,右端停在右眼正下方。
+   - 小尺寸(96 以下):每隻眼睛的眉毛和眼珠合成一筆往臉中間壓低的粗斜線(畫出來至少 2 px 寬、純黑);
+     呆毛畫大一點、線細一點,兩瓣留得出白;腳趾只剩一筆;開心、睡覺的眼睛也是斜的。
+   - 看書(read)整個重畫:改成四分之三正面站著,兩隻翅膀在胸前捧著一本攤開的書。
+     臉照待機:V 字怒眉、實心眼珠;長長的上嘴往左下斜出身體外,嘴袋從嘴下面垂成一大塊半月形(黃色只在嘴袋);
+     書只用墨線(白頁、幾行字、封面只描邊),書頂跟嘴袋最低點之間一直留著一段白縫;翅膀從身體兩側伸下來捏住書的兩個角,
+     翅膀先塗白再描線,書線在翅膀那裡斷開。只動三樣:眼珠在書上左右掃(掃完一行跳回來)、
+     右頁沿著弧線翻到左邊(翻起來的那頁只比書頂高一點點,碰不到嘴袋)、身體很小的呼吸;中間皺一次眉。
+     嘴、嘴袋、書、翅膀、腳整圈都不動。
+   - 開心:騰空那三格翅膀往外上方張開(第 4 格最大,羽毛尖超出身體輪廓),身體往上、腳下看得到空隙;落地那格的眼睛改成壓扁的開心弧線。
+   - 尷尬:最後斜眼瞄人那格眼珠整個推到一邊、上眼皮壓低、頭轉一點;線團離額頭和嘴遠一點,畫得小時圈數少、線細。
+   - 睡覺:呆毛整撮(兩瓣的形狀不變)往一側倒;身體不比待機大(坐下用放低表示),呼吸起伏大一點;z 不靠近畫布上緣。
    用法:const a = PelicanArt.animate(canvas, { size: 180, fps: 8, pose: 'idle', onTick }); a.setPose('happy'); a.setFps(6); a.stop();
    fps 是「基準速度」:各動作會按 PelicanArt.fps 的比例換算(fps 8 時待機每秒 5 張、開心 8 張、尷尬和看書 4 張、睡覺 3 張)。 */
 (function () {
@@ -63,6 +79,9 @@
   let XF = ID;                             // 目前的座標轉換:身體的呼吸、嘴袋的晃動
   let INKW = 1;                            // 線條加粗倍數:畫得很小時線條加粗,才看得清楚
   let TINY = false;                        // 畫得非常小(64 以下):省略腳趾、眉毛縮短、眼睛再放大
+  let SMALL = false;                       // 第六版:96 以下,臉改成簡化的粗斜線、呆毛留白、腳趾只剩一筆
+  let SIZE = 300;                          // 第六版:目前畫的大小(css px),小尺寸的線寬要換算成螢幕上的 px
+  const DROP = 3.5;                        // 第六版:身體整隻往下放多少(腿短約 15%,腳底的地面線不動)
   /* 150 以上不加粗;96 時 1.5 倍;52 時約 3.3 倍(第四版:52 時再加粗,臭臉才看得出來) */
   const inkFor = (size) => (!size || size >= 150 ? 1 : size >= 96 ? 1 + 0.5 * (150 - size) / 54
     : Math.min(3.4, 1.5 + 1.8 * (96 - size) / 44));
@@ -190,7 +209,8 @@
   const OUT_HEAD = spline(OUT_REST, 8);
   const OUTLINE = BEAK_TOP.concat(OUT_HEAD.slice(1));
   /* 嘴的下緣:一條直線,從嘴尖(多畫出去一點,跟上緣交叉成尖尖的嘴)到嘴袋右上角,右端直接收掉 */
-  const BEAK_LOW = spline([[10.5, 112.6], [60, 112.2], [110, 111.3], [170.5, 110.2]], 10);
+  /* 第六版:越往右越往下(右端低約 4.4,約身高的 2.5%),右端停在右眼正下方 */
+  const BEAK_LOW = spline([[10.5, 112.6], [60, 113.6], [110, 114.2], [168.5, 114.6]], 10);
   /* 嘴袋的碗:一筆 U 形,從左上往下繞過圓圓的碗底(最低點在嘴袋寬一半多一點的地方),再往右上鼓著爬回去,
      停在嘴的下緣稍下方、稍左邊(跟嘴線末端留一點空隙) */
   const BOWL_PTS = [[34.5, 132], [33.2, 141.9], [32.8, 151.7], [33.4, 161.4], [35.8, 171.2], [39.8, 180.9], [45.6, 190.7],
@@ -204,9 +224,10 @@
   /* 塗白的範圍:外框(含上嘴)接回碗的左半,左上缺口那裡往內收一點,白色不會跑出黃色塗鴉外面 */
   const WHITE_BODY = OUTLINE.concat(BOWL_PTS.slice(0, 11).reverse(), [[33.6, 126], [28, 113.6]]);
   /* 嘴袋(塗黃的範圍)。第三個數字是那一邊可以塗出去多少:上緣(嘴的下緣)和胸口那一邊幾乎不出去,左邊和下緣出去最多 */
-  const POUCH = [[24, 112.5, 0.4], [100, 111.6, 0.4], [171.5, 110.4, 1.2]]
+  // 第六版:上緣跟著嘴的下緣往下;右上角收回框內(不塗出去)
+  const POUCH = [[24, 113.4, 0.4], [100, 114.4, 0.4], [164, 115.6, 0]]
     // 碗底下面離肚子的外框很近,那一段少塗出去一點(不會蓋過外框、把白肚子塗黃)
-    .concat(BOWL_PTS.slice().reverse().map(([x, y], i) => [x, y, i < 10 ? 0.7 : i < 12 ? 2 : i < 15 ? 3.5 : 9]))
+    .concat(BOWL_PTS.slice().reverse().map(([x, y], i) => [x, y, i < 3 ? 0 : i < 10 ? 0.7 : i < 12 ? 2 : i < 15 ? 3.5 : 9]))
     .concat([[33, 126, 9], [29, 116, 6]]);
   /* 翅膀:身體右側,從裡面往下彎、底下一個小波浪,尾端伸出身體外面分成三片圓頭的羽毛(中間那片最長,片和片之間凹得深) */
   /* 一片羽毛:從 A 繞一個圓頭到 B,往 deg 度的方向伸出 L 長(半個橢圓;片和片在接點處夾出深深的凹口) */
@@ -221,12 +242,15 @@
     return out;
   };
   const WING_N = [[261.6, 187.6], [263, 173.2]];   // 兩個凹口
-  const WING = [[208, 157], [208.8, 168], [211.8, 179], [216.4, 188.4], [221.6, 193.8], [225.6, 191.2], [227.4, 182.6],
-    [229.6, 189.6], [235, 194.6], [241, 196.6]]
+  /* 第六版:內側線往下多拉一段(U 比較深);整隻往下移 10.5(約身高 6%),羽毛尖往內收約 8(約身寬 5%,越靠尖端收越多) */
+  const WING_DY = 10.5, WING_IN = 8;
+  const WING = [[208, 157], [208.8, 168], [211.4, 180], [215.4, 191], [220.6, 198.6], [225.8, 199.4], [228.6, 193.4], [229, 184],
+    [231, 191], [235.6, 195.6], [241, 196.6]]
     .concat(lobe([246, 197.6], WING_N[0], 12, 18))                 // 下面那片,往右稍微朝下
     .concat(lobe(WING_N[0], WING_N[1], 18, -10).slice(1))          // 中間那片最長,往右
-    .concat(lobe(WING_N[1], [254.2, 164.6], 13.5, -50).slice(1));  // 上面那片往右上翹
-  const WING_PIVOT = [208, 157];
+    .concat(lobe(WING_N[1], [254.2, 164.6], 13.5, -50).slice(1))   // 上面那片往右上翹
+    .map(([x, y]) => [x - WING_IN * smooth((x - 228) / 40), y + WING_DY]);
+  const WING_PIVOT = [208, 157 + WING_DY];
   /* 呆毛:一個高高的圓頭圈(稍微往右倒)+ 右邊一個小圈,往後(右)倒。
      第四版:根部移到新的頭頂最高點稍微偏右;整撮縮成 0.9 倍、再往右後倒 15°(在 tuft() 裡換算) */
   const TUFT_BASE = [175, HEAD.cy - HEAD.ry * Math.sqrt(1 - Math.pow((175 - HEAD.cx) / HEAD.rxR, 2)) + 0.4];
@@ -240,13 +264,16 @@
   const BROWS = [[[128, 77], [146.5, 84.5]], [[162, 84.5], [182, 76.4]]];
   const EYES = [137, 170.5];                         // 眼睛中心 x
   /* 腳:[髖(跟著身體), 腳掌(貼地), 往外的腳趾, 往內的腳趾, 往下的腳趾] */
-  const LEGS = [
-    [[128.7, 235], [128.7, GROUND], [107, GROUND + 3.1], [141.1, GROUND], [120.6, GROUND + 8.7]],
-    [[186, 235], [186, GROUND], [171.2, GROUND + 5], [207.1, GROUND + 1.9], [180.5, GROUND + 8.7]],
-  ];
+  /* 第六版:三根腳趾扇形散開(往前稍微朝上、往前下、往後),兩隻腳一樣 */
+  const TOES = [[-18, -0.8], [12.5, 0.8], [-10.5, 7.8]];
+  const LEGS = [[128.7, 235], [186, 235]].map(([x, y]) => {
+    const F = [x, GROUND];
+    return [[x, y], F].concat(TOES.map(([u, v]) => [x + u, GROUND + v]));
+  });
   /* 黃色蠟筆:一束一束彎彎的掃筆(見 pouchFill) */
   const SWEEP = {
-    cell: 14.8,        // 束和束的間距(畫面上的 px,網格再亂挪);第三版放寬,白縫約一成五
+    cell: 12.6,        // 束和束的間距(畫面上的 px,網格再亂挪);第三版放寬到 14.8,第六版收密(圓圓的白洞改用 slits 畫細長白縫)
+    slits: 6,          // 第六版:順著筆觸的細長白縫有幾條
     ang: [20, 60],     // 掃筆方向(往右上斜幾度)
     len: [0.15, 0.45], // 每筆多長(嘴袋寬的幾成)
     bow: [0.1, 0.15],  // 彎曲(筆長的幾成)
@@ -270,8 +297,8 @@
     const th = (f.tilt || 0) * RAD, dx = f.dx || 0, dy = f.dy || 0;
     const pw = pouchWarp((f.pouch || [0, 0])[0], (f.pouch || [0, 0])[1]);
     const affine = th || dx || dy
-      ? ([x, y]) => { const v = rot([(x - CX) * sx, (y - BOT) * sq], th); return [CX + v[0] + dx, BOT + v[1] + dy]; }
-      : ([x, y]) => [CX + (x - CX) * sx, BOT + (y - BOT) * sq];
+      ? ([x, y]) => { const v = rot([(x - CX) * sx, (y - BOT) * sq], th); return [CX + v[0] + dx, BOT + v[1] + dy + DROP]; }
+      : ([x, y]) => [CX + (x - CX) * sx, BOT + (y - BOT) * sq + DROP];   // DROP:第六版整隻往下放(腿短一點)
     return { body: (p) => affine(pw(p)), affine, th };
   }
 
@@ -282,13 +309,14 @@
      每一筆量一下嘴袋在這條線上的範圍,兩端依那一邊的規定塗出去,塗出去多少每筆都不一樣,左邊和下緣才會參差不齊;
      彎出去的中段如果跑出嘴袋就拉回直線,不會蓋過嘴的下緣或胸口那條線。
      只有範圍跟著身體變形,筆的方向和粗細在畫面上固定。畫得很小時少塗出去一半 */
-  function pouchFill(ctx, r, size) {
+  /* area:別的嘴袋範圍(看書的正面嘴袋用,格式同 POUCH);cell:束和束的間距;fringe:毛邊沿著哪一段弧(邏輯座標的點串) */
+  function pouchFill(ctx, r, size, area, cell, fringe) {
     const spill = size && size < 120 ? 0.5 : 1;
-    const poly = POUCH.map(([x, y, s]) => { const p = XF([x, y]); return [p[0], p[1], s * spill]; });
+    const poly = (area || POUCH).map(([x, y, s]) => { const p = XF([x, y]); return [p[0], p[1], s * spill]; });
     const xs = poly.map((p) => p[0]), ys = poly.map((p) => p[1]);
     const x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs);
     const y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys);
-    const g = SWEEP.cell, main = [], over = [];
+    const g = cell || SWEEP.cell, main = [], over = [];
     for (let y = y0 + g * 0.3, row = 0; y < y1; y += g * 0.8, row++) {
       const cols = [];
       for (let x = x0 + (row % 2) * g * 0.5; x < x1; x += g) cols.push(x);
@@ -306,6 +334,30 @@
     ctx.lineJoin = ctx.lineCap = 'round';
     ctx.lineWidth = SWEEP.width * (1 + (INKW - 1) * 0.4);
     main.concat(over).forEach((pts) => { curve(ctx, pts); ctx.stroke(); });
+    // 第六版:左下那段弧線外面一圈短短的毛邊(從線裡面一點掃到線外面,長短、斜度每筆不一樣)
+    const arc = (fringe || BOWL_PTS.slice(1, 11)).map(XF);
+    for (let i = 0; i < arc.length - 1; i++) {
+      const a = arc[i], b = arc[i + 1], L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+      const t = [(b[0] - a[0]) / L, (b[1] - a[1]) / L], n = [-t[1], t[0]];   // n:往弧線外面(弧線往下走時是左邊)
+      for (let s = r() * 3; s < L; s += 4.2 + r() * 2.6) {
+        const p = [a[0] + t[0] * s, a[1] + t[1] * s], out = (2.5 + r() * 4.5) * spill, slant = (r() - 0.3) * 3;
+        curve(ctx, [[p[0] - n[0] * 3, p[1] - n[1] * 3], [p[0] + n[0] * out + t[0] * slant, p[1] + n[1] * out + t[1] * slant]]);
+        ctx.stroke();
+      }
+    }
+    // 第六版:順著筆觸方向(往右上斜)的細長白縫,只在嘴袋裡面(兩端和中間都要離邊夠遠),取代以前圓圓的白洞
+    ctx.strokeStyle = WHITE;
+    ctx.lineWidth = Math.max(1.6, 2.2 * (1 + (INKW - 1) * 0.25));
+    const nSlit = Math.round(SWEEP.slits * Math.min(1, (x1 - x0) / 120)) - (size && size < 120 ? 2 : 0);
+    for (let i = 0, tries = 0; i < nSlit && tries < 60; tries++) {
+      const c = [x0 + (x1 - x0) * (0.15 + 0.7 * r()), y0 + (y1 - y0) * (0.2 + 0.65 * r())];
+      const ang = -(24 + 30 * r()) * RAD, d = [Math.cos(ang), Math.sin(ang)], L = 9 + r() * 12, bw = (r() - 0.5) * 3;
+      const pts = [-1, -0.5, 0, 0.5, 1].map((u) => [c[0] + d[0] * L * u / 2 - d[1] * bw * (1 - u * u), c[1] + d[1] * L * u / 2 + d[0] * bw * (1 - u * u)]);
+      const pad = (p) => [[0, 0], [6, 0], [-6, 0], [0, 6], [0, -6]].every(([u, v]) => inPoly(poly, [p[0] + u, p[1] + v]));
+      if (!pts.every(pad)) continue;
+      curve(ctx, pts); ctx.stroke();
+      i++;
+    }
     ctx.restore();
   }
   /* 一束掃筆:回傳一串點(一筆畫完) */
@@ -363,7 +415,7 @@
     return c;
   }
 
-  /* f.wingAt(第五版,看書用):翅膀整隻再挪多少 [x, y](扶著書的右邊,不蓋住書頁) */
+  /* f.wingAt:翅膀整隻再挪多少 [x, y](第六版開心騰空時往外上方張開用) */
   function wing(ctx, r, f) {
     const a = (f.wing || 0) * RAD, [mx, my] = f.wingAt || [0, 0];
     const pts = WING.map(([x, y]) => { const v = rot([x - WING_PIVOT[0], y - WING_PIVOT[1]], a); return [WING_PIVOT[0] + v[0] + mx, WING_PIVOT[1] + v[1] + my]; });
@@ -375,102 +427,130 @@
 
   /* 呆毛:tuft 是往右(往後)倒的角度,越靠尖端彎越多;th 是身體轉的角度(第五版,呆毛跟著頭一起轉)。
      回傳呆毛尖在畫面上的位置(不用亂數) */
+  /* 第六版:f.tuftRigid 時整撮一起轉(兩瓣的形狀不變,睡覺往一側倒用);96 以下呆毛放大 1.3 倍、線細一點(96 時 0.78 倍、64 以下 0.6 倍),兩瓣裡面留得出白 */
   function tuft(ctx, r, f, th) {
-    const base = XF(TUFT_BASE), bend = (f.tuft || 0) * RAD;
+    const base = XF(TUFT_BASE), bend = (f.tuft || 0) * RAD, K = TUFT_K * (SMALL ? 1.3 : 1);
     const map = (pts) => pts.map(([x0, y0]) => {
-      const x = x0 * TUFT_K, y = y0 * TUFT_K;
-      const v = rot([x, y], TUFT_TILT * RAD + bend * (0.3 + 0.7 * Math.min(1, Math.hypot(x, y) / 29)) + (th || 0));
+      const x = x0 * K, y = y0 * K, far = Math.min(1, Math.hypot(x0, y0) * TUFT_K / 29);
+      const v = rot([x, y], TUFT_TILT * RAD + (f.tuftRigid ? bend : bend * (0.3 + 0.7 * far)) + (th || 0));
       return [base[0] + v[0], base[1] + v[1]];
     });
-    const saved = XF;
+    const saved = XF, wk = TINY ? 0.6 : SMALL ? 0.78 : 1;
     XF = ID;
     const a = spline(map(TUFT1), 7), b = spline(map(TUFT2), 6);   // 點取疏一點,圈圈才圓、不會抖出稜角
     ctx.fillStyle = WHITE;
     fillPoly(ctx, a); fillPoly(ctx, b);      // 圈圈裡面也是白的
     ctx.strokeStyle = INK;
-    line(ctx, extend(a, 3 + r() * 2, 0), r, 3.5, 0.9, true);   // 呆毛根部多畫進頭裡一點
-    line(ctx, b, r, 3.3, 0.8, true);
+    line(ctx, extend(a, 3 + r() * 2, 0), r, 3.5 * wk, 0.9, true);   // 呆毛根部多畫進頭裡一點
+    line(ctx, b, r, 3.3 * wk, 0.8, true);
     XF = saved;
     return map([[14.5, -42.5]])[0];
   }
 
-  /* 臉:open 半圓瞇眼(上緣切平、頂著眉毛)、blink 閉眼(眉毛下一道彎線)。
-     畫得很小時眼睛跟著線條放大一點;非常小時眼睛再放大、眉毛縮短成一筆短粗線(剪掉外側一段),眉眼合成一塊,臭臉才看得出來 */
-  const CUT = 0.3;                                   // 眼睛:圓心在切平的上緣下面 0.3 個半徑(寬約 2 個半徑、高約 1.3 個半徑)
-  function face(ctx, r, kind) {
-    if (kind !== 'open' && kind !== 'blink') { moodFace(ctx, r, kind); return; }   // 第五版的表情;待機不會走到
-    const k = TINY ? 1.65 : 1 + (INKW - 1) * 0.5;      // 眼睛放大倍數
-    const bk = 1 + (INKW - 1) * (TINY ? 0.35 : 0.6), R = 6.6 * k, bw = 6 * PEN_W * bk;
+  /* 臉:open 張眼、blink 閉眼(眉毛下一道彎線)。look 是眼珠往右挪多少(負的往左,看書時用)。
+     第六版:眼睛改成實心的直立橢圓(比第四版的半圓大約 15%),跟眉毛之間留一條縫;96 以下改畫簡化的臉(smallFace) */
+  const PUPIL = [5, 6.9];                            // 眼珠的半寬、半高
+  const EYE_GAP = 1.8;                               // 眉毛下緣到眼珠上緣的縫
+  /* 眉毛下緣在 x 這一點的高度(待機的眉毛) */
+  function browUnder(i, x, bw, lift) {
+    const [[x0, y0], [x1, y1]] = BROWS[i], slope = (y1 - y0) / (x1 - x0);
+    return y0 + slope * (x - x0) + (bw / 2) / Math.cos(Math.atan(slope)) - (lift || 0);
+  }
+  function pupil(ctx, r, c, k, kx) {
+    const pts = [];
+    for (let a = 0; a < 360; a += 30) {
+      const rr = 0.97 + r() * 0.06;
+      pts.push([c[0] + Math.cos(a * RAD) * PUPIL[0] * k * (kx || 1) * rr, c[1] + Math.sin(a * RAD) * PUPIL[1] * k * rr]);
+    }
+    fillPoly(ctx, spline(pts.concat([pts[0]]), 2));
+  }
+  /* look 有給時(看書)眼珠再往下 1.5(往下看);frown 皺眉:眉頭往下壓多少(眉尾抬一半),眼珠跟著往下讓 */
+  function face(ctx, r, kind, look, frown) {
+    if (SMALL) { smallFace(ctx, r, kind); return; }
+    if (kind !== 'open' && kind !== 'blink') { moodFace(ctx, r, kind); return; }   // 第五版起的表情;待機不會走到
+    const k = 1 + (INKW - 1) * 0.5;                   // 眼睛放大倍數(150 以上不放大)
+    const bw = 6 * PEN_W * (1 + (INKW - 1) * 0.6), fr = frown || 0;
     ctx.fillStyle = INK;
     EYES.forEach((ex, i) => {
-      const [[x0, y0], [x1, y1]] = BROWS[i];
-      const slope = (y1 - y0) / (x1 - x0), al = Math.atan(slope);
-      const u = [Math.cos(al), Math.sin(al)], v = [-Math.sin(al), Math.cos(al)];   // u 順著眉毛、v 垂直往下
-      const mid = y0 + slope * (ex - x0);                    // 眉毛中線在眼睛中心這一點的高度
-      const lid = mid + (bw / 2) / Math.cos(al) - 0.9;        // 眉毛下緣(眼睛平的那一邊稍微塞進眉毛底下,不留縫)
+      const lid = browUnder(i, ex, bw);
       if (kind === 'blink') {
-        const b = lid + 1.5;
+        const [[x0, y0], [x1, y1]] = BROWS[i], slope = (y1 - y0) / (x1 - x0), b = lid + 3;
         line(ctx, [[ex - 6 * k, b - 6 * k * slope], [ex, b + 3.5 * k], [ex + 6 * k, b + 6 * k * slope]], r, 3.2, 0.4);
         return;
       }
-      const c = [ex + v[0] * CUT * R + (r() - 0.5) * 0.4, lid + v[1] * CUT * R + (r() - 0.5) * 0.3], dot = [];
-      const a0 = -Math.asin(CUT) / RAD;
-      for (let a = a0; a <= 180 - a0 + 0.01; a += (180 - 2 * a0) / 14) {
-        const rr = R * (0.97 + r() * 0.06), cs = Math.cos(a * RAD) * rr, sn = Math.sin(a * RAD) * rr;
-        dot.push([c[0] + u[0] * cs + v[0] * sn, c[1] + u[1] * cs + v[1] * sn]);
-      }
-      fillPoly(ctx, dot);                                     // 回到起點那一段就是切平的上緣
+      const down = (look === undefined ? 0 : 1.5) + fr * 0.6;
+      pupil(ctx, r, [ex + (look || 0) + (r() - 0.5) * 0.4, lid + EYE_GAP + PUPIL[1] * k + down + (r() - 0.5) * 0.3], k);
     });
-    BROWS.forEach(([a, b], i) => {
-      // 眉毛:內側粗、眉尾細一點;非常小時剪掉外側 30%
-      const outer = i ? b : a, inner = i ? a : b, t = TINY ? 0.3 : 0;
-      const o = [outer[0] + (inner[0] - outer[0]) * t, outer[1] + (inner[1] - outer[1]) * t];
-      taper(ctx, r, inner, o, bw, bw * (TINY ? 0.85 : 0.72));
+    BROWS.forEach(([a, b], i) => {                            // 眉毛:內側粗、眉尾細一點
+      const outer = i ? b : a, inner = i ? a : b;
+      taper(ctx, r, [inner[0], inner[1] + fr], [outer[0], outer[1] - fr * 0.5], bw, bw * 0.72);
     });
   }
-  /* 第五版的表情。眉毛的位置用待機的眉毛當底,內側、外側各往上抬多少(負的往下壓):
+  /* 96 以下的臉:每隻眼睛的眉毛和眼珠合成一筆粗斜線,外側高、往臉中間壓低(兩筆合起來是 V,臭臉);
+     線寬換算成螢幕上至少 2 px、純黑。表情只改這一筆的彎法,斜度都留著 */
+  const SMALL_EYES = [[[125, 78], [149, 93]], [[184, 78], [159, 93]]];   // [外側, 內側]
+  function smallFace(ctx, r, kind) {
+    const name = kind.split(':')[0];
+    const W = Math.max(2.8 * 300 / SIZE, 6 * PEN_W * INKW * 0.6);   // 邏輯單位;畫出來約 2.8 px(至少 2 px)
+    const fat = (pts, w) => {
+      const p = pts.map(([x, y]) => XF([x + (r() - 0.5) * 0.6, y + (r() - 0.5) * 0.6]));
+      ctx.lineWidth = w; curve(ctx, p); ctx.stroke();
+    };
+    ctx.strokeStyle = INK; ctx.fillStyle = INK;
+    SMALL_EYES.forEach(([o, n], i) => {
+      const m = [(o[0] + n[0]) / 2, (o[1] + n[1]) / 2], s = i ? -1 : 1;
+      if (name === 'happy' || name === 'happysquash') fat([o, [m[0], m[1] - 5], [n[0], n[1] - 2]], W);          // 往上拱的斜弧
+      else if (name === 'closed') fat([[o[0], o[1] + 3], [m[0] + s * 2, m[1] + 5], [n[0], n[1] + 1]], W * 0.9); // 往下垂的斜弧
+      else if (name === 'squeeze') fat([[n[0] - s * 14, n[1] - 9], [n[0] - s * 2, n[1] - 3], [n[0] - s * 14, n[1] + 3]], W);
+      else if (name === 'meh') fat([[o[0], o[1] + 7], [n[0], n[1] + 1]], W * 0.9);
+      else if (name === 'sideeye') fat(i ? [[o[0], o[1] - 4], [n[0], n[1] - 3]] : [[o[0], o[1] + 6], [n[0], n[1] + 1]], W);
+      else if (name === 'blink') fat([[o[0], o[1] + 4], [n[0], n[1] + 2]], W * 0.9);
+      else {
+        const lk = name === 'look' || name === 'lookfrown' ? (+kind.split(':')[1] || 0) * 0.5 : 0;   // 看書:整筆跟著眼珠挪一點
+        const fr = name === 'lookfrown' ? 2 : 0;
+        fat([[o[0] + lk, o[1] - fr], [n[0] + lk, n[1] + fr]], W);
+      }
+    });
+  }
+  /* 第五版起的表情。眉毛的位置用待機的眉毛當底,內側、外側各往上抬多少(負的往下壓):
      [左眉 [內, 外], 右眉 [內, 外]]。內側抬高 = 眉毛鬆開;內側壓低、外側抬高 = 皺眉 */
   const MOODS = {
     happy: [[7, 3], [7, 3]],          // 開心:眉毛鬆開、只剩一點點 V(還是那張嘴硬的臉)
+    happysquash: [[6, 3], [6, 3]],    // 落地壓扁時的開心
     squeeze: [[-1, 3], [-1, 3]],      // > <:眉頭皺緊
     meh: [[4, -2], [4, -2]],          // 嘆氣:眉毛拉平
     closed: [[6, 1], [6, 1]],         // 睡覺:眉毛放鬆
-    sideeye: [[0, -3], [7, 10]],      // 斜眼瞄你:左眉壓平、右眉挑高
-    read: [[6, 2], [6, 2]],           // 看書:眉毛放平(專心,不是在生氣)
-    readfrown: [[-2, 6], [-2, 6]],    // 看到不懂的地方:眉頭皺起來
+    sideeye: [[1, -2], [8, 12]],      // 斜眼瞄你:左眉壓平、右眉挑高
   };
-  const EYE_Y = 87;                   // 眼睛中心的高度(待機的半圓眼差不多在這裡)
-  /* kind:happy 開心的弧線 ∩、squeeze > <、meh 眼皮垂成兩條橫線、closed 睡著(往下彎的弧 ∪)、
-     sideeye 半睜眼、眼珠擠到右邊、'read:3' 往下看(數字 = 眼珠往右挪多少,負的往左)、'readfrown:3' 同上加皺眉 */
+  const EYE_Y = 90;                   // 表情的眼睛中心高度(第六版:眼睛跟眉毛之間多了縫,往下 3)
+  /* kind:happy 開心的弧線 ∩、happysquash 壓扁的開心弧線(落地)、squeeze > <、meh 眼皮垂成兩條橫線、
+     closed 睡著(往下彎的弧 ∪)、sideeye 斜眼:上眼皮壓低,眼珠整個推到右邊(往外瞄) */
   function moodFace(ctx, r, kind) {
-    const [name, arg] = kind.split(':'), sh = +arg || 0;
-    const k = TINY ? 1.65 : 1 + (INKW - 1) * 0.5;
-    const bk = 1 + (INKW - 1) * (TINY ? 0.35 : 0.6), bw = 6 * PEN_W * bk;
-    const reading = name === 'read' || name === 'readfrown';
+    const name = kind.split(':')[0];
+    const k = 1 + (INKW - 1) * 0.5;
+    const bw = 6 * PEN_W * (1 + (INKW - 1) * 0.6);
     const E = EYE_Y + (name === 'squeeze' ? 1 : 0);
     ctx.fillStyle = INK;
     EYES.forEach((ex, i) => {
       const s = i ? -1 : 1;                                   // 往臉中間的方向
       const P = (pts) => pts.map(([u, v]) => [ex + u * k, E + v * k]);
       if (name === 'happy') line(ctx, P([[-6.5, 3], [-2.5, -3], [2.5, -3], [6.5, 3]]), r, 3.6, 0.4);
+      else if (name === 'happysquash') line(ctx, P([[-8, 2.5], [-3, -0.8], [3, -0.8], [8, 2.5]]), r, 3.9, 0.4);
       else if (name === 'squeeze') line(ctx, P([[-s * 5, -5], [s * 4.5, 0], [-s * 5, 5]]), r, 3.6, 0.4);
       else if (name === 'meh') line(ctx, P([[-7, 0], [0, 1.5], [7, 0]]), r, 3.8, 0.4);
       else if (name === 'closed') line(ctx, P([[-6.5, -1.5], [-2.5, 3], [2.5, 3], [6.5, -1.5]]), r, 3.6, 0.4);
-      else if (name === 'sideeye' || reading) {
-        const cx = name === 'sideeye' ? 3 : sh, lid = name === 'sideeye' ? -2 : 0;
-        const half = [];
-        for (let a = 0; a <= 180; a += 20) half.push([cx + Math.cos(a * RAD) * 5.4, lid + Math.sin(a * RAD) * 5.8]);
+      else if (name === 'sideeye') {
+        // 上眼皮壓得很低(一條往外稍微翹的平線),眼珠只露出下半個,整個推到眼皮的右端
+        const lid = 1.5, cx = 4.6, half = [];
+        for (let a = 0; a <= 180; a += 20) half.push([cx + Math.cos(a * RAD) * 4.6, lid + Math.sin(a * RAD) * 5.4]);
         fillPoly(ctx, P(half));
-        line(ctx, P([[-7 + cx * 0.3, lid], [cx * 0.5, lid + 0.5], [7 + cx * 0.3, lid - 0.3]]), r, 3.6, 0.4);   // 平的眼皮
+        line(ctx, P([[-8.5, lid + 0.6], [0, lid + 0.2], [9, lid - 0.8]]), r, 4, 0.4);
       }
     });
-    // 畫得非常小時,開心和睡著不畫眉毛(眉毛會跟弧線黏成一團,看起來像 xx)
-    if (TINY && (name === 'happy' || name === 'closed')) return;
-    (MOODS[name] || MOODS.read).forEach(([dIn, dOut], i) => {
+    (MOODS[name] || MOODS.happy).forEach(([dIn, dOut], i) => {
       const [a, b] = BROWS[i], inner0 = i ? a : b, outer0 = i ? b : a;
-      const inner = [inner0[0], inner0[1] - dIn], outer = [outer0[0], outer0[1] - dOut], t = TINY ? 0.3 : 0;
-      const o = [outer[0] + (inner[0] - outer[0]) * t, outer[1] + (inner[1] - outer[1]) * t];
-      taper(ctx, r, inner, o, bw, bw * (TINY ? 0.85 : 0.72));
+      const inner = [inner0[0], inner0[1] - dIn], outer = [outer0[0], outer0[1] - dOut];
+      taper(ctx, r, inner, outer, bw, bw * 0.72);
     });
   }
   /* 一筆由粗變細的短線(眉毛用):從 a(粗 w0)畫到 b(細 w1),分幾小段換筆粗,圓頭接起來看不出接縫 */
@@ -486,42 +566,47 @@
     }
   }
 
-  /* 腳:髖跟著身體,腳掌貼地,三根腳趾(往外、往內、往下)。非常小時只畫兩條加粗的腿。
-     第五版:mode 'jump' 騰空(腳跟著身體懸著、腳趾往下垂);'sit' 坐著(腿藏在肚子下面,只露出腳趾) */
+  /* 腳:髖跟著身體,腳掌貼地,三根腳趾扇形散開(往前稍微朝上、往後、往前下)。
+     第五版:mode 'jump' 騰空(腳跟著身體懸著、腳趾往下垂);'sit' 坐著(腿藏在肚子下面,只露出腳趾)。
+     第六版:腿和腳趾的線粗約 20%;96 以下腳趾只剩一筆(往前、往後) */
+  const LEG_W = 4.3, TOE_W = 4.1, TOE2_W = 3.6;
   function legs(ctx, r, affine, mode, dx) {
-    // dx:整隻往右挪時腳掌也跟著挪(待機沒有 dx,點跟第四版一樣)
+    // dx:整隻往右挪時腳掌也跟著挪
     const mv = (p) => (dx ? [p[0] + dx, p[1]] : p);
     LEGS.map((g) => g.map((p, i) => (i ? mv(p) : p))).forEach(([hip, foot, out, inn, down]) => {
+      const toes = (F) => {
+        const T = (p) => [F[0] + p[0] - foot[0], F[1] + p[1] - foot[1]];
+        if (SMALL) { line(ctx, [T(out), F, T(inn)], r, TOE_W, 0.5); return; }
+        line(ctx, [T(out), F, T(inn)], r, TOE_W, 0.8);
+        line(ctx, [F, T(down)], r, TOE2_W, 0.6);
+      };
       if (mode === 'jump') {
-        const h = affine(hip), F = [h[0] + 1, h[1] + 17];
-        if (TINY) { line(ctx, [h, [F[0], F[1] + 3]], r, 4.6, 0.5); return; }
-        line(ctx, [h, F], r, 3.6, 0.8);
-        line(ctx, [[F[0] - 13, F[1] + 6], F, [F[0] + 9, F[1] + 5]], r, 3.4, 0.6);
-        line(ctx, [F, [F[0] - 3, F[1] + 9]], r, 3, 0.5);
+        const h = affine(hip), F = [h[0] + 1, h[1] + 14];
+        line(ctx, [h, F], r, LEG_W, 0.8);
+        if (SMALL) { line(ctx, [[F[0] - 10, F[1] + 5], F, [F[0] + 7, F[1] + 4]], r, TOE_W, 0.5); return; }
+        line(ctx, [[F[0] - 13, F[1] + 6], F, [F[0] + 9, F[1] + 5]], r, TOE_W, 0.6);
+        line(ctx, [F, [F[0] - 4, F[1] + 9]], r, TOE2_W, 0.5);
         return;
       }
       if (mode === 'sit') {
         const F = [affine(hip)[0], foot[1]];
-        const T = (p) => [F[0] + p[0] - foot[0], F[1] + p[1] - foot[1]];
-        if (TINY) { line(ctx, [T(out), F, T(inn)], r, 4.6, 0.5); return; }
-        line(ctx, [[F[0] + 1, F[1] - 12], F], r, 3.6, 0.6);   // 上端藏在肚子後面(身體塗白時蓋掉)
-        line(ctx, [T(out), F, T(inn)], r, 3.4, 0.8);
+        if (!SMALL) line(ctx, [[F[0] + 1, F[1] - 12], F], r, LEG_W, 0.6);   // 上端藏在肚子後面(身體塗白時蓋掉)
+        toes(F);
         return;
       }
-      if (TINY) { line(ctx, [affine(hip), [foot[0], foot[1] + 3]], r, 4.6, 0.5); return; }
-      line(ctx, extend([affine(hip), foot], 0, 2 + r() * 2), r, 3.6, 0.8);
-      line(ctx, [out, foot, inn], r, 3.4, 0.8);
-      line(ctx, [foot, down], r, 3, 0.6);
+      line(ctx, extend([affine(hip), foot], 0, SMALL ? 0 : 2 + r() * 2), r, LEG_W, 0.8);
+      toes(foot);
     });
   }
 
-  /* ---------- 第五版:看書 ----------
-     一本攤開的書擋在身體前面、嘴袋的右下方(書頂離眼睛很遠,不擋臉)。書頁朝外攤開:兩頁白紙、中間書背凹下去、
-     每頁兩行字,底下露出一條封面,用黃色斜線來回塗(跟嘴袋同一種蠟筆,全身沒有藍色)。
-     書跟著身體走(點的位置經過身體的轉換),先塗白蓋住後面的身體、再塗黃、書頁再塗一次白(黃色塗出去的蓋掉)、最後描墨線。
-     page 1 = 右頁外緣翹起來往書背捲;page 2 = 那一頁越過書背往左邊落下(從右往左翻) */
-  /* c 書的中心、w 半頁寬(書的座標)、s 放大倍數(書的座標 → 邏輯座標)、tilt 書斜幾度(左邊稍微抬高,像拿起來看) */
-  const BOOK = { c: [164, 194], w: 52, s: 1.25, tilt: -5 };
+  /* ---------- 第六版:看書 ----------
+     四分之三正面站著(頭往左轉一點),兩隻翅膀在胸前捧著一本攤開的書。
+     - 臉照待機:V 字怒眉、實心眼珠(往下看書);長長的上嘴從兩眼中間往左下斜出去,尖端伸出身體外;
+       嘴袋從嘴的下緣垂下來,是一大塊半月形,最低點跟書頂之間一直留著白縫。黃色只在嘴袋。
+     - 書只用墨線:白頁、書背、每頁幾行字,封面只描邊。書在身體前面,翅膀在書的外側捏住兩個角;
+       翅膀先塗白、再描線,書線在翅膀那裡自然斷開,兩條線不交叉。
+     - 只動三樣:眼珠左右掃(f.look)、右頁翻到左頁(f.page 1 翹起、2 立在書背上、3 落到左邊)、身體很小的呼吸(f.br 0~1);
+       f.frown 皺眉一下。嘴、嘴袋、書、翅膀、腳整圈都不動。 */
   /* 把折線每段切成約 seg 長的小段;line() 會讓每個點各抖一點,書的線才跟身體外框一樣不平順 */
   function wobble(pts, seg) {
     const out = [pts[0]];
@@ -532,70 +617,126 @@
     }
     return out;
   }
-  const atBook = (pts) => pts.map(([u, v]) => {
-    const q = rot([u * BOOK.s, v * BOOK.s], BOOK.tilt * RAD);
-    return [BOOK.c[0] + q[0], BOOK.c[1] + q[1]];
-  });
-  function book(ctx, r, f) {
-    const w = BOOK.w;
-    const ink = (pts, wd) => line(ctx, wobble(atBook(pts), 9), r, wd, 0.9);
-    const M = (pts) => pts.map(([u, v]) => [-u, v]).reverse();          // 左右鏡射
-    const pageL = [[0, -11], [-10, -17], [-26, -19], [-w + 12, -18], [-w + 1, -14], [-w + 1, 9], [-w + 14, 11], [-26, 12], [-10, 14], [0, 18]];
-    const cover = [[-w - 3, -12], [-w - 3, 20], [-26, 25], [0, 31], [26, 25], [w + 3, 20], [w + 3, -12]];
+  const RB = { cx: 160, cy: 148, rx: 84, ry: 86 };            // 正面的身體:一顆圓球(下半稍微飽滿)
+  const RFACE = [6, 6];                                         // 臉(眉毛、眼睛)從待機的位置搬多少
+  const RBEAK = {
+    top: [[155, 110], [118, 117.5], [80, 125.5], [42, 133]],    // 上嘴的上緣:嘴根(兩眼中間下面)→ 嘴尖(往左稍微朝下)
+    low: [[39, 134.5], [85, 131.6], [131, 128], [177, 124]],   // 嘴的下緣:嘴尖 → 右端(右眼正下方);上嘴在嘴根那邊比較厚
+  };
+  /* 嘴袋的碗:從嘴的下緣右端往下,繞過圓圓的碗底(最低點約 178),左邊幾乎直直地爬回嘴的下緣(停在嘴尖後面一點,像待機的碗) */
+  const RBOWL = [[174, 127], [176.5, 139], [173, 151], [164, 163.5], [149, 172.5], [129, 177.5], [107, 178], [86, 172.5],
+    [70, 163], [59.5, 151], [54.5, 140.5], [53.5, 134]];
+  const RBOOK = { c: [160, 214], s: 1.08, tilt: -3 };           // 書的中心、放大、斜幾度(左邊稍微抬高)
+  const RLEGS = [141, 180];
+  const RWINGS = [[86, 184, 47, false], [234, 184, -47, true]]; // 肩膀的位置、轉幾度、要不要左右翻
+  /* 圓球上的點:a 是角度(0 = 右、90 = 下) */
+  function ballPts(B, a0, a1, step) {
+    const out = [];
+    for (let a = a0; a <= a1 + 0.01; a += step) {
+      const c = Math.cos(a * RAD), s = Math.sin(a * RAD);
+      out.push([B.cx + B.rx * Math.sign(c) * Math.pow(Math.abs(c), 0.92), B.cy + B.ry * (s > 0 ? Math.pow(s, 0.8) : s)]);
+    }
+    return out;
+  }
+  function readBody(ctx, r, f) {
+    const k = (f.br || 0) * 0.014, B = { cx: RB.cx, rx: RB.rx * (1 + k * 0.4), ry: RB.ry * (1 + k), cy: RB.cy - RB.ry * k };   // 呼吸:底部不動,往上鼓
     ctx.fillStyle = WHITE;
-    fillPoly(ctx, atBook(cover.concat([[w - 10, -17], [0, -11], [-w + 10, -17]])));
-    // 封面:書頁底下露出的那一條,斜斜地來回塗兩趟(第二趟錯開半格、方向反過來),可以塗出去一點
-    ctx.save();
-    ctx.strokeStyle = YELLOW;
-    ctx.lineJoin = ctx.lineCap = 'round';
-    ctx.lineWidth = SWEEP.width * (1 + (INKW - 1) * 0.4);
-    [[1, 0], [-1, 1.7]].forEach(([dir, off]) => {
-      const pts = [];
-      for (let u = -dir * (w + 3) + off, i = 0; dir > 0 ? u <= w + 3 : u >= -w - 3; u += dir * (3.4 + r() * 1.2), i++) {
-        const a = Math.min(1, Math.abs(u) / w), top = 6 + 9 * (1 - a), bot = 22 + 11 * (1 - a);
-        pts.push(i % 2 ? [u + dir * 2.5, top + r() * 2] : [u - dir * 2.5, bot - r() * 2]);
-      }
-      curve(ctx, atBook(pts).map(XF));
-      ctx.stroke();
-    });
-    ctx.restore();
-    ctx.fillStyle = WHITE;
-    fillPoly(ctx, atBook(pageL.concat(M(pageL))));
+    fillPoly(ctx, ballPts(B, 0, 356, 4));
     ctx.strokeStyle = INK;
-    ink(cover.slice(0, 6).concat([[w + 3, -10]]), 3.4);                               // 封面外緣(上面被書頁蓋住)
-    ink(pageL.slice(0, 6).reverse(), 3.4);                                             // 左頁的上緣和外側
-    ink(M(pageL).slice(4), 3.4);                                                       // 右頁
-    line(ctx, atBook([[0, -11], [1, 4], [0, 18]]), r, 2.8, 0.8);                       // 書背
-    ink([[-w + 1, 9], [-26, 12], [-10, 14], [0, 18], [10, 14], [26, 12], [w - 1, 9]], 2.6);   // 書頁底
-    [[-1, -7], [1, -7], [-1, 1], [1, 1]].forEach(([s, v]) => {                         // 每頁兩行字
-      if (f.page === 1 && s > 0 && v < 0) return;                                      // 右頁翹起來時,上面那行被翹起的紙蓋住
-      const a = s * 9, b = s * (w - 9), d = v < -3 ? -1 : 0;
-      line(ctx, atBook([[a, v + d], [(a * 2 + b) / 3, v - 1], [(a + b * 2) / 3, v], [b, v - 1]]), r, 1.9, 0.6);
-    });
-    if (f.page) {
-      const pg = f.page === 1
-        ? [[0, -11], [10, -15], [22, -20], [32, -25], [39, -26], [39, -14], [36, -2], [29, 5], [14, 11], [1, 16]]
-        : [[0, -11], [-8, -14], [-20, -19], [-32, -23], [-42, -23], [-44, -11], [-43, 3], [-31, 8], [-14, 12], [-1, 16]];
+    line(ctx, spline(ballPts(B, 100, 466, 9), 8), r, 4.4, 1.0, true);           // 一筆繞一圈,接頭多畫一點
+    if (!TINY) {                                                                // 頭頂多描一次(偏上一點)
+      const top = ballPts(B, 222 + r() * 10, 310 - r() * 10, 6), n = top.length - 1;
+      line(ctx, top.map(([x, y], i) => { const w = 0.3 + 0.7 * Math.sin(Math.PI * i / n); return [x + 0.8 * w, y - 2.8 * w]; }), r, 2.8, 0.9, true);
+    }
+    return B;
+  }
+  function readBeak(ctx, r, size) {
+    // 嘴袋:先塗白(伸出身體外的那一塊才蓋得住後面),再塗黃;下緣幾乎不塗出去(書頂那邊要留白縫),左邊塗出去多一點
+    const area = RBEAK.low.slice().reverse().map(([x, y]) => [x, y, 0.3])
+      .concat(RBOWL.map(([x, y], i) => [x, y, i < 3 ? 0 : i < 8 ? 0.6 : 5]));
+    ctx.fillStyle = WHITE;
+    fillPoly(ctx, area);
+    pouchFill(ctx, r, size, area, 11.5, RBOWL.slice(7).reverse());   // 毛邊在碗的左下
+    ctx.strokeStyle = INK;
+    line(ctx, extend(spline(RBOWL, 7), 0, 2), r, 4.1, 0.9, true);              // 碗:一筆從右上繞到嘴尖下面
+    ctx.fillStyle = WHITE;
+    fillPoly(ctx, RBEAK.top.concat(RBEAK.low));                                 // 上嘴塗白
+    line(ctx, extend(spline(RBEAK.top, 8), 2.5, 2.5), r, 4.4, 1.0, true);      // 上嘴的上緣(嘴尖多畫出去一點,跟下緣交叉)
+    line(ctx, extend(spline(RBEAK.low, 10), 0, 1.5), r, 4.6, 0.7, true);       // 嘴的下緣
+  }
+  /* 攤開的書(墨線,不塗色)。page:1 右頁上角翹起來、2 立在書背上(只比書頂高一點點)、3 落到左邊;
+     每頁的字:很小時 2 行(線加粗)、中等 3 行、大的 4 行 */
+  const RPAGES = {
+    1: [[0, -11], [12, -16], [24, -20.5], [34, -23], [41, -22], [45, -8], [49, 9], [36, 11], [24, 12], [10, 14], [0, 18]],
+    2: [[0, -11], [4, -17], [9, -23], [14, -26], [18, -23], [17, -9], [13, 4], [6, 12], [0, 18]],
+    3: [[0, -11], [-12, -16], [-26, -19.5], [-39, -21.5], [-45, -20], [-46, -6], [-45, 7], [-30, 11], [-14, 13.5], [0, 18]],
+  };
+  function readBook(ctx, r, page) {
+    const P = RBOOK, w = 52;
+    const at = (pts) => pts.map(([u, v]) => { const q = rot([u * P.s, v * P.s], P.tilt * RAD); return [P.c[0] + q[0], P.c[1] + q[1]]; });
+    const ink = (pts, wd, j) => line(ctx, wobble(at(pts), 9), r, wd, j === undefined ? 0.8 : j);
+    const M = (pts) => pts.map(([u, v]) => [-u, v]).reverse();
+    const pageL = [[0, -11], [-10, -17], [-26, -19], [-w + 12, -18], [-w + 1, -14], [-w + 1, 9], [-w + 14, 11], [-26, 12], [-10, 14], [0, 18]];
+    const cover = [[-w - 4, -11], [-w - 4, 15], [-26, 19], [0, 25], [26, 19], [w + 4, 15], [w + 4, -11]];
+    ctx.fillStyle = WHITE;
+    fillPoly(ctx, at(cover.concat([[w - 10, -17], [0, -11], [-w + 10, -17]])));
+    fillPoly(ctx, at(pageL.concat(M(pageL))));
+    ctx.strokeStyle = INK;
+    ink(cover, 3.4, 0.9);                                                                  // 封面(只描邊)
+    if (!TINY) ink([[-w + 1, 13], [-26, 16], [-10, 18.5], [0, 22], [10, 18.5], [26, 16], [w - 1, 13]], 2, 0.6);   // 書頁的厚度
+    ink(pageL.slice(0, 6).reverse(), 3.2);                                                 // 左頁上緣和外側
+    ink(M(pageL).slice(4), 3.2);                                                           // 右頁
+    if (!TINY) ink([[-w + 1, 9], [-26, 12], [-10, 14], [0, 18], [10, 14], [26, 12], [w - 1, 9]], 2.6);   // 書頁底
+    line(ctx, extend(at([[0, -11], [0.8, 3], [0, 23]]), 1, 0), r, 4.2, 0.6);               // 書背加粗
+    const rows = TINY ? [-8, 0] : SMALL ? [-9, -3, 3] : [-10.5, -5, 0.5, 6];
+    const tw = TINY ? 2.6 : 1.9;
+    const text = (s, v, a, b) => { const d = v < -5 ? -1.2 : 0; line(ctx, at([[a, v + d], [(a * 2 + b) / 3, v - 1 + d * 0.5], [(a + b * 2) / 3, v], [b, v - 0.8]]), r, tw, 0.5); };
+    rows.forEach((v) => [-1, 1].forEach((s) => {
+      if ((page === 1 && s > 0) || (page === 3 && s < 0)) return;                          // 被翻起來的那頁蓋住的字不畫
+      text(s, v, s * 9, s * (w - 10));
+    }));
+    if (page) {
+      const pg = RPAGES[page];
       ctx.fillStyle = WHITE;
-      fillPoly(ctx, atBook(pg));
+      fillPoly(ctx, at(pg));
       ink(pg, 2.8);
-      const s = f.page === 1 ? 1 : -1;          // 翹起來那張紙上的一行字,看得出是一頁書
-      line(ctx, atBook([[s * 8, -6], [s * 18, -9], [s * 28, -12]]), r, 1.9, 0.6);
+      if (page === 1) rows.slice(0, TINY ? 1 : 2).forEach((v) => text(1, v - 2, 9, 36));   // 翹起來那頁上也有字,看得出是書頁
+      if (page === 3) rows.slice(0, TINY ? 1 : 2).forEach((v) => text(-1, v - 1, -9, -38));
     }
   }
-  /* 看書時左邊的翅膀:右邊那隻翅膀左右翻過來、縮成 0.62 倍,從嘴袋前面伸過來,三瓣羽毛壓住書的左下角
-     (右邊用真的翅膀轉下來扶),兩隻翅膀一看就是同一種。先塗白蓋住後面的線,再描墨線 */
-  const LWING = { at: [90, 178], k: 0.62, deg: -98 };
-  function bookWing(ctx, r) {
-    const th = LWING.deg * RAD;
+  /* 正面的翅膀:同一隻三瓣羽毛的翅膀(mirror 左右翻),以 at 為肩膀轉 deg 度、縮成 0.78 倍;
+     整片在身體外面,外緣也要描。先塗白,書線在這裡斷開 */
+  function readWing(ctx, r, [ax, ay, deg, mirror]) {
+    const th = deg * RAD, k = 0.78;
     const pts = WING.map(([x, y]) => {
-      const v = rot([-(x - WING_PIVOT[0]) * LWING.k, (y - WING_PIVOT[1]) * LWING.k], th);
-      return [LWING.at[0] + v[0], LWING.at[1] + v[1]];
+      const v = rot([(mirror ? -1 : 1) * (x - WING_PIVOT[0]) * k, (y - WING_PIVOT[1]) * k], th);
+      return [ax + v[0], ay + v[1]];
     });
     ctx.fillStyle = WHITE;
     fillPoly(ctx, pts);
     ctx.strokeStyle = INK;
-    line(ctx, spline(pts, 5), r, 3.3, 0.7, true);
+    line(ctx, spline(pts.concat([pts[0]]), 5), r, 3.4, 0.7, true);
+  }
+  function readLegs(ctx, r) {
+    RLEGS.forEach((x) => {
+      const F = [x, GROUND], T = TOES.map(([u, v]) => [x + u, GROUND + v]);
+      line(ctx, extend([[x, 226], F], 0, SMALL ? 0 : 2), r, LEG_W, 0.8);
+      line(ctx, [T[0], F, T[1]], r, TOE_W, SMALL ? 0.5 : 0.8);
+      if (!SMALL) line(ctx, [F, T[2]], r, TOE2_W, 0.6);
+    });
+  }
+  function drawRead(ctx, r, f, size) {
+    readLegs(ctx, r);                                         // 腳先畫,上端被身體和書蓋住
+    const B = readBody(ctx, r, f);
+    XF = ([x, y]) => [x - TUFT_BASE[0] + RB.cx + 6, y - TUFT_BASE[1] + B.cy - B.ry + 1.5];
+    tuft(ctx, r, { tuft: 6 }, 0);
+    XF = ID;
+    readBeak(ctx, r, size);
+    XF = ([x, y]) => [x + RFACE[0], y + RFACE[1]];
+    face(ctx, r, SMALL ? (f.frown ? 'lookfrown:' : 'look:') + f.look : 'open', f.look, f.frown);
+    XF = ID;
+    readBook(ctx, r, f.page || 0);
+    RWINGS.forEach((g) => readWing(ctx, r, g));
   }
 
   /* ---------- 第五版:特效(都在畫面座標畫,位置跟著身體) ---------- */
@@ -611,12 +752,14 @@
         // 3~4 個歪歪的大圈,每圈換一個圈心、一筆繞下去互相交叉,最後拉出一條線頭(跟小雞的線團同一種畫法)
         // 圈心在嘴和頭的接頭(J)左上方,離嘴線夠遠不壓到嘴;頭抬高時往下讓,不超出畫布上緣
         // 畫得小(96 以下)時線團放大 1.2 倍,52 px 才看得出是一團纏起來的線
-        const R = ([0, 26, 30, 33, 22, 0][n] || 0) * (small ? 1.2 : 1), J0 = k.body(J), t = [J0[0] - 12, Math.max(J0[1] - 50, 8 + R * 0.95)];
+        // 第六版:圈心再往左上移(離額頭和嘴的上緣遠一點)、整團小一成五;畫得小時只繞兩圈、線細一點,52 px 不糊成一團黑
+        const R = ([0, 26, 30, 33, 22, 0][n] || 0) * (small ? 1.1 : 0.85), J0 = k.body(J);
+        const t = [J0[0] - 34, Math.max(J0[1] - 54, 6 + R * 0.9)], tw = small ? 1.9 : 2.8;
         if (n === 5) {
           const x = t[0] - 4, y = t[1] + 6;
-          line(ctx, [[x - 10, y + 2], [x - 4, y - 5], [x + 2, y + 1], [x + 8, y - 6], [x + 14, y - 1], [x + 19, y - 7]], r, 2.8, 0.5);
+          line(ctx, [[x - 10, y + 2], [x - 4, y - 5], [x + 2, y + 1], [x + 8, y - 6], [x + 14, y - 1], [x + 19, y - 7]], r, tw, 0.5);
         } else if (R) {
-          const loops = (n === 3 ? 4 : n === 4 ? 2 : 3) - (small && n !== 4 ? 1 : 0);   // 畫得小時少一圈,不糊成一團黑
+          const loops = small ? 2 : n === 3 ? 4 : n === 4 ? 2 : 3;
           const pts = [];
           let a = r() * Math.PI * 2, dir = 1;
           for (let i = 0; i < loops; i++) {
@@ -631,7 +774,7 @@
           }
           const q = pts[pts.length - 1], tail = n === 4 ? 1.8 : 1;   // 線頭:鬆開一半時拉得比較長
           pts.push([q[0] - R * 0.5 * tail, q[1] + R * 0.25], [q[0] - R * 0.95 * tail, q[1] - R * 0.1], [q[0] - R * 1.3 * tail, q[1] + R * 0.3]);
-          line(ctx, pts, r, 2.8, 0.5);
+          line(ctx, pts, r, tw, 0.5);
         }
       } else if (name === 'drop') {
         // 一大滴汗貼在頭的右上方外面,n 越大沿著頭的輪廓往下滑
@@ -649,10 +792,11 @@
         line(ctx, [[x + s + 3, y + 3], [x + s + 12, y + 8]], r, 2.6, 0.4);
       } else if (name === 'z') {
         // 打呼的 z:頭的右上方冒出來,往右上飄;n >= 2 時多一個小的
-        const b = k.body([236, 58]);
+        // 第六版:整條路徑放低,最高的 z 也離畫布上緣至少 8%(24 以下)
+        const b = k.body([232, 70]), top = 25;
         const z = (x, y, s) => line(ctx, [[x, y], [x + s, y], [x, y + s], [x + s, y + s]], r, 3.4, 0.5);
-        z(b[0] + n * 3, b[1] - n * 4, 16);
-        if (n >= 2) z(b[0] + 26 + n * 2, b[1] - 26 - n * 3, 11);
+        z(b[0] + n * 3, Math.max(top + 12, b[1] - n * 3.5), 15);
+        if (n >= 2) z(b[0] + 24 + n * 2, Math.max(top, b[1] - 24 - n * 2.5), 10);
       } else if (name === 'pop') {
         // 得意的短線:頭的右上方三條往外放射的短線(「哼」)
         [[[222, 46], [231, 30]], [[244, 62], [258, 51]], [[256, 88], [272, 84]]].forEach(([a, b], i) => {
@@ -701,25 +845,27 @@
 
   /* ---------- 第五版 ----------
      新欄位:sx 左右伸縮(沒給時跟待機一樣跟著 sq 算)、tilt 轉幾度(正 = 嘴往上抬)、dx、dy 整隻搬多少、
-     feet 'jump' 騰空 / 'sit' 坐著、fx 特效、book 捧著書、page 翻頁。嘴往下低時(tilt 負的)要給 dx,嘴尖才不會超出畫布 */
-  /* 開心(「哼,還不錯嘛」):抬下巴站好 → 蹲(預備,嘴袋往上頂)→ 拉長往上衝(嘴袋往下墜)→ 騰空、翅膀張開 →
-     頂點(停 2 拍)、得意的短線 → 落下(嘴袋往上甩)→ 落地壓扁、眼睛擠一下、嘴袋重重甩下去、冒煙 → 回彈 →
-     抬下巴得意(停 2 拍)→ 放鬆接回開頭。呆毛比身體慢一拍 */
+     feet 'jump' 騰空 / 'sit' 坐著、fx 特效、wingAt 翅膀整隻挪多少、tuftRigid 呆毛整撮一起轉。
+     嘴往下低時(tilt 負的)要給 dx,嘴尖才不會超出畫布 */
+  /* 開心(「哼,還不錯嘛」):抬下巴站好 → 蹲(預備,嘴袋往上頂)→ 拉長往上衝(嘴袋往下墜)→ 騰空、翅膀往外上方張開 →
+     頂點(停 2 拍)、翅膀張到最大、得意的短線 → 落下(嘴袋往上甩)→ 落地壓扁、眼睛笑成壓扁的弧線、嘴袋重重甩下去、冒煙 → 回彈 →
+     抬下巴得意(停 2 拍)→ 放鬆接回開頭。呆毛比身體慢一拍。
+     第六版:騰空三格翅膀轉高、整隻往外上方挪(羽毛尖超出身體輪廓),身體拉長、腳下看得到空隙;第 0 格接近待機的站姿 */
   const happy = [
-    { eyes: 'happy', tilt: 2, wing: -4, tuft: -4, pouch: [0, 1] },
+    { eyes: 'happy', tilt: 1, wing: -3, tuft: -3, pouch: [0, 1] },
     { sq: 0.86, sx: 1.03, tilt: -1, dx: 3, eyes: 'happy', wing: 8, tuft: 10, pouch: [1, -3], hold: 2 },
-    { sq: 1.1, sx: 0.95, dy: -3, tilt: 5, eyes: 'happy', wing: -30, tuft: 16, pouch: [1, 6] },
-    { sq: 1.05, sx: 0.96, dy: -20, tilt: 8, eyes: 'happy', wing: -50, feet: 'jump', tuft: 24, pouch: [-1, 8], fx: ['motion', 'shadow'] },
-    { sq: 0.98, dy: -28, tilt: 9, eyes: 'happy', wing: -42, feet: 'jump', tuft: 4, pouch: [0, 1], fx: ['pop', 'shadow'], hold: 2 },
-    { sq: 1.05, sx: 0.97, dy: -14, tilt: 6, eyes: 'happy', wing: -56, feet: 'jump', tuft: -16, pouch: [1, -6], fx: ['shadow'] },
-    { sq: 0.8, sx: 1.04, tilt: 1, dx: 1, eyes: 'squeeze', wing: 14, tuft: -22, pouch: [-3, 10], fx: ['dust'] },
+    { sq: 1.1, sx: 0.95, dy: -4, tilt: 5, eyes: 'happy', wing: -30, tuft: 16, pouch: [1, 6] },
+    { sq: 1.08, sx: 0.95, dy: -22, tilt: 7, eyes: 'happy', wing: -38, wingAt: [10, -6], feet: 'jump', tuft: 24, pouch: [-1, 8], fx: ['motion', 'shadow'] },
+    { sq: 1.03, sx: 0.98, dy: -28, tilt: 8, eyes: 'happy', wing: -46, wingAt: [13, -9], feet: 'jump', tuft: 12, pouch: [0, 1], fx: ['pop', 'shadow'], hold: 2 },
+    { sq: 1.07, sx: 0.96, dy: -17, tilt: 6, eyes: 'happy', wing: -36, wingAt: [10, -6], feet: 'jump', tuft: 8, pouch: [1, -6], fx: ['shadow'] },
+    { sq: 0.8, sx: 1.04, tilt: 1, dx: 1, eyes: 'happysquash', wing: 14, tuft: -22, pouch: [-3, 10], fx: ['dust'] },
     { sq: 1.06, sx: 0.97, tilt: 6, eyes: 'happy', wing: -20, tuft: 12, pouch: [2, -5] },
     { sq: 0.99, tilt: 7, eyes: 'happy', wing: -28, tuft: -6, pouch: [-1, 3], fx: ['pop'], hold: 2 },
-    { tilt: 4, eyes: 'happy', wing: -12, tuft: 2, pouch: [0, 0.5] },
+    { tilt: 3, eyes: 'happy', wing: -10, tuft: 2, pouch: [0, 0.5] },
   ];
   /* 尷尬懊惱(成績不理想):不哭也不裝可憐,是「嘖」。站好 → 縮一下、頭低下去 → 縮到最底,> <、嘴袋垂下來,
-     額頭上方冒出打結的線團、頭的右邊一滴汗(停 2 拍)→ 回彈 → 吸一口氣抬頭(線團鬆開)→ 嘆氣扁下去、嘴邊一團氣(停 2 拍)→
-     鬆下來、呆毛往後塌 → 斜眼瞄你一下(停 3 拍)→ 眨眼接回開頭 */
+     額頭左上方冒出打結的線團、頭的右邊一滴汗(停 2 拍)→ 回彈 → 吸一口氣抬頭(線團鬆開)→ 嘆氣扁下去、嘴邊一團氣(停 2 拍)→
+     鬆下來、呆毛往後塌 → 斜眼瞄你一下(第六版:眼珠推到一邊、上眼皮壓低、頭往上轉 2.5 度,停 3 拍)→ 眨眼接回開頭 */
   const oops = [
     { eyes: 'open', tuft: -2 },
     { sq: 0.9, sx: 1.02, tilt: -2, dx: 5, eyes: 'squeeze', wing: 8, tuft: 10, pouch: [0, 4], fx: ['tangle:1'] },
@@ -728,33 +874,34 @@
     { sq: 1.06, sx: 0.98, tilt: 3, eyes: 'meh', wing: -10, tuft: 8, pouch: [0, 1], fx: ['tangle:4', 'drop:2'] },
     { sq: 0.88, sx: 1.03, tilt: -3, dx: 7, eyes: 'meh', wing: 10, tuft: 16, pouch: [1, 9], fx: ['tangle:5', 'sigh:1'], hold: 2 },
     { sq: 0.86, sx: 1.03, tilt: -3, dx: 7, eyes: 'meh', wing: 14, tuft: 26, pouch: [1, 10], fx: ['sigh:2'] },
-    { tilt: -1, dx: 2, eyes: 'sideeye', wing: 4, tuft: -8, pouch: [0, 5], hold: 3 },
+    { tilt: 2.5, eyes: 'sideeye', wing: 4, tuft: -8, pouch: [0, 4], hold: 3 },
     { sq: 1.02, eyes: 'blink', tuft: 4, pouch: [0, 2] },
   ];
-  /* 看書:翅膀轉下來扶著書(wing 52°),動作小而安靜。眼睛往下看、在書上左右掃(一行兩拍,頭跟著偏一點)→
-     皺眉 → 翻一頁(右頁翹起來時右邊的翅膀往上推一點,接著落到左邊)→ 點一下頭 → 抬回來 */
-  const readFrame = (o) => Object.assign({ book: 1, wing: 60, wingAt: [14, 2] }, o);
+  /* 看書(第六版重畫,見 drawRead):look 眼珠往右挪多少、frown 皺眉、page 翻頁、br 呼吸。
+     往左看 → 中間 → 看到右邊(停 2 拍)→ 跳回下一行的開頭、皺一下眉(停 2 拍)→ 中間 → 看到右邊、右頁翹起來 →
+     那頁立在書背上 → 落到左邊(停 2 拍)→ 接回開頭(新的一頁)。一圈 12 拍(每秒 4 張約 3 秒) */
   const read = [
-    { eyes: 'read:-3', tilt: -1, dx: 2, tuft: 4, hold: 2 },
-    { eyes: 'read:3', tilt: 1, tuft: -6, hold: 2 },
-    { eyes: 'readfrown:-3', sq: 0.98, tilt: -1, dx: 2, tuft: 6, hold: 2 },
-    { eyes: 'readfrown:3', sq: 0.98, tilt: 1, tuft: -4 },
-    { eyes: 'read:3', page: 1, wing: 52, wingAt: [14, -4], tilt: 1, tuft: -6 },
-    { eyes: 'read:-3', page: 2, tilt: -1, dx: 2, tuft: 6 },
-    { eyes: 'read:0', sq: 0.97, tilt: -2, dx: 3, tuft: 10, pouch: [0, 1.5] },
-    { eyes: 'read:0', sq: 1.01, tuft: -4, hold: 2 },
-  ].map(readFrame);
-  /* 睡覺:坐在地上,嘴微微往下垂,翅膀垂著,呆毛往後倒。吐完氣(停 3 拍)→ 慢慢吸氣,嘴袋跟著往左下鼓 →
-     吸飽(停 3 拍)→ 吐氣 → 回到開頭。z 一格一格往右上飄 */
+    { look: -4.5, br: 0, hold: 2 },
+    { look: 0, br: 0.5 },
+    { look: 4.5, br: 1, hold: 2 },
+    { look: -4.5, frown: 2.5, br: 0.6, hold: 2 },
+    { look: 0, frown: 1.5, br: 0.2 },
+    { look: 4.5, page: 1, br: 0 },
+    { look: 1.5, page: 2, br: 0.5 },
+    { look: -3.5, page: 3, br: 1, hold: 2 },
+  ].map((f) => Object.assign({ front: true }, f));
+  /* 睡覺:坐在地上(整隻放低、只露出腳趾),嘴微微往下垂,翅膀垂著,呆毛整撮往後倒。吐完氣(停 3 拍)→ 慢慢吸氣,嘴袋跟著往左下鼓 →
+     吸飽(停 3 拍)→ 吐氣 → 回到開頭。z 一格一格往右上飄。
+     第六版:身體一直比待機小一點(sq 0.9~0.99),呼吸起伏比第五版大;呆毛整撮轉(兩瓣的形狀不變) */
   const sleep = [
-    { sq: 0.97, pouch: [1, -1], tuft: 30, fx: ['z:0'], hold: 3 },
-    { sq: 0.99, pouch: [-0.5, 1.5], tuft: 34, fx: ['z:1'] },
-    { sq: 1.02, pouch: [-2, 3.5], tuft: 38, fx: ['z:2'] },
-    { sq: 1.04, pouch: [-3, 5], tuft: 36, fx: ['z:3'], hold: 3 },
-    { sq: 1.02, pouch: [-2, 3], tuft: 30, fx: ['z:4'] },
-    { sq: 0.99, pouch: [0, 0.5], tuft: 26, fx: ['z:5'], hold: 2 },
-    { sq: 0.97, pouch: [1, -1.5], tuft: 28, fx: ['z:6'] },
-  ].map((f) => Object.assign({ eyes: 'closed', feet: 'sit', dy: 18, tilt: -3, dx: 6, wing: 10 }, f));
+    { sq: 0.9, pouch: [1, -1], tuft: 14, fx: ['z:0'], hold: 3 },
+    { sq: 0.93, pouch: [-0.5, 2], tuft: 16, fx: ['z:1'] },
+    { sq: 0.965, pouch: [-2.5, 4.5], tuft: 19, fx: ['z:2'] },
+    { sq: 0.99, pouch: [-3.5, 6.5], tuft: 18, fx: ['z:3'], hold: 3 },
+    { sq: 0.965, pouch: [-2.5, 4], tuft: 15, fx: ['z:4'] },
+    { sq: 0.93, pouch: [0, 1], tuft: 13, fx: ['z:5'], hold: 2 },
+    { sq: 0.905, pouch: [1, -1.5], tuft: 13, fx: ['z:6'] },
+  ].map((f) => Object.assign({ eyes: 'closed', feet: 'sit', dy: 12, tilt: -3, dx: 6, wing: 10, tuftRigid: true }, f));
 
   /* 第五版的姿勢接在 idle 後面(待機的種子用姿勢的順序算,不變) */
   const POSES = { idle, happy, oops, read, sleep };
@@ -771,12 +918,15 @@
     const r = rng(seed);
     INKW = inkFor(size);
     TINY = !!size && size <= 64;
+    SMALL = !!size && size <= 96;
+    SIZE = size || 300;
     const { body, affine, th } = bodyXF(f);
     ctx.save();
     ctx.lineCap = ctx.lineJoin = 'round';
     ctx.strokeStyle = INK; ctx.fillStyle = INK;
 
     XF = ID;
+    if (f.front) { drawRead(ctx, r, f, size); ctx.restore(); return; }   // 第六版:看書是正面,另外畫
     legs(ctx, r, affine, f.feet, f.dx);      // 先畫腳,身體塗白時蓋住腳的上端
 
     XF = body;
@@ -793,11 +943,9 @@
     const dx = 0.6 + r() * 1, dy = -2.4 - r() * 1.1, run = HEAD_TOP.slice(k0, k1);
     if (!TINY) line(ctx, run.map(([x, y], i) => { const w = 0.3 + 0.7 * Math.sin(Math.PI * i / Math.max(1, run.length - 1)); return [x + dx * w, y + dy * w]; }), r, 2.8, 0.9, true);
     // 嘴的下緣右端只多畫出去一點點就收掉(不往上勾);嘴袋的碗一筆畫完,右上端停在嘴線下面
-    line(ctx, extend(BEAK_LOW, 0, 1 + r() * 2), r, 3.8, 0.7, true);
+    line(ctx, extend(BEAK_LOW, 0, 0.5 + r()), r, 4.6, 0.7, true);   // 第六版:加粗約 20%
     line(ctx, BOWL, r, 4.1, 0.9, true);
-    if (f.book) book(ctx, r, f);             // 第五版才有;待機不會走到這裡,亂數用量不變
     wing(ctx, r, f);
-    if (f.book) bookWing(ctx, r);
     const tip = tuft(ctx, r, f, th);
     face(ctx, r, f.eyes || 'open');
     XF = ID;
@@ -884,7 +1032,7 @@
     holds: (p) => (POSES[p] ? POSES[p].map((f) => f.hold || 1) : []),
     calm: Object.assign({}, CALM),
     fps: Object.assign({}, POSE_FPS),        // 基準 8 時各動作的每秒張數
-    version: 2,
+    version: 3,
     metrics: { width: W, height: H, ground: GROUND },   // ground = 腳底在畫布裡的高度(邏輯像素)
   };
 })();

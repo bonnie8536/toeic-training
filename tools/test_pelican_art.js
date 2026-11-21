@@ -1,4 +1,4 @@
-/* 塗鴉鵜鶘(js/pelican-art.js,version 2:本體、待機,加上開心、尷尬、看書、睡覺四個姿勢)的測試。
+/* 塗鴉鵜鶘(js/pelican-art.js,version 3:本體、待機,加上開心、尷尬、看書、睡覺四個姿勢)的測試。
    用法:node tools/test_pelican_art.js
    在 Node 裡跑,用假的 canvas 記下每一個繪圖呼叫(含每個數字的完整值)和每一次設定的顏色、筆粗,檢查:
    - 介面:姿勢清單、格數、holds、靜止格、速度、metrics、version。
@@ -9,7 +9,9 @@
    - 第二版:墨線有輕重;嘴袋的黃色是一束一束、方向不一的掃筆。
    - version 2:姿勢清單照順序是 idle、happy、oops、read、sleep;各姿勢的格數、holds、靜止格、速度(尷尬和看書比待機慢、睡覺最慢);
      每個姿勢的每一格都畫得出來、畫兩次一樣、不超出畫布、沒有藍色、白色身體有塗白;減少動態時換到哪個姿勢都只畫那個姿勢的靜止格;
-     看書那幾格多了書頁的白色。 */
+     看書那幾格多了書頁的白色。
+   - version 3:看書改成正面捧書:每一格都有一本書(一大片白色、在身體下半),書沒有任何黃色,嘴袋的黃色跟書頂之間留白縫;
+     其他姿勢沒有書;睡覺的 z 和呆毛離畫布上緣至少 8%。 */
 const POSES = ['idle', 'happy', 'oops', 'read', 'sleep'];
 /* 各姿勢的格數範圍 */
 const FRAMES = { idle: [7, 10], happy: [9, 11], oops: [8, 10], read: [7, 9], sleep: [6, 8] };
@@ -127,7 +129,7 @@ const T = {};
 T['姿勢清單、version、metrics、速度'] = () => {
   const d = [];
   if (!eq(ART.poses, POSES)) d.push('poses ' + JSON.stringify(ART.poses));
-  if (ART.version !== 2) d.push('version ' + ART.version);
+  if (ART.version !== 3) d.push('version ' + ART.version);
   if (!eq(ART.metrics, { width: 300, height: 280, ground: 258 })) d.push('metrics ' + JSON.stringify(ART.metrics));
   if (!POSES.every((p) => ART.fps[p] > 0 && ART.fps[p] <= 8)) d.push('fps ' + JSON.stringify(ART.fps));
   // 尷尬比待機慢、看書不比待機快、睡覺最慢
@@ -336,12 +338,58 @@ T['新姿勢的白色身體也有塗白:每一格最大一片純白夠大、蓋�
   }
   return { ok: !d.length, detail: d.slice(0, 8).join('、') };
 };
-T['看書的每一格都有書(比待機多至少 3 片白色:封面底、書頁、左邊的翅膀);其他姿勢沒有'] = () => {
-  const whites = (pose, k) => fills(frameLog(ART, pose, k, 0, 180)).filter((f) => f.color === '#ffffff').length;
-  const base = whites('idle', 0), d = [];
-  for (let k = 0; k < ART.frameCount('read'); k++) if (whites('read', k) < base + 3) d.push('read ' + k + ' 只有 ' + whites('read', k));
-  ['happy', 'oops', 'sleep'].forEach((p) => { for (let k = 0; k < ART.frameCount(p); k++) if (whites(p, k) !== base) d.push(p + ' ' + k + ' 有 ' + whites(p, k)); });
-  return { ok: !d.length, detail: 'idle ' + base + ';' + d.slice(0, 6).join('、') };
+/* 書:最大一片「整個在畫布下半(上緣低於 175)、寬超過 100」的白色填色 */
+function bookOf(log) {
+  const box = (p) => { const xs = p.map((q) => q[0]), ys = p.map((q) => q[1]); return [Math.min.apply(null, xs), Math.min.apply(null, ys), Math.max.apply(null, xs), Math.max.apply(null, ys)]; };
+  const cands = fills(log).filter((f) => f.color === '#ffffff' && f.path.length > 3).map((f) => box(f.path)).filter((b) => b[1] > 175 && b[2] - b[0] > 100);
+  return cands.length ? cands.sort((a, b) => (b[2] - b[0]) - (a[2] - a[0]))[0] : null;
+}
+/* 黃色筆畫用到的每一個點 */
+function yellowPoints(log) {
+  let color = null;
+  const out = [];
+  log.forEach((l) => {
+    if (l.startsWith('strokeStyle=')) color = l.slice(12);
+    else if (color === '#ffe100' && /^(moveTo|lineTo)\(/.test(l)) out.push(nums(l));
+    else if (color === '#ffe100' && l.startsWith('quadraticCurveTo(')) { const [a, b, c, d] = nums(l); out.push([a, b], [c, d]); }
+  });
+  return out;
+}
+T['看書的每一格都有書(下半一大片白色);書裡沒有黃色,嘴袋的黃色最低點離書頂至少 8(300 的畫布);其他姿勢沒有書'] = () => {
+  const d = [];
+  let minGap = Infinity;
+  for (const size of SIZES) for (let k = 0; k < ART.frameCount('read'); k++) for (const v of [0, 1]) {
+    const log = frameLog(ART, 'read', k, v, size), b = bookOf(log);
+    if (!b) { d.push('read ' + size + '/' + k + ' 沒有書'); continue; }
+    const ys = yellowPoints(log);
+    if (!ys.length) d.push('read ' + size + '/' + k + ' 沒有嘴袋的黃色');
+    const inBook = ys.filter(([x, y]) => x >= b[0] && x <= b[2] && y >= b[1]);
+    if (inBook.length) d.push('read ' + size + '/' + k + ' 書裡有黃色 ' + inBook.length);
+    const low = Math.max.apply(null, ys.filter(([x]) => x >= b[0] && x <= b[2]).map((p) => p[1]).concat([-Infinity]));
+    minGap = Math.min(minGap, b[1] - low);
+    if (b[1] - low < 8) d.push('read ' + size + '/' + k + ' 黃色離書頂只有 ' + (b[1] - low).toFixed(1));
+  }
+  ['idle', 'happy', 'oops', 'sleep'].forEach((p) => { for (let k = 0; k < ART.frameCount(p); k++) if (bookOf(frameLog(ART, p, k, 0, 180))) d.push(p + ' ' + k + ' 有書'); });
+  return { ok: !d.length, detail: '最小白縫 ' + minGap.toFixed(1) + ';' + d.slice(0, 6).join('、') };
+};
+T['看書時嘴、嘴袋、書、腳整圈不動(各格的黃色範圍和書的位置都一樣)'] = () => {
+  const d = [], ref = {};
+  for (let k = 0; k < ART.frameCount('read'); k++) {
+    const log = frameLog(ART, 'read', k, 0, 300), b = bookOf(log), ys = yellowPoints(log);
+    const yb = [Math.min.apply(null, ys.map((p) => p[0])), Math.max.apply(null, ys.map((p) => p[1]))];
+    if (!k) { ref.b = b; ref.yb = yb; continue; }
+    if (b.some((x, i) => Math.abs(x - ref.b[i]) > 3)) d.push(k + ' 書動了 ' + JSON.stringify(b.map(Math.round)));
+    if (yb.some((x, i) => Math.abs(x - ref.yb[i]) > 4)) d.push(k + ' 嘴袋動了 ' + JSON.stringify(yb.map(Math.round)));
+  }
+  return { ok: !d.length, detail: d.slice(0, 6).join('、') };
+};
+T['睡覺:每一格所有的點(含 z、呆毛)離畫布上緣至少 8%'] = () => {
+  const lim = ART.metrics.height * 0.08, bad = [];
+  for (const size of SIZES) for (let k = 0; k < ART.frameCount('sleep'); k++) for (const v of [0, 1]) {
+    const top = Math.min.apply(null, points(frameLog(ART, 'sleep', k, v, size)).map((p) => p[1]));
+    if (top < lim) bad.push(size + '/' + k + '/' + v + ' ' + top.toFixed(1));
+  }
+  return { ok: !bad.length, detail: '上限 ' + lim.toFixed(1) + ';' + bad.slice(0, 6).join('、') };
 };
 T['墨線有輕重(粗細很多種);嘴袋黃色是一束一束方向不一的掃筆(至少 30 束,方向至少差 25°)'] = () => {
   const log = frameLog(ART, 'idle', 0, 0, 180);

@@ -2,7 +2,7 @@
    網站模式只做兩件事:提供 window.APP(頭像選單的「安裝到手機」)與註冊 /sw.js。
    主畫面開啟時(head 開機程式已在 <html> 加 is-app、app-shell)才建返回鍵、分頁列、捲動小標題、鍵盤偵測。
    不依賴 common.js(terms.html 沒載入它)。不讀寫任何瀏覽器端儲存,不碰 Supabase(只讀 CLOUD.user)。
-   圖示路徑改自 Lucide(ISC License,https://lucide.dev)。 */
+   分頁圖示是 js/doodle-art.js 的塗鴉圖示(分頁列建好後才載入);返回箭頭與分享圖示的路徑改自 Lucide(ISC License,https://lucide.dev)。 */
 (function () {
   'use strict';
   const doc = document;
@@ -14,16 +14,16 @@
   const KB_MIN = 120;          // visualViewport 縮小超過這個高度才算鍵盤打開
 
   const TABS = [
-    { key: 'home', label: '首頁', href: 'index.html', pages: ['index.html', 'diagnostic.html', 'daily.html'] },
-    { key: 'learn', label: '學習', href: 'learn.html', pages: ['learn.html', 'grammar.html', 'phonics.html', 'tenses.html', 'verbs.html', 'vocab.html', 'listening.html', 'reading.html', 'dialogue.html', 'writing.html'] },
-    { key: 'drill', label: '刷題', href: 'drill.html', pages: ['drill.html', 'practice.html', 'mock.html'] },
-    { key: 'review', label: '複習', href: 'review.html', pages: ['review.html'] },
+    { key: 'home', label: '首頁', href: 'index.html', pages: ['index.html', 'daily.html'] },
+    { key: 'learn', label: '日常學習', href: 'learn.html', pages: ['learn.html', 'grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'] },
+    { key: 'warmup', label: '練練手感', href: 'warmup.html', pages: ['warmup.html', 'vocab.html', 'listening.html', 'writing.html'] },
+    { key: 'drill', label: '刷刷題目', href: 'drill.html', pages: ['drill.html', 'practice.html', 'mock.html', 'diagnostic.html', 'review.html'] },
     { key: 'me', label: '我的', href: 'me.html', pages: ['me.html', 'history.html', 'analysis.html', 'admin.html'] },
   ];
   const TITLES = {
     'diagnostic.html': '程度檢測', 'daily.html': '每日練習', 'grammar.html': '文法基礎', 'phonics.html': '自然發音', 'verbs.html': '不規則動詞', 'vocab.html': '單字訓練',
     'listening.html': '聽力訓練', 'reading.html': '閱讀訓練', 'dialogue.html': '對話練習', 'tenses.html': '時態總整理', 'writing.html': '寫作練習', 'practice.html': '題庫刷題',
-    'mock.html': '模擬考', 'history.html': '學習記錄', 'analysis.html': '能力分析', 'admin.html': '教師後台', 'pricing.html': '方案與價格',
+    'mock.html': '模擬考', 'review.html': '錯題本', 'history.html': '學習記錄', 'analysis.html': '能力分析', 'admin.html': '教師後台', 'pricing.html': '方案與價格',
     'terms.html': '服務條款', 'privacy.html': '隱私權政策', 'refund.html': '退款政策', 'corrections.html': '題目更正紀錄', 'pay-result.html': '付款結果',
   };
   const PAGE = (function () {
@@ -40,28 +40,6 @@
   const SAFARI_MAJOR = (function () { const i = UA.indexOf('Version/'); return i > -1 ? (parseInt(UA.slice(i + 8), 10) || 0) : 0; })();
 
   const SVG = "<svg viewBox='0 0 24 24' width='24' height='24' aria-hidden='true' focusable='false' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'>";
-  const ICONS = {
-    home: {
-      o: "<path d='M3 10a2 2 0 0 1 .7-1.53l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><path d='M9 21v-7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v7'/>",
-      f: "<path fill='currentColor' d='M3 10a2 2 0 0 1 .7-1.53l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><rect x='9.75' y='13.75' width='4.5' height='8.5' rx='1' fill='#fff' stroke='none'/>",
-    },
-    learn: {
-      o: "<path d='M12 7v14'/><path d='M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z'/>",
-      f: "<path fill='currentColor' d='M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z'/><path d='M12 8v11' stroke='#fff'/>",
-    },
-    drill: {
-      o: "<rect x='8' y='2' width='8' height='4' rx='1'/><path d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/><path d='m9 14 2 2 4-4'/>",
-      f: "<path fill='currentColor' d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/><rect x='8' y='2' width='8' height='4' rx='1' fill='currentColor' stroke='#fff' stroke-width='1.5'/><path d='m9 14 2 2 4-4' stroke='#fff'/>",
-    },
-    review: {
-      o: "<path d='M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8'/><path d='M3 3v5h5'/>",
-      f: "<circle cx='12' cy='12' r='10' fill='currentColor' stroke='none'/><path d='M7 12a5 5 0 1 0 5-5 5.4 5.4 0 0 0-3.74 1.52L7 9.78' stroke='#fff'/><path d='M7 7v2.78h2.78' stroke='#fff'/>",
-    },
-    me: {
-      o: "<circle cx='12' cy='7' r='4'/><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/>",
-      f: "<circle cx='12' cy='7' r='4' fill='currentColor'/><path fill='currentColor' d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2z'/>",
-    },
-  };
   const CHEVRON = SVG.replace("stroke-width='1.8'", "stroke-width='2'") + "<path d='m15 18-6-6 6-6'/></svg>";
   const SHARE = "<svg viewBox='0 0 24 24' width='18' height='18' aria-hidden='true' focusable='false' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8'/><path d='m16 6-4-4-4 4'/><path d='M12 2v13'/></svg>";
   const X_ICON = "<svg viewBox='0 0 22 22' width='18' height='18' aria-hidden='true' focusable='false' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round'><path d='M5 5 17 17M17 5 5 17'/></svg>";
@@ -111,8 +89,8 @@
   function showInstallHelp() {
     if (doc.querySelector('.modal-mask')) return;
     const steps = SAFARI_MAJOR >= 26
-      ? [['點網址列旁的「⋯」'], ['點「分享」'], ['往下滑，點「加入主畫面」'], ['點「加入」']]
-      : [['點分享按鈕', SHARE], ['往下滑，點「加入主畫面」'], ['點「加入」']];
+      ? [['點網址列旁的「⋯」'], ['點「分享」'], ['往下滑並點「加入主畫面」'], ['點「加入」']]
+      : [['點分享按鈕', SHARE], ['往下滑並點「加入主畫面」'], ['點「加入」']];
     const mask = el('div', { class: 'modal-mask' });
     const box = el('div', { class: 'modal app-install', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'app-install-h' });
     const x = el('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉' }, X_ICON);
@@ -126,7 +104,7 @@
       ol.appendChild(li);
     });
     const note = el('p', { class: 'app-install-note' });
-    note.textContent = '從主畫面打開後要再登入一次。';
+    note.textContent = '從主畫面打開後要再登入一次';
     box.append(x, title, ol, note);
     mask.appendChild(box);
     doc.body.appendChild(mask);
@@ -159,16 +137,20 @@
     const t = tabOf(PAGE);
     location.href = t ? t.href : 'index.html';
   }
-  function tabIcon(key) {
-    return SVG + "<g class='ico-o'>" + ICONS[key].o + "</g><g class='ico-f'>" + ICONS[key].f + '</g></svg>';
-  }
+  /* 分頁圖示:canvas 由 DoodleArt 畫。選中的那格 fill、墨線黑;沒選中的 line、墨線灰。DoodleArt 還沒載到時只有文字(CSS 在 html.doodle-ready 之前不顯示 canvas) */
+  const TAB_INK = { on: '#151515', off: '#767f88' };
   function buildTabbar(cur, isRoot) {
     const nav = el('nav', { class: 'app-tabbar', 'aria-label': '主要分頁' });
     TABS.forEach(function (t) {
-      const a = el('a', { class: 'app-tab', href: t.href }, tabIcon(t.key) + '<span>' + t.label + '</span>');
-      if (t === cur) { a.classList.add('on'); a.setAttribute('aria-current', isRoot ? 'page' : 'true'); }
+      const on = t === cur;
+      const a = el('a', { class: 'app-tab', href: t.href });
+      a.appendChild(el('canvas', { class: 'app-tab-art', 'data-doodle': t.key, 'data-size': '26', 'data-tone': on ? 'fill' : 'line', 'data-ink': on ? TAB_INK.on : TAB_INK.off, 'aria-hidden': 'true' }));
+      const label = el('span');
+      label.textContent = t.label;
+      a.appendChild(label);
+      if (on) { a.classList.add('on'); a.setAttribute('aria-current', isRoot ? 'page' : 'true'); }
       a.addEventListener('click', function (e) {
-        if (t === cur && isRoot) {
+        if (on && isRoot) {
           e.preventDefault();
           try { window.scrollTo({ top: 0, behavior: mq('(prefers-reduced-motion: reduce)') ? 'auto' : 'smooth' }); }
           catch (err) { window.scrollTo(0, 0); }
@@ -179,6 +161,17 @@
       nav.appendChild(a);
     });
     return nav;
+  }
+  function paintTabs(nav) {
+    const D = window.DoodleArt;
+    if (!D || typeof D.mountAll !== 'function') return;
+    try { D.mountAll(nav); } catch (err) { console.warn('分頁圖示有幾個畫不出來：', err); }
+    html.classList.add('doodle-ready');
+  }
+  function loadTabArt(nav) {
+    if (window.DoodleArt) { paintTabs(nav); return; }
+    addScript('js/doodle-art.js').then(function () { paintTabs(nav); })
+      .catch(function (err) { console.warn('分頁圖示載入失敗，只顯示文字：', err); });
   }
   function buildTopbar(isRoot) {
     const inner = doc.querySelector('.topbar-inner');
@@ -224,7 +217,11 @@
   function buildShell() {
     const isRoot = html.classList.contains('is-tab-root');
     buildTopbar(isRoot);
-    if (html.classList.contains('has-tabbar')) doc.body.appendChild(buildTabbar(tabOf(PAGE), isRoot));
+    if (html.classList.contains('has-tabbar')) {
+      const nav = buildTabbar(tabOf(PAGE), isRoot);
+      doc.body.appendChild(nav);
+      loadTabArt(nav);
+    }
     wireScroll();
     wireKeyboard();
     window.addEventListener('pageshow', function () { syncKb(); syncScrolled(); });   // bfcache 回來時重新對齊
@@ -282,11 +279,11 @@
     return list;
   }
   /* 網站模式(實作契約第 7.3 節):練習頁在 PET_FOOD 時載入補券和結束畫面那一行要的檔;
-     學習、刷題、複習在 PET_ROAM_V2 時載入走動的小雞和面板;首頁、「我的」本來就有面板,只多載 pet-roam2.js。
+     日常學習、練練手感、刷刷題目、錯題本在 PET_ROAM_V2 時載入走動的小雞和面板;首頁、「我的」本來就有面板,只多載 pet-roam2.js。
      pet-roam-zones.js(電腦版到處走的空地,規格 1.11)只有網站模式載,放在 pet-roam2.js 前面;App 模式不載 */
   const WEB_FOOD_PAGES = ['daily.html', 'grammar.html', 'phonics.html', 'vocab.html', 'reading.html', 'practice.html', 'listening.html',
     'review.html', 'dialogue.html', 'mock.html', 'diagnostic.html', 'writing.html'];
-  const WEB_ROAM_FULL = ['learn.html', 'drill.html', 'review.html'];
+  const WEB_ROAM_FULL = ['learn.html', 'warmup.html', 'drill.html', 'review.html'];
   const WEB_ROAM_ONLY = ['index.html', 'me.html'];
   function webPetList(page) {
     const food = on('PET_FOOD'), roam2 = on('PET_ROAM_V2');

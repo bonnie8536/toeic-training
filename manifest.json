@@ -2,7 +2,7 @@
   "id": "/index.html",
   "name": "衝衝英文",
   "short_name": "衝衝英文",
-  "description": "多益聽力、閱讀 Part 1–7 刷題，每題附解析，答錯的題會收進每日複習；還有單字遊戲、文法課和計時模擬考。",
+  "description": "多益聽力、閱讀 Part 1–7 刷題，每題附解析，答錯的題會收進錯題本；還有單字遊戲、文法課和計時模擬考。",
   "start_url": "./index.html",
   "scope": "/",
   "display": "standalone",
@@ -16,7 +16,7 @@
   ],
   "shortcuts": [
     {
-      "name": "每日複習",
+      "name": "錯題本",
       "url": "./review.html",
       "icons": [
         { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png" }
@@ -30,8 +30,8 @@
       ]
     },
     {
-      "name": "文法基礎",
-      "url": "./grammar.html",
+      "name": "每日練習",
+      "url": "./daily.html",
       "icons": [
         { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png" }
       ]

@@ -78,14 +78,15 @@ function run(src, opt) {
   (opt.has || []).forEach(n => { if (n === 'PET.earn') win.PET = Object.assign(win.PET || {}, { earn() {} }); else win[n] = win[n] || {}; });
   vm.createContext(win);
   vm.runInContext(src, win);
-  return new Promise(resolve => setTimeout(() => resolve({ added, warns }), 20));
+  /* 分頁圖示用的 js/doodle-art.js 是小雞載入以外的事:分開記,不算進小雞的載入清單 */
+  return new Promise(resolve => setTimeout(() => resolve({ added: added.filter(s => s !== 'js/doodle-art.js'), art: added.filter(s => s === 'js/doodle-art.js'), warns }), 20));
 }
 
 const OFF = { PET_ON: true, PET_FOOD: false, PET_ROAM_V2: false, PET_FOOD_FROM: '' };
 const FOOD = Object.assign({}, OFF, { PET_FOOD: true, PET_FOOD_FROM: '2026-11-01' });
 const ROAM = Object.assign({}, OFF, { PET_ROAM_V2: true });
 const BOTH = Object.assign({}, FOOD, { PET_ROAM_V2: true });
-const PAGES = ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html', 'daily.html', 'grammar.html', 'practice.html', 'vocab.html',
+const PAGES = ['index.html', 'learn.html', 'warmup.html', 'drill.html', 'review.html', 'me.html', 'daily.html', 'grammar.html', 'practice.html', 'vocab.html',
   'reading.html', 'listening.html', 'writing.html', 'mock.html', 'diagnostic.html', 'dialogue.html', 'phonics.html', 'history.html', 'pricing.html', 'signup.html'];
 /* 每一頁靜態載入了哪些(第 2 步:每個載入 cloud.js 的頁面都有 PET;首頁和「我的」另外有面板那一套) */
 const STATIC = p => (p === 'index.html' || p === 'me.html' ? ['PET', 'PET.earn', 'PET_STORE', 'ChickArt', 'FoodArt', 'PET_UI'] : ['PET']);
@@ -141,6 +142,7 @@ const STATIC_OLD = p => (p === 'index.html' || p === 'me.html' ? ['PET', 'PET_ST
     const want = {
       'FOOD learn': [FOOD, 'learn.html', 'js/pet-food.js,js/pet-store.js,js/pet-hook.js,js/chick-art.js,js/food-art.js,js/pet-ui.js,js/pet-roam.js'],
       'ROAM learn': [ROAM, 'learn.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam2.js'],
+      'ROAM warmup': [ROAM, 'warmup.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam2.js'],
       'BOTH learn': [BOTH, 'learn.html', 'js/pet-food.js,js/pet-store.js,js/pet-hook.js,js/chick-art.js,js/food-art.js,js/pet-ui.js,js/pet-roam2.js'],
       'BOTH index': [BOTH, 'index.html', 'js/pet-hook.js,js/pet-roam2.js'],
       'FOOD me': [FOOD, 'me.html', 'js/pet-hook.js,js/pet-roam.js'],
@@ -161,8 +163,9 @@ const STATIC_OLD = p => (p === 'index.html' || p === 'me.html' ? ['PET', 'PET_ST
     const FOODP = 'js/pet-food.js,js/pet-store.js,js/pet-hook.js';
     const want = [
       [FOOD, 'practice.html', FOODP], [FOOD, 'daily.html', FOODP], [FOOD, 'writing.html', FOODP], [FOOD, 'diagnostic.html', FOODP],
-      [FOOD, 'learn.html', ''], [FOOD, 'index.html', ''], [FOOD, 'history.html', ''], [FOOD, 'review.html', FOODP],
+      [FOOD, 'learn.html', ''], [FOOD, 'warmup.html', ''], [FOOD, 'index.html', ''], [FOOD, 'history.html', ''], [FOOD, 'review.html', FOODP],
       [ROAM, 'learn.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'], [ROAM, 'drill.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'],
+      [ROAM, 'warmup.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'],
       [ROAM, 'index.html', 'js/pet-roam-zones.js,js/pet-roam2.js'], [ROAM, 'me.html', 'js/pet-roam-zones.js,js/pet-roam2.js'], [ROAM, 'practice.html', ''], [ROAM, 'history.html', ''],
       [BOTH, 'review.html', 'js/pet-food.js,js/pet-store.js,js/pet-hook.js,js/chick-art.js,js/food-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'],
       [BOTH, 'learn.html', 'js/pet-food.js,js/pet-store.js,js/chick-art.js,js/food-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'],
@@ -184,6 +187,23 @@ const STATIC_OLD = p => (p === 'index.html' || p === 'me.html' ? ['PET', 'PET_ST
     const src = NEW_SHELL;
     const ok = /function loadList[\s\S]{0,300}catch\(function \(err\) \{ console\.warn\('小雞載入失敗：', err\); \}\)/.test(src) && /loadWebPet\(\); \} catch \(err\) \{ console\.warn\('小雞載入失敗：', err\); \}/.test(src);
     check('載入失敗只 console.warn,不丟錯', ok);
+  }
+  /* 6b. 分頁圖示:App 模式有分頁列才載入 js/doodle-art.js,只載一次;頁面已經有 DoodleArt 就不載;網站模式不載 */
+  {
+    const bad = [];
+    for (const page of PAGES) {
+      const cases = [
+        ['App 有分頁列', { standalone: true, tabbar: true, has: STATIC(page) }, 1],
+        ['App 已有 DoodleArt', { standalone: true, tabbar: true, has: STATIC(page).concat(['DoodleArt']) }, 0],
+        ['App 沒有分頁列', { standalone: true, tabbar: false, has: STATIC(page) }, 0],
+        ['網站', { standalone: false, tabbar: false, has: STATIC(page) }, 0],
+      ];
+      for (const [name, o, n] of cases) {
+        const r = await run(NEW_SHELL, Object.assign({ page, cloud: true, config: OFF }, o));
+        if (r.art.length !== n) bad.push(page + ' ' + name + ' 載了 ' + r.art.length + ' 次');
+      }
+    }
+    check('分頁圖示:App 有分頁列才載入 js/doodle-art.js 一次,已經有就不載,網站模式不載', !bad.length, bad.length ? bad.slice(0, 3).join(' | ') : PAGES.length * 4 + ' 種都對');
   }
   /* 7. HTML 的 script 順序 */
   {

@@ -157,6 +157,18 @@ T['已淘汰的題不算;data/retired.json 讀不到時照原本的數;超過 99
   assert.equal(m.tiles.w.querySelector('.tile-badge').textContent, '99+');
   assert.equal(m.tiles.w.querySelector('.tile-badge').getAttribute('aria-label'), '待複習 120 題');
 };
+T['錯題本徽章:data/retired.json 回來之前不畫,回來後直接畫扣掉已淘汰題的數字(不會先出現再變小)'] = async () => {
+  const data = { drill_p5: { 'p5-1': { ok: false, t: 1 }, 'p5-2': { ok: false, t: 1 }, 'p5-3': { ok: false, t: 1 } } };
+  let release;
+  const gate = new Promise((r) => { release = r; });
+  const a = boot({ tiles: DRILL, store: makeStore(data), fetch: () => gate.then(() => ({ ok: true, json: () => Promise.resolve({ retired: [{ id: 'p5-2' }] }) })) });
+  await Promise.resolve();
+  assert.equal(a.tiles.w.querySelector('.tile-badge'), null, '還沒讀到淘汰清單就先畫了徽章');
+  release();
+  await a.ctx.HUB.paint();
+  assert.equal(a.tiles.w.querySelectorAll('.tile-badge').length, 1);
+  assert.equal(a.tiles.w.querySelector('.tile-badge').textContent, '2');
+};
 T['只讀不寫:整個過程沒有呼叫 store.set 或 store.remove;原始碼也沒有'] = async () => {
   const st = makeStore({ grammar_done: obj(3, (i) => 'ga-' + i), drill_p5: { 'p5-1': { ok: false, t: 1 } } });
   const h = boot({ tiles: LEARN.concat(DRILL), store: st });

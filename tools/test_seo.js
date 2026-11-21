@@ -473,6 +473,8 @@ T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上�
         const units = (t) => Array.from(t.matchAll(/(\d+) ?([章課組級題])/g)).map((m) => [m[2], m[1]]);
         const homeU = units(twin[2]);
         units(text).forEach(([u, n]) => homeU.filter((x) => x[0] === u).forEach((x) => assert.equal(n, x[1], f + ' 的「' + name + '」卡片寫的' + u + '數跟首頁不一樣')));
+        /* 同一塊磚兩邊的數字行要一字不差(單位比對抓不到「回合」這類沒列進單位的寫法) */
+        assert.equal(text, twin[2], f + ' 的「' + name + '」磚數字行跟首頁不一樣');
         if (href !== 'review.html') assert.ok(text.length > 0, f + ' 的「' + name + '」卡片沒有標籤');
         return;
       }

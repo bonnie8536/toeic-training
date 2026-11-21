@@ -113,9 +113,8 @@
   }
   function paintReview() {
     if (!tile('review.html')) return Promise.resolve();
-    const raw = pendingCount({});
-    paintBadge(raw);
-    if (!raw) return Promise.resolve();
+    /* 已淘汰的題要等 data/retired.json 回來才知道,所以先不畫,免得數字先出現再變小;抓不到就照原始數字畫 */
+    if (!pendingCount({})) { paintBadge(0); return Promise.resolve(); }
     return loadRetired().then(function (gone) { paintBadge(pendingCount(gone)); });
   }
 

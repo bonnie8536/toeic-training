@@ -756,7 +756,8 @@
         h('span', null, '分數 ', scoreEl), livesEl, pauseBtn),
       field,
       h('div', { class: 'game-input-row' }, input));
-    input.focus();
+    window.scrollTo(0, 0);   // 從頁面下方按「開始」進來時，分數、愛心、暫停留在第一屏
+    input.focus({ preventScroll: true });
 
     function spawn() {
       const onScreen = new Set(blocks.map(b => shownOf(b.item)));

@@ -336,7 +336,7 @@ function fakeBrowser(o) {
     IntersectionObserver: class { constructor(cb) { ios.push(cb); } observe() {} },
   };
   if (o.ui !== false) {
-    win.PET_UI = { reduced: false, mood: () => 'idle', label: () => '小黃，連續 5 天', view: () => ({ on: true, status: { hungry: false } }),
+    win.PET_UI = { reduced: false, mood: () => 'idle', label: () => '小黃 · 連續 5 天', view: () => ({ on: true, status: { hungry: false } }),
       onChange: (f) => { subs.push(f); f({ on: true, status: { hungry: false }, roam: true }, {}); }, openSheet() {} };
   }
   if (o.art !== false) {
@@ -372,7 +372,7 @@ run('開機', () => {
     ok(layer.classList.contains('is-ground') && !layer.getAttribute('role') && !layer.getAttribute('aria-label'), '外層:地面、沒有角色和文字');
     const btn = layer.kids[0];
     ok(btn && btn.tagName === 'BUTTON' && btn.classList.contains('pet-roam2-btn') && btn.getAttribute('type') === 'button' && btn.getAttribute('aria-haspopup') === 'dialog', '按鈕');
-    ok(btn && btn.getAttribute('aria-label') === '小黃，連續 5 天 · 打開餵食', '按鈕標籤加上「打開餵食」', btn && btn.attrs);
+    ok(btn && btn.getAttribute('aria-label') === '小黃 · 連續 5 天 · 打開餵食', '按鈕標籤加上「打開餵食」', btn && btn.attrs);
     const cv = btn && btn.kids[0];
     ok(cv && cv.tagName === 'CANVAS' && cv.classList.contains('pet-roam2-cv') && cv.getAttribute('aria-hidden') === 'true', '畫布 aria-hidden');
   }

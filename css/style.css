@@ -3917,6 +3917,10 @@ tr.is-open .ad-caret-ico { transform: translateY(2px) rotate(-135deg); }
     border-radius: var(--radius);
   }
 }
+/* 電腦版(文章與題目左右排):有底部列時文章框的高度扣掉底部列,捲到最後一行也看得到 */
+@media (min-width: 861px) {
+  html.is-quiz.has-quiz-foot main .set-layout .passage-sticky-wrap { max-height: calc(100vh - 88px - var(--quiz-foot-h, 76px)); }
+}
 /* 作答列右邊可以點開題號面板的「3 / 75」(模擬考、程度檢測):淡底膠囊加向下的小箭頭,看得出是按鈕 */
 html.is-quiz .quiz-bar button.quiz-count {
   display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin: 0; padding: 0 12px;
@@ -3948,6 +3952,7 @@ html:not(.authed) .wr-home-tag { display: none; }   /* 訪客沒有自動儲存�
   .foot-links { row-gap: 0; }
   .foot-links a { display: inline-flex; align-items: center; min-height: 44px; }
   .practice-panel .btn, .practice-panel .cfg-select, .review-row .btn { min-height: 44px; }
+  .practice-panel a.btn, .review-row a.btn { display: inline-flex; align-items: center; justify-content: center; }
   .cfg-part-check { min-height: 44px; }
   .pet-seg-b { min-height: 44px; }
   .player .btn, .player .speed-sel, .report-btn { min-height: 44px; }

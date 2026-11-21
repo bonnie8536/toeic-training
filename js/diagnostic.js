@@ -61,6 +61,7 @@
         h('button', {
           class: 'btn primary', 'data-gate': '',   // 開始檢測:沒登入時 js/profile.js 先攔下
           onclick: () => {
+            if (!uiReady()) return;   // 共用元件沒載到:不清掉原本的作答紀錄
             st = { answers: {}, done: false, startedAt: new Date().toISOString() };
             store.set(KEY, st);
             cur = 0;
@@ -94,7 +95,7 @@
 
   /* ============ 作答 ============ */
   /* 換題:焦點到新題的題幹(按鈕整段重畫,不然焦點掉回頁面) */
-  function go(i) { cur = i; renderTest(); window.scrollTo(0, 0); focus.focusMain(); }
+  function go(i) { cur = i; renderTest(); window.scrollTo(0, 0); if (focus) focus.focusMain(); }
   function renderTest() {
     if (!uiReady()) return;   // 共用元件沒載到:說一聲、給重新整理,不在這裡丟錯
     dropCard();

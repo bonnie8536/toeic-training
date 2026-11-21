@@ -160,6 +160,7 @@ function loadPage(dev) {
       head: { appendChild() {} },
     },
     confirm: msg => { dev.confirms.push(msg); return dev.confirmAnswer; },
+    UI: { confirm: o => Promise.resolve((dev.confirms.push(o.title + '\n' + (o.body || '')), dev.confirmAnswer)) },   // 新版 cloud.js 的確認視窗(UI.confirm)
     navigator: { get onLine() { return !dev.offline; } },
     atob: s => Buffer.from(s, 'base64').toString('latin1'),
   };

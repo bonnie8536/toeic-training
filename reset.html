@@ -74,10 +74,10 @@ if (/type=recovery/.test(location.hash)) sessionStorage.setItem('tr_pw_recovery'
   if (!recovering) {
     /* 連結失效或直接打開此頁:讓使用者重新申請 */
     const email = h('input', { class: 'modal-input', type: 'email', placeholder: 'Email', autocomplete: 'email' });
-    const msg = h('div', { class: 'result-note', style: 'margin-top:10px' });
+    const msg = h('div', { class: 'result-note reset-msg', style: 'margin-top:10px' });
     const btn = h('button', { class: 'btn primary', type: 'button', onclick: async () => {
       msg.textContent = ''; btn.disabled = true;
-      try { await CLOUD.resetPassword(email.value); msg.textContent = '重設信已寄出，請到信箱點連結（幾分鐘內沒收到可看垃圾郵件）。'; }
+      try { await CLOUD.resetPassword(email.value); msg.textContent = '重設信已寄出\n請到信箱點連結或查看垃圾郵件'; }
       catch (e) { msg.textContent = e.message; btn.disabled = false; }
     } }, '寄重設信');
     draw(...(CLOUD.user ? [h('p', { class: 'result-note' }, '這個重設連結已失效或已用過。')] : []),
@@ -97,7 +97,7 @@ if (/type=recovery/.test(location.hash)) sessionStorage.setItem('tr_pw_recovery'
     try {
       await CLOUD.updatePassword(pw.value);
       sessionStorage.removeItem('tr_pw_recovery');
-      draw(h('p', { class: 'result-note' }, '密碼已更新，你已經是登入狀態。'),
+      draw(h('p', { class: 'result-note' }, '密碼已更新'),
         h('a', { class: 'btn primary', href: 'index.html' }, '回首頁開始練習'));
     } catch (e) { msg.textContent = e.message; btn.disabled = false; }
   } }, '更新密碼');

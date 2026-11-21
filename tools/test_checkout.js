@@ -337,7 +337,7 @@ const cases = {
     const mNet = await msg(() => Promise.reject(new TypeError('Failed to fetch')));
     const m500 = await msg(() => Promise.resolve({ ok: false, status: 500, json: () => Promise.reject(new Error('not json')) }));
     const checks = [w0.fetchCalls.length === 0, e0 === '請先登入。', m409 === '一小時內有太多筆還沒完成的付款。',
-      /重新登入/.test(m401) && !/JWT/.test(m401), /連不上/.test(mNet), m500 === '暫時無法建立付款，請稍後再試。'];
+      /重新登入/.test(m401) && !/JWT/.test(m401), /連不上/.test(mNet), m500 === '暫時無法建立付款\n請稍後再試'];
     return { ok: checks.every(Boolean), detail: [e0, m409, m401, mNet, m500].join(' | ') };
   },
 
@@ -422,9 +422,9 @@ const cases = {
     const views = ['checking', 'pending', 'slow', 'failed', 'refunded', 'missing', 'noorder', 'login', 'error'].map(s => v(s));
     const all = [paid, year, five, test].concat(views);
     const checks = [
-      paid.title === '付款成功' && paid.lines[0] === '學生方案 一個月，199' + NB + '元。',
-      year.lines[0] === '老師方案 30' + NB + '位以內 一年，8,900' + NB + '元。',
-      five.lines[0] === '寫作批改 5' + NB + '篇，650' + NB + '元。',
+      paid.title === '付款成功' && paid.lines[0] === '學生方案 一個月 · 199' + NB + '元',
+      year.lines[0] === '老師方案 30' + NB + '位以內 一年 · 8,900' + NB + '元',
+      five.lines[0] === '寫作批改 5' + NB + '篇 · 650' + NB + '元',
       test.title === '測試付款成功' && /退款/.test(test.lines.join('')),
       v('pending').title === '處理中', v('slow').title === '處理中', v('failed').title === '付款沒有完成',
       v('slow').actions.some(a => a.retry), v('login').actions.some(a => a.login),
@@ -539,7 +539,7 @@ const cases = {
   '購買按鈕:既有帳號、無期限贈送、站長不放學生方案按鈕改寫說明;班級提供的保留按鈕加一句;寫作批改一律可以買': async () => {
     const { K } = load(makeWorld());
     const s = (g, a, signedIn) => K.slotFor(g, { signedIn: signedIn !== false, access: a });
-    const FREE = '你的帳號可以免費使用練習功能，不需要購買學生方案。';
+    const FREE = '你的帳號可以免費使用練習功能\n不需要購買學生方案';
     const legacy = { active: true, until: null, source: 'legacy', is_owner: false };
     const comp = { active: true, until: null, source: 'comp', is_owner: false };
     const compEnd = { active: true, until: '2026-12-01T00:00:00Z', source: 'comp', is_owner: false };
@@ -552,7 +552,7 @@ const cases = {
       JSON.stringify(s('student', comp)) === JSON.stringify({ button: false, note: FREE }),
       JSON.stringify(s('student', owner)) === JSON.stringify({ button: false, note: FREE }),
       JSON.stringify(s('student', compEnd)) === JSON.stringify({ button: true, note: null }),
-      JSON.stringify(s('student', cls)) === JSON.stringify({ button: true, note: '你的練習功能目前由班級提供。' }),
+      JSON.stringify(s('student', cls)) === JSON.stringify({ button: true, note: '你的練習功能目前由班級提供' }),
       JSON.stringify(s('student', trial)) === JSON.stringify({ button: true, note: null }),
       JSON.stringify(s('student', null)) === JSON.stringify({ button: true, note: null }),
       JSON.stringify(s('credits', legacy)) === JSON.stringify({ button: true, note: null }),
@@ -563,7 +563,7 @@ const cases = {
   '老師方案按鈕:被站長改成學生的寫聯絡站長;無期限的既有或贈送老師寫不用買;站長與讀不到使用權不放;沒登入照樣放': async () => {
     const { K } = load(makeWorld());
     const s = (a, signedIn) => K.slotFor('teacher', { signedIn: signedIn !== false, access: a });
-    const ASK = '老師方案請寫信到 ' + CONTACT_EMAIL + ' 聯絡站長。';
+    const ASK = '老師方案請寫信到 ' + CONTACT_EMAIL + ' 聯絡站長';
     const demoted = { teacher_purchase_allowed: false, is_owner: false, teacher_source: null };
     const legacyT = { teacher_purchase_allowed: true, is_owner: false, teacher_source: 'legacy', teacher_until: null, seats: null };
     const compT = { teacher_purchase_allowed: true, is_owner: false, teacher_source: 'comp', teacher_until: null, seats: 30 };
@@ -577,7 +577,7 @@ const cases = {
       !!r[1] && r[1].button === false && /不需要購買老師方案/.test(r[1].note),
       !!r[2] && r[2].button === false && /不需要購買老師方案/.test(r[2].note),
       /* 有名額上限的無期限贈送(30 位):照樣放按鈕,說明寫要更多名額再買 */
-      !!s(compT) && s(compT).button === true && s(compT).note === '你的老師方案沒有期限，名額 30' + NB + '位以內。需要更多名額再購買。',
+      !!s(compT) && s(compT).button === true && s(compT).note === '你的老師方案沒有期限\n名額 30' + NB + '位以內\n需要更多名額再購買',
       JSON.stringify(r[3]) === JSON.stringify({ button: true, note: null }),
       JSON.stringify(r[4]) === JSON.stringify({ button: true, note: null }),
       r[5] === null, r[6] === null,
@@ -599,7 +599,7 @@ const cases = {
       tiers(allNull) === '', K.slotFor('teacher', { signedIn: true, access: allNull }).button === false,
       tiers({ teacher_purchase_allowed: true, teacher_source: 'paid', teacher_until: '2026-12-01T00:00:00Z', seats: 30 }).split(',').length === 6,
       /* 無期限的 10 位改買 30 位:從今天開始,不寫「不退差額」(沒有剩下的天數) */
-      K.startNote('teacher30_month', Object.assign({}, comp10, { plan_starts: { teacher30: now } })) === '這次買的方案從今天開始。',
+      K.startNote('teacher30_month', Object.assign({}, comp10, { plan_starts: { teacher30: now } })) === '這次買的方案從今天開始',
     ];
     return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') + ' ' + [tiers(comp10), tiers(withStarts), tiers(allNull)].join(' | ') };
   },
@@ -614,8 +614,8 @@ const cases = {
   },
   '價格頁的購買區:有說明的照文字放,不放按鈕時只有說明;班級提供的同時有按鈕與說明': async () => {
     const D = domLoad();
-    const free = D.K.buySlot('student', true, { button: false, note: '你的帳號可以免費使用練習功能，不需要購買學生方案。' });
-    const cls = D.K.buySlot('student', true, { button: true, note: '你的練習功能目前由班級提供。' });
+    const free = D.K.buySlot('student', true, { button: false, note: '你的帳號可以免費使用練習功能\n不需要購買學生方案' });
+    const cls = D.K.buySlot('student', true, { button: true, note: '你的練習功能目前由班級提供' });
     const plain = D.K.buySlot('credits', true, { button: true, note: null });
     const btns = el => el.find(n => n.tagName === 'BUTTON');
     const checks = [btns(free).length === 0 && /不需要購買學生方案/.test(free.textContent),
@@ -639,7 +639,7 @@ const cases = {
     const u4 = n('teacher30_month', Object.assign({}, T, { teacher_active: false, teacher_until: '2026-11-03T15:59:59Z' }));
     const c = n('correction_five', T);
     const checks = [/接在 2026\/11\/08 之後開始/.test(t1 || ''), /接在 2026\/11\/30 之後開始/.test(t2 || ''), t3 === null,
-      u1 === '改買人數較多的方案從今天開始，原本的方案剩下的天數不退差額。', /接在 2026\/11\/30 之後開始/.test(u2 || ''),
+      u1 === '改買人數較多的方案從今天開始\n原本的方案剩下的天數不退差額', /接在 2026\/11\/30 之後開始/.test(u2 || ''),
       /接在 2026\/11\/30 之後開始/.test(u3 || ''), u4 === null, c === null, K.startNote('student_month', null) === null];
     return { ok: checks.every(Boolean), detail: [t1, t2, t3, u1, u2, u3, u4, c].join(' | ') };
   },
@@ -652,7 +652,7 @@ const cases = {
     const r = ['teacher30_month', 'teacher10_year', 'teacher60_month', 'student_month'].map(s => K.startNote(s, a));
     const b = Object.assign({}, a, { plan_starts: { student: '2026-12-01T00:00:00Z' } });
     const checks = [r[0] === '這次買的方案接在 2026/11/17 之後開始。', r[1] === '這次買的方案接在 2027/10/17 之後開始。',
-      r[2] === '改買人數較多的方案從今天開始，原本的方案剩下的天數不退差額。',
+      r[2] === '改買人數較多的方案從今天開始\n原本的方案剩下的天數不退差額',
       /* 學生:伺服器說今天開始(例如還沒開始的贈送接不上),就不寫接在已付期間之後 */
       r[3] === null, K.startNote('student_month', b) === '這次買的方案接在 2026/12/01 之後開始。'];
     return { ok: checks.every(Boolean), detail: r.concat([K.startNote('student_month', b)]).join(' | ') };
@@ -710,13 +710,13 @@ const cases = {
       teacher_source: 'paid', teacher_until: '2026-11-17T01:00:00Z', seats: 10, teacher_purchase_allowed: true, server_now: now,
       plan_starts: { student: '2026-11-17T01:00:00.000Z', teacher10: '2026-11-17T01:00:00.000Z', teacher30: now, teacher60: now } };
     const grace = Object.assign({}, t, { teacher_active: false, teacher_in_grace: true, plan_starts: { student: now } });
-    const BY_T = '你的老師方案已經包含練習功能，學生方案會接在老師方案之後開始。';
+    const BY_T = '你的老師方案已經包含練習功能\n學生方案會接在老師方案之後開始';
     const s = a => K.slotFor('student', { signedIn: true, access: a });
     const checks = [
       JSON.stringify(s(t)) === JSON.stringify({ button: true, note: BY_T }),
       K.startNote('student_month', t) === '這次買的方案接在 2026/11/17 之後開始。',
       JSON.stringify(s(grace)) === JSON.stringify({ button: true, note: null }),
-      JSON.stringify(s({ active: true, until: null, source: 'owner', is_owner: true, teacher_active: true })) === JSON.stringify({ button: false, note: '你的帳號可以免費使用練習功能，不需要購買學生方案。' }),
+      JSON.stringify(s({ active: true, until: null, source: 'owner', is_owner: true, teacher_active: true })) === JSON.stringify({ button: false, note: '你的帳號可以免費使用練習功能\n不需要購買學生方案' }),
     ];
     return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') + ' ' + JSON.stringify([s(t), s(grace)]) };
   },
@@ -729,10 +729,10 @@ const cases = {
     delete old.teacher_no_end_seats;
     const n = x => K.slotFor('teacher', { signedIn: true, access: x }).note;
     const checks = [
-      n(a) === '你的老師方案沒有期限，名額 10' + NB + '位以內。需要更多名額再購買。',
+      n(a) === '你的老師方案沒有期限\n名額 10' + NB + '位以內\n需要更多名額再購買',
       K.teacherSkus(a).join() === 'teacher30_month,teacher30_year,teacher60_month,teacher60_year',
       /* 舊資料庫:seats 是 30,但 30 位還在賣,看不出無期限那一段有幾位,就不寫人數 */
-      n(old) === '你的老師方案沒有期限，需要更多名額再購買。',
+      n(old) === '你的老師方案沒有期限\n需要更多名額再購買',
     ];
     return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') + ' ' + JSON.stringify([n(a), n(old)]) };
   },
@@ -874,7 +874,7 @@ const cases = {
     const b = await msg(() => okJson(409, { error: 'not_allowed', message: '你的帳號已經可以使用，不需要購買這個方案。' }));
     const c = await msg(() => okJson(409, { error: 'not_open' }));
     const d = await msg(() => okJson(405, { error: 'method not allowed' }));
-    const checks = [a === '11 月 1 日開放購買。', b === '你的帳號已經可以使用，不需要購買這個方案。', c === '暫時無法建立付款，請稍後再試。', d === '暫時無法建立付款，請稍後再試。'];
+    const checks = [a === '11 月 1 日開放購買。', b === '你的帳號已經可以使用，不需要購買這個方案。', c === '暫時無法建立付款\n請稍後再試', d === '暫時無法建立付款\n請稍後再試'];
     return { ok: checks.every(Boolean), detail: [a, b, c, d].join(' | ') };
   },
 
@@ -904,14 +904,14 @@ const cases = {
     const slowW = v('slow', null, { waited: true }), slowN = v('slow', { status: 'paid', item: 'student', months: 1, amount: 199, via: 'billing' });
     const all = [stu, tea, cre, un, back, back0, slowW, slowN, later, today];
     const checks = [
-      stu.lines[0] === '學生方案 一年，1,990' + NB + '元。' && stu.lines[1] === '已經開通，使用到 2027/11/16。',
-      tea.lines[0] === '老師方案 30' + NB + '位以內 一個月，890' + NB + '元。' && tea.lines[1] === '已經開通，使用到 2026/12/01。',
+      stu.lines[0] === '學生方案 一年 · 1,990' + NB + '元' && stu.lines[1] === '已經開通 · 使用到 2027/11/16',
+      tea.lines[0] === '老師方案 30' + NB + '位以內 一個月 · 890' + NB + '元' && tea.lines[1] === '已經開通 · 使用到 2026/12/01',
       cre.lines[1] === '已經加入 1' + NB + '篇批改。',   // 第三輪複審:以前寫「已經開通。」
-      un.title === '已收到付款' && un.lines.includes('開通需要站長處理，站長會寫信給你。') && !un.lines.some(l => /^已收到付款/.test(l))
+      un.title === '已收到付款' && un.lines.includes('開通需要站長處理') && un.lines.includes('站長會寫信給你') && !un.lines.some(l => /^已收到付款/.test(l))
         && !/我們/.test(un.lines.join('')) && !/已經開通/.test(un.lines.join('')),
-      later.lines[1] === '已經開通，2026/11/17 開始，使用到 2026/12/17。',
-      today.lines[1] === '已經開通，使用到 2026/11/17。',
-      back.title === '付款沒有完成' && back.lines.includes('如果已經刷卡成功，幾分鐘後會出現在「我的」頁的方案與付款。')
+      later.lines[1] === '已經開通 · 2026/11/17 開始 · 使用到 2026/12/17',
+      today.lines[1] === '已經開通 · 使用到 2026/11/17',
+      back.title === '付款沒有完成' && back.lines.includes('如果已經刷卡成功') && back.lines.includes('幾分鐘後會出現在「我的」頁的方案與付款')
         && back.actions[0].href === 'pricing.html' && back.actions[0].primary === true && !back.actions.some(a => a.retry),
       back0.title === '付款沒有完成',
       /等了 1 分鐘/.test(slowW.lines.join('')) && !/等了/.test(slowN.lines.join('')) && slowN.title === '處理中',

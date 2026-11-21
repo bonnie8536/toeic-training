@@ -10,7 +10,7 @@
     { k: 'text', title: '題目文字修正' },
   ];
   var HEADS = ['日期', '題號', 'Part', '問題', '處理', '影響'];
-  var LOAD_FAIL = '更正紀錄載入失敗，請稍後再試。';
+  var LOAD_FAIL = '更正紀錄載入失敗\n請稍後再試';
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);

@@ -9,7 +9,8 @@
     if (!root) return;
 
     if (!window.CLOUD || !CLOUD.enabled) {
-      root.append(h('p', null, '這個站目前沒開雲端帳號，練習進度只存在你自己的裝置上，不用註冊就能用。'),
+      root.append(h('p', null, '這個站目前沒開雲端帳號'),
+        h('p', { style: 'margin-top:6px' }, '練習進度只存在你的裝置上'),
         h('p', { style: 'margin-top:14px' }, h('a', { href: 'index.html' }, '回首頁開始練習')));
       return;
     }

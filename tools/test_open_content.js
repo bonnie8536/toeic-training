@@ -2469,6 +2469,9 @@ T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出�
       const c0 = JSON.parse(await s.eval("sessionStorage.getItem('__fake_calls') || '[]'")).length;
       await ACTS[name](s);
       await sleep(900);
+      /* 登出時還有沒同步的進度,cloud.js 問的是 UI.confirm(頁面上的視窗,不是原生 confirm):照原本「按確定」的意圖點「登出」 */
+      if ((how === '只登出' || how === '撤銷後改回訪客') && /登出$/.test(name) && !/所有裝置/.test(name)
+        && await s.eval("!!document.querySelector('.ui-dialog .ui-dialog-ok')")) { await click(s, '.ui-dialog .ui-dialog-ok'); await sleep(900); }
       await s.loaded();
       r.stay = await s.eval('window.__mark === 1');   // 這一頁沒有重載
       const st = await state(s);

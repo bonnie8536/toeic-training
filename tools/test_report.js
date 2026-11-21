@@ -109,7 +109,7 @@ T['重複回報:同題只有一筆、f 不變、c 與 n 更新;視窗預選上�
   await ex.byClass('report-btn')[0].fire('click');
   const m = modal(E);
   const pre = radios(m).find((r) => r.checked);
-  const dateLine = m.textContent.includes('回報過這題，再送出會更新內容。');
+  const dateLine = m.textContent.includes('回報過這題\n再送出會更新內容');
   const noteBack = noteBox(m).value;
   const r2 = radios(m).find((x) => x.attrs.value === 'unclear'); r2.checked = true; await r2.fire('change');
   noteBox(m).value = '第二次';
@@ -156,7 +156,7 @@ T['不在班與查詢失敗:「請寄信給客服」,有寄信鈕與地址,mailt
     const href = a && a.attrs.href;
     const q = href ? href.split('?')[1] : '';
     const params = {}; q.split('&').forEach((p) => { const i = p.indexOf('='); params[p.slice(0, i)] = decodeURIComponent(p.slice(i + 1)); });
-    outs.push({ t: title(m), href, params, hasAddr: m.textContent.includes('rushuplanguage@gmail.com'), line: m.textContent.includes('寄出信件後，客服才收得到。') });
+    outs.push({ t: title(m), href, params, hasAddr: m.textContent.includes('rushuplanguage@gmail.com'), line: m.textContent.includes('寄出信件後客服才收得到') });
   }
   const ok = outs.every((x) => x.t === '請寄信給客服' && x.href.startsWith('mailto:rushuplanguage@gmail.com?') && x.href.length < 1500 && x.hasAddr && x.line
     && x.params.subject === '題目回報 p5-b3-04（Part 5）不只一個答案' && x.params.body.includes('題號：p5-b3-04') && x.params.body.includes('Part：5')
@@ -172,7 +172,7 @@ T['離線:寫「回報已存在這台裝置。」,不寫自動送出或已收到
   const E = env({ joined: true, online: false });
   const { m } = await openAndSend(E, CTX, 'typo', '');
   ALL_TEXT.push(m.textContent);
-  return { ok: title(m) === '請寄信給客服' && m.textContent.includes('回報已存在這台裝置。') && !/已收到|自動送出/.test(m.textContent) && !!E.stored()['p5:p5-b3-04'], detail: title(m) };
+  return { ok: title(m) === '請寄信給客服' && m.textContent.includes('回報已存在這台裝置') && !/已收到|自動送出/.test(m.textContent) && !!E.stored()['p5:p5-b3-04'], detail: title(m) };
 };
 T['寫入失敗:顯示錯誤句,視窗不關,輸入留著'] = async () => {
   const E = env({ storeFails: true });
@@ -184,7 +184,7 @@ T['寫入失敗:顯示錯誤句,視窗不關,輸入留著'] = async () => {
   await m.find((n) => n.tagName === 'FORM')[0].fire('submit'); await K.settle();
   const msg = m.byClass('auth-msg')[0].textContent;
   ALL_TEXT.push(msg);
-  return { ok: msg === '存不進去，請重新整理後再試。' && !!modal(E) && noteBox(m).value === '我寫的字' && !submitBtn(m).disabled, detail: msg };
+  return { ok: msg === '存不進去\n請重新整理後再試' && !!modal(E) && noteBox(m).value === '我寫的字' && !submitBtn(m).disabled, detail: msg };
 };
 T['文案:全部結果文案不含「停止出題」「暫停」「審」「專家」,無破折號、emoji、半形標點'] = () => {
   const src = read('js/report.js');
@@ -238,7 +238,7 @@ T['視窗:補充說明旁寫明帳號資料裡班上老師看得到'] = async ()
   const ex = E.explain(); E.R.attach(ex, CTX);
   await ex.byClass('report-btn')[0].fire('click');
   const t = modal(E).textContent;
-  return { ok: t.includes('補充說明會存在你的帳號資料裡，班上的老師看得到。'), detail: '' };
+  return { ok: t.includes('補充說明會存在你的帳號資料裡\n班上的老師看得到'), detail: '' };
 };
 T['資料安全:normalize 只收「模組:id」形狀的鍵,constructor、toString、hasOwnProperty、__proto__ 丟掉;record 不受影響'] = () => {
   const E = env();

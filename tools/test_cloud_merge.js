@@ -161,6 +161,7 @@ function loadPage(w, opt) {
       querySelector() { return null; }, querySelectorAll() { return []; },
     },
     confirm: msg => { w.confirms.push(msg); return w.confirmAnswer; },
+    UI: { confirm: o => Promise.resolve((w.confirms.push(o.title + '\n' + (o.body || '')), w.confirmAnswer)) },   // 新版 cloud.js 的確認視窗(UI.confirm)
     navigator: { get onLine() { return !w.offline; } },
     URLSearchParams,
     atob: s => Buffer.from(s, 'base64').toString('latin1'),
@@ -505,7 +506,7 @@ function otherState(w, dropPet, newSide) {
   sess.sort((a, b) => (a[0] < b[0] ? -1 : 1));
   const db = w.db.filter(r => !(dropPet && r.k === 'pet')).map(r => J(r)).sort();
   const ops = (w.ops || w.__ops || []).filter(o => !(dropPet && (typeof o === 'string' ? /"k":"pet"/.test(o) : o.k === 'pet'))).map(o => (typeof o === 'string' ? o : J(o)));
-  const s = J({ local, sess, db, ops, reloads: w.reloads, confirms: w.confirms, signOuts: w.signOuts || [] });
+  const s = J({ local, sess, db, ops, reloads: w.reloads, confirms: w.confirms.map(c => (/\d+/.exec(c) || [''])[0]), signOuts: w.signOuts || [] });
   return norm(s);
 }
 /* 時間會跟著跑測試的時刻變:ISO 時間與 13 位數的毫秒時間換成記號再比 */
@@ -566,6 +567,8 @@ function syncScenarios() {
    - 70:確認前照空畫面寫過、蓋掉別的分頁剛灌好的本機那一份,自己又讀不到雲端:記上標記,這個分頁的下一頁、灌好的那個分頁換頁都不照本機作答
      (第 1 步那版、e49e444、49a5080 都會紅:雲端寫作紀錄被蓋成只剩這一頁寫的),不比,只要新版通過
    新版那一邊的 tr_cloud_seen_<帳號 id> 一律先拿掉再比(見 otherState)。
+   錯誤與訊息文字改成兩行(2026-11,js/cloud.js):
+   - 42:只有錯誤訊息的字(detail)換了,本機、請求、重載、問的次數一樣('state':只比 ## 後面的狀態;新版照樣一定要過)
    1~51、56、62、67 照樣逐位元組比(平常登入、重新整理、離線、兩台裝置、登出的請求與儲存都沒變) */
 function dropNullUpload(state, key) {
   const o = JSON.parse(state);
@@ -574,7 +577,7 @@ function dropNullUpload(state, key) {
   o.ops = o.ops.filter(x => { const q = JSON.parse(x); return !(q.op === 'upsert' && q.k === key && isNull(q.row)); });
   return J(o);
 }
-const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '51': null, '52': null, '53': null, '54': null, '55': null, '57': 'state', '58': null,
+const INTENDED = { '32': s => dropNullUpload(s, 'verb_quiz'), '42': 'state', '51': null, '52': null, '53': null, '54': null, '55': null, '57': 'state', '58': null,
   '59': null, '60': null, '61': null, '63': null, '64': null, '65': null, '66': null, '68': null, '69': null, '70': null };
 const intended = name => Object.prototype.hasOwnProperty.call(INTENDED, name.split('.')[0]);
 async function replay(variant) {

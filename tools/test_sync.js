@@ -153,6 +153,8 @@ function loadPage(w, src) {
       head: { appendChild(el) { if (w.sdkFail && el.onerror) setImmediate(el.onerror); } },   // 雲端元件沒快取又沒網路
     },
     confirm: msg => { w.confirms.push(msg); if (w.onConfirm) { const f = w.onConfirm; w.onConfirm = null; f(); } return w.confirmAnswer; },   // onConfirm:確認視窗開著的時候發生的事(情境 63)
+    /* 新版 cloud.js 的確認視窗是 UI.confirm(Promise);舊版基準檔仍用上面的原生 confirm。兩個記同一份 confirms */
+    UI: { confirm: o => { w.confirms.push(o.title + '\n' + (o.body || '')); if (w.onConfirm) { const f = w.onConfirm; w.onConfirm = null; f(); } return Promise.resolve(w.confirmAnswer); } },
     navigator: { get onLine() { return w.lieFi ? true : !w.offline; } },   // lieFi:手機以為有網路,其實連不出去
     /* 付款(startCheckout 打 Edge Function):w.fetches 記下送了幾次、帶的是誰的登入憑證(情境 63) */
     fetch: async (url, init) => {

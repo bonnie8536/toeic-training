@@ -120,12 +120,12 @@
     const note = h('textarea', { class: 'auth-input rp-note', id: 'rp-note', name: 'note', rows: '3', maxlength: String(MAX_NOTE), autocomplete: 'off' });
     note.value = prev ? prev.n : '';
     const field = h('div', { class: 'auth-field' }, h('label', { for: 'rp-note' }, '補充說明（可不填）'), note,
-      h('p', { class: 'auth-fine' }, '補充說明會存在你的帳號資料裡，班上的老師看得到。'));
+      h('p', { class: 'auth-fine' }, '補充說明會存在你的帳號資料裡\n班上的老師看得到'));
     const msg = h('p', { class: 'auth-msg', role: 'alert' });
     const submit = h('button', { class: 'btn primary auth-submit', type: 'submit' }, '送出');
     submit.disabled = !chosen;
     const form = h('form', { class: 'auth-form', novalidate: 'novalidate' }, set, field, msg, submit);
-    const prevLine = prev ? h('p', { class: 'auth-fine' }, '你在 ' + dateText(prev.t) + ' 回報過這題，再送出會更新內容。') : null;
+    const prevLine = prev ? h('p', { class: 'auth-fine' }, '你在 ' + dateText(prev.t) + ' 回報過這題\n再送出會更新內容') : null;
     const mask = h('div', { class: 'modal-mask buy-mask' });
     const box = h('div', { class: 'modal modal-auth modal-report', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'rp-h' },
       closeBtn, title, sub, prevLine, form);
@@ -142,7 +142,7 @@
       const rec = save(key, chosen, note.value);
       if (!rec) {
         busy = false; submit.disabled = false; closeBtn.disabled = false;
-        msg.textContent = '存不進去，請重新整理後再試。'; msg.className = 'auth-msg bad';
+        msg.textContent = '存不進去\n請重新整理後再試'; msg.className = 'auth-msg bad';
         return;
       }
       busy = false; closeBtn.disabled = false;
@@ -159,7 +159,7 @@
         try { await navigator.clipboard.writeText(SUPPORT); copy.textContent = '已複製'; } catch (e) { copy.textContent = '請手動複製'; }
       });
       const done = h('button', { class: 'btn auth-submit', type: 'button', onclick: () => close() }, '關閉');
-      box.append(h('p', { class: 'auth-fine' }, (online() ? '回報已存在你的帳號。' : '回報已存在這台裝置。') + '寄出信件後，客服才收得到。'),
+      box.append(h('p', { class: 'auth-fine' }, (online() ? '回報已存在你的帳號' : '回報已存在這台裝置') + '\n寄出信件後客服才收得到'),
         h('a', { class: 'btn primary auth-submit rp-mail', href: mailto(rec, ctx) }, '寄給客服'),
         h('p', { class: 'auth-fine' }, addr), copy, done);
       try { title.focus(); } catch (e) { /* 沒焦點也不影響 */ }

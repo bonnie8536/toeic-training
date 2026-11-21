@@ -145,6 +145,7 @@ function loadPage(w, opt) {
       querySelector() { return null; }, querySelectorAll() { return []; },
     },
     confirm: () => true,
+    UI: { confirm: () => Promise.resolve(true) },   // 新版 cloud.js 登出前的確認視窗(UI.confirm)
     navigator: { get onLine() { return !w.offline; } },
     URLSearchParams,
     atob: s => Buffer.from(s, 'base64').toString('latin1'),
@@ -971,7 +972,7 @@ const scenarios = {
       await tick(); await pg.S.idle(); await tick();
       const ledAfter = 'pet' in ledger(w);
       w.offline = !back;   // 網路恢復了但沒有 online 事件(它從來沒顯示離線);或還是不通
-      let asked = false; pg.ctx.confirm = () => { asked = true; return false; };
+      let asked = false; pg.ctx.UI.confirm = () => { asked = true; return Promise.resolve(false); };
       await pg.ctx.CLOUD.logout();
       const c = cp(w);
       const inCloud = !!(c && c.got && c.got[TODAY] && c.got[TODAY].pr === 'tomato');
@@ -1040,7 +1041,7 @@ const scenarios = {
       await tick();
       await pg.runShort(1000);   // 還不到 2 秒:earn 還沒先寫
       const before = !!(lp(w) && lp(w).got);
-      let asked = 0; pg.ctx.confirm = () => { asked++; return false; };
+      let asked = 0; pg.ctx.UI.confirm = () => { asked++; return Promise.resolve(false); };
       const reloads0 = w.reloads;
       let over = false; const lo = pg.ctx.CLOUD.logout().then(() => { over = true; }, () => { over = true; });
       await tick();

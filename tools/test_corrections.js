@@ -138,7 +138,7 @@ T['頁面:載入失敗(網路錯、非 200、格式不對)顯示錯誤句,不丟
   for (const f of [() => Promise.reject(new Error('x')), () => Promise.resolve({ ok: false }), () => Promise.resolve({ ok: true, json: () => Promise.resolve({}) })]) {
     const p = page(); await p.C.load(p.root, f, ''); outs.push(p.root.textContent);
   }
-  return { ok: outs.every((t) => t === '更正紀錄載入失敗，請稍後再試。'), detail: outs.length + ' 種失敗' };
+  return { ok: outs.every((t) => t === '更正紀錄載入失敗\n請稍後再試'), detail: outs.length + ' 種失敗' };
 };
 T['頁面:文字一律 textContent,不用 innerHTML'] = () => ({ ok: !/innerHTML|insertAdjacentHTML|document\.write/.test(read('js/corrections.js')), detail: '沒有 innerHTML' });
 
@@ -166,7 +166,7 @@ T['學習記錄:題目還在但被更正過的,展開後有連結;沒更正過�
     const a = linksIn(body)[0];
     res.push(a ? a.textContent + '|' + a.attrs.href : null);
   }
-  return { ok: res[0] === '這題曾更正，看更正紀錄|corrections.html?q=ga-02%3A6' && res[1] === '這題曾更正，看更正紀錄|corrections.html?q=p6-b7-1%3A2' && res[2] === null, detail: JSON.stringify(res) };
+  return { ok: res[0] === '這題有更正紀錄|corrections.html?q=ga-02%3A6' && res[1] === '這題有更正紀錄|corrections.html?q=p6-b7-1%3A2' && res[2] === null, detail: JSON.stringify(res) };
 };
 T['學習記錄:更正紀錄晚到也會補上連結;fetch 失敗、壞掉、沒有 fetch 都不報錯、不出連結'] = async () => {
   const ids = [['p5', 'p5-b2-17']];

@@ -226,9 +226,9 @@ const cases = {
       expired: P.status(base({ paid_through: '2026-10-01T00:00:00Z' })),
       unknown: P.status(null),
     };
-    const ok = r.owner === null && r.paid.text === '已付費，到 2026/11/04' && r.comp.text === '使用到 2026/11/04'
+    const ok = r.owner === null && r.paid.text === '已付費 · 到 2026/11/04' && r.comp.text === '使用到 2026/11/04'
       && r.legacy.text === '使用期限 無' && r.legacyUntil.text === '使用到 2026/11/04'
-      && r.cls.text === '由班級提供' && r.clsUntil.text === '由班級提供，到 2026/11/04'
+      && r.cls.text === '由班級提供' && r.clsUntil.text === '由班級提供 · 到 2026/11/04'
       && r.trial.text === '試用到 10 月 11 日' && r.expired.text === '使用期限已到' && r.expired.expired === true && !r.paid.expired && r.unknown === null;
     return { ok, detail: JSON.stringify(Object.fromEntries(Object.entries(r).map(([k, v]) => [k, v && v.text]))) };
   },
@@ -243,8 +243,8 @@ const cases = {
       P.teacherLine(base({ active: true, is_owner: true, is_teacher: true, teacher_source: 'owner' })),
       P.teacherLine(null),
     ];
-    const ok = r[0] === '老師方案 30' + NB + '位以內，到 2026/11/04' && r[1] === '老師試用 10' + NB + '位以內，到 2026/10/14' && r[2] === '老師方案 名額不限'
-      && r[3] === '老師方案 30' + NB + '位以內，2026/10/01 到期' && r[4] === null && r[5] === null && r[6] === null;
+    const ok = r[0] === '老師方案 30' + NB + '位以內 · 到 2026/11/04' && r[1] === '老師試用 10' + NB + '位以內 · 到 2026/10/14' && r[2] === '老師方案 名額不限'
+      && r[3] === '老師方案 30' + NB + '位以內 · 2026/10/01 到期' && r[4] === null && r[5] === null && r[6] === null;
     return { ok, detail: JSON.stringify(r) };
   },
   '班級列的狀態:由班級提供、老師方案已到期、超過老師的名額;找不到或不知道就不寫': () => {
@@ -355,9 +355,9 @@ const cases = {
       paidStatus: P.status(paidT), paidLine: P.teacherLine(paidT),
       paidStudentToo: P.status(paidStudentToo),
     };
-    const ok = r.trialStatus === null && r.trialLine === '老師試用 30' + NB + '位以內，到 2026/10/14' && r.bannerLastDay === null
-      && r.lastDayLine === '老師試用 30' + NB + '位以內，2026/10/14 到期' && r.paidStatus === null && r.paidLine === '老師方案 30' + NB + '位以內，到 2026/11/04'
-      && !!r.paidStudentToo && r.paidStudentToo.text === '已付費，到 2026/11/01';
+    const ok = r.trialStatus === null && r.trialLine === '老師試用 30' + NB + '位以內 · 到 2026/10/14' && r.bannerLastDay === null
+      && r.lastDayLine === '老師試用 30' + NB + '位以內 · 2026/10/14 到期' && r.paidStatus === null && r.paidLine === '老師方案 30' + NB + '位以內 · 到 2026/11/04'
+      && !!r.paidStudentToo && r.paidStudentToo.text === '已付費 · 到 2026/11/01';
     return { ok, detail: JSON.stringify(r) };
   },
   '老師方案已結束(名額 0):不寫「名額不限」;沒有日期就寫已結束': () => {

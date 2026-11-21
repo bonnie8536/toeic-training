@@ -131,8 +131,8 @@
       case 'paid':
         /* 撐著的只有贈送(沒有自己付費的)就不寫「已付費」 */
         if (Array.isArray(a.rights) && a.rights.indexOf('paid') < 0) return { text: '使用到 ' + until };
-        return { text: '已付費，到 ' + until };
-      case 'class': return { text: '由班級提供' + (until ? '，到 ' + until : '') };
+        return { text: '已付費 · 到 ' + until };
+      case 'class': return { text: '由班級提供' + (until ? ' · 到 ' + until : '') };
       case 'trial': return { text: '試用到 ' + dayText(s.until || a.trial_until, a.server_now) };
       case 'expired': return { text: '使用期限已到', expired: true };
       default: return { text: until ? '使用到 ' + until : '使用期限 無' };   // legacy、贈送
@@ -150,7 +150,7 @@
     if (!until) return label + ' ' + seats;
     const now = Date.parse(a.server_now);
     const past = Date.parse(a.teacher_until) <= (isFinite(now) ? now : Date.now());
-    return label + ' ' + seats + (past ? '，' + until + ' 到期' : '，到 ' + until);
+    return label + ' ' + seats + (past ? ' · ' + until + ' 到期' : ' · 到 ' + until);
   }
 
   /* 班級列的狀態(前端計畫六.3) */
@@ -271,7 +271,11 @@
     const C = cloud();
     const shell = document.documentElement.classList.contains('app-shell');
     const logout = h('button', { class: 'pw-logout', type: 'button' }, '登出');
-    logout.addEventListener('click', () => { Promise.resolve(C.logout()).catch(e => alert(e.message)); });
+    const logoutMsg = h('p', { class: 'pw-msg', role: 'alert' });
+    logout.addEventListener('click', () => {
+      logoutMsg.textContent = '';
+      Promise.resolve(C.logout()).catch(e => { logoutMsg.textContent = (e && e.message) || ''; });
+    });
     const box = h('div', { class: 'modal modal-paywall', role: 'dialog', 'aria-modal': shell ? null : 'true',
       'aria-labelledby': 'pw-h', 'aria-describedby': d.line ? 'pw-line' : null },
       h('span', { class: 'pw-icon', html: LOCK_ICON }),
@@ -280,7 +284,8 @@
       h('div', { class: 'pw-actions' },
         h('a', { class: 'btn primary pw-btn', href: 'pricing.html' }, '查看方案'),
         h('a', { class: 'btn pw-btn', href: 'me.html?join=' }, '輸入班級邀請碼'),
-        logout));
+        logout),
+      logoutMsg);
     const mask = h('div', { class: 'modal-mask pw-mask' }, box);
     document.body.append(mask);
     if (shell) document.documentElement.classList.add('app-gate');
@@ -403,7 +408,7 @@
         panel.append(h('p', { class: 'me-bill-more' }, h('a', { href: 'pricing.html' }, '查看方案')));
       }, e => {
         panel.innerHTML = '';
-        panel.append(h('p', { class: 'me-bill-msg bad', role: 'alert' }, e.message || '讀取失敗，請稍後再試。'));
+        panel.append(h('p', { class: 'me-bill-msg bad', role: 'alert' }, e.message || '讀取失敗\n請稍後再試'));
       });
     }
 
@@ -426,7 +431,7 @@
     const copy = h('button', { class: 'btn trial-copy', type: 'button' }, '複製');
     copy.addEventListener('click', async () => {
       try { await navigator.clipboard.writeText(code); copied.textContent = '已複製'; copied.className = 'auth-msg ok'; }
-      catch (e) { copied.textContent = '沒辦法自動複製，請手動抄下邀請碼'; copied.className = 'auth-msg bad'; }
+      catch (e) { copied.textContent = '沒辦法自動複製\n請手動抄下邀請碼'; copied.className = 'auth-msg bad'; }
     });
     const codeEl = h('span', { class: 'join-code trial-code' });
     codeEl.textContent = code;
@@ -437,8 +442,8 @@
     /* 班名在上、「班級邀請碼」緊貼在碼的上面 */
     let codeBox = null;
     if (code) codeBox = h('div', { class: 'trial-code-box' }, nameEl, h('span', { class: 'trial-code-label' }, '班級邀請碼'), h('div', { class: 'trial-code-row' }, codeEl, copy));
-    else if (o.closed) codeBox = h('div', { class: 'trial-code-box' }, nameEl, h('p', { class: 'trial-code-note' }, '這個班已停用，邀請碼不能用來加入，請聯絡站長。'));
-    else if (lost) codeBox = h('div', { class: 'trial-code-box' }, h('p', { class: 'trial-code-note' }, '沒有收到班級邀請碼，請聯絡站長。'));
+    else if (o.closed) codeBox = h('div', { class: 'trial-code-box' }, nameEl, h('p', { class: 'trial-code-note' }, '這個班已停用\n邀請碼不能用來加入\n請聯絡站長'));
+    else if (lost) codeBox = h('div', { class: 'trial-code-box' }, h('p', { class: 'trial-code-note' }, '沒有收到班級邀請碼\n請聯絡站長'));
     box.append(closeBtn,
       h('h2', { class: 'auth-h', id: 'trial-h' }, '老師試用已開始'),
       day ? h('p', { class: 'trial-who' }, '試用到 ' + day) : null,
@@ -537,8 +542,8 @@
       try { fresh = await C.refreshAccess(); } catch (e2) { fresh = null; }
       busy = false; closeBtn.disabled = false;
       if (trialStarted(fresh)) { started = true; trialSuccess(box, closeBtn, { until: fresh.teacher_until }, true, close); return; }
-      if (timedOut) failed('還沒收到開通結果', '等了 15 秒沒有回應，試用可能已經開始，請到「我的」頁查看。');
-      else failed('老師試用沒有開始', (err && err.message) || '發生錯誤，請稍後再試。');
+      if (timedOut) failed('還沒收到開通結果', '等了 15 秒沒有回應\n試用可能已經開始\n請到「我的」頁查看');
+      else failed('老師試用沒有開始', (err && err.message) || '發生錯誤\n請稍後再試');
     }
     function attempt() {
       const my = ++round;

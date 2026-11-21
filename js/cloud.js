@@ -152,7 +152,7 @@
       const s = document.createElement('script');
       s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
       s.onload = res;
-      s.onerror = () => rej(new Error('無法載入雲端元件，請檢查網路後重新整理'));
+      s.onerror = () => rej(new Error('無法載入雲端元件\n請檢查網路後重新整理'));
       document.head.appendChild(s);
     });
   }
@@ -432,7 +432,7 @@
      目前帳號和登入資料都不見了(別的分頁登出;或登入被撤銷後別的分頁照 leaveStaleAccount 改回訪客):這台沒有任何人登入著('nobody')。
      這時一樣不送(請求會用沒有登入的身分送出),只有「登出」例外,見 logout(審查 D 第 1 輪 #1、#3)。
      平常登入著的頁面兩樣都對得上,行為不變。 */
-  const GONE_MSG = '這個帳號已經在別的分頁登出，剛剛按的沒有送出。請重新整理這一頁。';
+  const GONE_MSG = '這個帳號已經在別的分頁登出\n請重新整理這一頁';
   /* 這台現在的登入是誰的:'mine' 畫面上這個帳號、'nobody' 沒有任何人、'other' 別人(或這一頁沒有帳號) */
   function loginOwner() {
     const u = window.CLOUD.user;
@@ -462,18 +462,25 @@
 
   async function login(email, password) {
     await window.CLOUD.ready;
-    if (!client) throw new Error('雲端元件尚未載入，請重新整理再試');
+    if (!client) throw new Error('雲端元件尚未載入\n請重新整理再試');
     const cp = currentProfile();   // 送出登入這一刻的目前帳號(afterAuth 判斷「灌過」記號算不算數)
     const { data, error } = await client.auth.signInWithPassword({ email: String(email).trim(), password });
     if (error) {
-      if (/Invalid login credentials/i.test(error.message)) throw new Error('帳號或密碼錯誤。用 Google 註冊的帳號請點 Google 登入。');
-      if (/Email not confirmed/i.test(error.message)) throw new Error('信箱還沒驗證：請到信箱點驗證連結（找不到信可以到「註冊」分頁重寄）');
-      if (/rate limit|too many/i.test(error.message)) throw new Error('請求太頻繁，請幾分鐘後再試');
-      if (/fetch|network/i.test(error.message)) throw new Error('連不上雲端伺服器：請檢查網路；若持續發生，請老師確認 Supabase 專案沒有休眠');
+      if (/Invalid login credentials/i.test(error.message)) throw new Error('帳號或密碼錯誤\n用 Google 註冊的帳號請點 Google 登入');
+      if (/Email not confirmed/i.test(error.message)) throw new Error('信箱還沒驗證\n請到信箱點驗證連結或到「註冊」分頁重寄');
+      if (/rate limit|too many/i.test(error.message)) throw new Error('請求太頻繁\n請幾分鐘後再試');
+      if (/fetch|network/i.test(error.message)) throw new Error('連不上雲端伺服器\n請檢查網路後再試');
       throw new Error(error.message);
     }
     window.CLOUD.user = data.user;
     await afterAuth(data.user, true, cp);
+  }
+
+  /* 還有進度沒同步就登出:先問(UI.confirm,Promise)。共用元件沒載到就不登出,免得悄悄刪掉進度 */
+  function askLogout(left) {
+    const U = window.UI;
+    if (!U || typeof U.confirm !== 'function') return Promise.resolve(false);
+    return U.confirm({ title: '有 ' + left + ' 項進度還沒同步', body: '現在登出會刪除這台裝置上的這些進度', ok: '登出', cancel: '取消', danger: true });
   }
 
   async function logout(opts) {
@@ -488,11 +495,11 @@
     const stop = o => o === 'other' || (o === 'nobody' && everywhere);
     if (stop(owner())) throw goneError();
     /* 這台已經沒有登入資料時 supabase-js 不會呼叫伺服器、直接回成功,別台其實沒被登出:先擋下來,什麼都不刪 */
-    if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效，沒辦法登出其他裝置。請重新登入後再試一次。');
+    if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效\n請重新登入後再登出其他裝置');
     if (user && !discard) {
       flushPetStore();   // 小雞還在等讀雲端的券和動作先寫下來(chick2 第一輪修正 #4)
       const left = await unsynced(user);
-      if (left > 0 && !confirm('還有 ' + left + ' 項進度還沒同步到雲端（可能是網路不穩）。現在登出，這台裝置上的這些進度會刪除。確定要登出？')) return;
+      if (left > 0 && !(await askLogout(left))) return;
     }
     /* 對帳、問的時候別的分頁換了人(或剛登入了下一個人):擋下。從這裡到刪完、重載都是同步的,中間不會再換 */
     const now = owner();
@@ -513,7 +520,7 @@
       catch (e) { error = e; }
       if (error) {
         try { if (saved && !localStorage.getItem(SB_KEY)) localStorage.setItem(SB_KEY, saved); } catch (e) {}
-        throw new Error('連不上雲端伺服器，沒辦法確認其他裝置已登出。這台維持登入，請確認網路後再試一次。');
+        throw new Error('連不上雲端伺服器\n其他裝置還沒確認登出\n這台維持登入');
       }
     } else {
       try { await client.auth.signOut({ scope: 'local' }); } catch (e) { /* 雲端元件沒載到 */ }
@@ -549,19 +556,19 @@
   }
 
   function needClient() {
-    if (!client) throw new Error('雲端元件尚未載入，請重新整理再試');
+    if (!client) throw new Error('雲端元件尚未載入\n請重新整理再試');
   }
 
   function friendly(error) {
     const m = error.message || '';
-    if (/already registered|already exists|already been registered/i.test(m)) return '這個 Email 已經註冊過，請直接登入；當初用 Google 註冊的話按 Google 登入，忘記密碼可以重設。';
-    if (/unsupported provider|provider is not enabled|provider.*disabled/i.test(m)) return 'Google 登入目前不能用，請改用 Email 註冊。';
-    if (/redirect|not allowed.*url/i.test(m)) return 'Google 登入的網址設定不對，請改用 Email 註冊。';
+    if (/already registered|already exists|already been registered/i.test(m)) return '這個 Email 已經註冊過\n請直接登入或點 Google 登入\n忘記密碼可以重設';
+    if (/unsupported provider|provider is not enabled|provider.*disabled/i.test(m)) return 'Google 登入目前不能用\n請改用 Email 註冊';
+    if (/redirect|not allowed.*url/i.test(m)) return 'Google 登入的網址設定不對\n請改用 Email 註冊';
     if (/password/i.test(m) && /short|least|characters/i.test(m)) return '密碼至少 8 碼。';
-    if (/rate limit|too many|security purposes/i.test(m)) return '請求太頻繁，請幾分鐘後再試。';
-    if (/signups? not allowed|signup is disabled|not allowed/i.test(m)) return '目前未開放註冊，請聯絡老師。';
+    if (/rate limit|too many|security purposes/i.test(m)) return '請求太頻繁\n請幾分鐘後再試';
+    if (/signups? not allowed|signup is disabled|not allowed/i.test(m)) return '目前未開放註冊\n請聯絡老師';
     if (/invalid.*email|email.*invalid/i.test(m)) return 'Email 格式不對。';
-    if (/fetch|network/i.test(m)) return '連不上雲端伺服器，請檢查網路後再試。';
+    if (/fetch|network/i.test(m)) return '連不上雲端伺服器\n請檢查網路後再試';
     return m;
   }
 
@@ -577,7 +584,7 @@
     if (error) throw new Error(friendly(error));
     /* Confirm email 開啟時,已註冊過的 email 會回一個沒有 identities 的假 user(不洩漏帳號存在),這裡當作已註冊處理 */
     if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
-      throw new Error('這個 Email 已經註冊過，請直接登入；當初用 Google 註冊的話按 Google 登入，忘記密碼可以重設。');
+      throw new Error('這個 Email 已經註冊過\n請直接登入或點 Google 登入\n忘記密碼可以重設');
     }
     bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(前端計畫三.6;沒有意向什麼都不做)
     if (data.session) {
@@ -742,6 +749,14 @@
 
   /* 資料庫的訊息不帶句號(線上的舊函式也是),顯示時統一補上 */
   function sentence(m) { return /[。！？!?.]$/.test(m) ? m : m + '。'; }
+  /* 伺服器回來的「原因,請做某事」拆成兩行:第一行發生什麼,第二行怎麼辦(畫面用 white-space: pre-line 顯示換行);其他句子照 sentence */
+  function twoLines(m) {
+    const s = String(m);
+    if (s.indexOf('\n') >= 0) return s;
+    const i = s.search(/[，,]請/);
+    if (i < 0) return sentence(s);
+    return (s.slice(0, i) + '\n' + s.slice(i + 1)).replace(/[。.]$/, '');
+  }
 
   /* 呼叫資料庫函式;資料庫的錯誤訊息(中文)原樣丟出,連不上才換成網路的說明。
      加入班級、老師試用、讀方案與付款紀錄都是「這台現在登入的帳號」的:不是畫面上這個就不送(審查 D) */
@@ -755,7 +770,7 @@
     try { res = await client.rpc(fn, args); } catch (e) { res = { error: e }; }
     if (res && res.error) {
       const m = String(res.error.message || '');
-      throw new Error(/failed to fetch|networkerror|load failed/i.test(m) ? '連不上雲端伺服器，請檢查網路後再試。' : (m ? sentence(m) : '發生錯誤，請稍後再試。'));
+      throw new Error(/failed to fetch|networkerror|load failed/i.test(m) ? '連不上雲端伺服器\n請檢查網路後再試' : (m ? sentence(m) : '發生錯誤\n請稍後再試'));
     }
     return res ? res.data : null;
   }
@@ -787,7 +802,7 @@
       const s = data && data.session;
       if (s && s.user && s.user.id === user.id && typeof s.access_token === 'string') token = s.access_token;
     } catch (e) { token = ''; }
-    if (!token) throw new Error('登入已失效，請重新登入後再試。');
+    if (!token) throw new Error('登入已失效\n請重新登入後再試');
     const ctl = typeof AbortController === 'function' ? new AbortController() : null;
     const timer = setTimeout(() => { if (ctl) ctl.abort(); }, CHECKOUT_TIMEOUT_MS);
     let res;
@@ -799,19 +814,19 @@
         cache: 'no-store', credentials: 'omit', signal: ctl ? ctl.signal : undefined,
       });
     } catch (e) {
-      throw new Error('連不上付款伺服器，請檢查網路後再試。');
+      throw new Error('連不上付款伺服器\n請檢查網路後再試');
     } finally {
       clearTimeout(timer);
     }
     let body = null;
     try { body = await res.json(); } catch (e) { body = null; }
-    if (res.status === 401) throw new Error('登入已失效，請重新登入後再試。');
+    if (res.status === 401) throw new Error('登入已失效\n請重新登入後再試');
     if (!res.ok) {
       /* 回應是 { error: 代碼, message: 給人看的話 }(11 月 1 日前、已經可以使用的帳號),或舊的 { error: 給人看的話 }。
          英文代碼(not_open、method not allowed)不給人看 */
       const say = v => (typeof v === 'string' && /[^\x00-\x7f]/.test(v) ? v.trim() : '');
-      const m = (body && (say(body.message) || say(body.error))) || '暫時無法建立付款，請稍後再試';
-      throw new Error(sentence(m.slice(0, 120)));
+      const m = (body && (say(body.message) || say(body.error))) || '暫時無法建立付款\n請稍後再試';
+      throw new Error(twoLines(m.slice(0, 120)));
     }
     return body;
   }

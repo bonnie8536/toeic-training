@@ -29,16 +29,16 @@
   const TZ_MS = 8 * 3600e3;
 
   const SAY = Object.freeze({
-    freeStudent: '你的帳號可以免費使用練習功能，不需要購買學生方案。',
-    byClass: '你的練習功能目前由班級提供。',
+    freeStudent: '你的帳號可以免費使用練習功能\n不需要購買學生方案',
+    byClass: '你的練習功能目前由班級提供',
     /* 老師方案在期內:學生方案接在老師方案之後才開始(資料庫 _plan_start 同一個規則) */
-    byTeacher: '你的老師方案已經包含練習功能，學生方案會接在老師方案之後開始。',
-    freeTeacher: '你的帳號可以使用老師方案的功能，不需要購買老師方案。',
+    byTeacher: '你的老師方案已經包含練習功能\n學生方案會接在老師方案之後開始',
+    freeTeacher: '你的帳號可以使用老師方案的功能\n不需要購買老師方案',
     /* 無期限但有名額上限(例如站長送的 10 位):只賣名額比它多的方案 */
-    moreSeats: n => '你的老師方案沒有期限，' + (typeof n === 'number' ? '名額 ' + n + NB + '位以內。' : '') + '需要更多名額再購買。',
-    today: '這次買的方案從今天開始。',
-    askTeacher: '老師方案請寫信到 ' + MAIL + ' 聯絡站長。',
-    upgrade: '改買人數較多的方案從今天開始，原本的方案剩下的天數不退差額。',
+    moreSeats: n => '你的老師方案沒有期限\n' + (typeof n === 'number' ? '名額 ' + n + NB + '位以內\n' : '') + '需要更多名額再購買',
+    today: '這次買的方案從今天開始',
+    askTeacher: '老師方案請寫信到 ' + MAIL + ' 聯絡站長',
+    upgrade: '改買人數較多的方案從今天開始\n原本的方案剩下的天數不退差額',
     sending: '正在前往付款頁…',
     submit: '前往付款',
   });
@@ -256,7 +256,7 @@
   function itemLine(row) {
     const t = itemText(row);
     if (!t) return null;
-    return typeof row.amount === 'number' ? t + '，' + money(row.amount) + '。' : t + '。';
+    return typeof row.amount === 'number' ? t + ' · ' + money(row.amount) : t;
   }
   /* 付款成功時寫的那一句。my_checkout 的 plan(這次買的那一段)優先:排在後面才開始的寫哪天開始、用到哪天;
      舊資料庫沒有 plan 時看 access(學生看 paid_through,沒有再看 until;老師看 teacher_until) */
@@ -267,13 +267,13 @@
     if (end) {
       const s = Date.parse(p.starts_at), now = Date.parse(row.server_now);
       const later = isFinite(s) && isFinite(now) && s > now + 1000;
-      return '已經開通，' + (later ? fmtDate(s) + ' 開始，' : '') + '使用到 ' + end + '。';
+      return '已經開通 · ' + (later ? fmtDate(s) + ' 開始 · ' : '') + '使用到 ' + end;
     }
     const a = isObj(row) && isObj(row.access) ? row.access : null;
     let until = '';
     if (a && row.item === 'student') until = fmtDate(a.paid_through) || fmtDate(a.until);
     if (a && row.item === 'teacher') until = fmtDate(a.teacher_until);
-    return until ? '已經開通，使用到 ' + until + '。' : '已經開通。';
+    return until ? '已經開通 · 使用到 ' + until : '已經開通';
   }
 
   /* 付款結果頁每一種狀態的標題、說明、按鈕(pay-result.js 照這個畫) */
@@ -283,7 +283,7 @@
   /* 付款成功後的主要按鈕照買的項目:老師方案要到教師後台開班拿邀請碼,寫作批改到寫作練習送作文(第三輪複審) */
   const NEXT = { teacher: { text: '前往教師後台', href: 'admin.html' }, credits: { text: '前往寫作練習', href: 'writing.html' } };
   function nextAction(row) { return Object.assign({ primary: true }, (isObj(row) && NEXT[row.item]) || HOME); }
-  const ASK_LINE = '有問題請寫信到 ' + MAIL + '，附上訂單編號。';
+  const ASK_LINE = '有問題請寫信到 ' + MAIL + ' 並附上訂單編號';
   function stateView(st) {
     const s = isObj(st) ? st.state : '';
     const row = isObj(st) && isObj(st.row) ? st.row : null;
@@ -291,22 +291,22 @@
     const v = (title, lines, actions, tone) => ({ title, lines: lines.filter(Boolean), actions, tone: tone || '' });
     switch (s) {
       case 'checking': return v('查詢付款結果', ['查詢中'], []);
-      case 'pending': return v('處理中', [line, '還沒收到藍新金流傳回的付款結果，這一頁會自動更新。'], [], 'wait');
-      case 'slow': return v('處理中', [line, (st.waited ? '等了 1 分鐘還沒收到付款結果。' : '還沒查到開通的結果。')
-        + '刷卡成功的話，開通後會出現在「我的」頁的方案與付款。', ASK_LINE],
+      case 'pending': return v('處理中', [line, '還沒收到藍新金流傳回的付款結果', '這一頁會自動更新'], [], 'wait');
+      case 'slow': return v('處理中', [line, st.waited ? '等了 1 分鐘還沒收到付款結果' : '還沒查到開通的結果',
+        '刷卡成功後會出現在「我的」頁的方案與付款', ASK_LINE],
         [{ text: '再查一次', retry: true, primary: true }, ME], 'wait');
       case 'paid': return v('付款成功', [line, paidLine(row)], [nextAction(row), ME], 'ok');
-      case 'unapplied': return v('已收到付款', [line, '開通需要站長處理，站長會寫信給你。', ASK_LINE],
+      case 'unapplied': return v('已收到付款', [line, '開通需要站長處理', '站長會寫信給你', ASK_LINE],
         [Object.assign({ primary: true }, ME)], 'wait');
-      case 'test': return v('測試付款成功', [line, '沒有開通任何東西。請到藍新後台退款，再到站長後台記下退款。'],
+      case 'test': return v('測試付款成功', [line, '沒有開通任何東西', '請到藍新後台退款', '再到站長後台記下退款'],
         [{ text: '前往站長後台', href: 'admin.html', primary: true }], 'ok');
-      case 'failed': return v('付款沒有完成', [line, '這筆付款沒有成功，不會開通。'], [Object.assign({ primary: true }, PRICING), ME], 'bad');
-      case 'cancelled': return v('付款沒有完成', [line, '如果已經刷卡成功，幾分鐘後會出現在「我的」頁的方案與付款。'],
+      case 'failed': return v('付款沒有完成', [line, '這筆付款沒有成功', '不會開通'], [Object.assign({ primary: true }, PRICING), ME], 'bad');
+      case 'cancelled': return v('付款沒有完成', [line, '如果已經刷卡成功', '幾分鐘後會出現在「我的」頁的方案與付款'],
         [Object.assign({ primary: true }, PRICING), ME], 'bad');
       case 'refunded': return v('已退款', [line, '這筆付款已經退款。'], [ME]);
-      case 'missing': return v('找不到這筆訂單', ['目前登入的帳號查不到這筆訂單，請確認是付款時用的帳號。'], [PRICING]);
-      case 'noorder': return v('沒有付款資料', ['沒有收到訂單編號。'], [Object.assign({ primary: true }, ME)]);
-      case 'login': return v('請先登入', ['請用付款時的帳號登入。'], [{ text: '登入', login: true, primary: true }]);
+      case 'missing': return v('找不到這筆訂單', ['目前登入的帳號查不到這筆訂單', '請確認是付款時用的帳號'], [PRICING]);
+      case 'noorder': return v('沒有付款資料', [], [Object.assign({ primary: true }, ME)]);
+      case 'login': return v('請先登入', ['請用付款時的帳號登入'], [{ text: '登入', login: true, primary: true }]);
       default: return v('沒辦法查詢', ['這個網站沒有開雲端帳號。'], [PRICING]);
     }
   }
@@ -396,13 +396,13 @@
   async function pay(sku, consentAt) {
     if (paying) return null;
     if (!isoOk(consentAt)) throw new Error('請先勾選同意。');
-    if (!findItem(sku)) throw new Error('找不到這個方案，請重新整理頁面再試。');
+    if (!findItem(sku)) throw new Error('找不到這個方案\n請重新整理頁面再試');
     const C = cloud();
     if (!C || typeof C.startCheckout !== 'function') throw new Error('這個網站沒有開雲端帳號。');
     paying = true;
     try {
       const r = validResponse(await C.startCheckout(sku, consentAt));
-      if (!r) throw new Error('付款資料不完整，請稍後再試。');
+      if (!r) throw new Error('付款資料不完整\n請稍後再試');
       rememberOrder(r.order_no);
       submitForm(r.action, r.fields);
       return r.order_no;
@@ -468,9 +468,10 @@
       head,
       h('p', { class: 'trial-who' }, (C && C.user && C.user.email) || ''),
       form,
-      h('p', { class: 'auth-fine' }, '只接受信用卡，按「前往付款」後到藍新金流的付款頁刷卡。勾選的說明在',
-        h('a', { href: 'terms.html', target: '_blank', rel: 'noopener' }, '服務條款'), '的消費者權益，退款的條件在',
-        h('a', { href: 'refund.html', target: '_blank', rel: 'noopener' }, '退款政策'), '。'));
+      h('p', { class: 'auth-fine' }, '只接受信用卡。按「前往付款」後到藍新金流的付款頁刷卡。'),
+      h('p', { class: 'auth-fine' }, '勾選的說明見',
+        h('a', { href: 'terms.html', target: '_blank', rel: 'noopener' }, '服務條款'), '、退款的條件見',
+        h('a', { href: 'refund.html', target: '_blank', rel: 'noopener' }, '退款政策')));
     if (items.length === 1) radios[0].hidden = true;
     mask.append(box);
     document.body.append(mask);
@@ -482,7 +483,7 @@
       const p = picked();
       const lines = [group === 'student' && access && access.active === true && access.source === 'class' ? SAY.byClass : null,
         p ? startNote(skuOf(p), access) : null].filter(Boolean);
-      note.textContent = lines.join('');
+      note.textContent = lines.join('\n');
       note.hidden = !lines.length;
     }
     showNote();
@@ -509,7 +510,7 @@
       } catch (err) {
         sending = false;
         lock(false);
-        msg.textContent = err.message || '暫時無法建立付款，請稍後再試。';
+        msg.textContent = err.message || '暫時無法建立付款\n請稍後再試';
         msg.className = 'auth-msg bad';
         /* 送出時按鈕停用,瀏覽器把焦點丟到 body;放回視窗裡,鍵盤與讀螢幕軟體才不會停在後面的頁面 */
         (submit.disabled ? agree : submit).focus();
@@ -561,7 +562,7 @@
     if (group === 'test') {
       const sec = h('section', { class: 'pricing-plan pricing-test', 'aria-labelledby': 'pricing-test' },
         h('h2', { id: 'pricing-test' }, '站長測試'),
-        h('p', null, '只有站長看得到。在正式環境刷 10' + NB + '元，確認付款與開通通知正常，刷完到藍新後台退款。'),
+        h('p', null, '只有站長看得到。在正式環境刷 10' + NB + '元確認付款與開通通知正常。刷完到藍新後台退款。'),
         buySlot(group, signedIn, slot));
       const after = document.getElementById('pricing-correction');
       const anchor = after && after.closest('section');

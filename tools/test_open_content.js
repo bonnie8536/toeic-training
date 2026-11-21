@@ -347,7 +347,7 @@ const CONTENT = [
   { url: 'practice.html?part=5', see: '.opts .opt', act: [{ sel: '.opts .opt' }], free: [{ sel: '.quiz-foot .btn.primary', then: '.quiz-foot .btn-text' }] },
   { url: 'practice.html?mode=wrong&part=5', see: '#practice-root .ui-empty' },   // 錯題本清單:沒登入看得到空狀態「沒有錯題」
   { url: 'diagnostic.html', see: '.diag-intro', act: [{ sel: '.diag-intro .btn.primary' }] },
-  { url: 'mock.html', see: '.part-card', act: [{ sel: '.part-card .btn.primary' }, { sel: '.part-card .btn.primary', i: 1 }] },
+  { url: 'mock.html', see: '.part-card', act: [{ sel: '.part-card .btn.primary' }, { sel: '.part-card .btn:not(.primary)' }] },
 ];
 const PERSONAL = ['history.html', 'analysis.html', 'review.html', 'admin.html'];
 const WHY = { cloud: /登入之後才能作答/, local: /才能作答/ };
@@ -1370,7 +1370,7 @@ T['模擬考考到一半別的分頁登出、換帳號、登回來還沒灌好,�
       ls: { [SB]: login, ['tr_u' + CPID + '_mock_history']: J(three), ['tr_u' + CPID + '_mock_wrong']: J(newer) }, ss: { __fake_rows: rows } });
     try {
       await click(s, '.part-card .btn.primary');   // 開始(這時登入著、能作答)
-      r.started = await s.eval("!!document.querySelector('.drill-top .mock-timer') && PROFILE.canAct()");
+      r.started = await s.eval("!!document.querySelector('.quiz-bar .mock-timer') && PROFILE.canAct()");
       await mockPick(s, 8, 0, wrongOf(P5[0]));
       await mockPick(s, 9, 0, wrongOf(P5[1]));
       if (how !== '照常') await s.eval(OTHER_TAB_LOGOUT);
@@ -1379,9 +1379,9 @@ T['模擬考考到一半別的分頁登出、換帳號、登回來還沒灌好,�
       const before = await s.eval(LS);
       await s.eval('window.confirm = () => true; true');
       if (how === '時間到') { await s.eval('(() => { const t = Date.now; Date.now = () => t() + 60 * 60e3; return true; })()'); await sleep(1600); }
-      else await click(s, '.drill-top .btn');   // 交卷
+      else { await click(s, '.quiz-act'); await sleep(400); await click(s, '.ui-dialog-ok'); }   // 交卷(還有題沒答完,確認視窗按「交卷」)
       await sleep(how === '照常' ? 1500 : 600);
-      r.result = await s.eval(`({ title: document.title, head: (document.querySelector('.report-head h2') || {}).textContent || '',
+      r.result = await s.eval(`({ title: document.title, head: (document.querySelector('.result-card') || {}).textContent || '',
         note: (document.querySelector('.mock-unsaved') || {}).textContent || '', mask: !!document.querySelector('.modal-mask'), later: ${LATER} })`);
       r.wrote = lsDiff(before, await s.eval(LS)).filter((k) => /^tr_u|^tr_unsynced_/.test(k));
       r.ups = JSON.parse(await s.eval("sessionStorage.getItem('__fake_up') || '[]'")).filter((u) => u.k === 'mock_history').length;
@@ -1959,7 +1959,7 @@ T['刷題頁隨機練習、聽力隨機練習、程度檢測:交卷的確認視�
   const PAGES = [
     { name: '隨機練習', ui: true, url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: '交卷', keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /^\d+ \/ 10$/, kept: "document.querySelectorAll('.q-block .opt.picked').length" },
     { name: '聽力隨機練習', ui: true, url: 'practice.html', start: ['.listen-start', '開始'], pick: '.letter-row .letter-big', submit: '交卷', keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /^\d+ \/ 10$/, kept: "document.querySelectorAll('.letter-row .letter-big.picked').length" },
-    { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: '交卷', keys: [DIAG], up: ['diag'], report: /./, kept: null },
+    { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: '交卷', keys: [DIAG], up: ['diag'], report: /./, kept: null, ui: true },
   ];
   const out = [];
   for (const how of ['照常', '登出', '還沒灌過']) {
@@ -1974,17 +1974,17 @@ T['刷題頁隨機練習、聽力隨機練習、程度檢測:交卷的確認視�
         await s.eval(`window.confirm = (m) => { window.__asked = String(m); ${BREAK_ACCOUNT[how] || 'true'}; return true; }; true`);
         const before = await s.eval(LS), up0 = await s.eval(UPS);
         if (pg.ui) {
-          /* 題庫、聽力的確認是頁面裡的視窗(UI.confirm):開著的時候別的分頁登出或帳號資料夾變成還沒灌過,按確定再查一次 */
+          /* 題庫、聽力、程度檢測的確認是頁面裡的視窗(UI.confirm):開著的時候別的分頁登出或帳號資料夾變成還沒灌過,按確定再查一次 */
           await pressText(s, '.quiz-act', pg.submit);
           await sleep(400);
-          r.asked = await s.eval("(document.querySelector('.ui-dialog-h') || {}).textContent || ''");
+          await s.eval("window.__asked = (document.querySelector('.ui-dialog-h') || {}).textContent || ''; true");
           if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
           await click(s, '.ui-dialog-ok');
-        } else {
-          await pressText(s, '.drill-nav-btns .btn', pg.submit);
-          r.asked = await s.eval("window.__asked || ''");
-        }
+        } else await pressText(s, '.drill-nav-btns .btn', pg.submit);
+        r.asked = await s.eval("window.__asked || ''");
+        await sleep(300);
         r.card = await card(s);
+        /* 成績讀結算卡的 .result-score(題庫、聽力是「N / 10」,程度檢測有分數就好);舊的 .report-head 也認 */
         r.report = await s.eval(REPORT);
         r.submitLeft = await s.eval(`[...document.querySelectorAll('.drill-nav-btns .btn, .quiz-act')].some((b) => b.textContent.indexOf(${J(pg.submit)}) > -1)`);
         r.kept = pg.kept ? await s.eval(pg.kept) : null;
@@ -2085,11 +2085,11 @@ T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改�
     const PAGES = [
       { name: '隨機練習', ui: true, url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.quiz-act', '交卷'], keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /^\d+ \/ 10$/ },
       { name: '聽力隨機練習', ui: true, url: 'practice.html', start: ['.listen-start', '開始'], pick: '.letter-row .letter-big', submit: ['.quiz-act', '交卷'], keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /^\d+ \/ 10$/ },
-      { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷'], keys: [DIAG], up: ['diag'], report: /./ },
-      { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.drill-top .btn', '交卷'], keys: [MH], up: ['mock_history'], report: /參考總分/, mock: true },
+      { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.quiz-act', '交卷'], keys: [DIAG], up: ['diag'], report: /./, ui: true },
+      { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.quiz-act', '交卷'], keys: [MH], up: ['mock_history'], report: /參考總分/, mock: true, ui: true },
       /* 錯題本(定稿 E4):抽題固定,聽力 2 第 1 題答錯 → 照常時多寫、多傳 mock_wrong 各一次;擋下時一個鍵都不寫 */
       { name: '模擬考(答一題錯)', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: '#mock-root .letter-row .letter-big', pickI: wrongOf(BANK.listening.p2[0]), pre: FIXRAND,
-        submit: ['.drill-top .btn', '交卷'], keys: [MH, 'tr_u' + CPID + '_mock_wrong'], up: ['mock_history', 'mock_wrong'], once: 'mock_wrong', report: /參考總分/, mock: true },
+        submit: ['.quiz-act', '交卷'], keys: [MH, 'tr_u' + CPID + '_mock_wrong'], up: ['mock_history', 'mock_wrong'], once: 'mock_wrong', report: /參考總分/, mock: true, ui: true },
     ];
     for (const how of ['照常', '登出', '還沒灌過']) {
       for (const pg of PAGES) {
@@ -2105,12 +2105,13 @@ T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改�
           await s.eval(COUNT_SILENT);
           const before = await s.eval(LS), up0 = await s.eval(UPS);
           const during = async () => { if (BREAK[how]) r.broke = await o.eval(BREAK[how]); };
-          /* 題庫、聽力的確認是頁面裡的視窗(UI.confirm),其他頁還是原生視窗 */
+          /* 題庫、聽力、程度檢測、模擬考的確認是頁面裡的視窗(UI.confirm):視窗開著時另一個分頁改帳號,再按它的「交卷」;其他頁還是原生視窗 */
           r.asked = pg.ui ? await pressUiConfirm(s, pg.submit[0], pg.submit[1], during) : await pressDialogs(B, s, pg.submit[0], pg.submit[1], pg.mock, async () => { await during(); });
           await sleep(900);
           const st = await state(s);
           r.card = st.mask ? st.title : '';
-          r.report = pg.mock ? await s.eval("(document.querySelector('.report-head h2') || {}).textContent || ''") : await s.eval(REPORT);
+          /* 模擬考的「參考總分」在結算卡的小字(kicker),讀整張卡;其他頁讀 .result-score(題庫、聽力是「N / 10」) */
+          r.report = pg.mock ? await s.eval("(document.querySelector('.result-card') || {}).textContent || ''") : await s.eval(REPORT);
           if (pg.mock) r.note = await s.eval("(document.querySelector('.mock-unsaved') || {}).textContent || ''"), r.later = await s.eval(LATER);
           await sleep(1300);
           /* 只看這一頁寫出來的(O 刪掉的、記上的標記不算;登出之後帳號資料夾的鍵又出現也算) */
@@ -2224,13 +2225,14 @@ T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 
   const PAGES = [
     { name: '隨機練習', ui: true, url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.quiz-act', '交卷'], sets: ['drill_p5', 'hist'], count: HIST, add: 1, report: /^\d+ \/ 10$/ },
     { name: '聽力隨機練習', ui: true, url: 'practice.html', start: ['.listen-start', '開始'], pick: '.letter-row .letter-big', submit: ['.quiz-act', '交卷'], sets: ['listen_p2', 'hist'], count: HIST, add: 1, report: /^\d+ \/ 10$/ },
-    { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷'], sets: ['diag'], count: HIST, add: 0, report: /./ },
-    { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.drill-top .btn', '交卷'], sets: ['mock_history'], count: MH, add: 1, report: /參考總分/, mock: true },
+    { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.quiz-act', '交卷'], sets: ['diag'], count: HIST, add: 0, report: /./, ui: true },
+    { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.quiz-act', '交卷'], sets: ['mock_history'], count: MH, add: 1, report: /參考總分/, mock: true, ui: true },
     /* 錯題本(定稿 E4):有作答時按兩下交卷,mock_wrong 也只寫一次 */
     { name: '模擬考(答一題錯)', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: '#mock-root .letter-row .letter-big', pickI: wrongOf(BANK.listening.p2[0]), fix: FIXRAND,
-      submit: ['.drill-top .btn', '交卷'], sets: ['mock_history', 'mock_wrong'], count: MH, add: 1, report: /參考總分/, mock: true },
+      submit: ['.quiz-act', '交卷'], sets: ['mock_history', 'mock_wrong'], count: MH, add: 1, report: /參考總分/, mock: true, ui: true },
   ];
-  const REPORT = (pg) => pg.mock ? "(document.querySelector('.report-head h2') || {}).textContent || ''" : "((document.querySelector('.report-head, .result-score') || {}).textContent || '').trim()";
+  /* 模擬考的「參考總分」在結算卡的小字(kicker),讀整張卡;其他頁讀 .result-score(題庫、聽力是「N / 10」) */
+  const REPORT = (pg) => pg.mock ? "(document.querySelector('.result-card') || {}).textContent || ''" : "((document.querySelector('.report-head, .result-score') || {}).textContent || '').trim()";
   const card = async (s) => { const st = await state(s); return st.mask ? st.title : ''; };
   const o = await open(B, { url: 'robots.txt', early: true });   // 別的分頁(先開:A 開的時候會清空、灌好 localStorage)
   const out = [];
@@ -2250,14 +2252,15 @@ T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 
           await s.eval(COUNT_SILENT);
           await s.eval(WATCH);
           const n0 = await s.eval(N(pg.count));
-          /* 題庫、聽力的確認是頁面裡的視窗(UI.confirm),按確定之前後面的頁面按不到,沒有「那 50 毫秒」:按一次確定,只批改一次 */
+          /* 題庫、聽力、程度檢測、模擬考的確認是頁面裡的視窗(UI.confirm),按確定之前後面的頁面按不到,沒有「那 50 毫秒」:按一次確定,只批改一次 */
           r.asked = pg.ui ? await pressUiConfirm(s, pg.submit[0], pg.submit[1], async () => { if (how !== '照常') r.broke = await o.eval(OTHER_TAB_LOGOUT); })
             : await pressTwice(B, s, pg.submit[0], pg.submit[1], pg.mock, async (n) => { if (how !== '照常' && n === 1) r.broke = await o.eval(OTHER_TAB_LOGOUT); });
           await sleep(900);
           const c = await s.eval(COUNTS);
           r.done = c.done.length; r.sets = c.sets;
-          /* 兩下都點在交卷鈕上,第二下的時候還沒批改(不然這一次不算數:第二下太晚,已經過了那 50 毫秒) */
-          r.inTime = pg.ui || (c.clicks.length === 2 && c.clicks.every((x) => x.txt.indexOf(pg.submit[1]) > -1) && c.clicks[1].done === 0 && c.clicks[1].sets === 0);
+          /* 兩下都點在交卷鈕上,第二下的時候還沒批改(不然這一次不算數:第二下太晚,已經過了那 50 毫秒)。
+             UI.confirm 沒有「按確定之後還等一下」的空檔,不會有第二下:只看批改一次 */
+          r.inTime = pg.ui ? c.done.length === 1 : c.clicks.length === 2 && c.clicks.every((x) => x.txt.indexOf(pg.submit[1]) > -1) && c.clicks[1].done === 0 && c.clicks[1].sets === 0;
           r.card = await card(s);
           r.report = await s.eval(REPORT(pg));
           if (how === '照常') {
@@ -2277,7 +2280,7 @@ T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 
         const once = (sets) => pg.sets.every((k) => sets[k] === 1);
         if (how === '照常') {
           r.ok = r.inTime && r.done === 1 && once(r.sets) && r.add === pg.add && !r.card && pg.report.test(r.report) && !r.silent.length
-            && (pg.mock || J(r.asked) === J(['confirm']));
+            && (pg.mock || pg.ui || J(r.asked) === J(['confirm']));
         } else {
           r.ok = r.broke === true && /已經在別的分頁登出/.test(r.card) && !r.report && r.done === 0 && !Object.keys(r.sets).length
             && r.back && r.closed && J(r.asked2) === J(['confirm']) && r.done2 === 1 && once(r.sets2) && !r.card2 && pg.report.test(r.report2);
@@ -2519,7 +2522,8 @@ const UNPRESS_JS = "{ const o = document.getElementById('__press'); if (o) { if 
 const UNPRESS = '(() => { ' + UNPRESS_JS + ' return true; })()';
 /* 模擬考第 u 個單元、題組裡第 b 題的第 o 個選項(聽力 1/2 是字母鈕) */
 async function mockPick(s, u, b, o) {
-  await clickNth(s, '.q-nav button', u);
+  await click(s, '.quiz-count');
+  await clickNth(s, '.mock-panel .q-nav button', u);
   const n = await s.eval(`(() => { const old = document.getElementById('__press'); if (old) old.removeAttribute('id');
     const lr = document.querySelector('#mock-root .letter-row');
     if (lr) { lr.querySelectorAll('.letter-big')[${o}].id = '__press'; return 1; }
@@ -2556,8 +2560,9 @@ T['錯題本 E1:模擬考交卷把答錯的題收進 mock_wrong(只寫一次、�
     await sleep(1200);
     await s.eval(WATCH_SETS);
     const before = await s.eval(LS), up0 = await s.eval(UPS);
-    await s.eval('window.confirm = () => true; true');
-    await click(s, '.drill-top .btn');
+    await click(s, '.quiz-act');
+    await sleep(400);
+    await click(s, '.ui-dialog-ok');
     await sleep(1800);
     const after = await s.eval(LS);
     /* 小雞(pet-store)自己的「只在本機」標記、帳本不算 */
@@ -2571,7 +2576,7 @@ T['錯題本 E1:模擬考交卷把答錯的題收進 mock_wrong(只寫一次、�
     r.sets = await s.eval(SETS_OF('mock_wrong'));
     r.ups = (await s.eval(UPS)).slice(up0.length).filter((k) => k === 'mock_wrong').length;
     r.note = await s.eval("(document.querySelector('.mock-wb-note') || {}).textContent || ''");
-    r.link = await s.eval("!!document.querySelector('.mock-wb-note a[href=\"practice.html#wrongbook\"]')");
+    r.link = await s.eval("!!document.querySelector('.result-links a[href=\"review.html\"]')");
     await s.go('practice.html#wrongbook');
     await sleep(1500);
     r.p5 = await s.eval("(() => { const row = [...document.querySelectorAll('#wrongbook .review-row')].find((x) => /Part 5/.test(x.textContent)); return row ? row.querySelector('b').textContent : ''; })()");

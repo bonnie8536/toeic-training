@@ -216,7 +216,7 @@ function fakeDom() {
   }
   const root = new Node('ROOT');
   const html = new Node('html'); const body = new Node('body'); root.append(html); html.append(body);
-  const document = { createElement: (t) => new Node(t), createTextNode: (t) => { const n = new Node('#text'); n._text = String(t); return n; },
+  const document = { createElement: (t) => new Node(t), createElementNS: (ns, t) => new Node(t), createTextNode: (t) => { const n = new Node('#text'); n._text = String(t); return n; },
     createDocumentFragment: () => new Node('#fragment'), body, documentElement: html, title: '', visibilityState: 'visible', hidden: false,
     querySelector: (s) => body.querySelector(s), querySelectorAll: () => [], getElementById: (id) => body.querySelector('#' + id),
     addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; }, activeElement: null };
@@ -234,7 +234,7 @@ async function openPage(o) {
   const errors = [];
   const ctx = { console: { log() {}, warn() {}, error: (...a) => errors.push('console.error ' + a.join(' ')) }, document: dom.document, URL, URLSearchParams, setTimeout, clearTimeout,
     setInterval: () => 0, clearInterval() {}, Promise, Date, Math, JSON, Intl, Blob: function () {}, confirm: () => true, alert() {}, scrollTo() {}, requestAnimationFrame: (f) => setTimeout(f, 0),
-    matchMedia: () => ({ matches: false, addEventListener() {}, removeEventListener() {} }), CustomEvent: function (t, d) { this.type = t; this.detail = d && d.detail; },
+    matchMedia: (q) => ({ matches: /reduced-motion/.test(q), addEventListener() {}, removeEventListener() {} }), CustomEvent: function (t, d) { this.type = t; this.detail = d && d.detail; },
     Audio: function () { this.play = () => Promise.resolve(); this.pause = () => {}; this.addEventListener = () => {}; this.removeEventListener = () => {}; },
     history: { replaceState() {}, pushState() {}, back() {} }, navigator: { userAgent: 'node' },
     location: { search: o.search || '', hash: o.hash || '', pathname: '/' + o.page, href: 'https://x/' + o.page + (o.search || ''), origin: 'https://x', reload() {} },
@@ -344,12 +344,18 @@ async function main() {
   }
   /* B7 模擬考:標準半回開考、交卷、看結果;題目從淘汰後的題庫抽 */
   {
-    const p = await openPage({ page: 'mock.html', rootId: 'mock-root', scripts: DATA('part5', 'part6', 'part7', 'listening').concat(['js/common.js', 'js/sync-merge.js', 'js/wrongbook.js', 'js/mock.js']),
+    const p = await openPage({ page: 'mock.html', rootId: 'mock-root', scripts: DATA('part5', 'part6', 'part7', 'listening').concat(['js/common.js', 'js/ui.js', 'js/sync-merge.js', 'js/wrongbook.js', 'js/mock.js']),
       act: async (ctx, root) => {
         const starts = root.find((n) => n.tagName === 'BUTTON' && n.textContent === '開始');
         await starts[starts.length - 1].click(); await settle();
-        const sub = root.find((n) => n.tagName === 'BUTTON' && /交卷/.test(n.textContent))[0];
-        if (sub) { await sub.click(); await wait(80); await settle(); }
+        /* 專心模式:「交卷」在作答列(不在 root 底下),沒答完會開 UI.confirm,按它的確定(表單送出)才交卷 */
+        const body = ctx.document.body;
+        const sub = body.find((n) => n.tagName === 'BUTTON' && /交卷/.test(n.textContent))[0];
+        if (sub) {
+          await sub.click(); await settle();
+          const dlg = body.find((n) => n.tagName === 'FORM')[0];
+          if (dlg) { await dlg.fire('submit'); await wait(80); await settle(); }
+        }
       } });
     const hist = JSON.parse(p.ls.get('tr_u' + p.PID + '_mock_history') || '[]');
     const mw = JSON.parse(p.ls.get('tr_u' + p.PID + '_mock_wrong') || '{}');

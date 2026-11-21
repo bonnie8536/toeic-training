@@ -6,7 +6,8 @@
    總課數讀磚上原本寫的數字(不載入課程資料),讀不到的就維持靜態文字。
    待複習題數只數單題(Part 5、聽力 Part 1 與 2、片語),規則跟 js/wrongbook.js 的 pick 一樣:
    刷題紀錄與模擬考答錯紀錄取比較新的那一筆,最後一次答錯才算;題庫已淘汰的題(data/retired.json)不算。
-   不依賴 cloud.js、profile.js;沒有 store 或讀不到時什麼都不改。 */
+   不依賴 cloud.js、profile.js;沒有 store 或讀不到時什麼都不改。
+   對外:HUB.paint() 重畫;HUB.pending() 回傳待複習題數的 Promise(首頁錯題本那一列用,跟徽章共用同一次計算)。 */
 (function () {
   'use strict';
   const doc = document;
@@ -111,19 +112,35 @@
       })
       .catch(function () { return {}; });
   }
+  /* 待複習的題數(扣掉已淘汰的題),回傳 Promise。同一次畫面只讀一次 data/retired.json:
+     paint() 開始時重算一次,之後(例如首頁的錯題本那一列)再叫 pending() 拿到的是同一個 Promise */
+  let pendingP = null;
+  function computePending() {
+    let raw = 0;
+    try { raw = pendingCount({}); } catch (e) { raw = 0; }
+    /* 已淘汰的題要等 data/retired.json 回來才知道;0 題就不必讀;抓不到就照原始數字 */
+    if (!raw) return Promise.resolve(0);
+    return loadRetired().then(function (gone) {
+      try { return pendingCount(gone); } catch (e) { return raw; }
+    });
+  }
+  function pending() {
+    if (!pendingP) pendingP = computePending();
+    return pendingP;
+  }
+  /* 數字回來之前不畫徽章,免得數字先出現再變小 */
   function paintReview() {
     if (!tile('review.html')) return Promise.resolve();
-    /* 已淘汰的題要等 data/retired.json 回來才知道,所以先不畫,免得數字先出現再變小;抓不到就照原始數字畫 */
-    if (!pendingCount({})) { paintBadge(0); return Promise.resolve(); }
-    return loadRetired().then(function (gone) { paintBadge(pendingCount(gone)); });
+    return pending().then(paintBadge);
   }
 
   function paint() {
+    pendingP = null;
     try { paintLessons(); } catch (e) { /* 讀不到就維持靜態總數 */ }
     try { return paintReview(); } catch (e) { return Promise.resolve(); }
   }
 
-  window.HUB = { paint: paint, pendingCount: pendingCount, doneCount: doneCount };
+  window.HUB = { paint: paint, pending: pending, pendingCount: pendingCount, doneCount: doneCount };
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', paint);
   else paint();
   window.addEventListener('pageshow', function (e) { if (e && e.persisted) paint(); });

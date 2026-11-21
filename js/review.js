@@ -58,7 +58,7 @@
 
   let onHome = false;
   renderHome();
-  /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud;審查 2026-11-19 #1):別台考的錯題合併進來時,還在首頁就重畫題數 */
+  /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud):別台考的錯題合併進來時,還在首頁就重畫題數 */
   if (WB && typeof WB.syncCloud === 'function') WB.syncCloud().then(r => { if (r.changed && onHome) renderHome(); });
 
   /* 動態放進頁面的圖示:頁面還在載入時由 js/ui.js 在載入完成那一下統一畫,之後重畫的自己叫 */
@@ -131,7 +131,22 @@
         ok, answer: LETTERS[q.answer] + '. ' + q.options[q.answer], note: ok ? '已移出錯題本' : null, next: last ? '看成績' : '下一題',
         onNext: () => { if (last) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
       });
-      if (typeof result.scrollIntoView === 'function') result.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      reveal(result);
+    }
+    /* 解析出現後往下捲:只捲到解析底端不被底部列蓋住,而且題幹不捲到作答列底下(解析很長時,下半段讓人自己捲) */
+    function reveal(el) {
+      const box = el && el.closest ? el.closest('.q-block') : null;
+      const stem = box && box.querySelector('.q-text');
+      if (!stem || typeof el.getBoundingClientRect !== 'function' || typeof window.scrollBy !== 'function') {
+        if (el && typeof el.scrollIntoView === 'function') el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        return;
+      }
+      const foot = document.querySelector('.quiz-foot');
+      const footTop = foot ? foot.getBoundingClientRect().top : window.innerHeight;
+      const need = el.getBoundingClientRect().bottom + 12 - footTop;
+      const room = stem.getBoundingClientRect().top - 64;   // 作答列高 52,再留一點
+      const by = Math.min(need, room);
+      if (by > 0) window.scrollBy({ top: by, behavior: 'smooth' });
     }
 
     /* c:這一下選的選項。題目可能是模擬考答錯才在錯題本(mock_wrong;錯題本定稿 1.6):

@@ -3106,9 +3106,9 @@ html:not(.doodle-ready) .module-card.tile-featured, .module-card.tile-featured:h
 /* ---------- 首頁 ---------- */
 /* <html class="authed">:已登入(開機程式依本機登入紀錄先加,雲端確認後校正)。藏首屏與目錄,每日練習卡當主角 */
 html.authed .home-hero, html.authed .home-dir { display: none; }
-/* 未登入首屏。DOM 順序 h1、.stats、.hero-cta、小雞。
-   桌機:左欄 h1、主按鈕與文字連結、統計一排小字;小雞 180 緊跟在左欄右邊(間距 48),垂直置中,不飄到畫面最右。
-   手機:h1 與小雞(88)並排,小雞頂端對齊 h1,h1 排成兩行;按鈕與統計在下面整寬 */
+/* 未登入首屏。DOM 順序 h1、.stats、.hero-cta、角色(主角鵜鶘,載不到時退回小雞)。
+   桌機:左欄 h1、主按鈕與文字連結、統計一排小字;鵜鶘 180 緊跟在左欄右邊(間距 48),垂直置中,不飄到畫面最右。
+   手機:h1 與鵜鶘(112)並排,頭頂對齊 h1 第一行;按鈕與統計在下面整寬 */
 .home-hero .hero-inner {
   display: grid; grid-template-columns: minmax(0, max-content) auto; justify-content: start; column-gap: 48px;
   grid-template-areas: "h1 chick" "cta chick" "stats chick";
@@ -3131,8 +3131,10 @@ html.authed .home-hero, html.authed .home-dir { display: none; }
     padding-top: 28px; padding-bottom: 28px;
   }
   .home-hero h1 { font-size: 24px; align-self: start; }
-  /* 小雞畫布上方留有跳起來的空間:往上疊,讓看得到的頭頂跟 h1 第一行對齊 */
+  /* 畫布上方留有跳起來的空間:往上疊,讓看得到的頭頂跟 h1 第一行對齊(下面一行是退回小雞時的大小) */
   .hero-chick { align-self: start; width: 88px !important; height: 103px !important; margin: -22px -6px -6px 0; }
+  /* 鵜鶘(主角):畫布 300×280 的比例,比小雞寬;上方約 1/10、下方約 1/25 是空白 */
+  .hero-chick.is-pelican { width: 112px !important; height: 105px !important; margin: -10px -4px -4px 0; }
   .home-hero .hero-cta { margin-top: 20px; }
   .hero-cta .btn.primary { padding: 0 28px; }
   .home-hero .stats { gap: 12px; margin-top: 16px; }
@@ -3164,11 +3166,12 @@ html:not(.doodle-ready) .daily-row.has-art .daily-bar, .daily-row.has-art:has(> 
 /* 未登入:首屏已經有「開始練習」通往同一頁,卡片不再放按鈕(三列本身就是連結) */
 html:not(.authed) .home .daily-go { display: none; }
 html:not(.authed) .home .daily-card { padding-bottom: 8px; }
-/* 全做完:不放按鈕,換成開心的小雞與一行字 */
+/* 全做完:不放按鈕,換成開心的鵜鶘與一行字 */
 .daily-fin { display: none; }
 .daily-card.is-done .daily-go { display: none; }
 .daily-card.is-done .daily-fin { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
 .daily-fin canvas { display: block; margin: -16px 0 -6px; }
+.daily-fin canvas.is-pelican { margin: -8px 0 -3px; }   /* 鵜鶘 84:畫布高 78 */
 .daily-fin p { font-family: var(--round); font-size: var(--fs-lg); font-weight: 700; color: var(--ok-ink); }
 /* 小雞卡:內距跟每日練習卡一樣;「餵牠」在內距之內、上方留 16。這一頁的實色按鈕只有每日練習那一顆,「餵牠」改描邊 */
 .home .pet-home {

@@ -103,7 +103,7 @@
       <div class="stat"><b id="stat-questions">—</b><span>刷題題數</span></div>
     </div>
     <div class="hero-cta" data-nosnippet><a class="btn primary" href="daily.html">開始練習</a><a class="btn-text" href="diagnostic.html">先測程度</a></div>
-    <div class="hero-pic" data-nosnippet><canvas class="hero-chick" data-chick="read" data-size="180" aria-hidden="true"></canvas></div>
+    <div class="hero-pic" data-nosnippet><canvas class="hero-chick" data-mascot="read" data-size="180" aria-hidden="true"></canvas></div>
   </div>
 </section>
 
@@ -117,7 +117,7 @@
         <li><a class="daily-row has-art" href="daily.html?part=g"><canvas class="daily-art" data-doodle="grammar" data-size="40" aria-hidden="true"></canvas><span class="daily-name">文法 5 題</span><span class="daily-st">0 / 5</span><span class="daily-bar" aria-hidden="true"><i style="width:0%"></i></span></a></li>
       </ol>
       <a class="btn primary daily-go" href="daily.html?part=d">開始</a>
-      <div class="daily-fin"><canvas data-chick="happy" data-size="72" aria-hidden="true"></canvas><p>今日練習已完成</p></div>
+      <div class="daily-fin"><canvas data-mascot="happy" data-size="84" aria-hidden="true"></canvas><p>今日練習已完成</p></div>
     </section>
     <a class="home-review" href="review.html" hidden><canvas class="home-review-art" data-doodle="wrongbook" data-size="40" aria-hidden="true"></canvas><span class="home-review-t" data-nosnippet>錯題本</span><span class="tile-badge" data-nosnippet></span></a>
   </div>
@@ -254,17 +254,15 @@
   const n = ((window.TOEIC || {}).articles || []).length;
   const p = document.querySelector('.home-dir a.tile[href="reading.html"] p');
   if (p && n) p.textContent = n + ' 篇文章';
-  /* 已登入時每日練習下面的「錯題本」那一列:待複習的題數跟目錄裡錯題本磚的徽章同一個算法(js/hub.js),0 題就不出現 */
+  /* 已登入時每日練習下面的「錯題本」那一列:待複習的題數直接問 js/hub.js(跟目錄裡錯題本磚的徽章同一次計算),0 題就不出現 */
   const row = document.querySelector('.home-review');
-  const sync = () => {
-    const src = document.querySelector('.home-dir a.tile[href="review.html"] .tile-badge');
+  const show = (n) => {
     const badge = row.querySelector('.tile-badge');
-    const text = src ? src.textContent : '';
-    row.hidden = !text;
-    badge.textContent = text;
-    if (src) badge.setAttribute('aria-label', src.getAttribute('aria-label') || ''); else badge.removeAttribute('aria-label');
+    row.hidden = !(n > 0);
+    badge.textContent = n > 0 ? (n > 99 ? '99+' : String(n)) : '';
+    if (n > 0) badge.setAttribute('aria-label', '待複習 ' + n + ' 題'); else badge.removeAttribute('aria-label');
   };
-  const paint = () => { if (row && window.HUB) Promise.resolve(window.HUB.paint()).then(sync, sync); };
+  const paint = () => { if (row && window.HUB && typeof window.HUB.pending === 'function') window.HUB.pending().then(show, () => show(0)); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', paint); else paint();
   window.addEventListener('pageshow', (e) => { if (e && e.persisted) paint(); });
 })();

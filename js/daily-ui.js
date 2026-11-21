@@ -15,7 +15,7 @@
   function prog(day) { return D.progress(store.get(D.KEY, null), day || DAY); }
   function label(p) { return p.name + ' ' + p.n + ' ' + p.unit; }
 
-  /* 動態放進頁面的圖示與小雞:頁面還在載入時由 js/ui.js 在載入完成那一下統一畫,之後重畫的自己叫 UI.mount(掛過的不重掛) */
+  /* 動態放進頁面的圖示與鵜鶘:頁面還在載入時由 js/ui.js 在載入完成那一下統一畫,之後重畫的自己叫 UI.mount(掛過的不重掛) */
   function art(box) {
     if (window.UI && document.readyState !== 'loading') UI.mount(box);
   }
@@ -36,11 +36,11 @@
     });
     return ol;
   }
-  /* 清單下面:還沒做完是一顆整寬主按鈕(都沒開始「開始」,做到一半「繼續」,連到第一個還沒做完的項目),全做完換成小雞與一行字 */
+  /* 清單下面:還沒做完是一顆整寬主按鈕(都沒開始「開始」,做到一半「繼續」,連到第一個還沒做完的項目),全做完換成開心的鵜鶘與一行字 */
   function foot(pr) {
     if (pr.complete) {
       return h('div', { class: 'daily-fin' },
-        h('canvas', { 'data-chick': 'happy', 'data-size': '72', 'aria-hidden': 'true' }),
+        h('canvas', { 'data-mascot': 'happy', 'data-size': '84', 'aria-hidden': 'true' }),
         h('p', null, '今日練習已完成'));
     }
     const next = D.PARTS.find(x => !pr[x.key].finished);
@@ -162,7 +162,21 @@
       const left = nextOpen();
       return f.feedback({ ok, answer, next: left < 0 ? '看成績' : '下一題', onNext: () => { if (left < 0) summary(); else go(left); } });
     }
-    function reveal(el) { if (typeof el.scrollIntoView === 'function') el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+    /* 解析出現後往下捲:只捲到解析底端不被底部列蓋住,而且題幹不捲到作答列底下(解析很長時,下半段讓人自己捲) */
+    function reveal(el) {
+      const box = el && el.closest ? el.closest('.q-block') : null;
+      const stem = box && box.querySelector('.q-text');
+      if (!stem || typeof el.getBoundingClientRect !== 'function' || typeof window.scrollBy !== 'function') {
+        if (el && typeof el.scrollIntoView === 'function') el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        return;
+      }
+      const foot = document.querySelector('.quiz-foot');
+      const footTop = foot ? foot.getBoundingClientRect().top : window.innerHeight;
+      const need = el.getBoundingClientRect().bottom + 12 - footTop;
+      const room = stem.getBoundingClientRect().top - 64;   // 作答列高 52,再留一點
+      const by = Math.min(need, room);
+      if (by > 0) window.scrollBy({ top: by, behavior: 'smooth' });
+    }
     function save(q, extra) {
       return D.record(Object.assign({ store, log: logAttempt, now: Date.now(), date: DAY, part: key, item: q }, extra));
     }

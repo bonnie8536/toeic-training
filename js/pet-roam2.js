@@ -25,11 +25,11 @@
   const MEDIA = new Set(['img', 'svg', 'picture', 'video', 'audio', 'iframe', 'canvas', 'progress', 'meter']);
   const CLICK_UP = 'a[href],button,[role=button],[role=link]';
   const GAME = '.game-field,.mem-grid,.toast-grid';
-  const WEB_PAGES = ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'];
+  const WEB_PAGES = ['index.html', 'learn.html', 'warmup.html', 'drill.html', 'review.html', 'me.html'];
   /* 站點設定表(規格 1.4):找不到錨點就當這頁沒有站點 */
   const STATIONS = {
     'index.html': [{ sel: '#daily-home', edge: 'top' }],
-    'learn.html': [{ sel: 'main h1', edge: 'right' }],
+    'learn.html': [{ sel: 'main h1', edge: 'right' }], 'warmup.html': [{ sel: 'main h1', edge: 'right' }],
     'drill.html': [{ sel: 'main h1', edge: 'right' }],
     'review.html': [{ sel: 'main h1', edge: 'right' }, { sel: '.part-card', edge: 'top' }],
     'me.html': [{ sel: 'main h1', edge: 'right' }],

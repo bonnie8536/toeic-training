@@ -12,6 +12,7 @@
   };
   const KEY = p => 'drill_p' + p;
   const HOME = 'practice.html';
+  const GATE = { 'data-gate': '' };   // 會寫紀錄的按鈕:沒登入時 js/profile.js 先攔下
   const listUrl = p => 'practice.html?mode=wrong&part=' + p;
 
   /* 空狀態:頁首(圖示+標題)加一張 UI.empty。action 沒給 href 時是按鈕 */
@@ -330,11 +331,9 @@
   function mainBtn(label, onClick, gate, disabled) {
     return h('button', { class: 'btn primary', type: 'button', 'data-gate': gate ? '' : null, disabled: disabled ? '' : null, onclick: onClick }, label);
   }
-  /* 作答列右邊的「交卷」:UI.focus 的按鈕不是我們建的,事後標上 data-gate */
+  /* 作答列右邊的「交卷」(標 data-gate:沒登入時 js/profile.js 先攔下) */
   function setSubmit(f, onClick) {
-    f.action(onClick ? { label: '交卷', onClick } : null);
-    const b = f.bar.querySelector('.quiz-act');
-    if (b) b.setAttribute('data-gate', '');
+    f.action(onClick ? { label: '交卷', onClick, attrs: GATE } : null);
   }
 
   /* ================= 錯題本清單(?mode=wrong&part=N) ================= */
@@ -344,12 +343,10 @@
     emptyView('錯題本', '錯題本沒有載入完成', { label: '重新整理', onClick: () => location.reload() }, 'wrongbook');
   }
 
-  /* 結算卡:再做一次、下一回這類會寫紀錄的主按鈕標 data-gate */
+  /* 結算卡:再做一次、下一回這類會寫紀錄的主按鈕在 UI.result 的 primary 帶 attrs: GATE */
   function showResult(card, detail) {
     root.replaceChildren(card.el);
     if (detail) root.append(detail);
-    const go = card.el.querySelector('.result-go');
-    if (go) go.setAttribute('data-gate', '');
     window.scrollTo(0, 0);
     card.heading.focus({ preventScroll: true });
   }
@@ -498,8 +495,9 @@
         kicker: parts.length === 1 ? DATA[parts[0]].title : 'Part ' + parts.join('、'),
         score: qCorrect, total: qTotal,
         stats: wrongN ? [['收進錯題本', wrongN + ' 題']] : null,
-        primary: { label: '再做一次', onClick: () => { card.destroy(); startQuiz(config); } },
+        primary: { label: '再做一次', onClick: () => { card.destroy(); startQuiz(config); }, attrs: GATE },
         links: [wrongN ? { label: '看錯題本', href: wbHref } : null, { label: '回題庫刷題', href: HOME }],
+        earnId: 'p' + config[0].p,
       });
       showResult(card, UI.detail('逐題解析 ' + qTotal + ' 題', reviewBlocks(), { wrong: wrongN }));
     }
@@ -612,9 +610,9 @@
           saveRec(p, q.id, oi, ok);
           draw();
         }),
-        withoutVerdict(explainBox(q, rec, rec ? q.translation : null, { m: 'p' + p, id: q.id })),
-        rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已移出錯題本') : null));
-      if (rec) f.feedback({ ok: rec.ok, answer: rec.ok ? null : LETTERS[q.answer] + '. ' + q.options[q.answer], next: isLast ? '看成績' : '下一題', onNext: next });
+        withoutVerdict(explainBox(q, rec, rec ? q.translation : null, { m: 'p' + p, id: q.id }))));
+      /* 單題:答對時「已移出錯題本」寫在回饋條的小字(題組題一次好幾題,仍寫在各題下面) */
+      if (rec) f.feedback({ ok: rec.ok, answer: rec.ok ? null : LETTERS[q.answer] + '. ' + q.options[q.answer], note: rec.ok ? '已移出錯題本' : null, next: isLast ? '看成績' : '下一題', onNext: next });
       else f.foot([mainBtn(isLast ? '看成績' : '下一題', null, false, true)]);
     }
 
@@ -667,8 +665,9 @@
         kicker: d.title + ' 錯題本 · 移出',
         big: String(cleared), unit: '題', ratio: asked ? cleared / asked : 1,
         stats: rest > 0 ? [['還沒複習', rest + ' 題']] : null,
-        primary: rest > 0 ? { label: '下一回', href: again } : { label: '回錯題本', href: listUrl(p) },
+        primary: rest > 0 ? { label: '下一回', href: again, attrs: GATE } : { label: '回錯題本', href: listUrl(p), attrs: GATE },
         links: rest > 0 ? [{ label: '回錯題本', href: listUrl(p) }] : [],
+        earnId: 'pr',
       });
       showResult(card);
     }

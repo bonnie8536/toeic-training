@@ -310,7 +310,7 @@
       const VERB_UNITS = ['gc-02', 'gc-03', 'gc-04', 'gc-06', 'gc-08', 'gc-12'];
       const back = { label: '回文法基礎', href: 'grammar.html' };
       const card = UI.result({
-        compact: true, score: ok, total: u.quiz.length, kicker: '小試身手',
+        inline: true, score: ok, total: u.quiz.length, kicker: '小試身手', earnId: 'g:' + u.id,
         primary: next ? { label: '下一課', href: 'grammar.html?u=' + next.id } : back,
         links: [
           cat ? { label: '刷這個考點的題目', href: 'practice.html?part=5&cat=' + encodeURIComponent(cat) } : null,

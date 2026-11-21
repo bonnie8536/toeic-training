@@ -27,11 +27,12 @@
   }));
 
   const KEY = 'diag';
+  const GATE = { 'data-gate': '' };   // 會寫紀錄的按鈕:沒登入時 js/profile.js 先攔下
   let st = store.get(KEY, null);   // {answers:{i:choice}, done, startedAt, finishedAt}
   let cur = 0;
   let focus = null;        // 專心模式(作答中)
   let handler = null;      // 作答列右邊「交卷」現在要做的事(每次畫面重畫時換成那一畫面的 handIn)
-  let panel = null;        // 題號面板
+  let panel = null;        // 題號面板(UI.sheet,開著時才有)
   let asking = false;      // 「還有題沒作答」的確認視窗開著:這時再按交卷不算
   let resultCard = null;   // 報告的結算卡:換畫面前呼叫 destroy() 停掉小雞
 
@@ -68,7 +69,6 @@
   /* ============ 題號面板:作答列右邊「3 / 28」點開,可跳題,答過的題有底色 ============ */
   function openPanel() {
     if (panel) return;
-    const opener = document.activeElement;
     const nav = h('div', { class: 'q-nav' });
     items.forEach((x, i) => {
       const done = st.answers[i] !== undefined;
@@ -78,38 +78,15 @@
         onclick: () => { closePanel(false); cur = i; renderTest(); window.scrollTo(0, 0); },
       }, String(i + 1)));
     });
-    const close = h('button', { class: 'btn-text mock-panel-close', type: 'button', onclick: () => closePanel(true) }, '關閉');
-    const box = h('div', { class: 'modal mock-panel', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'mock-panel-h' },
-      h('div', { class: 'mock-panel-head' },
-        h('h2', { id: 'mock-panel-h' }, '題號'),
-        h('span', { class: 'mock-panel-sum' }, '已作答 ' + Object.keys(st.answers).length + ' / ' + items.length),
-        close),
-      h('div', { class: 'mock-panel-group' }, nav));
-    const mask = h('div', { class: 'modal-mask ui-mask mock-panel-mask' }, box);
-    const onKey = e => {
-      if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); e.stopPropagation(); closePanel(true); return; }
-      if (e.key !== 'Tab') return;
-      const list = [...box.querySelectorAll('button')], first = list[0], last = list[list.length - 1];
-      if (!box.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
-      else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    };
-    let downOnMask = false;
-    mask.addEventListener('pointerdown', e => { downOnMask = e.target === mask; });
-    mask.addEventListener('click', e => { const hit = downOnMask && e.target === mask; downOnMask = false; if (hit) closePanel(true); });
-    document.addEventListener('keydown', onKey, true);
-    document.body.append(mask);
-    panel = { mask, onKey, opener };
-    (box.querySelector('.q-nav .cur') || close).focus();
+    /* 焦點先到目前那一題(aria-current);Esc、點遮罩、關閉鈕由 UI.sheet 處理 */
+    panel = UI.sheet({
+      title: '題號', note: '已作答 ' + Object.keys(st.answers).length + ' / ' + items.length, class: 'mock-panel',
+      nodes: [h('div', { class: 'mock-panel-group' }, nav)],
+      onClose: () => { panel = null; },
+    });
   }
-  function closePanel(back) {
-    if (!panel) return;
-    const p = panel;
-    panel = null;
-    document.removeEventListener('keydown', p.onKey, true);
-    p.mask.remove();
-    if (back && p.opener && typeof p.opener.focus === 'function') p.opener.focus();
-  }
+  /* back:焦點回作答列的「3 / 28」;點了題號換題時不回 */
+  function closePanel(back) { if (panel) panel.close(back); }
 
   /* ============ 作答 ============ */
   function renderTest() {
@@ -118,11 +95,12 @@
     const total = items.length;
     const it = items[cur];
 
-    /* 專心模式:進度在作答列,交卷在作答列右邊。答案每題都存,中途離開進度不會丟,所以關閉不用再確認 */
+    /* 專心模式:進度在作答列,交卷在作答列右邊。答案每題都存,中途離開進度不會丟,所以關閉不用再確認。
+       交卷跟作答一樣標 data-gate:別的分頁登出後再按,js/profile.js 先攔下 */
     if (!focus || !focus.active) {
       focus = UI.focus.enter({
         total, confirmExit: false, onCount: openPanel,
-        action: { label: '交卷', onClick: e => handler && handler(e) },
+        action: { label: '交卷', onClick: e => handler && handler(e), attrs: GATE },
         onExit: () => { leaveFocus(); location.href = 'drill.html'; },
       });
     }
@@ -193,7 +171,7 @@
     }
     handler = e => handIn(e && e.currentTarget);
     const isLast = cur >= total - 1;
-    focus.action(isLast ? null : { label: '交卷', onClick: handler });
+    focus.action(isLast ? null : { label: '交卷', onClick: handler, attrs: GATE });
     focus.foot([
       cur > 0 ? h('button', { class: 'btn-text', type: 'button', onclick: () => { cur--; renderTest(); window.scrollTo(0, 0); } }, '上一題') : null,
       h('button', {
@@ -255,11 +233,10 @@
       stats: [['參考級距', band]],
       note: '級距為估算，非正式成績',
       primary: { label: '去刷題', href: 'practice.html' },
-      links: [{ label: '列印 / 存成 PDF', onClick: () => window.print() }, { label: '再測一次', onClick: retest }],
+      links: [{ label: '列印 / 存成 PDF', onClick: () => window.print() }, { label: '再測一次', onClick: retest, attrs: GATE }],   // 再測一次:沒登入時先攔下
+      earnId: 'diag',
     });
     resultCard = card;
-    const again = card.el.querySelectorAll('.result-link')[1];
-    if (again) again.setAttribute('data-gate', '');   // 再測一次:沒登入時 js/profile.js 先攔下
     root.append(card.el, h('p', { class: 'diag-levels' },
       h('span', null, '基礎題 ' + pct(aB)), h('span', null, '中級題 ' + pct(aM)), h('span', null, '進階題 ' + pct(aA))));
 

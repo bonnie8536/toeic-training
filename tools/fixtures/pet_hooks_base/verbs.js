@@ -226,11 +226,11 @@
         const wrongList = items.filter((x, i) => !results[i]);
         const card = UI.result({
           score: ok, total: items.length, kicker: '不規則動詞',
-          primary: { label: '再做一次', onClick: () => startQuiz(list) },
+          primary: { label: '再做一次', onClick: () => startQuiz(list), attrs: { 'data-gate': '' } },   // 跟「測驗這些字」一樣
           links: [{ label: '回動詞表', onClick: () => render() }],
+          earnId: 'iv',
         });
         root.append(card.el);
-        card.el.querySelector('.result-go').setAttribute('data-gate', '');   // 跟「測驗這些字」一樣
         if (wrongList.length) {
           root.append(UI.detail('答錯的動詞 ' + wrongList.length + ' 個', [h('div', { class: 'vq-list' }, wrongList.map(v =>
             h('div', { class: 'vq-item bad' }, h('b', null, v.base), h('span', null, v.past + ' / ' + v.pp), h('i', null, v.zh))))], { wrong: 0 }));

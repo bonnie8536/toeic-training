@@ -138,9 +138,7 @@
   const emptyBox = (text, action) => UI.empty({ pose: 'sleep', text, action });
   /* 遊戲進行中:藏導覽、頂端換成關閉鈕與進度;底部列留空(遊戲自己有操作區)或放回饋條。離開(關閉鈕確認後)先停掉遊戲 */
   function focusOn(total, onExit, dirty) {
-    const f = UI.focus.enter({ total, onExit, confirmExit: true });
-    f.dirty(dirty !== false);
-    return f;
+    return UI.focus.enter({ total, onExit, confirmExit: true, dirty: dirty !== false });
   }
   /* 結束畫面:一張結算卡加(有才有)逐字清單,放進 parent 再回傳結算卡(呼叫端接著才呼叫掛勾,點心才畫得進卡裡) */
   function showResult(parent, opt, listTitle, listNodes, wrongN) {
@@ -955,6 +953,7 @@
       field.append(overlay);
       const times = clears[bestKey].n;
       const card = showResult(overlay, {
+        earnId: 'fall',   // 跟掛勾同一個來源 id
         compact: true, big: String(score), unit: '分', flag: isBest ? '新紀錄' : '', pose: 'happy',
         stats: [['用時', fmtTime(playMs) + (fastest && prev.n ? ' 最快' : '')], ['一次打對', firstTry + ' / ' + total]],
         note: (src.live.length > 1 ? '這個組合' : banksOnly ? '這個單字本' : '這個字庫') + '已通關 ' + times + ' 次' + (prev.n && !fastest ? ' · 最快 ' + fmtTime(prev.secs * 1000) : ''),
@@ -1056,6 +1055,7 @@
       root.innerHTML = '';
       const ok = results.filter(Boolean).length;
       const card = showResult(root, {
+        earnId: 'ph',   // 跟掛勾同一個來源 id
         score: ok, total: list.length, kicker: '片語特訓 · ' + groupName,
         primary: { label: '再做一次', onClick: () => startDrill(groupName, items) },
         links: [{ label: '回單字訓練', onClick: renderHome }],
@@ -1182,6 +1182,7 @@
       f.leave();
       root.innerHTML = '';
       const card = showResult(root, {
+        earnId: 'pairs',   // 跟掛勾同一個來源 id
         big: String(moves), unit: '步', kicker: '翻牌配對 · ' + items.length + ' 對', flag: isBest ? '新紀錄' : '', pose: 'happy',
         stats: [['用時', secs + ' 秒']],
         note: prev && !isBest ? '最佳紀錄 ' + prev.moves + ' 步 · ' + prev.secs + ' 秒' : '',
@@ -1273,6 +1274,7 @@
         const isBest = okN > (best[src.key] || 0);
         if (isBest) { best[src.key] = okN; store.set('vgame_toast_best', best); }
         const card = showResult(root, {
+          earnId: 'toast',   // 跟掛勾同一個來源 id
           score: okN, total: results.length, kicker: '記憶吐司', flag: isBest && okN ? '新紀錄' : '',
           primary: { label: '再做一次', onClick: () => startToast(modes, levelName) },
           links: [{ label: '回單字訓練', onClick: renderHome }],
@@ -1343,6 +1345,7 @@
       const okN = results.filter(Boolean).length;
       const wrong = list.filter((x, i) => !results[i]);
       const card = showResult(root, {
+        earnId: 'mcq',   // 跟掛勾同一個來源 id
         score: okN, total: list.length, kicker: '單字選擇題',
         primary: { label: '再做一次', onClick: () => startMcq(modes, levelName, dir) },
         links: [{ label: '回單字訓練', onClick: renderHome }],

@@ -201,6 +201,7 @@ function fakeUI(dom) {
   return {
     doodle: () => Promise.resolve(false),
     chick: () => ({ destroy() {} }),
+    mount: () => Promise.resolve(false),
     focus: {
       enter() {
         const slot = mk('div', 'quiz-foot-in');

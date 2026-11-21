@@ -123,17 +123,16 @@
       if (first && cur > 0) first.focus({ preventScroll: true });
     }
 
-    /* 答完一題:底部換成回饋條,右邊是下一題(最後一題是看成績);解析放在選項下面 */
+    /* 答完一題:底部換成回饋條,右邊是下一題(最後一題是看成績);解析放在選項下面。
+       答對時回饋條多一行小字「已移出錯題本」:這題已經不在錯題本裡 */
     function after(ok, q, result) {
       const last = cur === list.length - 1;
       f.feedback({
-        ok, answer: LETTERS[q.answer] + '. ' + q.options[q.answer], next: last ? '看成績' : '下一題',
+        ok, answer: LETTERS[q.answer] + '. ' + q.options[q.answer], note: ok ? '已移出錯題本' : null, next: last ? '看成績' : '下一題',
         onNext: () => { if (last) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
       });
       if (typeof result.scrollIntoView === 'function') result.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
-    /* 答對才有的一行:這題已經不在錯題本裡 */
-    function moved(ok) { return ok ? h('div', { class: 'verdict ok' }, '已移出錯題本') : null; }
 
     /* c:這一下選的選項。題目可能是模擬考答錯才在錯題本(mock_wrong;錯題本定稿 1.6):
        答對:刷題紀錄那筆是答錯的就照舊刪掉(答對過的紀錄不刪,已作答數不能少);mock_wrong 那筆是答錯的,寫一筆比較新的已訂正記號
@@ -203,7 +202,7 @@
             if (done) return; done = true;
             const ok = grade(q, oi, opts);
             settle(item, ok, oi);
-            result.append(withReport(h('div', { class: 'explain' }, moved(ok),
+            result.append(withReport(h('div', { class: 'explain' },
               h('div', null, q.explanation), h('div', { class: 'tr' }, '句意：' + q.translation)), 'p5', q.id));
             after(ok, q, result);
           }), result);
@@ -215,7 +214,7 @@
             if (done) return; done = true;
             const ok = grade(q.quiz, oi, opts);
             settle(item, ok, oi);
-            result.append(withReport(h('div', { class: 'explain' }, moved(ok),
+            result.append(withReport(h('div', { class: 'explain' },
               h('div', null, q.quiz.explanation)), 'ph', q.id),
               h('div', { class: 'phrase-card' },
                 h('div', { class: 'pc-head' }, h('b', null, q.phrase), h('span', null, q.zh)),
@@ -244,7 +243,7 @@
             if (done) return; done = true;
             const ok = grade(q, oi, opts, true);
             settle(item, ok, oi);
-            result.append(withReport(h('div', { class: 'explain' }, moved(ok),
+            result.append(withReport(h('div', { class: 'explain' },
               h('div', null, q.explanation)), item.kind, q.id, true),
               h('div', { class: 'transcript-box' }, h('b', null, '逐字稿'),
                 h('div', { class: 'tr-en' }, (q.question ? q.question + '\n' : '') + q.options.map((o, oi2) => LETTERS[oi2] + '. ' + o).join('\n')),
@@ -262,6 +261,7 @@
         big: cleared, unit: '/ ' + list.length + ' 題', ratio: list.length ? cleared / list.length : 0, kicker: '清掉',
         primary: { label: '回錯題本', href: 'review.html' },
         links: [{ label: '回首頁', href: 'index.html' }],
+        earnId: 'rv',
       });
       root.replaceChildren(h('h1', { class: 'rv-sr' }, '錯題本'), card.el);
       window.scrollTo(0, 0);

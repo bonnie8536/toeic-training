@@ -163,22 +163,23 @@
     let cur = 0;
     let over = false;
     let audio = null;
-    let panel = null;       // 題號面板(開著時的元素與收掉它的函式)
+    let panel = null;       // 題號面板(UI.sheet,開著時才有)
     let asking = false;     // 「還有題組沒答完」的確認視窗開著
     let actionOn = true;    // 作答列右邊的「交卷」在不在(最後一題換成底部的主按鈕)
     const deadline = Date.now() + cfg.mins * 60 * 1000;
     const timerEl = h('span', { class: 'mock-timer', role: 'timer' });
     /* 專心模式:離開提醒(body.dataset.leaveConfirm,付費牆與搬家頁會讀)一開考就算作答中,所以一進來就 dirty。
-       倒數放在作答列、緊鄰進度,一直看得到 */
+       倒數放在作答列的計數左邊(f.slot),一直看得到。
+       交卷沒有 data-gate:開始那一下已經擋過登入;考到一半登出的情況由上面「交卷時存不進去的成績」處理 */
     const f = UI.focus.enter({
       total: units.length,
       body: LEAVE_BODY,
+      dirty: true,
       onCount: openPanel,
       action: { label: '交卷', onClick: () => submit(false) },
       onExit: () => { over = true; clearInterval(timerId); stopAudio(); closePanel(false); renderHome(); },
     });
-    f.dirty(true);
-    f.bar.insertBefore(timerEl, f.bar.querySelector('.quiz-count'));
+    f.slot(timerEl);
     const timerId = setInterval(tick, 1000);
     tick();
 
@@ -224,7 +225,6 @@
     /* ---------- 題號面板:作答列右邊「3 / 43」點開,可跳題,答過的題有底色 ---------- */
     function openPanel() {
       if (panel || over) return;
-      const opener = document.activeElement;
       const done = units.filter((x, i) => unitAnswered(i)).length;
       const group = (sec, label) => {
         const nav = h('div', { class: 'q-nav' });
@@ -240,40 +240,15 @@
         });
         return nav.firstChild ? h('div', { class: 'mock-panel-group' }, h('p', { class: 'mock-panel-label' }, label), nav) : null;
       };
-      const close = h('button', { class: 'btn-text mock-panel-close', type: 'button', onclick: () => closePanel(true) }, '關閉');
-      const box = h('div', { class: 'modal mock-panel', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'mock-panel-h' },
-        h('div', { class: 'mock-panel-head' },
-          h('h2', { id: 'mock-panel-h' }, '題號'),
-          h('span', { class: 'mock-panel-sum' }, '已作答 ' + done + ' / ' + units.length),
-          close),
-        group('L', '聽力'), group('R', '閱讀'));
-      const mask = h('div', { class: 'modal-mask ui-mask mock-panel-mask' }, box);
-      const items = () => [...box.querySelectorAll('button')];
-      const onKey = e => {
-        if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); e.stopPropagation(); closePanel(true); return; }
-        if (e.key !== 'Tab') return;
-        const list = items(), first = list[0], last = list[list.length - 1];
-        if (!box.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
-        else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-      };
-      let downOnMask = false;
-      mask.addEventListener('pointerdown', e => { downOnMask = e.target === mask; });
-      mask.addEventListener('click', e => { const hit = downOnMask && e.target === mask; downOnMask = false; if (hit) closePanel(true); });
-      document.addEventListener('keydown', onKey, true);
-      document.body.append(mask);
-      panel = { mask, onKey, opener };
-      const now = box.querySelector('.q-nav .cur') || close;
-      now.focus();
+      /* 焦點先到目前那一題(aria-current);Esc、點遮罩、關閉鈕由 UI.sheet 處理 */
+      panel = UI.sheet({
+        title: '題號', note: '已作答 ' + done + ' / ' + units.length, class: 'mock-panel',
+        nodes: [group('L', '聽力'), group('R', '閱讀')],
+        onClose: () => { panel = null; },
+      });
     }
-    function closePanel(back) {
-      if (!panel) return;
-      const p = panel;
-      panel = null;
-      document.removeEventListener('keydown', p.onKey, true);
-      p.mask.remove();
-      if (back && p.opener && typeof p.opener.focus === 'function') p.opener.focus();
-    }
+    /* back:焦點回作答列的「3 / 43」;點了題號換題時不回 */
+    function closePanel(back) { if (panel) panel.close(back); }
 
     function makeOncePlayer(id, state) {
       const btn = h('button', { class: 'btn player-btn', type: 'button' }, state.played ? '已播放' : '▶ 播放 · 限一次');
@@ -528,13 +503,11 @@
         flag: timeUp ? '時間到' : null,
         stats: [['聽力', String(lScore)], ['閱讀', String(rScore)]],
         note: '參考換算，非正式成績',
-        primary: { label: '再做一次', onClick: () => startExam(sizeKey) },
+        primary: { label: '再做一次', onClick: () => startExam(sizeKey), attrs: { 'data-gate': '' } },   // 沒登入時 js/profile.js 先攔下
         links: [{ label: '看錯題本', href: 'review.html' }, { label: '回模擬考', href: 'mock.html' }],
-        /* 不給 earnId:地瓜、麵包蟲的券 id 是 y_mock、w:s1_mock,對不上 'mock';一頁只有這一張卡,認掛勾放進 card.reward 的那一次就夠 */
+        earnId: 'mock',
       });
       resultCard = card;
-      const again = card.el.querySelector('.result-go');
-      if (again) again.setAttribute('data-gate', '');   // 再做一次:沒登入時 js/profile.js 先攔下
       root.append(card.el);
       const after = [unsaved ? null : wrongNote(wb, skipped || 0), unsavedNote(unsaved)].filter(Boolean);
       if (after.length) root.append(h('div', { class: 'mock-after' }, ...after));

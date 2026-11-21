@@ -89,25 +89,6 @@
     return { el: h('div', { class: 'player' }, btn, speedSelect([audio]), label), stop: () => audio.pause(), plays: () => plays };
   }
 
-  /* 輸入框拿到焦點、手機鍵盤跳出來時(可視範圍縮掉一大塊),底部固定列改回內容後面,不蓋住輸入框,也不被鍵盤蓋住。
-     回傳關掉監聽的函式 */
-  function typingGuard(el) {
-    const vv = window.visualViewport;
-    const html = document.documentElement;
-    if (!vv) return () => {};
-    const sync = () => html.classList.toggle('ear-kb', document.activeElement === el && window.innerHeight - vv.height > 120);
-    const later = () => setTimeout(sync, 300);
-    vv.addEventListener('resize', sync);
-    el.addEventListener('focus', later);
-    el.addEventListener('blur', later);
-    return () => {
-      vv.removeEventListener('resize', sync);
-      el.removeEventListener('focus', later);
-      el.removeEventListener('blur', later);
-      html.classList.remove('ear-kb');
-    };
-  }
-
   const sec = getParam('sec');
   if (sec && SECTIONS[sec]) startRound(sec);
   else renderHome();
@@ -164,7 +145,6 @@
     const results = [];
     let cur = 0;
     let player = null;
-    let guardOff = null;
     const f = UI.focus.enter({
       total: list.length,
       onExit: () => { stopAll(); location.href = 'listening.html'; },
@@ -174,8 +154,6 @@
     function stopAll() {
       if (player) player.stop();
       player = null;
-      if (guardOff) guardOff();
-      guardOff = null;
     }
     function isLast() { return cur === list.length - 1; }
     function nextLabel() { return isLast() ? '看成績' : '下一題'; }
@@ -303,8 +281,7 @@
         player.el,
         input,
         result));
-      f.foot([checkBtn]);
-      guardOff = typingGuard(input);
+      f.foot([checkBtn]);   // 手機鍵盤彈出時,專心模式自己讓開底部列(html.ui-kb),不蓋住輸入框
       input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
 
       function check() {
@@ -416,6 +393,7 @@
         score: ok, total: list.length, kicker: d.title,
         primary: { label: '再做一次', onClick: () => { card.destroy(); startRound(sec); } },
         links: [{ label: '回聽力訓練', href: 'listening.html' }],
+        earnId: 'e' + sec,
       });
       root.replaceChildren(card.el);
       window.scrollTo(0, 0);

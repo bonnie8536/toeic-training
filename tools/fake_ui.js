@@ -13,6 +13,7 @@ module.exports = function fakeUI(doc) {
   const action = (a, cls) => {
     const b = el(a.href ? 'a' : 'button', cls, a.label);
     if (a.href) b.setAttribute('href', a.href);
+    Object.keys(a.attrs || {}).forEach(k => b.setAttribute(k, String(a.attrs[k])));
     if (typeof a.onClick === 'function') b.addEventListener('click', e => a.onClick(e));
     return b;
   };
@@ -31,7 +32,7 @@ module.exports = function fakeUI(doc) {
     focus: {
       enter(opt) {
         const api = {
-          opt, cur: 0, total: opt.total, isDirty: false, gone: false, active: true,
+          opt, cur: 0, total: opt.total, isDirty: !!opt.dirty, gone: false, active: true,
           progress(n) { api.cur = n; },
           setTotal(n) { api.total = n; },
           dirty(v) { api.isDirty = v === undefined ? true : !!v; },
@@ -66,7 +67,8 @@ module.exports = function fakeUI(doc) {
       card.append(reward);
       const acts = el('div', 'result-actions');
       if (o.primary) acts.append(action(o.primary, 'btn primary result-go'));
-      if ((o.links || []).length) { const l = el('div', 'result-links'); o.links.forEach(x => l.append(action(x, 'btn-text result-link'))); acts.append(l); }
+      const links = (o.links || []).filter(x => x && x.label);   // 跟真的一樣:null 項目略過
+      if (links.length) { const l = el('div', 'result-links'); links.forEach(x => l.append(action(x, 'btn-text result-link'))); acts.append(l); }
       card.append(acts);
       if (o.note) card.append(el('p', 'result-note', o.note));
       const api = { el: card, reward, heading, pose: o.pose || null, opt: o, destroy() {} };

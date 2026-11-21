@@ -378,7 +378,7 @@
       const next = UNITS[idx + 1];
       const back = { label: '回自然發音', href: 'phonics.html' };
       const card = UI.result({
-        compact: true, score: ok, total: u.quiz.length, kicker: '小試身手',
+        inline: true, score: ok, total: u.quiz.length, kicker: '小試身手', earnId: 'pn:' + u.id,
         primary: next ? { label: '下一課', href: 'phonics.html?u=' + next.id } : back,
         links: next ? [back] : [],
       });

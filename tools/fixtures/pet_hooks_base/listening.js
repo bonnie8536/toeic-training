@@ -115,11 +115,10 @@
   function mainBtn(label, onClick, gate, disabled) {
     return h('button', { class: 'btn primary', type: 'button', 'data-gate': gate ? '' : null, disabled: disabled ? '' : null, onclick: onClick }, label);
   }
-  /* 作答列右邊的「交卷」:UI.focus 的按鈕不是我們建的,事後標上 data-gate */
+  /* 作答列右邊的「交卷」與結算卡的主按鈕(會寫紀錄):標 data-gate,沒登入時 js/profile.js 先攔下 */
+  const GATE = { 'data-gate': '' };
   function setSubmit(f, onClick) {
-    f.action(onClick ? { label: '交卷', onClick } : null);
-    const b = f.bar.querySelector('.quiz-act');
-    if (b) b.setAttribute('data-gate', '');
+    f.action(onClick ? { label: '交卷', onClick, attrs: GATE } : null);
   }
   const answerText = (q, i) => LETTERS[i] + '. ' + q.options[i];
 
@@ -393,8 +392,6 @@
     function showResult(card, detail) {
       root.replaceChildren(card.el);
       if (detail) root.append(detail);
-      const go = card.el.querySelector('.result-go');
-      if (go) go.setAttribute('data-gate', '');
       window.scrollTo(0, 0);
       card.heading.focus({ preventScroll: true });
     }
@@ -411,8 +408,9 @@
         kicker: parts.length === 1 ? '聽力 ' + PARTS[parts[0]].title : '聽力 Part ' + parts.join('、'),
         score: qCorrect, total: qTotal,
         stats: wrongN ? [['收進錯題本', wrongN + ' 題']] : null,
-        primary: { label: '再做一次', onClick: () => { card.destroy(); startQuiz(root, config); } },   // 跟「開始」一樣
+        primary: { label: '再做一次', onClick: () => { card.destroy(); startQuiz(root, config); }, attrs: GATE },   // 跟「開始」一樣
         links: [wrongN ? { label: '看錯題本', href: wbHref } : null, { label: '回題庫刷題', href: 'practice.html' }],
+        earnId: 'l' + config[0].p,
       });
       showResult(card, UI.detail('逐題解析 ' + qTotal + ' 題', reviewBlocks(), { wrong: wrongN }));
     }
@@ -487,8 +485,9 @@
         kicker: (window.WRONGBOOK ? WRONGBOOK.TITLE[config[0].p] : '聽力 ' + PARTS[config[0].p].title) + ' 錯題本',
         score: qCorrect, total: qTotal,
         stats: rest > 0 ? [['還沒複習', rest + ' 題']] : null,
-        primary: rest > 0 ? { label: '下一回', href: again } : { label: '回錯題本', href: back },
+        primary: rest > 0 ? { label: '下一回', href: again, attrs: GATE } : { label: '回錯題本', href: back, attrs: GATE },
         links: rest > 0 ? [{ label: '回錯題本', href: back }] : [],
+        earnId: opts.wrongOnly ? 'pr' : 'l' + config[0].p,
       });
       showResult(card);
     }

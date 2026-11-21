@@ -15,16 +15,9 @@
   function prog(day) { return D.progress(store.get(D.KEY, null), day || DAY); }
   function label(p) { return p.name + ' ' + p.n + ' ' + p.unit; }
 
-  /* 動態放進頁面的圖示與小雞:頁面還在載入時由 js/ui.js 在載入完成那一下統一畫,之後重畫的自己叫 */
+  /* 動態放進頁面的圖示與小雞:頁面還在載入時由 js/ui.js 在載入完成那一下統一畫,之後重畫的自己叫 UI.mount(掛過的不重掛) */
   function art(box) {
-    const U = window.UI;
-    if (!U || document.readyState === 'loading') return;
-    U.doodle(box);
-    box.querySelectorAll('canvas[data-chick]').forEach(cv => {
-      if (cv.getAttribute('data-chick-on')) return;
-      cv.setAttribute('data-chick-on', '1');
-      U.chick(cv, { size: Number(cv.getAttribute('data-size')) || 72, pose: cv.getAttribute('data-chick') });
-    });
+    if (window.UI && document.readyState !== 'loading') UI.mount(box);
   }
 
   /* ---------- 三項的清單(首頁與 daily.html 共用) ---------- */
@@ -276,6 +269,7 @@
         score: s.ok, total: s.done, kicker: label(p), flag: pr.complete ? '今日完成' : null,
         primary: next ? { label: '接著做' + next.name, href: 'daily.html?part=' + next.key } : { label: '回首頁', href: 'index.html' },
         links: next ? [{ label: '回每日練習', href: 'daily.html' }] : [],
+        earnId: 'd',
       });
       root.replaceChildren(...[srTitle(p.name), card.el, bad.length ? UI.detail('答錯 ' + bad.length + ' 題', [missed(bad)], { wrong: 0 }) : null].filter(Boolean));
       window.scrollTo(0, 0);

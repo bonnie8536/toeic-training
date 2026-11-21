@@ -273,7 +273,7 @@
       const next = D.PARTS.find(x => !pr[x.key].finished);
       const bad = list5.filter(x => s.answered[x.id] === 0);
       const card = UI.result({
-        score: s.ok, total: s.done, kicker: label(p), flag: pr.complete ? '今日完成' : null, earnId: 'd',
+        score: s.ok, total: s.done, kicker: label(p), flag: pr.complete ? '今日完成' : null,
         primary: next ? { label: '接著做' + next.name, href: 'daily.html?part=' + next.key } : { label: '回首頁', href: 'index.html' },
         links: next ? [{ label: '回每日練習', href: 'daily.html' }] : [],
       });
@@ -295,7 +295,7 @@
       onError();
     };
     const btn = h('button', {
-      class: 'btn primary player-btn', type: 'button',
+      class: 'btn player-btn', type: 'button',
       onclick: () => {
         plays++;
         audio.currentTime = 0;

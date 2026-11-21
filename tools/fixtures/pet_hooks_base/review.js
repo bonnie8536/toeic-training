@@ -226,7 +226,7 @@
         /* 聽力 P1/P2:可重複播放(複習情境) */
         player = new Audio('audio/' + q.id + '.mp3');
         const playBtn = h('button', {
-          class: 'btn primary player-btn', type: 'button',
+          class: 'btn player-btn', type: 'button',
           onclick: () => { player.currentTime = 0; player.play().catch(() => {}); },
         }, '▶ 播放');
         block.append(h('div', { class: 'meta', style: 'margin-bottom:8px' },
@@ -259,7 +259,7 @@
       stopAudio();
       f.leave();
       const card = UI.result({
-        score: cleared, total: list.length, kicker: '清掉錯題', earnId: 'rv',
+        big: cleared, unit: '/ ' + list.length + ' 題', ratio: list.length ? cleared / list.length : 0, kicker: '清掉',
         primary: { label: '回錯題本', href: 'review.html' },
         links: [{ label: '回首頁', href: 'index.html' }],
       });

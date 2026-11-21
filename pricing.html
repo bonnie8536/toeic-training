@@ -18,7 +18,7 @@
   d.classList.add('is-app');
   d.classList.add('app-shell');
   if (['signup.html', 'reset.html', 'terms.html', 'pricing.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
-  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  if (!location.search && ['index.html', 'learn.html', 'warmup.html', 'drill.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
   var m = document.querySelector('meta[name=viewport]');
   if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
   window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
@@ -65,7 +65,7 @@
       <p class="pricing-opt"><span>一個月</span><b>199<small> 元</small></b></p>
       <p class="pricing-opt"><span>一年</span><b>1,990<small> 元</small></b></p>
     </div>
-    <p>包含網站上全部的練習功能：閱讀、聽力、對話、文法、自然發音、單字、寫作練習、題庫刷題、模擬考與每日複習。</p>
+    <p>包含網站上全部的練習功能：閱讀、聽力、對話、文法、自然發音、單字、寫作練習、題庫刷題、模擬考與錯題本。</p>
     <p>程度檢測免費</p>
   </section>
 

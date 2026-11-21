@@ -18,7 +18,7 @@
   d.classList.add('is-app');
   d.classList.add('app-shell');
   if (['signup.html', 'reset.html', 'terms.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
-  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  if (!location.search && ['index.html', 'learn.html', 'warmup.html', 'drill.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
   var m = document.querySelector('meta[name=viewport]');
   if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
   window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://www.rushuplanguage.com/img/icon-512.png">
 <meta name="twitter:card" content="summary">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.rushuplanguage.com/#website","name":"衝衝英文","alternateName":"Rushup","url":"https://www.rushuplanguage.com/","inLanguage":"zh-Hant","publisher":{"@id":"https://www.rushuplanguage.com/#organization"}},{"@type":"OnlineBusiness","@id":"https://www.rushuplanguage.com/#organization","name":"衝衝英文","alternateName":"Rushup","url":"https://www.rushuplanguage.com/","description":"衝衝英文是準備多益（TOEIC）的線上英文練習網站。聽力、閱讀 Part 1–7 題庫超過 900 題，每題附解析，答錯的題會收進每日複習；也有單字遊戲、文法、自然發音、分級閱讀、對話和寫作練習，以及計時模擬考，模擬試題每次從題庫隨機抽出。由個人經營。","logo":"https://www.rushuplanguage.com/img/icon-512.png","email":"rushuplanguage@gmail.com"}]}
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.rushuplanguage.com/#website","name":"衝衝英文","alternateName":"Rushup","url":"https://www.rushuplanguage.com/","inLanguage":"zh-Hant","publisher":{"@id":"https://www.rushuplanguage.com/#organization"}},{"@type":"OnlineBusiness","@id":"https://www.rushuplanguage.com/#organization","name":"衝衝英文","alternateName":"Rushup","url":"https://www.rushuplanguage.com/","description":"衝衝英文是準備多益（TOEIC）的線上英文練習網站。聽力、閱讀 Part 1–7 題庫超過 900 題，每題附解析，答錯的題會收進錯題本；也有單字遊戲、文法、自然發音、分級閱讀、對話和寫作練習，以及計時模擬考，模擬試題每次從題庫隨機抽出。由個人經營。","logo":"https://www.rushuplanguage.com/img/icon-512.png","email":"rushuplanguage@gmail.com"}]}
 </script>
 <title>衝衝英文 - 多益練習：聽力、閱讀題庫刷題、單字與模擬考</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,27 +56,33 @@
 <header class="topbar">
   <div class="topbar-inner" data-nosnippet>
     <a class="brand" href="index.html">衝衝英文</a>
-    <nav class="topnav">
-      <a href="index.html" class="active">首頁</a>
-      <a href="diagnostic.html">程度檢測</a>
+    <nav class="topnav" aria-label="主要導覽">
+      <a href="index.html" class="active" aria-current="page">首頁</a>
       <div class="nav-group">
-        <button class="nav-btn" type="button">學習</button>
+        <a class="nav-btn" href="learn.html">日常學習</a>
         <div class="nav-menu">
           <a href="grammar.html">文法基礎</a>
           <a href="phonics.html">自然發音</a>
-          <a href="vocab.html">單字訓練</a>
-          <a href="listening.html">聽力訓練</a>
           <a href="reading.html">閱讀訓練</a>
           <a href="dialogue.html">對話練習</a>
-          <a href="writing.html">寫作練習</a>
         </div>
       </div>
       <div class="nav-group">
-        <button class="nav-btn" type="button">刷題</button>
+        <a class="nav-btn" href="warmup.html">練練手感</a>
+        <div class="nav-menu">
+          <a href="vocab.html">單字訓練</a>
+          <a href="listening.html">聽力訓練</a>
+          <a href="writing.html">寫作練習</a>
+          <a href="grammar.html?ref=verbs">不規則動詞</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <a class="nav-btn" href="drill.html">刷刷題目</a>
         <div class="nav-menu">
           <a href="practice.html">題庫刷題</a>
           <a href="mock.html">模擬考</a>
-          <a href="review.html">每日複習</a>
+          <a href="diagnostic.html">程度檢測</a>
+          <a href="review.html">錯題本</a>
         </div>
       </div>
     </nav>

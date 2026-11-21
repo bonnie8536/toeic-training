@@ -242,20 +242,3 @@ function logAttempt(m, id, c, ok, extra) {
     try { window.PET_STORE.afterAnswer(); } catch (e) { /* 小雞出錯不影響作答紀錄 */ }
   }
 }
-
-/* 頂欄群組選單:桌機 hover/focus 由 CSS 處理,這裡補「點一下切換」給觸控裝置 */
-document.addEventListener('DOMContentLoaded', () => {
-  const groups = $$('.nav-group');
-  if (!groups.length) return;
-  groups.forEach(g => {
-    const btn = g.querySelector('.nav-btn');
-    if (!btn) return;
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      const open = g.classList.contains('open');
-      groups.forEach(x => x.classList.remove('open'));
-      if (!open) g.classList.add('open');
-    });
-  });
-  document.addEventListener('click', () => groups.forEach(x => x.classList.remove('open')));
-});

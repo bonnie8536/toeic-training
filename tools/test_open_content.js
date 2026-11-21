@@ -1998,6 +1998,7 @@ async function pressDialogs(B, s, sel, text, exact, during, promptText) {
   const p = await point(s, '#__press');
   const queue = [], asked = [];
   let wake = null, done = false;
+  const probe = (expr, none) => Promise.race([s.eval(expr).catch(() => none), sleep(400).then(() => none)]);
   const off = B.on((m) => { if (m.sessionId === s.sid && m.method === 'Page.javascriptDialogOpening') { queue.push(m.params); if (wake) wake(); } });
   try {
     await s.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p.x, y: p.y });
@@ -2006,8 +2007,9 @@ async function pressDialogs(B, s, sel, text, exact, during, promptText) {
     const end = Date.now() + 15000;
     while (Date.now() < end) {
       /* 站內的確認與輸入視窗(js/ui.js UI.confirm、UI.prompt):跟原生視窗一樣記下種類、先跑 during,再填字(prompt)、按確定 */
-      if (!queue.length) {
-        const ui = await s.eval(UI_DLG_SEEN).catch(() => '');   // 按確定後換頁中讀不到就當沒有
+      /* 原生視窗開著時頁面的 eval 不會回:滑鼠放開回來了(沒有原生視窗卡著)才看,而且最多等 400 毫秒;換頁中讀不到也當沒有 */
+      if (!queue.length && done) {
+        const ui = await probe(UI_DLG_SEEN, '');
         if (ui) {
           asked.push(ui);
           if (during) await during(asked.length, { type: ui });
@@ -2018,7 +2020,7 @@ async function pressDialogs(B, s, sel, text, exact, during, promptText) {
         }
       }
       if (!queue.length) {
-        if (done) { await sleep(400); if (!queue.length && !(await s.eval(UI_DLG_OPEN).catch(() => false))) break; continue; }
+        if (done) { await sleep(400); if (!queue.length && !(await probe(UI_DLG_OPEN, false))) break; continue; }
         await Promise.race([new Promise((r) => { wake = r; }), sleep(500)]);
         wake = null;
         continue;

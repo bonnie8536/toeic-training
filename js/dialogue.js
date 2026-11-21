@@ -10,7 +10,9 @@
 
   if (!root) return;
   if (!dialogues.length) {
-    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '對話資料尚未載入。'));
+    root.append(window.UI && typeof UI.empty === 'function'
+      ? UI.empty({ text: '對話尚未載入', action: { label: '重新整理', onClick: () => location.reload() } })
+      : h('div', { class: 'q-block' }, '對話尚未載入'));
     return;
   }
 
@@ -32,7 +34,25 @@
     const next = Object.assign({}, all, { [id]: list.concat(i).sort((a, b) => a - b) });
     if (pageHeard || !canKeep()) { pageHeard = next; return; }
     store.set('dlg_heard', next);
-    if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { after: root.querySelectorAll('.dlg-line')[i] });
+    if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { into: heardCard(cur).reward });
+  }
+  /* 整段每句都聽過:在對話下面放結算小卡(緊湊版結算卡,不蓋住對話),拿到的點心畫在卡裡的點心列。
+     只在剛好聽完的那一刻放;已經全部聽過的對話重新打開不放 */
+  function heardCard(d) {
+    const lines = root.querySelector('.dlg-lines');
+    const total = d.lines.length;
+    if (!window.UI || typeof UI.result !== 'function' || !lines) {
+      const reward = h('div', { class: 'result-reward' });
+      if (lines) lines.after(reward);
+      return { reward };
+    }
+    const card = UI.result({ compact: true, score: total, total, kicker: '全部聽過' });
+    card.el.classList.add('rd-done');
+    lines.after(card.el);
+    if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      try { card.el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) { /* 捲不到就算了 */ }
+    }
+    return card;
   }
   const slangCount = (d) => d.lines.reduce((n, l) => n + (l.slang || []).length, 0);
 
@@ -87,7 +107,7 @@
 
     const head = h('div', { class: 'reader-head' },
       h('div', { class: 'meta' },
-        h('a', { href: 'dialogue.html' }, '← 回對話列表'),
+        h('a', { href: 'dialogue.html' }, '← 回對話練習'),
         h('span', { class: 'badge cat' }, d.cat),
         h('span', { class: 'badge ' + levelBadgeClass(d.level) }, d.level),
         h('span', null, d.lines.length + ' 句')),
@@ -103,7 +123,7 @@
     const progressEl = h('span', { class: 'vocab-progress' });
     const msgEl = h('span', { class: 'dlg-msg', role: 'status' });
     const toolbar = h('div', { class: 'reader-toolbar' }, allBtn, biBtn, slowBtn,
-      h('span', { class: 'toolbar-note' }, '點句子播放。點虛線字看解釋。'), progressEl, msgEl);
+      h('span', { class: 'toolbar-note' }, '點句子播放 · 點虛線字看解釋'), progressEl, msgEl);
 
     const linesEl = h('div', { class: 'dlg-lines' });
     const bubbles = d.lines.map((l, i) => {
@@ -135,7 +155,7 @@
         if (at < pos) return;                     // 重疊的跳過
         if (at > pos) out.push(l.en.slice(pos, at));
         const surface = l.en.slice(at, at + s.t.length);
-        const span = h('span', { class: 'vw dlg-sl', tabindex: '0', role: 'button', 'aria-label': surface + '，看意思' }, surface);
+        const span = h('span', { class: 'vw dlg-sl', tabindex: '0', role: 'button', 'aria-label': '看意思：' + surface }, surface);
         const show = (e) => { e.stopPropagation(); openPop(span, s); };
         span.addEventListener('click', show);
         span.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(e); } });
@@ -144,6 +164,11 @@
       });
       if (pos < l.en.length) out.push(l.en.slice(pos));
       return out;
+    }
+
+    /* 聲音載不到:第一行寫發生什麼,第二行寫怎麼辦 */
+    function failMsg() {
+      msgEl.replaceChildren('這句的聲音沒有載入', h('span', { class: 'dlg-msg-2' }, '請檢查網路'));
     }
 
     /* ---------- 播放 ---------- */
@@ -157,7 +182,7 @@
       audio.playbackRate = slow ? 0.8 : 1;
       msgEl.textContent = '';
       const p = audio.play();
-      if (p && p.catch) p.catch(() => { msgEl.textContent = '這句的聲音沒有載入，請檢查網路'; stop(); });
+      if (p && p.catch) p.catch(() => { failMsg(); stop(); });
       markHeard(d.id, i);
       updateProgress();
       if (playAll) bubbles[i].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
@@ -176,7 +201,7 @@
     });
     audio.addEventListener('error', () => {
       if (playing < 0) return;
-      msgEl.textContent = '這句的聲音沒有載入，請檢查網路';
+      failMsg();
       stop();
     });
     function toggleAll() {

@@ -5,7 +5,7 @@
    - 新版寫入蓋戳記(_r、_t、_p);兩台同時改中文留下的 alt 顯示「另一台寫的」,可以換或刪。
    - 開頁呼叫一次 CLOUD.syncKey('vgame_banks'),有變就重畫;cloud:merged、別的分頁(storage)改了題庫:首頁、編輯頁重畫,遊戲中不打斷。
    - 編輯頁的名稱欄位:重畫時換成合併後的名稱;學生沒動過名稱欄位,勾選、刪字、加字、按完成都不寫名稱(不會把別台的改名蓋回去)。
-   - 閱讀頁「單字存入題庫」(js/reading.js):每次重讀本機題庫、蓋戳記;同一篇再按一次沒有變就不存(不多上傳一次)。 */
+   - 閱讀頁「存入單字本」(js/reading.js):每次重讀本機題庫、蓋戳記;同一篇再按一次沒有變就不存(不多上傳一次)。 */
 const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
@@ -150,7 +150,7 @@ const legacy = () => [{ id: 'b1', name: '第一課', words: [{ en: 'apple', zh: 
     const home = openVocab(CID, local);          // 分頁一:重新開(題庫已存在)
     button(home.root, '編輯').click();           // 進編輯頁
     const editing = !!home.root.querySelector('[data-vview="edit"]');
-    /* 分頁二:閱讀頁按「單字存入題庫」(直接用 SYNC_MERGE 寫本機,跟 js/reading.js 一樣) */
+    /* 分頁二:閱讀頁按「存入單字本」(直接用 SYNC_MERGE 寫本機,跟 js/reading.js 一樣) */
     const other = SM.editBank(home.banks(), 'art_9', Date.now(), b => SM.addWords(Object.assign({}, b, { name: '文章：九' }), [{ en: 'refund', zh: '退款' }], Date.now()));
     home.setBanks(other);
     /* 分頁一:改名、批次加字、勾選、刪字 */
@@ -240,7 +240,7 @@ const legacy = () => [{ id: 'b1', name: '第一課', words: [{ en: 'apple', zh: 
     const b1 = home.banks()[0];
     check('頁面沒有 sync-merge.js:照舊加字(不蓋戳記),不會壞', b1.words.length === 4 && !b1.words[3]._r, J(b1.words.map(w => w.en)));
   }
-  /* 6. 閱讀頁:單字存入題庫 */
+  /* 6. 閱讀頁:存入單字本 */
   {
     const art = { id: 'r1', title: 'Title', titleZh: '退款的文章', category: '商業', level: '初級', readTime: 3, image: 'x.svg',
       paragraphs: [{ en: 'Ask for a [[refund]] today.', zh: '今天要求退款。' }], vocab: [{ word: 'refund', zh: '退款' }, { word: 'invoices', base: 'invoice', zh: '發票' }], questions: [] };
@@ -249,13 +249,13 @@ const legacy = () => [{ id: 'b1', name: '第一課', words: [{ en: 'apple', zh: 
     first.setBanks(legacy());
     const pg = openVocab(CID, local, { reading: art });
     const synced = J(pg.syncCalls) === J(['vgame_banks']);
-    const btn = button(pg.root, '單字存入題庫');
+    const btn = button(pg.root, '存入單字本');
     btn.click();
     const b = pg.banks().find(x => x.id === 'art_r1');
     const before = pg.pushes.length;
-    const btn2 = pg.root.all().find(e => e.tagName === 'BUTTON' && /^已存入題庫/.test(textOf(e)));
+    const btn2 = pg.root.all().find(e => e.tagName === 'BUTTON' && /^已存入單字本/.test(textOf(e)));
     btn2.click();
-    check('閱讀頁單字存入題庫:原本的題庫留著、新題庫和字有戳記;再按一次沒變就不存', synced && !!b && b.name === '文章：退款的文章' && !!b._r && b.words.length === 2 && b.words.every(w => !!w._r)
+    check('閱讀頁存入單字本:原本的題庫留著、新題庫和字有戳記;再按一次沒變就不存', synced && !!b && b.name === '文章：退款的文章' && !!b._r && b.words.length === 2 && b.words.every(w => !!w._r)
       && pg.banks().length === 2 && pg.pushes.length === before, J(b) + ' / 再按一次多存 ' + (pg.pushes.length - before) + ' 次');
   }
   /* 7. 編輯頁的名稱欄位跟著合併更新:別台改的名稱不會被輸入框裡的舊名稱蓋回去(只有學生真的改了名稱欄位才寫名稱) */

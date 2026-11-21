@@ -592,8 +592,8 @@ const SITES = [
   ['js/vocab.js', 'startMcq summary()', ['function startMcq(', 'function summary() {'], G + "'mcq', { n: list.length, into: card.reward });"],
   ['js/vocab.js', 'startDrill summary()', ['function startDrill(', 'function summary() {'], G + "'ph', { n: list.length, into: card.reward });"],
   ['js/reading.js', 'renderQuestions 選項 onclick', ['function renderQuestions(', 'function drawQuestion(', /onclick: \(\) => \{$/],
-    "if (window.PET_HOOK && Object.keys(answers).length === a.questions.length) PET_HOOK.done('r:' + a.id, { into: list.querySelector('.drill-nav-btns') });"],
-  ['js/reading.js', 'renderTransfer submit()', ['function renderTransfer(', 'function submit() {'], G + "'tq:' + a.id, { into: area, after: area.querySelector('.tq-result') });"],
+    "if (window.PET_HOOK && Object.keys(answers).length === a.questions.length) PET_HOOK.done('r:' + a.id, { into: card.reward });"],
+  ['js/reading.js', 'renderTransfer submit()', ['function renderTransfer(', 'function submit() {'], G + "'tq:' + a.id, { into: card.reward });"],
   ['js/practice.js', 'startQuiz submit()(交卷後的 review)', ['function startQuiz(', 'function submit(opener, asked) {'],
     G + "'p' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '5' ? [session.answers[i]] : u.item.questions.map((q, qi) => session.answers[i][qid(u.item, q, qi)])).filter(r => r && r.c > -1).length, 0), into: " + RR + ' });'],
   ['js/practice.js', 'startReview summary()', ['function startReview(', 'function summary() {'],
@@ -605,12 +605,12 @@ const SITES = [
   ['js/ear.js', 'summary()', ['function startRound(', 'function summary() {'], G + "'e' + sec, { n: list.length, into: card.reward });"],
   ['js/review.js', 'summary()', ['function summary() {'], G + "'rv', { n: list.length, into: card.reward });"],
   ['js/dialogue.js', 'markHeard()', ['function markHeard('],
-    "if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { after: root.querySelectorAll('.dlg-line')[i] });"],
+    "if (window.PET_HOOK && cur && cur.id === id && cur.lines.every((l, k) => k === i || list.indexOf(k) > -1)) PET_HOOK.done('dlg:' + id, { into: heardCard(cur).reward });"],
   ['js/mock.js', 'submit()', ['function submit(timeUp, asked) {'], G + "'mock', { into: card.reward });"],
   ['js/diagnostic.js', '「交卷，看報告」handIn()', ['function renderTest(', 'function handIn(opener, asked) {'], G + "'diag', { into: card.reward });"],
-  ['js/writing.js', '技巧課「標記讀完」onclick', ['function lessonView(', /onclick: \(\) => \{$/], "if (window.PET_HOOK && unitDone(units[idx])) PET_HOOK.done('wr:' + les.id, { into: wrap });"],
-  ['js/writing.js', '句子重組答對', ['function scrambleBlock(', "if (picked.map(t => t.w).join(' ') === s.answer) {"], "if (window.PET_HOOK && unitDone({ t: 's', ref: s })) PET_HOOK.done('wr:' + s.id, { into: block });"],
-  ['js/writing.js', '造句、回信、論述存檔 saveNow()', ['function writeArea(', 'function saveNow() {'], "if (window.PET_HOOK && !petWas && unitDone(petU)) PET_HOOK.done('wr:' + id, { into: savedNote.parentNode });"],
+  ['js/writing.js', '技巧課「標記讀完」onclick', ['function lessonView(', /onclick: \(\) => \{$/], "if (window.PET_HOOK && unitDone(units[idx])) PET_HOOK.done('wr:' + les.id, { into: rewardCard(wrap, '完成').reward });"],
+  ['js/writing.js', '句子重組答對', ['function scrambleBlock(', "if (picked.map(t => t.w).join(' ') === s.answer) {"], "if (window.PET_HOOK && unitDone({ t: 's', ref: s })) PET_HOOK.done('wr:' + s.id, { into: rewardCard(block, '答對').reward });"],
+  ['js/writing.js', '造句、回信、論述存檔 saveNow()', ['function writeArea(', 'function saveNow() {'], "if (window.PET_HOOK && !petWas && unitDone(petU)) PET_HOOK.done('wr:' + id, { into: rewardCard(savedNote.parentNode, '已儲存', true).reward });"],
 ];
 /* 寫作存檔要先記下寫入前是不是已經完成,所以 saveNow 在 store.set 前多一行 */
 const WRITE_BEFORE = "const petU = window.PET_HOOK ? { t: Object.keys(KEYS).find(k => KEYS[k] === storeKey), ref: { id } } : null, petWas = !petU || unitDone(petU);";

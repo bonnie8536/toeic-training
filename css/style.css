@@ -3764,6 +3764,20 @@ html.is-quiz.ear-kb body { padding-bottom: 0 !important; }
 
 /* ==== 閱讀、對話、寫作 ==== */
 
+/* 結算小卡:放在文章、對話、單元頁裡的緊湊版結算卡。跟遊戲浮層不同,這裡要有邊框、跟內容隔開一段距離,
+   沒有主按鈕時不留按鈕那一格的高度 */
+.result-card.is-compact.rd-done { max-width: 360px; margin: 24px auto; padding: 20px 16px; border: 1px solid var(--line); background: #fff; }
+.result-card.is-compact.rd-done .result-actions:empty { display: none; }
+.result-card.is-compact.rd-done .result-chick { margin: -24px auto -6px; }
+.rd-word .result-score b { font-size: var(--fs-2xl); font-weight: 900; }
+/* 寫作單元的小卡放在有框的區塊裡面:不再畫一層框,只用上方留白與區塊隔開 */
+.result-card.is-compact.rd-word { max-width: none; margin: 16px 0 0; padding: 12px 0 4px; border: 0; }
+.tq-result.rd-done { font-size: inherit; font-weight: inherit; }
+.tq-submit { align-items: center; }
+.tq-left { font-size: var(--fs-sm); color: var(--ink-soft); }
+.dlg-msg-2 { display: block; color: var(--ink-soft); }
+.dlg-lines + .rd-done { margin-top: 32px; }
+
 /* ---- */
 
 

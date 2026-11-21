@@ -7,9 +7,25 @@
   const articles = (window.TOEIC && TOEIC.articles) || [];
 
   if (!articles.length) {
-    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' },
-      '文章資料尚未載入。請確認 data/articles.js 存在（執行 tools/merge_data.py 產生）。'));
+    root.append(emptyView('文章尚未載入', { label: '重新整理', onClick: () => location.reload() }));
     return;
+  }
+
+  /* 空狀態:用共用的小雞空狀態;共用元件沒載到時退回一行字 */
+  function emptyView(text, action) {
+    if (window.UI && typeof UI.empty === 'function') return UI.empty({ text, action });
+    return h('div', { class: 'q-block' }, text);
+  }
+  /* 結算小卡(緊湊版結算卡),放進文章頁;拿到點心時食物圖出現在卡裡的點心列。
+     共用元件沒載到時回傳只有點心列的替身,掛勾照樣有地方寫 */
+  function miniCard(opt) {
+    if (window.UI && typeof UI.result === 'function') {
+      const c = UI.result(Object.assign({ compact: true }, opt));
+      c.el.classList.add('rd-done');
+      return c;
+    }
+    const reward = h('div', { class: 'result-reward' });
+    return { el: reward, reward, destroy() {} };
   }
 
   const LEVEL_ORDER = ['初級', '中級', '中高級', '高級'];
@@ -23,8 +39,8 @@
   const article = articles.find(a => a.id === artId);
   if (article) renderReader(article);
   else renderList();
-  /* 自訂題庫先跟雲端對齊一次(同步合併設計 3.6):開了好幾天的 App,「單字存入題庫」才不是根據舊資料;
-     文章頁的「單字存入題庫／更新題庫單字」按鈕跟著更新 */
+  /* 自訂題庫先跟雲端對齊一次(同步合併設計 3.6):開了好幾天的 App,「存入單字本」才不是根據舊資料;
+     文章頁的「存入單字本／更新單字本」按鈕跟著更新 */
   if (window.CLOUD && typeof CLOUD.syncKey === 'function') {
     CLOUD.syncKey('vgame_banks').then(r => { if (r && r.changed && bankBtnSync) bankBtnSync(); }, () => {});
   }
@@ -58,7 +74,8 @@
         LEVEL_ORDER.indexOf(levelName(a)) - LEVEL_ORDER.indexOf(levelName(b)));
       const shown = sorted.filter(a => levelFilter === '全部' || levelName(a) === levelFilter);
       if (!shown.length) {
-        listWrap.append(h('div', { class: 'q-block' }, '這個級別還沒有文章。'));
+        listWrap.append(emptyView('這個級別還沒有文章',
+          levelFilter === '全部' ? null : { label: '看全部', onClick: () => { levelFilter = '全部'; drawChips(); drawList(); } }));
         return;
       }
       shown.forEach(a => {
@@ -111,7 +128,7 @@
 
     const head = h('div', { class: 'reader-head' },
       h('div', { class: 'meta' },
-        h('a', { href: 'reading.html' }, '← 回文章列表'),
+        h('a', { href: 'reading.html' }, '← 回閱讀訓練'),
         h('span', { class: 'badge cat' }, a.category),
         h('span', { class: 'badge ' + levelBadgeClass(a.level) }, a.level),
         h('span', null, '約 ' + a.readTime + ' 分鐘')),
@@ -127,10 +144,10 @@
     const bankBtn = h('button', {
       class: 'btn' + (hasBank() ? ' on' : ''), 'data-gate': '',   // 存進自訂題庫:沒登入時先攔下
       onclick: () => importVocabToBank(a, bankBtn),
-    }, hasBank() ? '更新題庫單字' : '單字存入題庫');
+    }, hasBank() ? '更新單字本' : '存入單字本');
     bankBtnSync = () => {
       if (/^已存入/.test(bankBtn.textContent)) return;
-      bankBtn.textContent = hasBank() ? '更新題庫單字' : '單字存入題庫';
+      bankBtn.textContent = hasBank() ? '更新單字本' : '存入單字本';
       bankBtn.classList.toggle('on', hasBank());
     };
     const toolbar = h('div', { class: 'reader-toolbar' },
@@ -304,7 +321,7 @@
         span.classList.remove('gap');
         span.classList.add('done');
         span.textContent = surface;   // 本文恢復原文英文,填的內容存在卡片裡
-        showTranslationPop(span, surface, entry, idx, '已填入！');
+        showTranslationPop(span, surface, entry, idx, '已填入');
       }
     }
 
@@ -314,7 +331,7 @@
       const typed = st.t;
       const differs = typed && typed.toLowerCase().trim() !== surface.toLowerCase();
       const baseNote = entry.base && entry.base.toLowerCase() !== surface.toLowerCase()
-        ? h('span', { class: 'base' }, '（原形 ' + entry.base + '）') : null;
+        ? h('span', { class: 'base' }, '原形 ' + entry.base) : null;
       openPop(span, [
         okMsg ? h('div', { class: 'pop-ok' }, okMsg) : null,
         typed
@@ -341,7 +358,7 @@
               span.classList.remove('done');
               span.textContent = surface;
             },
-          }, '清除，重新練習')),
+          }, '清除重練')),
       ]);
     }
 
@@ -359,22 +376,24 @@
 
     const list = h('div', null);
     wrap.append(list);
+    let card = null;   // 全部答完時的結算小卡(答對幾題、拿到的點心)
     drawAll();
 
     function drawAll() {
+      if (card) { card.destroy(); card = null; }
       list.innerHTML = '';
       a.questions.forEach((q, qi) => list.append(drawQuestion(q, qi)));
       const answered = Object.keys(answers).length;
       const correct = a.questions.filter((q, qi) => answers[qi] === q.answer).length;
+      if (answered === a.questions.length) {
+        card = miniCard({ score: correct, total: a.questions.length, kicker: '抓重點' });
+        list.append(card.el);
+      }
       const foot = h('div', { class: 'drill-nav-btns' },
         h('button', {
           class: 'btn', 'data-gate': '',
           onclick: () => { answers = {}; store.set(key, answers); drawAll(); },
-        }, '再做一次'),
-        answered === a.questions.length
-          ? h('span', { class: 'result-note', style: 'align-self:center' },
-              '本篇成績：' + correct + ' / ' + a.questions.length)
-          : null);
+        }, '再做一次'));
       list.append(foot);
     }
 
@@ -406,7 +425,7 @@
       if (done) {
         const box = h('div', { class: 'explain' },
           h('div', { class: 'verdict ' + (chosen === q.answer ? 'ok' : 'bad') },
-            chosen === q.answer ? '答對了' : '答錯 · 正解 ' + LETTERS[q.answer]),
+            chosen === q.answer ? '答對' : '答錯 · 正解 ' + LETTERS[q.answer]),
           h('div', null, q.explanation));
         /* 回報題目(js/report.js):題號跟上面 logAttempt('r') 同一套 */
         if (window.REPORT) REPORT.attach(box, { m: 'r', id: a.id + ':' + qi });
@@ -439,8 +458,7 @@
       });
     }
     if (banks !== before) store.set('vgame_banks', banks);
-    const bank = banks.find(b => b && b.id === bid) || { words: [] };
-    btn.textContent = '已存入題庫（' + bank.words.length + ' 字）';
+    btn.textContent = '已存入單字本';
     btn.classList.add('on');
     if (!btn.nextElementSibling || !btn.nextElementSibling.classList.contains('bank-golink')) {
       btn.after(h('a', { class: 'bank-golink', href: 'vocab.html' }, '去單字訓練'));
@@ -468,13 +486,14 @@
     const area = h('div', { class: 'tq-area' });
     wrap.append(
       h('p', { class: 'result-note' },
-        '同一批單字換一篇文章。字卡拖進空格，或先點字卡再點空格。'
-        + (last ? '上次成績 ' + last.score + ' / ' + last.total + '。' : '')),
+        '字卡拖進空格或先點字卡再點空格'
+        + (last ? ' · 上次成績 ' + last.score + ' / ' + last.total : '')),
       area);
 
     let placed = {}, selected = null, armed = null, submitted = false;
     let dragged = false;
     let bankOrder = shuffle(tr.words.map(x => x.word));
+    let card = null;   // 交卷後的結算小卡(取代原本那行成績),拿到的點心也畫在這裡
 
     function shuffle(list) {
       const arr = [...list];
@@ -556,6 +575,7 @@
     }
 
     function draw() {
+      if (card) { card.destroy(); card = null; }
       area.innerHTML = '';
       const used = new Set(Object.values(placed));
 
@@ -612,22 +632,25 @@
 
       const filledN = Object.keys(placed).length;
       if (!submitted) {
-        area.append(h('div', { class: 'drill-nav-btns' },
+        area.append(h('div', { class: 'drill-nav-btns tq-submit' },
           h('button', {
             class: 'btn primary', type: 'button', 'data-gate': '',
             disabled: filledN < answers.length ? '' : null,
             onclick: submit,
-          }, filledN < answers.length ? '交卷（還有 ' + (answers.length - filledN) + ' 格）' : '交卷')));
+          }, '交卷'),
+          filledN < answers.length ? h('span', { class: 'tq-left' }, '還有 ' + (answers.length - filledN) + ' 格') : null));
       } else {
         const score = answers.filter((w, bi) => placed[bi] === w).length;
-        area.append(h('div', { class: 'tq-result' }, '成績：' + score + ' / ' + answers.length));
+        card = miniCard({ score, total: answers.length, kicker: '單字考題' });
+        card.el.classList.add('tq-result');
+        area.append(card.el);
         const zhWrap = h('div', { class: 'tq-zh' });
         String(tr.passageZh).split(/\n{2,}/).forEach(z => zhWrap.append(h('p', null, z)));
         const words = h('div', { class: 'tq-review' });
         tr.words.forEach(x => words.append(h('div', null, h('b', null, x.word), x.zh)));
         area.append(zhWrap, words,
           h('div', { class: 'drill-nav-btns' },
-            h('button', { class: 'btn', type: 'button', onclick: reset }, '重新挑戰')));
+            h('button', { class: 'btn', type: 'button', onclick: reset }, '再做一次')));
       }
     }
 

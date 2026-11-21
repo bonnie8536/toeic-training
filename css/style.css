@@ -3252,8 +3252,8 @@ html.is-quiz .quiz-bar {
 .quiz-side:empty { display: none; }
 .quiz-side { display: flex; flex: none; margin-right: -8px; }
 .quiz-bar.has-act .quiz-count { min-width: 0; }
-.quiz-act.btn-text { padding: 0 10px; font-size: var(--fs-sm); color: var(--ink-soft); }
-.quiz-act.btn-text:hover { color: var(--ink); background: var(--bg-soft); }
+.quiz-act.btn-text { padding: 0 10px; font-size: var(--fs-sm); font-weight: 700; color: var(--primary); }
+.quiz-act.btn-text:hover { color: var(--primary-dark); background: var(--primary-tint); }
 .quiz-close {
   display: inline-flex; align-items: center; justify-content: center; flex: none; width: 44px; height: 44px; padding: 0;
   border: 0; border-radius: var(--r-md); background: none; color: var(--ink-soft); cursor: pointer;
@@ -3468,3 +3468,50 @@ a.result-go:hover { text-decoration: none; }
 .ui-dialog-actions .btn-text:hover { color: var(--ink); background: var(--bg-soft); }
 @keyframes ui-fade { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .modal-mask.ui-mask, .ui-dialog { animation: none; } }
+
+/* ---------------- 各頁面的補充樣式：每一段的規則加在自己的標記下面 ---------------- */
+
+/* ==== 導覽與分組頁 ==== */
+
+/* ---- */
+
+
+/* ==== 首頁、我的、價格 ==== */
+
+/* ---- */
+
+
+/* ==== 題庫與錯題本 ==== */
+
+/* ---- */
+
+
+/* ==== 模擬考與程度檢測 ==== */
+
+/* ---- */
+
+
+/* ==== 每日練習 ==== */
+
+/* ---- */
+
+
+/* ==== 單字與不規則動詞 ==== */
+
+/* ---- */
+
+
+/* ==== 文法、自然發音、聽力訓練 ==== */
+
+/* ---- */
+
+
+/* ==== 閱讀、對話、寫作 ==== */
+
+/* ---- */
+
+
+/* ==== 學習記錄、能力分析、帳號周邊 ==== */
+
+/* ---- */
+

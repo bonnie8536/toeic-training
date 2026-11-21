@@ -13,13 +13,13 @@ const H_SRC = (read('js/common.js').match(/function h\(tag[\s\S]*?\r?\n\}\r?\n/)
 if (!H_SRC) throw new Error('js/common.js 裡找不到 function h(tag, ...)');
 const UI_SRC = read('js/pet-ui.js');
 
-const RETRY = '沒有存到，再試一次。';
-const OLD_BAD = '小雞的資料讀不到，這台先不能餵。';
-const CLOCK = '這台裝置的日期不對，調好以後再餵。';
+const RETRY = '沒有存到\n再試一次';
+const OLD_BAD = '這台先不能餵\n小雞的資料讀不到';
+const CLOCK = '這台先不能餵\n請先調好這台裝置的日期';
 /* 按下去才發現唯讀:狀態列的一句(跟說明一樣不叫學生再試) */
 const NOT_SAVED = {
-  取名: { readOnly: '名字沒有改，這台先不能改小雞的資料。', clock: '名字沒有改，這台裝置的日期不對，調好以後再改。' },
-  改目標: { readOnly: '目標沒有改，這台先不能改小雞的資料。', clock: '目標沒有改，這台裝置的日期不對，調好以後再改。' },
+  取名: { readOnly: '名字沒有改\n這台先不能改小雞的資料', clock: '名字沒有改\n請先調好這台裝置的日期' },
+  改目標: { readOnly: '目標沒有改\n這台先不能改小雞的資料', clock: '目標沒有改\n請先調好這台裝置的日期' },
 };
 
 /* ---------- 很小的假 DOM:只做 pet-ui.js 用到的 ---------- */
@@ -231,7 +231,7 @@ T['「我的」頁那一區:改目標才發現唯讀,狀態列說目標沒有改
 T['v2 唯讀的說明:不說重新整理就好(退回第 1 步那一版時重新整理也一樣),也不用資料讀不到那句'] = async () => {
   const pg = loadPage({ view: 'v2', act: () => ({ ok: false }) });
   const act = pg.act();
-  return { ok: act.length > 0 && !/重新整理/.test(act) && act !== OLD_BAD && act !== CLOCK && /新版/.test(act) && /[。]$/.test(act), detail: JSON.stringify(act) };
+  return { ok: act.length > 0 && !/重新整理/.test(act) && act !== OLD_BAD && act !== CLOCK && /新版/.test(act) && !/[，。]/.test(act) && act.split('\n').length === 2, detail: JSON.stringify(act) };
 };
 T['不認得的版本與讀不到(newer 沒亮)照舊是「' + OLD_BAD + '」;時鐘不對照舊'] = async () => {
   const a = loadPage({ view: 'bad', act: () => ({ ok: false }) }).act();

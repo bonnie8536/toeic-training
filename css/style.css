@@ -2593,8 +2593,8 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 .pet-more { grid-column: 1 / -1; }
 .pet-more:empty, .pet-msg:empty { display: none; }
 .pet-card .pet-msg { grid-column: 1 / -1; }
-.pet-msg { margin-top: 6px; font-size: 14px; color: var(--ink-light); }
-.pet-note { margin-top: 8px; font-size: 13.5px; color: var(--ink-light); }
+.pet-msg { margin-top: 6px; font-size: 14px; color: var(--ink-light); white-space: pre-line; }   /* 訊息分兩行:發生什麼、原因或怎麼辦 */
+.pet-note { margin-top: 8px; font-size: 13.5px; color: var(--ink-light); white-space: pre-line; }
 .pet-act .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 20px; font-size: 15.5px; white-space: nowrap; }
 .pet-act .btn:hover { text-decoration: none; }
 .pet-act .btn[aria-disabled="true"] { opacity: .6; cursor: default; }
@@ -2770,6 +2770,8 @@ div.pet-roam2.is-fly .pet-roam2-btn, div.pet-roam2.is-scroll .pet-roam2-btn, div
 div.pet-roam2.is-move .pet-roam2-btn { pointer-events: none; }
 /* 有小雞的卡片在畫面上:原地淡出 0.2 秒 */
 div.pet-roam2.is-faded .pet-roam2-btn { opacity: 0; pointer-events: none; }
+/* 地面上腳下有內容(手機、App):一樣淡出;飛起來、站上站點時看得到 */
+div.pet-roam2.is-covered.is-ground .pet-roam2-btn { opacity: 0; pointer-events: none; }
 /* 剛放進頁面、第一次排好位置之前:看不到,也不做淡出(有小雞的卡片在畫面上時一開始就是淡出的) */
 div.pet-roam2.is-init .pet-roam2-btn { opacity: 0; pointer-events: none; transition: none; }
 /* 站在卡片上緣:可點範圍往上移 8 px,點卡片上緣不會點到小雞 */
@@ -2835,10 +2837,12 @@ html.pet-roam2.pet-roam2-wide .pet-card .pet-pic {
 /* 預設放在左緣:pet-ui 量寬度時可用的寬是整個視窗,量到的是一行的寬,再移到格子上方(放在 50% 量會被擠成兩行) */
 .pet-tip { position: fixed; z-index: 270; left: 8px; top: 16px; max-width: min(240px, calc(100vw - 16px)); text-wrap: balance; padding: 6px 10px; border-radius: 10px; background: #2b3036; color: #fff; font-size: 13px; line-height: 1.5; pointer-events: none; }
 .pet-tile-fly { position: fixed; z-index: 260; left: 0; top: 0; pointer-events: none; will-change: transform; }
-.pet-hint { margin-top: 10px; font-size: 13.5px; color: var(--ink-light); text-align: center; }
+.pet-hint { margin-top: 10px; font-size: 13.5px; color: var(--ink-light); text-align: center; white-space: pre-line; }
 .pet-hint:empty { display: none; }
 .pet-empty { display: grid; gap: 10px; margin-top: 10px; }
 .pet-empty p { font-size: 14.5px; text-align: center; text-wrap: balance; }
+.pet-empty .pet-empty-t { font-size: var(--fs-md); font-weight: 700; color: var(--ink); }
+.pet-empty .pet-empty-tag { justify-self: center; margin-top: -6px; padding: 2px 10px; border-radius: var(--r-full); background: var(--bg-soft); font-size: var(--fs-xs); color: var(--ink-soft); }
 .pet-empty .btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 44px; }
 .pet-empty .btn:hover { text-decoration: none; }
 /* 托盤下面原本的內容,用一條線隔開 */

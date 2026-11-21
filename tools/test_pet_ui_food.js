@@ -20,7 +20,20 @@ const STEP1_LATER = [
   ["const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h' });",
     "const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h', 'data-nosnippet': '' });"],
   /* 2026-11-21 文字精簡:保護卡的說明 */
-  ["'漏掉一天會自動用掉一張保護卡。'", "'漏掉一天會用掉 1 張保護卡。'"],
+  ["'漏掉一天會自動用掉一張保護卡。'", "'漏掉一天會用掉 1 張保護卡'"],
+  /* 2026-11-21 標點:12 字內不用逗號、單行不加句號、訊息分兩行(發生什麼、原因或怎麼辦) */
+  ["(t ? '，' + t : '')", "(t ? ' · ' + t : '')"],
+  ["msg = '餵了 ' + n + ' 顆。';", "msg = '餵了 ' + n + ' 顆';"],
+  ["'noFood') ? '' : '沒有存到，再試一次。';", "'noFood') ? '' : '沒有存到\\n再試一次';"],
+  ["return what + '沒有改，這台裝置的日期不對，調好以後再改。';", "return what + '沒有改\\n請先調好這台裝置的日期';"],
+  ["return what + '沒有改，這台先不能改小雞的資料。';", "return what + '沒有改\\n這台先不能改小雞的資料';"],
+  ["    return '沒有存到，再試一次。';", "    return '沒有存到\\n再試一次';"],
+  ["'小雞的資料是新版網頁存的，這台先不能餵。'", "'這台先不能餵\\n小雞的資料是新版網頁存的'"],
+  ["'這台裝置的日期不對，調好以後再餵。'", "'這台先不能餵\\n請先調好這台裝置的日期'"],
+  ["'小雞的資料讀不到，這台先不能餵。'", "'這台先不能餵\\n小雞的資料讀不到'"],
+  ["'，保護卡 '", "' · 保護卡 '"],
+  ["' 題。' : '改了從明天開始。'", "' 題' : '明天起生效'"],
+  ["'餵牠（' + s.food + ' 顆）'", "'餵牠 · ' + s.food + ' 顆'"],
 ];
 const OLD_SRC = STEP1_LATER.reduce((src, [from, to]) => {
   if (src.split(from).length !== 2) throw new Error('tools/fixtures/pet_ui_step1.js 裡找不到剛好一行:' + from);
@@ -29,7 +42,7 @@ const OLD_SRC = STEP1_LATER.reduce((src, [from, to]) => {
 
 const NAMES = { grain: '飼料', corn: '玉米', greens: '青江菜', pea: '豌豆', berry: '藍莓', tomato: '小番茄', melon: '西瓜', yam: '地瓜', worm: '麵包蟲' };
 const IDS = Object.keys(NAMES);
-const RO_TEXT = { readOnly: '小雞的資料讀不到，這台先不能餵。', clock: '這台裝置的日期不對，調好以後再餵。' };
+const RO_TEXT = { readOnly: '這台先不能餵\n小雞的資料讀不到', clock: '這台先不能餵\n請先調好這台裝置的日期' };
 
 /* ---------- 假 DOM ---------- */
 function makeDom(timers) {
@@ -347,7 +360,7 @@ T['格子:button[type=button]、圖只畫一張(render size 40 variant 0,不 mou
   const trayMounts = pg.log.mounts.filter(m => m.opt && m.opt.size === 40);
   return { ok: b.tagName === 'BUTTON' && b.getAttribute('type') === 'button' && !!b.querySelector('canvas.pet-tile-cv') && b.querySelector('.pet-tile-n').textContent === '玉米' &&
     pg.count('corn') === '2 份' && pg.count('grain') === '4 顆' && b.getAttribute('aria-describedby') === 'pet-tip-corn' && g.getAttribute('aria-describedby') === null &&
-    !!sr && sr.classList.contains('pet-sr') && sr.textContent === '玉米要壓碎再給小雞，整顆太大。' &&
+    !!sr && sr.classList.contains('pet-sr') && sr.textContent === '玉米要壓碎' &&
     pg.doc.getElementById('pet-tip-yam') === null && pg.tile('yam').getAttribute('aria-describedby') === null &&
     renders.length === 4 && renders.every(r => r[1].variant === 0) && trayMounts.length === 0,
     detail: JSON.stringify({ renders: renders.map(r => r[0] + JSON.stringify(r[1])), mounts: trayMounts.length, c: pg.count('corn'), g: pg.count('grain') }) };
@@ -383,17 +396,17 @@ T['面板在小圖畫完之前就關掉:不再畫、不丟錯'] = async () => {
 
 /* ================= D. 格子狀態與標籤(契約第 6 節的表) ================= */
 const LABEL_CASES = [
-  ['飼料有', {}, 'grain', '飼料，4 顆，全部餵牠', [], false],
-  ['飼料 0', { status: { food: 0 } }, 'grain', '飼料，0 顆', ['is-empty'], true],
-  ['點心可以餵', {}, 'corn', '玉米，2 份，餵一份', [], false],
-  ['點心 0 份', {}, 'pea', '豌豆，0 份', ['is-empty'], true],
-  ['今天還沒練習', { pantry: { practiced: false, canSnack: false, gotToday: null }, status: { todayCount: 0 } }, 'corn', '玉米，2 份，今天練習一下才能餵', ['is-locked'], true],
-  ['今天的 3 份點心餵過了', { pantry: { ateToday: true, ateCount: 3, ateFood: 'pea', canSnack: false } }, 'corn', '玉米，2 份，今天的 3 份點心餵過了', ['is-done'], true],
-  ['今天餵了 1 份,還能再餵', { pantry: { ateToday: true, ateCount: 1, ateFood: 'pea', canSnack: true } }, 'corn', '玉米，2 份，餵一份', [], false],
-  ['今天餵了 2 份,還能再餵', { pantry: { ateToday: true, ateCount: 2, ateFood: 'pea', canSnack: true } }, 'corn', '玉米，2 份，餵一份', [], false],
-  ['滿了', {}, 'yam', '地瓜，9 份，滿了，餵一份', ['is-full'], false],
-  ['最愛(favKnown)', { pantry: { fav: 'corn', favKnown: true } }, 'corn', '玉米，最喜歡的，2 份，餵一份', ['is-fav'], false],
-  ['最愛還不知道時不寫', { pantry: { fav: 'corn', favKnown: false } }, 'corn', '玉米，2 份，餵一份', [], false],
+  ['飼料有', {}, 'grain', '飼料 · 4 顆 · 全部餵牠', [], false],
+  ['飼料 0', { status: { food: 0 } }, 'grain', '飼料 · 0 顆', ['is-empty'], true],
+  ['點心可以餵', {}, 'corn', '玉米 · 2 份 · 餵一份', [], false],
+  ['點心 0 份', {}, 'pea', '豌豆 · 0 份', ['is-empty'], true],
+  ['今天還沒練習', { pantry: { practiced: false, canSnack: false, gotToday: null }, status: { todayCount: 0 } }, 'corn', '玉米 · 2 份 · 今天練習後才能餵', ['is-locked'], true],
+  ['今天的 3 份點心餵過了', { pantry: { ateToday: true, ateCount: 3, ateFood: 'pea', canSnack: false } }, 'corn', '玉米 · 2 份 · 今天的 3 份點心餵過了', ['is-done'], true],
+  ['今天餵了 1 份,還能再餵', { pantry: { ateToday: true, ateCount: 1, ateFood: 'pea', canSnack: true } }, 'corn', '玉米 · 2 份 · 餵一份', [], false],
+  ['今天餵了 2 份,還能再餵', { pantry: { ateToday: true, ateCount: 2, ateFood: 'pea', canSnack: true } }, 'corn', '玉米 · 2 份 · 餵一份', [], false],
+  ['滿了', {}, 'yam', '地瓜 · 9 份 · 滿了 · 餵一份', ['is-full'], false],
+  ['最愛(favKnown)', { pantry: { fav: 'corn', favKnown: true } }, 'corn', '玉米 · 最喜歡 · 2 份 · 餵一份', ['is-fav'], false],
+  ['最愛還不知道時不寫', { pantry: { fav: 'corn', favKnown: false } }, 'corn', '玉米 · 2 份 · 餵一份', [], false],
 ];
 for (const [name, over, id, label, cls, dis] of LABEL_CASES) {
   T['格子標籤:' + name + ' → 「' + label + '」'] = async () => {
@@ -415,7 +428,7 @@ T['滿了:份數寫「9 份」,「滿了」自己一行(.pet-tile-f,跟預覽一
   const full = id => { const e = pg.tile(id).querySelector('.pet-tile-f'); return e ? e.textContent : null; };
   const kids = pg.tile('yam').children.map(n => n.className);
   return { ok: pg.count('yam') === '9 份' && full('yam') === '滿了' && full('corn') === '' && full('grain') === '' && kids.indexOf('pet-tile-f') === kids.indexOf('pet-tile-c') + 1 &&
-    pg.tile('yam').getAttribute('aria-label') === '地瓜，9 份，滿了，餵一份' &&
+    pg.tile('yam').getAttribute('aria-label') === '地瓜 · 9 份 · 滿了 · 餵一份' &&
     !!pg.tile('corn').querySelector('.pet-heart') && !pg2.tile('corn').querySelector('.pet-heart') && !pg.tile('yam').querySelector('.pet-heart'),
     detail: JSON.stringify({ c: pg.count('yam'), f: full('yam'), kids, label: pg.tile('yam').getAttribute('aria-label') }) };
 };
@@ -435,20 +448,20 @@ T['唯讀:托盤整排變淡(is-ro)、每格 aria-disabled,下面放現有的唯
 };
 
 /* ================= E. 點心那一行、提示、沒有食物 ================= */
-T['點心那一行:今天的券有舊的地瓜(y)或麵包蟲(w:)而且還沒吃:「今天拿到 1 份地瓜。」「今天拿到 1 份麵包蟲。」(看不出是不是從結束畫面拿的,第二輪審查);不是第一張也講;吃滿 3 份照樣寫吃過'] = async () => {
+T['點心那一行:今天的券有舊的地瓜(y)或麵包蟲(w:)而且還沒吃:「今天拿到 1 份地瓜」「今天拿到 1 份麵包蟲」(看不出是不是從結束畫面拿的,第二輪審查);不是第一張也講;吃滿 3 份照樣寫吃過'] = async () => {
   const t = over => { const pg = load({ view: foodView(over), food: true }); pg.open(); return pg.sheet.querySelector('.pet-snack-line').textContent; };
   const one = (id, food) => ({ gotToday: { id, food }, gotAll: [{ id, food }] });
   const y = t({ pantry: one('y', 'yam') }), ws = t({ pantry: one('w:s1', 'worm') }), wa = t({ pantry: one('w:a2', 'worm') });
   const ya = t({ pantry: Object.assign(one('y', 'yam'), { ateToday: true, ateCount: 3 }) }), g = t({ pantry: one('g:ga-01', 'pea') });
   const second = t({ pantry: { gotToday: { id: 'd', food: 'corn' }, gotAll: [{ id: 'd', food: 'corn' }, { id: 'y', food: 'yam' }] } });
-  return { ok: y === '今天拿到 1 份地瓜。' && ws === '今天拿到 1 份麵包蟲。' && wa === ws && ya === '今天的 3 份點心都吃了，明天再餵。' && g === '' && second === y, detail: JSON.stringify([y, ws, wa, ya, g, second]) };
+  return { ok: y === '今天拿到 1 份地瓜' && ws === '今天拿到 1 份麵包蟲' && wa === ws && ya === '今天的 3 份點心都吃了 · 明天再餵' && g === '' && second === y, detail: JSON.stringify([y, ws, wa, ya, g, second]) };
 };
-T['點心那一行:吃滿 3 份「今天的 3 份點心都吃了，明天再餵。」;吃了 1、2 份「今天吃了 N 份點心，還能再餵 M 份。」;今天的券是 m 還沒吃「今天拿到 1 份青江菜。」;其他空的'] = async () => {
+T['點心那一行:吃滿 3 份「今天的 3 份點心都吃了 · 明天再餵」;吃了 1、2 份「今天吃了 N 份點心，還能再餵 M 份。」;今天的券是 m 還沒吃「今天拿到 1 份青江菜」;其他空的'] = async () => {
   const t = over => { const pg = load({ view: foodView(over), food: true }); pg.open(); return pg.sheet.querySelector('.pet-snack-line').textContent; };
   const m = { gotToday: { id: 'm', food: 'greens' }, gotAll: [{ id: 'm', food: 'greens' }] };
   const a = t({ pantry: { ateToday: true, ateCount: 3, canSnack: false } }), b = t({ pantry: m }), c = t({}), d = t({ pantry: Object.assign({}, m, { ateToday: true, ateCount: 3, canSnack: false }) });
   const a1 = t({ pantry: { ateToday: true, ateCount: 1 } }), a2 = t({ pantry: { ateToday: true, ateCount: 2 } });
-  return { ok: a === '今天的 3 份點心都吃了，明天再餵。' && b === '今天拿到 1 份青江菜。' && c === '' && d === a && a1 === '今天吃了 1 份點心，還能再餵 2 份。' && a2 === '今天吃了 2 份點心，還能再餵 1 份。', detail: JSON.stringify([a, b, c, d, a1, a2]) };
+  return { ok: a === '今天的 3 份點心都吃了 · 明天再餵' && b === '今天拿到 1 份青江菜' && c === '' && d === a && a1 === '今天吃了 1 份點心 · 還能再餵 2 份' && a2 === '今天吃了 2 份點心 · 還能再餵 1 份', detail: JSON.stringify([a, b, c, d, a1, a2]) };
 };
 T['點心那一行:10/23 起地瓜、麵包蟲的券記在自己的 id(y_<來源>、w:s1_<來源>),結束畫面講過了,打開面板不再講'] = async () => {
   const t = over => { const pg = load({ view: foodView(over), food: true }); pg.open(); return pg.sheet.querySelector('.pet-snack-line').textContent; };
@@ -462,7 +475,7 @@ T['點心那一行:達標(m)沒有結束畫面,補寫給的地瓜、麵包蟲記
   const y = t({ pantry: one('y_m', 'yam') }), ws = t({ pantry: one('w:s1_m', 'worm') }), wa = t({ pantry: one('w:a3_m', 'worm') });
   const second = t({ pantry: { gotToday: { id: 'd', food: 'corn' }, gotAll: [{ id: 'd', food: 'corn' }, { id: 'y_m', food: 'yam' }] } });
   const other = t({ pantry: one('y_mx', 'yam') });
-  return { ok: y === '今天拿到 1 份地瓜。' && ws === '今天拿到 1 份麵包蟲。' && wa === ws && second === y && other === '', detail: JSON.stringify([y, ws, wa, second, other]) };
+  return { ok: y === '今天拿到 1 份地瓜' && ws === '今天拿到 1 份麵包蟲' && wa === ws && second === y && other === '', detail: JSON.stringify([y, ws, wa, second, other]) };
 };
 T['「點一下餵食」只在現在餵得下去時出現:今天的 3 份點心都餵過、飼料 0 顆時不出現(審查第 1 輪 #6);飼料還有、或點心還能餵時照樣出現'] = async () => {
   const hintOf = over => { const pg = load({ view: foodView(over), food: true }); pg.open(); return pg.sheet.querySelector('.pet-hint').textContent; };
@@ -482,10 +495,10 @@ T['localStorage 讀不到時照樣顯示「點一下餵食」,不丟錯'] = asyn
   pg.open();
   return { ok: pg.sheet.querySelector('.pet-hint').textContent === '點一下餵食', detail: pg.sheet.querySelector('.pet-hint').textContent };
 };
-T['今天還沒練習而且有存點心:提示那一行是「今天練習一下，就可以餵點心。」'] = async () => {
+T['今天還沒練習而且有存點心:提示那一行是「今天練習後才能餵」'] = async () => {
   const pg = load({ view: foodView({ pantry: { practiced: false, canSnack: false, gotToday: null } }), food: true });
   pg.open();
-  return { ok: pg.sheet.querySelector('.pet-hint').textContent === '今天練習一下，就可以餵點心。', detail: pg.sheet.querySelector('.pet-hint').textContent };
+  return { ok: pg.sheet.querySelector('.pet-hint').textContent === '今天練習後才能餵', detail: pg.sheet.querySelector('.pet-hint').textContent };
 };
 T['沒有食物:只剩一格變淡的飼料,下面一行說明加一般按鈕(不是 primary)'] = async () => {
   const pg = load({ view: foodView({ status: { food: 0 }, pantry: { order: [], stock: {}, gotToday: null } }), food: true });
@@ -493,7 +506,7 @@ T['沒有食物:只剩一格變淡的飼料,下面一行說明加一般按鈕(�
   const e = pg.sheet.querySelector('.pet-empty');
   const a = e && e.querySelector('a');
   const seq = pg.sheet.children.map(n => n.className.split(' ')[0]);
-  return { ok: pg.tiles().length === 1 && pg.tile('grain').classList.contains('is-empty') && !!e && e.querySelector('p').textContent === '答題就有飼料，每天完成練習最多可以拿 3 份點心。' &&
+  return { ok: pg.tiles().length === 1 && pg.tile('grain').classList.contains('is-empty') && !!e && e.querySelector('p').textContent === '還沒有點心' && !!e.querySelector('.pet-empty-tag') && e.querySelector('.pet-empty-tag').textContent === '每天最多 3 份' &&
     !!a && a.classList.contains('btn') && a.classList.contains('pet-go') && !a.classList.contains('primary') && a.textContent === '去做每日練習' && seq.indexOf('pet-empty') === seq.indexOf('pet-hint') + 1,
     detail: JSON.stringify({ n: pg.tiles().length, a: a && a.className, seq }) };
 };
@@ -544,7 +557,7 @@ T['常識提示:鍵盤把焦點移到格子時出現(role=tooltip),Esc 先收提
   pg.doc.key('Tab');
   pg.tile('corn').focus();
   const tip = pg.doc.body.querySelector('.pet-tip');
-  const ok1 = !!tip && tip.getAttribute('role') === 'tooltip' && tip.textContent === '玉米要壓碎再給小雞，整顆太大。';
+  const ok1 = !!tip && tip.getAttribute('role') === 'tooltip' && tip.textContent === '玉米要壓碎';
   pg.doc.key('Escape');
   const ok2 = !pg.doc.body.querySelector('.pet-tip') && !!pg.doc.body.querySelector('.pet-sheet') && pg.doc.body.querySelector('.pet-mask').className.indexOf('is-off') < 0;
   pg.doc.key('Escape');
@@ -567,7 +580,7 @@ T['常識提示:滑鼠停住出現、離開收起;飼料沒有提示;點滑鼠�
   pg.doc.body.querySelector('.pet-mask').fire('pointerdown', { pointerType: 'mouse' });
   pg.tile('corn').focus();
   const d = pg.doc.body.querySelector('.pet-tip');
-  return { ok: !noTip && ta === '玉米要壓碎再給小雞，整顆太大。' && !b && !c && !d, detail: JSON.stringify({ ta, b: !!b, c: !!c, d: !!d }) };
+  return { ok: !noTip && ta === '玉米要壓碎' && !b && !c && !d, detail: JSON.stringify({ ta, b: !!b, c: !!c, d: !!d }) };
 };
 T['常識提示:長按 500 毫秒出現,這次放開不算點(不吃)'] = async () => {
   const pg = load({ view: foodView(), food: true });
@@ -603,22 +616,22 @@ T['點心可以餵:S.eat 呼叫一次;份數和點心那一行在點下去當下
   pg.timers.advance(1300);
   const after = pg.tiles().every(b => !b.classList.contains('is-busy'));
   const doneNow = pg.tile('yam').classList.contains('is-done');
-  return { ok: c1 === '1 份' && line === '今天吃了 1 份點心，還能再餵 2 份。' && live === '小黃吃了玉米。還有 1 份。' && busy && calls.join() === 'eat:corn' && after && !doneNow &&
-    labelDone === '地瓜，9 份，滿了，餵一份',
+  return { ok: c1 === '1 份' && line === '今天吃了 1 份點心 · 還能再餵 2 份' && live === '小黃吃了玉米 · 還有 1 份' && busy && calls.join() === 'eat:corn' && after && !doneNow &&
+    labelDone === '地瓜 · 9 份 · 滿了 · 餵一份',
     detail: JSON.stringify({ c1, line, live, busy, calls, after, doneNow, labelDone }) };
 };
-T['吃完最後一份:live「小黃吃了玉米。」'] = async () => {
+T['吃完最後一份:live「小黃吃了玉米」'] = async () => {
   const pg = load({ view: foodView({ pantry: { stock: { corn: 1, pea: 0, yam: 9 } } }), food: true });
   pg.state.eat = () => ({ ok: true, reason: null, left: 0 });
   pg.open();
   pg.tile('corn').fire('click'); pg.timers.advance(50);
-  return { ok: pg.live() === '小黃吃了玉米。' && pg.count('corn') === '0 份', detail: pg.live() + ' ' + pg.count('corn') };
+  return { ok: pg.live() === '小黃吃了玉米' && pg.count('corn') === '0 份', detail: pg.live() + ' ' + pg.count('corn') };
 };
 T['第一次吃到最愛:live 加「牠最喜歡玉米。」,格子馬上有愛心;小雞名字空的時候用「小雞」'] = async () => {
   const pg = load({ view: foodView({ status: { name: '' }, pantry: { fav: 'corn' } }), food: true });
   pg.open();
   pg.tile('corn').fire('click'); pg.timers.advance(50);
-  return { ok: pg.live() === '小雞吃了玉米。還有 1 份。牠最喜歡玉米。' && !!pg.tile('corn').querySelector('.pet-heart'), detail: pg.live() };
+  return { ok: pg.live() === '小雞吃了玉米 · 還有 1 份 · 牠最喜歡玉米' && !!pg.tile('corn').querySelector('.pet-heart'), detail: pg.live() };
 };
 /* 第三輪審查 #10 起:eat 不再交給引擎播一次(只啄 2 下),改成照食物的口數一格一格畫(每一口都咬到) */
 T['動畫:小雞播 eat 再 happy;啄地那格各咬一口舞台上的食物(56 px、不錯開),口數照食物;面板小雞 maxDpr 1.5、variants 1'] = async () => {
@@ -810,12 +823,12 @@ T['減少動態:食物不上舞台,小雞換 eat 靜止格停 1 秒再回待機;
   pg.timers.advance(1000);
   const p2 = pg.log.poses.slice(-1)[0];
   const free = pg.tiles().every(b => !b.classList.contains('is-busy'));
-  return { ok: p1 === 'eat' && p2 === 'idle' && c1 === '1 份' && live === '小黃吃了玉米。還有 1 份。' && !stage && free && pg.log.drawFrame > 0,
+  return { ok: p1 === 'eat' && p2 === 'idle' && c1 === '1 份' && live === '小黃吃了玉米 · 還有 1 份' && !stage && free && pg.log.drawFrame > 0,
     detail: JSON.stringify({ p1, p2, c1, live, stage: !!stage, free, drawFrame: pg.log.drawFrame }) };
 };
-T['saved 失敗:live 說原因(唯讀、時鐘)或「沒有存到，再試一次。」,重畫後份數回來'] = async () => {
+T['saved 失敗:live 說原因(唯讀、時鐘)或「沒有存到\n再試一次」,重畫後份數回來'] = async () => {
   const bad = [];
-  for (const [reason, want] of [['readOnly', '玉米沒有餵，這台先不能改小雞的資料。'], ['clock', '玉米沒有餵，這台裝置的日期不對，調好以後再餵。'], ['error', '沒有存到，再試一次。'], ['failed', '沒有存到，再試一次。']]) {
+  for (const [reason, want] of [['readOnly', '玉米沒有餵\n這台先不能改小雞的資料'], ['clock', '玉米沒有餵\n請先調好這台裝置的日期'], ['error', '沒有存到\n再試一次'], ['failed', '沒有存到\n再試一次']]) {
     const pg = load({ view: foodView(), food: true });
     pg.state.saved = Promise.resolve({ ok: false, reason });
     pg.open();
@@ -835,23 +848,23 @@ T['saved 成功:份數照 view() 新的資料畫'] = async () => {
   pg.emit('pet:change');
   await flush(); await flush();
   pg.timers.advance(1300);
-  return { ok: pg.count('corn') === '1 份' && !pg.tile('yam').classList.contains('is-done') && pg.sheet.querySelector('.pet-snack-line').textContent === '今天吃了 1 份點心，還能再餵 2 份。', detail: pg.count('corn') };
+  return { ok: pg.count('corn') === '1 份' && !pg.tile('yam').classList.contains('is-done') && pg.sheet.querySelector('.pet-snack-line').textContent === '今天吃了 1 份點心 · 還能再餵 2 份', detail: pg.count('corn') };
 };
-T['今天還沒練習:不吃,提示那一行和 live 念「今天練習一下，就可以餵點心。」'] = async () => {
+T['今天還沒練習:不吃,提示那一行和 live 念「今天練習後才能餵」'] = async () => {
   const pg = load({ view: foodView({ pantry: { practiced: false, canSnack: false, gotToday: null } }), food: true });
   pg.open();
   pg.tile('corn').fire('click'); pg.timers.advance(100);
-  return { ok: pg.log.calls.length === 0 && pg.live() === '今天練習一下，就可以餵點心。' && pg.sheet.querySelector('.pet-hint').textContent === '今天練習一下，就可以餵點心。',
+  return { ok: pg.log.calls.length === 0 && pg.live() === '今天練習後才能餵' && pg.sheet.querySelector('.pet-hint').textContent === '今天練習後才能餵',
     detail: JSON.stringify({ calls: pg.log.calls, live: pg.live() }) };
 };
-T['今天的 3 份餵過了:不呼叫 eat、播 nope(搖頭)、不扣;live「小黃今天吃了 3 份點心，明天再餵。」'] = async () => {
+T['今天的 3 份餵過了:不呼叫 eat、播 nope(搖頭)、不扣;live「小黃今天吃了 3 份點心 · 明天再餵」'] = async () => {
   const pg = load({ view: foodView({ pantry: { ateToday: true, ateCount: 3, ateFood: 'pea', canSnack: false } }), food: true });
   pg.open();
   pg.tile('corn').fire('click'); pg.timers.advance(100);
   const poses = pg.log.poses.slice(), live = pg.live(), c = pg.count('corn');
   pg.timers.advance(2000);
   const sf = pg.sheet.querySelector('.pet-stage-food');
-  return { ok: pg.log.calls.length === 0 && poses.includes('nope') && live === '小黃今天吃了 3 份點心，明天再餵。' && c === '2 份' && sf.hidden && pg.tiles().every(b => !b.classList.contains('is-busy')),
+  return { ok: pg.log.calls.length === 0 && poses.includes('nope') && live === '小黃今天吃了 3 份點心 · 明天再餵' && c === '2 份' && sf.hidden && pg.tiles().every(b => !b.classList.contains('is-busy')),
     detail: JSON.stringify({ calls: pg.log.calls, poses, live, c }) };
 };
 T['eat 當場回 ateToday(另一個分頁剛吃到第 3 份):照「今天的 3 份餵過了」播 nope,不扣'] = async () => {
@@ -859,7 +872,7 @@ T['eat 當場回 ateToday(另一個分頁剛吃到第 3 份):照「今天的 3 �
   pg.state.eat = () => ({ ok: false, reason: 'ateToday' });
   pg.open();
   pg.tile('corn').fire('click'); pg.timers.advance(100);
-  return { ok: pg.live() === '小黃今天吃了 3 份點心，明天再餵。' && pg.count('corn') === '2 份' && pg.log.poses.includes('nope'), detail: pg.live() };
+  return { ok: pg.live() === '小黃今天吃了 3 份點心 · 明天再餵' && pg.count('corn') === '2 份' && pg.log.poses.includes('nope'), detail: pg.live() };
 };
 T['一天 3 份:前一口還在存的時候再餵一口,兩口都算進今天(今天吃了 2 份);已經吃了 2 份再餵 1 份,那一行變成吃滿,格子變 is-done'] = async () => {
   const d1 = deferred(), d2 = deferred();
@@ -876,8 +889,8 @@ T['一天 3 份:前一口還在存的時候再餵一口,兩口都算進今天(�
   pg3.tile('corn').fire('click'); pg3.timers.advance(1300);
   const line3 = pg3.sheet.querySelector('.pet-snack-line').textContent;
   pg3.tile('corn').fire('click'); pg3.timers.advance(100);
-  return { ok: calls === 'eat:corn,eat:corn' && line2 === '今天吃了 2 份點心，還能再餵 1 份。' && c2 === '1 份' && line3 === '今天的 3 份點心都吃了，明天再餵。' && pg3.tile('yam').classList.contains('is-done')
-             && pg3.log.calls.join() === 'eat:corn' && pg3.live() === '小黃今天吃了 3 份點心，明天再餵。',
+  return { ok: calls === 'eat:corn,eat:corn' && line2 === '今天吃了 2 份點心 · 還能再餵 1 份' && c2 === '1 份' && line3 === '今天的 3 份點心都吃了 · 明天再餵' && pg3.tile('yam').classList.contains('is-done')
+             && pg3.log.calls.join() === 'eat:corn' && pg3.live() === '小黃今天吃了 3 份點心 · 明天再餵',
     detail: JSON.stringify({ calls, line2, c2, line3, calls3: pg3.log.calls, live3: pg3.live() }) };
 };
 T['0 份:什麼都不做'] = async () => {
@@ -888,7 +901,7 @@ T['0 份:什麼都不做'] = async () => {
 };
 
 /* ================= H. 飼料 ================= */
-T['飼料:呼叫 feed,份數當下變 0,成功 live「餵了 4 顆。」'] = async () => {
+T['飼料:呼叫 feed,份數當下變 0,成功 live「餵了 4 顆」'] = async () => {
   let v = foodView();
   const pg = load({ view: () => v, food: true });
   pg.open();
@@ -897,9 +910,9 @@ T['飼料:呼叫 feed,份數當下變 0,成功 live「餵了 4 顆。」'] = asy
   v = foodView({ status: { food: 0 } });
   await flush(); await flush();
   pg.timers.advance(1300);
-  return { ok: pg.log.calls.join() === 'feed' && c0 === '0 顆' && pg.live() === '餵了 4 顆。' && pg.count('grain') === '0 顆', detail: JSON.stringify({ c0, live: pg.live(), calls: pg.log.calls }) };
+  return { ok: pg.log.calls.join() === 'feed' && c0 === '0 顆' && pg.live() === '餵了 4 顆' && pg.count('grain') === '0 顆', detail: JSON.stringify({ c0, live: pg.live(), calls: pg.log.calls }) };
 };
-T['飼料:失敗時份數畫回來,live「沒有存到，再試一次。」'] = async () => {
+T['飼料:失敗時份數畫回來,live「沒有存到\n再試一次」'] = async () => {
   const pg = load({ view: foodView(), food: true });
   pg.state.feedRes = { ok: false, reason: 'error' };
   pg.open();
@@ -907,7 +920,7 @@ T['飼料:失敗時份數畫回來,live「沒有存到，再試一次。」'] = 
   await flush(); await flush();
   pg.timers.advance(3000);
   const sf = pg.sheet.querySelector('.pet-stage-food');
-  return { ok: pg.count('grain') === '4 顆' && pg.live() === '沒有存到，再試一次。' && sf.hidden, detail: pg.count('grain') + ' ' + pg.live() };
+  return { ok: pg.count('grain') === '4 顆' && pg.live() === '沒有存到\n再試一次' && sf.hidden, detail: pg.count('grain') + ' ' + pg.live() };
 };
 
 /* ================= I. pet:earn、走動開關、卡片 ================= */
@@ -948,7 +961,7 @@ T['走動開關:存不了時用 saveMsg 說「設定沒有改…」;「我的」
   const has = !!pg.sheet.querySelector('.pet-switch') && !pg.sheet.querySelector('.pet-goal');
   pg.sheet.querySelector('.pet-switch').fire('click');
   await flush(); await flush();
-  return { ok: has && pg.live() === '設定沒有改，這台先不能改小雞的資料。', detail: pg.live() };
+  return { ok: has && pg.live() === '設定沒有改\n這台先不能改小雞的資料', detail: pg.live() };
 };
 /* 首頁的實色按鈕只留每日練習那一顆:首頁卡片的「餵牠」是描邊(沒有 primary),「我的」頁照舊實色 */
 T['卡片(食物模式):.pet-act 一律放 button.btn.pet-open「餵牠」(首頁描邊、「我的」實色),按了打開面板、關掉焦點回到它;唯讀說明照放'] = async () => {

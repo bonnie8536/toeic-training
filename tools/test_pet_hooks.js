@@ -241,11 +241,11 @@ T['等那 150 毫秒時那一行離開畫面:不寫字'] = async () => {
   const p = e.head.querySelector('p');
   return { ok: !!p && p.textContent === '' && r && r.result === 'got', detail: p && JSON.stringify(p.textContent) };
 };
-T['今天的 3 份都拿了(cap):「今天的 3 份點心都拿到了，明天再來。」'] = async () => {
+T['今天的 3 份都拿了(cap):「今天的 3 份點心都拿到了 · 明天再來」'] = async () => {
   const e = hookEnv({ result: { result: 'cap', food: null, id: null, left: 0 } });
   await e.H.done('mock', { into: e.head });
   const p = earnP(e)[0];
-  return { ok: !!p && p.textContent === '今天的 3 份點心都拿到了，明天再來。', detail: p && p.textContent };
+  return { ok: !!p && p.textContent === '今天的 3 份點心都拿到了 · 明天再來', detail: p && p.textContent };
 };
 T['拿到:只寫 +1 食物:「+1 小番茄」;拿到第 3 份加註拿滿:「+1 小番茄 · 今日點心已拿滿」'] = async () => {
   const e = hookEnv({ result: { result: 'got', food: 'tomato', id: 'p5', left: 2 } });
@@ -256,14 +256,14 @@ T['拿到:只寫 +1 食物:「+1 小番茄」;拿到第 3 份加註拿滿:「+1 
   const b = earnP(e2)[0];
   return { ok: !!a && a.textContent === '+1 小番茄' && !!b && b.textContent === '+1 小番茄 · 今日點心已拿滿', detail: [a && a.textContent, b && b.textContent].join(' / ') };
 };
-T['同一個練習今天拿過了(dup):「這個練習今天拿過點心了，換別的練習還能拿 2 份。」;沒有 left 時只說前半句'] = async () => {
+T['同一個練習今天拿過了(dup):「這個練習今天拿過點心了 · 換別的練習還能拿 2 份」;沒有 left 時只說前半句'] = async () => {
   const e = hookEnv({ result: { result: 'dup', food: null, id: null, left: 2 } });
   await e.H.done('p5', { n: 10, into: e.head });
   const a = earnP(e)[0];
   const e2 = hookEnv({ result: { result: 'dup', food: null, id: null } });
   await e2.H.done('p5', { n: 10, into: e2.head });
   const b = earnP(e2)[0];
-  return { ok: !!a && a.textContent === '這個練習今天拿過點心了，換別的練習還能拿 2 份。' && !!b && b.textContent === '這個練習今天拿過點心了。' && !a.classList.contains('is-held'), detail: [a && a.textContent, b && b.textContent].join(' / ') };
+  return { ok: !!a && a.textContent === '這個練習今天拿過點心了 · 換別的練習還能拿 2 份' && !!b && b.textContent === '這個練習今天拿過點心了' && !a.classList.contains('is-held'), detail: [a && a.textContent, b && b.textContent].join(' / ') };
 };
 /* 手機上那一行比一行長(審查第 3 輪 #1:375 寬時那一行 305 px,拿過了、拿到第 3 份、名字 10 個字的那幾句會折成兩行,
    只留一行的話字寫上去時下面的按鈕往下跳 24 px)。等結果的時候就照這次可能寫的最長一句留夠行數(style.minHeight,每行 1.6em),
@@ -355,11 +355,11 @@ T['css:掉落通關畫面的那一行撐滿 .game-over 的寬(align-self: stretc
   const m = /\.game-over\s*>\s*\.pet-earn\s*\{([^}]*)\}/.exec(css);
   return { ok: !!m && /align-self\s*:\s*stretch/.test(m[1]) && /text-align\s*:\s*center/.test(m[1]), detail: m ? m[1] : '沒有 .game-over > .pet-earn' };
 };
-T['存滿:「小番茄已經存滿 9 份，先餵掉一些再來拿。」'] = async () => {
+T['存滿:「小番茄已經存滿 9 份 · 先餵掉一些再來拿」'] = async () => {
   const e = hookEnv({ result: { result: 'full', food: 'tomato', id: null } });
   await e.H.done('rv', { n: 10, into: e.head });
   const p = earnP(e)[0];
-  return { ok: !!p && p.textContent === '小番茄已經存滿 9 份，先餵掉一些再來拿。', detail: p && p.textContent };
+  return { ok: !!p && p.textContent === '小番茄已經存滿 9 份 · 先餵掉一些再來拿', detail: p && p.textContent };
 };
 T['小雞還沒取名:用「小雞」'] = async () => {
   const e = hookEnv({ name: '', result: { result: 'got', food: 'corn', id: 'd' } });
@@ -460,7 +460,7 @@ T['同一個 into 呼叫兩次只有一個 .pet-earn,文字是後來那次的'] 
   await e.H.done('iv', { n: 10, into: e.head });
   await e.H.done('g:ga-01', { n: 5, into: e.head });
   const ps = earnP(e);
-  return { ok: ps.length === 1 && ps[0].textContent === '今天的 3 份點心都拿到了，明天再來。', detail: ps.length + ' ' + (ps[0] && ps[0].textContent) };
+  return { ok: ps.length === 1 && ps[0].textContent === '今天的 3 份點心都拿到了 · 明天再來', detail: ps.length + ' ' + (ps[0] && ps[0].textContent) };
 };
 T['into 不是元素(null、字串、沒給):照樣領,不碰 DOM、不丟錯'] = async () => {
   const e = hookEnv();
@@ -799,7 +799,7 @@ T['每日練習頁:沒有掛勾、或開關關著(PET_STORE.food false),成績�
   const b = dailyRun({ store: { food: false, view: () => ({}), earn: () => { called++; return Promise.resolve({ result: 'off' }); } } });
   await settle();
   const sa = ser(a.root), sb = ser(b.root);
-  return { ok: !a.threw && !b.threw && /4 \/ 5/.test(a.root.textContent) && sa === sb && !/pet-earn/.test(sb) && called === 0,
+  return { ok: !a.threw && !b.threw && /^4 \/ 5/.test(((a.root.querySelector('.result-score') || {}).textContent || '').trim()) && sa === sb && !/pet-earn/.test(sb) && called === 0,
     detail: [a.threw && a.threw.message, b.threw && b.threw.message, sa === sb, called].join(' | ') };
 };
 T['每日練習頁:開關打開時成績頁的點心列(.result-reward)裡多一行「+1 玉米」,其他不變,只寫了 pet 以外的什麼都沒有'] = async () => {

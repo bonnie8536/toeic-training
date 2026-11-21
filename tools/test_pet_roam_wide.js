@@ -730,7 +730,10 @@ run('App 模式、窄的網站模式(800、1000):跟 f94cec7 那一版用同一�
   ];
   for (const c of cases) for (const seed of [11, 12]) {
     const mk = (src, z) => sim(Object.assign({ src, zones: z ? ZONES : null, seed, build: narrowPage(c.o.W) }, c.o));
-    const a = scenario(mk(OLD, false)), b = scenario(mk(ROAM, c.zones));
+    /* 新版多一個 is-covered(地面上腳下有內容時藏起來):比對時拿掉這一個 class,位置、姿勢、其他 class 仍要完全一樣;
+       這個假頁面只有往下捲到小雞卡時地面上才有內容,那時本來就淡出(is-faded),所以拿掉它不會藏掉差異。另外確認一開始(地面是空的)沒有 is-covered */
+    const a = scenario(mk(OLD, false)), raw = scenario(mk(ROAM, c.zones)), b = raw.map((v) => v.replace(' is-covered', ''));
+    ok(raw.every((v, k) => v === b[k] || / is-faded/.test(v)) && !/ is-covered/.test(raw[0]), c.name + ' #' + seed + ':is-covered 只出現在本來就淡出的時候,一開始沒有');
     const i = a.findIndex((v, k) => v !== b[k]);
     const moved = new Set(a.map((v) => v.split('|')[0])).size;
     ok(i < 0 && a.length === b.length && (c.o.page === 'grammar.html' || moved > 3), c.name + ' #' + seed + ':' + a.length + ' 格完全一樣', i < 0 ? { moved } : { at: i, old: a[i], now: b[i] });

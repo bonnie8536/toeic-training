@@ -183,9 +183,8 @@
     let roamOff = false, wide = false, wz = null, curPose = 'idle';
     const still = () => reduced || roamOff || !MAIN;
     let mode = 'ground', x = 0, gy = 0, feetDoc = 0, origin = 0, dir = Math.random() < 0.5 ? 1 : -1, lean = 0;
-    let lane = [0, 0], groundOff = CFG.webLift, perch = null, faded = false, off = false, sheetOpen = false, scrolling = false;
-    let act = null, turning = 0, held = false, flown = false, script = null, raf = 0, perchTimer = 0, lastFrame = '', lastMood = null, mine = false, failAt = 0;
-    const enteredAt = performance.now();
+    let lane = [0, 0], groundOff = CFG.webLift, perch = null, faded = false, off = false, sheetOpen = false, scrolling = false, gSpans = null, covered = false;
+    let act = null, turning = 0, held = false, flown = false, script = null, raf = 0, perchTimer = 0, lastFrame = '', lastMood = null, mine = false, failAt = 0; const enteredAt = performance.now();
     /* 照模式定大小(CFG.sizes):換了就重開引擎(畫布照裝置像素比重配,最多 2 倍),css 的 --pet2-w、--pet2-h 跟著改;靜止的小雞新的引擎馬上停在靜止格(審查第 1 輪 #7);寬不寬先算好再開第一次(#9) */
     function sized() {
       const so = root.screen && root.screen.orientation, s = sizeFor(APP, wide, APP && innerHeight <= CFG.landH && html.clientWidth > innerHeight && !/^portrait/.test((so && so.type) || ''), root.innerWidth), st = html.style;   // 橫放看方向不只看高:直放的視窗變矮(鍵盤、分割畫面)不換(審查第 3 輪 #2)
@@ -356,13 +355,14 @@
       if (want === faded || (want && focused())) return;
       faded = want;
       layer.classList.toggle('is-faded', faded);
-      btn.inert = faded;
+      btn.inert = faded || covered;
       if (faded) {
         stopScript();
         anim.stop();
       } else { lastFrame = ''; if (!off) next(); }
     }
 
+    function cover() { let c = false; gSpans = null; if (!wide && mode === 'ground' && !off) { const gl = groundLine(), o = collect(lane[0] - CFG.padI, lane[1] + S + CFG.padI, gl - BOXH, gl, { text: true, media: true, cards: true }); gSpans = freeSpans(o, lane[0], lane[1], gl - BOXH, gl, S); c = !gSpans.length; if (!c && !spanAt(gSpans, x)) { x = nearest(gSpans, x); place(); } } if (c !== covered) { covered = c; layer.classList.toggle('is-covered', c); btn.inert = c || faded; } }   /* 地面上不壓在內容上(手機、App):腳下那一條有字、圖、可以點的東西、卡片、頁尾連結時藏起來(引擎照跑、照樣會飛上站點),有空段就只在空段裡走;捲到空的地方(頁面最下面替小雞留的空白)再出來。電腦版到處走有自己的空地規則,不套這條 */
     /* ---------- 要不要整層藏起來 ---------- */
     function typing() {
       const a = doc.activeElement;
@@ -390,7 +390,7 @@
     function settle() {
       if (offCheck() || script || scrolling) { if (wz) wz.dirty = true; return; }   // 飛完、回到畫面上的時候再量
       measure();
-      setFaded(twin());
+      setFaded(twin()); cover();
       if (mode === 'air') checkPerch(true);
       else { x = clampLane(x); place(); if (wide) remeasure(); }
     }
@@ -421,7 +421,7 @@
     }
 
     /* ---------- 一般走動(引擎計時器每拍呼叫) ---------- */
-    const span = () => (mode === 'air' ? perch && perch.span : (wz && wz.lane) || lane);   // wz.lane:忙的時候落到一側的地面,只在那一側走
+    const span = () => (mode === 'air' ? perch && perch.span : (gSpans && spanAt(gSpans, x)) || (wz && wz.lane) || lane);   // gSpans:地面上空著的那一段;wz.lane:忙的時候落到一側的地面,只在那一側走
     function onTick(t) {
       if (script || off || faded || still() || scrolling || held) return;
       if (turning > 0) {
@@ -442,7 +442,7 @@
       if (act && --act.left <= 0) next();
     }
     function next() {
-      if (script || off || faded) return;
+      cover(); if (script || off || faded) return;
       layer.classList.toggle('is-still', still());
       if (still()) { showStill(); return; }
       if (held) { setPose(U.mood()); return; }
@@ -737,7 +737,7 @@
       layer.hidden = false;
       offCheck();
       html.classList.add('has-pet');
-      btn.setAttribute('aria-label', U.label(v) + '，打開餵食');
+      btn.setAttribute('aria-label', U.label(v) + ' · 打開餵食');
       const ro = v.roam === false, roamChanged = ro !== roamOff;
       if (roamChanged) { roamOff = ro; if (roamOff && mode === 'air') snapGround(); }
       if (ev.sheet === true) {

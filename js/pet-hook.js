@@ -39,14 +39,14 @@
   const isLeft = n => typeof n === 'number' && n >= 0 && n === Math.floor(n);
   function lineFor(r, S) {
     if (!r || typeof r !== 'object') return '';
-    if (r.result === 'cap') return '今天的 ' + perDay() + ' 份點心都拿到了，明天再來。';
-    if (r.result === 'dup') return '這個練習今天拿過點心了' + (isLeft(r.left) && r.left > 0 ? '，換別的練習還能拿 ' + r.left + ' 份。' : '。');
+    if (r.result === 'cap') return '今天的 ' + perDay() + ' 份點心都拿到了 · 明天再來';
+    if (r.result === 'dup') return '這個練習今天拿過點心了' + (isLeft(r.left) && r.left > 0 ? ' · 換別的練習還能拿 ' + r.left + ' 份' : '');
     const f = foodName(r.food);
     if (!f) return '';
     if (r.result === 'got') {
       return '+1 ' + f + (isLeft(r.left) && r.left === 0 ? ' · 今日點心已拿滿' : '');
     }
-    if (r.result === 'full') return f + '已經存滿 9 份，先餵掉一些再來拿。';
+    if (r.result === 'full') return f + '已經存滿 9 份 · 先餵掉一些再來拿';
     return '';
   }
   /* 這次可能寫的最長一句要幾行:手機上那一行只有 305 px 左右,拿過了、拿到第 3 份、名字長的那幾句會折成兩行(審查第 3 輪 #1)。

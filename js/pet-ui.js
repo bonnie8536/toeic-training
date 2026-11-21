@@ -37,7 +37,7 @@
   function nameOf(v) { return ((v || cur).status && (v || cur).status.name) || '小雞'; }
   /* 斷掉時不寫「連續 0 天」,改寫一起練了幾天;從沒練過什麼都不寫 */
   function streakText(s) { return s.streak > 0 ? '連續 ' + s.streak + ' 天' : s.practicedDays > 0 ? '一起練了 ' + s.practicedDays + ' 天' : ''; }
-  function label(v) { const t = streakText((v || cur).status); return nameOf(v) + (t ? '，' + t : ''); }
+  function label(v) { const t = streakText((v || cur).status); return nameOf(v) + (t ? ' · ' + t : ''); }
 
   /* ---------- 小雞動畫:看得到(畫面上、分頁在前景)才動 ---------- */
   /* opt:{ maxDpr, variants }(餵食面板 160 px 的小雞用 1.5 與 1,規格 A.9);沒給就跟第 1 步一樣 */
@@ -145,9 +145,9 @@
     let r;
     try { r = await S.feed(); } catch (e) { r = { ok: false, reason: 'error' }; }
     feeding = false;
-    if (r && r.ok) { msg = '餵了 ' + n + ' 顆。'; notify({ fed: n }); return true; }
+    if (r && r.ok) { msg = '餵了 ' + n + ' 顆'; notify({ fed: n }); return true; }
     /* 唯讀(資料讀不到、時鐘不對)與沒有飼料:action() 已經寫了原因,這裡不重複 */
-    msg = r && (r.reason === 'readOnly' || r.reason === 'clock' || r.reason === 'noFood') ? '' : '沒有存到，再試一次。';
+    msg = r && (r.reason === 'readOnly' || r.reason === 'clock' || r.reason === 'noFood') ? '' : '沒有存到\n再試一次';
     notify();
     return false;
   }
@@ -155,9 +155,9 @@
      其他失敗(出錯、登出、沒存成)才請學生再試一次 */
   function saveMsg(r, what) {
     if (r && r.ok) return '';
-    if (r && r.reason === 'clock') return what + '沒有改，這台裝置的日期不對，調好以後再改。';
-    if (r && r.reason === 'readOnly') return what + '沒有改，這台先不能改小雞的資料。';
-    return '沒有存到，再試一次。';
+    if (r && r.reason === 'clock') return what + '沒有改\n請先調好這台裝置的日期';
+    if (r && r.reason === 'readOnly') return what + '沒有改\n這台先不能改小雞的資料';
+    return '沒有存到\n再試一次';
   }
   async function setGoal(n) {
     msg = '';
@@ -176,7 +176,7 @@
     return done ? h('a', { class: cls, href: 'drill.html', 'data-focus': key }, '去答題')
       : h('a', { class: cls, href: 'daily.html', 'data-focus': key }, '去做每日練習');
   }
-  function roText(v) { return v.newer ? '小雞的資料是新版網頁存的，這台先不能餵。' : v.reason === 'clock' ? '這台裝置的日期不對，調好以後再餵。' : '小雞的資料讀不到，這台先不能餵。'; }
+  function roText(v) { return v.newer ? '這台先不能餵\n小雞的資料是新版網頁存的' : v.reason === 'clock' ? '這台先不能餵\n請先調好這台裝置的日期' : '這台先不能餵\n小雞的資料讀不到'; }   // 第一行發生什麼、第二行原因或怎麼辦(css pre-line)
   /* noGo:首頁那張卡就在每日練習下面,沒有飼料時不再放一個去每日練習的按鈕 */
   function action(v, noGo) {
     const s = v.status;
@@ -184,7 +184,7 @@
     if (s.food > 0 || feeding) {
       /* 存的時候用 aria-disabled、不用 disabled:按鈕留得住焦點(feeding 擋住重複按) */
       return h('button', { class: 'btn primary pet-feed', type: 'button', 'data-focus': 'feed', 'aria-disabled': feeding ? 'true' : null, onclick: feed },
-        '餵牠（' + s.food + ' 顆）');
+        '餵牠 · ' + s.food + ' 顆');
     }
     return noGo ? null : goLink();
   }
@@ -198,7 +198,7 @@
   function streakLine(s) {
     const t = streakText(s);
     if (!t) return null;
-    return h('p', { class: 'pet-streak' }, t + (s.streak > 0 && s.shields > 0 ? '，保護卡 ' + s.shields + ' 張' : ''));
+    return h('p', { class: 'pet-streak' }, t + (s.streak > 0 && s.shields > 0 ? ' · 保護卡 ' + s.shields + ' 張' : ''));
   }
   /* 最近 7 天有沒有練(Duolingo 連續天數畫面的一週列) */
   function week(v) {
@@ -222,11 +222,11 @@
       h('div', { class: 'pet-seg', role: 'group', 'aria-labelledby': idp + '-goal' }, GOALS.map((n) =>
         h('button', { class: 'pet-seg-b', type: 'button', 'data-focus': 'goal' + n, 'aria-pressed': String(s.nextGoal === n), disabled: v.readOnly ? '' : null,
           onclick: () => { if (s.nextGoal !== n) setGoal(n); } }, n + ' 題'))),
-      h('p', { class: 'pet-goal-note' }, s.nextGoal !== s.goal ? '明天起每天 ' + s.nextGoal + ' 題。' : '改了從明天開始。'));
+      h('p', { class: 'pet-goal-note' }, s.nextGoal !== s.goal ? '明天起每天 ' + s.nextGoal + ' 題' : '明天起生效'));
   }
   /* 訪客的小雞不會搬到帳號裡(cloud.js 不搬訪客資料);網站沒開雲端時沒有登入,不提 */
   function notes(v, full) {
-    return [full && v.status.streak > 0 && v.status.shields > 0 ? h('p', { class: 'pet-note' }, '漏掉一天會用掉 1 張保護卡。') : null].filter(Boolean);
+    return [full && v.status.streak > 0 && v.status.shields > 0 ? h('p', { class: 'pet-note' }, '漏掉一天會用掉 1 張保護卡') : null].filter(Boolean);
   }
   /* 重畫一塊內容,焦點原本在裡面的話放回同一個 data-focus;找不到就放到 fallback(例如首頁卡片的小雞) */
   function paint(box, nodes, fallback) {
@@ -263,7 +263,7 @@
   const LAND_Q = '(orientation: landscape) and (max-height: 500px)';
   /* 舞台上的位置,跟 css 那一塊對齊:食物在小雞嘴前(對舞台中線的位移、上緣),愛心從頭頂冒出來 */
   const STAGE = { port: { chick: 160, food: 56, dx: 36, top: 126, cx: -12, head: 65, rise: 46 }, land: { chick: 96, food: 40, dx: 22, top: 51, cx: -7, head: 20, rise: 16 } };
-  const LOCK = '今天練習一下，就可以餵點心。';
+  const LOCK = '今天練習後才能餵';
   /* 一天可以餵幾份、今天餵了幾份(pantry 的 ateMax、ateCount;一天一份那版的 pantry 沒有這兩個鍵,照 ateToday 算 1 份、上限 3) */
   const ateN = (p) => (typeof p.ateCount === 'number' && p.ateCount >= 0 ? p.ateCount : p.ateToday ? 1 : 0), ateMax = (p) => (typeof p.ateMax === 'number' && p.ateMax > 0 ? p.ateMax : 3), ateAll = (p) => ateN(p) >= ateMax(p);
   const HEART = "<svg viewBox='0 0 30 28' width='15' height='14' aria-hidden='true' focusable='false'><path d='M15 26C8 20.5 2.6 15.8 2.4 9.6 2.2 5.2 5.5 2.3 9.1 2.6c2.6.2 4.6 2 5.8 4.1 1.3-2.3 3.4-4.2 6.2-4.2 3.7 0 6.6 3.2 6.2 7.4-.6 6-6.2 10.6-12.3 16.1z' fill='#ff7a93' stroke='#151515' stroke-width='2.4' stroke-linejoin='round'/></svg>";
@@ -271,7 +271,7 @@
     try { const n = P.foodName && P.foodName(id); if (n) return n; } catch (e) { /* 舊版 pet.js */ } return F && F.info && F.info[id] ? F.info[id].name : '';
   }
   /* 常識提示只用規格那兩句,其他食物等查證來源(契約 12 第 10 條) */
-  function tipOf(id) { return id === 'grain' ? '' : id === 'corn' ? '玉米要壓碎再給小雞，整顆太大。' : ''; }
+  function tipOf(id) { return id === 'grain' ? '' : id === 'corn' ? '玉米要壓碎' : ''; }
   function hintTurn() {
     try {
       const n = parseInt(localStorage.getItem(HINT_KEY), 10) || 0;
@@ -280,7 +280,7 @@
       return true;
     } catch (e) { return true; }
   }
-  function eatFail(fn, why) { return why === 'clock' ? fn + '沒有餵，這台裝置的日期不對，調好以後再餵。' : why === 'readOnly' ? fn + '沒有餵，這台先不能改小雞的資料。' : '沒有存到，再試一次。'; }
+  function eatFail(fn, why) { return why === 'clock' ? fn + '沒有餵\n請先調好這台裝置的日期' : why === 'readOnly' ? fn + '沒有餵\n這台先不能改小雞的資料' : '沒有存到\n再試一次'; }
   /* 吃點心時把 eat 姿勢自帶的飼料色碎屑藏起來(碎屑交給食物自己噴,規格 3.6) */
   function crumbless(g) {
     return new Proxy(g, {
@@ -349,9 +349,9 @@
       const n = snack ? Math.max(0, (p.stock && p.stock[id]) || 0) : feeding ? 0 : Math.max(0, v.status.food || 0);
       const full = snack && n >= MAX_STOCK, fav = snack && id === p.fav && !!p.favKnown;
       const locked = snack && n > 0 && !p.practiced, done = snack && n > 0 && !!p.practiced && ateAll(p);
-      const count = n + (snack ? ' 份' : ' 顆'), text = count + (full ? '，滿了' : '');   // 格子上「滿了」自己一行(預覽 .ff)
-      const name = foodName(id) + (fav ? '，最喜歡的' : '') + '，' + text;
-      const label = n === 0 || v.readOnly ? name : !snack ? name + '，全部餵牠' : locked ? name + '，今天練習一下才能餵' : done ? name + '，今天的 ' + ateMax(p) + ' 份點心餵過了' : name + '，餵一份';
+      const count = n + (snack ? ' 份' : ' 顆'), text = count + (full ? ' · 滿了' : '');   // 格子上「滿了」自己一行(預覽 .ff)
+      const name = foodName(id) + (fav ? ' · 最喜歡' : '') + ' · ' + text;   // 讀屏標籤:片段用「 · 」相連
+      const label = n === 0 || v.readOnly ? name : !snack ? name + ' · 全部餵牠' : locked ? name + ' · ' + LOCK : done ? name + ' · 今天的 ' + ateMax(p) + ' 份點心餵過了' : name + ' · 餵一份';
       const hold = busy || feeding;
       return { n, count, full, label, fav, off: !!v.readOnly || n === 0 || locked || done || hold,
         cls: { 'is-empty': n === 0, 'is-locked': locked, 'is-done': done, 'is-full': full, 'is-fav': fav, 'is-busy': hold } };
@@ -441,7 +441,7 @@
       });
       /* 今天吃過了講吃了幾份、還能再餵幾份;還沒吃時,今天的券沒有結束畫面講過(達標 m)或看不出是不是結束畫面給的(一天一份那版的 y、w:s1,沒有 _來源)就講;達標補寫給的地瓜、麵包蟲記在 y_m、w:…_m,也沒有結束畫面,也講(規格 4.3,審查第 2 輪 #2) */
       const gl = Array.isArray(p.gotAll) ? p.gotAll : p.gotToday ? [p.gotToday] : [], told = gl.find((g) => g && /^(m|y|w:[a-z0-9]+|(?:y|w:[a-z0-9]+)_m)$/.test(g.id || '')), k = ateN(p), mx = ateMax(p);
-      const lt = k >= mx ? '今天的 ' + mx + ' 份點心都吃了，明天再餵。' : k > 0 ? '今天吃了 ' + k + ' 份點心，還能再餵 ' + (mx - k) + ' 份。' : told ? '今天拿到 1 份' + foodName(told.food) + '。' : '';
+      const lt = k >= mx ? '今天的 ' + mx + ' 份點心都吃了 · 明天再餵' : k > 0 ? '今天吃了 ' + k + ' 份點心 · 還能再餵 ' + (mx - k) + ' 份' : told ? '今天拿到 1 份' + foodName(told.food) : '';
       if (line.textContent !== lt) line.textContent = lt;
       const stocked = (p.order || []).some((id) => ((p.stock && p.stock[id]) || 0) > 0);
       const grain = !feeding && v.status.food > 0;
@@ -449,7 +449,7 @@
       if (hint.textContent !== ht) hint.textContent = ht;
       const none = !v.readOnly && !feeding && !grain && !stocked;
       if (none && !empty) {
-        empty = h('div', { class: 'pet-empty' }, h('p', null, '答題就有飼料，每天完成練習最多可以拿 ' + ateMax(p) + ' 份點心。'), goLink(true));
+        empty = h('div', { class: 'pet-empty' }, h('p', { class: 'pet-empty-t' }, '還沒有點心'), h('p', { class: 'pet-empty-tag' }, '每天最多 ' + ateMax(p) + ' 份'), goLink(true));   // 空狀態:標題一行、數量做成標籤、出口一個
         hint.after(empty);
       } else if (!none && empty) {
         if (empty.contains(doc.activeElement)) tiles[0].b.focus();
@@ -497,7 +497,7 @@
         return;
       }
       const mine = { id, left: Math.max(0, Math.floor(r.left) || 0), first, eatId: typeof r.eatId === 'string' ? r.eatId : '' }; pending = pending.concat([mine]);
-      say(nameOf() + '吃了' + fn + '。' + (mine.left > 0 ? '還有 ' + mine.left + ' 份。' : '') + (first ? '牠最喜歡' + fn + '。' : ''));
+      say(nameOf() + '吃了' + fn + (mine.left > 0 ? ' · 還有 ' + mine.left + ' 份' : '') + (first ? ' · 牠最喜歡' + fn : ''));
       if (REDUCE) {
         hold(STILL_MS);
         o.chick().still('eat', STILL_MS, () => plainFrame(cv, geo().chick, 'eat', A.calm.eat || 0));
@@ -517,7 +517,7 @@
     }
     /* 今天的 3 份點心都吃過了:搖頭,食物飛回托盤,不扣(規格 3.5) */
     function refuse(id) {
-      say(nameOf() + '今天吃了 ' + ateMax(pan(cur)) + ' 份點心，明天再餵。');
+      say(nameOf() + '今天吃了 ' + ateMax(pan(cur)) + ' 份點心 · 明天再餵');
       if (REDUCE) { hold(STILL_MS); o.chick().still('nope', STILL_MS); return; }
       hold(FLY_MS * 2 + NOPE_MS);
       const t = serve(id, () => o.chick().play(['nope']));

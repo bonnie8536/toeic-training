@@ -18,14 +18,15 @@
   d.classList.add('is-app');
   d.classList.add('app-shell');
   if (['signup.html', 'reset.html', 'terms.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
-  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  if (!location.search && ['index.html', 'learn.html', 'warmup.html', 'drill.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
   var m = document.querySelector('meta[name=viewport]');
   if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
   window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
 })();
 </script>
+<meta name="description" content="日常學習：文法基礎、自然發音、閱讀訓練和對話練習，從基礎一課一課往上走。">
 <meta name="robots" content="noindex">
-<title>學習 - 衝衝英文</title>
+<title>日常學習 - 衝衝英文</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap">
@@ -44,63 +45,62 @@
 <header class="topbar">
   <div class="topbar-inner" data-nosnippet>
     <a class="brand" href="index.html">衝衝英文</a>
-    <nav class="topnav">
+    <nav class="topnav" aria-label="主要導覽">
       <a href="index.html">首頁</a>
-      <a href="diagnostic.html">程度檢測</a>
       <div class="nav-group">
-        <button class="nav-btn active" type="button">學習</button>
+        <a class="nav-btn active" href="learn.html" aria-current="page">日常學習</a>
         <div class="nav-menu">
           <a href="grammar.html">文法基礎</a>
           <a href="phonics.html">自然發音</a>
-          <a href="vocab.html">單字訓練</a>
-          <a href="listening.html">聽力訓練</a>
           <a href="reading.html">閱讀訓練</a>
           <a href="dialogue.html">對話練習</a>
-          <a href="writing.html">寫作練習</a>
         </div>
       </div>
       <div class="nav-group">
-        <button class="nav-btn" type="button">刷題</button>
+        <a class="nav-btn" href="warmup.html">練練手感</a>
+        <div class="nav-menu">
+          <a href="vocab.html">單字訓練</a>
+          <a href="listening.html">聽力訓練</a>
+          <a href="writing.html">寫作練習</a>
+          <a href="grammar.html?ref=verbs">不規則動詞</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <a class="nav-btn" href="drill.html">刷刷題目</a>
         <div class="nav-menu">
           <a href="practice.html">題庫刷題</a>
           <a href="mock.html">模擬考</a>
-          <a href="review.html">每日複習</a>
+          <a href="diagnostic.html">程度檢測</a>
+          <a href="review.html">錯題本</a>
         </div>
       </div>
     </nav>
   </div>
 </header>
 
-<main class="container">
-  <div class="page-head"><h1>學習</h1></div>
-  <div class="module-cards">
-    <a class="module-card" href="grammar.html">
+<main class="container hub">
+  <div class="page-head"><canvas class="hub-art" data-doodle="learn" data-size="40" aria-hidden="true"></canvas><h1>日常學習</h1></div>
+  <div class="tile-grid">
+    <a class="module-card tile tile-featured" href="grammar.html">
+      <canvas class="tile-art" data-doodle="grammar" data-size="96" aria-hidden="true"></canvas>
       <h2>文法基礎</h2>
       <p>8 章 94 課</p>
+      <span class="btn primary tile-go">開始</span>
     </a>
-    <a class="module-card" href="phonics.html">
+    <a class="module-card tile" href="phonics.html">
+      <canvas class="tile-art" data-doodle="phonics" data-size="64" aria-hidden="true"></canvas>
       <h2>自然發音</h2>
       <p>8 章 54 課</p>
     </a>
-    <a class="module-card" href="vocab.html">
-      <h2>單字訓練</h2>
-      <p>4 種遊戲 · 片語練習</p>
-    </a>
-    <a class="module-card" href="listening.html">
-      <h2>聽力訓練</h2>
-      <p>4 種練習</p>
-    </a>
-    <a class="module-card" href="reading.html">
+    <a class="module-card tile" href="reading.html">
+      <canvas class="tile-art" data-doodle="reading" data-size="64" aria-hidden="true"></canvas>
       <h2>閱讀訓練</h2>
-      <p>分級文章 · 英中對照</p>
+      <p>40 篇文章</p>
     </a>
-    <a class="module-card" href="dialogue.html">
+    <a class="module-card tile" href="dialogue.html">
+      <canvas class="tile-art" data-doodle="dialogue" data-size="64" aria-hidden="true"></canvas>
       <h2>對話練習</h2>
       <p>24 組對話</p>
-    </a>
-    <a class="module-card" href="writing.html">
-      <h2>寫作練習</h2>
-      <p>3 級</p>
     </a>
   </div>
 </main>
@@ -115,6 +115,7 @@
 <script src="js/cloud-config.js"></script>
 <script src="js/plans-config.js"></script>
 <script src="js/common.js"></script>
+<script src="js/doodle-art.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/sync-merge.js"></script>
 <script src="js/pet-config.js"></script>
@@ -122,6 +123,7 @@
 <script src="js/cloud.js"></script>
 <script src="js/profile.js"></script>
 <script src="js/paywall.js"></script>
+<script src="js/hub.js"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "753df33a812d44c78d22641c5063e4d3"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

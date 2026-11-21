@@ -18,15 +18,15 @@
   d.classList.add('is-app');
   d.classList.add('app-shell');
   if (['signup.html', 'reset.html', 'terms.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
-  if (!location.search && ['index.html', 'learn.html', 'drill.html', 'review.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  if (!location.search && ['index.html', 'learn.html', 'warmup.html', 'drill.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
   var m = document.querySelector('meta[name=viewport]');
   if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
   window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
 })();
 </script>
-<meta name="description" content="每日複習：刷題、片語、單字、文法答錯的，集中成一份今日功課。">
+<meta name="description" content="錯題本：刷題、片語、單字、文法答錯的題都集中在這裡，一次複習完。">
 <meta name="robots" content="noindex">
-<title>每日複習 - 衝衝英文</title>
+<title>錯題本 - 衝衝英文</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap">
@@ -45,27 +45,33 @@
 <header class="topbar">
   <div class="topbar-inner" data-nosnippet>
     <a class="brand" href="index.html">衝衝英文</a>
-    <nav class="topnav">
+    <nav class="topnav" aria-label="主要導覽">
       <a href="index.html">首頁</a>
-      <a href="diagnostic.html">程度檢測</a>
       <div class="nav-group">
-        <button class="nav-btn" type="button">學習</button>
+        <a class="nav-btn" href="learn.html">日常學習</a>
         <div class="nav-menu">
           <a href="grammar.html">文法基礎</a>
           <a href="phonics.html">自然發音</a>
-          <a href="vocab.html">單字訓練</a>
-          <a href="listening.html">聽力訓練</a>
           <a href="reading.html">閱讀訓練</a>
           <a href="dialogue.html">對話練習</a>
-          <a href="writing.html">寫作練習</a>
         </div>
       </div>
       <div class="nav-group">
-        <button class="nav-btn active" type="button">刷題</button>
+        <a class="nav-btn" href="warmup.html">練練手感</a>
+        <div class="nav-menu">
+          <a href="vocab.html">單字訓練</a>
+          <a href="listening.html">聽力訓練</a>
+          <a href="writing.html">寫作練習</a>
+          <a href="grammar.html?ref=verbs">不規則動詞</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <a class="nav-btn active" href="drill.html">刷刷題目</a>
         <div class="nav-menu">
           <a href="practice.html">題庫刷題</a>
           <a href="mock.html">模擬考</a>
-          <a href="review.html" class="active">每日複習</a>
+          <a href="diagnostic.html">程度檢測</a>
+          <a href="review.html" class="active" aria-current="page">錯題本</a>
         </div>
       </div>
     </nav>

@@ -15,10 +15,10 @@
   /* 「開始使用」的判定(跟 refund.html「怎樣算開始使用」同一件事),放在勾選框正下方。
      老師方案的功能(班級、學生進度)不是練習功能,所以老師方案另外寫一句(2026-10-17 第二輪複審)。
      學生方案與寫作批改各寫自己那一句,跟退款政策一字不差(第三輪複審:以前兩種共用一句,批改的視窗沒寫 5 篇的規則) */
-  /* 每句最多一個逗號:條件用頓號列在冒號後面(退款政策 refund.html 同步改成同一句,意思不變) */
-  const CONSENT_DEF = '方案開始計算後，登入並使用過任何一項需要方案的練習功能就算開始使用。';
-  const CONSENT_DEF_CREDITS = '寫作真人批改以一篇為單位。批改完成的那一篇就算使用。5' + NB + '篇批改服務批改過其中一篇就算開始使用。';
-  const CONSENT_DEF_TEACHER = '老師方案開始計算後，下列任一項就算開始使用：用過任何一項需要方案的練習功能、有學生用邀請碼加入你的班級、在教師後台查看過班上學生的練習進度。';
+  /* 這三句是條文:要改字,先換條款版本(CONSENT_VERSION)並同步 refund.html */
+  const CONSENT_DEF = '方案開始計算後，登入並使用過任何一項需要方案的練習功能，就算開始使用。';
+  const CONSENT_DEF_CREDITS = '寫作真人批改以一篇為單位，批改完成的那一篇就算使用。5' + NB + '篇批改服務批改過其中一篇，就算開始使用。';
+  const CONSENT_DEF_TEACHER = '老師方案開始計算後，用過任何一項需要方案的練習功能、有學生用邀請碼加入你的班級，或在教師後台查看過班上學生的練習進度，就算開始使用。';
   const GATEWAYS = Object.freeze({ S: 'https://core.newebpay.com/MPG/mpg_gateway', T: 'https://ccore.newebpay.com/MPG/mpg_gateway' });
   const FIELD_KEYS = ['MerchantID', 'TradeInfo', 'TradeSha', 'Version'];
   const LAST_KEY = 'tr_pay_last';            // 這個分頁最後建立的訂單 { o, at }(sessionStorage;藍新的「返回商店」不帶訂單編號)

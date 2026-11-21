@@ -689,7 +689,7 @@ const cases = {
     const mask = box.parentNode;
     const checks = [
       /* 這裡開的是老師方案的視窗:第二輪複審起寫老師方案自己的定義(學生方案、批改的視窗照舊,見第二輪複審的案例) */
-      !!def && def.textContent === '老師方案開始計算後，下列任一項就算開始使用：用過任何一項需要方案的練習功能、有學生用邀請碼加入你的班級、在教師後台查看過班上學生的練習進度。',
+      !!def && def.textContent === '老師方案開始計算後，用過任何一項需要方案的練習功能、有學生用邀請碼加入你的班級，或在教師後台查看過班上學生的練習進度，就算開始使用。',
       /* 被拒絕後焦點回到視窗裡(第一輪複審) */
       inBox === box && D.dom.document.activeElement === submit,
       /* 視窗比畫面高時可以捲動(第一輪複審) */
@@ -809,7 +809,7 @@ const cases = {
     const norm = x => x.split(NB).join(' ');
     const checks = [
       !!s && refund.includes(norm(s)) && /需要方案的練習功能/.test(s) && !/批改/.test(s),
-      !!c && refund.includes(norm(c)) && /5 篇批改服務批改過其中一篇就算開始使用。/.test(norm(c)) && !/練習功能/.test(c),
+      !!c && refund.includes(norm(c)) && /5 篇批改服務批改過其中一篇，就算開始使用。/.test(norm(c)) && !/練習功能/.test(c),
       copyProblems(s).length === 0 && copyProblems(c).length === 0,
     ];
     return { ok: checks.every(Boolean), detail: checks.map(x => (x ? 'o' : 'x')).join('') + ' ' + JSON.stringify([s, c]) };

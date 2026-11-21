@@ -579,6 +579,8 @@ T['style.css 檔尾有 hooks 那一塊,每一條規則都掛在 .pet-earn 上(�
    區塊用縮排判斷:從錨點那一行到下一個同樣縮排、開頭是 } 的那一行。 */
 const G = "if (window.PET_HOOK) PET_HOOK.done(";
 const RH = "root.querySelector('.report-head')";
+/* 題庫、聽力的結算是結算卡(UI.result):點心那一行放進卡片的 .result-reward */
+const RR = "root.querySelector('.result-reward')";
 const SITES = [
   ['js/daily-ui.js', 'runPart summary()', ['function runPart(', 'function summary() {'], G + "'d', { into: " + RH + ' });'],
   ['js/grammar.js', 'finish()', ['function finish() {'], G + "'g:' + u.id, { n: u.quiz.length, into: tail.querySelector('.report-head') });"],
@@ -593,13 +595,13 @@ const SITES = [
     "if (window.PET_HOOK && Object.keys(answers).length === a.questions.length) PET_HOOK.done('r:' + a.id, { into: list.querySelector('.drill-nav-btns') });"],
   ['js/reading.js', 'renderTransfer submit()', ['function renderTransfer(', 'function submit() {'], G + "'tq:' + a.id, { into: area, after: area.querySelector('.tq-result') });"],
   ['js/practice.js', 'startQuiz submit()(交卷後的 review)', ['function startQuiz(', 'function submit(opener, asked) {'],
-    G + "'p' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '5' ? [session.answers[i]] : u.item.questions.map((q, qi) => session.answers[i][qid(u.item, q, qi)])).filter(r => r && r.c > -1).length, 0), into: " + RH + ' });'],
+    G + "'p' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '5' ? [session.answers[i]] : u.item.questions.map((q, qi) => session.answers[i][qid(u.item, q, qi)])).filter(r => r && r.c > -1).length, 0), into: " + RR + ' });'],
   ['js/practice.js', 'startReview summary()', ['function startReview(', 'function summary() {'],
-    G + "'pr', { n: Object.values(session).reduce((s, r) => s + (p === '5' ? 1 : Object.keys(r).length), 0), into: " + RH + ' });'],
+    G + "'pr', { n: Object.values(session).reduce((s, r) => s + (p === '5' ? 1 : Object.keys(r).length), 0), into: " + RR + ' });'],
   ['js/listening.js', 'startQuiz summary()(錯題複習)', ['function startQuiz(', 'function summary() {'],
-    G + "opts.wrongOnly ? 'pr' : 'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: " + RH + ' });'],
+    G + "opts.wrongOnly ? 'pr' : 'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: " + RR + ' });'],
   ['js/listening.js', 'startQuiz submit()(一般練習交卷)', ['function startQuiz(', 'function submit(opener, asked) {'],
-    G + "'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: " + RH + ' });'],
+    G + "'l' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '1' || u.p === '2' ? (sess[i].answers.c > -1 ? 1 : 0) : u.item.questions.filter((q, qi) => sess[i].answers[qi] !== undefined).length), 0), into: " + RR + ' });'],
   ['js/ear.js', 'summary()', ['function startRound(', 'function summary() {'], G + "'e' + sec, { n: list.length, into: " + RH + ' });'],
   ['js/review.js', 'summary()', ['function summary() {'], G + "'rv', { n: list.length, into: " + RH + ' });'],
   ['js/dialogue.js', 'markHeard()', ['function markHeard('],

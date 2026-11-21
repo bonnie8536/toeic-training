@@ -1,6 +1,7 @@
 /* 聽力刷題引擎(掛在題庫刷題頁使用):
-   window.LISTEN = { PARTS, partStats, startQuiz(rootEl, config), startReview(rootEl, p, g) }(g:錯題本的組名,錯題本定稿 2026-11-18)
+   window.LISTEN = { PARTS, partStats, startQuiz(rootEl, config), startReview(rootEl, p, g) }(g:錯題本的組名)
    - config = [{p:'1'|'2'|'3'|'4', n}] 可混合;作答前每題限播 2 次,答後解鎖+逐字稿。
+   - 作答是專心模式:一般練習只記選擇、交卷後看成績卡與逐題解析;錯題複習每題作答後馬上給回饋。
    - 紀錄存 listen_p1~p4(雲端同步)。 */
 (function () {
   const L = (window.TOEIC && TOEIC.listening) || null;
@@ -14,6 +15,7 @@
   };
   const KEY = p => 'listen_p' + p;
   const qid = (set, qi) => set.id + ':' + qi;
+  const listUrl = p => 'practice.html?mode=wrong&part=' + p;
 
   function partStats(p) {
     const st = store.get(KEY(p), {});
@@ -82,11 +84,12 @@
       }));
     speedSel.addEventListener('change', () => { if (audio) audio.playbackRate = Number(speedSel.value); });
     const label = h('span', { class: 'player-note' });
-    const btn = h('button', { class: 'btn primary player-btn', type: 'button' }, '▶ 播放');
+    /* 作答畫面的實色按鈕只有底部的主按鈕,播放鈕用描邊 */
+    const btn = h('button', { class: 'btn player-btn', type: 'button' }, '▶ 播放');
     function refresh() {
       const free = state.done;
       const left = 2 - state.plays;
-      label.textContent = free ? '已作答，可重複聽' : (left > 0 ? '還可播放 ' + left + ' 次' : '播放次數用完，請作答');
+      label.textContent = free ? '可重複播放' : (left > 0 ? '還可播放 ' + left + ' 次' : '播放次數已用完');
       btn.disabled = !free && left <= 0;
       btn.textContent = state.plays > 0 ? '▶ 再播一次' : '▶ 播放';
     }
@@ -105,6 +108,21 @@
     return { el: h('div', { class: 'player' }, btn, speedSel, label), refresh, stop: () => { if (audio) audio.pause(); } };
   }
 
+  /* 專心模式的底部按鈕:文字按鈕(上一題)與實色主按鈕(gate:要登入才能做的那一下標 data-gate) */
+  function textBtn(label, onClick) {
+    return h('button', { class: 'btn-text', type: 'button', onclick: onClick }, label);
+  }
+  function mainBtn(label, onClick, gate, disabled) {
+    return h('button', { class: 'btn primary', type: 'button', 'data-gate': gate ? '' : null, disabled: disabled ? '' : null, onclick: onClick }, label);
+  }
+  /* 作答列右邊的「交卷」:UI.focus 的按鈕不是我們建的,事後標上 data-gate */
+  function setSubmit(f, onClick) {
+    f.action(onClick ? { label: '交卷', onClick } : null);
+    const b = f.bar.querySelector('.quiz-act');
+    if (b) b.setAttribute('data-gate', '');
+  }
+  const answerText = (q, i) => LETTERS[i] + '. ' + q.options[i];
+
   /* ================= 混合聽力練習 ================= */
   /* opts.units:直接給這一輪的單元 [{ p, item }](錯題本複習,js/wrongbook.js 的 round 算好的),不呼叫 pickPool。
      opts.back:「回錯題本」的網址;opts.group:只複習的那一組(組名);opts.rest:這一組還沒輪到幾題(答錯的題數) */
@@ -114,26 +132,19 @@
     if (Array.isArray(opts.units)) opts.units.forEach(u => units.push(u));
     else config.forEach(c => pickPool(c.p, c.n, opts.wrongOnly).forEach(item => units.push({ p: c.p, item })));
     const back = opts.back || 'practice.html';
-    if (!units.length) {
-      root.innerHTML = '';
-      root.append(h('div', { class: 'q-block', style: 'margin-top:20px' }, opts.wrongOnly ? (opts.group ? '這一組已經沒有錯題。' : '目前沒有聽力錯題。') : '沒有題目。'),
-        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: back }, opts.back ? '回錯題本' : '回題庫')));
-      return;
-    }
-    /* 這一回要答幾題:聽力 3、4 整組重答,算整組的題數(跟成績頁「答對 x / N 題」的 N 一樣),寫「X 組（N 題）」,跟 Part 6、7 同一種寫法 */
-    const n = units.reduce((k, u) => k + (u.p === '1' || u.p === '2' ? 1 : u.item.questions.length), 0);
-    const roundText = units.some(u => u.p === '3' || u.p === '4') ? units.length + ' 組（' + n + ' 題）' : n + ' 題';
-    const sub = opts.wrongOnly
-      ? (opts.units ? (opts.group ? opts.group + ' · ' : '') + '這一回 ' + roundText : '錯題複習 · ' + units.length + ' 單元')
-      : config.map(c => 'Part ' + c.p + ' × ' + c.n + ' ' + PARTS[c.p].unit).join(' · ');
-    const heading = opts.wrongOnly && opts.units ? '聽力 ' + PARTS[config[0].p].title + ' 錯題本 ' : '聽力練習 ';
     /* 一般練習=交卷式(答完全部才對答案);錯題複習=即時對答(答對才移出) */
     const instant = !!opts.wrongOnly;
+    if (!units.length) {
+      root.replaceChildren(
+        h('div', { class: 'page-head' }, h('h1', null, instant ? '聽力錯題本' : '聽力練習')),
+        UI.empty({ pose: 'sleep', text: instant ? '沒有錯題' : '沒有題目', action: { label: opts.back ? '回錯題本' : '回題庫刷題', href: back } }));
+      return;
+    }
     const sess = units.map(() => ({ done: false, answers: {}, plays: 0 }));
-    const okFlags = [];
     let cur = 0;
     let player = null;
-    let handing = false;   // 交卷的確認視窗按了確定、正在等那 50 毫秒(見 submit):這時再按交卷不算
+    let handing = false;   // 交卷的確認視窗開著:這時再按交卷不算
+    const f = UI.focus.enter({ total: units.length, onExit: () => { location.href = back; }, confirmExit: !instant, body: '還沒交卷的作答不會計分' });
     draw();
 
     function unitAnswered(i) {
@@ -142,25 +153,19 @@
       return u.item.questions.every((q, qi) => sess[i].answers[qi] !== undefined);
     }
 
+    function go(i) { cur = i; draw(); window.scrollTo(0, 0); }
+
+    /* 選了答案:重畫但捲動位置留著 */
+    function repaint() {
+      const y = window.scrollY;
+      draw();
+      window.scrollTo(0, y);
+    }
+
     function draw() {
       if (player) player.stop();
-      root.innerHTML = '';
-      root.append(h('div', { class: 'drill-top' },
-        h('h1', null, heading, h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' }, sub)),
-        h('a', { href: back, style: 'font-size:13.5px;margin-left:auto' }, opts.back ? '← 回錯題本' : '← 回題庫')));
-      const nav = h('div', { class: 'q-nav' });
-      units.forEach((x, i) => {
-        let cls = i === cur ? 'cur' : '';
-        if (okFlags[i] === true) cls += ' ok';
-        if (okFlags[i] === false) cls += ' ng';
-        if (!instant && unitAnswered(i) && okFlags[i] === undefined) cls += ' ans';
-        nav.append(h('button', {
-          class: cls.trim(),
-          disabled: instant ? '' : null,
-          onclick: instant ? null : () => { cur = i; draw(); window.scrollTo(0, 0); },
-        }, String(i + 1)));
-      });
-      root.append(nav);
+      root.replaceChildren();
+      f.progress(cur + 1);
       const u = units[cur];
       const state = sess[cur];
       player = makePlayer(u.item.id, state);
@@ -170,25 +175,28 @@
     }
 
     /* 作答鈕、交卷鈕都標 data-gate(跟 js/practice.js 的閱讀練習一樣):開始之後別的分頁登出、換帳號,或這台的帳號資料夾還沒灌過,
-       js/profile.js 在按下去之前擋下、開「重新整理」卡,不選取、不對答案、不出成績,選好的留在這一頁。
-       以前沒標,common.js 靜靜不寫,交卷後照樣寫「答錯的題目已收進錯題本。」,其實一筆都沒存(審查 D 第 2 輪 #2)。「下一題」不寫東西,照常 */
-    function nextRow(canNext) {
+       js/profile.js 在按下去之前擋下、開「重新整理」卡,不選取、不對答案、不出成績,選好的留在這一頁。「下一題」不寫東西,照常 */
+    function drawFoot(canNext) {
       const isLast = cur === units.length - 1;
       if (!instant) {
-        return h('div', { class: 'drill-nav-btns' },
-          h('button', {
-            class: 'btn primary', 'data-gate': isLast ? '' : null,
-            onclick: e => { if (isLast) submit(e.currentTarget); else { cur++; draw(); window.scrollTo(0, 0); } },
-          }, isLast ? '交卷' : '下一' + PARTS[units[cur + 1].p].unit + ' →'),
-          isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: e => submit(e.currentTarget) }, '交卷'));
+        f.foot([
+          cur > 0 ? textBtn('上一題', () => go(cur - 1)) : null,
+          mainBtn(isLast ? '交卷' : '下一題', e => { if (isLast) submit(e.currentTarget); else go(cur + 1); }, isLast),
+        ]);
+        setSubmit(f, isLast ? null : e => submit(e.currentTarget));
+        return;
       }
-      return h('div', { class: 'drill-nav-btns' },
-        canNext
-          ? h('button', {
-              class: 'btn primary',
-              onclick: () => { if (isLast) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
-            }, isLast ? '看本輪成績' : '下一' + PARTS[units[cur + 1] ? units[cur + 1].p : units[cur].p].unit + ' →')
-          : h('span', { class: 'result-note', style: 'align-self:center' }, '聽音檔作答後才能繼續'));
+      f.foot([mainBtn(isLast ? '看成績' : '下一題', next, false, !canNext)]);
+    }
+
+    function next() {
+      if (cur === units.length - 1) summary(); else go(cur + 1);
+    }
+
+    /* 單題的即時回饋(Part 1、2):回饋條寫對錯與正解,解析方塊不重複 */
+    function drawFeedback(q, rec) {
+      const isLast = cur === units.length - 1;
+      f.feedback({ ok: rec.ok, answer: rec.ok ? null : answerText(q, q.answer), next: isLast ? '看成績' : '下一題', onNext: next });
     }
 
     function letterButtons(count, rec, answer, onPick) {
@@ -222,10 +230,11 @@
       return box;
     }
 
-    function reveal(q, rec, transcript, m) {
+    /* verdict:false 時不寫「答對了」「答錯 · 正解」那一行(作答當下由底部回饋條寫) */
+    function reveal(q, rec, transcript, m, verdict) {
       return h('div', null,
         withReport(h('div', { class: 'explain' },
-          h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
+          verdict === false ? null : h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
             rec.ok ? '答對了' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
           h('div', null, q.explanation)), m, q.id),
         h('div', { class: 'transcript-box' },
@@ -249,13 +258,12 @@
           ? letterButtons(4, rec, q.answer, oi => {
               state.done = true;
               state.answers = { c: oi, ok: oi === q.answer };
-              okFlags[cur] = state.answers.ok;
               saveRec('1', q.id, oi, state.answers.ok);
               draw();
             })
-          : letterPick(4, state.answers.c, oi => { state.answers.c = oi; draw(); }),
-        instant && rec ? reveal(q, rec, q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n'), 'l1') : null));
-      root.append(nextRow(state.done));
+          : letterPick(4, state.answers.c, oi => { state.answers.c = oi; f.dirty(true); repaint(); }),
+        instant && rec ? reveal(q, rec, q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n'), 'l1', false) : null));
+      if (instant && rec) drawFeedback(q, rec); else drawFoot(state.done);
     }
 
     function drawP2(q, state) {
@@ -268,13 +276,12 @@
           ? letterButtons(3, rec, q.answer, oi => {
               state.done = true;
               state.answers = { c: oi, ok: oi === q.answer };
-              okFlags[cur] = state.answers.ok;
               saveRec('2', q.id, oi, state.answers.ok);
               draw();
             })
-          : letterPick(3, state.answers.c, oi => { state.answers.c = oi; draw(); }),
-        instant && rec ? reveal(q, rec, q.question + '\n' + q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n'), 'l2') : null));
-      root.append(nextRow(state.done));
+          : letterPick(3, state.answers.c, oi => { state.answers.c = oi; f.dirty(true); repaint(); }),
+        instant && rec ? reveal(q, rec, q.question + '\n' + q.options.map((o, i) => LETTERS[i] + '. ' + o).join('\n'), 'l2', false) : null));
+      if (instant && rec) drawFeedback(q, rec); else drawFoot(state.done);
     }
 
     function drawSet(p, set, state) {
@@ -300,12 +307,12 @@
               if (instant) {
                 saveRec(p, qid(set, qi), oi, oi === q.answer);
                 const all = set.questions.every((x, xi) => state.answers[xi] !== undefined);
-                if (all) {
-                  state.done = true;
-                  okFlags[cur] = set.questions.every((x, xi) => state.answers[xi] === x.answer);
-                }
+                if (all) state.done = true;
+                draw();
+              } else {
+                f.dirty(true);
+                repaint();
               }
-              draw();
             },
           }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
         });
@@ -327,24 +334,28 @@
           h('div', { class: 'tr-zh' }, set.transcriptZh)));
       }
       root.append(block);
-      root.append(nextRow(complete));
+      drawFoot(complete);
+    }
+
+    /* 單元名稱:Part 1、2 是「題」,題組是「組」,混在一起就叫單元 */
+    function unitWord(list) {
+      const single = u => u.p === '1' || u.p === '2';
+      return list.every(single) ? '題' : list.every(u => !single(u)) ? '組' : '個單元';
     }
 
     /* 交卷:統一批改(未作答算錯,不寫入錯題紀錄) */
     function submit(opener, asked) {
-      /* 等那 50 毫秒的時候交卷鈕還按得到:以前再按一次又問、又排一次,批改、小雞的 PET_HOOK.done 都跑兩次,第二次還把沒答的(c: -1)寫進紀錄與錯題本 */
-      if (handing && !asked) return;
-      const missing = units.filter((u, i) => !unitAnswered(i)).length;
-      if (missing && !asked) {
-        if (!confirm('還有 ' + missing + ' 個單元沒答完，確定要交卷嗎？未作答的算錯。')) return;
-        /* 原生確認視窗開著的時候,別的分頁對 localStorage 的改動(登出、換帳號、記上「還沒灌過」)Chrome 不會送進這一頁,
-           按確定之後要再過兩個工作(實測約 2 毫秒)才看得到,在那之前讀到的還是舊值,下面的查核都會放行:等 50 毫秒再往下(審查 D 第 4 輪 #3) */
+      /* 確認視窗開著的時候交卷鈕還按得到:不再問第二次,批改、小雞的 PET_HOOK.done 也只跑一次 */
+      if (handing) return;
+      const missingUnits = units.filter((u, i) => !unitAnswered(i));
+      if (missingUnits.length && !asked) {
         handing = true;
-        setTimeout(() => { handing = false; submit(opener, true); }, 50);   // 往下才放開:holdForAccount 擋下跳卡時,之後還能再按交卷
+        UI.confirm({ title: '還有 ' + missingUnits.length + ' ' + unitWord(missingUnits) + '沒答完', body: '未作答的算錯', ok: '交卷', cancel: '繼續作答' })
+          .then(yes => { handing = false; if (yes) submit(opener, true); });
         return;
       }
       /* 確認視窗開著的時候別的分頁登出、帳號資料夾變成還沒灌過:問完再查一次,擋下就開「重新整理」卡、不批改,選好的留著
-         (跟 js/practice.js 隨機練習的交卷一樣;以前照樣寫「答錯的題目已收進錯題本。」,審查 D 第 3 輪 #3) */
+         (跟 js/practice.js 隨機練習的交卷一樣) */
       if (typeof holdForAccount === 'function' && holdForAccount(opener)) return;
       units.forEach((u, i) => {
         const state = sess[i];
@@ -354,47 +365,66 @@
             state.answers.ok = state.answers.c === u.item.answer;
             saveRec(u.p, u.item.id, state.answers.c, state.answers.ok);
           } else state.answers = { c: -1, ok: false };
-          okFlags[i] = state.answers.ok;
         } else {
-          let allOk = true;
           u.item.questions.forEach((q, qi) => {
             const c = state.answers[qi];
             if (c !== undefined) saveRec(u.p, qid(u.item, qi), c, c === q.answer);
-            if (c !== q.answer) allOk = false;
           });
-          okFlags[i] = allOk;
         }
       });
       review();
     }
 
-    function review() {
-      if (player) player.stop();
-      root.innerHTML = '';
+    /* 這一輪答對幾題、共幾題;錯在哪幾個 Part */
+    function tally() {
       let qTotal = 0, qCorrect = 0;
+      const wrongParts = new Set();
       units.forEach((u, i) => {
         if (u.p === '1' || u.p === '2') {
           qTotal++;
-          if (sess[i].answers.ok) qCorrect++;
+          if (sess[i].answers.ok) qCorrect++; else wrongParts.add(u.p);
         } else {
-          u.item.questions.forEach((q, qi) => { qTotal++; if (sess[i].answers[qi] === q.answer) qCorrect++; });
+          u.item.questions.forEach((q, qi) => { qTotal++; if (sess[i].answers[qi] === q.answer) qCorrect++; else wrongParts.add(u.p); });
         }
       });
-      const btns = () => h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(root, config) }, '再做一次'),   // 跟「開始聽力練習」一樣
-        h('a', { class: 'btn', href: 'practice.html' }, '回題庫'));
-      root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-        h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),
-        qTotal - qCorrect ? h('div', { class: 'band-note' }, '答錯的題目已收進錯題本。') : null));
-      root.append(btns());
+      return { qTotal, qCorrect, wrongParts };
+    }
 
-      /* 逐題檢討(音檔解鎖重聽) */
-      units.forEach((u, i) => {
+    function showResult(card, detail) {
+      root.replaceChildren(card.el);
+      if (detail) root.append(detail);
+      const go = card.el.querySelector('.result-go');
+      if (go) go.setAttribute('data-gate', '');
+      window.scrollTo(0, 0);
+      card.heading.focus({ preventScroll: true });
+    }
+
+    function review() {
+      if (player) player.stop();
+      f.leave();
+      const { qTotal, qCorrect, wrongParts } = tally();
+      const wrongN = qTotal - qCorrect;
+      /* 只有一個 Part 有錯題就直接看那個 Part 的錯題本,多個 Part 去錯題本首頁 */
+      const wbHref = wrongParts.size === 1 ? listUrl([...wrongParts][0]) : 'review.html';
+      const parts = [...new Set(config.map(c => c.p))];
+      const card = UI.result({
+        kicker: parts.length === 1 ? '聽力 ' + PARTS[parts[0]].title : '聽力 Part ' + parts.join('、'),
+        score: qCorrect, total: qTotal,
+        stats: wrongN ? [['收進錯題本', wrongN + ' 題']] : null,
+        primary: { label: '再做一次', onClick: () => { card.destroy(); startQuiz(root, config); } },   // 跟「開始」一樣
+        links: [wrongN ? { label: '看錯題本', href: wbHref } : null, { label: '回題庫刷題', href: 'practice.html' }],
+      });
+      showResult(card, UI.detail('逐題解析 ' + qTotal + ' 題', reviewBlocks(), { wrong: wrongN }));
+    }
+
+    /* 逐題檢討(音檔解鎖重聽) */
+    function reviewBlocks() {
+      return units.map((u, i) => {
         const state = sess[i];
         const rp = makePlayer(u.item.id, state);
         if (u.p === '1') {
           const q = u.item;
-          root.append(h('div', { class: 'q-block', style: 'margin-top:18px' },
+          return h('div', { class: 'q-block' },
             h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 1 照片描述')),
             h('div', { class: 'listen-photo' }, h('img', {
               src: 'img/listening/' + q.id + '.jpg', alt: '聽力照片',
@@ -402,75 +432,65 @@
             })),
             rp.el,
             letterButtons(4, state.answers, q.answer, () => {}),
-            reveal(q, state.answers, q.options.map((o, oi) => LETTERS[oi] + '. ' + o).join('\n'), 'l1')));
-        } else if (u.p === '2') {
+            reveal(q, state.answers, q.options.map((o, oi) => LETTERS[oi] + '. ' + o).join('\n'), 'l1'));
+        }
+        if (u.p === '2') {
           const q = u.item;
-          root.append(h('div', { class: 'q-block', style: 'margin-top:18px' },
+          return h('div', { class: 'q-block' },
             h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, 'Part 2 應答')),
             rp.el,
             letterButtons(3, state.answers, q.answer, () => {}),
-            reveal(q, state.answers, q.question + '\n' + q.options.map((o, oi) => LETTERS[oi] + '. ' + o).join('\n'), 'l2')));
-        } else {
-          const set = u.item;
-          const block = h('div', { class: 'q-block', style: 'margin-top:18px' },
-            h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, PARTS[u.p].title)),
-            rp.el);
-          set.questions.forEach((q, qi) => {
-            const chosen = state.answers[qi];
-            const rec = { c: chosen === undefined ? -1 : chosen, ok: chosen === q.answer };
-            const opts = h('div', { class: 'opts', style: 'margin-top:6px' });
-            q.options.forEach((opt, oi) => {
-              let cls = 'opt';
-              if (oi === q.answer) cls += ' correct';
-              else if (oi === rec.c) cls += ' wrong';
-              else cls += ' plain';
-              opts.append(h('button', { class: cls, disabled: '' },
-                h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
-            });
-            block.append(h('div', { style: 'margin-top:14px' },
-              h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), q.q),
-              opts,
-              withReport(h('div', { class: 'explain' },
-                h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
-                  rec.ok ? '答對了' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
-                h('div', null, q.explanation)), 'l' + u.p, qid(set, qi))));
-          });
-          const transcript = u.p === '3'
-            ? set.dialogue.map(t => (t.s === 'M' ? '男：' : '女：') + t.text).join('\n')
-            : set.talk;
-          block.append(h('div', { class: 'transcript-box' },
-            h('b', null, '逐字稿'),
-            h('div', { class: 'tr-en' }, transcript),
-            h('div', { class: 'tr-zh' }, set.transcriptZh)));
-          root.append(block);
+            reveal(q, state.answers, q.question + '\n' + q.options.map((o, oi) => LETTERS[oi] + '. ' + o).join('\n'), 'l2'));
         }
+        const set = u.item;
+        const block = h('div', { class: 'q-block' },
+          h('div', { class: 'meta', style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, PARTS[u.p].title)),
+          rp.el);
+        set.questions.forEach((q, qi) => {
+          const chosen = state.answers[qi];
+          const rec = { c: chosen === undefined ? -1 : chosen, ok: chosen === q.answer };
+          const opts = h('div', { class: 'opts', style: 'margin-top:6px' });
+          q.options.forEach((opt, oi) => {
+            let cls = 'opt';
+            if (oi === q.answer) cls += ' correct';
+            else if (oi === rec.c) cls += ' wrong';
+            else cls += ' plain';
+            opts.append(h('button', { class: cls, disabled: '' },
+              h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
+          });
+          block.append(h('div', { style: 'margin-top:14px' },
+            h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), q.q),
+            opts,
+            withReport(h('div', { class: 'explain' },
+              h('div', { class: 'verdict ' + (rec.ok ? 'ok' : 'bad') },
+                rec.ok ? '答對了' : (rec.c === -1 ? '未作答 · 正解 ' : '答錯 · 正解 ') + LETTERS[q.answer]),
+              h('div', null, q.explanation)), 'l' + u.p, qid(set, qi))));
+        });
+        const transcript = u.p === '3'
+          ? set.dialogue.map(t => (t.s === 'M' ? '男：' : '女：') + t.text).join('\n')
+          : set.talk;
+        block.append(h('div', { class: 'transcript-box' },
+          h('b', null, '逐字稿'),
+          h('div', { class: 'tr-en' }, transcript),
+          h('div', { class: 'tr-zh' }, set.transcriptZh)));
+        return block;
       });
-      root.append(btns());
-      window.scrollTo(0, 0);
     }
 
     function summary() {
       if (player) player.stop();
-      root.innerHTML = '';
-      let qTotal = 0, qCorrect = 0;
-      units.forEach((u, i) => {
-        if (u.p === '1' || u.p === '2') {
-          qTotal++;
-          if (sess[i].answers.ok) qCorrect++;
-        } else {
-          u.item.questions.forEach((q, qi) => { qTotal++; if (sess[i].answers[qi] === q.answer) qCorrect++; });
-        }
-      });
+      f.leave();
+      const { qTotal, qCorrect } = tally();
       const rest = opts.wrongOnly && opts.units ? opts.rest || 0 : 0;
-      root.append(h('div', { class: 'report-head', style: 'margin-top:26px' },
-        h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),
-        qTotal - qCorrect ? h('div', { class: 'band-note' }, '答錯的題目已收進錯題本。') : null,
-        rest > 0 ? h('div', { class: 'band-note' }, (opts.group ? '這一組' : '這個 Part') + '還有 ' + rest + ' 題還沒複習。') : null));
-      root.append(h('div', { class: 'drill-nav-btns' },
-        opts.wrongOnly ? null : h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(root, config) }, '再做一次'),
-        rest > 0 ? h('a', { class: 'btn primary', 'data-gate': '', href: 'practice.html?mode=review&part=' + config[0].p + (opts.group ? '&g=' + encodeURIComponent(opts.group) : '') }, '下一回') : null,
-        h('a', { class: 'btn', href: back }, opts.back ? '回錯題本' : '回題庫')));
-      window.scrollTo(0, 0);
+      const again = 'practice.html?mode=review&part=' + config[0].p + (opts.group ? '&g=' + encodeURIComponent(opts.group) : '');
+      const card = UI.result({
+        kicker: (window.WRONGBOOK ? WRONGBOOK.TITLE[config[0].p] : '聽力 ' + PARTS[config[0].p].title) + ' 錯題本',
+        score: qCorrect, total: qTotal,
+        stats: rest > 0 ? [['還沒複習', rest + ' 題']] : null,
+        primary: rest > 0 ? { label: '下一回', href: again } : { label: '回錯題本', href: back },
+        links: rest > 0 ? [{ label: '回錯題本', href: back }] : [],
+      });
+      showResult(card);
     }
   }
 
@@ -482,7 +502,7 @@
     document.title = '聽力 ' + PARTS[p].title + ' 錯題本 - 衝衝英文';
     const r = W.round(p, g || null);
     startQuiz(root, [{ p, n: r.units.length }], { wrongOnly: true, units: r.units.map(item => ({ p, item })),
-      back: 'practice.html?mode=wrong&part=' + p, group: g || '', rest: r.rest });
+      back: listUrl(p), group: g || '', rest: r.rest });
   }
 
   window.LISTEN = { PARTS, partStats, startQuiz, startReview };

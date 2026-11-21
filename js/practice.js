@@ -1,7 +1,7 @@
 /* 刷題模組(隨機練習版):
-   - 隨機練習:選題型+題數(P5 選考點亦可),隨機抽題(優先抽沒做過的,其次答錯的),
-     逐題即時解析,做完看本輪成績。不顯示全題庫的已刷/未刷清單。
-   - 錯題本:歷來答錯的題目集中在這裡複習,重新答對就移出。
+   - 隨機練習:選題型+題數(P5 選考點亦可),隨機抽題(優先抽沒做過的,其次答錯的)。
+     作答是專心模式:題目一題一頁,只記選擇不對答案,交卷後一次看成績卡與逐題解析。
+   - 錯題本:歷來答錯的題目集中在這裡複習,重新答對就移出;複習時每題作答後馬上給回饋。
    - 作答紀錄仍存 drill_p5/p6/p7(雲端模式會同步),錯題本由紀錄即時推導。 */
 (function () {
   const root = $('#practice-root');
@@ -11,9 +11,21 @@
     '7': { items: (window.TOEIC && TOEIC.part7) || [], title: 'Part 7 閱讀理解', unit: '組', sizes: [1, 2, 3, 4, 5, 8] },
   };
   const KEY = p => 'drill_p' + p;
+  const HOME = 'practice.html';
+  const listUrl = p => 'practice.html?mode=wrong&part=' + p;
+
+  /* 空狀態:頁首(圖示+標題)加一張 UI.empty。action 沒給 href 時是按鈕 */
+  function emptyView(title, text, action, doodle) {
+    root.replaceChildren(
+      h('div', { class: 'page-head' },
+        doodle ? h('canvas', { class: 'hub-art', 'data-doodle': doodle, 'data-size': '40', 'aria-hidden': 'true' }) : null,
+        h('h1', null, title)),
+      UI.empty({ pose: 'sleep', text, action }));
+    if (doodle) UI.doodle(root);
+  }
 
   if (!DATA['5'].items.length) {
-    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '題庫尚未載入（請執行 tools/merge_data.py）。'));
+    root.append(UI.empty({ pose: 'sleep', text: '題庫沒有載入完成', action: { label: '重新整理', onClick: () => location.reload() } }));
     return;
   }
 
@@ -68,7 +80,7 @@
   }
 
   /* ---------- 路由 ----------
-     錯題本(錯題本定稿 2026-11-18):?mode=wrong&part=N 是那個 Part 的錯題本清單(js/wrongbook-ui.js);
+     ?mode=wrong&part=N 是那個 Part 的錯題本清單(js/wrongbook-ui.js);
      ?mode=review&part=N(&g=組名)複習整個 Part 或只複習一組,一回有上限。聽力的 part(1–4)只有 window.LISTEN 在才走 */
   const mode = getParam('mode');
   const partParam = getParam('part');
@@ -81,7 +93,7 @@
     // 相容程度檢測報告的深連結:直接開一輪隨機練習
     startQuiz([{ p: partParam, n: partParam === '5' ? 10 : 2, cat: getParam('cat') || 'all' }]);
   } else renderHome();
-  /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud;審查 2026-11-19 #1):別台考的錯題合併進本機,
+  /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud):別台考的錯題合併進本機,
      錯題本面板、錯題本清單由 js/wrongbook-ui.js keepFresh 收到 cloud:merged 重畫 */
   if (WB && typeof WB.syncCloud === 'function') WB.syncCloud();
 
@@ -89,6 +101,7 @@
   function renderHome() {
     document.title = '題庫刷題 - 衝衝英文';
     root.append(h('div', { class: 'page-head' },
+      h('canvas', { class: 'hub-art', 'data-doodle': 'practice', 'data-size': '40', 'aria-hidden': 'true' }),
       h('h1', null, '題庫刷題')));
 
     /* 隨機練習:三個 Part 各一列(勾選+數量),可同時勾多個混合出題 */
@@ -136,52 +149,53 @@
       return Math.min(n, max);
     }
 
-    const s5 = partStats('5'), s6 = partStats('6'), s7 = partStats('7');
-    const totalAnswered = s5.answered + s6.answered + s7.answered;
-    const totalCorrect = s5.correct + s6.correct + s7.correct;
+    /* 開始鈕:這一頁唯一的實色按鈕。錯題本沒有錯題時的出口「去刷題」把焦點帶到這裡 */
+    const startBtn = h('button', {
+      class: 'btn primary practice-start', 'data-gate': '',
+      onclick: () => {
+        const config = [];
+        for (const r of rows) {
+          if (!r.cb.checked) continue;
+          const n = rowSize(r);
+          if (n === null) { r.customInput.focus(); return; }
+          config.push({ p: r.p, n, cat: r.p === '5' && r.catSel ? r.catSel.value : 'all' });
+        }
+        if (!config.length) return;
+        startQuiz(config);
+      },
+    }, '開始');
 
-    /* 錯題本面板的各列(data-part、wb-see:從 bfcache 回來重畫時,焦點放回同一列的「查看」)。「查看」的報讀名稱帶 Part,7 顆才分得出來 */
+    /* 錯題本面板的各列(data-part、wb-see:從 bfcache 回來重畫時,焦點放回同一列的「查看」)。「查看」的報讀名稱帶 Part,7 顆才分得出來。
+       0 題的 Part 不列;全部都是 0 題時整個換成空狀態 */
     function wbRows() {
-      return ['5', '6', '7'].map(p => {
+      const list = [];
+      ['5', '6', '7'].forEach(p => {
         const n = WB ? WB.count(p) : partStats(p).wrong;
-        return h('div', { class: 'review-row', 'data-part': p },
+        if (!n) return;
+        list.push(h('div', { class: 'review-row', 'data-part': p },
           h('span', null, DATA[p].title),
-          h('b', { style: n ? 'color:var(--bad)' : 'color:var(--ok)' }, n + ' 題'),
-          !n ? h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題')
-            : WB ? h('a', { class: 'btn wb-see', href: 'practice.html?mode=wrong&part=' + p, 'aria-label': '查看 ' + WB.TITLE[p] + ' 錯題本' }, '查看')
-              : h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(p) }, '複習'));
-      }).concat(window.LISTEN ? ['1', '2', '3', '4'].map(p => {
+          h('b', { style: 'color:var(--bad)' }, n + ' 題'),
+          WB ? h('a', { class: 'btn wb-see', href: listUrl(p), 'aria-label': '查看 ' + WB.TITLE[p] + ' 錯題本' }, '查看')
+            : h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(p) }, '複習')));
+      });
+      if (window.LISTEN) ['1', '2', '3', '4'].forEach(p => {
         const n = WB ? WB.count(p) : LISTEN.partStats(p).wrong;
-        return h('div', { class: 'review-row', 'data-part': p },
+        if (!n) return;
+        list.push(h('div', { class: 'review-row', 'data-part': p },
           h('span', null, '聽力 ' + LISTEN.PARTS[p].title),
-          h('b', { style: n ? 'color:var(--bad)' : 'color:var(--ok)' }, n + ' 題'),
-          !n ? h('span', { style: 'font-size:13px;color:var(--ink-light)' }, '沒有錯題')
-            : WB ? h('a', { class: 'btn wb-see', href: 'practice.html?mode=wrong&part=' + p, 'aria-label': '查看 ' + WB.TITLE[p] + ' 錯題本' }, '查看')
-              : h('button', { class: 'btn', 'data-gate': '', onclick: () => { root.innerHTML = ''; LISTEN.startReview(root, p); window.scrollTo(0, 0); } }, '複習'));
-      }) : []);
+          h('b', { style: 'color:var(--bad)' }, n + ' 題'),
+          WB ? h('a', { class: 'btn wb-see', href: listUrl(p), 'aria-label': '查看 ' + WB.TITLE[p] + ' 錯題本' }, '查看')
+            : h('button', { class: 'btn', 'data-gate': '', onclick: () => { root.innerHTML = ''; LISTEN.startReview(root, p); window.scrollTo(0, 0); } }, '複習')));
+      });
+      return list.length ? list : [UI.empty({ pose: 'sleep', text: '沒有錯題', action: { label: '去刷題', onClick: () => { startBtn.scrollIntoView({ block: 'center' }); startBtn.focus(); } } })];
     }
     const wbRowsBox = h('div', { class: 'review-rows' }, wbRows());
 
     root.append(h('div', { class: 'practice-panels' },
       h('div', { class: 'practice-panel' },
         h('h2', null, '隨機練習'),
-        h('p', null, '共 ' + (s5.total + s6.total + s7.total) + ' 題' +
-          (totalAnswered ? ' · 已作答 ' + totalAnswered + ' 題 · 正確率 ' + Math.round(totalCorrect / totalAnswered * 100) + '%' : '')),
         h('div', { class: 'cfg-rows' }, rows.map(r => r.row)),
-        h('button', {
-          class: 'btn primary', style: 'margin-top:14px', 'data-gate': '',
-          onclick: () => {
-            const config = [];
-            for (const r of rows) {
-              if (!r.cb.checked) continue;
-              const n = rowSize(r);
-              if (n === null) { r.customInput.focus(); return; }
-              config.push({ p: r.p, n, cat: r.p === '5' && r.catSel ? r.catSel.value : 'all' });
-            }
-            if (!config.length) return;
-            startQuiz(config);
-          },
-        }, '開始')),
+        startBtn),
       /* 錯題本面板:每個 Part 一列「N 題 + 查看」,查看連到那個 Part 的錯題本清單(一組一組,點開才看到題目)。
          題數含模擬考答錯的題(js/wrongbook.js);沒載到就照以前只算刷題紀錄,按鈕照舊直接複習 */
       h('div', { class: 'practice-panel', id: 'wrongbook' },
@@ -189,7 +203,7 @@
         wbRowsBox)));
     /* 從錯題本複習按上一頁回來(bfcache 原樣拿回來):題數變了就重畫這幾列(js/wrongbook-ui.js keepFresh) */
     if (WB && window.WRONGBOOK_UI) WRONGBOOK_UI.keepFresh(wbRowsBox, () => WRONGBOOK_UI.sig(WB.PARTS), () => wbRowsBox.replaceChildren(...wbRows()));
-    /* practice.html#wrongbook(模擬考結果、每日複習連過來):面板是 JS 畫的,瀏覽器自己不會捲過去。
+    /* practice.html#wrongbook(從錯題本、模擬考結果連過來):面板是 JS 畫的,瀏覽器自己不會捲過去。
        頂欄是固定的(sticky),要扣掉它的高度(.me-sec 的 scroll-margin-top 同一個意思);桌機一列、手機兩列、更窄還會更高,照實際高度算 */
     if (location.hash === '#wrongbook') {
       const panel = document.getElementById('wrongbook');
@@ -214,16 +228,14 @@
         const row = h('div', { class: 'cfg-part-row' },
           h('label', { class: 'cfg-part-check' }, cb, h('span', null, d.title)),
           sel,
-          h('span', { style: 'font-size:12.5px;color:var(--ink-light)' },
-            '已作答 ' + s.answered + ' / ' + s.total + (s.answered ? ' · ' + Math.round(s.correct / s.answered * 100) + '%' : '')));
+          h('span', { class: 'cfg-done' }, '已作答 ' + s.answered + ' / ' + s.total));
         return { p, cb, sel, row };
       });
       root.append(h('div', { class: 'practice-panel', style: 'margin-bottom:50px' },
         h('h2', null, '聽力隨機練習'),
-        h('p', null, '每題最多播 2 次。'),
         h('div', { class: 'cfg-rows' }, lrows.map(r => r.row)),
         h('button', {
-          class: 'btn primary', style: 'margin-top:14px', 'data-gate': '',
+          class: 'btn listen-start', 'data-gate': '', 'aria-label': '開始聽力練習',
           onclick: () => {
             const config = lrows.filter(r => r.cb.checked).map(r => ({ p: r.p, n: Number(r.sel.value) }));
             if (!config.length) return;
@@ -231,8 +243,9 @@
             LISTEN.startQuiz(root, config);
             window.scrollTo(0, 0);
           },
-        }, '開始聽力練習')));
+        }, '開始')));
     }
+    UI.doodle(root);
   }
 
   /* ================= 共用:選項與解析 ================= */
@@ -284,6 +297,12 @@
     if (ctx && window.REPORT) REPORT.attach(box, ctx);
     return box;
   }
+  /* 作答當下底部的回饋條已經寫了對錯與正解:解析方塊拿掉那一行 */
+  function withoutVerdict(box) {
+    const v = box && box.querySelector('.verdict');
+    if (v) v.remove();
+    return box;
+  }
 
   /* 作答期間的選項(交卷式:只選不對答,可改選) */
   function pickButtons(q, rec, onPick) {
@@ -304,35 +323,35 @@
     logAttempt('p' + p, id, oi, ok);
   }
 
-  /* back:錯題本複習時給 Part,右邊的連結變成「← 回錯題本」(那個 Part 的錯題本清單) */
-  function topBar(title, sub, back) {
-    return h('div', { class: 'drill-top' },
-      h('h1', null, title, ' ', h('span', { style: 'font-size:13.5px;color:var(--ink-light);font-weight:400' }, sub || '')),
-      back ? h('a', { href: 'practice.html?mode=wrong&part=' + back, style: 'font-size:13.5px;margin-left:auto' }, '← 回錯題本')
-        : h('a', { href: 'practice.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回題庫'));
+  /* 專心模式的底部按鈕:文字按鈕(上一題)與實色主按鈕(gate:要登入才能做的那一下標 data-gate) */
+  function textBtn(label, onClick) {
+    return h('button', { class: 'btn-text', type: 'button', onclick: onClick }, label);
+  }
+  function mainBtn(label, onClick, gate, disabled) {
+    return h('button', { class: 'btn primary', type: 'button', 'data-gate': gate ? '' : null, disabled: disabled ? '' : null, onclick: onClick }, label);
+  }
+  /* 作答列右邊的「交卷」:UI.focus 的按鈕不是我們建的,事後標上 data-gate */
+  function setSubmit(f, onClick) {
+    f.action(onClick ? { label: '交卷', onClick } : null);
+    const b = f.bar.querySelector('.quiz-act');
+    if (b) b.setAttribute('data-gate', '');
   }
 
   /* ================= 錯題本清單(?mode=wrong&part=N) ================= */
   function renderWrong(p) {
     if (window.WRONGBOOK_UI) { WRONGBOOK_UI.renderList(root, p); return; }
     document.title = '錯題本 - 衝衝英文';
-    root.append(topBar('錯題本'), h('div', { class: 'q-block' }, '錯題本沒有載入完成，請重新整理。'));
+    emptyView('錯題本', '錯題本沒有載入完成', { label: '重新整理', onClick: () => location.reload() }, 'wrongbook');
   }
 
-  function sessionDots(list, cur, results, onJump, answered) {
-    const nav = h('div', { class: 'q-nav' });
-    list.forEach((x, i) => {
-      let cls = i === cur ? 'cur' : '';
-      if (results[i] === true) cls += ' ok';
-      if (results[i] === false) cls += ' ng';
-      if (answered && answered(i) && results[i] === undefined) cls += ' ans';
-      nav.append(h('button', {
-        class: cls.trim(),
-        disabled: onJump ? null : '',
-        onclick: onJump ? () => onJump(i) : null,
-      }, String(i + 1)));
-    });
-    return nav;
+  /* 結算卡:再做一次、下一回這類會寫紀錄的主按鈕標 data-gate */
+  function showResult(card, detail) {
+    root.replaceChildren(card.el);
+    if (detail) root.append(detail);
+    const go = card.el.querySelector('.result-go');
+    if (go) go.setAttribute('data-gate', '');
+    window.scrollTo(0, 0);
+    card.heading.focus({ preventScroll: true });
   }
 
   /* ================= 隨機練習(config=[{p,n,cat}],可混合多個 Part) ================= */
@@ -341,18 +360,14 @@
     const units = [];   // {p, item}:p5 的 item=題目,p6/7 的 item=題組
     config.forEach(c => pickPool(c.p, c.n, c.cat).forEach(item => units.push({ p: c.p, item })));
     if (!units.length) {
-      root.innerHTML = '';
-      root.append(topBar('隨機練習'), h('div', { class: 'q-block' }, '這個範圍沒有題目。'),
-        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: 'practice.html' }, '回題庫')));
+      emptyView('隨機練習', '沒有題目', { label: '回題庫刷題', href: HOME });
       return;
     }
-    const sub = config.map(c =>
-      'Part ' + c.p + ' × ' + c.n + ' ' + DATA[c.p].unit + (c.cat && c.cat !== 'all' ? '（' + c.cat + '）' : '')).join(' · ');
-    /* 交卷式:作答期間只記選擇不對答,交卷後一次看成績+逐題檢討(她指定的流程) */
+    /* 交卷式:作答期間只記選擇不對答,交卷後一次看成績卡與逐題檢討 */
     const session = { answers: {} };   // p5 單元:{c};p6/7 單元:{qKey:{c}};交卷後補 ok
-    const okFlags = [];
     let cur = 0;
-    let handing = false;   // 交卷的確認視窗按了確定、正在等那 50 毫秒(見 submit):這時再按交卷不算
+    let handing = false;   // 交卷的確認視窗開著:這時再按交卷不算
+    const f = UI.focus.enter({ total: units.length, onExit: () => { location.href = HOME; }, body: '還沒交卷的作答不會計分' });
     draw();
 
     function unitAnswered(i) {
@@ -362,22 +377,27 @@
       return u.item.questions.every((q, qi) => sess[qid(u.item, q, qi)]);
     }
 
-    function draw() {
-      root.innerHTML = '';
-      root.append(topBar('隨機練習', sub));
-      root.append(sessionDots(units, cur, okFlags, i => { cur = i; draw(); window.scrollTo(0, 0); }, unitAnswered));
-      if (units[cur].p === '5') drawP5();
-      else drawSet();
+    function go(i) { cur = i; draw(); window.scrollTo(0, 0); }
+
+    /* 選了答案:重畫但捲動位置留著 */
+    function picked() {
+      f.dirty(true);
+      const y = window.scrollY;
+      draw();
+      window.scrollTo(0, y);
     }
 
-    function navRow() {
+    function draw() {
+      root.replaceChildren();
+      f.progress(cur + 1);
       const isLast = cur === units.length - 1;
-      return h('div', { class: 'drill-nav-btns' },
-        h('button', {
-          class: 'btn primary', 'data-gate': isLast ? '' : null,   // 「下一題」照常;最後一題的交卷要登入
-          onclick: e => { if (isLast) submit(e.currentTarget); else { cur++; draw(); window.scrollTo(0, 0); } },
-        }, isLast ? '交卷' : '下一' + DATA[units[cur + 1].p].unit + ' →'),
-        isLast ? null : h('button', { class: 'btn', 'data-gate': '', onclick: e => submit(e.currentTarget) }, '交卷'));
+      f.foot([
+        cur > 0 ? textBtn('上一題', () => go(cur - 1)) : null,
+        mainBtn(isLast ? '交卷' : '下一題', e => { if (isLast) submit(e.currentTarget); else go(cur + 1); }, isLast),
+      ]);
+      setSubmit(f, isLast ? null : e => submit(e.currentTarget));
+      if (units[cur].p === '5') drawP5();
+      else drawSet();
     }
 
     function drawP5() {
@@ -388,9 +408,8 @@
           h('span', { class: 'badge cat' }, 'Part 5'),
           h('span', { class: 'badge cat' }, q.category),
           h('span', { class: 'badge ' + (q.difficulty === '基礎' ? 'level-basic' : q.difficulty === '進階' ? 'level-adv' : 'level-mid') }, q.difficulty)),
-        h('div', { class: 'q-text', style: 'font-size:17px' }, h('span', { class: 'q-no' }, (cur + 1) + '.'), q.question),
-        pickButtons(q, rec, oi => { session.answers[cur] = { c: oi }; draw(); })));
-      root.append(navRow());
+        h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, (cur + 1) + '.'), q.question),
+        pickButtons(q, rec, oi => { session.answers[cur] = { c: oi }; picked(); })));
     }
 
     function drawSet() {
@@ -402,7 +421,6 @@
       const passCol = h('div', { class: 'passage-sticky-wrap' });
       if (p === '6') passCol.append(part6Passage(set, sess, false));
       else set.passages.forEach(ps => passCol.append(part7Passage(ps)));
-      passCol.append(h('button', { class: 'btn', style: 'margin-top:12px', disabled: '' }, '交卷後可看全文翻譯'));
       layout.append(h('div', null, passCol));
 
       const qCol = h('div', null);
@@ -410,31 +428,32 @@
       set.questions.forEach((q, qi) => {
         const id = qid(set, q, qi);
         const label = p === '6' ? '(' + q.num + ')' : 'Q' + (qi + 1);
-        const text = p === '6' ? '選出最適合填入空格 (' + q.num + ') 的答案' : q.q;
+        const text = p === '6' ? '' : q.q;   // 段落填空:空格編號標在選項上方,不另寫題幹
         qCol.append(h('div', { class: 'q-block' },
           h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, label), text),
-          pickButtons(q, sess[id], oi => { sess[id] = { c: oi }; draw(); })));
+          pickButtons(q, sess[id], oi => { sess[id] = { c: oi }; picked(); })));
       });
       layout.append(qCol);
       root.append(layout);
-      root.append(navRow());
+    }
+
+    /* 單元名稱:只有 Part 5 是「題」,題組是「組」,混在一起就叫單元 */
+    function unitWord(list) {
+      return list.every(u => u.p === '5') ? '題' : list.every(u => u.p !== '5') ? '組' : '個單元';
     }
 
     function submit(opener, asked) {
-      /* 等那 50 毫秒的時候交卷鈕還按得到:以前再按一次又問、又排一次,批改、小雞的 PET_HOOK.done 都跑兩次,第二次還把沒答的(c: -1)寫進紀錄與錯題本 */
-      if (handing && !asked) return;
-      const missing = units.filter((u, i) => !unitAnswered(i)).length;
-      if (missing && !asked) {
-        if (!confirm('還有 ' + missing + ' 個單元沒答完，確定要交卷嗎？未作答的算錯。')) return;
-        /* 原生確認視窗開著的時候,別的分頁對 localStorage 的改動(登出、換帳號、記上「還沒灌過」)Chrome 不會送進這一頁,
-           按確定之後要再過兩個工作(實測約 2 毫秒)才看得到,在那之前讀到的還是舊值,下面的查核都會放行:等 50 毫秒再往下(審查 D 第 4 輪 #3) */
+      /* 確認視窗開著的時候交卷鈕還按得到:不再問第二次,批改、小雞的 PET_HOOK.done 也只跑一次 */
+      if (handing) return;
+      const missingUnits = units.filter((u, i) => !unitAnswered(i));
+      if (missingUnits.length && !asked) {
         handing = true;
-        setTimeout(() => { handing = false; submit(opener, true); }, 50);   // 往下才放開:holdForAccount 擋下跳卡時,之後還能再按交卷
+        UI.confirm({ title: '還有 ' + missingUnits.length + ' ' + unitWord(missingUnits) + '沒答完', body: '未作答的算錯', ok: '交卷', cancel: '繼續作答' })
+          .then(yes => { handing = false; if (yes) submit(opener, true); });
         return;
       }
       /* data-gate 只在按下去那一刻查。確認視窗開著的時候別的分頁登出、或這台的帳號資料夾變成還沒灌過:問完再查一次,
-         擋下就開「重新整理」卡,不批改、不出成績,作答留在這一頁(登回原帳號再按一次就能交)。
-         以前照樣批改,store.set 靜靜不寫,畫面卻寫「答錯的 N 題已收進錯題本。」(審查 D 第 3 輪 #3) */
+         擋下就開「重新整理」卡,不批改、不出成績,作答留在這一頁(登回原帳號再按一次就能交) */
       if (typeof holdForAccount === 'function' && holdForAccount(opener)) return;
       /* 統一批改+寫入紀錄(只記有作答的) */
       units.forEach((u, i) => {
@@ -444,10 +463,8 @@
             rec.ok = rec.c === u.item.answer;
             saveRec('5', u.item.id, rec.c, rec.ok);
           } else session.answers[i] = { c: -1, ok: false };
-          okFlags[i] = session.answers[i].ok;
         } else {
           const sess = session.answers[i] = session.answers[i] || {};
-          let allOk = true;
           u.item.questions.forEach((q, qi) => {
             const id = qid(u.item, q, qi);
             const rec = sess[id];
@@ -455,101 +472,102 @@
               rec.ok = rec.c === q.answer;
               saveRec(u.p, id, rec.c, rec.ok);
             } else sess[id] = { c: -1, ok: false };
-            if (!sess[id].ok) allOk = false;
           });
-          okFlags[i] = allOk;
         }
       });
       review();
-      if (window.PET_HOOK) PET_HOOK.done('p' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '5' ? [session.answers[i]] : u.item.questions.map((q, qi) => session.answers[i][qid(u.item, q, qi)])).filter(r => r && r.c > -1).length, 0), into: root.querySelector('.report-head') });
+      if (window.PET_HOOK) PET_HOOK.done('p' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '5' ? [session.answers[i]] : u.item.questions.map((q, qi) => session.answers[i][qid(u.item, q, qi)])).filter(r => r && r.c > -1).length, 0), into: root.querySelector('.result-reward') });
     }
 
     function review() {
-      root.innerHTML = '';
-      root.append(topBar('隨機練習', sub));
+      f.leave();
       let qTotal = 0, qCorrect = 0;
+      const wrongParts = new Set();
       units.forEach((u, i) => {
         if (u.p === '5') {
           qTotal++;
-          if (session.answers[i].ok) qCorrect++;
+          if (session.answers[i].ok) qCorrect++; else wrongParts.add(u.p);
         } else {
-          u.item.questions.forEach((q, qi) => { qTotal++; if (session.answers[i][qid(u.item, q, qi)].ok) qCorrect++; });
+          u.item.questions.forEach((q, qi) => { qTotal++; if (session.answers[i][qid(u.item, q, qi)].ok) qCorrect++; else wrongParts.add(u.p); });
         }
       });
       const wrongN = qTotal - qCorrect;
-      const btns = () => h('div', { class: 'drill-nav-btns' },
-        h('button', { class: 'btn primary', 'data-gate': '', onclick: () => startQuiz(config) }, '再做一次'),
-        wrongN && config.length === 1 ? h('button', { class: 'btn', 'data-gate': '', onclick: () => startReview(config[0].p) }, '複習錯題') : null,
-        h('a', { class: 'btn', href: 'practice.html' }, '回題庫'));
-      root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
-        h('h2', null, '答對 ' + qCorrect + ' / ' + qTotal + ' 題'),
-        wrongN ? h('div', { class: 'band-note' }, '收進錯題本 ' + wrongN + ' 題') : null));
-      root.append(btns());
+      /* 只有一個 Part 有錯題就直接看那個 Part 的錯題本,多個 Part 去錯題本首頁 */
+      const wbHref = wrongParts.size === 1 ? listUrl([...wrongParts][0]) : 'review.html';
+      const parts = [...new Set(config.map(c => c.p))];
+      const card = UI.result({
+        kicker: parts.length === 1 ? DATA[parts[0]].title : 'Part ' + parts.join('、'),
+        score: qCorrect, total: qTotal,
+        stats: wrongN ? [['收進錯題本', wrongN + ' 題']] : null,
+        primary: { label: '再做一次', onClick: () => { card.destroy(); startQuiz(config); } },
+        links: [wrongN ? { label: '看錯題本', href: wbHref } : null, { label: '回題庫刷題', href: HOME }],
+      });
+      showResult(card, UI.detail('逐題解析 ' + qTotal + ' 題', reviewBlocks(), { wrong: wrongN }));
+    }
 
-      /* 逐題檢討 */
-      units.forEach((u, i) => {
+    /* 逐題檢討 */
+    function reviewBlocks() {
+      return units.map((u, i) => {
         if (u.p === '5') {
           const q = u.item;
           const rec = session.answers[i];
-          root.append(h('div', { class: 'q-block', style: 'margin-top:18px' },
+          return h('div', { class: 'q-block' },
             h('div', { class: 'meta', style: 'display:flex;gap:8px;margin-bottom:10px' },
               h('span', { class: 'badge cat' }, 'Part 5'),
               h('span', { class: 'badge cat' }, q.category)),
             h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, (i + 1) + '.'), q.question),
             optionButtons(q, rec, () => {}),
-            explainBox(q, rec, q.translation, { m: 'p5', id: q.id })));
-        } else {
-          const set = u.item;
-          const sess = session.answers[i];
-          const layout = h('div', { class: 'set-layout', style: 'margin-top:18px' });
-          const passCol = h('div', { class: 'passage-col' });
-          if (u.p === '6') passCol.append(part6Passage(set, sess, true));
-          else set.passages.forEach(ps => passCol.append(part7Passage(ps)));
-          const trWrap = h('div', { class: 'set-translation', style: 'display:none' },
-            u.p === '6' ? set.translation : (set.translation || []).map((t, ti) =>
-              h('div', null, set.passages[ti] && set.passages[ti].label ? h('b', null, '【' + set.passages[ti].label + '】\n') : null, t, ti < set.translation.length - 1 ? '\n\n' : '')));
-          const trBtn = h('button', {
-            class: 'btn', style: 'margin-top:12px',
-            onclick: () => { trWrap.style.display = trWrap.style.display === 'none' ? '' : 'none'; },
-          }, '顯示全文翻譯');
-          passCol.append(trBtn, trWrap);
-          layout.append(h('div', null, passCol));
-          const qCol = h('div', null);
-          qCol.append(h('div', { style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, DATA[u.p].title)));
-          set.questions.forEach((q, qi) => {
-            const id = qid(set, q, qi);
-            const label = u.p === '6' ? '(' + q.num + ')' : 'Q' + (qi + 1);
-            const text = u.p === '6' ? '空格 (' + q.num + ')' : q.q;
-            qCol.append(h('div', { class: 'q-block' },
-              h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, label), text),
-              optionButtons(q, sess[id], () => {}),
-              explainBox(q, sess[id], null, { m: 'p' + u.p, id })));
-          });
-          layout.append(qCol);
-          root.append(layout);
+            explainBox(q, rec, q.translation, { m: 'p5', id: q.id }));
         }
+        const set = u.item;
+        const sess = session.answers[i];
+        const layout = h('div', { class: 'set-layout' });
+        const passCol = h('div', { class: 'passage-col' });
+        if (u.p === '6') passCol.append(part6Passage(set, sess, true));
+        else set.passages.forEach(ps => passCol.append(part7Passage(ps)));
+        const trWrap = h('div', { class: 'set-translation', style: 'display:none' },
+          u.p === '6' ? set.translation : (set.translation || []).map((t, ti) =>
+            h('div', null, set.passages[ti] && set.passages[ti].label ? h('b', null, '【' + set.passages[ti].label + '】\n') : null, t, ti < set.translation.length - 1 ? '\n\n' : '')));
+        const trBtn = h('button', {
+          class: 'btn', style: 'margin-top:12px',
+          onclick: () => { trWrap.style.display = trWrap.style.display === 'none' ? '' : 'none'; },
+        }, '顯示全文翻譯');
+        passCol.append(trBtn, trWrap);
+        layout.append(h('div', null, passCol));
+        const qCol = h('div', null);
+        qCol.append(h('div', { style: 'margin-bottom:8px' }, h('span', { class: 'badge cat' }, DATA[u.p].title)));
+        set.questions.forEach((q, qi) => {
+          const id = qid(set, q, qi);
+          const label = u.p === '6' ? '(' + q.num + ')' : 'Q' + (qi + 1);
+          const text = u.p === '6' ? '' : q.q;
+          qCol.append(h('div', { class: 'q-block' },
+            h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, label), text),
+            optionButtons(q, sess[id], () => {}),
+            explainBox(q, sess[id], null, { m: 'p' + u.p, id })));
+        });
+        layout.append(qCol);
+        return layout;
       });
-      root.append(btns());
-      window.scrollTo(0, 0);
     }
   }
 
-  /* ================= 錯題本 =================
+  /* ================= 錯題本複習 =================
      g:只複習這一組(組名,js/wrongbook.js 的分組);不給就是整個 Part。一回有上限(WRONGBOOK.ROUND),最早錯的先出。
-     題目含模擬考答錯的題(mock_wrong);作答照舊寫 drill_p*(saveRec),答對那筆比模擬考那筆新,自然移出 */
+     題目含模擬考答錯的題(mock_wrong);作答照舊寫 drill_p*(saveRec),答對那筆比模擬考那筆新,自然移出。
+     每題作答當下就存、就給回饋(底部回饋條),所以離開不用確認 */
   function startReview(p, g) {
     const d = DATA[p];
     document.title = d.title + ' 錯題本 - 衝衝英文';
     const st = store.get(KEY(p), {});
     let units;                    // p5: 題;p6/7: {set, wrongKeys}
-    let rest = 0, n = 0;          // 這一組還沒輪到幾題、這一回幾題
+    let rest = 0;                 // 這一組還沒輪到幾題
     if (!WB && g) {               // 分組要 js/wrongbook.js;沒載到不要默默複習整個 Part
-      root.append(topBar(d.title + ' 錯題本', g, p), h('div', { class: 'q-block' }, '錯題本沒有載入完成，請重新整理。'));
+      emptyView(d.title + ' 錯題本', '錯題本沒有載入完成', { label: '重新整理', onClick: () => location.reload() }, 'wrongbook');
       return;
     }
     if (WB) {
       const r = WB.round(p, g || null);
-      units = r.units; rest = r.rest; n = r.n;
+      units = r.units; rest = r.rest;
     } else if (p === '5') {
       units = DATA['5'].items.filter(q => st[q.id] && !st[q.id].ok);
     } else {
@@ -560,55 +578,45 @@
       });
     }
     if (!units.length) {
-      root.innerHTML = '';
-      root.append(topBar(d.title + ' 錯題本', g || '', p), h('div', { class: 'q-block' }, g ? '這一組已經沒有錯題。' : '目前沒有錯題。'),
-        h('div', { class: 'drill-nav-btns' }, h('a', { class: 'btn', href: 'practice.html?mode=wrong&part=' + p }, '回錯題本')));
+      emptyView(d.title + ' 錯題本', '沒有錯題', { label: '回錯題本', href: listUrl(p) }, 'wrongbook');
       return;
     }
-    const sub = WB
-      ? (g ? g + ' · ' : '') + '這一回 ' + (p === '5' ? n + ' 題' : units.length + ' 組（' + n + ' 題）')
-      : '共 ' + units.length + ' ' + d.unit;
+    const asked = p === '5' ? units.length : units.reduce((s, u) => s + u.wrongKeys.length, 0);
     const session = {};           // 單元 idx → {qKey:{c,ok}} (p5 用 {c,ok})
-    const okFlags = [];
     let cur = 0, cleared = 0;
+    const f = UI.focus.enter({ total: units.length, onExit: () => { location.href = listUrl(p); }, confirmExit: false });
     draw();
 
     function draw() {
-      root.innerHTML = '';
-      root.append(topBar(d.title + ' 錯題本', sub, p));
-      root.append(sessionDots(units, cur, okFlags));
+      root.replaceChildren();
+      f.progress(cur + 1);
       if (p === '5') drawP5(); else drawSet();
     }
 
-    function nextRow(canNext, isLast) {
-      return h('div', { class: 'drill-nav-btns' },
-        canNext
-          ? h('button', {
-              class: 'btn primary',
-              onclick: () => { if (isLast) summary(); else { cur++; draw(); window.scrollTo(0, 0); } },
-            }, isLast ? '完成複習' : '下一' + d.unit + ' →')
-          : h('span', { class: 'result-note', style: 'align-self:center' }, '重新作答後才能繼續'));
+    function next() {
+      if (cur === units.length - 1) summary(); else { cur++; draw(); window.scrollTo(0, 0); }
     }
 
     function drawP5() {
       const q = units[cur];
       const rec = session[cur];
+      const isLast = cur === units.length - 1;
       root.append(h('div', { class: 'q-block' },
         h('div', { class: 'meta', style: 'display:flex;gap:8px;margin-bottom:10px' },
           h('span', { class: 'badge cat' }, q.category),
           h('span', { class: 'badge level-mid' }, q.difficulty)),
-        h('div', { class: 'q-text', style: 'font-size:17px' }, h('span', { class: 'q-no' }, (cur + 1) + '.'), q.question),
+        h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, (cur + 1) + '.'), q.question),
         optionButtons(q, rec, oi => {
           const ok = oi === q.answer;
           session[cur] = { c: oi, ok };
-          okFlags[cur] = ok;
           if (ok) cleared++;
           saveRec(p, q.id, oi, ok);
           draw();
         }),
-        explainBox(q, rec, rec ? q.translation : null, { m: 'p' + p, id: q.id }),
+        withoutVerdict(explainBox(q, rec, rec ? q.translation : null, { m: 'p' + p, id: q.id })),
         rec && rec.ok ? h('div', { class: 'result-note', style: 'margin-top:8px;color:var(--ok)' }, '已移出錯題本') : null));
-      root.append(nextRow(!!rec, cur === units.length - 1));
+      if (rec) f.feedback({ ok: rec.ok, answer: rec.ok ? null : LETTERS[q.answer] + '. ' + q.options[q.answer], next: isLast ? '看成績' : '下一題', onNext: next });
+      else f.foot([mainBtn(isLast ? '看成績' : '下一題', null, false, true)]);
     }
 
     function drawSet() {
@@ -626,7 +634,7 @@
         if (!wrongKeys.includes(id)) return;      // 只重考錯的
         const rec = sess[id];
         const label = p === '6' ? '(' + q.num + ')' : 'Q' + (qi + 1);
-        const text = p === '6' ? '選出最適合填入空格 (' + q.num + ') 的答案' : q.q;
+        const text = p === '6' ? '' : q.q;
         qCol.append(h('div', { class: 'q-block' },
           h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, label), text),
           optionButtons(q, rec, oi => {
@@ -634,8 +642,6 @@
             sess[id] = { c: oi, ok };
             if (ok) cleared++;
             saveRec(p, id, oi, ok);
-            const done = wrongKeys.every(k => sess[k]);
-            if (done) okFlags[cur] = wrongKeys.every(k => sess[k].ok);
             draw();
           }),
           explainBox(q, rec, null, { m: 'p' + p, id }),
@@ -643,7 +649,8 @@
       });
       layout.append(qCol);
       root.append(layout);
-      root.append(nextRow(wrongKeys.every(k => sess[k]), cur === units.length - 1));
+      const all = wrongKeys.every(k => sess[k]);
+      f.foot([mainBtn(cur === units.length - 1 ? '看成績' : '下一題', next, false, !all)]);
     }
 
     /* 錯題複習時,文章空格顯示所有已作答紀錄(含之前答對的) */
@@ -655,18 +662,17 @@
     }
 
     function summary() {
-      root.innerHTML = '';
-      root.append(topBar(d.title + ' 錯題本', '', p));
+      f.leave();
       const again = 'practice.html?mode=review&part=' + p + (g ? '&g=' + encodeURIComponent(g) : '');
-      root.append(h('div', { class: 'report-head', style: 'margin-top:20px' },
-        h('h2', null, '移出 ' + cleared + ' 題'),
-        h('div', { class: 'band-note' }, '沒答對的留在錯題本，隔天再試。'),
-        rest > 0 ? h('div', { class: 'band-note' }, (g ? '這一組' : '這個 Part') + '還有 ' + rest + ' 題還沒複習。') : null));
-      root.append(h('div', { class: 'drill-nav-btns' },
-        rest > 0 ? h('a', { class: 'btn primary', 'data-gate': '', href: again }, '下一回') : null,
-        h('a', { class: rest > 0 ? 'btn' : 'btn primary', href: 'practice.html?mode=wrong&part=' + p }, '回錯題本')));
-      window.scrollTo(0, 0);
-      if (window.PET_HOOK) PET_HOOK.done('pr', { n: Object.values(session).reduce((s, r) => s + (p === '5' ? 1 : Object.keys(r).length), 0), into: root.querySelector('.report-head') });
+      const card = UI.result({
+        kicker: d.title + ' 錯題本 · 移出',
+        big: String(cleared), unit: '題', ratio: asked ? cleared / asked : 1,
+        stats: rest > 0 ? [['還沒複習', rest + ' 題']] : null,
+        primary: rest > 0 ? { label: '下一回', href: again } : { label: '回錯題本', href: listUrl(p) },
+        links: rest > 0 ? [{ label: '回錯題本', href: listUrl(p) }] : [],
+      });
+      showResult(card);
+      if (window.PET_HOOK) PET_HOOK.done('pr', { n: Object.values(session).reduce((s, r) => s + (p === '5' ? 1 : Object.keys(r).length), 0), into: root.querySelector('.result-reward') });
     }
   }
 
@@ -683,7 +689,7 @@
       const q = set.questions.find(x => x.num === num);
       const rec = q ? sess[qid(set, q, 0)] : null;
       if (rec && graded) {
-        frag.append(h('span', { class: 'gap-mark answered', title: rec.ok ? '' : '（答錯，顯示正解）' }, q.options[q.answer]));
+        frag.append(h('span', { class: 'gap-mark answered', title: rec.ok ? '' : '答錯 · 顯示正解' }, q.options[q.answer]));
       } else if (rec && rec.c !== undefined && rec.c > -1) {
         /* 作答中:顯示自己選的,不透露對錯 */
         frag.append(h('span', { class: 'gap-mark filled' }, q.options[rec.c]));

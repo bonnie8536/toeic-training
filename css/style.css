@@ -3507,6 +3507,28 @@ html:not(.authed) .pet-me .pet-open.btn.primary:hover { color: var(--primary); b
 
 /* ==== 題庫與錯題本 ==== */
 
+/* 題庫首頁:Part 列右邊的已作答數字、兩個開始鈕的上方間距 */
+.cfg-done { font-size: var(--fs-xs); color: var(--ink-soft); }
+.practice-start, .listen-start { margin-top: 14px; }
+.practice-panel .ui-empty { padding: 8px 0 4px; }
+
+/* 錯題本清單頁首:圖示、標題、「← 回題庫刷題」同一列,放不下時連結換到下一行 */
+.page-head.wb-top { flex-wrap: wrap; row-gap: 2px; }
+.wb-back { margin-left: auto; font-size: var(--fs-sm); }
+@media (max-width: 600px) { .wb-back { margin-left: 52px; flex-basis: 100%; } }
+
+/* 結算卡下面的逐題解析:題組的文章與題目上下排,跟卡片同寬 */
+.result-detail-body .q-block { margin-top: 18px; }
+.result-detail-body .q-block:first-child { margin-top: 4px; }
+.result-detail-body .set-layout { grid-template-columns: minmax(0, 1fr); gap: 14px; margin: 18px 0 0; }
+.result-detail-body .set-layout:first-child { margin-top: 4px; }
+
+/* 專心模式的題組(Part 6、7):文章與題目左右排,欄位放寬,跟作答列之間留一點空 */
+html.is-quiz main .set-layout { margin-top: 16px; }
+@media (min-width: 900px) {
+  html.is-quiz main.container:has(.set-layout) { max-width: 1040px; }
+}
+
 /* ---- */
 
 

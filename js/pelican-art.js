@@ -1,4 +1,4 @@
-/* 塗鴉鵜鶘的圖(主要吉祥物)。原檔與預覽不在這個 repo(第六版)。要改圖先改原檔、在預覽看過,再整份複製過來(保留這段開頭)。
+/* 塗鴉鵜鶘的圖(主要吉祥物)。原檔與預覽不在這個 repo(第七版)。要改圖先改原檔、在預覽看過,再整份複製過來(保留這段開頭)。
    這裡只畫圖,不讀寫任何儲存;畫法跟塗鴉小雞(js/chick-art.js)同一套,兩隻要看起來是同一個人畫的。
    第一版:本體定型 + 待機(idle)。
    - 長相照選定的草圖:圓滾滾的身體、往左伸的長直嘴(上嘴是一條細長三角、尖端很尖;嘴的下緣一條直線),
@@ -66,6 +66,12 @@
    - 開心:騰空那三格翅膀往外上方張開(第 4 格最大,羽毛尖超出身體輪廓),身體往上、腳下看得到空隙;落地那格的眼睛改成壓扁的開心弧線。
    - 尷尬:最後斜眼瞄人那格眼珠整個推到一邊、上眼皮壓低、頭轉一點;線團離額頭和嘴遠一點,畫得小時圈數少、線細。
    - 睡覺:呆毛整撮(兩瓣的形狀不變)往一側倒;身體不比待機大(坐下用放低表示),呼吸起伏大一點;z 不靠近畫布上緣。
+   第七版(version 3,審查後;姿勢清單、格數、holds、速度、靜止格都沒變,本體和待機一筆沒改):
+   - 看書:眼睛改成往下看書(畫法同小雞的看書):眉毛下面隔一段白,一條往下垂的眼皮橫線,下面掛著半個眼珠,稍微往書那邊靠;
+     96 左右眉毛和眼睛分開畫,64 以下合成一筆、下面掛半個眼珠;中間皺眉那兩格臉往下點一點(嘴、嘴袋、書不動)。
+     腳的位置改成跟待機一樣;很小時書背再粗、每頁 2 行字拉開行距。
+   - 開心:騰空三格和抬下巴那格的翅膀張得更開(約 1.5 倍),三片羽毛扇形散開;第 0 格保留待機的眼睛,第 1 格才笑瞇。
+   - 播放:看書(正面)跟其他姿勢互換時,畫面淡出淡入約 150 ms。
    用法:const a = PelicanArt.animate(canvas, { size: 180, fps: 8, pose: 'idle', onTick }); a.setPose('happy'); a.setFps(6); a.stop();
    fps 是「基準速度」:各動作會按 PelicanArt.fps 的比例換算(fps 8 時待機每秒 5 張、開心 8 張、尷尬和看書 4 張、睡覺 3 張)。 */
 (function () {
@@ -244,12 +250,14 @@
   const WING_N = [[261.6, 187.6], [263, 173.2]];   // 兩個凹口
   /* 第六版:內側線往下多拉一段(U 比較深);整隻往下移 10.5(約身高 6%),羽毛尖往內收約 8(約身寬 5%,越靠尖端收越多) */
   const WING_DY = 10.5, WING_IN = 8;
-  const WING = [[208, 157], [208.8, 168], [211.4, 180], [215.4, 191], [220.6, 198.6], [225.8, 199.4], [228.6, 193.4], [229, 184],
+  /* 第七版:fan 是三片羽毛扇形散開幾度(開心張翅膀時用;0 = 原本的翅膀,一點都不變),散開時每片也長一點 */
+  const wingPts = (fan) => [[208, 157], [208.8, 168], [211.4, 180], [215.4, 191], [220.6, 198.6], [225.8, 199.4], [228.6, 193.4], [229, 184],
     [231, 191], [235.6, 195.6], [241, 196.6]]
-    .concat(lobe([246, 197.6], WING_N[0], 12, 18))                 // 下面那片,往右稍微朝下
-    .concat(lobe(WING_N[0], WING_N[1], 18, -10).slice(1))          // 中間那片最長,往右
-    .concat(lobe(WING_N[1], [254.2, 164.6], 13.5, -50).slice(1))   // 上面那片往右上翹
+    .concat(lobe([246, 197.6], WING_N[0], 12 * (1 + fan / 50), 18 + fan))                 // 下面那片,往右稍微朝下
+    .concat(lobe(WING_N[0], WING_N[1], 18 * (1 + fan / 70), -10).slice(1))                // 中間那片最長,往右
+    .concat(lobe(WING_N[1], [254.2, 164.6], 13.5 * (1 + fan / 50), -50 - fan).slice(1))   // 上面那片往右上翹
     .map(([x, y]) => [x - WING_IN * smooth((x - 228) / 40), y + WING_DY]);
+  const WING = wingPts(0);
   const WING_PIVOT = [208, 157 + WING_DY];
   /* 呆毛:一個高高的圓頭圈(稍微往右倒)+ 右邊一個小圈,往後(右)倒。
      第四版:根部移到新的頭頂最高點稍微偏右;整撮縮成 0.9 倍、再往右後倒 15°(在 tuft() 裡換算) */
@@ -415,10 +423,10 @@
     return c;
   }
 
-  /* f.wingAt:翅膀整隻再挪多少 [x, y](第六版開心騰空時往外上方張開用) */
+  /* f.wingAt:翅膀整隻再挪多少 [x, y](第六版開心騰空時往外上方張開用);f.fan:羽毛扇形散開幾度(第七版) */
   function wing(ctx, r, f) {
     const a = (f.wing || 0) * RAD, [mx, my] = f.wingAt || [0, 0];
-    const pts = WING.map(([x, y]) => { const v = rot([x - WING_PIVOT[0], y - WING_PIVOT[1]], a); return [WING_PIVOT[0] + v[0] + mx, WING_PIVOT[1] + v[1] + my]; });
+    const pts = (f.fan ? wingPts(f.fan) : WING).map(([x, y]) => { const v = rot([x - WING_PIVOT[0], y - WING_PIVOT[1]], a); return [WING_PIVOT[0] + v[0] + mx, WING_PIVOT[1] + v[1] + my]; });
     ctx.fillStyle = WHITE;
     fillPoly(ctx, pts);                      // 先塗白:羽毛伸出身體的地方蓋住後面的外框
     ctx.strokeStyle = INK;
@@ -464,7 +472,7 @@
     }
     fillPoly(ctx, spline(pts.concat([pts[0]]), 2));
   }
-  /* look 有給時(看書)眼珠再往下 1.5(往下看);frown 皺眉:眉頭往下壓多少(眉尾抬一半),眼珠跟著往下讓 */
+  /* look 有給時(看書)改畫往下看的眼睛(readEye,第七版);frown 皺眉:眉頭往下壓多少(眉尾抬一半),眼睛跟著往下讓 */
   function face(ctx, r, kind, look, frown) {
     if (SMALL) { smallFace(ctx, r, kind); return; }
     if (kind !== 'open' && kind !== 'blink') { moodFace(ctx, r, kind); return; }   // 第五版起的表情;待機不會走到
@@ -478,13 +486,25 @@
         line(ctx, [[ex - 6 * k, b - 6 * k * slope], [ex, b + 3.5 * k], [ex + 6 * k, b + 6 * k * slope]], r, 3.2, 0.4);
         return;
       }
-      const down = (look === undefined ? 0 : 1.5) + fr * 0.6;
-      pupil(ctx, r, [ex + (look || 0) + (r() - 0.5) * 0.4, lid + EYE_GAP + PUPIL[1] * k + down + (r() - 0.5) * 0.3], k);
+      if (look !== undefined) { readEye(ctx, r, ex, i, lid, look, fr, k); return; }
+      pupil(ctx, r, [ex + (r() - 0.5) * 0.4, lid + EYE_GAP + PUPIL[1] * k + (r() - 0.5) * 0.3], k);
     });
     BROWS.forEach(([a, b], i) => {                            // 眉毛:內側粗、眉尾細一點
       const outer = i ? b : a, inner = i ? a : b;
       taper(ctx, r, [inner[0], inner[1] + fr], [outer[0], outer[1] - fr * 0.5], bw, bw * 0.72);
     });
+  }
+  /* 第七版:看書的眼睛(畫法同小雞的看書):眉毛下面隔一段白,一條往下垂的眼皮橫線,眼皮下面掛著半個眼珠(上緣切平、下面圓),
+     整個眼睛比待機低約三成、稍微往書(兩眼中間下面)靠;眼珠和眼皮跟著 look 左右掃(眼皮挪得少一點)。
+     i:0 左眼、1 右眼;lid:待機眉毛下緣的高度;fr:皺眉時整個再往下讓一點 */
+  function readEye(ctx, r, ex, i, lid, look, fr, k) {
+    const s = i ? -1 : 1;                              // 往臉中間(書那邊)的方向
+    const y = lid + 8.5 + fr * 0.4, x = ex + s * 1.2 + look;
+    const half = [];
+    for (let a = 0; a <= 180; a += 20) half.push([x + Math.cos(a * RAD) * 5.6 * k, y + 0.6 + Math.sin(a * RAD) * 8 * k]);
+    fillPoly(ctx, half);
+    const lx = ex + s * 1.2 + look * 0.55;            // 眼皮:外側高一點點(跟著眉毛的方向),稍微往下彎
+    line(ctx, [[lx - 8.5 * k, y - 0.9 * s], [lx, y + 0.5], [lx + 8.5 * k, y + 0.9 * s]], r, 3.6, 0.4);
   }
   /* 96 以下的臉:每隻眼睛的眉毛和眼珠合成一筆粗斜線,外側高、往臉中間壓低(兩筆合起來是 V,臭臉);
      線寬換算成螢幕上至少 2 px、純黑。表情只改這一筆的彎法,斜度都留著 */
@@ -505,11 +525,21 @@
       else if (name === 'meh') fat([[o[0], o[1] + 7], [n[0], n[1] + 1]], W * 0.9);
       else if (name === 'sideeye') fat(i ? [[o[0], o[1] - 4], [n[0], n[1] - 3]] : [[o[0], o[1] + 6], [n[0], n[1] + 1]], W);
       else if (name === 'blink') fat([[o[0], o[1] + 4], [n[0], n[1] + 2]], W * 0.9);
-      else {
-        const lk = name === 'look' || name === 'lookfrown' ? (+kind.split(':')[1] || 0) * 0.5 : 0;   // 看書:整筆跟著眼珠挪一點
-        const fr = name === 'lookfrown' ? 2 : 0;
-        fat([[o[0] + lk, o[1] - fr], [n[0] + lk, n[1] + fr]], W);
-      }
+      else if (name === 'look' || name === 'lookfrown') {
+        // 第七版:看書。斜線放平一點、整筆往上提(眼皮壓著),中間下面掛著半個眼珠(往下看),眼珠跟著 look 左右掃;
+        // 眼珠的下緣離嘴的上緣留一點白,52 px 也不黏在一起
+        // 96 左右(線還不算太粗):眉毛跟眼睛分開畫,眉毛提高、下面隔一條白縫掛著上緣切平的半個眼珠;
+        // 64 以下(線太粗、擺不下兩樣):眉毛和眼皮合成一筆,中間下面掛著半個眼珠
+        const lk = (+kind.split(':')[1] || 0) * 0.5, fr = name === 'lookfrown' ? 1.5 : 0;
+        const a = TINY ? [o[0] + lk * 0.5, o[1] - 3 - fr] : [o[0] + 2, o[1] - 8 - fr];
+        const b = TINY ? [n[0] + lk * 0.5, n[1] - 6 + fr] : [n[0] - 2, n[1] - 14 + fr];
+        fat([a, b], W);
+        const c = TINY ? XF([(a[0] + b[0]) / 2 + lk * 0.7 + s * 2.5, (a[1] + b[1]) / 2]) : XF([(o[0] + n[0]) / 2 + lk + s * 2, 89 + fr * 0.5]);
+        const rx = Math.max(6.5, W * 0.55), dy = TINY ? W * 0.5 + 6.5 : Math.max(7.5, W * 0.7);
+        const half = [];
+        for (let t = 0; t <= 180; t += 30) half.push([c[0] + Math.cos(t * RAD) * rx, c[1] + Math.sin(t * RAD) * dy]);
+        ctx.beginPath(); half.forEach(([x, y], q) => (q ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); ctx.fill();
+      } else fat([o, n], W);
     });
   }
   /* 第五版起的表情。眉毛的位置用待機的眉毛當底,內側、外側各往上抬多少(負的往下壓):
@@ -627,7 +657,7 @@
   const RBOWL = [[174, 127], [176.5, 139], [173, 151], [164, 163.5], [149, 172.5], [129, 177.5], [107, 178], [86, 172.5],
     [70, 163], [59.5, 151], [54.5, 140.5], [53.5, 134]];
   const RBOOK = { c: [160, 214], s: 1.08, tilt: -3 };           // 書的中心、放大、斜幾度(左邊稍微抬高)
-  const RLEGS = [141, 180];
+  const RLEGS = [128.7, 186];                                  // 第七版:腳的位置跟待機一模一樣,切過來時腳不會跳
   const RWINGS = [[86, 184, 47, false], [234, 184, -47, true]]; // 肩膀的位置、轉幾度、要不要左右翻
   /* 圓球上的點:a 是角度(0 = 右、90 = 下) */
   function ballPts(B, a0, a1, step) {
@@ -687,13 +717,14 @@
     ink(pageL.slice(0, 6).reverse(), 3.2);                                                 // 左頁上緣和外側
     ink(M(pageL).slice(4), 3.2);                                                           // 右頁
     if (!TINY) ink([[-w + 1, 9], [-26, 12], [-10, 14], [0, 18], [10, 14], [26, 12], [w - 1, 9]], 2.6);   // 書頁底
-    line(ctx, extend(at([[0, -11], [0.8, 3], [0, 23]]), 1, 0), r, 4.2, 0.6);               // 書背加粗
-    const rows = TINY ? [-8, 0] : SMALL ? [-9, -3, 3] : [-10.5, -5, 0.5, 6];
+    line(ctx, extend(at([[0, -11], [0.8, 3], [0, 23]]), 1, 0), r, TINY ? 5.8 : 4.2, 0.6);   // 書背加粗(第七版:很小時再粗一點,兩頁的 V 才清楚)
+    // 第七版:很小時每頁 2 行、行距拉開、兩頭多留白,不會糊成一條灰色
+    const rows = TINY ? [-10, 2] : SMALL ? [-9, -3, 3] : [-10.5, -5, 0.5, 6];
     const tw = TINY ? 2.6 : 1.9;
     const text = (s, v, a, b) => { const d = v < -5 ? -1.2 : 0; line(ctx, at([[a, v + d], [(a * 2 + b) / 3, v - 1 + d * 0.5], [(a + b * 2) / 3, v], [b, v - 0.8]]), r, tw, 0.5); };
     rows.forEach((v) => [-1, 1].forEach((s) => {
       if ((page === 1 && s > 0) || (page === 3 && s < 0)) return;                          // 被翻起來的那頁蓋住的字不畫
-      text(s, v, s * 9, s * (w - 10));
+      text(s, v, s * (TINY ? 12 : 9), s * (w - (TINY ? 15 : 10)));
     }));
     if (page) {
       const pg = RPAGES[page];
@@ -732,7 +763,8 @@
     tuft(ctx, r, { tuft: 6 }, 0);
     XF = ID;
     readBeak(ctx, r, size);
-    XF = ([x, y]) => [x + RFACE[0], y + RFACE[1]];
+    const nod = f.nod || 0;                                   // 第七版:點頭時臉(眉毛、眼睛)往下點一點,嘴和嘴袋不動
+    XF = ([x, y]) => [x + RFACE[0], y + RFACE[1] + nod];
     face(ctx, r, SMALL ? (f.frown ? 'lookfrown:' : 'look:') + f.look : 'open', f.look, f.frown);
     XF = ID;
     readBook(ctx, r, f.page || 0);
@@ -798,9 +830,9 @@
         z(b[0] + n * 3, Math.max(top + 12, b[1] - n * 3.5), 15);
         if (n >= 2) z(b[0] + 24 + n * 2, Math.max(top, b[1] - 24 - n * 2.5), 10);
       } else if (name === 'pop') {
-        // 得意的短線:頭的右上方三條往外放射的短線(「哼」)
+        // 得意的短線:頭的右上方三條往外放射的短線(「哼」);pop:2 只畫上面兩條(第七版:翅膀張到最大時,最下面那條會碰到羽毛)
         [[[222, 46], [231, 30]], [[244, 62], [258, 51]], [[256, 88], [272, 84]]].forEach(([a, b], i) => {
-          if (small && i === 1) return;
+          if ((small && i === 1) || (n === 2 && i === 2)) return;
           line(ctx, [k.body(a), k.body(b)], r, 3, 0.5);
         });
       } else if (name === 'dust') {
@@ -852,15 +884,15 @@
      抬下巴得意(停 2 拍)→ 放鬆接回開頭。呆毛比身體慢一拍。
      第六版:騰空三格翅膀轉高、整隻往外上方挪(羽毛尖超出身體輪廓),身體拉長、腳下看得到空隙;第 0 格接近待機的站姿 */
   const happy = [
-    { eyes: 'happy', tilt: 1, wing: -3, tuft: -3, pouch: [0, 1] },
+    { eyes: 'open', tilt: 1, wing: -3, tuft: -3, pouch: [0, 1] },
     { sq: 0.86, sx: 1.03, tilt: -1, dx: 3, eyes: 'happy', wing: 8, tuft: 10, pouch: [1, -3], hold: 2 },
     { sq: 1.1, sx: 0.95, dy: -4, tilt: 5, eyes: 'happy', wing: -30, tuft: 16, pouch: [1, 6] },
-    { sq: 1.08, sx: 0.95, dy: -22, tilt: 7, eyes: 'happy', wing: -38, wingAt: [10, -6], feet: 'jump', tuft: 24, pouch: [-1, 8], fx: ['motion', 'shadow'] },
-    { sq: 1.03, sx: 0.98, dy: -28, tilt: 8, eyes: 'happy', wing: -46, wingAt: [13, -9], feet: 'jump', tuft: 12, pouch: [0, 1], fx: ['pop', 'shadow'], hold: 2 },
-    { sq: 1.07, sx: 0.96, dy: -17, tilt: 6, eyes: 'happy', wing: -36, wingAt: [10, -6], feet: 'jump', tuft: 8, pouch: [1, -6], fx: ['shadow'] },
+    { sq: 1.08, sx: 0.95, dy: -22, tilt: 7, eyes: 'happy', wing: -62, wingAt: [8, -12], fan: 14, feet: 'jump', tuft: 24, pouch: [-1, 8], fx: ['motion', 'shadow'] },
+    { sq: 1.03, sx: 0.98, dy: -28, tilt: 8, eyes: 'happy', wing: -76, wingAt: [8, -17], fan: 22, feet: 'jump', tuft: 12, pouch: [0, 1], fx: ['pop:2', 'shadow'], hold: 2 },
+    { sq: 1.07, sx: 0.96, dy: -17, tilt: 6, eyes: 'happy', wing: -54, wingAt: [7, -10], fan: 12, feet: 'jump', tuft: 8, pouch: [1, -6], fx: ['shadow'] },
     { sq: 0.8, sx: 1.04, tilt: 1, dx: 1, eyes: 'happysquash', wing: 14, tuft: -22, pouch: [-3, 10], fx: ['dust'] },
     { sq: 1.06, sx: 0.97, tilt: 6, eyes: 'happy', wing: -20, tuft: 12, pouch: [2, -5] },
-    { sq: 0.99, tilt: 7, eyes: 'happy', wing: -28, tuft: -6, pouch: [-1, 3], fx: ['pop'], hold: 2 },
+    { sq: 0.99, tilt: 7, eyes: 'happy', wing: -42, wingAt: [8, -5], fan: 12, tuft: -6, pouch: [-1, 3], fx: ['pop'], hold: 2 },
     { tilt: 3, eyes: 'happy', wing: -10, tuft: 2, pouch: [0, 0.5] },
   ];
   /* 尷尬懊惱(成績不理想):不哭也不裝可憐,是「嘖」。站好 → 縮一下、頭低下去 → 縮到最底,> <、嘴袋垂下來,
@@ -877,15 +909,15 @@
     { tilt: 2.5, eyes: 'sideeye', wing: 4, tuft: -8, pouch: [0, 4], hold: 3 },
     { sq: 1.02, eyes: 'blink', tuft: 4, pouch: [0, 2] },
   ];
-  /* 看書(第六版重畫,見 drawRead):look 眼珠往右挪多少、frown 皺眉、page 翻頁、br 呼吸。
+  /* 看書(第六版重畫,見 drawRead):look 眼珠往右挪多少、frown 皺眉、nod 臉往下點多少(第七版)、page 翻頁、br 呼吸。
      往左看 → 中間 → 看到右邊(停 2 拍)→ 跳回下一行的開頭、皺一下眉(停 2 拍)→ 中間 → 看到右邊、右頁翹起來 →
      那頁立在書背上 → 落到左邊(停 2 拍)→ 接回開頭(新的一頁)。一圈 12 拍(每秒 4 張約 3 秒) */
   const read = [
     { look: -4.5, br: 0, hold: 2 },
     { look: 0, br: 0.5 },
     { look: 4.5, br: 1, hold: 2 },
-    { look: -4.5, frown: 2.5, br: 0.6, hold: 2 },
-    { look: 0, frown: 1.5, br: 0.2 },
+    { look: -4.5, frown: 2.5, nod: 1, br: 0.6, hold: 2 },
+    { look: 0, frown: 1.5, nod: 2, br: 0.2 },
     { look: 4.5, page: 1, br: 0 },
     { look: 1.5, page: 2, br: 0.5 },
     { look: -3.5, page: 3, br: 1, hold: 2 },
@@ -988,7 +1020,26 @@
     const framesOf = (p) => cache[p] || (cache[p] = bake(p, px, poseSeed(o.seed, p), o.size));
     let pose = POSES[o.pose] ? o.pose : 'idle', fps = o.fps, i = 0, timer = null, seq = sequence(pose);
     const reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    function paint(img) { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(img, 0, 0); }
+    /* 第七版:看書是正面,跟其他(側面)姿勢互換時,上一張畫面用約 150 ms 淡出、新的淡入,整隻不會一下子跳過去。
+       減少動態時、或環境沒有 requestAnimationFrame 時不做 */
+    const FADE_MS = 150, raf = typeof window.requestAnimationFrame === 'function' ? window.requestAnimationFrame.bind(window) : null;
+    const now = () => (window.performance && performance.now ? performance.now() : Date.now());
+    let last = null, fade = null;
+    function paint(img) {
+      last = img;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const t = fade ? (now() - fade.t0) / FADE_MS : 1;
+      if (t >= 1) { fade = null; ctx.drawImage(img, 0, 0); return; }
+      ctx.globalAlpha = 1 - t; ctx.drawImage(fade.from, 0, 0);
+      ctx.globalAlpha = t; ctx.drawImage(img, 0, 0);
+      ctx.globalAlpha = 1;
+    }
+    function fadeFrom(p) {
+      if (reduce || !raf || !last || !!POSES[p][0].front === !!POSES[pose][0].front) return;
+      fade = { from: last, t0: now() };
+      const step = () => { if (!fade || !last) return; paint(last); if (fade) raf(step); };
+      raf(step);
+    }
     function tick() {
       const fr = framesOf(pose);
       if (reduce) { paint(fr(CALM[pose] || 0, 0)); return; }
@@ -1002,7 +1053,7 @@
     function stop() { if (timer) clearInterval(timer); timer = null; }
     start();
     return {
-      setPose(p) { if (POSES[p]) { pose = p; seq = sequence(p); i = 0; start(); } },
+      setPose(p) { if (POSES[p]) { fadeFrom(p); pose = p; seq = sequence(p); i = 0; start(); } },
       setFps(n) { fps = n; start(); },
       // 停掉計時器,只畫指定的那一格;減少動態時一律畫該姿勢的靜止格
       show(k, variant, p) {

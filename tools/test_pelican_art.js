@@ -11,7 +11,9 @@
      每個姿勢的每一格都畫得出來、畫兩次一樣、不超出畫布、沒有藍色、白色身體有塗白;減少動態時換到哪個姿勢都只畫那個姿勢的靜止格;
      看書那幾格多了書頁的白色。
    - version 3:看書改成正面捧書:每一格都有一本書(一大片白色、在身體下半),書沒有任何黃色,嘴袋的黃色跟書頂之間留白縫;
-     其他姿勢沒有書;睡覺的 z 和呆毛離畫布上緣至少 8%。 */
+     其他姿勢沒有書;睡覺的 z 和呆毛離畫布上緣至少 8%。
+   - 第七版(仍是 version 3):看書(正面)跟其他姿勢互換時淡出淡入(約 150 ms,用 requestAnimationFrame;減少動態時不做),
+     側面姿勢之間互換不淡入淡出。 */
 const POSES = ['idle', 'happy', 'oops', 'read', 'sleep'];
 /* 各姿勢的格數範圍 */
 const FRAMES = { idle: [7, 10], happy: [9, 11], oops: [8, 10], read: [7, 9], sleep: [6, 8] };
@@ -45,8 +47,8 @@ function makeCanvas() {
 
 /* 一個獨立的假頁面:自己的計時器、自己的 PelicanArt。碰到任何儲存就記下來;Math.random 一被呼叫就丟例外 */
 function makeEnv(opt) {
-  const o = Object.assign({ dpr: 1, reduce: false }, opt);
-  const timers = new Map(), touched = [];
+  const o = Object.assign({ dpr: 1, reduce: false, raf: false }, opt);
+  const timers = new Map(), touched = [], frames = [], clock = { t: 0 };
   let tid = 0;
   const g = {
     console, devicePixelRatio: o.dpr,
@@ -57,13 +59,18 @@ function makeEnv(opt) {
     clearTimeout: (id) => { timers.delete(id); },
     document: { createElement: () => makeCanvas() },
   };
+  if (o.raf) {                                   // 淡入淡出用:requestAnimationFrame 記下來由測試手動推進,時間也由測試撥
+    g.requestAnimationFrame = (fn) => { frames.push(fn); return frames.length; };
+    g.performance = { now: () => clock.t };
+  }
   ['localStorage', 'sessionStorage', 'indexedDB'].forEach((k) => Object.defineProperty(g, k, { get() { touched.push(k); return undefined; } }));
   Object.defineProperty(g.document, 'cookie', { get() { touched.push('cookie'); return ''; }, set() { touched.push('cookie'); } });
   g.window = g;
   vm.createContext(g);
   vm.runInContext('Math.random = function () { throw new Error("用了 Math.random"); };', g);
   vm.runInContext(SRC, g, { filename: 'pelican-art.js' });
-  return { A: g.PelicanArt, g, timers, touched, intervals: () => [...timers.values()].filter((t) => !t.once) };
+  const flush = (ms) => { clock.t += ms; const list = frames.splice(0); list.forEach((fn) => fn()); return list.length; };
+  return { A: g.PelicanArt, g, timers, touched, clock, flush, intervals: () => [...timers.values()].filter((t) => !t.once) };
 }
 const ART = makeEnv().A;
 const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -272,6 +279,40 @@ T['重入:onTick 裡呼叫 setPose 只留一個計時器,stop() 之後一個都�
   const live = env.intervals().length;
   a.stop();
   return { ok: live === 1 && env.intervals().length === 0, detail: 'live ' + live + ',stop 後 ' + env.intervals().length };
+};
+T['看書跟其他姿勢互換時淡出淡入約 150 ms(之後回到不透明);側面姿勢互換、減少動態時都不淡入淡出'] = () => {
+  const d = [];
+  const alphas = (c, from) => c.log.slice(from).filter((l) => l.startsWith('globalAlpha=')).map((l) => +l.slice(12));
+  const env = makeEnv({ dpr: 1, raf: true }), c = makeCanvas();
+  const a = env.A.animate(c, { size: 120, pose: 'idle' });
+  let mark = c.log.length;
+  a.setPose('happy');                                         // 側面 → 側面:不淡入淡出
+  if (alphas(c, mark).length || env.flush(16)) d.push('idle → happy 有淡入淡出');
+  mark = c.log.length;
+  a.setPose('read');                                          // 側面 → 正面:淡入淡出
+  const first = alphas(c, mark);
+  if (!(first.length >= 2 && first[0] > 0.9 && first[1] < 0.1)) d.push('happy → read 第一張不是從舊畫面開始淡 ' + JSON.stringify(first));
+  let n = 0, prev = first[1];
+  for (let ms = 0; ms < 200; ms += 40) {
+    const m = c.log.length;
+    env.flush(40); n++;
+    const al = alphas(c, m);
+    if (al.length && !(al[1] >= prev)) d.push('新畫面沒有越來越清楚 ' + JSON.stringify(al));
+    if (al.length) prev = al[1];
+  }
+  mark = c.log.length;
+  if (env.flush(40)) d.push('150 ms 之後還在跑');
+  env.intervals()[0].fn();                                     // 淡完之後照常播放,不再改透明度
+  if (alphas(c, mark).length) d.push('淡完還在改透明度');
+  mark = c.log.length;
+  a.setPose('sleep');                                         // 正面 → 側面:也淡入淡出
+  if (!alphas(c, mark).length) d.push('read → sleep 沒有淡入淡出');
+  a.stop();
+  const env2 = makeEnv({ dpr: 1, raf: true, reduce: true }), c2 = makeCanvas();
+  const b = env2.A.animate(c2, { size: 120, pose: 'idle' });
+  b.setPose('read'); b.setPose('idle');
+  if (alphas(c2, 0).length || env2.flush(16)) d.push('減少動態時還在淡入淡出');
+  return { ok: !d.length, detail: d.join(';') };
 };
 T['不讀寫任何儲存、不用 Math.random(原始碼裡也沒有這些字)'] = () => {
   const { env } = run({}, 30);

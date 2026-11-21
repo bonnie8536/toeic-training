@@ -23,7 +23,7 @@
      · mock_wrong(模擬考答錯的題,錯題本定稿 2026-11-18):合併函式 SYNC_MERGE.mockWrong,同一題留 t 新的、其他都留(聯集)。
        跟 mock_history 一樣先讀雲端、合併、再上傳;搬家暫存區(takePending → takeSynced)也照 SYNC_FN 合併。
        舊快取的 sync-merge.js 沒有 mockWrong:merge() 是 null,照上面的規則不上傳、帳本留著。
-       模擬考、每日複習、題庫、能力分析開頁時呼叫 syncKey('mock_wrong') 跟雲端對齊一次(js/wrongbook.js syncCloud;為什麼見已知限制 8)。
+       模擬考、錯題本、題庫、能力分析開頁時呼叫 syncKey('mock_wrong') 跟雲端對齊一次(js/wrongbook.js syncCloud;為什麼見已知限制 8)。
    已知限制:
      1. 兩台在同一時間讀雲端、合併、上傳時,後到的那台可能蓋掉先到的那台剛傳上去的東西;先到那台本機還留著,
         下次上傳、灌資料、開單字頁、登出前對帳時會再合併上傳(pet 是 pet-store 的 remoteBehind),所以不會永久消失。
@@ -44,7 +44,7 @@
      8. mock_wrong(錯題本審查 2026-11-19 #1):部署前就開著、沒重新整理的舊版分頁(它的合併表沒有 mock_wrong)恢復連線、關頁、切到背景時
         補傳帳本,帳本上的 mock_wrong 不讀雲端、不合併就整份上傳。同一台的新版頁面剛寫了 mock_wrong、還沒傳上去(0.8 秒內、離線)時,
         雲端那一列會變成這台本機那一份:別台傳上去、這台本機沒有的錯題,別台如果已經登出(共用電腦,本機刪了)就找不回來。
-        模擬考、每日複習、題庫、能力分析開頁先跟雲端對齊(WRONGBOOK.syncCloud → syncKey,tools/test_sync_union.js 34),本機開頁時就有雲端那份;
+        模擬考、錯題本、題庫、能力分析開頁先跟雲端對齊(WRONGBOOK.syncCloud → syncKey,tools/test_sync_union.js 34),本機開頁時就有雲端那份;
         剩下的是開頁之後、這台交卷或複習之前別台才傳上去的(兩台差不多同時在考),或開頁時讀不到雲端(離線)的。舊分頁重新整理或關掉就沒有這個問題。
         不改用「只在本機」標記(不記帳本、舊版看不到):舊版 cloud.js 登出時只算自己合併表上的標記,離線交卷後在舊分頁登出會不問就刪掉;記在帳本至少會問。 */
 (function () {

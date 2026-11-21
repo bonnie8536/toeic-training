@@ -116,7 +116,7 @@ function folderGone() {
 /* 這一頁因為帳號那一邊存不進去的原因(每一頁都看,不只內容頁;第 2 輪審查 2026-10-31):
    'gone':folderGone(別的分頁登出、換帳號)。
    'loading':已登入,可是 js/cloud.js folderReady 說這一頁的資料夾還不能用:這台的帳號資料夾還沒灌過雲端進度(空的,讀雲端失敗)、這一頁是照還沒灌過的資料夾畫的(別的分頁之後才灌好,要重新整理)、
-   或剛在這一頁登入、重載之前(資料夾還是訪客的)。以前非內容頁(每日練習、每日複習)照常寫進資料夾但不記帳,
+   或剛在這一頁登入、重載之前(資料夾還是訪客的)。以前非內容頁(每日練習、錯題本)照常寫進資料夾但不記帳,
    下次灌資料用雲端蓋回去,那段時間的練習沒有任何提示就不見了。
    '':不是帳號的原因(訪客、本機學生檔案、平常登入著)。舊版 cloud.js 沒有 folderReady 就只看 folderGone */
 function accountBlock() {
@@ -124,7 +124,7 @@ function accountBlock() {
   const C = window.CLOUD;
   try { return C && C.user && typeof C.folderReady === 'function' && !C.folderReady() ? 'loading' : ''; } catch (e) { return ''; }
 }
-/* 沒有 data-gate 的作答(每日練習、每日複習這類非內容頁)按下去之前問一下:這一頁因為帳號那一邊存不進去,
+/* 沒有 data-gate 的作答(每日練習、錯題本這類非內容頁)按下去之前問一下:這一頁因為帳號那一邊存不進去,
    就不讓這一下生效(不對答案),開 js/profile.js 的「重新整理」卡,跟內容頁一樣;不能顯示「答對了」卻什麼都沒存。回 true = 擋下了 */
 function holdForAccount(opener) {
   if (!accountBlock()) return false;

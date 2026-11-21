@@ -215,7 +215,7 @@
     try { return Promise.resolve(C.syncKey('mock_wrong')).then((r) => r || none, () => none); } catch (e) { return Promise.resolve(none); }
   }
 
-  /* 清單上的字(用字照學習記錄 js/history.js):題目最多 max 字;選項整句列出,跟學習記錄一樣不截(審查 2026-11-19:截在 30 字時 Part 7、聽力大半的正解看不完整) */
+  /* 清單上的字(用字照學習記錄 js/history.js):題目最多 max 字;選項整句列出,跟學習記錄一樣不截(截在 30 字時 Part 7、聽力大半的正解看不完整) */
   const cut = (s, n) => { const t = String(s === undefined || s === null ? '' : s); return t.length > n ? t.slice(0, n) + '…' : t; };
   function stem(x, max) {
     const n = max || 90, q = x.q;

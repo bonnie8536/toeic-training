@@ -1,6 +1,8 @@
 /* 共用元件(js/ui.js)的測試:結算卡的姿勢分級與分數、沒載到圖時不丟錯、destroy 停計時器、專心模式進出、
    離開前確認、確認與輸入視窗(確定、取消、Esc、點遮罩、焦點)、空狀態、點心列、不讀寫儲存。
    主角鵜鶘:有 PelicanArt 時結算卡與空狀態用牠、沒有或載入失敗退回 ChickArt、兩個都沒有不畫、canvas[data-mascot] 掛載、尺寸照 metrics 的比例。
+   第二版:點心事件的認法(特別點心的 id、兩張卡不互搶)、只有點心列、內嵌小卡、屬性(attrs)、通知視窗、輸入框提示、空狀態的連結與 extra、
+   作答列的 slot 與回饋小字、鍵盤彈出、面板、UI.mount;樣式檢查只看共用元件那一段。
    用法:node tools/test_ui.js
    js/ui.js 在 vm 裡跑,配一個很小的假 DOM(只做 ui.js 用到的);計時器、圖的程式、IntersectionObserver 都是假的,由測試手動推進。 */
 'use strict';
@@ -182,6 +184,7 @@ function loadPage(opt) {
     });
   };
   if (o.markup) o.markup(doc);
+  if (o.extra) Object.assign(ctx, o.extra);   // 其他全域(visualViewport、innerHeight 等)
   ctx.window = ctx;
   vm.createContext(ctx);
   vm.runInContext(SRC, ctx, { filename: 'js/ui.js' });
@@ -1002,13 +1005,18 @@ T['原始碼與樣式沒有本機路徑;樣式有專心模式、付費牆與分�
   const css = fs.readFileSync(path.join(REPO, 'css', 'style.css'), 'utf8');
   const start = css.indexOf('/* ======== 共用元件(js/ui.js)');
   assert.ok(start > 0, 'style.css 最後一段的開頭註解');
-  const kit = css.slice(start);
+  /* 只檢查共用元件那一段:後面「各頁面的補充樣式」是各頁自己的規則,不受這裡的限制 */
+  const end = css.indexOf('/* ---------------- 各頁面的補充樣式', start);
+  assert.ok(end > start, '共用元件那一段的結尾標記(各頁面的補充樣式)');
+  const kit = css.slice(start, end);
   /* repo 是公開的:不寫本機的絕對路徑 */
   const local = /(^|[^A-Za-z])[A-Za-z]:[\\/]/;
   assert.ok(!local.test(kit) && !local.test(SRC), '樣式與 js/ui.js 不該有本機路徑');
   ['html.is-quiz .topbar-inner', 'html.is-quiz.app-shell .app-tabbar', 'html.is-quiz .pet-roam', 'html.is-quiz.app-shell.has-tabbar body::after',
     '.modal-mask.pw-mask', 'html.is-quiz.app-kb .quiz-foot', '.tile-featured', '.tile-badge', '.tile-group-h', '.result-reward', '.ui-empty', '.app-tab-art',
-    'a.nav-btn', '--fs-3xl', '--r-full', '--snack-tint', '.tile-featured .tile-go:not(.primary)', '.page-head:has(> .hub-art)', '.tile-group-art', '.quiz-live', '@keyframes ui-hop', 'html.is-quiz:not(.app-gate) .topbar'].forEach((s) => assert.ok(kit.includes(s), '樣式少了 ' + s));
+    'a.nav-btn', '--fs-3xl', '--r-full', '--snack-tint', '.tile-featured .tile-go:not(.primary)', '.page-head:has(> .hub-art)', '.tile-group-art', '.quiz-live', '@keyframes ui-hop', 'html.is-quiz:not(.app-gate) .topbar',
+    'html.is-quiz.ui-kb .quiz-foot', '.quiz-slot', '.quiz-fb-note', '.result-card.is-inline', '.ui-reward-row', '.ui-empty-links', '.ui-empty-extra', '.ui-dialog-hint',
+    '.modal-mask.ui-sheet-mask', '.ui-sheet-close'].forEach((s) => assert.ok(kit.includes(s), '樣式少了 ' + s));
   /* 各練習頁原本的 .result-note、寫作練習的 .tile 不被新規則蓋到:新段落裡不出現沒掛在新類別底下的這兩個選擇器 */
   const sels = (kit.replace(/\/\*[\s\S]*?\*\//g, '').match(/[^{}]+\{/g) || []).map((x) => x.replace(/\{$/, '').trim());
   const parts = [].concat(...sels.map((x) => x.split(',').map((y) => y.trim())));
@@ -1040,6 +1048,363 @@ T['原始碼與樣式沒有本機路徑;樣式有專心模式、付費牆與分�
     const norm = (s) => s.replace(/\r\n/g, '\n').trimEnd();
     assert.strictEqual(norm(css.slice(0, start)), norm(before), '最後一段之前的舊樣式不動');
   }
+};
+
+/* ---------- 第二版:點心事件的認法、點心列、內嵌小卡、通知視窗、面板、掛載 ---------- */
+const line = (p, card, wait) => { const n = p.doc.createElement('p'); n.className = 'pet-earn' + (wait ? ' is-wait' : ''); card.reward.append(n); return n; };
+
+T['點心事件:earnId 也認特別點心的 id(y_<來源>、w:…_<來源>、截到 24 字的),不認只是字尾相像的'] = async () => {
+  const fd = fakeFood();
+  const p = loadPage({ pelican: fakePelican(), food: fd });
+  const got = (earnId, id) => {
+    const c = p.UI.result({ score: 6, total: 10, earnId });
+    p.doc.body.append(c.el);
+    p.emit('pet:earn', { result: 'got', food: 'corn', id, source: 'hook' });
+    const n = c.reward.querySelectorAll('canvas').length;
+    c.destroy();
+    return n;
+  };
+  assert.strictEqual(got('rv', 'rv'), 1, '一般點心:id 就是來源');
+  assert.strictEqual(got('rv', 'w:s1_rv'), 1, '麵包蟲:w:s1_<來源>');
+  assert.strictEqual(got('p5', 'y_p5'), 1, '地瓜:y_<來源>');
+  assert.strictEqual(got('mock', 'w:a12_mock'), 1, '每 30 天的麵包蟲');
+  const long = 'wr:abcdefghijklmnopqrstuvwxyz';
+  assert.strictEqual(got(long, ('w:s2_' + long).slice(0, 24)), 1, '超過 24 字截掉後面的特別點心');
+  assert.strictEqual(got('p5', 'y_p55'), 0, '字尾相像但不是這個來源');
+  assert.strictEqual(got('p5', 'p6'), 0);
+  assert.strictEqual(p.listeners('pet:earn'), 0, '每張卡 destroy 後拿掉監聽');
+};
+
+T['點心事件:同一頁兩張卡不互相搶(掛勾正在等的那一行優先,其次 earnId,最後是已經有那一行的卡)'] = async () => {
+  const fd = fakeFood();
+  const p = loadPage({ pelican: fakePelican(), food: fd });
+  const has = (c) => c.reward.querySelectorAll('canvas').length;
+  /* 舊卡留著上一次掛勾的那一行(已經寫完,不是 is-wait);新卡的掛勾正在等 */
+  const a = p.UI.result({ score: 6, total: 10 }), b = p.UI.result({ score: 6, total: 10 });
+  p.doc.body.append(a.el, b.el);
+  line(p, a, false);
+  line(p, b, true);
+  p.emit('pet:earn', { result: 'got', food: 'corn', id: 'x', source: 'hook' });
+  await settle();
+  assert.deepStrictEqual([has(a), has(b)], [0, 1], '畫在掛勾正在等的那一張');
+  /* 舊的那一行不是 is-wait 也不在 earnId:另一張給了 earnId 的卡優先 */
+  const c = p.UI.result({ score: 6, total: 10, earnId: 'mock' });
+  p.doc.body.append(c.el);
+  p.emit('pet:earn', { result: 'got', food: 'melon', id: 'y_mock', source: 'hook' });
+  await settle();
+  assert.deepStrictEqual([has(a), has(c)], [0, 1], 'earnId 對得上的那張');
+  assert.ok(c.reward.classList.contains('has-food'));
+  /* 掛勾正在等 + earnId 對得上:兩張都在等時挑對得上的 */
+  const d = p.UI.result({ score: 6, total: 10, earnId: 'g:1' }), e = p.UI.result({ score: 6, total: 10, earnId: 'g:2' });
+  p.doc.body.append(d.el, e.el);
+  line(p, d, true); line(p, e, true);
+  p.emit('pet:earn', { result: 'got', food: 'tomato', id: 'g:1', source: 'hook' });
+  await settle();
+  assert.deepStrictEqual([has(d), has(e)], [1, 0]);
+  /* 沒有任何一張認得:都不畫 */
+  const f = p.UI.result({ score: 6, total: 10, earnId: 'q' });
+  p.doc.body.append(f.el);
+  p.emit('pet:earn', { result: 'got', food: 'corn', id: 'zz', source: 'hook' });
+  await settle();
+  assert.strictEqual(has(f), 0);
+  [a, b, c, d, e, f].forEach((x) => x.destroy());
+  assert.strictEqual(p.listeners('pet:earn'), 0);
+};
+
+T['UI.rewardRow:只有點心列(沒有角色、分數、按鈕),掛勾放進 reward 就畫食物;destroy 拿掉監聽;跟結算卡同一套認法'] = async () => {
+  const fd = fakeFood(), pe = fakePelican();
+  const p = loadPage({ pelican: pe, food: fd });
+  const r = p.UI.rewardRow();
+  assert.ok(r.el.classList.contains('ui-reward-row'));
+  assert.strictEqual(r.reward.parentNode, r.el);
+  assert.ok(r.reward.classList.contains('result-reward'));
+  assert.strictEqual(r.el.querySelector('canvas'), null, '沒有角色');
+  assert.strictEqual(r.el.querySelector('.result-score, .btn'), null);
+  assert.strictEqual(pe.made.length, 0);
+  p.doc.body.append(r.el);
+  /* 另一張結算卡也在頁面上:點心畫在掛勾正在等的點心列 */
+  const card = p.UI.result({ score: 6, total: 10 });
+  p.doc.body.append(card.el);
+  line(p, card, false);
+  const ln = line(p, r, true);
+  p.emit('pet:earn', { result: 'got', food: 'tomato', id: 'dlg:a1', source: 'hook' });
+  await settle();
+  assert.ok(r.reward.classList.contains('has-food'));
+  assert.strictEqual(r.reward.children[0].tagName, 'CANVAS', '食物在左邊');
+  assert.strictEqual(r.reward.children[1], ln, '掛勾那一行不動');
+  assert.strictEqual(card.reward.querySelector('canvas'), null, '結算卡不搶');
+  card.destroy();
+  r.destroy(); r.destroy();
+  assert.strictEqual(p.listeners('pet:earn'), 0);
+  assert.strictEqual(fd.mounted[0].stopped, 1, 'destroy 收掉食物');
+  /* earnId 也可以給;被拿出頁面又沒 destroy:下一個事件來時自己收掉 */
+  const r2 = p.UI.rewardRow({ earnId: 'wr:9' });
+  p.doc.body.append(r2.el);
+  p.emit('pet:earn', { result: 'got', food: 'corn', id: 'y_wr:9', source: 'hook' });
+  await settle();
+  assert.ok(r2.reward.classList.contains('has-food'));
+  r2.el.remove();
+  p.emit('pet:earn', { result: 'got', food: 'corn', id: 'other', source: 'hook' });
+  assert.strictEqual(p.listeners('pet:earn'), 0, '拿出頁面後自己收掉');
+};
+
+T['結算卡:big 沒給 unit 不接出 null;primary、links 可帶 attrs(不收事件與 href);links 的 null 略過'] = async () => {
+  const p = loadPage({ pelican: fakePelican() });
+  const w = p.UI.result({ compact: true, big: '已儲存', ratio: 1 });
+  assert.strictEqual(w.heading.textContent, '已儲存');
+  assert.ok(!/null|undefined/.test(w.heading.textContent));
+  assert.strictEqual(p.UI.result({ big: 0, unit: null }).heading.textContent, '0');
+  const c = p.UI.result({ score: 1, total: 2,
+    primary: { label: '再做一次', onClick() {}, attrs: { 'data-gate': '', onclick: 'alert(1)', href: 'javascript:x', class: 'evil', 'aria-describedby': 'n1', hidden: false } },
+    links: [null, { label: '再測一次', onClick() {}, attrs: { 'data-gate': true } }, undefined, { label: '回題庫', href: 'practice.html', attrs: { 'data-x': 1 } }] });
+  const go = c.el.querySelector('.result-go');
+  assert.strictEqual(go.getAttribute('data-gate'), '');
+  assert.strictEqual(go.getAttribute('aria-describedby'), 'n1');
+  assert.strictEqual(go.getAttribute('onclick'), null, '不收事件屬性');
+  assert.strictEqual(go.getAttribute('href'), null, 'href 不從 attrs 進來');
+  assert.strictEqual(go.className, 'btn primary result-go', 'class 不被蓋掉');
+  assert.strictEqual(go.getAttribute('hidden'), null, 'false 不設');
+  const links = c.el.querySelectorAll('.result-link');
+  assert.deepStrictEqual(links.map((n) => n.textContent), ['再測一次', '回題庫'], 'null、undefined 略過');
+  assert.strictEqual(links[0].getAttribute('data-gate'), '');
+  assert.strictEqual(links[1].getAttribute('data-x'), '1');
+  assert.strictEqual(links[1].getAttribute('href'), 'practice.html');
+};
+
+T['結算卡內嵌版(inline):is-inline、角色跟緊湊版一樣小(鵜鶘 120、退回小雞 96)、沒有按鈕時不留按鈕列'] = async () => {
+  const pe = fakePelican();
+  const p = loadPage({ pelican: pe, media: { '(min-width: 900px)': true } });
+  const c = p.UI.result({ inline: true, score: 3, total: 4, kicker: '小試身手' });
+  assert.ok(c.el.classList.contains('result-card') && c.el.classList.contains('is-inline'));
+  assert.ok(!c.el.classList.contains('is-compact'), '不是遊戲浮層的緊湊版');
+  assert.strictEqual(pe.made[0].opt.size, 120, '桌機也是 120');
+  assert.strictEqual(c.el.querySelector('.result-actions').children.length, 0);
+  const ck = fakeChick();
+  const p2 = loadPage({ chick: ck });
+  p2.UI.result({ inline: true, score: 1, total: 4 });
+  await settle();
+  assert.strictEqual(ck.made[0].opt.size, 96, '退回小雞 96');
+  /* compact 與 inline 同時給:照 compact */
+  const both = p.UI.result({ compact: true, inline: true, score: 1, total: 2 });
+  assert.ok(both.el.classList.contains('is-compact') && !both.el.classList.contains('is-inline'));
+};
+
+T['通知視窗 UI.alert:只有一顆按鈕(預設「知道了」),按下、Esc、點遮罩都回 true,焦點回原處'] = async () => {
+  const p = loadPage();
+  const opener = p.doc.createElement('button'); p.doc.body.append(opener); opener.focus();
+  let v = p.UI.alert({ title: '登出失敗', body: '連不上雲端\n請稍後再試' });
+  const dlg = p.doc.querySelector('.ui-dialog');
+  assert.strictEqual(dlg.getAttribute('role'), 'alertdialog');
+  assert.strictEqual(dlg.querySelector('.ui-dialog-cancel'), null, '沒有取消');
+  assert.strictEqual(dlg.querySelectorAll('button').length, 1);
+  const ok = dlg.querySelector('.ui-dialog-ok');
+  assert.strictEqual(ok.textContent, '知道了');
+  assert.strictEqual(p.doc.activeElement, ok);
+  assert.ok(key(p.doc, 'Tab').defaultPrevented && p.doc.activeElement === ok, 'Tab 停在唯一的按鈕');
+  submit(dlg);
+  assert.strictEqual(await v, true);
+  assert.strictEqual(p.doc.activeElement, opener);
+  v = p.UI.alert({ title: 'x', ok: '好' });
+  assert.strictEqual(p.doc.querySelector('.ui-dialog-ok').textContent, '好');
+  key(p.doc, 'Escape');
+  assert.strictEqual(await v, true);
+  v = p.UI.alert({ title: 'y' });
+  const mask = p.doc.querySelector('.ui-mask');
+  press(mask); click(mask);
+  assert.strictEqual(await v, true);
+  assert.strictEqual((p.doc.listeners.keydown || []).length, 0);
+};
+
+T['輸入視窗 hint:輸入框下面一行小字,輸入框 aria-describedby 指到它;沒給就沒有'] = async () => {
+  const p = loadPage();
+  let v = p.UI.prompt({ title: '改暱稱', label: '暱稱', value: '小明', hint: '老師可見' });
+  const dlg = p.doc.querySelector('.ui-dialog');
+  const field = dlg.querySelector('.ui-dialog-field');
+  assert.deepStrictEqual(field.children.map((n) => n.tagName), ['INPUT', 'P'], '輸入框在上、提示在下');
+  const hint = field.querySelector('.ui-dialog-hint');
+  assert.strictEqual(hint.textContent, '老師可見');
+  assert.strictEqual(field.querySelector('input').getAttribute('aria-describedby'), hint.getAttribute('id'));
+  assert.strictEqual(dlg.querySelector('.ui-dialog-body'), null, 'hint 不是 body');
+  key(p.doc, 'Escape'); await v;
+  v = p.UI.prompt({ title: 'x' });
+  assert.strictEqual(p.doc.querySelector('.ui-dialog-hint'), null);
+  assert.strictEqual(p.doc.querySelector('.ui-dialog input').getAttribute('aria-describedby'), null);
+  key(p.doc, 'Escape'); await v;
+};
+
+T['空狀態:action.primary 是實色、links 一排文字連結(null 略過、可帶 attrs)、extra 放在下面'] = async () => {
+  const p = loadPage({ pelican: fakePelican() });
+  const msg = p.doc.createElement('p'); msg.className = 'ac-msg';
+  const e = p.UI.empty({ text: '累計作答 3 / 10 題', action: { label: '去刷題', href: 'practice.html', primary: true },
+    links: [{ label: '程度檢測', href: 'diagnostic.html' }, null, { label: '說明', onClick() {}, attrs: { 'data-x': '1' } }], extra: [msg, null] });
+  const go = e.querySelector('.ui-empty-go');
+  assert.ok(go.classList.contains('btn') && go.classList.contains('primary'));
+  const links = e.querySelectorAll('.ui-empty-links .ui-empty-link');
+  assert.deepStrictEqual(links.map((n) => n.tagName + ':' + n.textContent), ['A:程度檢測', 'BUTTON:說明']);
+  assert.ok(links.every((n) => n.classList.contains('btn-text')));
+  assert.strictEqual(links[1].getAttribute('data-x'), '1');
+  const kids = e.children.map((n) => n.className);
+  assert.deepStrictEqual(kids.slice(1), ['ui-empty-text', 'btn ui-empty-go primary', 'ui-empty-links', 'ui-empty-extra'], '字、出口、連結、extra 的順序');
+  assert.strictEqual(e.querySelector('.ui-empty-extra').children[0], msg);
+  assert.strictEqual(e.querySelectorAll('.btn.primary').length, 1);
+  /* extra 也可以只給一個節點;沒給 links、extra 就沒有那兩格 */
+  const e2 = p.UI.empty({ text: 'x', extra: p.doc.createElement('div') });
+  assert.strictEqual(e2.querySelector('.ui-empty-extra').children.length, 1);
+  const e3 = p.UI.empty({ text: 'y', action: { label: 'z', href: 'a.html' } });
+  assert.strictEqual(e3.querySelector('.ui-empty-links'), null);
+  assert.strictEqual(e3.querySelector('.ui-empty-extra'), null);
+  assert.ok(!e3.querySelector('.ui-empty-go').classList.contains('primary'), '預設描邊');
+};
+
+T['專心模式:action 帶 attrs、f.bar 是作答列、f.slot 放在計數左邊、enter 的 dirty 選項、回饋的 note'] = async () => {
+  const p = loadPage();
+  const f = p.UI.focus.enter({ total: 5, dirty: true, body: '還沒交卷', action: { label: '交卷', onClick() {}, attrs: { 'data-gate': '' } } });
+  assert.strictEqual(f.bar, p.doc.querySelector('.quiz-bar'));
+  assert.strictEqual(f.bar.querySelector('.quiz-act').getAttribute('data-gate'), '');
+  assert.strictEqual(p.doc.body.dataset.leaveConfirm, '還沒交卷', 'dirty: true 一進來就設');
+  f.action({ label: '交卷', attrs: { 'data-gate': '' } });
+  assert.strictEqual(f.bar.querySelector('.quiz-act').getAttribute('data-gate'), '', '換掉時也帶');
+  const timer = p.doc.createElement('span'); timer.className = 'mock-timer'; timer.textContent = '39:59';
+  f.slot(timer);
+  const kids = f.bar.children;
+  const at = (cls) => kids.findIndex((n) => n.classList.contains(cls));
+  assert.ok(at('quiz-track') < at('quiz-slot') && at('quiz-slot') < at('quiz-count') && at('quiz-count') < at('quiz-side'), '進度、倒數、計數、交卷');
+  assert.strictEqual(f.bar.querySelector('.quiz-slot .mock-timer'), timer);
+  f.slot(null);
+  assert.strictEqual(f.bar.querySelector('.mock-timer'), null);
+  f.feedback({ ok: true, note: '已移出錯題本' });
+  const foot = p.doc.querySelector('.quiz-foot');
+  assert.strictEqual(foot.querySelector('.quiz-fb-text').textContent, '答對');
+  assert.strictEqual(foot.querySelector('.quiz-fb-note').textContent, '已移出錯題本');
+  assert.strictEqual(p.doc.querySelector('.quiz-live').textContent, '答對 · 已移出錯題本', '讀屏也念那一行');
+  f.feedback({ ok: false, answer: 'B' });
+  assert.strictEqual(foot.querySelector('.quiz-fb-note').textContent, '', '下一題沒給 note 就清掉');
+  f.foot([]);
+  assert.strictEqual(foot.querySelector('.quiz-fb-note').textContent, '');
+  f.leave();
+  assert.strictEqual(p.doc.body.dataset.leaveConfirm, undefined);
+  /* 預設不是 dirty */
+  const g = p.UI.focus.enter({ total: 2 });
+  assert.strictEqual(p.doc.body.dataset.leaveConfirm, undefined);
+  g.leave();
+};
+
+T['專心模式的鍵盤:一般網頁輸入框聚焦、可視高度少 120 以上時加 html.ui-kb,收起或離開時拿掉'] = async () => {
+  const vvOn = {};
+  const vv = { height: 800, addEventListener: (t, fn) => { (vvOn[t] = vvOn[t] || []).push(fn); }, removeEventListener: (t, fn) => { vvOn[t] = (vvOn[t] || []).filter((x) => x !== fn); } };
+  const p = loadPage({ extra: { visualViewport: vv, innerHeight: 800 } });
+  const html = p.doc.documentElement;
+  const input = p.doc.createElement('input'); p.doc.body.append(input);
+  const btn = p.doc.createElement('button'); p.doc.body.append(btn);
+  const resize = (h) => { vv.height = h; (vvOn.resize || []).forEach((fn) => fn()); };
+  const f = p.UI.focus.enter({ total: 3 });
+  input.focus();
+  resize(420);
+  assert.ok(html.classList.contains('ui-kb'), '輸入框聚焦、鍵盤彈出');
+  resize(760);
+  assert.ok(!html.classList.contains('ui-kb'), '只少 40:不是鍵盤');
+  resize(420);
+  btn.focus(); p.runTimers();
+  assert.ok(!html.classList.contains('ui-kb'), '焦點不在輸入框');
+  input.focus(); p.runTimers();
+  assert.ok(html.classList.contains('ui-kb'), '焦點回來之後再看一次');
+  f.leave();
+  assert.ok(!html.classList.contains('ui-kb'), '離開專心模式拿掉');
+  assert.strictEqual((vvOn.resize || []).length, 0, '拿掉 visualViewport 監聽');
+  assert.strictEqual((p.doc.listeners.focusin || []).length, 0);
+  assert.strictEqual(p.timers.size, 0);
+  /* 不在專心模式:不管 */
+  resize(300);
+  assert.ok(!html.classList.contains('ui-kb'));
+  /* 沒有 visualViewport 的瀏覽器:不掛監聽也不丟錯 */
+  const p2 = loadPage();
+  p2.UI.focus.enter({ total: 1 }).leave();
+};
+
+T['面板 UI.sheet:標題、小字、關閉;焦點先到 aria-current、鎖在面板裡;Esc、點遮罩、關閉鈕都關,焦點回原處;close(false) 不回;同時只開一個'] = async () => {
+  const p = loadPage();
+  const opener = p.doc.createElement('button'); p.doc.body.append(opener); opener.focus();
+  const mk = (n, cur) => { const b = p.doc.createElement('button'); b.textContent = String(n); if (cur) b.setAttribute('aria-current', 'true'); return b; };
+  const nav = p.doc.createElement('div'); nav.className = 'q-nav';
+  const b1 = mk(1), b2 = mk(2, true), b3 = mk(3); nav.append(b1, b2, b3);
+  let closed = 0;
+  const s = p.UI.sheet({ title: '題號', note: '已作答 1 / 3', nodes: [nav, null], class: 'mock-panel', onClose: () => closed++ });
+  const box = p.doc.querySelector('.ui-sheet');
+  assert.strictEqual(s.el, box);
+  assert.ok(box.classList.contains('modal') && box.classList.contains('mock-panel'));
+  assert.strictEqual(box.getAttribute('role'), 'dialog');
+  assert.strictEqual(box.getAttribute('aria-modal'), 'true');
+  assert.strictEqual(box.getAttribute('aria-labelledby'), box.querySelector('.ui-sheet-h').getAttribute('id'));
+  assert.strictEqual(box.querySelector('.ui-sheet-h').textContent, '題號');
+  assert.strictEqual(box.querySelector('.ui-sheet-note').textContent, '已作答 1 / 3');
+  assert.ok(box.querySelector('.ui-sheet-body .q-nav'));
+  assert.ok(p.doc.querySelector('.modal-mask.ui-mask.ui-sheet-mask'));
+  assert.strictEqual(p.doc.activeElement, b2, '焦點先到目前那一題');
+  /* Tab 在最後一個 → 第一個(關閉鈕);Shift+Tab 反過來;焦點跑出去拉回來 */
+  b3.focus();
+  assert.ok(key(p.doc, 'Tab').defaultPrevented);
+  assert.strictEqual(p.doc.activeElement, box.querySelector('.ui-sheet-close'));
+  assert.ok(key(p.doc, 'Tab', true).defaultPrevented);
+  assert.strictEqual(p.doc.activeElement, b3);
+  opener.focus();
+  assert.ok(box.contains(p.doc.activeElement));
+  const esc = key(p.doc, 'Escape');
+  assert.ok(esc.stopped, 'Esc 不往下傳');
+  assert.strictEqual(p.doc.querySelector('.ui-sheet'), null);
+  assert.strictEqual(p.doc.activeElement, opener, '焦點回原處');
+  assert.strictEqual(closed, 1);
+  assert.strictEqual(s.open, false);
+  s.close(); assert.strictEqual(closed, 1, '關過的再關不重複');
+  assert.strictEqual((p.doc.listeners.keydown || []).length, 0);
+  assert.strictEqual((p.doc.listeners.focusin || []).length, 0);
+  /* 點遮罩(按下也在遮罩上)、關閉鈕 */
+  opener.focus();
+  p.UI.sheet({ title: 'A', nodes: [] });
+  const mask = p.doc.querySelector('.ui-sheet-mask');
+  click(mask.querySelector('.ui-sheet-h'));
+  assert.ok(p.doc.querySelector('.ui-sheet'), '點面板裡面不關');
+  press(mask); click(mask);
+  assert.strictEqual(p.doc.querySelector('.ui-sheet'), null);
+  assert.strictEqual(p.doc.activeElement, opener);
+  p.UI.sheet({ title: 'B' });
+  assert.strictEqual(p.doc.activeElement, p.doc.querySelector('.ui-sheet-close'), '沒有 aria-current 時焦點在關閉');
+  click(p.doc.querySelector('.ui-sheet-close'));
+  assert.strictEqual(p.doc.querySelector('.ui-sheet'), null);
+  /* close(false):點題號換題,焦點不回作答列;再開一個會先收掉前一個 */
+  opener.focus();
+  const x = p.UI.sheet({ title: 'C' });
+  const y = p.UI.sheet({ title: 'D' });
+  assert.strictEqual(p.doc.querySelectorAll('.ui-sheet').length, 1);
+  assert.ok(!x.open && y.open);
+  y.close(false);
+  assert.notStrictEqual(p.doc.activeElement, opener, 'close(false) 不把焦點拉回去');
+  /* 外部字串只當文字 */
+  const z = p.UI.sheet({ title: '<b>x</b>', note: '<img>' });
+  assert.strictEqual(p.doc.querySelector('.ui-sheet b'), null);
+  z.close();
+};
+
+T['UI.mount(root):掛上 root 底下的圖示、鵜鶘、小雞;掛過的不重掛;只動 root 裡面'] = async () => {
+  const pe = fakePelican(), ck = fakeChick();
+  const drawn = [];
+  const D = { ids: ['home'], mountAll(root) { drawn.push(root); } };
+  const p = loadPage({ pelican: pe, chick: ck, loads: {}, markup(doc) { const a = doc.createElement('canvas'); a.setAttribute('data-chick', 'idle'); doc.body.append(a); } });
+  p.ctx.DoodleArt = D;
+  assert.strictEqual(ck.made.length, 1, '頁面載入時掛上整頁');
+  const box = p.doc.createElement('section');
+  const mk = (k, v, size) => { const c = p.doc.createElement('canvas'); c.setAttribute(k, v); if (size) c.setAttribute('data-size', size); box.append(c); return c; };
+  mk('data-chick', 'happy', '72'); mk('data-mascot', 'read', '120'); mk('data-doodle', 'home', '40');
+  const outside = p.doc.createElement('canvas'); outside.setAttribute('data-chick', 'idle'); p.doc.body.append(outside, box);
+  const r = p.UI.mount(box);
+  assert.strictEqual(typeof r.then, 'function', '回傳 Promise');
+  assert.strictEqual(await r, true);
+  assert.deepStrictEqual(ck.made.slice(1).map((a) => [a.opt.size, a.opt.pose]), [[72, 'happy']], 'root 裡的小雞(root 外面的不碰)');
+  assert.deepStrictEqual(pe.made.map((a) => [a.opt.size, a.opt.pose]), [[120, 'read']]);
+  assert.deepStrictEqual(drawn, [box], '圖示交給 DoodleArt 畫 root');
+  assert.strictEqual(outside.getAttribute('data-chick-on'), null);
+  p.UI.mount(box);
+  assert.strictEqual(ck.made.length, 2, '再呼叫一次不重掛小雞');
+  assert.strictEqual(pe.made.length, 1, '不重掛鵜鶘');
 };
 
 /* ---------- 執行 ---------- */

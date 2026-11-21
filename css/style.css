@@ -3239,7 +3239,7 @@ html:not(.authed) .home .pet-home { display: none; }   /* 未登入時小雞在�
      付費牆設 inert 時也跳過 .topbar,所以作答列的關閉鈕一直按得到,學生可以離開;分頁列藏起來了,遮罩改蓋到底。
      底部固定列(z-index 90)在遮罩(200)下面,被蓋住、按不到。網站模式的遮罩照舊蓋滿整頁。
    - body::after 是分頁列後面的白底墊片,跟分頁列一起藏;底部的留白改成底部固定列的高度(js 量好寫在 --quiz-foot-h)。
-   - 鍵盤打開(html.app-kb):底部固定列改回內容後面(js 把它放在 main 後面),不蓋住輸入框。 */
+   - 鍵盤打開(App 外殼加 html.app-kb,一般網頁由 js/ui.js 加 html.ui-kb):底部固定列改回內容後面(js 把它放在 main 後面),不蓋住輸入框。 */
 .quiz-bar, .quiz-foot { display: none; }
 html.is-quiz .topbar-inner { display: none; }
 html.is-quiz .topbar { position: sticky; top: 0; }
@@ -3252,6 +3252,9 @@ html.is-quiz .quiz-bar {
 .quiz-side:empty { display: none; }
 .quiz-side { display: flex; flex: none; margin-right: -8px; }
 .quiz-bar.has-act .quiz-count { min-width: 0; }
+/* 計數左邊的位置(f.slot):模擬考的倒數 */
+.quiz-slot { display: flex; flex: none; align-items: center; }
+.quiz-slot:empty { display: none; }
 .quiz-act.btn-text { padding: 0 10px; font-size: var(--fs-sm); font-weight: 700; color: var(--primary); }
 .quiz-act.btn-text:hover { color: var(--primary-dark); background: var(--primary-tint); }
 .quiz-close {
@@ -3300,8 +3303,8 @@ html.is-quiz .quiz-foot {
   background: #fff; border-top: 1px solid var(--line);
 }
 html.is-quiz .quiz-foot.is-empty { display: none; }
-html.is-quiz.app-kb .quiz-foot { position: static; padding-bottom: 12px; }
-html.is-quiz.app-kb body { padding-bottom: 0 !important; }
+html.is-quiz.app-kb .quiz-foot, html.is-quiz.ui-kb .quiz-foot { position: static; padding-bottom: 12px; }
+html.is-quiz.app-kb body, html.is-quiz.ui-kb body { padding-bottom: 0 !important; }
 /* 兩種模式同一套對齊:內層最寬 720 置中(跟題目同寬);手機上文字按鈕在左、主按鈕撐滿剩下的寬度,
    600 以上主按鈕固定 240 靠右,文字按鈕(上一題)或回饋文字靠左 */
 .quiz-foot-row { max-width: 720px; margin: 0 auto; }
@@ -3329,9 +3332,13 @@ html.is-quiz .quiz-foot.is-bad { background: var(--bad-tint); }
 .quiz-foot.is-bad .btn.primary:focus-visible { outline-color: var(--bad-ink); }
 .quiz-fb-icon { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 32px; height: 32px; border-radius: var(--r-full); background: #fff; }
 .quiz-fb-icon:empty { display: none; }
+.quiz-fb-words { min-width: 0; }
 .quiz-fb-text { font-family: var(--round); font-size: var(--fs-lg); font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
-.quiz-foot.is-ok .quiz-fb-icon, .quiz-foot.is-ok .quiz-fb-text { color: var(--ok-ink); }
-.quiz-foot.is-bad .quiz-fb-icon, .quiz-foot.is-bad .quiz-fb-text { color: var(--bad-ink); }
+/* 回饋下面一行小字(f.feedback 的 note,例如「已移出錯題本」);沒有字時不佔高度 */
+.quiz-fb-note { margin: 2px 0 0; font-size: var(--fs-sm); line-height: 1.5; }
+.quiz-fb-note:empty { display: none; }
+.quiz-foot.is-ok .quiz-fb-icon, .quiz-foot.is-ok .quiz-fb-text, .quiz-foot.is-ok .quiz-fb-note { color: var(--ok-ink); }
+.quiz-foot.is-bad .quiz-fb-icon, .quiz-foot.is-bad .quiz-fb-text, .quiz-foot.is-bad .quiz-fb-note { color: var(--bad-ink); }
 @media (min-width: 600px) {
   .quiz-foot.is-fb .quiz-foot-row { flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; }
   .quiz-foot.is-fb .quiz-fb { flex: 1; min-width: 0; }
@@ -3419,6 +3426,17 @@ a.result-go:hover { text-decoration: none; }
 .result-card.is-compact .result-chick.is-pelican { margin: -11px auto -5px; }   /* 鵜鶘 120:畫布高 112 */
 .result-card.is-compact .result-kicker { margin-top: 8px; }
 .result-card.is-compact .result-actions { margin-top: 24px; }
+/* 內嵌版(opt.inline):放在頁面內容裡的小卡(課末小測、閱讀的題目做完)。不畫外框,上方一條分隔線跟內容隔開;
+   角色跟緊湊版一樣小(鵜鶘 120)。置中;外層要靠左時在那一頁的段落把 align-items、text-align 改掉 */
+.result-card.is-inline { max-width: 480px; margin: 32px auto 0; padding: 28px 0 8px; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; }
+.result-card.is-inline .result-chick { margin: -28px auto -7px; }
+.result-card.is-inline .result-chick.is-pelican { margin: -11px auto -5px; }
+.result-card.is-inline .result-kicker { margin-top: 8px; }
+.result-card.is-inline .result-actions { margin-top: 20px; }
+.result-card .result-actions:empty { display: none; }
+/* 只有點心列(UI.rewardRow):對話、寫作。拿到點心時是膠囊,只有字時是一行灰字,都沒有時不佔高度 */
+.ui-reward-row { display: flex; justify-content: center; }
+.ui-reward-row > .result-reward.has-food { margin-top: 16px; }
 @media (max-width: 600px) {
   .result-card { margin-top: 16px; padding: 24px 16px; }
 }
@@ -3458,6 +3476,11 @@ a.result-go:hover { text-decoration: none; }
 .ui-empty-text { margin: 0; font-size: var(--fs-md); color: var(--ink-soft); }
 .ui-empty-go { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 20px; padding: 0 24px; border-radius: var(--r-md); text-decoration: none; }
 .ui-empty-go:hover { text-decoration: none; }
+.ui-empty-go.primary { min-height: 48px; padding: 0 32px; }
+/* 出口下面一排文字連結(links)、再下面呼叫端放的節點(extra) */
+.ui-empty-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 8px; margin-top: 8px; }
+.ui-empty-extra { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; margin-top: 16px; }
+.ui-empty-extra:empty { display: none; }
 
 /* ---------- 確認與輸入視窗(沿用 .modal-mask、.modal) ---------- */
 /* 強制登入頁的遮罩規則會讓開頂欄與分頁列;這兩個視窗一律蓋滿整頁,疊在所有東西上面 */
@@ -3468,12 +3491,33 @@ a.result-go:hover { text-decoration: none; }
 .ui-dialog-field { margin-top: 16px; }
 .ui-dialog-input { display: block; width: 100%; min-height: 44px; font-size: var(--fs-md); border-radius: var(--r-sm); }
 .ui-dialog-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-tint); }
+.ui-dialog-hint { margin: 6px 0 0; font-size: var(--fs-xs); color: var(--ink-soft); }
 .ui-dialog-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 24px; }
 .ui-dialog-actions .btn.primary { min-height: 44px; min-width: 88px; padding: 0 20px; font-size: var(--fs-md); border-radius: var(--r-md); }
 .ui-dialog-actions .btn-text { color: var(--ink-soft); }
 .ui-dialog-actions .btn-text:hover { color: var(--ink); background: var(--bg-soft); }
 @keyframes ui-fade { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .modal-mask.ui-mask, .ui-dialog { animation: none; } }
+
+/* ---------- 面板(UI.sheet,從作答列點開的題號面板):手機從底部升起,600 以上置中 ---------- */
+.modal-mask.ui-sheet-mask { align-items: flex-end; padding: 0; }
+.modal-mask.ui-sheet-mask > .modal { margin: 0; }
+.ui-sheet {
+  max-width: none; max-height: 80vh; overflow-y: auto;
+  padding: 16px 16px calc(24px + env(safe-area-inset-bottom)); border-radius: var(--r-lg) var(--r-lg) 0 0;
+  animation: ui-rise .2s var(--ease-out);
+}
+.ui-sheet-head { display: flex; align-items: center; gap: 12px; min-height: 44px; }
+.ui-sheet .ui-sheet-h { font-family: var(--round); font-size: var(--fs-lg); line-height: 1.4; }
+.ui-sheet-note { flex: 1; font-size: var(--fs-sm); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.ui-sheet-h + .ui-sheet-close { margin-left: auto; }
+.ui-sheet-close.btn-text { min-height: 44px; padding: 0 12px; margin-right: -12px; color: var(--ink-soft); }
+.ui-sheet-close.btn-text:hover { color: var(--ink); background: var(--bg-soft); }
+@media (min-width: 600px) {
+  .modal-mask.ui-sheet-mask { align-items: center; padding: 20px; }
+  .ui-sheet { max-width: 480px; padding: 20px 24px 24px; border-radius: var(--r-lg); }
+}
+@media (prefers-reduced-motion: reduce) { .ui-sheet { animation: none; } }
 
 /* ---------------- 各頁面的補充樣式：每一段的規則加在自己的標記下面 ---------------- */
 

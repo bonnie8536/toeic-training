@@ -624,7 +624,7 @@
     return built.get(k);
   }
   const vmod = (v) => ((Math.floor(+v || 0) % VARIANTS) + VARIANTS) % VARIANTS;
-  function check(id) { if (!Object.prototype.hasOwnProperty.call(ICONS, id)) throw new Error('DoodleArt: 沒有這個圖示 ' + JSON.stringify(id) + '(有:' + Object.keys(ICONS).join('、') + ')'); }
+  function check(id) { if (!Object.prototype.hasOwnProperty.call(ICONS, id)) throw new Error('DoodleArt：沒有這個圖示 ' + JSON.stringify(id) + '(有：' + Object.keys(ICONS).join('、') + ')'); }
   function paint(ctx, id, o) {
     const lvl = levelFor(o.size), v = vmod(o.variant), lineOnly = o.tone === 'line';
     /* 墨線每一筆用自己的種子(圖示、抖動組、第幾筆),兩種 tone 跳過的筆不同也不會讓其他筆跟著變,換 tone 時線條不跳 */
@@ -650,7 +650,7 @@
   function opts(defaults, opt) {
     const o = Object.assign({}, defaults);
     Object.keys(opt || {}).forEach((k) => { if (opt[k] !== undefined && opt[k] !== null && opt[k] !== '') o[k] = opt[k]; });
-    if (o.tone !== 'fill' && o.tone !== 'line') throw new Error('DoodleArt: tone 只能是 fill 或 line,收到 ' + JSON.stringify(o.tone));
+    if (o.tone !== 'fill' && o.tone !== 'line') throw new Error('DoodleArt: tone 只能是 fill 或 line，收到 ' + JSON.stringify(o.tone));
     return o;
   }
   const cache = new Map();
@@ -720,7 +720,7 @@
       mounted.set(c, h);
       out.push(h);
     });
-    if (bad.length) throw new Error('DoodleArt: 沒有這個圖示 ' + bad.map((b) => JSON.stringify(b)).join('、'));
+    if (bad.length) throw new Error('DoodleArt：沒有這個圖示 ' + bad.map((b) => JSON.stringify(b)).join('、'));
     return out;
   }
   const handleOf = (canvas) => mounted.get(canvas) || null;

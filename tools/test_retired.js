@@ -295,11 +295,22 @@ async function main() {
     check('B2 錯題本資料:7 個 Part 的錯題、分組、一回、題組數都不含淘汰題、不丟錯;模擬考作答(含分頁暫存補存)帶淘汰題的 key 會被丟掉', !p.errors.length && !bad.length, bad.join(' / ') + p.errors.join(' / '));
   }
   /* B3 題庫刷題:首頁、錯題本清單、錯題複習(Part 5/6/7 與聽力 1–4)、聽力刷題、深連結 */
+  /* 題庫刷題用 window.UI(js/ui.js 的專心模式、結算卡、空狀態):這裡的小 DOM 撐不起真的 ui.js,換成一個只把文字放進頁面的替身 */
+  const UI_STUB = (ctx) => {
+    const mk = (cls, ...kids) => { const n = ctx.document.createElement('div'); n.className = cls; n.append(...kids); return n; };
+    return { UI: {
+      focus: { enter: () => ({ bar: mk('quiz-bar'), progress() {}, setTotal() {}, dirty() {}, foot() {}, action() {}, feedback() { return null; }, leave() {} }) },
+      result: (o) => { const el = mk('result-card', String(o.kicker || ''), ' ', String(o.score !== undefined ? o.score : o.big)); return { el, reward: mk('result-reward'), heading: el, destroy() {} }; },
+      detail: (title, nodes) => mk('result-detail', title, ...nodes),
+      empty: (o) => mk('ui-empty', o.text),
+      confirm: () => Promise.resolve(true), doodle: () => Promise.resolve(false),
+    } };
+  };
   const PRACTICE = DATA('part5', 'part6', 'part7', 'listening').concat(['js/common.js', 'js/sync-merge.js', 'js/wrongbook.js', 'js/wrongbook-ui.js', 'js/listening.js', 'js/practice.js']);
   const modes = [['', '首頁']].concat(['5', '6', '7', '1', '2', '3', '4'].map((pt) => ['?mode=wrong&part=' + pt, '錯題本 Part ' + pt]),
     ['5', '6', '7', '1', '2', '3', '4'].map((pt) => ['?mode=review&part=' + pt, '錯題複習 Part ' + pt]), [['?part=5', 'Part 5 深連結'], ['?part=7', 'Part 7 深連結']]);
   for (const [search, label] of modes) {
-    const p = await openPage({ page: 'practice.html', rootId: 'practice-root', search, scripts: PRACTICE });
+    const p = await openPage({ page: 'practice.html', rootId: 'practice-root', search, scripts: PRACTICE, extra: UI_STUB });
     const leaked = ids.filter((id) => p.text.includes(id));
     check('B3 題庫刷題 ' + label + ':畫得出來、不丟錯、畫面沒有淘汰題的 id', !p.errors.length && p.text.length > 20 && !leaked.length, p.errors.join(' / ') + leaked.join(','));
   }
@@ -352,7 +363,7 @@ async function main() {
   }
   /* B9 答案就地改:那一題現在的正解剛好是學生當時選的(當時判錯) */
   {
-    const p = await openPage({ page: 'practice.html', rootId: 'practice-root', search: '?mode=wrong&part=5', scripts: PRACTICE });
+    const p = await openPage({ page: 'practice.html', rootId: 'practice-root', search: '?mode=wrong&part=5', scripts: PRACTICE, extra: UI_STUB });
     const WB = p.ctx.WRONGBOOK;
     const x = WB.items('5').find((y) => y.key === changed.id);
     check('B9 答案就地改:頁面不丟錯;舊紀錄的對錯照當時判的(這題還在錯題本,選的跟現在的正解一樣),重做答對就移出',

@@ -343,9 +343,9 @@ const CONTENT = [
   { url: 'writing.html?level=l1&u=1', see: '.tiles .tile', act: [{ sel: '.tiles .tile' }, { sel: '.unit-block .pop-btns .btn.primary' }] },
   { url: 'writing.html?level=l1&u=23', see: 'textarea.write-area', act: [{ sel: 'textarea.write-area', text: true }], free: [{ sel: '.unit-block > .btn', then: '.model-box' }] },
   { url: 'writing.html?level=l3&u=3', see: '.outline-grid textarea', act: [{ sel: '.outline-grid textarea', text: true }, { sel: 'textarea.write-area', i: 4, text: true }] },
-  { url: 'practice.html', see: '.practice-panel', act: [{ sel: '.practice-panel .btn.primary' }, { sel: '.practice-panel .btn.primary', i: 1 }] },
-  { url: 'practice.html?part=5', see: '.opts .opt', act: [{ sel: '.opts .opt' }], free: [{ sel: '.q-nav button', i: 1, then: '.q-nav button.cur' }] },
-  { url: 'practice.html?mode=wrong&part=5', see: '#practice-root .q-block' },   // 錯題本清單(錯題本定稿 2026-11-18):沒登入看得到「目前沒有錯題。」
+  { url: 'practice.html', see: '.practice-panel', act: [{ sel: '.practice-start' }, { sel: '.listen-start' }] },
+  { url: 'practice.html?part=5', see: '.opts .opt', act: [{ sel: '.opts .opt' }], free: [{ sel: '.quiz-foot .btn.primary', then: '.quiz-foot .btn-text' }] },
+  { url: 'practice.html?mode=wrong&part=5', see: '#practice-root .ui-empty' },   // 錯題本清單:沒登入看得到空狀態「沒有錯題」
   { url: 'diagnostic.html', see: '.diag-intro', act: [{ sel: '.diag-intro .btn.primary' }] },
   { url: 'mock.html', see: '.part-card', act: [{ sel: '.part-card .btn.primary' }, { sel: '.part-card .btn.primary', i: 1 }] },
 ];
@@ -1447,6 +1447,18 @@ async function pressText(s, sel, text) {
   await s.eval(`(() => { const b = [...document.querySelectorAll(${J(sel)})].find((x) => x.textContent.indexOf(${J(text)}) > -1); if (!b) return false; b.id = '__press'; return true; })()`);
   await click(s, '#__press');
 }
+/* 專心模式(UI.focus)作答列的總數(進度條的 aria-valuemax):題庫、聽力的題號列拿掉之後,「這一輪幾個單元」看這裡 */
+const QUIZ_TOTAL = "Number((document.querySelector('.quiz-track') || { getAttribute: () => 0 }).getAttribute('aria-valuemax'))";
+/* 按下去會開頁面裡的確認視窗(UI.confirm)的按鈕:按下去、等視窗出現,先跑 during,再按確定。回 ['confirm'](沒開視窗回 []) */
+async function pressUiConfirm(s, sel, text, during) {
+  await pressText(s, sel, text);
+  await sleep(400);
+  if (!(await s.eval("!!document.querySelector('.ui-dialog')"))) return [];
+  if (during) await during();
+  await sleep(300);
+  await click(s, '.ui-dialog-ok');
+  return ['confirm'];
+}
 
 /* 單字頁「練哪些字」改成勾選清單(站長 2026-11:「單字題庫可以改成用勾的」):
    已登入:點開清單勾兩個題庫、取消文章單字 → 存起來(mode 是第一個、modes 照清單順序),重新整理還記得,記憶吐司烤的字就是兩個題庫的字;
@@ -1836,7 +1848,7 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
     /* 甲:聽力隨機練習(交卷式:先選、交卷才對答案) */
     let s = await page('practice.html');
     try {
-      await pressText(s, '.practice-panel .btn.primary', '開始聽力練習');   // data-gate,這時能作答
+      await pressText(s, '.listen-start', '開始');   // data-gate,這時能作答
       r.letters = await s.eval("document.querySelectorAll('.letter-row .letter-big').length");
       await click(s, '.letter-row .letter-big', 0);   // 能作答時先選 A
       await s.eval(COUNT_SILENT);
@@ -1846,10 +1858,12 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
       r.pickCard = await card(s);
       r.picked = await s.eval(PICKED_L);
       if (r.pickCard) await closeBy(s, 'esc');
-      await s.eval('window.confirm = () => true; true');
-      await pressText(s, '.drill-nav-btns .btn', '交卷');
+      await pressText(s, '.quiz-act', '交卷');
+      await sleep(400);
+      /* 照常:還有 9 題沒答完,頁面裡的確認視窗,按「交卷」。擋下時按下去那一刻就跳「重新整理」卡,沒有確認視窗 */
+      if (await s.eval("!!document.querySelector('.ui-dialog')")) await click(s, '.ui-dialog-ok');
       r.submitCard = await card(s);
-      r.report = await s.eval("(document.querySelector('.report-head') || {}).textContent || ''");
+      r.report = await s.eval("((document.querySelector('.result-score') || {}).textContent || '').trim()");
       r.picked2 = await s.eval(PICKED_L);
       await sleep(1300);
       r.wrote = lsDiff(before, await s.eval(LS)).filter((k) => !/_pet$/.test(k));
@@ -1876,7 +1890,7 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
       const before = await s.eval(LS), up0 = await s.eval(UPS);
       await click(s, '.letter-row .letter-big', await s.eval('TOEIC.listening.p2[0].answer'));   // 點正確答案
       r.revCard = await card(s);
-      r.verdict = await s.eval("(document.querySelector('.verdict') || {}).textContent || ''");
+      r.verdict = await s.eval("(document.querySelector('.quiz-fb-text') || {}).textContent || ''");   // 底部回饋條「答對」
       await sleep(1300);
       r.revWrote = lsDiff(before, await s.eval(LS)).filter((k) => !/_pet$/.test(k));
       r.revUps = (await s.eval(UPS)).slice(up0.length);
@@ -1912,8 +1926,8 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
     } finally { await s.close(); }
     const has = (a, ks) => ks.every((k) => a.includes(k));
     if (how === '照常') {
-      r.ok = r.letters === 3 && !r.pickCard && r.picked === 1 && !r.submitCard && /答對 \d+ \/ 10 題/.test(r.report) && has(r.wrote, [HIST, P2]) && has(r.ups, ['hist', 'listen_p2'])
-        && r.revSettled && r.revLetters === 3 && !r.revCard && /答對了/.test(r.verdict) && has(r.revWrote, [HIST, P2]) && has(r.revUps, ['hist', 'listen_p2']) && r.revOk === true
+      r.ok = r.letters === 3 && !r.pickCard && r.picked === 1 && !r.submitCard && /^\d+ \/ 10$/.test(r.report) && has(r.wrote, [HIST, P2]) && has(r.ups, ['hist', 'listen_p2'])
+        && r.revSettled && r.revLetters === 3 && !r.revCard && /答對/.test(r.verdict) && has(r.revWrote, [HIST, P2]) && has(r.revUps, ['hist', 'listen_p2']) && r.revOk === true
         /* 照常按 Enter 對完答案,同一下 Enter 落到剛拿到焦點的「下一題」(main 就是這樣),畫面已經是下一題:只看題號列記了對錯、存了 */
         && r.inputs === 2 && !r.typeCard && !r.enterCard && r.marked === 1 && has(r.vbWrote, [HIST, VQ]) && has(r.vbUps, ['hist', 'verb_quiz'])
         && !r.silent.length && !r.revSilent.length && !r.vbSilent.length;
@@ -1941,10 +1955,10 @@ T['刷題頁隨機練習、聽力隨機練習、程度檢測:交卷的確認視�
   const rows = J([{ k: 'hist', v: oldHist, updated_at: new Date(day + 10).toISOString() }]);
   const HIST = 'tr_u' + CPID + '_hist', P5 = 'tr_u' + CPID + '_drill_p5', P2 = 'tr_u' + CPID + '_listen_p2', DIAG = 'tr_u' + CPID + '_diag';
   const card = async (s) => { const st = await state(s); return st.mask ? st.title : ''; };
-  const REPORT = "(document.querySelector('.report-head') || {}).textContent || ''";
+  const REPORT = "((document.querySelector('.report-head, .result-score') || {}).textContent || '').trim()";
   const PAGES = [
-    { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: '交卷', keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /答對 \d+ \/ 10 題/, kept: "document.querySelectorAll('.q-block .opt.picked').length" },
-    { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: '交卷', keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /答對 \d+ \/ 10 題/, kept: "document.querySelectorAll('.letter-row .letter-big.picked').length" },
+    { name: '隨機練習', ui: true, url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: '交卷', keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /^\d+ \/ 10$/, kept: "document.querySelectorAll('.q-block .opt.picked').length" },
+    { name: '聽力隨機練習', ui: true, url: 'practice.html', start: ['.listen-start', '開始'], pick: '.letter-row .letter-big', submit: '交卷', keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /^\d+ \/ 10$/, kept: "document.querySelectorAll('.letter-row .letter-big.picked').length" },
     { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: '交卷', keys: [DIAG], up: ['diag'], report: /./, kept: null },
   ];
   const out = [];
@@ -1959,11 +1973,20 @@ T['刷題頁隨機練習、聽力隨機練習、程度檢測:交卷的確認視�
         await s.eval(COUNT_SILENT);
         await s.eval(`window.confirm = (m) => { window.__asked = String(m); ${BREAK_ACCOUNT[how] || 'true'}; return true; }; true`);
         const before = await s.eval(LS), up0 = await s.eval(UPS);
-        await pressText(s, '.drill-nav-btns .btn', pg.submit);
-        r.asked = await s.eval("window.__asked || ''");
+        if (pg.ui) {
+          /* 題庫、聽力的確認是頁面裡的視窗(UI.confirm):開著的時候別的分頁登出或帳號資料夾變成還沒灌過,按確定再查一次 */
+          await pressText(s, '.quiz-act', pg.submit);
+          await sleep(400);
+          r.asked = await s.eval("(document.querySelector('.ui-dialog-h') || {}).textContent || ''");
+          if (BREAK_ACCOUNT[how]) await s.eval(BREAK_ACCOUNT[how]);
+          await click(s, '.ui-dialog-ok');
+        } else {
+          await pressText(s, '.drill-nav-btns .btn', pg.submit);
+          r.asked = await s.eval("window.__asked || ''");
+        }
         r.card = await card(s);
         r.report = await s.eval(REPORT);
-        r.submitLeft = await s.eval(`[...document.querySelectorAll('.drill-nav-btns .btn')].some((b) => b.textContent.indexOf(${J(pg.submit)}) > -1)`);
+        r.submitLeft = await s.eval(`[...document.querySelectorAll('.drill-nav-btns .btn, .quiz-act')].some((b) => b.textContent.indexOf(${J(pg.submit)}) > -1)`);
         r.kept = pg.kept ? await s.eval(pg.kept) : null;
         await sleep(1300);
         /* 「之前」是問之前拍的:別的分頁登出刪掉的、記上的標記不算,只看這一頁寫出來的(登出之後帳號資料夾的鍵又出現也算) */
@@ -2052,7 +2075,7 @@ T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改�
   const HIST = 'tr_u' + CPID + '_hist', P5 = 'tr_u' + CPID + '_drill_p5', P2 = 'tr_u' + CPID + '_listen_p2', DIAG = 'tr_u' + CPID + '_diag', MH = 'tr_u' + CPID + '_mock_history';
   const TO_Y = `(() => { ${OTHER_TAB_LOGOUT}; localStorage.setItem(${J(SB)}, ${J(J({ access_token: 'y', user: Y_USER }))}); localStorage.setItem('tr_current_profile', ${J(J(YPID))}); return true; })()`;
   const BREAK = { 登出: OTHER_TAB_LOGOUT, 還沒灌過: BREAK_ACCOUNT['還沒灌過'], 換帳號: TO_Y };
-  const REPORT = "(document.querySelector('.report-head') || {}).textContent || ''";
+  const REPORT = "((document.querySelector('.report-head, .result-score') || {}).textContent || '').trim()";
   const LATER = "JSON.parse(sessionStorage.getItem('tr_mock_unsaved') || '[]').length";
   const SENT = "JSON.parse(sessionStorage.getItem('__fake_calls') || '[]').map((c) => c.op)";
   /* O:同網域的另一個分頁(先開:A 開的時候會清空、灌好 localStorage) */
@@ -2060,8 +2083,8 @@ T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改�
   const out = [];
   try {
     const PAGES = [
-      { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷'], keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /答對 \d+ \/ 10 題/ },
-      { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: ['.drill-nav-btns .btn', '交卷'], keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /答對 \d+ \/ 10 題/ },
+      { name: '隨機練習', ui: true, url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.quiz-act', '交卷'], keys: [HIST, P5], up: ['hist', 'drill_p5'], report: /^\d+ \/ 10$/ },
+      { name: '聽力隨機練習', ui: true, url: 'practice.html', start: ['.listen-start', '開始'], pick: '.letter-row .letter-big', submit: ['.quiz-act', '交卷'], keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /^\d+ \/ 10$/ },
       { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷'], keys: [DIAG], up: ['diag'], report: /./ },
       { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.drill-top .btn', '交卷'], keys: [MH], up: ['mock_history'], report: /參考總分/, mock: true },
       /* 錯題本(定稿 E4):抽題固定,聽力 2 第 1 題答錯 → 照常時多寫、多傳 mock_wrong 各一次;擋下時一個鍵都不寫 */
@@ -2081,7 +2104,9 @@ T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改�
           await sleep(1000);                              // 程度檢測每答一題就存:等它 0.8 秒後上傳完,再拍「之前」
           await s.eval(COUNT_SILENT);
           const before = await s.eval(LS), up0 = await s.eval(UPS);
-          r.asked = await pressDialogs(B, s, pg.submit[0], pg.submit[1], pg.mock, async () => { if (BREAK[how]) r.broke = await o.eval(BREAK[how]); });
+          const during = async () => { if (BREAK[how]) r.broke = await o.eval(BREAK[how]); };
+          /* 題庫、聽力的確認是頁面裡的視窗(UI.confirm),其他頁還是原生視窗 */
+          r.asked = pg.ui ? await pressUiConfirm(s, pg.submit[0], pg.submit[1], during) : await pressDialogs(B, s, pg.submit[0], pg.submit[1], pg.mock, async () => { await during(); });
           await sleep(900);
           const st = await state(s);
           r.card = st.mask ? st.title : '';
@@ -2197,15 +2222,15 @@ T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 
   const N = (k) => `JSON.parse(localStorage.getItem(${J(k)}) || '[]').length`;
   const BACK_X = `(() => { localStorage.setItem(${J(SB)}, ${J(login)}); localStorage.setItem('tr_current_profile', ${J(J(CPID))}); return true; })()`;
   const PAGES = [
-    { name: '隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷'], sets: ['drill_p5', 'hist'], count: HIST, add: 1, report: /答對 \d+ \/ 10 題/ },
-    { name: '聽力隨機練習', url: 'practice.html', start: ['.practice-panel .btn.primary', '開始聽力練習'], pick: '.letter-row .letter-big', submit: ['.drill-nav-btns .btn', '交卷'], sets: ['listen_p2', 'hist'], count: HIST, add: 1, report: /答對 \d+ \/ 10 題/ },
+    { name: '隨機練習', ui: true, url: 'practice.html', start: ['.practice-panel .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.quiz-act', '交卷'], sets: ['drill_p5', 'hist'], count: HIST, add: 1, report: /^\d+ \/ 10$/ },
+    { name: '聽力隨機練習', ui: true, url: 'practice.html', start: ['.listen-start', '開始'], pick: '.letter-row .letter-big', submit: ['.quiz-act', '交卷'], sets: ['listen_p2', 'hist'], count: HIST, add: 1, report: /^\d+ \/ 10$/ },
     { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.drill-nav-btns .btn', '交卷'], sets: ['diag'], count: HIST, add: 0, report: /./ },
     { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.drill-top .btn', '交卷'], sets: ['mock_history'], count: MH, add: 1, report: /參考總分/, mock: true },
     /* 錯題本(定稿 E4):有作答時按兩下交卷,mock_wrong 也只寫一次 */
     { name: '模擬考(答一題錯)', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: '#mock-root .letter-row .letter-big', pickI: wrongOf(BANK.listening.p2[0]), fix: FIXRAND,
       submit: ['.drill-top .btn', '交卷'], sets: ['mock_history', 'mock_wrong'], count: MH, add: 1, report: /參考總分/, mock: true },
   ];
-  const REPORT = (pg) => pg.mock ? "(document.querySelector('.report-head h2') || {}).textContent || ''" : "(document.querySelector('.report-head') || {}).textContent || ''";
+  const REPORT = (pg) => pg.mock ? "(document.querySelector('.report-head h2') || {}).textContent || ''" : "((document.querySelector('.report-head, .result-score') || {}).textContent || '').trim()";
   const card = async (s) => { const st = await state(s); return st.mask ? st.title : ''; };
   const o = await open(B, { url: 'robots.txt', early: true });   // 別的分頁(先開:A 開的時候會清空、灌好 localStorage)
   const out = [];
@@ -2225,12 +2250,14 @@ T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 
           await s.eval(COUNT_SILENT);
           await s.eval(WATCH);
           const n0 = await s.eval(N(pg.count));
-          r.asked = await pressTwice(B, s, pg.submit[0], pg.submit[1], pg.mock, async (n) => { if (how !== '照常' && n === 1) r.broke = await o.eval(OTHER_TAB_LOGOUT); });
+          /* 題庫、聽力的確認是頁面裡的視窗(UI.confirm),按確定之前後面的頁面按不到,沒有「那 50 毫秒」:按一次確定,只批改一次 */
+          r.asked = pg.ui ? await pressUiConfirm(s, pg.submit[0], pg.submit[1], async () => { if (how !== '照常') r.broke = await o.eval(OTHER_TAB_LOGOUT); })
+            : await pressTwice(B, s, pg.submit[0], pg.submit[1], pg.mock, async (n) => { if (how !== '照常' && n === 1) r.broke = await o.eval(OTHER_TAB_LOGOUT); });
           await sleep(900);
           const c = await s.eval(COUNTS);
           r.done = c.done.length; r.sets = c.sets;
           /* 兩下都點在交卷鈕上,第二下的時候還沒批改(不然這一次不算數:第二下太晚,已經過了那 50 毫秒) */
-          r.inTime = c.clicks.length === 2 && c.clicks.every((x) => x.txt.indexOf(pg.submit[1]) > -1) && c.clicks[1].done === 0 && c.clicks[1].sets === 0;
+          r.inTime = pg.ui || (c.clicks.length === 2 && c.clicks.every((x) => x.txt.indexOf(pg.submit[1]) > -1) && c.clicks[1].done === 0 && c.clicks[1].sets === 0);
           r.card = await card(s);
           r.report = await s.eval(REPORT(pg));
           if (how === '照常') {
@@ -2239,7 +2266,7 @@ T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 
           } else {
             r.back = await s.eval(BACK_X);
             r.closed = await closeBy(s, 'esc');
-            r.asked2 = await pressDialogs(B, s, pg.submit[0], pg.submit[1], false);
+            r.asked2 = pg.ui ? await pressUiConfirm(s, pg.submit[0], pg.submit[1]) : await pressDialogs(B, s, pg.submit[0], pg.submit[1], false);
             await sleep(900);
             const c2 = await s.eval(COUNTS);
             r.done2 = c2.done.length; r.sets2 = c2.sets;
@@ -2626,24 +2653,24 @@ T['錯題本 E6:錯題本複習答對只在模擬考錯題裡的題:刷題紀錄
     ls: { [SB]: login0(), [AK('mock_wrong')]: J(mw), [AK('drill_p5')]: J(d5) } });
   const r = {};
   try {
-    r.dots = await s.eval("document.querySelectorAll('.q-nav button').length");
-    r.top = await s.eval("(document.querySelector('.drill-top') || {}).textContent || ''");
+    r.dots = await s.eval(QUIZ_TOTAL);
+    r.close = await s.eval("!!document.querySelector('.quiz-close')");   // 專心模式:作答列左邊的關閉鈕回錯題本
     await clickNth(s, '.q-block .opts .opt', P5[0].answer);     // 最早錯的先出:P5[0]
-    await pressText(s, '.drill-nav-btns .btn', '下一題');
+    await pressText(s, '.quiz-foot .btn', '下一題');
     r.second = await s.eval("(document.querySelector('.q-text') || {}).textContent || ''");
     await clickNth(s, '.q-block .opts .opt', q.answer);
     await sleep(300);
     r.d5 = (await s.eval(LSJ('drill_p5')))[q.id];
     r.mw = (await s.eval(LSJ('mock_wrong')))[q.id];
-    await pressText(s, '.drill-nav-btns .btn', '完成複習');
-    r.sum = await s.eval("(document.querySelector('.report-head') || {}).textContent || ''");
-    r.back = await s.eval("[...document.querySelectorAll('.drill-nav-btns a')].map((a) => a.textContent + '>' + a.getAttribute('href'))");
+    await pressText(s, '.quiz-foot .btn', '看成績');
+    r.sum = await s.eval("(document.querySelector('.result-card') || {}).textContent || ''");
+    r.back = await s.eval("[...document.querySelectorAll('.result-card a')].map((a) => a.textContent + '>' + a.getAttribute('href'))");
     await s.go('practice.html?mode=wrong&part=5');
     await sleep(1000);
-    r.after = await s.eval("(document.querySelector('.q-block') || {}).textContent || ''");
+    r.after = await s.eval("(document.querySelector('.ui-empty-text') || {}).textContent || ''");
   } finally { await s.close(); }
-  r.ok = r.dots === 2 && /回錯題本/.test(r.top) && r.second.indexOf(q.question.slice(0, 20)) > -1 && !!r.d5 && r.d5.ok === true && J(r.mw) === J(mw[q.id])
-    && /移出 2 題/.test(r.sum) && J(r.back) === J(['回錯題本>practice.html?mode=wrong&part=5']) && /目前沒有錯題/.test(r.after);
+  r.ok = r.dots === 2 && r.close && r.second.indexOf(q.question.slice(0, 20)) > -1 && !!r.d5 && r.d5.ok === true && J(r.mw) === J(mw[q.id])
+    && /移出\s*2\s*題/.test(r.sum) && J(r.back) === J(['回錯題本>practice.html?mode=wrong&part=5']) && /沒有錯題/.test(r.after);
   return { ok: r.ok, detail: J(r) };
 };
 
@@ -2710,21 +2737,21 @@ T['錯題本 U1–U10:Part 5 清單分 9 組照題庫順序、預設收起、可
     await clickNth(s, '.wb-go', 2);
     await sleep(800);
     r.u8url = await s.eval('location.search');
-    r.u8dots = await s.eval("document.querySelectorAll('.q-nav button').length");
+    r.u8dots = await s.eval(QUIZ_TOTAL);
     const cats = new Set();
     for (let i = 0; i < r.u8dots; i++) {
       cats.add(await s.eval("(document.querySelector('.q-block .badge.cat') || {}).textContent"));
       const q = await s.eval("document.querySelector('.q-text').textContent");
       const item = BANK.part5.find((x) => q.indexOf(x.question.slice(0, 30)) > -1);
       await clickNth(s, '.q-block .opts .opt', i === 0 ? item.answer : wrongOf(item));   // 第一題答對,其他答錯
-      await pressText(s, '.drill-nav-btns .btn', i === r.u8dots - 1 ? '完成複習' : '下一題');
+      await pressText(s, '.quiz-foot .btn', i === r.u8dots - 1 ? '看成績' : '下一題');
     }
     r.u8cats = [...cats];
-    r.u8sum = await s.eval("(document.querySelector('.report-head') || {}).textContent");
-    r.u8next = await s.eval("[...document.querySelectorAll('.drill-nav-btns a')].map((a) => a.textContent)");
-    r.u8 = /g=/.test(r.u8url) && r.u8dots === 20 && J(r.u8cats) === J([st.cats[2]]) && /這一組還有 4 題還沒複習/.test(r.u8sum) && J(r.u8next) === J(['下一回', '回錯題本']);
+    r.u8sum = await s.eval("(document.querySelector('.result-card') || {}).textContent");
+    r.u8next = await s.eval("[...document.querySelectorAll('.result-card a')].map((a) => a.textContent)");
+    r.u8 = /g=/.test(r.u8url) && r.u8dots === 20 && J(r.u8cats) === J([st.cats[2]]) && /還沒複習\s*4 題/.test(r.u8sum) && J(r.u8next) === J(['下一回', '回錯題本']);
     /* 回錯題本:那一組少一題,剛剛開的組(全部展開過)還開著 */
-    await pressText(s, '.drill-nav-btns a', '回錯題本');
+    await pressText(s, '.result-card a', '回錯題本');
     await sleep(1000);
     const d = await s.eval(WB_STATE);
     r.u9 = d.g[2].n === 23 && d.g.every((x) => x.open === 'true');
@@ -2772,10 +2799,10 @@ T['錯題本 U11–U13、U15:聽力網址直接開、聽力 3 一段一組、聽
     r.l4 = l4.g.map((x) => x.name + ':' + x.n); r.l4all = l4.all;
     await s.go('practice.html?mode=wrong&part=1');
     await sleep(900);
-    r.l1 = await s.eval("(document.querySelector('.q-block') || {}).textContent || ''");
+    r.l1 = await s.eval("(document.querySelector('.ui-empty-text') || {}).textContent || ''");
     await s.go('practice.html?mode=review&part=2');
     await sleep(900);
-    r.l2review = { letters: await s.eval("document.querySelectorAll('.letter-row .letter-big').length"), top: await s.eval("(document.querySelector('.drill-top') || {}).textContent") };
+    r.l2review = { letters: await s.eval("document.querySelectorAll('.letter-row .letter-big').length"), bar: await s.eval("!!document.querySelector('.quiz-close')") };
     /* U12:題庫首頁面板 */
     await s.go('practice.html');
     await sleep(1000);
@@ -2798,8 +2825,8 @@ T['錯題本 U11–U13、U15:聽力網址直接開、聽力 3 一段一組、聽
   }
   const cats2 = [...new Set(BANK.listening.p2.slice(0, 8).map((q) => q.category))];
   const ok = J(r.l2.slice().sort()) === J(cats2.slice().sort()) && J(r.l3) === J(BANK.listening.p3.slice(0, 2).map((x) => x.title + ':1')) && /2 題 · 2 段對話/.test(r.l3sum)
-    && J(r.l4) === J(['機場廣播:2']) && r.l4all === null && /目前沒有錯題/.test(r.l1) && r.l2review.letters === 3 && /回錯題本/.test(r.l2review.top)
-    && J(r.panel) === J(['63 題|查看>practice.html?mode=wrong&part=5', '3 題|查看>practice.html?mode=wrong&part=6', '30 題|查看>practice.html?mode=wrong&part=7', '0 題|沒有錯題',
+    && J(r.l4) === J(['機場廣播:2']) && r.l4all === null && /沒有錯題/.test(r.l1) && r.l2review.letters === 3 && r.l2review.bar
+    && J(r.panel) === J(['63 題|查看>practice.html?mode=wrong&part=5', '3 題|查看>practice.html?mode=wrong&part=6', '30 題|查看>practice.html?mode=wrong&part=7',
       '8 題|查看>practice.html?mode=wrong&part=2', '2 題|查看>practice.html?mode=wrong&part=3', '2 題|查看>practice.html?mode=wrong&part=4'])
     && r.an.n > 9 && r.an.h4 && r.an.before === 'false' && r.an.after === 'true' && r.an.p7.length > 2 && r.an.p7.indexOf('多篇閱讀') === r.an.p7.length - 1 && !r.an.old
     && J(r.an.links) === J(['practice.html?mode=wrong&part=5', 'practice.html?mode=wrong&part=6', 'practice.html?mode=wrong&part=7'])
@@ -2953,7 +2980,7 @@ async function pickIn(s, i, o) {
 }
 
 /* 審查 #4、#6:聽力 3、4 複習整組重答,頂部要寫「這一回 X 組（N 題）」,N 是整組的題數,跟成績頁的分母一樣 */
-T['錯題本 U19:聽力 3、4 錯題本複習:頂部「這一回 X 組（N 題）」,X 是上排編號數、N 跟成績頁「答對 x / N 題」一樣'] = async (B) => {
+T['錯題本 U19:聽力 3、4 錯題本複習:作答列的總數是這一回的組數,N 是整組的題數,跟成績卡「x / N」一樣'] = async (B) => {
   const st = wbStudent();
   const L = BANK.listening;
   const sets4 = L.p4.filter((x) => x.type === '機場廣播'), sets3 = L.p3.slice(0, 2);
@@ -2962,20 +2989,20 @@ T['錯題本 U19:聽力 3、4 錯題本複習:頂部「這一回 X 組（N 題�
   try {
     for (const [name, url, sets] of [['l4', null, sets4], ['l3', 'practice.html?mode=review&part=3', sets3]]) {
       if (url) { await s.go(url); await sleep(700); }
-      const top = await s.eval("(document.querySelector('.drill-top h1 span') || {}).textContent || ''");
-      const dots = await s.eval("document.querySelectorAll('.q-nav button').length");
+      const dots = await s.eval(QUIZ_TOTAL);
       for (let u = 0; u < dots; u++) {
         const nq = await s.eval("document.querySelectorAll('.q-block .opts').length");
         for (let i = 0; i < nq; i++) await pickIn(s, i, 0);   // 每一題都點 A(畫面每點一下重畫一次)
-        await pressText(s, '.drill-nav-btns .btn', u === dots - 1 ? '看本輪成績' : '下一組');
+        await pressText(s, '.quiz-foot .btn', u === dots - 1 ? '看成績' : '下一題');
       }
-      const sum = await s.eval("(document.querySelector('.report-head h2') || {}).textContent || ''");
-      const m = /這一回 (\d+) 組（(\d+) 題）/.exec(top), q = /答對 \d+ \/ (\d+) 題/.exec(sum);
-      out[name] = { top, dots, sum, want: [sets.length, sets.reduce((k, x) => k + x.questions.length, 0)], m: m ? [Number(m[1]), Number(m[2])] : null, q: q ? Number(q[1]) : null };
+      const sum = await s.eval("((document.querySelector('.result-score') || {}).textContent || '').trim()");
+      const kicker = await s.eval("(document.querySelector('.result-kicker') || {}).textContent || ''");
+      const q = /^\d+ \/ (\d+)$/.exec(sum);
+      out[name] = { kicker, dots, sum, want: [sets.length, sets.reduce((k, x) => k + x.questions.length, 0)], q: q ? Number(q[1]) : null };
     }
   } finally { await s.close(); }
-  const ok = ['l4', 'l3'].every((k) => { const o = out[k]; return o.m && o.m[0] === o.dots && o.m[0] === o.want[0] && o.m[1] === o.want[1] && o.q === o.m[1]; })
-    && /^機場廣播 · /.test(out.l4.top);
+  const ok = ['l4', 'l3'].every((k) => { const o = out[k]; return o.dots === o.want[0] && o.q === o.want[1]; })
+    && /Part 4/.test(out.l4.kicker) && /Part 3/.test(out.l3.kicker);
   return { ok, detail: J(out) };
 };
 

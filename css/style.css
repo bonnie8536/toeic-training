@@ -3598,6 +3598,45 @@ html.is-quiz #mock-root .passage-sticky-wrap { position: static; max-height: non
 
 
 /* ==== 每日練習 ==== */
+/* 每日練習(js/daily-ui.js)與錯題本(js/review.js)。首頁那張每日練習卡的樣式在前面「首頁」那一段 */
+.daily-sr, .rv-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* daily.html 總覽:頁首(圖示、標題、1 / 3)加同一張卡 */
+.page-head:has(> .hub-art) .daily-count { margin-left: auto; font-size: var(--fs-md); font-weight: 700; color: var(--ink-soft); }
+#daily-root .daily-card { margin-top: 0; padding: 4px 20px 20px; border-radius: var(--r-lg); }
+#daily-root .daily-st { color: var(--ink-soft); }
+#daily-root .daily-row.is-done .daily-st { color: var(--ok-ink); }
+@media (min-width: 600px) { #daily-root .daily-card { padding: 8px 24px 24px; } }
+
+/* 作答中:題目上面一個小標籤講這是哪一項 */
+.daily-tags { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
+.daily-part {
+  display: inline-block; margin: 0; padding: 4px 12px; border-radius: var(--r-full);
+  background: var(--bg-soft); color: var(--ink-soft); font-family: var(--round); font-size: var(--fs-sm); font-weight: 700; line-height: 1.5;
+}
+html.is-quiz .daily-tags + .q-block { padding-top: 16px; }
+.daily-sub { margin: 0; font-size: var(--fs-md); color: var(--ink-soft); }
+.player-note { display: inline-flex; flex-direction: column; }
+.player-sub { font-size: var(--fs-xs); }
+html.is-quiz main .write-area { font-size: var(--fs-md); }
+
+/* 錯題本:有待複習的題是一個大數字加一顆主按鈕 */
+.review-todo { display: flex; flex-direction: column; align-items: center; gap: 20px; margin: 8px 0 0; padding: 28px 20px; border-radius: var(--r-lg); text-align: center; }
+.review-todo:hover { border-color: var(--line); box-shadow: none; }
+.review-todo .review-todo-t { margin: 0; font-family: var(--round); font-size: var(--fs-lg); font-weight: 700; color: var(--ink-soft); }
+.review-todo-t b { margin: 0 2px; font-size: var(--fs-3xl); line-height: 1.2; color: var(--ink); font-variant-numeric: tabular-nums; }
+.review-todo .btn.primary { width: 100%; max-width: 320px; min-height: 48px; border-radius: var(--r-md); font-size: var(--fs-md); }
+@media (min-width: 600px) { .review-todo { padding: 36px 24px; } }
+/* 其他待複習:整列可點的清單,名稱、數字、右箭頭 */
+.rv-group-h { margin: 28px 0 8px; font-size: var(--fs-md); font-weight: 700; color: var(--ink-soft); }
+.rv-list { margin: 0 0 48px; padding: 0; list-style: none; border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff; overflow: hidden; }
+.rv-list li + li { border-top: 1px solid var(--line); }
+.rv-row { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 16px; color: var(--ink); text-decoration: none; }
+.rv-row:hover { text-decoration: none; background: var(--bg-soft); }
+.rv-row:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.rv-name { flex: 1; min-width: 0; font-family: var(--round); font-size: var(--fs-md); font-weight: 700; }
+.rv-num { font-size: var(--fs-sm); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.rv-row::after { content: '›'; font-size: 22px; line-height: 1; color: var(--ink-soft); }
 
 /* ---- */
 

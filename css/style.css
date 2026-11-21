@@ -2314,6 +2314,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 .buy-opt input[hidden] { display: none; }
 .buy-opt-name { flex: 1; min-width: 0; }
 .buy-opt-amt { font-family: var(--round); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.buy-opt-amt small { margin-right: 2px; font-family: var(--font); font-size: 14px; font-weight: 400; color: var(--ink-soft); }
 .buy-opt:has(input:checked) { border-color: var(--primary); background: var(--primary-tint); }
 .buy-opt:has(input[hidden]) { cursor: default; }
 .buy-opt:has(input:focus-visible) { outline: 2px solid var(--primary); outline-offset: 2px; }

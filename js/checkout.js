@@ -241,7 +241,10 @@
     return { state: 'pending', row };
   }
 
-  function money(n) { return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + NB + '元'; }
+  function digits(n) { return String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function money(n) { return digits(n) + NB + '元'; }
+  /* 購買視窗裡的價格:跟價格頁的價格表同一個寫法(小字 NT$ 加數字) */
+  function priceEl(n) { return h('span', { class: 'buy-opt-amt' }, h('small', null, 'NT$' + NB), digits(n)); }
   /* 期間的寫法跟價格頁一樣:一個月、一年 */
   function period(m) { return m === 1 ? '一個月' : m === 12 ? '一年' : m + NB + '個月'; }
   /* 「學生方案 一個月」「老師方案 30 位以內 一年」(名額的寫法跟價格頁一樣)「寫作批改 5 篇」;站長測試項目照名稱 */
@@ -448,7 +451,7 @@
       if (i === 0) input.checked = true;
       return input;
     });
-    const opts = items.map((it, i) => h('label', { class: 'buy-opt' }, radios[i], h('span', { class: 'buy-opt-name' }, it.label), h('span', { class: 'buy-opt-amt' }, money(it.amount))));
+    const opts = items.map((it, i) => h('label', { class: 'buy-opt' }, radios[i], h('span', { class: 'buy-opt-name' }, it.label), priceEl(it.amount)));
     const note = h('p', { class: 'buy-note' });
     const agree = h('input', { type: 'checkbox', id: 'buy-consent', name: 'buy-consent', 'aria-describedby': 'buy-def' });
     const msg = h('p', { class: 'auth-msg', role: 'alert' });
@@ -545,25 +548,26 @@
     else location.href = 'signup.html?mode=login';
   }
 
-  /* 一組的購買區:說明(有的話)與按鈕(slot.button 是 true 才放) */
-  function buySlot(group, signedIn, slot) {
+  /* 一組的購買區:說明(有的話)與按鈕(slot.button 是 true 才放)。
+     一頁只有一顆實色按鈕:solid 是 false 時用描邊(initPricing 讓第一個有按鈕的方案用實色,其他描邊) */
+  function buySlot(group, signedIn, slot, solid) {
     const s = slot || { button: true, note: null };
     const box = h('div', { class: 'pricing-buy' });
     if (s.note) box.append(h('p', { class: 'pricing-buy-note' }, s.note));
     if (s.button) {
-      const btn = h('button', { class: 'btn primary pricing-buy-btn', type: 'button' }, signedIn ? GROUPS[group].title : '登入後購買');
+      const btn = h('button', { class: (solid === false ? 'btn' : 'btn primary') + ' pricing-buy-btn', type: 'button' }, signedIn ? GROUPS[group].title : '登入後購買');
       btn.addEventListener('click', () => { if (signedIn) buyDialog(group, btn); else openLogin(); });
       box.append(btn);
     }
     return box;
   }
 
-  function place(main, group, signedIn, slot) {
+  function place(main, group, signedIn, slot, solid) {
     if (group === 'test') {
       const sec = h('section', { class: 'pricing-plan pricing-test', 'aria-labelledby': 'pricing-test' },
         h('h2', { id: 'pricing-test' }, '站長測試'),
         h('p', null, '只有站長看得到。在正式環境刷 10' + NB + '元確認付款與開通通知正常。刷完到藍新後台退款。'),
-        buySlot(group, signedIn, slot));
+        buySlot(group, signedIn, slot, solid));
       const after = document.getElementById('pricing-correction');
       const anchor = after && after.closest('section');
       if (anchor) anchor.after(sec); else main.append(sec);
@@ -573,7 +577,7 @@
     const sec = head && head.closest('section');
     if (!sec) return;
     const price = sec.querySelector('.pricing-opts, .pricing-table-wrap');
-    const el = buySlot(group, signedIn, slot);
+    const el = buySlot(group, signedIn, slot, solid);
     if (price) price.after(el); else sec.append(el);
   }
 
@@ -587,7 +591,14 @@
     const paytest = paytestFlag(location.search);
     const owner = signedIn && paytest ? await C.isOwner() : false;
     const o = { paidUi: window.PAID_UI === true, signedIn, access: C.access, owner, paytest };
-    groupsFor(o).forEach(g => place(main, g, signedIn, slotFor(g, o)));
+    /* 實色只給第一個有按鈕的方案(依序學生、老師、寫作批改;學生方案是主打),其他描邊 */
+    let solidLeft = true;
+    groupsFor(o).forEach(g => {
+      const slot = slotFor(g, o);
+      const solid = solidLeft && !!(slot && slot.button);
+      if (solid) solidLeft = false;
+      place(main, g, signedIn, slot, solid);
+    });
   }
 
   window.CHECKOUT = { CONSENT_TEXT, CONSENT_DEF, CONSENT_DEF_TEACHER, CONSENT_DEF_CREDITS, catalog, slotFor, groupsFor, teacherSkus, startNote, paytestFlag, backFlag, orderNoOk, validResponse, rememberOrder, lastOrder, orderFromPage,

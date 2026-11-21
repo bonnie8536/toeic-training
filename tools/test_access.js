@@ -483,7 +483,8 @@ const cases = {
     const ctx = {}; ctx.window = ctx; vm.createContext(ctx); vm.runInContext(PLANS_SRC, ctx);
     const P = ctx.PLANS;
     const fmt = n => n.toLocaleString('en-US');
-    const has = (label, n) => new RegExp(label + '[\\s\\S]{0,80}?' + fmt(n) + '<small>').test(PRICING);
+    /* 價格寫成「NT$ 199」(幣別在數字前面的小字,後面不再寫「元」) */
+    const has = (label, n) => new RegExp(label + '[\\s\\S]{0,80}?NT\\$\\s</small>' + fmt(n) + '(?![\\d,])').test(PRICING);
     const checks = [
       ctx.PAID_UI === false,
       P.student.month === 199 && P.student.year === 1990, has('一個月', P.student.month), has('一年', P.student.year),

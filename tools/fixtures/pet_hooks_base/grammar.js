@@ -6,9 +6,17 @@
   const UNITS = (window.TOEIC && TOEIC.grammar) || [];
 
   if (!UNITS.length) {
-    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '文法教材生成中，稍後再來。'));
+    root.append(UI.empty({ pose: 'read', text: '文法教材準備中' }));
     return;
   }
+
+  /* 課名「主題：副題」:清單與課內標題只放主題,副題放在課內標題下面一行;沒有冒號就原樣。
+     document.title 與 setPageMeta 仍用完整課名(搜尋結果要用) */
+  const splitTitle = t => {
+    const i = String(t).indexOf('：');
+    return i > 0 ? { topic: t.slice(0, i), sub: t.slice(i + 1) } : { topic: String(t), sub: '' };
+  };
+  const topicOf = t => splitTitle(t).topic;
 
   const STAGES = {
     a: { name: '第一章 名詞、冠詞與代名詞' },
@@ -26,11 +34,11 @@
      時態總整理是全部章節後面的「總整理」(z)。資料與程式要用到才載入。 */
   const REFS = {
     verbs: {
-      stage: 'c', title: '不規則動詞表', sub: '118 個字的三態，可查可測驗',
+      stage: 'c', title: '不規則動詞表', tag: '118 個字', meta: '118 個字的三態，可查可測驗',
       files: ['data/verbs.js', 'js/verbs.js'], view: () => window.VERBS_VIEW,
     },
     tenses: {
-      stage: 'z', title: '12 時態總整理', sub: '一張表看完全部時態，附時間連接詞的搭配',
+      stage: 'z', title: '12 時態總整理', tag: '', meta: '一張表看完全部時態，附時間連接詞的搭配',
       files: ['data/tenses.js', 'js/tenses.js'], view: () => window.TENSES_VIEW,
     },
   };
@@ -82,7 +90,7 @@
           class: 'gx-node' + (done[u.id] ? ' done' : '') + (u.id === currentId ? ' cur' : '') +
             (!currentId && !currentRef && u.id === nextId ? ' next' : ''),
           href: 'grammar.html?u=' + u.id,
-          title: (i + 1) + '. ' + u.title,
+          title: (i + 1) + '. ' + topicOf(u.title),
           style: 'transform:translateX(' + OFFS[i % OFFS.length] + 'px)',
         }, String(i + 1)));
       });
@@ -149,38 +157,48 @@
           h('h2', null, STAGES[stage].name),
           h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + ' / ' + list.length)));
       const col = h('div', { class: 'gx-col' },
-        h('div', { class: 'page-head' }, h('h1', null, '文法基礎')),
+        h('div', { class: 'page-head' },
+          h('canvas', { class: 'hub-art', 'data-doodle': 'grammar', 'data-size': '40', 'aria-hidden': 'true' }),
+          h('h1', null, '文法基礎')),
         units);
+      /* 同一章裡主題一樣的幾課:清單多放一行副題,不然兩列看起來一模一樣 */
+      const seen = {};
+      list.forEach(u => { const t = topicOf(u.title); seen[t] = (seen[t] || 0) + 1; });
       list.forEach((u, i) => {
+        const p = splitTitle(u.title);
         units.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : '') + (todo && u.id === todo.id ? ' next' : ''), href: 'grammar.html?u=' + u.id },
           h('span', { class: 'n' }, String(i + 1)),
-          h('span', { class: 't' }, u.title)));
+          h('span', { class: 't' }, p.topic, seen[p.topic] > 1 && p.sub ? h('span', { class: 'gx-dup' }, p.sub) : null)));
       });
       /* 這一章的查表頁;最後一章後面接總整理 */
       refsOf(stage).concat(stage === 'h' ? refsOf('z') : []).forEach(([k, r]) => {
         units.append(h('a', { class: 'gx-unit-row gx-appendix', href: 'grammar.html?ref=' + k },
           h('span', { class: 'n' }, '表'),
-          h('span', { class: 't' }, r.title, h('i', null, r.sub))));
+          h('span', { class: 't' }, r.title, r.tag ? h('i', null, r.tag) : null)));
       });
       col.append(h('div', { style: 'height:40px' }));
       layout.append(buildRail(stage, null, sk => { stage = sk; draw(); window.scrollTo(0, 0); }), col);
+      if (window.UI) UI.doodle(layout);
     }
   }
 
   /* ================= 查表頁:跟課程一樣在文法區裡,左邊路徑還在 ================= */
   function renderRef(k) {
     const r = REFS[k];
-    setPageMeta('ref=' + k, r.title + '：' + r.sub + '。');
+    setPageMeta('ref=' + k, r.title + '：' + r.meta + '。');
     widen();
     const host = h('div', null, h('p', { class: 'result-note', style: 'margin-top:30px' }, '載入中…'));
     root.append(h('div', { class: 'gx-layout' }, buildRail(r.stage, null, null, k), h('div', { class: 'gx-col' }, host)));
     loadScripts(r.files).then(() => {
       const view = r.view();
       if (!view) throw new Error('view missing');
+      host.replaceChildren();
       view.mount(host);
     }).catch(() => {
       host.innerHTML = '';
-      host.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '這張表載入失敗，請重新整理再試。'));
+      host.append(h('div', { class: 'q-block', style: 'margin-top:30px' },
+        h('p', null, '這張表載入失敗'),
+        h('button', { class: 'btn', type: 'button', style: 'margin-top:12px', onclick: () => location.reload() }, '重新整理')));
     });
   }
 
@@ -204,10 +222,11 @@
     widen();
     const col = h('div', { class: 'gx-col' });
     root.append(h('div', { class: 'gx-layout' }, buildRail(stageOf(u), u.id, null), col));
+    const parts = splitTitle(u.title);
     col.append(h('div', { class: 'drill-top' },
-      h('h1', null, u.title),
+      h('h1', null, parts.topic),
       h('a', { href: 'grammar.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回文法基礎')));
-    col.append(h('div', { class: 'gx-goal' }, u.goal));
+    if (parts.sub) col.append(h('p', { class: 'gx-sub' }, parts.sub));
 
     /* 講解 */
     const lesson = h('div', { class: 'lesson-view' });
@@ -289,14 +308,19 @@
       const cat = DRILL_LINK[u.id];
       /* 過去式與完成式的課,學完直接去查三態 */
       const VERB_UNITS = ['gc-02', 'gc-03', 'gc-04', 'gc-06', 'gc-08', 'gc-12'];
-      tail.append(
-        h('div', { class: 'report-head', style: 'margin-top:10px' },
-          h('h2', null, '答對 ' + ok + ' / ' + u.quiz.length)),
-        h('div', { class: 'drill-nav-btns' },
-          next ? h('a', { class: 'btn primary', href: 'grammar.html?u=' + next.id }, '下一課：' + next.title) : null,
-          cat ? h('a', { class: 'btn', href: 'practice.html?part=5&cat=' + encodeURIComponent(cat) }, '刷這個考點的題目') : null,
-          VERB_UNITS.includes(u.id) ? h('a', { class: 'btn', href: 'grammar.html?ref=verbs' }, '查不規則動詞表') : null,
-          h('a', { class: 'btn', href: 'grammar.html' }, '回文法基礎')));
+      const back = { label: '回文法基礎', href: 'grammar.html' };
+      const card = UI.result({
+        compact: true, score: ok, total: u.quiz.length, kicker: '小試身手',
+        primary: next ? { label: '下一課', href: 'grammar.html?u=' + next.id } : back,
+        links: [
+          cat ? { label: '刷這個考點的題目', href: 'practice.html?part=5&cat=' + encodeURIComponent(cat) } : null,
+          VERB_UNITS.includes(u.id) ? { label: '查不規則動詞表', href: 'grammar.html?ref=verbs' } : null,
+          next ? back : null,
+        ],
+      });
+      tail.append(card.el);
+      card.el.scrollIntoView({ block: 'nearest' });
+      card.heading.focus({ preventScroll: true });
     }
   }
 })();

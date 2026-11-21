@@ -8,9 +8,17 @@
   const UNITS = (window.TOEIC && TOEIC.phonics) || [];
 
   if (!UNITS.length) {
-    root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '自然發音教材準備中，稍後再來。'));
+    root.append(UI.empty({ pose: 'read', text: '自然發音教材準備中' }));
     return;
   }
+
+  /* 課名「主題：副題」:清單與課內標題只放主題,副題放在課內標題下面一行;沒有冒號就原樣。
+     document.title 與 setPageMeta 仍用完整課名(搜尋結果要用) */
+  const splitTitle = t => {
+    const i = String(t).indexOf('：');
+    return i > 0 ? { topic: t.slice(0, i), sub: t.slice(i + 1) } : { topic: String(t), sub: '' };
+  };
+  const topicOf = t => splitTitle(t).topic;
 
   /* 章名:跟 data/raw/phonics_ch*.json 的章字母對應 */
   const STAGES = {
@@ -145,7 +153,7 @@
           class: 'gx-node' + (done[u.id] ? ' done' : '') + (u.id === currentId ? ' cur' : '') +
             (!currentId && u.id === nextId ? ' next' : ''),
           href: 'phonics.html?u=' + u.id,
-          title: (i + 1) + '. ' + u.title,
+          title: (i + 1) + '. ' + topicOf(u.title),
           style: 'transform:translateX(' + OFFS[i % OFFS.length] + 'px)',
         }, String(i + 1)));
       });
@@ -202,12 +210,18 @@
           h('h2', null, STAGES[stage].name),
           h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + ' / ' + list.length)));
       const col = h('div', { class: 'gx-col' },
-        h('div', { class: 'page-head' }, h('h1', null, '自然發音')),
+        h('div', { class: 'page-head' },
+          h('canvas', { class: 'hub-art', 'data-doodle': 'phonics', 'data-size': '40', 'aria-hidden': 'true' }),
+          h('h1', null, '自然發音')),
         units);
+      /* 同一章裡主題一樣的幾課:清單多放一行副題,不然兩列看起來一模一樣 */
+      const seen = {};
+      list.forEach(u => { const t = topicOf(u.title); seen[t] = (seen[t] || 0) + 1; });
       list.forEach((u, i) => {
+        const p = splitTitle(u.title);
         units.append(h('a', { class: 'gx-unit-row' + (done[u.id] ? ' done' : '') + (todo && u.id === todo.id ? ' next' : ''), href: 'phonics.html?u=' + u.id },
           h('span', { class: 'n' }, String(i + 1)),
-          h('span', { class: 't' }, u.title),
+          h('span', { class: 't' }, p.topic, seen[p.topic] > 1 && p.sub ? h('span', { class: 'gx-dup' }, p.sub) : null),
           u.key && u.key.kk ? h('span', { class: 'ph-row-kk' }, '[' + u.key.kk + ']') : null));
       });
       if (stage === stageKeys[stageKeys.length - 1]) {
@@ -217,6 +231,7 @@
       }
       col.append(h('div', { style: 'height:40px' }));
       layout.append(buildRail(stage, null, sk => { stage = sk; draw(); window.scrollTo(0, 0); }), col);
+      if (window.UI) UI.doodle(layout);
     }
   }
 
@@ -242,7 +257,7 @@
         grid.append(h('div', { class: 'ph-chart-row' + (done[u.id] ? ' done' : '') },
           h('span', { class: 'ph-chart-kk' }, k.kk ? '[' + k.kk + ']' : ''),
           play,
-          h('a', { href: 'phonics.html?u=' + u.id }, u.title)));
+          h('a', { href: 'phonics.html?u=' + u.id }, topicOf(u.title))));
       });
       col.append(grid);
     });
@@ -258,10 +273,11 @@
     widen();
     const col = h('div', { class: 'gx-col' });
     root.append(h('div', { class: 'gx-layout' }, buildRail(stageOf(u), u.id, null), col));
+    const parts = splitTitle(u.title);
     col.append(h('div', { class: 'drill-top' },
-      h('h1', null, u.title),
+      h('h1', null, parts.topic),
       h('a', { href: 'phonics.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回自然發音')));
-    col.append(h('div', { class: 'gx-goal' }, u.goal));
+    if (parts.sub) col.append(h('p', { class: 'gx-sub' }, parts.sub));
 
     /* 這課的音:KK+代表字 */
     const k = u.key || {};
@@ -271,7 +287,6 @@
     col.append(h('div', { class: 'ph-key' },
       k.kk ? h('span', { class: 'ph-key-kk' }, '[' + k.kk + ']') : null,
       keyBtn,
-      h('span', { class: 'ph-key-hint' }, '每個字都可以點來聽'),
       slowToggle()));
 
     /* 講解 */
@@ -345,7 +360,7 @@
       if (isListen) {
         const pb = h('button', { class: 'btn primary ph-listen', type: 'button' }, h('span', { class: 'ph-spk', html: SPEAKER }), '播放');
         pb.addEventListener('click', () => playWord(q.word, pb));
-        head = h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), '聽聽看，是哪一個字？', h('div', { class: 'ph-listen-row' }, pb));
+        head = h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), '聽音選字', h('div', { class: 'ph-listen-row' }, pb));
       } else {
         head = h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, 'Q' + (qi + 1)), q.q);
       }
@@ -361,12 +376,15 @@
       done[u.id] = { ok, t: u.quiz.length };
       store.set('phonics_done', done);
       const next = UNITS[idx + 1];
-      tail.append(
-        h('div', { class: 'report-head', style: 'margin-top:10px' },
-          h('h2', null, '答對 ' + ok + ' / ' + u.quiz.length)),
-        h('div', { class: 'drill-nav-btns' },
-          next ? h('a', { class: 'btn primary', href: 'phonics.html?u=' + next.id }, '下一課：' + next.title) : null,
-          h('a', { class: 'btn', href: 'phonics.html' }, '回自然發音')));
+      const back = { label: '回自然發音', href: 'phonics.html' };
+      const card = UI.result({
+        compact: true, score: ok, total: u.quiz.length, kicker: '小試身手',
+        primary: next ? { label: '下一課', href: 'phonics.html?u=' + next.id } : back,
+        links: next ? [back] : [],
+      });
+      tail.append(card.el);
+      card.el.scrollIntoView({ block: 'nearest' });
+      card.heading.focus({ preventScroll: true });
     }
   }
 })();

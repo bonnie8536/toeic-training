@@ -15,7 +15,7 @@
     const PAIRS = (T && T.pairs) || [];
 
     if (!TENSES.length) {
-      root.append(h('div', { class: 'q-block', style: 'margin-top:30px' }, '時態總整理準備中，稍後再來。'));
+      root.append(UI.empty({ pose: 'read', text: '時態總整理準備中' }));
       return;
     }
 
@@ -25,10 +25,10 @@
       { k: 'fut', name: '未來' },
     ];
     const ASPECTS = [
-      { k: 'simple', name: '簡單式', hint: '就是這件事，不強調過程或先後' },
+      { k: 'simple', name: '簡單式', hint: '不強調過程或先後' },
       { k: 'prog', name: '進行式', hint: '那個時間點正在進行' },
-      { k: 'perf', name: '完成式', hint: '到那個時間點為止，已經完成或累積' },
-      { k: 'perfprog', name: '完成進行式', hint: '到那個時間點為止，一直持續在做' },
+      { k: 'perf', name: '完成式', hint: '到那時已經完成或累積' },
+      { k: 'perfprog', name: '完成進行式', hint: '到那時一直持續在做' },
     ];
     const idOf = (time, aspect) => 't-' + time + '-' + aspect;
     const byId = id => TENSES.find(x => x.id === id);
@@ -106,12 +106,11 @@
       document.title = '12 時態總整理 - 衝衝英文';
       root.innerHTML = '';
       root.append(h('div', { class: 'page-head' }, h('h1', null, '12 時態總整理')));
-      root.append(h('p', { class: 'result-note' },
-        '直的是三個時間，橫的是四種面向。任何一個時態都是「哪個時間 × 哪種面向」的組合，點一格看完整用法。'));
+      root.append(h('p', { class: 'tn-howto' }, '點格子看用法'));
 
       /* ---- 主矩陣 ---- */
       const grid = h('div', { class: 'tn-grid' });
-      grid.append(h('div', { class: 'tn-corner' }));
+      grid.append(h('div', { class: 'tn-corner' }, h('span', { class: 'tn-axis-t' }, '時間'), h('span', { class: 'tn-axis-a' }, '面向')));
       TIMES.forEach(t => grid.append(h('div', { class: 'tn-head' }, t.name)));
       ASPECTS.forEach(a => {
         grid.append(h('div', { class: 'tn-side' }, h('b', null, a.name), h('span', null, a.hint)));

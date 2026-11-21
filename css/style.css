@@ -3712,6 +3712,23 @@ html.vb-quizzing .gx-rail { display: none; }
 
 /* ==== 文法、自然發音、聽力訓練 ==== */
 
+/* 文法與自然發音:清單只放課名的主題,課內標題下面一行副題;同章主題重複的幾課在清單裡多一行副題分辨 */
+.gx-sub { margin: 0 0 20px; font-size: var(--fs-sm); line-height: 1.5; color: var(--ink-soft); }
+.drill-top:has(+ .gx-sub) { margin-bottom: 6px; }
+.gx-unit-row .t .gx-dup { display: block; margin-top: 2px; font-size: var(--fs-xs); line-height: 1.4; color: var(--ink-soft); }
+/* 課末小測的結算卡接在單元頁尾 */
+.gx-col .result-card.is-compact { margin: 36px auto 0; padding-top: 28px; border-top: 1px solid var(--line); border-radius: 0; }
+
+/* 12 時態總整理:左上角標出兩個軸(橫排是時間,直排是面向),說明只留一句操作指示 */
+.tn-howto { margin: 2px 0 0; font-size: var(--fs-sm); line-height: 1.5; color: var(--ink-soft); }
+.tn-corner { display: flex; flex-direction: column; justify-content: space-between; padding: 4px 10px 0 0; font-size: var(--fs-xs); line-height: 1.35; color: var(--ink-soft); }
+.tn-corner .tn-axis-t { align-self: flex-end; }
+.tn-corner .tn-axis-a { align-self: flex-start; }
+@media (max-width: 600px) {
+  .tn-corner { padding: 0; align-items: center; }
+  .tn-corner .tn-axis-t, .tn-corner .tn-axis-a { align-self: center; }
+}
+
 /* ---- */
 
 

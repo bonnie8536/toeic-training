@@ -142,7 +142,7 @@ T['列表頁(文法、自然發音、閱讀、對話):標題下只有 h1、不�
     const src = read('js/' + n + '.js');
     const body = fnBody(src, L[n]);
     /* 站長刪過兩次列表標題下的說明句(3c18669、159e17d):page-head 裡只放 h1,摘要交給頁面說明 */
-    assert.match(body, /h\('div', \{ class: 'page-head' \},\s*h\('h1', null, '[^']+'\)\)[,;]/, n + ' 列表的標題下不能掛介紹句,page-head 裡只放 h1');
+    assert.match(body, /h\('div', \{ class: 'page-head' \},\s*(?:h\('canvas', \{ class: 'hub-art'[^}]*\}\),\s*)?h\('h1', null, '[^']+'\)\)[,;]/, n + ' 列表的標題下不能掛介紹句,page-head 裡只放 h1(可以有標題左邊的圖示)');
     assert.match(body, /h\('div', \{ [^}]*'data-nosnippet': ''/, n + ' 列表的清單沒有在建立時帶 data-nosnippet');
     assert.equal(/(?:set|remove|toggle)Attribute\('data-nosnippet'/.test(src), false, n + ' 不能事後用程式加或拿掉 data-nosnippet');
     let rail = '';

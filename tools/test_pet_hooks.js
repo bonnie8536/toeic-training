@@ -583,8 +583,8 @@ const RH = "root.querySelector('.report-head')";
 const RR = "root.querySelector('.result-reward')";
 const SITES = [
   ['js/daily-ui.js', 'runPart summary()', ['function runPart(', 'function summary() {'], G + "'d', { into: card.reward });"],
-  ['js/grammar.js', 'finish()', ['function finish() {'], G + "'g:' + u.id, { n: u.quiz.length, into: tail.querySelector('.report-head') });"],
-  ['js/phonics.js', 'finish()', ['function finish() {'], G + "'pn:' + u.id, { n: u.quiz.length, into: tail.querySelector('.report-head') });"],
+  ['js/grammar.js', 'finish()', ['function finish() {'], G + "'g:' + u.id, { n: u.quiz.length, into: card.reward });"],
+  ['js/phonics.js', 'finish()', ['function finish() {'], G + "'pn:' + u.id, { n: u.quiz.length, into: card.reward });"],
   ['js/verbs.js', 'startQuiz summary()', ['function startQuiz(', 'function summary() {'], G + "'iv', { n: items.length, into: card.reward });"],
   ['js/vocab.js', 'roundClear()', ['function roundClear() {'], G + "'fall', { into: card.reward });"],
   ['js/vocab.js', 'startPairs finish()', ['function startPairs(', 'function finish() {'], G + "'pairs', { into: card.reward });"],

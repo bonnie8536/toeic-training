@@ -3788,12 +3788,12 @@ html.vb-quizzing .gx-col { margin-inline: auto; }
 /* 文法與自然發音:清單只放課名的主題,課內標題下面一行副題;同章主題重複的幾課在清單裡多一行副題分辨 */
 .gx-sub { margin: 0 0 20px; font-size: var(--fs-sm); line-height: 1.5; color: var(--ink-soft); }
 .drill-top:has(+ .gx-sub) { margin-bottom: 6px; }
-/* 單課頁:標題放在路徑前面(手機先看到課名、圓圈排在下面);電腦版標題在右欄上方,路徑佔左欄兩列。
+/* 文法與自然發音的清單頁、單課頁:標題放在路徑前面(手機先看到標題、圓圈排在下面);電腦版標題在右欄上方,路徑佔左欄兩列。
    標題跟清單頁同一個 h1(字級、螢光筆),副題是淡色小字 */
-.gx-layout.is-unit { grid-template-rows: auto 1fr; row-gap: 0; }
-.gx-layout.is-unit > .gx-head { grid-column: 2; grid-row: 1; min-width: 0; max-width: 770px; }
-.gx-layout.is-unit > .gx-rail { grid-column: 1; grid-row: 1 / span 2; }
-.gx-layout.is-unit > .gx-col { grid-column: 2; grid-row: 2; }
+.gx-layout.has-head { grid-template-rows: auto 1fr; row-gap: 0; }
+.gx-layout.has-head > .gx-head { grid-column: 2; grid-row: 1; min-width: 0; max-width: 770px; }
+.gx-layout.has-head > .gx-rail { grid-column: 1; grid-row: 1 / span 2; }
+.gx-layout.has-head > .gx-col { grid-column: 2; grid-row: 2; }
 .gx-head .drill-top { margin-top: 34px; }
 .gx-head .drill-top h1 { font-size: 26px; display: inline-block; position: relative; z-index: 0; }
 .gx-head .drill-top h1::before {
@@ -3806,8 +3806,9 @@ html.vb-quizzing .gx-col { margin-inline: auto; }
 @media (max-width: 860px) {
   .gx-head .drill-top { margin-top: 26px; }
   .gx-head .drill-top h1 { font-size: 22px; }
-  .gx-head .gx-sub { margin-bottom: 8px; }
-  .gx-layout.is-unit > .gx-rail { padding-top: 0; margin-bottom: 12px; }
+  .gx-head .gx-sub { margin-bottom: 10px; }
+  .gx-head .page-head { margin-bottom: 10px; }
+  .gx-layout.has-head > .gx-rail { padding-top: 0; margin-bottom: 12px; }
 }
 .gx-unit-row .t .gx-dup { display: block; margin-top: 2px; font-size: var(--fs-xs); line-height: 1.4; color: var(--ink-soft); }
 

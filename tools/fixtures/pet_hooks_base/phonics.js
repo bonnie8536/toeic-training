@@ -192,7 +192,7 @@
     const todo = UNITS.find(u => !done[u.id]) || null;
     let stage = getParam('ch');
     if (!STAGES[stage] || !stageKeys.includes(stage)) stage = todo ? stageOf(todo) : stageKeys[0];
-    const layout = h('div', { class: 'gx-layout' });
+    const layout = h('div', { class: 'gx-layout has-head' });   // 標題在路徑前面(css .gx-layout.has-head)
     root.append(layout);
     draw();
 
@@ -209,10 +209,11 @@
         h('div', { class: 'exercise-head' },
           h('h2', null, STAGES[stage].name),
           h('span', { style: 'margin-left:auto;font-size:13.5px;color:var(--ink-light)' }, doneN + ' / ' + list.length)));
+      /* 標題放在章節導覽前面:手機上先看到標題,章、課的圓圈排在下面;電腦版標題仍在右欄上方 */
+      const ph = h('div', { class: 'page-head' },
+        h('canvas', { class: 'hub-art', 'data-doodle': 'phonics', 'data-size': '40', 'aria-hidden': 'true' }),
+        h('h1', null, '自然發音'));
       const col = h('div', { class: 'gx-col' },
-        h('div', { class: 'page-head' },
-          h('canvas', { class: 'hub-art', 'data-doodle': 'phonics', 'data-size': '40', 'aria-hidden': 'true' }),
-          h('h1', null, '自然發音')),
         units);
       /* 同一章裡主題一樣的幾課:清單多放一行副題,不然兩列看起來一模一樣 */
       const seen = {};
@@ -230,7 +231,7 @@
           h('span', { class: 't' }, '發音總表')));
       }
       col.append(h('div', { style: 'height:40px' }));
-      layout.append(buildRail(stage, null, sk => { stage = sk; draw(); window.scrollTo(0, 0); }), col);
+      layout.append(h('div', { class: 'gx-head' }, ph), buildRail(stage, null, sk => { stage = sk; draw(); window.scrollTo(0, 0); }), col);
       if (window.UI) UI.doodle(layout);
     }
   }
@@ -279,7 +280,7 @@
         h('h1', null, parts.topic),
         h('a', { href: 'phonics.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回自然發音')),
       parts.sub ? h('p', { class: 'gx-sub' }, parts.sub) : null);
-    root.append(h('div', { class: 'gx-layout is-unit' }, head, buildRail(stageOf(u), u.id, null), col));
+    root.append(h('div', { class: 'gx-layout has-head' }, head, buildRail(stageOf(u), u.id, null), col));
 
     /* 這課的音:KK+代表字 */
     const k = u.key || {};

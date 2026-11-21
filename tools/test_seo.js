@@ -512,7 +512,7 @@ T['首頁卡片與內頁說明寫的是真的、而且一致(2026-11-13 審查�
 };
 T['頂欄與分組頁:20 頁的頂欄是同一份(首頁加三個分組連結),目前頁亮的是歸屬那一格,我的、學習記錄、能力分析、教師後台都不亮;新頁登記在分頁列、開機清單、版面檢查;「每日複習」改成「錯題本」'] = () => {
   const NAV = /<nav class="topnav" aria-label="主要導覽">[\s\S]*?<\/nav>/;
-  const plain = (n) => n.replace(/\r/g, '').replace(/ class="active" aria-current="page"/g, '').replace(/ active/g, '').replace(/ aria-current="page"/g, '');
+  const plain = (n) => n.replace(/\r/g, '').replace(/ class="active" aria-current="page"/g, '').replace(/ active/g, '').replace(/ aria-current="(page|true)"/g, '');
   const withNav = PAGES.filter((f) => /class="topnav"/.test(read(f)));
   assert.equal(withNav.length, 20, '有導覽的頁數:' + withNav.length);
   const base = plain(NAV.exec(read('index.html'))[0]);
@@ -543,6 +543,8 @@ T['頂欄與分組頁:20 頁的頂欄是同一份(首頁加三個分組連結),�
     const want = Object.keys(OWNER).find((k) => OWNER[k].indexOf(f) > -1);
     assert.equal(homeOn, want === 'home', f + ' 首頁那格');
     assert.equal(grp, want === 'home' || want === 'none' ? null : want, f + ' 亮的分組');
+    /* 亮的那一格讀屏也聽得到:分組頁自己是 page,子頁是 true(下拉選單平常藏著,不能只靠選單裡那一項) */
+    if (grp) assert.ok(nav[0].indexOf('<a class="nav-btn active" href="' + grp + '" aria-current="' + (f === grp ? 'page' : 'true') + '">') > -1, f + ' 亮的分組要有 aria-current');
     assert.equal((nav[0].match(/class="[^"]*\bactive\b/g) || []).length - (homeOn ? 1 : 0) - (grp ? 1 : 0) <= 1, true, f + ' 亮太多格');
     if (want === 'none') assert.equal(/\bactive\b/.test(nav[0]), false, f + ' 這一頁頂欄不該亮');
   });

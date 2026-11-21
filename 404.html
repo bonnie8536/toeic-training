@@ -23,15 +23,16 @@
   </div>
 </header>
 
+<!-- 跟空狀態(UI.empty)同一個樣子:鵜鶘、一行字、回首頁,下面一排分組頁;鵜鶘由 /js/ui.js 畫,沒載到時只少了圖 -->
 <main class="container-narrow">
-  <div class="page-head"><h1>找不到這個網頁</h1></div>
-  <p style="display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 28px">
-    <a class="btn primary" href="/">回首頁</a>
-    <a class="btn" href="/diagnostic.html">程度檢測</a>
-  </p>
-  <nav class="foot-links" aria-label="主要單元" style="margin-bottom:60px">
-    <a href="/grammar.html">文法基礎</a><a href="/phonics.html">自然發音</a><a href="/vocab.html">單字訓練</a><a href="/listening.html">聽力訓練</a><a href="/reading.html">閱讀訓練</a><a href="/dialogue.html">對話練習</a><a href="/writing.html">寫作練習</a><a href="/practice.html">題庫刷題</a><a href="/mock.html">模擬考</a>
-  </nav>
+  <div class="ui-empty nf-empty">
+    <canvas class="ui-empty-art" data-mascot="oops" data-size="130" aria-hidden="true"></canvas>
+    <h1 class="ui-empty-text">找不到這個網頁</h1>
+    <a class="btn primary ui-empty-go" href="/">回首頁</a>
+    <nav class="ui-empty-links" aria-label="主要單元">
+      <a class="btn-text ui-empty-link" href="/learn.html">日常學習</a><a class="btn-text ui-empty-link" href="/warmup.html">練練手感</a><a class="btn-text ui-empty-link" href="/drill.html">刷刷題目</a><a class="btn-text ui-empty-link" href="/review.html">錯題本</a>
+    </nav>
+  </div>
 </main>
 
 <footer>
@@ -41,5 +42,6 @@
   </div>
 </footer>
 
+<script src="/js/ui.js" defer></script>
 </body>
 </html>

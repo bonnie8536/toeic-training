@@ -6,8 +6,8 @@
 
 :root {
   --ink: #404040;
-  --ink-light: #767f88;
-  --ink-soft: #5d6670;   /* 白底 5.8:1。付款視窗與價格頁的說明小字用(--ink-light 只有 4.07:1,不到 4.5:1) */
+  --ink-light: #5f6770;   /* 白底 5.9:1、淺灰底 5.5:1(以前 #767f88 只有 4.07:1) */
+  --ink-soft: #5d6670;   /* 白底 5.8:1。付款視窗與價格頁的說明小字用 */
   --primary: #0b72c4;
   --primary-dark: #095d9f;
   --primary-tint: #e9f4fc;
@@ -16,7 +16,7 @@
   --hint-orange: #e8890c;
   --tint-green: #eef7dc;
   --tint-orange: #fff0e1;
-  --ok: #3a8a4d;
+  --ok: #2f7a42;          /* 白字疊上去 5.3:1;當字色疊淺灰底也過 4.5:1 */
   --ok-tint: #e8f4ea;
   --bad: #c94040;
   --bad-tint: #fbecec;
@@ -87,7 +87,7 @@ button { font-family: var(--font); cursor: pointer; }
   white-space: nowrap;
 }
 .topnav a:hover { background: var(--bg-soft); text-decoration: none; }
-.topnav a.active { color: var(--primary); font-weight: 700; background: var(--primary-tint); }
+.topnav a.active { color: var(--primary-dark); font-weight: 700; background: var(--primary-tint); }   /* 淡藍底上的字用深一階的藍(4.46 → 6.2:1) */
 /* 十項導覽在 860-1180px 會把學生選單擠出畫面:縮間距,再不夠就橫向滑動 */
 @media (max-width: 1180px) {
   .topbar-inner { gap: 14px; }
@@ -1419,8 +1419,8 @@ table.cat-table td.num { white-space: nowrap; }
 }
 .nav-btn::after { content: '▾'; font-size: 11px; margin-left: 5px; color: var(--ink-light); }
 .nav-btn:hover, .nav-group.open .nav-btn { background: var(--bg-soft); }
-.nav-btn.active { color: var(--primary); font-weight: 700; background: var(--primary-tint); }
-.nav-btn.active::after { color: var(--primary); }
+.nav-btn.active { color: var(--primary-dark); font-weight: 700; background: var(--primary-tint); }
+.nav-btn.active::after { color: var(--primary-dark); }
 .nav-menu {
   display: none;
   position: absolute;
@@ -3143,7 +3143,8 @@ html.authed .home-hero, html.authed .home-dir { display: none; }
   /* 畫布上方留有跳起來的空間:往上疊,讓看得到的頭頂跟 h1 第一行對齊(下面一行是退回小雞時的大小) */
   .hero-chick { align-self: start; width: 88px !important; height: 103px !important; margin: -22px -6px -6px 0; }
   /* 鵜鶘(主角):畫布 300×280 的比例,比小雞寬;上方約 1/10、下方約 1/25 是空白 */
-  .hero-chick.is-pelican { width: 112px !important; height: 105px !important; margin: -10px -4px -4px 0; }
+  /* 寬 92(高 86):h1 在 360 到 375 寬排回兩行(「衝衝英文：多益聽力、」「閱讀刷題與單字練習」);左右的空白往外疊 */
+  .hero-chick.is-pelican { width: 92px !important; height: 86px !important; margin: -8px -4px -4px -8px; }
   .home-hero .hero-cta { margin-top: 20px; }
   .hero-cta .btn.primary { padding: 0 28px; }
   .home-hero .stats { gap: 12px; margin-top: 16px; }

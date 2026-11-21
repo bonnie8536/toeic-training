@@ -1,5 +1,6 @@
 /* 共用元件(js/ui.js)的測試:結算卡的姿勢分級與分數、沒載到圖時不丟錯、destroy 停計時器、專心模式進出、
    離開前確認、確認與輸入視窗(確定、取消、Esc、點遮罩、焦點)、空狀態、點心列、不讀寫儲存。
+   主角鵜鶘:有 PelicanArt 時結算卡與空狀態用牠、沒有或載入失敗退回 ChickArt、兩個都沒有不畫、canvas[data-mascot] 掛載、尺寸照 metrics 的比例。
    用法:node tools/test_ui.js
    js/ui.js 在 vm 裡跑,配一個很小的假 DOM(只做 ui.js 用到的);計時器、圖的程式、IntersectionObserver 都是假的,由測試手動推進。 */
 'use strict';
@@ -109,17 +110,19 @@ function key(doc, k, shift) { return doc.fire('keydown', { key: k, shiftKey: !!s
 const tick = () => new Promise((r) => setImmediate(r));
 async function settle() { for (let i = 0; i < 8; i++) await tick(); }
 
-/* ---------- 一頁:ui.js 載入一次。opt.art:要不要有假的 ChickArt、FoodArt ---------- */
-function fakeChick(poses) {
+/* ---------- 一頁:ui.js 載入一次。opt.pelican、opt.chick、opt.food:要不要有假的 PelicanArt、ChickArt、FoodArt ---------- */
+function fakeChick(poses) { return fakeArt(poses || ['idle', 'happy', 'eat', 'hungry', 'sleep', 'walk', 'run'], { width: 240, height: 280 }); }
+function fakePelican(poses) { return fakeArt(poses || ['idle', 'happy', 'oops', 'read', 'sleep'], { width: 300, height: 280 }); }
+function fakeArt(poses, metrics) {
   const made = [];
   return {
     made,
     lib: {
-      poses: poses || ['idle', 'happy', 'eat', 'hungry', 'sleep', 'walk', 'run'],
+      poses,
       calm: { idle: 1, happy: 0, sleep: 0 },
       holds: () => [1, 1, 1, 1],
       fps: { idle: 8, happy: 8 },
-      metrics: { width: 240, height: 280 },
+      metrics,
       animate(canvas, o) {
         const a = { canvas, opt: o, pose: o.pose, stops: 0, timer: true, poses: [o.pose], shown: null,
           setPose(p) { this.pose = p; this.poses.push(p); this.timer = true; },
@@ -156,6 +159,7 @@ function loadPage(opt) {
   ['localStorage', 'sessionStorage', 'indexedDB'].forEach((k) => {
     Object.defineProperty(ctx, k, { get() { storage.touched.push(k); throw new Error('不該讀寫 ' + k); }, configurable: true });
   });
+  if (o.pelican) ctx.PelicanArt = o.pelican.lib;
   if (o.chick) ctx.ChickArt = o.chick.lib;
   if (o.food) ctx.FoodArt = o.food.lib;
   if (o.io) {
@@ -193,8 +197,8 @@ function loadPage(opt) {
 const T = {};
 
 T['結算卡:姿勢照分數分級(80% 以上 happy、50% 到 79% idle、50% 以下 oops),沒有 oops 時退回 idle'] = async () => {
-  const ch = fakeChick(['idle', 'happy', 'sleep']);
-  const p = loadPage({ chick: ch });
+  const ch = fakePelican(['idle', 'happy', 'sleep']);
+  const p = loadPage({ pelican: ch });
   const cases = [[8, 10, 'happy'], [10, 10, 'happy'], [5, 10, 'idle'], [79, 100, 'idle'], [4, 10, 'oops'], [0, 10, 'oops']];
   for (const [s, t, want] of cases) {
     const c = p.UI.result({ score: s, total: t, primary: { label: '再做一次' } });
@@ -205,8 +209,8 @@ T['結算卡:姿勢照分數分級(80% 以上 happy、50% 到 79% idle、50% 以
     c.destroy();
   }
   /* 有 oops 姿勢時照用;給 pose 時照給的 */
-  const ch2 = fakeChick(['idle', 'happy', 'oops', 'read']);
-  const p2 = loadPage({ chick: ch2 });
+  const ch2 = fakePelican(['idle', 'happy', 'oops', 'read']);
+  const p2 = loadPage({ pelican: ch2 });
   p2.UI.result({ score: 2, total: 10 });
   assert.strictEqual(ch2.made[0].opt.pose, 'oops');
   const c2 = p2.UI.result({ score: 2, total: 10, pose: 'happy' });
@@ -214,7 +218,7 @@ T['結算卡:姿勢照分數分級(80% 以上 happy、50% 到 79% idle、50% 以
 };
 
 T['結算卡:大分數「8 / 10」、「165 分」、標記、stats 最多 3 格、note、主按鈕與文字連結'] = async () => {
-  const p = loadPage({ chick: fakeChick() });
+  const p = loadPage({ pelican: fakePelican() });
   let again = 0;
   const c = p.UI.result({ score: 8, total: 10, kicker: '題庫刷題', flag: '新紀錄', primary: { label: '再做一次', onClick: () => again++ },
     links: [{ label: '看錯題本', href: 'review.html' }, { label: '回題庫', onClick() {} }] });
@@ -255,23 +259,24 @@ T['結算卡:大分數「8 / 10」、「165 分」、標記、stats 最多 3 格
   const x = p.UI.result({ score: 1, total: 2, kicker: '<img src=x onerror=1>' });
   assert.strictEqual(x.el.querySelector('.result-kicker').textContent, '<img src=x onerror=1>');
   assert.strictEqual(x.el.querySelector('img'), null);
-  /* 緊湊版:小雞 96 */
-  const ch = fakeChick();
-  const p2 = loadPage({ chick: ch, media: { '(min-width: 900px)': true } });
+  /* 緊湊版:鵜鶘 120 */
+  const ch = fakePelican();
+  const p2 = loadPage({ pelican: ch, media: { '(min-width: 900px)': true } });
   p2.UI.result({ score: 1, total: 2 });
   p2.UI.result({ score: 1, total: 2, compact: true });
-  assert.deepStrictEqual(ch.made.map((a) => a.opt.size), [160, 96], '桌機 160、緊湊版 96');
-  const p3 = loadPage({ chick: ch });
+  assert.deepStrictEqual(ch.made.map((a) => a.opt.size), [200, 120], '桌機 200、緊湊版 120');
+  const p3 = loadPage({ pelican: ch });
   p3.UI.result({ score: 1, total: 2 });
-  assert.strictEqual(ch.made[ch.made.length - 1].opt.size, 140, '手機 140');
+  assert.strictEqual(ch.made[ch.made.length - 1].opt.size, 180, '手機 180');
 };
 
 T['沒載到圖(ChickArt、FoodArt、DoodleArt 都沒有、載入失敗):元件照常顯示,不丟錯'] = async () => {
   const p = loadPage({ markup(doc) { const cv = doc.createElement('canvas'); cv.setAttribute('data-doodle', 'home'); cv.setAttribute('data-size', '26'); doc.body.append(cv); } });
   const c = p.UI.result({ score: 9, total: 10, primary: { label: '再做一次' } });
   p.doc.body.append(c.el);
-  assert.ok(c.el.querySelector('canvas.result-chick'), '小雞的位置還在');
-  assert.strictEqual(c.el.querySelector('.result-chick').style.width, '140px', '畫布先佔好大小');
+  assert.ok(c.el.querySelector('canvas.result-chick'), '角色的位置還在');
+  assert.strictEqual(c.el.querySelector('.result-chick').style.width, '180px', '畫布先佔好大小(照鵜鶘)');
+  assert.strictEqual(c.el.querySelector('.result-chick').style.height, '168px', '高度照鵜鶘的比例 280/300');
   const e = p.UI.empty({ text: '沒有錯題', action: { label: '去刷題', href: 'practice.html' } });
   const f = p.UI.focus.enter({ total: 3 });
   f.progress(1);
@@ -287,11 +292,11 @@ T['沒載到圖(ChickArt、FoodArt、DoodleArt 都沒有、載入失敗):元件�
   assert.strictEqual(p.timers.size, 0, '載入失敗後沒有留下計時器');
   /* 圖的程式本身丟錯也不丟到外面 */
   const bad = { poses: ['idle'], animate() { throw new Error('壞了'); } };
-  const p2 = loadPage({ chick: { lib: bad } });
+  const p2 = loadPage({ pelican: { lib: bad } });
   const c2 = p2.UI.result({ score: 1, total: 1 });
   c2.destroy();
-  const ok = await p2.UI.art.ensure('ChickArt');
-  assert.strictEqual(ok.ChickArt, true);
+  const ok = await p2.UI.art.ensure('PelicanArt');
+  assert.strictEqual(ok.PelicanArt, true);
 };
 
 T['要用時才載:DoodleArt 載到後畫上 canvas[data-doodle] 並標 doodle-ready;canvas[data-chick] 畫上小雞'] = async () => {
@@ -323,9 +328,9 @@ T['要用時才載:DoodleArt 載到後畫上 canvas[data-doodle] 並標 doodle-r
 };
 
 T['destroy 與離開畫面:停掉小雞的計時器、拿掉監聽;減少動態時只畫靜止格'] = async () => {
-  const ch = fakeChick();
+  const ch = fakePelican();
   const ios = [];
-  const p = loadPage({ chick: ch, io: ios });
+  const p = loadPage({ pelican: ch, io: ios });
   const c = p.UI.result({ score: 6, total: 10 });
   p.doc.body.append(c.el);
   assert.strictEqual(ch.made.length, 0, '還沒看到之前不開動畫');
@@ -354,8 +359,8 @@ T['destroy 與離開畫面:停掉小雞的計時器、拿掉監聽;減少動態�
   assert.strictEqual(p.timers.size, 0, 'destroy 後沒有留下計時器');
   c.destroy();   // 再呼叫一次不出錯
   /* 減少動態:畫靜止格,不跳、不留計時器 */
-  const ch3 = fakeChick();
-  const p3 = loadPage({ chick: ch3, media: { '(prefers-reduced-motion: reduce)': true } });
+  const ch3 = fakePelican();
+  const p3 = loadPage({ pelican: ch3, media: { '(prefers-reduced-motion: reduce)': true } });
   const c3 = p3.UI.result({ score: 9, total: 10 });
   assert.strictEqual(ch3.made.length, 1);
   assert.deepStrictEqual(ch3.made[0].shown, [0, 0, 'happy'], 'happy 的靜止格');
@@ -365,8 +370,8 @@ T['destroy 與離開畫面:停掉小雞的計時器、拿掉監聽;減少動態�
 };
 
 T['happy 不播畫格(裡面有壓得很扁的格):只畫第一格,進場整張跳一次,跳完拿掉 .is-hop'] = async () => {
-  const ch = fakeChick();
-  const p = loadPage({ chick: ch });
+  const ch = fakePelican();
+  const p = loadPage({ pelican: ch });
   const c = p.UI.result({ score: 8, total: 10 });
   p.doc.body.append(c.el);
   const a = ch.made[0];
@@ -388,9 +393,9 @@ T['happy 不播畫格(裡面有壓得很扁的格):只畫第一格,進場整張�
 
 T['卡片被拿出頁面卻沒呼叫 destroy:小雞自己停掉計時器、拿掉監聽(有 IntersectionObserver 與沒有的瀏覽器)'] = async () => {
   /* 有 IntersectionObserver:拿掉時會收到「看不到」,那時發現畫布不在頁面上就自己收掉 */
-  const ch = fakeChick();
+  const ch = fakePelican();
   const ios = [];
-  const p = loadPage({ chick: ch, io: ios });
+  const p = loadPage({ pelican: ch, io: ios });
   const c = p.UI.result({ score: 6, total: 10 });
   p.doc.body.append(c.el);
   ios[0].fire(true);
@@ -410,8 +415,8 @@ T['卡片被拿出頁面卻沒呼叫 destroy:小雞自己停掉計時器、拿�
   assert.strictEqual(c2.chick.alive, true, '沒放進頁面過的不收');
   c2.destroy();
   /* 沒有 IntersectionObserver:每 5 秒看一次還在不在頁面上 */
-  const chB = fakeChick();
-  const pB = loadPage({ chick: chB });
+  const chB = fakePelican();
+  const pB = loadPage({ pelican: chB });
   const cB = pB.UI.result({ score: 6, total: 10 });
   pB.doc.body.append(cB.el);
   assert.ok(chB.made[0].timer);
@@ -435,8 +440,8 @@ T['卡片被拿出頁面卻沒呼叫 destroy:小雞自己停掉計時器、拿�
 };
 
 T['分頁到背景時停,回來再動'] = async () => {
-  const ch = fakeChick();
-  const p = loadPage({ chick: ch });
+  const ch = fakePelican();
+  const p = loadPage({ pelican: ch });
   p.UI.result({ score: 6, total: 10 });
   const a = ch.made[0];
   assert.ok(a.timer);
@@ -447,8 +452,8 @@ T['分頁到背景時停,回來再動'] = async () => {
 };
 
 T['點心列:收到 pet:earn(got)時畫出那個食物、小雞跳一次;其他結果、別張卡的點心不畫;掛勾那行字不動'] = async () => {
-  const ch = fakeChick(), fd = fakeFood();
-  const p = loadPage({ chick: ch, food: fd });
+  const ch = fakePelican(), fd = fakeFood();
+  const p = loadPage({ pelican: ch, food: fd });
   const c = p.UI.result({ score: 6, total: 10 });
   p.doc.body.append(c.el);
   /* 掛勾還沒把那一行放進來:不是給這張卡的,不畫 */
@@ -794,29 +799,150 @@ T['輸入視窗:確定回字串(去頭尾空白)、取消與 Esc 回 null、空�
 };
 
 T['空狀態:小雞靜態一張(預設 sleep)、一行字、一個出口;沒有計時器、沒有監聽,有 destroy'] = async () => {
-  const ch = fakeChick();
-  const p = loadPage({ chick: ch });
+  const ch = fakePelican();
+  const p = loadPage({ pelican: ch });
   const e = p.UI.empty({ text: '沒有錯題', action: { label: '去刷題', href: 'practice.html' } });
   assert.ok(e.classList.contains('ui-empty'));
   assert.strictEqual(e.querySelector('.ui-empty-text').textContent, '沒有錯題');
   const go = e.querySelector('.ui-empty-go');
   assert.deepStrictEqual([go.tagName, go.textContent, go.getAttribute('href')], ['A', '去刷題', 'practice.html']);
   assert.ok(go.classList.contains('btn') && !go.classList.contains('primary'), '出口是描邊按鈕');
-  assert.strictEqual(ch.made[0].opt.size, 136, '畫布 136(睡著的小雞看得到的部分約 92 寬)');
+  assert.strictEqual(ch.made[0].opt.size, 130, '畫布 130(鵜鶘)');
   assert.deepStrictEqual(ch.made[0].shown, [0, 0, 'sleep'], '靜止格');
   assert.ok(!ch.made[0].timer);
   assert.strictEqual((p.doc.listeners.visibilitychange || []).length, 0, '靜態的小雞不掛 visibilitychange');
   assert.strictEqual(typeof e.destroy, 'function');
   e.destroy(); e.destroy();
-  /* 等開始用 read,沒有 read 姿勢退回 idle;出口是按鈕時呼叫 onClick */
+  /* 等開始用 read(鵜鶘有 read);出口是按鈕時呼叫 onClick */
   let n = 0;
   const e2 = p.UI.empty({ pose: 'read', text: '還沒開始', action: { label: '開始', onClick: () => n++ } });
-  assert.strictEqual(ch.made[1].opt.pose, 'idle');
+  assert.strictEqual(ch.made[1].opt.pose, 'read');
   click(e2.querySelector('.ui-empty-go'));
   assert.strictEqual(n, 1);
   const e3 = p.UI.empty({ text: '沒有紀錄' });
   assert.strictEqual(e3.querySelector('.ui-empty-go'), null);
   assert.strictEqual(p.timers.size, 0);
+};
+
+/* ---------- 主角鵜鶘:有 PelicanArt 就用,沒有或載入失敗退回 ChickArt,兩個都沒有就不畫 ---------- */
+T['結算卡與空狀態:有 PelicanArt 就畫鵜鶘(不碰 ChickArt),畫布加 .is-pelican'] = async () => {
+  const pe = fakePelican(), ck = fakeChick();
+  const p = loadPage({ pelican: pe, chick: ck });
+  const c = p.UI.result({ score: 9, total: 10 });
+  const e = p.UI.empty({ text: '沒有錯題' });
+  assert.strictEqual(pe.made.length, 2, '結算卡與空狀態各畫一隻鵜鶘');
+  assert.strictEqual(ck.made.length, 0, '小雞沒被叫出來');
+  assert.ok(c.el.querySelector('.result-chick').classList.contains('is-pelican'));
+  assert.ok(e.querySelector('.ui-empty-art').classList.contains('is-pelican'));
+  assert.strictEqual(c.mascot, c.chick, 'card.mascot 與舊名 card.chick 是同一個');
+  assert.strictEqual(pe.made[0].opt.pose, 'happy');
+  assert.strictEqual(pe.made[1].opt.pose, 'sleep');
+  await settle();
+  assert.ok(!p.scripts.some((s) => String(s).endsWith('chick-art.js')), '有鵜鶘時不載小雞的檔');
+  c.destroy();
+};
+
+T['鵜鶘還沒載進頁面:會去載 js/pelican-art.js(UI.art.ensure 也認別名 pelican),載到後畫鵜鶘'] = async () => {
+  const pe = fakePelican(), ck = fakeChick();
+  const p = loadPage({ chick: ck, loads: { PelicanArt: { file: 'js/pelican-art.js', lib: pe.lib } } });
+  const c = p.UI.result({ score: 9, total: 10 });
+  assert.strictEqual(pe.made.length, 0, '還沒載到');
+  await settle();
+  assert.ok(p.scripts.some((s) => String(s).endsWith('js/pelican-art.js')), '載了 pelican-art.js');
+  assert.strictEqual(pe.made.length, 1, '載到後畫鵜鶘');
+  assert.strictEqual(ck.made.length, 0);
+  assert.ok(c.el.querySelector('.result-chick').classList.contains('is-pelican'));
+  assert.strictEqual((await p.UI.art.ensure(['pelican'])).PelicanArt, true);
+};
+
+T['鵜鶘載入失敗:退回 ChickArt,畫布換成小雞的寬與比例、拿掉 .is-pelican;兩個都沒有就不畫、不丟錯'] = async () => {
+  const ck = fakeChick();
+  const p = loadPage({ chick: ck });   // 沒有 PelicanArt,也載不到(<script> 送 error)
+  const c = p.UI.result({ score: 9, total: 10 });
+  const cv = c.el.querySelector('.result-chick');
+  assert.strictEqual(cv.style.width, '180px', '一開始先照鵜鶘留位置');
+  await settle();
+  assert.strictEqual(ck.made.length, 1, '退回小雞');
+  assert.strictEqual(ck.made[0].opt.pose, 'happy');
+  assert.strictEqual(ck.made[0].opt.size, 140, '小雞手機 140');
+  assert.strictEqual(cv.style.width, '140px');
+  assert.strictEqual(cv.style.height, Math.round(140 * 280 / 240) + 'px', '高度照小雞的比例');
+  assert.ok(!cv.classList.contains('is-pelican'), '小雞用原本的邊距');
+  assert.strictEqual(c.mascot.art, 'ChickArt');
+  /* 小雞沒有的姿勢仍會退回 idle */
+  const ck2 = fakeChick(['idle', 'happy', 'sleep']);
+  const p2 = loadPage({ chick: ck2 });
+  p2.UI.result({ score: 1, total: 10 });
+  await settle();
+  assert.strictEqual(ck2.made[0].opt.pose, 'idle');
+  /* 空狀態退回小雞:136 */
+  const ck3 = fakeChick();
+  const p3 = loadPage({ chick: ck3 });
+  const e = p3.UI.empty({ text: 'x' });
+  await settle();
+  assert.strictEqual(ck3.made[0].opt.size, 136);
+  assert.strictEqual(e.querySelector('.ui-empty-art').style.width, '136px');
+  /* 兩個都沒有:畫布照鵜鶘留著、不丟錯、沒有留下計時器 */
+  const p4 = loadPage();
+  const c4 = p4.UI.result({ score: 1, total: 2, compact: true });
+  const e4 = p4.UI.empty({ text: 'y' });
+  await settle();
+  assert.strictEqual(c4.el.querySelector('.result-chick').style.width, '120px');
+  assert.ok(c4.el.querySelector('.result-chick').classList.contains('is-pelican'));
+  c4.destroy(); e4.destroy();
+  assert.strictEqual(p4.timers.size, 0);
+  /* 鵜鶘的 animate 丟錯:不丟到外面;鵜鶘存在就不另外叫小雞 */
+  const bad = { poses: ['idle', 'happy'], animate() { throw new Error('壞了'); } };
+  const ck5 = fakeChick();
+  const p5 = loadPage({ pelican: { lib: bad }, chick: ck5 });
+  p5.UI.result({ score: 1, total: 2 }).destroy();
+  assert.strictEqual(ck5.made.length, 0);
+};
+
+T['data-mascot 掛載:頁面載入時畫鵜鶘(姿勢、寬、data-still);data-chick 仍畫小雞;各掛各的'] = async () => {
+  const pe = fakePelican(), ck = fakeChick();
+  const p = loadPage({ pelican: pe, chick: ck, markup(doc) {
+    const a = doc.createElement('canvas'); a.setAttribute('data-mascot', 'read'); a.setAttribute('data-size', '200'); doc.body.append(a);
+    const b = doc.createElement('canvas'); b.setAttribute('data-mascot', 'happy'); b.setAttribute('data-size', '120'); b.setAttribute('data-still', ''); doc.body.append(b);
+    const d = doc.createElement('canvas'); d.setAttribute('data-chick', 'idle'); d.setAttribute('data-size', '80'); doc.body.append(d);
+    const f = doc.createElement('canvas'); f.setAttribute('data-mascot', ''); doc.body.append(f);
+  } });
+  const cvs = p.doc.querySelectorAll('canvas');
+  assert.deepStrictEqual(pe.made.map((a) => [a.opt.size, a.opt.pose]), [[200, 'read'], [120, 'happy'], [180, 'idle']], '鵜鶘:姿勢、寬(沒給寬 180、沒給姿勢 idle)');
+  assert.deepStrictEqual(ck.made.map((a) => [a.opt.size, a.opt.pose]), [[80, 'idle']], 'data-chick 還是小雞');
+  assert.ok(cvs[0].classList.contains('is-pelican') && !cvs[2].classList.contains('is-pelican'));
+  assert.strictEqual(pe.made[1].timer, false, 'data-still 只畫靜止格');
+  assert.strictEqual(cvs[0].getAttribute('data-mascot-on'), '1');
+  assert.strictEqual(cvs[2].getAttribute('data-chick-on'), '1');
+  assert.strictEqual(cvs[2].getAttribute('data-mascot-on'), null, 'data-chick 不被當成主角');
+  /* 沒有鵜鶘時 data-mascot 退回小雞(寬 ×0.78) */
+  const ck2 = fakeChick();
+  const p2 = loadPage({ chick: ck2, markup(doc) { const a = doc.createElement('canvas'); a.setAttribute('data-mascot', 'idle'); a.setAttribute('data-size', '180'); doc.body.append(a); } });
+  await settle();
+  assert.deepStrictEqual([ck2.made[0].opt.size, ck2.made[0].opt.pose], [140, 'idle']);
+  assert.strictEqual(typeof p2.UI.mascot, 'function');
+};
+
+T['尺寸照 metrics 的比例算:寬 180/200/120/130,高 = 寬 × 高/寬(不變形);metrics 換了高度跟著換'] = async () => {
+  const pe = fakePelican();
+  const p = loadPage({ pelican: pe, media: { '(min-width: 900px)': false } });
+  const sizeOf = (n) => [n.style.width, n.style.height];
+  const c = p.UI.result({ score: 5, total: 10 });
+  assert.deepStrictEqual(sizeOf(c.el.querySelector('.result-chick')), ['180px', '168px'], '手機 180 × 168');
+  const k = p.UI.result({ score: 5, total: 10, compact: true });
+  assert.deepStrictEqual(sizeOf(k.el.querySelector('.result-chick')), ['120px', '112px'], '緊湊版 120 × 112');
+  const e = p.UI.empty({ text: 'z' });
+  assert.deepStrictEqual(sizeOf(e.querySelector('.ui-empty-art')), ['130px', '121px'], '空狀態 130 × 121');
+  const pw = loadPage({ pelican: pe, media: { '(min-width: 900px)': true } });
+  const w = pw.UI.result({ score: 5, total: 10 });
+  assert.deepStrictEqual(sizeOf(w.el.querySelector('.result-chick')), ['200px', '187px'], '桌機 200 × 187');
+  /* 比例不是寫死的:metrics 換成 300×300,高度跟著變成寬 */
+  const sq = fakeArt(['idle', 'happy', 'oops', 'read', 'sleep'], { width: 300, height: 300 });
+  const ps = loadPage({ pelican: sq });
+  const s = ps.UI.result({ score: 5, total: 10 });
+  assert.deepStrictEqual(sizeOf(s.el.querySelector('.result-chick')), ['180px', '180px']);
+  /* 傳給 animate 的寬就是畫布的寬,沒有另外縮放 */
+  assert.ok(pe.made.every((a) => [180, 120, 130, 200].includes(a.opt.size)));
 };
 
 T['逐題收合:預設收合,標題右邊「答錯 N 題」(數 .opt.wrong 或照給的數字)'] = async () => {
@@ -833,8 +959,8 @@ T['逐題收合:預設收合,標題右邊「答錯 N 題」(數 .opt.wrong 或�
 };
 
 T['不讀寫儲存、不用 innerHTML、不寫 console.log'] = async () => {
-  const ch = fakeChick(), fd = fakeFood();
-  const p = loadPage({ chick: ch, food: fd });
+  const ch = fakePelican(), fd = fakeFood();
+  const p = loadPage({ pelican: ch, food: fd });
   const f = p.UI.focus.enter({ total: 3 });
   f.dirty(true); f.progress(1); f.feedback({ ok: false, answer: 'A' }); f.leave();
   const c = p.UI.result({ score: 1, total: 3 }); p.doc.body.append(c.el);

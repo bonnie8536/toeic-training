@@ -1,13 +1,16 @@
 /* 衝衝英文:共用元件 window.UI
-   - UI.art.ensure(names)      需要時才載入 ChickArt、FoodArt、DoodleArt(js/ 底下同層的檔),回傳 Promise,載入失敗也是 resolve
-   - UI.chick(canvas, opt)     小雞:看得到才動;離開畫面、分頁到背景、destroy() 時停掉計時器;減少動態時只畫靜止格。
+   - UI.art.ensure(names)      需要時才載入 PelicanArt、ChickArt、FoodArt、DoodleArt(js/ 底下同層的檔),回傳 Promise,載入失敗也是 resolve
+   - UI.mascot(canvas, opt)    主角鵜鶘(結算卡、空狀態、canvas[data-mascot]):有 PelicanArt 就畫牠,沒有或載入失敗時退回小雞,兩個都沒有就不畫。
+                               畫布高度照 PelicanArt.metrics 的比例算,不變形;其餘行為跟 UI.chick 一樣
+   - UI.chick(canvas, opt)     小雞(寵物相關的地方用):看得到才動;離開畫面、分頁到背景、destroy() 時停掉計時器;減少動態時只畫靜止格。
                                happy 只畫靜止格,跳一下由 CSS 做(opt.hop:進場跳一次)。
                                收掉卡片前請呼叫 destroy();忘了呼叫時,畫布被拿出頁面後小雞會自己收掉計時器與監聽
    - UI.focus.enter(opt)       專心模式(作答中):<html> 加 is-quiz,頂端換成作答列,底部固定列放按鈕或回饋條;
                                opt.action { label, onClick } 是作答列右邊的文字按鈕(交卷)
    - UI.result(opt)            結算卡(opt.earnId:這張卡要認的點心事件 id,建議給);UI.detail(title, nodes, opt) 逐題收合;UI.empty(opt) 空狀態
    - UI.confirm(opt)、UI.prompt(opt)  確認與輸入視窗(Promise)
-   - UI.doodle(root)           把 canvas[data-doodle] 交給 DoodleArt 畫;頁面載入時對整頁做一次,canvas[data-chick] 也在那時畫上小雞
+   - UI.doodle(root)           把 canvas[data-doodle] 交給 DoodleArt 畫;頁面載入時對整頁做一次,
+                               canvas[data-mascot] 畫上鵜鶘(主角)、canvas[data-chick] 畫上小雞(寵物)也在那時做
    不依賴小雞存檔與登入,不讀寫任何瀏覽器端儲存,不用 innerHTML(文字一律 textContent)。圖沒載到時元件照常顯示,只是少了圖。 */
 (function () {
   'use strict';
@@ -15,14 +18,15 @@
   const html = doc.documentElement;
   const NS = 'http://www.w3.org/2000/svg';
   const LOAD_MS = 10000;                       // 圖的程式最多等這麼久,逾時當作沒載到
-  const CHICK_RATIO = 280 / 240;               // 小雞畫布的高寬比(ChickArt.metrics)
+  const CHICK_RATIO = 280 / 240;               // 小雞畫布的高寬比(ChickArt.metrics;載入後以 metrics 為準)
+  const PELICAN_RATIO = 280 / 300;             // 鵜鶘畫布的高寬比(PelicanArt.metrics;載入後以 metrics 為準)
   const POSE_FALLBACK = { oops: 'idle', read: 'idle' };
   /* 開心的跳躍裡有壓得很扁的格(蹲下 0.7、落地 0.6),放大在結算卡上像圖壞掉:這些姿勢只畫靜止格(正常比例),
      要跳時由 CSS 把整張畫布往上跳一次(.is-hop,壓扁不超過 0.92、以腳底為基準) */
   const STILL_POSES = ['happy'];
   const HOP_MS = 640;
-  const ART_FILES = { ChickArt: 'chick-art.js', FoodArt: 'food-art.js', DoodleArt: 'doodle-art.js' };
-  const ART_ALIAS = { chick: 'ChickArt', food: 'FoodArt', doodle: 'DoodleArt' };
+  const ART_FILES = { PelicanArt: 'pelican-art.js', ChickArt: 'chick-art.js', FoodArt: 'food-art.js', DoodleArt: 'doodle-art.js' };
+  const ART_ALIAS = { pelican: 'PelicanArt', chick: 'ChickArt', food: 'FoodArt', doodle: 'DoodleArt' };
   const ICON = {
     close: ['M6 6l12 12', 'M18 6 6 18'],
     ok: ['m5 12.5 4.5 4.5L19 7.5'],
@@ -123,22 +127,39 @@
       .then(function (r) { const out = {}; list.forEach(function (n, i) { out[n] = r[i]; }); return out; });
   }
 
-  /* ---------- 小雞 ---------- */
-  function posesOf() { const A = window.ChickArt; return A && Array.isArray(A.poses) ? A.poses : []; }
+  /* ---------- 主角鵜鶘與配角小雞 ----------
+     兩隻的介面一樣(animate、poses、calm、holds、fps、metrics)。同一份程式兩種用法:
+     kind 'chick':只畫小雞(寵物);kind 'pelican'(預設):先畫鵜鶘,沒有或載入失敗時退回小雞。 */
+  function ratioOf(name) {
+    const A = window[name], m = A && A.metrics;
+    if (m && m.width > 0 && m.height > 0) return m.height / m.width;
+    return name === 'PelicanArt' ? PELICAN_RATIO : CHICK_RATIO;
+  }
+  function posesOf(name) { const A = window[name]; return A && Array.isArray(A.poses) ? A.poses : []; }
   /* 沒有那個姿勢就退回:oops、read 還沒畫好時用 idle */
-  function poseOk(p) {
-    const list = posesOf();
+  function poseOk(name, p) {
+    const list = posesOf(name);
     if (list.indexOf(p) > -1) return p;
     const f = POSE_FALLBACK[p];
     if (f && list.indexOf(f) > -1) return f;
     return list.indexOf('idle') > -1 || !list.length ? 'idle' : list[0];
   }
-  function chick(canvas, opt) {
-    const o = Object.assign({ size: 96, pose: 'idle', still: false, hop: false }, opt || {});
-    const size = o.size;
+  function mascot(canvas, opt) {
+    const o = Object.assign({ size: 96, pose: 'idle', still: false, hop: false, kind: 'pelican' }, opt || {});
+    const wantPelican = o.kind !== 'chick';
+    const chickSize = o.chickSize > 0 ? o.chickSize : o.size;   // 退回小雞時的寬(鵜鶘比較寬,小雞要小一點)
+    let fell = false;                                           // 鵜鶘載不到、改用小雞
+    function artName() { return wantPelican && !fell ? 'PelicanArt' : 'ChickArt'; }
+    function sizeNow() { return artName() === 'ChickArt' && wantPelican ? chickSize : o.size; }
+    /* 畫布大小:寬照給的,高照那隻的 metrics 比例算(不變形) */
+    function fit() {
+      const w = sizeNow();
+      canvas.style.width = w + 'px';
+      canvas.style.height = Math.round(w * ratioOf(artName())) + 'px';
+      safe(function () { canvas.classList.toggle('is-pelican', artName() === 'PelicanArt'); });
+    }
     canvas.setAttribute('aria-hidden', 'true');
-    canvas.style.width = size + 'px';
-    canvas.style.height = Math.round(size * CHICK_RATIO) + 'px';
+    fit();
     let anim = null, want = o.pose, running = false, alive = true, back = 0, hopT = 0, hopped = false, io = null, watchT = 0, wasIn = false;
     let seen = !('IntersectionObserver' in window);
     /* 畫布放進頁面過、後來被拿掉了(呼叫端換掉卡片卻沒呼叫 destroy):自己收掉計時器與監聽,不握住畫布 */
@@ -148,8 +169,8 @@
     }
     /* 會不會動:靜態的小雞(空狀態)、減少動態、只畫靜止格的姿勢(happy)都不開計時器 */
     const canMove = !o.still && !reduced();
-    const loops = function () { return canMove && !reduced() && STILL_POSES.indexOf(poseOk(want)) < 0; };
-    function calmOf(p) { const A = window.ChickArt; return A && A.calm && typeof A.calm[p] === 'number' ? A.calm[p] : 0; }
+    const loops = function () { return canMove && !reduced() && STILL_POSES.indexOf(poseOk(artName(), want)) < 0; };
+    function calmOf(p) { const A = window[artName()]; return A && A.calm && typeof A.calm[p] === 'number' ? A.calm[p] : 0; }
     function clearBack() { if (back) { clearTimeout(back); back = 0; } }
     function clearHop() {
       if (hopT) { clearTimeout(hopT); hopT = 0; }
@@ -165,15 +186,16 @@
       return true;
     }
     function make() {
-      const A = window.ChickArt;
+      const A = window[artName()];
       if (anim) return true;
       if (!A || typeof A.animate !== 'function') return false;
-      anim = safe(function () { return A.animate(canvas, { size: size, fps: 8, pose: poseOk(want), maxDpr: 2, variants: 1 }); }) || null;
+      fit();   // 圖載到了:畫布高度改照它自己的 metrics 比例
+      anim = safe(function () { return A.animate(canvas, { size: sizeNow(), fps: 8, pose: poseOk(artName(), want), maxDpr: 2, variants: 1 }); }) || null;
       running = !!anim;
       return !!anim;
     }
     function paintStill(p) {
-      const q = poseOk(p || want);
+      const q = poseOk(artName(), p || want);
       safe(function () { anim.show(calmOf(q), 0, q); });
       running = false;
     }
@@ -194,7 +216,7 @@
         return;
       }
       if (!anim) { make(); return; }
-      if (!running) { running = true; safe(function () { anim.setPose(poseOk(want)); }); }
+      if (!running) { running = true; safe(function () { anim.setPose(poseOk(artName(), want)); }); }
     }
     /* 沒有 IntersectionObserver 的瀏覽器:畫布被拿掉時沒有事件叫醒 sync,每 5 秒看一次還在不在頁面上 */
     function watch() {
@@ -225,20 +247,33 @@
       if (!io) watch();
       doc.addEventListener('visibilitychange', sync);
     }
-    if (window.ChickArt) sync();
-    else ensure(['ChickArt']).then(sync);
+    /* 載圖:鵜鶘先試,載不到再試小雞(兩個都沒有就不畫,畫布照鵜鶘的大小留著) */
+    if (!wantPelican) {
+      if (window.ChickArt) sync(); else ensure(['ChickArt']).then(sync);
+    } else if (window.PelicanArt) sync();
+    else {
+      ensure(['PelicanArt']).then(function (got) {
+        if (!alive) return;
+        if (got.PelicanArt) { sync(); return; }
+        ensure(['ChickArt']).then(function (got2) {
+          if (!alive) return;
+          if (got2.ChickArt) { fell = true; fit(); }
+          sync();
+        });
+      });
+    }
     return {
       setPose: function (p) {
         want = p;
         clearBack();
-        if (anim && running && loops()) safe(function () { anim.setPose(poseOk(p)); });
+        if (anim && running && loops()) safe(function () { anim.setPose(poseOk(artName(), p)); });
         else sync();
       },
       /* 播一次再回到原本的姿勢;停著、減少動態時不播。happy 不播畫格,改成靜止格加整張跳一次 */
       play: function (p) {
-        const A = window.ChickArt;
+        const A = window[artName()];
         if (!alive || !canMove || reduced() || !anim || !A) return false;
-        const q = poseOk(p);
+        const q = poseOk(artName(), p);
         clearBack();
         if (STILL_POSES.indexOf(q) > -1) {
           paintStill(q);
@@ -250,15 +285,19 @@
         safe(function () { anim.setPose(q); });
         const frames = (typeof A.holds === 'function' ? A.holds(q) : []).reduce(function (a, b) { return a + b; }, 0) || 8;
         const fps = (A.fps && A.fps[q]) || 8;
-        back = setTimeout(function () { back = 0; if (anim && running) safe(function () { anim.setPose(poseOk(want)); }); }, frames * 1000 / fps);
+        back = setTimeout(function () { back = 0; if (anim && running) safe(function () { anim.setPose(poseOk(artName(), want)); }); }, frames * 1000 / fps);
         return true;
       },
       destroy: destroy,
-      get pose() { return anim ? anim.pose : poseOk(want); },
+      get pose() { return anim ? anim.pose : poseOk(artName(), want); },
+      get art() { return artName(); },
       get running() { return running; },
       get alive() { return alive; },
     };
   }
+
+  /* 小雞(寵物):只畫小雞,不退回別的 */
+  function chick(canvas, opt) { return mascot(canvas, Object.assign({}, opt || {}, { kind: 'chick' })); }
 
   /* ---------- 食物(靜態一張) ---------- */
   function food(canvas, id, size) {
@@ -305,6 +344,15 @@
     /* 頁面自己先載了 doodle-art.js(建議這樣做):當下就畫,版面不會在圖出現時跳一下 */
     if (window.DoodleArt) return Promise.resolve(paintDoodles(r, list));
     return ensure(['DoodleArt']).then(function () { return paintDoodles(r, list); });
+  }
+  /* canvas[data-mascot="姿勢"]:主角鵜鶘(首頁首屏等);data-size 是寬,data-still 只畫靜止格 */
+  function mountMascots(root) {
+    qsa(root || doc, 'canvas[data-mascot]').forEach(function (cv) {
+      if (cv.getAttribute('data-mascot-on')) return;
+      cv.setAttribute('data-mascot-on', '1');
+      const size = attrNum(cv, 'data-size', 180);
+      mascot(cv, { size: size, chickSize: Math.round(size * 0.78), pose: cv.getAttribute('data-mascot') || 'idle', still: cv.hasAttribute('data-still') });
+    });
   }
   function mountChicks(root) {
     qsa(root || doc, 'canvas[data-chick]').forEach(function (cv) {
@@ -560,7 +608,7 @@
       o.note ? el('p', { class: 'result-note' }, [o.note]) : null,
     ]);
     /* happy 進場時整張跳一次(只畫正常比例的靜止格) */
-    const c = chick(cv, { size: compact ? 96 : wide ? 160 : 140, pose: pose, hop: true });
+    const c = mascot(cv, { size: compact ? 120 : wide ? 200 : 180, chickSize: compact ? 96 : wide ? 160 : 140, pose: pose, hop: true });
     let snack = null, alive = true, took = false;
     /* 這個事件是不是給這張卡的:
        - 給了 earnId(建議):detail.id 要對上
@@ -600,6 +648,7 @@
       reward: reward,
       heading: head,
       pose: pose,
+      mascot: c,
       chick: c,
       destroy: function () {
         alive = false;
@@ -631,15 +680,16 @@
     const box = el('div', { class: 'ui-empty' }, [cv, el('p', { class: 'ui-empty-text' }, [o.text || ''])]);
     if (o.action && o.action.label) box.append(action(o.action, 'btn ui-empty-go'));
     /* 靜態一張:不開計時器、不掛監聽;box.destroy() 給要收掉畫面的呼叫端用(沒呼叫也不會留下東西) */
-    const c = chick(cv, { size: 136, pose: o.pose || 'sleep', still: true });
+    const c = mascot(cv, { size: 130, chickSize: 136, pose: o.pose || 'sleep', still: true });
     box.destroy = c.destroy;
     return box;
   }
 
-  function boot() { mountChicks(doc); doodle(doc); }
+  function boot() { mountMascots(doc); mountChicks(doc); doodle(doc); }
 
   const UI = window.UI = {
     art: { ensure: ensure, base: BASE },
+    mascot: mascot,
     chick: chick,
     focus: { enter: enter, get active() { return active; } },
     result: result,

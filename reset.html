@@ -67,7 +67,7 @@ if (/type=recovery/.test(location.hash)) sessionStorage.setItem('tr_pw_recovery'
 (async function () {
   const root = document.getElementById('reset-root');
   const draw = (...nodes) => { root.innerHTML = ''; root.append(h('h1', { style: 'font-size:22px;margin:0 0 6px' }, '重設密碼'), ...nodes); };
-  if (!window.CLOUD || !CLOUD.enabled) { draw(h('p', { class: 'result-note' }, '此站未啟用雲端帳號。')); return; }
+  if (!window.CLOUD || !CLOUD.enabled) { draw(h('p', { class: 'result-note' }, '此站未啟用雲端帳號')); return; }
   await CLOUD.ready;
   const recovering = sessionStorage.getItem('tr_pw_recovery') === '1' && CLOUD.user;
 
@@ -80,7 +80,7 @@ if (/type=recovery/.test(location.hash)) sessionStorage.setItem('tr_pw_recovery'
       try { await CLOUD.resetPassword(email.value); msg.textContent = '重設信已寄出\n請到信箱點連結或查看垃圾郵件'; }
       catch (e) { msg.textContent = e.message; btn.disabled = false; }
     } }, '寄重設信');
-    draw(...(CLOUD.user ? [h('p', { class: 'result-note' }, '這個重設連結已失效或已用過。')] : []),
+    draw(...(CLOUD.user ? [h('p', { class: 'result-note' }, '這個重設連結已失效或已用過')] : []),
       h('div', { class: 'modal-row' }, email, btn), msg,
       h('p', { style: 'margin-top:18px' }, h('a', { href: 'index.html' }, '回首頁')));
     return;
@@ -91,8 +91,8 @@ if (/type=recovery/.test(location.hash)) sessionStorage.setItem('tr_pw_recovery'
   const msg = h('div', { style: 'color:var(--bad);font-size:13.5px;margin-top:8px;min-height:20px' });
   const btn = h('button', { class: 'btn primary', type: 'button', onclick: async () => {
     msg.textContent = '';
-    if (pw.value.length < 8) { msg.textContent = '密碼至少 8 碼。'; return; }
-    if (pw.value !== pw2.value) { msg.textContent = '兩次輸入的密碼不一樣。'; return; }
+    if (pw.value.length < 8) { msg.textContent = '密碼至少 8 碼'; return; }
+    if (pw.value !== pw2.value) { msg.textContent = '兩次輸入的密碼不一樣'; return; }
     btn.disabled = true;
     try {
       await CLOUD.updatePassword(pw.value);

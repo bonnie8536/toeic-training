@@ -248,7 +248,7 @@
         h('h2', null, title),
         h('p', { class: 'modal-why', id: 'reload-why' }, gone
           ? '這一頁還是登出前的畫面。' + (account ? '剛剛按的沒有送出' : '先不能作答') + '。重新整理就會換成這台現在的登入狀態。'
-          : '你已經登入了。這一頁還沒從雲端拿到你的練習紀錄，先不能作答。重新整理一次就會載入。'),
+          : '練習紀錄還沒載入。重新整理一次就會載入。'),
         h('p', { class: 'modal-sub', id: 'reload-sub' }, gone
           ? lose + '要留著的話先在別的分頁登回原本的帳號，再回來按一次。'
           : lose + '一直出現的話請檢查網路連線。'),
@@ -390,7 +390,7 @@
        (卡上說登回原帳號再按一次就留得住;以前打的字直接不見,審查 D 第 2 輪 #3)。重新整理就沒了,跟卡上說的一樣 */
     let unsentName = null;
     /* 視窗(js/ui.js)開著的時候別的分頁可能登出、改登入別人:按確定之後先等 50 毫秒(以前原生視窗開著時 Chrome 不送 localStorage 的改動,
-       按確定後約 2 毫秒才看得到;審查 D 第 4 輪 #3),再看一次這台現在的登入是不是畫面上這個帳號,不是就開卡、不送。
+       按確定後約 2 毫秒才看得到),再看一次這台現在的登入是不是畫面上這個帳號,不是就開卡、不送。
        js/cloud.js 送出前那一次確認照舊(丟 account_gone 也開卡)。取消、空白(確定鈕按不下去)都不送 */
     async function stillMine(opener) {
       await pause(50);
@@ -655,7 +655,7 @@
         if (opts.onMode) opts.onMode(mode);
         const msg = h('p', { class: 'auth-msg', role: 'alert' });
         if (CLOUD.authError) { msg.textContent = CLOUD.authError; msg.className = 'auth-msg bad'; CLOUD.authError = ''; }
-        else if (CLOUD.sessionExpired && !CLOUD.user && mode === 'login') { msg.textContent = '登入已失效。請重新登入。'; CLOUD.sessionExpired = false; }
+        else if (CLOUD.sessionExpired && !CLOUD.user && mode === 'login') { msg.textContent = '登入已失效\n請重新登入'; CLOUD.sessionExpired = false; }
 
         if (mode === 'forgot') drawForgot(msg);
         else drawMain(msg);
@@ -728,7 +728,7 @@
           email.input.addEventListener('blur', () => {
             const v = email.value();
             if (!v) return;
-            if (!EMAIL_RE.test(v)) return email.bad('Email 格式不對。');
+            if (!EMAIL_RE.test(v)) return email.bad('Email 格式不對');
             const fix = typoFix(v);
             if (fix) email.tipFix('改成 ', fix);   // 點了就換成建議的網址
           });
@@ -738,9 +738,9 @@
           const btn = submitBtn('註冊');
           const form = formOf(btn, msg, async ({ lock, unlock, fail }) => {
             let ok = true;
-            ok = name.bad(name.value() ? '' : '請輸入暱稱。') && ok;
-            ok = email.bad(EMAIL_RE.test(email.value()) ? '' : 'Email 格式不對。') && ok;
-            ok = pw.bad(pw.raw().length >= 8 ? '' : '密碼至少 8 碼。') && ok;
+            ok = name.bad(name.value() ? '' : '請輸入暱稱') && ok;
+            ok = email.bad(EMAIL_RE.test(email.value()) ? '' : 'Email 格式不對') && ok;
+            ok = pw.bad(pw.raw().length >= 8 ? '' : '密碼至少 8 碼') && ok;
             if (!ok) { const b = card.querySelector('.is-bad input'); if (b) b.focus(); return; }
             /* 呼叫 signUp 之前存好(選學生、沒有身分選擇的頁面就清掉別頁留下的) */
             if (role) role.save(email.value());
@@ -761,8 +761,8 @@
           const btn = submitBtn('登入');
           const form = formOf(btn, msg, async ({ lock, unlock, fail }) => {
             let ok = true;
-            ok = email.bad(EMAIL_RE.test(email.value()) ? '' : 'Email 格式不對。') && ok;
-            ok = pw.bad(pw.raw() ? '' : '請輸入密碼。') && ok;
+            ok = email.bad(EMAIL_RE.test(email.value()) ? '' : 'Email 格式不對') && ok;
+            ok = pw.bad(pw.raw() ? '' : '請輸入密碼') && ok;
             if (!ok) { const b = card.querySelector('.is-bad input'); if (b) b.focus(); return; }
             lock('登入中');
             forgetIntent();   // 登入既有帳號:註冊時選老師的意向作廢
@@ -778,9 +778,9 @@
         const email = authField({ label: 'Email', type: 'email', name: 'email', ac: 'email', inputmode: 'email' });
         const btn = submitBtn('寄重設信');
         const form = formOf(btn, msg, async ({ lock, unlock, fail, ok }) => {
-          if (!email.bad(EMAIL_RE.test(email.value()) ? '' : 'Email 格式不對。')) { email.input.focus(); return; }
+          if (!email.bad(EMAIL_RE.test(email.value()) ? '' : 'Email 格式不對')) { email.input.focus(); return; }
           lock('寄送中');
-          try { await CLOUD.resetPassword(email.value()); ok('重設信已寄出。到信箱點連結設新密碼。'); }
+          try { await CLOUD.resetPassword(email.value()); ok('重設信已寄出\n到信箱點連結設新密碼'); }
           catch (e) { fail(e.message); unlock(); }
         }, email.el);
         put(heading('重設密碼'), form,
@@ -808,7 +808,7 @@
         const again = h('button', { class: 'btn auth-full', type: 'button' }, '重寄驗證信');
         again.addEventListener('click', async () => {
           again.disabled = true;
-          try { await CLOUD.resendConfirm(email); msg.textContent = '已重寄。'; msg.className = 'auth-msg ok'; }
+          try { await CLOUD.resendConfirm(email); msg.textContent = '已重寄'; msg.className = 'auth-msg ok'; }
           catch (e) { msg.textContent = e.message; msg.className = 'auth-msg bad'; again.disabled = false; }
         });
         put(
@@ -1017,9 +1017,9 @@
     }, '建立並開始');
     input.addEventListener('keydown', e => { if (e.key === 'Enter') createBtn.click(); });
 
-    const box = h('div', act ? { class: 'modal modal-gate', role: 'dialog', 'aria-modal': 'true', 'aria-label': '你是哪位？', 'aria-describedby': 'gate-why' } : { class: 'modal' },
+    const box = h('div', act ? { class: 'modal modal-gate', role: 'dialog', 'aria-modal': 'true', 'aria-label': list.length ? '選擇學生' : '新增學生', 'aria-describedby': 'gate-why' } : { class: 'modal' },
       act ? h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }) : null,
-      h('h2', null, voluntary === true ? '新增學生' : '你是哪位？'),
+      h('h2', null, voluntary === true || !list.length ? '新增學生' : '選擇學生'),   // 還沒有檔案時只能建一個
       /* 說明跟著下面的畫面:還沒有任何檔案時只能建一個,有檔案時才是選 */
       act ? h('p', { class: 'modal-why', id: 'gate-why' }, (list.length ? '選好' : '建好') + '你的檔案才能作答。') : null,
       h('p', { class: 'modal-sub' }, '每位學生的進度、錯題與檢測報告只存在這台裝置上。'),

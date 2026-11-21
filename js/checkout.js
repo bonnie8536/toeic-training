@@ -307,11 +307,11 @@
       case 'failed': return v('付款沒有完成', [line, '這筆付款沒有成功', '不會開通'], [Object.assign({ primary: true }, PRICING), ME], 'bad');
       case 'cancelled': return v('付款沒有完成', [line, '如果已經刷卡成功', '幾分鐘後會出現在「我的」頁的方案與付款'],
         [Object.assign({ primary: true }, PRICING), ME], 'bad');
-      case 'refunded': return v('已退款', [line, '這筆付款已經退款。'], [ME]);
+      case 'refunded': return v('已退款', [line, '這筆付款已經退款'], [ME]);
       case 'missing': return v('找不到這筆訂單', ['目前登入的帳號查不到這筆訂單', '請確認是付款時用的帳號'], [PRICING]);
       case 'noorder': return v('沒有付款資料', [], [Object.assign({ primary: true }, ME)]);
       case 'login': return v('請先登入', ['請用付款時的帳號登入'], [{ text: '登入', login: true, primary: true }]);
-      default: return v('沒辦法查詢', ['這個網站沒有開雲端帳號。'], [PRICING]);
+      default: return v('沒辦法查詢', ['這個網站沒有開雲端帳號'], [PRICING]);
     }
   }
   /* 這個狀態之後不會再變(pay-result.js 把焦點移到標題用) */
@@ -399,10 +399,10 @@
   /* 建單並整頁送到藍新。正在送就回 null(連按兩次只建一張單);成功後維持「送出中」直到離開這一頁 */
   async function pay(sku, consentAt) {
     if (paying) return null;
-    if (!isoOk(consentAt)) throw new Error('請先勾選同意。');
+    if (!isoOk(consentAt)) throw new Error('請先勾選同意');
     if (!findItem(sku)) throw new Error('找不到這個方案\n請重新整理頁面再試');
     const C = cloud();
-    if (!C || typeof C.startCheckout !== 'function') throw new Error('這個網站沒有開雲端帳號。');
+    if (!C || typeof C.startCheckout !== 'function') throw new Error('這個網站沒有開雲端帳號');
     paying = true;
     try {
       const r = validResponse(await C.startCheckout(sku, consentAt));

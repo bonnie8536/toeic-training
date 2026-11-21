@@ -336,7 +336,7 @@ const cases = {
     const m401 = await msg(() => okJson(401, { error: 'Invalid JWT' }));
     const mNet = await msg(() => Promise.reject(new TypeError('Failed to fetch')));
     const m500 = await msg(() => Promise.resolve({ ok: false, status: 500, json: () => Promise.reject(new Error('not json')) }));
-    const checks = [w0.fetchCalls.length === 0, e0 === '請先登入。', m409 === '一小時內有太多筆還沒完成的付款。',
+    const checks = [w0.fetchCalls.length === 0, e0 === '請先登入', m409 === '一小時內有太多筆還沒完成的付款',
       /重新登入/.test(m401) && !/JWT/.test(m401), /連不上/.test(mNet), m500 === '暫時無法建立付款\n請稍後再試'];
     return { ok: checks.every(Boolean), detail: [e0, m409, m401, mNet, m500].join(' | ') };
   },
@@ -376,7 +376,7 @@ const cases = {
     const p2 = load(w2); await p2.ready;
     let e1 = ''; try { await p2.K.pay('student_month', '2026-11-01T01:30:00.000Z'); } catch (e) { e1 = e.message; }
     const o2 = await p2.K.pay('student_month', '2026-11-01T01:30:00.000Z');
-    const checks = [b === null, n1 === 1, busyAfter === true, e1 === '太多筆。', o2 === ORDER, w2.fetchCalls.length === 2];
+    const checks = [b === null, n1 === 1, busyAfter === true, e1 === '太多筆', o2 === ORDER, w2.fetchCalls.length === 2];
     return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') };
   },
   'pay:沒有同意時間、不認得的方案、回應不對,都不送出表單': async () => {

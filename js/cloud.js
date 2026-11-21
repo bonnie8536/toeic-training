@@ -57,7 +57,7 @@
     const hash = location.hash || '';
     if (!/[#&]error/.test(hash) || /access_token=/.test(hash)) return '';
     const m = /[#&]error_description=([^&]*)/.exec(hash) || /[#&]error(?:_code)?=([^&]*)/.exec(hash);
-    const raw = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '登入沒有完成。';
+    const raw = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '登入沒有完成';
     try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
     return raw;
   })();
@@ -454,7 +454,7 @@
   }
   /* 送出帳號層級的請求前呼叫 */
   function mustBeShown() {
-    if (!window.CLOUD.user) throw new Error('請先登入。');
+    if (!window.CLOUD.user) throw new Error('請先登入');
     if (!accountShown()) throw goneError();
   }
   /* 給頁面(js/profile.js、js/classes.js、教師後台)送出前先問:回空字串 = 可以送(或還沒登入,讓頁面照自己的「請先登入」);回字 = 不能送,要顯示的原因 */
@@ -564,10 +564,10 @@
     if (/already registered|already exists|already been registered/i.test(m)) return '這個 Email 已經註冊過\n請直接登入或點 Google 登入\n忘記密碼可以重設';
     if (/unsupported provider|provider is not enabled|provider.*disabled/i.test(m)) return 'Google 登入目前不能用\n請改用 Email 註冊';
     if (/redirect|not allowed.*url/i.test(m)) return 'Google 登入的網址設定不對\n請改用 Email 註冊';
-    if (/password/i.test(m) && /short|least|characters/i.test(m)) return '密碼至少 8 碼。';
+    if (/password/i.test(m) && /short|least|characters/i.test(m)) return '密碼至少 8 碼';
     if (/rate limit|too many|security purposes/i.test(m)) return '請求太頻繁\n請幾分鐘後再試';
     if (/signups? not allowed|signup is disabled|not allowed/i.test(m)) return '目前未開放註冊\n請聯絡老師';
-    if (/invalid.*email|email.*invalid/i.test(m)) return 'Email 格式不對。';
+    if (/invalid.*email|email.*invalid/i.test(m)) return 'Email 格式不對';
     if (/fetch|network/i.test(m)) return '連不上雲端伺服器\n請檢查網路後再試';
     return m;
   }
@@ -619,7 +619,7 @@
     await window.CLOUD.ready;
     needClient();
     const n = String(name || '').trim().slice(0, 20);
-    if (!n) throw new Error('請輸入暱稱。');
+    if (!n) throw new Error('請輸入暱稱');
     mustBeShown();   // 改的是這台現在登入的帳號:不是畫面上這個就不送(審查 D)
     const { data, error } = await client.auth.updateUser({ data: { name: n } });
     if (error) throw new Error(friendly(error));
@@ -638,7 +638,7 @@
   async function resetPassword(email) {
     await window.CLOUD.ready;
     needClient();
-    if (!/^\S+@\S+\.\S+$/.test(String(email).trim())) throw new Error('Email 格式不對。');
+    if (!/^\S+@\S+\.\S+$/.test(String(email).trim())) throw new Error('Email 格式不對');
     const { error } = await client.auth.resetPasswordForEmail(String(email).trim(), { redirectTo: siteUrl('reset.html') });
     if (error) throw new Error(friendly(error));
   }
@@ -747,30 +747,28 @@
     } catch (e) { return null; }
   }
 
-  /* 資料庫的訊息不帶句號(線上的舊函式也是),顯示時統一補上 */
-  function sentence(m) { return /[。！？!?.]$/.test(m) ? m : m + '。'; }
-  /* 伺服器回來的「原因,請做某事」拆成兩行:第一行發生什麼,第二行怎麼辦(畫面用 white-space: pre-line 顯示換行);其他句子照 sentence */
+  /* 伺服器回來的「原因,請做某事」拆成兩行:第一行發生什麼,第二行怎麼辦(畫面用 white-space: pre-line 顯示換行);其他訊息原樣、不補句號 */
   function twoLines(m) {
     const s = String(m);
     if (s.indexOf('\n') >= 0) return s;
     const i = s.search(/[，,]請/);
-    if (i < 0) return sentence(s);
+    if (i < 0) return s;
     return (s.slice(0, i) + '\n' + s.slice(i + 1)).replace(/[。.]$/, '');
   }
 
   /* 呼叫資料庫函式;資料庫的錯誤訊息(中文)原樣丟出,連不上才換成網路的說明。
      加入班級、老師試用、讀方案與付款紀錄都是「這台現在登入的帳號」的:不是畫面上這個就不送(審查 D) */
   async function callRpc(fn, args) {
-    if (!enabled) throw new Error('這個網站沒有開雲端帳號。');
+    if (!enabled) throw new Error('這個網站沒有開雲端帳號');
     await window.CLOUD.ready;
-    if (!window.CLOUD.user) throw new Error('請先登入。');
+    if (!window.CLOUD.user) throw new Error('請先登入');
     needClient();
     mustBeShown();
     let res;
     try { res = await client.rpc(fn, args); } catch (e) { res = { error: e }; }
     if (res && res.error) {
       const m = String(res.error.message || '');
-      throw new Error(/failed to fetch|networkerror|load failed/i.test(m) ? '連不上雲端伺服器\n請檢查網路後再試' : (m ? sentence(m) : '發生錯誤\n請稍後再試'));
+      throw new Error(/failed to fetch|networkerror|load failed/i.test(m) ? '連不上雲端伺服器\n請檢查網路後再試' : (m ? twoLines(m) : '發生錯誤\n請稍後再試'));
     }
     return res ? res.data : null;
   }
@@ -790,10 +788,10 @@
      回伺服器原本的回應 { action, fields, order_no },檢查交給 checkout.js(validResponse)。 */
   const CHECKOUT_TIMEOUT_MS = 20000;
   async function startCheckout(sku, consentAt) {
-    if (!enabled) throw new Error('這個網站沒有開雲端帳號。');
+    if (!enabled) throw new Error('這個網站沒有開雲端帳號');
     await window.CLOUD.ready;
     const user = window.CLOUD.user;
-    if (!user) throw new Error('請先登入。');
+    if (!user) throw new Error('請先登入');
     needClient();
     mustBeShown();   // 審查 D:別的分頁登出、換了帳號(下面的登入憑證比對擋得住換帳號,擋不住登出又登回別人之前的那一下)
     let token = '';

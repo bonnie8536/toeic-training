@@ -167,12 +167,12 @@ const cases = {
     const r = api.normalize('ａｂｃｄ２３４５');
     return { ok: r === 'ABCD2345', detail: r };
   },
-  '收費上線後的名額檢查:資料庫的新訊息原樣顯示,句尾補句號': async () => {
+  '收費上線後的名額檢查:資料庫的新訊息原樣顯示,「原因,請做某事」分兩行、不補句號': async () => {
     const w = world();
     w.client.rpc = async (fn, args) => { w.calls.push(['rpc', fn, args]); return { data: null, error: { message: '這位老師的班級名額已滿（上限 10 人），請聯絡老師' } }; };
     const api = load(w);
     const r = await api.join(' abcd-2345 ');
-    return { ok: !r.ok && r.message === '這位老師的班級名額已滿（上限 10 人），請聯絡老師。' && w.calls[0][1] === 'join_class' && w.calls[0][2].p_code === 'ABCD2345', detail: r.message };
+    return { ok: !r.ok && r.message === '這位老師的班級名額已滿（上限 10 人）\n請聯絡老師' && w.calls[0][1] === 'join_class' && w.calls[0][2].p_code === 'ABCD2345', detail: r.message };
   },
   '資料庫訊息本來就有句號、驚嘆號或問號:不重複補': async () => {
     const out = [];
@@ -223,10 +223,10 @@ const cases = {
     const list = await api.list();
     return { ok: r.ok && list.classes.length === 1, detail: '班級數 ' + list.classes.length };
   },
-  '停用或不存在的碼:顯示資料庫給的說明(線上的舊訊息沒有句號,前端補)': async () => {
+  '停用或不存在的碼:顯示資料庫給的說明(線上的舊訊息沒有句號,前端也不補)': async () => {
     const w = world(); const api = load(w);
     const a = await api.join('KX7MPQ2R'); const b = await api.join('ZZZZZZZZ');
-    return { ok: !a.ok && !b.ok && a.message === '邀請碼不存在或已停用。' && b.message === a.message, detail: a.message + ' | ' + b.message };
+    return { ok: !a.ok && !b.ok && a.message === '邀請碼不存在或已停用' && b.message === a.message, detail: a.message + ' | ' + b.message };
   },
   '沒網路:說連不上,不是說碼錯': async () => {
     const w = world(); w.offline = true; const api = load(w);

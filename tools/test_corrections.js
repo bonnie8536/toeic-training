@@ -110,7 +110,7 @@ T['頁面:題號搜尋與空結果'] = async () => {
   s.value = ' P7-B4-2 '; await s.fire('input');
   const rows = rowsIn(p.root);
   s.value = 'zzzz'; await s.fire('input');
-  const none = p.root.textContent.includes('沒有符合的紀錄。');
+  const none = p.root.textContent.includes('沒有符合的紀錄');
   return { ok: rows.length >= 1 && rows.every((r) => r.children[1].textContent.toLowerCase().includes('p7-b4-2')) && none, detail: rows.length + ' 列,空結果文案 ' + none };
 };
 T['頁面:?q=p7-b4-2:1 標出整組淘汰那一列;q 指到文字修正會展開該組'] = async () => {

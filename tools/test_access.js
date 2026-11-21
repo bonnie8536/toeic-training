@@ -228,7 +228,7 @@ const cases = {
     w.access = ACTIVE; await p.C.refreshAccess(); const d = p.C.locked();
     return { ok: a === false && b === true && r === null && c === true && d === false && calls(w) === 4, detail: [a, b, c, d].join(' → ') };
   },
-  '包裝函式:參數照資料庫函式的名字傳,資料庫的中文錯誤原樣丟出(句尾補句號),連不上改說網路': async () => {
+  '包裝函式:參數照資料庫函式的名字傳,資料庫的中文錯誤原樣丟出(不補句號),連不上改說網路': async () => {
     const w = loggedIn(makeWorld({ paid: false, other: {
       join_class: { data: '晨讀班', error: null },
       start_teacher_trial: { data: null, error: { message: '老師試用每個帳號只能開始一次' } },
@@ -241,7 +241,7 @@ const cases = {
     try { await p.C.myBilling(); } catch (e) { e2 = e.message; }
     const j = w.rpc.find(c => c[0] === 'join_class'), s = w.rpc.find(c => c[0] === 'start_teacher_trial');
     return { ok: name === '晨讀班' && j[1].p_code === 'ABCD2345' && s[1].p_seats === 30 && s[1].p_class_name === '週六班'
-      && e1 === '老師試用每個帳號只能開始一次。' && /網路/.test(e2) && calls(w) === 0,
+      && e1 === '老師試用每個帳號只能開始一次' && /網路/.test(e2) && calls(w) === 0,
       detail: name + ' | ' + e1 + ' | ' + e2 };
   },
   '包裝函式:沒登入不呼叫': async () => {

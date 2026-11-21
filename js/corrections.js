@@ -105,7 +105,7 @@
         d.append(s, t.el);
         body.append(d);
       });
-      if (!shown) body.append(el('p', 'corr-msg', '沒有符合的紀錄。'));
+      if (!shown) body.append(el('p', 'corr-msg', '沒有符合的紀錄'));
       if (target) { target.scrollIntoView({ block: 'center' }); }
     }
     draw(true);

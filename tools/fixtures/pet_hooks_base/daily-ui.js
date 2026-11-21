@@ -266,12 +266,16 @@
     }
 
     /* 答錯的那幾題:單字是字加中文,聽寫是原句,文法是填好答案的句子 */
-    function missed(bad) {
-      return h('div', { class: 'vq-list daily-miss' }, bad.map(x => {
-        if (key === 'v') return h('div', { class: 'vq-item bad' }, h('b', null, x.word), h('span', null, x.zh), h('i', null, '✗'));
+    /* 逐題解析:這一項的每一題(題目或單字、正解),答對打勾、答錯打叉 */
+    function rows(items, s) {
+      return h('div', { class: 'vq-list daily-miss' }, items.map(x => {
+        const bad = s.answered[x.id] === 0;
+        const cls = 'vq-item' + (bad ? ' bad' : '');
+        const mark = h('i', { 'aria-label': bad ? '答錯' : '答對' }, bad ? '✗' : '✓');
+        if (key === 'v') return h('div', { class: cls }, h('b', null, x.word), h('span', null, x.zh), mark);
         const text = key === 'd' ? x.text
           : /_{2,}/.test(x.q) ? x.q.replace(/_{2,}/, x.options[x.answer]) : [x.q, h('br'), h('b', null, x.options[x.answer])];
-        return h('div', { class: 'vq-item bad' }, h('span', null, text), h('i', null, '✗'));
+        return h('div', { class: cls }, h('span', null, text), mark);
       }));
     }
     function summary() {
@@ -284,11 +288,13 @@
       const bad = list5.filter(x => s.answered[x.id] === 0);
       const card = UI.result({
         score: s.ok, total: s.done, kicker: label(p), flag: pr.complete ? '今日完成' : null,
-        primary: next ? { label: '接著做' + next.name, href: 'daily.html?part=' + next.key } : { label: '回首頁', href: 'index.html' },
-        links: next ? [{ label: '回每日練習', href: 'daily.html' }] : [],
+        /* 三項都做完:沒有下一步要做,不放實色按鈕,回首頁做成文字連結 */
+        primary: next ? { label: '接著做' + next.name, href: 'daily.html?part=' + next.key } : null,
+        links: next ? [{ label: '回每日練習', href: 'daily.html' }] : [{ label: '回首頁', href: 'index.html' }],
         earnId: 'd',
       });
-      root.replaceChildren(...[srTitle(p.name), card.el, bad.length ? UI.detail('答錯 ' + bad.length + ' 題', [missed(bad)], { wrong: 0 }) : null].filter(Boolean));
+      const seenItems = list5.filter(x => s.answered[x.id] !== undefined);
+      root.replaceChildren(...[srTitle(p.name), card.el, seenItems.length ? UI.detail('逐題解析 ' + seenItems.length + ' 題', [rows(seenItems, s)], { wrong: bad.length }) : null].filter(Boolean));
       window.scrollTo(0, 0);
       card.heading.focus();
     }

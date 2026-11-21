@@ -9,7 +9,7 @@
 (function () {
   /* 邀請碼的字母表跟資料庫的 gen_class_code 一樣:沒有 0、1、I、O */
   const CODE_RE = /^[A-HJ-NP-Z2-9]{8}$/;
-  const NET_MSG = '連不上雲端伺服器。請檢查網路後再試。';
+  const NET_MSG = '連不上雲端伺服器\n請檢查網路後再試';
   const PENDING_KEY = 'tr_pending_join';
   const PENDING_TTL_MS = 24 * 3600e3;
 
@@ -20,31 +20,34 @@
   }
 
   function formatError(code) {
-    if (!code) return '請輸入邀請碼。';
-    if (/[^A-Z0-9]/.test(code)) return '邀請碼只有英文字母和數字。';
-    if (code.length !== 8) return '邀請碼是 8 碼。現在是 ' + code.length + ' 碼。';
-    if (!CODE_RE.test(code)) return '邀請碼沒有 0、1、I、O。請再對一次。';
+    if (!code) return '請輸入邀請碼';
+    if (/[^A-Z0-9]/.test(code)) return '邀請碼只有英文字母和數字';
+    if (code.length !== 8) return '邀請碼是 8 碼\n現在是 ' + code.length + ' 碼';
+    if (!CODE_RE.test(code)) return '邀請碼沒有 0、1、I、O\n請再對一次';
     return '';
   }
 
   function isNetwork(err) {
     return /failed to fetch|networkerror|network|load failed|timeout/i.test(String((err && err.message) || err || ''));
   }
-  /* 資料庫的訊息不帶句號(線上的舊函式也是),顯示時統一補上 */
-  function sentence(m) { return /[。！？!?.]$/.test(m) ? m : m + '。'; }
+  /* 資料庫的訊息原樣顯示,不補句號;「原因,請做某事」拆成兩行(第一行發生什麼,第二行怎麼辦;畫面用 white-space: pre-line) */
+  function sentence(m) {
+    const i = m.indexOf('\n') < 0 ? m.search(/[，,]請/) : -1;
+    return i < 0 ? m : (m.slice(0, i) + '\n' + m.slice(i + 1)).replace(/[。.]$/, '');
+  }
   function messageOf(err) {
     if (isNetwork(err)) return NET_MSG;
     const m = String((err && err.message) || '');
-    return m ? sentence(m) : '發生錯誤。請稍後再試。';
+    return m ? sentence(m) : '發生錯誤\n請稍後再試';
   }
 
   /* 可以呼叫雲端:回 { client, user };不行就回 { message }。
      write(加入、退出):送出時用的是這台現在的登入資料,別的分頁登出、換了帳號(這一頁沒重載)就不送,回 { message, gone: true }(審查 D) */
   async function session(write) {
     const C = window.CLOUD;
-    if (!C || !C.enabled) return { message: '這個網站沒有開雲端帳號。' };
+    if (!C || !C.enabled) return { message: '這個網站沒有開雲端帳號' };
     try { await C.ready; } catch (e) { /* ready 不會失敗,保險 */ }
-    if (!C.user) return { message: '請先登入。' };
+    if (!C.user) return { message: '請先登入' };
     if (!C.client) return { message: NET_MSG };
     const gone = write && typeof C.accountCheck === 'function' ? C.accountCheck() : '';
     if (gone) return { message: gone, gone: true };
@@ -86,7 +89,7 @@
   }
 
   async function leave(classId) {
-    if (!classId) return { ok: false, message: '找不到這個班級。' };
+    if (!classId) return { ok: false, message: '找不到這個班級' };
     const s = await session(true);
     if (s.message) return { ok: false, message: s.message, gone: !!s.gone };
     try {
@@ -216,7 +219,7 @@
         btn.disabled = true;
         const r = await leave(c.id);
         if (!r.ok) { btn.disabled = false; say(r.message, 'bad'); if (r.gone) goneCard(btn); return; }
-        say('已退出「' + label + '」。', 'ok');
+        say('已退出「' + label + '」', 'ok');
         await refresh(true);
         joinBtn.focus();
       });
@@ -230,7 +233,7 @@
     function openJoin(prefill) {
       if (accountMoved()) { goneCard(joinBtn); return; }
       showJoinDialog(prefill, joinBtn, async (name) => {
-        say('已加入「' + name + '」。', 'ok');
+        say('已加入「' + name + '」', 'ok');
         await refresh(true);
       });
     }

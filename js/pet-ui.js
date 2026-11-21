@@ -758,7 +758,7 @@
     const c = chick(cv, 96), de = doc.documentElement, isWide = () => !!de && de.classList.contains('pet-roam2-wide'), wide = () => c.hold(isWide());   // 電腦版到處走(pet-roam2.js 加 html.pet-roam2-wide,css 藏起來):停住不畫,拿掉照常動
     if (de && 'MutationObserver' in window) { new MutationObserver(wide).observe(de, { attributes: true, attributeFilter: ['class'] }); wide(); window.addEventListener('beforeprint', () => { if (isWide()) c.hold(false, true); }); window.addEventListener('afterprint', wide); }   // 列印時卡片的小雞照常印出來:先畫一格,印完再停住(規格 1.11;第三輪複查 #2)
     pic.addEventListener('click', () => openSheet(pic, { noGoal: kind === 'me' }));
-    /* 食物模式:「餵牠」打開面板(規格 3.1);同一顆按鈕一直用,關掉面板時焦點回得來。首頁的實色按鈕只留每日練習那一顆,這裡描邊;「我的」頁實色 */
+    /* 食物模式:「餵牠」打開面板;同一顆按鈕一直用,關掉面板時焦點回得來。首頁的實色按鈕只留每日練習那一顆,這裡描邊;「我的」頁實色 */
     const open = FOOD ? h('button', { class: kind === 'home' ? 'btn pet-open' : 'btn primary pet-open', type: 'button', 'aria-haspopup': 'dialog', 'data-focus': 'open' }, '餵牠') : null;
     if (open) open.addEventListener('click', () => openSheet(open, { noGoal: kind === 'me' }));
     onChange((v, ev) => {

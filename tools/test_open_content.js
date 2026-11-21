@@ -467,7 +467,7 @@ for (const mode of ['cloud', 'local']) {
       await sleep(300);
       const b = await state(s);
       await s.close();
-      const ok = a.mask && !a.x && !a.why && b.mask && (mode === 'cloud' ? a.aria === 'true' : /你是哪位/.test(a.title));
+      const ok = a.mask && !a.x && !a.why && b.mask && (mode === 'cloud' ? a.aria === 'true' : /選擇學生|新增學生/.test(a.title));
       out.push({ u, ok, a: { mask: a.mask, x: a.x, why: a.why, aria: a.aria, title: a.title }, still: b.mask });
     }
     return { ok: out.every((x) => x.ok), detail: J(out.filter((x) => !x.ok).length ? out.filter((x) => !x.ok) : out.map((x) => x.u)) };

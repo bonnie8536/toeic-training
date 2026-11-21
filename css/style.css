@@ -3868,7 +3868,7 @@ html.is-quiz #ear-root .write-area { font-size: 16px; min-height: 96px; }
 
 /* 兩行訊息:程式用換行字元把「發生什麼」和「怎麼辦」分成兩行,這裡讓換行顯示出來 */
 .auth-msg, .me-class-msg, .me-bill-msg, .trial-fail, .trial-code-note, .pw-msg, .corr-msg, .buy-note, .pricing-buy-note,
-.modal-report .auth-fine, .reset-msg { white-space: pre-line; }
+.modal-report .auth-fine, .reset-msg, .auth-note { white-space: pre-line; }
 
 /* 付費牆遮罩:登出失敗的訊息 */
 .pw-msg { margin: 12px 0 0; font-size: var(--fs-sm); color: var(--bad-ink); text-align: center; }

@@ -527,7 +527,7 @@ cases['開通失敗:資料庫的訊息原樣顯示,沒有邀請碼與前往教�
   const p = await openPage(w);
   const d = dialog(p);
   const msg = d && d.byClass('auth-msg').find(n => n.className.includes('bad'));
-  return { ok: !!d && msg && msg.textContent === '老師試用每個帳號只能開始一次。' && d.byClass('trial-go').length === 0 && d.byClass('trial-code').length === 0
+  return { ok: !!d && msg && msg.textContent === '老師試用每個帳號只能開始一次' && d.byClass('trial-go').length === 0 && d.byClass('trial-code').length === 0
     && trialCalls(w).length === 1, detail: d ? norm(d.textContent) : '沒有視窗' };
 };
 

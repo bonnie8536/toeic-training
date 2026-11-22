@@ -11,10 +11,15 @@ const crypto = require('crypto');
 const REPO = path.join(__dirname, '..');
 const SRC_FILE = path.join(REPO, 'js/doodle-art.js');
 const SRC = fs.existsSync(SRC_FILE) ? fs.readFileSync(SRC_FILE, 'utf8') : '';
+/* 第二批圖示(聽力訓練入口、寫作級別)放在另一支檔,載入 doodle-art.js 之後往 DoodleArt 登記 */
+const MORE_FILE = path.join(REPO, 'js/doodle-art-more.js');
+const MORE = fs.existsSync(MORE_FILE) ? fs.readFileSync(MORE_FILE, 'utf8') : '';
 const EXPECT = [['home', '首頁'], ['learn', '日常學習'], ['warmup', '練練手感'], ['drill', '刷刷題目'], ['me', '我的'],
   ['grammar', '文法基礎'], ['phonics', '自然發音'], ['reading', '閱讀訓練'], ['dialogue', '對話練習'], ['vocab', '單字訓練'],
   ['listening', '聽力訓練'], ['writing', '寫作練習'], ['verbs', '不規則動詞'], ['practice', '題庫刷題'], ['mock', '模擬考'],
-  ['diagnostic', '程度檢測'], ['wrongbook', '錯題本'], ['daily', '每日練習'], ['analysis', '能力分析'], ['history', '學習記錄']];
+  ['diagnostic', '程度檢測'], ['wrongbook', '錯題本'], ['daily', '每日練習'], ['analysis', '能力分析'], ['history', '學習記錄'],
+  ['parrot', '句子跟讀'], ['dictation', '句子聽寫'], ['soundalike', '相似音辨析'], ['coins', '數字與價格'],
+  ['sentence', '句子力'], ['plane', 'Email 力'], ['idea', '論述力']];
 const YELLOW = '#ffe100';
 
 /* ---------- 假的 canvas:記下每一個呼叫和屬性設定 ---------- */
@@ -55,6 +60,7 @@ function makeEnv(opt) {
   vm.createContext(g);
   vm.runInContext('Math.random = function () { globalThis.__rand = (globalThis.__rand || 0) + 1; return 0.5; };', g);
   if (SRC) vm.runInContext(SRC, g, { filename: 'doodle-art.js' });
+  if (SRC && MORE && o.more !== false) vm.runInContext(MORE, g, { filename: 'doodle-art-more.js' });
   return { g, D: g.DoodleArt, timers, touched, rand: () => g.__rand || 0 };
 }
 const logOf = (c) => c.log.join('\n');
@@ -71,7 +77,7 @@ T['載入後有 window.DoodleArt,介面齊全,邏輯畫布 100×100'] = () => {
   return { ok: !!D && !missing.length && D.metrics.width === 100 && D.metrics.height === 100,
     detail: D ? '缺 ' + missing.join('、') + ' metrics ' + JSON.stringify(D.metrics) : '沒有 DoodleArt' };
 };
-T['20 個圖示的 id、順序、中文名稱'] = () => {
+T['27 個圖示的 id、順序、中文名稱(後 7 個由 doodle-art-more.js 登記)'] = () => {
   const { D } = makeEnv();
   if (!D) return { ok: false, detail: '沒有 DoodleArt' };
   const mine = D.ids.map((id) => [id, D.info[id] && D.info[id].name]);
@@ -201,7 +207,7 @@ T['不讀寫儲存、不用 Math.random(原始碼和實際執行都查)'] = () =
   [...env.timers.values()].forEach((t) => t.fn());
   h.stop();
   env.D.mountAll({ querySelectorAll: () => [makeCanvas({ doodle: 'me' })] });
-  const src = !/localStorage|sessionStorage|indexedDB|document\.cookie|Math\.random/.test(SRC);
+  const src = !/localStorage|sessionStorage|indexedDB|document\.cookie|Math\.random/.test(SRC + MORE);
   return { ok: src && !env.touched.length && env.rand() === 0, detail: JSON.stringify({ src, touched: env.touched, rand: env.rand() }) };
 };
 T['26px 灰線版另外簡化:答案卡、嘴、文章、錯題本的墨線筆畫比上色版少,其他尺寸的灰線版不受影響'] = () => {
@@ -215,6 +221,21 @@ T['26px 灰線版另外簡化:答案卡、嘴、文章、錯題本的墨線筆�
   /* 72px 的灰線版跟上色版是同一組墨線(只少了塗鴉) */
   const big = D.ids.filter((id) => n(id, 72, 'line') !== n(id, 72, 'fill'));
   return { ok: !bad.length && !big.length, detail: '沒變少:' + bad.join('、') + ' 72px 墨線不同:' + big.join('、') };
+};
+T['doodle-art-more.js:沒有 doodle-art.js 時什麼都不做;登記的圖示 mountAll 照畫,同名不重複列'] = () => {
+  const g = {};
+  g.window = g;
+  vm.createContext(g);
+  let quiet = true;
+  try { vm.runInContext(MORE, g, { filename: 'doodle-art-more.js' }); } catch (e) { quiet = false; }
+  const base = makeEnv({ more: false }).D, env = makeEnv({ dpr: 2 });
+  if (!base || !env.D) return { ok: false, detail: '沒有 DoodleArt' };
+  const n0 = base.ids.length;
+  base.extend((k) => k.def('home', '首頁', '家', () => [{ line: [[0, 0], [10, 10]] }]));
+  const c = makeCanvas({ doodle: 'coins', size: '52' });
+  env.D.mountAll({ querySelectorAll: () => [c] });
+  return { ok: !!MORE && quiet && !g.DoodleArt && n0 === 20 && base.ids.length === 20 && c.width === 104 && drawsOf(c) === 1,
+    detail: JSON.stringify({ quiet, n0, after: base.ids.length, w: c.width }) };
 };
 T['不認得的 id、tone 丟出清楚的錯誤'] = () => {
   const { D } = makeEnv();
@@ -230,7 +251,7 @@ T['不認得的 id、tone 丟出清楚的錯誤'] = () => {
 };
 T['檔頭說原檔不在 repo,不寫本機路徑'] = () => {
   const head = SRC.split('*/')[0];
-  return { ok: /原檔與預覽不在這個 repo/.test(head) && !/[A-Za-z]:[\\/]/.test(SRC) && !/\/(Users|home)\//.test(SRC), detail: head.slice(0, 160) };
+  return { ok: /原檔與預覽不在這個 repo/.test(head) && !/[A-Za-z]:[\\/]/.test(SRC + MORE) && !/\/(Users|home)\//.test(SRC + MORE), detail: head.slice(0, 160) };
 };
 
 let pass = 0;

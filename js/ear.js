@@ -14,10 +14,10 @@
   }
 
   const SECTIONS = {
-    s: { key: 'ear_s', title: '句子跟讀', items: E.shadow || E.dictation, per: 5 },
-    d: { key: 'ear_d', title: '句子聽寫', items: E.dictation, per: 5 },
-    mp: { key: 'ear_mp', title: '相似音辨析', items: E.pairs, per: 10 },
-    n: { key: 'ear_n', title: '數字與價格', items: E.numbers, per: 10 },
+    s: { key: 'ear_s', title: '句子跟讀', art: 'parrot', items: E.shadow || E.dictation, per: 5 },
+    d: { key: 'ear_d', title: '句子聽寫', art: 'dictation', items: E.dictation, per: 5 },
+    mp: { key: 'ear_mp', title: '相似音辨析', art: 'soundalike', items: E.pairs, per: 10 },
+    n: { key: 'ear_n', title: '數字與價格', art: 'coins', items: E.numbers, per: 10 },
   };
   const LEVELS = ['全部', '初級', '中級', '進階'];
   const levelCls = lv => (lv === '初級' ? 'level-basic' : lv === '進階' ? 'level-high' : 'level-mid');
@@ -121,6 +121,7 @@
         const s = stats(k, level);
         const pct = s.total ? Math.round(s.done / s.total * 100) : 0;
         const kids = [
+          h('canvas', { class: 'ear-art', 'data-doodle': d.art, 'data-size': '52', 'aria-hidden': 'true' }),
           h('h2', null, d.title),
           h('p', null, h('span', { 'data-nosnippet': '' }, s.done + ' / ' + s.total + ' 題')),
           h('span', { class: 'ear-bar', 'aria-hidden': 'true' }, h('i', { style: 'width:' + pct + '%' })),
@@ -132,6 +133,7 @@
           href: 'listening.html?sec=' + k + (level !== '全部' ? '&lv=' + encodeURIComponent(level) : ''),
         }, ...kids);
       }));
+      if (window.UI) UI.doodle(grid);
     }
   }
 

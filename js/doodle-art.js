@@ -725,7 +725,12 @@
   }
   const handleOf = (canvas) => mounted.get(canvas) || null;
 
-  window.DoodleArt = {
+  /* 別的檔(js/doodle-art-more.js)用 extend 加圖示:拿到 def 和畫圖用的小工具,加進來的圖示跟這裡的一樣畫 */
+  function extend(fn) {
+    fn({ def: (id, name, meaning, build) => { def(id, name, meaning, build); if (api.ids.indexOf(id) < 0) api.ids.push(id); api.info[id] = { name, meaning }; },
+      L, OUT, RAD, DEEP, PALE, add, unit, rotAbout, ellipse, spline, arc, rrect, bubble, annulus, head, pencil, dot });
+  }
+  const api = window.DoodleArt = {
     ids: Object.keys(ICONS),
     info: Object.fromEntries(Object.entries(ICONS).map(([id, f]) => [id, { name: f.name, meaning: f.meaning }])),
     colors: { ink: INK, yellow: YELLOW, deep: DEEP, pale: PALE, red: RED, green: GREEN, paper: PAPER, lineInk: '#767f88' },
@@ -735,6 +740,7 @@
     mount,
     mountAll,
     handleOf,
+    extend,
     metrics: { width: W, height: H },
   };
 })();

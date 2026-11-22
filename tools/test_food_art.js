@@ -165,9 +165,9 @@ T['bite() 走完 steps 後 onDone 只呼叫一次(不抖、會抖兩種都是);s
   });
   return { ok: !d.length, detail: d.join(';') };
 };
-T['檔頭寫了原檔位置;不讀寫任何儲存'] = () => {
+T['檔頭註明原檔不在 repo、不寫本機路徑;不讀寫任何儲存'] = () => {
   const head = FOOD_SRC.split('*/')[0];
-  return { ok: /小雞\/第二階段\/food-art\.js/.test(head) && !/localStorage|sessionStorage|PET_STORE|CLOUD/.test(FOOD_SRC),
+  return { ok: /原檔與預覽不在這個 repo/.test(head) && !/[A-Z]:\//.test(head) && !/localStorage|sessionStorage|PET_STORE|CLOUD/.test(FOOD_SRC),
     detail: head.slice(0, 200) };
 };
 

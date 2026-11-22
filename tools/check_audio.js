@@ -182,7 +182,7 @@ async function check(argv, depsIn) {
         asr = { skipped: false, sampled: sample.length, worst };
       }
     }
-  } else deps.log('略過語音辨識：' + asr.reason + '（這台目前沒有可用的辨識模型，見計畫第 4.4 節）');
+  } else deps.log('略過語音辨識：' + asr.reason + '（這台目前沒有可用的辨識模型）');
 
   deps.log('檢查 ' + stats.checked + ' / ' + items.length + ' 個檔；錯誤 ' + errors.length + '，警告 ' + warns.length);
   for (const [c, a] of Object.entries(stats.wpm)) deps.log(c + ' 語速 平均 ' + (a.reduce((x, y) => x + y, 0) / a.length).toFixed(0) + ' wpm（' + Math.min(...a).toFixed(0) + '–' + Math.max(...a).toFixed(0) + '）');

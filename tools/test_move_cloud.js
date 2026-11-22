@@ -1,4 +1,4 @@
-/* 搬家計畫 2.7:js/cloud.js 的 flushForMove(舊網址寄出頁)與搬家暫存區 tr_move_pending_<帳號 id>(新網址登入灌資料時合併)。
+/* js/cloud.js 的 flushForMove(舊網址寄出頁)與搬家暫存區 tr_move_pending_<帳號 id>(新網址登入灌資料時合併)。
    跟 tools/test_cloud_merge.js 同一套假的 Supabase(加上 in() 與一次傳多列的 upsert,題庫跟 sync_del 一起讀、一起傳)、localStorage、時鐘與計時器;
    合併規則載入真的 js/sync-merge.js(每一頁都在 cloud.js 前面載入)、js/move-rules.js、js/move-merge.js,
    小雞用真的 js/pet.js。用法:node tools/test_move_cloud.js */
@@ -356,7 +356,7 @@ T['暫存區:可以合併的鍵,同一項兩邊不一樣又沒辦法比(沒有�
   return { ok, detail: J({ c, bv }) };
 };
 
-/* ---------- 跟同步合併(js/sync-merge.js)對齊:合併表上的鍵(題庫、刪除標記、模擬考紀錄)用同一套合併(同步合併設計 3.12) ---------- */
+/* ---------- 跟同步合併(js/sync-merge.js)對齊:合併表上的鍵(題庫、刪除標記、模擬考紀錄)用同一套合併 ---------- */
 const SMX = { console: { log() {}, warn() {}, error() {} } };
 SMX.window = SMX;
 vm.createContext(SMX);
@@ -515,7 +515,7 @@ T['flushForMove:題庫跟雲端一樣、帳本空的:讀一次雲端就好,不�
   return { ok, detail: J({ left: r.left, reads, ups: ups(w) }) };
 };
 
-/* ---------- 模擬考錯題 mock_wrong(錯題本定稿 2026-11-18) ---------- */
+/* ---------- 模擬考錯題 mock_wrong ---------- */
 const mw = (k, c, ok, t) => ({ [k]: { c, ok, t } });
 T['暫存區:模擬考錯題(mock_wrong)搬家暫存區、本機、雲端各一份:三份聯集(同一題留 t 新的),上傳到雲端,不進備份、暫存區刪掉'] = async () => {
   const w = makeWorld();

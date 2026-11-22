@@ -1,4 +1,4 @@
-/* 小雞的純計算(路線圖 1.2a;第二階段規格在 repo 外的 小雞第二階段規格.md)。不碰畫面、不讀寫任何儲存鍵:
+/* 小雞的純計算。不碰畫面、不讀寫任何儲存鍵:
    呼叫的人把 hist 與 pet 傳進來,自己決定要不要存。測試:node tools/test_pet.js。
    - 有效題數:同一題(模組加題號)同一天只算一次;跟上一筆相隔不到 2 秒的不算;
      交卷時用迴圈一次寫很多筆(時間只差幾毫秒)算同一批,整批跟前一筆比;單字考題用 n、翻牌配對用配對數(最多 50)。
@@ -10,19 +10,19 @@
    - 第二階段(v: 2)加了食物與走動開關:got(拿到的券)、ate(吃掉哪一張)、foodOld(壓縮掉的舊券)、once(一輩子一次的)、
      roam(走動開關)。這一版照常讀寫 v2;新欄位只在有內容時才寫出來。v1 進來、沒有新內容,出去還是 v1,
      而且跟 f18d208 那一版逐位元組相同(test_pet.js 比對)。唯一的例外是合併時 oldMet 只增不減:兩份對不上
-     (較早移出的那份記得的達標比較晚那份多)時,f18d208 只取較晚那份會少算,這一版取大(chick2 第二輪修正 #2)。
-     已知限制(chick2 第三輪修正 #2):時鐘快的裝置寫的紀錄,oldBefore 會比合併那台的 400 天截止日晚(最多晚兩台的時鐘差)。
+     (較早移出的那份記得的達標比較晚那份多)時,f18d208 只取較晚那份會少算,這一版取大。
+     已知限制:時鐘快的裝置寫的紀錄,oldBefore 會比合併那台的 400 天截止日晚(最多晚兩台的時鐘差)。
      三份以上的紀錄合併時,落在截止日與那個 oldBefore 之間的達標日,依合併的順序可能被加起來或取大,累積達標差這幾天;
      任何一種順序都不少於任何一份輸入,也不少於 f18d208。oldBefore 都不晚於截止日時跟順序無關(test_pet.js 釘住)。
-     要消掉得記下壓縮掉的是哪幾天,資料格式要改,所以不做;時鐘允許的範圍縮到 3 天(第三輪修正 #1)讓這段從 12 天縮到 6 天左右。
+     要消掉得記下壓縮掉的是哪幾天,資料格式要改,所以不做;時鐘允許的範圍縮到 3 天讓這段從 12 天縮到 6 天左右。
      合併只取聯集,同步得到的券不會因為合併少掉。
      foodOld 分開記每種「壓縮進去幾張券」(got)和「其中吃掉幾張」(ate),合併時各自取大,剩的是相減:
-     壓縮時沒看到某一口的那份,蓋不掉看到的那份,吃掉的點心不會隔天又回來(chick2 第二輪修正 #1、#4)。
+     壓縮時沒看到某一口的那份,蓋不掉看到的那份,吃掉的點心不會隔天又回來。
      已知限制:壓縮進去的券認不出是哪幾張。一張券超過 119 天沒同步、另一份同種的舊券已經壓縮成不少於它的數字時,
-     合併逐種取大,這一張不另外加(附錄 A.3、A.4;取大是唯一不會越合併越多的做法,test_pet.js 釘住這個行為)。
+     合併逐種取大,這一張不另外加(取大是唯一不會越合併越多的做法,test_pet.js 釘住這個行為)。
      兩台都離線、各自吃了一口又各自壓縮,合併後只算得到一口(寧可多給)。
      同一張券兩台各吃一次、一口在壓縮那天之前、一口在之後(吃到舊券)時,兩邊都算到;舊券剩的夾在 0、吃掉的不超過壓縮進去的,
-     多算的那一口不會扣到同種還沒吃的新券(chick2 第三輪修正 #3)。
+     多算的那一口不會扣到同種還沒吃的新券。
      獎勵規則(拿到哪種食物)在 js/pet-food.js。 */
 'use strict';
 globalThis.PET = (function () {
@@ -193,11 +193,11 @@ globalThis.PET = (function () {
   /* ---------- 第二階段的欄位:食物(券)與走動開關 ---------- */
   const KEEP_FOOD = 120;    // got、ate 留幾天,更早的壓縮進 foodOld
   const MAX_STOCK = 9;      // 每種點心最多存幾份(在拿到時判斷,js/pet-food.js)
-  const SNACKS_PER_DAY = 3; // 一天最多拿幾份、最多餵幾份點心(Bonnie 2026-10-23:「每天拿三個阿 可以為三次」);在寫入的那台判斷
+  const SNACKS_PER_DAY = 3; // 一天最多拿幾份、最多餵幾份點心;在寫入的那台判斷
   /* 整理時每天最多留幾張券、幾筆吃掉。一台一天最多寫 3 張、3 筆;三台同一天各自離線、各拿 3 份吃 3 份,合併後 9 張 9 筆,
-     上限要容得下,不然 id 大的那幾張會被整理掉(券不見、吃掉的又回來;審查第 1 輪 #2,6 的時候三台就會掉)。一天一份那版是 4。
+     上限要容得下,不然 id 大的那幾張會被整理掉(券不見、吃掉的又回來,6 的時候三台就會掉)。一天一份那版是 4。
      每天 9 張 9 筆、id 都最長、120 天加第一階段 400 天約 120 KB,在測試門檻 128 KB 以內,是雲端單一鍵上限 256 KB
-     (tools/supabase_hardening.sql)的一半(附錄 A.8);一般學生一天 3 張 3 筆,120 天約 20 KB。
+     (tools/supabase_hardening.sql)的一半;一般學生一天 3 張 3 筆,120 天約 20 KB。
      要 4 台以上同一天都離線、各拿滿 3 份才會超過,超過時留 id 最小的 9 張(寧可少這幾張,不讓資料無上限長大) */
   const PER_DAY = 3 * SNACKS_PER_DAY;
   const LEFT_MAX = 100000;
@@ -240,7 +240,7 @@ globalThis.PET = (function () {
     return out;
   }
   /* 讀 v2 的新欄位,壞掉的那一欄自己丟掉,其他照留。
-     foodOld 是 { before, got: 每種壓縮進去幾張券, ate: 其中吃掉幾張 }(chick2 第二輪修正 #1)。
+     foodOld 是 { before, got: 每種壓縮進去幾張券, ate: 其中吃掉幾張 }。
      舊的寫法 { before, left: 每種剩幾張 } 也讀得懂,當成 got 是 left、ate 是 0(線上沒有人寫過 v2,只是測試資料用得到) */
   function readFood(raw, today) { return compress(rawFood(raw, today), today); }
   function rawFood(raw, today) {
@@ -279,9 +279,9 @@ globalThis.PET = (function () {
   }
   /* 舊券還剩幾張:壓縮進去的減掉壓縮時已經吃掉的,再減掉之後吃掉的,最少 0。
      同一張券在兩台各吃一次、一口在壓縮前(壓縮時算進 foodOld.ate)、一口在壓縮後(吃到舊券 old:…)時,合併後兩邊都算到,
-     會減成負的;負的加到同種的新券上,會把還沒吃的新券抵掉(chick2 第三輪修正 #3)。舊券不會被吃掉比壓縮進去的還多,所以夾在 0 */
+     會減成負的;負的加到同種的新券上,會把還沒吃的新券抵掉。舊券不會被吃掉比壓縮進去的還多,所以夾在 0 */
   function oldLeft(fo, f, eaten) { return Math.max(0, (fo.got[f] || 0) - (fo.ate[f] || 0) - oldEaten(fo, f, eaten)); }
-  /* 壓縮(附錄 A.4):最早一筆 got 或 ate 早於「今天減 119 天」時,截止日 c 設成那天;
+  /* 壓縮:最早一筆 got 或 ate 早於「今天減 119 天」時,截止日 c 設成那天;
      早於 c 的券逐種數進 foodOld.got,其中被 ate(不論日期)指到的、加上指到舊券的吃掉紀錄,逐種數進 foodOld.ate;刪掉早於 c 的 got 與 ate。
      吃光的食物在 got 還是有數字,托盤那一格才不會消失 */
   function compress(F, today) {
@@ -297,7 +297,7 @@ globalThis.PET = (function () {
     const fo = F.foodOld, n = {}, e = {};
     if (fo) { Object.assign(n, fo.got); Object.assign(e, fo.ate); }
     /* 舊券吃掉的不超過壓縮進去的:同一張券一口在壓縮前、一口在壓縮後(兩台各吃一次)時兩邊都算到,不夾的話再壓縮一次,
-       多算的那一口會把這次壓縮進去、還沒吃的新券扣掉(chick2 第三輪修正 #3) */
+       多算的那一口會把這次壓縮進去、還沒吃的新券扣掉 */
     if (fo) Object.keys(fo.got).forEach(f => { const k = oldEaten(fo, f, eaten); if (k) e[f] = Math.min(fo.got[f], (own(e, f) ? e[f] : 0) + k); });
     const add = (o, f) => { o[f] = (own(o, f) ? o[f] : 0) + 1; if (!own(n, f)) n[f] = 0; };
     const got = {}, ate = {};
@@ -310,7 +310,7 @@ globalThis.PET = (function () {
   }
   function clampTally(o) { const s = {}; Object.keys(o).sort().forEach(f => { s[f] = Math.max(0, Math.min(LEFT_MAX, o[f])); }); return s; }
 
-  /* 合併(附錄 A.3):got、ate 逐日逐 id 聯集(同 id 不同值取字串較小的);foodOld 兩邊先壓縮到較晚的 before,got、ate 再各自逐種取大;
+  /* 合併:got、ate 逐日逐 id 聯集(同 id 不同值取字串較小的);foodOld 兩邊先壓縮到較晚的 before,got、ate 再各自逐種取大;
      once 聯集取較早的日期;roam 後改的贏,同時改的 on:false 贏(休息優先)。合併完再整理一次(每天上限、壓縮) */
   function unionDated(a, b) {
     const out = {};
@@ -322,10 +322,10 @@ globalThis.PET = (function () {
   }
   function mergeFood(A, B) {
     /* 兩邊的 before 不同時(例如一台停用很久,自己壓縮到今天的截止日;另一台在截止日附近沒有券,before 還停在以前):
-       先把兩邊都壓縮到較晚的那個 before,再逐種取大。直接取 before 較晚的那組,會整份丟掉另一邊的舊券(第三輪審查 #1)。
+       先把兩邊都壓縮到較晚的那個 before,再逐種取大。直接取 before 較晚的那組,會整份丟掉另一邊的舊券。
        重新壓縮時看兩邊的吃掉紀錄,另一台吃掉的舊券不會又算成沒吃。
        「壓縮進去幾張」和「其中吃掉幾張」分開取大:一份壓縮時沒看到某一口,它的吃掉數比較小,蓋不掉看到那一口的那份
-       (以前只記剩幾張、逐種取大,沒看到那一口的那份剩得多,吃掉的又回來;chick2 第二輪修正 #1、#4)。
+       (以前只記剩幾張、逐種取大,沒看到那一口的那份剩得多,吃掉的又回來)。
        壓縮進去的券認不出是哪幾張,所以券數也只能取大:一邊超過 119 天沒同步的券,若另一邊同種的券數不少於它,就不另外加(開頭的已知限制) */
     let foodOld = null;
     const befores = [A.foodOld, B.foodOld].filter(Boolean).map(o => o.before).sort();
@@ -364,7 +364,7 @@ globalThis.PET = (function () {
     const p = empty();
     /* oldBefore 取較晚的;oldMet 只增不減:每一邊把自己早於那天的達標日也算進去,取大的。
        以前成對取 oldBefore 較晚的那組:很久沒同步、還留著 400 天前練習日的那份,整理時自己移到今天的截止日,
-       oldBefore 比雲端晚、oldMet 卻比較小,雲端累積的達標整個被丟掉(chick2 第二輪修正 #2)。
+       oldBefore 比雲端晚、oldMet 卻比較小,雲端累積的達標整個被丟掉。
        兩份對得上時兩邊算出來一樣,結果跟以前逐位元組相同;只有對不上(以前會少掉)時不同 */
     p.oldBefore = a.oldBefore > b.oldBefore ? a.oldBefore : b.oldBefore;
     const folded = x => x.oldMet + (p.oldBefore ? x.met.filter(d => d < p.oldBefore).length : 0);

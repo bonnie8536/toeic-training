@@ -1,4 +1,4 @@
-/* 真機演練用的 Worker(搬家計畫 7.4 最後一項、步驟_真機演練.md 第七節):把 tools/move-worker/worker.js 的三個網域常數換成演練用的,
+/* 真機演練用的 Worker:把 tools/move-worker/worker.js 的三個網域常數換成演練用的,
    讓 PHASE A 的代理在真的 Cloudflare 上先跑一次(代理網頁與檔案、伺服器寫的 tr_hd 與 tr_moved cookie、iPhone 音檔的 Range、
    轉址改寫、新網址憑證不對時的 503 維護頁),不動正式網域。
    用法:node tools/build_rehearsal_worker.js --old <Worker 的 workers.dev 主機名稱> --new https://<新的演練網址> --out <檔案>

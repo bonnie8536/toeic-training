@@ -64,7 +64,7 @@
     return { g: '文法', r: '文章', ph: '片語', ear: '英語耳' }[m] || m;
   }
 
-  /* 寄給客服的信:主旨與內文照計畫 2.2。網址超過 1500 字元時把補充說明縮短(中文每字編碼後 9 個字元) */
+  /* 寄給客服的信:網址超過 1500 字元時把補充說明縮短(中文每字編碼後 9 個字元) */
   function mailto(rec, ctx) {
     const part = partOf(ctx);
     const type = labelOf(rec.c);

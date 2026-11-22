@@ -1,4 +1,4 @@
-/* 站長後台「收費管理」的記帳:記一筆收款(前端計畫九.3)、贈送(九.4)、寫作批改扣篇數與更正(九.5)、下載全部備份 v2(九.6)。
+/* 站長後台「收費管理」的記帳:記一筆收款、贈送、寫作批改扣篇數與更正、下載全部備份 v2。
    tools/test_owner_billing.js 用 fixture 測。
    - 只走 owner_record_payment、owner_grant_comp、owner_consume_credit、owner_adjust_credits、owner_export、owner_export_gateway(資料庫在裡面檢查站長、寫異動紀錄)。
    - 記一筆收款是手動收款(轉帳、LINE Pay、現金)的路;之後接上藍新,線上付款由金流的 Edge Function 記,不經過這裡。
@@ -65,7 +65,7 @@
     if (!O.untilFromDate(d)) return '請選付款日。';
     return d > todayInput() ? '付款日不能晚於今天。' : '';
   }
-  /* 預填金額(js/plans-config.js);名額或篇數不是定價表上的就空著讓她填 */
+  /* 預填金額(js/plans-config.js);名額或篇數不是定價表上的就空著讓站長填 */
   function priceOf(v) {
     const P = window.PLANS;
     if (!isObj(P)) return '';
@@ -103,9 +103,9 @@
       inOwnerClass: arr(d.joined).some(c => c.teacher_id === ownerId),
       credits: Math.max(0, Number(a.credits) || 0),
       seats: typeof a.seats === 'number' && a.seats > 0 ? a.seats : null,
-      /* 停用的班的人數加總(同一人在兩個班會算兩次,只是估計);成員名單還在,變回老師就又讀得到、也算名額(需要她決定的事 20) */
+      /* 停用的班的人數加總(同一人在兩個班會算兩次,只是估計);成員名單還在,變回老師就又讀得到、也算名額 */
       oldMembers: arr(d.classes).filter(c => c.active === false).reduce((s, c) => s + (Number(c.members) || 0), 0),
-      /* 他加入的別位老師的班:他變成老師以後寫給自己學生的備註,那位老師讀得到(需要她決定的事 21) */
+      /* 他加入的別位老師的班:他變成老師以後寫給自己學生的備註,那位老師讀得到 */
       others: arr(d.joined).filter(c => c.teacher_id !== ownerId).map(c => str(c.name) || '沒有班名的班'),
     };
   }
@@ -275,7 +275,7 @@
   }
 
   /* ---------- 學生詳情的寫作批改(教師後台學生進度,只有站長模式) ----------
-     ref = writing_<b|e|y>:<題目 id>:<作文內容 SHA-256 前 12 碼>(前端計畫九.5);內容先去掉頭尾空白再算,
+     ref = writing_<b|e|y>:<題目 id>:<作文內容 SHA-256 前 12 碼>;內容先去掉頭尾空白再算,
      只多一個空白不算新的版本。學生改寫以後內容不同就是新的 ref,可以再扣一次。 */
   async function sha12(t) {
     const c = window.crypto;

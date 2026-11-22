@@ -106,14 +106,14 @@ function canKeepProgress() {
   try { return !(P && typeof P.blocksWrite === 'function' && P.blocksWrite()); } catch (e) { return true; }
 }
 /* 這一頁的資料夾是雲端帳號的,可是這台目前的帳號已經不是它(別的分頁登出、換了帳號,這一頁沒重載):每一頁都不寫(內容頁 profile.js canAct 也擋)。
-   寫了會把登出時刪掉的帳號資料夾建回來,共用電腦上下一個人的練習也會留在前一個人的資料夾裡(2026-10-31 審查)。訪客、本機學生檔案不看這個。
+   寫了會把登出時刪掉的帳號資料夾建回來,共用電腦上下一個人的練習也會留在前一個人的資料夾裡(2026-10-31)。訪客、本機學生檔案不看這個。
    頁面還在確認登入(CLOUD.user 還是 null)、或 cloud.js 是沒有 folderReady 的舊版時,只有這一條擋得住 */
 function folderGone() {
   const id = window.__PROFILE_ID;
   if (typeof id !== 'string' || id.charAt(0) !== 'c') return false;
   try { return localStorage.getItem('tr_current_profile') !== JSON.stringify(id); } catch (e) { return false; }
 }
-/* 這一頁因為帳號那一邊存不進去的原因(每一頁都看,不只內容頁;第 2 輪審查 2026-10-31):
+/* 這一頁因為帳號那一邊存不進去的原因(每一頁都看,不只內容頁;2026-10-31):
    'gone':folderGone(別的分頁登出、換帳號)。
    'loading':已登入,可是 js/cloud.js folderReady 說這一頁的資料夾還不能用:這台的帳號資料夾還沒灌過雲端進度(空的,讀雲端失敗)、這一頁是照還沒灌過的資料夾畫的(別的分頁之後才灌好,要重新整理)、
    或剛在這一頁登入、重載之前(資料夾還是訪客的)。以前非內容頁(每日練習、錯題本)照常寫進資料夾但不記帳,

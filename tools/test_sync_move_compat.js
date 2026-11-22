@@ -1,4 +1,4 @@
-/* 同步合併(feat/sync-union)跟搬家(feat/move)合在一起時要成立的事(同步合併第二輪審查 #6、#7)。
+/* 同步合併(feat/sync-union)跟搬家(feat/move)合在一起時要成立的事。
    用法:node tools/test_sync_move_compat.js
    這個分支自己沒有搬家的檔案(js/move-rules.js、js/move-merge.js):只檢查自己這邊,搬家那幾項略過(算通過)。
    兩個分支都進 main 之後(或試合併的暫存 clone 裡)這幾項就會真的檢查,沒處理好會失敗:

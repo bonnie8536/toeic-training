@@ -1,4 +1,4 @@
-/* 搬家的無頭 Chrome 測試(搬家計畫 7.4):127.0.0.1:8931 當舊網址、localhost:8932 當新網址(兩個不同的網域,js/move-config.js 寫死這兩個),
+/* 搬家的無頭 Chrome 測試:127.0.0.1:8931 當舊網址、localhost:8932 當新網址(兩個不同的網域,js/move-config.js 寫死這兩個),
    127.0.0.1:8933 當冒充的網站。用真的滑鼠點擊(window.open 要使用者的點擊)。
    不連外網:js/cloud-config.js 換成空的(不載 Supabase),其他網域一律解析不到。
    情境:訪客搬家、新網址已經有資料(題庫同 id 不同內容)、同一包再搬、搬家碼貼上、其他分頁開著要先關、冒充的網站送來的包不收、
@@ -821,7 +821,7 @@ T['自動搬家(LINE 內建瀏覽器,這個分頁試過):寄出頁沒有開新�
   return { ok, detail: J({ btns, names, done, note: note.slice(0, 200) }) };
 };
 
-/* ---------- 審查第二輪(10/28) ---------- */
+/* ---------- 10/28 補充的案例 ---------- */
 /* js/move-link.js 在 node 裡(冒充的網站產生自己的金鑰;最後檢查歷史紀錄裡的密文它解不解得開) */
 function linkLib() { require(path.join(REPO, 'js/move-link.js')); return globalThis.MOVE_LINK; }
 const barBtn = (text) => `(() => { const b = [...document.querySelectorAll('#move-bar button')].find((x) => x.textContent === ${J(text)});

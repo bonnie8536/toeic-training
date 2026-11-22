@@ -40,7 +40,7 @@
 ## E. 發學生帳號(日常操作就這個)
 
 **Authentication → Users → Add user**,一人一組:
-- Email 不必是真信箱,格式像 email 就行,例:`anna@bonnie.class`、`s01@bonnie.class`
+- Email 不必是真信箱,格式像 email 就行,例:`anna@class.test`、`s01@class.test`
   (@ 前面那段會顯示成學生名稱,建議用學生好記的代號)
 - 密碼妳設好抄給學生。改密碼/停用也都在這個頁面。
 

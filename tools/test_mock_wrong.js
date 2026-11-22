@@ -1,4 +1,4 @@
-/* 模擬考錯題收進錯題本(mock_wrong)與錯題本分組(定稿設計 2026-11-18,第 4.1 節 M1–M13;審查 2026-11-19 加 M14 答案不截斷、M15 SINCE 不早於上線、M16 開頁跟雲端對齊)。
+/* 模擬考錯題收進錯題本(mock_wrong)與錯題本分組(M1–M13)。
    node + vm:載真題庫 data/*.js、js/sync-merge.js、js/move-rules.js、js/move-merge.js、js/wrongbook.js;
    store 用假的(記每個鍵 get、set 幾次);passTypeLabel 從 js/common.js 抄出來跑。
    用法:node tools/test_mock_wrong.js */
@@ -128,7 +128,7 @@ T['M5 合併結果跟本機一樣時回傳進去的那個物件、sameAsLocal �
 
 /* ================= M6–M11、M13:js/wrongbook.js ================= */
 const WB = (ctx) => need((ctx || BASE).WRONGBOOK, 'js/wrongbook.js(WRONGBOOK)');
-T['M6 pick:刷題紀錄和 mock_wrong 誰算數(定稿 1.2 表格六種情況;形狀壞掉當成沒有)'] = () => {
+T['M6 pick:刷題紀錄和 mock_wrong 誰算數(形狀壞掉當成沒有)'] = () => {
   const P = WB().pick;
   const d = (ok, t) => ({ c: 0, ok, t }), m = (ok, t) => ({ c: 1, ok, t });
   const show = (x) => (x ? (x.r.ok ? 'ok' : 'wrong') + ':' + x.src : 'none');
@@ -354,7 +354,7 @@ T['M13 分頁暫存相容:新版留的 { pid, rec, ans } 舊版 saveLater 的篩
   return { ok, detail: J({ old: oldFilter(entry), n: clean.length, first: clean.slice(0, 3) }) };
 };
 
-/* 審查(2026-11-19)#1:錯題本每列的「你的答案」「正解」整句列出,跟學習記錄(js/history.js)一樣不截斷。
+/* 2026-11-19:錯題本每列的「你的答案」「正解」整句列出,跟學習記錄(js/history.js)一樣不截斷。
    以前截在 30 字,Part 7、聽力大半的正解看不完整(題庫裡最長的選項 109 字) */
 T['M14 optText:選項整句列出不截斷(真題庫每一個選項);選的不在範圍內、題目壞掉回空字串'] = () => {
   const W = WB();
@@ -374,7 +374,7 @@ T['M14 optText:選項整句列出不截斷(真題庫每一個選項);選的不�
   return { ok, detail: J({ n, long, bad: bad.length, sample: bad.slice(0, 3), edge }) };
 };
 
-/* 審查(2026-11-19)#2:SINCE(js/wrongbook.js)是這一版上線的時間,模擬考首頁靠它說「X/X 改版以前的模擬考補不回來」,寧可晚不要早。
+/* 2026-11-19:SINCE(js/wrongbook.js)是這一版上線的時間,模擬考首頁靠它說「X/X 改版以前的模擬考補不回來」,寧可晚不要早。
    還沒上線(origin/main 還沒有 js/wrongbook.js)時:SINCE 要是台灣時間某天 23:59:59、在現在之後、兩天以內。
    上線拖過那一天,這一項就擋下來,要把 SINCE 改成上線當天台灣時間 23:59:59。上線之後 SINCE 是過去的時間,不再檢查 */
 T['M15 SINCE:還沒上線時是台灣時間某天 23:59:59、在現在之後兩天以內;已上線不檢查'] = () => {
@@ -389,7 +389,7 @@ T['M15 SINCE:還沒上線時是台灣時間某天 23:59:59、在現在之後兩�
   return { ok, detail: J({ SINCE: W.SINCE, 台灣: isFinite(since) ? tw(since) : null, 現在台灣: tw(now), 還有幾小時: isFinite(since) ? Math.round((since - now) / 36e5 * 10) / 10 : null }) };
 };
 
-/* 審查 2026-11-19 #1:開頁跟雲端對齊(syncCloud)只叫 CLOUD.syncKey('mock_wrong') 一次、照它回的;沒有雲端、syncKey 丟錯或回失敗的 Promise 都回
+/* 2026-11-19:開頁跟雲端對齊(syncCloud)只叫 CLOUD.syncKey('mock_wrong') 一次、照它回的;沒有雲端、syncKey 丟錯或回失敗的 Promise 都回
    { ok:false, changed:false },不丟錯、不碰 store。四個頁面開頁都有呼叫(模擬考、每日複習、題庫、能力分析),老師後台沒有(讀的是學生的資料) */
 T['M16 syncCloud:只叫一次 CLOUD.syncKey(\'mock_wrong\')、照它回;沒有雲端、丟錯、失敗都回 ok:false 不丟錯、不碰 store;四個頁面開頁有呼叫、老師後台沒有'] = async () => {
   const run = async (cloud) => {

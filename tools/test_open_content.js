@@ -1,4 +1,4 @@
-/* 「先看再登入」的無頭 Chrome 測試(站長 2026-10-31 的決定):內容頁沒登入(雲端)、沒選學生(本機)也看得到內容,
+/* 「先看再登入」的無頭 Chrome 測試(2026-10-31 決定):內容頁沒登入(雲端)、沒選學生(本機)也看得到內容,
    第一次作答時才跳出登入卡或「你是哪位？」,那一下不生效、不寫任何資料,視窗可以關(X、Esc、點遮罩),關掉再作答又跳。
    個人頁(學習記錄、能力分析、每日複習、教師後台)照舊一打開就要登入、關不掉。已登入、已選學生的人行為完全不變。
    兩個本機伺服器:127.0.0.1:8961 雲端模式(js/cloud-config.js 換成假的設定,supabase-js 換成頁面裡的假元件,不連外網),
@@ -108,7 +108,7 @@ function fakeSdk(user, delay) {
   window.supabase = { createClient: () => client };
 })();`;
 }
-/* 會登入、會存雲端的假 supabase-js(第 2 輪審查的三項用):登入資料存在 SB(跟真的 supabase-js 同一個鍵),重載後 getSession 讀得到;
+/* 會登入、會存雲端的假 supabase-js:登入資料存在 SB(跟真的 supabase-js 同一個鍵),重載後 getSession 讀得到;
    雲端的 progress 表與收到的 upsert 放 sessionStorage(__fake_rows、__fake_up),重載後還在。
    c = { user:登入後的帳號, teachersDelay、progressDelay:查詢延遲毫秒, sessionDelay:getSession 延遲毫秒, access:rpc('my_access') 回的使用權 } */
 const SB = 'sb-fakeproj-auth-token';
@@ -139,7 +139,7 @@ function fakeCloud(c) {
   }
   const session = () => { try { return JSON.parse(localStorage.getItem(SB)); } catch (e) { return null; } };
   /* 帳號層級的請求(登出、改暱稱、資料庫函式;my_access 不算)記在 sessionStorage 的 __fake_calls:
-     { op, as: 送出時這台登入資料的帳號 id }(跟真的 supabase-js 一樣,請求帶的是 localStorage 現在的登入資料;審查 D 那一項看有沒有送、送給誰)。回的東西跟以前一樣 */
+     { op, as: 送出時這台登入資料的帳號 id }(跟真的 supabase-js 一樣,請求帶的是 localStorage 現在的登入資料;看有沒有送、送給誰)。回的東西跟以前一樣 */
   const called = (op) => { const log = ss('__fake_calls'); const cur = session(); log.push({ op, as: cur && cur.user ? cur.user.id : null }); sessionStorage.setItem('__fake_calls', JSON.stringify(log)); };
   /* Google 登入:先離開這一頁(到 robots.txt,當作 Google 的同意頁),測試再開 redirectTo#access_token=…;
      回來那一頁 getSession 跟真的 supabase-js(detectSessionInUrl)一樣,把網址上的登入資料存起來、清掉網址。
@@ -405,7 +405,7 @@ async function guestPage(B, mode, pg) {
       if (end.main !== before.main) bad.push(label + ' 關掉之後畫面變了');
     }
     if (pg.drag) {
-      /* 閱讀頁的單字考題:字卡拖進空格(pointerdown 起頭)也被擋下,放開時跳出視窗(第 3 輪審查 #3:以前不跳,看不出為什麼拖不動) */
+      /* 閱讀頁的單字考題:字卡拖進空格(pointerdown 起頭)也被擋下,放開時跳出視窗(以前不跳,看不出為什麼拖不動) */
       const before = await snap(s);
       const { a, b } = await chipAndBlank(s);
       await mouseDrag(s, a, b);
@@ -683,7 +683,7 @@ T['本機「你是哪位？」的說明跟著畫面:還沒有檔案時請他建�
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 第 2 輪審查 #1:沒登入按「播放全部」,播到一半從頭像選單登入。登入成功(CLOUD.user 有了)到頁面重載之間,這一頁的資料夾還是訪客的;
+/* 沒登入按「播放全部」,播到一半從頭像選單登入。登入成功(CLOUD.user 有了)到頁面重載之間,這一頁的資料夾還是訪客的;
    這時下一句開始播(第 1 句播完的 ended),不能寫進訪客資料夾、不能記進帳號的帳本。記了帳,灌資料時會把帳號在雲端的那一列當成
    「本機比較新」,讀不到本機的值就上傳 null,把各裝置的「聽過幾句」整列清掉。教師查詢慢 1.5 秒,登入一定落在這段時間裡 */
 const AUDIO_HOOK = '(() => { const p = HTMLMediaElement.prototype.play; HTMLMediaElement.prototype.play = function () { window.__audio = this; return p.call(this); }; })();';
@@ -726,7 +726,7 @@ T['播到一半登入:登入到重載之間下一句開始播,不寫訪客資料
   return { ok, detail: J(r) };
 };
 
-/* 第 2 輪審查 #2:付費牆(PAID_UI 打開、試用結束)在 App 外殼裡跟登入視窗一樣露出頂欄和分頁列,分頁點得到(內容頁改成 on-action 之後也一樣) */
+/* 付費牆(PAID_UI 打開、試用結束)在 App 外殼裡跟登入視窗一樣露出頂欄和分頁列,分頁點得到(內容頁改成 on-action 之後也一樣) */
 T['付費牆:App 外殼裡內容頁與個人頁的遮罩都露出頂欄和分頁列,點分頁換得了頁'] = async (B) => {
   const out = [];
   SWAP = { '/js/plans-config.js': fs.readFileSync(path.join(REPO, 'js', 'plans-config.js'), 'utf8').replace(/window\.PAID_UI\s*=\s*false/, 'window.PAID_UI = true') };
@@ -751,7 +751,7 @@ T['付費牆:App 外殼裡內容頁與個人頁的遮罩都露出頂欄和分頁
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 第 2 輪審查 #3:矮一點的手機(iPhone SE、mini 的 Safari、Android)上,作答跳出的登入卡(切到註冊更高)比畫面高時遮罩可以捲:
+/* 矮一點的手機(iPhone SE、mini 的 Safari、Android)上,作答跳出的登入卡(切到註冊更高)比畫面高時遮罩可以捲:
    捲到最上面 X、標題、說明句都在畫面裡,捲到最下面看得到「已經有帳號？登入」那一列 */
 T['矮手機:作答跳出的登入卡、註冊卡比畫面高時可以捲,X、標題、說明句、最下面的切換列都看得到'] = async (B) => {
   const out = [];
@@ -771,7 +771,7 @@ T['矮手機:作答跳出的登入卡、註冊卡比畫面高時可以捲,X、�
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 第 3 輪審查 #1:登入失效(別台按「登出所有裝置」)改回訪客,或別的分頁登出(帳號資料夾刪掉了),這個分頁灌過資料的旗標還在。
+/* 登入失效(別台按「登出所有裝置」)改回訪客,或別的分頁登出(帳號資料夾刪掉了),這個分頁灌過資料的旗標還在。
    在同一個分頁用 Google 登回來:這一頁的資料夾不是這個帳號的,要跟剛登入一樣灌資料、重載,之後作答照常寫進帳號資料夾、不跳登入卡,
    上傳的是「雲端原本的 + 新的這一筆」,不能只剩新的這一筆(帳號資料夾是空的時候直接上傳,會把雲端整列蓋掉) */
 async function settleNav(s, ms) {
@@ -835,7 +835,7 @@ T['登入失效或別的分頁登出之後,同一分頁用 Google 登回來:灌�
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 第 3 輪審查 #2:桌機視窗比卡片矮(1366x768 的筆電、1920x1080 放大 125%)時遮罩有捲軸。按住捲軸拖是要捲動看下面,
+/* 桌機視窗比卡片矮(1366x768 的筆電、1920x1080 放大 125%)時遮罩有捲軸。按住捲軸拖是要捲動看下面,
    不是點遮罩:視窗不能關、打的字要還在。點遮罩的空白處照樣關 */
 T['桌機矮視窗:按住登入卡、註冊卡、「你是哪位？」遮罩的捲軸拖動不會關掉視窗,打的字還在;點遮罩空白處照樣關'] = async () => {
   const out = [];
@@ -888,7 +888,7 @@ T['桌機矮視窗:按住登入卡、註冊卡、「你是哪位？」遮罩的�
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 第 3 輪審查 #3:閱讀頁單字考題說「字卡拖進空格」,拖曳是第一種作答方法。沒登入時拖不動,放開那一下要跳出視窗說明為什麼
+/* 閱讀頁單字考題說「字卡拖進空格」,拖曳是第一種作答方法。沒登入時拖不動,放開那一下要跳出視窗說明為什麼
    (觸控:放開時根本沒有 click;滑鼠:click 落在字卡與空格共同的外層,不在作答元素上)。
    一般作答鈕按下去拖開再放(取消點擊的慣例)不跳。已登入的人照樣拖得進去 */
 T['拖曳:閱讀頁字卡拖進空格(觸控)沒登入時放開就跳出視窗,畫面與資料不變;一般作答鈕按下去拖開不跳;已登入照樣拖得進去'] = async (B) => {
@@ -927,7 +927,7 @@ T['拖曳:閱讀頁字卡拖進空格(觸控)沒登入時放開就跳出視窗,�
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 第 3 輪審查 #4:作答框按 Ctrl+V 貼上、把別處的文字拖進來,跟打字一樣是作答:沒登入時跳出視窗、框裡什麼都沒進來、什麼都不寫。
+/* 作答框按 Ctrl+V 貼上、把別處的文字拖進來,跟打字一樣是作答:沒登入時跳出視窗、框裡什麼都沒進來、什麼都不寫。
    已登入的人拖得進去 */
 T['貼上、拖文字進作答框:沒登入時跳出視窗,框裡沒有字、資料不變;關掉後再貼又跳;已登入的人拖得進去'] = async (B) => {
   const out = [];
@@ -970,7 +970,7 @@ T['貼上、拖文字進作答框:沒登入時跳出視窗,框裡沒有字、資
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 第 4 輪審查 #1:先看再登入的主要流程是「沒登入按作答 → 登入卡 → Google → 回到同一個內容頁」。回來那一頁內容先畫好,
+/* 先看再登入的主要流程是「沒登入按作答 → 登入卡 → Google → 回到同一個內容頁」。回來那一頁內容先畫好,
    supabase-js 要先拿網址上的 access_token 去問帳號(getSession 慢),這段時間 CLOUD.user 是 null、資料夾還是訪客的。
    這時按作答(通常一回來就再按剛剛那一題)只擋下,不能跳「登入之後才能作答」;確認完灌資料、重載,之後照常作答。
    另外這一頁正要灌資料重載時,開著的登入卡上按 Google 不導去 Google(location.assign 會蓋掉重載,剛登入的人又被送去 Google 一次);
@@ -1056,7 +1056,7 @@ T['Google 登入回來、雲端還沒確認登入:按作答只擋下、不跳「
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 第 4 輪審查 #2:Google 回來(或在登入卡用密碼登入)時讀雲端進度失敗(網路斷一下、Supabase 慢或休眠):這一頁不重載,
+/* Google 回來(或在登入卡用密碼登入)時讀雲端進度失敗(網路斷一下、Supabase 慢或休眠):這一頁不重載,
    CLOUD.user 有了、頂欄顯示已登入,資料夾卻還是訪客的,作答照樣擋下(寫進訪客資料夾、之後照帳號資料夾的舊值上傳會蓋掉雲端)。
    這時不能叫已登入的人「登入之後才能作答」:跳一張「還沒載入你的練習紀錄」的卡,附「重新整理」;重新整理之後灌回雲端紀錄、照常作答 */
 T['登入後讀雲端進度失敗、資料夾還不是這個帳號:作答跳「重新整理」卡(不叫人登入)、什麼都不寫;重新整理後灌回雲端紀錄、照常作答'] = async (B) => {
@@ -1129,7 +1129,7 @@ T['登入後讀雲端進度失敗、資料夾還不是這個帳號:作答跳「�
 
 /* 已登入的人開新分頁(sessionStorage 是每個分頁自己的,這個分頁還沒灌過):內容頁照舊先灌雲端資料再重載。
    重載前那一下小雞照常同步一次,寫入被最後一道擋下(根據的是舊畫面,本來就不寫),但那是登入著的人,不能留「還沒登入」的警告
-   (第 4 輪審查 #2 的測試重新整理後就是這一頁,98f3778 就有);重載後照常作答、寫進帳號資料夾、雲端原本的紀錄還在 */
+   (98f3778 就有);重載後照常作答、寫進帳號資料夾、雲端原本的紀錄還在 */
 T['已登入的人開新分頁的內容頁:灌資料重載前那一下不寫、不留「還沒登入」警告,重載後照常作答'] = async (B) => {
   const day = Date.now() - 864e5;
   const oldHist = [0, 1, 2].map((n) => ({ m: 'g', id: 'old-' + n, c: 0, ok: true, t: day + n }));
@@ -1157,7 +1157,7 @@ T['已登入的人開新分頁的內容頁:灌資料重載前那一下不寫、�
   return { ok, detail: J(r) };
 };
 
-/* 2026-10-31 審查(main 130f330 就有,tools/test_sync.js 情境 52~54 測 cloud.js 的記帳;這裡測內容頁擋不擋得住、什麼都不寫):
+/* 2026-10-31(main 130f330 就有,tools/test_sync.js 情境 52~54 測 cloud.js 的記帳;這裡測內容頁擋不擋得住、什麼都不寫):
    甲:別的分頁按登出(帳號資料夾、帳本、登入資料、目前帳號都刪了),這一頁沒重載,記憶體裡還是原帳號:作答跳「重新整理」卡,
        帳號資料夾不會被建回來、不記帳;這一頁不經過作答鈕的寫入(store.set、logAttempt)也不寫。
        這裡是內容頁(grammar.html,profile.js 的 blocksWrite 也擋);沒有 data-require-profile 的頁面只靠 common.js 的最後一道,另見「非內容頁(每日練習)」那兩項。
@@ -1184,7 +1184,7 @@ T['別的分頁登出後沒重載的內容頁、帳號資料夾還沒灌過又�
     a.wrote = lsDiff(before.ls, mid.ls);
     a.same = mid.main === before.main;
     a.picked = await s.eval(PICKED);
-    /* 卡上說的是帳號已經在別的分頁登出,不是「你已經登入了」(第 2 輪審查之後;之前沿用「還沒載入你的練習紀錄」那張) */
+    /* 卡上說的是帳號已經在別的分頁登出,不是「你已經登入了」(之前沿用「還沒載入你的練習紀錄」那張) */
     a.ok = a.at === true && a.card.mask && /登出/.test(a.card.title) && !/你已經登入/.test(a.card.why) && !WHY.cloud.test(a.card.why) && !a.wrote.length && a.same && a.picked === 0;
   } finally { await s.close(); }
   s = await open(B, { url: 'robots.txt', early: true, sdk: fakeCloud({ user: USER }),
@@ -1226,7 +1226,7 @@ const OTHER_TAB_LOGOUT = `(() => { [${J(SB)}, ${J(SB + '-user')}, ${J('tr_unsync
 const KEEP = "(typeof canKeepProgress === 'function' ? canKeepProgress() : null)";
 const accountKeys = (ls) => Object.keys(JSON.parse(ls)).filter((k) => k.indexOf('tr_u' + CPID + '_') === 0 || k === 'tr_unsynced_' + UID);
 
-/* 第 2 輪審查(2026-10-31):沒有 data-require-profile 的頁面(每日練習)沒有 data-gate,profile.js 的 blocksWrite 也不管,
+/* 2026-10-31:沒有 data-require-profile 的頁面(每日練習)沒有 data-gate,profile.js 的 blocksWrite 也不管,
    別的分頁登出之後只有 common.js 的最後一道擋得住。不擋的話這一頁把登出時刪掉的帳號資料夾建回來,之後帳號在這台登回來時
    資料夾不是空的、不記「還沒灌過」,別的分頁沿用舊的「灌過」旗標整份上傳(tools/test_sync.js 情境 52 那條又回來)。
    甲:已登入、灌過的頁面(記憶體裡還是原帳號):store.set、logAttempt 都不寫;按作答跳「重新整理」卡,說的是帳號已經登出
@@ -1299,7 +1299,7 @@ T['非內容頁(每日練習):別的分頁登出後沒重載,寫入與作答都�
   return { ok: !!a.ok && !!b.ok && !!c.ok, detail: '已登入的頁面 ' + J(a) + ' | 還在確認登入 ' + J(b) + ' | 每日複習 ' + J(c) };
 };
 
-/* 第 2 輪審查(2026-10-31):已登入、這台的帳號資料夾還沒灌過(空的,「還沒灌過」標記在)、讀雲端進度失敗時,
+/* 2026-10-31:已登入、這台的帳號資料夾還沒灌過(空的,「還沒灌過」標記在)、讀雲端進度失敗時,
    每日練習(非內容頁)以前照常顯示對錯、寫進帳號資料夾但不記帳;網路好了灌資料用雲端蓋回去,剛答的題目沒有任何提示就不見了
    (雲端也有今天的每日進度時一起被蓋掉)。要跟內容頁一樣:作答跳「重新整理」卡、不對答案、什麼都不寫;
    網路好了重新整理,灌回雲端紀錄、照常作答,雲端原本的紀錄還在 */
@@ -1346,7 +1346,7 @@ T['非內容頁(每日練習):已登入、帳號資料夾還沒灌過又讀不�
   return { ok: !!r.ok, detail: J(r) };
 };
 
-/* 第 2 輪審查(2026-10-31):模擬考的「交卷」(和時間到自動交卷)沒有 data-gate。考到一半別的分頁登出、換帳號,
+/* 2026-10-31:模擬考的「交卷」(和時間到自動交卷)沒有 data-gate。考到一半別的分頁登出、換帳號,
    或登回來時帳號資料夾空的又讀不到雲端(「還沒灌過」標記),交卷那一下被 common.js 的最後一道靜靜擋下:
    以前結果畫面照常出現,這次成績哪裡都沒有存,學生也不知道。
    要的是:結果照樣給他看,寫明「這次成績還沒存進紀錄」,成績先放這個分頁的 sessionStorage(綁交卷時的帳號資料夾);
@@ -1357,7 +1357,7 @@ const YPID = 'c' + Y_USER.id.replace(/-/g, '');
 T['模擬考考到一半別的分頁登出、換帳號、登回來還沒灌好,或時間到自動交卷:結果寫明還沒存,成績留在這個分頁,回到同一個帳號後補存;不寫進別人的資料夾'] = async (B) => {
   const day = Date.now() - 864e5;
   const three = [1, 2, 3].map((n) => ({ d: new Date(day + n * 1000).toISOString(), size: 'quick', lRaw: n, lTotal: 12, rRaw: n, rTotal: 18, lScore: 5, rScore: 5 }));
-  /* 錯題本(錯題本定稿 2026-11-18,E2、E3):Part 5 前兩題答錯(抽題固定);第 2 題 mock_wrong 裡已經有一筆比這次交卷新的,補存後還是那一筆 */
+  /* 錯題本(E2、E3):Part 5 前兩題答錯(抽題固定);第 2 題 mock_wrong 裡已經有一筆比這次交卷新的,補存後還是那一筆 */
   const P5 = BANK.part5, newer = { [P5[1].id]: { c: P5[1].answer, ok: true, t: Date.now() + 600e3 } };
   const rows = J([{ k: 'mock_history', v: three, updated_at: new Date(day + 10000).toISOString() }, { k: 'mock_wrong', v: newer, updated_at: new Date(day + 10000).toISOString() }]);
   const login = J({ access_token: 'x', user: USER });
@@ -1434,7 +1434,7 @@ T['模擬考考到一半別的分頁登出、換帳號、登回來還沒灌好,�
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 多分頁第 3 輪審查 #2(2026-11-01):單字頁的題庫編輯器(加入單字、勾選、刪字、改名)和遊戲、片語特訓的選項沒有 data-gate
+/* 多分頁(2026-11-01):單字頁的題庫編輯器(加入單字、勾選、刪字、改名)和遊戲、片語特訓的選項沒有 data-gate
    (進來那一下的「新增題庫」「編輯」「開始練習」才有)。進來之後別的分頁登出,或這台的帳號資料夾還沒灌過(別的分頁正在灌、讀不到雲端):
    以前 common.js 的 store 靜靜不寫,畫面卻寫「加入 3 個」、清空輸入框、清單 0 個字,選項照樣對答案,什麼提示都沒有(e49e444 則會寫進
    被刪掉的資料夾、記帳)。要的是:跳「重新整理」卡,輸入框的字留著、勾選不變、字沒刪,什麼都不寫;照常的時候跟以前一樣 */
@@ -1464,7 +1464,7 @@ async function pressUiConfirm(s, sel, text, during) {
   return ['confirm'];
 }
 
-/* 單字頁「練哪些字」改成勾選清單(站長 2026-11:「單字題庫可以改成用勾的」):
+/* 單字頁「練哪些字」改成勾選清單(2026-11 決定):
    已登入:點開清單勾兩個題庫、取消文章單字 → 存起來(mode 是第一個、modes 照清單順序),重新整理還記得,記憶吐司烤的字就是兩個題庫的字;
    全部取消:不存、寫「至少勾一個。」、四個「開始」都不能按(按了也不跳視窗);再勾回一個(3 個字):掉落、翻牌能按,吐司、選擇題不能,卡片寫要幾個。
    手機寬(375、320):點開清單沒有左右捲動、每一列至少 40px 高、點名稱就能勾、級別選單不在 label 裡(點它不會切換勾選)。
@@ -1552,7 +1552,7 @@ T['單字頁「練哪些字」勾選清單:勾兩個題庫存起來、重新整�
     && r.guest.checked === 'word,phrase' && !r.guest.mask && !r.guest.wrote.length && r.guest.after === 'word';
   return { ok, detail: J(r) };
 };
-/* 審查後補的(2026-11-11):
+/* 補的(2026-11-11):
    手機寬(320、375、390):老師按週出的題庫名稱前面都一樣,點開清單每個名稱整個看得到(換行,不變省略號);窄螢幕清單佔滿一整行(「練哪些字」在上面)。
    框(summary)的無障礙名稱(Chrome 算的)開頭是旁邊看得到的「練哪些字」,後面是勾了哪些、共幾個字。
    全選的勾選框跟題庫的勾選框在同一欄;題庫有字沒勾時,清單那一列寫「練 N 個」,跟下面題庫卡片的數字一樣。
@@ -1605,7 +1605,7 @@ T['單字頁「練哪些字」:手機上長的題庫名稱整個看得到、框�
     && r.only.active === 'SUMMARY' && r.only.inPick && r.only.picked === 'bank:bw1' && r.only.y < 200;
   return { ok, detail: J(r) };
 };
-/* 審查第 2 輪(2026-11-11):
+/* 補的(2026-11-11):
    手機寬(375、320)框收起來時:長的週題庫名稱可以被省略號切掉,但後面那段「N 個 · 共 X 個字」整個看得到(勾 5 個、只勾 3 個週題庫都一樣),框還是一行。
    題庫卡片的「只練這個」在 320、360、375、390 寬都是一行(跟同一列的「編輯」一樣高),沒有超出卡片、沒有左右捲動。
    框的無障礙名稱從框裡的字來(開頭是「練哪些字」),Chrome 不再把同一段字放進描述(以前報讀軟體會唸兩次)。
@@ -1746,7 +1746,7 @@ T['單字頁:題庫編輯器的加入單字、勾選、刪字、改名,片語特
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 審查 D 第 1 輪 #4、#5、#6(73900cf 新加的擋下):
+/* (73900cf 新加的擋下):
    甲 掉落消除玩到一半擋下(別的分頁登出、帳號資料夾還沒灌過),學生在輸入框打字按 Enter:以前同一下 Enter 的 keypress 落到卡上的「重新整理」,
       頁面馬上重載,打的字和這一局都沒了、卡片根本看不到。要的是:不重載,卡片在,打的字留著,遊戲暫停;卡片開著時再按一次 Enter 也不重載
       (卡的焦點停在標題:重新整理會清掉這一頁還沒存的東西,不當預設按鈕),卡上寫明重新整理會清掉還沒存的。
@@ -1826,14 +1826,14 @@ T['單字頁遊戲:掉落消除擋下時按 Enter 不重新整理、字掉到底
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 帳號那一邊存不進去時的漏攔偵測(審查 D 第 2 輪 #2):js/common.js 的 keepOrWarn 在 accountBlock 時不印「還沒登入」
+/* 帳號那一邊存不進去時的漏攔偵測:js/common.js 的 keepOrWarn 在 accountBlock 時不印「還沒登入」
    (小雞開頁同步也會走到,不是漏攔),最下面主程式那一道看不到。這裡把 keepOrWarn 包一層,記下「帳號那一邊靜靜擋下」的寫入(小雞的不算):
    作答被 data-gate、holdForAccount 擋在前面時一筆都不會有;有的話就是某個作答漏攔,畫面照樣說存了。重載後要再裝一次 */
 const COUNT_SILENT = `(() => { if (window.__silent) return true; const f = window.keepOrWarn; window.__silent = [];
   window.keepOrWarn = (what) => { const ok = f(what); if (!ok && !/^pet/.test(String(what)) && typeof accountBlock === 'function' && accountBlock()) window.__silent.push(what); return ok; }; return true; })()`;
 const SILENT = '(window.__silent || []).slice()';
 const UPS = "JSON.parse(sessionStorage.getItem('__fake_up') || '[]').map((u) => u.k).filter((k) => k !== 'pet' && k !== '_meta')";
-/* 審查 D 第 2 輪 #2:刷題頁的聽力隨機練習、聽力錯題複習(js/listening.js)和文法頁的動詞測驗(js/verbs.js)進來之後的作答、交卷沒有 data-gate
+/* 刷題頁的聽力隨機練習、聽力錯題複習(js/listening.js)和文法頁的動詞測驗(js/verbs.js)進來之後的作答、交卷沒有 data-gate
    (進來那一下「開始聽力練習」「複習」「測驗這些字」才有)。開始之後別的分頁登出,或這台的帳號資料夾還沒灌過:
    以前 common.js 靜靜不寫,畫面卻照樣選取、對答案,交卷後寫「答錯的題目已收進錯題本。」,其實一筆都沒存、也沒跳卡(e49e444 則寫進被刪掉的資料夾、記帳)。
    要的是:跟同一頁的閱讀練習一樣跳「重新整理」卡,不選取、不對答案、不出成績,之前選好、打好的留著,什麼都不寫;照常的時候跟以前一樣存、上傳 */
@@ -1880,7 +1880,7 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
       await s.eval(`window.__old = true; localStorage.setItem(${J(P2)}, JSON.stringify({ [TOEIC.listening.p2[0].id]: { c: (TOEIC.listening.p2[0].answer + 1) % 3, ok: false, t: 1 } })); location.reload(); true`);
       r.revSettled = await settleNav(s);
       await sleep(800);
-      /* 錯題本面板那一列的「查看」→ 聽力 Part 2 的錯題本清單 →「開始複習」(data-gate,這時能作答)(錯題本定稿 2026-11-18) */
+      /* 錯題本面板那一列的「查看」→ 聽力 Part 2 的錯題本清單 →「開始複習」(data-gate,這時能作答) */
       await s.eval("(() => { const row = [...document.querySelectorAll('.review-row')].find((x) => /聽力 Part 2/.test(x.textContent)); const b = row && row.querySelector('.btn'); if (!b) return false; b.id = '__press'; return true; })()");
       await click(s, '#__press');   // 查看
       r.listSettled = await settleNav(s);
@@ -1947,7 +1947,7 @@ T['刷題頁聽力隨機練習、聽力錯題複習、動詞測驗:開始之後�
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 審查 D 第 3 輪 #3:刷題頁的隨機練習、聽力隨機練習、程度檢測交卷時,沒答完會先問「還有 N 個單元沒答完，確定要交卷嗎？」。
+/* 刷題頁的隨機練習、聽力隨機練習、程度檢測交卷時,沒答完會先問「還有 N 個單元沒答完，確定要交卷嗎？」。
    data-gate 在按下去那一刻檢查(這時還能作答),確認視窗開著的時候別的分頁登出(或這台的帳號資料夾變成還沒灌過):
    以前按確定之後照樣批改,store.set 被 common.js 的最後一道靜靜擋下,畫面卻寫「答錯的 N 題已收進錯題本。」、畫出檢測報告,
    其實一筆都沒存、也沒跳卡(e49e444 則寫進被刪掉的資料夾、上傳)。要的是:問完之後再查一次,擋下就跳「重新整理」卡、不批改、不出成績,
@@ -2064,7 +2064,7 @@ async function pressDialogs(B, s, sel, text, exact, during, promptText) {
   return asked;
 }
 
-/* 審查 D 第 4 輪 #3(e49e444 就有;49a5080 那一項的確認視窗是同一頁裡的替身,抓不到):Chrome 的原生確認視窗開著的時候,
+/* (e49e444 就有;49a5080 那一項的確認視窗是同一頁裡的替身,抓不到):Chrome 的原生確認視窗開著的時候,
    別的分頁對 localStorage 的改動不會送進這一頁,按確定之後同一段程式裡讀到的還是舊值(holdForAccount、canSaveNow、帳號動作的 mustBeShown 都放行)。
    這裡真的開兩個分頁(A 是要測的頁面,O 是同網域的 robots.txt)、跳真的視窗:視窗開著時 O 登出 X(或記上「還沒灌過」、改登入 Y),再按確定。
    以前:交卷照樣批改、出成績,把登出時刪掉的帳號資料夾寫回來、上傳;模擬考照樣存進紀錄;刪除帳號送出 delete_own_account
@@ -2091,7 +2091,7 @@ T['真的確認視窗開著時另一個分頁登出、記上還沒灌過、改�
       { name: '聽力隨機練習', ui: true, url: 'practice.html', start: ['.listen-start', '開始'], pick: '.letter-row .letter-big', submit: ['.quiz-act', '交卷'], keys: [HIST, P2], up: ['hist', 'listen_p2'], report: /^\d+ \/ 10$/ },
       { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.quiz-act', '交卷'], keys: [DIAG], up: ['diag'], report: /./, ui: true },
       { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.quiz-act', '交卷'], keys: [MH], up: ['mock_history'], report: /參考總分/, mock: true, ui: true },
-      /* 錯題本(定稿 E4):抽題固定,聽力 2 第 1 題答錯 → 照常時多寫、多傳 mock_wrong 各一次;擋下時一個鍵都不寫 */
+      /* 錯題本:抽題固定,聽力 2 第 1 題答錯 → 照常時多寫、多傳 mock_wrong 各一次;擋下時一個鍵都不寫 */
       { name: '模擬考(答一題錯)', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: '#mock-root .letter-row .letter-big', pickI: wrongOf(BANK.listening.p2[0]), pre: FIXRAND,
         submit: ['.quiz-act', '交卷'], keys: [MH, 'tr_u' + CPID + '_mock_wrong'], up: ['mock_history', 'mock_wrong'], once: 'mock_wrong', report: /參考總分/, mock: true, ui: true },
     ];
@@ -2231,7 +2231,7 @@ T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 
     { name: '聽力隨機練習', ui: true, url: 'practice.html', start: ['.listen-start', '開始'], pick: '.letter-row .letter-big', submit: ['.quiz-act', '交卷'], sets: ['listen_p2', 'hist'], count: HIST, add: 1, report: /^\d+ \/ 10$/ },
     { name: '程度檢測', url: 'diagnostic.html', start: ['.diag-intro .btn.primary', '開始'], pick: '.q-block .opt', submit: ['.quiz-act', '交卷'], sets: ['diag'], count: HIST, add: 0, report: /./, ui: true },
     { name: '模擬考', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: null, submit: ['.quiz-act', '交卷'], sets: ['mock_history'], count: MH, add: 1, report: /參考總分/, mock: true, ui: true },
-    /* 錯題本(定稿 E4):有作答時按兩下交卷,mock_wrong 也只寫一次 */
+    /* 錯題本:有作答時按兩下交卷,mock_wrong 也只寫一次 */
     { name: '模擬考(答一題錯)', url: 'mock.html', start: ['.part-card .btn.primary', ''], pick: '#mock-root .letter-row .letter-big', pickI: wrongOf(BANK.listening.p2[0]), fix: FIXRAND,
       submit: ['.quiz-act', '交卷'], sets: ['mock_history', 'mock_wrong'], count: MH, add: 1, report: /參考總分/, mock: true, ui: true },
   ];
@@ -2298,7 +2298,7 @@ T['交卷的確認視窗按確定之後馬上再按一次交卷(還在等那 50 
     : J(out.map((x) => x.how + '/' + x.page + ' 問 ' + x.asked.join(',') + (x.asked2 ? ' 再問 ' + x.asked2.join(',') : '') + ' 批改 ' + (x.done2 !== undefined ? x.done2 : x.done) + ' 次')) };
 };
 
-/* 多分頁第 3 輪審查 #1(2026-11-01):別的分頁登出又登回來、正在灌資料(「還沒灌過」標記記著、帳號資料夾空的)時,這個分頁換到寫作頁的技巧課。
+/* 多分頁(2026-11-01):別的分頁登出又登回來、正在灌資料(「還沒灌過」標記記著、帳號資料夾空的)時,這個分頁換到寫作頁的技巧課。
    寫作頁的 readMap 是畫面時讀的(開頁時是空的),按「標記讀完」整份寫回。這一頁確認登入(查教師身分)之前別的分頁先灌好、劃掉標記:
    以前這一頁不灌資料,按下去雲端 writing_read 從三課變成只剩這一課。要的是:這一頁重灌重載,畫面換成灌好的資料夾,按下去四課都在;
    這一頁自己讀雲端也失敗時,按下去跳「重新整理」卡、什麼都不寫,雲端三課還在 */
@@ -2339,7 +2339,7 @@ T['寫作頁:開頁時帳號資料夾還沒灌過(別的分頁正在灌),確認�
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 審查 D 第 2 輪 #3:加入班級視窗開著(自己按開的、邀請連結 ?join= 開的)、改暱稱視窗開著的時候,別的分頁登出 X、改登入 Y。
+/* 加入班級視窗開著(自己按開的、邀請連結 ?join= 開的)、改暱稱視窗開著的時候,別的分頁登出 X、改登入 Y。
    以前按「加入」:不送(對),但連視窗帶打好的邀請碼一起關掉、開卡;卡上說「要留著的話，先在別的分頁登回原本的帳號，再回來按一次」,
    照做之後視窗是空的(?join= 的碼開頁時就從網址拿掉了)。改暱稱也一樣,打的暱稱不見了。
    要的是:加入視窗不關,那句話寫在表單的訊息行,碼留在框裡;登回 X 再按一次「加入」照常送到 X。
@@ -2407,13 +2407,13 @@ T['加入班級、改暱稱的視窗開著時別的分頁換帳號:按下去不�
   return { ok: out.every((x) => x.ok), detail: J(out) };
 };
 
-/* 審查 D(e49e444 就有;tools/test_sync.js 情境 63 測 js/cloud.js 送出前的確認):分頁畫面是帳號 X、沒重載,別的分頁登出 X、改登入 Y(或只登出)。
+/* e49e444 就有(tools/test_sync.js 情境 63 測 js/cloud.js 送出前的確認):分頁畫面是帳號 X、沒重載,別的分頁登出 X、改登入 Y(或只登出)。
    supabase-js 送出時用的是這台現在的登入資料:以前這一頁按「刪除帳號」刪掉的是 Y 的帳號與雲端進度,「登出」把 Y 登出,
    「改暱稱」改的是 Y,「加入班級」把 Y 加進班。要的是:「我的」頁、頭像選單的這些按鈕都不問、不送,跳「這個帳號已經在別的分頁登出」卡,
    說剛剛按的沒有送出;Y 的登入資料、目前帳號、資料夾都不動,這一頁不重載,X 的資料夾不會被建回來。
    問的時候換帳號:確認視窗、暱稱視窗開著時別的分頁才換成 Y,按確定之後 js/cloud.js 送出前那一次確認擋下,一樣跳卡、不跳 alert、不送。
    平常登入著的「我的」頁:改暱稱、刪除帳號照常問、照常送到 X。
-   審查 D 第 1 輪 #1、#3:這台已經沒有任何人登入著(只登出;或登入被撤銷、別的分頁照 leaveStaleAccount 改回訪客,X 的資料夾還留著)時按「登出」,
+   這台已經沒有任何人登入著(只登出;或登入被撤銷、別的分頁照 leaveStaleAccount 改回訪客,X 的資料夾還留著)時按「登出」,
    不會登出到別人:照 e49e444 清掉 X 留在這台的東西、重載,但不呼叫 signOut(31745ec 跳卡、X 的資料留在共用電腦上)。刪除帳號照樣擋 */
 T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出所有裝置、改暱稱、刪除帳號、加入班級都不問不送,跳「這個帳號已經在別的分頁登出」卡;平常登入著照常'] = async (B) => {
   const login = J({ access_token: 'x', user: USER });
@@ -2505,7 +2505,7 @@ T['別的分頁登出、改登入別人後沒重載的頁面:按登出、登出�
   return { ok: !bad.length, detail: bad.length ? '不對的 ' + bad.length + ' 項:' + J(bad) : J(out.map((r) => r.how + '/' + r.name + ' 送了 ' + (r.sent.join(',') || '沒有'))) };
 };
 
-/* ================= 錯題本:模擬考錯題收進錯題本、錯題本分組(錯題本定稿 2026-11-18 第 4.3 節) =================
+/* ================= 錯題本:模擬考錯題收進錯題本、錯題本分組 =================
    題庫在 node 這邊也載一份(灌學生紀錄、算答案用)。模擬考抽題固定:開頁前把 Math.random 換成 () => 0.999,洗牌不換位置,
    快速回合抽到的就是各 Part 題庫的前幾題(單元順序:聽力 2 ×6、聽力 3、聽力 4、閱讀 5 ×10、閱讀 6、閱讀 7) */
 const BANK = (() => {
@@ -2847,7 +2847,7 @@ T['錯題本 U11–U13、U15:聽力網址直接開、聽力 3 一段一組、聽
   return { ok, detail: J(r) };
 };
 
-/* 審查(2026-11-18 介面第 1 輪)#1:從複習按瀏覽器上一頁(手機返回鍵、iPhone 右滑)回來。網站真的上線時 .html 不是 no-store,
+/* 2026-11-18:從複習按瀏覽器上一頁(手機返回鍵、iPhone 右滑)回來。網站真的上線時 .html 不是 no-store,
    頁面從 bfcache 原樣拿回來:以前題數沒變、剛答對的題還列著。window.__mark 還在＝真的是 bfcache 拿回來的(不是重新載入) */
 async function back(s) { await s.eval('history.back(); true'); await sleep(900); await s.loaded(); await sleep(300); }
 const QTEXT_ITEM = async (s) => { const q = await s.eval("document.querySelector('.q-text').textContent"); return BANK.part5.find((x) => q.indexOf(x.question.slice(0, 30)) > -1); };
@@ -2918,7 +2918,7 @@ T['錯題本 U16:從複習按上一頁回來(bfcache 原樣拿回來):錯題本�
   return { ok, detail: J(r) };
 };
 
-/* 審查 #2:模擬考結果「看錯題本 →」、每日複習「前往」連到 practice.html#wrongbook:標題、第一列不能被固定的頂欄蓋住
+/* 模擬考結果「看錯題本 →」、每日複習「前往」連到 practice.html#wrongbook:標題、第一列不能被固定的頂欄蓋住
    (桌機頂欄一列、手機兩列,320 可能更高,所以照頂欄實際的高度算) */
 T['錯題本 U17:practice.html#wrongbook 捲到錯題本面板時,「錯題本」標題和第一列在頂欄下面、沒被蓋住(1280、375、320)'] = async (B) => {
   const st = wbStudent();
@@ -2937,8 +2937,8 @@ T['錯題本 U17:practice.html#wrongbook 捲到錯題本面板時,「錯題本�
   return { ok, detail: J(out) };
 };
 
-/* 審查 #3:手機上「你的答案」「正解」各佔一行,標籤和答案不分開(以前「· 正⏎解：D. …」);桌機也不能把標籤拆開 */
-/* 審查(2026-11-19)#1 加:答案整句列出,跟學習記錄一樣不截斷(以前截在 30 字,Part 7、聽力大半的正解看不完整);整句變長了手機照樣不出現橫向捲動 */
+/* 手機上「你的答案」「正解」各佔一行,標籤和答案不分開(以前「· 正⏎解：D. …」);桌機也不能把標籤拆開 */
+/* 2026-11-19 加:答案整句列出,跟學習記錄一樣不截斷(以前截在 30 字,Part 7、聽力大半的正解看不完整);整句變長了手機照樣不出現橫向捲動 */
 T['錯題本 U18:每列「你的答案：…」「正解：…」整句列出不截斷;手機(375、320)各佔一行、標籤和答案同一行、不橫向捲動;桌機標籤不拆開'] = async (B) => {
   const st = wbStudent();
   const L1 = BANK.listening.p1, day = Date.now() - 864e5, l1 = {};
@@ -2992,7 +2992,7 @@ async function pickIn(s, i, o) {
   await s.eval(UNPRESS);
 }
 
-/* 審查 #4、#6:聽力 3、4 複習整組重答,頂部要寫「這一回 X 組（N 題）」,N 是整組的題數,跟成績頁的分母一樣 */
+/* 聽力 3、4 複習整組重答,頂部要寫「這一回 X 組（N 題）」,N 是整組的題數,跟成績頁的分母一樣 */
 T['錯題本 U19:聽力 3、4 錯題本複習:作答列的總數是這一回的組數,N 是整組的題數,跟成績卡「x / N」一樣'] = async (B) => {
   const st = wbStudent();
   const L = BANK.listening;
@@ -3019,7 +3019,7 @@ T['錯題本 U19:聽力 3、4 錯題本複習:作答列的總數是這一回的�
   return { ok, detail: J(out) };
 };
 
-/* 審查 #5:同名的「查看」「看錯題本」「全部展開」,讀螢幕要分得出是哪個 Part(aria-label 開頭是畫面上的字,WCAG 2.5.3) */
+/* 同名的「查看」「看錯題本」「全部展開」,讀螢幕要分得出是哪個 Part(aria-label 開頭是畫面上的字,WCAG 2.5.3) */
 T['錯題本 U20:題庫首頁「查看」、能力分析「看錯題本」「全部展開」的報讀名稱都帶 Part、不重複,開頭是畫面上的字;全部展開按下去名稱跟著變'] = async (B) => {
   const st = wbStudent();
   const r = {};
@@ -3039,7 +3039,7 @@ T['錯題本 U20:題庫首頁「查看」、能力分析「看錯題本」「全
   return { ok, detail: J(r) };
 };
 
-/* 審查(2026-11-19)#1:部署前就開著、沒重新整理的舊版分頁(合併表沒有 mock_wrong)會把帳本上的 mock_wrong 整份上傳。
+/* 2026-11-19:部署前就開著、沒重新整理的舊版分頁(合併表沒有 mock_wrong)會把帳本上的 mock_wrong 整份上傳。
    會寫或顯示錯題本的頁面開頁先跟雲端對齊一次(CLOUD.syncKey('mock_wrong'),跟單字頁、閱讀頁開頁對齊題庫一樣):
    別台考的錯題先進本機,之後就算被舊分頁整份傳上去也還在。本機多的合併後上傳;雲端跟本機一樣時不上傳;畫面照合併後的算 */
 T['錯題本 S1:模擬考、每日複習、題庫首頁、錯題本清單、能力分析開頁先跟雲端對齊 mock_wrong:別台的錯題進本機、畫面跟著算,本機多的合併上傳、一樣的不傳;其他鍵不動'] = async (B) => {
@@ -3080,9 +3080,9 @@ T['錯題本 S1:模擬考、每日複習、題庫首頁、錯題本清單、能�
   return { ok: !bad.length, detail: bad.length ? '不對的:' + J(bad) : J(out.map((r) => r.url + ' ' + (r.shown || '')).join(' / ')) };
 };
 
-/* 審查(2026-11-19)#2、#3:能力分析的錯題區。
-   #2 每個 Part 的標題列(Part 名稱、題數、看錯題本)在 320 寬也各一行:數字和「題」不拆開、按鈕字不從中間斷(錯題本清單的組標題列同一套,css .wb-head)。
-   #3 Part 名稱是標題(h3)、組標題是 h4:報讀用標題跳讀時,從 Part 5 最後一組跳到 Part 6 第一組之前先聽到「Part 6 段落填空」
+/* 2026-11-19:能力分析的錯題區。
+   每個 Part 的標題列(Part 名稱、題數、看錯題本)在 320 寬也各一行:數字和「題」不拆開、按鈕字不從中間斷(錯題本清單的組標題列同一套,css .wb-head)。
+   Part 名稱是標題(h3)、組標題是 h4:報讀用標題跳讀時,從 Part 5 最後一組跳到 Part 6 第一組之前先聽到「Part 6 段落填空」
    (APG Accordion:組標題的層級對應頁面結構;錯題本清單頁 Part 是 h1、組是 h2)。字級、粗細跟以前的 <b> 一樣 */
 T['錯題本 U21:能力分析錯題區:每個 Part 的標題列在 320、375、1280 寬三段各一行、不橫向捲動;Part 名稱是 h3、組是 h4,標題順序 h2 錯題 → h3 Part → h4 組;字級粗細跟以前一樣'] = async (B) => {
   const st = wbStudent();

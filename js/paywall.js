@@ -1,4 +1,4 @@
-/* 付費牆與「我的」頁的方案資訊(前端計畫五、六)。
+/* 付費牆與「我的」頁的方案資訊。
    - 只在 window.PAID_UI === true(js/plans-config.js)而且雲端有開時才動畫面;沒開時一個節點都不碰。
    - 只看 js/cloud.js 已經查好的 CLOUD.access,不另外查 my_access,也不碰同步(store、push、灌資料)。
    - 不知道使用權(null、錯誤、逾時、離線)一律不擋;只有 CLOUD.locked() 為真(這個分頁從伺服器拿到 active false)才蓋遮罩。
@@ -73,7 +73,7 @@
   /* 試用結束超過這麼久,遮罩就不再寫「試用已結束」與那個舊日期(多半是既有帳號或贈送到期、被改成學生的老師) */
   const OLD_TRIAL_MS = 14 * 864e5;
 
-  /* 要不要蓋遮罩、寫什麼(前端計畫五.4 的順序)。o = { paidUi, locked, page } */
+  /* 要不要蓋遮罩、寫什麼。o = { paidUi, locked, page } */
   function decide(a, o) {
     if (!o || o.paidUi !== true || o.locked !== true || !o.page) return null;
     if (!isObj(a) || a.active !== false || a.is_owner === true) return null;
@@ -108,18 +108,18 @@
     try { localStorage.setItem(BANNER_KEY, JSON.stringify({ u: uid, until })); } catch (e) { /* 存不進去:下次開頁會再出現 */ }
   }
 
-  /* 試用快結束的提示條(前端計畫五.5):只有靠試用、而且 until 在 2 天內;關掉的那個到期日不再出現。
+  /* 試用快結束的提示條:只有靠試用、而且 until 在 2 天內;關掉的那個到期日不再出現。
      靠老師試用撐著的人(plan teacher,until 含老師的 3 天寬限)不出現,老師的日期看「我的」頁老師那一列 */
   function banner(a, o) {
     if (!o || o.paidUi !== true || !o.page || !isObj(a) || a.active !== true || a.plan === 'teacher') return null;
     const C = cloud();
     if (!C || typeof C.trialEndsSoon !== 'function' || !C.trialEndsSoon(a)) return null;
     if (bannerClosed(o.uid, a.until)) return null;
-    /* 最後 2 天寫到幾點(她 2026-10-11 的決定):「試用到 10 月 8 日 09:00」 */
+    /* 最後 2 天寫到幾點(2026-10-11 的決定):「試用到 10 月 8 日 09:00」 */
     return { text: '試用到 ' + dayText(a.until, a.server_now) + ' ' + fmtTime(a.until), until: a.until };
   }
 
-  /* 「我的」頁名字下方的方案狀態(前端計畫六.1)。站長不顯示。
+  /* 「我的」頁名字下方的方案狀態。站長不顯示。
      撐著的是老師方案(plan teacher)時,until 多了 3 天寬限,跟老師那一列的日期對不上:這一列不寫,只留老師那一列 */
   function status(a) {
     const C = cloud();
@@ -153,7 +153,7 @@
     return label + ' ' + seats + (past ? ' · ' + until + ' 到期' : ' · 到 ' + until);
   }
 
-  /* 班級列的狀態(前端計畫六.3) */
+  /* 班級列的狀態 */
   function classStatus(a, classId) {
     if (!isObj(a)) return '';
     const c = classesOf(a).find(x => x.class_id === classId);
@@ -207,7 +207,7 @@
       out.grants.push({ text: label.trim() + ' ' + span + (g.revoked_at ? ' 已撤銷' : ''), revoked: !!g.revoked_at });
     });
     /* 藍新沒有付成的單(刷卡被拒、站長整理時標成沒付款)不列:沒有扣到錢,付款結果頁已經寫過付款沒有完成。
-       伺服器的 my_billing 也不回這種單,這裡是舊資料庫的備援(2026-10-17 第二輪複審) */
+       伺服器的 my_billing 也不回這種單,這裡是舊資料庫的備援(2026-10-17) */
     (Array.isArray(b.payments) ? b.payments : []).filter(isObj).filter(p => !(p.method === 'newebpay' && p.status === 'failed')).reverse().forEach(p => {
       let item = '';
       if (p.item === 'student') item = '學生方案 ' + period(p.months);
@@ -453,7 +453,7 @@
     go.focus();
   }
 
-  /* ---------- 註冊時選了老師:登入完成後自動開老師試用(前端計畫三.6、四) ----------
+  /* ---------- 註冊時選了老師:登入完成後自動開老師試用 ----------
      意向只是提示,權限一律看資料庫。四個條件全部成立才開(cloud.js 的 trialIntentOk):30 分鐘內存的、
      帳號是這次才建立的、綁的是這個帳號(Email 那條比帳號 id,沒綁 id 的不開;Google 那條要是這個分頁自己從 Google 回來、
      綁上的帳號 id 一樣)、my_access 說 teacher_trial_available。
@@ -494,7 +494,7 @@
 
   /* 自動開的視窗:先寫「開通中」(焦點放在標題),成功換成跟手動開同一個畫面;失敗寫資料庫的原文,附「再試一次」
      (資料庫只給每個帳號一次,「我的」頁與教師後台的開始老師試用照舊在)。
-     等了 AUTO_TRIAL_WAIT_MS 還沒回應就不再擋著畫面:重新查一次使用權,看得出開了就當成功,否則請她到「我的」頁看;晚到的回應不再改畫面。
+     等了 AUTO_TRIAL_WAIT_MS 還沒回應就不再擋著畫面:重新查一次使用權,看得出開了就當成功,否則請使用者到「我的」頁看;晚到的回應不再改畫面。
      關掉之後重新整理這一頁,頂欄選單、「我的」頁、教師後台才看得到老師身分 */
   const AUTO_TRIAL_WAIT_MS = 15000;
   function autoTrial(intent) {

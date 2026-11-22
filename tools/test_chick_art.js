@@ -1,5 +1,5 @@
 /* 塗鴉小雞(js/chick-art.js,第六版)的回歸測試:第四版的 8 個姿勢、第五版的 13 個姿勢一筆都不能變;
-   第五版的新姿勢照小雞第二階段規格第 2 節、附錄 B;第六版接在最後的 oops(尷尬懊惱)、read(在看書)看格數、速度、靜止格、不超出畫布。
+   第五版的新姿勢照小雞第二階段的設計;第六版接在最後的 oops(尷尬懊惱)、read(在看書)看格數、速度、靜止格、不超出畫布。
    用法:node tools/test_chick_art.js
    - 第一部分在 Node 裡跑,用假的 canvas 記下每一個繪圖呼叫(含每個數字的完整值),跟第四版
      (tools/fixtures/chick_art_v4.js,27557eb 那一版的原樣)、第五版(tools/fixtures/chick_art_v5.js,ab7097b 那一版,
@@ -124,7 +124,7 @@ T['舊姿勢的順序、格數、holds、travel、fps、metrics 跟第四版相�
   if (!eq(CUR.travel, { walk: 10, run: 20, fly: 0 })) d.push('travel ' + JSON.stringify(CUR.travel));
   return { ok: !d.length, detail: d.join(';') };
 };
-T['靜止格:舊姿勢只有 eat 從 0 改成 3(規格 3.6),其他跟第四版相同'] = () => {
+T['靜止格:舊姿勢只有 eat 從 0 改成 3,其他跟第四版相同'] = () => {
   const want = { idle: 1, happy: 0, eat: 3, hungry: 0, demand: 1, sleep: 0, walk: 0, run: 1, takeoff: 0, fly: 0, land: 3, nope: 5, flop: 3, oops: 2, read: 0 };
   const same = OLD.filter((p) => p !== 'eat').every((p) => V4.calm[p] === CUR.calm[p]);
   return { ok: same && V4.calm.eat === 0 && eq(CUR.calm, want), detail: JSON.stringify(CUR.calm) };

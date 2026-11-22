@@ -1,4 +1,4 @@
-/* 舊網址 Cloudflare Worker(tools/move-worker/worker.js)的測試,在 Node 裡用假的上游跑(搬家計畫 3.3、3.4、3.6、7.4)。
+/* 舊網址 Cloudflare Worker(tools/move-worker/worker.js)的測試,在 Node 裡用假的上游跑。
    PHASE A、B 兩版都跑:把原始碼的 PHASE 那一行換掉再載入。用法:node tools/test_worker.js */
 'use strict';
 const fs = require('fs');
@@ -220,7 +220,7 @@ T['B:導覽帶 tr_hd=1、沒有 tr_moved=1:回搬家頁的內容(網址不變、
   assert.equal(img.status, 301);
 };
 
-/* 要貼到 Cloudflare 的那一份在 repo 外(D:/claudecode/刷刷英文開發/搬家/worker/舊網址worker_貼上用.js):改了這裡要一起換、線上 Worker 也要重貼。
+/* 要貼到 Cloudflare 的那一份在 repo 外:改了這裡要一起換、線上 Worker 也要重貼。
    那份不在這台(別的電腦、CI)就略過 */
 T['tools/move-worker/worker.js 跟貼上用那一份(repo 外)一樣'] = async () => {
   const p = path.join(REPO, '..', '刷刷英文開發', '搬家', 'worker', '舊網址worker_貼上用.js');

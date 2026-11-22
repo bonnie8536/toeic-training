@@ -183,7 +183,7 @@ function load(w, o) {
   if (o.paid !== undefined) ctx.PAID_UI = o.paid;
   ctx.CLOUD = { enabled: true, user: o.user === undefined ? { id: ME, email: 'teacher@example.com' } : o.user, client: w.client, ready: Promise.resolve(),
     isTeacher: o.isTeacher !== false, access: o.access || null, accessReady: Promise.resolve(o.access || null) };
-  /* o.gone:別的分頁登出、換了帳號(CLOUD.accountCheck 回原因;審查 D)。PROFILE.accountGone 開卡的次數記在 ctx.goneCards */
+  /* o.gone:別的分頁登出、換了帳號(CLOUD.accountCheck 回原因)。PROFILE.accountGone 開卡的次數記在 ctx.goneCards */
   if (o.gone !== undefined) {
     ctx.CLOUD.accountCheck = () => (typeof o.gone === 'function' ? o.gone() : o.gone);
     ctx.PROFILE = { accountGone: () => { ctx.goneCards = (ctx.goneCards || 0) + 1; } };
@@ -309,7 +309,7 @@ const cases = {
     const ok = !a.ok && !b.ok && !c.ok && sent === 0 && !gone.ok && /不在/.test(gone.message) && w.memberships.length === 5;
     return { ok, detail: JSON.stringify([a.message, gone.message, sent]) };
   },
-  /* 審查 D:新增班級、換邀請碼、停用、移除學生送出時用的是這台現在的登入資料:別的分頁登出、換了帳號就不送,
+  /* 新增班級、換邀請碼、停用、移除學生送出時用的是這台現在的登入資料:別的分頁登出、換了帳號就不送,
      回那句話、開「這個帳號已經在別的分頁登出」卡;讀班級照讀;平常(accountCheck 回空字串)照常送 */
   '別的分頁登出、換了帳號:新增班級、換邀請碼、停用、移除學生都不送,開卡;讀班級照讀;平常照常送': async () => {
     const GONE = '這個帳號已經在別的分頁登出，剛剛按的沒有送出。請重新整理這一頁。';
@@ -519,7 +519,7 @@ const cases = {
     return { ok, detail: JSON.stringify({ noProgress, noClassDelete, noMemberWrite, html }) };
   },
 
-  /* ---------- 審查修正(移除的確認文字、焦點、無障礙名稱、唯讀) ---------- */
+  /* ---------- 移除的確認文字、焦點、無障礙名稱、唯讀 ---------- */
   '移除的確認(現在的資料庫):只在這位老師的班的學生,寫出看不到進度、備份不再包含他;還在別班就不寫;停用的班不說用邀請碼回來': async () => {
     const a = await askRemove({}, '晨讀班', S2NAME);
     const b = await askRemove({}, '晨讀班', '王小明');
@@ -728,7 +728,7 @@ Object.assign(cases, {
     const plan = a.root.byClass('ac-plan');
     return { ok: plan.length === 1 && /方案 30\u00a0位以內/.test(plan[0].textContent) && /已用 3 人/.test(plan[0].textContent) && /到期日 2026\/11\/04/.test(plan[0].textContent), detail: plan.map(p => p.textContent).join() };
   },
-  /* 錯題本審查(2026-11-19)#4:每日複習答對「只在模擬考錯題裡的題」只寫 mock_wrong(js/review.js settle),
+  /* 2026-11-19:每日複習答對「只在模擬考錯題裡的題」只寫 mock_wrong(js/review.js settle),
      以前「本週動態」不認這個鍵:這週只做了這種複習的學生不會列出,可是學生表的「最近活動」是今天,兩邊對不上。
      同一週考過模擬考(交卷同時寫 mock_history、mock_wrong)只標「模擬考」,不多標「模擬考錯題」(那次沒有複習) */
   'admin.js 本週動態:只寫了 mock_wrong(每日複習答對模擬考錯題)的學生也列出、標「模擬考錯題」;同一週考過模擬考的只標「模擬考」': async () => {

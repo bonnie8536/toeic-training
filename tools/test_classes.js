@@ -60,7 +60,7 @@ function makeStorage(broken) {
   };
 }
 
-/* extra:併進 CLOUD 的東西(accountCheck:這台現在的登入是不是畫面上這個帳號,審查 D) */
+/* extra:併進 CLOUD 的東西(accountCheck:這台現在的登入是不是畫面上這個帳號) */
 function load(w, user, local, extra) {
   const ctx = { console, document: { addEventListener() {} }, window: {} };
   ctx.window = ctx;
@@ -238,7 +238,7 @@ const cases = {
     const r = await api.join('ABCD2345');
     return { ok: !r.ok && /登入/.test(r.message) && w.calls.length === 0, detail: r.message };
   },
-  /* 審查 D:supabase-js 送出時用的是這台現在的登入資料。別的分頁登出、換了帳號(CLOUD.accountCheck 回原因)就不送,
+  /* supabase-js 送出時用的是這台現在的登入資料。別的分頁登出、換了帳號(CLOUD.accountCheck 回原因)就不送,
      回那句話與 gone:true(畫面開「這個帳號已經在別的分頁登出」卡);列表照讀。CLOUD 沒有 accountCheck(舊版)照舊 */
   '別的分頁登出、換了帳號:加入、退出都不送,回 gone;列表照讀;舊版 cloud.js 沒有 accountCheck 照舊': async () => {
     const w = world(); w.classes[1].active = true;

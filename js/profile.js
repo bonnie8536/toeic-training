@@ -80,10 +80,10 @@
   /* 攔截:document 的 capture 階段(比元素自己的 onclick、閱讀頁字卡的 pointerdown、文章單字的 stopPropagation 都早),
      preventDefault + stopPropagation。不用 stopImmediatePropagation、不掛在 window:舊網址自動搬家(js/move-out.js)
      在 window 的 capture 看使用者有沒有動作,一定要先看到這一下才會取消自動搬家;小雞(pet-roam2.js)也掛在 document 的 capture,照常收得到。
-     - click、Enter/空白鍵:開視窗。作答框的貼上(Ctrl+V)、把別處的文字拖進來(drop)也開視窗,跟打字一樣(第 3 輪審查 #4)。
+     - click、Enter/空白鍵:開視窗。作答框的貼上(Ctrl+V)、把別處的文字拖進來(drop)也開視窗,跟打字一樣。
        pointerdown、mousedown、輸入法的 beforeinput:靜默擋下(字卡拖不動、作答框打不進字),等 click 再開。
      - 可以拖的作答元素(閱讀頁的字卡、填了字的空格,標 data-gate="drag"):拖了 6px 以上(跟 reading.js 一樣的門檻)再放開,
-       瀏覽器不會在它身上補 click(觸控根本沒有 click,滑鼠的 click 落在共同的外層),放開那一下就開視窗(第 3 輪審查 #3)。
+       瀏覽器不會在它身上補 click(觸控根本沒有 click,滑鼠的 click 落在共同的外層),放開那一下就開視窗。
        一般作答鈕按下去拖開再放是「取消這一下」的慣例,不開。
      - 作答框:focus 進來(滑鼠、鍵盤 Tab、頁面自動 focus)就設 readonly,中文輸入法、手機鍵盤也進不來;按一個字才開視窗。
        readonly 的框不收拖進來的文字(連 drop 都不發),dragover 先說「收」,drop 才攔得到。登入、建檔後頁面會重載。 */
@@ -128,7 +128,7 @@
   }
 
   /* 按下去的是遮罩本身(卡片外面的空白):可以關的視窗靠這個關。桌機視窗比卡片矮時遮罩有自己的捲軸,
-     按住捲軸拖動是要捲動看下面,mousedown 的 target 一樣是遮罩,要排除,不然一按就關、打的字也沒了(第 3 輪審查 #2) */
+     按住捲軸拖動是要捲動看下面,mousedown 的 target 一樣是遮罩,要排除,不然一按就關、打的字也沒了 */
   function onMaskItself(mask, e) {
     if (e.target !== mask) return false;
     const r = mask.getBoundingClientRect();
@@ -198,9 +198,9 @@
        已登入的人開頁頭一秒(離線又遇到登入憑證過期最多約 25 秒)看起來也像訪客:這段時間看這一頁的資料夾,
        c 開頭就是登入著的帳號(寫入本來就寫進那個資料夾),跟以前一樣照常作答。
        有 CLOUD.user 時還要這一頁的資料夾就是這個帳號的,而且頁面不是正要重載:剛在這一頁登入(登入卡、Google 回來)到重載之間,
-       資料夾還是訪客的,這時寫入會寫進訪客資料夾、又記進新帳號的帳本,灌資料時把帳號雲端那一列當成本機比較新,上傳空值蓋掉(第 2 輪審查 #1)。
+       資料夾還是訪客的,這時寫入會寫進訪客資料夾、又記進新帳號的帳本,灌資料時把帳號雲端那一列當成本機比較新,上傳空值蓋掉。
        灌完雲端資料要重載的那一下也一樣不寫(cloud.js 本來就不替它記帳,根據的是舊畫面)。
-       還要 cloud.js folderReady(2026-10-31 審查):別的分頁登出、換帳號之後沒重載的頁面(資料夾已經刪了、或是下一個人在用),
+       還要 cloud.js folderReady(2026-10-31):別的分頁登出、換帳號之後沒重載的頁面(資料夾已經刪了、或是下一個人在用),
        和這台帳號資料夾還沒灌過雲端進度(空的,讀雲端進度失敗)的頁面,一樣不寫,開「重新整理」卡。舊版 cloud.js 沒有這個函式就照舊 */
     let settled = false;
     Promise.resolve(CLOUD.ready).then(() => { settled = true; }, () => { settled = true; });
@@ -214,10 +214,10 @@
     };
     /* 作答被攔下:開可以關的登入卡,多一句為什麼要登入。頁面正要重載就只擋下,不開卡(馬上就換成登入後的畫面)。
        已經登入、雲端還在確認也只擋下:Google 回來的那一頁正在灌這個帳號的資料,灌完就重載(js/cloud.js afterAuth),
-       不能跟已經登入的人說「登入之後才能作答」(第 3 輪審查 #1)。
-       登入回來的那一頁(CLOUD.authReturning)在雲端確認之前 CLOUD.user 還是 null,一樣只擋下(第 4 輪審查 #1):
+       不能跟已經登入的人說「登入之後才能作答」。
+       登入回來的那一頁(CLOUD.authReturning)在雲端確認之前 CLOUD.user 還是 null,一樣只擋下:
        剛在 Google 登入完、一回來就再按剛剛那一題的人,不能又看到登入卡;確認完沒拿到帳號(登入沒成功)才照常開卡。
-       確認完已經登入、資料夾卻還不是這個帳號(讀雲端進度失敗,這一頁沒重載):開「重新整理」卡,不叫已經登入的人去登入(第 4 輪審查 #2) */
+       確認完已經登入、資料夾卻還不是這個帳號(讀雲端進度失敗,這一頁沒重載):開「重新整理」卡,不叫已經登入的人去登入 */
     const askToAct = opener => {
       if (canAct() || CLOUD.reloading) return;
       if (!settled && (CLOUD.user || CLOUD.authReturning)) return;
@@ -230,18 +230,18 @@
 
     /* 已經登入、這一頁的資料夾卻還不是這個帳號:登入(Google 回來、登入卡)時讀雲端進度失敗(網路斷一下、Supabase 慢或休眠),
        js/cloud.js afterAuth 沒灌資料、這一頁沒重載。作答照樣擋下(這時寫進訪客的資料夾,之後照帳號資料夾裡的舊值上傳會蓋掉雲端那一列),
-       但頂欄顯示的是他的名字,不能叫他「登入之後才能作答」:請他重新整理,下一頁的資料夾就是這個帳號的,會重灌雲端進度(第 4 輪審查 #2)。
+       但頂欄顯示的是他的名字,不能叫他「登入之後才能作答」:請他重新整理,下一頁的資料夾就是這個帳號的,會重灌雲端進度。
        跟本機的「你是哪位？」一樣可以關(X、Esc、點遮罩),關掉焦點回到被按的那個東西 */
-    /* account:帳號層級的動作(登出、刪除帳號、改暱稱、加入班級…)被擋下開的(審查 D):一定是「已經在別的分頁登出」那張,
+    /* account:帳號層級的動作(登出、刪除帳號、改暱稱、加入班級…)被擋下開的:一定是「已經在別的分頁登出」那張,
        說的是剛剛那一下沒有送出,不說作答 */
     function showReload(opener, account) {
       if (document.querySelector('.modal-mask')) return null;
-      /* 別的分頁已經登出、換了帳號(js/common.js accountBlock 回 'gone'):這一頁頂欄還是原帳號,但不能跟他說「你已經登入了」(第 2 輪審查) */
+      /* 別的分頁已經登出、換了帳號(js/common.js accountBlock 回 'gone'):這一頁頂欄還是原帳號,但不能跟他說「你已經登入了」 */
       const gone = !!account || (typeof accountBlock === 'function' && accountBlock() === 'gone');
       const title = gone ? '這個帳號已經在別的分頁登出' : '還沒載入你的練習紀錄';
       const btn = h('button', { class: 'btn primary', type: 'button', onclick: () => location.reload() }, '重新整理');
       /* 重新整理會清掉這一頁還沒交出去的作答(刷題頁隨機練習的整份作答)、還沒加入的輸入(題庫編輯器打好的單字):卡上寫明,
-         別的分頁登出的那一種再說怎麼留著(登回原本的帳號,這一頁就能照常交;審查 D 第 1 輪 #6) */
+         別的分頁登出的那一種再說怎麼留著(登回原本的帳號,這一頁就能照常交) */
       const lose = '重新整理會清掉這一頁還沒存的作答和打好的字。';
       const box = h('div', { class: 'modal modal-gate modal-reload', role: 'dialog', 'aria-modal': 'true', 'aria-label': title, 'aria-describedby': 'reload-why reload-sub' },
         h('button', { class: 'modal-close', type: 'button', 'aria-label': '關閉', html: X_ICON, onclick: () => close() }),
@@ -256,7 +256,7 @@
       const mask = h('div', { class: 'modal-mask' }, box);
       document.body.append(mask);
       /* 焦點一律停在標題,不放在「重新整理」上:它會清掉還沒存的東西;卡片也可能在打字時跳出來(掉落消除的字掉到底),
-         順手按的 Enter 不能把頁面重新整理掉(審查 D 第 1 輪 #4、#6)。Tab 一下就到按鈕 */
+         順手按的 Enter 不能把頁面重新整理掉。Tab 一下就到按鈕 */
       focusInto(box, null);
       trapTab(box);
       /* preventDefault:點遮罩的預設動作會把焦點拉到 body,蓋掉 close() 放回去的焦點。按在遮罩的捲軸上不算 */
@@ -286,7 +286,7 @@
       askToAct,
       /* store 與作答紀錄的最後一道(js/common.js canKeepProgress):內容頁、頁面載完之後、不能作答 → 不寫 */
       blocksWrite: () => gateMode() === 'action' && document.readyState !== 'loading' && !canAct(),
-      /* 審查 D:帳號層級的動作被擋下時開「這個帳號已經在別的分頁登出」卡(js/classes.js、教師後台、signup.js 用) */
+      /* 帳號層級的動作被擋下時開「這個帳號已經在別的分頁登出」卡(js/classes.js、教師後台、signup.js 用) */
       accountGone: (opener) => goneCard(opener),
       logout: (e) => logoutHere(e),
     };
@@ -364,7 +364,7 @@
       topbar.append(note);
     }
 
-    /* 帳號層級的動作(登出、登出所有裝置、刪除帳號、改暱稱;審查 D,e49e444 就有):supabase-js 送出時用的是這台現在的登入資料。
+    /* 帳號層級的動作(登出、登出所有裝置、刪除帳號、改暱稱;e49e444 就有):supabase-js 送出時用的是這台現在的登入資料。
        別的分頁登出這個帳號、改登入別人之後,這一頁沒重載、畫面還是原帳號,按下去會作用在別的分頁登入的那個人身上(刪除帳號會刪掉他的帳號與雲端進度)。
        這台現在的登入不是畫面上這個帳號(js/cloud.js accountCheck)就不問、不送,開「這個帳號已經在別的分頁登出」卡。
        按確認視窗的時候別的分頁也可能剛好換人:js/cloud.js 送出前會再確認一次,那時丟出來的 code 'account_gone' 一樣開這張卡,不跳 alert。
@@ -378,7 +378,7 @@
     const openerOf = e => (e && e.currentTarget && e.currentTarget.nodeType === 1 ? e.currentTarget : null);
 
     /* 頭像選單、「我的」頁、signup.html 的「登出」。不先問 accountCheck:js/cloud.js logout 一開頭(問「確定要登出？」之前)就確認,
-       換了人照樣丟 account_gone 開卡;這台已經沒有任何人登入著時,它照以前清掉這個帳號留在這台的東西、重載(審查 D 第 1 輪 #1、#3)。
+       換了人照樣丟 account_gone 開卡;這台已經沒有任何人登入著時,它照以前清掉這個帳號留在這台的東西、重載。
        其他錯誤跟以前一樣不接 */
     function logoutHere(e) {
       const opener = openerOf(e);
@@ -387,7 +387,7 @@
 
     /* 改暱稱、刪除帳號:頭像選單與「我的」頁(me.html)共用。
        暱稱視窗開著時別的分頁換了人(按確定後才丟 account_gone):打的暱稱記在這一頁,登回原帳號再按「改暱稱」時預先填好
-       (卡上說登回原帳號再按一次就留得住;以前打的字直接不見,審查 D 第 2 輪 #3)。重新整理就沒了,跟卡上說的一樣 */
+       (卡上說登回原帳號再按一次就留得住;以前打的字直接不見)。重新整理就沒了,跟卡上說的一樣 */
     let unsentName = null;
     /* 視窗(js/ui.js)開著的時候別的分頁可能登出、改登入別人:按確定之後先等 50 毫秒(以前原生視窗開著時 Chrome 不送 localStorage 的改動,
        按確定後約 2 毫秒才看得到),再看一次這台現在的登入是不是畫面上這個帳號,不是就開卡、不送。
@@ -561,7 +561,7 @@
       return h('div', { class: 'auth-pw' }, input, btn);
     }
 
-    /* ---------- 註冊時選身分(前端計畫四;只有 window.PAID_UI === true 才出現) ----------
+    /* ---------- 註冊時選身分(只有 window.PAID_UI === true 才出現) ----------
        做法參考 Quizlet(註冊表單裡就問是不是老師,預設不是)、Kahoot(先選帳號類型,選了才出現那一類要填的欄位)、
        Google Classroom(兩張「我是學生」「我是老師」大選項卡):兩張選項卡放在 Google 鈕上面(兩種註冊都適用),預設學生。
        選老師只多三樣:名額(數字與價錢)、選填的班級名稱、方案說明連結;試用規則只寫在 pricing.html。

@@ -255,7 +255,7 @@
       }
     }
     localStorage.removeItem('tr_current_profile');
-    clearSignupIntent();   // 註冊時選老師的意向(前端計畫三.6):登出就作廢,下一個人用這台不會沿用
+    clearSignupIntent();   // 註冊時選老師的意向:登出就作廢,下一個人用這台不會沿用
     location.reload();
   }
 
@@ -300,7 +300,7 @@
     if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
       throw new Error('這個 Email 已經註冊過，請直接登入；當初用 Google 註冊的話按 Google 登入，忘記密碼可以重設。');
     }
-    bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(前端計畫三.6;沒有意向什麼都不做)
+    bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(沒有意向什麼都不做)
     if (data.session) {
       window.CLOUD.user = data.user;
       await afterAuth(data.user, true);
@@ -375,7 +375,7 @@
   }
 
   /* ---------- 使用權(收費) ----------
-     原則(前端計畫一.1、三):讀不到 my_access 一律放行,只有這個分頁從伺服器拿到 active === false 才算鎖住。
+     原則:讀不到 my_access 一律放行,只有這個分頁從伺服器拿到 active === false 才算鎖住。
      window.PAID_UI(js/plans-config.js)不是 true 時完全不呼叫 my_access(資料庫還沒有這個函式)。
      快取 tr_access_<帳號 id> 只給離線時顯示日期,不拿來擋人。同步(push、flushAll、灌資料)完全不看使用權。 */
   function paidUi() { return window.PAID_UI === true; }
@@ -540,7 +540,7 @@
     } catch (e) { return false; }
   }
 
-  /* 讀雲端單一鍵(唯讀;路線圖 1.2b,小雞寫回前先抓雲端那一份合併,因為每個分頁只灌一次雲端資料)。
+  /* 讀雲端單一鍵(唯讀,小雞寫回前先抓雲端那一份合併,因為每個分頁只灌一次雲端資料)。
      回 { ok: true, found, v, updated_at }(雲端沒有這一列 found 是 false;別台刪掉的那一列 found 是 true、v 是 null)。
      沒登入、離線、連不上、逾時、讀到一半換了帳號、這一頁剛灌完資料要重載:回 { ok: false },
      呼叫的人這時不能把「沒讀到」當成「雲端沒有」去上傳。不寫本機、不動帳本、不上傳。 */
@@ -570,8 +570,8 @@
     return { ok: true, found: true, v: row.v === undefined ? null : row.v, updated_at: typeof row.updated_at === 'string' ? row.updated_at : null };
   }
 
-  /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email?, uid? }),綁在要註冊的那個帳號上(前端計畫三.6;
-     站長選的保守做法:只存在這台,不寫進帳號資料 user_metadata,別台點驗證信不會自動開,改用「我的」頁與教師後台的開始老師試用):
+  /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email?, uid? }),綁在要註冊的那個帳號上(
+     保守做法:只存在這台,不寫進帳號資料 user_metadata,別台點驗證信不會自動開,改用「我的」頁與教師後台的開始老師試用):
      - Email 註冊:存 localStorage(收驗證信可能換分頁),帶小寫的 Email。signUp 成功就綁上回來的帳號 id(uid),
        之後只認這個 id(同一個 Email 刪掉重建的帳號是新的 id,不算);沒拿到 id 就不自動開(不退回比 Email)。對不上的當場清掉、不用。
      - Google 註冊(按按鈕時還不知道 Email):存 sessionStorage,只有同一個分頁從 Google 回來讀得到。
@@ -689,7 +689,7 @@
     return intent;
   }
 
-  /* 登入後要不要自動開老師試用。全部成立才開(前端計畫三.6):意向是 30 分鐘內存的、
+  /* 登入後要不要自動開老師試用。全部成立才開:意向是 30 分鐘內存的、
      綁的是這個帳號(Email 那條:綁的帳號 id 一樣,沒綁 id 的不算;Google 那條:這個分頁讀出來、綁的帳號 id 一樣)、
      帳號是這次才建立的、資料庫說可以試用。
      帳號建立時間是伺服器的鐘,意向的 at 是裝置的鐘:用 my_access 的 server_now 算出兩個鐘差多少再比。 */
@@ -709,7 +709,7 @@
     return !!(access && access.teacher_trial_available === true);
   }
 
-  /* 「我的」頁方案狀態用哪一種(前端計畫六.1 的順序);日期一律用伺服器回的 */
+  /* 「我的」頁方案狀態用哪一種;日期一律用伺服器回的 */
   function accessStatus(a) {
     if (!a || typeof a !== 'object') return null;
     if (a.is_owner) return { kind: 'owner' };

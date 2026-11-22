@@ -1,4 +1,4 @@
-/* 衝衝英文搬家:哪些鍵要搬、怎麼認、收到的搬家包怎麼重新驗證(搬家計畫 2.2、2.5)。
+/* 衝衝英文搬家:哪些鍵要搬、怎麼認、收到的搬家包怎麼重新驗證。
    純計算,不讀寫任何儲存;寄出頁、收件頁、測試(tools/test_move_core.js)共用。
    - 鍵名一律用嚴格的正規式拆,不用 startsWith:tr_unsynced_<id> 也是 tr_u 開頭,不能被當成學生資料夾。
    - 模組鍵的合併規則寫在 RULES;程式裡用到的每個 store 鍵都要在這裡有規則(test_move_core.js 會掃 js/*.js,
@@ -10,7 +10,7 @@
   /* 模組鍵 → 合併規則(規則的意思在 js/move-merge.js)。
      sync_del:自訂題庫的刪除標記(js/sync-merge.js,只有雲端帳號的資料夾會寫)。tombs = 兩份標記聯集(SYNC_MERGE.tombs),
      不能是 single(整份換掉):少了別台的標記,刪掉的題庫和字會回來;沒有規則時搬家包整包被 validate 拒絕。
-     mock_wrong:模擬考答錯的題(js/wrongbook.js,錯題本定稿 2026-11-18),每題 { c, ok, t },跟錯題本一樣用 pool(同一題留 t 新的)。
+     mock_wrong:模擬考答錯的題(js/wrongbook.js,2026-11-18),每題 { c, ok, t },跟錯題本一樣用 pool(同一題留 t 新的)。
      q_reports:回報題目(js/report.js),每題 { c, n, t, f },同一題兩邊都有就留 t 新的。 */
   const EXACT = Object.freeze({
     hist: 'hist', mock_history: 'mock', mock_wrong: 'pool', q_reports: 'pool', pet: 'pet', daily_done: 'daily', vgame_banks: 'banks', sync_del: 'tombs',
@@ -230,7 +230,7 @@
     return false;
   }
 
-  /* 這台要搬的資料的指紋(搬家計畫 2.11):寄出頁準備搬家時算一次存進 tr_move_done,之後舊網址每一頁再算一次,
+  /* 這台要搬的資料的指紋:寄出頁準備搬家時算一次存進 tr_move_done,之後舊網址每一頁再算一次,
      不一樣就是搬完之後又有新的進度(在舊網址練習、新網址連不上時、退回期間),要再搬一次,不能直接帶走。
      算進去的:訪客資料、本機學生的資料、學生名單、帳本(tr_unsynced_,還沒上傳的帳號進度)、只在本機的標記(tr_localonly_)。
      不算的:目前選哪個學生、提示次數、登入資料、搬家自己的紀錄、雲端帳號資料夾(從雲端來的,登入在新網址就回來)。

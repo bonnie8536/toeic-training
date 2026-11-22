@@ -9,7 +9,7 @@
 --   1. 班級(classes)與學生↔班級(memberships),老師只讀自己班上的學生
 --   2. 邀請碼:學生自己輸入碼加入,不需要老師手動綁
 --   3. 老師申請(teacher_applications),核准一律人工,不可自助升級
---   4. 把現有 6 位學生補進她的預設班級,教師後台的可見範圍不變
+--   4. 把現有 6 位學生補進站長的預設班級,教師後台的可見範圍不變
 
 -- ---------- 1. 班級 ----------
 
@@ -53,7 +53,7 @@ create table if not exists public.teacher_applications (
   reviewed_at timestamptz
 );
 
--- 站長旗標:只有站長能審申請。她自己那一列設 true(下面的回填會設)
+-- 站長旗標:只有站長能審申請。站長自己那一列設 true(下面的回填會設)
 alter table public.teachers add column if not exists is_owner boolean not null default false;
 
 -- ---------- 3. 判斷用的函式(一定要有,否則政策會互相遞迴) ----------
@@ -179,7 +179,7 @@ grant execute on function public.join_class(text) to authenticated;
 -- 邀請碼比對用得到,順手補索引
 create index if not exists classes_code_idx on public.classes (upper(code));
 
--- ---------- 6. 回填:現有 6 位學生 → 她的預設班級 ----------
+-- ---------- 6. 回填:現有 6 位學生 → 站長的預設班級 ----------
 -- 不回填的話,政策一換教師後台就看不到任何人。
 -- 2026-10 已套用過。公開檔案不放個人信箱:重跑前把下一行的 <站長登入用的信箱> 換成站長登入用的信箱。
 insert into public.teachers (user_id, is_owner)

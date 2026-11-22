@@ -2,7 +2,7 @@
    後台編輯器的一支函式只看得到自己資料夾裡的檔案,讀不到 supabase/functions/_shared/。
    這支把每支函式需要的檔案攤平到同一個資料夾,並把 '../_shared/xxx.ts' 改成 './xxx.ts',其他內容一字不改。
    用法:node tools/build_edge_dashboard.js <輸出資料夾>
-     例:node tools/build_edge_dashboard.js D:/claudecode/刷刷英文開發/收費/newebpay/後台貼上用
+     例:node tools/build_edge_dashboard.js <輸出資料夾>
    輸出:<輸出資料夾>/newebpay-checkout/*.ts、<輸出資料夾>/newebpay-notify/*.ts
    每個檔案在後台編輯器新增一個同名檔案、整份貼上;index.ts 是進入點。 */
 const fs = require('fs');

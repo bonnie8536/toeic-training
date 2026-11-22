@@ -1,10 +1,10 @@
-/* 小雞第二階段:電腦版到處走,學生在忙、在捲動時(規格 1.11;第四輪審查第 1 輪的 4 項)。
+/* 小雞第二階段:電腦版到處走,學生在忙、在捲動時。
    用法:node tools/test_pet_roam_busy.js
    - 忙的時候站在主要內容底下的地面:不從那裡斜斜飛過主要內容,沿著地面跑到最近那一側空白(路線經過學生正在用的地方附近就去另一側),
-     到了再往上飛到那一側的空地,不會一直釘在地面(審查 #0;第三輪複查 #0)。
-   - 忙的時候在同一側空白裡只往上一層、下一層換,不跳過中間那層,不飛過主要內容(審查 #2)。
-   - 一直來回捲動:剛捲過時少去靠近可見範圍上下緣 200 px 的空地,不會剛落下就被捲出去掉回地面(審查 #1)。
-   - 進頁馬上被捲動(捲回上次的位置):一樣 5 秒內離開地面;挑不到地方時 1 秒後再挑(審查 #3)。
+     到了再往上飛到那一側的空地,不會一直釘在地面。
+   - 忙的時候在同一側空白裡只往上一層、下一層換,不跳過中間那層,不飛過主要內容。
+   - 一直來回捲動:剛捲過時少去靠近可見範圍上下緣 200 px 的空地,不會剛落下就被捲出去掉回地面。
+   - 進頁馬上被捲動(捲回上次的位置):一樣 5 秒內離開地面;挑不到地方時 1 秒後再挑。
    假瀏覽器在 tools/pet_roam_sim.js。 */
 const { Z, S, BOXH, mulberry, ART, nodeLoad, ROAM, wanderRun } = require('./pet_roam_sim.js');
 let pass = 0, fail = 0;
@@ -36,7 +36,7 @@ function pick(o, n) {
 }
 const only = (p, keys) => Object.keys(p).every((k) => keys.some((q) => k.startsWith(q)));
 
-run('choose:忙的時候站在主要內容底下的地面,不飛過主要內容,沿著地面跑到最近那一側空白(審查 #0;第三輪複查 #0)', () => {
+run('choose:忙的時候站在主要內容底下的地面,不飛過主要內容,沿著地面跑到最近那一側空白', () => {
   for (const x of [800, 973]) {
     const p = pick({ x });
     ok(only(p, ['ground walk 1180']), '地面 x ' + x + ':200 次都沿著地面往右到 1180(右側空白的開頭),不起飛', p);
@@ -46,7 +46,7 @@ run('choose:忙的時候站在主要內容底下的地面,不飛過主要內容,
   const d = Z.choose({ zones: ZONES, here: Object.assign({}, GROUND, { x: 800 }), ground: Object.assign({}, GROUND, { x: 800 }), now: 1e6, busy: true, calm: 0, near: [], mouse: null, lastFly: -1e9,
     recent: [], order: ['ground'], main: MAIN, H: 800, top: 59, bottom: 737, scrollY: 0, S, BOXH, flyFrames: FF, rnd: mulberry(2) });
   ok(!!d && d.pose === 'run' && Z.CFG.runSpeed >= 40 && Math.abs(d.dur - 380 / Z.CFG.runSpeed) < 1e-9, '用跑的(每秒 ' + Z.CFG.runSpeed + ' px),380 px 不用走 24 秒', d);
-  /* 第三輪複查 #0 的真頁面:刷題頁 1280,主要內容 120 到 1160,小雞在地面 x 636(腳 796),兩側空地腳 331 */
+  /* 真頁面:刷題頁 1280,主要內容 120 到 1160,小雞在地面 x 636(腳 796),兩側空地腳 331 */
   const M3 = { l: 120, r: 1160 }, Z3 = [{ key: 'side-L:331:16', kind: 'side-L', feetDoc: 331, lo: 16, hi: 64 }, { key: 'side-R:331:1168', kind: 'side-R', feetDoc: 331, lo: 1168, hi: 1216 }];
   const bad = [], got = {}, rnd = mulberry(9);
   for (let i = 0; i < 200; i++) {
@@ -60,7 +60,7 @@ run('choose:忙的時候站在主要內容底下的地面,不飛過主要內容,
   const g = pick({ x: 30 });
   ok(!g.none && only(g, ['side-L:730:16']), '地面 x 30(已經在左側空白底下):往上到左側最低的那塊', g);
 });
-run('choose:忙的時候路線經過學生正在用的地方附近(240 px 內),改沿著地面走到那一側空白(審查 #0)', () => {
+run('choose:忙的時候路線經過學生正在用的地方附近(240 px 內),改沿著地面走到那一側空白', () => {
   const p = pick({ x: 800, c: { near: [700] } });
   ok(only(p, ['ground walk 1180']), '欄位在 700:不起飛,沿著地面往右走到 1180(右側空白的開頭)', p);
   const q = pick({ x: 800, c: { near: [1000] } });
@@ -71,7 +71,7 @@ run('choose:忙的時候路線經過學生正在用的地方附近(240 px 內),�
     near: [700], lastFly: -1e9, recent: [], order: ['ground'], main: MAIN, H: 800, top: 59, bottom: 737, scrollY: 0, S, BOXH, flyFrames: FF, rnd: mulberry(1) });
   ok(none === null, '兩側空白都沒有空地:不走(留在原地)', none);
 });
-run('choose:忙的時候在同一側空白裡只往上一層、下一層換,不跳過中間那層;最低那層可以落回那一側的地面(審查 #2)', () => {
+run('choose:忙的時候在同一側空白裡只往上一層、下一層換,不跳過中間那層;最低那層可以落回那一側的地面', () => {
   const at = (z) => Object.assign({}, z, { x: z.lo, feet: z.feetDoc });
   const a = pick({ here: at(Lz(730)) });
   ok(only(a, ['side-L:530:16', 'ground']), '左側 730:只去 530 或落回地面,不直接去 150', a);
@@ -84,7 +84,7 @@ run('choose:忙的時候在同一側空白裡只往上一層、下一層換,不�
   const e = pick({ here: at(Lz(530)), c: { busy: false, calm: 60000 } });
   ok(Object.keys(e).some((k) => k.startsWith('side-R') || k.startsWith('main')), '不忙的時候照常跨過主要內容', e);
 });
-run('choose:剛捲動過,少去靠近可見範圍上下緣 200 px 的空地(審查 #1)', () => {
+run('choose:剛捲動過,少去靠近可見範圍上下緣 200 px 的空地', () => {
   const here = Object.assign({}, GROUND, { x: 30 });
   const free = { busy: false, calm: 60000 };
   const p0 = pick({ here, c: Object.assign({ scrolled: 1e9 }, free) }, 1000), p1 = pick({ here, c: Object.assign({ scrolled: 2000 }, free) }, 1000);
@@ -95,7 +95,7 @@ run('choose:剛捲動過,少去靠近可見範圍上下緣 200 px 的空地(審�
 
 /* ---------- 模擬:假瀏覽器跑真的 js/pet-roam2.js ---------- */
 const key3 = (o) => { let last = -1e9; return (Q) => { if (Q.st.t - last >= 3000) { last = Q.st.t; Q.fireDoc('keydown', { key: 'Shift' }); } if (o) o(Q); }; };
-run('電腦版:一直在按鍵(忙),小雞從主要內容底下的地面出發,任一段 60 秒去 3 個地方以上,不一直待在地面(審查 #0)', () => {
+run('電腦版:一直在按鍵(忙),小雞從主要內容底下的地面出發,任一段 60 秒去 3 個地方以上,不一直待在地面', () => {
   for (const name of ['drill', 'learn']) for (const startX of [800, 973, 400]) for (const seed of [1, 2, 3]) {
     const tag = name + ' 1280 x ' + startX + ' #' + seed + ':';
     let cross = 0, runAt = -1, runX = 0, upX = null;
@@ -108,10 +108,10 @@ run('電腦版:一直在按鍵(忙),小雞從主要內容底下的地面出發,�
     ok(r.minZones >= 3, tag + '任一段 60 秒裡去過 3 個以上的地方', r.minZones);
     const go = runAt >= 0 ? runAt : r.first, need = runAt >= 0 ? Math.abs(upX - runX) / Z.CFG.runSpeed * 1000 + 2500 : 0;
     ok(r.ground <= 0.3 && go >= 0 && go <= 5000 && r.first - go <= need + 1, tag + '在地面不到 3 成,5 秒內開始離開(跑向一側或起飛),跑到一側就往上飛', { ground: r.ground, first: r.first, runAt, need });
-    ok(cross === 0, tag + '忙的時候不飛過主要內容那一欄(第三輪複查 #0)', cross);
+    ok(cross === 0, tag + '忙的時候不飛過主要內容那一欄', cross);
   }
 });
-run('電腦版:一直在按鍵(忙),在同一側空白裡換,不跳過中間那層(審查 #2)', () => {
+run('電腦版:一直在按鍵(忙),在同一側空白裡換,不跳過中間那層', () => {
   /* 刷題頁 1280(假瀏覽器的版型照真的刷題頁,主要內容 120 到 1160):兩側的層 173(卡片上緣)、331(頁尾上緣整條;卡片下緣 301 差不到 64 px,只留頁尾那一層);地面 796 */
   const levels = [173, 331, 796];
   const bad = [];
@@ -133,7 +133,7 @@ run('電腦版:一直在按鍵(忙),在同一側空白裡換,不跳過中間那�
   }
   ok(bad.length === 0 && moves >= 20, '忙的時候每次都換到同一側相鄰的那層(換了 ' + moves + ' 次)', bad.slice(0, 4));
 });
-run('電腦版:每 7 秒來回捲 160 px,在地面不到 3 成、沒有落下不到 2 秒就被捲出去的(審查 #1)', () => {
+run('電腦版:每 7 秒來回捲 160 px,在地面不到 3 成、沒有落下不到 2 秒就被捲出去的', () => {
   for (const seed of [1, 2, 3, 4]) {
     let n = 0;
     const r = wanderRun({ name: 'learn', W: 1280, H: 800, seed, ms: 210000, mark: (Q) => {
@@ -143,7 +143,7 @@ run('電腦版:每 7 秒來回捲 160 px,在地面不到 3 成、沒有落下不
     ok(Math.min(...r.stays) >= 2, '#' + seed + ' 每次落下都待 2 秒以上', r.stays.filter((s) => s < 2));
   }
 });
-run('電腦版:進頁馬上被捲到卡片下面(捲回上次的位置),一樣 5 秒內離開地面(審查 #3)', () => {
+run('電腦版:進頁馬上被捲到卡片下面(捲回上次的位置),一樣 5 秒內離開地面', () => {
   for (const name of ['index', 'learn']) for (const seed of [1, 2, 3, 4, 5, 6]) {
     let done = false;
     const r = wanderRun({ name, W: 1280, H: 800, seed, startX: 332, ms: 30000, mark: (Q) => { if (!done && Q.st.t >= 200) { done = true; Q.scroll(600); } } });
@@ -151,7 +151,7 @@ run('電腦版:進頁馬上被捲到卡片下面(捲回上次的位置),一樣 5
   }
 });
 
-/* ---------- 第五輪審查 ---------- */
+/* ---------- 滑鼠與捲動節奏 ---------- */
 /* 1280×800 的窄版頁(複習):主要內容 255 到 1025,兩側空白各兩層,標題右邊一塊 */
 const M5 = { l: 255, r: 1025 };
 const Z5 = [{ key: 'side-L:700:16', kind: 'side-L', feetDoc: 700, lo: 16, hi: 199 }, { key: 'side-L:400:16', kind: 'side-L', feetDoc: 400, lo: 16, hi: 199 },
@@ -159,7 +159,7 @@ const Z5 = [{ key: 'side-L:700:16', kind: 'side-L', feetDoc: 700, lo: 16, hi: 19
   { key: 'main:124:300', kind: 'main', feetDoc: 124, lo: 300, hi: 420 }];
 const base5 = (o) => Object.assign({ zones: Z5, now: 1e6, busy: false, calm: 60000, near: [], mouse: null, lastFly: -1e9, recent: [], order: ['ground'], main: M5,
   H: 800, top: 59, bottom: 737, scrollY: 0, S, BOXH, flyFrames: FF }, o);
-run('choose:不忙、只有滑鼠在主要內容裡動,站在主要內容底下的地面一樣走得掉(第五輪審查 #0)', () => {
+run('choose:不忙、只有滑鼠在主要內容裡動,站在主要內容底下的地面一樣走得掉', () => {
   for (const mouse of [640, 500, 900]) {
     const rnd = mulberry(3), out = {}, bad = [];
     for (let i = 0; i < 200; i++) {
@@ -174,14 +174,14 @@ run('choose:不忙、只有滑鼠在主要內容裡動,站在主要內容底下�
     ok(!out.none && !bad.length, '滑鼠在 ' + mouse + ':200 次都離開(飛到一側空白,或沿著地面走到一側);起飛的路線離滑鼠 240 px 以外', { out, bad: bad.slice(0, 3) });
   }
 });
-run('choose:知道滑鼠的高度時,量小雞走的那條線到滑鼠的距離(第五輪審查 #0)', () => {
+run('choose:知道滑鼠的高度時,量小雞走的那條線到滑鼠的距離', () => {
   const here = Object.assign({}, GROUND, { x: 770 });
   const pick5 = (mouseY) => { const rnd = mulberry(5), out = {}; for (let i = 0; i < 200; i++) { const d = Z.choose(base5({ here, ground: here, mouse: 640, mouseY, rnd })); const k = d ? (d.how === 'walk' ? 'walk' : d.z.kind + ' ' + d.how) : 'none'; out[k] = (out[k] || 0) + 1; } return out; };
   const hi = pick5(400), lo = pick5(770);
   ok(!hi.none && !hi.walk && Object.keys(hi).every((k) => k.startsWith('side-')), '滑鼠在 (640, 400)、小雞在地面 x 770:往兩側空白飛(路線離滑鼠 240 px 以外),不去主要內容', hi);
   ok(Object.keys(lo).every((k) => k === 'walk'), '滑鼠在 (640, 770),就在小雞旁邊:不起飛,沿著地面走到一側', lo);
 });
-run('電腦版:不打字、不捲動,只有滑鼠每 1.5 秒在主要內容中間動一下,小雞一樣 5 秒內離開地面、在地面不到 3 成(第五輪審查 #0)', () => {
+run('電腦版:不打字、不捲動,只有滑鼠每 1.5 秒在主要內容中間動一下,小雞一樣 5 秒內離開地面、在地面不到 3 成', () => {
   const OLD = require('./pet_roam_sim.js').ZONES.replace(' || (c.mouse !== null && c.mouse !== undefined);', ';').replace('if (c.mouseY === null || c.mouseY === undefined)', 'if (true)');
   const mv = (Q) => { if (Q.st.t % 1500 < 100) Q.fireDoc('pointermove', { clientX: 618 + (Q.st.t / 1500 % 4) * 14, clientY: 300 + (Q.st.t / 1500 % 5) * 50, pointerType: 'mouse' }); };
   const old = wanderRun({ name: 'review', W: 1280, H: 800, seed: 1, startX: 770, ms: 60000, zones: OLD, mark: mv });
@@ -191,7 +191,7 @@ run('電腦版:不打字、不捲動,只有滑鼠每 1.5 秒在主要內容中�
     ok(r.first >= 0 && r.first <= 5000 && r.ground <= 0.3 && r.minZones >= 3, name + ' 1280 #' + seed + ':5 秒內離開地面、在地面 3 成以下、任一段 60 秒去 3 個地方', { first: r.first, ground: r.ground, minZones: r.minZones });
   }
 });
-run('tracker:滑鼠在頂欄上(橫的位置對著主要內容)不算在主要內容裡動(第五輪審查 #0)', () => {
+run('tracker:滑鼠在頂欄上(橫的位置對著主要內容)不算在主要內容裡動', () => {
   const on = {};
   const win = { addEventListener() {}, setTimeout: () => 1, clearTimeout() {}, getSelection: () => ({ isCollapsed: true, rangeCount: 0 }), scrollY: 0 };
   const doc = { addEventListener: (t, f) => { on[t] = f; }, activeElement: null, body: {} };
@@ -202,7 +202,7 @@ run('tracker:滑鼠在頂欄上(橫的位置對著主要內容)不算在主要�
   on.pointermove({ clientX: 640, clientY: 400, pointerType: 'mouse' });
   ok(T.pointer(now) === 640, '頂欄下面:算', T.pointer(now));
 });
-run('choose:這一側只剩兩塊、別的地方都超過平常飛得到的距離,不在「上、下、地面」三步裡一直繞,也會去另一側(第五輪審查 #1)', () => {
+run('choose:這一側只剩兩塊、別的地方都超過平常飛得到的距離,不在「上、下、地面」三步裡一直繞,也會去另一側', () => {
   /* 刷題頁 1920×1080:主要內容 440 到 1480,右側兩層(331、173),左側一層、標題右邊一塊都在 1000 px 以外 */
   const zones = [{ key: 'side-R:331:1488', kind: 'side-R', feetDoc: 331, lo: 1488, hi: 1856 }, { key: 'side-R:173:1488', kind: 'side-R', feetDoc: 173, lo: 1488, hi: 1856 },
     { key: 'side-L:331:16', kind: 'side-L', feetDoc: 331, lo: 16, hi: 384 }, { key: 'main:139:514', kind: 'main', feetDoc: 139, lo: 514, hi: 546 }];
@@ -226,7 +226,7 @@ run('choose:這一側只剩兩塊、別的地方都超過平常飛得到的距�
     ok(seq.some((k) => k.startsWith('side-L') || k.startsWith('main')), '#' + seed + ' 也去另一側或標題右邊', seq.join(' '));
   }
 });
-run('choose:捲動有固定的節奏、下一次捲動前飛不完,先不往主要內容那一欄起飛(第五輪審查 #2)', () => {
+run('choose:捲動有固定的節奏、下一次捲動前飛不完,先不往主要內容那一欄起飛', () => {
   const here = Object.assign({}, GROUND, { x: 600 });
   const c = (sc, extra) => base5({ zones: Z5.filter((z) => z.kind === 'main').concat([{ key: 'main:330:300', kind: 'main', feetDoc: 330, lo: 300, hi: 900 }], extra || []), here, ground: here, scrolled: 4000, sc, rnd: mulberry(4) });
   ok(Z.choose(c({ next: 1e6 + 500, step: 300, dir: 1 })) === null, '0.5 秒後會往下捲 300 px、目的地會被捲走:不起飛', Z.choose(c({ next: 1e6 + 500, step: 300, dir: 1 })));
@@ -237,7 +237,7 @@ run('choose:捲動有固定的節奏、下一次捲動前飛不完,先不往主�
   const low = { key: 'main:600:300', kind: 'main', feetDoc: 600, lo: 300, hi: 900 }, f = Z.choose(c({ next: 1e6 + 500, step: 300, dir: 1, only: true }, [low]));
   ok(!!f && f.z.key === low.key, '0.5 秒後會捲,但再捲 300 px 還看得到的(腳 600,在頁面最上面只能往下捲):照樣去', f);
 });
-run('tracker:記得捲動的步幅、方向和節奏(第五輪審查 #2)', () => {
+run('tracker:記得捲動的步幅、方向和節奏', () => {
   const won = {};
   const win = { addEventListener: (t, f) => { won[t] = f; }, setTimeout: () => 1, clearTimeout() {}, getSelection: () => ({ isCollapsed: true, rangeCount: 0 }), scrollY: 0 };
   const doc = { addEventListener() {}, activeElement: null, body: {} };
@@ -250,7 +250,7 @@ run('tracker:記得捲動的步幅、方向和節奏(第五輪審查 #2)', () =>
   ok(Math.abs(s.next - (112000 + 6000)) < 400, '照前兩次的間隔(6 秒)估下一次', s);
   ok(Z.CFG.busyScroll <= 1500, '捲動後算忙的時間縮短(' + Z.CFG.busyScroll + ' 毫秒)', Z.CFG.busyScroll);
 });
-run('arrived:落回地面時,在地面待的 2 到 5 秒從落地站好以後算,不剛落下就飛回去(第五輪審查 #1)', () => {
+run('arrived:落回地面時,在地面待的 2 到 5 秒從落地站好以後算,不剛落下就飛回去', () => {
   const rnd = mulberry(1);
   for (let i = 0; i < 50; i++) {
     const m = Z.memory(0, rnd);
@@ -258,7 +258,7 @@ run('arrived:落回地面時,在地面待的 2 到 5 秒從落地站好以後算
     ok(m.until - 1e6 >= 1200 + 600 + 2000 && m.until - 1e6 <= 1200 + 600 + 5000, '落下 1.2 秒:' + (m.until - 1e6) + ' 毫秒後才換', m.until - 1e6);
   }
 });
-run('routeOf、rescue:往下又橫移遠的改成邊飛邊往下;腳下的空地被捲到頂欄底下,往下撲到看得到的空地(第五輪審查 #1、#2)', () => {
+run('routeOf、rescue:往下又橫移遠的改成邊飛邊往下;腳下的空地被捲到頂欄底下,往下撲到看得到的空地', () => {
   const r = Z.routeOf({ x: 546, feet: 139, lo: 514, hi: 546 }, { feet: 331, lo: 1488, hi: 1856 }, 1488, { busy: false, flyFrames: FF, S });
   ok(!!r && r.how === 'fly' && Math.abs(r.dur - (1488 - 546) / 400) < 1e-9, '從標題右邊(腳 139)到右側空白(腳 331、橫移 942 px):邊飛邊往下,每秒 400 px', r);
   ok(Z.routeOf({ x: 546, feet: 139, lo: 514, hi: 546 }, { feet: 331, lo: 1488, hi: 1856 }, 1488, { busy: true, flyFrames: FF, S }) === null, '忙的時候還是不飛');
@@ -269,7 +269,7 @@ run('routeOf、rescue:往下又橫移遠的改成邊飛邊往下;腳下的空地
   ok(Z.rescue(zs, 200, 110, ctx, (z) => z.key !== 'a').z.key === 'b', '落地前再確認不行的跳過', null);
   ok(Z.rescue(zs, 200, 720, ctx, () => true) === null, '下面沒有看得到的空地:回地面(null)', null);
 });
-run('電腦版:站的空地被捲到頂欄底下,下面有看得到的空地時往下撲過去,不直接回地面(第五輪審查 #2)', () => {
+run('電腦版:站的空地被捲到頂欄底下,下面有看得到的空地時往下撲過去,不直接回地面', () => {
   let ok1 = 0, tried = 0;
   for (const seed of [1, 2, 3, 4, 5, 6]) {
     let st = 0, at = 0, res = '';
@@ -297,7 +297,7 @@ function wheel6(name, W, H, seed, zones) {
   } }, zones ? { zones } : {}));
   return Object.assign(r, { drops });
 }
-run('電腦版:每 6 秒滾一格,不在下一次捲動前一刻起飛又馬上被丟回地面;有空地的頁面常常離開地面(第五輪審查 #2)', () => {
+run('電腦版:每 6 秒滾一格,不在下一次捲動前一刻起飛又馬上被丟回地面;有空地的頁面常常離開地面', () => {
   const OLD = require('./pet_roam_sim.js').ZONES.replace('busyScroll: 1000', 'busyScroll: 3000').replace(/sc\.next > c\.now &&/, 'false &&');
   const before = [];
   for (const name of ['review', 'index', 'learn']) for (const seed of [1, 2, 3]) before.push(...wheel6(name, 1280, 800, seed, OLD).drops);
@@ -310,8 +310,8 @@ run('電腦版:每 6 秒滾一格,不在下一次捲動前一刻起飛又馬上�
   }
 });
 
-/* ---------- 第三輪複查 ---------- */
-run('choose:一側空白有三層、另一側在 2.5 秒外,不忙的時候不一直在同一側繞,每兩三次就有機會去另一側(第三輪複查 #1)', () => {
+/* ---------- 多層空地的換邊 ---------- */
+run('choose:一側空白有三層、另一側在 2.5 秒外,不忙的時候不一直在同一側繞,每兩三次就有機會去另一側', () => {
   /* 首頁 1280 捲過卡片:主要內容 120 到 1160,兩側各三層(腳 142、442、592),主要內容裡沒有空地 */
   const L3 = (f) => ({ key: 'side-L:' + f + ':16', kind: 'side-L', feetDoc: f, lo: 16, hi: 64 }), R3 = (f) => ({ key: 'side-R:' + f + ':1168', kind: 'side-R', feetDoc: f, lo: 1168, hi: 1216 });
   const zones = [L3(142), L3(442), L3(592), R3(142), R3(442), R3(592)], ground = { key: 'ground', ground: true, feet: 796, lo: 16, hi: 1216 };

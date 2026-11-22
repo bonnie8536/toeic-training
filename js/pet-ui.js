@@ -1,11 +1,11 @@
-/* 小雞的畫面(路線圖 1.3、1.4;規格在 repo 外的 小雞規格.md 第 5、7 節)。
+/* 小雞的畫面。
    - 共用:小雞動畫的控制(只在看得到時動,約每秒 8 張;減少動態時只畫一張靜止的)、底部彈出的餵食面板、心情與文字。
    - 網站模式:首頁每日練習下面一張卡、「我的」頁一區。App 有分頁列時這兩個由 CSS 藏起來,改由 js/pet-roam.js 在分頁列上走。
    - 讀寫一律經過 js/pet-store.js(只寫 pet 這一個鍵);這裡不碰 store、localStorage。名字一律用文字節點放進畫面。
    - 面板照 js/app-shell.js 的 showInstallHelp:遮罩、右上角 ×、Esc、點背景關、關掉焦點回原處;另加從下面滑上來、
      把手與標題那一條往下拉關、背景設 inert、焦點鎖在面板裡。剛打開的 350 毫秒不接受點按(連點小雞時第二下不會按到面板裡的按鈕)。
    - 每日目標只放一個地方:「我的」頁那一區有,從那裡打開的面板就不再放。
-   - 第二階段(小雞第二階段規格.md 第 3 節、實作契約第 6 節):PET_STORE.food 為真時面板上半是餵食區(舞台、托盤),卡片上的按鈕改成「餵牠」打開面板;PET_STORE.roamV2 為真時面板放「小雞在頁面上走動」開關。兩個開關各自獨立,
+   - 第二階段:PET_STORE.food 為真時面板上半是餵食區(舞台、托盤),卡片上的按鈕改成「餵牠」打開面板;PET_STORE.roamV2 為真時面板放「小雞在頁面上走動」開關。兩個開關各自獨立,
      都關著時畫出來的東西、焦點、事件跟第 1 步那版完全一樣(tools/test_pet_ui_food.js 對 tools/fixtures/pet_ui_step1.js 比)。
      食物模式唯一碰 localStorage 的是 tr_pet_hint(「點一下就餵」出現過幾次,不在學生資料裡、不同步)。
    載入順序:common.js、cloud.js、pet-config.js、pet.js、pet-store.js、chick-art.js、(food-art.js)、pet-ui.js(App 再加 pet-roam.js)。 */
@@ -40,7 +40,7 @@
   function label(v) { const t = streakText((v || cur).status); return nameOf(v) + (t ? ' · ' + t : ''); }
 
   /* ---------- 小雞動畫:看得到(畫面上、分頁在前景)才動 ---------- */
-  /* opt:{ maxDpr, variants }(餵食面板 160 px 的小雞用 1.5 與 1,規格 A.9);沒給就跟第 1 步一樣 */
+  /* opt:{ maxDpr, variants }(餵食面板 160 px 的小雞用 1.5 與 1);沒給就跟第 1 步一樣 */
   function chick(canvas, size, onTick, opt) {
     const M = A.metrics;
     canvas.style.width = size + 'px';
@@ -82,7 +82,7 @@
       queue = list.map((p) => ({ pose: p, left: len(p) }));
       if (queue.length) anim.setPose(queue[0].pose); else if (anim.pose !== base) anim.setPose(base);
     }
-    /* 吃 n 口再播 after(規格 3.6;預覽 eatSeq):eat 第 1 到 5 格,口數不夠就重複第 4、5 格,最後第 6、7 格,每秒 8 格;引擎的 eat 只啄 2 下,要咬 3、4 口的食物會剩一截直接消失(第三輪審查 #10)。啄地那格照樣經過 onTick 咬一口。看不到、減少動態時不播,
+    /* 吃 n 口再播 after:eat 第 1 到 5 格,口數不夠就重複第 4、5 格,最後第 6、7 格,每秒 8 格;引擎的 eat 只啄 2 下,要咬 3、4 口的食物會剩一截直接消失。啄地那格照樣經過 onTick 咬一口。看不到、減少動態時不播,
        回 false;播到一半看不到了就停,回來時回到 base(舞台的食物由 onTick 收掉) */
     function eat(n, after) {
       if (REDUCE || !running || typeof anim.show !== 'function') return false;
@@ -95,7 +95,7 @@
         eatT = 0;
         if (!running) return;
         if (i >= fr.length) { queue = []; play(after || []); return; }
-        anim.show(fr[i], i === fr.length - 1 ? 1 : 0, 'eat');   // 最後一格換另一組線條(預覽 [7, 1])
+        anim.show(fr[i], i === fr.length - 1 ? 1 : 0, 'eat');   // 最後一格換另一組線條
         if (onTick) onTick({ pose: 'eat', frame: fr[i], tick: i, travel: 0 });
         i++; eatT = setTimeout(step, 125);
       };
@@ -114,7 +114,7 @@
         if (then) then();
         setTimeout(() => { if (queue[0] !== mine) return; queue = []; if (anim && running) anim.setPose(want()); }, ms);
       },
-      hold(on, show) { held = !!on; if (show) seen = true; sync(); },   // show:不在畫面上也畫(列印前;第三輪複查 #2)
+      hold(on, show) { held = !!on; if (show) seen = true; sync(); },   // show:不在畫面上也畫(列印前)
       destroy() { held = true; sync(); if (io) io.disconnect(); doc.removeEventListener('visibilitychange', sync); },
       get pose() { return anim ? anim.pose : want(); },
       get busy() { return queue.length > 0; },
@@ -168,7 +168,7 @@
 
   /* ---------- 共用的內容 ---------- */
   /* 餵完沒有飼料時換成這個連結;data-focus 跟餵食按鈕一樣,鍵盤焦點會從按鈕移到它 */
-  /* plain:食物模式的空托盤用一般按鈕樣式(規格 3.7,不催) */
+  /* plain:食物模式的空托盤用一般按鈕樣式(不催) */
   function goLink(plain) {
     let done = false;
     try { done = !!(window.DAILY && DAILY.progress(store.get(DAILY.KEY, null), DAILY.dateOf(Date.now())).complete); } catch (e) { done = false; }
@@ -239,7 +239,7 @@
     else if (fallback && fallback.isConnected) fallback.focus();
   }
   function moodOf(c, v, ev) { c.setBase(mood(v)); if (ev.fed) c.play(['eat', 'happy']); }
-  /* 「小雞在頁面上走動」開關(ROAM2 才放;WCAG 2.2.2,規格 1.8) */
+  /* 「小雞在頁面上走動」開關(ROAM2 才放;WCAG 2.2.2) */
   let roamSaving = false;
   function roamRow(v) {
     const on = v.roam !== false;
@@ -256,7 +256,7 @@
     roamSaving = false; msg = saveMsg(r, '設定'); notify();
   }
 
-  /* ---------- 餵食區(PET_FOOD;規格第 3 節、契約第 6 節) ---------- */
+  /* ---------- 餵食區(PET_FOOD) ---------- */
   const F = window.FoodArt;
   const HINT_KEY = 'tr_pet_hint', HINT_TIMES = 3, MAX_STOCK = 9;    // HINT_KEY:「點一下餵食」出現過幾次(前 3 次打開面板才出現)
   const FLY_MS = 300, EAT_MS = 1200, NOPE_MS = 750, STILL_MS = 1000, LONG_MS = 500, TIP_MS = 1200;
@@ -270,7 +270,7 @@
   function foodName(id) {
     try { const n = P.foodName && P.foodName(id); if (n) return n; } catch (e) { /* 舊版 pet.js */ } return F && F.info && F.info[id] ? F.info[id].name : '';
   }
-  /* 常識提示只用規格那兩句,其他食物等查證來源(契約 12 第 10 條) */
+  /* 常識提示只用已查證的那兩句,其他食物等查證來源 */
   function tipOf(id) { return id === 'grain' ? '' : id === 'corn' ? '玉米要壓碎' : ''; }
   function hintTurn() {
     try {
@@ -281,7 +281,7 @@
     } catch (e) { return true; }
   }
   function eatFail(fn, why) { return why === 'clock' ? fn + '沒有餵\n請先調好這台裝置的日期' : why === 'readOnly' ? fn + '沒有餵\n這台先不能改小雞的資料' : '沒有存到\n再試一次'; }
-  /* 吃點心時把 eat 姿勢自帶的飼料色碎屑藏起來(碎屑交給食物自己噴,規格 3.6) */
+  /* 吃點心時把 eat 姿勢自帶的飼料色碎屑藏起來(碎屑交給食物自己噴) */
   function crumbless(g) {
     return new Proxy(g, {
       get(t, p) { const v = t[p]; return typeof v === 'function' ? v.bind(t) : v; },
@@ -298,7 +298,7 @@
       g.setTransform(1, 0, 0, 1, 0, 0);
     } catch (e) { console.warn('小雞畫面更新失敗：', e); }
   }
-  /* 托盤小圖:每種只畫一張、不動(規格 3.3)。塗鴉畫法很花時間(9 種在手機上要好幾百毫秒),點下去那一下只放大小定好的空白畫布交給 later 排隊,面板出來以後才一格一格畫;這一頁畫好的留著,再打開直接用 */
+  /* 托盤小圖:每種只畫一張、不動。塗鴉畫法很花時間(9 種在手機上要好幾百毫秒),點下去那一下只放大小定好的空白畫布交給 later 排隊,面板出來以後才一格一格畫;這一頁畫好的留著,再打開直接用 */
   const iconImg = {}, iconDpr = () => Math.min(2, window.devicePixelRatio || 1);
   function icon(id, later) {
     const cv = h('canvas', { class: 'pet-tile-cv', 'aria-hidden': 'true' });
@@ -335,7 +335,7 @@
     o.box.addEventListener('scroll', () => hideTip());   // 提示是 fixed,面板捲動就收起來,不會離開格子
 
     function say(t) { msg = t; o.live.textContent = ''; later(() => { if (msg === t) o.live.textContent = t; }, 30); }   // 先清掉再寫,同一句也會再念一次
-    /* 畫面用的 pantry:剛吃的那幾口還在存的時候,份數和今天吃了幾份先照吃完算(規格 3.4 當下一起更新);已經寫進 view() 的那一口不再多算 */
+    /* 畫面用的 pantry:剛吃的那幾口還在存的時候,份數和今天吃了幾份先照吃完算;已經寫進 view() 的那一口不再多算 */
     function pan(v) {
       const p = v.pantry || { stock: {}, order: [], practiced: false, ateToday: false, gotToday: null, fav: '', favKnown: false };
       const today = v.status && v.status.today, ate = today && v.pet && v.pet.ate && v.pet.ate[today];
@@ -349,7 +349,7 @@
       const n = snack ? Math.max(0, (p.stock && p.stock[id]) || 0) : feeding ? 0 : Math.max(0, v.status.food || 0);
       const full = snack && n >= MAX_STOCK, fav = snack && id === p.fav && !!p.favKnown;
       const locked = snack && n > 0 && !p.practiced, done = snack && n > 0 && !!p.practiced && ateAll(p);
-      const count = n + (snack ? ' 份' : ' 顆'), text = count + (full ? ' · 滿了' : '');   // 格子上「滿了」自己一行(預覽 .ff)
+      const count = n + (snack ? ' 份' : ' 顆'), text = count + (full ? ' · 滿了' : '');   // 格子上「滿了」自己一行
       const name = foodName(id) + (fav ? ' · 最喜歡' : '') + ' · ' + text;   // 讀屏標籤:片段用「 · 」相連
       const label = n === 0 || v.readOnly ? name : !snack ? name + ' · 全部餵牠' : locked ? name + ' · ' + LOCK : done ? name + ' · 今天的 ' + ateMax(p) + ' 份點心餵過了' : name + ' · 餵一份';
       const hold = busy || feeding;
@@ -439,7 +439,7 @@
         if (st.fav && !heart) t.b.append(h('span', { class: 'pet-heart', 'aria-hidden': 'true', html: HEART }));
         else if (!st.fav && heart) heart.remove();
       });
-      /* 今天吃過了講吃了幾份、還能再餵幾份;還沒吃時,今天的券沒有結束畫面講過(達標 m)或看不出是不是結束畫面給的(一天一份那版的 y、w:s1,沒有 _來源)就講;達標補寫給的地瓜、麵包蟲記在 y_m、w:…_m,也沒有結束畫面,也講(規格 4.3,審查第 2 輪 #2) */
+      /* 今天吃過了講吃了幾份、還能再餵幾份;還沒吃時,今天的券沒有結束畫面講過(達標 m)或看不出是不是結束畫面給的(一天一份那版的 y、w:s1,沒有 _來源)就講;達標補寫給的地瓜、麵包蟲記在 y_m、w:…_m,也沒有結束畫面,也講 */
       const gl = Array.isArray(p.gotAll) ? p.gotAll : p.gotToday ? [p.gotToday] : [], told = gl.find((g) => g && /^(m|y|w:[a-z0-9]+|(?:y|w:[a-z0-9]+)_m)$/.test(g.id || '')), k = ateN(p), mx = ateMax(p);
       const lt = k >= mx ? '今天的 ' + mx + ' 份點心都吃了 · 明天再餵' : k > 0 ? '今天吃了 ' + k + ' 份點心 · 還能再餵 ' + (mx - k) + ' 份' : told ? '今天拿到 1 份' + foodName(told.food) : '';
       if (line.textContent !== lt) line.textContent = lt;
@@ -480,7 +480,7 @@
       hold(EAT_MS); eat();
       backstop(t, EAT_MS * 2);   // 小雞沒播到(例如畫面外)時也收回去
     }
-    /* 備用的收食物(#8):時間到了小雞還在吃(eat、開心還在播,或咬完了碎屑還在落)就隔 0.5 秒再看,切到背景、不吃了、多等 8 秒才收(chick2 第三輪修正 #5:慢的手機吃到一半食物不見) */
+    /* 備用的收食物:時間到了小雞還在吃(eat、開心還在播,或咬完了碎屑還在落)就隔 0.5 秒再看,切到背景、不吃了、多等 8 秒才收(慢的手機吃到一半食物不見) */
     function backstop(t, ms, left = 16) { later(() => { if (t === tok) { if (left > 0 && doc.visibilityState !== 'hidden' && eatingNow()) backstop(t, 500, left - 1); else unserve(t); } }, ms); }
     function eatingNow() { try { return !!o.chick().busy || sawEat || !!(stageM && stageM.step >= stageM.steps); } catch (e) { return false; } }
     function snack(id, p) {
@@ -505,9 +505,9 @@
       } else {
         hold(EAT_MS);
         spinNext = first;
-        o.chick().still('happy', FLY_MS + 300, null, 0);   // 食物靠近時張嘴(規格 3.6;預覽 eatIt 的 happy 第 1 格),到了才吃
+        o.chick().still('happy', FLY_MS + 300, null, 0);   // 食物靠近時張嘴(happy 第 1 格),到了才吃
         const t = serve(id, () => { noCrumbs = true; if (!o.chick().eat(steps(id), ['happy'])) unserve(tok); });
-        backstop(t, FLY_MS + EAT_MS * 2);   // 切到背景、畫面外時小雞沒吃,也收回去(第三輪審查 #8)
+        backstop(t, FLY_MS + EAT_MS * 2);   // 切到背景、畫面外時小雞沒吃,也收回去
       }
       Promise.resolve(r.saved).then((s) => s, () => ({ ok: false, reason: 'error' })).then((s) => {
         pending = pending.filter((x) => x !== mine);
@@ -515,7 +515,7 @@
         notify();
       });
     }
-    /* 今天的 3 份點心都吃過了:搖頭,食物飛回托盤,不扣(規格 3.5) */
+    /* 今天的 3 份點心都吃過了:搖頭,食物飛回托盤,不扣 */
     function refuse(id) {
       say(nameOf() + '今天吃了 ' + ateMax(pan(cur)) + ' 份點心 · 明天再餵');
       if (REDUCE) { hold(STILL_MS); o.chick().still('nope', STILL_MS); return; }
@@ -581,7 +581,7 @@
       try { if (typeof cv.animate === 'function') cv.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(-1)', offset: 0.5 }, { transform: 'scaleX(1)' }], { duration: 520, easing: 'ease-in-out' }); } catch (e) { /* 不轉 */ }
       hearts();
     }
-    /* 頭上冒 3 顆塗鴉愛心,照預覽 heartPath/hearts:每秒 7 張、每張線條重抖(±0.8)、左右晃、1.1 秒升起、最後 1/4 淡出;減少動態畫一張(進度 0.4)停 1 秒 */
+    /* 頭上冒 3 顆塗鴉愛心,每秒 7 張、每張線條重抖(±0.8)、左右晃、1.1 秒升起、最後 1/4 淡出;減少動態畫一張(進度 0.4)停 1 秒 */
     function hearts() {
       const g = geo(), dpr = Math.min(2, window.devicePixelRatio || 1), W = 96, TOP = 24, HT = TOP + g.head + 12, c = h('canvas', { class: 'pet-pop', 'aria-hidden': 'true' });
       const gx = c.getContext && c.getContext('2d');
@@ -625,7 +625,7 @@
     const body = h('div', { class: 'pet-sheet-body' });
     const live = h('p', { class: 'pet-msg', role: 'status' });
     const rest = h('div', { class: 'pet-sheet-body' });
-    /* 食物模式:舞台、點心那一行、托盤、提示排在名字下面(規格 3.2);舞台上的小雞 160 px、橫放 96 px */
+    /* 食物模式:舞台、點心那一行、托盤、提示排在名字下面;舞台上的小雞 160 px、橫放 96 px */
     const fa = FOOD ? makeFeed({ mask, box, live, chick: () => c }) : null;
     const cv = fa ? fa.cv : h('canvas', { class: 'pet-big' });
     if (fa) box.append(top, x, head, ...fa.els, body, live, rest);
@@ -673,7 +673,7 @@
       const s = v.status;
       drawHead(v);
       moodOf(c, v, fa ? {} : ev);   // 食物模式吃飼料由托盤播(grain(),每一口都咬到)
-      /* 食物模式不再放「餵牠（N 顆）」按鈕,飼料是托盤第一格(規格 3.8) */
+      /* 食物模式不再放「餵牠（N 顆）」按鈕,飼料是托盤第一格 */
       if (fa) { fa.draw(v, ev); paint(body, [todayLine(s), streakLine(s), week(v)], x); }
       else paint(body, [todayLine(s), streakLine(s), week(v), h('div', { class: 'pet-act' }, action(v))], x);
       paint(rest, [s.totalMet > 0 ? h('p', { class: 'pet-grow' }, '累積達標 ' + s.totalMet + ' 天') : null,
@@ -756,7 +756,7 @@
     const live = h('p', { class: 'pet-msg', role: 'status' });
     box.append(pic, main, act, more, live);
     const c = chick(cv, 96), de = doc.documentElement, isWide = () => !!de && de.classList.contains('pet-roam2-wide'), wide = () => c.hold(isWide());   // 電腦版到處走(pet-roam2.js 加 html.pet-roam2-wide,css 藏起來):停住不畫,拿掉照常動
-    if (de && 'MutationObserver' in window) { new MutationObserver(wide).observe(de, { attributes: true, attributeFilter: ['class'] }); wide(); window.addEventListener('beforeprint', () => { if (isWide()) c.hold(false, true); }); window.addEventListener('afterprint', wide); }   // 列印時卡片的小雞照常印出來:先畫一格,印完再停住(規格 1.11;第三輪複查 #2)
+    if (de && 'MutationObserver' in window) { new MutationObserver(wide).observe(de, { attributes: true, attributeFilter: ['class'] }); wide(); window.addEventListener('beforeprint', () => { if (isWide()) c.hold(false, true); }); window.addEventListener('afterprint', wide); }   // 列印時卡片的小雞照常印出來:先畫一格,印完再停住
     pic.addEventListener('click', () => openSheet(pic, { noGoal: kind === 'me' }));
     /* 食物模式:「餵牠」打開面板;同一顆按鈕一直用,關掉面板時焦點回得來。首頁的實色按鈕只留每日練習那一顆,這裡描邊;「我的」頁實色 */
     const open = FOOD ? h('button', { class: kind === 'home' ? 'btn pet-open' : 'btn primary pet-open', type: 'button', 'aria-haspopup': 'dialog', 'data-focus': 'open' }, '餵牠') : null;

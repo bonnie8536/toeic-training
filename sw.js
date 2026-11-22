@@ -5,7 +5,7 @@
    (node tools/check_release.js 會檢查,--fix 自動換),舊快取整批作廢,不會拿新版共用檔配舊版頁面。
    不經手:跨網域(Supabase、jsDelivr、Google Fonts、Cloudflare)、非 GET、Range 請求、音檔、帶登入參數的頁面。
    這裡不讀寫學生的進度資料,只刪自己 ss- 開頭的快取。 */
-const V = 'v20261121-1152';
+const V = 'v20261122-1543';
 const PAGES = 'ss-pages-' + V;
 const ASSETS = 'ss-assets-' + V;
 const IMAGES = 'ss-img-' + V;
@@ -15,7 +15,7 @@ const IMG_MAX = 80;
 const AUTH_QS = /[?&](code|error|error_code|error_description|access_token|refresh_token|token_hash)=/;
 const noop = () => {};
 const cachedPages = new Set();   // 這次拿的是快取版 HTML 的頁面(client id)
-/* 搬家(搬家計畫 3.5):舊網址轉址期第一次回來、有資料還沒搬的裝置,在離開之前先看到搬家頁。
+/* 搬家:舊網址轉址期第一次回來、有資料還沒搬的裝置,在離開之前先看到搬家頁。
    網域清單跟 js/move-config.js、tools/move-worker/worker.js 一樣(tools/test_move_core.js 檢查);後面那個是本機測試用的舊網址。
    只在舊網址:安裝時多存一份搬家頁與它載入的檔案(MOVE_ASSETS,tools/test_sw.js 從 move-out.html 讀出來比對);
    導覽的回應是轉址(opaqueredirect)而且有 ss-move-flag 這個記號(js/move-out.js 在「有資料、還沒搬」時建的空快取)時,改回存好的搬家頁。

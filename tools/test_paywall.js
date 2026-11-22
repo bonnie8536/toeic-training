@@ -312,7 +312,7 @@ const cases = {
       && six.includes('老師方案 10' + NB + '位以內 6' + NB + '個月') && /未付款$/.test(noNow);
     return { ok, detail: JSON.stringify({ fresh, stale, failed, six, noNow }) };
   },
-  '方案與付款(第二輪複審):藍新沒有付成的單(刷卡被拒、站長整理時標成沒付款)不列,不會隔天又冒出一筆「未完成」;其他付款照列': () => {
+  '方案與付款:藍新沒有付成的單(刷卡被拒、站長整理時標成沒付款)不列,不會隔天又冒出一筆「未完成」;其他付款照列': () => {
     const { P } = load({ paid: true });
     const T = Date.parse('2026-11-03T03:00:00Z');
     const b = { payments: [

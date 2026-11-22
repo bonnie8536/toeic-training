@@ -1,4 +1,4 @@
-/* 小雞第二階段的測試用假瀏覽器(tools/test_pet_roam_wide.js 用;原本在那個檔裡,第三輪審查後拆出來,讓測試檔留在 800 行以內)。
+/* 小雞第二階段的測試用假瀏覽器(tools/test_pet_roam_wide.js 用;原本在那個檔裡,讓測試檔留在 800 行以內)。
    sim(o) 建一個很小的假瀏覽器(時鐘、計時器、requestAnimationFrame、elementsFromPoint、捲動、視窗大小、MutationObserver),
    把 js/pet-roam-zones.js 和 js/pet-roam2.js 原樣載入。st.qsaStar 數量了幾次空地(querySelectorAll('*')),st.rects 數 getBoundingClientRect 叫了幾次。 */
 const fs = require('fs');
@@ -54,7 +54,7 @@ const WHITE = { backgroundColor: 'rgb(255, 255, 255)' };
 
 /* 小雞的大小(2026-10-23 起每種模式一個數字,CFG.sizes):o.size 沒給時照 48 px 跑(這些模擬原本的數字都是照 48 px 調的,當成走法本身的回歸測試);
    o.size 是數字時三種模式都改成那個大小;'real' 照檔案裡的數字(tools/test_pet_roam_size.js 用)。沒有 sizes 那一行的舊版原樣載入 */
-const SIZES_RE = /sizes: Object\.freeze\(\{ app: \d+, (appLand: \d+, )?web: \d+, wide: (?:\d+|Object\.freeze\(\[\[[\d, \[\]]*\]\]\.map\(Object\.freeze\)\)) \}\)/;   // appLand:App 橫放(審查第 2 輪 #4);wide:一個數字,或照視窗寬分段的表(10/23 晚上起)
+const SIZES_RE = /sizes: Object\.freeze\(\{ app: \d+, (appLand: \d+, )?web: \d+, wide: (?:\d+|Object\.freeze\(\[\[[\d, \[\]]*\]\]\.map\(Object\.freeze\)\)) \}\)/;   // appLand:App 橫放;wide:一個數字,或照視窗寬分段的表(10/23 晚上起)
 function sized(src, size) {
   if (!src || size === 'real') return src;
   const n = size || 48;
@@ -156,7 +156,7 @@ function sim(o) {
   const subs = [];
   const view = () => ({ on: true, status: { hungry: ui.hungry }, roam: ui.roam });
   win.PET_UI = { reduced: ui.reduced, mood: () => ui.mood, label: () => '小黃', view, onChange: (f) => { subs.push(f); f(view(), {}); }, openSheet() {} };
-  const liveT = new Set();   // 還在跑的引擎計時器(換大小重開引擎時,舊的不能再被叫醒;審查第 3 輪 #0)
+  const liveT = new Set();   // 還在跑的引擎計時器(換大小重開引擎時,舊的不能再被叫醒)
   const anim = { pose: 'idle', shown: null, sizes: [], ticks: 0, get live() { return liveT.size; } };   // sizes:每次開引擎的大小(換模式時重開);ticks:引擎的計時器跑了幾拍(靜止的小雞不該跑);live:同時在跑的引擎計時器
   win.ChickArt = Object.assign({}, ART, {
     animate(cv, opt) {
@@ -238,7 +238,7 @@ function supported(P, b) {
     return near(r.top) && r.left < b.r && r.right > b.l;
   });
 }
-/* 量測用的障礙(跟程式無關,照規格自己算):可以點的四邊 8 px;文字、圖片、卡片左右下 4 px;站著的那張卡片、頂欄不算 */
+/* 量測用的障礙(跟程式無關):可以點的四邊 8 px;文字、圖片、卡片左右下 4 px;站著的那張卡片、頂欄不算 */
 function obstaclesNow(P) {
   const out = [];
   for (const e of P.html.all()) {
@@ -282,7 +282,7 @@ function site(name, W, H) {
       add(main, 'a', LINK({ box: [M + 10, 602, R, 860] }));
     } else if (name === 'learn' || name === 'drill') {
       h1 = head(64);
-      if (name === 'drill') { add(main, 'a', LINK({ box: [L, 173, M - 11, 301] })); add(main, 'a', LINK({ box: [M + 11, 173, R, 301] })); }   // 刷題頁照真的:一排兩張卡片(10/24 無頭 Chrome 1440×900;審查第 1 輪 #1)
+      if (name === 'drill') { add(main, 'a', LINK({ box: [L, 173, M - 11, 301] })); add(main, 'a', LINK({ box: [M + 11, 173, R, 301] })); }   // 刷題頁照真的:一排兩張卡片(10/24 無頭 Chrome 1440×900)
       else for (let i = 0; i < 4; i++) { add(main, 'a', LINK({ box: [L, 150 + i * 200, M - 10, 330 + i * 200] })); add(main, 'a', LINK({ box: [M + 10, 150 + i * 200, R, 330 + i * 200] })); }
       if (name === 'learn') { const w = add(main, 'section', { box: [L, 950, M - 10, 1150], style: WHITE }); add(w, 'h2', { box: [L + 24, 970, M - 34, 1000], texts: [[L + 24, 972, L + 130, 998]] }); }
     } else if (name === 'review') {

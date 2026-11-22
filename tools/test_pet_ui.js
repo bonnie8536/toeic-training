@@ -239,7 +239,7 @@ T['不認得的版本與讀不到(newer 沒亮)照舊是「' + OLD_BAD + '」;�
   return { ok: a === OLD_BAD && c === CLOCK, detail: JSON.stringify([a, c]) };
 };
 
-/* 第二階段加的(餵食面板 160 px 小雞省記憶體,規格 A.9):chick() 第四個參數照給;沒給時跟第 1 步一樣,不多帶 variants */
+/* 第二階段加的(餵食面板 160 px 小雞省記憶體):chick() 第四個參數照給;沒給時跟第 1 步一樣,不多帶 variants */
 T['PET_UI.chick:沒給 opt 時 animate 參數跟第 1 步一樣;給 { maxDpr, variants } 時照用'] = async () => {
   const pg = loadPage({ view: 'v1', act: () => ({ ok: true }) });
   const got = [];
@@ -251,7 +251,7 @@ T['PET_UI.chick:沒給 opt 時 animate 參數跟第 1 步一樣;給 { maxDpr, va
     b.maxDpr === 1.5 && b.variants === 1 && b.size === 160, detail: JSON.stringify(got) };
 };
 
-/* 電腦版到處走(pet-roam2.js 在 html 加 pet-roam2-wide,css 把卡片裡的小雞藏起來):卡片裡的小雞停住不畫,class 拿掉就照常動(第四輪審查 #4) */
+/* 電腦版到處走(pet-roam2.js 在 html 加 pet-roam2-wide,css 把卡片裡的小雞藏起來):卡片裡的小雞停住不畫,class 拿掉就照常動 */
 T['首頁卡片、我的:html 有 pet-roam2-wide 時卡片裡的小雞停住(不跑計時器、不畫),拿掉就照常動;面板裡的小雞不受影響'] = async () => {
   const out = [];
   for (const [me, wide0] of [[true, true], [true, false], [false, true]]) {
@@ -278,7 +278,7 @@ T['首頁卡片、我的:html 有 pet-roam2-wide 時卡片裡的小雞停住(不
   return { ok: okMe && okMe2 && okSheet, detail: JSON.stringify(out) };
 };
 
-/* 規格 1.11「只有一隻」:列印時卡片的小雞照常印出來(第三輪複查 #2)。css 在列印時把卡片的小雞放回來、拿掉空的窩;
+/* 「只有一隻」:列印時卡片的小雞照常印出來。css 在列印時把卡片的小雞放回來、拿掉空的窩;
    js 在 beforeprint 讓停住的小雞畫一格(不然印出來是舊的那格或空白),afterprint 再停住 */
 T['列印:電腦版到處走時卡片的小雞照常印出來(css 列印時放回小雞、拿掉窩;beforeprint 畫一格,afterprint 再停住)'] = async () => {
   const css = read('css/style.css').replace(/\r\n/g, '\n'), pm = css.match(/@media print\s*\{[\s\S]*?\n\}/g) || [];

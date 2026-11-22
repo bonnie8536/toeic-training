@@ -1,4 +1,4 @@
-/* 搬家(搬家計畫第二節)的純計算測試:挑鍵、搬家包、雜湊、收件端驗證、合併規則、題庫、重搬、寫入日誌與空間、搬家碼與搬家檔。
+/* 搬家的純計算測試:挑鍵、搬家包、雜湊、收件端驗證、合併規則、題庫、重搬、寫入日誌與空間、搬家碼與搬家檔。
    載入真的 js/move-rules.js、js/move-merge.js、js/move-pack.js、js/move-apply.js、js/common.js(日誌還原),
    小雞與每日練習用真的 js/pet.js、js/pet-food.js、js/daily.js。假的 localStorage 可以設容量。
    共用的假 localStorage 與載入在 tools/fixtures/move_kit.js。用法:node tools/test_move_core.js */
@@ -359,7 +359,7 @@ T['登入過的帳號還沒上傳的:放進 tr_move_pending_<帳號>,不寫進�
   return 'ok';
 };
 
-/* ---------- 跟同步合併(js/sync-merge.js)對齊:題庫戳記、刪除標記、暫存區(同步合併設計 3.12) ---------- */
+/* ---------- 跟同步合併(js/sync-merge.js)對齊:題庫戳記、刪除標記、暫存區 ---------- */
 /* 新版頁面做的題庫(有 _r、_t、_p 戳記):用 SYNC_MERGE 一步一步改,跟 js/vocab.js 一樣 */
 const sbank = (id, name, words, t) => SM.editBank([], id, t, (b) => SM.addWords(Object.assign(b, { name }), words.map((w) => ({ en: w, zh: '中' + w })), t))[0];
 const edit = (b, t, fn) => SM.editBank([b], b.id, t, fn)[0];
@@ -448,7 +448,7 @@ T['暫存區(帳號還沒上傳的)再搬一次:題庫、刪除標記、模擬�
   return 'ok';
 };
 
-/* ---------- 模擬考錯題 mock_wrong(錯題本定稿 2026-11-18) ---------- */
+/* ---------- 模擬考錯題 mock_wrong ---------- */
 T['mock_wrong:暫存區(帳號還沒上傳的)再搬一次,兩包的模擬考錯題取聯集(同一題留 t 新的),不整份換掉'] = async () => {
   const ls = makeStorage(0, {});
   const k = (s) => 'tr_u' + CPID + '_' + s;
@@ -481,7 +481,7 @@ T['mock_wrong:新版收件頁收得下含 mock_wrong 的包(訪客、本機學�
   return 'ok';
 };
 
-/* ---------- 再搬一次:舊網址的題庫從上次搬家後沒變過(第二輪審查 #1、#2) ----------
+/* ---------- 再搬一次:舊網址的題庫從上次搬家後沒變過 ----------
    舊網址這份上次已經送到新網址(加進去、合併、或另存「（舊網址）」),那個題庫還在,就不再另存一份:
    不靠 _p(最多 8 個舊版本,新網址改 9 次以上就認不出來),靠 tr_move_log 記的「這台上次送的那份」的雜湊與它落在哪個題庫 */
 const plainBank = () => ({ id: 'b1', name: '我的單字', words: [{ en: 'gate', zh: '登機門', on: true }, { en: 'board', zh: '登機', on: true }, { en: 'seat', zh: '座位', on: true }] });
@@ -575,7 +575,7 @@ T['再搬一次:舊網址的題庫沒變、學生把「（舊網址）」複本�
   return J(names);
 };
 
-/* ---------- 舊網址只改了題庫名稱(字沒動)(第三輪審查) ----------
+/* ---------- 舊網址只改了題庫名稱(字沒動) ----------
    以前看到「這些字新網址已經有了」就跳過,舊網址搬完之後改的名稱不會過去 */
 const renamed = (b, name, t) => edit(b, t, (x) => Object.assign({}, x, { name }));
 T['再搬一次:舊網址搬完之後只改了題庫名稱、新網址沒動過:名稱跟過去,不多一份;新網址原本那份寫入前備份'] = async () => {
@@ -642,7 +642,7 @@ T['題庫(訪客):舊網址新建、還沒加字的題庫,新網址已經有別�
   return 'ok';
 };
 
-/* ---------- 刪除標記不放進 accounts(第二輪審查 #3) ----------
+/* ---------- 刪除標記不放進 accounts ----------
    新網址 service worker 快取的舊收件頁(844e936)的 MOVE_RULES 沒有 sync_del 的規則,accounts 裡有就整包拒收。
    新版寄出頁把刪除標記放在另外的 del 欄位(舊收件頁不看,只會讓刪掉的回來,不會少),雜湊照舊只算 keys、accounts */
 function oldRules() {
@@ -801,7 +801,7 @@ T['搬家碼:壓縮(RU1Z:)與不壓縮(RU1:)都還原得回同一包;搬家檔�
   return z.length + ' / ' + plain.length;
 };
 
-/* ---------- 第一輪審查修正 ---------- */
+/* ---------- 補充的案例 ---------- */
 const wr = (fields, at) => Object.assign({}, fields, { updatedAt: at });
 T['寫作:同一題兩邊寫的不一樣,比較新的(updatedAt)放原位,另一份留在 alt,不會不見;一邊空的直接補上'] = async () => {
   const ls = makeStorage(0, {

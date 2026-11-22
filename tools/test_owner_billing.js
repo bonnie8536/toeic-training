@@ -1,5 +1,5 @@
-/* 站長後台「收費管理」的總覽(前端計畫九.1)、記一筆收款(九.3)、贈送(九.4)、寫作批改扣篇數與更正(九.5)、
-   下載全部備份 v2(九.6)的測試。假環境在 tools/owner_test_kit.js,資料庫的回覆是 tools/fixtures/owner_contract.json。
+/* 站長後台「收費管理」的總覽、記一筆收款、贈送、寫作批改扣篇數與更正、
+   下載全部備份 v2 的測試。假環境在 tools/owner_test_kit.js,資料庫的回覆是 tools/fixtures/owner_contract.json。
    用法:node tools/test_owner_billing.js */
 const nodeCrypto = require('crypto');
 const K = require('./owner_test_kit');
@@ -39,7 +39,7 @@ async function openPam(A) {
 }
 
 const cases = {
-  /* ---------- 總覽(九.1) ---------- */
+  /* ---------- 總覽 ---------- */
   '總覽:收費管理多一個總覽分頁,按了才呼叫 owner_overview({ p_days: 14 });五段照資料庫的回傳寫': async () => {
     const w = world(); const L = await area(w);
     const tabs = L.el.byClass('ow-sub-tab').map(b => b.textContent);
@@ -74,7 +74,7 @@ const cases = {
     return { ok: okk, detail: JSON.stringify({ bad: bad.slice(0, 80), look: w.calls('owner_lookup') }) };
   },
 
-  /* ---------- 記一筆收款(九.3) ---------- */
+  /* ---------- 記一筆收款 ---------- */
   '記一筆收款:查帳號頁有按鈕;預設學生方案 1 個月 199 元、轉帳、今天;送出參數照資料庫;結果寫開始日與到期日;做完重讀': async () => {
     const w = world(); const L = await area(w);
     await openLookup(L, ACC.tom.email);
@@ -204,7 +204,7 @@ const cases = {
     return { ok: okk, detail: names.join() };
   },
 
-  /* ---------- 贈送(九.4) ---------- */
+  /* ---------- 贈送 ---------- */
   '贈送學生方案:到期日空白是沒有期限(送 null),選日子送那天結束;原因寫進備註;做完重讀': async () => {
     const w = world(); const L = await area(w);
     await openLookup(L, 'EXPIRED.Eve@example.test'.toLowerCase());
@@ -255,7 +255,7 @@ const cases = {
     return { ok: okk, detail: JSON.stringify({ inOwner, err: errOf(d) }) };
   },
 
-  /* ---------- 更正寫作批改篇數(九.5) ---------- */
+  /* ---------- 更正寫作批改篇數 ---------- */
   '更正:一定要寫原因;減到負的不送;第一次按寫出更正後剩幾篇,第二次才送;結果寫剩幾篇': async () => {
     const w = world(); const L = await area(w);
     await openLookup(L, ACC.pam.email);
@@ -362,7 +362,7 @@ const cases = {
     return { ok: okk, detail: JSON.stringify({ done, fresh }) };
   },
 
-  /* ---------- 下載全部備份(九.6) ---------- */
+  /* ---------- 下載全部備份 ---------- */
   'PAID_UI 沒開:下載全部備份跟以前一樣(version 1,欄位與順序不變),不呼叫 owner_export,沒有多的說明': async () => {
     const w = world();
     const A = loadAdmin(w, { paid: false }); await settle();
@@ -374,7 +374,7 @@ const cases = {
       && !/SQL Editor/.test(A.root.textContent);
     return { ok: okk, detail: JSON.stringify({ keys: Object.keys(p), rpcs: w.rpcs }) };
   },
-  '站長模式:下載全部備份也呼叫 owner_export 與 owner_export_gateway,存成 version 2(rows 加 paid、gateway);按鈕旁寫只含她看得到的學生、完整備份用 SQL Editor': async () => {
+  '站長模式:下載全部備份也呼叫 owner_export 與 owner_export_gateway,存成 version 2(rows 加 paid、gateway);按鈕旁寫只含站長看得到的學生、完整備份用 SQL Editor': async () => {
     const w = world();
     w.next.owner_export_gateway = [{ data: clone(GW), error: null }];
     const A = loadAdmin(w, { paid: true }); await settle();
@@ -465,7 +465,7 @@ const cases = {
     return { ok: okk, detail: JSON.stringify({ keys: Object.keys(p), t: t.slice(0, 200) }) };
   },
 
-  /* ---------- 審查修正(E2) ---------- */
+  /* ---------- 補的案例(E2) ---------- */
   '記一筆收款:網路斷掉沒收到結果,取消再打開沿用同一個送出編號並寫出來;取消後重讀這個帳號;編號一個帳號一個;收到結果(成功或已經記過)才換新的': async () => {
     const w = world(); const L = await area(w);
     await openLookup(L, ACC.tom.email);

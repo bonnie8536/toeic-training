@@ -1,7 +1,7 @@
-/* 衝衝英文:舊網址 www.shuashualanguage.com 與 shuashualanguage.com 的 Cloudflare Worker(搬家計畫第三節)。
+/* 衝衝英文:舊網址 www.shuashualanguage.com 與 shuashualanguage.com 的 Cloudflare Worker。
    用法:Cloudflare → Workers & Pages → 建一個 Worker,把這整份貼上;切換日在 Settings → Domains & Routes 加兩條 Route
    (www.shuashualanguage.com/*、shuashualanguage.com/*),再把舊網域原本的 DNS 紀錄改成 Proxied(紀錄不刪,名字一直查得到)。
-   這個 Worker 回應每一個請求,不會轉給 GitHub。步驟在 D:/claudecode/刷刷英文開發/搬家/步驟_Cloudflare.md。
+   這個 Worker 回應每一個請求,不會轉給 GitHub。
    測試:node tools/test_worker.js(PHASE A、B 每一條路徑)。
    - 沒有加密的 http(帶不帶 www、哪個階段):最先處理,一律 301 到 https 的帶 www 舊網址同一路徑。以前 GitHub Pages 的 Enforce HTTPS 做這件事,
      Worker 接手之後要自己做:http 是另一個網域(localStorage 是空的、看不到進度,搬家程式也不載),登入密碼與網頁程式也不能走沒加密的路。

@@ -1,8 +1,8 @@
-/* 衝衝英文搬家:舊網址每一頁的提示與帶走(搬家計畫 2.11、3.4、3.5、7.0)。js/app-shell.js 只在舊網址(MOVE.onOld)載入它,
+/* 衝衝英文搬家:舊網址每一頁的提示與帶走。js/app-shell.js 只在舊網址(MOVE.onOld)載入它,
    前面要先載 js/move-config.js、js/move-rules.js。不依賴 js/common.js(terms.html 沒載入它)。
    - 記號:這台有要搬的資料、還沒搬,就寫不含資料的 cookie tr_hd=1 與 Cache Storage 的空快取 ss-move-flag
      (Worker 與 service worker 看得到,localStorage 它們讀不到);搬好了寫 tr_moved=1、刪掉 ss-move-flag;沒有資料就把兩個記號都拿掉。
-     這一段跟新網址通不通無關,預備版(搬家計畫 7.0)上線就開始寫。
+     這一段跟新網址通不通無關,預備版上線就開始寫。
    - 帶走之前一定先確認新網址通(抓 MOVE.to/move-ping.txt,3 秒內沒成功就什麼都不做,網站照常用):
      切換前與退回期間不會把人帶到打不開的地方。
    - 網址帶登入回來的東西(查詢字串的 code、access_token、error,或 # 後面的 access_token、error、type=)什麼都不做,讓登入跑完。
@@ -12,7 +12,7 @@
    - 搬過了、新網址連不上:頁面頂端說這裡練習的進度不會自動過去,連得上之後會提醒再搬一次。
    - 離開這一頁(pagehide、切到背景)時重算一次記號:在這一頁練習的,下一次 Worker 就知道這台又有要搬的。
    - 沒資料也沒登入:頁面頂端先說「拍謝！我們換網址了…正在幫你導過去」,約 1.8 秒後帶到新網址同一路徑,帶之前刪掉自己 ss- 開頭的快取、註銷 service worker(這台不需要它接轉址)。
-   - 有資料還沒搬:先試自動搬家(站長 10/28:「為甚麼你不能自動把進度全部搬過去」)。四站,搬家碼只以加密過的樣子進網址(js/move-link.js 開頭):
+   - 有資料還沒搬:先試自動搬家。四站,搬家碼只以加密過的樣子進網址(js/move-link.js 開頭):
      tryAuto 顯示「…正在把你的進度帶過去…」與「等一下再搬」,2.5 秒後帶到新網址 move-in.html#want&n=<一次性號碼>(網址裡沒有資料)拿一次性公鑰;
      新網址帶回寄出頁 move-out.html#key=<公鑰>&n=<同一個號碼>,autoSend 核對號碼(別的網站塞的公鑰不用)、組好跟「複製搬家碼」同一包(buildPack,登入著先 flushForMove 跟雲端對帳)、
      加密,不超過 MOVE_LINK.AUTO_MAX 就帶到 move-in.html#auto=<密文>;新網址合併好帶回 move-out.html#ack=<雜湊>,js/move-out-page.js 用 ackCheck

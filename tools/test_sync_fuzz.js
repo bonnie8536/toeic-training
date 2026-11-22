@@ -1,4 +1,4 @@
-/* 多台裝置隨機操作的模糊測試(同步合併設計第五節):證明「任何一台曾經同步上去的自訂題目,除非被使用者刪除,不會從雲端或任何裝置消失」。
+/* 多台裝置隨機操作的模糊測試:證明「任何一台曾經同步上去的自訂題目,除非被使用者刪除,不會從雲端或任何裝置消失」。
    用法:node tools/test_sync_fuzz.js              (N=序列數 SEED=種子 可以換;預設 2000 組依序 + 300 組搶時間 + 300 組混舊版)
    頁面是真的 js/sync-merge.js 與 js/cloud.js(假的 Supabase 在 tools/sync_harness.js)。每一組:2 到 3 台裝置、10 到 16 個隨機操作
    (加字、改中文、勾選、改名、刪字、刪題庫、存入文章題庫、模擬考交卷(同時把答錯的題寫進 mock_wrong)、上傳、關頁補傳、斷線、恢復連線、App 重開(灌資料)、換頁、
@@ -7,9 +7,9 @@
    在 跑/跑步/慢跑 之間換來換去(含改回原本的)、刪 alt、把 alt 換成主要的。新版改內容會換 _r,這些操作做不出「跟以前某一版一模一樣」的字;
    所以另外有「這個分支早期的頁面改回以前那一版」:把 run 或 refund 的中文、勾選、alt 改回這個字以前的某一版(這台看過、雜湊在它的 _p 裡),
    _r、_m 原樣留著(早期的頁面改內容不換 _r),_p 記改前那一版。那一版的 _r 跟現在一樣時(之後只有合併改過 alt、或也是早期的頁面改的)
-   內容就跟那一版一模一樣,跟別台的版本互相吸收過,重複英文那一組的 absorbZh、joinWord 的「互相吸收過」才走得到(第三輪審查 r3 #4;
+   內容就跟那一版一模一樣,跟別台的版本互相吸收過,重複英文那一組的 absorbZh、joinWord 的「互相吸收過」才走得到(
    每組結果印出改回幾次、其中一模一樣幾次)。以前連 _r 一起抄、也會抄到重複英文那一組另一個 run 的版本,做出早期的頁面也做不出的資料
-   (兩個 run 雜湊一樣、改回新版才有的版本),換種子會失敗(第三輪審查第二批 r3b #2)。
+   (兩個 run 雜湊一樣、改回新版才有的版本),換種子會失敗。
    改回的那個中文不重新保護(別台同時從那一版改過時,早期的頁面本來就會被當成舊版本);這個操作守的是別台打的中文、字、最後收斂。
    被刪過的字不改回(改回的可能就是刪掉的那個樣子)。重複英文那一組的細節(繞一圈吸收、兩個輸家的順序、_p 滿了、沒有新的 alt)
    在 tools/test_sync_merge.js 的「重複英文那一組」用手寫的資料守。
@@ -27,7 +27,7 @@
    中文另外比(不用 SYNC_MERGE 的任何函式):每個字的中文和 alt 裡的每一個(題庫|英文|中文)跟字一樣只能多不能少,
    除了被刪掉的、和某一台在自己畫面上換掉的(那台的使用者改中文、批次加字更新中文,本機少了它)。
    學生又打回以前被換掉的中文(別的地方都沒有它的時候),從那一步重新保護:之前的「換掉」「刪掉」不再豁免它。
-   另外(r3b #7):同一個英文(norm)在一個題庫裡不會有兩個字(重複英文的舊資料除外);重複英文那一組的 run 和 Run(英文完全一樣)
+   另外:同一個英文(norm)在一個題庫裡不會有兩個字(重複英文的舊資料除外);重複英文那一組的 run 和 Run(英文完全一樣)
    出現過就一直在;A、B 最後,只有一台的使用者改過的勾選、題庫名稱,每台和雲端都是那台最後改的樣子(兩台都改過的是衝突,看時鐘,不斷言)。 */
 const H = require('./sync_harness');
 const { J, makeWorld, makeDevice, signIn, newSession, open, logout, loggedIn, banksOf, localOf, cloudOf, storeSet, setCloud,
@@ -219,11 +219,11 @@ function runOne(seed, mode) {
     /* 這個分支早期的頁面(改內容不換 _r):把 run 或 refund 的中文、勾選、alt 改回這個字以前的某一版(這台看過、雜湊在它的 _p 裡),
        _r、_m 原樣留著,_p 記改前那一版。那一版的 _r 跟現在一樣(之後只有合併改過 alt,或也是早期的頁面改的)時,內容就跟那一版一模一樣。
        以前連 _r 一起抄、也會抄到重複英文那一組另一個 run 的版本:兩個 run 雜湊一樣、或改回新版才有的版本,早期的頁面做不出這種資料
-       (第三輪審查第二批 r3b #2 找到的 6 組種子都是這樣) */
+        */
     const restorable = en => { const cur = (banks.find(b => b.id === 'bLegacy') || {}).words || []; const c = cur.find(x => x && x.en === en);
       const past = c && Array.isArray(c._p) ? c._p.map(e => String(e).split('.')[0]) : [];
       return c ? ((seenVer.get(d) || new Map()).get(en) || []).filter(v => editableOf(v) !== editableOf(c) && past.indexOf(w.SM.wordHash(v)) >= 0) : []; };
-    /* 這個字被刪過就不改回:改回的那一版可能就是刪掉的那個樣子(刪除標記記的是它的雜湊),早期的頁面本來就會被刪掉(第三輪起新版換 _r 修好) */
+    /* 這個字被刪過就不改回:改回的那一版可能就是刪掉的那個樣子(刪除標記記的是它的雜湊),早期的頁面本來就會被刪掉 */
     const canRestore = bids.indexOf('bLegacy') >= 0 && !delBank.has('bLegacy') ? RESTORE_EN.filter(en => !delKey.has('bLegacy|' + en) && restorable(en).length) : [];
     if (canRestore.length && chance(0.3)) {
       const lw = banks.find(b => b.id === 'bLegacy').words || [];
@@ -248,7 +248,7 @@ function runOne(seed, mode) {
     if (bids.indexOf('bLegacy') >= 0 && chance(0.15)) {
       /* 重複英文的舊資料(run/跑、Run/經營):把第一個 run 的中文在幾個寫法之間換來換去(含改回原本的「跑」)、在編輯頁刪掉 alt、
          把 alt 換成主要的。裝置時鐘有快有慢,學生改回以前的中文要在主要或 alt,不能不見。新版改內容會換 _r,改回的那一份跟以前那一版
-         雜湊不同,不會被當成舊版本(第三輪);「互相吸收過」要靠上面早期頁面的「改回以前那一版」才做得出來 */
+         雜湊不同,不會被當成舊版本;「互相吸收過」要靠上面早期頁面的「改回以前那一版」才做得出來 */
       const lw = banks.find(b => b.id === 'bLegacy').words || [];
       const run = lw.find(x => x && key(x.en) === 'run');
       if (run && Array.isArray(run.alt) && run.alt.length && chance(0.5)) {
@@ -346,7 +346,7 @@ function runOne(seed, mode) {
            只在別的地方(其他裝置本機、舊版頁面記住的那份、雲端)都沒有它的時候重新算:別的地方還有的是舊的那一份,之後被換掉、刪掉是對的,
            分不出來就照舊豁免(少抓,不誤報)。
            「早期的頁面改回以前那一版」改回的中文不重新算:內容跟那一版一模一樣,別台同時從那一版改過的,會把它當成那個舊版本
-           (早期的頁面本來就會這樣,第三輪起新版改內容換 _r 才修好);這個操作守的是別台打的中文、字、最後收斂 */
+           (早期的頁面本來就會這樣);這個操作守的是別台打的中文、字、最後收斂 */
         const restored = /改回以前那一版/.test(log[log.length - 1]);
         const elsewhere = it => devs.some(x => x !== d && (zhItems(banksOf(x)).has(it) || zhItems(x.snapshot).has(it))) || zhItems(cloudOf(w, 'vgame_banks')).has(it);
         afterZ.forEach(it => { if (!restored && !beforeZ.has(it) && !elsewhere(it)) firstZ.set(it, step); });

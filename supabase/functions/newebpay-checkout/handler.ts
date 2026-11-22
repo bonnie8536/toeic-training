@@ -18,7 +18,7 @@ import { CONSENT_VERSION, findProduct, type Product } from '../_shared/products.
 import { getAuthUser, makeRpc, type FetchLike, type RestError } from '../_shared/supabase_rest.ts';
 import { SITE as LIVE_SITE, SITE_ORIGINS } from '../_shared/site.ts';
 
-// 網址集中在 _shared/site.ts(搬家計畫 5.3):SITE 是付款後帶回的網站,兩個網域在搬家期間都放行
+// 網址集中在 _shared/site.ts:SITE 是付款後帶回的網站,兩個網域在搬家期間都放行
 export const SITE = LIVE_SITE;
 export const ALLOWED_ORIGINS: readonly string[] = Object.freeze([
   ...SITE_ORIGINS,
@@ -59,7 +59,7 @@ type Config = {
 class ConfigError extends Error {}
 
 // 通知網址:預設是這支專案的 newebpay-notify 函式;NEWEBPAY_NOTIFY_URL 可以換成自己網域的短網址
-// (藍新舊手冊寫網址欄位最多 50 字,Supabase 的函式網址約 69 字,見 刷刷英文開發/收費/newebpay/上線步驟.md)。
+// (藍新舊手冊寫網址欄位最多 50 字,Supabase 的函式網址約 69 字)。
 // ReturnURL 一律是通知網址後面加 /return(兩個網址不能一樣,藍新手冊的規定)。
 function notifyBase(supabaseUrl: string, override: string | undefined): string {
   const raw = (override ?? '').trim() || `${supabaseUrl.replace(/\/+$/, '')}/functions/v1/newebpay-notify`;
@@ -150,7 +150,7 @@ function emailForNewebpay(email: string | null): string | undefined {
 }
 
 // 最多讀 MAX_BODY 個位元組,不管 Content-Length 寫多少(分段傳送根本沒有這個標頭):
-// 讀到超過就停下、取消剩下的串流,回 null。跟 newebpay-notify 的 readCapped 同一種做法(2026-10-17 審查修正)。
+// 讀到超過就停下、取消剩下的串流,回 null。跟 newebpay-notify 的 readCapped 同一種做法。
 async function readCapped(req: Request): Promise<Uint8Array | null> {
   const lenHeader = req.headers.get('content-length');
   if (lenHeader !== null && Number(lenHeader) > MAX_BODY) return null;
@@ -206,7 +206,7 @@ export function createCheckoutHandler(deps: CheckoutDeps): (req: Request) => Pro
         NotifyURL: cfg.notifyUrl,
         ReturnURL: cfg.returnUrl,
         ClientBackURL: `${SITE}/pay-result.html?back=1`, // 在付款頁按「返回商店」= 沒付款就回來
-        CREDIT: 1, // 只開信用卡一次付清(她 2026-10-16 決定)
+        CREDIT: 1, // 只開信用卡一次付清(2026-10-16 決定)
         TradeLimit: 900, // 付款頁 15 分鐘逾時
       },
     });
@@ -246,7 +246,7 @@ export function createCheckoutHandler(deps: CheckoutDeps): (req: Request) => Pro
       const p = findProduct(b.body.sku);
       if (!p) return fail(400, MSG_SKU, origin);
       if (b.body.consent !== true) return fail(400, MSG_CONSENT, origin);
-      // 開始收費前只有 test10 可以建單(是不是站長由資料庫判斷)。2026-10-16 審查修正:
+      // 開始收費前只有 test10 可以建單(是不是站長由資料庫判斷)。2026-10-16 修正:
       // 函式部署後到 11/1 之間,不能有人從瀏覽器主控台直接呼叫、買到真的方案。
       if (p.sku !== 'test10' && now().getTime() < cfg.salesStart) {
         return fail(409, notOpenMessage(cfg.salesStart), origin, 'not_open');

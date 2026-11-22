@@ -785,6 +785,32 @@ T['build_icons:全部算好、檢查過才寫;maskable 安全區不過時一個�
   }
 };
 
+/* 頁尾:連結列每頁看得到;說明句收在預設關著的「關於本站」裡,字留在原始碼 */
+T['每一個有頁尾的頁面:連結列在前、直接看得到;說明句收進預設關著的「關於本站」,頁尾只有這一個 p'] = () => {
+  let n = 0;
+  PAGES.forEach((f) => {
+    const s = read(f);
+    const m = /<footer[\s\S]*?<\/footer>/.exec(s);
+    if (!m) return;
+    n++;
+    const foot = m[0];
+    assert.equal((foot.match(/<details/g) || []).length, 1, f + ' 頁尾的 details 不是恰好一個');
+    const d = /<details class="foot-about"([^>]*)>([\s\S]*?)<\/details>/.exec(foot);
+    assert.ok(d, f + ' 頁尾沒有 details.foot-about');
+    assert.equal(/\bopen\b/.test(d[1]), false, f + ' 的「關於本站」預設不能打開');
+    const sum = /<summary>([^<]*)<\/summary>/.exec(d[2]);
+    assert.ok(sum && sum[1] === '關於本站', f + ' 的 summary 文字不是「關於本站」');
+    const p = /<p>([^<]*)<\/p>/.exec(d[2]);
+    assert.ok(p && p[1].indexOf('衝衝英文由個人經營') > -1, f + ' 的說明句不在 details 裡');
+    const nav = foot.indexOf('<nav class="foot-links"');
+    assert.ok(nav > -1 && nav < foot.indexOf('<details'), f + ' 的連結列不在 details 前面');
+    assert.ok(nav < foot.indexOf('</nav>') && foot.indexOf('</nav>') < foot.indexOf('<details'), f + ' 的連結列跑進 details');
+    assert.equal((foot.match(/<p[\s>]/g) || []).length, 1, f + ' 頁尾的 p 不是只有一個');
+    assert.equal(/data-nosnippet[^>]*>\s*<details/.test(foot), false, f + ' 的說明句被包進 data-nosnippet');
+  });
+  assert.ok(n >= 28, '有頁尾的頁面太少:' + n);
+};
+
 let pass = 0;
 const names = Object.keys(T);
 for (const n of names) {

@@ -1023,12 +1023,31 @@ footer {
 }
 footer p { margin: 0; }
 /* 方案、條款、隱私、退款、客服信箱：藍新商店規範要求每頁都看得到（2026-10-15） */
-.foot-links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
 .foot-links a { color: var(--ink-light); text-decoration: underline; text-underline-offset: 2px; }
 .foot-links a:hover { color: var(--primary-dark); }
+/* 說明句預設收起來,連結列照舊每頁看得到 */
+.foot-about { margin-top: 10px; }
+.foot-about > summary {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--ink-light);
+  list-style: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.foot-about > summary::-webkit-details-marker { display: none; }
+.foot-about > summary::after {
+  content: ''; flex: none; width: 6px; height: 6px; margin: 0 2px 3px 0;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg);
+  transition: transform .2s var(--ease-out);
+}
+.foot-about[open] > summary::after { transform: translateY(2px) rotate(225deg); }
+.foot-about > summary:hover { color: var(--primary-dark); }
+.foot-about > summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: var(--r-sm); }
+.foot-about > p { margin-top: 6px; max-width: 68ch; }
+@media (prefers-reduced-motion: reduce) { .foot-about > summary::after { transition: none; } }
 @media (max-width: 860px) {
   footer { padding: 18px 0 24px; }
-  .foot-links { gap: 4px 14px; margin-top: 8px; }
+  .foot-links { gap: 4px 14px; }
+  .foot-about { margin-top: 8px; }
 }
 
 /* ---------------- 學生檔案 ---------------- */
@@ -3951,6 +3970,8 @@ html:not(.authed) .wr-home-tag { display: none; }   /* 訪客沒有自動儲存�
   .pm-item { min-height: 44px; }
   .foot-links { row-gap: 0; }
   .foot-links a { display: inline-flex; align-items: center; min-height: 44px; }
+  .foot-about { margin-top: 0; }
+  .foot-about > summary { min-height: 44px; }
   .practice-panel .btn, .practice-panel .cfg-select, .review-row .btn { min-height: 44px; }
   .practice-panel a.btn, .review-row a.btn { display: inline-flex; align-items: center; justify-content: center; }
   .cfg-part-check { min-height: 44px; }

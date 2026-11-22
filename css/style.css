@@ -552,7 +552,7 @@ button { font-family: var(--font); cursor: pointer; }
   font-size: 14.5px; cursor: pointer;
   width: 150px; flex: none;
 }
-.cfg-part-check input { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
+.cfg-part-check input { width: 16px; height: 16px; accent-color: var(--fill); cursor: pointer; }
 .cfg-select {
   font-family: var(--font);
   font-size: 14.5px;
@@ -736,6 +736,7 @@ button { font-family: var(--font); cursor: pointer; }
 .q-nav button.ng { background: var(--bad-tint); border-color: #ecc7c7; color: var(--bad); }
 
 .drill-nav-btns { display: flex; gap: 10px; margin: 6px 0 50px; }
+.drill-nav-btns > .btn { display: inline-flex; align-items: center; justify-content: center; }   /* 一列裡主按鈕字較大,描邊鈕被拉高時字也置中 */
 
 .result-note { font-size: 14px; color: var(--ink-light); margin: 8px 0 18px; }
 
@@ -1607,7 +1608,7 @@ table.cat-table td.num { white-space: nowrap; }
 .vg-pick-row { display: flex; align-items: center; gap: 8px; padding: 0 8px; border-radius: 6px; }
 .vg-pick-row:hover { background: var(--bg-soft); }
 .vg-pick-check { display: flex; align-items: center; gap: 9px; flex: 1 1 auto; min-width: 0; min-height: 40px; padding: 6px 0; cursor: pointer; color: var(--ink); }
-.vg-pick-check input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--primary); cursor: pointer; }
+.vg-pick-check input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--fill); cursor: pointer; }
 /* 名稱整個顯示、太長就換行(老師按週出的題庫前面都一樣,切成省略號就分不出來;title 提示在手機上不會出現) */
 .vg-pick-name { min-width: 0; line-height: 1.4; overflow-wrap: anywhere; }
 .vg-pick-n { flex: none; margin-left: auto; font-size: 12.5px; color: var(--ink-light); white-space: nowrap; }
@@ -2129,7 +2130,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   -webkit-tap-highlight-color: transparent;
 }
 .dlg-line.left .dlg-bubble { border-top-left-radius: 4px; }
-.dlg-line.right .dlg-bubble { border-top-right-radius: 4px; background: var(--primary-tint); border-color: #cfe5f6; }
+.dlg-line.right .dlg-bubble { border-top-right-radius: 4px; background: var(--primary-tint); border-color: var(--line); }
 .dlg-bubble:hover { border-color: var(--primary); }
 .dlg-bubble:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 .dlg-bubble.playing { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-tint); }
@@ -2337,7 +2338,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   position: relative; display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 6px 14px;
   border: 1px solid var(--line); border-radius: 10px; background: #fff; font-size: 15px; color: var(--ink); cursor: pointer;
 }
-.buy-opt input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--primary); cursor: pointer; }
+.buy-opt input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--fill); cursor: pointer; }
 .buy-opt input[hidden] { display: none; }
 .buy-opt-name { flex: 1; min-width: 0; }
 .buy-opt-amt { font-family: var(--round); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -2349,7 +2350,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 10px; background: var(--bg-soft);
   font-size: 14.5px; line-height: 1.6; color: var(--ink); cursor: pointer;
 }
-.buy-consent input { flex: none; width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--primary); cursor: pointer; }
+.buy-consent input { flex: none; width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--fill); cursor: pointer; }
 .buy-consent:has(input:focus-visible) { outline: 2px solid var(--primary); outline-offset: 2px; }
 .modal-buy .auth-fine { margin-top: 12px; text-align: center; color: var(--ink-soft); }
 .modal-buy .auth-fine a { text-decoration: underline; text-underline-offset: 2px; }
@@ -2471,7 +2472,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 14px;
   border: 1px solid var(--line); border-radius: 10px; background: #fff; font-size: 15px; color: var(--ink); cursor: pointer;
 }
-.auth-seat input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--primary); cursor: pointer; }
+.auth-seat input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--fill); cursor: pointer; }
 .auth-seat:has(input:checked) { border-color: var(--primary); }
 .auth-seat-n { font-weight: 700; min-width: 3.6em; }
 .auth-seat-p { margin-left: auto; color: var(--ink-light); font-variant-numeric: tabular-nums; }

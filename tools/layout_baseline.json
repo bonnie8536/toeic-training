@@ -47,12 +47,12 @@
    0,
    2189,
    375,
-   169
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 2467,
+  "bodyH": 2422,
   "shell": 0
  },
  "375 daily.html": {
@@ -103,12 +103,12 @@
    0,
    511,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 657,
+  "bodyH": 634,
   "shell": 0
  },
  "375 learn.html": {
@@ -159,12 +159,12 @@
    0,
    671,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 927,
+  "bodyH": 904,
   "shell": 0
  },
  "375 warmup.html": {
@@ -215,12 +215,12 @@
    0,
    671,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 927,
+  "bodyH": 904,
   "shell": 0
  },
  "375 drill.html": {
@@ -271,12 +271,12 @@
    0,
    671,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 927,
+  "bodyH": 904,
   "shell": 0
  },
  "375 me.html": {
@@ -327,12 +327,12 @@
    0,
    557,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 813,
+  "bodyH": 790,
   "shell": 0
  },
  "375 grammar.html": {
@@ -383,12 +383,12 @@
    0,
    1245,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 1391,
+  "bodyH": 1368,
   "shell": 0
  },
  "375 phonics.html": {
@@ -439,12 +439,12 @@
    0,
    811,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 957,
+  "bodyH": 934,
   "shell": 0
  },
  "375 practice.html": {
@@ -495,12 +495,12 @@
    0,
    895,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 1041,
+  "bodyH": 1018,
   "shell": 0
  },
  "375 reading.html": {
@@ -551,12 +551,12 @@
    0,
    11649,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 11795,
+  "bodyH": 11772,
   "shell": 0
  },
  "375 dialogue.html": {
@@ -607,12 +607,12 @@
    0,
    9577,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 9723,
+  "bodyH": 9700,
   "shell": 0
  },
  "375 listening.html": {
@@ -651,7 +651,7 @@
    0,
    131,
    375,
-   350
+   458
   ],
   "h1": [
    68,
@@ -661,14 +661,14 @@
   ],
   "footer": [
    0,
-   529,
+   637,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 675,
+  "bodyH": 760,
   "shell": 0
  },
  "375 vocab.html": {
@@ -719,12 +719,12 @@
    0,
    1200,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 1346,
+  "bodyH": 1323,
   "shell": 0
  },
  "375 writing.html": {
@@ -763,7 +763,7 @@
    0,
    131,
    375,
-   420
+   396
   ],
   "h1": [
    68,
@@ -773,14 +773,14 @@
   ],
   "footer": [
    0,
-   599,
+   575,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 745,
+  "bodyH": 698,
   "shell": 0
  },
  "375 review.html": {
@@ -831,7 +831,7 @@
    0,
    520,
    375,
-   146
+   123
   ],
   "mask": [
    0,
@@ -846,7 +846,7 @@
    535
   ],
   "aria": "true",
-  "bodyH": 776,
+  "bodyH": 753,
   "shell": 0
  },
  "375 history.html": {
@@ -897,7 +897,7 @@
    0,
    520,
    375,
-   146
+   123
   ],
   "mask": [
    0,
@@ -912,7 +912,7 @@
    535
   ],
   "aria": "true",
-  "bodyH": 666,
+  "bodyH": 643,
   "shell": 0
  },
  "375 analysis.html": {
@@ -963,7 +963,7 @@
    0,
    544,
    375,
-   146
+   123
   ],
   "mask": [
    0,
@@ -978,7 +978,7 @@
    535
   ],
   "aria": "true",
-  "bodyH": 690,
+  "bodyH": 667,
   "shell": 0
  },
  "375 diagnostic.html": {
@@ -1029,12 +1029,12 @@
    0,
    393,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 539,
+  "bodyH": 516,
   "shell": 0
  },
  "375 mock.html": {
@@ -1085,12 +1085,12 @@
    0,
    622,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 768,
+  "bodyH": 745,
   "shell": 0
  },
  "375 signup.html": {
@@ -1131,12 +1131,12 @@
    0,
    740,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 886,
+  "bodyH": 863,
   "shell": 0
  },
  "375 terms.html": {
@@ -1177,12 +1177,12 @@
    0,
    3708,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 3854,
+  "bodyH": 3831,
   "shell": 0
  },
  "375 privacy.html": {
@@ -1223,12 +1223,12 @@
    0,
    4406,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 4552,
+  "bodyH": 4529,
   "shell": 0
  },
  "375 refund.html": {
@@ -1269,12 +1269,12 @@
    0,
    1667,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 1813,
+  "bodyH": 1790,
   "shell": 0
  },
  "375 corrections.html": {
@@ -1315,12 +1315,12 @@
    0,
    9813,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 9959,
+  "bodyH": 9936,
   "shell": 0
  },
  "375 pricing.html": {
@@ -1366,12 +1366,12 @@
    0,
    2133,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 2279,
+  "bodyH": 2257,
   "shell": 0
  },
  "375 pay-result.html": {
@@ -1417,12 +1417,12 @@
    0,
    346,
    375,
-   146
+   123
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 492,
+  "bodyH": 470,
   "shell": 0
  },
  "375 reset.html": {
@@ -2241,7 +2241,7 @@
    235,
    93,
    810,
-   232
+   285
   ],
   "h1": [
    307,
@@ -2251,14 +2251,14 @@
   ],
   "footer": [
    0,
-   373,
+   426,
    1280,
    109
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 481,
+  "bodyH": 535,
   "shell": 0
  },
  "1280 vocab.html": {
@@ -2353,7 +2353,7 @@
    235,
    93,
    810,
-   178
+   231
   ],
   "h1": [
    307,
@@ -2363,14 +2363,14 @@
   ],
   "footer": [
    0,
-   319,
+   372,
    1280,
    109
   ],
   "mask": null,
   "modal": null,
   "aria": null,
-  "bodyH": 427,
+  "bodyH": 481,
   "shell": 0
  },
  "1280 review.html": {

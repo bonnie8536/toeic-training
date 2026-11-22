@@ -7,20 +7,20 @@
      讀不到雲端、合併說唯讀(形狀認不得,例如更新版的格式)、頁面沒有合併函式時不上傳,帳本留著(不會退回整份上傳);
      灌資料時碰到這些情況,題庫、標記、模擬考紀錄也留本機(帳本記著),不拿雲端蓋掉。
      其他鍵的上傳、灌資料、帳本、登出跟以前一樣(整份上傳,後傳的蓋掉先傳的)。
-     · pet(小雞第二階段規格附錄 A.5):合併函式 PET.cloudMerge(js/pet.js)。合併前跟 pet-store 一樣用登入憑證的 iat 對時,
+     · pet:合併函式 PET.cloudMerge(js/pet.js)。合併前跟 pet-store 一樣用登入憑證的 iat 對時,
        這台時鐘差太多也不合併、不上傳,帳本留著(合併整理時用這台的時間,慢的時鐘會丟掉別台最近幾天的紀錄)。
-       登出前(chick2 第一輪修正 #2、#4):先叫 pet-store 把還在等讀雲端的券和動作寫下來(PET_STORE.flushPending),
+       登出前:先叫 pet-store 把還在等讀雲端的券和動作寫下來(PET_STORE.flushPending),
        帳本上沒有、但標記成「只在本機」的 pet(開關都關時讀不到雲端只寫本機的改動)也先合併上傳,傳不上去就算進「還沒同步」先問。
        pet 因為雲端是更新版格式(v3)而留在帳本時,登出會照樣提示把它算進「還沒同步」。pet 的每一次請求跟以前逐位元組相同。
-     · vgame_banks(自訂題庫)、sync_del(刪除標記)、mock_history(模擬考紀錄)(同步合併設計,2026-10-24):
+     · vgame_banks(自訂題庫)、sync_del(刪除標記)、mock_history(模擬考紀錄):
        合併函式在 js/sync-merge.js(SYNC_MERGE,每一頁都在 cloud.js 之前載入)。題庫「少了不算刪除」,只有刪除標記對得上的才刪;
        題庫上傳時跟 sync_del 一次查詢讀兩列、一次 upsert 傳兩列。單字頁、閱讀頁開頁時呼叫 syncKey 跟雲端對齊一次;
        登出前多一輪對帳(雲端比本機少就先合併上傳再刪本機);搬家離開舊網址前(flushForMove)也對帳,傳不上去、讀不到雲端的放進搬家包。
        寫作、hist、錯題本(drill_p*、listen_p*)還是整份上傳(下一輪)。
-       帳本上沒有這個鍵(本機上次對齊之後沒改過)時合併給 localClean:舊版頁面就地改的名稱、勾選、中文用雲端那份(r2 #1、#4;
-       名稱不看 _t:這台之前在同一個題庫改過別的字、已經上傳也一樣,r3b #1)。
-       合併後上傳失敗時,帳本上沒有的鍵補記(開單字頁、對帳的 pull 原本帳本是空的,失敗後不會重傳、離線登出也不問;r2 #3);pet 不補記(r3 #3)。
-     · mock_wrong(模擬考答錯的題,錯題本定稿 2026-11-18):合併函式 SYNC_MERGE.mockWrong,同一題留 t 新的、其他都留(聯集)。
+       帳本上沒有這個鍵(本機上次對齊之後沒改過)時合併給 localClean:舊版頁面就地改的名稱、勾選、中文用雲端那份(
+       名稱不看 _t:這台之前在同一個題庫改過別的字、已經上傳也一樣)。
+       合併後上傳失敗時,帳本上沒有的鍵補記(開單字頁、對帳的 pull 原本帳本是空的,失敗後不會重傳、離線登出也不問);pet 不補記。
+     · mock_wrong(模擬考答錯的題,2026-11-18):合併函式 SYNC_MERGE.mockWrong,同一題留 t 新的、其他都留(聯集)。
        跟 mock_history 一樣先讀雲端、合併、再上傳;搬家暫存區(takePending → takeSynced)也照 SYNC_FN 合併。
        舊快取的 sync-merge.js 沒有 mockWrong:merge() 是 null,照上面的規則不上傳、帳本留著。
        模擬考、錯題本、題庫、能力分析開頁時呼叫 syncKey('mock_wrong') 跟雲端對齊一次(js/wrongbook.js syncCloud;為什麼見已知限制 8)。
@@ -31,7 +31,7 @@
         舊版頁面就地改的名稱、取消勾選、中文:這台本機的題庫也有還沒上傳的改動(帳本上有;之前改過、已經上傳的不算)時分不出誰新,固定選一份(名稱、勾選可能退回,
         中文輸的放 alt);舊版頁面把名稱、勾選、中文改回以前用過的值,新版認得那是舊版本,會被改回新版那一份。
      3. 在新版刪掉一個沒改過的舊資料(字或題庫,沒有 _r;包括部署前用舊版存的文章題庫),之後在舊版頁面加回一模一樣的
-        (文章題庫照著存一定一模一樣),會被標記刪掉;在新版頁面加回不會。刪除標記的 hs(被刪那一份吸收過的舊版本)只刪有 _r 的(r3b #3),
+        (文章題庫照著存一定一模一樣),會被標記刪掉;在新版頁面加回不會。刪除標記的 hs(被刪那一份吸收過的舊版本)只刪有 _r 的,
         所以在新版改過才刪的,舊版頁面重新加回會留著;代價是舊版頁面或很久沒同步的裝置會把改之前那份帶回來(只會多,再刪一次就好)。
      4. 刪除標記保留 400 天、最多 1000 筆;清掉之後,很久沒開的裝置可能把刪掉的帶回來(只會多)。
      5. 兩台都改了同一個字的中文:新的當主要,另一個放 alt(不設上限,編輯頁全部看得到,可以換或刪)。改回以前用過的中文也一樣
@@ -41,7 +41,7 @@
      7. 單鍵 256 KB:合併只會讓題庫變大,碰到上限時上傳會一直失敗、帳本一直留著,登出時會問。新字只多 4 碼的 _r(不寫 on、_t),
         剛批次加字的題庫大約是 main 格式的 1.04 倍(tools/test_sync_merge.js 量 jsonb 的大小);改過、取消勾選、合併過的字多 _t、_p,
         每個大約多 40 到 100 位元組。模擬考紀錄合併時留 300 筆(大約 40 KB),不照 mock.js 的 30 筆裁(時鐘錯的裝置剛考完的那一筆才不會被裁掉)。
-     8. mock_wrong(錯題本審查 2026-11-19 #1):部署前就開著、沒重新整理的舊版分頁(它的合併表沒有 mock_wrong)恢復連線、關頁、切到背景時
+     8. mock_wrong:部署前就開著、沒重新整理的舊版分頁(它的合併表沒有 mock_wrong)恢復連線、關頁、切到背景時
         補傳帳本,帳本上的 mock_wrong 不讀雲端、不合併就整份上傳。同一台的新版頁面剛寫了 mock_wrong、還沒傳上去(0.8 秒內、離線)時,
         雲端那一列會變成這台本機那一份:別台傳上去、這台本機沒有的錯題,別台如果已經登出(共用電腦,本機刪了)就找不回來。
         模擬考、錯題本、題庫、能力分析開頁先跟雲端對齊(WRONGBOOK.syncCloud → syncKey,tools/test_sync_union.js 34),本機開頁時就有雲端那份;
@@ -63,7 +63,7 @@
   })();
   /* 這一頁是登入回來的頁面(Google 導回來、點信裡的連結):網址帶 access_token(密碼重設的 type=recovery 不算)或 ?code=,
      要趁 supabase-js 清掉網址之前記下來。回來那一頁 supabase-js 先拿 access_token 去問帳號,雲端確認登入之前 CLOUD.user 是 null、
-     資料夾還是訪客的:內容頁這時按作答只擋下、不跳「登入之後才能作答」(js/profile.js askToAct,第 4 輪審查 #1) */
+     資料夾還是訪客的:內容頁這時按作答只擋下、不跳「登入之後才能作答」(js/profile.js askToAct) */
   const authReturning = !authError && (function () {
     const hash = String(location.hash || ''), search = String(location.search || '');
     return (/[#&]access_token=/.test(hash) && !/[#&]type=recovery/.test(hash)) || /[?&]code=/.test(search);
@@ -87,7 +87,7 @@
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
     startCheckout, myCheckout, isOwner,
     saveSignupIntent, takeSignupIntent, clearSignupIntent, markLocalOnly, clearLocalOnly, syncKey, flushForMove, folderReady };
-  /* 先合併再上傳的鍵(同步合併設計 3.2)。merge() 用到時才找合併函式:頁面沒載到(pet.js、sync-merge.js)就是 null,
+  /* 先合併再上傳的鍵。merge() 用到時才找合併函式:頁面沒載到(pet.js、sync-merge.js)就是 null,
      這時不上傳、帳本留著,不會退回整份上傳。
      clock:合併前要對時(只有 pet:PET.cloudMerge 依日期裁切,慢的時鐘會丟掉別台的新日期)。
      tombs:合併要用刪除標記;上傳時跟 sync_del 一次查詢讀兩列、一次 upsert 傳兩列(雲端不會有「題庫少了、標記還沒到」的空窗)。
@@ -128,13 +128,13 @@
   const early = {};
   const SEEN_PREFIX = 'tr_cloud_seen_';   // 「這台灌過這個帳號」記號(說明在下面「這一頁的寫入能不能記帳」那一段);開頁時就要用,放在這裡
   /* 這一頁的資料夾(雲端帳號的)開頁時是不是空的:cloud.js 載入當下就看,這時頁面程式還沒寫任何東西。
-     afterAuth 判斷「帳號資料夾是空的」用(見 folderEmpty 上面的說明;第 2 輪審查 2026-10-31) */
+     afterAuth 判斷「帳號資料夾是空的」用(見 folderEmpty 上面的說明;2026-10-31) */
   const emptyAtLoad = (function () {
     const pid = window.__PROFILE_ID;
     return typeof pid === 'string' && pid.charAt(0) === 'c' && folderEmpty('tr_u' + pid + '_', null);
   })();
   /* 開頁時帳號資料夾是空的、這台也沒有「灌過這個帳號」的記號(seenPid):這一頁的畫面是照還沒灌過的資料夾畫的
-     (別的分頁登出把資料夾刪了、正在登回來灌資料)。確認登入時資料夾有東西了(別的分頁灌好了),這一頁要重灌重載(多分頁第 3 輪審查 #1) */
+     (別的分頁登出把資料夾刪了、正在登回來灌資料)。確認登入時資料夾有東西了(別的分頁灌好了),這一頁要重灌重載 */
   const unreadyAtLoad = emptyAtLoad && !seenPid(window.__PROFILE_ID);
   /* 這一頁的畫面根據的是還沒灌過的資料夾,而且這一頁自己沒灌成(讀雲端失敗):之後就算別的分頁灌好、標記劃掉,這一頁也不能作答、不記帳,
      要重新整理才換成灌好的資料夾(寫作頁這類照畫面整份寫回的鍵,不然會把雲端蓋成只剩這一頁的那幾筆) */
@@ -227,7 +227,7 @@
     return '';
   }
 
-  /* ---------- 這一頁的寫入能不能記帳(2026-10-31 審查,main 130f330 就有的三條掉資料路徑) ----------
+  /* ---------- 這一頁的寫入能不能記帳(2026-10-31,main 130f330 就有的三條掉資料路徑) ----------
      1. 這一頁的資料夾還是不是這台目前的帳號:別的分頁登出(資料夾、帳本刪光)或換帳號之後,沒重載的頁面記憶體裡的
         CLOUD.user、__PROFILE_ID 還是原帳號。照寫照記帳的話,寫入根據的是空的資料夾(或是下一個人的練習),
         上傳因為登入不在了失敗、帳本留著,原帳號下次在這台登入時灌資料把它當成本機較新,整份上傳蓋掉雲端(js/pet-store.js profileGone 同一套判斷)。
@@ -237,9 +237,9 @@
         頁面拿到的是空資料夾,記了帳,下一頁灌資料會把只有新那幾筆的 hist、錯題本整份傳上去蓋掉雲端。
         資料夾不是空的(之前灌過、登入失效改回訪客留著的)不記,跟以前一樣:讀不到雲端時照常作答記帳,下次灌資料比新舊(離線也是這樣)。
         這台灌過這個帳號(「灌過」記號 tr_cloud_seen_<帳號 id>,灌好時寫、登出刪掉、開始登入或確認完的時候不是這台的目前帳號就先刪掉、搬家不帶)也不記:雲端本來就沒有進度的帳號
-        (新註冊、只看後台的老師)灌完資料夾還是空的,不能因為這樣每開一個新分頁就把已經灌好的分頁擋下(多分頁第 3 輪審查 #4、#5)。
+        (新註冊、只看後台的老師)灌完資料夾還是空的,不能因為這樣每開一個新分頁就把已經灌好的分頁擋下。
         代價跟資料夾不是空的、只是舊了一樣(已知限制,整份上傳後傳的蓋掉先傳的):灌過之後別台才有進度,這台讀不到雲端時照常作答記帳。
-     3. 這一頁的畫面是照還沒灌過的資料夾畫的、自己又沒灌成(pageUnhydrated):別的分頁之後灌好、劃掉標記,這一頁一樣不記帳(多分頁第 3 輪審查 #1)。
+     3. 這一頁的畫面是照還沒灌過的資料夾畫的、自己又沒灌成(pageUnhydrated):別的分頁之後灌好、劃掉標記,這一頁一樣不記帳。
      平常登入著的頁面這些條件都成立,行為不變。 */
   function unhydratedKey(uid) { return 'tr_cloud_unhydrated_' + uid; }
   function unhydrated(uid) {
@@ -280,7 +280,7 @@
      - 這一頁的資料夾不是這個帳號的(otherFolder):這一頁確認登入前寫的在別的資料夾,直接看帳號資料夾。
      - 是這個帳號的:現在一個鍵都沒有;或開頁時是空的(emptyAtLoad)、現在只有這一頁確認登入前寫的鍵(early)。
        不能把 early 的鍵一律當成不算:資料夾本來就有資料、只是剛好每個鍵都在確認登入前重寫過(新學生常常只有 hist)時,
-       會被當成空的,讀雲端失敗時已登入、本機資料完整的人被擋下,那一筆也丟了(第 2 輪審查)。
+       會被當成空的,讀雲端失敗時已登入、本機資料完整的人被擋下,那一筆也丟了。
        開頁後別的分頁把資料夾刪了(登出)、這一頁又沒寫:現在一個鍵都沒有,一樣算空的 */
   function accountFolderEmpty(prefix, otherFolder) {
     if (otherFolder) return folderEmpty(prefix, null);
@@ -302,13 +302,13 @@
     if (serverAccess && typeof serverAccess.is_teacher === 'boolean') window.CLOUD.isTeacher = serverAccess.is_teacher;   // my_access 先回來了:以它為準
 
     const pid = pidOf(user);
-    /* 這一頁的資料夾不是這個帳號的(第 3 輪審查 #1):登入失效改回訪客、或別的分頁登出(帳號資料夾刪掉了)之後,
+    /* 這一頁的資料夾不是這個帳號的:登入失效改回訪客、或別的分頁登出(帳號資料夾刪掉了)之後,
        在同一個分頁用 Google 登回來,這個分頁之前灌過資料的旗標還在。旗標不算數,跟剛登入一樣灌資料、重載;
        不然這一頁的寫入進訪客資料夾,之後照帳號資料夾裡的舊值或空值上傳,會把雲端那一列蓋掉 */
     const otherFolder = window.__PROFILE_ID !== pid;
     /* 這一頁在確認登入(查教師身分那一趟)的時候,別的分頁登出了(目前帳號、登入資料都刪了),或換成別的帳號:
        不寫回目前帳號、不灌資料、不設旗標。以前照樣寫回,這一頁(和別的沒重載的分頁)的資料夾又對得上,拿被刪空的資料夾作答記帳,
-       這個帳號之後在這台登入時整份上傳蓋掉雲端(多分頁第 3 輪審查 #3,e49e444 就有)。這一頁照 folderGone 擋下、開「已在別的分頁登出」卡,
+       這個帳號之後在這台登入時整份上傳蓋掉雲端(e49e444 就有)。這一頁照 folderGone 擋下、開「已在別的分頁登出」卡,
        換頁後照 leaveStaleAccount 改回訪客。別的分頁登出又用同一個帳號登回來(登入資料是它)照常往下(moved);
        這一頁本來就不是這個帳號的資料夾(訪客頁剛登入)才要主動改寫目前帳號 */
     const moved = !otherFolder && !sameFolder();
@@ -316,15 +316,15 @@
     /* 走到這裡 moved 就是「確認登入途中別的分頁登出又登回同一個帳號」:資料夾被刪過,這個分頁之前灌過的旗標不算數,
        照新分頁的規則重灌(資料夾是空的就記「還沒灌過」、確認前寫的作廢;讀雲端失敗這一頁不能作答、不記帳)。
        以前旗標在、標記又還沒記,這一頁不灌資料照常記帳:確認前寫的那一筆上傳被刪掉的鍵(雲端 hist 變 null),
-       或照被刪空的資料夾作答整份蓋掉雲端(審查 D 第 2 輪 #1,e49e444 就有;情境 58 是沒有旗標的新分頁、情境 66 是這一條) */
+       或照被刪空的資料夾作答整份蓋掉雲端(e49e444 就有) */
     /* 剛登入(fresh)、或這一頁的資料夾不是這個帳號的(訪客頁登入、Google 回來):「灌過」記號不算數,先刪掉,灌好再寫回。
        部署前就開著的舊版分頁不認得這個記號,在那裡登出會把資料夾刪光、記號留著;照記號不記「還沒灌過」的話,讀雲端進度失敗時
-       學生在空資料夾上作答記帳,網路好了整份上傳蓋掉雲端。先刪掉,這段時間別的分頁開的頁面也照「還沒灌過」的資料夾看(unreadyAtLoad;審查 D 第 1 輪 #2)。
+       學生在空資料夾上作答記帳,網路好了整份上傳蓋掉雲端。先刪掉,這段時間別的分頁開的頁面也照「還沒灌過」的資料夾看(unreadyAtLoad)。
        開始登入(送出密碼那一刻 cpAtSend;不是剛登入就是開頁時)和確認完的這一刻,這個帳號都是這台的目前帳號,記號才算數、不刪:
        這段時間一直有別的分頁登入著它、灌好了,記號是對的。以前一律刪,在登入前就開著的訪客頁再登入同一個帳號,資料夾是空的
-       (雲端沒有進度的帳號)就記上標記,灌好的分頁跟著不能作答,讀雲端失敗時一直卡在「還沒載入」卡(審查 D 第 3 輪 #1,be7104d 造成;情境 67)。
+       (雲端沒有進度的帳號)就記上標記,灌好的分頁跟著不能作答,讀雲端失敗時一直卡在「還沒載入」卡(be7104d 造成)。
        只看確認那一刻不夠:舊版分頁登出之後、這一頁確認之前,別的分頁先把目前帳號寫回去(灌過的分頁換頁先確認完、舊版分頁換頁一律先寫),
-       記號就被當成對的,標記沒記,讀雲端失敗時照空資料夾作答整份上傳(審查 D 第 4 輪 #1,e49e444 就有,5aff2d5 擋得住、49a5080 又打開;情境 69)。
+       記號就被當成對的,標記沒記,讀雲端失敗時照空資料夾作答整份上傳(e49e444 就有,5aff2d5 擋得住、49a5080 又打開)。
        moved(確認途中有人登出又登回同一個帳號)時確認那一刻一定不是目前帳號,也照這條刪。
        已知限制(部署過渡期):送出登入時已經有分頁登入著這個帳號,確認之前舊版分頁登出、另一個舊版分頁又換頁寫回目前帳號,分辨不出來 */
     let wasCurrent = false, atStart = !otherFolder;
@@ -337,17 +337,17 @@
     const pendTry = 'tr_move_pending_tried_' + user.id;   // 搬家暫存區:這個分頁只為它重灌一次,載不到合併程式也不會一直重載
     const movePend = hasPending(user.id) && !sessionStorage.getItem(pendTry);
     const notYet = unhydrated(user.id);   // 這台這個帳號的資料夾還沒灌過:別的分頁之前灌過的旗標不算數
-    /* 開頁時照還沒灌過的(空)資料夾畫,確認登入前別的分頁灌好了:畫面是舊的,要重灌重載(多分頁第 3 輪審查 #1)。
+    /* 開頁時照還沒灌過的(空)資料夾畫,確認登入前別的分頁灌好了:畫面是舊的,要重灌重載。
        「灌好了」看兩樣:有「灌過」記號(開頁時沒有,別的分頁灌好一定會寫),或資料夾有這一頁沒寫過的鍵(舊版分頁灌的不寫記號)。
        只看資料夾的話,雲端所有的鍵都是這一頁確認前照空畫面寫過的(只用過寫作頁的學生),就認不出來:這一頁不重灌,
-       照記憶體裡的空畫面整份寫回,蓋掉雲端(審查 D 第 3 輪 #2,e49e444 就有;情境 68) */
+       照記憶體裡的空畫面整份寫回,蓋掉雲端(e49e444 就有) */
     const filled = unreadyAtLoad && !otherFolder && (seen(user.id) || !folderEmpty(prefix, early));
     const hydrate = fresh || otherFolder || moved || !sessionStorage.getItem(flagKey) || movePend || notYet || filled;
     /* 帳號資料夾是空的、這台也沒灌過這個帳號:先記「還沒灌過」再寫目前帳號,別的分頁一看到目前帳號是它,就知道資料夾還不能用 */
     const markNow = hydrate && !notYet && !seen(user.id) && accountFolderEmpty(prefix, otherFolder);
     /* filled、而且這一頁確認前寫過:那幾筆是照開頁時的空畫面寫的,可能已經蓋掉別的分頁剛灌好的本機那一份。一樣記「還沒灌過」:
        哪一頁灌成功(本機換回雲端那一份、劃掉標記)之前,所有分頁都不能作答、不記帳。只讓這個分頁的下一頁重灌不夠,讀不到雲端時
-       這個分頁的下一頁、灌好的那個分頁換頁都照被蓋掉的本機作答整份上傳(審查 D 第 4 輪 #2,e49e444 就有;情境 70) */
+       這個分頁的下一頁、灌好的那個分頁換頁都照被蓋掉的本機作答整份上傳(e49e444 就有) */
     const overwrote = filled && Object.keys(early).length > 0;
     if (markNow || overwrote) { try { localStorage.setItem(unhydratedKey(user.id), '1'); } catch (e) { /* 寫不進去就跟以前一樣 */ } }
     /* 這一頁的畫面根據的是還沒灌過的資料夾:灌成了就重載;灌不成,這一頁之後都不能作答(標記被別的分頁劃掉也一樣) */
@@ -356,7 +356,7 @@
 
     if (hydrate) {
       /* 灌到一半連不上:下次開頁照樣重灌,不沿用舊旗標。filled:這一頁確認前照空畫面寫的可能已經蓋掉別的分頁灌好的本機那一份,
-         讀不到雲端時這個分頁的下一頁也要重灌,不然照被蓋掉的本機作答整份上傳(審查 D 第 3 輪 #2;情境 68) */
+         讀不到雲端時這個分頁的下一頁也要重灌,不然照被蓋掉的本機作答整份上傳 */
       if (fresh || otherFolder || moved || filled) sessionStorage.removeItem(flagKey);
       if (movePend) sessionStorage.setItem(pendTry, '1');
       hydrating = true;
@@ -365,7 +365,7 @@
       const cloud = {};
       (rows || []).forEach(r => { cloud[r.k] = r; });
       /* 要對時的鍵(pet)本機和雲端都有時,先對時;時鐘差太多就不合併(planMerged 照原本的規則,留本機也不補傳) */
-      await takePending(user, prefix, cloud);   // 搬家暫存區先併進本機與帳本,下面照常比新舊、上傳(搬家計畫 2.7)
+      await takePending(user, prefix, cloud);   // 搬家暫存區先併進本機與帳本,下面照常比新舊、上傳
       const clockOk = mergeNeeded(prefix, cloud) ? await sessionClockOk(user) : true;
 
       /* 哪些鍵要留本機的版本(其餘照舊用雲端覆蓋):
@@ -420,7 +420,7 @@
     }
   }
 
-  /* ---------- 帳號層級的動作:送出前確認這台現在的登入就是畫面上這個帳號(審查 D,e49e444 就有) ----------
+  /* ---------- 帳號層級的動作:送出前確認這台現在的登入就是畫面上這個帳號(e49e444 就有) ----------
      supabase-js 每一次請求都拿這台 localStorage 現在的登入資料(SB_KEY),不看這一頁記憶體裡的 CLOUD.user。
      別的分頁登出這個帳號、改登入別人之後,沒重載的分頁頂欄還是原帳號:按「刪除帳號」刪掉的是別的分頁登入的那個人的帳號與雲端進度,
      「登出」「登出所有裝置」登出的是他,「改暱稱」「改密碼」改的是他,加入班級、老師試用開在他身上,讀方案、付款紀錄讀的也是他的。
@@ -430,7 +430,7 @@
      登入資料不見了(被撤銷、別台按「登出所有裝置」)或格式認不得、目前帳號還是它:不算換人,照以前的路走
      (登出照常清掉這台、登出所有裝置照常說這台的登入已失效)。讀不到 localStorage 就分不出來,也照以前。
      目前帳號和登入資料都不見了(別的分頁登出;或登入被撤銷後別的分頁照 leaveStaleAccount 改回訪客):這台沒有任何人登入著('nobody')。
-     這時一樣不送(請求會用沒有登入的身分送出),只有「登出」例外,見 logout(審查 D 第 1 輪 #1、#3)。
+     這時一樣不送(請求會用沒有登入的身分送出),只有「登出」例外,見 logout。
      平常登入著的頁面兩樣都對得上,行為不變。 */
   const GONE_MSG = '這個帳號已經在別的分頁登出\n請重新整理這一頁';
   /* 這台現在的登入是誰的:'mine' 畫面上這個帳號、'nobody' 沒有任何人、'other' 別人(或這一頁沒有帳號) */
@@ -487,9 +487,9 @@
     const user = window.CLOUD.user;
     const everywhere = !!(opts && opts.everywhere);
     const discard = !!(opts && opts.discard);   // 刪除帳號成功之後(deleteAccount 送出前已經確認過是畫面上這個帳號)
-    /* 別的分頁已經登出這個帳號、改登入別人:不登出(會把別的分頁登入的那個人登出、清掉目前帳號),什麼都不刪、不問(審查 D)。
+    /* 別的分頁已經登出這個帳號、改登入別人:不登出(會把別的分頁登入的那個人登出、清掉目前帳號),什麼都不刪、不問。
        這台已經沒有任何人登入著('nobody',見 loginOwner):不會登出到別人,照以前清掉這個帳號留在這台的資料夾與帳本(共用電腦不留個資),
-       只是不呼叫 signOut、不動登入資料、目前帳號、註冊意向:別的分頁可能正要登入下一個人(審查 D 第 1 輪 #1、#3;31745ec 擋下,資料留在這台清不掉)。
+       只是不呼叫 signOut、不動登入資料、目前帳號、註冊意向:別的分頁可能正要登入下一個人(31745ec 擋下,資料留在這台清不掉)。
        「登出所有裝置」照樣擋:這台沒有登入資料,沒辦法登出其他裝置 */
     const owner = () => (user && !discard ? loginOwner() : 'mine');
     const stop = o => o === 'other' || (o === 'nobody' && everywhere);
@@ -497,7 +497,7 @@
     /* 這台已經沒有登入資料時 supabase-js 不會呼叫伺服器、直接回成功,別台其實沒被登出:先擋下來,什麼都不刪 */
     if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效\n請重新登入後再登出其他裝置');
     if (user && !discard) {
-      flushPetStore();   // 小雞還在等讀雲端的券和動作先寫下來(chick2 第一輪修正 #4)
+      flushPetStore();   // 小雞還在等讀雲端的券和動作先寫下來
       const left = await unsynced(user);
       if (left > 0 && !(await askLogout(left))) return;
     }
@@ -528,7 +528,7 @@
     try { [SB_KEY, SB_KEY + '-user', SB_KEY + '-code-verifier'].forEach(k => localStorage.removeItem(k)); } catch (e) {}
     if (user) forgetAccount(user);
     localStorage.removeItem('tr_current_profile');
-    clearSignupIntent();   // 註冊時選老師的意向(前端計畫三.6):登出就作廢,下一個人用這台不會沿用
+    clearSignupIntent();   // 註冊時選老師的意向:登出就作廢,下一個人用這台不會沿用
     location.reload();
   }
   /* 登出時清掉這個帳號留在這台的東西:帳本、只在本機的標記、還沒灌過的標記、灌過的記號、這個分頁的灌過旗標、整個帳號資料夾 */
@@ -586,7 +586,7 @@
     if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
       throw new Error('這個 Email 已經註冊過\n請直接登入或點 Google 登入\n忘記密碼可以重設');
     }
-    bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(前端計畫三.6;沒有意向什麼都不做)
+    bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(沒有意向什麼都不做)
     if (data.session) {
       window.CLOUD.user = data.user;
       await afterAuth(data.user, true, cp);
@@ -599,9 +599,9 @@
      init() 接著跑 afterAuth 灌回進度。backTo 給空值就回到按下按鈕的那一頁。
      Google 帳戶的 Email 本來就驗證過了,不會再寄驗證信。
      等雲端確認登入(CLOUD.ready)之後,這一頁要是已經登入、灌完雲端資料正要重載(afterAuth 最後那一下),就不導去 Google,
-     讓重載照常發生(重載後就是登入後的畫面);不然 location.assign 會蓋掉重載,剛登入的人又被送去 Google 一次(第 4 輪審查 #1)。
+     讓重載照常發生(重載後就是登入後的畫面);不然 location.assign 會蓋掉重載,剛登入的人又被送去 Google 一次。
      登入失效改回訪客的那一下(leaveStaleAccount,CLOUD.user 是 null)照舊。密碼登入、註冊不導頁,蓋不掉重載,不擋
-     (跟重載搶到的話,下一頁資料夾跟帳號對不上就照第 3 輪的規則重灌,最多多重載一次;tools/test_sync.js 情境 30 就是在這種頁面送密碼) */
+     (跟重載搶到的話,下一頁資料夾跟帳號對不上就重灌,最多多重載一次;tools/test_sync.js 有測在這種頁面送密碼) */
   async function signInWithGoogle(backTo) {
     await window.CLOUD.ready;
     if (reloading && window.CLOUD.user) return;
@@ -620,7 +620,7 @@
     needClient();
     const n = String(name || '').trim().slice(0, 20);
     if (!n) throw new Error('請輸入暱稱');
-    mustBeShown();   // 改的是這台現在登入的帳號:不是畫面上這個就不送(審查 D)
+    mustBeShown();   // 改的是這台現在登入的帳號:不是畫面上這個就不送
     const { data, error } = await client.auth.updateUser({ data: { name: n } });
     if (error) throw new Error(friendly(error));
     if (data && data.user) window.CLOUD.user = data.user;
@@ -646,7 +646,7 @@
   async function updatePassword(password) {
     await window.CLOUD.ready;
     needClient();
-    mustBeShown();   // 審查 D:別的分頁換了帳號,改到的會是那個人的密碼
+    mustBeShown();   // 別的分頁換了帳號,改到的會是那個人的密碼
     const { error } = await client.auth.updateUser({ password });
     if (error) throw new Error(friendly(error));
   }
@@ -662,14 +662,14 @@
   async function deleteAccount() {
     await window.CLOUD.ready;
     needClient();
-    mustBeShown();   // 審查 D:delete_own_account 刪的是這台現在登入的帳號,不是畫面上這個就不送
+    mustBeShown();   // delete_own_account 刪的是這台現在登入的帳號,不是畫面上這個就不送
     const { error } = await client.rpc('delete_own_account');
     if (error) throw new Error('刪除失敗：' + error.message + '\n請寫信給客服要求刪除');
     await logout({ discard: true });
   }
 
   /* ---------- 使用權(收費) ----------
-     原則(前端計畫一.1、三):讀不到 my_access 一律放行,只有這個分頁從伺服器拿到 active === false 才算鎖住。
+     原則:讀不到 my_access 一律放行,只有這個分頁從伺服器拿到 active === false 才算鎖住。
      window.PAID_UI(js/plans-config.js)不是 true 時完全不呼叫 my_access(資料庫還沒有這個函式)。
      快取 tr_access_<帳號 id> 只給離線時顯示日期,不拿來擋人。同步(push、flushAll、灌資料)完全不看使用權。 */
   function paidUi() { return window.PAID_UI === true; }
@@ -729,7 +729,7 @@
     if (!enabled || !paidUi()) return Promise.resolve(null);
     const user = window.CLOUD.user;
     if (!user || !client) return Promise.resolve(null);
-    if (!accountShown()) return Promise.resolve(null);   // 審查 D:讀到的會是別的分頁登入的那個人的使用權,不採用
+    if (!accountShown()) return Promise.resolve(null);   // 讀到的會是別的分頁登入的那個人的使用權,不採用
     return fetchAccess(user);
   }
 
@@ -757,7 +757,7 @@
   }
 
   /* 呼叫資料庫函式;資料庫的錯誤訊息(中文)原樣丟出,連不上才換成網路的說明。
-     加入班級、老師試用、讀方案與付款紀錄都是「這台現在登入的帳號」的:不是畫面上這個就不送(審查 D) */
+     加入班級、老師試用、讀方案與付款紀錄都是「這台現在登入的帳號」的:不是畫面上這個就不送 */
   async function callRpc(fn, args) {
     if (!enabled) throw new Error('這個網站沒有開雲端帳號');
     await window.CLOUD.ready;
@@ -793,7 +793,7 @@
     const user = window.CLOUD.user;
     if (!user) throw new Error('請先登入');
     needClient();
-    mustBeShown();   // 審查 D:別的分頁登出、換了帳號(下面的登入憑證比對擋得住換帳號,擋不住登出又登回別人之前的那一下)
+    mustBeShown();   // 別的分頁登出、換了帳號(下面的登入憑證比對擋得住換帳號,擋不住登出又登回別人之前的那一下)
     let token = '';
     try {
       const { data } = await client.auth.getSession();
@@ -844,7 +844,7 @@
     } catch (e) { return false; }
   }
 
-  /* 讀雲端單一鍵(唯讀;路線圖 1.2b,小雞寫回前先抓雲端那一份合併,因為每個分頁只灌一次雲端資料)。
+  /* 讀雲端單一鍵(唯讀;小雞寫回前先抓雲端那一份合併,因為每個分頁只灌一次雲端資料)。
      回 { ok: true, found, v, updated_at }(雲端沒有這一列 found 是 false;別台刪掉的那一列 found 是 true、v 是 null)。
      沒登入、離線、連不上、逾時、讀到一半換了帳號、這一頁剛灌完資料要重載:回 { ok: false },
      呼叫的人這時不能把「沒讀到」當成「雲端沒有」去上傳。不寫本機、不動帳本、不上傳。 */
@@ -874,8 +874,8 @@
     return { ok: true, found: true, v: row.v === undefined ? null : row.v, updated_at: typeof row.updated_at === 'string' ? row.updated_at : null };
   }
 
-  /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email?, uid? }),綁在要註冊的那個帳號上(前端計畫三.6;
-     站長選的保守做法:只存在這台,不寫進帳號資料 user_metadata,別台點驗證信不會自動開,改用「我的」頁與教師後台的開始老師試用):
+  /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email?, uid? }),綁在要註冊的那個帳號上(
+     保守做法:只存在這台,不寫進帳號資料 user_metadata,別台點驗證信不會自動開,改用「我的」頁與教師後台的開始老師試用):
      - Email 註冊:存 localStorage(收驗證信可能換分頁),帶小寫的 Email。signUp 成功就綁上回來的帳號 id(uid),
        之後只認這個 id(同一個 Email 刪掉重建的帳號是新的 id,不算);沒拿到 id 就不自動開(不退回比 Email)。對不上的當場清掉、不用。
      - Google 註冊(按按鈕時還不知道 Email):存 sessionStorage,只有同一個分頁從 Google 回來讀得到。
@@ -993,7 +993,7 @@
     return intent;
   }
 
-  /* 登入後要不要自動開老師試用。全部成立才開(前端計畫三.6):意向是 30 分鐘內存的、
+  /* 登入後要不要自動開老師試用。全部成立才開:意向是 30 分鐘內存的、
      綁的是這個帳號(Email 那條:綁的帳號 id 一樣,沒綁 id 的不算;Google 那條:這個分頁讀出來、綁的帳號 id 一樣)、
      帳號是這次才建立的、資料庫說可以試用。
      帳號建立時間是伺服器的鐘,意向的 at 是裝置的鐘:用 my_access 的 server_now 算出兩個鐘差多少再比。 */
@@ -1013,7 +1013,7 @@
     return !!(access && access.teacher_trial_available === true);
   }
 
-  /* 「我的」頁方案狀態用哪一種(前端計畫六.1 的順序);日期一律用伺服器回的 */
+  /* 「我的」頁方案狀態用哪一種;日期一律用伺服器回的 */
   function accessStatus(a) {
     if (!a || typeof a !== 'object') return null;
     if (a.is_owner) return { kind: 'owner' };
@@ -1046,7 +1046,7 @@
     } catch (e) {}
   }
 
-  /* ---------- 「只在本機」標記(要合併的鍵,chick2 第一輪修正 #2) ----------
+  /* ---------- 「只在本機」標記(要合併的鍵) ----------
      開關都關著(第 2 步)時,pet-store 讀不到雲端只寫本機、不記帳:同一台還開著的第 1 步分頁會把帳本上的 pet 不合併就傳上去。
      以前登出只看帳本,這些改動(取名、改目標、餵飼料)會不問就跟著帳號資料夾刪掉。現在 pet-store 寫本機時在這裡記「鍵 → 時間」,
      不在帳本裡,第 1 步的 cloud.js 看不到;登出時這一版先合併再上傳,傳不上去就算進「還沒同步」先問。
@@ -1114,7 +1114,7 @@
     Object.keys(readLocalOnly(user.id)).forEach(k => { if (spec(k)) left.add(k); });
     return left.size;
   }
-  /* 登出前對帳(同步合併設計 3.5):表上 reconcile 的鍵、本機有值的,一次查詢讀它們在雲端的列(題庫連 sync_del 一起讀),
+  /* 登出前對帳:表上 reconcile 的鍵、本機有值的,一次查詢讀它們在雲端的列(題庫連 sync_del 一起讀),
      合併結果跟雲端不同就記帳、走 upload 的佇列上傳。別台的舊版頁面可能剛把雲端蓋掉,這台本機是唯一還有那份的地方,
      登出要刪本機,刪之前確認雲端不比本機少。讀不到雲端(離線)、合併說唯讀:什麼都不做,不另外算進「還沒同步」
      (不然每次離線登出都要問;已知限制 6)。回傳有沒有發現雲端少了。
@@ -1197,7 +1197,7 @@
   function mergeFn(key) { const s = spec(key); return s ? s.merge() : null; }
   /* 呼叫合併函式:題庫多給合併後的刪除標記和 localClean;其他照 PET.cloudMerge 的約定(本機, 雲端, 現在)。丟錯當成合併不了。
      clean:本機這個鍵上次跟雲端對齊之後沒改過(帳本上沒有、也沒有「只在本機」的標記)。雲端跟它不一樣就是別台改的;
-     舊版頁面就地改名、取消勾選、改中文不動戳記,兩份分不出先後時用雲端那份(第二輪審查 r2 #1、#4:以前比字串,改名會被退回) */
+     舊版頁面就地改名、取消勾選、改中文不動戳記,兩份分不出先後時用雲端那份(以前比字串,改名會被退回) */
   function runMerge(key, local, cloudV, tombsV, clean) {
     const fn = mergeFn(key);
     if (!fn) return null;
@@ -1205,7 +1205,7 @@
   }
   function cleanKey(uid, key) { return !(key in readLedger(uid)) && !(key in readLocalOnly(uid)); }
   /* 合併後上傳失敗:本機已經是合併結果、跟雲端不同,帳本上沒有的鍵補記(開單字頁、對帳的 pull 走到這裡時帳本本來是空的)。
-     不記的話恢復連線、關頁都不會補傳,離線登出也不會問,別台舊版剛把雲端蓋掉時這台是唯一還有那份的地方(第二輪審查 r2 #3) */
+     不記的話恢復連線、關頁都不會補傳,離線登出也不會問,別台舊版剛把雲端蓋掉時這台是唯一還有那份的地方 */
   function holdInLedger(user, keys) {
     const led = readLedger(user.id), t = Date.now();
     const add = keys.filter(k => !(k in led));
@@ -1233,7 +1233,7 @@
      太舊的會壓縮。這台時鐘比伺服器慢超過 3 天或快超過 3 天、或拿不到登入憑證的 iat,就不合併、不上傳,帳本留著。
      兩台一快一慢時相差兩邊相加,pet.js 只留這台的今天加 7 天以內的日期、今天往前 6 天的 fed,所以兩邊相加不能超過 6 天:
      以前各 6 天,一台快 4 天、一台慢 4 天時,慢的那台合併會丟掉快的那台的練習日、達標日、券和吃掉紀錄再上傳
-     (chick2 第三輪修正 #1;js/pet-store.js 同一組數字,test_pet.js 從兩個檔讀出來驗)。
+     (js/pet-store.js 同一組數字,test_pet.js 從兩個檔讀出來驗)。
      伺服器時間取自 supabase-js 手上登入憑證的 iat(剛換過的憑證,跟伺服器最多差憑證的有效期) */
   const SLOW_MAX_MS = 3 * 864e5, FAST_MAX_MS = 3 * 864e5;
   function clockOkFrom(s) {
@@ -1304,7 +1304,7 @@
       try { if (localStorage.getItem(lk) === sent) unmark(user.id, key, readAt); } catch (e) { /* 讀不到就留著標記,登出時多問一次 */ }
       return true;
     } catch (e) {
-      /* pet 不補記:跟以前一樣只留「只在本機」標記(pet 的請求逐位元組不變;第三輪審查 r3 #3) */
+      /* pet 不補記:跟以前一樣只留「只在本機」標記(pet 的請求逐位元組不變) */
       if (!spec(key).clock) holdInLedger(user, [key]);
       console.warn('進度暫時沒同步，已記下，下次連線會補傳：' + key, e);
       return false;
@@ -1341,7 +1341,7 @@
     return out;
   }
 
-  /* 題庫(合併要用刪除標記的鍵)先合併再上傳(同步合併設計 3.3):
+  /* 題庫(合併要用刪除標記的鍵)先合併再上傳:
      1. 讀本機的題庫和 sync_del;2. 一次查詢讀雲端這兩列;3. 標記先合併,4. 題庫用合併後的標記合併;
      5. 讀雲端這段時間本機兩個鍵有變 → 放棄(下一次再來);6. 寫回本機(不經 store.set,不記帳);
      7. 跟雲端不同的列放在同一個 upsert 送出(兩列一起成功或一起失敗);8. 成功(或兩列都跟雲端一樣)就劃帳本:
@@ -1395,7 +1395,7 @@
     return true;
   }
 
-  /* 頁面打開時跟雲端對齊一次(同步合併設計 3.6;單字頁、閱讀頁開頁時呼叫 syncKey('vgame_banks')):
+  /* 頁面打開時跟雲端對齊一次(單字頁、閱讀頁開頁時呼叫 syncKey('vgame_banks')):
      讀雲端、合併,本機有變就寫回本機(送 cloud:merged),雲端比較舊就上傳;走同一個佇列。等於題庫版的 remoteBehind:
      開了好幾天的 App 一進單字頁就先對齊雲端,之後的編輯不會是根據舊資料。
      回 { ok, changed }。沒登入、這一頁還沒灌過資料、不是合併表上要對帳的鍵、讀不到雲端:ok 是 false,什麼都不改 */
@@ -1419,7 +1419,7 @@
      拿不到合併函式、合併說唯讀、或時鐘差太多(clockOk 是 false):要對時的鍵(pet)照原本的規則留本機或用雲端,但留本機也不補傳(hold),帳本留著;
      其他鍵(題庫、標記、模擬考紀錄)本機跟雲端不一樣就一律留本機、不補傳(hold)、記帳本,不拿雲端蓋掉(本機可能有還沒傳上去的題庫)。
      時鐘差太多、本機那份有「只在本機」的標記(marks,帳本上沒有)時也留本機、不補傳(hold):以前用雲端那份蓋掉,
-     讀不到雲端時改的名字、目標、餵食就不見了。允許的範圍改成 3 天以後差 3 到 6 天的裝置也會走到這裡(chick2 第三輪修正 #1 的配套)。
+     讀不到雲端時改的名字、目標、餵食就不見了。允許的範圍改成 3 天以後差 3 到 6 天的裝置也會走到這裡。
      留下來的那份下次對得了時由 pet-store 跟雲端合併上傳 */
   function planMerged(prefix, cloud, keepLocal, led, clockOk, marks, dirty) {
     const plan = { save: {}, hold: {} };
@@ -1444,7 +1444,7 @@
       if (!m || m.ok !== true) {
         if (s.clock && !(k in keepLocal) && !clockOk && local !== undefined && marks && Object.prototype.hasOwnProperty.call(marks, k)) keepLocal[k] = Date.now();
         /* 不對時的鍵(題庫、標記、模擬考紀錄)本機和雲端都有、又合併不了(頁面沒有合併函式、合併說唯讀):一律留本機、不補傳、帳本記著,
-           之後有合併函式的頁面再合併上傳。以前雲端比帳本新時用雲端蓋掉本機,這台還沒傳上去的題庫就不見了(第二輪審查) */
+           之後有合併函式的頁面再合併上傳。以前雲端比帳本新時用雲端蓋掉本機,這台還沒傳上去的題庫就不見了 */
         if (!s.clock && !(k in keepLocal) && local !== undefined && canonOf(local) !== canonOf(c.v)) { keepLocal[k] = led[k] = Date.now(); }
         if (k in keepLocal) plan.hold[k] = true;
         return;
@@ -1457,7 +1457,7 @@
     return plan;
   }
 
-  /* ---------- 搬家(搬家計畫 2.7) ----------
+  /* ---------- 搬家 ----------
      舊網址:CLOUD.flushForMove() 在寄出頁「準備搬家」時呼叫。跟登出前一樣先叫小雞把等著的動作寫下來,但不登出、不刪任何東西;
      帳本上(加上只在本機標記的 pet)每一項先讀雲端那一列的 updated_at:雲端沒有、或比帳本舊,照原本的方式上傳(pet 先合併再傳);
      合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄)不看 updated_at,一律先合併再上傳(合併不會蓋掉別台的東西);
@@ -1469,7 +1469,7 @@
      新網址:收件頁把那幾項存成 tr_move_pending_<帳號 id>,這個帳號在這台登入、灌資料時由 takePending 處理(手上有雲端每一列的 updated_at):
      先決定這台這一項算不算數(跟下面灌資料同一套規則):本機有,而且帳本上比雲端新(或雲端沒有這一列)、
      或帳本沒記但雲端完全沒有這一列(從沒上傳過),就以本機那份為底;否則以雲端那份為底。
-     合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄)用同步的合併(js/sync-merge.js,同步合併設計 3.12):本機、雲端、暫存三份合併
+     合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄)用同步的合併(js/sync-merge.js):本機、雲端、暫存三份合併
      (題庫套三份聯集的刪除標記;分不出先後的名稱、勾選:暫存那份比雲端新就偏暫存那份,本機有比暫存那份新的改動才不偏),寫進帳號資料夾、帳本記現在;
      同一個題庫不會因為戳記不同另存「（舊網址）」,舊網址刪掉的題庫、字照標記刪掉;合併不了的(形狀認不得)暫存那份放進備份,本機不動。
      其他可以聯集的(練習紀錄、錯題、完成紀錄、最佳成績、每日練習)本機算數就本機跟雲端先合併,再跟暫存那份合併,
@@ -1514,7 +1514,7 @@
     [pv, local, cv].forEach(x => { if (x !== undefined && !same(x, keep) && !drop.some(d => same(d, x))) drop.push(x); });
     return { use, drop };
   }
-  /* 暫存區裡合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄、模擬考錯題):本機、雲端、暫存三份用 SYNC_MERGE 合併(同步合併設計 3.12)。
+  /* 暫存區裡合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄、模擬考錯題):本機、雲端、暫存三份用 SYNC_MERGE 合併。
      標記先合(三份聯集),題庫套合併後的標記。先合雲端和暫存那份(暫存那份比雲端新就在分不出先後時偏它),再合本機
      (本機帳本上的改動不比暫存那份新就偏剛合好的那份);結果吸收過雲端那份,下面 planMerged 再跟雲端合併時不會又被改回去。
      鍵清單跟著 MERGED 走(takePending 也是看 MERGED 把鍵交過來);每個鍵用哪個合併函式寫在 SYNC_FN。

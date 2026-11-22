@@ -15,7 +15,7 @@
   if (window.top !== window.self) return;
   if (key) window.MOVE_KEY_IN = h; else window.MOVE_ACK_IN = h;
 })();
-/* 搬家寄出頁(舊網址用,搬家計畫 2.3)。不能被別的網站框住誘按(GitHub Pages 不能設 frame-ancestors):被框住就什麼都不顯示 */
+/* 搬家寄出頁(舊網址用)。不能被別的網站框住誘按(GitHub Pages 不能設 frame-ancestors):被框住就什麼都不顯示 */
 if (window.top !== window.self) { document.documentElement.style.display = 'none'; }
 (function () {
   var sa = false;

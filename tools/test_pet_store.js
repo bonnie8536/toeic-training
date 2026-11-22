@@ -1,4 +1,4 @@
-/* 小雞寫回(路線圖 1.2c,規格在 repo 外的 小雞規格.md 第 9 節):js/pet-store.js 什麼時候寫、寫到哪裡、會不會蓋掉雲端。
+/* 小雞寫回:js/pet-store.js 什麼時候寫、寫到哪裡、會不會蓋掉雲端。
    用法:node tools/test_pet_store.js
    載入真的 js/common.js(store、logAttempt)、js/cloud.js(帳本、上傳、readKey)、js/pet.js、js/pet-config.js、js/pet-store.js,
    配假的 Supabase、假的 localStorage、假的時鐘與計時器(跟 tools/test_sync.js 同一套做法)。
@@ -225,9 +225,9 @@ function recordPetWrites(w) {
 const looksV2 = s => /"v":2/.test(s) || /"(got|ate|foodOld|once|roam)":/.test(s);
 /* n 張某種食物的券,放在今天以前的 n 天 */
 function ticketsBefore(food, n) { const got = {}; for (let i = 1; i <= n; i++) got[addDays(TODAY, -i)] = { ['r:t' + i]: food }; return got; }
-/* cloud.js 是不是先合併再上傳的新版(規格 A.5):是的話讀不到雲端時 pet-store 改用 store.set(記帳),帳本上會有 pet */
+/* cloud.js 是不是先合併再上傳的新版:是的話讀不到雲端時 pet-store 改用 store.set(記帳),帳本上會有 pet */
 const merged = pg => { try { const k = pg.ctx.CLOUD.mergedKeys; return Array.isArray(k) && k.indexOf('pet') >= 0; } catch (e) { return false; } };
-/* 讀不到雲端時記帳交給 cloud.js:要 cloud.js 是先合併的新版,而且第二階段的開關打開了(第 3 步;第 2 步時同一台可能還開著第 1 步的分頁,它的 cloud.js 補傳不先合併,第二輪審查 X1) */
+/* 讀不到雲端時記帳交給 cloud.js:要 cloud.js 是先合併的新版,而且第二階段的開關打開了(第 3 步;第 2 步時同一台可能還開著第 1 步的分頁,它的 cloud.js 補傳不先合併) */
 const ledgers = pg => merged(pg) && !!pg.S && (pg.S.food === true || pg.S.roamV2 === true);
 
 /* 第二階段的紀錄(v2):第一階段的欄位加上食物與走動開關。第 1 步的相容版只能看、一筆都不寫 */
@@ -542,7 +542,7 @@ const scenarios = {
     await pa.S.sync(); await pa.runTimers();
     const c = cp(a);
     const mono = totals.every((x, i) => i === 0 || x >= totals[i - 1]);
-    /* hist 是整鍵後寫的贏(規格第 9 節已知限制):同一天兩台各答,小雞取較多的那台,不加總,也不倒退 */
+    /* hist 是整鍵後寫的贏:同一天兩台各答,小雞取較多的那台,不加總,也不倒退 */
     return { ok: mono && sum(c.days) === 9 && Object.values(c.days).every(n => n === 3) && same(lp(a).days, c.days),
              detail: '雲端總題數歷程 ' + JSON.stringify(totals) + ' / 最後 ' + JSON.stringify(c.days) };
   },
@@ -600,7 +600,7 @@ const scenarios = {
     return { ok: keys() === before && !pushed.length, detail: '其他鍵 ' + (keys() === before ? '沒變' : '變了') + ' / 上傳了 ' + JSON.stringify([...new Set(w.upserts)]) };
   },
 
-  /* ---------- 裝置時鐘不準(10/16 審查):用伺服器發的登入憑證時間(iat)對時 ---------- */
+  /* ---------- 裝置時鐘不準:用伺服器發的登入憑證時間(iat)對時 ---------- */
   '29. 時鐘慢 20 天的裝置登入:pet 一個字都不寫(本機、雲端都不動),畫面唯讀;之後時鐘準的裝置開新工作階段,30 天都還在': async () => {
     const db = [];
     const days = {}, met = [];
@@ -650,8 +650,8 @@ const scenarios = {
     return { ok: fastUp === 0 && !db.some(r => r.k === 'pet') && !(future in c.days) && !c.met.includes(future) && c.days['2026-10-01'] === 25 && c.days[TODAY] === 5,
              detail: '快的裝置上傳 pet ' + fastUp + ' 次 / 準的裝置之後雲端 ' + JSON.stringify(c.days) + ' 達標 ' + JSON.stringify(c.met) };
   },
-  /* chick2 第二輪修正 #3:fed 只留這台的今天往前 6 天,時鐘快 6 天多的裝置會把別台今天餵的飼料清掉再上傳。快超過 6 天就不寫 */
-  /* chick2 第三輪修正 #1:兩台一快一慢時相差兩邊上限相加,以前各 6 天、相差 12 天,慢的那台會把快的那台的天丟掉。現在各 3 天:
+  /* fed 只留這台的今天往前 6 天,時鐘快 6 天多的裝置會把別台今天餵的飼料清掉再上傳。快超過 6 天就不寫 */
+  /* 兩台一快一慢時相差兩邊上限相加,以前各 6 天、相差 12 天,慢的那台會把快的那台的天丟掉。現在各 3 天:
      快或慢超過 3 天就不寫;3 天以內照常合併上傳 */
   '30a. 時鐘快 3.5、5.9、6.5、7.5 天或慢 3.5、5.9 天的裝置:不合併、不上傳,雲端今天餵的飼料還在;快或慢 2.9 天照常合併上傳,餵食還在': async () => {
     const out = [];
@@ -697,7 +697,7 @@ const scenarios = {
     return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
   },
 
-  /* ---------- 讀雲端時登出(10/16 審查) ---------- */
+  /* ---------- 讀雲端時登出 ---------- */
   '33. 讀雲端時登出:帳號資料夾清掉後不會再寫回 pet 或帳本;訪客照常寫': async () => {
     const out = [];
     for (const variant of ['canon', 'other-device']) {
@@ -816,7 +816,7 @@ const scenarios = {
                && v.readOnly && v.newer === true && v.pet.days['2026-09-01'] === 30 && v.pet.days[TODAY] === 25 && v.status.name === '阿啾',
              detail: '寫 ' + writes.n + ' 次 / 雲端 ' + (same(cp(w), cloud1) ? '沒動' : '被改') + ' / 畫面 ' + JSON.stringify({ newer: v.newer, d0901: v.pet.days['2026-09-01'], today: v.pet.days[TODAY], name: v.status.name }) };
   },
-  '38. 雲端或本機是不認得的版本(v3、1.5、1e9)、或本機壞掉:唯讀,畫面照舊不說版本(只有剛好是 v2 才說,規格 5.3);v1 照常不是唯讀': async () => {
+  '38. 雲端或本機是不認得的版本(v3、1.5、1e9)、或本機壞掉:唯讀,畫面照舊不說版本(只有剛好是 v2 才說);v1 照常不是唯讀': async () => {
     const out = [];
     const cases = [['cloud', { v: 3, days: {} }], ['cloud', { v: 1.5 }], ['cloud', { v: 1e9 }], ['local', { v: 3, days: {} }], ['local', { v: 1.5 }], ['local', '{not json'], ['none', null]];
     for (const [where, bad, newer] of cases.map(c => c.concat(false))) {
@@ -911,7 +911,7 @@ const scenarios = {
                && ev.length === 1 && J(ev[0]) === J({ result: 'got', food: 'pea', id: 'g:ga-01', date: TODAY, source: 'hook' }) && pg.S.food === true && pg.S.roamV2 === false,
              detail: J({ r, got: c && c.got, others: others(w) === before, ev }) };
   },
-  /* 第二輪審查:網路看起來連著、其實不通(訊號差、要登入的 Wi-Fi)時,讀雲端要等 8 秒才逾時,前面還排著答題後的同步就是 16 秒;
+  /* 網路看起來連著、其實不通(訊號差、要登入的 Wi-Fi)時,讀雲端要等 8 秒才逾時,前面還排著答題後的同步就是 16 秒;
      結束畫面只等 10 秒。券不用等雲端:等 2 秒還沒結果就先只寫本機(跟讀不到雲端時同一條路),離開頁面時也先寫 */
   '42a. 網路卡住(讀雲端一直不回)、前面還有一次同步在等:earn 2 秒後先寫在本機並回 got,之後換頁那張券還在,網路好了傳上雲端': async () => {
     const w = makeWorld();
@@ -954,7 +954,7 @@ const scenarios = {
     }
     return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
   },
-  '42d. 網路卡住時拿到點心(2 秒後先寫本機)、卡住的同步又失敗,然後登出:券記在帳本上,登出前補傳到雲端;網路還不通時登出會先問(第三輪審查 #2)': async () => {
+  '42d. 網路卡住時拿到點心(2 秒後先寫本機)、卡住的同步又失敗,然後登出:券記在帳本上,登出前補傳到雲端;網路還不通時登出會先問': async () => {
     const out = [];
     for (const back of [true, false]) {
       const w = makeWorld();
@@ -982,7 +982,7 @@ const scenarios = {
     }
     return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
   },
-  /* chick2 第一輪修正 #3:畫面在點下去的當下就顯示吃掉了,正式寫入卻排在讀雲端後面(網路卡住要 8 秒)。
+  /* 畫面在點下去的當下就顯示吃掉了,正式寫入卻排在讀雲端後面(網路卡住要 8 秒)。
      這段時間離開頁面,那一口沒寫進任何地方:下一頁點心回到托盤、今天又能餵、第一次吃到最愛的愛心再跳一次。
      現在 eat 跟 earn 一樣:等 2 秒、離開頁面或切到背景時,先照讀不到雲端的規則寫(同一個吃的 id,之後合併只留一筆) */
   '42e. 網路卡住時餵點心,2 秒內離開頁面、切到背景,或等了 2 秒:這一口先寫在本機(第 3 步記帳),下一頁還是吃過了;網路好了以後只有一筆、雲端也有': async () => {
@@ -1025,7 +1025,7 @@ const scenarios = {
     }
     return { ok: out.every(x => x.ok), detail: J(out.filter(x => !x.ok)).slice(0, 900) };
   },
-  /* chick2 第一輪修正 #4:結束畫面剛出現、earn 還在等讀雲端時就登出。登出前只看帳本,那張還沒寫的券不算,
+  /* 結束畫面剛出現、earn 還在等讀雲端時就登出。登出前只看帳本,那張還沒寫的券不算,
      沒問就清掉帳號資料夾,'pr' 這種補不回來的券就沒了。現在登出前先叫 pet-store 把還在等的券寫下來,再補傳或先問 */
   '42f. 拿到點心後 1 秒內登出(earn 還在等讀雲端):網路慢但會回時券傳上雲端、不用問;網路卡死時先問,取消就留著': async () => {
     const out = [];
@@ -1102,8 +1102,8 @@ const scenarios = {
     const ev = evs(w, 'pet:earn').filter(e => e.date === TODAY);
     return { ok: r.result === 'got' && r.food === 'corn' && ev.length === 1 && ev[0].source === 'hook' && cp(w).got[TODAY].d === 'corn', detail: J({ r, ev }) };
   },
-  /* chick2 第三輪修正 #4:前一次同步正在讀雲端(網路慢、會回)時交卷。那一輪讀完雲端才讀 hist,補寫先把這次交卷補成今天的券,
-     掛勾排在後面拿到 cap,結束畫面寫「今天的點心拿過了」,其實這就是今天第一份。規格 5.2:同一天同一個來源是同一張券 */
+  /* 前一次同步正在讀雲端(網路慢、會回)時交卷。那一輪讀完雲端才讀 hist,補寫先把這次交卷補成今天的券,
+     掛勾排在後面拿到 cap,結束畫面寫「今天的點心拿過了」,其實這就是今天第一份。同一天同一個來源是同一張券 */
   '44a. 前一次同步讀雲端讀到一半時交卷(今天第一個完成):補寫先寫了這次的券,掛勾還是回 got 與那份食物;券只有一張,pet:earn 只送一次': async () => {
     const w = makeWorld();
     cloudRow(w, 'hist', dayHist(YDAY, 5));
@@ -1265,7 +1265,7 @@ const scenarios = {
     return { ok: r0.ok === false && r0.reason === 'off' && writes.n === 0 && v0 === true && r.ok && v1 === false && c.v === 2 && c.roam.on === false && !c.got && pg.S.roamV2 === true && pg.S.food === false,
              detail: J({ r0, w: writes.n, v0, r: r.ok, v1, roam: c && c.roam }) };
   },
-  '51. 讀不到雲端時(規格 A.5):cloud.js 是先合併的新版(mergedKeys 有 pet)而且第二階段的開關打開了(第 3 步)才用 store.set 記帳交給它;開關都關著(第 2 步,同一台可能還開著第 1 步的分頁)或舊版 cloud.js 照舊只寫本機;讀得到雲端但對不了時(沒有憑證)一律只寫本機': async () => {
+  '51. 讀不到雲端時:cloud.js 是先合併的新版(mergedKeys 有 pet)而且第二階段的開關打開了(第 3 步)才用 store.set 記帳交給它;開關都關著(第 2 步,同一台可能還開著第 1 步的分頁)或舊版 cloud.js 照舊只寫本機;讀得到雲端但對不了時(沒有憑證)一律只寫本機': async () => {
     const out = [];
     const c0 = { v: 1, born: '2026-10-01', days: { '2026-10-01': 25 }, met: ['2026-10-01'] };
     for (const [m, sw] of [[true, {}], [false, {}], [true, FOOD], [true, { roam: true }], [false, FOOD]]) {
@@ -1282,7 +1282,7 @@ const scenarios = {
     out.push({ ok: !('pet' in ledger(w)) && same(cp(w), c0) && lp(w).days[TODAY] === 3, d: '沒有憑證:帳本 ' + ('pet' in ledger(w)) + '、雲端 ' + (same(cp(w), c0) ? '沒動' : '被改') });
     return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
   },
-  /* chick2 第二輪修正 #4:手機離線吃了最舊的玉米(隔天午夜要壓縮的那張舊券),午夜前沒同步;隔天早上筆電先開,
+  /* 手機離線吃了最舊的玉米(隔天午夜要壓縮的那張舊券),午夜前沒同步;隔天早上筆電先開,
      自己壓縮到新的截止日(不知道這一口)並上傳;手機恢復連線合併。以前吃掉的那份在兩台都回來 */
   '52. 食物打開:手機離線吃了最舊的舊券、午夜前沒同步,隔天筆電先同步、手機再合併:吃掉的不會回來,兩台都一樣': async () => {
     const db = [];
@@ -1310,7 +1310,7 @@ const scenarios = {
     return { ok: e.ok && /^old:/.test(ticket) && before === 4 && afterEat === 3 && ca === 3 && cb === 3,
       detail: J({ ticket, before, afterEat, laptopFirst, phone: ca, laptop: cb, cloud: cp(wa).foodOld }) };
   },
-  /* chick2 第二輪修正 #5(規格 5.2 與附錄 C 第 10 條改寫的取捨):手機分頁停在筆電領麵包蟲之前,隔天在卡住的網路上完成練習,
+  /* 手機分頁停在筆電領麵包蟲之前,隔天在卡住的網路上完成練習,
      用自己舊的那份判斷,同一個階段的麵包蟲又給一次(日期不同,是另一張券)。這一張占掉手機那天的名額,學生拿到麵包蟲而不是那天的點心,
      總份數不變;合併不收回任何一張(寧可多給)。這裡釘住:兩張都在、每天只有一張、once 記較早那天、之後不會再給第三次 */
   '53. 食物打開:同一個階段的麵包蟲在兩台、兩天各給一次:兩張都留著(記在自己的 id:w:s1_<給它的練習>)、每天還是只有一張、once 記較早那天;之後不再給第三次': async () => {
@@ -1356,7 +1356,7 @@ const scenarios = {
                && Object.keys(c.ate[TODAY]).length === 3 && synced && p1.ateCount === 0 && p1.canSnack === true,
              detail: J({ res, pan: [pan.ateCount, pan.canSnack], e4: e4.reason, s4, rawSame, synced, ate: c && c.ate, next: [p1.ateCount, p1.canSnack, p1.practiced] }) };
   },
-  /* 審查第 2 輪 #1:今天這個來源的券是開頁補寫給的地瓜(y_<來源>),掛勾沒有領過。學生重做同一份練習,
+  /* 今天這個來源的券是開頁補寫給的地瓜(y_<來源>),掛勾沒有領過。學生重做同一份練習,
      交卷那一刻本機已經有這個來源的券,要回 dup(結束畫面說同一份今天拿過了),不能把補寫那張說成這次新拿到的;資料一個字都不動 */
   '55. 食物打開:今天補寫給了這個來源的地瓜(y_tq:a1),重做同一份練習回 dup、不說拿到地瓜;一般券的對照也是 dup;券不變': async () => {
     const out = {};

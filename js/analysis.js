@@ -239,8 +239,8 @@
       if (!parts.length) wbBox.append(emptyState({ pose: 'sleep', text: '沒有錯題' }));
       parts.forEach(({ p, groups }) => {
         const total = groups.reduce((n, g) => n + g.items.length, 0);
-        /* Part 名稱是 h3、底下的組是 h4(報讀用標題跳讀時聽得到換了 Part;審查 2026-11-19 #3),樣子跟以前的粗體字一樣。
-           題數、看錯題本不縮、不斷行,320 寬也各一行(css .wb-part-head;審查 2026-11-19 #2) */
+        /* Part 名稱是 h3、底下的組是 h4(報讀用標題跳讀時聽得到換了 Part),樣子跟以前的粗體字一樣。
+           題數、看錯題本不縮、不斷行,320 寬也各一行(css .wb-part-head) */
         wbBox.append(h('div', { class: 'q-block', 'data-part': p },
           h('div', { class: 'q-text wb-part-head' },
             h('h3', { class: 'wb-part-title' }, WB.TITLE[p]), h('span', { class: 'wb-part-n' }, total + ' 題'),
@@ -251,7 +251,7 @@
     paintWrong(null);
     root.append(wbBox);
     WBUI.keepFresh(wbBox, () => WBUI.sig(['5', '6', '7']), paintWrong);
-    /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud;審查 2026-11-19 #1):別台考的錯題合併進來時 keepFresh 重畫這一區 */
+    /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud):別台考的錯題合併進來時 keepFresh 重畫這一區 */
     if (typeof WB.syncCloud === 'function') WB.syncCloud();
   } else if (!wg.length) {
     root.append(emptyState({ pose: 'sleep', text: '沒有錯題' }));

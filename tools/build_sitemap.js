@@ -54,7 +54,7 @@ function unitIds(root, page) {
 function contentFiles(root, page) {
   const html = read(root, page);
   const data = Array.from(html.matchAll(/<script src="(data\/[^"]+\.js)"/g)).map((m) => m[1]);
-  /* js/<資料名>.js 只有這一頁真的載入時才算(daily.html 載入 data/ear.js 但不載入 js/ear.js;2026-11-18 審查) */
+  /* js/<資料名>.js 只有這一頁真的載入時才算(daily.html 載入 data/ear.js 但不載入 js/ear.js) */
   const own = [page.replace(/\.html$/, '')].concat(data.map((d) => path.basename(d, '.js')))
     .map((n) => 'js/' + n + '.js').filter((f, i) => fs.existsSync(path.join(root, f)) && (i === 0 || html.includes('src="' + f + '"')));
   /* 更正紀錄頁的內容在 data/corrections.json,頁面用 fetch 讀,不是 script 標籤 */

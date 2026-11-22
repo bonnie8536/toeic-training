@@ -24,7 +24,7 @@ if (secretHits.length) {
   process.exit(1);
 }
 
-/* 網域開關(tools/domain.json,搬家計畫 7.1、7.2):檔案跟它不一致就不能上線 */
+/* 網域開關(tools/domain.json):檔案跟它不一致就不能上線 */
 const dom = require('./apply_domain.js').run(REPO, true);
 if (dom.changed.length) {
   console.log('網域設定是 ' + dom.cfg.live + ',這些檔案還沒跟上:' + dom.changed.join('、') + '。執行 node tools/apply_domain.js');

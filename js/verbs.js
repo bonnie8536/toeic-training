@@ -171,7 +171,7 @@
         const v = items[cur];
         /* 作答框、「對答案」標 data-gate(跟聽寫的作答框一樣):開始之後別的分頁登出、換帳號,或這台的帳號資料夾還沒灌過,
            js/profile.js 讓作答框打不進字、按鍵(包括 Enter)就開「重新整理」卡,不對答案,打好的字留著。
-           以前沒標,common.js 靜靜不寫,畫面照樣對答案、跳下一題,什麼都沒存(審查 D 第 2 輪 #2) */
+           以前沒標,common.js 靜靜不寫,畫面照樣對答案、跳下一題,什麼都沒存 */
         const past = h('input', { class: 'modal-input vb-input', type: 'text', placeholder: '過去式', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'data-gate': '' });
         const pp = h('input', { class: 'modal-input vb-input', type: 'text', placeholder: '過去分詞', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'data-gate': '' });
         const after = h('div', null);

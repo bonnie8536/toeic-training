@@ -3,11 +3,11 @@
    - 已填 → 載入 supabase-js(CDN),提供 login/logout/push;登入後把雲端進度灌回
      localStorage(沿用既有命名空間機制),各模組程式完全不用改。
    - 同步策略:每次 store.set 後 0.8 秒內去抖動上傳該鍵;每個分頁工作階段登入時整批下載一次。
-   - 登記過要合併的鍵(MERGED,目前只有 pet;小雞第二階段規格附錄 A.5):上傳前先讀雲端那一列、用 PET.cloudMerge 合併、
+   - 登記過要合併的鍵(MERGED,目前只有 pet):上傳前先讀雲端那一列、用 PET.cloudMerge 合併、
      存回本機,再上傳合併結果;灌雲端資料時本機和雲端都有就存合併結果,不直接覆蓋。讀不到雲端、合併說唯讀(雲端是更新版的格式)、
      頁面沒有 PET 時不上傳,帳本留著。合併前跟 pet-store 一樣用登入憑證的 iat 對時,這台時鐘差太多也不合併、不上傳,帳本留著
      (合併整理時用這台的時間,慢的時鐘會丟掉別台最近幾天的紀錄)。其他鍵的上傳、灌資料、帳本、登出跟以前一樣。
-     登出前(chick2 第一輪修正 #2、#4):先叫 pet-store 把還在等讀雲端的券和動作寫下來(PET_STORE.flushPending),
+     登出前:先叫 pet-store 把還在等讀雲端的券和動作寫下來(PET_STORE.flushPending),
      帳本上沒有、但標記成「只在本機」的 pet(開關都關時讀不到雲端只寫本機的改動)也先合併上傳,傳不上去就算進「還沒同步」先問。
      已知限制:兩台在同一時間讀雲端、合併、上傳時,後到的那台可能蓋掉先到的那台剛傳上去的東西;先到那台本機還留著,
      它的 pet-store 下次同步看到雲端少了會再合併上傳(remoteBehind),所以不會永久消失。
@@ -244,7 +244,7 @@
     /* 這台已經沒有登入資料時 supabase-js 不會呼叫伺服器、直接回成功,別台其實沒被登出:先擋下來,什麼都不刪 */
     if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效，沒辦法登出其他裝置。請重新登入後再試一次。');
     if (user && !(opts && opts.discard)) {
-      flushPetStore();   // 小雞還在等讀雲端的券和動作先寫下來(chick2 第一輪修正 #4)
+      flushPetStore();   // 小雞還在等讀雲端的券和動作先寫下來
       const left = await unsynced(user);
       if (left > 0 && !confirm('還有 ' + left + ' 項進度還沒同步到雲端（可能是網路不穩）。現在登出，這台裝置上的這些進度會刪除。確定要登出？')) return;
     }
@@ -276,7 +276,7 @@
       }
     }
     localStorage.removeItem('tr_current_profile');
-    clearSignupIntent();   // 註冊時選老師的意向(前端計畫三.6):登出就作廢,下一個人用這台不會沿用
+    clearSignupIntent();   // 註冊時選老師的意向:登出就作廢,下一個人用這台不會沿用
     location.reload();
   }
 
@@ -321,7 +321,7 @@
     if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
       throw new Error('這個 Email 已經註冊過，請直接登入；當初用 Google 註冊的話按 Google 登入，忘記密碼可以重設。');
     }
-    bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(前端計畫三.6;沒有意向什麼都不做)
+    bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(沒有意向什麼都不做)
     if (data.session) {
       window.CLOUD.user = data.user;
       await afterAuth(data.user, true);
@@ -396,7 +396,7 @@
   }
 
   /* ---------- 使用權(收費) ----------
-     原則(前端計畫一.1、三):讀不到 my_access 一律放行,只有這個分頁從伺服器拿到 active === false 才算鎖住。
+     原則:讀不到 my_access 一律放行,只有這個分頁從伺服器拿到 active === false 才算鎖住。
      window.PAID_UI(js/plans-config.js)不是 true 時完全不呼叫 my_access(資料庫還沒有這個函式)。
      快取 tr_access_<帳號 id> 只給離線時顯示日期,不拿來擋人。同步(push、flushAll、灌資料)完全不看使用權。 */
   function paidUi() { return window.PAID_UI === true; }
@@ -561,7 +561,7 @@
     } catch (e) { return false; }
   }
 
-  /* 讀雲端單一鍵(唯讀;路線圖 1.2b,小雞寫回前先抓雲端那一份合併,因為每個分頁只灌一次雲端資料)。
+  /* 讀雲端單一鍵(唯讀,小雞寫回前先抓雲端那一份合併,因為每個分頁只灌一次雲端資料)。
      回 { ok: true, found, v, updated_at }(雲端沒有這一列 found 是 false;別台刪掉的那一列 found 是 true、v 是 null)。
      沒登入、離線、連不上、逾時、讀到一半換了帳號、這一頁剛灌完資料要重載:回 { ok: false },
      呼叫的人這時不能把「沒讀到」當成「雲端沒有」去上傳。不寫本機、不動帳本、不上傳。 */
@@ -591,8 +591,8 @@
     return { ok: true, found: true, v: row.v === undefined ? null : row.v, updated_at: typeof row.updated_at === 'string' ? row.updated_at : null };
   }
 
-  /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email?, uid? }),綁在要註冊的那個帳號上(前端計畫三.6;
-     站長選的保守做法:只存在這台,不寫進帳號資料 user_metadata,別台點驗證信不會自動開,改用「我的」頁與教師後台的開始老師試用):
+  /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email?, uid? }),綁在要註冊的那個帳號上(
+     保守做法:只存在這台,不寫進帳號資料 user_metadata,別台點驗證信不會自動開,改用「我的」頁與教師後台的開始老師試用):
      - Email 註冊:存 localStorage(收驗證信可能換分頁),帶小寫的 Email。signUp 成功就綁上回來的帳號 id(uid),
        之後只認這個 id(同一個 Email 刪掉重建的帳號是新的 id,不算);沒拿到 id 就不自動開(不退回比 Email)。對不上的當場清掉、不用。
      - Google 註冊(按按鈕時還不知道 Email):存 sessionStorage,只有同一個分頁從 Google 回來讀得到。
@@ -710,7 +710,7 @@
     return intent;
   }
 
-  /* 登入後要不要自動開老師試用。全部成立才開(前端計畫三.6):意向是 30 分鐘內存的、
+  /* 登入後要不要自動開老師試用。全部成立才開:意向是 30 分鐘內存的、
      綁的是這個帳號(Email 那條:綁的帳號 id 一樣,沒綁 id 的不算;Google 那條:這個分頁讀出來、綁的帳號 id 一樣)、
      帳號是這次才建立的、資料庫說可以試用。
      帳號建立時間是伺服器的鐘,意向的 at 是裝置的鐘:用 my_access 的 server_now 算出兩個鐘差多少再比。 */
@@ -730,7 +730,7 @@
     return !!(access && access.teacher_trial_available === true);
   }
 
-  /* 「我的」頁方案狀態用哪一種(前端計畫六.1 的順序);日期一律用伺服器回的 */
+  /* 「我的」頁方案狀態用哪一種;日期一律用伺服器回的 */
   function accessStatus(a) {
     if (!a || typeof a !== 'object') return null;
     if (a.is_owner) return { kind: 'owner' };
@@ -763,7 +763,7 @@
     } catch (e) {}
   }
 
-  /* ---------- 「只在本機」標記(要合併的鍵,chick2 第一輪修正 #2) ----------
+  /* ---------- 「只在本機」標記(要合併的鍵) ----------
      開關都關著(第 2 步)時,pet-store 讀不到雲端只寫本機、不記帳:同一台還開著的第 1 步分頁會把帳本上的 pet 不合併就傳上去。
      以前登出只看帳本,這些改動(取名、改目標、餵飼料)會不問就跟著帳號資料夾刪掉。現在 pet-store 寫本機時在這裡記「鍵 → 時間」,
      不在帳本裡,第 1 步的 cloud.js 看不到;登出時這一版先合併再上傳,傳不上去就算進「還沒同步」先問。
@@ -870,7 +870,7 @@
      太舊的會壓縮。這台時鐘比伺服器慢超過 3 天或快超過 3 天、或拿不到登入憑證的 iat,就不合併、不上傳,帳本留著。
      兩台一快一慢時相差兩邊相加,pet.js 只留這台的今天加 7 天以內的日期、今天往前 6 天的 fed,所以兩邊相加不能超過 6 天:
      以前各 6 天,一台快 4 天、一台慢 4 天時,慢的那台合併會丟掉快的那台的練習日、達標日、券和吃掉紀錄再上傳
-     (chick2 第三輪修正 #1;js/pet-store.js 同一組數字,test_pet.js 從兩個檔讀出來驗)。
+     (js/pet-store.js 同一組數字,test_pet.js 從兩個檔讀出來驗)。
      伺服器時間取自 supabase-js 手上登入憑證的 iat(剛換過的憑證,跟伺服器最多差憑證的有效期) */
   const SLOW_MAX_MS = 3 * 864e5, FAST_MAX_MS = 3 * 864e5;
   function clockOkFrom(s) {
@@ -970,7 +970,7 @@
      結果跟雲端不同就記帳、補傳,一樣就從帳本和補傳清單拿掉。本機沒有、或是 null:用雲端那份。
      拿不到合併函式、合併說唯讀、或時鐘差太多(clockOk 是 false):照原本的規則留本機或用雲端,但留本機也不補傳(hold),帳本留著。
      時鐘差太多、本機那份有「只在本機」的標記(marks,帳本上沒有)時也留本機、不補傳(hold):以前用雲端那份蓋掉,
-     讀不到雲端時改的名字、目標、餵食就不見了。允許的範圍改成 3 天以後差 3 到 6 天的裝置也會走到這裡(chick2 第三輪修正 #1 的配套)。
+     讀不到雲端時改的名字、目標、餵食就不見了。允許的範圍改成 3 天以後差 3 到 6 天的裝置也會走到這裡。
      留下來的那份下次對得了時由 pet-store 跟雲端合併上傳 */
   function planMerged(prefix, cloud, keepLocal, led, clockOk, marks) {
     const plan = { save: {}, hold: {} };

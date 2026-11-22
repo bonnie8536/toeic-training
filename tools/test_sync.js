@@ -743,7 +743,7 @@ const scenarios = {
     return { ok: w.confirms.length === 1 && !(w.signOuts || []).length && same(lv(w, K), [{ id: 'b2' }]) && !!pg.ctx.CLOUD.user,
              detail: '問了 ' + w.confirms.length + ' 次 / signOut ' + ((w.signOuts || []).join(',') || '沒呼叫') + ' / 本機題庫 ' + JSON.stringify(lv(w, K)) };
   },
-  /* ---------- 讀單一鍵(路線圖 1.2b,小雞寫回前先抓雲端那一份合併) ---------- */
+  /* ---------- 讀單一鍵(小雞寫回前先抓雲端那一份合併) ---------- */
   '43. 讀單一鍵:只回這個帳號那一列,而且什麼都不寫(本機、帳本、雲端都不變)': async src => {
     const w = makeWorld();
     const PET = { v: 1, days: { '2026-10-10': 12 } };
@@ -855,7 +855,7 @@ const scenarios = {
     return { ok: same(cv(w, 'verb_quiz'), row) && same(lv(w, 'verb_quiz'), row) && !led.includes('verb_quiz'),
              detail: '雲端 ' + JSON.stringify(cv(w, 'verb_quiz')) + ' / 帳號資料夾 ' + JSON.stringify(lv(w, 'verb_quiz')) + ' / 帳本 ' + JSON.stringify(led) };
   },
-  /* ---------- 同一台好幾個分頁、讀雲端進度失敗(main 130f330 就有的掉資料路徑,2026-10-31 審查) ----------
+  /* ---------- 同一台好幾個分頁、讀雲端進度失敗(main 130f330 就有的掉資料路徑) ----------
      下面幾個情境用 w.authFromStorage(登入看這台的登入資料)、w.rls(請求帶這台現在的登入資料,不是這個帳號就擋下),
      兩個分頁共用 localStorage、各自一份 sessionStorage(換 w.session)。作答照 practice.js:寫入當下重讀本機、加一筆、整份寫回 */
   '52. 同一台兩個分頁都登入,一個登出再登回來、讀雲端進度失敗或還在讀:另一個分頁換頁後要重灌,作答不能把錯題本(整份上傳)蓋掉雲端': async src => {
@@ -929,7 +929,7 @@ const scenarios = {
       return { ok: user && !led.includes('hist') && same(cv(w, 'hist'), FIVE) && same(lv(w, 'hist'), FIVE),
                detail: how + ':登入著 ' + user + ' / 帳本 ' + JSON.stringify(led) + ' / 下一頁雲端 ' + JSON.stringify(cv(w, 'hist')) + ' / 本機 ' + JSON.stringify(lv(w, 'hist')) };
     };
-    /* 甲:開頁時資料夾已經是這個帳號、登入資料也在,資料夾是空的(審查的重現方式) */
+    /* 甲:開頁時資料夾已經是這個帳號、登入資料也在,資料夾是空的 */
     const w1 = makeWorld(); w1.authFromStorage = true; w1.rls = true;
     w1.db.push({ user_id: USER.id, k: 'hist', v: FIVE, updated_at: new Date(Date.now() - 24 * HOUR).toISOString() });
     w1.local.setItem('tr_current_profile', JSON.stringify(PID));
@@ -992,7 +992,7 @@ const scenarios = {
     const rs = [await one('密碼'), await one('Google 讀失敗'), await one('Google 讀到')];
     return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
   },
-  /* 第 2 輪審查(2026-10-31):「帳號資料夾是空的」以前把這一頁確認登入前寫的鍵(early)一律當成不算。
+  /* 「帳號資料夾是空的」以前把這一頁確認登入前寫的鍵(early)一律當成不算。
      資料夾本來就有資料、只是剛好每個鍵都在確認登入前重寫過(新學生的資料夾常常只有 hist),會被當成空的、記上「還沒灌過」:
      讀雲端進度失敗時,已登入、本機有完整資料的人被擋下,那一筆也丟掉;另一個早就灌好的分頁一樣被擋下。
      要的是:不記標記,確認前那一筆照常記帳,下一頁雲端留著(e49e444 就是這樣) */
@@ -1049,7 +1049,7 @@ const scenarios = {
      (資料夾空的、標記記著),這時開分頁 C;C 還在確認登入時 B 灌好了(資料夾有 hist、標記劃掉)。
      C 確認登入時資料夾已經有東西,不能因為開頁那一刻是空的又記上標記:C 還在讀雲端進度的時候,灌好的 B 照常作答、上雲;
      C 讀到之後灌資料重載,看得到 B 剛答的那一筆。
-     (多分頁第 3 輪審查 2026-11-01:以前這裡測的是 C 讀雲端失敗、照常記帳。C 的畫面是照空資料夾畫的,寫作頁這類照畫面整份寫回的鍵
+     (2026-11-01:以前這裡測的是 C 讀雲端失敗、照常記帳。C 的畫面是照空資料夾畫的,寫作頁這類照畫面整份寫回的鍵
      會把雲端蓋掉,現在 C 自己讀失敗時不能作答,那條改在情境 60 測;這裡留 C 讀得到的那條,請求與儲存跟第 1 步那版逐位元組比) */
   '57. 新分頁開頁時帳號資料夾是空的(別的分頁正在灌),確認登入前那個分頁灌好了:不能再記「還沒灌過」,新分頁讀雲端的時候灌好的分頁照常作答、上雲,新分頁讀到後看得到': async src => {
     const UNHYD = 'tr_cloud_unhydrated_' + USER.id;
@@ -1094,7 +1094,7 @@ const scenarios = {
     /* 別的分頁:登出(cloud.js logout 刪的那些),又登回來(登入資料存好了,afterAuth 還在查教師身分) */
     const folder = [];
     for (let i = 0; i < w.local.length; i++) { const k = w.local.key(i); if (k.startsWith(PREFIX)) folder.push(k); }
-    folder.concat([SB_KEY, LEDGER, SEEN, 'tr_current_profile']).forEach(k => w.local.removeItem(k));   // SEEN:第 3 輪起登出也刪「這台灌過」
+    folder.concat([SB_KEY, LEDGER, SEEN, 'tr_current_profile']).forEach(k => w.local.removeItem(k));   // SEEN:登出也刪「這台灌過」
     w.local.setItem(SB_KEY, JSON.stringify({ access_token: 'a', expires_at: 1, user: USER }));
     w.progressFail = true;
     release(); w.authGate = null; await pg.ready;
@@ -1108,7 +1108,7 @@ const scenarios = {
              detail: '開頁時資料夾 ' + JSON.stringify(folder.map(k => k.slice(PREFIX.length))) + ' / 標記 ' + mark + ' / 能作答 ' + can + ' / 帳本 ' + JSON.stringify(led) +
                ' / 下一頁雲端 ' + JSON.stringify(cv(w, 'hist')) + ' / 本機 ' + JSON.stringify(lv(w, 'hist')) };
   },
-  /* 多分頁第 3 輪審查 #1(2026-11-01):分頁 A 灌過;分頁 B 登出(資料夾刪光)又用密碼登回來、正在讀雲端進度(標記記著、資料夾空的),
+  /* 分頁 A 灌過;分頁 B 登出(資料夾刪光)又用密碼登回來、正在讀雲端進度(標記記著、資料夾空的),
      這時 A 換頁:A 的畫面照空資料夾畫(寫作頁的 readMap、作文框都是開頁時讀的)。A 確認登入前 B 先灌好、劃掉標記,
      A 確認登入時標記不在、自己的旗標還在,以前就不灌資料:照空畫面按「標記讀完」整份寫回,雲端 writing_read 從三課變成只剩一課。
      要的是:開頁時資料夾是空的、這台這個帳號也還沒灌過,確認登入時資料夾卻有東西了(別的分頁灌好了),這一頁要重灌重載。
@@ -1166,7 +1166,7 @@ const scenarios = {
     const rs = [await one('卡在確認登入'), await one('卡在查教師身分'), await one('A 也讀失敗'), await one('B 之後才灌好')];
     return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
   },
-  /* 多分頁第 3 輪審查 #1 同一條,新分頁那一邊(以前情境 57 的後半):分頁 B 這台第一次登入、正在讀雲端進度時開新分頁 C(資料夾空的),
+  /* 同上,新分頁那一邊(以前情境 57 的後半):分頁 B 這台第一次登入、正在讀雲端進度時開新分頁 C(資料夾空的),
      C 確認登入前 B 灌好了,C 自己讀雲端失敗。C 的畫面照空資料夾畫:以前照常作答記帳,寫作頁整份寫回,下一頁把雲端蓋成只剩 C 那一課。
      要的是:C 不能作答、不記帳;不記「還沒灌過」標記,灌好的 B 照常作答上雲;C 網路好了重新整理,看得到全部 */
   '60. 新分頁開頁時帳號資料夾是空的(別的分頁正在灌),確認登入前那個分頁灌好了、這個新分頁自己讀雲端失敗:新分頁不能作答、不記帳,灌好的分頁照常,寫作紀錄不被蓋掉': async src => {
@@ -1207,7 +1207,7 @@ const scenarios = {
     return { ok, detail: 'B 讀的時候標記 ' + markB + ' / C 開頁時 ' + JSON.stringify(atLoad) + ' / C 讀失敗後標記 ' + mark + ' / C 能作答 ' + canC + ' / B 能作答 ' + canB +
       ' / C 寫進去 ' + wroteC + ' / 帳本 ' + JSON.stringify(led) + ' / C 作答後雲端 ' + JSON.stringify(mid) + ' / C 重新整理重灌 ' + s.reloaded + ' / C 重新整理後本機 ' + JSON.stringify(shown) + ' / 最後雲端 ' + JSON.stringify(cv(w, WR)) };
   },
-  /* 多分頁第 3 輪審查 #3(e49e444 就有):分頁 A 換頁,getSession 已經拿到 X、還在查教師身分;這時分頁 B 按登出(資料夾、帳本、目前帳號、登入資料全刪)。
+  /* 分頁 A 換頁,getSession 已經拿到 X、還在查教師身分;這時分頁 B 按登出(資料夾、帳本、目前帳號、登入資料全刪)。
      以前 A 確認完照樣把目前帳號寫回 X:A 的資料夾對得上、folderReady 是 true,拿被刪空的資料夾作答、記帳(上傳被 RLS 擋下、帳本留著),
      X 之後在這台登入時灌資料把帳本當成本機比較新,整份上傳把雲端錯題本蓋成只剩新那一題;別的沒重載的分頁 C 也跟著又能記帳。
      要的是:A 不寫回目前帳號、不灌資料;A、C 都不能作答、不記帳;X 再登入後雲端還是 5 題 */
@@ -1242,7 +1242,7 @@ const scenarios = {
              detail: '卡住時 A 已拿到帳號 ' + userA + ' / A 確認後目前帳號 ' + cp + ' / A 重載 ' + aReloaded + ' / A 能作答 ' + canA + ' / C 能作答 ' + canC +
                ' / 帳本 ' + led + ' / 再登入後雲端 ' + JSON.stringify(cv(w, K)) + ' / 本機 ' + JSON.stringify(lv(w, K)) };
   },
-  /* 多分頁第 3 輪審查 #4、#5(這個分支新加的回歸):雲端還沒有任何進度的帳號(新註冊、只看後台的老師)灌完資料夾還是空的。
+  /* 雲端還沒有任何進度的帳號(新註冊、只看後台的老師)灌完資料夾還是空的。
      以前開新分頁時「資料夾是空的」就記「還沒灌過」標記:別的分頁正在灌、或灌失敗時,早就灌好的分頁也被擋下(還說「還沒載入你的練習紀錄」),
      換頁多讀一次、多重載一次;新分頁讀失敗後被關掉,原分頁一直被擋。要的是:這台灌過這個帳號(登出前)就不記標記,跟 e49e444 一樣 */
   '62. 雲端還沒有任何進度的帳號(新註冊、老師帳號):灌好的分頁在別的分頁正在灌、或灌失敗時照常作答、上雲,換頁不多讀、不多重載': async src => {
@@ -1295,7 +1295,7 @@ const scenarios = {
     const rs = [await one('讀失敗', true), await one('還在讀', true), await one('讀失敗', false), await two()];
     return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
   },
-  /* 審查 D(e49e444 就有):帳號層級的動作送出時,supabase-js 用的是這台 localStorage 現在的登入資料,不是這一頁記憶體裡的 CLOUD.user。
+  /* 帳號層級的動作送出時,supabase-js 用的是這台 localStorage 現在的登入資料,不是這一頁記憶體裡的 CLOUD.user。
      分頁 A 畫面是帳號 X、沒重載,別的分頁登出 X、改登入 Y:A 按「刪除帳號」刪掉的是 Y 的帳號與雲端進度(接著把 Y 登出),
      「登出」「登出所有裝置」登出的是 Y,「改暱稱」「改密碼」改的是 Y,加入班級、老師試用開在 Y 身上。
      要的是:送出前這台的目前帳號(tr_current_profile)與登入資料不是畫面上這個帳號,就一個請求都不送、不問、不重載,丟 code 'account_gone'
@@ -1354,7 +1354,7 @@ const scenarios = {
       for (const act of Object.keys(ACTS)) {
         const r = await run(how, act);
         /* 只登出、按「登出」:這台已經沒有任何人登入著(目前帳號、登入資料都刪了),不會登出到別人。照 e49e444 清掉 X 留在這台的東西
-           (這裡 B 登出時已經刪光了,剩 A 這個分頁的灌過旗標)、重載,但不呼叫 signOut(審查 D 第 1 輪 #1、#3,情境 64) */
+           (這裡 B 登出時已經刪光了,剩 A 這個分頁的灌過旗標)、重載,但不呼叫 signOut(情境 64) */
         if (how === '只登出' && act === '登出') {
           if (!(!r.err && !r.sent.length && !r.signOutCalls && r.cleared && r.reloaded && !r.asked)) bad.push(r);
           continue;
@@ -1389,7 +1389,7 @@ const scenarios = {
     return { ok: !bad.length, detail: bad.length ? '不對的 ' + bad.length + ' 項:' + bad.map(r => r.how + '/' + r.act + ' 送了 ' + (r.sent.join(',') || '沒有') + ' 錯誤 ' + (r.err || '沒有') + ' 沒動 ' + r.same + ' 重載 ' + r.reloaded + ' 問了 ' + r.asked).join(' | ')
       : '換帳號、只登出、剛登入 Y × 8 個動作都沒送、什麼都沒動(只登出時按登出:不呼叫 signOut,清掉 X 留在這台的、重載);平常、登回 X 都照常送到 X' };
   },
-  /* 審查 D 第 1 輪 #1、#3(31745ec 新造成的):X 的登入被撤銷(別台按「登出所有裝置」、帳號刪除),supabase-js 清掉這台的登入資料;
+  /* X 的登入被撤銷(別台按「登出所有裝置」、帳號刪除),supabase-js 清掉這台的登入資料;
      別的分頁開頁照 leaveStaleAccount 改回訪客(目前帳號刪掉,X 的資料夾、帳本照設計留著)。沒重載的分頁 A 按「登出」:
      31745ec 當成「別的分頁換人了」擋下(account_gone),X 的進度、自訂題庫、帳本留在這台(共用電腦),之後沒有按鈕能刪(訪客頁沒有登出)。
      這時這台沒有任何人登入著,不會登出到別人。要的是:跟 e49e444 一樣清掉 X 留在這台的東西、重載,有沒同步的進度照樣先問、按取消什麼都不刪;
@@ -1437,7 +1437,7 @@ const scenarios = {
     for (const how of ['沒有沒同步的', '有沒同步的、按確定', '有沒同步的、按取消', '問的時候別人登入', '對照:沒有別的分頁']) rs.push(await one(how));
     return { ok: rs.every(r => r.ok), detail: rs.map(r => r.how + ':' + (r.ok ? '對' : '不對 ' + JSON.stringify(r))).join(' | ') };
   },
-  /* 審查 D 第 1 輪 #2(e49e444 就有;這個分支 73900cf 加的「灌過」記號把 4ea2c29 已經擋住的又打開):部署前就開著的舊版分頁
+  /* 部署前就開著的舊版分頁
      (tools/fixtures/cloud_step1.js;e49e444 的登出一樣)不認得 tr_cloud_seen_<帳號 id>,在那裡按登出:資料夾、帳本、目前帳號刪光,記號留著。
      之後 X 在這台用新版登入、讀雲端進度失敗(網路斷一下、Supabase 休眠):以前看到記號就不記「還沒灌過」,學生在空資料夾上作答、記帳,
      網路好了下一頁整份上傳,雲端錯題本從五題變成只剩新那一題。要的是:剛登入(fresh)或這一頁的資料夾不是這個帳號的(Google 回來)時,
@@ -1522,7 +1522,7 @@ const scenarios = {
     })();
     return { ok: a.ok && g.ok && c.ok, detail: a.detail + ' | ' + g.detail + ' | ' + c.detail };
   },
-  /* 審查 D 第 2 輪 #1(e49e444 就有,情境 61 沒蓋到的那一條):分頁 A 灌過(旗標在 A),換到新的一頁 P,P 還在確認登入(查教師身分)。
+  /* 分頁 A 灌過(旗標在 A),換到新的一頁 P,P 還在確認登入(查教師身分)。
      這時分頁 B 登出 X(資料夾、帳本、灌過記號、目前帳號都刪掉),又用同一個帳號 X 登回來,B 也還在查教師身分、還沒記「還沒灌過」標記。
      以前 P 確認完:登入資料是 X 就當成「登回同一個帳號」放行(情境 58 是沒有旗標的新分頁),旗標在、標記沒記,P 不灌資料、照常作答記帳:
      - P 確認前作答過:early 那一筆照樣記帳,init 最後補傳讀到被刪掉的鍵,雲端 hist 被蓋成 null,B 灌資料也拿到 null
@@ -1586,7 +1586,7 @@ const scenarios = {
     for (const how of ['別的分頁沒動', '確認前作答、P 讀得到', '確認前作答、P 讀不到', '確認後作答、P 讀得到', '確認後作答、P 讀不到、B 也讀不到']) rs.push(await one(how));
     return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
   },
-  /* 審查 D 第 3 輪 #1(be7104d 造成,73900cf、31745ec 沒有):雲端還沒有進度的帳號(新註冊、只看後台的老師),分頁 A 登入、灌好
+  /* 雲端還沒有進度的帳號(新註冊、只看後台的老師),分頁 A 登入、灌好
      (資料夾還是空的)。分頁 B 是 A 登入之前就開著的訪客頁(頂欄還是「登入」),在 B 用密碼再登入同一個帳號。
      be7104d 起「剛登入、訪客頁登入」一律先刪掉「灌過」記號,資料夾又是空的,就記上「還沒灌過」標記:
      B 還在讀雲端時 A 不能作答;B 讀失敗時 A 一直卡在「還沒載入」卡,換頁也一樣,要等讀得到雲端才恢復(e49e444 照常作答、上雲)。
@@ -1625,7 +1625,7 @@ const scenarios = {
     const rs = [await one('還在讀'), await one('讀失敗')];
     return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
   },
-  /* 審查 D 第 3 輪 #2(e49e444 就有,73900cf 的 59 沒有補完):帳號在雲端只有一個整份上傳的鍵(只用過寫作頁的新學生,雲端只有 writing_read={l1,l2,l3})。
+  /* 帳號在雲端只有一個整份上傳的鍵(只用過寫作頁的新學生,雲端只有 writing_read={l1,l2,l3})。
      分頁 A 灌過;分頁 B 登出又登回同一個帳號,正在讀雲端(標記記著、資料夾空的)。A 換頁成 P(開頁時資料夾空的、沒有「灌過」記號:照空資料夾畫),
      P 還在確認登入(getSession)時學生按了「標記讀完」,寫作頁照開頁時的空畫面寫 {l4}(在 B 灌好之前或之後)。
      以前 P 確認登入時,資料夾唯一的鍵是 P 自己確認前寫過的,不算「別的分頁灌好了」,P 不重灌:確認前那一筆記帳,
@@ -1685,7 +1685,7 @@ const scenarios = {
       for (const [pFlag, pFail] of [[true, false], [true, true], [false, false], [false, true]]) rs.push(await one(order, pFlag, pFail));
     return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
   },
-  /* 審查 D 第 4 輪 #1(e49e444 就有;5aff2d5 擋得住,49a5080 又打開):舊版分頁 O 和新版分頁 A 都灌好(A 寫了「灌過」記號),O 按登出:
+  /* 舊版分頁 O 和新版分頁 A 都灌好(A 寫了「灌過」記號),O 按登出:
      資料夾、目前帳號刪光,記號留著。學生在新版的訪客頁 N 用密碼登入同一個帳號,N 卡在查教師身分,讀雲端進度失敗。
      甲:A 換頁成 P、P 也卡在查教師身分,P 先確認完(走 moved:確認途中有人登出又登回同一帳號),把目前帳號寫回去;
      乙:另一個舊版分頁 O2 在 N 送出登入之後換頁(舊版 afterAuth 一律先寫回目前帳號);
@@ -1745,7 +1745,7 @@ const scenarios = {
     const rs = [await one('P 先確認'), await one('舊版分頁換頁'), await one('N 先確認')];
     return { ok: rs.every(r => r.ok), detail: rs.map(r => r.detail).join(' | ') };
   },
-  /* 審查 D 第 4 輪 #2(e49e444 就有,49a5080 的 68 只修了一半):情境 68 的「B 先灌」,P 確認前照開頁時的空畫面寫了 {l4},
+  /* 情境 68 的「B 先灌」,P 確認前照開頁時的空畫面寫了 {l4},
      把 B 灌好的本機那一份({l1,l2,l3})蓋掉;P 確認時重灌,但讀不到雲端,P 被擋下,本機還是 {l4}。
      49a5080 只讓 P 這個分頁的下一頁重灌,讀得到雲端才有用:
      甲:P 分頁的下一頁還是讀不到:沒有「還沒灌過」標記、開頁時有記號,照 {l4} 作答記帳,網路好了整份上傳,雲端只剩 {l4,l5}
@@ -1812,7 +1812,7 @@ const FLAG = 'tr_cloud_hydrated_' + USER.id;
 const OTHER_USER = { id: '9a9a9a9a-1111-4222-8333-444455556666', email: 'o@x.com', user_metadata: {} };
 const hasAll = (v, want) => Array.isArray(v) && want.every(x => v.includes(x));
 const UNHYD = 'tr_cloud_unhydrated_' + USER.id;   // 「這台帳號資料夾還沒灌過」標記
-const SEEN = 'tr_cloud_seen_' + USER.id;          // 「這台灌過這個帳號」(第 3 輪起,登出刪掉)
+const SEEN = 'tr_cloud_seen_' + USER.id;          // 「這台灌過這個帳號」(登出刪掉)
 const WR = 'writing_read';                        // 寫作頁:畫面時讀的 readMap,按「標記讀完」整份寫回(整份上傳的鍵)
 /* 這一頁能不能作答(js/cloud.js folderReady;舊版沒有這個函式就當成可以) */
 const ready = pg => (typeof pg.ctx.CLOUD.folderReady === 'function' ? pg.ctx.CLOUD.folderReady() : true);

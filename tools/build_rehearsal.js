@@ -1,9 +1,9 @@
-/* 真機演練用的網站(搬家計畫 7.4 最後一項):把網站複製一份,網域清單換成兩個演練用的網址,
+/* 真機演練用的網站:把網站複製一份,網域清單換成兩個演練用的網址,
    放到 Cloudflare Pages 的兩個專案(一個當舊網址、一個當新網址,上傳同一個資料夾)。不動正式網域。
    用法:node tools/build_rehearsal.js --old https://<舊>.pages.dev --new https://<新>.pages.dev --out <資料夾>
    會改的:js/move-config.js 的 PROD、js/app-shell.js 的 MOVE_OLD 與 MOVE_NEW 第一個網址;加 _headers 讓 move-ping.txt 可以跨網域讀。
    不改 sw.js:Cloudflare Pages 會把 /grammar.html 轉到 /grammar,service worker 的轉址期邏輯在演練網址上會誤觸,所以演練網址上它是關的
-   (那一段由 tools/test_sw.js 測)。不複製 tools/、supabase/、說明文件、CNAME;音檔只放 audio/ 排序後的前 20 個(Cloudflare 後台拖曳上傳最多 1000 個檔案)。步驟在 D:/claudecode/刷刷英文開發/搬家/步驟_真機演練.md。 */
+   (那一段由 tools/test_sw.js 測)。不複製 tools/、supabase/、說明文件、CNAME;音檔只放 audio/ 排序後的前 20 個(Cloudflare 後台拖曳上傳最多 1000 個檔案)。 */
 'use strict';
 const fs = require('fs');
 const path = require('path');

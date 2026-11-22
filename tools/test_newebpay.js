@@ -1,6 +1,6 @@
 /* 藍新金流 Edge Function 的測試(不連網路、不碰資料庫、不需要 Deno)。
    1. supabase/functions/_shared/newebpay.ts:加解密與驗章,用藍新手冊的官方範例與第三方範例比對
-      (範例值與出處在 tools/fixtures/newebpay.vectors.json,跟 刷刷英文開發/收費/newebpay/newebpay.test.mjs 同一組)
+      (範例值與出處在 tools/fixtures/newebpay.vectors.json,跟原本的 newebpay.test.mjs 同一組)
    2. _shared/products.ts:伺服器價格表跟 js/plans-config.js 一致
    3. newebpay-checkout、newebpay-notify 的處理邏輯:用假的 fetch 代替 Supabase,檢查送去資料庫的參數與回應
    4. supabase/config.toml 與原始碼裡沒有金鑰、商店代號
@@ -411,7 +411,7 @@ test('價格表的代號與內容跟 paid_gateway_additions.sql 的核對表相�
   assert.deepEqual(key(rows), key(fromTs));
 });
 
-test('審查:品名跟網站的寫法一樣(一個月、一年、N 位以內),一般空白,UTF-8 也在 50 位元組以內', async () => {
+test('品名跟網站的寫法一樣(一個月、一年、N 位以內),一般空白,UTF-8 也在 50 位元組以內', async () => {
   const { PRODUCTS } = await PROD_MOD;
   const want = {
     student_month: '衝衝英文 學生方案 一個月',
@@ -583,7 +583,7 @@ function checkoutStreamReq(total, { chunk = 16384, fill = 0x20, prefix = '' } = 
   return { req, sent: () => sent };
 }
 
-test('審查:checkout 分段傳送 10 MB 讀到 4096 位元組就停,回 413、不建單', async () => {
+test('checkout 分段傳送 10 MB 讀到 4096 位元組就停,回 413、不建單', async () => {
   for (const chunk of [16384, 1000]) {
     const { handler, sb } = await checkoutWith();
     const s = checkoutStreamReq(10 * 1024 * 1024, { chunk });
@@ -929,7 +929,7 @@ test('notify:太大的請求直接拒絕', async () => {
   assert.equal(sb.calls.length, 0);
 });
 
-// ---------- 2026-10-16 審查補的測試 ----------
+// ---------- 2026-10-16 補的測試 ----------
 
 // 分段送出(沒有 Content-Length)的大請求:記下實際被讀走多少位元組
 function streamReq(total, contentType, chunk = 16384) {
@@ -946,7 +946,7 @@ function streamReq(total, contentType, chunk = 16384) {
   return { req, sent: () => sent };
 }
 
-test('審查:notify 分段傳送(沒有 Content-Length)的大請求讀到上限就停,回 413', async () => {
+test('notify 分段傳送(沒有 Content-Length)的大請求讀到上限就停,回 413', async () => {
   for (const type of ['application/x-www-form-urlencoded', 'application/x-www-form-urlencoded; charset=UTF-8']) {
     const { handler, sb } = await notifyWith();
     const s = streamReq(2 * 1024 * 1024, type);
@@ -971,7 +971,7 @@ test('審查:notify 分段傳送(沒有 Content-Length)的大請求讀到上限�
   }
 });
 
-test('審查:notify 只收 x-www-form-urlencoded;multipart 與其他格式回 415,不讀內容、不碰資料庫', async () => {
+test('notify 只收 x-www-form-urlencoded;multipart 與其他格式回 415,不讀內容、不碰資料庫', async () => {
   // 大的 multipart 串流:一看格式就拒絕,不會讀到上限
   for (const type of ['multipart/form-data; boundary=----x', 'MULTIPART/FORM-DATA; boundary=y']) {
     const { handler, sb } = await notifyWith();
@@ -1017,7 +1017,7 @@ test('審查:notify 只收 x-www-form-urlencoded;multipart 與其他格式回 41
   }
 });
 
-test('審查:明文只收 JSON;Result 要是物件、有訂單編號;付款請求才有的欄位擋下,RespondType 照收', async () => {
+test('明文只收 JSON;Result 要是物件、有訂單編號;付款請求才有的欄位擋下,RespondType 照收', async () => {
   const { parseNotify, aesEncryptHex } = await LIB;
   const signedPlain = async (plain) => signedBody(await aesEncryptHex(plain, K1.hashKey, K1.hashIV));
   const cases = [
@@ -1053,7 +1053,7 @@ test('審查:明文只收 JSON;Result 要是物件、有訂單編號;付款請�
   assert.equal(ok.ok, true, ok.error);
 });
 
-test('審查:拿 newebpay-checkout 回的付款請求欄位冒充通知,一律 400、不碰資料庫', async () => {
+test('拿 newebpay-checkout 回的付款請求欄位冒充通知,一律 400、不碰資料庫', async () => {
   const { handler: co } = await checkoutWith();
   const j = await (await co(checkoutReq({ sku: 'student_year', consent: true }))).json();
   assert.ok(j.fields && j.order_no);
@@ -1080,7 +1080,7 @@ test('審查:拿 newebpay-checkout 回的付款請求欄位冒充通知,一律 4
   assert.equal(sb.rpcCalls('newebpay_mark_failed').length, 1);
 });
 
-test('審查:開始收費前只賣 test10(正式、測試環境都一樣);11/1 起照常;Secret 可以改日期', async () => {
+test('開始收費前只賣 test10(正式、測試環境都一樣);11/1 起照常;Secret 可以改日期', async () => {
   const before = new Date('2026-10-31T15:59:59.999Z'); // 台北 10/31 23:59:59.999
   const at = new Date('2026-10-31T16:00:00Z');         // 台北 11/1 00:00:00
   const { DEFAULT_SALES_START } = await CHECKOUT;
@@ -1129,7 +1129,7 @@ test('審查:開始收費前只賣 test10(正式、測試環境都一樣);11/1 �
   }
 });
 
-test('審查:資料庫 raise 的訊息(P0001)一律回 409 {error: not_allowed, message};其他錯誤不外洩', async () => {
+test('資料庫 raise 的訊息(P0001)一律回 409 {error: not_allowed, message};其他錯誤不外洩', async () => {
   const msgs = ['你的帳號已經可以使用，不需要購買這個方案。', '11 月 1 日開放購買。', '一小時內有太多筆還沒完成的付款，請稍後再試'];
   for (const m of msgs) {
     const sb = fakeSupabase({ rpcReply: () => ({ status: 400, body: { code: 'P0001', message: m, details: null, hint: null } }) });

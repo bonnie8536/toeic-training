@@ -1082,7 +1082,7 @@ footer p { margin: 0; }
 .pm-sep { border-top: 1px solid var(--line); margin: 6px 4px; }
 
 /* 視窗比畫面高時(矮手機的註冊卡、手機橫放、鍵盤打開)遮罩可以捲,從頂端排,X 和標題才看得到;
-   放得下時 margin:auto 照舊上下左右置中,跟以前一模一樣(第 2 輪審查 #3:以前只有矮於 480 和 App 外殼才這樣) */
+   放得下時 margin:auto 照舊上下左右置中,跟以前一模一樣(以前只有矮於 480 和 App 外殼才這樣) */
 .modal-mask {
   position: fixed; inset: 0;
   background: rgba(30, 40, 50, .45);
@@ -1236,7 +1236,7 @@ table.cat-table td.num { white-space: nowrap; }
 .wb-you { color: var(--bad); }
 .wb-key { color: var(--ok); }
 @media (max-width: 600px) {
-  .wb-you, .wb-key { display: block; }   /* 手機各佔一行(定稿 2.8 線框),中間的「 · 」不要 */
+  .wb-you, .wb-key { display: block; }   /* 手機各佔一行,中間的「 · 」不要 */
   .wb-sep { display: none; }
 }
 .wb-groups { margin-bottom: 40px; }
@@ -1884,7 +1884,7 @@ html.app-shell .app-back:focus-visible { outline: 2px solid var(--primary); outl
 html.app-shell .modal-mask { overflow-y: auto; align-items: flex-start; }
 html.app-shell .modal-mask > .modal { margin: auto; }
 /* 強制登入(個人頁)和付費牆的遮罩不蓋頂欄和分頁列。付費牆用自己的 class:內容頁是先看再登入(on-action),
-   不能靠 data-require-profile 認(第 2 輪審查 #2) */
+   不能靠 data-require-profile 認 */
 html.app-shell body[data-require-profile]:not([data-require-profile="on-action"]) .modal-mask,
 html.app-shell .modal-mask.pw-mask { top: calc(59px + env(safe-area-inset-top)); }
 /* 強制登入時頂欄露在遮罩上方:頂欄自己要疊在遮罩之上,寬視窗的選單下拉才點得到 */
@@ -2332,13 +2332,13 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 /* 價格頁按鈕旁的一句說明(已經可以使用、班級提供、老師方案請聯絡站長);沒有按鈕時只有這一句 */
 .pricing-buy-note { margin: 0 0 10px; font-size: 14.5px; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
 .pricing-buy-note:last-child { margin-bottom: 0; }
-/* 選項下面的起算說明、勾選框下面「怎樣算開始使用」。顏色用 --ink-soft:白底對比要到 4.5:1(2026-10-17 第二輪複審) */
+/* 選項下面的起算說明、勾選框下面「怎樣算開始使用」。顏色用 --ink-soft:白底對比要到 4.5:1 */
 .buy-note { margin: 10px 2px 0; font-size: 13.5px; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
 .buy-note[hidden] { display: none; }
 .buy-def { margin: 6px 2px 0; font-size: 13.5px; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
 /* 送出中:按鈕維持主色、不淡掉(跟還沒勾選的停用狀態分得出來) */
 .modal-buy[aria-busy="true"] .buy-submit { opacity: 1; cursor: progress; }
-/* 送出中「正在前往付款頁」寫在按鈕上;提示區的同一句只給讀螢幕軟體,畫面上不重複(第三輪複審) */
+/* 送出中「正在前往付款頁」寫在按鈕上;提示區的同一句只給讀螢幕軟體,畫面上不重複 */
 .auth-msg.buy-sending { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 /* 送出中焦點移到標題(讀螢幕軟體用),不畫框 */
 .modal-buy .auth-h:focus { outline: none; }
@@ -2663,7 +2663,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
   .pet-mask, .pet-sheet { transition: none; }
 }
 
-/* App 分頁列上的小雞(Bonnie 10/17:「讓他在 tab bar 跑」):腳直接踩在分頁列上緣,背景透明,沒有另外一條走道。
+/* App 分頁列上的小雞:腳直接踩在分頁列上緣,背景透明,沒有另外一條走道。
    這一層不接受點擊,只有小雞本身可以點;頁面底部多留小雞的高度,捲到最底時最後的內容和按鈕在小雞上面 */
 .pet-roam { display: none; }
 @media (max-width: 860px), (pointer: coarse) and (max-height: 500px) {
@@ -2701,8 +2701,8 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 
 /* ======== 小雞第二階段:hooks(js/pet-hook.js)開始 ======== */
 /* 結束畫面「小黃拿到 1 份小番茄。」那一行。只在 PET_FOOD 打開時才產生 .pet-earn。
-   等結果的時候(is-wait)先留一行的高度,字寫上去時下面的按鈕不會往下跳(第三輪審查 #9);
-   留過高度、結果沒有字的改成 is-held,繼續留著那一行的高度,按鈕也不會往上跳(chick2 第一輪修正 #6)。
+   等結果的時候(is-wait)先留一行的高度,字寫上去時下面的按鈕不會往下跳;
+   留過高度、結果沒有字的改成 is-held,繼續留著那一行的高度,按鈕也不會往上跳。
    一開始就看得出沒有字、沒留高度的那一行收起來:看不見、不占位置,但留在讀螢幕的樹裡,寫字時 role=status 才念得到。 */
 .pet-earn { margin: 12px 0 0; font-size: 15px; font-weight: 700; line-height: 1.6; min-height: 1.6em; color: var(--ink); }
 .pet-earn:empty:not(.is-wait):not(.is-held) {
@@ -2715,13 +2715,13 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 .drill-nav-btns:has(> .pet-earn.is-wait), .wc-bar:has(> .pet-earn.is-wait),
 .drill-nav-btns:has(> .pet-earn.is-held), .wc-bar:has(> .pet-earn.is-held) { flex-wrap: wrap; }
 .wc-bar > .pet-earn { text-align: right; font-size: 14px; }
-/* 對話:放在最後聽的那一句下面(第三輪審查 #4);題庫:放在成績下面(#5) */
+/* 對話:放在最後聽的那一句下面;題庫:放在成績下面 */
 .dlg-lines > .pet-earn { margin: 0; text-align: center; }
-/* 播放全部把正在播的那一句捲到剛好露出(block: nearest),那一行就在它下面:捲的時候多留間距 14 加一行 24 再多一點(chick2 第一輪修正 #5) */
+/* 播放全部把正在播的那一句捲到剛好露出(block: nearest),那一行就在它下面:捲的時候多留間距 14 加一行 24 再多一點 */
 .dlg-line:has(+ .pet-earn) .dlg-bubble { scroll-margin-bottom: 56px; }
 .tq-result + .pet-earn { margin: -8px 0 16px; }
 /* 掉落通關的畫面:那一行空著時,按鈕那一排照原本置中。
-   .game-over 是置中的直排,空的那一行會縮成 0 寬、量不到要留幾行;撐滿整排的寬,字照樣置中(審查第 2 輪 寬度 #1) */
+   .game-over 是置中的直排,空的那一行會縮成 0 寬、量不到要留幾行;撐滿整排的寬,字照樣置中 */
 .game-over > .pet-earn { align-self: stretch; text-align: center; }
 .game-over > :nth-last-child(2):has(+ .pet-earn:empty:not(.is-wait):not(.is-held)) { margin-bottom: auto; }
 @media print {
@@ -2730,11 +2730,11 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 /* ======== 小雞第二階段:hooks 結束 ======== */
 
 /* ======== 小雞第二階段:roam(js/pet-roam2.js)開始 ======== */
-/* 整頁跑(小雞第二階段規格.md 第 1 節)。每一條都掛在 html.pet-roam2 或 div.pet-roam2 底下,開關關著時不作用。
+/* 整頁跑。每一條都掛在 html.pet-roam2 或 div.pet-roam2 底下,開關關著時不作用。
    外層不接受點擊,只有小雞按鈕能點;地面層 z-index 91(App 模式要在分頁列 90 上面),站點層 49(頂欄 50 下面)。
    網站模式的地面層也是 49:頂端導覽列的下拉選單、個人選單在頂欄 50 裡面,矮視窗時會長到視窗下緣,小雞不能蓋住它們。 */
-/* 小雞的寬和框高:js/pet-roam2.js 照模式寫在 <html> 上(CFG.sizes:App、1023 以下 96×102,App 手機橫放 64×68,電腦版到處走照視窗寬:1440 以上 110×116、1344 以上 94×99、1328 以上 86×91、1312 以上 78×83、1296 以上 70×74、其他 62×66;Bonnie 10/23 約 2 倍),這裡是 js 寫之前的預設。
-   --pet2-tw、--pet2-th 是可以點的範圍(CFG.tap):只有畫出來的小雞那麼大,框上面留給跳起來的那一條透明的地方點得到底下的卡片(審查第 2 輪 #3) */
+/* 小雞的寬和框高:js/pet-roam2.js 照模式寫在 <html> 上(CFG.sizes:App、1023 以下 96×102,App 手機橫放 64×68,電腦版到處走照視窗寬:1440 以上 110×116、1344 以上 94×99、1328 以上 86×91、1312 以上 78×83、1296 以上 70×74、其他 62×66),這裡是 js 寫之前的預設。
+   --pet2-tw、--pet2-th 是可以點的範圍(CFG.tap):只有畫出來的小雞那麼大,框上面留給跳起來的那一條透明的地方點得到底下的卡片 */
 html.pet-roam2 { --pet2-w: 96px; --pet2-h: 102px; --pet2-tw: 69px; --pet2-th: 71px; }
 div.pet-roam2 { display: block; left: 0; right: 0; pointer-events: none; }
 div.pet-roam2[hidden], div.pet-roam2.is-off { display: none !important; }
@@ -2753,7 +2753,7 @@ html.app-shell div.pet-roam2 { display: none; }
   html.app-shell.has-tabbar div.pet-roam2 { display: block; padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left); }
   html.app-shell.has-tabbar div.pet-roam2.is-ground { bottom: calc(var(--app-tab-h) + env(safe-area-inset-bottom)); }
   html.app-shell.app-kb div.pet-roam2 { display: none; }
-  /* 規格 1.2:「我的」那一區不再藏起來(只藏首頁那張),當餵食和走動開關的固定入口 */
+  /* 「我的」那一區不再藏起來(只藏首頁那張),當餵食和走動開關的固定入口 */
   html.app-shell.has-tabbar.pet-roam2 .pet-card.pet-me:not([hidden]) { display: grid; }
   /* 分頁列那一套頁面底部留白、橫放時文章框扣掉的高度(--pet-h,第一階段 51 px)改成走動那隻的高度,最後的內容捲得到小雞上面 */
   html.app-shell.pet-roam2 { --pet-h: var(--pet2-h); }
@@ -2767,7 +2767,7 @@ html.app-shell div.pet-roam2 { display: none; }
 .pet-roam2-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 /* 飛行中、捲動中(停下 150 毫秒內)、別處按著手指時:點擊穿過小雞,落到底下的東西 */
 div.pet-roam2.is-fly .pet-roam2-btn, div.pet-roam2.is-scroll .pet-roam2-btn, div.pet-roam2.is-pass .pet-roam2-btn { pointer-events: none; }
-/* 電腦版到處走(規格 1.11):走、跳、飛的時候點擊穿過,停著才點得到 */
+/* 電腦版到處走:走、跳、飛的時候點擊穿過,停著才點得到 */
 div.pet-roam2.is-move .pet-roam2-btn { pointer-events: none; }
 /* 有小雞的卡片在畫面上:原地淡出 0.2 秒 */
 div.pet-roam2.is-faded .pet-roam2-btn { opacity: 0; pointer-events: none; }
@@ -2779,7 +2779,7 @@ div.pet-roam2.is-init .pet-roam2-btn { opacity: 0; pointer-events: none; transit
 .pet-roam2-btn.is-perch { margin-top: -8px; }
 .pet-roam2-cv { position: absolute; left: calc((var(--pet2-tw) - var(--pet2-w)) / 2); top: calc(var(--pet2-th) - var(--pet2-h)); display: block; pointer-events: none; transform-origin: 50% 80%; }
 .pet-roam2-btn.is-perch .pet-roam2-cv { top: calc(8px + var(--pet2-th) - var(--pet2-h)); }
-/* 電腦版到處走(規格 1.11,寬 1024 以上的網站模式,js 加 html.pet-roam2-wide):畫面上只留走動的那隻。
+/* 電腦版到處走(寬 1024 以上的網站模式,js 加 html.pet-roam2-wide):畫面上只留走動的那隻。
    首頁卡片、「我的」那一區的小雞藏起來(位置留著,版面不跳),畫一個空的窩;名字、今天的進度、餵食按鈕照舊,點窩一樣打開面板。
    藏著的小雞由 js/pet-ui.js 停住不畫;列印時卡片的小雞照常印出來(下面的 @media print,pet-ui.js 在 beforeprint 先畫一格) */
 html.pet-roam2.pet-roam2-wide .pet-card .pet-cv { visibility: hidden; }
@@ -2820,14 +2820,14 @@ html.pet-roam2.pet-roam2-wide .pet-card .pet-pic {
 .pet-tile-cv { display: block; width: 40px; height: 40px; margin-bottom: 4px; pointer-events: none; }
 .pet-tile-n { font: 700 13.5px/1.3 var(--round); white-space: nowrap; }
 .pet-tile-c { font-size: 12.5px; color: var(--ink-light); text-align: center; font-variant-numeric: tabular-nums; }
-/* 存滿時「滿了」自己一行(跟預覽的 .ff 一樣),5 欄的窄格子裡不會只剩一個字換行 */
+/* 存滿時「滿了」自己一行,5 欄的窄格子裡不會只剩一個字換行 */
 .pet-tile-f { font-size: 11.5px; color: var(--ink-light); text-align: center; white-space: nowrap; }
 .pet-tile-f:empty { display: none; }
 .pet-tile:not([aria-disabled="true"]):hover { background: #fff; border-color: var(--line); }
 .pet-tile:not([aria-disabled="true"]):active { transform: scale(.95); }
 .pet-tile:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 .pet-tile[aria-disabled="true"] { cursor: default; }
-/* 0 份淡;今天的點心餵過了淡一點(比 0 份淡得少);今天還沒練習照平常的樣子(規格 3.3) */
+/* 0 份淡;今天的點心餵過了淡一點(比 0 份淡得少);今天還沒練習照平常的樣子 */
 .pet-tile.is-empty .pet-tile-cv { opacity: .32; }
 .pet-tile.is-empty .pet-tile-n, .pet-tile.is-empty .pet-tile-c { color: #a3abb3; }
 .pet-tile.is-done .pet-tile-cv { opacity: .6; }
@@ -2858,7 +2858,7 @@ html.pet-roam2.pet-roam2-wide .pet-card .pet-pic {
 .pet-switch[aria-checked="true"]::after { transform: translateX(20px); }
 .pet-switch[aria-disabled="true"] { opacity: .6; cursor: default; }
 .pet-switch:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-/* 橫放(高度 500 以下):舞台 96 px,小雞在左、托盤在右(規格 3.2) */
+/* 橫放(高度 500 以下):舞台 96 px,小雞在左、托盤在右 */
 @media (orientation: landscape) and (max-height: 500px) {
   .pet-sheet:has(> .pet-stage) { display: grid; grid-template-columns: 150px minmax(0, 1fr); column-gap: 16px; align-content: start; max-width: 720px; }
   .pet-sheet:has(> .pet-stage) > * { grid-column: 1 / -1; }

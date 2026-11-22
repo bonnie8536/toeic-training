@@ -48,7 +48,7 @@
   function isNoActive(err) { return !!err && (err.code === '42703' || /column .*active.* does not exist/i.test(String(err.message || ''))); }
 
   /* write(新增班級、換邀請碼、停用、移除學生):送出時用的是這台現在的登入資料,別的分頁登出、換了帳號(這一頁沒重載)就不送,
-     開「這個帳號已經在別的分頁登出」卡(js/profile.js;審查 D) */
+     開「這個帳號已經在別的分頁登出」卡(js/profile.js) */
   async function session(write) {
     const C = window.CLOUD;
     if (!C || !C.enabled) return { message: '這個網站沒有開雲端帳號。' };
@@ -173,7 +173,7 @@
     return n && n.y === p.y ? p.m + ' 月 ' + p.d + ' 日' : fmtDate(iso);
   }
 
-  /* 方案與名額那一列(前端計畫八.1)。o = { paidUi, used:班級區算出來的已用人數(有就用它,移除後馬上更新) }
+  /* 方案與名額那一列。o = { paidUi, used:班級區算出來的已用人數(有就用它,移除後馬上更新) }
      回 null(不顯示)或 { kind, chips, lines, full, trial } */
   function planInfo(a, o) {
     if (!o || o.paidUi !== true || !isObj(a) || a.is_owner === true) return null;

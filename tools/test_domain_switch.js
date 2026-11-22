@@ -1,4 +1,4 @@
-/* 切換日與換信箱之後,付款與網域的測試照樣要過(搬家計畫 7.2;步驟_Supabase.md 第二、三節部署前要跑)。
+/* 切換日與換信箱之後,付款與網域的測試照樣要過。
    把這個資料夾複製一份(不含 audio、img、.git 與 .tmp_ 開頭的暫存資料夾),在複本裡做切換的那個 commit 會做的事:
    tools/domain.json 的 live 改成 new、填 switchDate、mail 換成一個假的信箱,跑 apply_domain.js,
    再跑 tools/test_newebpay.js、tools/test_checkout.js、tools/test_domain.js,都要過。複本跑完就刪,這個資料夾一個檔都不改。

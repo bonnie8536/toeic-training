@@ -57,7 +57,7 @@
   }
 
   /* ---------- 自訂題庫 ----------
-     多台裝置同步(同步合併設計 3.6、3.7.4):每次寫入前重新讀本機那一份,用 js/sync-merge.js 的函式改(蓋 _r、_t、_p 戳記),
+     多台裝置同步:每次寫入前重新讀本機那一份,用 js/sync-merge.js 的函式改(蓋 _r、_t、_p 戳記),
      不拿畫面打開時讀進來的舊陣列整份寫回(同一台兩個分頁,另一個分頁剛存的文章題庫才不會被蓋掉)。
      刪題庫、刪字先存刪除標記(sync_del,只有雲端帳號才寫)再存題庫:中途被關掉只會多留,不會少。
      頁面沒載到 sync-merge.js(不該發生)時照舊直接改,不蓋戳記。 */
@@ -125,7 +125,7 @@
   const canKeep = () => typeof canKeepProgress !== 'function' || canKeepProgress();
   /* 題庫編輯器、遊戲裡的作答沒有 data-gate(進來的那一下「新增題庫」「編輯」「開始」才有)。進來之後才因為帳號那一邊存不進去
      (別的分頁登出、換帳號,或這台的帳號資料夾還沒從雲端灌好、這一頁要重新整理):這一下不生效,開「重新整理」卡
-     (js/common.js holdForAccount,跟每日練習一樣;多分頁第 3 輪審查 #2)。以前 store.set 靜靜不寫,畫面卻寫「加入 3 個」、清空輸入框、照樣對答案。
+     (js/common.js holdForAccount,跟每日練習一樣)。以前 store.set 靜靜不寫,畫面卻寫「加入 3 個」、清空輸入框、照樣對答案。
      舊版 common.js 沒有這個函式就照舊。回 true = 擋下了 */
   const held = el => typeof holdForAccount === 'function' && holdForAccount(el);
   let pageSrc = null;   // 還沒登入時「練哪些字」的選擇(不存,格式跟 vgame_src 一樣)
@@ -600,7 +600,7 @@
             class: 'bank-word-del', type: 'button', title: '刪除這個字',
             onclick: e => { if (held(e.currentTarget) || !persist()) return; removeWord(id, w); drawList(); },
           }, '✕'),
-          /* 兩台同時改了這個字的中文:沒當主要的那個放在 alt(同步合併設計 3.7.3),可以換成它或刪掉 */
+          /* 兩台同時改了這個字的中文:沒當主要的那個放在 alt,可以換成它或刪掉 */
           alt.map(a => h('div', { class: 'bank-word-alt' },
             h('span', null, '另一台寫的：' + a),
             h('button', { class: 'pop-mini', type: 'button', onclick: e => { if (held(e.currentTarget)) return; editWord(id, w, { zh: a, alt: alt.filter(x => x !== a) }); drawList(); } }, '換成這個'),
@@ -791,7 +791,7 @@
       }
       const H = field.clientHeight;
       /* 字掉到底時存不進去(別的分頁登出、換帳號、帳號資料夾還沒灌好;held 開「重新整理」卡):先暫停,這個字留在底下、不扣命。
-         以前照樣扣命、漏接靜靜不存,最後寫「沒命了，分數 N（新紀錄）」其實什麼都沒存(審查 D 第 1 輪 #5) */
+         以前照樣扣命、漏接靜靜不存,最後寫「沒命了，分數 N（新紀錄）」其實什麼都沒存 */
       let stall = false;
       blocks = blocks.filter(b => {
         if (over) return false;
@@ -829,7 +829,7 @@
       /* 中文輸入法選字中的 Enter 不算送出 */
       if (e.isComposing || e.keyCode === 229) return;
       if (e.key !== 'Enter' || !running || over) return;
-      /* 擋下時先暫停,打的字留著。preventDefault:卡片一開焦點就移走,不取消的話同一下 Enter 的 keypress 會落到卡片上按下去(審查 D 第 1 輪 #4) */
+      /* 擋下時先暫停,打的字留著。preventDefault:卡片一開焦點就移走,不取消的話同一下 Enter 的 keypress 會落到卡片上按下去 */
       if (held(input)) { e.preventDefault(); togglePause(); return; }
       const raw = input.value.trim();
       const val = norm(raw);
@@ -1263,7 +1263,7 @@
                 b.classList.add(bi === ai ? 'correct' : bi === oi ? 'wrong' : 'plain');
               });
               const isLast = cur === order.length - 1;
-              /* 「看成績」要存最佳紀錄:答完最後一題才擋下的話,跳卡、不出成績(以前照樣寫「（新紀錄）」卻沒存;審查 D 第 1 輪 #5) */
+              /* 「看成績」要存最佳紀錄:答完最後一題才擋下的話,跳卡、不出成績(以前照樣寫「（新紀錄）」卻沒存) */
               after.append(h('div', { class: 'vg-next-row' },
                 h('button', { class: 'btn primary', type: 'button', onclick: e2 => { if (!isLast) { cur++; draw(); } else if (!held(e2.currentTarget)) summary(); } },
                   isLast ? '看成績' : '下一題')));

@@ -20,8 +20,8 @@
        --only      只產 favicon 系列(favicon.ico、favicon-*.png、favicon.svg)或只產 App 系列(icon-*.png)
        --out       寫到別的資料夾試跑,不動網站
        --tmp       Chrome 暫存資料放哪(預設系統暫存)
-   例:換正式 logo(三張 SVG 在 logo 定稿資料夾)
-     node tools/build_icons.js <定稿>/favicon.svg --app <定稿>/app_icon.svg --maskable <定稿>/app_icon_maskable.svg --tmp D:/tmp
+   例:換正式 logo
+     node tools/build_icons.js <logo資料夾>/favicon.svg --app <logo資料夾>/app_icon.svg --maskable <logo資料夾>/app_icon_maskable.svg --tmp <暫存資料夾>
    換完跑 node tools/test_seo.js;PNG、ICO 不算網頁檔案,sw.js 的 V 不用換(圖片是先給快取、背景更新)。 */
 'use strict';
 const fs = require('fs');

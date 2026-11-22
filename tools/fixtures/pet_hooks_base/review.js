@@ -6,7 +6,7 @@
   const T = window.TOEIC || {};
   const LD = T.listening || {};
 
-  /* Part 5、聽力 1/2 的錯題跟題組錯題數用 js/wrongbook.js 算(含模擬考答錯的題,錯題本定稿 2026-11-18);沒載到就照以前只看刷題紀錄 */
+  /* Part 5、聽力 1/2 的錯題跟題組錯題數用 js/wrongbook.js 算(含模擬考答錯的題);沒載到就照以前只看刷題紀錄 */
   const WB = window.WRONGBOOK || null;
   function collect() {
     if (WB) {
@@ -152,7 +152,7 @@
       if (by > 0) window.scrollBy({ top: by, behavior: 'smooth' });
     }
 
-    /* c:這一下選的選項。題目可能是模擬考答錯才在錯題本(mock_wrong;錯題本定稿 1.6):
+    /* c:這一下選的選項。題目可能是模擬考答錯才在錯題本(mock_wrong):
        答對:刷題紀錄那筆是答錯的就照舊刪掉(答對過的紀錄不刪,已作答數不能少);mock_wrong 那筆是答錯的,寫一筆比較新的已訂正記號
        (不然刪掉刷題紀錄後模擬考那筆會冒回來)。
        答錯:刷題紀錄那筆是答錯的就照舊把時間改成現在;刷題紀錄沒有這題、或那筆是答對的(之後模擬考答錯才進錯題本),

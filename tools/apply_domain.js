@@ -1,4 +1,4 @@
-/* 網站現在掛在哪個網域,只看 tools/domain.json 這一個開關(搬家計畫 1.4、7.1 第 2 項、7.2 第 3 項)。
+/* 網站現在掛在哪個網域,只看 tools/domain.json 這一個開關。
    live 是 'old' 時,整個網站照舊部署在 www.shuashualanguage.com;切換那一個 commit 只做兩件事:
    把 live 改成 'new'(switchDate 填切換日),再跑 node tools/apply_domain.js,一起改掉:
      CNAME、每一頁的 canonical、og:url、og:image、首頁結構化資料的網址、頁面文字裡的「www.<網域>」、sitemap.xml 的網址、

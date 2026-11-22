@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_by": "D:/claudecode/刷刷英文開發/收費/pgl/owner_contract.mjs",
+    "generated_by": "owner_contract.mjs",
     "generated_at": "2026-10-17T02:55:23.826Z",
     "migration_md5": "7630acc95815b2ea469787778f5dbde7",
     "note": "本機 PGlite 記憶體資料庫的回傳,全部是假資料。每一項:fn、as(呼叫者)、args(跟 client.rpc 傳的具名參數一樣)、expect、ok,成功放 data(rpc 的 data),失敗放 error(仿 supabase-js:message、code)。seed: true 是建世界時的呼叫。四個世界各自從頭建:主世界(大部分)、demote(owner_set_role.demote_paid_teacher 開始的四項)、new_class(promote_new_class 與 seats_full)、request_key(owner_grant_comp.with_key、.duplicate,owner_adjust_credits.with_key、.duplicate,owner_overview.renewed_not_expiring)。",

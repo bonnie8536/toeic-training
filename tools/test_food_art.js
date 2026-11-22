@@ -1,4 +1,4 @@
-/* 塗鴉食物(js/food-art.js)的測試:小雞第二階段規格 3.3、4.2、附錄 A.9,實作契約第 4.2 節。
+/* 塗鴉食物(js/food-art.js)的測試。
    用法:node tools/test_food_art.js
    - 第一部分在 Node 裡跑,用假的 canvas 記下每一個繪圖呼叫:9 種的順序和名字、每種至少 3 張不同的抖動、
      同樣參數畫兩次一模一樣、托盤用的 render 一張就好、mount 不抖時不開計時器、bite() 吃完只呼叫一次 onDone。
@@ -14,7 +14,7 @@ const { spawn } = require('child_process');
 const REPO = path.join(__dirname, '..');
 const read = (f) => fs.readFileSync(path.join(REPO, f), 'utf8');
 const FOOD_SRC = fs.existsSync(path.join(REPO, 'js/food-art.js')) ? read('js/food-art.js') : '';
-/* 契約第 2.1 節的 PET.FOODS(托盤順序);js/pet.js 有 PET.FOODS 時改用它 */
+/* 約定好的 PET.FOODS(托盤順序);js/pet.js 有 PET.FOODS 時改用它 */
 const CONTRACT_FOODS = [['grain', '飼料'], ['corn', '玉米'], ['greens', '青江菜'], ['pea', '豌豆'], ['berry', '藍莓'],
   ['tomato', '小番茄'], ['melon', '西瓜'], ['yam', '地瓜'], ['worm', '麵包蟲']];
 
@@ -58,7 +58,7 @@ const logOf = (c) => c.log.join('\n');
 const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const drawsOf = (c) => c.log.filter((l) => l.startsWith('drawImage(')).length;
 
-/* PET.FOODS:data 那邊寫好以後用真的,還沒寫好就對契約 */
+/* PET.FOODS:data 那邊寫好以後用真的,還沒寫好就對約定好的清單 */
 function petFoods() {
   try {
     const g = {};
@@ -66,7 +66,7 @@ function petFoods() {
     vm.runInContext(read('js/pet.js'), g, { filename: 'pet.js' });
     const P = g.PET;
     if (P && Array.isArray(P.FOODS)) return { from: 'js/pet.js', list: P.FOODS.map((f) => [f.id, f.name]), foodName: P.foodName };
-  } catch (e) { /* 讀不到就對契約 */ }
+  } catch (e) { /* 讀不到就對約定好的清單 */ }
   return { from: '契約第 2.1 節(js/pet.js 還沒有 PET.FOODS)', list: CONTRACT_FOODS, foodName: null };
 }
 

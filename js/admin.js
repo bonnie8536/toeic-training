@@ -2,7 +2,7 @@
    資料權限由 Supabase RLS 控管——只有 teachers 表裡的帳號查得到全部學生的列。 */
 (function () {
   /* 最近一次讀到的原始列,給「下載備份」用。Supabase 免費版沒有任何自動備份,
-     所以這是她唯一的還原來源——動資料庫之前先按一次。 */
+     所以這是站長唯一的還原來源——動資料庫之前先按一次。 */
   let allRows = [];
   const root = $('#admin-root');
 
@@ -19,7 +19,7 @@
   /* 收費畫面(js/plans-config.js 的 PAID_UI)打開才看使用權;沒開時跟以前一模一樣 */
   const PAID = window.PAID_UI === true;
   const AC = window.ADMIN_CLASSES || null;   // js/admin-classes.js:班級區、方案那一列
-  /* js/admin-owner-*.js:收費管理(前端計畫九),只有收費畫面打開、而且 my_access 說是站長才掛上;
+  /* js/admin-owner-*.js:收費管理,只有收費畫面打開、而且 my_access 說是站長才掛上;
      重新整理學生資料時留著同一個(篩選、頁數不會跑掉) */
   const OW = window.ADMIN_OWNER || null;
   let ownerArea = null;
@@ -146,7 +146,7 @@
 
   /* ---------- 教師紀錄(存在教師自己的資料列,學生看不到) ---------- */
   async function saveNote(uid, obj, statusEl) {
-    /* 存進「這台現在登入的帳號」那一列:別的分頁登出、換了帳號(這一頁沒重載)就不送(審查 D) */
+    /* 存進「這台現在登入的帳號」那一列:別的分頁登出、換了帳號(這一頁沒重載)就不送 */
     const gone = typeof CLOUD.accountCheck === 'function' ? CLOUD.accountCheck() : '';
     if (gone) {
       statusEl.textContent = gone;
@@ -330,7 +330,7 @@
 
     /* 本週動態:近 7 天各學生動過哪些區域。
        mock_wrong(模擬考答錯的題):錯題本答對只在模擬考錯題裡的題時只寫這個鍵(js/review.js),這週只做了這種複習的學生也要列出,
-       不然學生表的「最近活動」是今天、這裡卻沒有他(審查 2026-11-19 #4)。模擬考交卷也會寫它,同一週有「模擬考」就不多標「模擬考錯題」 */
+       不然學生表的「最近活動」是今天、這裡卻沒有他。模擬考交卷也會寫它,同一週有「模擬考」就不多標「模擬考錯題」 */
     const AREA = [
       [/^drill_p/, '刷題'], [/^listen_p/, '聽力刷題'], [/^grammar_done/, '文法'], [/^phonics_done/, '自然發音'],
       [/^(vocab_|vgame_|phrase_)/, '單字片語'], [/^writing_/, '寫作'],
@@ -435,7 +435,7 @@
       box.append(h('p', { style: 'font-size:14px;color:var(--ink-light);margin-bottom:8px' }, name + ' 還沒做程度檢測。'));
     }
 
-    /* 錯題清單:有 js/wrongbook.js 就用它算(學生的刷題紀錄加模擬考答錯的題 mock_wrong,錯題本定稿 2026-11-18),
+    /* 錯題清單:有 js/wrongbook.js 就用它算(學生的刷題紀錄加模擬考答錯的題 mock_wrong,2026-11-18),
        模擬考來的在描述後面加「(模擬考)」;已作答、正確率(drillStats)不變 */
     const wrongLine = (label, d, describe) => {
       let ids = d.wrong, mock = new Set();

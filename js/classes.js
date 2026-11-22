@@ -42,7 +42,7 @@
   }
 
   /* 可以呼叫雲端:回 { client, user };不行就回 { message }。
-     write(加入、退出):送出時用的是這台現在的登入資料,別的分頁登出、換了帳號(這一頁沒重載)就不送,回 { message, gone: true }(審查 D) */
+     write(加入、退出):送出時用的是這台現在的登入資料,別的分頁登出、換了帳號(這一頁沒重載)就不送,回 { message, gone: true } */
   async function session(write) {
     const C = window.CLOUD;
     if (!C || !C.enabled) return { message: '這個網站沒有開雲端帳號' };
@@ -297,8 +297,8 @@
       closeBtn.disabled = false;
       submit.textContent = '加入';
       if (!r.ok) {
-        /* 按加入的時候別的分頁登出、換了帳號(r.gone,審查 D):跟其他送不出去的一樣,那句話寫在表單的訊息行,視窗不關、碼留在框裡,
-           登回原本的帳號再按一次就送得出去(以前關掉視窗再開卡,打好的碼、邀請連結帶來的碼都丟了;審查 D 第 2 輪 #3) */
+        /* 按加入的時候別的分頁登出、換了帳號(r.gone):跟其他送不出去的一樣,那句話寫在表單的訊息行,視窗不關、碼留在框裡,
+           登回原本的帳號再按一次就送得出去(以前關掉視窗再開卡,打好的碼、邀請連結帶來的碼都丟了) */
         if (r.field) bad(r.message); else fail(r.message);
         input.focus();
         return;

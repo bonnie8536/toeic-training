@@ -1,4 +1,4 @@
-/* 同一個帳號多台裝置:自訂題庫(vgame_banks)、刪除標記(sync_del)、模擬考紀錄(mock_history)、模擬考錯題(mock_wrong,31–34)先合併再上傳(同步合併設計 3.2–3.6、5.2)。
+/* 同一個帳號多台裝置:自訂題庫(vgame_banks)、刪除標記(sync_del)、模擬考紀錄(mock_history)、模擬考錯題(mock_wrong,31–34)先合併再上傳。
    用法:node tools/test_sync_union.js
    假的 Supabase 與多台裝置在 tools/sync_harness.js;頁面載入真的 js/sync-merge.js 與 js/cloud.js。
    「舊版頁面」用 tools/fixtures/cloud_sync_base.js(main 4c823ec 的 cloud.js,沒有合併表)。
@@ -355,7 +355,7 @@ const scenarios = {
     const kept = !!(t && t.vgame_banks && t.vgame_banks.w[A] && t.vgame_banks.w[A].kiwi);
     return { ok: kept && 'vgame_banks' in ledgerOf(pc) && has(banksOf(pc), A, 'cherry'), detail: '本機 kiwi 標記還在 ' + kept + ' / 帳本 ' + J(Object.keys(ledgerOf(pc))) };
   },
-  '25. (r2 #1、#4)舊版頁面就地改名、取消勾選、改中文,新版那台沒動過那個題庫:開單字頁、灌資料、登出前對帳都不退回;舊版那台之後更新成新版也一樣': async () => {
+  '25. 舊版頁面就地改名、取消勾選、改中文,新版那台沒動過那個題庫:開單字頁、灌資料、登出前對帳都不退回;舊版那台之後更新成新版也一樣': async () => {
     const out = [];
     for (const legacy of [true, false]) for (const how of ['syncKey', 'hydrate', 'logout']) {
       const w = makeWorld(109);
@@ -385,7 +385,7 @@ const scenarios = {
     }
     return { ok: out.every(x => x.ok), detail: out.filter(x => !x.ok).map(x => x.d).join(' / ') || out.length + ' 種都留著' };
   },
-  '26. (r2 #3)開單字頁(syncKey)發現雲端少了、合併後上傳失敗:記進帳本;恢復連線自己補傳、離線登出會先問': async () => {
+  '26. 開單字頁(syncKey)發現雲端少了、合併後上傳失敗:記進帳本;恢復連線自己補傳、離線登出會先問': async () => {
     const out = [];
     for (const then of ['online', 'offlineLogout']) {
       const w = makeWorld(113);
@@ -432,7 +432,7 @@ const scenarios = {
     }
     return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
   },
-  '27. (r2 #8)只有帶刪除標記的寫入失敗:雲端的題庫那一列不會先變少(題庫和標記同一個 upsert,一起失敗);恢復後刪掉、標記也上雲、帳本清空': async () => {
+  '27. 只有帶刪除標記的寫入失敗:雲端的題庫那一列不會先變少(題庫和標記同一個 upsert,一起失敗);恢復後刪掉、標記也上雲、帳本清空': async () => {
     const { w, phone, A } = await twoDevices(127);
     const B = newBank(phone, '乙'); await phone.pg.runTimers();
     phone.writeFail = keys => keys.indexOf('sync_del') >= 0;
@@ -446,7 +446,7 @@ const scenarios = {
     const done = !ids(c2).includes(A) && ids(c2).includes(B) && !!(t2 && t2.vgame_banks.b[A]) && !Object.keys(ledgerOf(phone)).length;
     return { ok: held && done, detail: '失敗時雲端 ' + J(ids(c1)) + ' 帳本 ' + J(led) + ' / 恢復後雲端 ' + J(ids(c2)) + ' 標記有A ' + !!(t2 && t2.vgame_banks.b[A]) + ' 帳本 ' + J(Object.keys(ledgerOf(phone))) };
   },
-  '28. (r3 #3)小雞開關關著時只寫本機的 pet(只有「只在本機」標記),登出時讀得到雲端、上傳失敗:跟 main 一樣只送一次讀和一次寫,帳本不記 pet,之後 online/關頁也不補傳 pet': async () => {
+  '28. 小雞開關關著時只寫本機的 pet(只有「只在本機」標記),登出時讀得到雲端、上傳失敗:跟 main 一樣只送一次讀和一次寫,帳本不記 pet,之後 online/關頁也不補傳 pet': async () => {
     const P = items => ({ v: 1, items });
     const fakePet = () => ({ cloudMerge(a, b) {
       const ok = x => !!x && typeof x === 'object' && !Array.isArray(x);
@@ -478,7 +478,7 @@ const scenarios = {
     const ok = J(atLogout) === J(['read', 'write@' + markAt]) && led.indexOf('pet') < 0 && !after.length && dev.confirms.length === 1;
     return { ok, detail: '登出時 pet 的請求 ' + J(atLogout) + ' / 帳本 ' + J(led) + ' / 之後 ' + J(after) + ' / 問了 ' + dev.confirms.length + ' 次' };
   },
-  '29. (r3b #1)新版那台在同一個題庫改了別的字(或加字)並上傳、之後舊版頁面就地改名整份上傳:新版開單字頁、隔天重開都留舊版的改名,舊版那台重開也是;新版改的字也在': async () => {
+  '29. 新版那台在同一個題庫改了別的字(或加字)並上傳、之後舊版頁面就地改名整份上傳:新版開單字頁、隔天重開都留舊版的改名,舊版那台重開也是;新版改的字也在': async () => {
     const out = [];
     for (const how of ['改字', '加字']) for (const when of ['syncKey', 'hydrate']) {
       const w = makeWorld(7);
@@ -507,7 +507,7 @@ const scenarios = {
     }
     return { ok: out.every(x => x.ok), detail: out.filter(x => !x.ok).map(x => x.d).join(' / ') || out.length + ' 種都留著' };
   },
-  '30. (r3b #3)在新版刪掉的文章題庫、改過再刪的字,之後在舊版頁面重新「單字存入題庫」(main 的寫法,內容跟以前一模一樣):留著,不會被刪除標記再刪一次': async () => {
+  '30. 在新版刪掉的文章題庫、改過再刪的字,之後在舊版頁面重新「單字存入題庫」(main 的寫法,內容跟以前一模一樣):留著,不會被刪除標記再刪一次': async () => {
     const VOCAB = [['gate', '登機門'], ['board', '登機']];
     const oldImport = arr => {                                     // main 的 importVocabToBank:讀本機、就地改、整份寫回
       let b = arr.find(x => x.id === 'art_x1');
@@ -598,11 +598,11 @@ const scenarios = {
     const ok = got && untouched && keys === 'l1-01,p5-a,p6-y:2';
     return { ok, detail: '舊版灌下 ' + got + ' / 舊版沒動雲端 ' + untouched + ' / 雲端 ' + keys };
   },
-  /* 審查 2026-11-19 #1:同一台還開著部署前的舊版分頁(舊版 cloud.js 的合併表沒有 mock_wrong,帳本上有就整份上傳,不讀雲端、不合併)。
+  /* 同一台還開著部署前的舊版分頁(舊版 cloud.js 的合併表沒有 mock_wrong,帳本上有就整份上傳,不讀雲端、不合併)。
      學校電腦考完上傳、登出(本機刪掉),之後家裡新版的模擬考頁開頁先對齊(js/mock.js 呼叫 CLOUD.syncKey('mock_wrong')),
      離線交卷、恢復連線兩個分頁同時補傳(誰先都一樣),或連線中交卷後馬上關掉舊分頁(pagehide 搶在新版 0.8 秒的上傳之前):學校那兩題都還在。
      沒先對齊時本機沒有學校那兩題,舊分頁整份傳上去就只剩家裡那一題(cloud.js 已知限制 8 寫的剩下那段:對齊之後、交卷之前別台才傳的) */
-  '34. (審查 2026-11-19 #1)同一台還開著部署前的舊版分頁:新版模擬考頁開頁先對齊,離線交卷後兩個分頁一起恢復連線(兩種先後)、或交卷後馬上關掉舊分頁,別台已經登出的錯題都還在雲端': async () => {
+  '34. 同一台還開著部署前的舊版分頁:新版模擬考頁開頁先對齊,離線交卷後兩個分頁一起恢復連線(兩種先後)、或交卷後馬上關掉舊分頁,別台已經登出的錯題都還在雲端': async () => {
     const out = [];
     for (const how of ['舊分頁先', '新分頁先', '關掉舊分頁']) {
       const w = makeWorld(171);

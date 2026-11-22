@@ -168,7 +168,7 @@
         return;
       }
       /* 問的時候別的分頁登出、帳號資料夾變成還沒灌過:不交卷、不畫報告,開「重新整理」卡,答過的留著
-         (跟刷題頁的交卷一樣;以前照樣畫出報告,其實沒存,審查 D 第 3 輪 #3) */
+         (跟刷題頁的交卷一樣;以前照樣畫出報告,其實沒存) */
       if (typeof holdForAccount === 'function' && holdForAccount(opener)) return;
       st.done = true;
       st.finishedAt = new Date().toISOString();

@@ -3836,6 +3836,9 @@ html.vb-quizzing .gx-col { margin-inline: auto; }
 .tile-grid.wr-tiles { grid-template-columns: 1fr; }
 @media (min-width: 600px) { .tile-grid.wr-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .module-card.tile.ear-tile.is-off:hover { border-color: var(--line); transform: none; }
+/* 入口磚的圖示(聽力四個入口、寫作三個級別共用):跟單字玩法磚一樣放在名稱上方,52px;圖沒載到時不留空位 */
+.ear-art { display: block; flex: none; width: 52px; height: 52px; margin: 0 0 10px; }
+html:not(.doodle-ready) .ear-art { display: none !important; }
 
 /* 聽力訓練作答(專心模式) */
 html.is-quiz #ear-root .drill-top { margin: 14px 0 0; }
@@ -3857,6 +3860,14 @@ html.is-quiz #ear-root .write-area { font-size: 16px; min-height: 96px; }
 
 /* ==== 閱讀、對話、寫作 ==== */
 
+/* 寫作首頁三個級別:手機一欄時圖示放左邊(名稱、單元數在右),磚不會因為圖示變高 */
+@media (max-width: 599px) {
+  .wr-tiles .module-card.tile.ear-tile { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "art name" "art num" "bar bar"; column-gap: 14px; align-items: center; min-height: 0; }
+  .wr-tiles .ear-art { grid-area: art; margin: 0; }
+  .wr-tiles .ear-tile h2 { grid-area: name; align-self: end; }
+  .wr-tiles .module-card.tile.ear-tile p { grid-area: num; align-self: start; margin: 2px 0 0; }
+  .wr-tiles .ear-bar { grid-area: bar; margin-top: 12px; }
+}
 .result-card.tq-result { font-size: inherit; font-weight: inherit; }
 .tq-submit { align-items: center; }
 .tq-left { font-size: var(--fs-sm); color: var(--ink-soft); }

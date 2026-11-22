@@ -56,6 +56,7 @@
   }
 
   const LEVEL_NAME = { l1: '第一級 句子力', l2: '第二級 Email 力', l3: '第三級 論述力' };
+  const LEVEL_ART = { l1: 'sentence', l2: 'plane', l3: 'idea' };   // 首頁級別磚的圖示(js/doodle-art-more.js)
   const LEVEL_WHAT = { l1: '句子重組與造句', l2: 'Email 回信', l3: '短文論述' };
   const TYPE_BADGE = { lesson: ['技巧課', 'level-mid'], s: ['重組', 'level-basic'], b: ['造句', 'level-basic'], e: ['Email', 'level-adv'], y: ['論述', 'level-high'] };
 
@@ -93,6 +94,7 @@
         const done = units.filter(unitDone).length;
         const pct = Math.round(done / units.length * 100);
         return h('a', { class: 'module-card tile part-card ear-tile', href: 'writing.html?level=' + k },
+          h('canvas', { class: 'ear-art', 'data-doodle': LEVEL_ART[k], 'data-size': '52', 'aria-hidden': 'true' }),
           h('h2', null, LEVEL_NAME[k]),
           h('p', null, done + ' / ' + units.length + ' 個單元'),
           h('span', { class: 'ear-bar', 'aria-hidden': 'true' }, h('i', { style: 'width:' + pct + '%' })));

@@ -1,4 +1,4 @@
-/* 小雞的純計算測試(路線圖 1.2a,規格在 repo 外的 小雞規格.md 第 3、5、9 節)。
+/* 小雞的純計算測試。
    用法:node tools/test_pet.js
    js/pet.js 在沒有 store、document、localStorage 的沙盒裡載入,碰到就會丟錯,證明它不讀寫任何鍵。
    輸入一律先深度凍結,函式改到輸入(例如 hist)也會丟錯。
@@ -304,9 +304,9 @@ T['留 400 天:移出的達標天記進 oldMet,合併舊副本不重複計'] = (
   return { ok: s1.totalMet === 450 && s2.totalMet === 450 && s3.totalMet === 450 && Object.keys(merged.days).length <= 400 && merged.oldMet === 50,
            detail: JSON.stringify({ s1: s1.totalMet, s2: s2.totalMet, s3: s3.totalMet, days: Object.keys(merged.days).length, oldMet: merged.oldMet, oldBefore: merged.oldBefore }) };
 };
-/* chick2 第二輪修正 #2:以前 oldMet 與 oldBefore 成對取 oldBefore 較晚的那組。很久沒同步、還留著 400 天前練習日的那份,
+/* 以前 oldMet 與 oldBefore 成對取 oldBefore 較晚的那組。很久沒同步、還留著 400 天前練習日的那份,
    整理時自己移到今天的截止日,oldBefore 比雲端晚,雲端累積的 oldMet 整個被丟掉,成長階段倒退。現在 oldMet 只增不減 */
-T['chick2 第二輪修正 #2:很久沒同步的那份 oldBefore 比較晚、oldMet 比較小:合併後累積達標不倒退(cloudMerge、reconcile、merge 兩個方向)'] = () => {
+T['很久沒同步的那份 oldBefore 比較晚、oldMet 比較小:合併後累積達標不倒退(cloudMerge、reconcile、merge 兩個方向)'] = () => {
   const t = tp('2029-04-14 12:00:00');
   const cloud = freeze({ v: 1, born: '2026-10-11', goals: [], days: {}, met: [], oldMet: 30, oldBefore: '2028-03-06', fed: {}, name: '小黃', nameAt: 5 });
   const stale = freeze({ v: 1, born: '2026-10-11', days: { '2028-02-16': 1 } });
@@ -322,7 +322,7 @@ T['chick2 第二輪修正 #2:很久沒同步的那份 oldBefore 比較晚、oldM
 /* 只增不減的規則只在兩份對不上時跟 f18d208 不同:隨機 600 組 v1,合併後的累積達標不少於任何一邊;
    跟 f18d208 不同的組,唯一的差別是 oldMet 比較大(第 1 步 v1 逐位元組相同的唯一例外:較早移出的那份記得的達標比較晚那份多,
    兩份對不上;f18d208 只取較晚那份,少算) */
-T['chick2 第二輪修正 #2:隨機 600 組 v1:合併後累積達標不少於任何一邊;跟 f18d208 不同的組只差在 oldMet 比較大'] = () => {
+T['隨機 600 組 v1:合併後累積達標不少於任何一邊;跟 f18d208 不同的組只差在 oldMet 比較大'] = () => {
   let seed = 12345;
   const rnd = n => { seed = (seed + 0x6D2B79F5) | 0; let x = Math.imul(seed ^ (seed >>> 15), 1 | seed); x ^= x + Math.imul(x ^ (x >>> 7), 61 | x); return ((x ^ (x >>> 14)) >>> 0) % n; };
   const today = '2029-04-14', t = now(today);
@@ -622,7 +622,7 @@ T['第 1 步相容版:不管拿到什麼,回傳要寫的那份(changed 或 remot
   }));
   return { ok: !bad.length, detail: bad.slice(0, 5).join(' | ') || 'ok' };
 };
-T['第 1 步:isNext 只認得剛好是 v2 的紀錄;v3、1.5、1e9 這些不認得的版本、v1 與壞掉的都不算(規格 5.3:不認得的版本跟現在一樣)'] = () => {
+T['第 1 步:isNext 只認得剛好是 v2 的紀錄;v3、1.5、1e9 這些不認得的版本、v1 與壞掉的都不算(不認得的版本跟現在一樣)'] = () => {
   const yes = [{ v: 2 }, v2Rec()].map(x => P.isNext(freeze(x)));
   const no = [null, undefined, {}, { v: 1 }, { v: 3 }, { v: 1.5 }, { v: 1e9 }, { v: Infinity }, { v: '2' }, { v: NaN }, [2], '亂碼', 2].map(x => P.isNext(x));
   return { ok: yes.every(x => x === true) && no.every(x => x === false) && !('isNewer' in P), detail: J(yes) + ' / ' + J(no) + ' / isNewer 還在=' + ('isNewer' in P) };
@@ -782,7 +782,7 @@ T['新版:壓縮時吃光的食物在 foodOld 還有數字(got 1、ate 1),托盤
   return { ok: c.foodOld && J(c.foodOld.got) === '{"melon":1,"pea":1}' && J(c.foodOld.ate) === '{"pea":1}' && !c.got && !c.ate && J(pan.order) === '["pea","melon"]' && pan.stock.pea === 0 && pan.stock.melon === 1,
            detail: J({ foodOld: c.foodOld, order: pan.order, stock: pan.stock }) };
 };
-/* 第三輪審查 #1:兩邊的 foodOld.before 不同時,不能整份丟掉 before 較早那邊的 left。
+/* 兩邊的 foodOld.before 不同時,不能整份丟掉 before 較早那邊的 left。
    雲端 3/10 壓縮了 10 張玉米(before 11/11);平板停在 11/6,手上 6 張。5/20 合併時雲端在截止日附近沒有券,before 還是 11/11,
    平板自己壓縮到 1/21。修之前取 before 較晚的那組:玉米剩 6,雲端被傳成 6,4 份永遠不見 */
 const staleTablet = () => {
@@ -813,7 +813,7 @@ T['新版:foodOld 的 before 不同(停用很久的平板):兩邊先壓縮到同
 T['新版:foodOld 的 before 不同、兩邊都吃過舊券:重新壓縮時算進兩邊的吃掉紀錄,兩口都算(10 張吃 2 口剩 8)'] = () => {
   const { cloud, tablet, T: t } = staleTablet();
   /* 雲端 2/1 吃了一張舊券;平板 11/2 吃了 11/2 那張(雲端壓縮時不知道)。以前只記剩幾張,平板那一口只能退回來(剩 9);
-     現在壓縮進去的券數和吃掉數分開記,平板那一份重新壓縮時把自己那一口算進吃掉數,取大後兩口都在(chick2 第二輪修正 #1) */
+     現在壓縮進去的券數和吃掉數分開記,平板那一份重新壓縮時把自己那一口算進吃掉數,取大後兩口都在 */
   const c2 = Object.assign({}, cloud, { ate: { '2027-02-01': { e1: 'old:2026-11-11:corn:0' } } });
   const t2 = Object.assign({}, tablet, { days: { '2026-11-02': 3 }, ate: { '2026-11-02': { e2: '2026-11-02/d' } } });
   const truth = 10 - 2;   // 10 張,雲端吃掉 1 張舊券、平板吃掉 11/2 那張
@@ -845,8 +845,8 @@ T['新版:foodOld 的 before 不同(隨機 300 組,沒有吃):合併後每種都
   }
   return { ok: !bad.length, detail: bad.slice(0, 5).join(' | ') || '300 組都對' };
 };
-/* chick2 第一輪修正 #1:foodOld 只記每種剩幾張,券一壓縮進去就認不出是哪幾張。一台手機的券超過 119 天沒同步,
-   另一份已經把同種的舊券壓縮成不少於它的數字時,合併逐種取大,這一張不會另外加上去(附錄 A.3、A.4 寫明的已知限制)。
+/* foodOld 只記每種剩幾張,券一壓縮進去就認不出是哪幾張。一台手機的券超過 119 天沒同步,
+   另一份已經把同種的舊券壓縮成不少於它的數字時,合併逐種取大,這一張不會另外加上去。
    取大是唯一不會越合併越多的做法(同一份跟自己合併要不變),所以這裡把行為釘住,並確認 pet.js 開頭照實寫出這個限制,
    不再寫沒有條件的「永遠不收回」 */
 T['新版:已知限制(券超過 119 天沒同步):另一份同種的舊券已壓縮成不少於它的數字時,合併取大、這張不另外加;兩個方向、cloudMerge 與 reconcile 都一樣,pet.js 開頭寫明'] = () => {
@@ -862,7 +862,7 @@ T['新版:已知限制(券超過 119 天沒同步):另一份同種的舊券已�
   return { ok: g(a) === 2 && g(b) === 2 && g(r) === 2 && J(a.foodOld) === fo && J(b.foodOld) === fo && doc,
            detail: J({ a: g(a), b: g(b), r: g(r), foodOld: a.foodOld, header: doc }) };
 };
-/* chick2 第二輪修正 #1、#4:吃掉的點心隔天又回來。挑券永遠先吃同種最舊的那張,正是隔天午夜要壓縮的那張。
+/* 吃掉的點心隔天又回來。挑券永遠先吃同種最舊的那張,正是隔天午夜要壓縮的那張。
    另一份(沒看到這一口)隔天自己壓縮到新的截止日,把它算成沒吃;以前兩邊壓縮後的 before 一樣,合併不再重算、逐種取大,
    沒看到這一口的那份贏。不需要任何一台離線,只要這一口還沒同步、另一台隔天先同步。
    現在 foodOld 分開記「壓縮進去幾張券」(got)和「其中吃掉幾張」(ate),兩個數字各自取大,剩的是兩個相減:
@@ -876,7 +876,7 @@ const eatBack = () => {
   const cloud = P.cloudMerge(freeze(ate.pet), freeze(cloudE), at(E)).v;
   return { at, E, E1, laptop: cloudE, cloud, ticket: ate.ticket };
 };
-T['chick2 第二輪修正 #1:手機吃了最舊的舊券並上傳,筆電(前一天同步過)隔天合併:吃掉的不回來;reconcile、cloudMerge、手機再合併都是 1'] = () => {
+T['手機吃了最舊的舊券並上傳,筆電(前一天同步過)隔天合併:吃掉的不回來;reconcile、cloudMerge、手機再合併都是 1'] = () => {
   const { at, E1, laptop, cloud, ticket } = eatBack();
   const s = p => P.pantry(freeze(p), at(E1)).stock.corn;
   const rc = P.reconcile({ local: freeze(laptop), remote: freeze(cloud), hist: [], now: at(E1) });
@@ -885,7 +885,7 @@ T['chick2 第二輪修正 #1:手機吃了最舊的舊券並上傳,筆電(前一�
   return { ok: /^old:/.test(ticket) && s(cloud) === 1 && s(rc.pet) === 1 && s(cm.v) === 1 && s(phone) === 1,
            detail: J({ ticket, cloud: s(cloud), reconcile: s(rc.pet), cloudMerge: s(cm.v), phone: s(phone), foodOld: rc.pet.foodOld }) };
 };
-T['chick2 第二輪修正 #1:吃的是還沒壓縮、隔天就壓縮的一般券:筆電隔天合併,吃掉的不回來'] = () => {
+T['吃的是還沒壓縮、隔天就壓縮的一般券:筆電隔天合併,吃掉的不回來'] = () => {
   const at = d => tp(d + ' 12:00:00');
   const G0 = '2026-11-02', E = addDays(G0, 119), E1 = addDays(E, 1);
   const R = { v: 2, born: '2026-11-01', days: { [E]: 8, [E1]: 8 }, got: { [G0]: { d: 'corn' }, '2026-12-01': { m: 'greens' } } };
@@ -897,7 +897,7 @@ T['chick2 第二輪修正 #1:吃的是還沒壓縮、隔天就壓縮的一般券
   return { ok: phone.ticket === G0 + '/d' && s(cloud, E1) === 0 && s(next, E1) === 0 && s(back, E1) === 0,
            detail: J({ ticket: phone.ticket, cloud: s(cloud, E1), next: s(next, E1), back: s(back, E1), foodOld: next.foodOld }) };
 };
-T['chick2 第二輪修正 #4:手機當天吃了、午夜前沒同步,隔天兩份各自整理後再合併(兩個方向):吃掉的不回來;舊券與一般券都一樣'] = () => {
+T['手機當天吃了、午夜前沒同步,隔天兩份各自整理後再合併(兩個方向):吃掉的不回來;舊券與一般券都一樣'] = () => {
   const out = [];
   const D = '2027-03-01', c0 = addDays(D, -119);
   const nowD = tp(D + ' 12:00:00'), nowD1 = tp(addDays(D, 1) + ' 12:00:00');
@@ -920,7 +920,7 @@ T['chick2 第二輪修正 #4:手機當天吃了、午夜前沒同步,隔天兩�
   }
   return { ok: out.every(x => x.ok), detail: out.map(x => x.d).join(' / ') };
 };
-T['chick2 第二輪修正 #1:模糊測試找到的三份:(a+b)+c 與 a+(b+c) 結果相同'] = () => {
+T['模糊測試找到的三份:(a+b)+c 與 a+(b+c) 結果相同'] = () => {
   const a = freeze({ v: 2, ate: { '2027-03-17': { e6: 'old:2027-01-27:tomato:2' } } });
   const b = freeze({ v: 2, foodOld: { before: '2027-01-27', left: { tomato: 3 } } });
   const c = freeze({ v: 2, ate: { '2027-01-18': { e29: 'old:2027-01-31:worm:2' } } });
@@ -928,7 +928,7 @@ T['chick2 第二輪修正 #1:模糊測試找到的三份:(a+b)+c 與 a+(b+c) 結
   const l = P.merge(freeze(P.merge(a, b, t)), c, t), r = P.merge(a, freeze(P.merge(b, c, t)), t);
   return { ok: P.canon(l) === P.canon(r) && stockP(l, t).tomato === 2, detail: J({ left: stockP(l, t), right: stockP(r, t), l: l.foodOld, r: r.foodOld }) };
 };
-T['chick2 第二輪修正 #1:舊的 foodOld 寫法 { before, left } 讀得懂(got 是 left、ate 是 0),剩的份數跟以前一樣;整理後寫成新的寫法、再整理不變'] = () => {
+T['舊的 foodOld 寫法 { before, left } 讀得懂(got 是 left、ate 是 0),剩的份數跟以前一樣;整理後寫成新的寫法、再整理不變'] = () => {
   const old = { v: 2, born: '2026-06-01', days: { '2026-11-20': 20 }, got: { '2026-11-20': { m: 'greens' } },
     ate: { '2026-11-19': { e1: 'old:2026-07-24:corn:0' } }, foodOld: { before: '2026-07-24', left: { corn: 2, yam: 0 } } };
   const t = now('2026-11-20');
@@ -1065,7 +1065,7 @@ T['新版:v2 樣本檔(tools/fixtures/pet_v2_samples.json)每一份都整理得�
   return { ok: !bad.length && samples.records.length >= 5, detail: bad.join('、') || samples.records.length + ' 份' };
 };
 
-/* ---------- chick2 第三輪修正 #1:兩台時鐘都在允許範圍內、方向相反 ----------
+/* ---------- 兩台時鐘都在允許範圍內、方向相反 ----------
    cloud.js 與 pet-store.js 讓這台比伺服器慢或快各 SLOW_MAX_MS、FAST_MAX_MS 以內的裝置合併上傳。兩台一快一慢時相差兩者相加;
    pet.js 只留這台的今天加 7 天以內的日期(AHEAD)、今天往前 6 天的 fed。以前兩邊各 6 天,相差 12 天:慢的那台合併時把快的那台的
    練習日、達標日、餵食、券、吃掉紀錄丟掉再上傳(吃掉紀錄不見,點心又回來)。這裡從兩個檔讀出允許範圍,讓兩台站在最邊邊各合併一次 */
@@ -1080,7 +1080,7 @@ function clockLimits() {
   ['cloud.js', 'pet-store.js'].forEach(f => { const s = rd(f); out[f] = { slow: num(s, 'SLOW_MAX_MS'), fast: num(s, 'FAST_MAX_MS') }; });
   return out;
 }
-T['chick2 第三輪修正 #1:允許範圍內一快一慢的兩台(站在最邊邊)各自合併,另一台的練習日、達標日、餵食、券、吃掉紀錄都還在'] = () => {
+T['允許範圍內一快一慢的兩台(站在最邊邊)各自合併,另一台的練習日、達標日、餵食、券、吃掉紀錄都還在'] = () => {
   const L = clockLimits();
   const slowMax = Math.max(L['cloud.js'].slow, L['pet-store.js'].slow), fastMax = Math.max(L['cloud.js'].fast, L['pet-store.js'].fast);
   if (!isFinite(slowMax) || !isFinite(fastMax)) return { ok: false, detail: '讀不到 SLOW_MAX_MS、FAST_MAX_MS ' + J(L) };
@@ -1118,10 +1118,10 @@ T['chick2 第三輪修正 #1:允許範圍內一快一慢的兩台(站在最邊�
   }
   return { ok: !bad.length, detail: (bad.slice(0, 3).join(' | ') || '都在') + ';允許範圍 ' + J(L) };
 };
-/* chick2 第三輪修正 #2(已知限制,只釘住範圍):一份紀錄的 oldBefore 比合併那台的 400 天截止日晚(時鐘快的裝置寫的)時,
+/* 已知限制,只釘住範圍:一份紀錄的 oldBefore 比合併那台的 400 天截止日晚(時鐘快的裝置寫的)時,
    截止日與那個 oldBefore 之間的達標日,依合併的順序可能被加起來或取大,總數差這幾天。任何一種順序都不少於任何一份輸入、
    也不少於 f18d208;oldBefore 都不晚於截止日時跟順序無關 */
-T['chick2 第三輪修正 #2:oldMet 合併順序:結果不少於任何一份、不少於 f18d208,差別只在截止日與時鐘快的 oldBefore 之間的達標日'] = () => {
+T['oldMet 合併順序:結果不少於任何一份、不少於 f18d208,差別只在截止日與時鐘快的 oldBefore 之間的達標日'] = () => {
   const today = '2027-03-01', t = now(today), cutoff = addDays(today, -399);
   const tot = p => p.oldMet + p.met.length;
   const a = freeze({ v: 1, days: {}, met: ['2026-01-30'], oldMet: 0, oldBefore: '', fed: {} });
@@ -1147,10 +1147,10 @@ T['chick2 第三輪修正 #2:oldMet 合併順序:結果不少於任何一份、�
   return { ok: bounded && assoc === 0, detail: J({ left: tot(l), right: tot(r), floor, gap, assocFail: assoc }) };
 };
 
-/* ---------- chick2 第三輪修正 #3:同一張最舊的券在兩台各吃一次,剛好跨過壓縮那天 ----------
+/* ---------- 同一張最舊的券在兩台各吃一次,剛好跨過壓縮那天 ----------
    筆電 9/28 吃(券還沒壓縮,記成 2026-06-01/d),手機沒同步到這一口;9/29 那張已經壓縮成舊券,手機吃到 old:2026-06-02:corn:0。
    合併時 foodOld.ate 取大(筆電壓縮時算了那一口),舊券的吃掉紀錄又扣一次:舊券那一格變成 -1,把另一張還沒吃的 9/20 玉米抵掉,
-   托盤 0 份;那張壓縮以後也算成吃掉,點心永遠不見。規格 5.2:同一張券被兩台各吃一次只算一次 */
+   托盤 0 份;那張壓縮以後也算成吃掉,點心永遠不見。同一張券被兩台各吃一次只算一次 */
 function doubleEat() {
   const at = d => tp(d + ' 12:00:00');
   const withDay = (p, d) => Object.assign({}, p, { days: Object.assign({}, p.days, { [d]: 25 }) });
@@ -1160,7 +1160,7 @@ function doubleEat() {
   const ph = P.eat(freeze(withDay(shared, '2026-09-29')), 'corn', 'ph1', at('2026-09-29'));
   return { at, withDay, shared, lap, ph };
 }
-T['chick2 第三輪修正 #3:同一張券兩台各吃一次(一口在壓縮前、一口在壓縮後):只算一次,另一張玉米還在,壓縮以後也還吃得到'] = () => {
+T['同一張券兩台各吃一次(一口在壓縮前、一口在壓縮後):只算一次,另一張玉米還在,壓縮以後也還吃得到'] = () => {
   const { at, withDay, lap, ph } = doubleEat();
   const ms = [P.merge(freeze(lap.pet), freeze(ph.pet), at('2026-09-29')), P.merge(freeze(ph.pet), freeze(lap.pet), at('2026-09-29'))];
   const bad = [];
@@ -1180,7 +1180,7 @@ T['chick2 第三輪修正 #3:同一張券兩台各吃一次(一口在壓縮前�
   });
   return { ok: !bad.length, detail: bad.slice(0, 4).join(' | ') || '兩種順序、五個日期都剩 1 份' };
 };
-T['chick2 第三輪修正 #3 對照組:兩口都在壓縮前、或都在壓縮後吃到同一張:合併後只算一次,剩 1 份'] = () => {
+T['對照組:兩口都在壓縮前、或都在壓縮後吃到同一張:合併後只算一次,剩 1 份'] = () => {
   const { at, withDay, shared, lap, ph } = doubleEat();
   const lapB = P.eat(freeze(withDay(shared, '2026-09-29')), 'corn', 'lap1', at('2026-09-29'));
   const phA = P.eat(freeze(withDay(shared, '2026-09-28')), 'corn', 'ph1', at('2026-09-28'));

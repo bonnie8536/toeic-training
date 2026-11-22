@@ -9,7 +9,7 @@
   const html = doc.documentElement;
   const STANDALONE = html.classList.contains('is-app');
   const SW_ON = true;          // 緊急退路:改成 false,並把 sw.js 整份換成 tools/sw-killswitch.js
-  const IOS_INSTALL = 'off';   // 'off' | 'password-only' | 'on'。她用 iPhone 實測主畫面 App 的 Google 登入前維持 'off'
+  const IOS_INSTALL = 'off';   // 'off' | 'password-only' | 'on'。站長用 iPhone 實測主畫面 App 的 Google 登入前維持 'off'
   const TITLE_AFTER = 64;      // 捲超過這個高度,頂欄才淡入頁名
   const KB_MIN = 120;          // visualViewport 縮小超過這個高度才算鍵盤打開
 
@@ -277,7 +277,7 @@
   /* ---------- 分頁列上的小雞(js/pet-roam.js;第二階段 PET_ROAM_V2 開著時換成 js/pet-roam2.js) ----------
      只在有分頁列、而且載入了 common.js 與 cloud.js 的頁面(條款、價格頁沒有)。先載開關 pet-config.js,開著才載其他的;
      頁面上已經有的(首頁與「我的」頁網站模式就有的那幾個、每個載入 cloud.js 的頁面都有的 pet.js)不重載。照順序執行(async = false)。
-     第二階段(小雞第二階段規格、實作契約第 11 節):PET_FOOD 開著時多載 pet-food.js(pet.js 後)、pet-hook.js(pet-store.js 後)、
+     第二階段:PET_FOOD 開著時多載 pet-food.js(pet.js 後)、pet-hook.js(pet-store.js 後)、
      food-art.js(pet-ui.js 前)。網站模式只在開關打開時才動作(loadWebPet),兩個都關著時一個檔都不多載。 */
   function on(name) { return window[name] === true; }
   function hasGlobal(name) {
@@ -300,9 +300,9 @@
     list.push(['PET_ROAM', on('PET_ROAM_V2') ? 'js/pet-roam2.js' : 'js/pet-roam.js']);
     return list;
   }
-  /* 網站模式(實作契約第 7.3 節):練習頁在 PET_FOOD 時載入補券和結束畫面那一行要的檔;
+  /* 網站模式:練習頁在 PET_FOOD 時載入補券和結束畫面那一行要的檔;
      日常學習、練練手感、刷刷題目、錯題本在 PET_ROAM_V2 時載入走動的小雞和面板;首頁、「我的」本來就有面板,只多載 pet-roam2.js。
-     pet-roam-zones.js(電腦版到處走的空地,規格 1.11)只有網站模式載,放在 pet-roam2.js 前面;App 模式不載 */
+     pet-roam-zones.js(電腦版到處走的空地)只有網站模式載,放在 pet-roam2.js 前面;App 模式不載 */
   const WEB_FOOD_PAGES = ['daily.html', 'grammar.html', 'phonics.html', 'vocab.html', 'reading.html', 'practice.html', 'listening.html',
     'review.html', 'dialogue.html', 'mock.html', 'diagnostic.html', 'writing.html'];
   const WEB_ROAM_FULL = ['learn.html', 'warmup.html', 'drill.html', 'review.html'];
@@ -355,7 +355,7 @@
     }).catch(function (err) { console.warn('小雞載入失敗：', err); });
   }
 
-  /* 搬家(搬家計畫 2.11、2.12):舊網址載入提示與帶走的程式(js/move-out.js),新網址載入新網址的提示(js/move-in-boot.js);
+  /* 搬家:舊網址載入提示與帶走的程式(js/move-out.js),新網址載入新網址的提示(js/move-in-boot.js);
      其他網域(本機預覽)一個都不載。網域清單跟 js/move-config.js 一樣(tools/test_move_core.js 檢查),後面那個是本機測試用的。
      新課程上線時(js/courses.js)PAGE 要改成扣掉課程的 base 再判斷,否則 /ja/english/grammar.html 會被當成根目錄的文法頁。 */
   const MOVE_OLD = ['https://www.shuashualanguage.com', 'http://127.0.0.1:8931'];

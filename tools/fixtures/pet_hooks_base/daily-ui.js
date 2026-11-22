@@ -184,7 +184,7 @@
       return D.record(Object.assign({ store, log: logAttempt, now: Date.now(), date: DAY, part: key, item: q }, extra));
     }
     /* 這一頁沒有 data-gate(訪客也能做每日練習)。已登入、可是因為帳號那一邊存不進去時(別的分頁登出、換帳號,
-       或這台的帳號資料夾還沒從雲端灌好):這一下不生效、不對答案,開「重新整理」卡(js/common.js holdForAccount;第 2 輪審查)。
+       或這台的帳號資料夾還沒從雲端灌好):這一下不生效、不對答案,開「重新整理」卡(js/common.js holdForAccount)。
        舊版 common.js 沒有這個函式就照舊 */
     function held(el) { return typeof holdForAccount === 'function' && holdForAccount(el); }
 

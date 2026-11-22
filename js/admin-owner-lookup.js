@@ -1,4 +1,4 @@
-/* 站長後台「收費管理」的查帳號(前端計畫九.2):輸入 Email 或帳號 id,呼叫 owner_lookup。
+/* 站長後台「收費管理」的查帳號:輸入 Email 或帳號 id,呼叫 owner_lookup。
    顯示目前使用權、每一段使用權(撤銷、恢復、改到期日、拿掉到期日)、付款(退款要再按一次)、寫作批改紀錄、異動紀錄。
    調整使用權只走 owner_update_grant,參數空白一律代表不改(資料庫的規則):
      撤銷 (id, null, null, true);恢復 (id, null, null, false);改到期日 (id, null, 新的完整到期日, null);
@@ -45,7 +45,7 @@
       return true;
     }
     /* 做完一件事:d 是按下去那時候畫面上的帳號。畫面還是他就重讀他;已經換成別人(或正在讀別人),只寫他做完了什麼。
-       done 是字串(做完了),或 { text, bad: true }(不確定有沒有做到,要她先核對) */
+       done 是字串(做完了),或 { text, bad: true }(不確定有沒有做到,要站長先核對) */
     async function reread(done, d, key) {
       if (opts.onChanged) opts.onChanged();
       const t = typeof done === 'string' ? done : str(done && done.text);
@@ -203,7 +203,7 @@
     }
     const nowOf = d => { const t = Date.parse(isObj(d.access) ? d.access.server_now : ''); return isFinite(t) ? t : Date.now(); };
     /* 退掉 g 之後會往前接的付費方案(資料庫 _refund_payment → _requeue_paid):同一種、還沒開始、排在 g 結束以後;
-       退老師方案時,接在老師方案後面的學生方案也算(2026-10-17 第二輪複審) */
+       退老師方案時,接在老師方案後面的學生方案也算 */
     function queuedAfter(d, g, now) {
       if (!g || !g.ends_at) return [];
       const end = Date.parse(g.ends_at);

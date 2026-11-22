@@ -300,7 +300,7 @@ async function t(name, fn) {
     const k = W.caches.dump()['ss-assets-' + SWV]; assert.ok(k.includes('/css/style.css') && k.includes('/manifest.json'));
   });
 
-  // 搬家(搬家計畫 3.5):舊網址轉址期第一次回來的人
+  // 搬家:舊網址轉址期第一次回來的人
   const redirectRes = () => mkRes(null, { status: 200, type: 'opaqueredirect' });
   await t('move: 舊網址安裝時存好搬家頁與它載入的每個檔案(清單跟 move-out.html 一樣)', async () => {
     const html = fs.readFileSync(path.join(REPO, 'move-out.html'), 'utf8');

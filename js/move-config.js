@@ -1,4 +1,4 @@
-/* 衝衝英文搬家:兩個網域寫死在這裡(搬家計畫 2.3)。sw.js 與 tools/move-worker/worker.js 各有一份同樣的清單,
+/* 衝衝英文搬家:兩個網域寫死在這裡。sw.js 與 tools/move-worker/worker.js 各有一份同樣的清單,
    tools/test_move_core.js 會檢查三份一樣。網域永遠帶 www:瀏覽器的資料依「網域加 www 與否」分開存。
    本機測試(tools/test_move_e2e.js)用 127.0.0.1 當舊網址、localhost 當新網址,兩者是不同網域,也都算安全環境。
    這支只放設定,不讀寫任何儲存。 */

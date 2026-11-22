@@ -145,7 +145,7 @@ function clock(start) {
   return { now: () => t, wait: ms => { t += ms; return Promise.resolve(); } };
 }
 
-/* 文案規則(交接文件第 5 節):沒有 emoji、破折號、「不是…而是」,中文旁邊的標點是全形 */
+/* 文案規則:沒有 emoji、破折號、「不是…而是」,中文旁邊的標點是全形 */
 function copyProblems(s) {
   const out = [];
   if (/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(s)) out.push('emoji');
@@ -535,7 +535,7 @@ const cases = {
   },
 
 
-  /* ---------- 審查修正(2026-10-17):已經能用的帳號、班級、被改成學生的老師 ---------- */
+  /* ---------- 2026-10-17:已經能用的帳號、班級、被改成學生的老師 ---------- */
   '購買按鈕:既有帳號、無期限贈送、站長不放學生方案按鈕改寫說明;班級提供的保留按鈕加一句;寫作批改一律可以買': async () => {
     const { K } = load(makeWorld());
     const s = (g, a, signedIn) => K.slotFor(g, { signedIn: signedIn !== false, access: a });
@@ -586,7 +586,7 @@ const cases = {
     ];
     return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') + ' ' + JSON.stringify(r) };
   },
-  '老師方案的名額(第一輪複審):無期限但有名額上限的只賣更多名額;伺服器的 plan_starts 是 null 的那一級不賣': async () => {
+  '老師方案的名額:無期限但有名額上限的只賣更多名額;伺服器的 plan_starts 是 null 的那一級不賣': async () => {
     const { K } = load(makeWorld());
     const now = '2026-11-05T00:00:00.000Z';
     const comp10 = { teacher_purchase_allowed: true, is_owner: false, teacher_source: 'comp', teacher_until: null, seats: 10, teacher_active: true, server_now: now };
@@ -603,7 +603,7 @@ const cases = {
     ];
     return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') + ' ' + [tiers(comp10), tiers(withStarts), tiers(allNull)].join(' | ') };
   },
-  '購買視窗(第一輪複審):無期限 10 位的老師只看到 30、60 位的選項': async () => {
+  '購買視窗:無期限 10 位的老師只看到 30、60 位的選項': async () => {
     const access = { active: true, source: 'legacy', until: null, server_now: '2026-11-05T00:00:00Z', teacher_purchase_allowed: true, teacher_source: 'comp',
       teacher_active: true, seats: 10, teacher_until: null, plan_starts: { teacher10: null, teacher30: '2026-11-05T00:00:00Z', teacher60: '2026-11-05T00:00:00Z' } };
     const D = domLoad({ access });
@@ -643,7 +643,7 @@ const cases = {
       /接在 2026\/11\/30 之後開始/.test(u3 || ''), u4 === null, c === null, K.startNote('student_month', null) === null];
     return { ok: checks.every(Boolean), detail: [t1, t2, t3, u1, u2, u3, u4, c].join(' | ') };
   },
-  '起算說明(第一輪複審):有伺服器的 plan_starts 就照它寫;10 位一年加 30 位一個月再續 30 位,接在 30 位那段之後': async () => {
+  '起算說明:有伺服器的 plan_starts 就照它寫;10 位一年加 30 位一個月再續 30 位,接在 30 位那段之後': async () => {
     const { K } = load(makeWorld());
     const now = '2026-10-17T01:00:00.000Z';
     const a = { server_now: now, teacher_source: 'paid', teacher_active: true, seats: 30, teacher_until: '2027-10-16T16:30:00.000Z',
@@ -688,11 +688,11 @@ const cases = {
     while (inBox && inBox !== box) inBox = inBox.parentNode;
     const mask = box.parentNode;
     const checks = [
-      /* 這裡開的是老師方案的視窗:第二輪複審起寫老師方案自己的定義(學生方案、批改的視窗照舊,見第二輪複審的案例) */
+      /* 這裡開的是老師方案的視窗:老師方案另外寫自己的定義(學生方案、批改的視窗照舊) */
       !!def && def.textContent === '老師方案開始計算後，用過任何一項需要方案的練習功能、有學生用邀請碼加入你的班級，或在教師後台查看過班上學生的練習進度，就算開始使用。',
-      /* 被拒絕後焦點回到視窗裡(第一輪複審) */
+      /* 被拒絕後焦點回到視窗裡 */
       inBox === box && D.dom.document.activeElement === submit,
-      /* 視窗比畫面高時可以捲動(第一輪複審) */
+      /* 視窗比畫面高時可以捲動 */
       !!mask && /\bbuy-mask\b/.test(mask.className),
       !!def && agree.attrs['aria-describedby'] === def.attrs.id,
       links.includes('refund.html') && links.includes('terms.html'),
@@ -702,8 +702,8 @@ const cases = {
     ];
     return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') + ' ' + JSON.stringify({ note1, note2, sending, after, links }) };
   },
-  /* ---------- 第二輪複審(2026-10-17) ---------- */
-  '學生方案(第二輪複審):老師方案在期內的人,按鈕旁寫老師方案已經包含練習功能;購買視窗照 plan_starts 寫接在老師方案之後': async () => {
+  /* ---------- 2026-10-17 追加的案例 ---------- */
+  '學生方案:老師方案在期內的人,按鈕旁寫老師方案已經包含練習功能;購買視窗照 plan_starts 寫接在老師方案之後': async () => {
     const { K } = load(makeWorld());
     const now = '2026-10-17T01:00:00.000Z';
     const t = { active: true, until: '2026-11-20T01:00:00Z', source: 'paid', plan: 'teacher', is_owner: false, teacher_active: true, teacher_live: true,
@@ -720,7 +720,7 @@ const cases = {
     ];
     return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') + ' ' + JSON.stringify([s(t), s(grace)]) };
   },
-  '老師方案的名額說明(第二輪複審):無期限 10 位加上有期限的 30 位升級,寫無期限那一段的 10 位;舊資料庫看不出來時不寫人數': async () => {
+  '老師方案的名額說明:無期限 10 位加上有期限的 30 位升級,寫無期限那一段的 10 位;舊資料庫看不出來時不寫人數': async () => {
     const { K } = load(makeWorld());
     const now = '2026-10-17T01:00:00.000Z';
     const a = { teacher_purchase_allowed: true, is_owner: false, teacher_source: 'comp', teacher_until: null, seats: 30, teacher_no_end_seats: 10,
@@ -736,7 +736,7 @@ const cases = {
     ];
     return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') + ' ' + JSON.stringify([n(a), n(old)]) };
   },
-  '購買視窗(第二輪複審):老師方案的「開始使用」寫老師方案的功能,退款政策也寫;學生方案照舊;條款版本換新': async () => {
+  '購買視窗:老師方案的「開始使用」寫老師方案的功能,退款政策也寫;學生方案照舊;條款版本換新': async () => {
     const access = { active: true, source: 'trial', until: '2026-11-08T01:00:00Z', trial_until: '2026-11-08T01:00:00Z', server_now: '2026-11-05T00:00:00Z',
       teacher_purchase_allowed: true, teacher_source: null, teacher_active: false, teacher_until: null };
     const defOf = group => { const D = domLoad({ access }); D.K.buyDialog(group, null); const box = D.dom.body.byClass('modal-buy')[0]; return { K: D.K, def: box ? box.byClass('buy-def')[0].textContent : '' }; };
@@ -752,7 +752,7 @@ const cases = {
     ];
     return { ok: checks.every(Boolean), detail: checks.map(x => (x ? 'o' : 'x')).join('') + ' ' + JSON.stringify([t.def, s.def, CONSENT_VERSION]) };
   },
-  '購買視窗(第二輪複審):送出中焦點移到視窗標題(按鈕停用時不會掉到頁面後面),提示區寫正在前往付款頁': async () => {
+  '購買視窗:送出中焦點移到視窗標題(按鈕停用時不會掉到頁面後面),提示區寫正在前往付款頁': async () => {
     const access = { active: true, source: 'trial', until: '2026-11-08T01:00:00Z', trial_until: '2026-11-08T01:00:00Z', server_now: '2026-11-05T00:00:00Z' };
     const D = domLoad({ access, cloud: { startCheckout: () => new Promise(() => {}) } });
     D.K.buyDialog('student', null);
@@ -770,7 +770,7 @@ const cases = {
       msg.textContent === '正在前往付款頁…' && msg.attrs.role === 'alert', !/\bbad\b/.test(msg.className)];
     return { ok: checks.every(Boolean), detail: checks.map(x => (x ? 'o' : 'x')).join('') + ' ' + JSON.stringify({ active: active && (active.attrs.id || active.tagName), msg: msg.textContent }) };
   },
-  '購買視窗與價格頁的小字(第二輪複審):在白底的對比至少 4.5:1,開始使用的定義至少 13.5px': async () => {
+  '購買視窗與價格頁的小字:在白底的對比至少 4.5:1,開始使用的定義至少 13.5px': async () => {
     const css = read('css/style.css');
     const root = (/:root\s*\{([^}]*)\}/.exec(css) || [])[1] || '';
     const vars = {};
@@ -786,7 +786,7 @@ const cases = {
     const ok = got.every(g => g[2] >= 4.5) && size >= 13.5;
     return { ok, detail: JSON.stringify({ got, size }) };
   },
-  '付款頁面其他小字(第三輪複審):訂單編號、付款帳號的信箱在白底,「我的」付款紀錄的小標題在淺灰底,對比都至少 4.5:1': async () => {
+  '付款頁面其他小字:訂單編號、付款帳號的信箱在白底,「我的」付款紀錄的小標題在淺灰底,對比都至少 4.5:1': async () => {
     const css = read('css/style.css');
     const root = (/:root\s*\{([^}]*)\}/.exec(css) || [])[1] || '';
     const vars = {};
@@ -800,7 +800,7 @@ const cases = {
       .map(([s, bg]) => { const c = resolve(prop(rule(s), 'color')); return [s, c, bg, Math.round(ratio(c, bg) * 100) / 100]; });
     return { ok: got.every(g => g[3] >= 4.5), detail: JSON.stringify(got) };
   },
-  '購買視窗(第三輪複審):學生方案與寫作批改各寫自己的「開始使用」,跟退款政策的那一句一字不差': async () => {
+  '購買視窗:學生方案與寫作批改各寫自己的「開始使用」,跟退款政策的那一句一字不差': async () => {
     const access = { active: true, source: 'trial', until: '2026-11-08T01:00:00Z', trial_until: '2026-11-08T01:00:00Z', server_now: '2026-11-05T00:00:00Z',
       teacher_purchase_allowed: true, teacher_source: null, teacher_active: false, teacher_until: null };
     const defOf = group => { const D = domLoad({ access }); D.K.buyDialog(group, null); const box = D.dom.body.byClass('modal-buy')[0]; return box ? box.byClass('buy-def')[0].textContent : ''; };
@@ -814,7 +814,7 @@ const cases = {
     ];
     return { ok: checks.every(Boolean), detail: checks.map(x => (x ? 'o' : 'x')).join('') + ' ' + JSON.stringify([s, c]) };
   },
-  '購買視窗(第三輪複審):送出中「正在前往付款頁」畫面上只出現一次(提示區照樣朗讀,但看不到)': async () => {
+  '購買視窗:送出中「正在前往付款頁」畫面上只出現一次(提示區照樣朗讀,但看不到)': async () => {
     const access = { active: true, source: 'trial', until: '2026-11-08T01:00:00Z', trial_until: '2026-11-08T01:00:00Z', server_now: '2026-11-05T00:00:00Z' };
     let reject;
     const D = domLoad({ access, cloud: { startCheckout: () => new Promise((res, rej) => { reject = rej; }) } });
@@ -839,7 +839,7 @@ const cases = {
       after.msg === '11 月 1 日開放購買。' && after.hidden === false];
     return { ok: checks.every(Boolean), detail: checks.map(x => (x ? 'o' : 'x')).join('') + ' ' + JSON.stringify({ hiddenCls, during, after }) };
   },
-  '付款結果(第三輪複審):主要按鈕照買的項目;老師方案前往教師後台,寫作批改前往寫作練習並寫加入幾篇,學生方案開始練習': async () => {
+  '付款結果:主要按鈕照買的項目;老師方案前往教師後台,寫作批改前往寫作練習並寫加入幾篇,學生方案開始練習': async () => {
     const { K } = load(makeWorld());
     const v = row => K.stateView({ state: 'paid', row });
     const tea = v({ status: 'paid', sku: 'teacher30_year', item: 'teacher', seats: 30, months: 12, amount: 8900, applied: true, server_now: '2026-10-17T01:00:00Z',
@@ -858,7 +858,7 @@ const cases = {
     ];
     return { ok: checks.every(Boolean), detail: checks.map(x => (x ? 'o' : 'x')).join('') + ' ' + JSON.stringify([prim(tea), prim(five), five.lines, prim(stu)]) };
   },
-  '條款(第三輪複審):老師購買學生方案,接在自己的老師方案後面(跟資料庫 _plan_start 同一個規則)': async () => {
+  '條款:老師購買學生方案,接在自己的老師方案後面(跟資料庫 _plan_start 同一個規則)': async () => {
     const t = text('terms.html');
     const li = (/<li>方案從開通當天開始計算。[\s\S]*?<\/li>/.exec(html('terms.html')) || [''])[0];
     const checks = [/老師購買學生方案，接在自己的老師方案後面。/.test(li), copyProblems(t).length === 0];
@@ -894,7 +894,7 @@ const cases = {
     const tea = v('paid', { status: 'paid', sku: 'teacher30_month', item: 'teacher', seats: 30, months: 1, amount: 890, applied: true, access: { until: '2026-12-04T15:59:59Z', teacher_until: '2026-12-01T15:59:59Z' } });
     const cre = v('paid', { status: 'paid', sku: 'correction_one', item: 'credits', credits: 1, amount: 150, applied: true, access: { until: null } });
     const un = v('unapplied', { status: 'paid', sku: 'student_month', item: 'student', months: 1, amount: 199, applied: false });
-    /* 第一輪複審:my_checkout 的 plan(這次買的那一段)優先;排在後面才開始的寫哪天開始 */
+    /* my_checkout 的 plan(這次買的那一段)優先;排在後面才開始的寫哪天開始 */
     const later = v('paid', { status: 'paid', sku: 'teacher30_month', item: 'teacher', seats: 30, months: 1, amount: 890, applied: true, server_now: '2026-10-17T01:00:00Z',
       plan: { starts_at: '2026-11-16T16:30:00Z', ends_at: '2026-12-16T16:30:00Z' }, access: { teacher_until: '2027-10-16T16:30:00Z' } });
     const today = v('paid', { status: 'paid', sku: 'student_month', item: 'student', months: 1, amount: 199, applied: true, server_now: '2026-10-17T01:00:00Z',
@@ -906,7 +906,7 @@ const cases = {
     const checks = [
       stu.lines[0] === '學生方案 一年 · NT$' + NB + '1,990' && stu.lines[1] === '已經開通 · 使用到 2027/11/16',
       tea.lines[0] === '老師方案 30' + NB + '位以內 一個月 · NT$' + NB + '890' && tea.lines[1] === '已經開通 · 使用到 2026/12/01',
-      cre.lines[1] === '已經加入 1' + NB + '篇批改。',   // 第三輪複審:以前寫「已經開通。」
+      cre.lines[1] === '已經加入 1' + NB + '篇批改。',   // 以前寫「已經開通。」
       un.title === '已收到付款' && un.lines.includes('開通需要客服處理') && un.lines.includes('客服會寫信給你') && !un.lines.some(l => /^已收到付款/.test(l))
         && !/我們/.test(un.lines.join('')) && !/已經開通/.test(un.lines.join('')),
       later.lines[1] === '已經開通 · 2026/11/17 開始 · 使用到 2026/12/17',
@@ -994,7 +994,7 @@ const cases = {
   },
 
   /* ---------- 頁面與文案 ---------- */
-  '價格頁:不寫全站免費公告(站長 11/17:要收錢我們就收)、不寫過期的日期;載入購買程式;同意句子一字不差': async () => {
+  '價格頁:不寫全站免費公告、不寫過期的日期;載入購買程式;同意句子一字不差': async () => {
     const pr = html('pricing.html');
     const t = text('pricing.html');
     const order = ['js/cloud-config.js', 'js/plans-config.js', 'js/common.js', 'js/cloud.js', 'js/profile.js', 'js/checkout.js'].map(s => pr.indexOf('src="' + s + '"'));
@@ -1040,7 +1040,7 @@ const cases = {
     ];
     return { ok: checks.every(Boolean), detail: checks.map(c => (c ? 'o' : 'x')).join('') };
   },
-  '購買視窗的外框(第一輪複審):視窗比畫面高時外框可以捲動,從頂端開始排': async () => {
+  '購買視窗的外框:視窗比畫面高時外框可以捲動,從頂端開始排': async () => {
     const css = read('css/style.css');
     const rule = (/\.modal-mask\.buy-mask\s*\{([^}]*)\}/.exec(css) || [])[1] || '';
     const inner = (/\.modal-mask\.buy-mask\s*>\s*\.modal\s*\{([^}]*)\}/.exec(css) || [])[1] || '';

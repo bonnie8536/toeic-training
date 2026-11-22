@@ -1,4 +1,4 @@
-/* 網域開關(tools/domain.json + tools/apply_domain.js)與網址結構(js/courses.js)的測試(搬家計畫第一節、7.1、7.2)。
+/* 網域開關(tools/domain.json + tools/apply_domain.js)與網址結構(js/courses.js)的測試。
    - 現在的檔案跟 domain.json 一致(live 是 old 時整站照舊能部署在舊網址)。
    - 在記憶體裡切到 new:CNAME、canonical、og:url、結構化資料、sitemap、robots、Edge Function 的 LIVE 全部換成新網址,
      舊網域只剩「舊網址 shuashualanguage.com」的說明與兩邊都要在的網域清單;再切回 old 一個位元組都不差;重跑一次不再變。
@@ -131,7 +131,7 @@ T['hreflang:現在只有一個介面語言開著,不產生任何 hreflang;頁面
   const links = Array.from(C.hreflangFor('/grammar.html', 'https://www.rushuplanguage.com', fake)).map((l) => l.lang + ' ' + l.href);
   assert.deepEqual(links, ['zh-Hant-TW https://www.rushuplanguage.com/grammar.html', 'ja https://www.rushuplanguage.com/ja/english/grammar.html', 'x-default https://www.rushuplanguage.com/grammar.html']);
 };
-T['原名:Bonnie 說原名不用加(2026-10-23)——頁尾只寫「衝衝英文由個人經營」,JSON-LD 只列 Rushup;舊網址的搬家提示才說改名'] = () => {
+T['原名:2026-10-23 決定原名不用加——頁尾只寫「衝衝英文由個人經營」,JSON-LD 只列 Rushup;舊網址的搬家提示才說改名'] = () => {
   const pages = Object.keys(files).filter((rel) => /^[^/]+[.]html$/.test(rel) && files[rel] && /由個人經營/.test(files[rel]));
   assert.ok(pages.length >= 25, '有頁尾的頁面太少:' + pages.length);
   pages.forEach((rel) => {

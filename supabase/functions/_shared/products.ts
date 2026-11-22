@@ -21,7 +21,7 @@ export type Product = Readonly<{
 // 條款改版時改這裡,資料庫會記下每一筆付款是照哪一版同意的。
 export const CONSENT_VERSION = 'terms-2026-10-17';
 
-const TEACHER_YEAR_MONTHS = 10; // 年繳收 10 個月(她 2026-10-07 決定)
+const TEACHER_YEAR_MONTHS = 10; // 年繳收 10 個月(2026-10-07 決定)
 
 function p(sku: string, item: Item, months: number | null, seats: number | null, credits: number | null,
   amount: number, desc: string, ownerOnly = false): Product {

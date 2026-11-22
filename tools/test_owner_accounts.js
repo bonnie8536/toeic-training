@@ -1,4 +1,4 @@
-/* 站長後台「收費管理」第一段(前端計畫九.8 帳號清單、九.2 查帳號、九.9 改角色、九.10 搬班級)的測試。
+/* 站長後台「收費管理」第一段的測試。
    假的 Supabase 回的是 tools/fixtures/owner_contract.json:本機 PGlite 跑真的 supabase_paid_access.sql 錄下來的回傳
    (參數、回傳形狀、錯誤訊息都是真的)。fixture 每次重錄 id 與時間都會變,所以這裡不寫死 id 與日期,一律從 fixture 讀。
    鐵律:
@@ -12,7 +12,7 @@ const { FX, SRC, ACC, OWNER_ID, ALL, clone, rowBy, DATE, DAY, isoOf, world, sett
   rowOf, btn, dlg, field, radio, setVal, pick, ok, cancel, lines, warns, onlyOwnerRpcs, run } = K;
 
 const cases = {
-  /* 審查 D:owner_* 送出時用的是這台現在的登入資料。別的分頁登出、換了帳號(CLOUD.accountCheck 回原因)就不送,回那句話;
+  /* owner_* 送出時用的是這台現在的登入資料。別的分頁登出、換了帳號(CLOUD.accountCheck 回原因)就不送,回那句話;
      平常(回空字串)、舊版 cloud.js 沒有 accountCheck 照常送 */
   '別的分頁登出、換了帳號:owner_* 一個都不送,回那句話;平常照常送': async () => {
     const GONE = '這個帳號已經在別的分頁登出，剛剛按的沒有送出。請重新整理這一頁。';
@@ -434,7 +434,7 @@ const cases = {
     return { ok: okk, detail: JSON.stringify({ l, err, a, res: lines(res) }) };
   },
 
-  /* ---------- 審查修正(2026-10-11) ---------- */
+  /* ---------- 2026-10-11 補的案例 ---------- */
   '改成學生的確認照資料庫的規則寫他自己付費的學生方案:預付續約不寫提前;試用中付的才提前,保留到寫提前後的日期;贈送後面接付費寫幾號才開始': () => {
     const { O } = context(world(), { paid: true });
     const now = Date.parse(ALL.server_now), D = 864e5;

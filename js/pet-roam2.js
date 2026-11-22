@@ -1,17 +1,17 @@
-/* 小雞第二階段:整頁跑(小雞第二階段規格.md 第 1、2 節、附錄 A.1、A.9;原型在 小雞/第二階段/roam-proto.js)。
+/* 小雞第二階段:整頁跑。
    - 只由 js/app-shell.js 依 PET_ROAM_V2 載入,跟 js/pet-roam.js 二選一。不讀寫學生資料;唯一的儲存是 sessionStorage pet_roam_x。
-   - App 模式(html.app-shell 有分頁列):腳一直踩在分頁列上緣(Bonnie 10/17 選 B),地面上不閃、不縮。網站模式(五個主分頁):地面是視窗下緣往上 4 px,兩側各留 16 px。
+   - App 模式(html.app-shell 有分頁列):腳一直踩在分頁列上緣,地面上不閃、不縮。網站模式(五個主分頁):地面是視窗下緣往上 4 px,兩側各留 16 px。
    - 主分頁偶爾飛上站點(停 4 秒以上、今天吃過飼料、不在睡覺、不餓:30%,每次進頁最多一次),停 8 到 20 秒再撲著翅膀落回地面。
      站點只選不能點、旁邊有空位的地方(可以點的東西間隔 8 px,文字、圖片、卡片 4 px);寬螢幕的網站模式,主要內容兩側的空白也是站點。
      飛行照 ChickArt.flyPlan 播,格號和位移在同一個 requestAnimationFrame 迴圈算,飛行中點擊穿過小雞。
    - 練習頁(App 模式非主分頁)坐在分頁列上畫靜止格;遊戲回合中、鍵盤打開、任何面板打開時整層隱藏;分頁在背景時停止。
    - 有小雞的卡片(.pet-card)在畫面上時,走動那隻原地淡出,畫面上只有一隻;電腦版到處走時改成卡片裡的小雞藏起來(html.pet-roam2-wide,css 畫空的窩),走動那隻不淡出。
-   - 減少動態、或學生關掉「小雞在頁面上走動」(view().roam === false):停在地面畫靜止格,不抖,一樣可以點。大小(Bonnie 10/23 約 2 倍)每種模式一個數字(CFG.sizes)。
-   - 電腦版到處走(規格 1.11):網站模式、寬 1024 以上、有 js/pet-roam-zones.js 時不飛站點,在空地之間一直換地方;走、跳、飛時點擊穿過(is-move),
+   - 減少動態、或學生關掉「小雞在頁面上走動」(view().roam === false):停在地面畫靜止格,不抖,一樣可以點。大小每種模式一個數字(CFG.sizes)。
+   - 電腦版到處走:網站模式、寬 1024 以上、有 js/pet-roam-zones.js 時不飛站點,在空地之間一直換地方;走、跳、飛時點擊穿過(is-move),
      停著才點得到;空地只在捲動停下、視窗大小改變、內容變動時量(最多每秒一次)。App 模式和 1023 以下照上面不變。 */
 (function (root) {
   'use strict';
-  /* 規格的數字都在這裡(時間是毫秒,flyMax、fallMax、hopDur 是秒) */
+  /* 數字都在這裡(時間是毫秒,flyMax、fallMax、hopDur 是秒) */
   const CFG = Object.freeze({
     sizes: Object.freeze({ app: 96, appLand: 64, web: 96, wide: Object.freeze([[1440, 110], [1344, 94], [1328, 86], [1312, 78], [1296, 70], [0, 62]].map(Object.freeze)) }), landH: 500, resizeEnd: 300, tap: Object.freeze({ w: 0.72, h: 0.7, min: 44 }), padI: 8, padO: 4, step: 12, maxPts: 240, turnTicks: 8, gap: 16, webLift: 4,   // sizes:走動那隻的寬,App 分頁列上(手機橫放、視窗高 landH 以下用 appLand)、網站模式 1023 以下、電腦版到處走(以前都是 48;照視窗寬 innerWidth 分段 [下限, 寬]:1440 以上 110、1344 以上 94、1328 以上 86、1312 以上 78、1296 以上 70、其他 62,挑學習、刷題頁兩側還站得下的最大值,最小 62;理由和實測在 tools/test_pet_roam_size.js);resizeEnd:拖動視窗停下多久才換大小;框高照引擎的比例;tap:可以點的範圍佔寬、框高的比例(只有畫出來的小雞那麼大,最小 44)
     flyChance: 0.3, flyAfter: 4000, perchMin: 8000, perchMax: 20000, perchRetry: 3000, hopMax: 80, hopDur: 0.4,
@@ -26,7 +26,7 @@
   const CLICK_UP = 'a[href],button,[role=button],[role=link]';
   const GAME = '.game-field,.mem-grid,.toast-grid';
   const WEB_PAGES = ['index.html', 'learn.html', 'warmup.html', 'drill.html', 'review.html', 'me.html'];
-  /* 站點設定表(規格 1.4):找不到錨點就當這頁沒有站點 */
+  /* 站點設定表:找不到錨點就當這頁沒有站點 */
   const STATIONS = {
     'index.html': [{ sel: '#daily-home', edge: 'top' }],
     'learn.html': [{ sel: 'main h1', edge: 'right' }], 'warmup.html': [{ sel: 'main h1', edge: 'right' }],
@@ -38,7 +38,7 @@
   /* ---------- 純計算(node 測試用 module.exports 拿) ---------- */
   function alpha(c) { const m = /rgba?\(([^)]+)\)/.exec(c || ''); if (!m) return 0; const p = m[1].split(',').map(Number); return p.length > 3 ? p[3] : 1; }
   function shown(s) { return !!s && s.display !== 'none' && s.visibility !== 'hidden' && !(Number(s.opacity) <= 0.05); }
-  /* 附錄 A.1 可以點的東西,另外看計算後的 cursor: pointer(本站的點擊大多用 addEventListener 綁) */
+  /* 可以點的東西,另外看計算後的 cursor: pointer(本站的點擊大多用 addEventListener 綁) */
   function isClickable(e, s) {
     if (CLICK_TAGS.has(e.tagName.toLowerCase())) return true;
     if (e.getAttribute('draggable') === 'true' || ROLES.has(e.getAttribute('role'))) return true;
@@ -91,7 +91,7 @@
     return !obs.some((o) => hits(o, top, bot) && o.l - o.p - S < v && o.r + o.p > v);
   }
   /* 主要內容外左右的空白放得下小雞加兩邊各 16 px(48 px 時是 80,96 是 128,110 是 142):那一欄也是站點 */
-  const sizeFor = (app, wide, land, iw) => (app ? CFG.sizes[land ? 'appLand' : 'app'] : !wide ? CFG.sizes.web : CFG.sizes.wide.find(([w]) => !(iw < w))[1]);   // land:App 手機橫放(審查第 2 輪 #4,102 高的框會吃掉兩條分頁列中間三分之一);iw:視窗寬,沒給時當最寬那段
+  const sizeFor = (app, wide, land, iw) => (app ? CFG.sizes[land ? 'appLand' : 'app'] : !wide ? CFG.sizes.web : CFG.sizes.wide.find(([w]) => !(iw < w))[1]);   // land:App 手機橫放(102 高的框會吃掉兩條分頁列中間三分之一);iw:視窗寬,沒給時當最寬那段
   function sideColumns(mainL, mainR, vw, size) {
     const out = [], S = size || CFG.sizes.web, g = CFG.gap, min = S + 2 * g;
     if (mainL >= min) out.push({ side: 'left', lo: g, hi: Math.floor(mainL - g - S) });
@@ -168,7 +168,7 @@
     let S = 0, BOXH = 0, TW = 0, TH = 0, anim = null;   // 小雞的寬、框高、可以點的寬高、引擎:照模式(sized())
     const layer = doc.createElement('div');
     layer.className = 'pet-roam2 is-ground is-init';   // 第一次排好位置之前看不到(css),免得在左緣或卡片旁邊閃一下
-    const btn = doc.createElement('button'), cv = doc.createElement('canvas');   // 按鈕只有畫出來的小雞那麼大(腳底對齊框底),畫布照舊整個框、超出按鈕(審查第 2 輪 #3)
+    const btn = doc.createElement('button'), cv = doc.createElement('canvas');   // 按鈕只有畫出來的小雞那麼大(腳底對齊框底),畫布照舊整個框、超出按鈕
     btn.className = 'pet-roam2-btn'; btn.setAttribute('type', 'button'); btn.setAttribute('aria-haspopup', 'dialog');
     cv.className = 'pet-roam2-cv'; cv.setAttribute('aria-hidden', 'true');
     btn.append(cv); layer.append(btn);
@@ -185,12 +185,12 @@
     let mode = 'ground', x = 0, gy = 0, feetDoc = 0, origin = 0, dir = Math.random() < 0.5 ? 1 : -1, lean = 0;
     let lane = [0, 0], groundOff = CFG.webLift, perch = null, faded = false, off = false, sheetOpen = false, scrolling = false, gSpans = null, covered = false;
     let act = null, turning = 0, held = false, flown = false, script = null, raf = 0, perchTimer = 0, lastFrame = '', lastMood = null, mine = false, failAt = 0; const enteredAt = performance.now();
-    /* 照模式定大小(CFG.sizes):換了就重開引擎(畫布照裝置像素比重配,最多 2 倍),css 的 --pet2-w、--pet2-h 跟著改;靜止的小雞新的引擎馬上停在靜止格(審查第 1 輪 #7);寬不寬先算好再開第一次(#9) */
+    /* 照模式定大小(CFG.sizes):換了就重開引擎(畫布照裝置像素比重配,最多 2 倍),css 的 --pet2-w、--pet2-h 跟著改;靜止的小雞新的引擎馬上停在靜止格;寬不寬先算好再開第一次 */
     function sized() {
-      const so = root.screen && root.screen.orientation, s = sizeFor(APP, wide, APP && innerHeight <= CFG.landH && html.clientWidth > innerHeight && !/^portrait/.test((so && so.type) || ''), root.innerWidth), st = html.style;   // 橫放看方向不只看高:直放的視窗變矮(鍵盤、分割畫面)不換(審查第 3 輪 #2)
+      const so = root.screen && root.screen.orientation, s = sizeFor(APP, wide, APP && innerHeight <= CFG.landH && html.clientWidth > innerHeight && !/^portrait/.test((so && so.type) || ''), root.innerWidth), st = html.style;   // 橫放看方向不只看高:直放的視窗變矮(鍵盤、分割畫面)不換
       if (s === S || (S && html.classList.contains('app-kb'))) return false;   // 鍵盤開著不換,收起來再換
       S = s; BOXH = Math.round(S * M.ground / M.width); TW = Math.max(CFG.tap.min, Math.round(S * CFG.tap.w)); TH = Math.max(CFG.tap.min, Math.round(BOXH * CFG.tap.h)); lastFrame = ''; const old = anim; anim = null; if (old) old.stop();
-      anim = A.animate(cv, { size: S, fps: 8, maxDpr: 2, pose: curPose, onTick: (t) => { if (anim) onTick(t); } }); if (off || faded) anim.stop(); else if (still()) showStill();   // 新引擎的第一拍在 animate() 裡同步跑、anim 還沒換好:這一拍不走 onTick,不然換姿勢會叫醒剛停掉的舊引擎、之後沒人停得掉(審查第 3 輪 #0)
+      anim = A.animate(cv, { size: S, fps: 8, maxDpr: 2, pose: curPose, onTick: (t) => { if (anim) onTick(t); } }); if (off || faded) anim.stop(); else if (still()) showStill();   // 新引擎的第一拍在 animate() 裡同步跑、anim 還沒換好:這一拍不走 onTick,不然換姿勢會叫醒剛停掉的舊引擎、之後沒人停得掉
       if (st && typeof st.setProperty === 'function') { st.setProperty('--pet2-w', S + 'px'); st.setProperty('--pet2-h', BOXH + 'px'); st.setProperty('--pet2-tw', TW + 'px'); st.setProperty('--pet2-th', TH + 'px'); } return true;
     }
     const Z = !APP && MAIN && root.PET_ROAM_ZONES && root.PET_ROAM_ZONES.version === 1 ? root.PET_ROAM_ZONES : null, ZST = Object.freeze({ sel: 'zone', edge: 'zone' });
@@ -230,7 +230,7 @@
         }
         return out;
       },
-      deco: Z ? (e) => Z.decoRects(e, getComputedStyle) : null,   // 網站模式:標題的螢光筆也是障礙(規格 1.11);App 模式不變
+      deco: Z ? (e) => Z.decoRects(e, getComputedStyle) : null,   // 網站模式:標題的螢光筆也是障礙;App 模式不變
     };
     function collect(x0, x1, y0, y1, o) {
       const seen = new Set(), els = [];
@@ -335,14 +335,14 @@
     function setPose(p) { lastFrame = ''; curPose = p; anim.setPose(p); syncMove(); }
     function showStill() { const m = U.mood(); lastFrame = ''; curPose = m; anim.show(A.calm[m] || 0, 0, m); syncMove(); }
     function syncMove() { if (Z) layer.classList.toggle('is-move', wide && !held && (!!script || ((curPose === 'walk' || curPose === 'run') && !still()))); }   // 電腦版:走、跳、飛時點擊穿過,停著才點得到
-    /* 鍵盤焦點(看得到焦點框)在小雞上:不淡出、不飛、站點上不飛走(規格 1.2、1.8)。點小雞(觸控、滑鼠)、關掉面板後 pet-ui 把焦點放回來,沒有焦點框,不算(第三輪審查 #3:不然卡片捲回畫面時兩隻同時在) */
+    /* 鍵盤焦點(看得到焦點框)在小雞上:不淡出、不飛、站點上不飛走。點小雞(觸控、滑鼠)、關掉面板後 pet-ui 把焦點放回來,沒有焦點框,不算(不然卡片捲回畫面時兩隻同時在) */
     let hovered = false, keyFocus = false;
     const focusShown = () => { try { return btn.matches(':focus-visible'); } catch (e) { return false; } };
     const focused = () => doc.activeElement === btn && (keyFocus || focusShown());
 
     /* ---------- 畫面上只有一隻:有小雞的卡片在畫面上時原地淡出 ---------- */
     function twin() {
-      if (wide) return false;   // 電腦版到處走:卡片裡的小雞藏起來(css),走動那隻不淡出(Bonnie 10/20)
+      if (wide) return false;   // 電腦版到處走:卡片裡的小雞藏起來(css),走動那隻不淡出
       const top = topLimit(), bot = groundLine();
       for (const c of doc.querySelectorAll('.pet-card')) {
         if (c.hidden) continue;
@@ -382,7 +382,7 @@
       off = now;
       layer.classList.toggle('is-off', off);
       if (off) { stopScript(); anim.stop(); if (mode === 'air' && !perch) { toGround(); place(); } }
-      else { lastFrame = ''; measure(); place(); if (wz && wz.dirty) remeasure(); next(); }   // 藏著的時候內容變了:馬上看腳下那塊還在不在(第三輪審查 #1)
+      else { lastFrame = ''; measure(); place(); if (wz && wz.dirty) remeasure(); next(); }   // 藏著的時候內容變了:馬上看腳下那塊還在不在
       return off;
     }
 
@@ -408,7 +408,7 @@
       const nx = nearest(sp, x);
       if (nx !== null && Math.abs(nx - x) <= CFG.hopMax) { perch.span = spanAt(sp, nx); hop(nx); } else descend();
     }
-    /* 不播動畫直接回地面,從比較近的一側走進來(規格 1.7) */
+    /* 不播動畫直接回地面,從比較近的一側走進來 */
     function snapGround() {
       abortScript();
       const left = x + S / 2 < html.clientWidth / 2;
@@ -452,7 +452,7 @@
       const roomy = !!sp && sp[1] - sp[0] >= 8;
       if (m === 'sleep') act = { pose: 'sleep', left: Infinity };
       else if (m === 'hungry') act = r < 0.65 || !roomy ? { pose: 'hungry', left: rand(30, 60) } : { pose: 'walk', left: rand(10, 20) };
-      else if (wide && sp) act = Z.stroll(sp, x, Math.random, mode === 'ground');   // 電腦版的空地和地面都多半站著,不跑(第三輪審查 #3)
+      else if (wide && sp) act = Z.stroll(sp, x, Math.random, mode === 'ground');   // 電腦版的空地和地面都多半站著,不跑
       else if (r < 0.35 || !roomy) act = { pose: 'idle', left: rand(16, 32) };
       else if (r < 0.85) act = { pose: 'walk', left: rand(20, 48) };
       else act = { pose: 'run', left: rand(12, 24) };
@@ -490,12 +490,12 @@
       script = null;
       cancelAnimationFrame(raf);
       if (air) { btn.removeAttribute('tabindex'); layer.classList.remove('is-fly'); }
-      /* 地面上跳到一半(試飛失敗、小跳)被中止時 gy 還沒歸零:一起放回去,不然之後一直浮在地面上面(第三輪審查 #7) */
+      /* 地面上跳到一半(試飛失敗、小跳)被中止時 gy 還沒歸零:一起放回去,不然之後一直浮在地面上面 */
       if (lean || gy) { lean = 0; gy = 0; place(); }
       syncMove();
     }
     function abortScript() { if (script) endScript(); }
-    /* 中止正在播的動作;飛上去或落下來到一半(在空中、不在站點上)直接回地面(第三輪審查 #6) */
+    /* 中止正在播的動作;飛上去或落下來到一半(在空中、不在站點上)直接回地面 */
     function stopScript() {
       const flying = !!script && script.air && !perch;
       abortScript();
@@ -556,16 +556,16 @@
       }, true);
       return true;
     }
-    /* 站的時間到了:滑鼠停在牠身上、鍵盤焦點在牠身上時不飛走,過一下再看(規格 1.8) */
+    /* 站的時間到了:滑鼠停在牠身上、鍵盤焦點在牠身上時不飛走,過一下再看 */
     function perchEnd() { if (held || focused()) perchTimer = setTimeout(perchEnd, CFG.perchRetry); else descend(); }
     /* 撲著翅膀落回地面(fly 第 1、2 格慢速循環,邊撲邊掉,最多 1.2 秒) */
     function descend() {
       clearTimeout(perchTimer);
       if (mode !== 'air') return;
-      /* 站點上正在播一小段(拿到點心開心跳一下、站點上的小跳):過一下再看。以前直接回去,之後沒人再排,小雞一直站著(chick2 第二輪修正 #6) */
+      /* 站點上正在播一小段(拿到點心開心跳一下、站點上的小跳):過一下再看。以前直接回去,之後沒人再排,小雞一直站著 */
       if (script) { if (perch) perchTimer = setTimeout(perchEnd, CFG.perchRetry); return; }
       if (off || sheetOpen || faded || still()) { snapGround(); return; }
-      perch = null;   // 一開始落就離開站點:途中被中止(切到背景、淡出)時照「飛到一半」回地面,不會卡在半空(第三輪審查 #6)
+      perch = null;   // 一開始落就離開站點:途中被中止(切到背景、淡出)時照「飛到一半」回地面,不會卡在半空
       const gl = groundLine(), start = feetDoc, x0 = x, tx = clampLane(x), sy0 = scrollY;
       const D = Math.min(CFG.fallMax, Math.max(0.6, (gl + sy0 - start) / 520));
       dir = tx >= x0 ? 1 : -1;
@@ -608,7 +608,7 @@
       play(list.map((p) => seq(p)), () => next());
     }
 
-    /* ---------- 電腦版到處走(規格 1.11;空地、路線、權重、途中位置在 js/pet-roam-zones.js) ---------- */
+    /* ---------- 電腦版到處走(空地、路線、權重、途中位置在 js/pet-roam-zones.js) ---------- */
     function wzReset() { wide = !!Z && html.clientWidth >= Z.CFG.minW; wz = wide ? Z.memory(performance.now(), Math.random) : null; if (Z) html.classList.toggle('pet-roam2-wide', wide); }   // 大小在載入時、拖完視窗時換(resizeEnd)
     /* 量空地:捲動停下、視窗大小改變、內容變動時,最多每秒一次。腳下那塊還在就留著,不在就小跳到 80 px 內的空地,再不行落回地面 */
     function remeasure() {
@@ -650,7 +650,7 @@
       const land = how === 'hop' ? { dur: 0.25, apply(t) { frame('land', t < 0.125 ? 0 : 1, 0); } } : seq('land');
       play(how === 'fly' ? [seq('takeoff'), mv, land] : [mv, land], () => { perch = { st: ZST, zone: z, feetDoc: g.f1, span: d.span || [z.lo, z.hi] }; wz.arrive = true; next(); }, true, how);
     }
-    /* 站的、要去的空地被捲到頂欄底下:撲著翅膀往下落到看得到的空地(Z.rescue),沒有才回地面(第五輪審查 #2) */
+    /* 站的、要去的空地被捲到頂欄底下:撲著翅膀往下落到看得到的空地(Z.rescue),沒有才回地面 */
     function lostZone() {
       const f = Math.max(feetDoc - scrollY, topLimit() + BOXH), ok = wide && mode === 'air' && !off && !faded && !still() && U.mood() === 'idle';
       const d = ok ? Z.rescue(wz.zones, x, f, { top: topLimit(), bottom: groundLine() - BOXH - 8, scrollY, BOXH }, landOk) : null;
@@ -674,7 +674,7 @@
       const d = Z.choose({ zones: wz.zones, here, ground: groundZone(), now, busy: tr.busy(now), calm: tr.calm(now), near: tr.near(now), mouse: tr.pointer(now), mouseY: tr.pointerY(now), lastFly: wz.lastFly,
         recent: wz.recent, order: wz.order, main: wz.main, scrolled: tr.scrolled(now), sc: tr.scrollInfo(), H: innerHeight, top: topLimit(), bottom: groundLine() - BOXH - 8, scrollY, S, BOXH, flyFrames: (a, m) => flyFrames(a, null, m), rnd: Math.random });
       if (!d) { wz.until = now + Z.CFG.retry; return; }
-      if (d.how === 'walk') { const p = d.pose || 'walk'; wz.until = now + d.dur * 1000; dir = d.tx >= x ? 1 : -1; act = { pose: p, left: Math.ceil(d.dur * (A.fps[p] || 8)) }; turning = 0; setPose(p); place(); return; }   // 忙著、飛不上去:沿著地面走(在地面用跑的)到一側空白(第四輪審查 #0;第三輪複查 #0)
+      if (d.how === 'walk') { const p = d.pose || 'walk'; wz.until = now + d.dur * 1000; dir = d.tx >= x ? 1 : -1; act = { pose: p, left: Math.ceil(d.dur * (A.fps[p] || 8)) }; turning = 0; setPose(p); place(); return; }   // 忙著、飛不上去:沿著地面走(在地面用跑的)到一側空白
       if (!d.z.ground && !landOk(d.z, d.tx)) { wz.zones = wz.zones.filter((q) => q !== d.z); wz.until = now + Z.CFG.retryLand; return; }
       goZone(d);
     }
@@ -703,7 +703,7 @@
       mutTimer = setTimeout(() => { mutTimer = 0; settle(); }, CFG.mutThrottle);
     }).observe(doc.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['class', 'style', 'hidden', 'open'] });
     function resizeEnd() { sizeT = 0; if (!sized()) return; if (wide) { if (mode === 'air') snapGround(); Object.assign(wz, { zones: [], measuredAt: -1e9, dirty: true }); } measure(); if (mode === 'ground') { x = clampLane(x); place(); } }   // 拖完視窗才換大小(網站模式;拖的途中跨過幾段都不換,一次拖動最多重開一次引擎):到處走的時候回地面、用新的大小重量空地
-    const relayout = () => { offCheck(); if (APP) sized(); else { clearTimeout(sizeT); sizeT = setTimeout(resizeEnd, CFG.resizeEnd); } measure(); if (Z && (html.clientWidth >= Z.CFG.minW) !== wide) { if (mode === 'air') snapGround(); wzReset(); syncMove(); } else if (wide && mode === 'air' && x > lane[1]) snapGround(); if (perch) checkPerch(true); else settle(); };   // 分頁列藏起來時停住;寬度跨過 1024 時回地面換規則;變窄後小雞在視窗外(右側空白不見了)直接回地面,不從視窗外飛回來、頁面不變寬(第二輪審查 #3)
+    const relayout = () => { offCheck(); if (APP) sized(); else { clearTimeout(sizeT); sizeT = setTimeout(resizeEnd, CFG.resizeEnd); } measure(); if (Z && (html.clientWidth >= Z.CFG.minW) !== wide) { if (mode === 'air') snapGround(); wzReset(); syncMove(); } else if (wide && mode === 'air' && x > lane[1]) snapGround(); if (perch) checkPerch(true); else settle(); };   // 分頁列藏起來時停住;寬度跨過 1024 時回地面換規則;變窄後小雞在視窗外(右側空白不見了)直接回地面,不從視窗外飛回來、頁面不變寬
     root.addEventListener('resize', relayout);
     root.addEventListener('orientationchange', relayout);
     new MutationObserver(() => { offCheck(); if (APP) sized(); }).observe(html, { attributes: true, attributeFilter: ['class'] });   // app-kb:鍵盤收起來時補換大小(網站模式只在拖完視窗時換)
@@ -725,7 +725,7 @@
       if (held && !script) { if (still()) showStill(); else setPose(U.mood()); } else if (was && !held) next();   // 靜止的小雞停住時也不抖
     }
     btn.addEventListener('focus', () => { keyFocus = focusShown(); pause(); });
-    /* 焦點離開:有焦點時沒淡出的,現在補(第三輪審查 #3) */
+    /* 焦點離開:有焦點時沒淡出的,現在補 */
     btn.addEventListener('blur', () => { keyFocus = false; pause(); if (!off && !scrolling) setFaded(twin()); });
     btn.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { if (tr) tr.stay(); hovered = true; pause(); } });
     btn.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { if (wide) tr.leave(); else { hovered = false; pause(); } } });
@@ -784,7 +784,7 @@
 
     root.PET_ROAM2 = Object.freeze({
       version: 1,
-      /* 唯讀的快照,給預覽和量測腳本讀 */
+      /* 唯讀的快照,給量測腳本讀 */
       get state() {
         return Object.freeze({ mode: APP ? 'app' : 'web', main: MAIN, x: Math.round(x), ground: mode === 'ground',
           perch: perch ? perch.st.sel : null, faded, flying: !!(script && script.air), pose: anim.pose, still: still(), off, scrolling,

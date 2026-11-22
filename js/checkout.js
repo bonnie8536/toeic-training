@@ -13,8 +13,8 @@
   const NB = ' ';   // 數字與單位之間不換行
   const CONSENT_TEXT = '我同意線上服務開始使用後，不適用 7 天猶豫期。';
   /* 「開始使用」的判定(跟 refund.html「怎樣算開始使用」同一件事),放在勾選框正下方。
-     老師方案的功能(班級、學生進度)不是練習功能,所以老師方案另外寫一句(2026-10-17 第二輪複審)。
-     學生方案與寫作批改各寫自己那一句,跟退款政策一字不差(第三輪複審:以前兩種共用一句,批改的視窗沒寫 5 篇的規則) */
+     老師方案的功能(班級、學生進度)不是練習功能,所以老師方案另外寫一句。
+     學生方案與寫作批改各寫自己那一句,跟退款政策一字不差(以前兩種共用一句,批改的視窗沒寫 5 篇的規則) */
   /* 這三句是條文:要改字,先換條款版本(CONSENT_VERSION)並同步 refund.html */
   const CONSENT_DEF = '方案開始計算後，登入並使用過任何一項需要方案的練習功能，就算開始使用。';
   const CONSENT_DEF_CREDITS = '寫作真人批改以一篇為單位，批改完成的那一篇就算使用。5' + NB + '篇批改服務批改過其中一篇，就算開始使用。';
@@ -99,7 +99,7 @@
   function teacherCount() { return catalog().filter(x => x.group === 'teacher').length; }
   function unlimitedTeacher(a) { return teacherCount() > 0 && teacherSkus(a).length === 0; }
   /* 「名額 N 位以內」的 N:沒有期限的那一段的名額(my_access.teacher_no_end_seats)。seats 是目前所有期內方案裡最多的,
-     另外買的有期限升級也算在內,不能拿來寫(2026-10-17 第二輪複審)。舊資料庫沒有這個欄位時,只在 seats 以內的方案都不賣時才用 seats */
+     另外買的有期限升級也算在內,不能拿來寫。舊資料庫沒有這個欄位時,只在 seats 以內的方案都不賣時才用 seats */
   function noEndCap(a) {
     if (!isObj(a)) return null;
     if ('teacher_no_end_seats' in a) return typeof a.teacher_no_end_seats === 'number' ? a.teacher_no_end_seats : null;
@@ -209,7 +209,7 @@
 
   function rememberOrder(o, now) {
     if (!orderNoOk(o)) return;
-    try { sessionStorage.setItem(LAST_KEY, JSON.stringify({ o, at: typeof now === 'number' ? now : Date.now() })); } catch (e) { /* 存不進去:結果頁改請她到「我的」頁看 */ }
+    try { sessionStorage.setItem(LAST_KEY, JSON.stringify({ o, at: typeof now === 'number' ? now : Date.now() })); } catch (e) { /* 存不進去:結果頁改請使用者到「我的」頁看 */ }
   }
   function lastOrder(now) {
     try {
@@ -284,7 +284,7 @@
   const HOME = { text: '開始練習', href: 'index.html' };
   const ME = { text: '查看方案與付款', href: 'me.html' };
   const PRICING = { text: '回方案與價格', href: 'pricing.html' };
-  /* 付款成功後的主要按鈕照買的項目:老師方案要到教師後台開班拿邀請碼,寫作批改到寫作練習送作文(第三輪複審) */
+  /* 付款成功後的主要按鈕照買的項目:老師方案要到教師後台開班拿邀請碼,寫作批改到寫作練習送作文 */
   const NEXT = { teacher: { text: '前往教師後台', href: 'admin.html' }, credits: { text: '前往寫作練習', href: 'writing.html' } };
   function nextAction(row) { return Object.assign({ primary: true }, (isObj(row) && NEXT[row.item]) || HOME); }
   const ASK_LINE = '有問題請寫信到 ' + MAIL + ' 並附上訂單編號';
@@ -503,7 +503,7 @@
       const p = picked();
       if (!p) return;
       /* 按鈕停用前把焦點移到標題;正在前往付款頁寫在提示區(role=alert),讀螢幕軟體才聽得到。
-         按鈕上也寫同一句,提示區就只給讀螢幕軟體(buy-sending 看不到),畫面上不會出現兩次(第三輪複審) */
+         按鈕上也寫同一句,提示區就只給讀螢幕軟體(buy-sending 看不到),畫面上不會出現兩次 */
       head.focus();
       msg.textContent = SAY.sending; msg.className = 'auth-msg buy-sending';
       sending = true;

@@ -1,8 +1,8 @@
-/* 小雞第二階段:整頁跑(js/pet-roam2.js;規格 小雞第二階段規格.md 第 1、2 節、附錄 A.1、A.9;實作契約第 5 節)。
+/* 小雞第二階段:整頁跑(js/pet-roam2.js)。
    用法:node tools/test_pet_roam2.js
    - util 的純計算:freeSpans(可點的東西間隔 8 px、文字圖片卡片 4 px、整排沒空位)、sideColumns(兩側空白 80 px 門檻)、
      leanFor(最多 11 度、中段最斜、頭尾 0、60 px 以下照比例)、flyFrames(照 ChickArt.flyPlan、2.5 秒上限、飛不到就不去)。
-   - obstaclesOf 配一個很小的假 DOM:附錄 A.1 的可以點的東西、計算後 cursor: pointer、文字、圖片、卡片、略過自己那一層。
+   - obstaclesOf 配一個很小的假 DOM:可以點的東西、計算後 cursor: pointer、文字、圖片、卡片、略過自己那一層。
    - 原始碼檢查:不讀寫 localStorage、不碰 PET_STORE、不讀網址參數、sessionStorage 只用 pet_roam_x、設定集中在一個凍結的物件。
    - 開機:缺 PET_UI 或舊版引擎、頁面上已經有舊的 .pet-roam 時什麼都不做;App 模式放在分頁列前面,DOM 照契約。
    瀏覽器裡的行為(地面高度、站點、點擊穿過、淡出)由 scratchpad 的 Chrome 檢查看,不進 repo。 */
@@ -59,7 +59,7 @@ run('設定', () => {
   eq([CFG.hopMax, CFG.hopDur], [80, 0.4], '小跳 80 px、0.4 秒');
   eq([CFG.scrollIdle, CFG.mutThrottle, CFG.fade], [150, 250, 200], '捲動停 150、節流 250、淡出 200 毫秒');
   eq([CFG.flyMax, CFG.fallMax, CFG.leanMax, CFG.leanFull], [2.5, 1.2, 11, 60], '飛 2.5 秒、落 1.2 秒、斜 11 度、60 px');
-  eq([CFG.sizes, CFG.padI, CFG.padO, CFG.gap, CFG.webLift], [{ app: 96, appLand: 64, web: 96, wide: [[1440, 110], [1344, 94], [1328, 86], [1312, 78], [1296, 70], [0, 62]] }, 8, 4, 16, 4], '尺寸(每種模式一個,2026-10-23 約 2 倍;App 手機橫放 64,審查第 2 輪 #4;電腦版到處走照視窗寬分段)與間隔;兩側空白的門檻照大小算(tools/test_pet_roam_size.js)');
+  eq([CFG.sizes, CFG.padI, CFG.padO, CFG.gap, CFG.webLift], [{ app: 96, appLand: 64, web: 96, wide: [[1440, 110], [1344, 94], [1328, 86], [1312, 78], [1296, 70], [0, 62]] }, 8, 4, 16, 4], '尺寸(每種模式一個,2026-10-23 約 2 倍;App 手機橫放 64;電腦版到處走照視窗寬分段)與間隔;兩側空白的門檻照大小算(tools/test_pet_roam_size.js)');
 });
 
 /* ---------- freeSpans ---------- */
@@ -146,7 +146,7 @@ run('flyFrames', () => {
   ok(FF(400, PLAN).n === 30 && FF(160, PLAN).n === 12, '每秒 160 px 的節奏,1 到 2.5 秒');
 });
 
-/* ---------- 量障礙(附錄 A.1),配很小的假 DOM ---------- */
+/* ---------- 量障礙,配很小的假 DOM ---------- */
 function fakeEl(tag, o) {
   o = o || {};
   const attrs = Object.assign({}, o.attrs || {});
@@ -178,7 +178,7 @@ function kinds(list, o, own) { return U.obstaclesOf(list, o || ALL, ENV(own)).ma
 run('obstaclesOf', () => {
   const page = fakeEl('div', { style: { backgroundColor: 'rgb(246, 248, 250)' } });
   const mk = (tag, o) => fakeEl(tag, Object.assign({ parent: page }, o || {}));
-  // 附錄 A.1:可以點的東西一律 8 px
+  // 可以點的東西一律 8 px
   const clickables = [mk('a'), mk('a', { attrs: { href: 'x.html' } }), mk('button'), mk('input'), mk('select'), mk('textarea'), mk('label'), mk('summary'),
     mk('details'), mk('video'), mk('audio'), mk('iframe'), mk('canvas'), mk('div', { attrs: { draggable: 'true' } }), mk('div', { attrs: { contenteditable: '' } }),
     mk('div', { attrs: { contenteditable: 'true' } }), mk('span', { attrs: { role: 'button' } }), mk('span', { attrs: { role: 'link' } }), mk('span', { attrs: { role: 'tab' } }),
@@ -219,7 +219,7 @@ run('obstaclesOf', () => {
 run('samplePoints', () => {
   const pts = U.samplePoints(100, 164, 40, 107, 12, 1000, 800);
   const has = (x, y) => pts.some((p) => near(p[0], x, 0.6) && near(p[1], y, 0.6));
-  ok(has(100, 40) && has(164, 40) && has(100, 107) && has(164, 107) && has(132, 73.5), '四角加中心(附錄 A.1)', pts.slice(0, 6));
+  ok(has(100, 40) && has(164, 40) && has(100, 107) && has(164, 107) && has(132, 73.5), '四角加中心', pts.slice(0, 6));
   ok(pts.every((p) => p[0] >= 0 && p[0] < 1000 && p[1] >= 0 && p[1] < 800), '都在視窗裡');
   ok(U.samplePoints(-50, 30, -10, 20, 12, 1000, 800).every((p) => p[0] >= 0 && p[1] >= 0), '超出視窗的夾回來');
   ok(pts.length <= 80, '取樣點有上限(不列舉全頁)', pts.length);
@@ -241,7 +241,7 @@ run('原始碼', () => {
   ok(!/(flyChance|failChance|flyAfter|perchMin|perchMax|failEvery)\s*[:=]/.test(rest) && /CFG\.flyChance/.test(rest) && /CFG\.failChance/.test(rest), '機率和時間只寫在設定物件裡');
   const lines = SRC.split('\n').length;
   ok(lines <= 800, '800 行以內', lines);
-  console.log('  js/pet-roam2.js:' + lines + ' 行,' + Buffer.byteLength(SRC, 'utf8') + ' bytes(規格 A.9 目標 15 KB)');
+  console.log('  js/pet-roam2.js:' + lines + ' 行,' + Buffer.byteLength(SRC, 'utf8') + ' bytes');
 });
 
 /* ---------- css/style.css 裡 roam 那一塊:開關關著時不作用;<html> 也有 pet-roam2 這個 class,規則不能套到 <html> ---------- */
@@ -427,7 +427,7 @@ run('這一層畫不出來時停住(App 模式分頁列藏起來的寬視窗、�
   ok(web.win.PET_ROAM2.state.off === false, '網站模式沒有分頁列:照常走動', web.win.PET_ROAM2.state);
 });
 
-/* 第二輪審查:進頁第一格還沒放好位置就畫出來;靜止的小雞被滑鼠停住、鍵盤焦點時又開始抖 */
+/* 進頁第一格還沒放好位置就畫出來;靜止的小雞被滑鼠停住、鍵盤焦點時又開始抖 */
 run('進頁:第一次排好位置之前整層看不到(is-init),排好以後才拿掉', () => {
   const app = fakeBrowser({ tabbar: true, bar: { shown: true }, htmlClass: ['app-shell', 'has-tabbar', 'is-tab-root'], page: 'me.html' });
   const layer = app.body.kids.find((e) => e.classList.contains('pet-roam2'));
@@ -467,7 +467,7 @@ run('靜止的小雞(練習頁、關掉走動):滑鼠停住、鍵盤焦點都畫
   ok(main.anim.poses.length > q1, '走動打開、滑鼠停住:照常換成待機姿勢(停下來)', main.anim.poses.slice(q1));
 });
 
-/* ---------- 第三輪審查:中止動作後回到地面(#6 落下來到一半、#7 地面上跳到一半)、觸控留下的焦點不擋淡出(#3) ---------- */
+/* ---------- 中止動作後回到地面(落下來到一半、地面上跳到一半)、觸控留下的焦點不擋淡出 ---------- */
 const rectOf = (l, t, r, b) => ({ left: l, top: t, right: r, bottom: b, width: r - l, height: b - t, x: l, y: t });
 const OFFSCREEN = rectOf(0, 2000, 300, 2100), ONSCREEN = rectOf(0, 300, 300, 400);
 /* 一頁:時間可以撥、計時器記下來、有一張 .pet-card(card.r 是它現在的位置)、學習頁標題右邊是站點;App 模式分頁列上緣在 760 */
@@ -493,7 +493,7 @@ function roamPage(page, o) {
   }
   return Object.assign(P, { clock, card, btn, ty, at, cut, V, R: P.win.PET_ROAM2 });
 }
-run('第三輪審查 #7:地面上試飛失敗跳到一半被中止(切到背景、打開面板、淡出),回來時腳踩在地面上,不浮在分頁列上面', () => {
+run('地面上試飛失敗跳到一半被中止(切到背景、打開面板、淡出),回來時腳踩在地面上,不浮在分頁列上面', () => {
   for (const how of ['hidden', 'sheet', 'fade']) {
     const P = roamPage('index.html', { random: 0.01 });   // 剛進頁還不能飛,5% 的試飛失敗一定發生
     P.at(0);
@@ -505,7 +505,7 @@ run('第三輪審查 #7:地面上試飛失敗跳到一半被中止(切到背景�
     ok(P.ty() === 0, '試飛失敗跳到一半、' + how + ':之後走動也在地面上', P.ty());
   }
 });
-run('第三輪審查 #6:從站點撲著翅膀落回地面到一半被中止(切到背景、淡出、打開面板),回來時在地面上,不卡在半空', () => {
+run('從站點撲著翅膀落回地面到一半被中止(切到背景、淡出、打開面板),回來時在地面上,不卡在半空', () => {
   for (const how of ['hidden', 'fade', 'sheet']) {
     const P = roamPage('learn.html', { random: 0.01 });
     P.at(5000);   // 停了 4 秒以上:30% 的飛一定發生
@@ -522,9 +522,9 @@ run('第三輪審查 #6:從站點撲著翅膀落回地面到一半被中止(切�
       '落到一半、' + how + ':回來時在地面上', { up, perched, pe: !!pe, falling, state: s, y: P.ty() });
   }
 });
-/* chick2 第二輪修正 #6:站的時間到了的那一刻,站點上正在播一小段動作(拿到點心開心跳一下、站點上的小跳)。
+/* 站的時間到了的那一刻,站點上正在播一小段動作(拿到點心開心跳一下、站點上的小跳)。
    以前 descend() 先清掉計時器、看到正在播就直接回去,之後沒有人再排下一次,小雞一直站在站點上 */
-run('chick2 第二輪修正 #6:站的時間到了時站點上正在播開心跳一下,播完過一下照樣落回地面,不會一直站著', () => {
+run('站的時間到了時站點上正在播開心跳一下,播完過一下照樣落回地面,不會一直站著', () => {
   const P = roamPage('learn.html', { random: 0.01 });
   P.at(5000);
   P.at(9000);   // 飛完、站上標題右邊
@@ -545,7 +545,7 @@ run('chick2 第二輪修正 #6:站的時間到了時站點上正在播開心跳�
   ok(perched && playing && rearmed && still && s.ground === true && s.perch === null && P.ty() === 0,
     '站點上播開心時站的時間到了:重排一次,之後落回地面', { perched, playing, rearmed, still, state: s, y: P.ty() });
 });
-run('第三輪審查 #3:點小雞(觸控、滑鼠)留下的焦點沒有焦點框,有小雞的卡片回到畫面時照樣淡出;鍵盤焦點才不淡出,焦點離開就補淡出', () => {
+run('點小雞(觸控、滑鼠)留下的焦點沒有焦點框,有小雞的卡片回到畫面時照樣淡出;鍵盤焦點才不淡出,焦點離開就補淡出', () => {
   const P = roamPage('me.html', { web: true });
   P.at(0);
   ok(P.R.state.faded === false, '卡片不在畫面上:不淡出');

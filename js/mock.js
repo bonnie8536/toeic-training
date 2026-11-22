@@ -2,7 +2,7 @@
    - 從現有題庫隨機抽題(聽力+閱讀),全程倒數,時間到自動交卷。
    - 聽力每題音檔只能播一次(正式考規則);全部交卷後才對答案。
    - 分數為參考換算(樣本小,僅供追蹤趨勢);紀錄存 mock_history(雲端同步)。
-   - 交卷時答錯的題收進錯題本(mock_wrong,js/wrongbook.js;錯題本定稿 2026-11-18)。沒作答的不收;原本在錯題本、這次答對的移出。
+   - 交卷時答錯的題收進錯題本(mock_wrong,js/wrongbook.js)。沒作答的不收;原本在錯題本、這次答對的移出。
      不寫 drill_p*、listen_p*、hist(那幾個鍵是整份上傳,模擬考頁寫它們會蓋掉別台在考試期間刷的題)。 */
 (function () {
   const root = $('#mock-root');
@@ -44,7 +44,7 @@
   const pick = (arr, n) => shuffle(arr || []).slice(0, n);
   const qid = (set, i) => set.id + ':' + i;
 
-  /* ---------- 交卷時存不進去的成績(第 2 輪審查 2026-10-31) ----------
+  /* ---------- 交卷時存不進去的成績(2026-10-31) ----------
      「交卷」和時間到自動交卷沒有 data-gate(開始的時候是能作答的)。考到一半別的分頁登出、換帳號,
      或登回來時這台的帳號資料夾還沒從雲端灌好,交卷那一下 js/common.js 的最後一道會擋下:以前結果照常出現、成績哪裡都沒存。
      現在結果照樣給他看,但寫明還沒存;這一筆先放這個分頁的 sessionStorage,綁交卷時的資料夾(帳號),
@@ -70,7 +70,7 @@
     const m = S && typeof S.mock === 'function' ? S.mock(Array.isArray(hist) ? hist : [], recs) : null;   // 同一筆不會變兩筆,照日期排
     store.set('mock_history', (m && m.ok ? m.v : (Array.isArray(hist) ? hist : []).concat(recs)).slice(-30));
   }
-  /* 補存:分數照舊補進 mock_history;那一筆帶著作答(ans,錯題本定稿 2026-11-18)就順便把答錯的題補進錯題本(js/wrongbook.js)。
+  /* 補存:分數照舊補進 mock_history;那一筆帶著作答(ans)就順便把答錯的題補進錯題本(js/wrongbook.js)。
      對錯在這裡用題庫重算,不信任暫存裡的東西;mock_wrong 同一題已經有比較新的,合併時留新的,重跑結果一樣。
      分數和錯題都確認寫進去了才從暫存拿掉。舊版 mock.js 讀到帶 ans 的暫存只看 rec(分數照補、ans 丟掉) */
   function saveLater() {
@@ -96,7 +96,7 @@
   renderHome();
   /* 確認登入之後(這一頁不重載、能作答):之前存不進去的成績補存,首頁的紀錄表跟著重畫 */
   Promise.resolve(window.CLOUD ? CLOUD.ready : null).then(() => { if (saveLater() && onHome) renderHome(); }, () => {});
-  /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud;審查 2026-11-19 #1):部署前就開著的舊版分頁會把帳本上的 mock_wrong 整份上傳,
+  /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud):部署前就開著的舊版分頁會把帳本上的 mock_wrong 整份上傳,
      本機先有別台考的錯題,交卷後就算被它整份傳上去也還在 */
   if (window.WRONGBOOK && typeof WRONGBOOK.syncCloud === 'function') WRONGBOOK.syncCloud();
 
@@ -459,7 +459,7 @@
         const hist = store.get('mock_history', []);
         hist.push(rec);
         store.set('mock_history', hist.slice(-30));
-        /* 答錯的題收進錯題本(mock_wrong,錯題本定稿 2026-11-18):t 跟這一筆 mock_history 同一毫秒。出錯不影響成績 */
+        /* 答錯的題收進錯題本(mock_wrong):t 跟這一筆 mock_history 同一毫秒。出錯不影響成績 */
         if (window.WRONGBOOK) { try { wb = WRONGBOOK.save(WRONGBOOK.fromAnswers(ans, Date.parse(rec.d))); } catch (e) { wb = null; } }
       } else {
         /* 存不進去:先放這個分頁,寫明原因(js/common.js accountBlock);放不進 sessionStorage 就只能請他記下分數。

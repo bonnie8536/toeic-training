@@ -1,4 +1,4 @@
-/* 站長後台「收費管理」的共用部分(前端計畫九;tools/test_owner_accounts.js 用 fixture 測)。
+/* 站長後台「收費管理」的共用部分(tools/test_owner_accounts.js 用 fixture 測)。
    - 只有 window.PAID_UI === true 而且 CLOUD.access.is_owner === true 才掛上(mount 自己再檢查一次);
      沒開時這幾支檔案只定義 window.ADMIN_OWNER,一個節點都不碰、一個函式都不呼叫。
    - 寫入只走 owner_* 函式(資料庫在裡面檢查站長並寫異動紀錄),不直接寫任何表。
@@ -16,7 +16,7 @@
   const X_ICON = '<svg viewBox="0 0 22 22" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">'
     + '<path d="M5 5 17 17M17 5 5 17"/></svg>';
 
-  /* 帳號清單的分類(對應 owner_accounts 的 p_filter,前端計畫九.8);sub 是老師旁邊的四個小按鈕 */
+  /* 帳號清單的分類(對應 owner_accounts 的 p_filter);sub 是老師旁邊的四個小按鈕 */
   const FILTERS = [
     { key: 'all', label: '全部' }, { key: 'owner', label: '站長' }, { key: 'teacher', label: '老師' },
     { key: 'teacher_active', label: '期內', sub: true }, { key: 'teacher_grace', label: '寬限中', sub: true },
@@ -77,7 +77,7 @@
     return y + '-' + two(m) + '-' + two(Math.min(day, last));
   }
 
-  /* ---------- 帳號清單的文字(前端計畫九.8) ---------- */
+  /* ---------- 帳號清單的文字 ---------- */
   function displayName(r) {
     if (!isObj(r)) return '';
     const n = str(r.name).trim();
@@ -95,7 +95,7 @@
     return c.reason === 'expired' ? '老師方案已到期' : c.reason === 'over_seats' ? '超過老師的名額' : '';
   }
 
-  /* 使用狀態(前端計畫六.1 的順序,跟「我的」頁同一套):站長與靠老師方案撐著的列不寫(老師那一行寫) */
+  /* 使用狀態(跟「我的」頁同一套):站長與靠老師方案撐著的列不寫(老師那一行寫) */
   function statusText(a, nowIso) {
     if (!isObj(a) || a.source === 'owner' || a.plan === 'owner') return '';
     const paid = Date.parse(a.paid_through);
@@ -130,7 +130,7 @@
     return { state, source: a.teacher_source, seats: a.seats, seats_used: a.seats_used, plan_until: a.teacher_until, grace_until: a.teacher_grace_until };
   }
 
-  /* ---------- 改角色(前端計畫九.9) ---------- */
+  /* ---------- 改角色 ---------- */
   /* 老師改成學生的確認框:依序寫後果,他自己的使用權照查帳號讀到的每一段使用權寫
      (rights 會把老師方案的來源也算進去,分不出是學生的還是老師的,所以看 grants) */
   function demoteLines(r, look, ownerId, nowIso) {
@@ -252,7 +252,7 @@
     return out;
   }
 
-  /* ---------- 搬班級(前端計畫九.10) ---------- */
+  /* ---------- 搬班級 ---------- */
   function moveResult(res, graceDay) {
     const out = { lines: [], warns: [] };
     if (!isObj(res)) return out;
@@ -304,7 +304,7 @@
     return n ? '「' + n + '」（' + e + '）' : '「' + e + '」';
   }
 
-  /* ---------- 查帳號(前端計畫九.2) ---------- */
+  /* ---------- 查帳號 ---------- */
   function grantLabel(g) {
     if (!isObj(g)) return '';
     if (g.kind === 'teacher') {
@@ -415,7 +415,7 @@
   async function rpc(fn, args) {
     const C = window.CLOUD;
     if (!C || !C.client) return { ok: false, message: NET_MSG };
-    /* 送出時用的是這台現在的登入資料:別的分頁登出、換了帳號(這一頁沒重載)就不送(審查 D) */
+    /* 送出時用的是這台現在的登入資料:別的分頁登出、換了帳號(這一頁沒重載)就不送 */
     const gone = typeof C.accountCheck === 'function' ? C.accountCheck() : '';
     if (gone) return { ok: false, message: gone };
     try {
@@ -629,7 +629,7 @@
       note.className = 'auth-note ow-field-note' + (m ? ' bad' : '');
       wrap.classList.toggle('is-bad', !!m);
     }
-    /* derive:她自己還沒改過這一欄,就跟著別的欄位換(例如換項目時的預填金額) */
+    /* derive:使用者還沒改過這一欄,就跟著別的欄位換(例如換項目時的預填金額) */
     function sync(v) {
       if (f.derive && !touched && focusEl && f.type !== 'radio') {
         const x = str(f.derive(v));

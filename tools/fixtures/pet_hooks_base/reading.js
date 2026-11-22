@@ -35,7 +35,7 @@
   const article = articles.find(a => a.id === artId);
   if (article) renderReader(article);
   else renderList();
-  /* 自訂題庫先跟雲端對齊一次(同步合併設計 3.6):開了好幾天的 App,「存入單字本」才不是根據舊資料;
+  /* 自訂題庫先跟雲端對齊一次:開了好幾天的 App,「存入單字本」才不是根據舊資料;
      文章頁的「存入單字本／更新單字本」按鈕跟著更新 */
   if (window.CLOUD && typeof CLOUD.syncKey === 'function') {
     CLOUD.syncKey('vgame_banks').then(r => { if (r && r.changed && bankBtnSync) bankBtnSync(); }, () => {});
@@ -433,7 +433,7 @@
   }
 
   /* ============ 單字存入題庫(單字訓練的自訂題庫) ============
-     每次都重讀本機的題庫、用 js/sync-merge.js 的函式改(蓋 _r、_t、_p 戳記,多台裝置合併用;同步合併設計 3.7.4),改到才存 */
+     每次都重讀本機的題庫、用 js/sync-merge.js 的函式改(蓋 _r、_t、_p 戳記,多台裝置合併用),改到才存 */
   function importVocabToBank(a, btn) {
     const norm = s => String(s).toLowerCase().replace(/\s+/g, ' ').trim();
     const SM = window.SYNC_MERGE || null;

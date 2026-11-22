@@ -1,4 +1,4 @@
-/* 衝衝英文搬家:把算好的結果寫進新網址的 localStorage(搬家計畫 2.6)。
+/* 衝衝英文搬家:把算好的結果寫進新網址的 localStorage。
    要寫的每一項是 [鍵, 原字串, 種類](js/move-merge.js 的 plan 給的),種類:
      add      新網址本來沒有這個鍵;
      grow     合併,結果包含新網址原本的東西(題庫、紀錄、錯題、完成紀錄、最佳成績、小雞、每日練習…);
@@ -110,7 +110,7 @@
     let p = prepare(ls, writes, now, !o.noBackup);
     if (!fits(ls, p.need + RESERVE)) {
       if (o.noBackup || !p.backupKey) return { ok: false, why: 'space' };
-      p = prepare(ls, writes, now, false);   // 備份放不下:不備份再試一次,呼叫的人只能給不會變少的合併(搬家計畫 2.4)
+      p = prepare(ls, writes, now, false);   // 備份放不下:不備份再試一次,呼叫的人只能給不會變少的合併
       if (!fits(ls, p.need + RESERVE)) return { ok: false, why: 'space' };
       if (p.replaced && !o.allowNoBackup) return { ok: false, why: 'noBackup' };
     }

@@ -1,4 +1,4 @@
-/* 衝衝英文搬家:新網址每一頁的提示(搬家計畫 2.6、2.7、2.12)。js/app-shell.js 只在新網址(MOVE.onNew)載入它,前面要先載 js/move-config.js。
+/* 衝衝英文搬家:新網址每一頁的提示。js/app-shell.js 只在新網址(MOVE.onNew)載入它,前面要先載 js/move-config.js。
    一次只出現一條,依序:
    1. 上次搬到一半分頁被關,js/common.js 已經照日誌處理過(tr_move_restored):請再搬一次。
    2. 這台有從舊網址搬來、還沒合併的帳號進度(tr_move_pending_<帳號 id>),目前卻沒登入那個帳號:請登入一次(每一頁都出現)。

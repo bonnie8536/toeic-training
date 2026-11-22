@@ -1,10 +1,10 @@
 // newebpay.ts:藍新金流 MPG 的加解密與驗章(不含任何金鑰)
-// 從 刷刷英文開發/收費/newebpay/newebpay.mjs 移植,邏輯逐行相同,只加型別。
+// 移植自原本的 newebpay.mjs,邏輯逐行相同,只加型別。
 // 只用 WebCrypto(globalThis.crypto.subtle)、TextEncoder、TextDecoder:Supabase Edge Function(Deno)與 Node 24 都能跑。
 // 型別只用「可以直接刪掉」的寫法(沒有 enum、namespace),Node 的 type stripping 才能直接 import 這個檔做測試:
 //   node tools/test_newebpay.js
 //
-// 規格(出處見 刷刷英文開發/收費/newebpay/藍新串接.md):
+// 藍新規格:
 //   TradeInfo = bin2hex(AES-256-CBC(http_build_query(參數))),key = HashKey、iv = HashIV,明文補到 32 byte 的倍數
 //   TradeSha  = 大寫 SHA256("HashKey=" + key + "&" + TradeInfo + "&HashIV=" + iv)
 //   藍新回傳的密文也是 32 byte 補齊,補齊長度可能是 17 到 32;WebCrypto 只接受 1 到 16,所以這裡自己處理補齊。
@@ -295,7 +295,7 @@ const isPlainObject = (v: unknown): v is Record<string, unknown> =>
   v !== null && typeof v === 'object' && !Array.isArray(v);
 
 // 只收 JSON 明文。我們一律送 RespondType=JSON,藍新回的明文也是 JSON;
-// query string(String 格式)跟我們自己的付款請求明文是同一種格式,收了就分不出來,一律丟錯(2026-10-17 審查修正)。
+// query string(String 格式)跟我們自己的付款請求明文是同一種格式,收了就分不出來,一律丟錯。
 // Result 一定要是物件(或內容是物件的 JSON 字串),不是就丟錯,不再當成空物件繼續。
 function parsePlain(text: string): { status: string | null; message: string | null; result: Record<string, unknown> } {
   const t = text.trim();
@@ -314,7 +314,7 @@ const fail = (error: string): ParsedNotify => ({ ok: false, status: null, messag
 
 // 只會出現在我們送給藍新的「付款請求」明文、不會出現在藍新回傳結果裡的欄位。
 // 付款請求(makeMpgFields)跟藍新的通知用同一組金鑰、同一條 TradeSha 公式,任何登入的人都拿得到自己那張單的請求欄位;
-// 不擋的話,把請求欄位原封不動 POST 到 NotifyURL 也會驗章通過(2026-10-16 審查修正)。
+// 不擋的話,把請求欄位原封不動 POST 到 NotifyURL 也會驗章通過。
 // 請求明文是 query string,parsePlain 只收 JSON 已經會擋;這張表是第二道。
 // RespondType 不在表上:藍新回傳結果的共同欄位本來就有 RespondType,列進來會把真的通知全部擋掉。
 const REQUEST_ONLY_KEYS = ['NotifyURL', 'ReturnURL', 'ClientBackURL', 'CustomerURL', 'TimeStamp', 'LoginType', 'TradeLimit'];
@@ -379,7 +379,7 @@ export function checkPaid(parsed: ParsedNotify | { ok: false } | null | undefine
   if (p.status !== 'SUCCESS') return { paid: false, reason: 'status_' + (p.status ?? 'missing') };
   const hasPayTime = r.PayTime !== undefined && r.PayTime !== null && String(r.PayTime).trim() !== '';
   const payTime = parsePayTime(r.PayTime);
-  // 有 PayTime 但格式看不懂 ≠ 取號:要記成要站長處理,不能當成「還沒付」默默略過(2026-10-07 審查修正)
+  // 有 PayTime 但格式看不懂 ≠ 取號:要記成要站長處理,不能當成「還沒付」默默略過
   if (!payTime) return { paid: false, reason: hasPayTime ? 'bad_pay_time' : 'no_pay_time' };
   if (merchantOrderNo !== undefined && r.MerchantOrderNo !== merchantOrderNo) return { paid: false, reason: 'order_mismatch' };
   if (amount !== undefined && Number(r.Amt) !== amount) return { paid: false, reason: 'amount_mismatch' };

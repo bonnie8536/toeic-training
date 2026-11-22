@@ -1,4 +1,4 @@
-/* 小雞第二階段的獎勵規則測試(規格 4.3、5.2、附錄 A.2、附錄 C 第 6 到 14 條):js/pet-food.js。
+/* 小雞第二階段的獎勵規則測試:js/pet-food.js。
    用法:node tools/test_pet_food.js
    js/pet.js 與 js/pet-food.js 在沒有 store、document、localStorage 的沙盒裡載入;輸入一律深度凍結,改到就丟錯。
    最後用 TZ=UTC 與 TZ=America/Los_Angeles 各再跑一次,確認日期只看台北時間。 */
@@ -84,7 +84,7 @@ T['earn:拒絕時不回 pet、什麼都不寫;拿到時只多一張券,其他欄
   return { ok: cap.result === 'cap' && cap.left === 0 && !('pet' in cap) && r.result === 'got' && r.left === 2 && same && J(r.pet.got) === J({ [D]: { iv: 'pea' } }) && !r.pet.ate && !r.pet.once, detail: J({ cap, got: r.pet && r.pet.got }) };
 };
 
-/* ---------- 一天 3 張(附錄 C 第 6、7、12 條;2026-10-23 從一天一張改成 3 張) ---------- */
+/* ---------- 一天 3 張(2026-10-23 從一天一張改成 3 張) ---------- */
 T['一天 3 張在寫入時判斷:同一台第 4 個完成回 cap;兩台各自離線拿到不同 id,合併後全部都在;拿到同一個 id,合併後只有一張'] = () => {
   const a1 = earn(pet(), 'd', tp(D + ' 09:00:00'));
   const a2 = earn(a1.pet, 'g:ga-01', tp(D + ' 10:00:00'));
@@ -112,7 +112,7 @@ T['一天 15 個練習 id 加上 d、m:只寫前 3 個,其他都 cap'] = () => {
   return { ok: res.slice(0, 3).every(x => x === 'got') && res.slice(3).every(x => x === 'cap') && J(p.got[D]) === J({ 'g:ga-01': 'pea', iv: 'pea', 'pn:a': 'pea' }), detail: J(res) };
 };
 
-/* ---------- 吃(附錄 C 第 8、9 條) ---------- */
+/* ---------- 吃 ---------- */
 T['點心第 4 份、今天還沒練習、沒有券:eat 拒絕,pet 不變;只寫了作業、今天有券但 days 是 0:可以餵'] = () => {
   const p = pet({ v: 2, got: tickets('pea', 4) });
   const e1 = P.eat(freeze(p), 'pea', 'a1', now(D));
@@ -133,7 +133,7 @@ T['餓不餓只看飼料:今天只吃點心,hungry 仍是 true;餵飼料才不�
   return { ok: e.ok && s.hungry === true && f.hungry === false && s.food === 6, detail: J({ hungry: s.hungry, food: s.food, afterFeed: f.hungry }) };
 };
 
-/* ---------- 地瓜與麵包蟲(附錄 C 第 10、11 條) ---------- */
+/* ---------- 地瓜與麵包蟲 ---------- */
 function streakPet(end, n, over) { const days = {}; range(addDays(end, -(n - 1)), n).forEach(d => { days[d] = 5; }); return pet(Object.assign({ days }, over || {})); }
 T['連續天數到 7 的倍數那天給地瓜;今天還沒答題(只寫作業)不算今天,照一般的種類'] = () => {
   const r7 = earn(streakPet(D, 7), 'g:ga-01');
@@ -221,7 +221,7 @@ T['上線日以前的完成、達標、連續天數、成長階段都不給食�
   return { ok: a.result === 'off' && w.food === 'pea' && y.result === 'off' && b.added.length === 0, detail: J([a.result, w.id, y.result, b.added]) };
 };
 
-/* ---------- 程度檢測(附錄 C 第 14 條) ---------- */
+/* ---------- 程度檢測 ---------- */
 T['程度檢測重測:西瓜只給一次(記在 once.diag),之後回 once;壓縮之後也不再給'] = () => {
   const r1 = earn(pet(), 'diag');
   const nx = addDays(D, 3);
@@ -232,7 +232,7 @@ T['程度檢測重測:西瓜只給一次(記在 once.diag),之後回 once;壓縮
   return { ok: r1.result === 'got' && r1.food === 'melon' && r1.pet.once.diag === D && r2.result === 'once' && r3.result === 'once' && b.added.length === 0, detail: J([r1.result, r2.result, r3.result, b.added]) };
 };
 
-/* ---------- 補寫(附錄 C 第 12a、13 條) ---------- */
+/* ---------- 補寫 ---------- */
 const DAY1 = '2026-11-05', DAY2 = '2026-11-06', DAY3 = '2026-11-07', DAY4 = '2026-11-08', DAY5 = '2026-11-09';
 function sources() {
   return {
@@ -291,7 +291,7 @@ T['補寫:沒有可補的就原樣回傳,不產生 v2'] = () => {
 };
 
 /* ---------- 純函式 ---------- */
-/* chick2 第二輪修正 #5(已知限制,規格 5.2 與附錄 C 第 10 條):麵包蟲領過沒有只看判斷那台的 once。手機停在筆電領之前,
+/* 已知限制:麵包蟲領過沒有只看判斷那台的 once。手機停在筆電領之前,
    隔天用自己舊的那份判斷,同一個階段的麵包蟲又給一次。這一張占掉手機那天的名額(拿到麵包蟲而不是那天的點心),總份數不變;
    合併兩張都留著、兩個方向結果一樣、once 記較早那天、合併後的資料不會再給第三次 */
 T['已知限制:同一個階段的麵包蟲在兩台、兩天各給一次:兩張都留著(各記在自己的 id:w:s1_<給它的練習>)、每天只有一張、合併順序無關、once 記較早那天、之後不再給'] = () => {

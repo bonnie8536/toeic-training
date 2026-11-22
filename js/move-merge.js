@@ -1,4 +1,4 @@
-/* 衝衝英文搬家:新網址已經有資料時怎麼合併(搬家計畫 2.4)。純計算,不讀寫儲存。
+/* 衝衝英文搬家:新網址已經有資料時怎麼合併。純計算,不讀寫儲存。
    原則:依每個鍵資料的形狀合併,寧可多留,不可少掉。真正只有一個值的設定才問人(conflicts),預設留新網址的。
    - 題庫(vgame_banks):用 id 合併,任何一個題庫都不會少;同 id 內容不同就改一個新 id、名稱加「（舊網址）」,
      並把 vgame_best、vgame_clear、vgame_pairs_best、vgame_toast_best、vgame_done 裡 bank:<舊 id> 那幾項
@@ -8,7 +8,7 @@
      vgame_done['+recent'](組合鍵最近玩的順序,js/vocab.js trimCombos)不是成績鍵,原樣留著。
      新版頁面寫的題庫有同步的戳記(js/sync-merge.js:_r、_t、_p…,每改一次就變):只差戳記、看得到的內容一樣(名稱、字、中文、勾選、alt)
      就當成同一份;一份的 _p 記著另一份(另一份是它的舊版本)就用新的那份(舊網址的比較新:換成 SYNC_MERGE 合併的結果,原值先備份)。
-     只有兩邊都真的改了才另存「（舊網址）」(同步合併設計 3.12:兩個網域沒有共同的同步紀錄,一次搬完就結束)。
+     只有兩邊都真的改了才另存「（舊網址）」(兩個網域沒有共同的同步紀錄,一次搬完就結束)。
    - 刪除標記(sync_del,只有雲端帳號的資料夾會寫):兩份聯集(SYNC_MERGE.tombs),不整份換掉、不問。
    - 雲端帳號還沒上傳的(暫存區 tr_move_pending_<帳號 id>):同一個帳號又搬來一包時,題庫、刪除標記、模擬考紀錄兩包用 SYNC_MERGE 合併
      (js/cloud.js 的 MERGED 表上的鍵;登入時 cloud.js takePending 也用同一套跟本機、雲端合併),其他鍵照舊留時間比較晚的那包。
@@ -400,7 +400,7 @@
       const copyName = name.slice(-SUFFIX.length) === SUFFIX ? name : name + SUFFIX;
       const was = prev.bankIds && prev.bankIds[folder + '|' + id];   // 上次另存的「（舊網址）」那份
       const at = was ? out.findIndex((x) => bankId(x) === was) : -1;
-      /* 舊網址只改了名、字一模一樣(第三輪審查:以前看到「這些字新網址已經有了」就跳過,改的名稱不會過去)。字一樣的只有:
+      /* 舊網址只改了名、字一模一樣(以前看到「這些字新網址已經有了」就跳過,改的名稱不會過去)。字一樣的只有:
          nameOnly:同一個 id 的這份(或沒有字);copyRenamed:上次另存的「（舊網址）」那份,搬家寫的、之後沒動過。交給下面判斷 */
       const twins = hasBody(body) ? out.reduce((a, x, i) => (bankBody(x) === body ? a.concat(i) : a), []) : [];
       const nameOnly = bankBody(same) === body && same.name !== b.name && twins.every((i) => i === at0);
@@ -612,7 +612,7 @@
       conflict(k, c.sub, m.why, choosable, { newText: preview(nv.v), oldText: preview(ov), newValue: nv.v, oldValue: ov });
     });
 
-    /* 3. 雲端帳號還沒上傳的:放暫存區,登入那個帳號時才合併(搬家計畫 2.7) */
+    /* 3. 雲端帳號還沒上傳的:放暫存區,登入那個帳號時才合併 */
     valid.accounts.forEach((items, uid) => {
       const pk = 'tr_move_pending_' + uid;
       if (skip(pk, '帳號還沒上傳的進度')) return;

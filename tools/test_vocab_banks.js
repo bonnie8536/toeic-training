@@ -1,4 +1,4 @@
-/* 單字頁的自訂題庫寫入(同步合併設計 3.6、3.7.4、2.2 C):真的 js/common.js、js/sync-merge.js、js/vocab.js 在很小的假 DOM 裡跑。
+/* 單字頁的自訂題庫寫入:真的 js/common.js、js/sync-merge.js、js/vocab.js 在很小的假 DOM 裡跑。
    用法:node tools/test_vocab_banks.js
    - 編輯頁開著時別的分頁存入文章題庫,這一頁改名、加字、勾選、刪字都不會把它蓋掉(每次寫入前重讀)。
    - 刪字、刪題庫:雲端帳號先存刪除標記(sync_del)再存題庫;本機學生檔案、訪客不寫標記。

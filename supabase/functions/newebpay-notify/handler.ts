@@ -11,7 +11,7 @@ import { checkPaid, parseNotify, type Keys, type ParsedNotify } from '../_shared
 import { makeRpc, type FetchLike } from '../_shared/supabase_rest.ts';
 import { SITE as LIVE_SITE } from '../_shared/site.ts';
 
-export const SITE = LIVE_SITE;   // 付款後帶回的結果頁跟著 _shared/site.ts(搬家計畫 5.3)
+export const SITE = LIVE_SITE;   // 付款後帶回的結果頁跟著 _shared/site.ts
 const RESULT_PAGE = `${SITE}/pay-result.html`;
 const FUNCTION_NAME = 'newebpay-notify';
 const MAX_BODY = 65536;
@@ -77,14 +77,14 @@ function pick(r: Record<string, unknown>): Record<string, unknown> {
 type FormRead = { form: URLSearchParams | null; reject: 'too_large' | 'bad_type' | null };
 
 // 藍新的 MPG 通知與 Cloudflare 轉送都用 application/x-www-form-urlencoded(可以帶 charset)。
-// multipart 與其他格式一律不收:multipart 的解析器不受我們的上限控制,而且藍新不會這樣送(2026-10-17 審查修正)。
+// multipart 與其他格式一律不收:multipart 的解析器不受我們的上限控制,而且藍新不會這樣送。
 function isUrlencoded(req: Request): boolean {
   const t = (req.headers.get('content-type') ?? '').split(';')[0].trim().toLowerCase();
   return t === 'application/x-www-form-urlencoded';
 }
 
 // 最多讀 MAX_BODY 個位元組。沒有 Content-Length(分段傳送)也一樣:讀到超過就停下、取消剩下的串流,回 tooLarge。
-// 這個網址不用登入(verify_jwt = false),不能讓陌生人送一個很大的請求、讓函式整個讀進記憶體(2026-10-16 審查修正)。
+// 這個網址不用登入(verify_jwt = false),不能讓陌生人送一個很大的請求、讓函式整個讀進記憶體。
 async function readCapped(req: Request): Promise<{ bytes: Uint8Array | null; tooLarge: boolean }> {
   const lenHeader = req.headers.get('content-length');
   if (lenHeader !== null && Number(lenHeader) > MAX_BODY) return { bytes: null, tooLarge: true };
@@ -170,8 +170,8 @@ export function createNotifyHandler(deps: NotifyDeps): (req: Request) => Promise
         outcome = String(data?.outcome ?? 'unknown');
       } else if (success) {
         // 驗章通過、明文說成功,但我們看不懂(沒有或看不懂 PayTime、TradeNo 怪):記成要站長處理,不默默略過。
-        // 這筆不一定是真的付款,不能直接補開通。站長要先在藍新後台找到同一個訂單編號、同一個金額的成功交易,
-        // 有找到才照上線步驟.md 第 8 節處理;後台沒有這筆交易就只把事件標成已處理。
+        // 這筆不一定是真的付款,不能直接補開通。要先在藍新後台找到同一個訂單編號、同一個金額的成功交易,
+        // 有找到才補開通;後台沒有這筆交易就只把事件標成已處理。
         // 只開信用卡,不會有 ATM 取號這種「成功但還沒付」的通知。
         const reason = paid.paid ? 'bad_trade_no' : paid.reason;
         const { error } = await rpc('newebpay_log', {

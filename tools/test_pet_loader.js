@@ -158,7 +158,7 @@ const STATIC_OLD = p => (p === 'index.html' || p === 'me.html' ? ['PET', 'PET_ST
     if (r.added.join() !== wantCold) bad.push('cold:' + r.added.join(','));
     check('開關打開,App 模式:PET_FOOD 加 pet-food(pet.js 後)、pet-hook(pet-store 後)、food-art(pet-ui 前);PET_ROAM_V2 換成 pet-roam2;已經有的不重載', !bad.length, bad.length ? bad.join(' | ') : Object.keys(want).length + 1 + ' 種都對');
   }
-  /* 5. 開關打開:網站模式(實作契約第 7.3 節) */
+  /* 5. 開關打開:網站模式 */
   {
     const FOODP = 'js/pet-food.js,js/pet-store.js,js/pet-hook.js';
     const want = [

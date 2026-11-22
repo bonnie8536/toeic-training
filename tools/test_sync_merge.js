@@ -1,4 +1,4 @@
-/* 同步合併的純計算測試(同步合併設計 3.7–3.9、5.1 第 1 點):js/sync-merge.js 的 banks、tombs、mock 與頁面寫入用的戳記。
+/* 同步合併的純計算測試:js/sync-merge.js 的 banks、tombs、mock 與頁面寫入用的戳記。
    用法:node tools/test_sync_merge.js            (隨機測試的種子固定;SEED=數字 換一組)
    js/sync-merge.js 在沒有 store、document、localStorage 的沙盒裡載入,碰到就會丟錯,證明它不讀寫任何鍵。
    輸入一律先深度凍結,合併改到輸入也會丟錯。
@@ -58,7 +58,7 @@ function wordSet(banks) {
   return out;
 }
 const bankIds = banks => new Set((banks || []).filter(b => b && typeof b.id === 'string').map(b => b.id));
-/* 模擬「改回去的內容跟以前那一版一模一樣」(第三輪起新版改內容會換 _r,不會這樣;舊版頁面、這一版之前的資料可能有):
+/* 模擬「改回去的內容跟以前那一版一模一樣」(不會這樣;舊版頁面、這一版之前的資料可能有):
    每個字的 _r 換回 ref 裡同一個英文那個字的(ref 沒有 _r 就拿掉)、拿掉 _m,兩份互相吸收過 */
 const unmark = (banks, ref) => banks.map(b => Object.assign({}, b, { words: (b.words || []).map(w => {
   const c = Object.assign({}, w), o = findWord(ref, b.id, w.en);
@@ -376,7 +376,7 @@ function evolve(banks, tombs, now, steps, from) {
   check('editBank 沒改到內容:回原本的陣列(不寫、不上傳)', unchanged === next, '');
 })();
 
-/* ---------- 9. 第二輪審查(2026-10-25)找到的會丟資料的情況 ---------- */
+/* ---------- 9. 2026-10-25 找到的會丟資料的情況 ---------- */
 (function nameClock() {
   /* A 建題庫,B 拿到一樣的一份;B 改名時 B 的時鐘慢(或 A 建立時 A 的時鐘快):B 的 _nt 比 A 小,但 B 的那一份吸收過 A 的(新版本) */
   const run = (aSkew, bSkew, bLater) => {
@@ -414,7 +414,7 @@ function evolve(banks, tombs, now, steps, from) {
 })();
 
 (function altKeep() {
-  /* 審查 r5:同一個字已經有 3 個 alt(之前幾輪兩台同時改中文留下的),再一輪同時改:兩台寫的中文都要留著 */
+  /* 同一個字已經有 3 個 alt(之前幾輪兩台同時改中文留下的),再一輪同時改:兩台寫的中文都要留著 */
   const edit = (banks, zh, t) => SM.editBank(banks, 'b1', t, b => SM.setWord(b, 'issue', { zh }, t));
   let cloud = SM.editBank([], 'b1', T0, b => SM.addWords(Object.assign({}, b, { name: 'x' }), [{ en: 'issue', zh: '問題' }], T0));
   const rounds = [['一期', '核發'], ['發行', '課題'], ['核准', '議題']];
@@ -436,7 +436,7 @@ function evolve(banks, tombs, now, steps, from) {
 })();
 
 (function altAlternate() {
-  /* 審查 repro_alt2:兩台輪流改同一個字的中文,每次照 cloud.js 的流程上傳(本機改 → 跟雲端合併 → 寫回本機 → 上傳),中間沒重開頁面。
+  /* 兩台輪流改同一個字的中文,每次照 cloud.js 的流程上傳(本機改 → 跟雲端合併 → 寫回本機 → 上傳),中間沒重開頁面。
      學生打過、而且沒有在自己畫面上被換掉的中文(那台改的時候畫面上的主要中文才算「換掉」),最後雲端和兩台都要看得到 */
   const runSeq = (labels, order) => {
     let cloud = SM.editBank([], 'b1', T0, b => SM.addWords(Object.assign({}, b, { name: 'x' }), [{ en: 'run', zh: '跑' }], T0));
@@ -537,7 +537,7 @@ function evolve(banks, tombs, now, steps, from) {
     'main ' + (a / 1024).toFixed(1) + ' KB / 新版 ' + (b / 1024).toFixed(1) + ' KB / 倍數 ' + (b / a).toFixed(3));
 })();
 
-/* ---------- 10. 第二輪審查(2026-10-25 r2)找到的 ---------- */
+/* ---------- 10. 2026-10-25 找到的 ---------- */
 (function oldPageEdits() {
   /* 舊版頁面(main 的 vocab.js)改名、取消勾選、改中文都是就地改物件,_t、_nt、_p 原樣留著,只有內容雜湊變了。
      這台本機那份是改之前的(上次跟雲端對齊之後沒改過,帳本上沒有:localClean),雲端是舊版頁面改過的:要用雲端改的,不能退回。
@@ -572,7 +572,7 @@ function evolve(banks, tombs, now, steps, from) {
 })();
 
 (function renameClockConcurrent() {
-  /* 審查 r2 #2:只有一台改了名、另一台同時改了同一個題庫的字(誰都不是誰的新版本):不能比 _nt。
+  /* 只有一台改了名、另一台同時改了同一個題庫的字(誰都不是誰的新版本):不能比 _nt。
      建立題庫那台時鐘快(建立時的 _nt 在未來)、或改名那台時鐘慢,以前改名都會被退回 */
   const MIN = 60e3;
   const run = (creatorSkew, renamerSkew, how) => {
@@ -597,7 +597,7 @@ function evolve(banks, tombs, now, steps, from) {
 })();
 
 (function loserAlt() {
-  /* 審查 r2 #5:三台。輸的那一份(q)帶著之前衝突留下的 alt,合併時那些 alt 要留著(不能只留主要那份的 alt) */
+  /* 三台。輸的那一份(q)帶著之前衝突留下的 alt,合併時那些 alt 要留著(不能只留主要那份的 alt) */
   const edit = (banks, zh, t) => SM.editBank(clone(banks), 'b1', t, b => SM.setWord(b, 'issue', { zh }, t));
   const base = SM.editBank([], 'b1', T0, b => SM.addWords(Object.assign({}, b, { name: 'x' }), [{ en: 'issue', zh: '問題' }], T0));
   const pc = edit(base, '議題', T0 + 10000), phone = edit(base, '發行', T0 + 20000);
@@ -612,7 +612,7 @@ function evolve(banks, tombs, now, steps, from) {
 })();
 
 (function changeBack() {
-  /* test_sync_fuzz 的中文檢查找到的(seed 66 B 7719918;審查 r2 #7 也提過):手機時鐘快 3 小時,12:10 把「退款」改成「退錢」;
+  /* test_sync_fuzz 的中文檢查找到的(seed 66 B 7719918):手機時鐘快 3 小時,12:10 把「退款」改成「退錢」;
      電腦時鐘準,拿到之後 12:30 改回「退款」(跟以前某一版一模一樣)。兩份互相在對方的 _p 裡,以前用 _t 大的(手機的「退錢」)、
      不留 alt,電腦後來打的「退款」哪裡都沒有了。現在 _t 大的當主要,另一個中文放 alt */
   const base = [{ id: 'b1', name: 'x', _r: 'rrrrrr', words: [{ en: 'refund', zh: '退款', _r: 'dc43' }] }];
@@ -620,7 +620,7 @@ function evolve(banks, tombs, now, steps, from) {
   const phone = SM.editBank(clone(base), 'b1', phoneT, b => SM.setWord(b, 'refund', { zh: '退錢' }, phoneT));
   const pcT = T0 + 30 * 60e3;
   const pcMarked = SM.editBank(clone(phone), 'b1', pcT, b => SM.setWord(b, 'refund', { zh: '退款' }, pcT));
-  const pc = unmark(pcMarked, base);   // 第三輪起改內容會換 _r,改回去跟以前一模一樣時才會互相吸收過
+  const pc = unmark(pcMarked, base);   // 新版改內容會換 _r,改回去跟以前一模一樣時才會互相吸收過
   const m1 = merge(pc, phone), m2 = merge(phone, pc);
   const seen = v => { const w = findWord(v.v, 'b1', 'refund'); return [w.zh].concat(w.alt || []).sort().join(); };
   check('改回以前的中文(兩份互相吸收過)、改回去那台時鐘慢:兩個中文都留(一個在 alt),順序無關、再合併不變',
@@ -629,7 +629,7 @@ function evolve(banks, tombs, now, steps, from) {
 })();
 
 (function revertMark() {
-  /* 第三輪(test_sync_fuzz 加了「學生又打回以前的中文」的檢查後找到的):改回以前某一版的內容(雜湊一樣),會被當成那個舊版本:
+  /* (test_sync_fuzz 加了「學生又打回以前的中文」的檢查後找到的):改回以前某一版的內容(雜湊一樣),會被當成那個舊版本:
      1. 電腦改回「跑」、手機同時把「跑步」改成「慢跑」:慢跑的 _p 裡有原本「跑」的雜湊,電腦改回的「跑」被當成舊版本拿掉;
      2. 手機刪了 run(標記記的是原本「跑」的雜湊),電腦拿到別台改的版本後又改回「跑」:被那個刪除標記刪掉。
      3. 兩台各自把「跑」改成「跑步」,其中一台再改成「慢跑」:另一台的「跑步」跟慢跑 _p 裡的那一版同一個雜湊,被當成舊版本拿掉。
@@ -659,7 +659,7 @@ function evolve(banks, tombs, now, steps, from) {
 })();
 
 (function dupWords() {
-  /* 審查 r2 #6:舊資料同一個題庫裡同一個英文出現兩次(run/跑、Run/經營):一台新版改名、一台舊版頁面就地加字,兩個都要留著 */
+  /* 舊資料同一個題庫裡同一個英文出現兩次(run/跑、Run/經營):一台新版改名、一台舊版頁面就地加字,兩個都要留著 */
   const legacy = [{ id: 'b1', name: '第一課', words: [{ en: 'apple', zh: '蘋果', on: true }] },
     { id: 'b2', name: '舊題庫', words: [{ en: 'run', zh: '跑', on: true }, { en: 'Run', zh: '經營', on: true }] }];
   const A = SM.editBank(clone(legacy), 'b2', T0, b => Object.assign({}, b, { name: '舊題庫改名' }));
@@ -676,7 +676,7 @@ function evolve(banks, tombs, now, steps, from) {
   const t1 = merge(off, backOn).v, t2 = merge(backOn, off).v;
   check('同一個英文出現兩次的舊資料:取消勾選又勾回來(內容跟原本一樣、兩份互相吸收過)合併後那個字還在,用 _t 新的那份', J(runs(t1)) === '[true]' && J(runs(t2)) === '[true]'
     && zhs(t1) === '經營,跑' && merge(t1, off).sameAsLocal && merge(t1, backOn).sameAsLocal, J(runs(t1)) + ' / ' + J(runs(t2)) + ' / ' + zhs(t1));
-  /* 第二輪摘要發現(第三輪修):重複英文的舊資料裡,手機時鐘快 3 小時把 run 的「跑」改成「跑步」;電腦時鐘準,拿到之後改回「跑」
+  /* 重複英文的舊資料裡,手機時鐘快 3 小時把 run 的「跑」改成「跑步」;電腦時鐘準,拿到之後改回「跑」
      (跟舊資料一模一樣,兩份互相吸收過)。以前重複英文那一組只留 _t 大的(手機的「跑步」),電腦改回的「跑」沒放 alt,哪裡都沒有了。
      跟英文只出現一次的 changeBack 一樣:主要那個留著,輸的中文放 alt */
   const phoneT = T0 + 10 * 60e3 + 3 * 3600e3, pcT = T0 + 30 * 60e3;
@@ -705,7 +705,7 @@ function evolve(banks, tombs, now, steps, from) {
     '少了 ' + J(lostD) + ' / ' + allZh(d1) + ' / ' + allZh(d2));
 })();
 
-/* ---------- 11. 第三輪審查(2026-10-25 r3)找到的 ---------- */
+/* ---------- 11. 2026-10-25 找到的 ---------- */
 const renameTo = name => b => Object.assign({}, b, { name });
 const addInvoice = t => b => SM.addWords(b, [{ en: 'invoice', zh: '發票' }], t);
 /* 上傳/對齊:本機跟雲端合併,兩邊都存合併結果(cloud.js 的 uploadMerged、syncKey) */
@@ -714,7 +714,7 @@ function syncTo(state, dev, clean) {
   state[dev] = clone(m.v); state.cloud = clone(m.v);
 }
 (function nameRevertBack() {
-  /* r3 #1:B 把題庫名稱 甲→丙 並上傳,A 對齊拿到「丙」、之後加字;B 再把名稱改回「甲」(字沒動)並上傳,然後 A 上傳。
+  /* B 把題庫名稱 甲→丙 並上傳,A 對齊拿到「丙」、之後加字;B 再把名稱改回「甲」(字沒動)並上傳,然後 A 上傳。
      以前題庫的 _r 改名時不換,改回的那一版跟第一版雜湊一樣:A 的 _p 有第一版,A 被當成新版本、用 A 的「丙」,
      B 最後改的「甲」每台和雲端都不見了(時鐘準也會) */
   const run = (aSkew, bSkew, addBeforeRevert) => {
@@ -743,7 +743,7 @@ function syncTo(state, dev, clean) {
 })();
 
 (function nameTwoRenames() {
-  /* r3 #2:題庫在時鐘快的 A 建立(_nt 在未來);B 在 10 分鐘後連改兩次名(打錯字馬上改正);A 還停在原本的名稱、加了字。
+  /* 題庫在時鐘快的 A 建立(_nt 在未來);B 在 10 分鐘後連改兩次名(打錯字馬上改正);A 還停在原本的名稱、加了字。
      以前 _on 只記上一個名稱,認不出「只有 B 改名」,退回比 _nt,B 的改名被退回、找不回來 */
   const run = (aSkew, bSkew, names, uploadEach) => {
     const s = { cloud: SM.editBank([], 'b1', T0 + aSkew, renameTo('多益')) };
@@ -769,7 +769,7 @@ function syncTo(state, dev, clean) {
 })();
 
 (function nameCausalRandom() {
-  /* 名稱的因果隨機測試(r3 審查者的 name_causal_fuzz):2 台新版(可加 1 台舊版頁面就地改名)隨機改名、加字、跟雲端對齊。
+  /* 名稱的因果隨機測試:2 台新版(可加 1 台舊版頁面就地改名)隨機改名、加字、跟雲端對齊。
      改名是一個事件,記下那台當時知道的改名;最後全部對齊後,「沒有被別的改名知道的」改名只有一個、而且是新版頁面改的,
      最後的名稱一定是它(名稱沒有 alt,退回就找不回來;只有一個最新的改名時不能看時鐘)。最後每台新版跟雲端一樣 */
   const NAMES = ['甲', '乙', '丙'];
@@ -830,7 +830,7 @@ function syncTo(state, dev, clean) {
 })();
 
 (function dupAbsorb() {
-  /* r3 #4:重複英文那一組(同一個英文出現兩次的舊資料)裡互相吸收過的字。新版頁面改內容會換 _r,做不出這種資料,
+  /* 重複英文那一組(同一個英文出現兩次的舊資料)裡互相吸收過的字。新版頁面改內容會換 _r,做不出這種資料,
      只有這個分支早期的資料、舊版頁面改回一模一樣的內容會有;雜湊用真的 wordHash 算、_p 照格式手寫 */
   const pE = (h, t) => h + '.' + t.toString(36);
   const word = (zh, extra) => Object.assign({ en: 'run', zh, on: true, _r: 'r' + zh.length }, extra || {});
@@ -899,9 +899,9 @@ function syncTo(state, dev, clean) {
   }
 })();
 
-/* ---------- 12. 第三輪審查第二批(2026-10-25 r3b)找到的 ---------- */
+/* ---------- 12. 2026-10-25 第二批找到的 ---------- */
 (function oldRenameCleanLocal() {
-  /* r3b #1:A(新版)建題庫、上傳;C(部署前開著的舊版頁面)編輯頁開著;A 在同一個題庫改另一個字的中文(或只加一個字)並上傳;
+  /* A(新版)建題庫、上傳;C(部署前開著的舊版頁面)編輯頁開著;A 在同一個題庫改另一個字的中文(或只加一個字)並上傳;
      C 就地改名、整份上傳。A 本機沒改過(帳本空)就對齊或灌資料:以前主要那份用整個題庫的 _t 選(A 改字時蓋了新的 _t),
      _nt 又一樣,名稱跟著 A 退回;C 重開也拿到舊名稱,C 的改名哪裡都沒有了(main 最後上傳的那份會留著) */
   const run = (how, aSkew) => {
@@ -930,7 +930,7 @@ function syncTo(state, dev, clean) {
 })();
 
 (function oldRenameGuards() {
-  /* r3b #5:第三輪(7578bdf)加的兩條舊版頁面改名保護,以前改壞了也沒有測試抓得到 */
+  /* 7578bdf 加的兩條舊版頁面改名保護,以前改壞了也沒有測試抓得到 */
   {
     /* (a) renamedFrom 的「y 自己的代號在 y 的 _nl 裡不算」:雲端叫甲,新版 N 改成乙並上傳;舊版 O 灌資料後就地改成丙、整份上傳,
        N 對齊(本機沒改過)拿到丙;O 再灌資料、就地把名稱改回乙(_nr、_nl 是抄來的),整份上傳,N 再對齊。
@@ -966,7 +966,7 @@ function syncTo(state, dev, clean) {
 })();
 
 (function nameRevertSlowClock() {
-  /* r3b #6:先看名稱來源、再看誰是新版本的排序(r3 #1、#2)以前只靠名稱隨機測試的某一組守著,換種子就抓不到。
+  /* 先看名稱來源、再看誰是新版本的排序,以前只靠名稱隨機測試的某一組守著,換種子就抓不到。
      兩台新版,裝置 0 快約 4.5 分鐘、裝置 1 慢約 2.1 小時;裝置 1 把甲改成丙、後來又改回甲,裝置 0 同時在加字。
      把「誰是新版本」放在名稱來源前面時,三處都變成丙(裝置 1 最後改的甲被退回);時鐘都準時不會發生 */
   const s = { cloud: [SM.newBank('b', '甲', T0 - DAY)] };
@@ -987,7 +987,7 @@ function syncTo(state, dev, clean) {
 })();
 
 (function dupTwoCycles() {
-  /* r3b #8:重複英文那一組有兩個互不相通的圈(run:跑/跑步/慢跑、Run:經營/管理/營運,各自繞一圈單向吸收),分在兩份。
+  /* 重複英文那一組有兩個互不相通的圈(run:跑/跑步/慢跑、Run:經營/管理/營運,各自繞一圈單向吸收),分在兩份。
      走不到第一個 top 的要再留一個 top;只留第一個時 run 的三個中文整組不見 */
   const pE = (h, t) => h + '.' + t.toString(36);
   const cyc = (en, zs, t0) => {
@@ -1006,7 +1006,7 @@ function syncTo(state, dev, clean) {
 })();
 
 (function tombOldReadd() {
-  /* r3b #3:刪除標記的 hs(被刪那一份吸收過的舊版本)以前不分有沒有 _r。舊版頁面存的東西沒有 _r,文章題庫的內容又是固定的
+  /* 刪除標記的 hs(被刪那一份吸收過的舊版本)以前不分有沒有 _r。舊版頁面存的東西沒有 _r,文章題庫的內容又是固定的
      (id art_<文章>、名稱、每個字的中文都照文章產生),學生在舊版頁面重新存入,雜湊一定對得上被刪那一份吸收過的舊版本,又被刪掉。
      現在 hs 只刪有 _r 的(新版做的版本,_r 每一版都不一樣,對得上就一定是那個舊版本);沒有 _r 的只有 h0(刪的就是那個樣子)刪得掉 */
   const T1 = T0 + DAY;

@@ -1,4 +1,4 @@
-/* 站長後台「收費管理」查帳號(前端計畫九.2)的測試:使用權的撤銷、恢復、改到期日、拿掉到期日,付款的退款,
+/* 站長後台「收費管理」查帳號的測試:使用權的撤銷、恢復、改到期日、拿掉到期日,付款的退款,
    以及讀取中、做完一件事之後畫面與焦點的處理。假環境在 tools/owner_test_kit.js。
    用法:node tools/test_owner_lookup.js */
 const K = require('./owner_test_kit');
@@ -112,7 +112,7 @@ const cases = {
     return { ok: okk, detail: JSON.stringify({ l, a, l2, b, msg, refundedBtns }) };
   },
 
-  /* ---------- 審查修正(2026-10-11) ---------- */
+  /* ---------- 2026-10-11 補的案例 ---------- */
   '退過款的付費使用權:全額退款不給恢復(寫用贈送);部分退款的恢復要寫出已退的金額、再按一次才送': async () => {
     const w = world(); const L = await area(w);
     const full = refundedPam(199), part = refundedPam(100);
@@ -158,7 +158,7 @@ const cases = {
       && w.calls('owner_refund_payment').length === 0;
     return { ok: okk, detail: JSON.stringify({ l1, l2, l3 }) };
   },
-  '退款(第二輪複審):後面還有排著的付費方案時,確認框寫那幾段會往前接;老師方案有排著的就不寫立刻結束': async () => {
+  '退款:後面還有排著的付費方案時,確認框寫那幾段會往前接;老師方案有排著的就不寫立刻結束': async () => {
     const w = world(); const L = await area(w);
     const pam = clone(FX['owner_lookup.paid_with_credits'].data);
     const sp = pam.payments.find(x => x.item === 'student');

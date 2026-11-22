@@ -2,7 +2,7 @@
    用法:node tools/test_pet_hooks.js
    1. pet-hook.js 配假的 PET_STORE、假的 PET、小假 DOM:三種結束畫面文字逐字對;其他結果、逾時、丟錯都不寫字、不丟錯;
       PET_STORE.food 不是 true 時不碰 DOM;into 已經離開畫面時不寫;同一個 into 只有一個 .pet-earn。
-   2. 每個呼叫點(實作契約第 7.2 節):讀原始碼確認呼叫在對的函式裡、是那個函式的最後一句、id 和 n 寫法對、
+   2. 每個呼叫點:讀原始碼確認呼叫在對的函式裡、是那個函式的最後一句、id 和 n 寫法對、
       前面有 window.PET_HOOK 的判斷;vocab.js 的 gameOver() 沒有呼叫;跟 27557eb 比,只多了這幾行,沒有刪改任何一行
       (站名改名的行,與搬家另外加的「/* 搬家」開頭整段除外)。
    3. 真的 daily-ui.js 跑在假 DOM 上:沒有掛勾或開關關著時畫面跟原本一樣;掛勾出錯(earn 丟錯、view 丟錯)時成績頁照樣畫完。 */
@@ -20,22 +20,22 @@ const BASE = '27557eb';
    內容頁先看再登入(2026-10-31,作答鈕標 data-gate、對話與發音與單字頁沒登入時只記在這一頁、寫作沒登入不自動存)
    又改了 grammar、phonics、verbs、vocab、reading、practice、ear、dialogue、mock、diagnostic、writing;
    搜尋摘要(2026-11-18,聽力訓練頁的進度數字與級別選單建立時帶 data-nosnippet)改了 ear;
-   多分頁同步第 2 輪審查(2026-10-31,帳號那一邊存不進去時作答跳「重新整理」卡、模擬考交卷存不進去先留在分頁)改了 daily-ui、mock、review;
-   多分頁同步第 3 輪審查(2026-11-01,單字頁的題庫編輯器與遊戲、片語特訓作答前先問 holdForAccount)改了 vocab;
-   審查 D 第 1 輪(2026-11-01,掉落消除擋下時按 Enter 不落到卡上、字掉到底先暫停,記憶吐司「看成績」先問)又改了 vocab;
-   審查 D 第 2 輪(2026-11-01,聽力練習與錯題複習的作答、交卷,動詞測驗的作答框與「對答案」標 data-gate)改了 listening、verbs;
-   審查 D 第 3 輪(2026-11-01,交卷的確認視窗問完再問 holdForAccount,交卷鈕把自己傳給 submit 當卡片關掉後焦點回去的地方)
+   多分頁同步(2026-10-31,帳號那一邊存不進去時作答跳「重新整理」卡、模擬考交卷存不進去先留在分頁)改了 daily-ui、mock、review;
+   多分頁同步(2026-11-01,單字頁的題庫編輯器與遊戲、片語特訓作答前先問 holdForAccount)改了 vocab;
+   之後(2026-11-01,掉落消除擋下時按 Enter 不落到卡上、字掉到底先暫停,記憶吐司「看成績」先問)又改了 vocab;
+   再之後(2026-11-01,聽力練習與錯題複習的作答、交卷,動詞測驗的作答框與「對答案」標 data-gate)改了 listening、verbs;
+   接著(2026-11-01,交卷的確認視窗問完再問 holdForAccount,交卷鈕把自己傳給 submit 當卡片關掉後焦點回去的地方)
    改了 practice、listening、diagnostic(下面 SITES 的錨點跟著換成 submit(opener)、onclick: e => );
-   審查 D 第 4 輪(2026-11-01,交卷的確認視窗按確定之後等 50 毫秒再查帳號、批改:原生視窗開著時別的分頁改的 localStorage 要過一下才看得到)
+   接著(2026-11-01,交卷的確認視窗按確定之後等 50 毫秒再查帳號、批改:原生視窗開著時別的分頁改的 localStorage 要過一下才看得到)
    改了 practice、listening、diagnostic、mock(SITES 的錨點換成 submit(opener, asked)、submit(timeUp, asked),程度檢測的交卷搬進 handIn(opener, asked));
    之後(2026-11-01,按確定之後那 50 毫秒裡再按交卷不算,不再批改兩次)又改了 practice、listening、diagnostic;
    搜尋結果外觀(2026-11-05,標題分隔從「|」改成「 - 」,文法、自然發音、閱讀、對話列表的清單帶 data-nosnippet)
    改了 daily-ui、dialogue、ear、grammar、mock、phonics、practice、reading、review、verbs、vocab、writing;
-   同一天審查後拿掉這四個列表標題下加的介紹句,文法、自然發音列表頁的章節導覽列也帶 data-nosnippet,又改了 grammar、phonics、reading、dialogue;
+   同一天後來拿掉這四個列表標題下加的介紹句,文法、自然發音列表頁的章節導覽列也帶 data-nosnippet,又改了 grammar、phonics、reading、dialogue;
    單字遊戲「練哪些字」改成可以勾好幾個(2026-11-11,文章單字、片語、自己的題庫一起練)又改了 vocab;
    錯題本分組、模擬考錯題收進錯題本(2026-11-18,mock_wrong、js/wrongbook.js)改了 mock、practice、listening、review;
-   同一天介面審查(上一頁從 bfcache 回來重畫錯題本面板、#wrongbook 扣掉頂欄、聽力 3/4 複習頂部寫組數和整組題數)又改了 practice、listening;
-   錯題本審查(2026-11-19,模擬考、每日複習、題庫開頁先跟雲端對齊 mock_wrong:WRONGBOOK.syncCloud)又改了 mock、practice、review;
+   同一天(上一頁從 bfcache 回來重畫錯題本面板、#wrongbook 扣掉頂欄、聽力 3/4 複習頂部寫組數和整組題數)又改了 practice、listening;
+   錯題本(2026-11-19,模擬考、每日複習、題庫開頁先跟雲端對齊 mock_wrong:WRONGBOOK.syncCloud)又改了 mock、practice、review;
    共用元件第二版(2026-11-21,結算卡帶 earnId 與按鈕屬性、題號面板改 UI.sheet、對話與寫作改 UI.rewardRow)改了全部 14 個模組,
    對話與寫作的呼叫點只換了放點心的那一列(heardRow、snackRow),位置與 id 不變 */
 const LATER_BASE = ['js/vocab.js', 'js/reading.js', 'js/daily-ui.js', 'js/grammar.js', 'js/phonics.js', 'js/ear.js', 'js/dialogue.js',
@@ -265,7 +265,7 @@ T['同一個練習今天拿過了(dup):「這個練習今天拿過點心了 · �
   const b = earnP(e2)[0];
   return { ok: !!a && a.textContent === '這個練習今天拿過點心了 · 換別的練習還能拿 2 份' && !!b && b.textContent === '這個練習今天拿過點心了' && !a.classList.contains('is-held'), detail: [a && a.textContent, b && b.textContent].join(' / ') };
 };
-/* 手機上那一行比一行長(審查第 3 輪 #1:375 寬時那一行 305 px,拿過了、拿到第 3 份、名字 10 個字的那幾句會折成兩行,
+/* 手機上那一行比一行長(375 寬時那一行 305 px,拿過了、拿到第 3 份、名字 10 個字的那幾句會折成兩行,
    只留一行的話字寫上去時下面的按鈕往下跳 24 px)。等結果的時候就照這次可能寫的最長一句留夠行數(style.minHeight,每行 1.6em),
    寫上去、沒字可寫都一直留著:按鈕不往下跳也不往上跳。這裡的版面照「每個字 1 個字寬」算(中文字剛好、數字和空白只會算多) */
 const rowsOf = (t, w, fs) => Math.max(1, Math.ceil(String(t).length * fs / w));
@@ -288,7 +288,7 @@ const RESULTS = [
   ['3 份都拿了', { result: 'cap', food: null, id: null, left: 0 }],
   ['存滿', { result: 'full', food: 'tomato', id: null }],
 ];
-T['手機寬(305、320、250 px):等結果時就照最長的一句留夠行數,寫上字以後高度不變,下面的按鈕不跳(拿過了、拿到第 3 份、名字 10 個字;審查第 3 輪 #1)'] = async () => {
+T['手機寬(305、320、250 px):等結果時就照最長的一句留夠行數,寫上字以後高度不變,下面的按鈕不跳(拿過了、拿到第 3 份、名字 10 個字)'] = async () => {
   const bad = [];
   for (const w of [305, 320, 250]) for (const name of ['小黃', LONG_NAME]) for (const [tag, r] of RESULTS) {
     const fs = 15;
@@ -319,7 +319,7 @@ T['手機寬留了兩行、結果沒有字(once)時一直留著(is-held,高度�
     detail: JSON.stringify([a.before, a.after, q && q.style.minHeight, q && q.className]) };
 };
 /* 掉落通關畫面(vocab.js PET_HOOK.done('fall', { into: overlay })):.game-over 是置中的直排(align-items: center),
-   空的那一行縮成 0 寬,量不到寬就只留一行;手機上字寫上去折成兩行,再挑戰一關、回單字訓練往上跳 12 px(審查第 2 輪 寬度 #1)。
+   空的那一行縮成 0 寬,量不到寬就只留一行;手機上字寫上去折成兩行,再挑戰一關、回單字訓練往上跳 12 px。
    量不到自己的寬時改量外層扣掉左右 padding 的寬,照那個寬留夠行數 */
 async function fallThenWrite(W, name, result) {
   let res;
@@ -333,7 +333,7 @@ async function fallThenWrite(W, name, result) {
   res(result); await settle(); e.fire(200); await pr; await settle();
   return { p, before, after: { min: p && p.style.minHeight, rows: minRows(p), text: p ? p.textContent : '' } };
 }
-T['掉落通關畫面(.game-over 置中直排,空的那一行量起來 0 寬):手機寬照外層扣掉 padding 的寬留夠行數,寫上字後高度不變,按鈕不跳(審查第 2 輪 寬度 #1)'] = async () => {
+T['掉落通關畫面(.game-over 置中直排,空的那一行量起來 0 寬):手機寬照外層扣掉 padding 的寬留夠行數,寫上字後高度不變,按鈕不跳'] = async () => {
   const bad = [];
   for (const W of [337, 352, 375]) for (const name of ['小黃', LONG_NAME]) for (const [tag, r] of RESULTS) {
     const { before, after } = await fallThenWrite(W, name, r);
@@ -469,8 +469,8 @@ T['into 不是元素(null、字串、沒給):照樣領,不碰 DOM、不丟錯'] 
   try { await e.H.done('d', { into: null }); await e.H.done('d', { into: 'x' }); await e.H.done('d'); await e.H.done('d', null); } catch (x) { threw = true; }
   return { ok: !threw && e.calls.length === 4 && e.dom.made.length === before, detail: [threw, e.calls.length, e.dom.made.length - before].join() };
 };
-/* 第三輪審查 #9:空的那一行不占位置,字 150 毫秒到 10 秒後才寫上去,下面的按鈕(再練一輪等)往下跳 36 px */
-T['等結果的時候先留一行的高度(.is-wait),寫上字時拿掉;沒有字可寫(later、逾時)也拿掉 is-wait,但改成 is-held 保留高度(chick2 第一輪修正 #6)'] = async () => {
+/* 空的那一行不占位置,字 150 毫秒到 10 秒後才寫上去,下面的按鈕(再練一輪等)往下跳 36 px */
+T['等結果的時候先留一行的高度(.is-wait),寫上字時拿掉;沒有字可寫(later、逾時)也拿掉 is-wait,但改成 is-held 保留高度'] = async () => {
   const out = [];
   const e = hookEnv();
   const pr = e.H.done('r:a1', { into: e.head });
@@ -491,7 +491,7 @@ T['等結果的時候先留一行的高度(.is-wait),寫上字時拿掉;沒有�
   out.push(['逾時', mw && !earnP(m)[0].classList.contains('is-wait') && earnP(m)[0].classList.contains('is-held') && earnP(m)[0].textContent === '']);
   return { ok: out.every(x => x[1]), detail: JSON.stringify(out) };
 };
-/* chick2 第一輪修正 #6:結果是 once(重做程度檢測)、later、off 時沒有字,以前拿掉 is-wait 就收起來,下面的按鈕往上跳 34 px。
+/* 結果是 once(重做程度檢測)、later、off 時沒有字,以前拿掉 is-wait 就收起來,下面的按鈕往上跳 34 px。
    留過一行的那一行,這個結束畫面裡就一直留著那一行的高度(is-held);空的 role=status 留著不會被念 */
 T['留過高度的那一行,結果沒有字(once、later、off、出錯)時保留高度(is-held、不收起來);拿到時沒有 is-held'] = async () => {
   const out = [];
@@ -520,7 +520,7 @@ T['看得出一定沒有字的(題數少於一回合、不認得的練習):一�
   const cls = env => earnP(env)[0].classList.contains('is-wait');
   return { ok: !cls(s) && !cls(b) && cls(g), detail: JSON.stringify([cls(s), cls(b), cls(g)]) };
 };
-/* 第三輪審查 #4、#5:結束的那一行要在學生眼前(對話放在最後聽的那一句下面、題庫放在成績下面),不是工具列或整塊的最後 */
+/* 結束的那一行要在學生眼前(對話放在最後聽的那一句下面、題庫放在成績下面),不是工具列或整塊的最後 */
 T['after:那一行放在指定元素的正後面(不是 into 的最後);同一個位置再呼叫一次重用同一行'] = async () => {
   const e = hookEnv();
   const area = e.dom.createElement('div'), res = e.dom.createElement('div'), zh = e.dom.createElement('div');
@@ -567,9 +567,9 @@ T['style.css 檔尾有 hooks 那一塊,每一條規則都掛在 .pet-earn 上(�
   const body = css.slice(a, b).replace(/\/\*[\s\S]*?\*\//g, '').replace(/@media[^{]*\{/g, '');
   const sels = [...body.matchAll(/([^{}]+)\{[^{}]*\}/g)].map(m => m[1].trim()).filter(Boolean);
   const bad = sels.filter(s => s.split(',').some(x => !x.includes('.pet-earn')));
-  /* 第三輪審查 #9:等結果時留一行的高度;#4、#5:對話放在那一句下面、題庫放在成績下面 */
+  /* 等結果時留一行的高度;對話放在那一句下面、題庫放在成績下面 */
   const raw = css.slice(a, b);
-  /* chick2 第一輪修正 #6:留過高度、結果沒有字的那一行(is-held)不收起來;#5:播放全部捲到的那一句下面留出那一行的空間 */
+  /* 留過高度、結果沒有字的那一行(is-held)不收起來;播放全部捲到的那一句下面留出那一行的空間 */
   const more = [/\.pet-earn \{[^}]*min-height: 1\.6em/, /\.pet-earn:empty:not\(\.is-wait\):not\(\.is-held\) \{[^}]*position: absolute[^}]*min-height: 0/,
     /:has\(> \.pet-earn\.is-wait\)/, /:has\(> \.pet-earn\.is-held\)/, /\.dlg-lines > \.pet-earn \{/, /\.tq-result \+ \.pet-earn \{/,
     /:has\(\+ \.pet-earn:empty:not\(\.is-wait\):not\(\.is-held\)\)/, /\.dlg-line:has\(\+ \.pet-earn\) \.dlg-bubble \{[^}]*scroll-margin-bottom: \d+px/].filter(r => !r.test(raw));
@@ -693,7 +693,7 @@ T['跟 ' + BASE + ' 比:只多了掛勾那幾行,沒有刪掉或改掉任何一�
     }
     const r = spawnSync('git', ['-C', REPO, 'diff', '--no-color', '-U0', BASE, '--', f], { encoding: 'utf8' });
     if (r.status !== 0) { bad.push(f + ' git 失敗:' + (r.stderr || '').trim()); return; }
-    /* 搬家(2026-10,第一輪審查):寫作與文章單字顯示「搬家留下的另一份」。那幾段整段是新加的、第一行是「/* 搬家」開頭的註解,
+    /* 搬家(2026-10):寫作與文章單字顯示「搬家留下的另一份」。那幾段整段是新加的、第一行是「/* 搬家」開頭的註解,
        只換掉 MOVE_REPLACED 列的那一行;這樣的段落不算掛勾以外的刪改。其他段落照原本的規則檢查。 */
     const hunks = [];
     r.stdout.split('\n').filter(l => !/^(\+\+\+|---) /.test(l)).forEach(l => {
@@ -791,7 +791,7 @@ function dailyRun(o) {
   try { vm.runInContext(read('js/daily-ui.js'), ctx); } catch (e) { threw = e; }
   return { dom, root, ctx, threw, lsBefore };
 }
-/* 等結果的時候那一行多一個 is-wait(先留一行的高度,第三輪審查 #9) */
+/* 等結果的時候那一行多一個 is-wait(先留一行的高度) */
 const dropEarn = html => html.replace(/<P \.pet-earn( is-wait| is-held)? role="status"><\/P>/g, '');
 T['每日練習頁:沒有掛勾、或開關關著(PET_STORE.food false),成績頁一模一樣、沒有 .pet-earn、不呼叫 earn'] = async () => {
   let called = 0;

@@ -1,4 +1,4 @@
-/* 每日練習的測試(她 2026-10-12 的決定:聽寫 5 句、單字 5 題、文法 5 題,每天換題、所有人都能做)。
+/* 每日練習的測試(2026-10-12 決定:聽寫 5 句、單字 5 題、文法 5 題,每天換題、所有人都能做)。
    用法:node tools/test_daily.js
    js/daily.js 在沒有 document、localStorage 的沙盒裡載入;記錄的路徑用真的 js/common.js(store、logAttempt)
    配假的 localStorage 與假的 CLOUD 跑,訪客與登入各一次。

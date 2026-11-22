@@ -1,4 +1,4 @@
-/* 小雞第二階段的餵食面板(js/pet-ui.js;規格 小雞第二階段規格.md 第 3 節、實作契約第 6 節)。
+/* 小雞第二階段的餵食面板(js/pet-ui.js)。
    用法:node tools/test_pet_ui_food.js
    - 開關都關:新的 pet-ui.js 跟第 1 步那版(tools/fixtures/pet_ui_step1.js)對同一組假 view() 畫出的卡片和面板,
      DOM 序列化後完全相同,焦點順序、掛的事件、呼叫 PET_STORE 與 ChickArt 的參數也相同。
@@ -366,7 +366,7 @@ T['格子:button[type=button]、圖只畫一張(render size 40 variant 0,不 mou
     detail: JSON.stringify({ renders: renders.map(r => r[0] + JSON.stringify(r[1])), mounts: trayMounts.length, c: pg.count('corn'), g: pg.count('grain') }) };
 };
 
-/* 第二輪審查:托盤小圖是完整的塗鴉畫法,9 種在點下去那一下同步畫要 300 毫秒以上(手機慢 4 倍時);
+/* 托盤小圖是完整的塗鴉畫法,9 種在點下去那一下同步畫要 300 毫秒以上(手機慢 4 倍時);
    點下去時只放空白的畫布,面板出來以後一格一格畫(每格一個畫面),同一頁再打開就直接用畫好的 */
 T['托盤小圖不在點下去那一下畫:openSheet 回來時 render 0 次、畫布大小已經定好;之後一格一格補上,每格各畫一次;同一頁再打開直接用畫好的'] = async () => {
   const pg = load({ view: foodView({ pantry: { order: ['corn', 'pea', 'yam', 'worm'], stock: { corn: 2, pea: 0, yam: 9, worm: 1 } } }), food: true });
@@ -448,7 +448,7 @@ T['唯讀:托盤整排變淡(is-ro)、每格 aria-disabled,下面放現有的唯
 };
 
 /* ================= E. 點心那一行、提示、沒有食物 ================= */
-T['點心那一行:今天的券有舊的地瓜(y)或麵包蟲(w:)而且還沒吃:「今天拿到 1 份地瓜」「今天拿到 1 份麵包蟲」(看不出是不是從結束畫面拿的,第二輪審查);不是第一張也講;吃滿 3 份照樣寫吃過'] = async () => {
+T['點心那一行:今天的券有舊的地瓜(y)或麵包蟲(w:)而且還沒吃:「今天拿到 1 份地瓜」「今天拿到 1 份麵包蟲」(看不出是不是從結束畫面拿的);不是第一張也講;吃滿 3 份照樣寫吃過'] = async () => {
   const t = over => { const pg = load({ view: foodView(over), food: true }); pg.open(); return pg.sheet.querySelector('.pet-snack-line').textContent; };
   const one = (id, food) => ({ gotToday: { id, food }, gotAll: [{ id, food }] });
   const y = t({ pantry: one('y', 'yam') }), ws = t({ pantry: one('w:s1', 'worm') }), wa = t({ pantry: one('w:a2', 'worm') });
@@ -469,7 +469,7 @@ T['點心那一行:10/23 起地瓜、麵包蟲的券記在自己的 id(y_<來源
   const a = t({ pantry: one('y_p5', 'yam') }), b = t({ pantry: one('w:s1_g:ga-01', 'worm') }), c = t({ pantry: one('w:a12_iv', 'worm') });
   return { ok: a === '' && b === '' && c === '', detail: JSON.stringify([a, b, c]) };
 };
-T['點心那一行:達標(m)沒有結束畫面,補寫給的地瓜、麵包蟲記在 y_m、w:s1_m、w:a3_m,打開面板要講(審查第 2 輪 #2);y_mx 這類別的來源不講'] = async () => {
+T['點心那一行:達標(m)沒有結束畫面,補寫給的地瓜、麵包蟲記在 y_m、w:s1_m、w:a3_m,打開面板要講;y_mx 這類別的來源不講'] = async () => {
   const t = over => { const pg = load({ view: foodView(over), food: true }); pg.open(); return pg.sheet.querySelector('.pet-snack-line').textContent; };
   const one = (id, food) => ({ gotToday: { id, food }, gotAll: [{ id, food }] });
   const y = t({ pantry: one('y_m', 'yam') }), ws = t({ pantry: one('w:s1_m', 'worm') }), wa = t({ pantry: one('w:a3_m', 'worm') });
@@ -477,7 +477,7 @@ T['點心那一行:達標(m)沒有結束畫面,補寫給的地瓜、麵包蟲記
   const other = t({ pantry: one('y_mx', 'yam') });
   return { ok: y === '今天拿到 1 份地瓜' && ws === '今天拿到 1 份麵包蟲' && wa === ws && second === y && other === '', detail: JSON.stringify([y, ws, wa, second, other]) };
 };
-T['「點一下餵食」只在現在餵得下去時出現:今天的 3 份點心都餵過、飼料 0 顆時不出現(審查第 1 輪 #6);飼料還有、或點心還能餵時照樣出現'] = async () => {
+T['「點一下餵食」只在現在餵得下去時出現:今天的 3 份點心都餵過、飼料 0 顆時不出現;飼料還有、或點心還能餵時照樣出現'] = async () => {
   const hintOf = over => { const pg = load({ view: foodView(over), food: true }); pg.open(); return pg.sheet.querySelector('.pet-hint').textContent; };
   const all = { ateToday: true, ateCount: 3, canSnack: false };
   const done0 = hintOf({ pantry: all, status: { food: 0 } }), doneGrain = hintOf({ pantry: all, status: { food: 4 } });
@@ -633,7 +633,7 @@ T['第一次吃到最愛:live 加「牠最喜歡玉米。」,格子馬上有愛�
   pg.tile('corn').fire('click'); pg.timers.advance(50);
   return { ok: pg.live() === '小雞吃了玉米 · 還有 1 份 · 牠最喜歡玉米' && !!pg.tile('corn').querySelector('.pet-heart'), detail: pg.live() };
 };
-/* 第三輪審查 #10 起:eat 不再交給引擎播一次(只啄 2 下),改成照食物的口數一格一格畫(每一口都咬到) */
+/* eat 不再交給引擎播一次(只啄 2 下),改成照食物的口數一格一格畫(每一口都咬到) */
 T['動畫:小雞播 eat 再 happy;啄地那格各咬一口舞台上的食物(56 px、不錯開),口數照食物;面板小雞 maxDpr 1.5、variants 1'] = async () => {
   const pg = load({ view: foodView(), food: true });
   pg.open();
@@ -676,7 +676,7 @@ T['餵點心的飛行(0.3 秒)途中:小雞一直張著嘴、還沒吃;食物到
   return { ok: flying && mid.length === 1 && mid[0] === 'show:happy:0' && after.indexOf('show:eat:1') > 0 && after.indexOf('idle') < 0,
     detail: JSON.stringify({ flying, mid, after }) };
 };
-/* 第三輪審查 #10:引擎的 eat 只啄 2 下,要咬 3、4 口的食物剩一截直接消失。照預覽 eatSeq:第 1 到 5 格,不夠就重複第 4、5 格,最後第 6、7 格 */
+/* 引擎的 eat 只啄 2 下,要咬 3、4 口的食物剩一截直接消失。照預覽 eatSeq:第 1 到 5 格,不夠就重複第 4、5 格,最後第 6、7 格 */
 const J = x => JSON.stringify(x);
 const eatShows = (poses) => poses.filter(p => /^show:eat:/.test(p)).map(p => +p.split(':')[2]);
 const wantSeq = n => { const ks = [1, 2, 3, 4, 5]; for (let k = 2; k < n; k++) ks.push(4, 5); return ks.concat([6, 7, 7]); };
@@ -713,7 +713,7 @@ T['餵飼料:飼料到了舞台、存好了才吃,啄 3 下咬 3 口(飼料 3 �
   return { ok: !!stage && bites === 3 && J(seq) === J(wantSeq(3)) && pg.log.poses.slice(-1)[0] === 'happy' && !pg.log.poses.slice(n0).includes('eat'),
     detail: JSON.stringify({ seq, bites, poses: pg.log.poses.slice(n0) }) };
 };
-/* 第三輪審查 #8:點心飛過去的 0.3 秒內切到背景,食物停在小雞嘴邊、一直重畫 */
+/* 點心飛過去的 0.3 秒內切到背景,食物停在小雞嘴邊、一直重畫 */
 T['餵點心時切到背景:飛行途中或吃到一半,回來時舞台上的食物收掉、不再重畫;吃到一半的回到待機,不會一直卡在 eat'] = async () => {
   const bad = [];
   for (const when of ['fly', 'eat']) {
@@ -737,7 +737,7 @@ T['餵點心時切到背景:飛行途中或吃到一半,回來時舞台上的食
   }
   return { ok: !bad.length, detail: bad.join(' / ') };
 };
-/* chick2 第三輪修正 #5:#10 改成一格一格吃以後,收食物的備用計時器(點心點下去 2.7 秒、飼料存好 2.4 秒)還是照時間收,
+/* 改成一格一格吃以後,收食物的備用計時器(點心點下去 2.7 秒、飼料存好 2.4 秒)還是照時間收,
    不看小雞吃完了沒。慢的手機每一格都比 125 毫秒晚,計時器先到,還沒咬完的食物就不見了。這裡把每一格拉長成 0.5 秒 */
 T['慢的手機(每一格 0.5 秒):小雞還在吃時舞台上的食物不收,每一口都咬到;吃完才收掉。點心與飼料都一樣'] = async () => {
   const bad = [];

@@ -1,4 +1,4 @@
-/* 小雞的存取(路線圖 1.2c;規格在 repo 外的 小雞規格.md 第 9 節)。計算全在 js/pet.js,這裡只決定什麼時候算、寫到哪裡。
+/* 小雞的存取。計算全在 js/pet.js,這裡只決定什麼時候算、寫到哪裡。
    只寫 pet 這一個鍵;hist 與其他鍵只讀不寫。
    - 什麼時候重算:開頁(等 CLOUD.ready 之後)、回到頁面(離上次同步超過 1 分鐘)、恢復連線、
      答題後(common.js 的 logAttempt 呼叫 afterAnswer:停 4 秒再做,兩次讀雲端至少隔 30 秒)。
@@ -7,9 +7,9 @@
      登入、而且 CLOUD.readKey 讀到雲端那一份:跟本機那份、hist 合併(PET.reconcile);結果跟雲端不一樣才 store.set
      (寫本機並照常記帳上傳),跟雲端一樣只是本機舊了就只寫本機。
      登入、但讀不到雲端(離線、逾時、換了帳號、supabase-js 手上的登入不是這個帳號):
-     第 3 步(第二階段開關打開)而且 cloud.js 是先合併再上傳的新版(CLOUD.mergedKeys 有 pet,第二階段規格 A.5)時改用 store.set,
+     第 3 步(第二階段開關打開)而且 cloud.js 是先合併再上傳的新版(CLOUD.mergedKeys 有 pet)時改用 store.set,
      記帳後由 cloud.js 先讀雲端、合併再上傳;開關都關著(第 2 步)時同一台可能還開著第 1 步的分頁,它的 cloud.js 會把帳本上的
-     pet 不合併就傳上去,所以照第 1 步只寫本機(第二輪實作審查 X1)。舊版 cloud.js 也只寫本機,不經過 store.set,
+     pet 不合併就傳上去,所以照第 1 步只寫本機。舊版 cloud.js 也只寫本機,不經過 store.set,
      所以不記帳、不上傳,沒合併過的本機那份不會蓋掉雲端;下次讀得到再合併上傳。
      讀得到雲端但對不了時(登入憑證沒有或解不開):一律只寫本機,不記帳,不讓沒對過時的資料經過任何一條路上傳。
      訪客、網站沒開雲端:只寫本機。
@@ -18,30 +18,30 @@
    - 第二階段的開關(js/pet-config.js):PET_FOOD 打開而且 PET_FOOD_FROM 是有效日期時才有食物(earn、eat、每次同步補券),
      PET_ROAM_V2 打開時才有走動開關(setRoam)。兩個都關著時新函式一律立刻回 off、不讀不寫,
      其他行為(寫入次數、內容、view() 的鍵)跟第 1 步那版逐位元組相同(test_pet_store.js 比對)。
-   - 這台的時鐘跟伺服器差太多(慢或快超過 3 天,chick2 第三輪修正 #1):唯讀,本機、雲端都不寫。伺服器時間取自剛讀雲端時用的登入憑證
+   - 這台的時鐘跟伺服器差太多(慢或快超過 3 天):唯讀,本機、雲端都不寫。伺服器時間取自剛讀雲端時用的登入憑證
      (access_token 的 iat;伺服器剛收下這張憑證,所以 iat 跟伺服器時間最多差憑證的有效期,預設 1 小時)。
-     慢的裝置會把它眼中「晚超過 7 天」的天丟掉,寫回去就刪掉了別台的進度(10/16 審查)。憑證沒有或解不開時對不了時,
+     慢的裝置會把它眼中「晚超過 7 天」的天丟掉,寫回去就刪掉了別台的進度。憑證沒有或解不開時對不了時,
      當成讀不到雲端:只寫本機、不上傳。
    - 讀雲端的時候登出了(或別的分頁換了帳號):帳號資料夾已經清掉,什麼都不寫,免得把 pet 和帳本寫回去。
    - 讀不到雲端時只寫了本機的改動(餵食、改目標、取名),登入時在 cloud.js 記一個「只在本機」的標記(不在帳本裡);
-     登出時 cloud.js 先合併上傳,傳不上去就算進「還沒同步」先問(chick2 第一輪修正 #2)。登出前還在排隊的動作和 earn,
-     cloud.js 會先呼叫 flushPending 照讀不到雲端的規則寫下來(#4)。
+     登出時 cloud.js 先合併上傳,傳不上去就算進「還沒同步」先問。登出前還在排隊的動作和 earn,
+     cloud.js 會先呼叫 flushPending 照讀不到雲端的規則寫下來。
      已知限制:在下一次讀得到雲端之前開了新的工作階段時,cloud.js 灌資料先合併本機與雲端(第二階段),合併不了(時鐘差太多)
      才用雲端那份蓋掉本機,這些改動會不見;每天的題數從 hist 重算,不會少。
      合併後的那份上傳失敗(斷線、請求被中斷)時它留在帳本上,之後任何一次 cloud.js 的 flushAll(開別的頁、切到背景、
      恢復連線)都會先把這份沒有重新合併過的本機那份傳上去,蓋掉別台在這中間寫進雲端的名字、目標、餵食。
      別台只有在同一個工作階段裡再同步才併得回來;它開了新的工作階段的話,灌資料會先用雲端那份蓋掉它的本機,這些就沒了。
      每天的題數在 hist 涵蓋的範圍內會重算回來。cloud.js 是先合併的新版(mergedKeys)時,帳本補傳會先合併,這條限制就沒了。
-   - 食物(第二階段規格 4.3、5.2):掛勾在結束畫面呼叫 earn({ id, n });這次唯讀或出錯時記在分頁記憶體(最多 20 筆),
+   - 食物:掛勾在結束畫面呼叫 earn({ id, n });這次唯讀或出錯時記在分頁記憶體(最多 20 筆),
      之後第一次正常的同步依原本的完成時間補寫。每次同步也從 daily_done、mock_history、diag、hist 與達標日補最近 7 天的券
      (那些鍵只讀)。拿到券就在 window 送 'pet:earn'(detail { result, food, id, date, source })。
      同一輪裡掛勾的那一個先算,再補寫:每日練習做完一項時 daily_done 已經記好了,先補寫的話掛勾那一下會變成「今天拿過了」。
      前一輪同步已經在讀雲端時交卷,補寫還是可能先寫了這次的券:交卷那一刻本機那天沒有券、現在那天的券又是同一個來源給的,
-     掛勾就回 got 與那份食物,不說「拿過了」(chick2 第三輪修正 #4,見 mine())。
+     掛勾就回 got 與那份食物,不說「拿過了」(見 mine())。
      網路看起來連著、其實不通時讀雲端要 8 秒才逾時:earn 最多等 2 秒,之後先用這台的資料判斷,照讀不到雲端的規則寫(第 3 步登入時記帳),
      離開頁面或切到背景時也先寫(結束畫面只等 10 秒,分頁記憶體會跟著頁面不見);下一次同步再合併上傳。
      吃點心(eat)也一樣:畫面當場就顯示吃掉了,正式寫入等 2 秒、離開頁面或切到背景時先照同樣的規則寫(同一個吃的 id,
-     之後合併只留一筆;chick2 第一輪修正 #3)。
+     之後合併只留一筆)。
    載入順序:common.js、pet-config.js、pet.js、cloud.js、(pet-food.js)、pet-store.js。測試:node tools/test_pet_store.js */
 (function () {
   'use strict';
@@ -51,7 +51,7 @@
   const VISIBLE_GAP_MS = 60000;  // 回到頁面時,離上次同步超過這麼久才再做
   /* 這台的時鐘比伺服器慢或快超過這麼久就不寫。兩台一快一慢時相差兩邊相加:pet.js 只留這台的今天加 7 天以內的日期、
      今天往前 6 天的 fed,所以兩邊相加不能超過 6 天。以前各 6 天,一台快 4 天、一台慢 4 天時,慢的那台合併會丟掉快的那台的
-     練習日、達標日、券和吃掉紀錄再上傳(chick2 第三輪修正 #1;js/cloud.js 同一組數字,test_pet.js 從兩個檔讀出來驗)。
+     練習日、達標日、券和吃掉紀錄再上傳(js/cloud.js 同一組數字,test_pet.js 從兩個檔讀出來驗)。
      憑證剛換過、跟伺服器只差幾分鐘到 1 小時;發了超過 3 天還沒換的憑證才會誤擋,那一次只是不寫,不丟資料 */
   const SLOW_MAX_MS = 3 * 864e5;
   const FAST_MAX_MS = 3 * 864e5;
@@ -62,7 +62,7 @@
   const FROM = typeof window.PET_FOOD_FROM === 'string' ? window.PET_FOOD_FROM : '';
   const food = on && window.PET_FOOD === true && typeof P.isDate === 'function' && P.isDate(FROM) && typeof P.earn === 'function';
   const roamV2 = on && window.PET_ROAM_V2 === true && typeof P.setRoam === 'function';
-  /* 第 3 步:第二階段的開關打開了,第 1 步那版的分頁已經汰換掉(規格 5.3 等一週的條件) */
+  /* 第 3 步:第二階段的開關打開了,第 1 步那版的分頁已經汰換掉 */
   const step3 = food || roamV2;
   const EARN_WAIT_MS = 2000;      // earn 等合併後的結果最多這麼久,之後先照讀不到雲端的規則寫(結束畫面只等 10 秒)
 
@@ -83,7 +83,7 @@
   }
   function cloudOn() { return !!(window.CLOUD && window.CLOUD.enabled); }
   function cloudUser() { return cloudOn() && window.CLOUD.user && typeof window.CLOUD.user.id === 'string' ? window.CLOUD.user : null; }
-  /* cloud.js 是先合併再上傳的新版(規格 A.5) */
+  /* cloud.js 是先合併再上傳的新版 */
   function cloudMerges() {
     try { const k = window.CLOUD.mergedKeys; return Array.isArray(k) && k.indexOf(KEY) >= 0; } catch (e) { return false; }
   }
@@ -118,7 +118,7 @@
     try { localStorage.setItem(storageKey(KEY), JSON.stringify(p)); return true; } catch (e) { return false; }
   }
   /* 登入時只寫在本機的改動,記在 cloud.js 的「只在本機」標記(不在帳本裡,第 1 步的 cloud.js 看不到):登出時這一版先合併上傳,
-     傳不上去就算進「還沒同步」先問(chick2 第一輪修正 #2)。讀到雲端、寫過合併後的那份,就劃掉。舊版 cloud.js 沒有這兩個函式,什麼都不做 */
+     傳不上去就算進「還沒同步」先問。讀到雲端、寫過合併後的那份,就劃掉。舊版 cloud.js 沒有這兩個函式,什麼都不做 */
   function markLocal(on) {
     try {
       const C = window.CLOUD, f = C && (on ? C.markLocalOnly : C.clearLocalOnly);
@@ -126,7 +126,7 @@
     } catch (e) { /* 標記不到只是登出時不會先問 */ }
   }
 
-  /* newer:這一版看得懂 v2,不會再因為版本說「新版網頁存的」;不認得的版本照舊說資料讀不到(規格 5.3)。鍵留著給畫面 */
+  /* newer:這一版看得懂 v2,不會再因為版本說「新版網頁存的」;不認得的版本照舊說資料讀不到。鍵留著給畫面 */
   function view() {
     if (!on) return { on: false };
     const now = Date.now();
@@ -174,10 +174,10 @@
     return { pet, got, used, res };
   }
 
-  /* 掛勾的結果(chick2 第三輪修正 #4):前一次同步正在讀雲端時交卷,那一輪讀完雲端才讀 hist,補寫先把這次的完成補成那天的券,
+  /* 掛勾的結果:前一次同步正在讀雲端時交卷,那一輪讀完雲端才讀 hist,補寫先把這次的完成補成那天的券,
      掛勾排在後面就拿到 cap,結束畫面說「今天的點心拿過了」,其實這就是那天第一份。
      交卷那一刻本機那天還沒有券(ask.had 是 false),現在那天的券又是這個來源給的(id 相同,或這個分頁補寫時記下的來源相同),
-     就回 got 與那份食物(規格 5.2:同一天同一個來源是同一張券)。同一張只回一次 got(claimed),不另外送 pet:earn(補寫那時送過了) */
+     就回 got 與那份食物(同一天同一個來源是同一張券)。同一張只回一次 got(claimed),不另外送 pet:earn(補寫那時送過了) */
   function mine(ask, pet, r) {
     if (r && r.result === 'got') { claimed = claimed.concat([r.date + '/' + r.id]).slice(-LATER_MAX); return r; }
     /* 一天 3 份以後:補寫先寫了同一個來源的券,掛勾那一下會是 dup(同一個來源拿過了),那天剛好滿 3 張時是 cap */
@@ -192,7 +192,7 @@
     return { result: 'got', food: day[id], id, date: d, left: Math.max(0, P.SNACKS_PER_DAY - Object.keys(day).length) };
   }
   /* 交卷那一刻本機那天有沒有這個來源的券(一天 3 份以後只看同一個來源;讀不到、壞掉當成有:照舊回 cap、dup)。
-     跟 earn 判斷 dup 用同一條規則(審查第 2 輪 #1):特別的券記在 y_<來源>、w:…_<來源>,也算這個來源的 */
+     跟 earn 判斷 dup 用同一條規則:特別的券記在 y_<來源>、w:…_<來源>,也算這個來源的 */
   function hadTicket(t, id) {
     const l = readLocal();
     if (l === null) return false;
@@ -284,7 +284,7 @@
     return queued;
   }
   /* 動作排進佇列。還沒做完就登出時(cloud.js 呼叫 flushPending),先照讀不到雲端的規則寫在本機,cloud.js 再合併上傳或先問;
-     leave(吃點心)時等 2 秒、離開頁面或切到背景也先寫(畫面當場就顯示吃掉了,chick2 第一輪修正 #3)。
+     leave(吃點心)時等 2 秒、離開頁面或切到背景也先寫(畫面當場就顯示吃掉了)。
      先寫過的,正式那一輪的動作若因為「已經做過」被拒絕(今天吃過、沒有飼料),照樣算成功、寫合併後的那份 */
   function act(mutate, leave) {
     if (!on) return Promise.resolve({ ok: false, reason: 'off' });
@@ -386,7 +386,7 @@
       return true;
     } catch (e) { return false; }
   }
-  /* 先寫本機:用這台現在的資料(本機那份、hist)判斷,拿到就照讀不到雲端的規則寫(saveUnread;第 3 步登入時記帳,第三輪審查 #2),
+  /* 先寫本機:用這台現在的資料(本機那份、hist)判斷,拿到就照讀不到雲端的規則寫(saveUnread;第 3 步登入時記帳),
      下一次同步合併上傳。
      只在 got(寫了券)、cap(今天已經有 3 張)和 dup(這個來源今天拿過了)時回結果(合併只會多不會少,答案不會變),其他回 null 繼續等。
      唯讀、時鐘不對、雲端那份救不回、登出了:什麼都不做。讀寫之間沒有 await,跟同步的寫入不會交錯 */

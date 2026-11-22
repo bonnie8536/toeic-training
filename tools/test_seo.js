@@ -9,7 +9,7 @@
    - 首頁:WebSite 與 OnlineBusiness(Organization 的子類型)結構化資料,alternateName 只有 Rushup;h1 有站名;沒有過期的日期公告。
    - 首頁搜尋結果的摘要(2026-11-13,Google 拿了導覽列文字當摘要):全站 .topbar-inner、頁尾連結列(外包 div)、首頁數字列、每日練習、小雞卡、聽力訓練頁的進度數字與級別選單一建立就帶 data-nosnippet(首頁、價格頁不寫全站免費公告,2026-11-17 站長拿掉),
      h1、功能卡片、頁尾那句不帶,h1 下不掛介紹句;首頁說明第一句講是準備多益的線上練習網站,寫的題數不超過題庫,數字列照資料算(題庫含聽力、單字不重複);
-     定稿關鍵字表分「原樣」「拆開」逐處核對,「多益練習」要原樣在標題或說明;錯題本接在題庫後面(模擬考錯題不進錯題本);h1 用 keep-all 只在「：」「、」後換行;
+     關鍵字表分「原樣」「拆開」逐處核對,「多益練習」要原樣在標題或說明;錯題本接在題庫後面(模擬考錯題不進錯題本);h1 用 keep-all 只在「：」「、」後換行;
      錯題本的卡片與說明只寫 js/review.js 真的收的(不寫全站錯題);單字、聽力頁的說明和首頁卡片列出頁上每一種玩法;
      標題、說明、h1、結構化資料、manifest 說明不寫會變假的字(免費、考古題、官方……),iPhone 安裝入口關著時也不寫 App、主畫面。
    - sitemap.xml 跟 tools/build_sitemap.js 產生的一樣:每個要收錄的頁加上每個單元,沒有 noindex 的頁。
@@ -323,7 +323,7 @@ function bodyElements(src) {
   assert.deepEqual(stack.map((e) => e.tag), [], '有沒關的標籤');
   return els;
 }
-/* 首頁說明與 App 說明不能寫的字(2026-11-13 定稿):會變假的(之後要收費、題目不是真題、跟 ETS 無關、音檔是合成語音……)與誇大字 */
+/* 首頁說明與 App 說明不能寫的字:會變假的(之後要收費、題目不是真題、跟 ETS 無關、音檔是合成語音……)與誇大字 */
 const HOME_BANNED = ['免費', '考古題', '官方', '真人', '口說', '離線', '免註冊', 'PDF', '下載', '神器', '首選', '保證', '990', '一站式', '全方位', '打造', '助你', '輕鬆', '高效', 'AI', '刷刷'];
 T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、每日練習、小雞卡、聽力頁進度與級別選單建立時就帶 data-nosnippet,全站頁尾連結列包一層;h1、功能卡片、頁尾那句不帶;h1 下不掛介紹句;首頁、價格頁不寫全站免費公告;聽力頁說明不寫這頁沒有的題組'] = () => {
   /* 11/13 Google 拿首頁的導覽列文字當摘要:有頂欄的每一頁,.topbar-inner 都帶(「登入▾」、App 的返回鍵與頁名是 JS 加進這一層的);header 本身不能帶 */
@@ -339,7 +339,7 @@ T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、每日練習�
   const src = homeSrc();
   const els = bodyElements(src);
   const one = (pred, name) => { const x = els.filter(pred); assert.equal(x.length, 1, '首頁找不到剛好一個 ' + name); return x[0]; };
-  /* 該擋的:數字列(JS 填的數字)、每日練習(個人進度)。免費公告 11/17 拿掉了(站長:「不用特別寫全站免費什麼的,要收錢我們就收」) */
+  /* 該擋的:數字列(JS 填的數字)、每日練習(個人進度)。免費公告 11/17 拿掉了 */
   assert.ok(one((e) => e.tag === 'div' && e.cls.indexOf('stats') > -1, '.stats').own, '數字列沒帶 data-nosnippet');
   assert.ok(one((e) => e.id === 'daily-home', '#daily-home').own, '每日練習沒帶 data-nosnippet');
   assert.equal(/全站免費|free-note/.test(src), false, '首頁不再寫全站免費公告');
@@ -390,7 +390,7 @@ T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、每日練習�
     kids.forEach((k) => assert.ok(k.hidden, '錯題本那一列的字沒帶 data-nosnippet'));
   });
 };
-T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上練習網站;關鍵字表寫的位置真的有;錯題本不接在模擬考後面;h1 不把詞拆兩行;數字列算的是實際資料;寫的題數是真的;不寫會變假的字'] = () => {
+T['首頁與 App 的說明:講清楚是準備多益的線上練習網站;關鍵字表寫的位置真的有;錯題本不接在模擬考後面;h1 不把詞拆兩行;數字列算的是實際資料;寫的題數是真的;不寫會變假的字'] = () => {
   const src = homeSrc(), s = head('index.html');
   const desc = meta(s, 'name', 'description');
   const org = JSON.parse(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/.exec(src)[1])['@graph'].find((x) => x['@type'] === 'OnlineBusiness');
@@ -399,10 +399,10 @@ T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上�
   assert.match(desc, /^衝衝英文是準備多益的線上英文練習網站。/, '首頁說明第一句要講是什麼站:' + desc);
   [titleOf(s), desc, h1, man.description].forEach((t) => assert.match(t, /多益/, t));
   [titleOf(s), desc, h1].forEach((t) => assert.ok(/聽力/.test(t) && /閱讀/.test(t), '要寫出主要練聽力、閱讀:' + t));
-  /* 定稿第六節關鍵字表:T 標題、D 說明、H h1、M manifest、J 結構化資料、C 首頁卡片。
+  /* 關鍵字表:T 標題、D 說明、H h1、M manifest、J 結構化資料、C 首頁卡片。
      「原樣」是整個詞一字不差出現的地方,要剛好是表上寫的那幾處(多了、少了都要回去改表);
      「拆開」是沒有原樣、但同一段有「多益」也有詞的後半(C 首頁卡片上沒有「多益」兩字,只看後半)。
-     以前只查拆開的片段(「練習」「聽力」),表上寫「多益練習:T、D、H、J」,其實一處都沒有原樣(審查第 2 輪 #1) */
+     以前只查拆開的片段(「練習」「聽力」),表上寫「多益練習:T、D、H、J」,其實一處都沒有原樣 */
   const spot = { T: titleOf(s), D: desc, H: h1, M: man.description, J: org.description,
     /* 首頁卡片的名稱換成「錯題本」之前,舊名「每日複習」也算同一個詞(關鍵字表只看「錯題本」出現在哪幾處) */
     C: Array.from(src.matchAll(/<a class="module-card[^"]*"[^>]*>\s*(?:<canvas[^>]*><\/canvas>\s*)?<h2>([^<]+)<\/h2>\s*<p>([^<]*)<\/p>/g)).map((m) => m[1] + m[2]).join('|').replace(/每日複習/g, '錯題本') };
@@ -482,7 +482,7 @@ T['首頁與 App 的說明(2026-11-13 定稿):講清楚是準備多益的線上�
     });
   });
 };
-T['首頁卡片與內頁說明寫的是真的、而且一致(2026-11-13 審查第 2 輪):錯題本只寫 js/review.js 真的收的;單字、聽力頁的說明和首頁卡片列出頁上每一種玩法'] = () => {
+T['首頁卡片與內頁說明寫的是真的、而且一致:錯題本只寫 js/review.js 真的收的;單字、聽力頁的說明和首頁卡片列出頁上每一種玩法'] = () => {
   const cards = new Map(Array.from(read('index.html').matchAll(/<a class="module-card[^"]*" href="([^"]+)">\s*(?:<canvas[^>]*><\/canvas>\s*)?<h2>[^<]+<\/h2>\s*<p>([^<]*)<\/p>/g)).map((m) => [m[1], m[2]]));
   /* js/review.js 收的是題庫刷題(Part 5、聽力 P1/P2 直接出題,題組列出來連回刷題)、片語、單字遊戲漏接、文法和自然發音沒全對的課;
      模擬考(只存 mock_history)、程度檢測、閱讀文章、聽寫這類聽力基本功的錯題都不會進去,所以不能寫「全站錯題」。

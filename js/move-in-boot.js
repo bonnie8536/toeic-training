@@ -53,7 +53,7 @@
     const d = root.document;
     if (d.getElementById('move-bar')) return;
     const box = el('div', { id: 'move-bar', role: 'region', 'aria-label': '搬家提示',
-      style: 'background:var(--primary-tint,#e9f4fc);border-bottom:1px solid var(--line,#e3e8ed);padding:10px 16px;font-size:15px;line-height:1.6;position:relative;z-index:50' });
+      style: 'background:var(--primary-tint,#e5faff);border-bottom:1px solid var(--line,#e3e8ed);padding:10px 16px;font-size:15px;line-height:1.6;position:relative;z-index:50' });
     const inner = el('div', { style: 'max-width:960px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center' });
     inner.appendChild(el('span', { style: 'flex:1 1 260px' }, text));
     buttons.forEach((b) => {

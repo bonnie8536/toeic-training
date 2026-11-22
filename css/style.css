@@ -8,9 +8,12 @@
   --ink: #404040;
   --ink-light: #5f6770;   /* 白底 5.9:1、淺灰底 5.5:1(以前 #767f88 只有 4.07:1) */
   --ink-soft: #5d6670;   /* 白底 5.8:1。付款視窗與價格頁的說明小字用 */
-  --primary: #0b72c4;
-  --primary-dark: #095d9f;
-  --primary-tint: #e9f4fc;
+  --primary: #0b72c4;          /* 字、框線、聚焦外框 */
+  --primary-dark: #095d9f;     /* 淡底上的字 */
+  --primary-tint: #e5faff;
+  --fill: #00cdfe;             /* 主色的填色:主按鈕、進度條、選中的圓 */
+  --fill-dark: #00b9e6;        /* 填色滑過、按下 */
+  --on-fill: #095d9f;          /* 填色上的小字(主按鈕的大字用白) */
   --highlight: #ffedad;        /* 螢光筆黃:已完成單字 */
   --highlight-deep: #f7d764;
   --hint-orange: #e8890c;
@@ -70,8 +73,8 @@ button { font-family: var(--font); cursor: pointer; }
 }
 .brand:hover { text-decoration: none; }
 .brand-mark {
-  background: var(--primary);
-  color: #fff;
+  background: var(--fill);
+  color: var(--on-fill);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .5px;
@@ -132,7 +135,7 @@ button { font-family: var(--font); cursor: pointer; }
 .module-card:hover {
   text-decoration: none;
   border-color: var(--primary);
-  box-shadow: 0 3px 14px rgba(11, 114, 196, .1);
+  box-shadow: 0 3px 14px rgba(0, 205, 254, .1);
 }
 .module-card h2 { font-size: 21px; margin: 10px 0 6px; }
 .module-card p { color: var(--ink-light); font-size: 14.5px; }
@@ -162,7 +165,7 @@ button { font-family: var(--font); cursor: pointer; }
 .daily-name { font-size: 16px; font-weight: 700; transition: color .15s; }
 .daily-st { display: inline-flex; align-items: center; gap: 4px; font-size: 14px; color: var(--ink-light); font-variant-numeric: tabular-nums; }
 .daily-bar { grid-column: 1 / -1; height: 6px; background: var(--bg-soft); border-radius: 3px; overflow: hidden; }
-.daily-bar i { display: block; height: 100%; background: var(--primary); border-radius: 3px; }
+.daily-bar i { display: block; height: 100%; background: var(--fill); border-radius: 3px; }
 .daily-row.is-done .daily-st { color: var(--ok); font-weight: 700; }
 .daily-row.is-done .daily-bar i { background: var(--ok); }
 .daily-done { margin: 4px 0 6px; font-size: 15px; }
@@ -220,7 +223,7 @@ button { font-family: var(--font); cursor: pointer; }
   flex-direction: column;
   transition: box-shadow .15s, border-color .15s;
 }
-.article-card:hover { text-decoration: none; border-color: var(--primary); box-shadow: 0 3px 14px rgba(11,114,196,.1); }
+.article-card:hover { text-decoration: none; border-color: var(--primary); box-shadow: 0 3px 14px rgba(0,205,254,.1); }
 .article-card .thumb { background: var(--bg-soft); border-bottom: 1px solid var(--line); }
 .article-card .thumb img, .article-card .thumb svg { width: 100%; height: 150px; display: block; object-fit: cover; }
 .article-card .body { padding: 15px 18px 16px; }
@@ -258,7 +261,7 @@ button { font-family: var(--font); cursor: pointer; }
   cursor: pointer;
 }
 .tq-chip:hover { border-color: var(--primary); color: var(--primary); }
-.tq-chip.on { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 700; }
+.tq-chip.on { background: var(--fill); border-color: var(--fill); color: var(--on-fill); font-weight: 700; }
 .tq-chip.used { opacity: .3; cursor: default; }
 .tq-passage p { line-height: 2.2; margin: 0 0 14px; font-size: 16.5px; }
 .tq-blank {
@@ -304,8 +307,8 @@ button { font-family: var(--font); cursor: pointer; }
   font-size: 14.5px;
 }
 .btn:hover { border-color: var(--primary); color: var(--primary); }
-.btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 700; }
-.btn.primary:hover { background: var(--primary-dark); color: #fff; }
+.btn.primary { background: var(--fill); border-color: var(--fill); color: #fff; font-size: var(--fs-btn); font-weight: 700; }
+.btn.primary:hover { background: var(--fill-dark); border-color: var(--fill-dark); color: #fff; }
 .btn.on { background: var(--primary-tint); border-color: var(--primary); color: var(--primary-dark); font-weight: 700; }
 .btn:disabled { opacity: .45; cursor: default; }
 .toolbar-note { font-size: 13px; color: var(--ink-light); }
@@ -514,12 +517,12 @@ button { font-family: var(--font); cursor: pointer; }
   text-align: left;
   transition: box-shadow .15s, border-color .15s;
 }
-.part-card:hover { border-color: var(--primary); box-shadow: 0 3px 14px rgba(11,114,196,.1); }
+.part-card:hover { border-color: var(--primary); box-shadow: 0 3px 14px rgba(0,205,254,.1); }
 .part-card h3 { font-size: 18.5px; margin: 5px 0 3px; }
 .part-card p { font-size: 13.5px; color: var(--ink-light); }
 .part-card .p-stats { margin-top: 13px; font-size: 13px; color: var(--ink-light); }
 .part-card .bar { height: 6px; background: var(--bg-soft); border-radius: 3px; margin-top: 7px; overflow: hidden; }
-.part-card .bar i { display: block; height: 100%; background: var(--primary); border-radius: 3px; }
+.part-card .bar i { display: block; height: 100%; background: var(--fill); border-radius: 3px; }
 
 /* 刷題首頁面板 */
 .practice-panels { display: grid; grid-template-columns: 1.15fr 1fr; gap: 22px; align-items: start; margin: 24px 0 50px; }
@@ -701,7 +704,7 @@ button { font-family: var(--font); cursor: pointer; }
 
 /* 交卷式作答:已選選項與答題進度點 */
 .opt.picked { border-color: var(--primary); background: var(--primary-tint); }
-.opt.picked .letter { background: var(--primary); color: #fff; }
+.opt.picked .letter { background: var(--fill); color: var(--on-fill); }
 .letter-big.picked { border-color: var(--primary); background: var(--primary-tint); color: var(--primary-dark); }
 .q-nav button.ans { background: var(--primary-tint); border-color: var(--primary); color: var(--primary-dark); }
 
@@ -934,7 +937,7 @@ button { font-family: var(--font); cursor: pointer; }
   border-radius: 10px;
   padding: 8px 14px;
   text-align: center;
-  box-shadow: 0 3px 10px rgba(11, 114, 196, .12);
+  box-shadow: 0 3px 10px rgba(0, 205, 254, .12);
   will-change: transform;
 }
 .fb-zh { font-size: 16.5px; font-weight: 700; white-space: nowrap; }
@@ -1066,8 +1069,8 @@ footer p { margin: 0; }
 .profile-dot {
   width: 26px; height: 26px;
   border-radius: 50%;
-  background: var(--primary);
-  color: #fff;
+  background: var(--fill);
+  color: var(--on-fill);
   font-size: 13px; font-weight: 700;
   display: inline-flex; align-items: center; justify-content: center;
   flex: none;
@@ -1122,9 +1125,11 @@ footer p { margin: 0; }
 .modal h2 { font-size: 20px; }
 .modal-sub { color: var(--ink-light); font-size: 13.5px; margin: 6px 0 14px; }
 .modal-list { max-height: 200px; overflow-y: auto; }
-.modal-row { display: flex; gap: 8px; margin-top: 6px; }
+.modal-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.modal-row .btn { white-space: nowrap; }   /* 主按鈕字大:按鈕不折行,排不下就整顆換到下一行 */
 .modal-input {
   flex: 1;
+  min-width: 0;
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 8px 12px;
@@ -1140,7 +1145,7 @@ footer p { margin: 0; }
 .diag-intro ul { margin: 12px 0 20px 22px; color: var(--ink-light); font-size: 14.5px; }
 .diag-intro li { margin-bottom: 4px; }
 .diag-bar { height: 8px; background: var(--bg-soft); border-radius: 4px; overflow: hidden; margin: 8px 0 20px; }
-.diag-bar i { display: block; height: 100%; background: var(--primary); border-radius: 4px; transition: width .2s; }
+.diag-bar i { display: block; height: 100%; background: var(--fill); border-radius: 4px; transition: width .2s; }
 .diag-count { font-size: 13.5px; color: var(--ink-light); }
 
 /* 檢測報告 */
@@ -1165,7 +1170,7 @@ footer p { margin: 0; }
 .bar-line { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 14px; }
 .bar-line .lb { width: 130px; flex: none; }
 .bar-line .track { flex: 1; height: 10px; background: var(--bg-soft); border-radius: 5px; overflow: hidden; }
-.bar-line .track i { display: block; height: 100%; border-radius: 5px; background: var(--primary); }
+.bar-line .track i { display: block; height: 100%; border-radius: 5px; background: var(--fill); }
 .bar-line .track i.weak { background: var(--bad); }
 .bar-line .track i.mid { background: var(--hint-orange); }
 .bar-line .val { width: 74px; text-align: right; color: var(--ink-light); font-size: 13px; flex: none; }
@@ -1201,7 +1206,7 @@ table.cat-table td.num { white-space: nowrap; }
   position: absolute; left: 0; right: 0; top: 14px; height: 10px;
   border-radius: 5px; background: var(--bg-soft); border: 1px solid var(--line);
 }
-.bs-seg { position: absolute; top: 14px; height: 12px; margin-top: -1px; border-radius: 6px; background: var(--primary); }
+.bs-seg { position: absolute; top: 14px; height: 12px; margin-top: -1px; border-radius: 6px; background: var(--fill); }
 .bs-label {
   position: absolute; top: -10px; transform: translateX(-50%);
   font-size: 14px; font-weight: 700; color: var(--primary-dark); white-space: nowrap;
@@ -1345,10 +1350,10 @@ table.cat-table td.num { white-space: nowrap; }
 .mem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 6px 0 30px; }
 .mem-card {
   min-height: 78px;
-  border: 2px solid var(--primary-dark);
+  border: 2px solid var(--fill-dark);
   border-radius: var(--radius);
-  background: var(--primary);
-  color: #fff;
+  background: var(--fill);
+  color: var(--on-fill);
   font: inherit;
   font-size: 15px;
   font-weight: 700;
@@ -1397,7 +1402,7 @@ table.cat-table td.num { white-space: nowrap; }
   font-size: 13.5px;
   color: var(--ink);
 }
-.hist-tab.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+.hist-tab.on { background: var(--fill); color: var(--on-fill); border-color: var(--fill); }
 .hist-day-head { font-weight: 700; margin: 18px 0 8px; color: var(--ink-light); font-size: 13.5px; }
 .hist-row { border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 8px; background: #fff; }
 .hist-row.wrong { border-left: 4px solid var(--bad); }
@@ -1482,11 +1487,11 @@ table.cat-table td.num { white-space: nowrap; }
   z-index: 500;
   padding: 6px 14px;
   border-radius: 16px;
-  background: var(--primary);
-  color: #fff;
+  background: var(--fill);
+  color: var(--on-fill);
   font-weight: 700;
   font-size: 15px;
-  box-shadow: 0 6px 18px rgba(11,114,196,.35);
+  box-shadow: 0 6px 18px rgba(0,205,254,.35);
   white-space: nowrap;
 }
 
@@ -1518,7 +1523,7 @@ table.cat-table td.num { white-space: nowrap; }
   font-weight: 700; font-size: 15px;
 }
 .gx-station.on { box-shadow: 0 0 0 2px var(--primary); }
-.gx-station.on .gx-ring span { background: var(--primary); color: #fff; }
+.gx-station.on .gx-ring span { background: var(--fill); color: var(--on-fill); }
 .gx-station.full .gx-ring span { background: var(--ok); color: #fff; }
 .gx-pathwrap { flex: 1; min-width: 0; max-height: calc(100vh - 110px); overflow-y: auto; scrollbar-width: thin; padding: 2px 4px 20px; }
 .gx-path-title { padding: 6px 4px 2px; }
@@ -1548,7 +1553,7 @@ table.cat-table td.num { white-space: nowrap; }
 .gx-node:hover { text-decoration: none; border-color: var(--primary); color: var(--primary); }
 .gx-node.done { background: var(--ok); border-color: var(--ok); color: #fff; box-shadow: 0 3px 0 #2c6c3b; }
 .gx-node.next { border-color: var(--primary); color: var(--primary); box-shadow: 0 3px 0 var(--primary-dark); }
-.gx-node.cur, .gx-node.cur:hover { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: 0 3px 0 var(--primary-dark); }
+.gx-node.cur, .gx-node.cur:hover { background: var(--fill); border-color: var(--fill); color: var(--on-fill); box-shadow: 0 3px 0 var(--fill-dark); }
 .gx-continue { display: flex; align-items: center; gap: 12px; margin: -4px 0 20px; font-size: 13.5px; color: var(--ink-light); }
 .gx-unit-row {
   display: flex; align-items: center; gap: 12px;
@@ -2104,7 +2109,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 .dlg-card .thumb img { width: 100%; height: 170px; display: block; object-fit: cover; object-position: center 30%; }
 .dlg-illust img { object-position: center 30%; }
 .dlg-card .body { padding: 15px 18px 16px; }
-.dlg-card:hover { text-decoration: none; border-color: var(--primary); box-shadow: 0 3px 14px rgba(11,114,196,.1); }
+.dlg-card:hover { text-decoration: none; border-color: var(--primary); box-shadow: 0 3px 14px rgba(0,205,254,.1); }
 .dlg-card .meta { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: var(--ink-light); margin-bottom: 6px; flex-wrap: wrap; }
 .dlg-card-title { font-size: 17px; font-weight: 700; line-height: 1.45; }
 .dlg-card-en { color: var(--ink-light); font-size: 14px; margin-top: 1px; }
@@ -2606,7 +2611,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 .pet-today { margin-top: 2px; font-size: 15px; font-variant-numeric: tabular-nums; }
 .pet-today b { font-size: 17px; color: var(--ink); }
 .pet-bar { display: block; height: 6px; margin: 4px 0 6px; max-width: 320px; background: var(--bg-soft); border-radius: 3px; overflow: hidden; }
-.pet-bar i { display: block; height: 100%; background: var(--primary); border-radius: 3px; }
+.pet-bar i { display: block; height: 100%; background: var(--fill); border-radius: 3px; }
 .pet-bar.is-met i { background: var(--ok); }
 .pet-streak { font-size: 14px; color: var(--ink-light); font-variant-numeric: tabular-nums; }
 .pet-card .pet-act { grid-row: span 2; }
@@ -2616,6 +2621,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 .pet-msg { margin-top: 6px; font-size: 14px; color: var(--ink-light); white-space: pre-line; }   /* 訊息分兩行:發生什麼、原因或怎麼辦 */
 .pet-note { margin-top: 8px; font-size: 13.5px; color: var(--ink-light); white-space: pre-line; }
 .pet-act .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 20px; font-size: 15.5px; white-space: nowrap; }
+.pet-act .btn.primary { font-size: var(--fs-btn); }
 .pet-act .btn:hover { text-decoration: none; }
 .pet-act .btn[aria-disabled="true"] { opacity: .6; cursor: default; }
 .pet-card .pet-act:empty { display: none; }
@@ -2671,7 +2677,7 @@ html.is-app .auth-expired { padding-left: max(20px, env(safe-area-inset-left)); 
 .pet-week { display: flex; justify-content: center; gap: 10px; margin: 10px 0 2px; }
 .pet-day { display: grid; justify-items: center; gap: 2px; width: 28px; font-size: 12.5px; line-height: 1.3; color: var(--ink-light); }
 .pet-dot { display: block; width: 14px; height: 14px; border: 1.5px solid #c5ccd3; border-radius: 50%; }
-.pet-day.is-on .pet-dot { background: var(--primary); border-color: var(--primary); }
+.pet-day.is-on .pet-dot { background: var(--fill); border-color: var(--fill); }
 .pet-day.is-today { color: var(--ink); font-weight: 700; }
 .pet-sheet-body .pet-act { margin-top: 14px; }
 .pet-sheet-body .pet-act .btn { width: 100%; }
@@ -2873,7 +2879,7 @@ html.pet-roam2.pet-roam2-wide .pet-card .pet-pic {
 .pet-switch-row > span { font-size: 14.5px; font-weight: 700; color: var(--ink); }
 .pet-switch { position: relative; flex: none; width: 50px; height: 30px; padding: 0; border: 0; border-radius: 15px; background: #8a939c; cursor: pointer; transition: background .15s; }
 .pet-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(20, 30, 40, .25); transition: transform .15s; }
-.pet-switch[aria-checked="true"] { background: var(--primary); }
+.pet-switch[aria-checked="true"] { background: var(--fill); }
 .pet-switch[aria-checked="true"]::after { transform: translateX(20px); }
 .pet-switch[aria-disabled="true"] { opacity: .6; cursor: default; }
 .pet-switch:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
@@ -2961,11 +2967,12 @@ html.pet-roam2.pet-roam2-wide .pet-card .pet-pic {
 .rpa-item.is-closed .rpa-id { color: var(--ink-soft); font-weight: 400; }
 
 /* ======== 共用元件(js/ui.js)與新版導覽、首頁、分組頁 ========
-   字級只用 --fs-xs 到 --fs-3xl 七級,圓角只用 --r-sm 到 --r-full 四級。一個畫面只有一顆實色主按鈕(.btn.primary)。
+   字級只用 --fs-xs 到 --fs-3xl 七級,另加實色主按鈕專用的 --fs-btn;圓角只用 --r-sm 到 --r-full 四級。一個畫面只有一顆實色主按鈕(.btn.primary)。
    動畫只動 transform 與 opacity;減少動態時全部拿掉。灰字一律用 --ink-soft(白底 5.8:1),--ink-light 在白底不到 4.5:1。
    舊樣式不刪,這一段用新類別蓋過;每條都掛在新類別或新結構底下,舊頁面的元素不會吃到。 */
 :root {
   --fs-xs: 12px; --fs-sm: 14px; --fs-md: 16px; --fs-lg: 18px; --fs-xl: 22px; --fs-2xl: 28px; --fs-3xl: 44px;
+  --fs-btn: 19px;        /* 實色主按鈕:天藍底配白色粗體大字 */
   --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-full: 999px;
   --ok-ink: #2b6b3c;     /* 綠底上的綠字 5.9:1 */
   --bad-ink: #a83232;    /* 紅底上的紅字 5.7:1 */
@@ -3059,11 +3066,11 @@ html:not(.doodle-ready) .module-card.tile:not(.tile-featured), .module-card.tile
 .module-card.tile-featured p { grid-area: num; align-self: start; font-size: var(--fs-md); }
 .tile-featured .tile-go {
   grid-area: go; display: flex; align-items: center; justify-content: center;
-  min-height: 48px; margin-top: 16px; padding: 0 24px; font-size: var(--fs-md); border-radius: var(--r-md); white-space: nowrap;
+  min-height: 48px; margin-top: 16px; padding: 0 24px; border-radius: var(--r-md); white-space: nowrap;
 }
-.tile-featured .tile-go:not(.primary) { background: #fff; color: var(--primary); border-color: var(--line); }
+.tile-featured .tile-go:not(.primary) { background: #fff; color: var(--primary); border-color: var(--line); font-size: var(--fs-md); }
 @media (hover: hover) {
-  .tile-featured:hover .tile-go.primary { background: var(--primary-dark); border-color: var(--primary-dark); }
+  .tile-featured:hover .tile-go.primary { background: var(--fill-dark); border-color: var(--fill-dark); }
   .tile-featured:hover .tile-go:not(.primary) { border-color: var(--primary); background: var(--primary-tint); }
 }
 html:not(.doodle-ready) .module-card.tile-featured, .module-card.tile-featured:has(> .tile-art.is-noart) {
@@ -3147,7 +3154,7 @@ html.authed .home-hero, html.authed .home-dir { display: none; }
 .home-hero .hero-cta { grid-area: cta; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 28px; }
 .hero-cta .btn.primary {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: 52px; padding: 0 36px; font-size: var(--fs-lg); border-radius: var(--r-md); text-decoration: none;
+  min-height: 52px; padding: 0 36px; font-size: var(--fs-btn); border-radius: var(--r-md); text-decoration: none;
 }
 .home-hero .stats { grid-area: stats; flex-wrap: nowrap; gap: 4px 20px; margin-top: 20px; }
 .home-hero .stat { display: flex; align-items: baseline; gap: 6px; white-space: nowrap; }
@@ -3190,7 +3197,7 @@ html:not(.doodle-ready) .daily-row.has-art .daily-bar, .daily-row.has-art:has(> 
 .home .daily-row.is-done .daily-st { color: var(--ok-ink); }
 .daily-go {
   display: flex; align-items: center; justify-content: center; width: 100%;
-  min-height: 48px; margin-top: 16px; font-size: var(--fs-md); border-radius: var(--r-md); text-decoration: none;
+  min-height: 48px; margin-top: 16px; font-size: var(--fs-btn); border-radius: var(--r-md); text-decoration: none;
 }
 .daily-go:hover { text-decoration: none; }
 /* 未登入:首屏已經有「開始練習」通往同一頁,卡片不再放按鈕(三列本身就是連結) */
@@ -3213,7 +3220,7 @@ html:not(.authed) .home .daily-card { padding-bottom: 8px; }
 .home .pet-home .pet-act { grid-row: auto; grid-column: 1 / -1; margin-top: 16px; }
 .home .pet-home .pet-act .btn { width: 100%; min-height: 44px; margin: 0; border-radius: var(--r-md); }
 .home .pet-home .pet-more, .home .pet-home .pet-msg { padding-left: 0; }
-.home .pet-home .btn.primary { background: #fff; color: var(--ink); border-color: var(--line); }
+.home .pet-home .btn.primary { background: #fff; color: var(--ink); border-color: var(--line); font-size: 15.5px; }
 .home .pet-home .btn.primary:hover { color: var(--primary); border-color: var(--primary); background: #fff; }
 .home .pet-home .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 .home .pet-streak { color: var(--ink-soft); }
@@ -3299,7 +3306,7 @@ html.is-quiz .quiz-bar {
 .quiz-close:active { transform: scale(.94); }
 .quiz-close:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
 .quiz-track { position: relative; flex: 1; height: 6px; border-radius: var(--r-full); background: var(--line); overflow: hidden; }
-.quiz-fill { position: absolute; inset: 0; border-radius: var(--r-full); background: var(--primary); transform-origin: 0 50%; transform: scaleX(0); transition: transform .3s var(--ease-out); }
+.quiz-fill { position: absolute; inset: 0; border-radius: var(--r-full); background: var(--fill); transform-origin: 0 50%; transform: scaleX(0); transition: transform .3s var(--ease-out); }
 .quiz-count {
   flex: none; min-width: 52px; text-align: right; font-size: var(--fs-sm); font-weight: 700; color: var(--ink-soft);
   font-variant-numeric: tabular-nums; white-space: nowrap;
@@ -3342,7 +3349,7 @@ html.is-quiz.app-kb body, html.is-quiz.ui-kb body { padding-bottom: 0 !important
    600 以上主按鈕固定 240 靠右,文字按鈕(上一題)或回饋文字靠左 */
 .quiz-foot-row { max-width: 720px; margin: 0 auto; }
 .quiz-foot-in { display: flex; align-items: center; gap: 8px; }
-.quiz-foot-in .btn.primary { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 48px; font-size: var(--fs-md); border-radius: var(--r-md); }
+.quiz-foot-in .btn.primary { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 48px; font-size: var(--fs-btn); border-radius: var(--r-md); }
 .quiz-foot-in .btn-text { flex: none; padding: 0 16px; margin-left: -12px; font-size: var(--fs-sm); color: var(--ink-soft); }
 .quiz-foot-in .btn-text:hover { color: var(--ink); background: var(--bg-soft); }
 @media (min-width: 600px) {
@@ -3446,7 +3453,7 @@ canvas.is-hop { transform-origin: 50% 100%; animation: ui-hop .6s var(--ease-out
 .result-reward.has-food + .result-actions { margin-top: 24px; }
 .result-go {
   display: flex; align-items: center; justify-content: center; width: 100%; max-width: 320px;
-  min-height: 48px; font-size: var(--fs-md); border-radius: var(--r-md); text-decoration: none;
+  min-height: 48px; font-size: var(--fs-btn); border-radius: var(--r-md); text-decoration: none;
 }
 a.result-go:hover { text-decoration: none; }
 .result-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 8px; }
@@ -3540,7 +3547,7 @@ main:focus { outline: none; }
 .ui-dialog-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-tint); }
 .ui-dialog-hint { margin: 6px 0 0; font-size: var(--fs-xs); color: var(--ink-soft); }
 .ui-dialog-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 24px; }
-.ui-dialog-actions .btn.primary { min-height: 44px; min-width: 88px; padding: 0 20px; font-size: var(--fs-md); border-radius: var(--r-md); }
+.ui-dialog-actions .btn.primary { min-height: 44px; min-width: 88px; padding: 0 20px; font-size: var(--fs-btn); border-radius: var(--r-md); }
 .ui-dialog-actions .btn-text { color: var(--ink-soft); }
 .ui-dialog-actions .btn-text:hover { color: var(--ink); background: var(--bg-soft); }
 @keyframes ui-fade { from { opacity: 0; } to { opacity: 1; } }
@@ -3586,7 +3593,7 @@ html:not(.authed) .home-review { display: none; }
 .me-msg.bad { color: var(--bad); }
 .me-msg:empty { display: none; }
 /* 未登入時這一頁的實色按鈕是「登入」,小雞卡的「餵牠」改描邊 */
-html:not(.authed) .pet-me .pet-open.btn.primary { background: #fff; color: var(--ink); border-color: var(--line); }
+html:not(.authed) .pet-me .pet-open.btn.primary { background: #fff; color: var(--ink); border-color: var(--line); font-size: 15.5px; }
 html:not(.authed) .pet-me .pet-open.btn.primary:hover { color: var(--primary); border-color: var(--primary); background: #fff; }
 
 /* 價格:價格前面的幣別小一號;學生方案包含的練習一項一行,前面一個勾,窄螢幕兩欄 */
@@ -3643,10 +3650,12 @@ html.is-quiz main .set-layout { margin-top: 16px; }
 .mock-tag { padding: 2px 12px; border-radius: var(--r-full); background: var(--bg-soft); font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-soft); white-space: nowrap; }
 .mock-sizes .cfg-row { margin-top: auto; padding-top: 24px; }
 .mock-sizes .cfg-row .btn { min-height: 48px; padding: 0 28px; font-size: var(--fs-md); border-radius: var(--r-md); }
+.mock-sizes .cfg-row .btn.primary { font-size: var(--fs-btn); }
 @media (max-width: 600px) { .mock-sizes { grid-template-columns: 1fr; } .mock-sizes .cfg-row .btn { width: 100%; } }
 .diag-intro { display: flex; flex-direction: column; align-items: flex-start; max-width: 480px; padding: 24px; border-radius: var(--r-lg); margin: 24px 0 48px; }
 .diag-intro .mock-tags { margin: 0; }
 .diag-intro .btn { min-height: 48px; margin-top: 24px; padding: 0 32px; font-size: var(--fs-md); border-radius: var(--r-md); }
+.diag-intro .btn.primary { font-size: var(--fs-btn); }
 @media (max-width: 600px) { .diag-intro { max-width: none; } .diag-intro .btn { width: 100%; } }
 
 /* 作答中:倒數放在作答列、緊鄰進度 */
@@ -3714,7 +3723,7 @@ html.is-quiz main .write-area { font-size: var(--fs-md); }
 .review-todo:hover { border-color: var(--line); box-shadow: none; }
 .review-todo .review-todo-t { margin: 0; font-family: var(--round); font-size: var(--fs-lg); font-weight: 700; color: var(--ink-soft); }
 .review-todo-t b { margin: 0 2px; font-size: var(--fs-3xl); line-height: 1.2; color: var(--ink); font-variant-numeric: tabular-nums; }
-.review-todo .btn.primary { width: 100%; max-width: 320px; min-height: 48px; border-radius: var(--r-md); font-size: var(--fs-md); }
+.review-todo .btn.primary { width: 100%; max-width: 320px; min-height: 48px; border-radius: var(--r-md); font-size: var(--fs-btn); }
 @media (min-width: 600px) { .review-todo { padding: 36px 24px; } }
 /* 其他待複習:整列可點的清單,名稱、數字、右箭頭 */
 .rv-group-h { margin: 28px 0 8px; font-size: var(--fs-md); font-weight: 700; color: var(--ink-soft); }
@@ -3745,7 +3754,7 @@ html.is-quiz main .write-area { font-size: var(--fs-md); }
 .vg-start { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 16px; }
 .vg-opts { display: flex; flex-wrap: wrap; gap: 8px; flex: 1 1 220px; min-width: 0; }
 .vg-opts .cfg-select { flex: 1 1 130px; min-height: 44px; font-size: var(--fs-md); }
-.btn.primary.vg-go { flex: 1 1 100%; display: flex; align-items: center; justify-content: center; min-height: 48px; font-size: var(--fs-md); border-radius: var(--r-md); }
+.btn.primary.vg-go { flex: 1 1 100%; display: flex; align-items: center; justify-content: center; min-height: 48px; font-size: var(--fs-btn); border-radius: var(--r-md); }
 @media (min-width: 600px) { .btn.primary.vg-go { flex: 0 0 240px; margin-left: auto; } }
 .module-card.tile.vg-phrase-tile {
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "art name go" "art num go";
@@ -3765,7 +3774,7 @@ html.is-quiz main .vb-stem { margin-bottom: 4px; }
 
 /* 記憶吐司考題:答完後選項下面的「下一題」。手機整寬,桌機固定寬靠右 */
 .vg-next-row { display: flex; margin-top: 16px; }
-.vg-next-row .btn.primary { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; min-height: 48px; font-size: var(--fs-md); border-radius: var(--r-md); }
+.vg-next-row .btn.primary { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; min-height: 48px; font-size: var(--fs-btn); border-radius: var(--r-md); }
 @media (min-width: 600px) { .vg-next-row { justify-content: flex-end; } .vg-next-row .btn.primary { flex: 0 0 240px; } }
 
 /* 遊戲進行中(藏導覽):標題列與 HUD 往上靠一點,不留原本頂欄的空 */
@@ -3867,6 +3876,7 @@ html.is-quiz #ear-root .q-block { padding-top: 12px; }
 .ear-lv::before { content: '· '; }
 html.is-quiz #ear-root .player { gap: 12px; margin: 4px 0 8px; flex-wrap: wrap; }
 html.is-quiz #ear-root .player-btn { min-height: 48px; padding: 0 24px; font-size: var(--fs-md); border-radius: var(--r-md); }
+html.is-quiz #ear-root .player-btn.primary { font-size: var(--fs-btn); }
 html.is-quiz #ear-root .shadow-stage { border-radius: var(--r-md); }
 html.is-quiz #ear-root .pair-row { gap: 12px; }
 html.is-quiz #ear-root .pair-btn { min-height: 64px; border-radius: var(--r-md); }

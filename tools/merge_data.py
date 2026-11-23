@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""合併 data/raw/*.json → data/*.js,並做機械驗證。
+"""合併 data/raw/*.json → data/*.js,並做機械驗證;另外產生選題用的題目索引 data/bank-meta.js(只有編號與分類,js/bank.js 讀)。
 用法: python tools/merge_data.py
 硬錯誤(缺欄位/JSON 壞/對應不上)會列出並以 exit code 1 結束;警告不擋。
 淘汰的題(多益題庫 Part 1-7):從 data/raw 的批次檔整筆移走,在 data/retired.json 記一筆(id、part、date、reason、replacedBy);
@@ -697,6 +697,58 @@ if os.path.exists(_index):
             if bank_total <= claim:
                 errors.append(f'index.html 寫「題庫超過 {claim} 題」,題庫現在 {bank_total} 題:改 index.html 那三處說明文字')
 
+# ---------- 題目索引(data/bank-meta.js) ----------
+# 選題用的公開索引:只有編號與分類欄位,不放題目、選項、詳解、翻譯。七個 Part 依序(1–7),各 Part 照原陣列順序。
+# 欄位:id、part('1'–'7')、difficulty(P1–P5)、category(P2、P5)、type(P4 整組)、types(P6 各小題,照小題順序)、
+# size(P3、P4、P6、P7 的小題數)、format 與 words(P7;words 是整組文章字數)、canYou(P2 問句是不是 Can you、Could you 開頭)。
+# 字數用空白切詞;結構化文章(blocks)把表格、kv、聊天訊息的文字攤平再算,區塊類型 t、表頭開關 header、訊息時間 time 不算。
+META_SKIP = ('t', 'header', 'time')
+CAN_YOU = re.compile(r'^(can|could) you\b', re.I)
+
+
+def flat_text(v):
+    if isinstance(v, str):
+        return v
+    if isinstance(v, list):
+        return ' '.join(flat_text(x) for x in v)
+    if isinstance(v, dict):
+        return ' '.join(flat_text(x) for k, x in v.items() if k not in META_SKIP)
+    return ''
+
+
+def p7_words(s):
+    return sum(len((p.get('content') or flat_text(p.get('blocks') or [])).split()) for p in s['passages'])
+
+
+def bank_meta():
+    rows = []
+    for q in lp1:
+        rows.append({'id': q['id'], 'part': '1', 'difficulty': q['difficulty']})
+    for q in lp2:
+        rows.append({'id': q['id'], 'part': '2', 'difficulty': q['difficulty'], 'category': q['category'],
+                     'canYou': bool(CAN_YOU.match(q['question'].strip()))})
+    for s in lp3:
+        rows.append({'id': s['id'], 'part': '3', 'difficulty': s['difficulty'], 'size': len(s['questions'])})
+    for s in lp4:
+        rows.append({'id': s['id'], 'part': '4', 'difficulty': s['difficulty'], 'type': s['type'], 'size': len(s['questions'])})
+    for q in p5:
+        rows.append({'id': q['id'], 'part': '5', 'difficulty': q['difficulty'], 'category': q['category']})
+    for s in p6:
+        rows.append({'id': s['id'], 'part': '6', 'types': [q.get('type') for q in s['questions']], 'size': len(s['questions'])})
+    for s in p7:
+        rows.append({'id': s['id'], 'part': '7', 'format': s['format'], 'size': len(s['questions']), 'words': p7_words(s)})
+    return rows
+
+
+def write_meta(fname, rows):
+    path = os.path.join(OUT, fname)
+    with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        f.write('window.BANK_META = {"v": 1, "items": [\n')
+        f.write(',\n'.join(json.dumps(r, ensure_ascii=False, separators=(',', ':')) for r in rows))
+        f.write('\n]};\n')
+    print(f'  寫出 {fname}')
+
+
 # ---------- 輸出 ----------
 def write_js(fname, varname, data):
     path = os.path.join(OUT, fname)
@@ -747,4 +799,5 @@ if tenses:
     write_js('tenses.js', 'tenses', tenses)
 if phonics:
     write_js('phonics.js', 'phonics', phonics)
+write_meta('bank-meta.js', bank_meta())
 print('完成。')

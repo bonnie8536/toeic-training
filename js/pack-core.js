@@ -13,7 +13,8 @@
    模組不存在作答裡:看區塊(固定段是課表上那個區塊的 module,錯題重做看 pk[80].m)。每堂進度鍵上限 5 KB(LESSON_KEY_MAX)。
    區塊編號:固定段的區塊照課表順序 0 起編;個人段用固定的號碼(回顧 80–84、弱點補練 85–89、測驗檢討 90–97),兩台算出來一樣。
    跨裝置:開堂與每段交卷前先用 CLOUD.readKey 讀雲端那一份,跟本機的合併後再寫;作答中不寫,只在交卷時寫(saveLesson)。
-   pts、rvq、tests_v1 也一樣(saveShared)。讀不到雲端(離線、逾時)就照本機寫,下次開堂再合併。
+   pts、rvq、tests_v1 也一樣(saveShared);練習引擎寫的 drill_p*、listen_p*、hist 在開堂與交卷前用 syncPractice 併進雲端那一份。
+   讀不到雲端(離線、逾時)就照本機寫,下次開堂再合併。
    這一版沒有的:小檢核的 includeUnpassed(還沒過關的考點加題,第 8、24 堂才有)不加題;聽讀差兩級的時間挪移(只開兩級,最多差一級)。 */
 (function (root) {
   'use strict';
@@ -528,11 +529,35 @@
     return r.ok ? K.merge(local, r.v, today) : local;
   }
 
+  /* 課程頁開著的時候練習引擎會寫作答紀錄(drill_p*、listen_p*)與學習記錄(hist),這些鍵上傳是整份換:
+     開堂與每段交卷前先讀雲端那一份,用搬家的合併規則(js/move-merge.js 的 pool、hist,寧可多留)併進本機,
+     別台這段時間寫的才不會被這台交卷時蓋掉。合併後跟本機一樣就不寫。回 { <鍵>: 'merged'|'same'|'offline' } */
+  const PRACTICE_KEYS = ['drill_p5', 'drill_p6', 'drill_p7', 'listen_p1', 'listen_p2', 'listen_p3', 'listen_p4', 'hist'];
+  async function syncPractice(keys, deps) {
+    const MM = (deps && deps.merge) || root.MOVE_MERGE;
+    if (!MM || typeof MM.pool !== 'function' || typeof MM.hist !== 'function') throw new Error('要先載入 js/move-merge.js');
+    (keys || []).forEach((k) => { if (PRACTICE_KEYS.indexOf(k) < 0) throw new TypeError('syncPractice 只接受 ' + PRACTICE_KEYS.join('、')); });
+    const { store, cloud } = depsOf(deps);
+    const now = deps && Number.isFinite(deps.nowMs) ? deps.nowMs : Date.now();
+    const out = {};
+    for (const key of keys || []) {
+      const r = await readCloud(key, cloud);
+      if (!r.ok) { out[key] = 'offline'; continue; }
+      const local = store.get(key, null);
+      const empty = key === 'hist' ? [] : {};
+      const merged = r.v === null || r.v === undefined ? local : key === 'hist' ? MM.hist(local || empty, r.v, now) : MM.pool(local || empty, r.v);
+      const same = merged === null || JSON.stringify(merged) === JSON.stringify(local);
+      if (!same) store.set(key, merged);
+      out[key] = same ? 'same' : 'merged';
+    }
+    return out;
+  }
+
   root.PACK_CORE = Object.freeze({
     LESSON_KEY, LESSON_KEY_MAX, RESERVED, OPEN_LEVELS,
     lessonKey, parseLessonKey, compose, suggestedDate, dayOf, unlockState, fixedDone,
     newState, answer, readAnswer, setSegment, answeredIn, sizeOf, mergeLesson, mergeTests, freeze, allocate,
     pickFixed, pickWeak, pickReview, pickTestReview,
-    loadLesson, saveLesson, loadShared, saveShared,
+    loadLesson, saveLesson, loadShared, saveShared, syncPractice, PRACTICE_KEYS,
   });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

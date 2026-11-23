@@ -16,7 +16,7 @@ function sandbox() {
   const ctx = { console, Promise, Map, Set, JSON, Object, Array, Math, Number, String, Date, TypeError, Error, isNaN, TextEncoder };
   ctx.window = ctx;
   vm.createContext(ctx);
-  ['data/bank-meta.js', 'data/ear.js', 'js/move-rules.js', 'js/lesson-rules.js', 'js/bank.js', 'js/pack-core.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
+  ['data/bank-meta.js', 'data/ear.js', 'js/move-rules.js', 'js/move-merge.js', 'js/lesson-rules.js', 'js/bank.js', 'js/pack-core.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   return ctx;
 }
 const CTX = sandbox();
@@ -396,13 +396,39 @@ T['C17 每堂進度鍵 ≤5 KB:入門、門檻、聽讀不同級各 24 堂,固�
   return '最大 ' + max + ' 位元組(' + at + ')';
 };
 
-T['C18 js/pack-core.js 讀寫儲存只經過 lessonKey 與 pts、rvq、tests_v1 這幾個鍵(搬家規則的掃描認得)'] = () => {
+T['C18 js/pack-core.js 讀寫儲存只經過 lessonKey、pts、rvq、tests_v1 與 syncPractice 的練習鍵(搬家規則的掃描認得)'] = () => {
   const src = read('js/pack-core.js');
   const calls = (src.match(/store\.(get|set|remove)\(\s*[^,)]+/g) || []).map((x) => x.replace(/^store\.\w+\(\s*/, ''));
-  const allowed = ['lessonKey(term', "'pts'", "'rvq'", "'tests_v1'"];
+  const allowed = ['lessonKey(term', "'pts'", "'rvq'", "'tests_v1'", 'key'];
+  const body = src.slice(src.indexOf('async function syncPractice'), src.indexOf('root.PACK_CORE'));
+  const keyCalls = (s) => (s.match(/store\.\w+\(\s*key\b/g) || []).length;
+  assert.equal(keyCalls(src), keyCalls(body), 'store.get(key)、store.set(key) 只在 syncPractice 裡');
+  CTX.PACK_CORE.PRACTICE_KEYS.forEach((k) => assert.equal(CTX.MOVE_RULES.ruleOf(k), k === 'hist' ? 'hist' : 'pool', k));
   assert.deepEqual(calls.filter((c) => allowed.indexOf(c) < 0), []);
   assert.ok(!/'les_t'\s*\+[^\n]*store\./.test(src) && !/store\.\w+\(\s*'les_/.test(src));
   return calls.length + ' 處';
+};
+
+T['C19 練習引擎寫的 drill_p*、listen_p*、hist:開堂與交卷前併進雲端那一份(錯題本同一題留新的、學習記錄聯集),一樣就不寫;離線照本機'] = async () => {
+  const cloud = cloudOf();
+  const A = storeOf(cloud);
+  const t0 = Date.now();
+  cloud.rows.set('drill_p5', JSON.stringify({ 'p5-1': { c: 1, ok: false, t: t0 - 5000 }, 'p5-2': { c: 0, ok: true, t: t0 - 4000 } }));
+  cloud.rows.set('hist', JSON.stringify([{ m: 'p5', id: 'p5-2', c: 0, ok: true, t: t0 - 4000 }]));
+  A.mem.set('drill_p5', JSON.stringify({ 'p5-1': { c: 2, ok: true, t: t0 - 1000 }, 'p5-3': { c: 1, ok: true, t: t0 - 900 } }));
+  A.mem.set('hist', JSON.stringify([{ m: 'p5', id: 'p5-1', c: 2, ok: true, t: t0 - 1000 }]));
+  const r = await P.syncPractice(['drill_p5', 'hist', 'listen_p1'], { store: A, cloud, nowMs: t0 });
+  assert.deepEqual(plain(r), { drill_p5: 'merged', hist: 'merged', listen_p1: 'same' });
+  const d = A.get('drill_p5');
+  assert.deepEqual(Object.keys(d).sort(), ['p5-1', 'p5-2', 'p5-3']);
+  assert.equal(d['p5-1'].c, 2, '同一題留時間新的');
+  assert.deepEqual(A.get('hist').map((x) => x.id), ['p5-2', 'p5-1']);
+  assert.deepEqual(plain(await P.syncPractice(['drill_p5'], { store: A, cloud, nowMs: t0 })), { drill_p5: 'same' });
+  cloud.ok = false;
+  assert.deepEqual(plain(await P.syncPractice(['hist'], { store: A, cloud, nowMs: t0 })), { hist: 'offline' });
+  await assert.rejects(P.syncPractice(['pet'], { store: A, cloud }), TypeError);
+  await assert.rejects(P.syncPractice(['hist'], { store: A, cloud, merge: {} }), /move-merge/);
+  return 'ok';
 };
 
 (async () => {

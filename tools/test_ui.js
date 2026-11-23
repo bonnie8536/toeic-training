@@ -126,8 +126,8 @@ function fakeArt(poses, metrics) {
       fps: { idle: 8, happy: 8 },
       metrics,
       animate(canvas, o) {
-        const a = { canvas, opt: o, pose: o.pose, stops: 0, timer: true, poses: [o.pose], shown: null,
-          setPose(p) { this.pose = p; this.poses.push(p); this.timer = true; },
+        const a = { canvas, opt: o, pose: o.pose, stops: 0, timer: true, poses: [o.pose], opts: [o.once ? { once: o.once, held: o.held, onEnd: o.onEnd } : undefined], shown: null,
+          setPose(p, opt) { this.pose = p; this.poses.push(p); this.opts.push(opt); this.timer = true; },
           setFps() { this.timer = true; },
           show(k, v, p) { if (p) this.pose = p; this.shown = [k, v, p]; this.timer = false; },
           stop() { this.stops++; this.timer = false; } };
@@ -137,6 +137,16 @@ function fakeArt(poses, metrics) {
     },
   };
 }
+/* 第九版的鵜鶘:開心是一次性播放(once),第 9 格觸地 */
+function fakeOncePelican() {
+  const f = fakePelican(['idle', 'happy', 'oops', 'read', 'sleep']);
+  f.lib.once = ['happy'];
+  f.lib.cues = { happy: { land: 9 } };
+  f.lib.calm = { idle: 1, happy: 13, sleep: 0 };
+  return f;
+}
+/* 假的動畫播一段:照 frames 的格號呼叫 onTick(拍號從 from 起算) */
+function feed(a, frames, from) { frames.forEach((k, i) => a.opt.onTick({ pose: a.pose, frame: k, tick: (from || 0) + i })); }
 function fakeFood() {
   const mounted = [];
   return { mounted, lib: { ids: ['corn', 'tomato', 'melon'], mount(cv, id, o) { const m = { cv, id, o, stopped: 0, stop() { this.stopped++; } }; mounted.push(m); return m; } } };
@@ -392,6 +402,129 @@ T['happy 不播畫格(裡面有壓得很扁的格):只畫第一格,進場整張�
   assert.deepStrictEqual(ch2.made[0].shown, [0, 0, 'happy']);
   assert.ok(!ch2.made[0].timer);
   assert.ok(!p2.doc.querySelector('canvas').classList.contains('is-hop'));
+};
+
+/* ---------- 第九版鵜鶘:開心是一次性播放 ---------- */
+T['一次性的開心:結算卡看到才從頭跳一次(不加 .is-hop)、觸地時分數彈一下(只一次)、跳完停在得意格;離開畫面再回來直接停在最後一格'] = async () => {
+  const ch = fakeOncePelican(), ios = [];
+  const p = loadPage({ pelican: ch, io: ios });
+  const c = p.UI.result({ score: 9, total: 10, primary: { label: '再做一次' } });
+  p.doc.body.append(c.el);
+  assert.ok(c.el.classList.contains('is-cele') && !c.el.classList.contains('is-enter'), '開心的卡片用 .is-cele 進場');
+  assert.strictEqual(ch.made.length, 0, '還沒看到之前不開始');
+  ios[0].fire(true);
+  const a = ch.made[0];
+  assert.strictEqual(a.opt.pose, 'happy');
+  assert.strictEqual(a.opt.once, true, '播一次');
+  assert.ok(!a.opt.held, '第一次從頭播');
+  assert.strictEqual(typeof a.opt.onEnd, 'function');
+  assert.ok(a.timer, '有在動');
+  assert.ok(!c.el.querySelector('.result-chick').classList.contains('is-hop'), '不再整張畫布跳');
+  feed(a, [0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 4, 5, 5, 6, 6, 6, 6, 7, 7, 8]);
+  assert.ok(!c.el.classList.contains('is-land'), '還沒觸地');
+  feed(a, [9], 20);
+  assert.ok(c.el.classList.contains('is-land'), '觸地時分數彈一下');
+  c.el.classList.remove('is-land');
+  feed(a, [9, 9, 10, 11], 21);
+  a.opt.onTick({ pose: 'happy', frame: 13, tick: 0, held: true });
+  assert.ok(!c.el.classList.contains('is-land'), '只彈一次');
+  a.opt.onEnd();
+  ios[0].fire(false);
+  assert.ok(!a.timer, '離開畫面就停');
+  ios[0].fire(true);
+  assert.strictEqual(a.poses[a.poses.length - 1], 'happy');
+  assert.strictEqual(JSON.stringify(a.opts[a.opts.length - 1]), JSON.stringify({ once: true, held: true }), '回來直接停在最後一格,不重播');
+  c.destroy();
+  assert.deepStrictEqual(a.shown, [13, 0, 'happy'], 'destroy 後停在得意格');
+  await settle();
+  assert.strictEqual(p.timers.size, 0, '沒有留下計時器');
+};
+
+T['一次性的開心:進場那一跳還沒跳完時拿到點心不重來,跳完再 play 從頭跳、停在得意格;普通分數的卡拿到點心跳完停一下回到待機'] = async () => {
+  const ch = fakeOncePelican(), fd = fakeFood();
+  const p = loadPage({ pelican: ch, food: fd });
+  const c = p.UI.result({ score: 9, total: 10 });
+  p.doc.body.append(c.el);
+  const a = ch.made[0];
+  assert.strictEqual(a.opt.once, true);
+  const ln = p.doc.createElement('p'); ln.className = 'pet-earn'; c.reward.append(ln);
+  p.emit('pet:earn', { result: 'got', food: 'tomato' });
+  assert.deepStrictEqual(a.poses, ['happy'], '還在跳:不重來');
+  a.opt.onEnd();
+  assert.strictEqual(c.mascot.play('happy'), true);
+  assert.deepStrictEqual(a.poses, ['happy', 'happy'], '跳完再 play:從頭跳一次');
+  const o2 = a.opts[1];
+  assert.ok(o2.once && !o2.held);
+  o2.onEnd();
+  assert.strictEqual(a.poses.length, 2, '本來就是開心:停在得意格');
+  /* 普通分數(idle)的卡:簡單進場、照常循環;拿到點心跳一次,跳完停一下再回到待機 */
+  const c2 = p.UI.result({ score: 6, total: 10 });
+  p.doc.body.append(c2.el);
+  assert.ok(c2.el.classList.contains('is-enter') && !c2.el.classList.contains('is-cele'), '其他姿勢簡單進場');
+  const b = ch.made[1];
+  assert.strictEqual(b.opt.pose, 'idle');
+  assert.ok(!b.opt.once, 'idle 照常循環');
+  assert.strictEqual(c2.mascot.play('happy'), true);
+  assert.strictEqual(b.pose, 'happy');
+  assert.strictEqual(b.opts[b.opts.length - 1].once, true);
+  assert.ok(!c2.el.querySelector('.result-chick').classList.contains('is-hop'), '不整張畫布跳');
+  b.opts[b.opts.length - 1].onEnd();
+  assert.strictEqual(b.pose, 'happy', '跳完先停在得意格');
+  p.runTimers();
+  assert.strictEqual(b.pose, 'idle', '停一下再回到待機');
+  assert.strictEqual(b.opts[b.opts.length - 1], undefined, '回到待機照常循環');
+  assert.ok(!c2.el.classList.contains('is-land'), '普通分數的卡不彈分數');
+  c.destroy(); c2.destroy();
+};
+
+T['一次性的開心:減少動態時不加進場類別、只畫得意格、不跳;圖沒有一次性播放時開心照舊(簡單進場、整張畫布跳);圖還沒載到時當作新版'] = async () => {
+  const ch = fakeOncePelican();
+  const p = loadPage({ pelican: ch, media: { '(prefers-reduced-motion: reduce)': true } });
+  const c = p.UI.result({ score: 9, total: 10 });
+  p.doc.body.append(c.el);
+  assert.ok(!c.el.classList.contains('is-cele') && !c.el.classList.contains('is-enter'), '減少動態:不加進場類別');
+  const a = ch.made[0];
+  assert.ok(!a.opt.once, '不播一次');
+  assert.deepStrictEqual(a.shown, [13, 0, 'happy'], '只畫得意格');
+  assert.ok(!a.timer);
+  assert.strictEqual(c.mascot.play('happy'), false);
+  assert.strictEqual(p.timers.size, 0);
+  /* 舊版的圖(沒有 once) */
+  const old = fakePelican();
+  const p2 = loadPage({ pelican: old });
+  const c2 = p2.UI.result({ score: 9, total: 10 });
+  assert.ok(c2.el.classList.contains('is-enter') && !c2.el.classList.contains('is-cele'));
+  assert.ok(c2.el.querySelector('.result-chick').classList.contains('is-hop'));
+  assert.ok(!old.made[0].opt.once);
+  /* 圖要載:先當作新版(.is-cele),載到後看到才從頭跳 */
+  const ch3 = fakeOncePelican();
+  const p3 = loadPage({ loads: { PelicanArt: { file: 'js/pelican-art.js', lib: ch3.lib } } });
+  const c3 = p3.UI.result({ score: 9, total: 10 });
+  p3.doc.body.append(c3.el);
+  assert.ok(c3.el.classList.contains('is-cele'));
+  await settle();
+  assert.strictEqual(ch3.made.length, 1);
+  assert.strictEqual(ch3.made[0].opt.once, true);
+  c3.destroy();
+};
+
+T['結算卡進場的樣式:卡片 .94 到 1.02、數字和按鈕約 1 秒起依序淡入、分數彈一下;都用 backwards(播完不留 transform);減少動態和列印時都不動'] = async () => {
+  const css = fs.readFileSync(path.join(REPO, 'css', 'style.css'), 'utf8');
+  const pop = css.match(/@keyframes ui-card-pop \{([^{}]*\{[^}]*\}\s*)+\}/);
+  assert.ok(pop, '有 ui-card-pop');
+  const scales = (pop[0].match(/scale\(([^)]+)\)/g) || []).map((m) => Number(m.slice(6, -1)));
+  assert.ok(scales.length >= 2 && Math.max.apply(null, scales) <= 1.02 && Math.min.apply(null, scales) >= 0.9, '卡片的放大量 ' + scales);
+  assert.ok(/@keyframes ui-score-pop \{ from \{ transform: scale\(1\.1\d?\); \}/.test(css), '分數從 1.1x 彈回來');
+  assert.ok(/\.result-score b \{ display: inline-block;/.test(css), '分數的數字是 inline-block(才吃得到 transform)');
+  const delay = (sel) => { const m = css.match(new RegExp('\\.result-card\\.is-cele > \\.' + sel + ' \\{ animation-delay: ([\\d.]+)s; \\}')); return m ? +m[1] : NaN; };
+  const ds = ['result-stats', 'result-reward', 'result-actions'].map(delay);
+  assert.ok(ds[0] >= 0.8 && ds[0] <= 1.1 && ds[1] > ds[0] && ds[2] > ds[1], '依序淡入 ' + ds);
+  const anims = css.match(/\.result-card[^{}]*\{[^}]*animation: ui-(card|score)[^;]*;/g) || [];
+  assert.ok(anims.length >= 4 && anims.every((x) => /backwards;$/.test(x)), '進場動畫用 backwards:' + anims.join(' | '));
+  const rm = css.match(/@media \(prefers-reduced-motion: reduce\) \{\s*canvas\.is-hop[^}]*\}/);
+  assert.ok(rm && ['.result-card.is-enter', '.result-card.is-cele,', '.result-card.is-cele > *', '.result-card.is-land .result-score b'].every((s) => rm[0].includes(s)), '減少動態時不動');
+  const pr = css.match(/@media print \{\s*\.result-chick, \.result-food, \.result-actions[^@]*?\n\}/);
+  assert.ok(pr && /\.result-card\.is-cele > \*[^{]*\{ animation: none; \}/.test(pr[0]), '列印時不動');
 };
 
 T['卡片被拿出頁面卻沒呼叫 destroy:小雞自己停掉計時器、拿掉監聽(有 IntersectionObserver 與沒有的瀏覽器)'] = async () => {

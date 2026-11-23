@@ -43,7 +43,7 @@ const T = BASE.TOEIC, L = T.listening;
 const ITEMS = BASE.BANK_META.items;
 const LISTS = { '1': L.p1, '2': L.p2, '3': L.p3, '4': L.p4, '5': T.part5, '6': T.part6, '7': T.part7 };
 
-/* 跟 tools/merge_data.py 同一套算法,用 JS 再算一次 */
+/* 跟 tools/bank_meta.py 同一套算法,用 JS 再算一次 */
 const words = (s) => String(s || '').trim().split(/\s+/).filter(Boolean).length;
 const flat = (v) => (typeof v === 'string' ? v : Array.isArray(v) ? v.map(flat).join(' ')
   : v && typeof v === 'object' ? Object.entries(v).filter(([k]) => ['t', 'header', 'time'].indexOf(k) < 0).map(([, x]) => flat(x)).join(' ') : '');

@@ -3,7 +3,7 @@
    之後換資料來源只改這個檔,呼叫的一方不用動,所以三個函式都回 Promise。
    window.BANK = {
      meta(part)  → 索引陣列(照題庫原順序,Part 1 到 7)。每筆 { id, part, difficulty, category, type, types, size, format, words, canYou },
-                   只有該 Part 有的欄位(見 tools/merge_data.py 的題目索引一節);part('1'–'7')有給就只回那個 Part。回傳的陣列與每筆都凍結
+                   只有該 Part 有的欄位(見 tools/bank_meta.py);part('1'–'7')有給就只回那個 Part。回傳的陣列與每筆都凍結
      get(ids)    → 題目陣列,跟 ids 同順序、同長度:P1、P2、P5 是那一題,P3、P4、P6、P7 是整組;題庫裡沒有的 id(例如已淘汰)那一格是 null。
                    回傳複本,改了不影響題庫。id 是 Part 的格式、可是那個 Part 的題庫檔沒載入時整個失敗(不當成沒有這題)
      pick(spec)  → id 陣列:照條件從索引選一個 Part 的題(或組),見下面 pick 的說明

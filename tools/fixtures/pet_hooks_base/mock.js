@@ -24,6 +24,16 @@
       desc: '聽力 36 題 · 閱讀約 39 題',
       l: { p1: 3, p2: 12, p3: 4, p4: 3 }, r: { p5: 15, p6: 2, p7: 4 },
     },
+    /* 完整一回(2026-11-23):題數照正式多益,聽力 100 題、閱讀 100 題,限時 120 分(聽力 45 + 閱讀 75)。
+       聽力 Part 1 6 題、Part 2 25 題、Part 3 13 組 39 題、Part 4 10 組 30 題;閱讀 Part 5 30 題、Part 6 4 組 16 題。
+       Part 7 正式是單篇 29 題、雙篇 2 組 10 題、三篇 3 組 15 題(共 54 題)。題庫 Part 7 只有單篇 40 組(每組 4 題)、
+       雙篇 13 組、三篇 2 組(每組 5 題),三篇少一組,所以三篇用 2 組、不夠的 5 題用雙篇補:單篇 6 組 24 題、雙篇 4 組 20 題、
+       三篇 2 組 10 題,合計 54 題,閱讀剛好 100 題。r.p7 是數字(只抽幾組)或 { single, double, triple }(各抽幾組)。 */
+    full: {
+      name: '完整一回', mins: 120,
+      desc: '聽力 100 題 · 閱讀 100 題',
+      l: { p1: 6, p2: 25, p3: 13, p4: 10 }, r: { p5: 30, p6: 4, p7: { single: 6, double: 4, triple: 2 } },
+    },
   };
   const LEAVE_BODY = '模擬考還沒交卷。離開後這次作答不會計分。';
 
@@ -43,6 +53,13 @@
   }
   const pick = (arr, n) => shuffle(arr || []).slice(0, n);
   const qid = (set, i) => set.id + ':' + i;
+  /* Part 7:數字就隨機抽幾組;物件就依單篇、雙篇、三篇各抽幾組(照正式考卷的順序:單篇在前),題庫那一種不夠就有幾組給幾組 */
+  function pickP7(spec) {
+    const all = TOEIC.part7 || [];
+    if (typeof spec === 'number') return pick(all, spec);
+    return [['single', 1], ['double', 2], ['triple', 3]].reduce((out, [k, n]) =>
+      out.concat(pick(all.filter(x => x.passages && x.passages.length === n), spec[k] || 0)), []);
+  }
 
   /* ---------- 交卷時存不進去的成績(2026-10-31) ----------
      「交卷」和時間到自動交卷沒有 data-gate(開始的時候是能作答的)。考到一半別的分頁登出、換帳號,
@@ -110,7 +127,7 @@
     root.append(head);
     if (window.UI && typeof UI.mount === 'function' && document.readyState !== 'loading') UI.mount(head);   // 標題左邊的圖示(頁面載入那一下 js/ui.js 會畫,之後重畫的自己掛)
 
-    /* 一個畫面只有一顆實色主按鈕:第一張(快速回合)是主按鈕,第二張是描邊按鈕 */
+    /* 一個畫面只有一顆實色主按鈕:第一張(快速回合)是主按鈕,其他兩張是描邊按鈕 */
     const cards = h('div', { class: 'part-cards mock-sizes' });
     Object.entries(SIZES).forEach(([k, s], i) => {
       cards.append(h('div', { class: 'part-card' },
@@ -158,7 +175,7 @@
     pick(LDATA.p4, cfg.l.p4).forEach(item => units.push({ sec: 'L', p: '4', item }));
     pick(TOEIC.part5, cfg.r.p5).forEach(item => units.push({ sec: 'R', p: '5', item }));
     pick(TOEIC.part6, cfg.r.p6).forEach(item => units.push({ sec: 'R', p: '6', item }));
-    pick(TOEIC.part7, cfg.r.p7).forEach(item => units.push({ sec: 'R', p: '7', item }));
+    pickP7(cfg.r.p7).forEach(item => units.push({ sec: 'R', p: '7', item }));
 
     document.title = '模擬考進行中 - 衝衝英文';
     dropCard();
@@ -180,11 +197,17 @@
       dirty: true,
       onCount: openPanel,
       action: { label: '交卷', onClick: () => submit(false) },
-      onExit: () => { over = true; clearInterval(timerId); stopAudio(); closePanel(false); renderHome(); },
+      onExit: () => { over = true; clearInterval(timerId); unwake(); stopAudio(); closePanel(false); renderHome(); },
     });
     f.slot(timerEl);
     const timerId = setInterval(tick, 1000);
     tick();
+    /* 120 分鐘的考試:切到背景、螢幕鎖住時計時器會被瀏覽器放慢甚至暫停,但倒數是看截止時間算的(deadline),
+       回到畫面那一下馬上對一次,時間到了就交卷,不用等下一個一秒 */
+    const wake = () => { if (!document.hidden) tick(); };
+    document.addEventListener('visibilitychange', wake);
+    window.addEventListener('pageshow', wake);
+    function unwake() { document.removeEventListener('visibilitychange', wake); window.removeEventListener('pageshow', wake); }
 
     function tick() {
       const left = Math.max(0, deadline - Date.now());
@@ -232,10 +255,13 @@
     function openPanel() {
       if (panel || over) return;
       const done = units.filter((x, i) => unitAnswered(i)).length;
-      const group = (sec, label) => {
+      /* 一個 Part 一組:題號多的時候(完整一回約 100 個)比較找得到;標籤寫這個 Part 有幾題或幾組 */
+      const group = (sec, p) => {
+        const idx = [];
+        units.forEach((x, i) => { if (x.sec === sec && x.p === p) idx.push(i); });
+        if (!idx.length) return null;
         const nav = h('div', { class: 'q-nav' });
-        units.forEach((x, i) => {
-          if (x.sec !== sec) return;
+        idx.forEach(i => {
           let cls = i === cur ? 'cur' : '';
           if (unitAnswered(i)) cls += ' ans';
           nav.append(h('button', {
@@ -244,12 +270,14 @@
             onclick: () => { closePanel(false); go(i); },
           }, String(i + 1)));
         });
-        return nav.firstChild ? h('div', { class: 'mock-panel-group' }, h('p', { class: 'mock-panel-label' }, label), nav) : null;
+        const sets = p === '3' || p === '4' || p === '6' || p === '7';
+        const label = (sec === 'L' ? '聽力' : '閱讀') + ' Part ' + p + ' · ' + idx.length + (sets ? ' 組' : ' 題');
+        return h('div', { class: 'mock-panel-group' }, h('p', { class: 'mock-panel-label' }, label), nav);
       };
       /* 焦點先到目前那一題(aria-current);Esc、點遮罩、關閉鈕由 UI.sheet 處理 */
       panel = UI.sheet({
         title: '題號', note: '已作答 ' + done + ' / ' + units.length, class: 'mock-panel',
-        nodes: [group('L', '聽力'), group('R', '閱讀')],
+        nodes: ['1', '2', '3', '4'].map(p => group('L', p)).concat(['5', '6', '7'].map(p => group('R', p))),
         onClose: () => { panel = null; },
       });
     }
@@ -439,6 +467,7 @@
       closePanel(false);
       f.leave();
       clearInterval(timerId);
+      unwake();
       stopAudio();
 
       let lRaw = 0, lTotal = 0, rRaw = 0, rTotal = 0;

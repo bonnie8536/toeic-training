@@ -2595,6 +2595,50 @@ T['錯題本 E1:模擬考交卷把答錯的題收進 mock_wrong(只寫一次、�
   return { ok: r.ok, detail: J(r) };
 };
 
+/* 2026-11-23:模擬考首頁三種規模(快速回合、標準半回、完整一回),完整一回 200 題、限時 120 分鐘。
+   首頁只有一顆實色主按鈕(快速回合);完整一回開考有 100 個題號、依 Part 分組;切到背景回來倒數照實際時間(回到畫面馬上對一次);
+   時間到自動交卷,寫進 mock_history 的 size 是 'full'、聽力 100 閱讀 100 題;作答的錯題收進 mock_wrong,首頁歷次紀錄顯示「完整一回」 */
+T['模擬考 完整一回:首頁三張卡(一顆主按鈕)、開考 120 分鐘與 100 個題號分 Part;回到畫面倒數照實際時間;時間到交卷存 size full、錯題收進錯題本;歷次紀錄寫「完整一回」'] = async (B) => {
+  const P5 = BANK.part5;
+  const s = await open(B, { url: 'mock.html', user: true, sdk: fakeCloud({ user: USER }), ls: { [SB]: login0() }, pre: FIXRAND });
+  const r = {};
+  try {
+    r.cards = await s.eval("[...document.querySelectorAll('.part-card')].map((c) => c.querySelector('h3').textContent + '|' + c.querySelector('.mock-tags').textContent + '|' + (c.querySelector('.btn.primary') ? 'P' : 'O'))");
+    r.primaries = await s.eval("document.querySelectorAll('.btn.primary').length");
+    await clickNth(s, '.part-card .btn', 2);
+    await sleep(600);
+    r.timer0 = await s.eval("document.querySelector('.mock-timer').textContent");
+    r.count = await s.eval("document.querySelector('.quiz-count').textContent");
+    await click(s, '.quiz-count');
+    r.panel = await s.eval("({ labels: [...document.querySelectorAll('.mock-panel .mock-panel-label')].map((x) => x.textContent), btns: document.querySelectorAll('.mock-panel .q-nav button').length, note: (document.querySelector('.ui-sheet-note') || {}).textContent })");
+    await s.eval("(() => { const b = document.querySelector('.ui-sheet-close'); if (b) b.click(); return true; })()");
+    await sleep(300);
+    await mockPick(s, 54, 0, wrongOf(P5[0]));   // Part 5 第 1 題:錯
+    /* 切到背景 30 分鐘後回來:不等下一個一秒,回到畫面那一下就對 */
+    await s.eval("(() => { const t = Date.now; window.__realNow = t; Date.now = () => t() + 30 * 60e3; document.dispatchEvent(new Event('visibilitychange')); return true; })()");
+    r.timer1 = await s.eval("document.querySelector('.mock-timer').textContent");
+    await s.eval("(() => { const t = window.__realNow; Date.now = () => t() + 121 * 60e3; document.dispatchEvent(new Event('visibilitychange')); return true; })()");
+    await sleep(1800);
+    r.result = await s.eval("({ title: document.title, flag: (document.querySelector('.result-card') || {}).textContent || '' })");
+    const ls = JSON.parse(await s.eval(LS));
+    const mh = JSON.parse(ls[AK('mock_history')] || '[]'), mw = JSON.parse(ls[AK('mock_wrong')] || '{}');
+    r.rec = mh[mh.length - 1];
+    r.mw = Object.keys(mw);
+    r.note = await s.eval("(document.querySelector('.mock-wb-note') || {}).textContent || ''");
+    await s.go('mock.html');
+    await sleep(1200);
+    r.hist = await s.eval("(document.querySelector('.cat-table tr:nth-child(2) td:nth-child(2)') || {}).textContent || ''");
+  } finally { await s.close(); }
+  const d = ['快速回合|', '標準半回|', '完整一回|聽力 100 題 · 閱讀 100 題限時 120 分鐘'];
+  r.ok = r.cards.length === 3 && r.cards.every((c, i) => c.startsWith(d[i]) || (i < 2 && c.startsWith(d[i].split('|')[0]))) && r.cards[0].endsWith('|P') && r.cards[1].endsWith('|O') && r.cards[2].endsWith('|O') && r.primaries === 1
+    && /^(120:00|119:5\d)$/.test(r.timer0) && /^1 \/ 100$/.test(r.count.replace(/\s/g, ' ').trim())
+    && J(r.panel.labels) === J(['聽力 Part 1 · 6 題', '聽力 Part 2 · 25 題', '聽力 Part 3 · 13 組', '聽力 Part 4 · 10 組', '閱讀 Part 5 · 30 題', '閱讀 Part 6 · 4 組', '閱讀 Part 7 · 12 組']) && r.panel.btns === 100
+    && /^(89|90):\d\d$/.test(r.timer1) && /模擬考結果/.test(r.result.title) && /時間到/.test(r.result.flag)
+    && r.rec && r.rec.size === 'full' && r.rec.lTotal === 100 && r.rec.rTotal === 100
+    && J(r.mw) === J([P5[0].id]) && /收進錯題本 1 題/.test(r.note) && r.hist === '完整一回';
+  return { ok: !!r.ok, detail: J(r) };
+};
+
 T['錯題本 E5:每日複習出現只在模擬考錯題裡的題;答對不動刷題紀錄、寫已訂正記號;答錯在刷題紀錄新加一筆、mock_wrong 不變,錯題本那題變成今天、不標模擬考'] = async (B) => {
   const P5 = BANK.part5, day = Date.now() - 864e5;
   const mw = { [P5[3].id]: { c: wrongOf(P5[3]), ok: false, t: day }, [P5[5].id]: { c: wrongOf(P5[5]), ok: false, t: day + 1 } };

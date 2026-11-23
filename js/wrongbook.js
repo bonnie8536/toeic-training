@@ -146,10 +146,10 @@
     return { units, n, rest: all.length - n, total: all.length };
   }
 
-  /* 分頁暫存的作答:只留 [字串, 整數],最多 200 對 */
+  /* 分頁暫存的作答:只留 [字串, 整數],最多 400 對(完整一回約 200 題;以前上限 200,正好卡在完整一回的題數) */
   function cleanAns(ans) {
     if (!Array.isArray(ans)) return [];
-    return ans.filter((e) => Array.isArray(e) && e.length === 2 && typeof e[0] === 'string' && Number.isInteger(e[1])).slice(0, 200);
+    return ans.filter((e) => Array.isArray(e) && e.length === 2 && typeof e[0] === 'string' && Number.isInteger(e[1])).slice(0, 400);
   }
   /* 模擬考交卷的作答 [[題目 key, 選的], …](只有作答的)→ 要寫進 mock_wrong 的那幾筆。對錯用題庫算(不信任呼叫的人)。
      答錯:{ c, ok: false, t: T }。答對:這題現在在錯題本、而且決定的那一筆比這次交卷舊,才寫已訂正記號 { c, ok: true, t: T }。

@@ -339,7 +339,7 @@ T['M11 大小:題庫全錯 < 50 KB;1500 筆長 key < 100 KB'] = () => {
   const size2 = Buffer.byteLength(J(MW(null, big).v));
   return { ok: n === total && n > 0 && size < 50 * 1024 && size2 < 100 * 1024, detail: n + ' 題 ' + size + ' B;1500 筆 ' + size2 + ' B' };
 };
-T['M13 分頁暫存相容:新版留的 { pid, rec, ans } 舊版 saveLater 的篩選照樣認得;清理 ans 只留 [字串, 整數]、最多 200 對'] = () => {
+T['M13 分頁暫存相容:新版留的 { pid, rec, ans } 舊版 saveLater 的篩選照樣認得;清理 ans 只留 [字串, 整數]、最多 400 對(完整一回有 200 題)'] = () => {
   const r = spawnSync('git', ['-C', REPO, 'show', '23b8ca9:js/mock.js'], { encoding: 'utf8' });
   const line = r.status === 0 ? /const mine = all\.filter\((x => [^\n]*?)\);/.exec(r.stdout) : null;
   if (!line) return { ok: false, detail: '讀不到 23b8ca9 的 mock.js saveLater 篩選' };
@@ -347,9 +347,9 @@ T['M13 分頁暫存相容:新版留的 { pid, rec, ans } 舊版 saveLater 的篩
   const entry = { pid: 'cX', rec: { d: '2026-11-18T02:00:00.000Z', size: 'quick' }, ans: [['p5-b1-01', 1]] };
   const W = WB();
   const raw = [['p5-a', 1], ['p5-b', '2'], [3, 1], ['p5-c', 1.5], 'x', null, ['p5-d', 0, 9], ['p5-e', -1]]
-    .concat(Array.from({ length: 300 }, (x, i) => ['p5-z' + i, i % 4]));
+    .concat(Array.from({ length: 500 }, (x, i) => ['p5-z' + i, i % 4]));
   const clean = W.cleanAns(raw);
-  const ok = oldFilter(entry) === true && clean.length === 200 && J(clean[0]) === J(['p5-a', 1]) && clean.every((x) => Array.isArray(x) && x.length === 2 && typeof x[0] === 'string' && Number.isInteger(x[1]))
+  const ok = oldFilter(entry) === true && clean.length === 400 && J(clean[0]) === J(['p5-a', 1]) && clean.every((x) => Array.isArray(x) && x.length === 2 && typeof x[0] === 'string' && Number.isInteger(x[1]))
     && J(W.cleanAns('不是陣列')) === '[]';
   return { ok, detail: J({ old: oldFilter(entry), n: clean.length, first: clean.slice(0, 3) }) };
 };
@@ -432,6 +432,96 @@ T['M12 搬家規則 pool、標籤「模擬考錯題」;cloud.js 合併表有 moc
   };
   const ok = got.rule === 'pool' && got.label === '模擬考錯題' && got.pool && got.merged && got.take && got.subs;
   return { ok, detail: J(got) };
+};
+
+/* ================= M17–M19:完整一回(2026-11-23) ================= */
+/* 從 js/mock.js 讀 SIZES 設定(IIFE 裡面,沒辦法直接 require):取 const SIZES = {...}; 那一段 eval */
+function sizesFromSource() {
+  const m = /const SIZES = (\{[\s\S]*?\n  \});/.exec(read('js/mock.js'));
+  if (!m) return null;
+  return vm.runInNewContext('(' + m[1] + ')');
+}
+const p7Counts = (spec) => (typeof spec === 'number' ? { n: spec } : spec);
+/* 一種規模實際抽出來的題數(聽力、閱讀),跟 js/mock.js startExam 的規則一樣:p3、p4 每組 3 題,Part 6 每組 4 題,Part 7 看每組自己的題數 */
+function planFor(cfg, rnd) {
+  const shuf = (a) => { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };
+  const take = (arr, n) => shuf(arr).slice(0, n);
+  const units = [];
+  ['p1', 'p2', 'p3', 'p4'].forEach((p) => { if (cfg.l[p]) take(L[p], cfg.l[p]).forEach((item) => units.push({ sec: 'L', p: p.slice(1), item })); });
+  take(TOEIC.part5, cfg.r.p5).forEach((item) => units.push({ sec: 'R', p: '5', item }));
+  take(TOEIC.part6, cfg.r.p6).forEach((item) => units.push({ sec: 'R', p: '6', item }));
+  const s7 = cfg.r.p7;
+  if (typeof s7 === 'number') take(TOEIC.part7, s7).forEach((item) => units.push({ sec: 'R', p: '7', item }));
+  else ['single', 'double', 'triple'].forEach((k) => { const np = { single: 1, double: 2, triple: 3 }[k]; take(TOEIC.part7.filter((x) => x.passages.length === np), s7[k] || 0).forEach((item) => units.push({ sec: 'R', p: '7', item })); });
+  return units;
+}
+const qCount = (u) => (u.p === '1' || u.p === '2' || u.p === '5' ? 1 : u.item.questions.length);
+T['M17 SIZES.full:聽力 100、閱讀 100、限時 120 分;題庫夠抽;順序 快速、半回、整回;說明寫的題數跟實際抽出來的一樣;舊兩種規模不變'] = () => {
+  const S = sizesFromSource();
+  if (!S || !S.full) return { ok: false, detail: '還沒有 SIZES.full' };
+  const keys = Object.keys(S);
+  const bad = [];
+  if (J(keys) !== J(['quick', 'half', 'full'])) bad.push('順序 ' + keys);
+  if (J(S.quick) !== J({ name: '快速回合', mins: 22, desc: '聽力 12 題 · 閱讀約 18 題', l: { p2: 6, p3: 1, p4: 1 }, r: { p5: 10, p6: 1, p7: 1 } })) bad.push('quick 被改了');
+  if (J(S.half) !== J({ name: '標準半回', mins: 47, desc: '聽力 36 題 · 閱讀約 39 題', l: { p1: 3, p2: 12, p3: 4, p4: 3 }, r: { p5: 15, p6: 2, p7: 4 } })) bad.push('half 被改了');
+  const F = S.full, got = {};
+  if (F.name !== '完整一回' || F.mins !== 120) bad.push('名稱/時間 ' + F.name + F.mins);
+  const units = planFor(F, rng(7));
+  const lq = units.filter((u) => u.sec === 'L').reduce((n, u) => n + qCount(u), 0), rq = units.filter((u) => u.sec === 'R').reduce((n, u) => n + qCount(u), 0);
+  got.l = lq; got.r = rq;
+  if (lq !== 100) bad.push('聽力 ' + lq);
+  if (rq !== 100) bad.push('閱讀 ' + rq);
+  if (F.desc !== '聽力 100 題 · 閱讀 100 題') bad.push('desc ' + F.desc);
+  ['p1', 'p2', 'p3', 'p4'].forEach((p) => { if ((F.l[p] || 0) > L[p].length) bad.push('題庫不夠 ' + p); });
+  if (F.r.p5 > TOEIC.part5.length || F.r.p6 > TOEIC.part6.length) bad.push('題庫不夠 p5/p6');
+  const np = [1, 2, 3].map((n) => TOEIC.part7.filter((x) => x.passages.length === n).length);
+  const s7 = p7Counts(F.r.p7);
+  if (s7.single > np[0] || s7.double > np[1] || s7.triple > np[2]) bad.push('Part 7 題庫不夠 ' + np);
+  const u7 = units.filter((u) => u.p === '7');
+  got.p7 = { sets: u7.length, q: u7.reduce((n, u) => n + qCount(u), 0), bank: np };
+  if (got.p7.q !== 54) bad.push('Part 7 ' + got.p7.q);
+  const lUnits = units.filter((u) => u.sec === 'L').length;
+  got.units = units.length;
+  return { ok: !bad.length, detail: bad.join(' | ') || J(got) };
+};
+T['M18 完整一回全錯:交卷作答約 200 題 → cleanAns 全留、fromAnswers 約 200 筆、save 寫得進去、一次只寫一次;跟本機原有的錯題合起來沒有互相蓋掉'] = () => {
+  const S = sizesFromSource();
+  if (!S || !S.full) return { ok: false, detail: '還沒有 SIZES.full' };
+  const units = planFor(S.full, rng(11));
+  const ans = [];
+  units.forEach((u) => {
+    if (u.p === '5' || u.p === '1' || u.p === '2') { ans.push([u.item.id, wrongC(u.item)]); return; }
+    u.item.questions.forEach((q, qi) => ans.push([u.p === '6' ? u.item.id + ':' + q.num : u.item.id + ':' + qi, wrongC(q)]));
+  });
+  const old = { 'p5-OLD-1': { c: 1, ok: false, t: 5 } };   // 不在題庫的舊 key 不能被動到
+  const ctx = sandbox({ mock_wrong: old });
+  const W = WB(ctx);
+  const clean = W.cleanAns(ans);
+  const add = W.fromAnswers(clean, NOW);
+  ctx.store.reset();
+  const r = W.save(add);
+  const after = ctx.store.peek('mock_wrong');
+  const bad = [];
+  if (ans.length !== 200) bad.push('作答 ' + ans.length);
+  if (clean.length !== ans.length) bad.push('cleanAns 只留了 ' + clean.length);
+  if (Object.keys(add).length !== ans.length) bad.push('fromAnswers ' + Object.keys(add).length);
+  if (!r.ok || r.wrong !== ans.length) bad.push('save ' + J(r));
+  if (ctx.store.n.set.mock_wrong !== 1) bad.push('寫了 ' + ctx.store.n.set.mock_wrong + ' 次');
+  if (!after || Object.keys(after).length !== ans.length + 1 || J(after['p5-OLD-1']) !== J(old['p5-OLD-1'])) bad.push('寫進去的鍵數 ' + (after && Object.keys(after).length));
+  return { ok: !bad.length, detail: bad.join(' | ') || J({ n: ans.length, wrong: r.wrong }) };
+};
+T['M19 歷次紀錄 size:\'full\' 的 mock_history 合併、不同規模同一毫秒不會被當成同一筆、上限 30 筆(mock.js)不傷到舊筆;舊頁面讀到不認得的 size 只顯示原字串'] = () => {
+  const mk = (size, d) => ({ d, size, lRaw: 100, lTotal: 100, rRaw: 90, rTotal: 100, lScore: 495, rScore: 450 });
+  const d = '2026-11-23T02:00:00.000Z';
+  const m = SM.mock([mk('quick', d)], [mk('full', d), mk('full', d)]);
+  const bad = [];
+  if (!m.ok || m.v.length !== 2 || m.v.map((r) => r.size).sort().join() !== 'full,quick') bad.push('合併 ' + J(m));
+  /* 舊頁面:SIZES[r.size] 沒有 → 顯示 r.size(用 HEAD 上的 js/mock.js 確認那一句還在) */
+  const old = spawnSync('git', ['-C', REPO, 'show', '44d92f6:js/mock.js'], { encoding: 'utf8' }).stdout || '';
+  if (!/\(SIZES\[r\.size\] \|\| \{\}\)\.name \|\| r\.size/.test(old)) bad.push('舊頁面的後備顯示不在');
+  if (!/\(SIZES\[r\.size\] \|\| \{\}\)\.name \|\| r\.size/.test(read('js/mock.js'))) bad.push('新頁面沒有後備顯示');
+  const P = BASE.PET_FOOD || BASE.PET_STORE;
+  return { ok: !bad.length, detail: bad.join(' | ') || 'ok' };
 };
 
 (async () => {

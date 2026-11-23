@@ -65,12 +65,12 @@ T['P3 小型 schema 驗證:認得 $ref、oneOf、if/then、additionalProperties�
   return 'ok';
 };
 
-T['P4 check_packs 指令:兩包通過、exit 0;技巧卡、每週新字表、小檢核清單還沒做只列提醒'] = () => {
+T['P4 check_packs 指令:兩包通過、exit 0;技巧卡還沒做只列提醒;新字表與小檢核清單有了就不再提醒缺少'] = () => {
   const r = spawnSync(process.execPath, [path.join(__dirname, 'check_packs.js')], { encoding: 'utf8', cwd: REPO });
   assert.equal(r.status, 0, r.stdout + r.stderr);
   assert.match(r.stdout, /通過/);
   assert.match(r.stdout, /技巧卡還沒有/);
-  assert.match(r.stdout, /每週新字表還沒有/);
+  assert.ok(!/每週新字表還沒有/.test(r.stdout) && !/可用題清單選題/.test(r.stdout));
   assert.ok(!/^錯誤/m.test(r.stdout));
   return r.stdout.trim().split('\n').length + ' 行';
 };

@@ -130,7 +130,7 @@ function checkContent(pack, data, out, opt) {
       const sec = l.checkpoint.answerSeconds + 60 + secondsOf(l.checkpoint.fill);
       if (sec < 918 || sec > 1080) put({ hard: true, msg: '小檢核 ' + sec + ' 秒（含說明 60 秒要 918–1,080）' });
       (l.checkpoint.fill || []).forEach((b) => checkBlock(b, data, opt).forEach(put));
-      if (live) out.warnings.push(at + '小檢核只從可用題清單選題，清單還沒有時上課會停在這一段');
+      if (live && !opt.pool) out.warnings.push(at + '小檢核只從可用題清單選題，清單還沒有時上課會停在這一段');
     }
   });
   /* 還沒做的內容(技巧卡、每週新字表)整包列一次 */
@@ -201,6 +201,7 @@ async function main(files) {
   const packs = [];
   ok.forEach(({ f, pack }) => {
     opt.words = fs.existsSync(path.join(REPO, 'data/packs/words_' + pack.level + '.json'));
+    opt.pool = fs.existsSync(path.join(REPO, 'data/packs/checkpoint_pool.json'));
     const r = checkPack(pack, data, opt);
     packs.push(pack);
     r.errors.forEach((m) => console.log('錯誤　' + f + ' ' + m));
@@ -214,6 +215,7 @@ async function main(files) {
     out.errors.forEach((m) => console.log('錯誤　' + m));
     errors += out.errors.length;
   }
+  if (!files.length) errors += require('./check_pack_lists.js').main() ? 1 : 0;
   console.log(errors ? '有 ' + errors + ' 個錯誤' : '通過');
   return errors ? 1 : 0;
 }

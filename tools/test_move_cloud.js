@@ -71,9 +71,12 @@ function makeClient(w) {
 }
 const tick = async () => { for (let i = 0; i < 10; i++) await new Promise((r) => setImmediate(r)); };
 
-/* opt.movers:'yes'(先載好 MOVE_RULES、MOVE_MERGE)、'fail'(要載時載不到)、不給同 'yes' */
+/* opt.movers:'yes'(先載好 MOVE_RULES、MOVE_MERGE)、'fail'(要載時載不到)、不給同 'yes'。
+   opt.lazy:頁面上沒先載的檔(SRC 的名稱,例 ['rules', 'syncLesson']),cloud.js 要用時補載得到(w.loaded 記補載了哪些) */
+const LAZY_SRC = { 'js/move-rules.js': 'rules', 'js/move-merge.js': 'merge', 'js/daily.js': 'daily', 'js/sync-merge.js': 'sync', 'js/sync-merge-lesson.js': 'syncLesson' };
 function loadPage(w, opt) {
   opt = opt || {};
+  const lazy = opt.lazy || [];
   const timers = new Map(); let tid = 0;
   const listeners = {};
   class FakeDate extends Date { constructor(...a) { if (a.length) super(...a); else super(w.clock.t); } static now() { return w.clock.t; } }
@@ -85,7 +88,15 @@ function loadPage(w, opt) {
     history: { replaceState() {} },
     document: {
       visibilityState: 'visible', addEventListener(ev, fn) { (listeners['doc:' + ev] = listeners['doc:' + ev] || []).push(fn); },
-      createElement() { return {}; }, head: { appendChild(s) { w.scriptLoads = (w.scriptLoads || 0) + 1; Promise.resolve().then(() => s.onerror && s.onerror(new Error('404'))); } },
+      createElement() { return {}; },
+      head: {
+        appendChild(s) {
+          w.scriptLoads = (w.scriptLoads || 0) + 1;
+          const name = LAZY_SRC[s.src];
+          if (name && lazy.indexOf(name) > -1) { (w.loaded = w.loaded || []).push(s.src); Promise.resolve().then(() => { vm.runInContext(SRC[name], ctx); if (s.onload) s.onload(); }); return; }
+          Promise.resolve().then(() => s.onerror && s.onerror(new Error('404')));
+        },
+      },
       querySelector() { return null; }, querySelectorAll() { return []; },
     },
     confirm: () => true, navigator: { get onLine() { return !w.offline; } }, URLSearchParams,
@@ -99,8 +110,8 @@ function loadPage(w, opt) {
   vm.createContext(ctx);
   try { ctx.__PROFILE_ID = JSON.parse(w.local.getItem('tr_current_profile')) || null; } catch (e) { ctx.__PROFILE_ID = null; }
   Object.assign(ctx, { PET_ON: true, PET_FOOD: true, PET_FOOD_FROM: '2026-10-20' });
-  vm.runInContext(SRC.pet, ctx); vm.runInContext(SRC.food, ctx); vm.runInContext(SRC.sync, ctx); vm.runInContext(SRC.syncLesson, ctx);
-  if (opt.movers !== 'fail') { vm.runInContext(SRC.rules, ctx); vm.runInContext(SRC.merge, ctx); vm.runInContext(SRC.daily, ctx); }
+  vm.runInContext(SRC.pet, ctx); vm.runInContext(SRC.food, ctx);
+  ['sync', 'syncLesson'].concat(opt.movers !== 'fail' ? ['rules', 'merge', 'daily'] : []).forEach((n) => { if (lazy.indexOf(n) < 0) vm.runInContext(SRC[n], ctx); });
   vm.runInContext(opt.cloudSrc || SRC.cloud, ctx);   // opt.cloudSrc:改過的 cloud.js(測試合併表多一個鍵)
   return {
     ctx,
@@ -570,6 +581,31 @@ T['暫存區:課程進度(les_t 一堂一鍵、pts):搬家暫存、本機、雲�
   const ok = J(ids(lv(w, 'les_t1_03'))) === J(['l2-01', 'l2-02', 'l2-03']) && J(ids(cv(w, 'les_t1_03'))) === J(['l2-01', 'l2-02', 'l2-03'])
     && J(b(cv(w, 'pts'))) === J(['cloud', 'moved']) && !backups(w).length && w.local.getItem(PEND) === null;
   return { ok, detail: J({ local: ids(lv(w, 'les_t1_03')), cloud: ids(cv(w, 'les_t1_03')), pts: b(cv(w, 'pts')), bk: backups(w), ups: ups(w) }) };
+};
+/* 課程的合併函式在 js/sync-merge-lesson.js:頁面沒先載它(也沒先載搬家程式)時,處理暫存區前跟搬家程式一起補載,課程進度照樣合併;
+   補載不到就整個不處理,暫存區留著(跟搬家程式載不到一樣) */
+T['暫存區:頁面沒先載 js/sync-merge-lesson.js 與搬家程式:要用時補載,課程進度照樣三份合併;補載不到暫存區留著'] = async () => {
+  const st = (rows) => ({ v: 1, lessonId: { listening: 'entry-L03', reading: 'entry-L03' }, packVersion: { listening: '1.2.0', reading: '1.2.0' },
+    levels: { listening: 'entry', reading: 'entry' }, startedAt: Math.floor((T0 - 10 * HOUR) / 1000), doneAt: null, seg: { vocab: { st: 'todo', t0: null, t1: null } }, pk: {}, a: rows });
+  const setup = () => {
+    const w = makeWorld();
+    cloudRow(w, 'les_t1_03', st([[4, 'l2-01', 0, 1, 3, 10]]), T0 - HOUR);
+    signedIn(w);
+    w.local.setItem(PREFIX + 'les_t1_03', J(st([[4, 'l2-02', 0, 1, 3, 20]])));
+    w.local.setItem(LEDGER, J({ les_t1_03: T0 - 4 * HOUR }));
+    w.local.setItem(PEND, J({ items: [['les_t1_03', J(st([[4, 'l2-03', 0, 1, 3, 30]])), T0 - 2 * HOUR]] }));
+    return w;
+  };
+  const ids = (v) => (v && v.a ? v.a.map((x) => x[1]).sort() : []);
+  const w = setup();
+  await openLoggedIn(w, { lazy: ['rules', 'merge', 'daily', 'syncLesson'] });
+  const w2 = setup();
+  await openLoggedIn(w2, { movers: 'fail', lazy: ['syncLesson'] });
+  const all = J(['l2-01', 'l2-02', 'l2-03']);
+  const ok = (w.loaded || []).indexOf('js/sync-merge-lesson.js') > -1 && J(ids(lv(w, 'les_t1_03'))) === all && J(ids(cv(w, 'les_t1_03'))) === all
+    && !backups(w).length && w.local.getItem(PEND) === null
+    && w2.local.getItem(PEND) !== null && !backups(w2).length && J(ids(cv(w2, 'les_t1_03'))) === J(['l2-01']);
+  return { ok, detail: J({ loaded: w.loaded, local: ids(lv(w, 'les_t1_03')), cloud: ids(cv(w, 'les_t1_03')), bk: backups(w), failPend: w2.local.getItem(PEND) !== null, failCloud: ids(cv(w2, 'les_t1_03')) }) };
 };
 T['暫存區:合併表上有、takeSynced 對照表(SYNC_FN)沒有的鍵:暫存那份放進備份,不當成題庫合併、不默默略過'] = async () => {
   const src = SRC.cloud.replace(/(\r?\n    mock_wrong: \{ merge: SMF\('mockWrong'\), reconcile: true \},)/, '$1\n    vgame_miss: { merge: SMF(\'mock\'), reconcile: true },');

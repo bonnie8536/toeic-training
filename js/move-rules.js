@@ -14,7 +14,8 @@
      q_reports:回報題目(js/report.js),每題 { c, n, t, f },同一題兩邊都有就留 t 新的。
      課程(js/pack-core.js、js/lesson-rules.js):plan(課表設定)、pts(考點狀態)、rvq(回顧佇列)、tests_v1(測驗結果)、
      les_t<期>_<堂>(一堂一鍵,由 PACK_CORE.lessonKey 產生)。搬家時整份換(single,兩邊不同時問人);
-     跨裝置同步是另一件事:課程頁寫入前先讀雲端那一份合併(見 js/pack-core.js)。 */
+     雲端帳號的搬家暫存區不走這裡的 single:pts、rvq、tests_v1、les_t 在 js/cloud.js 的合併表上,takeSynced 用 SYNC_MERGE.pts、rvq、tests、lesson
+     (作答、批次、佇列聯集;tools/test_move_cloud.js)。訪客與本機學生的搬家要不要改用合併另外決定(現在維持 single)。 */
   const EXACT = Object.freeze({
     hist: 'hist', mock_history: 'mock', mock_wrong: 'pool', q_reports: 'pool', pet: 'pet', daily_done: 'daily', vgame_banks: 'banks', sync_del: 'tombs',
     vgame_best: 'best', vgame_toast_best: 'best', vgame_pairs_best: 'pairsBest', vgame_clear: 'clear',

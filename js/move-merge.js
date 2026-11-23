@@ -40,6 +40,7 @@
     writing_read: '寫作讀過的課', writing_s: '寫作句型', writing_b: '寫作造句', writing_e: '寫作回信', writing_y: '寫作論述',
     ear_s: '句子跟讀', ear_d: '句子聽寫', ear_mp: '相似音辨析', ear_n: '數字與價格', diag: '程度檢測', ph_slow: '自然發音慢速',
     vgame_src: '單字遊戲上次的題目來源', profiles: '學生名單', current_profile: '目前的學生檔案', pet_hint: '小雞提示次數',
+    plan: '課表設定', pts: '考點狀態', rvq: '回顧佇列', tests_v1: '測驗結果',
   };
 
   const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
@@ -70,6 +71,8 @@
     if (/^read_q_/.test(sub)) return '閱讀題作答';
     if (/^read_tq_/.test(sub)) return '閱讀單字考題成績';
     if (/^vocab_/.test(sub)) return '文章單字';
+    const les = /^les_t(\d{1,2})_(\d{2})$/.exec(sub);
+    if (les) return '第 ' + Number(les[1]) + ' 期第 ' + Number(les[2]) + ' 堂課程進度';
     return sub;
   }
 

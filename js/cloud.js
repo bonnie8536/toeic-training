@@ -24,6 +24,12 @@
        跟 mock_history 一樣先讀雲端、合併、再上傳;搬家暫存區(takePending → takeSynced)也照 SYNC_FN 合併。
        舊快取的 sync-merge.js 沒有 mockWrong:merge() 是 null,照上面的規則不上傳、帳本留著。
        模擬考、錯題本、題庫、能力分析開頁時呼叫 syncKey('mock_wrong') 跟雲端對齊一次(js/wrongbook.js syncCloud;為什麼見已知限制 8)。
+     · 課程(js/pack-core.js、js/lesson-rules.js):les_t<期>_<堂>(一堂一鍵,用 MERGED_FAMILIES 的鍵名規則認)、pts、rvq、tests_v1。
+       合併函式 SYNC_MERGE.lesson、pts、rvq、tests(規則見 js/sync-merge.js)。以前整份上傳:離線做的一段、開新分頁灌資料、
+       讀雲端逾時後補傳、兩台差不多同時交卷,後到的會把另一台的作答整份蓋掉。現在跟題庫一樣先讀雲端合併再上傳,灌資料時也合併;
+       加 reconcile:登出、搬家前對帳時本機有這些鍵才多讀它們(沒有課程資料的帳號請求跟以前一樣)。搬家暫存區(SYNC_FN、SYNC_FAMILY)也合併。
+       部署前就開著的舊版分頁(合併表沒有這些鍵)照舊整份上傳,同已知限制 8;課程頁跟這一版 cloud.js 一起上線,舊分頁沒有課程頁。
+       tools/test_lesson_sync.js。
    已知限制:
      1. 兩台在同一時間讀雲端、合併、上傳時,後到的那台可能蓋掉先到的那台剛傳上去的東西;先到那台本機還留著,
         下次上傳、灌資料、開單字頁、登出前對帳時會再合併上傳(pet 是 pet-store 的 remoteBehind),所以不會永久消失。
@@ -101,8 +107,26 @@
     vgame_banks: { merge: SMF('banks'), tombs: true, reconcile: true },
     mock_history: { merge: SMF('mock'), reconcile: true },
     mock_wrong: { merge: SMF('mockWrong'), reconcile: true },
+    pts: { merge: SMF('pts'), reconcile: true },
+    rvq: { merge: SMF('rvq'), reconcile: true },
+    tests_v1: { merge: SMF('tests'), reconcile: true },
   };
-  const spec = k => (typeof k === 'string' && Object.prototype.hasOwnProperty.call(MERGED, k) ? MERGED[k] : null);
+  /* 用鍵名規則認的合併表:課程進度一堂一鍵 les_t<期>_<堂>(期 1–99、堂 01–24,跟 js/pack-core.js 的 lessonKey 一樣) */
+  const MERGED_FAMILIES = [{ re: /^les_t[1-9]\d?_(0[1-9]|1\d|2[0-4])$/, spec: { merge: SMF('lesson'), reconcile: true } }];
+  const spec = k => {
+    if (typeof k !== 'string') return null;
+    if (Object.prototype.hasOwnProperty.call(MERGED, k)) return MERGED[k];
+    const f = MERGED_FAMILIES.filter(x => x.re.test(k))[0];
+    return f ? f.spec : null;
+  };
+  /* 合併表上的鍵:固定的那幾個(照表上的順序,sync_del 在 vgame_banks 前面),加上 names 裡符合規則的(排序、不重複) */
+  const mergedIn = names => Object.keys(MERGED).concat(Array.from(new Set(names || [])).filter(k => !Object.prototype.hasOwnProperty.call(MERGED, k) && spec(k)).sort());
+  /* 這個資料夾本機有的鍵名 */
+  function localNames(prefix) {
+    const out = [];
+    try { for (let i = 0; i < localStorage.length; i++) { const lk = localStorage.key(i); if (lk && lk.startsWith(prefix)) out.push(lk.slice(prefix.length)); } } catch (e) { /* 讀不到就只看固定的那幾個 */ }
+    return out;
+  }
   window.CLOUD.mergedKeys = Object.freeze(Object.keys(MERGED));   // pet-store 用它判斷這一版 cloud.js 會先合併 pet 再上傳
   if (!enabled) return;
   tidySignupIntent(authError);   // 註冊時選老師的意向:開頁就清過期的、記下「這個分頁從 Google 回來了」(要趁 supabase-js 清掉網址之前;getSession 之後綁帳號 id)
@@ -393,7 +417,7 @@
       writeLedger(user.id, led);
       /* 灌過資料:只在本機的改動不是合併過(跟雲端一樣,或記在帳本上)、就是留本機記在帳本上,標記都不用了;
          對不了時留在本機的(hold)標記留著,登出時還是先合併上傳、傳不上去先問 */
-      Object.keys(MERGED).forEach(k => { if (!plan.hold[k]) unmark(user.id, k, Infinity); });
+      mergedIn(Object.keys(readLocalOnly(user.id))).forEach(k => { if (!plan.hold[k]) unmark(user.id, k, Infinity); });
 
       for (let i = localStorage.length - 1; i >= 0; i--) {
         const lk = localStorage.key(i);
@@ -1123,17 +1147,17 @@
   async function checkCloud(user) {
     const prefix = 'tr_u' + pidOf(user) + '_';
     const has = k => { const v = readLocal(prefix + k); return v !== null && v !== undefined; };
-    const keys = Object.keys(MERGED).filter(k => MERGED[k].reconcile && has(k));
+    const keys = mergedIn(localNames(prefix)).filter(k => spec(k).reconcile && has(k));
     const notRead = { behind: false, unsure: keys };
     if (!keys.length || !canUpload(user)) return notRead;
-    const want = keys.some(k => MERGED[k].tombs) && keys.indexOf(TOMBS) < 0 ? [TOMBS].concat(keys) : keys;
+    const want = keys.some(k => spec(k).tombs) && keys.indexOf(TOMBS) < 0 ? [TOMBS].concat(keys) : keys;
     const clean = {};
     want.forEach(k => { clean[k] = cleanKey(user.id, k); });
     const rows = await readRows(user, want);
     if (!rows.ok) return notRead;
     let tombsV = null;
     const behind = [], unsure = [];
-    Object.keys(MERGED).filter(k => want.indexOf(k) >= 0).forEach(k => {
+    mergedIn(want).filter(k => want.indexOf(k) >= 0).forEach(k => {
       const local = readLocal(prefix + k);
       const cv = rows.found[k] ? rows.v[k] : null;
       if (local === null || local === undefined) { if (k === TOMBS) tombsV = cv; return; }
@@ -1424,8 +1448,8 @@
   function planMerged(prefix, cloud, keepLocal, led, clockOk, marks, dirty) {
     const plan = { save: {}, hold: {} };
     let tombsV = null;   // 合併後的刪除標記(表上 sync_del 排在 vgame_banks 前面),給題庫用
-    Object.keys(MERGED).forEach(k => {
-      const s = MERGED[k];
+    mergedIn(Object.keys(cloud).concat(localNames(prefix))).forEach(k => {
+      const s = spec(k);
       const c = cloud[k];
       const local = readLocal(prefix + k);
       if (!c || c.v === null || c.v === undefined) { if (k === TOMBS && local) tombsV = local; return; }   // 雲端沒有:照舊留本機、補傳
@@ -1517,15 +1541,18 @@
   /* 暫存區裡合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄、模擬考錯題):本機、雲端、暫存三份用 SYNC_MERGE 合併。
      標記先合(三份聯集),題庫套合併後的標記。先合雲端和暫存那份(暫存那份比雲端新就在分不出先後時偏它),再合本機
      (本機帳本上的改動不比暫存那份新就偏剛合好的那份);結果吸收過雲端那份,下面 planMerged 再跟雲端合併時不會又被改回去。
-     鍵清單跟著 MERGED 走(takePending 也是看 MERGED 把鍵交過來);每個鍵用哪個合併函式寫在 SYNC_FN。
-     MERGED 上有、SYNC_FN 沒有的鍵(以後加進合併表卻忘了這裡):暫存那份一律放進備份,不准當成題庫合併、也不准略過(略過的話暫存區照樣刪掉)。
+     鍵清單跟著 MERGED 走(takePending 也是看 MERGED 把鍵交過來,用鍵名規則認的課程進度也在裡面);每個鍵用哪個合併函式寫在 SYNC_FN
+     (規則認的鍵寫在 SYNC_FAMILY)。MERGED 上有、SYNC_FN 沒有的鍵(以後加進合併表卻忘了這裡):暫存那份一律放進備份,
+     不准當成題庫合併、也不准略過(略過的話暫存區照樣刪掉)。
      回 { sets: [[鍵, 原字串]], backup: [[鍵, 原字串]] };合併不了的鍵暫存那份放進備份,本機不動 */
-  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong' };
+  const SYNC_FAMILY = [[/^les_t/, 'lesson']];
+  const SYNC_TWO = { mock: 1, mockWrong: 1, pts: 1, rvq: 1, tests: 1, lesson: 1 };   // 雲端和暫存那份先合、再合本機(不用標記)
+  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', pts: 'pts', rvq: 'rvq', tests_v1: 'tests' };
   function takeSynced(syncItems, led, cloud, prefix, now) {
     const S = window.SYNC_MERGE, sets = [], backup = [];
     const val = (raw) => { try { return raw === null || raw === undefined ? null : JSON.parse(raw); } catch (e) { return undefined; } };
     const local = {}, cv = {};
-    const KEYS = Object.keys(MERGED).filter((k) => !MERGED[k].clock);
+    const KEYS = Object.keys(MERGED).filter((k) => !MERGED[k].clock).concat(mergedIn(syncItems.map((x) => x.k)).filter((k) => !MERGED[k]));
     KEYS.forEach((k) => {
       try { local[k] = val(localStorage.getItem(prefix + k)); } catch (e) { local[k] = undefined; }
       const c = cloud[k];
@@ -1542,7 +1569,8 @@
     KEYS.forEach((k) => {
       const x = byKey.get(k);
       if (!x) return;
-      const fn = Object.prototype.hasOwnProperty.call(SYNC_FN, k) ? SYNC_FN[k] : null;
+      const fam = SYNC_FAMILY.filter((f) => !MERGED[k] && f[0].test(k))[0];
+      const fn = Object.prototype.hasOwnProperty.call(SYNC_FN, k) ? SYNC_FN[k] : fam ? fam[1] : null;
       if (!fn) { backup.push([k, x.raw]); return; }
       const c = cloud[k], cloudT = c ? Date.parse(c.updated_at) : NaN;
       const pendNewer = !(cloudT >= x.t);
@@ -1552,7 +1580,7 @@
       const localNewer = led[k] !== undefined && led[k] >= x.t;
       let m = null;
       if (fn === 'tombs') m = T === null ? null : run(() => S.tombs(base, T, now));
-      else if (fn === 'mock' || fn === 'mockWrong') { const a = run(() => S[fn](cv[k], x.pv)); m = ok(a) ? run(() => S[fn](base, a.v)) : null; }
+      else if (SYNC_TWO[fn]) { const a = run(() => S[fn](cv[k], x.pv)); m = ok(a) ? run(() => S[fn](base, a.v)) : null; }
       else {
         const a = run(() => (pendNewer ? S.banks(cv[k], x.pv, { now, tombs: T, localClean: true }) : S.banks(x.pv, cv[k], { now, tombs: T, localClean: cv[k] !== null })));
         m = ok(a) ? run(() => S.banks(base, a.v, { now, tombs: T, localClean: !localNewer })) : null;
@@ -1649,7 +1677,7 @@
     const pend = () => {
       const led = readLedger(user.id), marks = readLocalOnly(user.id);
       const at = {};
-      Object.keys(marks).forEach(k => { if (MERGED[k]) at[k] = marks[k]; });
+      Object.keys(marks).forEach(k => { if (spec(k)) at[k] = marks[k]; });
       Object.keys(led).forEach(k => { at[k] = led[k]; });
       return at;
     };

@@ -372,17 +372,18 @@
     return 'start.html?step=' + (isPlain(st) && RESUME_STEPS.indexOf(st.step) > -1 ? st.step : 'target');
   }
   /* 首頁的卡(每日練習卡後面,桌機在右欄)。state 是 homeState 的結果;info:{ signedIn, onboard, guest, levels }。不畫就回 null。
-     訪客的狀態 A 不畫卡:首屏的「先測程度」就連到 start.html。卡上的按鈕都是描邊鈕或文字按鈕,實色主按鈕留給每日練習 */
+     訪客的狀態 A 不畫卡:首屏的「先測程度」就連到 start.html。卡上的按鈕都是描邊鈕或文字按鈕,實色主按鈕留給每日練習;
+     按鈕字不用「開始」(每日練習卡已經有一顆「開始」) */
   function homeCard(state, info) {
     const i = isPlain(info) ? info : {};
     const card = (title, sub, primary, more) => Object.assign({ state, title, sub, primary, secondary: null, dismiss: false }, more || {});
     if (state === 'A') {
       if (!i.signedIn) return null;
-      return card('找出程度，從適合的練習開始', '填多益成績，或做 28 題檢測（約 20 分鐘）', { text: '開始', href: 'start.html?step=target' },
+      return card('找出程度，從適合的練習開始', '填多益成績，或做 28 題檢測（約 20 分鐘）', { text: '設定程度', href: 'start.html?step=target' },
         { secondary: { text: '我有班級代碼', href: 'start.html?step=join' } });
     }
-    if (state === 'B') return card('繼續設定', '', { text: '繼續', href: continueHref(i.signedIn ? i.onboard : i.guest) });
-    if (state === 'B_result') return card('繼續設定', '', { text: '看起始程度', href: 'start.html?step=result' });
+    if (state === 'B') return card('繼續設定起始程度', '', { text: '繼續', href: continueHref(i.signedIn ? i.onboard : i.guest) });
+    if (state === 'B_result') return card('繼續設定起始程度', '', { text: '看起始程度', href: 'start.html?step=result' });
     if (state === 'D0') {
       const link = practiceLink(i.levels);
       return card('你的起始程度', levelsLabel(i.levels), link ? { text: '開始練習', href: link } : { text: '看起始程度', href: 'start.html?step=result' });
@@ -407,7 +408,8 @@
       tested ? { key: 'test', label: '重新檢測', value: dayLabel(diag.finishedAt), href: 'start.html?step=test&from=me' }
         : { key: 'test', label: '做檢測', value: '', href: 'start.html?step=test&from=me' },
     ];
-    if (tested) rows.push({ key: 'legacy', label: '舊版程度檢測', value: dayLabel(diag.finishedAt), href: 'diagnostic.html' });
+    /* 上次那份報告(檢測頁);跟「重新檢測」是同一個檢測,不叫「舊版」 */
+    if (tested) rows.push({ key: 'legacy', label: '檢測報告', value: dayLabel(diag.finishedAt), href: 'diagnostic.html' });
     return rows;
   }
 

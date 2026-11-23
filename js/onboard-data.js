@@ -227,8 +227,9 @@
       clearGuest();
       return { status: 'none' };
     }
-    if (plan.kind === 'confirm') return { status: 'confirm', answers: { targetScore: g.targetScore, examMonth: g.examMonth, pendingAction: g.pendingAction } };
-    if (plan.kind === 'x1') return { status: 'x1', levels: GET.levels(), trusted: flags.trusted };
+    const answers = { targetScore: g.targetScore, examMonth: g.examMonth, pendingAction: g.pendingAction };
+    if (plan.kind === 'confirm') return { status: 'confirm', answers };
+    if (plan.kind === 'x1') return { status: 'x1', levels: GET.levels(), trusted: flags.trusted, answers };
     return finish(plan);
   }
   /* 接回的第一步:有暫存碼就加入,成功才刪訪客暫存、到 S4;失敗留在 C1 顯示原因(碼帶回去,可以改) */

@@ -1,6 +1,7 @@
 /* start.html 的畫面行為(js/onboard.js):用假 DOM、假 history 把五個檔(common、onboard-core、onboard-data、onboard-ui、onboard)
    真的載進沙盒,點按鈕、按方向鍵、送出表單,看換到哪一步、畫了什麼、存了什麼。不開瀏覽器、不連網。
-   共用元件(js/ui.js)換成假的:UI.confirm 畫成 .modal-mask(標題、取消、確定),UI.result、UI.sheet 照參數畫最少的節點,參數另外記下來比對。
+   共用元件(js/ui.js)換成假的:UI.confirm 畫成 .modal-mask(標題、取消、確定),UI.result、UI.sheet 照參數畫最少的節點,參數另外記下來比對
+   (起始焦點這類真的 js/ui.js 行為在 tools/test_ui.js)。
    用法:node tools/test_onboard_screens.js */
 'use strict';
 const fs = require('fs');
@@ -62,6 +63,8 @@ function makeDom(win) {
       else this._v = v;
     }
     append(...ns) { ns.forEach((n) => { if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.push(n); if (n.tagName === 'SCRIPT' && this.tagName === 'HEAD') win.__loadScript(n); }); }
+    prepend(...ns) { ns.reverse().forEach((n) => { if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.unshift(n); }); }
+    scrollIntoView() {}
     _rm(c) { const i = this.children.indexOf(c); if (i > -1) this.children.splice(i, 1); c.parentNode = null; }
     remove() { if (this.parentNode) this.parentNode._rm(this); }
     setAttribute(k, v) { this.attrs[k] = String(v); }
@@ -101,7 +104,9 @@ function makeDom(win) {
   }
   const html = new N('html');
   const head = new N('head'); const body = new N('body'); html.append(head, body);
-  const root = new N('main'); root.attrs.id = 'ob-root'; body.append(root);
+  /* 同 start.html:main 裡面一個 #ob-root(共用元件沒載到的那一塊放在 main 最前面,不在 #ob-root 裡) */
+  const main = new N('main'); body.append(main);
+  const root = new N('div'); root.attrs.id = 'ob-root'; main.append(root);
   Object.assign(doc, {
     documentElement: html, head, body, activeElement: null, title: '',
     createElement: (t) => new N(t),
@@ -127,7 +132,9 @@ function fakeUI(e, doc) {
       const mask = node('div', 'modal-mask ui-mask');
       const done = (v) => { mask.remove(); resolve(v); };
       mask.esc = () => done(false);
-      mask.append(node('h2', 'ui-dialog-h', o.title), node('p', 'ui-dialog-body', o.body || ''),
+      const body = node('p', 'ui-dialog-body', o.body && o.body.nodeType ? null : o.body || '');
+      if (o.body && o.body.nodeType) body.append(o.body);   // 內文可以是節點(js/ui.js 照樣接上)
+      mask.append(node('h2', 'ui-dialog-h', o.title), body,
         button('btn-text ui-dialog-cancel', o.cancel || '取消', () => done(false)),
         button('btn primary ui-dialog-ok' + (o.danger ? ' is-danger' : ''), o.ok || '確定', () => done(true)));
       doc.body.append(mask);
@@ -158,7 +165,8 @@ function fakeUI(e, doc) {
 
 /* ---------- 沙盒 ---------- */
 /* opt:url(開頁網址)、signed(已登入)、init(localStorage)、session(sessionStorage)、folderReady、teacherQuery('fail')、
-   join(假 CLASSES.api.join 的結果)、diagFail(data/diagnostic.js 載不到)、paid(window.PAID_UI) */
+   join(假 CLASSES.api.join 的結果)、diagFail(data/diagnostic.js 載不到)、paid(window.PAID_UI)、noUi(共用元件沒載到)、
+   waitCloud(已登入、雲端元件一直沒載完) */
 async function open(opt) {
   opt = opt || {};
   const ls = opt.ls || new Map(Object.entries(opt.init || {}));
@@ -204,7 +212,8 @@ async function open(opt) {
     vm.runInContext(read('data/diagnostic.js'), ctx);
     s.onload();
   });
-  ctx.CLOUD = { enabled: true, user, isTeacher: false, reloading: false, authReturning: false, ready: Promise.resolve(user),
+  if (opt.waitCloud) ctx.__PROFILE_ID = CPID;   // 已登入、雲端元件還沒載完(CLOUD.ready 一直沒好)
+  ctx.CLOUD = { enabled: true, user, isTeacher: false, reloading: false, authReturning: false, ready: opt.waitCloud ? new Promise(() => {}) : Promise.resolve(user),
     push: (k) => e.pushed.push(k), folderReady: () => opt.folderReady !== false,
     client: { from: () => ({ select: () => ({ eq: () => Promise.resolve(teacherRows) }) }) } };
   ctx.PROFILE = {
@@ -228,7 +237,8 @@ async function open(opt) {
     api: { normalize, check: (raw) => formatError(normalize(raw)),
       join: (c) => { e.joins.push(c); return Promise.resolve(opt.join || { ok: true, name: '週三班' }); } },
   };
-  ctx.UI = fakeUI(e, dom.doc);
+  const ui = fakeUI(e, dom.doc);
+  ctx.UI = opt.noUi ? undefined : ui;   // noUi:js/ui.js 沒載到(請求被擋)
   vm.createContext(ctx);
   ['js/common.js', 'js/onboard-core.js', 'js/onboard-data.js', 'js/onboard-ui.js', 'js/onboard.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   (dom.doc.on.DOMContentLoaded || []).forEach((f) => f({}));
@@ -336,22 +346,40 @@ T['P5 接回 test、entry、score:寫進帳號、刪訪客暫存、到 S4 或 S8
   assert.equal(s.find('開始練習').attrs.href, 'practice.html?part=5');
 };
 
-T['P6 接回 X1:帳號已有設定出確認視窗(UI.confirm);「保留帳號的設定」是取消那顆,不改任何鍵、回首頁'] = async () => {
+/* X1 內文的兩行 */
+const x1Lines = (e) => e.mask().querySelector('.ui-dialog-body').querySelectorAll('.ob-line').map((n) => n.textContent);
+T['P6 接回 X1:帳號已有設定出確認視窗(UI.confirm),兩行列出帳號的設定與剛才的答案;起始焦點在「保留設定」(取消那顆、不是紅色),按了不改任何鍵、回首頁'] = async () => {
   const init = { [G_KEY]: pendingGuest('entry'), [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: LV };
   const e = await open({ url: 'start.html?step=resume', signed: true, init: Object.assign({}, init), session: { ob_auth_nonce: NONCE } });
   assert.equal(e.dialogTitle(), '這個帳號已有學習設定');
-  eq([e.confirms[0].body, e.confirms[0].ok, e.confirms[0].cancel, e.confirms[0].danger], ['聽力 進階／閱讀 門檻', '重新設定', '保留帳號的設定', undefined]);
-  await e.press('保留帳號的設定');
+  const c = e.confirms[0];
+  eq([c.ok, c.cancel, c.danger, c.focusCancel], ['改用剛才的答案', '保留設定', undefined, true]);
+  eq(x1Lines(e), ['帳號的設定：聽力 進階／閱讀 門檻', '剛才的答案：目標 600 分／從入門開始']);
+  await e.press('保留設定');
   eq([e.replaced, e.ls.get(PRE + 'levels'), e.ls.get(PRE + 'onboard'), e.guest()], [['index.html'], LV, doneOnboard(), null]);
+  /* 剛才的答案照訪客暫存:目標還不確定、選幫我測 */
+  const t = await open({ url: 'start.html?step=resume', signed: true, session: { ob_auth_nonce: NONCE },
+    init: { [G_KEY]: pendingGuest('test', { targetScore: null }), [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: LV } });
+  eq(x1Lines(t)[1], '剛才的答案：目標 還不確定／幫我測');
 };
-T['P6b X1:Esc、點遮罩等於「保留帳號的設定」;「重新設定」照寫,舊值存進 previous'] = async () => {
+T['P6b X1:Esc、點遮罩等於「保留設定」;「改用剛才的答案」照寫,舊值存進 previous'] = async () => {
   const init = { [G_KEY]: pendingGuest('entry'), [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: LV };
   const k = await open({ url: 'start.html?step=resume', signed: true, init: Object.assign({}, init), session: { ob_auth_nonce: NONCE } });
   k.mask().esc(); await settle();
   eq([k.replaced, k.ls.get(PRE + 'levels'), k.guest()], [['index.html'], LV, null]);
   const e = await open({ url: 'start.html?step=resume', signed: true, init, session: { ob_auth_nonce: NONCE } });
-  await e.press('重新設定');
+  await e.press('改用剛才的答案');
   eq([e.step(), e.acct('levels').reading, e.acct('onboard').status, e.acct('onboard').previous.onboard.status], ['result', 'entry', 'done', 'done']);
+};
+T['P6c 共用元件沒載到:接回到 X1、帶入確認、S8 都不丟錯,出「共用元件沒載到」與重新整理;訪客暫存與帳號都不動'] = async () => {
+  const init = () => ({ [G_KEY]: pendingGuest('entry'), [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: LV });
+  const x = await open({ url: 'start.html?step=resume', signed: true, init: init(), session: { ob_auth_nonce: NONCE }, noUi: true });
+  eq([!!x.ctx.document.querySelector('.ui-missing'), !!x.find('重新整理'), x.root.textContent, x.ls.get(G_KEY), x.ls.get(PRE + 'levels'), x.replaced],
+    [true, true, '', init()[G_KEY], LV, []]);
+  const imp = await open({ url: 'start.html?step=resume', signed: true, init: { [G_KEY]: pendingGuest('score') }, noUi: true });
+  eq([!!imp.find('重新整理'), imp.root.textContent, imp.guest().pendingAction, imp.acct('onboard')], [true, '', 'score', null]);
+  const r = await open({ url: 'start.html?step=result', signed: true, init: { [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: LV }, noUi: true });
+  eq([!!r.find('重新整理'), r.results.length, r.acct('levels')], [true, 0, JSON.parse(LV)]);
 };
 T['P7 共用電腦:隨機碼不在這個分頁 → 先問要不要帶入;「不用」刪訪客暫存、不寫帳號、回首頁'] = async () => {
   const e = await open({ url: 'start.html?step=resume', signed: true, init: { [G_KEY]: pendingGuest('score') } });
@@ -376,6 +404,12 @@ T['P8 接回失敗:資料夾還不能用出「重新整理」;查不到是不是
   eq([f.h1(), f.acct('onboard'), f.guest().pendingAction], ['載入失敗', null, 'test']);
   await f.press('重試');
   eq([f.step(), f.h1()], ['resume', '載入失敗']);
+};
+
+T['P8b 等雲端、算級別時:一行小字「載入中…」,不畫頁面大標'] = async () => {
+  const w = await open({ url: 'start.html?step=resume', signed: true, waitCloud: true });
+  const p = w.root.querySelector('p');
+  eq([w.h1(), w.root.textContent, p && p.className, p && p.getAttribute('role')], [null, '載入中…', 'result-note ob-loading', 'status']);
 };
 
 T['P9 接回班級:有暫存碼且是這個分頁發起的 → 自動加入、到 S4 並顯示已加入;加入失敗留在 C1 顯示原因'] = async () => {
@@ -520,11 +554,26 @@ T['P19 每個畫面只有一顆實色主按鈕,其他是文字按鈕;S0 有鵜�
       const cv = e.root.querySelector('canvas');
       eq([cv && cv.getAttribute('data-mascot'), cv && cv.getAttribute('aria-hidden'), e.mounts > 0], ['read', 'true', true]);
       eq(buttonsOf(e), ['btn:開始', 'btn-text:我有班級代碼', 'btn-text:登入']);
+      /* 標題短(手機上跟鵜鶘並排也是一行);副標的「（約 20 分鐘）」不斷開 */
+      eq([e.h1(), e.root.querySelector('.ob-nowrap').textContent], ['找出你的起始程度', '（約 20 分鐘）']);
     }
     if (step === 'exam') eq(buttonsOf(e), ['btn:下一步', 'btn-text:還沒報名']);
     if (step === 'score') eq(buttonsOf(e), ['btn-text:只記得總分', 'btn:送出', 'btn-text:改成幫我測']);
     if (step === 'signup') eq(buttonsOf(e), ['btn-text:返回']);
-    if (step === 'test') eq(buttonsOf(e), ['btn:開始檢測', 'btn-text:先跳過，從入門開始']);
+    if (step === 'test') {
+      eq(buttonsOf(e), ['btn:開始檢測', 'btn-text:先跳過，從入門開始']);
+      /* 同檢測頁的開始頁:標題左邊圖示、卡片裡兩個小標籤、主按鈕在卡片裡;沒有單項的列點 */
+      const art = e.root.querySelector('.page-head canvas');
+      const card = e.root.querySelector('.diag-intro');
+      eq([art && art.getAttribute('data-doodle'), card && card.querySelectorAll('.mock-tag').map((n) => n.textContent),
+        card && !!card.querySelector('.btn.primary'), card && card.querySelector('.ob-intro-note').textContent, !!e.root.querySelector('ul')],
+      ['diagnostic', ['閱讀 28 題', '約 20 分鐘'], true, '聽力先依閱讀結果推估', false]);
+    }
+    /* C1 訪客:標題、代碼欄、小字、註冊卡都在同一個置中的欄(.auth-page)裡 */
+    if (step === 'join' && !o.signed) {
+      const col = e.root.querySelector('.auth-page');
+      eq([e.root.children.length, !!(col && col.querySelector('h1') && col.contains(e.ctx.document.getElementById('ob-join')) && col.querySelector('form.auth-card'))], [1, true]);
+    }
   }
   eq(out, STEP_CASES.map(([step, o]) => [step + (o.signed ? '(登入)' : ''), step === 'signup' || (step === 'join' && !o.signed) || step === 'level' || step === 'target' ? 0 : 1]));
 };

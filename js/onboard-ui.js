@@ -121,10 +121,11 @@
   }
 
   /* ---------- 檢測頁(js/diagnostic.js)結算卡的主按鈕 ----------
-     設定中、按「開始檢測」之後交的卷:換成「看起始程度」;其他時候回 null(檢測頁照原本的「去刷題」) */
+     設定中、按「開始檢測」之後交的卷:換成「看起始程度」;其他時候回 null(檢測頁照原本的「去刷題」)。
+     核心檔或資料檔沒載到也回 null,不讓檢測報告畫不出來 */
   function diagPrimary() {
     const D = window.ONBOARD_DATA;
-    if (!D || D.isGuest()) return null;
+    if (!C || !D || D.isGuest()) return null;
     return C.diagRowState(D.account().onboard, D.diag()) === 'result' ? { label: '看起始程度', href: 'start.html?step=result' } : null;
   }
 

@@ -104,7 +104,7 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     '-/* 第一屏:結算卡。姓名與日期放在分數上面的小字;三個難度的正確率跟在卡片下面一行 */',
     '+/* 第一屏:結算卡。姓名與日期放在分數上面的小字;三個難度的正確率跟在卡片下面一行。',
     '+新用戶設定起始程度途中交的卷,主按鈕換成「看起始程度」(js/onboard-ui.js,只有這種時候不是 null) */',
-    '+const next = window.ONBOARD_UI ? ONBOARD_UI.diagPrimary() : null;',
+    "+let next = null; try { next = window.ONBOARD_UI ? ONBOARD_UI.diagPrimary() : null; } catch (e) { /* 照原本的「去刷題」 */ }",
     "-primary: { label: '去刷題', href: 'practice.html' },",
     "+primary: next || { label: '去刷題', href: 'practice.html' },",
   ]);
@@ -147,13 +147,14 @@ T['S8 公開的新檔不寫內部用語與 repo 外的路徑'] = () => {
 T['B1 homeCard:訪客 A 不畫(首屏的「先測程度」連 start.html);已登入 A、B、B_result、D0、E 的標題與按鈕;其他狀態不畫'] = () => {
   assert.equal(C.homeCard('A', { signedIn: false }), null);
   const a = plain(C.homeCard('A', { signedIn: true }));
+  /* 按鈕字跟狀態 E 一樣是「設定程度」:每日練習卡已經有一顆「開始」 */
   eq([a.title, a.sub, a.primary.text, a.primary.href, a.secondary.text, a.secondary.href, a.dismiss],
-    ['找出程度，從適合的練習開始', '填多益成績，或做 28 題檢測（約 20 分鐘）', '開始', 'start.html?step=target', '我有班級代碼', 'start.html?step=join', false]);
+    ['找出程度，從適合的練習開始', '填多益成績，或做 28 題檢測（約 20 分鐘）', '設定程度', 'start.html?step=target', '我有班級代碼', 'start.html?step=join', false]);
   const bg = plain(C.homeCard('B', { signedIn: false, guest: guestOf({ step: 'exam' }) }));
-  eq([bg.title, bg.sub, bg.primary.text, bg.primary.href, bg.secondary], ['繼續設定', '', '繼續', 'start.html?step=exam', null]);
+  eq([bg.title, bg.sub, bg.primary.text, bg.primary.href, bg.secondary], ['繼續設定起始程度', '', '繼續', 'start.html?step=exam', null]);
   assert.equal(C.homeCard('B', { signedIn: true, onboard: { status: 'in_progress', step: 'test' } }).primary.href, 'start.html?step=test');
   const br = plain(C.homeCard('B_result', { signedIn: true, onboard: { status: 'in_progress', step: 'test' } }));
-  eq([br.title, br.primary.text, br.primary.href], ['繼續設定', '看起始程度', 'start.html?step=result']);
+  eq([br.title, br.primary.text, br.primary.href], ['繼續設定起始程度', '看起始程度', 'start.html?step=result']);
   const d0 = plain(C.homeCard('D0', { signedIn: true, levels: { listening: 'threshold', reading: 'entry' } }));
   eq([d0.title, d0.sub, d0.primary.text, d0.primary.href], ['你的起始程度', '聽力 門檻／閱讀 入門', '開始練習', 'grammar.html']);
   eq(plain(C.homeCard('D0', { signedIn: true, levels: null })).primary, { text: '看起始程度', href: 'start.html?step=result' });
@@ -166,14 +167,15 @@ T['B1b continueHref:接著中斷的那一步;沒有或不認得回 S1'] = () => 
     ['target', 'exam', 'level', 'score', 'test', 'result'].map((s) => 'start.html?step=' + s));
   [null, {}, { step: null }, { step: 'signup' }, { step: 'resume' }, { step: 'x' }].forEach((v) => assert.equal(C.continueHref(v), 'start.html?step=target', J(v)));
 };
-T['B2 settingsRows:有程度五列(舊版檢測有 diag.done 才有);沒程度只有「設定程度」'] = () => {
+T['B2 settingsRows:有程度五列(「檢測報告」有 diag.done 才有,不叫「舊版」);沒程度只有「設定程度」'] = () => {
   const lv = { listening: 'threshold', reading: 'entry' };
   const ob = { status: 'done', targetScore: 600, examMonth: '2027-03' };
   const rows = plain(C.settingsRows({ onboard: ob, levels: lv }, { done: true, finishedAt: '2026-11-18T04:00:00.000Z' }));
   eq(rows.map((r) => [r.label, r.value, r.href || r.action]), [
     ['程度', '聽力 門檻／閱讀 入門', 'levels'], ['目標分數', '600 分', 'start.html?step=target&from=me'],
     ['考試月份', '2027 年 3 月', 'start.html?step=exam&from=me'], ['重新檢測', '11 月 18 日', 'start.html?step=test&from=me'],
-    ['舊版程度檢測', '11 月 18 日', 'diagnostic.html']]);
+    ['檢測報告', '11 月 18 日', 'diagnostic.html']]);
+  assert.ok(!/舊版/.test(read('js/onboard-core.js').split('\n').filter((l) => /label: '/.test(l)).join('\n')), '列名不寫「舊版」');
   const r2 = plain(C.settingsRows({ onboard: { status: 'done', targetScore: null, examMonth: null }, levels: lv }, { done: false }));
   eq(r2.map((r) => r.value), ['聽力 門檻／閱讀 入門', '還不確定', '還沒報名', '']);
   assert.equal(r2[3].label, '做檢測', '沒做過檢測叫「做檢測」,跟 S8 一致');
@@ -270,14 +272,14 @@ function homeGrid(env, withPet) {
   return { grid, daily, box };
 }
 
-T['B3 首頁卡:訪客沒有暫存不畫(首屏有「先測程度」);訪客設定到一半畫「繼續設定」;雲端沒開不畫;老師等 CLOUD.ready 後收掉'] = async () => {
+T['B3 首頁卡:訪客沒有暫存不畫(首屏有「先測程度」);訪客設定到一半畫「繼續設定起始程度」;雲端沒開不畫;老師等 CLOUD.ready 後收掉'] = async () => {
   const g = uiEnv();
   const h0 = homeGrid(g); g.UI.homeCard(h0.box); await settle();
   eq([h0.box.hidden, h0.box.children.length], [true, 0]);
 
   const b = uiEnv({ init: { tr_onboard_guest: J(guestOf({ step: 'exam' })) } });
   const hb = homeGrid(b); b.UI.homeCard(hb.box);
-  eq([hb.box.hidden, texts(hb.box)], [false, ['繼續設定', '繼續']]);
+  eq([hb.box.hidden, texts(hb.box)], [false, ['繼續設定起始程度', '繼續']]);
   assert.equal(hb.box.all().find((x) => x.tagName === 'A').getAttribute('href'), 'start.html?step=exam');
 
   const off = uiEnv({ init: { tr_onboard_guest: J(guestOf({ step: 'exam' })) } }); off.ctx.CLOUD.enabled = false;
@@ -297,7 +299,7 @@ T['B3b 首頁卡:已登入沒有 onboard 等 CLOUD.ready 前不畫;之後新帳�
   const hn = homeGrid(n); n.UI.homeCard(hn.box);
   eq([hn.box.hidden, hn.box.children.length], [true, 0], '等 CLOUD.ready:不畫');
   await settle();
-  eq([hn.box.hidden, texts(hn.box)], [false, ['找出程度，從適合的練習開始', '開始', '我有班級代碼']]);
+  eq([hn.box.hidden, texts(hn.box)], [false, ['找出程度，從適合的練習開始', '設定程度', '我有班級代碼']]);
   /* 帳號有不認得的 onboard:ready 之前先畫的卡沒有「不用了」(還沒確定登入) */
   const u = uiEnv(signedIn());
   u.ls.set(PRE + 'onboard', J({ v: 1, status: 'weird' }));
@@ -370,7 +372,7 @@ T['B4 「我的」頁學習設定:老師、訪客、雲端沒開不顯示;有程
   eq([lv.reading, lv.source.reading, lv.source.listening, lv.history[lv.history.length - 1].reason, sh.open], ['high', 'manual', 'score', 'manual', false]);
 };
 /* 檢測頁:真的 js/diagnostic.js 載進沙盒,看結算卡的主按鈕 */
-function diagPage(ob, diag, opt) {
+function diagPage(ob, diag, opt, tweak) {
   const e = uiEnv(Object.assign(signedIn(), opt || {}));
   if (ob) e.ls.set(PRE + 'onboard', J(ob));
   if (diag) e.ls.set(PRE + 'diag', J(diag));
@@ -379,6 +381,7 @@ function diagPage(ob, diag, opt) {
   Object.assign(ctx, { TOEIC: {}, scrollTo() {}, print() {} });
   ctx.UI = Object.assign(ctx.UI, { focus: { enter: () => ({ leave() {}, progress() {}, setTotal() {}, foot() {}, action() {}, focusMain() {} }) } });
   vm.runInContext(read('data/diagnostic.js'), ctx);
+  if (tweak) tweak(ctx);
   const before = e.ls.get(PRE + 'diag');
   vm.runInContext(read('js/diagnostic.js'), ctx);
   return { e, before };
@@ -398,6 +401,13 @@ T['B5 檢測頁:設定中、按「開始檢測」之後交的卷,結算卡主按
   eq(plain(none.e.results[0].primary), { label: '去刷題', href: 'practice.html' });
   const guest = uiEnv();
   assert.equal(guest.UI.diagPrimary(), null, '訪客');
+  /* 換主按鈕的程式丟錯、核心檔沒載到:報告照畫,主按鈕照原本 */
+  const boom = diagPage(ip, done, null, (ctx) => { ctx.ONBOARD_UI = { diagPrimary() { throw new Error('x'); } }; });
+  eq([boom.e.results.length, plain(boom.e.results[0].primary)], [1, { label: '去刷題', href: 'practice.html' }]);
+  const noCore = uiEnv(signedIn());
+  noCore.ctx.ONBOARD_CORE = undefined;
+  vm.runInContext(read('js/onboard-ui.js'), noCore.ctx);
+  assert.equal(noCore.ctx.ONBOARD_UI.diagPrimary(), null, '核心檔沒載到');
 };
 
 /* ---------- 各頁的接點(原始檔) ---------- */
@@ -444,14 +454,16 @@ T['B8 教師後台:「起始程度」欄在檢測結果後、內容用 levelsLab
   const span = /colspan: '(\d+)'/.exec(tbl);
   eq([nTh, nTd, span && Number(span[1])], [9, 9, 9]);
 };
-T['B9 隱私權政策:學習設定一節(蒐集目的不提課表、學習包);Cookie 段補沒登入時的暫存與 7 天;未成年節與生效日期不動'] = () => {
+T['B9 隱私權政策:學習設定一節(蒐集目的整句照指定字樣,不提課表、學習包、題目難易度);Cookie 段補沒登入時的暫存與 7 天;未成年節與生效日期不動'] = () => {
   const p = read('privacy.html');
   const cookie = p.slice(p.indexOf('<h2>Cookie 與裝置上的儲存</h2>'), p.indexOf('<h2>資料安全</h2>'));
   assert.ok(/沒登入時填的目標分數、考試月份與成績只存在這台裝置，7 天後不再使用並自動刪除；登入後改存進帳號。/.test(cookie));
   const sec = p.slice(p.indexOf('<h2 id="learning">學習設定與程度檢測</h2>'), p.indexOf('<h2>你的權利</h2>'));
   assert.ok(sec.length > 40, '有學習設定一節,在「你的權利」之前');
-  assert.ok(sec.indexOf('用來判斷起始程度、推薦適合的練習') > -1);
-  assert.ok(!/課表|學習包/.test(p), '不寫還沒做的功能');
+  /* 蒐集目的整句比對:只寫判斷起始程度、推薦練習(跟 S1 頁尾同一個說法),不寫網站還沒有的用途 */
+  assert.ok(sec.indexOf('<p>開始使用時，本站會問你的多益目標分數、預計考試月份與英文程度，用來判斷起始程度、推薦適合的練習，不用在其他用途。蒐集者與聯絡方式同本頁開頭。</p>') > -1);
+  assert.ok(read('js/onboard.js').indexOf("'回答只用來判斷起始程度、推薦適合的練習。'") > -1, 'S1 頁尾同一個說法');
+  assert.ok(!/課表|學習包|難易度/.test(p), '不寫還沒做的功能');
   assert.ok(/<h2>未成年人<\/h2>\r?\n    <p>未滿 18 歲的使用者，請在家長或監護人同意後再註冊並提供個人資料。<\/p>/.test(p));
   assert.ok(p.indexOf('2026 年 10 月 17 日起適用') > -1, '生效日期這次不換');
 };

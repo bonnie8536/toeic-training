@@ -236,7 +236,7 @@
 
     /* 第一屏:結算卡。姓名與日期放在分數上面的小字;三個難度的正確率跟在卡片下面一行。
        新用戶設定起始程度途中交的卷,主按鈕換成「看起始程度」(js/onboard-ui.js,只有這種時候不是 null) */
-    const next = window.ONBOARD_UI ? ONBOARD_UI.diagPrimary() : null;
+    let next = null; try { next = window.ONBOARD_UI ? ONBOARD_UI.diagPrimary() : null; } catch (e) { /* 照原本的「去刷題」 */ }
     const card = UI.result({
       kicker: (p ? p.name + ' · ' : '') + (st.finishedAt || '').slice(0, 10),
       score, total,

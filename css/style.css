@@ -3547,7 +3547,8 @@ main:focus { outline: none; }
 .ui-dialog-input { display: block; width: 100%; min-height: 44px; font-size: var(--fs-md); border-radius: var(--r-sm); }
 .ui-dialog-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-tint); }
 .ui-dialog-hint { margin: 6px 0 0; font-size: var(--fs-xs); color: var(--ink-soft); }
-.ui-dialog-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 24px; }
+.ui-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 24px; }
+.ui-dialog-actions .btn, .ui-dialog-actions .btn-text { white-space: nowrap; }   /* 同 .modal-row:按鈕字不折行,窄螢幕排不下就整顆換到下一行 */
 .ui-dialog-actions .btn.primary { min-height: 44px; min-width: 88px; padding: 0 20px; font-size: var(--fs-btn); border-radius: var(--r-md); }
 .ui-dialog-actions .btn-text { color: var(--ink-soft); }
 .ui-dialog-actions .btn-text:hover { color: var(--ink); background: var(--bg-soft); }
@@ -4051,7 +4052,14 @@ html.app-shell .ob-back { visibility: hidden; }
 .ob-switch .btn-text { margin-left: -12px; font-size: var(--fs-sm); }
 .ob-foot { margin-top: 28px; }
 .ob-foot a { margin-left: 6px; }
-.ob-rules { margin: 14px 0 0; padding-left: 20px; color: var(--ink-soft); font-size: var(--fs-sm); }
+.ob-nowrap { white-space: nowrap; }
+.ob-line { display: block; }   /* 視窗內文分行(帳號已有學習設定:帳號的設定、剛才的答案各一行) */
+.ob-loading { margin-top: 30px; }   /* 等雲端、算級別:一行小字,同文法查表頁的「載入中…」 */
+/* S4:同檢測頁的開始頁(.diag-intro 卡片、兩個小標籤、卡片裡的實色主按鈕),下面接文字按鈕 */
+.ob-intro-note { margin: 12px 0 0; font-size: var(--fs-sm); color: var(--ink-soft); }
+.ob-intro .auth-msg:not(:empty) { margin-top: 12px; }
+.ob-intro-more { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 12px 0 0 -12px; }
+.ob-intro-more .btn-text .ob-date { margin-left: 2px; }
 /* 按鈕列:實色主按鈕一顆,後面是文字按鈕 */
 .ob-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 24px 0 40px; }
 .ob-actions .btn.primary {
@@ -4060,7 +4068,6 @@ html.app-shell .ob-back { visibility: hidden; }
 }
 .ob-actions .btn.primary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 .ob-date, .me-row-val { font-size: 13px; font-weight: 400; color: var(--ink-soft); }
-.ob-actions .btn-text .ob-date { margin-left: 2px; }
 .me-row-val { margin-left: auto; padding-left: 12px; overflow-wrap: anywhere; }
 /* S8:結算卡(UI.result)的標題是一句話不是分數,字級降到 --fs-2xl;兩科級別放在統計列 */
 .ob-result .result-score b { font-size: var(--fs-2xl); }
@@ -4093,6 +4100,7 @@ html.app-shell .ob-back { visibility: hidden; }
 }
 @media (max-width: 600px) {
   .ob-level-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ob-intro-more { flex-direction: column; align-self: stretch; margin-left: 0; }   /* 卡片裡的主按鈕在手機佔滿寬:文字按鈕置中排在下面 */
 }
 @media (max-width: 359px) {
   .ob-score { grid-template-columns: 1fr; }

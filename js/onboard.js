@@ -87,6 +87,8 @@
   function pageHead(title, sub) {
     return h('div', { class: 'page-head' }, h('h1', { id: 'ob-title' }, title), sub ? h('p', null, sub) : null);
   }
+  /* 等雲端、算級別時:一行小字(同文法查表頁的「載入中…」),不畫頁面大標 */
+  const loading = () => h('p', { class: 'result-note ob-loading', role: 'status' }, '載入中…');
   /* 原生 append(null) 會印出 null 這個字(S4 沒有提示、S8 沒有條件列時):先濾掉 */
   const put = (...nodes) => root.append(...nodes.filter(Boolean));
   const actions = (...nodes) => h('div', { class: 'ob-actions' }, nodes.filter(Boolean));
@@ -128,9 +130,10 @@
   }
 
   /* ---------- S0 ---------- */
+  /* 標題短到手機上跟鵜鶘並排也是一行(螢光筆只壓一行);「（約 20 分鐘）」不從中間斷開 */
   function screenStart() {
     put(h('div', { class: 'ob-start' },
-      pageHead('找出程度，從適合的練習開始', '填多益成績，或做 28 題檢測（約 20 分鐘）'),
+      pageHead('找出你的起始程度', ['填多益成績，或做 28 題檢測', h('span', { class: 'ob-nowrap' }, '（約 20 分鐘）')]),
       h('canvas', { class: 'ob-start-art', 'data-mascot': 'read', 'data-size': '160', 'aria-hidden': 'true' })),
     actions(btn('開始', () => go('target')), textBtn('我有班級代碼', () => go('join')),
       D.isGuest() ? textBtn('登入', () => PROFILE.showLogin('login')) : null));
@@ -290,7 +293,7 @@
 
   /* ---------- 接回 ---------- */
   function screenResume() {
-    put(pageHead(TITLES.resume));
+    put(loading());
     D.resume().then(afterResume, () => resumeFailed('failed'));
   }
   function afterResume(r) {
@@ -312,14 +315,27 @@
     if (r.status === 'blocked' || r.status === 'failed') { resumeFailed(r.status); return; }
     location.replace('index.html');   // none、expired、teacher:照首頁
   }
-  /* X1:帳號已經設定過程度。Esc、點遮罩、「保留帳號的設定」都是保留(UI.confirm 的取消)。
-     重新設定不刪資料(帳號原本的設定存進 onboard.previous),不用紅色的危險按鈕 */
+  /* X1:帳號已經設定過程度。Esc、點遮罩、「保留設定」都是保留(UI.confirm 的取消),視窗一開焦點也停在保留上。
+     「改用剛才的答案」不刪資料(帳號原本的設定存進 onboard.previous),不用紅色的危險按鈕。
+     內文兩行:帳號的設定、剛才的答案(兩顆按鈕各對一行)。按鈕字要短:手機上兩顆排一列。
+     共用元件沒載到時(uiReady)不問、不動訪客暫存,畫面換成重新整理 */
+  const PICKED = { score: '有多益成績', test: '幫我測', entry: '從入門開始' };
+  function uiOrReload() {
+    if (uiReady()) return true;
+    root.innerHTML = '';   // 拿掉「載入中…」,只留重新整理那一塊
+    return false;
+  }
   function askX1(r) {
-    UI.confirm({ title: '這個帳號已有學習設定', body: C.levelsLabel(r.levels), ok: '重新設定', cancel: '保留帳號的設定' })
+    if (!uiOrReload()) return;
+    const a = r.answers || {};
+    const body = h('span', null, h('span', { class: 'ob-line' }, '帳號的設定：' + C.levelsLabel(r.levels)),
+      h('span', { class: 'ob-line' }, '剛才的答案：目標 ' + C.targetLabel(a.targetScore) + (PICKED[a.pendingAction] ? '／' + PICKED[a.pendingAction] : '')));
+    UI.confirm({ title: '這個帳號已有學習設定', body, ok: '改用剛才的答案', cancel: '保留設定', focusCancel: true })
       .then((reset) => afterResume(D.applyX1(reset ? 'reset' : 'keep', r.trusted)));
   }
   /* 不是在這個分頁的登入卡登入的:列出要帶入的答案(成績不帶),本人選。Esc、點遮罩當作「不用」 */
   function askImport(a) {
+    if (!uiOrReload()) return;
     const body = '目標　' + C.targetLabel(a.targetScore) + '／考試　' + (C.ymLabel(a.examMonth) || '還沒報名');
     UI.confirm({ title: '要帶入這台裝置上填的答案嗎？', body, ok: '帶入', cancel: '不用' })
       .then((yes) => D.confirmImport(!!yes)).then(afterResume, () => resumeFailed('failed'));
@@ -357,6 +373,7 @@
     done: { title: '清除這份報告？', body: '刷題與閱讀進度不受影響', ok: '重新檢測', cancel: '取消', danger: true },
     stale: { title: '清除上次沒做完的作答？', body: '刷題與閱讀進度不受影響', ok: '重新開始', cancel: '取消', danger: true },
   };
+  /* 畫面同檢測頁的開始頁(js/diagnostic.js renderIntro):標題左邊的圖示、卡片裡兩個小標籤與實色主按鈕 */
   function screenTest() {
     const diag = D.diag();
     const msg = msgLine();
@@ -364,13 +381,18 @@
       const el = e.currentTarget;
       const done = !!(diag && diag.done);
       if (!done && !staleDiag(diag)) { startAndGo(msg, el); return; }
+      if (!uiReady()) return;   // 共用元件沒載到:不清掉上次的作答
       UI.confirm(done ? RETEST.done : RETEST.stale).then((yes) => { if (yes && wrote(D.removeDiag(), msg, el)) startAndGo(msg, el); });
     });
     const legacy = C.legacyUsable(diag, Date.now()) ? h('button', { class: 'btn-text', type: 'button', onclick: (e) => useLegacy(diag, msg, e.currentTarget) },
       '用上次的閱讀檢測', h('span', { class: 'ob-date' }, C.dayLabel(diag.finishedAt))) : null;
     put(flash ? h('p', { class: 'auth-msg ok', role: 'status' }, flash) : null,
-      pageHead(TITLES.test, '閱讀 28 題，約 20 分鐘'), h('ul', { class: 'ob-rules' }, h('li', null, '聽力先依閱讀結果推估')), msg,
-      actions(start, textBtn('先跳過，從入門開始', (e) => { if (wrote(D.chooseEntry(), msg, e.currentTarget)) go('result'); }), legacy));
+      h('div', { class: 'page-head' }, h('canvas', { class: 'hub-art', 'data-doodle': 'diagnostic', 'data-size': '40', 'aria-hidden': 'true' }),
+        h('h1', { id: 'ob-title' }, TITLES.test)),
+      h('div', { class: 'diag-intro ob-intro' },
+        h('p', { class: 'mock-tags' }, h('span', { class: 'mock-tag' }, '閱讀 28 題'), h('span', { class: 'mock-tag' }, '約 20 分鐘')),
+        h('p', { class: 'ob-intro-note' }, '聽力先依閱讀結果推估'), msg, start,
+        h('div', { class: 'ob-intro-more' }, textBtn('先跳過，從入門開始', (e) => { if (wrote(D.chooseEntry(), msg, e.currentTarget)) go('result'); }), legacy)));
     flash = '';
   }
   function useLegacy(diag, msg, el) {
@@ -394,7 +416,7 @@
   }
   /* 剛交的卷:先算級別存進帳號再畫;失敗的「重試」回這一頁重算,帳號資料夾還不能用時開「重新整理」卡 */
   function computeLegacy() {
-    put(pageHead(TITLES.resume));
+    put(loading());
     loadItems().then((items) => {
       if (current !== 'result') return;
       const lv = C.levelsFromLegacy(D.diag(), items);
@@ -414,6 +436,7 @@
     return old ? '成績超過 2 年' : null;
   }
   function drawResult(acc) {
+    if (!uiReady()) return;   // 結算卡靠共用元件:沒載到時說一聲、給重新整理
     const lv = acc.levels, ob = acc.onboard || {};
     const tl = C.testedLevels(lv);
     const tested = ob.levelSource === 'legacy' || (ob.levelSource === 'manual' && !!tl && tl.reason === 'legacy');
@@ -453,7 +476,6 @@
     const field = h('div', { class: 'auth-field ob-field' }, h('label', { for: 'ob-join' }, '邀請碼'), input, h('p', { class: 'auth-hint' }, '向老師拿 8 碼的邀請碼'), note);
     const bad = noteField(field, input, note, 'ob-join-note');
     const fine = h('p', { class: 'auth-fine' }, JOIN_FINE);
-    put(pageHead(TITLES.join), field);
     bad(joinError);
     joinError = '';
     if (D.isGuest()) {
@@ -468,9 +490,12 @@
       input.addEventListener('input', () => { bad(''); remember(false); });
       input.addEventListener('blur', () => { if (input.value) remember(true); });
       if (input.value) remember(false);
-      put(fine, h('div', { class: 'auth-page ob-join-auth' }, watchAuth(PROFILE.buildAuthCard({ mode: 'signup', backTo: 'start.html?step=resume', autofocus: false }))));
+      /* 訪客:代碼欄、小字、註冊卡放在同一個置中的欄裡(同 S9 登入卡的寬度),左緣對齊 */
+      put(h('div', { class: 'auth-page ob-join-guest' }, pageHead(TITLES.join), field, fine,
+        h('div', { class: 'ob-join-auth' }, watchAuth(PROFILE.buildAuthCard({ mode: 'signup', backTo: 'start.html?step=resume', autofocus: false })))));
       return;
     }
+    put(pageHead(TITLES.join), field);
     const submit = btn('加入', async (e) => {
       const el = e.currentTarget;
       el.disabled = true;
@@ -519,7 +544,7 @@
     /* 訪客不用等雲端元件載完(CDN)就能先畫;已登入、剛從 Google 回來的要等確認登入 */
     const pid = window.__PROFILE_ID;
     const maybeSigned = (typeof pid === 'string' && pid.charAt(0) === 'c') || !!CLOUD.authReturning;
-    if (maybeSigned) put(pageHead(TITLES.resume));
+    if (maybeSigned) put(loading());
     else first();
     await CLOUD.ready;
     if (CLOUD.reloading) return;

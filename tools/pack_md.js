@@ -1,7 +1,7 @@
-/* 課表文件(Markdown)的讀法,給 tools/md_to_pack.js 用(這裡只有純函式,不讀寫檔案)。
+/* Markdown 課表的讀法,給 tools/md_to_pack.js 用(這裡只有純函式,不讀寫檔案)。
    - 逐堂表認得兩種寫法:入門的「段 | 分鐘 | 類型 | 素材來源與選題條件 | 單位數 | 每單位秒數 | 秒數 | 計時」、
      門檻的「段 | 分 | 序 | 素材來源（模組） | 選題條件 | 難度配比 | 單位數 | 秒／單位 | 計時 | 秒數」;只讀聽力段、閱讀段的區塊
-   - 單字段、小檢核段(第 0.1 節的表 C′)由規則產生,不讀逐堂表
+   - 單字段、小檢核段(小檢核表:堂號 | 聽力考點 | 閱讀考點 | 作答秒數 | 補足 | 合計秒數)由規則產生,不讀逐堂表
    轉不出來的一律回 { issue },由呼叫的一方列成清單,不猜。 */
 'use strict';
 require('../js/lesson-rules.js');
@@ -16,7 +16,7 @@ const LEVEL_ZH = { entry: '入門', threshold: '門檻' };
 const SCORE = { entry: { listening: [5, 220], reading: [5, 170], total: [10, 395] }, threshold: { listening: [225, 320], reading: [175, 270], total: [400, 595] } };
 /* 英語耳的程度:入門只用初級句,門檻用初級、中級 */
 const EAR_LEVEL = { entry: ['初級'], threshold: ['初級', '中級'] };
-/* 沒有新字的週(入門第 12 週只回顧;門檻第 7 週期中、第 12 週不給新字),轉檔時再核對課表文件寫的句子 */
+/* 沒有新字的週(入門第 12 週只回顧;門檻第 7 週期中、第 12 週不給新字),轉檔時再核對課表寫的句子 */
 const NO_WORD_WEEKS = { entry: { weeks: [12], text: /第 12 週只回顧/ }, threshold: { weeks: [7, 12], text: /第 7 週（期中）不給新字/ } };
 const STATUS_RANK = ['available', 'available_legacy', 'needs_tags', 'partial', 'new_content', 'needs_items'];
 const REPLAY = { p1: 11, p2: 11, p3: 36, p4: 33 };
@@ -73,7 +73,7 @@ function lessonsOf(md) {
   return out;
 }
 
-/* 0.1 節(到下一個 ## 為止) */
+/* 課表開頭的對齊說明那一節(到下一個 ## 為止):小檢核表、聽力段加重播時間的堂號都寫在這裡 */
 function alignSection(md) {
   const m = /^## 0\.1 [^\n]*\n([\s\S]*?)(?=^## )/m.exec(md);
   return m ? m[1] : '';
@@ -309,7 +309,7 @@ function vocabBlocks(no, level) {
   return out;
 }
 
-/* ---------- 小檢核(表 C′) ---------- */
+/* ---------- 小檢核(小檢核表) ---------- */
 function cpKey(token) {
   if (/^P5\.vocab_\*$/.test(token)) return 'P5.cat:字彙辨析';
   return /^P[1-7]\.[a-z_:一-鿿]+$/.test(token) ? token : null;
@@ -371,7 +371,7 @@ function fillBlocks(cell, level, answerSec) {
 function learnedWords(n) {
   return { labelZh: '已學單字小考', module: 'article_vocab', unit: 'word', count: n, secondsPerUnit: 20, timing: 'timed', select: { where: { weekWords: ['this_week', 'last_week', 'three_weeks_ago'] }, levelMix: 'none' }, bankStatus: 'new_content' };
 }
-/* 表 C′ → { <堂號>: { listening, reading, answer, total, fill } };秒數取第一個數字(「440；有補位 540」取 440) */
+/* 小檢核表(堂號 | 聽力考點 | 閱讀考點 | 作答秒數 | 補足 | 合計秒數)→ { <堂號>: { listening, reading, answer, total, fill } };秒數取第一個數字(「440；有補位 540」取 440) */
 function firstNumber(s) {
   const m = /^([\d,]+)/.exec(String(s || '').trim());
   return m ? Number(m[1].replace(/,/g, '')) : NaN;

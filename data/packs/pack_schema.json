@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://www.rushuplanguage.com/schema/pack_schema.json",
   "title": "衝衝英文學習包",
-  "description": "學習包：一個級別一包、24 堂。v1.2：包層加 liveThrough（開放到第幾堂）；個人段規則加 test_review_v1（測驗檢討段依學生最弱的 Part 出題）；legacyWhere 加 canYou；單字段的「前 3 週」一律寫 three_weeks_ago（課表文件裡的 week_minus_3 轉檔時換成這個）。v1.1：主考點格 pointCells、termGoal 改 cellsPassed、固定段占比依堂型、小檢核題組型考點與補足區塊。",
+  "description": "學習包：一個級別一包、24 堂。v1.2：包層加 liveThrough（開放到第幾堂）；個人段規則加 test_review_v1（測驗檢討段依學生最弱的 Part 出題）；legacyWhere 加 canYou；單字段的「前 3 週」一律寫 three_weeks_ago。v1.1：主考點格 pointCells、termGoal 改 cellsPassed、固定段占比依堂型、小檢核題組型考點與補足區塊。",
   "type": "object",
   "additionalProperties": false,
   "required": [

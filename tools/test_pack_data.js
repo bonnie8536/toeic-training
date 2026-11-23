@@ -1,5 +1,5 @@
 /* 學習包資料與工具:data/packs/pack_schema.json(v1.2)、tools/schema_lite.js、tools/check_packs.js、tools/md_to_pack.js 與 tools/pack_md.js。
-   課表文件在 repo 外,這裡不讀;轉檔的讀法用小段的表格文字測。用法:node tools/test_pack_data.js */
+   Markdown 課表不放在 repo,這裡不讀;轉檔的讀法用小段的表格文字測。用法:node tools/test_pack_data.js */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -115,6 +115,17 @@ T['P6 check_packs 內容:開放的堂是錯誤、之後的堂只提醒(練習秒
   return 'ok';
 };
 
+T['P13 check_packs:題庫篩不了的條件(stemKeyword、P3／P4 題型)標成 needs_tags 的整包列一條提醒;沒標的在開放的堂算錯誤'] = async () => {
+  const r = await check(copy(PACKS.threshold));
+  assert.ok(!r.errors.length && r.warnings.some((w) => /條件題庫篩不了、標成 needs_tags.*threshold-L19-reading-2/.test(w)), r.errors.join(' / '));
+  const bad = copy(PACKS.threshold);
+  const b = bad.lessons[2].segments.filter((s) => s.slot === 'reading')[0].blocks.filter((x) => x.module === 'p5')[0];
+  b.select.legacyWhere = Object.assign({}, b.select.legacyWhere, { stemKeyword: ['NOT'] });
+  b.bankStatus = 'available_legacy';
+  assert.ok((await check(bad)).errors.some((e) => /第 3 堂：.*stemKeyword 題庫篩不了/.test(e)));
+  return 'ok';
+};
+
 T['P7 兩包互相拼課表都是 60 分;拼不起來的會報錯'] = () => {
   const ok = { errors: [] };
   CP.checkMix([PACKS.entry, PACKS.threshold], ok);
@@ -173,7 +184,7 @@ T['P9 單字段由規則產生:主課字卡＋10、延伸 14、小檢核堂 11�
   return 'ok';
 };
 
-T['P10 小檢核表 C′ 的讀法:各 n、組數與題型、單篇 ≤225 字、補位與未過關;補足區塊的秒數'] = () => {
+T['P10 小檢核表的讀法:各 n、組數與題型、單篇 ≤225 字、補位與未過關;補足區塊的秒數'] = () => {
   const a = M.cpPoints('`P2.wh`、`P2.yn`、`P2.choice` 各 5');
   assert.deepEqual(a.points.map((p) => p.key + p.n), ['P2.wh5', 'P2.yn5', 'P2.choice5']);
   const b = M.cpPoints('`P3.set` 2 組（`gist`、`speaker_place`）、`P4.set` 2 組');
@@ -192,7 +203,7 @@ T['P10 小檢核表 C′ 的讀法:各 n、組數與題型、單篇 ≤225 字�
   return 'ok';
 };
 
-T['P11 轉檔的其他小工具:主考點格的鍵(Part 沿用前一個)、難度配比、0.1 節的重播堂號、重播加 1 分、參數檢查'] = () => {
+T['P11 轉檔的其他小工具:主考點格的鍵(Part 沿用前一個)、難度配比、對齊說明列的重播堂號、重播加 1 分、參數檢查'] = () => {
   assert.deepEqual(MD.cellKeys('P1 `photo`、P2 `wh`'), ['P1.photo', 'P2.wh']);
   assert.deepEqual(MD.cellKeys('`P2.yn`、`choice`、`request`'), ['P2.yn', 'P2.choice', 'P2.request']);
   assert.deepEqual(MD.cellKeys('P6 `grammar`、`vocab`'), ['P6.type:文法', 'P6.type:字彙']);

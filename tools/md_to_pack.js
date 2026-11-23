@@ -1,10 +1,10 @@
-/* 課表文件(Markdown)轉學習包 JSON(data/packs/pack_<級>.json,格式見 data/packs/pack_schema.json v1.2)。
+/* Markdown 課表轉學習包 JSON(data/packs/pack_<級>.json,格式見 data/packs/pack_schema.json v1.2)。
    用法:node tools/md_to_pack.js --level entry --md <入門課表.md> [--out data/packs/pack_entry.json]
           [--live-through 4] [--version 1.0.0] [--date 2026-11-24] [--dry]
-   課表文件不在 repo 裡,路徑一律由參數給。
+   Markdown 課表不放在 repo,路徑一律由參數給。
    - 聽力段、閱讀段的區塊讀逐堂表;單字、小檢核、測驗檢討、測驗段照規則產生(讀法與規則在 tools/pack_md.js)。
    - 段的分鐘照堂型固定;引導聽力的重播加秒超過段時間 60 秒內:聽力段 +1 分、回顧段 −1 分(上限 −1 單位),
-     再跟課表第 0.1 節列的堂號核對。
+     再跟課表開頭對齊說明那一節列的堂號(「第 n、m 堂聽力段 a → b 分」)核對。
    - 轉不出來的列不猜:不放進 JSON,列在最後。開放的堂(≤ liveThrough)有轉不出的列就不寫檔、exit 1;之後的堂只列出來。
    寫完要再跑 node tools/check_packs.js。 */
 'use strict';
@@ -17,7 +17,7 @@ const TEST_KIND = { 1: 'pretest', 13: 'midterm', 23: 'posttest' };
 const TEST_SEC = { test_listening: [1380, '半回卷聽力'], test_reading: [2220, '半回卷閱讀'] };
 const pad = (n) => (n < 10 ? '0' : '') + n;
 
-/* 0.1 節寫的「第 n、m 堂聽力段 a → b 分」 */
+/* 對齊說明那一節寫的「第 n、m 堂聽力段 a → b 分」 */
 function replayListed(md) {
   const out = new Set(), re = /第 ([\d、]+) 堂聽力段 (\d+) → (\d+) 分/g;
   let m;
@@ -99,7 +99,7 @@ function testSegment(slot, order) {
 }
 function checkpointPart(no, ctx, issues) {
   const row = ctx.cp[no];
-  if (!row) { issues.push({ no, at: 'checkpoint', why: '第 0.1 節的表 C′ 沒有這一堂' }); return null; }
+  if (!row) { issues.push({ no, at: 'checkpoint', why: '小檢核表沒有這一堂' }); return null; }
   const L = M.cpPoints(row.listening), Rd = M.cpPoints(row.reading);
   L.bad.concat(Rd.bad).forEach((t) => issues.push({ no, at: 'checkpoint', text: t, why: '考點與題量讀不出來' }));
   const pts = L.points.concat(Rd.points);
@@ -215,14 +215,14 @@ function buildLesson(L, ctx, issues) {
 function buildPack(md, opt) {
   const level = opt.level, issues = [], notes = [];
   if (!M.LEVEL_ZH[level]) throw new Error('這一版只轉入門(entry)、門檻(threshold)');
-  if (!M.NO_WORD_WEEKS[level].text.test(md)) issues.push({ no: 0, at: 'vocab', why: '課表文件沒寫哪幾週沒有新字，單字段的週次對不上' });
+  if (!M.NO_WORD_WEEKS[level].text.test(md)) issues.push({ no: 0, at: 'vocab', why: '課表沒寫哪幾週沒有新字，單字段的週次對不上' });
   const ctx = { level, cp: M.cpTable(md), notes, replayed: new Set() };
   ctx.cells = pointCells(md, issues);
   const lessons = M.lessonsOf(md).map((L) => buildLesson(L, ctx, issues));
   if (lessons.map((l) => l.no).join() !== Array.from({ length: 24 }, (_, i) => i + 1).join()) issues.push({ no: 0, at: 'lessons', why: '逐堂表要剛好第 1 到 24 堂' });
   const listed = replayListed(md);
   const a = [...ctx.replayed].sort((x, y) => x - y).join('、'), b = [...listed].sort((x, y) => x - y).join('、');
-  if (a !== b) issues.push({ no: 0, at: 'listening', why: '算出要加重播時間的堂是 ' + (a || '無') + '，第 0.1 節寫 ' + (b || '無') });
+  if (a !== b) issues.push({ no: 0, at: 'listening', why: '算出要加重播時間的堂是 ' + (a || '無') + '，對齊說明寫 ' + (b || '無') });
   const mix = difficultyMix(md);
   if (!mix) issues.push({ no: 0, at: 'difficultyMix', why: '找不到難度配比' });
   const delta = /前測預估分數（取 5 的倍數）＋(\d+)/.exec(md);
@@ -235,7 +235,7 @@ function buildPack(md, opt) {
     termGoal: { scoreDelta: { listening: delta ? Number(delta[1]) : 0, reading: delta ? Number(delta[1]) : 0 }, scoreCap: 495, completion: { twicePerWeek: 20, oncePerWeek: 10 }, cellsPassed: 9, scoreVisibleToStudent: false },
     weeklyGoals: { completionRate: 0.8, studyDays: { twicePerWeek: 3, oncePerWeek: 2 }, focusAccuracy: 0.6, pointMet: { minItems: 5, rate: 0.8, groupWindow: 'week' }, reviewDone: 0.8, testWeeks: { studyDays: { twicePerWeek: 2, oncePerWeek: 1 } } },
     lessons,
-    authoring: { designer: 'designer:' + level, updatedAt: opt.date, changeNote: '由課表文件轉出（tools/md_to_pack.js）；開放到第 ' + liveThrough + ' 堂' },
+    authoring: { designer: 'designer:' + level, updatedAt: opt.date, changeNote: '由 tools/md_to_pack.js 轉出；開放到第 ' + liveThrough + ' 堂' },
   };
   return { pack, issues, notes };
 }
@@ -260,7 +260,7 @@ function main(argv) {
   let o;
   try { o = args(argv); } catch (e) { console.error(e.message); return 2; }
   let md;
-  try { md = fs.readFileSync(o.md, 'utf8'); } catch (e) { console.error('讀不到課表文件：' + e.message); return 2; }
+  try { md = fs.readFileSync(o.md, 'utf8'); } catch (e) { console.error('讀不到課表：' + e.message); return 2; }
   const { pack, issues, notes } = buildPack(md, o);
   const blocking = issues.filter((x) => x.no === 0 || x.no <= o.liveThrough);
   notes.forEach((n) => console.log('說明　' + n));

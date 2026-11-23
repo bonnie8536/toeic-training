@@ -9,6 +9,8 @@
      文法單元、英語耳程度在題庫裡有;題庫題用題目索引(data/bank-meta.js)算可用量;
    - 兩包能互相拼課表(聽力一級、閱讀另一級時每堂仍是 60 分)。
    開放的堂(≤ liveThrough)內容有問題算錯誤;之後的堂只列成提醒。題量不足、技巧卡與每週新字表還沒做,一律列成提醒。
+   題庫篩不了的條件(legacyWhere 裡 bank.js 不認得的欄位,例如 stemKeyword;P3、P4 指定題型):選題時不篩、可用量會算多。
+   區塊標成 needs_tags 的整包列一條提醒;沒標的在開放的堂算錯誤(開放前要在題目索引補欄位,或標成 needs_tags)。
    有錯誤 exit 1。 */
 'use strict';
 const fs = require('fs');
@@ -21,6 +23,7 @@ const read = (f) => fs.readFileSync(path.join(REPO, f), 'utf8');
 const REPLAY = { p1: 11, p2: 11, p3: 36, p4: 33 };
 const PRACTICE_SLOTS = ['vocab', 'listening', 'reading'];
 const BANK_PART = { p1: '1', p2: '2', p3: '3', p4: '4', p5: '5', p6: '6', p7: '7' };
+const LEGACY_OK = ['difficulty', 'category', 'type', 'format', 'maxWordCount', 'canYou'];   // 跟 js/pack-core.js bankWhereOf 一樣
 const pad = (n) => (n < 10 ? '0' : '') + n;
 const secondsOf = (blocks) => (blocks || []).reduce((a, b) => a + b.count * b.secondsPerUnit, 0);
 
@@ -94,6 +97,9 @@ function checkBlock(b, data, opt) {
     const want = /^[347]$/.test(part) || part === '6' ? 'set' : 'item';
     if (b.unit !== want) out.push({ hard: true, msg: b.blockId + ' 的單位要是 ' + want });
     if (b.select) {
+      const lw = b.select.legacyWhere || {}, where = b.select.where || {};
+      const cant = Object.keys(lw).filter((k) => LEGACY_OK.indexOf(k) < 0).concat(/^[34]$/.test(part) && where.qType ? ['qType'] : []);
+      if (cant.length) out.push(b.bankStatus === 'needs_tags' ? { group: 'filter', id: b.blockId } : { hard: true, msg: b.blockId + ' 的條件 ' + cant.join('、') + ' 題庫篩不了（選題時不篩，可用量算多了）；在題目索引補欄位，或標成 needs_tags' });
       const have = opt.count(part, legacyToBank(b.select));
       if (have === 0) out.push({ hard: true, msg: b.blockId + ' 題庫裡沒有符合條件的題' });
       else if (have < b.count) out.push({ hard: false, msg: b.blockId + ' 題量不足：要 ' + b.count + '，題庫符合條件的有 ' + have });
@@ -114,7 +120,7 @@ function checkBlock(b, data, opt) {
 
 /* 內容:開放的堂是錯誤,之後的堂是提醒 */
 function checkContent(pack, data, out, opt) {
-  const missing = { tips: new Set(), words: new Set() };
+  const missing = { tips: new Set(), words: new Set(), filter: new Set() };
   (pack.lessons || []).forEach((l) => {
     const live = l.no <= pack.liveThrough;
     const at = '第 ' + l.no + ' 堂：';
@@ -136,6 +142,7 @@ function checkContent(pack, data, out, opt) {
   /* 還沒做的內容(技巧卡、每週新字表)整包列一次 */
   if (missing.tips.size) out.warnings.push('技巧卡還沒有 ' + missing.tips.size + ' 張：' + [...missing.tips].sort().join('、'));
   if (missing.words.size) out.warnings.push('每週新字表還沒有（' + missing.words.size + ' 個單字區塊用到）');
+  if (missing.filter.size) out.warnings.push('有 ' + missing.filter.size + ' 個區塊的條件題庫篩不了、標成 needs_tags（選題時不篩，可用量算多了）：' + [...missing.filter].sort().join('、'));
 }
 
 /* 兩包互相拼:聽力段跟一包、單字與閱讀段跟另一包,每堂仍是 60 分 */

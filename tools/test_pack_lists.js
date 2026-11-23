@@ -68,9 +68,12 @@ T['P1 題目清單通過檢查;id 都在題目索引、都不在淘汰名單、�
   assert.ok(POOL.ids.length > 400);
 };
 
-T['P2 清單的內容:待補清單與改過唸讀文字的聽力題、後來新增的題不在清單'] = () => {
-  ['l2-06', 'l1-04', 'l1-26', 'l2-101', 'l3-51', 'l3-23'].forEach((id) => assert.ok(POOL.ids.indexOf(id) < 0, id));
-  assert.ok(POOL.ids.indexOf('l1-03') > -1);
+T['P2 清單的內容:後來改過唸讀文字的聽力題(P1、P2 的選項會唸出來)與淘汰的題不在清單;題號從更正紀錄與淘汰名單推算'] = () => {
+  const rows = JSON.parse(read('tools/corrections/source.json')).rows.concat(JSON.parse(read('data/corrections.json')).rows);
+  const changed = [...new Set(rows.filter((r) => /^P[12]$/.test(r.a) && r.k === 'text').map((r) => String(r.id).split(':')[0]))];
+  assert.ok(changed.length > 0, '更正紀錄裡要有改過文字的 P1、P2 題');
+  changed.concat([...SRC.retired]).forEach((id) => assert.ok(POOL.ids.indexOf(id) < 0, id));
+  assert.ok(POOL.ids.some((id) => /^l[12]-/.test(id)), '清單裡要有 P1、P2 的題');
 };
 
 T['P3 清單的毛病抓得到:重複、不在索引、在淘汰名單、少一個 Part、格式不對、題量不夠只提醒'] = () => {

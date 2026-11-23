@@ -7986,6 +7986,6 @@
   "authoring": {
     "designer": "designer:entry",
     "updatedAt": "2026-11-24",
-    "changeNote": "由課表文件轉出（tools/md_to_pack.js）；開放到第 4 堂"
+    "changeNote": "由 tools/md_to_pack.js 轉出；開放到第 4 堂"
   }
 }

@@ -4012,7 +4012,7 @@ html:not(.authed) .wr-home-tag { display: none; }   /* 訪客沒有自動儲存�
    一個畫面只有一顆實色主按鈕(天藍底白字,字級 --fs-btn),其他動作是文字按鈕(.btn-text);手機上按鈕列固定在下方。
    App 外殼裡用外殼的返回鍵,這裡的返回鈕藏起來(不出現兩個返回)。螢光筆只用在 h1。 */
 .ob-root { padding-bottom: 8px; }
-.ob-head { display: flex; justify-content: space-between; align-items: center; min-height: 44px; margin-top: 18px; }
+.ob-head { display: flex; justify-content: space-between; align-items: center; max-width: 520px; min-height: 44px; margin-top: 18px; }   /* 跟選項同寬:第幾題對齊選項右緣 */
 .ob-head + .page-head { margin-top: 10px; }
 .ob-progress { font-size: var(--fs-sm); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .ob-back {
@@ -4109,4 +4109,5 @@ html.app-shell .ob-back { visibility: hidden; }
 .ob-home-actions .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 @media (max-width: 600px) {
   .ob-home-actions .btn { flex: 1 1 100%; min-height: 48px; }
+  .ob-home-actions .btn-text { margin: 0 auto; }
 }

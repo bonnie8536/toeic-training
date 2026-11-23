@@ -72,8 +72,14 @@
      腳的位置改成跟待機一樣;很小時書背再粗、每頁 2 行字拉開行距。
    - 開心:騰空三格和抬下巴那格的翅膀張得更開(約 1.5 倍),三片羽毛扇形散開;第 0 格保留待機的眼睛,第 1 格才笑瞇。
    - 播放:看書(正面)跟其他姿勢互換時,畫面淡出淡入約 150 ms。
+   第八版(version 4;前面五個姿勢一筆沒改,種子也不變):新姿勢 daydream 白日夢接在最後(首頁首屏用)。
+   - 整隻趴在地上:身體壓扁、屁股往後拉長,肚子貼地;頭往上抬、嘴往左上翹,眉毛鬆開抬高、眼珠往上看(發呆,還是那張臭臉);
+     翅膀往上收一點,兩隻腳往後伸出屁股、腳底朝天。長相(圓身、大嘴袋、全白、臭臉眉毛)照待機的畫法,只換姿勢。
+   - 上方飄著三本小書(攤開的大書、黃色蠟筆封面的闔起來的書、攤開的小書),大小不一、高低錯開、微微傾斜;頭上兩個小圈往書那邊冒。
+   - 動態:書各自慢慢上下飄、腳趾輪流翹、很小的呼吸和嘴袋晃動、偶爾眨眼。12 格,每秒 4 張(一圈約 3 秒)。靜止格第 0 格。
+   - 播放:白日夢(趴著)跟站著的姿勢互換時也淡出淡入。
    用法:const a = PelicanArt.animate(canvas, { size: 180, fps: 8, pose: 'idle', onTick }); a.setPose('happy'); a.setFps(6); a.stop();
-   fps 是「基準速度」:各動作會按 PelicanArt.fps 的比例換算(fps 8 時待機每秒 5 張、開心 8 張、尷尬和看書 4 張、睡覺 3 張)。 */
+   fps 是「基準速度」:各動作會按 PelicanArt.fps 的比例換算(fps 8 時待機每秒 5 張、開心 8 張、尷尬、看書和白日夢 4 張、睡覺 3 張)。 */
 (function () {
   const W = 300, H = 280, GROUND = 258;    // 邏輯尺寸;GROUND = 腳底(地面線)的高度
   const CX = 150, BOT = 242;               // 呼吸時身體以肚子底部為支點上下伸縮
@@ -301,6 +307,7 @@
   /* 身體:以肚子底部為支點先伸縮(sq 上下、sx 左右)、再轉 tilt 度(正 = 順時針,嘴往上抬),最後搬 dx、dy。
      第五版才有 sx、tilt、dx、dy;待機沒有這些欄位,算法跟第四版一模一樣 */
   function bodyXF(f) {
+    if (f.lie) return lieXF(f);                              // 第八版:白日夢趴著,另外算
     const sq = f.sq || 1, sx = f.sx || 1 + (sq - 1) * 0.7;   // 吸氣時往上鼓、也一起變胖(不會變得又高又窄)
     const th = (f.tilt || 0) * RAD, dx = f.dx || 0, dy = f.dy || 0;
     const pw = pouchWarp((f.pouch || [0, 0])[0], (f.pouch || [0, 0])[1]);
@@ -525,6 +532,14 @@
       else if (name === 'meh') fat([[o[0], o[1] + 7], [n[0], n[1] + 1]], W * 0.9);
       else if (name === 'sideeye') fat(i ? [[o[0], o[1] - 4], [n[0], n[1] - 3]] : [[o[0], o[1] + 6], [n[0], n[1] + 1]], W);
       else if (name === 'blink') fat([[o[0], o[1] + 4], [n[0], n[1] + 2]], W * 0.9);
+      else if (name === 'dream' || name === 'dreamblink') {
+        // 第八版:發呆往上看。斜線放平一點、整筆往上提,下面掛一顆圓眼珠(靠左上,往上看);眨眼時眼珠換成一小橫
+        const a = [o[0], o[1] - 5], b = [n[0], n[1] - 10];
+        const m = [(a[0] + b[0]) / 2 - 2.5, (a[1] + b[1]) / 2 + W * 0.5 + (TINY ? 5 : 6.5)];
+        fat([a, b], W);
+        if (name === 'dreamblink') fat([[m[0] - 5, m[1]], [m[0] + 5, m[1] + 1]], W * 0.7);
+        else { const c = XF(m); ctx.beginPath(); ctx.arc(c[0], c[1], Math.max(TINY ? 6 : 5.5, W * 0.55), 0, Math.PI * 2); ctx.fill(); }
+      }
       else if (name === 'look' || name === 'lookfrown') {
         // 第七版:看書。斜線放平一點、整筆往上提(眼皮壓著),中間下面掛著半個眼珠(往下看),眼珠跟著 look 左右掃;
         // 眼珠的下緣離嘴的上緣留一點白,52 px 也不黏在一起
@@ -551,6 +566,8 @@
     meh: [[4, -2], [4, -2]],          // 嘆氣:眉毛拉平
     closed: [[6, 1], [6, 1]],         // 睡覺:眉毛放鬆
     sideeye: [[1, -2], [8, 12]],      // 斜眼瞄你:左眉壓平、右眉挑高
+    dream: [[8, 3], [8, 3]],      // 第八版:發呆,眉毛整條抬高、V 鬆一點(還是那張臭臉)
+    dreamblink: [[8, 3], [8, 3]],
   };
   const EYE_Y = 90;                   // 表情的眼睛中心高度(第六版:眼睛跟眉毛之間多了縫,往下 3)
   /* kind:happy 開心的弧線 ∩、happysquash 壓扁的開心弧線(落地)、squeeze > <、meh 眼皮垂成兩條橫線、
@@ -569,6 +586,8 @@
       else if (name === 'squeeze') line(ctx, P([[-s * 5, -5], [s * 4.5, 0], [-s * 5, 5]]), r, 3.6, 0.4);
       else if (name === 'meh') line(ctx, P([[-7, 0], [0, 1.5], [7, 0]]), r, 3.8, 0.4);
       else if (name === 'closed') line(ctx, P([[-6.5, -1.5], [-2.5, 3], [2.5, 3], [6.5, -1.5]]), r, 3.6, 0.4);
+      else if (name === 'dream') pupil(ctx, r, [ex - 1.4 * k, E - 1.6 * k], k * 0.92);   // 第八版:發呆往上看,眼珠往上靠、稍微往左(書那邊)
+      else if (name === 'dreamblink') line(ctx, P([[-6, -0.5], [-2, 2], [2, 2], [6, -0.5]]), r, 3.4, 0.4);
       else if (name === 'sideeye') {
         // 上眼皮壓得很低(一條往外稍微翹的平線),眼珠只露出下半個,整個推到眼皮的右端
         const lid = 1.5, cx = 4.6, half = [];
@@ -771,6 +790,102 @@
     RWINGS.forEach((g) => readWing(ctx, r, g));
   }
 
+  /* ---------- 第八版:白日夢(daydream) ----------
+     整隻趴在地上:本體還是同一顆球(外框、嘴袋、翅膀、呆毛、臉都照待機的畫法,長相一筆沒改),
+     整隻壓扁、屁股往後拉長,肚子貼著地面線;頭往上抬(嘴往左上翹),眉毛鬆開抬高、眼珠往上看(發呆);
+     翅膀往上收一點,兩隻腳往後伸出屁股、腳底朝天(三根腳趾往右上攤開),腳趾輪流翹一下。
+     上方飄著三本小書(大小不一、高低錯開、微微傾斜),各自慢慢上下飄;頭上兩個小圈往書那邊冒(想的泡泡)。
+     書只用墨線、白頁和嘴袋那支黃色蠟筆,全身照樣不出現藍色。 */
+  /* 身體:先在身體座標壓扁(sq)、屁股那一半往後拉長(sx、back),再以 LIE.pivot 為軸把頭往上抬:
+     越上面轉越多(頭整個轉 tilt 度,肚子只轉 tiltBody 度),頭還是一顆圓頂,嘴袋跟著往下垂;
+     每格重算整隻要往下放多少,讓最低點剛好碰到地面線(呼吸時肚子不離地,只有背往上鼓) */
+  const LIE = { pivot: [180, 200], y0: 125, y1: 205 };   // 抬頭:y0 以上整個轉 tilt 度,y1 以下只轉 tiltBody 度,中間慢慢過去
+  function lieXF(f) {
+    const th = (f.tilt || 0) * RAD, thB = (f.tiltBody || 0) * RAD, sq = f.sq || 1, sx = f.sx || 1, back = f.back || 0, dx = f.dx || 0;
+    const pw = pouchWarp((f.pouch || [0, 0])[0], (f.pouch || [0, 0])[1]);
+    const [px, py] = LIE.pivot;
+    const base = ([x, y]) => {
+      const x1 = CX + (x - CX) * (sx + back * smooth((x - 150) / 100)), y1 = BOT + (y - BOT) * sq;   // 先壓扁、屁股往後拉長
+      const a = thB + (th - thB) * smooth((LIE.y1 - y1) / (LIE.y1 - LIE.y0));                         // 再把頭往上抬(越上面轉越多)
+      const v = rot([x1 - px, y1 - py], a);
+      return [px + v[0], py + v[1]];
+    };
+    let low = -Infinity;
+    OUTLINE.forEach((p) => { low = Math.max(low, base(p)[1]); });
+    const dy = GROUND - 0.5 - low;
+    const affine = (p) => { const q = base(p); return [q[0] + dx, q[1] + dy]; };
+    return { body: (p) => affine(pw(p)), affine, th };
+  }
+  /* 腳(趴著):往後伸出屁股,只露出一小段腿和腳掌。腿貼著地往後(上端藏在屁股裡),腳踝在屁股後面,
+     三根腳趾往右上攤開(腳底朝天);kick 是兩隻腳的腳趾各往上翹幾度(輪流動一下)。很小時只剩兩根腳趾 */
+  const LIE_FEET = [[260, 2.5], [274, 5]];            // 腳踝:[x(畫面座標,再加 dx), 離地多高];後面那隻高一點、靠後一點
+  const LIE_TOES = [[-74, 10.5], [-40, 13], [-6, 10.5]];   // 腳趾往右上攤開:[幾度(負的往上), 多長]
+  function lieLegs(ctx, r, f) {
+    LIE_FEET.forEach(([x0, up], i) => {
+      const A = [x0 + (f.dx || 0), GROUND - up], kick = (f.kick || [0, 0])[i];
+      const T = ([deg, L]) => [A[0] + Math.cos((deg - kick) * RAD) * L, A[1] + Math.sin((deg - kick) * RAD) * L];
+      line(ctx, extend([[A[0] - 26, GROUND - 9 - up * 0.5], A], 0, 1), r, LEG_W, 0.6);   // 腿往後伸,上端藏在屁股裡(身體塗白時蓋掉)
+      if (SMALL) { line(ctx, [T(LIE_TOES[0]), A, T(LIE_TOES[2])], r, TOE_W, 0.5); return; }
+      line(ctx, [T(LIE_TOES[0]), A, T(LIE_TOES[2])], r, TOE_W, 0.8);
+      line(ctx, [A, T(LIE_TOES[1])], r, TOE2_W, 0.6);
+    });
+  }
+  /* 飄著的書(畫面座標)。三本:[種類, 中心, 大小, 斜幾度];每格 f.books 給每本 [往上飄多少, 多轉幾度]。
+     open:攤開的書(兩頁往上翹成淺淺的 V,書背在中間,每頁一兩行字);shut:闔起來的書(封面黃色蠟筆、右下露出書頁的厚度、書背一條線) */
+  const DAY_BOOKS = [
+    ['open', [92, 46], 1.12, -10],
+    ['shut', [180, 34], 1, 14],
+    ['open', [34, 74], 0.66, 12],
+  ];
+  function openBook(ctx, r, at, k) {
+    const w = 30, ink = (pts, wd, j) => line(ctx, wobble(at(pts), 6), r, wd * k, j === undefined ? 0.7 : j);
+    const pageL = [[0, -3], [-8, -8], [-19, -10], [-w + 2, -9], [-w, -7], [-w, 9], [-w + 8, 10], [-19, 10.5], [-8, 11.5], [0, 14]];
+    const M = (pts) => pts.map(([u, v]) => [-u, v]).reverse();
+    const cover = [[-w - 3, -5], [-w - 3, 12], [-16, 14], [0, 18], [16, 14], [w + 3, 12], [w + 3, -5]];
+    ctx.fillStyle = WHITE;
+    fillPoly(ctx, at(cover.concat([[w - 4, -9], [0, -3], [-w + 4, -9]])));
+    fillPoly(ctx, at(pageL.concat(M(pageL))));
+    ctx.strokeStyle = INK;
+    ink(cover, 3.2, 0.8);
+    ink(pageL.slice(0, 6).reverse(), 3);
+    ink(M(pageL).slice(4), 3);
+    line(ctx, extend(at([[0, -3], [0.6, 6], [0, 16]]), 1, 0), r, (TINY ? 5 : 3.8) * k, 0.5);   // 書背
+    const rows = SMALL ? [-1] : [-3, 3];
+    rows.forEach((v) => [-1, 1].forEach((s) => {
+      const a = s * 6, b = s * (w - 7), d = v < 0 ? -0.8 : 0;
+      line(ctx, at([[a, v + d], [(a * 2 + b) / 3, v - 0.8 + d * 0.5], [(a + b * 2) / 3, v], [b, v - 0.6]]), r, (SMALL ? 2.6 : 1.9) * Math.max(0.8, k), 0.4);
+    }));
+  }
+  function shutBook(ctx, r, at, size) {
+    const w = 21, h = 14, t = 5;                     // 封面半寬、半高、書頁厚度
+    const cover = [[-w, -h], [w, -h], [w, h], [-w, h]];
+    const block = [[w, -h], [w + t, -h + t * 0.7], [w + t, h + t * 0.7], [-w + t, h + t * 0.7], [-w, h], [w, h]];
+    ctx.fillStyle = WHITE;
+    fillPoly(ctx, at(block));
+    fillPoly(ctx, at(cover));
+    pouchFill(ctx, r, size, at(cover).map(([x, y]) => [x, y, 0.6]), 7, []);   // 封面:嘴袋那支黃色蠟筆
+    ctx.strokeStyle = INK;
+    line(ctx, wobble(at(cover.concat([cover[0]])), 6), r, 3.2, 0.7);
+    line(ctx, wobble(at([[w, -h], [w + t, -h + t * 0.7], [w + t, h + t * 0.7], [-w + t, h + t * 0.7], [-w, h]]), 6), r, 2.8, 0.6);
+    if (!TINY) line(ctx, wobble(at([[w + 1, h - 1 + t * 0.35], [-w + t * 0.5 + 1, h + t * 0.35]]), 8), r, 1.6, 0.3);   // 書頁的線
+    line(ctx, at([[-w + 6, -h + 1], [-w + 6, h - 1]]), r, 2.4, 0.4);                        // 書背
+  }
+  function dayBooks(ctx, r, f, size) {
+    const mv = f.books || [];
+    DAY_BOOKS.forEach(([kind, c, k, deg], i) => {
+      const [up, turn] = mv[i] || [0, 0];
+      const th = (deg + turn) * RAD;
+      const at = (pts) => pts.map(([u, v]) => { const q = rot([u * k, v * k], th); return [c[0] + q[0], c[1] - up + q[1]]; });
+      if (kind === 'open') openBook(ctx, r, at, k); else shutBook(ctx, r, at, size);
+    });
+    // 想的泡泡:頭頂左上方兩個小圈,一個小一個大,往書那邊冒
+    if (!TINY) [[152, 98, 3.2], [134, 83, 5]].forEach(([x, y, s]) => {
+      const ring = [];
+      for (let a = 0; a <= 360; a += 40) ring.push([x + Math.cos(a * RAD) * s, y + Math.sin(a * RAD) * s * 0.9]);
+      line(ctx, ring, r, 2.4, 0.3);
+    });
+  }
+
   /* ---------- 第五版:特效(都在畫面座標畫,位置跟著身體) ---------- */
   function fx(ctx, r, list, k) {
     ctx.save();
@@ -935,14 +1050,31 @@
     { sq: 0.905, pouch: [1, -1.5], tuft: 13, fx: ['z:6'] },
   ].map((f) => Object.assign({ eyes: 'closed', feet: 'sit', dy: 12, tilt: -3, dx: 6, wing: 10, tuftRigid: true }, f));
 
-  /* 第五版的姿勢接在 idle 後面(待機的種子用姿勢的順序算,不變) */
-  const POSES = { idle, happy, oops, read, sleep };
+  /* 第八版:白日夢(見 lieXF、lieLegs、dayBooks)。趴著、嘴往上抬、發呆看著上面飄的書。
+     一圈 12 格、每格 1 拍:三本書各自上下飄(相位錯開三分之一圈,飄的時候順便轉一點)、兩隻腳的腳趾輪流翹、
+     身體很小的呼吸(背往上鼓,肚子不離地)、嘴袋和呆毛跟著輕輕晃;第 7 格眨一下眼。
+     每秒 4 張、一圈約 3 秒,動作小,可以長時間放著 */
+  const DAY_N = 12;
+  const daydream = Array.from({ length: DAY_N }, (_, k) => {
+    const a = k / DAY_N * Math.PI * 2, ph = (i) => a + i * Math.PI * 2 / 3;
+    return {
+      sq: 0.74 + 0.012 * (1 - Math.cos(a)) / 2,
+      pouch: [0.6 * Math.sin(a), 1.4 * Math.sin(a - 0.9)],
+      tuft: 3 + 4 * Math.sin(a - 0.8),
+      kick: [7 + 7 * Math.sin(a), 7 - 7 * Math.sin(a)],
+      books: [0, 1, 2].map((i) => [6 * Math.sin(ph(i)), 2.5 * Math.cos(ph(i))]),
+      eyes: k === 7 ? 'dreamblink' : 'dream',
+    };
+  }).map((f) => Object.assign({ lie: true, tilt: 30, tiltBody: 10, sx: 0.88, back: 0.16, dx: -18, wing: -32 }, f));
+
+  /* 第五版的姿勢接在 idle 後面(待機的種子用姿勢的順序算,不變);第八版的白日夢接在最後(前面各姿勢的種子不變) */
+  const POSES = { idle, happy, oops, read, sleep, daydream };
   /* 不想看動畫(減少動態)時每個姿勢顯示的那一格:
      happy 第 8 格(站著抬下巴、開心的眼睛、得意的短線)、oops 第 2 格(縮到最底、> <、線團和汗都在)、
-     read 第 0 格(捧著書往下看)、sleep 第 3 格(吸飽氣、兩個 z) */
-  const CALM = { idle: 0, happy: 8, oops: 2, read: 0, sleep: 3 };
+     read 第 0 格(捧著書往下看)、sleep 第 3 格(吸飽氣、兩個 z)、daydream 第 0 格(三本書都在空中、張著眼往上看) */
+  const CALM = { idle: 0, happy: 8, oops: 2, read: 0, sleep: 3, daydream: 0 };
   /* 各動作在基準 fps = 8 時的播放速度;實際 = 呼叫者給的 fps × 這裡 / 8 */
-  const POSE_FPS = { idle: 5, happy: 8, oops: 4, read: 4, sleep: 3 };
+  const POSE_FPS = { idle: 5, happy: 8, oops: 4, read: 4, sleep: 3, daydream: 4 };
   const fpsFor = (pose, base) => base * (POSE_FPS[pose] || 8) / 8;
 
   /* 畫一格。seed 決定這一格的抖動 */
@@ -959,7 +1091,8 @@
 
     XF = ID;
     if (f.front) { drawRead(ctx, r, f, size); ctx.restore(); return; }   // 第六版:看書是正面,另外畫
-    legs(ctx, r, affine, f.feet, f.dx);      // 先畫腳,身體塗白時蓋住腳的上端
+    if (f.lie) lieLegs(ctx, r, f);           // 第八版:趴著,腳往後伸出屁股
+    else legs(ctx, r, affine, f.feet, f.dx); // 先畫腳,身體塗白時蓋住腳的上端
 
     XF = body;
     ctx.fillStyle = WHITE;
@@ -982,6 +1115,7 @@
     face(ctx, r, f.eyes || 'open');
     XF = ID;
     if (f.fx) fx(ctx, r, f.fx, { body, tip, size, dx: f.dx });
+    if (f.books) dayBooks(ctx, r, f, size);  // 第八版:白日夢上方飄的書
     ctx.restore();
   }
 
@@ -1021,8 +1155,10 @@
     let pose = POSES[o.pose] ? o.pose : 'idle', fps = o.fps, i = 0, timer = null, seq = sequence(pose);
     const reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     /* 第七版:看書是正面,跟其他(側面)姿勢互換時,上一張畫面用約 150 ms 淡出、新的淡入,整隻不會一下子跳過去。
+       第八版:白日夢是趴著的,跟站著的(側面、正面)互換時也淡出淡入;站著的側面姿勢之間照舊直接換。
        減少動態時、或環境沒有 requestAnimationFrame 時不做 */
     const FADE_MS = 150, raf = typeof window.requestAnimationFrame === 'function' ? window.requestAnimationFrame.bind(window) : null;
+    const scene = (p) => (POSES[p][0].front ? 'front' : POSES[p][0].lie ? 'lie' : 'side');
     const now = () => (window.performance && performance.now ? performance.now() : Date.now());
     let last = null, fade = null;
     function paint(img) {
@@ -1035,7 +1171,7 @@
       ctx.globalAlpha = 1;
     }
     function fadeFrom(p) {
-      if (reduce || !raf || !last || !!POSES[p][0].front === !!POSES[pose][0].front) return;
+      if (reduce || !raf || !last || scene(p) === scene(pose)) return;
       fade = { from: last, t0: now() };
       const step = () => { if (!fade || !last) return; paint(last); if (fade) raf(step); };
       raf(step);
@@ -1083,7 +1219,7 @@
     holds: (p) => (POSES[p] ? POSES[p].map((f) => f.hold || 1) : []),
     calm: Object.assign({}, CALM),
     fps: Object.assign({}, POSE_FPS),        // 基準 8 時各動作的每秒張數
-    version: 3,
+    version: 4,
     metrics: { width: W, height: H, ground: GROUND },   // ground = 腳底在畫布裡的高度(邏輯像素)
   };
 })();

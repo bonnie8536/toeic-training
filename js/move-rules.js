@@ -11,7 +11,10 @@
      sync_del:自訂題庫的刪除標記(js/sync-merge.js,只有雲端帳號的資料夾會寫)。tombs = 兩份標記聯集(SYNC_MERGE.tombs),
      不能是 single(整份換掉):少了別台的標記,刪掉的題庫和字會回來;沒有規則時搬家包整包被 validate 拒絕。
      mock_wrong:模擬考答錯的題(js/wrongbook.js,2026-11-18),每題 { c, ok, t },跟錯題本一樣用 pool(同一題留 t 新的)。
-     q_reports:回報題目(js/report.js),每題 { c, n, t, f },同一題兩邊都有就留 t 新的。 */
+     q_reports:回報題目(js/report.js),每題 { c, n, t, f },同一題兩邊都有就留 t 新的。
+     onboard、self_score、levels:起始程度設定、自填成績、起始程度(js/onboard-data.js),都是整份換掉(single)。
+     雲端帳號的搬家暫存區不走這裡的 single:這三個鍵在 js/cloud.js 的合併表上,takeSynced 用 SYNC_MERGE.levels、onboard、selfScore
+     (留自己時間欄位較新的那份,levels.history 聯集;tools/test_move_cloud.js)。 */
   const EXACT = Object.freeze({
     hist: 'hist', mock_history: 'mock', mock_wrong: 'pool', q_reports: 'pool', pet: 'pet', daily_done: 'daily', vgame_banks: 'banks', sync_del: 'tombs',
     vgame_best: 'best', vgame_toast_best: 'best', vgame_pairs_best: 'pairsBest', vgame_clear: 'clear',
@@ -20,6 +23,7 @@
     writing_read: 'idmap', writing_s: 'idmap', writing_b: 'texts', writing_e: 'texts', writing_y: 'texts',
     ear_s: 'idmap', ear_d: 'idmap', ear_mp: 'idmap', ear_n: 'idmap',
     diag: 'single', ph_slow: 'single', vgame_src: 'single',
+    onboard: 'single', self_score: 'single', levels: 'single',
   });
   const ID = '[A-Za-z0-9_.-]{1,80}';
   const FAMILIES = Object.freeze([
@@ -32,9 +36,11 @@
   /* 不在學生資料夾底下的全站鍵 */
   const GLOBAL = Object.freeze({ tr_profiles: 'profiles', tr_current_profile: 'currentProfile', tr_pet_hint: 'fillMissing' });
   /* 不搬的 tr_ 鍵:暫時的、各網域自己的、跟登入有關的。tr_cloud_unhydrated_:js/cloud.js 的「這台帳號資料夾還沒灌過」標記;
-     tr_cloud_seen_:「這台灌過這個帳號」記號(都是各網域自己的) */
+     tr_cloud_seen_:「這台灌過這個帳號」記號(都是各網域自己的);
+     tr_onboard_guest:start.html 沒登入時暫存的回答(js/onboard-data.js,7 天),只在這台、登入後搬進帳號 */
   const EXCLUDE = [/^tr_access_/, /^tr_trial_note_closed$/, /^tr_signup_intent(_used)?$/, /^tr_pending_join$/, /^tr_move_/,
-    /^tr_unsynced_/, /^tr_localonly_/, /^tr_cloud_hydrated_/, /^tr_cloud_unhydrated_/, /^tr_cloud_seen_/, /^tr_auth_expired$/, /^tr_pw_recovery$/, /^tr_pay_last$/];
+    /^tr_unsynced_/, /^tr_localonly_/, /^tr_cloud_hydrated_/, /^tr_cloud_unhydrated_/, /^tr_cloud_seen_/, /^tr_auth_expired$/, /^tr_pw_recovery$/, /^tr_pay_last$/,
+    /^tr_onboard_guest$/];
   const FOLDER = /^tr_u(p[0-9a-z]{4,20}|c[0-9a-f]{32})_([A-Za-z0-9_.-]{1,100})$/;
   const GUEST = /^tr_([A-Za-z0-9_.-]{1,100})$/;
   const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;

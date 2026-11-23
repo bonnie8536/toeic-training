@@ -235,13 +235,15 @@
 
     root.append(h('div', { class: 'page-head' }, h('h1', null, '檢測報告')));
 
-    /* 第一屏:結算卡。姓名與日期放在分數上面的小字;三個難度的正確率跟在卡片下面一行 */
+    /* 第一屏:結算卡。姓名與日期放在分數上面的小字;三個難度的正確率跟在卡片下面一行。
+       新用戶設定起始程度途中交的卷,主按鈕換成「看起始程度」(js/onboard-ui.js,只有這種時候不是 null) */
+    const next = window.ONBOARD_UI ? ONBOARD_UI.diagPrimary() : null;
     const card = UI.result({
       kicker: (p ? p.name + ' · ' : '') + (st.finishedAt || '').slice(0, 10),
       score, total,
       stats: [['參考級距', band]],
       note: '級距為估算 · 非正式成績',
-      primary: { label: '去刷題', href: 'practice.html' },
+      primary: next || { label: '去刷題', href: 'practice.html' },
       links: [{ label: '列印 / 存成 PDF', onClick: () => window.print() }, { label: '再測一次', onClick: retest, attrs: GATE }],   // 再測一次:沒登入時先攔下
       earnId: 'diag',
     });

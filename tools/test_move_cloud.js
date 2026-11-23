@@ -1,6 +1,6 @@
 /* js/cloud.js 的 flushForMove(舊網址寄出頁)與搬家暫存區 tr_move_pending_<帳號 id>(新網址登入灌資料時合併)。
    跟 tools/test_cloud_merge.js 同一套假的 Supabase(加上 in() 與一次傳多列的 upsert,題庫跟 sync_del 一起讀、一起傳)、localStorage、時鐘與計時器;
-   合併規則載入真的 js/sync-merge.js(每一頁都在 cloud.js 前面載入)、js/move-rules.js、js/move-merge.js,
+   合併規則載入真的 js/sync-merge.js、js/sync-merge-lesson.js(每一頁都在 cloud.js 前面載入)、js/move-rules.js、js/move-merge.js,
    小雞用真的 js/pet.js。用法:node tools/test_move_cloud.js */
 'use strict';
 const fs = require('fs');
@@ -9,7 +9,7 @@ const path = require('path');
 
 const REPO = path.join(__dirname, '..');
 const read = (f) => fs.readFileSync(path.join(REPO, f), 'utf8');
-const SRC = { cloud: read('js/cloud.js'), sync: read('js/sync-merge.js'), pet: read('js/pet.js'), food: read('js/pet-food.js'), rules: read('js/move-rules.js'), merge: read('js/move-merge.js'), daily: read('js/daily.js') };
+const SRC = { cloud: read('js/cloud.js'), sync: read('js/sync-merge.js'), syncLesson: read('js/sync-merge-lesson.js'), pet: read('js/pet.js'), food: read('js/pet-food.js'), rules: read('js/move-rules.js'), merge: read('js/move-merge.js'), daily: read('js/daily.js') };
 const USER = { id: '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72', email: 's@x.com', user_metadata: { name: '學生' } };
 const OTHER = '9a9a9a9a-0000-4000-8000-000000000000';
 const PID = 'c' + USER.id.replace(/-/g, '');
@@ -99,7 +99,7 @@ function loadPage(w, opt) {
   vm.createContext(ctx);
   try { ctx.__PROFILE_ID = JSON.parse(w.local.getItem('tr_current_profile')) || null; } catch (e) { ctx.__PROFILE_ID = null; }
   Object.assign(ctx, { PET_ON: true, PET_FOOD: true, PET_FOOD_FROM: '2026-10-20' });
-  vm.runInContext(SRC.pet, ctx); vm.runInContext(SRC.food, ctx); vm.runInContext(SRC.sync, ctx);
+  vm.runInContext(SRC.pet, ctx); vm.runInContext(SRC.food, ctx); vm.runInContext(SRC.sync, ctx); vm.runInContext(SRC.syncLesson, ctx);
   if (opt.movers !== 'fail') { vm.runInContext(SRC.rules, ctx); vm.runInContext(SRC.merge, ctx); vm.runInContext(SRC.daily, ctx); }
   vm.runInContext(opt.cloudSrc || SRC.cloud, ctx);   // opt.cloudSrc:改過的 cloud.js(測試合併表多一個鍵)
   return {
@@ -361,6 +361,7 @@ const SMX = { console: { log() {}, warn() {}, error() {} } };
 SMX.window = SMX;
 vm.createContext(SMX);
 vm.runInContext(SRC.sync, SMX);
+vm.runInContext(SRC.syncLesson, SMX);
 const SM = SMX.SYNC_MERGE;
 const DAY = 24 * HOUR;
 /* 新版頁面做的題庫(有 _r、_t、_p 戳記) */
@@ -529,6 +530,27 @@ T['暫存區:模擬考錯題(mock_wrong)搬家暫存區、本機、雲端各一�
   const bk = Object.keys(w.local.dump()).filter((k) => /^tr_move_backup_/.test(k));
   const ok = J(lv(w, 'mock_wrong')) === J(want) && J(cv(w, 'mock_wrong')) === J(want) && !bk.length && w.local.getItem(PEND) === null && ups(w).includes('mock_wrong');
   return { ok, detail: J({ local: lv(w, 'mock_wrong'), cloud: cv(w, 'mock_wrong'), bk, ups: ups(w) }) };
+};
+T['暫存區:起始程度設定的 levels、onboard、self_score:暫存、本機、雲端三份照自己的時間欄位留最新的,levels.history 三份聯集,不進備份'] = async () => {
+  const w = makeWorld();
+  const h = (t, l) => ({ at: iso(t), listening: l, reading: l, reason: 'manual' });
+  const lvl = (t, l) => ({ listening: l, reading: l, source: { listening: 'score', reading: 'score' }, setAt: iso(t), history: [h(t, l)] });
+  const ob = (t, status) => ({ v: 1, status, step: status === 'done' ? 'result' : 'test', updatedAt: iso(t) });
+  const ss = (t, l) => ({ listening: l, reading: 200, total: l + 200, examYm: '2026-09', fromTotal: false, enteredAt: iso(t) });
+  cloudRow(w, 'levels', lvl(T0 - 5 * HOUR, 'entry'), T0 - HOUR);
+  cloudRow(w, 'onboard', ob(T0 - 5 * HOUR, 'in_progress'), T0 - HOUR);
+  cloudRow(w, 'self_score', ss(T0 - HOUR, 400), T0 - HOUR);
+  signedIn(w);
+  w.local.setItem(PREFIX + 'levels', J(lvl(T0 - 4 * HOUR, 'threshold')));
+  w.local.setItem(LEDGER, J({ levels: T0 - 4 * HOUR }));
+  w.local.setItem(PEND, J({ items: [['levels', J(lvl(T0 - 2 * HOUR, 'high')), T0 - 2 * HOUR], ['onboard', J(ob(T0 - 3 * HOUR, 'done')), T0 - 3 * HOUR],
+    ['self_score', J(ss(T0 - 3 * HOUR, 300)), T0 - 3 * HOUR]] }));
+  await openLoggedIn(w);
+  const L = lv(w, 'levels') || {};
+  const ok = L.listening === 'high' && (L.history || []).length === 3 && J(cv(w, 'levels')) === J(L)
+    && (lv(w, 'onboard') || {}).status === 'done' && (cv(w, 'onboard') || {}).status === 'done'
+    && (lv(w, 'self_score') || {}).listening === 400 && !backups(w).length && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ levels: L, onboard: lv(w, 'onboard'), self: lv(w, 'self_score'), bk: backups(w), ups: ups(w) }) };
 };
 T['暫存區:課程進度(les_t 一堂一鍵、pts):搬家暫存、本機、雲端三份合併(作答聯集、考點批次聯集),上傳到雲端,不進備份'] = async () => {
   const w = makeWorld();

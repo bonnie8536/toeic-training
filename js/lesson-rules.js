@@ -4,7 +4,7 @@
      P1.photo;P2.wh、yn、choice、request(Can you／Could you 開頭的是非問句)、statement、neg(否定與附加問句合併);
      P3.set、P4.set、P7.set(整組);P5.cat:<分類>;P6.type:<小題題型>。
    日期一律是 'YYYY-MM-DD' 字串(學生當地的日子,由呼叫的一方給);週是週一到週日。
-   兩台的 pts、rvq 合併用 js/sync-merge.js(SYNC_MERGE.pts、rvq;雲端同步也用同一份),要先載入它。
+   兩台的 pts、rvq 合併用 js/sync-merge-lesson.js(SYNC_MERGE.pts、rvq;雲端同步也用同一份),要先載入 js/sync-merge.js 與它。
    考點狀態(store 鍵 pts):{ <考點鍵>: { s, hits: [{ d, n, ok, src, b, v }], pauseUntil } }
      s:new(沒練)、learning(學習中)、met(達標過一次、還沒過關)、passed(過關)、weak(弱點)、stuck(卡關,pauseUntil 之前暫停不排)。
        s 是寫入時算的快取,兩台合併後可能過時,讀的時候用 statusOf 或 mergePts 重算
@@ -20,7 +20,7 @@
   'use strict';
   function sync() {
     const S = root.SYNC_MERGE;
-    if (!S || typeof S.pts !== 'function' || typeof S.rvq !== 'function') throw new Error('要先載入 js/sync-merge.js');
+    if (!S || typeof S.pts !== 'function' || typeof S.rvq !== 'function') throw new Error('要先載入 js/sync-merge.js 與 js/sync-merge-lesson.js');
     return S;
   }
 

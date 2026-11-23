@@ -742,6 +742,15 @@ T['確認視窗:確定 true、取消 false、Esc false、點遮罩 false;焦點�
   click(dlg.querySelector('.ui-dialog-cancel'));
   assert.strictEqual(await v, false);
 
+  const lines = p.doc.createElement('span'); lines.textContent = '兩行內文';
+  v = p.UI.confirm({ title: 'A2', body: lines, ok: '改用', cancel: '保留', focusCancel: true });
+  dlg = p.doc.querySelector('.ui-dialog');
+  assert.strictEqual(p.doc.activeElement, dlg.querySelector('.ui-dialog-cancel'), 'focusCancel:停在取消');
+  assert.ok(!dlg.querySelector('.ui-dialog-ok').classList.contains('is-danger'), 'focusCancel 不把確定變紅');
+  assert.strictEqual(dlg.querySelector('.ui-dialog-body').firstChild, lines, '內文給節點就照樣接上(分行用)');
+  key(p.doc, 'Escape');
+  assert.strictEqual(await v, false);
+
   v = p.UI.confirm({ title: 'B' });
   const esc = key(p.doc, 'Escape');
   assert.ok(esc.stopped, 'Esc 不往下傳給頁面上其他處理');

@@ -3547,7 +3547,8 @@ main:focus { outline: none; }
 .ui-dialog-input { display: block; width: 100%; min-height: 44px; font-size: var(--fs-md); border-radius: var(--r-sm); }
 .ui-dialog-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-tint); }
 .ui-dialog-hint { margin: 6px 0 0; font-size: var(--fs-xs); color: var(--ink-soft); }
-.ui-dialog-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 24px; }
+.ui-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 24px; }
+.ui-dialog-actions .btn, .ui-dialog-actions .btn-text { white-space: nowrap; }   /* 同 .modal-row:按鈕字不折行,窄螢幕排不下就整顆換到下一行 */
 .ui-dialog-actions .btn.primary { min-height: 44px; min-width: 88px; padding: 0 20px; font-size: var(--fs-btn); border-radius: var(--r-md); }
 .ui-dialog-actions .btn-text { color: var(--ink-soft); }
 .ui-dialog-actions .btn-text:hover { color: var(--ink); background: var(--bg-soft); }
@@ -4006,3 +4007,115 @@ html:not(.authed) .wr-home-tag { display: none; }   /* 訪客沒有自動儲存�
 .auth-opt { margin-left: 4px; padding: 1px 8px; border-radius: var(--r-full); background: var(--bg-soft); font-size: var(--fs-xs); font-weight: 400; color: var(--ink-soft); }
 /* 404:空狀態的樣子,文字是 h1(頁面唯一的標題) */
 .nf-empty h1.ui-empty-text { font-size: var(--fs-xl); font-family: var(--round); color: var(--ink); }
+
+/* ==== 新用戶設定起始程度(start.html、首頁的卡、我的頁學習設定) ====
+   一頁一個問題:頁首左邊返回、右邊第幾題;選項是整張可點的卡片(外觀同 .auth-role-card)。
+   一個畫面只有一顆實色主按鈕(天藍底白字,字級 --fs-btn),其他動作是文字按鈕(.btn-text);手機上按鈕列固定在下方。
+   App 外殼裡用外殼的返回鍵,這裡的返回鈕藏起來(不出現兩個返回)。螢光筆只用在 h1。 */
+.ob-root { padding-bottom: 8px; }
+.ob-head { display: flex; justify-content: space-between; align-items: center; max-width: 520px; min-height: 44px; margin-top: 18px; }   /* 跟選項同寬:第幾題對齊選項右緣 */
+.ob-head + .page-head { margin-top: 10px; }
+.ob-progress { font-size: var(--fs-sm); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.ob-back {
+  display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-left: -10px;
+  border: 0; border-radius: var(--r-md); background: none; color: var(--ink); cursor: pointer;
+}
+.ob-back:hover { background: var(--bg-soft); }
+.ob-back:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+html.app-shell .ob-back { visibility: hidden; }
+/* S0:標題在左、鵜鶘緊跟在右邊(同首頁首屏的排法,不飄到畫面最右);手機鵜鶘縮到 96 寬 */
+.ob-start { display: flex; align-items: center; gap: 16px 48px; }
+.ob-start .page-head { flex: 0 1 auto; min-width: 0; }
+.ob-start-art { display: block; flex: none; }
+@media (max-width: 600px) {
+  .ob-start { align-items: flex-start; gap: 8px; }
+  .ob-start-art { width: 80px !important; height: 93px !important; margin: 18px -6px -6px 0; }   /* 退回小雞時 */
+  .ob-start-art.is-pelican { width: 96px !important; height: 90px !important; margin: 26px -6px -4px 0; }
+}
+.ob-choices { display: grid; gap: 10px; margin: 18px 0; max-width: 520px; }
+/* 選項的外觀同 .auth-role-card,但不能共用那條規則:.auth-role-card 是 label 包 input(選定靠 :has(input:checked)),
+   這裡是 button[role=radio](點了就前進,選定靠 aria-checked) */
+.ob-choice {
+  display: flex; align-items: center; width: 100%; min-height: 56px; padding: 10px 16px;
+  border: 1px solid var(--line); border-radius: var(--r-md); background: #fff; color: var(--ink);
+  font-family: var(--round); font-size: var(--fs-md); font-weight: 700; text-align: left; cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.ob-choice:hover { border-color: var(--primary); }
+.ob-choice[aria-checked="true"] { border-color: var(--primary); background: var(--primary-tint); color: var(--primary-dark); box-shadow: inset 0 0 0 1px var(--primary); }
+.ob-choice:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.ob-field, .ob-form { max-width: 520px; margin: 18px 0 6px; }
+.ob-form { display: grid; gap: 14px; }
+.ob-score { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ob-score.is-one { grid-template-columns: 1fr; max-width: 254px; }
+.ob-switch { margin: -4px 0 0; }
+.ob-switch .btn-text { margin-left: -12px; font-size: var(--fs-sm); }
+.ob-foot { margin-top: 28px; }
+.ob-foot a { margin-left: 6px; }
+.ob-nowrap { white-space: nowrap; }
+.ob-line { display: block; }   /* 視窗內文分行(帳號已有學習設定:帳號的設定、剛才的答案各一行) */
+.ob-loading { margin-top: 30px; }   /* 等雲端、算級別:一行小字,同文法查表頁的「載入中…」 */
+/* S4:同檢測頁的開始頁(.diag-intro 卡片、兩個小標籤、卡片裡的實色主按鈕),下面接文字按鈕 */
+.ob-intro-note { margin: 12px 0 0; font-size: var(--fs-sm); color: var(--ink-soft); }
+.ob-intro .auth-msg:not(:empty) { margin-top: 12px; }
+.ob-intro-more { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 12px 0 0 -12px; }
+.ob-intro-more .btn-text .ob-date { margin-left: 2px; }
+/* 按鈕列:實色主按鈕一顆,後面是文字按鈕 */
+.ob-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 24px 0 40px; }
+.ob-actions .btn.primary {
+  display: inline-flex; align-items: center; justify-content: center; min-width: 200px; min-height: 48px; padding: 0 32px;
+  font-size: var(--fs-btn); border-radius: var(--r-md); text-decoration: none;
+}
+.ob-actions .btn.primary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.ob-date, .me-row-val { font-size: 13px; font-weight: 400; color: var(--ink-soft); }
+.me-row-val { margin-left: auto; padding-left: 12px; overflow-wrap: anywhere; }
+/* S8:結算卡(UI.result)的標題是一句話不是分數,字級降到 --fs-2xl;兩科級別放在統計列 */
+.ob-result .result-score b { font-size: var(--fs-2xl); }
+.ob-mine { max-width: 480px; margin: 8px auto 40px; }
+.ob-mine .me-list { margin-bottom: 0; }
+.ob-root > .auth-msg { max-width: 480px; margin: 12px auto 0; text-align: center; }
+.ob-auth-back { margin-top: 18px; text-align: center; }
+.ob-join-auth { margin-top: 24px; }
+/* S8b 改級別(UI.sheet):兩組四選一,下面一顆「套用」 */
+.ob-level-set { margin-top: 16px; }
+.ob-level-set + .ob-level-set { margin-top: 14px; }
+.ob-level-legend { font-size: var(--fs-sm); color: var(--ink-soft); padding: 0; margin-bottom: 8px; }
+.ob-level-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.ob-gap { margin-top: 10px; }
+.ob-gap:empty { display: none; }
+.ob-sheet-actions { margin-top: 20px; }
+.ob-sheet-actions .btn.primary {
+  display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px;
+  font-size: var(--fs-btn); border-radius: var(--r-md);
+}
+.ob-sheet-actions .btn.primary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+@media (max-width: 860px) {
+  .ob-actions {
+    position: sticky; bottom: 0; z-index: 5; display: grid; justify-items: center; gap: 4px; margin: 22px 0 24px;
+    padding: 12px 0 calc(12px + env(safe-area-inset-bottom)); background: #fff;
+    /* 白底往左右延伸到整個畫面寬(只畫陰影,不佔版面、不會出現橫向捲動),兩側不露出底下捲動的內容 */
+    box-shadow: 0 0 0 100vmax #fff; clip-path: inset(0 -100vmax);
+  }
+  .ob-actions .btn.primary { width: 100%; min-width: 0; }
+}
+@media (max-width: 600px) {
+  .ob-level-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ob-intro-more { flex-direction: column; align-self: stretch; margin-left: 0; }   /* 卡片裡的主按鈕在手機佔滿寬:文字按鈕置中排在下面 */
+}
+@media (max-width: 359px) {
+  .ob-score { grid-template-columns: 1fr; }
+}
+/* 首頁的卡(index.html #onboard-home):每日練習卡後面,桌機在右欄;按鈕是描邊鈕與文字按鈕 */
+.ob-home[hidden] { display: none; }
+.home .ob-home { margin-top: 16px; }
+.home .ob-home + .pet-home { margin-top: 16px; }   /* 小雞卡原本接在每日練習卡後面(.daily-home + .pet-home),現在接在這張卡後面 */
+.ob-home h2 { font-size: var(--fs-lg); margin: 0; }
+.ob-home-sub { margin: 6px 0 0; color: var(--ink-soft); font-size: var(--fs-sm); }
+.ob-home-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; }
+.ob-home-actions .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px; border-radius: var(--r-md); text-decoration: none; }
+.ob-home-actions .btn:hover { text-decoration: none; }
+.ob-home-actions .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+@media (max-width: 600px) {
+  .ob-home-actions .btn { flex: 1 1 100%; min-height: 48px; }
+  .ob-home-actions .btn-text { margin: 0 auto; }
+}

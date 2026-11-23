@@ -1,6 +1,6 @@
 /* 課程進度跨裝置同步:真的 js/cloud.js 的上傳、灌雲端資料、登出前對帳,加上 js/pack-core.js 的開堂與交卷。
    les_t<期>_<堂>、pts、rvq、tests_v1 在 cloud.js 的合併表上,任何一條路都不會整份蓋掉另一台的作答。
-   假的 Supabase 與多台裝置在 tools/sync_harness.js;頁面載入真的 js/sync-merge.js、js/cloud.js,再載入 js/lesson-rules.js、js/pack-core.js。
+   假的 Supabase 與多台裝置在 tools/sync_harness.js;頁面載入真的 js/sync-merge.js、js/sync-merge-lesson.js、js/cloud.js,再載入 js/lesson-rules.js、js/pack-core.js。
    用法:node tools/test_lesson_sync.js */
 'use strict';
 const fs = require('fs');
@@ -187,6 +187,35 @@ T['S7 合併函式會收斂:SYNC_MERGE.lesson、pts、rvq、tests 跟參數順�
     }
   });
   return { ok: !bad.length, detail: J(bad) };
+};
+
+/* 課程的四個合併函式放在 js/sync-merge-lesson.js(從 js/sync-merge.js 分出來):接在 sync-merge.js 後面載入時把它們加進 SYNC_MERGE,
+   原有的函式是同一個、還是凍結的;sync-merge.js 沒載到就什麼都不做(不丟錯、不建 SYNC_MERGE);檔案本身不讀寫儲存、不碰畫面 */
+T['S8 js/sync-merge-lesson.js:接在 sync-merge.js 後面載入,SYNC_MERGE 多 lesson、pts、rvq、tests,原有的函式不變、還是凍結的;單獨載入不做事'] = async () => {
+  const COURSE = ['lesson', 'pts', 'rvq', 'tests'];
+  const c = { console };
+  c.window = c;
+  vm.createContext(c);
+  vm.runInContext(read('js/sync-merge.js'), c, { filename: 'js/sync-merge.js' });
+  const before = c.SYNC_MERGE;
+  vm.runInContext(read('js/sync-merge-lesson.js'), c, { filename: 'js/sync-merge-lesson.js' });
+  const after = c.SYNC_MERGE;
+  const alone = { console };
+  alone.window = alone;
+  vm.createContext(alone);
+  let threw = false;
+  try { vm.runInContext(read('js/sync-merge-lesson.js'), alone, { filename: 'js/sync-merge-lesson.js' }); } catch (e) { threw = true; }
+  const code = read('js/sync-merge-lesson.js').replace(/\/\*[\s\S]*?\*\//g, '');
+  const got = {
+    added: Object.keys(after).filter((k) => !(k in before)).sort(),
+    kept: Object.keys(before).every((k) => after[k] === before[k]),
+    frozen: Object.isFrozen(after),
+    works: after.pts(null, { 'P2.wh': { s: 'learning', hits: [], pauseUntil: null } }).ok === true && after.rvq([], null).ok === true,
+    alone: !threw && alone.SYNC_MERGE === undefined,
+    pure: !/localStorage|sessionStorage|document|store\./.test(code),
+  };
+  const ok = J(got.added) === J(COURSE.slice().sort()) && COURSE.every((k) => typeof after[k] === 'function') && got.kept && got.frozen && got.works && got.alone && got.pure;
+  return { ok, detail: J(got) };
 };
 
 (async () => {

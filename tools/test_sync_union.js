@@ -283,7 +283,7 @@ const scenarios = {
     return { ok: has(banksOf(phone), A, 'early') && ids(banksOf(phone)).includes(B) && has(cloudOf(w, 'vgame_banks'), A, 'early') && !!p2,
              detail: '本機 ' + J([...wordKeys(banksOf(phone))]) + ' / 雲端 ' + J([...wordKeys(cloudOf(w, 'vgame_banks'))]) };
   },
-  '21. 每個載入 js/cloud.js 的頁面都在它前面載入 js/sync-merge.js(沒載到的頁面題庫就傳不上去),sw.js 寫死的快取清單(搬家頁的 MOVE_ASSETS)也有它': async () => {
+  '21. 每個載入 js/cloud.js 的頁面都在它前面載入 js/sync-merge.js(沒載到的頁面題庫就傳不上去),每個載入 sync-merge.js 的頁面都緊接著載入 js/sync-merge-lesson.js(課程進度的合併),sw.js 寫死的快取清單(搬家頁的 MOVE_ASSETS)也有這兩個檔': async () => {
     const fs = require('fs'), path = require('path');
     const dir = path.join(__dirname, '..');
     const pages = fs.readdirSync(dir).filter(f => /\.html$/.test(f));
@@ -292,18 +292,19 @@ const scenarios = {
     pages.forEach(f => {
       const srcs = [];
       fs.readFileSync(path.join(dir, f), 'utf8').replace(/<script[^>]*\ssrc="([^"]+)"/g, (m, src) => { srcs.push(src); return m; });
-      const ci = srcs.indexOf('js/cloud.js');
+      const ci = srcs.indexOf('js/cloud.js'), si = srcs.indexOf('js/sync-merge.js'), li = srcs.indexOf('js/sync-merge-lesson.js');
+      /* 課程進度的合併函式在另一個檔:緊接在 sync-merge.js 後面(只載一次),沒有 sync-merge.js 的頁面也不單獨載它 */
+      if ((si > -1 || li > -1) && (si < 0 || li !== si + 1 || srcs.lastIndexOf('js/sync-merge-lesson.js') !== li)) { bad.push(f); return; }
       if (ci < 0) return;
       n++;
-      const si = srcs.indexOf('js/sync-merge.js');
       if (si < 0 || si > ci || srcs.lastIndexOf('js/sync-merge.js') !== si) bad.push(f);
     });
     const sw = fs.readFileSync(path.join(dir, 'sw.js'), 'utf8');
     /* sw.js 平常是執行時才快取;寫死的清單只有搬家頁的 MOVE_ASSETS(feat/move:舊網址安裝時先存好搬家頁載入的每個檔案,tools/test_sw.js 比對 move-out.html)。
        有寫死清單就要有 sync-merge.js,不然舊網址離線時搬家頁拿不到它,題庫傳不上去 */
     const listed = /js\/(cloud|pet|common)\.js/.test(sw);
-    const listOk = !listed || /'\/js\/sync-merge\.js'/.test(sw);
-    return { ok: n >= 20 && !bad.length && listOk, detail: n + ' 頁' + (bad.length ? ',沒載或順序不對:' + bad.join('、') : ',都在 cloud.js 前面') + ' / sw.js 寫死清單 ' + listed + (listOk ? '' : ',清單裡沒有 js/sync-merge.js') };
+    const listOk = !listed || (/'\/js\/sync-merge\.js', '\/js\/sync-merge-lesson\.js'/.test(sw));
+    return { ok: n >= 20 && !bad.length && listOk, detail: n + ' 頁' + (bad.length ? ',沒載或順序不對:' + bad.join('、') : ',都在 cloud.js 前面') + ' / sw.js 寫死清單 ' + listed + (listOk ? '' : ',清單裡沒有 js/sync-merge.js、js/sync-merge-lesson.js') };
   },
   '22. 頁面沒載到 sync-merge.js、雲端又比帳本新(別台後來上傳過):灌資料時不拿雲端蓋掉本機沒上傳的題庫,留本機、帳本留著,回正常頁面再合併上傳': async () => {
     const w = makeWorld(101);

@@ -371,7 +371,7 @@
 
     const table = h('table', { class: 'cat-table' },
       h('tr', null,
-        h('th', null, '學生'), h('th', null, '最近活動'), h('th', null, '檢測結果'),
+        h('th', null, '學生'), h('th', null, '最近活動'), h('th', null, '檢測結果'), h('th', null, '起始程度'),
         h('th', null, 'Part 5'), h('th', null, 'Part 6'), h('th', null, 'Part 7'), h('th', null, '單字'),
         h('th', { class: 'ad-caret-th' }, h('span', { class: 'ad-sr' }, '展開'))));
 
@@ -393,13 +393,14 @@
           h('span', { class: 'ad-sync' }, '最後同步 ' + syncText(s.last))),
         h('td', { class: 'num' }, (s.last || '').slice(0, 10) || '—'),
         h('td', { class: 'num' }, diag ? diag.score + '/' + diag.total + ' · ' + diag.band : '未檢測'),
+        h('td', { class: 'num' }, window.ONBOARD_CORE ? ONBOARD_CORE.levelsLabel(s.keys['levels']) : '未設定'),   // 起始程度(start.html 寫的 levels)
         h('td', { class: 'num' }, fmt(d5)), h('td', { class: 'num' }, fmt(d6)), h('td', { class: 'num' }, fmt(d7)),
         h('td', { class: 'num' }, vo.done + '/' + vo.total),
         h('td', { class: 'ad-caret-td' }, caret));
 
       const wb = ownerOn() ? OW.billing.writingBlock({ uid, keys: s.keys }) : null;
       const detailRow = h('tr', { style: 'display:none' },
-        h('td', { colspan: '8', style: 'background:var(--bg-soft)' }, detail(name, diag, d5, d6, d7), wb ? wb.el : null,
+        h('td', { colspan: '9', style: 'background:var(--bg-soft)' }, detail(name, diag, d5, d6, d7), wb ? wb.el : null,
           noteSection(uid, tnote0, n => { nameEl.textContent = n || meta.name || meta.email || uid.slice(0, 8); })));
       const toggle = () => {
         detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';

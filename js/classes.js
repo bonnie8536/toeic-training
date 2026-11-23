@@ -103,7 +103,8 @@
     }
   }
 
-  const api = { normalize, join, list, leave };
+  /* check:邀請碼格式的錯誤訊息(合格回空字串),start.html 的 C1 離開欄位時用 */
+  const api = { normalize, check: (raw) => formatError(normalize(raw)), join, list, leave };
 
   /* 沒登入時打開的邀請碼:存一天,讀一次就清掉。存不進去、壞掉都當作沒有 */
   const pending = {
@@ -276,7 +277,7 @@
       closeBtn,
       h('h2', { class: 'auth-h', id: 'join-h' }, '加入班級'),
       form,
-      h('p', { class: 'auth-fine' }, '加入後這個班的老師看得到你的暱稱、Email 和學習記錄。'));
+      h('p', { class: 'auth-fine' }, '加入後這個班的老師看得到你的暱稱、Email、程度檢測結果和學習記錄。'));
     mask.append(box);
     document.body.append(mask);
 

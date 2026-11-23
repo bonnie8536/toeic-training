@@ -4,7 +4,7 @@
      看得到才動,離開畫面、分頁到背景、destroy() 時停;happy 只畫靜止格,跳一下由 CSS 做。忘了 destroy 時,畫布拿出頁面後自己收掉
    - UI.focus.enter(opt)  專心模式;UI.sheet(opt) 從作答列點開的面板(題號面板)
    - UI.result(opt) 結算卡、UI.rewardRow(opt) 只有點心列、UI.detail(title, nodes, opt) 逐題收合、UI.empty(opt) 空狀態
-   - UI.confirm(opt)、UI.prompt(opt)、UI.alert(opt)  確認、輸入、通知視窗(Promise)
+   - UI.confirm(opt)、UI.prompt(opt)、UI.alert(opt)  確認、輸入、通知視窗(Promise);opt.body 是字串或節點(要分行時給節點)
    - UI.mount(root)  root 底下的 canvas[data-doodle]、[data-mascot]、[data-chick] 都掛上(掛過的不重掛),頁面載入時對整頁做一次;UI.doodle(root) 只畫圖示
    不依賴小雞存檔與登入,不讀寫任何瀏覽器端儲存,不用 innerHTML(文字一律 textContent)。圖沒載到時元件照常顯示,只是少了圖。 */
 (function () {
@@ -423,9 +423,10 @@
       doc.body.append(mask);
       off = holdFocus(mask, items, no);
       dlgOpen = no;
-      /* 起始焦點:輸入框;危險的確認停在取消上(按錯 Enter 不會刪東西);其他停在確定 */
+      /* 起始焦點:輸入框;危險的確認停在取消上(按錯 Enter 不會刪東西);其他停在確定。
+         opt.focusCancel:不是危險的動作(確定不用紅色),但按錯 Enter 會蓋掉資料,一樣停在取消上 */
       if (input) { input.focus(); safe(function () { input.select(); }); }
-      else (o.danger && cancel ? cancel : ok).focus();
+      else ((o.danger || o.focusCancel) && cancel ? cancel : ok).focus();
     });
     /* 打開它的程式要收掉時(例如作答結束)呼叫:等於按取消 */
     done.cancel = function () { if (cancelIt) cancelIt(); };

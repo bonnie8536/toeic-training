@@ -1,5 +1,5 @@
 /* 學習包的課程引擎:拼課表、選題、凍結選題、解鎖、進度鍵與兩台合併。課程頁用;這一版還沒有頁面載入它。
-   要先載入 js/sync-merge.js(兩台的合併)、js/lesson-rules.js(考點與個人段的規則)、js/bank.js(題庫題一律經過 BANK.pick、BANK.get、BANK.meta)。
+   要先載入 js/sync-merge.js 與 js/sync-merge-lesson.js(兩台的合併)、js/lesson-rules.js(考點與個人段的規則)、js/bank.js(題庫題一律經過 BANK.pick、BANK.get、BANK.meta)。
    學習包是 data/packs/pack_<級>.json(schema 在 data/packs/pack_schema.json);這一版只開入門(entry)、門檻(threshold)兩包。
 
    進度鍵 les_t<期>_<堂>(例 les_t1_03,期 1–99、堂 01–24):一律用 lessonKey(term, no) 產生,不要自己拼字串。內容:
@@ -14,7 +14,7 @@
                                                           r = 答對 1 ＋ 第一次作答 2(0–3)、dt 是距 startedAt 的秒數
    模組不存在作答裡:看區塊(固定段是課表上那個區塊的 module,個人段看 pk 的 m)。每堂進度鍵上限 5 KB(LESSON_KEY_MAX,超過時先縮,見 fitLesson)。
    區塊編號:固定段的區塊照課表順序 0 起編;個人段用固定的號碼(回顧 80–84、弱點補練 85–89、測驗檢討 90–97),兩台算出來一樣。
-   跨裝置:les_t*、pts、rvq、tests_v1 在 js/cloud.js 的合併表上(合併函式在 js/sync-merge.js):上傳前先讀雲端那一份合併,開新分頁灌雲端資料時
+   跨裝置:les_t*、pts、rvq、tests_v1 在 js/cloud.js 的合併表上(合併函式在 js/sync-merge-lesson.js):上傳前先讀雲端那一份合併,開新分頁灌雲端資料時
    本機和雲端都有就存合併結果,不會整份蓋掉別台的;讀不到雲端就不上傳、帳本留著。這裡開堂、交卷時再讀一次雲端合併(loadLesson、saveLesson、
    saveShared、loadShared),畫面一開始就有別台的進度;讀不到雲端(離線、逾時)就照本機寫,上傳時 cloud.js 會合併。
    作答中每答一題用 saveLessonLocal 只寫本機、不讀雲端(中途關分頁,回來從沒答的題接著做);交卷用 saveLesson。
@@ -28,7 +28,7 @@
   if (!R) throw new Error('要先載入 js/lesson-rules.js');
   function sync() {
     const S = root.SYNC_MERGE;
-    if (!S || typeof S.lesson !== 'function' || typeof S.tests !== 'function') throw new Error('要先載入 js/sync-merge.js');
+    if (!S || typeof S.lesson !== 'function' || typeof S.tests !== 'function') throw new Error('要先載入 js/sync-merge.js 與 js/sync-merge-lesson.js');
     return S;
   }
 

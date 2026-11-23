@@ -26,7 +26,8 @@ T['挑鍵:tr_unsynced_ 不會被當成學生資料夾;雲端帳號資料夾不�
   assert.equal(c('tr_drill_p5'), 'guest');
   assert.equal(c('sb-ydz-auth-token'), 'skip');
   ['tr_access_' + UID, 'tr_trial_note_closed', 'tr_signup_intent', 'tr_pending_join', 'tr_move_done', 'tr_move_log', 'tr_localonly_' + UID,
-    'tr_cloud_unhydrated_' + UID, 'tr_cloud_seen_' + UID].forEach((k) => assert.equal(c(k), 'skip', k));   // js/cloud.js 的「還沒灌過」「灌過」(各網域自己的)
+    'tr_cloud_unhydrated_' + UID, 'tr_cloud_seen_' + UID, 'tr_onboard_guest'].forEach((k) => assert.equal(c(k), 'skip', k));   // js/cloud.js 的「還沒灌過」「灌過」(各網域自己的);start.html 的訪客暫存
+  assert.equal(c('tr_onboard'), 'guest');   // onboard 有規則了:訪客資料夾裡的同名鍵算訪客資料(start.html 只在登入後寫,訪客不會有)
   assert.equal(c('tr_profiles'), 'global');
   assert.equal(c('tr_whatever_new'), 'unknown');
   return '全部對';

@@ -14,6 +14,7 @@ function load() {
   vm.createContext(ctx);
   vm.runInContext(read('data/bank-meta.js'), ctx);
   vm.runInContext(read('js/sync-merge.js'), ctx, { filename: 'js/sync-merge.js' });
+  vm.runInContext(read('js/sync-merge-lesson.js'), ctx, { filename: 'js/sync-merge-lesson.js' });
   vm.runInContext(read('js/lesson-rules.js'), ctx, { filename: 'js/lesson-rules.js' });
   return ctx;
 }

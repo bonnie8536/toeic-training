@@ -24,8 +24,12 @@
        跟 mock_history 一樣先讀雲端、合併、再上傳;搬家暫存區(takePending → takeSynced)也照 SYNC_FN 合併。
        舊快取的 sync-merge.js 沒有 mockWrong:merge() 是 null,照上面的規則不上傳、帳本留著。
        模擬考、錯題本、題庫、能力分析開頁時呼叫 syncKey('mock_wrong') 跟雲端對齊一次(js/wrongbook.js syncCloud;為什麼見已知限制 8)。
+     · levels、onboard、self_score(新用戶的起始程度設定):合併函式 SYNC_MERGE.levels、onboard、selfScore,
+       整份留自己時間欄位(setAt、updatedAt、enteredAt)較新的那一份,levels.history 兩份聯集。整份上傳的話,舊裝置離線排隊的上傳會蓋掉雲端較新的。
+       先讀雲端、合併、再上傳;灌資料、搬家暫存區(SYNC_FN)也合併。不加 reconcile:登出、搬家前的對帳請求跟以前一樣。
+       部署前就開著的舊版分頁(合併表沒有這三個鍵)照舊整份上傳,同已知限制 8。tools/test_onboard_sync.js。
      · 課程(js/pack-core.js、js/lesson-rules.js):les_t<期>_<堂>(一堂一鍵,用 MERGED_FAMILIES 的鍵名規則認)、pts、rvq、tests_v1。
-       合併函式 SYNC_MERGE.lesson、pts、rvq、tests(規則見 js/sync-merge.js)。以前整份上傳:離線做的一段、開新分頁灌資料、
+       合併函式 SYNC_MERGE.lesson、pts、rvq、tests(規則見 js/sync-merge-lesson.js)。以前整份上傳:離線做的一段、開新分頁灌資料、
        讀雲端逾時後補傳、兩台差不多同時交卷,後到的會把另一台的作答整份蓋掉。現在跟題庫一樣先讀雲端合併再上傳,灌資料時也合併;
        加 reconcile:登出、搬家前對帳時本機有這些鍵才多讀它們(沒有課程資料的帳號請求跟以前一樣)。搬家暫存區(SYNC_FN、SYNC_FAMILY)也合併。
        部署前就開著的舊版分頁(合併表沒有這些鍵)照舊整份上傳,同已知限制 8;課程頁跟這一版 cloud.js 一起上線,舊分頁沒有課程頁。
@@ -107,6 +111,9 @@
     vgame_banks: { merge: SMF('banks'), tombs: true, reconcile: true },
     mock_history: { merge: SMF('mock'), reconcile: true },
     mock_wrong: { merge: SMF('mockWrong'), reconcile: true },
+    levels: { merge: SMF('levels') },
+    onboard: { merge: SMF('onboard') },
+    self_score: { merge: SMF('selfScore') },
     pts: { merge: SMF('pts'), reconcile: true },
     rvq: { merge: SMF('rvq'), reconcile: true },
     tests_v1: { merge: SMF('tests'), reconcile: true },
@@ -1515,6 +1522,7 @@
     const load = (window.MOVE_RULES ? Promise.resolve() : add('js/move-rules.js')).then(() => (window.MOVE_MERGE ? null : add('js/move-merge.js')))
       .then(() => (window.DAILY ? null : add('js/daily.js')))
       .then(() => (window.SYNC_MERGE ? null : add('js/sync-merge.js')))
+      .then(() => (window.SYNC_MERGE && window.SYNC_MERGE.lesson ? null : add('js/sync-merge-lesson.js')))
       .then(have, () => false);
     return Promise.race([load, new Promise(resolve => setTimeout(() => resolve(false), READ_TIMEOUT_MS))]);
   }
@@ -1546,8 +1554,8 @@
      不准當成題庫合併、也不准略過(略過的話暫存區照樣刪掉)。
      回 { sets: [[鍵, 原字串]], backup: [[鍵, 原字串]] };合併不了的鍵暫存那份放進備份,本機不動 */
   const SYNC_FAMILY = [[/^les_t/, 'lesson']];
-  const SYNC_TWO = { mock: 1, mockWrong: 1, pts: 1, rvq: 1, tests: 1, lesson: 1 };   // 雲端和暫存那份先合、再合本機(不用標記)
-  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', pts: 'pts', rvq: 'rvq', tests_v1: 'tests' };
+  const SYNC_TWO = { mock: 1, mockWrong: 1, levels: 1, onboard: 1, selfScore: 1, pts: 1, rvq: 1, tests: 1, lesson: 1 };   // 雲端和暫存那份先合、再合本機(不用標記)
+  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests' };
   function takeSynced(syncItems, led, cloud, prefix, now) {
     const S = window.SYNC_MERGE, sets = [], backup = [];
     const val = (raw) => { try { return raw === null || raw === undefined ? null : JSON.parse(raw); } catch (e) { return undefined; } };

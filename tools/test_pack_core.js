@@ -16,7 +16,7 @@ function sandbox() {
   const ctx = { console, Promise, Map, Set, JSON, Object, Array, Math, Number, String, Date, TypeError, Error, isNaN, TextEncoder };
   ctx.window = ctx;
   vm.createContext(ctx);
-  ['data/bank-meta.js', 'data/ear.js', 'js/move-rules.js', 'js/sync-merge.js', 'js/move-merge.js', 'js/lesson-rules.js', 'js/bank.js', 'js/pack-core.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
+  ['data/bank-meta.js', 'data/ear.js', 'js/move-rules.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js', 'js/move-merge.js', 'js/lesson-rules.js', 'js/bank.js', 'js/pack-core.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   return ctx;
 }
 const CTX = sandbox();

@@ -1,0 +1,161 @@
+{
+  "v": 1,
+  "cards": [
+    {
+      "id": "tip-P1-photo",
+      "part": "P1",
+      "title": "先看照片再核對每一句",
+      "body": "題本只印照片，四句描述只播一次也不印出來。播放前先看照片，認出人在做的動作和看得到的東西。每聽一句就回照片核對，動作和東西都對上才留下。常見的錯誤選項會說出照片裡有的東西，動作卻說錯。",
+      "example": {
+        "en": "(A) A man is typing on a laptop.\n(B) A man is drinking some coffee.",
+        "zh": "照片是男子坐在桌前用筆電打字，桌上有一杯咖啡。B 的咖啡看得到，但他沒在喝。",
+        "kind": "photo"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P2-wh",
+      "part": "P2",
+      "title": "聽問句第一個字",
+      "body": "WH 問句是用 When、Where、Who 這類字開頭的問句。第一個字決定要找哪一種答案，When 找時間、Where 找地點、Who 找人。先抓住這個字，再找三個選項裡回答這種資訊的那一個。WH 問句不能只用是或不是回答，Yes 或 No 開頭的選項多半可以先刪。",
+      "example": {
+        "en": "Who is giving the talk this afternoon?\n(A) In the main hall.\n(B) Ms. Chen from the sales team.\n(C) Yes, it was a great talk.",
+        "zh": "Who 問人，答案是 B。A 答的是地點，C 用 Yes 回答。",
+        "kind": "script"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P2-yn",
+      "part": "P2",
+      "title": "Yes/No 問句的間接回答",
+      "body": "Yes/No 問句是用 Do、Is、Have、Can 這類字開頭，可以用是或不是回答的問句。正解不一定會說 Yes 或 No，也可能直接說接下來的安排。所以別只等 Yes 或 No，要聽後半句有沒有接上問的那件事。Yes 開頭但後半句講別的事，是常見陷阱。",
+      "example": {
+        "en": "Did you send the price list to the client?\n(A) I'll do it right after lunch.\n(B) Yes, the prices went up.\n(C) She's a new client.",
+        "zh": "A 沒說 No，用「午餐後就寄」表示還沒寄。B 的後半句沒有回答。",
+        "kind": "script"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P3-gist",
+      "part": "P3",
+      "title": "先讀題目，聽前兩句抓主旨",
+      "body": "Part 3 是兩三人的簡短對話，題本會印出題目和選項。播放前先讀第一題，看它是不是主旨題，也就是問整段對話在談什麼、說話的人為什麼打來。主旨題的答案多半在對話的頭一兩句，開頭要專心聽。只抓到對話裡一個單字的選項是常見陷阱。",
+      "example": {
+        "en": "Woman: Hi, I'm calling about the desk I ordered last week. It still hasn't arrived.\nMan: I'm sorry. Let me check the delivery status for you.\nQuestion: Why is the woman calling?\n(A) To ask about a late delivery\n(B) To order a new desk",
+        "zh": "女子開頭兩句就說了目的。B 只抓到 desk 這個字。",
+        "kind": "script"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P3-speaker_place",
+      "part": "P3",
+      "title": "從用字判斷身分與地點",
+      "body": "有些題目問說話的人是誰或在哪裡。對話多半不會直接說出職業或地點，要從一組相關的字推出來，例如聽到 menu、table for two 多半是在餐廳。至少兩個線索指向同一個答案再選。只跟對話裡一個字有關的選項是常見陷阱。",
+      "example": {
+        "en": "Woman: I'd like to borrow these three books. Here's my card.\nMan: Sure. Please return them within two weeks.\nQuestion: Where most likely are the speakers?\n(A) At a library\n(B) At a bookstore",
+        "zh": "borrow 和 return 都指向圖書館。B 只跟 books 有關。",
+        "kind": "script"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P4-gist",
+      "part": "P4",
+      "title": "獨白開頭兩句說目的",
+      "body": "Part 4 是一個人說的簡短獨白，例如電話留言、公告或會議發言。第一題常問這段話的目的，像是為什麼打這通電話。說話的人多半在開頭兩句就交代身分和目的。播放前先讀題，開頭專心聽。只提到獨白裡某個單字的選項是常見陷阱。",
+      "example": {
+        "en": "Hi, this is Amy from the dental clinic. I'm calling to move your Monday appointment to Wednesday at ten. Please call us back to confirm the new time.\nQuestion: Why is the speaker calling?\n(A) To change an appointment time\n(B) To give directions to the clinic",
+        "zh": "目的在 I'm calling to 那一句。B 只抓到 clinic 這個字。",
+        "kind": "script"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P5-word_form",
+      "part": "P5",
+      "title": "看空格前後判斷詞性",
+      "body": "詞性是指一個字是名詞、動詞、形容詞還是副詞。四個選項只有字尾不同時，這題考的就是詞性。先不用翻譯整句，只看空格前後各一兩個字，想想這個位置缺哪一種字。例如 a 和名詞中間的空格，多半要放形容詞。",
+      "example": {
+        "en": "The hotel offers a ------- view of the river.\n(A) beauty (B) beautiful (C) beautifully (D) beautify",
+        "zh": "空格在 a 和名詞 view 中間，要放形容詞 B。",
+        "kind": "sentence"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P5-tense",
+      "part": "P5",
+      "title": "先找句中的時間線索",
+      "body": "時態是動詞用來表示過去、現在或未來的形式。四個選項是同一個動詞的不同時態時，先在句子裡圈出時間線索，例如 yesterday、last month、next week。再選跟線索配合的時態，像 yesterday 配過去式、next week 配未來式。",
+      "example": {
+        "en": "The sales team ------- the new product to customers next Monday.\n(A) presented (B) will present (C) has presented (D) presenting",
+        "zh": "時間線索是 next Monday，要用未來式 B。",
+        "kind": "sentence"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P5-verb_form",
+      "part": "P5",
+      "title": "時間線索與主被動",
+      "body": "四個選項是同一個動詞的不同形式時，先找句中的時間線索決定時態，例如 last year 用過去式。再看主詞（句子裡做動作的人或東西）是不是自己做這個動作。主詞是東西、空格後面又沒有受詞（動作的對象）時，多半要用被動，像 was sent、is made。",
+      "example": {
+        "en": "The invitations ------- to all guests last Friday.\n(A) send (B) will send (C) were sent (D) are sending",
+        "zh": "last Friday 要用過去式，邀請函是被寄出的，選 C。",
+        "kind": "sentence"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P5-pron_case",
+      "part": "P5",
+      "title": "看空格位置選代名詞",
+      "body": "代名詞是代替人或東西的字，像 he、him、his。選項是同一個人的不同形式時，看空格在句子裡的位置。在動詞前面當主詞（做動作的人）選 he，在動詞或 for、to 這類字後面選 him，後面緊接名詞、表示「誰的」選 his。",
+      "example": {
+        "en": "Ms. Lin asked ------- assistant to book a meeting room.\n(A) she (B) her (C) hers (D) herself",
+        "zh": "空格後面緊接名詞 assistant，表示「她的」，選 B。",
+        "kind": "sentence"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P5-prep_vs_conj",
+      "part": "P5",
+      "title": "介系詞接名詞，連接詞接子句",
+      "body": "介系詞像 despite、because of、during，後面接名詞。連接詞像 although、because、while，後面接子句，也就是帶有主詞和動詞的一句話。先看空格後面接的那一段有沒有動詞。有動詞選連接詞，只有名詞選介系詞。意思相近的兩個字常一起出現在選項裡，要靠這一步分辨。",
+      "example": {
+        "en": "------- the heavy rain, the outdoor concert started on time.\n(A) Although (B) Despite (C) Because (D) However",
+        "zh": "空格後只有名詞 the heavy rain，沒有動詞，選介系詞 B。",
+        "kind": "sentence"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P6-grammar",
+      "part": "P6",
+      "title": "看空格前後句再選文法",
+      "body": "Part 6 是一篇有幾個空格的短文。文法題的線索有時在別的句子，例如時態要看前後句說的事發生了沒有，代名詞（it、they 這類字）要看它指前面哪個人或東西。單看本句有兩個選項都說得通時，回頭讀空格的前一句和後一句再選。",
+      "example": {
+        "en": "We have packed your order. It ------- by express mail. You will get a tracking number once it leaves our warehouse.\n(A) was sent (B) will be sent (C) sends (D) has sent",
+        "zh": "後一句 once it leaves 表示還沒出貨，要選 B。",
+        "kind": "sentence"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P7-detail",
+      "part": "P7",
+      "title": "回原文找同義說法",
+      "body": "細節題問文章裡寫明的一件事，例如時間、地點或要準備的東西。先讀題目並圈出人名、日期這類好找的字，再回文章找到那一句。正解多半換了說法，像文章寫 free 而選項寫 at no cost。照抄原文字詞的選項常是陷阱，字一樣但答的是別的問題。",
+      "example": {
+        "en": "The staff kitchen will be closed for cleaning from June 3 to June 5.\nQuestion: How long will the kitchen be closed?\n(A) For three days\n(B) For cleaning",
+        "zh": "June 3 到 5 換成 three days。B 抄原文，答的是原因。",
+        "kind": "sentence"
+      },
+      "source": "original"
+    }
+  ]
+}

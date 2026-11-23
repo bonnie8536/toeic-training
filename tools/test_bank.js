@@ -107,14 +107,14 @@ T_['B5 P6 每組的空格號是 1 到小題數照順序(作答紀錄「組id:空
   const bad = T.part6.filter((s) => J(s.questions.map((q) => q.num)) !== J(s.questions.map((q, i) => i + 1)));
   return { ok: !bad.length, detail: bad.map((s) => s.id).join(',') || T.part6.length + ' 組' };
 };
-T_['B6 tools/merge_data.py 產生的索引跟 repo 裡的一樣;原本的 13 個輸出檔一個位元組都沒變'] = () => {
+T_['B6 tools/merge_data.py 產生的索引跟 repo 裡的一樣;原本的 13 個輸出檔與技巧卡 tips.js 一個位元組都沒變'] = () => {
   if (!PY) return { skip: true, detail: '找不到 Python 3(試過環境變數 PYTHON、python3、python、py),設 PYTHON=python 執行檔路徑可以跑' };
   const out = fs.mkdtempSync(path.join(os.tmpdir(), 'bank-meta-'));
   try {
     const r = spawnSync(PY, [path.join(REPO, 'tools', 'merge_data.py')], { cwd: REPO, encoding: 'utf8', env: Object.assign({}, process.env, { PYTHONIOENCODING: 'utf-8', MERGE_OUT_DIR: out }) });
     if (r.status !== 0) return { ok: false, detail: 'merge_data.py exit ' + r.status + ' ' + String(r.stderr || r.stdout).slice(-300) };
     const files = fs.readdirSync(out).sort();
-    const want = ['articles.js', 'bank-meta.js', 'diagnostic.js', 'ear.js', 'grammar.js', 'listening.js', 'part5.js', 'part6.js', 'part7.js', 'phonics.js', 'phrases.js', 'tenses.js', 'verbs.js', 'writing.js'];
+    const want = ['articles.js', 'bank-meta.js', 'diagnostic.js', 'ear.js', 'grammar.js', 'listening.js', 'part5.js', 'part6.js', 'part7.js', 'phonics.js', 'phrases.js', 'tenses.js', 'tips.js', 'verbs.js', 'writing.js'];
     const lf = (s) => s.replace(/\r\n/g, '\n');
     const diff = files.filter((f) => lf(fs.readFileSync(path.join(out, f), 'utf8')) !== lf(read('data/' + f)));
     return { ok: J(files) === J(want) && !diff.length, detail: J({ files: files.length, diff }) };

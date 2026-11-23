@@ -231,7 +231,7 @@ function buildPack(md, opt) {
   const pack = {
     schemaVersion: '1.2', packId: 'pack-' + level + '-v1', level, nameZh: M.LEVEL_ZH[level], packVersion: opt.version,
     status: liveThrough > 0 ? 'live' : 'draft', liveThrough, specRefs: ['00-v1.2'], scoreRange: M.SCORE[level],
-    difficultyMix: mix || { D1: 0, D2: 1, D3: 0, D4: 0 }, weeks: 12, lessonsPerWeek: 2, mainPoints: mainPoints(md, issues).valueOf(), pointCells: ctx.cells,
+    difficultyMix: mix || { D1: 0, D2: 1, D3: 0, D4: 0 }, weeks: 12, lessonsPerWeek: 2, mainPoints: mainPoints(md, issues), pointCells: ctx.cells,
     termGoal: { scoreDelta: { listening: delta ? Number(delta[1]) : 0, reading: delta ? Number(delta[1]) : 0 }, scoreCap: 495, completion: { twicePerWeek: 20, oncePerWeek: 10 }, cellsPassed: 9, scoreVisibleToStudent: false },
     weeklyGoals: { completionRate: 0.8, studyDays: { twicePerWeek: 3, oncePerWeek: 2 }, focusAccuracy: 0.6, pointMet: { minItems: 5, rate: 0.8, groupWindow: 'week' }, reviewDone: 0.8, testWeeks: { studyDays: { twicePerWeek: 2, oncePerWeek: 1 } } },
     lessons,

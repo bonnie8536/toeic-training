@@ -458,8 +458,9 @@
         ids = st.pk[idx] ? st.pk[idx].ids : (await pickBankIds(x.part, x.count, where, lesson.mix[x.part <= '4' ? 'listening' : 'reading'], ctx, avoid)).ids;
       }
       ids.forEach((id) => avoid.push(id));
-      st = freeze(st, idx, ids, ctx.now, { r: 'test_review' });
-      blocks.push(Object.assign({ idx: idx++ }, x, { ids: st.pk[idx - 1].ids }));
+      const at = idx++;
+      st = freeze(st, at, ids, ctx.now, { r: 'test_review' });
+      blocks.push(Object.assign({ idx: at }, x, { ids: st.pk[at].ids }));
     }
     return { state: st, blocks };
   }

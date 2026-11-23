@@ -1,7 +1,7 @@
 /* 文法基礎:從零開始的文法課。
    四階單元路徑(句子的零件→把句子變化→加長句子→接軌多益),
-   一單元=白話講解+例句對照+小試身手;完成打勾,紀錄存 grammar_done(雲端同步):{ 單元id: { ok: 答對數, t: 題數, at: 完成時間 } },
-   at 是後來加的,舊紀錄沒有(或是 true、1 這類更舊的寫法)照讀,GRAMMAR.done(id) 整理成同一個樣子。
+   一單元=白話講解+例句對照+小試身手;完成打勾,紀錄存 grammar_done(雲端同步):{ 單元id: { ok: 答對數, t: 題數 } },
+   課程頁(GRAMMAR.unit)完成的多記 at(完成時間),文法頁寫的格式不變;沒有 at(或是 true、1 這類更舊的寫法)照讀,GRAMMAR.done(id) 整理成同一個樣子。
    課程頁的入口 window.GRAMMAR.unit(el, id, opts)(沒有 #grammar-root 的頁面只開這個入口),見 lessonUnit。 */
 (function () {
   const root = $('#grammar-root');
@@ -323,7 +323,7 @@
     function finish() {
       const ok = results.filter(Boolean).length;
       const done = store.get('grammar_done', {});
-      done[u.id] = { ok, t: u.quiz.length, at: Date.now() };
+      done[u.id] = host ? { ok, t: u.quiz.length, at: Date.now() } : { ok, t: u.quiz.length };
       store.set('grammar_done', done);
       if (host) {
         host.onDone(LESSON_ENTRY.result(u.quiz.map((q, qi) => ({ m: 'g', id: u.id, sub: qi + 1, key: u.id + ':' + qi, c: picks[qi], ok: !!results[qi] }))));

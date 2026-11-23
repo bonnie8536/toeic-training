@@ -234,18 +234,17 @@ T['L5 LISTEN.startQuiz 帶 onDone 的參數錯誤:沒給 units、空的、Part �
 };
 
 /* ================= 文法 js/grammar.js ================= */
-const noAt = (s) => { const g = s.stored.tr_grammar_done; if (g) Object.values(g).forEach((v) => { delete v.at; }); return s; };
-T['G1 文法頁沒給新參數:首頁、單元作答完,畫面與紀錄跟改之前一樣;完成紀錄只多了 at(完成時間)'] = () => {
+T['G1 文法頁沒給新參數:首頁、單元作答完,畫面與紀錄跟改之前一樣(完成紀錄不加 at,只有課程頁才寫)'] = () => {
   const data = ['data/grammar.js'];
   const quiz = (env) => { for (let i = 0; i < 12; i++) { const o = nodes(env.root, '.opts').find((x) => !x.children[0].disabled); if (!o) break; o.children[i % 4].click(); } env.flush(); };
   const res = compare('js/grammar.js', data, [
     { name: '首頁', env: { rootId: 'grammar-root' }, act: (env) => env.flush() },
-    { name: '單元', env: { rootId: 'grammar-root', search: '?u=gb-03', ls: { tr_grammar_done: J({ 'ga-01': { ok: 3, t: 8 } }) } }, act: quiz, pick: noAt },
+    { name: '單元', env: { rootId: 'grammar-root', search: '?u=gb-03', ls: { tr_grammar_done: J({ 'ga-01': { ok: 3, t: 8 } }) } }, act: quiz },
   ]);
   const env = engineEnv({ data, engines: [{ file: 'js/grammar.js' }], rootId: 'grammar-root', search: '?u=gb-03' });
   quiz(env);
   const rec = env.stored().tr_grammar_done['gb-03'];
-  return { ok: res.ok && rec && rec.at === NOW && Object.keys(rec).join() === 'ok,t,at', detail: res.detail + ' ' + J(rec) };
+  return { ok: res.ok && rec && Object.keys(rec).join() === 'ok,t', detail: res.detail + ' ' + J(rec) };
 };
 function grammarEnv(ls) {
   const pet = [];

@@ -1,0 +1,1575 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.rushuplanguage.com/schema/pack_schema.json",
+  "title": "衝衝英文學習包",
+  "description": "學習包：一個級別一包、24 堂。v1.2：包層加 liveThrough（開放到第幾堂）；個人段規則加 test_review_v1（測驗檢討段依學生最弱的 Part 出題）；legacyWhere 加 canYou；單字段的「前 3 週」一律寫 three_weeks_ago（課表文件裡的 week_minus_3 轉檔時換成這個）。v1.1：主考點格 pointCells、termGoal 改 cellsPassed、固定段占比依堂型、小檢核題組型考點與補足區塊。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packId",
+    "level",
+    "nameZh",
+    "packVersion",
+    "status",
+    "liveThrough",
+    "specRefs",
+    "scoreRange",
+    "difficultyMix",
+    "weeks",
+    "lessonsPerWeek",
+    "mainPoints",
+    "pointCells",
+    "termGoal",
+    "weeklyGoals",
+    "lessons",
+    "authoring"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.2"
+    },
+    "packId": {
+      "type": "string",
+      "pattern": "^pack-(entry|threshold|advanced|high)-v[0-9]+$"
+    },
+    "level": {
+      "$ref": "#/$defs/level"
+    },
+    "nameZh": {
+      "enum": [
+        "入門",
+        "門檻",
+        "進階",
+        "高分"
+      ]
+    },
+    "packVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "review",
+        "live",
+        "retired"
+      ]
+    },
+    "liveThrough": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 24,
+      "description": "開放到第幾堂：第 1 堂到這一堂開放，之後的堂顯示尚未開放；0 是都還沒開放。status 是 live 時至少 1；只寫一個數字，所以開放的堂號一定從第 1 堂連號"
+    },
+    "specRefs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^(00|01|02|03)-v[0-9]+\\.[0-9]+$"
+      }
+    },
+    "scoreRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "listening",
+        "reading",
+        "total"
+      ],
+      "properties": {
+        "listening": {
+          "$ref": "#/$defs/range"
+        },
+        "reading": {
+          "$ref": "#/$defs/range"
+        },
+        "total": {
+          "$ref": "#/$defs/range"
+        }
+      }
+    },
+    "difficultyMix": {
+      "$ref": "#/$defs/mix"
+    },
+    "weeks": {
+      "const": 12
+    },
+    "lessonsPerWeek": {
+      "const": 2
+    },
+    "mainPoints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "listening",
+        "reading"
+      ],
+      "properties": {
+        "listening": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/skillKey"
+          }
+        },
+        "reading": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/skillKey"
+          }
+        }
+      }
+    },
+    "pointCells": {
+      "type": "array",
+      "description": "主考點格：第 2–6、8–11 週，聽讀各 9 格，共 18 格；整期考點目標的分母",
+      "minItems": 18,
+      "maxItems": 18,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "week",
+          "track",
+          "keys"
+        ],
+        "properties": {
+          "week": {
+            "enum": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              8,
+              9,
+              10,
+              11
+            ]
+          },
+          "track": {
+            "enum": [
+              "listening",
+              "reading"
+            ]
+          },
+          "keys": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 4,
+            "items": {
+              "$ref": "#/$defs/skillKey"
+            }
+          }
+        }
+      }
+    },
+    "termGoal": {
+      "$ref": "#/$defs/termGoal"
+    },
+    "weeklyGoals": {
+      "$ref": "#/$defs/weeklyGoals"
+    },
+    "lessons": {
+      "type": "array",
+      "minItems": 24,
+      "maxItems": 24,
+      "items": {
+        "$ref": "#/$defs/lesson"
+      }
+    },
+    "bankCheck": {
+      "$ref": "#/$defs/bankCheck"
+    },
+    "authoring": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "designer",
+        "updatedAt"
+      ],
+      "properties": {
+        "designer": {
+          "type": "string",
+          "pattern": "^designer:(entry|threshold|advanced|high)$",
+          "description": "角色代號，不寫真實姓名"
+        },
+        "reviewer": {
+          "type": "string",
+          "pattern": "^(human|model):[a-z0-9_.-]+$"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "changeNote": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    }
+  },
+  "$defs": {
+    "level": {
+      "enum": [
+        "entry",
+        "threshold",
+        "advanced",
+        "high"
+      ]
+    },
+    "difficulty": {
+      "enum": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ]
+    },
+    "range": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "integer",
+        "minimum": 5,
+        "maximum": 990
+      }
+    },
+    "mix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "properties": {
+        "D1": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "D2": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "D3": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "D4": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "skillKey": {
+      "type": "string",
+      "description": "考點鍵。補標前的過渡寫法 P5.cat:<category>、P6.type:<type>、P3.set、P4.set、P7.set 也接受。",
+      "pattern": "^(P1\\.photo|P[2-4]\\.[a-z_]+|P[347]\\.set|P5\\.[a-z_]+(-[0-9]{2})?|P5\\.cat:[^\\s]+|P6\\.[a-z_]+|P6\\.type:[^\\s]+|P7\\.[a-z_]+)$"
+    },
+    "moduleRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "id"
+      ],
+      "properties": {
+        "module": {
+          "$ref": "#/$defs/module"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "題目、單元或卡片的 id；同一 id 在不同模組可能重複（例：片語 ph-101 與自然發音 ph-01 同前綴），所以一定要和 module 一起寫"
+        },
+        "sub": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "題組內小題：P6 填 num，P3、P4、P7 填從 1 起算的小題序"
+        }
+      }
+    },
+    "module": {
+      "enum": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "p7",
+        "grammar",
+        "phrases",
+        "articles",
+        "vocab_transfer",
+        "article_vocab",
+        "ear_dictation",
+        "ear_pairs",
+        "ear_numbers",
+        "ear_shadow",
+        "phonics",
+        "verbs",
+        "tenses",
+        "writing",
+        "dialogues",
+        "tip_cards",
+        "test_forms",
+        "word_cards"
+      ]
+    },
+    "where": {
+      "type": "object",
+      "description": "選題條件；陣列表示任一符合。tiers 不必寫，程式用學生該科的級帶入。",
+      "additionalProperties": false,
+      "properties": {
+        "part": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5",
+              "P6",
+              "P7"
+            ]
+          }
+        },
+        "qType": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z_]+$"
+          }
+        },
+        "point": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z_]+(-[0-9]{2})?$"
+          }
+        },
+        "ability": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "L1",
+              "L2",
+              "L3",
+              "L4",
+              "L5",
+              "R1",
+              "R2",
+              "R3",
+              "R4",
+              "R5"
+            ]
+          }
+        },
+        "level": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/difficulty"
+          }
+        },
+        "genre": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z_]+$"
+          }
+        },
+        "topic": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z_]+$"
+          }
+        },
+        "evidenceScope": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "single",
+              "adjacent",
+              "paragraph",
+              "cross_paragraph",
+              "cross_text",
+              "graphic"
+            ]
+          }
+        },
+        "setSize": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 5
+          }
+        },
+        "passages": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          }
+        },
+        "speakerCount": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3
+          }
+        },
+        "graphic": {
+          "type": "boolean"
+        },
+        "quote": {
+          "type": "boolean"
+        },
+        "maxWordCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "practiceOnly": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "live",
+              "trial"
+            ]
+          }
+        },
+        "useFor": {
+          "enum": [
+            "practice",
+            "placement",
+            "pretest",
+            "mock"
+          ]
+        },
+        "audioVariant": {
+          "enum": [
+            "standard",
+            "slow",
+            "challenge"
+          ]
+        },
+        "earLevel": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "初級",
+              "中級",
+              "進階"
+            ]
+          }
+        },
+        "articleLevel": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "初級",
+              "中級",
+              "中高級",
+              "高級"
+            ]
+          }
+        },
+        "phraseType": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "動詞片語",
+              "形容詞+介系詞",
+              "動詞+介系詞",
+              "慣用語"
+            ]
+          }
+        },
+        "unitIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z]{2}-[0-9]{2,3}$"
+          }
+        },
+        "weekWords": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "this_week",
+              "last_week",
+              "three_weeks_ago"
+            ]
+          },
+          "description": "單字段用：本週、上週、前 3 週的新字"
+        }
+      }
+    },
+    "legacyWhere": {
+      "type": "object",
+      "description": "補標前的舊欄位條件。補標後程式改用 where，本欄保留作對照。",
+      "additionalProperties": false,
+      "properties": {
+        "difficulty": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "基礎",
+              "中級",
+              "進階"
+            ]
+          }
+        },
+        "category": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "passageType": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "format": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "single",
+              "double",
+              "triple"
+            ]
+          }
+        },
+        "stemKeyword": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "maxWordCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "canYou": {
+          "type": "boolean",
+          "description": "Part 2：問句是不是 Can you／Could you 開頭（題目索引 data/bank-meta.js 的 canYou）。Yes/No 問句排除這類時寫 false，請求與提議寫 true"
+        }
+      }
+    },
+    "select": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "where",
+        "levelMix"
+      ],
+      "properties": {
+        "where": {
+          "$ref": "#/$defs/where"
+        },
+        "legacyWhere": {
+          "$ref": "#/$defs/legacyWhere"
+        },
+        "levelMix": {
+          "description": "pack：照包的 difficultyMix；none：不套配比（非題庫模組）；或寫明配比",
+          "oneOf": [
+            {
+              "enum": [
+                "pack",
+                "none"
+              ]
+            },
+            {
+              "$ref": "#/$defs/mix"
+            }
+          ]
+        },
+        "order": {
+          "enum": [
+            "easy_to_hard",
+            "random",
+            "as_listed"
+          ]
+        },
+        "exclude": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "seenWithinDays": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 60
+            },
+            "usedInLesson": {
+              "type": "boolean"
+            },
+            "sameScenarioInLesson": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blockId",
+        "module",
+        "unit",
+        "count",
+        "secondsPerUnit",
+        "timing",
+        "bankStatus"
+      ],
+      "properties": {
+        "blockId": {
+          "type": "string",
+          "pattern": "^(entry|threshold|advanced|high)-L(0[1-9]|1[0-9]|2[0-4])-[a-z_]+-[0-9]{1,2}$"
+        },
+        "labelZh": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "module": {
+          "$ref": "#/$defs/module"
+        },
+        "unit": {
+          "enum": [
+            "item",
+            "set",
+            "unit",
+            "sentence",
+            "lesson",
+            "article",
+            "word",
+            "phrase",
+            "card",
+            "form"
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50
+        },
+        "secondsPerUnit": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 2400
+        },
+        "timing": {
+          "enum": [
+            "guided",
+            "timed",
+            "untimed",
+            "test"
+          ]
+        },
+        "playsAllowed": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "select": {
+          "$ref": "#/$defs/select"
+        },
+        "ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/moduleRef"
+          }
+        },
+        "bankStatus": {
+          "enum": [
+            "available",
+            "available_legacy",
+            "partial",
+            "needs_items",
+            "needs_tags",
+            "new_content"
+          ]
+        },
+        "bankAvailable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "shortfall": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "basis": {
+          "type": "string",
+          "maxLength": 200
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "select"
+          ],
+          "not": {
+            "required": [
+              "ids"
+            ]
+          }
+        },
+        {
+          "required": [
+            "ids"
+          ],
+          "not": {
+            "required": [
+              "select"
+            ]
+          }
+        }
+      ]
+    },
+    "segment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slot",
+        "order",
+        "titleZh",
+        "minutes",
+        "fixed"
+      ],
+      "properties": {
+        "slot": {
+          "enum": [
+            "vocab",
+            "listening",
+            "reading",
+            "checkpoint",
+            "review",
+            "weak",
+            "wrapup",
+            "test_listening",
+            "test_reading",
+            "test_review"
+          ]
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "titleZh": {
+          "enum": [
+            "單字",
+            "聽力",
+            "閱讀",
+            "小檢核",
+            "回顧",
+            "弱點補練",
+            "本堂結果",
+            "聽力測驗",
+            "閱讀測驗",
+            "測驗檢討"
+          ]
+        },
+        "minutes": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 37
+        },
+        "fixed": {
+          "type": "boolean"
+        },
+        "track": {
+          "enum": [
+            "listening",
+            "reading",
+            "both"
+          ],
+          "description": "聽讀不同級時，這段跟哪一科的級走"
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/block"
+          }
+        },
+        "rule": {
+          "enum": [
+            "review_v1",
+            "weak_v1",
+            "wrapup_v1",
+            "test_review_v1"
+          ]
+        },
+        "maxUnits": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "fixed": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "properties": {
+                "slot": {
+                  "enum": [
+                    "review",
+                    "weak"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "slot": {
+                "enum": [
+                  "review",
+                  "weak"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "rule"
+            ],
+            "properties": {
+              "fixed": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "slot": {
+                "enum": [
+                  "vocab",
+                  "listening",
+                  "reading",
+                  "checkpoint",
+                  "test_listening",
+                  "test_reading"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "blocks"
+            ],
+            "properties": {
+              "blocks": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "slot": {
+                "const": "test_review"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "rule"
+            ],
+            "properties": {
+              "rule": {
+                "const": "test_review_v1"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "coversWeeks",
+        "listening",
+        "reading",
+        "itemsPerPoint",
+        "rules"
+      ],
+      "properties": {
+        "coversWeeks": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          }
+        },
+        "listening": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/skillKey"
+          }
+        },
+        "reading": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/skillKey"
+          }
+        },
+        "itemsPerPoint": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "single",
+            "group"
+          ],
+          "properties": {
+            "single": {
+              "const": 5
+            },
+            "group": {
+              "const": 2,
+              "description": "P3、P4、P6 每考點 2 組；P7 單篇 4 題組 1 組或 2 題組 2 組；雙篇、三篇 1 組"
+            }
+          }
+        },
+        "includeUnpassed": {
+          "type": "boolean",
+          "description": "true：再加入還沒過關的主考點（第 24 堂是全期達標一次、還沒過關的；其他堂是前一次小檢核沒過關的），放得下才加"
+        },
+        "rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "meetAt",
+            "weakAt"
+          ],
+          "properties": {
+            "meetAt": {
+              "const": 4
+            },
+            "weakAt": {
+              "const": 2
+            }
+          }
+        },
+        "answerSeconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1020,
+          "description": "檢核題作答時間合計；加說明 60 秒 ≤1,080"
+        },
+        "fill": {
+          "type": "array",
+          "description": "補足區塊，不計入檢核判定（slotReason cp_fill）",
+          "items": {
+            "$ref": "#/$defs/block"
+          }
+        }
+      }
+    },
+    "test": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "form",
+        "blueprint"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "pretest",
+            "midterm",
+            "posttest"
+          ]
+        },
+        "form": {
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "interim_half"
+          ]
+        },
+        "blueprint": {
+          "const": "half_v1"
+        }
+      }
+    },
+    "lesson": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lessonId",
+        "no",
+        "week",
+        "lessonType",
+        "kind",
+        "titleZh",
+        "minutes",
+        "focus",
+        "objectivesZh",
+        "segments",
+        "fixedShare",
+        "bankStatus"
+      ],
+      "properties": {
+        "lessonId": {
+          "type": "string",
+          "pattern": "^(entry|threshold|advanced|high)-L(0[1-9]|1[0-9]|2[0-4])$"
+        },
+        "no": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 24
+        },
+        "week": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12,
+          "description": "週＝ceil(no÷2)，由檢查腳本驗證"
+        },
+        "lessonType": {
+          "enum": [
+            "main",
+            "extension"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "regular",
+            "checkpoint",
+            "test",
+            "test_review",
+            "timed_review"
+          ],
+          "description": "regular 正課；checkpoint 第 4、8、12、16、20、24 堂；test 第 1、13、23 堂；test_review 第 2、14 堂（第 24 堂同時有測驗檢討，kind 寫 checkpoint）；timed_review 第 21、22 堂"
+        },
+        "titleZh": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 20
+        },
+        "minutes": {
+          "type": "integer",
+          "minimum": 55,
+          "maximum": 60
+        },
+        "focus": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "listening",
+            "reading"
+          ],
+          "properties": {
+            "listening": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/skillKey"
+              }
+            },
+            "reading": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/skillKey"
+              }
+            }
+          }
+        },
+        "objectivesZh": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 30
+          }
+        },
+        "segments": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/segment"
+          }
+        },
+        "checkpoint": {
+          "$ref": "#/$defs/checkpoint"
+        },
+        "test": {
+          "$ref": "#/$defs/test"
+        },
+        "fixedShare": {
+          "type": "number",
+          "minimum": 0.6,
+          "maximum": 1
+        },
+        "teacherNote": {
+          "type": "string",
+          "maxLength": 300
+        },
+        "bankStatus": {
+          "enum": [
+            "available",
+            "available_legacy",
+            "partial",
+            "needs_items",
+            "needs_tags",
+            "new_content"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "checkpoint"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "checkpoint"
+            ],
+            "properties": {
+              "no": {
+                "enum": [
+                  4,
+                  8,
+                  12,
+                  16,
+                  20,
+                  24
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "test"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "test"
+            ],
+            "properties": {
+              "no": {
+                "enum": [
+                  1,
+                  13,
+                  23
+                ]
+              },
+              "fixedShare": {
+                "const": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "regular",
+                  "timed_review",
+                  "checkpoint",
+                  "test_review"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "fixedShare": {
+                "minimum": 0.6,
+                "maximum": 0.7
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "no": {
+                "enum": [
+                  1,
+                  13,
+                  23
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "kind": {
+                "const": "test"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "no": {
+                "enum": [
+                  4,
+                  8,
+                  12,
+                  16,
+                  20,
+                  24
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "kind": {
+                "const": "checkpoint"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "no": {
+                "enum": [
+                  2,
+                  14
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "kind": {
+                "const": "test_review"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "no": {
+                "enum": [
+                  21,
+                  22
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "kind": {
+                "const": "timed_review"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "no": {
+                "enum": [
+                  1,
+                  3,
+                  5,
+                  7,
+                  9,
+                  11,
+                  13,
+                  15,
+                  17,
+                  19,
+                  21,
+                  23
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "lessonType": {
+                "const": "main"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "lessonType": {
+                "const": "extension"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "termGoal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scoreDelta",
+        "scoreCap",
+        "completion",
+        "cellsPassed",
+        "scoreVisibleToStudent"
+      ],
+      "properties": {
+        "scoreDelta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "listening",
+            "reading"
+          ],
+          "properties": {
+            "listening": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 50
+            },
+            "reading": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 50
+            }
+          }
+        },
+        "scoreCap": {
+          "const": 495
+        },
+        "completion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "twicePerWeek",
+            "oncePerWeek"
+          ],
+          "properties": {
+            "twicePerWeek": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 24
+            },
+            "oncePerWeek": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            }
+          }
+        },
+        "cellsPassed": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18,
+          "description": "18 個主考點格中要過關的格數，預設 9"
+        },
+        "scoreVisibleToStudent": {
+          "type": "boolean",
+          "description": "分數目標是否顯示給學生與家長；專用平行卷上線前為 false"
+        }
+      }
+    },
+    "weeklyGoals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "completionRate",
+        "studyDays",
+        "focusAccuracy",
+        "pointMet",
+        "reviewDone"
+      ],
+      "properties": {
+        "completionRate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "studyDays": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "twicePerWeek",
+            "oncePerWeek"
+          ],
+          "properties": {
+            "twicePerWeek": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 7
+            },
+            "oncePerWeek": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 7
+            }
+          }
+        },
+        "focusAccuracy": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "pointMet": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "minItems",
+            "rate",
+            "groupWindow"
+          ],
+          "properties": {
+            "minItems": {
+              "const": 5
+            },
+            "rate": {
+              "const": 0.8
+            },
+            "groupWindow": {
+              "const": "week",
+              "description": "題組型考點以同一週累計判定；單題型同日"
+            }
+          }
+        },
+        "reviewDone": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "testWeeks": {
+          "type": "object",
+          "description": "第 1、7、12 週的規則，四級相同",
+          "additionalProperties": false,
+          "properties": {
+            "studyDays": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "twicePerWeek",
+                "oncePerWeek"
+              ],
+              "properties": {
+                "twicePerWeek": {
+                  "const": 2
+                },
+                "oncePerWeek": {
+                  "const": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "bankCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkedAt",
+        "rows"
+      ],
+      "properties": {
+        "checkedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "skillKey",
+              "needed",
+              "available",
+              "status"
+            ],
+            "properties": {
+              "skillKey": {
+                "$ref": "#/$defs/skillKey"
+              },
+              "needed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "available": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "status": {
+                "enum": [
+                  "available",
+                  "available_legacy",
+                  "partial",
+                  "needs_items",
+                  "needs_tags",
+                  "new_content"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

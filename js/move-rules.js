@@ -11,7 +11,10 @@
      sync_del:自訂題庫的刪除標記(js/sync-merge.js,只有雲端帳號的資料夾會寫)。tombs = 兩份標記聯集(SYNC_MERGE.tombs),
      不能是 single(整份換掉):少了別台的標記,刪掉的題庫和字會回來;沒有規則時搬家包整包被 validate 拒絕。
      mock_wrong:模擬考答錯的題(js/wrongbook.js,2026-11-18),每題 { c, ok, t },跟錯題本一樣用 pool(同一題留 t 新的)。
-     q_reports:回報題目(js/report.js),每題 { c, n, t, f },同一題兩邊都有就留 t 新的。 */
+     q_reports:回報題目(js/report.js),每題 { c, n, t, f },同一題兩邊都有就留 t 新的。
+     課程(js/pack-core.js、js/lesson-rules.js):plan(課表設定)、pts(考點狀態)、rvq(回顧佇列)、tests_v1(測驗結果)、
+     les_t<期>_<堂>(一堂一鍵,由 PACK_CORE.lessonKey 產生)。搬家時整份換(single,兩邊不同時問人);
+     跨裝置同步是另一件事:課程頁寫入前先讀雲端那一份合併(見 js/pack-core.js)。 */
   const EXACT = Object.freeze({
     hist: 'hist', mock_history: 'mock', mock_wrong: 'pool', q_reports: 'pool', pet: 'pet', daily_done: 'daily', vgame_banks: 'banks', sync_del: 'tombs',
     vgame_best: 'best', vgame_toast_best: 'best', vgame_pairs_best: 'pairsBest', vgame_clear: 'clear',
@@ -20,6 +23,7 @@
     writing_read: 'idmap', writing_s: 'idmap', writing_b: 'texts', writing_e: 'texts', writing_y: 'texts',
     ear_s: 'idmap', ear_d: 'idmap', ear_mp: 'idmap', ear_n: 'idmap',
     diag: 'single', ph_slow: 'single', vgame_src: 'single',
+    plan: 'single', pts: 'single', rvq: 'single', tests_v1: 'single',
   });
   const ID = '[A-Za-z0-9_.-]{1,80}';
   const FAMILIES = Object.freeze([
@@ -28,6 +32,7 @@
     [new RegExp('^read_q_' + ID + '$'), 'answers'],
     [new RegExp('^read_tq_' + ID + '$'), 'single'],
     [new RegExp('^vocab_' + ID + '$'), 'fills'],
+    [/^les_t\d{1,2}_\d{2}$/, 'single'],
   ]);
   /* 不在學生資料夾底下的全站鍵 */
   const GLOBAL = Object.freeze({ tr_profiles: 'profiles', tr_current_profile: 'currentProfile', tr_pet_hint: 'fillMissing' });

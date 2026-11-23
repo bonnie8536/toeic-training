@@ -969,11 +969,24 @@ T['格式不對的包:算雜湊不會丟錯(收件頁先驗證、再算雜湊)']
   return 'ok';
 };
 
+/* ---------- 課程的鍵 ---------- */
+T['課程的鍵:plan、pts、rvq、tests_v1 與 les_t<期>_<堂> 整份換(single),格式不對的不認'] = () => {
+  ['plan', 'pts', 'rvq', 'tests_v1', 'les_t1_01', 'les_t1_24', 'les_t12_03'].forEach((k) => assert.equal(R.ruleOf(k), 'single', k));
+  ['les_t1_1', 'les_t123_01', 'les_tx1', 'les_t1_001', 'les_', 'lesson_t1_01'].forEach((k) => assert.equal(R.ruleOf(k), null, k));
+  const ids = new Set(['pabcd12']);
+  assert.deepEqual(R.classify('tr_upabcd12_les_t1_03', ids), { kind: 'profile', rule: 'single', pid: 'pabcd12', sub: 'les_t1_03' });
+  assert.equal(R.classify('tr_les_t1_03', ids).kind, 'guest');
+  assert.equal(R.classify('tr_uc' + '0'.repeat(32) + '_pts', ids).kind, 'cloud');
+  return 'ok';
+};
+
 /* ---------- 程式裡用到的每個 store 鍵都有合併規則 ---------- */
 T['程式裡用到的每個 store 鍵都在合併表裡有規則(新增的鍵沒有規則就失敗)'] = () => {
   const files = fs.readdirSync(path.join(REPO, 'js')).filter((f) => /\.js$/.test(f) && !/^move-/.test(f) && f !== 'cloud.js');
   const found = new Set(), unresolved = [];
-  const known = { 'D.KEY': 'daily_done', 'DAILY.KEY': 'daily_done', KEY: null, 'KEY(p)': null, key: null, storeKey: null, 'SECTIONS[sec].key': null };
+  /* 課程進度鍵一律用 PACK_CORE.lessonKey 產生(js/pack-core.js),這裡當成 les_t1_01 檢查合併規則。
+     不要寫成 store.get('les_t' + …):下面的字串拼接會被讀成 les_tx1,對不上 les_t<期>_<堂> 的規則而失敗 */
+  const known = { 'D.KEY': 'daily_done', 'DAILY.KEY': 'daily_done', KEY: null, 'KEY(p)': null, key: null, storeKey: null, 'SECTIONS[sec].key': null, 'lessonKey(term, no)': 'les_t1_01' };
   files.forEach((f) => {
     const src = read('js/' + f);
     const consts = {};

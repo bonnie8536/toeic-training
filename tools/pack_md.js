@@ -105,7 +105,6 @@ function objectives(text) {
 }
 
 /* ---------- 區塊:選題條件 ---------- */
-const WHERE_KEYS = ['part', 'qType', 'point', 'level', 'format', 'setSize', 'maxWordCount', 'speakerCount', 'earLevel', 'unitIds', 'ids'];
 const LEGACY_KEYS = ['difficulty', 'category', 'type', 'format', 'stemKeyword', 'maxWordCount'];
 const VALUE = {
   part: /^P[1-7]$/, qType: /^[a-z_]+$/, point: /^[a-z_]+$/, level: /^D[1-4](–D[1-4])?$/, format: /^(single|double|triple)$/,

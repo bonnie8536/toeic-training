@@ -168,7 +168,8 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
   ]);
   /* cloud.js:引導的三個鍵只准合併表加三列、SYNC_FN 加三個鍵、檔頭說明(下面 ok 的規則);
      課程進度(les_t、pts、rvq、tests_v1)那一份逐行列在 COURSE:合併表三列、用鍵名規則認的課程進度(MERGED_FAMILIES、mergedIn、localNames)、
-     搬家暫存區的 SYNC_FAMILY 與 SYNC_TWO(兩邊的鍵都在,takeSynced 的分支改看 SYNC_TWO)、搬家暫存區補載 js/sync-merge-lesson.js、檔頭說明 */
+     搬家暫存區的 SYNC_FAMILY 與 SYNC_TWO(兩邊的鍵都在,takeSynced 的分支改看 SYNC_TWO)、搬家暫存區補載 js/sync-merge-lesson.js
+     (已經載好的判斷 have() 也要看到 SYNC_MERGE.lesson)、檔頭說明 */
   const ok = [
     /^\+    (levels: \{ merge: SMF\('levels'\) \}|onboard: \{ merge: SMF\('onboard'\) \}|self_score: \{ merge: SMF\('selfScore'\) \}),$/,
     /^-  const SYNC_FN = \{ sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong' \};$/,
@@ -218,6 +219,8 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     '+    mergedIn(Object.keys(cloud).concat(localNames(prefix))).forEach(k => {',
     '+      const s = spec(k);',
     "+      .then(() => (window.SYNC_MERGE && window.SYNC_MERGE.lesson ? null : add('js/sync-merge-lesson.js')))",
+    '-    const have = () => !!(window.MOVE_RULES && window.MOVE_MERGE && window.DAILY && window.SYNC_MERGE);',
+    '+    const have = () => !!(window.MOVE_RULES && window.MOVE_MERGE && window.DAILY && window.SYNC_MERGE && window.SYNC_MERGE.lesson);',
     '-     鍵清單跟著 MERGED 走(takePending 也是看 MERGED 把鍵交過來);每個鍵用哪個合併函式寫在 SYNC_FN。',
     '-     MERGED 上有、SYNC_FN 沒有的鍵(以後加進合併表卻忘了這裡):暫存那份一律放進備份,不准當成題庫合併、也不准略過(略過的話暫存區照樣刪掉)。',
     '+     鍵清單跟著 MERGED 走(takePending 也是看 MERGED 把鍵交過來,用鍵名規則認的課程進度也在裡面);每個鍵用哪個合併函式寫在 SYNC_FN',

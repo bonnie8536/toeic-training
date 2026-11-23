@@ -1512,7 +1512,7 @@
   function pendingKey(uid) { return 'tr_move_pending_' + uid; }
   function hasPending(uid) { try { return localStorage.getItem(pendingKey(uid)) !== null; } catch (e) { return false; } }
   function loadMovers() {
-    const have = () => !!(window.MOVE_RULES && window.MOVE_MERGE && window.DAILY && window.SYNC_MERGE);
+    const have = () => !!(window.MOVE_RULES && window.MOVE_MERGE && window.DAILY && window.SYNC_MERGE && window.SYNC_MERGE.lesson);
     if (have()) return Promise.resolve(true);
     const add = src => new Promise((res, rej) => {
       const s = document.createElement('script');

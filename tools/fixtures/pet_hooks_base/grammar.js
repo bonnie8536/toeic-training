@@ -1,12 +1,14 @@
 /* 文法基礎:從零開始的文法課。
    四階單元路徑(句子的零件→把句子變化→加長句子→接軌多益),
-   一單元=白話講解+例句對照+小試身手;完成打勾,紀錄存 grammar_done(雲端同步)。 */
+   一單元=白話講解+例句對照+小試身手;完成打勾,紀錄存 grammar_done(雲端同步):{ 單元id: { ok: 答對數, t: 題數, at: 完成時間 } },
+   at 是後來加的,舊紀錄沒有(或是 true、1 這類更舊的寫法)照讀,GRAMMAR.done(id) 整理成同一個樣子。
+   課程頁的入口 window.GRAMMAR.unit(el, id, opts)(沒有 #grammar-root 的頁面只開這個入口),見 lessonUnit。 */
 (function () {
   const root = $('#grammar-root');
   const UNITS = (window.TOEIC && TOEIC.grammar) || [];
 
   if (!UNITS.length) {
-    root.append(UI.empty({ pose: 'read', text: '文法教材準備中' }));
+    if (root) root.append(UI.empty({ pose: 'read', text: '文法教材準備中' }));
     return;
   }
 
@@ -44,6 +46,8 @@
   };
   const refsOf = sk => Object.entries(REFS).filter(([, r]) => r.stage === sk);
 
+  window.GRAMMAR = Object.freeze({ unit: lessonUnit, done: doneOf });
+  if (!root) return;   // 課程頁:不畫文法頁,只開上面的入口
   const uid = getParam('u');
   const unit = UNITS.find(x => x.id === uid);
   const ref = getParam('ref') || (getParam('ch') === 'z' ? 'tenses' : null);
@@ -221,21 +225,33 @@
     })), Promise.resolve());
   }
 
+  /* ================= 課程頁的入口 =================
+     GRAMMAR.unit(el, id, opts):在 el 裡畫一課的講解與小試身手(課名是 h2;不畫章節路徑、不改頁面標題),
+     小試身手全部答完、grammar_done 與學習記錄存好之後呼叫 opts.onDone(result)(js/lesson-entry.js,課程頁要先載入它)。
+     result.items 一題一筆:m 'g'、id 單元 id、sub 第幾題(1 起算)、key 學習記錄的題號(單元id:題索引)。沒有這一課丟 TypeError */
+  function lessonUnit(el, id, opts) {
+    const o = LESSON_ENTRY.check('GRAMMAR.unit', el, opts, false);
+    const u = UNITS.find(x => x.id === id);
+    if (!u) throw new TypeError('GRAMMAR.unit：沒有這一課 ' + id);
+    renderUnit(u, { el, onDone: o.onDone });
+  }
+
+  /* 一課的完成紀錄;沒做過是 null。舊紀錄缺的欄位是 null */
+  function doneOf(id) {
+    const r = store.get('grammar_done', {})[id];
+    if (!r) return null;
+    const num = v => (typeof v === 'number' ? v : null);
+    return typeof r === 'object' ? { ok: num(r.ok), t: num(r.t), at: num(r.at) } : { ok: null, t: null, at: null };
+  }
+
   /* ================= 單元 ================= */
-  function renderUnit(u) {
-    document.title = u.title + ' - 衝衝英文';
-    setPageMeta('u=' + encodeURIComponent(u.id), u.goal);
+  /* host 是課程頁給的 { el, onDone }(文法頁是 undefined):畫在 el 裡、做完交給 onDone */
+  function renderUnit(u, host) {
     const idx = UNITS.indexOf(u);
-    widen();
     const col = h('div', { class: 'gx-col' });
     const parts = splitTitle(u.title);
-    /* 標題在路徑前面:手機上先看到課名,章與課的圓圈排在下面;電腦版標題仍在右欄上方(css .gx-layout.has-head) */
-    const head = h('div', { class: 'gx-head' },
-      h('div', { class: 'drill-top' },
-        h('h1', null, parts.topic),
-        h('a', { href: 'grammar.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回文法基礎')),
-      parts.sub ? h('p', { class: 'gx-sub' }, parts.sub) : null);
-    root.append(h('div', { class: 'gx-layout has-head' }, head, buildRail(stageOf(u), u.id, null), col));
+    if (host) host.el.replaceChildren(h('div', null, h('h2', null, parts.topic), parts.sub ? h('p', { class: 'gx-sub' }, parts.sub) : null, col));
+    else unitPage(u, col, parts);
 
     /* 講解 */
     const lesson = h('div', { class: 'lesson-view' });
@@ -264,6 +280,7 @@
     /* 小試身手(即答:學習情境要立刻知道對錯) */
     col.append(h('div', { class: 'exercise-head', style: 'margin-top:26px' }, h('h2', null, '小試身手')));
     const results = [];
+    const picks = [];   // 各題選的選項(課程頁的結果用)
     const quizWrap = h('div', null);
     u.quiz.forEach((q, qi) => {
       let answered = false;
@@ -275,6 +292,7 @@
           onclick: () => {
             if (answered) return;
             answered = true;
+            picks[qi] = oi;
             results[qi] = oi === q.answer;
             logAttempt('g', u.id + ':' + qi, oi, results[qi]);
             [...opts.children].forEach((btn, bi) => {
@@ -305,8 +323,12 @@
     function finish() {
       const ok = results.filter(Boolean).length;
       const done = store.get('grammar_done', {});
-      done[u.id] = { ok, t: u.quiz.length };
+      done[u.id] = { ok, t: u.quiz.length, at: Date.now() };
       store.set('grammar_done', done);
+      if (host) {
+        host.onDone(LESSON_ENTRY.result(u.quiz.map((q, qi) => ({ m: 'g', id: u.id, sub: qi + 1, key: u.id + ':' + qi, c: picks[qi], ok: !!results[qi] }))));
+        return;
+      }
       const next = UNITS[idx + 1];
       /* 對應題庫 P5 考點的單元,學完直接去刷題 */
       const DRILL_LINK = {
@@ -331,5 +353,19 @@
       card.el.scrollIntoView({ block: 'nearest' });
       card.heading.focus({ preventScroll: true });
     }
+  }
+
+  /* 文法頁的單元:頁面標題、搜尋用的網址與說明、頁首與左邊的章節路徑,講解與小試身手放進 col */
+  function unitPage(u, col, parts) {
+    document.title = u.title + ' - 衝衝英文';
+    setPageMeta('u=' + encodeURIComponent(u.id), u.goal);
+    widen();
+    /* 標題在路徑前面:手機上先看到課名,章與課的圓圈排在下面;電腦版標題仍在右欄上方(css .gx-layout.has-head) */
+    const head = h('div', { class: 'gx-head' },
+      h('div', { class: 'drill-top' },
+        h('h1', null, parts.topic),
+        h('a', { href: 'grammar.html', style: 'font-size:13.5px;margin-left:auto' }, '← 回文法基礎')),
+      parts.sub ? h('p', { class: 'gx-sub' }, parts.sub) : null);
+    root.append(h('div', { class: 'gx-layout has-head' }, head, buildRail(stageOf(u), u.id, null), col));
   }
 })();

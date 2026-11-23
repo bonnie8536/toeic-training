@@ -92,10 +92,21 @@ T['P14 check_packs 技巧卡逐張查:開放的堂缺卡算錯誤、之後的堂
   assert.ok(photo.errors.some((e) => /^第 2 堂：測驗檢討會配的技巧卡 tip-P1-photo 還沒有/.test(e)), photo.errors.join(' / '));
   const later = await check(copy(PACKS.entry), withoutTips('tip-P5-tense'));
   assert.ok(!later.errors.length && later.warnings.some((w) => /之後的堂用到的技巧卡還沒有 \d+ 張：.*tip-P5-tense/.test(w)), later.errors.join(' / '));
+  /* 測驗檢討這一條路單獨查:技巧卡區塊裡的 tip-P7-detail(第 19 堂)先換成別張,缺這張只會從測驗檢討來 */
   const closed = copy(PACKS.entry);
+  closed.lessons.forEach((l) => l.segments.forEach((s) => (s.blocks || []).filter((b) => b.module === 'tip_cards')
+    .forEach((b) => b.ids.forEach((x) => { if (x.id === 'tip-P7-detail') x.id = 'tip-P1-photo'; }))));
+  assert.ok(tipIdsOf(PACKS.entry.lessons).indexOf('tip-P7-detail') > -1 && tipIdsOf(closed.lessons).indexOf('tip-P7-detail') < 0);
   closed.liveThrough = 1;
   const r1 = await check(closed, withoutTips('tip-P7-detail'));
   assert.ok(!r1.errors.length && r1.warnings.some((w) => /技巧卡還沒有.*tip-P7-detail/.test(w)), '第 2 堂還沒開放時測驗檢討缺卡只提醒：' + r1.errors.join(' / '));
+  closed.liveThrough = 2;
+  const r2 = await check(closed, withoutTips('tip-P7-detail'));
+  assert.ok(r2.errors.some((e) => /^第 2 堂：測驗檢討會配的技巧卡 tip-P7-detail 還沒有/.test(e)), '第 2 堂開放後同一份算錯誤：' + r2.errors.join(' / '));
+  const noReview = copy(closed);
+  noReview.lessons.forEach((l) => { l.segments = l.segments.filter((s) => s.slot !== 'test_review'); });
+  const r3 = await check(noReview, withoutTips('tip-P7-detail'));
+  assert.ok(!r3.warnings.some((w) => /技巧卡還沒有.*tip-P7-detail/.test(w)), '拿掉測驗檢討段後不該再提醒 tip-P7-detail');
   const th = await check(copy(PACKS.threshold), withoutTips('tip-P7-detail'));
   assert.ok(th.errors.some((e) => /^第 2 堂：測驗檢討會配的技巧卡 tip-P7-detail 還沒有/.test(e)), th.errors.join(' / '));
   const none = await check(copy(PACKS.threshold), Object.assign({}, DATA, { tips: new Set() }));

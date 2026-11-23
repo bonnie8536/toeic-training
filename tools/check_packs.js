@@ -29,7 +29,8 @@ const LEGACY_OK = ['difficulty', 'category', 'type', 'format', 'maxWordCount', '
 const pad = (n) => (n < 10 ? '0' : '') + n;
 const secondsOf = (blocks) => (blocks || []).reduce((a, b) => a + b.count * b.secondsPerUnit, 0);
 
-/* 測驗檢討(test_review_v1)會配的技巧卡:聽力 Part 1–4、閱讀 Part 5–7 輪流當最弱的 Part,收集 planTestReview 配的卡 */
+/* 測驗檢討(test_review_v1)會配的技巧卡:聽力 Part 1–4、閱讀 Part 5–7 輪流當最弱的 Part,收集 planTestReview 配的卡。
+   收集到的要剛好 Part 1–7 各一張;不是的話(planTestReview 的配法改了,這裡會漏查)丟錯,要一起改這個函式 */
 function reviewTips(LR) {
   const ids = new Set();
   ['1', '2', '3', '4'].forEach((a) => ['5', '6', '7'].forEach((b) => {
@@ -38,7 +39,13 @@ function reviewTips(LR) {
     parts['P' + b] = { n: 1, ok: 0 };
     LR.planTestReview(parts).filter((x) => x.kind === 'tip').forEach((x) => ids.add(x.id));
   }));
-  return [...ids].sort();
+  const list = [...ids].sort();
+  const parts = list.map((id) => (/^tip-P([1-7])-/.exec(String(id)) || [])[1] || '?').join('');
+  if (parts !== '1234567') {
+    throw new Error('測驗檢討會配的技巧卡要 Part 1–7 各一張，從 js/lesson-rules.js 收集到 ' + list.length + ' 張：' + (list.join('、') || '無') +
+      '；planTestReview 的配法改了的話，tools/check_packs.js 的 reviewTips 要一起改');
+  }
+  return list;
 }
 
 /* 題庫資料:題目索引、文法單元、英語耳、技巧卡(用 vm 載入網站的資料檔);測驗檢討會配的技巧卡 */
@@ -247,5 +254,5 @@ async function main(files) {
   return errors ? 1 : 0;
 }
 
-module.exports = { checkPack, checkStructure, checkContent, checkMix, loadData, legacyToBank, bankCounts };
+module.exports = { checkPack, checkStructure, checkContent, checkMix, loadData, legacyToBank, bankCounts, reviewTips };
 if (require.main === module) main(process.argv.slice(2)).then((c) => { process.exitCode = c; }, (e) => { console.error(e); process.exitCode = 2; });

@@ -101,17 +101,44 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
   /* 檢測頁:diag 的格式與讀寫不動;結算卡的 primary 換成「看起始程度」(設定中交的卷);從開始頁進來直接開考(按「開始」那段抽成 begin) */
   const dg = changedLines('js/diagnostic.js').map((l) => l.slice(0, 1) + l.slice(1).trim());
   eq(dg, [
-    '+else if (autoStart()) begin();',
-    '+/* 從開始頁按「開始檢測」進來(網址帶 start=1、設定起始程度停在檢測這一步、還沒有作答):直接開考,不用再按一次「開始」。',
-    '+網址的 start=1 拿掉,重新整理時照一般規則(有作答接著做) */',
-    '+function autoStart() {',
-    '+let go = false;',
+    '+const AUTO_WAIT = 8000;   // 直接開考前等雲端確認登入的上限(毫秒)',
+    '+const wantStart = takeStartParam();',
+    '+else if (wantStart && testPending()) autoStart();',
+    '+/* 網址的 start=1(從開始頁按「開始檢測」進來)一開頁就讀出來並從網址拿掉:重新整理、上一頁、書籤都照一般規則 */',
+    '+function takeStartParam() {',
     '+try {',
-    "+if (new URLSearchParams(location.search).get('start') !== '1') return false;",
-    "+history.replaceState(null, '', location.pathname + location.hash);",
-    '+go = !!(window.ONBOARD_UI && ONBOARD_UI.testPending && ONBOARD_UI.testPending());',
-    '+} catch (e) { go = false; }',
-    '+return go;',
+    '+const q = new URLSearchParams(location.search);',
+    "+if (q.get('start') !== '1') return false;",
+    "+q.delete('start');",
+    '+const rest = q.toString();',
+    "+history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + location.hash);",
+    '+return true;',
+    '+} catch (e) { return false; }',
+    '+}',
+    '+function testPending() {',
+    '+try { return !!(window.ONBOARD_UI && ONBOARD_UI.testPending && ONBOARD_UI.testPending()); } catch (e) { return false; }',
+    '+}',
+    '+/* 設定起始程度停在檢測這一步、還沒有作答:等雲端確認登入,還能寫才直接開考,不用再按一次「開始」。',
+    '+確認完不能寫(登入失效、別台登出)、確認失敗或等太久:照原本畫開始頁,按「開始」時 js/profile.js 照常攔下。頁面正要重載就不畫 */',
+    '+function autoStart() {',
+    "+root.replaceChildren(h('p', { class: 'result-note', role: 'status' }, '載入中…'));",
+    '+let settled = false;',
+    '+const timer = setTimeout(() => finish(false), AUTO_WAIT);',
+    '+function finish(ok) {',
+    '+if (settled) return;',
+    '+settled = true;',
+    '+clearTimeout(timer);',
+    '+if (window.CLOUD && CLOUD.reloading) return;',
+    '+st = store.get(KEY, null);',
+    '+if (st && st.done) renderReport();',
+    '+else if (st) renderTest();',
+    '+else if (ok && testPending() && canWrite()) begin();',
+    '+else renderIntro();',
+    '+}',
+    '+Promise.resolve(window.CLOUD ? CLOUD.ready : null).then(() => finish(true), () => finish(false));',
+    '+}',
+    '+function canWrite() {',
+    "+try { return !window.PROFILE || typeof PROFILE.canAct !== 'function' || !!PROFILE.canAct(); } catch (e) { return false; }",
     '+}',
     '+',
     '+function begin() {',
@@ -410,7 +437,9 @@ function diagPage(ob, diag, opt, tweak) {
   const root = e.dom.document.createElement('div'); root.setAttribute('id', 'diag-root'); e.dom.body.append(root);
   const ctx = e.ctx;
   Object.assign(ctx, { TOEIC: {}, scrollTo() {}, print() {} });
-  ctx.UI = Object.assign(ctx.UI, { focus: { enter: () => ({ leave() {}, progress() {}, setTotal() {}, foot() {}, action() {}, focusMain() {} }) } });
+  e.focusLog = [];
+  ctx.clearTimeout = clearTimeout;
+  ctx.UI = Object.assign(ctx.UI, { focus: { enter: () => { e.focusLog.push('enter'); return { active: true, leave() {}, progress() {}, setTotal() {}, foot() {}, action() {}, focusMain() { e.focusLog.push('main'); } }; } } });
   vm.runInContext(read('data/diagnostic.js'), ctx);
   if (tweak) tweak(ctx);
   const before = e.ls.get(PRE + 'diag');
@@ -440,33 +469,69 @@ T['B5 檢測頁:設定中、按「開始檢測」之後交的卷,結算卡主按
   vm.runInContext(read('js/onboard-ui.js'), noCore.ctx);
   assert.equal(noCore.ctx.ONBOARD_UI.diagPrimary(), null, '核心檔沒載到');
 };
-T['B5b 檢測頁:從開始頁進來(網址 start=1、設定停在檢測這一步、還沒作答)直接開考;其他情況照原本先畫開始頁'] = () => {
+T['B5b 檢測頁:從開始頁進來(網址 start=1、設定停在檢測這一步、還沒作答)等雲端確認登入、還能寫才直接開考;參數一開頁就拿掉;其他情況照原本'] = async () => {
   const ip = { v: 1, status: 'in_progress', step: 'test', testFrom: new Date(NOW - MIN).toISOString() };
-  const url = (search) => (ctx) => {
+  const url = (search, more) => (ctx) => {
     Object.assign(ctx.location, { search, pathname: '/diagnostic.html', hash: '' });
     ctx.history = { replaceState(s, t, u) { ctx.__replaced = u; } };
+    if (more) more(ctx);
   };
-  const intro = (p) => p.e.dom.body.all().some((x) => x.tagName === 'BUTTON' && x.textContent === '開始');
-  const go = diagPage(ip, null, null, url('?start=1'));
+  const body = (p) => p.e.dom.body.all();
+  const intro = (p) => body(p).some((x) => x.tagName === 'BUTTON' && x.textContent === '開始');
+  const quiz = (p) => body(p).some((x) => /(^| )q-block( |$)/.test(x.className || ''));
+  const loading = (p) => body(p).some((x) => x.textContent === '載入中…' && x.getAttribute('role') === 'status');
+  const anyDiag = (p) => Array.from(p.e.ls.keys()).some((k) => /diag$/.test(k));
+  /* 正常:雲端確認前只顯示載入中、不寫;確認完能寫 → 開考(專心模式、第 1 題、焦點) */
+  let release;
+  const go = diagPage(ip, null, null, url('?start=1', (ctx) => { ctx.CLOUD.ready = new Promise((r) => { release = r; }); }));
+  eq([go.e.ctx.__replaced, loading(go), anyDiag(go), intro(go), quiz(go)], ['/diagnostic.html', true, false, false, false], '確認前');
+  release(go.e.ctx.CLOUD.user); await settle();
   const d = JSON.parse(go.e.ls.get(PRE + 'diag'));
-  eq([d.done, Object.keys(d.answers).length, typeof d.startedAt, go.e.ctx.__replaced, intro(go)], [false, 0, 'string', '/diagnostic.html', false]);
-  /* 沒帶 start=1、設定已完成、沒有設定、訪客:不寫 diag,畫開始頁;start=1 照樣從網址拿掉 */
-  const cases = [
+  eq([d.done, Object.keys(d.answers).length, typeof d.startedAt, intro(go), quiz(go), loading(go), go.e.focusLog], [false, 0, 'string', false, true, false, ['enter', 'main']], '確認後');
+  /* 不開考、畫開始頁、不寫 diag 的情況 */
+  const notStart = [
     ['沒帶網址參數', diagPage(ip, null, null, url(''))],
     ['設定已完成', diagPage({ v: 1, status: 'done', step: 'result' }, null, null, url('?start=1'))],
+    ['設定中但不在檢測這一步', diagPage({ v: 1, status: 'in_progress', step: 'result' }, null, null, url('?start=1'))],
+    ['設定完成但停在檢測這一步', diagPage({ v: 1, status: 'done', step: 'test' }, null, null, url('?start=1'))],
     ['沒有設定', diagPage(null, null, null, url('?start=1'))],
-    ['訪客', diagPage(ip, null, { pid: 'p1', user: null }, url('?start=1'))],
+    ['訪客(訪客資料夾也有停在檢測的設定)', diagPage(null, null, { pid: 'p1', user: null }, url('?start=1', (ctx) => { ctx.localStorage.setItem('tr_up1_onboard', J(ip)); }))],
+    ['引導的程式沒載到', diagPage(ip, null, null, url('?start=1', (ctx) => { ctx.ONBOARD_UI = undefined; }))],
+    ['確認完不能寫(登入失效)', diagPage(ip, null, null, url('?start=1', (ctx) => { ctx.PROFILE.canAct = () => false; }))],
+    ['雲端確認失敗', diagPage(ip, null, null, url('?start=1', (ctx) => { ctx.CLOUD.ready = Promise.reject(new Error('x')); }))],
   ];
-  const anyDiag = (p) => Array.from(p.e.ls.keys()).some((k) => /diag$/.test(k));
-  cases.forEach(([name, p]) => eq([anyDiag(p), intro(p)], [false, true], name));
-  assert.equal(cases[1][1].e.ctx.__replaced, '/diagnostic.html', '參數拿掉');
-  /* 已經有作答:照原本接著做,不重開 */
+  await settle();
+  notStart.forEach(([name, p]) => eq([anyDiag(p), intro(p), quiz(p), p.e.focusLog.length], [false, true, false, 0], name));
+  notStart.slice(1).forEach(([name, p]) => assert.equal(p.e.ctx.__replaced, '/diagnostic.html', name + ':參數拿掉'));
+  /* 頁面正要重載:只留載入中,不寫、不畫 */
+  const rl = diagPage(ip, null, null, url('?start=1', (ctx) => { ctx.CLOUD.reloading = true; }));
+  await settle();
+  eq([anyDiag(rl), intro(rl), quiz(rl), loading(rl)], [false, false, false, true], '正要重載');
+  /* 等太久:照原本畫開始頁;之後雲端才確認也不再開考 */
+  let late, fire;
+  const slow = diagPage(ip, null, null, url('?start=1', (ctx) => {
+    ctx.CLOUD.ready = new Promise((r) => { late = r; });
+    ctx.setTimeout = (fn, ms) => { fire = fn; ctx.__wait = ms; return 1; };
+  }));
+  assert.equal(slow.e.ctx.__wait, 8000);
+  fire(); late(slow.e.ctx.CLOUD.user); await settle();
+  eq([anyDiag(slow), intro(slow), quiz(slow)], [false, true, false], '等太久');
+  /* 等的時候別的分頁開考了:照讀到的作答接著做,不重開 */
+  let r2;
+  const other = diagPage(ip, null, null, url('?start=1', (ctx) => { ctx.CLOUD.ready = new Promise((r) => { r2 = r; }); }));
   const half = { answers: { 0: 1 }, done: false, startedAt: new Date(NOW - MIN).toISOString() };
+  other.e.ls.set(PRE + 'diag', J(half));
+  r2(other.e.ctx.CLOUD.user); await settle();
+  eq([JSON.parse(other.e.ls.get(PRE + 'diag')).answers, quiz(other)], [{ 0: 1 }, true], '別的分頁先開考');
+  /* 已經有作答或報告:照原本接著做或看報告,不重開;參數照樣拿掉 */
   const cont = diagPage(ip, half, null, url('?start=1'));
-  eq(JSON.parse(cont.e.ls.get(PRE + 'diag')).answers, { 0: 1 });
-  /* 引導的程式沒載到:照原本先畫開始頁 */
-  const noUi = diagPage(ip, null, null, (ctx) => { url('?start=1')(ctx); ctx.ONBOARD_UI = undefined; });
-  eq([noUi.e.ls.has(PRE + 'diag'), intro(noUi)], [false, true]);
+  eq([JSON.parse(cont.e.ls.get(PRE + 'diag')).answers, cont.e.ctx.__replaced, quiz(cont), loading(cont)], [{ 0: 1 }, '/diagnostic.html', true, false], '有作答');
+  const done = { answers: ANS28(), done: true, startedAt: new Date(NOW - 20 * MIN).toISOString(), finishedAt: new Date(NOW).toISOString() };
+  const rep = diagPage(ip, done, null, url('?start=1'));
+  eq([rep.e.results.length, rep.e.ctx.__replaced, rep.e.ls.get(PRE + 'diag')], [1, '/diagnostic.html', rep.before], '有報告');
+  /* 其他網址參數留著 */
+  const keep = diagPage(ip, half, null, url('?start=1&x=2'));
+  assert.equal(keep.e.ctx.__replaced, '/diagnostic.html?x=2');
 };
 
 /* ---------- 各頁的接點(原始檔) ---------- */

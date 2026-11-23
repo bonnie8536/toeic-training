@@ -36,21 +36,48 @@
   let asking = false;      // 「還有題沒作答」的確認視窗開著:這時再按交卷不算
   let resultCard = null;   // 報告的結算卡:換畫面前呼叫 destroy() 停掉小雞
 
+  const AUTO_WAIT = 8000;   // 直接開考前等雲端確認登入的上限(毫秒)
+  const wantStart = takeStartParam();
   if (st && st.done) renderReport();
   else if (st) renderTest();
-  else if (autoStart()) begin();
+  else if (wantStart && testPending()) autoStart();
   else renderIntro();
 
-  /* 從開始頁按「開始檢測」進來(網址帶 start=1、設定起始程度停在檢測這一步、還沒有作答):直接開考,不用再按一次「開始」。
-     網址的 start=1 拿掉,重新整理時照一般規則(有作答接著做) */
-  function autoStart() {
-    let go = false;
+  /* 網址的 start=1(從開始頁按「開始檢測」進來)一開頁就讀出來並從網址拿掉:重新整理、上一頁、書籤都照一般規則 */
+  function takeStartParam() {
     try {
-      if (new URLSearchParams(location.search).get('start') !== '1') return false;
-      history.replaceState(null, '', location.pathname + location.hash);
-      go = !!(window.ONBOARD_UI && ONBOARD_UI.testPending && ONBOARD_UI.testPending());
-    } catch (e) { go = false; }
-    return go;
+      const q = new URLSearchParams(location.search);
+      if (q.get('start') !== '1') return false;
+      q.delete('start');
+      const rest = q.toString();
+      history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + location.hash);
+      return true;
+    } catch (e) { return false; }
+  }
+  function testPending() {
+    try { return !!(window.ONBOARD_UI && ONBOARD_UI.testPending && ONBOARD_UI.testPending()); } catch (e) { return false; }
+  }
+  /* 設定起始程度停在檢測這一步、還沒有作答:等雲端確認登入,還能寫才直接開考,不用再按一次「開始」。
+     確認完不能寫(登入失效、別台登出)、確認失敗或等太久:照原本畫開始頁,按「開始」時 js/profile.js 照常攔下。頁面正要重載就不畫 */
+  function autoStart() {
+    root.replaceChildren(h('p', { class: 'result-note', role: 'status' }, '載入中…'));
+    let settled = false;
+    const timer = setTimeout(() => finish(false), AUTO_WAIT);
+    function finish(ok) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      if (window.CLOUD && CLOUD.reloading) return;
+      st = store.get(KEY, null);
+      if (st && st.done) renderReport();
+      else if (st) renderTest();
+      else if (ok && testPending() && canWrite()) begin();
+      else renderIntro();
+    }
+    Promise.resolve(window.CLOUD ? CLOUD.ready : null).then(() => finish(true), () => finish(false));
+  }
+  function canWrite() {
+    try { return !window.PROFILE || typeof PROFILE.canAct !== 'function' || !!PROFILE.canAct(); } catch (e) { return false; }
   }
 
   function begin() {

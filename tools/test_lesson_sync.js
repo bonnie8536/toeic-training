@@ -7,7 +7,7 @@ const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
 const H = require('./sync_harness');
-const { J, tick, makeWorld, makeDevice, signIn, newSession, logout, localOf, cloudOf, ledgerOf, storeSet, now } = H;
+const { J, tick, makeWorld, makeDevice, signIn, newSession, logout, localOf, cloudOf, ledgerOf, storeSet, now, setCloud, PREFIX, USER } = H;
 
 const REPO = path.join(__dirname, '..');
 const read = (f) => fs.readFileSync(path.join(REPO, f), 'utf8');
@@ -216,6 +216,67 @@ T['S8 js/sync-merge-lesson.js:接在 sync-merge.js 後面載入,SYNC_MERGE 多 l
   };
   const ok = J(got.added) === J(COURSE.slice().sort()) && COURSE.every((k) => typeof after[k] === 'function') && got.kept && got.frozen && got.works && got.alone && got.pure;
   return { ok, detail: J(got) };
+};
+
+/* 一堂的進度(直接寫本機用,不經課程引擎) */
+const lessonOf = (ids) => ({ v: 1, lessonId: { listening: 'entry-L03' }, packVersion: { listening: '1.2.0' }, levels: { listening: 'entry' }, startedAt: 1000, doneAt: null,
+  seg: {}, pk: {}, a: ids.map((id, i) => [4, id, 0, 1, 3, i + 1]) });
+const marksOf = (dev) => JSON.parse(dev.local.getItem('tr_localonly_' + USER.id) || '{}');
+
+/* 登出前對帳(js/cloud.js checkCloud):合併表上 reconcile 的鍵。pts、rvq、tests_v1 本機比雲端多、帳本是空的
+   (別台少的那份剛蓋掉雲端,這台上次對齊之後沒改過):對帳那一次查詢要讀這三個鍵,合併後補回雲端,登出刪本機也不會少 */
+T['S9 pts、rvq、tests_v1 登出前對帳:本機比雲端多一筆、帳本空的,對帳讀這三個鍵,合併上傳後雲端是聯集'] = async () => {
+  const { w, phone } = await twoDevices(10);
+  const hit = (b) => ({ s: 'learning', hits: [{ d: '2026-10-24', n: 1, ok: 1, src: 'p', b }], pauseUntil: null });
+  const q = (id) => ({ m: 'p5', id, sub: null, due: '2026-10-25', step: 1, d0: '2026-10-24' });
+  setCloud(w, 'pts', { 'P2.wh': hit('a') });
+  setCloud(w, 'rvq', [q('p5-a')]);
+  setCloud(w, 'tests_v1', { t1: { pre: { form: 'half', at: 500 } } });
+  phone.local.setItem(PREFIX + 'pts', J({ 'P2.wh': hit('a'), 'P5.cat:x': hit('b') }));
+  phone.local.setItem(PREFIX + 'rvq', J([q('p5-a'), q('p5-b')]));
+  phone.local.setItem(PREFIX + 'tests_v1', J({ t1: { pre: { form: 'half', at: 500 }, mid: { form: 'half', at: 900 } } }));
+  phone.ops = [];
+  const out = await logout(phone);
+  const recon = phone.ops.filter((o) => o.op === 'read' && o.viaIn).map((o) => o.keys)[0] || [];
+  const pts = cloudOf(w, 'pts') || {}, rvq = cloudOf(w, 'rvq') || [], tests = cloudOf(w, 'tests_v1') || {};
+  const ok = out && ['pts', 'rvq', 'tests_v1'].every((k) => recon.indexOf(k) > -1)
+    && J(Object.keys(pts).sort()) === J(['P2.wh', 'P5.cat:x']) && J(rvq.map((e) => e.id).sort()) === J(['p5-a', 'p5-b'])
+    && J(Object.keys(tests.t1 || {}).sort()) === J(['mid', 'pre']) && localOf(phone, 'pts') === null;
+  return { ok, detail: J({ out, recon, pts: Object.keys(pts), rvq: rvq.map((e) => e.id), tests }) };
+};
+
+/* 「只在本機」的標記(js/cloud.js markLocalOnly,合併表上的鍵都可以記,一堂一鍵的課程進度也是):灌雲端資料時合併過就劃掉,
+   不然登出前一直算成「還沒同步」 */
+T['S10 一堂的進度記著「只在本機」標記、跟雲端一樣:開新分頁灌資料合併過,標記劃掉'] = async () => {
+  const { w, phone } = await twoDevices(11);
+  setCloud(w, KEY, lessonOf(['l1-03']));
+  phone.local.setItem(PREFIX + KEY, J(lessonOf(['l1-03'])));
+  phone.pg.ctx.CLOUD.markLocalOnly(KEY);
+  const marked = KEY in marksOf(phone);
+  await newSession(phone);
+  await phone.pg.runTimers();
+  const ok = marked && !(KEY in marksOf(phone)) && J(answered(localOf(phone, KEY))) === J(['l1-03']);
+  return { ok, detail: J({ marked, marks: marksOf(phone), local: answered(localOf(phone, KEY)) }) };
+};
+
+/* 登出補傳(js/cloud.js unsynced):補傳那一輪讀雲端時,另一個分頁把這一堂的進度寫成合併過的新版本(不經帳本),合併上傳因為本機變了而放棄。
+   補傳前後比對的狀態要看得到一堂一鍵的課程進度變了,才會再補傳一次;不然只剩登出前對帳,對帳上傳時再碰上一次寫入就要問「還沒同步」 */
+T['S11 登出補傳時另一個分頁連續寫了三次這一堂的進度:補傳再試、對帳補上,不問就登出,雲端有每一次寫的作答'] = async () => {
+  const { w, phone } = await twoDevices(12);
+  setCloud(w, KEY, lessonOf(['l1-01']));   // 筆電之前傳過這一堂
+  phone.offline = true;
+  storeSet(phone, KEY, lessonOf(['l1-03']));
+  await phone.pg.runTimers();
+  const held = KEY in ledgerOf(phone);
+  phone.offline = false;
+  const ids = ['l1-03'];
+  let n = 0;
+  const arm = () => { phone.onRead = () => { n++; ids.push('l1-0' + (4 + n)); phone.local.setItem(PREFIX + KEY, J(lessonOf(ids))); if (n < 3) arm(); }; };
+  arm();
+  const out = await logout(phone);
+  phone.onRead = null;
+  const ok = held && n === 3 && out && phone.confirms.length === 0 && J(answered(cloudOf(w, KEY))) === J(['l1-01'].concat(ids).sort());
+  return { ok, detail: J({ held, n, out, confirms: phone.confirms.length, cloud: answered(cloudOf(w, KEY)) }) };
 };
 
 (async () => {

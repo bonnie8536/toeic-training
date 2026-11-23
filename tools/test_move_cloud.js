@@ -580,24 +580,36 @@ T['暫存區:起始程度設定的 levels、onboard、self_score:暫存、本機
     && (lv(w, 'self_score') || {}).listening === 400 && !backups(w).length && w.local.getItem(PEND) === null;
   return { ok, detail: J({ levels: L, onboard: lv(w, 'onboard'), self: lv(w, 'self_score'), bk: backups(w), ups: ups(w) }) };
 };
-T['暫存區:課程進度(les_t 一堂一鍵、pts):搬家暫存、本機、雲端三份合併(作答聯集、考點批次聯集),上傳到雲端,不進備份'] = async () => {
+T['暫存區:課程進度(les_t 一堂一鍵、pts、rvq、tests_v1):搬家暫存、本機、雲端三份合併(作答、考點批次、回顧項目、測驗聯集),上傳到雲端,不進備份'] = async () => {
   const w = makeWorld();
   const st = (start, rows) => ({ v: 1, lessonId: { listening: 'entry-L03', reading: 'entry-L03' }, packVersion: { listening: '1.2.0', reading: '1.2.0' },
     levels: { listening: 'entry', reading: 'entry' }, startedAt: start, doneAt: null, seg: { vocab: { st: 'todo', t0: null, t1: null } }, pk: {}, a: rows });
   const S = Math.floor((T0 - 10 * HOUR) / 1000);
   const hit = (b) => ({ s: 'learning', hits: [{ d: '2026-11-05', n: 1, ok: 1, src: 'p', b }], pauseUntil: null });
+  const q = (id, step) => ({ m: 'p5', id, sub: null, due: '2026-11-0' + (5 + (step || 1)), step: step || 1, d0: '2026-11-05' });
+  const test = (t, slot, at) => ({ [t]: { [slot]: { form: 'half', at } } });
   cloudRow(w, 'les_t1_03', st(S, [[4, 'l2-01', 0, 1, 3, 10]]), T0 - HOUR);
   cloudRow(w, 'pts', { 'P2.wh': hit('cloud') }, T0 - HOUR);
+  cloudRow(w, 'rvq', [q('p5-c'), q('p5-s', 1)], T0 - HOUR);   // p5-s:同一項,本機那份往後排了一階(step 大的贏,不會變成兩項)
+  cloudRow(w, 'tests_v1', test('t1', 'pre', 500), T0 - HOUR);
   signedIn(w);
   w.local.setItem(PREFIX + 'les_t1_03', J(st(S, [[4, 'l2-02', 0, 1, 3, 20]])));
-  w.local.setItem(LEDGER, J({ les_t1_03: T0 - 4 * HOUR }));
-  w.local.setItem(PEND, J({ items: [['les_t1_03', J(st(S, [[4, 'l2-03', 0, 1, 3, 30]])), T0 - 2 * HOUR], ['pts', J({ 'P2.wh': hit('moved') }), T0 - 2 * HOUR]] }));
+  w.local.setItem(PREFIX + 'rvq', J([q('p5-l'), q('p5-s', 3)]));
+  w.local.setItem(PREFIX + 'tests_v1', J(test('t1', 'mid', 700)));
+  w.local.setItem(LEDGER, J({ les_t1_03: T0 - 4 * HOUR, rvq: T0 - 4 * HOUR, tests_v1: T0 - 4 * HOUR }));
+  w.local.setItem(PEND, J({ items: [['les_t1_03', J(st(S, [[4, 'l2-03', 0, 1, 3, 30]])), T0 - 2 * HOUR], ['pts', J({ 'P2.wh': hit('moved') }), T0 - 2 * HOUR],
+    ['rvq', J([q('p5-p')]), T0 - 2 * HOUR], ['tests_v1', J(test('t2', 'pre', 900)), T0 - 2 * HOUR]] }));
   await openLoggedIn(w);
   const ids = (v) => (v && v.a ? v.a.map((x) => x[1]).sort() : []);
   const b = (v) => (v && v['P2.wh'] ? v['P2.wh'].hits.map((h) => h.b).sort() : []);
+  const rq = (v) => (Array.isArray(v) ? v.map((e) => e.id + (e.step > 1 ? '@' + e.step : '')).sort() : []);
+  const ts = (v) => (v && typeof v === 'object' ? Object.keys(v).sort().map((t) => t + ':' + Object.keys(v[t]).sort().join('+')) : []);
   const ok = J(ids(lv(w, 'les_t1_03'))) === J(['l2-01', 'l2-02', 'l2-03']) && J(ids(cv(w, 'les_t1_03'))) === J(['l2-01', 'l2-02', 'l2-03'])
-    && J(b(cv(w, 'pts'))) === J(['cloud', 'moved']) && !backups(w).length && w.local.getItem(PEND) === null;
-  return { ok, detail: J({ local: ids(lv(w, 'les_t1_03')), cloud: ids(cv(w, 'les_t1_03')), pts: b(cv(w, 'pts')), bk: backups(w), ups: ups(w) }) };
+    && J(b(cv(w, 'pts'))) === J(['cloud', 'moved'])
+    && J(rq(cv(w, 'rvq'))) === J(['p5-c', 'p5-l', 'p5-p', 'p5-s@3']) && J(rq(lv(w, 'rvq'))) === J(['p5-c', 'p5-l', 'p5-p', 'p5-s@3'])
+    && J(ts(cv(w, 'tests_v1'))) === J(['t1:mid+pre', 't2:pre']) && J(ts(lv(w, 'tests_v1'))) === J(['t1:mid+pre', 't2:pre'])
+    && ups(w).includes('rvq') && ups(w).includes('tests_v1') && !backups(w).length && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ local: ids(lv(w, 'les_t1_03')), cloud: ids(cv(w, 'les_t1_03')), pts: b(cv(w, 'pts')), rvq: rq(cv(w, 'rvq')), tests: ts(cv(w, 'tests_v1')), bk: backups(w), ups: ups(w) }) };
 };
 /* 課程的合併函式在 js/sync-merge-lesson.js:頁面沒先載它(也沒先載搬家程式)時,處理暫存區前跟搬家程式一起補載,課程進度照樣合併;
    補載不到就整個不處理,暫存區留著(跟搬家程式載不到一樣) */
@@ -623,6 +635,55 @@ T['暫存區:頁面沒先載 js/sync-merge-lesson.js 與搬家程式:要用時�
     && !backups(w).length && w.local.getItem(PEND) === null
     && w2.local.getItem(PEND) !== null && !backups(w2).length && J(ids(cv(w2, 'les_t1_03'))) === J(['l2-01']);
   return { ok, detail: J({ loaded: w.loaded, local: ids(lv(w, 'les_t1_03')), cloud: ids(cv(w, 'les_t1_03')), bk: backups(w), failPend: w2.local.getItem(PEND) !== null, failCloud: ids(cv(w2, 'les_t1_03')) }) };
+};
+/* 頁面已經先載好搬家程式與 js/sync-merge.js,只有 js/sync-merge-lesson.js 沒載:處理暫存區前也要補載它,不能因為 SYNC_MERGE 在就當成都有了 */
+T['暫存區:搬家程式都先載好、只差 js/sync-merge-lesson.js:照樣補載它,課程進度三份合併,不進備份'] = async () => {
+  const st = (rows) => ({ v: 1, lessonId: { listening: 'entry-L03', reading: 'entry-L03' }, packVersion: { listening: '1.2.0', reading: '1.2.0' },
+    levels: { listening: 'entry', reading: 'entry' }, startedAt: Math.floor((T0 - 10 * HOUR) / 1000), doneAt: null, seg: { vocab: { st: 'todo', t0: null, t1: null } }, pk: {}, a: rows });
+  const w = makeWorld();
+  cloudRow(w, 'les_t1_03', st([[4, 'l2-01', 0, 1, 3, 10]]), T0 - HOUR);
+  signedIn(w);
+  w.local.setItem(PREFIX + 'les_t1_03', J(st([[4, 'l2-02', 0, 1, 3, 20]])));
+  w.local.setItem(LEDGER, J({ les_t1_03: T0 - 4 * HOUR }));
+  w.local.setItem(PEND, J({ items: [['les_t1_03', J(st([[4, 'l2-03', 0, 1, 3, 30]])), T0 - 2 * HOUR]] }));
+  await openLoggedIn(w, { lazy: ['syncLesson'] });
+  const ids = (v) => (v && v.a ? v.a.map((x) => x[1]).sort() : []);
+  const all = J(['l2-01', 'l2-02', 'l2-03']);
+  const ok = J(w.loaded || []) === J(['js/sync-merge-lesson.js']) && J(ids(lv(w, 'les_t1_03'))) === all && J(ids(cv(w, 'les_t1_03'))) === all
+    && !backups(w).length && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ loaded: w.loaded, local: ids(lv(w, 'les_t1_03')), cloud: ids(cv(w, 'les_t1_03')), bk: backups(w) }) };
+};
+/* 「只在本機」的標記(js/cloud.js markLocalOnly;合併表上的鍵,一堂一鍵的課程進度也算):搬家時帳本沒記、只有標記的課程進度
+   也是這台還沒上傳的改動,放進搬家包時帶標記的時間(不是對帳補上的 0) */
+T['flushForMove:只有「只在本機」標記的課程進度(帳本沒記)、讀不到雲端:放進搬家包,時間是標記的時間'] = async () => {
+  const w = makeWorld();
+  const st = { v: 1, lessonId: { listening: 'entry-L03' }, packVersion: { listening: '1.2.0' }, levels: { listening: 'entry' }, startedAt: Math.floor(T0 / 1000), doneAt: null, seg: {}, pk: {}, a: [] };
+  const pg = await openLoggedIn(w);
+  w.clock.t += 5000;
+  w.local.setItem(PREFIX + 'les_t1_03', J(st));
+  pg.ctx.CLOUD.markLocalOnly('les_t1_03');
+  const marked = JSON.parse(w.local.getItem('tr_localonly_' + USER.id) || '{}').les_t1_03;
+  w.offline = true;
+  const r = await pg.ctx.CLOUD.flushForMove();
+  const item = (r.accounts[USER.id] || []).find((e) => e[0] === 'les_t1_03');
+  const ok = marked === w.clock.t && !!item && item[2] === marked && r.left === 1;
+  return { ok, detail: J({ marked, item: item && [item[0], item[2]], left: r.left }) };
+};
+/* 對帳(checkCloud)本身丟錯時的備援:本機有值、要對帳的鍵全部放進搬家包,一堂一鍵的課程進度也要算(用鍵名規則認,不只看固定的那幾個) */
+T['flushForMove:對帳丟錯時,本機有的課程進度(一堂一鍵)照樣放進搬家包'] = async () => {
+  const w = makeWorld();
+  const st = (rows) => ({ v: 1, lessonId: { listening: 'entry-L03' }, packVersion: { listening: '1.2.0' }, levels: { listening: 'entry' }, startedAt: Math.floor(T0 / 1000), doneAt: null, seg: {}, pk: {}, a: rows });
+  cloudRow(w, 'les_t1_03', st([[4, 'l2-01', 0, 1, 3, 10]]), T0 - HOUR);
+  const pg = await openLoggedIn(w);
+  w.local.setItem(PREFIX + 'les_t1_03', J(st([[4, 'l2-01', 0, 1, 3, 10], [4, 'l2-02', 0, 1, 3, 20]])));   // 雲端被別台少的那份蓋掉,這台帳本空的
+  const real = pg.ctx.SYNC_MERGE;
+  pg.ctx.SYNC_MERGE = new Proxy(real, { get(t, p) { if (p === 'lesson') throw new Error('合併程式壞了'); return t[p]; } });
+  let r = null, err = '';
+  try { r = await pg.ctx.CLOUD.flushForMove(); } catch (e) { err = String(e); }
+  pg.ctx.SYNC_MERGE = real;
+  const item = r ? (r.accounts[USER.id] || []).find((e) => e[0] === 'les_t1_03') : null;
+  const ok = !err && !!item && JSON.parse(item[1]).a.length === 2 && r.left === 1;
+  return { ok, detail: J({ err, item: item && [item[0], item[2]], left: r && r.left }) };
 };
 T['暫存區:合併表上有、takeSynced 對照表(SYNC_FN)沒有的鍵:暫存那份放進備份,不當成題庫合併、不默默略過'] = async () => {
   const src = SRC.cloud.replace(/(\r?\n    mock_wrong: \{ merge: SMF\('mockWrong'\), reconcile: true \},)/, '$1\n    vgame_miss: { merge: SMF(\'mock\'), reconcile: true },');

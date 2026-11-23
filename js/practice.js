@@ -2,7 +2,9 @@
    - 隨機練習:選題型+題數(P5 選考點亦可),隨機抽題(優先抽沒做過的,其次答錯的)。
      作答是專心模式:題目一題一頁,只記選擇不對答案,交卷後一次看成績卡與逐題解析。
    - 錯題本:歷來答錯的題目集中在這裡複習,重新答對就移出;複習時每題作答後馬上給回饋。
-   - 作答紀錄仍存 drill_p5/p6/p7(雲端模式會同步),錯題本由紀錄即時推導。 */
+   - 作答紀錄仍存 drill_p5/p6/p7(雲端模式會同步),錯題本由紀錄即時推導。
+   - 課程頁的入口 window.DRILL.startQuiz(el, units, opts)(沒有 #practice-root 的頁面只開這個入口):units = [{ p: '5'–'7', item }]
+     (BANK.get 拿到的)照順序出、不抽題;opts 與結果見 js/lesson-entry.js(課程頁要先載入它)。 */
 (function () {
   const root = $('#practice-root');
   const DATA = {
@@ -26,7 +28,7 @@
   }
 
   if (!DATA['5'].items.length) {
-    root.append(UI.empty({ pose: 'sleep', text: '題庫沒有載入完成', action: { label: '重新整理', onClick: () => location.reload() } }));
+    if (root) root.append(UI.empty({ pose: 'sleep', text: '題庫沒有載入完成', action: { label: '重新整理', onClick: () => location.reload() } }));
     return;
   }
 
@@ -87,7 +89,9 @@
   const partParam = getParam('part');
   const listenPart = p => !!window.LISTEN && ['1', '2', '3', '4'].indexOf(p) > -1;
   const WB = window.WRONGBOOK || null;
-  if (mode === 'wrong' && (DATA[partParam] || listenPart(partParam))) renderWrong(partParam);
+  window.DRILL = Object.freeze({ startQuiz: lessonQuiz });
+  if (!root) { /* 課程頁:不畫刷題頁,只開上面的入口 */ }
+  else if (mode === 'wrong' && (DATA[partParam] || listenPart(partParam))) renderWrong(partParam);
   else if (mode === 'review' && DATA[partParam]) startReview(partParam, getParam('g'));
   else if (mode === 'review' && listenPart(partParam)) { LISTEN.startReview(root, partParam, getParam('g')); }
   else if (partParam && DATA[partParam]) {
@@ -96,7 +100,7 @@
   } else renderHome();
   /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud):別台考的錯題合併進本機,
      錯題本面板、錯題本清單由 js/wrongbook-ui.js keepFresh 收到 cloud:merged 重畫 */
-  if (WB && typeof WB.syncCloud === 'function') WB.syncCloud();
+  if (root && WB && typeof WB.syncCloud === 'function') WB.syncCloud();
 
   /* ================= 首頁 ================= */
   function renderHome() {
@@ -369,11 +373,25 @@
       emptyView('隨機練習', '沒有題目', { label: '回題庫刷題', href: HOME });
       return;
     }
+    runQuiz(root, units, config, null);
+  }
+
+  function lessonQuiz(el, units, opts) {   // 課程頁的入口 DRILL.startQuiz(說明在檔頭)
+    const o = LESSON_ENTRY.check('DRILL.startQuiz', el, opts, true), list = LESSON_ENTRY.units('DRILL.startQuiz', units, ['5', '6', '7'], ['5']);
+    if (uiReady()) runQuiz(el, list, list.map(u => ({ p: u.p })), o);
+  }
+
+  /* 作答一輪:root 是畫在哪裡;lesson 是課程頁給的 opts(刷題頁是 null)。即時回饋時小題對過答案就有 ok(交卷式作答中不會有) */
+  function runQuiz(root, units, config, lesson) {
+    const instant = !!lesson && lesson.feedback === 'instant', graded = rec => !!rec && rec.ok !== undefined;
+    const qsOf = u => (u.p === '5' ? [u.item] : u.item.questions), keyOf = (u, q, qi) => (u.p === '5' ? q.id : qid(u.item, q, qi));
+    const recOf = (i, key) => (units[i].p === '5' ? session.answers[i] : (session.answers[i] || {})[key]);
     /* 交卷式:作答期間只記選擇不對答,交卷後一次看成績卡與逐題檢討 */
     const session = { answers: {} };   // p5 單元:{c};p6/7 單元:{qKey:{c}};交卷後補 ok
     let cur = 0;
     let handing = false;   // 交卷的確認視窗開著:這時再按交卷不算
-    const f = UI.focus.enter({ total: units.length, onExit: () => { location.href = HOME; }, body: '還沒交卷的作答不會計分' });
+    const f = UI.focus.enter(instant ? { total: units.length, onExit: lesson.onExit, confirmExit: false }
+      : { total: units.length, onExit: lesson ? lesson.onExit : () => { location.href = HOME; }, body: '還沒交卷的作答不會計分' });
     draw();
     f.focusMain();
 
@@ -389,6 +407,7 @@
 
     /* 選了答案:重畫但捲動位置留著,焦點回到剛選的那顆,讀屏念「已選 B」 */
     function picked(oi) {
+      if (instant) { gradeNow(); return; }
       f.dirty(true);
       const y = window.scrollY;
       f.keep(draw);
@@ -407,6 +426,20 @@
       setSubmit(f, isLast ? null : e => submit(e.currentTarget));
       if (units[cur].p === '5') drawP5();
       else drawSet();
+      if (instant) footNow(isLast);
+    }
+
+    /* 即時回饋:剛選的小題對答案、存紀錄,重畫成解析的樣子;底部單題答了是回饋條,題組全部答了才能按下一題,最後一題是「完成」 */
+    function gradeNow() {
+      const u = units[cur];
+      qsOf(u).forEach((q, qi) => { const key = keyOf(u, q, qi), rec = recOf(cur, key); if (rec && !graded(rec)) { rec.ok = rec.c === q.answer; saveRec(u.p, key, rec.c, rec.ok); } });
+      draw();
+    }
+    function footNow(isLast) {
+      const u = units[cur], rec = session.answers[cur], next = () => { if (isLast) finish(); else go(cur + 1); };
+      setSubmit(f, null);
+      if (u.p === '5' && graded(rec)) f.feedback({ ok: rec.ok, answer: rec.ok ? null : LETTERS[u.item.answer] + '. ' + u.item.options[u.item.answer], next: isLast ? '完成' : '下一題', onNext: next });
+      else f.foot([mainBtn(isLast ? '完成' : '下一題', next, false, !qsOf(u).every((q, qi) => graded(recOf(cur, keyOf(u, q, qi)))))]);
     }
 
     function drawP5() {
@@ -418,7 +451,8 @@
           h('span', { class: 'badge cat' }, catLabel(q.category)),
           h('span', { class: 'badge ' + (q.difficulty === '基礎' ? 'level-basic' : q.difficulty === '進階' ? 'level-adv' : 'level-mid') }, q.difficulty)),
         h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, (cur + 1) + '.'), q.question),
-        pickButtons(q, rec, oi => { session.answers[cur] = { c: oi }; picked(oi); })));
+        graded(rec) ? optionButtons(q, rec, () => {}) : pickButtons(q, rec, oi => { session.answers[cur] = { c: oi }; picked(oi); }),
+        graded(rec) ? withoutVerdict(explainBox(q, rec, q.translation, { m: 'p5', id: q.id })) : null));
     }
 
     function drawSet() {
@@ -440,7 +474,8 @@
         const text = p === '6' ? '' : q.q;   // 段落填空:空格編號標在選項上方,不另寫題幹
         qCol.append(h('div', { class: 'q-block' },
           h('div', { class: 'q-text' }, h('span', { class: 'q-no' }, label), text),
-          pickButtons(q, sess[id], oi => { sess[id] = { c: oi }; picked(oi); })));
+          graded(sess[id]) ? optionButtons(q, sess[id], () => {}) : pickButtons(q, sess[id], oi => { sess[id] = { c: oi }; picked(oi); }),
+          graded(sess[id]) ? explainBox(q, sess[id], null, { m: 'p' + p, id }) : null));
       });
       layout.append(qCol);
       root.append(layout);
@@ -484,8 +519,15 @@
           });
         }
       });
+      if (lesson) { finish(); return; }
       review();
       if (window.PET_HOOK) PET_HOOK.done('p' + config[0].p, { n: units.reduce((s, u, i) => s + (u.p === '5' ? [session.answers[i]] : u.item.questions.map((q, qi) => session.answers[i][qid(u.item, q, qi)])).filter(r => r && r.c > -1).length, 0), into: root.querySelector('.result-reward') });
+    }
+
+    /* 課程頁:紀錄都存好了,離開專心模式、把這一輪的結果交給 onDone(不畫成績卡、不給點心) */
+    function finish() {
+      f.leave();
+      lesson.onDone(LESSON_ENTRY.bankResult('p', units, ['5'], (i, key) => (recOf(i, key) || {}).c));
     }
 
     function review() {

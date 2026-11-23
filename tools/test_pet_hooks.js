@@ -38,7 +38,8 @@ const BASE = '27557eb';
    錯題本(2026-11-19,模擬考、每日複習、題庫開頁先跟雲端對齊 mock_wrong:WRONGBOOK.syncCloud)又改了 mock、practice、review;
    共用元件第二版(2026-11-21,結算卡帶 earnId 與按鈕屬性、題號面板改 UI.sheet、對話與寫作改 UI.rewardRow)改了全部 14 個模組,
    對話與寫作的呼叫點只換了放點心的那一列(heardRow、snackRow),位置與 id 不變;
-   模擬考加「完整一回」(2026-11-23,SIZES.full、Part 7 依單雙三篇抽題、題號面板分 Part、回到畫面時對一次倒數)又改了 mock */
+   模擬考加「完整一回」(2026-11-23,SIZES.full、Part 7 依單雙三篇抽題、題號面板分 Part、回到畫面時對一次倒數)又改了 mock;
+   新用戶設定起始程度(2026-11-23,設定中交的卷結算卡主按鈕換成「看起始程度」)改了 diagnostic */
 const LATER_BASE = ['js/vocab.js', 'js/reading.js', 'js/daily-ui.js', 'js/grammar.js', 'js/phonics.js', 'js/ear.js', 'js/dialogue.js',
   'js/verbs.js', 'js/practice.js', 'js/mock.js', 'js/diagnostic.js', 'js/writing.js', 'js/review.js', 'js/listening.js'];
 

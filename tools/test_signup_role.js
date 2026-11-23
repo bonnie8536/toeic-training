@@ -185,6 +185,24 @@ cases['PAID_UI 沒開:註冊卡沒有身分選擇,結構跟沒有 plans-config �
   return { ok: r.sameSignup && r.sameLogin && r.sameErr && r.noRole && r.saves === 0 && r.flow === 'google,signUp / google,login' && r.signUpArgs === 2, detail: JSON.stringify(r) };
 };
 
+cases['未成年提醒:註冊、登入兩個分頁的同意小字同一段多一行;PAID_UI 開關都有'] = async () => {
+  const MINOR = '未滿 18 歲請先取得家長或監護人同意。';
+  const out = [];
+  for (const paid of [false, true]) {
+    for (const mode of ['signup', 'login']) {
+      const { card } = loadCard({ paid, mode });
+      const fine = card.byClass('auth-fine').filter(p => /即表示同意/.test(p.textContent));
+      const p = fine[0];
+      const last = p ? p.children[p.children.length - 1] : null;
+      const br = p ? p.children[p.children.length - 2] : null;
+      out.push({ paid, mode, n: fine.length, text: p ? norm(p.textContent) : '', tail: last && last.nodeType === 3 ? last._text : '', br: !!br && br.tagName === 'BR',
+        once: (card.textContent.split(MINOR).length - 1) });
+    }
+  }
+  const ok = out.every(r => r.n === 1 && r.tail === MINOR && r.br && r.once === 1 && r.text === '註冊或使用 Google 帳戶登入，即表示同意服務條款與隱私權政策。' + MINOR);
+  return { ok, detail: JSON.stringify(out.map(r => [r.paid, r.mode, r.n, r.br, r.once])) };
+};
+
 cases['PAID_UI 打開:註冊分頁最上面兩張選項卡,預設學生;學生沒有說明行;老師的設定先藏著'] = async () => {
   const { card } = loadCard({ paid: true });
   const box = roleBox(card);

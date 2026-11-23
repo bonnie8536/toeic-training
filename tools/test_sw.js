@@ -183,6 +183,11 @@ async function t(name, fn) {
     assert.deepStrictEqual(state.log, []);
     ev = await fire(mkReq('/index.html?foo=1&error_description=x', { mode: 'navigate', destination: 'document' }));
     assert.strictEqual(await (await ev.responded).text(), 'NET /index.html'); await settle(ev);
+    /* start.html 的 Google 登入回到 start.html?step=resume(js/onboard.js) */
+    ev = await fire(mkReq('/start.html?step=resume&code=abc', { mode: 'navigate', destination: 'document' }), { preloadResponse: Promise.resolve(mkRes('PRELOAD start')) });
+    assert.strictEqual(await (await ev.responded).text(), 'PRELOAD start'); await settle(ev);
+    ev = await fire(mkReq('/start.html?step=resume&code=abc', { mode: 'navigate', destination: 'document' }));
+    assert.strictEqual(await (await ev.responded).text(), 'NET /start.html'); await settle(ev);
     const pages = await W.caches.open('ss-pages-' + SWV);
     assert.ok(!(await pages.keys()).some((k) => /code=|error/.test(k.url)));
   });

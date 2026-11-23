@@ -129,7 +129,15 @@
     return C.diagRowState(D.account().onboard, D.diag()) === 'result' ? { label: '看起始程度', href: 'start.html?step=result' } : null;
   }
 
+  /* 檢測頁開頁時直接開考的條件(js/diagnostic.js autoStart):登入著、設定停在檢測這一步、還沒有作答 */
+  function testPending() {
+    const D = window.ONBOARD_DATA;
+    if (!C || !D || D.isGuest()) return false;
+    const ob = D.account().onboard;
+    return !!ob && ob.status === 'in_progress' && ob.step === 'test' && D.diag() === null;
+  }
+
   document.addEventListener('DOMContentLoaded', () => { homeCard(document.getElementById('onboard-home')); });
 
-  window.ONBOARD_UI = Object.freeze({ levelPanel, homeCard, settingsSection, diagPrimary });
+  window.ONBOARD_UI = Object.freeze({ levelPanel, homeCard, settingsSection, diagPrimary, testPending });
 })();

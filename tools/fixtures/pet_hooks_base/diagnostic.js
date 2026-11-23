@@ -38,7 +38,29 @@
 
   if (st && st.done) renderReport();
   else if (st) renderTest();
+  else if (autoStart()) begin();
   else renderIntro();
+
+  /* 從開始頁按「開始檢測」進來(網址帶 start=1、設定起始程度停在檢測這一步、還沒有作答):直接開考,不用再按一次「開始」。
+     網址的 start=1 拿掉,重新整理時照一般規則(有作答接著做) */
+  function autoStart() {
+    let go = false;
+    try {
+      if (new URLSearchParams(location.search).get('start') !== '1') return false;
+      history.replaceState(null, '', location.pathname + location.hash);
+      go = !!(window.ONBOARD_UI && ONBOARD_UI.testPending && ONBOARD_UI.testPending());
+    } catch (e) { go = false; }
+    return go;
+  }
+
+  function begin() {
+    if (!uiReady()) return;   // 共用元件沒載到:不清掉原本的作答紀錄
+    st = { answers: {}, done: false, startedAt: new Date().toISOString() };
+    store.set(KEY, st);
+    cur = 0;
+    renderTest();
+    focus.focusMain();
+  }
 
   function dropCard() { if (resultCard) { resultCard.destroy(); resultCard = null; } }
   function leaveFocus() { closePanel(false); if (focus) { focus.leave(); focus = null; } }
@@ -60,14 +82,7 @@
           h('span', { class: 'mock-tag' }, '約 20 分鐘')),
         h('button', {
           class: 'btn primary', 'data-gate': '',   // 開始檢測:沒登入時 js/profile.js 先攔下
-          onclick: () => {
-            if (!uiReady()) return;   // 共用元件沒載到:不清掉原本的作答紀錄
-            st = { answers: {}, done: false, startedAt: new Date().toISOString() };
-            store.set(KEY, st);
-            cur = 0;
-            renderTest();
-            focus.focusMain();
-          },
+          onclick: begin,
         }, '開始')));
   }
 

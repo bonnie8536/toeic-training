@@ -94,17 +94,48 @@ function changedLines(file) {
   assert.equal(d.status, 0, 'git diff 失敗');
   return String(d.stdout || '').split('\n').filter((l) => /^[+-]/.test(l) && !/^(\+\+\+|---) /.test(l)).map((l) => l.replace(/\r$/, ''));
 }
-T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按鈕;cloud.js 只多三個鍵的合併規則'] = () => {
+T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按鈕與從開始頁進來直接開考;cloud.js 只多三個鍵的合併規則'] = () => {
   const files = ['data/diagnostic.js', 'js/common.js'];
   const r = spawnSync('git', ['diff', '--quiet', '--ignore-cr-at-eol', baseRef(), '--'].concat(files), { cwd: REPO });
   assert.equal(r.status, 0, '有改到:' + files.join('、'));
-  /* 檢測頁:diag 的格式與讀寫不動,只有結算卡的 primary 換成「看起始程度」(設定中交的卷) */
+  /* 檢測頁:diag 的格式與讀寫不動;結算卡的 primary 換成「看起始程度」(設定中交的卷);從開始頁進來直接開考(按「開始」那段抽成 begin) */
   const dg = changedLines('js/diagnostic.js').map((l) => l.slice(0, 1) + l.slice(1).trim());
   eq(dg, [
+    '+else if (autoStart()) begin();',
+    '+/* 從開始頁按「開始檢測」進來(網址帶 start=1、設定起始程度停在檢測這一步、還沒有作答):直接開考,不用再按一次「開始」。',
+    '+網址的 start=1 拿掉,重新整理時照一般規則(有作答接著做) */',
+    '+function autoStart() {',
+    '+let go = false;',
+    '+try {',
+    "+if (new URLSearchParams(location.search).get('start') !== '1') return false;",
+    "+history.replaceState(null, '', location.pathname + location.hash);",
+    '+go = !!(window.ONBOARD_UI && ONBOARD_UI.testPending && ONBOARD_UI.testPending());',
+    '+} catch (e) { go = false; }',
+    '+return go;',
+    '+}',
+    '+',
+    '+function begin() {',
+    '+if (!uiReady()) return;   // 共用元件沒載到:不清掉原本的作答紀錄',
+    '+st = { answers: {}, done: false, startedAt: new Date().toISOString() };',
+    '+store.set(KEY, st);',
+    '+cur = 0;',
+    '+renderTest();',
+    '+focus.focusMain();',
+    '+}',
+    '+',
+    '-onclick: () => {',
+    '-if (!uiReady()) return;   // 共用元件沒載到:不清掉原本的作答紀錄',
+    '-st = { answers: {}, done: false, startedAt: new Date().toISOString() };',
+    '-store.set(KEY, st);',
+    '-cur = 0;',
+    '-renderTest();',
+    '-focus.focusMain();',
+    '-},',
+    '+onclick: begin,',
     '-/* 第一屏:結算卡。姓名與日期放在分數上面的小字;三個難度的正確率跟在卡片下面一行 */',
     '+/* 第一屏:結算卡。姓名與日期放在分數上面的小字;三個難度的正確率跟在卡片下面一行。',
     '+新用戶設定起始程度途中交的卷,主按鈕換成「看起始程度」(js/onboard-ui.js,只有這種時候不是 null) */',
-    "+let next = null; try { next = window.ONBOARD_UI ? ONBOARD_UI.diagPrimary() : null; } catch (e) { /* 照原本的「去刷題」 */ }",
+    '+let next = null; try { next = window.ONBOARD_UI ? ONBOARD_UI.diagPrimary() : null; } catch (e) { /* 照原本的「去刷題」 */ }',
     "-primary: { label: '去刷題', href: 'practice.html' },",
     "+primary: next || { label: '去刷題', href: 'practice.html' },",
   ]);
@@ -149,7 +180,7 @@ T['B1 homeCard:訪客 A 不畫(首屏的「先測程度」連 start.html);已登
   const a = plain(C.homeCard('A', { signedIn: true }));
   /* 按鈕字跟狀態 E 一樣是「設定程度」:每日練習卡已經有一顆「開始」 */
   eq([a.title, a.sub, a.primary.text, a.primary.href, a.secondary.text, a.secondary.href, a.dismiss],
-    ['找出程度，從適合的練習開始', '填多益成績，或做 28 題檢測（約 20 分鐘）', '設定程度', 'start.html?step=target', '我有班級代碼', 'start.html?step=join', false]);
+    ['找出你的起始程度', '填多益成績，或做 28 題檢測（約 20 分鐘）', '設定程度', 'start.html?step=target', '我有班級代碼', 'start.html?step=join', false]);
   const bg = plain(C.homeCard('B', { signedIn: false, guest: guestOf({ step: 'exam' }) }));
   eq([bg.title, bg.sub, bg.primary.text, bg.primary.href, bg.secondary], ['繼續設定起始程度', '', '繼續', 'start.html?step=exam', null]);
   assert.equal(C.homeCard('B', { signedIn: true, onboard: { status: 'in_progress', step: 'test' } }).primary.href, 'start.html?step=test');
@@ -159,7 +190,7 @@ T['B1 homeCard:訪客 A 不畫(首屏的「先測程度」連 start.html);已登
   eq([d0.title, d0.sub, d0.primary.text, d0.primary.href], ['你的起始程度', '聽力 門檻／閱讀 入門', '開始練習', 'grammar.html']);
   eq(plain(C.homeCard('D0', { signedIn: true, levels: null })).primary, { text: '看起始程度', href: 'start.html?step=result' });
   const e = plain(C.homeCard('E', { signedIn: true }));
-  eq([e.title, e.sub, e.primary.text, e.primary.href, e.dismiss], ['找出程度，從適合的練習開始', '填多益成績，或做 28 題檢測（約 20 分鐘）', '設定程度', 'start.html?step=target', true]);
+  eq([e.title, e.sub, e.primary.text, e.primary.href, e.dismiss], ['找出你的起始程度', '填多益成績，或做 28 題檢測（約 20 分鐘）', '設定程度', 'start.html?step=target', true]);
   ['none', 'S0', 'resume', 'join', undefined].forEach((s) => assert.equal(C.homeCard(s, {}), null, String(s)));
 };
 T['B1b continueHref:接著中斷的那一步;沒有或不認得回 S1'] = () => {
@@ -299,7 +330,7 @@ T['B3b 首頁卡:已登入沒有 onboard 等 CLOUD.ready 前不畫;之後新帳�
   const hn = homeGrid(n); n.UI.homeCard(hn.box);
   eq([hn.box.hidden, hn.box.children.length], [true, 0], '等 CLOUD.ready:不畫');
   await settle();
-  eq([hn.box.hidden, texts(hn.box)], [false, ['找出程度，從適合的練習開始', '設定程度', '我有班級代碼']]);
+  eq([hn.box.hidden, texts(hn.box)], [false, ['找出你的起始程度', '設定程度', '我有班級代碼']]);
   /* 帳號有不認得的 onboard:ready 之前先畫的卡沒有「不用了」(還沒確定登入) */
   const u = uiEnv(signedIn());
   u.ls.set(PRE + 'onboard', J({ v: 1, status: 'weird' }));
@@ -309,7 +340,7 @@ T['B3b 首頁卡:已登入沒有 onboard 等 CLOUD.ready 前不畫;之後新帳�
 
   const o = uiEnv(signedIn());
   const ho = homeGrid(o); o.UI.homeCard(ho.box); await settle();
-  eq(texts(ho.box), ['找出程度，從適合的練習開始', '設定程度', '不用了']);
+  eq(texts(ho.box), ['找出你的起始程度', '設定程度', '不用了']);
   ho.box.all().find((x) => x.textContent === '不用了').click();
   eq([ho.box.hidden, JSON.parse(o.ls.get(PRE + 'onboard')).status], [true, 'dismissed']);
 };
@@ -408,6 +439,34 @@ T['B5 檢測頁:設定中、按「開始檢測」之後交的卷,結算卡主按
   noCore.ctx.ONBOARD_CORE = undefined;
   vm.runInContext(read('js/onboard-ui.js'), noCore.ctx);
   assert.equal(noCore.ctx.ONBOARD_UI.diagPrimary(), null, '核心檔沒載到');
+};
+T['B5b 檢測頁:從開始頁進來(網址 start=1、設定停在檢測這一步、還沒作答)直接開考;其他情況照原本先畫開始頁'] = () => {
+  const ip = { v: 1, status: 'in_progress', step: 'test', testFrom: new Date(NOW - MIN).toISOString() };
+  const url = (search) => (ctx) => {
+    Object.assign(ctx.location, { search, pathname: '/diagnostic.html', hash: '' });
+    ctx.history = { replaceState(s, t, u) { ctx.__replaced = u; } };
+  };
+  const intro = (p) => p.e.dom.body.all().some((x) => x.tagName === 'BUTTON' && x.textContent === '開始');
+  const go = diagPage(ip, null, null, url('?start=1'));
+  const d = JSON.parse(go.e.ls.get(PRE + 'diag'));
+  eq([d.done, Object.keys(d.answers).length, typeof d.startedAt, go.e.ctx.__replaced, intro(go)], [false, 0, 'string', '/diagnostic.html', false]);
+  /* 沒帶 start=1、設定已完成、沒有設定、訪客:不寫 diag,畫開始頁;start=1 照樣從網址拿掉 */
+  const cases = [
+    ['沒帶網址參數', diagPage(ip, null, null, url(''))],
+    ['設定已完成', diagPage({ v: 1, status: 'done', step: 'result' }, null, null, url('?start=1'))],
+    ['沒有設定', diagPage(null, null, null, url('?start=1'))],
+    ['訪客', diagPage(ip, null, { pid: 'p1', user: null }, url('?start=1'))],
+  ];
+  const anyDiag = (p) => Array.from(p.e.ls.keys()).some((k) => /diag$/.test(k));
+  cases.forEach(([name, p]) => eq([anyDiag(p), intro(p)], [false, true], name));
+  assert.equal(cases[1][1].e.ctx.__replaced, '/diagnostic.html', '參數拿掉');
+  /* 已經有作答:照原本接著做,不重開 */
+  const half = { answers: { 0: 1 }, done: false, startedAt: new Date(NOW - MIN).toISOString() };
+  const cont = diagPage(ip, half, null, url('?start=1'));
+  eq(JSON.parse(cont.e.ls.get(PRE + 'diag')).answers, { 0: 1 });
+  /* 引導的程式沒載到:照原本先畫開始頁 */
+  const noUi = diagPage(ip, null, null, (ctx) => { url('?start=1')(ctx); ctx.ONBOARD_UI = undefined; });
+  eq([noUi.e.ls.has(PRE + 'diag'), intro(noUi)], [false, true]);
 };
 
 /* ---------- 各頁的接點(原始檔) ---------- */

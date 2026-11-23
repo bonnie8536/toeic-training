@@ -437,7 +437,7 @@ T['P11 重新檢測還沒交卷就回 S8:回 S4、不記完成;交卷後算級�
   await a.press('開始檢測');
   eq([a.dialogTitle(), a.confirms[0].body, a.confirms[0].danger], ['清除這份報告？', '刷題與閱讀進度不受影響', true]);
   await a.press('重新檢測');
-  eq([a.hrefs, a.acct('diag'), a.acct('onboard').status, a.acct('onboard').step], [['diagnostic.html'], null, 'in_progress', 'test']);
+  eq([a.hrefs, a.acct('diag'), a.acct('onboard').status, a.acct('onboard').step], [['diagnostic.html?start=1'], null, 'in_progress', 'test']);
 
   /* 到檢測頁後按返回回到 S8 網址:還沒交卷 */
   const b = await open({ url: 'start.html?step=result', signed: true, ls });
@@ -527,12 +527,12 @@ T['P18 S4 舊檢測沒做完而且是 7 天前開始的:先確認再清掉上次
   eq([a.mask(), a.ls.get(PRE + 'diag'), a.hrefs], [null, stale, []], '取消:作答留著、不前往');
   await a.press('開始檢測');
   await a.press('重新開始');
-  eq([a.acct('diag'), a.hrefs, a.acct('onboard').step, a.acct('onboard').testFrom], [null, ['diagnostic.html'], 'test', NOW_ISO]);
+  eq([a.acct('diag'), a.hrefs, a.acct('onboard').step, a.acct('onboard').testFrom], [null, ['diagnostic.html?start=1'], 'test', NOW_ISO]);
 
   const recent = J({ answers: { 0: 1 }, done: false, startedAt: new Date(NOW - 3 * DAY).toISOString() });
   const b = await open({ url: 'start.html?step=test', signed: true, init: { [PRE + 'diag']: recent } });
   await b.press('開始檢測');
-  eq([b.confirms.length, b.ls.get(PRE + 'diag'), b.hrefs], [0, recent, ['diagnostic.html']]);
+  eq([b.confirms.length, b.ls.get(PRE + 'diag'), b.hrefs], [0, recent, ['diagnostic.html?start=1']]);
 };
 
 /* 每一個畫面:實色主按鈕最多一顆(登入卡自己的不算),其他動作是文字按鈕 */

@@ -379,7 +379,7 @@
     const card = (title, sub, primary, more) => Object.assign({ state, title, sub, primary, secondary: null, dismiss: false }, more || {});
     if (state === 'A') {
       if (!i.signedIn) return null;
-      return card('找出程度，從適合的練習開始', '填多益成績，或做 28 題檢測（約 20 分鐘）', { text: '設定程度', href: 'start.html?step=target' },
+      return card('找出你的起始程度', '填多益成績，或做 28 題檢測（約 20 分鐘）', { text: '設定程度', href: 'start.html?step=target' },
         { secondary: { text: '我有班級代碼', href: 'start.html?step=join' } });
     }
     if (state === 'B') return card('繼續設定起始程度', '', { text: '繼續', href: continueHref(i.signedIn ? i.onboard : i.guest) });
@@ -388,7 +388,7 @@
       const link = practiceLink(i.levels);
       return card('你的起始程度', levelsLabel(i.levels), link ? { text: '開始練習', href: link } : { text: '看起始程度', href: 'start.html?step=result' });
     }
-    if (state === 'E') return card('找出程度，從適合的練習開始', '填多益成績，或做 28 題檢測（約 20 分鐘）', { text: '設定程度', href: 'start.html?step=target' }, { dismiss: true });
+    if (state === 'E') return card('找出你的起始程度', '填多益成績，或做 28 題檢測（約 20 分鐘）', { text: '設定程度', href: 'start.html?step=target' }, { dismiss: true });
     return null;
   }
   /* 「我的」頁學習設定(五列)。account:{ onboard, levels };diag 是舊檢測。

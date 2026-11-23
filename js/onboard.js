@@ -361,7 +361,7 @@
       document.head.append(s);
     });
   }
-  function startAndGo(msg, el) { if (wrote(D.startTest(), msg, el)) location.href = 'diagnostic.html'; }
+  function startAndGo(msg, el) { if (wrote(D.startTest(), msg, el)) location.href = 'diagnostic.html?start=1'; }   // 檢測頁直接開考,不再按一次「開始」
   /* 舊檢測沒做完、而且是 7 天前開始的:不接著舊作答(可能混到幾個月前的答案),跟有報告時一樣先確認再清掉 */
   function staleDiag(diag) {
     if (!diag || diag.done) return false;

@@ -6,7 +6,8 @@
 這裡檢查淘汰的 id 不在題庫裡、替代題在題庫裡、題庫 id 不重複(七個 Part 一起看)、批次檔名照格式(不照格式的檔也會被 glob 載進題庫)。
 測試用環境變數(tools/test_retired.js):MERGE_RAW_DIR、MERGE_OUT_DIR、MERGE_RETIRED、MERGE_INDEX 換掉 data/raw、data、data/retired.json、index.html;
 MERGE_TIPS 換掉技巧卡來源 data/raw/tip_cards.json(tools/test_tips.js)。
-技巧卡 data/tips.js 的檢查與輸出格式見 tools/tips_build.py;技巧卡有錯也算硬錯誤。
+技巧卡 data/tips.js 的檢查與輸出格式見 tools/tips_build.py;技巧卡有錯也算硬錯誤,
+來源不見了但輸出資料夾還有舊的 tips.js(或 MERGE_TIPS 指定的檔不存在)也算硬錯誤。
 """
 import json, re, sys, glob, os
 from collections import Counter
@@ -701,11 +702,11 @@ if os.path.exists(_index):
 
 # ---------- 技巧卡(檢查規則與輸出格式見 tools/tips_build.py) ----------
 import tips_build
-tips, tip_errors = tips_build.load(os.environ.get('MERGE_TIPS') or os.path.join(RAW, 'tip_cards.json'))
+_tips_env = os.environ.get('MERGE_TIPS')
+tips, tip_errors, tip_warnings = tips_build.load_for_merge(_tips_env or os.path.join(RAW, 'tip_cards.json'), bool(_tips_env), OUT)
 errors.extend('技巧卡 ' + e for e in tip_errors)
-if tips is None and not tip_errors:
-    warnings.append('tip_cards.json 還沒有，不輸出 data/tips.js')
-elif tips:
+warnings.extend(tip_warnings)
+if tips:
     scan_simplified(tips, '技巧卡')
 
 # ---------- 輸出 ----------

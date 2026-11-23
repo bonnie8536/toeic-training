@@ -1,4 +1,4 @@
-/* 技巧卡：由 tools/merge_data.py 從 data/raw/tip_cards.json 產生，不要手改。 */
+/* 技巧卡：由 tools/merge_data.py 從 data/raw/tip_cards.json 產生，不要手改。欄位、示例的排法與顯示規則見 tools/tips_build.py。 */
 window.TIP_CARDS = (function freeze(x) {
   Object.keys(x).forEach(function (k) { if (x[k] && typeof x[k] === 'object') freeze(x[k]); });
   return Object.freeze(x);

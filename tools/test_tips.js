@@ -1,6 +1,7 @@
 /* 技巧卡:data/raw/tip_cards.json → tools/tips_build.py(由 tools/merge_data.py 呼叫)→ data/tips.js(window.TIP_CARDS)。
-   檢查:資料檔跟來源一致、每一層都凍結;產生時的每條檢查都抓得到壞資料(各放一筆);合併遇到壞的技巧卡整個停下、不寫檔;
-   內文與示例說明用全形標點、沒有承諾效果或口語客套的字;第 1–8 堂與測驗檢討會配的卡都在。
+   檢查:資料檔跟來源一致、每一層都凍結;產生時的每條檢查都抓得到壞資料(各放一筆,含示例的排法);合併遇到壞的技巧卡整個停下、不寫檔;
+   合併找不到來源時,指定的來源不在或留著舊的 tips.js 算錯誤;內文與示例說明用全形標點、沒有承諾效果或口語客套的字;
+   第 1–8 堂與測驗檢討會配的卡都在;check_packs 收集測驗檢討的卡少了或多了會丟錯。
    要跑 Python 的項目先看環境變數 PYTHON,再試 python3、python、py;都沒有就跳過那幾項(印出原因,結尾列出略過幾項)。
    不連網、不改 repo 的檔案(暫存資料夾在系統 temp,跑完刪掉)。用法:node tools/test_tips.js */
 'use strict';
@@ -100,6 +101,13 @@ const BAD = [
   ['多了欄位', (d) => { d.cards[9].note = 'x'; }, /第 10 張 [^：]+：多了欄位 note/],
   ['少了欄位', (d) => { delete d.cards[10].body; }, /第 11 張 [^：]+：少了欄位 body/],
   ['頂層格式不對', (d) => { d.v = 2; }, /格式要是/],
+  ['版本號是 true', (d) => { d.v = true; }, /格式要是/],
+  ['示例種類跟 Part 對不上', (d) => { d.cards[4].example.kind = 'sentence'; }, /第 5 張 tip-P3-speaker_place：example\.kind 在 P3 要是 script/],
+  ['P3 示例沒有 Question: 那一行', (d) => { d.cards[3].example.en = d.cards[3].example.en.replace('Question: ', ''); }, /第 4 張 tip-P3-gist：example\.en 要先寫聽到的內容/],
+  ['P4 示例的 Question: 在第一行', (d) => { d.cards[5].example.en = 'Question: Why is the speaker calling?\n(A) To change a time\n(B) To ask for directions'; }, /第 6 張 tip-P4-gist：example\.en 要先寫聽到的內容/],
+  ['P2 示例第一行是選項', (d) => { d.cards[1].example.en = '(A) In the main hall.\n(B) Ms. Chen.\n(C) Yes.'; }, /第 2 張 tip-P2-wh：example\.en 第一行是問句/],
+  ['照片卡的描述不是 (A) 開頭', (d) => { d.cards[0].example.en = 'A man is typing.'; }, /第 1 張 tip-P1-photo：example\.en 照片卡每一行/],
+  ['照片卡的說明沒先寫照片情境', (d) => { d.cards[0].example.zh = '選 A，B 的動作不對。'; }, /第 1 張 tip-P1-photo：example\.zh 第一句要寫照片情境/],
 ];
 
 T['T3 產生時的檢查:每種壞資料各一筆都擋下(exit 1),印出哪一張、哪一欄,只有那一個錯'] = () => {
@@ -139,7 +147,31 @@ T['T4 tools/merge_data.py 遇到壞的技巧卡:exit 1、印出哪一張哪一�
   });
 };
 
-T['T5 文字:中文用全形標點、逗號少;沒有承諾效果或口語客套的字、驚嘆號、問號、破折號、表情符號;示例英文沒有中文;示例種類跟 Part 對得上;都標原創'] = () => {
+T['T5 tools/merge_data.py 找不到技巧卡來源:MERGE_TIPS 指定的檔不在、或輸出資料夾還留著舊的 tips.js 算錯誤(不寫檔);兩者都不是只提醒'] = () => {
+  if (needPy('T5')) return 'SKIP';
+  return inTmp((dir) => {
+    const out = path.join(dir, 'out'), raw = path.join(dir, 'raw');
+    fs.mkdirSync(out);
+    const named = runPy([path.join('tools', 'merge_data.py')], { MERGE_OUT_DIR: out, MERGE_TIPS: path.join(dir, 'nothing.json') });
+    assert.ok(named.code === 1 && /技巧卡 MERGE_TIPS 指定的來源不存在/.test(named.out), named.out.slice(-500));
+    assert.deepStrictEqual(fs.readdirSync(out), []);
+    fs.mkdirSync(raw);
+    fs.readdirSync(path.join(REPO, 'data', 'raw')).filter((f) => f !== 'tip_cards.json')
+      .forEach((f) => fs.copyFileSync(path.join(REPO, 'data', 'raw', f), path.join(raw, f)));
+    fs.writeFileSync(path.join(out, 'tips.js'), '/* 舊檔 */\n');
+    const stale = runPy([path.join('tools', 'merge_data.py')], { MERGE_RAW_DIR: raw, MERGE_OUT_DIR: out });
+    assert.ok(stale.code === 1 && /tip_cards\.json 不見了，輸出資料夾還留著舊的 tips\.js/.test(stale.out), stale.out.slice(-500));
+    assert.deepStrictEqual(fs.readdirSync(out), ['tips.js']);
+    assert.strictEqual(fs.readFileSync(path.join(out, 'tips.js'), 'utf8'), '/* 舊檔 */\n');
+    fs.unlinkSync(path.join(out, 'tips.js'));
+    const fresh = runPy([path.join('tools', 'merge_data.py')], { MERGE_RAW_DIR: raw, MERGE_OUT_DIR: out });
+    assert.ok(fresh.code === 0 && /\[W\] tip_cards\.json 還沒有，不輸出 tips\.js/.test(fresh.out), fresh.out.slice(-500));
+    assert.ok(fs.readdirSync(out).length > 0 && !fs.existsSync(path.join(out, 'tips.js')));
+    return 'ok';
+  });
+};
+
+T['T6 文字:中文用全形標點、逗號少;沒有承諾效果或口語客套的字、驚嘆號、問號、破折號、表情符號;示例英文沒有中文;示例種類跟 Part 對得上;都標原創'] = () => {
   RAW.cards.forEach((c) => {
     const zh = [c.title, c.body, c.example.zh || ''];
     zh.forEach((s) => {
@@ -156,7 +188,7 @@ T['T5 文字:中文用全形標點、逗號少;沒有承諾效果或口語客套
   return RAW.cards.length + ' 張';
 };
 
-T['T6 第 1–8 堂技巧卡區塊引用的卡、測驗檢討會配的卡(js/lesson-rules.js)都在 data/tips.js'] = () => {
+T['T7 第 1–8 堂技巧卡區塊引用的卡、測驗檢討會配的卡(js/lesson-rules.js)都在 data/tips.js'] = () => {
   const have = new Set(loadTips().cards.map((c) => c.id));
   const data = require('./check_packs.js').loadData();
   const used = new Set(data.reviewTips);
@@ -166,6 +198,16 @@ T['T6 第 1–8 堂技巧卡區塊引用的卡、測驗檢討會配的卡(js/les
   assert.deepStrictEqual(missing, []);
   assert.strictEqual(data.reviewTips.length, 7);
   return used.size + ' 張';
+};
+
+T['T8 check_packs 收集測驗檢討會配的卡:要剛好 Part 1–7 各一張,配法改了(少一個 Part、一個 Part 兩張)會丟錯'] = () => {
+  const { reviewTips } = require('./check_packs.js');
+  const fake = (idOf) => ({ planTestReview: (parts) => Object.keys(parts).map((p) => ({ kind: 'tip', id: idOf(p.slice(1)) })).filter((x) => x.id) });
+  assert.deepStrictEqual(reviewTips(fake((n) => 'tip-P' + n + '-x')), ['1', '2', '3', '4', '5', '6', '7'].map((n) => 'tip-P' + n + '-x'));
+  assert.throws(() => reviewTips(fake((n) => (n === '7' ? null : 'tip-P' + n + '-x'))), /Part 1–7 各一張，從 js\/lesson-rules\.js 收集到 6 張/);
+  const two = { planTestReview: (parts) => Object.keys(parts).flatMap((p) => [{ kind: 'tip', id: 'tip-' + p + '-a' }, { kind: 'tip', id: 'tip-' + p + '-b' }]) };
+  assert.throws(() => reviewTips(two), /收集到 14 張/);
+  return 'ok';
 };
 
 (async () => {

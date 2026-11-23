@@ -1178,7 +1178,7 @@
   function pendingState(user) {
     const prefix = 'tr_u' + pidOf(user) + '_';
     let vals = [];
-    try { vals = Object.keys(MERGED).map(k => localStorage.getItem(prefix + k)); } catch (e) { /* 讀不到就只比帳本 */ }
+    try { vals = mergedIn(localNames(prefix)).map(k => localStorage.getItem(prefix + k)); } catch (e) { /* 讀不到就只比帳本 */ }
     return JSON.stringify([readLedger(user.id), readLocalOnly(user.id), vals]);
   }
 
@@ -1701,7 +1701,7 @@
        雲端少了:合併上傳,傳不上去的記在帳本,下面放進搬家包;讀不到雲端、合併說唯讀(確認不了):本機那份也放進搬家包,
        收件端用同步的合併(只會多),寧可多帶 */
     let unsure;
-    try { unsure = (await checkCloud(user)).unsure; } catch (e) { unsure = Object.keys(MERGED).filter(k => MERGED[k].reconcile); }
+    try { unsure = (await checkCloud(user)).unsure; } catch (e) { unsure = mergedIn(localNames('tr_u' + pidOf(user) + '_')).filter(k => spec(k).reconcile); }
     const left = pend(), prefix = 'tr_u' + pidOf(user) + '_', items = [];
     unsure.forEach(k => { if (!(k in left)) left[k] = 0; });   // 帳本沒記:時間給 0(收件端當成上次對齊之後沒改過,分不出先後的偏雲端那份)
     Object.keys(left).sort().forEach(k => {

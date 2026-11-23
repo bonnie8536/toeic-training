@@ -157,6 +157,23 @@ T['flushForMove:帳本比雲端新的照常上傳;雲端比較新的(不在合�
   return { ok, detail: J({ left: r.left, carried, upOnce, after, ledger: ledger(w) }) };
 };
 
+/* 搬家寄出頁(舊網址)不載 js/sync-merge-lesson.js(舊網址的 Worker 只代理固定的檔案清單):課程進度拿不到合併函式,
+   照規則不整份上傳(不蓋掉雲端那份)、帳本留著,放進搬家包,到新網址再合併 */
+T['flushForMove:頁面沒載 js/sync-merge-lesson.js:課程進度不整份上傳、不蓋掉雲端那份,放進搬家包'] = async () => {
+  const w = makeWorld();
+  const st = (rows) => ({ v: 1, lessonId: { listening: 'entry-L03', reading: 'entry-L03' }, packVersion: { listening: '1.2.0', reading: '1.2.0' },
+    levels: { listening: 'entry', reading: 'entry' }, startedAt: Math.floor((T0 - 10 * HOUR) / 1000), doneAt: null, seg: { vocab: { st: 'todo', t0: null, t1: null } }, pk: {}, a: rows });
+  const ids = (v) => (v && v.a ? v.a.map((x) => x[1]).sort() : []);
+  cloudRow(w, 'les_t1_03', st([[4, 'l2-01', 0, 1, 3, 10]]), T0 - HOUR);
+  const pg = await openLoggedIn(w, { lazy: ['syncLesson'] });
+  w.clock.t += 1000; w.local.setItem(PREFIX + 'les_t1_03', J(st([[4, 'l2-02', 0, 1, 3, 20]]))); pg.ctx.CLOUD.push('les_t1_03', 1);
+  await pg.runTimers();
+  const r = await pg.ctx.CLOUD.flushForMove();
+  const carried = (r.accounts[USER.id] || []).map((e) => e[0]);
+  const ok = carried.indexOf('les_t1_03') > -1 && J(ids(cv(w, 'les_t1_03'))) === J(['l2-01']) && ups(w).indexOf('les_t1_03') < 0
+    && 'les_t1_03' in ledger(w) && !(w.loaded || []).length;
+  return { ok, detail: J({ carried, cloud: ids(cv(w, 'les_t1_03')), ups: ups(w), ledger: ledger(w), loaded: w.loaded }) };
+};
 T['flushForMove:離線時全部交給搬家包;什麼都沒有時不打任何請求;沒登入回空的'] = async () => {
   const w = makeWorld();
   const pg = await openLoggedIn(w);

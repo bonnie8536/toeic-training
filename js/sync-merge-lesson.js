@@ -2,7 +2,9 @@
    從 js/sync-merge.js 分出來的(兩個檔合在一起超過 800 行);載入時把 lesson、pts、rvq、tests 加進 window.SYNC_MERGE
    (換成一份新的凍結物件,原有的函式還是同一個,對外的名稱與行為跟以前在 js/sync-merge.js 裡一樣)。
    每一頁都緊接在 js/sync-merge.js 後面、js/cloud.js 之前載入(tools/test_sync_union.js 檢查)。js/sync-merge.js 沒載到就什麼都不做:
-   js/cloud.js 拿不到這四個合併函式,跟舊快取一樣不上傳、帳本留著。合併函式的約定跟 js/sync-merge.js 一樣。 */
+   js/cloud.js 拿不到這四個合併函式,跟舊快取一樣不上傳、帳本留著。合併函式的約定跟 js/sync-merge.js 一樣。
+   搬家寄出頁 move-out.html 不載這個檔:它在舊網址,舊網址的 Worker 轉址期只代理固定的檔案清單(tools/move-worker/worker.js 的 KEEP_ASSETS)。
+   那一頁的課程進度照上面的規則不上傳、放進搬家包,到新網址登入時再合併(搬家暫存區要用時也會補載這個檔)。 */
 (function (root) {
   'use strict';
   const base = root.SYNC_MERGE;

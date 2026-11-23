@@ -27,7 +27,7 @@ const ON_OLD = MOVE_FROM.indexOf(self.location.origin) > -1;
 const MOVE = 'ss-move-' + V;
 const MOVE_FLAG = 'ss-move-flag';
 const MOVE_PAGE = '/move-out.html';
-const MOVE_ASSETS = [MOVE_PAGE, '/css/style.css', '/img/favicon.svg', '/js/move-config.js', '/js/cloud-config.js', '/js/common.js', '/js/sync-merge.js', '/js/sync-merge-lesson.js', '/js/pet-config.js',
+const MOVE_ASSETS = [MOVE_PAGE, '/css/style.css', '/img/favicon.svg', '/js/move-config.js', '/js/cloud-config.js', '/js/common.js', '/js/sync-merge.js', '/js/pet-config.js',
   '/js/pet.js', '/js/cloud.js', '/js/move-rules.js', '/js/move-merge.js', '/js/move-pack.js', '/js/move-link.js', '/js/move-out.js', '/js/move-out-page.js'];
 
 self.addEventListener('install', (event) => {

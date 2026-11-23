@@ -15,7 +15,7 @@
   const LOAD_MS = 10000;                       // 圖的程式最多等這麼久,逾時當作沒載到
   const CHICK_RATIO = 280 / 240;               // 小雞畫布的高寬比(ChickArt.metrics;載入後以 metrics 為準)
   const PELICAN_RATIO = 280 / 300;             // 鵜鶘畫布的高寬比(PelicanArt.metrics;載入後以 metrics 為準)
-  const POSE_FALLBACK = { oops: 'idle', read: 'idle' };
+  const POSE_FALLBACK = { oops: 'idle', read: 'idle', daydream: 'idle' };
   /* 開心的跳躍裡有壓得很扁的格(蹲下 0.7、落地 0.6),放大在結算卡上像圖壞掉:這些姿勢只畫靜止格(正常比例),
      要跳時由 CSS 把整張畫布往上跳一次(.is-hop,壓扁不超過 0.92、以腳底為基準) */
   const STILL_POSES = ['happy'];

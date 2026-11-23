@@ -3142,7 +3142,15 @@ html:not(.doodle-ready) .module-card.tile-featured, .module-card.tile-featured:h
 
 /* ---------- 首頁 ---------- */
 /* <html class="authed">:已登入(開機程式依本機登入紀錄先加,雲端確認後校正)。藏首屏與目錄,每日練習卡當主角 */
-html.authed .home-hero, html.authed .home-dir { display: none; }
+html.authed .home-dir { display: none; }
+/* 已登入首屏精簡版:只留一行短大標題與鵜鶘,每日練習卡當主角。
+   同頁只有一個 h1:未登入顯示搜尋用的 h1,已登入把它藏起來,改顯示 .home-short(role=heading aria-level=1,未登入時 display:none 不進無障礙樹)。
+   搜尋引擎沒有登入紀錄,看到的版面與文字不變。 */
+.home-short { display: none; }
+html.authed .home-hero h1, html.authed .home-hero .stats, html.authed .home-hero .hero-cta { display: none; }
+html.authed .home-hero .home-short { display: block; grid-area: h1; align-self: center; margin: 0; font-family: var(--round); font-weight: 700; font-size: 32px; line-height: 1.35; letter-spacing: .5px; word-break: keep-all; overflow-wrap: anywhere; }
+html.authed .home-hero .hero-inner { grid-template-areas: "h1 chick"; padding-top: 16px; padding-bottom: 8px; }
+html.authed .home-hero .hero-chick.is-pelican { width: 140px !important; height: 131px !important; }
 /* 未登入首屏。DOM 順序 h1、.stats、.hero-cta、角色(主角鵜鶘,載不到時退回小雞)。
    桌機:左欄 h1、主按鈕與文字連結、統計一排小字;鵜鶘 180 緊跟在左欄右邊(間距 48),垂直置中,不飄到畫面最右。
    手機:h1 與鵜鶘(112)並排,頭頂對齊 h1 第一行;按鈕與統計在下面整寬 */
@@ -3173,6 +3181,9 @@ html.authed .home-hero, html.authed .home-dir { display: none; }
   /* 鵜鶘(主角):畫布 300×280 的比例,比小雞寬;上方約 1/10、下方約 1/25 是空白 */
   /* 寬 92(高 86):h1 在 360 到 375 寬排回兩行(「衝衝英文：多益聽力、」「閱讀刷題與單字練習」);左右的空白往外疊 */
   .hero-chick.is-pelican { width: 92px !important; height: 86px !important; margin: -8px -4px -4px -8px; }
+  html.authed .home-hero .hero-inner { grid-template-areas: "h1 chick"; padding-top: 8px; padding-bottom: 0; }
+  html.authed .home-hero .home-short { font-size: 24px; align-self: center; }
+  html.authed .home-hero .hero-chick.is-pelican { width: 120px !important; height: 112px !important; margin: 0; }
   .home-hero .hero-cta { margin-top: 20px; }
   .hero-cta .btn.primary { padding: 0 28px; }
   .home-hero .stats { gap: 12px; margin-top: 16px; }

@@ -10,8 +10,9 @@
      就當成同一份;一份的 _p 記著另一份(另一份是它的舊版本)就用新的那份(舊網址的比較新:換成 SYNC_MERGE 合併的結果,原值先備份)。
      只有兩邊都真的改了才另存「（舊網址）」(兩個網域沒有共同的同步紀錄,一次搬完就結束)。
    - 刪除標記(sync_del,只有雲端帳號的資料夾會寫):兩份聯集(SYNC_MERGE.tombs),不整份換掉、不問。
-   - 雲端帳號還沒上傳的(暫存區 tr_move_pending_<帳號 id>):同一個帳號又搬來一包時,題庫、刪除標記、模擬考紀錄兩包用 SYNC_MERGE 合併
-     (js/cloud.js 的 MERGED 表上的鍵;登入時 cloud.js takePending 也用同一套跟本機、雲端合併),其他鍵照舊留時間比較晚的那包。
+   - 雲端帳號還沒上傳的(暫存區 tr_move_pending_<帳號 id>):同一個帳號又搬來一包時,js/cloud.js 合併表上的鍵(題庫、刪除標記、模擬考紀錄、
+     模擬考錯題、起始程度三個鍵、課程進度)兩包用 SYNC_MERGE 合併(登入時 cloud.js takePending 也用同一套跟本機、雲端合併);
+     合併不了的留時間比較晚的那包,沒選上的那包存進 tr_move_backup_<時間>_<帳號 id>。其他鍵照舊留時間比較晚的那包。
    - 寫作(writing_b、writing_e、writing_y)同一題兩邊寫的不一樣:updatedAt 比較新的那份放原位,另一份放進那一題的 alt(陣列),兩份都留;
      文章單字(vocab_)同一格兩邊填的不一樣:留新網址的,舊網址那份放進 alt。js/writing.js、js/reading.js 會把 alt 顯示出來。
    - 錯題本(drill_p、listen_p、phrase_drill、verb_quiz)同一題兩邊都有:留時間(t)比較新的那份(錯題本看最後一次作答);單字錯題 vgame_miss 的次數取大的。
@@ -23,8 +24,8 @@
      「上次搬家寫的、新網址之後沒動過就直接換新」只對同一台裝置再搬有效,別台搬來的不同值列為衝突。沒有裝置編號的包不走這條捷徑。
    - 新網址算不算已經有資料(要不要問「切換到舊網址的學生檔案」):用 MOVE_RULES.meaningful,頁面自己建的空小雞不算。
    - 小雞用 PET.cloudMerge,每日練習用 DAILY.merge;呼叫的人沒給(或小雞的時鐘對不上)就列為衝突、留新網址的。
-   依賴 js/move-rules.js(MOVE_RULES);題庫的戳記、刪除標記、暫存區的合併用 js/sync-merge.js(SYNC_MERGE,頁面要在這個檔之前載入;
-   沒載到時題庫照舊另存「（舊網址）」、刪除標記列為衝突留新網址的、暫存區留時間晚的,只會多,不會少)。 */
+   依賴 js/move-rules.js(MOVE_RULES);題庫的戳記、刪除標記、暫存區的合併用 js/sync-merge.js、js/sync-merge-lesson.js(SYNC_MERGE,頁面要在這個檔之前載入;
+   沒載到時題庫照舊另存「（舊網址）」、刪除標記列為衝突留新網址的、暫存區留時間晚的、另一包進備份,只會多,不會少)。 */
 (function (root) {
   'use strict';
   const R = root.MOVE_RULES;
@@ -41,6 +42,7 @@
     ear_s: '句子跟讀', ear_d: '句子聽寫', ear_mp: '相似音辨析', ear_n: '數字與價格', diag: '程度檢測', ph_slow: '自然發音慢速',
     vgame_src: '單字遊戲上次的題目來源', profiles: '學生名單', current_profile: '目前的學生檔案', pet_hint: '小雞提示次數',
     plan: '課表設定', pts: '考點狀態', rvq: '回顧佇列', tests_v1: '測驗結果',
+    onboard: '起始程度設定', self_score: '自填成績', levels: '起始程度', q_reports: '回報過的題目',
   };
 
   const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
@@ -623,12 +625,21 @@
       const curP = was === null ? { ok: false } : parse(was);
       const have = curP.ok && isPlain(curP.v) && Array.isArray(curP.v.items) ? curP.v.items.filter((e) => Array.isArray(e) && e.length === 3 && typeof e[0] === 'string') : [];
       const bySub = new Map(have.map((e) => [e[0], e]));
-      const joined = joinPending(bySub, items, ctx.now);   // 題庫、刪除標記、模擬考紀錄:兩包合併
+      const j = joinPending(bySub, items, ctx.now);   // 合併表上的鍵:兩包合併
+      const bk = 'tr_move_backup_' + ctx.now + '_' + uid;
+      if (j.lost.length && skip(bk, '帳號還沒上傳的進度')) return;   // 備份放不下:暫存區這次也不動,下次再搬
       items.forEach((e) => {
-        if (joined.has(e[0])) { bySub.set(e[0], joined.get(e[0])); return; }
+        if (j.joined.has(e[0])) { bySub.set(e[0], j.joined.get(e[0])); return; }
         const h = bySub.get(e[0]);
-        if (!h || !(h[2] > e[2])) bySub.set(e[0], e);   // 其他鍵:留時間比較晚的那包
+        if (!h || !(h[2] > e[2])) bySub.set(e[0], e);   // 其他鍵、合併不了的:留時間比較晚的那包
       });
+      if (j.lost.length) {
+        const old = parse(target.get(bk));
+        const kept = old.ok && isPlain(old.v) && Array.isArray(old.v.keys) ? old.v.keys : [];
+        const seen = new Set(kept.map(canon));
+        const keys = kept.concat(j.lost.map((e) => [e[0], e[1]]).filter((x) => !seen.has(canon(x))));
+        put(bk, JSON.stringify({ at: ctx.now, uid, keys }), kept.length ? 'grow' : 'add');
+      }
       const list = Array.from(bySub.values()).sort((x, y) => (x[0] < y[0] ? -1 : x[0] > y[0] ? 1 : 0));
       if (canon(list) === canon(have)) return;
       put(pk, JSON.stringify({ from: ctx.from, at: ctx.now, items: list }), 'grow');
@@ -642,34 +653,42 @@
     res.writes.push(['tr_move_log', JSON.stringify(res.log), 'replace']);
     return res;
   }
-  /* 同一個帳號的暫存區已經有一包、又搬來一包(例如別台用搬家碼帶來的):js/cloud.js 的 MERGED 表上的鍵(題庫、刪除標記、模擬考紀錄、模擬考錯題)
-     兩包用 SYNC_MERGE 合併,不是時間晚的整份換掉(另一包可能有這包沒有的題庫、標記、考試)。標記先合併,題庫用合併後的標記;
-     分不出先後的名稱、勾選用時間晚的那包。讀不懂、合併不了的鍵不放進來(照原本的規則;舊快取的 sync-merge.js 沒有 mockWrong 也一樣)。
-     回 Map(鍵 → [鍵, 原字串, 兩包裡比較晚的時間]) */
-  const SYNC_SUBS = ['sync_del', 'vgame_banks', 'mock_history', 'mock_wrong'];
+  /* 同一個帳號的暫存區已經有一包、又搬來一包(例如別台用搬家碼帶來的):js/cloud.js 合併表上的鍵兩包用 SYNC_MERGE 合併,
+     不是時間晚的整份換掉(另一包可能有這包沒有的題庫、標記、考試、作答)。每個鍵用哪個合併函式跟 js/cloud.js 的 SYNC_FN 一樣,
+     課程進度一堂一鍵照 cloud.js 合併表的鍵名規則(tools/test_move_pending.js 對過兩邊)。標記先合併,題庫用合併後的標記;
+     分不出先後的名稱、勾選用時間晚的那包。合併函式不在(舊快取的 sync-merge.js、沒載到 sync-merge-lesson.js)、讀不懂、合併不了的:
+     不放進 joined(照原本的規則留時間晚的那包),沒選上的那包(兩包不一樣時)放進 lost,由 plan 存進備份。
+     回 { joined: Map(鍵 → [鍵, 原字串, 兩包裡比較晚的時間]), lost: [[鍵, 原字串, 時間]] } */
+  const SYNC_FN = Object.freeze({ sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong',
+    levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests' });
+  const SYNC_FAMILY = Object.freeze([[/^les_t[1-9]\d?_(0[1-9]|1\d|2[0-4])$/, 'lesson']]);
+  function syncFnOf(sub) {
+    if (own(SYNC_FN, sub)) return SYNC_FN[sub];
+    const f = SYNC_FAMILY.filter((x) => x[0].test(sub))[0];
+    return f ? f[1] : null;
+  }
   function joinPending(have, items, now) {
-    const out = new Map();
-    const S = sync();
-    if (!S) return out;
+    const joined = new Map(), lost = [];
+    const S = isPlain(root.SYNC_MERGE) ? root.SYNC_MERGE : null;
+    const fnOf = (name) => (S && typeof S[name] === 'function' ? S[name] : null);
     const fresh = new Map(items.map((e) => [e[0], e]));
     const val = (e) => { if (!e) return null; const p = parse(e[1]); return p.ok ? p.v : undefined; };
     let T = null;
-    try { const t = S.tombs(val(have.get('sync_del')), val(fresh.get('sync_del')), now); T = t && t.ok === true ? t.v : null; } catch (e) { T = null; }
-    SYNC_SUBS.forEach((sub) => {
-      const a = have.get(sub), b = fresh.get(sub);
-      if (!a || !b) return;
-      const va = val(a), vb = val(b);
-      if (va === undefined || vb === undefined) return;
+    const tombs = fnOf('tombs');
+    try { const t = tombs ? tombs(val(have.get('sync_del')), val(fresh.get('sync_del')), now) : null; T = t && t.ok === true ? t.v : null; } catch (e) { T = null; }
+    fresh.forEach((b, sub) => {
+      const a = have.get(sub), name = syncFnOf(sub);
+      if (!a || !name) return;
+      const va = val(a), vb = val(b), fn = fnOf(name);
       const [older, newer] = a[2] > b[2] ? [vb, va] : [va, vb];
       let m = null;
-      try {
-        m = sub === 'sync_del' ? S.tombs(va, vb, now) : sub === 'vgame_banks' ? S.banks(older, newer, { now, tombs: T, localClean: true })
-          : sub === 'mock_wrong' ? S.mockWrong(va, vb) : S.mock(va, vb);
-      } catch (e) { m = null; }
-      if (!m || m.ok !== true || m.v === null) return;
-      out.set(sub, [sub, JSON.stringify(m.v), Math.max(a[2], b[2])]);
+      if (fn && va !== undefined && vb !== undefined) {
+        try { m = name === 'banks' ? fn(older, newer, { now, tombs: T, localClean: true }) : fn(va, vb, now); } catch (e) { m = null; }
+      }
+      if (m && m.ok === true && m.v !== null) { joined.set(sub, [sub, JSON.stringify(m.v), Math.max(a[2], b[2])]); return; }
+      if (a[1] !== b[1]) lost.push(a[2] > b[2] ? b : a);   // 下面留時間晚的那包(一樣晚留新搬來的),另一包進備份
     });
-    return out;
+    return { joined, lost };
   }
   function nameOf(valid, pid) {
     const e = valid.keys.filter((x) => x[0] === 'tr_profiles')[0];
@@ -684,5 +703,6 @@
     return s.length > 60 ? s.slice(0, 60) + '…' : s;
   }
 
-  root.MOVE_MERGE = Object.freeze({ canon, quickHash, labelOf, mergeOne, mergeBanks, remapRelated, plan, hist, mock, idmap, answers, texts, fills, pool, best, pairsBest, clear, profiles, valueUnion, SUFFIX });
+  root.MOVE_MERGE = Object.freeze({ canon, quickHash, labelOf, mergeOne, mergeBanks, remapRelated, plan, hist, mock, idmap, answers, texts, fills, pool, best, pairsBest, clear, profiles, valueUnion, SUFFIX,
+    SYNC_FN, SYNC_FAMILY, syncFnOf });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

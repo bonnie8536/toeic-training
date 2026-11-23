@@ -16,7 +16,7 @@ function sandbox() {
   const ctx = { console, Promise, Map, Set, JSON, Object, Array, Math, Number, String, Date, TypeError, Error, isNaN, TextEncoder };
   ctx.window = ctx;
   vm.createContext(ctx);
-  ['data/bank-meta.js', 'data/ear.js', 'js/move-rules.js', 'js/move-merge.js', 'js/lesson-rules.js', 'js/bank.js', 'js/pack-core.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
+  ['data/bank-meta.js', 'data/ear.js', 'js/move-rules.js', 'js/sync-merge.js', 'js/move-merge.js', 'js/lesson-rules.js', 'js/bank.js', 'js/pack-core.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   return ctx;
 }
 const CTX = sandbox();
@@ -74,12 +74,13 @@ T['C2 拼課表(同一級):段照學習包順序、每堂 60 分;固定區塊依
   return 'ok';
 };
 
-T['C3 聽讀不同級:聽力段跟聽力級、單字與閱讀段跟閱讀級;聽力重播加 1 分的堂,回顧段的分鐘跟著聽力那一包,合計仍 60'] = () => {
+T['C3 聽讀不同級:聽力段跟聽力級、單字與閱讀段跟閱讀級(看區塊編號的開頭);門檻引導 P1 是 D1、D2 各半;聽力重播加 1 分的堂,回顧段的分鐘跟著聽力那一包,合計仍 60'] = () => {
   const l = P.compose(PACKS, { listening: 'threshold', reading: 'entry' }, 3);
   const seg = (s) => l.segments.filter((x) => x.slot === s)[0];
-  assert.ok(seg('listening').blocks.every((b) => !b.select || !b.select.legacyWhere || !b.select.legacyWhere.difficulty || true));
-  assert.deepEqual(seg('listening').blocks.map((b) => b.module), PACKS.threshold.lessons[2].segments.filter((s) => s.slot === 'listening')[0].blocks.map((b) => b.module));
-  assert.deepEqual(seg('reading').blocks.map((b) => b.module), PACKS.entry.lessons[2].segments.filter((s) => s.slot === 'reading')[0].blocks.map((b) => b.module));
+  assert.ok(seg('listening').blocks.every((b) => /^threshold-L03-listening-/.test(b.blockId)), '聽力段出門檻的區塊');
+  ['vocab', 'reading'].forEach((s) => assert.ok(seg(s).blocks.every((b) => b.blockId.indexOf('entry-L03-' + s + '-') === 0), s + ' 段出入門的區塊'));
+  const guided = seg('listening').blocks.filter((b) => b.module === 'p1' && b.timing === 'guided')[0];
+  assert.deepEqual(plain(guided.select.levelMix), { D1: 0.5, D2: 0.5, D3: 0, D4: 0 });
   assert.deepEqual(plain(l.lessonId), { listening: 'threshold-L03', reading: 'entry-L03' });
   assert.deepEqual(plain(l.mix), { listening: PACKS.threshold.difficultyMix, reading: PACKS.entry.difficultyMix });
   const five = P.compose(PACKS, { listening: 'entry', reading: 'threshold' }, 5);
@@ -334,7 +335,7 @@ T['C15 開堂與交卷:先讀雲端那一份合併再寫,兩台交錯作答同�
   /* 離線:照本機 */
   cloud.ok = false;
   const off = await P.saveLesson(1, 3, (s) => P.answer(s, { b: 4, m: 'l2', id: 'l2-04', c: 0, ok: true, f: true, t: NOW + 40 }), devB);
-  assert.equal(off.a.length, 4);
+  assert.deepEqual([off.state.a.length, off.cloudRead, off.over], [4, false, false]);
   const offLoad = await P.loadLesson(1, 3, devB);
   assert.equal(offLoad.cloudRead, false);
   const throwing = { readKey: async () => { throw new Error('斷線'); } };
@@ -391,8 +392,10 @@ T['C17 每堂進度鍵 ≤5 KB:入門、門檻、聽讀不同級各 24 堂,固�
     }
   }
   assert.ok(max <= P.LESSON_KEY_MAX, at + ' ' + max + ' 位元組');
-  const huge = Object.assign(P.newState(P.compose(PACKS, LV, 3), NOW), { a: Array.from({ length: 200 }, (_, i) => [1, 'p5', 'p5-' + i, null, 1, 1, 1, i]) });
-  await assert.rejects(P.saveLesson(1, 3, () => huge, { store: storeOf(null), cloud: null }), /進度太大/);
+  const huge = Object.assign(P.newState(P.compose(PACKS, LV, 3), NOW), { a: Array.from({ length: 400 }, (_, i) => [1, 'p5-' + i, 0, 1, 3, i]) });
+  const S = storeOf(null);
+  const big = await P.saveLesson(1, 3, () => huge, { store: S, cloud: null });
+  assert.deepEqual([big.over, S.get('les_t1_03').a.length], [true, 400], '縮不下還是寫,回 over 給課程頁提示');
   return '最大 ' + max + ' 位元組(' + at + ')';
 };
 
@@ -409,7 +412,7 @@ T['C18 js/pack-core.js 讀寫儲存只經過 lessonKey、pts、rvq、tests_v1 �
   return calls.length + ' 處';
 };
 
-T['C19 練習引擎寫的 drill_p*、listen_p*、hist:開堂與交卷前併進雲端那一份(錯題本同一題留新的、學習記錄聯集),一樣就不寫;離線照本機'] = async () => {
+T['C19 練習引擎寫的 drill_p*、listen_p*、hist:每一段呼叫引擎之前併進雲端那一份(錯題本同一題留新的、學習記錄聯集),一樣就不寫;離線照本機'] = async () => {
   const cloud = cloudOf();
   const A = storeOf(cloud);
   const t0 = Date.now();
@@ -428,6 +431,110 @@ T['C19 練習引擎寫的 drill_p*、listen_p*、hist:開堂與交卷前併進�
   assert.deepEqual(plain(await P.syncPractice(['hist'], { store: A, cloud, nowMs: t0 })), { hist: 'offline' });
   await assert.rejects(P.syncPractice(['pet'], { store: A, cloud }), TypeError);
   await assert.rejects(P.syncPractice(['hist'], { store: A, cloud, merge: {} }), /move-merge/);
+  return 'ok';
+};
+
+T['C20 弱點補練計畫變了再跑一次:直接用凍結的 pk 重建,模組、題目、題數都不變;pk 存了模組與考點鍵'] = async () => {
+  const l = P.compose(PACKS, LV, 2);
+  const f = await P.pickFixed(l, P.newState(l, NOW), ctxOf());
+  const first = [{ key: 'P2.wh', part: '2', track: 'listening', seconds: 330, reason: 'weak:P2.wh', base: null },
+    { key: 'P5.cat:介系詞', part: '5', track: 'reading', seconds: 330, reason: 'weak:P5.cat:介系詞', base: null }];
+  const w = await P.pickWeak(l, f.state, first, ctxOf());
+  const later = [{ key: 'P5.cat:介系詞', part: '5', track: 'reading', seconds: 660, reason: 'weak:P5.cat:介系詞', base: { module: 'grammar', ids: ['gg-01'], seconds: 480 } },
+    { key: 'P2.wh', part: '2', track: 'listening', seconds: 0, reason: 'weak:P2.wh', base: null }];
+  const again = await P.pickWeak(l, w.state, later, ctxOf({ random: rng(9) }));
+  const shape = (r) => plain(r.blocks.map((b) => [b.idx, b.module, b.key, b.ids]));
+  assert.deepEqual(shape(again), shape(w));
+  assert.deepEqual(plain(again.state.pk), plain(w.state.pk));
+  assert.deepEqual([w.state.pk[85].m, w.state.pk[85].k, w.state.pk[86].m], ['p2', 'P2.wh', 'p5']);
+  const tr = await P.pickTestReview(l, w.state, { P1: { n: 5, ok: 0 }, P5: { n: 5, ok: 0 } }, ctxOf());
+  const tr2 = await P.pickTestReview(l, tr.state, { P3: { n: 5, ok: 0 }, P7: { n: 5, ok: 0 } }, ctxOf());
+  assert.deepEqual(plain(tr2.blocks.map((b) => [b.idx, b.kind, b.part, b.ids])), plain(tr.blocks.map((b) => [b.idx, b.kind, b.part, b.ids])), '測驗檢討也照凍結的重建');
+  return 'ok';
+};
+
+T['C21 個人段的難度:入門帳號弱點補練、補題、考點回顧沒有進階題(P3 只有基礎的組);最近答錯基礎題時只出基礎;門檻帳號才有進階'] = async () => {
+  const lE = P.compose(PACKS, LV, 3);
+  const st = (await P.pickFixed(lE, P.newState(lE, NOW), ctxOf())).state;
+  const plans = [{ key: 'P2.wh', part: '2', seconds: 660, reason: 'weak:P2.wh', base: null }, { key: 'P3.set', part: '3', seconds: 720, reason: 'weak:P3.set', base: null }];
+  const w = await P.pickWeak(lE, st, plans, ctxOf());
+  const diffs = (ids) => ids.map((id) => META.get(id).difficulty);
+  w.blocks.forEach((b) => diffs(b.ids).forEach((d) => assert.notEqual(d, '進階', b.idx)));
+  assert.ok(diffs(w.blocks[1].ids).every((d) => d === '基礎'), 'P3 只有基礎的組');
+  const c = await P.pickWeak(lE, st, [{ key: null, part: '5', seconds: 800, reason: 'fallback:c', base: null }], ctxOf());
+  assert.ok(diffs(c.blocks[0].ids).every((d) => d !== '進階') && c.blocks[0].ids.length === 20);
+  const wrongId = CTX.BANK_META.items.filter((r) => r.category === 'WH問句' && r.difficulty === '基礎')[0].id;
+  const recs = { 1: {}, 2: { [wrongId]: { c: 1, ok: false, t: Date.now() } }, 3: {}, 4: {}, 5: {}, 6: {}, 7: {} };
+  const capped = await P.pickWeak(lE, P.newState(lE, NOW), [{ key: 'P2.wh', part: '2', seconds: 6 * 35, reason: 'weak:P2.wh', base: null }], ctxOf({ records: recs }));
+  assert.ok(diffs(capped.blocks[0].ids).every((d) => d === '基礎'), JSON.stringify(diffs(capped.blocks[0].ids)));
+  const rv = await P.pickReview(lE, st, [{ k: 'P5.cat:詞性變化', due: '2026-11-24', step: 7 }], ctxOf());
+  assert.ok(diffs(rv.state.pk[81].ids).every((d) => d !== '進階'));
+  const lT = P.compose(PACKS, { listening: 'threshold', reading: 'threshold' }, 3);
+  const stT = (await P.pickFixed(lT, P.newState(lT, NOW), ctxOf())).state;
+  const t = await P.pickWeak(lT, stT, [{ key: 'P5.cat:詞性變化', part: '5', seconds: 1600, reason: 'weak', base: null }], ctxOf());
+  assert.ok(diffs(t.blocks[0].ids).indexOf('進階') > -1, '門檻可以出進階');
+  return 'ok';
+};
+
+T['C22 兩台用不同的級開同一堂:開始早的那份為主,另一份只併對得上的作答;各完成一半的段:合併後補 doneAt;個人段整段取先凍結的那一份'] = () => {
+  const lE = P.compose(PACKS, LV, 3), lM = P.compose(PACKS, { listening: 'threshold', reading: 'entry' }, 3);
+  let a = P.freeze(P.newState(lE, NOW), 4, ['l2-01', 'l2-02'], NOW + 5);
+  let b = P.freeze(P.newState(lM, NOW + 50), 4, ['l2-09', 'l2-02'], NOW + 60);
+  b = P.answer(P.answer(b, { b: 4, id: 'l2-02', c: 1, ok: true, f: true, t: NOW + 70 }), { b: 4, id: 'l2-09', c: 1, ok: true, f: true, t: NOW + 80 });
+  b = P.setSegment(b, lM, 'vocab', 'done', NOW + 90);
+  const m = P.mergeLesson(a, b);
+  assert.deepEqual([m.levels.listening, m.a.map((x) => x[1]), m.seg.vocab.st], ['entry', ['l2-02'], 'todo']);
+  assert.deepEqual(plain(P.mergeLesson(b, a)), plain(m));
+  /* 同一個組合,一台做完前半、另一台(離線)做完後半 */
+  let x = P.newState(lE, NOW), y = P.newState(lE, NOW + 10);
+  const slots = lE.segments.map((s) => s.slot);
+  slots.slice(0, 3).forEach((s, i) => { x = P.setSegment(x, lE, s, 'done', NOW + 100 + i); });
+  slots.slice(3).forEach((s, i) => { y = P.setSegment(y, lE, s, lE.segments[3 + i].fixed ? 'done' : 'skip', NOW + 200 + i); });
+  assert.deepEqual([x.doneAt, y.doneAt], [null, null]);
+  assert.equal(P.mergeLesson(x, y).doneAt, NOW + 200 + slots.length - 4);
+  /* 個人段:先凍結的那一份整段留下,不跟另一台照別的計畫選的拼在一起 */
+  let p = P.newState(lE, NOW), q = P.newState(lE, NOW);
+  p = P.freeze(P.freeze(p, 85, ['gg-01'], NOW + 300, { r: 'base_module', m: 'grammar', k: 'P5.cat:介系詞' }), 86, ['p5-1'], NOW + 300, { r: 'weak', m: 'p5', k: 'P5.cat:介系詞' });
+  q = P.freeze(P.freeze(P.freeze(q, 85, ['l2-03'], NOW + 200, { r: 'weak', m: 'p2', k: 'P2.wh' }), 86, ['p5-2'], NOW + 200, { r: 'weak', m: 'p5' }), 87, ['l1-03'], NOW + 200, { r: 'weak', m: 'p1' });
+  assert.deepEqual(Object.keys(P.mergeLesson(p, q).pk).map((k) => P.mergeLesson(p, q).pk[k].ids[0]), ['l2-03', 'p5-2', 'l1-03']);
+  return 'ok';
+};
+
+T['C23 超過 5 KB 先縮:刪掉不在凍結選題裡的作答;作答中 saveLessonLocal 只寫本機、不讀雲端'] = async () => {
+  const l = P.compose(PACKS, LV, 3);
+  let s = P.freeze(P.newState(l, NOW), 4, ['l2-01'], NOW);
+  for (let i = 0; i < 260; i++) s = P.answer(s, { b: 4, id: 'p5-x' + i, c: 1, ok: true, f: true, t: NOW + i });
+  s = P.answer(s, { b: 4, id: 'l2-01', c: 1, ok: true, f: true, t: NOW + 999 });
+  assert.ok(P.sizeOf(s) > P.LESSON_KEY_MAX);
+  const f = P.fitLesson(s, l);
+  assert.deepEqual([f.trimmed, f.over, f.state.a.map((x) => x[1])], [260, false, ['l2-01']]);
+  let reads = 0;
+  const cloud = { readKey: async () => { reads++; return { ok: true, found: false, v: null }; } };
+  const S = storeOf(null);
+  const r = P.saveLessonLocal(1, 3, (x) => P.answer(x || P.newState(l, NOW), { b: 4, id: 'l2-01', c: 1, ok: true, f: true, t: NOW + 3 }), { store: S, cloud });
+  assert.deepEqual([reads, r.state.a.length, S.get('les_t1_03').a.length], [0, 1, 1]);
+  return 'ok';
+};
+
+T['C24 難度配比用最大餘數法;引導區塊寫了難度、題不夠時照 D2→D3→D1 借別級(入門 P3、P4 只用基礎的組,不借);篩不了的條件欄位記在 need'] = async () => {
+  const mix = PACKS.threshold.difficultyMix;
+  assert.deepEqual(plain(P.allocate(6, mix)), { D1: 2, D2: 3, D3: 1, D4: 0 });
+  assert.deepEqual(plain(P.allocate(10, mix)), { D1: 3, D2: 5, D3: 2, D4: 0 });
+  assert.deepEqual(plain(P.allocate(3, { D1: 0.5, D2: 0.5 }, ['D1'])), { D1: 3, D2: 0, D3: 0, D4: 0 });
+  const tweak = (levels, f) => {
+    const l = JSON.parse(JSON.stringify(P.compose(PACKS, levels, 3)));
+    f(l.segments.filter((s) => s.slot === 'listening')[0].blocks.filter((b) => /^p[1-4]$/.test(b.module))[0]);
+    return l;
+  };
+  const wh = (b) => { b.module = 'p2'; b.unit = 'item'; b.count = 20; b.select = { levelMix: { D1: 1, D2: 0, D3: 0, D4: 0 }, legacyWhere: { category: ['WH問句'], difficulty: ['基礎'], stemKeyword: ['NOT'] } }; };
+  const lT = tweak({ listening: 'threshold', reading: 'threshold' }, wh);
+  const bT = bankBlocks(lT)[0], rT = await P.pickFixed(lT, P.newState(lT, NOW), ctxOf());
+  assert.equal(rT.state.pk[bT.idx].ids.length, 20, '基礎不夠跟中級借');
+  assert.deepEqual(plain(rT.need.filter((x) => x.idx === bT.idx)[0].ignored), ['stemKeyword']);
+  const p3 = (b) => { b.module = 'p3'; b.unit = 'set'; b.track = 'listening'; b.count = 12; b.select = { levelMix: { D1: 1, D2: 0, D3: 0, D4: 0 }, legacyWhere: { difficulty: ['基礎'] } }; };
+  const lE = tweak(LV, p3), bE = bankBlocks(lE)[0];
+  const rE = await P.pickFixed(lE, P.newState(lE, NOW), ctxOf());
+  assert.ok(rE.state.pk[bE.idx].ids.every((id) => META.get(id).difficulty === '基礎') && rE.state.pk[bE.idx].ids.length === 8, '入門 P3 不借');
   return 'ok';
 };
 

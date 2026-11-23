@@ -1,25 +1,36 @@
 /* 學習包的課程引擎:拼課表、選題、凍結選題、解鎖、進度鍵與兩台合併。課程頁用;這一版還沒有頁面載入它。
-   要先載入 js/lesson-rules.js(考點與個人段的規則)、js/bank.js(題庫題一律經過 BANK.pick、BANK.get)。
+   要先載入 js/sync-merge.js(兩台的合併)、js/lesson-rules.js(考點與個人段的規則)、js/bank.js(題庫題一律經過 BANK.pick、BANK.get、BANK.meta)。
    學習包是 data/packs/pack_<級>.json(schema 在 data/packs/pack_schema.json);這一版只開入門(entry)、門檻(threshold)兩包。
 
    進度鍵 les_t<期>_<堂>(例 les_t1_03,期 1–99、堂 01–24):一律用 lessonKey(term, no) 產生,不要自己拼字串。內容:
      { v: 1, lessonId: { listening, reading }, packVersion: { listening, reading }, levels: { listening, reading },
        startedAt, doneAt,                                  時間都是 epoch 秒;doneAt 沒上完是 null
        seg: { <段>: { st: 'todo'|'doing'|'done'|'skip', t0, t1 } },
-       pk:  { <區塊編號>: { at, ids, r, m, sub } },         凍結的選題;at 是距 startedAt 的秒數,r 是出題原因(個人段才有),
-                                                          m、sub 是錯題重做那幾題的模組與小題;字卡區塊不存字(就是那一週全部的字)
+       pk:  { <區塊編號>: { at, ids, r, m, sub, k, p } },   凍結的選題;at 是距 startedAt 的秒數,r 是出題原因(個人段才有);
+                                                          錯題重做(80)的 m、sub 是那幾題的模組與小題(陣列);弱點補練(85–89)的 m 是區塊的模組
+                                                          ('grammar'、'ear_dictation'、'p1'–'p7')、k 是考點鍵(沒有是 null);
+                                                          測驗檢討(90–97)的 m 是 'tip' 或 'p1'–'p7'、p 是 Part。字卡區塊不存字(就是那一週全部的字)
        a:   [[區塊編號, id, sub, c, r, dt]] }               作答:sub 題組小題(1 起算,單題 0)、c 選的選項(不是選擇題 -1)、
                                                           r = 答對 1 ＋ 第一次作答 2(0–3)、dt 是距 startedAt 的秒數
-   模組不存在作答裡:看區塊(固定段是課表上那個區塊的 module,錯題重做看 pk[80].m)。每堂進度鍵上限 5 KB(LESSON_KEY_MAX)。
+   模組不存在作答裡:看區塊(固定段是課表上那個區塊的 module,個人段看 pk 的 m)。每堂進度鍵上限 5 KB(LESSON_KEY_MAX,超過時先縮,見 fitLesson)。
    區塊編號:固定段的區塊照課表順序 0 起編;個人段用固定的號碼(回顧 80–84、弱點補練 85–89、測驗檢討 90–97),兩台算出來一樣。
-   跨裝置:開堂與每段交卷前先用 CLOUD.readKey 讀雲端那一份,跟本機的合併後再寫;作答中不寫,只在交卷時寫(saveLesson)。
-   pts、rvq、tests_v1 也一樣(saveShared);練習引擎寫的 drill_p*、listen_p*、hist 在開堂與交卷前用 syncPractice 併進雲端那一份。
-   讀不到雲端(離線、逾時)就照本機寫,下次開堂再合併。
-   這一版沒有的:小檢核的 includeUnpassed(還沒過關的考點加題,第 8、24 堂才有)不加題;聽讀差兩級的時間挪移(只開兩級,最多差一級)。 */
+   跨裝置:les_t*、pts、rvq、tests_v1 在 js/cloud.js 的合併表上(合併函式在 js/sync-merge.js):上傳前先讀雲端那一份合併,開新分頁灌雲端資料時
+   本機和雲端都有就存合併結果,不會整份蓋掉別台的;讀不到雲端就不上傳、帳本留著。這裡開堂、交卷時再讀一次雲端合併(loadLesson、saveLesson、
+   saveShared、loadShared),畫面一開始就有別台的進度;讀不到雲端(離線、逾時)就照本機寫,上傳時 cloud.js 會合併。
+   作答中每答一題用 saveLessonLocal 只寫本機、不讀雲端(中途關分頁,回來從沒答的題接著做);交卷用 saveLesson。
+   練習引擎寫的 drill_p*、listen_p*、hist 還是整份上傳(還不在合併表上):每一段呼叫引擎「之前」用 syncPractice 併進雲端那一份。
+   只保護這一段開始之前別台寫的紀錄;這一段作答中別台寫的,這台引擎寫入時整份上傳會蓋掉(跟現在的刷題頁一樣),要等這三種鍵也進合併表。
+   這一版沒有的:小檢核的 includeUnpassed(還沒過關的考點加題,第 8、24 堂才有)不加題;聽讀差兩級的時間挪移(只開兩級,最多差一級);
+   學習包 legacyWhere 裡 bank.js 篩不了的欄位(例 stemKeyword)不篩,選題結果的 need 會列出來(ignored)。 */
 (function (root) {
   'use strict';
   const R = root.LESSON_RULES;
   if (!R) throw new Error('要先載入 js/lesson-rules.js');
+  function sync() {
+    const S = root.SYNC_MERGE;
+    if (!S || typeof S.lesson !== 'function' || typeof S.tests !== 'function') throw new Error('要先載入 js/sync-merge.js');
+    return S;
+  }
 
   const OPEN_LEVELS = ['entry', 'threshold'];
   const LESSON_KEY = /^les_t(\d{1,2})_(\d{2})$/;
@@ -29,7 +40,10 @@
   const LISTENING_MODULES = /^(p[1-4]|ear_\w+)$/;
   const BANK_PART = { p1: '1', p2: '2', p3: '3', p4: '4', p5: '5', p6: '6', p7: '7' };
   const DIFF = { D1: '基礎', D2: '中級', D3: '進階' };
+  const LV = ['D1', 'D2', 'D3', 'D4'];
+  const CODE = { 基礎: 'D1', 中級: 'D2', 進階: 'D3' };
   const BORROW = ['D2', 'D3', 'D1', 'D4'];
+  const LEGACY_OK = ['difficulty', 'category', 'type', 'format', 'maxWordCount', 'canYou'];
   const EAR = { ear_dictation: ['dictation', 'ear_d'], ear_pairs: ['pairs', 'ear_mp'], ear_numbers: ['numbers', 'ear_n'], ear_shadow: ['shadow', 'ear_s'] };
   const RESERVED = { review: 80, weak: 85, test_review: 90 };
   const CP_MIN = 918, CP_MAX = 1080, CP_INTRO = 60;
@@ -224,56 +238,22 @@
     return new TextEncoder().encode(JSON.stringify(v)).length;
   }
 
-  /* 兩台的進度合併:段以「交卷或略過」優先,兩邊都交卷取交卷時間早的;選題取凍結得早的;作答以(區塊、題、小題)聯集,
-     同一題兩邊都有取作答時間早的(第一次作答)。其中一邊是 null 就回另一邊的複本 */
-  const RANK = { todo: 0, doing: 1, skip: 2, done: 3 };
-  function mergeSeg(x, y) {
-    if (!x) return clone(y);
-    if (!y) return clone(x);
-    const t0 = [x.t0, y.t0].filter((v) => v !== null && v !== undefined).sort((a, b) => a - b)[0];
-    const win = RANK[y.st] > RANK[x.st] || (RANK[y.st] === RANK[x.st] && y.t1 !== null && (x.t1 === null || y.t1 < x.t1)) ? y : x;
-    return { st: win.st, t0: t0 === undefined ? null : t0, t1: win.t1 };
-  }
+  /* 兩台的進度合併(SYNC_MERGE.lesson,雲端同步也用同一份):開始時間早的那份為主;段以「交卷或略過」優先,兩邊都交卷取交卷時間早的;
+     選題取凍結得早的(個人段整段取同一份);作答以(區塊、題、小題)聯集,同一題取作答時間早的(第一次作答);所有段都交卷或略過時補 doneAt。
+     兩份的 levels、lessonId、packVersion 不一樣時只留主要那份,另一份只併入題目對得上的作答。
+     其中一邊是 null 或形狀不對就回另一邊的複本;都不對回 null;另一邊是認不得的新版格式時回這一邊(不拿來合併) */
+  const v1 = (s) => !!s && typeof s === 'object' && s.v === 1 && Number.isInteger(s.startedAt) && !!s.seg && Array.isArray(s.a);
   function mergeLesson(a, b) {
-    const ok = (s) => !!s && typeof s === 'object' && Number.isInteger(s.startedAt) && s.seg && Array.isArray(s.a);
-    if (!ok(a)) return ok(b) ? clone(b) : null;
-    if (!ok(b)) return clone(a);
-    const first = a.startedAt <= b.startedAt ? a : b;
-    const start = first.startedAt;
-    const seg = {};
-    new Set(Object.keys(a.seg).concat(Object.keys(b.seg))).forEach((k) => { seg[k] = mergeSeg(a.seg[k], b.seg[k]); });
-    const pk = {};
-    const pkAt = {};
-    [a, b].forEach((s) => Object.keys(s.pk || {}).forEach((k) => {
-      const abs = s.startedAt + s.pk[k].at;
-      if (!pk[k] || abs < pkAt[k]) { pk[k] = clone(s.pk[k]); pkAt[k] = abs; }
-    }));
-    Object.keys(pk).forEach((k) => { pk[k].at = pkAt[k] - start; });
-    const rows = new Map();
-    [a, b].forEach((s) => s.a.forEach((x) => {
-      const abs = s.startedAt + x[A_DT], o = rows.get(aKey(x));
-      if (!o || abs < o.abs) rows.set(aKey(x), { abs, x });
-    }));
-    const merged = [...rows.values()].sort((p, q) => p.abs - q.abs || (aKey(p.x) < aKey(q.x) ? -1 : 1)).map((r) => r.x.slice(0, A_DT).concat([r.abs - start]));
-    const done = [a.doneAt, b.doneAt].filter(Number.isInteger).sort((p, q) => p - q)[0];
-    return {
-      v: 1, lessonId: clone(first.lessonId), packVersion: clone(first.packVersion), levels: clone(first.levels),
-      startedAt: start, doneAt: done === undefined ? null : done, seg, pk, a: merged,
-    };
+    const m = sync().lesson(a === undefined ? null : a, b === undefined ? null : b);
+    if (m.ok) return m.v === null ? null : clone(m.v);
+    return v1(a) ? clone(a) : v1(b) ? clone(b) : null;
   }
 
-  /* tests_v1 合併:{ t1: { pre, mid, post } },同一次測驗兩邊都有取 at 早的(第一次交卷) */
+  /* tests_v1 合併(SYNC_MERGE.tests):{ t1: { pre, mid, post } },同一次測驗兩邊都有取 at 早的(第一次交卷) */
   function mergeTests(a, b) {
-    const A = a && typeof a === 'object' ? a : {}, B = b && typeof b === 'object' ? b : {};
-    const out = {};
-    new Set(Object.keys(A).concat(Object.keys(B))).forEach((t) => {
-      const x = A[t] || {}, y = B[t] || {};
-      out[t] = {};
-      new Set(Object.keys(x).concat(Object.keys(y))).forEach((k) => {
-        out[t][k] = clone(!x[k] ? y[k] : !y[k] ? x[k] : (y[k].at < x[k].at ? y[k] : x[k]));
-      });
-    });
-    return out;
+    const plain = (x) => (x && typeof x === 'object' && !Array.isArray(x) ? x : null);
+    const m = sync().tests(plain(a), plain(b));
+    return m.ok && m.v ? clone(m.v) : {};
   }
 
   /* ---------- 凍結選題 ---------- */
@@ -290,23 +270,28 @@
     for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
     return a;
   }
-  /* 難度配比 → 各級題數:四捨五入,差額補給比例最大的一級 */
-  function allocate(n, mix) {
-    const lv = ['D1', 'D2', 'D3', 'D4'];
-    const out = {};
-    lv.forEach((l) => { out[l] = Math.round(n * (mix[l] || 0)); });
-    const big = lv.slice().sort((x, y) => (mix[y] || 0) - (mix[x] || 0))[0];
-    out[big] += n - lv.reduce((a, l) => a + out[l], 0);
-    if (out[big] < 0) { out[big] = 0; }
+  /* 難度配比 → 各級題數(最大餘數法):先取整數部分,剩下的題照小數部分大的先給,一樣時比例大的先、再來級低的先。
+     allow 有給時只在這幾級分配(比例照它們之間的相對大小);這幾級的比例都是 0 就全部是 0(呼叫的一方再照借題順序補) */
+  function allocate(n, mix, allow) {
+    const lv = allow || LV;
+    const w = {}, exact = {}, out = { D1: 0, D2: 0, D3: 0, D4: 0 };
+    lv.forEach((l) => { w[l] = Math.max(0, Number(mix && mix[l]) || 0); });
+    const sum = lv.reduce((a, l) => a + w[l], 0);
+    if (!(sum > 0) || !(n > 0)) return out;
+    lv.forEach((l) => { exact[l] = n * w[l] / sum; out[l] = Math.floor(exact[l] + 1e-9); });
+    let left = n - lv.reduce((a, l) => a + out[l], 0);
+    lv.filter((l) => w[l] > 0).sort((x, y) => (exact[y] - out[y]) - (exact[x] - out[x]) || w[y] - w[x] || LV.indexOf(x) - LV.indexOf(y))
+      .forEach((l) => { if (left > 0) { out[l]++; left--; } });
     return out;
   }
+  /* 學習包的 legacyWhere → BANK.pick 的 where;bank.js 篩不了的欄位列在 ignored(不篩,選題結果的 need 會記) */
   function bankWhereOf(sel) {
     const lw = sel.legacyWhere || {}, w = {};
     ['difficulty', 'category', 'type', 'format'].forEach((k) => { if (lw[k]) w[k] = lw[k].slice(); });
     if (lw.maxWordCount) w.maxWords = lw.maxWordCount;
     if (typeof lw.canYou === 'boolean') w.canYou = lw.canYou;
     if (sel.where && sel.where.setSize) w.size = sel.where.setSize.slice();
-    return w;
+    return { where: w, ignored: Object.keys(lw).filter((k) => LEGACY_OK.indexOf(k) < 0) };
   }
   function doneIds(records) {
     return Object.keys(records || {}).map((k) => k.split(':')[0]);
@@ -317,10 +302,12 @@
     return B;
   }
 
-  /* 題庫題:levelMix 分配到各難度,不夠的照 D2→D3→D1→D4 借;還不夠就放寬「14 天內做過」,並記一筆 need */
-  async function pickBankIds(part, n, where, mix, ctx, avoid, within) {
+  /* 題庫題。plan = { mix(難度配比,可以沒有), allow(先出的難度,D 代碼), extra(不夠時依序再借的難度) },P6、P7 或不分難度是 null。
+     有 mix 就照 mix 在 allow 裡分配(最大餘數法),不夠先在 allow 裡照 D2→D3→D1→D4 補,再照 extra 借(個人段是放寬一級);
+     還不夠就放寬「14 天內做過」(難度條件不變),記 relaxed */
+  async function pickBankIds(part, n, where, plan, ctx, avoid, within) {
     const B = bankOf(ctx);
-    const base = { part, where, within, records: ctx.records ? ctx.records[part] || {} : undefined, random: ctx.random };
+    const base = { part, within, records: ctx.records ? ctx.records[part] || {} : undefined, random: ctx.random };
     const got = [];
     const take = async (w, k, extraAvoid) => {
       if (k <= 0) return;
@@ -328,15 +315,49 @@
       ids.forEach((id) => got.push(id));
     };
     const seen = ctx.seen ? Array.from(ctx.seen) : [];
-    const hasDiff = /^[1-5]$/.test(part) && mix && !where.difficulty;
-    if (hasDiff) {
-      const want = allocate(n, mix);
-      for (const l of ['D1', 'D2', 'D3', 'D4']) if (DIFF[l]) await take(Object.assign({}, where, { difficulty: [DIFF[l]] }), want[l], seen);
-      for (const l of BORROW) if (DIFF[l]) await take(Object.assign({}, where, { difficulty: [DIFF[l]] }), n - got.length, seen);
+    const lv = (list) => Object.assign({}, where, { difficulty: list.filter((l) => DIFF[l]).map((l) => DIFF[l]) });
+    let last = where;
+    if (plan && /^[1-5]$/.test(part)) {
+      const allow = plan.allow, extra = (plan.extra || []).filter((l) => DIFF[l] && allow.indexOf(l) < 0);
+      if (plan.mix) { const want = allocate(n, plan.mix, allow); for (const l of allow) if (DIFF[l]) await take(lv([l]), want[l], seen); }
+      else await take(lv(allow), n, seen);
+      for (const l of BORROW) if (DIFF[l] && allow.indexOf(l) > -1) await take(lv([l]), n - got.length, seen);
+      for (const l of extra) await take(lv([l]), n - got.length, seen);
+      last = lv(allow.concat(extra));
     } else await take(where, n, seen);
     let relaxed = false;
-    if (got.length < n && seen.length) { relaxed = true; await take(where, n - got.length, []); }
+    if (got.length < n && seen.length) { relaxed = true; await take(last, n - got.length, []); }
     return { ids: got, relaxed };
+  }
+  /* 固定區塊的難度:legacyWhere 寫了難度就在那幾級裡出(有 levelMix 照它分配),不夠照 D2→D3→D1 借別級;
+     入門的 P3、P4 只用基礎的組,不借。沒寫難度照 levelMix 分配到三級 */
+  function fixedPlan(part, where, mix, strict) {
+    if (!/^[1-5]$/.test(part) || (!where.difficulty && !mix)) return null;
+    const allow = where.difficulty ? LV.filter((l) => DIFF[l] && where.difficulty.indexOf(DIFF[l]) > -1) : LV;
+    const extra = where.difficulty && !strict ? BORROW.filter((l) => DIFF[l] && allow.indexOf(l) < 0) : [];
+    return { mix, allow, extra };
+  }
+  /* 個人段的難度(LESSON_RULES.personalDiff):學生那一科的級可以出的、不高於這個考點最近答錯那題;mix 只給沒有考點的補題(fallback a、c)與測驗檢討 */
+  function personalPlan(level, part, lastWrong, mix) {
+    const d = R.personalDiff(level, part, lastWrong);
+    return d ? { mix, allow: d.allow.map((x) => CODE[x]), extra: d.up ? [CODE[d.up]] : [] } : null;
+  }
+  /* 這個考點最近答錯那題(組)的難度:看作答紀錄 ctx.records(drill_p*、listen_p* 的 { ok, t });沒答錯過回 null */
+  async function lastWrongDiff(key, ctx) {
+    const w = R.bankWhere(key);
+    const recs = w && /^[1-5]$/.test(w.part) && ctx.records ? ctx.records[w.part] : null;
+    if (!recs) return null;
+    const lk = R.legacyKey(key);
+    let best = null;
+    (await bankOf(ctx).meta(w.part)).forEach((row) => {
+      if (!row.difficulty || R.keysOfRow(row).indexOf(lk) < 0) return;
+      const subs = row.size ? Array.from({ length: row.size }, (_, i) => row.id + ':' + i) : [row.id];
+      subs.forEach((k) => {
+        const r = recs[k], t = r && Number(r.t) || 0;
+        if (r && r.ok === false && (!best || t > best.t)) best = { t, d: row.difficulty };
+      });
+    });
+    return best ? best.d : null;
   }
 
   function earIds(block, ctx, avoid) {
@@ -362,7 +383,7 @@
     return shuffle(list.filter((id) => avoid.indexOf(id) < 0), ctx.random || Math.random).slice(0, block.count);
   }
 
-  /* 一個固定區塊選題。回 { ids, need }(need 是不夠的題數,夠就是 0) */
+  /* 一個固定區塊選題。回 { ids, need, relaxed, ignored }(need 是不夠的題數,夠就是 0;ignored 是篩不了、沒篩的條件欄位) */
   async function pickBlock(block, lesson, ctx, avoid, inCheckpoint) {
     if (block.ids) return { ids: block.ids.map((x) => x.id), need: 0 };
     const sel = block.select, part = BANK_PART[block.module];
@@ -374,8 +395,10 @@
         const done = new Set(doneIds(ctx.records && ctx.records[part]));
         within = ctx.checkpointPool.filter((id) => !done.has(id));
       }
-      const r = await pickBankIds(part, block.count, bankWhereOf(sel), mix, ctx, avoid, within);
-      return { ids: r.ids, need: block.count - r.ids.length, relaxed: r.relaxed };
+      const w = bankWhereOf(sel);
+      const strict = lesson.levels[block.track] === 'entry' && /^[34]$/.test(part);
+      const r = await pickBankIds(part, block.count, w.where, fixedPlan(part, w.where, mix, strict), ctx, avoid, within);
+      return { ids: r.ids, need: block.count - r.ids.length, relaxed: r.relaxed, ignored: w.ignored };
     }
     if (block.module === 'grammar') return { ids: sel.where.unitIds.slice(), need: 0 };
     if (EAR[block.module]) { const ids = earIds(block, ctx, avoid); return { ids, need: block.count - ids.length }; }
@@ -387,7 +410,8 @@
   }
 
   /* 固定段全部區塊選題並凍結(已經凍結的不動)。ctx = { bank, records: { '1'…'7': 作答紀錄 }, seen(14 天內做過的 id),
-     checkpointPool, ear, earRecords, weekWords(week, which), random, now }。回 { state, need: [{ idx, module, want, got }] } */
+     checkpointPool, ear, earRecords, weekWords(week, which), random, now }。
+     回 { state, need: [{ idx, module, want, got, relaxed, ignored }] }(題不夠、放寬過「14 天內做過」、或有篩不了的條件欄位的區塊) */
   async function pickFixed(lesson, state, ctx) {
     if (!Number.isInteger(ctx && ctx.now)) throw new TypeError('ctx.now 要是 epoch 秒');
     let st = state;
@@ -398,39 +422,60 @@
         if (st.pk[b.idx]) continue;
         const r = await pickBlock(b, lesson, ctx, avoid, seg.slot === 'checkpoint');
         r.ids.forEach((id) => avoid.push(id));
-        if (r.need > 0 || r.relaxed) need.push({ idx: b.idx, module: b.module, want: b.count, got: r.ids.length, relaxed: !!r.relaxed });
+        const ignored = r.ignored || [];
+        if (r.need > 0 || r.relaxed || ignored.length) need.push(Object.assign({ idx: b.idx, module: b.module, want: b.count, got: r.ids.length, relaxed: !!r.relaxed }, ignored.length ? { ignored } : {}));
         st = freeze(st, b.idx, r.ids, ctx.now);
       }
     }
     return { state: st, need };
   }
 
-  /* 弱點補練:plans 是 LESSON_RULES.planWeak 的結果;每個考點先放改派的基礎模組,再出同考點的題。凍結在 85 起 */
+  /* 個人段已經凍結的區塊(from ≤ 編號 < to),照編號排 */
+  function frozenIn(state, from, to) {
+    return Object.keys(state.pk || {}).map(Number).filter((i) => i >= from && i < to).sort((a, b) => a - b).map((i) => ({ idx: i, e: state.pk[i] }));
+  }
+  /* 沒存模組的舊凍結選題:從題號猜(l1- 到 l4- 是聽力、p5- 到 p7- 是閱讀、g 開頭是文法單元,其他是英語耳) */
+  function moduleOfIds(ids) {
+    const m = /^(?:l([1-4])|p([5-7]))-/.exec((ids || [])[0] || '');
+    return m ? 'p' + (m[1] || m[2]) : /^g[a-z]-\d/.test((ids || [])[0] || '') ? 'grammar' : 'ear_dictation';
+  }
+  const trackOfPart = (part) => (/^[1-4]$/.test(String(part)) ? 'listening' : 'reading');
+
+  /* 弱點補練:plans 是 LESSON_RULES.planWeak 的結果;每個考點先放改派的基礎模組,再出同考點的題,凍結在 85 起,pk 存模組(m)與考點鍵(k)。
+     85–89 已經有任何凍結的區塊(開過這一段、或從別台合併過來)就直接用 pk 重建、不再照這次的計畫選:計畫跟著考點狀態變,
+     照編號沿用會讓模組、題目、題數對不上。題目照個人段的難度(personalPlan);沒有考點的補題(fallback a、c)照那一級的難度配比 */
   async function pickWeak(lesson, state, plans, ctx) {
+    const frozen = frozenIn(state, RESERVED.weak, RESERVED.test_review);
+    if (frozen.length) return { state, blocks: frozen.map((x) => ({ idx: x.idx, module: x.e.m || moduleOfIds(x.e.ids), ids: x.e.ids, r: x.e.r, key: x.e.k || null })) };
     let st = state, idx = RESERVED.weak;
     const avoid = frozenIds(st), blocks = [];
-    const put = (module, ids, r) => {
-      st = freeze(st, idx, ids, ctx.now, { r });
+    const put = (module, ids, r, key) => {
+      st = freeze(st, idx, ids, ctx.now, { r, m: module, k: key || null });
       st.pk[idx].ids.forEach((id) => avoid.push(id));
-      blocks.push({ idx, module, ids: st.pk[idx].ids, r });
+      blocks.push({ idx, module, ids: st.pk[idx].ids, r, key: key || null });
       idx++;
     };
     for (const p of plans || []) {
+      if (idx + (p.base ? 1 : 0) >= RESERVED.test_review) break;
       if (p.base) {
         /* 改派的聽寫只會出現在聽力級入門(LESSON_RULES 的 baseModule),用初級句 */
-        const ids = st.pk[idx] ? st.pk[idx].ids : p.base.module === 'grammar' ? p.base.ids.slice()
+        const ids = p.base.module === 'grammar' ? p.base.ids.slice()
           : earIds({ module: p.base.module, count: p.base.count, select: { where: { earLevel: ['初級'] } } }, ctx, avoid);
-        put(p.base.module, ids, 'base_module');
+        put(p.base.module, ids, 'base_module', p.key);
       }
       const w = p.key ? R.bankWhere(p.key) : { part: p.part, where: {} };
-      const ids = st.pk[idx] ? st.pk[idx].ids : (await pickBankIds(w.part, R.weakCount(p), w.where, null, ctx, avoid)).ids;
-      put('p' + w.part, ids, p.reason);
+      const track = trackOfPart(w.part);
+      const plan = personalPlan(lesson.levels[track], w.part, p.key ? await lastWrongDiff(p.key, ctx) : null, p.key ? null : lesson.mix[track]);
+      const ids = (await pickBankIds(w.part, R.weakCount(p), w.where, plan, ctx, avoid)).ids;
+      put('p' + w.part, ids, p.reason, p.key);
     }
     return { state: st, blocks };
   }
 
-  /* 回顧:units 是 LESSON_RULES.pickReview 的 units。錯題重做原題放 80;考點回顧每個考點 3 題新題放 81 起 */
+  /* 回顧:units 是 LESSON_RULES.pickReview 的 units。錯題重做原題放 80;考點回顧每個考點 3 題新題放 81 起(照個人段的難度,r 記考點鍵)。
+     80–84 已經有凍結的區塊就不再選(跟弱點補練一樣,佇列合併後換了項目也不拼進來) */
   async function pickReview(lesson, state, units, ctx) {
+    if (frozenIn(state, RESERVED.review, RESERVED.weak).length) return { state };
     let st = state;
     const redo = (units || []).filter((u) => !u.k), keys = (units || []).filter((u) => u.k);
     st = freeze(st, RESERVED.review, redo.map((u) => u.id), ctx.now, { r: 'review', sub: redo.map((u) => (u.sub === undefined ? null : u.sub)), m: redo.map((u) => u.m) });
@@ -438,15 +483,19 @@
     let idx = RESERVED.review + 1;
     for (const u of keys.slice(0, 4)) {
       const w = R.bankWhere(u.k);
-      const got = st.pk[idx] ? { ids: st.pk[idx].ids } : await pickBankIds(w.part, R.isGroupKey(u.k) ? 1 : 3, w.where, null, ctx, avoid);
+      const plan = st.pk[idx] ? null : personalPlan(lesson.levels[trackOfPart(w.part)], w.part, await lastWrongDiff(u.k, ctx), null);
+      const got = st.pk[idx] ? { ids: st.pk[idx].ids } : await pickBankIds(w.part, R.isGroupKey(u.k) ? 1 : 3, w.where, plan, ctx, avoid);
       got.ids.forEach((id) => avoid.push(id));
       st = freeze(st, idx++, got.ids, ctx.now, { r: 'point_review:' + u.k });
     }
     return { state: st };
   }
 
-  /* 測驗檢討:parts 是測驗各 Part 的 { n, ok };技巧卡與新題凍結在 90 起;testIds(測驗出過的題)不再出 */
+  /* 測驗檢討:parts 是測驗各 Part 的 { n, ok };技巧卡與新題凍結在 90 起(pk 存 m:'tip' 或 'p1'–'p7'、p:Part);testIds(測驗出過的題)不再出。
+     90–97 已經有任何凍結的區塊就用 pk 重建(tests_v1 合併後最弱的 Part 可能變了)。新題照那一級的難度配比、在個人段的難度內 */
   async function pickTestReview(lesson, state, parts, ctx) {
+    const frozen = frozenIn(state, RESERVED.test_review, RESERVED.test_review + 8);
+    if (frozen.length) return { state, blocks: frozen.map((x) => testBlockOf(x.idx, x.e)) };
     let st = state, idx = RESERVED.test_review;
     const avoid = frozenIds(st).concat(ctx.testIds || []), blocks = [];
     for (const x of R.planTestReview(parts)) {
@@ -455,14 +504,23 @@
       if (x.kind === 'tip') ids = [x.id];
       else {
         const where = x.part === '7' ? { format: ['single'], size: x.size } : {};
-        ids = st.pk[idx] ? st.pk[idx].ids : (await pickBankIds(x.part, x.count, where, lesson.mix[x.part <= '4' ? 'listening' : 'reading'], ctx, avoid)).ids;
+        const track = trackOfPart(x.part);
+        ids = (await pickBankIds(x.part, x.count, where, personalPlan(lesson.levels[track], x.part, null, lesson.mix[track]), ctx, avoid)).ids;
       }
       ids.forEach((id) => avoid.push(id));
       const at = idx++;
-      st = freeze(st, at, ids, ctx.now, { r: 'test_review' });
+      st = freeze(st, at, ids, ctx.now, { r: 'test_review', m: x.kind === 'tip' ? 'tip' : 'p' + x.part, p: x.part });
       blocks.push(Object.assign({ idx: at }, x, { ids: st.pk[at].ids }));
     }
     return { state: st, blocks };
+  }
+  /* 凍結的測驗檢討區塊 → 跟 planTestReview 一樣的形狀(題數照凍結的題) */
+  function testBlockOf(idx, e) {
+    const tip = e.m === 'tip' || (!e.m && /^tip-/.test((e.ids || [])[0] || ''));
+    const part = e.p || (tip ? ((/^tip-P(\d)/.exec(e.ids[0]) || [])[1] || '') : moduleOfIds(e.ids).slice(1));
+    const ids = (e.ids || []).slice();
+    return tip ? { idx, kind: 'tip', part, id: ids[0], seconds: 120, ids }
+      : { idx, kind: 'items', part, count: ids.length, seconds: ids.length * R.PRACTICE_SECONDS[part], ids };
   }
 
   /* ---------- 讀寫(開堂與交卷前先合併雲端那一份) ---------- */
@@ -493,18 +551,53 @@
     return { state: merged, cloudRead: r.ok };
   }
 
-  /* 交卷:先讀雲端合併,再套用 update(state) 寫出。回寫出的內容 */
+  /* 進度超過 5 KB 時先縮(新物件):①刪掉題目不在那個區塊凍結選題裡的作答(兩台各自開堂、選了不同的題,合併後留下的);
+     ②有給 lesson(compose 的結果)時,刪掉已交卷或略過的段裡、沒有任何作答的區塊的凍結選題。
+     回 { state, trimmed(刪了幾筆), over(縮完還是超過) };還是超過照樣寫(不擋交卷),課程頁提示 */
+  const SEG_RANGE = { review: [RESERVED.review, RESERVED.weak], weak: [RESERVED.weak, RESERVED.test_review], test_review: [RESERVED.test_review, RESERVED.test_review + 8] };
+  function fitLesson(state, lesson) {
+    if (!state || sizeOf(state) <= LESSON_KEY_MAX) return { state, trimmed: 0, over: false };
+    const pk = state.pk || {};
+    const orphan = (x) => pk[x[0]] && Array.isArray(pk[x[0]].ids) && pk[x[0]].ids.length > 0 && pk[x[0]].ids.indexOf(x[1]) < 0;
+    let st = Object.assign({}, state, { a: state.a.filter((x) => !orphan(x)) });
+    let trimmed = state.a.length - st.a.length;
+    if (sizeOf(st) > LESSON_KEY_MAX && lesson) {
+      const answered = new Set(st.a.map((x) => x[0]));
+      const drop = new Set();
+      lesson.segments.forEach((s) => {
+        if (!finished(st.seg[s.slot])) return;
+        const idx = (s.blocks || []).map((b) => b.idx);
+        const range = SEG_RANGE[s.slot];
+        Object.keys(st.pk).map(Number).filter((i) => (idx.indexOf(i) > -1 || (range && i >= range[0] && i < range[1])) && !answered.has(i)).forEach((i) => drop.add(i));
+      });
+      const kept = {};
+      Object.keys(st.pk).forEach((k) => { if (!drop.has(Number(k))) kept[k] = st.pk[k]; });
+      st = Object.assign({}, st, { pk: kept });
+      trimmed += drop.size;
+    }
+    return { state: st, trimmed, over: sizeOf(st) > LESSON_KEY_MAX };
+  }
+
+  /* 交卷:先讀雲端合併,再套用 update(state)、縮到 5 KB 內(fitLesson)寫出。deps.lesson(compose 的結果)有給才會縮凍結選題。
+     回 { state(寫出的內容), cloudRead, trimmed, over } */
   async function saveLesson(term, no, update, deps) {
     const { store, cloud } = depsOf(deps);
     const local = store.get(lessonKey(term, no), null);
     const r = await readCloud(lessonKey(term, no), cloud);
-    const next = update(r.ok ? mergeLesson(local, r.v) : local);
-    if (sizeOf(next) > LESSON_KEY_MAX) throw new Error('進度太大：' + lessonKey(term, no) + ' ' + sizeOf(next) + ' 位元組');
-    store.set(lessonKey(term, no), next);
-    return next;
+    const f = fitLesson(update(r.ok ? mergeLesson(local, r.v) : local), deps && deps.lesson);
+    store.set(lessonKey(term, no), f.state);
+    return { state: f.state, cloudRead: r.ok, trimmed: f.trimmed, over: f.over };
+  }
+  /* 作答中:只寫本機、不讀雲端(每答一題寫一次,中途關分頁回來從沒答的題接著做)。進度合併是聯集,不讀雲端也不會蓋掉別台的:
+     cloud.js 上傳前會先讀雲端合併。回 { state, trimmed, over } */
+  function saveLessonLocal(term, no, update, deps) {
+    const { store } = depsOf(deps);
+    const f = fitLesson(update(store.get(lessonKey(term, no), null)), deps && deps.lesson);
+    store.set(lessonKey(term, no), f.state);
+    return f;
   }
 
-  /* pts、rvq、tests_v1:寫入前同樣先讀雲端合併。today 給 pts 重算狀態用 */
+  /* pts、rvq、tests_v1:寫入前同樣先讀雲端合併。today 給 pts 重算狀態用;讀不到雲端也重算(本機的 s 可能是合併過、過時的) */
   const SHARED = {
     pts: { get: (store) => store.get('pts', null), set: (store, v) => store.set('pts', v), merge: (a, b, today) => R.mergePts(a, b, today) },
     rvq: { get: (store) => store.get('rvq', null), set: (store, v) => store.set('rvq', v), merge: (a, b) => R.mergeRvq(a, b) },
@@ -516,8 +609,7 @@
     const { store, cloud } = depsOf(deps);
     const local = K.get(store);
     const r = await readCloud(key, cloud);
-    const base = r.ok ? K.merge(local, r.v, today) : local;
-    const next = update(base);
+    const next = update(K.merge(local, r.ok ? r.v : null, today));
     K.set(store, next);
     return next;
   }
@@ -527,12 +619,13 @@
     const { store, cloud } = depsOf(deps);
     const local = K.get(store);
     const r = await readCloud(key, cloud);
-    return r.ok ? K.merge(local, r.v, today) : local;
+    return K.merge(local, r.ok ? r.v : null, today);
   }
 
-  /* 課程頁開著的時候練習引擎會寫作答紀錄(drill_p*、listen_p*)與學習記錄(hist),這些鍵上傳是整份換:
-     開堂與每段交卷前先讀雲端那一份,用搬家的合併規則(js/move-merge.js 的 pool、hist,寧可多留)併進本機,
-     別台這段時間寫的才不會被這台交卷時蓋掉。合併後跟本機一樣就不寫。回 { <鍵>: 'merged'|'same'|'offline' } */
+  /* 課程頁開著的時候練習引擎會寫作答紀錄(drill_p*、listen_p*)與學習記錄(hist),這些鍵還不在 cloud.js 的合併表上,上傳是整份換。
+     每一段呼叫引擎「之前」讀雲端那一份,用搬家的合併規則(js/move-merge.js 的 pool、hist,寧可多留)併進本機:
+     這一段開始之前別台寫的紀錄,不會被這台引擎接下來的寫入蓋掉。這一段作答中別台寫的,還是會被蓋掉(跟現在的刷題頁一樣)。
+     合併後跟本機一樣就不寫。回 { <鍵>: 'merged'|'same'|'offline' } */
   const PRACTICE_KEYS = ['drill_p5', 'drill_p6', 'drill_p7', 'listen_p1', 'listen_p2', 'listen_p3', 'listen_p4', 'hist'];
   async function syncPractice(keys, deps) {
     const MM = (deps && deps.merge) || root.MOVE_MERGE;
@@ -559,6 +652,6 @@
     lessonKey, parseLessonKey, compose, suggestedDate, dayOf, unlockState, fixedDone,
     newState, answer, readAnswer, setSegment, answeredIn, sizeOf, mergeLesson, mergeTests, freeze, allocate,
     pickFixed, pickWeak, pickReview, pickTestReview,
-    loadLesson, saveLesson, loadShared, saveShared, syncPractice, PRACTICE_KEYS,
+    loadLesson, saveLesson, saveLessonLocal, fitLesson, loadShared, saveShared, syncPractice, PRACTICE_KEYS,
   });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

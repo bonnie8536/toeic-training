@@ -351,7 +351,7 @@ async function main() {
     const p = await openPage({ page: 'mock.html', rootId: 'mock-root', scripts: DATA('part5', 'part6', 'part7', 'listening').concat(['js/common.js', 'js/ui.js', 'js/sync-merge.js', 'js/wrongbook.js', 'js/mock.js']),
       act: async (ctx, root) => {
         const starts = root.find((n) => n.tagName === 'BUTTON' && n.textContent === '開始');
-        await starts[starts.length - 1].click(); await settle();
+        await starts[1].click(); await settle();   // 卡片順序:快速回合、標準半回、完整一回(2026-11-23 加)
         /* 專心模式:「交卷」在作答列(不在 root 底下),沒答完會開 UI.confirm,按它的確定(表單送出)才交卷 */
         const body = ctx.document.body;
         const sub = body.find((n) => n.tagName === 'BUTTON' && /交卷/.test(n.textContent))[0];

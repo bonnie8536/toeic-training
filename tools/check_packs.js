@@ -8,7 +8,9 @@
    - 內容:單字、聽力(引導區塊加重播秒數)、閱讀段的練習秒數占段時間 85–100%;小檢核含說明 60 秒在 918–1,080 秒;
      文法單元、英語耳程度在題庫裡有;題庫題用題目索引(data/bank-meta.js)算可用量;
    - 兩包能互相拼課表(聽力一級、閱讀另一級時每堂仍是 60 分)。
-   開放的堂(≤ liveThrough)內容有問題算錯誤;之後的堂只列成提醒。題量不足、技巧卡與每週新字表還沒做,一律列成提醒。
+   開放的堂(≤ liveThrough)內容有問題算錯誤;之後的堂只列成提醒。題量不足、每週新字表還沒做,一律列成提醒。
+   技巧卡逐張查 data/tips.js(還沒產生時當作一張都沒有):tip_cards 區塊引用的卡,開放的堂缺了算錯誤,之後的堂缺的整包列一條提醒;
+   有測驗檢討段(test_review)的堂,js/lesson-rules.js 測驗檢討會配的卡(每個 Part 一張)也照同樣的規則查。
    題庫篩不了的條件(legacyWhere 裡 bank.js 不認得的欄位,例如 stemKeyword;P3、P4 指定題型):選題時不篩、可用量會算多。
    區塊標成 needs_tags 的整包列一條提醒;沒標的在開放的堂算錯誤(開放前要在題目索引補欄位,或標成 needs_tags)。
    有錯誤 exit 1。 */
@@ -27,13 +29,28 @@ const LEGACY_OK = ['difficulty', 'category', 'type', 'format', 'maxWordCount', '
 const pad = (n) => (n < 10 ? '0' : '') + n;
 const secondsOf = (blocks) => (blocks || []).reduce((a, b) => a + b.count * b.secondsPerUnit, 0);
 
-/* 題庫資料:題目索引、文法單元、英語耳(用 vm 載入網站的資料檔) */
+/* 測驗檢討(test_review_v1)會配的技巧卡:聽力 Part 1–4、閱讀 Part 5–7 輪流當最弱的 Part,收集 planTestReview 配的卡 */
+function reviewTips(LR) {
+  const ids = new Set();
+  ['1', '2', '3', '4'].forEach((a) => ['5', '6', '7'].forEach((b) => {
+    const parts = {};
+    parts['P' + a] = { n: 1, ok: 0 };
+    parts['P' + b] = { n: 1, ok: 0 };
+    LR.planTestReview(parts).filter((x) => x.kind === 'tip').forEach((x) => ids.add(x.id));
+  }));
+  return [...ids].sort();
+}
+
+/* 題庫資料:題目索引、文法單元、英語耳、技巧卡(用 vm 載入網站的資料檔);測驗檢討會配的技巧卡 */
 function loadData() {
-  const ctx = { console, Promise, Map, Set, JSON, Object, Array, Math, Number, String, TypeError, Error };
+  const ctx = { console, Promise, Map, Set, JSON, Object, Array, Math, Number, String, TypeError, Error, Date, isNaN };
   ctx.window = ctx;
   vm.createContext(ctx);
-  ['data/bank-meta.js', 'data/grammar.js', 'data/ear.js', 'js/bank.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
-  return { bank: ctx.BANK, grammar: new Set(ctx.TOEIC.grammar.map((u) => u.id)), ear: ctx.TOEIC.ear };
+  ['data/bank-meta.js', 'data/grammar.js', 'data/ear.js', 'js/bank.js', 'js/lesson-rules.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
+  if (fs.existsSync(path.join(REPO, 'data/tips.js'))) vm.runInContext(read('data/tips.js'), ctx, { filename: 'data/tips.js' });
+  const cards = ctx.TIP_CARDS ? ctx.TIP_CARDS.cards : [];
+  return { bank: ctx.BANK, grammar: new Set(ctx.TOEIC.grammar.map((u) => u.id)), ear: ctx.TOEIC.ear,
+    tips: new Set(cards.map((c) => c.id)), reviewTips: reviewTips(ctx.LESSON_RULES) };
 }
 
 function legacyToBank(sel) {
@@ -112,19 +129,22 @@ function checkBlock(b, data, opt) {
     const n = list.filter((q) => (b.select.where.earLevel || []).indexOf(q.level) > -1).length;
     if (n < b.count) out.push({ hard: true, msg: b.blockId + ' 英語耳題量不足：要 ' + b.count + '，有 ' + n });
   }
-  if (b.module === 'tip_cards' && !opt.tips) b.ids.forEach((x) => out.push({ group: 'tips', id: x.id }));
+  if (b.module === 'tip_cards') b.ids.filter((x) => !data.tips.has(x.id)).forEach((x) => out.push({ group: 'tips', id: x.id, hard: true, msg: b.blockId + ' 的技巧卡 ' + x.id + ' 還沒有' }));
   if (b.module === 'article_vocab' && !opt.words) out.push({ group: 'words', id: b.blockId });
   if (b.bankStatus === 'needs_items') out.push({ hard: true, msg: b.blockId + ' 標成需要補題' });
   return out;
 }
 
-/* 內容:開放的堂是錯誤,之後的堂是提醒 */
+/* 內容:開放的堂是錯誤,之後的堂是提醒(分組的項目在之後的堂整包列一條) */
 function checkContent(pack, data, out, opt) {
   const missing = { tips: new Set(), words: new Set(), filter: new Set() };
   (pack.lessons || []).forEach((l) => {
     const live = l.no <= pack.liveThrough;
     const at = '第 ' + l.no + ' 堂：';
-    const put = (x) => (x.group ? missing[x.group].add(x.id) : (live && x.hard ? out.errors : out.warnings).push(at + x.msg));
+    const put = (x) => (x.group && !(live && x.hard) ? missing[x.group].add(x.id) : (live && x.hard ? out.errors : out.warnings).push(at + x.msg));
+    if ((l.segments || []).some((s) => s.slot === 'test_review')) {
+      data.reviewTips.filter((id) => !data.tips.has(id)).forEach((id) => put({ group: 'tips', id, hard: true, msg: '測驗檢討會配的技巧卡 ' + id + ' 還沒有' }));
+    }
     (l.segments || []).forEach((s) => {
       if (PRACTICE_SLOTS.indexOf(s.slot) > -1) {
         const sec = secondsOf(s.blocks) + addReplay(s.slot, s.blocks), all = s.minutes * 60;
@@ -140,7 +160,7 @@ function checkContent(pack, data, out, opt) {
     }
   });
   /* 還沒做的內容(技巧卡、每週新字表)整包列一次 */
-  if (missing.tips.size) out.warnings.push('技巧卡還沒有 ' + missing.tips.size + ' 張：' + [...missing.tips].sort().join('、'));
+  if (missing.tips.size) out.warnings.push('之後的堂用到的技巧卡還沒有 ' + missing.tips.size + ' 張：' + [...missing.tips].sort().join('、'));
   if (missing.words.size) out.warnings.push('每週新字表還沒有（' + missing.words.size + ' 個單字區塊用到）');
   if (missing.filter.size) out.warnings.push('有 ' + missing.filter.size + ' 個區塊的條件題庫篩不了、標成 needs_tags（選題時不篩，可用量算多了）：' + [...missing.filter].sort().join('、'));
 }
@@ -202,7 +222,7 @@ async function main(files) {
   const data = loadData();
   const items = readPacks(list);
   const ok = items.filter((x) => x.pack);
-  const opt = { schema, tips: fs.existsSync(path.join(REPO, 'data/tips.js')), count: await bankCounts(ok.map((x) => x.pack), data.bank) };
+  const opt = { schema, count: await bankCounts(ok.map((x) => x.pack), data.bank) };
   let errors = 0;
   items.filter((x) => x.bad).forEach((x) => { console.log('錯誤　' + x.f + ' 讀不懂：' + x.bad); errors++; });
   const packs = [];

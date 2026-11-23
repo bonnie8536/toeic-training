@@ -17,11 +17,15 @@ const PACKS = { entry: JSON.parse(read('data/packs/pack_entry.json')), threshold
 const copy = (x) => JSON.parse(JSON.stringify(x));
 const DATA = CP.loadData();
 let COUNT = null;
-async function check(pack) {
+async function check(pack, data) {
   if (!COUNT) COUNT = await CP.bankCounts([PACKS.entry, PACKS.threshold], DATA.bank);
   const count = await CP.bankCounts([pack], DATA.bank);
-  return CP.checkPack(pack, DATA, { schema: SCHEMA, tips: false, words: false, count });
+  return CP.checkPack(pack, data || DATA, { schema: SCHEMA, words: false, count });
 }
+/* 第 1–8 堂技巧卡區塊引用的卡,加上測驗檢討會配的卡 */
+const tipIdsOf = (lessons) => lessons.flatMap((l) => l.segments.flatMap((s) => (s.blocks || []).filter((b) => b.module === 'tip_cards').flatMap((b) => b.ids.map((x) => x.id))));
+const EARLY_TIPS = [...new Set(Object.keys(PACKS).flatMap((k) => tipIdsOf(PACKS[k].lessons.slice(0, 8))).concat(DATA.reviewTips))].sort();
+const withoutTips = (...ids) => Object.assign({}, DATA, { tips: new Set([...DATA.tips].filter((id) => ids.indexOf(id) < 0)) });
 
 const T = {};
 
@@ -65,14 +69,38 @@ T['P3 小型 schema 驗證:認得 $ref、oneOf、if/then、additionalProperties�
   return 'ok';
 };
 
-T['P4 check_packs 指令:兩包通過、exit 0;技巧卡還沒做只列提醒;新字表與小檢核清單有了就不再提醒缺少'] = () => {
+T['P4 check_packs 指令:兩包通過、exit 0;第 1–8 堂與測驗檢討用到的技巧卡都有,缺卡提醒只列之後的堂;新字表與小檢核清單有了就不再提醒缺少'] = () => {
   const r = spawnSync(process.execPath, [path.join(__dirname, 'check_packs.js')], { encoding: 'utf8', cwd: REPO });
   assert.equal(r.status, 0, r.stdout + r.stderr);
   assert.match(r.stdout, /通過/);
-  assert.match(r.stdout, /技巧卡還沒有/);
+  const tipLines = r.stdout.split('\n').filter((s) => /技巧卡還沒有/.test(s));
+  assert.ok(tipLines.length > 0 && tipLines.every((s) => /之後的堂用到的技巧卡還沒有/.test(s)), tipLines.join(' / '));
+  const listed = new Set(tipLines.flatMap((s) => s.trim().split('：').pop().split('、')));
+  EARLY_TIPS.forEach((id) => assert.ok(!listed.has(id), id + ' 不該在缺卡提醒裡'));
   assert.ok(!/每週新字表還沒有/.test(r.stdout) && !/可用題清單選題/.test(r.stdout));
   assert.ok(!/^錯誤/m.test(r.stdout));
   return r.stdout.trim().split('\n').length + ' 行';
+};
+
+T['P14 check_packs 技巧卡逐張查:開放的堂缺卡算錯誤、之後的堂整包列一條提醒;開放的堂有測驗檢討段時,測驗檢討會配的卡都要有'] = async () => {
+  assert.deepEqual(DATA.reviewTips, ['tip-P1-photo', 'tip-P2-wh', 'tip-P3-gist', 'tip-P4-gist', 'tip-P5-word_form', 'tip-P6-grammar', 'tip-P7-detail']);
+  EARLY_TIPS.forEach((id) => assert.ok(DATA.tips.has(id), id));
+  const all = await check(copy(PACKS.entry));
+  assert.ok(!all.errors.length && !all.warnings.some((w) => /技巧卡還沒有.*tip-P5-tense/.test(w)), all.errors.join(' / '));
+  const photo = await check(copy(PACKS.entry), withoutTips('tip-P1-photo'));
+  assert.ok(photo.errors.some((e) => /^第 3 堂：entry-L03-listening-1 的技巧卡 tip-P1-photo 還沒有/.test(e)), photo.errors.join(' / '));
+  assert.ok(photo.errors.some((e) => /^第 2 堂：測驗檢討會配的技巧卡 tip-P1-photo 還沒有/.test(e)), photo.errors.join(' / '));
+  const later = await check(copy(PACKS.entry), withoutTips('tip-P5-tense'));
+  assert.ok(!later.errors.length && later.warnings.some((w) => /之後的堂用到的技巧卡還沒有 \d+ 張：.*tip-P5-tense/.test(w)), later.errors.join(' / '));
+  const closed = copy(PACKS.entry);
+  closed.liveThrough = 1;
+  const r1 = await check(closed, withoutTips('tip-P7-detail'));
+  assert.ok(!r1.errors.length && r1.warnings.some((w) => /技巧卡還沒有.*tip-P7-detail/.test(w)), '第 2 堂還沒開放時測驗檢討缺卡只提醒：' + r1.errors.join(' / '));
+  const th = await check(copy(PACKS.threshold), withoutTips('tip-P7-detail'));
+  assert.ok(th.errors.some((e) => /^第 2 堂：測驗檢討會配的技巧卡 tip-P7-detail 還沒有/.test(e)), th.errors.join(' / '));
+  const none = await check(copy(PACKS.threshold), Object.assign({}, DATA, { tips: new Set() }));
+  assert.ok(none.errors.some((e) => /threshold-L03-reading-1 的技巧卡 tip-P5-word_form 還沒有/.test(e)));
+  return EARLY_TIPS.length + ' 張';
 };
 
 T['P5 check_packs 抓得到結構錯誤:liveThrough 超出、live 卻是 0、不是 live 卻開放、分鐘不是 60、fixedShare 不符、blockId 重複、堂號不連續'] = async () => {

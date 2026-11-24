@@ -3260,6 +3260,66 @@ html:not(.authed) .home .pet-home { display: none; }   /* 未登入時小雞在�
 .home-dir:last-of-type { margin-bottom: 48px; }
 @media (prefers-reduced-motion: reduce) { .home-review { transition: none; } .home-review:active { transform: none; } }
 
+/* ---------- 課程:今天的課卡(首頁 .home-grid 第一張、課程總覽頂端)與課程總覽的清單(js/lesson-home.js、js/lessons.js) ----------
+   卡片排法照小雞卡:鵜鶘在左、字在右、按鈕整寬在下;內距手機 20、600 以上 24。編號是小字、堂名是標題。
+   卡上有實色主按鈕時(.home-grid.lesson-go)每日練習卡的「開始」藏起來(三列本身就是連結,同未登入首頁的做法) */
+.lsn-home { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 16px; padding: 20px; border-radius: var(--r-lg); }
+.lsn-home-art { display: block; }
+.lsn-home-main { min-width: 0; }
+.lsn-home-main:first-child { grid-column: 1 / -1; }
+.lsn-home-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.lsn-home .lsn-kicker { margin: 0; font-size: var(--fs-sm); color: var(--ink-light); }
+.lsn-home-all { margin-left: auto; font-size: var(--fs-sm); color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lsn-home-all:hover { color: var(--primary); text-decoration: none; }
+.lsn-home-all:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+.lsn-home h2 { margin: 2px 0 0; font-family: var(--round); font-size: 20px; line-height: 1.35; overflow-wrap: anywhere; }
+.lsn-home h2:focus { outline: none; }
+.lsn-home .mock-tags { margin-top: 8px; }
+.lsn-home-go {
+  grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; width: 100%;
+  min-height: 48px; margin-top: 16px; font-size: var(--fs-btn); border-radius: var(--r-md); text-decoration: none;
+}
+.lsn-home-go:hover { text-decoration: none; }
+.lsn-home-go:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.lsn-home-act { grid-column: 1 / -1; margin-top: 12px; }
+.lsn-home-note { margin: 0; font-size: var(--fs-sm); color: var(--ink-light); }
+.lsn-home-retry { min-height: 44px; margin-top: 12px; padding: 0 20px; border-radius: var(--r-md); }
+.home .lsn-home + .daily-home { margin-top: 16px; }
+.home .home-grid.lesson-go .daily-go { display: none; }
+.home .home-grid.lesson-go > .daily-home { padding-bottom: 8px; }
+@media (min-width: 600px) {
+  .lsn-home { padding: 24px; }
+  .home .home-grid.lesson-go > .daily-home { padding-bottom: 12px; }
+}
+@media (min-width: 900px) {
+  html.authed .home-grid.has-lesson > .lsn-home { grid-column: 1; grid-row: 1; }
+  html.authed .home-grid.has-lesson > .daily-home { grid-row: 2 / span 3; margin-top: 0; }
+}
+/* 課程總覽:600 以下每列兩行(編號與狀態一行、堂名一行,最多兩行),600 以上一行、堂名超出用刪節號;列高至少 56 */
+.lsn-tags { margin: 12px 0 0; }
+#lsn-root > .lsn-home { margin-top: 16px; }
+.lsn-list { margin-top: 16px; }
+.lsn-list .lsn-row {
+  display: grid; grid-template-columns: 16px minmax(0, 1fr) auto 12px; grid-template-areas: "mark no st go" ". name name name";
+  align-items: center; column-gap: 12px; row-gap: 2px; min-height: 56px; padding: 10px 16px; font-size: var(--fs-md);
+}
+.lsn-list a.lsn-row::after { grid-area: go; margin-left: 0; text-align: right; }
+.lsn-mark { grid-area: mark; display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; }
+.lsn-mark.is-done { color: var(--ok); }
+.lsn-mark.is-done svg { display: block; }
+.lsn-mark.is-doing::before, .lsn-mark.is-todo::before { content: ''; box-sizing: border-box; width: 10px; height: 10px; border-radius: 50%; }
+.lsn-mark.is-doing::before { background: var(--primary); }
+.lsn-mark.is-todo::before { border: 2px solid var(--ink-light); }
+.lsn-row-no { grid-area: no; font-size: var(--fs-sm); font-weight: 700; }
+.lsn-row-name { grid-area: name; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+.lsn-list .lsn-row-st { grid-area: st; margin-left: 0; font-size: var(--fs-sm); color: var(--ink-light); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.lsn-row.is-off { color: var(--ink-light); }
+.lsn-list a.lsn-row[aria-current] .lsn-row-no { color: var(--primary); }
+@media (min-width: 600px) {
+  .lsn-list .lsn-row { grid-template-columns: 16px auto minmax(0, 1fr) auto 12px; grid-template-areas: "mark no name st go"; }
+  .lsn-row-name { display: block; white-space: nowrap; text-overflow: ellipsis; }
+}
+
 /* ---------- App 分頁列:圖示改成 canvas(DoodleArt),沒載到時只顯示文字,不留空框 ---------- */
 .app-tab-art { display: none; }
 @media (max-width: 860px), (pointer: coarse) and (max-height: 500px) {

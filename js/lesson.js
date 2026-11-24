@@ -3,10 +3,11 @@
    第 1 堂前測交給 js/lesson-test.js(LESSON_TEST),回顧、弱點補練、前測檢討、小檢核、本堂結果交給 js/lesson-personal.js(LESSON_PERSONAL),
    呼叫時傳 ctx = { no, lesson, slot, segment, host, key, classId, levels, state(), setState(s), runRound(blocks, opt), step(round),
      push(), show(el, focus), note(lines), has(kind, id), meta, files, data, views, items, now(), nowMs(), today() }。
-   runRound(blocks 或 LESSON_CORE.rounds 的一步, opt) → Promise<'done'|'exit'>:同步作答紀錄 → 作答前快照 → 只出還沒答的題 → 呼叫引擎 →
-     交卷時逐題寫進度、排 pts 與 rvq。opt = { feedback('instant'|'submit'), plays, src('p'|'w'|'r';null 不記 pts 與 rvq;小檢核回合預設 null),
+   ctx.runRound(blocks, opt) → Promise<'done'|'exit'>:opt.round 是 LESSON_CORE.rounds 的那一步(文法單元、英語耳走各自的步驟);
+     題庫回合:同步作答紀錄 → 作答前快照 → 只出還沒答的題 → 呼叫引擎 → 交卷時逐題寫進度、排 pts 與 rvq。
+     opt = { cp(小檢核的檢核回合:只寫進度), feedback('instant'|'submit'), plays, src('p'|'w'|'r';null 不記 pts 與 rvq;沒給時照區塊編號,LESSON_CORE.rerecord),
      wrong(false 不排錯題), first(false 時一律不是第一次作答), result(false 交卷後不出區塊結果), onItems(rows, result), opener(按下的按鈕) }。
-   有 LESSON_PERSONAL.rejudge(ctx) 時開頁呼叫一次(小檢核判定前關頁的補判)。
+   開頁時:第 1 堂呼叫 LESSON_TEST.expire(作答中的段超過 24 小時或時間用完就交卷),有小檢核的堂呼叫 LESSON_PERSONAL.judge(判定前關頁的補判)。
    時間:now 是 epoch 秒,作答紀錄與學習記錄是毫秒(LESSON_CORE 換算)。 */
 (function (root) {
   'use strict';
@@ -31,7 +32,7 @@
   const READING_EST = 41;   // 前測組卷前的閱讀題數:39–43 題取中間(約 30 分鐘)
   const S = {
     no: null, files: null, meta: new Map(), lesson: null, state: null, levels: null, classId: null, trial: null, note: null,
-    slot: null, depth: 0, url: '', run: 0, screen: '', ignorePop: false, focus: null, onExit: null, words: null, pool: null,
+    slot: null, depth: 0, url: '', run: 0, screen: '', ignorePop: false, focus: null, onExit: null, words: null, pool: null, fresh: false,
   };
 
   /* ---------- 小工具 ---------- */
@@ -44,7 +45,7 @@
   function div(cls) { const n = doc.createElement('div'); n.className = cls; return n; }
   function termNow() { const p = D.plan(); return p && Number.isInteger(p.term) && p.term >= 1 && p.term <= 99 ? p.term : 1; }
   const progressKey = () => C.lessonKey(termNow(), S.no);
-  function histNow() { return typeof store !== 'undefined' && store ? store.get('hist', []) || [] : []; }   // 只讀(學習記錄)
+  const histNow = () => D.hist();   // 學習記錄(只讀)
   function fail(e) { console.error(e); empty('badData', true); }
 
   /* ---------- 頁首、標題、換畫面 ---------- */
@@ -180,16 +181,20 @@
     if (st.status === 'locked') return empty('locked', focus, { m: st.next });
     return empty('limit', focus);
   }
-  /* 有進度時補凍結、個人段試排、前測的時間;小檢核補判(有的話) */
+  /* 有進度時補凍結、個人段試排;前測超過 24 小時或時間用完就交卷(LESSON_TEST.expire);小檢核判定前關頁的補判(LESSON_PERSONAL.judge) */
   async function prepare() {
     const jobs = [trialNow()];
     if (S.state) jobs.push(D.fillFixed(S.no, S.lesson, S.state, pickCtx()));
     const out = await Promise.all(jobs);
     S.trial = out[0];
     if (out[1]) S.state = out[1];
-    const LP = root.LESSON_PERSONAL;
-    if (S.state && segOf('checkpoint') && LP && typeof LP.rejudge === 'function') await LP.rejudge(ctxOf('checkpoint'));
-    S.note = (S.note || []).concat(await testClock());
+    const LP = root.LESSON_PERSONAL, LT = root.LESSON_TEST;
+    if (S.state && segOf('checkpoint') && LP && typeof LP.judge === 'function') await LP.judge(ctxOf('checkpoint'));
+    if (S.state && S.lesson.kind === 'test' && LT && typeof LT.expire === 'function') {
+      const x = await LT.expire(ctxOf('test_listening'));
+      S.note = (S.note || []).concat(x.lines);
+      S.fresh = !!x.finished;   // 這次開頁才交卷、上完第 1 堂:前測結果是第一次看到
+    }
   }
   function trialNow() {
     return D.trial(S.no, S.lesson, S.state).catch((e) => { console.error(e); return { review: null, weak: null }; });
@@ -220,19 +225,6 @@
     return C.testResume({ limit: C.testLimit(slot, testCount(slot) || 0), t0: seg.t0, lastAt, now: nowSec() });
   }
   const testDoing = () => (S.lesson.kind === 'test' && S.state ? Object.keys(C.TEST_QUOTA).filter((s) => S.state.seg[s] && S.state.seg[s].st === 'doing') : []);
-  /* 開頁時:超過 24 小時或時間已用完的測驗段直接交卷,回總覽上方的通知 */
-  async function testClock() {
-    const notes = [];
-    for (const slot of testDoing()) {
-      const r = testLeft(slot);
-      if (!r.expired && r.remaining > 0) continue;
-      S.state = await D.segment(S.no, S.lesson, slot, 'done', nowSec());
-      const listening = slot === 'test_listening';
-      if (r.expired) notes.push(listening ? T.lesson.overListening : T.lesson.overReading, T.lesson.autoSubmitted);
-      else if (listening) notes.push(T.lesson.timeUpListening);
-    }
-    return notes;
-  }
   function leftMinutes() {
     const out = {};
     testDoing().forEach((slot) => { out[slot] = Math.max(0, Math.ceil(testLeft(slot).remaining / 60)); });
@@ -320,22 +312,31 @@
       if (!host().querySelector('.result-card')) await showDone();   // 前測結果、本堂結果由各自的程式畫
       return;
     }
+    if (out === 'done' && SKIPPABLE[slot] && S.state.seg[slot] && S.state.seg[slot].st === 'skip') {
+      const next = await skipEmpty();   // 正式規劃是 0 項:記了略過,直接開下一段
+      if (next && next !== slot) { await enterSegment(next); return; }
+    }
     await toOverview();
   }
+  /* 前測、個人段、本堂結果:頁首收起來(這幾個畫面由各自的程式放進 host),再交給 LESSON_TEST、LESSON_PERSONAL */
   async function runDelegate(slot) {
     const [mod, fn] = DELEGATE[slot];
     const M = root[mod];
     if (!M || typeof M[fn] !== 'function') { console.error('沒有載入 ' + mod + '.' + fn); empty('itemsFailed', true); return 'gone'; }
+    S.screen = slot;
+    setHead(false, titleNow());
     return M[fn](ctxOf(slot), slot === 'wrapup' ? { first: true } : undefined);
   }
+  /* 上完的堂重看:前測結果或本堂結果(只讀)。開頁時才自動交卷上完第 1 堂的,前測結果算第一次看到(給點心) */
   async function showDone() {
     S.screen = 'done';
     leaveFocus();
-    const test = S.lesson.kind === 'test';
+    const test = S.lesson.kind === 'test', first = test && !!S.fresh;
+    S.fresh = false;
     const M = root[test ? 'LESSON_TEST' : 'LESSON_PERSONAL'], fn = test ? 'result' : 'wrapup';
     setHead(false, titleNow());
     if (!M || typeof M[fn] !== 'function') { console.error('沒有載入 ' + (test ? 'LESSON_TEST' : 'LESSON_PERSONAL') + '.' + fn); empty('itemsFailed', false); return; }
-    const out = await M[fn](ctxOf(test ? 'test_reading' : 'wrapup'), { first: false });
+    const out = await M[fn](ctxOf(test ? 'test_reading' : 'wrapup'), { first });
     if (out && out.nodeType) screen(out, true, 'done');
   }
   /* 固定段:從第一個沒完成的步驟做到最後,全部完成記交卷 */
@@ -498,6 +499,14 @@
     }).then((btn) => runRound(r, { opener: btn }));
   }
   const partsOfIds = (ids) => ids.map(C.partOfId).filter((p, i, a) => p && a.indexOf(p) === i);
+  /* 個人段、小檢核叫的回合(ctx.runRound):opt.round 是 LESSON_CORE.rounds 的那一步;文法單元、英語耳走各自的步驟,題庫走 runRound */
+  function delegateRound(input, opt) {
+    const o = Object.assign({}, opt), r = Array.isArray(input) ? Object.assign({ kind: 'bank' }, o.round, { blocks: input }) : input;
+    delete o.round; delete o.slot; delete o.bridge;
+    if (r.kind === 'grammar') return stepGrammar(r);
+    if (r.kind === 'ear') return stepEar(r);
+    return runRound(r, o);
+  }
   async function runRound(input, opt) {
     const o = opt || {};
     const blocks = Array.isArray(input) ? input : input.blocks;
@@ -506,7 +515,7 @@
     const engine = Number(partsOfIds(ids)[0] || (round.engine === 'LISTEN' ? 1 : 5)) <= 4 ? 'LISTEN' : 'DRILL';
     const feedback = o.feedback || round.feedback || (blocks[0] && blocks[0].timing === 'guided' ? 'instant' : 'submit');
     const cp = o.cp !== undefined ? !!o.cp : !!round.cp;
-    const x = { engine, feedback, o: Object.assign({ src: cp ? null : 'p' }, o), plays: o.plays || round.plays || (feedback === 'instant' ? 2 : 1) };
+    const x = { engine, feedback, cp, o: Object.assign({}, o, cp && o.src === undefined ? { src: null } : {}), plays: o.plays || round.plays || (feedback === 'instant' ? 2 : 1) };
     if (hold(o.opener)) return 'exit';
     const run = S.run;
     loading();
@@ -569,11 +578,12 @@
     const items = (res && res.items) || [];
     const rows = items.map((it) => rowOf(it, job, x.o)).filter(Boolean);
     record(rows);
-    if (x.o.src) queuePoints(job, rows, before, x.o);
+    if (x.o.src !== null) queuePoints(job, rows, before, x.o);
     if (typeof x.o.onItems === 'function') await x.o.onItems(rows, res);
     if (x.feedback !== 'submit' || x.o.result === false) return 'done';
     return new Promise((resolve) => {
-      const r = { parts: partsOfIds(job.units.map((u) => u.item.id)), score: res.score, total: res.total, units: job.units, answers: items, wrong: res.total - res.score };
+      const answers = new Map(items.map((it) => [it.key, { c: Number.isInteger(it.c) ? it.c : -1, ok: !!it.ok }]));   // 逐題解析用:作答紀錄的鍵 → 選項、對錯
+      const r = { parts: partsOfIds(job.units.map((u) => u.item.id)), score: res.score, total: res.total, units: job.units, answers, wrong: res.total - res.score };
       screen(V.blockResult(r, { next: () => resolve('done') }), true, 'block');
     });
   }
@@ -583,12 +593,14 @@
     const first = o.first !== false && b.module !== 'redo' && !job.snap.has(it.key);
     return { b: b.idx, id: it.id, sub: it.sub || 0, c: Number.isInteger(it.c) ? it.c : -1, ok: !!it.ok, f: first, t: nowSec() };
   }
-  /* 考點:照進度裡這個區塊的全部作答記一批(同一批重記只留題數多的);答錯的新題排回顧 */
+  /* 考點:照進度裡這個區塊的全部作答記一批(同一批重記只留題數多的);來源沒給時照區塊編號與段(LESSON_CORE.rerecord:
+     固定段與前測檢討 p、考點回顧 r、弱點補練 w,錯題重做不記)。答錯的新題排回顧 */
   function queuePoints(job, rows, before, o) {
     const day = today(), key = progressKey();
     job.blocks.filter((b, i, a) => b.module !== 'redo' && a.indexOf(b) === i).forEach((b) => {
+      const map = o.src ? { src: o.src, b: key + ':' + b.idx } : C.rerecord(b.idx, S.slot, key);
       const answers = blockAnswers(b.idx);
-      if (answers.length) D.hits(answers, { today: day, src: o.src, b: key + ':' + b.idx });
+      if (map && answers.length) D.hits(answers, { today: day, src: map.src, b: map.b });
     });
     if (o.wrong === false) return;
     const refs = rows.filter((r) => !r.ok && !before.has(r.b + '|' + r.id + '|' + r.sub) && job.byId.get(r.id).module !== 'redo')
@@ -652,7 +664,7 @@
     return Object.freeze({
       no: S.no, lesson: S.lesson, slot, segment: segOf(slot), host: host(), key: progressKey(), classId: S.classId, levels: S.levels,
       state: () => S.state, setState: (s) => { if (s && typeof s === 'object') S.state = s; },
-      runRound, step: (r) => runStep(r), push: () => pushStep(slot), show: (node, focus) => screen(node, focus !== false),
+      runRound: delegateRound, step: (r) => runStep(r), push: () => pushStep(slot), show: (node, focus) => screen(node, focus !== false),
       note: (lines) => { S.note = [].concat(lines || []).filter(Boolean); }, has, meta: S.meta, files: S.files,
       data: D, views: V, items: root.LESSON_ITEMS, now: nowSec, nowMs, today,
     });

@@ -136,7 +136,7 @@ function enginesOf(ctx, dom) {
 function fakesOf(ctx, dom, log) {
   const seg = async (c, slot, st) => { c.setState(await c.data.segment(c.no, c.lesson, slot, st, c.now())); };
   const card = () => { const s = mk(dom, 'section', 'result-card fake-result'); s.append(mk(dom, 'h2', 'result-score', 'done')); return s; };
-  ctx.LESSON_ITEMS = { review(units, answers) { log.push(['items.review', units.length, answers.length]); return units.map((u) => mk(dom, 'div', 'fake-item', u.item.id)); } };
+  ctx.LESSON_ITEMS = { review(units, answers) { log.push(['items.review', units.length, answers.size]); return units.map((u) => mk(dom, 'div', 'fake-item', u.item.id)); } };
   ctx.LESSON_TEST = {
     assemble: (c) => ctx.LESSON_DATA.testForm(c),
     async run(c) { log.push(['test.run', c.slot]); await seg(c, c.slot, 'done'); return 'done'; },
@@ -595,12 +595,13 @@ T['第 1 堂開頁:聽力測驗超過 24 小時自動交卷、時間用完交卷
     if (at) s = e.P.answer(s, { b: 0, id: s.pk[0].ids[0], sub: 0, c: 1, ok: true, f: true, t: NOW - ago + at });
     e.store.set('les_t1_01', s);
   };
-  const a = await page({ search: '?no=1', seed: seed(2 * DAY) });
+  const real = (ctx) => ['js/lesson-items.js', 'js/lesson-test.js'].forEach((f) => vm.runInContext(K.read(f), ctx, { filename: f }));   // 時間到與 24 小時由 LESSON_TEST.expire 判
+  const a = await page({ search: '?no=1', seed: seed(2 * DAY), before: real });
   eq([a.dom.querySelector('.lsn-note').textContent, a.active() === a.dom.querySelector('.lsn-note'), a.les(1).seg.test_listening.st], ['聽力測驗超過 24 小時已自動交卷', true, 'done']);
-  const b = await page({ search: '?no=1', seed: seed(1200, 1100) });
+  const b = await page({ search: '?no=1', seed: seed(1200, 1100), before: real });
   eq([b.dom.querySelector('.lsn-note').textContent, b.les(1).seg.test_listening.st, b.steps()[1][1]], ['聽力測驗時間到', 'done', 'current']);
   const clock = new Map([['lsn_clock', JSON.stringify({ k: 'les_t1_01', s: 'test_listening', at: NOW - 600 + 400 })]]);
-  const c = await page({ search: '?no=1', seed: seed(600, 300), kit: { session: clock } });
+  const c = await page({ search: '?no=1', seed: seed(600, 300), kit: { session: clock }, before: real });
   const n = c.les(1).pk[0].ids.reduce((s, id) => s + (/^l[12]-/.test(id) ? 1 : c.ctx.BANK_META.items.filter((r) => r.id === id)[0].size), 0);
   eq([c.dom.querySelector('.lsn-note'), c.$$('.lsn-step-min')[0].textContent, c.text('.lsn-go'), c.$$('.lsn-rule').length, c.les(1).seg.test_listening.st],
     [null, '剩 ' + Math.ceil((c.ctx.LESSON_CORE.testLimit('test_listening', n) - 400) / 60) + ' 分鐘', '繼續', 0, 'doing']);

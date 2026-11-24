@@ -111,7 +111,7 @@
     const ex = card.example || {};
     const lines = String(ex.en || '').split('\n').filter((s) => s.trim());
     const zh = String(ex.zh || '');
-    const out = [];
+    const out = [el('p', { class: 'lsn-ex-h' }, [TX().tip.example])];
     let rest = zh;
     if (card.part === 'P1') {
       const cut = zh.indexOf('。');

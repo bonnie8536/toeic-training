@@ -49,6 +49,7 @@
 .lsn-tip-h, .lsn-words-h, .lsn-card-h { margin: 8px 0 0; font-family: var(--round); font-size: var(--fs-xl); line-height: 1.4; }
 .lsn-tip-body { margin: 12px 0 0; font-size: var(--fs-md); line-height: 1.8; }
 .lsn-ex { display: grid; gap: 16px; margin-top: 20px; padding: 16px; border: 1px solid var(--line); border-radius: var(--r-md); background: #fff; }
+.lsn-ex-h { margin: 0 0 -4px; font-size: var(--fs-sm); font-weight: 700; color: var(--ink-light); }
 .lsn-ex-sec { display: grid; gap: 8px; justify-items: start; }
 .lsn-ex-tag { font-size: var(--fs-xs); }
 .lsn-ex-line, .lsn-ex-photo { margin: 0; font-size: var(--fs-md); line-height: 1.7; }

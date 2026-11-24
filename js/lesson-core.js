@@ -66,7 +66,7 @@
       skipSeg: '略過這一段', skipAsk: (name) => '略過' + name + '？', skipBody: '略過後不能再做', skipOk: '略過', cancel: '取消',
       timeUpListening: '聽力測驗時間到', overListening: '聽力測驗超過 24 小時', overReading: '閱讀測驗超過 24 小時', autoSubmitted: '已自動交卷',
     },
-    tip: { photo: '照片', play: '播出', book: '題本', next: '下一步' },
+    tip: { example: '示例', photo: '照片', play: '播出', book: '題本', next: '下一步' },
     words: { h: '本週新字', count: (n) => n + ' 個字', start: '開始小考', next: '下一題', done: '完成' },
     bridge: { parts: partsLabel, count: (n) => n + ' 題', note: '交卷後才對答案', start: '開始' },
     block: { parts: partsLabel, next: '下一步', review: (n) => '逐題解析 ' + n + ' 題' },

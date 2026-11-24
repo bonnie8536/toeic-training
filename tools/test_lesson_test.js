@@ -117,7 +117,7 @@ function pageCtx(e, no, lv, extra) {
   return Object.assign({
     no, lesson, host: e.host, notes,
     state: () => state, setState: (s) => { state = s; },
-    push: (s) => e.log.push(['push', s]), notify: (lines) => notes.push(lines),
+    push: (s) => e.log.push(['push', s]), note: (lines) => notes.push(lines),
     data: e.D, items: e.I,
     now: () => e.clock.sec(), nowMs: () => e.clock.ms(), today: () => e.P.dayOf(e.clock.sec()),
   }, extra || {});

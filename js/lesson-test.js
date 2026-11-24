@@ -1,7 +1,7 @@
 /* 第 1 堂的前測(lesson.html?no=1):組卷、閱讀測驗開始頁、作答(不對答、不能回上一題、聽力音檔只播一次)、倒數、
    離開與接著做、時間到與超過 24 小時自動交卷、前測紀錄 tests_v1、前測結果。
-   ctx 由 js/lesson.js 給:{ no, lesson, host, state(), setState(s), push(step), notify(lines), data: LESSON_DATA, items: LESSON_ITEMS, now(), nowMs(), today() }。
-   notify(lines) 是選填的:回總覽時要放在通知列的字(聽力測驗時間到、超過 24 小時)。
+   ctx 由 js/lesson.js 給:{ no, lesson, host, state(), setState(s), push(step), note(lines), data: LESSON_DATA, items: LESSON_ITEMS, now(), nowMs(), today() }。
+   note(lines):回總覽時要放在通知列的字(聽力測驗時間到、超過 24 小時)。
    window.LESSON_TEST = {
      assemble(ctx)  組卷 → Promise<{ 0: 聽力 ids, 1: 閱讀 ids }>;ctx 可以是上課頁的 ctx,或選題的 ctx(LESSON_DATA.fillFixed 補組卷時這樣叫)
      picked(ctx)    組卷後凍結 0、1 兩格的新進度(還沒寫):按「開始」時交給 LESSON_DATA.start,建立進度與凍結同一次寫
@@ -37,7 +37,7 @@
   const keyOf = (ctx) => core().lessonKey(termOf(ctx.data), ctx.no);
   const finished = (st, slot) => !!(st && st.seg && st.seg[slot] && (st.seg[slot].st === 'done' || st.seg[slot].st === 'skip'));
   const hold = (btn) => typeof root.holdForAccount === 'function' && root.holdForAccount(btn);
-  function notify(ctx, lines) { if (lines.length && typeof ctx.notify === 'function') ctx.notify(lines); }
+  function notify(ctx, lines) { if (lines.length) ctx.note(lines); }
   function focusHead(h) {
     try { if (typeof root.scrollTo === 'function') root.scrollTo(0, 0); h.focus({ preventScroll: true }); } catch (e) { /* 焦點放不上去不影響作答 */ }
   }

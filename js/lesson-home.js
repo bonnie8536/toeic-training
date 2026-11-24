@@ -190,12 +190,13 @@
     if (window.UI && typeof UI.mount === 'function') UI.mount(card);
     if (focus) { const t = card.querySelector('h2'); if (t) t.focus(); }
   }
-  /* 先用本機的進度畫,再跟雲端合併後重畫(有變才換);新的一次開始後舊的那次不畫 */
+  /* 先用本機的進度畫,再跟雲端合併後重畫(有變才換);新的一次開始後舊的那次不畫。
+     「載入中」在 lesson-core.js(字串在那裡)載完就畫,不等其他檔 */
   async function refresh(focus) {
     const my = ++home.seq;
     home.running = true;
     try {
-      await loadBase();
+      await loadOne('core');
       if (my !== home.seq || !mine()) return;
       if (!home.card) paintCard({ kind: 'loading' });
       await loadRest();

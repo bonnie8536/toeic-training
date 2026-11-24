@@ -3272,6 +3272,7 @@ html:not(.authed) .home .pet-home { display: none; }   /* 未登入時小雞在�
 .lsn-home-all { margin-left: auto; font-size: var(--fs-sm); color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .lsn-home-all:hover { color: var(--primary); text-decoration: none; }
 .lsn-home-all:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+@media (pointer: coarse) { .lsn-home-all { padding-top: 10px; padding-bottom: 10px; margin-top: -10px; margin-bottom: -10px; } }   /* 手指點的範圍至少 44 高,版面不變(同 .lsn-back) */
 .lsn-home h2 { margin: 2px 0 0; font-family: var(--round); font-size: 20px; line-height: 1.35; overflow-wrap: anywhere; }
 .lsn-home h2:focus { outline: none; }
 .lsn-home .mock-tags { margin-top: 8px; }

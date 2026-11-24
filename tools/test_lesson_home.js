@@ -164,6 +164,7 @@ async function open(opt) {
   const dom = makeDom((s) => {
     const src = s.src || s.attrs.src;
     e.loads.push(src);
+    if (src === o.hangScript) return;   // 這一支一直載不完(慢網路)
     setImmediate(() => {
       if (src === 'js/classes.js') ctx.CLASSES = classes();
       else vm.runInContext(K.read(src), ctx, { filename: src });
@@ -375,6 +376,15 @@ T['卡的狀態:載入中(一行 status、沒有鵜鶘、沒有按鈕);讀不到
   card(f).querySelector('button').click(); await settle();
   eq([textOf(card(f), '.lsn-home-go'), f.dom.doc.activeElement === card(f).querySelector('h2')], ['開始第 3 堂', true]);
 };
+T['右上「{d} / 24 堂」:手指操作時上下內距補到點得到 44 高、負外距抵掉(版面不變,同 .lsn-back)'] = () => {
+  const css = K.read('css/style.css');
+  assert.ok(css.indexOf('@media (pointer: coarse) { .lsn-home-all { padding-top: 10px; padding-bottom: 10px; margin-top: -10px; margin-bottom: -10px; } }') > -1, '手指操作的點擊範圍');
+};
+T['有 plan:lesson-core.js 載完就畫「載入中」,不等 lesson-data.js 等其他檔'] = async () => {
+  const e = await open({ seed: pilotSeed(), hangScript: 'js/lesson-data.js' });
+  const c = card(e);
+  eq([!!c, c && textOf(c, '[role]'), e.loads, e.grid.className], [true, '載入中…', LOAD_BASE, 'home-grid has-lesson']);
+};
 T['雲端灌資料後重畫:本機第 3 堂做一半、雲端那份已上完 → CLOUD.ready 之後換成第 4 堂,合併結果寫回本機'] = async () => {
   const cloud = K.cloudOf();
   cloud.put('les_t1_03', lessonState(3, NOW - DAY, true));
@@ -426,6 +436,18 @@ T['decorateResult:試行沒 plan → 開始第 1 堂;有 plan 照首頁卡(可�
   const gone = await open({ seed: lv, membership: { ok: true, classes: [{ id: CLS }] } });
   const rg = resultCard(gone); gone.ctx.LESSON_HOME.decorateResult(rg.sec); rg.sec.remove(); await settle();
   eq(rg.go(), ['開始練習', 'grammar.html']);
+};
+
+T['decorateResult:不等班級名單,結果頁的主按鈕當下就照原樣(名單一直沒回來、不是試行班都一樣)'] = async () => {
+  const lv = Object.assign(SEED_DONE(), { levels: LV_EE });
+  for (const membership of ['hang', { ok: true, classes: [{ id: 'class-b' }] }]) {
+    const e = await open({ seed: lv, membership, timers: 'fake' });
+    const r = resultCard(e);
+    e.ctx.LESSON_HOME.decorateResult(r.sec);
+    const now = r.go();
+    await settle();
+    eq([now, r.go()], [['開始練習', 'grammar.html'], ['開始練習', 'grammar.html']], JSON.stringify(membership));
+  }
 };
 
 /* ---------- 課程總覽 ---------- */

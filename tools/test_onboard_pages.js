@@ -87,7 +87,7 @@ T['S6 onboard*.js 的 store 鍵都是字面字串;三鍵與訪客鍵只在資料
 };
 /* 比對基準:設定起始程度上線前最後一版 main(4323272)。上線後 main 已經含這些改動,跟 main 比會變成沒有差異,
    所以固定跟上線前那一版比:檢查的還是「這個功能只動了這幾行」 */
-const PRE_ONBOARD = '432327216bf5f18bbc74b56cdfa2193e28763ff0';
+const PRE_ONBOARD = '432327216b';   // 短 hash:完整 40 字會被金鑰檢查當成金鑰
 function baseRef() {
   const r = spawnSync('git', ['rev-parse', '--verify', '--quiet', PRE_ONBOARD + '^{commit}'], { cwd: REPO, encoding: 'utf8' });
   assert.equal(r.status, 0, '找不到比對基準 ' + PRE_ONBOARD + '(要完整的 git 歷史)');

@@ -423,4 +423,31 @@ T['帳號:資料夾不是雲端帳號、也沒有 CLOUD.user 時是訪客;還沒
   eq(K.env({ user: null, pilot: ['class-a'] }).D.pilotNow().state, 'guest');
 };
 
+/* ---------- 小檢核的預留題 ---------- */
+T['ctx 的預留題:有帳號才有,跟 PACK_CORE.reserveFor 算的一樣(雲端帳號的資料夾、還沒換資料夾時的 CLOUD.user 算出同一份);訪客沒有;不寫任何鍵'] = async () => {
+  const e = await ready(), l = e.lesson(EE, 2);
+  const n = e.store.sets.length;
+  const c = e.D.ctx(l, NOW), got = await c.reserve();
+  const want = await e.P.reserveFor(K.PACKS, EE, 2, { account: CPID, pool: K.POOL.ids, bank: e.B });
+  const four = e.lesson(EE, 4).segments.filter((s) => s.slot === 'checkpoint')[0].blocks.filter((b) => !b.fill);
+  eq([got, got.length, e.store.sets.length], [want, four.reduce((a, b) => a + b.count, 0), n]);
+  eq(await e.D.ctx(e.lesson(EE, 3), NOW).reserve(), got, '第 2、3 堂都是第 4 堂那一份');
+  const u = await ready({ pid: 'pabc123' });
+  eq(await u.D.ctx(u.lesson(EE, 2), NOW).reserve(), got, '還沒換資料夾(CLOUD.user)');
+  const g = await ready({ user: null });
+  eq(g.D.ctx(g.lesson(EE, 2), NOW).reserve, undefined, '訪客不預留');
+  eq(await g.P.reserved(g.D.ctx(g.lesson(EE, 2), NOW)), []);
+};
+T['前測組卷先避開預留題(第 4 堂小檢核那一份);那個 Part 只剩預留題時才用它補滿配額'] = async () => {
+  const e = await ready(), l = e.lesson(EE, 1), c = e.D.ctx(l, NOW);
+  const hold = await c.reserve(), form = await e.D.testForm(c);
+  const all = form[0].concat(form[1]);
+  eq([all.filter((id) => hold.indexOf(id) > -1), all.length], [[], (await pick(e, 1)).form[0].length + form[1].length]);
+  const p1 = e.ctx.BANK_META.items.filter((r) => r.part === '1').map((r) => r.id);
+  const tight = Object.assign({}, c, { reserve: p1.slice(1) });
+  const f2 = await e.D.testForm(tight);
+  const got = f2[0].filter((id) => /^l1-/.test(id));
+  eq([got.length, got.indexOf(p1[0]) > -1, got.filter((id) => id !== p1[0]).every((id) => p1.indexOf(id) > 0)], [3, true, true], '配額照樣 3 題,先用沒預留的那一題');
+};
+
 K.run(T);

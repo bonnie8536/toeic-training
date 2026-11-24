@@ -74,6 +74,8 @@
   /* ---------- 選題寫進進度 ---------- */
   /* 個人段整段取先凍結的那一份(另一台已經凍結了這一段就用它的,不拼接),由 LESSON_DATA.freeze 寫 */
   async function keep(ctx, picked, range) { return set(ctx, await ctx.data.freeze(ctx.no, ctx.lesson, picked, range)); }
+  /* 選題不夠、放寬過或用預留題補過的區塊(同固定段,只記在主控台) */
+  function noteNeed(r) { if (r && r.need && r.need.length) console.info('選題不夠或放寬過：', r.need); return r; }
   /* 回顧規劃:同一個 rvq 寫入裡選項目(逾期太久的錯題重做改成考點回顧),回 pickReview 的結果 */
   function planQueue(ctx, opt, today) { return ctx.data.planReview(opt, today); }
 
@@ -166,7 +168,7 @@
     if (!frozenIn(ctx.state(), RANGE.review)) {
       const r = await planQueue(ctx, ctx.data.reviewOpt(seg, inp), inp.today);
       if (!r || !r.units.length) return skip(ctx, 'review');
-      await keep(ctx, (await pack().pickReview(ctx.lesson, ctx.state(), r.units, selCtx(ctx))).state, RANGE.review);
+      await keep(ctx, noteNeed(await pack().pickReview(ctx.lesson, ctx.state(), r.units, selCtx(ctx))).state, RANGE.review);
     }
     const out = await steps(ctx, seg, inp.meta);
     if (out !== 'done') return out;
@@ -201,7 +203,7 @@
     const inp = await inputsOf(ctx);
     if (!frozenIn(ctx.state(), RANGE.weak)) {
       const plans = rules().planWeak(ctx.data.weakOpt(ctx.no, ctx.lesson, ctx.state(), inp, null));
-      const r = await pack().pickWeak(ctx.lesson, ctx.state(), plans, selCtx(ctx));
+      const r = noteNeed(await pack().pickWeak(ctx.lesson, ctx.state(), plans, selCtx(ctx)));
       if (!r.blocks.some((b) => b.ids.length)) return skip(ctx, 'weak');
       await keep(ctx, r.state, RANGE.weak);
     }
@@ -219,7 +221,7 @@
     const pre = await backfillTests(ctx, inp.today);
     if (!frozenIn(ctx.state(), RANGE.test_review)) {
       const c = Object.assign({}, selCtx(ctx), { testIds: testIds(ctx, pre) });
-      const r = await pack().pickTestReview(ctx.lesson, ctx.state(), ctx.data.testParts(inp) || {}, c);
+      const r = noteNeed(await pack().pickTestReview(ctx.lesson, ctx.state(), ctx.data.testParts(inp) || {}, c));
       await keep(ctx, r.state, RANGE.test_review);
     }
     const out = await steps(ctx, seg, inp.meta);

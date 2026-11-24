@@ -538,6 +538,116 @@ T['C24 難度配比用最大餘數法;引導區塊寫了難度、題不夠時照
   return 'ok';
 };
 
+/* ---------- 小檢核的預留題 ---------- */
+const POOL = JSON.parse(read('data/packs/checkpoint_pool.json')).ids;
+const ACC = 'c7c1d2e3f4a5b4c6d8e9f0a1b2c3d4e5f';
+const cpBlocks = (l) => l.segments.filter((s) => s.slot === 'checkpoint')[0].blocks.filter((b) => !b.fill);
+const reserveOf = (levels, no, account, ctx) => P.reserveFor(PACKS, levels, no, { account: account === undefined ? ACC : account, pool: POOL, bank: (ctx || CTX).BANK });
+/* 第 3 堂的題庫區塊、弱點補練、考點回顧、測驗檢討:除了預留題,同一 Part 的題全部先凍結在一個用不到的區塊,逼它們只能用預留題 */
+async function squeezed(part) {
+  const l = P.compose(PACKS, LV, 3), hold = await reserveOf(LV, 3);
+  const others = CTX.BANK_META.items.filter((r) => r.part === part && hold.indexOf(r.id) < 0).map((r) => r.id);
+  return { l, hold, state: P.freeze(P.newState(l, NOW), 79, others, NOW) };
+}
+
+T['C25 預留題:第 1–3 堂是第 4 堂、第 4–7 堂是第 8 堂(照學習包有小檢核段的堂找);同一個帳號每次一樣(另開一個不能用 Math.random 的沙盒也一樣)、換帳號不同;都在清單內、合乎那個區塊的條件、題數對;訪客與第 24 堂沒有'] = async () => {
+  assert.deepEqual([1, 2, 3, 4, 5, 7, 8, 23, 24].map((n) => P.nextCheckpoint(PACKS, LV, n)), [4, 4, 4, 8, 8, 8, 12, 24, null]);
+  const other = sandbox();
+  other.Math = Object.assign(Object.create(Math), { random: () => { throw new Error('不能用 Math.random'); } });
+  assert.throws(() => vm.runInContext('Math.random()', other), /不能用/);
+  let n = 0;
+  for (const lv of [LV, { listening: 'threshold', reading: 'threshold' }, { listening: 'threshold', reading: 'entry' }, { listening: 'entry', reading: 'threshold' }]) {
+    const a = await reserveOf(lv, 2), b = await reserveOf(lv, 3), c = await other.PACK_CORE.reserveFor(PACKS, lv, 1, { account: ACC, pool: POOL, bank: other.BANK });
+    assert.deepEqual([plain(b), plain(c)], [plain(a), plain(a)], '同一個帳號、同一個小檢核每次一樣');
+    const l = P.compose(PACKS, lv, 4);
+    assert.equal(a.length, cpBlocks(l).reduce((s, x) => s + x.count, 0));
+    assert.equal(new Set(a).size, a.length, '不重複');
+    let at = 0;
+    cpBlocks(l).forEach((blk) => {
+      const lw = blk.select.legacyWhere || {};
+      a.slice(at, at + blk.count).forEach((id) => {
+        const m = META.get(id);
+        assert.ok(POOL.indexOf(id) > -1, id + ' 不在清單');
+        assert.equal(m.part, blk.module.slice(1), id);
+        if (lw.category) assert.ok(lw.category.indexOf(m.category) > -1, id + ' 類別');
+        if (blk.module === 'p1' && lv.listening === 'entry') assert.ok(m.difficulty !== '進階', id + ' 入門的照片描述不出進階');
+      });
+      at += blk.count;
+    });
+    const p1 = cpBlocks(l).filter((x) => x.module === 'p1')[0];
+    const want = P.allocate(p1.count, PACKS[lv.listening].difficultyMix);
+    const got = { D1: 0, D2: 0, D3: 0 };
+    a.slice(0, p1.count).forEach((id) => { got[{ 基礎: 'D1', 中級: 'D2', 進階: 'D3' }[META.get(id).difficulty]]++; });
+    assert.deepEqual([got.D1, got.D2 + got.D3], [want.D1, want.D2 + want.D3 + want.D4], '照片描述照那一級的難度配比');
+    const others = await Promise.all(['c0', 'c1', 'c2', 'c3'].map((x) => reserveOf(lv, 2, x + ACC.slice(2))));
+    assert.ok(others.some((x) => JSON.stringify(x) !== JSON.stringify(a)), '換帳號不同');
+    n += a.length;
+  }
+  assert.deepEqual(plain(await reserveOf(LV, 4)), plain(await reserveOf(LV, 7)), '第 4–7 堂都是第 8 堂那一份');
+  assert.notDeepEqual(plain(await reserveOf(LV, 4)), plain(await reserveOf(LV, 3)));
+  assert.deepEqual([plain(await reserveOf(LV, 2, null)), plain(await reserveOf(LV, 2, '')), plain(await reserveOf(LV, 24))], [[], [], []]);
+  return '四種級別組合共 ' + n + ' 題';
+};
+
+T['C26 練習先避開預留題:固定段、測驗檢討、考點回顧有別的題可選時不用;湊不滿(放寬「14 天內做過」之後)才用預留題補滿,need 記 reserved'] = async () => {
+  const l = P.compose(PACKS, LV, 3), hold = await reserveOf(LV, 3);
+  const r = await P.pickFixed(l, P.newState(l, NOW), ctxOf({ reserve: () => Promise.resolve(hold) }));
+  bankBlocks(l).forEach((b) => r.state.pk[b.idx].ids.forEach((id) => assert.ok(hold.indexOf(id) < 0, b.blockId + ' 用了預留題 ' + id)));
+  assert.deepEqual(plain(r.need), []);
+  const seenAll = CTX.BANK_META.items.filter((x) => x.part === '1').map((x) => x.id);
+  const s = await P.pickFixed(l, P.newState(l, NOW), ctxOf({ reserve: hold, seen: seenAll }));
+  bankBlocks(l).filter((b) => b.module === 'p1').forEach((b) => {
+    assert.ok(s.state.pk[b.idx].ids.length === b.count && s.state.pk[b.idx].ids.every((id) => hold.indexOf(id) < 0), '先放寬 14 天內做過的,不用預留題');
+    assert.ok(s.need.some((x) => x.idx === b.idx && x.relaxed && !x.reserved));
+  });
+  const q = await squeezed('1');
+  const f = await P.pickFixed(q.l, q.state, ctxOf({ reserve: q.hold, seen: seenAll }));
+  const p1 = bankBlocks(q.l).filter((b) => b.module === 'p1');
+  const used = p1.reduce((a, b) => a.concat(f.state.pk[b.idx].ids), []);
+  const holdP1 = q.hold.filter((id) => /^l1-/.test(id)), wantP1 = p1.reduce((a, b) => a + b.count, 0);
+  assert.ok(used.length === Math.min(wantP1, holdP1.length) && used.every((id) => q.hold.indexOf(id) > -1), '只剩預留題時用它補(預留題 ' + holdP1.length + ' 題、要 ' + wantP1 + ' 題)');
+  const np1 = f.need.filter((x) => x.module === 'p1');
+  assert.deepEqual([np1.length, np1.reduce((a, x) => a + (x.reserved || 0), 0), np1.every((x) => x.relaxed)], [p1.length, used.length, true], JSON.stringify(f.need));
+  const parts = { P1: { n: 3, ok: 0 }, P2: { n: 12, ok: 10 }, P5: { n: 15, ok: 12 } };
+  const tr = await P.pickTestReview(q.l, q.state, parts, ctxOf({ reserve: q.hold }));
+  const t1 = tr.blocks.filter((b) => b.kind === 'items' && b.part === '1')[0];
+  assert.ok(t1.ids.length === Math.min(t1.count, holdP1.length) && t1.ids.every((id) => q.hold.indexOf(id) > -1) && tr.need.some((x) => x.idx === t1.idx && x.reserved === t1.ids.length), '測驗檢討也是');
+  const rv = await P.pickReview(q.l, q.state, [{ k: 'P1.photo', due: '2026-11-24', step: 7 }], ctxOf({ reserve: q.hold }));
+  assert.ok(rv.state.pk[81].ids.length === 3 && rv.need.some((x) => x.idx === 81 && x.reserved === 3), '考點回顧也是');
+  return '固定段照片描述 ' + used.length + ' 題用預留題補';
+};
+
+T['C27 弱點補練的題數是用剩下的時間換算的:先避開預留題、放寬完還不夠也不用預留題補(照原本少出),need 記下來'] = async () => {
+  const q = await squeezed('1');
+  const plans = [{ key: 'P1.photo', part: '1', track: 'listening', seconds: 300, reason: 'weak:P1.photo', base: null }];
+  const w = await P.pickWeak(q.l, q.state, plans, ctxOf({ reserve: q.hold }));
+  assert.deepEqual(w.blocks.map((b) => [b.idx, b.module, b.ids.length]), [[85, 'p1', 0]]);
+  assert.deepEqual(plain(w.need), [{ idx: 85, module: 'p1', want: R.weakCount(plans[0]), got: 0, relaxed: false }]);
+  const free = await P.pickWeak(q.l, P.newState(q.l, NOW), plans, ctxOf({ reserve: q.hold }));
+  assert.ok(free.blocks[0].ids.length === R.weakCount(plans[0]) && free.blocks[0].ids.every((id) => q.hold.indexOf(id) < 0), '有別的題可選時不用預留題');
+  const again = await P.pickWeak(q.l, free.state, plans, ctxOf({ reserve: q.hold }));
+  assert.deepEqual(plain(again.need), [], '凍結過的照原樣,need 是空的');
+  return 'ok';
+};
+
+T['C28 小檢核本身的選題規則不變:給不給預留題選出來都一樣(同一個亂數);預留題被做掉了就選清單裡別的沒做過的題,不夠照樣少出,不用做過的題補'] = async () => {
+  const l = P.compose(PACKS, LV, 4), hold8 = await reserveOf(LV, 4), hold4 = await reserveOf(LV, 3);
+  const base = { checkpointPool: POOL };
+  const a = await P.pickFixed(l, P.newState(l, NOW), ctxOf(Object.assign({ random: rng(11) }, base)));
+  const b = await P.pickFixed(l, P.newState(l, NOW), ctxOf(Object.assign({ random: rng(11), reserve: hold8 }, base)));
+  const c = await P.pickFixed(l, P.newState(l, NOW), ctxOf(Object.assign({ random: rng(11), reserve: hold4 }, base)));
+  cpBlocks(l).forEach((blk) => assert.deepEqual([plain(b.state.pk[blk.idx].ids), plain(c.state.pk[blk.idx].ids)], [plain(a.state.pk[blk.idx].ids), plain(a.state.pk[blk.idx].ids)], blk.blockId));
+  const p1 = cpBlocks(l).filter((x) => x.module === 'p1')[0];
+  const done = {};
+  CTX.BANK_META.items.filter((x) => x.part === '1').map((x) => x.id).filter((id) => POOL.indexOf(id) > -1).slice(0, 18).forEach((id) => { done[id] = { ok: true, t: 1 }; });
+  hold4.filter((id) => /^l1-/.test(id)).forEach((id) => { done[id] = { ok: true, t: 1 }; });
+  const fresh = POOL.filter((id) => /^l1-/.test(id) && !done[id]);
+  const d = await P.pickFixed(l, P.newState(l, NOW), ctxOf(Object.assign({ reserve: hold8, records: { 1: done, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {} } }, base)));
+  assert.deepEqual(plain(d.state.pk[p1.idx].ids.slice().sort()), plain(fresh.slice().sort()), '只選清單裡沒做過的');
+  assert.ok(fresh.length < p1.count && d.need.some((x) => x.idx === p1.idx && x.got === fresh.length && !x.reserved), '不夠就少出');
+  return '照片描述清單剩 ' + fresh.length + ' 題沒做過';
+};
+
 (async () => {
   let pass = 0;
   const names = Object.keys(T);

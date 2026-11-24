@@ -1,5 +1,5 @@
 /* 課程頁的讀寫:讀學習包與字表、查試行班(這個分頁的 sessionStorage 鍵 lsn_pilot)、讀每堂進度、建立進度與學習計畫 plan(含補凍結)、
-   組選題的 ctx、凍結、記作答、段的狀態、pts／rvq／tests_v1 的排隊寫入、syncPractice、作答前的紀錄快照、個人段試排、
+   組選題的 ctx(含下一次小檢核的預留題)、凍結、記作答、段的狀態、pts／rvq／tests_v1 的排隊寫入、syncPractice、作答前的紀錄快照、個人段試排、
    前測的最後畫面時間(sessionStorage 鍵 lsn_clock)。
    課程頁的檔裡只有這一支寫 store、讀寫 sessionStorage;進度鍵一律經過 js/pack-core.js 的 loadLesson、saveLesson、saveLessonLocal(先合併雲端那一份)。
    載入時不依賴其他檔:LESSON_CORE、PACK_CORE、LESSON_RULES、BANK、CLASSES、CLOUD、store 都在函式裡才用,首頁可以只載 lesson-core.js 與這一支就判定試行班。
@@ -201,6 +201,23 @@
     }));
     return Array.from(out);
   }
+  /* 下一次小檢核的預留題(PACK_CORE.reserveFor):有帳號才有,種子用帳號的資料夾名稱(雲端帳號 c 開頭、不含連字號);
+     同一頁同一組條件只算一次。算不出來(例如題目索引沒載入)就這次不預留,照原本的選題 */
+  const reserves = new Map();
+  function reserveOf(lesson) {
+    const id = accountId();
+    if (!id || !mem.packs || !mem.pool || !Array.isArray(mem.pool.ids)) return undefined;
+    const account = id.charAt(0) === 'u' ? 'c' + id.slice(1).replace(/-/g, '') : id;
+    const key = [account, lesson.no, lesson.levels.listening, lesson.levels.reading].join('|');
+    return () => {
+      if (!reserves.has(key)) {
+        const run = Promise.resolve().then(() => pack().reserveFor(mem.packs, lesson.levels, lesson.no, { account, pool: mem.pool.ids, bank: root.BANK }))
+          .catch((e) => { reserves.delete(key); console.warn('預留題算不出來，這次不預留：', e); return []; });
+        reserves.set(key, run);
+      }
+      return reserves.get(key);
+    };
+  }
   /* 選題的 ctx(要先 await packs() 才有字表與小檢核清單) */
   function ctx(lesson, now) {
     const records = practiceRecords(), testIds = pretestIds();
@@ -208,17 +225,25 @@
     return {
       bank: root.BANK, records, seen: seenIds(records, now * 1000, testIds),
       checkpointPool: mem.pool && Array.isArray(mem.pool.ids) ? mem.pool.ids.filter((id) => testIds.indexOf(id) < 0) : undefined,
+      reserve: reserveOf(lesson),
       ear: root.TOEIC && root.TOEIC.ear,
       earRecords: { ear_d: store.get('ear_d', {}) || {}, ear_mp: store.get('ear_mp', {}) || {}, ear_n: store.get('ear_n', {}) || {}, ear_s: store.get('ear_s', {}) || {} },
       weekWords: words ? core().weekWordsFrom(words) : undefined, random: Math.random, now,
     };
   }
-  /* 前測組卷:照配額 BANK.pick(不限難度、沒做過的先),Part 1→7 排成兩個 id 陣列 → { 0: 聽力, 1: 閱讀 } */
+  /* 前測組卷:照配額 BANK.pick(不限難度、沒做過的先),Part 1→7 排成兩個 id 陣列 → { 0: 聽力, 1: 閱讀 }。
+     先避開下一次小檢核的預留題(c.reserve),不夠才用 */
   async function testForm(c) {
     const B = c.bank || need('BANK'), Q = core().TEST_QUOTA, out = {};
+    const hold = await pack().reserved(c);
     for (const slot of ['test_listening', 'test_reading']) {
       const ids = [];
-      for (const [part, n] of Q[slot].parts) (await B.pick({ part, n, order: 'fresh', records: (c.records || {})[part] || {}, random: c.random })).forEach((id) => ids.push(id));
+      for (const [part, n] of Q[slot].parts) {
+        const spec = { part, order: 'fresh', records: (c.records || {})[part] || {}, random: c.random };
+        const got = await B.pick(Object.assign({ n, exclude: hold }, spec));
+        if (got.length < n && hold.length) (await B.pick(Object.assign({}, spec, { n: n - got.length, exclude: got }))).forEach((id) => got.push(id));
+        got.forEach((id) => ids.push(id));
+      }
       out[Q[slot].idx] = ids;
     }
     return out;

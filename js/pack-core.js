@@ -20,6 +20,7 @@
    作答中每答一題用 saveLessonLocal 只寫本機、不讀雲端(中途關分頁,回來從沒答的題接著做);交卷用 saveLesson。
    練習引擎寫的 drill_p*、listen_p*、hist 還是整份上傳(還不在合併表上):每一段呼叫引擎「之前」用 syncPractice 併進雲端那一份。
    只保護這一段開始之前別台寫的紀錄;這一段作答中別台寫的,這台引擎寫入時整份上傳會蓋掉(跟現在的刷題頁一樣),要等這三種鍵也進合併表。
+   小檢核的預留題(reserveFor):每個帳號下一次小檢核那一堂先算好一份,練習選題先避開、湊不滿才用,讓小檢核有沒做過的清單題可選。
    這一版沒有的:小檢核的 includeUnpassed(還沒過關的考點加題,第 8、24 堂才有)不加題;聽讀差兩級的時間挪移(只開兩級,最多差一級);
    學習包 legacyWhere 裡 bank.js 篩不了的欄位(例 stemKeyword)不篩,選題結果的 need 會列出來(ignored)。 */
 (function (root) {
@@ -304,8 +305,9 @@
 
   /* 題庫題。plan = { mix(難度配比,可以沒有), allow(先出的難度,D 代碼), extra(不夠時依序再借的難度) },P6、P7 或不分難度是 null。
      有 mix 就照 mix 在 allow 裡分配(最大餘數法),不夠先在 allow 裡照 D2→D3→D1→D4 補,再照 extra 借(個人段是放寬一級);
-     還不夠就放寬「14 天內做過」(難度條件不變),記 relaxed */
-  async function pickBankIds(part, n, where, plan, ctx, avoid, within) {
+     還不夠就放寬「14 天內做過」(難度條件不變),記 relaxed。hold = { ids: 下一次小檢核的預留題(reserveFor), fill }:
+     前面每一步都先避開 ids,放寬完還不夠、fill 是 true 時才用它補滿,reserved 是補了幾題 */
+  async function pickBankIds(part, n, where, plan, ctx, avoid, within, hold) {
     const B = bankOf(ctx);
     const base = { part, within, records: ctx.records ? ctx.records[part] || {} : undefined, random: ctx.random };
     const got = [];
@@ -314,20 +316,23 @@
       const ids = await B.pick(Object.assign({}, base, { n: k, where: w, exclude: avoid.concat(got, extraAvoid || []) }));
       ids.forEach((id) => got.push(id));
     };
+    const keep = hold ? hold.ids : [];
     const seen = ctx.seen ? Array.from(ctx.seen) : [];
+    const first = seen.concat(keep);
     const lv = (list) => Object.assign({}, where, { difficulty: list.filter((l) => DIFF[l]).map((l) => DIFF[l]) });
     let last = where;
     if (plan && /^[1-5]$/.test(part)) {
       const allow = plan.allow, extra = (plan.extra || []).filter((l) => DIFF[l] && allow.indexOf(l) < 0);
-      if (plan.mix) { const want = allocate(n, plan.mix, allow); for (const l of allow) if (DIFF[l]) await take(lv([l]), want[l], seen); }
-      else await take(lv(allow), n, seen);
-      for (const l of BORROW) if (DIFF[l] && allow.indexOf(l) > -1) await take(lv([l]), n - got.length, seen);
-      for (const l of extra) await take(lv([l]), n - got.length, seen);
+      if (plan.mix) { const want = allocate(n, plan.mix, allow); for (const l of allow) if (DIFF[l]) await take(lv([l]), want[l], first); }
+      else await take(lv(allow), n, first);
+      for (const l of BORROW) if (DIFF[l] && allow.indexOf(l) > -1) await take(lv([l]), n - got.length, first);
+      for (const l of extra) await take(lv([l]), n - got.length, first);
       last = lv(allow.concat(extra));
-    } else await take(where, n, seen);
-    let relaxed = false;
-    if (got.length < n && seen.length) { relaxed = true; await take(last, n - got.length, []); }
-    return { ids: got, relaxed };
+    } else await take(where, n, first);
+    let relaxed = false, reserved = 0;
+    if (got.length < n && seen.length) { relaxed = true; await take(last, n - got.length, keep); }
+    if (got.length < n && keep.length && hold.fill) { const had = got.length; await take(last, n - got.length, []); reserved = got.length - had; }
+    return { ids: got, relaxed, reserved };
   }
   /* 固定區塊的難度:legacyWhere 寫了難度就在那幾級裡出(有 levelMix 照它分配),不夠照 D2→D3→D1 借別級;
      入門的 P3、P4 只用基礎的組,不借。沒寫難度照 levelMix 分配到三級 */
@@ -383,22 +388,24 @@
     return shuffle(list.filter((id) => avoid.indexOf(id) < 0), ctx.random || Math.random).slice(0, block.count);
   }
 
-  /* 一個固定區塊選題。回 { ids, need, relaxed, ignored }(need 是不夠的題數,夠就是 0;ignored 是篩不了、沒篩的條件欄位) */
-  async function pickBlock(block, lesson, ctx, avoid, inCheckpoint) {
+  /* 一個固定區塊選題。回 { ids, need, relaxed, reserved, ignored }(need 是不夠的題數,夠就是 0;reserved 是用預留題補了幾題;
+     ignored 是篩不了、沒篩的條件欄位)。hold 是預留題:小檢核的檢核區塊不避開(選題規則不變),其他題庫區塊先避開 */
+  async function pickBlock(block, lesson, ctx, avoid, inCheckpoint, hold) {
     if (block.ids) return { ids: block.ids.map((x) => x.id), need: 0 };
     const sel = block.select, part = BANK_PART[block.module];
     if (part) {
       const mix = sel.levelMix === 'pack' ? lesson.mix[block.track] : sel.levelMix === 'none' ? null : sel.levelMix;
+      const checking = inCheckpoint && !block.fill;
       let within;
-      if (inCheckpoint && !block.fill) {
+      if (checking) {
         if (!Array.isArray(ctx.checkpointPool)) throw new Error('小檢核要給可用題清單（checkpointPool）');
         const done = new Set(doneIds(ctx.records && ctx.records[part]));
         within = ctx.checkpointPool.filter((id) => !done.has(id));
       }
       const w = bankWhereOf(sel);
       const strict = lesson.levels[block.track] === 'entry' && /^[34]$/.test(part);
-      const r = await pickBankIds(part, block.count, w.where, fixedPlan(part, w.where, mix, strict), ctx, avoid, within);
-      return { ids: r.ids, need: block.count - r.ids.length, relaxed: r.relaxed, ignored: w.ignored };
+      const r = await pickBankIds(part, block.count, w.where, fixedPlan(part, w.where, mix, strict), ctx, avoid, within, checking ? null : hold);
+      return { ids: r.ids, need: block.count - r.ids.length, relaxed: r.relaxed, reserved: r.reserved, ignored: w.ignored };
     }
     if (block.module === 'grammar') return { ids: sel.where.unitIds.slice(), need: 0 };
     if (EAR[block.module]) { const ids = earIds(block, ctx, avoid); return { ids, need: block.count - ids.length }; }
@@ -410,24 +417,83 @@
   }
 
   /* 固定段全部區塊選題並凍結(已經凍結的不動)。ctx = { bank, records: { '1'…'7': 作答紀錄 }, seen(14 天內做過的 id),
-     checkpointPool, ear, earRecords, weekWords(week, which), random, now }。
-     回 { state, need: [{ idx, module, want, got, relaxed, ignored }] }(題不夠、放寬過「14 天內做過」、或有篩不了的條件欄位的區塊) */
+     checkpointPool, reserve(預留題,見 reserveFor;可以沒有), ear, earRecords, weekWords(week, which), random, now }。
+     回 { state, need: [{ idx, module, want, got, relaxed, reserved, ignored }] }(題不夠、放寬過「14 天內做過」、用預留題補過、
+     或有篩不了的條件欄位的區塊) */
   async function pickFixed(lesson, state, ctx) {
     if (!Number.isInteger(ctx && ctx.now)) throw new TypeError('ctx.now 要是 epoch 秒');
     let st = state;
     const need = [];
     const avoid = frozenIds(st);
+    const todo = lesson.segments.some((s) => (s.blocks || []).some((b) => !st.pk[b.idx]));
+    const hold = { ids: todo ? await reservedOf(ctx) : [], fill: true };
     for (const seg of lesson.segments) {
       for (const b of seg.blocks || []) {
         if (st.pk[b.idx]) continue;
-        const r = await pickBlock(b, lesson, ctx, avoid, seg.slot === 'checkpoint');
+        const r = await pickBlock(b, lesson, ctx, avoid, seg.slot === 'checkpoint', hold);
         r.ids.forEach((id) => avoid.push(id));
         const ignored = r.ignored || [];
-        if (r.need > 0 || r.relaxed || ignored.length) need.push(Object.assign({ idx: b.idx, module: b.module, want: b.count, got: r.ids.length, relaxed: !!r.relaxed }, ignored.length ? { ignored } : {}));
+        if (r.need > 0 || r.relaxed || r.reserved || ignored.length) need.push(needOf(b.idx, b.module, b.count, r, ignored));
         st = freeze(st, b.idx, r.ids, ctx.now);
       }
     }
     return { state: st, need };
+  }
+  /* need 的一筆:題不夠、放寬過、用預留題補過的區塊 */
+  function needOf(idx, module, want, r, ignored) {
+    return Object.assign({ idx, module, want, got: r.ids.length, relaxed: !!r.relaxed }, r.reserved ? { reserved: r.reserved } : {}, ignored && ignored.length ? { ignored } : {});
+  }
+  const shortOf = (want, r) => r.ids.length < want || r.relaxed || r.reserved > 0;
+
+  /* ---------- 小檢核的預留題 ---------- */
+  /* 字串的 32 位元雜湊(FNV-1a)與 mulberry32 亂數:同一個種子在每個瀏覽器排出一樣的順序 */
+  function hash32(str) {
+    let h = 0x811c9dc5;
+    const s = String(str);
+    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+    return h >>> 0;
+  }
+  function mulberry32(seed) {
+    let a = seed >>> 0;
+    return function () {
+      a = (a + 0x6D2B79F5) >>> 0;
+      let t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  /* 第 no 堂之後下一次小檢核的堂號(學習包裡有 checkpoint 段的堂);後面沒有回 null */
+  function nextCheckpoint(packs, levels, no) {
+    const L = packFor(packs, levels.listening);
+    for (let m = no + 1; m <= 24; m++) if (lessonOf(L, m).segments.some((s) => s.slot === 'checkpoint')) return m;
+    return null;
+  }
+  /* 預留題:第 no 堂之後下一次小檢核那一堂,每個檢核區塊照它自己的選題條件(同模組、同難度配比與條件、從小檢核可用題清單選),
+     用「帳號＋那一堂的堂號＋區塊編號」當種子挑出區塊題數那麼多題。不排除做過的題與前測題,不存進任何鍵:同一個帳號、同一組級別
+     每次算出來都一樣(換裝置也一樣)。課程裡的練習選題先避開這些題,湊不滿才用(pickBankIds 的 hold;弱點補練不用);
+     小檢核本身的選題規則不變。
+     ctx = { account(帳號 id), pool(小檢核可用題清單,不扣前測題), bank }。沒有帳號(訪客)回 [] */
+  async function reserveFor(packs, levels, no, ctx) {
+    const c = ctx || {};
+    if (typeof c.account !== 'string' || !c.account || !Array.isArray(c.pool)) return [];
+    const at = nextCheckpoint(packs, levels, no);
+    if (!at) return [];
+    const lesson = compose(packs, levels, at), out = [];
+    for (const seg of lesson.segments.filter((s) => s.slot === 'checkpoint')) {
+      for (const b of seg.blocks) {
+        if (b.fill || !BANK_PART[b.module]) continue;
+        const pc = { bank: c.bank, records: {}, checkpointPool: c.pool, random: mulberry32(hash32(c.account + '|' + at + '|' + b.idx)) };
+        (await pickBlock(b, lesson, pc, out.slice(), true)).ids.forEach((id) => out.push(id));
+      }
+    }
+    return out;
+  }
+  /* 選題的 ctx 帶的預留題:ctx.reserve 是陣列,或回陣列(或 Promise)的函式;沒有回 [] */
+  async function reservedOf(ctx) {
+    const r = ctx && ctx.reserve;
+    const v = await (typeof r === 'function' ? r() : r);
+    return Array.isArray(v) ? v.slice() : [];
   }
 
   /* 個人段已經凍結的區塊(from ≤ 編號 < to),照編號排 */
@@ -443,12 +509,15 @@
 
   /* 弱點補練:plans 是 LESSON_RULES.planWeak 的結果;每個考點先放改派的基礎模組,再出同考點的題,凍結在 85 起,pk 存模組(m)與考點鍵(k)。
      85–89 已經有任何凍結的區塊(開過這一段、或從別台合併過來)就直接用 pk 重建、不再照這次的計畫選:計畫跟著考點狀態變,
-     照編號沿用會讓模組、題目、題數對不上。題目照個人段的難度(personalPlan);沒有考點的補題(fallback a、c)照那一級的難度配比 */
+     照編號沿用會讓模組、題目、題數對不上。題目照個人段的難度(personalPlan);沒有考點的補題(fallback a、c)照那一級的難度配比。
+     弱點補練、考點回顧、測驗檢討都先避開預留題(ctx.reserve)。考點回顧、測驗檢討的題數是固定的,放寬完還不夠才用預留題補;
+     弱點補練的題數是用剩下的時間換算的,不用預留題補,題不夠就照原本少出(這一段提早結束)。
+     回傳的 need 跟 pickFixed 一樣(題不夠、放寬過、用預留題補過的區塊,不存) */
   async function pickWeak(lesson, state, plans, ctx) {
     const frozen = frozenIn(state, RESERVED.weak, RESERVED.test_review);
-    if (frozen.length) return { state, blocks: frozen.map((x) => ({ idx: x.idx, module: x.e.m || moduleOfIds(x.e.ids), ids: x.e.ids, r: x.e.r, key: x.e.k || null })) };
+    if (frozen.length) return { state, blocks: frozen.map((x) => ({ idx: x.idx, module: x.e.m || moduleOfIds(x.e.ids), ids: x.e.ids, r: x.e.r, key: x.e.k || null })), need: [] };
     let st = state, idx = RESERVED.weak;
-    const avoid = frozenIds(st), blocks = [];
+    const avoid = frozenIds(st), blocks = [], need = [], hold = { ids: await reservedOf(ctx), fill: false };
     const put = (module, ids, r, key) => {
       st = freeze(st, idx, ids, ctx.now, { r, m: module, k: key || null });
       st.pk[idx].ids.forEach((id) => avoid.push(id));
@@ -466,38 +535,40 @@
       const w = p.key ? R.bankWhere(p.key) : { part: p.part, where: {} };
       const track = trackOfPart(w.part);
       const plan = personalPlan(lesson.levels[track], w.part, p.key ? await lastWrongDiff(p.key, ctx) : null, p.key ? null : lesson.mix[track]);
-      const ids = (await pickBankIds(w.part, R.weakCount(p), w.where, plan, ctx, avoid)).ids;
-      put('p' + w.part, ids, p.reason, p.key);
+      const want = R.weakCount(p), r = await pickBankIds(w.part, want, w.where, plan, ctx, avoid, undefined, hold);
+      if (shortOf(want, r)) need.push(needOf(idx, 'p' + w.part, want, r));
+      put('p' + w.part, r.ids, p.reason, p.key);
     }
-    return { state: st, blocks };
+    return { state: st, blocks, need };
   }
 
   /* 回顧:units 是 LESSON_RULES.pickReview 的 units。錯題重做原題放 80;考點回顧每個考點 3 題新題放 81 起(照個人段的難度,r 記考點鍵)。
      80–84 已經有凍結的區塊就不再選(跟弱點補練一樣,佇列合併後換了項目也不拼進來) */
   async function pickReview(lesson, state, units, ctx) {
-    if (frozenIn(state, RESERVED.review, RESERVED.weak).length) return { state };
+    if (frozenIn(state, RESERVED.review, RESERVED.weak).length) return { state, need: [] };
     let st = state;
     const redo = (units || []).filter((u) => !u.k), keys = (units || []).filter((u) => u.k);
     st = freeze(st, RESERVED.review, redo.map((u) => u.id), ctx.now, { r: 'review', sub: redo.map((u) => (u.sub === undefined ? null : u.sub)), m: redo.map((u) => u.m) });
-    const avoid = frozenIds(st);
+    const avoid = frozenIds(st), need = [], hold = { ids: keys.length ? await reservedOf(ctx) : [], fill: true };
     let idx = RESERVED.review + 1;
     for (const u of keys.slice(0, 4)) {
-      const w = R.bankWhere(u.k);
+      const w = R.bankWhere(u.k), want = R.isGroupKey(u.k) ? 1 : 3;
       const plan = st.pk[idx] ? null : personalPlan(lesson.levels[trackOfPart(w.part)], w.part, await lastWrongDiff(u.k, ctx), null);
-      const got = st.pk[idx] ? { ids: st.pk[idx].ids } : await pickBankIds(w.part, R.isGroupKey(u.k) ? 1 : 3, w.where, plan, ctx, avoid);
+      const got = st.pk[idx] ? { ids: st.pk[idx].ids } : await pickBankIds(w.part, want, w.where, plan, ctx, avoid, undefined, hold);
+      if (!st.pk[idx] && shortOf(want, got)) need.push(needOf(idx, 'p' + w.part, want, got));
       got.ids.forEach((id) => avoid.push(id));
       st = freeze(st, idx++, got.ids, ctx.now, { r: 'point_review:' + u.k });
     }
-    return { state: st };
+    return { state: st, need };
   }
 
   /* 測驗檢討:parts 是測驗各 Part 的 { n, ok };技巧卡與新題凍結在 90 起(pk 存 m:'tip' 或 'p1'–'p7'、p:Part);testIds(測驗出過的題)不再出。
      90–97 已經有任何凍結的區塊就用 pk 重建(tests_v1 合併後最弱的 Part 可能變了)。新題照那一級的難度配比、在個人段的難度內 */
   async function pickTestReview(lesson, state, parts, ctx) {
     const frozen = frozenIn(state, RESERVED.test_review, RESERVED.test_review + 8);
-    if (frozen.length) return { state, blocks: frozen.map((x) => testBlockOf(x.idx, x.e)) };
+    if (frozen.length) return { state, blocks: frozen.map((x) => testBlockOf(x.idx, x.e)), need: [] };
     let st = state, idx = RESERVED.test_review;
-    const avoid = frozenIds(st).concat(ctx.testIds || []), blocks = [];
+    const avoid = frozenIds(st).concat(ctx.testIds || []), blocks = [], need = [], hold = { ids: await reservedOf(ctx), fill: true };
     for (const x of R.planTestReview(parts)) {
       if (x.kind === 'result') continue;
       let ids;
@@ -505,14 +576,16 @@
       else {
         const where = x.part === '7' ? { format: ['single'], size: x.size } : {};
         const track = trackOfPart(x.part);
-        ids = (await pickBankIds(x.part, x.count, where, personalPlan(lesson.levels[track], x.part, null, lesson.mix[track]), ctx, avoid)).ids;
+        const r = await pickBankIds(x.part, x.count, where, personalPlan(lesson.levels[track], x.part, null, lesson.mix[track]), ctx, avoid, undefined, hold);
+        if (shortOf(x.count, r)) need.push(needOf(idx, 'p' + x.part, x.count, r));
+        ids = r.ids;
       }
       ids.forEach((id) => avoid.push(id));
       const at = idx++;
       st = freeze(st, at, ids, ctx.now, { r: 'test_review', m: x.kind === 'tip' ? 'tip' : 'p' + x.part, p: x.part });
       blocks.push(Object.assign({ idx: at }, x, { ids: st.pk[at].ids }));
     }
-    return { state: st, blocks };
+    return { state: st, blocks, need };
   }
   /* 凍結的測驗檢討區塊 → 跟 planTestReview 一樣的形狀(題數照凍結的題) */
   function testBlockOf(idx, e) {
@@ -651,7 +724,7 @@
     LESSON_KEY, LESSON_KEY_MAX, RESERVED, OPEN_LEVELS,
     lessonKey, parseLessonKey, compose, suggestedDate, dayOf, unlockState, fixedDone,
     newState, answer, readAnswer, setSegment, answeredIn, sizeOf, mergeLesson, mergeTests, freeze, allocate,
-    pickFixed, pickWeak, pickReview, pickTestReview,
+    pickFixed, pickWeak, pickReview, pickTestReview, reserveFor, reserved: reservedOf, nextCheckpoint,
     loadLesson, saveLesson, saveLessonLocal, fitLesson, loadShared, saveShared, syncPractice, PRACTICE_KEYS,
   });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

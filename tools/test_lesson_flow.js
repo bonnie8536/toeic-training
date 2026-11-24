@@ -256,6 +256,10 @@ async function started(e, lv, no, slots, edit) {
 const lesson3 = (slots, edit, lv) => async (e) => { await doneThrough(e, lv || EE, 2); if (slots) await started(e, lv || EE, 3, slots, edit); };
 const withPk = (idx, ids) => (s) => Object.assign({}, s, { pk: Object.assign({}, s.pk, { [idx]: Object.assign({}, s.pk[idx], { ids }) }) });
 
+/* 給其他上課頁測試用的假頁面環境(tools/test_lesson_round.js);被 require 時不跑這個檔的測試 */
+module.exports = { page, finish, partial, subsOf, writeRec, stateOf, mark, allSlots, doneThrough, started, lesson3, withPk, settle };
+if (require.main !== module) return;
+
 const T = {};
 
 /* ---------- 開頁判斷(13 列與 compose 丟錯) ---------- */
@@ -447,52 +451,6 @@ T['即時回合中途離開:從作答紀錄補回已答的題(第一次作答),�
   const p2 = await page({ from: p });
   await p2.click('.lsn-go');
   eq([p2.last('LISTEN').units.map((u) => u.item.id), p2.les(3).a.filter((x) => x[0] === 4 || x[0] === 5).length], [a.units.slice(4).map((u) => u.item.id), 4]);
-};
-T['第一次作答:30 天前的作答紀錄不算這一段答過、照樣出題;回合開始前做過的(作答紀錄,或錯題本訂正後只剩學習記錄)補回與交卷都不是第一次;作答列的時間是秒'] = async () => {
-  let A, B, C;
-  const p = await page({ seed: async (e) => {
-    await lesson3(['vocab'])(e);
-    const pk = e.store.peek('les_t1_03').pk, old = (NOW - 30 * DAY) * 1000;
-    [A, B] = pk[4].ids; C = pk[5].ids[0];
-    e.store.set('listen_p1', { [A]: { c: 0, ok: true, t: old } });
-    e.store.set('listen_p2', { [C]: { c: 0, ok: true, t: old } });
-    e.store.set('hist', [{ m: 'l1', id: A, c: 0, ok: true, t: old }, { m: 'l1', id: B, c: 1, ok: false, t: old + 1000 }]);
-  } });
-  await p.click('.lsn-go');
-  await p.click('.lsn-go');
-  const a = p.last('LISTEN');
-  eq([a.units.map((u) => u.item.id).slice(0, 3), p.les(3).a.filter((x) => x[0] === 4 || x[0] === 5).length], [[A, B, C], 0], '30 天前的紀錄不算這一段答過');
-  partial(p, a, 1);
-  await p.click(p.dom.querySelector('.quiz-close'));
-  eq(p.les(3).a.filter((x) => x[0] === 4).map((x) => [x[1], x[4] & 2]), [[A, 0]], '中途離開補回:回合開始前做過,不是第一次');
-  await p.click('.lsn-go');
-  await p.finish(p.last('LISTEN'));
-  const rows = p.les(3).a.filter((x) => x[0] === 4 || x[0] === 5), f = (id) => rows.filter((x) => x[1] === id).map((x) => x[4] & 2);
-  eq([f(B), f(C), rows.filter((x) => [A, B, C].indexOf(x[1]) < 0).every((x) => (x[4] & 2) === 2), rows.every((x) => x[5] >= 0 && x[5] < 86400)],
-    [[0], [0], true, true], '交卷:學習記錄有、作答紀錄有的都不是第一次;dt 是秒');
-  eq((((p.e.store.peek('pts') || {})['P1.photo'] || {}).hits || []).filter((h) => h.b === 'les_t1_03:4'), [], 'P1 兩題都不是第一次:不記考點');
-};
-T['第一次作答:英語耳開始前做過的題、文法單元開始前做過的單元都不是第一次'] = async () => {
-  let first;
-  const q = await page({ search: '?no=2', seed: async (e) => {
-    await doneThrough(e, EE, 1); await started(e, EE, 2, ['test_review', 'vocab']);
-    first = e.store.peek('les_t1_02').pk[2].ids[0];
-    e.store.set('ear_d', { [first]: { ok: 1, t: (NOW - DAY) * 1000 } });
-  } });
-  await q.click('.lsn-go');
-  const ear = q.last('EAR'), ids = ear.opts.items;
-  ear.f.leave();
-  ear.opts.onDone({ score: ids.length, total: ids.length, items: ids.map((id) => ({ m: 'ear_d', id, sub: null, key: id, c: 'typed', ok: true })) });
-  await settle();
-  eq(q.les(2).a.filter((x) => x[0] === 2).map((x) => (x[4] & 2) === 2), ids.map((id) => id !== first));
-  const p = await page({ seed: async (e) => { await lesson3(['vocab', 'listening'])(e); e.store.set('grammar_done', { 'gf-01': { ok: 1, t: 1, at: null } }); } });
-  await p.click('.lsn-go');
-  await p.click('.lsn-go');
-  const g = p.last('GRAMMAR'), unit = p.ctx.TOEIC.grammar.filter((u) => u.id === 'gf-01')[0];
-  g.opts.onDone({ score: unit.quiz.length, total: unit.quiz.length, items: unit.quiz.map((x, qi) => ({ m: 'g', id: 'gf-01', sub: qi + 1, key: 'gf-01:' + qi, c: x.answer, ok: true })) });
-  await settle();
-  const rows = p.les(3).a.filter((x) => x[0] === 9);
-  eq([rows.length > 0, rows.every((x) => (x[4] & 2) === 0)], [true, true]);
 };
 T['交卷回合中途離開:不寫任何作答,回來整個回合重做(過場、同樣的題)'] = async () => {
   const p = await page({ seed: lesson3(['vocab']) });
@@ -717,7 +675,7 @@ T['每堂進度鍵:入門、門檻、混級第 1–4 堂的固定段填滿作答
   return '最大 ' + Math.max(...out) + ' 位元組';
 };
 T['檔案:課程頁兩支 js 與測試都在 800 行內;js/lesson.js、js/lesson-views.js 不寫 store、不讀寫 sessionStorage'] = () => {
-  ['js/lesson.js', 'js/lesson-views.js', 'css/lesson.css', 'tools/test_lesson_flow.js'].forEach((f) => assert.ok(K.read(f).split('\n').length <= 800, f + ' 超過 800 行'));
+  ['js/lesson.js', 'js/lesson-views.js', 'css/lesson.css', 'tools/test_lesson_flow.js', 'tools/test_lesson_round.js'].forEach((f) => assert.ok(K.read(f).split('\n').length <= 800, f + ' 超過 800 行'));
   ['js/lesson.js', 'js/lesson-views.js'].forEach((f) => eq([f, /\bstore\.(set|remove)\(|sessionStorage|localStorage|console\.log/.test(K.read(f))], [f, false]));
 };
 

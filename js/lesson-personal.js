@@ -71,31 +71,11 @@
   async function mark(ctx, slot, st) { return set(ctx, await ctx.data.segment(ctx.no, ctx.lesson, slot, st, ctx.now())); }
   async function skip(ctx, slot) { await mark(ctx, slot, 'skip'); return 'done'; }
 
-  /* ---------- 選題寫進進度(資料層還沒有這兩支時的暫時備援,之後改由 LESSON_DATA 寫) ---------- */
-  /* 個人段整段取先凍結的那一份:另一台已經凍結了這一段就用它的,不拼接 */
-  function takeFrozen(s, picked, range) {
-    if (!s || s === picked) return picked;
-    if (frozenIn(s, range)) return s;
-    const pk = Object.assign({}, s.pk);
-    Object.keys(picked.pk || {}).map(Number).filter((i) => i >= range[0] && i < range[1]).forEach((i) => { pk[i] = picked.pk[i]; });
-    return Object.assign({}, s, { pk });
-  }
-  async function keep(ctx, picked, range) {
-    const D = ctx.data;
-    if (typeof D.freeze === 'function') return set(ctx, await D.freeze(ctx.no, ctx.lesson, picked, range));
-    const r = await pack().saveLesson(termOf(D), ctx.no, (s) => takeFrozen(s, picked, range), { lesson: ctx.lesson });
-    if (r.over) console.warn('第 ' + ctx.no + ' 堂的進度超過 5 KB：', r.trimmed);
-    return set(ctx, r.state);
-  }
+  /* ---------- 選題寫進進度 ---------- */
+  /* 個人段整段取先凍結的那一份(另一台已經凍結了這一段就用它的,不拼接),由 LESSON_DATA.freeze 寫 */
+  async function keep(ctx, picked, range) { return set(ctx, await ctx.data.freeze(ctx.no, ctx.lesson, picked, range)); }
   /* 回顧規劃:同一個 rvq 寫入裡選項目(逾期太久的錯題重做改成考點回顧),回 pickReview 的結果 */
-  async function planQueue(ctx, opt, today) {
-    const D = ctx.data;
-    if (typeof D.planReview === 'function') return D.planReview(opt, today);
-    await D.flush();
-    let r = null;
-    await pack().saveShared('rvq', (q) => { r = rules().pickReview(q, opt); return r.rvq; }, today);
-    return r;
-  }
+  function planQueue(ctx, opt, today) { return ctx.data.planReview(opt, today); }
 
   /* ---------- 一段的步驟 ---------- */
   const idsIn = (b, st, has) => core().answerable(b, core().idsOf(b, st), has);
@@ -124,7 +104,7 @@
     if (!card) { console.warn('找不到這張技巧卡，略過：' + id); return Promise.resolve('next'); }
     return new Promise((resolve) => {
       const V = ctx.views || root.LESSON_VIEWS;
-      const n = V.tip(card, { next: () => resolve('next'), back: () => resolve('exit') });
+      const n = V.tip(card, { no: ctx.no, next: () => resolve('next'), back: () => resolve('exit') });
       if (n && n.nodeType) {
         ctx.host.replaceChildren(n);
         const h = n.querySelector('h2');
@@ -151,16 +131,14 @@
     if (made) ctx.data.tests(made, today);
     return made;
   }
+  /* 前測各 Part 的 { n, ok }:tests_v1 有就用,沒有從第 1 堂的進度算(LESSON_DATA.testParts) */
   function partsFrom(pre, ctx, meta) {
-    if (pre && pre.parts) return pre.parts;
-    const first = (ctx.data.states() || {})[1];
-    return first ? core().partsOf(first, (id) => (meta.get(id) || {}).size, (k, id) => meta.has(id)) : null;
+    return ctx.data.testParts({ tests: pre ? { ['t' + termOf(ctx.data)]: { pre } } : null, meta });
   }
   const hasParts = (p) => !!p && Object.keys(p).some((k) => p[k] && p[k].n > 0);
+  /* 前測出過的題(tests_v1 的 items 加上第 1 堂凍結的前測題):前測檢討選題時硬排除 */
   function testIds(ctx, pre) {
-    const ids = pre && Array.isArray(pre.items) ? pre.items.map((x) => x && x[0]) : [];
-    const first = (ctx.data.states() || {})[1];
-    [0, 1].forEach((i) => { const e = first && first.pk ? first.pk[i] : null; (e && Array.isArray(e.ids) ? e.ids : []).forEach((id) => ids.push(id)); });
+    const ids = (pre && Array.isArray(pre.items) ? pre.items.map((x) => x && x[0]) : []).concat(ctx.data.testIds());
     return ids.filter((id, i) => typeof id === 'string' && ids.indexOf(id) === i);
   }
   /* 前測檢討第一步:前測結果(不在專心模式) */
@@ -241,7 +219,7 @@
     const pre = await backfillTests(ctx, inp.today);
     if (!frozenIn(ctx.state(), RANGE.test_review)) {
       const c = Object.assign({}, selCtx(ctx), { testIds: testIds(ctx, pre) });
-      const r = await pack().pickTestReview(ctx.lesson, ctx.state(), partsFrom(pre, ctx, inp.meta) || {}, c);
+      const r = await pack().pickTestReview(ctx.lesson, ctx.state(), ctx.data.testParts(inp) || {}, c);
       await keep(ctx, r.state, RANGE.test_review);
     }
     const out = await steps(ctx, seg, inp.meta);

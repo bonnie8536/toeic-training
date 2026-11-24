@@ -155,6 +155,23 @@
     return r.state;
   }
 
+  /* 個人段(回顧 80–84、弱點補練 85–89、前測檢討 90–97)的選題寫進進度:range = [起, 迄)。
+     整段取先凍結的那一份:另一台已經凍結了這一段的任一格就用它的,不拼接;沒有才把 picked 在這一段的格補進去 */
+  function takePersonal(s, picked, range) {
+    if (!s) return picked;
+    const inRange = (k) => Number(k) >= range[0] && Number(k) < range[1];
+    if (Object.keys(s.pk || {}).some(inRange)) return s;
+    const pk = Object.assign({}, s.pk);
+    Object.keys(picked.pk || {}).filter(inRange).forEach((k) => { pk[k] = picked.pk[k]; });
+    return Object.assign({}, s, { pk });
+  }
+  async function freeze(no, lesson, picked, range) {
+    if (!picked || !Array.isArray(range) || range.length !== 2) throw new TypeError('要給選題的結果與區塊範圍');
+    const r = await pack().saveLesson(curTerm(), no, (s) => takePersonal(s, picked, range), { lesson });
+    warnOver(r, no);
+    return r.state;
+  }
+
   /* ---------- 選題 ---------- */
   function practiceRecords() {
     return {
@@ -342,6 +359,15 @@
     return Object.keys(after || {}).filter((k) => R.statusOf(k, after[k], today) === 'passed' && R.statusOf(k, (before || {})[k], today) !== 'passed');
   }
   function rvqWrite(today, fn) { return pack().saveShared('rvq', fn, today); }
+  /* 回顧規劃:同一個 rvq 寫入裡選項目(LESSON_RULES.pickReview),排在前面的寫入之後。回 pickReview 的結果 */
+  function planReview(opt, d) {
+    const today = dayNow(d);
+    return enqueue(async () => {
+      let out = null;
+      await rvqWrite(today, (q) => { out = rules().pickReview(q, opt); return out.rvq; });
+      return out;
+    });
+  }
   /* 沒給日期就用今天(這台的當地日期) */
   const dayNow = (today) => today || pack().dayOf(nowSec());
   /* 一批作答記進 pts(opt = { today, src, b });變成過關的考點接著排考點回顧。回變成過關的鍵 */
@@ -411,6 +437,8 @@
     return { form: 'interim_half', at: state.doneAt, parts, items };
   }
   function flush() { return queue; }
+  /* 學習記錄(只讀):即時回合補回時判斷第一次作答 */
+  function hist() { const h = hasStore() ? store.get('hist', []) : []; return Array.isArray(h) ? h : []; }
 
   /* ---------- 前測的最後畫面時間(這個分頁) ---------- */
   function clock(key, slot) {
@@ -421,8 +449,8 @@
   }
 
   root.LESSON_DATA = Object.freeze({
-    packs, pilot, pilotNow, plan: readPlan, levels, states, open, start, ctx, testForm, fillFixed, trial,
-    inputs, reviewOpt, weakOpt, record, segment, snapshot, sync,
-    hits, wrong, passed, reviewed, checkpoint, tests, pretest, flush, clock,
+    packs, pilot, pilotNow, plan: readPlan, levels, states, open, start, ctx, testForm, fillFixed, trial, freeze,
+    inputs, reviewOpt, weakOpt, testIds: pretestIds, testParts, record, segment, snapshot, sync, hist,
+    hits, wrong, passed, reviewed, checkpoint, tests, pretest, planReview, flush, clock,
   });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -83,14 +83,16 @@
       listening: '聽力', reading: '閱讀', part: PART_NAME, pct: (p) => p + '%', none: '—',
     },
     testReview: { title: '前測結果', tag: '暫用試卷', note: '不能跟之後的測驗直接比較', next: '下一步' },
-    checkpoint: { title: '小檢核', count: (n) => n + ' 題', aboutMin: (m) => '約 ' + m + ' 分鐘', note: '結果在本堂最後顯示', start: '開始', reading: '閱讀' },
-    wrapup: { kicker: lessonNo, next: '繼續', wrong: (k) => '錯題 ' + k + ' 題', checkpoint: '小檢核', checkpointReview: '小檢核解析', met: '達標', hold: '持平', weak: '弱點', point: POINT_NAME },
+    checkpoint: { title: '小檢核', count: (n) => n + ' 題', aboutMin: (m) => '約 ' + m + ' 分鐘', note: '結果在本堂最後顯示', start: '開始', reading: '閱讀',
+      missing: (names) => '這次沒有' + [].concat(names).join('、') + '的題' },
+    wrapup: { kicker: lessonNo, next: '繼續', wrong: (k) => '錯題 ' + k + ' 題', checkpoint: '小檢核', checkpointReview: '小檢核解析', met: '達標', hold: '持平', weak: '弱點', none: '沒有出題', point: POINT_NAME },
     admin: { col: '目前堂號', at: lessonNo, done: '完成', none: '—' },
   });
 
   const VERDICT = freeze({
     code: { m: 'met', h: 'hold', w: 'weak' },
     met: { text: TEXT.wrapup.met, icon: 'check' }, hold: { text: TEXT.wrapup.hold, icon: 'dash' }, weak: { text: TEXT.wrapup.weak, icon: 'dot' },
+    none: { text: TEXT.wrapup.none, icon: null },   // 這次的檢核題考不到這個考點(題不夠選):只寫字、不判定
   });
   /* 考點名稱:先換成舊欄位寫法(js/lesson-rules.js 有載入時),表上沒有就用 Part 名稱 */
   function pointName(key) {

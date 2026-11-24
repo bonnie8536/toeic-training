@@ -56,6 +56,7 @@ html.is-quiz .lsn-t-q .q-text { margin-bottom: 8px; font-size: var(--fs-md); }
 .lsn-v-tag.is-met { background: var(--ok-tint); color: var(--ok); }
 .lsn-v-tag.is-hold { background: var(--bg-soft); color: var(--ink-light); }
 .lsn-v-tag.is-weak { background: var(--tint-orange); color: var(--warn-ink); }
+.lsn-v-tag.is-none { padding-left: 12px; background: var(--bg-soft); color: var(--ink-light); font-weight: 400; }   /* 沒有出題:不是判定,只有字 */
 /* 逐題收合:結果頁的錯題、小檢核解析與區塊結果的逐題解析放寬到內容欄;600 以上題組的文章與題目左右排 */
 .lsn-narrow > .result-detail { max-width: none; margin: 28px 0 0; }
 .lsn-narrow > .result-detail + .result-detail { margin-top: 0; border-top: 0; }

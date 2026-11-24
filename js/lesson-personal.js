@@ -252,6 +252,18 @@
     if (!answers.some((a) => a.key)) return null;   // 沒有可判的考點:當作判過
     return ctx.data.checkpoint(ctx.no, answers, ctx.today());
   }
+  /* 這一堂的檢核考點(舊欄位寫法去重,照課表順序) */
+  function cpKeys(lesson) {
+    const cp = lesson.checkpoint || {}, R = rules();
+    return (cp.listening || []).concat(cp.reading || []).map((k) => R.legacyKey(k) || k).filter((k, i, a) => a.indexOf(k) === i);
+  }
+  /* 凍結的檢核題一題都考不到的考點 */
+  function cpMissing(ctx, st, meta, has) {
+    const seg = segOf(ctx.lesson, 'checkpoint');
+    if (!seg || !st) return [];
+    const got = new Set(cpAnswers(st, cpRounds(seg, st), meta, has).map((a) => rules().legacyKey(a.key)).filter(Boolean));
+    return cpKeys(ctx.lesson).filter((k) => !got.has(k));
+  }
   const countIn = (rounds, st, has) => rounds.reduce((a, r) => a + r.blocks.filter((b) => !b.fill).reduce((n, b) => n + idsIn(b, st, has).reduce((m, id) => m + (Number(has('bank', id)) || 1), 0), 0), 0);
   /* 說明頁:小檢核(題數、約幾分鐘、結果在本堂最後顯示),或換科時的「閱讀」 */
   function cpIntro(ctx, title, tags, rule) {
@@ -263,6 +275,11 @@
       focusHead(v.heading);
     });
   }
+  /* 說明頁的第二行:這次考不到的考點 */
+  function missingLine(ctx, meta, has) {
+    const miss = cpMissing(ctx, ctx.state(), meta, has);
+    return miss.length ? [TX().checkpoint.missing(miss.map((k) => core().pointName(k)))] : [];
+  }
   async function checkpoint(ctx) {
     const seg = segOf(ctx.lesson, 'checkpoint');
     if (!seg || closed(ctx.state(), 'checkpoint')) return 'done';
@@ -273,7 +290,7 @@
     for (let i = 0; i < list.length; i++) {
       if (roundDone(ctx.state(), list[i], has)) continue;
       const go = i === 0
-        ? await cpIntro(ctx, C.title, [C.count(countIn(list, ctx.state(), has)), sec ? C.aboutMin(Math.ceil(sec / 60)) : null], C.note)
+        ? await cpIntro(ctx, C.title, [C.count(countIn(list, ctx.state(), has)), sec ? C.aboutMin(Math.ceil(sec / 60)) : null], [C.note].concat(missingLine(ctx, meta, has)))
         : await cpIntro(ctx, C.reading, [C.count(countIn([list[i]], ctx.state(), has))], null);
       if (go !== 'start') return 'exit';
       if ((await ctx.runRound(list[i].blocks, Object.assign({ round: list[i], slot: 'checkpoint' }, CP_OPT))) === 'exit') return 'exit';
@@ -318,12 +335,12 @@
     if (rows.length) D.hits(cpAnswers(st, list, meta, has), { today: dayOf(rows), src: 'c', b: key + ':cp' });
   }
   const cpBlocks = (lesson) => ((segOf(lesson, 'checkpoint') || {}).blocks || []).filter((b) => !b.fill);
-  /* 小檢核清單:每個檢核考點(舊欄位寫法去重)一列,照課表的考點順序 */
-  function verdictRows(ctx, pts) {
-    const cp = ctx.lesson.checkpoint || {}, R = rules(), C = core();
+  /* 小檢核清單:每個檢核考點(舊欄位寫法去重)一列,照課表的考點順序。判過的寫判定;
+     凍結的檢核題考不到的考點(清單內沒做過的題不夠選)寫「沒有出題」,不讓那一列整個消失 */
+  function verdictRows(ctx, pts, missing) {
+    const C = core(), miss = new Set(missing || []);
     const got = new Map(C.verdictsOf(pts, keyOf(ctx) + ':cp').map((v) => [v.key, v.verdict]));
-    const keys = (cp.listening || []).concat(cp.reading || []).map((k) => R.legacyKey(k) || k).filter((k, i, a) => a.indexOf(k) === i);
-    return keys.filter((k) => got.has(k)).map((k) => ({ name: C.pointName(k), verdict: got.get(k) }));
+    return cpKeys(ctx.lesson).filter((k) => got.has(k) || miss.has(k)).map((k) => ({ name: C.pointName(k), verdict: got.has(k) ? got.get(k) : 'none' }));
   }
   async function unitsOf(ids) {
     const list = ids.filter((id, i) => ids.indexOf(id) === i);
@@ -354,7 +371,7 @@
       rows.length ? { score, total: rows.length } : { big: TX().lesson.done }));
     const more = node('div', 'lsn-narrow lsn-result-more');
     if (ctx.lesson.checkpoint) {
-      const list = verdictRows(ctx, await pack().loadShared('pts', ctx.today()));
+      const list = verdictRows(ctx, await pack().loadShared('pts', ctx.today()), cpMissing(ctx, st, meta, hasFor(ctx, meta)));
       if (list.length) more.append(node('h2', 'me-sec-h', [W.checkpoint]), I.verdicts(list));
     }
     const wrong = rows.filter((x) => (x[4] & 1) !== 1 && meta.has(x[1]));

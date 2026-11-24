@@ -286,13 +286,15 @@
   }
   /* 判定的圖示:線條 SVG(同 js/ui.js 的 icon),勾、橫線、實心小圓點 */
   function verdictIcon(v) {
-    const kind = (core().VERDICT[v] || {}).icon || 'dot';
+    const V = core().VERDICT[v];
+    if (V && V.icon === null) return null;
+    const kind = (V || {}).icon || 'dot';
     const svg = svgEl('svg', { viewBox: '0 0 24 24', width: 16, height: 16, 'aria-hidden': 'true', focusable: 'false', fill: 'none', stroke: 'currentColor', 'stroke-width': '2.2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', class: 'lsn-v-icon' });
     if (kind === 'dot') svg.append(svgEl('circle', { cx: 12, cy: 12, r: 4.5, fill: 'currentColor', stroke: 'none' }));
     else svg.append(svgEl('path', { d: kind === 'check' ? 'm5 12.5 4.5 4.5L19 7.5' : 'M6 12h12' }));
     return svg;
   }
-  /* 小檢核清單:list = [{ name, verdict: 'met'|'hold'|'weak' }],一個考點一列,右邊一個標籤(圖示加字);不放任何數字 */
+  /* 小檢核清單:list = [{ name, verdict: 'met'|'hold'|'weak'|'none' }],一個考點一列,右邊一個標籤(圖示加字;none 只有字);不放任何數字 */
   function verdicts(list) {
     return el('ul', { class: 'me-list lsn-verdicts' }, (list || []).map((x) => {
       const v = core().VERDICT[x.verdict];
@@ -301,7 +303,7 @@
   }
 
   /* ---------- 說明頁(小檢核、閱讀測驗開始頁) ----------
-   opt = { back: { label, href, onClick }, title, tags: [字], rule(一行說明), start(按鈕字), onStart(按鈕) };回 { el, heading } */
+   opt = { back: { label, href, onClick }, title, tags: [字], rule(一行說明,或好幾行的陣列), start(按鈕字), onStart(按鈕) };回 { el, heading } */
   function intro(opt) {
     const o = opt || {};
     const heading = el('h2', { class: 'lsn-h2', tabindex: '-1' }, [o.title]);
@@ -314,7 +316,7 @@
     }
     const tags = (o.tags || []).filter(Boolean);
     const box = el('div', { class: 'lsn-narrow lsn-intro' }, [back, heading, tags.length ? el('p', { class: 'mock-tags' }, tags.map((t) => el('span', { class: 'mock-tag' }, [t]))) : null,
-      o.rule ? el('p', { class: 'lsn-rule' }, [o.rule]) : null, go]);
+      ...[].concat(o.rule || []).filter(Boolean).map((r) => el('p', { class: 'lsn-rule' }, [r])), go]);
     return { el: box, heading, go };
   }
 

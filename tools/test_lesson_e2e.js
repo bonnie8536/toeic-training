@@ -442,7 +442,7 @@ async function walk(u, lv, shots) {
     return { heads, rows }; })()`);
   assert.ok(cp.heads.length >= 2 && cp.rows.length > 0, J(cp));
   assert.ok(cp.heads.every((t) => !/[0-9%]/.test(t)) && cp.rows.every((t) => !/%|\d+\s*(題|分)/.test(t)), '小檢核不能有題數、分數與 %:' + J(cp));
-  assert.ok(cp.rows.every((t) => /(達標|持平|弱點)$/.test(t)), J(cp.rows));
+  assert.ok(cp.rows.length === 3 && cp.rows.every((t) => /(達標|持平|弱點|沒有出題)$/.test(t)), J(cp.rows));   // 照片描述、WH 問句、詞性各一列(考不到的寫沒有出題)
   if (shots) await shot(p, '22_本堂結果');
   const h5 = await homeCard(p);
   assert.deepStrictEqual([h5.h, h5.go, h5.daily, h5.solid], ['第 5 堂尚未開放', null, true, 1]);

@@ -237,6 +237,34 @@ T['小檢核:題目都在清單內且不含前測題;說明頁題數、約幾分
   eq(segSt(pc, 'checkpoint'), 'done');
 };
 
+T['小檢核:清單內的照片描述都做過、那一區塊凍結 0 題時,說明頁寫這次沒有照片描述的題,本堂結果那一列寫「沒有出題」(不判定、不整列消失)'] = async () => {
+  const e = await env();
+  const poolP1 = POOL.ids.filter((id) => /^l1-/.test(id));
+  e.store.set('listen_p1', poolP1.reduce((o, id) => Object.assign(o, { [id]: { c: 0, ok: true, t: (NOW - 5 * DAY) * 1000 } }), {}));
+  const pc = await lessonFour(e, () => true);
+  const cp = pc.lesson.segments.filter((s) => s.slot === 'checkpoint')[0].blocks.filter((b) => !b.fill);
+  const p1 = cp.filter((b) => b.module === 'p1')[0];
+  eq([pc.state().pk[p1.idx].ids, cp.filter((b) => b !== p1).every((b) => pc.state().pk[b.idx].ids.length > 0)], [[], true]);
+  const run = e.LP.checkpoint(pc);
+  await settle(60);
+  const want = cp.filter((b) => b !== p1).reduce((a, b) => a + b.count, 0);
+  eq([e.host.querySelectorAll('.mock-tag').map(text)[0], e.host.querySelectorAll('.lsn-rule').map(text)], [want + ' 題', ['結果在本堂最後顯示', '這次沒有照片描述的題']]);
+  e.host.querySelector('.lsn-go').click();
+  await settle(60);
+  eq(e.host.querySelectorAll('.lsn-rule').length, 0, '換科的「閱讀」說明頁不放這一行');
+  e.host.querySelector('.lsn-go').click();
+  assert.equal(await run, 'done');
+  const later = pc.lesson.segments.filter((s) => ['vocab', 'listening', 'reading', 'review', 'weak'].indexOf(s.slot) > -1);
+  for (const s of later) pc.setState(await e.D.segment(4, pc.lesson, s.slot, 'done', NOW));
+  await e.D.flush();
+  assert.equal(await e.LP.wrapup(pc), 'done');
+  const rows = e.host.querySelectorAll('.lsn-row');
+  eq([rows.map(text), rows[0].querySelector('.lsn-v-tag').className, rows[0].querySelector('.lsn-v-icon'), !!rows[1].querySelector('.lsn-v-icon')],
+    [['照片描述沒有出題', 'WH 問句達標', '詞性達標'], 'lsn-v-tag is-none', null, true]);
+  const pts = e.store.peek('pts');
+  eq([(pts['P1.photo'] && pts['P1.photo'].hits || []).some((h) => h.b === 'les_t1_04:cp'), pts['P2.wh'].hits.some((h) => h.b === 'les_t1_04:cp')], [false, true]);
+};
+
 T['小檢核判定:兩個回合都交卷後判一次;判定與記錄用同一個陣列、先判再記、判定存在 pts 那一批的 v;答錯排回顧、過關的考點排考點回顧'] = async () => {
   const e = await env();
   const calls = spyRules(e, ['judgeCheckpoint', 'addHits']);

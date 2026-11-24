@@ -13,7 +13,7 @@
 .lsn-note { margin: 16px 0 0; padding: 12px 16px; border-left: 4px solid var(--primary); border-radius: 0 var(--r-sm) var(--r-sm) 0; background: var(--bg-soft); font-size: var(--fs-md); color: var(--ink); }
 .lsn-note-line { display: block; }
 /* 換畫面時程式把焦點移到標題、通知、空狀態的字(讀屏用),不畫框(同 .result-score) */
-#lsn-h:focus, .lsn-note:focus, .lsn-tip-h:focus, .lsn-words-h:focus, .lsn-card-h:focus, .lsn-grammar h2:focus, #lsn-root .ui-empty-text:focus { outline: none; }
+#lsn-h:focus, .lsn-note:focus, .lsn-tip-h:focus, .lsn-words-h:focus, .lsn-card-h:focus, .lsn-grammar h2:focus, .lsn-engine h1:focus, #lsn-root .ui-empty-text:focus { outline: none; }
 .lsn-loading { margin: 24px 0; }
 
 /* ---- 段落總覽:一段一列(記號、段名、分鐘、狀態字),記號之間一條線 ---- */

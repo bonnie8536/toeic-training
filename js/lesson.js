@@ -636,9 +636,13 @@
         } catch (e) { reject(e); }
       };
       root.GRAMMAR.unit(eng, id, { onDone, onExit: () => resolve('exit') });
-      const h2 = eng.querySelector('h2');
-      if (h2) { h2.setAttribute('tabindex', '-1'); h2.focus(); }
+      focusEngineHead(eng, 'h2');
     });
+  }
+  /* 引擎畫好的標題:換到這一步時焦點移過去(文法單元是 h2,英語耳是 h1) */
+  function focusEngineHead(eng, sel) {
+    const h = eng.querySelector(sel);
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus(); }
   }
   function stepEar(r) {
     const b = r.blocks[0], sec = EAR_SEC[b.module];
@@ -656,6 +660,7 @@
         } catch (e) { reject(e); }
       };
       root.EAR.round(eng, sec, { items: ids, onDone, onExit: () => resolve('exit') });
+      focusEngineHead(eng, 'h1, h2');
     });
   }
 

@@ -128,6 +128,9 @@ function enginesOf(ctx, dom) {
     need(Array.isArray(opts.items) && opts.items.length && opts.items.every((id) => ctx.TOEIC.ear[list].some((q) => q.id === id)), 'EAR.round：items');
     const f = ctx.UI.focus.enter({ total: opts.items.length, onExit: opts.onExit });
     body(el, 'ear');
+    const top = mk(dom, 'div', 'drill-top');
+    top.append(mk(dom, 'h1', null, sec));   // 真的引擎在題目上面畫標題 h1(js/ear.js)
+    el.prepend(top);
     calls.push({ name: 'EAR', el, sec, opts, f });
   } };
   return calls;
@@ -493,6 +496,21 @@ T['英語耳:照凍結的題出(sec 對到模組)、作答寫進度不寫 pts;�
   await p.click('.lsn-go');
   await p.click('.lsn-go');
   eq([p.emptyText(), p.text('.ui-empty-go'), p.ctx.UI.focus.active, p.e.logs.error.length > 0], ['課程資料有誤', '回首頁', null, true]);
+};
+T['英語耳:換到這一步時焦點在引擎畫的標題(從段落總覽進來、接在上一個回合後面都一樣)'] = async () => {
+  const headOf = (p) => { const c = p.last('EAR'); return c ? c.el.querySelector('h1') : null; };
+  const q = await page({ search: '?no=2', seed: async (e) => { await doneThrough(e, EE, 1); await started(e, EE, 2, ['test_review', 'vocab']); } });
+  await q.click('.lsn-go');
+  const h = headOf(q);
+  eq([q.last().name, !!h, q.active() === h, h && h.getAttribute('tabindex')], ['EAR', true, true, '-1'], '從段落總覽進來');
+  const p = await page({ search: '?no=2', levels: TE, seed: async (e) => { await doneThrough(e, TE, 1); await started(e, TE, 2, ['test_review', 'vocab']); } });
+  await p.click('.lsn-go');
+  for (let i = 0; i < 6 && p.last().name !== 'EAR'; i++) {
+    if (p.ctx.UI.focus.active) await p.finish();
+    else await p.click(p.$('.result-go') ? '.result-go' : '.lsn-go');   // 區塊結果的「下一步」、過場的「開始」
+  }
+  const h2 = headOf(p);
+  eq([p.calls.map((c) => c.name), !!h2, p.active() === h2], [['LISTEN', 'LISTEN', 'EAR'], true, true], '接在上一個回合後面');
 };
 T['略過個人段:先問(取消停在取消上),確定才記略過;固定段沒有略過'] = async () => {
   const p = await page({ seed: async (e) => {

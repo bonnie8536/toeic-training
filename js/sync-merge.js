@@ -1,5 +1,5 @@
 /* 同一個帳號多台裝置的合併規則。純計算,不讀寫儲存,window.SYNC_MERGE。
-   js/cloud.js 的 MERGED 表用它:vgame_banks(自訂題庫)、sync_del(刪除標記)、mock_history(模擬考紀錄)、mock_wrong(模擬考錯題)上傳前先讀雲端、合併、再上傳;
+   js/cloud.js 的 MERGED 表用它:vgame_banks(自訂題庫)、sync_del(刪除標記)、mock_history(模擬考紀錄)、mock_wrong(模擬考錯題)、levels、onboard、self_score(起始程度設定)上傳前先讀雲端、合併、再上傳;
    灌雲端資料時本機和雲端都有就存合併結果。每一頁都要在 cloud.js 之前載入(tools/test_sync_union.js 檢查)。
    合併函式的約定跟 PET.cloudMerge 一樣:回 { ok, v, sameAsLocal, sameAsCloud };形狀認不得回 { ok: false }(唯讀:不合併、不上傳、帳本留著)。
    原則:
@@ -503,6 +503,61 @@
     return { ok: true, v: sameAsLocal ? a : v, sameAsLocal, sameAsCloud };
   }
 
+  /* ---------- 起始程度設定的三個帳號鍵(levels、onboard、self_score,js/onboard-data.js 寫) ----------
+     以前整份上傳,舊裝置離線時排隊的上傳補傳時會蓋掉雲端較新的那一份。現在整份留「自己的時間欄位」較新的那一份:
+     levels 看 setAt(兩科、來源跟著它),onboard 看 updatedAt,self_score 看 enteredAt。levels.history 兩份聯集,
+     同一筆(內容完全一樣)只留一筆,照 at 排序,留最新 LEVELS_HISTORY_MAX 筆(跟 js/onboard-core.js 的 HISTORY_MAX 一樣,tools/test_onboard_sync.js 檢查)。
+     比較順序:形狀對(一般物件)的贏不對的(字串、陣列、數字:格式壞掉),有時間的贏沒有時間(或不是日期)的,時間新的贏,
+     都一樣時取 canon 字串小的(兩台合出來一樣)。認不得的版本(有 v 而且不是 1)回 ok:false:更新版的格式不拿這一版的去蓋。
+     壞掉的配上沒有、或兩份都壞:回 ok:false(不合併、不上傳、帳本留著,跟其他合併表上的鍵一樣)。
+     時間在 now(第三個參數,沒給用 Date.now())一天以後的當成沒有時間:時鐘錯很多的裝置寫的那份不會一直贏。
+     時鐘只快幾分鐘的,靠寫入端讓時間只往前走(js/onboard-core.js stampAfter) */
+  const LEVELS_HISTORY_MAX = 20;
+  const timeOf = (x, f) => { const s = isPlain(x) ? x[f] : null; const t = typeof s === 'string' ? Date.parse(s) : NaN; return isFinite(t) ? t : NaN; };
+  const unknownV = x => isPlain(x) && own(x, 'v') && x.v !== 1;
+  const FUTURE_MAX = 864e5;
+  function newerOf(x, y, f, lim) {
+    const px = isPlain(x), py = isPlain(y);
+    if (px !== py) return px ? x : y;
+    const sane = t => (t > lim ? NaN : t);
+    const tx = sane(timeOf(x, f)), ty = sane(timeOf(y, f)), gx = isFinite(tx), gy = isFinite(ty);
+    if (gx !== gy) return gx ? x : y;
+    if (gx && tx !== ty) return tx > ty ? x : y;
+    const main = o => { const c = Object.assign({}, o); delete c.history; return canon(c); };   // levels:history 另外聯集,不拿來比
+    return main(x) <= main(y) ? x : y;
+  }
+  function byTime(f, extra) {
+    return function (a, b, now) {
+      const none = x => x === null || x === undefined;
+      const lim = (isNum(now) ? now : Date.now()) + FUTURE_MAX;
+      if (unknownV(a) || unknownV(b)) return { ok: false };
+      if (none(a) && none(b)) return { ok: true, v: null, sameAsLocal: a === null, sameAsCloud: b === null };
+      if (!isPlain(a) && !isPlain(b)) return { ok: false };
+      const win = none(a) ? b : none(b) ? a : newerOf(a, b, f, lim);
+      const v = extra ? extra(win, [a, b].filter(isPlain)) : win;
+      const s = canon(v);
+      const sameAsLocal = isPlain(a) && s === canon(a);
+      const sameAsCloud = isPlain(b) && s === canon(b);
+      return { ok: true, v: sameAsLocal ? a : v, sameAsLocal, sameAsCloud };
+    };
+  }
+  /* levels.history 聯集:只留一般物件;at 不是日期的排最前面(最先被裁掉) */
+  function joinHistory(win, list) {
+    if (!list.some(x => isArr(x.history))) return win;
+    const seen = new Map();
+    list.forEach(x => { (isArr(x.history) ? x.history : []).forEach(h => { if (isPlain(h)) seen.set(canon(h), h); }); });
+    const at = h => timeOf(h, 'at');
+    const rows = Array.from(seen.entries()).sort((p, q) => {
+      const tp = at(p[1]), tq = at(q[1]), gp = isFinite(tp), gq = isFinite(tq);
+      if (gp !== gq) return gp ? 1 : -1;
+      return (gp && tp !== tq ? tp - tq : 0) || cmp(p[0], q[0]);
+    });
+    return Object.assign({}, win, { history: rows.slice(-LEVELS_HISTORY_MAX).map(e => e[1]) });
+  }
+  const levels = byTime('setAt', joinHistory);
+  const onboard = byTime('updatedAt');
+  const selfScore = byTime('enteredAt');
+
   /* ---------- 新版頁面寫入時用的(js/vocab.js、js/reading.js) ----------
      都回新的物件或陣列,不改輸入。改到內容才蓋戳記:改前的雜湊放進 _p、_t 換成現在;沒改到就回原本那一份(不用寫、不上傳) */
   function newBankId(now) { return 'b' + Math.floor(now).toString(36) + rnd(3); }
@@ -611,7 +666,7 @@
 
   root.SYNC_MERGE = Object.freeze({
     canon, quickHash, norm, stateKey, bankHash, wordHash, tombHit, zhDiffers,
-    banks, tombs, mock, mockWrong,
+    banks, tombs, mock, mockWrong, levels, onboard, selfScore,
     newBankId, newBank, newWord, reviseWord, reviseBank, editBank, addWords, setWord, deleteWord, deleteBank,
   });
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -1,0 +1,1749 @@
+/* 雲端同步層(Supabase)。
+   - CLOUD_CONFIG 未填 → CLOUD.enabled=false,全站維持本機模式。
+   - 已填 → 載入 supabase-js(CDN),提供 login/logout/push;登入後把雲端進度灌回
+     localStorage(沿用既有命名空間機制),各模組程式完全不用改。
+   - 同步策略:每次 store.set 後 0.8 秒內去抖動上傳該鍵;每個分頁工作階段登入時整批下載一次。
+   - 合併表(MERGED)上的鍵上傳前先讀雲端那一列、合併、存回本機,再上傳合併結果;灌雲端資料時本機和雲端都有就存合併結果,不直接覆蓋。
+     讀不到雲端、合併說唯讀(形狀認不得,例如更新版的格式)、頁面沒有合併函式時不上傳,帳本留著(不會退回整份上傳);
+     灌資料時碰到這些情況,題庫、標記、模擬考紀錄也留本機(帳本記著),不拿雲端蓋掉。
+     其他鍵的上傳、灌資料、帳本、登出跟以前一樣(整份上傳,後傳的蓋掉先傳的)。
+     · pet:合併函式 PET.cloudMerge(js/pet.js)。合併前跟 pet-store 一樣用登入憑證的 iat 對時,
+       這台時鐘差太多也不合併、不上傳,帳本留著(合併整理時用這台的時間,慢的時鐘會丟掉別台最近幾天的紀錄)。
+       登出前:先叫 pet-store 把還在等讀雲端的券和動作寫下來(PET_STORE.flushPending),
+       帳本上沒有、但標記成「只在本機」的 pet(開關都關時讀不到雲端只寫本機的改動)也先合併上傳,傳不上去就算進「還沒同步」先問。
+       pet 因為雲端是更新版格式(v3)而留在帳本時,登出會照樣提示把它算進「還沒同步」。pet 的每一次請求跟以前逐位元組相同。
+     · vgame_banks(自訂題庫)、sync_del(刪除標記)、mock_history(模擬考紀錄):
+       合併函式在 js/sync-merge.js(SYNC_MERGE,每一頁都在 cloud.js 之前載入)。題庫「少了不算刪除」,只有刪除標記對得上的才刪;
+       題庫上傳時跟 sync_del 一次查詢讀兩列、一次 upsert 傳兩列。單字頁、閱讀頁開頁時呼叫 syncKey 跟雲端對齊一次;
+       登出前多一輪對帳(雲端比本機少就先合併上傳再刪本機);搬家離開舊網址前(flushForMove)也對帳,傳不上去、讀不到雲端的放進搬家包。
+       寫作、hist、錯題本(drill_p*、listen_p*)還是整份上傳(下一輪)。
+       帳本上沒有這個鍵(本機上次對齊之後沒改過)時合併給 localClean:舊版頁面就地改的名稱、勾選、中文用雲端那份(
+       名稱不看 _t:這台之前在同一個題庫改過別的字、已經上傳也一樣)。
+       合併後上傳失敗時,帳本上沒有的鍵補記(開單字頁、對帳的 pull 原本帳本是空的,失敗後不會重傳、離線登出也不問);pet 不補記。
+     · mock_wrong(模擬考答錯的題,2026-11-18):合併函式 SYNC_MERGE.mockWrong,同一題留 t 新的、其他都留(聯集)。
+       跟 mock_history 一樣先讀雲端、合併、再上傳;搬家暫存區(takePending → takeSynced)也照 SYNC_FN 合併。
+       舊快取的 sync-merge.js 沒有 mockWrong:merge() 是 null,照上面的規則不上傳、帳本留著。
+       模擬考、錯題本、題庫、能力分析開頁時呼叫 syncKey('mock_wrong') 跟雲端對齊一次(js/wrongbook.js syncCloud;為什麼見已知限制 8)。
+   已知限制:
+     1. 兩台在同一時間讀雲端、合併、上傳時,後到的那台可能蓋掉先到的那台剛傳上去的東西;先到那台本機還留著,
+        下次上傳、灌資料、開單字頁、登出前對帳時會再合併上傳(pet 是 pet-store 的 remoteBehind),所以不會永久消失。
+     2. 舊版頁面(部署前就開著的分頁、拿快取的頁面)整份上傳題庫,可能暫時把雲端蓋掉,新版下一次合併時補回;舊版頁面刪的題庫、字沒有標記,會回來。
+        舊版頁面就地改的名稱、取消勾選、中文:這台本機的題庫也有還沒上傳的改動(帳本上有;之前改過、已經上傳的不算)時分不出誰新,固定選一份(名稱、勾選可能退回,
+        中文輸的放 alt);舊版頁面把名稱、勾選、中文改回以前用過的值,新版認得那是舊版本,會被改回新版那一份。
+     3. 在新版刪掉一個沒改過的舊資料(字或題庫,沒有 _r;包括部署前用舊版存的文章題庫),之後在舊版頁面加回一模一樣的
+        (文章題庫照著存一定一模一樣),會被標記刪掉;在新版頁面加回不會。刪除標記的 hs(被刪那一份吸收過的舊版本)只刪有 _r 的,
+        所以在新版改過才刪的,舊版頁面重新加回會留著;代價是舊版頁面或很久沒同步的裝置會把改之前那份帶回來(只會多,再刪一次就好)。
+     4. 刪除標記保留 400 天、最多 1000 筆;清掉之後,很久沒開的裝置可能把刪掉的帶回來(只會多)。
+     5. 兩台都改了同一個字的中文:新的當主要,另一個放 alt(不設上限,編輯頁全部看得到,可以換或刪)。改回以前用過的中文也一樣
+        (分不出哪個是後來改的,_t 大的當主要);所以在編輯頁「換成另一台寫的、再刪掉原本的」剛好跟以前某一版一樣時,刪掉的那個可能又出現在 alt。
+     6. 別台舊版把雲端蓋掉、而唯一還有那份的新版裝置在登出時又讀不到雲端(帳本是空的,不會問):那份會跟著登出刪掉。
+        (只講登出。搬家不會:flushForMove 讀不到雲端時把題庫、刪除標記、模擬考紀錄放進搬家包,而且舊網址本機不刪。)
+     7. 單鍵 256 KB:合併只會讓題庫變大,碰到上限時上傳會一直失敗、帳本一直留著,登出時會問。新字只多 4 碼的 _r(不寫 on、_t),
+        剛批次加字的題庫大約是 main 格式的 1.04 倍(tools/test_sync_merge.js 量 jsonb 的大小);改過、取消勾選、合併過的字多 _t、_p,
+        每個大約多 40 到 100 位元組。模擬考紀錄合併時留 300 筆(大約 40 KB),不照 mock.js 的 30 筆裁(時鐘錯的裝置剛考完的那一筆才不會被裁掉)。
+     8. mock_wrong:部署前就開著、沒重新整理的舊版分頁(它的合併表沒有 mock_wrong)恢復連線、關頁、切到背景時
+        補傳帳本,帳本上的 mock_wrong 不讀雲端、不合併就整份上傳。同一台的新版頁面剛寫了 mock_wrong、還沒傳上去(0.8 秒內、離線)時,
+        雲端那一列會變成這台本機那一份:別台傳上去、這台本機沒有的錯題,別台如果已經登出(共用電腦,本機刪了)就找不回來。
+        模擬考、錯題本、題庫、能力分析開頁先跟雲端對齊(WRONGBOOK.syncCloud → syncKey,tools/test_sync_union.js 34),本機開頁時就有雲端那份;
+        剩下的是開頁之後、這台交卷或複習之前別台才傳上去的(兩台差不多同時在考),或開頁時讀不到雲端(離線)的。舊分頁重新整理或關掉就沒有這個問題。
+        不改用「只在本機」標記(不記帳本、舊版看不到):舊版 cloud.js 登出時只算自己合併表上的標記,離線交卷後在舊分頁登出會不問就刪掉;記在帳本至少會問。 */
+(function () {
+  const cfg = window.CLOUD_CONFIG || {};
+  const enabled = !!(cfg.url && cfg.anonKey);
+
+  /* Google 登入失敗時 Supabase 不是回傳錯誤,而是把錯誤掛在網址的 # 後面導回來。
+     這裡先接住再把網址清乾淨(登入卡會把它顯示出來);密碼重設的 # 帶的是 token,不動它。 */
+  const authError = (function () {
+    const hash = location.hash || '';
+    if (!/[#&]error/.test(hash) || /access_token=/.test(hash)) return '';
+    const m = /[#&]error_description=([^&]*)/.exec(hash) || /[#&]error(?:_code)?=([^&]*)/.exec(hash);
+    const raw = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '登入沒有完成';
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    return raw;
+  })();
+  /* 這一頁是登入回來的頁面(Google 導回來、點信裡的連結):網址帶 access_token(密碼重設的 type=recovery 不算)或 ?code=,
+     要趁 supabase-js 清掉網址之前記下來。回來那一頁 supabase-js 先拿 access_token 去問帳號,雲端確認登入之前 CLOUD.user 是 null、
+     資料夾還是訪客的:內容頁這時按作答只擋下、不跳「登入之後才能作答」(js/profile.js askToAct) */
+  const authReturning = !authError && (function () {
+    const hash = String(location.hash || ''), search = String(location.search || '');
+    return (/[#&]access_token=/.test(hash) && !/[#&]type=recovery/.test(hash)) || /[?&]code=/.test(search);
+  })();
+
+  /* 使用權(收費)的狀態。宣告在這裡,雲端沒開時 locked() 等函式也能安全呼叫 */
+  let serverAccess = null;    // 這個分頁從伺服器拿到的 my_access;null = 還不知道
+  let accessPromise = null;   // 這一頁正在查的 my_access(沒查就是 null)
+  let accessSeq = 0, appliedSeq = 0;   // 每次查詢編號;只採用比已採用的那次更新的回答(舊的晚回來就丟掉)
+  const ACCESS_TIMEOUT_MS = 8000;
+  const INTENT_WINDOW_MS = 30 * 60e3, INTENT_SKEW_MS = 2 * 60e3;
+  const INTENT_KEY = 'tr_signup_intent', OLD_INTENT_USED_KEY = 'tr_signup_intent_used';   // 後者是舊版寫的,開頁就清掉
+  let googleBack = false;   // 這一頁是這個分頁自己從 Google 回來的,而且有 Google 那條意向:getSession 之後綁帳號 id(bindGoogleIntent)
+  let idBeforeBack = '';    // 那一頁開頁時(supabase-js 處理網址之前)這台原本登入的帳號 id;getSession 拿到的還是它,就不是這次 Google 回來的
+  let otherTabSignedIn = false;   // 那一頁開頁到 getSession 之間,別的分頁改過登入資料(watchOtherTabs)
+  /* supabase-js 把登入資料存在 localStorage 的這個位置(預設名稱:sb-<專案代號>-auth-token) */
+  const SB_KEY = 'sb-' + ((/^https?:\/\/([^./]+)\./.exec(cfg.url) || [])[1] || '') + '-auth-token';
+
+  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '',
+    authReturning: enabled && authReturning, login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
+    access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
+    startCheckout, myCheckout, isOwner,
+    saveSignupIntent, takeSignupIntent, clearSignupIntent, markLocalOnly, clearLocalOnly, syncKey, flushForMove, folderReady };
+  /* 先合併再上傳的鍵。merge() 用到時才找合併函式:頁面沒載到(pet.js、sync-merge.js)就是 null,
+     這時不上傳、帳本留著,不會退回整份上傳。
+     clock:合併前要對時(只有 pet:PET.cloudMerge 依日期裁切,慢的時鐘會丟掉別台的新日期)。
+     tombs:合併要用刪除標記;上傳時跟 sync_del 一次查詢讀兩列、一次 upsert 傳兩列(雲端不會有「題庫少了、標記還沒到」的空窗)。
+     reconcile:登出前、頁面呼叫 syncKey 時也比一次雲端(pet 不加,它的請求維持不變)。queue:跟哪個鍵排同一個佇列。
+     順序有用:灌資料時 sync_del 要先合併,合併後的標記給 vgame_banks 用。 */
+  const TOMBS = 'sync_del';
+  const SMF = name => () => { const S = window.SYNC_MERGE; return S && typeof S[name] === 'function' ? S[name] : null; };
+  const MERGED = {
+    pet: { merge: () => (window.PET && typeof window.PET.cloudMerge === 'function' ? window.PET.cloudMerge : null), clock: true },
+    sync_del: { merge: SMF('tombs'), reconcile: true, queue: 'vgame_banks' },
+    vgame_banks: { merge: SMF('banks'), tombs: true, reconcile: true },
+    mock_history: { merge: SMF('mock'), reconcile: true },
+    mock_wrong: { merge: SMF('mockWrong'), reconcile: true },
+  };
+  const spec = k => (typeof k === 'string' && Object.prototype.hasOwnProperty.call(MERGED, k) ? MERGED[k] : null);
+  window.CLOUD.mergedKeys = Object.freeze(Object.keys(MERGED));   // pet-store 用它判斷這一版 cloud.js 會先合併 pet 再上傳
+  if (!enabled) return;
+  tidySignupIntent(authError);   // 註冊時選老師的意向:開頁就清過期的、記下「這個分頁從 Google 回來了」(要趁 supabase-js 清掉網址之前;getSession 之後綁帳號 id)
+
+  /* 登入失效改回訪客(leaveStaleAccount)時記一個旗標,重載後的那一頁讀到就清掉:
+     頂欄只在這個分頁顯示一次「登入已失效」,換頁或下一個人開新分頁都不會再出現 */
+  const EXPIRED_KEY = 'tr_auth_expired';
+  try {
+    window.CLOUD.sessionExpired = sessionStorage.getItem(EXPIRED_KEY) === '1';
+    sessionStorage.removeItem(EXPIRED_KEY);
+  } catch (e) { window.CLOUD.sessionExpired = false; }
+
+  let client = null;
+  const pending = {};
+  const queues = {};              // 要合併的鍵的上傳一個一個做,不跟自己搶(sync_del 跟 vgame_banks 排同一個)
+  /* 開站確認登入狀態(有網路約 1 秒;離線又遇到登入憑證過期,supabase-js 會重試約 25 秒)之前的寫入先放 early,
+     確認完再決定:這一頁剛灌完雲端資料要重載 → 作廢(那些寫入根據的是舊資料,以雲端為準);其他情況 → 記進帳本。 */
+  let settled = false;
+  let hydrating = false;   // 這一頁決定要灌雲端資料了(之後要重載)
+  let reloading = false;
+  /* 這一頁已經要重載了(灌完雲端資料、改回訪客):舊網址的自動搬家(js/move-out.js)看到就不帶走,免得重載把換到新網址的那一下取消掉 */
+  Object.defineProperty(window.CLOUD, 'reloading', { get: () => reloading, enumerable: true });
+  const early = {};
+  const SEEN_PREFIX = 'tr_cloud_seen_';   // 「這台灌過這個帳號」記號(說明在下面「這一頁的寫入能不能記帳」那一段);開頁時就要用,放在這裡
+  /* 這一頁的資料夾(雲端帳號的)開頁時是不是空的:cloud.js 載入當下就看,這時頁面程式還沒寫任何東西。
+     afterAuth 判斷「帳號資料夾是空的」用(見 folderEmpty 上面的說明;2026-10-31) */
+  const emptyAtLoad = (function () {
+    const pid = window.__PROFILE_ID;
+    return typeof pid === 'string' && pid.charAt(0) === 'c' && folderEmpty('tr_u' + pid + '_', null);
+  })();
+  /* 開頁時帳號資料夾是空的、這台也沒有「灌過這個帳號」的記號(seenPid):這一頁的畫面是照還沒灌過的資料夾畫的
+     (別的分頁登出把資料夾刪了、正在登回來灌資料)。確認登入時資料夾有東西了(別的分頁灌好了),這一頁要重灌重載 */
+  const unreadyAtLoad = emptyAtLoad && !seenPid(window.__PROFILE_ID);
+  /* 這一頁的畫面根據的是還沒灌過的資料夾,而且這一頁自己沒灌成(讀雲端失敗):之後就算別的分頁灌好、標記劃掉,這一頁也不能作答、不記帳,
+     要重新整理才換成灌好的資料夾(寫作頁這類照畫面整份寫回的鍵,不然會把雲端蓋成只剩這一頁的那幾筆) */
+  let pageUnhydrated = false;
+
+  window.CLOUD.ready = init();
+  /* 確認登入之後,等這一頁的 my_access 查完(沒查、失敗、逾時都是 null) */
+  window.CLOUD.accessReady = window.CLOUD.ready.then(() => accessPromise || null, () => null);
+  /* 使用權快取只留目前登入的帳號那一份;登出、刪帳號、換帳號後重載的那一頁就清掉 */
+  window.CLOUD.ready.then(() => purgeAccessCache(window.CLOUD.user), () => purgeAccessCache(null));
+
+  function loadSdk() {
+    return new Promise((res, rej) => {
+      if (window.supabase && window.supabase.createClient) return res();
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+      s.onload = res;
+      s.onerror = () => rej(new Error('無法載入雲端元件\n請檢查網路後重新整理'));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    try {
+      if (window.navigator && navigator.onLine === false && adoptStored()) return window.CLOUD.user;
+      await loadSdk();
+      client = window.supabase.createClient(cfg.url, cfg.anonKey);
+      window.CLOUD.client = client;
+      const { data: { session } } = await client.auth.getSession();
+      bindGoogleIntent(session);   // 只動註冊意向那一個鍵,不碰登入與同步
+      if (!session) { adoptStored(); leaveStaleAccount(); return window.CLOUD.user; }
+      window.CLOUD.user = session.user;
+      await afterAuth(session.user, false);
+      return session.user;
+    } catch (e) {
+      console.warn('雲端初始化失敗：', e);
+      adoptStored();
+      leaveStaleAccount();
+      return window.CLOUD.user;
+    } finally {
+      bindGoogleIntent(null);   // 從 Google 回來卻沒走到 getSession(離線、雲端元件載不到):Google 那條意向丟掉;已經綁過就什麼都不做
+      settled = true;
+      if (!reloading) keepEarly();
+      flushAll();
+    }
+  }
+
+  /* 離線開 App,或連不到雲端(登入憑證換不到新的、雲端元件載不到):這台還留著登入資料、而且就是目前資料夾的帳號,
+     就維持登入狀態。這時不灌資料、上傳多半會失敗,寫入照樣記帳,下次連上再補傳。
+     supabase-js 只有在網路類的失敗才會留著登入資料;憑證被撤銷之類會自己清掉,這裡就讀不到。 */
+  function adoptStored() {
+    if (window.CLOUD.user) return true;
+    try {
+      const saved = JSON.parse(localStorage.getItem(SB_KEY));
+      const u = saved && saved.user;
+      if (u && typeof u.id === 'string' && pidOf(u) === window.__PROFILE_ID) { window.CLOUD.user = u; return true; }
+    } catch (e) {}
+    return false;
+  }
+
+  /* 資料夾還停在雲端帳號,這台卻沒有這個帳號的登入資料(別台按「登出所有裝置」、帳號刪除):改回訪客再重載。
+     之後沒登入的人練習的東西寫在訪客的資料夾,原帳號下次登入時才不會把它當成「從沒上傳過的資料」傳上去。
+     原帳號的資料與帳本一筆都不刪(只有登出才刪),下次登入照常比對新舊。
+     目前不處理(分不出是本人還是別人寫的,丟資料或混入別人的練習要二選一):開站確認登入那一兩秒內的寫入、
+     頁面開著時才被撤銷的寫入,照舊留在原帳號。 */
+  function leaveStaleAccount() {
+    const pid = window.__PROFILE_ID;
+    if (reloading || window.CLOUD.user || typeof pid !== 'string' || pid.charAt(0) !== 'c') return;
+    /* 別的分頁可能已經換成別的帳號登入:那就不動目前帳號,重載後跟著它 */
+    try {
+      if (localStorage.getItem('tr_current_profile') === JSON.stringify(pid)) {
+        localStorage.removeItem('tr_current_profile');
+        try { sessionStorage.setItem(EXPIRED_KEY, '1'); } catch (e) { /* 提示不顯示而已 */ }
+      }
+    } catch (e) { return; }
+    window.__PROFILE_ID = null;
+    reloading = true;
+    location.reload();
+  }
+
+  function pidOf(user) { return 'c' + user.id.replace(/-/g, ''); }
+  /* 這台 supabase-js 還留著登入資料、而且就是目前資料夾的帳號 → 回它的 id;否則回空字串。
+     登入被撤銷(別台按「登出所有裝置」、帳號刪除)時 supabase-js 會清掉登入資料,這時的寫入不記帳:
+     那可能是別人在用這台,或是根據很久沒更新的本機資料,下次登入要以雲端為準。 */
+  function storedUid() {
+    try {
+      const u = (JSON.parse(localStorage.getItem(SB_KEY)) || {}).user;
+      if (u && typeof u.id === 'string' && pidOf(u) === window.__PROFILE_ID) return u.id;
+    } catch (e) {}
+    return '';
+  }
+
+  /* ---------- 這一頁的寫入能不能記帳(2026-10-31,main 130f330 就有的三條掉資料路徑) ----------
+     1. 這一頁的資料夾還是不是這台目前的帳號:別的分頁登出(資料夾、帳本刪光)或換帳號之後,沒重載的頁面記憶體裡的
+        CLOUD.user、__PROFILE_ID 還是原帳號。照寫照記帳的話,寫入根據的是空的資料夾(或是下一個人的練習),
+        上傳因為登入不在了失敗、帳本留著,原帳號下次在這台登入時灌資料把它當成本機較新,整份上傳蓋掉雲端(js/pet-store.js profileGone 同一套判斷)。
+     2. 「還沒灌過」標記 tr_cloud_unhydrated_<帳號 id>(在帳號資料夾外面,跟帳本一樣):要灌資料時帳號資料夾是空的
+        (這台第一次登入、別的分頁登出把資料夾刪了;怎麼算空的見 accountFolderEmpty)就先記上,灌成功才劃掉,登出時清掉。
+        記著的時候每一頁都要灌(別的分頁之前灌過的旗標不算數),這段時間的寫入不記帳:讀雲端進度失敗(網路斷一下、Supabase 慢或休眠)時
+        頁面拿到的是空資料夾,記了帳,下一頁灌資料會把只有新那幾筆的 hist、錯題本整份傳上去蓋掉雲端。
+        資料夾不是空的(之前灌過、登入失效改回訪客留著的)不記,跟以前一樣:讀不到雲端時照常作答記帳,下次灌資料比新舊(離線也是這樣)。
+        這台灌過這個帳號(「灌過」記號 tr_cloud_seen_<帳號 id>,灌好時寫、登出刪掉、開始登入或確認完的時候不是這台的目前帳號就先刪掉、搬家不帶)也不記:雲端本來就沒有進度的帳號
+        (新註冊、只看後台的老師)灌完資料夾還是空的,不能因為這樣每開一個新分頁就把已經灌好的分頁擋下。
+        代價跟資料夾不是空的、只是舊了一樣(已知限制,整份上傳後傳的蓋掉先傳的):灌過之後別台才有進度,這台讀不到雲端時照常作答記帳。
+     3. 這一頁的畫面是照還沒灌過的資料夾畫的、自己又沒灌成(pageUnhydrated):別的分頁之後灌好、劃掉標記,這一頁一樣不記帳。
+     平常登入著的頁面這些條件都成立,行為不變。 */
+  function unhydratedKey(uid) { return 'tr_cloud_unhydrated_' + uid; }
+  function unhydrated(uid) {
+    try { return localStorage.getItem(unhydratedKey(uid)) !== null; } catch (e) { return true; }
+  }
+  function seen(uid) {
+    try { return localStorage.getItem(SEEN_PREFIX + uid) !== null; } catch (e) { return false; }
+  }
+  /* 開頁時只知道資料夾名稱(c + 去掉 - 的帳號 id):找名稱對得上的「灌過」記號 */
+  function seenPid(pid) {
+    if (typeof pid !== 'string' || pid.charAt(0) !== 'c') return false;
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.indexOf(SEEN_PREFIX) === 0 && 'c' + k.slice(SEEN_PREFIX.length).replace(/-/g, '') === pid) return true;
+      }
+    } catch (e) {}
+    return false;
+  }
+  function currentProfile() {
+    try { return localStorage.getItem('tr_current_profile'); } catch (e) { return null; }
+  }
+  function sameFolder() {
+    try { return localStorage.getItem('tr_current_profile') === JSON.stringify(window.__PROFILE_ID); } catch (e) { return false; }
+  }
+  function canRecord(uid) { return sameFolder() && !unhydrated(uid) && !pageUnhydrated; }
+  /* 帳號資料夾有沒有東西;skip:這些鍵不算 */
+  function folderEmpty(prefix, skip) {
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith(prefix) && !(skip && Object.prototype.hasOwnProperty.call(skip, k.slice(prefix.length)))) return false;
+      }
+    } catch (e) { return false; }
+    return true;
+  }
+  /* 要灌資料時,帳號資料夾算不算空的(空的就記「還沒灌過」):
+     - 這一頁的資料夾不是這個帳號的(otherFolder):這一頁確認登入前寫的在別的資料夾,直接看帳號資料夾。
+     - 是這個帳號的:現在一個鍵都沒有;或開頁時是空的(emptyAtLoad)、現在只有這一頁確認登入前寫的鍵(early)。
+       不能把 early 的鍵一律當成不算:資料夾本來就有資料、只是剛好每個鍵都在確認登入前重寫過(新學生常常只有 hist)時,
+       會被當成空的,讀雲端失敗時已登入、本機資料完整的人被擋下,那一筆也丟了。
+       開頁後別的分頁把資料夾刪了(登出)、這一頁又沒寫:現在一個鍵都沒有,一樣算空的 */
+  function accountFolderEmpty(prefix, otherFolder) {
+    if (otherFolder) return folderEmpty(prefix, null);
+    return folderEmpty(prefix, null) || (emptyAtLoad && folderEmpty(prefix, early));
+  }
+  /* js/profile.js canAct 用:已登入、這一頁的資料夾就是這台目前的帳號、而且灌過雲端進度,才能作答(不然開「重新整理」卡) */
+  function folderReady() {
+    const u = window.CLOUD.user;
+    return !!(u && typeof u.id === 'string' && pidOf(u) === window.__PROFILE_ID && canRecord(u.id));
+  }
+
+  /* cpAtSend:剛登入(fresh)時,送出密碼那一刻這台的目前帳號(tr_current_profile 原樣,沒有是 null),見下面「灌過」記號那一段 */
+  async function afterAuth(user, fresh, cpAtSend) {
+    if (paidUi()) accessPromise = fetchAccess(user);   // 使用權跟教師身分同時查;不等它,登入與灌資料照舊
+    try {
+      const { data } = await client.from('teachers').select('user_id').eq('user_id', user.id);
+      window.CLOUD.isTeacher = !!(data && data.length);
+    } catch (e) { /* 非教師 */ }
+    if (serverAccess && typeof serverAccess.is_teacher === 'boolean') window.CLOUD.isTeacher = serverAccess.is_teacher;   // my_access 先回來了:以它為準
+
+    const pid = pidOf(user);
+    /* 這一頁的資料夾不是這個帳號的:登入失效改回訪客、或別的分頁登出(帳號資料夾刪掉了)之後,
+       在同一個分頁用 Google 登回來,這個分頁之前灌過資料的旗標還在。旗標不算數,跟剛登入一樣灌資料、重載;
+       不然這一頁的寫入進訪客資料夾,之後照帳號資料夾裡的舊值或空值上傳,會把雲端那一列蓋掉 */
+    const otherFolder = window.__PROFILE_ID !== pid;
+    /* 這一頁在確認登入(查教師身分那一趟)的時候,別的分頁登出了(目前帳號、登入資料都刪了),或換成別的帳號:
+       不寫回目前帳號、不灌資料、不設旗標。以前照樣寫回,這一頁(和別的沒重載的分頁)的資料夾又對得上,拿被刪空的資料夾作答記帳,
+       這個帳號之後在這台登入時整份上傳蓋掉雲端(e49e444 就有)。這一頁照 folderGone 擋下、開「已在別的分頁登出」卡,
+       換頁後照 leaveStaleAccount 改回訪客。別的分頁登出又用同一個帳號登回來(登入資料是它)照常往下(moved);
+       這一頁本來就不是這個帳號的資料夾(訪客頁剛登入)才要主動改寫目前帳號 */
+    const moved = !otherFolder && !sameFolder();
+    if (moved && storedUid() !== user.id) return;
+    /* 走到這裡 moved 就是「確認登入途中別的分頁登出又登回同一個帳號」:資料夾被刪過,這個分頁之前灌過的旗標不算數,
+       照新分頁的規則重灌(資料夾是空的就記「還沒灌過」、確認前寫的作廢;讀雲端失敗這一頁不能作答、不記帳)。
+       以前旗標在、標記又還沒記,這一頁不灌資料照常記帳:確認前寫的那一筆上傳被刪掉的鍵(雲端 hist 變 null),
+       或照被刪空的資料夾作答整份蓋掉雲端(e49e444 就有) */
+    /* 剛登入(fresh)、或這一頁的資料夾不是這個帳號的(訪客頁登入、Google 回來):「灌過」記號不算數,先刪掉,灌好再寫回。
+       部署前就開著的舊版分頁不認得這個記號,在那裡登出會把資料夾刪光、記號留著;照記號不記「還沒灌過」的話,讀雲端進度失敗時
+       學生在空資料夾上作答記帳,網路好了整份上傳蓋掉雲端。先刪掉,這段時間別的分頁開的頁面也照「還沒灌過」的資料夾看(unreadyAtLoad)。
+       開始登入(送出密碼那一刻 cpAtSend;不是剛登入就是開頁時)和確認完的這一刻,這個帳號都是這台的目前帳號,記號才算數、不刪:
+       這段時間一直有別的分頁登入著它、灌好了,記號是對的。以前一律刪,在登入前就開著的訪客頁再登入同一個帳號,資料夾是空的
+       (雲端沒有進度的帳號)就記上標記,灌好的分頁跟著不能作答,讀雲端失敗時一直卡在「還沒載入」卡(be7104d 造成)。
+       只看確認那一刻不夠:舊版分頁登出之後、這一頁確認之前,別的分頁先把目前帳號寫回去(灌過的分頁換頁先確認完、舊版分頁換頁一律先寫),
+       記號就被當成對的,標記沒記,讀雲端失敗時照空資料夾作答整份上傳(e49e444 就有,5aff2d5 擋得住、49a5080 又打開)。
+       moved(確認途中有人登出又登回同一個帳號)時確認那一刻一定不是目前帳號,也照這條刪。
+       已知限制(部署過渡期):送出登入時已經有分頁登入著這個帳號,確認之前舊版分頁登出、另一個舊版分頁又換頁寫回目前帳號,分辨不出來 */
+    let wasCurrent = false, atStart = !otherFolder;
+    const me = JSON.stringify(pid);
+    try { wasCurrent = localStorage.getItem('tr_current_profile') === me; } catch (e) { /* 讀不到:照刪 */ }
+    if (fresh) atStart = cpAtSend === me;
+    if (!(atStart && wasCurrent)) { try { localStorage.removeItem(SEEN_PREFIX + user.id); } catch (e) { /* 刪不掉:跟以前一樣 */ } }
+    const prefix = 'tr_u' + pid + '_';
+    const flagKey = 'tr_cloud_hydrated_' + user.id;
+    const pendTry = 'tr_move_pending_tried_' + user.id;   // 搬家暫存區:這個分頁只為它重灌一次,載不到合併程式也不會一直重載
+    const movePend = hasPending(user.id) && !sessionStorage.getItem(pendTry);
+    const notYet = unhydrated(user.id);   // 這台這個帳號的資料夾還沒灌過:別的分頁之前灌過的旗標不算數
+    /* 開頁時照還沒灌過的(空)資料夾畫,確認登入前別的分頁灌好了:畫面是舊的,要重灌重載。
+       「灌好了」看兩樣:有「灌過」記號(開頁時沒有,別的分頁灌好一定會寫),或資料夾有這一頁沒寫過的鍵(舊版分頁灌的不寫記號)。
+       只看資料夾的話,雲端所有的鍵都是這一頁確認前照空畫面寫過的(只用過寫作頁的學生),就認不出來:這一頁不重灌,
+       照記憶體裡的空畫面整份寫回,蓋掉雲端(e49e444 就有) */
+    const filled = unreadyAtLoad && !otherFolder && (seen(user.id) || !folderEmpty(prefix, early));
+    const hydrate = fresh || otherFolder || moved || !sessionStorage.getItem(flagKey) || movePend || notYet || filled;
+    /* 帳號資料夾是空的、這台也沒灌過這個帳號:先記「還沒灌過」再寫目前帳號,別的分頁一看到目前帳號是它,就知道資料夾還不能用 */
+    const markNow = hydrate && !notYet && !seen(user.id) && accountFolderEmpty(prefix, otherFolder);
+    /* filled、而且這一頁確認前寫過:那幾筆是照開頁時的空畫面寫的,可能已經蓋掉別的分頁剛灌好的本機那一份。一樣記「還沒灌過」:
+       哪一頁灌成功(本機換回雲端那一份、劃掉標記)之前,所有分頁都不能作答、不記帳。只讓這個分頁的下一頁重灌不夠,讀不到雲端時
+       這個分頁的下一頁、灌好的那個分頁換頁都照被蓋掉的本機作答整份上傳(e49e444 就有) */
+    const overwrote = filled && Object.keys(early).length > 0;
+    if (markNow || overwrote) { try { localStorage.setItem(unhydratedKey(user.id), '1'); } catch (e) { /* 寫不進去就跟以前一樣 */ } }
+    /* 這一頁的畫面根據的是還沒灌過的資料夾:灌成了就重載;灌不成,這一頁之後都不能作答(標記被別的分頁劃掉也一樣) */
+    if (hydrate && (notYet || markNow || filled || moved)) pageUnhydrated = true;
+    localStorage.setItem('tr_current_profile', JSON.stringify(pid));
+
+    if (hydrate) {
+      /* 灌到一半連不上:下次開頁照樣重灌,不沿用舊旗標。filled:這一頁確認前照空畫面寫的可能已經蓋掉別的分頁灌好的本機那一份,
+         讀不到雲端時這個分頁的下一頁也要重灌,不然照被蓋掉的本機作答整份上傳 */
+      if (fresh || otherFolder || moved || filled) sessionStorage.removeItem(flagKey);
+      if (movePend) sessionStorage.setItem(pendTry, '1');
+      hydrating = true;
+      const { data: rows, error } = await client.from('progress').select('k,v,updated_at').eq('user_id', user.id);
+      if (error) throw error;   // 連不上就整段不做:本機一個都不刪(「還沒灌過」標記留著)
+      const cloud = {};
+      (rows || []).forEach(r => { cloud[r.k] = r; });
+      /* 要對時的鍵(pet)本機和雲端都有時,先對時;時鐘差太多就不合併(planMerged 照原本的規則,留本機也不補傳) */
+      await takePending(user, prefix, cloud);   // 搬家暫存區先併進本機與帳本,下面照常比新舊、上傳
+      const clockOk = mergeNeeded(prefix, cloud) ? await sessionClockOk(user) : true;
+
+      /* 哪些鍵要留本機的版本(其餘照舊用雲端覆蓋):
+         - 帳本上有、而且本機改動時間比雲端新(或雲端沒有這一列)
+         - 帳本上沒有,但雲端完全沒有這一列:代表從來沒傳上去過(例如新建自訂題庫後馬上關頁)。
+           被別台裝置刪掉的鍵在雲端是 v=null 的一列,不會落在這裡。 */
+      const led = readLedger(user.id);
+      /* 本機有還沒上傳的改動的鍵(帳本、確認登入前的寫入、「只在本機」的標記):其他的鍵本機上次跟雲端對齊之後沒改過(合併時 localClean) */
+      const dirty = {};
+      Object.keys(led).concat(Object.keys(early), Object.keys(readLocalOnly(user.id))).forEach(k => { dirty[k] = true; });
+      Object.keys(early).forEach(k => { if (led[k] === early[k]) delete led[k]; });   // 這一頁確認登入前的寫入根據的是舊資料,以雲端為準
+      const keepLocal = {};
+      Object.keys(led).forEach(k => {
+        const c = cloud[k];
+        if (!c || !(Date.parse(c.updated_at) >= led[k])) keepLocal[k] = led[k];
+        else delete led[k];   // 雲端比較新:用雲端的,帳本劃掉
+      });
+      for (let i = 0; i < localStorage.length; i++) {
+        const lk = localStorage.key(i);
+        if (!lk || !lk.startsWith(prefix)) continue;
+        const k = lk.slice(prefix.length);
+        if (!(k in cloud) && !(k in keepLocal)) { keepLocal[k] = Date.now(); led[k] = keepLocal[k]; }
+      }
+      const plan = planMerged(prefix, cloud, keepLocal, led, clockOk, readLocalOnly(user.id), dirty);   // pet:本機和雲端都有就存合併結果(下面雲端蓋本機那一圈之後才寫)
+      writeLedger(user.id, led);
+      /* 灌過資料:只在本機的改動不是合併過(跟雲端一樣,或記在帳本上)、就是留本機記在帳本上,標記都不用了;
+         對不了時留在本機的(hold)標記留著,登出時還是先合併上傳、傳不上去先問 */
+      Object.keys(MERGED).forEach(k => { if (!plan.hold[k]) unmark(user.id, k, Infinity); });
+
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const lk = localStorage.key(i);
+        if (lk && lk.startsWith(prefix) && !(lk.slice(prefix.length) in keepLocal)) localStorage.removeItem(lk);
+      }
+      (rows || []).forEach(r => {
+        if (r.k !== '_meta' && r.v !== null && !(r.k in keepLocal)) localStorage.setItem(prefix + r.k, JSON.stringify(r.v));
+      });
+      Object.keys(plan.save).forEach(k => localStorage.setItem(prefix + k, JSON.stringify(plan.save[k])));
+      try { localStorage.setItem(SEEN_PREFIX + user.id, '1'); } catch (e) { /* 寫不進去:之後資料夾空的時候照舊記標記 */ }   // 這台灌過這個帳號
+      try { localStorage.removeItem(unhydratedKey(user.id)); } catch (e) { /* 劃不掉:下一頁再灌一次 */ }   // 資料夾灌好了
+      /* 留下來的本機改動補傳上去;失敗也沒關係,帳本還在,下次再傳。合併說唯讀的不補傳 */
+      await Promise.all(Object.keys(keepLocal).filter(k => !plan.hold[k]).map(k => upload(user, k, keepLocal[k])));
+      sessionStorage.setItem(flagKey, '1');
+      try {
+        await client.from('progress').upsert({
+          user_id: user.id, k: '_meta',
+          v: { email: user.email, name: nameOf(user), last_login: new Date().toISOString() },
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'user_id,k' });
+      } catch (e) { /* 名冊寫入失敗不擋使用 */ }
+      reloading = true;
+      location.reload();   // 重載讓各模組讀到剛灌回的雲端進度
+    }
+  }
+
+  /* ---------- 帳號層級的動作:送出前確認這台現在的登入就是畫面上這個帳號(e49e444 就有) ----------
+     supabase-js 每一次請求都拿這台 localStorage 現在的登入資料(SB_KEY),不看這一頁記憶體裡的 CLOUD.user。
+     別的分頁登出這個帳號、改登入別人之後,沒重載的分頁頂欄還是原帳號:按「刪除帳號」刪掉的是別的分頁登入的那個人的帳號與雲端進度,
+     「登出」「登出所有裝置」登出的是他,「改暱稱」「改密碼」改的是他,加入班級、老師試用開在他身上,讀方案、付款紀錄讀的也是他的。
+     兩樣都對得上才送,不然丟 code 'account_gone'(js/profile.js、js/classes.js、教師後台開「這個帳號已經在別的分頁登出」卡):
+     - 目前帳號(tr_current_profile)是畫面上這個帳號的資料夾:別的分頁登出會刪掉、換帳號會改掉。
+     - supabase-js 的登入資料是這個帳號的:別的分頁剛登入別人、還在確認登入,目前帳號還沒改的那一兩秒。
+     登入資料不見了(被撤銷、別台按「登出所有裝置」)或格式認不得、目前帳號還是它:不算換人,照以前的路走
+     (登出照常清掉這台、登出所有裝置照常說這台的登入已失效)。讀不到 localStorage 就分不出來,也照以前。
+     目前帳號和登入資料都不見了(別的分頁登出;或登入被撤銷後別的分頁照 leaveStaleAccount 改回訪客):這台沒有任何人登入著('nobody')。
+     這時一樣不送(請求會用沒有登入的身分送出),只有「登出」例外,見 logout。
+     平常登入著的頁面兩樣都對得上,行為不變。 */
+  const GONE_MSG = '這個帳號已經在別的分頁登出\n請重新整理這一頁';
+  /* 這台現在的登入是誰的:'mine' 畫面上這個帳號、'nobody' 沒有任何人、'other' 別人(或這一頁沒有帳號) */
+  function loginOwner() {
+    const u = window.CLOUD.user;
+    if (!u || typeof u.id !== 'string') return 'other';
+    let cp = null, saved = null;
+    try { cp = localStorage.getItem('tr_current_profile'); saved = localStorage.getItem(SB_KEY); } catch (e) { return 'mine'; }
+    const mine = cp === JSON.stringify(pidOf(u));
+    if (cp !== null && !mine) return 'other';
+    let id = null;
+    try { const s = JSON.parse(saved); id = s && s.user && typeof s.user.id === 'string' ? s.user.id : null; } catch (e) { id = null; }
+    if (id !== null) return id === u.id ? 'mine' : 'other';
+    return mine ? 'mine' : 'nobody';
+  }
+  function accountShown() { return loginOwner() === 'mine'; }
+  function goneError() {
+    const e = new Error(GONE_MSG);
+    e.code = 'account_gone';
+    return e;
+  }
+  /* 送出帳號層級的請求前呼叫 */
+  function mustBeShown() {
+    if (!window.CLOUD.user) throw new Error('請先登入');
+    if (!accountShown()) throw goneError();
+  }
+  /* 給頁面(js/profile.js、js/classes.js、教師後台)送出前先問:回空字串 = 可以送(或還沒登入,讓頁面照自己的「請先登入」);回字 = 不能送,要顯示的原因 */
+  window.CLOUD.accountCheck = () => (!window.CLOUD.user || accountShown() ? '' : GONE_MSG);
+
+  async function login(email, password) {
+    await window.CLOUD.ready;
+    if (!client) throw new Error('雲端元件尚未載入\n請重新整理再試');
+    const cp = currentProfile();   // 送出登入這一刻的目前帳號(afterAuth 判斷「灌過」記號算不算數)
+    const { data, error } = await client.auth.signInWithPassword({ email: String(email).trim(), password });
+    if (error) {
+      if (/Invalid login credentials/i.test(error.message)) throw new Error('帳號或密碼錯誤\n用 Google 註冊的帳號請點 Google 登入');
+      if (/Email not confirmed/i.test(error.message)) throw new Error('信箱還沒驗證\n請到信箱點驗證連結或到「註冊」分頁重寄');
+      if (/rate limit|too many/i.test(error.message)) throw new Error('請求太頻繁\n請幾分鐘後再試');
+      if (/fetch|network/i.test(error.message)) throw new Error('連不上雲端伺服器\n請檢查網路後再試');
+      throw new Error(error.message);
+    }
+    window.CLOUD.user = data.user;
+    await afterAuth(data.user, true, cp);
+  }
+
+  /* 還有進度沒同步就登出:先問(UI.confirm,Promise)。共用元件沒載到就不登出(免得悄悄刪掉進度),丟錯讓呼叫的地方顯示原因 */
+  function askLogout(left) {
+    const U = window.UI;
+    if (!U || typeof U.confirm !== 'function') return Promise.reject(new Error('共用元件沒載到\n請重新整理再試'));
+    return U.confirm({ title: '有 ' + left + ' 項進度還沒同步', body: '現在登出會刪除這台裝置上的這些進度', ok: '登出', cancel: '取消', danger: true });
+  }
+
+  async function logout(opts) {
+    const user = window.CLOUD.user;
+    const everywhere = !!(opts && opts.everywhere);
+    const discard = !!(opts && opts.discard);   // 刪除帳號成功之後(deleteAccount 送出前已經確認過是畫面上這個帳號)
+    /* 別的分頁已經登出這個帳號、改登入別人:不登出(會把別的分頁登入的那個人登出、清掉目前帳號),什麼都不刪、不問。
+       這台已經沒有任何人登入著('nobody',見 loginOwner):不會登出到別人,照以前清掉這個帳號留在這台的資料夾與帳本(共用電腦不留個資),
+       只是不呼叫 signOut、不動登入資料、目前帳號、註冊意向:別的分頁可能正要登入下一個人(31745ec 擋下,資料留在這台清不掉)。
+       「登出所有裝置」照樣擋:這台沒有登入資料,沒辦法登出其他裝置 */
+    const owner = () => (user && !discard ? loginOwner() : 'mine');
+    const stop = o => o === 'other' || (o === 'nobody' && everywhere);
+    if (stop(owner())) throw goneError();
+    /* 這台已經沒有登入資料時 supabase-js 不會呼叫伺服器、直接回成功,別台其實沒被登出:先擋下來,什麼都不刪 */
+    if (everywhere && !localStorage.getItem(SB_KEY)) throw new Error('這台的登入已失效\n請重新登入後再登出其他裝置');
+    if (user && !discard) {
+      flushPetStore();   // 小雞還在等讀雲端的券和動作先寫下來
+      const left = await unsynced(user);
+      if (left > 0 && !(await askLogout(left))) return;
+    }
+    /* 對帳、問的時候別的分頁換了人(或剛登入了下一個人):擋下。從這裡到刪完、重載都是同步的,中間不會再換 */
+    const now = owner();
+    if (stop(now)) throw goneError();
+    if (now === 'nobody') {
+      forgetAccount(user);
+      location.reload();
+      return;
+    }
+    /* 一般的登出只登出這台(共用電腦登出不會把學生自己手機上的登入一起踢掉)。
+       everywhere:「我的」頁的「登出所有裝置」。連不上伺服器時 supabase-js 會先清掉這台的登入資料再回錯誤,
+       這時把登入資料放回去,這台維持登入、不刪資料,丟錯誤讓畫面講清楚。
+       只登出這台時沒網路 signOut 會失敗、而且可能不清本機的登入資料:下面照樣清掉,免得下次開站又自動登回去 */
+    if (everywhere) {
+      const saved = localStorage.getItem(SB_KEY);
+      let error = null;
+      try { ({ error } = await client.auth.signOut({ scope: 'global' })); }
+      catch (e) { error = e; }
+      if (error) {
+        try { if (saved && !localStorage.getItem(SB_KEY)) localStorage.setItem(SB_KEY, saved); } catch (e) {}
+        throw new Error('連不上雲端伺服器\n其他裝置還沒確認登出\n這台維持登入');
+      }
+    } else {
+      try { await client.auth.signOut({ scope: 'local' }); } catch (e) { /* 雲端元件沒載到 */ }
+    }
+    try { [SB_KEY, SB_KEY + '-user', SB_KEY + '-code-verifier'].forEach(k => localStorage.removeItem(k)); } catch (e) {}
+    if (user) forgetAccount(user);
+    localStorage.removeItem('tr_current_profile');
+    clearSignupIntent();   // 註冊時選老師的意向:登出就作廢,下一個人用這台不會沿用
+    location.reload();
+  }
+  /* 登出時清掉這個帳號留在這台的東西:帳本、只在本機的標記、還沒灌過的標記、灌過的記號、這個分頁的灌過旗標、整個帳號資料夾 */
+  function forgetAccount(user) {
+    writeLedger(user.id, {});
+    writeLocalOnly(user.id, {});
+    try { localStorage.removeItem(unhydratedKey(user.id)); localStorage.removeItem(SEEN_PREFIX + user.id); } catch (e) {}   // 資料夾要刪了,「灌過」也不算數
+    sessionStorage.removeItem('tr_cloud_hydrated_' + user.id);
+    const prefix = 'tr_u' + pidOf(user) + '_';
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(prefix)) localStorage.removeItem(k);   // 共用電腦不留個資
+    }
+  }
+
+  /* 顯示名稱:Email 註冊時填的暱稱(user_metadata.name);Google 登入沒填過暱稱,
+     就用 Google 帳戶的名字(full_name);兩者都沒有才用 email 的 @ 前段 */
+  function nameOf(user) {
+    const m = (user && user.user_metadata) || {};
+    return String(m.name || m.full_name || ((user && user.email) || '').split('@')[0] || '').trim();
+  }
+
+  function siteUrl(page) {
+    return location.origin + location.pathname.replace(/[^/]*$/, '') + page;
+  }
+
+  function needClient() {
+    if (!client) throw new Error('雲端元件尚未載入\n請重新整理再試');
+  }
+
+  function friendly(error) {
+    const m = error.message || '';
+    if (/already registered|already exists|already been registered/i.test(m)) return '這個 Email 已經註冊過\n請直接登入或點 Google 登入\n忘記密碼可以重設';
+    if (/unsupported provider|provider is not enabled|provider.*disabled/i.test(m)) return 'Google 登入目前不能用\n請改用 Email 註冊';
+    if (/redirect|not allowed.*url/i.test(m)) return 'Google 登入的網址設定不對\n請改用 Email 註冊';
+    if (/password/i.test(m) && /short|least|characters/i.test(m)) return '密碼至少 8 碼';
+    if (/rate limit|too many|security purposes/i.test(m)) return '請求太頻繁\n請幾分鐘後再試';
+    if (/signups? not allowed|signup is disabled|not allowed/i.test(m)) return '目前未開放註冊\n請聯絡老師';
+    if (/invalid.*email|email.*invalid/i.test(m)) return 'Email 格式不對';
+    if (/fetch|network/i.test(m)) return '連不上雲端伺服器\n請檢查網路後再試';
+    return m;
+  }
+
+  /* 註冊:Confirm email 開啟時要先到信箱點連結(回 needsConfirm:true);關閉時直接登入 */
+  async function signUp(email, password, name) {
+    await window.CLOUD.ready;
+    needClient();
+    const cp = currentProfile();   // 同 login
+    const { data, error } = await client.auth.signUp({
+      email: String(email).trim(), password,
+      options: { data: { name: String(name || '').trim().slice(0, 20) }, emailRedirectTo: siteUrl('index.html') },
+    });
+    if (error) throw new Error(friendly(error));
+    /* Confirm email 開啟時,已註冊過的 email 會回一個沒有 identities 的假 user(不洩漏帳號存在),這裡當作已註冊處理 */
+    if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+      throw new Error('這個 Email 已經註冊過\n請直接登入或點 Google 登入\n忘記密碼可以重設');
+    }
+    bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(沒有意向什麼都不做)
+    if (data.session) {
+      window.CLOUD.user = data.user;
+      await afterAuth(data.user, true, cp);
+      return { needsConfirm: false };
+    }
+    return { needsConfirm: true };
+  }
+
+  /* Google 登入:導到 Google 同意頁,回來時 supabase-js 會從網址取回 session,
+     init() 接著跑 afterAuth 灌回進度。backTo 給空值就回到按下按鈕的那一頁。
+     Google 帳戶的 Email 本來就驗證過了,不會再寄驗證信。
+     等雲端確認登入(CLOUD.ready)之後,這一頁要是已經登入、灌完雲端資料正要重載(afterAuth 最後那一下),就不導去 Google,
+     讓重載照常發生(重載後就是登入後的畫面);不然 location.assign 會蓋掉重載,剛登入的人又被送去 Google 一次。
+     登入失效改回訪客的那一下(leaveStaleAccount,CLOUD.user 是 null)照舊。密碼登入、註冊不導頁,蓋不掉重載,不擋
+     (跟重載搶到的話,下一頁資料夾跟帳號對不上就重灌,最多多重載一次;tools/test_sync.js 有測在這種頁面送密碼) */
+  async function signInWithGoogle(backTo) {
+    await window.CLOUD.ready;
+    if (reloading && window.CLOUD.user) return;
+    needClient();
+    const redirectTo = backTo ? siteUrl(backTo) : location.href.split('#')[0];
+    const { error } = await client.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo, queryParams: { prompt: 'select_account' } },
+    });
+    if (error) throw new Error(friendly(error));
+  }
+
+  /* 改暱稱(Google 進來的人沒填過,教師後台看到的是 Google 帳戶名字) */
+  async function updateName(name) {
+    await window.CLOUD.ready;
+    needClient();
+    const n = String(name || '').trim().slice(0, 20);
+    if (!n) throw new Error('請輸入暱稱');
+    mustBeShown();   // 改的是這台現在登入的帳號:不是畫面上這個就不送
+    const { data, error } = await client.auth.updateUser({ data: { name: n } });
+    if (error) throw new Error(friendly(error));
+    if (data && data.user) window.CLOUD.user = data.user;
+    const u = window.CLOUD.user;
+    try {
+      await client.from('progress').upsert({
+        user_id: u.id, k: '_meta',
+        v: { email: u.email, name: n, last_login: new Date().toISOString() },
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'user_id,k' });
+    } catch (e) { /* 名冊寫入失敗不擋使用 */ }
+    return n;
+  }
+
+  async function resetPassword(email) {
+    await window.CLOUD.ready;
+    needClient();
+    if (!/^\S+@\S+\.\S+$/.test(String(email).trim())) throw new Error('Email 格式不對');
+    const { error } = await client.auth.resetPasswordForEmail(String(email).trim(), { redirectTo: siteUrl('reset.html') });
+    if (error) throw new Error(friendly(error));
+  }
+
+  async function updatePassword(password) {
+    await window.CLOUD.ready;
+    needClient();
+    mustBeShown();   // 別的分頁換了帳號,改到的會是那個人的密碼
+    const { error } = await client.auth.updateUser({ password });
+    if (error) throw new Error(friendly(error));
+  }
+
+  async function resendConfirm(email) {
+    await window.CLOUD.ready;
+    needClient();
+    const { error } = await client.auth.resend({ type: 'signup', email: String(email).trim(), options: { emailRedirectTo: siteUrl('index.html') } });
+    if (error) throw new Error(friendly(error));
+  }
+
+  /* 自助刪除帳號:呼叫資料庫函式 delete_own_account(見 tools/supabase_public_signup.sql),成功後清本機並登出 */
+  async function deleteAccount() {
+    await window.CLOUD.ready;
+    needClient();
+    mustBeShown();   // delete_own_account 刪的是這台現在登入的帳號,不是畫面上這個就不送
+    const { error } = await client.rpc('delete_own_account');
+    if (error) throw new Error('刪除失敗：' + error.message + '\n請寫信給客服要求刪除');
+    await logout({ discard: true });
+  }
+
+  /* ---------- 使用權(收費) ----------
+     原則:讀不到 my_access 一律放行,只有這個分頁從伺服器拿到 active === false 才算鎖住。
+     window.PAID_UI(js/plans-config.js)不是 true 時完全不呼叫 my_access(資料庫還沒有這個函式)。
+     快取 tr_access_<帳號 id> 只給離線時顯示日期,不拿來擋人。同步(push、flushAll、灌資料)完全不看使用權。 */
+  function paidUi() { return window.PAID_UI === true; }
+  function accessKey(uid) { return 'tr_access_' + uid; }
+  const NOTE_KEY = 'tr_trial_note_closed';
+
+  /* 快取只存離線時顯示日期要用的欄位;班名、點數、角色、教師欄位不存(共用電腦不留個資) */
+  const CACHE_FIELDS = ['active', 'source', 'is_owner', 'until', 'trial_until', 'paid_through', 'teacher_until', 'server_now'];
+  function slimAccess(a) {
+    const out = {};
+    CACHE_FIELDS.forEach(k => { if (a[k] !== undefined) out[k] = a[k]; });
+    return out;
+  }
+  function purgeAccessCache(user) {
+    try {
+      const keep = user && typeof user.id === 'string' ? accessKey(user.id) : null;
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const k = localStorage.key(i);
+        if (k && k.indexOf('tr_access_') === 0 && k !== keep) localStorage.removeItem(k);
+      }
+      /* js/paywall.js 的「試用提示條關掉了」({ u: 帳號 id, until }):只留給目前登入的那個帳號 */
+      const note = localStorage.getItem(NOTE_KEY);
+      if (note !== null) {
+        let u = null;
+        try { const v = JSON.parse(note); u = v && typeof v === 'object' ? v.u : null; } catch (e) { u = null; }
+        if (!keep || u !== user.id) localStorage.removeItem(NOTE_KEY);
+      }
+    } catch (e) { /* 讀不到 localStorage 就沒有東西可清 */ }
+  }
+
+  /* 查一次 my_access。失敗、沒資料、逾時、帳號已經換了都回 null,不動目前的結果;逾時之後才回來的也不採用。
+     同時有兩次在查時(開頁的還沒回、又按了開始老師試用),先送的比較晚回來就丟掉,回目前採用的那份 */
+  function fetchAccess(user) {
+    const seq = ++accessSeq;
+    return new Promise(resolve => {
+      let done = false;
+      const finish = a => { if (done) return; done = true; clearTimeout(timer); resolve(a); };
+      const timer = setTimeout(() => finish(null), ACCESS_TIMEOUT_MS);
+      let call;
+      try { call = Promise.resolve(client.rpc('my_access')); } catch (e) { call = Promise.reject(e); }
+      call.then(r => {
+        const a = r && !r.error && r.data && typeof r.data === 'object' && !Array.isArray(r.data) ? r.data : null;
+        const cur = window.CLOUD.user;
+        if (done || !a || !cur || cur.id !== user.id) return finish(null);
+        if (seq < appliedSeq) return finish(serverAccess);
+        appliedSeq = seq;
+        serverAccess = a;
+        window.CLOUD.access = a;
+        if (typeof a.is_teacher === 'boolean') window.CLOUD.isTeacher = a.is_teacher;
+        try { localStorage.setItem(accessKey(user.id), JSON.stringify({ at: Date.now(), access: slimAccess(a) })); } catch (e) { /* 存不進去只是離線時看不到日期 */ }
+        finish(a);
+      }, () => finish(null));
+    });
+  }
+
+  function refreshAccess() {
+    if (!enabled || !paidUi()) return Promise.resolve(null);
+    const user = window.CLOUD.user;
+    if (!user || !client) return Promise.resolve(null);
+    if (!accountShown()) return Promise.resolve(null);   // 讀到的會是別的分頁登入的那個人的使用權,不採用
+    return fetchAccess(user);
+  }
+
+  function locked() {
+    return paidUi() && !!serverAccess && serverAccess.active === false;
+  }
+
+  /* 上一次存下來的使用權(只用來顯示日期) */
+  function cachedAccess() {
+    const u = window.CLOUD && window.CLOUD.user;
+    if (!u || typeof u.id !== 'string') return null;
+    try {
+      const c = JSON.parse(localStorage.getItem(accessKey(u.id)));
+      return c && c.access && typeof c.access === 'object' ? c.access : null;
+    } catch (e) { return null; }
+  }
+
+  /* 伺服器回來的「原因,請做某事」拆成兩行:第一行發生什麼,第二行怎麼辦(畫面用 white-space: pre-line 顯示換行);其他訊息原樣、不補句號 */
+  function twoLines(m) {
+    const s = String(m);
+    if (s.indexOf('\n') >= 0) return s;
+    const i = s.search(/[，,]請/);
+    if (i < 0) return s;
+    return (s.slice(0, i) + '\n' + s.slice(i + 1)).replace(/[。.]$/, '');
+  }
+
+  /* 呼叫資料庫函式;資料庫的錯誤訊息(中文)原樣丟出,連不上才換成網路的說明。
+     加入班級、老師試用、讀方案與付款紀錄都是「這台現在登入的帳號」的:不是畫面上這個就不送 */
+  async function callRpc(fn, args) {
+    if (!enabled) throw new Error('這個網站沒有開雲端帳號');
+    await window.CLOUD.ready;
+    if (!window.CLOUD.user) throw new Error('請先登入');
+    needClient();
+    mustBeShown();
+    let res;
+    try { res = await client.rpc(fn, args); } catch (e) { res = { error: e }; }
+    if (res && res.error) {
+      const m = String(res.error.message || '');
+      throw new Error(/failed to fetch|networkerror|load failed/i.test(m) ? '連不上雲端伺服器\n請檢查網路後再試' : (m ? twoLines(m) : '發生錯誤\n請稍後再試'));
+    }
+    return res ? res.data : null;
+  }
+  function joinClass(code) { return callRpc('join_class', { p_code: String(code == null ? '' : code) }); }
+  async function startTeacherTrial(seats, name) {
+    const data = await callRpc('start_teacher_trial', { p_seats: Number(seats), p_class_name: String(name || '').trim() || null });
+    refreshAccess();
+    return data;
+  }
+  function myBilling() { return callRpc('my_billing', {}); }
+  /* 付款結果頁查自己的一筆單(newebpay/paid_gateway_additions.sql 的 my_checkout;不是自己的單回 null)。只讀 */
+  function myCheckout(orderNo) { return callRpc('my_checkout', { p_order_no: String(orderNo == null ? '' : orderNo) }); }
+
+  /* 建立藍新付款單(Edge Function newebpay-checkout,js/checkout.js 呼叫)。
+     只送商品代號與「勾選同意」:金額由伺服器的價格表決定,這裡一個數字都不送。
+     consent_at 是勾選的時間(裝置的鐘),伺服器另外用自己的時間記下同意的條款版本。
+     回伺服器原本的回應 { action, fields, order_no },檢查交給 checkout.js(validResponse)。 */
+  const CHECKOUT_TIMEOUT_MS = 20000;
+  async function startCheckout(sku, consentAt) {
+    if (!enabled) throw new Error('這個網站沒有開雲端帳號');
+    await window.CLOUD.ready;
+    const user = window.CLOUD.user;
+    if (!user) throw new Error('請先登入');
+    needClient();
+    mustBeShown();   // 別的分頁登出、換了帳號(下面的登入憑證比對擋得住換帳號,擋不住登出又登回別人之前的那一下)
+    let token = '';
+    try {
+      const { data } = await client.auth.getSession();
+      const s = data && data.session;
+      if (s && s.user && s.user.id === user.id && typeof s.access_token === 'string') token = s.access_token;
+    } catch (e) { token = ''; }
+    if (!token) throw new Error('登入已失效\n請重新登入後再試');
+    const ctl = typeof AbortController === 'function' ? new AbortController() : null;
+    const timer = setTimeout(() => { if (ctl) ctl.abort(); }, CHECKOUT_TIMEOUT_MS);
+    let res;
+    try {
+      res = await fetch(cfg.url.replace(/\/+$/, '') + '/functions/v1/newebpay-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token, apikey: cfg.anonKey },
+        body: JSON.stringify({ sku: String(sku), consent: true, consent_at: String(consentAt) }),
+        cache: 'no-store', credentials: 'omit', signal: ctl ? ctl.signal : undefined,
+      });
+    } catch (e) {
+      throw new Error('連不上付款伺服器\n請檢查網路後再試');
+    } finally {
+      clearTimeout(timer);
+    }
+    let body = null;
+    try { body = await res.json(); } catch (e) { body = null; }
+    if (res.status === 401) throw new Error('登入已失效\n請重新登入後再試');
+    if (!res.ok) {
+      /* 回應是 { error: 代碼, message: 給人看的話 }(11 月 1 日前、已經可以使用的帳號),或舊的 { error: 給人看的話 }。
+         英文代碼(not_open、method not allowed)不給人看 */
+      const say = v => (typeof v === 'string' && /[^\x00-\x7f]/.test(v) ? v.trim() : '');
+      const m = (body && (say(body.message) || say(body.error))) || '暫時無法建立付款\n請稍後再試';
+      throw new Error(twoLines(m.slice(0, 120)));
+    }
+    return body;
+  }
+
+  /* 是不是站長:只用來決定價格頁要不要顯示 NT$10 測試項目(?paytest=1)。能不能買由資料庫擋(newebpay_begin_checkout)。
+     有 my_access 就用它;PAID_UI 沒開時沒有,改讀自己那一列 teachers.is_owner(teachers 的政策只給讀自己的列)。 */
+  async function isOwner() {
+    if (!enabled) return false;
+    try { await window.CLOUD.ready; } catch (e) { return false; }
+    const user = window.CLOUD.user;
+    if (!user || !client) return false;
+    if (serverAccess && typeof serverAccess.is_owner === 'boolean') return serverAccess.is_owner;
+    try {
+      const { data, error } = await client.from('teachers').select('is_owner').eq('user_id', user.id);
+      if (error || !Array.isArray(data)) return false;
+      return data.some(r => r && r.is_owner === true);
+    } catch (e) { return false; }
+  }
+
+  /* 讀雲端單一鍵(唯讀;小雞寫回前先抓雲端那一份合併,因為每個分頁只灌一次雲端資料)。
+     回 { ok: true, found, v, updated_at }(雲端沒有這一列 found 是 false;別台刪掉的那一列 found 是 true、v 是 null)。
+     沒登入、離線、連不上、逾時、讀到一半換了帳號、這一頁剛灌完資料要重載:回 { ok: false },
+     呼叫的人這時不能把「沒讀到」當成「雲端沒有」去上傳。不寫本機、不動帳本、不上傳。 */
+  const READ_TIMEOUT_MS = 8000;
+  async function readKey(key) {
+    const fail = { ok: false };
+    if (!enabled || typeof key !== 'string' || !key || key.length > 100) return fail;
+    try { await window.CLOUD.ready; } catch (e) { return fail; }
+    const user = window.CLOUD.user;
+    if (!client || !user || typeof user.id !== 'string' || reloading || pidOf(user) !== window.__PROFILE_ID) return fail;
+    let timer = null;
+    const timeout = new Promise(resolve => { timer = setTimeout(() => resolve(null), READ_TIMEOUT_MS); });
+    /* 先確認 supabase-js 手上的登入就是這個帳號:沒有登入時查詢會用公開金鑰,RLS 回空陣列,會被誤當成「雲端沒有」 */
+    const query = (async () => {
+      const { data } = await client.auth.getSession();
+      const s = data && data.session;
+      if (!s || !s.user || s.user.id !== user.id) return null;
+      return client.from('progress').select('k,v,updated_at').eq('user_id', user.id).eq('k', key);
+    })();
+    let res;
+    try { res = await Promise.race([query, timeout]); } catch (e) { res = null; }
+    clearTimeout(timer);
+    const cur = window.CLOUD.user;
+    if (!res || res.error || !Array.isArray(res.data) || !cur || cur.id !== user.id || reloading) return fail;
+    const row = res.data.filter(r => r && r.k === key)[0];
+    if (!row) return { ok: true, found: false, v: null, updated_at: null };
+    return { ok: true, found: true, v: row.v === undefined ? null : row.v, updated_at: typeof row.updated_at === 'string' ? row.updated_at : null };
+  }
+
+  /* 註冊時選了老師的意向('tr_signup_intent' = { seats, name, at, email?, uid? }),綁在要註冊的那個帳號上(
+     保守做法:只存在這台,不寫進帳號資料 user_metadata,別台點驗證信不會自動開,改用「我的」頁與教師後台的開始老師試用):
+     - Email 註冊:存 localStorage(收驗證信可能換分頁),帶小寫的 Email。signUp 成功就綁上回來的帳號 id(uid),
+       之後只認這個 id(同一個 Email 刪掉重建的帳號是新的 id,不算);沒拿到 id 就不自動開(不退回比 Email)。對不上的當場清掉、不用。
+     - Google 註冊(按按鈕時還不知道 Email):存 sessionStorage,只有同一個分頁從 Google 回來讀得到。
+       開頁時網址帶 access_token(或 ?code=)才算這個分頁自己從 Google 回來;那一頁 getSession 拿到帳號就綁上帳號 id,
+       拿不到(沒有 session、雲端初始化失敗)、拿到的是開頁前這台就登入著的帳號(假的 ?code= 網址),
+       或開頁到 getSession 之間別的分頁改過登入資料,就丟掉。之後只認綁的 id 跟登入的帳號一樣的;沒綁 id 的一律不算。
+       別的分頁登入、在 Google 頁按上一頁、取消回來的都不算(取消回來的當場清掉)。
+     選學生註冊、按登入時呼叫 clearSignupIntent;讀過一次(takeSignupIntent)不論成不成立都清掉。 */
+  const sessionIntents = new WeakSet();   // takeSignupIntent 從這個分頁 sessionStorage 讀出來、綁的帳號 id 跟登入的一樣(Google 那條)
+  function saveSignupIntent(o, at) {
+    const email = o && typeof o.email === 'string' ? o.email.trim().toLowerCase() : '';
+    const intent = { seats: Number(o && o.seats), name: String((o && o.name) || '').trim(), at: typeof at === 'number' ? at : Date.now() };
+    if (email) intent.email = email;
+    clearSignupIntent();
+    try {
+      if (email) localStorage.setItem(INTENT_KEY, JSON.stringify(intent));
+      else sessionStorage.setItem(INTENT_KEY, JSON.stringify(intent));
+    } catch (e) { /* 存不進去就不會自動開試用,登入後到「我的」頁自己開 */ }
+    return Object.assign({}, intent);
+  }
+  function clearSignupIntent() {
+    try { localStorage.removeItem(INTENT_KEY); } catch (e) {}
+    try { sessionStorage.removeItem(INTENT_KEY); } catch (e) {}
+  }
+  function readIntent(store) {
+    try {
+      const v = JSON.parse(store.getItem(INTENT_KEY));
+      return v && typeof v === 'object' && !Array.isArray(v) ? v : null;
+    } catch (e) { return null; }
+  }
+  /* 每一頁一載入(有沒有登入都一樣):過期(超過 30 分鐘)或時間在未來的意向清掉,Email 不在這台久留;
+     Google 那條:網址是 Google 導回來的就記下(等 getSession 之後綁帳號 id),是登入失敗導回來的就清掉。
+     舊版寫過的 tr_signup_intent_used 一併清掉(已經不用) */
+  function tidySignupIntent(authErr) {
+    try { localStorage.removeItem(OLD_INTENT_USED_KEY); } catch (e) {}
+    const now = Date.now();
+    const hash = String(location.hash || ''), search = String(location.search || '');
+    const back = (/[#&]access_token=/.test(hash) && !/[#&]type=/.test(hash)) || /[?&]code=/.test(search);
+    const tidy = (store, isSession) => {
+      const raw = store.getItem(INTENT_KEY);
+      if (raw === null) return;
+      let v = null;
+      try { v = JSON.parse(raw); } catch (e) { v = null; }
+      const at = v && typeof v === 'object' ? v.at : NaN;
+      if (typeof at !== 'number' || !isFinite(at) || now - at > INTENT_WINDOW_MS || at > now + INTENT_SKEW_MS) { store.removeItem(INTENT_KEY); return; }
+      if (!isSession) return;
+      if (authErr) store.removeItem(INTENT_KEY);
+      else if (back) { googleBack = true; idBeforeBack = storedSessionId(); watchOtherTabs(true); }
+    };
+    try { tidy(localStorage, false); } catch (e) {}
+    try { tidy(sessionStorage, true); } catch (e) {}
+  }
+  /* localStorage 裡 supabase-js 現在存的登入帳號 id(沒有就空字串) */
+  function storedSessionId() {
+    try {
+      const u = (JSON.parse(localStorage.getItem(SB_KEY)) || {}).user;
+      return u && typeof u.id === 'string' ? u.id : '';
+    } catch (e) { return ''; }
+  }
+  /* 從 Google 回來的那一頁,開頁到 getSession 這段時間別的分頁有沒有改登入資料(storage 事件只有別的分頁寫的才會送,
+     這一頁 supabase-js 自己存的不會)。改過就不知道 getSession 拿到的是不是這次 Google 回來的帳號(記在 otherTabSignedIn) */
+  function onOtherTab(e) { if (e && (e.key === SB_KEY || e.key === null)) otherTabSignedIn = true; }
+  function watchOtherTabs(on) {
+    try { window[on ? 'addEventListener' : 'removeEventListener']('storage', onOtherTab); } catch (e) {}
+  }
+  /* 從 Google 回來的那一頁,getSession 之後呼叫一次(之後再呼叫什麼都不做):
+     拿到帳號就把這個分頁的 Google 意向綁上帳號 id;沒有帳號(session 是 null、雲端初始化失敗)就丟掉。
+     拿到的帳號就是開頁前這台原本登入的那一個(網址的 ?code= 是假的、沒換成新帳號),
+     或這段時間別的分頁改過登入資料:也丟掉(改用「我的」頁與教師後台的開始老師試用) */
+  function bindGoogleIntent(session) {
+    if (!googleBack) return;
+    googleBack = false;
+    watchOtherTabs(false);
+    const id = session && session.user && typeof session.user.id === 'string' ? session.user.id : '';
+    try {
+      const v = readIntent(sessionStorage);
+      if (!v) return;
+      if (!id || id === idBeforeBack || otherTabSignedIn) { sessionStorage.removeItem(INTENT_KEY); return; }
+      const out = Object.assign({}, v, { uid: id });
+      delete out.returned;
+      sessionStorage.setItem(INTENT_KEY, JSON.stringify(out));
+    } catch (e) { try { sessionStorage.removeItem(INTENT_KEY); } catch (e2) {} }
+  }
+  /* Email 註冊成功:把這台 localStorage 裡、Email 跟這次註冊一樣的意向綁上回來的帳號 id */
+  function bindEmailIntent(email, user) {
+    const id = user && typeof user.id === 'string' ? user.id : '';
+    if (!id) return;
+    try {
+      const v = readIntent(localStorage);
+      if (!v || typeof v.email !== 'string' || v.email !== String(email || '').trim().toLowerCase()) return;
+      localStorage.setItem(INTENT_KEY, JSON.stringify(Object.assign({}, v, { uid: id })));
+    } catch (e) { /* 綁不上:不自動開,登入後到「我的」頁自己開 */ }
+  }
+  /* Email 那條綁的是不是這個帳號:只比綁上的 uid。沒綁到 uid 的一律不算(不退回比 Email:
+     同一個 Email 刪掉重建的帳號會被當成同一個),這時改用「我的」頁與教師後台的開始老師試用 */
+  function emailIntentFor(v, user) {
+    if (typeof v.email !== 'string' || !v.email) return false;
+    return typeof v.uid === 'string' && !!v.uid && !!(user && user.id === v.uid);
+  }
+  /* 讀出這台的意向(讀了就清)。登入了就只回綁在這個帳號上的:Google 那條要綁的 id 一樣,
+     Email 那條要綁的 id 一樣;對不上的回 null(一樣清掉)。帳號資料 user_metadata 一律不讀。 */
+  function takeSignupIntent() {
+    const u = window.CLOUD.user;
+    const uid = u && typeof u.id === 'string' ? u.id : '';
+    let intent = null;
+    const s = readIntent(sessionStorage), l = readIntent(localStorage);
+    if (s && uid && typeof s.uid === 'string' && s.uid === uid) {
+      intent = { seats: s.seats, name: s.name, at: s.at, uid: s.uid };
+      sessionIntents.add(intent);
+    } else if (l && typeof l.email === 'string' && l.email && (!u || emailIntentFor(l, u))) {
+      intent = { seats: l.seats, name: l.name, at: l.at, email: l.email };
+      if (typeof l.uid === 'string' && l.uid) intent.uid = l.uid;
+    }
+    clearSignupIntent();
+    return intent;
+  }
+
+  /* 登入後要不要自動開老師試用。全部成立才開:意向是 30 分鐘內存的、
+     綁的是這個帳號(Email 那條:綁的帳號 id 一樣,沒綁 id 的不算;Google 那條:這個分頁讀出來、綁的帳號 id 一樣)、
+     帳號是這次才建立的、資料庫說可以試用。
+     帳號建立時間是伺服器的鐘,意向的 at 是裝置的鐘:用 my_access 的 server_now 算出兩個鐘差多少再比。 */
+  function trialIntentOk(intent, user, access, now) {
+    const t = typeof now === 'number' ? now : Date.now();
+    if (!intent || typeof intent !== 'object' || [10, 30, 60].indexOf(intent.seats) < 0) return false;
+    if (sessionIntents.has(intent)) {
+      if (!user || typeof intent.uid !== 'string' || !intent.uid || user.id !== intent.uid) return false;
+    } else if (!emailIntentFor(intent, user)) return false;
+    const created = Date.parse(user && user.created_at);
+    if (!isFinite(created)) return false;
+    const serverNow = Date.parse(access && access.server_now);
+    const offset = isFinite(serverNow) ? serverNow - t : 0;   // 伺服器的鐘減裝置的鐘
+    const at = intent.at;
+    if (typeof at !== 'number' || !isFinite(at) || at > t + INTENT_SKEW_MS || t - at > INTENT_WINDOW_MS) return false;
+    if (created < at + offset - INTENT_SKEW_MS) return false;
+    return !!(access && access.teacher_trial_available === true);
+  }
+
+  /* 「我的」頁方案狀態用哪一種;日期一律用伺服器回的 */
+  function accessStatus(a) {
+    if (!a || typeof a !== 'object') return null;
+    if (a.is_owner) return { kind: 'owner' };
+    const now = Date.parse(a.server_now);
+    const paid = Date.parse(a.paid_through);
+    if (isFinite(paid) && paid > (isFinite(now) ? now : Date.now())) return { kind: 'paid', until: a.paid_through };
+    if (a.source === 'legacy' || a.source === 'class' || a.source === 'trial') return { kind: a.source, until: a.until || null };
+    if (a.active === false) return { kind: 'expired' };
+    return { kind: 'active', until: a.until || null };
+  }
+
+  /* 試用快結束的提示條:只有目前靠試用、而且 until 在 2 天以內(試用中已付款的人 until 是付費到期日,不會出現) */
+  function trialEndsSoon(a) {
+    if (!a || a.source !== 'trial' || !a.until) return false;
+    const left = Date.parse(a.until) - Date.parse(a.server_now);
+    return isFinite(left) && left > 0 && left <= 2 * 864e5;
+  }
+
+  /* ---------- 「還沒上雲」帳本 ----------
+     鍵 → 本機改動的時間(ms)。寫入當下就記,上傳成功才劃掉。
+     存在 localStorage 但不在學生資料的前綴底下,灌資料與登出的批次刪除不會誤刪它。 */
+  function ledgerKey(uid) { return 'tr_unsynced_' + uid; }
+  function readLedger(uid) {
+    try { return JSON.parse(localStorage.getItem(ledgerKey(uid))) || {}; } catch (e) { return {}; }
+  }
+  function writeLedger(uid, led) {
+    try {
+      if (Object.keys(led).length) localStorage.setItem(ledgerKey(uid), JSON.stringify(led));
+      else localStorage.removeItem(ledgerKey(uid));
+    } catch (e) {}
+  }
+
+  /* ---------- 「只在本機」標記(要合併的鍵) ----------
+     開關都關著(第 2 步)時,pet-store 讀不到雲端只寫本機、不記帳:同一台還開著的第 1 步分頁會把帳本上的 pet 不合併就傳上去。
+     以前登出只看帳本,這些改動(取名、改目標、餵飼料)會不問就跟著帳號資料夾刪掉。現在 pet-store 寫本機時在這裡記「鍵 → 時間」,
+     不在帳本裡,第 1 步的 cloud.js 看不到;登出時這一版先合併再上傳,傳不上去就算進「還沒同步」先問。
+     合併上傳成功、灌資料合併過、pet-store 讀到雲端再寫過,就劃掉。存在帳號資料夾外面(灌資料不會當成進度上傳),登出時清掉 */
+  let writeSeq = 0;   // 記帳(push)與標記的次數:登出補傳的時候又寫進來就再補傳一次
+  function localOnlyKey(uid) { return 'tr_localonly_' + uid; }
+  function readLocalOnly(uid) {
+    try { const o = JSON.parse(localStorage.getItem(localOnlyKey(uid))); return o && typeof o === 'object' && !Array.isArray(o) ? o : {}; } catch (e) { return {}; }
+  }
+  function writeLocalOnly(uid, o) {
+    try {
+      if (Object.keys(o).length) localStorage.setItem(localOnlyKey(uid), JSON.stringify(o));
+      else localStorage.removeItem(localOnlyKey(uid));
+    } catch (e) {}
+  }
+  function markedUser() {
+    const u = enabled ? window.CLOUD.user : null;
+    return u && typeof u.id === 'string' && pidOf(u) === window.__PROFILE_ID ? u : null;
+  }
+  function markLocalOnly(key) {
+    const u = markedUser();
+    if (!u || !spec(key)) return;
+    writeSeq++;
+    writeLocalOnly(u.id, Object.assign({}, readLocalOnly(u.id), { [key]: Date.now() }));
+  }
+  function clearLocalOnly(key) {
+    const u = markedUser();
+    if (u) unmark(u.id, key, Infinity);
+  }
+  /* 標記的時間不晚於 t(上傳的那份讀本機之前就寫了)才劃掉 */
+  function unmark(uid, key, t) {
+    const o = readLocalOnly(uid);
+    if (!(key in o) || o[key] > t) return;
+    const rest = Object.assign({}, o);
+    delete rest[key];
+    writeLocalOnly(uid, rest);
+  }
+  /* 登出前呼叫 pet-store:還在等讀雲端的券和動作先照讀不到雲端的規則寫下來(第 3 步記帳,第 2 步寫本機加標記) */
+  function flushPetStore() {
+    try { const S = window.PET_STORE; if (S && typeof S.flushPending === 'function') S.flushPending(); } catch (e) { /* 小雞出錯不擋登出 */ }
+  }
+  /* 登出前:帳本全部補傳,只在本機的要合併的鍵(帳本上沒有的)也先合併上傳。回傳還剩幾項沒上雲:
+     帳本上的加上還標記著的,同一個鍵只算一次。等的這段時間又有寫入(例如小雞那一輪讀到雲端、寫了合併後的那份,
+     讓這次合併上傳因為本機變了而放棄)就再補傳一次,最多三次;什麼都沒變就不再試(網路不通時不多等) */
+  async function unsynced(user) {
+    let left = 0;
+    for (let pass = 0; pass < 3; pass++) {
+      const before = pendingState(user), seq = writeSeq;
+      left = await uploadPass(user);
+      if (!left || (writeSeq === seq && pendingState(user) === before)) break;
+    }
+    if (await reconcile(user)) left = leftCount(user);   // 對帳時發現雲端少了:合併上傳;傳不上去的記在帳本,算進「還沒同步」
+    return left;
+  }
+  async function uploadPass(user) {
+    const marks = readLocalOnly(user.id), led = readLedger(user.id);
+    const extra = Object.keys(marks).filter(k => spec(k) && !(k in led));
+    const at = k => (typeof marks[k] === 'number' && isFinite(marks[k]) && marks[k] > 0 ? marks[k] : Date.now());
+    await Promise.all([flushAll()].concat(canUpload(user) ? extra.map(k => upload(user, k, at(k))) : []));
+    return leftCount(user);
+  }
+  /* 還剩幾項沒上雲:帳本上的加上還標記著「只在本機」的,同一個鍵只算一次 */
+  function leftCount(user) {
+    const left = new Set(Object.keys(readLedger(user.id)));
+    Object.keys(readLocalOnly(user.id)).forEach(k => { if (spec(k)) left.add(k); });
+    return left.size;
+  }
+  /* 登出前對帳:表上 reconcile 的鍵、本機有值的,一次查詢讀它們在雲端的列(題庫連 sync_del 一起讀),
+     合併結果跟雲端不同就記帳、走 upload 的佇列上傳。別台的舊版頁面可能剛把雲端蓋掉,這台本機是唯一還有那份的地方,
+     登出要刪本機,刪之前確認雲端不比本機少。讀不到雲端(離線)、合併說唯讀:什麼都不做,不另外算進「還沒同步」
+     (不然每次離線登出都要問;已知限制 6)。回傳有沒有發現雲端少了。
+     搬家(flushForMove)也對帳,用 checkCloud 多拿 unsure:本機有、但沒確認雲端不比本機少的鍵(讀不到雲端、合併說唯讀),放進搬家包 */
+  async function reconcile(user) { return (await checkCloud(user)).behind; }
+  async function checkCloud(user) {
+    const prefix = 'tr_u' + pidOf(user) + '_';
+    const has = k => { const v = readLocal(prefix + k); return v !== null && v !== undefined; };
+    const keys = Object.keys(MERGED).filter(k => MERGED[k].reconcile && has(k));
+    const notRead = { behind: false, unsure: keys };
+    if (!keys.length || !canUpload(user)) return notRead;
+    const want = keys.some(k => MERGED[k].tombs) && keys.indexOf(TOMBS) < 0 ? [TOMBS].concat(keys) : keys;
+    const clean = {};
+    want.forEach(k => { clean[k] = cleanKey(user.id, k); });
+    const rows = await readRows(user, want);
+    if (!rows.ok) return notRead;
+    let tombsV = null;
+    const behind = [], unsure = [];
+    Object.keys(MERGED).filter(k => want.indexOf(k) >= 0).forEach(k => {
+      const local = readLocal(prefix + k);
+      const cv = rows.found[k] ? rows.v[k] : null;
+      if (local === null || local === undefined) { if (k === TOMBS) tombsV = cv; return; }
+      const m = runMerge(k, local, cv, tombsV, clean[k] && cleanKey(user.id, k));
+      if (k === TOMBS) tombsV = m && m.ok ? m.v : null;
+      if (!m || m.ok !== true) unsure.push(k);
+      else if (!m.sameAsCloud) behind.push(k);
+    });
+    if (!behind.length) return { behind: false, unsure };
+    const led = readLedger(user.id), t = Date.now();
+    behind.forEach(k => { if (!(k in led)) led[k] = t; });
+    writeSeq++;
+    writeLedger(user.id, led);
+    await Promise.all(behind.map(k => upload(user, k, led[k], clean[k])));   // 帳本是對帳剛記的:本機還是沒改過的那份(localClean)
+    return { behind: true, unsure };
+  }
+  /* 帳本、標記和要合併的鍵的本機值:補傳前後比對,看等的時候有沒有又寫進來 */
+  function pendingState(user) {
+    const prefix = 'tr_u' + pidOf(user) + '_';
+    let vals = [];
+    try { vals = Object.keys(MERGED).map(k => localStorage.getItem(prefix + k)); } catch (e) { /* 讀不到就只比帳本 */ }
+    return JSON.stringify([readLedger(user.id), readLocalOnly(user.id), vals]);
+  }
+
+  /* 上傳一個鍵。合併表上的鍵排隊走 uploadMerged(題庫走 uploadWithTombs),其他鍵照舊。
+     clean:帳本上這一筆(時間 t)是登出前對帳記的,本機那份上次跟雲端對齊之後沒改過 */
+  function upload(user, key, t, clean) {
+    const s = spec(key);
+    if (!s) return uploadPlain(user, key, t);
+    return enqueue(key, () => (s.tombs ? uploadWithTombs(user, key, t, false, clean === true) : uploadMerged(user, key, t)));
+  }
+  function enqueue(key, run) {
+    const q = spec(key).queue || key;
+    const p = (queues[q] || Promise.resolve()).then(run, run);
+    queues[q] = p.catch(() => false);
+    return p;
+  }
+
+  /* 上傳一個鍵的「目前本機值」。成功且期間沒有更新的改動,才從帳本劃掉。 */
+  async function uploadPlain(user, key, t) {
+    let v = null;
+    try {
+      const raw = localStorage.getItem('tr_u' + pidOf(user) + '_' + key);
+      v = raw === null ? null : JSON.parse(raw);
+    } catch (e) { return false; }
+    try {
+      const { error } = await client.from('progress').upsert({
+        user_id: user.id, k: key, v, updated_at: new Date(t).toISOString(),
+      }, { onConflict: 'user_id,k' });
+      if (error) throw error;
+      const led = readLedger(user.id);
+      if (led[key] !== undefined && led[key] <= t) { delete led[key]; writeLedger(user.id, led); }
+      return true;
+    } catch (e) {
+      console.warn('進度暫時沒同步，已記下，下次連線會補傳：' + key, e);
+      return false;
+    }
+  }
+
+  /* ---------- 先合併再上傳的鍵(pet、自訂題庫、刪除標記、模擬考紀錄) ---------- */
+  function mergeFn(key) { const s = spec(key); return s ? s.merge() : null; }
+  /* 呼叫合併函式:題庫多給合併後的刪除標記和 localClean;其他照 PET.cloudMerge 的約定(本機, 雲端, 現在)。丟錯當成合併不了。
+     clean:本機這個鍵上次跟雲端對齊之後沒改過(帳本上沒有、也沒有「只在本機」的標記)。雲端跟它不一樣就是別台改的;
+     舊版頁面就地改名、取消勾選、改中文不動戳記,兩份分不出先後時用雲端那份(以前比字串,改名會被退回) */
+  function runMerge(key, local, cloudV, tombsV, clean) {
+    const fn = mergeFn(key);
+    if (!fn) return null;
+    try { return spec(key).tombs ? fn(local, cloudV, { now: Date.now(), tombs: tombsV, localClean: clean === true }) : fn(local, cloudV, Date.now()); } catch (e) { return null; }
+  }
+  function cleanKey(uid, key) { return !(key in readLedger(uid)) && !(key in readLocalOnly(uid)); }
+  /* 合併後上傳失敗:本機已經是合併結果、跟雲端不同,帳本上沒有的鍵補記(開單字頁、對帳的 pull 走到這裡時帳本本來是空的)。
+     不記的話恢復連線、關頁都不會補傳,離線登出也不會問,別台舊版剛把雲端蓋掉時這台是唯一還有那份的地方 */
+  function holdInLedger(user, keys) {
+    const led = readLedger(user.id), t = Date.now();
+    const add = keys.filter(k => !(k in led));
+    if (!add.length) return;
+    add.forEach(k => { led[k] = t; });
+    writeSeq++;
+    writeLedger(user.id, led);
+  }
+  /* 比較兩份 JSON 內容(物件的鍵排序後;雲端 jsonb 回來的鍵順序跟本機寫的不一樣) */
+  function canonOf(x) {
+    if (Array.isArray(x)) return '[' + x.map(canonOf).join(',') + ']';
+    if (x && typeof x === 'object') return '{' + Object.keys(x).sort().map(k => JSON.stringify(k) + ':' + canonOf(x[k])).join(',') + '}';
+    return JSON.stringify(x === undefined ? null : x);
+  }
+  /* 讀本機一個鍵:沒有是 null,壞掉(不是 JSON)是 undefined */
+  function readLocal(lk) {
+    try { const raw = localStorage.getItem(lk); return raw === null ? null : JSON.parse(raw); } catch (e) { return undefined; }
+  }
+  /* 合併後寫回本機的通知(單字頁在首頁時重畫);pet 不送 */
+  function notify(key) {
+    if (key === 'pet') return;
+    try { if (typeof window.dispatchEvent === 'function' && typeof CustomEvent === 'function') window.dispatchEvent(new CustomEvent('cloud:merged', { detail: { key } })); } catch (e) { /* 只是不會自動重畫 */ }
+  }
+  /* 合併前對時(Integrate 加,跟 js/pet-store.js 同一套):PET.cloudMerge 整理時用這台的時間,晚超過 7 天的日期會丟掉、
+     太舊的會壓縮。這台時鐘比伺服器慢超過 3 天或快超過 3 天、或拿不到登入憑證的 iat,就不合併、不上傳,帳本留著。
+     兩台一快一慢時相差兩邊相加,pet.js 只留這台的今天加 7 天以內的日期、今天往前 6 天的 fed,所以兩邊相加不能超過 6 天:
+     以前各 6 天,一台快 4 天、一台慢 4 天時,慢的那台合併會丟掉快的那台的練習日、達標日、券和吃掉紀錄再上傳
+     (js/pet-store.js 同一組數字,test_pet.js 從兩個檔讀出來驗)。
+     伺服器時間取自 supabase-js 手上登入憑證的 iat(剛換過的憑證,跟伺服器最多差憑證的有效期) */
+  const SLOW_MAX_MS = 3 * 864e5, FAST_MAX_MS = 3 * 864e5;
+  function clockOkFrom(s) {
+    try {
+      const part = s && typeof s.access_token === 'string' ? s.access_token.split('.')[1] : '';
+      if (!part) return false;
+      const b64 = part.replace(/-/g, '+').replace(/_/g, '/');
+      const claims = JSON.parse(window.atob(b64 + '==='.slice((b64.length + 3) % 4)));
+      if (typeof claims.iat !== 'number' || !isFinite(claims.iat)) return false;
+      const skew = claims.iat * 1000 - Date.now();
+      return skew <= SLOW_MAX_MS && -skew <= FAST_MAX_MS;
+    } catch (e) { return false; }
+  }
+  async function sessionClockOk(user) {
+    let timer = null;
+    const timeout = new Promise(resolve => { timer = setTimeout(() => resolve(null), READ_TIMEOUT_MS); });
+    let res;
+    try { res = await Promise.race([client.auth.getSession(), timeout]); } catch (e) { res = null; }
+    clearTimeout(timer);
+    const s = res && res.data && res.data.session;
+    return !!(s && s.user && s.user.id === user.id) && clockOkFrom(s);
+  }
+  /* 灌資料時有沒有要對時的鍵(pet)要合併(本機和雲端都有,雲端那一列 v 不是 null) */
+  function mergeNeeded(prefix, cloud) {
+    return Object.keys(MERGED).filter(k => MERGED[k].clock).some(k => {
+      const c = cloud[k];
+      if (!c || c.v === null || c.v === undefined) return false;
+      try { const raw = localStorage.getItem(prefix + k); return raw !== null && raw !== 'null'; } catch (e) { return true; }
+    });
+  }
+  function strike(user, key, t) {
+    const led = readLedger(user.id);
+    if (led[key] !== undefined && led[key] <= t) { delete led[key]; writeLedger(user.id, led); }
+  }
+  /* 先讀雲端那一列、合併、存回本機,再上傳合併結果。本機是 null:不上傳 null(不刪雲端那份),帳本劃掉。
+     拿不到合併函式、讀不到雲端、合併說唯讀、讀雲端這段時間本機又改了:回 false,帳本留著,下一次再來。
+     寫回本機不經過 store.set(不再記帳、不再觸發上傳) */
+  async function uploadMerged(user, key, t, pull) {
+    const lk = 'tr_u' + pidOf(user) + '_' + key;
+    const readAt = Date.now();   // 這之前標記的「只在本機」改動都在要上傳的這一份裡
+    let raw, v;
+    try { raw = localStorage.getItem(lk); v = raw === null ? null : JSON.parse(raw); } catch (e) { return false; }
+    if (v === null && !pull) { strike(user, key, t); unmark(user.id, key, readAt); return true; }
+    const merge = mergeFn(key);
+    if (!merge) return false;
+    const row = await fetchRow(user, key);
+    if (!row.ok) return false;
+    if (v === null && !(row.found && row.v !== null)) return true;   // syncKey:兩邊都沒有
+    let out = v, sent = raw;   // sent:上傳的那份在本機的樣子(上傳完本機還是它,標記才劃掉)
+    if (row.found && row.v !== null) {
+      if (spec(key).clock && !row.clock) return false;   // 時鐘差太多:不合併、不上傳,帳本留著
+      let m = null;
+      try { m = merge(v, row.v, Date.now()); } catch (e) { m = null; }
+      if (!m || m.ok !== true) return false;
+      try {
+        if (localStorage.getItem(lk) !== raw) return false;
+        if (!m.sameAsLocal) { localStorage.setItem(lk, JSON.stringify(m.v)); notify(key); }
+      } catch (e) { return false; }
+      if (m.sameAsCloud) { strike(user, key, t); unmark(user.id, key, readAt); return true; }
+      if (!m.sameAsLocal) { out = m.v; sent = JSON.stringify(m.v); }
+    }
+    try {
+      const { error } = await client.from('progress').upsert({
+        user_id: user.id, k: key, v: out, updated_at: new Date(t).toISOString(),
+      }, { onConflict: 'user_id,k' });
+      if (error) throw error;
+      strike(user, key, t);
+      try { if (localStorage.getItem(lk) === sent) unmark(user.id, key, readAt); } catch (e) { /* 讀不到就留著標記,登出時多問一次 */ }
+      return true;
+    } catch (e) {
+      /* pet 不補記:跟以前一樣只留「只在本機」標記(pet 的請求逐位元組不變) */
+      if (!spec(key).clock) holdInLedger(user, [key]);
+      console.warn('進度暫時沒同步，已記下，下次連線會補傳：' + key, e);
+      return false;
+    }
+  }
+  /* 上傳前讀雲端單一列。跟 readKey 一樣先確認 supabase-js 手上的登入就是這個帳號、8 秒逾時、讀到一半換帳號或要重載就算失敗;
+     不等 CLOUD.ready(灌資料就在 init 裡面,等它會卡死)。回 { ok, found, v } */
+  async function fetchRow(user, key) {
+    const r = await readRows(user, [key]);
+    if (!r.ok) return r;
+    return r.found[key] ? { ok: true, found: true, v: r.v[key], clock: r.clock } : { ok: true, found: false, v: null, clock: r.clock };
+  }
+  /* 讀幾列(一列用 eq,跟以前的請求一模一樣;多列用 in,一次查詢)。回 { ok, found: { 鍵: true }, v: { 鍵: 值 }, clock } */
+  async function readRows(user, keys) {
+    const fail = { ok: false };
+    if (!client || reloading) return fail;
+    let timer = null, clock = false;
+    const timeout = new Promise(resolve => { timer = setTimeout(() => resolve(null), READ_TIMEOUT_MS); });
+    const query = (async () => {
+      const { data } = await client.auth.getSession();
+      const s = data && data.session;
+      if (!s || !s.user || s.user.id !== user.id) return null;
+      clock = clockOkFrom(s);
+      const q = client.from('progress').select('k,v,updated_at').eq('user_id', user.id);
+      return keys.length === 1 ? q.eq('k', keys[0]) : q.in('k', keys);
+    })();
+    let res;
+    try { res = await Promise.race([query, timeout]); } catch (e) { res = null; }
+    clearTimeout(timer);
+    const cur = window.CLOUD.user;
+    if (!res || res.error || !Array.isArray(res.data) || !cur || cur.id !== user.id || reloading) return fail;
+    const out = { ok: true, found: {}, v: {}, clock };
+    res.data.forEach(r => { if (r && keys.indexOf(r.k) >= 0 && !out.found[r.k]) { out.found[r.k] = true; out.v[r.k] = r.v === undefined ? null : r.v; } });
+    return out;
+  }
+
+  /* 題庫(合併要用刪除標記的鍵)先合併再上傳:
+     1. 讀本機的題庫和 sync_del;2. 一次查詢讀雲端這兩列;3. 標記先合併,4. 題庫用合併後的標記合併;
+     5. 讀雲端這段時間本機兩個鍵有變 → 放棄(下一次再來);6. 寫回本機(不經 store.set,不記帳);
+     7. 跟雲端不同的列放在同一個 upsert 送出(兩列一起成功或一起失敗);8. 成功(或兩列都跟雲端一樣)就劃帳本:
+        題庫用帳本時間 t,標記用讀本機的時間(那之前寫的標記都在這一份裡)。
+     拿不到合併函式、讀不到雲端、任一個合併說唯讀:回 false,帳本留著,本機不改。
+     pull(syncKey):本機沒有題庫也照樣把雲端那份(套過標記)放進本機 */
+  async function uploadWithTombs(user, key, t, pull, cleanAt) {
+    const prefix = 'tr_u' + pidOf(user) + '_';
+    const lk = prefix + key, dk = prefix + TOMBS;
+    const readAt = Date.now();
+    /* 讀本機之前:帳本上沒有(或只有對帳記的那一筆,之後沒再寫過)→ 本機這份上次對齊之後沒改過(讀雲端的時候本機又改了就放棄) */
+    const clean = cleanKey(user.id, key) || (cleanAt === true && readLedger(user.id)[key] === t && !(key in readLocalOnly(user.id)));
+    let raw, rawD, v, d;
+    try {
+      raw = localStorage.getItem(lk); rawD = localStorage.getItem(dk);
+      v = raw === null ? null : JSON.parse(raw); d = rawD === null ? null : JSON.parse(rawD);
+    } catch (e) { return false; }
+    if (v === null && !pull) { strike(user, key, t); return true; }
+    if (!mergeFn(key) || !mergeFn(TOMBS)) return false;
+    const rows = await readRows(user, [key, TOMBS]);
+    if (!rows.ok) return false;
+    const cv = rows.found[key] ? rows.v[key] : null, cd = rows.found[TOMBS] ? rows.v[TOMBS] : null;
+    if (v === null && cv === null) return true;   // syncKey:兩邊都沒有
+    const md = runMerge(TOMBS, d, cd);
+    if (!md || md.ok !== true) return false;
+    const mb = runMerge(key, v, cv, md.v, clean);
+    if (!mb || mb.ok !== true) return false;
+    const tombsOut = md.v !== null && !md.sameAsLocal, banksOut = !mb.sameAsLocal;
+    try {
+      if (localStorage.getItem(lk) !== raw || localStorage.getItem(dk) !== rawD) return false;
+      if (tombsOut) localStorage.setItem(dk, JSON.stringify(md.v));
+      if (banksOut) localStorage.setItem(lk, JSON.stringify(mb.v));
+    } catch (e) { return false; }
+    if (banksOut) notify(key);
+    const at = new Date(t).toISOString();
+    const send = [];
+    if (md.v !== null && !md.sameAsCloud) send.push({ user_id: user.id, k: TOMBS, v: md.v, updated_at: at });
+    if (!mb.sameAsCloud) send.push({ user_id: user.id, k: key, v: mb.v, updated_at: at });
+    if (send.length) {
+      try {
+        const { error } = await client.from('progress').upsert(send, { onConflict: 'user_id,k' });
+        if (error) throw error;
+      } catch (e) {
+        holdInLedger(user, send.map(r => r.k));
+        console.warn('進度暫時沒同步，已記下，下次連線會補傳：' + key, e);
+        return false;
+      }
+    }
+    strike(user, key, t);
+    strike(user, TOMBS, readAt);
+    return true;
+  }
+
+  /* 頁面打開時跟雲端對齊一次(單字頁、閱讀頁開頁時呼叫 syncKey('vgame_banks')):
+     讀雲端、合併,本機有變就寫回本機(送 cloud:merged),雲端比較舊就上傳;走同一個佇列。等於題庫版的 remoteBehind:
+     開了好幾天的 App 一進單字頁就先對齊雲端,之後的編輯不會是根據舊資料。
+     回 { ok, changed }。沒登入、這一頁還沒灌過資料、不是合併表上要對帳的鍵、讀不到雲端:ok 是 false,什麼都不改 */
+  async function syncKey(key) {
+    const fail = { ok: false, changed: false };
+    const s = spec(key);
+    if (!enabled || !s || !s.reconcile) return fail;
+    try { await window.CLOUD.ready; } catch (e) { return fail; }
+    const user = window.CLOUD.user;
+    if (!user || typeof user.id !== 'string' || reloading || !canUpload(user) || pidOf(user) !== window.__PROFILE_ID) return fail;
+    const lk = 'tr_u' + pidOf(user) + '_' + key;
+    let before = null;
+    try { before = localStorage.getItem(lk); } catch (e) { return fail; }
+    const ok = await enqueue(key, () => (s.tombs ? uploadWithTombs(user, key, Date.now(), true) : uploadMerged(user, key, Date.now(), true)));
+    let after = before;
+    try { after = localStorage.getItem(lk); } catch (e) { after = before; }
+    return { ok: ok === true, changed: after !== before };
+  }
+  /* 灌雲端資料時:本機和雲端都有(雲端那一列 v 不是 null)就存合併結果(save,在雲端蓋本機那一圈之後才寫);
+     結果跟雲端不同就記帳、補傳,一樣就從帳本和補傳清單拿掉。本機沒有、或是 null:用雲端那份。
+     拿不到合併函式、合併說唯讀、或時鐘差太多(clockOk 是 false):要對時的鍵(pet)照原本的規則留本機或用雲端,但留本機也不補傳(hold),帳本留著;
+     其他鍵(題庫、標記、模擬考紀錄)本機跟雲端不一樣就一律留本機、不補傳(hold)、記帳本,不拿雲端蓋掉(本機可能有還沒傳上去的題庫)。
+     時鐘差太多、本機那份有「只在本機」的標記(marks,帳本上沒有)時也留本機、不補傳(hold):以前用雲端那份蓋掉,
+     讀不到雲端時改的名字、目標、餵食就不見了。允許的範圍改成 3 天以後差 3 到 6 天的裝置也會走到這裡。
+     留下來的那份下次對得了時由 pet-store 跟雲端合併上傳 */
+  function planMerged(prefix, cloud, keepLocal, led, clockOk, marks, dirty) {
+    const plan = { save: {}, hold: {} };
+    let tombsV = null;   // 合併後的刪除標記(表上 sync_del 排在 vgame_banks 前面),給題庫用
+    Object.keys(MERGED).forEach(k => {
+      const s = MERGED[k];
+      const c = cloud[k];
+      const local = readLocal(prefix + k);
+      if (!c || c.v === null || c.v === undefined) { if (k === TOMBS && local) tombsV = local; return; }   // 雲端沒有:照舊留本機、補傳
+      /* 本機沒有:用雲端那份(下面雲端蓋本機那一圈寫進來)。題庫先套一次刪除標記(舊版頁面整份上傳時可能把刪掉的帶回雲端),
+         套完跟雲端不同就存套過的那份、記帳補傳;標記認不得或頁面沒有合併函式就照舊用雲端那份 */
+      if (local === null) {
+        delete keepLocal[k]; delete led[k];
+        if (k === TOMBS) { const t = runMerge(k, null, c.v); tombsV = t && t.ok === true ? t.v : null; }
+        const m = s.tombs ? runMerge(k, null, c.v, tombsV) : null;
+        if (m && m.ok === true && !m.sameAsCloud) { plan.save[k] = m.v; keepLocal[k] = led[k] = Date.now(); }
+        return;
+      }
+      const fn = local === undefined || (s.clock && !clockOk) ? null : mergeFn(k);
+      const m = fn ? runMerge(k, local, c.v, tombsV, !(dirty && dirty[k])) : null;
+      if (k === TOMBS) tombsV = m && m.ok === true ? m.v : null;   // 標記認不得:題庫照聯集合併(只會多)
+      if (!m || m.ok !== true) {
+        if (s.clock && !(k in keepLocal) && !clockOk && local !== undefined && marks && Object.prototype.hasOwnProperty.call(marks, k)) keepLocal[k] = Date.now();
+        /* 不對時的鍵(題庫、標記、模擬考紀錄)本機和雲端都有、又合併不了(頁面沒有合併函式、合併說唯讀):一律留本機、不補傳、帳本記著,
+           之後有合併函式的頁面再合併上傳。以前雲端比帳本新時用雲端蓋掉本機,這台還沒傳上去的題庫就不見了 */
+        if (!s.clock && !(k in keepLocal) && local !== undefined && canonOf(local) !== canonOf(c.v)) { keepLocal[k] = led[k] = Date.now(); }
+        if (k in keepLocal) plan.hold[k] = true;
+        return;
+      }
+      plan.save[k] = m.v;
+      if (m.sameAsCloud) { delete keepLocal[k]; delete led[k]; return; }
+      keepLocal[k] = led[k] || Date.now();
+      led[k] = keepLocal[k];
+    });
+    return plan;
+  }
+
+  /* ---------- 搬家 ----------
+     舊網址:CLOUD.flushForMove() 在寄出頁「準備搬家」時呼叫。跟登出前一樣先叫小雞把等著的動作寫下來,但不登出、不刪任何東西;
+     帳本上(加上只在本機標記的 pet)每一項先讀雲端那一列的 updated_at:雲端沒有、或比帳本舊,照原本的方式上傳(pet 先合併再傳);
+     合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄)不看 updated_at,一律先合併再上傳(合併不會蓋掉別台的東西);
+     接著跟登出前一樣對帳(帳本是空的也做,checkCloud):別台舊版頁面剛把雲端蓋掉時,這台是唯一還有那份的地方,
+     離開舊網址之後(轉址期 301、service worker 註銷)不會再有機會補回;雲端少了就合併上傳,傳不上去的留在帳本,
+     讀不到雲端或合併說唯讀的,本機那份(時間 0)也一起交給搬家包;
+     其他雲端比帳本新的不上傳(uploadPlain 不比新舊,會用舊的蓋掉別台的新版),連同傳不上去的一起交給搬家包,
+     這一頁之後也不再自動補傳它們(held,只在這一頁,不寫進任何儲存)。回 { ok, left, accounts: { 帳號 id: [[鍵, 原字串, 帳本時間]] } }。
+     新網址:收件頁把那幾項存成 tr_move_pending_<帳號 id>,這個帳號在這台登入、灌資料時由 takePending 處理(手上有雲端每一列的 updated_at):
+     先決定這台這一項算不算數(跟下面灌資料同一套規則):本機有,而且帳本上比雲端新(或雲端沒有這一列)、
+     或帳本沒記但雲端完全沒有這一列(從沒上傳過),就以本機那份為底;否則以雲端那份為底。
+     合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄)用同步的合併(js/sync-merge.js):本機、雲端、暫存三份合併
+     (題庫套三份聯集的刪除標記;分不出先後的名稱、勾選:暫存那份比雲端新就偏暫存那份,本機有比暫存那份新的改動才不偏),寫進帳號資料夾、帳本記現在;
+     同一個題庫不會因為戳記不同另存「（舊網址）」,舊網址刪掉的題庫、字照標記刪掉;合併不了的(形狀認不得)暫存那份放進備份,本機不動。
+     其他可以聯集的(練習紀錄、錯題、完成紀錄、最佳成績、每日練習)本機算數就本機跟雲端先合併,再跟暫存那份合併,
+     寫進帳號資料夾、帳本記現在,下面照常上傳;錯題本同一題留時間比較新的;同一項兩邊不一樣又沒辦法比的,沒選上的那一整份也放進備份;pet 本機沒有就放暫存那份,交給 planMerged 跟雲端合併;
+     其他鍵(單一值)比時間:本機算數就拿帳本時間比(從沒上傳過的不知道時間,留本機),否則拿雲端那一列的時間比,暫存那份比較新才用。
+     沒被選上的每一份(本機、雲端、暫存)都存進 tr_move_backup_<時間>。處理完刪掉暫存區。合併程式(js/move-rules.js、
+     js/move-merge.js、js/daily.js、js/sync-merge.js)載不到、或寫不進去,就整個不處理,暫存區留著,下一個分頁再來。 */
+  const held = new Set();
+  function pendingKey(uid) { return 'tr_move_pending_' + uid; }
+  function hasPending(uid) { try { return localStorage.getItem(pendingKey(uid)) !== null; } catch (e) { return false; } }
+  function loadMovers() {
+    const have = () => !!(window.MOVE_RULES && window.MOVE_MERGE && window.DAILY && window.SYNC_MERGE);
+    if (have()) return Promise.resolve(true);
+    const add = src => new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+    const load = (window.MOVE_RULES ? Promise.resolve() : add('js/move-rules.js')).then(() => (window.MOVE_MERGE ? null : add('js/move-merge.js')))
+      .then(() => (window.DAILY ? null : add('js/daily.js')))
+      .then(() => (window.SYNC_MERGE ? null : add('js/sync-merge.js')))
+      .then(have, () => false);
+    return Promise.race([load, new Promise(resolve => setTimeout(() => resolve(false), READ_TIMEOUT_MS))]);
+  }
+  /* 題庫、刪除標記、模擬考紀錄不在這裡:合併表上的鍵走 takeSynced(SYNC_MERGE)。題庫不能用 MOVE_MERGE.mergeBanks:
+     它把蓋過戳記的同一個題庫當成內容不同,另存一份「（舊網址）」、刪除標記(用 id 記)也對不上那份(tools/test_sync_move_compat.js) */
+  const UNION = { hist: 1, mock: 1, idmap: 1, answers: 1, texts: 1, fills: 1, pool: 1, best: 1, pairsBest: 1, clear: 1, daily: 1 };   // answers:雲端答過的不換;texts、fills:兩份都留(js/move-merge.js);daily:DAILY.merge
+  /* 兩份合併:回 { v, lost }(合併不了回 null)。lost:b 那份有項目沒留下來(同一項兩邊不一樣又沒辦法比,js/move-merge.js 的 dropped),
+     呼叫的人要把 b 那份放進備份 */
+  function unionOf(MM, rule, k, a, b, now) {
+    const m = MM.mergeOne(rule, k, a, b, { now, daily: window.DAILY });
+    return m.kind === 'conflict' ? null : { v: m.v, lost: !!m.dropped };
+  }
+  /* 單一值:本機算數時 localT 是帳本時間(從沒上傳過的是 Infinity,不知道就不換),否則跟雲端那一列比。
+     回 { use: 'local' | 'pending' | 'cloud', drop: [沒選上的值] } */
+  function pickSingle(local, localWins, localT, cv, cloudT, pv, t) {
+    const pendingWins = localWins ? !(localT >= t) : (cv === undefined || !(cloudT >= t));
+    const use = pendingWins ? 'pending' : (localWins ? 'local' : 'cloud');
+    const drop = [];
+    const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+    const keep = use === 'pending' ? pv : use === 'local' ? local : cv;
+    [pv, local, cv].forEach(x => { if (x !== undefined && !same(x, keep) && !drop.some(d => same(d, x))) drop.push(x); });
+    return { use, drop };
+  }
+  /* 暫存區裡合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄、模擬考錯題):本機、雲端、暫存三份用 SYNC_MERGE 合併。
+     標記先合(三份聯集),題庫套合併後的標記。先合雲端和暫存那份(暫存那份比雲端新就在分不出先後時偏它),再合本機
+     (本機帳本上的改動不比暫存那份新就偏剛合好的那份);結果吸收過雲端那份,下面 planMerged 再跟雲端合併時不會又被改回去。
+     鍵清單跟著 MERGED 走(takePending 也是看 MERGED 把鍵交過來);每個鍵用哪個合併函式寫在 SYNC_FN。
+     MERGED 上有、SYNC_FN 沒有的鍵(以後加進合併表卻忘了這裡):暫存那份一律放進備份,不准當成題庫合併、也不准略過(略過的話暫存區照樣刪掉)。
+     回 { sets: [[鍵, 原字串]], backup: [[鍵, 原字串]] };合併不了的鍵暫存那份放進備份,本機不動 */
+  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong' };
+  function takeSynced(syncItems, led, cloud, prefix, now) {
+    const S = window.SYNC_MERGE, sets = [], backup = [];
+    const val = (raw) => { try { return raw === null || raw === undefined ? null : JSON.parse(raw); } catch (e) { return undefined; } };
+    const local = {}, cv = {};
+    const KEYS = Object.keys(MERGED).filter((k) => !MERGED[k].clock);
+    KEYS.forEach((k) => {
+      try { local[k] = val(localStorage.getItem(prefix + k)); } catch (e) { local[k] = undefined; }
+      const c = cloud[k];
+      cv[k] = c && c.v !== null && c.v !== undefined ? c.v : null;
+    });
+    const ok = (m) => !!m && m.ok === true;
+    const run = (fn) => { try { return fn(); } catch (e) { return null; } };
+    let T = null;
+    const t0 = run(() => S.tombs(local.sync_del === undefined ? null : local.sync_del, cv.sync_del, now));
+    if (ok(t0)) T = t0.v;
+    const byKey = new Map(syncItems.map((x) => [x.k, x]));
+    const pt = byKey.get('sync_del');
+    if (pt) { const t1 = run(() => S.tombs(T, pt.pv, now)); if (ok(t1)) T = t1.v; }
+    KEYS.forEach((k) => {
+      const x = byKey.get(k);
+      if (!x) return;
+      const fn = Object.prototype.hasOwnProperty.call(SYNC_FN, k) ? SYNC_FN[k] : null;
+      if (!fn) { backup.push([k, x.raw]); return; }
+      const c = cloud[k], cloudT = c ? Date.parse(c.updated_at) : NaN;
+      const pendNewer = !(cloudT >= x.t);
+      const lv = local[k];
+      if (lv === undefined) { try { const raw = localStorage.getItem(prefix + k); if (raw !== null) backup.push([k, raw]); } catch (e) { /* 讀不到 */ } }
+      const base = lv === undefined ? null : lv;
+      const localNewer = led[k] !== undefined && led[k] >= x.t;
+      let m = null;
+      if (fn === 'tombs') m = T === null ? null : run(() => S.tombs(base, T, now));
+      else if (fn === 'mock' || fn === 'mockWrong') { const a = run(() => S[fn](cv[k], x.pv)); m = ok(a) ? run(() => S[fn](base, a.v)) : null; }
+      else {
+        const a = run(() => (pendNewer ? S.banks(cv[k], x.pv, { now, tombs: T, localClean: true }) : S.banks(x.pv, cv[k], { now, tombs: T, localClean: cv[k] !== null })));
+        m = ok(a) ? run(() => S.banks(base, a.v, { now, tombs: T, localClean: !localNewer })) : null;
+        if (ok(m) && Array.isArray(m.v) && !m.sameAsLocal) m = { ok: true, v: orderLike(m.v, [base, cv[k], x.pv]), sameAsLocal: false };
+      }
+      if (!ok(m) || m.v === null) { backup.push([k, x.raw]); return; }
+      if (!m.sameAsLocal || lv === undefined) sets.push([k, JSON.stringify(m.v)]);
+    });
+    return { sets, backup };
+  }
+  /* 題庫的順序:本機的在前、雲端的接著、暫存那份才有的最後(SYNC_MERGE 照第一個參數的順序;分不出先後時偏第二個參數,所以參數順序不一定是這個) */
+  function orderLike(v, lists) {
+    const rank = new Map();
+    lists.forEach(l => { if (Array.isArray(l)) l.forEach(b => { if (b && typeof b.id === 'string' && !rank.has(b.id)) rank.set(b.id, rank.size); }); });
+    const r = b => (b && typeof b.id === 'string' && rank.has(b.id) ? rank.get(b.id) : Infinity);
+    return v.map((b, i) => [b, i]).sort((p, q) => r(p[0]) - r(q[0]) || p[1] - q[1]).map(p => p[0]);
+  }
+  async function takePending(user, prefix, cloud) {
+    if (!hasPending(user.id)) return;
+    let items = null;
+    try { const p = JSON.parse(localStorage.getItem(pendingKey(user.id))); items = p && Array.isArray(p.items) ? p.items : null; } catch (e) { items = null; }
+    if (!items) return;   // 讀不懂的暫存區不刪,留著(每個分頁最多為它重灌一次)
+    if (!(await loadMovers())) return;
+    const R = window.MOVE_RULES, MM = window.MOVE_MERGE;
+    const now = Date.now();
+    const led = readLedger(user.id), backup = [], sets = [], synced = [];
+    const parse = raw => { try { return raw === null ? undefined : JSON.parse(raw); } catch (e) { return undefined; } };
+    items.forEach(e => {
+      if (!Array.isArray(e) || e.length !== 3 || typeof e[0] !== 'string' || typeof e[1] !== 'string') return;
+      const k = e[0], raw = e[1], t = typeof e[2] === 'number' && isFinite(e[2]) ? Math.min(e[2], now) : 0;
+      const rule = R.ruleOf(k), pv = parse(raw);
+      if (!rule || pv === undefined) return;
+      if (spec(k) && !spec(k).clock) { synced.push({ k, raw, pv, t }); return; }   // 題庫、刪除標記、模擬考紀錄:下面 takeSynced 一起合併
+      const c = cloud[k];
+      const cv = c && c.v !== null && c.v !== undefined ? c.v : undefined;
+      const cloudT = c ? Date.parse(c.updated_at) : NaN;
+      let local;
+      try { local = parse(localStorage.getItem(prefix + k)); } catch (err) { local = undefined; }
+      /* 這台的本機那份算不算數:帳本上比雲端新、或帳本沒記但雲端沒有這一列(從沒上傳過,下面灌資料也會留它) */
+      const hasLed = led[k] !== undefined;
+      const localWins = local !== undefined && (hasLed ? !(cloudT >= led[k]) : !c);
+      const localT = hasLed ? led[k] : Infinity;
+      if (rule === 'pet') {
+        if (local === undefined) { sets.push([k, raw]); led[k] = now; }   // 跟雲端那份的合併交給 planMerged(會先對時)
+        else {
+          const fn = mergeFn('pet');
+          let m = null;
+          try { m = fn ? fn(local, pv, now) : null; } catch (err) { m = null; }
+          if (m && m.ok === true) { if (!m.sameAsLocal) sets.push([k, JSON.stringify(m.v)]); led[k] = now; }
+          else backup.push([k, raw]);
+        }
+        return;
+      }
+      if (UNION[rule]) {
+        let base = localWins ? local : cv;
+        const lost = [];
+        if (localWins && cv !== undefined) {   // 合併不了(null):下面照單一值處理,不拿暫存那份蓋掉本機
+          const u = unionOf(MM, rule, k, local, cv, now);
+          base = u ? u.v : null;
+          if (u && u.lost) lost.push(cv);
+        }
+        let out = null;
+        if (base === undefined) out = pv;
+        else if (base !== null) { const u = unionOf(MM, rule, k, base, pv, now); out = u ? u.v : null; if (u && u.lost) lost.push(pv); }
+        if (out !== null) {
+          lost.forEach(x => backup.push([k, JSON.stringify(x)]));   // 沒辦法比的那幾項:整份放進備份,不會默默不見
+          sets.push([k, JSON.stringify(out)]); led[k] = now; return;
+        }
+      }
+      const pick = pickSingle(local, localWins, localT, cv, cloudT, pv, t);
+      pick.drop.forEach(x => backup.push([k, JSON.stringify(x)]));
+      if (pick.use === 'pending') { sets.push([k, raw]); led[k] = now; }
+      else if (pick.use === 'local' && !hasLed) led[k] = now;   // 從沒上傳過的留本機:帳本記上,下面照常上傳
+    });
+    if (synced.length) {
+      const r = takeSynced(synced, led, cloud, prefix, now);
+      r.backup.forEach(x => backup.push(x));
+      r.sets.forEach(x => { sets.push(x); led[x[0]] = now; });
+    }
+    try {
+      if (backup.length) localStorage.setItem('tr_move_backup_' + now, JSON.stringify({ at: now, uid: user.id, keys: backup }));
+      sets.forEach(([k, v]) => localStorage.setItem(prefix + k, v));
+      writeLedger(user.id, led);
+      localStorage.removeItem(pendingKey(user.id));
+    } catch (e) { /* 空間不夠:暫存區留著;寫了一半的鍵帳本沒記,下面以雲端為準,暫存區下一次再合併一次(聯集,不會變少) */ }
+  }
+
+  async function flushForMove() {
+    const empty = { ok: true, left: 0, accounts: {} };
+    try { await window.CLOUD.ready; } catch (e) { /* 照目前的狀態 */ }
+    const user = window.CLOUD.user;
+    if (!enabled || !user || typeof user.id !== 'string') return empty;
+    flushPetStore();
+    const pend = () => {
+      const led = readLedger(user.id), marks = readLocalOnly(user.id);
+      const at = {};
+      Object.keys(marks).forEach(k => { if (MERGED[k]) at[k] = marks[k]; });
+      Object.keys(led).forEach(k => { at[k] = led[k]; });
+      return at;
+    };
+    const first = pend();
+    let rows = null;
+    if (Object.keys(first).length && canUpload(user)) {
+      try {
+        const { data, error } = await client.from('progress').select('k,updated_at').eq('user_id', user.id);
+        if (!error && Array.isArray(data)) rows = data;
+      } catch (e) { rows = null; }
+    }
+    if (rows) {
+      const upd = {};
+      rows.forEach(r => { if (r && typeof r.k === 'string') upd[r.k] = Date.parse(r.updated_at); });
+      /* 合併表上不用對時的鍵(題庫、刪除標記、模擬考紀錄)一律先合併再上傳:不會蓋掉別台的,傳上去的就不必放進搬家包 */
+      const merges = k => !!spec(k) && !spec(k).clock;
+      await Promise.all(Object.keys(first).filter(k => merges(k) || !(upd[k] >= first[k])).map(k => upload(user, k, first[k])));
+    }
+    /* 跟登出前一樣對帳(帳本是空的也要):別台舊版頁面可能剛把雲端的題庫整份蓋掉,這台是唯一還有那份的地方;
+       離開舊網址之後(轉址期每個請求都 301、service worker 也註銷了)這台的程式再也跑不到,不會再補回。
+       雲端少了:合併上傳,傳不上去的記在帳本,下面放進搬家包;讀不到雲端、合併說唯讀(確認不了):本機那份也放進搬家包,
+       收件端用同步的合併(只會多),寧可多帶 */
+    let unsure;
+    try { unsure = (await checkCloud(user)).unsure; } catch (e) { unsure = Object.keys(MERGED).filter(k => MERGED[k].reconcile); }
+    const left = pend(), prefix = 'tr_u' + pidOf(user) + '_', items = [];
+    unsure.forEach(k => { if (!(k in left)) left[k] = 0; });   // 帳本沒記:時間給 0(收件端當成上次對齊之後沒改過,分不出先後的偏雲端那份)
+    Object.keys(left).sort().forEach(k => {
+      let raw = null;
+      try { raw = localStorage.getItem(prefix + k); JSON.parse(raw); } catch (e) { raw = null; }
+      if (raw === null) return;
+      held.add(k);
+      const t = Math.floor(Number(left[k]));
+      items.push([k, raw, isFinite(t) && t > 0 ? t : 0]);
+    });
+    return { ok: true, left: items.length, accounts: items.length ? { [user.id]: items } : {} };
+  }
+
+  /* 把帳本上全部補傳。回傳還剩幾筆沒傳成功。 */
+  async function flushAll() {
+    const user = window.CLOUD.user;
+    if (!user) return 0;
+    if (canUpload(user)) {   // 傳不了就只回報帳本上還有幾筆(登出時要先問)
+      Object.keys(pending).forEach(k => { clearTimeout(pending[k]); delete pending[k]; });
+      const led = readLedger(user.id);
+      await Promise.all(Object.keys(led).filter(k => !held.has(k)).map(k => upload(user, k, led[k])));
+    }
+    return Object.keys(readLedger(user.id)).length;
+  }
+
+  /* 可以直接上傳:雲端元件在、有登入,而且這個分頁已經灌過雲端資料(新舊比對過)、現在沒有在灌 */
+  function canUpload(user) {
+    return !!(client && user && !hydrating && sessionStorage.getItem('tr_cloud_hydrated_' + user.id));
+  }
+
+  function push(key, val) {
+    const t = Date.now();
+    if (!settled) { early[key] = t; return; }
+    if (reloading) return;   // 剛灌完雲端資料、頁面要重載:這時的寫入根據的是舊畫面,不記帳
+    const user = window.CLOUD.user;
+    if (!user) return;
+    /* 這一頁的資料夾不是這個帳號的(剛在這一頁登入、灌資料重載之前):寫進的是訪客資料夾,不記進帳號的帳本。
+       記了帳,灌資料或補傳時會讀帳號資料夾裡的舊值或空值上傳,蓋掉雲端那一列 */
+    if (pidOf(user) !== window.__PROFILE_ID) return;
+    /* 別的分頁登出、換了帳號(這一頁沒重載),或這台的帳號資料夾還沒灌過:寫入根據的是空的、或不是這個帳號的資料夾,不記帳 */
+    if (!canRecord(user.id)) return;
+    const led = readLedger(user.id);
+    led[key] = t;
+    writeSeq++;
+    writeLedger(user.id, led);   // 先記帳:就算 0.8 秒內關頁,下次開站也會補傳
+    if (!canUpload(user)) return;   // 離線維持登入的頁面:記了帳就好,下次灌資料時比新舊再補傳
+    clearTimeout(pending[key]);
+    pending[key] = setTimeout(() => { delete pending[key]; upload(user, key, t); }, 800);
+  }
+
+  /* 確認登入之前的寫入記進目前帳號的帳本 */
+  function keepEarly() {
+    const u = window.CLOUD.user;
+    const uid = u && pidOf(u) === window.__PROFILE_ID ? u.id : storedUid();
+    const keys = Object.keys(early);
+    if (!uid || !keys.length || !canRecord(uid)) return;   // 跟 push 一樣:資料夾不是這台目前的帳號、或還沒灌過,不記帳
+    const led = readLedger(uid);
+    keys.forEach(k => { if (!(led[k] >= early[k])) led[k] = early[k]; });
+    writeLedger(uid, led);
+  }
+
+  /* 關頁、切到背景、恢復連線時補傳。還沒確認完登入就要離開:只有確定沒網路(這一頁不會灌資料)才先記帳;
+     有網路時照舊以雲端為準(之後若同一頁真的灌了資料,灌資料前會把這些作廢) */
+  function onLeave() {
+    if (!settled && !hydrating && window.navigator && navigator.onLine === false) keepEarly();
+    flushAll();
+  }
+  window.addEventListener('pagehide', onLeave);
+  window.addEventListener('online', () => { flushAll(); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') onLeave();
+  });
+})();

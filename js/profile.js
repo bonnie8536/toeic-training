@@ -463,6 +463,7 @@
           h('span', { class: 'profile-dot me-dot', 'aria-hidden': 'true' }, cur.name.slice(0, 1).toUpperCase()),
           who),
         links,
+        window.ONBOARD_UI ? ONBOARD_UI.settingsSection() : null,   // 學習設定(js/onboard-ui.js,只有 me.html 載入;老師、本機學生檔案不顯示)
         window.CLASSES ? CLASSES.section(classOpts) : null,   // 班級(js/classes.js,只有 me.html 載入)
         list(row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }), row('改暱稱', { run: renameUser })),
         list(row('登出', { run: logoutHere, danger: true }), row('登出所有裝置', { run: logoutEverywhere, danger: true })),
@@ -794,7 +795,8 @@
       function consentLine() {
         return h('p', { class: 'auth-fine' }, '註冊或使用 Google 帳戶登入，即表示同意',
           h('a', { href: 'terms.html', target: '_blank', rel: 'noopener' }, '服務條款'), '與',
-          h('a', { href: 'privacy.html', target: '_blank', rel: 'noopener' }, '隱私權政策'), '。');
+          h('a', { href: 'privacy.html', target: '_blank', rel: 'noopener' }, '隱私權政策'), '。',
+          h('br'), '未滿 18 歲請先取得家長或監護人同意。');
       }
 
       /* 原生 append(null) 會印出 'null' 這個字,標題在頁面模式是 null,所以要先濾掉 */

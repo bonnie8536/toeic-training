@@ -24,6 +24,10 @@
        跟 mock_history 一樣先讀雲端、合併、再上傳;搬家暫存區(takePending → takeSynced)也照 SYNC_FN 合併。
        舊快取的 sync-merge.js 沒有 mockWrong:merge() 是 null,照上面的規則不上傳、帳本留著。
        模擬考、錯題本、題庫、能力分析開頁時呼叫 syncKey('mock_wrong') 跟雲端對齊一次(js/wrongbook.js syncCloud;為什麼見已知限制 8)。
+     · levels、onboard、self_score(新用戶的起始程度設定):合併函式 SYNC_MERGE.levels、onboard、selfScore,
+       整份留自己時間欄位(setAt、updatedAt、enteredAt)較新的那一份,levels.history 兩份聯集。整份上傳的話,舊裝置離線排隊的上傳會蓋掉雲端較新的。
+       先讀雲端、合併、再上傳;灌資料、搬家暫存區(SYNC_FN)也合併。不加 reconcile:登出、搬家前的對帳請求跟以前一樣。
+       部署前就開著的舊版分頁(合併表沒有這三個鍵)照舊整份上傳,同已知限制 8。tools/test_onboard_sync.js。
    已知限制:
      1. 兩台在同一時間讀雲端、合併、上傳時,後到的那台可能蓋掉先到的那台剛傳上去的東西;先到那台本機還留著,
         下次上傳、灌資料、開單字頁、登出前對帳時會再合併上傳(pet 是 pet-store 的 remoteBehind),所以不會永久消失。
@@ -101,6 +105,9 @@
     vgame_banks: { merge: SMF('banks'), tombs: true, reconcile: true },
     mock_history: { merge: SMF('mock'), reconcile: true },
     mock_wrong: { merge: SMF('mockWrong'), reconcile: true },
+    levels: { merge: SMF('levels') },
+    onboard: { merge: SMF('onboard') },
+    self_score: { merge: SMF('selfScore') },
   };
   const spec = k => (typeof k === 'string' && Object.prototype.hasOwnProperty.call(MERGED, k) ? MERGED[k] : null);
   window.CLOUD.mergedKeys = Object.freeze(Object.keys(MERGED));   // pet-store 用它判斷這一版 cloud.js 會先合併 pet 再上傳
@@ -1520,7 +1527,7 @@
      鍵清單跟著 MERGED 走(takePending 也是看 MERGED 把鍵交過來);每個鍵用哪個合併函式寫在 SYNC_FN。
      MERGED 上有、SYNC_FN 沒有的鍵(以後加進合併表卻忘了這裡):暫存那份一律放進備份,不准當成題庫合併、也不准略過(略過的話暫存區照樣刪掉)。
      回 { sets: [[鍵, 原字串]], backup: [[鍵, 原字串]] };合併不了的鍵暫存那份放進備份,本機不動 */
-  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong' };
+  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', levels: 'levels', onboard: 'onboard', self_score: 'selfScore' };
   function takeSynced(syncItems, led, cloud, prefix, now) {
     const S = window.SYNC_MERGE, sets = [], backup = [];
     const val = (raw) => { try { return raw === null || raw === undefined ? null : JSON.parse(raw); } catch (e) { return undefined; } };
@@ -1552,7 +1559,7 @@
       const localNewer = led[k] !== undefined && led[k] >= x.t;
       let m = null;
       if (fn === 'tombs') m = T === null ? null : run(() => S.tombs(base, T, now));
-      else if (fn === 'mock' || fn === 'mockWrong') { const a = run(() => S[fn](cv[k], x.pv)); m = ok(a) ? run(() => S[fn](base, a.v)) : null; }
+      else if (fn === 'mock' || fn === 'mockWrong' || fn === 'levels' || fn === 'onboard' || fn === 'selfScore') { const a = run(() => S[fn](cv[k], x.pv)); m = ok(a) ? run(() => S[fn](base, a.v)) : null; }
       else {
         const a = run(() => (pendNewer ? S.banks(cv[k], x.pv, { now, tombs: T, localClean: true }) : S.banks(x.pv, cv[k], { now, tombs: T, localClean: cv[k] !== null })));
         m = ok(a) ? run(() => S.banks(base, a.v, { now, tombs: T, localClean: !localNewer })) : null;

@@ -36,9 +36,58 @@
   let asking = false;      // 「還有題沒作答」的確認視窗開著:這時再按交卷不算
   let resultCard = null;   // 報告的結算卡:換畫面前呼叫 destroy() 停掉小雞
 
+  const AUTO_WAIT = 8000;   // 直接開考前等雲端確認登入的上限(毫秒)
+  const wantStart = takeStartParam();
   if (st && st.done) renderReport();
   else if (st) renderTest();
+  else if (wantStart && testPending()) autoStart();
   else renderIntro();
+
+  /* 網址的 start=1(從開始頁按「開始檢測」進來)一開頁就讀出來並從網址拿掉:重新整理、上一頁、書籤都照一般規則 */
+  function takeStartParam() {
+    try {
+      const q = new URLSearchParams(location.search);
+      if (q.get('start') !== '1') return false;
+      q.delete('start');
+      const rest = q.toString();
+      history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + location.hash);
+      return true;
+    } catch (e) { return false; }
+  }
+  function testPending() {
+    try { return !!(window.ONBOARD_UI && ONBOARD_UI.testPending && ONBOARD_UI.testPending()); } catch (e) { return false; }
+  }
+  /* 設定起始程度停在檢測這一步、還沒有作答:等雲端確認登入,還能寫才直接開考,不用再按一次「開始」。
+     確認完不能寫(登入失效、別台登出)、確認失敗或等太久:照原本畫開始頁,按「開始」時 js/profile.js 照常攔下。頁面正要重載就不畫 */
+  function autoStart() {
+    root.replaceChildren(h('p', { class: 'result-note', role: 'status' }, '載入中…'));
+    let settled = false;
+    const timer = setTimeout(() => finish(false), AUTO_WAIT);
+    function finish(ok) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      if (window.CLOUD && CLOUD.reloading) return;
+      st = store.get(KEY, null);
+      if (st && st.done) renderReport();
+      else if (st) renderTest();
+      else if (ok && testPending() && canWrite()) begin();
+      else renderIntro();
+    }
+    Promise.resolve(window.CLOUD ? CLOUD.ready : null).then(() => finish(true), () => finish(false));
+  }
+  function canWrite() {
+    try { return !window.PROFILE || typeof PROFILE.canAct !== 'function' || !!PROFILE.canAct(); } catch (e) { return false; }
+  }
+
+  function begin() {
+    if (!uiReady()) return;   // 共用元件沒載到:不清掉原本的作答紀錄
+    st = { answers: {}, done: false, startedAt: new Date().toISOString() };
+    store.set(KEY, st);
+    cur = 0;
+    renderTest();
+    focus.focusMain();
+  }
 
   function dropCard() { if (resultCard) { resultCard.destroy(); resultCard = null; } }
   function leaveFocus() { closePanel(false); if (focus) { focus.leave(); focus = null; } }
@@ -60,14 +109,7 @@
           h('span', { class: 'mock-tag' }, '約 20 分鐘')),
         h('button', {
           class: 'btn primary', 'data-gate': '',   // 開始檢測:沒登入時 js/profile.js 先攔下
-          onclick: () => {
-            if (!uiReady()) return;   // 共用元件沒載到:不清掉原本的作答紀錄
-            st = { answers: {}, done: false, startedAt: new Date().toISOString() };
-            store.set(KEY, st);
-            cur = 0;
-            renderTest();
-            focus.focusMain();
-          },
+          onclick: begin,
         }, '開始')));
   }
 
@@ -235,13 +277,15 @@
 
     root.append(h('div', { class: 'page-head' }, h('h1', null, '檢測報告')));
 
-    /* 第一屏:結算卡。姓名與日期放在分數上面的小字;三個難度的正確率跟在卡片下面一行 */
+    /* 第一屏:結算卡。姓名與日期放在分數上面的小字;三個難度的正確率跟在卡片下面一行。
+       新用戶設定起始程度途中交的卷,主按鈕換成「看起始程度」(js/onboard-ui.js,只有這種時候不是 null) */
+    let next = null; try { next = window.ONBOARD_UI ? ONBOARD_UI.diagPrimary() : null; } catch (e) { /* 照原本的「去刷題」 */ }
     const card = UI.result({
       kicker: (p ? p.name + ' · ' : '') + (st.finishedAt || '').slice(0, 10),
       score, total,
       stats: [['參考級距', band]],
       note: '級距為估算 · 非正式成績',
-      primary: { label: '去刷題', href: 'practice.html' },
+      primary: next || { label: '去刷題', href: 'practice.html' },
       links: [{ label: '列印 / 存成 PDF', onClick: () => window.print() }, { label: '再測一次', onClick: retest, attrs: GATE }],   // 再測一次:沒登入時先攔下
       earnId: 'diag',
     });

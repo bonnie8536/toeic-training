@@ -530,6 +530,27 @@ T['暫存區:模擬考錯題(mock_wrong)搬家暫存區、本機、雲端各一�
   const ok = J(lv(w, 'mock_wrong')) === J(want) && J(cv(w, 'mock_wrong')) === J(want) && !bk.length && w.local.getItem(PEND) === null && ups(w).includes('mock_wrong');
   return { ok, detail: J({ local: lv(w, 'mock_wrong'), cloud: cv(w, 'mock_wrong'), bk, ups: ups(w) }) };
 };
+T['暫存區:起始程度設定的 levels、onboard、self_score:暫存、本機、雲端三份照自己的時間欄位留最新的,levels.history 三份聯集,不進備份'] = async () => {
+  const w = makeWorld();
+  const h = (t, l) => ({ at: iso(t), listening: l, reading: l, reason: 'manual' });
+  const lvl = (t, l) => ({ listening: l, reading: l, source: { listening: 'score', reading: 'score' }, setAt: iso(t), history: [h(t, l)] });
+  const ob = (t, status) => ({ v: 1, status, step: status === 'done' ? 'result' : 'test', updatedAt: iso(t) });
+  const ss = (t, l) => ({ listening: l, reading: 200, total: l + 200, examYm: '2026-09', fromTotal: false, enteredAt: iso(t) });
+  cloudRow(w, 'levels', lvl(T0 - 5 * HOUR, 'entry'), T0 - HOUR);
+  cloudRow(w, 'onboard', ob(T0 - 5 * HOUR, 'in_progress'), T0 - HOUR);
+  cloudRow(w, 'self_score', ss(T0 - HOUR, 400), T0 - HOUR);
+  signedIn(w);
+  w.local.setItem(PREFIX + 'levels', J(lvl(T0 - 4 * HOUR, 'threshold')));
+  w.local.setItem(LEDGER, J({ levels: T0 - 4 * HOUR }));
+  w.local.setItem(PEND, J({ items: [['levels', J(lvl(T0 - 2 * HOUR, 'high')), T0 - 2 * HOUR], ['onboard', J(ob(T0 - 3 * HOUR, 'done')), T0 - 3 * HOUR],
+    ['self_score', J(ss(T0 - 3 * HOUR, 300)), T0 - 3 * HOUR]] }));
+  await openLoggedIn(w);
+  const L = lv(w, 'levels') || {};
+  const ok = L.listening === 'high' && (L.history || []).length === 3 && J(cv(w, 'levels')) === J(L)
+    && (lv(w, 'onboard') || {}).status === 'done' && (cv(w, 'onboard') || {}).status === 'done'
+    && (lv(w, 'self_score') || {}).listening === 400 && !backups(w).length && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ levels: L, onboard: lv(w, 'onboard'), self: lv(w, 'self_score'), bk: backups(w), ups: ups(w) }) };
+};
 T['暫存區:合併表上有、takeSynced 對照表(SYNC_FN)沒有的鍵:暫存那份放進備份,不當成題庫合併、不默默略過'] = async () => {
   const src = SRC.cloud.replace(/(\r?\n    mock_wrong: \{ merge: SMF\('mockWrong'\), reconcile: true \},)/, '$1\n    vgame_miss: { merge: SMF(\'mock\'), reconcile: true },');
   if (src === SRC.cloud) return { ok: false, detail: '改不到 cloud.js 的 MERGED' };

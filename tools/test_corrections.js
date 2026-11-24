@@ -67,10 +67,10 @@ T['頁面登記:開機清單、canonical、og、TITLES、check_layout、sitemap�
   const bad = Object.keys(checks).filter((k) => !checks[k]);
   return { ok: !bad.length, detail: bad.length ? '缺 ' + bad : '全部登記' };
 };
-T['頁尾連結:28 頁都有(含自己與 404),在退款政策之後、客服信箱之前'] = () => {
+T['頁尾連結:29 頁都有(含自己、404 與 start.html),在退款政策之後、客服信箱之前'] = () => {
   const pages = fs.readdirSync(REPO).filter((f) => /\.html$/.test(f) && /class="foot-links"/.test(read(f)));
   const bad = pages.filter((f) => { const s = f === '404.html' ? '/' : ''; return !read(f).includes('<a href="' + s + 'refund.html">退款政策</a><a href="' + s + 'corrections.html">題目更正紀錄</a><a href="mailto:'); });
-  return { ok: pages.length === 28 && !bad.length, detail: pages.length + ' 頁,缺 ' + bad };
+  return { ok: pages.length === 29 && !bad.length, detail: pages.length + ' 頁,缺 ' + bad };
 };
 
 /* ---------- 頁面程式(假 DOM) ---------- */

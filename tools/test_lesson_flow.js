@@ -452,6 +452,19 @@ T['即時回合中途離開:從作答紀錄補回已答的題(第一次作答),�
   await p2.click('.lsn-go');
   eq([p2.last('LISTEN').units.map((u) => u.item.id), p2.les(3).a.filter((x) => x[0] === 4 || x[0] === 5).length], [a.units.slice(4).map((u) => u.item.id), 4]);
 };
+T['過場:卡片上方「← 回第 3 堂」,按了回總覽(不寫作答、不呼叫引擎),再按開始又是同一個過場'] = async () => {
+  const p = await page({ seed: lesson3(['vocab']) });
+  await p.click('.lsn-go');
+  await p.click('.lsn-go');
+  await p.finish();
+  const back = p.root.firstChild && p.root.firstChild.className === 'lsn-bridge-wrap lsn-narrow' ? p.root.firstChild.firstChild : null;   // 卡片上方的第一個
+  eq([!!back && back.textContent, back && back.getAttribute('href'), p.active() === p.$('.lsn-card-h'), p.calls.length], ['← 回第 3 堂', 'lesson.html?no=3', true, 1]);
+  const n = p.les(3).a.length;
+  await p.click(back);
+  eq([!!p.$('.lsn-steps'), p.steps()[1][1], p.les(3).a.length, p.calls.length, p.active() === p.h1], [true, 'current', n, 1, true]);
+  await p.click('.lsn-go');
+  eq([p.text('.lsn-card-h'), p.calls.length], ['Part 2、Part 1', 1]);
+};
 T['交卷回合中途離開:不寫任何作答,回來整個回合重做(過場、同樣的題)'] = async () => {
   const p = await page({ seed: lesson3(['vocab']) });
   await p.click('.lsn-go');

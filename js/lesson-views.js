@@ -175,16 +175,18 @@
   }
 
   /* ---------- 過場(交卷回合之前) ----------
-     round = { parts: ['2', '1'], count };on.start(e) */
+     round = { parts: ['2', '1'], count };on = { start(e), no(堂號), back(e) }:有 no 時卡片上方放「← 回第 n 堂」(同說明頁、技巧卡) */
   function bridge(round, handlers) {
     const t = TX().bridge;
     const h = handlers || {};
-    return el('section', { class: 'lsn-card lsn-bridge lsn-narrow' }, [
+    const card = el('section', { class: 'lsn-card lsn-bridge lsn-narrow' }, [
       heading('h2', 'lsn-card-h', t.parts(round.parts)),
       tags([t.count(round.count)]),
       el('p', { class: 'lsn-line' }, [t.note]),
       el('div', { class: 'lsn-acts' }, [primary(t.start, h.start)]),
     ]);
+    if (!h.no) return card;
+    return el('div', { class: 'lsn-bridge-wrap lsn-narrow' }, [back(TX().lesson.backTo(h.no), 'lesson.html?no=' + h.no, h.back), card]);
   }
 
   /* ---------- 區塊結果(交卷回合之後) ----------

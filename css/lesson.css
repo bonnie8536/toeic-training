@@ -74,6 +74,8 @@ html.is-quiz main .q-block .lsn-word-q { margin-bottom: 8px; font-family: var(--
 /* ---- 過場:交卷回合之前一張 ---- */
 .lsn-card { display: flex; flex-direction: column; align-items: stretch; margin-top: 24px; margin-bottom: 48px; padding: 24px; border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff; }
 .lsn-card .mock-tags { margin-top: 12px; }
+.lsn-bridge-wrap { padding-top: 24px; }   /* 過場:返回連結在卡片上方(上距同技巧卡) */
+.lsn-bridge-wrap > .lsn-bridge { margin-top: 8px; }
 .lsn-line { margin: 12px 0 0; font-size: var(--fs-md); color: var(--ink-soft); }
 
 /* ---- 區塊結果、文法單元 ---- */

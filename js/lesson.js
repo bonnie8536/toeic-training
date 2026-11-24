@@ -495,8 +495,8 @@
     const count = r.blocks.reduce((a, b) => a + quietIds(b).reduce((x, id) => x + (Number(has('bank', id)) || 0), 0), 0);
     if (!count) return runRound(r);
     return new Promise((resolve) => {
-      screen(V.bridge({ parts: r.parts, count }, { start: (e) => resolve(e.currentTarget) }), true, 'bridge');
-    }).then((btn) => runRound(r, { opener: btn }));
+      screen(V.bridge({ parts: r.parts, count }, { start: (e) => resolve(e.currentTarget), no: S.no, back: () => resolve(null) }), true, 'bridge');
+    }).then((btn) => (btn ? runRound(r, { opener: btn }) : 'exit'));   // 「← 回第 n 堂」:還沒開始作答,直接回總覽
   }
   const partsOfIds = (ids) => ids.map(C.partOfId).filter((p, i, a) => p && a.indexOf(p) === i);
   /* 個人段、小檢核叫的回合(ctx.runRound):opt.round 是 LESSON_CORE.rounds 的那一步;文法單元、英語耳走各自的步驟,題庫走 runRound */

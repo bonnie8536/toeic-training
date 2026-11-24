@@ -534,14 +534,20 @@
     ids.forEach((id, i) => { if (got[i]) items.set(id, got[i]); else console.warn('找不到這一題，略過：' + id); });
     const keys = [];
     items.forEach((item, id) => C.itemKeys(C.partOfId(id), item, id).forEach((k) => keys.push({ id, part: C.partOfId(id), sub: k.sub, key: k.key })));
-    const snap = new Set();
-    partsOfIds(Array.from(items.keys())).forEach((p) => D.snapshot(p, keys.filter((k) => k.part === p).map((k) => k.key)).forEach((k) => snap.add(k)));
-    const job = { blocks, items, byId, keys, snap, units: [] };
+    const job = { blocks, items, byId, keys, snap: snapOf(items, keys), units: [] };
     if (feedback === 'instant') record(reconcileRows(job, null));
     const left = pendingIds(job);
     const use = feedback === 'instant' ? left : left.length ? Array.from(items.keys()) : [];
     job.units = use.map((id) => ({ p: C.partOfId(id), item: items.get(id) }));
     return job;
+  }
+  /* 作答前快照:回合開始前做過的小題(作答紀錄有紀錄,或學習記錄有同一題、比現在早的紀錄;錯題本訂正後會刪掉作答紀錄、學習記錄還在) */
+  function snapOf(items, keys) {
+    const snap = new Set(), start = nowMs();
+    partsOfIds(Array.from(items.keys())).forEach((p) => D.snapshot(p, keys.filter((k) => k.part === p).map((k) => k.key)).forEach((k) => snap.add(k)));
+    const done = new Set(histNow().filter((h) => h && Number(h.t) < start).map((h) => h.m + '|' + h.id));
+    keys.forEach((k) => { if (done.has((Number(k.part) <= 4 ? 'l' : 'p') + k.part + '|' + k.key)) snap.add(k.key); });
+    return snap;
   }
   function pendingIds(job) {
     const got = new Set((S.state.a || []).map((x) => x[0] + '|' + x[1] + '|' + x[2]));

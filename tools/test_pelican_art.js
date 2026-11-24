@@ -16,14 +16,10 @@
      側面姿勢之間互換不淡入淡出。
    - version 4(第八版):姿勢清單最後多了 daydream 白日夢,上面每一條通用規則(格數、holds、速度、畫兩次一樣、不超出畫布、
      沒有藍色、白色身體有塗白、減少動態只畫靜止格)都照樣檢查它;另外檢查:趴著(身體寬比高多很多、肚子貼地、比站著低)、
-     腳往後伸出屁股、身體上面左中右三本書(一本黃色封面)且各格上下飄而身體不動、跟站著的姿勢互換時淡出淡入。
-   - version 5(第九版):開心重排成 14 格、每秒 24 拍(hold 是拍數),其他姿勢每一格跟第八版一模一樣(指紋)。開心另外檢查:
-     時間表(預備至少 0.25 秒、0.7~1 秒觸地、1~1.6 秒跳完)、往上衝越來越慢且落下越來越快、觸地那格貼地、起跳拉長與觸地壓最扁、
-     各格身體面積大致不變、線條每 3 拍換一次抖動組;一次性播放(once):播一遍、onEnd 一次、停在最後一格三種抖動輪流、held、
-     onEnd 裡換姿勢只留一個計時器、減少動態時只畫靜止格。 */
+     腳往後伸出屁股、身體上面左中右三本書(一本黃色封面)且各格上下飄而身體不動、跟站著的姿勢互換時淡出淡入。 */
 const POSES = ['idle', 'happy', 'oops', 'read', 'sleep', 'daydream'];
 /* 各姿勢的格數範圍 */
-const FRAMES = { idle: [7, 10], happy: [14, 14], oops: [8, 10], read: [7, 9], sleep: [6, 8], daydream: [10, 13] };
+const FRAMES = { idle: [7, 10], happy: [9, 11], oops: [8, 10], read: [7, 9], sleep: [6, 8], daydream: [10, 13] };
 const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
@@ -143,10 +139,9 @@ const T = {};
 T['姿勢清單、version、metrics、速度'] = () => {
   const d = [];
   if (!eq(ART.poses, POSES)) d.push('poses ' + JSON.stringify(ART.poses));
-  if (ART.version !== 5) d.push('version ' + ART.version);
+  if (ART.version !== 4) d.push('version ' + ART.version);
   if (!eq(ART.metrics, { width: 300, height: 280, ground: 258 })) d.push('metrics ' + JSON.stringify(ART.metrics));
-  // 開心是每秒 24 拍(hold 用拍數算),其他照舊每秒最多 8 張
-  if (!POSES.every((p) => (p === 'happy' ? ART.fps[p] === 24 : ART.fps[p] > 0 && ART.fps[p] <= 8))) d.push('fps ' + JSON.stringify(ART.fps));
+  if (!POSES.every((p) => ART.fps[p] > 0 && ART.fps[p] <= 8)) d.push('fps ' + JSON.stringify(ART.fps));
   // 尷尬比待機慢、看書不比待機快、睡覺最慢
   const f = ART.fps;
   if (!(f.oops < f.idle && f.read <= f.idle && POSES.every((p) => p === 'sleep' || f.sleep < f[p]))) d.push('速度順序 ' + JSON.stringify(f));
@@ -162,15 +157,14 @@ T['idle 約 8 格,holds 是正整數、一圈 2 到 4 秒;靜止格在範圍內;
   return { ok, detail: JSON.stringify({ n, h, sec, calm: ART.calm }) };
 };
 
-T['新姿勢:格數、holds(正整數、1 到 3;開心是拍數 1 到 8)、靜止格都在範圍內;一圈的秒數合理(開心 1~3 秒,其他 2~5 秒)'] = () => {
+T['新姿勢:格數、holds(正整數、1 到 3)、靜止格都在範圍內;一圈的秒數合理(開心 1~3 秒,其他 2~5 秒)'] = () => {
   const d = [], info = {};
   POSES.slice(1).forEach((p) => {
     const n = ART.frameCount(p), h = ART.holds(p), c = ART.calm[p];
     const sec = h.reduce((a, b) => a + b, 0) / ART.fps[p];
     info[p] = { n, sec: +sec.toFixed(2), calm: c };
     if (!(n >= FRAMES[p][0] && n <= FRAMES[p][1])) d.push(p + ' 格數 ' + n);
-    const maxHold = p === 'happy' ? 8 : 3;
-    if (!(h.length === n && h.every((x) => Number.isInteger(x) && x >= 1 && x <= maxHold))) d.push(p + ' holds ' + JSON.stringify(h));
+    if (!(h.length === n && h.every((x) => Number.isInteger(x) && x >= 1 && x <= 3))) d.push(p + ' holds ' + JSON.stringify(h));
     if (!(Number.isInteger(c) && c >= 0 && c < n)) d.push(p + ' 靜止格 ' + c);
     const [lo, hi] = p === 'happy' ? [1, 3] : [2, 5];
     if (!(sec >= lo && sec <= hi)) d.push(p + ' 一圈 ' + sec.toFixed(2) + ' 秒');
@@ -534,143 +528,6 @@ T['白日夢(趴著)跟站著的姿勢互換時淡出淡入,白日夢再設一�
   const b = env2.A.animate(c2, { size: 120, pose: 'idle' });
   b.setPose('daydream'); b.setPose('idle');
   if (alphas(c2, 0) || env2.flush(16)) d.push('減少動態時還在淡入淡出');
-  return { ok: !d.length, detail: d.join(';') };
-};
-
-/* ---------- version 5(第九版):開心重排 ---------- */
-/* 其他姿勢每一格(6 種大小、兩種抖動)的呼叫序列指紋,在第八版(3df7de6)上算的:改開心不能動到它們 */
-const V4_PRINTS = { idle: '5ae9771c81086159', oops: 'd3df485a42381e05', read: '298ab52f3768a6d5', sleep: '53a04464bb0dd9c2', daydream: '1142301deb9b0868' };
-function poseDigest(A, pose) {
-  const h = crypto.createHash('sha1');
-  for (const size of SIZES) for (let k = 0; k < A.frameCount(pose); k++) for (const v of [0, 1]) h.update(frameLog(A, pose, k, v, size).join('\n') + '\n#\n');
-  return h.digest('hex').slice(0, 16);
-}
-T['其他姿勢(idle、oops、read、sleep、daydream)每一格跟第八版一模一樣;格數、holds、靜止格、速度也沒變'] = () => {
-  const d = [];
-  const V4 = { idle: [8, 5, 0], oops: [9, 4, 2], read: [8, 4, 0], sleep: [7, 3, 3], daydream: [12, 4, 0] };
-  Object.keys(V4_PRINTS).forEach((p) => {
-    const got = poseDigest(ART, p);
-    if (got !== V4_PRINTS[p]) d.push(p + ' 指紋 ' + got);
-    const [n, fps, calm] = V4[p];
-    if (ART.frameCount(p) !== n || ART.fps[p] !== fps || ART.calm[p] !== calm) d.push(p + ' 介面變了');
-  });
-  return { ok: !d.length, detail: d.join(';') };
-};
-/* 某格的身體:最大一片白色的外框範圍與面積 */
-function bodyOf(log) {
-  const big = fills(log).filter((f) => f.color === '#ffffff').sort((a, b) => area(b.path) - area(a.path))[0].path;
-  return { box: boxOf(big), area: area(big) };
-}
-T['開心:14 格每秒 24 拍、靜止格是最後一格(得意停格)、一次性播放有 happy、重點格 land 在中間;預備至少 0.25 秒、0.7~1 秒觸地、1~1.6 秒跳完'] = () => {
-  const d = [];
-  const n = ART.frameCount('happy'), h = ART.holds('happy'), land = ART.cues && ART.cues.happy && ART.cues.happy.land;
-  if (n !== 14 || ART.fps.happy !== 24) d.push('格數 ' + n + ' fps ' + ART.fps.happy);
-  if (ART.calm.happy !== n - 1) d.push('靜止格 ' + ART.calm.happy);
-  if (!eq(ART.once, ['happy'])) d.push('once ' + JSON.stringify(ART.once));
-  if (!(Number.isInteger(land) && land > 2 && land < n - 2)) d.push('land ' + land);
-  const tick = 1000 / ART.fps.happy, at = (k) => h.slice(0, k).reduce((a, b) => a + b, 0) * tick;
-  const base = bodyOf(frameLog(ART, 'happy', 0, 0, 180)).box[3];
-  const takeoff = h.findIndex((_, k) => base - bodyOf(frameLog(ART, 'happy', k, 0, 180)).box[3] >= 3);
-  const info = { takeoff, preMs: Math.round(at(takeoff)), landMs: Math.round(at(land)), endMs: Math.round(at(n - 1)) };
-  if (!(info.preMs >= 250)) d.push('預備太短');
-  if (!(info.landMs >= 700 && info.landMs <= 1000)) d.push('觸地時間');
-  if (!(info.endMs >= 1000 && info.endMs <= 1600)) d.push('跳完的時間');
-  if (!h.slice(takeoff, land).some((x) => x === 1) || !h.slice(takeoff, land).some((x) => x >= 3)) d.push('騰空的格沒有快慢之分 ' + JSON.stringify(h));
-  return { ok: !d.length, detail: JSON.stringify(info) + ' ' + d.join(';') };
-};
-T['開心:往上衝每拍升得越來越少(頂點慢進)、落下每拍掉得越來越多(加速),觸地那格貼地;蹲、起跳拉長、觸地壓最扁,各格身體面積大致不變'] = () => {
-  const d = [];
-  const h = ART.holds('happy'), land = ART.cues.happy.land;
-  const B = h.map((_, k) => bodyOf(frameLog(ART, 'happy', k, 0, 180)));
-  const lift = B.map((b) => B[0].box[3] - b.box[3]);
-  const ratio = B.map((b) => (b.box[3] - b.box[1]) / (b.box[2] - b.box[0]));
-  const apex = lift.indexOf(Math.max.apply(null, lift)), takeoff = lift.findIndex((x) => x >= 3);
-  const up = [], down = [];
-  for (let k = takeoff; k < apex; k++) up.push((lift[k + 1] - lift[k]) / h[k]);
-  for (let k = apex; k < land; k++) down.push((lift[k] - lift[k + 1]) / h[k]);
-  if (!(lift[apex] >= 20)) d.push('跳得不夠高 ' + lift[apex].toFixed(1));
-  if (!(up.length >= 2 && up.every((v, i) => v > 0 && (!i || v < up[i - 1])))) d.push('上升 ' + up.map((v) => v.toFixed(1)));
-  if (!(down.length >= 2 && down.every((v, i) => v > 0 && (!i || v > down[i - 1])))) d.push('落下 ' + down.map((v) => v.toFixed(1)));
-  if (!(Math.abs(lift[land]) < 1.5)) d.push('觸地那格沒貼地 ' + lift[land].toFixed(1));
-  const r0 = ratio[0], rMin = Math.min.apply(null, ratio);
-  if (!(ratio[land] === rMin && ratio[land] < 0.8 * r0)) d.push('觸地不是最扁 ' + ratio.map((v) => v.toFixed(2)));
-  if (!(Math.min.apply(null, ratio.slice(1, takeoff)) < 0.88 * r0)) d.push('起跳前沒有蹲');
-  if (!(ratio[takeoff] > 1.04 * r0)) d.push('起跳沒有拉長 ' + ratio[takeoff].toFixed(2) + ' / ' + r0.toFixed(2));
-  const areas = B.map((b) => b.area / B[0].area);
-  if (!areas.every((a) => a > 0.8 && a < 1.2)) d.push('面積 ' + areas.map((a) => a.toFixed(2)));
-  return { ok: !d.length, detail: JSON.stringify({ lift: lift.map((v) => +v.toFixed(1)), ratio: ratio.map((v) => +v.toFixed(2)) }) + ' ' + d.join(';') };
-};
-T['開心播放:線條每 3 拍換一次抖動組(跟每格停多久無關),格的順序照 holds'] = () => {
-  const { env, a, canvas } = run({ pose: 'happy' }, 48);
-  const map = bakedMap(env.A, 'happy', 180, 2), kv = painted(canvas).map((x) => map.get(x));
-  const want = [];
-  ART.holds('happy').forEach((h, k) => { for (let j = 0; j < h; j++) want.push(k); });
-  const ok = kv.length === 48 && kv.every((x, i) => x && x[0] === want[i % want.length] && x[1] === Math.floor(i / 3) % 2);
-  a.stop();
-  return { ok, detail: JSON.stringify(kv.slice(0, 14)) };
-};
-/* 某姿勢最後一格三種抖動烤好的指紋 → 抖動組 */
-function heldMap(A, pose, size, dpr) {
-  const px = size / A.metrics.width * dpr, k = A.frameCount(pose) - 1, m = new Map();
-  [0, 1, 2].forEach((v) => m.set('img:' + digest(['scale(' + px + ',' + px + ')'].concat(frameLog(A, pose, k, v, size)).join('\n')), v));
-  return m;
-}
-T['一次性播放(once):照 holds 播一遍,到最後一格呼叫 onEnd 一次,之後停在最後一格、三種抖動輪流(每秒 8 張;只畫一種抖動時也一樣)'] = () => {
-  const d = [];
-  const env = makeEnv({ dpr: 1 }), c = makeCanvas(), ticks = [];
-  let ends = 0;
-  const a = env.A.animate(c, { size: 120, pose: 'happy', once: true, variants: 1, onEnd: () => { ends++; }, onTick: (t) => ticks.push(t) });
-  const h = ART.holds('happy'), n = h.length, want = [];
-  h.slice(0, n - 1).forEach((x, k) => { for (let j = 0; j < x; j++) want.push(k); });
-  want.push(n - 1);                                           // 到最後一格的第一拍就算播完
-  const ms0 = env.intervals().map((t) => t.ms);
-  for (let i = 1; i < want.length; i++) env.intervals()[0].fn();
-  const got = ticks.map((t) => t.frame);
-  if (!eq(got, want)) d.push('順序 ' + got.join(','));
-  if (ends !== 1) d.push('onEnd ' + ends + ' 次');
-  const ms1 = env.intervals().map((t) => t.ms);
-  if (!eq(ms0, [1000 / 24]) || !eq(ms1, [125])) d.push('間隔 ' + JSON.stringify([ms0, ms1]));
-  const mark = painted(c).length, hm = heldMap(env.A, 'happy', 120, 1);
-  for (let i = 0; i < 9; i++) env.intervals()[0].fn();
-  const held = painted(c).slice(mark).map((x) => hm.get(x));
-  if (!eq(held, [0, 1, 2, 0, 1, 2, 0, 1, 2])) d.push('停格的抖動 ' + JSON.stringify(held));
-  if (!ticks.slice(want.length).every((t) => t.frame === n - 1 && t.held)) d.push('停格的 onTick');
-  if (ends !== 1) d.push('停格時又呼叫 onEnd');
-  if (env.intervals().length !== 1) d.push('計時器 ' + env.intervals().length);
-  a.stop();
-  if (env.intervals().length) d.push('stop 後還有計時器');
-  return { ok: !d.length, detail: d.join(';') };
-};
-T['once:held 直接停在最後一格(不呼叫 onEnd);onEnd 裡換姿勢只留一個計時器;setPose 不給 once 照舊循環;減少動態時只畫靜止格、馬上呼叫 onEnd、不開計時器'] = () => {
-  const d = [];
-  const env = makeEnv({ dpr: 1 }), c = makeCanvas(), hm = heldMap(env.A, 'happy', 120, 1);
-  let ends = 0;
-  const a = env.A.animate(c, { size: 120, pose: 'idle' });
-  a.setPose('happy', { once: true, held: true, onEnd: () => { ends++; } });
-  for (let i = 0; i < 4; i++) env.intervals()[0].fn();
-  const held = painted(c).slice(-5).map((x) => hm.get(x));
-  if (!eq(held, [0, 1, 2, 0, 1]) || ends) d.push('held ' + JSON.stringify(held) + ' onEnd ' + ends);
-  if (!eq(env.intervals().map((t) => t.ms), [125])) d.push('held 的間隔');
-  /* onEnd 裡換回待機:只留待機的計時器 */
-  a.setPose('happy', { once: true, onEnd: () => { ends++; a.setPose('idle'); } });
-  for (let i = 0; i < 60 && a.pose === 'happy'; i++) env.intervals()[0].fn();
-  if (a.pose !== 'idle' || ends !== 1) d.push('onEnd 換姿勢 ' + a.pose + ' ' + ends);
-  if (!eq(env.intervals().map((t) => t.ms), [200])) d.push('換回待機後的計時器 ' + JSON.stringify(env.intervals().map((t) => t.ms)));
-  /* 不給 once:開心照 holds 循環,不會停 */
-  const ticks = [];
-  const b = env.A.animate(makeCanvas(), { size: 120, pose: 'happy', onTick: (t) => ticks.push(t.frame) });
-  const loop = ART.holds('happy').reduce((x, y) => x + y, 0);
-  for (let i = 1; i < loop + 5; i++) env.intervals()[env.intervals().length - 1].fn();
-  if (!(ticks[loop] === 0 && ticks.length === loop + 5)) d.push('沒給 once 沒有循環');
-  a.stop(); b.stop();
-  /* 減少動態 */
-  const env2 = makeEnv({ dpr: 1, reduce: true }), c2 = makeCanvas();
-  let ends2 = 0;
-  const r = env2.A.animate(c2, { size: 120, pose: 'happy', once: true, onEnd: () => { ends2++; } });
-  const map = bakedMap(env2.A, 'happy', 120, 1), shown = painted(c2).map((x) => map.get(x));
-  if (!(eq(shown, [[ART.calm.happy, 0]]) && ends2 === 1 && env2.intervals().length === 0)) d.push('減少動態 ' + JSON.stringify(shown) + ' onEnd ' + ends2);
-  r.setPose('happy', { once: true, onEnd: () => { ends2++; } });
-  if (ends2 !== 2 || env2.intervals().length) d.push('減少動態 setPose');
   return { ok: !d.length, detail: d.join(';') };
 };
 

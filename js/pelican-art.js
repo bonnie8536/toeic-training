@@ -78,17 +78,8 @@
    - 上方飄著三本小書(攤開的大書、黃色蠟筆封面的闔起來的書、攤開的小書),大小不一、高低錯開、微微傾斜;頭上兩個小圈往書那邊冒。
    - 動態:書各自慢慢上下飄、腳趾輪流翹、很小的呼吸和嘴袋晃動、偶爾眨眼。12 格,每秒 4 張(一圈約 3 秒)。靜止格第 0 格。
    - 播放:白日夢(趴著)跟站著的姿勢互換時也淡出淡入。
-   第九版(version 5;長相一筆沒改,其他五個姿勢每一格都跟第八版一樣):開心(happy)的動作重排(見 happy 前面的說明)。
-   - 以前結算卡只畫一張靜止格、整張畫布用 CSS 拉起來跳,翅膀、嘴袋、呆毛一起動,像隨便拉一下。
-     改成在畫布裡每格重畫:預備蹲、起跳拉長、頂點回圓、落地壓扁,翅膀、呆毛、嘴袋各自慢一點跟上、甩過頭再回來。
-   - 14 格,每秒 24 拍(hold 用拍數:快的 1 拍、慢的 3~4 拍);約 0.83 秒觸地,約 1.2 秒到最後的得意停格。靜止格改成第 13 格(得意停格)。
-   - 線條沸騰跟動作分開:每 3 拍換一次抖動組(每秒 8 次),不管這格停多久。
-   - 一次性播放:animate 的 once 播一次就停在最後一格,之後那格三種抖動輪流(停住不死);onEnd 播到最後一格時呼叫;
-     held 直接停在最後一格。PelicanArt.once 列出設計成這樣播的姿勢,PelicanArt.cues.happy.land 是觸地那一格(網站拿來對分數彈跳的時間)。
-   - 壓扁時嘴不跟著左右拉長(bodyXF 的 sxBeak),落地的煙多一格往外飄(dust:2)。
    用法:const a = PelicanArt.animate(canvas, { size: 180, fps: 8, pose: 'idle', onTick }); a.setPose('happy'); a.setFps(6); a.stop();
-   播一次:a.setPose('happy', { once: true, onEnd }) 或 animate(canvas, { pose: 'happy', once: true, onEnd })。
-   fps 是「基準速度」:各動作會按 PelicanArt.fps 的比例換算(fps 8 時待機每秒 5 張、開心 24 拍、尷尬、看書和白日夢 4 張、睡覺 3 張)。 */
+   fps 是「基準速度」:各動作會按 PelicanArt.fps 的比例換算(fps 8 時待機每秒 5 張、開心 8 張、尷尬、看書和白日夢 4 張、睡覺 3 張)。 */
 (function () {
   const W = 300, H = 280, GROUND = 258;    // 邏輯尺寸;GROUND = 腳底(地面線)的高度
   const CX = 150, BOT = 242;               // 呼吸時身體以肚子底部為支點上下伸縮
@@ -314,20 +305,15 @@
     };
   }
   /* 身體:以肚子底部為支點先伸縮(sq 上下、sx 左右)、再轉 tilt 度(正 = 順時針,嘴往上抬),最後搬 dx、dy。
-     第五版才有 sx、tilt、dx、dy;待機沒有這些欄位,算法跟第四版一模一樣。
-     第九版:sxBeak 是嘴(接頭 J 左邊)的左右伸縮,沒給時跟身體一樣(舊姿勢的算法一模一樣)。
-     開心的擠壓伸展給 1:身體左右撐開、長嘴不跟著拉長只跟著搬,壓得很扁時嘴尖也不會超出畫布左邊 */
+     第五版才有 sx、tilt、dx、dy;待機沒有這些欄位,算法跟第四版一模一樣 */
   function bodyXF(f) {
     if (f.lie) return lieXF(f);                              // 第八版:白日夢趴著,另外算
     const sq = f.sq || 1, sx = f.sx || 1 + (sq - 1) * 0.7;   // 吸氣時往上鼓、也一起變胖(不會變得又高又窄)
     const th = (f.tilt || 0) * RAD, dx = f.dx || 0, dy = f.dy || 0;
     const pw = pouchWarp((f.pouch || [0, 0])[0], (f.pouch || [0, 0])[1]);
-    const sb = f.sxBeak;
-    const hx = sb === undefined || sb === sx ? (x) => (x - CX) * sx
-      : (x) => (x >= J[0] ? (x - CX) * sx : (J[0] - CX) * sx + (x - J[0]) * sb);
     const affine = th || dx || dy
-      ? ([x, y]) => { const v = rot([hx(x), (y - BOT) * sq], th); return [CX + v[0] + dx, BOT + v[1] + dy + DROP]; }
-      : ([x, y]) => [CX + hx(x), BOT + (y - BOT) * sq + DROP];   // DROP:第六版整隻往下放(腿短一點)
+      ? ([x, y]) => { const v = rot([(x - CX) * sx, (y - BOT) * sq], th); return [CX + v[0] + dx, BOT + v[1] + dy + DROP]; }
+      : ([x, y]) => [CX + (x - CX) * sx, BOT + (y - BOT) * sq + DROP];   // DROP:第六版整隻往下放(腿短一點)
     return { body: (p) => affine(pw(p)), affine, th };
   }
 
@@ -965,15 +951,9 @@
           line(ctx, [k.body(a), k.body(b)], r, 3, 0.5);
         });
       } else if (name === 'dust') {
-        // 落地的煙:兩隻腳的外側。第九版:dust:2 是下一格,煙往外飄、變小變淡(只剩一小團和一條短線)
+        // 落地的煙:兩隻腳的外側
         [[96, -1], [220, 1]].forEach(([x0, s]) => {
           const x = x0 + (k.dx || 0);
-          if (n === 2) {
-            const u = x + s * 12;
-            line(ctx, [[u, GROUND - 5], [u + s * 7, GROUND - 12], [u + s * 14, GROUND - 8]], r, 2.2, 0.8);
-            if (!small) line(ctx, [[u + s * 9, GROUND - 19], [u + s * 13, GROUND - 23]], r, 2, 0.5);
-            return;
-          }
           line(ctx, [[x, GROUND - 2], [x + s * 10, GROUND - 11], [x + s * 19, GROUND - 6], [x + s * 23, GROUND - 1]], r, 2.6, 1);
           if (!small) line(ctx, [[x + s * 4, GROUND - 16], [x + s * 10, GROUND - 22]], r, 2.2, 0.6);
         });
@@ -1018,32 +998,18 @@
      頂點(停 2 拍)、翅膀張到最大、得意的短線 → 落下(嘴袋往上甩)→ 落地壓扁、眼睛笑成壓扁的弧線、嘴袋重重甩下去、冒煙 → 回彈 →
      抬下巴得意(停 2 拍)→ 放鬆接回開頭。呆毛比身體慢一拍。
      第六版:騰空三格翅膀轉高、整隻往外上方挪(羽毛尖超出身體輪廓),身體拉長、腳下看得到空隙;第 0 格接近待機的站姿 */
-  /* 第九版重排(長相不變,只改動作):14 格,hold 的單位是「拍」,一拍 1/24 秒(每秒 24 拍)。快的格 1 拍、慢的格 3~4 拍,
-     重量感靠每格停多久,不靠格數。每格都在畫布裡重畫擠壓伸展(以前是靜止格整張用 CSS 拉),體積大致不變。
-     0 抬下巴站好(3)→ 1 預備蹲,翅膀往後下、嘴袋被頂上去、笑瞇眼(4)→ 2 蹲到底(2)→ 3 腳還踩著地、身體拉長往上衝,
-     翅膀還在下面、嘴袋往下墜(1)→ 4 離地上升,翅膀慢一格才往上甩(1)→ 5 快到頂,翅膀張開(2)→ 6 頂點,身體回圓、翅膀張到最大、
-     得意的短線(4)→ 7 開始落,翅膀拖在後面(2)→ 8 加速落,身體拉長、翅膀被風掀高、嘴袋往上甩(1)→ 9 觸地壓到最扁、冒煙、
-     眼睛擠成壓扁的弧線、翅膀砸下去、嘴袋重重甩下去(3)→ 10 回彈(1)→ 11 再沉一點(2)→ 12 收,翅膀半開、得意短線(3)→
-     13 得意停格:抬著下巴,開心的眼睛(8;一次性播放時之後一直停在這格,只剩線條在抖)。
-     往上衝時每拍移得多、到頂點越來越少(慢進),落下時每拍移得越來越多(加速);落地那一下沒有過渡格,才「頓」得出來。
-     跟隨:翅膀比身體慢一格,觸地往下砸過頭再往回一點;呆毛再慢一格、方向相反;嘴袋跟身體反向甩,振幅越來越小(+12、-7、+4、-1)。
-     sxBeak 1:嘴不跟著左右伸縮(見 bodyXF),身體壓扁撐開時嘴尖還在畫布裡 */
   const happy = [
-    { eyes: 'open', tilt: 1, wing: -3, tuft: -2, pouch: [0, 1], hold: 3 },
-    { sq: 0.86, sx: 1.05, tilt: -1, eyes: 'happy', wing: 10, tuft: -8, pouch: [1, -4], hold: 4 },
-    { sq: 0.78, sx: 1.08, tilt: -2, eyes: 'happy', wing: 14, tuft: -12, pouch: [1, -6], hold: 2 },
-    { sq: 1.08, sx: 0.94, dy: -4, tilt: 3, eyes: 'happy', wing: 12, tuft: -2, pouch: [0, 8], hold: 1 },
-    { sq: 1.08, sx: 0.95, dy: -14, tilt: 5, eyes: 'happy', wing: -34, wingAt: [4, -6], fan: 6, feet: 'jump', tuft: 10, pouch: [-1, 10], fx: ['motion', 'shadow'], hold: 1 },
-    { sq: 1.04, sx: 0.98, dy: -23, tilt: 7, eyes: 'happy', wing: -62, wingAt: [8, -12], fan: 14, feet: 'jump', tuft: 20, pouch: [0, 6], fx: ['shadow'], hold: 2 },
-    { sq: 1, sx: 1, dy: -27, tilt: 8, eyes: 'happy', wing: -78, wingAt: [8, -17], fan: 22, feet: 'jump', tuft: 14, pouch: [0, 1], fx: ['pop:2', 'shadow'], hold: 4 },
-    { sq: 1.02, sx: 0.99, dy: -24, tilt: 7, eyes: 'happy', wing: -66, wingAt: [8, -14], fan: 18, feet: 'jump', tuft: 4, pouch: [1, -3], fx: ['shadow'], hold: 2 },
-    { sq: 1.06, sx: 0.96, dy: -9, tilt: 5, eyes: 'happy', wing: -72, wingAt: [8, -12], fan: 16, feet: 'jump', tuft: -5, pouch: [1, -8], fx: ['shadow'], hold: 1 },
-    { sq: 0.74, sx: 1.12, tilt: 0, eyes: 'happysquash', wing: 16, tuft: -24, pouch: [-3, 12], fx: ['dust'], hold: 3 },
-    { sq: 1.07, sx: 0.95, dy: -4, tilt: 5, eyes: 'happy', wing: -28, wingAt: [3, -3], tuft: -10, pouch: [2, -7], fx: ['dust:2'], hold: 1 },
-    { sq: 0.93, sx: 1.04, tilt: 4, eyes: 'happy', wing: 4, tuft: 8, pouch: [-1, 4], hold: 2 },
-    { sq: 1.02, tilt: 6, eyes: 'happy', wing: -42, wingAt: [8, -5], fan: 12, tuft: -3, pouch: [-1, -1], fx: ['pop'], hold: 3 },
-    { tilt: 6, eyes: 'happy', wing: -26, wingAt: [4, -3], fan: 6, tuft: 2, pouch: [0, 0.5], fx: ['pop'], hold: 8 },
-  ].map((f) => Object.assign({ sxBeak: 1 }, f));
+    { eyes: 'open', tilt: 1, wing: -3, tuft: -3, pouch: [0, 1] },
+    { sq: 0.86, sx: 1.03, tilt: -1, dx: 3, eyes: 'happy', wing: 8, tuft: 10, pouch: [1, -3], hold: 2 },
+    { sq: 1.1, sx: 0.95, dy: -4, tilt: 5, eyes: 'happy', wing: -30, tuft: 16, pouch: [1, 6] },
+    { sq: 1.08, sx: 0.95, dy: -22, tilt: 7, eyes: 'happy', wing: -62, wingAt: [8, -12], fan: 14, feet: 'jump', tuft: 24, pouch: [-1, 8], fx: ['motion', 'shadow'] },
+    { sq: 1.03, sx: 0.98, dy: -28, tilt: 8, eyes: 'happy', wing: -76, wingAt: [8, -17], fan: 22, feet: 'jump', tuft: 12, pouch: [0, 1], fx: ['pop:2', 'shadow'], hold: 2 },
+    { sq: 1.07, sx: 0.96, dy: -17, tilt: 6, eyes: 'happy', wing: -54, wingAt: [7, -10], fan: 12, feet: 'jump', tuft: 8, pouch: [1, -6], fx: ['shadow'] },
+    { sq: 0.8, sx: 1.04, tilt: 1, dx: 1, eyes: 'happysquash', wing: 14, tuft: -22, pouch: [-3, 10], fx: ['dust'] },
+    { sq: 1.06, sx: 0.97, tilt: 6, eyes: 'happy', wing: -20, tuft: 12, pouch: [2, -5] },
+    { sq: 0.99, tilt: 7, eyes: 'happy', wing: -42, wingAt: [8, -5], fan: 12, tuft: -6, pouch: [-1, 3], fx: ['pop'], hold: 2 },
+    { tilt: 3, eyes: 'happy', wing: -10, tuft: 2, pouch: [0, 0.5] },
+  ];
   /* 尷尬懊惱(成績不理想):不哭也不裝可憐,是「嘖」。站好 → 縮一下、頭低下去 → 縮到最底,> <、嘴袋垂下來,
      額頭左上方冒出打結的線團、頭的右邊一滴汗(停 2 拍)→ 回彈 → 吸一口氣抬頭(線團鬆開)→ 嘆氣扁下去、嘴邊一團氣(停 2 拍)→
      鬆下來、呆毛往後塌 → 斜眼瞄你一下(第六版:眼珠推到一邊、上眼皮壓低、頭往上轉 2.5 度,停 3 拍)→ 眨眼接回開頭 */
@@ -1104,21 +1070,12 @@
   /* 第五版的姿勢接在 idle 後面(待機的種子用姿勢的順序算,不變);第八版的白日夢接在最後(前面各姿勢的種子不變) */
   const POSES = { idle, happy, oops, read, sleep, daydream };
   /* 不想看動畫(減少動態)時每個姿勢顯示的那一格:
-     happy 第 13 格(得意停格:站著抬下巴、開心的眼睛)、oops 第 2 格(縮到最底、> <、線團和汗都在)、
+     happy 第 8 格(站著抬下巴、開心的眼睛、得意的短線)、oops 第 2 格(縮到最底、> <、線團和汗都在)、
      read 第 0 格(捧著書往下看)、sleep 第 3 格(吸飽氣、兩個 z)、daydream 第 0 格(三本書都在空中、張著眼往上看) */
-  const CALM = { idle: 0, happy: 13, oops: 2, read: 0, sleep: 3, daydream: 0 };
-  /* 各動作在基準 fps = 8 時的播放速度;實際 = 呼叫者給的 fps × 這裡 / 8。
-     第九版:開心改成每秒 24 拍(hold 用拍數算,見 happy) */
-  const POSE_FPS = { idle: 5, happy: 24, oops: 4, read: 4, sleep: 3, daydream: 4 };
+  const CALM = { idle: 0, happy: 8, oops: 2, read: 0, sleep: 3, daydream: 0 };
+  /* 各動作在基準 fps = 8 時的播放速度;實際 = 呼叫者給的 fps × 這裡 / 8 */
+  const POSE_FPS = { idle: 5, happy: 8, oops: 4, read: 4, sleep: 3, daydream: 4 };
   const fpsFor = (pose, base) => base * (POSE_FPS[pose] || 8) / 8;
-  /* 第九版:線條沸騰跟動作分開。BOIL 有的姿勢每幾拍換一次抖動組(開心每 3 拍 = 每秒 8 次),不管這格停多久;
-     沒有的姿勢照舊(每一圈、每一拍輪替) */
-  const BOIL = { happy: 3 };
-  /* 一次性的姿勢(animate 的 once):播到最後一格就停在那格,之後只剩線條在抖:那格三種抖動輪流,基準 fps 8 時每秒 HOLD_FPS 張 */
-  const ONCE = ['happy'];
-  const HOLD_FPS = 8, HOLD_VARIANTS = 3;
-  /* 動作裡的重點格(給網站對時間用):開心第 9 格觸地 */
-  const CUES = { happy: { land: 9 } };
 
   /* 畫一格。seed 決定這一格的抖動 */
   function draw(ctx, f, seed, size) {
@@ -1165,10 +1122,9 @@
   const poseSeed = (seed, pose) => seed * 1000 + Object.keys(POSES).indexOf(pose) * 97;
   const frameSeed = (base, i, variant) => base + i * 13 + variant * 101;
 
-  /* 每一格各畫 2 種抖動到離屏畫布,播的時候交替,線條會沸騰。用到哪一格才畫哪一格,畫過的留著重播
-     (第九版:一次性姿勢停住的最後一格用到 3 種) */
+  /* 每一格各畫 2 種抖動到離屏畫布,播的時候交替,線條會沸騰。用到哪一格才畫哪一格,畫過的留著重播 */
   function bake(pose, px, seedBase, size) {
-    const slots = POSES[pose].map(() => []);
+    const slots = POSES[pose].map(() => [null, null]);
     return (i, b) => slots[i][b] || (slots[i][b] = (() => {
       const c = document.createElement('canvas');
       c.width = Math.round(W * px); c.height = Math.round(H * px);
@@ -1197,8 +1153,6 @@
     const cache = {};
     const framesOf = (p) => cache[p] || (cache[p] = bake(p, px, poseSeed(o.seed, p), o.size));
     let pose = POSES[o.pose] ? o.pose : 'idle', fps = o.fps, i = 0, timer = null, seq = sequence(pose);
-    /* 第九版:這次是不是播一次(once):{ onEnd, done };done 之後停在最後一格,只換抖動 */
-    let once = o.once ? { onEnd: o.onEnd, done: !!o.held } : null;
     const reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     /* 第七版:看書是正面,跟其他(側面)姿勢互換時,上一張畫面用約 150 ms 淡出、新的淡入,整隻不會一下子跳過去。
        第八版:白日夢是趴著的,跟站著的(側面、正面)互換時也淡出淡入;站著的側面姿勢之間照舊直接換。
@@ -1222,52 +1176,24 @@
       const step = () => { if (!fade || !last) return; paint(last); if (fade) raf(step); };
       raf(step);
     }
-    const lastK = () => POSES[pose].length - 1;
-    /* 抖動組:只畫一種(one)時都是 0;BOIL 有的姿勢照拍數換(跟動作分開);其他照舊 */
-    const variantAt = (j) => (one ? 0 : BOIL[pose] ? Math.floor(i / BOIL[pose]) % 2 : (Math.floor(i / seq.length) + j) % 2);
     function tick() {
-      const fr = framesOf(pose), mine = once;
-      if (reduce) { paint(fr(CALM[pose] || 0, 0)); if (mine) finish(mine); return; }
-      if (mine && mine.done) {                 // 停在最後一格:三種抖動輪流(只畫一種時也一樣,只多畫這一格的兩張)
-        paint(fr(lastK(), i % HOLD_VARIANTS));
-        if (typeof o.onTick === 'function') o.onTick({ pose, frame: lastK(), tick: i, held: true });
-        i++;
-        return;
-      }
+      const fr = framesOf(pose);
+      if (reduce) { paint(fr(CALM[pose] || 0, 0)); return; }
       const [k, j] = seq[i % seq.length];
-      paint(fr(k, variantAt(j)));
+      paint(fr(k, one ? 0 : (Math.floor(i / seq.length) + j) % 2));
       if (typeof o.onTick === 'function') o.onTick({ pose, frame: k, tick: i });
       i++;
-      // onTick 裡換了姿勢(once 換掉了)就不管這一次
-      if (mine && once === mine && k === lastK()) finish(mine);
     }
-    /* 一次性的播完了:計時器換成停格的速度,再通知呼叫的人(onEnd 裡換姿勢時,setPose 的 stop() 清得到停格的計時器) */
-    function finish(c) {
-      if (c.done) return;
-      c.done = true; i = 0;
-      stop();
-      if (!reduce) timer = setInterval(tick, 1000 / rate());
-      if (typeof c.onEnd === 'function') c.onEnd();
-    }
-    const rate = () => (once && once.done ? HOLD_FPS * fps / 8 : fpsFor(pose, fps));
     // 先開計時器再畫第一拍:onTick 裡又呼叫 setPose 時,裡面那次 start() 的 stop() 清得到這個計時器
-    function start() { stop(); if (!reduce) timer = setInterval(tick, 1000 / rate()); tick(); }
+    function start() { stop(); if (!reduce) timer = setInterval(tick, 1000 / fpsFor(pose, fps)); tick(); }
     function stop() { if (timer) clearInterval(timer); timer = null; }
     start();
     return {
-      /* opt(第九版,可省略):once 播一次就停在最後一格(之後只剩線條在抖)、onEnd 播到最後一格時呼叫一次(減少動態時馬上呼叫)、
-         held 直接停在最後一格(之前播過了,例如離開畫面又回來) */
-      setPose(p, opt) {
-        if (!POSES[p]) return;
-        fadeFrom(p); pose = p; seq = sequence(p); i = 0;
-        once = opt && opt.once ? { onEnd: opt.onEnd, done: !!opt.held } : null;
-        start();
-      },
+      setPose(p) { if (POSES[p]) { fadeFrom(p); pose = p; seq = sequence(p); i = 0; start(); } },
       setFps(n) { fps = n; start(); },
       // 停掉計時器,只畫指定的那一格;減少動態時一律畫該姿勢的靜止格
       show(k, variant, p) {
         if (p && POSES[p] && p !== pose) { pose = p; seq = sequence(p); i = 0; }
-        once = null;
         stop();
         const n = POSES[pose].length;
         paint(framesOf(pose)(reduce ? (CALM[pose] || 0) : (((k | 0) % n) + n) % n, reduce || one ? 0 : (variant ? 1 : 0)));
@@ -1292,10 +1218,8 @@
     frameCount: (p) => (POSES[p] ? POSES[p].length : 0),
     holds: (p) => (POSES[p] ? POSES[p].map((f) => f.hold || 1) : []),
     calm: Object.assign({}, CALM),
-    fps: Object.assign({}, POSE_FPS),        // 基準 8 時各動作的每秒張數(開心是每秒拍數)
-    once: ONCE.slice(),                      // 第九版:設計成播一次、停在最後一格的姿勢(animate 的 once)
-    cues: JSON.parse(JSON.stringify(CUES)),  // 第九版:重點格,例如 cues.happy.land = 觸地那一格
-    version: 5,
+    fps: Object.assign({}, POSE_FPS),        // 基準 8 時各動作的每秒張數
+    version: 4,
     metrics: { width: W, height: H, ground: GROUND },   // ground = 腳底在畫布裡的高度(邏輯像素)
   };
 })();

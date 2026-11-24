@@ -1,8 +1,7 @@
 /* 衝衝英文:共用元件 window.UI(每個函式的參數寫在它上方)
    - UI.art.ensure(names)  需要時才載入 PelicanArt、ChickArt、FoodArt、DoodleArt(同層的檔),回傳 Promise,載入失敗也是 resolve
    - UI.mascot(canvas, opt)  主角鵜鶘:沒有或載入失敗時退回小雞,兩個都沒有就不畫;UI.chick(canvas, opt) 只畫小雞(寵物)。
-     看得到才動,離開畫面、分頁到背景、destroy() 時停;happy 只畫靜止格,結算卡上的鵜鶘例外(看到才跳一次、停在得意格,
-     opt.onCue('land') 是觸地那一下),退回小雞時跳一下由 CSS 做。忘了 destroy 時,畫布拿出頁面後自己收掉
+     看得到才動,離開畫面、分頁到背景、destroy() 時停;happy 只畫靜止格,跳一下由 CSS 做。忘了 destroy 時,畫布拿出頁面後自己收掉
    - UI.focus.enter(opt)  專心模式;UI.sheet(opt) 從作答列點開的面板(題號面板)
    - UI.result(opt) 結算卡、UI.rewardRow(opt) 只有點心列、UI.detail(title, nodes, opt) 逐題收合、UI.empty(opt) 空狀態
    - UI.confirm(opt)、UI.prompt(opt)、UI.alert(opt)  確認、輸入、通知視窗(Promise)
@@ -17,12 +16,10 @@
   const CHICK_RATIO = 280 / 240;               // 小雞畫布的高寬比(ChickArt.metrics;載入後以 metrics 為準)
   const PELICAN_RATIO = 280 / 300;             // 鵜鶘畫布的高寬比(PelicanArt.metrics;載入後以 metrics 為準)
   const POSE_FALLBACK = { oops: 'idle', read: 'idle', daydream: 'idle' };
-  /* 開心是一次性的跳躍:小圖(首頁、空狀態等)只畫靜止格(正常比例)。
-     結算卡(opt.hop)上、圖有一次性播放(PelicanArt.once 有這個姿勢)時,看到才從頭跳一次、停在最後的得意格(見 mascot 的 celebrate);
-     圖沒有一次性播放(退回小雞)時照舊畫靜止格,由 CSS 把整張畫布往上跳一次(.is-hop,壓扁不超過 0.92、以腳底為基準) */
+  /* 開心的跳躍裡有壓得很扁的格(蹲下 0.7、落地 0.6),放大在結算卡上像圖壞掉:這些姿勢只畫靜止格(正常比例),
+     要跳時由 CSS 把整張畫布往上跳一次(.is-hop,壓扁不超過 0.92、以腳底為基準) */
   const STILL_POSES = ['happy'];
   const HOP_MS = 640;
-  const ONCE_BACK_MS = 500;                    // 拿到點心時跳完,停在得意格多久再回到原本的姿勢
   const KB_PX = 120;                           // 可視高度比視窗少這麼多:當作鍵盤彈出來了
   const DLG_ARM_MS = 400;                      // 視窗打開後這段時間內,滑鼠或手指點到確定不算(連點兩下的第二下)
   const ART_FILES = { PelicanArt: 'pelican-art.js', ChickArt: 'chick-art.js', FoodArt: 'food-art.js', DoodleArt: 'doodle-art.js' };
@@ -191,27 +188,9 @@
     let seen = !('IntersectionObserver' in window);
     /* 畫布放進頁面過、後來被拿掉了(呼叫端換掉卡片卻沒呼叫 destroy):自己收掉計時器與監聽,不握住畫布 */
     function dropped() { if (canvas.isConnected === true) { wasIn = true; return false; } return wasIn && canvas.isConnected === false; }
-    /* 一次性播放(結算卡進場):played 進場那一跳播過了(離開畫面再回來直接停在最後一格,不重播)、playing 正在跳、
-       lastFrame 上一拍是第幾格(重點格只在剛進那一格時通知 o.onCue 一次,例如 'land' 觸地) */
-    let played = false, playing = false, lastFrame = -1;
-    function onceOk(q) { const A = window[artName()]; return !!(A && Array.isArray(A.once) && A.once.indexOf(q) > -1); }
-    function celebrate(q) { return !!o.hop && onceOk(q); }
-    function onceOpt() {
-      if (played) { playing = false; return { once: true, held: true }; }
-      played = true; playing = true; lastFrame = -1;
-      return { once: true, onEnd: function () { playing = false; } };
-    }
-    function onTick(t) {
-      if (!t || t.held) return;
-      const prev = lastFrame;
-      lastFrame = t.frame;
-      if (!playing || typeof o.onCue !== 'function' || t.frame === prev) return;
-      const A = window[artName()], cues = A && A.cues && A.cues[t.pose];
-      if (cues && typeof cues === 'object') Object.keys(cues).forEach(function (name) { if (cues[name] === t.frame) safe(function () { o.onCue(name); }); });
-    }
-    /* 會不會動:靜態的小雞(空狀態)、減少動態、只畫靜止格的姿勢(happy,結算卡上一次性播放的除外)都不開計時器 */
+    /* 會不會動:靜態的小雞(空狀態)、減少動態、只畫靜止格的姿勢(happy)都不開計時器 */
     const canMove = !o.still && !reduced();
-    const loops = function () { const q = poseOk(artName(), want); return canMove && !reduced() && (STILL_POSES.indexOf(q) < 0 || celebrate(q)); };
+    const loops = function () { return canMove && !reduced() && STILL_POSES.indexOf(poseOk(artName(), want)) < 0; };
     function calmOf(p) { const A = window[artName()]; return A && A.calm && typeof A.calm[p] === 'number' ? A.calm[p] : 0; }
     function clearBack() { if (back) { clearTimeout(back); back = 0; } }
     function clearHop() { if (hopT) { clearTimeout(hopT); hopT = 0; } safe(function () { canvas.classList.remove('is-hop'); }); }
@@ -229,15 +208,10 @@
       if (anim) return true;
       if (!A || typeof A.animate !== 'function') return false;
       fit();   // 圖載到了:畫布高度改照它自己的 metrics 比例
-      const q = poseOk(artName(), want);
-      const opt = { size: sizeNow(), fps: 8, pose: q, maxDpr: 2, variants: 1, onTick: onTick };
-      if (loops() && celebrate(q)) Object.assign(opt, onceOpt());
-      anim = safe(function () { return A.animate(canvas, opt); }) || null;
+      anim = safe(function () { return A.animate(canvas, { size: sizeNow(), fps: 8, pose: poseOk(artName(), want), maxDpr: 2, variants: 1 }); }) || null;
       running = !!anim;
       return running;
     }
-    /* 換到 q 繼續播:結算卡進場的一次性姿勢第一次從頭播、之後停在最後一格 */
-    function resume(q) { safe(function () { if (celebrate(q)) anim.setPose(q, onceOpt()); else anim.setPose(q); }); }
     function paintStill(p) { const q = poseOk(artName(), p || want); safe(function () { anim.show(calmOf(q), 0, q); }); running = false; }
     function sync() {
       if (!alive) return;
@@ -251,7 +225,7 @@
       const go = seen && doc.visibilityState !== 'hidden';
       if (!go) { clearBack(); if (anim && running) safe(function () { anim.stop(); }); running = false; return; }
       if (!anim) { make(); return; }
-      if (!running) { running = true; resume(poseOk(artName(), want)); }
+      if (!running) { running = true; safe(function () { anim.setPose(poseOk(artName(), want)); }); }
     }
     /* 沒有 IntersectionObserver 的瀏覽器:畫布被拿掉時沒有事件叫醒 sync,每 5 秒看一次還在不在頁面上 */
     function watch() { watchT = setTimeout(function () { watchT = 0; if (!alive) return; if (dropped()) destroy(); else watch(); }, 5000); }
@@ -296,30 +270,14 @@
     return {
       setPose: function (p) {
         want = p; clearBack();
-        if (anim && running && loops()) resume(poseOk(artName(), p)); else sync();
+        if (anim && running && loops()) safe(function () { anim.setPose(poseOk(artName(), p)); }); else sync();
       },
-      /* 播一次再回到原本的姿勢;停著、減少動態時不播。
-         一次性的姿勢(鵜鶘的開心):從頭跳一次,停在得意格一下再回去(本來就是這個姿勢就停著);進場那一跳還沒跳完時不重來。
-         圖沒有一次性播放時 happy 不播畫格,改成靜止格加整張跳一次 */
+      /* 播一次再回到原本的姿勢;停著、減少動態時不播。happy 不播畫格,改成靜止格加整張跳一次 */
       play: function (p) {
         const A = window[artName()];
         if (!alive || !canMove || reduced() || !anim || !A) return false;
         const q = poseOk(artName(), p);
         clearBack();
-        if (onceOk(q)) {
-          if (!running) return false;
-          if (playing) return true;
-          playing = true; lastFrame = -1;
-          safe(function () {
-            anim.setPose(q, { once: true, onEnd: function () {
-              playing = false;
-              const w = poseOk(artName(), want);
-              if (w === q || !alive) return;
-              back = setTimeout(function () { back = 0; if (anim && running) resume(w); }, ONCE_BACK_MS);
-            } });
-          });
-          return true;
-        }
         if (STILL_POSES.indexOf(q) > -1) { paintStill(q); hop(); back = setTimeout(function () { back = 0; sync(); }, HOP_MS); return true; }
         if (!running) return false;
         safe(function () { anim.setPose(q); });
@@ -799,20 +757,8 @@
       head, stats, reward, acts,
       o.note ? el('p', { class: 'result-note' }, [o.note]) : null,
     ]);
-    /* 進場(只動 transform 與 opacity,減少動態時不加類別,樣式見 .result-card.is-cele):
-       - happy:鵜鶘看到才從頭跳一次(停在得意格),卡片同時淡入放大帶一點過衝(.is-cele);觸地那一下(onCue 'land')分數彈一下(.is-land);
-         數字、點心、按鈕從 0.95 秒起依序淡入。已經載好的鵜鶘沒有一次性播放(舊版的圖)時照其他姿勢
-       - 其他姿勢、退回小雞:卡片簡單淡入放大(.is-enter);退回小雞的 happy 由 CSS 整張跳一次 */
-    const cele = pose === 'happy' && !(window.PelicanArt && !(Array.isArray(window.PelicanArt.once) && window.PelicanArt.once.indexOf('happy') > -1));
-    if (!reduced()) card.classList.add(cele ? 'is-cele' : 'is-enter');
-    let landed = false;
-    function land() {
-      if (landed || !cele || reduced()) return;
-      landed = true;
-      card.classList.add('is-land');
-    }
-    const c = mascot(cv, { size: small ? 120 : wide ? 200 : 180, chickSize: small ? 96 : wide ? 160 : 140, pose: pose, hop: true,
-      onCue: function (name) { if (name === 'land') land(); } });
+    /* happy 進場時整張跳一次(只畫正常比例的靜止格) */
+    const c = mascot(cv, { size: small ? 120 : wide ? 200 : 180, chickSize: small ? 96 : wide ? 160 : 140, pose: pose, hop: true });
     const s = snackSlot(card, reward, o.earnId, c);
     return {
       el: card,

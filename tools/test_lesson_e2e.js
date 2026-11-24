@@ -4,7 +4,7 @@
    每個帳號一個瀏覽器設定檔(Target.createBrowserContext),兩個設定檔同一個帳號就是兩台裝置。作答用頁面裡的小幫手 __step():
    有沒選的選項就選、有主按鈕就按(只按 button,不點離開課程頁的連結)。最後一條(同步)不開瀏覽器,用 tools/sync_harness.js 的多台裝置。
    用法:node tools/test_lesson_e2e.js [--port <起始埠,用兩個>] [--debug-port <Chrome 的埠>] [--tmp <放 Chrome 使用者資料的資料夾>]
-        [--base <對照用的資料夾>] [--shots <截圖資料夾>] [--only <測試名稱的一段>]
+        [--base <對照用的資料夾>] [--shots <截圖資料夾>] [--only <測試名稱的一段,幾段用 | 分開>]
    --shots 給了時,走到的每個畫面存 375 與 1280 兩張(檔名「編號_畫面_寬.png」)。每次一個新的使用者資料夾,跑完刪掉。 */
 'use strict';
 const fs = require('fs');
@@ -173,10 +173,12 @@ async function tab(u, o) {
     p.clockId = (await send('Page.addScriptToEvaluateOnNewDocument', { source: STUB.clockScript(OFF) })).result.identifier;
     if (ms) await p.eval('window.__clockAdd ? (__clockAdd(' + ms + '), true) : true');
   };
-  p.loaded = async () => { for (let i = 0; i < 200; i++) { try { if ((await p.eval('document.readyState')) === 'complete') return; } catch (e) { /* 換頁中 */ } await sleep(100); } throw new Error('頁面沒載完'); };
+  /* 換頁前在舊頁放記號,記號不見(新頁)而且載完才算:機器忙的時候舊頁可能還沒開始換,不能只看 readyState */
+  p.mark = () => p.eval('window.__oldPage = true').catch(() => null);
+  p.loaded = async () => { for (let i = 0; i < 200; i++) { try { if ((await p.eval('!window.__oldPage && document.readyState')) === 'complete') return; } catch (e) { /* 換頁中 */ } await sleep(100); } throw new Error('頁面沒載完'); };
   p.settle = async (ms) => { await p.eval('window.CLOUD && CLOUD.ready ? CLOUD.ready.then(() => true, () => true) : true'); await sleep(ms === undefined ? 900 : ms); };
-  p.go = async (url, ms) => { await send('Page.navigate', { url: p.origin + '/' + url }); await sleep(200); await p.loaded(); await p.settle(ms); };
-  p.reload = async () => { await send('Page.reload', {}); await sleep(300); await p.loaded(); await p.settle(); };
+  p.go = async (url, ms) => { await p.mark(); await send('Page.navigate', { url: p.origin + '/' + url }); await sleep(200); await p.loaded(); await p.settle(ms); };
+  p.reload = async () => { await p.mark(); await send('Page.reload', {}); await sleep(300); await p.loaded(); await p.settle(); };
   p.wait = async (expr, what, ms) => {
     for (let i = 0; i < (ms || 15000) / 100; i++) { try { if (await p.eval(expr)) return; } catch (e) { /* 換頁中 */ } await sleep(100); }
     throw new Error('等不到:' + (what || expr));
@@ -207,13 +209,20 @@ async function shot(p, name) {
   if (!SHOTS || NAMES[name]) return;
   NAMES[name] = true;
   fs.mkdirSync(SHOTS, { recursive: true });
+  /* 小幫手用 element.click() 作答,不是真的滑鼠或手指,Chrome 會把之後程式移過去的焦點畫成鍵盤焦點框;
+     手指操作不會畫(第 7 條驗過)。截圖照手指操作的樣子:拍照時不畫鍵盤焦點框 */
+  await p.eval("(() => { const s = document.createElement('style'); s.id = '__shot'; s.textContent = ':focus-visible { outline: none !important; }'; document.head.append(s); return true; })()");
   for (const [w, h, mobile] of [[375, 812, true], [1280, 900, false]]) {
     await p.metrics(w, h, mobile);
     await sleep(500);
     const full = Math.min(3200, Math.max(h, Number(await p.eval('Math.ceil(document.documentElement.scrollHeight)')) || h));
-    const r = await p.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: full > h, clip: { x: 0, y: 0, width: w, height: full, scale: 1 } });
+    /* 整頁截圖:視窗拉到整頁高(只拉一次,專心模式的頁面高度跟著視窗長),固定在底部的作答列才會在頁面最下面,
+       不然會疊在第一個視窗的底部、蓋住中間的內容 */
+    if (full > h) { await p.metrics(w, full, mobile); await sleep(400); }
+    const r = await p.send('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width: w, height: full, scale: 1 } });
     fs.writeFileSync(path.join(SHOTS, name + '_' + w + '.png'), Buffer.from(r.result.data, 'base64'));
   }
+  await p.eval("(() => { const s = document.getElementById('__shot'); if (s) s.remove(); return true; })()");
   await p.metrics(...p.size);
   await sleep(300);
 }
@@ -267,7 +276,8 @@ const pilotUser = (c, u, lv) => { c.members[u.id] = [{ id: PILOT, name: '試行�
 
 const T = {};
 /* ---------- 1. 非試行學生 ---------- */
-const MAIN = "(() => { const m = document.querySelector('main'); return m ? m.innerHTML.replace(/ style=\"[^\"]*\"/g, '').replace(/\\s+/g, ' ') : ''; })()";
+/* main 的內容:拿掉 style 與 canvas 的 width、height(畫圖的時機不一定,分頁在背景時可能還沒畫) */
+const MAIN = "(() => { const m = document.querySelector('main'); return m ? m.innerHTML.replace(/ style=\"[^\"]*\"/g, '').replace(/(<canvas[^>]*?) width=\"\\d+\" height=\"\\d+\"/g, '$1').replace(/\\s+/g, ' ') : ''; })()";
 /* 畫面停下來(隔 700 毫秒讀兩次一樣)才比:機器忙的時候,班級、小雞這些晚到的區塊還在畫 */
 async function settled(p) {
   let last = null;
@@ -325,9 +335,18 @@ const TIP_PART = "(() => { const h = document.querySelector('.lsn-tip-h'); const
 const tipShot = async (p) => { const part = await p.eval(TIP_PART); return ['P1', 'P5', 'P7'].indexOf(part) > -1 ? '09_技巧卡_' + part : null; };
 const SHOT_LESSON = { tip: tipShot, cards: '10_單字字卡', wordquiz: '11_單字小考', bridge: '12_過場', block: '13_區塊結果與逐題解析', grammar: '14_文法單元', ear: '15_英語耳', prestep: '20_前測檢討', intro: '21_小檢核' };
 async function openDetail(p, s) { if (s === 'block') { await p.eval("(() => { const d = document.querySelector('.lsn-block-result details'); if (d) d.open = true; return true; })()"); await sleep(300); } }
+/* 版面:段落總覽每段一列(記號在段名左邊、同一列);課程總覽不能上的列沒有記號(兩頁的樣式表撞名時會跑掉) */
+async function stepsLayout(p) {
+  const bad = await p.eval(`[...document.querySelectorAll('.lsn-step')].filter((li) => {
+    const m = li.querySelector('.lsn-step-mark').getBoundingClientRect(), n = li.querySelector('.lsn-step-name').getBoundingClientRect();
+    return !(m.right <= n.left && Math.abs((m.top + m.bottom) / 2 - (n.top + n.bottom) / 2) < 14 && li.getBoundingClientRect().height < 80);
+  }).map((li) => li.textContent)`);
+  assert.deepStrictEqual(bad, [], '段落總覽排錯的段');
+}
 async function finishLesson(p, no, shots) {
   await p.go('lesson.html?no=' + no);
   await p.wait("document.querySelector('.lsn-steps')", '第 ' + no + ' 堂總覽');
+  if (no === 2) await stepsLayout(p);
   if (shots && no === 2) await shot(p, '08_段落總覽');
   const intro = shots && no === 4 ? Object.assign({}, SHOT_LESSON) : Object.assign({}, SHOT_LESSON, { intro: null });
   await drive(p, { goOn: true, shots: shots ? intro : null, before: (s) => openDetail(p, s), until: (s) => s === 'result' });
@@ -339,7 +358,7 @@ async function pretest(p, shots) {
   await p.go('start.html?step=result');
   await p.wait("(() => { const a = document.querySelector('.result-card .result-go'); return a && a.textContent.trim() === '開始第 1 堂'; })()", '開始第 1 堂');
   if (shots) await shot(p, '05_S8_試行');
-  await p.click('.result-card .result-go');
+  await p.mark(); await p.click('.result-card .result-go');
   await sleep(300); await p.loaded(); await p.settle();
   await p.wait("document.querySelector('.lsn-steps')", '第 1 堂總覽');
   assert.deepStrictEqual(await p.eval("[...document.querySelectorAll('.lsn-rule')].map((e) => e.textContent)"), ['每題音檔只播一次', '開始後不能回上一題']);
@@ -393,7 +412,7 @@ async function walk(u, lv, shots) {
   assert.deepStrictEqual([h0.go, h0.daily, h0.solid], ['開始第 1 堂', false, 1]);
   if (shots) await shot(p, '01_首頁卡_可開始');
   await pretest(p, shots);
-  await p.click('.result-card .result-go');
+  await p.mark(); await p.click('.result-card .result-go');
   await sleep(300); await p.loaded(); await p.settle();
   await p.wait("document.querySelector('.lsn-list')", '課程總覽');
   if (shots) await shot(p, '07_課程總覽');
@@ -431,6 +450,8 @@ async function walk(u, lv, shots) {
   await p.go('lessons.html');
   await p.wait("document.querySelector('.lsn-list')", '課程總覽');
   assert.deepStrictEqual(await p.eval("[...document.querySelectorAll('.lsn-list li')].slice(4, 6).map((li) => [li.textContent.includes('未開放'), !!li.querySelector('a')])"), [[true, false], [true, false]]);
+  const offMarks = await p.eval("[...document.querySelectorAll('.lsn-row.is-off .lsn-mark')].map((m) => getComputedStyle(m).borderTopWidth + ' ' + getComputedStyle(m, '::before').content).filter((x) => x !== '0px none')");
+  assert.deepStrictEqual(offMarks, [], '未開放的列不畫記號');
   await p.go('lesson.html?no=5');
   await p.wait("document.querySelector('.ui-empty-text')", '第 5 堂');
   assert.deepStrictEqual([await p.text('.ui-empty-text'), await p.text('.ui-empty-go')], ['第 5 堂尚未開放', '每日練習']);
@@ -530,7 +551,10 @@ T['5 兩台:(a) 一台做聽力段、一台做閱讀段,兩邊總覽都看到兩
   await a.wait("document.querySelector('.lsn-steps')", 'a 的總覽'); await b.wait("document.querySelector('.lsn-steps')", 'b 的總覽');
   const sa = await les(a, 3), sb = await les(b, 3), cloud = c.get(u.id, 'les_t1_03');
   assert.strictEqual(keys(cloud).length, 3, '雲端三題:' + J(keys(cloud)));
-  if (process.env.E2E_DUMP) fs.writeFileSync(process.env.E2E_DUMP, J({ sa, sb, cloud, log: c.log.filter((x) => x.as === u.id) }, null, 1));
+  if (process.env.E2E_DUMP) {
+    const probe = "(async () => { const r = await CLOUD.readKey('les_t1_03'); const o = await LESSON_DATA.open(3); return { ok: r.ok, cloudN: r.v && r.v.a.length, openN: o.state && o.state.a.length, localN: store.get('les_t1_03').a.length, reloading: CLOUD.reloading }; })()";
+    fs.writeFileSync(process.env.E2E_DUMP, J({ pa: await a.eval(probe), pb: await b.eval(probe), sa, sb, cloud, log: c.log.filter((x) => x.as === u.id) }, null, 1));
+  }
   assert.deepStrictEqual([keys(sa), keys(sb)], [keys(cloud), keys(cloud)], J({ a: keys(sa), b: keys(sb) }));
   /* (a) a 做完聽力段;b 開總覽看到聽力完成,做閱讀段;最後兩台開總覽都看到兩段完成 */
   const st = async (p) => p.eval("[...document.querySelectorAll('.lsn-step')].filter((li) => /聽力|閱讀/.test(li.textContent)).map((li) => li.className.replace('lsn-step is-', ''))");
@@ -606,6 +630,12 @@ T['7 iPhone 375×812 觸控:前測的播放鈕只播一次、倒數在走、沒�
   assert.deepStrictEqual([await p.text('.ui-dialog-h'), await p.text('.ui-dialog-cancel'), await p.text('.ui-dialog-ok')], ['這一題還沒答', '繼續作答', '下一題']);
   await tap(p, '.ui-dialog-cancel');
   assert.deepStrictEqual(await countOf(p), [1, 36]);
+  /* 用手指點選項、點「下一題」:換題時程式把焦點移到題目,手指操作不畫鍵盤焦點框 */
+  await tap(p, '#lsn-root .letter-big, #lsn-root .opt');
+  await tap(p, '.quiz-foot .btn.primary');
+  await p.wait("(() => { const t = document.querySelector('.quiz-count'); return t && /^2 \\//.test(t.textContent.trim()); })()", '第 2 題');
+  const ring = await p.eval("(() => { const e = document.querySelector(':focus-visible'); return e ? e.className || e.tagName : null; })()");
+  assert.strictEqual(ring, null, '手指操作後不該有鍵盤焦點框:' + ring);
   noErrors(p, 'iPhone');
   await p.close();
 };
@@ -623,8 +653,7 @@ T['8 PAID_UI 切 true:使用權到期的試行帳號照常上第 3 堂(刷題頁
     await p.wait("document.querySelector('.pw-mask')", '刷題頁擋下');
     await p.go('lesson.html?no=3');
     await p.wait("document.querySelector('.lsn-steps')", '第 3 堂總覽');
-    await p.click('.lsn-go');
-    await drive(p, { until: (s) => s === 'quiz' || s === 'cards' });
+    await drive(p, { goOn: true, until: (s) => s === 'quiz' || s === 'cards' });
     assert.strictEqual(await p.eval("!!document.querySelector('.pw-mask')"), false, '課程頁不擋');
     noErrors(p, '到期');
     await p.close();
@@ -714,7 +743,7 @@ async function main() {
   const srv = await serve(REPO, PORT);
   const base = BASE ? await serve(BASE, BASE_PORT) : null;
   let pass = 0, fail = 0;
-  const names = Object.keys(T).filter((n) => !ONLY || n.indexOf(ONLY) > -1);
+  const names = Object.keys(T).filter((n) => !ONLY || ONLY.split('|').some((o) => n.indexOf(o) > -1));
   try {
     B = await launch();
     for (const n of names) {

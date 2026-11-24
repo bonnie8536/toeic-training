@@ -469,10 +469,19 @@
     for (let m = no + 1; m <= 24; m++) if (lessonOf(L, m).segments.some((s) => s.slot === 'checkpoint')) return m;
     return null;
   }
+  /* 照「種子＋題 id」的雜湊值由小到大挑題(代替洗牌):每題的位置只看自己的 id,題庫或清單加減別的題時,已經挑中的題不會跟著換 */
+  function rankedBank(B, seed) {
+    const memo = new Map();
+    const rank = (id) => { if (!memo.has(id)) memo.set(id, mulberry32(hash32(seed + '|' + id))()); return memo.get(id); };
+    return {
+      pick: async (spec) => (await B.pick(Object.assign({}, spec, { n: Number.MAX_SAFE_INTEGER, order: 'listed' })))
+        .sort((x, y) => rank(x) - rank(y) || (x < y ? -1 : 1)).slice(0, spec.n),
+    };
+  }
   /* 預留題:第 no 堂之後下一次小檢核那一堂,每個檢核區塊照它自己的選題條件(同模組、同難度配比與條件、從小檢核可用題清單選),
-     用「帳號＋那一堂的堂號＋區塊編號」當種子挑出區塊題數那麼多題。不排除做過的題與前測題,不存進任何鍵:同一個帳號、同一組級別
-     每次算出來都一樣(換裝置也一樣)。課程裡的練習選題先避開這些題,湊不滿才用(pickBankIds 的 hold;弱點補練不用);
-     小檢核本身的選題規則不變。
+     每題用「帳號＋那一堂的堂號＋區塊編號＋題 id」的雜湊值排序,挑出區塊題數那麼多題。不排除做過的題與前測題,不存進任何鍵:
+     同一個帳號、同一組級別每次算出來都一樣(換裝置也一樣);題庫或清單少了沒挑中的題整份不變,少了挑中的題只換那一題。
+     課程裡的練習選題先避開這些題,湊不滿才用(pickBankIds 的 hold;弱點補練不用);小檢核本身的選題規則不變。
      ctx = { account(帳號 id), pool(小檢核可用題清單,不扣前測題), bank }。沒有帳號(訪客)回 [] */
   async function reserveFor(packs, levels, no, ctx) {
     const c = ctx || {};
@@ -483,7 +492,7 @@
     for (const seg of lesson.segments.filter((s) => s.slot === 'checkpoint')) {
       for (const b of seg.blocks) {
         if (b.fill || !BANK_PART[b.module]) continue;
-        const pc = { bank: c.bank, records: {}, checkpointPool: c.pool, random: mulberry32(hash32(c.account + '|' + at + '|' + b.idx)) };
+        const pc = { bank: rankedBank(bankOf(c), c.account + '|' + at + '|' + b.idx), records: {}, checkpointPool: c.pool };
         (await pickBlock(b, lesson, pc, out.slice(), true)).ids.forEach((id) => out.push(id));
       }
     }

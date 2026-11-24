@@ -655,6 +655,28 @@ T['C28 小檢核本身的選題規則不變:給不給預留題選出來都一樣
   return '照片描述清單剩 ' + fresh.length + ' 題沒做過';
 };
 
+T['C29 清單或題庫少了題時預留題不整份換:少了一題沒被挑中的題,整份一樣;少了一題挑中的題,只換掉那一題(題數不變)'] = async () => {
+  let n = 0;
+  for (const lv of COMBOS) {
+    for (const acc of [ACC, 'c0' + ACC.slice(2), 'c1' + ACC.slice(2)]) {
+      const a = await reserveOf(lv, 2, acc);
+      const less = (gone) => P.reserveFor(PACKS, lv, 2, { account: acc, pool: POOL.filter((id) => id !== gone), bank: CTX.BANK });
+      for (const blk of cpBlocks(P.compose(PACKS, lv, 4))) {
+        const part = blk.module.slice(1);
+        const out = POOL.filter((id) => META.get(id).part === part && a.indexOf(id) < 0);
+        for (const gone of [out[0], out[out.length - 1]]) assert.deepEqual(plain(await less(gone)), plain(a), '少了沒挑中的 ' + gone);
+        n += 2;
+      }
+      for (const gone of [a[0], a[a.length - 1]]) {
+        const b = await less(gone);
+        assert.deepEqual([b.length, a.filter((id) => b.indexOf(id) < 0), b.filter((id) => a.indexOf(id) < 0).length], [a.length, [gone], 1], '少了挑中的 ' + gone);
+        n++;
+      }
+    }
+  }
+  return '比了 ' + n + ' 種少一題的清單';
+};
+
 (async () => {
   let pass = 0;
   const names = Object.keys(T);

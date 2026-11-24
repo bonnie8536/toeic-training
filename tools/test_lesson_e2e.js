@@ -395,7 +395,16 @@ async function pretest(p, shots) {
   assert.ok(/前測完成/.test(res) && /時間到/.test(res) && /暫用試卷/.test(res) && /不能跟之後的測驗直接比較/.test(res), res.slice(0, 200));
   assert.ok(!/分數|預估|\d+ 分(?!鐘)/.test(res), '前測結果不能有分數:' + res.slice(0, 300));
   assert.strictEqual(await p.eval("document.querySelectorAll('.lsn-parts li').length"), 7);
+  const s = await snack(p);
   if (shots) await shot(p, '19_前測結果');
+  return s;
+}
+/* 結算卡的點心那一行(js/pet-hook.js):拿到小番茄,或一天的份數拿滿了 */
+async function snack(p) {
+  await p.wait("(() => { const e = document.querySelector('.result-card .pet-earn'); return !!e && !!e.textContent.trim(); })()", '點心那一行');
+  const t = await p.text('.result-card .pet-earn');
+  assert.match(t, /^\+1 小番茄|份點心都拿到了/);
+  return t;
 }
 async function homeCard(p) {
   await p.go('index.html', 1500);
@@ -411,7 +420,7 @@ async function walk(u, lv, shots) {
   const h0 = await homeCard(p);
   assert.deepStrictEqual([h0.go, h0.daily, h0.solid], ['開始第 1 堂', false, 1]);
   if (shots) await shot(p, '01_首頁卡_可開始');
-  await pretest(p, shots);
+  const s1 = await pretest(p, shots);
   await p.mark(); await p.click('.result-card .result-go');
   await sleep(300); await p.loaded(); await p.settle();
   await p.wait("document.querySelector('.lsn-list')", '課程總覽');
@@ -444,6 +453,7 @@ async function walk(u, lv, shots) {
   assert.ok(cp.heads.every((t) => !/[0-9%]/.test(t)) && cp.rows.every((t) => !/%|\d+\s*(題|分)/.test(t)), '小檢核不能有題數、分數與 %:' + J(cp));
   /* 照片描述、WH 問句、詞性各一列,三個考點都有判定:第 2、3 堂的練習先避開第 4 堂小檢核的預留題,照片描述不會被練習用完 */
   assert.ok(cp.rows.length === 3 && cp.rows.every((t) => /(達標|持平|弱點)$/.test(t)), J(cp.rows));
+  const s4 = await snack(p);
   if (shots) await shot(p, '22_本堂結果');
   const h5 = await homeCard(p);
   assert.deepStrictEqual([h5.h, h5.go, h5.daily, h5.solid], ['第 5 堂尚未開放', null, true, 1]);
@@ -459,7 +469,7 @@ async function walk(u, lv, shots) {
   if (shots) await shot(p, '23_第5堂尚未開放');
   noErrors(p, lv.reading);
   await p.close();
-  return '第 4 堂小檢核:' + cp.rows.join('、');
+  return '第 4 堂小檢核:' + cp.rows.join('、') + ';點心:前測結果「' + s1 + '」、第 4 堂「' + s4 + '」';
 }
 T['2 試行甲(入門):結果頁「開始第 1 堂」→ 前測(快轉)→ 第 2 堂 → 同一天第 3 堂明天開放 → 隔天第 3、4 堂 → 第 5 堂尚未開放'] = async () => {
   OFF = 0;

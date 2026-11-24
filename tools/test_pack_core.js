@@ -549,6 +549,26 @@ async function squeezed(part) {
   const others = CTX.BANK_META.items.filter((r) => r.part === part && hold.indexOf(r.id) < 0).map((r) => r.id);
   return { l, hold, state: P.freeze(P.newState(l, NOW), 79, others, NOW) };
 }
+/* 一份預留題 a 對上第 at 堂的檢核區塊:題數是區塊題數的合計、不重複,照區塊順序每題都在清單內、Part 與類別合乎那個區塊 */
+function fitsBlocks(lv, at, a) {
+  const l = P.compose(PACKS, lv, at);
+  assert.equal(a.length, cpBlocks(l).reduce((s, x) => s + x.count, 0), '第 ' + at + ' 堂檢核區塊的題數');
+  assert.equal(new Set(a).size, a.length, '不重複');
+  let k = 0;
+  cpBlocks(l).forEach((blk) => {
+    const lw = blk.select.legacyWhere || {};
+    a.slice(k, k + blk.count).forEach((id) => {
+      const m = META.get(id);
+      assert.ok(POOL.indexOf(id) > -1, id + ' 不在清單');
+      assert.equal(m.part, blk.module.slice(1), id);
+      if (lw.category) assert.ok(lw.category.indexOf(m.category) > -1, id + ' 類別');
+      if (blk.module === 'p1' && lv.listening === 'entry') assert.ok(m.difficulty !== '進階', id + ' 入門的照片描述不出進階');
+    });
+    k += blk.count;
+  });
+  return l;
+}
+const COMBOS = [LV, { listening: 'threshold', reading: 'threshold' }, { listening: 'threshold', reading: 'entry' }, { listening: 'entry', reading: 'threshold' }];
 
 T['C25 預留題:第 1–3 堂是第 4 堂、第 4–7 堂是第 8 堂(照學習包有小檢核段的堂找);同一個帳號每次一樣(另開一個不能用 Math.random 的沙盒也一樣)、換帳號不同;都在清單內、合乎那個區塊的條件、題數對;訪客與第 24 堂沒有'] = async () => {
   assert.deepEqual([1, 2, 3, 4, 5, 7, 8, 23, 24].map((n) => P.nextCheckpoint(PACKS, LV, n)), [4, 4, 4, 8, 8, 8, 12, 24, null]);
@@ -556,24 +576,10 @@ T['C25 預留題:第 1–3 堂是第 4 堂、第 4–7 堂是第 8 堂(照學習
   other.Math = Object.assign(Object.create(Math), { random: () => { throw new Error('不能用 Math.random'); } });
   assert.throws(() => vm.runInContext('Math.random()', other), /不能用/);
   let n = 0;
-  for (const lv of [LV, { listening: 'threshold', reading: 'threshold' }, { listening: 'threshold', reading: 'entry' }, { listening: 'entry', reading: 'threshold' }]) {
+  for (const lv of COMBOS) {
     const a = await reserveOf(lv, 2), b = await reserveOf(lv, 3), c = await other.PACK_CORE.reserveFor(PACKS, lv, 1, { account: ACC, pool: POOL, bank: other.BANK });
     assert.deepEqual([plain(b), plain(c)], [plain(a), plain(a)], '同一個帳號、同一個小檢核每次一樣');
-    const l = P.compose(PACKS, lv, 4);
-    assert.equal(a.length, cpBlocks(l).reduce((s, x) => s + x.count, 0));
-    assert.equal(new Set(a).size, a.length, '不重複');
-    let at = 0;
-    cpBlocks(l).forEach((blk) => {
-      const lw = blk.select.legacyWhere || {};
-      a.slice(at, at + blk.count).forEach((id) => {
-        const m = META.get(id);
-        assert.ok(POOL.indexOf(id) > -1, id + ' 不在清單');
-        assert.equal(m.part, blk.module.slice(1), id);
-        if (lw.category) assert.ok(lw.category.indexOf(m.category) > -1, id + ' 類別');
-        if (blk.module === 'p1' && lv.listening === 'entry') assert.ok(m.difficulty !== '進階', id + ' 入門的照片描述不出進階');
-      });
-      at += blk.count;
-    });
+    const l = fitsBlocks(lv, 4, a);
     const p1 = cpBlocks(l).filter((x) => x.module === 'p1')[0];
     const want = P.allocate(p1.count, PACKS[lv.listening].difficultyMix);
     const got = { D1: 0, D2: 0, D3: 0 };
@@ -585,6 +591,7 @@ T['C25 預留題:第 1–3 堂是第 4 堂、第 4–7 堂是第 8 堂(照學習
   }
   assert.deepEqual(plain(await reserveOf(LV, 4)), plain(await reserveOf(LV, 7)), '第 4–7 堂都是第 8 堂那一份');
   assert.notDeepEqual(plain(await reserveOf(LV, 4)), plain(await reserveOf(LV, 3)));
+  for (const lv of COMBOS) fitsBlocks(lv, 8, await reserveOf(lv, 4 + COMBOS.indexOf(lv)));   // 第 4–7 堂也真的替第 8 堂預留(不是空的)
   assert.deepEqual([plain(await reserveOf(LV, 2, null)), plain(await reserveOf(LV, 2, '')), plain(await reserveOf(LV, 24))], [[], [], []]);
   return '四種級別組合共 ' + n + ' 題';
 };

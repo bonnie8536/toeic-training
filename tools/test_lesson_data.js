@@ -448,6 +448,13 @@ T['前測組卷先避開預留題(第 4 堂小檢核那一份);那個 Part 只�
   const f2 = await e.D.testForm(tight);
   const got = f2[0].filter((id) => /^l1-/.test(id));
   eq([got.length, got.indexOf(p1[0]) > -1, got.filter((id) => id !== p1[0]).every((id) => p1.indexOf(id) > 0)], [3, true, true], '配額照樣 3 題,先用沒預留的那一題');
+  /* 補滿配額時不會再選到已經選的題:沒預留的那一題是唯一沒做過的(沒做過的排最前面),補的兩題也不能是它 */
+  const done = {};
+  p1.slice(1).forEach((id) => { done[id] = { c: 0, ok: true, t: (NOW - 86400) * 1000 }; });
+  const f3 = await e.D.testForm(Object.assign({}, tight, { records: Object.assign({}, c.records, { 1: done }) }));
+  const g3 = f3[0].filter((id) => /^l1-/.test(id));
+  eq([g3.length, new Set(g3).size, g3[0]], [3, 3, p1[0]], '補滿配額時不重複');
+  [form, f2, f3].forEach((f, i) => { const ids = f[0].concat(f[1]); eq(new Set(ids).size, ids.length, '第 ' + (i + 1) + ' 份前測沒有重複的題'); });
 };
 
 K.run(T);

@@ -7,7 +7,7 @@ const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
 const assert = require('assert');
-const { spawnSync, execSync } = require('child_process');
+const { spawnSync } = require('child_process');
 const { REPO, read, MIN, HOUR, DAY, NOW, NOW_ISO, UID, CPID, C, J, plain, eq, guestOf, dataEnv, signedIn } = require('./onboard_kit');
 
 const PRE = 'tr_u' + CPID + '_';
@@ -85,8 +85,13 @@ T['S6 onboard*.js 的 store 鍵都是字面字串;三鍵與訪客鍵只在資料
   assert.ok(!/localStorage|store\./.test(read('js/onboard-core.js')), '核心檔不讀寫儲存');
   assert.ok(!/document\.|window\./.test(read('js/onboard-core.js')), '核心檔不碰 DOM');
 };
+/* 比對基準:設定起始程度上線前最後一版 main(4323272)。上線後 main 已經含這些改動,跟 main 比會變成沒有差異,
+   所以固定跟上線前那一版比:檢查的還是「這個功能只動了這幾行」 */
+const PRE_ONBOARD = '432327216b';   // 短 hash:完整 40 字會被金鑰檢查當成金鑰
 function baseRef() {
-  try { execSync('git rev-parse --verify origin/main', { cwd: REPO, stdio: 'ignore' }); return 'origin/main'; } catch (e) { return 'main'; }   // 沒有遠端就跟本機 main 比
+  const r = spawnSync('git', ['rev-parse', '--verify', '--quiet', PRE_ONBOARD + '^{commit}'], { cwd: REPO, encoding: 'utf8' });
+  assert.equal(r.status, 0, '找不到比對基準 ' + PRE_ONBOARD + '(要完整的 git 歷史)');
+  return PRE_ONBOARD;
 }
 /* 跟 main 比的改動行(去掉換行差異、前後空白) */
 function changedLines(file) {
@@ -696,7 +701,7 @@ T['B8b 教師後台「目前堂號」:名單上有學生有 plan 才多這一欄
   const cells = [1, 3, 5].map((i) => [t.children[i].children[0].children[0].textContent, t.children[i].children[4].textContent]);
   eq(cells, [['甲', '第 2 堂'], ['乙', '—'], ['丙', '完成']]);
 };
-T['B9 隱私權政策:學習設定一節(蒐集目的整句照指定字樣,不提課表、學習包、題目難易度);Cookie 段補沒登入時的暫存與 7 天;未成年節與生效日期不動'] = () => {
+T['B9 隱私權政策:學習設定一節(蒐集目的整句照指定字樣,不提課表、學習包、題目難易度);Cookie 段補沒登入時的暫存與 7 天;未成年節不動;生效日期換成上線那天'] = () => {
   const p = read('privacy.html');
   const cookie = p.slice(p.indexOf('<h2>Cookie 與裝置上的儲存</h2>'), p.indexOf('<h2>資料安全</h2>'));
   assert.ok(/沒登入時填的目標分數、考試月份與成績只存在這台裝置，7 天後不再使用並自動刪除；登入後改存進帳號。/.test(cookie));
@@ -707,7 +712,7 @@ T['B9 隱私權政策:學習設定一節(蒐集目的整句照指定字樣,不�
   assert.ok(read('js/onboard.js').indexOf("'回答只用來判斷起始程度、推薦適合的練習。'") > -1, 'S1 頁尾同一個說法');
   assert.ok(!/課表|學習包|難易度/.test(p), '不寫還沒做的功能');
   assert.ok(/<h2>未成年人<\/h2>\r?\n    <p>未滿 18 歲的使用者，請在家長或監護人同意後再註冊並提供個人資料。<\/p>/.test(p));
-  assert.ok(p.indexOf('2026 年 10 月 17 日起適用') > -1, '生效日期這次不換');
+  assert.ok(p.indexOf('2026 年 11 月 24 日起適用') > -1, '生效日期是加上學習設定一節、上線的那天');
 };
 T['B10 樣式:首頁卡藏起來時不佔位、不影響每日練習的間距;主按鈕用 --fs-btn;不再有檢測頁那一列'] = () => {
   const css = read('css/style.css');

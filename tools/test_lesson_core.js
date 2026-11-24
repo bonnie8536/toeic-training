@@ -402,7 +402,7 @@ T['TEXT:全部字串全形標點、沒有驚嘆號破折號括號補充與句號
 };
 
 /* ---------- 檔案 ---------- */
-/* A4 之前就有的課程檔(引擎、規則與它們的測試)不算新檔 */
+/* 課程頁動工前就有的檔(引擎、規則與它們的測試)不算新檔 */
 const OLDER = ['js/lesson-rules.js', 'js/lesson-entry.js', 'tools/test_lesson_rules.js', 'tools/test_lesson_sync.js'];
 const COURSE_FILES = () => {
   const ls = (d, re) => (K.exists(d) ? fs.readdirSync(path.join(K.REPO, d)).filter((f) => re.test(f)).map((f) => (d === '.' ? f : d + '/' + f)) : []);
@@ -410,7 +410,7 @@ const COURSE_FILES = () => {
     ['tools/lesson_kit.js'], ls('tools', /^test_lesson_[\w]+\.js$/), ls('tools/fixtures', /^lesson_/)).filter((f) => K.exists(f) && OLDER.indexOf(f) < 0);
 };
 /* 字寫成 \u 跳脫,這支測試自己也不出現那些字 */
-const INTERNAL = /\u7ad9\u9577|\u6846\u67b6|\u898f\u683c|\u5be9\u67e5|\u7d93\u71df\u8005|\u5de5\u4f5c\u5305|\u4ee3\u7406|\u4ef2\u88c1|\u76f2\u7b54|\u5168\u5be9|\u5b9a\u7a3f\u8868|\u53bb ?AI ?\u611f|\x47PT|\bM[12]\b|\u3014|\u3015|\b[A-Z]:[\\/]/g;
+const INTERNAL = /\u7ad9\u9577|\u6846\u67b6|\u898f\u683c|\u5be9\u67e5|\u7d93\u71df\u8005|\u5de5\u4f5c\u5305|\u4ee3\u7406|\u4ef2\u88c1|\u76f2\u7b54|\u5168\u5be9|\u5b9a\u7a3f\u8868|\u53bb ?AI ?\u611f|\x47PT|\bM[12]\b|\b[A-EW][1-5](?![\dA-Za-z])|\u3014|\u3015|\b[A-Z]:[\\/]/g;
 T['公開用語:課程新檔(含註解)不出現內部用語、文件代號與 repo 外的路徑'] = () => {
   const files = COURSE_FILES();
   ['js/packs-config.js', 'js/lesson-core.js', 'js/lesson-data.js', 'lessons.html', 'lesson.html', 'tools/lesson_kit.js', 'tools/test_lesson_core.js', 'tools/test_lesson_data.js']

@@ -12,7 +12,7 @@ const K = require('./lesson_kit.js');
 const { fakeDom } = require('./engine_kit.js');
 
 const { eq, EE, TT, NOW, DAY } = K;
-const W4_FILES = ['js/lesson-items.js', 'js/lesson-test.js', 'js/lesson-personal.js'];
+const ITEM_FILES = ['js/lesson-items.js', 'js/lesson-test.js', 'js/lesson-personal.js'];
 
 /* ---------- 假的共用元件:只做課程頁呼叫到的;確認視窗照 UI.answers 依序回答(沒排就是確定,'wait' 先不回) ---------- */
 function fakeUI(dom, log) {
@@ -87,7 +87,7 @@ class FakeAudio {
 }
 FakeAudio.made = [];
 
-/* lesson_kit 的沙盒加上小假 DOM、假共用元件、假的播放、回報題目、點心掛勾,再載入 W4 的三支檔 */
+/* lesson_kit 的沙盒加上小假 DOM、假共用元件、假的播放、回報題目、點心掛勾,再載入題目畫面、前測、個人段三支檔 */
 function domEnv(opt) {
   const o = Object.assign({ pilot: ['class-a'], bank: true, timers: 'fake' }, opt || {});
   const e = K.env(o);
@@ -103,7 +103,7 @@ function domEnv(opt) {
   c.UI = fakeUI(dom, log);
   if (o.tips !== false) vm.runInContext(K.read('data/tips.js'), c, { filename: 'data/tips.js' });
   if (o.pack) c.PACK_CORE = o.pack(c.PACK_CORE);
-  W4_FILES.forEach((f) => vm.runInContext(K.read(f), c, { filename: f }));
+  ITEM_FILES.forEach((f) => vm.runInContext(K.read(f), c, { filename: f }));
   const main = dom.createElement('main'), host = dom.createElement('div');
   dom.body.append(main);
   main.append(host);
@@ -156,7 +156,7 @@ async function answerAll(e, choose, limit) {
 const rowsOf = (pc, b) => (pc.state().a || []).filter((x) => x[0] === b);
 const start = (e) => e.host.querySelector('.lsn-go');
 
-module.exports = { fakeUI, FakeAudio, domEnv, pageCtx, settle, text, allText, startTest, answerScreen, answerAll, nextBtn, rowsOf, W4_FILES };
+module.exports = { fakeUI, FakeAudio, domEnv, pageCtx, settle, text, allText, startTest, answerScreen, answerAll, nextBtn, rowsOf, ITEM_FILES };
 if (require.main !== module) return;
 
 const T = {};

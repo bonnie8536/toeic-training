@@ -532,7 +532,7 @@ T['5 兩台:(a) 一台做聽力段、一台做閱讀段,兩邊總覽都看到兩
   pilotUser(c, u, EE);
   await seedDone(c, u, EE, 2);
   const a = await tab(u, { url: 'lesson.html?no=3' }), b = await tab(u, { url: 'lesson.html?no=3' });
-  /* (b) 兩台都進單字段的小考?不:先做完單字段,再兩台同時進聽力段的即時回合 */
+  /* (b) a 做完單字段進聽力段;b 重新整理(拿到 a 凍結的題)也進聽力段;兩台同時做同一個即時回合 */
   await a.wait("document.querySelector('.lsn-steps')"); await b.wait("document.querySelector('.lsn-steps')");
   await drive(a, { goOn: true, until: (s) => s === 'tip' });
   await b.reload();
@@ -543,18 +543,17 @@ T['5 兩台:(a) 一台做聽力段、一台做閱讀段,兩邊總覽都看到兩
   for (let k = 0; k < 6; k++) { await b.step(); await sleep(200); }
   await a.click('.quiz-close'); await b.click('.quiz-close');
   const keys = (s) => ((s && s.a) || []).filter((x) => x[0] >= 4 && x[0] <= 5).map((x) => x[1] + '|' + x[2] + '|' + x[3]).sort();
-  /* 兩台離開後各自上傳(上傳時跟雲端合併):等雲端是三題,再兩台重新整理開這一堂 */
-  for (let i = 0; i < 100 && keys(c.get(u.id, 'les_t1_03')).length < 3; i++) await sleep(150);
-  await sleep(1200);
-  await a.reload(); await b.reload();
-  /* 總覽畫出來時開堂(loadLesson:本機與雲端合併)已經做完 */
-  await a.wait("document.querySelector('.lsn-steps')", 'a 的總覽'); await b.wait("document.querySelector('.lsn-steps')", 'b 的總覽');
+  /* 兩台離開後各自在 800 毫秒後上傳(讀雲端、合併、寫回)。兩台幾乎同時上傳時,讀雲端都在對方寫之前,後寫的那份會蓋掉先寫的
+     (js/cloud.js 的讀、合併、寫不是一次完成的);被蓋掉的那台本機還有,下次開這一堂(loadLesson 合併後寫回本機、上傳)就補回去。
+     所以兩台各開兩次這一堂,最後雲端與兩台都是聯集 */
+  await sleep(3000);
+  for (let round = 0; round < 2; round++) {
+    await a.reload(); await b.reload();
+    await a.wait("document.querySelector('.lsn-steps')", 'a 的總覽'); await b.wait("document.querySelector('.lsn-steps')", 'b 的總覽');
+    await sleep(2500);
+  }
   const sa = await les(a, 3), sb = await les(b, 3), cloud = c.get(u.id, 'les_t1_03');
   assert.strictEqual(keys(cloud).length, 3, '雲端三題:' + J(keys(cloud)));
-  if (process.env.E2E_DUMP) {
-    const probe = "(async () => { const r = await CLOUD.readKey('les_t1_03'); const o = await LESSON_DATA.open(3); return { ok: r.ok, cloudN: r.v && r.v.a.length, openN: o.state && o.state.a.length, localN: store.get('les_t1_03').a.length, reloading: CLOUD.reloading }; })()";
-    fs.writeFileSync(process.env.E2E_DUMP, J({ pa: await a.eval(probe), pb: await b.eval(probe), sa, sb, cloud, log: c.log.filter((x) => x.as === u.id) }, null, 1));
-  }
   assert.deepStrictEqual([keys(sa), keys(sb)], [keys(cloud), keys(cloud)], J({ a: keys(sa), b: keys(sb) }));
   /* (a) a 做完聽力段;b 開總覽看到聽力完成,做閱讀段;最後兩台開總覽都看到兩段完成 */
   const st = async (p) => p.eval("[...document.querySelectorAll('.lsn-step')].filter((li) => /聽力|閱讀/.test(li.textContent)).map((li) => li.className.replace('lsn-step is-', ''))");

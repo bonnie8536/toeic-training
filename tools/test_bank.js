@@ -226,9 +226,9 @@ T_['B15 pick 的錯誤:沒給條件、Part 不對、n 不是 0 以上整數、wh
   for (const c of cases) r.push(await rejects(B.pick(c)));
   return { ok: r.every((x) => x === 'TypeError'), detail: r.join(',') };
 };
-T_['B16 js/bank.js 不寫儲存、不碰畫面;沒有頁面載入它(這一版只給課程頁用),既有頁面不變'] = () => {
+T_['B16 js/bank.js 不寫儲存、不碰畫面;只給課程頁用(只有上課頁 lesson.html 載入它),既有頁面不變'] = () => {
   const src = read('js/bank.js');
-  const pages = fs.readdirSync(REPO).filter((f) => /\.html$/.test(f)).filter((f) => /bank(-meta)?\.js/.test(read(f)));
+  const pages = fs.readdirSync(REPO).filter((f) => /\.html$/.test(f)).filter((f) => /bank(-meta)?\.js/.test(read(f))).filter((f) => f !== 'lesson.html');
   const ok = !/store\.(set|remove)|localStorage|document\.|setItem/.test(src) && !pages.length;
   return { ok, detail: pages.join(',') };
 };

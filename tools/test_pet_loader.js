@@ -163,7 +163,7 @@ const STATIC_OLD = p => (p === 'index.html' || p === 'me.html' ? ['PET', 'PET_ST
     const FOODP = 'js/pet-food.js,js/pet-store.js,js/pet-hook.js';
     const want = [
       [FOOD, 'practice.html', FOODP], [FOOD, 'daily.html', FOODP], [FOOD, 'writing.html', FOODP], [FOOD, 'diagnostic.html', FOODP],
-      [FOOD, 'learn.html', ''], [FOOD, 'warmup.html', ''], [FOOD, 'index.html', ''], [FOOD, 'history.html', ''], [FOOD, 'review.html', FOODP],
+      [FOOD, 'learn.html', ''], [FOOD, 'warmup.html', ''], [FOOD, 'index.html', ''], [FOOD, 'history.html', ''], [FOOD, 'review.html', FOODP], [FOOD, 'lesson.html', FOODP],
       [ROAM, 'learn.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'], [ROAM, 'drill.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'],
       [ROAM, 'warmup.html', 'js/pet-store.js,js/chick-art.js,js/pet-ui.js,js/pet-roam-zones.js,js/pet-roam2.js'],
       [ROAM, 'index.html', 'js/pet-roam-zones.js,js/pet-roam2.js'], [ROAM, 'me.html', 'js/pet-roam-zones.js,js/pet-roam2.js'], [ROAM, 'practice.html', ''], [ROAM, 'history.html', ''],

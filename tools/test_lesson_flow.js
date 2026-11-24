@@ -512,6 +512,31 @@ T['略過個人段:先問(取消停在取消上),確定才記略過;固定段沒
   eq([q.steps()[1][1], q.$('.lsn-skip')], ['current', null]);
 };
 
+T['給個人段的 ctx.runRound:錯題重做 f 一律 false、不記 pts 不排錯題,onItems 拿到寫進進度的作答;考點回顧照給的 src 記一批'] = async () => {
+  const got = [];
+  const edit = (s) => {
+    const p5 = s.pk[10].ids.concat(s.pk[11].ids);
+    return Object.assign({}, s, { pk: Object.assign({}, s.pk, { 80: { at: 10, ids: p5.slice(0, 2), r: 'review', sub: [null, null], m: ['p5', 'p5'] }, 81: { at: 10, ids: p5.slice(2, 5), r: 'point_review:P5.cat:詞性變化' } }) });
+  };
+  const p = await page({ seed: lesson3(['vocab', 'listening', 'reading'], edit), before: (ctx) => {
+    ctx.LESSON_PERSONAL.review = async (c) => {
+      const rs = ctx.LESSON_CORE.rounds(c.segment, c.state());
+      got.push(rs.map((r) => [r.kind, r.engine, r.feedback, r.blocks.map((b) => b.idx)]));
+      got.push(await c.runRound(rs[0], { src: null, wrong: false, onItems: (rows) => { got.push(rows.map((x) => [x.b, x.f])); } }));
+      got.push(await c.runRound(rs[1], { src: 'r' }));
+      c.setState(await c.data.segment(c.no, c.lesson, 'review', 'done', c.now()));
+      return 'done';
+    };
+  } });
+  eq(p.steps()[3][1], 'current');
+  await p.click('.lsn-go');
+  await p.finish(p.last('DRILL'), (i) => i > 0);
+  await p.finish(p.last('DRILL'), (i) => i !== 1);
+  eq(got.slice(0, 4), [[['bank', 'DRILL', 'instant', [80]], ['bank', 'DRILL', 'instant', [81]]], [[80, false], [80, false]], 'done', 'done']);
+  const pts = p.e.store.peek('pts') || {}, hits = [].concat(...Object.keys(pts).map((k) => pts[k].hits));
+  eq([hits.map((h) => [h.src, h.b, h.n]), p.e.store.peek('rvq').map((x) => x.m), p.steps()[3][1]], [[['r', 'les_t1_03:81', 3]], ['p5'], 'done']);
+};
+
 /* ---------- 瀏覽歷史、焦點 ---------- */
 T['瀏覽歷史:進段 pushState(?no=3&s=段序號)、返回鍵回總覽、重新整理帶 s 一律回總覽'] = async () => {
   const p = await page({ search: '?no=3&s=2', seed: lesson3(['vocab']) });

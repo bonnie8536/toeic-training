@@ -591,7 +591,7 @@
       if (answers.length) D.hits(answers, { today: day, src: o.src, b: key + ':' + b.idx });
     });
     if (o.wrong === false) return;
-    const refs = rows.filter((r) => !r.ok && !before.has(r.b + '|' + r.id + '|' + r.sub))
+    const refs = rows.filter((r) => !r.ok && !before.has(r.b + '|' + r.id + '|' + r.sub) && job.byId.get(r.id).module !== 'redo')
       .map((r) => ({ m: job.byId.get(r.id).module, id: r.id, sub: r.sub || null }));
     if (refs.length) D.wrong(refs, day);
   }

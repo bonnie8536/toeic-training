@@ -540,7 +540,7 @@ T['C24 難度配比用最大餘數法;引導區塊寫了難度、題不夠時照
 
 /* ---------- 小檢核的預留題 ---------- */
 const POOL = JSON.parse(read('data/packs/checkpoint_pool.json')).ids;
-const ACC = 'c7c1d2e3f4a5b4c6d8e9f0a1b2c3d4e5f';
+const ACC = 'c' + '7c1d2e3f-4a5b-4c6d-8e9f-0a1b2c3d4e5f'.replace(/-/g, '');   // 雲端帳號的資料夾名稱(c 加帳號 id 去掉連字號)
 const cpBlocks = (l) => l.segments.filter((s) => s.slot === 'checkpoint')[0].blocks.filter((b) => !b.fill);
 const reserveOf = (levels, no, account, ctx) => P.reserveFor(PACKS, levels, no, { account: account === undefined ? ACC : account, pool: POOL, bank: (ctx || CTX).BANK });
 /* 第 3 堂的題庫區塊、弱點補練、考點回顧、測驗檢討:除了預留題,同一 Part 的題全部先凍結在一個用不到的區塊,逼它們只能用預留題 */

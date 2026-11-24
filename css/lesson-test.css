@@ -34,6 +34,9 @@ html.is-quiz .lsn-t-q .q-text { margin-bottom: 8px; font-size: var(--fs-md); }
 .result-card .lsn-tag-line { margin-top: 16px; }
 .lsn-tag-note { font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-soft); }
 .lsn-result-more { padding-bottom: 48px; }
+/* 前測結果上方的通知(閱讀測驗超過 24 小時自動交卷):跟結算卡同寬 */
+.lsn-result-note { max-width: 480px; margin: 24px auto 0; }
+.lsn-result-note + .result-card { margin-top: 12px; }
 .lsn-parts-wrap { display: grid; gap: 0 24px; margin-top: 8px; }
 @media (min-width: 720px) { .lsn-parts-wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 .lsn-parts-sec .me-list { margin-bottom: 0; }

@@ -8,7 +8,8 @@
      run(ctx)       接著做前測 → Promise<'exit'|'done'>:'exit' 回總覽(離開、聽力時間到);'done' 兩段都交卷,畫面已經是前測結果(不要再換畫面)
      result(ctx, { first })  前測結果;first 沒給時看這一期有沒有前測紀錄(沒有＝第一次看到,補寫紀錄並給點心);first: false 只補寫紀錄、不給點心
      info(ctx)      總覽要的 → Promise<{ test_listening: { n 題數, minutes 限時, left 剩幾分鐘(作答中才有) } | null, test_reading: … }>
-     expire(ctx)    開頁時:作答中的段超過 24 小時或時間用完就交卷 → Promise<{ lines(通知列的字), finished(這一次交卷讓這一堂上完了) }>
+     expire(ctx)    開頁時:作答中的段超過 24 小時或時間用完就交卷 → Promise<{ lines(總覽通知列的字), finished(這一次交卷讓這一堂上完了) }>;
+                    閱讀測驗超過 24 小時自動交卷的通知不在 lines,放在前測結果的結算卡上方
    }
    前測不寫作答紀錄(drill_p*、listen_p*)、學習記錄、模擬考紀錄、考點狀態、回顧佇列:只寫這一堂的進度,兩段都交卷後寫一次 tests_v1。
    時間:限時照實際題數換算(LESSON_CORE.testLimit);剩餘＝限時 −(最後活動 − 段開始),最後活動是最後一題的作答時間與這個分頁記的最後畫面時間取晚的,
@@ -22,6 +23,7 @@
   const itemsOf = (ctx) => ctx.items || root.LESSON_ITEMS;
   const given = new Set();      // 這一頁已經給過點心的進度鍵:同一頁重畫結果時不再叫一次
   const timedOut = new Set();   // 這一頁裡閱讀測驗時間到交卷的進度鍵:結果標題旁放「時間到」
+  const overdue = new Set();    // 這一頁裡閱讀測驗超過 24 小時沒有動靜、自動交卷的進度鍵:結算卡上方放通知(不是時間到)
 
   function node(tag, cls, text, attrs) {
     const n = root.document.createElement(tag);
@@ -78,6 +80,12 @@
     ctx.setState(s);
     return s;
   }
+  /* 閱讀測驗不是自己交卷:限時用完記「時間到」,超過 24 小時沒有動靜記通知 */
+  function readingEnded(ctx, expired) {
+    const k = keyOf(ctx);
+    (expired ? overdue : timedOut).add(k);
+    (expired ? timedOut : overdue).delete(k);
+  }
   function autoLines(slot, r) {
     const X = TX().lesson, listening = slot === 'test_listening';
     if (r.expired) return [listening ? X.overListening : X.overReading, X.autoSubmitted];
@@ -103,8 +111,8 @@
       const r = resumeOf(ctx, await paper(ctx, slot));
       if (!r.expired && r.remaining > 0) continue;
       await setSeg(ctx, slot, 'done');
-      if (slot === 'test_reading') timedOut.add(keyOf(ctx));
-      autoLines(slot, r).forEach((l) => lines.push(l));
+      if (slot === 'test_reading') readingEnded(ctx, r.expired);
+      else autoLines(slot, r).forEach((l) => lines.push(l));
     }
     return { lines, finished: !was.doneAt && !!ctx.state().doneAt };
   }
@@ -124,7 +132,7 @@
       if (how === 'exit') return 'exit';
       await setSeg(ctx, slot, 'done');
       if (how === 'done') continue;
-      if (slot === 'test_reading') { timedOut.add(keyOf(ctx)); continue; }
+      if (slot === 'test_reading') { readingEnded(ctx, how === 'auto' && r.expired); continue; }
       notify(ctx, how === 'auto' ? autoLines(slot, r) : [TX().lesson.timeUpListening]);
       return 'exit';
     }
@@ -285,8 +293,14 @@
   }
   /* 鵜鶘、「前測完成」(閱讀時間到交卷時旁邊放「時間到」)、點心列、主按鈕「繼續」回課程總覽、「暫用試卷」那一行、
      聽力與閱讀各 Part 的答對率。不放分數、題數、正解、逐題解析 */
+  /* 結算卡上方的通知(同總覽的通知列):焦點放在這裡 */
+  function noteOf(lines) {
+    const p = node('p', 'lsn-note lsn-result-note', '', { tabindex: '-1' });
+    lines.forEach((s) => p.append(node('span', 'lsn-note-line', s)));
+    return p;
+  }
   async function result(ctx, opt) {
-    const o = opt || {}, D = ctx.data, I = itemsOf(ctx), P = TX().pretest, key = keyOf(ctx), today = ctx.today();
+    const o = opt || {}, D = ctx.data, I = itemsOf(ctx), P = TX().pretest, L = TX().lesson, key = keyOf(ctx), today = ctx.today();
     let pre = await preOf(ctx, today);
     const missing = !pre;
     if (missing && ctx.state() && ctx.state().doneAt) {
@@ -295,11 +309,12 @@
     }
     const first = o.first === true || (o.first === undefined && missing);
     const card = root.UI.result({ kicker: P.kicker, big: P.title, flag: timedOut.has(key) ? P.timeUp : null, pose: 'happy', primary: { label: P.next, href: 'lessons.html' } });
+    const note = overdue.has(key) ? noteOf([L.overReading, L.autoSubmitted]) : null;
     card.el.append(I.tagLine(P.tag, P.note));
     const more = node('div', 'lsn-narrow lsn-result-more');
     if (pre && pre.parts) more.append(I.parts(pre.parts));
-    ctx.host.replaceChildren(card.el, more);
-    focusHead(card.heading);
+    ctx.host.replaceChildren(...[note, card.el, more].filter(Boolean));
+    focusHead(note || card.heading);
     if (first && !given.has(key)) {
       given.add(key);
       if (root.PET_HOOK) root.PET_HOOK.done(key, { into: card.reward });

@@ -606,6 +606,20 @@ T['第 1 堂開頁:聽力測驗超過 24 小時自動交卷、時間用完交卷
   eq([c.dom.querySelector('.lsn-note'), c.$$('.lsn-step-min')[0].textContent, c.text('.lsn-go'), c.$$('.lsn-rule').length, c.les(1).seg.test_listening.st],
     [null, '剩 ' + Math.ceil((c.ctx.LESSON_CORE.testLimit('test_listening', n) - 400) / 60) + ' 分鐘', '繼續', 0, 'doing']);
 };
+T['第 1 堂開頁:閱讀測驗超過 24 小時自動交卷 → 前測結果上方通知、焦點在通知,總覽的通知列沒有這一則'] = async () => {
+  const seed = async (e) => {
+    const x = await stateOf(e, EE, 1, NOW - 2 * DAY);
+    let s = mark(e, x.lesson, x.s, ['test_listening'], 'done', NOW - 2 * DAY + 1000);
+    s = e.P.setSegment(s, x.lesson, 'test_reading', 'doing', NOW - 2 * DAY + 1100);
+    s = e.P.answer(s, { b: 1, id: s.pk[1].ids[0], sub: 0, c: 1, ok: true, f: true, t: NOW - 2 * DAY + 1200 });
+    e.store.set('les_t1_01', s);
+  };
+  const real = (ctx) => ['js/lesson-items.js', 'js/lesson-test.js'].forEach((f) => vm.runInContext(K.read(f), ctx, { filename: f }));
+  const p = await page({ search: '?no=1', seed, before: real });
+  const note = p.root.firstChild;
+  eq([note && note.className, note && note.textContent, p.active() === note, !!p.$('.result-card'), !!p.les(1).doneAt, p.dom.querySelector('.lsn-top .lsn-note')],
+    ['lsn-note lsn-result-note', '閱讀測驗超過 24 小時已自動交卷', true, true, true, null]);
+};
 T['聽門檻讀入門第 3 堂:聽力區塊是門檻包、閱讀與單字是入門包,引擎拿到的是各自凍結的題'] = async () => {
   const p = await page({ levels: TE, seed: lesson3(['vocab'], null, TE) });
   const l = p.e.lesson(TE, 3), seg = (slot) => l.segments.filter((s) => s.slot === slot)[0].blocks.map((b) => b.blockId);

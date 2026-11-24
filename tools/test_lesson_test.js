@@ -482,7 +482,25 @@ T['閱讀時間到交卷:結果標題旁「時間到」;開頁時 24 小時自�
   await r2;
   e2.clock.add(DAY + 60);
   const x = await e2.LT.expire(p2);
-  eq([x.lines, x.finished, !!p2.state().doneAt], [['閱讀測驗超過 24 小時', '已自動交卷'], true, true]);
+  eq([x.lines, x.finished, !!p2.state().doneAt], [[], true, true], '閱讀的通知不放總覽,放在前測結果上');
+  await e2.LT.result(p2, { first: x.finished });
+  const note = e2.host.querySelector('.lsn-note');
+  eq([e2.UI.results.pop().opt.flag, note && note.querySelectorAll('.lsn-note-line').map(text), note && note.getAttribute('tabindex'), e2.dom.activeElement === note, e2.host.firstChild === note],
+    [null, ['閱讀測驗超過 24 小時', '已自動交卷'], '-1', true, true], '超過 24 小時不是時間到:標題旁不放「時間到」,結算卡上方通知、焦點在通知');
+};
+
+T['閱讀測驗超過 24 小時:總覽留著沒按、隔天才按「繼續」時也是自動交卷,前測結果上方通知、沒有「時間到」'] = async () => {
+  const e = domEnv();
+  const pc = await startTest(e);
+  const { run } = await finishTest(e, pc, () => 0);
+  start(e).click();
+  await settle();
+  e.UI.focusApi.close();
+  assert.equal(await run, 'exit');
+  e.clock.add(DAY + 60);
+  assert.equal(await e.LT.run(pc), 'done');
+  const note = e.host.querySelector('.lsn-note');
+  eq([e.UI.results.pop().opt.flag, note && text(note), e.dom.activeElement === note, pc.notes], [null, '閱讀測驗超過 24 小時已自動交卷', true, []]);
 };
 
 /* ---------- 逐題解析 ---------- */

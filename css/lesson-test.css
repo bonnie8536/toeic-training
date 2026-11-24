@@ -24,6 +24,7 @@ html.is-quiz .lsn-t-q .q-text { margin-bottom: 8px; font-size: var(--fs-md); }
 .lsn-h2:focus { outline: none; }
 .lsn-intro .mock-tags { margin-top: 12px; }
 .lsn-intro .lsn-rule { margin: 12px 0 0; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-soft); }
+.lsn-intro .lsn-rule + .lsn-rule { margin-top: 2px; }   /* 第二行說明(小檢核考不到的考點)緊接著第一行 */
 .lsn-intro .lsn-go, .lsn-pre-step .lsn-go { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin-top: 24px; padding: 0 32px; border-radius: var(--r-md); }
 @media (min-width: 600px) { .lsn-intro .lsn-go, .lsn-pre-step .lsn-go { width: 320px; } }
 .lsn-pre-step .lsn-tag-line { justify-content: flex-start; }

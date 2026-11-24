@@ -440,11 +440,15 @@
   /* 學習記錄(只讀):即時回合補回時判斷第一次作答 */
   function hist() { const h = hasStore() ? store.get('hist', []) : []; return Array.isArray(h) ? h : []; }
 
-  /* ---------- 前測的最後畫面時間(這個分頁) ---------- */
+  /* ---------- 前測的最後畫面時間(這個分頁) ----------
+     記 { p: 帳號, k: 進度鍵, s: 段, at }:同一個分頁先後登入兩個帳號時(公用電腦),進度鍵一樣,帳號不同就不用 */
   function clock(key, slot) {
     return {
-      touch() { sSet(CLOCK_KEY, JSON.stringify({ k: key, s: slot, at: nowSec() })); },
-      last() { const v = readJson(sGet(CLOCK_KEY)); return isPlain(v) && v.k === key && v.s === slot && Number.isInteger(v.at) ? v.at : null; },
+      touch() { sSet(CLOCK_KEY, JSON.stringify({ p: accountId(), k: key, s: slot, at: nowSec() })); },
+      last() {
+        const v = readJson(sGet(CLOCK_KEY)), p = accountId();
+        return isPlain(v) && !!p && v.p === p && v.k === key && v.s === slot && Number.isInteger(v.at) ? v.at : null;
+      },
     };
   }
 

@@ -366,6 +366,21 @@ T['clock:記這個分頁的最後畫面時間;進度鍵或段不同就不用;ses
   assert.equal(f.last(), null);
 };
 
+T['clock:同一個分頁換帳號(公用電腦先後登入兩個帳號)時,不用前一個帳號記的最後畫面時間'] = () => {
+  const session = new Map();
+  const a = K.env({ session });
+  a.D.clock('les_t1_01', 'test_listening').touch();
+  assert.equal(JSON.parse(session.get('lsn_clock')).p, CPID, '記的時候帶帳號');
+  const other = '11111111-2222-4333-8444-555555555555';
+  const b = K.env({ session, user: other, pid: 'c' + other.replace(/-/g, '') });
+  const cb = b.D.clock('les_t1_01', 'test_listening');
+  assert.equal(cb.last(), null, '另一個帳號不用');
+  cb.touch();
+  eq([cb.last(), a.D.clock('les_t1_01', 'test_listening').last()], [NOW, null], '換回來也不用別人的');
+  session.set('lsn_clock', JSON.stringify({ k: 'les_t1_01', s: 'test_listening', at: NOW }));
+  assert.equal(a.D.clock('les_t1_01', 'test_listening').last(), null, '沒有帳號的舊格式不用');
+};
+
 /* ---------- 原始碼 ---------- */
 T['課程檔裡只有 js/lesson-data.js 寫 store、讀寫 sessionStorage;它的 store 鍵都是字面字串或 lessonKey(term, no)'] = () => {
   const list = fs.readdirSync(path.join(K.REPO, 'js')).filter((f) => /^(lessons?(-[\w-]+)?|packs-config)\.js$/.test(f)).map((f) => 'js/' + f)

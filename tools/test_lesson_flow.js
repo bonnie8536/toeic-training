@@ -600,7 +600,7 @@ T['第 1 堂開頁:聽力測驗超過 24 小時自動交卷、時間用完交卷
   eq([a.dom.querySelector('.lsn-note').textContent, a.active() === a.dom.querySelector('.lsn-note'), a.les(1).seg.test_listening.st], ['聽力測驗超過 24 小時已自動交卷', true, 'done']);
   const b = await page({ search: '?no=1', seed: seed(1200, 1100), before: real });
   eq([b.dom.querySelector('.lsn-note').textContent, b.les(1).seg.test_listening.st, b.steps()[1][1]], ['聽力測驗時間到', 'done', 'current']);
-  const clock = new Map([['lsn_clock', JSON.stringify({ k: 'les_t1_01', s: 'test_listening', at: NOW - 600 + 400 })]]);
+  const clock = new Map([['lsn_clock', JSON.stringify({ p: K.CPID, k: 'les_t1_01', s: 'test_listening', at: NOW - 600 + 400 })]]);
   const c = await page({ search: '?no=1', seed: seed(600, 300), kit: { session: clock }, before: real });
   const n = c.les(1).pk[0].ids.reduce((s, id) => s + (/^l[12]-/.test(id) ? 1 : c.ctx.BANK_META.items.filter((r) => r.id === id)[0].size), 0);
   eq([c.dom.querySelector('.lsn-note'), c.$$('.lsn-step-min')[0].textContent, c.text('.lsn-go'), c.$$('.lsn-rule').length, c.les(1).seg.test_listening.st],

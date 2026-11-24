@@ -531,6 +531,30 @@ T['白日夢(趴著)跟站著的姿勢互換時淡出淡入,白日夢再設一�
   return { ok: !d.length, detail: d.join(';') };
 };
 
+/* 結算卡的開心鵜鶘就是用 animate(canvas, { size, pose: 'happy', fps: 8 }) 一直循環播這 10 格:這裡把「會換格、每秒 8 張、停不停」鎖住 */
+T['happy 循環播:基準 fps 8 時每秒 8 張(125 ms 一格)、10 格都輪過、一圈回到第 0 格、畫面每一拍都換;stop 之後不再動'] = () => {
+  const d = [];
+  const { env, a, canvas, ticks } = run({ pose: 'happy', size: 180 }, 41);
+  const n = ART.frameCount('happy'), want = [];
+  ART.holds('happy').forEach((h, k) => { for (let j = 0; j < h; j++) want.push(k); });
+  const got = ticks.map((t) => t.frame);
+  if (ART.fps.happy !== 8) d.push('fps.happy ' + ART.fps.happy);
+  if (n !== 10) d.push('格數 ' + n);
+  if (!eq(env.intervals().map((t) => t.ms), [125])) d.push('間隔 ' + JSON.stringify(env.intervals().map((t) => t.ms)));
+  if (a.fps !== 8) d.push('a.fps ' + a.fps);
+  if (!got.every((k, i) => k === want[i % want.length])) d.push('順序 ' + got.slice(0, 14).join(','));
+  if (new Set(got).size !== n) d.push('沒輪過全部格');
+  const map = bakedMap(env.A, 'happy', 180, 2), kv = painted(canvas).map((x) => map.get(x));
+  if (!(kv.length === 41 && kv.every((x) => x))) d.push('畫的不是烤好的格');
+  const changes = kv.slice(1).filter((x, i) => x[0] !== kv[i][0]).length;
+  if (changes < n * 3) d.push('換格次數太少 ' + changes);
+  a.stop();
+  const before = painted(canvas).length;
+  env.intervals().forEach((t) => t.fn());
+  if (env.intervals().length || painted(canvas).length !== before) d.push('stop 之後還在動');
+  return { ok: !d.length, detail: d.join(';') };
+};
+
 T['畫得小時墨線加粗(52 px 比 180 px 粗),180 px 以上不加粗'] = () => {
   const widths = (size) => frameLog(ART, 'idle', 0, 0, size).filter((l) => l.startsWith('lineWidth=')).map((l) => +l.slice(10));
   const max = (a) => Math.max.apply(null, a);

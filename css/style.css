@@ -3292,7 +3292,8 @@ html:not(.authed) .home .pet-home { display: none; }   /* 未登入時小雞在�
   .home .home-grid.lesson-go > .daily-home { padding-bottom: 12px; }
 }
 @media (min-width: 900px) {
-  html.authed .home-grid.has-lesson > .lsn-home { grid-column: 1; grid-row: 1; }
+  /* 課卡比右邊的小雞卡矮時(明天開放、尚未開放)拉到同高、內容置中,課卡跟每日練習卡之間不空一段 */
+  html.authed .home-grid.has-lesson > .lsn-home { grid-column: 1; grid-row: 1; align-self: stretch; align-content: center; }
   html.authed .home-grid.has-lesson > .daily-home { grid-row: 2 / span 3; margin-top: 0; }
 }
 /* 課程總覽:600 以下每列兩行(編號與狀態一行、堂名一行,最多兩行),600 以上一行、堂名超出用刪節號;列高至少 56 */

@@ -442,7 +442,8 @@ async function walk(u, lv, shots) {
     return { heads, rows }; })()`);
   assert.ok(cp.heads.length >= 2 && cp.rows.length > 0, J(cp));
   assert.ok(cp.heads.every((t) => !/[0-9%]/.test(t)) && cp.rows.every((t) => !/%|\d+\s*(題|分)/.test(t)), '小檢核不能有題數、分數與 %:' + J(cp));
-  assert.ok(cp.rows.length === 3 && cp.rows.every((t) => /(達標|持平|弱點|沒有出題)$/.test(t)), J(cp.rows));   // 照片描述、WH 問句、詞性各一列(考不到的寫沒有出題)
+  /* 照片描述、WH 問句、詞性各一列,三個考點都有判定:第 2、3 堂的練習先避開第 4 堂小檢核的預留題,照片描述不會被練習用完 */
+  assert.ok(cp.rows.length === 3 && cp.rows.every((t) => /(達標|持平|弱點)$/.test(t)), J(cp.rows));
   if (shots) await shot(p, '22_本堂結果');
   const h5 = await homeCard(p);
   assert.deepStrictEqual([h5.h, h5.go, h5.daily, h5.solid], ['第 5 堂尚未開放', null, true, 1]);
@@ -458,14 +459,36 @@ async function walk(u, lv, shots) {
   if (shots) await shot(p, '23_第5堂尚未開放');
   noErrors(p, lv.reading);
   await p.close();
+  return '第 4 堂小檢核:' + cp.rows.join('、');
 }
 T['2 試行甲(入門):結果頁「開始第 1 堂」→ 前測(快轉)→ 第 2 堂 → 同一天第 3 堂明天開放 → 隔天第 3、4 堂 → 第 5 堂尚未開放'] = async () => {
   OFF = 0;
-  await walk(user(21, '試行甲'), EE, true);
+  return walk(user(21, '試行甲'), EE, true);
 };
 T['2 試行乙(門檻):同上'] = async () => {
   OFF = 0;
-  await walk(user(22, '試行乙'), TT, false);
+  return walk(user(22, '試行乙'), TT, false);
+};
+T['2 照片描述的題在課程外(刷題頁)全部做過、清單裡沒有沒做過的:第 4 堂小檢核說明頁寫「這次沒有照片描述的題」,本堂結果那一列「沒有出題」'] = async () => {
+  OFF = 0;
+  const c = freshCloud(), u = user(24, '試行戊');
+  pilotUser(c, u, EE);
+  await seedDone(c, u, EE, 3);
+  const t = nowMs() - DAY_MS, rec = {};
+  K.env({}).ctx.BANK_META.items.filter((r) => r.part === '1').forEach((r) => { rec[r.id] = { c: 0, ok: true, t }; });
+  seedUser(c, u, { listen_p1: rec });
+  const p = await tab(u, { url: 'lesson.html?no=4' });
+  await p.wait("document.querySelector('.lsn-steps')", '第 4 堂總覽');
+  let intro = null;
+  const grab = async (q) => { if (intro === null) intro = await q.eval("document.getElementById('lsn-root').textContent"); return null; };
+  await drive(p, { goOn: true, shots: { intro: grab }, until: (s) => s === 'result' });
+  assert.ok(/這次沒有照片描述的題/.test(intro || ''), '小檢核說明頁:' + String(intro).slice(0, 300));
+  const rows = await p.eval("[...document.querySelectorAll('.lsn-verdicts li')].map((li) => li.textContent.trim())");
+  const p1 = rows.filter((x) => /照片描述/.test(x));
+  assert.ok(rows.length === 3 && p1.length === 1 && /沒有出題$/.test(p1[0]) && rows.filter((x) => x !== p1[0]).every((x) => /(達標|持平|弱點)$/.test(x)), J(rows));
+  noErrors(p, '戊');
+  await p.close();
+  return rows.join('、');
 };
 
 /* ---------- 3. 試行丙:聽門檻、讀入門 ---------- */

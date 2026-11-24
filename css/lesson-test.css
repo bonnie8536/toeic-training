@@ -19,12 +19,12 @@ html.is-quiz .lsn-t-q .q-text { margin-bottom: 8px; font-size: var(--fs-md); }
 @media (min-width: 600px) { html.is-quiz .lsn-t-q .q-text { font-size: var(--fs-lg); } }
 
 /* ---------- 說明頁(閱讀測驗開始頁、小檢核、換科)與前測檢討的前測結果:不在專心模式,靠左一欄 ---------- */
-.lsn-intro, .lsn-pre-step { display: flex; flex-direction: column; align-items: flex-start; padding: 8px 0 48px; }
+.lsn-intro, .lsn-pre-step { display: flex; flex-direction: column; align-items: flex-start; padding: 24px 0 48px; }   /* 上距同技巧卡(.lsn-screen) */
 .lsn-h2 { margin: 16px 0 0; font-family: var(--round); font-size: var(--fs-xl); font-weight: 700; line-height: 1.35; color: var(--ink); }
 .lsn-h2:focus { outline: none; }
 .lsn-intro .mock-tags { margin-top: 12px; }
-.lsn-rule { margin: 12px 0 0; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-soft); }
-.lsn-go { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin-top: 24px; padding: 0 32px; border-radius: var(--r-md); }
+.lsn-intro .lsn-rule { margin: 12px 0 0; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-soft); }
+.lsn-intro .lsn-go, .lsn-pre-step .lsn-go { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin-top: 24px; padding: 0 32px; border-radius: var(--r-md); }
 @media (min-width: 600px) { .lsn-intro .lsn-go, .lsn-pre-step .lsn-go { width: 320px; } }
 .lsn-pre-step .lsn-tag-line { justify-content: flex-start; }
 .lsn-pre-step .lsn-parts-wrap { align-self: stretch; margin-top: 8px; }

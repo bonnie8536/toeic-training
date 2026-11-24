@@ -59,7 +59,7 @@
     const L = TX().lesson;
     const word = s.st === 'done' ? L.done : s.st === 'skip' ? L.skip : '';
     return el('li', { class: 'lsn-step is-' + s.st, 'aria-current': s.st === 'current' ? 'step' : null }, [
-      el('span', { class: 'lsn-mark', 'aria-hidden': 'true' }),
+      el('span', { class: 'lsn-step-mark', 'aria-hidden': 'true' }),
       el('span', { class: 'lsn-step-name' }, [s.name]),
       el('span', { class: 'lsn-step-min' }, [s.time || '']),
       word ? el('span', { class: 'lsn-step-st' }, [word]) : null,

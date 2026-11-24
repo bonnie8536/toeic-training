@@ -191,6 +191,24 @@ T['前測檢討:第一步是前測結果(Part 清單、暫用試卷那一行、�
   eq(e.store.peek('tests_v1').t1.pre.at, s1.doneAt, '補寫前測紀錄');
 };
 
+T['前測檢討:沒做過的題不夠、只能放寬 14 天內做過的限制時,照樣不出前測原題'] = async () => {
+  const e = await env();
+  const s1 = await lessonOneDone(e);
+  const basic = [...e.meta.values()].filter((r) => r.part === '1' && r.difficulty === '基礎').map((r) => r.id).slice(0, 3);
+  const others = s1.pk[0].ids.filter((id) => !/^l1-/.test(id));
+  let s = Object.assign({}, s1, { pk: Object.assign({}, s1.pk, { 0: Object.assign({}, s1.pk[0], { ids: basic.concat(others) }) }), a: [] });
+  basic.forEach((id) => { s = e.P.answer(s, { b: 0, id, c: 3, ok: false, f: true, t: NOW - DAY }); });
+  e.store.set('les_t1_01', s);
+  const pc = await open(e, 2);
+  const rest = [...e.meta.values()].filter((r) => r.part === '1' && basic.indexOf(r.id) < 0).map((r) => r.id);
+  pc.setState(Object.assign({}, pc.state(), { pk: Object.assign({}, pc.state().pk, { 79: { at: 0, ids: rest } }) }));   // 其他照片描述都已經凍結(選題時避開)
+  const run = e.LP.testReview(pc);
+  for (let i = 0; i < 4; i++) { await settle(60); const go = e.host.querySelector('.lsn-go'); if (go) go.click(); if (pc.nextTip) pc.nextTip(); }
+  await run;
+  const p1 = Object.keys(pc.state().pk).map(Number).filter((i) => i >= 90 && pc.state().pk[i].m === 'p1');
+  eq([p1.length, p1.reduce((a, i) => a.concat(pc.state().pk[i].ids), []).filter((id) => basic.indexOf(id) > -1)], [1, []]);
+};
+
 T['前測檢討:沒有前測資料時略過前測結果那一步;「← 回第 2 堂」離開'] = async () => {
   const e = await env();
   const pc = await open(e, 2);
@@ -374,6 +392,21 @@ T['本堂結果第一次進來補記考點:照原本的來源與批次(固定段
   await e.LP.wrapup(page(e, 4, TT));
   await e.D.flush();
   eq(e.store.peek('pts'), again, '重看不再補記');
+};
+
+T['本堂結果補記考點:日期用那一區塊最後一題作答那天,隔天才進本堂結果也一樣'] = async () => {
+  const e = await env();
+  const pc = await open(e, 3, EE, { ok: () => true });
+  const d0 = today(e);
+  for (const s of pc.lesson.segments.filter((x) => x.fixed && x.slot !== 'wrapup')) { await pc.runRound(s.blocks, { slot: s.slot }); pc.setState(await e.D.segment(3, pc.lesson, s.slot, 'done', e.clock.sec())); }
+  await e.LP.review(pc);
+  await e.LP.weak(pc);
+  e.clock.add(DAY + 60);
+  assert.equal(await e.LP.wrapup(pc), 'done');
+  await e.D.flush();
+  const pts = e.store.peek('pts') || {};
+  const ds = Object.keys(pts).reduce((a, k) => a.concat(pts[k].hits.filter((h) => /^les_t1_03:/.test(h.b)).map((h) => h.d)), []);
+  eq([ds.length > 0, ds.filter((d) => d !== d0), today(e) !== d0], [true, [], true]);
 };
 
 T['本堂結果:錯題的逐題解析附回報題目;沒有錯題時不出錯題那一塊'] = async () => {

@@ -4,7 +4,6 @@
    不開瀏覽器、不連網。用法:node tools/test_lesson_round.js */
 'use strict';
 const vm = require('vm');
-const assert = require('assert');
 const K = require('./lesson_kit.js');
 const F = require('./test_lesson_flow.js');
 const { eq, NOW, DAY, EE, TE } = K;

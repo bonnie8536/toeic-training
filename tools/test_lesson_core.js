@@ -167,6 +167,7 @@ T['rounds:入門、門檻、聽門檻讀入門、聽入門讀門檻的實際學�
   eq(C.syncKeys(rs[2]), ['listen_p2', 'listen_p1', 'hist']);
   eq(C.syncKeys(C.rounds(seg(l3, 'reading'), null)[3]), ['drill_p5', 'hist']);
   eq(C.syncKeys(rs[0]), []);
+  eq(['3', '4', '6', '7'].map((p) => C.syncKeys({ kind: 'bank', parts: [p] })), [['listen_p3', 'hist'], ['listen_p4', 'hist'], ['drill_p6', 'hist'], ['drill_p7', 'hist']], 'P3、P4 是聽力,P6、P7 是刷題');
   eq(C.TEXT.block.parts(rs[2].parts), 'Part 2、Part 1', '區塊結果的小字照出現順序');
   return '4 組 × 4 堂';
 };

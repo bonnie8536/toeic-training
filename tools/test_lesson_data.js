@@ -237,6 +237,28 @@ T['ctx:records 是七個 Part 的作答紀錄;seen 是 14 天內做過的題(題
   eq(K.env().D.ctx(e.lesson(EE, 3), NOW).weekWords, undefined, '沒讀字表');
 };
 
+T['ctx:還沒寫前測紀錄時(tests_v1 沒有),seen 與小檢核清單照樣扣掉第 1 堂凍結的前測題'] = async () => {
+  const e = await ready();
+  const pool = K.POOL.ids, l1 = pool.filter((id) => /^l1-/.test(id)).slice(0, 2), p5 = pool.filter((id) => /^p5-/.test(id)).slice(0, 2);
+  const lesson1 = e.lesson(EE, 1);
+  e.store.set('les_t1_01', e.P.freeze(e.P.freeze(e.P.newState(lesson1, NOW - DAY), 0, l1, NOW - DAY), 1, p5, NOW - DAY));
+  const c = e.D.ctx(e.lesson(EE, 4), NOW);
+  eq([e.store.peek('tests_v1'), l1.concat(p5).filter((id) => c.seen.indexOf(id) < 0), l1.concat(p5).filter((id) => c.checkpointPool.indexOf(id) > -1), c.checkpointPool.length],
+    [undefined, [], [], pool.length - 4]);
+};
+
+T['個人段整段取先凍結的:另一台已經凍結回顧的 80,這一台帶 80–82 的選題寫進去,只留另一台的 80、沒有 81、82'] = async () => {
+  const cloud = K.cloudOf();
+  const e = await ready({ cloud });
+  const { l, picked } = await pick(e, 3);
+  await e.D.start(3, l, NOW - 600, 'class-a', picked);
+  const other = e.P.freeze(e.store.peek('les_t1_03'), 80, ['l1-13'], NOW - 300, { r: 'review', sub: [null], m: ['p1'] });
+  cloud.put('les_t1_03', other);
+  const mine = [80, 81, 82].reduce((s, i) => e.P.freeze(s, i, ['p5-' + i], NOW, { r: i === 80 ? 'review' : 'point_review:P5.cat:詞性變化' }), e.store.peek('les_t1_03'));
+  const s = await e.D.freeze(3, l, mine, [80, 85]);
+  eq([s.pk[80].ids, !!s.pk[81], !!s.pk[82], e.store.peek('les_t1_03').pk[80].ids], [['l1-13'], false, false, ['l1-13']]);
+};
+
 T['fillFixed:一般堂補還沒凍結的、沒變不寫;前測缺一格只補那一格(c.assemble)、兩格都有不寫'] = async () => {
   const e = await ready();
   const l = e.lesson(EE, 3);

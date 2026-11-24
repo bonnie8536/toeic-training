@@ -1,0 +1,92 @@
+/* 上課頁(lesson.html):頁首、段落總覽、技巧卡、字卡與單字題、過場、區塊結果、文法單元。
+   畫面在 js/lesson-views.js;顏色、字級、圓角用 css/style.css 的變數。類別一律 lsn- 開頭。 */
+
+/* ---- 頁首:總覽時「← 回課程」、通知、第 n 堂、堂名;其他畫面 h1 藏起來(.daily-sr),頁首不佔高度 ---- */
+.lsn-top, .page-head:has(> #lsn-h), .lsn-narrow { max-width: 810px; margin-left: auto; margin-right: auto; }
+.lsn-top { padding-top: 24px; }
+.lsn-top[hidden] { display: none; }
+.lsn-top + .page-head { margin-top: 16px; }
+.page-head.lsn-sr { margin-top: 0; margin-bottom: 0; }
+#lsn-h.daily-sr { position: absolute; }   /* .page-head h1 的 position: relative 會讓 .daily-sr 的 clip 失效 */
+.page-head .lsn-kicker { margin: 0 0 4px; font-size: var(--fs-sm); color: var(--ink-light); }
+.lsn-back { display: inline-block; font-size: var(--fs-sm); color: var(--primary); }
+.lsn-note { margin: 16px 0 0; padding: 12px 16px; border-left: 4px solid var(--primary); border-radius: 0 var(--r-sm) var(--r-sm) 0; background: var(--bg-soft); font-size: var(--fs-md); color: var(--ink); }
+.lsn-note-line { display: block; }
+/* 換畫面時程式把焦點移到標題、通知、空狀態的字(讀屏用),不畫框(同 .result-score) */
+#lsn-h:focus, .lsn-note:focus, .lsn-tip-h:focus, .lsn-words-h:focus, .lsn-card-h:focus, .lsn-grammar h2:focus, #lsn-root .ui-empty-text:focus { outline: none; }
+.lsn-loading { margin: 24px 0; }
+
+/* ---- 段落總覽:一段一列(記號、段名、分鐘、狀態字),記號之間一條線 ---- */
+.lsn-steps { list-style: none; margin: 20px 0 0; padding: 0; }
+.lsn-step { position: relative; display: grid; grid-template-columns: 24px minmax(0, 1fr) auto 40px; align-items: center; gap: 0 12px; min-height: 52px; }
+.lsn-step + .lsn-step::before { content: ''; position: absolute; left: 11px; top: -17px; height: 34px; border-left: 2px solid var(--line); }
+.lsn-mark { position: relative; z-index: 1; justify-self: center; box-sizing: border-box; width: 18px; height: 18px; border: 2px solid #b4bcc4; border-radius: 50%; background: #fff; }
+.lsn-step.is-current .lsn-mark { border-color: var(--fill); background: var(--fill); }
+.lsn-step.is-done .lsn-mark { border-color: var(--ok); background: var(--ok); }
+.lsn-step.is-done .lsn-mark::after { content: ''; position: absolute; left: 4px; top: 1px; width: 4px; height: 8px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.lsn-step.is-skip .lsn-mark { background: var(--bg-soft); }
+.lsn-step.is-skip .lsn-mark::after { content: ''; position: absolute; left: 6px; top: 1px; height: 12px; border-left: 2px solid #8a939c; transform: rotate(45deg); }
+.lsn-step-name { font-size: var(--fs-md); color: var(--ink); }
+.lsn-step.is-current .lsn-step-name { font-weight: 700; }
+.lsn-step.is-skip .lsn-step-name, .lsn-step.is-todo .lsn-step-name { color: var(--ink-soft); }
+.lsn-step-min { font-size: var(--fs-sm); color: var(--ink-light); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lsn-step-st { font-size: var(--fs-sm); color: var(--ink-light); white-space: nowrap; }
+.lsn-step.is-done .lsn-step-st { color: var(--ok-ink); font-weight: 700; }
+.lsn-rule { margin: 4px 0 0; font-size: var(--fs-md); color: var(--ink-soft); }
+.lsn-rule:first-of-type { margin-top: 20px; }
+
+/* ---- 按鈕列:主按鈕手機滿寬、600 以上寬 320 靠左;「略過這一段」在旁邊 ---- */
+.lsn-acts { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 16px; margin-top: 24px; }
+.lsn-acts .btn.primary { width: 100%; min-height: 48px; padding: 0 32px; border-radius: var(--r-md); }
+@media (min-width: 600px) {
+  .lsn-acts { justify-content: flex-start; }
+  .lsn-acts .btn.primary { width: 320px; }
+}
+
+/* ---- 技巧卡、字卡:內容欄最寬 720 置中 ---- */
+.lsn-screen { max-width: 720px; margin: 0 auto; padding: 24px 0 32px; }
+.lsn-screen > .lsn-back { margin-bottom: 8px; }
+.lsn-tip-h, .lsn-words-h, .lsn-card-h { margin: 8px 0 0; font-family: var(--round); font-size: var(--fs-xl); line-height: 1.4; }
+.lsn-tip-body { margin: 12px 0 0; font-size: var(--fs-md); line-height: 1.8; }
+.lsn-ex { display: grid; gap: 16px; margin-top: 20px; padding: 16px; border: 1px solid var(--line); border-radius: var(--r-md); background: #fff; }
+.lsn-ex-sec { display: grid; gap: 8px; justify-items: start; }
+.lsn-ex-tag { font-size: var(--fs-xs); }
+.lsn-ex-line, .lsn-ex-photo { margin: 0; font-size: var(--fs-md); line-height: 1.7; }
+.lsn-ex-line.is-opt { padding-left: 2.2em; text-indent: -2.2em; }
+.lsn-ex-opts { display: grid; gap: 8px 24px; width: 100%; }
+.lsn-ex-opt { font-size: var(--fs-md); line-height: 1.7; }
+.lsn-ex-zh { margin: 0; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-light); }
+@media (min-width: 600px) { .lsn-ex-opts { grid-template-columns: 1fr 1fr; } }
+
+/* ---- 字卡與單字題(專心模式) ---- */
+.lsn-words { display: grid; gap: 0 24px; margin: 16px 0 0; padding: 0; list-style: none; }
+.lsn-word { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.lsn-w-en { font-size: var(--fs-md); font-weight: 700; color: var(--ink); }
+.lsn-w-zh { font-size: var(--fs-md); color: var(--ink-soft); }
+html.is-quiz main .q-block .lsn-word-q { margin-bottom: 8px; font-family: var(--round); font-size: var(--fs-2xl); font-weight: 700; }
+.lsn-wq .mock-tags { margin: 0 0 20px; }
+@media (min-width: 600px) {
+  .lsn-words { grid-template-columns: 1fr 1fr; }
+  .lsn-wq .opts { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---- 過場:交卷回合之前一張 ---- */
+.lsn-card { display: flex; flex-direction: column; align-items: stretch; margin-top: 24px; margin-bottom: 48px; padding: 24px; border: 1px solid var(--line); border-radius: var(--r-lg); background: #fff; }
+.lsn-card .mock-tags { margin-top: 12px; }
+.lsn-line { margin: 12px 0 0; font-size: var(--fs-md); color: var(--ink-soft); }
+
+/* ---- 區塊結果、文法單元 ---- */
+.lsn-block-result { padding-bottom: 32px; }
+.lsn-block-result > .result-card.is-inline { margin-top: 24px; border-top: 0; }
+.lsn-detail { margin-top: 24px; }
+.lsn-grammar { padding: 24px 0 32px; }
+.lsn-grammar > .lsn-back { margin-bottom: 8px; }
+.lsn-tail .result-card.is-inline { margin-top: 32px; }
+
+@media (pointer: coarse) {
+  .lsn-back { padding-top: 10px; padding-bottom: 10px; margin-top: -10px; margin-bottom: -10px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lsn-note { animation: lsn-in .2s ease-out; }
+  @keyframes lsn-in { from { opacity: 0; } to { opacity: 1; } }
+}

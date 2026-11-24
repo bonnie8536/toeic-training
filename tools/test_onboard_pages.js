@@ -467,6 +467,28 @@ T['B3d 首頁卡的位置與按鈕:排在每日練習卡後面(小雞卡前面);
   const he = homeGrid(e, true); e.UI.homeCard(he.box); await settle();
   eq(he.box.all().filter((x) => x.tagName === 'A' || x.tagName === 'BUTTON').map((x) => x.className), ['btn', 'btn-text']);
 };
+/* 試行班(js/lesson-home.js):首頁格帶 .home-grid、課程的開關與名單,有 plan 的學生開頁當下就知道是試行班(課程的其他檔不用載到) */
+function pilotHome(over) {
+  const e = uiEnv(signedIn());
+  Object.entries(Object.assign({ levels: { listening: 'entry', reading: 'entry', source: {}, history: [] }, plan: { v: 1, classId: 'class-a', term: 1 } }, over))
+    .forEach(([k, v]) => e.ls.set(PRE + k, J(v)));
+  Object.assign(e.ctx, { PACKS_UI: 'pilot', PACKS_PILOT_CLASSES: ['class-a'], addEventListener() {} });
+  const g = homeGrid(e, true);
+  g.grid.className = 'home-grid';
+  vm.runInContext(read('js/lesson-home.js'), e.ctx);
+  e.UI.homeCard(g.box);
+  return Object.assign(e, { g });
+}
+T['B3e 試行班:設定做完(D0)不畫起始程度卡(讓給今天的課卡);剛交卷(B_result)照畫起始程度卡'] = async () => {
+  const d0 = pilotHome({ onboard: { v: 1, status: 'done', step: 'result', updatedAt: NOW_ISO } });
+  eq([d0.g.box.hidden, d0.g.box.children.length], [true, 0], '同步畫的那一次');
+  await settle();
+  eq([d0.g.box.hidden, d0.g.box.children.length], [true, 0], 'CLOUD.ready 之後');
+  const ip = { v: 1, status: 'in_progress', step: 'test', testFrom: new Date(NOW - HOUR).toISOString() };
+  const br = pilotHome({ onboard: ip, diag: { answers: {}, done: true, startedAt: new Date(NOW - 30 * MIN).toISOString(), finishedAt: new Date(NOW - MIN).toISOString() } });
+  await settle();
+  eq([br.g.box.hidden, texts(br.g.box)], [false, ['繼續設定起始程度', '看起始程度']]);
+};
 T['B4 「我的」頁學習設定:老師、訪客、雲端沒開不顯示;有程度五列;程度那列開改級別面板(UI.sheet),套用寫 manual'] = () => {
   assert.equal(uiEnv().UI.settingsSection(), null);
   assert.equal(uiEnv(signedIn({ teacher: true })).UI.settingsSection(), null);
@@ -642,6 +664,37 @@ T['B8 教師後台:「起始程度」欄在檢測結果後、內容用 levelsLab
   const nTh = (head.match(/h\('th'/g) || []).length, nTd = (row.match(/h\('td'/g) || []).length;
   const span = /colspan: '(\d+)'/.exec(tbl);
   eq([nTh, nTd, span && Number(span[1])], [9, 9, 9]);
+};
+/* 真的 js/admin.js 載進沙盒(假 DOM、假的雲端回 rows),回學生表 */
+async function adminTable(rows) {
+  const dom = miniDom();
+  const append = dom.N.prototype.append;   // 同瀏覽器:append 字串或 null 會變成文字
+  dom.N.prototype.append = function (...ns) { return append.apply(this, ns.map((n) => (n && typeof n === 'object' ? n : dom.document.createTextNode(String(n))))); };
+  const root = dom.document.createElement('div'); dom.body.append(root);
+  const ctx = { console: { log() {}, warn() {}, error() {} }, document: dom.document, Promise, Date, Object, Array, Set, Map, JSON, Math, String, Number, setTimeout,
+    TOEIC: {}, $: (s) => (s === '#admin-root' ? root : null), location: { reload() {} } };
+  ctx.window = ctx;
+  ctx.CLOUD = { enabled: true, user: { id: 'teacher-1' }, isTeacher: true, ready: Promise.resolve(), access: null,
+    client: { from: () => ({ select: () => Promise.resolve({ data: rows, error: null }) }) } };
+  vm.createContext(ctx);
+  vm.runInContext((read('js/common.js').match(/function h\(tag[\s\S]*?\n}\r?\n/) || [''])[0], ctx);
+  ['js/onboard-core.js', 'js/lesson-core.js', 'js/admin.js'].forEach((f) => vm.runInContext(read(f), ctx));
+  await settle();
+  return root.querySelector('table');
+}
+T['B8b 教師後台「目前堂號」:名單上有學生有 plan 才多這一欄(起始程度後面、10 欄、展開列跨 10);值:沒有 plan「—」、第 n 堂、24 堂完成「完成」、第 2 期看 les_t2_'] = async () => {
+  const at = (d) => '2026-11-' + d + 'T00:00:00Z';
+  const row = (u, k, v, d) => ({ user_id: u, k, v, updated_at: at(d || 20) });
+  const base = [row('s1', '_meta', { name: '甲' }, 23), row('s2', '_meta', { name: '乙' }, 22), row('s3', '_meta', { name: '丙' }, 21)];
+  const shape = (t) => [t.children[0].children.length, t.children[1].children.length, Number(t.children[2].children[0].getAttribute('colspan'))];
+  const plain9 = await adminTable(base);
+  eq([shape(plain9), plain9.children[0].children[4].textContent], [[9, 9, 9], 'Part 5'], '都沒有 plan:跟以前一樣');
+  const done24 = Array.from({ length: 24 }, (_, i) => row('s3', 'les_t2_' + String(i + 1).padStart(2, '0'), { doneAt: 1 }));
+  const t = await adminTable(base.concat([row('s1', 'plan', { v: 1, term: 1 }), row('s1', 'les_t1_01', { startedAt: 1, doneAt: 2 }), row('s1', 'les_t1_02', { startedAt: 3, doneAt: null }),
+    row('s3', 'plan', { v: 1, term: 2 })], done24));
+  eq([shape(t), t.children[0].children[3].textContent, t.children[0].children[4].textContent], [[10, 10, 10], '起始程度', '目前堂號']);
+  const cells = [1, 3, 5].map((i) => [t.children[i].children[0].children[0].textContent, t.children[i].children[4].textContent]);
+  eq(cells, [['甲', '第 2 堂'], ['乙', '—'], ['丙', '完成']]);
 };
 T['B9 隱私權政策:學習設定一節(蒐集目的整句照指定字樣,不提課表、學習包、題目難易度);Cookie 段補沒登入時的暫存與 7 天;未成年節與生效日期不動'] = () => {
   const p = read('privacy.html');

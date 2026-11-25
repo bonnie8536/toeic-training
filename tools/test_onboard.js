@@ -592,10 +592,13 @@ T['T5 還沒確認是不是老師(查教師表失敗、雲端元件沒載到):�
   eq(plain(await t.D.resume()), { status: 'teacher' });
   eq(folderKeys(t.ls), []);
 };
-T['T7 正要重載時刪 diag:回 blocked,本機 diag 還在'] = () => {
-  const e = dataEnv(signedIn({ reloading: true, init: { [PRE + 'diag']: J({ done: true }) } }));
-  assert.equal(e.D.removeDiag(), 'blocked');
-  assert.equal(e.ls.has(PRE + 'diag'), true);
+T['T7 重新檢測不刪舊檢測:開始檢測(包括正要重載時)本機 diag 還在,資料層沒有刪 diag 的函式'] = () => {
+  [false, true].forEach((reloading) => {
+    const e = dataEnv(signedIn({ reloading, init: { [PRE + 'diag']: J({ done: true }) } }));
+    e.D.startTest();
+    assert.equal(e.ls.get(PRE + 'diag'), J({ done: true }), reloading ? '正要重載' : '一般');
+    assert.equal(e.D.removeDiag, undefined);
+  });
 };
 T['T8 兩個分頁同時接回(共用 localStorage):levels.history 只有一筆'] = async () => {
   const ls = new Map(Object.entries({ [G_KEY]: J(gp('score')) }));
@@ -654,10 +657,13 @@ T['T12 已登入的 S3a 草稿:存在這個分頁,送出成功後刪掉;訪客�
   assert.equal(g.ss.has('ob_score_draft'), false);
 };
 
+/* 新檢測與預估分數的接點(N 開頭) */
+require('./onboard_est_cases')(T);
+
 /* ---------- 跑 ---------- */
 (async () => {
   let pass = 0;
-  const names = Object.keys(T).filter((n) => !ONLY_CORE || /^O(9|10|11)\b|^O15|^E/.test(n));
+  const names = Object.keys(T).filter((n) => !ONLY_CORE || /^O(9|10|11)\b|^O15|^E|^N8\b/.test(n));
   for (const name of names) {
     let detail = '', ok = true;
     try { detail = await T[name](); } catch (e) {

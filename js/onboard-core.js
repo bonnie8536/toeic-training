@@ -197,11 +197,80 @@
   }
   /* 兩科都是認得的級別才算設定過 */
   function levelsSet(lv) { return isPlain(lv) && isLevel(lv.listening) && isLevel(lv.reading); }
-  /* S8b「與檢測結果差 2 級」:跟最後一筆檢測或成績的結果比;只有 entry、manual 不比 */
+  /* S8b「與檢測結果差 2 級」:跟最後一筆檢測或成績的結果比(score 成績、legacy 舊檢測、est 程度檢測與練習);只有 entry、manual 不比 */
+  const TESTED = Object.freeze(['score', 'legacy', 'est']);
   function testedLevels(lv) {
     const h = isPlain(lv) && Array.isArray(lv.history) ? lv.history : [];
-    for (let i = h.length - 1; i >= 0; i--) if (h[i] && (h[i].reason === 'score' || h[i].reason === 'legacy')) return h[i];
+    for (let i = h.length - 1; i >= 0; i--) if (h[i] && TESTED.indexOf(h[i].reason) > -1) return h[i];
     return null;
+  }
+
+  /* ---------- 程度檢測(placement_v1,由 ESTIMATE_STORE 寫) ---------- */
+  /* placement_v1 = { v: 1, runs: [{ at, end, sec, tm: { L: [開始, 結束], R: [...] }, items, res: { L: [預估, 下緣, 上緣], R } }] }。
+     這裡只讀:最新一次(at 最晚)、做完的檢測(end 有值)、這一次做完了哪幾科(tm 有結束時間) */
+  const runsOf = (pl) => (isPlain(pl) && Array.isArray(pl.runs) ? pl.runs.filter((r) => isPlain(r) && typeof r.at === 'string' && isFinite(Date.parse(r.at))) : []);
+  const byAt = (a, b) => Date.parse(b.at) - Date.parse(a.at);
+  function latestRun(pl) { return runsOf(pl).sort(byAt)[0] || null; }
+  const ended = (r) => isPlain(r) && typeof r.end === 'string' && isFinite(Date.parse(r.end));
+  /* 最近做完的一次(給「重新檢測」右側的日期、檢測報告);沒有回 null */
+  function lastDoneRun(pl) { return runsOf(pl).filter(ended).sort((a, b) => Date.parse(b.end) - Date.parse(a.end))[0] || null; }
+  function runSections(run) {
+    const tm = isPlain(run) && isPlain(run.tm) ? run.tm : {};
+    const done = (s) => Array.isArray(tm[s]) && typeof tm[s][1] === 'string' && isFinite(Date.parse(tm[s][1]));
+    return { L: done('L'), R: done('R') };
+  }
+  /* 設定流程裡剛做完的檢測:新檢測(最新一次 end 不早於 testFrom)回 est、舊檢測(交卷不早於 testFrom)回 legacy;
+     兩個都有取晚的那個(同時取新檢測);都沒有回 null */
+  function freshTest(ob, diag, pl) {
+    if (!isPlain(ob) || ob.status !== 'in_progress' || ob.step !== 'test') return null;
+    const s = Date.parse(ob.testFrom);
+    if (!isFinite(s)) return null;
+    const run = latestRun(pl);
+    const e = ended(run) ? Date.parse(run.end) : NaN;
+    const f = isPlain(diag) && diag.done === true ? Date.parse(diag.finishedAt) : NaN;
+    const estOk = isFinite(e) && e >= s, legOk = isFinite(f) && f >= s;
+    if (estOk && (!legOk || e >= f)) return 'est';
+    return legOk ? 'legacy' : null;
+  }
+  /* 新檢測要做哪幾科:只有舊檢測(閱讀已有作答)而且還沒用新檢測測過聽力時只做聽力(L),其他兩科(LR) */
+  function testPlan(diag, pl) {
+    const legacy = isPlain(diag) && diag.done === true;
+    const listened = runsOf(pl).some((r) => runSections(r).L);
+    return legacy && !listened && !lastDoneRun(pl) ? 'L' : 'LR';
+  }
+  function placementHref(sec) { return 'placement.html?start=1&from=onboard' + (sec === 'L' || sec === 'R' ? '&sec=' + sec : ''); }
+
+  /* 預估分數對回四級(view 是 ESTIMATE_STORE 的 View,run 是剛做完的那一次,prev 是現在的 levels)。
+     這一次做完的科:用預估的級別(view 有數字時),沒有 view 時用這一次存的結果 res(只用這一次作答加起點算的);
+     沒做的那一科:已經有級別就不動,沒有的話用 view 有數字的級別,再沒有就入門。
+     這一次一科都沒做完,或做完的科兩種都算不出級別:回 null */
+  const SEC_KEY = Object.freeze({ L: 'listening', R: 'reading' });
+  function bandFromRun(run, sec) {
+    const r = isPlain(run) && isPlain(run.res) && Array.isArray(run.res[sec]) ? run.res[sec][0] : NaN;
+    return bandOf(SEC_KEY[sec], r);
+  }
+  function viewBand(view, sec) {
+    const v = isPlain(view) && view.ok === true && isPlain(view[sec]) ? view[sec] : null;
+    return v && v.show === true && isLevel(v.band) ? v.band : null;
+  }
+  function levelsFromEstimate(view, run, prev) {
+    const done = runSections(run);
+    if (!done.L && !done.R) return null;
+    const out = { source: {} };
+    ['L', 'R'].forEach((sec) => {
+      const k = SEC_KEY[sec];
+      if (done[sec]) { out[k] = viewBand(view, sec) || bandFromRun(run, sec); out.source[k] = 'est'; return; }
+      if (levelsSet(prev)) { out[k] = prev[k]; out.source[k] = isPlain(prev.source) && typeof prev.source[k] === 'string' ? prev.source[k] : 'manual'; return; }
+      const other = viewBand(view, sec);
+      out[k] = other || 'entry';
+      out.source[k] = other ? 'est' : 'entry';
+    });
+    return out.listening && out.reading ? out : null;
+  }
+  /* 做完檢測要不要直接改級別:已經設定完過(doneAt 有值)、有級別、又有課程進度的人不自動改,只顯示建議(suggest);其他直接寫(write) */
+  function estPolicy(ob, levels, hasCourse) {
+    const before = isPlain(ob) && typeof ob.doneAt === 'string' && !!ob.doneAt;
+    return before && levelsSet(levels) && !!hasCourse ? 'suggest' : 'write';
   }
 
   /* ---------- 訪客暫存 tr_onboard_guest ---------- */
@@ -242,7 +311,7 @@
   }
 
   /* ---------- 入口判斷 ---------- */
-  const PRACTICE = /^(hist|diag|drill_p\d{1,2}|listen_p\d{1,2})$/;
+  const PRACTICE = /^(hist|diag|fa_v1|placement_v1|drill_p\d{1,2}|listen_p\d{1,2})$/;
   function hasPracticeKeys(keys, pid) {
     const pre = 'tr_u' + pid + '_';
     return (keys || []).some((k) => typeof k === 'string' && k.indexOf(pre) === 0 && PRACTICE.test(k.slice(pre.length)));
@@ -276,22 +345,18 @@
     if (ctx.isApp && !ctx.hasLocalData) return out(9, 'S0');
     return out(10, 'A');
   }
-  /* 「看起始程度」:設定中、在檢測這一步、交卷時間不早於按「開始檢測」的時間 */
-  function diagRowState(ob, diag) {
-    if (!isPlain(ob) || ob.status !== 'in_progress' || ob.step !== 'test') return 'none';
-    if (!isPlain(diag) || diag.done !== true) return 'none';
-    const f = Date.parse(diag.finishedAt), s = Date.parse(ob.testFrom);
-    return isFinite(f) && isFinite(s) && f >= s ? 'result' : 'none';
-  }
+  /* 「看起始程度」:設定中、在檢測這一步、交卷(舊檢測)或做完(新檢測 placement_v1 最新一次的 end)不早於按「開始檢測」的時間 */
+  function diagRowState(ob, diag, pl) { return freshTest(ob, diag, pl) ? 'result' : 'none'; }
   function homeState(ctx) {
     const r = entryRoute(ctx);
-    if (r.state === 'B' && ctx.signedIn && diagRowState(ctx.onboard, ctx.diag) === 'result') return 'B_result';
+    if (r.state === 'B' && ctx.signedIn && diagRowState(ctx.onboard, ctx.diag, ctx.placement) === 'result') return 'B_result';
     return r.state;
   }
-  /* S8 開頁時要做什麼:legacy 先用剛交的卷算級別;draw 直接畫;done 先記完成再畫;
-     其他是要轉去的那一步。按了「重新檢測」(in_progress、test)還沒交卷時回 test,不能用舊級別記完成 */
-  function resultRoute(ob, levels, diag) {
-    if (diagRowState(ob, diag) === 'result') return 'legacy';
+  /* S8 開頁時要做什麼:est 用剛做完的新檢測對回四級、legacy 用剛交的舊卷算級別;draw 直接畫;done 先記完成再畫;
+     其他是要轉去的那一步。按了「重新檢測」(in_progress、test)還沒做完時回 test,不能用舊級別記完成 */
+  function resultRoute(ob, levels, diag, pl) {
+    const fresh = freshTest(ob, diag, pl);
+    if (fresh) return fresh;
     const o = isPlain(ob) ? ob : {};
     if (!levelsSet(levels)) return o.step === 'test' ? 'test' : 'level';
     if (o.status === 'done') return 'draw';
@@ -379,7 +444,7 @@
     const card = (title, sub, primary, more) => Object.assign({ state, title, sub, primary, secondary: null, dismiss: false }, more || {});
     if (state === 'A') {
       if (!i.signedIn) return null;
-      return card('找出你的起始程度', '填多益成績，或做 28 題檢測（約 20 分鐘）', { text: '設定程度', href: 'start.html?step=target' },
+      return card('找出你的起始程度', '填多益成績，或做 24 題檢測（約 15–20 分鐘）', { text: '設定程度', href: 'start.html?step=target' },
         { secondary: { text: '我有班級代碼', href: 'start.html?step=join' } });
     }
     if (state === 'B') return card('繼續設定起始程度', '', { text: '繼續', href: continueHref(i.signedIn ? i.onboard : i.guest) });
@@ -388,15 +453,17 @@
       const link = practiceLink(i.levels);
       return card('你的起始程度', levelsLabel(i.levels), link ? { text: '開始練習', href: link } : { text: '看起始程度', href: 'start.html?step=result' });
     }
-    if (state === 'E') return card('找出你的起始程度', '填多益成績，或做 28 題檢測（約 20 分鐘）', { text: '設定程度', href: 'start.html?step=target' }, { dismiss: true });
+    if (state === 'E') return card('找出你的起始程度', '填多益成績，或做 24 題檢測（約 15–20 分鐘）', { text: '設定程度', href: 'start.html?step=target' }, { dismiss: true });
     return null;
   }
-  /* 「我的」頁學習設定(五列)。account:{ onboard, levels };diag 是舊檢測。
+  /* 「我的」頁學習設定(五或六列)。account:{ onboard, levels };diag 是舊檢測;pl 是新檢測(placement_v1)。
      列:{ key, label, value, href } 或 { key, label, value, action:'levels' }(開改級別面板) */
-  function settingsRows(account, diag) {
+  function settingsRows(account, diag, pl) {
     const a = isPlain(account) ? account : {};
     const ob = isPlain(a.onboard) ? a.onboard : {};
-    const tested = isPlain(diag) && diag.done === true;
+    const legacy = isPlain(diag) && diag.done === true;
+    const run = lastDoneRun(pl);
+    const tested = legacy || !!run;
     if (levelsLabel(a.levels) === '未設定') {
       return [{ key: 'setup', label: '設定程度', value: '', href: ob.status === 'in_progress' ? continueHref(ob) : continueHref(null) }];
     }
@@ -404,12 +471,13 @@
       { key: 'levels', label: '程度', value: levelsLabel(a.levels), action: 'levels' },
       { key: 'target', label: '目標分數', value: targetLabel(ob.targetScore), href: 'start.html?step=target&from=me' },
       { key: 'exam', label: '考試月份', value: ymLabel(ob.examMonth) || '還沒報名', href: 'start.html?step=exam&from=me' },
-      /* 做過檢測叫「重新檢測」、右側放上次日期;沒做過叫「做檢測」,跟 S8 一致 */
-      tested ? { key: 'test', label: '重新檢測', value: dayLabel(diag.finishedAt), href: 'start.html?step=test&from=me' }
+      /* 做過檢測叫「重新檢測」、右側放上次日期(有新檢測放新檢測的);沒做過叫「做檢測」,跟 S8 一致 */
+      tested ? { key: 'test', label: '重新檢測', value: dayLabel(run ? run.end : diag.finishedAt), href: 'start.html?step=test&from=me' }
         : { key: 'test', label: '做檢測', value: '', href: 'start.html?step=test&from=me' },
     ];
-    /* 上次那份報告(檢測頁);跟「重新檢測」是同一個檢測,不叫「舊版」 */
-    if (tested) rows.push({ key: 'legacy', label: '檢測報告', value: dayLabel(diag.finishedAt), href: 'diagnostic.html' });
+    /* 上次那份報告:有新檢測連新檢測的結果頁;只有舊檢測照舊連檢測頁。兩種都有時舊的那份另列「閱讀檢測報告」,照樣看得到 */
+    if (run) rows.push({ key: 'report', label: '檢測報告', value: dayLabel(run.end), href: 'placement.html?view=last' });
+    if (legacy) rows.push({ key: 'legacy', label: run ? '閱讀檢測報告' : '檢測報告', value: dayLabel(diag.finishedAt), href: 'diagnostic.html' });
     return rows;
   }
 
@@ -418,6 +486,7 @@
     draftErrors, scoreFromDraft, cleanDraft, scoreMonths, examMonths, ymLabel, dayLabel, monthsBetween, scoreTooOld,
     flattenDiagItems, legacyReading, plusOne, levelsFromLegacy, legacyUsable,
     practiceLink, levelGap, pushHistory, stampAfter, newLevels, levelsSet, testedLevels,
+    latestRun, lastDoneRun, runSections, freshTest, testPlan, placementHref, levelsFromEstimate, estPolicy,
     newGuest, readGuest, guestPatch, resumeEligible,
     hasPracticeKeys, hasLocalData, entryRoute, diagRowState, homeState, resultRoute,
     patchOnboard, dismissedOnboard, resumePlan, applyX1,

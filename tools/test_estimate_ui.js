@@ -39,11 +39,14 @@ T['卡片:兩科都有數字:總分與範圍、兩科的數字刻度尺與範圍
   assert.equal(all(c, '.bs-seg').length, 2);
   return U.dateText(AT);
 };
-T['卡片:只差聽力:聽力寫「再做 12 題聽力」(最多寫 12)、主按鈕「做聽力檢測」連到 sec=L;有使用權時那一行連到練習頁'] = () => {
+T['卡片:只差聽力:聽力寫「再做 20 題聽力」(照實寫 20 − n,跟練習頁連結一致)、主按鈕「做聽力檢測」連到 sec=L;有使用權時那一行連到練習頁'] = () => {
   const v = view(need(20, 'any'), sec(290, 245, 335, 28));
-  const c = U.card({ view: v, practice: { L: 'listening.html', R: 'practice.html' } }).el;
-  eq(all(c, '.est-need').map(txt), ['再做 12 題聽力，就會顯示預估分數。']);
-  eq(all(c, '.est-need a').map((a) => a.getAttribute('href')), ['listening.html']);
+  const c = U.card({ view: v, practice: { L: 'practice.html#listen', R: 'practice.html' } }).el;
+  eq(all(c, '.est-need').map(txt), ['再做 20 題聽力，就會顯示預估分數。']);
+  eq(all(c, '.est-need a').map((a) => a.getAttribute('href')), ['practice.html#listen']);
+  eq(all(U.card({ view: view(need(17, 'any'), sec(290, 245, 335, 28)) }).el, '.est-need').map(txt), ['再做 17 題聽力，就會顯示預估分數。'], '做了 3 題');
+  const quiet = U.card({ view: v, solid: false }).el;
+  eq([primaries(quiet).length, all(quiet, '.est-go').map((b) => [txt(b), b.className])], [0, [['做聽力檢測', 'btn est-go']]], '頁面上已經有實色主按鈕時:描邊按鈕');
   eq(primaries(c).map((b) => [txt(b), b.getAttribute('href')]), [['做聽力檢測', 'placement.html?sec=L']]);
   assert.equal(all(c, '.est-total').length, 0, '一科沒有數字就沒有總分');
   const r = U.card({ view: view(sec(345, 300, 390, 30), need(8, 'big')), testHref: 'placement.html?from=me' }).el;
@@ -51,6 +54,7 @@ T['卡片:只差聽力:聽力寫「再做 12 題聽力」(最多寫 12)、主按
   eq(all(r, '.est-need a').length, 0, '沒給練習頁就不加連結');
   eq(primaries(r).map((b) => [txt(b), b.getAttribute('href')]), [['做閱讀檢測', 'placement.html?from=me&sec=R']]);
   eq(U.needText('L', { n: 5, kind: 'any' }), '再做 5 題聽力，就會顯示預估分數。');
+  eq([U.needText('L', { n: 20, kind: 'any' }), U.needText('L', { n: 20, kind: 'any' }, { test: true })], ['再做 20 題聽力，就會顯示預估分數。', '再做 12 題聽力，就會顯示預估分數。'], '檢測結果頁指的是 12 題檢測');
   eq(U.needText('L', { n: 6, kind: 'big' }), '再做 6 題對話或獨白題，就會顯示預估分數。');
   return 'ok';
 };
@@ -85,13 +89,13 @@ T['卡片:建議改級:那一科下面一行「依目前預估，建議改成進
   assert.equal(primaries(c).length + primaries(c2).length, 0);
   return 'ok';
 };
-T['卡片:用真的資料層算出來的 View 畫(只有刷題 24 題:閱讀有數字、聽力再做 12 題、主按鈕做聽力檢測)'] = () => {
+T['卡片:用真的資料層算出來的 View 畫(只有刷題 24 題:閱讀有數字、聽力再做 20 題、主按鈕做聽力檢測)'] = () => {
   const fa = { v: 1, i: {} };
   Object.keys(P.b).filter((k) => /^p5-/.test(k)).slice(0, 16).forEach((k, i) => { fa.i[k] = [E.dayNum(NOW) - 1, i % 3 ? 1 : 0, 'p']; });
   Object.keys(P.b).filter((k) => /^p7-/.test(k)).slice(0, 8).forEach((k, i) => { fa.i[k] = [E.dayNum(NOW) - 1, i % 2, 'p']; });
   const v = S.peek({ store: K.fakeStore({ fa_v1: fa }), cloud: null, params: P, now: NOW, profile: CPID, canWrite: () => true });
   const c = U.card({ view: v }).el;
-  eq([all(c, '.est-need').map(txt), primaries(c).map(txt), all(c, '.est-meta').map(txt)], [['再做 12 題聽力，就會顯示預估分數。'], ['做聽力檢測'], ['根據 24 題 · ' + U.dateText(AT)]]);
+  eq([all(c, '.est-need').map(txt), primaries(c).map(txt), all(c, '.est-meta').map(txt)], [['再做 20 題聽力，就會顯示預估分數。'], ['做聽力檢測'], ['根據 24 題 · ' + U.dateText(AT)]]);
   return parts(all(c, '.est-row')[1]);
 };
 

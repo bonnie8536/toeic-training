@@ -74,7 +74,7 @@ const EST_FILES = ['js/estimate-core.js', 'js/estimate-data.js', 'js/estimate-st
   'data/item-params.js', 'tools/build-item-params.js', 'tools/estimate_kit.js', 'tools/test_estimate.js', 'tools/test_item_params.js',
   'tools/test_estimate_store.js', 'tools/test_estimate_ui.js',
   /* 接上各頁的檔:檢測頁、練習的第一次作答、預估卡、課程前測與模擬考的測試 */
-  'js/placement.js', 'js/placement-views.js', 'css/placement.css', 'js/practice-fa.js', 'js/estimate-cards.js',
+  'js/placement.js', 'js/placement-views.js', 'css/placement.css', 'js/practice-fa.js', 'js/estimate-cards.js', 'js/estimate-boot.js',
   'tools/placement_kit.js', 'tools/test_placement.js', 'tools/e2e_placement.js', 'tools/test_estimate_practice.js', 'tools/test_estimate_cards.js',
   'tools/onboard_est_cases.js', 'tools/test_onboard_e2e.js', 'tools/test_estimate_course.js', 'tools/test_mock_score.js', 'tools/test_placement_e2e.js'];
 /* 公開 repo 不寫的字(寫成 \u 跳脫,這支檔自己也不出現):人名以外的內部用語、repo 外的路徑 */

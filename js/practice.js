@@ -209,16 +209,6 @@
       const panel = document.getElementById('wrongbook');
       if (panel) panel.hidden = !wbRowsBox.childElementCount;
     });
-    /* practice.html#wrongbook(從錯題本、模擬考結果連過來):面板是 JS 畫的,瀏覽器自己不會捲過去。頂欄是固定的(sticky),要扣掉它的高度(.me-sec 的 scroll-margin-top 同一個意思);桌機一列、手機兩列、更窄還會更高,照實際高度算 */
-    if (location.hash === '#wrongbook') {
-      const panel = document.getElementById('wrongbook');
-      if (panel && !panel.hidden) setTimeout(() => {
-        const bar = document.querySelector('.topbar');
-        panel.style.scrollMarginTop = (bar ? Math.ceil(bar.getBoundingClientRect().height) : 0) + 14 + 'px';
-        panel.scrollIntoView({ block: 'start' });
-      }, 0);
-    }
-
     /* 聽力隨機練習面板 */
     if (window.LISTEN) {
       const lrows = ['1', '2', '3', '4'].map(p => {
@@ -236,7 +226,7 @@
           h('span', { class: 'cfg-done' }, '已作答 ' + s.answered + ' / ' + s.total));
         return { p, cb, sel, row };
       });
-      panels.append(h('div', { class: 'practice-panel listen-panel' },
+      panels.append(h('div', { class: 'practice-panel listen-panel', id: 'listen' },
         h('h2', null, '聽力隨機練習'),
         h('div', { class: 'cfg-rows' }, lrows.map(r => r.row)),
         h('button', {
@@ -249,6 +239,15 @@
             window.scrollTo(0, 0);
           },
         }, '開始')));
+    }
+    /* practice.html#wrongbook(從錯題本、模擬考結果連過來)、#listen(預估分數卡的「再做 N 題聽力」):面板是 JS 畫的,瀏覽器自己不會捲過去。頂欄是固定的(sticky),要扣掉它的高度(.me-sec 的 scroll-margin-top 同一個意思);桌機一列、手機兩列、更窄還會更高,照實際高度算 */
+    if (location.hash === '#wrongbook' || location.hash === '#listen') {
+      const panel = document.getElementById(location.hash.slice(1));
+      if (panel && !panel.hidden) setTimeout(() => {
+        const bar = document.querySelector('.topbar');
+        panel.style.scrollMarginTop = (bar ? Math.ceil(bar.getBoundingClientRect().height) : 0) + 14 + 'px';
+        panel.scrollIntoView({ block: 'start' });
+      }, 0);
     }
     if (window.UI) UI.doodle(root);
   }

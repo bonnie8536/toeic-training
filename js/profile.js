@@ -58,18 +58,8 @@
   }
   function clearNotice() { const box = document.querySelector('.me-msg'); if (box) { box.replaceChildren(); box.classList.remove('bad'); } }
 
-  /* 預估多益分數卡(js/estimate-cards.js;帳號區與本機學生檔案共用):先放一個空的位置,卡片自己畫進去。估分的檔沒載到回 null。
-     改級之後重畫「學習設定」那一區(js/onboard-ui.js),程度那一列跟著換 */
-  function estimateSlot() {
-    if (!window.ESTIMATE_CARDS) return null;
-    const slot = h('div', { class: 'me-est' });
-    const relist = () => {
-      const old = document.getElementById('learning-settings');
-      const next = old && window.ONBOARD_UI ? ONBOARD_UI.settingsSection() : null;
-      if (old && next) old.replaceWith(next);
-    };
-    return ESTIMATE_CARDS.mount(slot, { suggest: true, onLevel: relist }) ? slot : null;
-  }
+  /* 預估多益分數卡(js/estimate-cards.js 的 meSlot;帳號區與本機學生檔案共用)。估分的檔沒載到回 null */
+  function estimateSlot() { return window.ESTIMATE_CARDS ? ESTIMATE_CARDS.meSlot() : null; }
 
   /* <html class="authed">:首頁靠它決定畫已登入還是未登入的版面。index.html 的開機程式先照本機紀錄加,這裡確認後校正 */
   function markAuthed(on) { try { document.documentElement.classList.toggle('authed', !!on); } catch (e) { /* 只是版面 */ } }

@@ -4,12 +4,17 @@
    再來 js/profile.js、js/analysis.js。補回舊 28 題要 data/diagnostic.js(兩頁都載,兩頁的數字才一樣)。
    · 先用本機資料畫(ESTIMATE_STORE.peek,不寫),雲端準備好後再讀雲端合併、重算(ESTIMATE_STORE.load),畫第二次。
    · 「再做 N 題」連到練習頁:只有用得到練習頁的人(收費畫面沒開,或使用權沒被鎖)才加連結。
+     聽力連到題庫頁的聽力練習(practice.html#listen,js/listening.js 的 LISTEN,作答會算進預估);
+     listening.html 是「聽力訓練」(js/ear.js),不算進預估,不連那裡。
    · 建議改級(opt.suggest 為真時才有):文字按鈕,有課程進度先確認;按了才改 levels(ONBOARD_DATA.applyEst),來源與理由記 est。
    · 不刪、不蓋作答紀錄與舊檢測結果:寫入只有 ESTIMATE_STORE 自己補的鍵,和按了改級之後的 levels。
 
    對外的函式:
    · mount(slot, opt) → { repaint() } | null:在 slot(一個空的元素)裡畫卡片。估分的檔沒載到回 null,slot 保持空的。
-       opt = { suggest(要不要有建議改級), onLevel(sec, level)(改級寫好之後呼叫) }
+       opt = { suggest(要不要有建議改級), onLevel(sec, level)(改級寫好之後呼叫),
+               solid(檢測按鈕要不要實色,預設 true;頁面上已經有別的實色主按鈕時給 false) }
+   · meSlot() → 元素 | null:「我的」頁(帳號區與本機學生檔案)用:一個放卡片的位置,有建議改級、檢測按鈕是描邊按鈕
+       (「我的」頁的實色主按鈕留給小雞卡);改級之後重畫「學習設定」那一區。估分的檔沒載到回 null。
    · hasCourse() → boolean:這個學生有沒有課程進度(有課程的 plan、上過任何一堂,或做過課程前測)。
    · practiceLinks() → { L, R } | null
    · writeLevel(sec, level) → 'ok' | 'blocked' | 'failed'
@@ -51,7 +56,7 @@
         if (P.decide(C.access, { paidUi: true, locked, page: 'paid' })) return null;
       } catch (e) { return null; }
     }
-    return { L: 'listening.html', R: 'practice.html' };
+    return { L: 'practice.html#listen', R: 'practice.html' };
   }
 
   /* ---------- 改級 ---------- */
@@ -87,7 +92,7 @@
     const course = hasCourse();
     function paint() {
       const next = U.card({
-        view: view || { ok: false }, testHref: 'placement.html', practice: practiceLinks(),
+        view: view || { ok: false }, testHref: 'placement.html', practice: practiceLinks(), solid: o.solid,
         suggest: suggestFor(view, o), hasCourse: course, onLevel,
       });
       if (card) card.destroy();
@@ -104,6 +109,18 @@
     paint();
     later().then(() => S.load()).then((v) => { if (v) { view = v; paint(); } }, () => { /* 讀不到雲端:留著本機畫的那一張 */ });
     return { repaint: paint };
+  }
+  /* 改級之後重畫「學習設定」那一區(js/onboard-ui.js),程度那一列跟著換 */
+  function relist() {
+    const old = root.document.getElementById('learning-settings');
+    const next = old && root.ONBOARD_UI ? root.ONBOARD_UI.settingsSection() : null;
+    if (old && next) old.replaceWith(next);
+  }
+  function meSlot() {
+    if (!ready()) return null;
+    const slot = root.document.createElement('div');
+    slot.className = 'me-est';
+    return mount(slot, { suggest: true, solid: false, onLevel: relist }) ? slot : null;
   }
   /* 雲端模式等登入狀態與使用權確定之後再讀;本機模式直接讀 */
   function later() {
@@ -127,5 +144,5 @@
     return safe(() => root.ESTIMATE_STORE.refresh({ store: storeOf(pid), profile: pid, cloud: null, canWrite: () => true }));
   }
 
-  root.ESTIMATE_CARDS = Object.freeze({ mount, hasCourse, practiceLinks, writeLevel, afterImport });
+  root.ESTIMATE_CARDS = Object.freeze({ mount, meSlot, hasCourse, practiceLinks, writeLevel, afterImport });
 })(window);

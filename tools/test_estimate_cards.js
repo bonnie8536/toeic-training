@@ -89,6 +89,16 @@ function oldAdminSrc() {
 }
 
 const A = {};
+/* 預估卡「再做 N 題」連到的練習頁:要是會記第一次作答的那一頁(載 js/listening.js、js/practice-fa.js、js/estimate-store.js),不是聽力訓練(listening.html) */
+A['練習頁連結:聽力連 practice.html#listen(載 listening.js、practice-fa.js、estimate-store.js,有 id 是 listen 的面板),閱讀連 practice.html'] = async () => {
+  const src = read('js/estimate-cards.js');
+  const m = /return { L: '([^']+)', R: '([^']+)' };/.exec(src);
+  const pageOf = (href) => href.split('#')[0];
+  const loads = (href) => ['js/listening.js', 'js/practice-fa.js', 'js/estimate-store.js'].every((f) => read(pageOf(href)).indexOf('<script src="' + f + '"') > -1);
+  const anchor = /class: 'practice-panel listen-panel', id: 'listen'/.test(read('js/practice.js')) && /location.hash === '#listen'/.test(read('js/practice.js'));
+  const ok = !!m && m[1] === 'practice.html#listen' && m[2] === 'practice.html' && loads(m[1]) && loads(m[2]) && anchor && read('listening.html').indexOf('js/practice-fa.js') < 0;
+  return { ok, detail: J(m && m.slice(1)) + ' anchor=' + anchor };
+};
 A['後台:有預估快照的學生「檢測結果」那一格寫「聽力 345／閱讀 290（預估 · 日期）」,展開列寫範圍與根據幾題、本站估計'] = async () => {
   const rows = [meta(S(1), '小安'), row(S(1), 'est_v1', SNAP(AT, [345, 300, 390, 100], [290, 245, 335, 86])), row(S(1), 'diag', oldDiag())];
   const { root } = await openAdmin(rows);
@@ -246,9 +256,11 @@ async function shot(p, name) {
 const CARD = `(() => { const c = document.querySelector('.est-card'); if (!c) return null; const t = (e) => e.textContent.replace(/\\s+/g, ' ').trim();
   return { rows: [...c.querySelectorAll('.est-row')].map(t), total: [...c.querySelectorAll('.est-total')].map(t), meta: [...c.querySelectorAll('.est-meta')].map(t),
     note: [...c.querySelectorAll('.est-note')].map(t), suggest: [...c.querySelectorAll('.est-suggest')].map(t),
-    primary: [...c.querySelectorAll('.btn.primary')].map((b) => t(b) + '>' + b.getAttribute('href')), links: [...c.querySelectorAll('.est-need a')].map((a) => a.getAttribute('href')) }; })()`;
+    primary: [...c.querySelectorAll('.btn.primary')].map((b) => t(b) + '>' + b.getAttribute('href')), go: [...c.querySelectorAll('.est-go')].map((b) => t(b) + '>' + b.getAttribute('href')), links: [...c.querySelectorAll('.est-need a')].map((a) => a.getAttribute('href')) }; })()`;
 /* 整頁看得到的實色主按鈕(不含頂欄與小雞卡:小雞卡是另一個功能,有自己的按鈕) */
 const PRIMARIES = "[...document.querySelectorAll('main .btn.primary')].filter((b) => b.offsetParent !== null && !b.closest('.pet-card')).map((b) => b.textContent.trim())";
+/* 整頁看得到的實色主按鈕,含小雞卡(每個畫面最多一顆) */
+const ALL_PRIMARIES = "[...document.querySelectorAll('.btn.primary')].filter((b) => b.offsetParent !== null).map((b) => b.textContent.trim())";
 const MAIN_TEXT = "(document.querySelector('main') || document.body).textContent";
 async function seedCloud(c, u, keys) { Object.keys(keys).forEach((k) => c.put(u.id, k, keys[k], isoAgo(1))); }
 async function cardOn(p, url) {
@@ -268,18 +280,19 @@ async function both(n, keys, more) {
   const me = await cardOn(p, 'me.html');
   const meOk = await noBad(p);
   const meBtns = await p.eval(PRIMARIES);
+  const meAll = await p.eval(ALL_PRIMARIES);
   if (more && more.me) await more.me(p);
   const an = await cardOn(p, 'analysis.html');
   const anOk = await noBad(p);
   const anBtns = await p.eval(PRIMARIES);
   if (more && more.an) await more.an(p);
-  const out = { me, an, clean: meOk && anOk, meBtns, anBtns, errors: p.errors.slice(), p, c, u };
+  const out = { me, an, clean: meOk && anOk, meBtns, meAll, anBtns, errors: p.errors.slice(), p, c, u };
   return out;
 }
 const sameNumbers = (r) => J(r.me.rows) === J(r.an.rows) && J(r.me.total) === J(r.an.total) && J(r.me.meta) === J(r.an.meta);
 
 const T = {};
-T['只有舊 28 題:兩頁同一張卡;閱讀有數字、聽力「再做 12 題聽力」、主按鈕「做聽力檢測」;補回的作答記成來源 g,舊結果不動'] = async () => {
+T['只有舊 28 題:兩頁同一張卡;閱讀有數字、聽力「再做 20 題聽力」、檢測按鈕「做聽力檢測」(能力分析頁實色、「我的」頁描邊,整頁最多一顆實色);補回的作答記成來源 g,舊結果不動'] = async () => {
   const diag = oldDiag();
   const x = expectOf({ diag });
   const r = await both(21, { diag }, { me: (p) => shot(p, 'c1_old28_me') });
@@ -287,26 +300,28 @@ T['只有舊 28 題:兩頁同一張卡;閱讀有數字、聽力「再做 12 題�
   const diagAfter = await r.p.eval("store.get('diag', null)");
   const gN = fa ? Object.values(fa.i).filter((e) => e[2] === 'g').length : 0;
   await r.p.close();
-  const ok = sameNumbers(r) && r.me.rows[0] === '聽力再做 12 題聽力，就會顯示預估分數。' && r.me.rows[1].startsWith('閱讀 ' + scoreOf(x.R))
-    && J(r.me.primary) === J(['做聽力檢測>placement.html?sec=L']) && r.me.total.length === 0 && gN === 28 && J(diagAfter) === J(diag)
-    && r.clean && !r.errors.length && J(r.meBtns) === J(['做聽力檢測']);
-  return { ok, detail: J(r.me) + ' g=' + gN + ' same=' + sameNumbers(r) + ' diag=' + (J(diagAfter) === J(diag)) + ' clean=' + r.clean + ' btns=' + J(r.meBtns) + ' 錯誤 ' + J(r.errors).slice(0, 200) };
+  const ok = sameNumbers(r) && r.me.rows[0] === '聽力再做 20 題聽力，就會顯示預估分數。' && r.me.rows[1].startsWith('閱讀 ' + scoreOf(x.R))
+    && J(r.me.go) === J(['做聽力檢測>placement.html?sec=L']) && J(r.me.primary) === '[]' && J(r.an.primary) === J(['做聽力檢測>placement.html?sec=L'])
+    && r.me.total.length === 0 && gN === 28 && J(diagAfter) === J(diag)
+    && r.clean && !r.errors.length && r.meBtns.length === 0 && r.meAll.length <= 1 && J(r.anBtns) === J(['做聽力檢測']);
+  return { ok, detail: J(r.me) + ' g=' + gN + ' same=' + sameNumbers(r) + ' diag=' + (J(diagAfter) === J(diag)) + ' clean=' + r.clean + ' btns=' + J(r.meBtns) + ' all=' + J(r.meAll) + ' 錯誤 ' + J(r.errors).slice(0, 200) };
 };
-T['只有練習紀錄(24 題 Part 5):閱讀有數字、聽力「再做 12 題聽力」;兩頁一樣;練習頁連結在「再做 N 題」'] = async () => {
+T['只有練習紀錄(24 題 Part 5):閱讀有數字、聽力「再做 20 題聽力」;兩頁一樣;「再做 N 題」連到題庫頁的聽力練習'] = async () => {
   const hist = practiceHist();
   const x = expectOf({ hist });
   const r = await both(22, { hist });
   await r.p.close();
   const ok = sameNumbers(r) && r.me.rows[1].startsWith('閱讀 ' + scoreOf(x.R)) && /^聽力再做 \d+ 題聽力/.test(r.me.rows[0])
-    && J(r.me.links) === J(['listening.html']) && r.clean && !r.errors.length;
+    && J(r.me.links) === J(['practice.html#listen']) && J(r.an.links) === J(['practice.html#listen']) && r.clean && !r.errors.length;
   return { ok, detail: J(r.me) };
 };
-T['什麼都沒有:卡片只有標題與一顆主按鈕「做程度檢測」;能力分析頁其他按鈕不是實色(整頁一顆主按鈕)'] = async () => {
+T['什麼都沒有:卡片只有標題與一顆檢測按鈕「做程度檢測」;能力分析頁是實色(整頁一顆主按鈕)、「我的」頁是描邊(整頁最多一顆實色)'] = async () => {
   const r = await both(23, {}, { an: (p) => shot(p, 'c3_none_analysis') });
   await r.p.close();
-  const ok = r.me.rows.length === 0 && r.me.note.length === 0 && J(r.me.primary) === J(['做程度檢測>placement.html']) && J(r.an) === J(r.me)
-    && J(r.anBtns) === J(['做程度檢測']) && r.clean && !r.errors.length;
-  return { ok, detail: J(r.me) + ' 能力分析主按鈕 ' + J(r.anBtns) };
+  const ok = r.me.rows.length === 0 && r.me.note.length === 0 && J(r.me.go) === J(['做程度檢測>placement.html']) && J(r.me.primary) === '[]'
+    && J(r.an.primary) === J(['做程度檢測>placement.html']) && J(r.an.go) === J(r.me.go) && J(r.an.rows) === J(r.me.rows)
+    && J(r.anBtns) === J(['做程度檢測']) && r.meAll.length <= 1 && r.clean && !r.errors.length;
+  return { ok, detail: J(r.me) + ' 能力分析主按鈕 ' + J(r.anBtns) + ' 我的整頁 ' + J(r.meAll) };
 };
 T['建議改級(有課程進度):個人頁有提示與文字按鈕、能力分析頁沒有;按了先確認,取消不改,確定才改 levels(來源與理由記 est)'] = async () => {
   const fa = richFa();
@@ -425,6 +440,21 @@ T['教師後台(頁面):有預估快照的學生寫預估、沒有的照舊;展�
   const ok = cells[0] === '聽力 345／閱讀 290（預估 · ' + dayText(AT) + '）' && /^\d+\/28 · /.test(cells[1]) && cells[2] === '未檢測'
     && det.includes('預估分數（') && det.includes('本站估計，不是正式成績。') && det.includes('檢測(') && clean && !errs.length;
   return { ok, detail: J(cells) + ' 錯誤 ' + J(errs).slice(0, 200) };
+};
+
+T['舊 28 題頁(diagnostic.html):只有舊卷結果的學生直接打開,舊卷的 28 題先抄進第一次作答(來源 g),舊卷不動(之後「再測一次」刪掉舊卷,作答也還在第一次作答紀錄裡)'] = async () => {
+  const c = STUB.createCloud();
+  SV.cloud = c; SV.local = false;
+  const u = user(41, '學生41');
+  const diag = oldDiag();
+  await seedCloud(c, u, { onboard: ONBOARD, diag });
+  const p = await tab(u);
+  await p.go('diagnostic.html');
+  await p.wait("(() => { const f = store.get('fa_v1', null); return !!f && Object.values(f.i).filter((e) => e[2] === 'g').length === 28; })()", '補回舊 28 題');
+  const diagAfter = await p.eval("store.get('diag', null)");
+  const errs = p.errors.slice();
+  await p.close();
+  return { ok: J(diagAfter) === J(diag) && !errs.length, detail: 'diag 沒動 ' + (J(diagAfter) === J(diag)) + ' 錯誤 ' + J(errs).slice(0, 200) };
 };
 
 /* ---------- 跑 ---------- */

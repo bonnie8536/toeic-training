@@ -8,16 +8,17 @@
    · levelName(level) → '入門' | '門檻' | '進階' | '高分'(認不得回 '')
    · scoreText(v) → '345' | '150 以下' | '450 以上':v 是 View.L 或 View.R(要 show 是 true)。
    · rangeText(v) → '300–390';兩端(150 以下、450 以上)回 ''。
-   · needText(sec, need) → '再做 8 題聽力，就會顯示預估分數。':need 是 View.L.need({ n, kind: 'any' | 'big' })。
-     kind 'any' 的題數最多寫 12(做完那一科的 12 題檢測就會顯示)。
+   · needText(sec, need, opt) → '再做 8 題聽力，就會顯示預估分數。':need 是 View.L.need({ n, kind: 'any' | 'big' })。
+     題數照實寫(題數不夠時是 20 − 已做的計分題數)。opt.test 為真時(檢測結果頁,指的是做那一科的 12 題檢測)kind 'any' 最多寫 12。
    · dateText(iso) → '11 月 25 日'(本機日期;壞掉回 '')
    · scale(sec, v, opt) → 節點:一科一條 5–495 的刻度尺,範圍塗色;兩端畫 5–150 或 450–495 那一段。opt.ticks:要不要刻度數字(預設 true)。
    · card(opt) → { el, destroy }:個人頁、能力分析頁共用的「預估多益分數」卡。
        opt = { view(View), testHref('placement.html'), practice({ L: 聽力練習網址, R: 刷題網址 },有使用權才給,「再做 N 題」那一行變成連結),
                suggest([{ sec, level }],ESTIMATE_STORE.suggestions 的回傳), hasCourse(有課程進度:改級前先確認),
                onLevel(sec, level)(按了「改成…」而且確認之後呼叫;可以回 Promise) }
-       某一科還不夠時才有一顆實色主按鈕:兩科都不夠「做程度檢測」、只差聽力「做聽力檢測」、只差閱讀「做閱讀檢測」(連到 testHref?sec=L|R)。
-       view.ok 是 false 或還沒有任何數字時,卡片只有標題與一顆主按鈕「做程度檢測」。
+       某一科還不夠時才有一顆檢測按鈕:兩科都不夠「做程度檢測」、只差聽力「做聽力檢測」、只差閱讀「做閱讀檢測」(連到 testHref?sec=L|R)。
+       opt.solid(預設 true):檢測按鈕是實色主按鈕;頁面上已經有別的實色主按鈕時(「我的」頁)給 false,改成描邊按鈕。
+       view.ok 是 false 或還沒有任何數字時,卡片只有標題與那一顆檢測按鈕「做程度檢測」。
    · result(opt) → UI.result 的回傳(多一個 extra 節點)| null:檢測結果頁的分數區塊。
        opt = { view, primary, links(同 UI.result),earnId(同 UI.result),compact、inline(同 UI.result) }
        有總分:小標「預估總分」、大字總分、兩科數字;沒有總分:小標「預估分數」、大字寫有數字的那幾科。
@@ -77,9 +78,11 @@
     return v.kind === 'low' ? STR.low : v.kind === 'high' ? STR.high : String(v.est);
   }
   function rangeText(v) { return v && v.show && v.kind === 'num' && fin(v.lo) && fin(v.hi) ? v.lo + '–' + v.hi : ''; }
-  function needText(sec, need) {
+  function needText(sec, need, opt) {
+    const test = !!(opt && opt.test);
     const n = need && Number.isInteger(need.n) && need.n > 0 ? need.n : TEST_MAX;
-    return need && need.kind === 'big' ? STR.needBig(sec, n) : STR.need(sec, Math.min(n, TEST_MAX));
+    if (need && need.kind === 'big') return STR.needBig(sec, n);
+    return STR.need(sec, test ? Math.min(n, TEST_MAX) : n);
   }
   function dateText(iso) {
     const t = Date.parse(iso);
@@ -142,13 +145,14 @@
       el('span', 'est-range', rangeText(v)),
     ]);
   }
-  function testAction(view, href) {
+  function testAction(view, href, solid) {
     const L = view.ok && view.L && view.L.show, R = view.ok && view.R && view.R.show;
     if (L && R) return null;
     const base = typeof href === 'string' && href ? href : 'placement.html';
     const join = base.indexOf('?') > -1 ? '&' : '?';
-    if (!L && !R) return el('a', 'btn primary est-go', STR.testBoth, { href: base });
-    return el('a', 'btn primary est-go', L ? STR.testR : STR.testL, { href: base + join + 'sec=' + (L ? 'R' : 'L') });
+    const cls = solid === false ? 'btn est-go' : 'btn primary est-go';
+    if (!L && !R) return el('a', cls, STR.testBoth, { href: base });
+    return el('a', cls, L ? STR.testR : STR.testL, { href: base + join + 'sec=' + (L ? 'R' : 'L') });
   }
   function card(opt) {
     const o = opt || {};
@@ -166,7 +170,7 @@
       kids.push(el('p', 'est-meta', STR.basis(n, dateText(view.at))));
       kids.push(el('p', 'est-note', STR.note));
     }
-    kids.push(testAction(view, o.testHref));
+    kids.push(testAction(view, o.testHref, o.solid));
     const box = el('section', 'est-card', kids);
     return { el: box, destroy() { box.remove(); } };
   }
@@ -185,7 +189,7 @@
     const kids = [];
     if (ranges.length) kids.push(el('p', 'est-ranges', ranges.join('　')));
     shown.forEach((s) => kids.push(el('div', 'est-scale-row', [el('span', 'est-sec', SEC_NAME[s]), scale(s, view[s])])));
-    ['L', 'R'].filter((s) => shown.indexOf(s) < 0).forEach((s) => kids.push(el('p', 'est-need', needText(s, view[s] && view[s].need))));
+    ['L', 'R'].filter((s) => shown.indexOf(s) < 0).forEach((s) => kids.push(el('p', 'est-need', needText(s, view[s] && view[s].need, { test: true }))));
     if (shown.length) kids.push(el('p', 'est-levels', STR.levels(shown.map((s) => SEC_NAME[s] + ' ' + levelName(view[s].band)))));
     if (shown.some((s) => view[s].band === 'entry')) kids.push(el('p', 'est-entry', STR.startEntry));
     return el('div', 'est-result', kids);

@@ -188,6 +188,19 @@ T['課程頁 lessons.html、lesson.html:noindex、沒有 canonical、不在 site
     assert.equal(titleOf(head(f)), '課程 - 衝衝英文', f);
   });
 };
+T['程度檢測頁 placement.html:要收錄(取代舊檢測頁的入口)、canonical 跟 og:url 一樣、進 sitemap;分頁列歸在刷刷題目、頁名「程度檢測」'] = () => {
+  const s = read('placement.html');
+  assert.ok(!NOINDEX.test(s), 'placement.html 要收錄');
+  assert.equal(canonicalOf(head('placement.html')), LIVE + '/placement.html');
+  assert.equal(meta(head('placement.html'), 'property', 'og:url'), LIVE + '/placement.html');
+  assert.equal(titleOf(head('placement.html')), '程度檢測 - 衝衝英文');
+  const d = meta(head('placement.html'), 'name', 'description');
+  assert.ok(/聽力 12 題、閱讀 12 題/.test(d) && /本站估計/.test(d) && !/準確|保證|官方|換算/.test(d), d);
+  assert.ok(read('sitemap.xml').indexOf(LIVE + '/placement.html<') > -1, 'placement.html 要進 sitemap(node tools/build_sitemap.js)');
+  const shell = read('js/app-shell.js');
+  assert.ok(/key: 'drill'[^\n]*'placement\.html'/.test(shell), '分頁列刷刷題目沒有 placement.html');
+  assert.ok(/'placement\.html': '程度檢測'/.test(shell), '頂欄頁名');
+};
 
 T['noindex 的頁不寫 canonical(訊號互相矛盾);轉址用的 tenses、verbs 指向文法頁裡的同一張表'] = () => {
   PAGES.filter((f) => NOINDEX.test(read(f))).forEach((f) => {
@@ -527,11 +540,11 @@ T['首頁卡片與內頁說明寫的是真的、而且一致:錯題本只寫 js/
     assert.ok(cards.get(f).indexOf(names.length + ' 種') === 0, '首頁「' + f + '」磚寫的玩法數跟頁上的 ' + names.length + ' 種不一樣:' + cards.get(f));
   });
 };
-T['頂欄與分組頁:23 頁的頂欄是同一份(首頁加三個分組連結),目前頁亮的是歸屬那一格,我的、學習記錄、能力分析、教師後台都不亮;新頁登記在分頁列、開機清單、版面檢查;「每日複習」改成「錯題本」'] = () => {
+T['頂欄與分組頁:24 頁的頂欄是同一份(首頁加三個分組連結),目前頁亮的是歸屬那一格,我的、學習記錄、能力分析、教師後台都不亮;新頁登記在分頁列、開機清單、版面檢查;「每日複習」改成「錯題本」'] = () => {
   const NAV = /<nav class="topnav" aria-label="主要導覽">[\s\S]*?<\/nav>/;
   const plain = (n) => n.replace(/\r/g, '').replace(/ class="active" aria-current="page"/g, '').replace(/ active/g, '').replace(/ aria-current="(page|true)"/g, '');
   const withNav = PAGES.filter((f) => /class="topnav"/.test(read(f)));
-  assert.equal(withNav.length, 23, '有導覽的頁數:' + withNav.length);
+  assert.equal(withNav.length, 24, '有導覽的頁數:' + withNav.length);
   const base = plain(NAV.exec(read('index.html'))[0]);
   const GROUPS = { 'learn.html': ['grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'], 'warmup.html': ['vocab.html', 'listening.html', 'writing.html', 'grammar.html?ref=verbs'],
     'drill.html': ['practice.html', 'mock.html', 'diagnostic.html', 'review.html'] };
@@ -547,7 +560,7 @@ T['頂欄與分組頁:23 頁的頂欄是同一份(首頁加三個分組連結),�
   });
   /* 目前頁亮哪一格:每一頁屬於哪一格的歸屬表 */
   const OWNER = { home: ['index.html', 'daily.html', 'start.html', 'lessons.html', 'lesson.html'], 'learn.html': ['learn.html', 'grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'],
-    'warmup.html': ['warmup.html', 'vocab.html', 'listening.html', 'writing.html'], 'drill.html': ['drill.html', 'practice.html', 'mock.html', 'diagnostic.html', 'review.html'],
+    'warmup.html': ['warmup.html', 'vocab.html', 'listening.html', 'writing.html'], 'drill.html': ['drill.html', 'practice.html', 'mock.html', 'diagnostic.html', 'placement.html', 'review.html'],
     none: ['me.html', 'history.html', 'analysis.html', 'admin.html'] };
   const all = Object.keys(OWNER).reduce((a, k) => a.concat(OWNER[k]), []);
   assert.deepEqual(all.slice().sort(), withNav.slice().sort(), '歸屬表要剛好涵蓋有導覽的頁');

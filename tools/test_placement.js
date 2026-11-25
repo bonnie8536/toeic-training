@@ -318,18 +318,132 @@ T['級別:沒設定過照預估寫(來源 est);有課程進度且已設定過不
   assert.strictEqual(curUnit(rf).part, '5', '從新用戶設定按「沒有耳機，先做閱讀」:直接從閱讀開始');
 };
 
-T['訪客:按開始不建立檢測;沒網路時兩科都做的先做閱讀、只做聽力的不開始'] = async () => {
+T['訪客:按開始不建立檢測;沒網路時聽力不開始(兩科都做的留在開始頁,要自己按「先做閱讀」)'] = async () => {
   const g = env({ pid: null });
   await start(g);
   assert.ok(g.box.querySelector('.pl-intro'));
   assert.strictEqual(g.ls.has('tr_placement_v1'), false);
   const off = env({ online: false });
   await start(off);
-  assert.strictEqual(curUnit(off).part, '5');
+  assert.strictEqual(curUnit(off), null, '兩科都做:不自己換成閱讀');
+  assert.strictEqual(txt(off.box.querySelector('.pl-note')), '連上網路才能做聽力。');
   const l = env({ online: false, search: '?sec=L' });
   await start(l);
   assert.strictEqual(txt(l.box.querySelector('.pl-note')), '連上網路才能做聽力。');
   assert.strictEqual(curUnit(l), null);
+};
+
+/* ---------- 選題的細節、沒有結果、離線、只有舊卷、焦點、聽力先播 ---------- */
+/* 換掉 ESTIMATE 的 pickUnit,記下每一格選題時用的能力值 */
+function spyPick(e) {
+  const orig = e.ctx.ESTIMATE, calls = [];
+  e.ctx.ESTIMATE = Object.assign({}, orig, { pickUnit: (o) => { calls.push({ theta: o.theta, ids: o.units.map((u) => u.id) }); return orig.pickUnit(o); } });
+  return calls;
+}
+T['選題:每一科第一格用「目前能力 − 0.5」,第二格起用目前能力(含這次已答的題)'] = async () => {
+  const e = env();
+  const calls = spyPick(e);
+  await start(e, '沒有耳機，先做閱讀');
+  const E = e.E, P = e.ctx.ITEM_PARAMS, day = E.dayNum(K.NOW);
+  const th0 = E.estimate(P, 'R', { fa: { v: 1, i: {} }, today: day }).theta;
+  assert.ok(Math.abs(calls[0].theta - (th0 - 0.5)) < 1e-9, '第一格 ' + calls[0].theta + ',目前能力 ' + th0);
+  doSlot(e, 'right'); await flush();
+  const th1 = E.estimate(P, 'R', { fa: e.get('fa_v1'), today: day }).theta;
+  assert.ok(Math.abs(calls[calls.length - 1].theta - th1) < 1e-9, '第二格不減 0.5');
+  return '第一格 ' + calls[0].theta.toFixed(2) + ',目前能力 ' + th0.toFixed(2);
+};
+T['選題:第一次作答紀錄寫不進去(更新版的格式,唯讀)時,這次出過的題照樣不再出'] = async () => {
+  const ls = new Map([['tr_u' + K.PID + '_fa_v1', JSON.stringify({ v: 2, i: {} })]]);
+  const e = env({ ls });
+  const calls = spyPick(e);
+  await start(e, '沒有耳機，先做閱讀');
+  const R = await doSection(e, 'right');
+  const ids = R.map((x) => x.id);
+  assert.strictEqual(new Set(ids).size, ids.length, '重出 ' + ids.join(','));
+  calls.forEach((c, i) => ids.slice(0, i).forEach((id) => assert.ok(c.ids.indexOf(id) < 0, '第 ' + (i + 1) + ' 格的候選還有 ' + id)));
+  assert.deepStrictEqual(e.get('fa_v1'), { v: 2, i: {} }, '更新版的格式不蓋掉');
+  return ids.length + ' 格';
+};
+T['新用戶設定以外做檢測:沒有設定、按過「不用了」的人,onboard 不新建、不復活;進行中的照舊記來源'] = async () => {
+  const ob = (o) => { const ls = new Map(); if (o) ls.set('tr_u' + K.PID + '_onboard', JSON.stringify(o)); return ls; };
+  const none = env({ onboard: true, ls: ob(null) });
+  await fullRun(none, 'right');
+  assert.ok(none.get('levels'), '級別照寫');
+  assert.strictEqual(none.get('onboard'), undefined, '沒有設定的不新建');
+  const gone = { v: 1, status: 'dismissed', step: null, path: null, updatedAt: '2026-11-01T00:00:00.000Z' };
+  const d = env({ onboard: true, ls: ob(gone) });
+  await fullRun(d, 'right');
+  assert.deepStrictEqual(d.get('onboard'), gone, '不用了的不復活');
+  assert.strictEqual(d.ctx.ONBOARD_DATA.applyManual('entry', 'high'), 'ok');
+  assert.deepStrictEqual(d.get('onboard'), gone, '改級別也不復活');
+  const live = { v: 1, status: 'done', step: 'result', path: 'self', levelSource: 'score', updatedAt: '2026-11-01T00:00:00.000Z' };
+  const l = env({ onboard: true, ls: ob(live) });
+  assert.strictEqual(l.ctx.ONBOARD_DATA.applyEst({ listening: 'advanced', reading: 'advanced', source: { listening: 'est', reading: 'est' } }), 'ok');
+  assert.deepStrictEqual([l.get('onboard').status, l.get('onboard').levelSource], ['done', 'est']);
+};
+T['看最近一次結果(?view=last):沒有做完的檢測是「還沒有檢測結果」;只挑做完的那次;訪客沒有「改級別」'] = async () => {
+  const g = env({ pid: null, search: '?view=last' });
+  await flush(40);
+  assert.strictEqual(txt(g.box.querySelector('.ui-empty-text')), '還沒有檢測結果');
+  assert.ok(!g.box.querySelector('.result-card'));
+  const ls = new Map();
+  const e = env({ ls });
+  await fullRun(e, 'right');
+  const done = lastRun(e).at;
+  const half = env({ ls, now: K.NOW + HOUR, search: '?sec=R' });
+  await start(half);
+  doSlot(half, 'wrong'); await flush();
+  const last = env({ ls, now: K.NOW + 2 * HOUR, search: '?view=last' });
+  await flush(40);
+  assert.ok(last.box.querySelector('.result-card'), '有做完的那次');
+  assert.strictEqual(all(last.box, '.pl-review .explain').length, 24, '看作答是做完的那次(' + done + ')');
+  const empty = env({ search: '?view=last' });
+  await flush(40);
+  assert.strictEqual(txt(empty.box.querySelector('.ui-empty-text')), '還沒有檢測結果', '空帳號');
+};
+T['離線按開始:留在開始頁寫「連上網路才能做聽力。」,不自己換成閱讀;按「沒有耳機，先做閱讀」才從閱讀開始'] = async () => {
+  const off = env({ online: false });
+  await start(off);
+  assert.ok(off.box.querySelector('.pl-intro'));
+  assert.strictEqual(txt(off.box.querySelector('.pl-note')), '連上網路才能做聽力。');
+  assert.strictEqual(curUnit(off), null);
+  await start(off, '沒有耳機，先做閱讀');
+  assert.strictEqual(curUnit(off).part, '5');
+};
+T['只有舊卷結果的人(網址沒帶科):開始頁預設只做聽力 12 題,多一行「會跟平常練習一起算。」'] = async () => {
+  const ls = new Map([['tr_u' + K.PID + '_diag', JSON.stringify({ done: true, answers: { 0: 1 }, startedAt: '2026-10-01T00:00:00.000Z', finishedAt: '2026-10-01T00:20:00.000Z' })]]);
+  const e = env({ onboard: true, ls });
+  const tags = all(e.box, '.mock-tag').map(txt);
+  assert.deepStrictEqual(tags, ['聽力 12 題']);
+  assert.ok(/會跟平常練習一起算。/.test(txt(e.box)));
+  await start(e);
+  assert.strictEqual(curUnit(e).part, '1');
+  assert.strictEqual(lastRun(e).sec, 'L');
+  const both = env({ onboard: true, ls: new Map([...ls].filter(([k]) => /_diag$/.test(k))), search: '?sec=R' });
+  assert.deepStrictEqual(all(both.box, '.mock-tag').map(txt), ['閱讀 12 題'], '網址帶了科就照網址');
+};
+T['焦點:做完最後一題,焦點移到結果卡的標題;按「看作答」焦點移到展開的那一塊'] = async () => {
+  const e = env();
+  await fullRun(e, 'right');
+  const head = e.box.querySelector('.result-card .result-score');
+  assert.strictEqual(e.dom.activeElement, head, '焦點在 ' + (e.dom.activeElement && e.dom.activeElement.className));
+  assert.strictEqual(head.getAttribute('tabindex'), '-1');
+  clickText(e.box.querySelector('.result-card'), '看作答');
+  assert.strictEqual(e.dom.activeElement, e.box.querySelector('.pl-review summary'));
+};
+T['聽力 Part 1、2:還沒按播放就選了答案,「下一題」不能按;開始播放後才能按'] = async () => {
+  const e = env();
+  await start(e);
+  assert.strictEqual(curUnit(e).part, '1');
+  pickAll(e, 'right');
+  assert.strictEqual(nextBtn(e).disabled, true, '沒播不能送出');
+  const n0 = lastRun(e).items.length;
+  nextBtn(e).click(); await flush();
+  assert.strictEqual(lastRun(e).items.length, n0);
+  e.box.querySelector('.pl-play').click();
+  assert.strictEqual(nextBtn(e).disabled, false, '開始播就能送出');
+  e.audios[e.audios.length - 1].emit('ended');
+  assert.strictEqual(nextBtn(e).disabled, false);
 };
 
 /* ---------- 字串與檔案 ---------- */

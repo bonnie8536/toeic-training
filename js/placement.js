@@ -199,9 +199,11 @@
   }
 
   /* ---------- 作答 ---------- */
+  /* 聽力 Part 1、2 要先按播放才能送出(手機上誤觸選項再碰到底部按鈕,不會沒聽就計分) */
+  function heardOnce(c) { return !c.player || !SINGLE[c.unit.part] || c.player.state() !== 'idle'; }
   function complete() {
     const c = st.cur;
-    return !!c && c.phase === 'answer' && c.unit.keys.every((k, qi) => qi in c.sel);
+    return !!c && c.phase === 'answer' && heardOnce(c) && c.unit.keys.every((k, qi) => qi in c.sel);
   }
   function isLastSlot(i) {
     for (let k = i + 1; k < st.plan.slots.length; k++) if (!st.skipSlots.has(k)) return false;
@@ -222,12 +224,16 @@
     st.root.replaceChildren(V().unitView(c.unit, c.sel, onPick, { player: c.player ? c.player.el : null, phase: c.phase }));
     const btn = el('button', { class: 'btn primary pl-next', type: 'button', 'data-gate': '', disabled: !complete() }, [isLastSlot(c.i) ? STR().finish : STR().next]);
     btn.addEventListener('click', submit);
+    st.nextBtn = btn;
     st.focus.foot([btn]);
   }
   function makePlayer(u) {
     const group = u.part === '3' || u.part === '4';
     return V().player('audio/' + u.id + '.mp3', {
-      onStart: () => heardAdd(u.id),
+      onStart: () => {
+        heardAdd(u.id);
+        if (st.cur && st.cur.unit === u && st.nextBtn) st.nextBtn.disabled = !complete();
+      },
       onEnd: () => {
         if (!group || !st.cur || st.cur.unit !== u) return;
         st.cur = Object.assign({}, st.cur, { phase: 'answer', t0: Date.now() });
@@ -314,7 +320,7 @@
     const runs = isPlain(readStore('placement_v1', null)) ? readStore('placement_v1', null) : null;
     const done = S().sectionsDone(runs);
     let box = null;
-    box = V().intro({ sec: st.secParam, retest: done.L || done.R, onboard: st.onboard, note,
+    box = V().intro({ sec: st.secParam, retest: done.L || done.R || legacyDone(), onboard: st.onboard, note,
       onStart: () => begin(st.secParam === 'R' ? ['R'] : st.secParam === 'L' ? ['L'] : ['L', 'R'], box),
       onReadFirst: () => begin(['R', 'L'], box), onSkip: skipEntry });
     paint([pageHead(), box]);
@@ -323,11 +329,8 @@
   async function begin(order, box) {
     if (st.busy || !root.UI) return;
     if (S().mode() === 'guest' || held(box && box.querySelector('.pl-go'))) return;   // 訪客:開始鈕的 data-gate 先請他登入
-    let ord = order;
-    if (ord[0] === 'L' && offline()) {
-      if (ord.length === 1) { renderIntro(STR().offline); return; }
-      ord = ['R', 'L'];
-    }
+    const ord = order;
+    if (ord[0] === 'L' && offline()) { renderIntro(STR().offline); return; }   // 留在開始頁說明,讓學生自己選「先做閱讀」
     st.busy = true;
     try {
       try { await S().load(); } catch (e) { /* 讀不到雲端照本機的做 */ }
@@ -394,8 +397,19 @@
       return { label: STR().applyLevel, onClick: () => root.ESTIMATE_UI.confirmLevel(true).then((ok) => { if (ok && setLevels(lv.suggest)) renderResult(view, run, false); }) };
     }
     const U = root.ONBOARD_UI, D = root.ONBOARD_DATA;
-    if (st.onboard || !U || typeof U.levelPanel !== 'function' || !D) return null;   // 從新用戶設定來的:級別在設定流程的下一步寫,那裡也能改
+    if (st.onboard || S().mode() === 'guest' || !U || typeof U.levelPanel !== 'function' || !D) return null;   // 從新用戶設定來的:級別在設定流程的下一步寫,那裡也能改
     return { label: STR().levels, onClick: () => U.levelPanel({ levels: readStore('levels', null), onApply: (l, r) => D.applyManual(l, r) === 'ok' }) };
+  }
+  /* 焦點移到這個元素(讀屏從這裡接著讀);沒有 tabindex 的先加 -1 */
+  function focusOn(node) {
+    if (!node || typeof node.focus !== 'function') return;
+    if (!node.hasAttribute('tabindex')) node.setAttribute('tabindex', '-1');
+    try { node.focus(); } catch (e) { /* 移不了焦點照常 */ }
+  }
+  function openReview(det) {
+    det.open = true;
+    if (typeof det.scrollIntoView === 'function') det.scrollIntoView({ block: 'start' });
+    focusOn(det.querySelector('summary'));
   }
   function reviewOf(run) {
     const answers = {}, units = [];
@@ -420,11 +434,12 @@
     const link = C && typeof C.practiceLink === 'function' ? C.practiceLink(readStore('levels', null)) : null;
     const primary = st.onboard ? { label: STR().nextStep, href: 'start.html?step=result' } : { label: STR().practice, href: link || 'learn.html' };
     const det = run ? reviewOf(run) : null;
-    const links = [levelLinks(lv, view, run), det ? { label: STR().review, onClick: () => { det.open = true; if (typeof det.scrollIntoView === 'function') det.scrollIntoView({ block: 'start' }); } } : null,
+    const links = [levelLinks(lv, view, run), det ? { label: STR().review, onClick: () => openReview(det) } : null,
       fresh ? null : { label: STR().retestLink, onClick: () => renderIntro() }];
     const card = root.ESTIMATE_UI.result({ view, primary, links, earnId: 'pl' });
     paint([pageHead(), card ? card.el : null, det]);
     st.card = card;
+    if (fresh && card) focusOn(card.el.querySelector('.result-score'));
     if (fresh && card && root.PET_HOOK) root.PET_HOOK.done('pl', { into: card.reward });
   }
   async function showLast() {
@@ -432,8 +447,9 @@
     let view = null;
     try { view = await S().load(); } catch (e) { view = null; }
     const runs = view && view.placement && Array.isArray(view.placement.runs) ? view.placement.runs.slice() : [];
-    const run = runs.filter((r) => r && Array.isArray(r.items) && r.items.length).sort((a, b) => (a.at < b.at ? 1 : -1))[0] || null;
-    renderResult(view, run, false);
+    /* 只看做完的那幾次(跟設定頁「檢測報告」的日期一致);一次都沒有就畫「還沒有檢測結果」 */
+    const run = runs.filter((r) => r && typeof r.end === 'string' && r.end && Array.isArray(r.items) && r.items.length).sort((a, b) => (a.at < b.at ? 1 : -1))[0] || null;
+    renderResult(run ? view : null, run, false);
   }
 
   /* ---------- 開頁 ---------- */
@@ -465,6 +481,13 @@
     }
     Promise.resolve(root.CLOUD ? root.CLOUD.ready : null).then(() => go(true), () => go(false));
   }
+  /* 網址沒帶科:只有舊卷結果(閱讀已有證據)的人只做聽力,跟新用戶設定同一個判斷(ONBOARD_CORE.testPlan) */
+  function planSec() {
+    const C = root.ONBOARD_CORE;
+    if (!C || typeof C.testPlan !== 'function') return 'LR';
+    try { return C.testPlan(readStore('diag', null), readStore('placement_v1', null)) === 'L' ? 'L' : 'LR'; } catch (e) { return 'LR'; }
+  }
+  function legacyDone() { const d = readStore('diag', null); return isPlain(d) && d.done === true; }
   function boot() {
     const box = doc().getElementById('pl-root');
     if (!box) return;
@@ -475,7 +498,7 @@
       return;
     }
     const p = readParams();
-    st.secParam = p.sec === 'L' || p.sec === 'R' ? p.sec : 'LR';
+    st.secParam = p.sec === 'L' || p.sec === 'R' ? p.sec : planSec();
     st.onboard = p.from === 'onboard';
     st.readFirst = p.first === 'R' && st.secParam === 'LR';
     if (p.view === 'last') { showLast(); return; }

@@ -8,6 +8,7 @@
    g 訪客:開始頁看得到,按開始不建立檢測
    h 375×812 觸控走完整個檢測,每個畫面沒有橫向捲動
    i 沒登入與沒做過檢測的人:首頁、刷題、聽力、模擬考的畫面跟 --base 的資料夾一樣(只差檢測入口改成 24 題與新網址)
+   j 不在新用戶設定裡做檢測:沒有設定、按過「不用了」的人,首頁卡跟做之前一樣(不出現「繼續設定起始程度」)
    用法:node tools/test_placement_e2e.js [--port <起始埠,用兩個>] [--debug-port <Chrome 的埠>] [--tmp <資料夾>] [--base <對照用的資料夾>]
         [--shots <截圖資料夾>] [--only <測試名稱的一段,幾段用 | 分開>]
    沒給 --base 時 i 不跑(印出來)。--shots 給了時,走到的畫面存 375 與 1280 兩張(檔名「編號_畫面_寬.png」)。 */
@@ -246,7 +247,7 @@ T['e 舊使用者(只有舊 28 題):個人頁閱讀有數字、聽力要再做;�
   await sleep(1500);
   const v = await peek(p);
   assert.ok(v.R && !v.L, '閱讀有數字、聽力沒有:' + J(v));
-  assert.ok(/再做 12 題聽力，就會顯示預估分數。/.test(await p.text('.est-card')), await p.text('.est-card'));
+  assert.ok(/再做 20 題聽力，就會顯示預估分數。/.test(await p.text('.est-card')), await p.text('.est-card'));
   assert.ok(/做聽力檢測/.test(t), '主按鈕做聽力檢測');
   assert.deepStrictEqual(await p.store('diag'), diag, '舊檢測不動');
   await shot(p, '08_個人頁卡片_資料不夠');
@@ -314,6 +315,34 @@ T['h 375×812 觸控走完整個檢測,每個畫面沒有橫向捲動'] = async 
 /* i:畫面的字與連結;舊版到新版只准換掉檢測入口(28 題 → 24 題、diagnostic.html → placement.html)與首頁卡的副標 */
 const SWAP = [['diagnostic.html', 'placement.html'], ['28 題檢測（約 20 分鐘）', '24 題檢測（約 15–20 分鐘）'], ['28 題', '24 題']];
 const SNAP = "(() => { const m = document.querySelector('main'); return { text: m ? m.innerText.replace(/\\s+/g, ' ').trim() : '', links: Array.from(document.querySelectorAll('main a, header a')).map((a) => a.getAttribute('href')), title: document.title }; })()";
+T['j 不在新用戶設定裡做檢測:沒有設定、按過「不用了」的人,首頁卡與 onboard 跟做之前一樣'] = async () => {
+  const c = fresh();
+  const out = [];
+  const gone = { v: 1, status: 'dismissed', step: null, path: null, updatedAt: new Date(K.nowMs() - DAY).toISOString() };
+  for (const [n, ob] of [[101, null], [102, gone]]) {
+    const u = user(n, 'j' + n);
+    if (ob) c.put(u.id, 'onboard', ob, ob.updatedAt);
+    const p = await open(u);
+    const home = async () => { await p.go('index.html'); await sleep(800); return p.texts('main h2'); };
+    const before = await home();
+    await p.go('placement.html?sec=R');
+    await p.press('開始', '.pl-intro');
+    await K.walk(p, 'right');
+    await sleep(1200);
+    const lv = await p.store('levels');
+    const after = await home();
+    const obAfter = await p.store('onboard');
+    K.noErrors(p, 'j' + n);
+    await p.close();
+    assert.ok(lv && lv.reading, '級別照寫');
+    assert.deepStrictEqual(after, before, '首頁卡不變:' + J(before) + ' → ' + J(after));
+    assert.ok(!after.some((t) => /繼續設定起始程度/.test(t)));
+    assert.deepStrictEqual(obAfter, ob, 'onboard 不新建、不復活');
+    out.push(J(after));
+  }
+  return out.join(' | ');
+};
+
 T['i 沒登入與沒做過檢測的人:首頁、刷題、聽力、模擬考跟舊版一樣(只差檢測入口)'] = async () => {
   if (!BASE) return '沒給 --base,不跑';
   const diffs = [];

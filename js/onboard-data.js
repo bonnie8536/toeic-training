@@ -157,10 +157,17 @@
   }
   /* 有課程進度的人重新檢測:級別不動,只把這一步走完(之後 S8 記完成、顯示建議) */
   function keepLevelsAfterTest() { return isGuest() ? 'guest' : patch({ step: 'result' }); }
-  /* S8 的「改成這個級別」(確認過):兩科照建議寫,理由記 est */
+  /* 改級別時順便記 levelSource:只在已經有設定(進行中或完成)時才記;沒有設定、按過「不用了」的人不新建、不復活
+     (在新用戶設定以外做檢測、在個人頁按「改成…」時,首頁不會因此出現「繼續設定起始程度」) */
+  function withSource(writes, src) {
+    const ob = GET.onboard();
+    const live = !!ob && typeof ob === 'object' && (ob.status === 'in_progress' || ob.status === 'done');
+    return live ? Object.assign({}, writes, { onboard: C.patchOnboard(ob, { levelSource: src }, nowIso()) }) : writes;
+  }
+  /* S8、檢測結果頁、預估卡的「改成這個級別」(確認過):兩科照建議寫,理由記 est */
   function applyEst(lv) {
     if (isGuest()) return 'guest';
-    return writeAll({ levels: levelsWith(lv.listening, lv.reading, lv.source, 'est'), onboard: C.patchOnboard(GET.onboard(), { levelSource: 'est' }, nowIso()) });
+    return writeAll(withSource({ levels: levelsWith(lv.listening, lv.reading, lv.source, 'est') }, 'est'));
   }
   /* 用舊檢測算出的級別(S4「用上次的閱讀檢測」、交卷後第一次到 S8) */
   function setLegacyLevels(lv) {
@@ -182,7 +189,7 @@
     const src = Object.assign({}, cur.source || {});
     if (cur.listening !== l) src.listening = 'manual';
     if (cur.reading !== r) src.reading = 'manual';
-    return writeAll({ levels: levelsWith(l, r, src, 'manual'), onboard: C.patchOnboard(GET.onboard(), { levelSource: 'manual' }, nowIso()) });
+    return writeAll(withSource({ levels: levelsWith(l, r, src, 'manual') }, 'manual'));
   }
   /* 首頁狀態 E「不用了」:要確定登入了(CLOUD.user)才寫 */
   function dismiss() {

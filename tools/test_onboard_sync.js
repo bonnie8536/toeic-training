@@ -7,6 +7,7 @@
    第 D 段:既有的鍵(hist、diag、題庫、刪除標記、模擬考紀錄、模擬考錯題)同一串動作,用改之前的 cloud.js
    (tools/fixtures/cloud_before_onboard_merge.js,加這三個鍵之前的 main)和現在的 cloud.js 各跑一次,請求、雲端、本機逐項相同。
    第 E 段:裝置時鐘不準。寫入端的時間只往前走(js/onboard-core.js stampAfter),合併時超過現在一天的時間當成沒有時間。
+   第 F 段:設定流程接上新檢測(placement_v1):手機做完的檢測,電腦灌資料後認得「看起始程度」,兩台各自的檢測紀錄都留著。
    用法:node tools/test_onboard_sync.js */
 'use strict';
 const fs = require('fs');
@@ -469,6 +470,28 @@ T['D3 js/cloud.js 的 MERGED 原有五個鍵的設定一字不差(pet、sync_del
   const lines = (src) => (/const MERGED = \{([\s\S]*?)\n  \};/.exec(src.replace(/\r\n/g, '\n')) || [, ''])[1].split('\n').filter((l) => /^\s{4}(pet|sync_del|vgame_banks|mock_history|mock_wrong):/.test(l));
   const a = lines(BEFORE), b = lines(AFTER);
   return { ok: a.length === 5 && J(a) === J(b), detail: J(b) };
+};
+
+/* ---------- F:設定流程與新檢測(placement_v1)跨裝置 ---------- */
+const runAt = (t, end) => ({ at: iso(t), end: end ? iso(end) : null, ip: 'ip1', cv: 'c1', sec: 'LR',
+  tm: { L: [iso(t), iso(t + 10 * MINUTE)], R: [iso(t + 10 * MINUTE), end ? iso(end) : null] }, items: [['L', 'l1-01', 0, 1, 20]], res: {} });
+T['F1 手機在設定流程裡做完新檢測、電腦之前做過一半:電腦灌資料後首頁是「看起始程度」、S8 走預估;兩次檢測都留著'] = async () => {
+  const { w, phone, pc } = await pair(21);
+  const t0 = now(pc);
+  storeSet(pc, 'placement_v1', { v: 1, runs: [runAt(t0 - 2 * HOUR, null)] });
+  await pc.pg.runTimers();
+  const t1 = now(phone);
+  const ob = { v: 1, status: 'in_progress', step: 'test', path: 'self', targetScore: 600, examMonth: null, levelSource: null, testFrom: iso(t1),
+    previous: null, startedAt: iso(t1), doneAt: null, updatedAt: iso(t1) };
+  storeSet(phone, 'onboard', ob);
+  storeSet(phone, 'placement_v1', { v: 1, runs: [runAt(t1 + MINUTE, t1 + 25 * MINUTE)] });
+  await phone.pg.runTimers();
+  await newSession(pc);
+  const pl = localOf(pc, 'placement_v1') || {}, cpl = cloudOf(w, 'placement_v1') || {};
+  const ctx = { cloudEnabled: true, signedIn: true, onboard: localOf(pc, 'onboard'), nowMs: t1 + HOUR, createdAtMs: t1 - 30 * 24 * HOUR, placement: pl };
+  const st = OC.homeState(ctx), route = OC.resultRoute(ctx.onboard, null, null, pl);
+  const ok = st === 'B_result' && route === 'est' && (pl.runs || []).length === 2 && (cpl.runs || []).length === 2;
+  return { ok, detail: J({ st, route, runs: (pl.runs || []).map((r) => [r.at, r.end]), cloud: (cpl.runs || []).length }) };
 };
 
 (async () => {

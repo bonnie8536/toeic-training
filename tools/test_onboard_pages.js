@@ -286,12 +286,12 @@ T['S7b js/classes.js 只改兩處:加入班級的小字補「程度檢測結果�
 };
 T['檔案大小:新的 js 檔與測試都小於 800 行'] = () => {
   ONB_FILES().concat(['tools/test_onboard.js', 'tools/test_onboard_pages.js', 'tools/test_onboard_screens.js', 'tools/test_onboard_sync.js', 'tools/onboard_kit.js',
-    'tools/onboard_est_cases.js'])
+    'tools/onboard_est_cases.js', 'tools/test_onboard_e2e.js'])
     .forEach((f) => assert.ok(read(f).split('\n').length < 800, f));
 };
 T['S8 公開的新檔不寫內部用語與 repo 外的路徑'] = () => {
   const files = ONB_FILES().concat(['start.html', 'tools/test_onboard.js', 'tools/test_onboard_pages.js', 'tools/test_onboard_screens.js', 'tools/test_onboard_sync.js', 'tools/onboard_kit.js',
-    'tools/onboard_est_cases.js']);
+    'tools/onboard_est_cases.js', 'tools/test_onboard_e2e.js']);
   const bad = [];
   /* 字寫成 \u 跳脫,這支測試自己也不出現那些字;另外抓里程碑代號、Windows 磁碟路徑 */
   const WORDS = /\u5be9\u67e5|\u898f\u683c|\u6846\u67b6|\u7d93\u71df\u8005|\u5de5\u4f5c\u5305|\u4ee3\u7406|\u3014|\x47PT|\bM1\b|\b[A-Z]:[\\/]/g;

@@ -1,0 +1,4 @@
+/* 預估多益分數卡在「我的」頁與能力分析頁的補充樣式(js/estimate-cards.js)。在 css/estimate.css 後面載入。 */
+
+/* 卡片的主按鈕是連結(行內元素):改成行內區塊,上面的間距才算得上,不會疊到「本站估計」那一行 */
+.est-card .est-go { display: inline-block; }

@@ -58,6 +58,19 @@
   }
   function clearNotice() { const box = document.querySelector('.me-msg'); if (box) { box.replaceChildren(); box.classList.remove('bad'); } }
 
+  /* 預估多益分數卡(js/estimate-cards.js;帳號區與本機學生檔案共用):先放一個空的位置,卡片自己畫進去。估分的檔沒載到回 null。
+     改級之後重畫「學習設定」那一區(js/onboard-ui.js),程度那一列跟著換 */
+  function estimateSlot() {
+    if (!window.ESTIMATE_CARDS) return null;
+    const slot = h('div', { class: 'me-est' });
+    const relist = () => {
+      const old = document.getElementById('learning-settings');
+      const next = old && window.ONBOARD_UI ? ONBOARD_UI.settingsSection() : null;
+      if (old && next) old.replaceWith(next);
+    };
+    return ESTIMATE_CARDS.mount(slot, { suggest: true, onLevel: relist }) ? slot : null;
+  }
+
   /* <html class="authed">:首頁靠它決定畫已登入還是未登入的版面。index.html 的開機程式先照本機紀錄加,這裡確認後校正 */
   function markAuthed(on) { try { document.documentElement.classList.toggle('authed', !!on); } catch (e) { /* 只是版面 */ } }
 
@@ -458,17 +471,19 @@
         statusOf: id => PAYWALL.classStatus(CLOUD.access, id),
         onChange: () => { if (plans) plans.update(); },
       } : undefined;
-      root.append(
+      /* 沒有的區塊是 null:先濾掉(append(null) 會印出「null」) */
+      root.append(...[
         h('div', { class: 'me-head' },
           h('span', { class: 'profile-dot me-dot', 'aria-hidden': 'true' }, cur.name.slice(0, 1).toUpperCase()),
           who),
+        estimateSlot(),   // 預估多益分數(js/estimate-cards.js)
         links,
         window.ONBOARD_UI ? ONBOARD_UI.settingsSection() : null,   // 學習設定(js/onboard-ui.js,只有 me.html 載入;老師、本機學生檔案不顯示)
         window.CLASSES ? CLASSES.section(classOpts) : null,   // 班級(js/classes.js,只有 me.html 載入)
         list(row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }), row('改暱稱', { run: renameUser })),
         list(row('登出', { run: logoutHere, danger: true }), row('登出所有裝置', { run: logoutEverywhere, danger: true })),
         h('p', { class: 'me-msg', role: 'status' }),
-        h('p', { class: 'me-delete' }, h('button', { type: 'button', onclick: deleteUser }, '刪除帳號')));
+        h('p', { class: 'me-delete' }, h('button', { type: 'button', onclick: deleteUser }, '刪除帳號'))].filter(Boolean));
       /* 老師試用開通後:重新查使用權(教師後台那一列、老師方案那一列才會出現)再整頁重畫 */
       if (paid) plans = PAYWALL.account({ who, after: links, onTrial: () => { Promise.resolve(CLOUD.refreshAccess()).then(() => renderAccount(root), () => renderAccount(root)); } });
     }
@@ -922,6 +937,7 @@
         for (const [k, v] of Object.entries(payload.data)) {
           localStorage.setItem('tr_u' + id + '_' + k, v);
         }
+        if (window.ESTIMATE_CARDS) ESTIMATE_CARDS.afterImport(id);   // 匯入的紀錄先補一次預估分數用的作答(js/estimate-cards.js)
         switchTo(id);
       } catch (e) {
         notice('匯入失敗', e.message);
@@ -992,6 +1008,7 @@
         h('span', { class: 'profile-dot me-dot', 'aria-hidden': 'true' }, cur ? cur.name.slice(0, 1) : '?'),
         cur ? h('div', { class: 'me-who' }, h('b', { class: 'me-name' }, cur.name)) : h('div', { class: 'me-actions' },
           h('button', { class: 'btn primary', type: 'button', onclick: () => showGate(true) }, '建立檔案'))),
+      cur ? estimateSlot() : null,   // 預估多益分數(js/estimate-cards.js)
       cur ? list(row('能力分析', { href: 'analysis.html' }), row('學習記錄', { href: 'history.html' })) : null,
       list(cur ? row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }) : null, row('匯入進度檔', { run: () => fileInput.click() }),
         row('切換學生', { run: () => showGate(true) })),

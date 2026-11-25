@@ -1,0 +1,56 @@
+/* 預估分數卡與結果頁的分數區塊(js/estimate-ui.js)。顏色、圓角用 css/style.css 的變數;刻度尺沿用 .band-scale。
+   用到的頁面在 css/style.css 後面載入這個檔。 */
+
+/* ---------- 預估多益分數卡(個人頁、能力分析頁) ---------- */
+.est-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+  padding: 20px 22px 18px;
+  margin: 8px 0 20px;
+}
+.est-title { font-size: 18px; margin: 0 0 6px; }
+.est-total { margin: 0 0 14px; color: var(--ink-light); font-size: 14px; }
+.est-total .est-num { font-size: 30px; color: var(--primary-dark); margin-right: 2px; }
+.est-num { color: var(--primary-dark); font-weight: 700; }
+
+.est-row {
+  display: grid;
+  grid-template-columns: 96px 1fr 84px;
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0;
+  font-size: 15px;
+}
+.est-row.is-need { grid-template-columns: 96px 1fr; }
+.est-sec { white-space: nowrap; }
+.est-row .est-num { font-size: 17px; }
+.est-range { text-align: right; color: var(--ink-light); font-size: 13.5px; white-space: nowrap; }
+.est-need { margin: 0; font-size: 14px; color: var(--ink-light); }
+.est-need a { color: var(--primary); }
+
+/* 卡片裡的刻度尺:只有軌道與塗色,不放刻度數字 */
+.band-scale.est-scale.is-bare { margin: 0; height: 12px; }
+.band-scale.est-scale.is-bare .bs-track,
+.band-scale.est-scale.is-bare .bs-seg { top: 1px; }
+
+.est-suggest { margin: 2px 0 8px 108px; font-size: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.est-meta { margin: 14px 0 0; font-size: 13px; color: var(--ink-light); }
+.est-note { margin: 2px 0 0; font-size: 12.5px; color: var(--ink-soft); }
+.est-card .est-go { margin-top: 14px; }
+
+/* ---------- 結果頁(放在 UI.result 的卡片裡) ---------- */
+.est-result { width: 100%; margin: 10px 0 0; text-align: left; }
+.est-ranges { margin: 0 0 4px; font-size: 13.5px; color: var(--ink-light); text-align: center; }
+.est-scale-row { display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 8px; }
+.est-scale-row .band-scale { margin: 14px 8px 26px; }
+.est-result .est-need { text-align: center; margin: 6px 0; }
+.est-levels { margin: 6px 0 0; font-size: 14.5px; text-align: center; }
+.est-entry { margin: 2px 0 0; font-size: 14px; color: var(--ink-light); text-align: center; }
+
+@media (max-width: 560px) {
+  .est-card { padding: 16px 16px 14px; }
+  .est-row { grid-template-columns: 76px 1fr 72px; gap: 8px; font-size: 14px; }
+  .est-row.is-need { grid-template-columns: 76px 1fr; }
+  .est-suggest { margin-left: 84px; }
+}

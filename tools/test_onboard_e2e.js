@@ -1,10 +1,10 @@
 /* 新用戶設定接上程度檢測的無頭 Chrome 測試:真的 start.html、index.html、me.html、diagnostic.html,假雲端(tools/fixtures/lesson_cloud_stub.js,
-   不連外網、不用真的帳號)。repo 裡還沒有 placement.html 時(或給了 --fake-placement),伺服器回一個假的檢測頁:
+   不連外網、不用真的帳號)。預設(或 repo 裡沒有 placement.html 時)伺服器回一個假的檢測頁(真的檢測頁整段走完在 tools/test_placement_e2e.js):
    照真的 js/estimate-store.js 開始一次檢測、每科送出 12 題、結束,再回 start.html?step=result(同檢測頁「下一步」的去處)。
    1. 新用戶:開始頁 → 目標 → 月份 → 「不確定，幫我測」 → 檢測說明 → 開始檢測 → (假的)檢測頁 → 結果頁(級別來源 est) → 首頁卡。
    2. 舊使用者(只有舊 28 題的結果):檢測說明只做聽力 → (假的)檢測頁只做聽力 → 結果頁聽力用預估、閱讀不動;舊報告還在;「我的」頁兩份報告都連得到。
    用法:node tools/test_onboard_e2e.js [--port <本機伺服器的埠>] [--debug-port <Chrome 的埠>] [--tmp <放 Chrome 使用者資料的資料夾>]
-        [--shots <截圖資料夾>] [--fake-placement]
+        [--shots <截圖資料夾>] [--real-placement]
    --shots 給了時,每個畫面存 375 與 1280 兩張(檔名「編號_畫面_寬.png」)。每次一個新的使用者資料夾,跑完刪掉。 */
 'use strict';
 const fs = require('fs');
@@ -21,7 +21,7 @@ const opt = (n) => { const i = args.indexOf(n); return i > -1 ? args[i + 1] : nu
 const PORT = Number(opt('--port')) || 8981, DEBUG = Number(opt('--debug-port')) || PORT + 2;
 const TMP = path.resolve(opt('--tmp') || os.tmpdir());
 const SHOTS = opt('--shots') ? path.resolve(opt('--shots')) : null;
-const FAKE = args.indexOf('--fake-placement') > -1 || !fs.existsSync(path.join(REPO, 'placement.html'));
+const FAKE = args.indexOf('--real-placement') < 0 || !fs.existsSync(path.join(REPO, 'placement.html'));   // 真的檢測頁要作答,整段走完在 tools/test_placement_e2e.js
 const PF = [process.env.PROGRAMFILES, process.env['PROGRAMFILES(X86)']].filter(Boolean);
 const CHROME = [].concat(...PF.map((d) => [path.join(d, 'Google/Chrome/Application/chrome.exe'), path.join(d, 'Microsoft/Edge/Application/msedge.exe')]))
   .find((p) => fs.existsSync(p));

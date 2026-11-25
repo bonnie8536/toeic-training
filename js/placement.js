@@ -394,7 +394,7 @@
       return { label: STR().applyLevel, onClick: () => root.ESTIMATE_UI.confirmLevel(true).then((ok) => { if (ok && setLevels(lv.suggest)) renderResult(view, run, false); }) };
     }
     const U = root.ONBOARD_UI, D = root.ONBOARD_DATA;
-    if (!U || typeof U.levelPanel !== 'function' || !D) return null;
+    if (st.onboard || !U || typeof U.levelPanel !== 'function' || !D) return null;   // 從新用戶設定來的:級別在設定流程的下一步寫,那裡也能改
     return { label: STR().levels, onClick: () => U.levelPanel({ levels: readStore('levels', null), onApply: (l, r) => D.applyManual(l, r) === 'ok' }) };
   }
   function reviewOf(run) {

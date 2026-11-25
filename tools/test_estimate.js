@@ -258,7 +258,41 @@ T['keyOf 對上題庫:每一題都有 key、跟練習頁與課程的寫法一致
   if (!fs.existsSync(ipFile)) return keys.length + ' 小題;data/item-params.js 還沒產生,用題庫 key 當難度表';
   const ip = load(); vm.runInContext(fs.readFileSync(ipFile, 'utf8'), ip);
   const lack = keys.filter((k) => !(k in ip.ITEM_PARAMS.b));
-  return keys.length + ' 小題;item-params 缺 ' + lack.length + '(淘汰的題不在表裡)';
+  eq(lack, [], 'item-params 缺的 key');
+  return keys.length + ' 小題;item-params 全部查得到';
+};
+
+/* 真的題目參數:隨機抽題(固定種子)的 key 都查得到難度;照題庫組成的候選題全部可出;估分、顯示跑得動 */
+T['真的 item-params:隨機抽題的 key 查得到難度、選題的候選題完整、估分與顯示跑得動'] = () => {
+  const ctx = load();
+  ['data/part5.js', 'data/part6.js', 'data/part7.js', 'data/listening.js', 'data/diagnostic.js', 'data/item-params.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
+  const IP = JSON.parse(JSON.stringify(ctx.ITEM_PARAMS)), D = ctx.TOEIC;
+  X.checkParams(IP);
+  const units = [];
+  [['1', D.listening.p1], ['2', D.listening.p2], ['5', D.part5]].forEach(([p, arr]) => arr.forEach((q) => units.push({ id: q.id, part: p, keys: [X.keyOf(p, q.id, q, 0)] })));
+  [['3', D.listening.p3], ['4', D.listening.p4], ['6', D.part6], ['7', D.part7]].forEach(([p, arr]) => arr.forEach((s) => units.push({ id: s.id, part: p, keys: s.questions.map((q, qi) => X.keyOf(p, s.id, q, qi)) })));
+  const rnd = mulberry(20261125);
+  let fa = X.faEmpty();
+  for (let i = 0; i < 300; i++) {
+    const u = units[Math.floor(rnd() * units.length)];
+    u.keys.forEach((k) => { assert.ok(Number.isFinite(IP.b[k]), '查得到難度 ' + k); fa = X.faAdd(fa, k, 300 + (i % 20), rnd() < 0.6 ? 1 : 0, 'p'); });
+  }
+  X.legacyItems(D.diagnostic).forEach((it) => assert.ok(Number.isFinite(IP.b[it.key]), '舊 28 題 ' + it.key));
+  ['1', '2', '3', '4', '5', '6', '7'].forEach((p) => {
+    const all = units.filter((u) => u.part === p);
+    eq(X.available({ part: p, units: all, params: IP, fa: X.faEmpty() }).length, all.length, 'Part ' + p + ' 候選題完整');
+    const got = X.pickUnit({ units: all, params: IP, theta: 0, seed: 's' + p, runAt: 'r', slot: 0 });
+    got.keys.forEach((k) => assert.ok(Number.isFinite(IP.b[k]), '選到的題查得到難度 ' + k));
+  });
+  ['L', 'R'].forEach((sec) => {
+    const e = X.estimate(IP, sec, { fa, today: 330 });
+    eq(e.missing, [], sec + ' 查不到難度的 key');
+    assert.ok(e.n > 0 && e.est >= 5 && e.est <= 495, sec + ' 預估 ' + e.est);
+  });
+  const view = X.display({ params: IP, fa, today: 330, now: 'n' });
+  assert.ok(view.L.show && view.R.show, '兩科都夠題數');
+  near(X.scoreOf(IP.curve.R, 1), 495, 0, '閱讀曲線到 495');
+  return '抽 300 次;聽力 ' + view.L.est + '、閱讀 ' + view.R.est;
 };
 
 /* ---------- 衰減與證據 ---------- */

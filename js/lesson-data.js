@@ -1,6 +1,6 @@
 /* 課程頁的讀寫:讀學習包與字表、查試行班(這個分頁的 sessionStorage 鍵 lsn_pilot)、讀每堂進度、建立進度與學習計畫 plan(含補凍結)、
    組選題的 ctx(含下一次小檢核的預留題)、凍結、記作答、段的狀態、pts／rvq／tests_v1 的排隊寫入、syncPractice、作答前的紀錄快照、個人段試排、
-   前測的最後畫面時間(sessionStorage 鍵 lsn_clock)。
+   前測的最後畫面時間(sessionStorage 鍵 lsn_clock)、前測的第一次作答(交給 ESTIMATE_STORE 寫 fa_v1)、程度檢測要避開的課程預留題。
    課程頁的檔裡只有這一支寫 store、讀寫 sessionStorage;進度鍵一律經過 js/pack-core.js 的 loadLesson、saveLesson、saveLessonLocal(先合併雲端那一份)。
    載入時不依賴其他檔:LESSON_CORE、PACK_CORE、LESSON_RULES、BANK、CLASSES、CLOUD、store 都在函式裡才用,首頁可以只載 lesson-core.js 與這一支就判定試行班。
    sessionStorage 的兩個鍵不是 tr_ 開頭,搬家不管;讀寫不到就當沒有(重查班級、退回用最後作答時間)。
@@ -462,6 +462,37 @@
     return { form: 'interim_half', at: state.doneAt, parts, items };
   }
   function flush() { return queue; }
+
+  /* ---------- 第一次作答紀錄(fa_v1,預估分數用) ----------
+     估分的資料層(js/estimate-store.js 的 ESTIMATE_STORE)有載入才寫;沒載入的頁面略過,前測兩段交卷後寫的 tests_v1 之後由估分那邊補回。
+     rows = [{ key(作答紀錄的鍵), c(選項,-1 是沒作答), ok, f(作答前作答紀錄沒有這一小題) }];沒作答、不是第一次作答的不寫
+     (不是第一次的,第一次作答由學習記錄補回)。src 是一個字的來源(k 課程前測)。已經有的題不覆蓋。回新寫了幾題 */
+  function firstAttempts(rows, src) {
+    const S = root.ESTIMATE_STORE;
+    if (!S || typeof S.recordMany !== 'function') return 0;
+    const list = (Array.isArray(rows) ? rows : []).filter((r) => isPlain(r) && typeof r.key === 'string' && r.key && r.f === true && Number.isInteger(r.c) && r.c >= 0)
+      .map((r) => ({ key: r.key, ok: r.ok ? 1 : 0, src }));
+    if (!list.length) return 0;
+    try { return S.recordMany(list); } catch (e) { console.warn('第一次作答紀錄寫不進去：', e); return 0; }
+  }
+  /* ---------- 程度檢測要避開的課程預留題 ----------
+     這一期有任一堂的進度才有:上到的最後一堂(還沒上完就含那一堂)之後,下一次小檢核的預留題(PACK_CORE.reserveFor,種子跟課程選題相同)。
+     沒有進度、沒有帳號、沒有起始程度、算不出來都回 []。回題目 id(題組是組 id),當 ESTIMATE.available 的 reserve。
+     要用的頁面得載 js/lesson-core.js、js/pack-core.js、js/bank.js 與這一支(題庫、學習包、小檢核清單由這裡去讀) */
+  async function placementReserve() {
+    try {
+      const st = states(), nos = Object.keys(st).map(Number), lv = levels();
+      if (!nos.length || !lv || !accountId()) return [];
+      const cur = Math.max.apply(null, nos), base = st[cur].doneAt ? cur : cur - 1;
+      await packs();
+      const run = reserveOf({ no: base, levels: lv });
+      const ids = run ? await run() : [];
+      return Array.isArray(ids) ? ids.filter((id) => typeof id === 'string') : [];
+    } catch (e) {
+      console.warn('課程預留題算不出來，檢測這次不避開：', e);
+      return [];
+    }
+  }
   /* 學習記錄(只讀):即時回合補回時判斷第一次作答 */
   function hist() { const h = hasStore() ? store.get('hist', []) : []; return Array.isArray(h) ? h : []; }
 
@@ -480,6 +511,6 @@
   root.LESSON_DATA = Object.freeze({
     packs, pilot, pilotNow, plan: readPlan, levels, states, open, start, ctx, testForm, fillFixed, trial, freeze,
     inputs, reviewOpt, weakOpt, testIds: pretestIds, testParts, record, segment, snapshot, sync, hist,
-    hits, wrong, passed, reviewed, checkpoint, tests, pretest, planReview, flush, clock,
+    hits, wrong, passed, reviewed, checkpoint, tests, pretest, planReview, flush, clock, firstAttempts, placementReserve,
   });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

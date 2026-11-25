@@ -11,7 +11,9 @@
      expire(ctx)    開頁時:作答中的段超過 24 小時或時間用完就交卷 → Promise<{ lines(總覽通知列的字), finished(這一次交卷讓這一堂上完了) }>;
                     閱讀測驗超過 24 小時自動交卷的通知不在 lines,放在前測結果的結算卡上方
    }
-   前測不寫作答紀錄(drill_p*、listen_p*)、學習記錄、模擬考紀錄、考點狀態、回顧佇列:只寫這一堂的進度,兩段都交卷後寫一次 tests_v1。
+   前測不寫作答紀錄(drill_p*、listen_p*)、學習記錄、模擬考紀錄、考點狀態、回顧佇列:只寫這一堂的進度,兩段都交卷後寫一次 tests_v1;
+   每送出一畫面,有作答的第一次作答另外記進 fa_v1(預估分數用,來源 k;頁面有載 js/estimate-store.js 才寫)。
+   做過程度檢測的人照樣做前測(不跳過)。
    時間:限時照實際題數換算(LESSON_CORE.testLimit);剩餘＝限時 −(最後活動 − 段開始),最後活動是最後一題的作答時間與這個分頁記的最後畫面時間取晚的,
    離開到回來之間不算。超過 24 小時沒有動靜就自動交卷,沒答的算錯。 */
 (function (root) {
@@ -242,17 +244,22 @@
     if (typeof root.scrollTo === 'function') root.scrollTo(0, 0);
     S.f.focusMain();
   }
-  /* 這一畫面的小題寫進進度(只寫本機);withBlanks:沒選的也寫(c -1、算錯) */
+  /* 這一畫面的小題寫進進度(只寫本機);withBlanks:沒選的也寫(c -1、算錯)。
+     有作答、第一次作答的小題也記進第一次作答紀錄(來源 k,LESSON_DATA.firstAttempts;沒載估分的資料層時略過) */
   function save(S, withBlanks) {
-    const u = S.units[S.cur], lock = S.locked[S.cur], t = S.ctx.now(), rows = [];
+    const u = S.units[S.cur], lock = S.locked[S.cur], t = S.ctx.now(), rows = [], fa = [];
     S.I.subsOf(u).forEach((k) => {
       if (k.sub in lock) return;
       const c = k.sub in S.sel ? S.sel[k.sub] : withBlanks ? -1 : null;
       if (c === null) return;
-      rows.push({ b: S.pp.idx, id: u.item.id, sub: k.sub, c, ok: c === answerOf(u, k.qi), f: S.first.get(k.key) !== false, t });
+      const row = { b: S.pp.idx, id: u.item.id, sub: k.sub, c, ok: c === answerOf(u, k.qi), f: S.first.get(k.key) !== false, t };
+      rows.push(row);
+      fa.push({ key: k.key, c, ok: row.ok, f: row.f });
       lock[k.sub] = c;
     });
-    if (rows.length) S.ctx.setState(S.ctx.data.record(S.ctx.no, S.ctx.lesson, rows));
+    if (!rows.length) return;
+    S.ctx.setState(S.ctx.data.record(S.ctx.no, S.ctx.lesson, rows));
+    if (typeof S.ctx.data.firstAttempts === 'function') S.ctx.data.firstAttempts(fa, 'k');
   }
   function touch(S) { S.touched = Date.now(); S.clock.touch(); }
   /* 倒數看截止時間算:切回畫面時馬上對一次;剩不到 5 分鐘變紅,剩 5 分、1 分各念一次;時間到把選了的寫進進度、自動交卷 */

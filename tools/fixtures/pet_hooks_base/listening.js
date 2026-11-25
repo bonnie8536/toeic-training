@@ -86,7 +86,9 @@
         if (v === '1') o.selected = true;
         return o;
       }));
-    speedSel.addEventListener('change', () => { if (audio) audio.playbackRate = Number(speedSel.value); });
+    speedSel.addEventListener('change', () => { if (audio) audio.playbackRate = Number(speedSel.value); if (audio && !audio.paused && !audio.ended && offRate()) state.rate = true; });
+    /* 預估分數(js/practice-fa.js):播的時候不是 1 倍速,記在 state.rate */
+    const offRate = () => !!speedSel.value && speedSel.value !== '1';
     const label = h('span', { class: 'player-note' });
     /* 作答畫面的實色按鈕只有底部的主按鈕,播放鈕用描邊 */
     const btn = h('button', { class: 'btn player-btn', type: 'button' }, '▶ 播放');
@@ -104,6 +106,7 @@
       audio = new Audio(src);
       audio.preload = 'auto';
       audio.playbackRate = Number(speedSel.value);
+      if (offRate()) state.rate = true;
       audio.addEventListener('error', () => { label.textContent = '找不到音檔'; btn.disabled = true; });
       audio.play().catch(() => { label.textContent = '音檔載入失敗'; });
       refresh();
@@ -156,6 +159,21 @@
     const f = UI.focus.enter({ total: units.length, onExit: lesson ? lesson.onExit : () => { location.href = back; }, confirmExit: !instant, body: '還沒交卷的作答不會計分' });
     draw();
     f.focusMain();
+
+    /* 預估分數的第一次作答(js/practice-fa.js,沒載到就不記;寫作答紀錄之前叫):交卷式練習有作答的記對錯(播放次數、速度分 l、r),
+       沒作答的、錯題本、課程回合(c)記成看過;交卷式練習交卷後背景重算 */
+    function faNote(list) {
+      if (!window.PRACTICE_FA) return;
+      const look = lesson || instant || !!opts.wrongOnly;
+      PRACTICE_FA.record([].concat(...list.map((i) => {
+        const u = units[i], s = sess[i], one = u.p === '1' || u.p === '2';
+        return (one ? [u.item] : u.item.questions).map((q, qi) => {
+          const c = one ? s.answers.c : s.answers[qi];
+          return { rec: KEY(u.p), key: one ? q.id : qid(u.item, qi), ok: look || c === undefined ? null : c === q.answer ? 1 : 0, src: lesson ? 'c' : PRACTICE_FA.listenSrc(s) };
+        });
+      })));
+      if (!look) PRACTICE_FA.later();
+    }
 
     function unitAnswered(i) {
       const u = units[i];
@@ -272,6 +290,7 @@
           ? letterButtons(4, rec, q.answer, oi => {
               state.done = true;
               state.answers = { c: oi, ok: oi === q.answer };
+              faNote([cur]);
               saveRec('1', q.id, oi, state.answers.ok);
               draw();
             })
@@ -290,6 +309,7 @@
           ? letterButtons(3, rec, q.answer, oi => {
               state.done = true;
               state.answers = { c: oi, ok: oi === q.answer };
+              faNote([cur]);
               saveRec('2', q.id, oi, state.answers.ok);
               draw();
             })
@@ -319,6 +339,7 @@
             onclick: () => {
               state.answers[qi] = oi;
               if (instant) {
+                faNote([cur]);
                 saveRec(p, qid(set, qi), oi, oi === q.answer);
                 const all = set.questions.every((x, xi) => state.answers[xi] !== undefined);
                 if (all) state.done = true;
@@ -371,6 +392,7 @@
       /* 確認視窗開著的時候別的分頁登出、帳號資料夾變成還沒灌過:問完再查一次,擋下就開「重新整理」卡、不批改,選好的留著
          (跟 js/practice.js 隨機練習的交卷一樣) */
       if (typeof holdForAccount === 'function' && holdForAccount(opener)) return;
+      faNote(units.map((u, i) => i));
       units.forEach((u, i) => {
         const state = sess[i];
         state.done = true;

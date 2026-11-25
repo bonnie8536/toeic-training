@@ -82,9 +82,7 @@
     return [...shuffle(fresh), ...shuffle(wrong), ...shuffle(done)].slice(0, n);
   }
 
-  /* ---------- 路由 ----------
-     ?mode=wrong&part=N 是那個 Part 的錯題本清單(js/wrongbook-ui.js);
-     ?mode=review&part=N(&g=組名)複習整個 Part 或只複習一組,一回有上限。聽力的 part(1–4)只有 window.LISTEN 在才走 */
+  /* ---------- 路由 ---------- ?mode=wrong&part=N 是那個 Part 的錯題本清單(js/wrongbook-ui.js);?mode=review&part=N(&g=組名)複習整個 Part 或只複習一組,一回有上限。聽力的 part(1–4)只有 window.LISTEN 在才走 */
   const mode = getParam('mode');
   const partParam = getParam('part');
   const listenPart = p => !!window.LISTEN && ['1', '2', '3', '4'].indexOf(p) > -1;
@@ -98,8 +96,7 @@
     // 相容程度檢測報告的深連結:直接開一輪隨機練習
     startQuiz([{ p: partParam, n: partParam === '5' ? 10 : 2, cat: getParam('cat') || 'all' }]);
   } else renderHome();
-  /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud):別台考的錯題合併進本機,
-     錯題本面板、錯題本清單由 js/wrongbook-ui.js keepFresh 收到 cloud:merged 重畫 */
+  /* 開頁先跟雲端對齊模擬考錯題(js/wrongbook.js syncCloud):別台考的錯題合併進本機,錯題本面板、錯題本清單由 js/wrongbook-ui.js keepFresh 收到 cloud:merged 重畫 */
   if (root && WB && typeof WB.syncCloud === 'function') WB.syncCloud();
 
   /* ================= 首頁 ================= */
@@ -170,8 +167,7 @@
       },
     }, '開始');
 
-    /* 錯題本面板的各列(data-part、wb-see:從 bfcache 回來重畫時,焦點放回同一列的「查看」)。「查看」的報讀名稱帶 Part,7 顆才分得出來。
-       0 題的 Part 不列;全部都是 0 題時整個面板不顯示(人已經在刷題頁,空狀態的出口只會回到同一頁) */
+    /* 錯題本面板的各列(data-part、wb-see:從 bfcache 回來重畫時,焦點放回同一列的「查看」)。「查看」的報讀名稱帶 Part,7 顆才分得出來。0 題的 Part 不列;全部都是 0 題時整個面板不顯示(人已經在刷題頁,空狀態的出口只會回到同一頁) */
     function wbRows() {
       const list = [];
       ['5', '6', '7'].forEach(p => {
@@ -196,15 +192,13 @@
     }
     const wbRowsBox = h('div', { class: 'review-rows' }, wbRows());
 
-    /* 三塊面板在同一個格線裡,間距都一樣:桌機左欄是隨機練習、聽力隨機練習,右欄是錯題本(佔兩列,css);手機一欄。
-       錯題本沒有錯題時不顯示,聽力面板遞補到右欄 */
+    /* 三塊面板在同一個格線裡,間距都一樣:桌機左欄是隨機練習、聽力隨機練習,右欄是錯題本(佔兩列,css);手機一欄。錯題本沒有錯題時不顯示,聽力面板遞補到右欄 */
     const panels = h('div', { class: 'practice-panels' },
       h('div', { class: 'practice-panel' },
         h('h2', null, '隨機練習'),
         h('div', { class: 'cfg-rows' }, rows.map(r => r.row)),
         startBtn),
-      /* 錯題本面板:每個 Part 一列「N 題 + 查看」,查看連到那個 Part 的錯題本清單(一組一組,點開才看到題目)。
-         題數含模擬考答錯的題(js/wrongbook.js);沒載到就照以前只算刷題紀錄,按鈕照舊直接複習 */
+      /* 錯題本面板:每個 Part 一列「N 題 + 查看」,查看連到那個 Part 的錯題本清單(一組一組,點開才看到題目)。題數含模擬考答錯的題(js/wrongbook.js);沒載到就照以前只算刷題紀錄,按鈕照舊直接複習 */
       h('div', { class: 'practice-panel', id: 'wrongbook', hidden: wbRowsBox.childElementCount ? null : '' },
         h('h2', null, '錯題本'),
         wbRowsBox));
@@ -215,8 +209,7 @@
       const panel = document.getElementById('wrongbook');
       if (panel) panel.hidden = !wbRowsBox.childElementCount;
     });
-    /* practice.html#wrongbook(從錯題本、模擬考結果連過來):面板是 JS 畫的,瀏覽器自己不會捲過去。
-       頂欄是固定的(sticky),要扣掉它的高度(.me-sec 的 scroll-margin-top 同一個意思);桌機一列、手機兩列、更窄還會更高,照實際高度算 */
+    /* practice.html#wrongbook(從錯題本、模擬考結果連過來):面板是 JS 畫的,瀏覽器自己不會捲過去。頂欄是固定的(sticky),要扣掉它的高度(.me-sec 的 scroll-margin-top 同一個意思);桌機一列、手機兩列、更窄還會更高,照實際高度算 */
     if (location.hash === '#wrongbook') {
       const panel = document.getElementById('wrongbook');
       if (panel && !panel.hidden) setTimeout(() => {
@@ -329,6 +322,8 @@
     return opts;
   }
 
+  /* 預估分數的第一次作答(js/practice-fa.js,沒載到就不記):錯題本複習記成看過 */
+  const faSeen = (p, key) => { if (window.PRACTICE_FA) PRACTICE_FA.record([{ rec: KEY(p), key, ok: null, src: 'p' }]); };
   function saveRec(p, id, oi, ok) {
     const st = store.get(KEY(p), {});
     st[id] = { c: oi, ok, t: Date.now() };
@@ -386,6 +381,8 @@
     const instant = !!lesson && lesson.feedback === 'instant', graded = rec => !!rec && rec.ok !== undefined;
     const qsOf = u => (u.p === '5' ? [u.item] : u.item.questions), keyOf = (u, q, qi) => (u.p === '5' ? q.id : qid(u.item, q, qi));
     const recOf = (i, key) => (units[i].p === '5' ? session.answers[i] : (session.answers[i] || {})[key]);
+    /* 第一次作答(寫作答紀錄之前叫):刷題頁有作答的記對錯、沒作答的記成看過,交卷後背景重算;課程回合一律記成看過(c) */
+    const faNote = (list) => { if (window.PRACTICE_FA) { PRACTICE_FA.record([].concat(...list.map((i) => qsOf(units[i]).map((q, qi) => { const key = keyOf(units[i], q, qi), rec = recOf(i, key); return { rec: KEY(units[i].p), key, ok: lesson || !rec ? null : rec.c === q.answer ? 1 : 0, src: lesson ? 'c' : 'p' }; })))); if (!lesson) PRACTICE_FA.later(); } };
     /* 交卷式:作答期間只記選擇不對答,交卷後一次看成績卡與逐題檢討 */
     const session = { answers: {} };   // p5 單元:{c};p6/7 單元:{qKey:{c}};交卷後補 ok
     let cur = 0;
@@ -432,6 +429,7 @@
     /* 即時回饋:剛選的小題對答案、存紀錄,重畫成解析的樣子;底部單題答了是回饋條,題組全部答了才能按下一題,最後一題是「完成」 */
     function gradeNow() {
       const u = units[cur];
+      faNote([cur]);
       qsOf(u).forEach((q, qi) => { const key = keyOf(u, q, qi), rec = recOf(cur, key); if (rec && !graded(rec)) { rec.ok = rec.c === q.answer; saveRec(u.p, key, rec.c, rec.ok); } });
       draw();
     }
@@ -496,10 +494,10 @@
           .then(yes => { handing = false; if (yes) submit(opener, true); });
         return;
       }
-      /* data-gate 只在按下去那一刻查。確認視窗開著的時候別的分頁登出、或這台的帳號資料夾變成還沒灌過:問完再查一次,
-         擋下就開「重新整理」卡,不批改、不出成績,作答留在這一頁(登回原帳號再按一次就能交) */
+      /* data-gate 只在按下去那一刻查。確認視窗開著的時候別的分頁登出、或這台的帳號資料夾變成還沒灌過:問完再查一次,擋下就開「重新整理」卡,不批改、不出成績,作答留在這一頁(登回原帳號再按一次就能交) */
       if (typeof holdForAccount === 'function' && holdForAccount(opener)) return;
       /* 統一批改+寫入紀錄(只記有作答的) */
+      faNote(units.map((u, i) => i));
       units.forEach((u, i) => {
         if (u.p === '5') {
           const rec = session.answers[i];
@@ -663,6 +661,7 @@
           const ok = oi === q.answer;
           session[cur] = { c: oi, ok };
           if (ok) cleared++;
+          faSeen(p, q.id);
           saveRec(p, q.id, oi, ok);
           draw();
         }),
@@ -694,6 +693,7 @@
             const ok = oi === q.answer;
             sess[id] = { c: oi, ok };
             if (ok) cleared++;
+            faSeen(p, id);
             saveRec(p, id, oi, ok);
             draw();
           }),

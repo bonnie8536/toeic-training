@@ -43,6 +43,7 @@
     vgame_src: '單字遊戲上次的題目來源', profiles: '學生名單', current_profile: '目前的學生檔案', pet_hint: '小雞提示次數',
     plan: '課表設定', pts: '考點狀態', rvq: '回顧佇列', tests_v1: '測驗結果',
     onboard: '起始程度設定', self_score: '自填成績', levels: '起始程度', q_reports: '回報過的題目',
+    fa_v1: '預估分數用作答', placement_v1: '程度檢測紀錄', est_v1: '預估分數',
   };
 
   const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
@@ -316,6 +317,13 @@
         let m = null;
         try { m = S ? S.tombs(nv, ov, ctx.now) : null; } catch (e) { m = null; }
         if (!m || m.ok !== true) return { v: nv, kind: 'conflict', why: 'tombs' };
+        return m.sameAsLocal ? { v: nv, kind: 'same' } : { v: m.v, kind: 'merged' };
+      }
+      case 'firstAttempts': case 'placementRuns': case 'estSnap': {   // 預估分數三個鍵:同步的合併函式(js/sync-merge-estimate.js),沒載到就留新網址的、列為衝突
+        const fn = root.SYNC_MERGE && typeof root.SYNC_MERGE[rule] === 'function' ? root.SYNC_MERGE[rule] : null;
+        let m = null;
+        try { m = fn ? fn(nv, ov) : null; } catch (e) { m = null; }
+        if (!m || m.ok !== true || m.v === null) return { v: nv, kind: 'conflict', why: 'shape' };
         return m.sameAsLocal ? { v: nv, kind: 'same' } : { v: m.v, kind: 'merged' };
       }
       case 'daily': {
@@ -660,7 +668,8 @@
      不放進 joined(照原本的規則留時間晚的那包),沒選上的那包(兩包不一樣時)放進 lost,由 plan 存進備份。
      回 { joined: Map(鍵 → [鍵, 原字串, 兩包裡比較晚的時間]), lost: [[鍵, 原字串, 時間]] } */
   const SYNC_FN = Object.freeze({ sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong',
-    levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests' });
+    levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests',
+    fa_v1: 'firstAttempts', placement_v1: 'placementRuns', est_v1: 'estSnap' });
   const SYNC_FAMILY = Object.freeze([[/^les_t[1-9]\d?_(0[1-9]|1\d|2[0-4])$/, 'lesson']]);
   function syncFnOf(sub) {
     if (own(SYNC_FN, sub)) return SYNC_FN[sub];

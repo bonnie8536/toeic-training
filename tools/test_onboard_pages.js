@@ -99,7 +99,7 @@ function changedLines(file) {
   assert.equal(d.status, 0, 'git diff 失敗');
   return String(d.stdout || '').split('\n').filter((l) => /^[+-]/.test(l) && !/^(\+\+\+|---) /.test(l)).map((l) => l.replace(/\r$/, ''));
 }
-T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按鈕與從開始頁進來直接開考;cloud.js 只多引導三個鍵與課程進度的合併規則'] = () => {
+T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按鈕與從開始頁進來直接開考;cloud.js 只多引導三個鍵與課程進度、預估分數的合併規則'] = () => {
   const files = ['data/diagnostic.js', 'js/common.js'];
   const r = spawnSync('git', ['diff', '--quiet', '--ignore-cr-at-eol', baseRef(), '--'].concat(files), { cwd: REPO });
   assert.equal(r.status, 0, '有改到:' + files.join('、'));
@@ -245,7 +245,24 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     '-    try { unsure = (await checkCloud(user)).unsure; } catch (e) { unsure = Object.keys(MERGED).filter(k => MERGED[k].reconcile); }',
     "+    try { unsure = (await checkCloud(user)).unsure; } catch (e) { unsure = mergedIn(localNames('tr_u' + pidOf(user) + '_')).filter(k => spec(k).reconcile); }",
   ];
-  eq(changedLines('js/cloud.js').filter((l) => !ok.some((re) => re.test(l)) && COURSE.indexOf(l) < 0), [], 'cloud.js 有不在清單上的改動');
+  /* 預估分數(fa_v1、placement_v1、est_v1)那一份逐行列在 ESTIMATE:合併表三列、檔頭說明、搬家暫存區補載估分的三個檔
+     (已經載好的判斷 have() 也要看到 SYNC_MERGE.firstAttempts)、SYNC_TWO 與 SYNC_FN 加這三個鍵(整行換掉,所以是新的一行) */
+  const ESTIMATE = [
+    '+     · 預估分數(js/estimate-store.js):fa_v1(第一次作答)、placement_v1(程度檢測紀錄)、est_v1(預估快照)。',
+    '+       合併函式 SYNC_MERGE.firstAttempts、placementRuns、estSnap(js/sync-merge-estimate.js,規則在 js/estimate-data.js):',
+    '+       第一次作答與檢測作答聯集,快照時間新的整份贏。先讀雲端合併再上傳,灌資料、搬家暫存區(SYNC_FN)也合併;加 reconcile。',
+    '+       部署前就開著的舊版分頁沒有估分頁面,不會寫這三個鍵。tools/test_estimate_store.js。',
+    "+    fa_v1: { merge: SMF('firstAttempts'), reconcile: true },",
+    "+    placement_v1: { merge: SMF('placementRuns'), reconcile: true },",
+    "+    est_v1: { merge: SMF('estSnap'), reconcile: true },",
+    '+    const have = () => !!(window.MOVE_RULES && window.MOVE_MERGE && window.DAILY && window.SYNC_MERGE && window.SYNC_MERGE.lesson && window.SYNC_MERGE.firstAttempts);',
+    "+      .then(() => (window.ESTIMATE ? null : add('js/estimate-core.js')))",
+    "+      .then(() => (window.ESTIMATE && window.ESTIMATE.mergeFirstAttempts ? null : add('js/estimate-data.js')))",
+    "+      .then(() => (window.SYNC_MERGE && window.SYNC_MERGE.firstAttempts ? null : add('js/sync-merge-estimate.js')))",
+    '+  const SYNC_TWO = { mock: 1, mockWrong: 1, levels: 1, onboard: 1, selfScore: 1, pts: 1, rvq: 1, tests: 1, lesson: 1, firstAttempts: 1, placementRuns: 1, estSnap: 1 };   // 雲端和暫存那份先合、再合本機(不用標記)',
+    "+  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests', fa_v1: 'firstAttempts', placement_v1: 'placementRuns', est_v1: 'estSnap' };",
+  ];
+  eq(changedLines('js/cloud.js').filter((l) => !ok.some((re) => re.test(l)) && COURSE.indexOf(l) < 0 && ESTIMATE.indexOf(l) < 0), [], 'cloud.js 有不在清單上的改動');
 };
 T['S7b js/classes.js 只改兩處:加入班級的小字補「程度檢測結果」、匯出邀請碼格式檢查'] = () => {
   const changed = changedLines('js/classes.js').map((l) => l.slice(0, 1) + l.slice(1).trim());

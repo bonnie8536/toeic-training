@@ -1,6 +1,7 @@
 /* js/cloud.js 的 flushForMove(舊網址寄出頁)與搬家暫存區 tr_move_pending_<帳號 id>(新網址登入灌資料時合併)。
    跟 tools/test_cloud_merge.js 同一套假的 Supabase(加上 in() 與一次傳多列的 upsert,題庫跟 sync_del 一起讀、一起傳)、localStorage、時鐘與計時器;
-   合併規則載入真的 js/sync-merge.js、js/sync-merge-lesson.js(每一頁都在 cloud.js 前面載入)、js/move-rules.js、js/move-merge.js,
+   合併規則載入真的 js/sync-merge.js、js/sync-merge-lesson.js、js/estimate-core.js、js/estimate-data.js、js/sync-merge-estimate.js
+   (每一頁都在 cloud.js 前面載入)、js/move-rules.js、js/move-merge.js,
    小雞用真的 js/pet.js。用法:node tools/test_move_cloud.js */
 'use strict';
 const fs = require('fs');
@@ -9,7 +10,8 @@ const path = require('path');
 
 const REPO = path.join(__dirname, '..');
 const read = (f) => fs.readFileSync(path.join(REPO, f), 'utf8');
-const SRC = { cloud: read('js/cloud.js'), sync: read('js/sync-merge.js'), syncLesson: read('js/sync-merge-lesson.js'), pet: read('js/pet.js'), food: read('js/pet-food.js'), rules: read('js/move-rules.js'), merge: read('js/move-merge.js'), daily: read('js/daily.js') };
+const SRC = { cloud: read('js/cloud.js'), sync: read('js/sync-merge.js'), syncLesson: read('js/sync-merge-lesson.js'), pet: read('js/pet.js'), food: read('js/pet-food.js'), rules: read('js/move-rules.js'), merge: read('js/move-merge.js'), daily: read('js/daily.js'),
+  estCore: read('js/estimate-core.js'), estData: read('js/estimate-data.js'), syncEst: read('js/sync-merge-estimate.js') };
 const USER = { id: '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72', email: 's@x.com', user_metadata: { name: '學生' } };
 const OTHER = '9a9a9a9a-0000-4000-8000-000000000000';
 const PID = 'c' + USER.id.replace(/-/g, '');
@@ -73,7 +75,8 @@ const tick = async () => { for (let i = 0; i < 10; i++) await new Promise((r) =>
 
 /* opt.movers:'yes'(先載好 MOVE_RULES、MOVE_MERGE)、'fail'(要載時載不到)、不給同 'yes'。
    opt.lazy:頁面上沒先載的檔(SRC 的名稱,例 ['rules', 'syncLesson']),cloud.js 要用時補載得到(w.loaded 記補載了哪些) */
-const LAZY_SRC = { 'js/move-rules.js': 'rules', 'js/move-merge.js': 'merge', 'js/daily.js': 'daily', 'js/sync-merge.js': 'sync', 'js/sync-merge-lesson.js': 'syncLesson' };
+const LAZY_SRC = { 'js/move-rules.js': 'rules', 'js/move-merge.js': 'merge', 'js/daily.js': 'daily', 'js/sync-merge.js': 'sync', 'js/sync-merge-lesson.js': 'syncLesson',
+  'js/estimate-core.js': 'estCore', 'js/estimate-data.js': 'estData', 'js/sync-merge-estimate.js': 'syncEst' };
 function loadPage(w, opt) {
   opt = opt || {};
   const lazy = opt.lazy || [];
@@ -111,7 +114,7 @@ function loadPage(w, opt) {
   try { ctx.__PROFILE_ID = JSON.parse(w.local.getItem('tr_current_profile')) || null; } catch (e) { ctx.__PROFILE_ID = null; }
   Object.assign(ctx, { PET_ON: true, PET_FOOD: true, PET_FOOD_FROM: '2026-10-20' });
   vm.runInContext(SRC.pet, ctx); vm.runInContext(SRC.food, ctx);
-  ['sync', 'syncLesson'].concat(opt.movers !== 'fail' ? ['rules', 'merge', 'daily'] : []).forEach((n) => { if (lazy.indexOf(n) < 0) vm.runInContext(SRC[n], ctx); });
+  ['sync', 'syncLesson', 'estCore', 'estData', 'syncEst'].concat(opt.movers !== 'fail' ? ['rules', 'merge', 'daily'] : []).forEach((n) => { if (lazy.indexOf(n) < 0) vm.runInContext(SRC[n], ctx); });
   vm.runInContext(opt.cloudSrc || SRC.cloud, ctx);   // opt.cloudSrc:改過的 cloud.js(測試合併表多一個鍵)
   return {
     ctx,
@@ -684,6 +687,57 @@ T['flushForMove:對帳丟錯時,本機有的課程進度(一堂一鍵)照樣放�
   const item = r ? (r.accounts[USER.id] || []).find((e) => e[0] === 'les_t1_03') : null;
   const ok = !err && !!item && JSON.parse(item[1]).a.length === 2 && r.left === 1;
   return { ok, detail: J({ err, item: item && [item[0], item[2]], left: r && r.left }) };
+};
+/* ---------- 預估分數三個鍵(fa_v1、placement_v1、est_v1) ---------- */
+const faOf = (rows) => ({ v: 1, i: rows });
+const runOf = (at, keys) => ({ at, end: null, ip: 'ip1', cv: 'c1', sec: 'L', tm: {}, items: keys.map((k) => ['L', k, 0, 1, 5]), res: {} });
+const faKeys = (v) => (v && v.i ? Object.keys(v.i).sort() : []);
+const runKeys = (v) => (v && Array.isArray(v.runs) ? v.runs.map((r) => r.at + ':' + r.items.map((x) => x[1]).join('+')) : []);
+T['暫存區:預估分數的 fa_v1、placement_v1、est_v1:搬家暫存、本機、雲端三份合併(作答聯集、同一題留早的、快照新的贏),上傳到雲端,不進備份'] = async () => {
+  const w = makeWorld();
+  const A = '2026-11-01T00:00:00.000Z', B = '2026-11-02T00:00:00.000Z';
+  cloudRow(w, 'fa_v1', faOf({ 'p5-a': [300, 1, 'p'], 'p5-x': [305, 0, 'p'] }), T0 - HOUR);
+  cloudRow(w, 'placement_v1', { v: 1, runs: [runOf(A, ['l1-01'])] }, T0 - HOUR);
+  cloudRow(w, 'est_v1', { ip: 'ip1', cv: 'c1', at: '2026-11-03T00:00:00.000Z', L: [300, 250, 350, 30], R: null }, T0 - HOUR);
+  signedIn(w);
+  w.local.setItem(PREFIX + 'fa_v1', J(faOf({ 'p5-b': [301, 0, 'p'], 'p5-x': [303, 1, 'p'] })));
+  w.local.setItem(PREFIX + 'placement_v1', J({ v: 1, runs: [runOf(A, ['l1-02'])] }));
+  w.local.setItem(LEDGER, J({ fa_v1: T0 - 4 * HOUR, placement_v1: T0 - 4 * HOUR }));
+  w.local.setItem(PEND, J({ items: [['fa_v1', J(faOf({ 'p5-c': [302, 1, 'l'] })), T0 - 2 * HOUR], ['placement_v1', J({ v: 1, runs: [runOf(B, ['l2-01'])] }), T0 - 2 * HOUR],
+    ['est_v1', J({ ip: 'ip1', cv: 'c1', at: '2026-11-04T00:00:00.000Z', L: [320, 270, 370, 40], R: null }), T0 - 2 * HOUR]] }));
+  await openLoggedIn(w);
+  const fa = ['p5-a', 'p5-b', 'p5-c', 'p5-x'], runs = [A + ':l1-01+l1-02', B + ':l2-01'];
+  const ok = J(faKeys(cv(w, 'fa_v1'))) === J(fa) && J(faKeys(lv(w, 'fa_v1'))) === J(fa) && J(cv(w, 'fa_v1').i['p5-x']) === J([303, 1, 'p'])
+    && J(runKeys(cv(w, 'placement_v1'))) === J(runs) && J(runKeys(lv(w, 'placement_v1'))) === J(runs)
+    && (cv(w, 'est_v1') || {}).at === '2026-11-04T00:00:00.000Z' && (lv(w, 'est_v1') || {}).at === '2026-11-04T00:00:00.000Z'
+    && ups(w).includes('fa_v1') && ups(w).includes('placement_v1') && !backups(w).length && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ fa: faKeys(cv(w, 'fa_v1')), runs: runKeys(cv(w, 'placement_v1')), est: cv(w, 'est_v1'), bk: backups(w), ups: ups(w) }) };
+};
+/* 搬家寄出頁不載 js/sync-merge-estimate.js(同 js/sync-merge-lesson.js 的理由):第一次作答拿不到合併函式,不整份上傳、不蓋掉雲端那份,放進搬家包 */
+T['flushForMove:頁面沒載 js/sync-merge-estimate.js:第一次作答不整份上傳、不蓋掉雲端那份,放進搬家包'] = async () => {
+  const w = makeWorld();
+  cloudRow(w, 'fa_v1', faOf({ 'p5-a': [300, 1, 'p'] }), T0 - HOUR);
+  const pg = await openLoggedIn(w, { lazy: ['syncEst'] });
+  w.clock.t += 1000; w.local.setItem(PREFIX + 'fa_v1', J(faOf({ 'p5-b': [301, 0, 'p'] }))); pg.ctx.CLOUD.push('fa_v1', 1);
+  await pg.runTimers();
+  const r = await pg.ctx.CLOUD.flushForMove();
+  const carried = (r.accounts[USER.id] || []).map((e) => e[0]);
+  const ok = carried.indexOf('fa_v1') > -1 && J(faKeys(cv(w, 'fa_v1'))) === J(['p5-a']) && ups(w).indexOf('fa_v1') < 0 && 'fa_v1' in ledger(w) && !(w.loaded || []).length;
+  return { ok, detail: J({ carried, cloud: faKeys(cv(w, 'fa_v1')), ups: ups(w), ledger: ledger(w), loaded: w.loaded }) };
+};
+/* 頁面沒先載估分的三個檔:處理暫存區前跟搬家程式一起補載,第一次作答照樣三份合併 */
+T['暫存區:頁面沒先載估分的檔與 js/sync-merge-estimate.js:要用時補載,第一次作答照樣三份合併,不進備份'] = async () => {
+  const w = makeWorld();
+  cloudRow(w, 'fa_v1', faOf({ 'p5-a': [300, 1, 'p'] }), T0 - HOUR);
+  signedIn(w);
+  w.local.setItem(PREFIX + 'fa_v1', J(faOf({ 'p5-b': [301, 0, 'p'] })));
+  w.local.setItem(LEDGER, J({ fa_v1: T0 - 4 * HOUR }));
+  w.local.setItem(PEND, J({ items: [['fa_v1', J(faOf({ 'p5-c': [302, 1, 'l'] })), T0 - 2 * HOUR]] }));
+  await openLoggedIn(w, { lazy: ['estCore', 'estData', 'syncEst'] });
+  const all = J(['p5-a', 'p5-b', 'p5-c']);
+  const ok = J(w.loaded || []) === J(['js/estimate-core.js', 'js/estimate-data.js', 'js/sync-merge-estimate.js'])
+    && J(faKeys(lv(w, 'fa_v1'))) === all && J(faKeys(cv(w, 'fa_v1'))) === all && !backups(w).length && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ loaded: w.loaded, local: faKeys(lv(w, 'fa_v1')), cloud: faKeys(cv(w, 'fa_v1')), bk: backups(w) }) };
 };
 T['暫存區:合併表上有、takeSynced 對照表(SYNC_FN)沒有的鍵:暫存那份放進備份,不當成題庫合併、不默默略過'] = async () => {
   const src = SRC.cloud.replace(/(\r?\n    mock_wrong: \{ merge: SMF\('mockWrong'\), reconcile: true \},)/, '$1\n    vgame_miss: { merge: SMF(\'mock\'), reconcile: true },');

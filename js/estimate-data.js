@@ -35,21 +35,12 @@
 
   /* ---------- 第一次作答紀錄 ---------- */
   function faEmpty() { return { v: 1, i: {} }; }
-  function okOf(ok) {
-    if (ok === null) return null;
-    if (ok === true || ok === 1) return 1;
-    if (ok === false || ok === 0) return 0;
-    return undefined;
-  }
-  function validEntry(e) {
-    return Array.isArray(e) && e.length === 3 && Number.isInteger(e[0]) && okOf(e[1]) !== undefined
-      && typeof e[2] === 'string' && e[2].length === 1 && SOURCES.indexOf(e[2]) > -1;
-  }
-  /* 不合格式的筆數丟掉,其餘照 key 排 */
+  const okOf = CORE.okOf;
+  /* 不合格式的筆數丟掉,其餘照 key 排(每筆的檢查跟估分用的是同一個函式) */
   function faNormalize(fa) {
     const src = isPlain(fa) && isPlain(fa.i) ? fa.i : {};
     const i = {};
-    Object.keys(src).sort().forEach((k) => { if (k && validEntry(src[k])) i[k] = [src[k][0], okOf(src[k][1]), src[k][2]]; });
+    Object.keys(src).sort().forEach((k) => { const e = k ? CORE.faEntry(src[k]) : null; if (e) i[k] = e; });
     return { v: 1, i };
   }
   /* 只在還沒有這一題時寫;回傳新物件,原物件不動 */
@@ -111,6 +102,14 @@
     });
     const ats = Object.keys(by).sort().slice(-RUNS_MAX);
     return { v: 1, runs: ats.map((at) => JSON.parse(JSON.stringify(Object.assign({}, by[at].head, { items: by[at].items })))) };
+  }
+
+  /* 一次檢測裡某一科的作答,寫成來源 t 的第一次作答紀錄(沒作答的不寫);存這次結果時只用它加先驗估 */
+  function runFa(r, sec, day) {
+    need(isPlain(r) && Array.isArray(r.items), '檢測紀錄要有 items');
+    need(sec === 'L' || sec === 'R', '科要是 L 或 R:' + sec);
+    need(Number.isInteger(day), '日數要是整數');
+    return r.items.filter(validItem).reduce((fa, it) => (it[0] === sec && (it[3] === 0 || it[3] === 1) ? faAdd(fa, it[1], day, it[3], 't') : fa), faEmpty());
   }
 
   /* ---------- 預估快照:時間新的整份贏 ---------- */
@@ -203,7 +202,7 @@
   function backfillStats(fa, src) { return backfillRun(fa, src).stats; }
 
   root.ESTIMATE = Object.freeze(Object.assign({}, CORE, {
-    dayNum, faEmpty, faNormalize, faAdd, mergeFirstAttempts, mergePlacementRuns, mergeEst,
+    dayNum, faEmpty, faNormalize, faAdd, mergeFirstAttempts, mergePlacementRuns, mergeEst, runFa,
     legacyItems, backfill, backfillStats,
   }));
 })(typeof globalThis !== 'undefined' ? globalThis : this);

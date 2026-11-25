@@ -30,6 +30,7 @@
   const SMOOTH = 10;
   const SUGGEST_P = 0.8;
   const SINGLE = { 1: true, 2: true, 5: true };
+  const NUM_PARTS = { 6: true, 7: true };
 
   const isPlain = (x) => !!x && typeof x === 'object' && !Array.isArray(x);
   const fin = (x) => typeof x === 'number' && isFinite(x);
@@ -48,12 +49,13 @@
   function cOf(part) { return partNorm(part) === '2' ? 1 / 3 : 0.25; }
   function secOf(part) { return Number(partNorm(part)[0]) <= 4 ? 'L' : 'R'; }
   function isGroupPart(part) { return !SINGLE[partNorm(part)]; }
-  /* 單題(P1、P2、P5):題目 id;題組:「組 id:」加小題的 num(P6 空格號),沒有 num 用 0 起算的位置 */
+  /* 單題(P1、P2、P5):題目 id;題組:「組 id:」加 0 起算的位置。
+     閱讀題組(P6、P7)跟刷題頁一樣,小題有 num(P6 空格號)就用 num;聽力題組(P3、P4)跟聽力頁一樣一律用位置 */
   function keyOf(part, setId, q, qi) {
     const p = partNorm(part);
     need(typeof setId === 'string' && setId !== '', '題目 id 要是字串');
     if (SINGLE[p]) return setId;
-    if (q && q.num !== undefined && q.num !== null) return setId + ':' + q.num;
+    if (NUM_PARTS[p[0]] && q && q.num !== undefined && q.num !== null) return setId + ':' + q.num;
     need(Number.isInteger(qi) && qi >= 0, '題組小題的位置要是 0 以上的整數');
     return setId + ':' + qi;
   }
@@ -206,7 +208,8 @@
     if (score <= cut[2]) return LEVELS[2];
     return LEVELS[3];
   }
-  /* 後驗 → 能力平均、預估(5 的倍數)、隨機與系統誤差、半寬、範圍、各級機率(每格分數先取 5 的倍數再對級) */
+  /* 後驗 → 能力平均、預估(5 的倍數)、隨機與系統誤差、半寬、範圍、各級機率。
+     各級機率用每一格的原始分數對級(不先取 5 的倍數):建議改級的 0.8 門檻是照這個算法定的 */
   function summarize(params, sec, lp, f, opt) {
     secCheck(sec);
     const S = scoreGrid(checkParams(params), sec), pi = weightsOf(lp);
@@ -214,7 +217,7 @@
     const pb = [0, 0, 0, 0];
     for (let g = 0; g < NG; g++) {
       mt += pi[g] * GRID[g]; ms += pi[g] * S[g]; ms2 += pi[g] * S[g] * S[g];
-      pb[LEVELS.indexOf(bandOf(sec, round5(S[g])))] += pi[g];
+      pb[LEVELS.indexOf(bandOf(sec, S[g]))] += pi[g];
     }
     const srand = Math.sqrt(Math.max(0, ms2 - ms * ms));
     const sys = sysErr(f, opt && opt.sys);
@@ -248,9 +251,29 @@
     return Math.pow(0.5, days / HALF_DAYS) * Math.pow(0.5, after / HALF_ITEMS);
   }
   const srcRank = (s) => SOURCES.indexOf(s);
+  /* 對錯:1 或 true → 1、0 或 false → 0、null 是看過(不計分);其他回 undefined */
+  function okOf(ok) {
+    if (ok === null) return null;
+    if (ok === true || ok === 1) return 1;
+    if (ok === false || ok === 0) return 0;
+    return undefined;
+  }
+  /* 一筆第一次作答 [日數(整數), 對錯, 來源] 整理成固定寫法;不合格式回 null(同步來的壞資料照這個丟掉) */
+  function faEntry(e) {
+    const shape = Array.isArray(e) && e.length === 3 && Number.isInteger(e[0])
+      && typeof e[2] === 'string' && e[2].length === 1 && SOURCES.indexOf(e[2]) > -1;
+    const ok = shape ? okOf(e[1]) : undefined;
+    return ok === undefined ? null : [e[0], ok, e[2]];
+  }
+  /* 只取格式對的筆:壞筆不讓整個估分丟錯,true/false 跟 1/0 同樣算 */
   function entriesOf(fa) {
     need(isPlain(fa) && isPlain(fa.i), '第一次作答紀錄要是 { v, i }');
-    return Object.keys(fa.i).map((key) => ({ key, day: fa.i[key][0], ok: fa.i[key][1], src: fa.i[key][2] }));
+    const out = [];
+    Object.keys(fa.i).sort().forEach((key) => {
+      const e = key ? faEntry(fa.i[key]) : null;
+      if (e) out.push({ key, day: e[0], ok: e[1], src: e[2] });
+    });
+    return out;
   }
   function order(a, b) {
     return (a.day - b.day) || (srcRank(a.src) - srcRank(b.src)) || (a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
@@ -278,7 +301,9 @@
     });
     return { list, n: list.length, parts, f: wa ? wp / wa : 0, missing: missing.sort() };
   }
-  /* 一科的估計:先驗 + 證據 */
+  /* 一科的估計:先驗 + 證據。
+     檢測結束時存的這次結果,只用這一次的作答加先驗:用 ESTIMATE.runFa(這次的紀錄, 科, 日數) 組出 fa 再傳進來,
+     不要用 sources 篩(sources 只照來源篩,會把以前每一次檢測的作答也算進去) */
   function estimate(params, sec, ctx) {
     const c = ctx || {};
     const ev = evidence(params, c.fa, sec, c.today, c);
@@ -364,7 +389,14 @@
       && !used.has(u.id) && !u.keys.some((k) => used.has(k))
       && !reserve.has(u.id));
   }
-  /* 開始前數好每格有沒有題:同一個 Part 的第 n 格要有 n 個可出的題,沒有就跳過;total 是小題數 */
+  /* 開始前數好每格有沒有題:同一個 Part 的第 n 格要有 n 個可出的題,沒有就跳過;total 是小題數。
+     沒給 size 的格,可出的題組小題數要都一樣,不然事先數的總數會跟實際出的對不上 */
+  function sizeOf(s, pool, k) {
+    if (s.size) return s.size;
+    const n = pool[k].keys.length;
+    need(pool.every((u) => u.keys.length === n), 'Part ' + s.part + ' 的題組小題數不一，這一格要給 size');
+    return n;
+  }
   function planSlots(script, availFn) {
     need(Array.isArray(script) && typeof availFn === 'function', '要有題型腳本與取題函式');
     const used = {}, slots = [];
@@ -375,7 +407,7 @@
       const k = used[key] || 0;
       if (pool.length <= k) return;
       used[key] = k + 1;
-      totalN += s.size || pool[k].keys.length;
+      totalN += sizeOf(s, pool, k);
       slots.push(Object.assign({ index }, s));
     });
     return { slots, total: totalN };
@@ -416,7 +448,7 @@
     cOf, secOf, isGroupPart, keyOf, keyFromSub, partOfKey,
     prob, info, delta, checkCurve, scoreOf, checkParams, expected, scoreGrid, thetaOfScore,
     prior, logPost, sysErr, bandOf, summarize, total, ends, suggest,
-    decay, evidence, estimate, enough,
+    okOf, faEntry, decay, evidence, estimate, enough,
     hashStr, seeded, startTheta, rankUnits, pickUnit, available, planSlots,
     display,
   });

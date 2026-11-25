@@ -145,12 +145,12 @@ T['先驗:沒有成績用平均分數反查、寬 2.0;自填成績照斜率換�
 /* ---------- EAP ---------- */
 /* 回歸基準(另外用一支獨立程式逐格算過):先驗 N(0.10, 2.0²)+ EV_R 十筆 → θ̂ = 0.3195616,分數平均 285.636 → 預估 285;
    隨機誤差 72.051、系統誤差 √(35² + 15²) = 38.079,√(72.051² + 38.079²) = 81.50 → 半寬 80,範圍 205–365;
-   各級機率 0.0653、0.3663、0.4360、0.1324。聽力 EV_L 七筆 → 310,半寬 100(91.48 與 38.08)。沒有作答 → 270,半寬 125 */
+   各級機率(每格用原始分數對級)0.0601、0.3487、0.4450、0.1462。聽力 EV_L 七筆 → 310,半寬 100(91.48 與 38.08)。沒有作答 → 270,半寬 125 */
 T['網格後驗平均:固定輸入的 θ̂、預估、範圍、各級機率(回歸基準)'] = () => {
   const a = sumOf('R', EV_R);
   near(a.theta, 0.3195616095271085, 1e-9); near(a.mean, 285.63629417686354, 1e-6); near(a.srand, 72.05135035587661, 1e-6);
   eq([a.est, a.h, a.lo, a.hi], [285, 80, 205, 365]);
-  [0.06532959389366913, 0.3663215393426785, 0.4359723367270621, 0.13237653003659083].forEach((p, k) => near(a.pb[k], p, 1e-9, '第 ' + k + ' 級'));
+  [0.06005990749297138, 0.34874415122984986, 0.44498108223035326, 0.1462148590468262].forEach((p, k) => near(a.pb[k], p, 1e-9, '第 ' + k + ' 級'));
   const b = sumOf('L', EV_L);
   near(b.theta, 0.17232493140078803, 1e-9); eq([b.est, b.h, b.lo, b.hi], [310, 100, 210, 410]);
   const z = sumOf('R', []);
@@ -204,6 +204,7 @@ T['四級:預估在切點上下都對上新用戶設定的對級;各級機率加
   eq(X.suggest({ pb: [0, 0.05, 0.1, 0.85] }, 'high'), null, '同一級不提示');
   eq(X.suggest({ pb: [0, 0.25, 0.4, 0.35] }, 'entry'), null, '沒有一級到 0.8');
   eq(X.suggest({ pb: [0.8, 0.2, 0, 0] }, 'threshold'), 'entry', '剛好 0.8 也提示');
+  eq(X.suggest({ pb: [0.79, 0.21, 0, 0] }, 'threshold'), null, '0.79 不提示');
 };
 
 /* ---------- 題目 key ---------- */
@@ -217,6 +218,8 @@ T['keyOf:單題用題目 id;題組用「組 id:」加空格號,沒有空格號�
   eq(X.keyOf('7', 'p7-b1-1', {}, 3), 'p7-b1-1:3');
   eq(X.keyOf('7s', 'p7-b1-1', {}, 1), 'p7-b1-1:1');
   eq(X.keyOf('6', 'd6', { num: 2 }, 1), 'd6:2', '舊檢測題組');
+  eq([X.keyOf('3', 'l3-11', { num: 5 }, 1), X.keyOf('4', 'l4-02', { num: 9 }, 0)], ['l3-11:1', 'l4-02:0'], '聽力題組跟聽力頁一樣不看 num');
+  eq(X.keyOf('7', 'p7-b1-1', { num: 4 }, 0), 'p7-b1-1:4', '閱讀題組跟刷題頁一樣有 num 用 num');
   eq([X.keyFromSub('6', 'p6-b1-1', 131), X.keyFromSub('3', 'l3-11', 1), X.keyFromSub('7', 'p7-b1-1', 4), X.keyFromSub('5', 'p5-x', 0), X.keyFromSub('1', 'l1-01', null)],
     ['p6-b1-1:131', 'l3-11:0', 'p7-b1-1:3', 'p5-x', 'l1-01']);
   eq(['l1-01', 'l2-x', 'l3-11:0', 'l4-02:2', 'p5-b1-01', 'p6-b1-1:131', 'p7-b1-1:3', 'd5-01', 'd6:2', 'd7:4', 'zz-1'].map(X.partOfKey),
@@ -535,6 +538,95 @@ T['估分與顯示:一個函式算兩科與總分;差不到 10 分沿用上次�
   const self = X.display({ params: PARAMS, fa: X.faEmpty(), today: 300, now: 'n', self: { L: { score: 400, months: 3 } } });
   eq([self.L.show, self.R.show], [true, false], '自填成績那一科顯示');
   throws(() => X.display({ params: PARAMS, fa: X.faEmpty(), today: 1.5, now: 'n' }), /日數/);
+};
+
+/* ---------- 補強:各級機率、壞資料、常數、平滑與四級、排除、補回日期、總分上緣、題數不一、這次檢測的結果 ---------- */
+/* 用很窄的先驗把後驗放在單一格:那一格的原始分數在切點上方、取 5 的倍數會落到切點(例如閱讀 271.4 → 270),各級機率要照原始分數 */
+T['各級機率:每格用原始分數對級,不先取 5 的倍數'] = () => {
+  let hit = 0;
+  ['L', 'R'].forEach((sec) => X.scoreGrid(PARAMS, sec).forEach((s, g) => {
+    const raw = X.bandOf(sec, s);
+    if (raw === X.bandOf(sec, Math.round(s / 5) * 5)) return;
+    hit++;
+    const one = X.summarize(PARAMS, sec, X.logPost({ mu: X.GRID[g], sd: 1e-3 }, []), 0);
+    near(one.pb[X.LEVELS.indexOf(raw)], 1, 1e-9, sec + ' 第 ' + g + ' 格 ' + s.toFixed(2));
+  }));
+  assert.ok(hit >= 3, '切點附近的格只有 ' + hit + ' 格');
+};
+
+T['估分:第一次作答紀錄混了壞筆不丟錯,結果跟整理過的一樣;對錯存成 true/false 照 1/0 算'] = () => {
+  let fa = X.faEmpty();
+  ['p5-a', 'p5-b', 'p5-c', 'p5-d', 'p5-e', 'l2-a', 'l2-b'].forEach((k, i) => { fa = X.faAdd(fa, k, 300, i % 2, 't'); });
+  const bad = { 'p5-f': null, 'p5-g': 'x', 'p5-h': [300, true, 'p'], 'p5-i': ['300', 1, 'p'], 'p5-j': [300, 1, 'z'], 'l2-c': [300, false, 'l'], 'l2-d': [300, 1] };
+  const dirty = { v: 1, i: Object.assign({}, fa.i, bad) };
+  const acc = { params: PARAMS, today: 300, now: 'n', done: { L: true, R: true } };
+  const a = X.display(Object.assign({}, acc, { fa: dirty }));
+  eq(a, X.display(Object.assign({}, acc, { fa: X.faNormalize(dirty) })), '跟整理過的一樣');
+  eq([a.R.n, a.L.n], [6, 3], '閱讀 5 筆 + true 那筆;聽力 2 筆 + false 那筆');
+  eq(X.evidence(PARAMS, dirty, 'R', 300).list.filter((e) => e.key === 'p5-h')[0].x, 1);
+  eq([X.faEntry([300, false, 'l']), X.faEntry([300, 1, 'z'])], [[300, 0, 'l'], null]);
+};
+
+T['證據:各來源的權重(課程前測 1);刷題、聽力一次、重播改速、補回算練習;看過的筆不計分'] = () => {
+  const one = (src) => X.evidence(PARAMS, X.faAdd(X.faEmpty(), 'p5-a', 300, 1, src), 'R', 300);
+  eq(['t', 'k', 'g', 'p', 'l', 'r', 'h'].map((s) => one(s).list[0].w), [1, 1, 1, 0.8, 0.8, 0.5, 0.7]);
+  eq(['t', 'k', 'g', 'p', 'l', 'r', 'h'].map((s) => one(s).f), [0, 0, 0, 1, 1, 1, 1], '練習佔權重比例');
+  eq(['o', 'c'].map((s) => one(s).n), [0, 0], '看過的來源就算存成答對也不計分');
+};
+
+/* 資訊量排名用 rankUnits 自己排;換很多種子挑,挑得到的剛好是前 5(題組前 3) */
+T['選題:單題前 5 每一題都挑得到、第 6 以後挑不到;題組前 3 組都挑得到、第 4 組以後挑不到'] = () => {
+  const b = {}, singles = [], groups = [];
+  for (let k = 0; k < 8; k++) { b['s' + k] = -0.3 + 0.2 * k; singles.push({ id: 's' + k, part: '5', keys: ['s' + k] }); }
+  for (let k = 0; k < 6; k++) {
+    b['g' + k + ':1'] = -0.3 + 0.3 * k; b['g' + k + ':2'] = -0.2 + 0.3 * k;
+    groups.push({ id: 'g' + k, part: '6', keys: ['g' + k + ':1', 'g' + k + ':2'] });
+  }
+  const P = Object.assign({}, PARAMS, { b });
+  [[singles, 5], [groups, 3]].forEach(([units, top]) => {
+    const seen = new Set();
+    for (let i = 0; i < 400; i++) seen.add(X.pickUnit({ params: P, units, theta: 0, seed: 'u' + i, runAt: 'r', slot: i % 7 }).id);
+    const ranked = X.rankUnits({ params: P, units, theta: 0, seed: 'u0' }).map((u) => u.id);
+    eq(Array.from(seen).sort(), ranked.slice(0, top).sort(), '前 ' + top);
+  });
+};
+
+T['顯示:數字差不到 10 分沿用上次,但四級照新算的數字(跨切點時看得出來)'] = () => {
+  const acc = { params: PARAMS, fa: X.faEmpty(), today: 300, now: 'n', self: { R: { score: 270, months: 0 } } };
+  const d0 = X.display(acc);
+  eq([d0.R.raw.est, d0.R.band], [275, 'advanced'], '新算 275');
+  const d1 = X.display(Object.assign({}, acc, { prev: { ip: 'ip-test', cv: 'c-test', at: 'x', R: [270, 0, 0, 0] } }));
+  eq([d1.R.est, d1.R.band, X.bandOf('R', 270)], [270, 'advanced', 'threshold'], '顯示沿用 270,四級還是照 275');
+};
+
+T['選題排除:呼叫的一方只給這次出過的組 id 也排除;總分上緣 990;題數不一的題組沒給 size 就擋下來'] = () => {
+  eq(X.available({ params: PARAMS, units: UNITS, part: '6', fa: X.faEmpty(), used: ['p6-x'] }), [], '只給組 id');
+  eq(X.available({ params: PARAMS, units: UNITS, part: '6', fa: X.faEmpty(), used: [] }).length, 1);
+  eq(X.total({ est: 495, srand: 0, sys: 0 }, { est: 495, srand: 0, sys: 0 }), { est: 990, h: 35, lo: 955, hi: 990 });
+  const g = (id, n) => ({ id, part: '7', keys: Array.from({ length: n }, (_, i) => id + ':' + i) });
+  const mixed = [g('a', 2), g('b', 4)], same = [g('a', 3), g('b', 3)];
+  throws(() => X.planSlots([{ part: '7' }], () => mixed), /size/);
+  eq(X.planSlots([{ part: '7' }, { part: '7' }], () => same).total, 6);
+  eq(X.planSlots([{ part: '7', size: 4 }], () => [mixed[1]]).total, 4);
+};
+
+T['補回舊 28 題:做完的日期照 finishedAt,沒有才用 startedAt'] = () => {
+  const d = Object.assign(shapeOf(15, mulberry(5)), { startedAt: '2026-09-01T02:00:00Z', finishedAt: '2026-09-03T02:20:00Z' });
+  eq(X.backfill(X.faEmpty(), { diag: d, legacy: LEGACY, now: NOW }).i['d5-01'][0], X.dayNum(Date.parse('2026-09-03T02:20:00Z')));
+  const noEnd = Object.assign({}, d, { finishedAt: undefined });
+  eq(X.backfill(X.faEmpty(), { diag: noEnd, legacy: LEGACY, now: NOW }).i['d5-01'][0], X.dayNum(Date.parse('2026-09-01T02:00:00Z')));
+};
+
+/* 這次檢測的結果只用這次的作答:以前檢測的 t 作答不能混進來 */
+T['這次檢測的結果:runFa 只取這次某一科有作答的題,估分不混以前檢測的作答'] = () => {
+  const r = run('2026-11-25T01:00:00Z', '2026-11-25T01:20:00Z', [['R', 'p5-a', 0, 1, 10], ['R', 'p5-b', 1, 0, 9], ['L', 'l2-a', 0, 1, 5], ['R', 'p5-c', 2, null, 3]]);
+  eq(X.runFa(r, 'R', 328), { v: 1, i: { 'p5-a': [328, 1, 't'], 'p5-b': [328, 0, 't'] } });
+  eq(X.runFa(r, 'L', 328), { v: 1, i: { 'l2-a': [328, 1, 't'] } });
+  let all = X.runFa(r, 'R', 328);
+  ['p5-d', 'p5-e', 'p5-f'].forEach((k) => { all = X.faAdd(all, k, 200, 0, 't'); });
+  const now = X.estimate(PARAMS, 'R', { fa: X.runFa(r, 'R', 328), today: 328 });
+  eq([now.n, X.estimate(PARAMS, 'R', { fa: all, today: 328, sources: 't' }).n], [2, 5]);
+  throws(() => X.runFa({}, 'R', 1), /items/);
 };
 
 /* ---------- 檔案本身 ---------- */

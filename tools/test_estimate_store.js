@@ -215,6 +215,31 @@ T['檢測續做:24 小時內(看最後一次動作)是 active,超過是 stale(�
   return 'ok';
 };
 
+/* 一科作答很久:最後一次送出離開始已經過了很久,24 小時要從最後一次送出起算(開始時間加上這一科作答秒數) */
+T['檢測續做:一科做了很久,24 小時從最後一次送出起算(開始時間加作答秒數),不是從這一科開始的時間'] = async () => {
+  const store = K.fakeStore();
+  const d = (t) => K.depsOf(ctx, { store, now: t });
+  const st = await S.startRun({ sec: 'L', at: new Date(NOW).toISOString() }, d(NOW));
+  S.beginSection(st.run.at, 'L', d(NOW));
+  S.answer(st.run.at, [{ s: 'L', key: L2[0], choice: 0, ok: 1, secs: 5 * 3600 }], d(NOW + 5 * HOUR));
+  S.answer(st.run.at, [{ s: 'L', key: L2[1], choice: 1, ok: 0, secs: 4 * 3600 }], d(NOW + 9 * HOUR));
+  assert.equal(S.runStatus(store.raw('placement_v1').runs[0], NOW + 30 * HOUR), 'active', '最後送出在 21 小時前');
+  assert.equal(S.runStatus(store.raw('placement_v1').runs[0], NOW + 34 * HOUR), 'stale');
+  return 'ok';
+};
+T['補回(頁面那一層):課程前測有、作答紀錄有(學習記錄已經清掉)記看過;模擬考答錯的題記看過'] = async () => {
+  const store = K.fakeStore({
+    hist: [{ m: 'g', id: 'g-1', c: 0, ok: true, t: NOW - 20 * DAY }],
+    drill_p5: { [P5[0]]: { c: 1, ok: true, t: NOW - 100 * DAY } },
+    mock_wrong: { [P5[1]]: { c: 2, ok: false, t: NOW - 5 * DAY } },
+    tests_v1: { t1: { pre: { at: Math.floor((NOW - 2 * DAY) / 1000), items: [[P5[0], 0, 1, true], [P5[2], 0, 2, false]] } } },
+  });
+  const v = S.refresh(K.depsOf(ctx, { store, now: NOW }));
+  const fa = store.raw('fa_v1').i;
+  eq([fa[P5[0]], fa[P5[1]], fa[P5[2]]], [[E.dayNum(NOW - 100 * DAY), null, 'o'], [E.dayNum(NOW - 5 * DAY), null, 'o'], [E.dayNum(NOW - 2 * DAY), 0, 'k']]);
+  return J(v.stats);
+};
+
 /* ---------- 起點、建議改級 ---------- */
 T['自填成績:24 個月內、5 的倍數才當起點;建議改級只在另一級機率 ≥0.8、跟目前級別不同時'] = () => {
   eq(S.selfOf({ listening: 300, reading: 255, examYm: '2026-05', fromTotal: false }, NOW), { L: { score: 300, months: 6, fromTotal: false }, R: { score: 255, months: 6, fromTotal: false } });

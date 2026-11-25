@@ -8,7 +8,7 @@
    · 雲端帳號:寫本機,上傳時 js/cloud.js 先讀雲端合併(合併表上的三個鍵)。load、startRun、finishRun 寫之前先讀雲端那一份合併。
    · 頁面因為帳號那一邊不能存(canKeepProgress 是 false)時不寫。
    資料安全:本機那份的 v 不是 1(更新版的格式)時整個鍵唯讀,不寫回;寫入一律是「原本的 ＋ 新的」,不刪、不蓋既有的作答與舊檢測紀錄
-   (只有整份不是物件、讀不懂的 fa_v1 會在記下一題時換成新的一份)。不碰 hist、drill_p*、listen_p*、diag、tests_v1,只讀。
+   (只有整份不是物件、讀不懂的 fa_v1 會在記下一題時換成新的一份)。不碰 hist、drill_p*、listen_p*、diag、tests_v1、mock_wrong,只讀。
    壞資料(形狀不對的筆、壞掉的自填成績)不丟錯:壞筆照 ESTIMATE 的規則略過,算不出來時 view.ok 是 false。
 
    deps(每個函式最後一個參數,都可以不給):{ store, cloud, params, legacy, now(毫秒), profile(學生檔案 id), canWrite() }
@@ -33,6 +33,7 @@
    · endSection(at, sec, deps) → run | null:這一科做完:記結束時間,存這一科只用這一次作答加起點算的結果 res[sec] = [預估, 下緣, 上緣]。
    · finishRun(at, deps) → Promise<View>:整次結束(end 寫現在),先讀雲端合併再寫,回重算後的 View。
    · activeRun(deps) → run | null:最新一次還沒結束、最後一次動作在 24 小時內的檢測(續做用)。
+     最後一次動作取開始時間、每科開始與結束,以及每科開始時間加上那一科作答秒數的加總(約等於最後一次送出)。
    · runStatus(run, nowMs) → 'done' | 'active' | 'stale':stale 是超過 24 小時沒做完(end 維持 null,作答留在 fa_v1 照樣計分)。
    · excludeFor(at, deps) → { fa, used }:給 ESTIMATE.available 的排除清單(fa 是本機的第一次作答;used 是這次出過的 key 與題組 id)。
    · sectionsDone(placement) → { L, R }:哪一科做完過檢測(那一科的 tm 有結束時間)。
@@ -179,7 +180,8 @@
     const get = (key, d) => { try { const v = dp.store.get(key, d); return v === null || v === undefined ? d : v; } catch (e) { return d; } };
     const diag = get('diag', null), hist = get('hist', []), records = {};
     RECORD_KEYS.forEach((k) => { const v = get(k, null); if (isPlain(v)) records[k] = v; });
-    const src = { rows: testRows(get('tests_v1', null)), hist: Array.isArray(hist) ? hist : [], records, now: dp.now };
+    const mock = get('mock_wrong', null);
+    const src = { rows: testRows(get('tests_v1', null)), hist: Array.isArray(hist) ? hist : [], records, mock: isPlain(mock) ? mock : null, now: dp.now };
     if (dp.legacy && isPlain(diag)) { src.diag = diag; src.legacy = dp.legacy; }
     return src;
   }
@@ -297,9 +299,19 @@
   }
 
   /* ---------- 檢測紀錄 ---------- */
+  /* 最後一次動作:開始時間、每科的開始與結束,以及「這一科的開始 + 這一科每題的作答秒數加總」(最後一次送出的時間,不會比實際晚) */
+  function secsOf(run, sec) {
+    return (Array.isArray(run.items) ? run.items : []).reduce((a, it) => a + (Array.isArray(it) && it[0] === sec && fin(it[4]) && it[4] > 0 ? it[4] : 0), 0);
+  }
   function lastActive(run) {
     const ts = [Date.parse(run.at)];
-    if (isPlain(run.tm)) Object.keys(run.tm).forEach((s) => (Array.isArray(run.tm[s]) ? run.tm[s] : []).forEach((x) => ts.push(Date.parse(x))));
+    if (isPlain(run.tm)) {
+      Object.keys(run.tm).forEach((s) => {
+        const t = Array.isArray(run.tm[s]) ? run.tm[s] : [];
+        t.forEach((x) => ts.push(Date.parse(x)));
+        ts.push(Date.parse(t[0]) + secsOf(run, s) * 1000);
+      });
+    }
     return Math.max.apply(null, ts.filter(fin).concat([-Infinity]));
   }
   function runStatus(run, nowMs) {

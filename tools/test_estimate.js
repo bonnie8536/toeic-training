@@ -652,6 +652,57 @@ T['這次檢測的結果:runFa 只取這次某一科有作答的題,估分不混
   throws(() => X.runFa({}, 'R', 1), /items/);
 };
 
+/* 作答紀錄的 t 是最後一次作答:學習記錄已經沒有這題(60 天前清掉),前測又出現時,作答紀錄那天比前測早,前測不算第一次 */
+T['補回:作答紀錄有、學習記錄沒有、課程前測有:作答紀錄那天比前測早就記看過(o),不是前測的 k;作答紀錄比前測晚才留 k'] = () => {
+  const d = (ms) => X.dayNum(ms);
+  const hist = [{ m: 'g', id: 'g-1', c: 0, ok: true, t: NOW - 20 * DAY }];
+  const records = { drill_p5: { 'p5-a': { c: 1, ok: true, t: NOW - 100 * DAY }, 'p5-b': { c: 0, ok: true, t: NOW - DAY } } };
+  const rows = [{ key: 'p5-a', day: d(NOW - 2 * DAY), ok: 1, src: 'k' }, { key: 'p5-b', day: d(NOW - 2 * DAY), ok: 0, src: 'k' }];
+  const fa = X.backfill(X.faEmpty(), { hist, records, rows, now: NOW });
+  eq(fa.i['p5-a'], [d(NOW - 100 * DAY), null, 'o'], '以前做過:看過');
+  eq(fa.i['p5-b'], [d(NOW - 2 * DAY), 0, 'k'], '前測之後才在刷題做:前測是第一次');
+  eq(X.backfillStats(X.faEmpty(), { hist, records, rows, now: NOW }), { g: 0, k: 1, h: 0, l: 0, r: 0, o: 1, cut: true }, '作答紀錄比學習記錄早:截斷');
+};
+/* 模擬考答錯的題(mock_wrong)不寫學習記錄:補回時記看過,之後在刷題第一次碰到也不算第一次;不拿來判斷學習記錄有沒有被截斷 */
+T['補回:模擬考答錯的題記看過(o,日數是模擬考那天);比它早的刷題紀錄照舊;不影響截斷判斷'] = () => {
+  const d = (ms) => X.dayNum(ms);
+  const hist = [{ m: 'p5', id: 'p5-b', c: 0, ok: false, t: NOW - 9 * DAY }];
+  const mock = { 'p5-a': { c: 1, ok: false, t: NOW - 30 * DAY }, 'p5-b': { c: 2, ok: false, t: NOW - 3 * DAY }, bad: 'x' };
+  const fa = X.backfill(X.faEmpty(), { hist, mock, now: NOW });
+  eq(fa.i, { 'p5-a': [d(NOW - 30 * DAY), null, 'o'], 'p5-b': [d(NOW - 9 * DAY), 0, 'h'] });
+  eq(X.backfillStats(X.faEmpty(), { hist, mock, now: NOW }).cut, false, '模擬考比學習記錄早不算截斷');
+};
+/* 一次補很多筆:不能每筆複製整份(以前 1500 筆要好幾百毫秒) */
+T['補回:1500 筆學習記錄一次補完夠快,結果跟逐筆 faAdd 一樣'] = () => {
+  const hist = Array.from({ length: 1499 }, (_, i) => ({ m: 'p5', id: 'p5-q' + i, c: 0, ok: i % 2 === 0, t: NOW - DAY + i }));
+  const t0 = Date.now();
+  const fa = X.backfill(X.faEmpty(), { hist, now: NOW });
+  const ms = Date.now() - t0;
+  let slow = X.faEmpty();
+  hist.slice().sort((a, b) => (a.id < b.id ? -1 : 1)).forEach((h) => { slow = X.faAdd(slow, h.id, X.dayNum(h.t), h.ok ? 1 : 0, 'h'); });
+  eq(X.faNormalize(fa), X.faNormalize(slow));
+  assert.ok(ms < 100, '補 1499 筆花了 ' + ms + ' 毫秒');
+  return ms + ' 毫秒';
+};
+/* 後驗每一格的 log 機率照 (b, c) 只算一次;結果要跟逐格呼叫 prob 一樣 */
+T['後驗:快取每題的 log 機率後,結果跟逐格算一模一樣;988 筆證據的後驗夠快'] = () => {
+  const pri = X.prior(PARAMS, 'R');
+  const evid = EV_R.concat(EV_R.map((e) => Object.assign({}, e, { w: e.w / 2 })));
+  const lp = X.logPost(pri, evid);
+  const ref = new Float64Array(X.GRID.length);
+  X.GRID.forEach((t, g) => {
+    ref[g] = -Math.pow(t - pri.mu, 2) / (2 * pri.sd * pri.sd);
+    evid.forEach((e) => { const p = X.prob(t, e.b, e.c); ref[g] += e.w * (e.x ? Math.log(p) : Math.log(1 - p)); });
+  });
+  eq(Array.from(lp), Array.from(ref));
+  const many = Array.from({ length: 988 }, (_, i) => ev(-2 + (i % 41) * 0.1, i % 3 ? 0.25 : 1 / 3, i % 2, 0.8));
+  const t0 = Date.now();
+  for (let k = 0; k < 5; k++) X.logPost(pri, many);
+  const ms = (Date.now() - t0) / 5;
+  assert.ok(ms < 40, '988 筆一次 ' + ms + ' 毫秒');
+  return ms.toFixed(1) + ' 毫秒';
+};
+
 /* ---------- 檔案本身 ---------- */
 const INTERNAL = /\u7ad9\u9577|\u7db2\u7ad9\u4e3b\u4eba|\u898f\u683c|\u6846\u67b6|\u5be9\u67e5|\u6311\u932f|\u65b9\u6848|\u6a21\u64ec\u5831\u544a|\u5de5\u4f5c\u5305|\u4ee3\u7406|\u8a55\u5206\u8005|AI ?\u8a55|\x47PT|\b[A-Z]:[\\/]|Users[\\/]|\u00a7|@[a-z0-9-]+\.[a-z]/g;
 const BANNED_UI = /\u6e96\u78ba|\u9032\u6b65|\u4fdd\u8b49|\u5206\u6578\u5340\u9593|\u63db\u7b97|\u5b98\u65b9|\u8003\u5230|\u6703\u62ff\u5230/g;

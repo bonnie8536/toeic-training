@@ -195,6 +195,31 @@ T['L3 聽力錯題本與課程回合：不寫計分紀錄（錯題本看過、�
   return { ok, detail: J({ faW, faL }) };
 };
 
+/* 沒有任何舊紀錄的題(補回不會先把它記成看過):即時對答案、錯題本模式(呼叫端直接給題)交卷後都只記看過 */
+T['L4 聽力即時對答案、錯題本模式（沒有任何舊紀錄的題）：作答後記成看過（ok 是 null），不是計分紀錄'] = () => {
+  const out = [{ feedback: 'instant' }, { wrongOnly: true }].map((o) => {
+    const env = makeEnv({ page: false });
+    const L = env.ctx.TOEIC.listening;
+    const units = [{ p: '2', item: clone(L.p2[7]) }, { p: '2', item: clone(L.p2[8]) }];
+    env.ctx.LISTEN.startQuiz(env.host, [{ p: '2', n: 2 }], Object.assign({ units }, o));
+    for (let i = 0; i < 6; i++) { answerVisible(env.host, i); const b = primary(env); if (b) b.click(); }
+    env.flush();
+    const fa = faOf(env), keys = units.map((u) => u.item.id);
+    return { o: J(o), answered: keys.filter((k) => (stored(env).listen_p2 || {})[k]).length, fa: keys.map((k) => fa[k] || null) };
+  });
+  return { ok: out.every((x) => x.answered === 2 && x.fa.every((e) => e && e[1] === null)), detail: J(out) };
+};
+T['L5 模擬考答錯過的題（mock_wrong 有、fa_v1 沒有）第一次在聽力練習碰到：記看過(o)，不是計分紀錄'] = () => {
+  const env0 = makeEnv({ page: false });
+  const item = env0.ctx.TOEIC.listening.p2[9];
+  const env = makeEnv({ page: false, ls: { mock_wrong: { [item.id]: { c: 0, ok: false, t: NOW - 3 * DAY_MS } } } });
+  env.ctx.LISTEN.startQuiz(env.host, [{ p: '2', n: 1 }], { units: [{ p: '2', item: clone(item) }] });
+  drive(env, env.host, ['交卷']);
+  env.flush();
+  const e = faOf(env)[item.id];
+  return { ok: !!e && e[1] === null && e[2] === 'o' && !!(stored(env).listen_p2 || {})[item.id], detail: J(e) };
+};
+
 /* ================= 3. 沒載到、出錯 ================= */
 T['N1 估分的檔沒載到（全沒有、只有 practice-fa 沒有資料層）、資料層丟錯：不丟錯、走到結算卡、沒有 fa_v1，作答紀錄照寫'] = () => {
   const broken = (ctx) => { ctx.ESTIMATE_STORE = { seen() { throw new Error('x'); }, refresh() { throw new Error('x'); }, recordMany() { throw new Error('x'); } }; };

@@ -170,6 +170,20 @@
   }
 
   /* ---------- 後驗 ---------- */
+  /* 每一題(難度 b、猜題下限 c)在每一格答對、答錯的 log 機率:同一組 (b, c) 只算一次(題目難度的種類不多) */
+  const LOG_MAX = 20000;
+  let logCache = new Map();
+  function logsOf(b, c) {
+    const k = b + '|' + c;
+    let v = logCache.get(k);
+    if (v) return v;
+    const yes = new Float64Array(NG), no = new Float64Array(NG);
+    for (let g = 0; g < NG; g++) { const p = prob(GRID[g], b, c); yes[g] = Math.log(p); no[g] = Math.log(1 - p); }
+    if (logCache.size >= LOG_MAX) logCache = new Map();
+    v = { yes, no };
+    logCache.set(k, v);
+    return v;
+  }
   function logPost(pri, evid) {
     need(isPlain(pri) && fin(pri.mu) && fin(pri.sd) && pri.sd > 0, '先驗要有 mu 與大於 0 的 sd');
     need(Array.isArray(evid), '證據要是陣列');
@@ -179,10 +193,8 @@
       need(isPlain(e) && (e.x === 0 || e.x === 1 || e.x === true || e.x === false), '證據的對錯要是 0 或 1');
       need(fin(e.w) && e.w >= 0, '證據的權重要是 0 以上的數字');
       if (!e.w) return;
-      for (let g = 0; g < NG; g++) {
-        const p = prob(GRID[g], e.b, e.c);
-        lp[g] += e.w * (e.x ? Math.log(p) : Math.log(1 - p));
-      }
+      const row = logsOf(e.b, e.c)[e.x ? 'yes' : 'no'], w = e.w;
+      for (let g = 0; g < NG; g++) lp[g] += w * row[g];
     });
     return lp;
   }

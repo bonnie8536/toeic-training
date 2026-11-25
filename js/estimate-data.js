@@ -166,6 +166,12 @@
       return a === undefined || a === null ? rows : rows.concat([{ key: it.key, day: dayNum(t), ok: a === it.answer ? 1 : 0, src: 'g' }]);
     }, []);
   }
+  /* 模擬考答錯的題 { key: { c, ok, t } }:模擬考不寫學習記錄,這些題記看過(日數是模擬考那天) */
+  function mockRows(mock) {
+    if (!isPlain(mock)) return [];
+    return Object.keys(mock).filter((key) => key && isPlain(mock[key]) && fin(Number(mock[key].t)))
+      .map((key) => ({ key, day: dayNum(Number(mock[key].t)), ok: null, src: 'o' }));
+  }
   function recordRows(records) {
     const rows = [];
     if (!isPlain(records)) return rows;
@@ -199,17 +205,25 @@
     });
     return { rows, cut, ids: new Set(list.map((h) => h.id)) };
   }
+  /* 一次寫很多列:只複製一次(每列都複製整份,1500 筆要好幾百毫秒);每列的檢查跟 faAdd 一樣 */
+  const EMPTY = Object.freeze({ v: 1, i: Object.freeze({}) });
   function addRows(fa, rows, stats) {
-    return rows.reduce((acc, r) => {
-      const next = faAdd(acc, r.key, r.day, r.ok, r.src);
-      if (next !== acc && stats) stats[r.src] = (stats[r.src] || 0) + 1;
-      return next;
-    }, fa);
+    need(isPlain(fa) && isPlain(fa.i), '第一次作答紀錄要是 { v, i }');
+    const i = Object.assign({}, fa.i);
+    rows.forEach((r) => {
+      faAdd(EMPTY, r.key, r.day, r.ok, r.src);
+      if (Object.prototype.hasOwnProperty.call(i, r.key)) return;
+      i[r.key] = [r.day, okOf(r.ok), r.src];
+      if (stats) stats[r.src] = (stats[r.src] || 0) + 1;
+    });
+    return { v: 1, i };
   }
-  /* src = { diag, legacy(舊檢測題目), rows(課程前測等逐題 { key, day, ok, src },沒作答的 ok 給 null 就不寫), hist, records({ drill_p5: …, listen_p1: … }), now }
+  /* src = { diag, legacy(舊檢測題目), rows(課程前測等逐題 { key, day, ok, src },沒作答的 ok 給 null 就不寫), hist, records({ drill_p5: …, listen_p1: … }),
+           mock(模擬考答錯的題 mock_wrong), now }
      只補還沒有的 key;回傳 { fa, stats } */
-  /* 舊 28 題、課程前測、學習記錄三種逐題的列先照日數排,同一天照來源先後、再照 key,才寫進去:
-     同一題先在刷題做過、後來又出現在前測,留的是較早的那次 */
+  /* 舊 28 題、課程前測、學習記錄、作答紀錄(學習記錄沒有的題記看過,日數是最後一次作答)、模擬考答錯的題(看過)
+     全部先照日數排,同一天照來源先後、再照 key,才寫進去:同一題先在刷題做過、後來又出現在前測,留的是較早的那次;
+     學習記錄已經清掉的舊作答,也排在後來的前測前面 */
   const byTime = (p, q) => (p.day - q.day) || (SOURCES.indexOf(p.src) - SOURCES.indexOf(q.src)) || cmp(p.key, q.key);
   function backfillRun(fa, src) {
     const s = isPlain(src) ? src : {};
@@ -220,11 +234,9 @@
     const recs = recordRows(s.records);
     const h = fromHist(s.hist || [], recs, s.now);
     stats.cut = h.cut;
-    const dated = fromDiag(s.diag, s.legacy).concat(rows, h.rows).sort(byTime);
-    let out = addRows(faNormalize(fa), dated, stats);
-    const seen = recs.filter((r) => !h.ids.has(r.key)).sort((a, b) => cmp(a.key, b.key)).map((r) => ({ key: r.key, day: dayNum(r.t), ok: null, src: 'o' }));
-    out = addRows(out, seen, stats);
-    return { fa: out, stats };
+    const seen = recs.filter((r) => !h.ids.has(r.key)).map((r) => ({ key: r.key, day: dayNum(r.t), ok: null, src: 'o' }));
+    const dated = fromDiag(s.diag, s.legacy).concat(rows, h.rows, seen, mockRows(s.mock)).sort(byTime);
+    return { fa: addRows(faNormalize(fa), dated, stats), stats };
   }
   function backfill(fa, src) { return backfillRun(fa, src).fa; }
   function backfillStats(fa, src) { return backfillRun(fa, src).stats; }

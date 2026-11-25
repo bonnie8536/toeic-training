@@ -41,7 +41,7 @@ const TABLE = [
   ['fall', 'berry'], ['pairs', 'berry'], ['toast', 'berry'], ['mcq', 'berry'], ['ph', 'berry'],
   ['r:art-03', 'tomato'], ['tq:art-03', 'tomato'], ['p5', 'tomato'], ['p6', 'tomato'], ['p7', 'tomato'], ['pr', 'tomato'],
   ['l1', 'tomato'], ['l2', 'tomato'], ['l3', 'tomato'], ['l4', 'tomato'], ['es', 'tomato'], ['ed', 'tomato'], ['emp', 'tomato'], ['en', 'tomato'], ['rv', 'tomato'], ['dlg:d-001', 'tomato'], ['les_t1_03', 'tomato'], ['les_t12_24', 'tomato'],
-  ['mock', 'melon'], ['diag', 'melon'], ['wr:w1-lesson-1', 'greens'], ['m', 'greens'],
+  ['mock', 'melon'], ['diag', 'melon'], ['pl', 'melon'], ['wr:w1-lesson-1', 'greens'], ['m', 'greens'],
 ];
 
 const T = {};
@@ -230,6 +230,31 @@ T['程度檢測重測:西瓜只給一次(記在 once.diag),之後回 once;壓縮
   const r3 = P.earn(freeze(P.sanitize(freeze(r1.pet), now(late)).pet), { id: 'diag', at: now(late), from: FROM }, now(late));
   const b = P.backfill(freeze(P.sanitize(freeze(r1.pet), now(nx)).pet), freeze({ daily: {}, mock: [], diag: { done: true, finishedAt: new Date(now(nx)).toISOString() }, hist: [], from: FROM }), now(nx));
   return { ok: r1.result === 'got' && r1.food === 'melon' && r1.pet.once.diag === D && r2.result === 'once' && r3.result === 'once' && b.added.length === 0, detail: J([r1.result, r2.result, r3.result, b.added]) };
+};
+
+T['新檢測(pl):第一次做完給西瓜、記在 once.pl;再做回 once;跟舊卷 diag 分開算(舊卷領過照樣給、新檢測領過舊卷照樣給)'] = () => {
+  const r1 = earn(pet(), 'pl');
+  const nx = addDays(D, 3);
+  const r2 = P.earn(freeze(r1.pet), { id: 'pl', at: now(nx), from: FROM }, now(nx));
+  const r3 = P.earn(freeze(r1.pet), { id: 'diag', at: now(nx), from: FROM }, now(nx));
+  const d1 = earn(pet(), 'diag');
+  const r4 = P.earn(freeze(d1.pet), { id: 'pl', at: now(nx), from: FROM }, now(nx));
+  const ok = r1.result === 'got' && r1.food === 'melon' && r1.pet.once.pl === D && !('diag' in r1.pet.once) && r2.result === 'once'
+    && r3.result === 'got' && r3.pet.once.diag === nx && r4.result === 'got' && r4.pet.once.pl === nx && r4.pet.once.diag === D;
+  return { ok, detail: J([r1.result, r1.pet.once, r2.result, r3.result, r4.result]) };
+};
+T['新檢測補寫:placement_v1 最早有結束時間的那一次補一張 pl;沒做完(end 是 null)、壞資料不補;once.pl 有了不補'] = () => {
+  const base = { daily: {}, mock: [], diag: null, hist: [], from: FROM };
+  const t1 = new Date(tp(DAY2 + ' 20:00:00')).toISOString(), t2 = new Date(tp(DAY4 + ' 09:00:00')).toISOString();
+  const pl = { v: 1, runs: [{ at: t2, end: t2 }, { at: t1, end: t1 }, { at: t1, end: null }, 'x'] };
+  const b = P.backfill(freeze(pet()), freeze(Object.assign({}, base, { placement: pl })), now(D));
+  const none = P.backfill(freeze(pet()), freeze(Object.assign({}, base, { placement: { v: 1, runs: [{ at: t1, end: null }] } })), now(D));
+  const bad = P.backfill(freeze(pet()), freeze(Object.assign({}, base, { placement: 'x' })), now(D));
+  const had = earn(pet(), 'pl', tp(DAY1 + ' 10:00:00'));
+  const again = P.backfill(freeze(had.pet), freeze(Object.assign({}, base, { placement: pl })), now(D));
+  const ok = J(b.added.map((x) => [x.date, x.id, x.food])) === J([[DAY2, 'pl', 'melon']]) && b.pet.once.pl === DAY2
+    && none.added.length === 0 && bad.added.length === 0 && had.result === 'got' && again.added.length === 0;
+  return { ok, detail: J([b.added, none.added, bad.added, had.result, again.added]) };
 };
 
 /* ---------- 補寫 ---------- */

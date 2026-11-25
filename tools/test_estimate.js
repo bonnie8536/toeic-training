@@ -454,6 +454,27 @@ T['合併檢測紀錄:同一次的作答照 key 聯集、結束時間取有值�
   eq(M(null, undefined), { v: 1, runs: [] });
 };
 
+T['合併檢測紀錄:每科的開始、結束時間與結果分開併,一科做完的時間不會被另一份沒做完的蓋掉;交換、結合、冪等'] = () => {
+  const M = X.mergePlacementRuns, AT = '2026-11-20T01:00:00Z';
+  const local = { v: 1, runs: [run(AT, null, [['L', 'l1-a', 1, 1, 9]], { tm: { L: [AT, '2026-11-20T01:08:00Z'] }, res: { L: [300, 230, 370] } })] };
+  const cloud = { v: 1, runs: [run(AT, null, [['L', 'l1-a', 1, 1, 9], ['L', 'l2-a', 0, 0, 7], ['L', 'l2-b', 0, 0, 7], ['L', 'l2-c', 0, 0, 7], ['L', 'l2-d', 0, 0, 7], ['L', 'l2-e', 0, 0, 7], ['L', 'l2-f', 0, 0, 7], ['L', 'l2-g', 0, 0, 7], ['L', 'l2-h', 0, 0, 7], ['L', 'l2-i', 0, 0, 7], ['L', 'l2-j', 0, 0, 7]], { tm: { L: [AT, null], R: ['2026-11-20T01:09:00Z', null] } })] };
+  [M(local, cloud), M(cloud, local)].forEach((m, i) => {
+    eq(m.runs[0].tm, { L: [AT, '2026-11-20T01:08:00Z'], R: ['2026-11-20T01:09:00Z', null] }, '時間 ' + i);
+    eq(m.runs[0].res, { L: [300, 230, 370] }, '結果 ' + i);
+    eq(m.runs[0].items.length, 11, '作答 ' + i);
+  });
+  const rnd = mulberry(11), t = (d, h) => '2026-11-0' + d + 'T0' + h + ':00:00Z';
+  const pick = (arr) => arr[Math.floor(rnd() * arr.length)];
+  const rr = () => ({ v: 1, runs: Array.from({ length: Math.floor(rnd() * 3) }, () => run(t(1 + Math.floor(rnd() * 3), 0), rnd() < 0.5 ? null : t(1, 9), [], {
+    tm: { L: [pick([null, t(1, 1), t(1, 2)]), pick([null, t(1, 3), t(1, 4)])], R: [pick([null, t(1, 5)]), pick([null, t(1, 6), t(1, 7)])] },
+    res: rnd() < 0.5 ? {} : { L: [pick([200, 300]), 150, 400] },
+  })) });
+  for (let r = 0; r < 300; r++) {
+    const x = rr(), y = rr(), z = rr();
+    eq(M(x, y), M(y, x), '交換 ' + r); eq(M(M(x, y), z), M(x, M(y, z)), '結合 ' + r); eq(M(M(x, y), y), M(x, y), '冪等 ' + r);
+  }
+};
+
 T['預估快照:時間新的整份贏,不合併欄位'] = () => {
   const a = { ip: 'ip1', cv: 'c1', at: '2026-11-20T00:00:00Z', L: [300, 250, 350, 30], R: null };
   const b = { ip: 'ip1', cv: 'c1', at: '2026-11-21T00:00:00Z', L: null, R: [280, 230, 330, 40] };
@@ -510,6 +531,8 @@ T['補回學習記錄:沒被截斷時每題取最早一筆(聽力看播放次數
   eq(X.backfillStats(X.faEmpty(), { hist, records, now: NOW }), { g: 0, k: 0, h: 1, l: 1, r: 2, o: 1, cut: false });
   const rows = X.backfill(X.faEmpty(), { rows: [{ key: 'p5-a', day: 5, ok: 1, src: 'k' }, { key: 'p5-b', day: 5, ok: null, src: 'k' }], now: NOW });
   eq(rows.i, { 'p5-a': [5, 1, 'k'] }, '課程前測逐題寫入、沒作答的不寫');
+  const order = X.backfill(X.faEmpty(), { hist: [{ m: 'p5', id: 'p5-a', c: 0, ok: false, t: NOW - 9 * DAY }], rows: [{ key: 'p5-a', day: X.dayNum(NOW - 2 * DAY), ok: 1, src: 'k' }, { key: 'p5-c', day: X.dayNum(NOW - 2 * DAY), ok: 0, src: 'k' }], now: NOW });
+  eq(order.i, { 'p5-a': [X.dayNum(NOW - 9 * DAY), 0, 'h'], 'p5-c': [X.dayNum(NOW - 2 * DAY), 0, 'k'] }, '先刷題、後來在前測又出現:留較早的刷題那次');
   throws(() => X.backfill(X.faEmpty(), { hist: 'x', now: NOW }), /學習記錄/);
   throws(() => X.backfill(X.faEmpty(), { now: NaN }), /時間/);
 };

@@ -81,13 +81,38 @@
       .sort((p, q) => ((SEC_RANK[p[0]] === undefined ? 2 : SEC_RANK[p[0]]) - (SEC_RANK[q[0]] === undefined ? 2 : SEC_RANK[q[0]])) || cmp(p[1], q[1]));
   }
   function headOf(r) {
-    return { at: r.at, end: typeof r.end === 'string' ? r.end : null, ip: r.ip, cv: r.cv, sec: r.sec, tm: r.tm, res: r.res };
+    return { at: r.at, end: typeof r.end === 'string' ? r.end : null, ip: r.ip, cv: r.cv, sec: r.sec };
   }
   /* 兩份同一次檢測的其他欄位:有結束時間的優先,再比結束時間,再比整份字串 */
   function betterHead(a, b) {
     if (!!a.end !== !!b.end) return a.end ? a : b;
     if (a.end !== b.end) return a.end > b.end ? a : b;
     return JSON.stringify(a) >= JSON.stringify(b) ? a : b;
+  }
+  /* 每科的開始與結束時間分開併:開始取早的,結束取有值的(都有取晚的);一科做完的時間不會被另一份沒做完的蓋掉 */
+  const isTime = (x) => typeof x === 'string' && x !== '';
+  function pickTime(a, b, later) {
+    if (!isTime(a)) return isTime(b) ? b : null;
+    if (!isTime(b)) return a;
+    return (later ? a > b : a < b) ? a : b;
+  }
+  function mergeTm(a, b) {
+    const out = {};
+    ['L', 'R'].forEach((sec) => {
+      const x = isPlain(a) && Array.isArray(a[sec]) ? a[sec] : null, y = isPlain(b) && Array.isArray(b[sec]) ? b[sec] : null;
+      if (!x && !y) return;
+      out[sec] = [pickTime(x && x[0], y && y[0], false), pickTime(x && x[1], y && y[1], true)];
+    });
+    return out;
+  }
+  /* 每科的結果分開併:兩份都有時取字串比較大的那份,只為了結果固定 */
+  function mergeRes(a, b) {
+    const out = {};
+    ['L', 'R'].forEach((sec) => {
+      const x = isPlain(a) && Array.isArray(a[sec]) ? a[sec] : null, y = isPlain(b) && Array.isArray(b[sec]) ? b[sec] : null;
+      if (x || y) out[sec] = (!y || (x && JSON.stringify(x) >= JSON.stringify(y)) ? x : y).slice();
+    });
+    return out;
   }
   function runsOf(p) {
     const runs = isPlain(p) && Array.isArray(p.runs) ? p.runs : [];
@@ -97,11 +122,12 @@
     const by = {};
     runsOf(a).concat(runsOf(b)).forEach((r) => {
       const prev = by[r.at];
-      const head = prev ? betterHead(prev.head, headOf(r)) : headOf(r);
-      by[r.at] = { head, items: itemsUnion([prev ? prev.items : [], r.items]) };
+      by[r.at] = prev
+        ? { head: betterHead(prev.head, headOf(r)), tm: mergeTm(prev.tm, r.tm), res: mergeRes(prev.res, r.res), items: itemsUnion([prev.items, r.items]) }
+        : { head: headOf(r), tm: mergeTm(r.tm, null), res: mergeRes(r.res, null), items: itemsUnion([r.items]) };
     });
     const ats = Object.keys(by).sort().slice(-RUNS_MAX);
-    return { v: 1, runs: ats.map((at) => JSON.parse(JSON.stringify(Object.assign({}, by[at].head, { items: by[at].items })))) };
+    return { v: 1, runs: ats.map((at) => JSON.parse(JSON.stringify(Object.assign({}, by[at].head, { tm: by[at].tm, items: by[at].items, res: by[at].res })))) };
   }
 
   /* 一次檢測裡某一科的作答,寫成來源 t 的第一次作答紀錄(沒作答的不寫);存這次結果時只用它加先驗估 */
@@ -182,18 +208,20 @@
   }
   /* src = { diag, legacy(舊檢測題目), rows(課程前測等逐題 { key, day, ok, src },沒作答的 ok 給 null 就不寫), hist, records({ drill_p5: …, listen_p1: … }), now }
      只補還沒有的 key;回傳 { fa, stats } */
+  /* 舊 28 題、課程前測、學習記錄三種逐題的列先照日數排,同一天照來源先後、再照 key,才寫進去:
+     同一題先在刷題做過、後來又出現在前測,留的是較早的那次 */
+  const byTime = (p, q) => (p.day - q.day) || (SOURCES.indexOf(p.src) - SOURCES.indexOf(q.src)) || cmp(p.key, q.key);
   function backfillRun(fa, src) {
     const s = isPlain(src) ? src : {};
     need(fin(s.now), '補回要給現在時間（毫秒）');
     need(s.hist === undefined || Array.isArray(s.hist), '學習記錄要是陣列');
     const stats = { g: 0, k: 0, h: 0, l: 0, r: 0, o: 0, cut: false };
-    let out = addRows(faNormalize(fa), fromDiag(s.diag, s.legacy), stats);
-    const rows = (Array.isArray(s.rows) ? s.rows : []).filter((r) => isPlain(r) && (r.ok === 0 || r.ok === 1 || r.ok === true || r.ok === false));
-    out = addRows(out, rows, stats);
+    const rows = (Array.isArray(s.rows) ? s.rows : []).filter((r) => isPlain(r) && Number.isInteger(r.day) && (r.ok === 0 || r.ok === 1 || r.ok === true || r.ok === false));
     const recs = recordRows(s.records);
     const h = fromHist(s.hist || [], recs, s.now);
     stats.cut = h.cut;
-    out = addRows(out, h.rows, stats);
+    const dated = fromDiag(s.diag, s.legacy).concat(rows, h.rows).sort(byTime);
+    let out = addRows(faNormalize(fa), dated, stats);
     const seen = recs.filter((r) => !h.ids.has(r.key)).sort((a, b) => cmp(a.key, b.key)).map((r) => ({ key: r.key, day: dayNum(r.t), ok: null, src: 'o' }));
     out = addRows(out, seen, stats);
     return { fa: out, stats };

@@ -465,7 +465,8 @@
       return h('div', { style: 'font-size:13.5px;color:var(--ink-light);margin-bottom:6px' },
         label + ' 錯題(' + ids.length + ')：' + ids.slice(0, 30).map(id => describe(id) + (mock.has(id) ? '（模擬考）' : '')).join('、') + (ids.length > 30 ? '…' : ''));
     };
-    box.append(
+    /* 沒有錯題的 Part 回 null:瀏覽器的 append(null) 會印出「null」,先濾掉 */
+    box.append(...[
       /* 題庫裡找不到(已淘汰的題,data/retired.json):只有沒載到 js/wrongbook.js 時會走到,寫「已淘汰」不寫成 #0、題組0 */
       wrongLine('Part 5', d5, id => {
         const q = p5ById[id];
@@ -478,7 +479,7 @@
       wrongLine('Part 7', d7, id => {
         const si = (TOEIC.part7 || []).findIndex(s => id.startsWith(s.id + ':'));
         return si < 0 ? '已淘汰的題組' : '題組' + (si + 1) + ' Q' + (Number(id.split(':')[1]) + 1);
-      }));
+      })].filter(Boolean));
     return box;
   }
 })();

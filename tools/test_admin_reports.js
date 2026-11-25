@@ -207,6 +207,15 @@ T['不碰學生的列:整個後台操作過程沒有寫 progress 以外的表,�
   const storeUse = /store\.(get|set|remove)\(/.test(src);
   return { ok: w.every((q) => q.table === 'progress' && q.op === 'upsert') && A.upserts.every((u) => u.row.user_id === K.OWNER_ID) && !storeUse, detail: w.length + ' 次寫入,store 使用 ' + storeUse };
 };
+T['學生表展開:沒有錯題的學生,展開列不出現 null 字樣(瀏覽器的 append(null) 會印出 null)'] = async () => {
+  const A = await open(BASE, { reports: false });
+  const carets = A.root.byClass('ad-caret');
+  for (const c of carets) await c.fire('click');
+  await K.settle();
+  const rows = A.root.find((n) => n.tagName === 'TR' && n.style && n.style.display === '');
+  const text = A.root.textContent;
+  return { ok: carets.length === 3 && rows.length === 3 && !/null|undefined/.test(text), detail: carets.length + ' 個學生,' + rows.length + ' 列展開;' + (text.match(/(null|undefined)+/) || ['沒有 null'])[0] };
+};
 T['admin.html:載入順序(report.js 在 admin-classes 前、admin-reports 在 admin.js 前)'] = () => {
   const s = read('admin.html');
   const i = (n) => s.indexOf('js/' + n + '.js');

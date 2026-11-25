@@ -4,13 +4,13 @@
    再來 js/profile.js、js/analysis.js。補回舊 28 題要 data/diagnostic.js(兩頁都載,兩頁的數字才一樣)。
    · 先用本機資料畫(ESTIMATE_STORE.peek,不寫),雲端準備好後再讀雲端合併、重算(ESTIMATE_STORE.load),畫第二次。
    · 「再做 N 題」連到練習頁:只有用得到練習頁的人(收費畫面沒開,或使用權沒被鎖)才加連結。
-   · 建議改級(opt.suggest 為真時才有):文字按鈕,有課程進度先確認;按了才改 levels,來源與理由記 est。
+   · 建議改級(opt.suggest 為真時才有):文字按鈕,有課程進度先確認;按了才改 levels(ONBOARD_DATA.applyEst),來源與理由記 est。
    · 不刪、不蓋作答紀錄與舊檢測結果:寫入只有 ESTIMATE_STORE 自己補的鍵,和按了改級之後的 levels。
 
    對外的函式:
    · mount(slot, opt) → { repaint() } | null:在 slot(一個空的元素)裡畫卡片。估分的檔沒載到回 null,slot 保持空的。
        opt = { suggest(要不要有建議改級), onLevel(sec, level)(改級寫好之後呼叫) }
-   · hasCourse() → boolean:這個學生有沒有課程進度(上過任何一堂,或做過課程前測)。
+   · hasCourse() → boolean:這個學生有沒有課程進度(有課程的 plan、上過任何一堂,或做過課程前測)。
    · practiceLinks() → { L, R } | null
    · writeLevel(sec, level) → 'ok' | 'blocked' | 'failed'
    · afterImport(pid) → View | null:匯入進度檔、還沒換到那個學生之前,替那個學生補一次預估分數用的紀錄。 */
@@ -38,7 +38,7 @@
         const k = localStorage.key(i);
         if (!k || k.indexOf(pre) !== 0) continue;
         const name = k.slice(pre.length);
-        if (LESSON_KEY.test(name) || name === 'tests_v1') return true;
+        if (LESSON_KEY.test(name) || name === 'tests_v1' || name === 'plan') return true;   // plan:跟新用戶設定、檢測頁的判斷一致
       }
     } catch (e) { return false; }
     return false;
@@ -58,16 +58,17 @@
   function readLevels() {
     try { /* global store:js/common.js */ return store.get('levels', null); } catch (e) { return null; }
   }
+  /* 寫入走 ONBOARD_DATA.applyEst(跟新用戶設定、檢測結果頁同一個寫法,寫完讀回);那支沒載到才自己寫 */
   function writeLevel(sec, level) {
     if (!LEVEL_KEY[sec] || LEVELS.indexOf(level) < 0) return 'failed';
     const D = root.ONBOARD_DATA, C = root.ONBOARD_CORE;
-    if (D && typeof D.applyEst === 'function') return D.applyEst(sec, level);
-    if (!C || typeof C.newLevels !== 'function') return 'failed';
-    try { if (typeof canKeepProgress === 'function' && !canKeepProgress()) return 'blocked'; } catch (e) { return 'blocked'; }
     const cur = readLevels();
     if (!isPlain(cur) || LEVELS.indexOf(cur.listening) < 0 || LEVELS.indexOf(cur.reading) < 0) return 'failed';
     const l = sec === 'L' ? level : cur.listening, r = sec === 'R' ? level : cur.reading;
     const source = Object.assign({}, isPlain(cur.source) ? cur.source : {}, { [LEVEL_KEY[sec]]: 'est' });
+    if (D && typeof D.applyEst === 'function') return D.applyEst({ listening: l, reading: r, source });
+    if (!C || typeof C.newLevels !== 'function') return 'failed';
+    try { if (typeof canKeepProgress === 'function' && !canKeepProgress()) return 'blocked'; } catch (e) { return 'blocked'; }
     store.set('levels', C.newLevels(cur, l, r, source, 'est', new Date().toISOString()));
     const back = readLevels();
     return isPlain(back) && back.listening === l && back.reading === r ? 'ok' : 'failed';

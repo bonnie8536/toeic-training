@@ -547,7 +547,7 @@ T['頂欄與分組頁:24 頁的頂欄是同一份(首頁加三個分組連結),�
   assert.equal(withNav.length, 24, '有導覽的頁數:' + withNav.length);
   const base = plain(NAV.exec(read('index.html'))[0]);
   const GROUPS = { 'learn.html': ['grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'], 'warmup.html': ['vocab.html', 'listening.html', 'writing.html', 'grammar.html?ref=verbs'],
-    'drill.html': ['practice.html', 'mock.html', 'diagnostic.html', 'review.html'] };
+    'drill.html': ['practice.html', 'mock.html', 'placement.html', 'review.html'] };
   const tops = [['index.html', '首頁']].concat(Array.from(base.matchAll(/<a class="nav-btn" href="([^"]+)">([^<]+)<\/a>/g)).map((m) => [m[1], m[2]]));
   assert.deepEqual(tops.map((t) => t[0]), ['index.html', 'learn.html', 'warmup.html', 'drill.html'], '頂欄四個連結:' + JSON.stringify(tops));
   assert.deepEqual(['首頁', '日常學習', '練練手感', '刷刷題目'], tops.map((t) => t[1]));

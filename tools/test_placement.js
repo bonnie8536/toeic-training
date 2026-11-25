@@ -77,19 +77,23 @@ T['兩科中間:聽力完成→接著做閱讀;先做閱讀的對稱一頁;「�
   assert.ok(typeof lastRun(r).end === 'string');
 };
 
-T['合併時先做完那一科的結束時間被舊的一份蓋掉:做完全部再補記,結果頁兩科都有數字'] = async () => {
+T['合併時先做完那一科的結束時間不被雲端那份沒做完的蓋掉:做完全部,結果頁兩科都有數字'] = async () => {
   const e = env();
   await start(e);
   await doSection(e, 'right');
   const k = e.keyOf('placement_v1');
   const pl = JSON.parse(e.ls.get(k));
-  pl.runs[0].tm.L = [pl.runs[0].tm.L[0], null];
-  e.ls.set(k, JSON.stringify(pl));
+  const stale = JSON.parse(JSON.stringify(pl));
+  stale.runs[0].tm.L = [stale.runs[0].tm.L[0], null];
+  stale.runs[0].items = stale.runs[0].items.slice(0, 3);
+  stale.runs[0].res = {};
+  e.ls.set(k, JSON.stringify(e.E.mergePlacementRuns(stale, pl)));
+  assert.ok(lastRun(e).tm.L[1], '聽力的結束時間留著');
   clickText(e.box, '開始閱讀');
   await flush();
   await doSection(e, 'right');
   await flush(40);
-  assert.ok(lastRun(e).tm.L[1], '聽力補記了結束時間');
+  assert.ok(lastRun(e).tm.L[1] && lastRun(e).tm.R[1]);
   assert.ok(/^根據 24 題/.test(txt(e.box.querySelector('.result-note'))));
 };
 
@@ -304,6 +308,14 @@ T['級別:沒設定過照預估寫(來源 est);有課程進度且已設定過不
   await flush(20);
   assert.strictEqual(c.UI.confirms[0].title, '改級別會換學習包。');
   assert.notStrictEqual(c.get('levels').listening, 'entry');
+  const ob = env({ onboard: true, search: '?from=onboard' });
+  await fullRun(ob, 'right');
+  assert.strictEqual(ob.get('levels'), undefined, '從新用戶設定來的:級別留給設定流程的結果頁寫');
+  const go = ob.box.querySelector('.result-go');
+  assert.deepStrictEqual([txt(go), go.getAttribute('href')], ['下一步', 'start.html?step=result']);
+  const rf = env({ onboard: true, search: '?start=1&from=onboard&first=R' });
+  await flush(40);
+  assert.strictEqual(curUnit(rf).part, '5', '從新用戶設定按「沒有耳機，先做閱讀」:直接從閱讀開始');
 };
 
 T['訪客:按開始不建立檢測;沒網路時兩科都做的先做閱讀、只做聽力的不開始'] = async () => {

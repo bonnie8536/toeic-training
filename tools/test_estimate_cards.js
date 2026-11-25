@@ -85,7 +85,7 @@ const meta = (uid, name) => row(uid, '_meta', { name, email: name + '@example.co
 const dayText = (iso) => { const d = new Date(Date.parse(iso)); return (d.getMonth() + 1) + ' 月 ' + d.getDate() + ' 日'; };
 function oldAdminSrc() {
   const { execFileSync } = require('child_process');
-  return execFileSync('git', ['-C', REPO, 'show', '5928f0decc694a0e1f9042706c2074052080ff51:js/admin.js'], { encoding: 'utf8' });
+  return execFileSync('git', ['-C', REPO, 'show', '5928f0d:js/admin.js'], { encoding: 'utf8' });
 }
 
 const A = {};

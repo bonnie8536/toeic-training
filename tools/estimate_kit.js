@@ -72,8 +72,12 @@ function depsOf(ctx, over) {
 /* 檔案列表:估分相關的新檔(公開用語掃描、行數檢查用) */
 const EST_FILES = ['js/estimate-core.js', 'js/estimate-data.js', 'js/estimate-store.js', 'js/estimate-ui.js', 'js/sync-merge-estimate.js', 'css/estimate.css',
   'data/item-params.js', 'tools/build-item-params.js', 'tools/estimate_kit.js', 'tools/test_estimate.js', 'tools/test_item_params.js',
-  'tools/test_estimate_store.js', 'tools/test_estimate_ui.js'];
+  'tools/test_estimate_store.js', 'tools/test_estimate_ui.js',
+  /* 接上各頁的檔:檢測頁、練習的第一次作答、預估卡、課程前測與模擬考的測試 */
+  'js/placement.js', 'js/placement-views.js', 'css/placement.css', 'js/practice-fa.js', 'js/estimate-cards.js',
+  'tools/placement_kit.js', 'tools/test_placement.js', 'tools/e2e_placement.js', 'tools/test_estimate_practice.js', 'tools/test_estimate_cards.js',
+  'tools/onboard_est_cases.js', 'tools/test_onboard_e2e.js', 'tools/test_estimate_course.js', 'tools/test_mock_score.js', 'tools/test_placement_e2e.js'];
 /* 公開 repo 不寫的字(寫成 \u 跳脫,這支檔自己也不出現):人名以外的內部用語、repo 外的路徑 */
-const INTERNAL = /\u7ad9\u9577|\u7db2\u7ad9\u4e3b\u4eba|\u898f\u683c|\u6846\u67b6|\u5be9\u67e5|\u6311\u932f|\u65b9\u6848|\u6a21\u64ec\u5831\u544a|\u5de5\u4f5c\u5305|\u4ee3\u7406|\u8a55\u5206\u8005|AI ?\u8a55|\x47PT|\b[A-Z]\x3a[\\/]|@[a-z0-9.]+\.(com|tw)/g;
+const INTERNAL = /\u7ad9\u9577|\u7db2\u7ad9\u4e3b\u4eba|\u898f\u683c|\u6846\u67b6|\u5be9\u67e5|\u6311\u932f|\u65b9\u6848|\u6a21\u64ec\u5831\u544a|\u5de5\u4f5c\u5305|\u4ee3\u7406|\u8a55\u5206\u8005|AI ?\u8a55|\x47PT|\b[A-Z]\x3a[\\/]|@(?!example\.com)[a-z0-9.]+\.(com|tw)/g;   // 測試用的 example.com 不算
 
 module.exports = { REPO, read, J, DAY, HOUR, NOW, UID, CPID, LPID, plain, eq, load, fakeStore, fakeCloud, depsOf, EST_FILES, INTERNAL };

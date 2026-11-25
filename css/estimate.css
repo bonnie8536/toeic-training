@@ -37,7 +37,7 @@
 .est-suggest { margin: 2px 0 8px 108px; font-size: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
 .est-meta { margin: 14px 0 0; font-size: 13px; color: var(--ink-light); }
 .est-note { margin: 2px 0 0; font-size: 12.5px; color: var(--ink-soft); }
-.est-card .est-go { margin-top: 14px; }
+.est-card .est-go { display: inline-block; margin-top: 14px; }   /* 主按鈕是連結:行內區塊才吃得到上面的間距,不疊到「本站估計」那一行 */
 
 /* ---------- 結果頁(放在 UI.result 的卡片裡) ---------- */
 .est-result { width: 100%; margin: 10px 0 0; text-align: left; }

@@ -17,12 +17,16 @@
   const es = () => root.ESTIMATE_STORE || null;
   const has = (o, k) => !!o && typeof o === 'object' && Object.prototype.hasOwnProperty.call(o, k);
 
+  /* 只讀這幾個作答紀錄的鍵(寫成字面字串,tools/test_move_core.js 掃描每個鍵都有搬家規則) */
+  const KEYS = { drill_p5: 'drill_p5', drill_p6: 'drill_p6', drill_p7: 'drill_p7', listen_p1: 'listen_p1', listen_p2: 'listen_p2', listen_p3: 'listen_p3', listen_p4: 'listen_p4' };
   /* 有沒有「舊作答紀錄有、fa_v1 沒有」的題 */
   function hasOld(rows, S) {
     const cache = {};
     return rows.some((r) => {
-      if (!(r.rec in cache)) cache[r.rec] = store.get(r.rec, null);   // global store:js/common.js
-      return has(cache[r.rec], r.key) && !S.seen(r.key);
+      const key = has(KEYS, r.rec) ? KEYS[r.rec] : null;
+      if (!key) return false;
+      if (!(key in cache)) cache[key] = store.get(key, null);   // global store:js/common.js
+      return has(cache[key], r.key) && !S.seen(r.key);
     });
   }
 

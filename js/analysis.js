@@ -180,7 +180,7 @@
     } : {
       pose: 'read', text: '累計作答 ' + rec.total + ' / 10 題',
       action: { label: '去刷題', href: 'practice.html', primary: true },
-      links: [{ label: '程度檢測', href: 'diagnostic.html' }],
+      links: [{ label: '程度檢測', href: 'placement.html' }],
     }));
     return;
   }

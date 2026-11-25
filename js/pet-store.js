@@ -163,7 +163,7 @@
     };
     used.forEach(x => take(P.earn(pet, { id: x.id, at: x.at, from: FROM }, now), 'later'));
     if (ask) { const r = P.earn(pet, { id: ask.id, at: ask.at, from: FROM }, now); take(r, 'hook'); res = mine(ask, pet, r); }
-    const b = P.backfill(pet, { daily: store.get('daily_done', null), mock: store.get('mock_history', null), diag: store.get('diag', null), hist: readHist(), from: FROM }, now);
+    const b = P.backfill(pet, { daily: store.get('daily_done', null), mock: store.get('mock_history', null), diag: store.get('diag', null), placement: store.get('placement_v1', null), hist: readHist(), from: FROM }, now);
     if (b.added.length) {
       pet = b.pet;
       filled = filled.concat(b.added.map(a => ({ date: a.date, src: a.src, id: a.id }))).slice(-LATER_MAX);

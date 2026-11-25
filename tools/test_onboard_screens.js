@@ -593,7 +593,7 @@ T['P19 每個畫面只有一顆實色主按鈕,其他是文字按鈕;S0 有鵜�
     if (step === 'score') eq(buttonsOf(e), ['btn-text:只記得總分', 'btn:送出', 'btn-text:改成幫我測']);
     if (step === 'signup') eq(buttonsOf(e), ['btn-text:返回']);
     if (step === 'test') {
-      eq(buttonsOf(e), ['btn:開始檢測', 'btn-text:先跳過，從入門開始']);
+      eq(buttonsOf(e), ['btn:開始檢測', 'btn-text:沒有耳機，先做閱讀', 'btn-text:先跳過，從入門開始']);
       /* 同檢測頁的開始頁:標題左邊圖示、卡片裡三個小標籤、兩行作答方式、主按鈕在卡片裡;沒有單項的列點 */
       const art = e.root.querySelector('.page-head canvas');
       const card = e.root.querySelector('.diag-intro');

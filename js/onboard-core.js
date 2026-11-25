@@ -238,7 +238,10 @@
     const listened = runsOf(pl).some((r) => runSections(r).L);
     return legacy && !listened && !lastDoneRun(pl) ? 'L' : 'LR';
   }
-  function placementHref(sec) { return 'placement.html?start=1&from=onboard' + (sec === 'L' || sec === 'R' ? '&sec=' + sec : ''); }
+  /* readFirst:兩科都做、沒有耳機的人先做閱讀(檢測頁看 first=R) */
+  function placementHref(sec, readFirst) {
+    return 'placement.html?start=1&from=onboard' + (sec === 'L' || sec === 'R' ? '&sec=' + sec : readFirst ? '&first=R' : '');
+  }
 
   /* 預估分數對回四級(view 是 ESTIMATE_STORE 的 View,run 是剛做完的那一次,prev 是現在的 levels)。
      這一次做完的科:用預估的級別(view 有數字時),沒有 view 時用這一次存的結果 res(只用這一次作答加起點算的);

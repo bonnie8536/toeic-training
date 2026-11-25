@@ -2,7 +2,7 @@
    配很小的假 DOM(tools/engine_kit.js)、假的 UI(專心模式、結算卡、確認視窗)、假的 Audio、假時鐘、手動推進的計時器、假的 CLOUD。
    不開瀏覽器、不連網。tools/test_placement.js 用。
    env(opt):opt = { ls(共用的 localStorage Map,兩次開頁用同一個)、now(毫秒)、search(網址的 ?…)、pid(學生檔案 id,null 是訪客)、
-                    online(false 是離線)、cloud(雲端每一列)、confirm(確認視窗回什麼,預設 true)、onboard(多載 onboard-core) } */
+                    online(false 是離線)、cloud(雲端每一列)、confirm(確認視窗回什麼,預設 true)、onboard(多載 onboard-core、onboard-data) } */
 'use strict';
 const fs = require('fs');
 const vm = require('vm');
@@ -97,7 +97,7 @@ function env(opt) {
   const loc = { search: o.search || '', pathname: '/placement.html', hash: '', href: 'placement.html', reload() {} };
   const ctx = {
     console: { log() {}, warn() {}, error: (...a) => { (ctx.__errors = ctx.__errors || []).push(a.join(' ')); }, info() {} },
-    document: dom, Date: FakeDate, Math, Audio: FakeAudio, URLSearchParams, Promise, Object, Array, JSON, Map, Set, Number, String, Error, TypeError, RegExp, Boolean, isFinite, isNaN,
+    document: dom, Date: FakeDate, Math, Audio: FakeAudio, URLSearchParams, Promise, Object, Array, JSON, sessionStorage: { getItem: () => null, setItem() {}, removeItem() {} }, Map, Set, Number, String, Error, TypeError, RegExp, Boolean, isFinite, isNaN,
     localStorage: { getItem: (k) => (ls.has(k) ? ls.get(k) : null), setItem: (k, v) => { ls.set(k, String(v)); }, removeItem: (k) => { ls.delete(k); }, get length() { return ls.size; }, key: (i) => [...ls.keys()][i] || null },
     location: loc, history: { replaceState: (a, b, u) => { loc.replaced = u; } }, navigator: { onLine: o.online !== false },
     scrollTo() {}, addEventListener() {}, removeEventListener() {},
@@ -115,7 +115,7 @@ function env(opt) {
   ctx.UI = fakeUI(dom, o);
   DATA.forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   vm.runInContext(read('js/common.js') + '\n;globalThis.__store = store;', ctx, { filename: 'js/common.js' });
-  if (o.onboard) vm.runInContext(read('js/onboard-core.js'), ctx, { filename: 'js/onboard-core.js' });
+  if (o.onboard) ['js/onboard-core.js', 'js/onboard-data.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   CODE.forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   const tick = (ms) => {
     clock.t += ms;

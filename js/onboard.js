@@ -368,7 +368,7 @@
     });
   }
   /* 「開始檢測」:記開始時間,到程度檢測頁直接開考(做哪幾科照 ONBOARD_CORE.testPlan) */
-  function startAndGo(msg, el, sec) { if (wrote(D.startTest(), msg, el)) location.href = C.placementHref(sec); }
+  function startAndGo(msg, el, sec, readFirst) { if (wrote(D.startTest(), msg, el)) location.href = C.placementHref(sec, readFirst); }
   /* 畫面同檢測頁的開始頁:標題左邊的圖示、卡片裡的小標籤、作答方式與實色主按鈕。
      只有舊檢測的人(閱讀已有作答)只做聽力;做過檢測的人多一行「會跟平常練習一起算。」。舊檢測與它的報告不刪 */
   const NOTES = ['戴上耳機。每段音檔只播一次。', '選好答案，按「下一題」。不能回上一題。'];
@@ -388,7 +388,8 @@
       h('div', { class: 'diag-intro ob-intro' },
         h('p', { class: 'mock-tags' }, tags.map((t) => h('span', { class: 'mock-tag' }, t))),
         notes.map((t) => h('p', { class: 'ob-intro-note' }, t)), msg, start,
-        h('div', { class: 'ob-intro-more' }, textBtn('先跳過，從入門開始', (e) => { if (wrote(D.chooseEntry(), msg, e.currentTarget)) go('result'); }), legacy)));
+        h('div', { class: 'ob-intro-more' }, plan === 'L' ? null : textBtn('沒有耳機，先做閱讀', (e) => startAndGo(msg, e.currentTarget, null, true)),
+          textBtn('先跳過，從入門開始', (e) => { if (wrote(D.chooseEntry(), msg, e.currentTarget)) go('result'); }), legacy)));
     flash = '';
   }
   function useLegacy(diag, msg, el) {

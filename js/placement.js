@@ -3,14 +3,15 @@
    · 選題一律呼叫 ESTIMATE(js/estimate-core.js):可出的題(available)、事先數好每一格(planSlots)、目前能力(estimate)、挑題(pickUnit)。
      第一格用「目前能力 − 0.5」(startTheta);種子是學生檔案 id,亂數加上這次的開始時間與第幾格,重整頁面挑到同一題。
    · 讀寫一律經 ESTIMATE_STORE(js/estimate-store.js):startRun、beginSection、answer(每送出一格就存)、endSection、finishRun、activeRun、excludeFor。
-     不寫 hist、drill_p*、listen_p*。級別(levels)只在下面 applyLevels 的條件寫:沒設定過、在新用戶設定流程裡、或沒有課程進度;有課程進度時只給「改成這個級別」。
+     不寫 hist、drill_p*、listen_p*。級別(levels)跟新用戶設定用同一套規則(ONBOARD_CORE.levelsFromEstimate、estPolicy,寫入走 ONBOARD_DATA.applyEst):
+     從新用戶設定來的不在這裡寫(回設定流程的結果頁再寫);已經設定完、有課程進度的人只給「改成這個級別」。
    · 作答:選好按「下一題」才送出,題組全部選完才能按;不能回上一題,沒有題號面板;不顯示對錯。每題記作答秒數(題組平均分給每一小題)。
    · 聽力:按播放才播、只播一次;出錯或沒播完停住可以「重新播放」一次;再出錯換同一個 Part 的另一題,這題不記。
      P3、P4 先播音,播完三題一起出。開始播的題記在這台裝置(tr_placement_heard,不同步):離開後回來,播到一半的那題換新題,不重播。
      沒有網路時不開始聽力(兩科都做的改成先做閱讀)。
    · 中途離開:24 小時內回來從下一格接著做(activeRun);離開前問一次。
-   網址:?sec=L|R 只做一科;?start=1 直接開始(從新用戶設定來);?from=onboard 結果頁主按鈕回新用戶設定;?view=last 看最近一次的結果。
-   課程預留題排除:RESERVE_ON 是開關(現在關),打開時讀 window.PLACEMENT_RESERVE() 給的題目 id。 */
+   網址:?sec=L|R 只做一科;?start=1 直接開始(從新用戶設定來,帶 first=R 是先做閱讀);?from=onboard 結果頁主按鈕回新用戶設定;?view=last 看最近一次的結果。
+   課程預留題排除:RESERVE_ON 是開關(現在關),打開時讀 LESSON_DATA.placementReserve() 給的題目 id(頁面要另外載課程的檔才有)。 */
 (function (root) {
   'use strict';
   const SCRIPT = Object.freeze({
@@ -21,15 +22,14 @@
   const AUTO_WAIT = 8000;
   const RESERVE_ON = false;
   const SINGLE = { 1: true, 2: true, 5: true };
-  const LEVEL_KEY = { L: 'listening', R: 'reading' };
-  const V = () => root.PLACEMENT_VIEWS;
+    const V = () => root.PLACEMENT_VIEWS;
   const E = () => root.ESTIMATE;
   const S = () => root.ESTIMATE_STORE;
   const STR = () => V().STR;
   const doc = () => root.document;
   const isPlain = (x) => !!x && typeof x === 'object' && !Array.isArray(x);
   const st = { root: null, run: null, sec: null, plan: null, cur: null, focus: null, card: null, skip: new Set(), skipSlots: new Set(), busy: false, asking: false,
-    secParam: 'LR', onboard: false, preload: null };
+    secParam: 'LR', onboard: false, readFirst: false, preload: null };
 
   function el(tag, attrs, kids) {
     const n = doc().createElement(tag);
@@ -73,10 +73,15 @@
   function hasCourse() { return isPlain(readStore('plan', null)); }
   function offline() { return !!(root.navigator && root.navigator.onLine === false); }
   function selfFor(sec) { return S().selfOf(readStore('self_score', null), Date.now())[sec]; }
-  function reserveIds() {
-    if (!RESERVE_ON || !hasCourse() || typeof root.PLACEMENT_RESERVE !== 'function') return [];
-    try { const r = root.PLACEMENT_RESERVE(); return Array.isArray(r) ? r : []; } catch (e) { return []; }
+  /* 課程預留題:開始一次檢測時讀一次(LESSON_DATA.placementReserve 是非同步的),整次檢測用同一份 */
+  let reserved = [];
+  async function loadReserve() {
+    reserved = [];
+    const LD = root.LESSON_DATA;
+    if (!RESERVE_ON || !hasCourse() || !LD || typeof LD.placementReserve !== 'function') return;
+    try { const r = await LD.placementReserve(); reserved = Array.isArray(r) ? r.filter((x) => typeof x === 'string') : []; } catch (e) { reserved = []; }
   }
+  const reserveIds = () => reserved;
   const itemsOf = (run, sec) => (run && Array.isArray(run.items) ? run.items : []).filter((it) => Array.isArray(it) && it[0] === sec && typeof it[1] === 'string');
   function answeredUnits(run, sec) {
     const out = [];
@@ -104,7 +109,7 @@
 
   /* ---------- 選題 ---------- */
   function avail(slot, fa, used) {
-    return E().available({ units: unitsOf(slot.part), part: slot.part, size: slot.size, params: params(), fa, used, reserve: reserveIds(), reserveOn: RESERVE_ON && hasCourse() });
+    return E().available({ units: unitsOf(slot.part), part: slot.part, size: slot.size, params: params(), fa, used, reserve: reserveIds(), reserveOn: reserveIds().length > 0 });
   }
   /* 這一科事先數好的格:用「這次作答以前」的第一次作答紀錄數,續做時跟開始時數的一樣 */
   function planFor(sec) {
@@ -326,6 +331,7 @@
     st.busy = true;
     try {
       try { await S().load(); } catch (e) { /* 讀不到雲端照本機的做 */ }
+      await loadReserve();
       const r = await S().startRun({ sec: st.secParam });
       if (!r || !r.run) { renderIntro(STR().saveFail); return; }
       st.run = r.run;
@@ -355,54 +361,37 @@
   }
 
   /* ---------- 結果 ---------- */
-  /* 做完的科補記結束時間:兩台(或上傳時跟雲端那份)合併時,同一次檢測沒有結束時間的兩份只留一份的 tm,
-     先做完的那一科的結束時間可能被舊的那份蓋掉。整份的格都答完了就再記一次(endSection 只補沒有的) */
-  function reEnd() {
-    const keep = { sec: st.sec, plan: st.plan, skipSlots: st.skipSlots };
-    ['L', 'R'].filter((s) => started(st.run, s) && !ended(st.run, s)).forEach((s) => {
-      st.sec = s; st.plan = planFor(s); st.skipSlots = new Set();
-      if (position(s) < 0) { const r = S().endSection(st.run.at, s); if (r) st.run = r; }
-    });
-    Object.assign(st, keep);
-  }
   async function finish() {
     leaveFocus();
     renderLoading();
-    try { reEnd(); } catch (e) { /* 補不了照樣看結果 */ }
     const at = st.run.at;
     let view = null;
     try { view = await S().finishRun(at); } catch (e) { view = null; }
     const runs = view && view.placement && Array.isArray(view.placement.runs) ? view.placement.runs : [];
     renderResult(view, runs.filter((r) => r && r.at === at)[0] || st.run, true);
   }
-  function setLevels(next, done) {
-    const C = root.ONBOARD_CORE, D = root.ONBOARD_DATA;
-    if (!C || !canKeep()) return false;
-    if (D && typeof D.setEstLevels === 'function') return D.setEstLevels(next.listening, next.reading) === 'ok';
-    const cur = readStore('levels', null);
-    const source = Object.assign({ listening: 'est', reading: 'est' }, isPlain(cur) && isPlain(cur.source) ? cur.source : {});
-    done.forEach((s) => { source[LEVEL_KEY[s]] = 'est'; });
-    db().set('levels', C.newLevels(cur, next.listening, next.reading, source, 'est', new Date().toISOString()));
-    return true;
+  /* 寫級別:跟新用戶設定、個人頁的「改成這個級別」同一個寫法(來源與理由記 est) */
+  function setLevels(lv) {
+    const D = root.ONBOARD_DATA;
+    if (!lv || !D || typeof D.applyEst !== 'function' || !canKeep()) return false;
+    return D.applyEst(lv) === 'ok';
   }
-  /* 寫不寫級別:這次做完、有數字的科照預估對回四級;另一科不動。
-     有課程進度、已經設定過、不是在新用戶設定裡:不寫,回 suggest(結果頁給「改成這個級別」) */
+  /* 寫不寫級別:從新用戶設定來的不寫(設定流程的結果頁會寫)。
+     其他入口不在設定流程裡:已經有級別、又有課程進度的回 suggest(結果頁給「改成這個級別」),其他直接寫。
+     級別怎麼對回跟設定流程同一個函式(ONBOARD_CORE.levelsFromEstimate) */
   function applyLevels(view, run) {
     const C = root.ONBOARD_CORE;
-    if (!C) return {};
+    if (st.onboard || !C || typeof C.levelsFromEstimate !== 'function') return {};
     const cur = readStore('levels', null);
-    const done = ['L', 'R'].filter((s) => ended(run, s) && view[s] && view[s].show);
-    if (!done.length) return {};
-    const next = { listening: isPlain(cur) ? cur.listening : null, reading: isPlain(cur) ? cur.reading : null };
-    done.forEach((s) => { next[LEVEL_KEY[s]] = view[s].band; });
-    if (!C.levelsSet(next)) return {};
-    const same = isPlain(cur) && cur.listening === next.listening && cur.reading === next.reading;
-    if (C.levelsSet(cur) && hasCourse() && !st.onboard) return same ? {} : { suggest: next, done };
-    return { wrote: setLevels(next, done) };
+    const lv = C.levelsFromEstimate(view, run, cur);
+    if (!lv) return {};
+    const same = isPlain(cur) && cur.listening === lv.listening && cur.reading === lv.reading;
+    if (C.levelsSet(cur) && hasCourse()) return same ? {} : { suggest: lv };
+    return { wrote: setLevels(lv) };
   }
   function levelLinks(lv, view, run) {
     if (lv.suggest) {
-      return { label: STR().applyLevel, onClick: () => root.ESTIMATE_UI.confirmLevel(true).then((ok) => { if (ok && setLevels(lv.suggest, lv.done)) renderResult(view, run, false); }) };
+      return { label: STR().applyLevel, onClick: () => root.ESTIMATE_UI.confirmLevel(true).then((ok) => { if (ok && setLevels(lv.suggest)) renderResult(view, run, false); }) };
     }
     const U = root.ONBOARD_UI, D = root.ONBOARD_DATA;
     if (!U || typeof U.levelPanel !== 'function' || !D) return null;
@@ -433,10 +422,10 @@
     const det = run ? reviewOf(run) : null;
     const links = [levelLinks(lv, view, run), det ? { label: STR().review, onClick: () => { det.open = true; if (typeof det.scrollIntoView === 'function') det.scrollIntoView({ block: 'start' }); } } : null,
       fresh ? null : { label: STR().retestLink, onClick: () => renderIntro() }];
-    const card = root.ESTIMATE_UI.result({ view, primary, links, earnId: 'placement' });
+    const card = root.ESTIMATE_UI.result({ view, primary, links, earnId: 'pl' });
     paint([pageHead(), card ? card.el : null, det]);
     st.card = card;
-    if (fresh && card && root.PET_HOOK) root.PET_HOOK.done('placement', { into: card.reward });
+    if (fresh && card && root.PET_HOOK) root.PET_HOOK.done('pl', { into: card.reward });
   }
   async function showLast() {
     renderLoading();
@@ -451,7 +440,7 @@
   function readParams() {
     let q = null;
     try { q = new root.URLSearchParams(root.location.search || ''); } catch (e) { return {}; }
-    const out = { sec: q.get('sec'), start: q.get('start') === '1', from: q.get('from'), view: q.get('view') };
+    const out = { sec: q.get('sec'), start: q.get('start') === '1', from: q.get('from'), view: q.get('view'), first: q.get('first') };
     if (out.start) {
       q.delete('start');
       const rest = q.toString();
@@ -471,7 +460,7 @@
       if (root.CLOUD && root.CLOUD.reloading) return;
       const act = S().activeRun();
       if (act) resume(act);
-      else if (ok && canKeep() && S().mode() !== 'guest') begin(['L', 'R'], null);
+      else if (ok && canKeep() && S().mode() !== 'guest') begin(st.readFirst ? ['R', 'L'] : ['L', 'R'], null);
       else renderIntro();
     }
     Promise.resolve(root.CLOUD ? root.CLOUD.ready : null).then(() => go(true), () => go(false));
@@ -488,6 +477,7 @@
     const p = readParams();
     st.secParam = p.sec === 'L' || p.sec === 'R' ? p.sec : 'LR';
     st.onboard = p.from === 'onboard';
+    st.readFirst = p.first === 'R' && st.secParam === 'LR';
     if (p.view === 'last') { showLast(); return; }
     const act = S().activeRun();
     if (act) resume(act);

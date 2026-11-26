@@ -10,7 +10,7 @@ const path = require('path');
 
 const SRC = path.join(__dirname, 'move-worker', 'worker.js');
 
-/* 換掉 NEW、NEW_HOST、OLD_WWW 三行;其他一個字都不改。找不到要換的地方就丟錯(正式程式改了格式時不會默默做出錯的演練版) */
+/* 換掉 NEW、NEW_HOST、OLD_WWW 三行,PHASE 一律改成 A(演練的是代理;正式的已是 B);其他一個字都不改。找不到要換的地方就丟錯(正式程式改了格式時不會默默做出錯的演練版) */
 function build(src, opt) {
   const old = String(opt.old || ''), neu = String(opt.new || '').replace(/\/+$/, '');
   if (!/^[a-z0-9.-]+$/.test(old) || !/^https:\/\/[a-z0-9.-]+$/.test(neu)) throw new Error('--old 要是主機名稱(不帶 https://),--new 要是 https:// 開頭的網址');

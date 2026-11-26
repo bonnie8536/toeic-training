@@ -157,7 +157,10 @@ T['演練版 Worker(tools/build_rehearsal_worker.js):只換三個網域,代理�
   const WH = 'rushup-move-worker.example.workers.dev', NP = 'https://rushup-move-new.pages.dev';
   const src = build(SRC, { old: WH, new: NP });
   const lines = (s) => s.replace(/\r\n/g, '\n').split('\n');   // Windows 上 git 取出來的是 CRLF
-  const diff = lines(src).slice(1).filter((l, i) => l !== lines(SRC)[i]);
+  /* 演練版一律是 PHASE A(演練的是代理);正式的 worker.js 現在是 B,先把那一行對齊成 A 再比,其他行只能差三個網域 */
+  assert.ok(/^const PHASE = 'A';$/m.test(src), '演練版不是 PHASE A');
+  const srcA = SRC.replace(/^const PHASE = '[AB]';/m, "const PHASE = 'A';");
+  const diff = lines(src).slice(1).filter((l, i) => l !== lines(srcA)[i]);
   assert.deepEqual(diff, ["const NEW = '" + NP + "';", "const NEW_HOST = 'rushup-move-new.pages.dev';", "const OLD_WWW = '" + WH + "';"]);
   const up = (status, headers) => () => new Response(status === 200 ? 'page' : null, { status, headers: headers || {} });
   const run = async (respond, p) => {

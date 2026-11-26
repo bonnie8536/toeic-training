@@ -178,7 +178,7 @@
     const li = [];
     if (s.profiles) li.push('學生檔案 ' + s.profiles + ' 個');
     if (s.banks.length) li.push('自訂單字題庫 ' + s.banks.length + ' 個：' + s.banks.map((n) => '「' + (n || '未命名') + '」').join('、'));
-    li.push(s.pet ? '小雞：有' : '小雞：沒有');
+    li.push(s.pet ? '寵物：有' : '寵物：沒有');
     li.push('練習紀錄 ' + s.hist + ' 筆');
     if (s.accountItems) li.push('帳號還沒上傳到雲端的進度 ' + s.accountItems + ' 項（到新網址登入同一個帳號時合併）');
     if (s.unknown) li.push('這台還有 ' + s.unknown + ' 個認不得的資料，不會搬，也不會刪');

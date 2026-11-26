@@ -16,6 +16,10 @@ if (!H_SRC) throw new Error('js/common.js 裡找不到 function h(tag, ...)');
 const NEW_SRC = read('js/pet-ui.js');
 /* 第 1 步之後刻意改的地方:[原本那一行, 改成]。2026-11-13 搜尋結果摘要:網站模式的小雞卡建立時就帶 data-nosnippet(test_seo 檢查) */
 const STEP1_LATER = [
+  /* 2026-11-26 預設名改「暴衝雞」、名字相關的標籤與輸入框提示(只改顯示的字) */
+  ["(v || cur).status.name) || '小雞'; }", "(v || cur).status.name) || '暴衝雞'; }"],
+  ["'aria-label': '幫小雞取名'", "'aria-label': '改名字'"],
+  ["'aria-label': '小雞的名字', autocomplete", "'aria-label': '名字', placeholder: '暴衝雞', autocomplete"],
   ["    if (v.guest && v.cloud) out.push(h('p', { class: 'pet-note' }, '登入後換成帳號裡的小雞。'));", ''],
   ["const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h' });",
     "const box = h('section', { class: 'pet-card pet-' + kind, 'aria-labelledby': idp + '-h', 'data-nosnippet': '' });"],
@@ -28,9 +32,9 @@ const STEP1_LATER = [
   ["return what + '沒有改，這台裝置的日期不對，調好以後再改。';", "return what + '沒有改\\n請先調好這台裝置的日期';"],
   ["return what + '沒有改，這台先不能改小雞的資料。';", "return what + '沒有改\\n這台先不能改小雞的資料';"],
   ["    return '沒有存到，再試一次。';", "    return '沒有存到\\n再試一次';"],
-  ["'小雞的資料是新版網頁存的，這台先不能餵。'", "'這台先不能餵\\n小雞的資料是新版網頁存的'"],
+  ["'小雞的資料是新版網頁存的，這台先不能餵。'", "'這台先不能餵\\n寵物的資料是新版網頁存的'"],
   ["'這台裝置的日期不對，調好以後再餵。'", "'這台先不能餵\\n請先調好這台裝置的日期'"],
-  ["'小雞的資料讀不到，這台先不能餵。'", "'這台先不能餵\\n小雞的資料讀不到'"],
+  ["'小雞的資料讀不到，這台先不能餵。'", "'這台先不能餵\\n寵物的資料讀不到'"],
   ["'，保護卡 '", "' · 保護卡 '"],
   ["' 題。' : '改了從明天開始。'", "' 題' : '明天起生效'"],
   ["'餵牠（' + s.food + ' 顆）'", "'餵牠 · ' + s.food + ' 顆'"],
@@ -42,7 +46,7 @@ const OLD_SRC = STEP1_LATER.reduce((src, [from, to]) => {
 
 const NAMES = { grain: '飼料', corn: '玉米', greens: '青江菜', pea: '豌豆', berry: '藍莓', tomato: '小番茄', melon: '西瓜', yam: '地瓜', worm: '麵包蟲' };
 const IDS = Object.keys(NAMES);
-const RO_TEXT = { readOnly: '這台先不能餵\n小雞的資料讀不到', clock: '這台先不能餵\n請先調好這台裝置的日期' };
+const RO_TEXT = { readOnly: '這台先不能餵\n寵物的資料讀不到', clock: '這台先不能餵\n請先調好這台裝置的日期' };
 
 /* ---------- 假 DOM ---------- */
 function makeDom(timers) {
@@ -627,11 +631,11 @@ T['吃完最後一份:live「小黃吃了玉米」'] = async () => {
   pg.tile('corn').fire('click'); pg.timers.advance(50);
   return { ok: pg.live() === '小黃吃了玉米' && pg.count('corn') === '0 份', detail: pg.live() + ' ' + pg.count('corn') };
 };
-T['第一次吃到最愛:live 加「牠最喜歡玉米。」,格子馬上有愛心;小雞名字空的時候用「小雞」'] = async () => {
+T['第一次吃到最愛:live 加「牠最喜歡玉米。」,格子馬上有愛心;小雞名字空的時候用「暴衝雞」'] = async () => {
   const pg = load({ view: foodView({ status: { name: '' }, pantry: { fav: 'corn' } }), food: true });
   pg.open();
   pg.tile('corn').fire('click'); pg.timers.advance(50);
-  return { ok: pg.live() === '小雞吃了玉米 · 還有 1 份 · 牠最喜歡玉米' && !!pg.tile('corn').querySelector('.pet-heart'), detail: pg.live() };
+  return { ok: pg.live() === '暴衝雞吃了玉米 · 還有 1 份 · 牠最喜歡玉米' && !!pg.tile('corn').querySelector('.pet-heart'), detail: pg.live() };
 };
 /* eat 不再交給引擎播一次(只啄 2 下),改成照食物的口數一格一格畫(每一口都咬到) */
 T['動畫:小雞播 eat 再 happy;啄地那格各咬一口舞台上的食物(56 px、不錯開),口數照食物;面板小雞 maxDpr 1.5、variants 1'] = async () => {
@@ -828,7 +832,7 @@ T['減少動態:食物不上舞台,小雞換 eat 靜止格停 1 秒再回待機;
 };
 T['saved 失敗:live 說原因(唯讀、時鐘)或「沒有存到\n再試一次」,重畫後份數回來'] = async () => {
   const bad = [];
-  for (const [reason, want] of [['readOnly', '玉米沒有餵\n這台先不能改小雞的資料'], ['clock', '玉米沒有餵\n請先調好這台裝置的日期'], ['error', '沒有存到\n再試一次'], ['failed', '沒有存到\n再試一次']]) {
+  for (const [reason, want] of [['readOnly', '玉米沒有餵\n這台先不能改寵物的資料'], ['clock', '玉米沒有餵\n請先調好這台裝置的日期'], ['error', '沒有存到\n再試一次'], ['failed', '沒有存到\n再試一次']]) {
     const pg = load({ view: foodView(), food: true });
     pg.state.saved = Promise.resolve({ ok: false, reason });
     pg.open();
@@ -939,7 +943,7 @@ T['走動開關:role=switch、aria-checked 跟 view().roam 一致、aria-labelle
   pg.open();
   const sw = pg.sheet.querySelector('.pet-switch');
   const lab = pg.doc.getElementById('pet-roam-l');
-  const a = sw.getAttribute('role') === 'switch' && sw.getAttribute('aria-checked') === 'true' && sw.getAttribute('aria-labelledby') === 'pet-roam-l' && lab && lab.textContent === '小雞在頁面上走動' && sw.getAttribute('type') === 'button' && sw.getAttribute('data-focus') === 'roam';
+  const a = sw.getAttribute('role') === 'switch' && sw.getAttribute('aria-checked') === 'true' && sw.getAttribute('aria-labelledby') === 'pet-roam-l' && lab && lab.textContent === '在頁面上走動' && sw.getAttribute('type') === 'button' && sw.getAttribute('data-focus') === 'roam';
   sw.focus(); sw.fire('click');
   const s2 = pg.sheet.querySelector('.pet-switch');
   const busy = s2.getAttribute('aria-disabled') === 'true';
@@ -961,7 +965,7 @@ T['走動開關:存不了時用 saveMsg 說「設定沒有改…」;「我的」
   const has = !!pg.sheet.querySelector('.pet-switch') && !pg.sheet.querySelector('.pet-goal');
   pg.sheet.querySelector('.pet-switch').fire('click');
   await flush(); await flush();
-  return { ok: has && pg.live() === '設定沒有改\n這台先不能改小雞的資料', detail: pg.live() };
+  return { ok: has && pg.live() === '設定沒有改\n這台先不能改寵物的資料', detail: pg.live() };
 };
 /* 首頁的實色按鈕只留每日練習那一顆:首頁卡片的「餵牠」是描邊(沒有 primary),「我的」頁照舊實色 */
 T['卡片(食物模式):.pet-act 一律放 button.btn.pet-open「餵牠」(首頁描邊、「我的」實色),按了打開面板、關掉焦點回到它;唯讀說明照放'] = async () => {

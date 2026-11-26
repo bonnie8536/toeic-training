@@ -366,7 +366,7 @@ T['存滿:「小番茄已經存滿 9 份 · 先餵掉一些再來拿」'] = asyn
   const p = earnP(e)[0];
   return { ok: !!p && p.textContent === '小番茄已經存滿 9 份 · 先餵掉一些再來拿', detail: p && p.textContent };
 };
-T['小雞還沒取名:用「小雞」'] = async () => {
+T['還沒取名:點心的字照樣是「+1 玉米」'] = async () => {
   const e = hookEnv({ name: '', result: { result: 'got', food: 'corn', id: 'd' } });
   await e.H.done('d', { into: e.head });
   const p = earnP(e)[0];

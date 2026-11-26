@@ -310,9 +310,8 @@ async function t(name, fn) {
   const redirectRes = () => mkRes(null, { status: 200, type: 'opaqueredirect' });
   await t('move: 舊網址安裝時存好搬家頁與它載入的每個檔案(清單跟 move-out.html 一樣)', async () => {
     const html = fs.readFileSync(path.join(REPO, 'move-out.html'), 'utf8');
-    const BRAND_IMGS = ['/img/brand-y2-28.png', '/img/brand-y2-56.png', '/img/brand-y2-84.png'];
     const want = ['/move-out.html'].concat([...html.matchAll(/<(?:script|link)\b[^>]*\b(?:src|href)="([^"]+)"/g)].map((m) => m[1])
-      .filter((u) => !/^https?:/.test(u)).map((u) => '/' + u.replace(/^\.?\//, ''))).concat(BRAND_IMGS);   // style.css 的背景圖(頂欄 Y2),頁面標籤讀不到,sw.js 另外列
+      .filter((u) => !/^https?:/.test(u)).map((u) => '/' + u.replace(/^\.?\//, '')));
     const sw = fs.readFileSync(path.join(REPO, 'sw.js'), 'utf8');
     const list = eval('(' + /const MOVE_ASSETS = (\[[\s\S]*?\]);/.exec(sw)[1].replace('MOVE_PAGE', "'/move-out.html'") + ')');
     assert.deepStrictEqual([...list].sort(), [...new Set(want)].sort());

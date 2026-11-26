@@ -329,13 +329,19 @@ T['只有練習紀錄(24 題 Part 5):閱讀有數字、聽力「再做 N 題就�
     && r.clean && !r.errors.length;
   return { ok, detail: J(r.me) };
 };
-T['什麼都沒有:卡片只有標題與一顆檢測按鈕「做程度檢測」;能力分析頁是實色(整頁一顆主按鈕)、「我的」頁是描邊(整頁最多一顆實色)'] = async () => {
-  const r = await both(23, {}, { an: (p) => shot(p, 'c3_none_analysis') });
+T['什麼都沒有:卡片只有標題與一顆檢測按鈕「做程度檢測」;能力分析頁是實色(整頁一顆主按鈕)、「我的」頁是描邊(整頁最多一顆實色);能力分析頁資料不夠的鵜鶘是 gaze(坐著抬眼看書),不是正面看書'] = async () => {
+  let art = null;
+  const r = await both(23, {}, { an: async (p) => {
+    await p.wait("!!document.querySelector('.ui-empty-art.is-pelican')", '能力分析頁空狀態的鵜鶘');
+    art = await p.eval("(() => { const c = document.querySelector('.ui-empty-art'); return [c.getAttribute('data-pose'), c.classList.contains('is-pelican'), document.querySelectorAll('canvas[data-pose=\"read\"], canvas[data-mascot=\"read\"], canvas[data-pose=\"daydream\"], canvas[data-mascot=\"daydream\"]').length]; })()");
+    await shot(p, 'c3_none_analysis');
+  } });
   await r.p.close();
   const ok = r.me.rows.length === 0 && r.me.note.length === 0 && J(r.me.go) === J(['做程度檢測>placement.html']) && J(r.me.primary) === '[]'
     && J(r.an.primary) === J(['做程度檢測>placement.html']) && J(r.an.go) === J(r.me.go) && J(r.an.rows) === J(r.me.rows)
-    && J(r.anBtns) === J(['做程度檢測']) && r.meAll.length <= 1 && r.clean && !r.errors.length;
-  return { ok, detail: J(r.me) + ' 能力分析主按鈕 ' + J(r.anBtns) + ' 我的整頁 ' + J(r.meAll) };
+    && J(r.anBtns) === J(['做程度檢測']) && r.meAll.length <= 1 && r.clean && !r.errors.length
+    && J(art) === J(['gaze', true, 0]);
+  return { ok, detail: J(r.me) + ' 能力分析主按鈕 ' + J(r.anBtns) + ' 我的整頁 ' + J(r.meAll) + ' 鵜鶘 ' + J(art) };
 };
 T['建議改級(有課程進度):個人頁有文字按鈕「改成…程度」、能力分析頁沒有;按了先確認(原因、會換學習包),取消不改,確定才改 levels(來源與理由記 est)'] = async () => {
   const fa = richFa();

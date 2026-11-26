@@ -1,0 +1,4 @@
+# GitHub Pages 的 Jekyll 設定：只調整發佈範圍，其他沿用預設。
+# tools、supabase 與兩份說明檔不放上網站（repo 本身照常公開）；move-ping.txt 是搬家流程要用的，不能排除。
+exclude: [tools, supabase, README.md, "GITHUB上線指南.md"]
+include: [.well-known]

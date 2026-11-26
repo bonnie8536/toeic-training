@@ -248,15 +248,17 @@
     }));
     return Array.from(out);
   }
-  /* 之後兩次小檢核的預留題(PACK_CORE.reserveFor,回 { ids, near, far }):有帳號才有,種子用帳號的資料夾名稱(雲端帳號 c 開頭、不含連字號)。
+  /* 之後兩次小檢核的預留題(PACK_CORE.reserveFor,回 { ids, near, far }):有帳號才有,種子用帳號的資料夾名稱(雲端帳號 c 開頭、不含連字號);
+     程度檢測做過的題在課程裡算做過、小檢核不選,清單先扣掉這些題(題組取組 id),不然預留到的題小檢核用不到。
      同一頁同一組條件只算一次。算不出來(例如題目索引沒載入)就這次不預留,照原本的選題 */
   const reserves = new Map();
   function reserveOf(lesson) {
     const id = accountId();
     if (!id || !mem.packs || !mem.pool || !Array.isArray(mem.pool.ids)) return undefined;
     const account = id.charAt(0) === 'u' ? 'c' + id.slice(1).replace(/-/g, '') : id;
-    const pool = mem.pool.ids;
-    const key = [account, lesson.no, lesson.levels.listening, lesson.levels.reading].join('|');
+    const done = new Set(Object.keys(placementSeen()).map((k) => k.split(':')[0]));
+    const pool = mem.pool.ids.filter((x) => !done.has(x)), out = mem.pool.ids.filter((x) => done.has(x)).sort();
+    const key = [account, lesson.no, lesson.levels.listening, lesson.levels.reading, out.join(',')].join('|');
     return () => {
       if (!reserves.has(key)) {
         const run = Promise.resolve().then(() => pack().reserveFor(mem.packs, lesson.levels, lesson.no, { account, pool, bank: root.BANK }))

@@ -221,10 +221,11 @@ T['B:導覽帶 tr_hd=1、沒有 tr_moved=1:回搬家頁的內容(網址不變、
 };
 
 /* 要貼到 Cloudflare 的那一份在 repo 外:改了這裡要一起換、線上 Worker 也要重貼。
-   那份不在這台(別的電腦、CI)就略過 */
+   路徑用環境變數 RUSHUP_WORKER_PASTE_FILE 傳入;沒設或檔案不存在(別的電腦、CI)就略過並說明 */
 T['tools/move-worker/worker.js 跟貼上用那一份(repo 外)一樣'] = async () => {
-  const p = path.join(REPO, '..', '刷刷英文開發', '搬家', 'worker', '舊網址worker_貼上用.js');
-  if (!fs.existsSync(p)) return;
+  const p = process.env.RUSHUP_WORKER_PASTE_FILE;
+  if (!p) { console.log('略過:沒有設定 RUSHUP_WORKER_PASTE_FILE'); return; }
+  if (!fs.existsSync(p)) { console.log('略過:RUSHUP_WORKER_PASTE_FILE 指定的檔案不存在'); return; }
   const n = (s) => s.replace(/\r\n/g, '\n');
   assert.equal(n(fs.readFileSync(p, 'utf8')), n(SRC), '兩份不一樣:改了 tools/move-worker/worker.js 要把貼上用那份一起換掉(線上 Worker 也要重貼)');
 };

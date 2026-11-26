@@ -1,12 +1,21 @@
-﻿任務卡.md
 *.bak
 .claude/*
 !.claude/launch.json
 __pycache__/
 
-# 金鑰與 Azure 音檔輸出（不進 repo）
+# 根目錄以中文命名的工作筆記（.md）不進 repo
+/[!A-Za-z0-9]*.md
+
+# 金鑰、憑證與環境變數檔（不進 repo）
 .env
+.env*
 *.env
+*.pem
+*.key
+*.p12
+*.pfx
 _secrets/
+
+# Azure 音檔輸出（不進 repo）
 audio_azure/
 audio_voices_list.json

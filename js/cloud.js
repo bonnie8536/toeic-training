@@ -60,6 +60,9 @@
 (function () {
   const cfg = window.CLOUD_CONFIG || {};
   const enabled = !!(cfg.url && cfg.anonKey);
+  /* supabase-js 的確切版本與內容雜湊(loadSdk 用,升版的做法寫在那裡) */
+  const SDK_SRC = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2/dist/umd/supabase.min.js';
+  const SDK_SRI = 'sha384-7i/4BYWz4Mn+lJfg2HWfEPfZQ7tmFKF3CTSKlXBpxWjNlLjcg+T6smpHG4gLmU1u';
 
   /* Google 登入失敗時 Supabase 不是回傳錯誤,而是把錯誤掛在網址的 # 後面導回來。
      這裡先接住再把網址清乾淨(登入卡會把它顯示出來);密碼重設的 # 帶的是 token,不動它。 */
@@ -181,7 +184,11 @@
     return new Promise((res, rej) => {
       if (window.supabase && window.supabase.createClient) return res();
       const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+      /* 鎖定確切版本並檢查內容雜湊:CDN 上的檔案被換掉時瀏覽器不執行。升版時 SDK_SRC 的版本號與 SDK_SRI 一起換,
+         雜湊用 curl -s 新網址 | openssl dgst -sha384 -binary | openssl base64 -A 算(抓兩次確認一樣) */
+      s.src = SDK_SRC;
+      s.integrity = SDK_SRI;
+      s.crossOrigin = 'anonymous';
       s.onload = res;
       s.onerror = () => rej(new Error('無法載入雲端元件\n請檢查網路後重新整理'));
       document.head.appendChild(s);

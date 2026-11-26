@@ -60,7 +60,7 @@
     calib: {
       h: '程度調整', listening: '聽力', reading: '閱讀', move: (a, b) => (LEVEL_NAME[a] || a) + ' → ' + (LEVEL_NAME[b] || b), info: '程度調整說明',
       lines: ['依第 2 到 4 堂第一次作答的答對率調整', '每科至少 20 題才調整', '答對率高於 80% 升一級，低於 45% 降一級', '每一期只調整一次',
-        '從第 5 堂起照新程度排課', '進階、高分目前照門檻課表上課', '到「我的」可以改級別'],
+        '從第 5 堂起照新程度排課', '進階、高分目前照門檻課表上課', '到「我的」可以改程度'],
     },
     s8: { first: '開始第 1 堂', start: (n) => '開始' + lessonNo(n), resume: (n) => '繼續' + lessonNo(n) },
     list: { h1: '課程', done: doneOf, label: '24 堂', complete: '完成', segs: segsOf, todo: '未開始', closed: '未開放', optional: '課後練習' },

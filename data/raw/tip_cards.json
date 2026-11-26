@@ -28,8 +28,8 @@
     {
       "id": "tip-P2-yn",
       "part": "P2",
-      "title": "Yes/No 問句的間接回答",
-      "body": "Yes/No 問句是用 Do、Is、Have、Can 這類字開頭，可以用是或不是回答的問句。正解不一定會說 Yes 或 No，也可能直接說現況或接下來的安排。所以別只等 Yes 或 No，要聽整句回答有沒有接上問的那件事。Yes 開頭但後半句講別的事，是常見陷阱。",
+      "title": "是非問句的間接回答",
+      "body": "是非問句是用 Do、Is、Have、Will 這類字開頭，可以用 Yes 或 No 回答的問句。正解不一定會說 Yes 或 No，也可能直接說現況或接下來的安排。所以別只等 Yes 或 No，要聽整句回答有沒有接上問的那件事。Yes 開頭但後半句講別的事，是常見陷阱。",
       "example": {
         "en": "Did you send the price list to the client?\n(A) I'll do it right after lunch.\n(B) Yes, the prices went up.\n(C) She's a new client.",
         "zh": "A 沒說 No，用「午餐後就寄」表示還沒寄。B 的後半句講的是漲價。",
@@ -52,8 +52,8 @@
     {
       "id": "tip-P3-speaker_place",
       "part": "P3",
-      "title": "從用字判斷身分與地點",
-      "body": "有些題目問說話的人是誰或在哪裡。對話沒有直接說出職業或地點時，要從一組相關的字推出來，例如聽到 menu、table for two 多半是在餐廳。最好等兩個線索指向同一個答案再選。只跟對話裡一個字有關的選項是常見陷阱。",
+      "title": "先讀三題，抓主旨、身分與地點",
+      "body": "播放前先讀這組的三題，標出每題問誰、問什麼。主旨、說話的人是誰、在哪裡，多半在對話的頭兩句。對話沒有直接說出職業或地點時，要從一組相關的字推出來，例如聽到 menu、table for two 多半是在餐廳。只跟對話裡一個字有關的選項是常見陷阱。",
       "example": {
         "en": "Woman: I'd like to borrow these three books. Here's my card.\nMan: Sure. Please return them within two weeks.\nQuestion: Where most likely are the speakers?\n(A) At a library\n(B) At a bookstore",
         "zh": "borrow 和 return 都指向圖書館。B 只跟 books 有關。",

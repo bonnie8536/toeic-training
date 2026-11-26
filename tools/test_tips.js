@@ -217,6 +217,24 @@ T['T9 卡的清單:19 張、id 照來源順序;兩包第 1–16 堂技巧卡區�
   return cards.length + ' 張';
 };
 
+/* 卡教的跟用到它的那一堂對得上:門檻第 7 堂聽力只配一張 Part 3 卡,本堂目標是先讀三題、聽前兩句抓主旨 */
+T['T10 門檻第 7 堂的 Part 3 卡教先讀題與抓主旨'] = () => {
+  const cards = new Map(loadTips().cards.map((c) => [c.id, c]));
+  const l7 = JSON.parse(read('data/packs/pack_threshold.json')).lessons.filter((l) => l.no === 7)[0];
+  const ids = l7.segments.flatMap((s) => (s.blocks || []).filter((b) => b.module === 'tip_cards')).flatMap((b) => b.ids.map((x) => x.id)).filter((id) => /^tip-P3-/.test(id));
+  assert.ok(ids.length > 0, '第 7 堂有 Part 3 卡');
+  ids.forEach((id) => { const c = cards.get(id); assert.ok(/先讀/.test(c.title + c.body) && /主旨/.test(c.title + c.body), id + ' 沒教先讀題與抓主旨'); });
+  return ids.join('、');
+};
+/* 考點的學生頁名稱(js/lesson-core.js POINT_NAME)跟卡上的叫法一致:P2.yn 是「是非問句」;Can 開頭的請求句課表歸在請求與提議,卡上不列 */
+T['T11 是非問句的卡:標題與內文叫「是非問句」、開頭字不列 Can'] = () => {
+  const c = loadTips().cards.filter((x) => x.id === 'tip-P2-yn')[0];
+  assert.ok(/是非問句/.test(c.title), c.title);
+  assert.ok(!/Yes\/No 問句/.test(c.title + c.body), '還有 Yes/No 問句的叫法');
+  assert.ok(!/Can/.test(c.body.split('。')[0]), '開頭字列了 Can');
+  return c.title;
+};
+
 T['T8 check_packs 收集測驗檢討會配的卡:要剛好 Part 1–7 各一張,配法改了(少一個 Part、一個 Part 兩張)會丟錯'] = () => {
   const { reviewTips } = require('./check_packs.js');
   const fake = (idOf) => ({ planTestReview: (parts) => Object.keys(parts).map((p) => ({ kind: 'tip', id: idOf(p.slice(1)) })).filter((x) => x.id) });

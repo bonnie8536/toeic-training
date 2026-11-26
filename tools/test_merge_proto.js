@@ -173,6 +173,36 @@ T['課程進度(les_t、pts、tests_v1、rvq):鍵是 __proto__、constructor、p
   return r.length + ' 次合併';
 };
 
+/* 預估分數三個鍵的形狀見 js/sync-merge-estimate.js 檔頭 */
+T['預估分數(fa_v1、placement_v1、est_v1):最外層與 i、runs[0]、runs[0].tm 帶 __proto__、constructor、prototype,內建物件不變,結果沒有 __proto__ 鍵'] = () => {
+  const bad = [];
+  const BADKEYS = (v) => '"__proto__":' + v + ',"constructor":' + v + ',"prototype":' + v + ',';
+  const fa = '{' + BADKEYS('{"pwn":1}') + '"v":1,"i":{' + BADKEYS('[1,1,"k"]') + '"p5-a":[2,0,"k"]}}';
+  const fa2 = J({ v: 1, i: { 'p5-b': [3, 1, 't'] } });
+  const run = '{' + BADKEYS('{"pwn":1}') + '"at":"2026-11-01T00:00:00Z","end":"2026-11-01T00:20:00Z","ip":1,"cv":1,"sec":"LR",'
+    + '"tm":{' + BADKEYS('["x","y"]') + '"L":["2026-11-01T00:00:00Z","2026-11-01T00:10:00Z"]},"items":[["L","l2-a",1,1,9]],"res":{"L":[1,2]}}';
+  const runs = '{' + BADKEYS('{"pwn":1}') + '"v":1,"runs":[' + run + ']}';
+  const runs2 = J({ v: 1, runs: [{ at: '2026-10-01T00:00:00Z', end: null, ip: 1, cv: 1, sec: 'R', tm: {}, items: [], res: {} }] });
+  const est = '{' + BADKEYS('{"pwn":1}') + '"ip":1,"cv":1,"at":"2026-11-02T00:00:00Z","L":[1,2],"R":[3,4]}';
+  const est2 = J({ ip: 1, cv: 1, at: '2026-10-02T00:00:00Z', L: [5, 6], R: [7, 8] });
+  const r = [];
+  [['firstAttempts', fa, fa2], ['placementRuns', runs, runs2], ['estSnap', est, est2]].forEach(([fn, evil, good]) => {
+    if (typeof SM[fn] !== 'function') { bad.push(fn + ' 沒有載到'); return; }
+    [[evil, good], [good, evil], [evil, null]].forEach(([a, b], i) => {
+      let x = null;
+      try { x = SM[fn](parseIn(a), b === null ? null : parseIn(b), NOW); } catch (e) { bad.push(fn + ' 第 ' + (i + 1) + ' 次丟錯 ' + e.message); }
+      if (!x) return;
+      r.push(x);
+      if (!x.ok) bad.push(fn + ' 第 ' + (i + 1) + ' 次沒有合併');
+      else bad.push(...cleanTree(x.v, fn + (i + 1)));
+      if (x.ok && x.v && x.v.pwn !== undefined) bad.push(fn + ' 第 ' + (i + 1) + ' 次多出屬性');
+    });
+  });
+  bad.push(...polluted());
+  assert.deepStrictEqual(bad, []);
+  return r.length + ' 次合併';
+};
+
 /* 從搬家碼到寫入清單,跟 js/move-in-page.js 的順序一樣:fromText → validate → plan */
 T['搬家碼:刪除標記帶 __proto__ 的搬家碼,讀取、驗證、合併之後內建物件不變;寫進暫存區的標記沒有 __proto__'] = async () => {
   const del = J({ v: 1, vgame_banks: { b: {}, w: { __x__: { isTeacher: { at: 1, h0: ['x'] } } } } }).replace('"__x__"', '"__proto__"');

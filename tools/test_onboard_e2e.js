@@ -202,7 +202,13 @@ T['1 新用戶:幫我測 → 檢測說明 → 檢測頁 → 結果頁用預估�
   assert.deepStrictEqual([lv.source, lv.history.map((h) => h.reason), ob.levelSource, ob.status], [{ listening: 'est', reading: 'est' }, ['est'], 'est', 'done']);
   const est = await p.eval('ESTIMATE_STORE.peek()');
   assert.deepStrictEqual([lv.listening, lv.reading], [est.L.band, est.R.band], '級別等於預估的級別');
-  assert.strictEqual(await p.text('.result-card .result-note'), '依程度檢測與練習');
+  /* 程度怎麼定的:卡片上不掛小字,寫在標題旁 ⓘ 的資訊欄 */
+  assert.ok(await p.eval("!document.querySelector('.result-card .result-note')"), '卡片上沒有小字');
+  await p.eval("document.querySelector('.result-card .result-score .est-info').click(), true");
+  await sleep(400);
+  assert.deepStrictEqual(await p.eval("[...document.querySelectorAll('.ui-sheet .est-info-p')].map((x) => x.textContent)"), ['這個程度是依你的程度檢測和之後的練習結果定的。']);
+  await p.eval("document.querySelector('.ui-sheet .ui-sheet-close').click(), true");
+  await sleep(400);
   await shot(p, '03_結果頁_新用戶');
   await p.go('index.html');
   await p.wait("!!document.querySelector('#onboard-home h2')", '首頁卡');

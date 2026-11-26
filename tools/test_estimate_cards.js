@@ -89,28 +89,27 @@ function oldAdminSrc() {
 }
 
 const A = {};
-/* 預估卡「還差 N 題」旁「去練習」連到的練習頁:要是會記第一次作答的那一頁(載 js/listening.js、js/practice-fa.js、js/estimate-store.js),不是聽力訓練(listening.html) */
-A['練習頁連結:聽力連 practice.html#listen(載 listening.js、practice-fa.js、estimate-store.js,有 id 是 listen 的面板),閱讀連 practice.html'] = async () => {
-  const src = read('js/estimate-cards.js');
-  const m = /return { L: '([^']+)', R: '([^']+)' };/.exec(src);
-  const pageOf = (href) => href.split('#')[0];
-  const loads = (href) => ['js/listening.js', 'js/practice-fa.js', 'js/estimate-store.js'].every((f) => read(pageOf(href)).indexOf('<script src="' + f + '"') > -1);
-  const anchor = /class: 'practice-panel listen-panel', id: 'listen'/.test(read('js/practice.js')) && /location.hash === '#listen'/.test(read('js/practice.js'));
-  const ok = !!m && m[1] === 'practice.html#listen' && m[2] === 'practice.html' && loads(m[1]) && loads(m[2]) && anchor && read('listening.html').indexOf('js/practice-fa.js') < 0;
-  return { ok, detail: J(m && m.slice(1)) + ' anchor=' + anchor };
+/* 預估卡「再做 N 題就有分數」那一科要做的事只有一顆檢測按鈕:連到的頁要是會記第一次作答、算進預估的那一頁
+   (placement.html 載 js/estimate-store.js 與 js/estimate-ui.js),不是聽力訓練(listening.html);卡片上不另外放「去練習」 */
+A['還沒有分數那一科的去處:卡片只給 placement.html(載 estimate-store.js、estimate-ui.js,作答算進預估);不另外給練習頁連結'] = async () => {
+  const src = read('js/estimate-cards.js'), ui = read('js/estimate-ui.js');
+  const loads = ['js/estimate-store.js', 'js/estimate-ui.js'].every((f) => read('placement.html').indexOf('<script src="' + f + '"') > -1);
+  const only = /testHref: 'placement\.html'/.test(src) && !/practice\.html/.test(src) && !/去練習|est-practice/.test(ui);
+  const ok = loads && only && read('listening.html').indexOf('js/estimate-store.js') < 0;
+  return { ok, detail: 'loads=' + loads + ' only=' + only };
 };
-A['後台:有預估快照的學生「檢測結果」那一格寫「聽力 345／閱讀 290（預估 · 日期）」,展開列寫範圍與根據幾題;聲明不寫在列上(在 ⓘ 的資訊欄)'] = async () => {
+A['後台:有預估快照的學生「檢測結果」那一格只寫「聽力 345／閱讀 290」,展開列「預估分數　聽力 345（300–390）　閱讀 290（245–335）」;題數、日期與聲明不寫在列上(在 ⓘ 的資訊欄)'] = async () => {
   const rows = [meta(S(1), '小安'), row(S(1), 'est_v1', SNAP(AT, [345, 300, 390, 100], [290, 245, 335, 86])), row(S(1), 'diag', oldDiag())];
   const { root } = await openAdmin(rows);
   const cell = cellsOf(root)[0][2];
-  const want = '聽力 345／閱讀 290（預估 · ' + dayText(AT) + '）';
+  const want = '聽力 345／閱讀 290';
   const tr = root.find((n) => n.tagName === 'TR' && n.attrs.style === 'cursor:pointer')[0];
   await tr.fire('click', { target: tr });
   await OK.settle();
   const t = root.textContent;
-  const ok = cell === want && t.includes('預估分數（' + dayText(AT) + '）：聽力 345（300–390）／閱讀 290（245–335）')
-    && t.includes('根據 186 題') && !/本站估計|不是正式成績/.test(t) && t.includes('檢測(') && !BAD_TEXT.test(t);
-  return { ok, detail: cell + ' | ' + (t.match(/預估分數（[^。]*。/) || [''])[0] };
+  const ok = cell === want && t.includes('預估分數　聽力 345（300–390）　閱讀 290（245–335）')
+    && !t.includes('根據 ') && !t.includes(dayText(AT)) && !/本站估計|不是正式成績/.test(t) && t.includes('檢測(') && !BAD_TEXT.test(t);
+  return { ok, detail: cell + ' | ' + (t.match(/預估分數　[^檢]*/) || [''])[0] };
 };
 A['後台:只有一科有數字時另一科寫「—」;兩端寫「150 以下」「450 以上」、不寫範圍'] = async () => {
   const rows = [meta(S(1), '甲'), row(S(1), 'est_v1', SNAP(AT, null, [120, 70, 170, 30])),
@@ -122,8 +121,8 @@ A['後台:只有一科有數字時另一科寫「—」;兩端寫「150 以下�
   for (const tr of trs) await tr.fire('click', { target: tr });
   await OK.settle();
   const t = root.textContent;
-  const ok = cells[0] === '聽力 —／閱讀 150 以下（預估 · ' + d + '）' && cells[1] === '聽力 450 以上／閱讀 300（預估 · ' + d + '）'
-    && t.includes('聽力 —／閱讀 150 以下') && t.includes('聽力 450 以上／閱讀 300（250–350）') && !BAD_TEXT.test(t);
+  const ok = cells[0] === '聽力 —／閱讀 150 以下' && cells[1] === '聽力 450 以上／閱讀 300' && d
+    && t.includes('聽力 —　閱讀 150 以下') && t.includes('聽力 450 以上　閱讀 300（250–350）') && !BAD_TEXT.test(t);
   return { ok, detail: J(cells) };
 };
 A['後台:壞掉的快照(兩科都不是數字、沒有日期、不是物件)當成沒有,照舊顯示舊檢測或「未檢測」,不出現 null'] = async () => {
@@ -293,7 +292,7 @@ const sameNumbers = (r) => J(r.me.rows) === J(r.an.rows) && J(r.me.total) === J(
   && J(r.me.info) === J(['預估分數說明']) && r.me.note.length === 0 && r.an.note.length === 0;
 
 const T = {};
-T['只有舊 28 題:兩頁同一張卡;閱讀有數字、聽力「還差 20 題」、檢測按鈕「做聽力檢測」(能力分析頁實色、「我的」頁描邊,整頁最多一顆實色);補回的作答記成來源 g,舊結果不動'] = async () => {
+T['只有舊 28 題:兩頁同一張卡;閱讀有數字、聽力「再做 20 題就有分數」、檢測按鈕「做聽力檢測」(能力分析頁實色、「我的」頁描邊,整頁最多一顆實色);補回的作答記成來源 g,舊結果不動'] = async () => {
   const diag = oldDiag();
   const x = expectOf({ diag });
   const r = await both(21, { diag }, { me: (p) => shot(p, 'c1_old28_me') });
@@ -301,19 +300,20 @@ T['只有舊 28 題:兩頁同一張卡;閱讀有數字、聽力「還差 20 題�
   const diagAfter = await r.p.eval("store.get('diag', null)");
   const gN = fa ? Object.values(fa.i).filter((e) => e[2] === 'g').length : 0;
   await r.p.close();
-  const ok = sameNumbers(r) && /^聽力 還差 20 題/.test(r.me.rows[0]) && r.me.rows[1].startsWith('閱讀 ' + scoreOf(x.R))
+  const ok = sameNumbers(r) && /^聽力 再做 20 題就有分數$/.test(r.me.rows[0]) && r.me.rows[1].startsWith('閱讀 ' + scoreOf(x.R))
     && J(r.me.go) === J(['做聽力檢測>placement.html?sec=L']) && J(r.me.primary) === '[]' && J(r.an.primary) === J(['做聽力檢測>placement.html?sec=L'])
     && r.me.total.length === 0 && gN === 28 && J(diagAfter) === J(diag)
     && r.clean && !r.errors.length && r.meBtns.length === 0 && r.meAll.length <= 1 && J(r.anBtns) === J(['做聽力檢測']);
   return { ok, detail: J(r.me) + ' g=' + gN + ' same=' + sameNumbers(r) + ' diag=' + (J(diagAfter) === J(diag)) + ' clean=' + r.clean + ' btns=' + J(r.meBtns) + ' all=' + J(r.meAll) + ' 錯誤 ' + J(r.errors).slice(0, 200) };
 };
-T['只有練習紀錄(24 題 Part 5):閱讀有數字、聽力「還差 N 題」;兩頁一樣;旁邊的「去練習」連到題庫頁的聽力練習'] = async () => {
+T['只有練習紀錄(24 題 Part 5):閱讀有數字、聽力「再做 N 題就有分數」;兩頁一樣;要做的事只有一顆「做聽力檢測」(不另外放「去練習」)'] = async () => {
   const hist = practiceHist();
   const x = expectOf({ hist });
   const r = await both(22, { hist });
   await r.p.close();
-  const ok = sameNumbers(r) && r.me.rows[1].startsWith('閱讀 ' + scoreOf(x.R)) && /^聽力 還差 \d+ 題去練習$/.test(r.me.rows[0])
-    && J(r.me.links) === J(['practice.html#listen']) && J(r.an.links) === J(['practice.html#listen']) && r.clean && !r.errors.length;
+  const ok = sameNumbers(r) && r.me.rows[1].startsWith('閱讀 ' + scoreOf(x.R)) && /^聽力 再做 \d+ 題就有分數$/.test(r.me.rows[0])
+    && J(r.me.links) === '[]' && J(r.an.links) === '[]' && J(r.me.go) === J(['做聽力檢測>placement.html?sec=L']) && J(r.an.go) === J(r.me.go)
+    && r.clean && !r.errors.length;
   return { ok, detail: J(r.me) };
 };
 T['什麼都沒有:卡片只有標題與一顆檢測按鈕「做程度檢測」;能力分析頁是實色(整頁一顆主按鈕)、「我的」頁是描邊(整頁最多一顆實色)'] = async () => {
@@ -324,7 +324,7 @@ T['什麼都沒有:卡片只有標題與一顆檢測按鈕「做程度檢測」;
     && J(r.anBtns) === J(['做程度檢測']) && r.meAll.length <= 1 && r.clean && !r.errors.length;
   return { ok, detail: J(r.me) + ' 能力分析主按鈕 ' + J(r.anBtns) + ' 我的整頁 ' + J(r.meAll) };
 };
-T['建議改級(有課程進度):個人頁有「建議程度」與文字按鈕、能力分析頁沒有;按了先確認(原因、會換學習包),取消不改,確定才改 levels(來源與理由記 est)'] = async () => {
+T['建議改級(有課程進度):個人頁有文字按鈕「改成…程度」、能力分析頁沒有;按了先確認(原因、會換學習包),取消不改,確定才改 levels(來源與理由記 est)'] = async () => {
   const fa = richFa();
   const x = expectOf({ fa_v1: fa, levels: LEVELS('threshold', 'entry') });
   const less = { v: 1, at: Math.floor(NOW / 1000) - 3 * 86400, items: [] };
@@ -355,7 +355,7 @@ T['建議改級(有課程進度):個人頁有「建議程度」與文字按鈕�
   const a = res.after || {}, key = first.sec === 'L' ? 'listening' : 'reading';
   const last = (a.history || [])[(a.history || []).length - 1] || {};
   const ok = sug.length > 0 && res.course === true && r.me.suggest.length === sug.length && r.an.suggest.length === 0
-    && /依目前的預估分數/.test(res.dlg || '') && /學習包會換成/.test(res.dlg || '') && /^建議程度/.test(r.me.suggest[0] || '') && J(res.afterCancel && [res.afterCancel.listening, res.afterCancel.reading]) === J(['threshold', 'entry'])
+    && /依目前的預估分數/.test(res.dlg || '') && /學習包會換成/.test(res.dlg || '') && /^改成\S+程度$/.test(r.me.suggest[0] || '') && J(res.afterCancel && [res.afterCancel.listening, res.afterCancel.reading]) === J(['threshold', 'entry'])
     && a[key] === first.level && a.source && a.source[key] === 'est' && last.reason === 'est' && res.card.suggest.length === sug.length - 1
     && J(r.me.rows) === J(r.an.rows) && J(r.me.total) === J(r.an.total) && r.clean && !r.errors.length;
   return { ok, detail: J({ sug, me: r.me.suggest, after: a && [a.listening, a.reading, a.source, last.reason], dlg: res.dlg }) };
@@ -415,7 +415,7 @@ T['本機學生檔案:「我的」頁有同一張卡;匯入進度檔後換到新
   const clean = await noBad(p);
   const errs = p.errors.slice();
   await p.close();
-  const ok = me.rows.length === 2 && /^閱讀 \S+/.test(me.rows[1]) && gN === 28 && /^閱讀 /.test(after.rows[1]) && !/還差/.test(after.rows[1]) && clean && !errs.length;
+  const ok = me.rows.length === 2 && /^閱讀 \S+/.test(me.rows[1]) && gN === 28 && /^閱讀 /.test(after.rows[1]) && !/再做/.test(after.rows[1]) && clean && !errs.length;
   return { ok, detail: J({ me: me.rows, after: after.rows, gN }) + ' 錯誤 ' + J(errs).slice(0, 200) };
 };
 T['教師後台(頁面):有預估快照的學生寫預估、沒有的照舊;展開列看得到預估與舊檢測'] = async () => {
@@ -440,14 +440,15 @@ T['教師後台(頁面):有預估快照的學生寫預估、沒有的照舊;展�
   await sleep(400);
   const det = await p.eval("document.querySelector('.cat-table tr[style*=pointer] + tr').textContent");
   await shot(p, 'c8_admin');
-  /* 展開列「根據 N 題」旁的 ⓘ:點開是跟學生同一份資訊欄 */
+  /* 展開列「預估分數」旁的 ⓘ:點開是跟學生同一份資訊欄(用了幾題、算到哪一天在這裡) */
   const info = await p.eval("(() => { const b = document.querySelector('.cat-table tr[style*=pointer] + tr .est-info'); if (!b) return null; b.click(); const s = document.querySelector('.ui-sheet'); return s ? [b.getAttribute('aria-label'), s.querySelector('h2').textContent, [...s.querySelectorAll('.est-info-p')].map((x) => x.textContent)] : 'no sheet'; })()");
   const clean = await noBad(p);
   const errs = p.errors.slice();
   await p.close();
-  const ok = cells[0] === '聽力 345／閱讀 290（預估 · ' + dayText(AT) + '）' && /^\d+\/28 · /.test(cells[1]) && cells[2] === '未檢測'
-    && det.includes('預估分數（') && det.includes('根據 186 題') && !/本站估計|不是正式成績/.test(det) && det.includes('檢測(')
-    && info && info[0] === '預估分數說明' && info[1] === '預估分數' && info[2].length === 4 && /不是多益的正式成績/.test(info[2][0]) && /^目前根據 186 題/.test(info[2][3])
+  const ok = cells[0] === '聽力 345／閱讀 290' && /^\d+\/28 · /.test(cells[1]) && cells[2] === '未檢測'
+    && det.includes('預估分數　聽力 345') && !det.includes('根據 ') && !/本站估計|不是正式成績/.test(det) && det.includes('檢測(')
+    && info && info[0] === '預估分數說明' && info[1] === '預估分數' && info[2].length === 5 && /不是多益的正式成績/.test(info[2][0])
+    && info[2][4] === '目前用了 186 題來算，算到 ' + dayText(AT) + '的作答。'
     && clean && !errs.length;
   return { ok, detail: J(cells) + ' ⓘ ' + J(info) + ' 錯誤 ' + J(errs).slice(0, 200) };
 };

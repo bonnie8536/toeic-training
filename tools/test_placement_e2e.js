@@ -127,7 +127,7 @@ T['a 新用戶:設定流程選檢測 → 24 題 → 結果頁有兩科、總分�
   await p.go('analysis.html');
   const an = await cardText(p, 'main');
   assert.deepStrictEqual(await peek(p), pv, '能力分析頁同一份預估');
-  assert.strictEqual(an.replace(/做.*檢測/, ''), me.replace(/做.*檢測/, '').replace(/建議程度.*$/, ''), '兩頁的卡片字一樣');
+  assert.strictEqual(an.replace(/做.*檢測/, ''), me.replace(/做.*檢測/, '').replace(/改成\S{2}程度/g, ''), '兩頁的卡片字一樣');
   await shot(p, '12_能力分析頁');
   K.noErrors(p, '新用戶');
   await p.close();
@@ -156,11 +156,11 @@ T['b 全對與全錯:後面的題變難/變易、分數到兩端照「450 以上
     out[mode] = { first: b.slice(0, 1).concat(b.slice(8, 9)), late: (b[3] + b[4] + b[5] + b[12] + b[13]) / 5, v, items: run.items.length, card: await p.text('.result-card') };
     if (mode === 'right') {
       assert.deepStrictEqual((await p.store('levels')).listening, 'entry', '有課程進度:不自動改級');
-      assert.ok(/改成這個級別/.test(out.right.card), '結果頁給「改成這個級別」');
+      assert.ok(/改成這個程度/.test(out.right.card), '結果頁給「改成這個程度」');
       await p.go('me.html');
       await cardText(p, 'main');
       await sleep(1500);
-      assert.ok(/建議程度 \S+ 改成\S+/.test(await p.text('.est-card')), '個人頁的建議改級:' + await p.text('.est-card'));
+      assert.ok(/改成\S{2}程度/.test(await p.text('.est-card')) && !/建議程度/.test(await p.text('.est-card')), '個人頁的建議改級:' + await p.text('.est-card'));
       await shot(p, '11_個人頁卡片_建議改級');
     }
     K.noErrors(p, mode);
@@ -282,12 +282,18 @@ T['e 舊使用者(只有舊 28 題):個人頁閱讀有數字、聽力要再做;�
   await sleep(1500);
   const v = await peek(p);
   assert.ok(v.R && !v.L, '閱讀有數字、聽力沒有:' + J(v));
-  assert.ok(/聽力 還差 20 題/.test(await p.text('.est-card')), await p.text('.est-card'));
+  assert.ok(/聽力 再做 20 題就有分數/.test(await p.text('.est-card')) && !/去練習/.test(await p.text('.est-card')), await p.text('.est-card'));
   assert.ok(/做聽力檢測/.test(t), '主按鈕做聽力檢測');
   assert.deepStrictEqual(await p.store('diag'), diag, '舊檢測不動');
   await shot(p, '08_個人頁卡片_資料不夠');
   await p.go('diagnostic.html');
   await p.wait("!!document.querySelector('.result-card')", '舊檢測報告');
+  /* 舊報告:「預估級距」;怎麼估的、不是正式成績寫在小標旁 ⓘ 的資訊欄,卡片上沒有半句的小字 */
+  assert.ok(/預估級距/.test(await p.text('.result-card')) && !/參考級距|級距為估算|非正式成績/.test(await p.text('.result-card')), await p.text('.result-card'));
+  await p.eval("document.querySelector('.result-kicker .est-info').click(), true");
+  await sleep(500);
+  assert.deepStrictEqual(await p.texts('.ui-sheet .est-info-p'), ['這個級距是本站依這次 28 題的答對題數估計的，不是多益的正式成績。', '題目只有 28 題，所以級距放得比較寬，只用來找起始程度。']);
+  await shot(p, '23_舊檢測報告資訊欄');
   K.noErrors(p, '舊使用者');
   await p.close();
   return '閱讀 ' + v.R.slice(0, 2).join(' ');
@@ -345,7 +351,7 @@ T['h 375×812 觸控走完整個檢測,每個畫面沒有橫向捲動'] = async 
   await p.eval("document.querySelector('.result-kicker .est-info').click(), true");
   await sleep(500);
   await K.noOverflow(p, '資訊欄');
-  assert.ok(/^目前根據 24 題，/.test((await p.texts('.ui-sheet .est-info-p')).slice(-1)[0] || ''), '資訊欄的根據 24 題');
+  assert.ok(/^目前用了 24 題來算，/.test((await p.texts('.ui-sheet .est-info-p')).slice(-1)[0] || ''), '資訊欄的「目前用了 24 題來算」');
   K.noErrors(p, '手機');
   await p.close();
   return '檢查 ' + n + ' 個畫面';
@@ -419,9 +425,10 @@ T['k 預估卡與模擬考結果的 ⓘ:鍵盤開關、焦點回到按鈕;資訊
   assert.deepStrictEqual(box, [44, 44, 22]);
   const sh = await infoKeys(p, '.est-card .est-info', '21_資訊欄');
   assert.strictEqual(sh.title, '預估分數');
-  assert.deepStrictEqual(sh.paras.slice(0, 3), ['這個分數是本站依你的作答估計的，不是多益的正式成績。', '每一題只算第一次作答。重做和錯題本的作答不算。',
-    '範圍：你的實際分數大多落在這個範圍內。作答的題數越多，範圍越窄。']);
-  assert.ok(/^目前根據 24 題，更新到 \d+ 月 \d+ 日。$/.test(sh.paras[3]), sh.paras[3]);
+  assert.deepStrictEqual(sh.paras.slice(0, 4), ['這個分數是本站依你的作答估計的，不是多益的正式成績。', '每一題只算第一次作答。重做和錯題本的作答不算。',
+    '範圍：如果現在去考多益，分數很可能在這個範圍內。做的題目越多，範圍會越窄。',
+    '每一科要有 20 題第一次作答，才會顯示分數；做該科的程度檢測（12 題）也可以。']);
+  assert.ok(/^目前用了 24 題來算，算到 \d+ 月 \d+ 日的作答。$/.test(sh.paras[4]), sh.paras[4]);
   /* 模擬考:快速回合直接交卷,結果的「參考總分」旁一個 ⓘ */
   await p.go('mock.html');
   await p.press('開始');
@@ -436,9 +443,13 @@ T['k 預估卡與模擬考結果的 ⓘ:鍵盤開關、焦點回到按鈕;資訊
   const mock = await p.text('.result-card');
   assert.ok(!NOTE.test(mock) && await p.eval("!document.querySelector('.result-card .result-note')"), '模擬考結果沒有聲明小字:' + mock);
   assert.strictEqual(await p.eval("document.querySelector('.result-kicker .est-info').getAttribute('aria-label')"), '模擬考分數說明');
+  /* 錯題本怎麼變:完整的句子、一行一件事(沒作答的題寫清楚「不會加進錯題本」) */
+  const wb = await p.texts('.mock-wb-note p');
+  assert.ok(wb.length > 0 && wb.every((t) => /。$/.test(t) && t.indexOf(' · ') < 0) && wb.some((t) => /^沒作答的 \d+ 題不會加進錯題本。$/.test(t)), J(wb));
   await shot(p, '18_模擬考結果');
   const ms = await infoKeys(p, '.result-kicker .est-info', '22_模擬考資訊欄');
-  assert.deepStrictEqual([ms.title, ms.paras], ['模擬考分數', ['這個分數是本站依這次答對的題數估計的，不是多益的正式成績。', '每次的題目難度不同，分數適合用來看自己的變化。']]);
+  assert.deepStrictEqual([ms.title, ms.paras], ['模擬考分數', ['這個分數是本站依這次答對的題數估計的，不是多益的正式成績。',
+    '每一次的題目不一樣，難度也會差一點，所以分數上下差 30 分左右是正常的。', '想知道分數有沒有提高，請比較好幾次的分數，不要只看一次。']]);
   K.noErrors(p, 'ⓘ');
   await p.close();
   return 'ok';

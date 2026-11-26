@@ -108,11 +108,12 @@ function changedLines(file) {
   assert.equal(d.status, 0, 'git diff 失敗');
   return String(d.stdout || '').split('\n').filter((l) => /^[+-]/.test(l) && !/^(\+\+\+|---) /.test(l)).map((l) => l.replace(/\r$/, ''));
 }
-T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按鈕與從開始頁進來直接開考;cloud.js 只多引導三個鍵與課程進度、預估分數的合併規則'] = () => {
+T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按鈕、級距的說明改放 ⓘ 與從開始頁進來直接開考;cloud.js 只多引導三個鍵與課程進度、預估分數的合併規則'] = () => {
   const files = ['data/diagnostic.js', 'js/common.js'];
   const r = spawnSync('git', ['diff', '--quiet', '--ignore-cr-at-eol', baseRef(), '--'].concat(files), { cwd: REPO });
   assert.equal(r.status, 0, '有改到:' + files.join('、'));
-  /* 檢測頁:diag 的格式與讀寫不動;結算卡的 primary 換成「看起始程度」(設定中交的卷);從開始頁進來直接開考(按「開始」那段抽成 begin) */
+  /* 檢測頁:diag 的格式與讀寫不動;結算卡的 primary 換成「看起始程度」(設定中交的卷);從開始頁進來直接開考(按「開始」那段抽成 begin);
+     「參考級距」改叫「預估級距」,卡片下面的小字「級距為估算 · 非正式成績」拿掉,改成小標旁的 ⓘ(js/estimate-ui.js 的 'diag' 資訊欄) */
   const dg = changedLines('js/diagnostic.js').map((l) => l.slice(0, 1) + l.slice(1).trim());
   eq(dg, [
     '+const AUTO_WAIT = 8000;   // 直接開考前等雲端確認登入的上限(毫秒)',
@@ -177,8 +178,12 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     '+/* 第一屏:結算卡。姓名與日期放在分數上面的小字;三個難度的正確率跟在卡片下面一行。',
     '+新用戶設定起始程度途中交的卷,主按鈕換成「看起始程度」(js/onboard-ui.js,只有這種時候不是 null) */',
     '+let next = null; try { next = window.ONBOARD_UI ? ONBOARD_UI.diagPrimary() : null; } catch (e) { /* 照原本的「去刷題」 */ }',
+    "-stats: [['參考級距', band]],",
+    "-note: '級距為估算 · 非正式成績',",
     "-primary: { label: '去刷題', href: 'practice.html' },",
+    "+stats: [['預估級距', band]],   // 級距怎麼估的、不是正式成績:寫在小標旁 ⓘ 點開的資訊欄(js/estimate-ui.js;沒載到就不畫)",
     "+primary: next || { label: '去刷題', href: 'practice.html' },",
+    "+if (window.ESTIMATE_UI) ESTIMATE_UI.addInfo(card.el, 'diag', { n: total });",
   ]);
   /* cloud.js:引導的三個鍵只准合併表加三列、SYNC_FN 加三個鍵、檔頭說明(下面 ok 的規則);
      課程進度(les_t、pts、rvq、tests_v1)那一份逐行列在 COURSE:合併表三列、用鍵名規則認的課程進度(MERGED_FAMILIES、mergedIn、localNames)、
@@ -522,7 +527,7 @@ T['B3e 試行班:設定做完(D0)不畫起始程度卡(讓給今天的課卡);�
   await settle();
   eq([br.g.box.hidden, texts(br.g.box)], [false, ['繼續設定起始程度', '看起始程度']]);
 };
-T['B4 「我的」頁學習設定:老師、訪客、雲端沒開不顯示;有程度五列;程度那列開改級別面板(UI.sheet),套用寫 manual'] = () => {
+T['B4 「我的」頁學習設定:老師、訪客、雲端沒開不顯示;有程度五列;程度那列開改程度面板(UI.sheet),套用寫 manual'] = () => {
   assert.equal(uiEnv().UI.settingsSection(), null);
   assert.equal(uiEnv(signedIn({ teacher: true })).UI.settingsSection(), null);
   const off = uiEnv(signedIn()); off.ctx.CLOUD.enabled = false; assert.equal(off.UI.settingsSection(), null);
@@ -535,9 +540,9 @@ T['B4 「我的」頁學習設定:老師、訪客、雲端沒開不顯示;有程
   eq(texts(sec), ['學習設定', '程度聽力 進階／閱讀 門檻', '目標分數785 分', '考試月份2027 年 3 月', '做檢測']);
   assert.equal(sec.getAttribute('id'), 'learning-settings');
   sec.all().find((x) => x.tagName === 'BUTTON').click();
-  assert.equal(e.sheets.length, 1, '開了改級別面板');
+  assert.equal(e.sheets.length, 1, '開了改程度面板');
   const sh = e.sheets[0];
-  eq([sh.opt.title, sh.opt.focus && sh.opt.focus.getAttribute('value')], ['改級別', 'advanced']);
+  eq([sh.opt.title, sh.opt.focus && sh.opt.focus.getAttribute('value')], ['改程度', 'advanced']);
   const radios = sh.el.all().filter((x) => x.tagName === 'INPUT');
   eq(radios.filter((x) => x.checked).map((x) => x.getAttribute('value')), ['advanced', 'threshold']);
   const pickR = radios.find((x) => x.getAttribute('name').indexOf('ob-reading') === 0 && x.getAttribute('value') === 'high');

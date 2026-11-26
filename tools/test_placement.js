@@ -74,7 +74,7 @@ T['兩科中間:聽力完成→接著做閱讀;先做閱讀的對稱一頁;「�
   clickText(r.box, '之後再做');
   await flush(40);
   assert.ok(r.box.querySelector('.result-card'), '之後再做:結果頁');
-  assert.deepStrictEqual(all(r.box, '.est-need').map(txt), ['聽力 還差 12 題']);
+  assert.deepStrictEqual(all(r.box, '.est-need').map(txt), ['聽力 再做 12 題就有分數']);
   assert.ok(typeof lastRun(r).end === 'string');
 };
 
@@ -95,9 +95,9 @@ T['合併時先做完那一科的結束時間不被雲端那份沒做完的蓋�
   await doSection(e, 'right');
   await flush(40);
   assert.ok(lastRun(e).tm.L[1] && lastRun(e).tm.R[1]);
-  /* 兩科都算進去:資訊欄的「根據 24 題」(數字旁不再掛小字) */
+  /* 兩科都算進去:資訊欄的「目前用了 24 題來算」(數字旁不再掛小字) */
   e.box.querySelector('.result-kicker .est-info').click();
-  assert.ok(/^目前根據 24 題，/.test(e.UI.sheets.slice(-1)[0].paras.slice(-1)[0]));
+  assert.ok(/^目前用了 24 題來算，/.test(e.UI.sheets.slice(-1)[0].paras.slice(-1)[0]));
 };
 
 T['選題跟著作答:全對的人後面的題比全錯的人難(真的題目難度)'] = async () => {
@@ -233,7 +233,7 @@ T['24 小時:超過就不續做,畫開始頁;作答留在第一次作答紀錄,�
   assert.strictEqual(late.get('placement_v1').runs[0].end, null, '舊的那次不寫結束');
 };
 
-T['只做一科(?sec=R):只出閱讀,結果頁只有閱讀數字、聽力寫還差 12 題、沒有總分'] = async () => {
+T['只做一科(?sec=R):只出閱讀,結果頁只有閱讀數字、聽力寫再做 12 題就有分數、沒有總分'] = async () => {
   const e = env({ search: '?sec=R' });
   await start(e);
   const R = await doSection(e, 'right');
@@ -241,7 +241,7 @@ T['只做一科(?sec=R):只出閱讀,結果頁只有閱讀數字、聽力寫還�
   assert.strictEqual(R.length, 6);
   assert.strictEqual(lastRun(e).sec, 'R');
   assert.ok(!lastRun(e).tm.L);
-  assert.deepStrictEqual(all(e.box, '.est-need').map(txt), ['聽力 還差 12 題'], txt(e.box).slice(0, 200));
+  assert.deepStrictEqual(all(e.box, '.est-need').map(txt), ['聽力 再做 12 題就有分數'], txt(e.box).slice(0, 200));
   assert.strictEqual(e.UI.lastResult.kicker, '預估分數');
 };
 
@@ -270,7 +270,7 @@ T['結果頁:預估總分或預估分數(小標旁 ⓘ)、一顆實色主按鈕�
   info.click();
   const sh = e.UI.sheets.slice(-1)[0];
   assert.strictEqual(sh.title, '預估分數');
-  assert.ok(/不是多益的正式成績。$/.test(sh.paras[0]) && /^目前根據 24 題，/.test(sh.paras[3]), JSON.stringify(sh.paras));
+  assert.ok(/不是多益的正式成績。$/.test(sh.paras[0]) && /^目前用了 24 題來算，/.test(sh.paras[4]), JSON.stringify(sh.paras));
   assert.ok(['預估總分', '預估分數'].indexOf(e.UI.lastResult.kicker) > -1);
   assert.ok(/建議程度：聽力 .+／閱讀 /.test(txt(card)));
   assert.ok(!/答對 \d+ 題/.test(txt(card)), '不顯示答對幾題');
@@ -301,7 +301,7 @@ T['只寫 fa_v1、placement_v1、est_v1(與級別):不寫 hist、drill_p*、list
   assert.ok(e.get('fa_v1').i['p5-b1-01'], '從學習記錄補回的那題也在');
 };
 
-T['級別:沒設定過照預估寫(來源 est);有課程進度且已設定過不寫,給「改成這個級別」,確認後才寫'] = async () => {
+T['級別:沒設定過照預估寫(來源 est);有課程進度且已設定過不寫,給「改成這個程度」,確認後才寫'] = async () => {
   const e = env({ onboard: true });
   await fullRun(e, 'right');
   const lv = e.get('levels');
@@ -313,9 +313,9 @@ T['級別:沒設定過照預估寫(來源 est);有課程進度且已設定過不
   const c = env({ ls, onboard: true });
   await fullRun(c, 'right');
   assert.deepStrictEqual(c.get('levels'), cur, '有課程進度不自動改');
-  clickText(c.box.querySelector('.result-card'), '改成這個級別');
+  clickText(c.box.querySelector('.result-card'), '改成這個程度');
   await flush(20);
-  assert.strictEqual(c.UI.confirms[0].title, '改級別會換學習包。');
+  assert.strictEqual(c.UI.confirms[0].title, '改程度會換學習包，要改嗎？');
   assert.notStrictEqual(c.get('levels').listening, 'entry');
   const ob = env({ onboard: true, search: '?from=onboard' });
   await fullRun(ob, 'right');
@@ -390,7 +390,7 @@ T['新用戶設定以外做檢測:沒有設定、按過「不用了」的人,onb
   assert.strictEqual(l.ctx.ONBOARD_DATA.applyEst({ listening: 'advanced', reading: 'advanced', source: { listening: 'est', reading: 'est' } }), 'ok');
   assert.deepStrictEqual([l.get('onboard').status, l.get('onboard').levelSource], ['done', 'est']);
 };
-T['看最近一次結果(?view=last):沒有做完的檢測是「還沒有檢測結果」;只挑做完的那次;訪客沒有「改級別」'] = async () => {
+T['看最近一次結果(?view=last):沒有做完的檢測是「還沒有檢測結果」;只挑做完的那次;訪客沒有「改程度」'] = async () => {
   const g = env({ pid: null, search: '?view=last' });
   await flush(40);
   assert.strictEqual(txt(g.box.querySelector('.ui-empty-text')), '還沒有檢測結果');

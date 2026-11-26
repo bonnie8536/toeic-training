@@ -331,6 +331,26 @@ T['首頁大標題(2026-11-23):.hero-display 是 div 不是標題標籤、字是
   assert.match(src, /class="home-short"[^>]*>今天衝一點</);
 };
 
+T['吉祥物姿勢(2026-11-26):首頁首屏的鵜鶘是 gaze(坐著抬眼看書);全站 html 與 js 不再把吉祥物設成正面看書(read)或白日夢(daydream)'] = () => {
+  const src = homeSrc();
+  const hero = /<canvas class="hero-chick"[^>]*>/.exec(src);
+  assert.ok(hero, '首頁沒有 canvas.hero-chick');
+  assert.match(hero[0], /data-mascot="gaze"/, '首頁首屏不是 gaze');
+  const skip = new Set(['js/pelican-art.js', 'js/chick-art.js']);
+  const files = PAGES.concat(fs.readdirSync(path.join(REPO, 'js')).filter((f) => /\.js$/.test(f)).map((f) => 'js/' + f)).filter((f) => !skip.has(f));
+  const BAD = [
+    /data-mascot="(read|daydream)"/,                                  // html 屬性
+    /'data-mascot':\s*'(read|daydream)'/,                              // 程式建的 canvas
+    /setAttribute\('data-mascot',\s*'(read|daydream)'\)/,
+    /\bpose:\s*['"](read|daydream)['"]/,                              // UI.empty / UI.mascot / animate 的 pose
+    /setPose\(\s*['"](read|daydream)['"]/,
+    /\[[^\[\]]*,\s*'(read|daydream)'\]/,                             // lesson-core 首頁課程卡 [文字, 姿勢]
+  ];
+  const hits = [];
+  files.forEach((f) => read(f).split(/\r?\n/).forEach((l, i) => { if (BAD.some((re) => re.test(l))) hits.push(f + ':' + (i + 1) + ' ' + l.trim().slice(0, 80)); }));
+  assert.deepEqual(hits, [], '還在用 read/daydream 姿勢');
+};
+
 /* 一頁 body 裡的每個元素,記下它是不是在 data-nosnippet 裡面(自己帶或外層帶)。不用套件:script 內容與註解拿掉後照標籤開合算外層 */
 const VOID_TAGS = /^(?:area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/;
 function bodyElements(src) {

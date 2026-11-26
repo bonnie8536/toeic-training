@@ -16,7 +16,7 @@
   const LOAD_MS = 10000;                       // 圖的程式最多等這麼久,逾時當作沒載到
   const CHICK_RATIO = 280 / 240;               // 小雞畫布的高寬比(ChickArt.metrics;載入後以 metrics 為準)
   const PELICAN_RATIO = 280 / 300;             // 鵜鶘畫布的高寬比(PelicanArt.metrics;載入後以 metrics 為準)
-  const POSE_FALLBACK = { oops: 'idle', read: 'idle', daydream: 'idle' };
+  const POSE_FALLBACK = { oops: 'idle', read: 'idle', daydream: 'idle', gaze: 'idle' };
   /* 開心的跳躍裡有壓得很扁的格(蹲下 0.7、落地 0.6),放大在結算卡上像圖壞掉:這些姿勢只畫靜止格(正常比例),
      要跳時由 CSS 把整張畫布往上跳一次(.is-hop,壓扁不超過 0.92、以腳底為基準)。
      例外:結算卡上的鵜鶘(opt.loopHappy,見 mascot 的 playsHappy)直接循環播畫格;退回小雞、減少動態、其他地方的 happy 照舊畫靜止格 */
@@ -807,7 +807,7 @@
      角色一張、一行字、一個出口(action;primary: true 是實色)、一排文字連結(links)、下面再放的節點(extra) */
   function empty(opt) {
     const o = opt || {};
-    const cv = el('canvas', { class: 'ui-empty-art' });
+    const cv = el('canvas', { class: 'ui-empty-art', 'data-pose': o.pose || 'sleep' });   // data-pose:gaze 的邊距另外調(css)
     const go = o.action && o.action.label ? action(o.action, 'btn ui-empty-go' + (o.action.primary ? ' primary' : '')) : null;
     const links = (o.links || []).filter(function (l) { return l && l.label; }).map(function (l) { return action(l, 'btn-text ui-empty-link'); });
     const extra = [].concat(o.extra || []).filter(function (n) { return n && n.nodeType; });

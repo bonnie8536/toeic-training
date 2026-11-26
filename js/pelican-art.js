@@ -78,6 +78,14 @@
    - 上方飄著三本小書(攤開的大書、黃色蠟筆封面的闔起來的書、攤開的小書),大小不一、高低錯開、微微傾斜;頭上兩個小圈往書那邊冒。
    - 動態:書各自慢慢上下飄、腳趾輪流翹、很小的呼吸和嘴袋晃動、偶爾眨眼。12 格,每秒 4 張(一圈約 3 秒)。靜止格第 0 格。
    - 播放:白日夢(趴著)跟站著的姿勢互換時也淡出淡入。
+   第九版(version 5;前面六個姿勢一筆沒改,種子也不變):新姿勢 gaze 坐著想事情、抬眼看書,接在最後(首頁首屏用)。
+   照站長自己在圖上改好的那張畫(眼睛、腳、尾巴是她改的),座標在那張圖上量。
+   - 一顆圓圓的鵜鶘坐在畫布右下,靠近我們的翅膀往前托著下巴;眼睛是一條平平的粗線壓著半顆眼珠(抬眼看),
+     看著飄在左上方的一本打開的書;兩隻腳各三根腳趾直接接在身體底線上;身體右下有兩片羽毛的尾巴。還是那張臭臉。
+   - 書照真的書的形狀算好點再投影(不拉斜、不壓扁),整本轉一個角度;線條套一層很淺的波、筆畫有輕重、轉角圓一點(手畫感)。
+   - 動態:書小幅上下飄、翻一頁,身體很小的呼吸,翅尖點兩下,第 9 格眨眼(只留那條線)。12 格,每秒 4 張。靜止格第 0 格。
+   - 種子改用固定編號(SEED_NO),不靠姿勢在清單裡的位置;舊姿勢的編號跟以前一樣。
+   - 網站上不再用看書(read)與白日夢(daydream)兩個姿勢(首頁改用 gaze),程式留著。
    用法:const a = PelicanArt.animate(canvas, { size: 180, fps: 8, pose: 'idle', onTick }); a.setPose('happy'); a.setFps(6); a.stop();
    fps 是「基準速度」:各動作會按 PelicanArt.fps 的比例換算(fps 8 時待機每秒 5 張、開心 8 張、尷尬、看書和白日夢 4 張、睡覺 3 張)。 */
 (function () {
@@ -307,6 +315,7 @@
   /* 身體:以肚子底部為支點先伸縮(sq 上下、sx 左右)、再轉 tilt 度(正 = 順時針,嘴往上抬),最後搬 dx、dy。
      第五版才有 sx、tilt、dx、dy;待機沒有這些欄位,算法跟第四版一模一樣 */
   function bodyXF(f) {
+    if (f.gz) return gazeXF(f);                               // 第九版:坐著看書,另外算
     if (f.lie) return lieXF(f);                              // 第八版:白日夢趴著,另外算
     const sq = f.sq || 1, sx = f.sx || 1 + (sq - 1) * 0.7;   // 吸氣時往上鼓、也一起變胖(不會變得又高又窄)
     const th = (f.tilt || 0) * RAD, dx = f.dx || 0, dy = f.dy || 0;
@@ -886,6 +895,235 @@
     });
   }
 
+  /* ---------- 第九版:坐著想事情、抬眼看書(gaze) ----------
+     照站長自己在圖上改好的那張畫(座標是在那張圖上量的,第 0 格的畫布座標):
+     - 一顆圓圓的球坐在地上(跟待機差不多圓,整隻縮成 0.955 倍、上下再壓一點,往右下放),長嘴朝左、嘴袋垂在前面。
+     - 靠近我們的翅膀(待機那隻三瓣羽毛的翅膀,形狀不變,左右翻、轉 62 度)往前伸,羽毛尖托在下巴,像在想事情。
+     - 眼睛:一條平平的粗線,線下面掛半顆眼珠(眼皮壓著、往上看);兩隻都往嘴巴那邊,右眼順著頭的弧度往右下斜、大一點。
+       眨眼格只留那條線。眼睛不跟著身體縮放,只跟著臉中心平移。
+     - 腳:不畫腿,兩隻腳直接接在身體底線上,三根腳趾往下張開,最後才畫(整隻看得到)。
+     - 尾巴:身體右下方伸出上下兩片尖尖的羽毛(上面那片短),先畫、填白,根部被身體蓋住。
+     - 書:飄在左上方的一本打開的書。照真的書的形狀算點(兩頁、中間書脊、頁面往外翹成淺淺的弧、底下一層封面、書頁有厚度),
+       從前上方往下看 50 度投影到畫面上、整本轉 -8 度,不拉斜、不壓扁;線條手畫感見 gazeBook。
+     - 動態(12 格、每格 1 拍、每秒 4 張):書小幅上下飄、轉一點,第 5~7 格翻一頁;身體很小的呼吸(嘴袋、呆毛跟著晃);
+       翅尖在下巴邊點兩下(第 1、3 格);第 9 格眨眼。靜止格第 0 格。 */
+  const GZ = {
+    sq: 0.97,                          // 上下壓扁(坐低);每格再加一點呼吸
+    S: 0.955, anchor: 300, dx: 26,     // 整隻縮小的倍數、縮放的 x 基準、往右搬多少
+    wing: { tip: [162.5, 147], rot: 62, k: 0.95, tap: -4 },   // 翅膀:中間那片羽毛尖放在身體上的哪一點、轉幾度、大小、點下巴轉幾度
+    book: { pitch: 50, roll: -8, c: [76, 64] },                // 書:往下看幾度、整本轉幾度、中心
+  };
+  /* 身體:以肚子底部為支點上下壓 sq,每格重算往下放多少(肚子剛好碰到地面線),再整隻以 (anchor, 地面線) 縮成 S 倍、往右搬 dx */
+  function gazeXF(f) {
+    const G = GZ, sq = f.sq;
+    const pw = pouchWarp(f.pouch[0], f.pouch[1]);
+    const base = ([x, y]) => [x, BOT + (y - BOT) * sq];
+    let low = -Infinity;
+    OUTLINE.forEach((p) => { low = Math.max(low, base(p)[1]); });
+    const dy = GROUND - 0.5 - low, S = G.S, ax = G.anchor;
+    const affine = (p) => { const q = base(p); return [ax + (q[0] + G.dx - ax) * S, GROUND + (q[1] + dy - GROUND) * S]; };
+    return { body: (p) => affine(pw(p)), affine, th: 0 };
+  }
+  /* 腳:左腳三根從同一點張開(最左那根彎出去);右腳是一小段橫線、底下掛三根(橫線右端往下那筆算一根)。
+     尾巴:上下兩片尖尖的羽毛,外框一筆。都是第 0 格的畫布座標 */
+  const GZ_FEET = [
+    [{ p: [[135.5, 252], [121, 254], [109.5, 260.5]] }, { p: [[135.5, 252], [127.5, 271]] }, { p: [[135.5, 252], [142.5, 265.5]] }],
+    [{ p: [[173.5, 265.5], [175.5, 257.5], [179.5, 255.3], [200, 254], [200.3, 274.7]], corner: [3] }, { p: [[190, 255], [188, 269]] }],
+  ];
+  const GZ_TAIL = { p: [[267, 212], [273.4, 211], [286.8, 211.3], [280.3, 217.2], [279.7, 221.8], [290, 222.3], [290.3, 228.3], [279, 234.9], [254, 236.2], [249, 233.5]], corner: [2, 4, 5] };
+  /* 眼睛:a→b 是那條粗線,眼珠中心在線上 t 的位置,半顆眼珠的寬 rx、高 ry(順著線的斜度) */
+  const GZ_EYES = [
+    { a: [149.8, 111], b: [169.4, 111.3], t: 0.55, rx: 6.2, ry: 7.4 },
+    { a: [189, 118], b: [207.5, 125], t: 0.42, rx: 8.8, ry: 7.8 },
+  ];
+  /* 一筆有尖角的線:每個點只抖一次,corner 裡的點放兩次(轉角才是尖的);mv 整筆平移 */
+  function inkPath(ctx, r, st, w, jit, mv) {
+    const j = jit * JIT, out = [];
+    st.p.forEach(([x, y], i) => {
+      const q = [x + (mv ? mv[0] : 0) + (r() - 0.5) * 2 * j, y + (mv ? mv[1] : 0) + (r() - 0.5) * 2 * j];
+      out.push(q); if ((st.corner || []).includes(i)) out.push(q);
+    });
+    ctx.strokeStyle = INK; ctx.lineWidth = w * PEN_W * INKW;
+    curve(ctx, out); ctx.stroke();
+  }
+  function gazeFeet(ctx, r) {
+    // 畫得很小時線變粗,腳趾尖收進畫布裡(140 以上不會碰到);120 以下再多留一個螢幕像素加抖動的量,反鋸齒的淡邊才不會碰到畫布底
+    const low = H - 1.5 - 5 * PEN_W * INKW / 2 - (SIZE <= 120 ? 300 / SIZE + 0.45 * JIT : 0);
+    GZ_FEET.forEach((foot) => foot.forEach((st, i) => {
+      if (SMALL && foot.length === 3 && i === 1) return;          // 96 以下:左腳少畫中間那根(三根擠在一起會糊)
+      if (TINY && i > 0) return;                                   // 64 以下:每隻腳只留一筆
+      inkPath(ctx, r, { p: st.p.map(([x, y]) => [x, Math.min(y, low)]), corner: st.corner }, 5, 0.45);
+    }));
+  }
+  let GZ_REF = null;   // 第 0 格時尾巴根部附近的身體外框點;每格看它移了多少,尾巴跟著移(跟著呼吸)
+  function gazeShift(affine) {
+    if (!GZ_REF) {
+      const a0 = gazeXF(gaze[0]).affine;
+      OUT_HEAD.forEach((p) => { const q = a0(p), d = Math.hypot(q[0] - 264, q[1] - 224); if (!GZ_REF || d < GZ_REF.d) GZ_REF = { p, q, d }; });
+    }
+    const q = affine(GZ_REF.p);
+    return [q[0] - GZ_REF.q[0], q[1] - GZ_REF.q[1]];
+  }
+  function gazeTail(ctx, r, affine) {
+    const mv = gazeShift(affine);
+    if (!TINY) {
+      ctx.fillStyle = WHITE;
+      fillPoly(ctx, GZ_TAIL.p.map(([x, y]) => [x + mv[0], y + mv[1]]));
+      inkPath(ctx, r, GZ_TAIL, 4.4, 0.4, mv);
+      return;
+    }
+    // 64 以下線很粗:尾巴尖往左收,墨線不碰畫布右緣(多留一個螢幕像素加抖動的量)
+    const right = W - 1.5 - 4.4 * PEN_W * INKW / 2 - 300 / SIZE - 0.4 * JIT;
+    const p = GZ_TAIL.p.map(([x, y]) => [Math.min(x + mv[0], right), y + mv[1]]);
+    ctx.fillStyle = WHITE;
+    fillPoly(ctx, p);
+    inkPath(ctx, r, { p, corner: GZ_TAIL.corner }, 4.4, 0.4);
+  }
+  /* 眼睛:先畫半顆眼珠(眨眼格不畫),再畫壓在上面的粗線。mv = 臉中心比第 0 格移了多少;bw = 線的筆粗(同待機的眉毛) */
+  function flatFace(ctx, r, kind, mv, bw) {
+    const grow = 1 + (INKW - 1) * 0.3;                             // 畫得小的時候眼珠放大一點
+    ctx.fillStyle = INK; ctx.strokeStyle = INK;
+    GZ_EYES.forEach((e) => {
+      const drop = kind === 'blink' ? 1.5 : 0;
+      const a = [e.a[0] + mv[0], e.a[1] + mv[1] + drop], b = [e.b[0] + mv[0], e.b[1] + mv[1] + drop];
+      const th = Math.atan2(b[1] - a[1], b[0] - a[0]), co = Math.cos(th), si = Math.sin(th);
+      if (kind !== 'blink') {
+        const c = [a[0] + (b[0] - a[0]) * e.t, a[1] + (b[1] - a[1]) * e.t], pts = [];
+        for (let q = 0; q <= 180; q += 15) {
+          const rr = 0.98 + r() * 0.04, u = Math.cos(q * RAD) * e.rx * grow * rr, v = Math.sin(q * RAD) * e.ry * grow * rr;
+          pts.push([c[0] + u * co - v * si, c[1] + u * si + v * co]);
+        }
+        fillPoly(ctx, spline(pts, 2));
+      }
+      taper(ctx, r, a, b, bw, bw);
+    });
+  }
+  /* 翅膀往前:待機那隻翅膀左右翻、轉 rot 度,中間那片羽毛的尖端放在 tip(身體上的點,跟著呼吸);
+     f.tap:以翅膀根部為軸再轉幾度(點下巴) */
+  const WTIP = WING.reduce((a, p) => (p[0] > a[0] ? p : a));
+  function gazeWing(ctx, r, f, body) {
+    const G = GZ.wing, k = G.k * GZ.S, th = G.rot * RAD, T = body(G.tip);
+    const map = ([x, y]) => { const v = rot([-(x - WTIP[0]) * k, (y - WTIP[1]) * k], th); return [T[0] + v[0], T[1] + v[1]]; };
+    const P0 = map(WING_PIVOT), tap = f.tap * RAD;
+    const pts = WING.map((p) => { const q = map(p), v = rot([q[0] - P0[0], q[1] - P0[1]], tap); return [P0[0] + v[0], P0[1] + v[1]]; });
+    ctx.fillStyle = WHITE;
+    fillPoly(ctx, pts);
+    ctx.strokeStyle = INK;
+    line(ctx, spline(pts, 6), r, 3.5, 0.8, true);
+  }
+  /* 一本打開的書。書的座標:x 往右(書脊 x = 0,一頁寬 W)、y 往上、z 往前(書脊從 -D/2 到 D/2);
+     封面是淺淺的 V(外側抬高 V),書頁疊在封面上、外側厚 T,最上面那頁從書脊陡陡地翹起來再攤平(頁面的弧度)。
+     從前上方往下看 pitch 度(不透視),再整本轉 roll 度,中心放在 c。f.bk = [往上飄多少, 多轉幾度];f.page = 翻頁那張翹起來幾度(0 = 沒在翻)。
+     每個面填白後只描一圈外框(共用的邊每次都落在同一個位置,看起來是一條);書頁前面的厚度只填白、描上緣(底下封面的邊就是它的底);每頁 3 條字線。
+     手畫的感覺(站長說書的線太硬):形狀照算出來的不變,只是
+     - 整本書套一層很淺的波(位置的平滑函數,同一個點不管描幾次都在同一個位置,共用的邊還是一條),直邊會微微彎,不像尺畫的;
+     - 每一筆有輕重(起筆收筆細、中段粗,同身體外框的畫法),轉角收成小圓角,繞一圈的線收筆時多帶出去一點、不剛好接死。 */
+  const BK = { W: 50, D: 64, T: 9, V: 7, e: 3.5 };
+  function gazeBook(ctx, r, f) {
+    const B = GZ.book, [up, turn] = f.bk;
+    const { W, D, T, V, e } = BK, h = D / 2;
+    const al = B.pitch * RAD, ro = (B.roll + turn) * RAD, c = [B.c[0], B.c[1] - up];
+    const ca = Math.cos(al), sa = Math.sin(al);
+    const yc = (u) => V * u, yt = (u) => yc(u) + T * (1 - Math.pow(1 - Math.min(1, u), 2));
+    const dep = ([, y, z]) => z * ca + y * sa;                            // 往我們這邊多近(排前後用)
+    const P0 = ([x, y, z]) => {
+      const q = rot([x, z * sa - y * ca], ro);
+      return [c[0] + q[0], c[1] + q[1]];
+    };
+    const WA = SMALL ? 0.6 : 1.15, WB = [r() * 6.28, r() * 6.28, r() * 6.28, r() * 6.28];
+    const P0w = (p) => {                                                  // 套上很淺的波
+      const q = P0(p), u = q[0] - c[0], v = q[1] - c[1];
+      return [q[0] + WA * (Math.sin(u * 0.11 + v * 0.07 + WB[0]) + 0.6 * Math.sin(u * 0.05 - v * 0.13 + WB[1])),
+        q[1] + WA * (Math.sin(u * 0.09 - v * 0.1 + WB[2]) + 0.6 * Math.sin(u * 0.14 + v * 0.045 + WB[3]))];
+    };
+    // 每個 3D 點只抖一次(同一個點不管描幾次都在同一個位置)
+    const j = 0.4 * JIT, JM = new Map();
+    const P = (p) => {
+      const k = p.map((v) => v.toFixed(2)).join(',');
+      if (!JM.has(k)) JM.set(k, [(r() - 0.5) * 2 * j, (r() - 0.5) * 2 * j]);
+      const q = P0w(p), d = JM.get(k); return [q[0] + d[0], q[1] + d[1]];
+    };
+    // 轉角(同一個點連放兩次)改成前後各退 e 的兩個點 → 小圓角;繞一圈的線(頭尾同一點)收筆多帶出去 over
+    const soften = (q, e, over) => {
+      const same = (a, b) => a && b && Math.abs(a[0] - b[0]) < 1e-6 && Math.abs(a[1] - b[1]) < 1e-6;
+      const toward = (a, b, d) => { const L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1, t = Math.min(0.45, d / L); return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]; };
+      const out = [];
+      for (let i = 0; i < q.length; i++) {
+        if (same(q[i], q[i + 1]) && out.length && q[i + 2]) { out.push(toward(q[i], out[out.length - 1], e), toward(q[i], q[i + 2], e)); i++; }
+        else if (!same(q[i], out[out.length - 1])) out.push(q[i]);
+      }
+      if (over && out.length > 3 && same(q[0], q[q.length - 1])) out.push(toward(out[0], out[1], over));
+      return out;
+    };
+    const U = (n, a, b) => Array.from({ length: n + 1 }, (_, i) => (a || 0) + ((b === undefined ? 1 : b) - (a || 0)) * i / n);
+    // 幾段邊接成一條線;轉角的點放兩次
+    const path = (segs, close) => {
+      const pts = [];
+      segs.forEach((sg, i) => { if (i) pts.push(sg[0]); pts.push(...sg); });
+      if (close) pts.push(segs[0][0], segs[0][0]);
+      return pts;
+    };
+    const stroke = (pts3, w) => { ctx.strokeStyle = INK; line(ctx, soften(pts3.map(P), 1.5, 2.2), r, w * (SMALL ? 0.72 : 1), 0, true); };
+    const fill = (pts3) => { ctx.fillStyle = WHITE; fillPoly(ctx, pts3.map(P0w)); };
+    const cu = (W + e) / W;
+    const cf = U(12, -cu, cu).map((u) => [W * u, yc(Math.abs(u)) - 1.6, h + e]), cbk = U(12, -cu, cu).map((u) => [W * u, yc(Math.abs(u)) - 1.6, -h - e]);
+    // 封面:一片比書頁大一圈的淺 V,最先畫;一圈外框一筆(96 以下不畫封面)
+    if (!SMALL) { const cv = path([cf, [cf[12], cbk[12]], cbk.slice().reverse()], true); fill(cv); stroke(cv, 3.2); }
+    const rows = SMALL ? [[-0.16, 0.8], [0.16, 0.6]] : [[-0.27, 0.84], [0, 0.82], [0.27, 0.58]];   // 字線:[在頁面前後哪裡, 寫到多寬]
+    const spine = U(4).map((t) => [0, 0, h - 2 * h * t]);   // 從前往後
+    const faces = [];
+    [-1, 1].forEach((sg) => {
+      const tf = U(8).map((u) => [sg * W * u, yt(u), h]), tb = U(8).map((u) => [sg * W * u, yt(u), -h]);
+      const to = U(4).map((t) => [sg * W, yt(1), h - 2 * h * t]);
+      const bf = U(8).map((u) => [sg * W * u, yc(u), h]);
+      const top = path([tf, to, tb.slice().reverse(), spine.slice().reverse()], true);
+      faces.push({ poly: top, line: top, w: 3.4,
+        extra: () => rows.forEach(([zz, b]) => line(ctx, U(6, 0.15, b).map((u) => P0w([sg * W * u, yt(u) + 0.3, zz * D])), r, SMALL ? 2.4 : 2.2, 0.55, true)) });
+      // 書頁前面的厚度:填白,只描上緣(跟書頁共用);96 以下沒有封面,補一條底線
+      faces.push({ poly: tf.concat([[sg * W, yc(1), h]], bf.slice().reverse()), line: tf, w: 3.4, extra: () => { if (SMALL) stroke(bf, 2.8); } });
+    });
+    faces.sort((a, b) => dep3(a.poly) - dep3(b.poly));
+    function dep3(pts) { return pts.reduce((a, p) => a + dep(p), 0) / pts.length; }
+    faces.forEach((Fc) => { fill(Fc.poly); stroke(Fc.line, Fc.w); Fc.extra(); });
+    // 翻頁:右頁最上面那張以書脊為軸翹 a0 度,越外面再多捲 k 度;一圈外框一筆,上面 2 條字線
+    const leaf = (a0, k) => {
+      const at = (u, z) => { const a = (a0 + k * u * u) * RAD, x = W * u, y = yt(u) + 0.4; return [x * Math.cos(a) - y * Math.sin(a), x * Math.sin(a) + y * Math.cos(a), z]; };
+      const fr = U(8).map((u) => at(u, h)), bk = U(8).map((u) => at(u, -h));
+      const lp = path([fr, U(3).map((t) => at(1, h - 2 * h * t)), bk.slice().reverse(), spine.slice().reverse()], true);
+      fill(lp); stroke(lp, 3);
+      [[-0.2, 0.78], [0.14, 0.6]].forEach(([zz, b]) => line(ctx, U(6, 0.18, b).map((u) => P0w(at(u, zz * D))), r, SMALL ? 2.4 : 2.2, 0.55, true));
+    };
+    const tn = f.page;
+    if (tn) leaf(tn, tn < 60 ? 10 : tn < 120 ? -8 : -15);
+  }
+  /* 一圈 12 格:書小幅上下飄、轉一點;第 5~7 格翻一頁(翹起來 → 立起來 → 落到左邊,第 8 格起是新的一頁);
+     身體很小的呼吸;翅尖點兩下(第 1、3 格);第 9 格眨眼。靜止格第 0 格 */
+  const GZ_N = 12;
+  const GZ_PAGE = [0, 0, 0, 0, 0, 22, 100, 150, 0, 0, 0, 0];   // 每格翻頁那張翹幾度
+  const GZ_TAP = [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
+  const gaze = Array.from({ length: GZ_N }, (_, k) => {
+    const a = k / GZ_N * Math.PI * 2;
+    return {
+      gz: true,
+      sq: GZ.sq + 0.012 * (1 - Math.cos(a)) / 2,
+      pouch: [0.5 * Math.sin(a), 1.2 * Math.sin(a - 0.9)],
+      tuft: 3 + 3 * Math.sin(a - 0.8),
+      bk: [3.5 * Math.sin(a), 1.5 * Math.sin(a + 1)],
+      page: GZ_PAGE[k],
+      tap: GZ_TAP[k] * GZ.wing.tap,
+      eyes: k === 9 ? 'blink' : 'open',
+    };
+  });
+  /* gaze 的臉:眼睛用畫布座標(在站長的圖上量的),不跟著身體縮放,只跟著臉中心平移(第 0 格的臉中心 GZ_C0 為基準) */
+  const GZ_FACE = [154, 86];
+  let GZ_C0 = null;
+  function gazeFace(ctx, r, kind) {
+    const body = XF, C = body(GZ_FACE);
+    if (!GZ_C0) GZ_C0 = gazeXF(gaze[0]).body(GZ_FACE);
+    XF = ID;
+    flatFace(ctx, r, kind, [C[0] - GZ_C0[0], C[1] - GZ_C0[1]], 6 * PEN_W * (1 + (INKW - 1) * 0.6));
+    XF = body;
+  }
   /* ---------- 第五版:特效(都在畫面座標畫,位置跟著身體) ---------- */
   function fx(ctx, r, list, k) {
     ctx.save();
@@ -1068,13 +1306,13 @@
   }).map((f) => Object.assign({ lie: true, tilt: 30, tiltBody: 10, sx: 0.88, back: 0.16, dx: -18, wing: -32 }, f));
 
   /* 第五版的姿勢接在 idle 後面(待機的種子用姿勢的順序算,不變);第八版的白日夢接在最後(前面各姿勢的種子不變) */
-  const POSES = { idle, happy, oops, read, sleep, daydream };
+  const POSES = { idle, happy, oops, read, sleep, daydream, gaze };
   /* 不想看動畫(減少動態)時每個姿勢顯示的那一格:
      happy 第 8 格(站著抬下巴、開心的眼睛、得意的短線)、oops 第 2 格(縮到最底、> <、線團和汗都在)、
      read 第 0 格(捧著書往下看)、sleep 第 3 格(吸飽氣、兩個 z)、daydream 第 0 格(三本書都在空中、張著眼往上看) */
-  const CALM = { idle: 0, happy: 8, oops: 2, read: 0, sleep: 3, daydream: 0 };
+  const CALM = { idle: 0, happy: 8, oops: 2, read: 0, sleep: 3, daydream: 0, gaze: 0 };
   /* 各動作在基準 fps = 8 時的播放速度;實際 = 呼叫者給的 fps × 這裡 / 8 */
-  const POSE_FPS = { idle: 5, happy: 8, oops: 4, read: 4, sleep: 3, daydream: 4 };
+  const POSE_FPS = { idle: 5, happy: 8, oops: 4, read: 4, sleep: 3, daydream: 4, gaze: 4 };
   const fpsFor = (pose, base) => base * (POSE_FPS[pose] || 8) / 8;
 
   /* 畫一格。seed 決定這一格的抖動 */
@@ -1091,7 +1329,8 @@
 
     XF = ID;
     if (f.front) { drawRead(ctx, r, f, size); ctx.restore(); return; }   // 第六版:看書是正面,另外畫
-    if (f.lie) lieLegs(ctx, r, f);           // 第八版:趴著,腳往後伸出屁股
+    if (f.gz) gazeTail(ctx, r, affine);      // 第九版:尾巴先畫,根部被身體蓋住
+    else if (f.lie) lieLegs(ctx, r, f);      // 第八版:趴著,腳往後伸出屁股
     else legs(ctx, r, affine, f.feet, f.dx); // 先畫腳,身體塗白時蓋住腳的上端
 
     XF = body;
@@ -1110,16 +1349,21 @@
     // 嘴的下緣右端只多畫出去一點點就收掉(不往上勾);嘴袋的碗一筆畫完,右上端停在嘴線下面
     line(ctx, extend(BEAK_LOW, 0, 0.5 + r()), r, 4.6, 0.7, true);   // 第六版:加粗約 20%
     line(ctx, BOWL, r, 4.1, 0.9, true);
-    wing(ctx, r, f);
+    if (f.gz) { XF = ID; gazeWing(ctx, r, f, body); XF = body; }   // 第九版:翅膀往前托著下巴
+    else wing(ctx, r, f);
     const tip = tuft(ctx, r, f, th);
-    face(ctx, r, f.eyes || 'open');
+    if (f.gz) gazeFace(ctx, r, f.eyes || 'open');   // 第九版:粗線壓著半顆眼珠(抬眼看)
+    else face(ctx, r, f.eyes || 'open');
     XF = ID;
     if (f.fx) fx(ctx, r, f.fx, { body, tip, size, dx: f.dx });
+    if (f.gz) { gazeBook(ctx, r, f); gazeFeet(ctx, r); }   // 第九版:飄著的書;腳接在身體底線上(最後畫)
     if (f.books) dayBooks(ctx, r, f, size);  // 第八版:白日夢上方飄的書
     ctx.restore();
   }
 
-  const poseSeed = (seed, pose) => seed * 1000 + Object.keys(POSES).indexOf(pose) * 97;
+  /* 第九版:每個姿勢的種子編號固定(以前用姿勢在清單裡的位置算,舊的六個編號不變) */
+  const SEED_NO = { idle: 0, happy: 1, oops: 2, read: 3, sleep: 4, daydream: 5, gaze: 6 };
+  const poseSeed = (seed, pose) => seed * 1000 + SEED_NO[pose] * 97;
   const frameSeed = (base, i, variant) => base + i * 13 + variant * 101;
 
   /* 每一格各畫 2 種抖動到離屏畫布,播的時候交替,線條會沸騰。用到哪一格才畫哪一格,畫過的留著重播 */
@@ -1219,7 +1463,7 @@
     holds: (p) => (POSES[p] ? POSES[p].map((f) => f.hold || 1) : []),
     calm: Object.assign({}, CALM),
     fps: Object.assign({}, POSE_FPS),        // 基準 8 時各動作的每秒張數
-    version: 4,
+    version: 5,
     metrics: { width: W, height: H, ground: GROUND },   // ground = 腳底在畫布裡的高度(邏輯像素)
   };
 })();

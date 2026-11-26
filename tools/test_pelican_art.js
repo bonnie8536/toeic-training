@@ -1,4 +1,4 @@
-/* 塗鴉鵜鶘(js/pelican-art.js,version 4:本體、待機,加上開心、尷尬、看書、睡覺、白日夢五個姿勢)的測試。
+/* 塗鴉鵜鶘(js/pelican-art.js,version 5:本體、待機,加上開心、尷尬、看書、睡覺、白日夢、坐著看書六個姿勢)的測試。
    用法:node tools/test_pelican_art.js
    在 Node 裡跑,用假的 canvas 記下每一個繪圖呼叫(含每個數字的完整值)和每一次設定的顏色、筆粗,檢查:
    - 介面:姿勢清單、格數、holds、靜止格、速度、metrics、version。
@@ -16,10 +16,13 @@
      側面姿勢之間互換不淡入淡出。
    - version 4(第八版):姿勢清單最後多了 daydream 白日夢,上面每一條通用規則(格數、holds、速度、畫兩次一樣、不超出畫布、
      沒有藍色、白色身體有塗白、減少動態只畫靜止格)都照樣檢查它;另外檢查:趴著(身體寬比高多很多、肚子貼地、比站著低)、
-     腳往後伸出屁股、身體上面左中右三本書(一本黃色封面)且各格上下飄而身體不動、跟站著的姿勢互換時淡出淡入。 */
-const POSES = ['idle', 'happy', 'oops', 'read', 'sleep', 'daydream'];
+     腳往後伸出屁股、身體上面左中右三本書(一本黃色封面)且各格上下飄而身體不動、跟站著的姿勢互換時淡出淡入。
+   - version 5(第九版):姿勢清單最後多了 gaze 坐著抬眼看書(首頁用),上面每一條通用規則都照樣檢查它;另外檢查:
+     12 格、每格 1 拍、每秒 4 張、靜止格第 0 格;種子編號固定(idle 0 … daydream 5、gaze 6);
+     每一格、64~300 各種大小的點離畫布邊至少一個線寬的一半加 1(墨線不碰畫布邊);只用墨黑、黃、純白;每一格都有書的白色(左上方)。 */
+const POSES = ['idle', 'happy', 'oops', 'read', 'sleep', 'daydream', 'gaze'];
 /* 各姿勢的格數範圍 */
-const FRAMES = { idle: [7, 10], happy: [9, 11], oops: [8, 10], read: [7, 9], sleep: [6, 8], daydream: [10, 13] };
+const FRAMES = { idle: [7, 10], happy: [9, 11], oops: [8, 10], read: [7, 9], sleep: [6, 8], daydream: [10, 13], gaze: [12, 12] };
 const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
@@ -139,7 +142,7 @@ const T = {};
 T['姿勢清單、version、metrics、速度'] = () => {
   const d = [];
   if (!eq(ART.poses, POSES)) d.push('poses ' + JSON.stringify(ART.poses));
-  if (ART.version !== 4) d.push('version ' + ART.version);
+  if (ART.version !== 5) d.push('version ' + ART.version);
   if (!eq(ART.metrics, { width: 300, height: 280, ground: 258 })) d.push('metrics ' + JSON.stringify(ART.metrics));
   if (!POSES.every((p) => ART.fps[p] > 0 && ART.fps[p] <= 8)) d.push('fps ' + JSON.stringify(ART.fps));
   // 尷尬比待機慢、看書不比待機快、睡覺最慢
@@ -553,6 +556,46 @@ T['happy 循環播:基準 fps 8 時每秒 8 張(125 ms 一格)、10 格都輪過
   env.intervals().forEach((t) => t.fn());
   if (env.intervals().length || painted(canvas).length !== before) d.push('stop 之後還在動');
   return { ok: !d.length, detail: d.join(';') };
+};
+
+/* ---------- 第九版:gaze 坐著抬眼看書 ---------- */
+T['gaze:12 格、每格 1 拍、每秒 4 張、靜止格第 0 格;種子編號固定(gaze 6,舊的六個照舊)'] = () => {
+  const d = [];
+  if (ART.frameCount('gaze') !== 12) d.push('格數 ' + ART.frameCount('gaze'));
+  if (!eq(ART.holds('gaze'), Array(12).fill(1))) d.push('holds ' + JSON.stringify(ART.holds('gaze')));
+  if (ART.fps.gaze !== 4) d.push('fps ' + ART.fps.gaze);
+  if (ART.calm.gaze !== 0) d.push('靜止格 ' + ART.calm.gaze);
+  const m = /const SEED_NO = (\{[^}]*\});/.exec(SRC);
+  const no = m && Function('return ' + m[1])();
+  if (!eq(no, { idle: 0, happy: 1, oops: 2, read: 3, sleep: 4, daydream: 5, gaze: 6 })) d.push('SEED_NO ' + (m && m[1]));
+  if (!/const poseSeed = \(seed, pose\) => seed \* 1000 \+ SEED_NO\[pose\] \* 97;/.test(SRC)) d.push('poseSeed 沒用 SEED_NO');
+  // 同一個種子,gaze 跟其他姿勢的第 0 格都不一樣
+  POSES.slice(0, 6).forEach((p) => { if (frameLog(ART, p, 0, 0, 180).join('\n') === frameLog(ART, 'gaze', 0, 0, 180).join('\n')) d.push(p + ' 跟 gaze 一樣'); });
+  return { ok: !d.length, detail: d.join(';') };
+};
+T['gaze:每一格、兩種抖動、64~300 的點離畫布邊至少「線寬一半 + 1」;顏色只有墨黑、黃、純白;每格左上方有書的白色'] = () => {
+  const W = ART.metrics.width, H = ART.metrics.height, bad = [], colors = new Set(), noBook = [];
+  for (const size of [64, 96, 100, 120, 140, 160, 220, 300]) for (let k = 0; k < 12; k++) for (const v of [0, 1]) {
+    const log = frameLog(ART, 'gaze', k, v, size);
+    let lw = 0, book = false, fill = '';
+    log.forEach((l) => {
+      if (l.startsWith('lineWidth=')) lw = +l.slice(10);
+      if (/^(fillStyle|strokeStyle)=/.test(l)) colors.add(l.split('=')[1].toLowerCase());
+      if (l.startsWith('fillStyle=')) fill = l.slice(10).toLowerCase();
+      const mm = /^(moveTo|lineTo|bezierCurveTo|quadraticCurveTo)\((.*)\)$/.exec(l);
+      if (!mm) return;
+      const n = mm[2].split(',').map(Number);
+      for (let i = 0; i + 1 < n.length; i += 2) {
+        const [x, y] = [n[i], n[i + 1]], e = lw / 2 + 1;
+        if (!(x >= e && x <= W - e && y >= e && y <= H - e)) bad.push(size + '/' + k + '/' + v + ' ' + x.toFixed(1) + ',' + y.toFixed(1) + ' 線寬 ' + lw.toFixed(1));
+        if (fill === '#ffffff' && x < 130 && y < 120) book = true;
+      }
+    });
+    if (!book) noBook.push(size + '/' + k + '/' + v);
+  }
+  const list = [...colors].sort();
+  const ok = !bad.length && !noBook.length && eq(list, ['#151515', '#ffe100', '#ffffff']);
+  return { ok, detail: JSON.stringify({ bad: bad.length, first: bad.slice(0, 4), colors: list, noBook: noBook.slice(0, 4) }) };
 };
 
 T['畫得小時墨線加粗(52 px 比 180 px 粗),180 px 以上不加粗'] = () => {

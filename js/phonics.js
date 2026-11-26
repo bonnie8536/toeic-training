@@ -8,7 +8,7 @@
   const UNITS = (window.TOEIC && TOEIC.phonics) || [];
 
   if (!UNITS.length) {
-    root.append(UI.empty({ pose: 'read', text: '自然發音教材準備中' }));
+    root.append(UI.empty({ pose: 'gaze', text: '自然發音教材準備中' }));
     return;
   }
 

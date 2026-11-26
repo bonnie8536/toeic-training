@@ -1032,6 +1032,19 @@ T['鵜鶘載入失敗:退回 ChickArt,畫布換成小雞的寬與比例、拿掉
   assert.strictEqual(ck5.made.length, 0);
 };
 
+T['gaze(坐著看書)載不到鵜鶘時退回小雞的 idle:空狀態與 data-mascot 都是;有鵜鶘時照畫 gaze'] = async () => {
+  const ck = fakeChick();
+  const p = loadPage({ chick: ck });   // 沒有 PelicanArt,也載不到
+  p.UI.empty({ pose: 'gaze', text: '還沒有作答紀錄' });
+  await settle();
+  assert.strictEqual(ck.made.length, 1, '退回小雞');
+  assert.strictEqual(ck.made[0].opt.pose, 'idle');
+  const pe = fakePelican(['idle', 'happy', 'oops', 'read', 'sleep', 'daydream', 'gaze']);
+  const p2 = loadPage({ pelican: pe });
+  p2.UI.empty({ pose: 'gaze', text: 'x' });
+  assert.strictEqual(pe.made[0].opt.pose, 'gaze');
+};
+
 T['data-mascot 掛載:頁面載入時畫鵜鶘(姿勢、寬、data-still);data-chick 仍畫小雞;各掛各的'] = async () => {
   const pe = fakePelican(), ck = fakeChick();
   const p = loadPage({ pelican: pe, chick: ck, markup(doc) {

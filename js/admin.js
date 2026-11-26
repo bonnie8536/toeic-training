@@ -202,7 +202,7 @@
     const text = '還沒有學生資料';
     if (window.UI && typeof UI.empty === 'function') {
       /* 多個班級時的挑選按鈕與結果訊息放在空狀態下面(extra) */
-      return UI.empty({ pose: 'read', text, action: { label, onClick: onCopy }, extra: [picks, msg] });
+      return UI.empty({ pose: 'gaze', text, action: { label, onClick: onCopy }, extra: [picks, msg] });
     }
     return h('div', { class: 'q-block' }, text, h('button', { class: 'btn', type: 'button', onclick: onCopy }, label), picks, msg);
   }

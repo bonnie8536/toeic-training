@@ -169,7 +169,7 @@
   if (rec.total < 10) {
     /* 還不夠分析:累計題數、一顆主按鈕、一個文字連結 */
     root.append(emptyState({
-      pose: 'read', text: '累計作答 ' + rec.total + ' / 10 題',
+      pose: 'gaze', text: '累計作答 ' + rec.total + ' / 10 題',
       action: { label: '去刷題', href: 'practice.html', primary: true },
       links: [{ label: '程度檢測', href: 'diagnostic.html' }],
     }));

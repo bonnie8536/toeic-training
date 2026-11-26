@@ -251,5 +251,7 @@
   const rvq = course(rvq2, isArr, (x, y) => setCanon(x) === setCanon(y));
   const tests = course(tests2, isPlain);
 
-  root.SYNC_MERGE = Object.freeze(Object.assign({}, base, { lesson, pts, rvq, tests, mockSeen, plan }));
+  /* 模擬考作答過的題與課表設定:兩份先拿掉 "__proto__" 鍵(SYNC_MERGE.guarded;舊快取的 sync-merge.js 沒有它時照原本合併) */
+  const g = typeof base.guarded === 'function' ? base.guarded : (f) => f;
+  root.SYNC_MERGE = Object.freeze(Object.assign({}, base, { lesson, pts, rvq, tests, mockSeen: g(mockSeen), plan: g(plan) }));
 })(typeof window !== 'undefined' ? window : globalThis);

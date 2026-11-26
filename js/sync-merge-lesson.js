@@ -15,6 +15,22 @@
   const isPlain = x => !!x && typeof x === 'object' && !isArr(x);
   const isNum = x => typeof x === 'number' && isFinite(x);
   const cmp = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+  /* 外來資料的 "__proto__" 鍵合併前拿掉、讀別份的鍵先用 own 確認(跟 js/sync-merge.js 的 noProto、guarded 一樣的理由) */
+  const get = (o, k) => (isPlain(o) && own(o, k) ? o[k] : undefined);
+  function noProto(x) {
+    if (!x || typeof x !== 'object') return x;
+    if (isArr(x)) {
+      let out = null;
+      for (let i = 0; i < x.length; i++) { const c = noProto(x[i]); if (c !== x[i]) { out = out || x.slice(); out[i] = c; } }
+      return out || x;
+    }
+    let out = own(x, '__proto__') ? {} : null;
+    const ks = keysOf(x);
+    for (let i = 0; i < ks.length && !out; i++) if (noProto(x[ks[i]]) !== x[ks[i]]) out = {};
+    if (!out) return x;
+    ks.forEach(k => { if (k !== '__proto__') out[k] = noProto(x[k]); });
+    return out;
+  }
 
   /* ---------- 課程(js/pack-core.js、js/lesson-rules.js 寫):les_t<期>_<堂>、pts、rvq、tests_v1 ----------
      形狀見那兩個檔的檔頭。都是一份是 null 就用另一份;形狀不對的那份當成沒有,兩份都不對回 ok:false;lesson 的 v 不是 1 回 ok:false。
@@ -32,14 +48,15 @@
   const setCanon = arr => canon(arr.map(canon).sort());
   function course(fn, shape, eq, versioned) {
     const same = eq || ((x, y) => canon(x) === canon(y));
-    return function (a, b) {
+    return function (a0, b0) {
+      const a = noProto(a0), b = noProto(b0);
       const none = x => x === null || x === undefined;
       if (versioned && [a, b].some(x => isPlain(x) && own(x, 'v') && x.v !== 1)) return { ok: false };
       if (none(a) && none(b)) return { ok: true, v: null, sameAsLocal: a === null, sameAsCloud: b === null };
       const ga = !none(a) && shape(a), gb = !none(b) && shape(b);
       if (!ga && !gb) return { ok: false };
       const r = ga && gb ? fn(a, b) : { v: ga ? a : b };
-      const sameAsLocal = ga && same(r.v, a), sameAsCloud = gb && same(r.v, b);
+      const sameAsLocal = ga && a === a0 && same(r.v, a), sameAsCloud = gb && b === b0 && same(r.v, b);
       const out = { ok: true, v: sameAsLocal ? a : sameAsCloud ? b : r.v, sameAsLocal, sameAsCloud };
       if (r.dropped) out.dropped = r.dropped;
       return out;
@@ -58,7 +75,7 @@
   const rowKey = x => x[0] + '|' + x[1] + '|' + x[2];
   /* 凍結選題:一般區塊各自取凍結早的;個人段一整段取最早凍結的那一份 */
   function joinPk(list) {
-    const pk = {}, at = {}, pkOf = s => (isPlain(s.pk) ? s.pk : {});
+    const pk = Object.create(null), at = Object.create(null), pkOf = s => (isPlain(s.pk) ? s.pk : {});
     const group = k => COURSE_GROUPS.findIndex(g => k >= g[0] && k < g[1]);
     const absOf = (s, e) => s.startedAt + (isNum(e.at) ? e.at : 0);
     const sig = (s, e) => canon(Object.assign({}, e, { at: absOf(s, e) }));   // 比較用:時間換成絕對時間,合併前後一樣
@@ -103,7 +120,7 @@
     }));
     const list = Array.from(rows.values()).sort((m, n) => m.abs - n.abs || cmp(rowKey(m.x), rowKey(n.x)));
     const seg = {};
-    if (same) new Set(keysOf(p.seg).concat(keysOf(q.seg))).forEach(k => { seg[k] = joinSeg(p.seg[k], q.seg[k]); });
+    if (same) new Set(keysOf(p.seg).concat(keysOf(q.seg))).forEach(k => { seg[k] = joinSeg(get(p.seg, k), get(q.seg, k)); });
     else keysOf(p.seg).forEach(k => { seg[k] = p.seg[k]; });
     const segs = keysOf(seg).map(k => seg[k]);
     const dones = (same ? [p.doneAt, q.doneAt] : [p.doneAt]).filter(Number.isInteger).sort((m, n) => m - n);
@@ -118,7 +135,7 @@
   function pts2(A, B) {
     const out = {};
     new Set(keysOf(A).concat(keysOf(B))).forEach(k => {
-      const x = isPlain(A[k]) ? A[k] : null, y = isPlain(B[k]) ? B[k] : null;
+      const x = isPlain(get(A, k)) ? A[k] : null, y = isPlain(get(B, k)) ? B[k] : null;
       if (!x || !y) { if (x || y) out[k] = x || y; return; }
       const by = new Map();
       hitsOf(x).concat(hitsOf(y)).forEach(h => {
@@ -153,9 +170,9 @@
   function tests2(A, B) {
     const out = {}, atOf = r => (isNum(r.at) ? r.at : Infinity);
     new Set(keysOf(A).concat(keysOf(B))).forEach(t => {
-      const x = isPlain(A[t]) ? A[t] : {}, y = isPlain(B[t]) ? B[t] : {}, o = {};
+      const x = isPlain(get(A, t)) ? A[t] : {}, y = isPlain(get(B, t)) ? B[t] : {}, o = {};
       new Set(keysOf(x).concat(keysOf(y))).forEach(k => {
-        const p = x[k], q = y[k];
+        const p = get(x, k), q = get(y, k);
         const w = !isPlain(q) ? p : !isPlain(p) ? q : atOf(q) < atOf(p) || (atOf(q) === atOf(p) && canon(q) < canon(p)) ? q : p;
         if (w !== undefined) o[k] = w;
       });

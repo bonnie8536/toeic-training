@@ -23,7 +23,9 @@
     for (let i = 0; i < ls.length; i++) { const k = ls.key(i); if (typeof k === 'string') out.push(k); }
     return out;
   }
-  function parseOk(raw) { try { return { ok: true, v: JSON.parse(raw) }; } catch (e) { return { ok: false }; } }
+  /* 外來資料的 "__proto__" 鍵讀的時候就拿掉(JSON.parse 會把它當一般的鍵留著,合併時會被當成換原型) */
+  const noProtoKey = (k, v) => (k === '__proto__' ? undefined : v);
+  function parseOk(raw) { try { return { ok: true, v: JSON.parse(raw, noProtoKey) }; } catch (e) { return { ok: false }; } }
 
   const meaningful = R.meaningful;
 
@@ -218,7 +220,7 @@
     } catch (e) { return { ok: false, why: 'broken' }; }
     if (json.length > MAX_BYTES) return { ok: false, why: 'tooBig' };
     let o;
-    try { o = JSON.parse(json); } catch (e) { return { ok: false, why: 'broken' }; }
+    try { o = JSON.parse(json, noProtoKey); } catch (e) { return { ok: false, why: 'broken' }; }   // 結構裡帶 __proto__ 的:拿掉之後雜湊對不上,整包不收
     if (!isPlain(o) || !isPlain(o.pack) || typeof o.hash !== 'string') return { ok: false, why: 'notMove' };
     return { ok: true, pack: o.pack, hash: o.hash };
   }

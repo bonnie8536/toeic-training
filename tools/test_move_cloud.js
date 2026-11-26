@@ -424,6 +424,23 @@ T['暫存區:舊網址離線刪掉的題庫(暫存區帶刪除標記 sync_del):�
   return { ok, detail: J({ ids, t, local: lv(w, 'vgame_banks') }) };
 };
 
+T['暫存區:刪除標記與錯題本帶 __proto__ 鍵,登入合併之後內建物件不變,本機與雲端存的都沒有 __proto__,一般的標記照常合併'] = async () => {
+  const w = makeWorld();
+  const b1 = sbank('b1', '留著', ['a'], T0 - 5 * DAY), b2 = sbank('b2', '舊網址刪的', ['x'], T0 - 5 * DAY);
+  cloudRow(w, 'vgame_banks', [b1, b2], T0 - HOUR);
+  const d = SM.deleteBank([b1, b2], null, 'b2', T0 - 3 * HOUR);
+  const evilDel = J(d.tombs).replace('"w":{}', '"w":{"__proto__":{"isTeacher":{"at":' + T0 + ',"h0":["x"]}},"constructor":{"pwn":{"at":' + T0 + ',"h0":["x"]}}}');
+  const evilDrill = '{"__proto__":{"pwn":1},"q1":{"c":1,"ok":false,"t":5}}';
+  w.local.setItem(PEND, J({ items: [['sync_del', evilDel, T0 - 3 * HOUR], ['vgame_banks', J(d.banks), T0 - 3 * HOUR], ['drill_p5', evilDrill, T0 - 3 * HOUR]] }));
+  const pg = await openLoggedIn(w);
+  const leaked = ['isTeacher', 'pwn'].filter((k) => vm.runInContext('({})[' + J(k) + '] !== undefined || Object[' + J(k) + '] !== undefined', pg.ctx) || ({})[k] !== undefined);
+  const t = cv(w, 'sync_del');
+  const stored = [J(t), w.local.getItem(PREFIX + 'sync_del'), J(cv(w, 'drill_p5')), w.local.getItem(PREFIX + 'drill_p5')].join(' ');
+  const ids = (cv(w, 'vgame_banks') || []).map((b) => b.id);
+  const ok = !leaked.length && !/__proto__/.test(stored) && !!t && !!t.vgame_banks.b.b2 && J(ids) === J(['b1']) && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ leaked, ids, stored: stored.slice(0, 300) }) };
+};
+
 T['暫存區:模擬考紀錄跟雲端聯集、留到 300 筆(同步的規則),不照搬家的 30 筆把舊網址的裁掉'] = async () => {
   const w = makeWorld();
   const cloud = Array.from({ length: 30 }, (x, i) => mockRec('2026-10-' + String(i + 1).padStart(2, '0') + 'T10:00', i));

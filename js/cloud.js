@@ -1553,12 +1553,14 @@
      (規則認的鍵寫在 SYNC_FAMILY)。MERGED 上有、SYNC_FN 沒有的鍵(以後加進合併表卻忘了這裡):暫存那份一律放進備份,
      不准當成題庫合併、也不准略過(略過的話暫存區照樣刪掉)。
      回 { sets: [[鍵, 原字串]], backup: [[鍵, 原字串]] };合併不了的鍵暫存那份放進備份,本機不動 */
+  /* 暫存區與本機讀出來的值:"__proto__" 鍵讀的時候就拿掉(JSON.parse 會把它當一般的鍵留著,合併時會被當成換原型) */
+  const noProtoKey = (k, v) => (k === '__proto__' ? undefined : v);
   const SYNC_FAMILY = [[/^les_t/, 'lesson']];
   const SYNC_TWO = { mock: 1, mockWrong: 1, levels: 1, onboard: 1, selfScore: 1, pts: 1, rvq: 1, tests: 1, lesson: 1 };   // 雲端和暫存那份先合、再合本機(不用標記)
   const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests' };
   function takeSynced(syncItems, led, cloud, prefix, now) {
     const S = window.SYNC_MERGE, sets = [], backup = [];
-    const val = (raw) => { try { return raw === null || raw === undefined ? null : JSON.parse(raw); } catch (e) { return undefined; } };
+    const val = (raw) => { try { return raw === null || raw === undefined ? null : JSON.parse(raw, noProtoKey); } catch (e) { return undefined; } };
     const local = {}, cv = {};
     const KEYS = Object.keys(MERGED).filter((k) => !MERGED[k].clock).concat(mergedIn(syncItems.map((x) => x.k)).filter((k) => !MERGED[k]));
     KEYS.forEach((k) => {
@@ -1615,7 +1617,7 @@
     const R = window.MOVE_RULES, MM = window.MOVE_MERGE;
     const now = Date.now();
     const led = readLedger(user.id), backup = [], sets = [], synced = [];
-    const parse = raw => { try { return raw === null ? undefined : JSON.parse(raw); } catch (e) { return undefined; } };
+    const parse = raw => { try { return raw === null ? undefined : JSON.parse(raw, noProtoKey); } catch (e) { return undefined; } };
     items.forEach(e => {
       if (!Array.isArray(e) || e.length !== 3 || typeof e[0] !== 'string' || typeof e[1] !== 'string') return;
       const k = e[0], raw = e[1], t = typeof e[2] === 'number' && isFinite(e[2]) ? Math.min(e[2], now) : 0;

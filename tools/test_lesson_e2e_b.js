@@ -282,8 +282,21 @@ T['6 引導:S4 三個標籤 → 短測 8 題(真音檔)→ 中場 → 28 題 →
   resetClock();
   const c = freshCloud(), u = user(37, '新同學');
   seedUser(c, u, { onboard: NEW_ONB });
+  /* S0 與首頁起始程度卡:沒登入的訪客才看得到(已經在檢測中的帳號開 start.html 會直接接回 S4) */
+  const g = await tab(null, { url: 'start.html' });
+  await g.wait("document.querySelector('.ob-start')", 'S0');
+  assert.equal(await g.eval("document.querySelector('.ob-start').textContent.includes('填多益成績，或做 36 題檢測（約 23 分鐘）')"), true, 'S0 副標');
+  await shot(g, '50_S0');
+  noErrors(g, '第 6 條訪客');
+  await g.close();
+  /* 首頁起始程度卡:登入、還沒開始設定程度的帳號 */
+  const n = await tab(user(38, '剛註冊'), { url: 'index.html' });
+  await n.wait("document.querySelector('#ob-home-h')", '首頁起始程度卡');
+  assert.equal(await n.eval("document.querySelector('.ob-home-sub').textContent"), '填多益成績，或做 36 題檢測（約 23 分鐘）');
+  await shot(n, '57_首頁卡_起始程度');
+  noErrors(n, '第 6 條新帳號');
+  await n.close();
   const p = await tab(u, { url: 'start.html' });
-  await shot(p, '50_S0');
   await p.go('start.html?step=test');
   await p.wait("document.querySelector('.diag-intro')", 'S4');
   assert.deepStrictEqual(await p.eval("[[...document.querySelectorAll('.diag-intro .mock-tag')].map((t) => t.textContent), document.querySelector('.ob-intro-note').textContent]"),

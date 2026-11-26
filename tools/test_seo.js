@@ -833,6 +833,23 @@ T['每一個有頁尾的頁面:連結列在前、直接看得到;說明句收進
   assert.ok(n >= 28, '有頁尾的頁面太少:' + n);
 };
 
+T['每一頁頂欄的品牌字左邊都有 Y2(.brand-logo);之後新加的頁面也要有'] = () => {
+  let n = 0;
+  PAGES.filter((f) => !REDIRECT_STUBS.includes(f)).forEach((f) => {
+    const m = /<a class="brand"[^>]*>([^]*?)<[/]a>/.exec(read(f));
+    if (!m) return;
+    n++;
+    assert.strictEqual(m[1].trim(), '<span class="brand-logo" aria-hidden="true"></span>衝衝英文', f + ' 頂欄品牌字左邊沒有 Y2');
+  });
+  assert.ok(n >= 33, '有頂欄品牌字的頁面太少:' + n);
+};
+
+T['App 模式非分頁根頁:頂欄不能把整個品牌區藏掉(Y2 在裡面),只能把字縮成 0 號'] = () => {
+  const css = read('css/style.css');
+  assert.ok(!/app-shell:not\(\.is-tab-root\)\s+\.brand\s*\{[^}]*display\s*:\s*none/.test(css), 'App 模式非根頁把 .brand 整個藏起來,Y2 跟著不見');
+  assert.ok(/app-shell:not\(\.is-tab-root\)\s+\.brand\s*\{[^}]*font-size\s*:\s*0/.test(css), 'App 模式非根頁沒有把品牌字縮成 0 號');
+};
+
 let pass = 0;
 const names = Object.keys(T);
 for (const n of names) {

@@ -46,7 +46,7 @@ async function advance(ms) {
 }
 
 /* ---------- 伺服器 ---------- */
-const SV = { cloud: null, paid: false, failPacks: false, classDelay: 0 };
+const SV = { cloud: null, paid: false, failPacks: false, classDelay: 0, notFound: null };   // notFound:路徑符合這個正規式的檔回 404(例:音檔載不到)
 function serve(root, port) {
   return new Promise((resolve, reject) => {
     const srv = http.createServer((req, res) => {
@@ -55,7 +55,7 @@ function serve(root, port) {
       if (p === '/') p = '/index.html';
       const send = (body, type) => { res.writeHead(200, { 'Content-Type': type || TYPES['.js'], 'Cache-Control': 'no-store' }); res.end(body); };
       if (p === '/js/cloud-config.js') return send("window.CLOUD_CONFIG = { url: 'https://fakeproj.supabase.co', anonKey: 'x' };");
-      if (p === '/sw.js' || (SV.failPacks && p.startsWith('/data/packs/'))) { res.writeHead(404); return res.end(); }
+      if (p === '/sw.js' || (SV.failPacks && p.startsWith('/data/packs/')) || (SV.notFound && SV.notFound.test(p))) { res.writeHead(404); return res.end(); }
       const file = path.join(root, p);
       if (!path.resolve(file).startsWith(root)) { res.writeHead(403); return res.end(); }
       fs.readFile(file, (err, buf) => {
@@ -286,7 +286,7 @@ async function seedDone(c, u, lv, n) {
     c.put(u.id, e.P.lessonKey(1, no), JSON.parse(J(s)), new Date((t + 700) * 1000).toISOString());
   }
   c.put(u.id, 'plan', { v: 1, source: 'self', classId: PILOT, packs: {}, packVersions: {}, startDate: '2026-11-01', lessonsPerWeek: null, mainDay: 1, extDay: null,
-    term: 1, postponedWeeks: 0, previous: null, updatedAt: nowMs() - 2 * DAY_MS });
+    term: 1, postponedWeeks: 0, previous: null, weeklyAskedAt: new Date(nowMs() - 2 * DAY_MS).toISOString(), updatedAt: nowMs() - 2 * DAY_MS });
 }
 const pilotUser = (c, u, lv) => { c.members[u.id] = [{ id: PILOT, name: '試行班' }]; seedUser(c, u, { onboard: ONBOARD, levels: LV(lv) }); };
 
@@ -425,6 +425,9 @@ async function walk(u, lv, shots, opt) {
   const s1 = await pretest(p, shots);
   await p.mark(); await p.click('.result-card .result-go');
   await sleep(300); await p.loaded(); await p.settle();
+  /* 第 1 堂上完第一次開課程總覽:先問每週上幾堂(之後再選:照每週 2 堂排) */
+  await p.wait("document.querySelector('.lsn-weekly')", '每週上幾堂');
+  await p.click('.lsn-weekly-later .btn-text');
   await p.wait("document.querySelector('.lsn-list')", '課程總覽');
   if (shots) await shot(p, '07_課程總覽');
   /* 第 2 堂:上完第一段先回首頁看「進行中」 */

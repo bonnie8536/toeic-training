@@ -151,14 +151,14 @@ T['K6 獨立小檢核那一列:清單列連到 cp=1,左堂號右分鐘'] = () =>
   eq([ul.className, ul.querySelector('a').getAttribute('href'), ul.querySelector('a').textContent, ul.querySelector('.me-row-val').textContent], ['me-list lsn-solo', 'lesson.html?no=4&cp=1', '第 4 堂小檢核18 分鐘', '18 分鐘']);
   eq(env().W.soloRow(null), null);
 };
-T['K7 程度調整:有變的科一列(不可點)、ⓘ 開說明面板五行;都沒變不出'] = () => {
+T['K7 程度調整:有變的科一列(不可點)、ⓘ 開說明面板七行;都沒變不出'] = () => {
   const e = env();
   const s = e.W.calibNotice({ listening: ['entry', 'threshold'], reading: null });
   eq([s.querySelector('h2').textContent, s.querySelectorAll('li').map((n) => n.textContent), s.querySelectorAll('a').length], ['程度調整', ['聽力入門 → 門檻'], 0]);
   const i = s.querySelector('.lsn-info');
   eq([i.textContent, i.getAttribute('aria-label'), i.className], ['ⓘ', '程度調整說明', 'btn-text lsn-info']);
   i.click();
-  eq([e.sheets[0].opt.title, e.sheets[0].el.querySelectorAll('p').length], ['程度調整', 5]);
+  eq([e.sheets[0].opt.title, e.sheets[0].el.querySelectorAll('p').length], ['程度調整', 7]);
   eq([e.W.calibNotice({ listening: null, reading: null }), e.W.calibNotice(null)], [null, null]);
 };
 T['K8 獨立小檢核的結果:結算卡(第 n 堂、大字小檢核、鵜鶘 happy、繼續回課程總覽,沒有點心的 earnId);下面直接接判定清單,沒有同名標題'] = () => {

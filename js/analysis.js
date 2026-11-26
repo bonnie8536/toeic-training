@@ -175,10 +175,10 @@
   if (rec.total < 10) {
     /* 還不夠分析:累計題數、一顆按鈕。上面有預估卡時,主按鈕(做程度檢測)在卡片裡,這裡只留一般按鈕 */
     root.append(emptyState(estOn ? {
-      pose: 'read', text: '累計作答 ' + rec.total + ' / 10 題',
+      pose: 'gaze', text: '累計作答 ' + rec.total + ' / 10 題',
       action: { label: '去刷題', href: 'practice.html' },
     } : {
-      pose: 'read', text: '累計作答 ' + rec.total + ' / 10 題',
+      pose: 'gaze', text: '累計作答 ' + rec.total + ' / 10 題',
       action: { label: '去刷題', href: 'practice.html', primary: true },
       links: [{ label: '程度檢測', href: 'placement.html' }],
     }));

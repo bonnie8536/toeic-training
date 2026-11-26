@@ -135,7 +135,7 @@
   function screenStart() {
     put(h('div', { class: 'ob-start' },
       pageHead('找出你的起始程度', ['填多益成績，或做 24 題檢測', h('span', { class: 'ob-nowrap' }, '（約 15–20 分鐘）')]),
-      h('canvas', { class: 'ob-start-art', 'data-mascot': 'read', 'data-size': '160', 'aria-hidden': 'true' })),
+      h('canvas', { class: 'ob-start-art', 'data-mascot': 'gaze', 'data-size': '160', 'aria-hidden': 'true' })),
     actions(btn('開始', () => go('target')), textBtn('我有班級代碼', () => go('join')),
       D.isGuest() ? textBtn('登入', () => PROFILE.showLogin('login')) : null));
   }

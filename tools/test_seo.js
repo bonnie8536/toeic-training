@@ -748,7 +748,7 @@ T['build_icons:PNG、ICO 寫出去讀得回來;PNG 記得來源;SVG 要正方形
   const m = IC.maskable(art, [255, 255, 255]);
   assert.deepEqual([m.w, m.h], [n, n]);
   assert.equal(IC.safeZoneProblem(m), null);
-  assert.deepEqual(IC.parseArgs(['a.svg', '--only', 'favicon', '--tmp', 'D:/x']), { svg: 'a.svg', app: null, maskable: null, bg: null, only: 'favicon', out: null, tmp: 'D:/x' });
+  assert.deepEqual(IC.parseArgs(['a.svg', '--only', 'favicon', '--tmp', 'D:/x']), { svg: 'a.svg', app: null, apple: null, maskable: null, bg: null, only: 'favicon', out: null, tmp: 'D:/x' });
   assert.throws(() => IC.parseArgs([]), /用法/);
   assert.throws(() => IC.parseArgs(['a.svg', '--only', 'all']), /--only/);
   assert.throws(() => IC.parseArgs(['a.svg', '--bg', 'blue']), /--bg/);
@@ -757,6 +757,11 @@ T['build_icons:PNG、ICO 寫出去讀得回來;PNG 記得來源;SVG 要正方形
   assert.match(t0, /^build_icons app sha256:[0-9a-f]{64}$/);
   assert.equal(IC.appTag('<svg/>\r\n', null, [1, 2, 3]), IC.appTag('<svg/>\n', null, [1, 2, 3]), '換行不同算同一張');
   assert.equal(new Set([t0, IC.appTag('<svg />', null, [1, 2, 3]), IC.appTag('<svg/>', '<svg/>', [1, 2, 3]), IC.appTag('<svg/>', null, [1, 2, 4])]).size, 4);
+  /* --apple(icon-180 另用一張):沒給或跟 App 圖一樣,記號跟以前一樣;給了不一樣的就不同 */
+  assert.equal(IC.appTag('<svg/>', null, [1, 2, 3], '<svg/>'), t0);
+  assert.equal(IC.appTag('<svg/>', null, [1, 2, 3], null), t0);
+  assert.notEqual(IC.appTag('<svg/>', null, [1, 2, 3], '<svg />'), t0);
+  assert.equal(IC.parseArgs(['a.svg', '--apple', 'full.svg']).apple, 'full.svg');
 };
 T['build_icons:全部算好、檢查過才寫;maskable 安全區不過時一個檔都不動、不留暫存檔;寫的時候四張 App 圖示一起換、記號一樣'] = () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'test_seo-icons-'));
@@ -839,6 +844,23 @@ T['每一個有頁尾的頁面:連結列在前、直接看得到;說明句收進
     assert.equal(/data-nosnippet[^>]*>\s*<details/.test(foot), false, f + ' 的說明句被包進 data-nosnippet');
   });
   assert.ok(n >= 28, '有頁尾的頁面太少:' + n);
+};
+
+T['每一頁頂欄的品牌字左邊都有 Y2(.brand-logo);之後新加的頁面也要有'] = () => {
+  let n = 0;
+  PAGES.filter((f) => !REDIRECT_STUBS.includes(f)).forEach((f) => {
+    const m = /<a class="brand"[^>]*>([^]*?)<[/]a>/.exec(read(f));
+    if (!m) return;
+    n++;
+    assert.strictEqual(m[1].trim(), '<span class="brand-logo" aria-hidden="true"></span>衝衝英文', f + ' 頂欄品牌字左邊沒有 Y2');
+  });
+  assert.ok(n >= 33, '有頂欄品牌字的頁面太少:' + n);
+};
+
+T['App 模式非分頁根頁:頂欄不能把整個品牌區藏掉(Y2 在裡面),只能把字縮成 0 號'] = () => {
+  const css = read('css/style.css');
+  assert.ok(!/app-shell:not\(\.is-tab-root\)\s+\.brand\s*\{[^}]*display\s*:\s*none/.test(css), 'App 模式非根頁把 .brand 整個藏起來,Y2 跟著不見');
+  assert.ok(/app-shell:not\(\.is-tab-root\)\s+\.brand\s*\{[^}]*font-size\s*:\s*0/.test(css), 'App 模式非根頁沒有把品牌字縮成 0 號');
 };
 
 let pass = 0;

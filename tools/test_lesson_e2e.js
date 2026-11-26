@@ -67,7 +67,7 @@ function serve(root, port) {
       if (!path.resolve(file).startsWith(root)) { res.writeHead(403); return res.end(); }
       fs.readFile(file, (err, buf) => {
         if (err) { res.writeHead(404); return res.end(); }
-        if (p === '/js/packs-config.js') return send(String(buf).replace('window.PACKS_PILOT_CLASSES = [];', 'window.PACKS_PILOT_CLASSES = ' + J([PILOT]) + ';'));
+        if (p === '/js/packs-config.js') return send(String(buf).replace(/window\.PACKS_PILOT_CLASSES = \[[^\]]*\];/,'window.PACKS_PILOT_CLASSES = ' + J([PILOT]) + ';'));
         if (p === '/js/plans-config.js' && SV.paid) return send(String(buf).replace('window.PAID_UI = false;', 'window.PAID_UI = true;'));
         send(buf, TYPES[path.extname(file)] || 'application/octet-stream');
       });

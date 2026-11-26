@@ -422,13 +422,14 @@ T['公開用語:課程新檔(含註解)不出現內部用語、文件代號與 r
   return files.length + ' 個檔';
 };
 
-T['js/lesson-core.js 不碰畫面與儲存、載入時不依賴其他檔;js/lesson-data.js 也能單獨載入;開關預設 pilot、名單空'] = () => {
+T['js/lesson-core.js 不碰畫面與儲存、載入時不依賴其他檔;js/lesson-data.js 也能單獨載入;開關是 pilot、名單只放班級 id'] = () => {
   const src = K.read('js/lesson-core.js').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
   eq((src.match(/\bdocument\b|localStorage|sessionStorage|\bstore\b|\bfetch\b|indexedDB|\bCLOUD\b|\bwindow\b/g) || []), []);
   assert.ok(K.bare('js/lesson-core.js').LESSON_CORE.TEXT, 'lesson-core.js 單獨載入');
   assert.ok(K.bare('js/lesson-data.js').LESSON_DATA.pilot, 'lesson-data.js 單獨載入');
   const cfg = K.bare('js/packs-config.js');
-  eq([cfg.PACKS_UI, cfg.PACKS_PILOT_CLASSES], ['pilot', []]);
+  eq(cfg.PACKS_UI, 'pilot');
+  assert.ok(Array.isArray(cfg.PACKS_PILOT_CLASSES) && cfg.PACKS_PILOT_CLASSES.every((id) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id)), '名單只放班級 id');
   const lines = (f) => K.read(f).split('\n').length;
   ['js/lesson-core.js', 'js/lesson-data.js', 'tools/lesson_kit.js', 'tools/test_lesson_core.js', 'tools/test_lesson_data.js'].forEach((f) => assert.ok(lines(f) <= 800, f + ' 超過 800 行'));
 };

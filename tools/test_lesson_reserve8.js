@@ -7,6 +7,7 @@
    先做檢測的兩種(門檻 6 個、入門升門檻 3 個帳號):第 1 堂前先在程度檢測頁(tools/placement_kit.js,真的 js/placement.js)做完
    聽力 12 題、閱讀 12 題,檢測做過的題在課程裡算做過。預留題先扣掉檢測做過的題,所以第 4 堂每個檢核區塊選到的題
    不比同一個帳號沒做檢測時少;門檻的第 8 堂照樣每個區塊選滿,入門升門檻的第 8 堂照樣至少 3 題(第 1–4 堂用掉的門檻題本來就會缺)。
+   上完門檻第 1–7 堂後重測:開始頁寫的聽力題數跟實際出的一樣(Part 1 的題可能都做過了)。
    答對率 60% 有斷言;40%、85% 只印數字。不開瀏覽器、不連網。用法:node tools/test_lesson_reserve8.js */
 'use strict';
 const K = require('./lesson_kit.js');
@@ -267,6 +268,28 @@ Object.keys(KINDS).forEach((kind) => {
     return KINDS[kind].n + ' 個帳號';
   };
 });
+/* 上完第 1–7 堂做過的題(作答紀錄的題組 id 加前測題)記成第一次作答紀錄的看過(來源 c,跟課程回合寫的一樣),回一份放這份紀錄的 localStorage */
+function seenAfterCourse(s, pid) {
+  const ids = new Set(s.e.D.testIds());
+  ['listen_p1', 'listen_p2', 'listen_p3', 'listen_p4', 'drill_p5', 'drill_p6', 'drill_p7'].forEach((k) => Object.keys(s.e.store.get(k, {}) || {}).forEach((x) => ids.add(x.split(':')[0])));
+  const probe = PK.env({ pid: null }), i = {};
+  ['1', '2', '3', '4', '5', '6', '7'].forEach((part) => probe.P.unitsOf(part).filter((u) => ids.has(u.id)).forEach((u) => u.keys.forEach((k) => { i[k] = [400, null, 'c']; })));
+  return new Map([['tr_u' + pid + '_fa_v1', JSON.stringify({ v: 1, i })]]);
+}
+T['上完門檻第 1–7 堂後重測:開始頁寫的聽力題數跟實際出的一樣,進度的分母也一樣'] = async () => {
+  const pid = 'c' + ACCOUNTS[0].replace(/-/g, '');
+  const s = student(ACCOUNTS[0], 2000, KINDS.門檻.lvOf, 0.6);
+  await s.e.D.packs();
+  for (let no = 1; no <= 7; no++) await s.lesson(no);
+  const p = PK.env({ pid, ls: seenAfterCourse(s, pid), now: (NOW + 25 * DAY) * 1000 });
+  const tag = PK.all(p.box, '.mock-tag').map(PK.txt)[0];
+  PK.clickText(p.box, '開始');
+  await PK.flush();
+  const L = await PK.doSection(p, 'right');
+  const n = L.reduce((a, x) => a + x.keys.length, 0);
+  eq([tag, L[0].count.split('／')[1]], ['聽力 ' + n + ' 題', String(n)]);
+  return tag + '(' + L.map((x) => 'P' + x.part).join(',') + ')';
+};
 T['答對率 40%、85%(只印數字)'] = async () => {
   for (const rate of [0.4, 0.85]) {
     for (const kind of Object.keys(KINDS)) {

@@ -234,18 +234,19 @@ async function walkCheckpoint(e, pc) {
   }
   return run;
 }
-T['小檢核:題目都在清單內且不含前測題;說明頁題數、約幾分鐘、結果在本堂最後顯示;換科有「閱讀」說明頁;檢核回合不排考點、不出解析'] = async () => {
+T['小檢核:題目都在清單內且不含前測題;說明頁題數、約幾分鐘(整段的分鐘)、結果在本堂最後顯示;換科有「閱讀」說明頁;檢核回合不排考點、不出解析'] = async () => {
   const e = await env();
   const poolP1 = POOL.ids.filter((id) => /^l1-/.test(id));
   e.store.set('tests_v1', { t1: { pre: { form: 'interim_half', at: NOW - DAY, parts: {}, items: poolP1.slice(0, 12).map((id) => [id, 0, 0, true]) } } });
   const pc = await lessonFour(e, () => true);
-  const cp = pc.lesson.segments.filter((s) => s.slot === 'checkpoint')[0].blocks.filter((b) => !b.fill);
+  const cpSeg = pc.lesson.segments.filter((s) => s.slot === 'checkpoint')[0], segMin = cpSeg.minutes, cp = cpSeg.blocks.filter((b) => !b.fill);
+  assert.notEqual(segMin, Math.ceil(pc.lesson.checkpoint.answerSeconds / 60), '這一堂的整段分鐘跟檢核題的作答時間不一樣');
   const ids = cp.reduce((a, b) => a.concat(pc.state().pk[b.idx].ids), []);
   const want = cp.reduce((a, b) => a + b.count, 0), reading = cp.filter((b) => b.module === 'p5').reduce((a, b) => a + b.count, 0);
   eq([ids.filter((id) => POOL.ids.indexOf(id) < 0), ids.filter((id) => poolP1.slice(0, 12).indexOf(id) > -1), ids.length, want], [[], [], want, 25]);
   const run = e.LP.checkpoint(pc);
   await settle(60);
-  eq([text(e.host.querySelector('h2')), e.host.querySelectorAll('.mock-tag').map(text), text(e.host.querySelector('.lsn-rule'))], ['小檢核', [want + ' 題', '約 8 分鐘'], '結果在本堂最後顯示']);
+  eq([text(e.host.querySelector('h2')), e.host.querySelectorAll('.mock-tag').map(text), text(e.host.querySelector('.lsn-rule'))], ['小檢核', [want + ' 題', '約 ' + segMin + ' 分鐘'], '結果在本堂最後顯示'], '分鐘跟段落總覽、首頁那一列同一個值(整段的分鐘)');
   e.host.querySelector('.lsn-go').click();
   await settle(60);
   eq([text(e.host.querySelector('h2')), e.host.querySelectorAll('.mock-tag').map(text), e.host.querySelector('.lsn-rule')], ['閱讀', [reading + ' 題'], null]);

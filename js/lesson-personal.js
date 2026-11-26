@@ -270,7 +270,7 @@
     return cpKeys(ctx.lesson).filter((k) => !got.has(k));
   }
   const countIn = (rounds, st, has) => rounds.reduce((a, r) => a + r.blocks.filter((b) => !b.fill).reduce((n, b) => n + idsIn(b, st, has).reduce((m, id) => m + (Number(has('bank', id)) || 1), 0), 0), 0);
-  /* 說明頁:小檢核(題數、約幾分鐘、結果在本堂最後顯示),或換科時的「閱讀」 */
+  /* 說明頁:小檢核(題數、約幾分鐘(整段的分鐘,同段落總覽與首頁那一列)、結果在本堂最後顯示),或換科時的「閱讀」 */
   function cpIntro(ctx, title, tags, rule) {
     return new Promise((resolve) => {
       const C = TX().checkpoint;
@@ -291,11 +291,10 @@
     const meta = await metaMap(), has = hasFor(ctx, meta), C = TX().checkpoint;
     if (stOf(ctx.state(), 'checkpoint') === 'todo') await mark(ctx, 'checkpoint', 'doing');
     const list = cpRounds(seg, ctx.state());
-    const sec = ctx.lesson.checkpoint && ctx.lesson.checkpoint.answerSeconds;
     for (let i = 0; i < list.length; i++) {
       if (roundDone(ctx.state(), list[i], has)) continue;
       const go = i === 0
-        ? await cpIntro(ctx, C.title, [C.count(countIn(list, ctx.state(), has)), sec ? C.aboutMin(Math.ceil(sec / 60)) : null], [ctx.solo ? C.soloNote : C.note].concat(missingLine(ctx, meta, has)))
+        ? await cpIntro(ctx, C.title, [C.count(countIn(list, ctx.state(), has)), seg.minutes ? C.aboutMin(seg.minutes) : null], [ctx.solo ? C.soloNote : C.note].concat(missingLine(ctx, meta, has)))
         : await cpIntro(ctx, C.reading, [C.count(countIn([list[i]], ctx.state(), has))], null);
       if (go !== 'start') return 'exit';
       if ((await ctx.runRound(list[i].blocks, Object.assign({ round: list[i], slot: 'checkpoint' }, CP_OPT))) === 'exit') return 'exit';

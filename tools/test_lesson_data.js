@@ -438,7 +438,9 @@ T['課程檔裡只有 js/lesson-data.js 寫 store、讀寫 sessionStorage;它的
   const list = fs.readdirSync(path.join(K.REPO, 'js')).filter((f) => /^(lessons?(-[\w-]+)?|packs-config)\.js$/.test(f)).map((f) => 'js/' + f)
     .concat(['lessons.html', 'lesson.html'].filter(K.exists));
   const writers = list.filter((f) => /\bstore\.(set|remove)\(|sessionStorage|localStorage/.test(K.read(f)));
-  eq(writers, ['js/lesson-data.js']);
+  eq(writers, ['js/lesson-data.js', 'js/lesson-week.js']);
+  /* 例外:每週堂數面板(「我的」頁沒有 lesson-data.js)只寫 plan 這一個鍵 */
+  eq(Array.from(K.read('js/lesson-week.js').matchAll(/store\.(set|remove)\(\s*([^,)]+)/g)).map((m) => m[2].trim()), ["'plan'"]);
   const src = K.read('js/lesson-data.js');
   assert.equal(/localStorage/.test(src), false);
   const args = Array.from(src.matchAll(/store\.(get|set|remove)\(\s*(\w+\([^)]*\)|[^,)]+)/g)).map((m) => m[2].trim());

@@ -126,6 +126,7 @@ function fakeUI(doc, e) {
     return n;
   };
   return {
+    sheet: (o) => { const el = node('div', 'ui-sheet'); (o.nodes || []).forEach((n) => el.append(n)); doc.body.append(el); const api = { opt: o, el, open: true, close: () => { api.open = false; el.remove(); } }; e.sheets.push(api); return api; },
     mount: (r) => { e.mounts.push(r); return Promise.resolve(true); },
     empty: (o) => {
       const box = node('div', 'ui-empty');
@@ -145,14 +146,15 @@ function fakeUI(doc, e) {
    cloud(雲端的列;cloud.ok false 讀不到)、fetchFail、fetchHang、timers('fake')、seed(本機的鍵) */
 const SEED_DONE = () => ({ onboard: { v: 1, status: 'done', step: 'result', updatedAt: new Date(NOW * 1000 - DAY * 1000).toISOString() } });
 const LV_EE = { listening: 'entry', reading: 'entry', source: { listening: 'score', reading: 'score' }, setAt: '2026-11-01T00:00:00.000Z', history: [] };
-const PLAN = { v: 1, source: 'self', classId: CLS, term: 1, packs: {}, packVersions: {}, startDate: '2026-11-20', lessonsPerWeek: null, mainDay: 4, extDay: null, postponedWeeks: 0, previous: null, updatedAt: 1 };
+const PLAN = { v: 1, source: 'self', classId: CLS, term: 1, packs: {}, packVersions: {}, startDate: '2026-11-20', lessonsPerWeek: null, mainDay: 4, extDay: null, postponedWeeks: 0, previous: null,
+  weeklyAskedAt: '2026-11-21T00:00:00.000Z', updatedAt: 1 };
 async function open(opt) {
   const o = Object.assign({ page: 'index', ui: 'pilot', ids: [CLS] }, opt || {});
   const ls = o.ls || new Map();
   const ss = o.ss || new Map();
   if (o.signed !== false) ls.set('tr_current_profile', J(CPID)); else ls.delete('tr_current_profile');
   Object.keys(o.seed || {}).forEach((k) => ls.set(PRE + k, J(o.seed[k])));
-  const e = { ls, ss, loads: [], calls: 0, fetches: [], mounts: [], empties: [], errors: [], win: {}, replaced: [] };
+  const e = { ls, ss, loads: [], calls: 0, fetches: [], mounts: [], empties: [], errors: [], win: {}, replaced: [], sheets: [] };
   const clock = K.clockOf(o.now || NOW);
   const timers = o.timers === 'fake' ? (() => { const list = []; let n = 0; return {
     set: (fn, ms) => { list.push({ id: ++n, at: clock.t + (ms || 0), fn }); return n; },
@@ -230,7 +232,7 @@ async function open(opt) {
     const h1 = dom.doc.createElement('h1'); h1.textContent = '課程'; ph.append(h1);
     e.root = dom.doc.createElement('div'); e.root.setAttribute('id', 'lsn-root');
     main.append(ph, e.root);
-    ['js/common.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js', 'js/move-rules.js', 'js/move-merge.js', 'js/lesson-rules.js', 'js/pack-util.js', 'js/pack-core.js', 'js/onboard-core.js', 'js/lesson-plan.js'].forEach(run);
+    ['js/common.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js', 'js/move-rules.js', 'js/move-merge.js', 'js/lesson-rules.js', 'js/pack-util.js', 'js/pack-core.js', 'js/onboard-core.js', 'js/lesson-plan.js', 'js/lesson-week.js'].forEach(run);
     ctx.CLASSES = classes();
     ['js/lesson-core.js', 'js/lesson-data.js', 'js/lesson-home.js', 'js/lessons.js'].forEach(run);
   }
@@ -243,7 +245,7 @@ const settle = async (n) => { for (let i = 0; i < (n || 40); i++) await new Prom
 const card = (e) => e.dom.doc.querySelector('.lsn-home');
 const textOf = (n, sel) => { const x = n && n.querySelector(sel); return x ? x.textContent : null; };
 const LOAD_BASE = ['js/lesson-core.js', 'js/lesson-data.js'];
-const LOAD_REST = ['js/lesson-rules.js', 'js/pack-util.js', 'js/pack-core.js', 'js/lesson-plan.js'];   // 首頁與程度結果頁已經載了 onboard-core.js
+const LOAD_REST = ['js/lesson-rules.js', 'js/pack-util.js', 'js/pack-core.js', 'js/lesson-plan.js', 'js/lesson-week.js'];   // 首頁與程度結果頁已經載了 onboard-core.js
 
 /* ---------- 進度 ---------- */
 const KE = K.env();
@@ -334,7 +336,7 @@ function cardView(e) {
   return {
     kicker: textOf(c, '.lsn-kicker'), h2: textOf(c, 'h2'), tags: c.querySelectorAll('.mock-tag').map((x) => x.textContent),
     pose: art ? art.getAttribute('data-mascot') : null, go: go ? [go.className, go.textContent, go.getAttribute('href')] : null,
-    buttons: c.querySelectorAll('a,button').filter((x) => x !== all).length, all: all ? [all.textContent, all.getAttribute('href'), all.getAttribute('aria-label')] : null,
+    buttons: c.querySelectorAll('a,button').filter((x) => x !== all && !(x.parentNode && x.parentNode.className === 'lsn-week')).length, all: all ? [all.textContent, all.getAttribute('href'), all.getAttribute('aria-label')] : null,
     grid: e.grid.className, solid: solid(e).length,
   };
 }
@@ -451,7 +453,7 @@ T['decorateResult:不等班級名單,結果頁的主按鈕當下就照原樣(名
 };
 
 /* ---------- 課程總覽 ---------- */
-const rows = (e) => e.root.querySelectorAll('li').map((li) => {
+const rows = (e) => e.root.querySelectorAll('.lsn-list li').map((li) => {
   const r = li.children[0];
   return { tag: r.tagName, href: r.getAttribute('href'), text: r.textContent, cur: r.getAttribute('aria-current'), mark: r.querySelector('.lsn-mark').className, tab: r.getAttribute('tabindex') };
 });
@@ -494,6 +496,59 @@ T['課程總覽的空狀態:沒加入試行班與老師「課程尚未開放」�
   fail = false;
   f.root.querySelector('.ui-empty-go').click(); await settle();
   eq([f.root.querySelectorAll('li').length, f.dom.doc.activeElement && f.dom.doc.activeElement.tagName], [24, 'H1']);
+};
+
+/* ---------- 每週堂數、本週一列、獨立小檢核、程度調整 ---------- */
+const weekOf = (e) => { const p = card(e).querySelector('.lsn-week'); return p ? [p.textContent, !!p.querySelector('button')] : null; };
+T['本週一列:主按鈕下面一行不可點;還沒選堂數時接「設定堂數」,打開面板(沒有下週起生效),選每週 1 堂套用後重畫、按鈕不見、{d} / {t} 跟著變'] = async () => {
+  const e = await open({ seed: pilotSeed() });
+  eq(weekOf(e), ['本週　完成 2 / 2 堂　練習 2 / 2 天設定堂數', true]);
+  const c = card(e), kids = c.children;
+  eq([kids.indexOf(c.querySelector('.lsn-week')) > kids.indexOf(c.querySelector('.lsn-home-go')), c.querySelector('.lsn-week').querySelectorAll('a').length], [true, 0]);
+  c.querySelector('.lsn-week-set').click(); await settle();
+  const s = e.sheets[0];
+  eq([s.opt.title, s.opt.note], ['每週堂數', null]);
+  const one = s.el.querySelectorAll('input')[1];
+  one.checked = true; (one.on.change || []).forEach((f) => f({}));
+  s.el.querySelector('.ob-apply').click(); await settle();
+  eq([weekOf(e), textOf(card(e), '.lsn-home-all'), JSON.parse(e.ls.get(PRE + 'plan')).perWeek], [['本週　完成 1 / 1 堂　練習 2 / 1 天', false], '1 / 12 堂', [{ w: 1, n: 1 }]]);
+};
+T['獨立小檢核那一列:每週 1 堂、第 4 堂沒上、到第 5 堂建議日期,卡片最上面一列連到 cp=1;主按鈕照舊是下一個必上堂;總覽的課後練習'] = async () => {
+  const plan = Object.assign({}, PLAN, { startDate: '2026-11-08', perWeek: [{ w: 1, n: 1 }] });
+  const seed = pilotSeed({ levels: Object.assign({}, LV_EE, { listening: 'threshold', reading: 'threshold' }), plan,
+    les_t1_01: lessonState(1, NOW - 16 * DAY, true, K.TT), les_t1_02: null, les_t1_03: lessonState(3, NOW - 9 * DAY, true, K.TT) });
+  const e = await open({ seed });
+  const c = card(e), solo = c.querySelector('.lsn-solo');
+  eq([c.children.indexOf(solo) > -1 && c.children.indexOf(solo) <= 1, textOf(solo, 'a'), solo.querySelector('a').getAttribute('href'), textOf(c, '.lsn-home-go')],
+    [true, '第 4 堂小檢核18 分鐘', 'lesson.html?no=4&cp=1', '開始第 5 堂']);
+  const l = await open({ page: 'lessons', seed });
+  eq([rows(l)[1].text.slice(-4), rows(l)[1].mark, rows(l)[3].text.slice(-4), textOf(l.root, '.lsn-tags')], ['課後練習', 'lsn-mark is-todo', '課後練習', '2 / 12 堂']);
+};
+T['每週上幾堂:第 1 堂上完、還沒問過(上線前的 plan 沒有這個欄位)開課程總覽先出這一頁;選了寫 plan、接著畫總覽;首頁不出'] = async () => {
+  const old = Object.assign({}, PLAN);
+  delete old.weeklyAskedAt;
+  const e = await open({ page: 'lessons', seed: pilotSeed({ plan: old }) });
+  eq([textOf(e.root, 'h2'), e.root.querySelectorAll('.ob-choice').length, !!e.root.querySelector('.lsn-list'), e.dom.doc.activeElement && e.dom.doc.activeElement.tagName], ['每週上幾堂', 2, false, 'H2']);
+  e.root.querySelectorAll('.ob-choice')[1].click(); await settle();
+  const p = JSON.parse(e.ls.get(PRE + 'plan'));
+  eq([p.perWeek, !!p.weeklyAskedAt, e.root.querySelectorAll('.lsn-list li').length], [[{ w: 1, n: 1 }], true, 24]);
+  const later = await open({ page: 'lessons', seed: pilotSeed({ plan: old }) });
+  later.root.querySelector('.lsn-weekly-later .btn-text').click(); await settle();
+  const lp = JSON.parse(later.ls.get(PRE + 'plan'));
+  eq([lp.perWeek, !!lp.weeklyAskedAt, later.root.querySelectorAll('.lsn-list li').length], [undefined, true, 24]);
+  const home = await open({ seed: pilotSeed({ plan: old }) });
+  eq([!!home.grid.querySelector('.ob-choice'), !!card(home)], [false, true], '首頁不出');
+};
+T['程度調整:本期調整過而且有變、第 5 堂還沒開始,課程總覽的卡下面、清單上面出一塊(有變的科一列、ⓘ);首頁不出'] = async () => {
+  const lv = Object.assign({}, LV_EE, { listening: 'threshold', source: { listening: 'calibrate', reading: 'score' }, history: [
+    { at: '2026-11-01T00:00:00.000Z', listening: 'entry', reading: 'entry', reason: 'score' }, { at: '2026-11-23T00:00:00.000Z', listening: 'threshold', reading: 'entry', reason: 'calibrate' }] });
+  const e = await open({ page: 'lessons', seed: pilotSeed({ levels: lv }) });
+  const kids = e.root.children, s = e.root.querySelector('.lsn-calib');
+  eq([kids.indexOf(s) > kids.indexOf(card(e)), kids.indexOf(s) < kids.indexOf(e.root.querySelector('.lsn-list')), textOf(s, 'h2'), s.querySelectorAll('li').map((x) => x.textContent), !!s.querySelector('.lsn-info')],
+    [true, true, '程度調整', ['聽力入門 → 門檻'], true]);
+  eq(!!(await open({ seed: pilotSeed({ levels: lv }) })).grid.querySelector('.lsn-calib'), false, '首頁不出');
+  const five = await open({ page: 'lessons', seed: pilotSeed({ levels: lv, les_t1_05: lessonState(5, NOW - 600, ['vocab']) }) });
+  eq(!!five.root.querySelector('.lsn-calib'), false, '第 5 堂開始了不出');
 };
 
 /* ---------- 檔案 ---------- */

@@ -150,7 +150,17 @@
     if (!S.levels) return empty('noLevels', focus);
     if (!(await loadFiles())) return empty('failed', focus, { retry: () => open(true).catch(fail) });
     if (!P || !ENGINES.every((k) => !!root[k]) || !(await loadMeta())) return empty('itemsFailed', focus);
+    await askWeekly();
     return openLesson(focus);
+  }
+  /* 第 2 堂以後:第 1 堂上完、還沒問過每週上幾堂,先出那一頁(js/lesson-week.js),選了再開這一堂 */
+  async function askWeekly() {
+    const W = root.LESSON_WEEK;
+    if (S.no < 2 || !W || !W.needWeekly(D.plan(), D.states())) return;
+    S.screen = 'weekly';
+    setHead(false, titleNow());
+    await W.weeklyScreen(host());
+    loading();
   }
   async function loadFiles() {
     try { S.files = await D.packs(); return true; } catch (e) { return false; }   // 讀不到的網址 lesson-data.js 已經印出
@@ -172,7 +182,8 @@
   function statusNow() {
     const states = Object.assign({}, D.states());
     if (S.state) states[S.no] = S.state;
-    const u = P.unlockState({ packs: S.files.packs, levels: S.levels, states, today: today() });
+    const LP = root.LESSON_PLAN, plan = D.plan();
+    const u = P.unlockState({ packs: S.files.packs, levels: S.levels, states, today: today(), optional: LP && plan ? LP.optionalOf(plan) : undefined });
     return { status: u.lessons[S.no - 1].status, next: u.next };
   }
   function showStatus(st, focus) {

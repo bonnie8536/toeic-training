@@ -42,19 +42,27 @@
   /* ---------- 介面字串 ---------- */
   const lessonNo = (n) => '第 ' + n + ' 堂';
   const segsOf = (a, b) => a + ' / ' + b + ' 段';
-  const doneOf = (d) => d + ' / 24 堂';
+  const doneOf = (d, t) => d + ' / ' + (t === undefined ? 24 : t) + ' 堂';
+  const LEVEL_NAME = { entry: '入門', threshold: '門檻', advanced: '進階', high: '高分' };
   const partsLabel = (list) => (list || []).map((p) => 'Part ' + p).join('、');
   const TEXT = freeze({
     page: { title: '課程 - 衝衝英文', lesson: (n) => lessonNo(n) + ' - 衝衝英文' },
     app: { title: '課程', lesson: lessonNo },
     home: {
-      kicker: lessonNo, done: doneOf, doneLabel: (d) => '課程 ' + doneOf(d), notLive: (n) => lessonNo(n) + '尚未開放',
+      kicker: lessonNo, done: doneOf, doneLabel: (d, t) => '課程 ' + doneOf(d, t), notLive: (n) => lessonNo(n) + '尚未開放',
       about60: '約 60 分鐘', about50: '約 50 分鐘', segs: segsOf, tomorrow: '明天開放',
       start: (n) => '開始' + lessonNo(n), resume: (n) => '繼續' + lessonNo(n), daily: '每日練習',
       course: '課程', loading: '載入中…', failed: '載入失敗', retry: '重試',
+      week: (a, b, c, d) => '本週　完成 ' + a + ' / ' + b + ' 堂　練習 ' + c + ' / ' + d + ' 天', setWeekly: '設定堂數',
+      solo: (n) => lessonNo(n) + '小檢核', soloMin: (m) => m + ' 分鐘',
+    },
+    weekly: { h: '每週上幾堂', two: '每週 2 堂', twoSub: '12 週上完 24 堂', one: '每週 1 堂', oneSub: '12 週上 12 堂主課', later: '之後再選' },
+    calib: {
+      h: '程度調整', listening: '聽力', reading: '閱讀', move: (a, b) => (LEVEL_NAME[a] || a) + ' → ' + (LEVEL_NAME[b] || b), info: '程度調整說明',
+      lines: ['依第 2 到 4 堂第一次作答的答對率調整', '答對率高於 80% 升一級，低於 45% 降一級', '每一期只調整一次', '從第 5 堂起照新程度出題', '到「我的」可以改級別'],
     },
     s8: { first: '開始第 1 堂', start: (n) => '開始' + lessonNo(n), resume: (n) => '繼續' + lessonNo(n) },
-    list: { h1: '課程', done: doneOf, label: '24 堂', complete: '完成', segs: segsOf, todo: '未開始', closed: '未開放' },
+    list: { h1: '課程', done: doneOf, label: '24 堂', complete: '完成', segs: segsOf, todo: '未開始', closed: '未開放', optional: '課後練習' },
     empty: {
       off: '課程尚未開放', unknown: '讀不到班級資料', noLevels: '還沒設定起始程度', setLevels: '設定程度',
       failed: '載入失敗', retry: '重試', itemsFailed: '題目載入失敗', reload: '重新整理', badData: '課程資料有誤', home: '回首頁',
@@ -85,7 +93,7 @@
       listening: '聽力', reading: '閱讀', part: PART_NAME, pct: (p) => p + '%', none: '—',
     },
     testReview: { title: '前測結果', tag: '暫用試卷', note: '不能跟之後的測驗直接比較', next: '下一步' },
-    checkpoint: { title: '小檢核', count: (n) => n + ' 題', aboutMin: (m) => '約 ' + m + ' 分鐘', note: '結果在本堂最後顯示', start: '開始', reading: '閱讀',
+    checkpoint: { title: '小檢核', count: (n) => n + ' 題', aboutMin: (m) => '約 ' + m + ' 分鐘', note: '結果在本堂最後顯示', soloNote: '結果在交卷後顯示', start: '開始', reading: '閱讀',
       missing: (names) => '這次沒有' + [].concat(names).join('、') + '的題' },
     wrapup: { kicker: lessonNo, next: '繼續', wrong: (k) => '錯題 ' + k + ' 題', checkpoint: '小檢核', checkpointReview: '小檢核解析', met: '達標', hold: '持平', weak: '弱點', none: '沒有出題', point: POINT_NAME },
     admin: { col: '目前堂號', at: lessonNo, done: '完成', none: '—' },
@@ -148,11 +156,12 @@
     return [segs.filter((s) => state && state.seg && finished(state.seg[s.slot])).length, segs.length];
   }
   /* unlock 是 PACK_CORE.unlockState 的結果;lessonOf(no) 回拼好的那一堂;onLessons:課程總覽頂端(明天開放、尚未開放時放「每日練習」)。
-     kind:start 可開始、doing 進行中、limit 明天開放、off 尚未開放(或 24 堂都上完) */
+     kind:start 可開始、doing 進行中、limit 明天開放、off 尚未開放(或 24 堂都上完)。done / total 只算必上的堂(課後練習不算) */
   function homeModel(opt) {
     const o = opt || {};
     const list = o.unlock && Array.isArray(o.unlock.lessons) ? o.unlock.lessons : [];
-    const done = list.filter((x) => x.status === 'done').length;
+    const must = list.length ? list.filter((x) => !x.optional) : null;
+    const done = (must || []).filter((x) => x.status === 'done').length, total = must ? must.length : 24;
     const no = o.unlock ? o.unlock.next : null;
     const item = list.filter((x) => x.no === no)[0];
     const status = item ? item.status : 'not_live';
@@ -164,7 +173,7 @@
     const daily = kind === 'limit' || kind === 'off';
     const go = { start: [TEXT.home.start(no), 'read'], doing: [TEXT.home.resume(no), 'read'], limit: [null, 'happy'], off: [null, 'sleep'] }[kind];
     return {
-      no, kind, done, segs, daily, pose: go[1],
+      no, kind, done, total, segs, daily, pose: go[1],
       kicker: kind === 'off' ? null : TEXT.home.kicker(no),
       title: kind === 'off' ? (no === null ? TEXT.home.course : TEXT.home.notLive(no)) : lessonTitle(lesson),
       tags: kind === 'start' ? [about] : kind === 'doing' ? [about, TEXT.home.segs(segs[0], segs[1])] : kind === 'limit' ? [TEXT.home.tomorrow] : [],
@@ -172,11 +181,11 @@
       label: daily ? (o.onLessons ? TEXT.home.daily : null) : go[0],
     };
   }
-  /* 課程總覽一列:完成、可上(有進度寫段數,沒有寫未開始)、不能上(未開放,不連結) */
-  function rowStatus(status, state, lesson) {
+  /* 課程總覽一列:完成、可上(有進度寫段數,沒有寫未開始;課後練習寫課後練習)、不能上(未開放,不連結) */
+  function rowStatus(status, state, lesson, optional) {
     if (status === 'done') return { text: TEXT.list.complete, link: true, mark: 'done' };
     if (status !== 'open') return { text: TEXT.list.closed, link: false, mark: null };
-    if (!(state && state.startedAt)) return { text: TEXT.list.todo, link: true, mark: 'todo' };
+    if (!(state && state.startedAt)) return { text: optional ? TEXT.list.optional : TEXT.list.todo, link: true, mark: 'todo' };
     const s = segCount(lesson, state);
     return { text: TEXT.list.segs(s[0], s[1]), link: true, mark: 'doing' };
   }
@@ -185,12 +194,15 @@
     if (!Number.isInteger(term) || term < 1 || term > 99 || !Number.isInteger(no) || no < 1 || no > 24) throw new TypeError('期要是 1–99、堂號要是 1–24');
     return 'les_t' + term + '_' + pad(no);
   }
-  /* 教師後台:keys 是一個學生雲端的鍵。沒有 plan 回 null;24 堂都完成回 'done';其他回 { no }(第一個沒有進度或還沒上完的堂) */
+  /* 教師後台:keys 是一個學生雲端的鍵。沒有 plan 回 null;24 堂都完成回 'done';其他回 { no }(第一個沒有進度或還沒上完的堂)。
+     每週 1 堂的課後練習跳過(js/lesson-plan.js 有載入時) */
   function currentNo(keys) {
     const k = isPlain(keys) ? keys : {};
     if (!isPlain(k.plan)) return null;
     const term = Number.isInteger(k.plan.term) && k.plan.term >= 1 && k.plan.term <= 99 ? k.plan.term : 1;
+    const LP = root.LESSON_PLAN, optional = LP && typeof LP.optionalOf === 'function' ? LP.optionalOf(k.plan) : () => false;
     for (let no = 1; no <= 24; no++) {
+      if (optional(no)) continue;
       const s = k[lessonKey(term, no)];
       if (!isPlain(s) || !s.doneAt) return { no };
     }

@@ -93,7 +93,8 @@
   }
 
   /* ---------- 「我的」頁學習設定(js/profile.js renderAccount 在 CLOUD.ready 之後呼叫) ----------
-     老師、訪客、本機學生檔案(雲端沒開)不顯示,回 null */
+     老師、訪客、本機學生檔案(雲端沒開)不顯示,回 null。
+     試行班的學生(有課表設定 plan)多一列「每週堂數」(js/lesson-week.js 的 settingsRow;沒載到或沒有 plan 不出,畫面跟原本一樣) */
   function settingsSection() {
     const D = window.ONBOARD_DATA;
     if (!D || !window.CLOUD || !CLOUD.enabled || CLOUD.isTeacher || D.isGuest()) return null;
@@ -104,7 +105,17 @@
     box.append(h('ul', { class: 'me-list' }, rows.map((r) => h('li', null, r.href
       ? h('a', { class: 'me-row', href: r.href }, inner(r))
       : h('button', { class: 'me-row', type: 'button', onclick: (e) => openLevels(box, e.currentTarget) }, inner(r))))));
+    const W = window.LESSON_WEEK, weekly = W ? W.settingsRow(() => redraw(box, '.me-row-weekly')) : null;
+    if (weekly) { weekly.querySelector('.me-row').classList.add('me-row-weekly'); box.querySelector('.me-list').append(weekly); }
     return box;
+  }
+  /* 改了設定之後整塊重畫,焦點放回 sel 那一列 */
+  function redraw(box, sel) {
+    const next = settingsSection();
+    if (!next || !box.parentNode) return;
+    box.replaceWith(next);
+    const t = next.querySelector(sel);
+    if (t) setTimeout(() => { try { t.focus(); } catch (e) { /* 照樣往下 */ } }, 0);
   }
   function openLevels(box, opener) {
     const D = window.ONBOARD_DATA;

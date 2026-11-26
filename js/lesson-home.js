@@ -20,6 +20,7 @@
     pack: ['js/pack-core.js', () => !!window.PACK_CORE],
     onboard: ['js/onboard-core.js', () => !!window.ONBOARD_CORE],
     plan: ['js/lesson-plan.js', () => !!window.LESSON_PLAN],
+    week: ['js/lesson-week.js', () => !!window.LESSON_WEEK],
   };
   const pending = new Map();
   function loadOne(name) {
@@ -39,7 +40,7 @@
   }
   const chain = (names) => names.reduce((p, n) => p.then(() => loadOne(n)), Promise.resolve());
   const loadBase = () => chain(['core', 'data']);
-  const loadRest = () => chain(['core', 'data', 'rules', 'merge', 'util', 'pack', 'onboard', 'plan']);
+  const loadRest = () => chain(['core', 'data', 'rules', 'merge', 'util', 'pack', 'onboard', 'plan', 'week']);
 
   /* ---------- 不用連網就知道的 ---------- */
   const LEVELS = ['entry', 'threshold', 'advanced', 'high'];
@@ -109,21 +110,25 @@
 
   /* ---------- 課程進度 ---------- */
   const nowSec = () => Math.floor(Date.now() / 1000);
-  /* { packs, levels, states, unlock, lessonOf };沒有起始程度回 null;學習包讀不到時丟錯。
-     opt.local:只用本機的進度;沒給時再從下一堂起一堂一堂跟雲端合併(讀到上完了就往後一堂),直到沒上完的那一堂 */
+  /* { packs, levels, states, unlock, lessonOf, plan, week, solo, calib };沒有起始程度回 null;學習包讀不到時丟錯。
+     opt.local:只用本機的進度;沒給時先做第 4 堂後的程度調整(條件不成立就不做),再從下一堂起一堂一堂跟雲端合併(讀到上完了就往後一堂),直到沒上完的那一堂。
+     每週 1 堂的課後練習不擋下一堂(LESSON_PLAN.optionalOf);week 是本週一列、solo 是獨立小檢核那一列、calib 是程度調整的 changed */
   async function course(opt) {
-    const D = window.LESSON_DATA, P = window.PACK_CORE;
+    const D = window.LESSON_DATA, P = window.PACK_CORE, LP = window.LESSON_PLAN;
+    const local = !!(opt && opt.local);
+    const calib = !local && D.calibrate ? await D.calibrate(nowSec()).catch((e) => { console.error('程度調整沒做：', e); return null; }) : null;
     const levels = D.levels();
     if (!levels) return null;
     const packs = (await D.packs({ lite: true })).packs;
-    const today = P.dayOf(nowSec());
+    const today = P.dayOf(nowSec()), plan = D.plan();
+    const optional = LP && plan ? LP.optionalOf(plan) : undefined;
     let states = D.states();
-    let unlock = P.unlockState({ packs, levels, states, today });
-    for (let n = 0; !(opt && opt.local) && unlock.next !== null && n < 24; n++) {
+    let unlock = P.unlockState({ packs, levels, states, today, optional });
+    for (let n = 0; !local && unlock.next !== null && n < 24; n++) {
       const no = unlock.next;
       const r = await D.open(no);
       if (r && r.state) states = Object.assign({}, states, { [no]: r.state });
-      unlock = P.unlockState({ packs, levels, states, today });
+      unlock = P.unlockState({ packs, levels, states, today, optional });
       if (!(r && r.state && r.state.doneAt)) break;
     }
     /* 做過的堂照那一堂自己的級別拼(兩台級別不同時以進度裡的為準) */
@@ -131,19 +136,25 @@
       const lv = states[no] && isObj(states[no].levels) ? states[no].levels : levels;
       try { return P.compose(packs, lv, no); } catch (e) { return P.compose(packs, levels, no); }
     };
-    return { packs, levels, states, unlock, lessonOf };
+    const w = LP && plan ? Object.assign(D.weekInputs(), { states, today }) : null;
+    const week = w ? LP.weekGoal(w) : null;
+    const solo = w ? LP.soloCheckpoint({ plan, states, unlock, today, packs, levels }) : null;
+    return { packs, levels, states, unlock, lessonOf, plan, week: week ? Object.assign({ unset: !(Array.isArray(plan.perWeek) && plan.perWeek.length) }, week) : null,
+      solo, calib: calib && calib.changed ? calib.changed : null };
   }
-  const modelOf = (c, onLessons) => LESSON_CORE.homeModel({ unlock: c.unlock, states: c.states, lessonOf: c.lessonOf, onLessons: !!onLessons });
+  const modelOf = (c, onLessons) => Object.assign(LESSON_CORE.homeModel({ unlock: c.unlock, states: c.states, lessonOf: c.lessonOf, onLessons: !!onLessons }),
+    { week: c.week || null, solo: c.solo || null });
 
   /* ---------- 卡片 ---------- */
-  /* model:LESSON_CORE.homeModel 的結果,或 { kind: 'loading' }、{ kind: 'failed' }。
-     opt.onLessons:課程總覽頂端(沒有右上的連結);opt.onRetry:「重試」按下去做什麼。回 section(插進頁面後再 UI.mount) */
+  /* model:modelOf 的結果(LESSON_CORE.homeModel 加 week、solo),或 { kind: 'loading' }、{ kind: 'failed' }。
+     opt.onLessons:課程總覽頂端(沒有右上的連結);opt.onRetry:「重試」按下去做什麼;opt.onChanged:每週堂數面板套用之後。回 section(插進頁面後再 UI.mount)。
+     卡片最上面是獨立小檢核那一列(有才出),主按鈕下面是本週一列 */
   function renderCard(model, opt) {
-    const o = opt || {}, m = model || { kind: 'loading' }, T = LESSON_CORE.TEXT.home;
+    const o = opt || {}, m = model || { kind: 'loading' }, T = LESSON_CORE.TEXT.home, W = window.LESSON_WEEK;
     const wait = m.kind === 'loading', failed = m.kind === 'failed';
     const pose = wait ? null : failed ? 'sleep' : m.pose;
     const all = !o.onLessons && typeof m.done === 'number'
-      ? h('a', { class: 'lsn-home-all', href: 'lessons.html', 'aria-label': T.doneLabel(m.done) }, T.done(m.done)) : null;
+      ? h('a', { class: 'lsn-home-all', href: 'lessons.html', 'aria-label': T.doneLabel(m.done, m.total) }, T.done(m.done, m.total)) : null;
     const head = m.kicker || all ? h('div', { class: 'lsn-home-head' }, m.kicker ? h('p', { class: 'lsn-kicker' }, m.kicker) : null, all) : null;
     const tags = Array.isArray(m.tags) && m.tags.length ? h('p', { class: 'mock-tags' }, m.tags.map((t) => h('span', { class: 'mock-tag' }, t))) : null;
     const main = h('div', { class: 'lsn-home-main' }, head, h('h2', { id: 'lsn-home-h', tabindex: '-1' }, wait || failed ? T.course : m.title), tags);
@@ -153,8 +164,10 @@
       act = h('div', { class: 'lsn-home-act' }, h('p', { class: 'lsn-home-note' }, T.failed),
         h('button', { class: 'btn lsn-home-retry', type: 'button', onclick: () => { if (typeof o.onRetry === 'function') o.onRetry(); } }, T.retry));
     } else if (m.href && m.label) act = h('a', { class: 'btn primary lsn-home-go', href: m.href }, m.label);
+    const solo = W && !wait && !failed ? W.soloRow(m.solo) : null;
+    const week = W && !wait && !failed ? W.weekRow(m.week, { unset: m.week && m.week.unset, onSet: () => W.weeklySheet({ onApplied: o.onChanged }) }) : null;
     return h('section', { class: 'daily-card lsn-home', 'aria-labelledby': 'lsn-home-h', 'data-nosnippet': '' },
-      pose ? h('canvas', { class: 'lsn-home-art', 'data-mascot': pose, 'data-size': '72', 'aria-hidden': 'true' }) : null, main, act);
+      solo, pose ? h('canvas', { class: 'lsn-home-art', 'data-mascot': pose, 'data-size': '72', 'aria-hidden': 'true' }) : null, main, act, week);
   }
 
   /* ---------- 首頁 ---------- */
@@ -183,7 +196,7 @@
     if (!home.grid || !window.LESSON_CORE) return;
     const sig = JSON.stringify(model);
     if (home.card && home.card.parentNode && sig === home.sig) return;
-    const card = renderCard(model, { onRetry: () => refresh(true) });
+    const card = renderCard(model, { onRetry: () => refresh(true), onChanged: () => refresh(false) });
     if (home.card && home.card.parentNode) home.card.replaceWith(card); else home.grid.prepend(card);
     home.card = card;
     home.sig = sig;

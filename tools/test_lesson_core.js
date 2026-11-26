@@ -88,6 +88,20 @@ T['homeModel:可開始(第 1 堂約 50 分鐘)、進行中(段數)、明天開�
   eq([m4.kind, m4.title, m4.done, m4.href], ['off', '課程', 24, null]);
   return '6 種';
 };
+T['homeModel、rowStatus 的每週 1 堂:{d} / {t} 只算必上的堂;課後練習不擋下一堂;總覽的課後練習沒有進度寫「課後練習」(空心點)'] = () => {
+  const lo = lessonOf(TT), plan = { startDate: '2026-11-01', perWeek: [{ w: 1, n: 1 }] }, opt = E.ctx.LESSON_PLAN.optionalOf(plan);
+  const st = { 1: started(lo(1), NOW - 9 * DAY, true) };
+  const u = P.unlockState({ packs: K.PACKS, levels: TT, states: st, today, optional: opt });
+  const m = C.homeModel({ unlock: u, states: st, lessonOf: lo });
+  eq([m.no, m.kind, m.done, m.total], [3, 'start', 1, 12]);
+  eq([C.TEXT.home.done(m.done, m.total), C.TEXT.home.doneLabel(m.done, m.total), C.TEXT.list.done(1, 12)], ['1 / 12 堂', '課程 1 / 12 堂', '1 / 12 堂']);
+  eq(C.homeModel({ unlock: unlockOf({}), states: {}, lessonOf: lessonOf(EE) }).total, 24, '每週 2 堂');
+  eq(C.rowStatus('open', null, lo(2), true), { text: '課後練習', link: true, mark: 'todo' });
+  const s2 = P.setSegment(started(lo(2), NOW - 600), lo(2), 'vocab', 'done', NOW - 300);
+  eq(C.rowStatus('open', s2, lo(2), true).mark, 'doing');
+  eq(C.rowStatus('done', s2, lo(2), true).text, '完成');
+  eq(C.rowStatus('locked', null, lo(2), true).text, '未開放');
+};
 
 T['rowStatus:完成(連結)、可上(有進度寫段數,沒有寫未開始)、不能上一律「未開放」不連結'] = () => {
   const l = lessonOf(EE)(3);
@@ -113,6 +127,10 @@ T['currentNo:沒有 plan、第 3 堂做一半、1–4 堂完成、24 堂完成�
   for (let n = 1; n <= 24; n++) all[P.lessonKey(1, n)] = done;
   assert.equal(C.currentNo(all), 'done');
   eq(C.currentNo(Object.assign({}, all, { plan: { term: 2 }, les_t2_01: done })), { no: 2 }, '第 2 期看 les_t2_');
+  /* 每週 1 堂:課後練習(第 2、4 堂)跳過;LESSON_PLAN 沒載到時照舊不跳 */
+  const weekly = { plan: { term: 1, startDate: '2026-11-01', perWeek: [{ w: 1, n: 1 }] }, les_t1_01: done, les_t1_03: done };
+  eq(C.currentNo(weekly), { no: 5 });
+  eq(K.bare('js/lesson-core.js').LESSON_CORE.currentNo(weekly), { no: 2 }, '沒有 LESSON_PLAN');
 };
 
 /* ---------- 段落總覽與步驟 ---------- */
@@ -393,12 +411,12 @@ function texts(obj, at) {
     return v && typeof v === 'object' ? a.concat(texts(v, p)) : a;
   }, []);
 }
-const BUTTONS = ['home.start', 'home.resume', 'home.daily', 'home.retry', 's8.first', 's8.start', 's8.resume', 'empty.setLevels', 'empty.retry', 'empty.reload', 'empty.home', 'empty.back',
+const BUTTONS = ['home.start', 'home.resume', 'home.daily', 'home.retry', 'home.setWeekly', 'weekly.later', 's8.first', 's8.start', 's8.resume', 'empty.setLevels', 'empty.retry', 'empty.reload', 'empty.home', 'empty.back',
   'empty.goTo', 'empty.daily', 'lesson.start', 'lesson.resume', 'lesson.skipSeg', 'lesson.skipOk', 'lesson.cancel', 'tip.next', 'words.start', 'words.next', 'words.done', 'bridge.start',
   'block.next', 'grammar.next', 'test.start', 'test.next', 'test.submit', 'test.keepGoing', 'test.play', 'pretest.next', 'testReview.next', 'checkpoint.start', 'wrapup.next'];
 const FIXED = ['home.start', 'home.resume', 's8.first', 's8.start', 's8.resume', 'empty.goTo', 'test.play'];
-const VERBS = ['開始', '繼續', '重試', '設定', '重新', '回', '前往', '略過', '取消', '下一', '完成', '交卷', '每日'];
-const NOTES = ['test.oncePlay', 'test.noBack', 'bridge.note', 'checkpoint.note', 'lesson.skipBody', 'test.blankBody', 'pretest.note', 'testReview.note'];
+const VERBS = ['開始', '繼續', '重試', '設定', '重新', '回', '前往', '略過', '取消', '下一', '完成', '交卷', '每日', '之後'];
+const NOTES = ['test.oncePlay', 'test.noBack', 'bridge.note', 'checkpoint.note', 'checkpoint.soloNote', 'lesson.skipBody', 'test.blankBody', 'pretest.note', 'testReview.note'];
 const EMPTY_TITLES = ['empty.off', 'empty.unknown', 'empty.noLevels', 'empty.failed', 'empty.itemsFailed', 'empty.badData', 'empty.notFound', 'empty.locked', 'empty.limit', 'empty.notLive', 'home.notLive'];
 const BANNED = /\u4fdd\u8b49|\u4e00\u5b9a|\u63d0\u5206|\u885d\u5230|\u9032\u6b65|\u547d\u4e2d|\u5b98\u65b9\u984c|\u771f\u984c|\u8003\u53e4\u984c|\u9810\u4f30|\u5206\u6578/;
 T['TEXT:全部字串全形標點、沒有驚嘆號破折號括號補充與句號、12 字以內不用逗號;按鈕 2–5 字動詞開頭;說明 18 字內;空狀態標題 10 字內;不承諾分數;前測改字'] = () => {
@@ -424,6 +442,10 @@ T['TEXT:全部字串全形標點、沒有驚嘆號破折號括號補充與句號
   EMPTY_TITLES.forEach((p) => { if (len(by.get(p)) > 10) bad.push(p + ' 空狀態標題太長 ' + by.get(p)); });
   eq(bad, []);
   eq([C.TEXT.pretest.tag, C.TEXT.pretest.note, C.TEXT.testReview.tag, C.TEXT.testReview.note], ['暫用試卷', '不能跟之後的測驗直接比較', '暫用試卷', '不能跟之後的測驗直接比較']);
+  eq([C.TEXT.home.week(1, 2, 2, 3), C.TEXT.home.setWeekly, C.TEXT.home.solo(4), C.TEXT.home.soloMin(18), C.TEXT.list.optional, C.TEXT.weekly.h, C.TEXT.weekly.later,
+    C.TEXT.checkpoint.soloNote, C.TEXT.calib.h, C.TEXT.calib.move('entry', 'threshold'), C.TEXT.calib.info],
+  ['本週　完成 1 / 2 堂　練習 2 / 3 天', '設定堂數', '第 4 堂小檢核', '18 分鐘', '課後練習', '每週上幾堂', '之後再選', '結果在交卷後顯示', '程度調整', '入門 → 門檻', '程度調整說明']);
+  eq(C.TEXT.calib.lines, ['依第 2 到 4 堂第一次作答的答對率調整', '答對率高於 80% 升一級，低於 45% 降一級', '每一期只調整一次', '從第 5 堂起照新程度出題', '到「我的」可以改級別']);
   eq([C.TEXT.home.segs(3, 6), C.TEXT.home.done(2), C.TEXT.home.doneLabel(2), C.TEXT.lesson.itemsMin(36, 17), C.TEXT.page.lesson(3)], ['3 / 6 段', '2 / 24 堂', '課程 2 / 24 堂', '36 題 · 17 分鐘', '第 3 堂 - 衝衝英文']);
   eq([C.TEXT.home.start(3), C.TEXT.empty.locked(2), C.TEXT.lesson.skipAsk('回顧'), C.TEXT.lesson.backTo(3)], ['開始第 3 堂', '先完成第 2 堂', '略過回顧？', '← 回第 3 堂']);
   assert.ok(Object.isFrozen(C.TEXT) && Object.isFrozen(C.TEXT.home), 'TEXT 不能被改');

@@ -86,6 +86,22 @@ html.is-quiz main .q-block .lsn-word-q { margin-bottom: 8px; font-family: var(--
 .lsn-grammar > .lsn-back { margin-bottom: 8px; }
 .lsn-tail .result-card.is-inline { margin-top: 32px; }
 
+/* ---- 每週上幾堂(單選卡片同引導流程,兩行字);程度調整那一塊與 ⓘ 說明按鈕(點擊範圍 44×44) ---- */
+.lsn-weekly { padding: 24px 0 32px; }
+.lsn-weekly .lsn-h2 { margin: 0; font-family: var(--round); font-size: var(--fs-xl); }
+.lsn-weekly .lsn-h2:focus { outline: none; }
+.lsn-weekly-choice { flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; }
+.lsn-weekly-sub { font-family: inherit; font-size: var(--fs-sm); font-weight: 400; color: var(--ink-light); }
+.lsn-weekly-later { margin: 0; }
+.lsn-weekly-later .btn-text { margin-left: -12px; }
+.lsn-calib { margin-top: 8px; }
+.lsn-calib-head { display: flex; align-items: center; gap: 4px; margin: 22px 0 8px 4px; }
+.lsn-calib-head .me-sec-h { margin: 0; }
+.lsn-info { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: -12px 0; padding: 0; font-size: var(--fs-md); color: var(--ink-light); }
+.lsn-info:hover { color: var(--primary); }
+.lsn-info-line { margin: 0 0 8px; font-size: var(--fs-md); line-height: 1.7; }
+.lsn-info-line:last-child { margin-bottom: 0; }
+
 @media (pointer: coarse) {
   .lsn-back { padding-top: 10px; padding-bottom: 10px; margin-top: -10px; margin-bottom: -10px; }
 }

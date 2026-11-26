@@ -3306,6 +3306,10 @@ html:not(.authed) .home .pet-home { display: none; }   /* 未登入時小雞在�
 .lsn-home-note { margin: 0; font-size: var(--fs-sm); color: var(--ink-light); }
 .lsn-home-retry { min-height: 44px; margin-top: 12px; padding: 0 20px; border-radius: var(--r-md); }
 .home .lsn-home + .daily-home { margin-top: 16px; }
+/* 獨立小檢核那一列(卡片最上面,一般清單列)與本週一列(主按鈕下面的一行小字,不可點;沒選每週堂數時接「設定堂數」):兩欄都佔滿 */
+.lsn-solo { grid-column: 1 / -1; margin: 0 0 16px; }
+.lsn-week { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 0 4px; margin: 12px 0 0; font-size: var(--fs-sm); color: var(--ink-light); font-variant-numeric: tabular-nums; }
+.lsn-week .btn-text { min-height: 44px; margin: -10px 0; padding: 0 8px; font-size: var(--fs-sm); }
 .home .home-grid.lesson-go .daily-go { display: none; }
 .home .home-grid.lesson-go > .daily-home { padding-bottom: 8px; }
 @media (min-width: 600px) {

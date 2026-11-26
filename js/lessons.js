@@ -1,7 +1,9 @@
 /* 課程總覽(lessons.html):整期 24 堂上到哪裡。頂端是今天的課卡(js/lesson-home.js 的 renderCard),下面一條 24 堂的清單。
    每堂只有三種狀態:完成、可上(有進度寫段數,沒有寫未開始)、不能上(右側寫未開放,不連結);今天不能上的原因只寫在頂端的卡。
    判定試行班、讀學習包與進度都經過 js/lesson-data.js(LESSON_DATA),畫面不寫任何資料。字串在 LESSON_CORE.TEXT。
-   空狀態(課程尚未開放、讀不到班級資料、還沒設定起始程度、載入失敗)用 UI.empty,鵜鶘 sleep。這一頁只有一個畫面,不寫瀏覽歷史。 */
+   空狀態(課程尚未開放、讀不到班級資料、還沒設定起始程度、載入失敗)用 UI.empty,鵜鶘 sleep。這一頁只有一個畫面,不寫瀏覽歷史。
+   第 1 堂上完、還沒問過每週上幾堂:先出那一頁(js/lesson-week.js),選了再畫總覽。每週 1 堂的課後練習沒有進度時寫「課後練習」。
+   本期做過第 4 堂後的程度調整而且有變、第 5 堂還沒開始:卡片下面、清單上面出「程度調整」那一塊。 */
 (function () {
   'use strict';
   const root = document.getElementById('lsn-root');
@@ -44,7 +46,7 @@
   function row(item, c, current) {
     let lesson = null;
     try { lesson = c.lessonOf(item.no); } catch (e) { console.error('第 ' + item.no + ' 堂拼不出來：', e); }
-    const st = C.rowStatus(item.status, c.states[item.no] || null, lesson);
+    const st = C.rowStatus(item.status, c.states[item.no] || null, lesson, !!item.optional);
     const kids = [
       h('span', { class: 'lsn-mark' + (st.mark ? ' is-' + st.mark : ''), 'aria-hidden': 'true' }, st.mark === 'done' ? check() : null),
       h('span', { class: 'lsn-row-no' }, T.home.kicker(item.no)), ' ',
@@ -58,14 +60,16 @@
     return h('li', null, el);
   }
   function draw(c, focus) {
-    const model = C.homeModel({ unlock: c.unlock, states: c.states, lessonOf: c.lessonOf, onLessons: true });
-    const sig = JSON.stringify([model, c.unlock, c.states]);
+    const model = Object.assign(C.homeModel({ unlock: c.unlock, states: c.states, lessonOf: c.lessonOf, onLessons: true }), { week: c.week || null, solo: c.solo || null });
+    const s5 = c.states[5], calib = c.calib && !(s5 && s5.startedAt) && window.LESSON_WEEK ? c.calib : null;
+    const sig = JSON.stringify([model, c.unlock, c.states, calib]);
     if (!focus && sig === drawn && root.querySelector('.lsn-list')) return;
     drawn = sig;
-    const card = LESSON_HOME.renderCard(model, { onLessons: true });
+    const card = LESSON_HOME.renderCard(model, { onLessons: true, onChanged: () => open(false) });
     const list = h('ol', { class: 'me-list lsn-list', 'aria-label': T.list.label },
       c.unlock.lessons.map((x) => row(x, c, x.no === c.unlock.next)));
-    put([h('p', { class: 'mock-tags lsn-tags' }, h('span', { class: 'mock-tag' }, T.list.done(model.done))), card, list], focus);
+    put([h('p', { class: 'mock-tags lsn-tags' }, h('span', { class: 'mock-tag' }, T.list.done(model.done, model.total))), card,
+      calib ? LESSON_WEEK.calibNotice(calib) : null, list].filter(Boolean), focus);
   }
 
   /* 開頁、重試、雲端資料到了:判定 → 讀學習包 → 先用本機進度畫,再跟雲端合併後重畫(有變才換) */
@@ -80,6 +84,13 @@
     if (p.state === 'unknown') { empty(T.empty.unknown, retry(), [daily(false)], focus); return; }
     if (p.state !== 'pilot') { empty(T.empty.off, daily(true), null, focus); return; }
     if (!LESSON_DATA.levels()) { empty(T.empty.noLevels, { label: T.empty.setLevels, href: 'start.html' }, null, focus); return; }
+    const W = window.LESSON_WEEK;
+    if (W && W.needWeekly(LESSON_DATA.plan(), LESSON_DATA.states())) {
+      drawn = '';
+      await W.weeklyScreen(root);
+      if (my !== seq) return;
+      loading();
+    }
     try {
       for (const local of [true, false]) {
         const c = await LESSON_HOME.course({ local });

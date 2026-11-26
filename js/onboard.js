@@ -448,15 +448,14 @@
       computed(r);
     });
   }
-  /* 結算卡下面的小字:聽力怎麼來的;自填的成績超過 2 年另外標出來(看最後一筆檢測或成績的來源,改過級別也不會消失) */
-  function sourceNote(acc) {
-    const lv = acc.levels, tl = C.testedLevels(lv);
+  /* 起始程度怎麼來的:不在卡片下面掛小字,寫成完整的句子放進標題旁 ⓘ 的資訊欄(ESTIMATE_UI.infoParas 'level')。
+     回 { from: 'score' | 'est' | 'legacy' | null, old: 自填的成績超過 2 年 }(看最後一筆檢測或成績的來源,改過級別也不會消失) */
+  function sourceOf(acc) {
+    const lv = acc.levels, tl = C.testedLevels(lv), src = lv.source || {};
     const old = !!acc.self_score && !!tl && tl.reason === 'score' && C.scoreTooOld(acc.self_score.examYm, Date.now());
-    const src = (lv.source || {}).listening;
-    if (src === 'score') return old ? '依你填的成績（超過 2 年）' : '依你填的成績';
-    if (src === 'est' || (lv.source || {}).reading === 'est') return '依程度檢測與練習';
-    if (src === 'legacy_plus1') return '聽力依閱讀結果推估';
-    return old ? '成績超過 2 年' : null;
+    const from = src.listening === 'score' ? 'score' : src.listening === 'est' || src.reading === 'est' ? 'est'
+      : src.listening === 'legacy_plus1' ? 'legacy' : null;
+    return { from, old };
   }
   function drawResult(acc) {
     if (!uiReady()) return;   // 結算卡靠共用元件:沒載到時說一聲、給重新整理
@@ -469,10 +468,11 @@
     const msg = msgLine();
     const edit = (label, value, step) => h('li', null, h('button', { class: 'me-row', type: 'button', onclick: () => go(step, 'result') },
       h('span', null, label + '　' + value), h('span', { class: 'me-row-val' }, '修改')));
-    card = UI.result({ big: TITLES.result, pose: 'happy', note: sourceNote(acc),
+    card = UI.result({ big: TITLES.result, pose: 'happy',
       stats: [['聽力', C.levelName(lv.listening)], ['閱讀', C.levelName(lv.reading)]],
       primary: link ? { label: '開始練習', href: link } : null,
-      links: [{ label: '改級別', onClick: () => openLevels(lv, msg) }, { label: tested ? '重新檢測' : '做檢測', onClick: () => go('test') }] });
+      links: [{ label: '改程度', onClick: () => openLevels(lv, msg) }, { label: tested ? '重新檢測' : '做檢測', onClick: () => go('test') }] });
+    if (window.ESTIMATE_UI) ESTIMATE_UI.addInfo(card.el, 'level', sourceOf(acc), 'heading');   // 沒有來源時不畫
     card.el.classList.add('ob-result');
     if (window.LESSON_HOME) LESSON_HOME.decorateResult(card.el);   // 試行班:主按鈕在背後換成上課的入口(js/lesson-home.js)
     put(card.el, msg, suggestLine(lv, msg), own ? h('section', { class: 'ob-mine', 'aria-labelledby': 'ob-mine-h' },
@@ -490,7 +490,7 @@
       });
     };
     const text = EU.STR.levels([['聽力', s.listening], ['閱讀', s.reading]].map((x) => x[0] + ' ' + C.levelName(x[1])));
-    return h('p', { class: 'auth-fine ob-suggest' }, text + '　', textBtn('改成這個級別', ask));
+    return h('p', { class: 'auth-fine ob-suggest' }, text + '　', textBtn('改成這個程度', ask));
   }
   function openLevels(lv, msg) {
     OUI.levelPanel({ levels: lv, onApply: (l, r) => {

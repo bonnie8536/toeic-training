@@ -154,20 +154,17 @@
   const estScore = v => (v.est < 150 ? '150 以下' : v.est >= 450 ? '450 以上' : String(v.est));
   const estRange = v => (v.est >= 150 && v.est < 450 ? v.lo + '–' + v.hi : '');
   const EST_SEC = [['L', '聽力'], ['R', '閱讀']];
-  /* 表格那一格:「聽力 345／閱讀 290（預估 · 11 月 25 日）」;沒有數字的科寫「—」 */
+  /* 表格那一格:「聽力 345／閱讀 290」;沒有數字的科寫「—」(用了幾題、算到哪一天在展開列 ⓘ 的資訊欄) */
   function estCell(e) {
-    return EST_SEC.map(([s, name]) => name + ' ' + (e[s] ? estScore(e[s]) : '—')).join('／') + '（預估 · ' + e.day + '）';
+    return EST_SEC.map(([s, name]) => name + ' ' + (e[s] ? estScore(e[s]) : '—')).join('／');
   }
-  /* 「根據 N 題」旁的 ⓘ:分數怎麼來的、不是正式成績,跟學生看到的資訊欄同一份(js/estimate-ui.js;沒載到就不畫) */
+  /* 標題旁的 ⓘ:分數怎麼來的、不是正式成績、用了幾題、算到哪一天,跟學生看到的資訊欄同一份(js/estimate-ui.js;沒載到就不畫) */
   const estInfo = (n, at) => (window.ESTIMATE_UI ? ESTIMATE_UI.infoButton({ kind: 'est', view: { n, at } }) : null);
-  /* 展開列:每科的數字與範圍、根據幾題 */
+  /* 展開列:「預估分數　聽力 345（300–390）　閱讀 290（245–335）」與 ⓘ */
   function estDetail(e) {
     const part = ([s, name]) => name + ' ' + (e[s] ? estScore(e[s]) + (estRange(e[s]) ? '（' + estRange(e[s]) + '）' : '') : '—');
     const n = EST_SEC.reduce((a, [s]) => a + (e[s] && e[s].n !== null ? e[s].n : 0), 0);
-    return [
-      h('h3', { style: 'font-size:15.5px;margin-bottom:4px' }, '預估分數（' + e.day + '）：' + EST_SEC.map(part).join('／')),
-      h('p', { class: 'adm-est-basis', style: 'font-size:13px;color:var(--ink-light);margin-bottom:10px' }, n ? '根據 ' + n + ' 題' : null, estInfo(n, e.at)),
-    ];
+    return [h('h3', { class: 'adm-est', style: 'font-size:15.5px;margin-bottom:10px' }, '預估分數　' + EST_SEC.map(part).join('　'), estInfo(n, e.at))];
   }
 
   function vocabStats(keys) {
@@ -473,7 +470,7 @@
   }
 
   function detail(name, diag, d5, d6, d7, pre) {
-    const box = h('div', { style: 'padding:8px 4px' });
+    const box = h('div', { class: 'adm-detail', style: 'padding:8px 4px' });
     if (pre) box.append(...estDetail(pre));
 
     if (diag) {

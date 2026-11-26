@@ -25,7 +25,6 @@
 }
 .est-row.is-need { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
 .est-left { color: var(--ink-light); font-weight: 700; }
-.est-practice { font-size: 14px; color: var(--primary); }
 .est-sec { white-space: nowrap; }
 .est-row .est-num { font-size: 17px; }
 .est-range { text-align: right; color: var(--ink-light); font-size: 13.5px; white-space: nowrap; }
@@ -36,9 +35,8 @@
 .band-scale.est-scale.is-bare .bs-track,
 .band-scale.est-scale.is-bare .bs-seg { top: 1px; }
 
-.est-suggest { margin: 2px 0 8px 130px; font-size: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; }   /* 字與字之間是全形空白 */
-.est-suggest-k { color: var(--ink-light); }
-.est-suggest-v { color: var(--ink); }
+.est-suggest { margin: 0 0 6px 130px; font-size: 14px; }   /* 第一欄 118px 加間距 12px:跟刻度尺左緣對齊 */
+.est-suggest .btn-text { margin-left: -12px; }   /* 字的左緣跟上面的刻度尺對齊(按鈕左右各有 12px 內距) */
 .est-card .est-go { display: inline-block; margin-top: 14px; }   /* 主按鈕是連結:行內區塊才吃得到上面的間距 */
 
 /* ---------- ⓘ 按鈕與資訊欄 ----------
@@ -57,15 +55,16 @@
 .est-info:focus-visible { outline: 2px solid var(--primary); outline-offset: -6px; }
 .est-info[aria-expanded="true"] { color: var(--primary-dark); }
 .result-kicker.est-kicker { display: inline-flex; align-items: center; justify-content: center; gap: 2px; }
+.result-score.est-heading .est-info { margin-left: 0; }
 .est-info-p { margin: 0 0 10px; font-size: 15px; line-height: 1.75; color: var(--ink); }
 .est-info-p:last-child { margin-bottom: 0; }
 .est-info-sheet .ui-sheet-body { padding-top: 6px; }
 
 /* ---------- 結果頁(放在 UI.result 的卡片裡) ---------- */
 .est-result { width: 100%; margin: 10px 0 0; text-align: left; }
-.est-ranges { margin: 0 0 4px; font-size: 13.5px; color: var(--ink-light); text-align: center; }
-.est-scale-row { display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 8px; }
+.est-scale-row { display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 8px; }
 .est-scale-row .band-scale { margin: 14px 8px 26px; }
+.est-scale-row .est-range { margin-bottom: 12px; }   /* 跟軌道同高(下面是刻度數字) */
 .est-result .est-need { text-align: center; margin: 6px 0; }
 .est-levels { margin: 6px 0 0; font-size: 14.5px; text-align: center; }
 .est-entry { margin: 2px 0 0; font-size: 14px; color: var(--ink-light); text-align: center; }
@@ -74,5 +73,7 @@
   .est-card { padding: 16px 16px 14px; }
   .est-row { grid-template-columns: 108px 1fr 72px; gap: 8px; font-size: 14px; }
   .est-row.is-need { grid-template-columns: 108px 1fr; }
-  .est-suggest { margin-left: 0; }   /* 窄版:建議那一行從左邊開始,不擠在數字欄右邊 */
+  .est-suggest { margin-left: 116px; }   /* 窄版第一欄 108px 加間距 8px */
 }
+
+@media print { .est-info { display: none; } }   /* 列印的檢測報告不印 ⓘ */

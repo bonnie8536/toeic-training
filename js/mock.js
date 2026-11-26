@@ -532,16 +532,16 @@
         unsaved === 'lost' ? null : h('button', { class: 'btn', type: 'button', onclick: () => location.reload() }, '重新整理'));
     }
 
-    /* 錯題收進錯題本的那一行:只有寫完讀回來確認過(wb.ok)才說「已收進」;存不進去時上面「還沒存」那一塊照舊說明 */
+    /* 錯題本怎麼變:完整的句子,一行一件事。只有寫完讀回來確認過(wb.ok)才說「已加進」;存不進去時下面「還沒存」那一塊照舊說明 */
     function wrongNote(wb, skipped) {
       if (!wb || !wb.ok) return null;
-      const parts = [];
-      if (wb.wrong > 0) parts.push('收進錯題本 ' + wb.wrong + ' 題');
-      else if (skipped < units.reduce((n, u) => n + unitQs(u), 0)) parts.push('這次沒有答錯的題');   // 有作答、沒有答錯
-      if (wb.cleared > 0) parts.push('移出 ' + wb.cleared + ' 題');
-      if (skipped > 0) parts.push('未作答 ' + skipped + ' 題不收');
-      if (!parts.length) return null;
-      return h('p', { class: 'band-note mock-wb-note' }, parts.join(' · '));
+      const lines = [];
+      if (wb.wrong > 0) lines.push('答錯的 ' + wb.wrong + ' 題已加進錯題本。');
+      else if (skipped < units.reduce((n, u) => n + unitQs(u), 0)) lines.push('這次沒有答錯的題。');   // 有作答、沒有答錯
+      if (wb.cleared > 0) lines.push('錯題本裡有 ' + wb.cleared + ' 題這次答對了，已移出錯題本。');
+      if (skipped > 0) lines.push('沒作答的 ' + skipped + ' 題不會加進錯題本。');
+      if (!lines.length) return null;
+      return h('div', { class: 'mock-wb-note' }, ...lines.map((t) => h('p', null, t)));
     }
 
     /* 結果:結算卡(分數、聽力與閱讀各自的約略分數、再做一次)放在最上面,逐題檢討收在卡片下面。回傳卡片(掛勾把點心放進 card.reward) */

@@ -35,7 +35,7 @@
       if (C.levelName(pick.listening) && C.levelName(pick.reading) && opts.onApply(pick.listening, pick.reading) && sheet) sheet.close();
     } }, '套用');
     const listening = group('listening', '聽力');
-    sheet = UI.sheet({ title: '改級別', class: 'ob-sheet', focus: listening.querySelector('input:checked') || undefined,
+    sheet = UI.sheet({ title: '改程度', class: 'ob-sheet', focus: listening.querySelector('input:checked') || undefined,
       nodes: [listening, group('reading', '閱讀'), note, h('div', { class: 'ob-sheet-actions' }, apply)] });
     return sheet;
   }

@@ -3746,7 +3746,7 @@ html.is-quiz #mock-root .passage-sticky-wrap { position: static; max-height: non
 
 /* 結果:卡片下面的小字提示與逐題收合 */
 .mock-after { max-width: 480px; margin: 16px auto 0; text-align: center; }
-.mock-after .mock-wb-note { margin: 0; font-size: var(--fs-sm); }
+.mock-after .mock-wb-note p { margin: 0; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-light); }
 .mock-after .mock-unsaved { margin-top: 0; text-align: left; }
 .mock-after .mock-unsaved p { margin: 4px 0 12px; }
 .mock-unsaved p.mock-unsaved-fine { margin-top: -8px; font-size: var(--fs-xs); color: var(--ink-soft); }
@@ -4003,6 +4003,11 @@ table.cat-table th.ad-caret-th, table.cat-table td.ad-caret-td { position: stick
 .ad-caret { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: var(--r-sm); background: none; cursor: pointer; }
 .ad-caret:hover { background: var(--bg-soft); }
 .ad-caret:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+/* 展開列:表格比畫面寬、可以左右捲時,展開的內容不跟著表格一樣寬,停在畫面左邊、字在畫面寬度內換行 */
+.adm-detail { overflow-wrap: anywhere; }
+@media (max-width: 860px) {
+  .adm-detail { position: sticky; left: 0; max-width: calc(100vw - 60px); }
+}
 .ad-caret-ico { width: 8px; height: 8px; border-right: 2px solid var(--ink-light); border-bottom: 2px solid var(--ink-light); transform: translateY(-2px) rotate(45deg); transition: transform .15s; }
 tr.is-open .ad-caret-ico { transform: translateY(2px) rotate(-135deg); }
 .ad-picks { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
@@ -4118,7 +4123,8 @@ html.app-shell .ob-back { visibility: hidden; }
 .ob-line { display: block; }   /* 視窗內文分行(帳號已有學習設定:帳號的設定、剛才的答案各一行) */
 .ob-loading { margin-top: 30px; }   /* 等雲端、算級別:一行小字,同文法查表頁的「載入中…」 */
 /* S4:同檢測頁的開始頁(.diag-intro 卡片、兩個小標籤、卡片裡的實色主按鈕),下面接文字按鈕 */
-.ob-intro-note { margin: 12px 0 0; font-size: var(--fs-sm); color: var(--ink-soft); }
+.ob-intro-note { margin: 12px 0 0; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-soft); }   /* 作答方式:跟檢測頁開始頁的 .pl-rule 一樣的行距 */
+.ob-intro-note + .ob-intro-note { margin-top: 2px; }
 .ob-intro .auth-msg:not(:empty) { margin-top: 12px; }
 .ob-intro-more { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 12px 0 0 -12px; }
 .ob-intro-more .btn-text .ob-date { margin-left: 2px; }

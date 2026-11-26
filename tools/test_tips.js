@@ -202,6 +202,21 @@ T['T7 第 1–8 堂技巧卡區塊引用的卡、測驗檢討會配的卡(js/les
   return used.size + ' 張';
 };
 
+/* 現在有的卡,照來源的順序:第 1–8 堂與測驗檢討的 13 張,再加第 9–16 堂先用到的 6 張 */
+const CARD_IDS = ['tip-P1-photo', 'tip-P2-wh', 'tip-P2-yn', 'tip-P3-gist', 'tip-P3-speaker_place', 'tip-P4-gist', 'tip-P5-word_form', 'tip-P5-tense',
+  'tip-P5-verb_form', 'tip-P5-pron_case', 'tip-P5-prep_vs_conj', 'tip-P6-grammar', 'tip-P7-detail',
+  'tip-P6-vocab', 'tip-P3-detail', 'tip-P5-prep_meaning', 'tip-P2-statement', 'tip-P5-vocab', 'tip-P5-vocab_verb'];
+T['T9 卡的清單:19 張、id 照來源順序;兩包第 1–16 堂技巧卡區塊引用的卡都在'] = () => {
+  const cards = loadTips().cards;
+  assert.deepStrictEqual(cards.map((c) => c.id), CARD_IDS);
+  const have = new Set(cards.map((c) => c.id)), missing = [];
+  ['entry', 'threshold'].forEach((lv) => JSON.parse(read('data/packs/pack_' + lv + '.json')).lessons.slice(0, 16).forEach((l) => l.segments
+    .forEach((s) => (s.blocks || []).filter((b) => b.module === 'tip_cards').forEach((b) => b.ids
+      .filter((x) => !have.has(x.id)).forEach((x) => missing.push(lv + ' 第 ' + l.no + ' 堂 ' + x.id))))));
+  assert.deepStrictEqual(missing, []);
+  return cards.length + ' 張';
+};
+
 T['T8 check_packs 收集測驗檢討會配的卡:要剛好 Part 1–7 各一張,配法改了(少一個 Part、一個 Part 兩張)會丟錯'] = () => {
   const { reviewTips } = require('./check_packs.js');
   const fake = (idOf) => ({ planTestReview: (parts) => Object.keys(parts).map((p) => ({ kind: 'tip', id: idOf(p.slice(1)) })).filter((x) => x.id) });

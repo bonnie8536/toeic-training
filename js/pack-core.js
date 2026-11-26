@@ -490,7 +490,7 @@
      同一次小檢核每次算出來都一樣(換裝置、從哪一堂算都一樣)。不排除做過的題,不存進任何鍵;題庫或清單少了沒挑中的題整份不變,
      少了挑中的題只換那一題(之後幾次可能跟著換一題)。課程裡的練習選題先避開兩份,湊不滿先用遠的、最後才用近的
      (pickBankIds 的 hold;弱點補練不用);小檢核本身也先避開之後兩次的預留題。
-     ctx = { account(帳號 id), pool(小檢核可用題清單,已扣前測題與短測題), bank }。回 { ids: near 接 far, near, far };
+     ctx = { account(帳號 id), pool(小檢核可用題清單,已扣前測題), bank }。回 { ids: near 接 far, near, far };
      沒有帳號(訪客)、沒有清單、後面沒有小檢核都是空的 */
   async function reserveFor(packs, levels, no, ctx) {
     const c = ctx || {};

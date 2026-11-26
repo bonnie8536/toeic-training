@@ -146,7 +146,7 @@
     return { level, correct, total: items.length, basicCorrect, basicTotal };
   }
   function plusOne(code) { const i = LEVELS.indexOf(code); return i < 0 ? code : LEVELS[Math.min(i + 1, LEVELS.length - 1)]; }
-  /* 聽力還沒有短測:聽力 = 閱讀級 + 1(最高高分,暫定) */
+  /* 聽力沒有檢測:聽力 = 閱讀級 + 1(最高高分,暫定) */
   function levelsFromLegacy(diag, items) {
     const r = legacyReading(diag, items);
     if (!r) return null;

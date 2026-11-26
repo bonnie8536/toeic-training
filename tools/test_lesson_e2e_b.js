@@ -1,11 +1,10 @@
-/* 課程第 5–8 堂、每週堂數、獨立小檢核、程度調整、聽力短測的無頭 Chrome 測試(tools/lesson_e2e_kit.js:真的頁面與引擎、假雲端、假時鐘)。
+/* 課程第 5–8 堂、每週堂數、獨立小檢核、程度調整的無頭 Chrome 測試(tools/lesson_e2e_kit.js:真的頁面與引擎、假雲端、假時鐘)。
    種好的進度用真的 js/pack-core.js 選題;作答率要算程度調整的堂,每一題照固定比例寫成第一次作答(答對或答錯)。
    用法:node tools/test_lesson_e2e_b.js [--port <起始埠,用三個>] [--tmp <放 Chrome 使用者資料的資料夾>] [--shots <截圖資料夾>] [--only <名稱的一段,幾段用 | 分開>]
    --shots 給了時存 375 與 1280 兩張。每次一個新的使用者資料夾,跑完刪掉。 */
 'use strict';
 const fs = require('fs');
 const os = require('os');
-const vm = require('vm');
 const path = require('path');
 const assert = require('assert');
 const K = require('./lesson_kit.js');
@@ -241,148 +240,6 @@ T['8 上線前的 plan(沒有 perWeek、weeklyAskedAt)、第 1 堂上完:首頁�
   assert.ok(await p.eval("!!document.querySelector('.lsn-weekly') && !document.querySelector('.lsn-list')"), '先出每週上幾堂');
   noErrors(p, '第 8 條');
   await p.close();
-};
-
-/* ---------- 第 6 條 聽力短測 ---------- */
-const NEW_ONB = { v: 1, status: 'in_progress', step: 'test', path: 'self', targetScore: 600, examMonth: null, levelSource: null, testFrom: null, previous: null,
-  startedAt: '2026-11-01T00:00:00.000Z', doneAt: null, updatedAt: '2026-11-01T00:00:00.000Z' };
-/* 舊檢測 28 題:前 n 題答對 */
-function diagOf(n, at) {
-  const ctx = { window: {} };
-  ctx.window = ctx;
-  vm.createContext(ctx);
-  vm.runInContext(K.read('data/diagnostic.js'), ctx);
-  const D = ctx.TOEIC.diagnostic, items = [].concat(D.p5, D.p6.questions, D.p7.questions);
-  const answers = {};
-  items.forEach((q, i) => { answers[i] = i < n ? q.answer : (q.answer + 1) % 4; });
-  return { answers, done: true, startedAt: ISO(at - 20 * 60e3), finishedAt: ISO(at) };
-}
-const qNo = (p) => p.eval("(() => { const m = /(\\d+)\\s*\\/\\s*8/.exec((document.querySelector('.quiz-count') || {}).textContent || ''); return m ? Number(m[1]) : null; })()");
-/* 短測答一題:play 時先按播放;right 答對,不然選正解的下一個 */
-async function listenOne(p, right, play) {
-  const n = await qNo(p);
-  if (play) { await p.click('.player-btn'); await p.wait("document.querySelector('.player-btn').disabled", '播放鈕'); await sleep(600); }
-  await p.eval(`(() => { const ob = store.get('onboard'); const id = ob.listen.ids[${n} - 1], L = TOEIC.listening['p' + id.charAt(1)];
-    const it = L.filter((x) => x.id === id)[0], bs = document.querySelectorAll('.letter-big');
-    bs[${right ? 'it.answer' : '(it.answer + 1) % bs.length'}].click(); return true; })()`);
-  await sleep(150);
-  await p.click('.quiz-foot .btn.primary');
-  for (let k = 0; k < 100; k++) { const m = await qNo(p).catch(() => null); if (n < 8 ? m === n + 1 : m === null) return; await sleep(100); }
-  throw new Error('等不到第 ' + (n + 1) + ' 題');
-}
-async function listenAll(p, right, play) { for (let i = 0; i < 8; i++) await listenOne(p, right, play && play(i)); }
-async function toListen(p, how) {
-  await p.go('start.html?step=test');
-  await p.wait("document.querySelector('.diag-intro')", 'S4');
-  if (how === 'legacy') await p.eval("[...document.querySelectorAll('.btn-text')].find((b) => /^用上次的閱讀檢測/.test(b.textContent)).click(); true");
-  else await p.click('.diag-intro .btn.primary');
-  await p.wait("document.querySelector('.quiz-count')", '短測');
-}
-T['6 引導:S4 三個標籤 → 短測 8 題(真音檔)→ 中場 → 28 題 → S8「聽力依 8 題短測」(閱讀入門 → 聽力門檻);中途重新整理接著做;稍後再做回來是中場;音檔載不到 2 題 → 自評;用上次的閱讀檢測;做過短測的第 4 堂小檢核不含那 8 題'] = async () => {
-  resetClock();
-  const c = freshCloud(), u = user(37, '新同學');
-  seedUser(c, u, { onboard: NEW_ONB });
-  /* S0 與首頁起始程度卡:沒登入的訪客才看得到(已經在檢測中的帳號開 start.html 會直接接回 S4) */
-  const g = await tab(null, { url: 'start.html' });
-  await g.wait("document.querySelector('.ob-start')", 'S0');
-  assert.equal(await g.eval("document.querySelector('.ob-start').textContent.includes('填多益成績，或做 36 題檢測（約 23 分鐘）')"), true, 'S0 副標');
-  await shot(g, '50_S0');
-  noErrors(g, '第 6 條訪客');
-  await g.close();
-  /* 首頁起始程度卡:登入、還沒開始設定程度的帳號 */
-  const n = await tab(user(38, '剛註冊'), { url: 'index.html' });
-  await n.wait("document.querySelector('#ob-home-h')", '首頁起始程度卡');
-  assert.equal(await n.eval("document.querySelector('.ob-home-sub').textContent"), '填多益成績，或做 36 題檢測（約 23 分鐘）');
-  await shot(n, '57_首頁卡_起始程度');
-  noErrors(n, '第 6 條新帳號');
-  await n.close();
-  const p = await tab(u, { url: 'start.html' });
-  await p.go('start.html?step=test');
-  await p.wait("document.querySelector('.diag-intro')", 'S4');
-  assert.deepStrictEqual(await p.eval("[[...document.querySelectorAll('.diag-intro .mock-tag')].map((t) => t.textContent), document.querySelector('.ob-intro-note').textContent]"),
-    [['聽力 8 題', '閱讀 28 題', '約 23 分鐘'], '每題音檔只播一次']);
-  await shot(p, '51_S4');
-  await p.click('.diag-intro .btn.primary');
-  await p.wait("document.querySelector('.quiz-count')", '短測');
-  assert.ok(await p.eval("document.documentElement.classList.contains('is-quiz') && !!document.querySelector('.player-btn')"), '專心模式、播放鈕');
-  assert.equal(await p.eval("getComputedStyle(document.querySelector('footer')).display"), 'none', '作答中不顯示頁尾');
-  await shot(p, '52_短測作答');
-  for (let i = 0; i < 3; i++) await listenOne(p, true, i === 0);
-  await p.reload();
-  await p.wait("document.querySelector('.quiz-count')", '重新整理後');
-  assert.equal(await qNo(p), 4, '從第 4 題接著做');
-  for (let i = 3; i < 8; i++) await listenOne(p, true, false);
-  await p.wait("document.querySelector('#ob-title') && document.querySelector('#ob-title').textContent === '聽力完成'", '中場');
-  await shot(p, '53_中場');
-  await p.eval("[...document.querySelectorAll('.btn-text')].find((b) => b.textContent === '稍後再做').click(); true");
-  await sleep(300); await p.loaded(); await p.settle();
-  await p.wait("document.querySelector('#onboard-home .btn')", '首頁起始程度卡');
-  await p.mark(); await p.click('#onboard-home .btn'); await sleep(300); await p.loaded(); await p.settle();
-  await p.wait("document.querySelector('#ob-title') && document.querySelector('#ob-title').textContent === '聽力完成'", '回來是中場');
-  await p.mark(); await p.click('.diag-intro .btn.primary'); await sleep(300); await p.loaded(); await p.settle(1500);
-  assert.ok(/diagnostic\.html/.test(await p.eval('location.href')), '去檢測頁');
-  await p.eval('store.set("diag", ' + J(diagOf(0, nowMs() + 60e3)) + '); true');
-  await p.go('start.html?step=result');
-  await p.wait("document.querySelector('.result-card')", 'S8');
-  assert.deepStrictEqual(await p.eval("[[...document.querySelectorAll('.result-stat dd')].map((d) => d.textContent), document.querySelector('.result-card .result-note').textContent]"),
-    [['門檻', '入門'], '聽力依 8 題短測']);
-  await shot(p, '54_S8_短測');
-  noErrors(p, '第 6 條 full');
-  await p.close();
-
-  /* 音檔載不到 2 題 → 自評;閱讀門檻 → 聽力上限進階 */
-  const u2 = user(38, '音檔失敗');
-  seedUser(c, u2, { onboard: NEW_ONB });
-  SV.notFound = /^\/audio\/l1-(13|22)\.mp3$/;
-  const q = await tab(u2, { url: 'start.html' });
-  await toListen(q, 'full');
-  await listenAll(q, true, (i) => i < 2);
-  await q.wait("document.querySelector('.ob-choice')", '自評');
-  assert.deepStrictEqual(await q.eval("[document.querySelector('#ob-title').textContent, document.querySelectorAll('.ob-choice').length, document.documentElement.classList.contains('is-quiz'), document.querySelectorAll('main .btn.primary').length]"),
-    ['聽英文時，你最接近哪一種', 4, false, 0]);
-  await shot(q, '55_自評');
-  await q.eval("[...document.querySelectorAll('.ob-choice')].find((b) => /會議/.test(b.textContent)).click(); true");
-  await q.wait("document.querySelector('#ob-title') && document.querySelector('#ob-title').textContent === '聽力完成'", '中場');
-  SV.notFound = null;
-  assert.deepStrictEqual((await storeGet(q, 'onboard')).listen.fail, [0, 1]);
-  await q.mark(); await q.click('.diag-intro .btn.primary'); await sleep(300); await q.loaded(); await q.settle(1500);
-  await q.eval('store.set("diag", ' + J(diagOf(16, nowMs() + 60e3)) + '); true');
-  await q.go('start.html?step=result');
-  await q.wait("document.querySelector('.result-card')", 'S8');
-  assert.deepStrictEqual(await q.eval("[[...document.querySelectorAll('.result-stat dd')].map((d) => d.textContent), document.querySelector('.result-card .result-note').textContent]"),
-    [['進階', '門檻'], '聽力依自評']);
-  await shot(q, '56_S8_自評');
-  await q.close();
-
-  /* 用上次的閱讀檢測:只做短測,直接到 S8 */
-  const u3 = user(39, '舊檢測');
-  seedUser(c, u3, { onboard: NEW_ONB, diag: diagOf(16, nowMs() - 3 * DAY_MS) });
-  const r = await tab(u3, { url: 'start.html' });
-  await toListen(r, 'legacy');
-  await listenAll(r, false);
-  await r.wait("document.querySelector('.result-card')", 'S8');
-  assert.deepStrictEqual(await r.eval("[[...document.querySelectorAll('.result-stat dd')].map((d) => d.textContent), document.querySelector('.result-card .result-note').textContent, location.search]"),
-    [['入門', '門檻'], '聽力依 8 題短測', '?step=result']);
-  noErrors(r, '第 6 條 legacy');
-  await r.close();
-
-  /* 做完短測的試行生:第 4 堂凍結的小檢核題不含那 8 題 */
-  const u4 = user(40, '短測試行'), ids = ['l1-13', 'l1-22', 'l2-08', 'l2-09', 'l2-87', 'l2-07', 'l2-97', 'l2-25'];
-  pilotUser(c, u4, TT);
-  c.put(u4.id, 'onboard', Object.assign({}, ONBOARD, { listen: { v: 1, mode: 'full', ids, a: ids.map(() => 0), fail: [], self: null, at: ISO(nowMs() - 9 * DAY_MS), doneAt: ISO(nowMs() - 9 * DAY_MS) } }));
-  const start = nowMs() - 8 * DAY_MS;
-  c.put(u4.id, 'plan', planOf(start));
-  await seedLessons(c, u4, TT, [1, 2, 3], (no) => sec(start) + no * 86400);
-  const s = await tab(u4, { url: 'lesson.html?no=4' });
-  await s.wait("document.querySelector('.lsn-steps')", '第 4 堂總覽');
-  await s.click('.lsn-go');
-  await s.wait("!document.querySelector('.lsn-steps')", '開始第 4 堂');
-  await sleep(800);
-  const st = await les(s, 4), frozen = [].concat(...Object.keys(st.pk).map((k) => st.pk[k].ids || []));
-  assert.deepStrictEqual(frozen.filter((id) => ids.indexOf(id) > -1), [], '凍結的題不含短測的 8 題');
-  noErrors(s, '第 6 條 第 4 堂');
-  await s.close();
-  return '凍結 ' + frozen.length + ' 題';
 };
 
 /* ---------- 第 7 條 模擬考 ---------- */

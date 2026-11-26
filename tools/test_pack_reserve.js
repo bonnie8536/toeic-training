@@ -1,6 +1,6 @@
 /* 小檢核的預留題(js/pack-core.js 的 reserveFor 與選題的補題順序):每一次小檢核各算一份、互不重疊;練習避開之後兩次的預留題,
    題不夠時先用遠的那一份、最後才用近的那一份;考點回顧另有順序;弱點補練只避開不補;小檢核本身先避開之後兩次的預留題。
-   做過聽力短測的學生(onboard.listen.ids)那 8 題當前測題。有進度的堂照那份進度自己的級別判斷能不能上。
+   有進度的堂照那份進度自己的級別判斷能不能上。
    node + vm(tools/lesson_kit.js):真的學習包、題目索引、js/pack-core.js、js/lesson-data.js;不開瀏覽器、不連網。
    用法:node tools/test_pack_reserve.js */
 'use strict';
@@ -177,29 +177,6 @@ T['R8 不改傳進來的 ctx 與進度'] = async () => {
   const rc = { account: ACC, pool: POOL.slice(), bank: B }, rb = JSON.stringify(rc.pool);
   await P.reserveFor(PACKS, TT, 3, rc);
   eq([JSON.stringify([c.seen, c.checkpointPool, c.records, hold, s]), JSON.stringify(rc.pool)], [before, rb]);
-  return 'ok';
-};
-
-T['R9 做過聽力短測的帳號:那 8 題算前測題(小檢核清單扣掉、預留題不挑);沒做過的帳號預留題跟改之前一樣'] = async () => {
-  for (const lv of [EE, TT]) {
-    const plainEnv = K.env({ bank: true, user: UIDS[1], pid: ACCOUNTS[1] });
-    await plainEnv.D.packs();
-    const l3 = plainEnv.lesson(lv, 3), c0 = plainEnv.D.ctx(l3, NOW);
-    const r0 = await plainEnv.P.reserved(c0);
-    eq(print(r0.slice(0, BEFORE[tag(lv) + '|1'][0])), BEFORE[tag(lv) + '|1'], '沒做過短測:第 4 堂那一份不變');
-    const short = r0.filter((id) => /^l[12]-/.test(id)).slice(0, 8);
-    assert.equal(short.length, 8);
-    const e = K.env({ bank: true, user: UIDS[1], pid: ACCOUNTS[1] });
-    e.store.set('onboard', { v: 1, step: 'done', listen: { v: 1, mode: 'full', ids: short } });
-    await e.D.packs();
-    const c = e.D.ctx(e.lesson(lv, 3), NOW), r = await e.P.reserved(c);
-    eq([short.filter((id) => e.D.testIds().indexOf(id) < 0), short.filter((id) => c.checkpointPool.indexOf(id) > -1), disjoint(r, short)], [[], [], []], tag(lv));
-    assert.ok(short.every((id) => c.seen.indexOf(id) > -1), '算進做過的題');
-    const bad = K.env({ bank: true, user: UIDS[1], pid: ACCOUNTS[1] });
-    bad.store.set('onboard', { v: 1, listen: { ids: short.slice(0, 7) } });
-    await bad.D.packs();
-    eq(print((await bad.P.reserved(bad.D.ctx(bad.lesson(lv, 3), NOW))).slice(0, r0.length)), print(r0), '不是 8 題不算');
-  }
   return 'ok';
 };
 

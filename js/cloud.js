@@ -64,16 +64,23 @@
 (function () {
   const cfg = window.CLOUD_CONFIG || {};
   const enabled = !!(cfg.url && cfg.anonKey);
+  /* supabase-js 的確切版本與內容雜湊(loadSdk 用,升版的做法寫在那裡) */
+  const SDK_SRC = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2/dist/umd/supabase.js';
+  const SDK_SRI = 'sha384-A97u3Qnt9GZHURO9YJZRe7VQgGUeFzcv6I1oIGnUTxQrCxnpQMwR0/G8F2zt9abZ';
 
-  /* Google 登入失敗時 Supabase 不是回傳錯誤,而是把錯誤掛在網址的 # 後面導回來。
-     這裡先接住再把網址清乾淨(登入卡會把它顯示出來);密碼重設的 # 帶的是 token,不動它。 */
+  /* Google 登入失敗、信裡的連結過期時,Supabase 把錯誤掛在網址的 # 後面導回來。
+     這裡先接住再把網址清乾淨(登入卡顯示 authErrorText 寫好的說明,網址上的文字一律不顯示);密碼重設的 # 帶的是 token,不動它。 */
   const authError = (function () {
     const hash = location.hash || '';
     if (!/[#&]error/.test(hash) || /access_token=/.test(hash)) return '';
-    const m = /[#&]error_description=([^&]*)/.exec(hash) || /[#&]error(?:_code)?=([^&]*)/.exec(hash);
-    const raw = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '登入沒有完成';
+    const pick = name => {
+      const m = new RegExp('[#&]' + name + '=([^&]*)').exec(hash);
+      if (!m) return '';
+      try { return decodeURIComponent(m[1].replace(/\+/g, ' ')); } catch (e) { return ''; }
+    };
+    const text = authErrorText(pick('error'), pick('error_code'), pick('error_description'));
     try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
-    return raw;
+    return text;
   })();
   /* 這一頁是登入回來的頁面(Google 導回來、點信裡的連結):網址帶 access_token(密碼重設的 type=recovery 不算)或 ?code=,
      要趁 supabase-js 清掉網址之前記下來。回來那一頁 supabase-js 先拿 access_token 去問帳號,雲端確認登入之前 CLOUD.user 是 null、
@@ -96,7 +103,7 @@
   /* supabase-js 把登入資料存在 localStorage 的這個位置(預設名稱:sb-<專案代號>-auth-token) */
   const SB_KEY = 'sb-' + ((/^https?:\/\/([^./]+)\./.exec(cfg.url) || [])[1] || '') + '-auth-token';
 
-  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '',
+  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError,
     authReturning: enabled && authReturning, login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
     startCheckout, myCheckout, isOwner,
@@ -188,7 +195,13 @@
     return new Promise((res, rej) => {
       if (window.supabase && window.supabase.createClient) return res();
       const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+      /* 鎖定確切版本並檢查內容雜湊:CDN 上的檔案被換掉時瀏覽器不執行。網址要指向 npm 套件裡原有的檔案(dist/umd/supabase.js),
+         不用 CDN 臨時產生的 .min.js(套件裡沒有這個檔,CDN 改了產生方式,雜湊就對不上)。升版時 SDK_SRC 的版本號與 SDK_SRI 一起換,
+         雜湊拿 npm 套件壓縮檔(npm pack @supabase/supabase-js@新版本)裡的 package/dist/umd/supabase.js 算:
+         openssl dgst -sha384 -binary 檔案 | openssl base64 -A,再確認 CDN 網址抓下來的檔案跟它逐位元組相同 */
+      s.src = SDK_SRC;
+      s.integrity = SDK_SRI;
+      s.crossOrigin = 'anonymous';
       s.onload = res;
       s.onerror = () => rej(new Error('無法載入雲端元件\n請檢查網路後重新整理'));
       document.head.appendChild(s);
@@ -597,6 +610,19 @@
     if (!client) throw new Error('雲端元件尚未載入\n請重新整理再試');
   }
 
+  /* 網址帶回來的登入錯誤 → 站上寫好的說明。只認幾種已知的錯誤代碼(說明文字只拿來分辨是哪一種),其他一律同一句:
+     網址誰都能編,帶進來的文字不能出現在登入視窗 */
+  function authErrorText(err, code, desc) {
+    const e = String(err).toLowerCase(), c = String(code).toLowerCase(), d = String(desc);
+    if (c === 'otp_expired' || c === 'flow_state_expired' || /link is invalid or has expired/i.test(d)) return '連結已過期\n請到「註冊」分頁重寄驗證信';
+    if (c === 'signup_disabled' || /signups? not allowed/i.test(d)) return '目前未開放註冊\n請聯絡老師';
+    if (c === 'provider_disabled' || /unsupported provider|provider is not enabled/i.test(d)) return 'Google 登入目前不能用\n請改用 Email 註冊';
+    if (c === 'over_request_rate_limit' || e === 'too_many_requests') return '請求太頻繁\n請幾分鐘後再試';
+    /* 取消 Google 登入:error_code 可能沒帶、是 access_denied 或 HTTP 狀態碼(403 這類數字);其他代碼不猜 */
+    if (e === 'access_denied' && (!c || c === 'access_denied' || /^\d+$/.test(c))) return 'Google 登入已取消';
+    return '登入沒有完成\n請再試一次';
+  }
+
   function friendly(error) {
     const m = error.message || '';
     if (/already registered|already exists|already been registered/i.test(m)) return '這個 Email 已經註冊過\n請直接登入或點 Google 登入\n忘記密碼可以重設';
@@ -619,11 +645,13 @@
       email: String(email).trim(), password,
       options: { data: { name: String(name || '').trim().slice(0, 20) }, emailRedirectTo: siteUrl('index.html') },
     });
+    /* 信箱已經註冊過:Confirm email 開啟時回一個沒有 identities 的假 user,關閉時回 already registered 的錯誤。
+       跟新註冊一樣回「去收信」(畫面另外寫明已經註冊過的人直接登入或重設密碼),這個畫面分辨不出信箱有沒有註冊過。
+       註冊時選老師的意向清掉(沒有新帳號可以綁) */
+    const taken = error ? /already registered|already exists|already been registered/i.test(error.message || '')
+      : !!(data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0);
+    if (taken) { clearSignupIntent(); return { needsConfirm: true }; }
     if (error) throw new Error(friendly(error));
-    /* Confirm email 開啟時,已註冊過的 email 會回一個沒有 identities 的假 user(不洩漏帳號存在),這裡當作已註冊處理 */
-    if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
-      throw new Error('這個 Email 已經註冊過\n請直接登入或點 Google 登入\n忘記密碼可以重設');
-    }
     bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(沒有意向什麼都不做)
     if (data.session) {
       window.CLOUD.user = data.user;
@@ -1563,12 +1591,14 @@
      (規則認的鍵寫在 SYNC_FAMILY)。MERGED 上有、SYNC_FN 沒有的鍵(以後加進合併表卻忘了這裡):暫存那份一律放進備份,
      不准當成題庫合併、也不准略過(略過的話暫存區照樣刪掉)。
      回 { sets: [[鍵, 原字串]], backup: [[鍵, 原字串]] };合併不了的鍵暫存那份放進備份,本機不動 */
+  /* 暫存區與本機讀出來的值:"__proto__" 鍵讀的時候就拿掉(JSON.parse 會把它當一般的鍵留著,合併時會被當成換原型) */
+  const noProtoKey = (k, v) => (k === '__proto__' ? undefined : v);
   const SYNC_FAMILY = [[/^les_t/, 'lesson']];
   const SYNC_TWO = { mock: 1, mockWrong: 1, levels: 1, onboard: 1, selfScore: 1, pts: 1, rvq: 1, tests: 1, lesson: 1, firstAttempts: 1, placementRuns: 1, estSnap: 1 };   // 雲端和暫存那份先合、再合本機(不用標記)
   const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests', fa_v1: 'firstAttempts', placement_v1: 'placementRuns', est_v1: 'estSnap' };
   function takeSynced(syncItems, led, cloud, prefix, now) {
     const S = window.SYNC_MERGE, sets = [], backup = [];
-    const val = (raw) => { try { return raw === null || raw === undefined ? null : JSON.parse(raw); } catch (e) { return undefined; } };
+    const val = (raw) => { try { return raw === null || raw === undefined ? null : JSON.parse(raw, noProtoKey); } catch (e) { return undefined; } };
     const local = {}, cv = {};
     const KEYS = Object.keys(MERGED).filter((k) => !MERGED[k].clock).concat(mergedIn(syncItems.map((x) => x.k)).filter((k) => !MERGED[k]));
     KEYS.forEach((k) => {
@@ -1625,7 +1655,7 @@
     const R = window.MOVE_RULES, MM = window.MOVE_MERGE;
     const now = Date.now();
     const led = readLedger(user.id), backup = [], sets = [], synced = [];
-    const parse = raw => { try { return raw === null ? undefined : JSON.parse(raw); } catch (e) { return undefined; } };
+    const parse = raw => { try { return raw === null ? undefined : JSON.parse(raw, noProtoKey); } catch (e) { return undefined; } };
     items.forEach(e => {
       if (!Array.isArray(e) || e.length !== 3 || typeof e[0] !== 'string' || typeof e[1] !== 'string') return;
       const k = e[0], raw = e[1], t = typeof e[2] === 'number' && isFinite(e[2]) ? Math.min(e[2], now) : 0;

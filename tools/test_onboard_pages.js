@@ -276,7 +276,12 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     '+  const SYNC_TWO = { mock: 1, mockWrong: 1, levels: 1, onboard: 1, selfScore: 1, pts: 1, rvq: 1, tests: 1, lesson: 1, firstAttempts: 1, placementRuns: 1, estSnap: 1 };   // 雲端和暫存那份先合、再合本機(不用標記)',
     "+  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests', fa_v1: 'firstAttempts', placement_v1: 'placementRuns', est_v1: 'estSnap' };",
   ];
-  eq(changedLines('js/cloud.js').filter((l) => !ok.some((re) => re.test(l)) && COURSE.indexOf(l) < 0 && ESTIMATE.indexOf(l) < 0), [], 'cloud.js 有不在清單上的改動');
+  /* 後來加的保護(跟起始程度無關):supabase-js 鎖版本與 integrity、網址帶回來的登入錯誤只顯示固定說明、
+     註冊訊息不分辨信箱有沒有註冊過、搬家暫存區讀值時拿掉 __proto__ 鍵;逐行列在 tools/fixtures/cloud_harden_lines.json(同一行出現幾次就列幾次) */
+  const HARDEN = require('./fixtures/cloud_harden_lines.json');
+  /* 清單逐行計次比對:清單上的每一行要出現同樣的次數,多一行(包括空行、右括號這類一般的行)或少一行都不算 */
+  const rest = changedLines('js/cloud.js').filter((l) => !ok.some((re) => re.test(l)) && COURSE.indexOf(l) < 0 && ESTIMATE.indexOf(l) < 0);
+  eq(rest.slice().sort(), HARDEN.slice().sort(), 'cloud.js 的改動跟清單不一樣');
 };
 T['S7b js/classes.js 只改兩處:加入班級的小字補「程度檢測結果」、匯出邀請碼格式檢查'] = () => {
   const changed = changedLines('js/classes.js').map((l) => l.slice(0, 1) + l.slice(1).trim());

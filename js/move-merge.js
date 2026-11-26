@@ -66,7 +66,15 @@
     h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
     return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
   }
-  function parse(raw) { try { return { ok: true, v: JSON.parse(raw) }; } catch (e) { return { ok: false }; } }
+  /* 外來資料的 "__proto__" 鍵讀的時候就拿掉(JSON.parse 會把它當一般的鍵留著,合併時會被當成換原型) */
+  const noProtoKey = (k, v) => (k === '__proto__' ? undefined : v);
+  function parse(raw) { try { return { ok: true, v: JSON.parse(raw, noProtoKey) }; } catch (e) { return { ok: false }; } }
+  /* 搬來的原字串直接寫進本機之前:帶 "__proto__" 鍵就改寫成拿掉之後的字串(頁面自己 JSON.parse 再 Object.assign 時才不會換掉原型);沒有就原樣 */
+  function cleanRaw(raw) {
+    let had = false;
+    const v = JSON.parse(raw, (k, x) => { if (k === '__proto__') { had = true; return undefined; } return x; });
+    return had ? JSON.stringify(v) : raw;
+  }
   function labelOf(sub) {
     if (own(LABELS, sub)) return LABELS[sub];
     if (/^drill_p/.test(sub)) return '刷題錯題本（Part ' + sub.slice(7) + '）';
@@ -549,10 +557,10 @@
       const c = R.classify(k, valid.profileIds);
       if (c.rule !== 'banks' || skip(k, labelOf(c.sub))) return;
       const folder = k.slice(0, k.length - c.sub.length);
-      const ov = JSON.parse(raw);
+      const ov = JSON.parse(raw, noProtoKey);
       const cur = target.get(k);
       if (cur === null) {
-        put(k, raw, 'add');
+        put(k, cleanRaw(raw), 'add');
         res.counts.added++;
         res.items.push({ key: k, kind: 'added' });
         if (Array.isArray(ov)) ov.forEach((b) => {
@@ -582,8 +590,8 @@
       const c = R.classify(k, valid.profileIds);
       if (c.rule === 'banks' || skip(k, labelOf(c.kind === 'global' ? c.sub.replace(/^tr_/, '') : c.sub))) return;
       const folder = k.slice(0, k.length - c.sub.length);
-      let ov = JSON.parse(raw);
-      let oraw = raw;
+      let ov = JSON.parse(raw, noProtoKey);
+      let oraw = cleanRaw(raw);
       if (c.kind !== 'global' && remaps[folder] && (BANK_KEYS.indexOf(c.sub) > -1 || c.sub === 'vgame_src')) {
         const moved = remapRelated(c.sub, ov, remaps[folder]);
         if (moved !== ov) { ov = moved; oraw = JSON.stringify(ov); }

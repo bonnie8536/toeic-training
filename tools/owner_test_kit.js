@@ -87,7 +87,7 @@ function fakeDom() {
     constructor(tag) { this.tagName = String(tag).toUpperCase(); this.nodeType = tag === '#text' ? 3 : 1; this.children = []; this.parentNode = null; this.attrs = {}; this.className = ''; this._text = ''; this.on = {}; this.dataset = {}; this.style = {}; this.hidden = false; this.disabled = false; this.value = ''; this.checked = false; }
     get type() { return this.attrs.type || ''; }
     set type(v) { this.attrs.type = String(v); }
-    append(...ns) { ns.forEach(n => { if (n === null || n === undefined) return; if (!(n instanceof Node)) { const t = new Node('#text'); t._text = String(n); n = t; } if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.push(n); }); }
+    append(...ns) { ns.forEach(n => { if (!(n instanceof Node)) { const t = new Node('#text'); t._text = String(n); n = t; } if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.push(n); }); }
     prepend(n) { if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.unshift(n); }
     after(n) { const p = this.parentNode; if (!p) return; if (n.parentNode) n.parentNode._rm(n); const i = p.children.indexOf(this); n.parentNode = p; p.children.splice(i + 1, 0, n); }
     insertBefore(n, ref) { if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; const i = ref ? this.children.indexOf(ref) : -1; if (i < 0) this.children.push(n); else this.children.splice(i, 0, n); }

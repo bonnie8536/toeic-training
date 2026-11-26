@@ -35,6 +35,7 @@
     [/^((r|tq|dlg):[a-z0-9:_-]+|p[567]|pr|l[1-4]|es|ed|emp|en|rv)$/, 'tomato'],
     [/^(mock|diag)$/, 'melon'],
     [/^(wr:[a-z0-9:_-]+|m)$/, 'greens'],
+    [/^les_t\d{1,2}_\d{2}$/, 'tomato'],   // 課程頁:每堂第一次看到本堂結果(第 1 堂是前測結果),來源 id 是進度鍵 les_t<期>_<堂>
   ];
   const SPECIAL = [[/^y$/, 'yam'], [/^w:(s[1-6]|a[1-9]\d{0,3})$/, 'worm']];
   function lookup(rules, id) {

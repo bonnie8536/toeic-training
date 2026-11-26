@@ -25,22 +25,23 @@ let PING = 'ok';
 /* 新網址的 move-in.html:DROP_MOVE_IN = n 時,從現在起第 n 次以後的請求都直接切斷連線(自動搬家第二次進收件頁、帶著密文的那一站連不上) */
 let DROP_MOVE_IN = 0, moveInHits = 0;
 /* 新網址的 move-in.html 晚這麼多毫秒才回(手機第一次連新網址很慢:舊網址那一頁已經在換頁、還沒換過去);move-ping.txt 晚這麼多毫秒才回(ping 還沒回來) */
-let HOLD_MOVE_IN = 0, PING_DELAY = 0;
+let HOLD_MOVE_IN = 0, PING_DELAY = 0, heldMoveIn = 0;   // heldMoveIn:被 HOLD_MOVE_IN 壓著的 move-in.html 請求數(測試看得到換到新網址的請求到了、還沒回)
 /* HANG_CLOCK:新網址收件頁自己對時抓的 move-ping.txt(同網域)收下請求、一直不回(手機網路切換時連線卡住);舊網址跨網域的 ping 照常 */
 let HANG_CLOCK = false;
 /* OLD_CLOUD:舊網址的 cloud-config 填上(cloud.js 啟用、要從 cdn.jsdelivr.net 載 supabase-js;那個請求由測試用 CDP Fetch 攔下、一直不回) */
 let OLD_CLOUD = false;
 const held = [];
-/* 冒充的網站 /attack.html:用 window.open 開舊網址一頁,ATTACK.after 毫秒之後把那個視窗導到 move-out.html#key=<它自己的公鑰>(猜一個號碼) */
-const ATTACK = { pub: '', after: [] };
+/* 冒充的網站 /attack.html:用 window.open 開舊網址一頁,測試叫 __go 時把那個視窗導到 move-out.html#key=<它自己的公鑰>(猜一個號碼)。
+   不用點擊之後的固定毫秒:開出視窗之後這一頁在背景,計時器會被瀏覽器延後(1800 毫秒實際晚到 2.4–2.8 秒),剛好碰上那個視窗倒數到期 */
+const ATTACK = { pub: '' };
 const ATTACKER_KEYS = [];
 const attackPage = () => `<!doctype html><meta charset="utf-8"><body><button id="go">go</button><script>
 document.getElementById('go').onclick = () => {
   const w = window.open('${OLD}/index.html', '_blank');
   window.__nav = [];
-  ${J(ATTACK.after)}.forEach((ms) => setTimeout(() => {
-    try { w.location = '${OLD}/move-out.html#key=${ATTACK.pub}&n=' + 'f'.repeat(32) + '&back=%2F'; window.__nav.push('ok ' + ms); } catch (e) { window.__nav.push(String(e)); }
-  }, ms));
+  window.__go = (tag) => {
+    try { w.location = '${OLD}/move-out.html#key=${ATTACK.pub}&n=' + 'f'.repeat(32) + '&back=%2F'; window.__nav.push('ok ' + tag); } catch (e) { window.__nav.push(String(e)); }
+  };
 };
 </script>`;
 
@@ -73,6 +74,7 @@ function serve(port) {
         res.end(buf);
       });
       const wait = port === 8932 && p === '/move-in.html' ? HOLD_MOVE_IN : port === 8932 && p === '/move-ping.txt' ? PING_DELAY : 0;
+      if (wait && p === '/move-in.html') heldMoveIn++;
       if (wait) setTimeout(send, wait); else send();
     });
     srv.on('error', (e) => reject(new Error('埠 ' + port + ' 不能用(' + e.code + '),先關掉占用它的程式')));
@@ -833,31 +835,36 @@ async function mouseAt(B, s, x, y) {
 T['自動搬家:別的網站先開舊網址一頁、再把那個視窗導到 move-out.html#key=<它自己的公鑰>(倒數中、已經在換到新網址時各一次):號碼對不上,不組包、不加密,停在一般的搬家頁'] = async (B) => {
   PING = 'ok';
   const L = linkLib();
-  const out = [];
+  const out = [], left = [];   // left:還開著的分頁,中途丟錯也在 finally 關掉
   try {
-    for (const after of [1800, 4500]) {
+    for (const phase of ['倒數中', '換頁中']) {
       const att = await L.newKey();
       ATTACKER_KEYS.push(att.jwk);
-      ATTACK.pub = att.pub; ATTACK.after = [after];
+      ATTACK.pub = att.pub;
       const st = await tab(B);
       await seed(st, OLD, { tr_vgame_banks: J([bank('x1', '私人單字', ['secretword'])]), tr_hist: J(hist(2, 'x')) }, true);
       await seed(st, NEW, {}, true);
       await st.close();
       /* 第二次:倒數到期、換到新網址的請求還沒回來(第一站已經記下號碼)時被導走 */
-      HOLD_MOVE_IN = after > 3000 ? 8000 : 0;
+      HOLD_MOVE_IN = phase === '換頁中' ? 8000 : 0;
       const ev = await tab(B, EVIL + '/attack.html');
-      const before = B.created.length;
+      left.push(ev);
+      const before = B.created.length, held0 = heldMoveIn;
       await ev.click('go');
       const w = await popup(B, before, OLD + '/');
+      left.push(w);
+      if (phase === '倒數中') await w.until('/正在把你的進度帶過去/.test((document.getElementById("move-bar") || {}).innerText || "") && sessionStorage.getItem("tr_move_auto") === null', 10000, '倒數中');
+      else for (let i = 0; heldMoveIn === held0; i++) { if (i > 150) throw new Error('等不到:倒數到期、換到新網址的請求'); await sleep(100); }
+      await ev.eval('window.__go(' + J(phase) + ')');
       await w.until('location.origin === ' + J(OLD) + ' && location.pathname === "/move-out.html" && [...document.querySelectorAll("button")].some((b) => b.textContent === "準備搬家")', 20000, '停在一般的搬家頁');
       await sleep(2500);
-      const r = { after, nav: await ev.eval('window.__nav'), where: await w.eval('location.origin + location.pathname'), memo: await w.eval('sessionStorage.getItem("tr_move_auto")') };
+      const r = { phase, nav: await ev.eval('window.__nav'), where: await w.eval('location.origin + location.pathname'), memo: await w.eval('sessionStorage.getItem("tr_move_auto")') };
       HOLD_MOVE_IN = 0;
-      await w.close(); await ev.close();
+      await w.close(); await ev.close(); left.length = 0;
       const nt = await tab(B); await nt.go(NEW + '/move-ping.txt'); r.newGot = 'tr_vgame_banks' in (await nt.ls()); await nt.close();
       out.push(r);
     }
-  } finally { HOLD_MOVE_IN = 0; }
+  } finally { HOLD_MOVE_IN = 0; for (const t of left) await t.close(); }
   const m2 = out[1] && out[1].memo ? JSON.parse(out[1].memo) : {};
   const ok = out.length === 2 && out.every((r) => /^ok/.test((r.nav || [])[0] || '') && r.where === OLD + '/move-out.html' && !r.newGot)
     && out[0].memo === null && m2.step === 'key' && /^[0-9a-f]{32}$/.test(m2.n || '');

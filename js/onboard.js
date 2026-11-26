@@ -451,6 +451,7 @@
       primary: link ? { label: '開始練習', href: link } : null,
       links: [{ label: '改級別', onClick: () => openLevels(lv, msg) }, { label: tested ? '重新檢測' : '做檢測', onClick: () => go('test') }] });
     card.el.classList.add('ob-result');
+    if (window.LESSON_HOME) LESSON_HOME.decorateResult(card.el);   // 試行班:主按鈕在背後換成上課的入口(js/lesson-home.js)
     put(card.el, msg, own ? h('section', { class: 'ob-mine', 'aria-labelledby': 'ob-mine-h' },
       h('h2', { class: 'me-sec-h', id: 'ob-mine-h' }, '你的選擇'),
       h('ul', { class: 'me-list' }, edit('目標', C.targetLabel(ob.targetScore), 'target'), edit('考試', C.ymLabel(ob.examMonth) || '還沒報名', 'exam'))) : null);

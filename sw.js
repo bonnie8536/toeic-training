@@ -5,7 +5,7 @@
    (node tools/check_release.js 會檢查,--fix 自動換),舊快取整批作廢,不會拿新版共用檔配舊版頁面。
    不經手:跨網域(Supabase、jsDelivr、Google Fonts、Cloudflare)、非 GET、Range 請求、音檔、帶登入參數的頁面。
    這裡不讀寫學生的進度資料,只刪自己 ss- 開頭的快取。 */
-const V = 'v20261125-0046';
+const V = 'v20261126-1148';
 const PAGES = 'ss-pages-' + V;
 const ASSETS = 'ss-assets-' + V;
 const IMAGES = 'ss-img-' + V;
@@ -27,8 +27,9 @@ const ON_OLD = MOVE_FROM.indexOf(self.location.origin) > -1;
 const MOVE = 'ss-move-' + V;
 const MOVE_FLAG = 'ss-move-flag';
 const MOVE_PAGE = '/move-out.html';
+const BRAND_IMGS = ['/img/brand-y2-28.png', '/img/brand-y2-56.png', '/img/brand-y2-84.png'];
 const MOVE_ASSETS = [MOVE_PAGE, '/css/style.css', '/img/favicon.svg', '/js/move-config.js', '/js/cloud-config.js', '/js/common.js', '/js/sync-merge.js', '/js/pet-config.js',
-  '/js/pet.js', '/js/cloud.js', '/js/move-rules.js', '/js/move-merge.js', '/js/move-pack.js', '/js/move-link.js', '/js/move-out.js', '/js/move-out-page.js'];
+  '/js/pet.js', '/js/cloud.js', '/js/move-rules.js', '/js/move-merge.js', '/js/move-pack.js', '/js/move-link.js', '/js/move-out.js', '/js/move-out-page.js', ...BRAND_IMGS];
 
 self.addEventListener('install', (event) => {
   /* Chrome 123+:音檔連 service worker 都不叫醒;其他瀏覽器靠 fetch 裡的判斷 */
@@ -43,6 +44,8 @@ self.addEventListener('install', (event) => {
   event.waitUntil(Promise.all([
     caches.open(PAGES).then((c) => c.add(new Request(OFFLINE, { cache: 'reload' }))),
     caches.open(ASSETS).then((c) => c.add(new Request('/css/style.css', { cache: 'reload' }))),
+    /* 頂欄品牌圖(style.css 的背景圖):先存好,第一次上線就離線也有圖;存不到就算了,圖載不到時那格是空的,不會破圖 */
+    caches.open(IMAGES).then((c) => Promise.all(BRAND_IMGS.map((u) => c.add(new Request(u, { cache: 'reload' })).catch(noop)))),
   ]));
   if (ON_OLD) event.waitUntil(caches.open(MOVE).then((c) => Promise.all(MOVE_ASSETS.map((u) => c.add(new Request(u, { cache: 'reload' })).catch(noop)))).catch(noop));   // 存不到也不擋安裝
   self.skipWaiting();

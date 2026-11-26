@@ -368,10 +368,11 @@
       return;
     }
     ids.sort((a, b) => (students[b].last || '').localeCompare(students[a].last || ''));
+    const lessonCol = lessonColumn(ids.map(uid => students[uid].keys));
 
     const table = h('table', { class: 'cat-table' },
       h('tr', null,
-        h('th', null, '學生'), h('th', null, '最近活動'), h('th', null, '檢測結果'), h('th', null, '起始程度'),
+        h('th', null, '學生'), h('th', null, '最近活動'), h('th', null, '檢測結果'), h('th', null, '起始程度'), lessonCol.head(),
         h('th', null, 'Part 5'), h('th', null, 'Part 6'), h('th', null, 'Part 7'), h('th', null, '單字'),
         h('th', { class: 'ad-caret-th' }, h('span', { class: 'ad-sr' }, '展開'))));
 
@@ -394,13 +395,14 @@
         h('td', { class: 'num' }, (s.last || '').slice(0, 10) || '—'),
         h('td', { class: 'num' }, diag ? diag.score + '/' + diag.total + ' · ' + diag.band : '未檢測'),
         h('td', { class: 'num' }, window.ONBOARD_CORE ? ONBOARD_CORE.levelsLabel(s.keys['levels']) : '未設定'),   // 起始程度(start.html 寫的 levels)
+        lessonCol.cell(s.keys),
         h('td', { class: 'num' }, fmt(d5)), h('td', { class: 'num' }, fmt(d6)), h('td', { class: 'num' }, fmt(d7)),
         h('td', { class: 'num' }, vo.done + '/' + vo.total),
         h('td', { class: 'ad-caret-td' }, caret));
 
       const wb = ownerOn() ? OW.billing.writingBlock({ uid, keys: s.keys }) : null;
       const detailRow = h('tr', { style: 'display:none' },
-        h('td', { colspan: '9', style: 'background:var(--bg-soft)' }, detail(name, diag, d5, d6, d7), wb ? wb.el : null,
+        h('td', lessonCol.span({ colspan: '9', style: 'background:var(--bg-soft)' }), detail(name, diag, d5, d6, d7), wb ? wb.el : null,
           noteSection(uid, tnote0, n => { nameEl.textContent = n || meta.name || meta.email || uid.slice(0, 8); })));
       const toggle = () => {
         detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
@@ -417,6 +419,20 @@
     root.append(table);
     root.append(h('div', { class: 'drill-nav-btns' },
       h('button', { class: 'btn', onclick: load }, '重新整理')));
+  }
+
+  /* 「目前堂號」欄(課程頁的進度,算法在 js/lesson-core.js 的 currentNo):名單上至少一位學生已開始上課(有 plan)才多這一欄,
+     放在「起始程度」後面;都沒有時表格跟以前一樣。展開列跨的欄數跟著多一欄 */
+  function lessonColumn(list) {
+    const LC = window.LESSON_CORE;
+    const on = !!LC && list.some(k => !!(k && k.plan));
+    const T = on ? LC.TEXT.admin : null;
+    const text = keys => { const c = LC.currentNo(keys); return c === 'done' ? T.done : c ? T.at(c.no) : T.none; };
+    return {
+      head: () => (on ? h('th', null, T.col) : null),
+      cell: keys => (on ? h('td', { class: 'num' }, text(keys)) : null),
+      span: attrs => (on ? Object.assign({}, attrs, { colspan: String(Number(attrs.colspan) + 1) }) : attrs),
+    };
   }
 
   function detail(name, diag, d5, d6, d7) {
@@ -449,7 +465,8 @@
       return h('div', { style: 'font-size:13.5px;color:var(--ink-light);margin-bottom:6px' },
         label + ' 錯題(' + ids.length + ')：' + ids.slice(0, 30).map(id => describe(id) + (mock.has(id) ? '（模擬考）' : '')).join('、') + (ids.length > 30 ? '…' : ''));
     };
-    box.append(
+    /* 沒有錯題的 Part 回 null:瀏覽器的 append(null) 會印出「null」,先濾掉 */
+    box.append(...[
       /* 題庫裡找不到(已淘汰的題,data/retired.json):只有沒載到 js/wrongbook.js 時會走到,寫「已淘汰」不寫成 #0、題組0 */
       wrongLine('Part 5', d5, id => {
         const q = p5ById[id];
@@ -462,7 +479,7 @@
       wrongLine('Part 7', d7, id => {
         const si = (TOEIC.part7 || []).findIndex(s => id.startsWith(s.id + ':'));
         return si < 0 ? '已淘汰的題組' : '題組' + (si + 1) + ' Q' + (Number(id.split(':')[1]) + 1);
-      }));
+      })].filter(Boolean));
     return box;
   }
 })();

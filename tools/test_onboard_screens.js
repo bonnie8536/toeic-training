@@ -208,6 +208,7 @@ async function open(opt) {
   });
   ctx.window = ctx;
   ctx.__loadScript = (s) => setImmediate(() => {
+    if (opt.lesson && s.src !== 'data/diagnostic.js') { e.loads.push(s.src); vm.runInContext(read(s.src), ctx, { filename: s.src }); s.onload(); return; }
     if (opt.diagFail) { s.onerror(); return; }
     vm.runInContext(read('data/diagnostic.js'), ctx);
     s.onload();
@@ -235,12 +236,20 @@ async function open(opt) {
     pending: { take: () => { const v = ls.get('tr_pending_join'); ls.delete('tr_pending_join'); return v ? JSON.parse(v).code : null; },
       save: (c) => ls.set('tr_pending_join', J({ code: c, at: NOW })) },
     api: { normalize, check: (raw) => formatError(normalize(raw)),
-      join: (c) => { e.joins.push(c); return Promise.resolve(opt.join || { ok: true, name: '週三班' }); } },
+      join: (c) => { e.joins.push(c); return Promise.resolve(opt.join || { ok: true, name: '週三班' }); },
+      list: () => { e.lists = (e.lists || 0) + 1; return opt.membership || Promise.resolve({ ok: true, classes: [] }); } },
   };
   const ui = fakeUI(e, dom.doc);
   ctx.UI = opt.noUi ? undefined : ui;   // noUi:js/ui.js 沒載到(請求被擋)
+  /* lesson:試行班的開關與名單(課程的檔照 start.html 的順序載,其他課程檔在背後依序載進來;學習包從 data/packs 讀) */
+  e.loads = [];
+  if (opt.lesson) {
+    Object.assign(ctx, { PACKS_UI: 'pilot', PACKS_PILOT_CLASSES: ['class-a'], TextEncoder, RegExp, Error, TypeError, Boolean,
+      fetch: (u) => Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(JSON.parse(read(u))) }) });
+  }
   vm.createContext(ctx);
-  ['js/common.js', 'js/onboard-core.js', 'js/onboard-data.js', 'js/onboard-ui.js', 'js/onboard.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
+  (opt.lesson ? ['js/common.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js', 'js/lesson-home.js'] : ['js/common.js'])
+    .concat(['js/onboard-core.js', 'js/onboard-data.js', 'js/onboard-ui.js', 'js/onboard.js']).forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   (dom.doc.on.DOMContentLoaded || []).forEach((f) => f({}));
   await settle();
   return Object.assign(e, {
@@ -476,6 +485,33 @@ T['P13 S8 結算卡:標題、兩科級別在統計列、不給分數;班級學�
   /* 換畫面時結算卡收掉(停掉角色) */
   await soon.press('目標　600 分修改');
   eq([soon.step(), soon.destroyed], ['target', 1]);
+};
+T['P13b S8 試行班:結算卡照原本先畫「開始練習」(不等名單),判定是試行班才換主按鈕;沒有 plan「開始第 1 堂」;有 plan 照首頁卡;不是試行班不換'] = async () => {
+  const init = { [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: LV };
+  const go = (e) => { const a = e.root.querySelector('.result-go'); return [a.textContent, a.attrs.href]; };
+  const yes = () => Promise.resolve({ ok: true, classes: [{ id: 'class-a' }] });
+  const a = await open({ url: 'start.html?step=result', signed: true, init, lesson: true, membership: yes() });
+  await settle();
+  eq([a.results[0].primary.label, go(a), a.lists], ['開始練習', ['開始第 1 堂', 'lesson.html?no=1'], 1]);
+  const yday = Math.floor(NOW / 1000) - 86400, lv = { listening: 'threshold', reading: 'threshold' };
+  const half = { v: 1, lessonId: {}, packVersion: {}, levels: lv, startedAt: yday, doneAt: null,
+    seg: { test_listening: { st: 'done', t0: yday, t1: yday + 900 }, test_reading: { st: 'todo', t0: null, t1: null } }, pk: {}, a: [] };
+  const b = await open({ url: 'start.html?step=result', signed: true, lesson: true,
+    init: Object.assign({ [PRE + 'plan']: J({ v: 1, classId: 'class-a', term: 1 }), [PRE + 'les_t1_01']: J(half) }, init) });
+  await settle();
+  eq([b.results[0].primary.label, go(b), b.lists || 0], ['開始練習', ['繼續第 1 堂', 'lesson.html?no=1'], 0]);
+  const n = await open({ url: 'start.html?step=result', signed: true, init, lesson: true, membership: Promise.resolve({ ok: true, classes: [{ id: 'class-b' }] }) });
+  await settle();
+  eq([go(n), n.lists, n.loads], [['開始練習', 'practice.html?part=5'], 1, ['js/lesson-core.js', 'js/lesson-data.js']]);
+};
+T['P13c S8 試行班:判定還沒回來就換到別的畫面,舊的結算卡不動、新畫面也不被改'] = async () => {
+  let answer;
+  const e = await open({ url: 'start.html?step=result', signed: true, lesson: true, membership: new Promise((r) => { answer = r; }),
+    init: { [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: LV } });
+  const old = e.root.querySelector('.result-go');
+  await e.press('目標　600 分修改');
+  answer({ ok: true, classes: [{ id: 'class-a' }] }); await settle();
+  eq([e.step(), old.textContent, old.attrs.href, e.lists, e.root.querySelector('.result-go')], ['target', '開始練習', 'practice.html?part=5', 1, null]);
 };
 T['P14 已登入開 S0:完成的人轉首頁、設定中的人接著中斷的那一步'] = async () => {
   const d = await open({ url: 'start.html', signed: true, init: { [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: LV } });

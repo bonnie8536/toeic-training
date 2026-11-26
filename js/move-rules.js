@@ -14,7 +14,11 @@
      q_reports:回報題目(js/report.js),每題 { c, n, t, f },同一題兩邊都有就留 t 新的。
      onboard、self_score、levels:起始程度設定、自填成績、起始程度(js/onboard-data.js),都是整份換掉(single)。
      雲端帳號的搬家暫存區不走這裡的 single:這三個鍵在 js/cloud.js 的合併表上,takeSynced 用 SYNC_MERGE.levels、onboard、selfScore
-     (留自己時間欄位較新的那份,levels.history 聯集;tools/test_move_cloud.js)。 */
+     (留自己時間欄位較新的那份,levels.history 聯集;tools/test_move_cloud.js)。
+     課程(js/pack-core.js、js/lesson-rules.js):plan(課表設定)、pts(考點狀態)、rvq(回顧佇列)、tests_v1(測驗結果)、
+     les_t<期>_<堂>(一堂一鍵,由 PACK_CORE.lessonKey 產生)。搬家時整份換(single,兩邊不同時問人);
+     雲端帳號的搬家暫存區不走這裡的 single:pts、rvq、tests_v1、les_t 在 js/cloud.js 的合併表上,takeSynced 用 SYNC_MERGE.pts、rvq、tests、lesson
+     (作答、批次、佇列聯集;tools/test_move_cloud.js)。訪客與本機學生的搬家要不要改用合併另外決定(現在維持 single)。 */
   const EXACT = Object.freeze({
     hist: 'hist', mock_history: 'mock', mock_wrong: 'pool', q_reports: 'pool', pet: 'pet', daily_done: 'daily', vgame_banks: 'banks', sync_del: 'tombs',
     vgame_best: 'best', vgame_toast_best: 'best', vgame_pairs_best: 'pairsBest', vgame_clear: 'clear',
@@ -24,6 +28,7 @@
     ear_s: 'idmap', ear_d: 'idmap', ear_mp: 'idmap', ear_n: 'idmap',
     diag: 'single', ph_slow: 'single', vgame_src: 'single',
     onboard: 'single', self_score: 'single', levels: 'single',
+    plan: 'single', pts: 'single', rvq: 'single', tests_v1: 'single',
   });
   const ID = '[A-Za-z0-9_.-]{1,80}';
   const FAMILIES = Object.freeze([
@@ -32,6 +37,7 @@
     [new RegExp('^read_q_' + ID + '$'), 'answers'],
     [new RegExp('^read_tq_' + ID + '$'), 'single'],
     [new RegExp('^vocab_' + ID + '$'), 'fills'],
+    [/^les_t\d{1,2}_\d{2}$/, 'single'],
   ]);
   /* 不在學生資料夾底下的全站鍵 */
   const GLOBAL = Object.freeze({ tr_profiles: 'profiles', tr_current_profile: 'currentProfile', tr_pet_hint: 'fillMissing' });

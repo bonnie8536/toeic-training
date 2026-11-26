@@ -1,6 +1,6 @@
 /* js/cloud.js 的 flushForMove(舊網址寄出頁)與搬家暫存區 tr_move_pending_<帳號 id>(新網址登入灌資料時合併)。
    跟 tools/test_cloud_merge.js 同一套假的 Supabase(加上 in() 與一次傳多列的 upsert,題庫跟 sync_del 一起讀、一起傳)、localStorage、時鐘與計時器;
-   合併規則載入真的 js/sync-merge.js(每一頁都在 cloud.js 前面載入)、js/move-rules.js、js/move-merge.js,
+   合併規則載入真的 js/sync-merge.js、js/sync-merge-lesson.js(每一頁都在 cloud.js 前面載入)、js/move-rules.js、js/move-merge.js,
    小雞用真的 js/pet.js。用法:node tools/test_move_cloud.js */
 'use strict';
 const fs = require('fs');
@@ -9,7 +9,7 @@ const path = require('path');
 
 const REPO = path.join(__dirname, '..');
 const read = (f) => fs.readFileSync(path.join(REPO, f), 'utf8');
-const SRC = { cloud: read('js/cloud.js'), sync: read('js/sync-merge.js'), pet: read('js/pet.js'), food: read('js/pet-food.js'), rules: read('js/move-rules.js'), merge: read('js/move-merge.js'), daily: read('js/daily.js') };
+const SRC = { cloud: read('js/cloud.js'), sync: read('js/sync-merge.js'), syncLesson: read('js/sync-merge-lesson.js'), pet: read('js/pet.js'), food: read('js/pet-food.js'), rules: read('js/move-rules.js'), merge: read('js/move-merge.js'), daily: read('js/daily.js') };
 const USER = { id: '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72', email: 's@x.com', user_metadata: { name: '學生' } };
 const OTHER = '9a9a9a9a-0000-4000-8000-000000000000';
 const PID = 'c' + USER.id.replace(/-/g, '');
@@ -71,9 +71,12 @@ function makeClient(w) {
 }
 const tick = async () => { for (let i = 0; i < 10; i++) await new Promise((r) => setImmediate(r)); };
 
-/* opt.movers:'yes'(先載好 MOVE_RULES、MOVE_MERGE)、'fail'(要載時載不到)、不給同 'yes' */
+/* opt.movers:'yes'(先載好 MOVE_RULES、MOVE_MERGE)、'fail'(要載時載不到)、不給同 'yes'。
+   opt.lazy:頁面上沒先載的檔(SRC 的名稱,例 ['rules', 'syncLesson']),cloud.js 要用時補載得到(w.loaded 記補載了哪些) */
+const LAZY_SRC = { 'js/move-rules.js': 'rules', 'js/move-merge.js': 'merge', 'js/daily.js': 'daily', 'js/sync-merge.js': 'sync', 'js/sync-merge-lesson.js': 'syncLesson' };
 function loadPage(w, opt) {
   opt = opt || {};
+  const lazy = opt.lazy || [];
   const timers = new Map(); let tid = 0;
   const listeners = {};
   class FakeDate extends Date { constructor(...a) { if (a.length) super(...a); else super(w.clock.t); } static now() { return w.clock.t; } }
@@ -85,7 +88,15 @@ function loadPage(w, opt) {
     history: { replaceState() {} },
     document: {
       visibilityState: 'visible', addEventListener(ev, fn) { (listeners['doc:' + ev] = listeners['doc:' + ev] || []).push(fn); },
-      createElement() { return {}; }, head: { appendChild(s) { w.scriptLoads = (w.scriptLoads || 0) + 1; Promise.resolve().then(() => s.onerror && s.onerror(new Error('404'))); } },
+      createElement() { return {}; },
+      head: {
+        appendChild(s) {
+          w.scriptLoads = (w.scriptLoads || 0) + 1;
+          const name = LAZY_SRC[s.src];
+          if (name && lazy.indexOf(name) > -1) { (w.loaded = w.loaded || []).push(s.src); Promise.resolve().then(() => { vm.runInContext(SRC[name], ctx); if (s.onload) s.onload(); }); return; }
+          Promise.resolve().then(() => s.onerror && s.onerror(new Error('404')));
+        },
+      },
       querySelector() { return null; }, querySelectorAll() { return []; },
     },
     confirm: () => true, navigator: { get onLine() { return !w.offline; } }, URLSearchParams,
@@ -99,8 +110,8 @@ function loadPage(w, opt) {
   vm.createContext(ctx);
   try { ctx.__PROFILE_ID = JSON.parse(w.local.getItem('tr_current_profile')) || null; } catch (e) { ctx.__PROFILE_ID = null; }
   Object.assign(ctx, { PET_ON: true, PET_FOOD: true, PET_FOOD_FROM: '2026-10-20' });
-  vm.runInContext(SRC.pet, ctx); vm.runInContext(SRC.food, ctx); vm.runInContext(SRC.sync, ctx);
-  if (opt.movers !== 'fail') { vm.runInContext(SRC.rules, ctx); vm.runInContext(SRC.merge, ctx); vm.runInContext(SRC.daily, ctx); }
+  vm.runInContext(SRC.pet, ctx); vm.runInContext(SRC.food, ctx);
+  ['sync', 'syncLesson'].concat(opt.movers !== 'fail' ? ['rules', 'merge', 'daily'] : []).forEach((n) => { if (lazy.indexOf(n) < 0) vm.runInContext(SRC[n], ctx); });
   vm.runInContext(opt.cloudSrc || SRC.cloud, ctx);   // opt.cloudSrc:改過的 cloud.js(測試合併表多一個鍵)
   return {
     ctx,
@@ -146,6 +157,23 @@ T['flushForMove:帳本比雲端新的照常上傳;雲端比較新的(不在合�
   return { ok, detail: J({ left: r.left, carried, upOnce, after, ledger: ledger(w) }) };
 };
 
+/* 搬家寄出頁(舊網址)不載 js/sync-merge-lesson.js(舊網址的 Worker 只代理固定的檔案清單):課程進度拿不到合併函式,
+   照規則不整份上傳(不蓋掉雲端那份)、帳本留著,放進搬家包,到新網址再合併 */
+T['flushForMove:頁面沒載 js/sync-merge-lesson.js:課程進度不整份上傳、不蓋掉雲端那份,放進搬家包'] = async () => {
+  const w = makeWorld();
+  const st = (rows) => ({ v: 1, lessonId: { listening: 'entry-L03', reading: 'entry-L03' }, packVersion: { listening: '1.2.0', reading: '1.2.0' },
+    levels: { listening: 'entry', reading: 'entry' }, startedAt: Math.floor((T0 - 10 * HOUR) / 1000), doneAt: null, seg: { vocab: { st: 'todo', t0: null, t1: null } }, pk: {}, a: rows });
+  const ids = (v) => (v && v.a ? v.a.map((x) => x[1]).sort() : []);
+  cloudRow(w, 'les_t1_03', st([[4, 'l2-01', 0, 1, 3, 10]]), T0 - HOUR);
+  const pg = await openLoggedIn(w, { lazy: ['syncLesson'] });
+  w.clock.t += 1000; w.local.setItem(PREFIX + 'les_t1_03', J(st([[4, 'l2-02', 0, 1, 3, 20]]))); pg.ctx.CLOUD.push('les_t1_03', 1);
+  await pg.runTimers();
+  const r = await pg.ctx.CLOUD.flushForMove();
+  const carried = (r.accounts[USER.id] || []).map((e) => e[0]);
+  const ok = carried.indexOf('les_t1_03') > -1 && J(ids(cv(w, 'les_t1_03'))) === J(['l2-01']) && ups(w).indexOf('les_t1_03') < 0
+    && 'les_t1_03' in ledger(w) && !(w.loaded || []).length;
+  return { ok, detail: J({ carried, cloud: ids(cv(w, 'les_t1_03')), ups: ups(w), ledger: ledger(w), loaded: w.loaded }) };
+};
 T['flushForMove:離線時全部交給搬家包;什麼都沒有時不打任何請求;沒登入回空的'] = async () => {
   const w = makeWorld();
   const pg = await openLoggedIn(w);
@@ -361,6 +389,7 @@ const SMX = { console: { log() {}, warn() {}, error() {} } };
 SMX.window = SMX;
 vm.createContext(SMX);
 vm.runInContext(SRC.sync, SMX);
+vm.runInContext(SRC.syncLesson, SMX);
 const SM = SMX.SYNC_MERGE;
 const DAY = 24 * HOUR;
 /* 新版頁面做的題庫(有 _r、_t、_p 戳記) */
@@ -550,6 +579,111 @@ T['暫存區:起始程度設定的 levels、onboard、self_score:暫存、本機
     && (lv(w, 'onboard') || {}).status === 'done' && (cv(w, 'onboard') || {}).status === 'done'
     && (lv(w, 'self_score') || {}).listening === 400 && !backups(w).length && w.local.getItem(PEND) === null;
   return { ok, detail: J({ levels: L, onboard: lv(w, 'onboard'), self: lv(w, 'self_score'), bk: backups(w), ups: ups(w) }) };
+};
+T['暫存區:課程進度(les_t 一堂一鍵、pts、rvq、tests_v1):搬家暫存、本機、雲端三份合併(作答、考點批次、回顧項目、測驗聯集),上傳到雲端,不進備份'] = async () => {
+  const w = makeWorld();
+  const st = (start, rows) => ({ v: 1, lessonId: { listening: 'entry-L03', reading: 'entry-L03' }, packVersion: { listening: '1.2.0', reading: '1.2.0' },
+    levels: { listening: 'entry', reading: 'entry' }, startedAt: start, doneAt: null, seg: { vocab: { st: 'todo', t0: null, t1: null } }, pk: {}, a: rows });
+  const S = Math.floor((T0 - 10 * HOUR) / 1000);
+  const hit = (b) => ({ s: 'learning', hits: [{ d: '2026-11-05', n: 1, ok: 1, src: 'p', b }], pauseUntil: null });
+  const q = (id, step) => ({ m: 'p5', id, sub: null, due: '2026-11-0' + (5 + (step || 1)), step: step || 1, d0: '2026-11-05' });
+  const test = (t, slot, at) => ({ [t]: { [slot]: { form: 'half', at } } });
+  cloudRow(w, 'les_t1_03', st(S, [[4, 'l2-01', 0, 1, 3, 10]]), T0 - HOUR);
+  cloudRow(w, 'pts', { 'P2.wh': hit('cloud') }, T0 - HOUR);
+  cloudRow(w, 'rvq', [q('p5-c'), q('p5-s', 1)], T0 - HOUR);   // p5-s:同一項,本機那份往後排了一階(step 大的贏,不會變成兩項)
+  cloudRow(w, 'tests_v1', test('t1', 'pre', 500), T0 - HOUR);
+  signedIn(w);
+  w.local.setItem(PREFIX + 'les_t1_03', J(st(S, [[4, 'l2-02', 0, 1, 3, 20]])));
+  w.local.setItem(PREFIX + 'rvq', J([q('p5-l'), q('p5-s', 3)]));
+  w.local.setItem(PREFIX + 'tests_v1', J(test('t1', 'mid', 700)));
+  w.local.setItem(LEDGER, J({ les_t1_03: T0 - 4 * HOUR, rvq: T0 - 4 * HOUR, tests_v1: T0 - 4 * HOUR }));
+  w.local.setItem(PEND, J({ items: [['les_t1_03', J(st(S, [[4, 'l2-03', 0, 1, 3, 30]])), T0 - 2 * HOUR], ['pts', J({ 'P2.wh': hit('moved') }), T0 - 2 * HOUR],
+    ['rvq', J([q('p5-p')]), T0 - 2 * HOUR], ['tests_v1', J(test('t2', 'pre', 900)), T0 - 2 * HOUR]] }));
+  await openLoggedIn(w);
+  const ids = (v) => (v && v.a ? v.a.map((x) => x[1]).sort() : []);
+  const b = (v) => (v && v['P2.wh'] ? v['P2.wh'].hits.map((h) => h.b).sort() : []);
+  const rq = (v) => (Array.isArray(v) ? v.map((e) => e.id + (e.step > 1 ? '@' + e.step : '')).sort() : []);
+  const ts = (v) => (v && typeof v === 'object' ? Object.keys(v).sort().map((t) => t + ':' + Object.keys(v[t]).sort().join('+')) : []);
+  const ok = J(ids(lv(w, 'les_t1_03'))) === J(['l2-01', 'l2-02', 'l2-03']) && J(ids(cv(w, 'les_t1_03'))) === J(['l2-01', 'l2-02', 'l2-03'])
+    && J(b(cv(w, 'pts'))) === J(['cloud', 'moved'])
+    && J(rq(cv(w, 'rvq'))) === J(['p5-c', 'p5-l', 'p5-p', 'p5-s@3']) && J(rq(lv(w, 'rvq'))) === J(['p5-c', 'p5-l', 'p5-p', 'p5-s@3'])
+    && J(ts(cv(w, 'tests_v1'))) === J(['t1:mid+pre', 't2:pre']) && J(ts(lv(w, 'tests_v1'))) === J(['t1:mid+pre', 't2:pre'])
+    && ups(w).includes('rvq') && ups(w).includes('tests_v1') && !backups(w).length && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ local: ids(lv(w, 'les_t1_03')), cloud: ids(cv(w, 'les_t1_03')), pts: b(cv(w, 'pts')), rvq: rq(cv(w, 'rvq')), tests: ts(cv(w, 'tests_v1')), bk: backups(w), ups: ups(w) }) };
+};
+/* 課程的合併函式在 js/sync-merge-lesson.js:頁面沒先載它(也沒先載搬家程式)時,處理暫存區前跟搬家程式一起補載,課程進度照樣合併;
+   補載不到就整個不處理,暫存區留著(跟搬家程式載不到一樣) */
+T['暫存區:頁面沒先載 js/sync-merge-lesson.js 與搬家程式:要用時補載,課程進度照樣三份合併;補載不到暫存區留著'] = async () => {
+  const st = (rows) => ({ v: 1, lessonId: { listening: 'entry-L03', reading: 'entry-L03' }, packVersion: { listening: '1.2.0', reading: '1.2.0' },
+    levels: { listening: 'entry', reading: 'entry' }, startedAt: Math.floor((T0 - 10 * HOUR) / 1000), doneAt: null, seg: { vocab: { st: 'todo', t0: null, t1: null } }, pk: {}, a: rows });
+  const setup = () => {
+    const w = makeWorld();
+    cloudRow(w, 'les_t1_03', st([[4, 'l2-01', 0, 1, 3, 10]]), T0 - HOUR);
+    signedIn(w);
+    w.local.setItem(PREFIX + 'les_t1_03', J(st([[4, 'l2-02', 0, 1, 3, 20]])));
+    w.local.setItem(LEDGER, J({ les_t1_03: T0 - 4 * HOUR }));
+    w.local.setItem(PEND, J({ items: [['les_t1_03', J(st([[4, 'l2-03', 0, 1, 3, 30]])), T0 - 2 * HOUR]] }));
+    return w;
+  };
+  const ids = (v) => (v && v.a ? v.a.map((x) => x[1]).sort() : []);
+  const w = setup();
+  await openLoggedIn(w, { lazy: ['rules', 'merge', 'daily', 'syncLesson'] });
+  const w2 = setup();
+  await openLoggedIn(w2, { movers: 'fail', lazy: ['syncLesson'] });
+  const all = J(['l2-01', 'l2-02', 'l2-03']);
+  const ok = (w.loaded || []).indexOf('js/sync-merge-lesson.js') > -1 && J(ids(lv(w, 'les_t1_03'))) === all && J(ids(cv(w, 'les_t1_03'))) === all
+    && !backups(w).length && w.local.getItem(PEND) === null
+    && w2.local.getItem(PEND) !== null && !backups(w2).length && J(ids(cv(w2, 'les_t1_03'))) === J(['l2-01']);
+  return { ok, detail: J({ loaded: w.loaded, local: ids(lv(w, 'les_t1_03')), cloud: ids(cv(w, 'les_t1_03')), bk: backups(w), failPend: w2.local.getItem(PEND) !== null, failCloud: ids(cv(w2, 'les_t1_03')) }) };
+};
+/* 頁面已經先載好搬家程式與 js/sync-merge.js,只有 js/sync-merge-lesson.js 沒載:處理暫存區前也要補載它,不能因為 SYNC_MERGE 在就當成都有了 */
+T['暫存區:搬家程式都先載好、只差 js/sync-merge-lesson.js:照樣補載它,課程進度三份合併,不進備份'] = async () => {
+  const st = (rows) => ({ v: 1, lessonId: { listening: 'entry-L03', reading: 'entry-L03' }, packVersion: { listening: '1.2.0', reading: '1.2.0' },
+    levels: { listening: 'entry', reading: 'entry' }, startedAt: Math.floor((T0 - 10 * HOUR) / 1000), doneAt: null, seg: { vocab: { st: 'todo', t0: null, t1: null } }, pk: {}, a: rows });
+  const w = makeWorld();
+  cloudRow(w, 'les_t1_03', st([[4, 'l2-01', 0, 1, 3, 10]]), T0 - HOUR);
+  signedIn(w);
+  w.local.setItem(PREFIX + 'les_t1_03', J(st([[4, 'l2-02', 0, 1, 3, 20]])));
+  w.local.setItem(LEDGER, J({ les_t1_03: T0 - 4 * HOUR }));
+  w.local.setItem(PEND, J({ items: [['les_t1_03', J(st([[4, 'l2-03', 0, 1, 3, 30]])), T0 - 2 * HOUR]] }));
+  await openLoggedIn(w, { lazy: ['syncLesson'] });
+  const ids = (v) => (v && v.a ? v.a.map((x) => x[1]).sort() : []);
+  const all = J(['l2-01', 'l2-02', 'l2-03']);
+  const ok = J(w.loaded || []) === J(['js/sync-merge-lesson.js']) && J(ids(lv(w, 'les_t1_03'))) === all && J(ids(cv(w, 'les_t1_03'))) === all
+    && !backups(w).length && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ loaded: w.loaded, local: ids(lv(w, 'les_t1_03')), cloud: ids(cv(w, 'les_t1_03')), bk: backups(w) }) };
+};
+/* 「只在本機」的標記(js/cloud.js markLocalOnly;合併表上的鍵,一堂一鍵的課程進度也算):搬家時帳本沒記、只有標記的課程進度
+   也是這台還沒上傳的改動,放進搬家包時帶標記的時間(不是對帳補上的 0) */
+T['flushForMove:只有「只在本機」標記的課程進度(帳本沒記)、讀不到雲端:放進搬家包,時間是標記的時間'] = async () => {
+  const w = makeWorld();
+  const st = { v: 1, lessonId: { listening: 'entry-L03' }, packVersion: { listening: '1.2.0' }, levels: { listening: 'entry' }, startedAt: Math.floor(T0 / 1000), doneAt: null, seg: {}, pk: {}, a: [] };
+  const pg = await openLoggedIn(w);
+  w.clock.t += 5000;
+  w.local.setItem(PREFIX + 'les_t1_03', J(st));
+  pg.ctx.CLOUD.markLocalOnly('les_t1_03');
+  const marked = JSON.parse(w.local.getItem('tr_localonly_' + USER.id) || '{}').les_t1_03;
+  w.offline = true;
+  const r = await pg.ctx.CLOUD.flushForMove();
+  const item = (r.accounts[USER.id] || []).find((e) => e[0] === 'les_t1_03');
+  const ok = marked === w.clock.t && !!item && item[2] === marked && r.left === 1;
+  return { ok, detail: J({ marked, item: item && [item[0], item[2]], left: r.left }) };
+};
+/* 對帳(checkCloud)本身丟錯時的備援:本機有值、要對帳的鍵全部放進搬家包,一堂一鍵的課程進度也要算(用鍵名規則認,不只看固定的那幾個) */
+T['flushForMove:對帳丟錯時,本機有的課程進度(一堂一鍵)照樣放進搬家包'] = async () => {
+  const w = makeWorld();
+  const st = (rows) => ({ v: 1, lessonId: { listening: 'entry-L03' }, packVersion: { listening: '1.2.0' }, levels: { listening: 'entry' }, startedAt: Math.floor(T0 / 1000), doneAt: null, seg: {}, pk: {}, a: rows });
+  cloudRow(w, 'les_t1_03', st([[4, 'l2-01', 0, 1, 3, 10]]), T0 - HOUR);
+  const pg = await openLoggedIn(w);
+  w.local.setItem(PREFIX + 'les_t1_03', J(st([[4, 'l2-01', 0, 1, 3, 10], [4, 'l2-02', 0, 1, 3, 20]])));   // 雲端被別台少的那份蓋掉,這台帳本空的
+  const real = pg.ctx.SYNC_MERGE;
+  pg.ctx.SYNC_MERGE = new Proxy(real, { get(t, p) { if (p === 'lesson') throw new Error('合併程式壞了'); return t[p]; } });
+  let r = null, err = '';
+  try { r = await pg.ctx.CLOUD.flushForMove(); } catch (e) { err = String(e); }
+  pg.ctx.SYNC_MERGE = real;
+  const item = r ? (r.accounts[USER.id] || []).find((e) => e[0] === 'les_t1_03') : null;
+  const ok = !err && !!item && JSON.parse(item[1]).a.length === 2 && r.left === 1;
+  return { ok, detail: J({ err, item: item && [item[0], item[2]], left: r && r.left }) };
 };
 T['暫存區:合併表上有、takeSynced 對照表(SYNC_FN)沒有的鍵:暫存那份放進備份,不當成題庫合併、不默默略過'] = async () => {
   const src = SRC.cloud.replace(/(\r?\n    mock_wrong: \{ merge: SMF\('mockWrong'\), reconcile: true \},)/, '$1\n    vgame_miss: { merge: SMF(\'mock\'), reconcile: true },');

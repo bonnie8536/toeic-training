@@ -1,5 +1,6 @@
 /* 同一個帳號多台裝置的合併規則。純計算,不讀寫儲存,window.SYNC_MERGE。
-   js/cloud.js 的 MERGED 表用它:vgame_banks(自訂題庫)、sync_del(刪除標記)、mock_history(模擬考紀錄)、mock_wrong(模擬考錯題)、levels、onboard、self_score(起始程度設定)上傳前先讀雲端、合併、再上傳;
+   js/cloud.js 的 MERGED 表用它:vgame_banks(自訂題庫)、sync_del(刪除標記)、mock_history(模擬考紀錄)、mock_wrong(模擬考錯題)、levels、onboard、self_score(起始程度設定)、
+   課程的 les_t<期>_<堂>、pts、rvq、tests_v1 上傳前先讀雲端、合併、再上傳(課程這四個的合併函式在 js/sync-merge-lesson.js,緊接著這個檔載入,併進 SYNC_MERGE);
    灌雲端資料時本機和雲端都有就存合併結果。每一頁都要在 cloud.js 之前載入(tools/test_sync_union.js 檢查)。
    合併函式的約定跟 PET.cloudMerge 一樣:回 { ok, v, sameAsLocal, sameAsCloud };形狀認不得回 { ok: false }(唯讀:不合併、不上傳、帳本留著)。
    原則:

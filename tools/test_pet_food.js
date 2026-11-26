@@ -40,7 +40,7 @@ const TABLE = [
   ['d', 'corn'], ['g:ga-01', 'pea'], ['pn:short-a', 'pea'], ['iv', 'pea'],
   ['fall', 'berry'], ['pairs', 'berry'], ['toast', 'berry'], ['mcq', 'berry'], ['ph', 'berry'],
   ['r:art-03', 'tomato'], ['tq:art-03', 'tomato'], ['p5', 'tomato'], ['p6', 'tomato'], ['p7', 'tomato'], ['pr', 'tomato'],
-  ['l1', 'tomato'], ['l2', 'tomato'], ['l3', 'tomato'], ['l4', 'tomato'], ['es', 'tomato'], ['ed', 'tomato'], ['emp', 'tomato'], ['en', 'tomato'], ['rv', 'tomato'], ['dlg:d-001', 'tomato'],
+  ['l1', 'tomato'], ['l2', 'tomato'], ['l3', 'tomato'], ['l4', 'tomato'], ['es', 'tomato'], ['ed', 'tomato'], ['emp', 'tomato'], ['en', 'tomato'], ['rv', 'tomato'], ['dlg:d-001', 'tomato'], ['les_t1_03', 'tomato'], ['les_t12_24', 'tomato'],
   ['mock', 'melon'], ['diag', 'melon'], ['wr:w1-lesson-1', 'greens'], ['m', 'greens'],
 ];
 

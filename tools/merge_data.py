@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-"""合併 data/raw/*.json → data/*.js,並做機械驗證。
+"""合併 data/raw/*.json → data/*.js,並做機械驗證;另外產生選題用的題目索引 data/bank-meta.js(只有編號與分類,js/bank.js 讀)。
 用法: python tools/merge_data.py
 硬錯誤(缺欄位/JSON 壞/對應不上)會列出並以 exit code 1 結束;警告不擋。
 淘汰的題(多益題庫 Part 1-7):從 data/raw 的批次檔整筆移走,在 data/retired.json 記一筆(id、part、date、reason、replacedBy);
 這裡檢查淘汰的 id 不在題庫裡、替代題在題庫裡、題庫 id 不重複(七個 Part 一起看)、批次檔名照格式(不照格式的檔也會被 glob 載進題庫)。
-測試用環境變數(tools/test_retired.js):MERGE_RAW_DIR、MERGE_OUT_DIR、MERGE_RETIRED、MERGE_INDEX 換掉 data/raw、data、data/retired.json、index.html。
+測試用環境變數(tools/test_retired.js):MERGE_RAW_DIR、MERGE_OUT_DIR、MERGE_RETIRED、MERGE_INDEX 換掉 data/raw、data、data/retired.json、index.html;
+MERGE_TIPS 換掉技巧卡來源 data/raw/tip_cards.json(tools/test_tips.js)。
+技巧卡 data/tips.js 的檢查與輸出格式見 tools/tips_build.py;技巧卡有錯也算硬錯誤,
+來源不見了但輸出資料夾還有舊的 tips.js(或 MERGE_TIPS 指定的檔不存在)也算硬錯誤。
 """
 import json, re, sys, glob, os
 from collections import Counter
@@ -697,6 +700,15 @@ if os.path.exists(_index):
             if bank_total <= claim:
                 errors.append(f'index.html 寫「題庫超過 {claim} 題」,題庫現在 {bank_total} 題:改 index.html 那三處說明文字')
 
+# ---------- 技巧卡(檢查規則與輸出格式見 tools/tips_build.py) ----------
+import tips_build
+_tips_env = os.environ.get('MERGE_TIPS')
+tips, tip_errors, tip_warnings = tips_build.load_for_merge(_tips_env or os.path.join(RAW, 'tip_cards.json'), bool(_tips_env), OUT)
+errors.extend('技巧卡 ' + e for e in tip_errors)
+warnings.extend(tip_warnings)
+if tips:
+    scan_simplified(tips, '技巧卡')
+
 # ---------- 輸出 ----------
 def write_js(fname, varname, data):
     path = os.path.join(OUT, fname)
@@ -747,4 +759,9 @@ if tenses:
     write_js('tenses.js', 'tenses', tenses)
 if phonics:
     write_js('phonics.js', 'phonics', phonics)
+# 題目索引(欄位與字數算法見 tools/bank_meta.py)
+import bank_meta
+bank_meta.write(OUT, bank_meta.rows(lp1, lp2, lp3, lp4, p5, p6, p7))
+if tips:
+    tips_build.write(OUT, tips)
 print('完成。')

@@ -3,13 +3,14 @@
    ②相似音辨析:句中辨認 coffee/copy 這類易混字。
    ③數字與價格:thirteen/thirty、時間、金額的辨聽。
    音檔可重複播放(訓練用);紀錄存 ear_d / ear_mp / ear_n(雲端同步)。
-   作答用專心模式(UI.focus):頂端進度列、底部固定列放按鈕與即時回饋;做完用結算卡(UI.result)。 */
+   作答用專心模式(UI.focus):頂端進度列、底部固定列放按鈕與即時回饋;做完用結算卡(UI.result)。
+   課程頁的入口 window.EAR.round(el, sec, opts)(沒有 #ear-root 的頁面只開這個入口),見 lessonRound。 */
 (function () {
   const root = $('#ear-root');
   const E = (window.TOEIC && TOEIC.ear) || null;
 
   if (!E || !E.dictation || !E.dictation.length) {
-    root.append(UI.empty({ pose: 'read', text: '聽力訓練教材準備中' }));
+    if (root) root.append(UI.empty({ pose: 'read', text: '聽力訓練教材準備中' }));
     return;
   }
 
@@ -89,6 +90,8 @@
     return { el: h('div', { class: 'player' }, btn, speedSelect([audio]), label), stop: () => audio.pause(), plays: () => plays };
   }
 
+  window.EAR = Object.freeze({ round: lessonRound });
+  if (!root) return;   // 課程頁:不畫聽力訓練頁,只開上面的入口
   const sec = getParam('sec');
   if (sec && SECTIONS[sec]) startRound(sec);
   else renderHome();
@@ -144,12 +147,31 @@
     document.title = d.title + ' - 聽力訓練 - 衝衝英文';
     const list = pick(sec, d.per, level);
     if (!list.length) { renderHome(); return; }
+    playRound(root, sec, list, level, null);
+  }
+
+  /* 課程頁的入口 EAR.round(el, sec, opts):sec 是 's'(跟讀)、'd'(聽寫)、'mp'(相似音)、'n'(數字);opts.items 是這一區的題目 id
+     (或題目)陣列,照順序出、不抽題;紀錄照聽力訓練頁存(ear_*),做完呼叫 opts.onDone(result),不畫成績卡(js/lesson-entry.js,
+     課程頁要先載入它)。result.items 一題一筆:m 是作答紀錄的鍵名(ear_d 這類)、key 是題目 id、c 是選的選項(聽寫是打的字,跟讀是 null) */
+  function lessonRound(el, sec, opts) {
+    const o = LESSON_ENTRY.check('EAR.round', el, opts, false);
+    if (!SECTIONS[sec]) throw new TypeError('EAR.round：sec 要是 s、d、mp、n');
+    const byId = new Map(SECTIONS[sec].items.map(q => [q.id, q]));
+    const list = (Array.isArray(o.items) ? o.items : []).map(x => byId.get(typeof x === 'string' ? x : x && x.id));
+    if (!list.length || list.some(q => !q)) throw new TypeError('EAR.round：items 要是這一區的題目 id 陣列，而且不能是空的');
+    if (uiReady()) playRound(el, sec, list, '全部', o);
+  }
+
+  /* root 是畫在哪裡;lesson 是課程頁給的 opts(聽力訓練頁是 null) */
+  function playRound(root, sec, list, level, lesson) {
+    const d = SECTIONS[sec];
     const results = [];
+    const picks = [];   // 各題的作答(課程頁的結果用)
     let cur = 0;
     let player = null;
     const f = UI.focus.enter({
       total: list.length,
-      onExit: () => { stopAll(); location.href = 'listening.html'; },
+      onExit: () => { stopAll(); if (!lesson) location.href = 'listening.html'; else if (lesson.onExit) lesson.onExit(); else history.back(); },
     });
     draw();
 
@@ -158,14 +180,15 @@
       player = null;
     }
     function isLast() { return cur === list.length - 1; }
-    function nextLabel() { return isLast() ? '看成績' : '下一題'; }
+    function nextLabel() { return isLast() ? (lesson ? '完成' : '看成績') : '下一題'; }
     function goNext() {
       if (isLast()) summary();
       else { cur++; draw(); window.scrollTo(0, 0); }
     }
     /* 答完一題:記下對錯,底部變成回饋條,按鈕是「下一題」(最後一題「看成績」) */
-    function answered(ok, answer) {
+    function answered(ok, answer, c) {
       results[cur] = ok;
+      picks[cur] = c;
       f.dirty(true);
       f.feedback({ ok, answer, next: nextLabel(), onNext: goNext });
     }
@@ -312,7 +335,7 @@
             q.note && q.note !== '無' ? h('div', { class: 'tr' }, q.note) : null,
             h('div', { class: 'tr' }, q.zh)), q.id));
         input.blur();
-        answered(perfect, perfect ? null : q.text);
+        answered(perfect, perfect ? null : q.text, input.value);
       }
     }
 
@@ -344,7 +367,7 @@
               withReport(h('div', { class: 'explain' },
                 h('div', null, q.note),
                 h('div', { class: 'tr' }, q.audioText + '\n' + q.zh)), q.id));
-            answered(ok, q.options[q.answer]);
+            answered(ok, q.options[q.answer], oi);
           },
         }, opt));
       });
@@ -377,7 +400,7 @@
               withReport(h('div', { class: 'explain' },
                 h('div', null, q.note),
                 h('div', { class: 'tr' }, q.audioText + '\n' + q.zh)), q.id));
-            answered(ok, LETTERS[q.answer] + '. ' + q.options[q.answer]);
+            answered(ok, LETTERS[q.answer] + '. ' + q.options[q.answer], oi);
           },
         }, h('span', { class: 'letter' }, LETTERS[oi]), h('span', null, opt)));
       });
@@ -391,6 +414,10 @@
       stopAll();
       f.leave();
       const ok = results.filter(Boolean).length;
+      if (lesson) {   // 課程頁:紀錄都存好了,把結果交給 onDone(不畫成績卡、不給點心)
+        lesson.onDone(LESSON_ENTRY.result(list.map((q, i) => ({ m: d.key, id: q.id, sub: null, key: q.id, c: picks[i] === undefined ? null : picks[i], ok: !!results[i] }))));
+        return;
+      }
       const card = UI.result({
         score: ok, total: list.length, kicker: d.title,
         primary: { label: '再做一次', onClick: () => { card.destroy(); startRound(sec); } },

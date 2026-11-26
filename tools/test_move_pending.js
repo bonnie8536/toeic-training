@@ -61,6 +61,17 @@ T['tests_v1(測驗結果):暫存區再搬一次,兩包的測驗聯集'] = async 
   assert.equal(r.bk, null);
   return 'ok';
 };
+T['fa_v1(預估分數用作答):暫存區再搬一次,兩包的作答聯集,同一題留早的那次;est_v1 留 at 新的那包'] = async () => {
+  const r = await twice('fa_v1', { v: 1, i: { 'p5-a': [10, 1, 'p'], 'p5-b': [12, 0, 'p'] } }, { v: 1, i: { 'p5-a': [8, 0, 'l'], 'p5-c': [9, 1, 'p'] } });
+  assert.deepEqual(r.v, { v: 1, i: { 'p5-a': [8, 0, 'l'], 'p5-b': [12, 0, 'p'], 'p5-c': [9, 1, 'p'] } });
+  assert.equal(r.bk, null);
+  const p = await twice('placement_v1', { v: 1, runs: [{ at: 'a1', end: null, items: [['L', 'k1', 0, 1, 3]] }] }, { v: 1, runs: [{ at: 'a1', end: 'e1', items: [['L', 'k2', 1, 0, 4]] }] });
+  assert.deepEqual([p.v.runs.length, p.v.runs[0].end, p.v.runs[0].items.map((x) => x[1])], [1, 'e1', ['k1', 'k2']]);
+  const e = await twice('est_v1', { ip: 'ip1', cv: 'c1', at: '2026-11-05', L: [300, 250, 350, 20], R: null }, { ip: 'ip1', cv: 'c1', at: '2026-11-01', L: null, R: null });
+  assert.equal(e.v.at, '2026-11-05', '帳本時間晚的那包比較舊,照快照的 at 留新的');
+  assert.equal(e.bk, null);
+  return 'ok';
+};
 T['levels:暫存區再搬一次,留 setAt 新的那包(不是帳本時間晚的),history 兩包聯集'] = async () => {
   const r = await twice('levels', lvl(NOW - 2 * HOUR, 'high'), lvl(NOW - 3 * HOUR, 'entry'));
   assert.equal(r.v.listening, 'high');

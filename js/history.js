@@ -184,7 +184,7 @@
     paintIcons();
 
     if (!all.length) {
-      root.append(emptyState({ pose: 'read', text: '還沒有作答紀錄', action: { label: '去刷題', href: 'practice.html' } }));
+      root.append(emptyState({ pose: 'gaze', text: '還沒有作答紀錄', action: { label: '去刷題', href: 'practice.html' } }));
       return;
     }
 
@@ -219,7 +219,7 @@
     if (!list.length) {
       root.append(emptyState(wrongOnly
         ? { pose: 'sleep', text: '沒有答錯的紀錄' }
-        : { pose: 'read', text: '還沒有紀錄', action: { label: '去刷題', href: 'practice.html' } }));
+        : { pose: 'gaze', text: '還沒有紀錄', action: { label: '去刷題', href: 'practice.html' } }));
       return;
     }
 

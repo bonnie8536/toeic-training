@@ -15,7 +15,7 @@
     const PAIRS = (T && T.pairs) || [];
 
     if (!TENSES.length) {
-      root.append(UI.empty({ pose: 'read', text: '時態總整理準備中' }));
+      root.append(UI.empty({ pose: 'gaze', text: '時態總整理準備中' }));
       return;
     }
 

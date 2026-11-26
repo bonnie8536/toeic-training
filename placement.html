@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* App 外殼開機:網站模式只登記安裝事件;主畫面開啟時才在 <html> 加 class、補 viewport-fit=cover */
+(function () {
+  var d = document.documentElement;
+  window.__bip = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__bip = e; });
+  window.addEventListener('appinstalled', function () { window.__bip = null; });
+  var sa = false;
+  try { sa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; } catch (e) { sa = false; }
+  if (!sa) return;
+  var p = location.pathname.split('/').pop() || 'index.html';
+  if (p.indexOf('.') < 0) p += '.html';
+  d.classList.add('is-app');
+  d.classList.add('app-shell');
+  if (['signup.html', 'reset.html', 'terms.html'].indexOf(p) < 0) d.classList.add('has-tabbar');
+  if (!location.search && ['index.html', 'learn.html', 'warmup.html', 'drill.html', 'me.html'].indexOf(p) > -1) d.classList.add('is-tab-root');
+  var m = document.querySelector('meta[name=viewport]');
+  if (m) m.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
+  window.addEventListener('load', function () { if (!window.APP_SHELL_OK) d.classList.remove('app-shell'); });
+})();
+</script>
+<meta name="description" content="多益程度檢測：聽力 12 題、閱讀 12 題，約 15–20 分鐘。難度跟著作答調整，做完看預估分數與建議程度。">
+<link rel="canonical" href="https://www.rushuplanguage.com/placement.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="程度檢測 - 衝衝英文">
+<meta property="og:description" content="多益程度檢測：聽力 12 題、閱讀 12 題，約 15–20 分鐘。難度跟著作答調整，做完看預估分數與建議程度。">
+<meta property="og:url" content="https://www.rushuplanguage.com/placement.html">
+<meta property="og:site_name" content="衝衝英文">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://www.rushuplanguage.com/img/icon-512.png">
+<meta name="twitter:card" content="summary">
+<title>程度檢測 - 衝衝英文</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@700;900&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/estimate.css">
+<link rel="stylesheet" href="css/placement.css">
+<link rel="icon" href="/img/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-title" content="衝衝英文">
+<meta name="theme-color" content="#00cdfe">
+<link rel="apple-touch-icon" href="/img/icon-180.png" sizes="180x180">
+<script src="js/app-shell.js" defer></script>
+</head>
+<body data-require-profile="on-action">
+
+<header class="topbar">
+  <div class="topbar-inner" data-nosnippet>
+    <a class="brand" href="index.html"><span class="brand-logo" aria-hidden="true"></span>衝衝英文</a>
+    <nav class="topnav" aria-label="主要導覽">
+      <a href="index.html">首頁</a>
+      <div class="nav-group">
+        <a class="nav-btn" href="learn.html">日常學習</a>
+        <div class="nav-menu">
+          <a href="grammar.html">文法基礎</a>
+          <a href="phonics.html">自然發音</a>
+          <a href="reading.html">閱讀訓練</a>
+          <a href="dialogue.html">對話練習</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <a class="nav-btn" href="warmup.html">練練手感</a>
+        <div class="nav-menu">
+          <a href="vocab.html">單字訓練</a>
+          <a href="listening.html">聽力訓練</a>
+          <a href="writing.html">寫作練習</a>
+          <a href="grammar.html?ref=verbs">不規則動詞</a>
+        </div>
+      </div>
+      <div class="nav-group">
+        <a class="nav-btn active" href="drill.html" aria-current="true">刷刷題目</a>
+        <div class="nav-menu">
+          <a href="practice.html">題庫刷題</a>
+          <a href="mock.html">模擬考</a>
+          <a href="placement.html" class="active" aria-current="page">程度檢測</a>
+          <a href="review.html">錯題本</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <noscript><div class="noscript-msg" data-nosnippet>需要開啟 JavaScript 才能使用這一頁</div></noscript>
+  <div id="pl-root"></div>
+</main>
+
+<footer>
+  <div class="container">
+    <div data-nosnippet><nav class="foot-links" aria-label="網站資訊"><a href="pricing.html">方案與價格</a><a href="terms.html">服務條款</a><a href="privacy.html">隱私權政策</a><a href="refund.html">退款政策</a><a href="corrections.html">題目更正紀錄</a><a href="mailto:rushuplanguage@gmail.com">客服信箱 rushuplanguage@gmail.com</a></nav></div>
+    <details class="foot-about">
+      <summary>關於本站</summary>
+      <p>衝衝英文由個人經營，與 ETS 及忠欣公司無關；TOEIC、多益為 ETS 之註冊商標。本站內容未經 ETS 審核或認可。</p>
+    </details>
+  </div>
+</footer>
+
+<script src="js/cloud-config.js"></script>
+<script src="js/plans-config.js"></script>
+<script src="data/listening.js"></script>
+<script src="data/part5.js"></script>
+<script src="data/part6.js"></script>
+<script src="data/part7.js"></script>
+<script src="data/diagnostic.js"></script>
+<script src="data/item-params.js"></script>
+<script src="js/common.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/sync-merge.js"></script>
+<script src="js/sync-merge-lesson.js"></script>
+<script src="js/estimate-core.js"></script>
+<script src="js/estimate-data.js"></script>
+<script src="js/sync-merge-estimate.js"></script>
+<script src="js/pet-config.js"></script>
+<script src="js/pet.js"></script>
+<script src="js/cloud.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/paywall.js"></script>
+<script src="js/onboard-core.js"></script>
+<script src="js/onboard-data.js"></script>
+<script src="js/onboard-ui.js"></script>
+<script src="js/estimate-store.js"></script>
+<script src="js/estimate-ui.js"></script>
+<script src="js/placement-views.js"></script>
+<script src="js/placement.js"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "753df33a812d44c78d22641c5063e4d3"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -457,7 +457,7 @@
      意向只是提示,權限一律看資料庫。四個條件全部成立才開(cloud.js 的 trialIntentOk):30 分鐘內存的、
      帳號是這次才建立的、綁的是這個帳號(Email 那條比帳號 id,沒綁 id 的不開;Google 那條要是這個分頁自己從 Google 回來、
      綁上的帳號 id 一樣)、my_access 說 teacher_trial_available。
-     不收費的頁面(analysis、diagnostic、drill、history、learn)也載入這支檔案,只為了登入完成時把意向用掉或清掉,不擋頁面。
+     不收費的頁面(analysis、diagnostic、placement、drill、history、learn)也載入這支檔案,只為了登入完成時把意向用掉或清掉,不擋頁面。
      意向讀一次就清掉(takeSignupIntent),所以一個註冊最多開一次;重載、換頁都不會再開。資料庫也只給每個帳號一次。
      剛登入的那一頁(要灌雲端資料,馬上重載):不讀意向,留給重載後那一頁,免得開到一半頁面就換掉。
      判斷方法:cloud.js 灌完資料才寫 tr_cloud_hydrated_<帳號 id>(這個分頁的 sessionStorage),

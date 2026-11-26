@@ -1,4 +1,5 @@
 /* 新用戶設定起始程度(start.html)的資料:訪客暫存 tr_onboard_guest 與三個 store 鍵(onboard、self_score、levels)的讀寫、登入後的接回。
+   舊檢測 diag、新檢測 placement_v1、課程的 plan 只讀。
    這四個鍵只在這個檔寫;畫面(js/onboard.js、js/onboard-ui.js)只呼叫這裡。純計算在 js/onboard-core.js。
    - 訪客(這一頁的資料夾不是雲端帳號、也沒有 CLOUD.user)只寫 tr_onboard_guest,而且只有調查答案(目標、考試月份、成績草稿、目前步驟)。
      帳號的鍵一律不寫;要作答(檢測、從入門開始、送出成績)時記下 pendingAction,先登入。
@@ -102,6 +103,9 @@
   /* ---------- 帳號的鍵 ---------- */
   function account() { return { onboard: GET.onboard(), self_score: GET.self_score(), levels: GET.levels() }; }
   function diag() { return store.get('diag', null); }
+  /* 新檢測的紀錄(js/estimate-store.js 寫,這裡只讀);有沒有課程進度(課程的 plan,js/lesson-data.js 寫,只讀) */
+  function placement() { return store.get('placement_v1', null); }
+  function hasCourse() { const p = store.get('plan', null); return !!p && typeof p === 'object' && !Array.isArray(p); }
   const blockedNow = () => (window.CLOUD && CLOUD.reloading) || !canKeepProgress();
   /* writes:{ onboard?, self_score?, levels? }。回 ok、blocked(這一頁不能寫)、failed(讀回不符)、guest(沒登入) */
   function writeAll(writes) {
@@ -141,38 +145,29 @@
     if (r === 'ok') clearDraft();
     return r;
   }
-  /* S4「開始檢測」:記開始時間,檢測頁只認這之後交的卷。
-     從 S8、「我的」頁重新檢測時設定已經是 done:改回 in_progress,交卷後檢測頁才出「看起始程度」;levels 留到新結果出來 */
+  /* S4「開始檢測」:記開始時間,只認這之後做完的檢測。
+     從 S8、「我的」頁重新檢測時設定已經是 done:改回 in_progress,做完後才出「看起始程度」;levels 留到新結果出來。
+     新檢測寫自己的鍵(placement_v1、fa_v1),舊檢測的 diag 不刪、不改 */
   function startTest() { return isGuest() ? 'guest' : patch({ step: 'test', testFrom: nowIso(), status: 'in_progress' }); }
-  /* 聽力短測(start.html?step=listen,js/onboard-listen.js):S4「開始檢測」(full,接著做 28 題)或「用上次的閱讀檢測」(legacy)開一份新的;
-     每題選了就存(c:0–3,-1 沒選;failed:那一題音檔載不到);全部答完(失敗 2 題以上要自評)寫 doneAt。不寫練習紀錄 */
-  function startListen(mode) {
+  /* 用新檢測的預估對回的級別(ONBOARD_CORE.levelsFromEstimate 的結果):理由記 est */
+  function setEstLevels(lv) {
     if (isGuest()) return 'guest';
-    return patch({ listen: C.newListen(mode, nowIso()), step: 'listen', status: 'in_progress' });
+    return writeAll({ levels: levelsWith(lv.listening, lv.reading, lv.source, 'est'),
+      onboard: C.patchOnboard(GET.onboard(), { levelSource: 'est', step: 'result' }, nowIso()) });
   }
-  function listenNow() { const ob = GET.onboard(); return ob && ob.listen && typeof ob.listen === 'object' ? ob.listen : null; }
-  function saveListen(i, c, failed) {
-    const l = listenNow();
-    if (isGuest() || !l || !Array.isArray(l.a) || !Number.isInteger(i) || i < 0 || i >= l.a.length) return 'failed';
-    const a = l.a.slice();
-    a[i] = Number.isInteger(c) && c >= 0 ? c : -1;
-    const fail = (Array.isArray(l.fail) ? l.fail : []).filter((x) => x !== i).concat(failed ? [i] : []).sort((x, y) => x - y);
-    return patch({ listen: Object.assign({}, l, { a, fail }) });
+  /* 有課程進度的人重新檢測:級別不動,只把這一步走完(之後 S8 記完成、顯示建議) */
+  function keepLevelsAfterTest() { return isGuest() ? 'guest' : patch({ step: 'result' }); }
+  /* 改級別時順便記 levelSource:只在已經有設定(進行中或完成)時才記;沒有設定、按過「不用了」的人不新建、不復活
+     (在新用戶設定以外做檢測、在個人頁按「改成…」時,首頁不會因此出現「繼續設定起始程度」) */
+  function withSource(writes, src) {
+    const ob = GET.onboard();
+    const live = !!ob && typeof ob === 'object' && (ob.status === 'in_progress' || ob.status === 'done');
+    return live ? Object.assign({}, writes, { onboard: C.patchOnboard(ob, { levelSource: src }, nowIso()) }) : writes;
   }
-  /* 答完時呼叫(自評頁選了帶 self);還沒答完或還要自評時只存 self、不寫 doneAt */
-  function finishListen(self) {
-    const l = listenNow();
-    if (isGuest() || !l) return 'failed';
-    const next = Object.assign({}, l, self ? { self } : {});
-    if (C.listenComplete(next) && !next.doneAt) next.doneAt = nowIso();
-    return patch({ listen: next });
-  }
-  /* S4 有舊報告時按「開始檢測」並確定:清掉舊報告(跟 js/diagnostic.js「重新檢測」同一個動作,格式不變)。
-     正要重載的那一下不刪:本機刪了不記帳,重載後雲端那份又回來 */
-  function removeDiag() {
-    if (isGuest() || blockedNow()) return 'blocked';
-    store.remove('diag');
-    return diag() === null ? 'ok' : 'failed';
+  /* S8、檢測結果頁、預估卡的「改成這個級別」(確認過):兩科照建議寫,理由記 est */
+  function applyEst(lv) {
+    if (isGuest()) return 'guest';
+    return writeAll(withSource({ levels: levelsWith(lv.listening, lv.reading, lv.source, 'est') }, 'est'));
   }
   /* 用舊檢測算出的級別(S4「用上次的閱讀檢測」、交卷後第一次到 S8) */
   function setLegacyLevels(lv) {
@@ -194,7 +189,7 @@
     const src = Object.assign({}, cur.source || {});
     if (cur.listening !== l) src.listening = 'manual';
     if (cur.reading !== r) src.reading = 'manual';
-    return writeAll({ levels: levelsWith(l, r, src, 'manual'), onboard: C.patchOnboard(GET.onboard(), { levelSource: 'manual' }, nowIso()) });
+    return writeAll(withSource({ levels: levelsWith(l, r, src, 'manual') }, 'manual'));
   }
   /* 首頁狀態 E「不用了」:要確定登入了(CLOUD.user)才寫 */
   function dismiss() {
@@ -311,6 +306,7 @@
       onboard: signedIn() ? GET.onboard() : null, guest: guest(), nowMs: Date.now(),
       createdAtMs: user ? Date.parse(user.created_at) : null, hasPracticeKeys: typeof pid === 'string' && C.hasPracticeKeys(keys, pid),
       isApp, hasLocalData: C.hasLocalData(keys), cloudEnabled: !!CL.enabled, diag: signedIn() ? diag() : null,
+      placement: signedIn() ? placement() : null,
     };
   }
 
@@ -319,8 +315,8 @@
   window.ONBOARD_DATA = Object.freeze({
     GUEST_KEY, isGuest, guest, saveGuest, clearGuest, startPending, cancelPending, forgetNonce, hasPendingJoin, dropJoin,
     draft, saveDraft, clearDraft,
-    account, diag, answer, chooseEntry, submitScore, startTest, removeDiag, setLegacyLevels, markDone, applyManual, dismiss, joinedClass,
-    startListen, saveListen, finishListen,
+    account, diag, placement, hasCourse, answer, chooseEntry, submitScore, startTest, setLegacyLevels, setEstLevels, keepLevelsAfterTest, applyEst,
+    markDone, applyManual, dismiss, joinedClass,
     resume, confirmImport, applyX1, context, firstPwaVisit,
   });
 })();

@@ -39,6 +39,34 @@
   const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
   const isPlain = x => !!x && typeof x === 'object' && !isArr(x);
   const isNum = x => typeof x === 'number' && isFinite(x);
+  /* 外來資料(本機、雲端、搬家包)的 "__proto__" 鍵:JSON.parse 會把它當一般的鍵留著,合併時 Object.assign、o[k] = v 會把它當成換原型,
+     當字典讀寫還會寫進 Object.prototype。合併之前一律拿掉(這個鍵不會是真的資料)。沒有這個鍵就回原本那一份(同一個物件)。
+     "constructor"、"prototype" 是真的英文單字(刪除標記用英文當鍵),照一般的鍵留著:當字典的物件用沒有原型的(dict),
+     讀別份的鍵用 own 先確認 */
+  const dict = () => Object.create(null);
+  function noProto(x) {
+    if (!x || typeof x !== 'object') return x;
+    if (isArr(x)) {
+      let out = null;
+      for (let i = 0; i < x.length; i++) { const c = noProto(x[i]); if (c !== x[i]) { out = out || x.slice(); out[i] = c; } }
+      return out || x;
+    }
+    let out = own(x, '__proto__') ? {} : null;
+    const ks = keysOf(x);
+    for (let i = 0; i < ks.length && !out; i++) if (noProto(x[ks[i]]) !== x[ks[i]]) out = {};
+    if (!out) return x;
+    ks.forEach(k => { if (k !== '__proto__') out[k] = noProto(x[k]); });
+    return out;
+  }
+  /* 合併函式的入口:兩份先拿掉 "__proto__";拿掉過的那份不算「跟結果一樣」(呼叫的人照常寫回拿掉之後的那份) */
+  function guarded(fn) {
+    return function (a, b, c) {
+      const sa = noProto(a), sb = noProto(b);
+      const r = fn(sa, sb, c);
+      if (!r || r.ok !== true || (sa === a && sb === b)) return r;
+      return Object.assign({}, r, { sameAsLocal: r.sameAsLocal && sa === a, sameAsCloud: r.sameAsCloud && sb === b });
+    };
+  }
   function canon(x) {
     if (isArr(x)) return '[' + x.map(canon).join(',') + ']';
     if (x && typeof x === 'object') return '{' + keysOf(x).sort().map(k => str(k) + ':' + canon(x[k])).join(',') + '}';
@@ -313,16 +341,16 @@
   }
   /* 讀一份刪除標記:null 是空的;不是預期的形狀(或更新版的 v)回 null 給呼叫的人當唯讀 */
   function readTombs(x) {
-    if (x === null || x === undefined) return { v: 1, other: {}, b: {}, w: {} };
+    if (x === null || x === undefined) return { v: 1, other: dict(), b: dict(), w: dict() };
     if (!isPlain(x) || x.v !== 1) return null;
-    const out = { v: 1, other: {}, b: {}, w: {} };
+    const out = { v: 1, other: dict(), b: dict(), w: dict() };
     Object.keys(x).forEach(k => { if (k !== 'v' && k !== 'vgame_banks') out.other[k] = x[k]; });
     const vb = x.vgame_banks;
     if (vb !== undefined && !isPlain(vb)) return null;
     if (isPlain(vb) && isPlain(vb.b)) Object.keys(vb.b).forEach(id => { const e = readEntry(vb.b[id]); if (e) out.b[id] = e; });
     if (isPlain(vb) && isPlain(vb.w)) Object.keys(vb.w).forEach(id => {
       if (!isPlain(vb.w[id])) return;
-      Object.keys(vb.w[id]).forEach(k => { const e = readEntry(vb.w[id][k]); if (e) (out.w[id] = out.w[id] || {})[k] = e; });
+      Object.keys(vb.w[id]).forEach(k => { const e = readEntry(vb.w[id][k]); if (e) (out.w[id] = out.w[id] || dict())[k] = e; });
     });
     return out;
   }
@@ -335,7 +363,7 @@
     const b = {}, w = {};
     keep.sort((a, c) => cmp(a[1], c[1])).forEach(([, , p]) => {
       if (p[0] === 'b') b[p[1]] = t.b[p[1]];
-      else (w[p[1]] = w[p[1]] || {})[p[2]] = t.w[p[1]][p[2]];
+      else (own(w, p[1]) ? w[p[1]] : (w[p[1]] = {}))[p[2]] = t.w[p[1]][p[2]];
     });
     const out = { v: 1 };
     Object.keys(t.other).sort().forEach(k => { out[k] = t.other[k]; });
@@ -346,15 +374,15 @@
     const A = readTombs(a), B = readTombs(b);
     if (!A || !B) return { ok: false };
     if ((a === null || a === undefined) && (b === null || b === undefined)) return { ok: true, v: null, sameAsLocal: true, sameAsCloud: true };
-    const t = { v: 1, other: {}, b: {}, w: {} };
+    const t = { v: 1, other: dict(), b: dict(), w: dict() };
     Object.keys(A.other).concat(Object.keys(B.other)).forEach(k => {
       if (!own(A.other, k) || !own(B.other, k)) t.other[k] = own(A.other, k) ? A.other[k] : B.other[k];
       else t.other[k] = canon(A.other[k]) >= canon(B.other[k]) ? A.other[k] : B.other[k];
     });
     Object.keys(A.b).concat(Object.keys(B.b)).forEach(id => { t.b[id] = joinEntry(A.b[id], B.b[id]); });
     Object.keys(A.w).concat(Object.keys(B.w)).forEach(id => {
-      const x = A.w[id] || {}, y = B.w[id] || {};
-      t.w[id] = {};
+      const x = A.w[id] || dict(), y = B.w[id] || dict();
+      t.w[id] = dict();
       Object.keys(x).concat(Object.keys(y)).forEach(k => { t.w[id][k] = joinEntry(x[k], y[k]); });
     });
     const v = writeTombs(t, now);
@@ -398,7 +426,7 @@
      順序:本機那份的順序,雲端多出來的接在後面(順序不算進比較,兩台順序不同不會一直互傳)。 */
   function banks(a, b, ctx) {
     if ((a !== null && a !== undefined && !Array.isArray(a)) || (b !== null && b !== undefined && !Array.isArray(b))) return { ok: false };
-    const T = ctx && isPlain(ctx.tombs) ? ctx.tombs : null;
+    const T = ctx && isPlain(ctx.tombs) ? noProto(ctx.tombs) : null;
     const clean = !!(ctx && ctx.localClean === true);
     const order = [], copies = new Map(), opaque = new Map();
     [a || [], b || []].forEach((arr, src) => arr.forEach(x => {
@@ -639,9 +667,10 @@
     return Object.assign({}, bank, { words });
   }
   function addTomb(T, path, entry, now) {
-    const t = readTombs(T) || { v: 1, other: {}, b: {}, w: {} };
+    const t = readTombs(noProto(T)) || { v: 1, other: dict(), b: dict(), w: dict() };
+    if (path[1] === '__proto__' || path[2] === '__proto__') return writeTombs(t, now);
     if (path[0] === 'b') t.b[path[1]] = joinEntry(t.b[path[1]], entry);
-    else { t.w[path[1]] = t.w[path[1]] || {}; t.w[path[1]][path[2]] = joinEntry(t.w[path[1]][path[2]], entry); }
+    else { t.w[path[1]] = t.w[path[1]] || dict(); t.w[path[1]][path[2]] = joinEntry(t.w[path[1]][path[2]], entry); }
     return writeTombs(t, now);
   }
   const entryOf = (x, now) => ({ at: now, h0: [x.h], hs: pList(x.p).map(pHash) });
@@ -666,8 +695,9 @@
   }
 
   root.SYNC_MERGE = Object.freeze({
-    canon, quickHash, norm, stateKey, bankHash, wordHash, tombHit, zhDiffers,
-    banks, tombs, mock, mockWrong, levels, onboard, selfScore,
+    canon, quickHash, norm, stateKey, bankHash, wordHash, tombHit, zhDiffers, guarded,
+    banks: guarded(banks), tombs: guarded(tombs), mock: guarded(mock), mockWrong: guarded(mockWrong),
+    levels: guarded(levels), onboard: guarded(onboard), selfScore: guarded(selfScore),
     newBankId, newBank, newWord, reviseWord, reviseBank, editBank, addWords, setWord, deleteWord, deleteBank,
   });
 })(typeof window !== 'undefined' ? window : globalThis);

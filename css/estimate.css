@@ -1,0 +1,79 @@
+/* 預估分數卡與結果頁的分數區塊(js/estimate-ui.js)。顏色、圓角用 css/style.css 的變數;刻度尺沿用 .band-scale。
+   用到的頁面在 css/style.css 後面載入這個檔。 */
+
+/* ---------- 預估多益分數卡(個人頁、能力分析頁) ---------- */
+.est-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+  padding: 20px 22px 18px;
+  margin: 8px 0 20px;
+}
+.est-head { display: flex; align-items: center; gap: 2px; margin: 0 0 6px; }
+.est-title { font-size: 18px; margin: 0; }
+.est-total { margin: 0 0 14px; color: var(--ink-light); font-size: 14px; }
+.est-total .est-num { font-size: 30px; color: var(--primary-dark); margin-right: 2px; }
+.est-num { color: var(--primary-dark); font-weight: 700; }
+
+.est-row {
+  display: grid;
+  grid-template-columns: 118px 1fr 84px;   /* 第一欄要放得下「閱讀 450 以上」 */
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0;
+  font-size: 15px;
+}
+.est-row.is-need { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+.est-left { color: var(--ink-light); font-weight: 700; }
+.est-sec { white-space: nowrap; }
+.est-row .est-num { font-size: 17px; }
+.est-range { text-align: right; color: var(--ink-light); font-size: 13.5px; white-space: nowrap; }
+.est-need { margin: 0; font-size: 14px; color: var(--ink-light); }
+
+/* 卡片裡的刻度尺:只有軌道與塗色,不放刻度數字 */
+.band-scale.est-scale.is-bare { margin: 0; height: 12px; }
+.band-scale.est-scale.is-bare .bs-track,
+.band-scale.est-scale.is-bare .bs-seg { top: 1px; }
+
+.est-suggest { margin: 0 0 6px 130px; font-size: 14px; }   /* 第一欄 118px 加間距 12px:跟刻度尺左緣對齊 */
+.est-suggest .btn-text { margin-left: -12px; }   /* 字的左緣跟上面的刻度尺對齊(按鈕左右各有 12px 內距) */
+.est-card .est-go { display: inline-block; margin-top: 14px; }   /* 主按鈕是連結:行內區塊才吃得到上面的間距 */
+
+/* ---------- ⓘ 按鈕與資訊欄 ----------
+   看得到的圖示約 22px,按得到的範圍 44px(負邊距抵掉,不撐高標題那一行) */
+.est-info {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; margin: -11px -11px -11px -6px; padding: 0;
+  border: 0; border-radius: 50%; background: transparent; color: var(--ink-soft);
+  cursor: pointer; vertical-align: middle; flex: none;
+  transition: color .15s, background-color .15s;
+}
+.est-info svg { display: block; }
+.est-info:hover { color: var(--primary-dark); background: var(--bg-soft); }
+.est-card .est-info:hover { background: var(--primary-tint); }
+.est-info:active { transform: scale(.94); }
+.est-info:focus-visible { outline: 2px solid var(--primary); outline-offset: -6px; }
+.est-info[aria-expanded="true"] { color: var(--primary-dark); }
+.result-kicker.est-kicker { display: inline-flex; align-items: center; justify-content: center; gap: 2px; }
+.result-score.est-heading .est-info { margin-left: 0; }
+.est-info-p { margin: 0 0 10px; font-size: 15px; line-height: 1.75; color: var(--ink); }
+.est-info-p:last-child { margin-bottom: 0; }
+.est-info-sheet .ui-sheet-body { padding-top: 6px; }
+
+/* ---------- 結果頁(放在 UI.result 的卡片裡) ---------- */
+.est-result { width: 100%; margin: 10px 0 0; text-align: left; }
+.est-scale-row { display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 8px; }
+.est-scale-row .band-scale { margin: 14px 8px 26px; }
+.est-scale-row .est-range { margin-bottom: 12px; }   /* 跟軌道同高(下面是刻度數字) */
+.est-result .est-need { text-align: center; margin: 6px 0; }
+.est-levels { margin: 6px 0 0; font-size: 14.5px; text-align: center; }
+.est-entry { margin: 2px 0 0; font-size: 14px; color: var(--ink-light); text-align: center; }
+
+@media (max-width: 560px) {
+  .est-card { padding: 16px 16px 14px; }
+  .est-row { grid-template-columns: 108px 1fr 72px; gap: 8px; font-size: 14px; }
+  .est-row.is-need { grid-template-columns: 108px 1fr; }
+  .est-suggest { margin-left: 116px; }   /* 窄版第一欄 108px 加間距 8px */
+}
+
+@media print { .est-info { display: none; } }   /* 列印的檢測報告不印 ⓘ */

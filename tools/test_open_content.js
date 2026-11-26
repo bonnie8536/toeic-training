@@ -2587,7 +2587,7 @@ T['錯題本 E1:模擬考交卷把答錯的題收進 mock_wrong(只寫一次、�
     r.seenRight = J(r.seen) === J(seenWant) && r.seen.every((k) => seen[k] === T0);
     r.sets = await s.eval(SETS_OF('mock_wrong'));
     r.ups = (await s.eval(UPS)).slice(up0.length).filter((k) => k === 'mock_wrong').length;
-    r.note = await s.eval("(document.querySelector('.mock-wb-note') || {}).textContent || ''");
+    r.note = await s.eval("[...document.querySelectorAll('.mock-wb-note p')].map((p) => p.textContent)");   // 完整的句子,一行一件事
     r.link = await s.eval("!!document.querySelector('.result-links a[href=\"review.html\"]')");
     await s.go('practice.html#wrongbook');
     await sleep(1500);
@@ -2595,7 +2595,7 @@ T['錯題本 E1:模擬考交卷把答錯的題收進 mock_wrong(只寫一次、�
     /* 捲到面板:面板頂端貼近視窗上緣;頁面比視窗只高一點、已經捲到底時,面板整個在視窗內也算(頁面變短之後頂端貼不到上緣) */
     r.scrolled = await s.eval("(() => { const p = document.getElementById('wrongbook').getBoundingClientRect(); const e = document.scrollingElement; return Math.abs(p.top) < 80 || (scrollY >= e.scrollHeight - innerHeight - 1 && p.top >= 0 && p.bottom <= innerHeight); })()");
   } finally { await s.close(); }
-  r.ok = !r.changed.length && r.right && r.seenRight && r.sets === 1 && r.ups === 1 && /收進錯題本 3 題/.test(r.note) && /移出 1 題/.test(r.note) && /未作答 \d+ 題不收/.test(r.note)
+  r.ok = !r.changed.length && r.right && r.seenRight && r.sets === 1 && r.ups === 1 && r.note.length === 3 && r.note[0] === '答錯的 3 題已加進錯題本。' && r.note[1] === '錯題本裡有 1 題這次答對了，已移出錯題本。' && /^沒作答的 \d+ 題不會加進錯題本。$/.test(r.note[2])
     && r.link && r.p5 === '2 題' && r.scrolled;
   return { ok: r.ok, detail: J(r) };
 };
@@ -2629,7 +2629,7 @@ T['模擬考 完整一回:首頁三張卡(一顆主按鈕)、開考 120 分鐘�
     const mh = JSON.parse(ls[AK('mock_history')] || '[]'), mw = JSON.parse(ls[AK('mock_wrong')] || '{}');
     r.rec = mh[mh.length - 1];
     r.mw = Object.keys(mw);
-    r.note = await s.eval("(document.querySelector('.mock-wb-note') || {}).textContent || ''");
+    r.note = await s.eval("[...document.querySelectorAll('.mock-wb-note p')].map((p) => p.textContent)");   // 完整的句子,一行一件事
     await s.go('mock.html');
     await sleep(1200);
     r.hist = await s.eval("(document.querySelector('.cat-table tr:nth-child(2) td:nth-child(2)') || {}).textContent || ''");
@@ -2640,7 +2640,7 @@ T['模擬考 完整一回:首頁三張卡(一顆主按鈕)、開考 120 分鐘�
     && J(r.panel.labels) === J(['聽力 Part 1 · 6 題', '聽力 Part 2 · 25 題', '聽力 Part 3 · 13 組', '聽力 Part 4 · 10 組', '閱讀 Part 5 · 30 題', '閱讀 Part 6 · 4 組', '閱讀 Part 7 · 12 組']) && r.panel.btns === 100
     && /^(89|90):\d\d$/.test(r.timer1) && /模擬考結果/.test(r.result.title) && /時間到/.test(r.result.flag)
     && r.rec && r.rec.size === 'full' && r.rec.lTotal === 100 && r.rec.rTotal === 100
-    && J(r.mw) === J([P5[0].id]) && /收進錯題本 1 題/.test(r.note) && r.hist === '完整一回';
+    && J(r.mw) === J([P5[0].id]) && r.note[0] === '答錯的 1 題已加進錯題本。' && r.hist === '完整一回';
   return { ok: !!r.ok, detail: J(r) };
 };
 

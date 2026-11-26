@@ -1,0 +1,42 @@
+/* 程度檢測頁(placement.html、js/placement.js、js/placement-views.js)。
+   開始頁沿用 .diag-intro 與 .mock-tags,題目沿用 .q-block、.opts、.letter-row、.passage-box、.set-layout、.player,結算卡沿用 UI.result;
+   這裡只補排法。顏色、圓角、字級用 css/style.css 的變數。在 css/style.css、css/estimate.css 後面載入。 */
+
+/* ---------- 開始頁、兩科中間:跟窄版內容同寬 ---------- */
+.pl-intro { max-width: 770px; margin-left: auto; margin-right: auto; display: flex; flex-direction: column; align-items: flex-start; }
+#pl-root > .page-head, #pl-root > .result-card, #pl-root > .pl-review, #pl-root > .ui-empty, #pl-root > .result-note { max-width: 770px; margin-left: auto; margin-right: auto; }
+.pl-intro .mock-tags { margin: 0; }
+.pl-rule { margin: 12px 0 0; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-soft); }
+.pl-rule + .pl-rule { margin-top: 2px; }
+.pl-h2 { margin: 0; font-family: var(--round); font-size: var(--fs-xl); font-weight: 700; line-height: 1.35; color: var(--ink); }
+.pl-h2:focus { outline: none; }
+.pl-go { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin-top: 24px; padding: 0 32px; border-radius: var(--r-md); }
+@media (min-width: 600px) { .pl-go { width: 320px; } }
+.pl-more { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 12px; }
+.pl-note { margin: 10px 0 0; font-size: var(--fs-sm); color: var(--bad); }
+.pl-note:empty { display: none; }
+
+/* ---------- 作答(專心模式):一個畫面一題或一組 ---------- */
+.pl-meta { margin-bottom: 8px; }
+html.is-quiz main .q-block.pl-unit { max-width: 770px; margin: 16px auto 0; }
+.pl-player { margin: 4px 0 8px; flex-wrap: wrap; }
+html.is-quiz .pl-unit .player-btn { min-height: 44px; padding: 0 24px; border-radius: var(--r-md); font-size: var(--fs-md); }
+.pl-play-icon { margin-right: 6px; }
+.pl-play.is-done .pl-play-icon { display: none; }
+html.is-quiz .pl-unit .letter-row { gap: 12px; margin: 16px 0 0; }
+html.is-quiz .pl-unit .letter-big { min-height: 52px; border-radius: var(--r-md); }
+.pl-q { margin-top: 20px; }
+.pl-q .opts { margin-top: 8px; }
+html.is-quiz .pl-q .q-text { margin-bottom: 8px; font-size: var(--fs-md); }
+@media (min-width: 600px) { html.is-quiz .pl-q .q-text { font-size: var(--fs-lg); } }
+.pl-next[disabled] { opacity: .45; cursor: default; }
+
+/* ---------- 看作答(結算卡下面,預設收合) ---------- */
+#pl-root > .pl-review { margin-top: 28px; margin-bottom: 48px; }
+.pl-review-unit + .pl-review-unit, .pl-review .set-layout + .pl-review-unit, .pl-review-unit + .set-layout { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+.pl-review .listen-photo { max-width: 360px; }
+.pl-review-q .explain { margin-top: 10px; }
+
+@media print {
+  .pl-go, .pl-more { display: none; }
+}

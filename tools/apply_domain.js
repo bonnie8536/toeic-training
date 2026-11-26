@@ -3,7 +3,7 @@
    把 live 改成 'new'(switchDate 填切換日),再跑 node tools/apply_domain.js,一起改掉:
      CNAME、每一頁的 canonical、og:url、og:image、首頁結構化資料的網址、頁面文字裡的「www.<網域>」、sitemap.xml 的網址、
      robots.txt 的 Sitemap、supabase/functions/_shared/site.ts 的 LIVE。
-   mail 是客服信箱:改了它再跑一次,js/checkout.js 的 MAIL 與每一頁的信箱一起換(新信箱定了才改)。
+   mail 是客服信箱:改了它再跑一次,js/checkout.js 的 MAIL、每一頁與 .well-known/security.txt 的信箱一起換(新信箱定了才改)。
    sitemap.xml 的 lastmod 不在這裡改(以前會一律蓋成 switchDate,Google 看到日期不準會整份不採用);
    切換後跑 node tools/build_sitemap.js,日期照各頁實際改動。
    不會改:js/move-config.js、sw.js、js/app-shell.js、tools/move-worker/worker.js 裡的兩個網域清單(兩邊都要在),
@@ -39,14 +39,14 @@ function transform(files, cfg) {
     if (rel === 'sitemap.xml') return put(rel, src.split(other).join(live));   // lastmod 不動,交給 tools/build_sitemap.js
     if (rel === 'robots.txt') return put(rel, src.split(other).join(live));
     if (rel === 'supabase/functions/_shared/site.ts') return put(rel, src.replace(/export const LIVE: 'old' \| 'new' = '(old|new)';/, "export const LIVE: 'old' | 'new' = '" + cfg.live + "';"));
-    if (rel === 'js/checkout.js') return put(rel, swapMail(src));
+    if (rel === 'js/checkout.js' || rel === '.well-known/security.txt') return put(rel, swapMail(src));
   });
   return out;
 }
 
 function listFiles(root) {
   const top = fs.readdirSync(root).filter((f) => /\.html$/.test(f));
-  return top.concat(['CNAME', 'sitemap.xml', 'robots.txt', 'supabase/functions/_shared/site.ts', 'js/checkout.js']);
+  return top.concat(['CNAME', 'sitemap.xml', 'robots.txt', 'supabase/functions/_shared/site.ts', 'js/checkout.js', '.well-known/security.txt']);
 }
 
 function run(root, check) {

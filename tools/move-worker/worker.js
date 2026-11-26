@@ -21,8 +21,8 @@
      GitHub Pages 還不認得新網域時的「Site not found」404。新網址自己的 404、500 照轉。
    - 不加 Cross-Origin-Opener-Policy(加了 window.opener 會變 null,搬家就斷了)、不加 Clear-Site-Data(會清掉學生的進度)。
    - 只接受 GET、HEAD,其他回 405(網站是靜態的)。
-   換階段:改 PHASE 那一行重新部署,不用動 DNS。 */
-const PHASE = 'A';
+   換階段:改 PHASE 那一行重新部署,不用動 DNS。線上從 2026-11-26 起是 B 階段。 */
+const PHASE = 'B';
 const REDIRECT_MAX_AGE = 3600;
 const NEW = 'https://www.rushuplanguage.com';
 const NEW_HOST = 'www.rushuplanguage.com';

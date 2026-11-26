@@ -1,5 +1,5 @@
 /* 能力分析:整合檢測+刷題+閱讀+寫作的所有紀錄,產出
-   ①預測分數帶 ②考點強弱項 ③錯題分類 ④學習量。全部由本人紀錄即時計算。 */
+   ⓪預估多益分數卡(js/estimate-cards.js) ①閱讀正確率 ②考點強弱項 ③錯題分類 ④學習量。全部由本人紀錄即時計算。 */
 (function () {
   const root = $('#analysis-root');
 
@@ -166,29 +166,39 @@
     h('h1', null, '能力分析')));
   if (window.UI && typeof UI.doodle === 'function') UI.doodle(root);
 
+  /* 0. 預估多益分數卡(js/estimate-cards.js,跟「我的」頁同一張、同一個數字):第一張卡,取代以前的「閱讀預測級距」。
+     估分的檔沒載到時照以前畫級距 */
+  const estSlot = h('div', { class: 'an-est' });
+  const estOn = !!(window.ESTIMATE_CARDS && ESTIMATE_CARDS.mount(estSlot, { suggest: false }));
+  if (estOn) root.append(estSlot);
+
   if (rec.total < 10) {
-    /* 還不夠分析:累計題數、一顆主按鈕、一個文字連結 */
-    root.append(emptyState({
-      pose: 'read', text: '累計作答 ' + rec.total + ' / 10 題',
+    /* 還不夠分析:累計題數、一顆按鈕。上面有預估卡時,主按鈕(做程度檢測)在卡片裡,這裡只留一般按鈕 */
+    root.append(emptyState(estOn ? {
+      pose: 'gaze', text: '累計作答 ' + rec.total + ' / 10 題',
+      action: { label: '去刷題', href: 'practice.html' },
+    } : {
+      pose: 'gaze', text: '累計作答 ' + rec.total + ' / 10 題',
       action: { label: '去刷題', href: 'practice.html', primary: true },
-      links: [{ label: '程度檢測', href: 'diagnostic.html' }],
+      links: [{ label: '程度檢測', href: 'placement.html' }],
     }));
     return;
   }
 
-  /* 1. 預測分數帶 */
+  /* 1. 閱讀正確率(沒有預估卡時多畫以前的預測級距) */
   const acc = x => x.t ? x.c / x.t : null;
   const aB0 = rec.diff['基礎'].t >= 4 ? acc(rec.diff['基礎']) : null;
   const aM0 = rec.diff['中級'].t >= 4 ? acc(rec.diff['中級']) : null;
   const aA0 = rec.diff['進階'].t >= 4 ? acc(rec.diff['進階']) : null;
   const overall = rec.correct / rec.total;
-  const est = bandEstimate(aB0 === null ? 1 : aB0, aM0 === null ? overall : aM0, aA0 === null ? overall : aA0, overall);
+  const est = estOn ? null : bandEstimate(aB0 === null ? 1 : aB0, aM0 === null ? overall : aM0, aA0 === null ? overall : aA0, overall);
   const accCls = r => r < 0.4 ? 'weak' : r < 0.6 ? 'mid' : '';
   root.append(h('div', { class: 'report-head' },
     h('div', { class: 'who' }, '資料來源 ' + rec.sources.join('、')),
-    h('h2', null, '閱讀預測級距'),
-    bandScale(est.band),
-    h('div', { style: 'margin-top:18px' },
+    estOn ? h('h2', null, '閱讀正確率')
+      : h('div', { class: 'est-head' }, h('h2', null, '閱讀預測級距'), window.ESTIMATE_UI ? ESTIMATE_UI.infoButton({ kind: 'est' }) : null),
+    est ? bandScale(est.band) : null,
+    h('div', { style: est ? 'margin-top:18px' : 'margin-top:10px' },
       bar('整體正確率', overall, Math.round(overall * 100) + '% · ' + rec.total + ' 題', accCls(overall)),
       aB0 !== null ? bar('基礎題', aB0, Math.round(aB0 * 100) + '%', accCls(aB0)) : null,
       aM0 !== null ? bar('中級題', aM0, Math.round(aM0 * 100) + '%', accCls(aM0)) : null,
@@ -197,8 +207,7 @@
         ? bar('Part ' + pp, rec.parts[pp].ok / rec.parts[pp].n,
             Math.round(rec.parts[pp].ok / rec.parts[pp].n * 100) + '% · ' + rec.parts[pp].n + ' 題',
             accCls(rec.parts[pp].ok / rec.parts[pp].n))
-        : null)),
-    h('div', { class: 'band-note' }, '參考換算 · 非正式成績')));
+        : null))));
 
   /* 2. 強弱項(長條圖,弱→強) */
   const catRows = Object.entries(rec.cats).filter(([, c]) => c.t >= 3)

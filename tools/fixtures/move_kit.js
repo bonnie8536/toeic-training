@@ -1,5 +1,6 @@
 /* 搬家測試共用的東西(tools/test_move_core.js、tools/test_move_guard.js):假的 localStorage(可以設容量)、
-   在 vm 裡載入真的 js/common.js、js/pet*.js、js/daily.js、js/sync-merge.js 與 js/sync-merge-lesson.js(跟同步共用的合併,順序同 move-in.html)、js/move-*.js,
+   在 vm 裡載入真的 js/common.js、js/pet*.js、js/daily.js、js/sync-merge.js、js/sync-merge-lesson.js、
+   js/estimate-core.js、js/estimate-data.js、js/sync-merge-estimate.js(跟同步共用的合併,順序同 move-in.html)、js/move-*.js,
    組包、驗證、合併、寫入一次做完的 moveInto。 */
 'use strict';
 const fs = require('fs');
@@ -49,7 +50,8 @@ function load(opt) {
   };
   ctx.window = ctx;
   vm.createContext(ctx);
-  ['js/common.js', 'js/pet-config.js', 'js/pet.js', 'js/pet-food.js', 'js/daily.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js', 'js/move-rules.js', 'js/move-merge.js', 'js/move-pack.js', 'js/move-apply.js', 'js/move-link.js']
+  ['js/common.js', 'js/pet-config.js', 'js/pet.js', 'js/pet-food.js', 'js/daily.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js',
+    'js/estimate-core.js', 'js/estimate-data.js', 'js/sync-merge-estimate.js', 'js/move-rules.js', 'js/move-merge.js', 'js/move-pack.js', 'js/move-apply.js', 'js/move-link.js']
     .filter((f) => without.indexOf(f) < 0).forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   return ctx;
 }

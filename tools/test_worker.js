@@ -157,7 +157,10 @@ T['演練版 Worker(tools/build_rehearsal_worker.js):只換三個網域,代理�
   const WH = 'rushup-move-worker.example.workers.dev', NP = 'https://rushup-move-new.pages.dev';
   const src = build(SRC, { old: WH, new: NP });
   const lines = (s) => s.replace(/\r\n/g, '\n').split('\n');   // Windows 上 git 取出來的是 CRLF
-  const diff = lines(src).slice(1).filter((l, i) => l !== lines(SRC)[i]);
+  /* 演練版一律是 PHASE A(演練的是代理);正式的 worker.js 現在是 B,先把那一行對齊成 A 再比,其他行只能差三個網域 */
+  assert.ok(/^const PHASE = 'A';$/m.test(src), '演練版不是 PHASE A');
+  const srcA = SRC.replace(/^const PHASE = '[AB]';/m, "const PHASE = 'A';");
+  const diff = lines(src).slice(1).filter((l, i) => l !== lines(srcA)[i]);
   assert.deepEqual(diff, ["const NEW = '" + NP + "';", "const NEW_HOST = 'rushup-move-new.pages.dev';", "const OLD_WWW = '" + WH + "';"]);
   const up = (status, headers) => () => new Response(status === 200 ? 'page' : null, { status, headers: headers || {} });
   const run = async (respond, p) => {
@@ -221,21 +224,24 @@ T['B:導覽帶 tr_hd=1、沒有 tr_moved=1:回搬家頁的內容(網址不變、
 };
 
 /* 要貼到 Cloudflare 的那一份在 repo 外:改了這裡要一起換、線上 Worker 也要重貼。
-   那份不在這台(別的電腦、CI)就略過 */
+   路徑用環境變數 RUSHUP_WORKER_PASTE_FILE 傳入;沒設或檔案不存在(別的電腦、CI)就印 SKIP 並說明,不算通過 */
 T['tools/move-worker/worker.js 跟貼上用那一份(repo 外)一樣'] = async () => {
-  const p = path.join(REPO, '..', '刷刷英文開發', '搬家', 'worker', '舊網址worker_貼上用.js');
-  if (!fs.existsSync(p)) return;
+  const p = process.env.RUSHUP_WORKER_PASTE_FILE;
+  if (!p) return { skip: '沒有設定 RUSHUP_WORKER_PASTE_FILE' };
+  if (!fs.existsSync(p)) return { skip: 'RUSHUP_WORKER_PASTE_FILE 指定的檔案不存在' };
   const n = (s) => s.replace(/\r\n/g, '\n');
   assert.equal(n(fs.readFileSync(p, 'utf8')), n(SRC), '兩份不一樣:改了 tools/move-worker/worker.js 要把貼上用那份一起換掉(線上 Worker 也要重貼)');
 };
 
 (async () => {
-  let pass = 0;
+  let pass = 0, skip = 0;
   const names = Object.keys(T);
   for (const n of names) {
-    try { await T[n](); pass++; console.log('PASS ' + n); }
-    catch (e) { console.log('FAIL ' + n + '  →  ' + (e && e.message)); }
+    try {
+      const r = await T[n]();
+      if (r && r.skip) { skip++; console.log('SKIP ' + n + '  →  ' + r.skip); } else { pass++; console.log('PASS ' + n); }
+    } catch (e) { console.log('FAIL ' + n + '  →  ' + (e && e.message)); }
   }
-  console.log(pass + ' / ' + names.length + ' 通過');
-  process.exit(pass === names.length ? 0 : 1);
+  console.log(pass + ' / ' + (names.length - skip) + ' 通過' + (skip ? ',略過 ' + skip + ' 項' : ''));
+  process.exit(pass + skip === names.length ? 0 : 1);
 })();

@@ -188,6 +188,19 @@ T['課程頁 lessons.html、lesson.html:noindex、沒有 canonical、不在 site
     assert.equal(titleOf(head(f)), '課程 - 衝衝英文', f);
   });
 };
+T['程度檢測頁 placement.html:要收錄(取代舊檢測頁的入口)、canonical 跟 og:url 一樣、進 sitemap;分頁列歸在刷刷題目、頁名「程度檢測」'] = () => {
+  const s = read('placement.html');
+  assert.ok(!NOINDEX.test(s), 'placement.html 要收錄');
+  assert.equal(canonicalOf(head('placement.html')), LIVE + '/placement.html');
+  assert.equal(meta(head('placement.html'), 'property', 'og:url'), LIVE + '/placement.html');
+  assert.equal(titleOf(head('placement.html')), '程度檢測 - 衝衝英文');
+  const d = meta(head('placement.html'), 'name', 'description');
+  assert.ok(/聽力 12 題、閱讀 12 題/.test(d) && /預估分數/.test(d) && !/準確|保證|官方|換算/.test(d), d);   // 寫「預估」分數,不承諾分數
+  assert.ok(read('sitemap.xml').indexOf(LIVE + '/placement.html<') > -1, 'placement.html 要進 sitemap(node tools/build_sitemap.js)');
+  const shell = read('js/app-shell.js');
+  assert.ok(/key: 'drill'[^\n]*'placement\.html'/.test(shell), '分頁列刷刷題目沒有 placement.html');
+  assert.ok(/'placement\.html': '程度檢測'/.test(shell), '頂欄頁名');
+};
 
 T['noindex 的頁不寫 canonical(訊號互相矛盾);轉址用的 tenses、verbs 指向文法頁裡的同一張表'] = () => {
   PAGES.filter((f) => NOINDEX.test(read(f))).forEach((f) => {
@@ -318,6 +331,39 @@ T['首頁:h1 有站名;看得到英文名 Rushup;沒有寫死日期的免費公�
   assert.equal(/\d+ 月 \d+ 日以前全站免費/.test(src), false);
 };
 
+T['首頁大標題(2026-11-23):.hero-display 是 div 不是標題標籤、字是「每天衝一點」、不含禁用字;h1 是搜尋用句不動且排在它後面;已登入時藏起來'] = () => {
+  const src = homeSrc();
+  const m = src.match(/<div class="hero-display" data-nosnippet>([^<]*)<\/div>/);
+  assert.ok(m, '首頁沒有帶 data-nosnippet 的 div.hero-display');
+  assert.equal(m[1], '每天衝一點');
+  assert.ok(src.indexOf('class="hero-display"') < src.indexOf('<h1>'), '大標題要在 h1 前面');
+  ['免費', '考古題', '官方', '神器', '首選', '保證', '一站式', '全方位', '打造', '助你', '輕鬆', '高效', 'AI', '刷刷'].forEach((w) => assert.equal(m[1].indexOf(w), -1, '大標題含禁用字 ' + w));
+  assert.equal(/[,，]/.test(m[1]), false);
+  const css = read('css/style.css');
+  assert.match(css, /html\.authed \.home-hero h1, html\.authed \.home-hero \.hero-display/,'已登入沒有藏 .hero-display');
+  assert.match(src, /class="home-short"[^>]*>今天衝一點</);
+};
+
+T['吉祥物姿勢(2026-11-26):首頁首屏的鵜鶘是 gaze(坐著抬眼看書);全站 html 與 js 不再把吉祥物設成正面看書(read)或白日夢(daydream)'] = () => {
+  const src = homeSrc();
+  const hero = /<canvas class="hero-chick"[^>]*>/.exec(src);
+  assert.ok(hero, '首頁沒有 canvas.hero-chick');
+  assert.match(hero[0], /data-mascot="gaze"/, '首頁首屏不是 gaze');
+  const skip = new Set(['js/pelican-art.js', 'js/chick-art.js']);
+  const files = PAGES.concat(fs.readdirSync(path.join(REPO, 'js')).filter((f) => /\.js$/.test(f)).map((f) => 'js/' + f)).filter((f) => !skip.has(f));
+  const BAD = [
+    /data-mascot="(read|daydream)"/,                                  // html 屬性
+    /'data-mascot':\s*'(read|daydream)'/,                              // 程式建的 canvas
+    /setAttribute\('data-mascot',\s*'(read|daydream)'\)/,
+    /\bpose:\s*['"](read|daydream)['"]/,                              // UI.empty / UI.mascot / animate 的 pose
+    /setPose\(\s*['"](read|daydream)['"]/,
+    /\[[^\[\]]*,\s*'(read|daydream)'\]/,                             // lesson-core 首頁課程卡 [文字, 姿勢]
+  ];
+  const hits = [];
+  files.forEach((f) => read(f).split(/\r?\n/).forEach((l, i) => { if (BAD.some((re) => re.test(l))) hits.push(f + ':' + (i + 1) + ' ' + l.trim().slice(0, 80)); }));
+  assert.deepEqual(hits, [], '還在用 read/daydream 姿勢');
+};
+
 /* 一頁 body 裡的每個元素,記下它是不是在 data-nosnippet 裡面(自己帶或外層帶)。不用套件:script 內容與註解拿掉後照標籤開合算外層 */
 const VOID_TAGS = /^(?:area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/;
 function bodyElements(src) {
@@ -394,7 +440,7 @@ T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、每日練習�
   assert.ok(rows >= 25, '有頁尾連結列的頁太少:' + rows);
   /* 首頁 h1 下的說明句刪過三次(3c18669、159e17d、22c78df):h1 後面緊接數字列;首屏後來加的主按鈕、文字連結、小雞跟數字列一樣帶 data-nosnippet,
      首屏裡除了 h1 沒有給搜尋引擎看的字,也沒有段落 */
-  assert.match(src, /<div class="hero-inner">\s*<h1>[^<]+<\/h1>\s*<div class="stats"/, '首頁 h1 下不掛介紹句');
+  assert.match(src, /<div class="hero-inner">\s*<div class="hero-display" data-nosnippet>[^<]+<\/div>\s*<h1>[^<]+<\/h1>\s*<div class="stats"/, '首頁 h1 下不掛介紹句');
   const heroAt = els.findIndex((e) => e.cls.indexOf('hero-inner') > -1), mainAt = els.findIndex((e) => e.tag === 'main');
   const hero = els.slice(heroAt + 1, mainAt);
   assert.ok(heroAt > -1 && hero.length >= 4, '首頁找不到首屏');
@@ -527,14 +573,14 @@ T['首頁卡片與內頁說明寫的是真的、而且一致:錯題本只寫 js/
     assert.ok(cards.get(f).indexOf(names.length + ' 種') === 0, '首頁「' + f + '」磚寫的玩法數跟頁上的 ' + names.length + ' 種不一樣:' + cards.get(f));
   });
 };
-T['頂欄與分組頁:23 頁的頂欄是同一份(首頁加三個分組連結),目前頁亮的是歸屬那一格,我的、學習記錄、能力分析、教師後台都不亮;新頁登記在分頁列、開機清單、版面檢查;「每日複習」改成「錯題本」'] = () => {
+T['頂欄與分組頁:24 頁的頂欄是同一份(首頁加三個分組連結),目前頁亮的是歸屬那一格,我的、學習記錄、能力分析、教師後台都不亮;新頁登記在分頁列、開機清單、版面檢查;「每日複習」改成「錯題本」'] = () => {
   const NAV = /<nav class="topnav" aria-label="主要導覽">[\s\S]*?<\/nav>/;
   const plain = (n) => n.replace(/\r/g, '').replace(/ class="active" aria-current="page"/g, '').replace(/ active/g, '').replace(/ aria-current="(page|true)"/g, '');
   const withNav = PAGES.filter((f) => /class="topnav"/.test(read(f)));
-  assert.equal(withNav.length, 23, '有導覽的頁數:' + withNav.length);
+  assert.equal(withNav.length, 24, '有導覽的頁數:' + withNav.length);
   const base = plain(NAV.exec(read('index.html'))[0]);
   const GROUPS = { 'learn.html': ['grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'], 'warmup.html': ['vocab.html', 'listening.html', 'writing.html', 'grammar.html?ref=verbs'],
-    'drill.html': ['practice.html', 'mock.html', 'diagnostic.html', 'review.html'] };
+    'drill.html': ['practice.html', 'mock.html', 'placement.html', 'review.html'] };
   const tops = [['index.html', '首頁']].concat(Array.from(base.matchAll(/<a class="nav-btn" href="([^"]+)">([^<]+)<\/a>/g)).map((m) => [m[1], m[2]]));
   assert.deepEqual(tops.map((t) => t[0]), ['index.html', 'learn.html', 'warmup.html', 'drill.html'], '頂欄四個連結:' + JSON.stringify(tops));
   assert.deepEqual(['首頁', '日常學習', '練練手感', '刷刷題目'], tops.map((t) => t[1]));
@@ -547,7 +593,7 @@ T['頂欄與分組頁:23 頁的頂欄是同一份(首頁加三個分組連結),�
   });
   /* 目前頁亮哪一格:每一頁屬於哪一格的歸屬表 */
   const OWNER = { home: ['index.html', 'daily.html', 'start.html', 'lessons.html', 'lesson.html'], 'learn.html': ['learn.html', 'grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'],
-    'warmup.html': ['warmup.html', 'vocab.html', 'listening.html', 'writing.html'], 'drill.html': ['drill.html', 'practice.html', 'mock.html', 'diagnostic.html', 'review.html'],
+    'warmup.html': ['warmup.html', 'vocab.html', 'listening.html', 'writing.html'], 'drill.html': ['drill.html', 'practice.html', 'mock.html', 'diagnostic.html', 'placement.html', 'review.html'],
     none: ['me.html', 'history.html', 'analysis.html', 'admin.html'] };
   const all = Object.keys(OWNER).reduce((a, k) => a.concat(OWNER[k]), []);
   assert.deepEqual(all.slice().sort(), withNav.slice().sort(), '歸屬表要剛好涵蓋有導覽的頁');

@@ -283,13 +283,13 @@
     const card = UI.result({
       kicker: (p ? p.name + ' · ' : '') + (st.finishedAt || '').slice(0, 10),
       score, total,
-      stats: [['參考級距', band]],
-      note: '級距為估算 · 非正式成績',
+      stats: [['預估級距', band]],   // 級距怎麼估的、不是正式成績:寫在小標旁 ⓘ 點開的資訊欄(js/estimate-ui.js;沒載到就不畫)
       primary: next || { label: '去刷題', href: 'practice.html' },
       links: [{ label: '列印 / 存成 PDF', onClick: () => window.print() }, { label: '再測一次', onClick: retest, attrs: GATE }],   // 再測一次:沒登入時先攔下
       earnId: 'diag',
     });
     resultCard = card;
+    if (window.ESTIMATE_UI) ESTIMATE_UI.addInfo(card.el, 'diag', { n: total });
     root.append(card.el, h('p', { class: 'diag-levels' },
       h('span', null, '基礎題 ' + pct(aB)), h('span', null, '中級題 ' + pct(aM)), h('span', null, '進階題 ' + pct(aA))));
 

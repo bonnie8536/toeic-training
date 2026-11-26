@@ -56,12 +56,20 @@ function literals(src) {
   while ((m = re.exec(src))) { if (m[0][0] === "'" || m[0][0] === '`') out.push(m[0].slice(1, -1)); }
   return out;
 }
-T['S4 介面字串:沒有保證、準確、進步、分數區間、還沒做的課表與學習包、半形標點接中文、破折號、英文大寫小標'] = () => {
+/* 跟預估分數有關的畫面檔:字眼、標點、破折號一樣檢查(檔不存在就略過;課程已經有學習包,這幾個檔不查「還沒做的功能」) */
+const EST_FILES = () => ['js/placement.js', 'js/analysis.js', 'js/profile.js'].concat(fs.readdirSync(path.join(REPO, 'js'))
+  .filter((f) => /^estimate-.*\.js$/.test(f)).map((f) => 'js/' + f)).filter((f) => fs.existsSync(path.join(REPO, f)));
+T['S4 介面字串:沒有保證、準確、進步、分數區間、還沒做的課表與學習包、半形標點接中文、破折號、英文大寫小標(預估分數的畫面檔也查字眼與標點)'] = () => {
   const bad = [];
+  EST_FILES().forEach((f) => literals(read(f)).forEach((s) => {
+    if (/保證|準確|進步|分數區間/.test(s)) bad.push(f + ' 字眼 ' + s);
+    if (/[一-鿿][,;:?!]|[,;:?!][一-鿿]/.test(s)) bad.push(f + ' 半形標點 ' + s);
+    if (/—/.test(s)) bad.push(f + ' 破折號 ' + s);
+  }));
+  assert.ok(EST_FILES().indexOf('js/estimate-ui.js') > -1 && EST_FILES().indexOf('js/profile.js') > -1, '預估分數的畫面檔有查到');
   ONB_FILES().forEach((f) => literals(read(f)).forEach((s) => {
     if (/保證|準確|進步|分數區間/.test(s)) bad.push(f + ' 字眼 ' + s);
-    /* 第 4 堂後的程度調整(試行班的課程)已經有了:S8 小字這一句例外 */
-    if (/課表|學習包|第 ?\d* ?週|考前可上|堂/.test(s) && s !== '依第 2 到 4 堂作答調整過') bad.push(f + ' 還沒做的功能 ' + s);
+    if (/課表|學習包|第 ?\d* ?週|考前可上|堂/.test(s)) bad.push(f + ' 還沒做的功能 ' + s);
     if (/[一-鿿][,;:?!]|[,;:?!][一-鿿]/.test(s)) bad.push(f + ' 半形標點 ' + s);
     if (/—/.test(s)) bad.push(f + ' 破折號 ' + s);
     if (/^[A-Z]{3,}$/.test(s.trim()) && /[A-Z]{4,}/.test(s) && !/^(GET|POST)$/.test(s)) bad.push(f + ' 大寫 ' + s);
@@ -100,11 +108,12 @@ function changedLines(file) {
   assert.equal(d.status, 0, 'git diff 失敗');
   return String(d.stdout || '').split('\n').filter((l) => /^[+-]/.test(l) && !/^(\+\+\+|---) /.test(l)).map((l) => l.replace(/\r$/, ''));
 }
-T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按鈕與從開始頁進來直接開考;cloud.js 只多引導三個鍵與課程進度的合併規則'] = () => {
+T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按鈕、級距的說明改放 ⓘ 與從開始頁進來直接開考;cloud.js 只多引導三個鍵與課程進度、預估分數的合併規則'] = () => {
   const files = ['data/diagnostic.js', 'js/common.js'];
   const r = spawnSync('git', ['diff', '--quiet', '--ignore-cr-at-eol', baseRef(), '--'].concat(files), { cwd: REPO });
   assert.equal(r.status, 0, '有改到:' + files.join('、'));
-  /* 檢測頁:diag 的格式與讀寫不動;結算卡的 primary 換成「看起始程度」(設定中交的卷);從開始頁進來直接開考(按「開始」那段抽成 begin) */
+  /* 檢測頁:diag 的格式與讀寫不動;結算卡的 primary 換成「看起始程度」(設定中交的卷);從開始頁進來直接開考(按「開始」那段抽成 begin);
+     「參考級距」改叫「預估級距」,卡片下面的小字「級距為估算 · 非正式成績」拿掉,改成小標旁的 ⓘ(js/estimate-ui.js 的 'diag' 資訊欄) */
   const dg = changedLines('js/diagnostic.js').map((l) => l.slice(0, 1) + l.slice(1).trim());
   eq(dg, [
     '+const AUTO_WAIT = 8000;   // 直接開考前等雲端確認登入的上限(毫秒)',
@@ -169,8 +178,12 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     '+/* 第一屏:結算卡。姓名與日期放在分數上面的小字;三個難度的正確率跟在卡片下面一行。',
     '+新用戶設定起始程度途中交的卷,主按鈕換成「看起始程度」(js/onboard-ui.js,只有這種時候不是 null) */',
     '+let next = null; try { next = window.ONBOARD_UI ? ONBOARD_UI.diagPrimary() : null; } catch (e) { /* 照原本的「去刷題」 */ }',
+    "-stats: [['參考級距', band]],",
+    "-note: '級距為估算 · 非正式成績',",
     "-primary: { label: '去刷題', href: 'practice.html' },",
+    "+stats: [['預估級距', band]],   // 級距怎麼估的、不是正式成績:寫在小標旁 ⓘ 點開的資訊欄(js/estimate-ui.js;沒載到就不畫)",
     "+primary: next || { label: '去刷題', href: 'practice.html' },",
+    "+if (window.ESTIMATE_UI) ESTIMATE_UI.addInfo(card.el, 'diag', { n: total });",
   ]);
   /* cloud.js:引導的三個鍵只准合併表加三列、SYNC_FN 加三個鍵、檔頭說明(下面 ok 的規則);
      課程進度(les_t、pts、rvq、tests_v1,之後加的 mock_seen、plan)那一份逐行列在 COURSE:合併表三列、用鍵名規則認的課程進度(MERGED_FAMILIES、mergedIn、localNames)、
@@ -237,8 +250,8 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     '+     (規則認的鍵寫在 SYNC_FAMILY)。MERGED 上有、SYNC_FN 沒有的鍵(以後加進合併表卻忘了這裡):暫存那份一律放進備份,',
     '+     不准當成題庫合併、也不准略過(略過的話暫存區照樣刪掉)。',
     "+  const SYNC_FAMILY = [[/^les_t/, 'lesson']];",
-    '+  const SYNC_TWO = { mock: 1, mockWrong: 1, levels: 1, onboard: 1, selfScore: 1, pts: 1, rvq: 1, tests: 1, lesson: 1, mockSeen: 1, plan: 1 };   // 雲端和暫存那份先合、再合本機(不用標記)',
-    "+  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests', mock_seen: 'mockSeen', plan: 'plan' };",
+    '+  const SYNC_TWO = { mock: 1, mockWrong: 1, levels: 1, onboard: 1, selfScore: 1, pts: 1, rvq: 1, tests: 1, lesson: 1, firstAttempts: 1, placementRuns: 1, estSnap: 1, mockSeen: 1, plan: 1 };   // 雲端和暫存那份先合、再合本機(不用標記)',
+    "+  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests', fa_v1: 'firstAttempts', placement_v1: 'placementRuns', est_v1: 'estSnap', mock_seen: 'mockSeen', plan: 'plan' };",
     '-    const KEYS = Object.keys(MERGED).filter((k) => !MERGED[k].clock);',
     '+    const KEYS = Object.keys(MERGED).filter((k) => !MERGED[k].clock).concat(mergedIn(syncItems.map((x) => x.k)).filter((k) => !MERGED[k]));',
     '-      const fn = Object.prototype.hasOwnProperty.call(SYNC_FN, k) ? SYNC_FN[k] : null;',
@@ -250,7 +263,27 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     '-    try { unsure = (await checkCloud(user)).unsure; } catch (e) { unsure = Object.keys(MERGED).filter(k => MERGED[k].reconcile); }',
     "+    try { unsure = (await checkCloud(user)).unsure; } catch (e) { unsure = mergedIn(localNames('tr_u' + pidOf(user) + '_')).filter(k => spec(k).reconcile); }",
   ];
-  eq(changedLines('js/cloud.js').filter((l) => !ok.some((re) => re.test(l)) && COURSE.indexOf(l) < 0), [], 'cloud.js 有不在清單上的改動');
+  /* 預估分數(fa_v1、placement_v1、est_v1)那一份逐行列在 ESTIMATE:合併表三列、檔頭說明、搬家暫存區補載估分的三個檔
+     (已經載好的判斷 have() 也要看到 SYNC_MERGE.firstAttempts);SYNC_TWO 與 SYNC_FN 兩邊的鍵都加在同一行,那兩行列在 COURSE */
+  const ESTIMATE = [
+    '+     · 預估分數(js/estimate-store.js):fa_v1(第一次作答)、placement_v1(程度檢測紀錄)、est_v1(預估快照)。',
+    '+       合併函式 SYNC_MERGE.firstAttempts、placementRuns、estSnap(js/sync-merge-estimate.js,規則在 js/estimate-data.js):',
+    '+       第一次作答與檢測作答聯集,快照時間新的整份贏。先讀雲端合併再上傳,灌資料、搬家暫存區(SYNC_FN)也合併;加 reconcile。',
+    '+       部署前就開著的舊版分頁沒有估分頁面,不會寫這三個鍵。tools/test_estimate_store.js。',
+    "+    fa_v1: { merge: SMF('firstAttempts'), reconcile: true },",
+    "+    placement_v1: { merge: SMF('placementRuns'), reconcile: true },",
+    "+    est_v1: { merge: SMF('estSnap'), reconcile: true },",
+    '+    const have = () => !!(window.MOVE_RULES && window.MOVE_MERGE && window.DAILY && window.SYNC_MERGE && window.SYNC_MERGE.lesson && window.SYNC_MERGE.firstAttempts);',
+    "+      .then(() => (window.ESTIMATE ? null : add('js/estimate-core.js')))",
+    "+      .then(() => (window.ESTIMATE && window.ESTIMATE.mergeFirstAttempts ? null : add('js/estimate-data.js')))",
+    "+      .then(() => (window.SYNC_MERGE && window.SYNC_MERGE.firstAttempts ? null : add('js/sync-merge-estimate.js')))",
+  ];
+  /* 後來加的保護(跟起始程度無關):supabase-js 鎖版本與 integrity、網址帶回來的登入錯誤只顯示固定說明、
+     註冊訊息不分辨信箱有沒有註冊過、搬家暫存區讀值時拿掉 __proto__ 鍵;逐行列在 tools/fixtures/cloud_harden_lines.json(同一行出現幾次就列幾次) */
+  const HARDEN = require('./fixtures/cloud_harden_lines.json');
+  /* 清單逐行計次比對:清單上的每一行要出現同樣的次數,多一行(包括空行、右括號這類一般的行)或少一行都不算 */
+  const rest = changedLines('js/cloud.js').filter((l) => !ok.some((re) => re.test(l)) && COURSE.indexOf(l) < 0 && ESTIMATE.indexOf(l) < 0);
+  eq(rest.slice().sort(), HARDEN.slice().sort(), 'cloud.js 的改動跟清單不一樣');
 };
 T['S7b js/classes.js 只改兩處:加入班級的小字補「程度檢測結果」、匯出邀請碼格式檢查'] = () => {
   const changed = changedLines('js/classes.js').map((l) => l.slice(0, 1) + l.slice(1).trim());
@@ -264,11 +297,13 @@ T['S7b js/classes.js 只改兩處:加入班級的小字補「程度檢測結果�
   assert.ok(read('js/onboard.js').indexOf("'加入後這個班的老師看得到你的暱稱、Email、程度檢測結果和學習記錄。'") > -1, 'C1 同一句');
 };
 T['檔案大小:新的 js 檔與測試都小於 800 行'] = () => {
-  ONB_FILES().concat(['tools/test_onboard.js', 'tools/test_onboard_pages.js', 'tools/test_onboard_screens.js', 'tools/test_onboard_sync.js', 'tools/onboard_kit.js'])
+  ONB_FILES().concat(['tools/test_onboard.js', 'tools/test_onboard_pages.js', 'tools/test_onboard_screens.js', 'tools/test_onboard_sync.js', 'tools/onboard_kit.js',
+    'tools/onboard_est_cases.js', 'tools/test_onboard_e2e.js'])
     .forEach((f) => assert.ok(read(f).split('\n').length < 800, f));
 };
 T['S8 公開的新檔不寫內部用語與 repo 外的路徑'] = () => {
-  const files = ONB_FILES().concat(['start.html', 'tools/test_onboard.js', 'tools/test_onboard_pages.js', 'tools/test_onboard_screens.js', 'tools/test_onboard_sync.js', 'tools/onboard_kit.js']);
+  const files = ONB_FILES().concat(['start.html', 'tools/test_onboard.js', 'tools/test_onboard_pages.js', 'tools/test_onboard_screens.js', 'tools/test_onboard_sync.js', 'tools/onboard_kit.js',
+    'tools/onboard_est_cases.js', 'tools/test_onboard_e2e.js']);
   const bad = [];
   /* 字寫成 \u 跳脫,這支測試自己也不出現那些字;另外抓里程碑代號、Windows 磁碟路徑 */
   const WORDS = /\u5be9\u67e5|\u898f\u683c|\u6846\u67b6|\u7d93\u71df\u8005|\u5de5\u4f5c\u5305|\u4ee3\u7406|\u3014|\x47PT|\bM1\b|\b[A-Z]:[\\/]/g;
@@ -282,7 +317,7 @@ T['B1 homeCard:訪客 A 不畫(首屏的「先測程度」連 start.html);已登
   const a = plain(C.homeCard('A', { signedIn: true }));
   /* 按鈕字跟狀態 E 一樣是「設定程度」:每日練習卡已經有一顆「開始」 */
   eq([a.title, a.sub, a.primary.text, a.primary.href, a.secondary.text, a.secondary.href, a.dismiss],
-    ['找出你的起始程度', '填多益成績，或做 36 題檢測（約 23 分鐘）', '設定程度', 'start.html?step=target', '我有班級代碼', 'start.html?step=join', false]);
+    ['找出你的起始程度', '填多益成績，或做 24 題檢測（約 15–20 分鐘）', '設定程度', 'start.html?step=target', '我有班級代碼', 'start.html?step=join', false]);
   const bg = plain(C.homeCard('B', { signedIn: false, guest: guestOf({ step: 'exam' }) }));
   eq([bg.title, bg.sub, bg.primary.text, bg.primary.href, bg.secondary], ['繼續設定起始程度', '', '繼續', 'start.html?step=exam', null]);
   assert.equal(C.homeCard('B', { signedIn: true, onboard: { status: 'in_progress', step: 'test' } }).primary.href, 'start.html?step=test');
@@ -292,7 +327,7 @@ T['B1 homeCard:訪客 A 不畫(首屏的「先測程度」連 start.html);已登
   eq([d0.title, d0.sub, d0.primary.text, d0.primary.href], ['你的起始程度', '聽力 門檻／閱讀 入門', '開始練習', 'grammar.html']);
   eq(plain(C.homeCard('D0', { signedIn: true, levels: null })).primary, { text: '看起始程度', href: 'start.html?step=result' });
   const e = plain(C.homeCard('E', { signedIn: true }));
-  eq([e.title, e.sub, e.primary.text, e.primary.href, e.dismiss], ['找出你的起始程度', '填多益成績，或做 36 題檢測（約 23 分鐘）', '設定程度', 'start.html?step=target', true]);
+  eq([e.title, e.sub, e.primary.text, e.primary.href, e.dismiss], ['找出你的起始程度', '填多益成績，或做 24 題檢測（約 15–20 分鐘）', '設定程度', 'start.html?step=target', true]);
   ['none', 'S0', 'resume', 'join', undefined].forEach((s) => assert.equal(C.homeCard(s, {}), null, String(s)));
 };
 T['B1b continueHref:接著中斷的那一步;沒有或不認得回 S1'] = () => {
@@ -499,7 +534,7 @@ T['B3e 試行班:設定做完(D0)不畫起始程度卡(讓給今天的課卡);�
   await settle();
   eq([br.g.box.hidden, texts(br.g.box)], [false, ['繼續設定起始程度', '看起始程度']]);
 };
-T['B4 「我的」頁學習設定:老師、訪客、雲端沒開不顯示;有程度五列;程度那列開改級別面板(UI.sheet),套用寫 manual'] = () => {
+T['B4 「我的」頁學習設定:老師、訪客、雲端沒開不顯示;有程度五列;程度那列開改程度面板(UI.sheet),套用寫 manual'] = () => {
   assert.equal(uiEnv().UI.settingsSection(), null);
   assert.equal(uiEnv(signedIn({ teacher: true })).UI.settingsSection(), null);
   const off = uiEnv(signedIn()); off.ctx.CLOUD.enabled = false; assert.equal(off.UI.settingsSection(), null);
@@ -512,9 +547,9 @@ T['B4 「我的」頁學習設定:老師、訪客、雲端沒開不顯示;有程
   eq(texts(sec), ['學習設定', '程度聽力 進階／閱讀 門檻', '目標分數785 分', '考試月份2027 年 3 月', '做檢測']);
   assert.equal(sec.getAttribute('id'), 'learning-settings');
   sec.all().find((x) => x.tagName === 'BUTTON').click();
-  assert.equal(e.sheets.length, 1, '開了改級別面板');
+  assert.equal(e.sheets.length, 1, '開了改程度面板');
   const sh = e.sheets[0];
-  eq([sh.opt.title, sh.opt.focus && sh.opt.focus.getAttribute('value')], ['改級別', 'advanced']);
+  eq([sh.opt.title, sh.opt.focus && sh.opt.focus.getAttribute('value')], ['改程度', 'advanced']);
   const radios = sh.el.all().filter((x) => x.tagName === 'INPUT');
   eq(radios.filter((x) => x.checked).map((x) => x.getAttribute('value')), ['advanced', 'threshold']);
   const pickR = radios.find((x) => x.getAttribute('name').indexOf('ob-reading') === 0 && x.getAttribute('value') === 'high');

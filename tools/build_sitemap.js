@@ -29,7 +29,7 @@ const UNIT_PAGES = {
 
 /* 首頁排第一,其他照網站導覽的順序;沒列到的頁照檔名排在後面 */
 const ORDER = ['index.html', 'grammar.html', 'phonics.html', 'reading.html', 'dialogue.html', 'vocab.html', 'listening.html',
-  'writing.html', 'practice.html', 'mock.html', 'diagnostic.html', 'daily.html', 'signup.html', 'pricing.html', 'terms.html', 'privacy.html', 'refund.html', 'corrections.html'];
+  'writing.html', 'practice.html', 'mock.html', 'placement.html', 'diagnostic.html', 'daily.html', 'signup.html', 'pricing.html', 'terms.html', 'privacy.html', 'refund.html', 'corrections.html'];
 
 function indexablePages(root) {
   return fs.readdirSync(root).filter((f) => /\.html$/.test(f) && f !== '404.html' && !NOINDEX.test(read(root, f)))

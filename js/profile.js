@@ -58,6 +58,9 @@
   }
   function clearNotice() { const box = document.querySelector('.me-msg'); if (box) { box.replaceChildren(); box.classList.remove('bad'); } }
 
+  /* 預估多益分數卡(js/estimate-cards.js 的 meSlot;帳號區與本機學生檔案共用)。估分的檔沒載到回 null */
+  function estimateSlot() { return window.ESTIMATE_CARDS ? ESTIMATE_CARDS.meSlot() : null; }
+
   /* <html class="authed">:首頁靠它決定畫已登入還是未登入的版面。index.html 的開機程式先照本機紀錄加,這裡確認後校正 */
   function markAuthed(on) { try { document.documentElement.classList.toggle('authed', !!on); } catch (e) { /* 只是版面 */ } }
 
@@ -458,17 +461,19 @@
         statusOf: id => PAYWALL.classStatus(CLOUD.access, id),
         onChange: () => { if (plans) plans.update(); },
       } : undefined;
-      root.append(
+      /* 沒有的區塊是 null:先濾掉(append(null) 會印出「null」) */
+      root.append(...[
         h('div', { class: 'me-head' },
           h('span', { class: 'profile-dot me-dot', 'aria-hidden': 'true' }, cur.name.slice(0, 1).toUpperCase()),
           who),
+        estimateSlot(),   // 預估多益分數(js/estimate-cards.js)
         links,
         window.ONBOARD_UI ? ONBOARD_UI.settingsSection() : null,   // 學習設定(js/onboard-ui.js,只有 me.html 載入;老師、本機學生檔案不顯示)
         window.CLASSES ? CLASSES.section(classOpts) : null,   // 班級(js/classes.js,只有 me.html 載入)
         list(row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }), row('改暱稱', { run: renameUser })),
         list(row('登出', { run: logoutHere, danger: true }), row('登出所有裝置', { run: logoutEverywhere, danger: true })),
         h('p', { class: 'me-msg', role: 'status' }),
-        h('p', { class: 'me-delete' }, h('button', { type: 'button', onclick: deleteUser }, '刪除帳號')));
+        h('p', { class: 'me-delete' }, h('button', { type: 'button', onclick: deleteUser }, '刪除帳號'))].filter(Boolean));
       /* 老師試用開通後:重新查使用權(教師後台那一列、老師方案那一列才會出現)再整頁重畫 */
       if (paid) plans = PAYWALL.account({ who, after: links, onTrial: () => { Promise.resolve(CLOUD.refreshAccess()).then(() => renderAccount(root), () => renderAccount(root)); } });
     }
@@ -646,8 +651,9 @@
       draw();
       return card;
 
-      function go(next) {
-        if (next === 'login') forgetIntent();   // 切到登入分頁:註冊時選老師的意向作廢
+      /* keepIntent:寄出驗證信畫面的「登入」。剛註冊的老師意向已經綁上新帳號,之後點信裡的連結才會自動開試用,這裡不清 */
+      function go(next, keepIntent) {
+        if (next === 'login' && !keepIntent) forgetIntent();   // 切到登入分頁:註冊時選老師的意向作廢
         mode = next; draw();
       }
 
@@ -679,9 +685,9 @@
 
       /* 底部一行切換。Engoo、Busuu、VoiceTube、均一都是這種做法:
          一個標題配一行「還沒有帳號?註冊」,不是兩個同級分頁。 */
-      function switchLine(text, linkText, next) {
+      function switchLine(text, linkText, next, keepIntent) {
         return h('p', { class: 'auth-switch' }, text,
-          h('button', { class: 'auth-link strong', type: 'button', onclick: () => go(next) }, linkText));
+          h('button', { class: 'auth-link strong', type: 'button', onclick: () => go(next, keepIntent) }, linkText));
       }
 
       /* role:註冊分頁的身分選擇(PAID_UI 打開才有)。轉跳 Google 之前存好意向(Google 回來時頁面狀態都不見了);
@@ -816,8 +822,10 @@
         put(
           opts.onMode ? null : h('h2', { class: 'auth-h' }, '驗證信已寄出'),
           h('p', { class: 'auth-sent' }, '寄到 ', h('b', null, email), '。點信裡的連結就完成註冊並登入。沒收到先看垃圾郵件。'),
+          h('p', { class: 'auth-sent' }, '已經有帳號：請直接登入、用 Google 登入或重設密碼。'),
           again,
-          msg);
+          msg,
+          switchLine('已經有帳號？', '登入', 'login', true));
       }
     }
 
@@ -922,6 +930,7 @@
         for (const [k, v] of Object.entries(payload.data)) {
           localStorage.setItem('tr_u' + id + '_' + k, v);
         }
+        if (window.ESTIMATE_CARDS) ESTIMATE_CARDS.afterImport(id);   // 匯入的紀錄先補一次預估分數用的作答(js/estimate-cards.js)
         switchTo(id);
       } catch (e) {
         notice('匯入失敗', e.message);
@@ -992,6 +1001,7 @@
         h('span', { class: 'profile-dot me-dot', 'aria-hidden': 'true' }, cur ? cur.name.slice(0, 1) : '?'),
         cur ? h('div', { class: 'me-who' }, h('b', { class: 'me-name' }, cur.name)) : h('div', { class: 'me-actions' },
           h('button', { class: 'btn primary', type: 'button', onclick: () => showGate(true) }, '建立檔案'))),
+      cur ? estimateSlot() : null,   // 預估多益分數(js/estimate-cards.js)
       cur ? list(row('能力分析', { href: 'analysis.html' }), row('學習記錄', { href: 'history.html' })) : null,
       list(cur ? row('匯出進度備份', { run: () => exportData(cur.id, cur.name) }) : null, row('匯入進度檔', { run: () => fileInput.click() }),
         row('切換學生', { run: () => showGate(true) })),

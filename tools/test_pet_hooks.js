@@ -42,6 +42,7 @@ const BASE = '27557eb';
    新用戶設定起始程度(2026-11-23,設定中交的卷結算卡主按鈕換成「看起始程度」)改了 diagnostic;
    課程頁用的入口(2026-11-24,DRILL.startQuiz、LISTEN.startQuiz 的 onDone 與播放次數、GRAMMAR.unit 與完成時間、EAR.round)
    又改了 practice、listening、grammar、ear:題庫刷題的交卷搬進 runQuiz、聽力訓練的一輪搬進 playRound,掛勾那一句與所在函式不變;
+   預估分數卡連到聽力練習(2026-11-25,聽力面板 id 是 listen、#listen 捲到那裡)又改了 practice;
    模擬考作答過的題記成做過(2026-11-26,交卷與補存寫 mock_seen 的 saveSeen)又改了 mock,掛勾那一句與所在函式不變 */
 const LATER_BASE = ['js/vocab.js', 'js/reading.js', 'js/daily-ui.js', 'js/grammar.js', 'js/phonics.js', 'js/ear.js', 'js/dialogue.js',
   'js/verbs.js', 'js/practice.js', 'js/mock.js', 'js/diagnostic.js', 'js/writing.js', 'js/review.js', 'js/listening.js'];

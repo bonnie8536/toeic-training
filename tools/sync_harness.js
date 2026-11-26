@@ -1,6 +1,7 @@
 /* 多台裝置同步測試共用的假環境(tools/test_sync_union.js、tools/test_sync_fuzz.js 用;不是測試檔,不單獨跑)。
    - 一個假的 Supabase(所有裝置共用同一個 db,同一個帳號),支援 select().eq()/in()、upsert(一列或多列,多列一起成功或一起失敗)。
-   - 每台裝置自己的 localStorage、分頁暫存、時鐘偏差、離線開關;頁面在 node 的 vm 沙盒裡載入真的 js/sync-merge.js、js/sync-merge-lesson.js 與 js/cloud.js
+   - 每台裝置自己的 localStorage、分頁暫存、時鐘偏差、離線開關;頁面在 node 的 vm 沙盒裡載入真的 js/sync-merge.js、js/sync-merge-lesson.js、
+     js/estimate-core.js、js/estimate-data.js、js/sync-merge-estimate.js 與 js/cloud.js
      (或 tools/fixtures/cloud_sync_base.js:main 4c823ec 那一版、沒有合併表的舊版 cloud.js,當「部署前就開著的舊版頁面」)。
    - 頁面寫入照新版 js/vocab.js 的做法:每次寫入前重讀本機、用 SYNC_MERGE 的戳記函式改、先存刪除標記再存題庫(store.set = 寫本機 + CLOUD.push)。
    每一次請求記在 dev.ops:{ op: 'read' | 'write' | 'teachers', keys: [...] }。
@@ -16,6 +17,7 @@ const SCRIPTS = {
   old: new vm.Script(read('tools/fixtures/cloud_sync_base.js'), { filename: 'cloud_sync_base.js' }),
   sm: new vm.Script(read('js/sync-merge.js'), { filename: 'js/sync-merge.js' }),
   sml: new vm.Script(read('js/sync-merge-lesson.js'), { filename: 'js/sync-merge-lesson.js' }),
+  est: ['js/estimate-core.js', 'js/estimate-data.js', 'js/sync-merge-estimate.js'].map(f => new vm.Script(read(f), { filename: f })),
 };
 
 const USER = { id: '3f2b8c1e-7d4a-4b9e-9c21-5a6e8f0d1b72', email: 's@x.com', user_metadata: { name: '學生' } };
@@ -60,6 +62,7 @@ function makeWorld(seed) {
   vm.createContext(ctx);
   SCRIPTS.sm.runInContext(ctx);
   SCRIPTS.sml.runInContext(ctx);
+  SCRIPTS.est.forEach(s => s.runInContext(ctx));
   world.SM = ctx.SYNC_MERGE;
   return world;
 }
@@ -173,7 +176,7 @@ function loadPage(dev) {
   ctx.supabase = { createClient: () => makeClient(dev) };
   try { ctx.__PROFILE_ID = JSON.parse(dev.local.getItem('tr_current_profile')) || null; } catch (e) { ctx.__PROFILE_ID = null; }
   vm.createContext(ctx);
-  if (!dev.old && !dev.noSm) { SCRIPTS.sm.runInContext(ctx); SCRIPTS.sml.runInContext(ctx); }
+  if (!dev.old && !dev.noSm) { SCRIPTS.sm.runInContext(ctx); SCRIPTS.sml.runInContext(ctx); SCRIPTS.est.forEach(s => s.runInContext(ctx)); }
   (dev.old ? SCRIPTS.old : SCRIPTS.cloud).runInContext(ctx);
   const pg = {
     ctx, dev, closed: false,

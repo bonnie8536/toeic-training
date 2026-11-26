@@ -82,7 +82,8 @@
       if (r.v !== null) s.keys[r.k] = r.v;
       s.kt[r.k] = r.updated_at;
       /* 學生回報題目(q_reports)不算「最近活動」:只回報、沒練習的學生不會被當成今天有練 */
-      if (r.k !== 'q_reports' && r.updated_at > s.last) s.last = r.updated_at;
+      /* 預估分數快照(est_v1)是開頁時重算寫的,也不算 */
+      if (r.k !== 'q_reports' && r.k !== 'est_v1' && r.updated_at > s.last) s.last = r.updated_at;
     });
 
     render(students);
@@ -132,6 +133,38 @@
     const weak = Object.entries(cats).filter(([, c]) => c.c / c.t < 0.8)
       .sort((a, b) => a[1].c / a[1].t - b[1].c / b[1].t);
     return { score, total: diagItems.length, band: est.band, cats, weak, wrong, finishedAt: (d.finishedAt || '').slice(0, 10) };
+  }
+
+  /* 預估分數快照 est_v1(學生開「我的」頁、能力分析頁、做完檢測時寫,js/estimate-store.js):{ at, L: [預估, 下緣, 上緣, 題數] | null, R: … }。
+     形狀不對的科當成沒有;兩科都沒有回 null(照舊顯示舊檢測)。畫面上的值一律是字串,不會出現 null */
+  const fin = x => typeof x === 'number' && isFinite(x);
+  function estSec(x) {
+    if (!Array.isArray(x) || !fin(x[0]) || !fin(x[1]) || !fin(x[2]) || x[0] < 5 || x[0] > 495) return null;
+    return { est: x[0], lo: x[1], hi: x[2], n: Number.isInteger(x[3]) && x[3] >= 0 ? x[3] : null };
+  }
+  function estSummary(keys) {
+    const e = keys['est_v1'];
+    if (!e || typeof e !== 'object' || typeof e.at !== 'string' || !isFinite(Date.parse(e.at))) return null;
+    const L = estSec(e.L), R = estSec(e.R);
+    if (!L && !R) return null;
+    const d = new Date(Date.parse(e.at));
+    return { L, R, at: e.at, day: (d.getMonth() + 1) + ' 月 ' + d.getDate() + ' 日' };
+  }
+  /* 「150 以下」「450 以上」或數字;範圍只有中間那一段才寫 */
+  const estScore = v => (v.est < 150 ? '150 以下' : v.est >= 450 ? '450 以上' : String(v.est));
+  const estRange = v => (v.est >= 150 && v.est < 450 ? v.lo + '–' + v.hi : '');
+  const EST_SEC = [['L', '聽力'], ['R', '閱讀']];
+  /* 表格那一格:「聽力 345／閱讀 290」;沒有數字的科寫「—」(用了幾題、算到哪一天在展開列 ⓘ 的資訊欄) */
+  function estCell(e) {
+    return EST_SEC.map(([s, name]) => name + ' ' + (e[s] ? estScore(e[s]) : '—')).join('／');
+  }
+  /* 標題旁的 ⓘ:分數怎麼來的、不是正式成績、用了幾題、算到哪一天,跟學生看到的資訊欄同一份(js/estimate-ui.js;沒載到就不畫) */
+  const estInfo = (n, at) => (window.ESTIMATE_UI ? ESTIMATE_UI.infoButton({ kind: 'est', view: { n, at } }) : null);
+  /* 展開列:「預估分數　聽力 345（300–390）　閱讀 290（245–335）」與 ⓘ */
+  function estDetail(e) {
+    const part = ([s, name]) => name + ' ' + (e[s] ? estScore(e[s]) + (estRange(e[s]) ? '（' + estRange(e[s]) + '）' : '') : '—');
+    const n = EST_SEC.reduce((a, [s]) => a + (e[s] && e[s].n !== null ? e[s].n : 0), 0);
+    return [h('h3', { class: 'adm-est', style: 'font-size:15.5px;margin-bottom:10px' }, '預估分數　' + EST_SEC.map(part).join('　'), estInfo(n, e.at))];
   }
 
   function vocabStats(keys) {
@@ -202,13 +235,13 @@
     const text = '還沒有學生資料';
     if (window.UI && typeof UI.empty === 'function') {
       /* 多個班級時的挑選按鈕與結果訊息放在空狀態下面(extra) */
-      return UI.empty({ pose: 'read', text, action: { label, onClick: onCopy }, extra: [picks, msg] });
+      return UI.empty({ pose: 'gaze', text, action: { label, onClick: onCopy }, extra: [picks, msg] });
     }
     return h('div', { class: 'q-block' }, text, h('button', { class: 'btn', type: 'button', onclick: onCopy }, label), picks, msg);
   }
 
   function noteSection(uid, tnote, onNick) {
-    const wrap = h('div', { style: 'margin-top:14px;border-top:1px solid var(--line);padding-top:12px' });
+    const wrap = h('div', { class: 'adm-detail', style: 'margin-top:14px;border-top:1px solid var(--line);padding-top:12px' });   // 手機寬時跟上面的展開內容一樣停在畫面左邊(css .adm-detail)
     const status = h('span', { class: 'player-note', style: 'margin-left:10px' });
     wrap.append(h('h3', { style: 'font-size:15.5px;margin-bottom:6px' }, '上課紀錄與備註', h('span', { style: 'font-size:12px;color:var(--ink-light);font-weight:400' }, '（只有教師帳號看得到）'), status));
 
@@ -334,7 +367,7 @@
     const AREA = [
       [/^drill_p/, '刷題'], [/^listen_p/, '聽力刷題'], [/^grammar_done/, '文法'], [/^phonics_done/, '自然發音'],
       [/^(vocab_|vgame_|phrase_)/, '單字片語'], [/^writing_/, '寫作'],
-      [/^ear_/, '聽力訓練'], [/^mock_history/, '模擬考'], [/^mock_wrong/, '模擬考錯題'], [/^diag/, '檢測'],
+      [/^ear_/, '聽力訓練'], [/^mock_history/, '模擬考'], [/^mock_wrong/, '模擬考錯題'], [/^(diag|placement_v1$)/, '檢測'],
     ];
     const weekAgo = new Date(Date.now() - 7 * 864e5).toISOString();
     const weekRows = ids.map(uid => {
@@ -382,6 +415,7 @@
       const tnote0 = myKeys['tnote_' + uid] || { needs: '', logs: [] };
       const name = tnote0.nick || meta.name || meta.email || uid.slice(0, 8);
       const diag = diagSummary(s.keys);
+      const pre = estSummary(s.keys);   // 預估分數快照;沒有時這一格照舊顯示舊檢測
       const d5 = drillStats(s.keys, 5), d6 = drillStats(s.keys, 6), d7 = drillStats(s.keys, 7);
       const vo = vocabStats(s.keys);
       const fmt = d => d.answered ? d.answered + ' 題 · ' + Math.round(d.correct / d.answered * 100) + '%' : '—';
@@ -393,7 +427,7 @@
         h('td', null, nameEl, meta.email && meta.email !== name ? h('span', { style: 'color:var(--ink-light);font-size:12.5px' }, ' ' + meta.email) : null,
           h('span', { class: 'ad-sync' }, '最後同步 ' + syncText(s.last))),
         h('td', { class: 'num' }, (s.last || '').slice(0, 10) || '—'),
-        h('td', { class: 'num' }, diag ? diag.score + '/' + diag.total + ' · ' + diag.band : '未檢測'),
+        h('td', { class: 'num' }, pre ? estCell(pre) : diag ? diag.score + '/' + diag.total + ' · ' + diag.band : '未檢測'),
         h('td', { class: 'num' }, window.ONBOARD_CORE ? ONBOARD_CORE.levelsLabel(s.keys['levels']) : '未設定'),   // 起始程度(start.html 寫的 levels)
         lessonCol.cell(s.keys),
         h('td', { class: 'num' }, fmt(d5)), h('td', { class: 'num' }, fmt(d6)), h('td', { class: 'num' }, fmt(d7)),
@@ -402,7 +436,7 @@
 
       const wb = ownerOn() ? OW.billing.writingBlock({ uid, keys: s.keys }) : null;
       const detailRow = h('tr', { style: 'display:none' },
-        h('td', lessonCol.span({ colspan: '9', style: 'background:var(--bg-soft)' }), detail(name, diag, d5, d6, d7), wb ? wb.el : null,
+        h('td', lessonCol.span({ colspan: '9', style: 'background:var(--bg-soft)' }), detail(name, diag, d5, d6, d7, pre), wb ? wb.el : null,
           noteSection(uid, tnote0, n => { nameEl.textContent = n || meta.name || meta.email || uid.slice(0, 8); })));
       const toggle = () => {
         detailRow.style.display = detailRow.style.display === 'none' ? '' : 'none';
@@ -435,8 +469,9 @@
     };
   }
 
-  function detail(name, diag, d5, d6, d7) {
-    const box = h('div', { style: 'padding:8px 4px' });
+  function detail(name, diag, d5, d6, d7, pre) {
+    const box = h('div', { class: 'adm-detail', style: 'padding:8px 4px' });
+    if (pre) box.append(...estDetail(pre));
 
     if (diag) {
       box.append(h('h3', { style: 'font-size:15.5px;margin-bottom:6px' }, '檢測(' + diag.finishedAt + ')：答對 ' + diag.score + '/' + diag.total + '，參考級距 ' + diag.band));
@@ -448,7 +483,7 @@
         box.append(h('div', { style: 'font-size:13.5px;color:var(--ink-light);margin-bottom:10px' },
           '檢測錯題：' + diag.wrong.map(w => 'Q' + (w.i + 1) + '（' + w.it.category + '）').join('、')));
       }
-    } else {
+    } else if (!pre) {
       box.append(h('p', { style: 'font-size:14px;color:var(--ink-light);margin-bottom:8px' }, name + ' 還沒做程度檢測。'));
     }
 

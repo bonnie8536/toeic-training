@@ -1,9 +1,28 @@
 /* 模擬考:照正式節奏的計時測驗。
    - 從現有題庫隨機抽題(聽力+閱讀),全程倒數,時間到自動交卷。
    - 聽力每題音檔只能播一次(正式考規則);全部交卷後才對答案。
-   - 分數為參考換算(樣本小,僅供追蹤趨勢);紀錄存 mock_history(雲端同步)。
+   - 分數是本站估計(樣本小,只供追蹤趨勢;算法見下面 MOCK_SCORE);紀錄存 mock_history(雲端同步)。
    - 交卷時答錯的題收進錯題本(mock_wrong,js/wrongbook.js)。沒作答的不收;原本在錯題本、這次答對的移出。
      不寫 drill_p*、listen_p*、hist(那幾個鍵是整份上傳,模擬考頁寫它們會蓋掉別台在考試期間刷的題)。 */
+/* 模擬考的分數:window.MOCK_SCORE.scaled(答對率, 科 'L' 或 'R')。放在頁面程式外面,題庫沒載到也定義得到 */
+(function () {
+  'use strict';
+  /* 分數(答對率→單科 5–495,本站估計,只做趨勢參考):跟預估分數用同一份曲線(data/item-params.js 的 curve)、
+     同一個函式(ESTIMATE.scoreOf 分段直線內插),再取到 5 的倍數。聽力曲線就是下面這張表;閱讀是這張表與公開來源的中間值。
+     題目參數或估分程式沒載到時,兩科都照這張表往下取(改版前的算法)。
+     已經存進 mock_history 的分數照當時存的顯示,不重算。 */
+  const CONV = [[0.97, 495], [0.92, 470], [0.86, 440], [0.8, 410], [0.75, 380], [0.7, 350],
+    [0.65, 320], [0.6, 290], [0.55, 260], [0.5, 230], [0.45, 200], [0.4, 170],
+    [0.35, 140], [0.3, 110], [0.25, 85], [0.15, 55], [0, 5]];
+  function scaled(pct, sec) {
+    const E = window.ESTIMATE, P = window.ITEM_PARAMS;
+    const curve = P && P.curve ? P.curve[sec] : null;
+    if (E && typeof E.scoreOf === 'function' && Array.isArray(curve)) return Math.round(E.scoreOf(curve, pct) / 5) * 5;
+    return CONV.find(([t]) => pct >= t)[1];
+  }
+  window.MOCK_SCORE = Object.freeze({ scaled });
+})();
+
 (function () {
   const root = $('#mock-root');
   const LDATA = (window.TOEIC && TOEIC.listening) || null;
@@ -37,11 +56,6 @@
   };
   const LEAVE_BODY = '模擬考還沒交卷。離開後這次作答不會計分。';
 
-  /* 參考換算(百分比→單科 5-495;正式換算依全卷等化,這裡只做趨勢參考) */
-  const CONV = [[0.97, 495], [0.92, 470], [0.86, 440], [0.8, 410], [0.75, 380], [0.7, 350],
-    [0.65, 320], [0.6, 290], [0.55, 260], [0.5, 230], [0.45, 200], [0.4, 170],
-    [0.35, 140], [0.3, 110], [0.25, 85], [0.15, 55], [0, 5]];
-  const scaled = pct => CONV.find(([t]) => pct >= t)[1];
 
   function shuffle(arr) {
     const a = [...arr];
@@ -492,8 +506,8 @@
         else if (u.p === '6') u.item.questions.forEach(q => add(st.answers[q.num] === q.answer, false));
         else u.item.questions.forEach((q, qi) => add(st.answers[qi] === q.answer, u.sec === 'L'));
       });
-      const lScore = scaled(lTotal ? lRaw / lTotal : 0);
-      const rScore = scaled(rTotal ? rRaw / rTotal : 0);
+      const lScore = MOCK_SCORE.scaled(lTotal ? lRaw / lTotal : 0, 'L');
+      const rScore = MOCK_SCORE.scaled(rTotal ? rRaw / rTotal : 0, 'R');
       const rec = { d: new Date().toISOString(), size: sizeKey, lRaw, lTotal, rRaw, rTotal, lScore, rScore };
       const ans = answered();
       let unsaved = '', wb = null;
@@ -531,16 +545,16 @@
         unsaved === 'lost' ? null : h('button', { class: 'btn', type: 'button', onclick: () => location.reload() }, '重新整理'));
     }
 
-    /* 錯題收進錯題本的那一行:只有寫完讀回來確認過(wb.ok)才說「已收進」;存不進去時上面「還沒存」那一塊照舊說明 */
+    /* 錯題本怎麼變:完整的句子,一行一件事。只有寫完讀回來確認過(wb.ok)才說「已加進」;存不進去時下面「還沒存」那一塊照舊說明 */
     function wrongNote(wb, skipped) {
       if (!wb || !wb.ok) return null;
-      const parts = [];
-      if (wb.wrong > 0) parts.push('收進錯題本 ' + wb.wrong + ' 題');
-      else if (skipped < units.reduce((n, u) => n + unitQs(u), 0)) parts.push('這次沒有答錯的題');   // 有作答、沒有答錯
-      if (wb.cleared > 0) parts.push('移出 ' + wb.cleared + ' 題');
-      if (skipped > 0) parts.push('未作答 ' + skipped + ' 題不收');
-      if (!parts.length) return null;
-      return h('p', { class: 'band-note mock-wb-note' }, parts.join(' · '));
+      const lines = [];
+      if (wb.wrong > 0) lines.push('答錯的 ' + wb.wrong + ' 題已加進錯題本。');
+      else if (skipped < units.reduce((n, u) => n + unitQs(u), 0)) lines.push('這次沒有答錯的題。');   // 有作答、沒有答錯
+      if (wb.cleared > 0) lines.push('錯題本裡有 ' + wb.cleared + ' 題這次答對了，已移出錯題本。');
+      if (skipped > 0) lines.push('沒作答的 ' + skipped + ' 題不會加進錯題本。');
+      if (!lines.length) return null;
+      return h('div', { class: 'mock-wb-note' }, ...lines.map((t) => h('p', null, t)));
     }
 
     /* 結果:結算卡(分數、聽力與閱讀各自的約略分數、再做一次)放在最上面,逐題檢討收在卡片下面。回傳卡片(掛勾把點心放進 card.reward) */
@@ -551,11 +565,12 @@
         kicker: '參考總分', big: String(lScore + rScore), unit: '分', ratio: (lRaw + rRaw) / Math.max(1, lTotal + rTotal),
         flag: timeUp ? '時間到' : null,
         stats: [['聽力', String(lScore)], ['閱讀', String(rScore)]],
-        note: '參考換算 · 非正式成績',
         primary: { label: '再做一次', onClick: () => startExam(sizeKey), attrs: { 'data-gate': '' } },   // 沒登入時 js/profile.js 先攔下
         links: [{ label: '看錯題本', href: 'review.html' }, { label: '回模擬考', href: 'mock.html' }],
         earnId: 'mock',
       });
+      /* 「參考總分」旁的 ⓘ:分數怎麼來的、不是正式成績,寫在點開的資訊欄(js/estimate-ui.js;沒載到就不畫) */
+      if (window.ESTIMATE_UI) ESTIMATE_UI.addInfo(card.el, 'mock');
       resultCard = card;
       root.append(card.el);
       const after = [unsaved ? null : wrongNote(wb, skipped || 0), unsavedNote(unsaved)].filter(Boolean);

@@ -54,13 +54,14 @@ async function volume(file, run) {
 }
 
 /* ---------- 語音辨識（可行才跑）---------- */
+/* Python 只從 --python 或環境變數 PYTHON 取得;都沒設就略過語音辨識 */
 function pythonExe(args) {
-  const cands = [args.python, process.env.PYTHON, 'C:/Users/USER/anaconda3/python.exe', 'python3'].filter(Boolean);
+  const cands = [args.python, process.env.PYTHON].filter(Boolean);
   return cands.find((c) => !/[\\/]/.test(c) || fs.existsSync(c)) || null;
 }
 async function asrAvailable(args, run) {
   const py = pythonExe(args);
-  if (!py) return { ok: false, reason: '找不到 Python' };
+  if (!py) return { ok: false, reason: '沒有可用的 Python:用 --python 或環境變數 PYTHON 指定' };
   const model = args.model || 'small.en';
   const home = os.homedir();
   const pt = path.join(home, '.cache', 'whisper', model + '.pt');
@@ -191,5 +192,5 @@ async function check(argv, depsIn) {
   return { errors, warns, items: items.length, checked: stats.checked, asr };
 }
 
-module.exports = { check, wer, expectedSeconds, asrAvailable };
+module.exports = { check, wer, expectedSeconds, asrAvailable, pythonExe };
 if (require.main === module) check(process.argv.slice(2)).then((r) => process.exit(r.errors.length ? 1 : 0), (e) => { console.error(e.message); process.exit(1); });

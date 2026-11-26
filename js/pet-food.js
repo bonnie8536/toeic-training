@@ -15,6 +15,7 @@
      隔天在那台完成練習,同一個階段的麵包蟲會再給一次;日期不同是另一張券,合併兩張都留著(寧可多給,不收回已經給的)。
      這一張占掉那台那天的一個名額,學生拿到麵包蟲而不是那一份點心,總份數不變。同步之後 once 記較早那天,不會再給第三次。
    - 每種最多存 9 份,滿了不給(full),不占名額,留給下一個完成的練習。
+   - 程度檢測:舊 28 題(diag)與新檢測(pl,placement_v1 有結束時間的那次)各自一輩子給一次,記在 once.diag、once.pl。
    - 補寫(backfill):最近 7 天裡還沒有任何券的日子,從既有的鍵看得到的完成補一張(跟一天一份那版相同,不補到 3 份:
      已經有券的日子不動,舊規則寫好的那幾天不會因為改成一天 3 份被補上券)。
    測試:node tools/test_pet_food.js、node tools/test_pet_food3.js */
@@ -33,7 +34,7 @@
     [/^((g|pn):[a-z0-9:_-]+|iv)$/, 'pea'],
     [/^(fall|pairs|toast|mcq|ph)$/, 'berry'],
     [/^((r|tq|dlg):[a-z0-9:_-]+|p[567]|pr|l[1-4]|es|ed|emp|en|rv)$/, 'tomato'],
-    [/^(mock|diag)$/, 'melon'],
+    [/^(mock|diag|pl)$/, 'melon'],   // pl:程度檢測(placement.html)第一次做完
     [/^(wr:[a-z0-9:_-]+|m)$/, 'greens'],
     [/^les_t\d{1,2}_\d{2}$/, 'tomato'],   // 課程頁:每堂第一次看到本堂結果(第 1 堂是前測結果),來源 id 是進度鍵 les_t<期>_<堂>
   ];
@@ -109,12 +110,13 @@
   /* 回傳 { result, food, id, left, F }:F 是寫好的新欄位(只有 got 時有);id 是券的 id;left 是那天還能拿幾份。
      先看那天滿 3 張沒有(cap),再看同一個來源拿過沒有(dup) */
   const SPECIAL_FOODS = ['yam', 'worm'];
+  const ONCE = { diag: true, pl: true };   // 一輩子一次的來源(記在 once 的同名欄位):舊 28 題 diag、新檢測 pl,兩個分開算
   function decide(p, F, src, d, from, streak) {
     const day = K.own(F.got, d) ? F.got[d] : {};
     const n = Object.keys(day).length, max = P.SNACKS_PER_DAY;
     if (n >= max) return { result: 'cap', left: 0 };
     if (usedSource(day, src)) return { result: 'dup', left: max - n };
-    if (src === 'diag' && K.own(F.once, 'diag')) return { result: 'once' };
+    if (ONCE[src] && K.own(F.once, src)) return { result: 'once' };
     const stock = K.stockOf(F);
     const room = f => (K.own(stock, f) ? stock[f] : 0) < P.MAX_STOCK;
     const special = Object.keys(day).some(id => SPECIAL_FOODS.includes(day[id]));   // 那天給過特別的了(含一天一份那版的 y、w:…)
@@ -126,7 +128,7 @@
       if (w && room('worm')) { food = 'worm'; id = specialId(w, src); once[w] = d; }
       else if (!room(food)) return { result: 'full', food, left: max - n };
     }
-    if (src === 'diag') once.diag = d;   // 程度檢測一輩子只給一次:第一次交卷那天就記下,就算那天換成了特別的食物
+    if (ONCE[src]) once[src] = d;   // 舊卷、新檢測各自一輩子只給一次:第一次交卷那天就記下,就算那天換成了特別的食物
     const got = Object.assign({}, F.got, { [d]: Object.assign({}, day, { [id]: food }) });
     return { result: 'got', food, id, left: max - n - 1, F: Object.assign({}, F, { got, once }) };
   }
@@ -150,6 +152,11 @@
   /* ---------- 補寫最近 7 天 ---------- */
   const isPlain = o => !!o && typeof o === 'object' && !Array.isArray(o);
   const timeOf = s => (typeof s === 'string' ? Date.parse(s) : NaN);
+  /* 新檢測(placement_v1)最早做完的那一次的結束時間;沒有回 NaN */
+  function firstPlacement(pl) {
+    const runs = isPlain(pl) && Array.isArray(pl.runs) ? pl.runs : [];
+    return runs.reduce((a, r) => { const t = isPlain(r) ? timeOf(r.end) : NaN; return K.isTime(t) && !(t >= a) ? t : a; }, NaN);
+  }
   /* 每天的完成:有時間的取 { id, t };看不出時間的 t 是 Infinity,d 排在 m 前面 */
   function completions(p, src, lo, hi) {
     const by = {};
@@ -163,6 +170,8 @@
     });
     if (Array.isArray(src.mock)) src.mock.forEach(r => { const t = isPlain(r) ? timeOf(r.d) : NaN; if (K.isTime(t)) add(P.dateOf(t), 'mock', t, 0); });
     if (isPlain(src.diag) && src.diag.done) { const t = timeOf(src.diag.finishedAt); if (K.isTime(t)) add(P.dateOf(t), 'diag', t, 0); }
+    const pl = firstPlacement(src.placement);
+    if (K.isTime(pl)) add(P.dateOf(pl), 'pl', pl, 0);
     if (isPlain(src.daily)) Object.keys(src.daily).forEach(d => {
       const day = src.daily[d];
       if (P.isDate(d) && isPlain(day) && ['d', 'v', 'g'].some(k => isPlain(day[k]) && Object.keys(day[k]).length >= ROUND_MIN)) add(d, 'd', Infinity, 1);

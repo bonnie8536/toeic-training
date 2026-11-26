@@ -35,7 +35,7 @@
       if (C.levelName(pick.listening) && C.levelName(pick.reading) && opts.onApply(pick.listening, pick.reading) && sheet) sheet.close();
     } }, '套用');
     const listening = group('listening', '聽力');
-    sheet = UI.sheet({ title: '改級別', class: 'ob-sheet', focus: listening.querySelector('input:checked') || undefined,
+    sheet = UI.sheet({ title: '改程度', class: 'ob-sheet', focus: listening.querySelector('input:checked') || undefined,
       nodes: [listening, group('reading', '閱讀'), note, h('div', { class: 'ob-sheet-actions' }, apply)] });
     return sheet;
   }
@@ -98,7 +98,7 @@
   function settingsSection() {
     const D = window.ONBOARD_DATA;
     if (!D || !window.CLOUD || !CLOUD.enabled || CLOUD.isTeacher || D.isGuest()) return null;
-    const rows = C.settingsRows(D.account(), D.diag());
+    const rows = C.settingsRows(D.account(), D.diag(), D.placement());
     const box = h('section', { class: 'me-sec', id: 'learning-settings', 'aria-labelledby': 'me-learning-h' },
       h('h2', { class: 'me-sec-h', id: 'me-learning-h' }, '學習設定'));
     const inner = (r) => [h('span', null, r.label), r.value ? h('span', { class: 'me-row-val' }, r.value) : null];
@@ -134,12 +134,12 @@
   }
 
   /* ---------- 檢測頁(js/diagnostic.js)結算卡的主按鈕 ----------
-     設定中、按「開始檢測」之後交的卷:換成「看起始程度」;其他時候回 null(檢測頁照原本的「去刷題」)。
+     設定中、按「開始檢測」之後交的卷(或做完的新檢測):換成「看起始程度」;其他時候回 null(檢測頁照原本的「去刷題」)。
      核心檔或資料檔沒載到也回 null,不讓檢測報告畫不出來 */
   function diagPrimary() {
     const D = window.ONBOARD_DATA;
     if (!C || !D || D.isGuest()) return null;
-    return C.diagRowState(D.account().onboard, D.diag()) === 'result' ? { label: '看起始程度', href: 'start.html?step=result' } : null;
+    return C.diagRowState(D.account().onboard, D.diag(), D.placement()) === 'result' ? { label: '看起始程度', href: 'start.html?step=result' } : null;
   }
 
   /* 檢測頁開頁時直接開考的條件(js/diagnostic.js autoStart):登入著、設定停在檢測這一步、還沒有作答 */

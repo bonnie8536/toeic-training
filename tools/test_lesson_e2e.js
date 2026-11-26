@@ -1,6 +1,7 @@
 /* 課程頁的無頭 Chrome 測試:真的頁面、真的練習引擎、假雲端(tools/fixtures/lesson_cloud_stub.js,不連外網、不用真的帳號)、假時鐘。
    一個本機伺服器放 repo 的檔:js/cloud-config.js 換成假的設定、js/packs-config.js 的試行班名單換成測試用的班、sw.js 回 404;
    --base 給了時,另一個埠放那個資料夾(例如上一版的匯出),第 1 條拿來比非試行帳號的畫面。
+   --base 要用還沒有課程功能的版本:第 1 條最後檢查課程判定多查班級名單的次數(跟 base 相差 1),拿已含課程的版本當 base 時這一點不成立,第 1 條一定失敗。
    每個帳號一個瀏覽器設定檔(Target.createBrowserContext),兩個設定檔同一個帳號就是兩台裝置。作答用頁面裡的小幫手 __step():
    有沒選的選項就選、有主按鈕就按(只按 button,不點離開課程頁的連結)。最後一條(同步)不開瀏覽器,用 tools/sync_harness.js 的多台裝置。
    用法:node tools/test_lesson_e2e.js [--port <起始埠,用兩個>] [--debug-port <Chrome 的埠>] [--tmp <放 Chrome 使用者資料的資料夾>]

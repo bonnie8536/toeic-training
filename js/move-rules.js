@@ -19,7 +19,10 @@
      課程(js/pack-core.js、js/lesson-rules.js):plan(課表設定)、pts(考點狀態)、rvq(回顧佇列)、tests_v1(測驗結果)、
      les_t<期>_<堂>(一堂一鍵,由 PACK_CORE.lessonKey 產生)。搬家時整份換(single,兩邊不同時問人);
      雲端帳號的搬家暫存區不走這裡的 single:pts、rvq、tests_v1、les_t 在 js/cloud.js 的合併表上,takeSynced 用 SYNC_MERGE.pts、rvq、tests、lesson
-     (作答、批次、佇列聯集;tools/test_move_cloud.js)。訪客與本機學生的搬家要不要改用合併另外決定(現在維持 single)。 */
+     (作答、批次、佇列聯集;tools/test_move_cloud.js)。訪客與本機學生的搬家要不要改用合併另外決定(現在維持 single)。
+     預估分數(js/estimate-store.js):fa_v1(第一次作答)、placement_v1(程度檢測紀錄)、est_v1(預估快照)。規則名就是合併函式名
+     (SYNC_MERGE.firstAttempts、placementRuns、estSnap,js/sync-merge-estimate.js):fa_v1 同一題留「較早」的那次作答,
+     跟 pool 的「留較新」相反,不能用 pool;est_v1 是 at 新的整份贏。訪客、本機學生與雲端帳號的暫存區都用同一組合併函式。 */
   const EXACT = Object.freeze({
     hist: 'hist', mock_history: 'mock', mock_wrong: 'pool', mock_seen: 'pool', q_reports: 'pool', pet: 'pet', daily_done: 'daily', vgame_banks: 'banks', sync_del: 'tombs',
     vgame_best: 'best', vgame_toast_best: 'best', vgame_pairs_best: 'pairsBest', vgame_clear: 'clear',
@@ -30,6 +33,7 @@
     diag: 'single', ph_slow: 'single', vgame_src: 'single',
     onboard: 'single', self_score: 'single', levels: 'single',
     plan: 'single', pts: 'single', rvq: 'single', tests_v1: 'single',
+    fa_v1: 'firstAttempts', placement_v1: 'placementRuns', est_v1: 'estSnap',
   });
   const ID = '[A-Za-z0-9_.-]{1,80}';
   const FAMILIES = Object.freeze([

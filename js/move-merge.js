@@ -43,6 +43,7 @@
     vgame_src: '單字遊戲上次的題目來源', profiles: '學生名單', current_profile: '目前的學生檔案', pet_hint: '寵物提示次數',
     plan: '課表設定', pts: '考點狀態', rvq: '回顧佇列', tests_v1: '測驗結果',
     onboard: '起始程度設定', self_score: '自填成績', levels: '起始程度', q_reports: '回報過的題目',
+    fa_v1: '預估分數用作答', placement_v1: '程度檢測紀錄', est_v1: '預估分數',
   };
 
   const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
@@ -65,7 +66,15 @@
     h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
     return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
   }
-  function parse(raw) { try { return { ok: true, v: JSON.parse(raw) }; } catch (e) { return { ok: false }; } }
+  /* 外來資料的 "__proto__" 鍵讀的時候就拿掉(JSON.parse 會把它當一般的鍵留著,合併時會被當成換原型) */
+  const noProtoKey = (k, v) => (k === '__proto__' ? undefined : v);
+  function parse(raw) { try { return { ok: true, v: JSON.parse(raw, noProtoKey) }; } catch (e) { return { ok: false }; } }
+  /* 搬來的原字串直接寫進本機之前:帶 "__proto__" 鍵就改寫成拿掉之後的字串(頁面自己 JSON.parse 再 Object.assign 時才不會換掉原型);沒有就原樣 */
+  function cleanRaw(raw) {
+    let had = false;
+    const v = JSON.parse(raw, (k, x) => { if (k === '__proto__') { had = true; return undefined; } return x; });
+    return had ? JSON.stringify(v) : raw;
+  }
   function labelOf(sub) {
     if (own(LABELS, sub)) return LABELS[sub];
     if (/^drill_p/.test(sub)) return '刷題錯題本（Part ' + sub.slice(7) + '）';
@@ -318,6 +327,13 @@
         if (!m || m.ok !== true) return { v: nv, kind: 'conflict', why: 'tombs' };
         return m.sameAsLocal ? { v: nv, kind: 'same' } : { v: m.v, kind: 'merged' };
       }
+      case 'firstAttempts': case 'placementRuns': case 'estSnap': {   // 預估分數三個鍵:同步的合併函式(js/sync-merge-estimate.js),沒載到就留新網址的、列為衝突
+        const fn = root.SYNC_MERGE && typeof root.SYNC_MERGE[rule] === 'function' ? root.SYNC_MERGE[rule] : null;
+        let m = null;
+        try { m = fn ? fn(nv, ov) : null; } catch (e) { m = null; }
+        if (!m || m.ok !== true || m.v === null) return { v: nv, kind: 'conflict', why: 'shape' };
+        return m.sameAsLocal ? { v: nv, kind: 'same' } : { v: m.v, kind: 'merged' };
+      }
       case 'daily': {
         const D = ctx.daily;
         if (!D || typeof D.merge !== 'function') return { v: nv, kind: 'conflict', why: 'daily' };
@@ -541,10 +557,10 @@
       const c = R.classify(k, valid.profileIds);
       if (c.rule !== 'banks' || skip(k, labelOf(c.sub))) return;
       const folder = k.slice(0, k.length - c.sub.length);
-      const ov = JSON.parse(raw);
+      const ov = JSON.parse(raw, noProtoKey);
       const cur = target.get(k);
       if (cur === null) {
-        put(k, raw, 'add');
+        put(k, cleanRaw(raw), 'add');
         res.counts.added++;
         res.items.push({ key: k, kind: 'added' });
         if (Array.isArray(ov)) ov.forEach((b) => {
@@ -574,8 +590,8 @@
       const c = R.classify(k, valid.profileIds);
       if (c.rule === 'banks' || skip(k, labelOf(c.kind === 'global' ? c.sub.replace(/^tr_/, '') : c.sub))) return;
       const folder = k.slice(0, k.length - c.sub.length);
-      let ov = JSON.parse(raw);
-      let oraw = raw;
+      let ov = JSON.parse(raw, noProtoKey);
+      let oraw = cleanRaw(raw);
       if (c.kind !== 'global' && remaps[folder] && (BANK_KEYS.indexOf(c.sub) > -1 || c.sub === 'vgame_src')) {
         const moved = remapRelated(c.sub, ov, remaps[folder]);
         if (moved !== ov) { ov = moved; oraw = JSON.stringify(ov); }
@@ -660,7 +676,8 @@
      不放進 joined(照原本的規則留時間晚的那包),沒選上的那包(兩包不一樣時)放進 lost,由 plan 存進備份。
      回 { joined: Map(鍵 → [鍵, 原字串, 兩包裡比較晚的時間]), lost: [[鍵, 原字串, 時間]] } */
   const SYNC_FN = Object.freeze({ sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong',
-    levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests', mock_seen: 'mockSeen', plan: 'plan' });
+    levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests',
+    fa_v1: 'firstAttempts', placement_v1: 'placementRuns', est_v1: 'estSnap', mock_seen: 'mockSeen', plan: 'plan' });
   const SYNC_FAMILY = Object.freeze([[/^les_t[1-9]\d?_(0[1-9]|1\d|2[0-4])$/, 'lesson']]);
   function syncFnOf(sub) {
     if (own(SYNC_FN, sub)) return SYNC_FN[sub];

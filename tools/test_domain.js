@@ -47,11 +47,12 @@ T['切到 new:該換的全換成新網址,舊網域只剩說明文字;切回現�
   assert.equal(toOld.CNAME.trim(), 'www.shuashualanguage.com');
   assert.match(toOld['supabase/functions/_shared/site.ts'], /export const LIVE: 'old' \| 'new' = 'old';/);
 };
-T['客服信箱:改 domain.json 的 mail 再跑一次,js/checkout.js 與每一頁的信箱一起換'] = () => {
+T['客服信箱:改 domain.json 的 mail 再跑一次,js/checkout.js、每一頁與 .well-known/security.txt 的信箱一起換'] = () => {
   const out = apply(files, Object.assign({}, CFG, { mail: 'help@example.test' }));
   assert.match(out['js/checkout.js'], /const MAIL = 'help@example\.test';/);
   Object.keys(out).forEach((rel) => assert.equal((out[rel] || '').indexOf(CFG.mail), -1, rel));
   assert.match(out['privacy.html'], /mailto:help@example\.test/);
+  assert.match(out['.well-known/security.txt'] || '', /^Contact: mailto:help@example\.test\r?$/m);
 };
 T['站內連結是相對路徑:網頁與 js/ 裡新網域的絕對網址只在 canonical、og、結構化資料與網域清單'] = () => {
   const bad = [];

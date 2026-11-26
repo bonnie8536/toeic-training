@@ -69,7 +69,7 @@ const started = (lesson, at, done) => {
 T['homeModel:可開始(第 1 堂約 50 分鐘)、進行中(段數)、明天開放、尚未開放、24 堂都上完;明天開放與尚未開放沒有按鈕,總覽頂端才放每日練習'] = () => {
   const lo = lessonOf(EE);
   const m0 = C.homeModel({ unlock: unlockOf({}), states: {}, lessonOf: lo });
-  eq([m0.no, m0.kind, m0.kicker, m0.title, m0.tags, m0.href, m0.label, m0.pose, m0.daily, m0.done], [1, 'start', '第 1 堂', '前測', ['約 50 分鐘'], 'lesson.html?no=1', '開始第 1 堂', 'read', false, 0]);
+  eq([m0.no, m0.kind, m0.kicker, m0.title, m0.tags, m0.href, m0.label, m0.pose, m0.daily, m0.done], [1, 'start', '第 1 堂', '前測', ['約 50 分鐘'], 'lesson.html?no=1', '開始第 1 堂', 'gaze', false, 0]);
   let s1 = started(lo(1), NOW - 3600);
   s1 = P.setSegment(s1, lo(1), 'test_listening', 'done', NOW - 3000);
   const m1 = C.homeModel({ unlock: unlockOf({ 1: s1 }), states: { 1: s1 }, lessonOf: lo });

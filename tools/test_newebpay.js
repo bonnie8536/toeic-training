@@ -399,9 +399,11 @@ test('價格表:只有 test10 限站長;品名合規;怪代號查不到', async 
   }
 });
 
-test('價格表的代號與內容跟 paid_gateway_additions.sql 的核對表相同(找不到 SQL 檔就跳過)', async (t) => {
-  const sqlPath = path.join(REPO, '..', '刷刷英文開發', '收費', 'newebpay', 'paid_gateway_additions.sql');
-  if (!fs.existsSync(sqlPath)) { t.skip('找不到 ' + sqlPath); return; }
+/* 收費 SQL 不在 repo 裡:用環境變數 RUSHUP_PAID_SQL_FILE 指到 paid_gateway_additions.sql,沒設就跳過 */
+test('價格表的代號與內容跟 paid_gateway_additions.sql 的核對表相同(沒設 RUSHUP_PAID_SQL_FILE 就跳過)', async (t) => {
+  const sqlPath = process.env.RUSHUP_PAID_SQL_FILE;
+  if (!sqlPath) { t.skip('沒有設定 RUSHUP_PAID_SQL_FILE'); return; }
+  if (!fs.existsSync(sqlPath)) { t.skip('RUSHUP_PAID_SQL_FILE 指定的檔案不存在'); return; }
   const { PRODUCTS } = await PROD_MOD;
   const sql = fs.readFileSync(sqlPath, 'utf8');
   const rows = [...sql.matchAll(/\('([a-z0-9_]+)', '(student|teacher|credits)', (null|\d+)(?:::int)?, (null|\d+)(?:::int)?, (null|\d+)(?:::int)?\)/g)]
@@ -1208,15 +1210,24 @@ test('build_edge_dashboard:攤平後沒有上層 import,檔案齊全,內容只�
   }
 });
 
-test('Edge Function 原始碼:沒有金鑰、商店代號、站長的資料;handler 不碰 Deno;index 用 Deno.serve', () => {
+/* 要擋的字樣放在 repo 外(tools/private_patterns.js);沒設 RUSHUP_PRIVATE_PATTERNS_FILE 就跳過字樣那一項(node test 記成 skip) */
+const { loadPrivatePatterns, privateHits } = require('./private_patterns.js');
+const PRIVATE = loadPrivatePatterns();
+test('Edge Function 原始碼沒有字樣清單上的字(沒設 RUSHUP_PRIVATE_PATTERNS_FILE 就跳過)', (t) => {
+  if (PRIVATE.skipped) { t.skip(PRIVATE.skipped); return; }
+  for (const f of walk(FN).filter((x) => x.endsWith('.ts'))) {
+    assert.deepEqual(privateHits(fs.readFileSync(f, 'utf8'), PRIVATE.patterns), [], path.relative(REPO, f) + ' 有字樣清單裡的字');
+  }
+});
+test('Edge Function 原始碼:沒有金鑰、商店代號;handler 不碰 Deno;index 用 Deno.serve', () => {
   const files = walk(FN).filter((f) => f.endsWith('.ts'));
   assert.ok(files.length >= 7);
   for (const f of files) {
     const src = fs.readFileSync(f, 'utf8');
     const rel = path.relative(REPO, f);
-    assert.equal(/MS1845581245/.test(src), false, rel);
+    assert.equal(/(?<![A-Za-z0-9])MS\d{8,}(?![0-9])/.test(src), false, rel);   // 藍新商店代號的格式:只從環境變數讀
     assert.equal(/[A-Za-z0-9]{32}/.test(src.replace(/https?:\/\/\S+/g, '')), false, rel);
-    assert.equal(/bonnie|8536|許|ydzcnnjnfxfmaqbszbgn|sb_secret_|service_role.*eyJ/i.test(src), false, rel);
+    assert.equal(/ydzcnnjnfxfmaqbszbgn|sb_secret_|service_role.*eyJ/i.test(src), false, rel);
     assert.equal(/console\.(log|info|warn|error)\([^)]*(HASH_KEY|HASH_IV|hashKey|hashIV|SERVICE_ROLE|TradeInfo)/.test(src), false, rel);
     if (/handler\.ts$|_shared/.test(f)) assert.equal(/\bDeno\./.test(src), false, rel);
     if (/index\.ts$/.test(f)) assert.match(src, /Deno\.serve\(/, rel);

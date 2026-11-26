@@ -17,7 +17,7 @@
     { key: 'home', label: '首頁', href: 'index.html', pages: ['index.html', 'daily.html', 'start.html', 'lessons.html', 'lesson.html'] },
     { key: 'learn', label: '日常學習', href: 'learn.html', pages: ['learn.html', 'grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'] },
     { key: 'warmup', label: '練練手感', href: 'warmup.html', pages: ['warmup.html', 'vocab.html', 'listening.html', 'writing.html'] },
-    { key: 'drill', label: '刷刷題目', href: 'drill.html', pages: ['drill.html', 'practice.html', 'mock.html', 'diagnostic.html', 'review.html'] },
+    { key: 'drill', label: '刷刷題目', href: 'drill.html', pages: ['drill.html', 'practice.html', 'mock.html', 'diagnostic.html', 'placement.html', 'review.html'] },
     { key: 'me', label: '我的', href: 'me.html', pages: ['me.html', 'history.html', 'analysis.html', 'admin.html'] },
   ];
   const TITLES = {
@@ -25,7 +25,7 @@
     'listening.html': '聽力訓練', 'reading.html': '閱讀訓練', 'dialogue.html': '對話練習', 'tenses.html': '時態總整理', 'writing.html': '寫作練習', 'practice.html': '題庫刷題',
     'mock.html': '模擬考', 'review.html': '錯題本', 'history.html': '學習記錄', 'analysis.html': '能力分析', 'admin.html': '教師後台', 'pricing.html': '方案與價格',
     'terms.html': '服務條款', 'privacy.html': '隱私權政策', 'refund.html': '退款政策', 'corrections.html': '題目更正紀錄', 'pay-result.html': '付款結果',
-    'start.html': '開始', 'lessons.html': '課程', 'lesson.html': '課程',
+    'start.html': '開始', 'lessons.html': '課程', 'lesson.html': '課程', 'placement.html': '程度檢測',
   };
   const PAGE = (function () {
     let p = location.pathname.split('/').pop() || 'index.html';
@@ -305,7 +305,7 @@
      日常學習、練練手感、刷刷題目、錯題本在 PET_ROAM_V2 時載入走動的小雞和面板;首頁、「我的」本來就有面板,只多載 pet-roam2.js。
      pet-roam-zones.js(電腦版到處走的空地)只有網站模式載,放在 pet-roam2.js 前面;App 模式不載 */
   const WEB_FOOD_PAGES = ['daily.html', 'grammar.html', 'phonics.html', 'vocab.html', 'reading.html', 'practice.html', 'listening.html',
-    'review.html', 'dialogue.html', 'mock.html', 'diagnostic.html', 'writing.html', 'lesson.html'];
+    'review.html', 'dialogue.html', 'mock.html', 'diagnostic.html', 'writing.html', 'lesson.html', 'placement.html'];
   const WEB_ROAM_FULL = ['learn.html', 'warmup.html', 'drill.html', 'review.html'];
   const WEB_ROAM_ONLY = ['index.html', 'me.html'];
   function webPetList(page) {

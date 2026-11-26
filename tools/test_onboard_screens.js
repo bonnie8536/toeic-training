@@ -62,8 +62,7 @@ function makeDom(win) {
       if (this.tagName === 'SELECT') this._v = this.children.some((c) => c.tagName === 'OPTION' && c.attrs.value === v) ? v : '';
       else this._v = v;
     }
-    replaceChildren(...ns) { this.children.slice().forEach((c) => this._rm(c)); this._t = ''; this.append(...ns); }
-    append(...ns) { ns.map((n) => (typeof n === 'string' ? doc.createTextNode(n) : n)).forEach((n) => { if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.push(n); if (n.tagName === 'SCRIPT' && this.tagName === 'HEAD') win.__loadScript(n); }); }
+    append(...ns) { ns.forEach((n) => { if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.push(n); if (n.tagName === 'SCRIPT' && this.tagName === 'HEAD') win.__loadScript(n); }); }
     prepend(...ns) { ns.reverse().forEach((n) => { if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.unshift(n); }); }
     scrollIntoView() {}
     _rm(c) { const i = this.children.indexOf(c); if (i > -1) this.children.splice(i, 1); c.parentNode = null; }
@@ -125,18 +124,7 @@ function fakeUI(e, doc) {
   e.confirms = []; e.sheets = []; e.results = []; e.mounts = 0; e.destroyed = 0;
   const node = (tag, cls, text) => { const n = doc.createElement(tag); if (cls) n.className = cls; if (text !== undefined && text !== null) n._t = String(text); return n; };
   const button = (cls, text, onClick) => { const b = node('button', cls, text); b.setAttribute('type', 'button'); b.addEventListener('click', onClick); return b; };
-  /* 專心模式:作答列的關閉鈕(.quiz-close)與底部按鈕列(.quiz-foot)放在 body,記下進度 */
-  const focus = { enter: (o) => {
-    const bar = node('div', 'quiz-bar'), foot = node('div', 'quiz-foot');
-    const api = { active: true, n: 0, progress: (n) => { api.n = n; }, foot: (ns) => { foot.children.slice().forEach((c) => c.remove()); (ns || []).forEach((x) => foot.append(x)); },
-      keep: (f) => f(), say: () => {}, focusMain: () => {}, leave: () => { api.active = false; bar.remove(); foot.remove(); } };
-    bar.append(button('quiz-close', '', () => { api.leave(); o.onExit(); }));
-    doc.body.append(bar, foot);
-    e.focus = api;
-    return api;
-  } };
   return {
-    focus,
     mount: () => { e.mounts++; },
     /* 確定回 true;取消、Esc、點遮罩回 false(mask.esc() 模擬 Esc) */
     confirm: (o) => new Promise((resolve) => {
@@ -177,7 +165,7 @@ function fakeUI(e, doc) {
 
 /* ---------- 沙盒 ---------- */
 /* opt:url(開頁網址)、signed(已登入)、init(localStorage)、session(sessionStorage)、folderReady、teacherQuery('fail')、
-   join(假 CLASSES.api.join 的結果)、diagFail(data/diagnostic.js 載不到)、paid(window.PAID_UI)、noUi(共用元件沒載到)、
+   join(假 CLASSES.api.join 的結果)、diagFail(data/diagnostic.js 載不到)、estFail(題目難度與估分的檔載不到)、paid(window.PAID_UI)、noUi(共用元件沒載到)、
    waitCloud(已登入、雲端元件一直沒載完) */
 async function open(opt) {
   opt = opt || {};
@@ -219,10 +207,12 @@ async function open(opt) {
     MutationObserver: class { observe() {} }, PAID_UI: opt.paid === true,
   });
   ctx.window = ctx;
+  /* 頁面要用時才載的檔:照網址載真的檔(data/diagnostic.js 不記在 loads) */
   ctx.__loadScript = (s) => setImmediate(() => {
-    if ((opt.lesson || /^(js\/lesson-|data\/listening)/.test(s.src)) &&s.src !== 'data/diagnostic.js') { e.loads.push(s.src); vm.runInContext(read(s.src), ctx, { filename: s.src }); s.onload(); return; }
-    if (opt.diagFail) { s.onerror(); return; }
-    vm.runInContext(read('data/diagnostic.js'), ctx);
+    const diagFile = s.src === 'data/diagnostic.js';
+    if ((diagFile && opt.diagFail) || (opt.estFail && /estimate|item-params/.test(s.src))) { s.onerror(); return; }
+    if (!diagFile) e.loads.push(s.src);
+    vm.runInContext(read(s.src), ctx, { filename: s.src });
     s.onload();
   });
   if (opt.waitCloud) ctx.__PROFILE_ID = CPID;   // 已登入、雲端元件還沒載完(CLOUD.ready 一直沒好)
@@ -260,8 +250,9 @@ async function open(opt) {
       fetch: (u) => Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(JSON.parse(read(u))) }) });
   }
   vm.createContext(ctx);
+  /* 同 start.html:估分的兩個核心檔每一頁都載(js/estimate-store.js、data/item-params.js 要用時才載) */
   (opt.lesson ? ['js/common.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js', 'js/lesson-home.js'] : ['js/common.js'])
-    .concat(['js/onboard-core.js', 'js/onboard-data.js', 'js/onboard-ui.js', 'js/onboard-listen.js', 'js/onboard.js']).forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
+    .concat(['js/estimate-core.js', 'js/estimate-data.js', 'js/estimate-ui.js', 'js/onboard-core.js', 'js/onboard-data.js', 'js/onboard-ui.js', 'js/onboard.js']).forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   (dom.doc.on.DOMContentLoaded || []).forEach((f) => f({}));
   await settle();
   return Object.assign(e, {
@@ -349,7 +340,15 @@ T['P4 單選卡片:方向鍵只移焦點與 tabindex,aria-checked 不變、不�
   assert.equal(e.root.querySelector('.ob-progress').attrs['aria-label'], '第 2 題，共 3 題');
 };
 
-T['P5 接回 test、entry、score:寫進帳號、刪訪客暫存、到 S4 或 S8;S8 聽力小字依來源、次按鈕「做檢測」'] = async () => {
+/* 結算卡標題旁 ⓘ 的資訊欄:起始程度怎麼來的(沒有 ⓘ 回 null) */
+const levelInfo = (e) => {
+  const b = e.root.querySelector('.result-score').querySelector('.est-info');
+  if (!b) return null;
+  b.click();
+  const sh = e.sheets[e.sheets.length - 1];
+  return [b.attrs['aria-label'], sh.opt.title].concat((sh.opt.nodes || []).map((n) => n.textContent));
+};
+T['P5 接回 test、entry、score:寫進帳號、刪訪客暫存、到 S4 或 S8;S8 標題旁 ⓘ 依來源寫一句(卡片上不掛小字)、次按鈕「做檢測」'] = async () => {
   const t = await open({ url: 'start.html?step=resume', signed: true, init: { [G_KEY]: pendingGuest('test') }, session: { ob_auth_nonce: NONCE } });
   eq([t.step(), t.h1(), t.guest(), t.acct('onboard').step, t.acct('onboard').targetScore], ['test', '程度檢測', null, 'test', 600]);
   assert.ok(t.find('開始檢測') && t.find('先跳過，從入門開始'));
@@ -357,13 +356,15 @@ T['P5 接回 test、entry、score:寫進帳號、刪訪客暫存、到 S4 或 S8
   const n = await open({ url: 'start.html?step=resume', signed: true, init: { [G_KEY]: pendingGuest('entry') }, session: { ob_auth_nonce: NONCE } });
   eq([n.step(), n.h1(), n.acct('levels').listening, n.acct('levels').reading, n.acct('onboard').status], ['result', '你的起始程度', 'entry', 'entry', 'done']);
   assert.equal(n.find('開始練習').attrs.href, 'grammar.html');
-  assert.ok(n.find('改級別') && n.find('做檢測') && !n.find('重新檢測'));
-  assert.ok(!/依你填的成績|依閱讀推估/.test(n.root.textContent));
+  assert.ok(n.find('改程度') && n.find('做檢測') && !n.find('重新檢測'));
+  assert.ok(!/依你填的|依閱讀/.test(n.root.textContent));
+  eq(levelInfo(n), null, '從入門開始:沒有來源要說明,不畫 ⓘ');
 
   const s = await open({ url: 'start.html?step=resume', signed: true, init: { [G_KEY]: pendingGuest('score') }, session: { ob_auth_nonce: NONCE } });
   eq([s.step(), s.acct('self_score').listening, s.acct('self_score').reading, s.acct('levels').listening, s.acct('levels').reading],
     ['result', 325, 270, 'advanced', 'threshold']);
-  assert.ok(/依你填的成績/.test(s.root.textContent));
+  assert.ok(!/依你填的/.test(s.root.textContent), '卡片上不掛小字');
+  eq(levelInfo(s), ['起始程度說明', '起始程度', '這個程度是依你填的多益成績定的。']);
   assert.equal(s.find('開始練習').attrs.href, 'practice.html?part=5');
 };
 
@@ -450,33 +451,27 @@ T['P10 沒有可接的訪客暫存:直接回首頁,不寫'] = async () => {
   eq([e.replaced, e.acct('onboard')], [['index.html'], null]);
 };
 
-T['P11 重新檢測還沒交卷就回 S8:回 S4、不記完成;交卷後算級別、記完成,小字「聽力依閱讀結果推估」、文字按鈕「重新檢測」'] = async () => {
-  const init = { [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: LV,
-    [PRE + 'diag']: J({ answers: {}, done: true, startedAt: '2026-11-01T01:00:00.000Z', finishedAt: '2026-11-01T01:20:00.000Z' }) };
-  const ls = new Map(Object.entries(init));
+T['P11 重新檢測還沒做完就回 S8:回 S4、不記完成;做完後用預估對回級別、記完成,標題旁 ⓘ 寫「依你的程度檢測和之後的練習結果定的」、文字按鈕「重新檢測」;舊報告不刪'] = async () => {
+  const oldDiag = J({ answers: {}, done: true, startedAt: '2026-11-01T01:00:00.000Z', finishedAt: '2026-11-01T01:20:00.000Z' });
+  const ls = new Map(Object.entries({ [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: LV, [PRE + 'diag']: oldDiag }));
   const a = await open({ url: 'start.html?step=test', signed: true, ls });
-  await a.press('開始檢測');
-  eq([a.dialogTitle(), a.confirms[0].body, a.confirms[0].danger], ['清除這份報告？', '刷題與閱讀進度不受影響', true]);
-  await a.press('重新檢測');
-  /* 先做聽力短測(開一份新的):不直接去檢測頁 */
-  eq([a.hrefs, a.acct('diag'), a.acct('onboard').status, a.acct('onboard').step, a.acct('onboard').listen.mode, a.step()], [[], null, 'in_progress', 'listen', 'full', 'listen']);
-  /* 短測還沒做完就回到 S8 網址:回短測 */
-  const b0 = await open({ url: 'start.html?step=result', signed: true, ls });
-  eq([b0.step(), b0.acct('onboard').status], ['listen', 'in_progress']);
-  /* 上線前的舊流程(沒有短測):中場按「開始閱讀」之後同一條路 */
-  ls.set(PRE + 'onboard', J(Object.assign(a.acct('onboard'), { step: 'test', testFrom: NOW_ISO, listen: undefined })));
+  await a.press('做聽力檢測');   // 只有舊檢測:閱讀已有作答,只做聽力
+  eq([a.confirms.length, a.hrefs, a.ls.get(PRE + 'diag'), a.acct('onboard').status, a.acct('onboard').step],
+    [0, ['placement.html?start=1&from=onboard&sec=L'], oldDiag, 'in_progress', 'test']);
 
-  /* 到檢測頁後按返回回到 S8 網址:還沒交卷 */
+  /* 到檢測頁後按返回回到 S8 網址:還沒做完 */
   const b = await open({ url: 'start.html?step=result', signed: true, ls });
   eq([b.step(), b.acct('onboard').status, b.acct('onboard').step], ['test', 'in_progress', 'test']);
 
-  /* 交卷(晚於 testFrom) */
-  ls.set(PRE + 'diag', J({ answers: {}, done: true, startedAt: new Date(NOW + MIN).toISOString(), finishedAt: new Date(NOW + 20 * MIN).toISOString() }));
+  /* 做完聽力(晚於 testFrom):聽力用預估的級別,閱讀不動 */
+  estDone(ls, 'L', 1);
   const c = await open({ url: 'start.html?step=result', signed: true, ls });
   const lv = c.acct('levels');
-  eq([c.step(), c.h1(), lv.reading, lv.listening, lv.history[lv.history.length - 1].reason, c.acct('onboard').status], ['result', '你的起始程度', 'entry', 'threshold', 'legacy', 'done']);
-  assert.ok(/聽力依閱讀結果推估/.test(c.root.textContent));
+  eq([c.step(), c.h1(), lv.listening, lv.reading, lv.source.listening, lv.source.reading, lv.history[lv.history.length - 1].reason, c.acct('onboard').status],
+    ['result', '你的起始程度', bandOf(c, 'L'), 'threshold', 'est', 'legacy', 'est', 'done']);
+  eq(levelInfo(c).slice(2), ['這個程度是依你的程度檢測和之後的練習結果定的。']);
   assert.ok(c.find('重新檢測') && !c.find('做檢測'));
+  eq([c.ls.get(PRE + 'diag'), c.loads], [oldDiag, ['data/item-params.js', 'js/estimate-store.js']], 'js/estimate-ui.js 跟頁面一起載(同 start.html)');
 };
 T['P12 S8 算級別時題目載不到:「重試」回 S8 重算,不是重跑接回'] = async () => {
   const ls = new Map(Object.entries({
@@ -496,7 +491,7 @@ T['P13 S8 結算卡:標題、兩科級別在統計列、不給分數;班級學�
     init: { [PRE + 'onboard']: doneOnboard({ examMonth: '2027-01' }), [PRE + 'levels']: LV } });
   const r = soon.results[0];
   eq([r.big, r.pose, r.score, r.total, r.stats, r.primary.label, r.links.map((l) => l.label)],
-    ['你的起始程度', 'happy', undefined, undefined, [['聽力', '進階'], ['閱讀', '門檻']], '開始練習', ['改級別', '重新檢測']]);
+    ['你的起始程度', 'happy', undefined, undefined, [['聽力', '進階'], ['閱讀', '門檻']], '開始練習', ['改程度', '重新檢測']]);
   assert.ok(/你的選擇/.test(soon.root.textContent));
   assert.ok(/目標　600 分/.test(soon.root.textContent) && /考試　2027 年 1 月/.test(soon.root.textContent));
   assert.ok(!/考前可上到|週|課表|學習包/.test(soon.root.textContent), soon.root.textContent);
@@ -572,21 +567,14 @@ T['P17 訪客直接開 test、result 網址:有待辦去登入卡,沒有回 S3']
   assert.equal(b.step(), 'signup');
 };
 
-T['P18 S4 舊檢測沒做完而且是 7 天前開始的:先確認再清掉上次的作答;7 天內的直接接著做'] = async () => {
-  const stale = J({ answers: { 0: 1, 1: 2 }, done: false, startedAt: new Date(NOW - 8 * DAY).toISOString() });
-  const a = await open({ url: 'start.html?step=test', signed: true, init: { [PRE + 'diag']: stale, [PRE + 'onboard']: doneOnboard({ status: 'in_progress', step: 'test', doneAt: null }) } });
-  await a.press('開始檢測');
-  eq([a.dialogTitle(), a.confirms[0].ok, a.confirms[0].danger, a.hrefs], ['清除上次沒做完的作答？', '重新開始', true, []]);
-  await a.press('取消');
-  eq([a.mask(), a.ls.get(PRE + 'diag'), a.hrefs], [null, stale, []], '取消:作答留著、不前往');
-  await a.press('開始檢測');
-  await a.press('重新開始');
-  eq([a.acct('diag'), a.hrefs, a.acct('onboard').step, a.acct('onboard').listen.mode, a.step()], [null, [], 'listen', 'full', 'listen']);
-
-  const recent = J({ answers: { 0: 1 }, done: false, startedAt: new Date(NOW - 3 * DAY).toISOString() });
-  const b = await open({ url: 'start.html?step=test', signed: true, init: { [PRE + 'diag']: recent } });
-  await b.press('開始檢測');
-  eq([b.confirms.length, b.ls.get(PRE + 'diag'), b.hrefs], [0, recent, ['diagnostic.html?start=1']]);
+T['P18 S4 舊檢測沒做完(7 天前或 7 天內開始的):新檢測用自己的鍵,不接舊作答、不問、不刪,直接到檢測頁'] = async () => {
+  for (const ago of [8 * DAY, 3 * DAY]) {
+    const old = J({ answers: { 0: 1, 1: 2 }, done: false, startedAt: new Date(NOW - ago).toISOString() });
+    const a = await open({ url: 'start.html?step=test', signed: true, init: { [PRE + 'diag']: old, [PRE + 'onboard']: doneOnboard({ status: 'in_progress', step: 'test', doneAt: null }) } });
+    await a.press('開始檢測');
+    eq([a.confirms.length, a.ls.get(PRE + 'diag'), a.hrefs, a.acct('onboard').step, a.acct('onboard').testFrom],
+      [0, old, ['placement.html?start=1&from=onboard'], 'test', NOW_ISO], String(ago / DAY));
+  }
 };
 
 /* 每一個畫面:實色主按鈕最多一顆(登入卡自己的不算),其他動作是文字按鈕 */
@@ -606,23 +594,22 @@ T['P19 每個畫面只有一顆實色主按鈕,其他是文字按鈕;S0 有鵜�
     out.push([step + (o.signed ? '(登入)' : ''), primaries(e).length]);
     if (step === 'start') {
       const cv = e.root.querySelector('canvas');
-      eq([cv && cv.getAttribute('data-mascot'), cv && cv.getAttribute('aria-hidden'), e.mounts > 0], ['read', 'true', true]);
+      eq([cv && cv.getAttribute('data-mascot'), cv && cv.getAttribute('aria-hidden'), e.mounts > 0], ['gaze', 'true', true]);
       eq(buttonsOf(e), ['btn:開始', 'btn-text:我有班級代碼', 'btn-text:登入']);
-      /* 標題短(手機上跟鵜鶘並排也是一行);副標的「（約 23 分鐘）」不斷開;題數含聽力短測 8 題 */
-      eq([e.h1(), e.root.querySelector('.ob-nowrap').textContent], ['找出你的起始程度', '（約 23 分鐘）']);
-      assert.ok(/填多益成績，或做 36 題檢測/.test(e.root.textContent));
+      /* 標題短(手機上跟鵜鶘並排也是一行);副標的「（約 15–20 分鐘）」不斷開 */
+      eq([e.h1(), e.root.querySelector('.ob-nowrap').textContent], ['找出你的起始程度', '（約 15–20 分鐘）']);
     }
     if (step === 'exam') eq(buttonsOf(e), ['btn:下一步', 'btn-text:還沒報名']);
     if (step === 'score') eq(buttonsOf(e), ['btn-text:只記得總分', 'btn:送出', 'btn-text:改成幫我測']);
     if (step === 'signup') eq(buttonsOf(e), ['btn-text:返回']);
     if (step === 'test') {
-      eq(buttonsOf(e), ['btn:開始檢測', 'btn-text:先跳過，從入門開始']);
-      /* 同檢測頁的開始頁:標題左邊圖示、卡片裡兩個小標籤、主按鈕在卡片裡;沒有單項的列點 */
+      eq(buttonsOf(e), ['btn:開始檢測', 'btn-text:沒有耳機，先做閱讀', 'btn-text:先跳過，從入門開始']);
+      /* 同檢測頁的開始頁:標題左邊圖示、卡片裡三個小標籤、作答方式一行一件事(四行)、主按鈕在卡片裡;沒有單項的列點 */
       const art = e.root.querySelector('.page-head canvas');
       const card = e.root.querySelector('.diag-intro');
       eq([art && art.getAttribute('data-doodle'), card && card.querySelectorAll('.mock-tag').map((n) => n.textContent),
-        card && !!card.querySelector('.btn.primary'), card && card.querySelector('.ob-intro-note').textContent, !!e.root.querySelector('ul')],
-      ['diagnostic', ['聽力 8 題', '閱讀 28 題', '約 23 分鐘'], true, '每題音檔只播一次', false]);
+        card && !!card.querySelector('.btn.primary'), card && card.querySelectorAll('.ob-intro-note').map((n) => n.textContent), !!e.root.querySelector('ul')],
+      ['diagnostic', ['聽力 12 題', '閱讀 12 題', '約 15–20 分鐘'], true, ['戴上耳機。', '每段音檔只播一次。', '選好答案後按「下一題」。', '不能回上一題。'], false]);
     }
     /* C1 訪客:標題、代碼欄、小字、註冊卡都在同一個置中的欄(.auth-page)裡 */
     if (step === 'join' && !o.signed) {
@@ -645,11 +632,11 @@ T['P20 PAID_UI 開或關:start.html 每一步畫的東西一樣'] = async () => 
   eq(on, off);
   assert.equal(off.length, STEP_CASES.length);
 };
-T['P21 S8b 改級別:「改級別」打開面板(UI.sheet),原本的級別已選好;套用寫進 levels(來源 manual)、面板收掉、結果重畫'] = async () => {
+T['P21 S8b 改程度:「改程度」打開面板(UI.sheet),原本的級別已選好;套用寫進 levels(來源 manual)、面板收掉、結果重畫'] = async () => {
   const e = await open({ url: 'start.html?step=result', signed: true, init: { [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: LV } });
-  await e.press('改級別');
+  await e.press('改程度');
   const sh = e.sheets[0];
-  assert.ok(sh && sh.opt.title === '改級別', '開了面板');
+  assert.ok(sh && sh.opt.title === '改程度', '開了面板');
   const radios = sh.el.all().filter((n) => n.tagName === 'INPUT');
   eq(radios.length, 8);
   const pick = radios.find((n) => /^ob-listening/.test(n.attrs.name) && n.attrs.value === 'entry');
@@ -663,67 +650,77 @@ T['P21 S8b 改級別:「改級別」打開面板(UI.sheet),原本的級別已選
   eq(e.results[e.results.length - 1].stats, [['聽力', '入門'], ['閱讀', '門檻']]);
 };
 
-/* ---------- 聽力短測(js/onboard-listen.js) ---------- */
-const LS8 = ['l1-13', 'l1-22', 'l2-08', 'l2-09', 'l2-87', 'l2-07', 'l2-97', 'l2-25'];
-const listenOb = (l, over) => doneOnboard(Object.assign({ status: 'in_progress', step: 'listen', doneAt: null, levelSource: null,
-  listen: Object.assign({ v: 1, mode: 'full', ids: LS8, a: Array(8).fill(null), fail: [], self: null, at: NOW_ISO, doneAt: null }, l) }, over || {}));
-/* 作答:選第 c 個字母、按主按鈕(作答列底部) */
-async function answer(e, c) {
-  const b = e.dom.doc.querySelectorAll('.letter-big')[c];
-  if (b) b.click();
-  await settle();
-  e.dom.doc.querySelector('.quiz-foot .btn').click();
-  await settle();
+/* ---------- 新檢測(placement_v1)做完回 S8 ---------- */
+/* 寫一次做完的新檢測進 ls:secs 是做完的科('L'、'R'、'LR'),ok 是每題對錯(1 全對、0 全錯);題目取難度表上每個 Part 的前幾題。
+   fa_v1 照檢測頁的寫法記來源 t;end 晚於 testFrom(NOW) */
+const ESTIMATE_CTX = (() => { const c = { window: {} }; c.window = c; vm.createContext(c); ['js/estimate-core.js', 'js/estimate-data.js', 'data/item-params.js'].forEach((f) => vm.runInContext(read(f), c)); return c; })();
+const SCRIPT = { L: [['l1', 2], ['l2', 4], ['l3', 3], ['l4', 3]], R: [['p5', 4], ['p6', 4], ['p7', 4]] };
+function estDone(ls, secs, ok, end) {
+  const E = ESTIMATE_CTX.ESTIMATE, keys = Object.keys(ESTIMATE_CTX.ITEM_PARAMS.b);
+  const at = new Date(NOW + MIN).toISOString(), fin = end === undefined ? new Date(NOW + 30 * MIN).toISOString() : end;
+  const fa = { v: 1, i: {} }, items = [], tm = {};
+  secs.split('').forEach((sec) => {
+    tm[sec] = [at, fin || new Date(NOW + 10 * MIN).toISOString()];
+    SCRIPT[sec].forEach(([part, n]) => keys.filter((k) => k.indexOf(part + '-') === 0).slice(0, n).forEach((k) => {
+      fa.i[k] = [E.dayNum(NOW), ok, 't']; items.push([sec, k, 0, ok, 20]);
+    }));
+  });
+  ls.set(PRE + 'fa_v1', J(fa));
+  ls.set(PRE + 'placement_v1', J({ v: 1, runs: [{ at, end: fin, ip: 'ip1', cv: 'c1', sec: secs, tm, items, res: {} }] }));
 }
-T['P22 S4「開始檢測」:先做聽力短測(專心模式,8 題,題目畫面同前測);每題選了就存;沒選就按先確認;第 8 題「交卷」後中場,「開始閱讀」才記開始時間去檢測頁'] = async () => {
-  const e = await open({ url: 'start.html?step=test', signed: true });
-  await e.press('開始檢測');
-  eq([e.step(), e.focus && e.focus.active, e.acct('onboard').listen.a, e.loads], ['listen', true, Array(8).fill(null), ['js/lesson-core.js', 'js/lesson-items.js', 'data/listening.js']]);
-  assert.ok(e.dom.doc.querySelector('.player-btn') && /Part 1/.test(e.root.textContent), '照片描述的題目與播放鈕');
-  await answer(e, 1);
-  e.dom.doc.querySelector('.quiz-foot .btn').click(); await settle();
-  eq([e.dialogTitle(), e.confirms[0].body, e.confirms[0].ok], ['這一題還沒答', '未作答的算錯', '下一題']);
-  e.mask().querySelector('.ui-dialog-ok').click(); await settle();
-  for (let i = 2; i < 8; i++) await answer(e, 0);
-  eq([e.acct('onboard').listen.a, !!e.acct('onboard').listen.doneAt, e.focus.active, e.hrefs], [[1, -1, 0, 0, 0, 0, 0, 0], true, false, []]);
-  eq([e.h1(), e.root.querySelectorAll('.mock-tag').map((n) => n.textContent), buttonsOf(e)], ['聽力完成', ['閱讀 28 題', '約 20 分鐘'], ['btn:開始閱讀', 'btn-text:稍後再做']]);
-  assert.equal(primaries(e).length, 1);
-  await e.press('開始閱讀');
-  eq([e.hrefs, e.acct('onboard').step, e.acct('onboard').testFrom], [['diagnostic.html?start=1'], 'test', NOW_ISO]);
-  assert.ok(!/答對|答錯|正解|\d \/ 8/.test(e.root.textContent), '不顯示對錯與答對數');
-};
-T['P23 短測中途離開(關閉鈕回首頁)再開:從下一題接著做;做完按「稍後再做」再開:直接是中場(不重做)'] = async () => {
-  const ls = new Map(Object.entries({ [PRE + 'onboard']: listenOb({ a: [0, 1, 2, null, null, null, null, null] }) }));
-  const e = await open({ url: 'start.html?step=listen', signed: true, ls });
-  eq(e.focus.n, 4, '第 4 題');
-  e.dom.doc.querySelector('.quiz-close').click(); await settle();
-  eq([e.replaced, e.focus.active], [['index.html'], false]);
-  ls.set(PRE + 'onboard', listenOb({ a: [0, 0, 0, 0, 0, 0, 0, 0], doneAt: NOW_ISO }));
-  const m = await open({ url: 'start.html?step=listen', signed: true, ls });
-  eq([m.h1(), m.focus, m.find('開始閱讀') !== null], ['聽力完成', undefined, true]);
-  await m.press('稍後再做');
-  eq(m.replaced, ['index.html']);
-};
-T['P24 音檔載不到 2 題:8 題答完出自評(選了就前進,不在專心模式);「用上次的閱讀檢測」做完直接到 S8,小字依來源'] = async () => {
-  const diag = J({ answers: {}, done: true, startedAt: '2026-11-10T01:00:00.000Z', finishedAt: '2026-11-10T01:20:00.000Z' });
-  const ls = new Map(Object.entries({ [PRE + 'diag']: diag, [PRE + 'onboard']: listenOb({ mode: 'legacy', a: [0, 0, 0, 0, 0, 0, 0, 0], fail: [0, 3] }) }));
-  const e = await open({ url: 'start.html?step=listen', signed: true, ls });
-  const opts = e.root.querySelectorAll('.ob-choice');
-  eq([e.h1(), opts.map((n) => n.textContent).length, e.focus, primaries(e).length], ['聽英文時，你最接近哪一種', 4, undefined, 0]);
-  opts[2].click(); await settle();
+/* 頁面上算出來的預估級別(同一個沙盒、同一份資料,只讀) */
+const bandOf = (e, sec) => { const v = e.ctx.ESTIMATE_STORE.peek(); return v.ok && v[sec].show ? v[sec].band : null; };
+const testing = (over) => doneOnboard(Object.assign({ status: 'in_progress', step: 'test', testFrom: NOW_ISO, levelSource: null, doneAt: null }, over || {}));
+
+T['P22 新用戶做完兩科:兩科都用預估的級別(來源 est)、記完成;結算卡沒有小字,標題旁 ⓘ 寫程度怎麼定的,主按鈕照級別'] = async () => {
+  const ls = new Map(Object.entries({ [PRE + 'onboard']: testing() }));
+  estDone(ls, 'LR', 1);
+  const e = await open({ url: 'start.html?step=result', signed: true, ls });
   const lv = e.acct('levels');
-  eq([e.step(), lv.listening, lv.reading, lv.source.listening, e.acct('onboard').listen.self], ['result', 'threshold', 'entry', 'self', 'advanced']);
-  assert.ok(/聽力依自評/.test(e.root.textContent));
-  const s = await open({ url: 'start.html?step=test', signed: true, init: { [PRE + 'diag']: diag } });
-  s.root.all().find((n) => n.tagName === 'BUTTON' && /^用上次的閱讀檢測/.test(n.textContent)).click(); await settle();
-  for (let i = 0; i < 8; i++) await answer(s, 0);
-  eq([s.step(), s.acct('levels').source.listening, s.hrefs], ['result', 'short', []]);
-  assert.ok(/聽力依 8 題短測/.test(s.root.textContent));
+  eq([e.h1(), lv.listening, lv.reading, lv.source, lv.history.map((h) => h.reason), e.acct('onboard').levelSource, e.acct('onboard').status],
+    ['你的起始程度', bandOf(e, 'L'), bandOf(e, 'R'), { listening: 'est', reading: 'est' }, ['est'], 'est', 'done']);
+  assert.ok(lv.listening && lv.reading, '兩科都有級別');
+  eq([e.results[0].note, levelInfo(e)], [undefined, ['起始程度說明', '起始程度', '這個程度是依你的程度檢測和之後的練習結果定的。']]);
+  eq(e.results[0].links.map((l) => l.label), ['改程度', '重新檢測']);
+  /* 全錯的人:兩科入門,主按鈕到文法 */
+  const low = new Map(Object.entries({ [PRE + 'onboard']: testing() }));
+  estDone(low, 'LR', 0);
+  const w = await open({ url: 'start.html?step=result', signed: true, ls: low });
+  eq([w.acct('levels').listening, w.acct('levels').reading, w.find('開始練習').attrs.href], ['entry', 'entry', 'grammar.html']);
 };
-T['P25 S8 小字:第 4 堂後調整過的優先(一行)'] = async () => {
-  const lv = J({ listening: 'threshold', reading: 'threshold', source: { listening: 'short', reading: 'calibrate' }, setAt: NOW_ISO, history: [] });
+T['P22b 只做一科(沒有級別):做的那科用預估,沒做的那科沒有數字就從入門;做一半回 S4'] = async () => {
+  const one = new Map(Object.entries({ [PRE + 'onboard']: testing() }));
+  estDone(one, 'R', 1);
+  const e = await open({ url: 'start.html?step=result', signed: true, ls: one });
+  eq([e.acct('levels').reading, e.acct('levels').listening, e.acct('levels').source], [bandOf(e, 'R'), 'entry', { listening: 'entry', reading: 'est' }]);
+  const half = new Map(Object.entries({ [PRE + 'onboard']: testing() }));
+  estDone(half, 'L', 1, null);
+  const h = await open({ url: 'start.html?step=result', signed: true, ls: half });
+  eq([h.step(), h.acct('levels'), h.acct('onboard').status], ['test', null, 'in_progress']);
+};
+T['P22c 有課程進度的人重新檢測:級別不自動改,結算卡下面出建議;按「改成這個程度」先確認(會換學習包)才改'] = async () => {
+  const ls = new Map(Object.entries({ [PRE + 'onboard']: testing({ doneAt: NOW_ISO }), [PRE + 'levels']: LV, [PRE + 'plan']: J({ v: 1, classId: 'x' }) }));
+  estDone(ls, 'LR', 0);
+  const e = await open({ url: 'start.html?step=result', signed: true, ls });
+  eq([e.acct('levels').listening, e.acct('levels').reading, e.acct('onboard').status], ['advanced', 'threshold', 'done']);
+  const line = e.root.querySelector('.ob-suggest');
+  eq(line && line.textContent, '建議程度：聽力 入門／閱讀 入門　改成這個程度');
+  await e.press('改成這個程度');
+  eq([e.dialogTitle(), e.acct('levels').listening], ['改程度會換學習包，要改嗎？', 'advanced'], '確認前不改');
+  e.mask().querySelector('.ui-dialog-ok').click(); await settle();   // 確認視窗的「改程度」(結算卡也有一顆同名的文字按鈕)
+  const lv = e.acct('levels');
+  eq([lv.listening, lv.reading, lv.history[lv.history.length - 1].reason, !!e.root.querySelector('.ob-suggest')], ['entry', 'entry', 'est', false]);
+  /* 估分的檔載不到:用這一次存的結果;也沒有就「載入失敗」,級別不動 */
+  const f = new Map(Object.entries({ [PRE + 'onboard']: testing() }));
+  estDone(f, 'LR', 1);
+  const x = await open({ url: 'start.html?step=result', signed: true, ls: f, estFail: true });
+  eq([x.h1(), x.acct('levels'), x.acct('onboard').step], ['載入失敗', null, 'test']);
+};
+T['P25 S8:第 4 堂後調整過的(來源有 calibrate)優先,寫在標題旁 ⓘ,卡片上不掛小字'] = async () => {
+  const hist = [{ at: NOW_ISO, listening: 'threshold', reading: 'entry', reason: 'est' }, { at: NOW_ISO, listening: 'threshold', reading: 'threshold', reason: 'calibrate' }];
+  const lv = J({ listening: 'threshold', reading: 'threshold', source: { listening: 'est', reading: 'calibrate' }, setAt: NOW_ISO, history: hist });
   const e = await open({ url: 'start.html?step=result', signed: true, init: { [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: lv } });
-  eq(e.results[0].note, '依第 2 到 4 堂作答調整過');
+  eq([e.results[0].note, levelInfo(e)], [undefined, ['起始程度說明', '起始程度', '這個程度依第 2 到 4 堂第一次作答的答對率調整過。']]);
 };
 
 /* ---------- 跑 ---------- */

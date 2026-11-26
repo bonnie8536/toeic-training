@@ -172,7 +172,7 @@
     const segs = lesson ? segCount(lesson, state) : null;
     const about = no === 1 ? TEXT.home.about50 : TEXT.home.about60;
     const daily = kind === 'limit' || kind === 'off';
-    const go = { start: [TEXT.home.start(no), 'read'], doing: [TEXT.home.resume(no), 'read'], limit: [null, 'happy'], off: [null, 'sleep'] }[kind];
+    const go = { start: [TEXT.home.start(no), 'gaze'], doing: [TEXT.home.resume(no), 'gaze'], limit: [null, 'happy'], off: [null, 'sleep'] }[kind];
     return {
       no, kind, done, total, segs, daily, pose: go[1],
       kicker: kind === 'off' ? null : TEXT.home.kicker(no),

@@ -2,7 +2,7 @@
    1. 每一頁有 <footer> 的頁面,在 375×667、375×812、768×1024、1280×720 四種視窗、沒登入(雲端、假的 supabase-js)打開,
       載入完成後頁尾的上緣在視窗外(footer.top ≥ innerHeight);捲到最底頁尾整個看得到(不被 App 分頁列蓋住)。
    2. App 模式(主畫面開啟,navigator.standalone)抽幾頁查同一件事。
-   3. 有專心模式的頁(題庫刷題、聽力訓練、模擬考、每日練習、程度檢測)實際進到作答畫面(本機模式、已選學生):
+   3. 有專心模式的頁(題庫刷題、聽力訓練、模擬考、每日練習、程度檢測舊頁 diagnostic.html 與新頁 placement.html)實際進到作答畫面(本機模式、已選學生):
       頁尾不顯示、捲到底也沒有,題目短時整頁不能捲;結束專心模式後頁尾又出現在頁面最底、仍不在第一屏。
    用法:node tools/test_footer_fold.js [--port <起始埠,預設 9200,用三個:雲端、本機、Chrome 除錯埠>] [--debug-port <埠>]
         [--tmp <放 Chrome 使用者資料的資料夾>] [--pages index.html,daily.html](只量這幾頁) [--only fold|app|quiz]
@@ -193,6 +193,7 @@ const QUIZ = [
   { name: '每日練習', url: 'daily.html?part=v' },
   { name: '程度檢測', url: 'diagnostic.html', ls: { ['tr_u' + LPID + '_diag']: J({ answers: {}, done: false, startedAt: '2026-11-01T00:00:00.000Z' }) } },
   { name: '模擬考', url: 'mock.html', click: '開始' },
+  { name: '程度檢測(新頁)', url: 'placement.html', click: '開始' },
 ];
 async function enterQuiz(s, q) {
   if (q.click) {

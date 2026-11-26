@@ -1941,7 +1941,9 @@ html.app-gate .profile-widget { display: none; }   /* 登入卡上已經有登�
     padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
   }
   html.app-shell .topnav, html.app-shell .profile-widget { display: none; }
-  html.app-shell:not(.is-tab-root) .brand { display: none; }
+  /* 非分頁根頁:品牌字不顯示,但手繪 Y2 留著(每個頂欄都要有)。字寫成 0 號不佔位,圖是固定寬高不受影響;標題兩側讓開返回鍵和 Y2 */
+  html.app-shell:not(.is-tab-root) .brand { font-size: 0; gap: 0; flex: none; }
+  html.app-shell:not(.is-tab-root) .app-title { left: 96px; right: 96px; }
   html.app-shell .app-title {
     display: block; position: absolute; top: 0; left: 60px; right: 60px;
     line-height: var(--app-bar-h); text-align: center;

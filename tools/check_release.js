@@ -24,6 +24,10 @@ if (secretHits.length) {
   process.exit(1);
 }
 
+/* 字樣清單(tools/private_patterns.js)在 repo 外:沒設環境變數時,付款相關的測試只會略過字樣比對。發佈前提醒一次,不擋 */
+const privateList = require('./private_patterns.js').loadPrivatePatterns();
+if (privateList.skipped) console.log('注意:' + privateList.skipped + ',這次的測試沒有比對字樣清單。發佈前請設好再跑一次全套測試。');
+
 /* 網域開關(tools/domain.json):檔案跟它不一致就不能上線 */
 const dom = require('./apply_domain.js').run(REPO, true);
 if (dom.changed.length) {

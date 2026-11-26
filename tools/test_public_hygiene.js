@@ -7,7 +7,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { execFileSync } = require('child_process');
+const { execFileSync, spawnSync } = require('child_process');
 
 const REPO = path.join(__dirname, '..');
 const read = (f) => fs.readFileSync(path.join(REPO, f), 'utf8');
@@ -23,13 +23,13 @@ const textFiles = () => tracked.filter((f) => !BIN.test(f)).map((f) => {
 const T = {};
 
 /* ---------- 個人字樣清單 ---------- */
-T['個人字樣清單:沒設環境變數或檔案不存在就略過並說明原因'] = () => {
+T['字樣清單:沒設環境變數或檔案不存在就略過並說明原因'] = () => {
   const P = require('./private_patterns.js');
   const a = P.loadPrivatePatterns({});
   const b = P.loadPrivatePatterns({ RUSHUP_PRIVATE_PATTERNS_FILE: path.join(os.tmpdir(), 'no-such-dir-' + Date.now(), 'x.txt') });
   return a.patterns.length === 0 && /RUSHUP_PRIVATE_PATTERNS_FILE/.test(a.skipped) && b.patterns.length === 0 && typeof b.skipped === 'string' && b.skipped.length > 0;
 };
-T['個人字樣清單:每行一個正規式,不分大小寫;空行與 # 開頭略過;有錯的那行直接報錯且不印出樣式'] = () => {
+T['字樣清單:每行一個正規式,不分大小寫;空行與 # 開頭略過;有錯的那行直接報錯且不印出樣式'] = () => {
   const P = require('./private_patterns.js');
   const d = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-'));
   try {
@@ -45,19 +45,34 @@ T['個人字樣清單:每行一個正規式,不分大小寫;空行與 # 開頭�
     return ok1 && /第 2 個/.test(msg) && msg.indexOf('unclosed') < 0;
   } finally { fs.rmSync(d, { recursive: true, force: true }); }
 };
-T['付款與 Edge Function 的測試改用 repo 外的個人字樣清單,不再放雜湊或明文'] = () => {
+T['付款與 Edge Function 的測試不放字樣的雜湊或明文,字樣清單由環境變數指定'] = () => {
   const co = read('tools/test_checkout.js'), nb = read('tools/test_newebpay.js');
   return !/PRIVATE_HASHES|hashedHits/.test(co) && !/(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])/.test(co)
     && /require\('\.\/private_patterns\.js'\)/.test(co) && /require\('\.\/private_patterns\.js'\)/.test(nb)
     && !/[一-鿿]\|/.test((nb.match(/assert\.equal\(\/[^\n]*sb_secret_[^\n]*/) || [''])[0]);
 };
-T['允許清單不再有個人字樣的雜湊'] = () => {
+T['允許清單沒有 64 碼十六進位的雜湊'] = () => {
   const j = JSON.parse(read('tools/secret_scan_allow.json'));
   return !(j.tokens || []).some((t) => /^[0-9a-f]{64}$/.test(t.token));
 };
 
 /* ---------- 商店代號、本機路徑、repo 外的路徑 ---------- */
 /* tools/fixtures/newebpay.vectors.json 是官方手冊與公開範例的值(檔內寫了出處),不算 */
+T['check_release.js:沒設 RUSHUP_PRIVATE_PATTERNS_FILE 時印出明顯的提醒,設了就不印'] = () => {
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'release-warn-'));
+  try {
+    const f = path.join(d, 'p.txt');
+    fs.writeFileSync(f, 'zz-no-such-word-zz\n');
+    const run = (extra) => {
+      const env = Object.assign({}, process.env, extra);
+      if (!extra) delete env.RUSHUP_PRIVATE_PATTERNS_FILE;
+      return spawnSync(process.execPath, [path.join(__dirname, 'check_release.js')], { cwd: REPO, env, encoding: 'utf8' });
+    };
+    const off = run(null), on = run({ RUSHUP_PRIVATE_PATTERNS_FILE: f });
+    const warn = /注意.*RUSHUP_PRIVATE_PATTERNS_FILE/;
+    return (warn.test(off.stdout + off.stderr) && !warn.test(on.stdout + on.stderr)) || JSON.stringify({ off: off.stdout.slice(0, 200), on: on.stdout.slice(0, 200) });
+  } finally { fs.rmSync(d, { recursive: true, force: true }); }
+};
 T['追蹤的檔案沒有正式格式的藍新商店代號(假代號要含 000000 或整串同一個數字)'] = () => {
   const bad = [];
   textFiles().filter(({ f }) => f !== 'tools/fixtures/newebpay.vectors.json').forEach(({ f, s }) => {

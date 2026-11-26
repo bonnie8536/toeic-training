@@ -156,12 +156,13 @@ function copyProblems(s) {
   if (/[!！]/.test(s)) out.push('驚嘆號');
   return out;
 }
-/* 個人資料檢查:公開的程式庫不能寫出要擋的字,樣式放在 repo 外的文字檔(見 tools/private_patterns.js),
-   用 RUSHUP_PRIVATE_PATTERNS_FILE 指定;沒設就略過這一項並印出原因。 */
+/* 字樣檢查:公開的程式庫不能寫出要擋的字,樣式放在 repo 外的文字檔(見 tools/private_patterns.js),
+   用 RUSHUP_PRIVATE_PATTERNS_FILE 指定;沒設就把這一項印成 SKIP 並寫出原因。 */
 const CONTACT_EMAIL = JSON.parse(fs.readFileSync(path.join(__dirname, 'domain.json'), 'utf8')).mail;   // 客服信箱跟著 tools/domain.json,換信箱之後照樣要過
 const { loadPrivatePatterns, privateHits } = require('./private_patterns.js');
 const PRIVATE = loadPrivatePatterns();
-if (PRIVATE.skipped) console.log('略過個人字樣比對:' + PRIVATE.skipped);
+const PAY_FILES = ['js/checkout.js', 'js/pay-result.js', 'js/paywall.js', 'js/profile.js', 'js/cloud.js',
+  'pay-result.html', 'pricing.html', 'terms.html', 'privacy.html', 'refund.html', 'me.html'];
 function foreignEmails(s) {
   return (String(s).match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) || []).filter(e => e.toLowerCase() !== CONTACT_EMAIL.toLowerCase());
 }
@@ -1046,39 +1047,49 @@ const cases = {
     });
     return { ok: probs.length === 0 && CHECKOUT_SRC.length > 0 && RESULT_SRC.length > 0, detail: probs.join(' | ') || '無' };
   },
-  '付款相關的檔案沒有站長的個人資料:信箱只有聯絡信箱,也沒有 repo 外清單裡的個人字樣(沒設清單就略過字樣這一項)': async () => {
-    /* 先確認檢查本身會抓:放進去的字找得到,換掉一個字就找不到,大小寫不影響 */
-    const probe = [/abcde/i, /雞蛋/i];
+  '付款相關的檔案只有聯絡信箱': async () => {
+    /* 先確認檢查本身會抓:聯絡信箱(大小寫不影響)不報,別的信箱會報 */
     const self = [
-      privateHits('xxABCDEyy', probe).join() === '0', privateHits('吃雞蛋糕', probe).join() === '1',
-      privateHits('abcdf 雞肉', probe).length === 0,
       foreignEmails('寫信到 ' + CONTACT_EMAIL + ' 或 ' + CONTACT_EMAIL.toUpperCase()).length === 0,
       foreignEmails('寫信到 someone@example.com').length === 1,
     ];
-    const files = ['js/checkout.js', 'js/pay-result.js', 'js/paywall.js', 'js/profile.js', 'js/cloud.js',
-      'pay-result.html', 'pricing.html', 'terms.html', 'privacy.html', 'refund.html', 'me.html'];
     const probs = [];
-    files.forEach(f => {
+    PAY_FILES.forEach(f => {
       const s = tryRead(f);
       if (!s) { probs.push(f + ':讀不到'); return; }
       const mails = foreignEmails(s);
       if (mails.length) probs.push(f + ':有聯絡信箱以外的信箱 ' + mails.length + ' 個');
-      const hits = privateHits(s, PRIVATE.patterns);
-      if (hits.length) probs.push(f + ':有個人字樣清單的第 ' + hits.map((i) => i + 1).join('、') + ' 個樣式');
     });
     const ok = self.every(Boolean) && probs.length === 0;
-    return { ok, detail: 'self ' + self.map(c => (c ? 'o' : 'x')).join('') + ' ' + (probs.join(' | ') || files.length + ' 個檔案都乾淨') + (PRIVATE.skipped ? '(個人字樣略過:' + PRIVATE.skipped + ')' : '(個人字樣 ' + PRIVATE.patterns.length + ' 個樣式)') };
+    return { ok, detail: 'self ' + self.map(c => (c ? 'o' : 'x')).join('') + ' ' + (probs.join(' | ') || PAY_FILES.length + ' 個檔案都乾淨') };
+  },
+  '付款相關的檔案沒有字樣清單上的字(沒設清單就 SKIP)': async () => {
+    /* 先確認檢查本身會抓:放進去的字找得到,換掉一個字就找不到,大小寫不影響 */
+    const probe = [/abcde/i, /雞蛋/i];
+    const self = [privateHits('xxABCDEyy', probe).join() === '0', privateHits('吃雞蛋糕', probe).join() === '1', privateHits('abcdf 雞肉', probe).length === 0];
+    if (!self.every(Boolean)) return { ok: false, detail: 'self ' + self.map(c => (c ? 'o' : 'x')).join('') };
+    if (PRIVATE.skipped) return { skip: PRIVATE.skipped };
+    const probs = [];
+    PAY_FILES.forEach(f => {
+      const s = tryRead(f);
+      if (!s) { probs.push(f + ':讀不到'); return; }
+      const hits = privateHits(s, PRIVATE.patterns);
+      if (hits.length) probs.push(f + ':有字樣清單的第 ' + hits.map((i) => i + 1).join('、') + ' 個樣式');
+    });
+    return { ok: probs.length === 0, detail: (probs.join(' | ') || PAY_FILES.length + ' 個檔案都乾淨') + '(' + PRIVATE.patterns.length + ' 個樣式)' };
   },
 };
 
 (async () => {
-  let pass = 0;
+  let pass = 0, skip = 0;
+  const total = Object.keys(cases).length;
   for (const [name, fn] of Object.entries(cases)) {
     let r;
     try { r = await fn(); } catch (e) { r = { ok: false, detail: '例外 ' + (e && e.message) }; }
+    if (r.skip) { skip++; console.log('SKIP ' + name + '  →  ' + r.skip); continue; }
     if (r.ok) pass++;
     console.log((r.ok ? 'PASS ' : 'FAIL ') + name + '  →  ' + r.detail);
   }
-  console.log(pass + ' / ' + Object.keys(cases).length + ' 通過');
-  process.exit(pass === Object.keys(cases).length ? 0 : 1);
+  console.log(pass + ' / ' + (total - skip) + ' 通過' + (skip ? ',略過 ' + skip + ' 項' : ''));
+  process.exit(pass + skip === total ? 0 : 1);
 })();

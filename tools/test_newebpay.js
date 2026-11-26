@@ -1210,11 +1210,16 @@ test('build_edge_dashboard:攤平後沒有上層 import,檔案齊全,內容只�
   }
 });
 
-/* 要擋的個人字樣放在 repo 外(tools/private_patterns.js);沒設 RUSHUP_PRIVATE_PATTERNS_FILE 就只略過字樣這一項 */
+/* 要擋的字樣放在 repo 外(tools/private_patterns.js);沒設 RUSHUP_PRIVATE_PATTERNS_FILE 就跳過字樣那一項(node test 記成 skip) */
 const { loadPrivatePatterns, privateHits } = require('./private_patterns.js');
 const PRIVATE = loadPrivatePatterns();
-test('Edge Function 原始碼:沒有金鑰、商店代號、站長的資料;handler 不碰 Deno;index 用 Deno.serve', (t) => {
-  if (PRIVATE.skipped) t.diagnostic('略過個人字樣比對:' + PRIVATE.skipped);
+test('Edge Function 原始碼沒有字樣清單上的字(沒設 RUSHUP_PRIVATE_PATTERNS_FILE 就跳過)', (t) => {
+  if (PRIVATE.skipped) { t.skip(PRIVATE.skipped); return; }
+  for (const f of walk(FN).filter((x) => x.endsWith('.ts'))) {
+    assert.deepEqual(privateHits(fs.readFileSync(f, 'utf8'), PRIVATE.patterns), [], path.relative(REPO, f) + ' 有字樣清單裡的字');
+  }
+});
+test('Edge Function 原始碼:沒有金鑰、商店代號;handler 不碰 Deno;index 用 Deno.serve', () => {
   const files = walk(FN).filter((f) => f.endsWith('.ts'));
   assert.ok(files.length >= 7);
   for (const f of files) {
@@ -1223,7 +1228,6 @@ test('Edge Function 原始碼:沒有金鑰、商店代號、站長的資料;hand
     assert.equal(/(?<![A-Za-z0-9])MS\d{8,}(?![0-9])/.test(src), false, rel);   // 藍新商店代號的格式:只從環境變數讀
     assert.equal(/[A-Za-z0-9]{32}/.test(src.replace(/https?:\/\/\S+/g, '')), false, rel);
     assert.equal(/ydzcnnjnfxfmaqbszbgn|sb_secret_|service_role.*eyJ/i.test(src), false, rel);
-    assert.deepEqual(privateHits(src, PRIVATE.patterns), [], rel + ' 有個人字樣清單裡的字');
     assert.equal(/console\.(log|info|warn|error)\([^)]*(HASH_KEY|HASH_IV|hashKey|hashIV|SERVICE_ROLE|TradeInfo)/.test(src), false, rel);
     if (/handler\.ts$|_shared/.test(f)) assert.equal(/\bDeno\./.test(src), false, rel);
     if (/index\.ts$/.test(f)) assert.match(src, /Deno\.serve\(/, rel);

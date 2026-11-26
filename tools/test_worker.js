@@ -221,22 +221,24 @@ T['B:導覽帶 tr_hd=1、沒有 tr_moved=1:回搬家頁的內容(網址不變、
 };
 
 /* 要貼到 Cloudflare 的那一份在 repo 外:改了這裡要一起換、線上 Worker 也要重貼。
-   路徑用環境變數 RUSHUP_WORKER_PASTE_FILE 傳入;沒設或檔案不存在(別的電腦、CI)就略過並說明 */
+   路徑用環境變數 RUSHUP_WORKER_PASTE_FILE 傳入;沒設或檔案不存在(別的電腦、CI)就印 SKIP 並說明,不算通過 */
 T['tools/move-worker/worker.js 跟貼上用那一份(repo 外)一樣'] = async () => {
   const p = process.env.RUSHUP_WORKER_PASTE_FILE;
-  if (!p) { console.log('略過:沒有設定 RUSHUP_WORKER_PASTE_FILE'); return; }
-  if (!fs.existsSync(p)) { console.log('略過:RUSHUP_WORKER_PASTE_FILE 指定的檔案不存在'); return; }
+  if (!p) return { skip: '沒有設定 RUSHUP_WORKER_PASTE_FILE' };
+  if (!fs.existsSync(p)) return { skip: 'RUSHUP_WORKER_PASTE_FILE 指定的檔案不存在' };
   const n = (s) => s.replace(/\r\n/g, '\n');
   assert.equal(n(fs.readFileSync(p, 'utf8')), n(SRC), '兩份不一樣:改了 tools/move-worker/worker.js 要把貼上用那份一起換掉(線上 Worker 也要重貼)');
 };
 
 (async () => {
-  let pass = 0;
+  let pass = 0, skip = 0;
   const names = Object.keys(T);
   for (const n of names) {
-    try { await T[n](); pass++; console.log('PASS ' + n); }
-    catch (e) { console.log('FAIL ' + n + '  →  ' + (e && e.message)); }
+    try {
+      const r = await T[n]();
+      if (r && r.skip) { skip++; console.log('SKIP ' + n + '  →  ' + r.skip); } else { pass++; console.log('PASS ' + n); }
+    } catch (e) { console.log('FAIL ' + n + '  →  ' + (e && e.message)); }
   }
-  console.log(pass + ' / ' + names.length + ' 通過');
-  process.exit(pass === names.length ? 0 : 1);
+  console.log(pass + ' / ' + (names.length - skip) + ' 通過' + (skip ? ',略過 ' + skip + ' 項' : ''));
+  process.exit(pass + skip === names.length ? 0 : 1);
 })();

@@ -111,10 +111,10 @@
   function avail(slot, fa, used) {
     return E().available({ units: unitsOf(slot.part), part: slot.part, size: slot.size, params: params(), fa, used, reserve: reserveIds(), reserveOn: reserveIds().length > 0 });
   }
-  /* 這一科事先數好的格:用「這次作答以前」的第一次作答紀錄數,續做時跟開始時數的一樣 */
-  function planFor(sec) {
-    const ex = S().excludeFor(st.run.at), mine = {};
-    (st.run.items || []).forEach((it) => { if (Array.isArray(it)) mine[it[1]] = true; });
+  /* 這一科事先數好的格:用「這次作答以前」的第一次作答紀錄數,續做時跟開始時數的一樣;開始頁(run 給 null)用現在的紀錄數 */
+  function planFor(sec, run0) {
+    const run = (run0 === undefined ? st.run : run0) || {}, ex = S().excludeFor(run.at), mine = {};
+    (run.items || []).forEach((it) => { if (Array.isArray(it)) mine[it[1]] = true; });
     const i = {};
     Object.keys(ex.fa.i).forEach((k) => { if (!mine[k]) i[k] = ex.fa.i[k]; });
     return E().planSlots(SCRIPT[sec], (part, s) => avail(Object.assign({ part }, s), { v: 1, i }, []));
@@ -130,6 +130,8 @@
     }
     return -1;
   }
+  /* 開始頁(run 給 null:上一次做完的不算這次)、兩科中間寫的題數:跟開始作答時數的一樣;數不出來回 null(畫面照腳本寫) */
+  function countOf(sec, run) { try { return planFor(sec, run).total; } catch (e) { return null; } }
   function numbers(i) {
     let from = 1, total = 0;
     st.plan.slots.forEach((s, k) => {
@@ -310,7 +312,7 @@
     leaveFocus();
     const other = done === 'L' ? 'R' : 'L';
     let box = null;
-    box = V().between(done, { onGo: () => { if (!held(box.querySelector('.pl-go'))) startSec(other, noteIn(box)); }, onLater: () => finish() });
+    box = V().between(done, { count: countOf(other), onGo: () => { if (!held(box.querySelector('.pl-go'))) startSec(other, noteIn(box)); }, onLater: () => finish() });
     paint([pageHead(), box]);
     const h2 = box.querySelector('.pl-h2');
     if (h2 && typeof h2.focus === 'function') h2.focus();
@@ -318,7 +320,7 @@
   function renderIntro(note) {
     leaveFocus();
     let box = null;
-    box = V().intro({ sec: st.secParam, onboard: st.onboard, note,
+    box = V().intro({ sec: st.secParam, counts: { L: countOf('L', null), R: countOf('R', null) }, onboard: st.onboard, note,
       onStart: () => begin(st.secParam === 'R' ? ['R'] : st.secParam === 'L' ? ['L'] : ['L', 'R'], box),
       onReadFirst: () => begin(['R', 'L'], box), onSkip: skipEntry });
     paint([pageHead(), box]);

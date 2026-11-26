@@ -4,8 +4,8 @@
    unit = { id, part: '1'–'7', item(題庫的那一題或一組), keys(每一小題的 key) };sel = { 小題位置: 選項 }。
    對外的函式:
    · STR
-   · intro(o) → 節點:開始頁。o = { sec: 'LR' | 'L' | 'R', onboard, note, onStart(), onReadFirst(), onSkip() }
-   · between(done, o) → 節點:一科做完、接著做另一科。done 是做完的科;o = { onGo(), onLater() }
+   · intro(o) → 節點:開始頁。o = { sec: 'LR' | 'L' | 'R', counts: { L, R }(每科這次可出的小題數,沒給寫 12), onboard, note, onStart(), onReadFirst(), onSkip() }
+   · between(done, o) → 節點:一科做完、接著做另一科。done 是做完的科;o = { count(另一科可出的小題數,沒給寫 12), onGo(), onLater() }
    · unitView(unit, sel, onPick(qi, c), o) → 節點:一題或一組。o = { player(節點), phase: 'listen' | 'answer' }
      聽力題組(P3、P4)在 listen 時只有播放鈕,播完(answer)三題一起出。
    · player(src, hooks) → { el, start(), stop(), state() }:只播一次的播放鈕。播放出錯、還沒播完就停住:出現「重新播放」一次;
@@ -18,7 +18,8 @@
   const SEC = Object.freeze({ L: '聽力', R: '閱讀' });
   const STR = Object.freeze({
     title: '程度檢測',
-    tag: Object.freeze({ L: '聽力 12 題', R: '閱讀 12 題', time: '約 15–20 分鐘' }),
+    tag: (sec, n) => SEC[sec] + ' ' + n + ' 題',
+    time: '約 15–20 分鐘',
     rules: Object.freeze({ L: Object.freeze(['戴上耳機。', '每段音檔只播一次。']), all: Object.freeze(['選好答案後按「下一題」。', '不能回上一題。']) }),
     start: '開始',
     readFirst: '沒有耳機，先做閱讀',
@@ -32,7 +33,7 @@
     noPhoto: '照片準備中',
     leave: Object.freeze({ title: '離開檢測？', body: '下次從這一題接著做。', ok: '離開', cancel: '繼續作答' }),
     done: Object.freeze({ L: '聽力完成', R: '閱讀完成' }),
-    then: Object.freeze({ L: Object.freeze(['接著做閱讀 12 題。']), R: Object.freeze(['接著做聽力 12 題。', '戴上耳機。']) }),
+    then: (sec, n) => '接著做' + SEC[sec] + ' ' + n + ' 題。',
     go: Object.freeze({ L: '開始閱讀', R: '開始聽力' }),
     later: '之後再做',
     sec: SEC,
@@ -73,10 +74,11 @@
   const typeLabel = (t) => (typeof root.passTypeLabel === 'function' ? root.passTypeLabel(t) : String(t || ''));
 
   /* ---------- 開始頁、兩科中間 ---------- */
+  const countOr = (n) => (Number.isInteger(n) && n >= 0 ? n : 12);   // 題數沒算出來時照腳本寫 12
   function intro(o) {
     const sec = o.sec || 'LR';
     const hasL = sec.indexOf('L') > -1, hasR = sec.indexOf('R') > -1;
-    const tags = [hasL ? STR.tag.L : null, hasR ? STR.tag.R : null, sec === 'LR' ? STR.tag.time : null].filter(Boolean);
+    const tags = [hasL ? STR.tag('L', countOr(o.counts && o.counts.L)) : null, hasR ? STR.tag('R', countOr(o.counts && o.counts.R)) : null, sec === 'LR' ? STR.time : null].filter(Boolean);
     const rules = (hasL ? STR.rules.L : []).concat(STR.rules.all);   // 一行只講一件事
     const more = [sec === 'LR' ? textBtn(STR.readFirst, () => o.onReadFirst()) : null, o.onboard ? textBtn(STR.skipEntry, () => o.onSkip()) : null].filter(Boolean);
     return el('div', { class: 'diag-intro pl-intro' }, [
@@ -88,9 +90,11 @@
     ]));
   }
   function between(done, o) {
+    const other = done === 'L' ? 'R' : 'L';
+    const lines = [STR.then(other, countOr(o.count))].concat(other === 'L' ? [STR.rules.L[0]] : []);   // 一行一件事;接著做聽力的多一行戴耳機
     return el('div', { class: 'diag-intro pl-intro pl-between' }, [
       el('h2', { class: 'pl-h2', tabindex: '-1' }, [STR.done[done]]),
-    ].concat(STR.then[done].map((t) => el('p', { class: 'pl-rule' }, [t])), [
+    ].concat(lines.map((t) => el('p', { class: 'pl-rule' }, [t])), [
       on(el('button', { class: 'btn primary pl-go', type: 'button', 'data-gate': '' }, [STR.go[done]]), () => o.onGo()),
       el('div', { class: 'pl-more' }, [textBtn(STR.later, () => o.onLater())]),
       el('p', { class: 'pl-note', role: 'status' }, [o.note || '']),

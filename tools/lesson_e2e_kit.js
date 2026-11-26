@@ -165,7 +165,8 @@ const ROBOT = `(() => {
   };
 })()`;
 
-/* 一個分頁。o = { ctx(沿用的設定檔), mobile, touch, seed(localStorage), url, origin, smart(題庫回合照正解答對的比例,見 ROBOT) } */
+/* 一個分頁。o = { ctx(沿用的設定檔), mobile, touch, seed(localStorage), url, origin, smart(題庫回合照正解答對的比例,見 ROBOT),
+   init(每一頁載入前先跑的程式,例:tools/placement_e2e_kit.js 的假 Audio) } */
 async function tab(u, o) {
   const ctx = o.ctx || (await B.send('Target.createBrowserContext', { disposeOnDetach: true })).result.browserContextId;
   const targetId = (await B.send('Target.createTarget', { url: 'about:blank', browserContextId: ctx })).result.targetId;
@@ -208,6 +209,7 @@ async function tab(u, o) {
   if (o.touch) await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
   await send('Page.addScriptToEvaluateOnNewDocument', { source: STUB.sdkScript(u) });
   if (o.smart) await send('Page.addScriptToEvaluateOnNewDocument', { source: 'window.__smart = ' + Number(o.smart) + ';' });
+  if (o.init) await send('Page.addScriptToEvaluateOnNewDocument', { source: o.init });
   await p.clock(0);
   pages.add(p);
   if (!o.ctx) {

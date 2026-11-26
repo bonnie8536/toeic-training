@@ -284,4 +284,4 @@ async function noOverflow(p, what) {
 }
 const noErrors = (p, what) => assert.deepStrictEqual(p.errors.filter((e) => !/sw\.js|cloudflareinsights|beacon/.test(e)), [], what + ' console 有錯誤:' + J(p.errors).slice(0, 600));
 
-module.exports = { REPO, J, sleep, STUB, SV, CLK, nowMs, serve, launch, shutdown, tab, advance, walk, practiceRound, shot, noOverflow, noErrors, PL_ROBOT };
+module.exports = { REPO, J, sleep, STUB, SV, CLK, nowMs, serve, launch, shutdown, tab, advance, walk, practiceRound, shot, noOverflow, noErrors, PL_ROBOT, AUDIO };

@@ -9,6 +9,7 @@ const path = require('path');
 const assert = require('assert');
 const K = require('./lesson_kit.js');
 const X = require('./lesson_e2e_kit.js');
+const PK = require('./placement_e2e_kit.js');
 
 const args = process.argv.slice(2);
 const opt = (n) => { const i = args.indexOf(n); return i > -1 ? args[i + 1] : null; };
@@ -142,6 +143,19 @@ T['3 試行乙答對 3 成:門檻 → 入門,首頁「第 5 堂尚未開放」']
   await p.wait("(() => { const h = document.querySelector('#lsn-home-h'); return h && h.textContent.trim() === '第 5 堂尚未開放'; })()", '第 5 堂尚未開放');
   const lv = await storeGet(p, 'levels');
   assert.deepStrictEqual([lv.listening, lv.reading, calibs(lv).length], ['entry', 'entry', 1]);
+  /* 調整之後:「我的」頁預估卡照常、程度列是調整後的級別;能力分析頁預估卡照常;設定結果頁 ⓘ 是調整那一句 */
+  await p.go('me.html', 1500);
+  await p.wait("document.querySelector('.est-card') && document.querySelector('#learning-settings .me-row-val')", '我的頁預估卡與學習設定');
+  assert.equal(await p.text('#learning-settings .me-row-val'), '聽力 入門／閱讀 入門');
+  await shot(p, '45_我的頁_調整後');
+  await p.go('analysis.html', 1500);
+  await p.wait("document.querySelector('.est-card')", '能力分析頁預估卡');
+  await p.go('start.html?step=result', 1500);
+  await p.wait("document.querySelector('.result-score .est-info')", '起始程度 ⓘ');
+  await p.click('.result-score .est-info');
+  await p.wait("document.querySelector('.ui-sheet')", 'ⓘ 說明');
+  assert.deepStrictEqual(await p.eval("[...document.querySelectorAll('.ui-sheet .est-info-p')].map((e) => e.textContent)"), ['這個程度依第 2 到 4 堂第一次作答的答對率調整過。']);
+  assert.equal(calibs(await storeGet(p, 'levels')).length, 1, '開這幾頁不多寫');
   noErrors(p, '第 3 條');
   await p.close();
 };
@@ -222,6 +236,65 @@ T['5 還沒選堂數:第 0、3 天上完第 1、2 堂,第 3 天首頁「本週�
   assert.equal(await cardText(p, '.lsn-week'), '本週　完成 1 / 1 堂　練習 2 / 1 天');
   noErrors(p, '第 5 條');
   await p.close();
+};
+
+/* ---------- 第 6 條 新用戶:適性檢測 → 首頁 → 上課 ---------- */
+async function press(p, t) {
+  const ok = await p.eval('(() => { const b = [...document.querySelectorAll("button, a")].find((e) => e.textContent.trim() === ' + J(t) + ' && e.offsetParent !== null); if (!b) return false; b.click(); return true; })()');
+  assert.ok(ok, '找不到按鈕「' + t + '」');
+  await sleep(500);
+}
+/* 檢測頁用 tools/placement_e2e_kit.js 的小幫手作答(五題對三題),做到結果頁 */
+async function placementWalk(p) {
+  for (let i = 0; i < 400; i++) {
+    const s = await p.eval(PK.PL_ROBOT + ';window.__pl()');
+    if (s.screen === 'result') return;
+    if (s.screen === 'between') { await press(p, '開始' + (/閱讀/.test(await p.text('.pl-between')) ? '閱讀' : '聽力')); continue; }
+    const did = await p.eval(PK.PL_ROBOT + ';window.__plStep("mix")');
+    await sleep(did === 'wait' ? 200 : 80);
+  }
+  throw new Error('檢測走太多步');
+}
+T['6 新用戶(試行班、沒有設定與級別):開始頁 → 不確定,幫我測 → 檢測 24 題 → 設定結果兩科照檢測、主按鈕「開始第 1 堂」→ 第 1 堂前測開始頁;首頁課卡第 1 堂、沒有起始程度卡'] = async () => {
+  resetClock();
+  const c = freshCloud(), u = user(37, '新用戶檢測');
+  c.members[u.id] = [{ id: PILOT, name: '試行班' }];
+  const g = await tab(null, { url: 'start.html' });
+  await g.wait("document.querySelector('.page-head p')", '開始頁');
+  assert.equal(await g.text('.page-head p'), '填多益成績，或做 24 題檢測（約 15–20 分鐘）');
+  await shot(g, '50_S0');
+  await g.close();
+  const p = await tab(u, { url: 'start.html', init: PK.AUDIO });
+  await press(p, '開始'); await press(p, '600 分');
+  await p.wait("location.search === '?step=exam'", '考試月份');
+  await press(p, '還沒報名');
+  await p.wait("location.search === '?step=level'", '程度');
+  await press(p, '不確定，幫我測');
+  await p.wait("document.querySelector('.diag-intro')", '檢測說明');
+  await shot(p, '51_S4');
+  await press(p, '開始檢測');
+  await p.wait("location.pathname === '/placement.html' && document.querySelector('.pl-meta')", '檢測頁直接開始', 20000);
+  await placementWalk(p);
+  await sleep(1500);
+  await shot(p, '52_檢測結果');
+  await press(p, '下一步');
+  await p.wait("location.search === '?step=result' && document.querySelector('.result-card .result-go') && !document.querySelector('.ob-loading')", '設定結果', 30000);
+  await p.wait("document.querySelector('.result-card .result-go').textContent.trim() === '開始第 1 堂'", '開始第 1 堂');
+  const lv = await storeGet(p, 'levels');
+  assert.ok(lv.listening && lv.reading, J(lv));
+  assert.deepStrictEqual([lv.source, lv.history.map((x) => x.reason)], [{ listening: 'est', reading: 'est' }, ['est']]);
+  assert.equal(await p.eval("document.querySelectorAll('main .btn.primary').length"), 1, '一顆主按鈕');
+  await shot(p, '53_S8_檢測');
+  await p.mark(); await p.click('.result-card .result-go'); await sleep(300); await p.loaded(); await p.settle();
+  await p.wait("document.querySelector('.lsn-steps')", '第 1 堂總覽');
+  assert.deepStrictEqual(await p.eval("[...document.querySelectorAll('.lsn-rule')].map((e) => e.textContent)"), ['每題音檔只播一次', '開始後不能回上一題']);
+  const h = await homeCard(p);
+  assert.deepStrictEqual([h.go, h.daily, h.solid], ['開始第 1 堂', false, 1], J(h));
+  assert.ok(await p.eval("(() => { const o = document.getElementById('onboard-home'); return o.hidden && !o.children.length; })()"), '沒有起始程度卡');
+  await shot(p, '54_首頁卡_第1堂');
+  noErrors(p, '第 6 條');
+  await p.close();
+  return '聽力 ' + lv.listening + '、閱讀 ' + lv.reading;
 };
 
 /* ---------- 第 8 條 上線前的 plan ---------- */

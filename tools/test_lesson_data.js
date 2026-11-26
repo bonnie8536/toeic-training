@@ -240,6 +240,26 @@ T['模擬考作答過的題(mock_seen):選題的作答紀錄先放模擬考、�
   eq(JSON.stringify([e.store.peek('mock_seen'), e.store.peek('listen_p1'), e.store.peek('drill_p5')]), before);
   assert.ok(e.D.ctx(e.lesson(EE, 3), NOW).seen.indexOf('l3-11') > -1, '14 天內做過');
 };
+T['程度檢測作答過的題(placement_v1):做完的那幾次有選答案的題,跟模擬考做過的一樣算做過(t 是那一次的結束時間,新的贏);快照、outsideSeen 看得到'] = async () => {
+  const e = await ready(), ms = (s) => s * 1000, iso = (s) => new Date(ms(s)).toISOString();
+  const run = (at, end, items) => ({ at: iso(at), end: end === null ? null : iso(end), ip: 1, cv: 1, sec: 'LR', tm: {}, items, res: {} });
+  e.store.set('placement_v1', { v: 1, runs: [
+    run(NOW - 2000, NOW - 1500, [['L', 'l2-04', 1, 1, 9], ['L', 'l2-06', null, 0, 30], ['R', 'p5-b1-02', 0, 0, 20], ['R', 'p5-b1-03', null, 0, 5], ['R', 'p5-b1-04', 2, 1, 7]]),
+    run(NOW - 1000, null, [['L', 'l2-08', 1, 1, 9]]),
+  ] });
+  e.store.set('mock_seen', { 'l2-04': ms(NOW - 1800), 'p5-b1-04': ms(NOW - 600) });
+  e.store.set('drill_p5', { 'p5-b1-02': { c: 1, ok: true, t: ms(NOW - 100) } });
+  const before = JSON.stringify(e.store.peek('placement_v1'));
+  const r = e.D.ctx(e.lesson(EE, 3), NOW).records;
+  eq([r[2]['l2-04'], r[2]['l2-06'], r[2]['l2-08'], r[5]['p5-b1-02'], r[5]['p5-b1-03'], r[5]['p5-b1-04']],
+    [{ ok: true, t: ms(NOW - 1500) }, undefined, undefined, { c: 1, ok: true, t: ms(NOW - 100) }, undefined, { ok: true, t: ms(NOW - 600) }]);
+  eq([...e.D.snapshot(5, ['p5-b1-02', 'p5-b1-03', 'p5-b1-05'])], ['p5-b1-02']);
+  eq([...e.D.snapshot('2', ['l2-04', 'l2-06', 'l2-08'])], ['l2-04']);
+  eq(e.D.outsideSeen(), { 'l2-04': ms(NOW - 1500), 'p5-b1-02': ms(NOW - 1500), 'p5-b1-04': ms(NOW - 600) });
+  eq(JSON.stringify(e.store.peek('placement_v1')), before, '不改 store 讀出的值');
+  e.store.set('placement_v1', { v: 2, runs: 'x' });
+  eq(e.D.outsideSeen(), { 'l2-04': ms(NOW - 1800), 'p5-b1-04': ms(NOW - 600) }, '形狀不對當沒有');
+};
 T['模擬考做過的清單題,小檢核不選'] = async () => {
   const e = await ready();
   const l = e.lesson(EE, 4), p1 = l.segments.filter((s) => s.slot === 'checkpoint')[0].blocks.filter((b) => b.module === 'p1')[0];

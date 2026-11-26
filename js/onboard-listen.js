@@ -142,13 +142,13 @@
     try { title.focus({ preventScroll: true }); window.scrollTo(0, 0); } catch (e) { /* 焦點放不上去不影響作答 */ }
   }
 
-  /* ---------- 中場 ---------- */
+  /* ---------- 中場:標題與鵜鶘的排法同 S0(.ob-start),下面是同 S4 的卡片 ---------- */
   function middle(root, o) {
     stop();
     const go = h('button', { class: 'btn primary', type: 'button', onclick: (e) => o.onGo(e.currentTarget) }, TEXT.go);
     root.replaceChildren(
-      h('div', { class: 'page-head ob-mid-head' }, h('canvas', { class: 'hub-art', 'data-mascot': 'happy', 'data-size': '56', 'aria-hidden': 'true' }),
-        h('h1', { id: 'ob-title' }, TEXT.doneH)),
+      h('div', { class: 'ob-start' }, h('div', { class: 'page-head' }, h('h1', { id: 'ob-title' }, TEXT.doneH)),
+        h('canvas', { class: 'ob-start-art', 'data-mascot': 'happy', 'data-size': '160', 'aria-hidden': 'true' })),
       h('div', { class: 'diag-intro ob-intro' },
         h('p', { class: 'mock-tags' }, h('span', { class: 'mock-tag' }, TEXT.reading), h('span', { class: 'mock-tag' }, TEXT.min)), go,
         h('div', { class: 'ob-intro-more' }, h('button', { class: 'btn-text', type: 'button', onclick: () => o.onLater() }, TEXT.later))));

@@ -133,7 +133,7 @@
   function soloResult(no, nodes) {
     const C = core().TEXT;
     const card = root.UI.result({ kicker: C.wrapup.kicker(no), big: C.checkpoint.title, pose: 'happy', primary: { label: C.wrapup.next, href: 'lessons.html' } });
-    return { nodes: [card.el, el('div', { class: 'lsn-narrow lsn-result-more' }, nodes || [])], heading: card.heading };
+    return { nodes: [card.el, el('div', { class: 'lsn-narrow lsn-result-more lsn-solo-more' }, nodes || [])], heading: card.heading };
   }
 
   /* ---------- 程度調整與說明按鈕 ---------- */

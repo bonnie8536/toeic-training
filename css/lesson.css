@@ -94,6 +94,7 @@ html.is-quiz main .q-block .lsn-word-q { margin-bottom: 8px; font-family: var(--
 .lsn-weekly-sub { font-family: inherit; font-size: var(--fs-sm); font-weight: 400; color: var(--ink-light); }
 .lsn-weekly-later { margin: 0; }
 .lsn-weekly-later .btn-text { margin-left: -12px; }
+.lsn-solo-more { margin-top: 24px; }   /* 獨立小檢核的結果:判定清單直接接在結算卡下面(沒有標題) */
 .lsn-calib { margin-top: 8px; }
 .lsn-calib-head { display: flex; align-items: center; gap: 4px; margin: 22px 0 8px 4px; }
 .lsn-calib-head .me-sec-h { margin: 0; }

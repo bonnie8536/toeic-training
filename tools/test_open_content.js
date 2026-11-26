@@ -2573,13 +2573,18 @@ T['錯題本 E1:模擬考交卷把答錯的題收進 mock_wrong(只寫一次、�
     await sleep(1800);
     const after = await s.eval(LS);
     /* 小雞(pet-store)自己的「只在本機」標記、帳本不算 */
-    r.changed = lsDiff(before, after).filter((k) => !/_pet$/.test(k) && k !== AK('mock_history') && k !== AK('mock_wrong') && k !== 'tr_unsynced_' + UID && k !== 'tr_localonly_' + UID);
+    r.changed = lsDiff(before, after).filter((k) => !/_pet$/.test(k) && k !== AK('mock_history') && k !== AK('mock_wrong') && k !== AK('mock_seen') && k !== 'tr_unsynced_' + UID && k !== 'tr_localonly_' + UID);
     const mw = JSON.parse(JSON.parse(after)[AK('mock_wrong')] || 'null') || {};
     const mh = JSON.parse(JSON.parse(after)[AK('mock_history')] || '[]');
     const T0 = Date.parse(mh[mh.length - 1].d);
     const want = { [P5[0].id]: false, [P5[1].id]: true, [L2[0].id]: false, [P6.id + ':' + P6.questions[1].num]: false };
     r.mw = Object.keys(mw).sort();
     r.right = J(r.mw) === J(Object.keys(want).sort()) && Object.keys(want).every((k) => mw[k].ok === want[k] && mw[k].t === T0);
+    /* mock_seen:課程把模擬考作答過的題算做過;交卷時記作答過的題與交卷時間(答對答錯都記、沒作答的不記) */
+    const seen = JSON.parse(JSON.parse(after)[AK('mock_seen')] || 'null') || {};
+    const seenWant = [P5[0].id, P5[1].id, L2[0].id, P6.id + ':' + P6.questions[0].num, P6.id + ':' + P6.questions[1].num].sort();
+    r.seen = Object.keys(seen).sort();
+    r.seenRight = J(r.seen) === J(seenWant) && r.seen.every((k) => seen[k] === T0);
     r.sets = await s.eval(SETS_OF('mock_wrong'));
     r.ups = (await s.eval(UPS)).slice(up0.length).filter((k) => k === 'mock_wrong').length;
     r.note = await s.eval("(document.querySelector('.mock-wb-note') || {}).textContent || ''");
@@ -2590,7 +2595,7 @@ T['錯題本 E1:模擬考交卷把答錯的題收進 mock_wrong(只寫一次、�
     /* 捲到面板:面板頂端貼近視窗上緣;頁面比視窗只高一點、已經捲到底時,面板整個在視窗內也算(頁面變短之後頂端貼不到上緣) */
     r.scrolled = await s.eval("(() => { const p = document.getElementById('wrongbook').getBoundingClientRect(); const e = document.scrollingElement; return Math.abs(p.top) < 80 || (scrollY >= e.scrollHeight - innerHeight - 1 && p.top >= 0 && p.bottom <= innerHeight); })()");
   } finally { await s.close(); }
-  r.ok = !r.changed.length && r.right && r.sets === 1 && r.ups === 1 && /收進錯題本 3 題/.test(r.note) && /移出 1 題/.test(r.note) && /未作答 \d+ 題不收/.test(r.note)
+  r.ok = !r.changed.length && r.right && r.seenRight && r.sets === 1 && r.ups === 1 && /收進錯題本 3 題/.test(r.note) && /移出 1 題/.test(r.note) && /未作答 \d+ 題不收/.test(r.note)
     && r.link && r.p5 === '2 題' && r.scrolled;
   return { ok: r.ok, detail: J(r) };
 };

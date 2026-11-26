@@ -101,13 +101,14 @@ async function t(name, fn) {
   const W = loadWorker(REPO + '/sw.js');
   const fire = async (req, extra) => { const ev = mkEvent({ request: req, ...extra }); W.listeners.fetch(ev); return ev; };
 
-  await t('install precaches offline.html + style.css, calls skipWaiting', async () => {
+  await t('install precaches offline.html + style.css + 頂欄 Y2 三張圖, calls skipWaiting', async () => {
     W.caches.store.set('ss-pages-v0', new MockCache());
     W.caches.store.set('someone-else', new MockCache());
     const ev = mkEvent(); W.listeners.install(ev); await settle(ev);
     const d = W.caches.dump();
     assert.deepStrictEqual(d['ss-pages-' + SWV], ['/offline.html']);
     assert.deepStrictEqual(d['ss-assets-' + SWV], ['/css/style.css']);
+    assert.deepStrictEqual(d['ss-img-' + SWV], ['/img/brand-y2-28.png', '/img/brand-y2-56.png', '/img/brand-y2-84.png']);
     assert.ok(W.self.skipped);
   });
   await t('install without addRoutes support does not throw (event.addRoutes undefined)', async () => {});
@@ -127,7 +128,7 @@ async function t(name, fn) {
     const ev = mkEvent(); W.listeners.activate(ev); await settle(ev);
     assert.ok(W.reg.preloadEnabled);
     const names = Object.keys(W.caches.dump()).sort();
-    assert.deepStrictEqual(names, ['someone-else', 'ss-assets-' + SWV, 'ss-move-' + SWV, 'ss-pages-' + SWV]);
+    assert.deepStrictEqual(names, ['someone-else', 'ss-assets-' + SWV, 'ss-img-' + SWV, 'ss-move-' + SWV, 'ss-pages-' + SWV]);
   });
   await t('passthrough: POST, cross-origin, Range, audio, video, /audio/, fetch() with empty destination', async () => {
     const cases = [

@@ -726,7 +726,7 @@ T['build_icons:PNG、ICO 寫出去讀得回來;PNG 記得來源;SVG 要正方形
   const m = IC.maskable(art, [255, 255, 255]);
   assert.deepEqual([m.w, m.h], [n, n]);
   assert.equal(IC.safeZoneProblem(m), null);
-  assert.deepEqual(IC.parseArgs(['a.svg', '--only', 'favicon', '--tmp', 'D:/x']), { svg: 'a.svg', app: null, maskable: null, bg: null, only: 'favicon', out: null, tmp: 'D:/x' });
+  assert.deepEqual(IC.parseArgs(['a.svg', '--only', 'favicon', '--tmp', 'D:/x']), { svg: 'a.svg', app: null, apple: null, maskable: null, bg: null, only: 'favicon', out: null, tmp: 'D:/x' });
   assert.throws(() => IC.parseArgs([]), /用法/);
   assert.throws(() => IC.parseArgs(['a.svg', '--only', 'all']), /--only/);
   assert.throws(() => IC.parseArgs(['a.svg', '--bg', 'blue']), /--bg/);
@@ -735,6 +735,11 @@ T['build_icons:PNG、ICO 寫出去讀得回來;PNG 記得來源;SVG 要正方形
   assert.match(t0, /^build_icons app sha256:[0-9a-f]{64}$/);
   assert.equal(IC.appTag('<svg/>\r\n', null, [1, 2, 3]), IC.appTag('<svg/>\n', null, [1, 2, 3]), '換行不同算同一張');
   assert.equal(new Set([t0, IC.appTag('<svg />', null, [1, 2, 3]), IC.appTag('<svg/>', '<svg/>', [1, 2, 3]), IC.appTag('<svg/>', null, [1, 2, 4])]).size, 4);
+  /* --apple(icon-180 另用一張):沒給或跟 App 圖一樣,記號跟以前一樣;給了不一樣的就不同 */
+  assert.equal(IC.appTag('<svg/>', null, [1, 2, 3], '<svg/>'), t0);
+  assert.equal(IC.appTag('<svg/>', null, [1, 2, 3], null), t0);
+  assert.notEqual(IC.appTag('<svg/>', null, [1, 2, 3], '<svg />'), t0);
+  assert.equal(IC.parseArgs(['a.svg', '--apple', 'full.svg']).apple, 'full.svg');
 };
 T['build_icons:全部算好、檢查過才寫;maskable 安全區不過時一個檔都不動、不留暫存檔;寫的時候四張 App 圖示一起換、記號一樣'] = () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'test_seo-icons-'));

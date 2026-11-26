@@ -5,8 +5,8 @@
    兩種帳號選到的檢核題都在小檢核清單內、開堂時沒做過、不是前測題;第 5–7 堂固定段每個題庫區塊都選滿。
    選題用真的 js/lesson-data.js 與 js/pack-core.js,作答紀錄與學習記錄照練習引擎的寫法寫回;每小題照固定種子的亂數答對(答錯選正解的下一個選項)。
    先做檢測的兩種(門檻 6 個、入門升門檻 3 個帳號):第 1 堂前先在程度檢測頁(tools/placement_kit.js,真的 js/placement.js)做完
-   聽力 12 題、閱讀 12 題,檢測做過的題在課程裡算做過。第 4、8 堂每個檢核區塊選到的題不比同一個帳號沒做檢測時少
-   (預留題先扣掉檢測做過的題);門檻的第 8 堂照樣每個區塊選滿。
+   聽力 12 題、閱讀 12 題,檢測做過的題在課程裡算做過。預留題先扣掉檢測做過的題,所以第 4 堂每個檢核區塊選到的題
+   不比同一個帳號沒做檢測時少;門檻的第 8 堂照樣每個區塊選滿,入門升門檻的第 8 堂照樣至少 3 題(第 1–4 堂用掉的門檻題本來就會缺)。
    答對率 60% 有斷言;40%、85% 只印數字。不開瀏覽器、不連網。用法:node tools/test_lesson_reserve8.js */
 'use strict';
 const K = require('./lesson_kit.js');
@@ -234,10 +234,10 @@ async function runOne(kind, ai, rate) {
   const reserved = [1, 2, 3, 4, 5, 6, 7].reduce((a, no) => a + sum(per[no], (x) => x.reserved || 0), 0);
   return { cp4: per[4].cp, cp8: cp8.blocks, bad, fixed, weak: [sum(weakOf, (x) => x.got), sum(weakOf, (x) => x.want)], relaxed, reserved };
 }
-/* 先做檢測的 r 跟沒做檢測的 base 比:第 4、8 堂哪幾個區塊選到的題比較少 */
-function fewer(base, r) {
+/* 先做檢測的 r 跟沒做檢測的 base 比:第 4 堂(full 時連第 8 堂)哪幾個區塊選到的題比較少 */
+function fewer(base, r, full) {
   const out = [];
-  [['cp4', 4], ['cp8', 8]].forEach(([k, no]) => (r[k] || []).forEach((b, i) => {
+  [['cp4', 4]].concat(full ? [['cp8', 8]] : []).forEach(([k, no]) => (r[k] || []).forEach((b, i) => {
     const was = (base[k] || [])[i];
     if (was && b.ids.length < was.ids.length) out.push('第 ' + no + ' 堂 ' + b.module + ' ' + b.ids.length + '/' + was.ids.length);
   }));
@@ -252,7 +252,7 @@ function line(kind, ai, rate, r) {
 
 const T = {};
 Object.keys(KINDS).forEach((kind) => {
-  T[kind + ':答對率 60%,第 8 堂小檢核' + (KINDS[kind].full ? '每個檢核區塊選滿' : '每個檢核區塊至少 3 題(簡短對話至少 1 組)') + ';檢核題都合規則;第 5–7 堂固定段選滿' + (KINDS[kind].base ? ';第 4、8 堂各區塊不比沒做檢測時少' : '')] = async () => {
+  T[kind + ':答對率 60%,第 8 堂小檢核' + (KINDS[kind].full ? '每個檢核區塊選滿' : '每個檢核區塊至少 3 題(簡短對話至少 1 組)') + ';檢核題都合規則;第 5–7 堂固定段選滿' + (KINDS[kind].base ? ';第 4 堂各區塊不比沒做檢測時少' : '')] = async () => {
     const bad = [];
     for (let ai = 0; ai < KINDS[kind].n; ai++) {
       const r = await runOne(kind, ai, 0.6);
@@ -260,7 +260,7 @@ Object.keys(KINDS).forEach((kind) => {
       const short = r.cp8.filter((b) => (KINDS[kind].full ? b.ids.length < b.want : b.ids.length < Math.min(b.want, b.module === 'p3' ? 1 : 3)));
       if (short.length) bad.push('帳號' + (ai + 1) + ' 選不滿 ' + fmt(short));
       if (r.bad.length) bad.push('帳號' + (ai + 1) + ' 檢核題不合規則 ' + r.bad.join(','));
-      if (KINDS[kind].base) fewer(await runOne(KINDS[kind].base, ai, 0.6), r).forEach((x) => bad.push('帳號' + (ai + 1) + ' 比沒做檢測少 ' + x));
+      if (KINDS[kind].base) fewer(await runOne(KINDS[kind].base, ai, 0.6), r, KINDS[kind].full).forEach((x) => bad.push('帳號' + (ai + 1) + ' 比沒做檢測少 ' + x));
       r.fixed.forEach((list, i) => list.filter((x) => x.got !== x.want).forEach((x) => bad.push('帳號' + (ai + 1) + ' 第 ' + (5 + i) + ' 堂區塊 ' + x.idx + ' ' + x.got + '/' + x.want)));
     }
     eq(bad, [], kind);

@@ -4,8 +4,13 @@
    2. App 模式(主畫面開啟,navigator.standalone)抽幾頁查同一件事。
    3. 有專心模式的頁(題庫刷題、聽力訓練、模擬考、每日練習、程度檢測舊頁 diagnostic.html 與新頁 placement.html)實際進到作答畫面(本機模式、已選學生):
       頁尾不顯示、捲到底也沒有,題目短時整頁不能捲;結束專心模式後頁尾又出現在頁面最底、仍不在第一屏。
+      程度檢測(placement.html)的作答畫面多量 390×844、768×1024、1440×900,App 模式量 375×812、390×844。
+   4. 程度檢測、起始程度、預估分數的其他畫面(STATES:檢測開始頁、兩科中間、結果頁、還沒有結果、「我的」與能力分析的預估分數卡、
+      新用戶設定的檢測說明與結果)在 375×812、390×844、768×1024、1440×900 與 App 模式(375×812、390×844)查第 1 項同一件事,
+      而且要真的畫到那個畫面(sel 找得到)。檢測紀錄用頁面裡真的 ESTIMATE_STORE 寫(本機學生檔案);
+      登入的畫面用假雲端(tools/fixtures/lesson_cloud_stub.js,不連外網、不用真的帳號)。
    用法:node tools/test_footer_fold.js [--port <起始埠,預設 9200,用三個:雲端、本機、Chrome 除錯埠>] [--debug-port <埠>]
-        [--tmp <放 Chrome 使用者資料的資料夾>] [--pages index.html,daily.html](只量這幾頁) [--only fold|app|quiz]
+        [--tmp <放 Chrome 使用者資料的資料夾>] [--pages index.html,daily.html](只量這幾頁) [--only fold|app|quiz|state]
    每次一個新的使用者資料夾,跑完刪掉。其他腳本可以 require 這支拿 serve、launch、connect、open。 */
 'use strict';
 const fs = require('fs');
@@ -13,6 +18,7 @@ const os = require('os');
 const path = require('path');
 const http = require('http');
 const { spawn } = require('child_process');
+const STUB = require('./fixtures/lesson_cloud_stub.js');
 
 const REPO = path.join(__dirname, '..');
 const args = process.argv.slice(2);
@@ -31,7 +37,13 @@ const J = JSON.stringify;
 const out = (s) => process.stdout.write(s + '\n');
 
 const SIZES = [{ width: 375, height: 667 }, { width: 375, height: 812 }, { width: 768, height: 1024 }, { width: 1280, height: 720 }];
+/* 程度檢測、起始程度、預估分數的畫面量的視窗;App 模式量前兩種 */
+const ADAPT_SIZES = [{ width: 375, height: 812 }, { width: 390, height: 844 }, { width: 768, height: 1024 }, { width: 1440, height: 900 }];
+const ADAPT_APP = ADAPT_SIZES.slice(0, 2);
 const LPID = 'ptest01';
+/* 登入的畫面用的假雲端(雲端那個埠的 /__cloud);帳號 id 是假的 */
+const CLOUD_DB = STUB.createCloud({});
+const USER = (n) => ({ id: '00000000-0000-4000-8000-' + String(n).padStart(12, '0'), email: 's' + n + '@example.com', user_metadata: { name: '同學' + n }, created_at: '2026-11-20T00:00:00.000Z' });
 /* 有頁尾的頁面:repo 根目錄裡含 <footer 的 .html */
 const ALL = fs.readdirSync(REPO).filter((f) => f.endsWith('.html') && /<footer[\s>]/.test(fs.readFileSync(path.join(REPO, f), 'utf8'))).sort();
 const PAGES = opt('--pages') ? opt('--pages').split(',') : ALL;
@@ -40,6 +52,7 @@ const PAGES = opt('--pages') ? opt('--pages').split(',') : ALL;
 function serve(port, cloud) {
   return new Promise((resolve, reject) => {
     const srv = http.createServer((req, res) => {
+      if (cloud && STUB.serveCloud(CLOUD_DB, req, res, 0)) return;
       let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
       if (p === '/') p = '/index.html';
       if (p === '/js/cloud-config.js') {
@@ -97,7 +110,7 @@ const FAKE_SDK = `(() => {
 /* 主畫面 App(加到主畫面後開啟):每頁 head 的開機程式看 navigator.standalone */
 const STANDALONE = "Object.defineProperty(navigator, 'standalone', { get: () => true });";
 
-/* 開一個新分頁。o.mode 'cloud'(沒登入)或 'local'(o.profile 時選好學生);o.ls 額外灌的 localStorage */
+/* 開一個新分頁。o.mode 'cloud'(沒登入;o.user 時用假雲端登入這個帳號)或 'local'(o.profile 時選好學生);o.ls 額外灌的 localStorage */
 async function open(B, o) {
   const origin = o.mode === 'local' ? LOCAL : CLOUD;
   const t = await B.send('Target.createTarget', { url: 'about:blank' });
@@ -124,11 +137,12 @@ async function open(B, o) {
   const size = o.size || { width: 375, height: 812 };
   await send('Emulation.setDeviceMetricsOverride', { width: size.width, height: size.height, deviceScaleFactor: 1, mobile: size.width < 768 });
   if (o.app) await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
-  if (o.mode !== 'local') await send('Page.addScriptToEvaluateOnNewDocument', { source: FAKE_SDK });
+  if (o.mode !== 'local') await send('Page.addScriptToEvaluateOnNewDocument', { source: o.user ? STUB.sdkScript(o.user) : FAKE_SDK });
   if (o.app) await send('Page.addScriptToEvaluateOnNewDocument', { source: STANDALONE });
   await s.go('robots.txt');
   const seed = Object.assign({}, o.ls || {});
   if (o.profile) { seed.tr_profiles = J([{ id: LPID, name: '小安', created: '2026-10-01' }]); seed.tr_current_profile = J(LPID); }
+  if (o.user) seed.tr_current_profile = J('c' + o.user.id.replace(/-/g, ''));
   await s.eval('localStorage.clear(); sessionStorage.clear(); Object.entries(' + J(seed) + ').forEach(([k, v]) => localStorage.setItem(k, v)); true');
   await s.go(o.url);
   await s.settle();
@@ -193,12 +207,114 @@ const QUIZ = [
   { name: '每日練習', url: 'daily.html?part=v' },
   { name: '程度檢測', url: 'diagnostic.html', ls: { ['tr_u' + LPID + '_diag']: J({ answers: {}, done: false, startedAt: '2026-11-01T00:00:00.000Z' }) } },
   { name: '模擬考', url: 'mock.html', click: '開始' },
-  { name: '程度檢測(新頁)', url: 'placement.html', click: '開始' },
+  { name: '程度檢測(新頁)', url: 'placement.html', click: '開始', adapt: true },
+  { name: '程度檢測 只做閱讀', url: 'placement.html?sec=R', click: '開始', adapt: true },
+  { name: '程度檢測 先做閱讀', url: 'placement.html', click: '沒有耳機，先做閱讀', adapt: true },
+  { name: '程度檢測 從新用戶設定直接開考', url: 'placement.html?start=1&from=onboard', adapt: true },
+  { name: '程度檢測 中途離開後接著做', url: 'placement.html', seed: 'midway', adapt: true },
 ];
 async function enterQuiz(s, q) {
   if (q.click) {
     await s.eval(`(() => { const b = [...document.querySelectorAll('main button')].find((e) => e.textContent.trim() === ${J(q.click)}); if (b) b.click(); return !!b; })()`);
     await sleep(1500);
+  }
+  /* 程度檢測開考前要先讀存檔、挑題:等到進專心模式(最多 6 秒),進不去由 quizProblems 報 */
+  if (q.adapt) for (let i = 0; i < 30 && !(await s.eval("document.documentElement.classList.contains('is-quiz')")); i++) await sleep(200);
+}
+
+/* ---------- 程度檢測與預估分數的紀錄:用頁面裡真的 ESTIMATE_STORE 寫,寫完把 localStorage 整份拿出來,之後開頁灌回去 ---------- */
+const PARTS = { L: [['l1', 2], ['l2', 4], ['l3', 3], ['l4', 3]], R: [['p5', 4], ['p6', 4], ['p7', 4]] };
+/* 開始一次兩科的檢測;secs 是做完的科,n 是另外在下一科先送出幾題(中途離開),finish 是整次結束 */
+const RUN = (secs, n, finish) => `(async () => {
+  if (window.CLOUD && CLOUD.ready) await CLOUD.ready.catch(() => null);
+  const S = ESTIMATE_STORE, keys = Object.keys(ITEM_PARAMS.b), parts = ${J(PARTS)};
+  const r = await S.startRun({ sec: 'LR' });
+  if (!r || !r.run) return false;
+  const at = r.run.at, used = new Set();
+  const take = (s, max) => {
+    let i = 0;
+    parts[s].forEach(([p, k]) => keys.filter((x) => x.indexOf(p + '-') === 0 && !r.fa.i[x] && !used.has(x)).slice(0, k).forEach((key) => {
+      if (i >= max) return;
+      used.add(key);
+      S.answer(at, [{ s, key, choice: 0, ok: i++ % 3 === 2 ? 0 : 1, secs: 20 }]);
+    }));
+  };
+  for (const s of ${J(secs)}) { S.beginSection(at, s); take(s, 99); S.endSection(at, s); }
+  const next = ${J(secs)}.length === 1 ? (${J(secs)}[0] === 'R' ? 'L' : 'R') : null;
+  if (next && ${n} > 0) { S.beginSection(at, next); take(next, ${n}); }
+  if (${finish}) await S.finishRun(at);
+  return true;
+})()`;
+const DUMP = 'JSON.stringify(Object.fromEntries(Object.keys(localStorage).map((k) => [k, localStorage.getItem(k)])))';
+async function waitFor(s, expr, ms) {
+  for (let i = 0; i < (ms || 15000) / 200; i++) { try { if (await s.eval(expr)) return true; } catch (e) { /* 換頁中 */ } await sleep(200); }
+  return false;
+}
+/* 本機學生檔案:先做閱讀、停在兩科中間(between);閱讀做完、聽力做了 4 題離開(midway);兩科做完(result) */
+async function localSeed(B, secs, n, finish) {
+  const s = await open(B, { mode: 'local', profile: true, url: 'placement.html?view=last' });
+  const ok = await s.eval(RUN(secs, n, finish));
+  const ls = JSON.parse(await s.eval(DUMP));
+  await s.close();
+  if (!ok) throw new Error('檢測紀錄寫不進去(' + secs.join('') + ')');
+  return ls;
+}
+/* 登入的新用戶:新用戶設定記下「開始檢測」→ 兩科做完 → 回設定流程的結果頁,用預估對回四級 */
+async function accountSeed(B, u) {
+  const s = await open(B, { mode: 'cloud', user: u, url: 'start.html?step=test' });
+  const st = await s.eval('ONBOARD_DATA.startTest()');
+  await s.go('placement.html?view=last'); await s.settle();
+  const ok = await s.eval(RUN(['L', 'R'], 0, true));
+  await s.go('start.html?step=result'); await s.settle();
+  const drawn = await waitFor(s, "!!document.querySelector('.result-card') && !document.querySelector('.ob-loading')", 20000);
+  const ls = JSON.parse(await s.eval(DUMP));
+  await s.close();
+  if (st !== 'ok' || !ok || !drawn) throw new Error('新用戶設定的結果頁沒做出來(startTest ' + st + ',檢測 ' + ok + ',結果頁 ' + drawn + ')');
+  return ls;
+}
+async function makeSeeds(B) {
+  const old = '2026-10-20T00:00:00.000Z', answers = {};
+  for (let i = 0; i < 28; i++) answers[i] = i % 4;
+  CLOUD_DB.put(USER(33).id, 'diag', { answers, done: true, startedAt: old, finishedAt: old }, old);   // 舊使用者:只有舊 28 題
+  return {
+    between: await localSeed(B, ['R'], 0, false),
+    midway: await localSeed(B, ['R'], 4, false),
+    result: await localSeed(B, ['L', 'R'], 0, true),
+    account: await accountSeed(B, USER(31)),
+  };
+}
+
+/* 程度檢測、起始程度、預估分數的畫面:sel 是這個畫面一定有的元素(找不到表示沒畫到,不算通過) */
+const STATES = [
+  { name: '程度檢測 開始頁(沒登入)', url: 'placement.html', sel: '.pl-intro' },
+  { name: '程度檢測 開始頁(從新用戶設定來)', url: 'placement.html?from=onboard', local: true, sel: '.pl-intro' },
+  { name: '程度檢測 只做閱讀的開始頁', url: 'placement.html?sec=R', local: true, sel: '.pl-intro' },
+  { name: '程度檢測 兩科中間', url: 'placement.html', local: true, seed: 'between', sel: '.pl-between' },
+  { name: '程度檢測 結果頁', url: 'placement.html?view=last', local: true, seed: 'result', sel: '#pl-root .result-card' },
+  { name: '程度檢測 還沒有結果', url: 'placement.html?view=last', local: true, sel: '#pl-root .ui-empty' },
+  { name: '我的 預估分數卡', url: 'me.html', local: true, seed: 'result', sel: '.est-card' },
+  { name: '能力分析 預估分數卡', url: 'analysis.html', local: true, seed: 'result', sel: '.est-card' },
+  { name: '新用戶設定 檢測說明', url: 'start.html?step=test', user: 32, sel: '.diag-intro' },
+  { name: '新用戶設定 檢測說明(只做聽力)', url: 'start.html?step=test', user: 33, sel: '.diag-intro' },
+  { name: '新用戶設定 結果(預估分數對回級別)', url: 'start.html?step=result', user: 31, seed: 'account', sel: '.result-card' },
+];
+function stateOpts(st, seeds, size, app) {
+  const o = { url: st.url, size, app, ls: st.seed ? seeds[st.seed] : undefined };
+  if (st.local) return Object.assign(o, { mode: 'local', profile: true });
+  return Object.assign(o, { mode: 'cloud', user: st.user ? USER(st.user) : undefined });
+}
+async function runState(B, results, seeds) {
+  for (const st of STATES) for (const app of [false, true]) for (const size of app ? ADAPT_APP : ADAPT_SIZES) {
+    if (opt('--pages') && !PAGES.includes(st.url.split('?')[0])) continue;
+    const s = await open(B, stateOpts(st, seeds, size, app));
+    const drawn = await waitFor(s, 'document.querySelector(' + J(st.sel) + ') !== null', 8000);
+    await sleep(300);
+    const m = await measure(s);
+    await s.close();
+    const bad = foldProblems(m);
+    if (!drawn) bad.unshift('沒有畫到這個畫面(找不到 ' + st.sel + ')');
+    if (app && !m.shell) bad.push('沒有進到 App 外殼');
+    results.push({ name: 'state ' + size.width + '×' + size.height + (app ? ' App' : '') + ' ' + st.name, bad, m });
   }
 }
 
@@ -223,11 +339,15 @@ async function runApp(B, results) {
   }
 }
 
-async function runQuiz(B, results) {
-  for (const size of [{ width: 375, height: 812 }, { width: 1280, height: 720 }]) for (const app of [false, true]) for (const q of QUIZ) {
-    if (app && size.width > 860) continue;
+/* 一般的作答畫面量 375×812、1280×720 與 App 375×812;程度檢測(adapt)量 ADAPT_SIZES 與 App ADAPT_APP */
+const QUIZ_SIZES = [{ width: 375, height: 812 }, { width: 1280, height: 720 }];
+async function runQuiz(B, results, seeds) {
+  const runs = [];
+  for (const size of QUIZ_SIZES) for (const app of [false, true]) for (const q of QUIZ) if (!q.adapt && !(app && size.width > 860)) runs.push({ q, size, app });
+  for (const q of QUIZ) if (q.adapt) for (const app of [false, true]) for (const size of app ? ADAPT_APP : ADAPT_SIZES) runs.push({ q, size, app });
+  for (const { q, size, app } of runs) {
     if (opt('--pages') && !PAGES.includes(q.url.split('?')[0])) continue;
-    const s = await open(B, { mode: 'local', profile: true, url: q.url, size, app, ls: q.ls });
+    const s = await open(B, { mode: 'local', profile: true, url: q.url, size, app, ls: q.seed ? seeds[q.seed] : q.ls });
     await enterQuiz(s, q);
     const m = await measure(s);
     const bad = quizProblems(m);
@@ -257,7 +377,9 @@ async function main() {
     B = await connect(L.ws);
     if (!ONLY || ONLY === 'fold') await runFold(B, results);
     if (!ONLY || ONLY === 'app') await runApp(B, results);
-    if (!ONLY || ONLY === 'quiz') await runQuiz(B, results);
+    const seeds = !ONLY || ONLY === 'quiz' || ONLY === 'state' ? await makeSeeds(B) : null;
+    if (!ONLY || ONLY === 'quiz') await runQuiz(B, results, seeds);
+    if (!ONLY || ONLY === 'state') await runState(B, results, seeds);
   } finally {
     if (B) B.ws.close();
     L.proc.kill();
@@ -277,4 +399,4 @@ async function main() {
 }
 
 if (require.main === module) main().then(() => setTimeout(() => process.exit(process.exitCode || 0), 300), (e) => { out(String(e && e.stack || e)); process.exit(2); });
-module.exports = { serve, launch, connect, open, measure, enterQuiz, QUIZ, CLOUD_PORT, LOCAL_PORT, DEBUG };
+module.exports = { serve, launch, connect, open, measure, enterQuiz, QUIZ, STATES, makeSeeds, stateOpts, CLOUD_PORT, LOCAL_PORT, DEBUG };

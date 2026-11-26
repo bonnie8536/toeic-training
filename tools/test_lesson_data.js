@@ -563,6 +563,14 @@ T['程度調整:第 4 堂上完(或只差本堂結果)時做一次,寫 levels �
   assert.equal(w.store.peek('les_t1_04').doneAt, null, '本堂結果還沒交:doneAt 是空的');
   eq((await w.D.calibrate(NOW)).done, 'now', '只差本堂結果就做');
 };
+T['程度調整:第 2–4 堂上入門課、之後在檢測結果頁改成門檻(est),調整從入門算一級:不跳到進階,兩科不變、照樣記一筆 calibrate'] = async () => {
+  const e = await calibEnv();
+  const at = new Date((NOW - DAY) * 1000).toISOString();
+  e.store.set('levels', Object.assign({}, LV0, { listening: 'threshold', reading: 'threshold', source: { listening: 'est', reading: 'est' }, setAt: at,
+    history: LV0.history.concat([{ at, listening: 'threshold', reading: 'threshold', reason: 'est' }]) }));
+  eq([await e.D.calibrate(NOW), historyOf(e)], [{ done: 'now', changed: { listening: null, reading: null } },
+    ['legacy:entry/entry', 'est:threshold/threshold', 'calibrate:threshold/threshold']]);
+};
 T['程度調整:同一頁同時呼叫兩次(開頁一次、雲端合併後又一次)只做一次,第二次回 before、變動跟第一次一樣'] = async () => {
   const e = await calibEnv();
   const n = setsOf(e, 'levels');

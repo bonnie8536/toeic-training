@@ -148,6 +148,27 @@ T['L8 升降:一科 ≥20 題才判,>80% 升、<45% 降,邊界不動;入門不�
   eq(frozen(prev), keep);
 };
 
+T['L8b 上課時的級別(taken)跟目前不一樣(上到一半改過):升降從上課時的級別算一級,目前已經在那個方向就不動;一樣時照 L8'] = () => {
+  const NOW_ISO = '2026-11-20T02:00:00.000Z';
+  const cur = { listening: 'threshold', reading: 'threshold', source: { listening: 'est', reading: 'est' }, setAt: '2026-11-10T00:00:00.000Z', history: [{ at: '2026-11-10T00:00:00.000Z', listening: 'threshold', reading: 'threshold', reason: 'est' }] };
+  const keep = frozen(cur);
+  const rate = (n, ok) => ({ n, ok });
+  const go = (l, r, taken, p) => L.calibrateLevels(p || cur, { listening: l, reading: r }, NOW_ISO, E.ctx.ONBOARD_CORE.newLevels, taken);
+  const up = go(rate(20, 18), rate(20, 18), { listening: 'entry', reading: 'entry' });
+  eq([up.levels.listening, up.levels.reading, up.changed, up.levels.source], ['threshold', 'threshold', { listening: null, reading: null }, cur.source], '入門課答得好:升到門檻,目前已經是門檻,不跳到進階');
+  const down = go(rate(20, 5), rate(20, 5), { listening: 'advanced', reading: 'advanced' });
+  eq([down.levels.listening, down.levels.reading, down.changed], ['threshold', 'threshold', { listening: null, reading: null }], '進階課答不好:降到門檻,目前已經是門檻');
+  const stay = go(rate(20, 12), rate(20, 12), { listening: 'entry', reading: 'entry' });
+  eq([stay.levels.listening, stay.levels.reading, stay.changed], ['threshold', 'threshold', { listening: null, reading: null }], '答對率在中間:不把目前的改回上課時的級別');
+  const back = go(rate(20, 5), rate(20, 18), { listening: 'advanced', reading: 'threshold' }, Object.assign({}, cur, { listening: 'high', reading: 'entry' }));
+  eq([back.levels.listening, back.levels.reading, back.changed], ['threshold', 'advanced', { listening: ['high', 'threshold'], reading: ['entry', 'advanced'] }], '目前在相反方向:改成從上課時的級別算一級');
+  const low = go(rate(20, 5), rate(20, 5), { listening: 'entry', reading: 'entry' });
+  eq([low.levels.listening, low.levels.reading], ['threshold', 'threshold'], '入門課答不好:入門不降,也不把目前的門檻改回入門');
+  const same = go(rate(20, 18), rate(20, 8), { listening: 'threshold', reading: 'threshold' });
+  eq([same.levels.listening, same.levels.reading], ['advanced', 'entry'], '一樣時照 L8');
+  eq(frozen(cur), keep);
+};
+
 T['L9 這一期做過沒有(levels.history 有 calibrate、時間在開始日當地 00:00 以後);畫面用的變動(比那一筆跟前一筆)'] = () => {
   const at = (d) => new Date(d + 'T00:00:00').toISOString();
   const h = [{ at: at('2026-10-01'), listening: 'entry', reading: 'entry', reason: 'calibrate' }, { at: at('2026-11-01'), listening: 'entry', reading: 'threshold', reason: 'score' },
@@ -158,14 +179,20 @@ T['L9 這一期做過沒有(levels.history 有 calibrate、時間在開始日當
   eq([L.calibration(lv, '2026-11-03'), L.calibration({ history: [h[2]] }, START)], [null, { changed: { listening: null, reading: null } }]);
 };
 
-T['L9c 程度檢測定的級別(est)之後調整:調整前後比 est 那一筆;之後又按「改成這個程度」(多一筆 est)仍算本期做過、變動不變'] = () => {
+T['L9c 程度檢測定的級別(est)之後調整:調整前後比 est 那一筆;之後又改了級別(est 或 manual,跟調整後不一樣)仍算本期做過,但不再顯示調整'] = () => {
+  /* 原本斷言改回 est 之後變動照舊顯示,已經過時:課程總覽會寫「入門 → 門檻」,「我的」頁卻是入門,兩頁互相矛盾。
+     現在只在目前的級別跟本期調整那一筆一樣時才顯示 */
   const at = (d) => new Date(d).toISOString();
   const e1 = { at: at('2026-10-30T09:00:00'), listening: 'threshold', reading: 'entry', reason: 'est' };
   const c1 = { at: at('2026-11-24T10:00:00'), listening: 'advanced', reading: 'entry', reason: 'calibrate' };
   const e2 = { at: at('2026-11-25T10:00:00'), listening: 'threshold', reading: 'entry', reason: 'est' };
-  const want = { changed: { listening: ['threshold', 'advanced'], reading: null } };
+  const m2 = Object.assign({}, e2, { reason: 'manual' }), same = Object.assign({}, e2, { listening: 'advanced' });
+  const want = { changed: { listening: ['threshold', 'advanced'], reading: null } }, none = { changed: { listening: null, reading: null } };
   eq([L.calibrated({ history: [e1, c1] }, START), L.calibration({ history: [e1, c1] }, START)], [true, want]);
-  eq([L.calibrated({ history: [e1, c1, e2] }, START), L.calibration({ history: [e1, c1, e2] }, START)], [true, want]);
+  eq([L.calibrated({ history: [e1, c1, e2] }, START), L.calibration({ history: [e1, c1, e2] }, START)], [true, none], '改回 est');
+  eq([L.calibrated({ history: [e1, c1, m2] }, START), L.calibration({ history: [e1, c1, m2] }, START)], [true, none], '手動改');
+  eq(L.calibration({ history: [e1, c1, same] }, START), want, '之後那一筆跟調整後一樣:照樣顯示');
+  eq(L.calibration({ listening: 'threshold', reading: 'entry', history: [e1, c1] }, START), none, '目前的級別(最上層)跟調整後不一樣');
 };
 
 T['L9b 兩台(或兩個分頁)各記一筆本期的 calibrate、合併成兩筆:變動照第一筆跟它之前那一筆比'] = () => {

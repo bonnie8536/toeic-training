@@ -157,6 +157,12 @@ T['K7 程度調整:有變的科一列(不可點)、ⓘ 開說明面板五行;都
   eq([e.sheets[0].opt.title, e.sheets[0].el.querySelectorAll('p').length], ['程度調整', 5]);
   eq([e.W.calibNotice({ listening: null, reading: null }), e.W.calibNotice(null)], [null, null]);
 };
+T['K8 獨立小檢核的結果:結算卡(第 n 堂、大字小檢核、鵜鶘 happy、繼續回課程總覽,沒有點心的 earnId);下面直接接判定清單,沒有同名標題'] = () => {
+  const e = env(), list = e.doc.createElement('ul');
+  const r = e.W.soloResult(4, [list]);
+  eq([e.results[0], r.nodes.length, r.nodes[1].children[0] === list, r.nodes[1].querySelectorAll('h2').length, r.heading.textContent],
+    [{ kicker: '第 4 堂', big: '小檢核', pose: 'happy', primary: { label: '繼續', href: 'lessons.html' } }, 2, true, 0, '小檢核']);
+};
 
 /* ---------- 跑 ---------- */
 (async () => {

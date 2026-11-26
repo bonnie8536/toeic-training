@@ -11,7 +11,10 @@
      review(ctx)、weak(ctx)、testReview(ctx)、checkpoint(ctx) → Promise<'done'|'exit'>:'done' 這一段交卷或略過;'exit' 學生離開。都回總覽
      wrapup(ctx) → Promise<'done'>:畫好本堂結果(不要再換畫面)。第一次進來(本堂結果段還不是 done)才補記考點、記完成、給點心;重看只讀
      judge(ctx) → Promise:小檢核兩個回合都交卷、段還沒交卷、還沒判過就補判(開頁、進弱點補練、進本堂結果前)
-   } */
+     cpResult(ctx) → Promise<[節點]>:小檢核清單與小檢核解析(本堂結果與獨立小檢核的結果共用)
+   }
+   ctx.solo:每週 1 堂的學生從首頁直接進第 4k 堂的小檢核(獨立小檢核),說明頁那一行換成「結果在交卷後顯示」。
+   第 4 堂本堂結果:第一次與重看都問 ctx.data.calibrate(第 4 堂後的程度調整;做過了只回結果),有變的科在小檢核清單下面出一塊(js/lesson-week.js)。 */
 (function (root) {
   'use strict';
   const RANGE = { review: [80, 85], weak: [85, 90], test_review: [90, 98] };
@@ -292,7 +295,7 @@
     for (let i = 0; i < list.length; i++) {
       if (roundDone(ctx.state(), list[i], has)) continue;
       const go = i === 0
-        ? await cpIntro(ctx, C.title, [C.count(countIn(list, ctx.state(), has)), sec ? C.aboutMin(Math.ceil(sec / 60)) : null], [C.note].concat(missingLine(ctx, meta, has)))
+        ? await cpIntro(ctx, C.title, [C.count(countIn(list, ctx.state(), has)), sec ? C.aboutMin(Math.ceil(sec / 60)) : null], [ctx.solo ? C.soloNote : C.note].concat(missingLine(ctx, meta, has)))
         : await cpIntro(ctx, C.reading, [C.count(countIn([list[i]], ctx.state(), has))], null);
       if (go !== 'start') return 'exit';
       if ((await ctx.runRound(list[i].blocks, Object.assign({ round: list[i], slot: 'checkpoint' }, CP_OPT))) === 'exit') return 'exit';
@@ -365,28 +368,43 @@
     });
     return rows;
   }
+  /* 小檢核清單(不含標題)與小檢核解析(review() 才畫,題目先讀好) */
+  async function cpParts(ctx, meta) {
+    const st = ctx.state(), W = TX().wrapup, I = itemsOf(ctx), has = hasFor(ctx, meta);
+    const list = verdictRows(ctx, await pack().loadShared('pts', ctx.today()), cpMissing(ctx, st, meta, has));
+    const cpIdx = new Set(cpBlocks(ctx.lesson).map((b) => b.idx));
+    const cpIds = [].concat(...cpBlocks(ctx.lesson).map((b) => idsIn(b, st, has)));
+    const units = cpIds.length ? await unitsOf(cpIds) : [];
+    return { list: list.length ? I.verdicts(list) : null,
+      review: () => (cpIds.length ? detail(W.checkpointReview, I.review(units, I.answersOf(units, (st.a || []).filter((x) => cpIdx.has(x[0]))))) : null) };
+  }
+  async function cpResult(ctx) {
+    const p = await cpParts(ctx, await metaMap());
+    return [p.list, p.review()].filter(Boolean);
+  }
+  /* 第 4 堂:程度調整有變的科(js/lesson-week.js 沒載到、沒變都不出) */
+  async function calibBlock(ctx) {
+    const W = root.LESSON_WEEK;
+    if (ctx.no !== 4 || !W || typeof ctx.data.calibrate !== 'function') return null;
+    try { const r = await ctx.data.calibrate(ctx.now()); return r && r.changed ? W.calibNotice(r.changed) : null; } catch (e) { console.error('程度調整沒做：', e); return null; }
+  }
   async function drawWrapup(ctx, meta) {
     const st = ctx.state(), W = TX().wrapup, I = itemsOf(ctx);
-    const cpIdx = new Set(cpBlocks(ctx.lesson).map((b) => b.idx));
     const rows = tally(st, apartIdx(ctx.lesson)), score = rows.filter((x) => (x[4] & 1) === 1).length;
     const card = root.UI.result(Object.assign({ kicker: W.kicker(ctx.no), primary: { label: W.next, href: 'lessons.html' } },
       rows.length ? { score, total: rows.length } : { big: TX().lesson.done }));
     const more = node('div', 'lsn-narrow lsn-result-more');
-    if (ctx.lesson.checkpoint) {
-      const list = verdictRows(ctx, await pack().loadShared('pts', ctx.today()), cpMissing(ctx, st, meta, hasFor(ctx, meta)));
-      if (list.length) more.append(node('h2', 'me-sec-h', [W.checkpoint]), I.verdicts(list));
-    }
+    const cp = ctx.lesson.checkpoint ? await cpParts(ctx, meta) : { list: null, review: () => null };
+    if (cp.list) more.append(node('h2', 'me-sec-h', [W.checkpoint]), cp.list);
+    const calib = await calibBlock(ctx);
+    if (calib) more.append(calib);
     const wrong = rows.filter((x) => (x[4] & 1) !== 1 && meta.has(x[1]));
     if (wrong.length) {
       const units = await unitsOf(wrong.map((x) => x[1]));
       more.append(detail(W.wrong(wrong.length), I.review(units, I.answersOf(units, rows))));
     }
-    const cpRows = (st.a || []).filter((x) => cpIdx.has(x[0]));
-    const cpIds = [].concat(...cpBlocks(ctx.lesson).map((b) => idsIn(b, st, hasFor(ctx, meta))));
-    if (cpIds.length) {
-      const units = await unitsOf(cpIds);
-      more.append(detail(W.checkpointReview, I.review(units, I.answersOf(units, cpRows))));
-    }
+    const review = cp.review();
+    if (review) more.append(review);
     ctx.host.replaceChildren(card.el, more);
     focusHead(card.heading);
     return card;
@@ -410,5 +428,5 @@
     return 'done';
   }
 
-  root.LESSON_PERSONAL = Object.freeze({ review, weak, testReview, checkpoint, wrapup, judge });
+  root.LESSON_PERSONAL = Object.freeze({ review, weak, testReview, checkpoint, wrapup, judge, cpResult });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

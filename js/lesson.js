@@ -8,7 +8,9 @@
      opt = { cp(小檢核的檢核回合:只寫進度), feedback('instant'|'submit'), plays, src('p'|'w'|'r';null 不記 pts 與 rvq;沒給時照區塊編號,LESSON_CORE.rerecord),
      wrong(false 不排錯題), first(false 時一律不是第一次作答), result(false 交卷後不出區塊結果), onItems(rows, result), opener(按下的按鈕) }。
    開頁時:第 1 堂呼叫 LESSON_TEST.expire(作答中的段超過 24 小時或時間用完就交卷),有小檢核的堂呼叫 LESSON_PERSONAL.judge(判定前關頁的補判)。
-   時間:now 是 epoch 秒,作答紀錄與學習記錄是毫秒(LESSON_CORE 換算)。 */
+   時間:now 是 epoch 秒,作答紀錄與學習記錄是毫秒(LESSON_CORE 換算)。
+   lesson.html?no=4&cp=1:獨立小檢核(每週 1 堂的學生沒上的第 4k 堂,首頁那一列連過來):沒有進度就照「開始」建立、直接進小檢核,
+   交卷後做第 4 堂後的程度調整、出小檢核的結果卡(js/lesson-week.js);小檢核已經交卷直接出結果。第 5 堂以後開頁先做程度調整(條件不成立就不做)。 */
 (function (root) {
   'use strict';
   const doc = root.document;
@@ -31,7 +33,7 @@
   const SET_SIZE = 3;       // 前測組卷前的聽力題數:P3、P4 一組 3 題(36 題)
   const READING_EST = 41;   // 前測組卷前的閱讀題數:39–43 題取中間(約 30 分鐘)
   const S = {
-    no: null, files: null, meta: new Map(), lesson: null, state: null, levels: null, classId: null, trial: null, note: null,
+    no: null, solo: false, files: null, meta: new Map(), lesson: null, state: null, levels: null, classId: null, trial: null, note: null,
     slot: null, depth: 0, url: '', run: 0, screen: '', ignorePop: false, focus: null, onExit: null, words: null, pool: null, fresh: false,
   };
 
@@ -89,7 +91,7 @@
   const histState = (depth) => ({ lsn: S.no, depth });
   function urlOf(slot) {
     const i = slot && S.lesson ? S.lesson.segments.findIndex((s) => s.slot === slot) : -1;
-    return 'lesson.html?no=' + S.no + (i > -1 ? '&s=' + (i + 1) : '');
+    return 'lesson.html?no=' + S.no + (S.solo ? '&cp=1' : '') + (i > -1 ? '&s=' + (i + 1) : '');
   }
   function pushStep(slot) {
     S.depth += 1;
@@ -112,6 +114,7 @@
   }
   async function toOverview() {
     S.run += 1;
+    S.solo = false;
     leaveFocus();
     if (S.depth > 0) { const n = S.depth; S.depth = 0; S.ignorePop = true; root.history.go(-n); }
     else root.history.replaceState(histState(0), '', urlOf());
@@ -128,6 +131,7 @@
   function boot() {
     root.addEventListener('popstate', onPop);
     S.no = parseNo();
+    S.solo = new URLSearchParams(root.location.search || '').get('cp') === '1';
     setTitles();
     if (S.no !== null) root.history.replaceState(histState(0), '', urlOf());   // 帶 s 的網址一律回總覽
     if (S.no === null) { empty('notFound', false); return; }
@@ -151,6 +155,10 @@
     if (!(await loadFiles())) return empty('failed', focus, { retry: () => open(true).catch(fail) });
     if (!P || !ENGINES.every((k) => !!root[k]) || !(await loadMeta())) return empty('itemsFailed', focus);
     await askWeekly();
+    if (S.no >= 5) {
+      try { await D.calibrate(nowSec(), { opening: S.no }); } catch (e) { console.error('程度調整沒做：', e); }
+      S.levels = D.levels() || S.levels;
+    }
     return openLesson(focus);
   }
   /* 第 2 堂以後:第 1 堂上完、還沒問過每週上幾堂,先出那一頁(js/lesson-week.js),選了再開這一堂 */
@@ -176,6 +184,7 @@
     const st = statusNow();
     if (st.status !== 'open') return showStatus(st, focus);
     await prepare();
+    if (S.solo && segOf('checkpoint')) return openSolo();
     if (S.state && S.state.doneAt) return showDone();
     return overview(focus);
   }
@@ -319,6 +328,7 @@
     pushStep(slot);
     const out = DELEGATE[slot] ? await runDelegate(slot) : await runFixed(segOf(slot), run);
     if (run !== S.run || out === 'gone') return;
+    if (S.solo && slot === 'checkpoint' && out === 'done') { await soloDone(); return; }
     if (S.state && S.state.doneAt && (slot === 'wrapup' || S.lesson.kind === 'test')) {
       if (!host().querySelector('.result-card')) await showDone();   // 前測結果、本堂結果由各自的程式畫
       return;
@@ -328,6 +338,27 @@
       if (next && next !== slot) { await enterSegment(next); return; }
     }
     await toOverview();
+  }
+  /* ---------- 獨立小檢核 ---------- */
+  async function openSolo() {
+    if (!(S.state && S.state.startedAt) && !(await startLesson())) return;
+    const cp = S.state.seg.checkpoint;
+    if (cp && cp.st === 'done') return showSolo();
+    return enterSegment('checkpoint');
+  }
+  async function soloDone() {
+    try { await D.calibrate(nowSec()); } catch (e) { console.error('程度調整沒做：', e); }
+    return showSolo();
+  }
+  async function showSolo() {
+    const W = root.LESSON_WEEK, LP = root.LESSON_PERSONAL;
+    S.screen = 'done';
+    leaveFocus();
+    setHead(false, titleNow());
+    if (!W || !LP || typeof LP.cpResult !== 'function') { console.error('沒有載入 LESSON_WEEK 或 LESSON_PERSONAL.cpResult'); empty('itemsFailed', true); return; }
+    const r = W.soloResult(S.no, await LP.cpResult(ctxOf('checkpoint')));
+    host().replaceChildren(...r.nodes);
+    try { r.heading.focus({ preventScroll: true }); root.scrollTo(0, 0); } catch (e) { /* 焦點放不上去不影響 */ }
   }
   /* 前測、個人段、本堂結果:頁首收起來(這幾個畫面由各自的程式放進 host),再交給 LESSON_TEST、LESSON_PERSONAL */
   async function runDelegate(slot) {
@@ -688,7 +719,7 @@
       state: () => S.state, setState: (s) => { if (s && typeof s === 'object') S.state = s; },
       runRound: delegateRound, step: (r) => runStep(r), push: () => pushStep(slot), show: (node, focus) => screen(node, focus !== false),
       note: (lines) => { S.note = [].concat(lines || []).filter(Boolean); }, has, meta: S.meta, files: S.files,
-      data: D, views: V, items: root.LESSON_ITEMS, now: nowSec, nowMs, today,
+      data: D, views: V, items: root.LESSON_ITEMS, now: nowSec, nowMs, today, solo: S.solo,
     });
   }
 

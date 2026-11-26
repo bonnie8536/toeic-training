@@ -128,6 +128,14 @@
       [el('span', { text: T.solo(solo.no) }), el('span', { class: 'me-row-val', text: T.soloMin(solo.minutes) })])])]);
   }
 
+  /* 獨立小檢核的結果:結算卡(大字「小檢核」、主按鈕「繼續」回課程總覽,不給點心)下面直接接判定清單與解析(nodes,
+     js/lesson-personal.js 的 cpResult;卡片的大字已經是小檢核,不再加同名的標題)。回 { nodes, heading } */
+  function soloResult(no, nodes) {
+    const C = core().TEXT;
+    const card = root.UI.result({ kicker: C.wrapup.kicker(no), big: C.checkpoint.title, pose: 'happy', primary: { label: C.wrapup.next, href: 'lessons.html' } });
+    return { nodes: [card.el, el('div', { class: 'lsn-narrow lsn-result-more' }, nodes || [])], heading: card.heading };
+  }
+
   /* ---------- 程度調整與說明按鈕 ---------- */
   /* ⓘ:打開說明面板(UI.sheet,一行一段);但書與限制放這裡 */
   function infoButton(label, title, lines) {
@@ -149,5 +157,5 @@
       el('ul', { class: 'me-list' }, rows)]);
   }
 
-  root.LESSON_WEEK = Object.freeze({ TEXT, needWeekly, weeklyScreen, weeklySheet, settingsRow, weekRow, soloRow, infoButton, calibNotice });
+  root.LESSON_WEEK = Object.freeze({ TEXT, needWeekly, weeklyScreen, weeklySheet, settingsRow, weekRow, soloRow, soloResult, infoButton, calibNotice });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -8,6 +8,7 @@
    重看不寫任何鍵、錯題不含小檢核、小檢核解析沒有題數、小檢核清單沒有數字、點心只在第一次。
    不開瀏覽器、不連網。用法:node tools/test_lesson_personal.js */
 'use strict';
+const vm = require('vm');
 const assert = require('assert');
 const K = require('./lesson_kit.js');
 const H = require('./test_lesson_test.js');
@@ -366,6 +367,38 @@ T['本堂結果:答對數不含小檢核、一出現就記完成、小檢核清�
   eq([e.store.sets.length, e.log.filter((x) => x[0] === 'pet').length], [n, 1], '重看:不寫任何鍵、不給點心');
 };
 
+T['獨立小檢核(每週 1 堂的課後練習):說明頁那一行換成「結果在交卷後顯示」;判定清單與解析用 cpResult 拿(跟本堂結果同一個函式)'] = async () => {
+  const e = await env();
+  const pc = await lessonFour(e, () => true);
+  pc.solo = true;
+  const run = e.LP.checkpoint(pc);
+  await settle(60);
+  eq(e.host.querySelectorAll('.lsn-rule').map(text), ['結果在交卷後顯示']);
+  for (let i = 0; i < 2; i++) { const go = e.host.querySelector('.lsn-go'); if (go) go.click(); await settle(60); }
+  assert.equal(await run, 'done');
+  const nodes = await e.LP.cpResult(pc);
+  const box = e.dom.createElement('div');
+  nodes.forEach((n) => box.append(n));
+  eq([box.querySelectorAll('.lsn-row').map(text), box.querySelectorAll('h2').length, e.log.filter((x) => x[0] === 'detail').map((x) => x[1])],
+    [['照片描述達標', 'WH 問句達標', '詞性達標'], 0, ['小檢核解析']]);
+};
+T['本堂結果的程度調整(第 4 堂):第一次與重看都問 calibrate;有變的科在小檢核清單下面、錯題上面出一塊;沒變、不是第 4 堂不出'] = async () => {
+  const e = await env();
+  vm.runInContext(K.read('js/lesson-week.js'), e.ctx, { filename: 'js/lesson-week.js' });
+  const pc = await lessonFourDone(e);
+  const calls = [];
+  pc.data = Object.assign({}, e.D, { calibrate: async (now) => { calls.push(now); return { done: 'now', changed: { listening: ['entry', 'threshold'], reading: null } }; } });
+  await e.LP.wrapup(pc);
+  const more = e.host.children[1], kids = more.children;
+  const at = (sel) => kids.indexOf(more.querySelector(sel));
+  eq([calls.length, text(more.querySelector('.lsn-calib h2')), more.querySelectorAll('.lsn-calib li').map(text), at('.lsn-verdicts') < at('.lsn-calib'), at('.lsn-calib') < at('details')],
+    [1, '程度調整', ['聽力入門 → 門檻'], true, true]);
+  pc.data = Object.assign({}, e.D, { calibrate: async () => ({ done: 'before', changed: { listening: null, reading: null } }) });
+  const pc2 = page(e, 4, TT);
+  pc2.data = pc.data;
+  await e.LP.wrapup(pc2);
+  assert.equal(e.host.querySelector('.lsn-calib'), null);
+};
 T['本堂結果第一次進來補記考點:照原本的來源與批次(固定段 p、考點回顧 r、弱點補練 w、小檢核 c),同一批不重複;錯題重做與前測不記'] = async () => {
   const e = await env();
   const d = today(e);

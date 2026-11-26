@@ -2,10 +2,14 @@
 # 推送前檢查（裝法：node tools/install_hooks.js）。兩件事：
 # 1. 被推的 ref 是備份用的（backup/ 開頭的分支或標籤、refs/original 底下）就拒絕；push --mirror 也會被擋。
 #    刪除遠端 ref 的推送不擋。
-# 2. 跑 node tools/secret_scan.js，有像金鑰的字串就拒絕。掃的是這個工作目錄追蹤的檔案。
-# 找不到 node 或 tools/secret_scan.js 時一律拒絕，避免沒檢查就推出去。
+# 2. 掃這次真正要推的每個 commit 裡的檔案（node tools/secret_scan.js --commits），有像金鑰的字串就拒絕，
+#    並寫出是哪個 commit、哪個檔案。已經在這個遠端追蹤分支上的 commit 不重掃。不看工作目錄與暫存區：
+#    已經 commit、之後只在工作目錄刪掉的金鑰照樣會被擋；工作目錄裡還沒 commit 的東西不影響推送。
+# 找不到 node 或 tools/secret_scan.js、列不出要推的 commit 時一律拒絕，避免沒檢查就推出去。
 
+remote="$1"
 bad=0
+revs=""
 while read -r local_ref local_sha remote_ref remote_sha; do
   case "$local_sha" in
     *[!0]*) ;;
@@ -18,9 +22,19 @@ while read -r local_ref local_sha remote_ref remote_sha; do
         bad=1 ;;
     esac
   done
+  revs="$revs $local_sha"
+  case "$remote_sha" in
+    *[!0]*)
+      if git cat-file -e "$remote_sha^{commit}" 2>/dev/null; then
+        revs="$revs ^$remote_sha"
+      fi ;;
+  esac
 done
 if [ "$bad" -ne 0 ]; then
   exit 1
+fi
+if [ -z "$revs" ]; then
+  exit 0
 fi
 
 top=$(git rev-parse --show-toplevel) || exit 1
@@ -32,8 +46,9 @@ if [ ! -f "$top/tools/secret_scan.js" ]; then
   echo "拒絕推送：這個分支沒有 tools/secret_scan.js，無法跑祕密掃描。" >&2
   exit 1
 fi
-if ! node "$top/tools/secret_scan.js" >&2; then
-  echo "拒絕推送：祕密掃描有命中。" >&2
+# $revs 只有 commit 的雜湊（可能帶 ^），刻意不加引號讓它拆成多個參數
+if ! node "$top/tools/secret_scan.js" --commits --remote "$remote" -- $revs >&2; then
+  echo "拒絕推送：祕密掃描有命中，或列不出要推的 commit。" >&2
   exit 1
 fi
 exit 0

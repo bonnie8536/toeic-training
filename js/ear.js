@@ -10,7 +10,7 @@
   const E = (window.TOEIC && TOEIC.ear) || null;
 
   if (!E || !E.dictation || !E.dictation.length) {
-    if (root) root.append(UI.empty({ pose: 'read', text: '聽力訓練教材準備中' }));
+    if (root) root.append(UI.empty({ pose: 'gaze', text: '聽力訓練教材準備中' }));
     return;
   }
 

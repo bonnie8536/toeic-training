@@ -1,7 +1,8 @@
 /* 衝衝英文:共用元件 window.UI(每個函式的參數寫在它上方)
    - UI.art.ensure(names)  需要時才載入 PelicanArt、ChickArt、FoodArt、DoodleArt(同層的檔),回傳 Promise,載入失敗也是 resolve
    - UI.mascot(canvas, opt)  主角鵜鶘:沒有或載入失敗時退回小雞,兩個都沒有就不畫;UI.chick(canvas, opt) 只畫小雞(寵物)。
-     看得到才動,離開畫面、分頁到背景、destroy() 時停;happy 只畫靜止格,跳一下由 CSS 做。忘了 destroy 時,畫布拿出頁面後自己收掉
+     看得到才動,離開畫面、分頁到背景、destroy() 時停;happy 只畫靜止格,跳一下由 CSS 做,
+     結算卡上的鵜鶘例外(opt.loopHappy):照 PelicanArt.fps.happy 一直循環播 10 格,不疊 .is-hop。忘了 destroy 時,畫布拿出頁面後自己收掉
    - UI.focus.enter(opt)  專心模式;UI.sheet(opt) 從作答列點開的面板(題號面板)
    - UI.result(opt) 結算卡、UI.rewardRow(opt) 只有點心列、UI.detail(title, nodes, opt) 逐題收合、UI.empty(opt) 空狀態
    - UI.confirm(opt)、UI.prompt(opt)、UI.alert(opt)  確認、輸入、通知視窗(Promise);opt.body 是字串或節點(要分行時給節點)
@@ -15,9 +16,10 @@
   const LOAD_MS = 10000;                       // 圖的程式最多等這麼久,逾時當作沒載到
   const CHICK_RATIO = 280 / 240;               // 小雞畫布的高寬比(ChickArt.metrics;載入後以 metrics 為準)
   const PELICAN_RATIO = 280 / 300;             // 鵜鶘畫布的高寬比(PelicanArt.metrics;載入後以 metrics 為準)
-  const POSE_FALLBACK = { oops: 'idle', read: 'idle' };
+  const POSE_FALLBACK = { oops: 'idle', read: 'idle', daydream: 'idle', gaze: 'idle' };
   /* 開心的跳躍裡有壓得很扁的格(蹲下 0.7、落地 0.6),放大在結算卡上像圖壞掉:這些姿勢只畫靜止格(正常比例),
-     要跳時由 CSS 把整張畫布往上跳一次(.is-hop,壓扁不超過 0.92、以腳底為基準) */
+     要跳時由 CSS 把整張畫布往上跳一次(.is-hop,壓扁不超過 0.92、以腳底為基準)。
+     例外:結算卡上的鵜鶘(opt.loopHappy,見 mascot 的 playsHappy)直接循環播畫格;退回小雞、減少動態、其他地方的 happy 照舊畫靜止格 */
   const STILL_POSES = ['happy'];
   const HOP_MS = 640;
   const KB_PX = 120;                           // 可視高度比視窗少這麼多:當作鍵盤彈出來了
@@ -169,7 +171,7 @@
     return list.indexOf('idle') > -1 || !list.length ? 'idle' : list[0];
   }
   function mascot(canvas, opt) {
-    const o = Object.assign({ size: 96, pose: 'idle', still: false, hop: false, kind: 'pelican' }, opt || {});
+    const o = Object.assign({ size: 96, pose: 'idle', still: false, hop: false, loopHappy: false, kind: 'pelican' }, opt || {});
     const wantPelican = o.kind !== 'chick';
     const chickSize = o.chickSize > 0 ? o.chickSize : o.size;   // 退回小雞時的寬(鵜鶘比較寬,小雞要小一點)
     let fell = false;                                           // 鵜鶘載不到、改用小雞
@@ -188,9 +190,11 @@
     let seen = !('IntersectionObserver' in window);
     /* 畫布放進頁面過、後來被拿掉了(呼叫端換掉卡片卻沒呼叫 destroy):自己收掉計時器與監聽,不握住畫布 */
     function dropped() { if (canvas.isConnected === true) { wasIn = true; return false; } return wasIn && canvas.isConnected === false; }
-    /* 會不會動:靜態的小雞(空狀態)、減少動態、只畫靜止格的姿勢(happy)都不開計時器 */
+    /* 會不會動:靜態的小雞(空狀態)、減少動態、只畫靜止格的姿勢(happy,結算卡上的鵜鶘除外)都不開計時器 */
     const canMove = !o.still && !reduced();
-    const loops = function () { return canMove && !reduced() && STILL_POSES.indexOf(poseOk(artName(), want)) < 0; };
+    /* 結算卡(opt.loopHappy)上的鵜鶘:happy 直接循環播畫格(退回小雞時不算,照舊靜止格加 CSS 跳) */
+    function playsHappy(q) { return !!o.loopHappy && q === 'happy' && artName() === 'PelicanArt'; }
+    const loops = function () { const q = poseOk(artName(), want); return canMove && !reduced() && (STILL_POSES.indexOf(q) < 0 || playsHappy(q)); };
     function calmOf(p) { const A = window[artName()]; return A && A.calm && typeof A.calm[p] === 'number' ? A.calm[p] : 0; }
     function clearBack() { if (back) { clearTimeout(back); back = 0; } }
     function clearHop() { if (hopT) { clearTimeout(hopT); hopT = 0; } safe(function () { canvas.classList.remove('is-hop'); }); }
@@ -272,13 +276,17 @@
         want = p; clearBack();
         if (anim && running && loops()) safe(function () { anim.setPose(poseOk(artName(), p)); }); else sync();
       },
-      /* 播一次再回到原本的姿勢;停著、減少動態時不播。happy 不播畫格,改成靜止格加整張跳一次 */
+      /* 播一次再回到原本的姿勢;停著、減少動態時不播。happy 不播畫格,改成靜止格加整張跳一次(結算卡上的鵜鶘本來就在循環播 happy:
+         現在就是 happy 時什麼都不用做,是別的姿勢時照一般姿勢播一輪再回去) */
       play: function (p) {
         const A = window[artName()];
         if (!alive || !canMove || reduced() || !anim || !A) return false;
         const q = poseOk(artName(), p);
         clearBack();
-        if (STILL_POSES.indexOf(q) > -1) { paintStill(q); hop(); back = setTimeout(function () { back = 0; sync(); }, HOP_MS); return true; }
+        if (playsHappy(q)) {
+          if (!running) return false;
+          if (poseOk(artName(), want) === q) { if (anim.pose !== q) safe(function () { anim.setPose(q); }); return true; }
+        } else if (STILL_POSES.indexOf(q) > -1) { paintStill(q); hop(); back = setTimeout(function () { back = 0; sync(); }, HOP_MS); return true; }
         if (!running) return false;
         safe(function () { anim.setPose(q); });
         const frames = (typeof A.holds === 'function' ? A.holds(q) : []).reduce(function (a, b) { return a + b; }, 0) || 8;
@@ -758,8 +766,8 @@
       head, stats, reward, acts,
       o.note ? el('p', { class: 'result-note' }, [o.note]) : null,
     ]);
-    /* happy 進場時整張跳一次(只畫正常比例的靜止格) */
-    const c = mascot(cv, { size: small ? 120 : wide ? 200 : 180, chickSize: small ? 96 : wide ? 160 : 140, pose: pose, hop: true });
+    /* happy:鵜鶘循環播 10 格(loopHappy),不疊 CSS 跳;退回小雞時進場整張跳一次(只畫正常比例的靜止格) */
+    const c = mascot(cv, { size: small ? 120 : wide ? 200 : 180, chickSize: small ? 96 : wide ? 160 : 140, pose: pose, hop: true, loopHappy: true });
     const s = snackSlot(card, reward, o.earnId, c);
     return {
       el: card,
@@ -799,7 +807,7 @@
      角色一張、一行字、一個出口(action;primary: true 是實色)、一排文字連結(links)、下面再放的節點(extra) */
   function empty(opt) {
     const o = opt || {};
-    const cv = el('canvas', { class: 'ui-empty-art' });
+    const cv = el('canvas', { class: 'ui-empty-art', 'data-pose': o.pose || 'sleep' });   // data-pose:gaze 的邊距另外調(css)
     const go = o.action && o.action.label ? action(o.action, 'btn ui-empty-go' + (o.action.primary ? ' primary' : '')) : null;
     const links = (o.links || []).filter(function (l) { return l && l.label; }).map(function (l) { return action(l, 'btn-text ui-empty-link'); });
     const extra = [].concat(o.extra || []).filter(function (n) { return n && n.nodeType; });

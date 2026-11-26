@@ -8,7 +8,7 @@
   const UNITS = (window.TOEIC && TOEIC.grammar) || [];
 
   if (!UNITS.length) {
-    if (root) root.append(UI.empty({ pose: 'read', text: '文法教材準備中' }));
+    if (root) root.append(UI.empty({ pose: 'gaze', text: '文法教材準備中' }));
     return;
   }
 

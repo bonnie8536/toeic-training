@@ -594,7 +594,7 @@ T['P19 每個畫面只有一顆實色主按鈕,其他是文字按鈕;S0 有鵜�
     out.push([step + (o.signed ? '(登入)' : ''), primaries(e).length]);
     if (step === 'start') {
       const cv = e.root.querySelector('canvas');
-      eq([cv && cv.getAttribute('data-mascot'), cv && cv.getAttribute('aria-hidden'), e.mounts > 0], ['read', 'true', true]);
+      eq([cv && cv.getAttribute('data-mascot'), cv && cv.getAttribute('aria-hidden'), e.mounts > 0], ['gaze', 'true', true]);
       eq(buttonsOf(e), ['btn:開始', 'btn-text:我有班級代碼', 'btn-text:登入']);
       /* 標題短(手機上跟鵜鶘並排也是一行);副標的「（約 15–20 分鐘）」不斷開 */
       eq([e.h1(), e.root.querySelector('.ob-nowrap').textContent], ['找出你的起始程度', '（約 15–20 分鐘）']);

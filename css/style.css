@@ -3162,16 +3162,26 @@ html:not(.doodle-ready) .module-card.tile-featured, .module-card.tile-featured:h
 
 /* ---------- 首頁 ---------- */
 /* <html class="authed">:已登入(開機程式依本機登入紀錄先加,雲端確認後校正)。藏首屏與目錄,每日練習卡當主角 */
-html.authed .home-hero, html.authed .home-dir { display: none; }
+html.authed .home-dir { display: none; }
+/* 已登入首屏精簡版:只留一行短大標題與鵜鶘,每日練習卡當主角。
+   同頁只有一個 h1:未登入顯示搜尋用的 h1,已登入把它藏起來,改顯示 .home-short(role=heading aria-level=1,未登入時 display:none 不進無障礙樹)。
+   搜尋引擎沒有登入紀錄,看到的版面與文字不變。 */
+.home-short { display: none; }
+html.authed .home-hero h1, html.authed .home-hero .hero-display, html.authed .home-hero .stats, html.authed .home-hero .hero-cta { display: none; }
+html.authed .home-hero .home-short { display: block; grid-area: h1; align-self: center; margin: 0; font-family: var(--round); font-weight: 700; font-size: 40px; line-height: 1.2; letter-spacing: -.01em; word-break: keep-all; overflow-wrap: anywhere; }
+html.authed .home-hero .hero-inner { grid-template-areas: "h1 chick"; padding-top: 16px; padding-bottom: 8px; column-gap: 32px; }
+html.authed .home-hero .hero-chick.is-pelican { width: 140px !important; height: 131px !important; }
 /* 未登入首屏。DOM 順序 h1、.stats、.hero-cta、角色(主角鵜鶘,載不到時退回小雞)。
    桌機:左欄 h1、主按鈕與文字連結、統計一排小字;鵜鶘 180 緊跟在左欄右邊(間距 48),垂直置中,不飄到畫面最右。
-   手機:h1 與鵜鶘(112)並排,頭頂對齊 h1 第一行;按鈕與統計在下面整寬 */
+   手機:大標題與鵜鶘(120)並排,大標題垂直置中對鵜鶘身體;按鈕與統計在下面整寬 */
 .home-hero .hero-inner {
   display: grid; grid-template-columns: minmax(0, max-content) auto; justify-content: start; column-gap: 48px;
-  grid-template-areas: "h1 chick" "cta chick" "stats chick";
+  grid-template-areas: "disp chick" "h1 chick" "cta chick" "stats chick";
   padding-top: 48px; padding-bottom: 44px;
 }
-.home-hero h1 { grid-area: h1; }
+.home-hero .hero-display { grid-area: disp; margin: 0; font-family: var(--round); font-weight: 700; font-size: 72px; line-height: 1.12; letter-spacing: -.01em; color: var(--ink); word-break: keep-all; }
+/* 搜尋用的 h1 字不動,樣式改成大標題下面的介紹句 */
+.home-hero h1 { grid-area: h1; margin-top: 16px; font-size: 18px; font-weight: 400; line-height: 1.6; letter-spacing: 0; color: var(--ink-soft); }
 .home-hero .hero-cta { grid-area: cta; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 28px; }
 .hero-cta .btn.primary {
   display: inline-flex; align-items: center; justify-content: center;
@@ -3182,17 +3192,35 @@ html.authed .home-hero, html.authed .home-dir { display: none; }
 .home-hero .stat b { font-size: var(--fs-md); color: var(--ink); font-variant-numeric: tabular-nums; }
 .home-hero .stat span { display: inline; font-size: var(--fs-sm); color: var(--ink-soft); }
 .hero-chick { grid-area: chick; align-self: center; display: block; }
+.hero-chick.is-pelican { width: 220px !important; height: 206px !important; }
+@media (max-width: 1023px) and (min-width: 601px) {
+  .home-hero .hero-display { font-size: 56px; }
+  .home-hero h1 { font-size: 17px; }
+  .hero-chick.is-pelican { width: 160px !important; height: 150px !important; }
+}
 @media (max-width: 600px) {
   .home-hero .hero-inner {
-    grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "h1 chick" "cta cta" "stats stats"; column-gap: 8px;
+    grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "disp chick" "h1 h1" "cta cta" "stats stats"; column-gap: 8px;
     padding-top: 28px; padding-bottom: 28px;
   }
-  .home-hero h1 { font-size: 24px; align-self: start; }
+  /* 大標題一行、跟鵜鶘並排:字級照可用寬算(5 個字;375 寬 43.8、360 寬 40.8,最大 44),不壓到鵜鶘;
+     垂直置中對鵜鶘身體(gaze:書飄在畫布左上,身體在右下;身體外框上下緣的中點在畫布高 62.6% 處):
+     margin-bottom = 身體中心到格子底(畫布 112 高:112 × 37.4% - 下方疊出去的 4 = 38)- 半行高 .56em */
+  .home-hero .hero-display { font-size: min(44px, calc((100vw - 156px) / 5)); align-self: end; margin-bottom: calc(38px - .56em); }
+  .home-hero h1 { font-size: 15px; margin-top: 12px; }
   /* 畫布上方留有跳起來的空間:往上疊,讓看得到的頭頂跟 h1 第一行對齊(下面一行是退回小雞時的大小) */
   .hero-chick { align-self: start; width: 88px !important; height: 103px !important; margin: -22px -6px -6px 0; }
   /* 鵜鶘(主角):畫布 300×280 的比例,比小雞寬;上方約 1/10、下方約 1/25 是空白 */
   /* 寬 92(高 86):h1 在 360 到 375 寬排回兩行(「衝衝英文：多益聽力、」「閱讀刷題與單字練習」);左右的空白往外疊 */
-  .hero-chick.is-pelican { width: 92px !important; height: 86px !important; margin: -8px -4px -4px -8px; }
+  .hero-chick.is-pelican { width: 120px !important; height: 112px !important; margin: -8px -4px -4px 0; }
+  @media (max-width: 340px) {
+    .hero-chick.is-pelican { width: 96px !important; height: 90px !important; }
+    .home-hero .hero-display { font-size: calc((100vw - 132px) / 5); margin-bottom: calc(30px - .56em); }   /* 鵜鶘 96(高 90):320 寬 37.6;90 × 37.4% - 4 = 30 */
+  }
+  html.authed .home-hero .hero-inner { grid-template-areas: "h1 chick"; padding-top: 8px; padding-bottom: 0; }
+  html.authed .home-hero .home-short { font-size: 28px; align-self: center; }
+  html.authed .home-hero .hero-chick.is-pelican { width: 120px !important; height: 112px !important; margin: 0; }
+  @media (max-width: 340px) { html.authed .home-hero .home-short { font-size: 25px; } html.authed .home-hero .hero-chick.is-pelican { width: 100px !important; height: 93px !important; } }
   .home-hero .hero-cta { margin-top: 20px; }
   .hero-cta .btn.primary { padding: 0 28px; }
   .home-hero .stats { gap: 12px; margin-top: 16px; }
@@ -3285,6 +3313,8 @@ html:not(.authed) .home .pet-home { display: none; }   /* 未登入時小雞在�
    卡上有實色主按鈕時(.home-grid.lesson-go)每日練習卡的「開始」藏起來(三列本身就是連結,同未登入首頁的做法) */
 .lsn-home { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 16px; padding: 20px; border-radius: var(--r-lg); }
 .lsn-home-art { display: block; }
+/* 鵜鶘 gaze 的墨跡貼近畫布右緣(書在左上):往左挪 4、右邊多留 6,墨跡到字的距離跟以前看書那隻差不多 */
+.lsn-home-art.is-pelican[data-mascot="gaze"] { margin: 0 6px 0 -4px; }
 .lsn-home-main { min-width: 0; }
 .lsn-home-main:first-child { grid-column: 1 / -1; }
 .lsn-home-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
@@ -3601,6 +3631,7 @@ a.result-go:hover { text-decoration: none; }
 .ui-empty { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 40px 16px 64px; }
 .ui-empty-art { display: block; margin: -44px 0 6px; }
 .ui-empty-art.is-pelican { margin: -12px 0 10px; }
+.ui-empty-art.is-pelican[data-pose="gaze"] { margin: -11px 0 14px; }   /* gaze 的腳貼近畫布底:下面多留 4,墨跡到字約 14(同以前看書那隻) */
 .ui-empty-text { margin: 0; font-size: var(--fs-md); color: var(--ink-soft); }
 .ui-empty-go { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 20px; padding: 0 24px; border-radius: var(--r-md); text-decoration: none; }
 .ui-empty-go:hover { text-decoration: none; }
@@ -4117,10 +4148,12 @@ html.app-shell .ob-back { visibility: hidden; }
 .ob-start { display: flex; align-items: center; gap: 16px 48px; }
 .ob-start .page-head { flex: 0 1 auto; min-width: 0; }
 .ob-start-art { display: block; flex: none; }
+.ob-start-art.is-pelican[data-mascot="gaze"] { margin-left: 9px; }   /* gaze 的書在畫布左上、墨跡比較靠左:多留 9,墨跡到標題的距離跟以前差不多 */
 @media (max-width: 600px) {
   .ob-start { align-items: flex-start; gap: 8px; }
   .ob-start-art { width: 80px !important; height: 93px !important; margin: 18px -6px -6px 0; }   /* 退回小雞時 */
   .ob-start-art.is-pelican { width: 96px !important; height: 90px !important; margin: 26px -6px -4px 0; }
+  .ob-start-art.is-pelican[data-mascot="gaze"] { margin-left: 6px; }
 }
 .ob-choices { display: grid; gap: 10px; margin: 18px 0; max-width: 520px; }
 /* 選項的外觀同 .auth-role-card,但不能共用那條規則:.auth-role-card 是 label 包 input(選定靠 :has(input:checked)),

@@ -331,6 +331,39 @@ T['首頁:h1 有站名;看得到英文名 Rushup;沒有寫死日期的免費公�
   assert.equal(/\d+ 月 \d+ 日以前全站免費/.test(src), false);
 };
 
+T['首頁大標題(2026-11-23):.hero-display 是 div 不是標題標籤、字是「每天衝一點」、不含禁用字;h1 是搜尋用句不動且排在它後面;已登入時藏起來'] = () => {
+  const src = homeSrc();
+  const m = src.match(/<div class="hero-display" data-nosnippet>([^<]*)<\/div>/);
+  assert.ok(m, '首頁沒有帶 data-nosnippet 的 div.hero-display');
+  assert.equal(m[1], '每天衝一點');
+  assert.ok(src.indexOf('class="hero-display"') < src.indexOf('<h1>'), '大標題要在 h1 前面');
+  ['免費', '考古題', '官方', '神器', '首選', '保證', '一站式', '全方位', '打造', '助你', '輕鬆', '高效', 'AI', '刷刷'].forEach((w) => assert.equal(m[1].indexOf(w), -1, '大標題含禁用字 ' + w));
+  assert.equal(/[,，]/.test(m[1]), false);
+  const css = read('css/style.css');
+  assert.match(css, /html\.authed \.home-hero h1, html\.authed \.home-hero \.hero-display/,'已登入沒有藏 .hero-display');
+  assert.match(src, /class="home-short"[^>]*>今天衝一點</);
+};
+
+T['吉祥物姿勢(2026-11-26):首頁首屏的鵜鶘是 gaze(坐著抬眼看書);全站 html 與 js 不再把吉祥物設成正面看書(read)或白日夢(daydream)'] = () => {
+  const src = homeSrc();
+  const hero = /<canvas class="hero-chick"[^>]*>/.exec(src);
+  assert.ok(hero, '首頁沒有 canvas.hero-chick');
+  assert.match(hero[0], /data-mascot="gaze"/, '首頁首屏不是 gaze');
+  const skip = new Set(['js/pelican-art.js', 'js/chick-art.js']);
+  const files = PAGES.concat(fs.readdirSync(path.join(REPO, 'js')).filter((f) => /\.js$/.test(f)).map((f) => 'js/' + f)).filter((f) => !skip.has(f));
+  const BAD = [
+    /data-mascot="(read|daydream)"/,                                  // html 屬性
+    /'data-mascot':\s*'(read|daydream)'/,                              // 程式建的 canvas
+    /setAttribute\('data-mascot',\s*'(read|daydream)'\)/,
+    /\bpose:\s*['"](read|daydream)['"]/,                              // UI.empty / UI.mascot / animate 的 pose
+    /setPose\(\s*['"](read|daydream)['"]/,
+    /\[[^\[\]]*,\s*'(read|daydream)'\]/,                             // lesson-core 首頁課程卡 [文字, 姿勢]
+  ];
+  const hits = [];
+  files.forEach((f) => read(f).split(/\r?\n/).forEach((l, i) => { if (BAD.some((re) => re.test(l))) hits.push(f + ':' + (i + 1) + ' ' + l.trim().slice(0, 80)); }));
+  assert.deepEqual(hits, [], '還在用 read/daydream 姿勢');
+};
+
 /* 一頁 body 裡的每個元素,記下它是不是在 data-nosnippet 裡面(自己帶或外層帶)。不用套件:script 內容與註解拿掉後照標籤開合算外層 */
 const VOID_TAGS = /^(?:area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/;
 function bodyElements(src) {
@@ -407,7 +440,7 @@ T['首頁搜尋結果的摘要(2026-11-13):導覽列、數字列、每日練習�
   assert.ok(rows >= 25, '有頁尾連結列的頁太少:' + rows);
   /* 首頁 h1 下的說明句刪過三次(3c18669、159e17d、22c78df):h1 後面緊接數字列;首屏後來加的主按鈕、文字連結、小雞跟數字列一樣帶 data-nosnippet,
      首屏裡除了 h1 沒有給搜尋引擎看的字,也沒有段落 */
-  assert.match(src, /<div class="hero-inner">\s*<h1>[^<]+<\/h1>\s*<div class="stats"/, '首頁 h1 下不掛介紹句');
+  assert.match(src, /<div class="hero-inner">\s*<div class="hero-display" data-nosnippet>[^<]+<\/div>\s*<h1>[^<]+<\/h1>\s*<div class="stats"/, '首頁 h1 下不掛介紹句');
   const heroAt = els.findIndex((e) => e.cls.indexOf('hero-inner') > -1), mainAt = els.findIndex((e) => e.tag === 'main');
   const hero = els.slice(heroAt + 1, mainAt);
   assert.ok(heroAt > -1 && hero.length >= 4, '首頁找不到首屏');

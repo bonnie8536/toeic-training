@@ -292,6 +292,7 @@ T['6 引導:S4 三個標籤 → 短測 8 題(真音檔)→ 中場 → 28 題 →
   await p.click('.diag-intro .btn.primary');
   await p.wait("document.querySelector('.quiz-count')", '短測');
   assert.ok(await p.eval("document.documentElement.classList.contains('is-quiz') && !!document.querySelector('.player-btn')"), '專心模式、播放鈕');
+  assert.equal(await p.eval("getComputedStyle(document.querySelector('footer')).display"), 'none', '作答中不顯示頁尾');
   await shot(p, '52_短測作答');
   for (let i = 0; i < 3; i++) await listenOne(p, true, i === 0);
   await p.reload();

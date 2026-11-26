@@ -220,21 +220,33 @@ async function run(w, h, touch, n) {
   await sleep(1500);
   await noOverflow(p, '結果頁');
   await shot(p, '06_結果頁');
+  /* 「根據 N 題」不寫在數字旁,寫在小標旁 ⓘ 點開的資訊欄最後一段(js/estimate-ui.js) */
+  const card = await p.eval("(document.querySelector('.result-card') || {}).textContent || ''");
+  assert.ok(card && !/本站估計|不是正式成績|根據 \d+ 題/.test(card), '結果頁數字旁沒有聲明小字:' + card);
+  await p.eval("document.querySelector('.result-card .result-kicker .est-info').click(), true");
+  await sleep(500);
+  const info = await p.eval("Array.from(document.querySelectorAll('.ui-sheet .est-info-p')).map((e) => e.textContent.replace(/\\s+/g, ' ').trim())");
+  await noOverflow(p, '資訊欄');
+  await shot(p, '06_結果頁資訊欄');
+  const note = info[info.length - 1] || '';
+  assert.ok(/^目前用了 24 題來算，算到 \d+ 月 \d+ 日的作答。$/.test(note), '資訊欄的「目前用了 24 題來算」:' + J(info));
+  await p.eval("(() => { const m = document.querySelector('.ui-sheet-mask'); m.dispatchEvent(new MouseEvent('mousedown', { bubbles: true })); m.dispatchEvent(new MouseEvent('click', { bubbles: true })); return true; })()");
+  await sleep(500);
+  assert.strictEqual(await p.eval("!!document.querySelector('.ui-sheet')"), false, '點遮罩關掉資訊欄');
   await p.eval("Array.from(document.querySelectorAll('.result-link')).filter(b => b.textContent.trim() === '看作答')[0].click()");
   await sleep(500);
   await shot(p, '07_看作答');
-  const res = await p.eval("(() => ({ primary: document.querySelectorAll('#pl-root .btn.primary').length, note: (document.querySelector('.result-note') || {}).textContent, items: (store.get('placement_v1', {}).runs || [])[0].items.length, ends: ['L', 'R'].map((x) => !!((store.get('placement_v1', {}).runs || [])[0].tm[x] || [])[1]), hist: store.get('hist', null), listen: store.get('listen_p1', null) }))()");
+  const res = await p.eval("(() => ({ primary: document.querySelectorAll('#pl-root .btn.primary').length, items: (store.get('placement_v1', {}).runs || [])[0].items.length, ends: ['L', 'R'].map((x) => !!((store.get('placement_v1', {}).runs || [])[0].tm[x] || [])[1]), hist: store.get('hist', null), listen: store.get('listen_p1', null) }))()");
   assert.strictEqual(res.primary, 1, '結果頁一顆主按鈕');
   assert.strictEqual(res.items, 24);
   assert.deepStrictEqual(res.ends, [true, true], '兩科都記了結束時間');
-  assert.ok(/^根據 24 題/.test(res.note), res.note);
   assert.strictEqual(res.hist, null);
   assert.strictEqual(res.listen, null);
   await sleep(3000);
   const up = ['fa_v1', 'placement_v1', 'est_v1'].filter((k) => CLOUD.get(u.id, k) !== undefined);
   assert.deepStrictEqual(p.errors, [], 'console 有錯:' + J(p.errors).slice(0, 500));
   await p.close();
-  return w + ':' + seen.join(' → ') + ' | ' + res.note + ' | 上傳 ' + up.join(',');
+  return w + ':' + seen.join(' → ') + ' | ' + note + ' | 上傳 ' + up.join(',');
 }
 
 (async () => {

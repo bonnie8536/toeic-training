@@ -146,10 +146,19 @@
     const p = rate.ok / rate.n;
     return p > UP ? LEVELS[Math.min(i + 1, LEVELS.length - 1)] : p < DOWN ? LEVELS[Math.max(i - 1, 0)] : level;
   }
-  /* 新的 levels(newLevels 是 ONBOARD_CORE.newLevels)與 changed: { listening: [舊, 新] | null, reading } */
-  function calibrateLevels(prev, rates, nowIso, newLevels) {
+  /* 一科調整後的級別:答對率是在 base(上課時的級別)量的,從 base 算一級得到 to。沒有要動、或目前(cur)已經在那個方向(升時不低於 to、降時不高於 to)
+     就留 cur,不然改成 to。base 跟 cur 一樣時就是照答對率升降一級 */
+  function rebased(cur, base, rate) {
+    const b = LEVELS.indexOf(base) > -1 ? base : cur, to = moved(b, rate), c = LEVELS.indexOf(cur), t = LEVELS.indexOf(to), d = t - LEVELS.indexOf(b);
+    if (c < 0 || d === 0 || (d > 0 && c >= t) || (d < 0 && c <= t)) return cur;
+    return to;
+  }
+  /* 新的 levels(newLevels 是 ONBOARD_CORE.newLevels)與 changed: { listening: [舊, 新] | null, reading }。
+     taken 是第 2–4 堂上課時的級別({ listening, reading },照進度記的;沒給當作跟 prev 一樣):上到一半改過級別時,從上課時的級別算 */
+  function calibrateLevels(prev, rates, nowIso, newLevels, taken) {
     if (!isPlain(prev) || typeof newLevels !== 'function') throw new TypeError('要給目前的 levels 與 newLevels');
-    const l = moved(prev.listening, rates && rates.listening), r = moved(prev.reading, rates && rates.reading);
+    const tk = isPlain(taken) ? taken : {};
+    const l = rebased(prev.listening, tk.listening, rates && rates.listening), r = rebased(prev.reading, tk.reading, rates && rates.reading);
     const source = Object.assign({}, isPlain(prev.source) ? prev.source : {});
     if (l !== prev.listening) source.listening = 'calibrate';
     if (r !== prev.reading) source.reading = 'calibrate';

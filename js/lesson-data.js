@@ -609,8 +609,14 @@
     } catch (e) { return null; }
   }
   /* 第 4 堂後校正一次(一期一次)。opt.opening:這次要開的堂號(上課頁開第 5 堂以後時給)。
+     答對率是在上課時的級別量的(takenLevels),上到一半改過級別時從那個級別算一級(LESSON_PLAN.calibrateLevels)。
      回 { done: 'now'(這次做了)|'before'(這一期做過了)|'wait'(還不到時候)|'skip'(讀不到雲端或沒有資料,下次再試), changed }(changed 見 LESSON_PLAN.calibration)。
      同一頁同時呼叫(開頁一次、雲端合併後又一次)時排隊:前一次跑完才跑下一次,下一次看到做過了回 before */
+  /* 第 2–4 堂上課時的級別:照第 4 堂的進度記的(沒有就看第 3、2 堂);都沒有回 null(當作跟目前一樣) */
+  function takenLevels(states) {
+    const s = [4, 3, 2].map((no) => states[no]).filter((x) => isPlain(x) && isPlain(x.levels))[0];
+    return s ? { listening: s.levels.listening, reading: s.levels.reading } : null;
+  }
   let calibQueue = Promise.resolve();
   function calibrate(now, opt) {
     const run = calibQueue.then(() => calibrateOnce(now, opt));
@@ -631,7 +637,7 @@
     if (!merged) return skip;
     if (LP.calibrated(merged, plan.startDate)) return before(merged);
     const rates = LP.calibrationRates(got.states, (no) => lessonAt(no, got.states[no]));
-    const out = LP.calibrateLevels(merged, rates, new Date(now * 1000).toISOString(), O.newLevels);
+    const out = LP.calibrateLevels(merged, rates, new Date(now * 1000).toISOString(), O.newLevels, takenLevels(got.states));
     store.set('levels', out.levels);
     return { done: 'now', changed: out.changed };
   }

@@ -94,7 +94,7 @@ T['1 試行乙:第 1–4 堂種好(答對約 6 成)→ 第 5–8 堂照頁面上
 };
 
 /* ---------- 第 2、3 條 程度調整 ---------- */
-T['2 試行甲(入門)答對 9 成:第 4 堂從頁面上到本堂結果,出「程度調整」兩列入門 → 門檻;ⓘ 面板五行、Esc 關、焦點回 ⓘ;重開不多寫;總覽也出;第 5 堂上門檻包'] = async () => {
+T['2 試行甲(入門)答對 9 成:第 4 堂從頁面上到本堂結果,出「程度調整」兩列入門 → 門檻;ⓘ 面板七行、Esc 關、焦點回 ⓘ;重開不多寫;總覽也出;第 5 堂上門檻包'] = async () => {
   resetClock();
   const c = freshCloud(), u = user(32, '試行甲B');
   pilotUser(c, u, EE);
@@ -110,7 +110,7 @@ T['2 試行甲(入門)答對 9 成:第 4 堂從頁面上到本堂結果,出「�
   await shot(p, '42_第4堂本堂結果_程度調整');
   await p.eval("(() => { const b = document.querySelector('.lsn-info'); b.focus(); b.click(); return true; })()");   // 滑鼠點按鈕時焦點在按鈕上
   await p.wait("document.querySelector('.ui-sheet')", 'ⓘ 面板');
-  assert.deepStrictEqual(await p.eval("[document.querySelector('.ui-sheet-h').textContent, document.querySelectorAll('.ui-sheet .lsn-info-line').length]"), ['程度調整', 5]);
+  assert.deepStrictEqual(await p.eval("[document.querySelector('.ui-sheet-h').textContent, document.querySelectorAll('.ui-sheet .lsn-info-line').length]"), ['程度調整', 7]);
   await shot(p, '43_程度調整說明');
   await p.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 });
   await p.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 });

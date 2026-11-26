@@ -428,7 +428,7 @@ T['M12 搬家規則 pool、標籤「模擬考錯題」;cloud.js 合併表有 moc
     merged: !!merged && /\n    mock_wrong: \{ merge: SMF\('mockWrong'\), reconcile: true \},/.test(merged[0]),
     take: !!take && !/\['sync_del', 'vgame_banks', 'mock_history'\]/.test(take[0]) && /Object\.keys\(MERGED\)\.filter\(\(k\) => !MERGED\[k\]\.clock\)/.test(take[0])
       && /const SYNC_FN = \{[^}]*mock_wrong: 'mockWrong'[^}]*\};\n  function takeSynced\(/.test(cloud),
-    subs: /const SYNC_SUBS = \[[^\]]*'mock_wrong'[^\]]*\]/.test(mm),
+    subs: typeof MM.syncFnOf === 'function' && MM.syncFnOf('mock_wrong') === 'mockWrong' && /const SYNC_FN = Object\.freeze\(\{[^}]*mock_wrong: 'mockWrong'/.test(mm),
   };
   const ok = got.rule === 'pool' && got.label === '模擬考錯題' && got.pool && got.merged && got.take && got.subs;
   return { ok, detail: J(got) };

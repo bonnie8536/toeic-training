@@ -2,7 +2,10 @@
    window.LISTEN = { PARTS, partStats, startQuiz(rootEl, config), startReview(rootEl, p, g) }(g:錯題本的組名)
    - config = [{p:'1'|'2'|'3'|'4', n}] 可混合;作答前每題限播 2 次,答後解鎖+逐字稿。
    - 作答是專心模式:一般練習只記選擇、交卷後看成績卡與逐題解析;錯題複習每題作答後馬上給回饋。
-   - 紀錄存 listen_p1~p4(雲端同步)。 */
+   - 紀錄存 listen_p1~p4(雲端同步)。
+   - 課程頁:startQuiz(el, null, { units, onDone, onExit, feedback, plays }),units 是 [{ p: '1'–'4', item }](BANK.get 拿到的),照順序出;
+     feedback 'instant' 每題作答就對答案(沒給時跟以前一樣:錯題複習即時、其餘交卷),plays 是作答前能播幾次(1–3,預設 2);
+     opts 與結果見 js/lesson-entry.js(課程頁要先載入它)。 */
 (function () {
   const L = (window.TOEIC && TOEIC.listening) || null;
   if (!L || !L.p2 || !L.p2.length) { window.LISTEN = null; return; }
@@ -70,7 +73,8 @@
     logAttempt('l' + p, id, oi, ok);
   }
 
-  function makePlayer(id, state) {
+  function makePlayer(id, state, limit) {
+    const max = limit || 2;   // 作答前最多播幾次(課程頁可以給 opts.plays)
     state.plays = state.plays || 0;
     /* 每按一次都換全新的 Audio 從第 0 秒解碼,不靠 seek 回頭:
        手機瀏覽器對 mp3 的 seek 表很脆弱,重播時容易只播一半就停。 */
@@ -88,13 +92,13 @@
     const btn = h('button', { class: 'btn player-btn', type: 'button' }, '▶ 播放');
     function refresh() {
       const free = state.done;
-      const left = 2 - state.plays;
+      const left = max - state.plays;
       label.textContent = free ? '可重複播放' : (left > 0 ? '還可播放 ' + left + ' 次' : '播放次數已用完');
       btn.disabled = !free && left <= 0;
       btn.textContent = state.plays > 0 ? '▶ 再播一次' : '▶ 播放';
     }
     btn.addEventListener('click', () => {
-      if (!state.done && state.plays >= 2) return;
+      if (!state.done && state.plays >= max) return;
       state.plays++;
       if (audio) audio.pause();
       audio = new Audio(src);
@@ -124,27 +128,32 @@
 
   /* ================= 混合聽力練習 ================= */
   /* opts.units:直接給這一輪的單元 [{ p, item }](錯題本複習,js/wrongbook.js 的 round 算好的),不呼叫 pickPool。
-     opts.back:「回錯題本」的網址;opts.group:只複習的那一組(組名);opts.rest:這一組還沒輪到幾題(答錯的題數) */
+     opts.back:「回錯題本」的網址;opts.group:只複習的那一組(組名);opts.rest:這一組還沒輪到幾題(答錯的題數)
+     opts.onDone 有給(課程頁)時 units 必填、不畫成績卡,見檔頭;opts.feedback、opts.plays 見檔頭 */
   function startQuiz(root, config, opts) {
     if (!uiReady()) return;   // 共用元件沒載到:說一聲、給重新整理,不在這裡丟錯
     opts = opts || {};
+    const lesson = opts.onDone !== undefined ? LESSON_ENTRY.check('LISTEN.startQuiz', root, opts, true) : null;
+    const given = lesson ? LESSON_ENTRY.units('LISTEN.startQuiz', opts.units, ['1', '2', '3', '4'], ['1', '2']) : opts.units;
+    if (opts.plays !== undefined && !(Number.isInteger(opts.plays) && opts.plays >= 1 && opts.plays <= 3)) throw new TypeError('LISTEN.startQuiz：plays 要是 1 到 3');
     const units = [];
-    if (Array.isArray(opts.units)) opts.units.forEach(u => units.push(u));
+    if (Array.isArray(given)) given.forEach(u => units.push(u));
     else config.forEach(c => pickPool(c.p, c.n, opts.wrongOnly).forEach(item => units.push({ p: c.p, item })));
     const back = opts.back || 'practice.html';
-    /* 一般練習=交卷式(答完全部才對答案);錯題複習=即時對答(答對才移出) */
-    const instant = !!opts.wrongOnly;
+    /* 一般練習=交卷式(答完全部才對答案);錯題複習=即時對答(答對才移出);有給 feedback 就照它 */
+    const instant = opts.feedback ? opts.feedback === 'instant' : !!opts.wrongOnly;
+    const lastLabel = lesson ? '完成' : '看成績';
     if (!units.length) {
       root.replaceChildren(
-        h('div', { class: 'page-head' }, h('h1', null, instant ? '聽力錯題本' : '聽力練習')),
-        UI.empty({ pose: 'sleep', text: instant ? '沒有錯題' : '沒有題目', action: { label: opts.back ? '回錯題本' : '回題庫刷題', href: back } }));
+        h('div', { class: 'page-head' }, h('h1', null, opts.wrongOnly ? '聽力錯題本' : '聽力練習')),
+        UI.empty({ pose: 'sleep', text: opts.wrongOnly ? '沒有錯題' : '沒有題目', action: { label: opts.back ? '回錯題本' : '回題庫刷題', href: back } }));
       return;
     }
     const sess = units.map(() => ({ done: false, answers: {}, plays: 0 }));
     let cur = 0;
     let player = null;
     let handing = false;   // 交卷的確認視窗開著:這時再按交卷不算
-    const f = UI.focus.enter({ total: units.length, onExit: () => { location.href = back; }, confirmExit: !instant, body: '還沒交卷的作答不會計分' });
+    const f = UI.focus.enter({ total: units.length, onExit: lesson ? lesson.onExit : () => { location.href = back; }, confirmExit: !instant, body: '還沒交卷的作答不會計分' });
     draw();
     f.focusMain();
 
@@ -172,7 +181,7 @@
       const state = sess[cur];
       if (!keepPlayer || !player) {
         if (player) player.stop();
-        player = makePlayer(u.item.id, state);
+        player = makePlayer(u.item.id, state, opts.plays);
       }
       if (u.p === '1') drawP1(u.item, state);
       else if (u.p === '2') drawP2(u.item, state);
@@ -191,7 +200,7 @@
         setSubmit(f, isLast ? null : e => submit(e.currentTarget));
         return;
       }
-      f.foot([mainBtn(isLast ? '看成績' : '下一題', next, false, !canNext)]);
+      f.foot([mainBtn(isLast ? lastLabel : '下一題', next, false, !canNext)]);
     }
 
     function next() {
@@ -201,7 +210,7 @@
     /* 單題的即時回饋(Part 1、2):回饋條寫對錯與正解,解析方塊不重複 */
     function drawFeedback(q, rec) {
       const isLast = cur === units.length - 1;
-      f.feedback({ ok: rec.ok, answer: rec.ok ? null : answerText(q, q.answer), next: isLast ? '看成績' : '下一題', onNext: next });
+      f.feedback({ ok: rec.ok, answer: rec.ok ? null : answerText(q, q.answer), next: isLast ? lastLabel : '下一題', onNext: next });
     }
 
     function letterButtons(count, rec, answer, onPick) {
@@ -377,6 +386,7 @@
           });
         }
       });
+      if (lesson) { finish(); return; }
       review();
     }
 
@@ -490,7 +500,15 @@
       });
     }
 
+    /* 課程頁:紀錄都存好了,停掉音檔、離開專心模式,把結果交給 onDone(不畫成績卡、不給點心) */
+    function finish() {
+      if (player) player.stop();
+      f.leave();
+      lesson.onDone(LESSON_ENTRY.bankResult('l', units, ['1', '2'], (i, key, qi) => (units[i].p === '1' || units[i].p === '2' ? sess[i].answers.c : sess[i].answers[qi])));
+    }
+
     function summary() {
+      if (lesson) { finish(); return; }
       if (player) player.stop();
       f.leave();
       const { qTotal, qCorrect } = tally();

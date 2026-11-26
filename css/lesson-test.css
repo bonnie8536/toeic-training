@@ -1,0 +1,74 @@
+/* 課程頁:第 1 堂前測的作答與倒數、說明頁、逐題解析、前測結果、本堂結果、小檢核清單與判定標籤
+   (js/lesson-items.js、js/lesson-test.js、js/lesson-personal.js)。
+   類別一律 lsn- 開頭;結算卡、逐題收合、標籤 .mock-tag、清單 .me-list、倒數 .mock-timer 沿用 css/style.css 的長相,這裡只補課程頁用到的排法。 */
+:root {
+  --warn-ink: #8a4a00;   /* 「弱點」標籤的字:疊 --tint-orange(#fff0e1)約 6.1:1(.badge.level-adv 的 #b05e0a 疊同一個底只有 4.2:1) */
+}
+
+/* ---------- 前測作答(專心模式):一個畫面一題或一組,題本只印照片、題目與選項 ---------- */
+.lsn-t-meta { margin-bottom: 8px; }
+.lsn-t-unit .player { margin: 4px 0 8px; }
+html.is-quiz .lsn-t-unit .player-btn { min-height: 44px; padding: 0 24px; border-radius: var(--r-md); font-size: var(--fs-md); }
+.lsn-play-icon { margin-right: 6px; }
+.lsn-play-icon[hidden] { display: none; }
+html.is-quiz .lsn-t-unit .letter-row { gap: 12px; margin: 16px 0 0; }
+html.is-quiz .lsn-t-unit .letter-big { min-height: 52px; border-radius: var(--r-md); }
+.lsn-t-q { margin-top: 20px; }
+.lsn-t-q .opts { margin-top: 8px; }
+html.is-quiz .lsn-t-q .q-text { margin-bottom: 8px; font-size: var(--fs-md); }
+@media (min-width: 600px) { html.is-quiz .lsn-t-q .q-text { font-size: var(--fs-lg); } }
+
+/* ---------- 說明頁(閱讀測驗開始頁、小檢核、換科)與前測檢討的前測結果:不在專心模式,靠左一欄 ---------- */
+.lsn-intro, .lsn-pre-step { display: flex; flex-direction: column; align-items: flex-start; padding: 24px 0 48px; }   /* 上距同技巧卡(.lsn-screen) */
+.lsn-h2 { margin: 16px 0 0; font-family: var(--round); font-size: var(--fs-xl); font-weight: 700; line-height: 1.35; color: var(--ink); }
+.lsn-h2:focus { outline: none; }
+.lsn-intro .mock-tags { margin-top: 12px; }
+.lsn-intro .lsn-rule { margin: 12px 0 0; font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-soft); }
+.lsn-intro .lsn-rule + .lsn-rule { margin-top: 2px; }   /* 第二行說明(小檢核考不到的考點)緊接著第一行 */
+.lsn-intro .lsn-go, .lsn-pre-step .lsn-go { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin-top: 24px; padding: 0 32px; border-radius: var(--r-md); }
+@media (min-width: 600px) { .lsn-intro .lsn-go, .lsn-pre-step .lsn-go { width: 320px; } }
+.lsn-pre-step .lsn-tag-line { justify-content: flex-start; }
+.lsn-pre-step .lsn-parts-wrap { align-self: stretch; margin-top: 8px; }
+
+/* ---------- 結果頁:結算卡下面的「暫用試卷」一行、Part 答對率、小檢核清單、錯題與小檢核解析 ---------- */
+.lsn-tag-line { align-items: center; justify-content: center; margin: 20px 0 0; }
+.result-card .lsn-tag-line { margin-top: 16px; }
+.lsn-tag-note { font-size: var(--fs-sm); line-height: 1.7; color: var(--ink-soft); }
+.lsn-result-more { padding-bottom: 48px; }
+/* 前測結果上方的通知(閱讀測驗超過 24 小時自動交卷):跟結算卡同寬 */
+.lsn-result-note { max-width: 480px; margin: 24px auto 0; }
+.lsn-result-note + .result-card { margin-top: 12px; }
+.lsn-parts-wrap { display: grid; gap: 0 24px; margin-top: 8px; }
+@media (min-width: 720px) { .lsn-parts-wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.lsn-parts-sec .me-list { margin-bottom: 0; }
+/* 清單裡的列是純文字(不連結):不給按下去的長相 */
+.lsn-row { gap: 12px; cursor: default; }
+.lsn-row:hover, .lsn-row:active { background: none; }
+.lsn-row .me-row-val { flex: none; font-size: var(--fs-md); font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+/* 小檢核清單:跟結算卡同寬、同一條中線 */
+.lsn-result-more > .me-sec-h, .lsn-verdicts { max-width: 480px; margin-left: auto; margin-right: auto; }
+.lsn-result-more > .me-sec-h { margin-top: 28px; padding-left: 4px; }
+.lsn-v-name { min-width: 0; }
+.lsn-v-tag {
+  display: inline-flex; align-items: center; gap: 4px; flex: none; padding: 2px 12px 2px 8px;
+  border-radius: var(--r-full); font-size: var(--fs-sm); font-weight: 700; line-height: 1.7;
+}
+.lsn-v-icon { flex: none; }
+.lsn-v-tag.is-met { background: var(--ok-tint); color: var(--ok); }
+.lsn-v-tag.is-hold { background: var(--bg-soft); color: var(--ink-light); }
+.lsn-v-tag.is-weak { background: var(--tint-orange); color: var(--warn-ink); }
+.lsn-v-tag.is-none { padding-left: 12px; background: var(--bg-soft); color: var(--ink-light); font-weight: 400; }   /* 沒有出題:不是判定,只有字 */
+/* 逐題收合:結果頁的錯題、小檢核解析與區塊結果的逐題解析放寬到內容欄;600 以上題組的文章與題目左右排 */
+.lsn-narrow > .result-detail { max-width: none; margin: 28px 0 0; }
+.lsn-narrow > .result-detail + .result-detail { margin-top: 0; border-top: 0; }
+@media (min-width: 760px) {
+  .lsn-narrow > .result-detail .result-detail-body .set-layout { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 24px; }
+}
+.lsn-review .passage-col .passage-box { position: static; max-height: none; }
+.lsn-tr-btn { margin-top: 12px; }
+.lsn-review .set-translation { margin-top: 12px; }
+.lsn-review .set-translation[hidden] { display: none; }
+
+@media print {
+  .lsn-go, .lsn-tr-btn, .lsn-play-icon { display: none; }
+}

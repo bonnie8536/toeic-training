@@ -69,6 +69,8 @@
     const D = window.ONBOARD_DATA;
     let state = C.homeState(ctx);
     if (state === 'S0') state = 'A';
+    /* 試行班的今天的課卡(js/lesson-home.js)要這個位置時:這張卡清空、藏起來 */
+    if (window.LESSON_HOME && LESSON_HOME.owns(state)) { root.innerHTML = ''; root.hidden = true; return; }
     const m = C.homeCard(state, { signedIn: ctx.signedIn, onboard: ctx.onboard, guest: ctx.guest, levels: ctx.signedIn ? D.account().levels : null });
     root.innerHTML = '';
     if (!m) { root.hidden = true; return; }

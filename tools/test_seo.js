@@ -179,6 +179,15 @@ T['開始頁 start.html:noindex、沒有 canonical、不在 sitemap;隱私權政
   assert.ok(read('sitemap.xml').indexOf('start.html') < 0, 'start.html 不進 sitemap');
   assert.ok(read('privacy.html').indexOf('<h2 id="learning">學習設定與程度檢測</h2>') > -1);
 };
+T['課程頁 lessons.html、lesson.html:noindex、沒有 canonical、不在 sitemap;標題是「課程 - 衝衝英文」'] = () => {
+  ['lessons.html', 'lesson.html'].forEach((f) => {
+    const s = read(f);
+    assert.ok(NOINDEX.test(s), f + ' 要 noindex');
+    assert.ok(!/rel="canonical"/.test(s), f + ' 不寫 canonical');
+    assert.ok(read('sitemap.xml').indexOf(f) < 0, f + ' 不進 sitemap');
+    assert.equal(titleOf(head(f)), '課程 - 衝衝英文', f);
+  });
+};
 
 T['noindex 的頁不寫 canonical(訊號互相矛盾);轉址用的 tenses、verbs 指向文法頁裡的同一張表'] = () => {
   PAGES.filter((f) => NOINDEX.test(read(f))).forEach((f) => {
@@ -518,11 +527,11 @@ T['首頁卡片與內頁說明寫的是真的、而且一致:錯題本只寫 js/
     assert.ok(cards.get(f).indexOf(names.length + ' 種') === 0, '首頁「' + f + '」磚寫的玩法數跟頁上的 ' + names.length + ' 種不一樣:' + cards.get(f));
   });
 };
-T['頂欄與分組頁:21 頁的頂欄是同一份(首頁加三個分組連結),目前頁亮的是歸屬那一格,我的、學習記錄、能力分析、教師後台都不亮;新頁登記在分頁列、開機清單、版面檢查;「每日複習」改成「錯題本」'] = () => {
+T['頂欄與分組頁:23 頁的頂欄是同一份(首頁加三個分組連結),目前頁亮的是歸屬那一格,我的、學習記錄、能力分析、教師後台都不亮;新頁登記在分頁列、開機清單、版面檢查;「每日複習」改成「錯題本」'] = () => {
   const NAV = /<nav class="topnav" aria-label="主要導覽">[\s\S]*?<\/nav>/;
   const plain = (n) => n.replace(/\r/g, '').replace(/ class="active" aria-current="page"/g, '').replace(/ active/g, '').replace(/ aria-current="(page|true)"/g, '');
   const withNav = PAGES.filter((f) => /class="topnav"/.test(read(f)));
-  assert.equal(withNav.length, 21, '有導覽的頁數:' + withNav.length);
+  assert.equal(withNav.length, 23, '有導覽的頁數:' + withNav.length);
   const base = plain(NAV.exec(read('index.html'))[0]);
   const GROUPS = { 'learn.html': ['grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'], 'warmup.html': ['vocab.html', 'listening.html', 'writing.html', 'grammar.html?ref=verbs'],
     'drill.html': ['practice.html', 'mock.html', 'diagnostic.html', 'review.html'] };
@@ -537,7 +546,7 @@ T['頂欄與分組頁:21 頁的頂欄是同一份(首頁加三個分組連結),�
     GROUPS[g].forEach((h) => assert.ok(fs.existsSync(path.join(REPO, h.split('?')[0])), h));
   });
   /* 目前頁亮哪一格:每一頁屬於哪一格的歸屬表 */
-  const OWNER = { home: ['index.html', 'daily.html', 'start.html'], 'learn.html': ['learn.html', 'grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'],
+  const OWNER = { home: ['index.html', 'daily.html', 'start.html', 'lessons.html', 'lesson.html'], 'learn.html': ['learn.html', 'grammar.html', 'phonics.html', 'reading.html', 'dialogue.html'],
     'warmup.html': ['warmup.html', 'vocab.html', 'listening.html', 'writing.html'], 'drill.html': ['drill.html', 'practice.html', 'mock.html', 'diagnostic.html', 'review.html'],
     none: ['me.html', 'history.html', 'analysis.html', 'admin.html'] };
   const all = Object.keys(OWNER).reduce((a, k) => a.concat(OWNER[k]), []);

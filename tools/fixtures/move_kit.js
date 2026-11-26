@@ -1,5 +1,6 @@
 /* 搬家測試共用的東西(tools/test_move_core.js、tools/test_move_guard.js):假的 localStorage(可以設容量)、
-   在 vm 裡載入真的 js/common.js、js/pet*.js、js/daily.js、js/sync-merge.js(題庫、刪除標記、模擬考紀錄跟同步共用的合併)、js/move-*.js,組包、驗證、合併、寫入一次做完的 moveInto。 */
+   在 vm 裡載入真的 js/common.js、js/pet*.js、js/daily.js、js/sync-merge.js 與 js/sync-merge-lesson.js(跟同步共用的合併,順序同 move-in.html)、js/move-*.js,
+   組包、驗證、合併、寫入一次做完的 moveInto。 */
 'use strict';
 const fs = require('fs');
 const vm = require('vm');
@@ -38,7 +39,9 @@ function makeStorage(quota, init) {
   return s;
 }
 
-function load() {
+/* opt.without:這幾個檔不載(例 ['js/sync-merge-lesson.js']:舊快取的頁面) */
+function load(opt) {
+  const without = (opt && opt.without) || [];
   const ctx = {
     console, crypto: globalThis.crypto, TextEncoder, TextDecoder, Blob, Response, CompressionStream, DecompressionStream,
     atob, btoa, Date, Math, JSON, URLSearchParams,
@@ -46,8 +49,8 @@ function load() {
   };
   ctx.window = ctx;
   vm.createContext(ctx);
-  ['js/common.js', 'js/pet-config.js', 'js/pet.js', 'js/pet-food.js', 'js/daily.js', 'js/sync-merge.js', 'js/move-rules.js', 'js/move-merge.js', 'js/move-pack.js', 'js/move-apply.js', 'js/move-link.js']
-    .forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
+  ['js/common.js', 'js/pet-config.js', 'js/pet.js', 'js/pet-food.js', 'js/daily.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js', 'js/move-rules.js', 'js/move-merge.js', 'js/move-pack.js', 'js/move-apply.js', 'js/move-link.js']
+    .filter((f) => without.indexOf(f) < 0).forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   return ctx;
 }
 const G = load();
@@ -62,12 +65,13 @@ function packOf(init, opt) {
   const ls = makeStorage(0, init);
   return P.collect(ls, Object.assign({ from: FROM, now: NOW, device: DEV_A }, opt || {}));
 }
-async function moveInto(newLs, init, extra, packOpt) {
+/* mm:換一份 MOVE_MERGE(例 load({ without }) 載出來的),不給用上面那份 */
+async function moveInto(newLs, init, extra, packOpt, mm) {
   const { pack } = packOf(init, packOpt);
   const hash = await P.hashOf(pack);
   const v = R.validate(JSON.parse(J(pack)), NOW);
   assert.ok(v.ok, 'validate ' + v.why);
-  const plan = M.plan(v, tgt(newLs), ctxFor(newLs, P.logHash(pack, hash), extra));   // 跟 js/move-in-page.js 一樣:記在 tr_move_log 的連 del 一起算
+  const plan = (mm || M).plan(v, tgt(newLs), ctxFor(newLs, P.logHash(pack, hash), extra));   // 跟 js/move-in-page.js 一樣:記在 tr_move_log 的連 del 一起算
   if (!plan.already) { const r = A.apply(newLs, plan.writes, { now: NOW }); assert.ok(r.ok, 'apply ' + r.why); }
   return { plan, hash, pack };
 }

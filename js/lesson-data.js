@@ -1,13 +1,13 @@
 /* 課程頁的讀寫:讀學習包與字表、查試行班(這個分頁的 sessionStorage 鍵 lsn_pilot)、讀每堂進度、建立進度與學習計畫 plan(含補凍結)、
-   組選題的 ctx(含下一次小檢核的預留題)、凍結、記作答、段的狀態、pts／rvq／tests_v1 的排隊寫入、syncPractice、作答前的紀錄快照、個人段試排、
-   前測的最後畫面時間(sessionStorage 鍵 lsn_clock)。
+   組選題的 ctx(含之後兩次小檢核的預留題)、凍結、記作答、段的狀態、pts／rvq／tests_v1 的排隊寫入、syncPractice、作答前的紀錄快照、個人段試排、
+   前測的最後畫面時間(sessionStorage 鍵 lsn_clock)、每週堂數(plan)、第 4 堂後的程度調整(levels)。
    課程頁的檔裡只有這一支寫 store、讀寫 sessionStorage;進度鍵一律經過 js/pack-core.js 的 loadLesson、saveLesson、saveLessonLocal(先合併雲端那一份)。
-   載入時不依賴其他檔:LESSON_CORE、PACK_CORE、LESSON_RULES、BANK、CLASSES、CLOUD、store 都在函式裡才用,首頁可以只載 lesson-core.js 與這一支就判定試行班。
+   載入時不依賴其他檔:LESSON_CORE、PACK_CORE、LESSON_RULES、BANK、LESSON_PLAN、ONBOARD_CORE、CLASSES、CLOUD、store 都在函式裡才用,首頁可以只載 lesson-core.js 與這一支就判定試行班。
    sessionStorage 的兩個鍵不是 tr_ 開頭,搬家不管;讀寫不到就當沒有(重查班級、退回用最後作答時間)。
    時間:now 是 epoch 秒;作答紀錄、學習記錄的 t 是毫秒。today 是這台的當地日期(PACK_CORE.dayOf)。 */
 (function (root) {
   'use strict';
-  const FILE = { LESSON_CORE: 'js/lesson-core.js', PACK_CORE: 'js/pack-core.js', LESSON_RULES: 'js/lesson-rules.js', BANK: 'js/bank.js' };
+  const FILE = { LESSON_CORE: 'js/lesson-core.js', PACK_CORE: 'js/pack-core.js', LESSON_RULES: 'js/lesson-rules.js', BANK: 'js/bank.js', LESSON_PLAN: 'js/lesson-plan.js' };
   function need(name) {
     const x = root[name];
     if (!x) throw new Error('要先載入 ' + FILE[name]);
@@ -138,7 +138,7 @@
       packs: { listening: 'pack-' + lv.listening + '-v1', reading: 'pack-' + lv.reading + '-v1' },
       packVersions: { listening: pv.listening, reading: pv.reading },
       startDate: pack().dayOf(now), lessonsPerWeek: null, mainDay: new Date(now * 1000).getDay(), extDay: null,
-      term: 1, postponedWeeks: 0, previous: null, updatedAt: Date.now(),
+      term: 1, postponedWeeks: 0, previous: null, perWeek: [], weeklyAskedAt: null, updatedAt: Date.now(),
     };
   }
   /* 按「開始」:建立進度與凍結選題同一次寫(picked 是選題後的進度,選題丟錯時什麼都沒寫);第 1 堂同一次把聽力測驗設成作答中,
@@ -493,6 +493,88 @@
   /* 學習記錄(只讀):即時回合補回時判斷第一次作答 */
   function hist() { const h = hasStore() ? store.get('hist', []) : []; return Array.isArray(h) ? h : []; }
 
+  /* ---------- 課表設定:每週堂數 ---------- */
+  /* 選每週 n 堂(LESSON_PLAN.withWeekly:還沒選過當週生效、選過下週生效);回寫出的 plan(第 12 週之後不能改,回原本的) */
+  function setWeekly(n, now) {
+    const plan = readPlan();
+    if (!isPlain(plan)) throw new Error('還沒有課表設定');
+    const next = need('LESSON_PLAN').withWeekly(plan, n, pack().dayOf(now), Date.now());
+    if (next !== plan) store.set('plan', next);
+    return next;
+  }
+  /* 「之後再選」:只記問過的時間,每週堂數維持沒選(照每週 2 堂排) */
+  function askWeekly() {
+    const plan = readPlan();
+    if (!isPlain(plan) || plan.weeklyAskedAt) return plan;
+    const next = Object.assign({}, plan, { weeklyAskedAt: new Date().toISOString(), updatedAt: Math.max(Date.now(), (Number(plan.updatedAt) || 0) + 1) });
+    store.set('plan', next);
+    return next;
+  }
+  /* 本週一列(LESSON_PLAN.weekGoal)與獨立小檢核(soloCheckpoint)要的資料 */
+  function weekInputs() {
+    const mh = hasStore() ? store.get('mock_history', []) : [];
+    return { plan: readPlan(), states: states(), hist: hist(), mockHistory: Array.isArray(mh) ? mh : [] };
+  }
+
+  /* ---------- 第 4 堂後的程度調整 ---------- */
+  /* 有進度的堂照進度裡的級別拼,沒有用目前上課的級別 */
+  function lessonAt(no, st) {
+    const lv = isPlain(st) && isPlain(st.levels) ? st.levels : levels();
+    try { return pack().compose(mem.packs, lv, no); } catch (e) { return pack().compose(mem.packs, levels(), no); }
+  }
+  /* 該做了沒有:(1) 第 4 堂除了本堂結果以外的段都交卷或略過;(2) 第 4 堂是課後練習(每週 1 堂)、第 3 堂固定段都交卷,
+     而且第 4 堂小檢核交卷了、或這次要開第 5 堂以後(第 5 堂還沒有進度) */
+  function calibReady(plan, sts, opt) {
+    const s4 = sts[4], l4 = lessonAt(4, s4);
+    if (s4 && (s4.doneAt || l4.segments.filter((s) => s.slot !== 'wrapup').every((s) => finished(s4, s.slot)))) return true;
+    if (!need('LESSON_PLAN').optionalOf(plan)(4) || !pack().fixedDone(lessonAt(3, sts[3]), sts[3])) return false;
+    const cp = s4 && s4.seg && s4.seg.checkpoint;
+    return !!(cp && cp.st === 'done') || (!!opt && Number(opt.opening) >= 5 && !sts[5]);
+  }
+  /* 第 2–5 堂的進度:先看本機;該做了才讀雲端合併第 2–4 堂(讀不到回 null) */
+  async function calibStates(plan, opt) {
+    const term = termOf(plan), local = {};
+    [2, 3, 4, 5].forEach((no) => { const s = localLesson(term, no); if (s) local[no] = s; });
+    if (!calibReady(plan, local, opt)) return { wait: true };
+    const out = Object.assign({}, local);
+    for (const no of [2, 3, 4]) {
+      const r = await pack().loadLesson(term, no);
+      if (!r.cloudRead) return null;
+      if (r.state) out[no] = r.state; else delete out[no];
+    }
+    return calibReady(plan, out, opt) ? { states: out } : { wait: true };
+  }
+  async function cloudLevels(local) {
+    const C = root.CLOUD, S = root.SYNC_MERGE;
+    if (!C || typeof C.readKey !== 'function' || !S || typeof S.levels !== 'function') return null;
+    try {
+      const r = await C.readKey('levels');
+      if (!r || r.ok !== true) return null;
+      const m = S.levels(local, r.found ? r.v : null, Date.now());
+      return m && m.ok && m.v ? m.v : null;
+    } catch (e) { return null; }
+  }
+  /* 第 4 堂後校正一次(一期一次)。opt.opening:這次要開的堂號(上課頁開第 5 堂以後時給)。
+     回 { done: 'now'(這次做了)|'before'(這一期做過了)|'wait'(還不到時候)|'skip'(讀不到雲端或沒有資料,下次再試), changed }(changed 見 LESSON_PLAN.calibration) */
+  async function calibrate(now, opt) {
+    const LP = need('LESSON_PLAN'), O = root.ONBOARD_CORE, plan = readPlan(), local = hasStore() ? store.get('levels', null) : null;
+    const skip = { done: 'skip', changed: null };
+    if (!isPlain(plan) || !accountId() || !core().courseLevels(local) || !O || typeof O.newLevels !== 'function') return skip;
+    const before = (lv) => ({ done: 'before', changed: LP.calibration(lv, plan.startDate).changed });
+    if (LP.calibrated(local, plan.startDate)) return before(local);
+    if (!mem.packs) await packs({ lite: true });
+    const got = await calibStates(plan, opt);
+    if (!got) return skip;
+    if (got.wait) return { done: 'wait', changed: null };
+    const merged = await cloudLevels(local);
+    if (!merged) return skip;
+    if (LP.calibrated(merged, plan.startDate)) return before(merged);
+    const rates = LP.calibrationRates(got.states, (no) => lessonAt(no, got.states[no]));
+    const out = LP.calibrateLevels(merged, rates, new Date(now * 1000).toISOString(), O.newLevels);
+    store.set('levels', out.levels);
+    return { done: 'now', changed: out.changed };
+  }
+
   /* ---------- 前測的最後畫面時間(這個分頁) ----------
      記 { p: 帳號, k: 進度鍵, s: 段, at }:同一個分頁先後登入兩個帳號時(公用電腦),進度鍵一樣,帳號不同就不用 */
   function clock(key, slot) {
@@ -508,6 +590,6 @@
   root.LESSON_DATA = Object.freeze({
     packs, pilot, pilotNow, plan: readPlan, levels, states, open, start, ctx, testForm, fillFixed, trial, freeze,
     inputs, reviewOpt, weakOpt, testIds: pretestIds, testParts, record, segment, snapshot, sync, hist, roundRecords, mockSeen,
-    hits, wrong, passed, reviewed, checkpoint, tests, pretest, planReview, flush, clock,
+    hits, wrong, passed, reviewed, checkpoint, tests, pretest, planReview, flush, clock, setWeekly, askWeekly, weekInputs, calibrate,
   });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

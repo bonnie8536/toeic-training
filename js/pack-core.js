@@ -170,26 +170,33 @@
     return !!state && lesson.segments.filter((s) => s.fixed).every((s) => state.seg && state.seg[s.slot] && state.seg[s.slot].st === 'done');
   }
 
-  /* 每一堂能不能上。opt = { packs, levels, states: { <堂號>: 進度 }, today }。
-     回 { lessons: [{ no, status }], next }:status 'done'(全部段交卷或略過)、'open'、'locked'(前一堂固定段沒交完)、
-     'not_live'(還沒開放,顯示「第 n 堂尚未開放」)、'daily_limit'(今天已經開了 2 堂,明天再上);next 是第一個沒上完的堂號(都上完是 null) */
+  /* 有進度的堂照那份進度自己的級別拼(第 4 堂後改了級別,進行中的那一堂照開始時的級別上完);拼不出來用目前的級別 */
+  function lessonFor(packs, levels, st, no) {
+    if (st && st.levels && typeof st.levels === 'object') { try { return compose(packs, st.levels, no); } catch (e) { /* 用目前的級別 */ } }
+    return compose(packs, levels, no);
+  }
+  /* 每一堂能不能上。opt = { packs, levels, states: { <堂號>: 進度 }, today, optional(no)(可以沒有:都必上) }。
+     回 { lessons: [{ no, status, optional }], next }:status 'done'(全部段交卷或略過)、'open'、'locked'(前一個必上的堂固定段沒交完)、
+     'not_live'(還沒開放,顯示「第 n 堂尚未開放」)、'daily_limit'(今天已經開了 2 堂,明天再上;課後練習也算);
+     optional 是 true 的是課後練習(每週 1 堂時的偶數堂):不擋下一堂,只有這種列才帶 optional。
+     next 是第一個沒上完的必上堂號(都上完是 null)。有進度的堂照進度裡的級別判斷尚未開放與固定段交卷 */
   function unlockState(opt) {
     const { packs, levels, today } = opt;
-    const states = opt.states || {};
+    const states = opt.states || {}, optional = typeof opt.optional === 'function' ? opt.optional : () => false;
     const lessons = [];
     const startedToday = Object.keys(states).filter((n) => states[n] && states[n].startedAt && dayOf(states[n].startedAt) === today).length;
     let prevFixed = true, next = null;
     for (let no = 1; no <= 24; no++) {
-      const l = compose(packs, levels, no), st = states[no];
+      const st = states[no], l = lessonFor(packs, levels, st, no), extra = !!optional(no);
       let status;
       if (st && st.doneAt) status = 'done';
       else if (no > l.liveThrough) status = 'not_live';
       else if (!prevFixed) status = 'locked';
       else if (!(st && st.startedAt) && startedToday >= DAILY_MAX) status = 'daily_limit';
       else status = 'open';
-      if (next === null && status !== 'done') next = no;
-      lessons.push({ no, status });
-      prevFixed = fixedDone(l, st);
+      if (next === null && status !== 'done' && !extra) next = no;
+      lessons.push(extra ? { no, status, optional: true } : { no, status });
+      if (!extra) prevFixed = fixedDone(l, st);
     }
     return { lessons, next };
   }

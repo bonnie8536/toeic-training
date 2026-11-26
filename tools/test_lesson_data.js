@@ -80,7 +80,7 @@ T['plan:只在第 1 堂、還沒有 plan 時寫一次,欄位照格式;第 1 堂�
   const plan = e.store.peek('plan');
   eq(plan, {
     v: 1, source: 'self', classId: 'class-a', packs: { listening: 'pack-threshold-v1', reading: 'pack-entry-v1' }, packVersions: { listening: '1.0.0', reading: '1.0.0' },
-    startDate: day(e, NOW), lessonsPerWeek: null, mainDay: new Date(NOW * 1000).getDay(), extDay: null, term: 1, postponedWeeks: 0, previous: null, updatedAt: NOW * 1000,
+    startDate: day(e, NOW), lessonsPerWeek: null, mainDay: new Date(NOW * 1000).getDay(), extDay: null, term: 1, postponedWeeks: 0, previous: null, perWeek: [], weeklyAskedAt: null, updatedAt: NOW * 1000,
   });
   await e.D.start(1, l, NOW + 60, 'class-b', picked);
   const p2 = await pick(e, 2, TE);
@@ -485,6 +485,84 @@ T['前測組卷先避開預留題(之後兩次小檢核那兩份);那個 Part �
   const g3 = f3[0].filter((id) => /^l1-/.test(id));
   eq([g3.length, new Set(g3).size, g3[0]], [3, 3, p1[0]], '補滿配額時不重複');
   [form, f2, f3].forEach((f, i) => { const ids = f[0].concat(f[1]); eq(new Set(ids).size, ids.length, '第 ' + (i + 1) + ' 份前測沒有重複的題'); });
+};
+
+/* ---------- 每週堂數與第 4 堂後的程度調整 ---------- */
+const PLAN_B = (extra) => Object.assign({ v: 1, source: 'self', classId: 'class-a', startDate: '2026-11-02', lessonsPerWeek: null, term: 1, updatedAt: 1000 }, extra || {});
+T['每週堂數:setWeekly 照 LESSON_PLAN.withWeekly 寫 plan;askWeekly 只寫問過的時間(已經有就不寫);weekInputs 給本週一列要的資料'] = async () => {
+  const e = await ready();
+  e.store.set('plan', PLAN_B());
+  const a = e.D.askWeekly();
+  eq([typeof a.weeklyAskedAt, a.perWeek, a.updatedAt > 1000], ['string', undefined, true], '舊 plan 按之後再選:每週堂數不加');
+  const n = e.store.sets.length;
+  e.D.askWeekly();
+  eq(e.store.sets.length, n, '問過了不再寫');
+  const b = e.D.setWeekly(1, NOW);
+  eq([b.perWeek, b.lessonsPerWeek, b.weeklyAskedAt, e.store.peek('plan').perWeek], [[{ w: 4, n: 1 }], 1, a.weeklyAskedAt, [{ w: 4, n: 1 }]]);
+  e.store.set('mock_history', [{ d: '2026-11-20T00:00:00.000Z' }]);
+  const w = e.D.weekInputs();
+  eq([w.plan.perWeek, Object.keys(w.states), w.hist, w.mockHistory.length], [[{ w: 4, n: 1 }], [], [], 1]);
+};
+
+/* 程度調整的情境:試行生(入門/入門),第 2–4 堂照 done 交卷;每堂聽力、閱讀各 rows 題第一次作答,ok 題答對 */
+function lessonWith(e, no, at, done, rows) {
+  const l = e.lesson(EE, no);
+  let s = e.P.newState(l, at);
+  l.segments.filter((x) => done === true || (done === 'fixed' && x.fixed) || (Array.isArray(done) && done.indexOf(x.slot) > -1))
+    .forEach((x) => { s = e.P.setSegment(s, l, x.slot, x.fixed ? 'done' : 'skip', at + 600); });
+  const a = [];
+  for (let i = 0; i < rows.n; i++) { a.push([3, 'l1-c' + i, 0, 0, (i < rows.ok ? 1 : 0) + 2, 10]); a.push([5, 'p5-c' + i, 0, 0, (i < rows.ok ? 1 : 0) + 2, 10]); }
+  return K.plain(Object.assign({}, s, { a }));
+}
+const LV0 = { listening: 'entry', reading: 'entry', source: { listening: 'legacy_plus1', reading: 'legacy' }, setAt: '2026-11-01T00:00:00.000Z',
+  history: [{ at: '2026-11-01T00:00:00.000Z', listening: 'entry', reading: 'entry', reason: 'legacy' }] };
+async function calibEnv(o) {
+  const cloud = K.cloudOf();
+  const e = await ready(Object.assign({ cloud, upload: true }, o && o.env));
+  e.store.set('plan', PLAN_B(o && o.plan));
+  e.store.set('levels', LV0);
+  const at = NOW - 20 * DAY, d4 = (o && o.done4) === undefined ? true : o.done4;
+  e.store.set('les_t1_02', lessonWith(e, 2, at, true, { n: 8, ok: 8 }));
+  e.store.set('les_t1_03', lessonWith(e, 3, at + 3 * DAY, true, { n: 8, ok: 8 }));
+  if (d4 !== null) e.store.set('les_t1_04', lessonWith(e, 4, at + 7 * DAY, d4, { n: 8, ok: 7 }));
+  return e;
+}
+const historyOf = (e) => (e.store.peek('levels').history || []).map((h) => h.reason + ':' + h.listening + '/' + h.reading);
+T['程度調整:第 4 堂上完(或只差本堂結果)時做一次,寫 levels 與一筆 calibrate;第二次回 before 不寫;第 5 堂進度不動'] = async () => {
+  const e = await calibEnv();
+  e.store.set('les_t1_05', { v: 1, startedAt: NOW, doneAt: null, seg: {}, pk: {}, a: [], levels: { listening: 'entry', reading: 'entry' } });
+  const five = K.J(e.store.peek('les_t1_05'));
+  const r = await e.D.calibrate(NOW);
+  eq([r, historyOf(e), e.store.peek('levels').source], [{ done: 'now', changed: { listening: ['entry', 'threshold'], reading: ['entry', 'threshold'] } },
+    ['legacy:entry/entry', 'calibrate:threshold/threshold'], { listening: 'calibrate', reading: 'calibrate' }]);
+  const n = setsOf(e, 'levels');
+  eq([await e.D.calibrate(NOW + 60), setsOf(e, 'levels'), K.J(e.store.peek('les_t1_05'))], [{ done: 'before', changed: r.changed }, n, five]);
+  const w = await calibEnv({ done4: e.lesson(EE, 4).segments.filter((x) => x.slot !== 'wrapup').map((x) => x.slot) });
+  assert.equal(w.store.peek('les_t1_04').doneAt, null, '本堂結果還沒交:doneAt 是空的');
+  eq((await w.D.calibrate(NOW)).done, 'now', '只差本堂結果就做');
+};
+T['程度調整:雲端已經有別台這一期做過的一筆時不寫;讀不到雲端回 skip 不寫;第 4 堂還有段沒交(每週 2 堂)回 wait'] = async () => {
+  const e = await calibEnv();
+  const other = Object.assign({}, LV0, { setAt: '2026-11-25T00:00:00.000Z', history: LV0.history.concat([{ at: '2026-11-25T00:00:00.000Z', listening: 'entry', reading: 'entry', reason: 'calibrate' }]) });
+  e.cloud.put('levels', other);
+  const n = setsOf(e, 'levels');
+  eq([await e.D.calibrate(NOW), setsOf(e, 'levels')], [{ done: 'before', changed: { listening: null, reading: null } }, n]);
+  const off = await calibEnv();
+  off.cloud.ok = false;
+  const m = setsOf(off, 'levels');
+  eq([(await off.D.calibrate(NOW)).done, setsOf(off, 'levels')], ['skip', m]);
+  const part = await calibEnv({ done4: ['vocab', 'listening'] });
+  eq((await part.D.calibrate(NOW)).done, 'wait');
+};
+T['程度調整(每週 1 堂):第 3 堂交完、第 4 堂小檢核沒做、也還沒要開第 5 堂時不做;小檢核交卷後、或要開第 5 堂時做'] = async () => {
+  const plan = { perWeek: [{ w: 1, n: 1 }] };
+  const a = await calibEnv({ plan, done4: null });
+  eq([(await a.D.calibrate(NOW)).done, (await a.D.calibrate(NOW, { opening: 4 })).done], ['wait', 'wait']);
+  eq((await a.D.calibrate(NOW, { opening: 5 })).done, 'now', '要開第 5 堂');
+  const b = await calibEnv({ plan, done4: ['checkpoint'] });
+  eq((await b.D.calibrate(NOW)).done, 'now', '小檢核交卷後');
+  const c = await calibEnv({ plan, done4: ['vocab'] });
+  eq((await c.D.calibrate(NOW)).done, 'wait', '第 4 堂開了但小檢核沒做');
 };
 
 K.run(T);

@@ -33,7 +33,7 @@ const plain = (x) => (x === undefined ? undefined : JSON.parse(J(x)));
 const eq = (a, b, m) => assert.deepStrictEqual(plain(a), plain(b), m);
 
 const CORE_FILES = ['data/bank-meta.js', 'data/ear.js', 'data/grammar.js', 'js/move-rules.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js', 'js/move-merge.js',
-  'js/lesson-rules.js', 'js/bank.js', 'js/pack-util.js', 'js/pack-core.js', 'js/daily.js', 'js/lesson-core.js', 'js/lesson-data.js'];
+  'js/lesson-rules.js', 'js/bank.js', 'js/pack-util.js', 'js/pack-core.js', 'js/daily.js', 'js/onboard-core.js', 'js/lesson-plan.js', 'js/lesson-core.js', 'js/lesson-data.js'];
 const BANK_FILES = ['data/part5.js', 'data/part6.js', 'data/part7.js', 'data/listening.js'];
 
 /* 共用的雲端:rows 存 JSON 字串;ok 是 false 時讀不到(離線) */

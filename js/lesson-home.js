@@ -18,6 +18,8 @@
     merge: ['js/sync-merge-lesson.js', () => !!(window.SYNC_MERGE && window.SYNC_MERGE.lesson)],
     util: ['js/pack-util.js', () => !!window.PACK_UTIL],
     pack: ['js/pack-core.js', () => !!window.PACK_CORE],
+    onboard: ['js/onboard-core.js', () => !!window.ONBOARD_CORE],
+    plan: ['js/lesson-plan.js', () => !!window.LESSON_PLAN],
   };
   const pending = new Map();
   function loadOne(name) {
@@ -37,7 +39,7 @@
   }
   const chain = (names) => names.reduce((p, n) => p.then(() => loadOne(n)), Promise.resolve());
   const loadBase = () => chain(['core', 'data']);
-  const loadRest = () => chain(['core', 'data', 'rules', 'merge', 'util', 'pack']);
+  const loadRest = () => chain(['core', 'data', 'rules', 'merge', 'util', 'pack', 'onboard', 'plan']);
 
   /* ---------- 不用連網就知道的 ---------- */
   const LEVELS = ['entry', 'threshold', 'advanced', 'high'];

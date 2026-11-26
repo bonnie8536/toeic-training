@@ -201,4 +201,24 @@ T['R9 做過聽力短測的帳號:那 8 題算前測題(小檢核清單扣掉、
   return 'ok';
 };
 
+T['R10 解鎖照進度裡的級別:第 5 堂有進度(門檻)而目前級別是入門時,第 5 堂照它的進度判可以上、第 6 堂尚未開放;沒有進度的堂照目前級別'] = async () => {
+  const packs = JSON.parse(JSON.stringify(PACKS));
+  packs.threshold.liveThrough = 8;
+  const day = NOW - 10 * K.DAY, today = P.dayOf(NOW), states = {};
+  for (let no = 1; no <= 4; no++) {
+    const l = P.compose(packs, EE, no);
+    let s = P.newState(l, day);
+    l.segments.forEach((x) => { s = P.setSegment(s, l, x.slot, x.fixed ? 'done' : 'skip', day + 600); });
+    states[no] = s;
+  }
+  const l5 = P.compose(packs, TT, 5);
+  states[5] = P.setSegment(P.newState(l5, day + 3 * K.DAY), l5, 'vocab', 'done', day + 3 * K.DAY + 60);
+  const u = P.unlockState({ packs, levels: EE, states, today });
+  eq(u.lessons.slice(3, 7).map((x) => x.status), ['done', 'open', 'not_live', 'not_live']);
+  eq(u.next, 5);
+  const v = P.unlockState({ packs, levels: TT, states: Object.assign({}, states, { 5: undefined }), today });
+  eq(v.lessons.slice(4, 6).map((x) => x.status), ['open', 'locked'], '沒有進度照目前級別(門檻開到第 8 堂)');
+  return 'ok';
+};
+
 K.run(T);

@@ -1048,6 +1048,15 @@ footer p { margin: 0; }
 .foot-about > summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: var(--r-sm); }
 .foot-about > p { margin-top: 6px; max-width: 68ch; }
 @media (prefers-reduced-motion: reduce) { .foot-about > summary::after { transition: none; } }
+/* 頁尾不在第一屏:有頁尾的頁面 main 至少一個視窗高,頁尾一律要捲到最底才看得到(內容短的頁面第一屏底下是留白)。
+   100vh 在手機上是網址列收起來時的高度(比當下可見的高),寧可多推一點也不要露出來;支援 lvh 的瀏覽器明確用最大的那個高度。
+   沒有頁尾的頁(搬家、重設密碼、離線)不撐高;不支援 :has 的舊瀏覽器那幾頁照樣撐高,只是多一段留白。
+   作答中(html.is-quiz)頁尾整個不顯示,main 的高度由專心模式那一段管。 */
+body > main { min-height: 100vh; }
+@supports (min-height: 100lvh) { body > main { min-height: 100lvh; } }
+body:not(:has(> footer)) > main { min-height: 0; }
+html.is-quiz footer { display: none; }
+@media print { body > main { min-height: 0; } }
 @media (max-width: 860px) {
   footer { padding: 18px 0 24px; }
   .foot-links { gap: 4px 14px; }
@@ -3326,7 +3335,7 @@ html.is-quiz.app-shell body[data-require-profile]:not([data-require-profile="on-
 html.is-quiz.app-shell .modal-mask.pw-mask { bottom: 0; }
 /* 內容欄最寬 720 置中;作答中不畫題目外框,選項加高好按 */
 html.is-quiz main.container, html.is-quiz main.container-narrow { max-width: 760px; }
-/* 頁尾留著(條款連結每頁都要有),但推到第一屏外面,作答時畫面上只有題目 */
+/* 作答中頁尾不顯示(見「頁尾」那一段);main 撐到底部固定列上面,題目短時底部列前面是留白 */
 html.is-quiz main { min-height: calc(100vh - 53px - var(--quiz-foot-h, 76px)); }
 html.is-quiz main .q-block { border: 0; padding: 24px 0 8px; margin-bottom: 0; background: none; }
 html.is-quiz main .q-block .q-text { font-size: var(--fs-lg); line-height: 1.6; margin-bottom: 20px; }

@@ -189,14 +189,40 @@
     const v = hasStore() ? store.get('mock_seen', null) : null;
     return isPlain(v) ? v : {};
   }
+  /* 程度檢測(placement_v1)作答過的題:做完(end 有值)的那幾次,有選答案的題 { 題目 key: { ok, t } },t 是那一次的結束時間(毫秒),
+     同一題取 t 大的。沒選的、還沒做完的不算;形狀不對當沒有 */
+  function placementSeen() {
+    const v = hasStore() ? store.get('placement_v1', null) : null, out = {};
+    (isPlain(v) && Array.isArray(v.runs) ? v.runs : []).forEach((r) => {
+      const t = isPlain(r) && typeof r.end === 'string' ? Date.parse(r.end) : NaN;
+      if (!Number.isFinite(t) || !Array.isArray(r.items)) return;
+      r.items.forEach((it) => {
+        if (!Array.isArray(it) || typeof it[1] !== 'string' || !it[1] || !Number.isInteger(it[2])) return;
+        if (!Object.prototype.hasOwnProperty.call(out, it[1]) || out[it[1]].t < t) out[it[1]] = { ok: !!it[3], t };
+      });
+    });
+    return out;
+  }
+  /* 課程以外作答過的題(模擬考、程度檢測):{ 題目 key: 毫秒 },兩邊都有取大的 */
+  function outsideSeen() {
+    const out = Object.assign({}, mockSeen()), pl = placementSeen();
+    Object.keys(pl).forEach((k) => { if (!(Number(out[k]) >= pl[k].t)) out[k] = pl[k].t; });
+    return out;
+  }
   /* 選題用的作答紀錄(新物件):每個 Part 先放模擬考作答過的題 { ok, t }(mock_wrong 同一題答錯而且時間不比它舊時 ok 是 false),
-     再用練習紀錄蓋上去(兩邊都有取 t 大的)。模擬考做過的題因此在課程裡算做過:小檢核不選、練習排在後面、14 天內做過照放寬規則 */
+     再疊程度檢測作答過的題(t 新的贏),最後用練習紀錄蓋上去(兩邊都有取 t 大的)。課程以外做過的題因此在課程裡算做過:
+     小檢核不選、練習排在後面、14 天內做過照放寬規則 */
   function practiceRecords() {
-    const round = roundRecords(), seen = mockSeen(), wrong = store.get('mock_wrong', null), out = {};
+    const round = roundRecords(), seen = mockSeen(), wrong = store.get('mock_wrong', null), pl = placementSeen(), out = {};
+    const partOf = (k) => core().partOfId(k.split(':')[0]);
     Object.keys(round).forEach((p) => { out[p] = {}; });
     Object.keys(seen).forEach((k) => {
-      const t = Number(seen[k]), p = core().partOfId(k.split(':')[0]), w = isPlain(wrong) ? wrong[k] : null;
+      const t = Number(seen[k]), p = partOf(k), w = isPlain(wrong) ? wrong[k] : null;
       if (p && out[p] && Number.isFinite(t)) out[p][k] = { ok: !(isPlain(w) && w.ok === false && Number(w.t) >= t), t };
+    });
+    Object.keys(pl).forEach((k) => {
+      const p = partOf(k), m = p && out[p] ? out[p][k] : null;
+      if (p && out[p] && !(m && m.t >= pl[k].t)) out[p][k] = pl[k];
     });
     Object.keys(round).forEach((p) => Object.keys(round[p]).forEach((k) => {
       const r = round[p][k], m = out[p][k];
@@ -385,10 +411,10 @@
     warnOver(r, no);
     return r.state;
   }
-  /* 回合開始前:這幾題(作答紀錄的鍵)哪些已經有紀錄(練習紀錄或模擬考作答過) */
+  /* 回合開始前:這幾題(作答紀錄的鍵)哪些已經有紀錄(練習紀錄,或模擬考、程度檢測作答過) */
   function snapshot(part, keys) {
     const get = REC[String(part).replace(/^[pPlL]/, '')];
-    const rec = get ? get() || {} : {}, seen = mockSeen();
+    const rec = get ? get() || {} : {}, seen = outsideSeen();
     return new Set((keys || []).filter((k) => !!rec[k] || seen[k] !== undefined));
   }
   function sync(keys) { return pack().syncPractice(keys); }
@@ -622,7 +648,7 @@
 
   root.LESSON_DATA = Object.freeze({
     packs, pilot, pilotNow, plan: readPlan, levels, states, open, start, ctx, testForm, fillFixed, trial, freeze,
-    inputs, reviewOpt, weakOpt, testIds: pretestIds, testParts, record, segment, snapshot, sync, hist, roundRecords, mockSeen,
+    inputs, reviewOpt, weakOpt, testIds: pretestIds, testParts, record, segment, snapshot, sync, hist, roundRecords, mockSeen, outsideSeen,
     hits, wrong, passed, reviewed, checkpoint, tests, pretest, planReview, flush, clock, firstAttempts, placementReserve,
     setWeekly, askWeekly, weekInputs, calibrate,
   });

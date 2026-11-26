@@ -605,7 +605,7 @@
     const seg = S.state.seg[S.slot];
     const since = ((seg && seg.t0) || S.state.startedAt) * 1000;
     const blocks = job.blocks.map((b) => (b.module === 'redo' ? b : { idx: b.idx, ids: C.idsOf(b, S.state).filter((id) => job.items.has(id)) }));
-    return C.reconcile({ blocks, items: (id) => job.items.get(id), records: D.roundRecords(), sinceMs: since, snapshot, hist: histNow(), mock: D.mockSeen() });
+    return C.reconcile({ blocks, items: (id) => job.items.get(id), records: D.roundRecords(), sinceMs: since, snapshot, hist: histNow(), mock: D.outsideSeen() });
   }
   function record(rows) { if (rows && rows.length) S.state = D.record(S.no, S.lesson, rows); }
   function callEngine(job, x) {

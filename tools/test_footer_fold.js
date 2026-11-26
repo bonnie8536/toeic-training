@@ -4,9 +4,10 @@
    2. App 模式(主畫面開啟,navigator.standalone)抽幾頁查同一件事。
    3. 有專心模式的頁(題庫刷題、聽力訓練、模擬考、每日練習、程度檢測舊頁 diagnostic.html 與新頁 placement.html)實際進到作答畫面(本機模式、已選學生):
       頁尾不顯示、捲到底也沒有,題目短時整頁不能捲;結束專心模式後頁尾又出現在頁面最底、仍不在第一屏。
-      程度檢測(placement.html)的作答畫面多量 390×844、768×1024、1440×900,App 模式量 375×812、390×844。
+      程度檢測(placement.html)的作答畫面多量 390×844、768×1024、1440×900,App 模式量 375×812、390×844;
+      聽力題組(Part 3、Part 4)是先把前面幾格寫進紀錄,打開接著做到那一格再量。
    4. 程度檢測、起始程度、預估分數的其他畫面(STATES:檢測開始頁、兩科中間、結果頁、還沒有結果、「我的」與能力分析的預估分數卡、
-      新用戶設定的檢測說明與結果)在 375×812、390×844、768×1024、1440×900 與 App 模式(375×812、390×844)查第 1 項同一件事,
+      新用戶設定的檢測說明與結果、模擬考交卷後的結果頁)在 375×812、390×844、768×1024、1440×900 與 App 模式(375×812、390×844)查第 1 項同一件事,
       而且要真的畫到那個畫面(sel 找得到)。檢測紀錄用頁面裡真的 ESTIMATE_STORE 寫(本機學生檔案);
       登入的畫面用假雲端(tools/fixtures/lesson_cloud_stub.js,不連外網、不用真的帳號)。
    用法:node tools/test_footer_fold.js [--port <起始埠,預設 9200,用三個:雲端、本機、Chrome 除錯埠>] [--debug-port <埠>]
@@ -212,6 +213,9 @@ const QUIZ = [
   { name: '程度檢測 先做閱讀', url: 'placement.html', click: '沒有耳機，先做閱讀', adapt: true },
   { name: '程度檢測 從新用戶設定直接開考', url: 'placement.html?start=1&from=onboard', adapt: true },
   { name: '程度檢測 中途離開後接著做', url: 'placement.html', seed: 'midway', adapt: true },
+  /* 聽力題組:前面幾格先寫進紀錄(listenAt),打開就接著做到 Part 3／Part 4 那一格;part 是畫面上該看到的 Part */
+  { name: '程度檢測 聽力題組 Part 3', url: 'placement.html', seed: 'p3', adapt: true, part: '3' },
+  { name: '程度檢測 聽力題組 Part 4', url: 'placement.html', seed: 'p4', adapt: true, part: '4' },
 ];
 async function enterQuiz(s, q) {
   if (q.click) {
@@ -245,15 +249,31 @@ const RUN = (secs, n, finish) => `(async () => {
   if (${finish}) await S.finishRun(at);
   return true;
 })()`;
+/* 聽力做到一半:Part 1 兩格、Part 2 四格(part 是 '4' 時再加 Part 3 一組三題)先答完,停在下一格;沒有結束這一科 */
+const LISTEN_AT = (part) => `(async () => {
+  if (window.CLOUD && CLOUD.ready) await CLOUD.ready.catch(() => null);
+  const S = ESTIMATE_STORE, keys = Object.keys(ITEM_PARAMS.b);
+  const r = await S.startRun({ sec: 'LR' });
+  if (!r || !r.run) return false;
+  const at = r.run.at, unit = (k) => k.split(':')[0];
+  const units = (p, n) => [...new Set(keys.filter((k) => k.indexOf(p + '-') === 0 && !r.fa.i[k]).map(unit))].slice(0, n);
+  const plan = [['l1', 2], ['l2', 4]].concat(${J(part)} === '4' ? [['l3', 1]] : []);
+  S.beginSection(at, 'L');
+  let i = 0;
+  plan.forEach(([p, n]) => units(p, n).forEach((u) => keys.filter((k) => unit(k) === u).forEach((key) => {
+    S.answer(at, [{ s: 'L', key, choice: 0, ok: i++ % 3 === 2 ? 0 : 1, secs: 20 }]);
+  })));
+  return true;
+})()`;
 const DUMP = 'JSON.stringify(Object.fromEntries(Object.keys(localStorage).map((k) => [k, localStorage.getItem(k)])))';
 async function waitFor(s, expr, ms) {
   for (let i = 0; i < (ms || 15000) / 200; i++) { try { if (await s.eval(expr)) return true; } catch (e) { /* 換頁中 */ } await sleep(200); }
   return false;
 }
 /* 本機學生檔案:先做閱讀、停在兩科中間(between);閱讀做完、聽力做了 4 題離開(midway);兩科做完(result) */
-async function localSeed(B, secs, n, finish) {
+async function localSeed(B, secs, n, finish, script) {
   const s = await open(B, { mode: 'local', profile: true, url: 'placement.html?view=last' });
-  const ok = await s.eval(RUN(secs, n, finish));
+  const ok = await s.eval(script || RUN(secs, n, finish));
   const ls = JSON.parse(await s.eval(DUMP));
   await s.close();
   if (!ok) throw new Error('檢測紀錄寫不進去(' + secs.join('') + ')');
@@ -280,6 +300,8 @@ async function makeSeeds(B) {
     between: await localSeed(B, ['R'], 0, false),
     midway: await localSeed(B, ['R'], 4, false),
     result: await localSeed(B, ['L', 'R'], 0, true),
+    p3: await localSeed(B, ['L'], 0, false, LISTEN_AT('3')),
+    p4: await localSeed(B, ['L'], 0, false, LISTEN_AT('4')),
     account: await accountSeed(B, USER(31)),
   };
 }
@@ -297,7 +319,19 @@ const STATES = [
   { name: '新用戶設定 檢測說明', url: 'start.html?step=test', user: 32, sel: '.diag-intro' },
   { name: '新用戶設定 檢測說明(只做聽力)', url: 'start.html?step=test', user: 33, sel: '.diag-intro' },
   { name: '新用戶設定 結果(預估分數對回級別)', url: 'start.html?step=result', user: 31, seed: 'account', sel: '.result-card' },
+  /* 模擬考交卷後的結果頁(標題旁有 ⓘ):開始後直接交卷(沒作答也能交),結果出來時已經離開專心模式 */
+  { name: '模擬考 交卷後的結果頁', url: 'mock.html', local: true, sel: '#mock-root .result-card', act: mockSubmit },
 ];
+async function mockSubmit(s) {
+  const click = (expr) => s.eval('(() => { const b = ' + expr + '; if (b) b.click(); return !!b; })()');
+  await click("[...document.querySelectorAll('main button')].find((e) => e.textContent.trim() === '開始')");
+  await waitFor(s, "!!document.querySelector('.quiz-bar')", 8000);
+  await sleep(600);
+  await click("[...document.querySelectorAll('button')].find((x) => x.textContent.trim() === '交卷' && x.offsetParent !== null)");
+  await waitFor(s, "!!document.querySelector('.ui-dialog .ui-dialog-ok')", 8000);
+  await sleep(400);
+  await click("document.querySelector('.ui-dialog .ui-dialog-ok')");
+}
 function stateOpts(st, seeds, size, app) {
   const o = { url: st.url, size, app, ls: st.seed ? seeds[st.seed] : undefined };
   if (st.local) return Object.assign(o, { mode: 'local', profile: true });
@@ -307,6 +341,7 @@ async function runState(B, results, seeds) {
   for (const st of STATES) for (const app of [false, true]) for (const size of app ? ADAPT_APP : ADAPT_SIZES) {
     if (opt('--pages') && !PAGES.includes(st.url.split('?')[0])) continue;
     const s = await open(B, stateOpts(st, seeds, size, app));
+    if (st.act) await st.act(s);
     const drawn = await waitFor(s, 'document.querySelector(' + J(st.sel) + ') !== null', 8000);
     await sleep(300);
     const m = await measure(s);
@@ -351,6 +386,10 @@ async function runQuiz(B, results, seeds) {
     await enterQuiz(s, q);
     const m = await measure(s);
     const bad = quizProblems(m);
+    if (q.part) {
+      const shown = await s.eval("(() => { const b = document.querySelector('#pl-root .pl-meta .badge'); return b ? b.textContent.trim() : null; })()");
+      if (shown !== 'Part ' + q.part) bad.push('沒有接到 Part ' + q.part + '(畫面是 ' + shown + ')');
+    }
     /* 題目短的時候不能捲:撐高 main 之後的頁面高度不能超過「視窗高」與「main 不撐高時的內容高」兩者較大的那個 */
     const natural = await s.eval(`(() => { const mn = document.querySelector('body > main'); mn.style.minHeight = '0px';
       const h = document.documentElement.scrollHeight; mn.style.minHeight = ''; return h; })()`);

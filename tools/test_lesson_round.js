@@ -143,46 +143,65 @@ T['第 1 堂總覽:聽力作答中,「剩幾分鐘」用最後一題的作答時
 /* 個人段最多放得下的:回顧 6–8 分鐘,錯題重做 P6 一小題 60 秒,最多 8 組(引擎整組出、整組作答);
    弱點補練 11–14 分鐘,P2 一題 35 秒,最多 24 題(兩個考點各 12 題);第 2 堂前測檢討 P2 7 題、P5 7 題加兩張技巧卡;
    固定段全部作答(文法單元照小試身手的題數);作答時間 7 位數 */
-T['每堂進度鍵最壞情況:第 2–4 堂固定段與個人段都放到最多、全部作答,作答時間 7 位數 ≤ 5,120 位元組、不用刪作答'] = async () => {
-  const e = K.env({ bank: true });
-  await e.D.packs();
+/* 一堂放到最多、全部作答的進度(還沒縮) */
+async function worstState(e, lv, no) {
   const rows = await e.B.meta();
   const big = (part, n) => rows.filter((r) => r.part === part).slice().sort((a, b) => (b.size || 1) - (a.size || 1)).slice(0, n).map((r) => r.id);
-  const C = e.ctx.LESSON_CORE, T0 = NOW, T1 = NOW + 1234567, out = [];
+  const C = e.ctx.LESSON_CORE, T0 = NOW, T1 = NOW + 1234567;
   const grammarSubs = (id) => (e.ctx.TOEIC.grammar.filter((u) => u.id === id)[0] || { quiz: [] }).quiz.map((q, i) => i + 1);
   /* 一題寫幾列:題庫照真的題目(P6 的小題號是題號),文法單元照小試身手的題數,技巧卡不寫,其他(單字、英語耳)一列 */
   const subsOf = async (id) => {
     if (metaRow(e, id)) return C.itemKeys(C.partOfId(id), (await e.B.get([id]))[0], id).map((k) => k.sub);
     return /^tip-/.test(id) ? [] : /^g[a-z]-\d/.test(id) ? grammarSubs(id) : [0];
   };
+  const lesson = e.lesson(lv, no);
+  let s = (await e.P.pickFixed(lesson, e.P.newState(lesson, T0), e.D.ctx(lesson, T0))).state;
+  const seg = (slot) => lesson.segments.filter((x) => x.slot === slot)[0];
+  if (seg('review')) {
+    const redo = big('6', Math.min(seg('review').maxUnits || 12, Math.floor(seg('review').minutes * 60 / 60)));
+    s = e.P.freeze(s, 80, redo, T1, { r: 'review', sub: redo.map(() => 1), m: redo.map(() => 'p6') });
+  }
+  if (seg('weak')) {
+    const half = Math.floor(seg('weak').minutes * 60 / 2 / 35);
+    [85, 86].forEach((idx, i) => { s = e.P.freeze(s, idx, big('2', 2 * half).slice(i * half, (i + 1) * half), T1, { r: 'point', m: 'p2', k: 'P2.wh' }); });
+  }
+  if (no === 2) {
+    s = e.P.freeze(s, 90, ['tip-P2-response'], T1, { r: 'test_review', m: 'tip', p: '2' });
+    s = e.P.freeze(s, 91, big('2', 31).slice(24), T1, { r: 'test_review', m: 'p2', p: '2' });
+    s = e.P.freeze(s, 92, ['tip-P5-pos'], T1, { r: 'test_review', m: 'tip', p: '5' });
+    s = e.P.freeze(s, 93, big('5', 7), T1, { r: 'test_review', m: 'p5', p: '5' });
+  }
+  for (const i of Object.keys(s.pk).map(Number)) {
+    for (const id of s.pk[i].ids) {
+      for (const sub of await subsOf(id)) s = e.P.answer(s, { b: i, id, sub, c: 1, ok: false, f: true, t: T1 });
+    }
+  }
+  return { lesson, state: mark(e, lesson, s, allSlots(lesson), 'done', T1 + 60) };
+}
+T['每堂進度鍵最壞情況:第 2–4 堂固定段與個人段都放到最多、全部作答,作答時間 7 位數 ≤ 5,120 位元組、不用刪作答'] = async () => {
+  const e = K.env({ bank: true });
+  await e.D.packs();
+  const out = [];
   for (const lv of [EE, K.TT, TE, K.ET]) {
     for (let no = 2; no <= 4; no++) {
-      const lesson = e.lesson(lv, no);
-      let s = (await e.P.pickFixed(lesson, e.P.newState(lesson, T0), e.D.ctx(lesson, T0))).state;
-      const seg = (slot) => lesson.segments.filter((x) => x.slot === slot)[0];
-      const redo = big('6', Math.min(seg('review').maxUnits || 12, Math.floor(seg('review').minutes * 60 / 60)));
-      const half = Math.floor(seg('weak').minutes * 60 / 2 / 35);
-      s = e.P.freeze(s, 80, redo, T1, { r: 'review', sub: redo.map(() => 1), m: redo.map(() => 'p6') });
-      [85, 86].forEach((idx, i) => { s = e.P.freeze(s, idx, big('2', 2 * half).slice(i * half, (i + 1) * half), T1, { r: 'point', m: 'p2', k: 'P2.wh' }); });
-      if (no === 2) {
-        s = e.P.freeze(s, 90, ['tip-P2-response'], T1, { r: 'test_review', m: 'tip', p: '2' });
-        s = e.P.freeze(s, 91, big('2', 31).slice(24), T1, { r: 'test_review', m: 'p2', p: '2' });
-        s = e.P.freeze(s, 92, ['tip-P5-pos'], T1, { r: 'test_review', m: 'tip', p: '5' });
-        s = e.P.freeze(s, 93, big('5', 7), T1, { r: 'test_review', m: 'p5', p: '5' });
-      }
-      for (const i of Object.keys(s.pk).map(Number)) {
-        for (const id of s.pk[i].ids) {
-          for (const sub of await subsOf(id)) s = e.P.answer(s, { b: i, id, sub, c: 1, ok: false, f: true, t: T1 });
-        }
-      }
-      s = mark(e, lesson, s, allSlots(lesson), 'done', T1 + 60);
-      const fit = e.P.fitLesson(s, lesson);
-      out.push([e.P.sizeOf(s), fit.trimmed, fit.over]);
+      const w = await worstState(e, lv, no), fit = e.P.fitLesson(w.state, w.lesson);
+      out.push([e.P.sizeOf(w.state), fit.trimmed, fit.over]);
     }
   }
   const max = Math.max(...out.map((x) => x[0]));
   eq([max <= 5120, out.every((x) => x[1] === 0 && x[2] === false)], [true, true], JSON.stringify(out));
   return '最大 ' + max + ' 位元組';
+};
+T['每堂進度鍵最壞情況(門檻第 5–8 堂):同樣放到最多、全部作答;≤ 5,120 位元組,或超過時縮完不超過、不刪作答'] = async () => {
+  const e = K.env({ bank: true });
+  await e.D.packs();
+  const out = [];
+  for (let no = 5; no <= 8; no++) {
+    const w = await worstState(e, K.TT, no), fit = e.P.fitLesson(w.state, w.lesson);
+    out.push([no, e.P.sizeOf(w.state), fit.over, fit.state.a.length === w.state.a.length]);
+  }
+  eq(out.filter((x) => x[1] > 5120 && (x[2] || !x[3])), [], JSON.stringify(out));
+  return out.map((x) => '第 ' + x[0] + ' 堂 ' + x[1] + ' 位元組').join('、');
 };
 
 /* 有一支在等永遠不會回來的 Promise 時,node 會在印出通過數之前就結束:算失敗 */

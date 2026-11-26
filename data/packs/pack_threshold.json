@@ -5,7 +5,7 @@
   "nameZh": "門檻",
   "packVersion": "1.0.0",
   "status": "live",
-  "liveThrough": 4,
+  "liveThrough": 8,
   "specRefs": [
     "00-v1.2"
   ],
@@ -8479,7 +8479,7 @@
   ],
   "authoring": {
     "designer": "designer:threshold",
-    "updatedAt": "2026-11-24",
-    "changeNote": "由 tools/md_to_pack.js 轉出；開放到第 4 堂"
+    "updatedAt": "2026-11-26",
+    "changeNote": "由 tools/md_to_pack.js 轉出；開放到第 8 堂"
   }
 }

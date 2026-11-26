@@ -41,11 +41,24 @@ T['P1 schema v1.2:版本 1.2;包層必填 liveThrough(0–24 整數);個人段�
   return 'ok';
 };
 
-T['P2 兩個學習包照 schema 檢查都通過;開放到第 4 堂,其餘不開放'] = () => {
+T['P2 兩個學習包照 schema 檢查都通過;入門開放到第 4 堂、門檻開放到第 8 堂,其餘不開放'] = () => {
+  const live = { entry: 4, threshold: 8 };
   Object.keys(PACKS).forEach((k) => {
     assert.deepEqual(validate(SCHEMA, PACKS[k]), [], k);
-    assert.deepEqual([PACKS[k].status, PACKS[k].liveThrough, PACKS[k].lessons.length], ['live', 4, 24]);
+    assert.deepEqual([PACKS[k].status, PACKS[k].liveThrough, PACKS[k].lessons.length], ['live', live[k], 24]);
   });
+  return 'ok';
+};
+
+/* 門檻開放到第 8 堂時,學習包只改開放到第幾堂與轉檔說明兩欄:24 堂的內容、其他欄位、入門那一包都跟開放到第 4 堂時逐位元組相同
+   (JSON 字串的 sha256 前 16 碼;版號不升,換版號會讓兩台同一堂各寫各的) */
+T['P2b 門檻開放到第 8 堂:24 堂內容、版號與其他欄位跟以前一樣,只改開放堂數與轉檔說明;入門那一包不變'] = () => {
+  const h = (x) => require('crypto').createHash('sha256').update(JSON.stringify(x)).digest('hex').slice(0, 16);
+  const t = PACKS.threshold, rest = Object.assign({}, t), au = Object.assign({}, t.authoring);
+  ['liveThrough', 'authoring', 'lessons'].forEach((k) => delete rest[k]);
+  ['changeNote', 'updatedAt'].forEach((k) => delete au[k]);
+  assert.deepEqual([h(t.lessons), h(rest), h(au), h(PACKS.entry), t.packVersion], ['7aba2844f9198a8c', '38221df33d201437', '7e39b8f76219bb5d', 'ef95b1a83872a393', '1.0.0']);
+  assert.equal(t.authoring.changeNote, '由 tools/md_to_pack.js 轉出；開放到第 8 堂');
   return 'ok';
 };
 

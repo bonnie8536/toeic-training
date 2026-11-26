@@ -71,6 +71,9 @@ T['C2 拼課表(同一級):段照學習包順序、每堂 60 分;固定區塊依
   const cp = c.segments.filter((s) => s.slot === 'checkpoint')[0];
   assert.deepEqual(cp.blocks.map((b) => b.module + (b.fill ? '*' : '')), ['p1', 'p2', 'p5', 'p5', 'grammar*']);
   assert.equal(c.liveThrough, 4);
+  /* 門檻開放到第 8 堂;聽讀有一科是入門的取兩包較小的(第 4 堂) */
+  const lt = (lv) => P.compose(PACKS, lv, 5).liveThrough;
+  assert.deepEqual([lt({ listening: 'threshold', reading: 'threshold' }), lt({ listening: 'threshold', reading: 'entry' }), lt({ listening: 'entry', reading: 'threshold' })], [8, 4, 4]);
   return 'ok';
 };
 

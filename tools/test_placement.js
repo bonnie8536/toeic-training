@@ -57,6 +57,43 @@ T['腳本每一格:聽力 P1 P1 P2×4 P3 組 P4 組、閱讀 P5×4 P6 組 P7 單
   assert.ok(run.items.every((it) => fa.i[it[1]] && fa.i[it[1]][2] === 't' && fa.i[it[1]][1] === 1));
 };
 
+/* 練習已經把某個 Part 全部做過(第一次作答紀錄都有、記成看過):回一份只放這份紀錄的 localStorage */
+function seenAll(part) {
+  const keys = [].concat(...env().P.unitsOf(part).map((u) => u.keys));
+  const i = {};
+  keys.forEach((k) => { i[k] = [400, null, 'p']; });
+  return new Map([['tr_u' + K.PID + '_fa_v1', JSON.stringify({ v: 1, i })]]);
+}
+T['Part 1 都做過了:聽力只剩 10 題,開始頁「聽力 10 題」、進度「聽力 · 1／10」;先做閱讀時兩科中間寫「接著做聽力 10 題。」'] = async () => {
+  const e = env({ ls: seenAll('1') });
+  assert.deepStrictEqual(all(e.box, '.mock-tag').map(txt), ['聽力 10 題', '閱讀 12 題', '約 15–20 分鐘']);
+  await start(e);
+  const L = await doSection(e, 'right');
+  assert.deepStrictEqual(L.map((x) => x.part), ['2', '2', '2', '2', '3', '4']);
+  assert.deepStrictEqual([L[0].count, L[5].count], ['聽力 · 1／10', '聽力 · 8–10／10']);
+  assert.ok(/接著做閱讀 12 題。/.test(txt(e.box)));
+  const r = env({ ls: seenAll('1') });
+  await start(r, '沒有耳機，先做閱讀');
+  await doSection(r, 'right');
+  assert.deepStrictEqual(all(r.box, '.pl-rule').map(txt), ['接著做聽力 10 題。', '戴上耳機。'], '一行一件事');
+  const only = env({ ls: seenAll('1'), search: '?sec=L' });
+  assert.deepStrictEqual(all(only.box, '.mock-tag').map(txt), ['聽力 10 題']);
+};
+T['Part 1 只剩 2 題:做完這次後看最近一次結果按「重新檢測」,開始頁寫「聽力 10 題」(做過的題不算可出)'] = async () => {
+  const ls = seenAll('1'), k = 'tr_u' + K.PID + '_fa_v1', fa = JSON.parse(ls.get(k));
+  const free = [].concat(...env().P.unitsOf('1').map((u) => u.keys)).filter((key, i, a) => i >= a.length - 2);
+  free.forEach((key) => { delete fa.i[key]; });
+  ls.set(k, JSON.stringify(fa));
+  const e = env({ ls });
+  assert.deepStrictEqual(all(e.box, '.mock-tag').map(txt).slice(0, 1), ['聽力 12 題']);
+  await fullRun(e, 'right');
+  const last = env({ ls, now: K.NOW + 2 * HOUR, search: '?view=last' });
+  await flush(40);
+  clickText(last.box, '重新檢測');
+  await flush();
+  assert.deepStrictEqual(all(last.box, '.mock-tag').map(txt), ['聽力 10 題', '閱讀 12 題', '約 15–20 分鐘']);
+};
+
 T['兩科中間:聽力完成→接著做閱讀;先做閱讀的對稱一頁;「之後再做」直接看結果'] = async () => {
   const e = env();
   await start(e);

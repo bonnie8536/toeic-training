@@ -34,7 +34,8 @@
     const s = (v || cur).status;
     return !s ? 'idle' : s.sleeping && !awake() ? 'sleep' : s.hungry && !s.metToday ? 'hungry' : 'idle';
   }
-  function nameOf(v) { return ((v || cur).status && (v || cur).status.name) || '小雞'; }
+  const DEFAULT_NAME = '暴衝雞';   // 沒取名時顯示的名字,只用來顯示,不寫進資料(status.name 沒取過就是空的)
+  function nameOf(v) { return ((v || cur).status && (v || cur).status.name) || DEFAULT_NAME; }
   /* 斷掉時不寫「連續 0 天」,改寫一起練了幾天;從沒練過什麼都不寫 */
   function streakText(s) { return s.streak > 0 ? '連續 ' + s.streak + ' 天' : s.practicedDays > 0 ? '一起練了 ' + s.practicedDays + ' 天' : ''; }
   function label(v) { const t = streakText((v || cur).status); return nameOf(v) + (t ? ' · ' + t : ''); }
@@ -156,7 +157,7 @@
   function saveMsg(r, what) {
     if (r && r.ok) return '';
     if (r && r.reason === 'clock') return what + '沒有改\n請先調好這台裝置的日期';
-    if (r && r.reason === 'readOnly') return what + '沒有改\n這台先不能改小雞的資料';
+    if (r && r.reason === 'readOnly') return what + '沒有改\n這台先不能改寵物的資料';
     return '沒有存到\n再試一次';
   }
   async function setGoal(n) {
@@ -176,7 +177,7 @@
     return done ? h('a', { class: cls, href: 'drill.html', 'data-focus': key }, '去答題')
       : h('a', { class: cls, href: 'daily.html', 'data-focus': key }, '去做每日練習');
   }
-  function roText(v) { return v.newer ? '這台先不能餵\n小雞的資料是新版網頁存的' : v.reason === 'clock' ? '這台先不能餵\n請先調好這台裝置的日期' : '這台先不能餵\n小雞的資料讀不到'; }   // 第一行發生什麼、第二行原因或怎麼辦(css pre-line)
+  function roText(v) { return v.newer ? '這台先不能餵\n寵物的資料是新版網頁存的' : v.reason === 'clock' ? '這台先不能餵\n請先調好這台裝置的日期' : '這台先不能餵\n寵物的資料讀不到'; }   // 第一行發生什麼、第二行原因或怎麼辦(css pre-line)
   /* noGo:首頁那張卡就在每日練習下面,沒有飼料時不再放一個去每日練習的按鈕 */
   function action(v, noGo) {
     const s = v.status;
@@ -243,7 +244,7 @@
   let roamSaving = false;
   function roamRow(v) {
     const on = v.roam !== false;
-    return h('div', { class: 'pet-switch-row' }, h('span', { id: 'pet-roam-l' }, '小雞在頁面上走動'),
+    return h('div', { class: 'pet-switch-row' }, h('span', { id: 'pet-roam-l' }, '在頁面上走動'),
       h('button', { class: 'pet-switch', type: 'button', role: 'switch', 'aria-checked': String(on), 'aria-labelledby': 'pet-roam-l', 'data-focus': 'roam',
         'aria-disabled': roamSaving || v.readOnly ? 'true' : null, onclick: (e) => setRoam(!on, e.currentTarget) }));
   }
@@ -280,7 +281,7 @@
       return true;
     } catch (e) { return true; }
   }
-  function eatFail(fn, why) { return why === 'clock' ? fn + '沒有餵\n請先調好這台裝置的日期' : why === 'readOnly' ? fn + '沒有餵\n這台先不能改小雞的資料' : '沒有存到\n再試一次'; }
+  function eatFail(fn, why) { return why === 'clock' ? fn + '沒有餵\n請先調好這台裝置的日期' : why === 'readOnly' ? fn + '沒有餵\n這台先不能改寵物的資料' : '沒有存到\n再試一次'; }
   /* 吃點心時把 eat 姿勢自帶的飼料色碎屑藏起來(碎屑交給食物自己噴) */
   function crumbless(g) {
     return new Proxy(g, {
@@ -644,11 +645,11 @@
     function drawHead(v) {
       if (renaming) return;
       paint(head, [h('h2', { id: 'pet-sheet-h' }, nameOf(v)),
-        v.readOnly ? null : h('button', { class: 'pet-pen', type: 'button', 'data-focus': 'pen', 'aria-label': '幫小雞取名', html: PEN, onclick: startRename })]);
+        v.readOnly ? null : h('button', { class: 'pet-pen', type: 'button', 'data-focus': 'pen', 'aria-label': '改名字', html: PEN, onclick: startRename })]);
     }
     function startRename() {
       renaming = true;
-      const input = h('input', { class: 'modal-input pet-name-in', type: 'text', maxlength: '10', value: cur.status.name || '', 'aria-label': '小雞的名字', autocomplete: 'off' });
+      const input = h('input', { class: 'modal-input pet-name-in', type: 'text', maxlength: '10', value: cur.status.name || '', 'aria-label': '名字', placeholder: DEFAULT_NAME, autocomplete: 'off' });
       /* 唯讀時沒有筆可以回去,焦點放到 ×,留在面板裡 */
       const done = () => { renaming = false; drawHead(cur); (head.querySelector('.pet-pen') || x).focus(); };
       const form = h('form', { class: 'pet-name-f' }, input,
@@ -794,5 +795,5 @@
   }
 
   mountHome(); mountMe();
-  window.PET_UI = { chick, onChange, mood, label, wake, openSheet, view: () => cur, reduced: REDUCE };
+  window.PET_UI = { defaultName: DEFAULT_NAME, chick, onChange, mood, label, wake, openSheet, view: () => cur, reduced: REDUCE };
 })();

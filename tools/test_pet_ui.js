@@ -14,12 +14,12 @@ if (!H_SRC) throw new Error('js/common.js 裡找不到 function h(tag, ...)');
 const UI_SRC = read('js/pet-ui.js');
 
 const RETRY = '沒有存到\n再試一次';
-const OLD_BAD = '這台先不能餵\n小雞的資料讀不到';
+const OLD_BAD = '這台先不能餵\n寵物的資料讀不到';
 const CLOCK = '這台先不能餵\n請先調好這台裝置的日期';
 /* 按下去才發現唯讀:狀態列的一句(跟說明一樣不叫學生再試) */
 const NOT_SAVED = {
-  取名: { readOnly: '名字沒有改\n這台先不能改小雞的資料', clock: '名字沒有改\n請先調好這台裝置的日期' },
-  改目標: { readOnly: '目標沒有改\n這台先不能改小雞的資料', clock: '目標沒有改\n請先調好這台裝置的日期' },
+  取名: { readOnly: '名字沒有改\n這台先不能改寵物的資料', clock: '名字沒有改\n請先調好這台裝置的日期' },
+  改目標: { readOnly: '目標沒有改\n這台先不能改寵物的資料', clock: '目標沒有改\n請先調好這台裝置的日期' },
 };
 
 /* ---------- 很小的假 DOM:只做 pet-ui.js 用到的 ---------- */
@@ -94,12 +94,12 @@ function status(over) {
   return Object.assign({ today: '2026-10-16', name: '小黃', streak: 10, shields: 2, practicedDays: 12, todayCount: 25, goal: 20, nextGoal: 20,
     metToday: true, food: 0, sleeping: false, hungry: false, totalMet: 10 }, over || {});
 }
-function viewOf(kind) {
+function viewOf(kind, over) {
   const base = { on: true, cloud: false, guest: true, pet: { v: 1, days: {} } };
-  if (kind === 'v1') return Object.assign(base, { readOnly: false, reason: '', newer: false, status: status() });
-  if (kind === 'v2') return Object.assign(base, { readOnly: true, reason: 'readOnly', newer: true, pet: { v: 2, days: {} }, status: status() });
-  if (kind === 'bad') return Object.assign(base, { readOnly: true, reason: 'readOnly', newer: false, status: status() });
-  if (kind === 'clock') return Object.assign(base, { readOnly: true, reason: 'clock', newer: false, status: status() });
+  if (kind === 'v1') return Object.assign(base, { readOnly: false, reason: '', newer: false, status: status(over) });
+  if (kind === 'v2') return Object.assign(base, { readOnly: true, reason: 'readOnly', newer: true, pet: { v: 2, days: {} }, status: status(over) });
+  if (kind === 'bad') return Object.assign(base, { readOnly: true, reason: 'readOnly', newer: false, status: status(over) });
+  if (kind === 'clock') return Object.assign(base, { readOnly: true, reason: 'clock', newer: false, status: status(over) });
   throw new Error(kind);
 }
 function loadPage(state) {
@@ -115,7 +115,7 @@ function loadPage(state) {
     ChickArt: { metrics: { width: 100, height: 100 }, holds: () => [1], animate: (c, o) => ({ pose: o.pose, setPose(p) { this.pose = p; }, stop() {}, setFps() {} }) },
     PET_STORE: {
       on: true,
-      view: () => viewOf(state.view),
+      view: () => viewOf(state.view, state.status),
       feed: async () => state.act('feed'),
       setGoal: async () => state.act('goal'),
       rename: async () => state.act('rename'),
@@ -198,6 +198,23 @@ T['取名:存好了,焦點回到取名的筆,狀態列空白'] = async () => {
   const pg = await renameThen({ ok: true }, 'v1', true);
   const a = pg.doc.activeElement;
   return { ok: pg.live() === '' && !!a && a.classList.contains('pet-pen') && a.isConnected, detail: JSON.stringify({ live: pg.live(), focus: a && a.className, on: a && a.isConnected }) };
+};
+/* 2026-11-26 預設名「暴衝雞」:沒取名時顯示預設名(只用來顯示),取過名的照舊;改名的輸入框提示跟預設名同一個來源 */
+T['沒取名:面板標題、狀態是「暴衝雞」;取過名的(阿肥)只顯示阿肥,不出現暴衝雞'] = async () => {
+  const a = loadPage({ view: 'v1', status: { name: '' }, act: () => ({ ok: true }) });
+  const b = loadPage({ view: 'v1', status: { name: '阿肥' }, act: () => ({ ok: true }) });
+  const ha = a.sheet.querySelector('h2').textContent, hb = b.sheet.querySelector('h2').textContent;
+  const labA = a.ctx.PET_UI.label(), labB = b.ctx.PET_UI.label();
+  return { ok: ha === '暴衝雞' && hb === '阿肥' && labA.startsWith('暴衝雞') && labB.startsWith('阿肥') && !labB.includes('暴衝雞') && a.ctx.PET_UI.defaultName === '暴衝雞',
+    detail: JSON.stringify({ ha, hb, labA, labB }) };
+};
+T['改名:筆的標籤是「改名字」,輸入框標籤「名字」、提示字「暴衝雞」,框裡沒取名時是空的(預設名沒寫進去)'] = async () => {
+  const a = loadPage({ view: 'v1', status: { name: '' }, act: () => ({ ok: true }) });
+  const pen = a.sheet.querySelector('.pet-pen');
+  pen.fire('click');
+  const inp = a.sheet.querySelector('input');
+  return { ok: pen.getAttribute('aria-label') === '改名字' && inp.getAttribute('aria-label') === '名字' && inp.getAttribute('placeholder') === '暴衝雞' && !inp.value,
+    detail: JSON.stringify({ pen: pen.getAttribute('aria-label'), label: inp.getAttribute('aria-label'), ph: inp.getAttribute('placeholder'), value: inp.value }) };
 };
 T['取名:按取消,焦點回到取名的筆'] = async () => {
   const pg = loadPage({ view: 'v1', act: () => ({ ok: true }) });

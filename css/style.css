@@ -4026,7 +4026,7 @@ table.cat-table th.ad-caret-th, table.cat-table td.ad-caret-td { position: stick
 .ad-caret { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: var(--r-sm); background: none; cursor: pointer; }
 .ad-caret:hover { background: var(--bg-soft); }
 .ad-caret:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
-/* 展開列:表格比畫面寬、可以左右捲時,展開的內容不跟著表格一樣寬,停在畫面左邊、字在畫面寬度內換行 */
+/* 展開列(預估、舊檢測、上課紀錄與備註):表格比畫面寬、可以左右捲時,展開的內容不跟著表格一樣寬,停在畫面左邊、字在畫面寬度內換行 */
 .adm-detail { overflow-wrap: anywhere; }
 @media (max-width: 860px) {
   .adm-detail { position: sticky; left: 0; max-width: calc(100vw - 60px); }

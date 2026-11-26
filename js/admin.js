@@ -241,7 +241,7 @@
   }
 
   function noteSection(uid, tnote, onNick) {
-    const wrap = h('div', { style: 'margin-top:14px;border-top:1px solid var(--line);padding-top:12px' });
+    const wrap = h('div', { class: 'adm-detail', style: 'margin-top:14px;border-top:1px solid var(--line);padding-top:12px' });   // 手機寬時跟上面的展開內容一樣停在畫面左邊(css .adm-detail)
     const status = h('span', { class: 'player-note', style: 'margin-left:10px' });
     wrap.append(h('h3', { style: 'font-size:15.5px;margin-bottom:6px' }, '上課紀錄與備註', h('span', { style: 'font-size:12px;color:var(--ink-light);font-weight:400' }, '（只有教師帳號看得到）'), status));
 

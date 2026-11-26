@@ -452,6 +452,39 @@ T['教師後台(頁面):有預估快照的學生寫預估、沒有的照舊;展�
     && clean && !errs.length;
   return { ok, detail: J(cells) + ' ⓘ ' + J(info) + ' 錯誤 ' + J(errs).slice(0, 200) };
 };
+/* 手機寬:學生表比畫面寬、可以左右捲(main 的做法,表格本身捲,整頁不橫捲);展開列的內容不跟著表格一樣寬,
+   預估分數、舊檢測、上課紀錄與備註(暱稱、備註、新增上課紀錄)都要在表格看得到的寬度內,不用左右捲就打得到字、按得到按鈕 */
+T['教師後台 375 寬:展開列的預估、舊檢測、上課紀錄與備註都在表格看得到的寬度內,整頁不橫捲'] = async () => {
+  const c = STUB.createCloud();
+  SV.cloud = c; SV.local = false;
+  const t = user(30, '老師');
+  c.teachers.add(t.id);
+  const s1 = user(31, '小安');
+  c.put(s1.id, '_meta', { name: '小安', email: s1.email }, isoAgo(1));
+  c.put(s1.id, 'est_v1', SNAP(AT, [345, 300, 390, 100], [290, 245, 335, 86]), isoAgo(1));
+  c.put(s1.id, 'diag', oldDiag(), isoAgo(30));
+  const p = await tab(t);
+  await p.metrics(375, 812, true);
+  await p.go('admin.html');
+  await p.wait("document.querySelectorAll('.cat-table tr[style*=pointer]').length === 1", '學生表');
+  await p.still();
+  await p.eval("document.querySelector('.cat-table tr[style*=pointer]').click(); true");
+  await sleep(400);
+  const m = await p.eval(`(() => {
+    const tr = document.querySelector('.cat-table tr[style*=pointer]');
+    const tb = tr.closest('table').getBoundingClientRect();
+    const edge = Math.min(tb.right, document.documentElement.clientWidth);
+    const det = tr.nextElementSibling;
+    const need = [...det.querySelectorAll('h3, input, textarea, button, .pop-btns')].filter((e) => e.offsetParent);
+    const over = need.filter((e) => e.getBoundingClientRect().right > edge + 1).map((e) => (e.placeholder || e.textContent || e.tagName).trim().slice(0, 12));
+    return { n: need.length, over, docW: document.documentElement.scrollWidth, viewW: document.documentElement.clientWidth,
+      hasNote: need.some((e) => e.tagName === 'TEXTAREA'), hasEst: need.some((e) => /預估分數/.test(e.textContent)), hasDiag: need.some((e) => /^檢測\\(/.test(e.textContent)) };
+  })()`);
+  const errs = p.errors.slice();
+  await p.close();
+  const ok = m.n > 5 && m.hasNote && m.hasEst && m.hasDiag && !m.over.length && m.docW === m.viewW && !errs.length;
+  return { ok, detail: J(m) + ' 錯誤 ' + J(errs).slice(0, 200) };
+};
 
 T['舊 28 題頁(diagnostic.html):只有舊卷結果的學生直接打開,舊卷的 28 題先抄進第一次作答(來源 g),舊卷不動(之後「再測一次」刪掉舊卷,作答也還在第一次作答紀錄裡)'] = async () => {
   const c = STUB.createCloud();

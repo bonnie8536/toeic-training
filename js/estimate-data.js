@@ -61,8 +61,10 @@
   }
   function mergeFirstAttempts(a, b) {
     const x = faNormalize(a).i, y = faNormalize(b).i, i = {};
+    const at = (o, k) => (Object.prototype.hasOwnProperty.call(o, k) ? o[k] : null);   // 題目 key 叫 constructor 時不讀到 Object 本身
     Object.keys(Object.assign({}, x, y)).sort().forEach((k) => {
-      i[k] = x[k] && y[k] ? earlier(x[k], y[k]).slice() : (x[k] || y[k]).slice();
+      const p = at(x, k), q = at(y, k);
+      i[k] = p && q ? earlier(p, q).slice() : (p || q).slice();
     });
     return { v: 1, i };
   }

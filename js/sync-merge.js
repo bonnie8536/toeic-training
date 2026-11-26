@@ -695,7 +695,7 @@
   }
 
   root.SYNC_MERGE = Object.freeze({
-    canon, quickHash, norm, stateKey, bankHash, wordHash, tombHit, zhDiffers,
+    canon, quickHash, norm, stateKey, bankHash, wordHash, tombHit, zhDiffers, guarded,
     banks: guarded(banks), tombs: guarded(tombs), mock: guarded(mock), mockWrong: guarded(mockWrong),
     levels: guarded(levels), onboard: guarded(onboard), selfScore: guarded(selfScore),
     newBankId, newBank, newWord, reviseWord, reviseBank, editBank, addWords, setWord, deleteWord, deleteBank,

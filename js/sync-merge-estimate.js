@@ -9,7 +9,8 @@
    · firstAttempts(fa_v1 { v: 1, i }):兩份聯集;同一題留日數小的,同日照來源先後,再同留對錯小的(看過最小)。v 不是 1 回 ok:false。
    · placementRuns(placement_v1 { v: 1, runs }):用開始時間 at 聯集;同一次的作答照 key 聯集,結束時間取有的那份;只留最新 5 次。v 不是 1 回 ok:false。
    · estSnap(est_v1 { ip, cv, at, L, R }):at 新的整份贏,不合併欄位。
-   一份是 null 或沒有就用另一份;兩份都形狀不對回 ok:false;一份形狀不對時當成沒有(壞的那份不會蓋掉好的)。 */
+   一份是 null 或沒有就用另一份;兩份都形狀不對回 ok:false;一份形狀不對時當成沒有(壞的那份不會蓋掉好的)。
+   兩份先拿掉 "__proto__" 鍵(SYNC_MERGE.guarded)。 */
 (function (root) {
   'use strict';
   const base = root.SYNC_MERGE, E = root.ESTIMATE;
@@ -35,9 +36,10 @@
   const runsShape = x => isPlain(x) && Array.isArray(x.runs);
   const estShape = x => isPlain(x) && typeof x.at === 'string' && x.at !== '';
 
-  const firstAttempts = wrap(E.mergeFirstAttempts, faShape, true);
-  const placementRuns = wrap(E.mergePlacementRuns, runsShape, true);
-  const estSnap = wrap(E.mergeEst, estShape, false);
+  const g = typeof base.guarded === 'function' ? base.guarded : (f) => f;
+  const firstAttempts = g(wrap(E.mergeFirstAttempts, faShape, true));
+  const placementRuns = g(wrap(E.mergePlacementRuns, runsShape, true));
+  const estSnap = g(wrap(E.mergeEst, estShape, false));
 
   root.SYNC_MERGE = Object.freeze(Object.assign({}, root.SYNC_MERGE, { firstAttempts, placementRuns, estSnap }));
 })(typeof window !== 'undefined' ? window : globalThis);

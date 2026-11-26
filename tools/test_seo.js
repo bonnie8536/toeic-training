@@ -824,6 +824,17 @@ T['每一個有頁尾的頁面:連結列在前、直接看得到;說明句收進
   assert.ok(n >= 28, '有頁尾的頁面太少:' + n);
 };
 
+T['每一頁頂欄的品牌字左邊都有 Y2(.brand-logo);之後新加的頁面也要有'] = () => {
+  let n = 0;
+  PAGES.filter((f) => !REDIRECT_STUBS.includes(f)).forEach((f) => {
+    const m = /<a class="brand"[^>]*>([^]*?)<[/]a>/.exec(read(f));
+    if (!m) return;
+    n++;
+    assert.strictEqual(m[1].trim(), '<span class="brand-logo" aria-hidden="true"></span>衝衝英文', f + ' 頂欄品牌字左邊沒有 Y2');
+  });
+  assert.ok(n >= 33, '有頂欄品牌字的頁面太少:' + n);
+};
+
 let pass = 0;
 const names = Object.keys(T);
 for (const n of names) {

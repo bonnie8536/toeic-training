@@ -169,6 +169,12 @@ T['O16e newLevels:最後一筆一樣、1 分鐘內不再多記;超過 1 分鐘�
   assert.equal(c.history.length, 2);
   assert.equal(C.newLevels(a, 'high', 'entry', {}, 'manual', NOW_ISO).history.length, 2);
 };
+T['O16g 不認得的步驟(例如只在測試帳號出現過的 listen):resultRoute 回 level(S3)、continueHref 回 S1,不丟錯'] = () => {
+  const ob = { status: 'in_progress', step: 'listen', listen: { v: 1, mode: 'full', ids: ['l2-01'], a: [null] } };
+  assert.equal(C.resultRoute(ob, null, null), 'level');
+  assert.equal(C.resultRoute(ob, { listening: 'threshold', reading: 'entry', source: { listening: 'short', reading: 'legacy' } }, null), 'level');
+  assert.equal(C.continueHref(ob), 'start.html?step=target');
+};
 T['O16f resultRoute:重新檢測還沒交卷回 test,不記完成'] = () => {
   const lv = { listening: 'advanced', reading: 'threshold' };
   const tf = '2026-11-19T01:00:00.000Z';

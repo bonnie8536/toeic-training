@@ -68,6 +68,16 @@ T['A2 levels:兩科、來源留 setAt 較新的那一份;history 兩份聯集、
   return { ok, detail: J(m.v) };
 };
 
+T['A2b levels:本機只有檢測那一筆(est)、雲端多了第 4 堂後調整那一筆(calibrate,setAt 較新):合併後兩筆都在、照時間排,級別與來源用雲端那份'] = () => {
+  const L = need('levels');
+  const e1 = hist(T0 - 30 * HOUR, 'threshold', 'entry', 'est');
+  const a = Object.assign(levels('threshold', 'entry', T0 - 30 * HOUR, [e1]), { source: { listening: 'est', reading: 'est' } });
+  const b = Object.assign(levels('advanced', 'entry', T0, [e1, hist(T0, 'advanced', 'entry', 'calibrate')]), { source: { listening: 'calibrate', reading: 'est' } });
+  const m = L(a, b), n = L(b, a);
+  const ok = m.ok && canon(m.v) === canon(n.v) && J(m.v.history.map((h) => h.reason)) === J(['est', 'calibrate']) && m.v.listening === 'advanced'
+    && m.v.source.listening === 'calibrate' && m.sameAsCloud;
+  return { ok, detail: J(m.v) };
+};
 T['A3 levels:缺 setAt(或不是日期)的輸給有 setAt 的,history 照樣聯集'] = () => {
   const L = need('levels');
   const noTime = levels('high', 'high', T0 + HOUR); delete noTime.setAt;

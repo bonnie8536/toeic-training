@@ -252,6 +252,10 @@ T['自填成績:24 個月內、5 的倍數才當起點;建議改級只在另一�
   eq(S.suggestions(view, { listening: 'advanced', reading: 'entry' }), []);
   eq(S.suggestions(view, null), [], '沒有級別不建議');
   eq(S.suggestions({ ok: false }, { listening: 'entry' }), []);
+  /* 第 4 堂後調整過的級別(history 最後一筆 calibrate、來源 calibrate):照兩科目前的級別算,不看 history 與來源 */
+  const cal = { listening: 'threshold', reading: 'entry', source: { listening: 'est', reading: 'calibrate' }, setAt: '2026-11-20T00:00:00.000Z',
+    history: [{ at: '2026-11-01T00:00:00.000Z', listening: 'threshold', reading: 'threshold', reason: 'est' }, { at: '2026-11-20T00:00:00.000Z', listening: 'threshold', reading: 'entry', reason: 'calibrate' }] };
+  eq(S.suggestions(view, cal), [{ sec: 'L', level: 'advanced' }]);
   return 'ok';
 };
 

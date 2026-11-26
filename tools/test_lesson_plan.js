@@ -158,6 +158,16 @@ T['L9 這一期做過沒有(levels.history 有 calibrate、時間在開始日當
   eq([L.calibration(lv, '2026-11-03'), L.calibration({ history: [h[2]] }, START)], [null, { changed: { listening: null, reading: null } }]);
 };
 
+T['L9c 程度檢測定的級別(est)之後調整:調整前後比 est 那一筆;之後又按「改成這個程度」(多一筆 est)仍算本期做過、變動不變'] = () => {
+  const at = (d) => new Date(d).toISOString();
+  const e1 = { at: at('2026-10-30T09:00:00'), listening: 'threshold', reading: 'entry', reason: 'est' };
+  const c1 = { at: at('2026-11-24T10:00:00'), listening: 'advanced', reading: 'entry', reason: 'calibrate' };
+  const e2 = { at: at('2026-11-25T10:00:00'), listening: 'threshold', reading: 'entry', reason: 'est' };
+  const want = { changed: { listening: ['threshold', 'advanced'], reading: null } };
+  eq([L.calibrated({ history: [e1, c1] }, START), L.calibration({ history: [e1, c1] }, START)], [true, want]);
+  eq([L.calibrated({ history: [e1, c1, e2] }, START), L.calibration({ history: [e1, c1, e2] }, START)], [true, want]);
+};
+
 T['L9b 兩台(或兩個分頁)各記一筆本期的 calibrate、合併成兩筆:變動照第一筆跟它之前那一筆比'] = () => {
   const at = (d) => new Date(d).toISOString();
   const legacy = { at: at('2026-11-01T00:00:00'), listening: 'entry', reading: 'entry', reason: 'legacy' };

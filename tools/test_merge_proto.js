@@ -203,6 +203,39 @@ T['預估分數(fa_v1、placement_v1、est_v1):最外層與 i、runs[0]、runs[0
   return r.length + ' 次合併';
 };
 
+T['模擬考作答過的題(mock_seen):題目 key 是 __proto__、constructor、prototype,內建物件不變,結果沒有 __proto__ 鍵'] = () => {
+  const evil = '{"__proto__":{"pwn":1},"constructor":5,"prototype":6,"p5|q1":1}';
+  const good = J({ 'p5|q2': 2 });
+  const bad = [];
+  const r = [SM.mockSeen(parseIn(evil), parseIn(good)), SM.mockSeen(parseIn(good), parseIn(evil)), SM.mockSeen(parseIn(evil), null)];
+  r.forEach((x, i) => {
+    if (!x.ok) { bad.push(i + ' 沒有合併'); return; }
+    bad.push(...cleanTree(x.v, 'v' + i));
+    if (x.v.pwn !== undefined) bad.push(i + ' 多出屬性');
+  });
+  bad.push(...polluted());
+  if (r[0].ok && J(Object.keys(r[0].v)) !== J(['constructor', 'p5|q1', 'p5|q2', 'prototype'])) bad.push('鍵 ' + J(Object.keys(r[0].v)));
+  assert.deepStrictEqual(bad, []);
+  return J(Object.keys(r[0].v));
+};
+
+/* plan 用 updatedAt 新的那份當主要、欄位照抄:帶 __proto__ 的那份要是新的(或另一份是 null)才看得出來;perWeek 每一列重組成 { w, n } */
+T['課表設定(plan):最外層與 perWeek[0] 帶 __proto__,帶的那份比較新或另一份是 null,內建物件不變,結果沒有 __proto__ 鍵'] = () => {
+  const evil = '{"__proto__":{"pwn":1},"v":1,"classId":"x","updatedAt":' + (NOW - 1000) + ',"startDate":"2026-11-02","perWeek":[{"w":1,"n":2,"__proto__":{"pwn":1}}]}';
+  const old = J({ v: 1, classId: 'x', updatedAt: NOW - 5000, startDate: '2026-11-01', perWeek: [{ w: 2, n: 1 }] });
+  const bad = [];
+  const r = [SM.plan(parseIn(evil), parseIn(old), NOW), SM.plan(parseIn(old), parseIn(evil), NOW), SM.plan(parseIn(evil), null, NOW), SM.plan(null, parseIn(evil), NOW)];
+  r.forEach((x, i) => {
+    if (!x.ok) { bad.push(i + ' 沒有合併'); return; }
+    bad.push(...cleanTree(x.v, 'v' + i));
+    if (x.v.pwn !== undefined) bad.push(i + ' 多出屬性');
+  });
+  bad.push(...polluted());
+  if (r[0].ok && J(r[0].v.perWeek) !== J([{ w: 1, n: 2 }, { w: 2, n: 1 }])) bad.push('perWeek ' + J(r[0].v.perWeek));
+  assert.deepStrictEqual(bad, []);
+  return r.length + ' 次合併';
+};
+
 /* 從搬家碼到寫入清單,跟 js/move-in-page.js 的順序一樣:fromText → validate → plan */
 T['搬家碼:刪除標記帶 __proto__ 的搬家碼,讀取、驗證、合併之後內建物件不變;寫進暫存區的標記沒有 __proto__'] = async () => {
   const del = J({ v: 1, vgame_banks: { b: {}, w: { __x__: { isTeacher: { at: 1, h0: ['x'] } } } } }).replace('"__x__"', '"__proto__"');

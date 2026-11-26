@@ -13,7 +13,7 @@ const vm = require('vm');
 const assert = require('assert');
 
 const K = require('./fixtures/move_kit.js');
-const { G, R, M, P, SM, J, NOW, UID, makeStorage, tgt, ctxFor, packOf } = K;
+const { G, R, M, P, SM, J, NOW, UID, makeStorage, tgt, ctxFor, packOf, bank } = K;
 
 const BAD = ['__proto__', 'constructor', 'prototype'];
 const ctxObj = vm.runInContext('Object', G);
@@ -211,6 +211,25 @@ T['搬家合併(move-merge):本機與搬來的值都帶 __proto__ 的物件,合�
   assert.deepStrictEqual(bad, []);
   assert.ok(v.ok && plan, '驗證不過(' + v.why + ')');
   return '寫入 ' + plan.writes.length + ' 筆';
+};
+
+T['搬家合併(move-merge):新網址沒有這個鍵(直接新增)時,寫入的值也拿掉 __proto__(題庫與其他鍵)'] = async () => {
+  const ls = makeStorage(0, {});
+  const banks = J([bank('b1', 'A', ['apple'])]).replace(/^\[\{/, '[{"__proto__":{"isTeacher":1},');
+  const pack = packOf({ tr_vgame_done: '{"__proto__":{"isTeacher":1},"b":[2]}', tr_vgame_banks: banks }).pack;
+  const sent = pack.keys.map((e) => e[0]).filter((k) => k === 'tr_vgame_done' || k === 'tr_vgame_banks');
+  if (sent.length !== 2) return '組包沒有帶這兩個鍵:' + sent.join();
+  const hash = await P.hashOf(pack);
+  const v = R.validate(JSON.parse(J(pack)), NOW);
+  assert.ok(v.ok, '驗證不過(' + v.why + ')');
+  const plan = M.plan(v, tgt(ls), ctxFor(ls, P.logHash(pack, hash)));
+  const bad = polluted();
+  const got = {};
+  plan.writes.forEach((w) => { if (sent.indexOf(w[0]) > -1) got[w[0]] = w[1]; });
+  sent.forEach((k) => { if (typeof got[k] !== 'string') bad.push(k + ' 沒有寫入'); else if (/"__proto__"/.test(got[k])) bad.push('寫入 ' + k + ' 帶 __proto__'); });
+  assert.deepStrictEqual(bad, []);
+  assert.deepStrictEqual(JSON.parse(got.tr_vgame_done), { b: [2] });
+  return sent.join('、') + ' 都沒有 __proto__';
 };
 
 /* ---------- 一般的資料:修改前的程式算出來的結果(一字不差) ---------- */

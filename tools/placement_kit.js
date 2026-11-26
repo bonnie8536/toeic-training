@@ -29,10 +29,12 @@ function fakeUI(doc, o) {
     return b;
   };
   const UI = {
-    confirms: [], alerts: [], foot: [], focusCount: 0, said: [],
+    confirms: [], alerts: [], foot: [], focusCount: 0, said: [], sheets: [],
     mount() {}, doodle: () => Promise.resolve(false),
     confirm(x) { UI.confirms.push(x); return Promise.resolve(o.confirm === undefined ? true : o.confirm); },
     alert(x) { UI.alerts.push(x); return Promise.resolve(true); },
+    /* 資訊欄(ⓘ 點開):記下標題與每一段的字 */
+    sheet(x) { UI.sheets.push({ title: x.title, paras: (x.nodes || []).map((n) => n.textContent) }); return { close() {} }; },
     empty(x) { const b = el('div', 'ui-empty'); b.append(el('p', 'ui-empty-text', x.text)); if (x.action) b.append(action(x.action, 'btn ui-empty-go')); b.destroy = () => {}; return b; },
     detail(title, nodes, opt) { const d = el('details', 'result-detail'); d.append(el('summary', 'result-detail-sum', title)); const body = el('div', 'result-detail-body'); nodes.forEach((n) => body.append(n)); d.append(body); d.wrong = opt && opt.wrong; return d; },
     result(x) {

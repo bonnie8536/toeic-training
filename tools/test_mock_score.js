@@ -63,11 +63,13 @@ T['沒載題目參數或估分程式:兩科都照改版前的表往下取,不丟
   });
 };
 
-T['模擬考頁:題目參數在估分程式之後、js/mock.js 之前載入;結果寫明是本站估計;歷次紀錄照當時存的分數顯示'] = () => {
+T['模擬考頁:題目參數在估分程式之後、js/mock.js 之前載入;結果的小標旁有 ⓘ(資訊欄寫明是本站估計、不是正式成績),數字旁不掛小字;歷次紀錄照當時存的分數顯示'] = () => {
   const html = read('mock.html'), at = (s) => html.indexOf('<script src="' + s + '"></script>');
   assert.ok(at('js/estimate-core.js') > -1 && at('js/estimate-data.js') < at('data/item-params.js') && at('data/item-params.js') < at('js/mock.js'));
   const src = read('js/mock.js');
-  assert.ok(src.includes("note: '本站估計，不是正式成績。'"));
+  assert.ok(!/本站估計，不是正式成績|非正式成績/.test(src.replace(/\/\*[\s\S]*?\*\//g, '')), '結算卡不再掛聲明小字');
+  assert.ok(src.includes("ESTIMATE_UI.addInfo(card.el, 'mock')"), '小標旁的 ⓘ');
+  assert.ok(at('js/estimate-ui.js') > -1 && at('js/estimate-ui.js') < at('js/mock.js') && html.indexOf('<link rel="stylesheet" href="css/estimate.css">') > -1, 'mock.html 載入 ⓘ 的程式與樣式');
   assert.ok(src.includes("r.lRaw + ' / ' + r.lTotal + ' · ' + r.lScore") && src.includes('r.lScore + r.rScore'), '歷次紀錄用存的 lScore、rScore');
   assert.ok(!/官方|準確|保證|進步/.test(src));
 };

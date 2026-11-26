@@ -22,10 +22,11 @@ async function fullRun(e, mode) {
 }
 const lastRun = (e) => { const p = e.get('placement_v1'); return p.runs[p.runs.length - 1]; };
 
-T['開始頁:三個標籤、兩行說明、一顆實色「開始」帶 data-gate、文字按鈕「沒有耳機，先做閱讀」'] = () => {
+T['開始頁:三個標籤、作答方式一行只講一件事(四行)、一顆實色「開始」帶 data-gate、文字按鈕「沒有耳機，先做閱讀」'] = () => {
   const e = env();
   assert.deepStrictEqual(all(e.box, '.mock-tag').map(txt), ['聽力 12 題', '閱讀 12 題', '約 15–20 分鐘']);
-  assert.deepStrictEqual(all(e.box, '.pl-rule').map(txt), ['戴上耳機。每段音檔只播一次。', '選好答案，按「下一題」。不能回上一題。']);
+  assert.deepStrictEqual(all(e.box, '.pl-rule').map(txt), ['戴上耳機。', '每段音檔只播一次。', '選好答案後按「下一題」。', '不能回上一題。']);
+  assert.deepStrictEqual(all(e.box, '.pl-rule').filter((n) => /，/.test(txt(n))).length, 0, '不用逗號串兩件事');
   const prim = all(e.box, '.btn.primary');
   assert.strictEqual(prim.length, 1);
   assert.strictEqual(txt(prim[0]), '開始');
@@ -35,7 +36,7 @@ T['開始頁:三個標籤、兩行說明、一顆實色「開始」帶 data-gate
   assert.deepStrictEqual(all(o.box, '.pl-more button').map(txt), ['沒有耳機，先做閱讀', '先跳過，從入門開始']);
   const r = env({ search: '?sec=R' });
   assert.deepStrictEqual(all(r.box, '.mock-tag').map(txt), ['閱讀 12 題']);
-  assert.deepStrictEqual(all(r.box, '.pl-rule').map(txt), ['選好答案，按「下一題」。不能回上一題。']);
+  assert.deepStrictEqual(all(r.box, '.pl-rule').map(txt), ['選好答案後按「下一題」。', '不能回上一題。']);
 };
 
 T['腳本每一格:聽力 P1 P1 P2×4 P3 組 P4 組、閱讀 P5×4 P6 組 P7 單篇組;進度「聽力 · 7–9／12」;兩科中間;24 題都存、每題有秒數'] = async () => {
@@ -68,12 +69,12 @@ T['兩科中間:聽力完成→接著做閱讀;先做閱讀的對稱一頁;「�
   assert.strictEqual(curUnit(r).part, '5');
   await doSection(r, 'right');
   assert.strictEqual(txt(r.box.querySelector('.pl-h2')), '閱讀完成');
-  assert.ok(/接著做聽力 12 題。戴上耳機。/.test(txt(r.box)));
+  assert.deepStrictEqual(all(r.box, '.pl-rule').map(txt), ['接著做聽力 12 題。', '戴上耳機。'], '一行一件事');
   assert.strictEqual(all(r.box, '.btn.primary').map(txt).join(), '開始聽力');
   clickText(r.box, '之後再做');
   await flush(40);
   assert.ok(r.box.querySelector('.result-card'), '之後再做:結果頁');
-  assert.ok(/再做 12 題聽力，就會顯示預估分數。/.test(txt(r.box)));
+  assert.deepStrictEqual(all(r.box, '.est-need').map(txt), ['聽力 還差 12 題']);
   assert.ok(typeof lastRun(r).end === 'string');
 };
 
@@ -94,7 +95,9 @@ T['合併時先做完那一科的結束時間不被雲端那份沒做完的蓋�
   await doSection(e, 'right');
   await flush(40);
   assert.ok(lastRun(e).tm.L[1] && lastRun(e).tm.R[1]);
-  assert.ok(/^根據 24 題/.test(txt(e.box.querySelector('.result-note'))));
+  /* 兩科都算進去:資訊欄的「根據 24 題」(數字旁不再掛小字) */
+  e.box.querySelector('.result-kicker .est-info').click();
+  assert.ok(/^目前根據 24 題，/.test(e.UI.sheets.slice(-1)[0].paras.slice(-1)[0]));
 };
 
 T['選題跟著作答:全對的人後面的題比全錯的人難(真的題目難度)'] = async () => {
@@ -212,7 +215,7 @@ T['離開:先問「離開檢測？」;續做從下一格接著做(同一題目�
   assert.ok(!run.items.some((it) => it[1] === at4.keys[0]), '播到一半的那題不記');
 };
 
-T['24 小時:超過就不續做,畫開始頁(重測多一行);作答留在第一次作答紀錄,下次不再出'] = async () => {
+T['24 小時:超過就不續做,畫開始頁;作答留在第一次作答紀錄,下次不再出'] = async () => {
   const ls = new Map();
   const e = env({ ls });
   await start(e);
@@ -230,7 +233,7 @@ T['24 小時:超過就不續做,畫開始頁(重測多一行);作答留在第一
   assert.strictEqual(late.get('placement_v1').runs[0].end, null, '舊的那次不寫結束');
 };
 
-T['只做一科(?sec=R):只出閱讀,結果頁只有閱讀數字、聽力寫再做 12 題、沒有總分'] = async () => {
+T['只做一科(?sec=R):只出閱讀,結果頁只有閱讀數字、聽力寫還差 12 題、沒有總分'] = async () => {
   const e = env({ search: '?sec=R' });
   await start(e);
   const R = await doSection(e, 'right');
@@ -238,16 +241,16 @@ T['只做一科(?sec=R):只出閱讀,結果頁只有閱讀數字、聽力寫再�
   assert.strictEqual(R.length, 6);
   assert.strictEqual(lastRun(e).sec, 'R');
   assert.ok(!lastRun(e).tm.L);
-  assert.ok(/再做 12 題聽力，就會顯示預估分數。/.test(txt(e.box)), txt(e.box).slice(0, 200));
+  assert.deepStrictEqual(all(e.box, '.est-need').map(txt), ['聽力 還差 12 題'], txt(e.box).slice(0, 200));
   assert.strictEqual(e.UI.lastResult.kicker, '預估分數');
 };
 
-T['重測:再出 24 題都沒做過的題;開始頁多一行「會跟平常練習一起算。」;舊的那次留著'] = async () => {
+T['重測:再出 24 題都沒做過的題;開始頁跟第一次一樣(不再多掛一行半句的說明);舊的那次留著'] = async () => {
   const ls = new Map();
   const e = env({ ls });
   const one = await fullRun(e, 'right');
   const b = env({ ls, now: K.NOW + 2 * HOUR });
-  assert.ok(/會跟平常練習一起算。/.test(txt(b.box)));
+  assert.deepStrictEqual(all(b.box, '.pl-rule').map(txt), ['戴上耳機。', '每段音檔只播一次。', '選好答案後按「下一題」。', '不能回上一題。']);
   const two = await fullRun(b, 'wrong');
   const ids1 = one.L.concat(one.R).map((x) => x.id), ids2 = two.L.concat(two.R).map((x) => x.id);
   assert.strictEqual(ids2.length, 14);
@@ -255,13 +258,19 @@ T['重測:再出 24 題都沒做過的題;開始頁多一行「會跟平常練�
   assert.strictEqual(b.get('placement_v1').runs.length, 2);
 };
 
-T['結果頁:預估總分或預估分數、一顆實色主按鈕「開始練習」、看作答、根據 N 題 · 本站估計;從新用戶設定來的主按鈕是「下一步」'] = async () => {
+T['結果頁:預估總分或預估分數(小標旁 ⓘ)、一顆實色主按鈕「開始練習」、看作答;根據 N 題與本站估計在資訊欄;從新用戶設定來的主按鈕是「下一步」'] = async () => {
   const e = env();
   await fullRun(e, (u, qi) => (qi + u.id.length) % 2 ? K.answerOf(u, qi) : (K.answerOf(u, qi) + 1) % 3);
   const card = e.box.querySelector('.result-card');
   assert.strictEqual(all(e.box, '.btn.primary').length, 1, '整頁一顆實色主按鈕');
   assert.strictEqual(txt(card.querySelector('.result-go')), '開始練習');
-  assert.ok(/^根據 24 題 · 本站估計，不是正式成績。$/.test(txt(card.querySelector('.result-note'))));
+  assert.ok(!card.querySelector('.result-note') && !/本站估計|不是正式成績|根據 \\d+ 題/.test(txt(card)), '數字旁沒有聲明小字');
+  const info = card.querySelector('.result-kicker .est-info');
+  assert.strictEqual(info && info.getAttribute('aria-label'), '預估分數說明');
+  info.click();
+  const sh = e.UI.sheets.slice(-1)[0];
+  assert.strictEqual(sh.title, '預估分數');
+  assert.ok(/不是多益的正式成績。$/.test(sh.paras[0]) && /^目前根據 24 題，/.test(sh.paras[3]), JSON.stringify(sh.paras));
   assert.ok(['預估總分', '預估分數'].indexOf(e.UI.lastResult.kicker) > -1);
   assert.ok(/建議程度：聽力 .+／閱讀 /.test(txt(card)));
   assert.ok(!/答對 \d+ 題/.test(txt(card)), '不顯示答對幾題');
@@ -410,12 +419,12 @@ T['離線按開始:留在開始頁寫「連上網路才能做聽力。」,不自
   await start(off, '沒有耳機，先做閱讀');
   assert.strictEqual(curUnit(off).part, '5');
 };
-T['只有舊卷結果的人(網址沒帶科):開始頁預設只做聽力 12 題,多一行「會跟平常練習一起算。」'] = async () => {
+T['只有舊卷結果的人(網址沒帶科):開始頁預設只做聽力 12 題,作答方式跟第一次一樣(不再多掛一行半句的說明)'] = async () => {
   const ls = new Map([['tr_u' + K.PID + '_diag', JSON.stringify({ done: true, answers: { 0: 1 }, startedAt: '2026-10-01T00:00:00.000Z', finishedAt: '2026-10-01T00:20:00.000Z' })]]);
   const e = env({ onboard: true, ls });
   const tags = all(e.box, '.mock-tag').map(txt);
   assert.deepStrictEqual(tags, ['聽力 12 題']);
-  assert.ok(/會跟平常練習一起算。/.test(txt(e.box)));
+  assert.deepStrictEqual(all(e.box, '.pl-rule').map(txt), ['戴上耳機。', '每段音檔只播一次。', '選好答案後按「下一題」。', '不能回上一題。']);
   await start(e);
   assert.strictEqual(curUnit(e).part, '1');
   assert.strictEqual(lastRun(e).sec, 'L');

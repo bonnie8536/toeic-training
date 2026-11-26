@@ -34,6 +34,9 @@ function load(opt) {
     ctx.UI.confirms = [];
     ctx.UI.confirmAnswer = true;
     ctx.UI.confirm = (x) => { ctx.UI.confirms.push(x); return Promise.resolve(ctx.UI.confirmAnswer); };
+    /* 資訊欄(UI.sheet):記下標題與每一段的字;假 DOM 沒有 SVG,圖示略過 */
+    ctx.UI.sheets = [];
+    ctx.UI.sheet = (x) => { const s = { title: x.title, paras: (x.nodes || []).map((n) => n.textContent), open: true }; ctx.UI.sheets.push(s); return { close() { s.open = false; } }; };
   }
   vm.createContext(ctx);
   BASE.concat(o.files || ['js/estimate-store.js', 'js/estimate-ui.js']).forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));

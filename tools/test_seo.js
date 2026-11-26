@@ -195,7 +195,7 @@ T['程度檢測頁 placement.html:要收錄(取代舊檢測頁的入口)、canon
   assert.equal(meta(head('placement.html'), 'property', 'og:url'), LIVE + '/placement.html');
   assert.equal(titleOf(head('placement.html')), '程度檢測 - 衝衝英文');
   const d = meta(head('placement.html'), 'name', 'description');
-  assert.ok(/聽力 12 題、閱讀 12 題/.test(d) && /本站估計/.test(d) && !/準確|保證|官方|換算/.test(d), d);
+  assert.ok(/聽力 12 題、閱讀 12 題/.test(d) && /預估分數/.test(d) && !/準確|保證|官方|換算/.test(d), d);   // 寫「預估」分數,不承諾分數
   assert.ok(read('sitemap.xml').indexOf(LIVE + '/placement.html<') > -1, 'placement.html 要進 sitemap(node tools/build_sitemap.js)');
   const shell = read('js/app-shell.js');
   assert.ok(/key: 'drill'[^\n]*'placement\.html'/.test(shell), '分頁列刷刷題目沒有 placement.html');

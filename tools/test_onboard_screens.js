@@ -594,12 +594,12 @@ T['P19 每個畫面只有一顆實色主按鈕,其他是文字按鈕;S0 有鵜�
     if (step === 'signup') eq(buttonsOf(e), ['btn-text:返回']);
     if (step === 'test') {
       eq(buttonsOf(e), ['btn:開始檢測', 'btn-text:沒有耳機，先做閱讀', 'btn-text:先跳過，從入門開始']);
-      /* 同檢測頁的開始頁:標題左邊圖示、卡片裡三個小標籤、兩行作答方式、主按鈕在卡片裡;沒有單項的列點 */
+      /* 同檢測頁的開始頁:標題左邊圖示、卡片裡三個小標籤、作答方式一行一件事(四行)、主按鈕在卡片裡;沒有單項的列點 */
       const art = e.root.querySelector('.page-head canvas');
       const card = e.root.querySelector('.diag-intro');
       eq([art && art.getAttribute('data-doodle'), card && card.querySelectorAll('.mock-tag').map((n) => n.textContent),
         card && !!card.querySelector('.btn.primary'), card && card.querySelectorAll('.ob-intro-note').map((n) => n.textContent), !!e.root.querySelector('ul')],
-      ['diagnostic', ['聽力 12 題', '閱讀 12 題', '約 15–20 分鐘'], true, ['戴上耳機。每段音檔只播一次。', '選好答案，按「下一題」。不能回上一題。'], false]);
+      ['diagnostic', ['聽力 12 題', '閱讀 12 題', '約 15–20 分鐘'], true, ['戴上耳機。', '每段音檔只播一次。', '選好答案後按「下一題」。', '不能回上一題。'], false]);
     }
     /* C1 訪客:標題、代碼欄、小字、註冊卡都在同一個置中的欄(.auth-page)裡 */
     if (step === 'join' && !o.signed) {

@@ -1,5 +1,5 @@
 /* 預估分數的共用畫面(js/estimate-ui.js):預估分數卡各狀態的字與一顆實色主按鈕、建議改級的文字按鈕與確認、
-   結果頁的分數區塊(有總分、只做一科、兩端、入門)、刻度尺、字串用字(不承諾分數、全形標點)。
+   結果頁的分數區塊(有總分、只做一科、兩端、入門)、刻度尺、標題旁的 ⓘ 與資訊欄、字串用字(不承諾分數、全形標點)。
    在 node 的 vm 裡跑,配很小的假 DOM 與假的 UI(tools/estimate_kit.js)。用法:node tools/test_estimate_ui.js */
 'use strict';
 const assert = require('assert');
@@ -16,6 +16,12 @@ const parts = (n) => n.children.map(txt).filter(Boolean).join('|');
 const sec = (est, lo, hi, n, extra) => Object.assign({ show: true, kind: est < 150 ? 'low' : est >= 450 ? 'high' : 'num', est, lo, hi, n, band: E.bandOf('L', est), pb: [0, 1, 0, 0], need: null }, extra);
 const need = (n, kind) => ({ show: false, need: { n, kind }, n: 0 });
 const view = (L, R, total) => ({ ok: true, L, R, total: total || null, at: AT });
+/* 畫面上不再有數字旁的聲明小字(本站估計、不是正式成績、根據 N 題):這些都在 ⓘ 的資訊欄裡 */
+const NOTE = /本站估計|不是正式成績|根據 \d+ 題/;
+const infoBtns = (n) => all(n, '.est-info');
+const openInfo = (btn) => { ctx.UI.sheets.length = 0; btn.click(); return ctx.UI.sheets[0]; };
+const EST_PARAS = ['這個分數是本站依你的作答估計的，不是多益的正式成績。', '每一題只算第一次作答。重做和錯題本的作答不算。',
+  '範圍：你的實際分數大多落在這個範圍內。作答的題數越多，範圍越窄。'];
 const T = {};
 
 /* ---------- 卡片 ---------- */
@@ -24,38 +30,42 @@ T['卡片:沒有資料(或算不出來)時只有標題和一顆主按鈕「做�
     const c = U.card({ view: v }).el;
     eq([all(c, '.est-title').map(txt), primaries(c).map(txt), primaries(c)[0].getAttribute('href')], [['預估多益分數'], ['做程度檢測'], 'placement.html'], 'case ' + i);
     assert.equal(all(c, '.est-row').length, 0);
-    assert.equal(all(c, '.est-note').length, 0);
+    assert.ok(!NOTE.test(txt(c)), txt(c));
+    eq(infoBtns(c).length, 1, '標題旁一個 ⓘ');
   });
   return 'ok';
 };
-T['卡片:兩科都有數字:總分與範圍、兩科的數字刻度尺與範圍、根據 N 題與日期、本站估計;沒有主按鈕'] = () => {
+T['卡片:兩科都有數字:總分與範圍、兩科的數字刻度尺與範圍;根據 N 題與日期、本站估計移進標題旁 ⓘ 的資訊欄;沒有主按鈕'] = () => {
   const v = view(sec(345, 300, 390, 100), sec(290, 245, 335, 86), { est: 635, lo: 545, hi: 725 });
   const c = U.card({ view: v }).el;
   eq(txt(all(c, '.est-total')[0]), '635　範圍 545–725');
   eq(all(c, '.est-row').map(parts), ['聽力 345|300–390', '閱讀 290|245–335']);
-  eq(all(c, '.est-meta').map(txt), ['根據 186 題 · ' + U.dateText(AT)]);
-  eq(all(c, '.est-note').map(txt), ['本站估計，不是正式成績。']);
+  assert.ok(!NOTE.test(txt(c)), '畫面上沒有聲明小字:' + txt(c));
+  const head = all(c, '.est-head')[0];
+  eq([all(head, '.est-title').map(txt), infoBtns(head).map((b) => b.getAttribute('aria-label'))], [['預估多益分數'], ['預估分數說明']], 'ⓘ 在標題旁');
+  const sh = openInfo(infoBtns(c)[0]);
+  eq([sh.title, sh.paras], ['預估分數', EST_PARAS.concat(['目前根據 186 題，更新到 ' + U.dateText(AT) + '。'])]);
   assert.equal(primaries(c).length, 0);
   assert.equal(all(c, '.bs-seg').length, 2);
   return U.dateText(AT);
 };
-T['卡片:只差聽力:聽力寫「再做 20 題聽力」(照實寫 20 − n,跟練習頁連結一致)、主按鈕「做聽力檢測」連到 sec=L;有使用權時那一行連到練習頁'] = () => {
+T['卡片:只差聽力:聽力分數的位置寫「還差 20 題」(照實寫 20 − n,跟練習頁連結一致)、主按鈕「做聽力檢測」連到 sec=L;有使用權時旁邊一個「去練習」連到練習頁'] = () => {
   const v = view(need(20, 'any'), sec(290, 245, 335, 28));
   const c = U.card({ view: v, practice: { L: 'practice.html#listen', R: 'practice.html' } }).el;
-  eq(all(c, '.est-need').map(txt), ['再做 20 題聽力，就會顯示預估分數。']);
-  eq(all(c, '.est-need a').map((a) => a.getAttribute('href')), ['practice.html#listen']);
-  eq(all(U.card({ view: view(need(17, 'any'), sec(290, 245, 335, 28)) }).el, '.est-need').map(txt), ['再做 17 題聽力，就會顯示預估分數。'], '做了 3 題');
+  eq(all(c, '.est-row.is-need .est-sec').map(txt), ['聽力 還差 20 題']);
+  eq(all(c, '.est-row.is-need a').map((a) => [txt(a), a.getAttribute('href')]), [['去練習', 'practice.html#listen']]);
+  eq(all(U.card({ view: view(need(17, 'any'), sec(290, 245, 335, 28)) }).el, '.est-left').map(txt), ['還差 17 題'], '做了 3 題');
   const quiet = U.card({ view: v, solid: false }).el;
   eq([primaries(quiet).length, all(quiet, '.est-go').map((b) => [txt(b), b.className])], [0, [['做聽力檢測', 'btn est-go']]], '頁面上已經有實色主按鈕時:描邊按鈕');
   eq(primaries(c).map((b) => [txt(b), b.getAttribute('href')]), [['做聽力檢測', 'placement.html?sec=L']]);
   assert.equal(all(c, '.est-total').length, 0, '一科沒有數字就沒有總分');
   const r = U.card({ view: view(sec(345, 300, 390, 30), need(8, 'big')), testHref: 'placement.html?from=me' }).el;
-  eq(all(r, '.est-need').map(txt), ['再做 8 題閱讀題，就會顯示預估分數。']);
-  eq(all(r, '.est-need a').length, 0, '沒給練習頁就不加連結');
+  eq(all(r, '.est-row.is-need').map(txt), ['閱讀 還差 8 題']);
+  eq(all(r, '.est-row.is-need a').length, 0, '沒給練習頁就不加連結');
   eq(primaries(r).map((b) => [txt(b), b.getAttribute('href')]), [['做閱讀檢測', 'placement.html?from=me&sec=R']]);
-  eq(U.needText('L', { n: 5, kind: 'any' }), '再做 5 題聽力，就會顯示預估分數。');
-  eq([U.needText('L', { n: 20, kind: 'any' }), U.needText('L', { n: 20, kind: 'any' }, { test: true })], ['再做 20 題聽力，就會顯示預估分數。', '再做 12 題聽力，就會顯示預估分數。'], '檢測結果頁指的是 12 題檢測');
-  eq(U.needText('L', { n: 6, kind: 'big' }), '再做 6 題對話或獨白題，就會顯示預估分數。');
+  eq(U.needText('L', { n: 5, kind: 'any' }), '還差 5 題');
+  eq([U.needText('L', { n: 20, kind: 'any' }), U.needText('L', { n: 20, kind: 'any' }, { test: true })], ['還差 20 題', '還差 12 題'], '檢測結果頁指的是 12 題檢測');
+  eq(U.needText('L', { n: 6, kind: 'big' }), '還差 6 題對話或獨白');
   return 'ok';
 };
 T['卡片:兩端寫「150 以下」「450 以上」、不寫範圍,刻度尺畫 5–150 或 450–495'] = () => {
@@ -66,26 +76,28 @@ T['卡片:兩端寫「150 以下」「450 以上」、不寫範圍,刻度尺畫 
   eq([U.scoreText(v.L), U.rangeText(v.L), U.rangeText(sec(300, 250, 495, 1))], ['450 以上', '', '250–495']);
   return 'ok';
 };
-T['卡片:建議改級:那一科下面一行「依目前預估，建議改成進階程度。」加文字按鈕;有課程進度先確認,確認了才改;沒有課程進度直接改'] = async () => {
+T['卡片:建議改級:那一科下面一行「建議程度　進階」加文字按鈕「改成進階」;按了先確認(原因寫在確認視窗,有課程進度多說會換學習包),確認了才改'] = async () => {
   const v = view(sec(345, 300, 390, 100), sec(290, 245, 335, 86), { est: 635, lo: 545, hi: 725 });
   const calls = [];
   const onLevel = (s, l) => { calls.push(s + ':' + l); };
   const c = U.card({ view: v, suggest: [{ sec: 'L', level: 'advanced' }, { sec: 'R', level: 'nope' }], hasCourse: true, onLevel }).el;
-  eq(all(c, '.est-suggest').map(txt), ['依目前預估，建議改成進階程度。改成進階']);
+  eq(all(c, '.est-suggest').map((n) => n.children.map(txt)), [['建議程度', '進階', '改成進階']]);
   const kids = c.children.map((n) => n.className);
   assert.equal(kids.indexOf('est-suggest'), kids.indexOf('est-row') + 1, '放在聽力那一列下面');
   const btn = all(c, '.est-suggest-go')[0];
   assert.ok(!/primary/.test(btn.className), '文字按鈕,不是實色');
   ctx.UI.confirmAnswer = false; ctx.UI.confirms.length = 0;
   btn.click(); await new Promise((r) => setTimeout(r, 0));
-  eq([calls, ctx.UI.confirms.map((x) => [x.title, x.ok, x.cancel])], [[], [['改級別會換學習包。', '改級別', '取消']]]);
+  eq([calls, ctx.UI.confirms.map((x) => [x.title, x.body, x.ok, x.cancel])], [[], [['聽力改成進階程度？',
+    '依目前的預估分數，你的聽力比較接近進階程度。改了之後，學習包會換成進階程度的。', '改成進階', '先不要']]]);
   ctx.UI.confirmAnswer = true;
   btn.click(); await new Promise((r) => setTimeout(r, 0));
   eq(calls, ['L:advanced']);
   const c2 = U.card({ view: v, suggest: [{ sec: 'R', level: 'high' }], hasCourse: false, onLevel }).el;
   ctx.UI.confirms.length = 0;
   all(c2, '.est-suggest-go')[0].click(); await new Promise((r) => setTimeout(r, 0));
-  eq([calls, ctx.UI.confirms.length], [['L:advanced', 'R:high'], 0]);
+  eq([calls, ctx.UI.confirms.map((x) => [x.title, x.body])], [['L:advanced', 'R:high'], [['閱讀改成高分程度？', '依目前的預估分數，你的閱讀比較接近高分程度。']]],
+    '沒有課程進度:一樣先確認(原因在視窗裡),不提學習包');
   assert.equal(primaries(c).length + primaries(c2).length, 0);
   return 'ok';
 };
@@ -95,33 +107,37 @@ T['卡片:用真的資料層算出來的 View 畫(只有刷題 24 題:閱讀有�
   Object.keys(P.b).filter((k) => /^p7-/.test(k)).slice(0, 8).forEach((k, i) => { fa.i[k] = [E.dayNum(NOW) - 1, i % 2, 'p']; });
   const v = S.peek({ store: K.fakeStore({ fa_v1: fa }), cloud: null, params: P, now: NOW, profile: CPID, canWrite: () => true });
   const c = U.card({ view: v }).el;
-  eq([all(c, '.est-need').map(txt), primaries(c).map(txt), all(c, '.est-meta').map(txt)], [['再做 20 題聽力，就會顯示預估分數。'], ['做聽力檢測'], ['根據 24 題 · ' + U.dateText(AT)]]);
+  eq([all(c, '.est-left').map(txt), primaries(c).map(txt), openInfo(infoBtns(c)[0]).paras.slice(-1)], [['還差 20 題'], ['做聽力檢測'], ['目前根據 24 題，更新到 ' + U.dateText(AT) + '。']]);
   return parts(all(c, '.est-row')[1]);
 };
 
 /* ---------- 結果頁 ---------- */
-T['結果頁:有總分:小標預估總分、大字總分、兩科數字、兩科範圍一行、兩條刻度尺、建議程度、根據 N 題 · 本站估計;主按鈕只有呼叫端給的那一顆'] = () => {
+T['結果頁:有總分:小標預估總分(旁邊 ⓘ)、大字總分、兩科數字、兩科範圍一行、兩條刻度尺、建議程度;根據 N 題與本站估計在資訊欄;主按鈕只有呼叫端給的那一顆'] = () => {
   const v = view(sec(345, 275, 415, 12), sec(290, 220, 360, 12, { band: 'advanced' }), { est: 635, lo: 520, hi: 750 });
   const r = U.result({ view: v, primary: { label: '開始練習', href: 'practice.html' }, links: [{ label: '改級別', onClick() {} }, { label: '看作答', onClick() {} }] });
   const c = r.el;
   eq([txt(all(c, '.result-kicker')[0]), txt(all(c, '.result-score')[0]), all(c, '.result-stat').map(txt)], ['預估總分', '635', ['聽力345', '閱讀290']]);
+  eq(all(c, '.result-kicker .est-info').length, 1, 'ⓘ 在小標旁');
   eq(all(c, '.est-ranges').map(txt), ['聽力 275–415　閱讀 220–360']);
   eq(all(c, '.est-scale-row').length, 2);
   eq(all(c, '.est-levels').map(txt), ['建議程度：聽力 進階／閱讀 進階']);
-  eq(all(c, '.result-note').map(txt), ['根據 24 題 · 本站估計，不是正式成績。']);
+  eq(all(c, '.result-note').length, 0);
+  assert.ok(!NOTE.test(txt(c)), txt(c));
+  eq(openInfo(all(c, '.est-info')[0]).paras.slice(-1), ['目前根據 24 題，更新到 ' + U.dateText(AT) + '。']);
   eq(primaries(c).map(txt), ['開始練習']);
   eq(all(c, '.est-entry').length, 0);
   return 'ok';
 };
-T['結果頁:只做一科:那一科有數字、另一科「再做 12 題閱讀」、沒有總分;入門多一行「從入門開始練習。」;兩端不寫範圍'] = () => {
+T['結果頁:只做一科:那一科有數字、另一科「閱讀　還差 12 題」、沒有總分;入門寫在建議程度(不另外加一行);兩端不寫範圍'] = () => {
   const v = view(sec(140, 90, 190, 12), need(20, 'any'));
   const c = U.result({ view: v, primary: { label: '下一步', href: 'start.html?step=result' } }).el;
   eq([txt(all(c, '.result-kicker')[0]), txt(all(c, '.result-score')[0]), all(c, '.result-stat').length], ['預估分數', '聽力 150 以下', 0]);
-  eq(all(c, '.est-need').map(txt), ['再做 12 題閱讀，就會顯示預估分數。']);
+  eq(all(c, '.est-need').map(txt), ['閱讀　還差 12 題']);
   eq(all(c, '.est-ranges').length, 0);
   eq(all(c, '.est-levels').map(txt), ['建議程度：聽力 入門']);
-  eq(all(c, '.est-entry').map(txt), ['從入門開始練習。']);
-  eq(all(c, '.result-note').map(txt), ['根據 12 題 · 本站估計，不是正式成績。']);
+  eq(all(c, '.est-entry').length, 0);
+  eq(all(c, '.result-note').length, 0);
+  eq(openInfo(all(c, '.result-kicker .est-info')[0]).paras.slice(-1), ['目前根據 12 題，更新到 ' + U.dateText(AT) + '。']);
   assert.equal(U.result({ view: { ok: false } }), null);
   return 'ok';
 };
@@ -133,22 +149,58 @@ function strings(x, out) {
   else if (x && typeof x === 'object') Object.keys(x).forEach((k) => strings(x[k], out));
   return out;
 }
-T['用字:不寫承諾分數的字(準確、進步、保證、分數區間、換算、官方、考到、會拿到)、全形標點、分數旁寫本站估計'] = () => {
-  const list = strings(U.STR, []).concat([U.STR.need('L', 8), U.STR.needBig('R', 3), U.STR.basis(3, '11 月 25 日'), U.STR.basisNote(24), U.STR.levels(['聽力 進階', '閱讀 門檻'])]);
+T['用字:不寫承諾分數的字(準確、進步、保證、分數區間、換算、官方、考到、會拿到)、全形標點;不是正式成績寫在資訊欄'] = () => {
+  const list = strings(U.STR, []).concat([U.STR.need('L', 8), U.STR.needBig('R', 3), U.STR.info.est.basis(3, '11 月 25 日'), U.STR.levels(['聽力 進階', '閱讀 門檻']),
+    U.STR.suggestBody('L', 'high', true)]);
   const banned = /準確|進步|保證|分數區間|換算|官方|考到|會拿到/;
   eq(list.filter((s) => banned.test(s)), []);
   const half = /[一-鿿][,;:?!]|[,;:?!][一-鿿]/;
   eq(list.filter((s) => half.test(s)), []);
-  assert.equal(U.STR.note, '本站估計，不是正式成績。');
+  assert.ok(/不是多益的正式成績。$/.test(U.STR.info.est.paras[0]) && /不是多益的正式成績。$/.test(U.STR.info.mock.paras[0]), '資訊欄第一段寫明不是正式成績');
   const src = K.read('js/estimate-ui.js').replace(/\/\*[\s\S]*?\*\//g, '');
   eq((src.match(/'[^'\n]*[一-鿿][^'\n]*'/g) || []).filter((s) => !/const STR|STR\./.test(s)).length > 0, true, '中文字串有在檔裡');
   const outside = src.slice(src.indexOf('const doc = ')).match(/'[^'\n]*[一-鿿][^'\n]*'/g) || [];
   eq(outside, [], '畫面上的字都在 STR(一處)');
   return list.length + ' 句';
 };
+T['資訊欄:預估分數四段(有資料才有第四段)、模擬考兩段;句子完整(句號結尾)、不寫準確進步保證官方換算分數區間'] = () => {
+  eq(U.infoParas('est'), EST_PARAS, '沒有資料:三段');
+  eq(U.infoParas('est', { ok: false }), EST_PARAS);
+  eq(U.infoParas('est', { n: 0, at: AT }), EST_PARAS, '0 題:不寫第四段');
+  eq(U.infoParas('est', { n: 31, at: AT }), EST_PARAS.concat(['目前根據 31 題，更新到 ' + U.dateText(AT) + '。']), '教師後台給 { n, at }');
+  eq(U.infoParas('est', view(sec(345, 300, 390, 100), need(4, 'big'))).slice(-1), ['目前根據 100 題，更新到 ' + U.dateText(AT) + '。'], '只算有數字的那一科');
+  eq(U.infoParas('mock'), ['這個分數是本站依這次答對的題數估計的，不是多益的正式成績。', '每次的題目難度不同，分數適合用來看自己的變化。']);
+  const paras = U.infoParas('est', { n: 31, at: AT }).concat(U.infoParas('mock'));
+  eq(paras.filter((p) => !/。$/.test(p)), [], '每段是完整的句子');
+  eq(paras.filter((p) => /準確|進步|保證|官方|換算|分數區間/.test(p)), []);
+  eq([U.STR.info.est.title, U.STR.info.mock.title], ['預估分數', '模擬考分數']);
+  return paras.length + ' 段';
+};
+T['ⓘ 按鈕:button、aria-label、aria-haspopup;點了開資訊欄;模擬考用另一份;UI.sheet 沒載到不畫按鈕'] = () => {
+  const b = U.infoButton({ kind: 'est', view: { n: 5, at: AT } });
+  eq([b.tagName.toLowerCase(), b.getAttribute('type'), b.getAttribute('aria-label'), b.getAttribute('aria-haspopup'), b.className, txt(b)],
+    ['button', 'button', '預估分數說明', 'dialog', 'est-info', ''], '只有圖示,沒有字(不用表情符號字元)');
+  const sh = openInfo(b);
+  eq([sh.title, sh.paras.length, ctx.document.activeElement === b], ['預估分數', 4, true], '點了先把焦點給按鈕(關了焦點回得來)');
+  const m = U.infoButton({ kind: 'mock' });
+  eq([m.getAttribute('aria-label'), openInfo(m).title], ['模擬考分數說明', '模擬考分數']);
+  const card = ctx.UI.result({ kicker: '參考總分', big: '700' });
+  U.addInfo(card.el, 'mock');
+  eq(all(card.el, '.result-kicker .est-info').length, 1, '模擬考結果:小標旁');
+  const sheet = ctx.UI.sheet;
+  ctx.UI.sheet = undefined;
+  try {
+    eq([U.infoButton({ kind: 'est' }), infoBtns(U.card({ view: view(need(20, 'any'), need(20, 'any')) }).el).length], [null, 0]);
+  } finally { ctx.UI.sheet = sheet; }
+  return 'ok';
+};
 T['樣式:新的樣式在 css/estimate.css,不往 css/style.css 加;共用畫面不讀寫儲存'] = () => {
   const css = K.read('css/estimate.css');
   assert.ok(/\.est-card\b/.test(css) && /\.est-row\b/.test(css));
+  /* ⓘ:看得到的圖示約 22px,觸控範圍 44px */
+  const info = (/\.est-info \{([^}]*)\}/.exec(css) || [])[1] || '';
+  assert.ok(/width: 44px/.test(info) && /height: 44px/.test(info), info);
+  assert.ok(/'width', '22'/.test(K.read('js/estimate-ui.js')));
   assert.ok(!/\.est-card\b/.test(K.read('css/style.css')));
   assert.ok(!/localStorage|store\.(get|set)|sessionStorage/.test(K.read('js/estimate-ui.js')));
   return 'ok';

@@ -9,6 +9,7 @@
    h 375×812 觸控走完整個檢測,每個畫面沒有橫向捲動
    i 沒登入與沒做過檢測的人:首頁、刷題、聽力、模擬考的畫面跟 --base 的資料夾一樣(只差檢測入口改成 24 題與新網址)
    j 不在新用戶設定裡做檢測:沒有設定、按過「不用了」的人,首頁卡跟做之前一樣(不出現「繼續設定起始程度」)
+   k 預估分數與模擬考結果標題旁的 ⓘ:鍵盤 Enter／空白鍵打開、Tab 留在資訊欄裡、Esc 與點遮罩關、關了焦點回到 ⓘ;數字旁沒有聲明小字
    用法:node tools/test_placement_e2e.js [--port <起始埠,用兩個>] [--debug-port <Chrome 的埠>] [--tmp <資料夾>] [--base <對照用的資料夾>]
         [--shots <截圖資料夾>] [--only <測試名稱的一段,幾段用 | 分開>]
    沒給 --base 時 i 不跑(印出來)。--shots 給了時,走到的畫面存 375 與 1280 兩張(檔名「編號_畫面_寬.png」)。 */
@@ -37,6 +38,40 @@ const cardText = (p, sel) => p.wait('!!document.querySelector(' + J(sel + ' .est
 const runOf = (p) => p.eval("(() => { const r = (store.get('placement_v1', {}).runs || []).slice(-1)[0]; return r || null; })()");
 const avgB = (p, ids) => p.eval('(' + J(ids) + ').map((id) => { const ks = Object.keys(ITEM_PARAMS.b).filter((k) => k === id || k.indexOf(id + ":") === 0); return ks.reduce((a, k) => a + ITEM_PARAMS.b[k], 0) / ks.length; })');
 
+/* 數字旁不該再出現的聲明小字(都在 ⓘ 的資訊欄裡) */
+const NOTE = /本站估計|不是正式成績|根據 \d+ 題/;
+/* 鍵盤:CDP 送真的按鍵(Enter、空白鍵、Esc、Tab) */
+const KEYS = { Enter: [13, 'Enter', '\r'], ' ': [32, 'Space', ' '], Escape: [27, 'Escape', ''], Tab: [9, 'Tab', ''] };
+async function key(p, k) {
+  const [vk, code, text] = KEYS[k];
+  await p.send('Input.dispatchKeyEvent', Object.assign({ type: 'keyDown', key: k, code, windowsVirtualKeyCode: vk }, text ? { text } : {}));
+  await p.send('Input.dispatchKeyEvent', { type: 'keyUp', key: k, code, windowsVirtualKeyCode: vk });
+  await sleep(250);
+}
+/* 資訊欄現在的樣子:開著沒、標題、段落、焦點在哪(info:焦點在 ⓘ 上;inSheet:焦點在資訊欄裡) */
+const SHEET = `(() => { const s = document.querySelector('.ui-sheet'); const a = document.activeElement;
+  return { open: !!s, title: s ? s.querySelector('h2').textContent : null, paras: s ? [...s.querySelectorAll('.est-info-p')].map((x) => x.textContent) : [],
+    info: !!(a && a.classList.contains('est-info')), inSheet: !!(s && s.contains(a)), expanded: (document.querySelector(${"'"}.est-info[aria-expanded="true"]${"'"}) || null) !== null }; })()`;
+/* ⓘ 的鍵盤操作:Enter 開、Tab 兩下還在裡面、Esc 關、焦點回 ⓘ;空白鍵開、點遮罩關、焦點回 ⓘ。回傳開著時的資訊欄 */
+async function infoKeys(p, sel, shotName) {
+  await p.eval('document.querySelector(' + J(sel) + ').focus(), true');
+  await key(p, 'Enter');
+  const opened = await p.eval(SHEET);
+  assert.ok(opened.open && opened.inSheet && opened.expanded, 'Enter 打開、焦點進資訊欄:' + J(opened));
+  await key(p, 'Tab'); await key(p, 'Tab');
+  assert.ok((await p.eval(SHEET)).inSheet, 'Tab 留在資訊欄裡');
+  if (shotName) await shot(p, shotName);
+  await key(p, 'Escape');
+  const shut = await p.eval(SHEET);
+  assert.ok(!shut.open && shut.info && !shut.expanded, 'Esc 關、焦點回 ⓘ:' + J(shut));
+  await key(p, ' ');
+  assert.ok((await p.eval(SHEET)).open, '空白鍵打開');
+  await p.eval("(() => { const m = document.querySelector('.ui-sheet-mask'); m.dispatchEvent(new MouseEvent('mousedown', { bubbles: true })); m.dispatchEvent(new MouseEvent('click', { bubbles: true })); return true; })()");
+  await sleep(300);
+  const back = await p.eval(SHEET);
+  assert.ok(!back.open && back.info, '點遮罩關、焦點回 ⓘ:' + J(back));
+  return opened;
+}
 const T = {};
 T['a 新用戶:設定流程選檢測 → 24 題 → 結果頁有兩科、總分與範圍 → 設定結果、首頁、個人頁、能力分析同一個數字'] = async () => {
   fresh();
@@ -61,9 +96,9 @@ T['a 新用戶:設定流程選檢測 → 24 題 → 結果頁有兩科、總分�
   } });
   assert.strictEqual(w.units.length, 14, '聽力 8 格、閱讀 6 格');
   await sleep(1500);
-  const note = await p.text('.result-card .result-note');
-  assert.ok(/^根據 24 題 · 本站估計，不是正式成績。/.test(note), note);
   const card = await p.text('.result-card');
+  assert.ok(!NOTE.test(card) && await p.eval("!document.querySelector('.result-card .result-note')"), '數字旁沒有聲明小字:' + card);
+  assert.ok(await p.eval("!!document.querySelector('.result-card .result-kicker .est-info')"), '小標旁有 ⓘ');
   assert.ok(/預估總分/.test(card) && /聽力/.test(card) && /閱讀/.test(card), card);
   const pv = await peek(p);
   assert.ok(pv.L && pv.R && pv.total, '兩科與總分都有:' + J(pv));
@@ -92,7 +127,7 @@ T['a 新用戶:設定流程選檢測 → 24 題 → 結果頁有兩科、總分�
   await p.go('analysis.html');
   const an = await cardText(p, 'main');
   assert.deepStrictEqual(await peek(p), pv, '能力分析頁同一份預估');
-  assert.strictEqual(an.replace(/做.*檢測/, ''), me.replace(/做.*檢測/, '').replace(/依目前預估.*$/, ''), '兩頁的卡片字一樣');
+  assert.strictEqual(an.replace(/做.*檢測/, ''), me.replace(/做.*檢測/, '').replace(/建議程度.*$/, ''), '兩頁的卡片字一樣');
   await shot(p, '12_能力分析頁');
   K.noErrors(p, '新用戶');
   await p.close();
@@ -125,7 +160,7 @@ T['b 全對與全錯:後面的題變難/變易、分數到兩端照「450 以上
       await p.go('me.html');
       await cardText(p, 'main');
       await sleep(1500);
-      assert.ok(/依目前預估，建議改成/.test(await p.text('.est-card')), '個人頁的建議改級:' + await p.text('.est-card'));
+      assert.ok(/建議程度 \S+ 改成\S+/.test(await p.text('.est-card')), '個人頁的建議改級:' + await p.text('.est-card'));
       await shot(p, '11_個人頁卡片_建議改級');
     }
     K.noErrors(p, mode);
@@ -247,7 +282,7 @@ T['e 舊使用者(只有舊 28 題):個人頁閱讀有數字、聽力要再做;�
   await sleep(1500);
   const v = await peek(p);
   assert.ok(v.R && !v.L, '閱讀有數字、聽力沒有:' + J(v));
-  assert.ok(/再做 20 題聽力，就會顯示預估分數。/.test(await p.text('.est-card')), await p.text('.est-card'));
+  assert.ok(/聽力 還差 20 題/.test(await p.text('.est-card')), await p.text('.est-card'));
   assert.ok(/做聽力檢測/.test(t), '主按鈕做聽力檢測');
   assert.deepStrictEqual(await p.store('diag'), diag, '舊檢測不動');
   await shot(p, '08_個人頁卡片_資料不夠');
@@ -306,7 +341,11 @@ T['h 375×812 觸控走完整個檢測,每個畫面沒有橫向捲動'] = async 
   await K.walk(p, 2, { hook: async (s) => { if (s.screen !== 'other') { n++; await K.noOverflow(p, s.screen + ' ' + (s.part || '')); } return false; } });
   await sleep(1200);
   await K.noOverflow(p, '結果頁');
-  assert.ok(/^根據 24 題/.test(await p.text('.result-note')));
+  assert.ok(!NOTE.test(await p.text('.result-card')), '結果頁數字旁沒有聲明小字');
+  await p.eval("document.querySelector('.result-kicker .est-info').click(), true");
+  await sleep(500);
+  await K.noOverflow(p, '資訊欄');
+  assert.ok(/^目前根據 24 題，/.test((await p.texts('.ui-sheet .est-info-p')).slice(-1)[0] || ''), '資訊欄的根據 24 題');
   K.noErrors(p, '手機');
   await p.close();
   return '檢查 ' + n + ' 個畫面';
@@ -361,6 +400,48 @@ T['i 沒登入與沒做過檢測的人:首頁、刷題、聽力、模擬考跟�
   }
   assert.deepStrictEqual(diffs, []);
   return '8 個畫面一樣';
+};
+
+T['k 預估卡與模擬考結果的 ⓘ:鍵盤開關、焦點回到按鈕;資訊欄的字;數字旁沒有聲明小字'] = async () => {
+  fresh();
+  const p = await open(user(95, '小晴'));
+  await p.go('placement.html');
+  await p.press('開始', '.pl-intro');
+  await K.walk(p, 'mix');
+  await sleep(1500);
+  await p.go('me.html');
+  const card = await cardText(p, 'main');
+  await sleep(1500);
+  assert.ok(!NOTE.test(await p.text('.est-card')), '卡片上沒有聲明小字:' + card);
+  assert.strictEqual(await p.eval("document.querySelector('.est-card .est-head .est-info').getAttribute('aria-label')"), '預估分數說明');
+  /* 觸控範圍 44px、看得到的圖示約 22px */
+  const box = await p.eval("(() => { const b = document.querySelector('.est-card .est-info'); const r = b.getBoundingClientRect(), i = b.querySelector('svg').getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height), Math.round(i.width)]; })()");
+  assert.deepStrictEqual(box, [44, 44, 22]);
+  const sh = await infoKeys(p, '.est-card .est-info', '21_資訊欄');
+  assert.strictEqual(sh.title, '預估分數');
+  assert.deepStrictEqual(sh.paras.slice(0, 3), ['這個分數是本站依你的作答估計的，不是多益的正式成績。', '每一題只算第一次作答。重做和錯題本的作答不算。',
+    '範圍：你的實際分數大多落在這個範圍內。作答的題數越多，範圍越窄。']);
+  assert.ok(/^目前根據 24 題，更新到 \d+ 月 \d+ 日。$/.test(sh.paras[3]), sh.paras[3]);
+  /* 模擬考:快速回合直接交卷,結果的「參考總分」旁一個 ⓘ */
+  await p.go('mock.html');
+  await p.press('開始');
+  await p.wait("!!document.querySelector('.quiz-bar')", '模擬考作答');
+  await sleep(600);
+  await p.eval("(() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent.trim() === '交卷' && x.offsetParent !== null); b.click(); return true; })()");
+  await p.wait("!!document.querySelector('.ui-dialog .ui-dialog-ok')", '交卷確認');
+  await sleep(500);
+  await p.eval("document.querySelector('.ui-dialog .ui-dialog-ok').click(), true");
+  await p.wait("!!document.querySelector('.result-card')", '模擬考結果', 20000);
+  await sleep(1500);
+  const mock = await p.text('.result-card');
+  assert.ok(!NOTE.test(mock) && await p.eval("!document.querySelector('.result-card .result-note')"), '模擬考結果沒有聲明小字:' + mock);
+  assert.strictEqual(await p.eval("document.querySelector('.result-kicker .est-info').getAttribute('aria-label')"), '模擬考分數說明');
+  await shot(p, '18_模擬考結果');
+  const ms = await infoKeys(p, '.result-kicker .est-info', '22_模擬考資訊欄');
+  assert.deepStrictEqual([ms.title, ms.paras], ['模擬考分數', ['這個分數是本站依這次答對的題數估計的，不是多益的正式成績。', '每次的題目難度不同，分數適合用來看自己的變化。']]);
+  K.noErrors(p, 'ⓘ');
+  await p.close();
+  return 'ok';
 };
 
 async function main() {

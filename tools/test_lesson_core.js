@@ -321,6 +321,23 @@ T['小檢核清單的考點名稱:第 4 堂兩包用到的鍵都在名稱表;表
   eq(Object.keys(C.PART_NAME).map((p) => C.PART_NAME[p]), ['Part 1 照片描述', 'Part 2 應答', 'Part 3 簡短對話', 'Part 4 簡短獨白', 'Part 5 單句填空', 'Part 6 段落填空', 'Part 7 閱讀理解']);
 };
 
+T['考點名稱補齊:Part 5 每個舊分類都有名稱;兩包第 1–8 堂小檢核的考點(照舊欄位寫法去重)名稱都不是 Part 名稱、彼此不重複'] = () => {
+  const cats = [].concat(...Object.keys(E.R.P5_QTYPE).map((k) => E.R.P5_QTYPE[k]));
+  const missing = cats.filter((c) => !C.POINT_NAME['P5.cat:' + c]);
+  eq([cats.length, missing], [13, []]);
+  const parts = Object.keys(C.PART_NAME).map((p) => C.PART_NAME[p]);
+  [EE, TT].forEach((lv) => {
+    const keys = new Set();
+    for (let no = 1; no <= 8; no++) {
+      const cp = lessonOf(lv)(no).checkpoint;
+      if (cp) cp.listening.concat(cp.reading).forEach((k) => keys.add(E.R.legacyKey(k)));
+    }
+    const names = [...keys].map(C.pointName);
+    eq([names.filter((n) => !n || parts.indexOf(n) > -1), names.length === new Set(names).size], [[], true], lv.listening + ' ' + names.join('、'));
+  });
+  eq(['P5.tense', 'P5.agreement', 'P5.pron_case'].map(C.pointName), ['時態與語態', '主詞動詞一致', '代名詞']);
+};
+
 /* ---------- 前測 ---------- */
 T['前測:配額 36 題聽力;限時照每題速度(36 題 1014 秒、39 題 1732 秒、43 題 1909 秒);接著做:沒作答、剩 3 分、用完、超過 24 小時、這個分頁記的時間比最後作答晚'] = () => {
   eq(C.TEST_QUOTA.test_listening.parts.reduce((a, x) => a + x[1], 0), 22);

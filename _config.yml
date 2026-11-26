@@ -1,4 +1,6 @@
 # GitHub Pages 的 Jekyll 設定：只調整發佈範圍，其他沿用預設。
 # tools、supabase 與兩份說明檔不放上網站（repo 本身照常公開）；move-ping.txt 是搬家流程要用的，不能排除。
-exclude: [tools, supabase, README.md, "GITHUB上線指南.md"]
+# CNAME 也要列：自訂 exclude 會整份取代預設清單，GitHub Pages 原本自動排除 CNAME 的做法就不再套用。
+# 自訂網域看的是 repo 設定與來源分支根目錄的 CNAME 檔，不是建置後的網站，排除它不影響網域。
+exclude: [tools, supabase, README.md, "GITHUB上線指南.md", CNAME]
 include: [.well-known]

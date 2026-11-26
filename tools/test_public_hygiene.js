@@ -2,7 +2,8 @@
    - 要擋的個人字樣不寫進 repo:放在 repo 外的文字檔,由 RUSHUP_PRIVATE_PATTERNS_FILE 指定(tools/private_patterns.js 讀)
    - 測試檔不寫正式格式的藍新商店代號;不寫本機絕對路徑;repo 外的檔案路徑由環境變數傳入
    - .gitignore 擋得住金鑰檔,也不會擋到現在追蹤的檔案
-   - _config.yml 只排除不需要發佈的資料夾與說明檔,搬家要用的 move-ping.txt 照常發佈;.well-known/security.txt 會發佈 */
+   - _config.yml 只排除不需要發佈的資料夾與說明檔,搬家要用的 move-ping.txt 照常發佈;.well-known/security.txt 會發佈
+   - _config.yml 的 exclude 要列 CNAME:自訂 exclude 會整份取代預設清單,GitHub Pages 原本自動排除 CNAME 的做法就不再套用 */
 'use strict';
 const fs = require('fs');
 const os = require('os');
@@ -134,7 +135,14 @@ T['_config.yml:只有 exclude 與 include 兩項;排除 tools、supabase 與兩�
   const ex = listIn(s, 'exclude') || [];
   return keys.sort().join() === 'exclude,include'
     && ['tools', 'supabase', 'README.md', 'GITHUB上線指南.md'].every((x) => ex.includes(x))
-    && ex.length === 4 && !ex.some((x) => /move-ping/.test(x)) && !exists('.nojekyll');
+    && ex.length === 5 && !ex.some((x) => /move-ping/.test(x)) && !exists('.nojekyll');
+};
+/* GitHub Pages(pages-gem)只在 exclude 等於 Jekyll 預設清單時才補上 CNAME;這裡自訂了 exclude,要自己列。
+   自訂網域看的是 repo 設定與來源分支根目錄的 CNAME 檔,不是建置後的網站,所以排除它不影響網域 */
+T['_config.yml:exclude 也列 CNAME,網站上的 /CNAME 維持 404'] = () => {
+  if (!exists('_config.yml')) return '沒有 _config.yml';
+  const ex = listIn(read('_config.yml'), 'exclude') || [];
+  return (ex.includes('CNAME') && exists('CNAME')) || ('exclude:' + ex.join('、'));
 };
 T['_config.yml:include 讓 .well-known 發佈'] = () => exists('_config.yml') && (listIn(read('_config.yml'), 'include') || []).join() === '.well-known';
 T['網站的頁面與程式不從 tools/、supabase/ 載入任何檔案'] = () => {

@@ -445,7 +445,7 @@ T['TEXT:全部字串全形標點、沒有驚嘆號破折號括號補充與句號
   eq([C.TEXT.home.week(1, 2, 2, 3), C.TEXT.home.setWeekly, C.TEXT.home.solo(4), C.TEXT.home.soloMin(18), C.TEXT.list.optional, C.TEXT.weekly.h, C.TEXT.weekly.later,
     C.TEXT.checkpoint.soloNote, C.TEXT.calib.h, C.TEXT.calib.move('entry', 'threshold'), C.TEXT.calib.info],
   ['本週　完成 1 / 2 堂　練習 2 / 3 天', '設定堂數', '第 4 堂小檢核', '18 分鐘', '課後練習', '每週上幾堂', '之後再選', '結果在交卷後顯示', '程度調整', '入門 → 門檻', '程度調整說明']);
-  eq(C.TEXT.calib.lines, ['依第 2 到 4 堂第一次作答的答對率調整', '每科至少 20 題才調整', '答對率高於 80% 升一級，低於 45% 降一級', '每一期只調整一次', '從第 5 堂起照新程度排課', '進階、高分目前照門檻課表上課', '到「我的」可以改級別']);
+  eq(C.TEXT.calib.lines, ['依第 2 到 4 堂第一次作答的答對率調整', '每科至少 20 題才調整', '答對率高於 80% 升一級，低於 45% 降一級', '每一期只調整一次', '從第 5 堂起照新程度排課', '進階、高分目前照門檻課表上課', '到「我的」可以改程度']);
   eq([C.TEXT.home.segs(3, 6), C.TEXT.home.done(2), C.TEXT.home.doneLabel(2), C.TEXT.lesson.itemsMin(36, 17), C.TEXT.page.lesson(3)], ['3 / 6 段', '2 / 24 堂', '課程 2 / 24 堂', '36 題 · 17 分鐘', '第 3 堂 - 衝衝英文']);
   eq([C.TEXT.home.start(3), C.TEXT.empty.locked(2), C.TEXT.lesson.skipAsk('回顧'), C.TEXT.lesson.backTo(3)], ['開始第 3 堂', '先完成第 2 堂', '略過回顧？', '← 回第 3 堂']);
   assert.ok(Object.isFrozen(C.TEXT) && Object.isFrozen(C.TEXT.home), 'TEXT 不能被改');

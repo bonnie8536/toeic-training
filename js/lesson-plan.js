@@ -166,12 +166,20 @@
     return -1;
   }
   function calibrated(levels, startDate) { return termIndex(levels, startDate) > -1; }
-  /* 畫面用:本期第一筆跟它前一筆比 → { changed };本期沒做過回 null */
+  /* 目前的級別:最上層有就用它,沒有用 history 最後一筆 */
+  function current(levels) {
+    const h = Array.isArray(levels.history) ? levels.history.filter(isPlain) : [], last = h[h.length - 1] || {};
+    const pick = (k) => (typeof levels[k] === 'string' ? levels[k] : last[k]);
+    return { listening: pick('listening'), reading: pick('reading') };
+  }
+  /* 畫面用:本期第一筆跟它前一筆比 → { changed };本期沒做過回 null。
+     之後又改了級別(檢測結果頁、「我的」頁),目前兩科跟那一筆不一樣時兩科都回 null(不再顯示調整,免得跟「我的」頁的級別矛盾) */
   function calibration(levels, startDate) {
     const i = termIndex(levels, startDate);
     if (i < 0) return null;
-    const h = levels.history, cur = h[i], prev = i > 0 && isPlain(h[i - 1]) ? h[i - 1] : null;
-    const diff = (k) => (prev && prev[k] !== cur[k] ? [prev[k], cur[k]] : null);
+    const h = levels.history, cur = h[i], prev = i > 0 && isPlain(h[i - 1]) ? h[i - 1] : null, now = current(levels);
+    const kept = now.listening === cur.listening && now.reading === cur.reading;
+    const diff = (k) => (kept && prev && prev[k] !== cur[k] ? [prev[k], cur[k]] : null);
     return { changed: { listening: diff('listening'), reading: diff('reading') } };
   }
 

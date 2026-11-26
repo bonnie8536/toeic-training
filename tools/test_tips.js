@@ -208,7 +208,7 @@ const CARD_IDS = ['tip-P1-photo', 'tip-P2-wh', 'tip-P2-yn', 'tip-P3-gist', 'tip-
   'tip-P6-vocab', 'tip-P3-detail', 'tip-P5-prep_meaning', 'tip-P2-statement', 'tip-P5-vocab', 'tip-P5-vocab_verb'];
 T['T9 卡的清單:19 張、id 照來源順序;兩包第 1–16 堂技巧卡區塊引用的卡都在'] = () => {
   const cards = loadTips().cards;
-  assert.deepStrictEqual(cards.map((c) => c.id), CARD_IDS);
+  assert.deepStrictEqual(copy(cards.map((c) => c.id)), CARD_IDS);   // 陣列來自 vm 的另一個環境,先複製再比
   const have = new Set(cards.map((c) => c.id)), missing = [];
   ['entry', 'threshold'].forEach((lv) => JSON.parse(read('data/packs/pack_' + lv + '.json')).lessons.slice(0, 16).forEach((l) => l.segments
     .forEach((s) => (s.blocks || []).filter((b) => b.module === 'tip_cards').forEach((b) => b.ids

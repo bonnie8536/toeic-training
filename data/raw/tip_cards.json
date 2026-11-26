@@ -156,6 +156,78 @@
         "kind": "sentence"
       },
       "source": "original"
+    },
+    {
+      "id": "tip-P6-vocab",
+      "part": "P6",
+      "title": "用上下文選字彙",
+      "body": "Part 6 是一篇有幾個空格的短文。字彙題的選項放進本句可能都說得通，單看這一句分不出來。這時讀空格的前一句和後一句，看事情接下來怎麼發展，再選跟上下文一致的字。後一句提到新的時間、結果或原因時，常是判斷的線索。",
+      "example": {
+        "en": "Please note that the staff meeting has been -------. It will now take place on Thursday at 3 P.M.\n(A) canceled (B) rescheduled (C) shortened (D) recorded",
+        "zh": "單看這句四個都說得通。後一句說改到週四舉行，選 B。",
+        "kind": "sentence"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P3-detail",
+      "part": "P3",
+      "title": "先讀題找關鍵字，答案常換說法",
+      "body": "細節題問對話裡說到的一件事，例如時間、地點或要做的事。播放前先讀題，找出題目問的是哪一位、問哪件事。播放時專心聽那個人說到這件事的地方。正解常換了說法，像對話說 the copier，選項寫 a machine。用了對話裡的字、答的卻是別件事的選項要小心。",
+      "example": {
+        "en": "Woman: I need the sales report before Thursday's meeting.\nMan: No problem. I'll e-mail it to you tomorrow morning.\nQuestion: What will the man do tomorrow?\n(A) Make a sales call\n(B) Send a document",
+        "zh": "男子說明天寄報告，B 換了說法，選 B。A 只用了 sales。",
+        "kind": "script"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P5-prep_meaning",
+      "part": "P5",
+      "title": "先分時間地點，再看動詞",
+      "body": "介系詞是 in、on、at、by 這類放在名詞前面的字。先看空格後面是時間還是地點。地點是某一點用 at，在裡面用 in，在表面上用 on。時間是幾點用 at，星期幾或日期用 on，月份或年份用 in。再看動詞，動作持續到那時用 until，最晚在那時做完用 by。",
+      "example": {
+        "en": "The library will stay open ------- 9 P.M. tonight.\n(A) at (B) in (C) until (D) by",
+        "zh": "stay open 要持續到九點，選 C。at 只指那一刻，by 指最晚做完。",
+        "kind": "sentence"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P2-statement",
+      "part": "P2",
+      "title": "平敘句找能接話的回應",
+      "body": "平敘句是說出一件事、沒有發問的句子，像告訴你會議改時間了。先想說話的人是在通知、抱怨還是提出想法，再選接得下去的回應。正解常是說出接下來的做法、追問細節或表示知道了。重複原句的字、意思卻接不上的選項是常見陷阱。",
+      "example": {
+        "en": "The parking lot will be closed for repairs tomorrow.\n(A) It's a large parking lot.\n(B) He repaired it yesterday.\n(C) Then I'll take the train.",
+        "zh": "選 C，說出之後的做法。A、B 只重複或改用原句的字。",
+        "kind": "script"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P5-vocab",
+      "part": "P5",
+      "title": "先看搭配字再看意思",
+      "body": "字彙題的四個選項詞性相同、意思不同。先找空格旁邊跟它搭在一起的字。空格要放形容詞，就看它後面的名詞。要放動詞，就看後面接的東西。再想哪個選項常和這個字一起用。好幾個選項的中文翻譯都說得通時，搭配常是分出答案的地方。",
+      "example": {
+        "en": "The woman at the front desk gave us ------- directions to the train station.\n(A) bright (B) sharp (C) wide (D) clear",
+        "zh": "sharp 也可譯成清晰，但只有 clear 搭 directions，選 D。",
+        "kind": "sentence"
+      },
+      "source": "original"
+    },
+    {
+      "id": "tip-P5-vocab_verb",
+      "part": "P5",
+      "title": "看動詞後面怎麼接",
+      "body": "動詞字彙題的四個選項都是動詞。只看中文意思，常有好幾個說得通。這時看空格後面接什麼。有的動詞後面直接接名詞，有的要先接介系詞，像 listen 後面要先接 to。選接法對得上、意思也通的那一個。",
+      "example": {
+        "en": "Please ------- the customer's e-mail before you leave today.\n(A) reply (B) respond (C) answer (D) speak",
+        "zh": "A、B 也是回覆，但後面要先接 to。D 意思不對，選 C。",
+        "kind": "sentence"
+      },
+      "source": "original"
     }
   ]
 }

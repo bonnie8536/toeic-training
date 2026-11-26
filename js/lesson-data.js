@@ -183,13 +183,20 @@
     1: () => store.get('listen_p1', {}), 2: () => store.get('listen_p2', {}), 3: () => store.get('listen_p3', {}), 4: () => store.get('listen_p4', {}),
     5: () => store.get('drill_p5', {}), 6: () => store.get('drill_p6', {}), 7: () => store.get('drill_p7', {}),
   };
-  /* 本期前測的全部題(tests_v1 的 items,加上第 1 堂凍結的前測題) */
+  /* 引導流程的聽力短測做過的 8 題(onboard.listen.ids 有 8 個字串才算);沒有回 [] */
+  function shortIds() {
+    const o = hasStore() ? store.get('onboard', null) : null;
+    const ids = isPlain(o) && isPlain(o.listen) && Array.isArray(o.listen.ids) ? o.listen.ids : [];
+    return ids.length === 8 && ids.every((id) => typeof id === 'string' && id) ? ids.slice() : [];
+  }
+  /* 本期前測的全部題(tests_v1 的 items,加上第 1 堂凍結的前測題),加上聽力短測的 8 題(跟前測題一樣:小檢核不選、練習排在後面) */
   function pretestIds() {
     const term = curTerm();
     const t = store.get('tests_v1', null), pre = isPlain(t) && isPlain(t['t' + term]) ? t['t' + term].pre : null;
     const ids = isPlain(pre) && Array.isArray(pre.items) ? pre.items.map((x) => x && x[0]) : [];
     const s = localLesson(term, 1);
     [0, 1].forEach((i) => { const e = s && s.pk ? s.pk[i] : null; (e && Array.isArray(e.ids) ? e.ids : []).forEach((id) => ids.push(id)); });
+    shortIds().forEach((id) => ids.push(id));
     return ids.filter((id, i) => typeof id === 'string' && ids.indexOf(id) === i);
   }
   /* 14 天內做過的題(題組取組 id),加上前測的題 */
@@ -201,17 +208,18 @@
     }));
     return Array.from(out);
   }
-  /* 下一次小檢核的預留題(PACK_CORE.reserveFor):有帳號才有,種子用帳號的資料夾名稱(雲端帳號 c 開頭、不含連字號);
-     同一頁同一組條件只算一次。算不出來(例如題目索引沒載入)就這次不預留,照原本的選題 */
+  /* 之後兩次小檢核的預留題(PACK_CORE.reserveFor,回 { ids, near, far }):有帳號才有,種子用帳號的資料夾名稱(雲端帳號 c 開頭、不含連字號);
+     做過聽力短測的帳號,清單先扣掉那 8 題。同一頁同一組條件只算一次。算不出來(例如題目索引沒載入)就這次不預留,照原本的選題 */
   const reserves = new Map();
   function reserveOf(lesson) {
     const id = accountId();
     if (!id || !mem.packs || !mem.pool || !Array.isArray(mem.pool.ids)) return undefined;
     const account = id.charAt(0) === 'u' ? 'c' + id.slice(1).replace(/-/g, '') : id;
-    const key = [account, lesson.no, lesson.levels.listening, lesson.levels.reading].join('|');
+    const short = shortIds(), pool = mem.pool.ids.filter((id) => short.indexOf(id) < 0);
+    const key = [account, lesson.no, lesson.levels.listening, lesson.levels.reading, short.length ? 'short' : ''].join('|');
     return () => {
       if (!reserves.has(key)) {
-        const run = Promise.resolve().then(() => pack().reserveFor(mem.packs, lesson.levels, lesson.no, { account, pool: mem.pool.ids, bank: root.BANK }))
+        const run = Promise.resolve().then(() => pack().reserveFor(mem.packs, lesson.levels, lesson.no, { account, pool, bank: root.BANK }))
           .catch((e) => { reserves.delete(key); console.warn('預留題算不出來，這次不預留：', e); return []; });
         reserves.set(key, run);
       }

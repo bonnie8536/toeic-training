@@ -289,8 +289,9 @@
 
   /* 題庫題。plan = { mix(難度配比,可以沒有), allow(先出的難度,D 代碼), extra(不夠時依序再借的難度) },P6、P7 或不分難度是 null。
      有 mix 就照 mix 在 allow 裡分配(最大餘數法),不夠先在 allow 裡照 D2→D3→D1→D4 補,再照 extra 借(個人段是放寬一級);
-     還不夠就放寬「14 天內做過」(難度條件不變),記 relaxed。hold = { ids: 下一次小檢核的預留題(reserveFor), fill }:
-     前面每一步都先避開 ids,放寬完還不夠、fill 是 true 時才用它補滿,reserved 是補了幾題 */
+     還不夠就放寬「14 天內做過」(難度條件不變),記 relaxed。hold = { ids: 之後兩次小檢核的預留題, near: 近的那一份, fill, mode }(reserveFor):
+     前面每一步都先避開 ids;放寬完還不夠、fill 是 true 時才用預留題補:先用遠的那一份(避開 near)、最後才用近的,reserved 是補了幾題。
+     mode 是 'review'(考點回顧要新題)時順序是:沒做過的非預留題 → 沒做過的遠的預留題 → 放寬 14 天內做過的 → 近的預留題 */
   async function pickBankIds(part, n, where, plan, ctx, avoid, within, hold) {
     const B = bankOf(ctx);
     const base = { part, within, records: ctx.records ? ctx.records[part] || {} : undefined, random: ctx.random };
@@ -314,8 +315,16 @@
       last = lv(allow.concat(extra));
     } else await take(where, n, first);
     let relaxed = false, reserved = 0;
-    if (got.length < n && seen.length) { relaxed = true; await take(last, n - got.length, keep); }
-    if (got.length < n && keep.length && hold.fill) { const had = got.length; await take(last, n - got.length, []); reserved = got.length - had; }
+    const near = hold && Array.isArray(hold.near) ? hold.near : [];
+    const relax = async () => { if (got.length < n && seen.length) { relaxed = true; await take(last, n - got.length, keep); } };
+    const useHold = async (extraAvoid) => {
+      if (got.length >= n || !keep.length || !hold.fill) return;
+      const had = got.length;
+      await take(last, n - got.length, extraAvoid);
+      reserved += got.length - had;
+    };
+    if (hold && hold.mode === 'review') { await useHold(seen.concat(near)); await relax(); } else { await relax(); await useHold(near); }
+    await useHold([]);
     return { ids: got, relaxed, reserved };
   }
   /* 固定區塊的難度:legacyWhere 寫了難度就在那幾級裡出(有 levelMix 照它分配),不夠照 D2→D3→D1 借別級;
@@ -373,7 +382,8 @@
   }
 
   /* 一個固定區塊選題。回 { ids, need, relaxed, reserved, ignored }(need 是不夠的題數,夠就是 0;reserved 是用預留題補了幾題;
-     ignored 是篩不了、沒篩的條件欄位)。hold 是預留題:小檢核的檢核區塊不避開(選題規則不變),其他題庫區塊先避開 */
+     ignored 是篩不了、沒篩的條件欄位)。hold 是預留題(pickBankIds):其他題庫區塊照 hold 避開與補題;小檢核的檢核區塊只從清單內、
+     沒做過的題選(within),一樣先避開之後兩次的預留題,清單內不夠才用(先遠後近)。沒給 hold(算預留題時)就不避開 */
   async function pickBlock(block, lesson, ctx, avoid, inCheckpoint, hold) {
     if (block.ids) return { ids: block.ids.map((x) => x.id), need: 0 };
     const sel = block.select, part = BANK_PART[block.module];
@@ -388,7 +398,8 @@
       }
       const w = bankWhereOf(sel);
       const strict = lesson.levels[block.track] === 'entry' && /^[34]$/.test(part);
-      const r = await pickBankIds(part, block.count, w.where, fixedPlan(part, w.where, mix, strict), ctx, avoid, within, checking ? null : hold);
+      const cpHold = hold && Array.isArray(hold.ids) && hold.ids.length ? { ids: hold.ids, near: hold.near || [], fill: true } : null;
+      const r = await pickBankIds(part, block.count, w.where, fixedPlan(part, w.where, mix, strict), ctx, avoid, within, checking ? cpHold : hold);
       return { ids: r.ids, need: block.count - r.ids.length, relaxed: r.relaxed, reserved: r.reserved, ignored: w.ignored };
     }
     if (block.module === 'grammar') return { ids: sel.where.unitIds.slice(), need: 0 };
@@ -410,7 +421,7 @@
     const need = [];
     const avoid = frozenIds(st);
     const todo = lesson.segments.some((s) => (s.blocks || []).some((b) => !st.pk[b.idx]));
-    const hold = { ids: todo ? await reservedOf(ctx) : [], fill: true };
+    const hold = { ids: todo ? await reservedOf(ctx) : [], near: todo ? await nearOf(ctx) : [], fill: true };
     for (const seg of lesson.segments) {
       for (const b of seg.blocks || []) {
         if (st.pk[b.idx]) continue;
@@ -445,32 +456,57 @@
         .sort((x, y) => rank(x) - rank(y) || (x < y ? -1 : 1)).slice(0, spec.n),
     };
   }
-  /* 預留題:第 no 堂之後下一次小檢核那一堂,每個檢核區塊照它自己的選題條件(同模組、同難度配比與條件、從小檢核可用題清單選),
-     每題用「帳號＋那一堂的堂號＋區塊編號＋題 id」的雜湊值排序,挑出區塊題數那麼多題。不排除做過的題與前測題,不存進任何鍵:
-     同一個帳號、同一組級別每次算出來都一樣(換裝置也一樣);題庫或清單少了沒挑中的題整份不變,少了挑中的題只換那一題。
-     課程裡的練習選題先避開這些題,湊不滿才用(pickBankIds 的 hold;弱點補練不用);小檢核本身的選題規則不變。
-     ctx = { account(帳號 id), pool(小檢核可用題清單,不扣前測題), bank }。沒有帳號(訪客)回 [] */
-  async function reserveFor(packs, levels, no, ctx) {
-    const c = ctx || {};
-    if (typeof c.account !== 'string' || !c.account || !Array.isArray(c.pool)) return [];
-    const at = nextCheckpoint(packs, levels, no);
-    if (!at) return [];
+  /* 第 at 堂小檢核的預留題 R(at):每個檢核區塊照它自己的選題條件(同模組、同難度配比與條件、從小檢核可用題清單選),
+     每題用「帳號＋那一堂的堂號＋區塊編號＋題 id」的雜湊值排序,挑出區塊題數那麼多題;avoid(前面幾次的預留題)不挑 */
+  async function reserveOne(packs, levels, at, c, avoid) {
     const lesson = compose(packs, levels, at), out = [];
     for (const seg of lesson.segments.filter((s) => s.slot === 'checkpoint')) {
       for (const b of seg.blocks) {
         if (b.fill || !BANK_PART[b.module]) continue;
         const pc = { bank: rankedBank(bankOf(c), c.account + '|' + at + '|' + b.idx), records: {}, checkpointPool: c.pool };
-        (await pickBlock(b, lesson, pc, out.slice(), true)).ids.forEach((id) => out.push(id));
+        (await pickBlock(b, lesson, pc, avoid.concat(out), true)).ids.forEach((id) => out.push(id));
       }
     }
     return out;
   }
-  /* 選題的 ctx 帶的預留題:ctx.reserve 是陣列,或回陣列(或 Promise)的函式;沒有回 [] */
-  async function reservedOf(ctx) {
+  /* 從第一次小檢核一路算到第 upTo 堂:每一次排除前面所有次的預留題(各次互不重疊)。回 { <堂號>: R } */
+  async function reserveChain(packs, levels, upTo, c) {
+    const out = {};
+    let used = [];
+    for (let at = nextCheckpoint(packs, levels, 0); at && at <= upTo; at = nextCheckpoint(packs, levels, at)) {
+      out[at] = await reserveOne(packs, levels, at, c, used);
+      used = used.concat(out[at]);
+    }
+    return out;
+  }
+  /* 預留題:第 no 堂之後的第一次(近的)與第二次(遠的)小檢核各一份。每次都從第一次小檢核算起,所以同一個帳號、同一組級別、
+     同一次小檢核每次算出來都一樣(換裝置、從哪一堂算都一樣)。不排除做過的題,不存進任何鍵;題庫或清單少了沒挑中的題整份不變,
+     少了挑中的題只換那一題(之後幾次可能跟著換一題)。課程裡的練習選題先避開兩份,湊不滿先用遠的、最後才用近的
+     (pickBankIds 的 hold;弱點補練不用);小檢核本身也先避開之後兩次的預留題。
+     ctx = { account(帳號 id), pool(小檢核可用題清單,已扣前測題與短測題), bank }。回 { ids: near 接 far, near, far };
+     沒有帳號(訪客)、沒有清單、後面沒有小檢核都是空的 */
+  async function reserveFor(packs, levels, no, ctx) {
+    const c = ctx || {};
+    const empty = { ids: [], near: [], far: [] };
+    if (typeof c.account !== 'string' || !c.account || !Array.isArray(c.pool)) return empty;
+    const nearAt = nextCheckpoint(packs, levels, no);
+    if (!nearAt) return empty;
+    const farAt = nextCheckpoint(packs, levels, nearAt);
+    const chain = await reserveChain(packs, levels, farAt || nearAt, c);
+    const near = chain[nearAt].slice(), far = farAt ? chain[farAt].slice() : [];
+    return { ids: near.concat(far), near, far };
+  }
+  /* 選題的 ctx 帶的預留題:ctx.reserve 是陣列(舊的寫法,只有一份)、reserveFor 的結果,或回這兩種(或 Promise)的函式。
+     reservedOf 回全部(ids)的複本,nearOf 回近的那一份的複本;沒有回 [] */
+  async function holdOf(ctx) {
     const r = ctx && ctx.reserve;
     const v = await (typeof r === 'function' ? r() : r);
-    return Array.isArray(v) ? v.slice() : [];
+    if (Array.isArray(v)) return { ids: v.slice(), near: [] };
+    const ok = (x) => (Array.isArray(x) ? x.slice() : []);
+    return v && typeof v === 'object' ? { ids: ok(v.ids), near: ok(v.near) } : { ids: [], near: [] };
   }
+  async function reservedOf(ctx) { return (await holdOf(ctx)).ids; }
+  async function nearOf(ctx) { return (await holdOf(ctx)).near; }
 
   /* 個人段已經凍結的區塊(from ≤ 編號 < to),照編號排 */
   function frozenIn(state, from, to) {
@@ -493,7 +529,7 @@
     const frozen = frozenIn(state, RESERVED.weak, RESERVED.test_review);
     if (frozen.length) return { state, blocks: frozen.map((x) => ({ idx: x.idx, module: x.e.m || moduleOfIds(x.e.ids), ids: x.e.ids, r: x.e.r, key: x.e.k || null })), need: [] };
     let st = state, idx = RESERVED.weak;
-    const avoid = frozenIds(st), blocks = [], need = [], hold = { ids: await reservedOf(ctx), fill: false };
+    const avoid = frozenIds(st), blocks = [], need = [], hold = { ids: await reservedOf(ctx), near: await nearOf(ctx), fill: false };
     const put = (module, ids, r, key) => {
       st = freeze(st, idx, ids, ctx.now, { r, m: module, k: key || null });
       st.pk[idx].ids.forEach((id) => avoid.push(id));
@@ -525,7 +561,7 @@
     let st = state;
     const redo = (units || []).filter((u) => !u.k), keys = (units || []).filter((u) => u.k);
     st = freeze(st, RESERVED.review, redo.map((u) => u.id), ctx.now, { r: 'review', sub: redo.map((u) => (u.sub === undefined ? null : u.sub)), m: redo.map((u) => u.m) });
-    const avoid = frozenIds(st), need = [], hold = { ids: keys.length ? await reservedOf(ctx) : [], fill: true };
+    const avoid = frozenIds(st), need = [], hold = { ids: keys.length ? await reservedOf(ctx) : [], near: keys.length ? await nearOf(ctx) : [], fill: true, mode: 'review' };
     let idx = RESERVED.review + 1;
     for (const u of keys.slice(0, 4)) {
       const w = R.bankWhere(u.k), want = R.isGroupKey(u.k) ? 1 : 3;
@@ -544,7 +580,7 @@
     const frozen = frozenIn(state, RESERVED.test_review, RESERVED.test_review + 8);
     if (frozen.length) return { state, blocks: frozen.map((x) => testBlockOf(x.idx, x.e)), need: [] };
     let st = state, idx = RESERVED.test_review;
-    const avoid = frozenIds(st).concat(ctx.testIds || []), blocks = [], need = [], hold = { ids: await reservedOf(ctx), fill: true };
+    const avoid = frozenIds(st).concat(ctx.testIds || []), blocks = [], need = [], hold = { ids: await reservedOf(ctx), near: await nearOf(ctx), fill: true };
     for (const x of R.planTestReview(parts)) {
       if (x.kind === 'result') continue;
       let ids;
@@ -700,7 +736,7 @@
     LESSON_KEY, LESSON_KEY_MAX, RESERVED, OPEN_LEVELS,
     lessonKey, parseLessonKey, compose, suggestedDate, dayOf, unlockState, fixedDone,
     newState, answer, readAnswer, setSegment, answeredIn, sizeOf, mergeLesson, mergeTests, freeze, allocate,
-    pickFixed, pickWeak, pickReview, pickTestReview, reserveFor, reserved: reservedOf, nextCheckpoint,
+    pickFixed, pickWeak, pickReview, pickTestReview, reserveFor, reserved: reservedOf, near: nearOf, nextCheckpoint,
     loadLesson, saveLesson, saveLessonLocal, fitLesson, loadShared, saveShared, syncPractice, PRACTICE_KEYS,
   });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -101,35 +101,41 @@ T['R3 第 20–23 堂只有第 24 堂那一份(遠的是空的);第 24 堂兩份
   return 'ok';
 };
 
+/* 補題順序用自己組的兩份(近、遠各 4 題照片描述):實際的第 4、8 堂兩份照片描述不一定都有(第 8 堂小檢核沒有照片描述) */
+function holdP1(from) {
+  const ids = from.filter((id) => /^l1-/.test(id));
+  const near = ids.slice(0, 4), far = ids.slice(4, 8);
+  return { ids: near.concat(far), near, far };
+}
+
 T['R4 固定段題不夠時先用遠的那一份,遠的用完才用近的'] = async () => {
-  const l = P.compose(PACKS, TT, 3), hold = await reserveOf(TT, 3);
+  const l = P.compose(PACKS, TT, 3), hold = holdP1(allOfPart('1'));
   const p1 = bankBlocks(l).filter((b) => b.module === 'p1'), want = p1.reduce((a, b) => a + b.count, 0);
-  const farP1 = ofPart(hold.far, '1'), nearP1 = ofPart(hold.near, '1');
   const used = (r) => p1.reduce((a, b) => a.concat(r.state.pk[b.idx].ids), []);
   const a = used(await P.pickFixed(l, squeeze(l, '1', hold.ids), ctxOf({ reserve: hold })));
-  assert.ok(a.length === Math.min(want, farP1.length + nearP1.length), '選到 ' + a.length);
-  eq([disjoint(a, farP1).length, disjoint(a, nearP1).length], [Math.min(want, farP1.length), Math.max(0, Math.min(want, farP1.length + nearP1.length) - farP1.length)], '先遠後近');
-  const b = used(await P.pickFixed(l, squeeze(l, '1', nearP1), ctxOf({ reserve: hold })));
-  assert.ok(b.length === Math.min(want, nearP1.length) && b.every((id) => nearP1.indexOf(id) > -1), '只剩近的時用近的');
-  return '照片描述要 ' + want + ' 題、遠 ' + farP1.length + '、近 ' + nearP1.length;
+  assert.ok(want > 4 && want < 8, '照片描述要 ' + want + ' 題');
+  eq([a.length, disjoint(a, hold.far).length, disjoint(a, hold.near).length], [want, 4, want - 4], '先把遠的 4 題用完,才用近的');
+  const b = used(await P.pickFixed(l, squeeze(l, '1', hold.near), ctxOf({ reserve: hold })));
+  assert.ok(b.length === 4 && b.every((id) => hold.near.indexOf(id) > -1), '只剩近的時用近的');
+  return '照片描述要 ' + want + ' 題';
 };
 
 T['R5 考點回顧:沒做過的非預留題 → 遠的預留題 → 14 天內做過的 → 近的預留題'] = async () => {
-  const l = P.compose(PACKS, TT, 3), hold = await reserveOf(TT, 3);
-  const farP1 = ofPart(hold.far, '1'), nearP1 = ofPart(hold.near, '1');
-  const free = allOfPart('1').filter((id) => hold.ids.indexOf(id) < 0);
+  const l = P.compose(PACKS, TT, 3), all = allOfPart('1'), hold = holdP1(all);
+  const free = all.filter((id) => hold.ids.indexOf(id) < 0);
   const seenIds = free.slice(0, 5), fresh = free.slice(5, 10);
   const units = [{ k: 'P1.photo', due: '2026-11-24', step: 7 }];
   const run = async (keep) => (await P.pickReview(l, squeeze(l, '1', keep), units, ctxOf({ reserve: hold, seen: seenIds }))).state.pk[81].ids;
   const a = await run(hold.ids.concat(seenIds, fresh));
   assert.ok(a.length === 3 && a.every((id) => fresh.indexOf(id) > -1), '有沒做過的新題就用:' + a);
-  assert.ok(farP1.length >= 3, '遠的那一份照片描述夠 3 題');
   const b = await run(hold.ids.concat(seenIds));
-  assert.ok(b.length === 3 && b.every((id) => farP1.indexOf(id) > -1), '沒有新題先用遠的預留題:' + b);
-  const c = await run(nearP1.concat(seenIds));
+  assert.ok(b.length === 3 && b.every((id) => hold.far.indexOf(id) > -1), '沒有新題先用遠的預留題:' + b);
+  const c = await run(hold.near.concat(seenIds));
   assert.ok(c.length === 3 && c.every((id) => seenIds.indexOf(id) > -1), '再來是 14 天內做過的:' + c);
-  const d = await run(nearP1);
-  assert.ok(d.length === Math.min(3, nearP1.length) && d.every((id) => nearP1.indexOf(id) > -1), '最後才用近的:' + d);
+  const d = await run(hold.near);
+  assert.ok(d.length === 3 && d.every((id) => hold.near.indexOf(id) > -1), '最後才用近的:' + d);
+  const r = await P.pickReview(l, squeeze(l, '1', hold.far.slice(0, 1).concat(seenIds.slice(0, 1), hold.near)), units, ctxOf({ reserve: hold, seen: seenIds }));
+  eq(r.state.pk[81].ids.map((id) => (hold.far.indexOf(id) > -1 ? 'far' : hold.near.indexOf(id) > -1 ? 'near' : 'seen')).sort(), ['far', 'near', 'seen'], '三種各剩一題時三種都用');
   return 'ok';
 };
 
@@ -141,24 +147,22 @@ T['R6 弱點補練只避開、不補:只剩預留題時選 0 題,need 記下來'
   return 'ok';
 };
 
-T['R7 小檢核的檢核區塊:清單內非預留題夠時不選預留題;不夠時才選,選到的都在清單內、沒做過'] = async () => {
-  const l = P.compose(PACKS, TT, 4), hold = await reserveOf(TT, 4);
-  const base = { checkpointPool: POOL, reserve: hold };
-  const a = await P.pickFixed(l, P.newState(l, NOW), ctxOf(base));
+T['R7 小檢核的檢核區塊:清單內非預留題夠時不選預留題;不夠時才選(先遠後近),選到的都在清單內、沒做過'] = async () => {
+  const l = P.compose(PACKS, TT, 4), real = await reserveOf(TT, 4);
+  const a = await P.pickFixed(l, P.newState(l, NOW), ctxOf({ checkpointPool: POOL, reserve: real }));
   cpBlocks(l).forEach((blk) => {
     const ids = a.state.pk[blk.idx].ids;
-    assert.ok(ids.length === blk.count && ids.every((id) => hold.ids.indexOf(id) < 0 && POOL.indexOf(id) > -1), blk.blockId + ' 不選預留題');
+    assert.ok(ids.length === blk.count && ids.every((id) => real.ids.indexOf(id) < 0 && POOL.indexOf(id) > -1), blk.blockId + ' 不選預留題');
   });
-  const p1 = cpBlocks(l).filter((x) => x.module === 'p1')[0];
+  const p1 = cpBlocks(l).filter((x) => x.module === 'p1')[0], hold = holdP1(POOL);
   const done = {};
-  POOL.filter((id) => /^l1-/.test(id) && hold.ids.indexOf(id) < 0).forEach((id) => { done[id] = { ok: true, t: 1 }; });
-  ofPart(hold.ids, '1').slice(0, 2).forEach((id) => { done[id] = { ok: true, t: 1 }; });
-  const d = await P.pickFixed(l, P.newState(l, NOW), ctxOf(Object.assign({}, base, { records: { 1: done, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {} } })));
-  const ids = d.state.pk[p1.idx].ids, left = POOL.filter((id) => /^l1-/.test(id) && !done[id]);
-  assert.ok(ids.length === Math.min(p1.count, left.length) && ids.every((id) => hold.ids.indexOf(id) > -1 && POOL.indexOf(id) > -1 && !done[id]), '不夠才用預留題:' + ids);
-  const farFirst = ofPart(hold.far, '1').filter((id) => !done[id]);
-  assert.ok(disjoint(ids, farFirst).length === Math.min(ids.length, farFirst.length), '先用遠的那一份');
-  return '照片描述清單剩 ' + left.length + ' 題沒做過';
+  POOL.filter((id) => /^l1-/.test(id) && hold.ids.indexOf(id) < 0).slice(2).forEach((id) => { done[id] = { ok: true, t: 1 }; });
+  hold.far.slice(0, 1).forEach((id) => { done[id] = { ok: true, t: 1 }; });
+  const d = await P.pickFixed(l, P.newState(l, NOW), ctxOf({ checkpointPool: POOL, reserve: hold, records: { 1: done, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {} } }));
+  const ids = d.state.pk[p1.idx].ids, kind = (id) => (hold.far.indexOf(id) > -1 ? 'far' : hold.near.indexOf(id) > -1 ? 'near' : 'free');
+  assert.ok(ids.every((id) => POOL.indexOf(id) > -1 && !done[id]), '都在清單內、沒做過');
+  eq([ids.length, ids.filter((id) => kind(id) === 'free').length, ids.filter((id) => kind(id) === 'far').length, ids.filter((id) => kind(id) === 'near').length], [p1.count, 2, 3, p1.count - 5], '先非預留、再遠、最後近');
+  return '照片描述 ' + p1.count + ' 題';
 };
 
 T['R8 不改傳進來的 ctx 與進度'] = async () => {

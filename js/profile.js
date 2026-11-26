@@ -816,8 +816,10 @@
         put(
           opts.onMode ? null : h('h2', { class: 'auth-h' }, '驗證信已寄出'),
           h('p', { class: 'auth-sent' }, '寄到 ', h('b', null, email), '。點信裡的連結就完成註冊並登入。沒收到先看垃圾郵件。'),
+          h('p', { class: 'auth-sent' }, '已經註冊過的 Email 不會收到驗證信，請直接登入或重設密碼。'),
           again,
-          msg);
+          msg,
+          switchLine('已經有帳號？', '登入', 'login'));
       }
     }
 

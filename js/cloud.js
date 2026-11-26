@@ -64,15 +64,19 @@
   const SDK_SRC = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2/dist/umd/supabase.min.js';
   const SDK_SRI = 'sha384-7i/4BYWz4Mn+lJfg2HWfEPfZQ7tmFKF3CTSKlXBpxWjNlLjcg+T6smpHG4gLmU1u';
 
-  /* Google 登入失敗時 Supabase 不是回傳錯誤,而是把錯誤掛在網址的 # 後面導回來。
-     這裡先接住再把網址清乾淨(登入卡會把它顯示出來);密碼重設的 # 帶的是 token,不動它。 */
+  /* Google 登入失敗、信裡的連結過期時,Supabase 把錯誤掛在網址的 # 後面導回來。
+     這裡先接住再把網址清乾淨(登入卡顯示 authErrorText 寫好的說明,網址上的文字一律不顯示);密碼重設的 # 帶的是 token,不動它。 */
   const authError = (function () {
     const hash = location.hash || '';
     if (!/[#&]error/.test(hash) || /access_token=/.test(hash)) return '';
-    const m = /[#&]error_description=([^&]*)/.exec(hash) || /[#&]error(?:_code)?=([^&]*)/.exec(hash);
-    const raw = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '登入沒有完成';
+    const pick = name => {
+      const m = new RegExp('[#&]' + name + '=([^&]*)').exec(hash);
+      if (!m) return '';
+      try { return decodeURIComponent(m[1].replace(/\+/g, ' ')); } catch (e) { return ''; }
+    };
+    const text = authErrorText(pick('error'), pick('error_code'), pick('error_description'));
     try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
-    return raw;
+    return text;
   })();
   /* 這一頁是登入回來的頁面(Google 導回來、點信裡的連結):網址帶 access_token(密碼重設的 type=recovery 不算)或 ?code=,
      要趁 supabase-js 清掉網址之前記下來。回來那一頁 supabase-js 先拿 access_token 去問帳號,雲端確認登入之前 CLOUD.user 是 null、
@@ -95,7 +99,7 @@
   /* supabase-js 把登入資料存在 localStorage 的這個位置(預設名稱:sb-<專案代號>-auth-token) */
   const SB_KEY = 'sb-' + ((/^https?:\/\/([^./]+)\./.exec(cfg.url) || [])[1] || '') + '-auth-token';
 
-  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError: authError ? friendly({ message: authError }) : '',
+  window.CLOUD = { enabled, ready: Promise.resolve(null), user: null, isTeacher: false, sessionExpired: false, client: null, authError,
     authReturning: enabled && authReturning, login, logout, push, readKey, signUp, signInWithGoogle, resetPassword, updatePassword, resendConfirm, deleteAccount, updateName, nameOf,
     access: null, accessReady: Promise.resolve(null), refreshAccess, locked, cachedAccess, joinClass, startTeacherTrial, myBilling, trialIntentOk, accessStatus, trialEndsSoon,
     startCheckout, myCheckout, isOwner,
@@ -597,6 +601,18 @@
     if (!client) throw new Error('雲端元件尚未載入\n請重新整理再試');
   }
 
+  /* 網址帶回來的登入錯誤 → 站上寫好的說明。只認幾種已知的錯誤代碼(說明文字只拿來分辨是哪一種),其他一律同一句:
+     網址誰都能編,帶進來的文字不能出現在登入視窗 */
+  function authErrorText(err, code, desc) {
+    const e = String(err).toLowerCase(), c = String(code).toLowerCase(), d = String(desc);
+    if (c === 'otp_expired' || c === 'flow_state_expired' || /link is invalid or has expired/i.test(d)) return '連結已過期\n請重新登入或重寄驗證信';
+    if (c === 'signup_disabled' || /signups? not allowed/i.test(d)) return '目前未開放註冊\n請聯絡老師';
+    if (c === 'provider_disabled' || /unsupported provider|provider is not enabled/i.test(d)) return 'Google 登入目前不能用\n請改用 Email 註冊';
+    if (c === 'over_request_rate_limit' || e === 'too_many_requests') return '請求太頻繁\n請幾分鐘後再試';
+    if (e === 'access_denied' && !c) return 'Google 登入已取消';
+    return '登入沒有完成\n請再試一次';
+  }
+
   function friendly(error) {
     const m = error.message || '';
     if (/already registered|already exists|already been registered/i.test(m)) return '這個 Email 已經註冊過\n請直接登入或點 Google 登入\n忘記密碼可以重設';
@@ -619,11 +635,13 @@
       email: String(email).trim(), password,
       options: { data: { name: String(name || '').trim().slice(0, 20) }, emailRedirectTo: siteUrl('index.html') },
     });
+    /* 信箱已經註冊過:Confirm email 開啟時回一個沒有 identities 的假 user,關閉時回 already registered 的錯誤。
+       跟新註冊一樣回「去收信」(畫面另外寫明已經註冊過的人直接登入或重設密碼),這個畫面分辨不出信箱有沒有註冊過。
+       註冊時選老師的意向清掉(沒有新帳號可以綁) */
+    const taken = error ? /already registered|already exists|already been registered/i.test(error.message || '')
+      : !!(data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0);
+    if (taken) { clearSignupIntent(); return { needsConfirm: true }; }
     if (error) throw new Error(friendly(error));
-    /* Confirm email 開啟時,已註冊過的 email 會回一個沒有 identities 的假 user(不洩漏帳號存在),這裡當作已註冊處理 */
-    if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
-      throw new Error('這個 Email 已經註冊過\n請直接登入或點 Google 登入\n忘記密碼可以重設');
-    }
     bindEmailIntent(email, data.user);   // 註冊時選了老師:意向綁上這個新帳號的 id(沒有意向什麼都不做)
     if (data.session) {
       window.CLOUD.user = data.user;

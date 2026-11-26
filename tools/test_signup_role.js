@@ -126,7 +126,7 @@ function loadCard(o) {
   if ('paid' in o) ctx.PAID_UI = o.paid; else if (o.plans === false) delete ctx.PAID_UI;
   const w = o.world || null;   // 給了 world:清意向就真的清它的 localStorage 與 sessionStorage(整合情境用)
   ctx.CLOUD = {
-    enabled: true, user: null, authError: '', sessionExpired: false, ready: Promise.resolve(null),
+    enabled: true, user: null, authError: o.authError || '', sessionExpired: false, ready: Promise.resolve(null),
     nameOf: () => '',
     saveSignupIntent: (x) => { log.push(['save', JSON.parse(JSON.stringify(x))]); return Object.assign({}, x, { at: 1700000000000 }); },
     clearSignupIntent: () => { log.push(['clear']); if (w) { w.local.removeItem('tr_signup_intent'); w.session.removeItem('tr_signup_intent'); } },
@@ -1029,6 +1029,74 @@ cases['真的從 Google 回來,別的分頁同時只改了別的 key(練習紀�
   w.search = '';
   await openPage(w); await openPage(w);
   return { ok: uid === UID && trialCalls(w).length === 1, detail: 'uid ' + uid + ' / 呼叫 ' + trialCalls(w).length };
+};
+
+/* ---------- 登入錯誤與註冊訊息:網址帶的文字不上畫面、註冊訊息不透露信箱有沒有註冊過 ---------- */
+const FAKE = '帳號異常，請加 LINE ID @fake-support 聯絡客服';
+const cardText = (card) => norm(card.textContent);
+cases['網址 # 帶任意的 error_description:登入視窗只顯示站上寫好的一句,網址上的文字不出現'] = async () => {
+  const out = [];
+  for (const hash of ['#error=server_error&error_description=' + encodeURIComponent(FAKE),
+    '#error=server_error&error_code=unexpected_failure&error_description=' + encodeURIComponent(FAKE),
+    '#error_description=' + encodeURIComponent(FAKE) + '&error=invalid_request',
+    '#error=' + encodeURIComponent(FAKE), '#error_code=' + encodeURIComponent(FAKE),
+    '#error=server_error&error_description=%E0%A4%A']) {
+    const { C } = await openPage(world({ user: null, hash }), 'index.html');
+    const { card } = loadCard({ mode: 'login', authError: C.authError });
+    const t = cardText(card);
+    out.push({ shown: C.authError, leak: /fake|LINE|客服|%/.test(C.authError + t), inCard: t.indexOf(norm(C.authError).split('\n')[0]) > -1 });
+  }
+  const ok = out.every(x => x.shown === '登入沒有完成\n請再試一次' && !x.leak && x.inCard);
+  return { ok, detail: JSON.stringify(out) };
+};
+
+cases['網址 # 帶已知的錯誤代碼:顯示對應的固定說明(說明裡沒有網址上的文字)'] = async () => {
+  const want = [
+    ['#error=access_denied&error_description=The+user+denied+' + encodeURIComponent(FAKE), 'Google 登入已取消'],
+    ['#error=access_denied&error_code=otp_expired&error_description=' + encodeURIComponent('Email link is invalid or has expired ' + FAKE), '連結已過期\n請重新登入或重寄驗證信'],
+    ['#error=invalid_request&error_code=validation_failed&error_description=Unsupported+provider%3A+provider+is+not+enabled', 'Google 登入目前不能用\n請改用 Email 註冊'],
+    ['#error=access_denied&error_code=signup_disabled&error_description=Signups+not+allowed+for+this+instance', '目前未開放註冊\n請聯絡老師'],
+    ['#error=too_many_requests&error_code=over_request_rate_limit&error_description=' + encodeURIComponent(FAKE), '請求太頻繁\n請幾分鐘後再試'],
+  ];
+  const bad = [];
+  for (const [hash, text] of want) {
+    const { C } = await openPage(world({ user: null, hash }), 'index.html');
+    if (C.authError !== text) bad.push(hash.slice(0, 40) + ' → ' + JSON.stringify(C.authError));
+  }
+  return { ok: !bad.length, detail: bad.join(' / ') || want.length + ' 種' };
+};
+
+cases['註冊:信箱已經註冊過(Supabase 回沒有 identities 的帳號)跟新註冊回一樣的結果,意向清掉'] = async () => {
+  const w = world({ user: null, signUpUser: { id: 'fake-id', identities: [] } });
+  const p = await openPage(w, 'signup.html');
+  p.C.saveSignupIntent({ seats: 30, name: '週六班', email: 'old@x.com' }, Date.now() - MIN);
+  let r = null, err = '';
+  try { r = await p.C.signUp('old@x.com', '12345678', '王老師'); } catch (e) { err = e.message; }
+  const w2 = world({ user: null, signUpUser: { id: 'n', identities: [{}] } });
+  const p2 = await openPage(w2, 'signup.html');
+  const r2 = await p2.C.signUp('new@x.com', '12345678', '小安');
+  const ok = !err && JSON.stringify(r) === JSON.stringify(r2) && intentLeft(w) === null;
+  return { ok, detail: JSON.stringify({ r, r2, err, left: intentLeft(w) }) };
+};
+
+cases['註冊:Supabase 回「已經註冊過」的錯誤時也顯示寄出驗證信的畫面,不顯示已經註冊過'] = async () => {
+  const w = world({ user: null });
+  const p = await openPage(w, 'signup.html');
+  p.C.client.auth.signUp = async () => ({ data: { user: null, session: null }, error: { message: 'User already registered' } });
+  let r = null, err = '';
+  try { r = await p.C.signUp('old@x.com', '12345678', '王老師'); } catch (e) { err = e.message; }
+  return { ok: !err && !!r && r.needsConfirm === true, detail: JSON.stringify({ r, err }) };
+};
+
+cases['註冊之後的畫面:寫明收信完成註冊,也寫明已經註冊過的人直接登入或重設密碼,並有登入的按鈕'] = async () => {
+  const { card } = loadCard({ paid: false });
+  await fillAndSubmit(card, { name: '小安', email: 'a@x.com', pw: '12345678' });
+  const t = cardText(card);
+  const toLogin = card.byText('登入')[0];
+  let back = false;
+  if (toLogin) { await toLogin.click(); await settle(); back = !!card.byTag('form')[0] && /忘記密碼/.test(cardText(card)); }
+  const ok = /點信裡的連結就完成註冊/.test(t) && /已經註冊過的 Email 不會收到驗證信，請直接登入或重設密碼。/.test(t) && !!toLogin && back;
+  return { ok, detail: t.slice(0, 200) + ' 登入按鈕 ' + !!toLogin + ' 回到登入 ' + back };
 };
 
 (async () => {

@@ -3,11 +3,10 @@
       CLOUD.client 建好了,主控台沒有 integrity 的錯誤。
    2. 同一個網址的回應被改掉一個字(用 CDP 的 Fetch 攔下來改):瀏覽器擋下、window.supabase 不存在、CLOUD.client 是 null,
       證明 integrity 真的有在檢查。
-   用法:node tools/check_sdk_live.js [--port <本機伺服器的埠,預設 9396>] [--debug-port <Chrome 除錯埠,預設 port+1>] [--tmp <放 Chrome 使用者資料的資料夾>]
-   Chrome 的使用者資料夾每次新建,跑完刪掉。 */
+   用法:node tools/check_sdk_live.js [--port <本機伺服器的埠,預設 9396>] [--debug-port <Chrome 除錯埠,預設 port+1>] --tmp <放 Chrome 使用者資料的資料夾,必填>
+   Chrome 的使用者資料夾每次新建,跑完刪掉。沒給 --tmp 就不跑(不放到系統暫存資料夾)。 */
 'use strict';
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
 const { spawn } = require('child_process');
 const { serve, connect } = require('./test_footer_fold.js');
@@ -15,7 +14,8 @@ const { serve, connect } = require('./test_footer_fold.js');
 const args = process.argv.slice(2);
 const opt = (n) => { const i = args.indexOf(n); return i > -1 ? args[i + 1] : null; };
 const PORT = Number(opt('--port')) || 9396, DEBUG = Number(opt('--debug-port')) || PORT + 1;
-const TMP = path.resolve(opt('--tmp') || os.tmpdir());
+if (!opt('--tmp')) { process.stderr.write('請用 --tmp 指定放 Chrome 使用者資料的資料夾。\n'); process.exit(2); }
+const TMP = path.resolve(opt('--tmp'));
 const CHROME = ['C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
   'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'].find((p) => fs.existsSync(p));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

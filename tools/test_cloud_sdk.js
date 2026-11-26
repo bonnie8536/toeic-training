@@ -1,4 +1,4 @@
-/* js/cloud.js 載入 supabase-js 的 script:網址鎖定確切版本(不是 @2 這種範圍),帶 integrity(sha384)與 crossOrigin="anonymous"。
+/* js/cloud.js 載入 supabase-js 的 script:網址鎖定確切版本(不是 @2 這種範圍)、指向 npm 套件裡原有的檔案,帶 integrity(sha384)與 crossOrigin="anonymous"。
    頁面已經有 window.supabase(測試放的假元件)時不建 script,照舊直接用。
    真的從 CDN 載入、雜湊對得上,由 tools/check_sdk_live.js 用無頭 Chrome 檢查(要連網路,不在這裡跑)。
    用法:node tools/test_cloud_sdk.js */
@@ -30,14 +30,14 @@ function open(withSdk) {
 const settle = () => new Promise((r) => setTimeout(r, 20));
 
 const T = {};
-T['載入器建的 script:確切版本的網址、sha384 的 integrity、crossOrigin=anonymous;載完就建立連線'] = async () => {
+T['載入器建的 script:確切版本、npm 套件裡原有的 dist/umd/supabase.js(CDN 臨時產生的 .min.js 內容可能會變)、sha384 的 integrity、crossOrigin=anonymous;載完就建立連線'] = async () => {
   const { ctx, added, fake } = open(false);
   await settle();
   if (added.length !== 1) return { ok: false, detail: '建了 ' + added.length + ' 個 script' };
   const s = added[0];
   const bad = [];
   if (s.tagName !== 'SCRIPT') bad.push('不是 script');
-  if (!/^https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@\d+\.\d+\.\d+\/dist\/umd\/supabase\.min\.js$/.test(s.src || '')) bad.push('網址不是確切版本 ' + s.src);
+  if (!/^https:\/\/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@\d+\.\d+\.\d+\/dist\/umd\/supabase\.js$/.test(s.src || '')) bad.push('網址不是確切版本的套件原檔 ' + s.src);
   if (!/^sha384-[A-Za-z0-9+/]{64}$/.test(s.integrity || '')) bad.push('integrity ' + s.integrity);
   if (s.crossOrigin !== 'anonymous') bad.push('crossOrigin ' + s.crossOrigin);
   if (typeof s.onload !== 'function' || typeof s.onerror !== 'function') bad.push('沒有 onload、onerror');

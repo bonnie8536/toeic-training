@@ -646,8 +646,9 @@
       draw();
       return card;
 
-      function go(next) {
-        if (next === 'login') forgetIntent();   // 切到登入分頁:註冊時選老師的意向作廢
+      /* keepIntent:寄出驗證信畫面的「登入」。剛註冊的老師意向已經綁上新帳號,之後點信裡的連結才會自動開試用,這裡不清 */
+      function go(next, keepIntent) {
+        if (next === 'login' && !keepIntent) forgetIntent();   // 切到登入分頁:註冊時選老師的意向作廢
         mode = next; draw();
       }
 
@@ -679,9 +680,9 @@
 
       /* 底部一行切換。Engoo、Busuu、VoiceTube、均一都是這種做法:
          一個標題配一行「還沒有帳號?註冊」,不是兩個同級分頁。 */
-      function switchLine(text, linkText, next) {
+      function switchLine(text, linkText, next, keepIntent) {
         return h('p', { class: 'auth-switch' }, text,
-          h('button', { class: 'auth-link strong', type: 'button', onclick: () => go(next) }, linkText));
+          h('button', { class: 'auth-link strong', type: 'button', onclick: () => go(next, keepIntent) }, linkText));
       }
 
       /* role:註冊分頁的身分選擇(PAID_UI 打開才有)。轉跳 Google 之前存好意向(Google 回來時頁面狀態都不見了);
@@ -816,10 +817,10 @@
         put(
           opts.onMode ? null : h('h2', { class: 'auth-h' }, '驗證信已寄出'),
           h('p', { class: 'auth-sent' }, '寄到 ', h('b', null, email), '。點信裡的連結就完成註冊並登入。沒收到先看垃圾郵件。'),
-          h('p', { class: 'auth-sent' }, '已經註冊過的 Email 不會收到驗證信，請直接登入或重設密碼。'),
+          h('p', { class: 'auth-sent' }, '已經有帳號：請直接登入、用 Google 登入或重設密碼。'),
           again,
           msg,
-          switchLine('已經有帳號？', '登入', 'login'));
+          switchLine('已經有帳號？', '登入', 'login', true));
       }
     }
 

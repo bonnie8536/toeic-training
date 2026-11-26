@@ -1053,7 +1053,10 @@ cases['網址 # 帶任意的 error_description:登入視窗只顯示站上寫好
 cases['網址 # 帶已知的錯誤代碼:顯示對應的固定說明(說明裡沒有網址上的文字)'] = async () => {
   const want = [
     ['#error=access_denied&error_description=The+user+denied+' + encodeURIComponent(FAKE), 'Google 登入已取消'],
-    ['#error=access_denied&error_code=otp_expired&error_description=' + encodeURIComponent('Email link is invalid or has expired ' + FAKE), '連結已過期\n請重新登入或重寄驗證信'],
+    ['#error=access_denied&error_code=403&error_description=The+user+denied', 'Google 登入已取消'],
+    ['#error=access_denied&error_code=access_denied', 'Google 登入已取消'],
+    ['#error=access_denied&error_code=bad_oauth_state', '登入沒有完成\n請再試一次'],
+    ['#error=access_denied&error_code=otp_expired&error_description=' + encodeURIComponent('Email link is invalid or has expired ' + FAKE), '連結已過期\n請到「註冊」分頁重寄驗證信'],
     ['#error=invalid_request&error_code=validation_failed&error_description=Unsupported+provider%3A+provider+is+not+enabled', 'Google 登入目前不能用\n請改用 Email 註冊'],
     ['#error=access_denied&error_code=signup_disabled&error_description=Signups+not+allowed+for+this+instance', '目前未開放註冊\n請聯絡老師'],
     ['#error=too_many_requests&error_code=over_request_rate_limit&error_description=' + encodeURIComponent(FAKE), '請求太頻繁\n請幾分鐘後再試'],
@@ -1095,8 +1098,28 @@ cases['註冊之後的畫面:寫明收信完成註冊,也寫明已經註冊過�
   const toLogin = card.byText('登入')[0];
   let back = false;
   if (toLogin) { await toLogin.click(); await settle(); back = !!card.byTag('form')[0] && /忘記密碼/.test(cardText(card)); }
-  const ok = /點信裡的連結就完成註冊/.test(t) && /已經註冊過的 Email 不會收到驗證信，請直接登入或重設密碼。/.test(t) && !!toLogin && back;
+  const ok = /點信裡的連結就完成註冊/.test(t) && /已經有帳號：請直接登入、用 Google 登入或重設密碼。/.test(t) && !/不會收到/.test(t) && !!toLogin && back;
   return { ok, detail: t.slice(0, 200) + ' 登入按鈕 ' + !!toLogin + ' 回到登入 ' + back };
+};
+
+cases['老師註冊後在寄出畫面按「登入」:意向留著(之後點信裡的連結,試用照常自動開啟)'] = async () => {
+  const { card, log } = loadCard({ paid: true });
+  await pick(card, 'teacher');
+  await fillAndSubmit(card, { name: '王老師', email: 'T@x.com', pw: '12345678' });
+  const before = intentCalls(log).map(x => x[0]).join(',');
+  const toLogin = card.byText('登入')[0];
+  if (toLogin) { await toLogin.click(); await settle(); }
+  const after = intentCalls(log).map(x => x[0]).join(',');
+  const onLogin = !!card.byTag('form')[0] && /忘記密碼/.test(cardText(card));
+  return { ok: before === 'save' && after === before && onLogin, detail: 'before=' + before + ' after=' + after + ' 回到登入 ' + onLogin };
+};
+
+cases['註冊分頁按「登入」切過去:意向照舊作廢'] = async () => {
+  const { card, log } = loadCard({ paid: true });
+  await pick(card, 'teacher');
+  const n = log.length;
+  await card.byText('登入')[0].click(); await settle();
+  return { ok: log.slice(n).some(x => x[0] === 'clear'), detail: JSON.stringify(log.slice(n)) };
 };
 
 (async () => {

@@ -146,11 +146,54 @@
     return { level, correct, total: items.length, basicCorrect, basicTotal };
   }
   function plusOne(code) { const i = LEVELS.indexOf(code); return i < 0 ? code : LEVELS[Math.min(i + 1, LEVELS.length - 1)]; }
-  /* 聽力還沒有短測:聽力 = 閱讀級 + 1(最高高分,暫定) */
-  function levelsFromLegacy(diag, items) {
+  /* 聽力:做完短測照短測(音檔失敗 2 題以上照自評),上限閱讀級＋1;沒有短測(上線前開始的檢測):聽力 = 閱讀級 + 1(最高高分,暫定)。
+     listen 是 onboard.listen(先用 listenFor 挑算數的那一份),answerOf(id) 回正解選項 */
+  function levelsFromLegacy(diag, items, listen, answerOf) {
     const r = legacyReading(diag, items);
     if (!r) return null;
-    return { listening: plusOne(r.level), reading: r.level, source: { listening: 'legacy_plus1', reading: 'legacy' } };
+    const l = isPlain(listen) && listen.doneAt && typeof answerOf === 'function' ? listenLevel(listen, answerOf, r.level) : null;
+    if (!l) return { listening: plusOne(r.level), reading: r.level, source: { listening: 'legacy_plus1', reading: 'legacy' } };
+    return { listening: l, reading: r.level, source: { listening: selfUsed(listen) ? 'self' : 'short', reading: 'legacy' } };
+  }
+
+  /* ---------- 聽力短測(8 題固定卷,tools/pick_listen_short.js 選的) ----------
+     onboard.listen = { v: 1, mode: 'full'|'legacy', ids, a: [8 格:null 還沒到、-1 沒選、0–3 選的], fail: [音檔失敗的題號], self, at, doneAt } */
+  const LISTEN_SHORT = Object.freeze(['l1-13', 'l1-22', 'l2-08', 'l2-09', 'l2-87', 'l2-07', 'l2-97', 'l2-25']);
+  const LISTEN_N = LISTEN_SHORT.length;
+  function newListen(mode, nowIso) {
+    return { v: 1, mode: mode === 'legacy' ? 'legacy' : 'full', ids: LISTEN_SHORT.slice(), a: LISTEN_SHORT.map(() => null), fail: [], self: null, at: nowIso, doneAt: null };
+  }
+  const failsOf = (l) => (Array.isArray(l.fail) ? l.fail.filter((i, k, x) => Number.isInteger(i) && i >= 0 && i < LISTEN_N && x.indexOf(i) === k) : []);
+  const selfUsed = (l) => failsOf(l).length >= 2;
+  /* 第一個還沒到的題(都到了回 -1) */
+  function listenNext(l) { return isPlain(l) && Array.isArray(l.a) ? l.a.findIndex((x, i) => i < LISTEN_N && x === null) : 0; }
+  /* 答完:8 格都不是 null(或那一題音檔失敗),而且失敗不到 2 題或自評過 */
+  function listenComplete(l) {
+    if (!isPlain(l) || !Array.isArray(l.a) || l.a.length !== LISTEN_N) return false;
+    const f = failsOf(l);
+    return l.a.every((x, i) => x !== null || f.indexOf(i) > -1) && (!selfUsed(l) || isLevel(l.self));
+  }
+  /* 聽力級:失敗 2 題以上用自評;其他照答對數(失敗、沒選算錯)0–3 入門、4–5 門檻、6–7 進階、8 高分。給 reading 時上限閱讀級＋1。還沒自評回 null */
+  function listenLevel(listen, answerOf, reading) {
+    if (!isPlain(listen) || !Array.isArray(listen.a)) return null;
+    let lv;
+    if (selfUsed(listen)) lv = isLevel(listen.self) ? listen.self : null;
+    else {
+      const f = failsOf(listen), ids = Array.isArray(listen.ids) ? listen.ids : LISTEN_SHORT;
+      const ok = listen.a.filter((c, i) => f.indexOf(i) < 0 && Number.isInteger(c) && c >= 0 && c === answerOf(ids[i])).length;
+      lv = ok >= 8 ? 'high' : ok >= 6 ? 'advanced' : ok >= 4 ? 'threshold' : 'entry';
+    }
+    if (!lv || !isLevel(reading)) return lv;
+    const cap = plusOne(reading);
+    return LEVELS.indexOf(lv) > LEVELS.indexOf(cap) ? cap : lv;
+  }
+  /* 這一份 onboard 的短測算不算數:full 的只給它之後交的那一份 28 題用(doneAt ≤ testFrom);legacy 做完就算 */
+  function listenFor(ob) {
+    const l = isPlain(ob) && isPlain(ob.listen) ? ob.listen : null;
+    if (!l || !l.doneAt || !listenComplete(l)) return null;
+    if (l.mode === 'legacy') return l;
+    const d = Date.parse(l.doneAt), t = Date.parse(ob.testFrom);
+    return isFinite(d) && isFinite(t) && d <= t ? l : null;
   }
   function legacyUsable(diag, nowMs) {
     if (!isPlain(diag) || diag.done !== true) return false;
@@ -293,7 +336,7 @@
   function resultRoute(ob, levels, diag) {
     if (diagRowState(ob, diag) === 'result') return 'legacy';
     const o = isPlain(ob) ? ob : {};
-    if (!levelsSet(levels)) return o.step === 'test' ? 'test' : 'level';
+    if (!levelsSet(levels)) return o.step === 'test' || o.step === 'listen' ? o.step : 'level';
     if (o.status === 'done') return 'draw';
     if (o.status !== 'in_progress' || o.step === 'result') return 'done';
     return RESUME_STEPS.indexOf(o.step) > -1 ? o.step : 'level';
@@ -366,7 +409,7 @@
 
   /* ---------- 首頁卡、「我的」頁學習設定 ---------- */
   function targetLabel(v) { return TARGETS.indexOf(v) < 0 ? '還不確定' : v === 860 ? '860 分以上' : v + ' 分'; }
-  const RESUME_STEPS = Object.freeze(['target', 'exam', 'level', 'score', 'test', 'result']);
+  const RESUME_STEPS = Object.freeze(['target', 'exam', 'level', 'score', 'test', 'listen', 'result']);
   /* 「繼續」:接著中斷的那一步(onboard 或訪客暫存的 step);沒有或不認得從 S1 開始 */
   function continueHref(st) {
     return 'start.html?step=' + (isPlain(st) && RESUME_STEPS.indexOf(st.step) > -1 ? st.step : 'target');
@@ -379,7 +422,7 @@
     const card = (title, sub, primary, more) => Object.assign({ state, title, sub, primary, secondary: null, dismiss: false }, more || {});
     if (state === 'A') {
       if (!i.signedIn) return null;
-      return card('找出你的起始程度', '填多益成績，或做 28 題檢測（約 20 分鐘）', { text: '設定程度', href: 'start.html?step=target' },
+      return card('找出你的起始程度', '填多益成績，或做 36 題檢測（約 23 分鐘）', { text: '設定程度', href: 'start.html?step=target' },
         { secondary: { text: '我有班級代碼', href: 'start.html?step=join' } });
     }
     if (state === 'B') return card('繼續設定起始程度', '', { text: '繼續', href: continueHref(i.signedIn ? i.onboard : i.guest) });
@@ -388,7 +431,7 @@
       const link = practiceLink(i.levels);
       return card('你的起始程度', levelsLabel(i.levels), link ? { text: '開始練習', href: link } : { text: '看起始程度', href: 'start.html?step=result' });
     }
-    if (state === 'E') return card('找出你的起始程度', '填多益成績，或做 28 題檢測（約 20 分鐘）', { text: '設定程度', href: 'start.html?step=target' }, { dismiss: true });
+    if (state === 'E') return card('找出你的起始程度', '填多益成績，或做 36 題檢測（約 23 分鐘）', { text: '設定程度', href: 'start.html?step=target' }, { dismiss: true });
     return null;
   }
   /* 「我的」頁學習設定(五列)。account:{ onboard, levels };diag 是舊檢測。
@@ -417,6 +460,7 @@
     LEVELS, TARGETS, levelName, levelsLabel, parseScoreInput, checkSection, checkTotal, bandOf, splitTotal, levelsFromScore,
     draftErrors, scoreFromDraft, cleanDraft, scoreMonths, examMonths, ymLabel, dayLabel, monthsBetween, scoreTooOld,
     flattenDiagItems, legacyReading, plusOne, levelsFromLegacy, legacyUsable,
+    LISTEN_SHORT, newListen, listenNext, listenComplete, listenLevel, listenFor,
     practiceLink, levelGap, pushHistory, stampAfter, newLevels, levelsSet, testedLevels,
     newGuest, readGuest, guestPatch, resumeEligible,
     hasPracticeKeys, hasLocalData, entryRoute, diagRowState, homeState, resultRoute,

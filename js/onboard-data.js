@@ -144,6 +144,29 @@
   /* S4「開始檢測」:記開始時間,檢測頁只認這之後交的卷。
      從 S8、「我的」頁重新檢測時設定已經是 done:改回 in_progress,交卷後檢測頁才出「看起始程度」;levels 留到新結果出來 */
   function startTest() { return isGuest() ? 'guest' : patch({ step: 'test', testFrom: nowIso(), status: 'in_progress' }); }
+  /* 聽力短測(start.html?step=listen,js/onboard-listen.js):S4「開始檢測」(full,接著做 28 題)或「用上次的閱讀檢測」(legacy)開一份新的;
+     每題選了就存(c:0–3,-1 沒選;failed:那一題音檔載不到);全部答完(失敗 2 題以上要自評)寫 doneAt。不寫練習紀錄 */
+  function startListen(mode) {
+    if (isGuest()) return 'guest';
+    return patch({ listen: C.newListen(mode, nowIso()), step: 'listen', status: 'in_progress' });
+  }
+  function listenNow() { const ob = GET.onboard(); return ob && ob.listen && typeof ob.listen === 'object' ? ob.listen : null; }
+  function saveListen(i, c, failed) {
+    const l = listenNow();
+    if (isGuest() || !l || !Array.isArray(l.a) || !Number.isInteger(i) || i < 0 || i >= l.a.length) return 'failed';
+    const a = l.a.slice();
+    a[i] = Number.isInteger(c) && c >= 0 ? c : -1;
+    const fail = (Array.isArray(l.fail) ? l.fail : []).filter((x) => x !== i).concat(failed ? [i] : []).sort((x, y) => x - y);
+    return patch({ listen: Object.assign({}, l, { a, fail }) });
+  }
+  /* 答完時呼叫(自評頁選了帶 self);還沒答完或還要自評時只存 self、不寫 doneAt */
+  function finishListen(self) {
+    const l = listenNow();
+    if (isGuest() || !l) return 'failed';
+    const next = Object.assign({}, l, self ? { self } : {});
+    if (C.listenComplete(next) && !next.doneAt) next.doneAt = nowIso();
+    return patch({ listen: next });
+  }
   /* S4 有舊報告時按「開始檢測」並確定:清掉舊報告(跟 js/diagnostic.js「重新檢測」同一個動作,格式不變)。
      正要重載的那一下不刪:本機刪了不記帳,重載後雲端那份又回來 */
   function removeDiag() {
@@ -297,6 +320,7 @@
     GUEST_KEY, isGuest, guest, saveGuest, clearGuest, startPending, cancelPending, forgetNonce, hasPendingJoin, dropJoin,
     draft, saveDraft, clearDraft,
     account, diag, answer, chooseEntry, submitScore, startTest, removeDiag, setLegacyLevels, markDone, applyManual, dismiss, joinedClass,
+    startListen, saveListen, finishListen,
     resume, confirmImport, applyX1, context, firstPwaVisit,
   });
 })();

@@ -60,7 +60,8 @@ T['S4 介面字串:沒有保證、準確、進步、分數區間、還沒做的�
   const bad = [];
   ONB_FILES().forEach((f) => literals(read(f)).forEach((s) => {
     if (/保證|準確|進步|分數區間/.test(s)) bad.push(f + ' 字眼 ' + s);
-    if (/課表|學習包|第 ?\d* ?週|考前可上|堂/.test(s)) bad.push(f + ' 還沒做的功能 ' + s);
+    /* 第 4 堂後的程度調整(試行班的課程)已經有了:S8 小字這一句例外 */
+    if (/課表|學習包|第 ?\d* ?週|考前可上|堂/.test(s) && s !== '依第 2 到 4 堂作答調整過') bad.push(f + ' 還沒做的功能 ' + s);
     if (/[一-鿿][,;:?!]|[,;:?!][一-鿿]/.test(s)) bad.push(f + ' 半形標點 ' + s);
     if (/—/.test(s)) bad.push(f + ' 破折號 ' + s);
     if (/^[A-Z]{3,}$/.test(s.trim()) && /[A-Z]{4,}/.test(s) && !/^(GET|POST)$/.test(s)) bad.push(f + ' 大寫 ' + s);
@@ -281,7 +282,7 @@ T['B1 homeCard:訪客 A 不畫(首屏的「先測程度」連 start.html);已登
   const a = plain(C.homeCard('A', { signedIn: true }));
   /* 按鈕字跟狀態 E 一樣是「設定程度」:每日練習卡已經有一顆「開始」 */
   eq([a.title, a.sub, a.primary.text, a.primary.href, a.secondary.text, a.secondary.href, a.dismiss],
-    ['找出你的起始程度', '填多益成績，或做 28 題檢測（約 20 分鐘）', '設定程度', 'start.html?step=target', '我有班級代碼', 'start.html?step=join', false]);
+    ['找出你的起始程度', '填多益成績，或做 36 題檢測（約 23 分鐘）', '設定程度', 'start.html?step=target', '我有班級代碼', 'start.html?step=join', false]);
   const bg = plain(C.homeCard('B', { signedIn: false, guest: guestOf({ step: 'exam' }) }));
   eq([bg.title, bg.sub, bg.primary.text, bg.primary.href, bg.secondary], ['繼續設定起始程度', '', '繼續', 'start.html?step=exam', null]);
   assert.equal(C.homeCard('B', { signedIn: true, onboard: { status: 'in_progress', step: 'test' } }).primary.href, 'start.html?step=test');
@@ -291,7 +292,7 @@ T['B1 homeCard:訪客 A 不畫(首屏的「先測程度」連 start.html);已登
   eq([d0.title, d0.sub, d0.primary.text, d0.primary.href], ['你的起始程度', '聽力 門檻／閱讀 入門', '開始練習', 'grammar.html']);
   eq(plain(C.homeCard('D0', { signedIn: true, levels: null })).primary, { text: '看起始程度', href: 'start.html?step=result' });
   const e = plain(C.homeCard('E', { signedIn: true }));
-  eq([e.title, e.sub, e.primary.text, e.primary.href, e.dismiss], ['找出你的起始程度', '填多益成績，或做 28 題檢測（約 20 分鐘）', '設定程度', 'start.html?step=target', true]);
+  eq([e.title, e.sub, e.primary.text, e.primary.href, e.dismiss], ['找出你的起始程度', '填多益成績，或做 36 題檢測（約 23 分鐘）', '設定程度', 'start.html?step=target', true]);
   ['none', 'S0', 'resume', 'join', undefined].forEach((s) => assert.equal(C.homeCard(s, {}), null, String(s)));
 };
 T['B1b continueHref:接著中斷的那一步;沒有或不認得回 S1'] = () => {

@@ -62,7 +62,8 @@ function makeDom(win) {
       if (this.tagName === 'SELECT') this._v = this.children.some((c) => c.tagName === 'OPTION' && c.attrs.value === v) ? v : '';
       else this._v = v;
     }
-    append(...ns) { ns.forEach((n) => { if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.push(n); if (n.tagName === 'SCRIPT' && this.tagName === 'HEAD') win.__loadScript(n); }); }
+    replaceChildren(...ns) { this.children.slice().forEach((c) => this._rm(c)); this._t = ''; this.append(...ns); }
+    append(...ns) { ns.map((n) => (typeof n === 'string' ? doc.createTextNode(n) : n)).forEach((n) => { if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.push(n); if (n.tagName === 'SCRIPT' && this.tagName === 'HEAD') win.__loadScript(n); }); }
     prepend(...ns) { ns.reverse().forEach((n) => { if (n.parentNode) n.parentNode._rm(n); n.parentNode = this; this.children.unshift(n); }); }
     scrollIntoView() {}
     _rm(c) { const i = this.children.indexOf(c); if (i > -1) this.children.splice(i, 1); c.parentNode = null; }
@@ -124,7 +125,18 @@ function fakeUI(e, doc) {
   e.confirms = []; e.sheets = []; e.results = []; e.mounts = 0; e.destroyed = 0;
   const node = (tag, cls, text) => { const n = doc.createElement(tag); if (cls) n.className = cls; if (text !== undefined && text !== null) n._t = String(text); return n; };
   const button = (cls, text, onClick) => { const b = node('button', cls, text); b.setAttribute('type', 'button'); b.addEventListener('click', onClick); return b; };
+  /* 專心模式:作答列的關閉鈕(.quiz-close)與底部按鈕列(.quiz-foot)放在 body,記下進度 */
+  const focus = { enter: (o) => {
+    const bar = node('div', 'quiz-bar'), foot = node('div', 'quiz-foot');
+    const api = { active: true, n: 0, progress: (n) => { api.n = n; }, foot: (ns) => { foot.children.slice().forEach((c) => c.remove()); (ns || []).forEach((x) => foot.append(x)); },
+      keep: (f) => f(), say: () => {}, focusMain: () => {}, leave: () => { api.active = false; bar.remove(); foot.remove(); } };
+    bar.append(button('quiz-close', '', () => { api.leave(); o.onExit(); }));
+    doc.body.append(bar, foot);
+    e.focus = api;
+    return api;
+  } };
   return {
+    focus,
     mount: () => { e.mounts++; },
     /* 確定回 true;取消、Esc、點遮罩回 false(mask.esc() 模擬 Esc) */
     confirm: (o) => new Promise((resolve) => {
@@ -208,7 +220,7 @@ async function open(opt) {
   });
   ctx.window = ctx;
   ctx.__loadScript = (s) => setImmediate(() => {
-    if (opt.lesson && s.src !== 'data/diagnostic.js') { e.loads.push(s.src); vm.runInContext(read(s.src), ctx, { filename: s.src }); s.onload(); return; }
+    if ((opt.lesson || /^(js\/lesson-|data\/listening)/.test(s.src)) &&s.src !== 'data/diagnostic.js') { e.loads.push(s.src); vm.runInContext(read(s.src), ctx, { filename: s.src }); s.onload(); return; }
     if (opt.diagFail) { s.onerror(); return; }
     vm.runInContext(read('data/diagnostic.js'), ctx);
     s.onload();
@@ -249,7 +261,7 @@ async function open(opt) {
   }
   vm.createContext(ctx);
   (opt.lesson ? ['js/common.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js', 'js/lesson-home.js'] : ['js/common.js'])
-    .concat(['js/onboard-core.js', 'js/onboard-data.js', 'js/onboard-ui.js', 'js/onboard.js']).forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
+    .concat(['js/onboard-core.js', 'js/onboard-data.js', 'js/onboard-ui.js', 'js/onboard-listen.js', 'js/onboard.js']).forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   (dom.doc.on.DOMContentLoaded || []).forEach((f) => f({}));
   await settle();
   return Object.assign(e, {
@@ -446,7 +458,13 @@ T['P11 重新檢測還沒交卷就回 S8:回 S4、不記完成;交卷後算級�
   await a.press('開始檢測');
   eq([a.dialogTitle(), a.confirms[0].body, a.confirms[0].danger], ['清除這份報告？', '刷題與閱讀進度不受影響', true]);
   await a.press('重新檢測');
-  eq([a.hrefs, a.acct('diag'), a.acct('onboard').status, a.acct('onboard').step], [['diagnostic.html?start=1'], null, 'in_progress', 'test']);
+  /* 先做聽力短測(開一份新的):不直接去檢測頁 */
+  eq([a.hrefs, a.acct('diag'), a.acct('onboard').status, a.acct('onboard').step, a.acct('onboard').listen.mode, a.step()], [[], null, 'in_progress', 'listen', 'full', 'listen']);
+  /* 短測還沒做完就回到 S8 網址:回短測 */
+  const b0 = await open({ url: 'start.html?step=result', signed: true, ls });
+  eq([b0.step(), b0.acct('onboard').status], ['listen', 'in_progress']);
+  /* 上線前的舊流程(沒有短測):中場按「開始閱讀」之後同一條路 */
+  ls.set(PRE + 'onboard', J(Object.assign(a.acct('onboard'), { step: 'test', testFrom: NOW_ISO, listen: undefined })));
 
   /* 到檢測頁後按返回回到 S8 網址:還沒交卷 */
   const b = await open({ url: 'start.html?step=result', signed: true, ls });
@@ -563,7 +581,7 @@ T['P18 S4 舊檢測沒做完而且是 7 天前開始的:先確認再清掉上次
   eq([a.mask(), a.ls.get(PRE + 'diag'), a.hrefs], [null, stale, []], '取消:作答留著、不前往');
   await a.press('開始檢測');
   await a.press('重新開始');
-  eq([a.acct('diag'), a.hrefs, a.acct('onboard').step, a.acct('onboard').testFrom], [null, ['diagnostic.html?start=1'], 'test', NOW_ISO]);
+  eq([a.acct('diag'), a.hrefs, a.acct('onboard').step, a.acct('onboard').listen.mode, a.step()], [null, [], 'listen', 'full', 'listen']);
 
   const recent = J({ answers: { 0: 1 }, done: false, startedAt: new Date(NOW - 3 * DAY).toISOString() });
   const b = await open({ url: 'start.html?step=test', signed: true, init: { [PRE + 'diag']: recent } });
@@ -590,8 +608,9 @@ T['P19 每個畫面只有一顆實色主按鈕,其他是文字按鈕;S0 有鵜�
       const cv = e.root.querySelector('canvas');
       eq([cv && cv.getAttribute('data-mascot'), cv && cv.getAttribute('aria-hidden'), e.mounts > 0], ['read', 'true', true]);
       eq(buttonsOf(e), ['btn:開始', 'btn-text:我有班級代碼', 'btn-text:登入']);
-      /* 標題短(手機上跟鵜鶘並排也是一行);副標的「（約 20 分鐘）」不斷開 */
-      eq([e.h1(), e.root.querySelector('.ob-nowrap').textContent], ['找出你的起始程度', '（約 20 分鐘）']);
+      /* 標題短(手機上跟鵜鶘並排也是一行);副標的「（約 23 分鐘）」不斷開;題數含聽力短測 8 題 */
+      eq([e.h1(), e.root.querySelector('.ob-nowrap').textContent], ['找出你的起始程度', '（約 23 分鐘）']);
+      assert.ok(/填多益成績，或做 36 題檢測/.test(e.root.textContent));
     }
     if (step === 'exam') eq(buttonsOf(e), ['btn:下一步', 'btn-text:還沒報名']);
     if (step === 'score') eq(buttonsOf(e), ['btn-text:只記得總分', 'btn:送出', 'btn-text:改成幫我測']);
@@ -603,7 +622,7 @@ T['P19 每個畫面只有一顆實色主按鈕,其他是文字按鈕;S0 有鵜�
       const card = e.root.querySelector('.diag-intro');
       eq([art && art.getAttribute('data-doodle'), card && card.querySelectorAll('.mock-tag').map((n) => n.textContent),
         card && !!card.querySelector('.btn.primary'), card && card.querySelector('.ob-intro-note').textContent, !!e.root.querySelector('ul')],
-      ['diagnostic', ['閱讀 28 題', '約 20 分鐘'], true, '聽力先依閱讀結果推估', false]);
+      ['diagnostic', ['聽力 8 題', '閱讀 28 題', '約 23 分鐘'], true, '每題音檔只播一次', false]);
     }
     /* C1 訪客:標題、代碼欄、小字、註冊卡都在同一個置中的欄(.auth-page)裡 */
     if (step === 'join' && !o.signed) {
@@ -642,6 +661,69 @@ T['P21 S8b 改級別:「改級別」打開面板(UI.sheet),原本的級別已選
   eq([lv.listening, lv.reading, lv.source.listening, lv.source.reading, lv.history[lv.history.length - 1].reason, sh.open, e.acct('onboard').levelSource],
     ['entry', 'threshold', 'manual', 'legacy', 'manual', false, 'manual']);
   eq(e.results[e.results.length - 1].stats, [['聽力', '入門'], ['閱讀', '門檻']]);
+};
+
+/* ---------- 聽力短測(js/onboard-listen.js) ---------- */
+const LS8 = ['l1-13', 'l1-22', 'l2-08', 'l2-09', 'l2-87', 'l2-07', 'l2-97', 'l2-25'];
+const listenOb = (l, over) => doneOnboard(Object.assign({ status: 'in_progress', step: 'listen', doneAt: null, levelSource: null,
+  listen: Object.assign({ v: 1, mode: 'full', ids: LS8, a: Array(8).fill(null), fail: [], self: null, at: NOW_ISO, doneAt: null }, l) }, over || {}));
+/* 作答:選第 c 個字母、按主按鈕(作答列底部) */
+async function answer(e, c) {
+  const b = e.dom.doc.querySelectorAll('.letter-big')[c];
+  if (b) b.click();
+  await settle();
+  e.dom.doc.querySelector('.quiz-foot .btn').click();
+  await settle();
+}
+T['P22 S4「開始檢測」:先做聽力短測(專心模式,8 題,題目畫面同前測);每題選了就存;沒選就按先確認;第 8 題「交卷」後中場,「開始閱讀」才記開始時間去檢測頁'] = async () => {
+  const e = await open({ url: 'start.html?step=test', signed: true });
+  await e.press('開始檢測');
+  eq([e.step(), e.focus && e.focus.active, e.acct('onboard').listen.a, e.loads], ['listen', true, Array(8).fill(null), ['js/lesson-core.js', 'js/lesson-items.js', 'data/listening.js']]);
+  assert.ok(e.dom.doc.querySelector('.player-btn') && /Part 1/.test(e.root.textContent), '照片描述的題目與播放鈕');
+  await answer(e, 1);
+  e.dom.doc.querySelector('.quiz-foot .btn').click(); await settle();
+  eq([e.dialogTitle(), e.confirms[0].body, e.confirms[0].ok], ['這一題還沒答', '未作答的算錯', '下一題']);
+  e.mask().querySelector('.ui-dialog-ok').click(); await settle();
+  for (let i = 2; i < 8; i++) await answer(e, 0);
+  eq([e.acct('onboard').listen.a, !!e.acct('onboard').listen.doneAt, e.focus.active, e.hrefs], [[1, -1, 0, 0, 0, 0, 0, 0], true, false, []]);
+  eq([e.h1(), e.root.querySelectorAll('.mock-tag').map((n) => n.textContent), buttonsOf(e)], ['聽力完成', ['閱讀 28 題', '約 20 分鐘'], ['btn:開始閱讀', 'btn-text:稍後再做']]);
+  assert.equal(primaries(e).length, 1);
+  await e.press('開始閱讀');
+  eq([e.hrefs, e.acct('onboard').step, e.acct('onboard').testFrom], [['diagnostic.html?start=1'], 'test', NOW_ISO]);
+  assert.ok(!/答對|答錯|正解|\d \/ 8/.test(e.root.textContent), '不顯示對錯與答對數');
+};
+T['P23 短測中途離開(關閉鈕回首頁)再開:從下一題接著做;做完按「稍後再做」再開:直接是中場(不重做)'] = async () => {
+  const ls = new Map(Object.entries({ [PRE + 'onboard']: listenOb({ a: [0, 1, 2, null, null, null, null, null] }) }));
+  const e = await open({ url: 'start.html?step=listen', signed: true, ls });
+  eq(e.focus.n, 4, '第 4 題');
+  e.dom.doc.querySelector('.quiz-close').click(); await settle();
+  eq([e.replaced, e.focus.active], [['index.html'], false]);
+  ls.set(PRE + 'onboard', listenOb({ a: [0, 0, 0, 0, 0, 0, 0, 0], doneAt: NOW_ISO }));
+  const m = await open({ url: 'start.html?step=listen', signed: true, ls });
+  eq([m.h1(), m.focus, m.find('開始閱讀') !== null], ['聽力完成', undefined, true]);
+  await m.press('稍後再做');
+  eq(m.replaced, ['index.html']);
+};
+T['P24 音檔載不到 2 題:8 題答完出自評(選了就前進,不在專心模式);「用上次的閱讀檢測」做完直接到 S8,小字依來源'] = async () => {
+  const diag = J({ answers: {}, done: true, startedAt: '2026-11-10T01:00:00.000Z', finishedAt: '2026-11-10T01:20:00.000Z' });
+  const ls = new Map(Object.entries({ [PRE + 'diag']: diag, [PRE + 'onboard']: listenOb({ mode: 'legacy', a: [0, 0, 0, 0, 0, 0, 0, 0], fail: [0, 3] }) }));
+  const e = await open({ url: 'start.html?step=listen', signed: true, ls });
+  const opts = e.root.querySelectorAll('.ob-choice');
+  eq([e.h1(), opts.map((n) => n.textContent).length, e.focus, primaries(e).length], ['聽英文時，你最接近哪一種', 4, undefined, 0]);
+  opts[2].click(); await settle();
+  const lv = e.acct('levels');
+  eq([e.step(), lv.listening, lv.reading, lv.source.listening, e.acct('onboard').listen.self], ['result', 'threshold', 'entry', 'self', 'advanced']);
+  assert.ok(/聽力依自評/.test(e.root.textContent));
+  const s = await open({ url: 'start.html?step=test', signed: true, init: { [PRE + 'diag']: diag } });
+  s.root.all().find((n) => n.tagName === 'BUTTON' && /^用上次的閱讀檢測/.test(n.textContent)).click(); await settle();
+  for (let i = 0; i < 8; i++) await answer(s, 0);
+  eq([s.step(), s.acct('levels').source.listening, s.hrefs], ['result', 'short', []]);
+  assert.ok(/聽力依 8 題短測/.test(s.root.textContent));
+};
+T['P25 S8 小字:第 4 堂後調整過的優先(一行)'] = async () => {
+  const lv = J({ listening: 'threshold', reading: 'threshold', source: { listening: 'short', reading: 'calibrate' }, setAt: NOW_ISO, history: [] });
+  const e = await open({ url: 'start.html?step=result', signed: true, init: { [PRE + 'onboard']: doneOnboard(), [PRE + 'levels']: lv } });
+  eq(e.results[0].note, '依第 2 到 4 堂作答調整過');
 };
 
 /* ---------- 跑 ---------- */

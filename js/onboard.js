@@ -8,9 +8,9 @@
 (function () {
   'use strict';
   const C = window.ONBOARD_CORE, D = window.ONBOARD_DATA, OUI = window.ONBOARD_UI;
-  const STEPS = ['start', 'target', 'exam', 'level', 'score', 'signup', 'resume', 'test', 'result', 'join'];
+  const STEPS = ['start', 'target', 'exam', 'level', 'score', 'signup', 'resume', 'test', 'listen', 'result', 'join'];
   const TITLES = { start: '開始', target: '你的多益目標', exam: '預計什麼時候考', level: '你的英文程度', score: '輸入多益成績', signup: '建立帳號',
-    resume: '載入中', test: '程度檢測', result: '你的起始程度', join: '加入班級' };
+    resume: '載入中', test: '程度檢測', listen: '程度檢測', result: '你的起始程度', join: '加入班級' };
   const PROGRESS = { target: 1, exam: 2, level: 3, score: 3 };
   const PREV = { target: 'start', exam: 'target', level: 'exam', score: 'level' };
   const AUTH_TITLES = { signup: '建立帳號', login: '登入', forgot: '重設密碼', sent: '驗證信已寄出' };
@@ -58,7 +58,7 @@
   /* 訪客不能開作答的畫面;已登入不用再看登入卡 */
   function guard(step) {
     if (D.isGuest()) {
-      if (step === 'test' || step === 'result' || step === 'signup') { const g = D.guest(); return g && g.pendingAction ? 'signup' : 'level'; }
+      if (step === 'test' || step === 'listen' || step === 'result' || step === 'signup') { const g = D.guest(); return g && g.pendingAction ? 'signup' : 'level'; }
       return step;
     }
     return step === 'signup' ? 'resume' : step;
@@ -67,6 +67,7 @@
   /* ---------- 畫面骨架 ---------- */
   function render(step, focus) {
     current = step;
+    if (window.ONBOARD_LISTEN) ONBOARD_LISTEN.stop();
     if (card) { card.destroy(); card = null; }
     root.innerHTML = '';
     document.title = TITLES[step] + ' - 衝衝英文';
@@ -130,10 +131,10 @@
   }
 
   /* ---------- S0 ---------- */
-  /* 標題短到手機上跟鵜鶘並排也是一行(螢光筆只壓一行);「（約 20 分鐘）」不從中間斷開 */
+  /* 標題短到手機上跟鵜鶘並排也是一行(螢光筆只壓一行);「（約 23 分鐘）」不從中間斷開 */
   function screenStart() {
     put(h('div', { class: 'ob-start' },
-      pageHead('找出你的起始程度', ['填多益成績，或做 28 題檢測', h('span', { class: 'ob-nowrap' }, '（約 20 分鐘）')]),
+      pageHead('找出你的起始程度', ['填多益成績，或做 36 題檢測', h('span', { class: 'ob-nowrap' }, '（約 23 分鐘）')]),
       h('canvas', { class: 'ob-start-art', 'data-mascot': 'read', 'data-size': '160', 'aria-hidden': 'true' })),
     actions(btn('開始', () => go('target')), textBtn('我有班級代碼', () => go('join')),
       D.isGuest() ? textBtn('登入', () => PROFILE.showLogin('login')) : null));
@@ -362,6 +363,8 @@
     });
   }
   function startAndGo(msg, el) { if (wrote(D.startTest(), msg, el)) location.href = 'diagnostic.html?start=1'; }   // 檢測頁直接開考,不再按一次「開始」
+  /* 先做聽力短測 8 題(full:之後接閱讀 28 題;legacy:用上次的閱讀檢測,做完直接算級別) */
+  function listenFirst(mode, msg, el) { if (wrote(D.startListen(mode), msg, el)) go('listen'); }
   /* 舊檢測沒做完、而且是 7 天前開始的:不接著舊作答(可能混到幾個月前的答案),跟有報告時一樣先確認再清掉 */
   function staleDiag(diag) {
     if (!diag || diag.done) return false;
@@ -380,9 +383,10 @@
     const start = btn('開始檢測', (e) => {
       const el = e.currentTarget;
       const done = !!(diag && diag.done);
-      if (!done && !staleDiag(diag)) { startAndGo(msg, el); return; }
+      if (diag && !done && !staleDiag(diag)) { startAndGo(msg, el); return; }   // 上線前就開始、7 天內沒做完的 28 題:照原本接著做
+      if (!diag) { listenFirst('full', msg, el); return; }
       if (!uiReady()) return;   // 共用元件沒載到:不清掉上次的作答
-      UI.confirm(done ? RETEST.done : RETEST.stale).then((yes) => { if (yes && wrote(D.removeDiag(), msg, el)) startAndGo(msg, el); });
+      UI.confirm(done ? RETEST.done : RETEST.stale).then((yes) => { if (yes && wrote(D.removeDiag(), msg, el)) listenFirst('full', msg, el); });
     });
     const legacy = C.legacyUsable(diag, Date.now()) ? h('button', { class: 'btn-text', type: 'button', onclick: (e) => useLegacy(diag, msg, e.currentTarget) },
       '用上次的閱讀檢測', h('span', { class: 'ob-date' }, C.dayLabel(diag.finishedAt))) : null;
@@ -390,19 +394,27 @@
       h('div', { class: 'page-head' }, h('canvas', { class: 'hub-art', 'data-doodle': 'diagnostic', 'data-size': '40', 'aria-hidden': 'true' }),
         h('h1', { id: 'ob-title' }, TITLES.test)),
       h('div', { class: 'diag-intro ob-intro' },
-        h('p', { class: 'mock-tags' }, h('span', { class: 'mock-tag' }, '閱讀 28 題'), h('span', { class: 'mock-tag' }, '約 20 分鐘')),
-        h('p', { class: 'ob-intro-note' }, '聽力先依閱讀結果推估'), msg, start,
+        h('p', { class: 'mock-tags' }, ['聽力 8 題', '閱讀 28 題', '約 23 分鐘'].map((t) => h('span', { class: 'mock-tag' }, t))),
+        h('p', { class: 'ob-intro-note' }, '每題音檔只播一次'), msg, start,
         h('div', { class: 'ob-intro-more' }, textBtn('先跳過，從入門開始', (e) => { if (wrote(D.chooseEntry(), msg, e.currentTarget)) go('result'); }), legacy)));
     flash = '';
   }
-  function useLegacy(diag, msg, el) {
-    el.disabled = true;
-    loadItems().then((items) => {
-      el.disabled = false;
-      const lv = C.levelsFromLegacy(diag, items);
-      if (!lv) { say(msg, '載入失敗，請再試一次。'); return; }
-      if (wrote(D.setLegacyLevels(lv), msg, el)) go('result');
-    });
+  function useLegacy(diag, msg, el) { listenFirst('legacy', msg, el); }
+
+  /* ---------- 聽力短測(js/onboard-listen.js) ----------
+     還沒做完:從下一題接著做(8 題答完要自評時是自評頁);做完了:full 出中場(閱讀 28 題接著做)、legacy 直接用上次的閱讀檢測算級別到 S8 */
+  function screenListen() {
+    const OL = window.ONBOARD_LISTEN, ob = D.account().onboard, l = ob && ob.listen;
+    if (!OL || !l || !Array.isArray(l.ids)) { replaceTo('test'); return; }
+    const fail = () => { if (current === 'listen') resumeFailed('failed', 'listen'); };
+    if (!l.doneAt) {
+      put(loading());
+      OL.test(root, { listen: l, save: (i, c, f) => D.saveListen(i, c, f), finish: (self) => D.finishListen(self),
+        onDone: () => { if (current === 'listen') render('listen', true); }, onExit: () => location.replace('index.html'), onFail: fail });
+      return;
+    }
+    if (l.mode === 'legacy') { computeLegacy(); return; }
+    OL.middle(root, { onLater: () => location.replace('index.html'), onGo: (el) => { const msg = msgLine(); put(msg); startAndGo(msg, el); } });
   }
 
   /* ---------- S8 ---------- */
@@ -414,25 +426,29 @@
     if (route === 'done' || route === 'draw') { drawResult(D.account()); return; }
     replaceTo(route);   // 檢測還沒交卷回 S4;還沒走到結果的回中斷的那一步
   }
-  /* 剛交的卷:先算級別存進帳號再畫;失敗的「重試」回這一頁重算,帳號資料夾還不能用時開「重新整理」卡 */
+  /* 剛交的卷(或用上次閱讀檢測做完短測):先算級別存進帳號再畫;失敗的「重試」回這一頁重算,帳號資料夾還不能用時開「重新整理」卡。
+     有算數的短測(ONBOARD_CORE.listenFor)時聽力照短測,短測的題目載不到也算失敗 */
   function computeLegacy() {
+    const step = current, listen = C.listenFor(D.account().onboard), OL = window.ONBOARD_LISTEN;
     put(loading());
-    loadItems().then((items) => {
-      if (current !== 'result') return;
-      const lv = C.levelsFromLegacy(D.diag(), items);
+    Promise.all([loadItems(), listen && OL ? OL.answers() : null]).then(([items, answerOf]) => {
+      if (current !== step) return;
+      const lv = listen && !answerOf ? null : C.levelsFromLegacy(D.diag(), items, listen, answerOf);
       const r = lv ? D.setLegacyLevels(lv) : 'failed';
-      if (r === 'ok') { render('result'); return; }
-      const retry = resumeFailed('failed', 'result');
+      if (r === 'ok') { if (step === 'result') render('result'); else replaceTo('result', true); return; }
+      const retry = resumeFailed('failed', step);
       if (r === 'blocked' && window.PROFILE && PROFILE.askToAct) PROFILE.askToAct(retry);
     });
   }
-  /* 結算卡下面的小字:聽力怎麼來的;自填的成績超過 2 年另外標出來(看最後一筆檢測或成績的來源,改過級別也不會消失) */
+  /* 結算卡下面的小字(一行):第 4 堂後調整過的最優先;再來是聽力怎麼來的;自填的成績超過 2 年另外標出來(看最後一筆檢測或成績的來源,改過級別也不會消失) */
+  const LISTEN_NOTE = { short: '聽力依 8 題短測', self: '聽力依自評', legacy_plus1: '聽力依閱讀結果推估' };
   function sourceNote(acc) {
-    const lv = acc.levels, tl = C.testedLevels(lv);
+    const lv = acc.levels, tl = C.testedLevels(lv), from = lv.source || {};
+    if (from.listening === 'calibrate' || from.reading === 'calibrate') return '依第 2 到 4 堂作答調整過';
     const old = !!acc.self_score && !!tl && tl.reason === 'score' && C.scoreTooOld(acc.self_score.examYm, Date.now());
-    const src = (lv.source || {}).listening;
+    const src = from.listening;
     if (src === 'score') return old ? '依你填的成績（超過 2 年）' : '依你填的成績';
-    if (src === 'legacy_plus1') return '聽力依閱讀結果推估';
+    if (LISTEN_NOTE[src]) return LISTEN_NOTE[src];
     return old ? '成績超過 2 年' : null;
   }
   function drawResult(acc) {
@@ -511,7 +527,7 @@
   }
 
   const SCREENS = { start: screenStart, target: screenTarget, exam: screenExam, level: screenLevel, score: screenScore, signup: screenSignup,
-    resume: screenResume, test: screenTest, result: screenResult, join: screenJoin };
+    resume: screenResume, test: screenTest, listen: screenListen, result: screenResult, join: screenJoin };
 
   /* ---------- 開頁 ---------- */
   function readJoin() {

@@ -625,7 +625,7 @@ T['顯示:數字差不到 10 分沿用上次,但四級照新算的數字(跨切�
 T['選題排除:呼叫的一方只給這次出過的組 id 也排除;總分上緣 990;題數不一的題組沒給 size 就擋下來'] = () => {
   eq(X.available({ params: PARAMS, units: UNITS, part: '6', fa: X.faEmpty(), used: ['p6-x'] }), [], '只給組 id');
   eq(X.available({ params: PARAMS, units: UNITS, part: '6', fa: X.faEmpty(), used: [] }).length, 1);
-  eq(X.total({ est: 495, srand: 0, sys: 0 }, { est: 495, srand: 0, sys: 0 }), { est: 990, h: 35, lo: 955, hi: 990 });
+  eq(X.total({ est: 495, srand: 0, sys: 0 }, { est: 495, srand: 0, sys: 0 }), { est: 990, h: 35, lo: 990 - 35, hi: 990 });
   const g = (id, n) => ({ id, part: '7', keys: Array.from({ length: n }, (_, i) => id + ':' + i) });
   const mixed = [g('a', 2), g('b', 4)], same = [g('a', 3), g('b', 3)];
   throws(() => X.planSlots([{ part: '7' }], () => mixed), /size/);

@@ -230,7 +230,7 @@ async function open(opt) {
     const h1 = dom.doc.createElement('h1'); h1.textContent = '課程'; ph.append(h1);
     e.root = dom.doc.createElement('div'); e.root.setAttribute('id', 'lsn-root');
     main.append(ph, e.root);
-    ['js/common.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js', 'js/move-rules.js', 'js/move-merge.js', 'js/lesson-rules.js', 'js/pack-core.js'].forEach(run);
+    ['js/common.js', 'js/sync-merge.js', 'js/sync-merge-lesson.js', 'js/move-rules.js', 'js/move-merge.js', 'js/lesson-rules.js', 'js/pack-util.js', 'js/pack-core.js'].forEach(run);
     ctx.CLASSES = classes();
     ['js/lesson-core.js', 'js/lesson-data.js', 'js/lesson-home.js', 'js/lessons.js'].forEach(run);
   }
@@ -243,7 +243,7 @@ const settle = async (n) => { for (let i = 0; i < (n || 40); i++) await new Prom
 const card = (e) => e.dom.doc.querySelector('.lsn-home');
 const textOf = (n, sel) => { const x = n && n.querySelector(sel); return x ? x.textContent : null; };
 const LOAD_BASE = ['js/lesson-core.js', 'js/lesson-data.js'];
-const LOAD_REST = ['js/lesson-rules.js', 'js/pack-core.js'];
+const LOAD_REST = ['js/lesson-rules.js', 'js/pack-util.js', 'js/pack-core.js'];
 
 /* ---------- 進度 ---------- */
 const KE = K.env();

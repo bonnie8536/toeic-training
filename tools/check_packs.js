@@ -176,6 +176,7 @@ function checkContent(pack, data, out, opt) {
 function checkMix(packs, out) {
   global.window = global;
   require('../js/lesson-rules.js');
+  require('../js/pack-util.js');
   require('../js/pack-core.js');
   const PC = global.PACK_CORE;
   const by = {};

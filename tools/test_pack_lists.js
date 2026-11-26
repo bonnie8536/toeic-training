@@ -94,7 +94,7 @@ T['E1 引擎讀得到:真的新字表轉成每週字序,真的清單餵給第 4 
   const ctx = { console, Promise, Map, Set, JSON, Object, Array, Math, Number, String, Date, TypeError, Error, isNaN, TextEncoder };
   ctx.window = ctx;
   vm.createContext(ctx);
-  ['data/bank-meta.js', 'data/ear.js', 'js/move-rules.js', 'js/move-merge.js', 'js/lesson-rules.js', 'js/bank.js', 'js/pack-core.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
+  ['data/bank-meta.js', 'data/ear.js', 'js/move-rules.js', 'js/move-merge.js', 'js/lesson-rules.js', 'js/bank.js', 'js/pack-util.js', 'js/pack-core.js'].forEach((f) => vm.runInContext(read(f), ctx, { filename: f }));
   const P = ctx.PACK_CORE, W = WORDS.entry;
   const weekWords = (week, which) => {
     const w = which === 'this_week' ? week : which === 'last_week' ? week - 1 : week - 3, r = W.weeks[w];

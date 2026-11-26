@@ -16,6 +16,7 @@
     classes: ['js/classes.js', () => !!window.CLASSES],
     rules: ['js/lesson-rules.js', () => !!window.LESSON_RULES],
     merge: ['js/sync-merge-lesson.js', () => !!(window.SYNC_MERGE && window.SYNC_MERGE.lesson)],
+    util: ['js/pack-util.js', () => !!window.PACK_UTIL],
     pack: ['js/pack-core.js', () => !!window.PACK_CORE],
   };
   const pending = new Map();
@@ -36,7 +37,7 @@
   }
   const chain = (names) => names.reduce((p, n) => p.then(() => loadOne(n)), Promise.resolve());
   const loadBase = () => chain(['core', 'data']);
-  const loadRest = () => chain(['core', 'data', 'rules', 'merge', 'pack']);
+  const loadRest = () => chain(['core', 'data', 'rules', 'merge', 'util', 'pack']);
 
   /* ---------- 不用連網就知道的 ---------- */
   const LEVELS = ['entry', 'threshold', 'advanced', 'high'];

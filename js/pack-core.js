@@ -1,5 +1,5 @@
 /* 學習包的課程引擎:拼課表、選題、凍結選題、解鎖、進度鍵與兩台合併。課程頁用;這一版還沒有頁面載入它。
-   要先載入 js/sync-merge.js 與 js/sync-merge-lesson.js(兩台的合併)、js/lesson-rules.js(考點與個人段的規則)、js/bank.js(題庫題一律經過 BANK.pick、BANK.get、BANK.meta)。
+   要先載入 js/sync-merge.js 與 js/sync-merge-lesson.js(兩台的合併)、js/pack-util.js(洗牌、配比、雜湊)、js/lesson-rules.js(考點與個人段的規則)、js/bank.js(題庫題一律經過 BANK.pick、BANK.get、BANK.meta)。
    學習包是 data/packs/pack_<級>.json(schema 在 data/packs/pack_schema.json);這一版只開入門(entry)、門檻(threshold)兩包。
 
    進度鍵 les_t<期>_<堂>(例 les_t1_03,期 1–99、堂 01–24):一律用 lessonKey(term, no) 產生,不要自己拼字串。內容:
@@ -27,6 +27,9 @@
   'use strict';
   const R = root.LESSON_RULES;
   if (!R) throw new Error('要先載入 js/lesson-rules.js');
+  const U = root.PACK_UTIL;
+  if (!U) throw new Error('要先載入 js/pack-util.js');
+  const { shuffle, allocate, hash32, mulberry32 } = U;
   function sync() {
     const S = root.SYNC_MERGE;
     if (!S || typeof S.lesson !== 'function' || typeof S.tests !== 'function') throw new Error('要先載入 js/sync-merge.js 與 js/sync-merge-lesson.js');
@@ -41,7 +44,7 @@
   const LISTENING_MODULES = /^(p[1-4]|ear_\w+)$/;
   const BANK_PART = { p1: '1', p2: '2', p3: '3', p4: '4', p5: '5', p6: '6', p7: '7' };
   const DIFF = { D1: '基礎', D2: '中級', D3: '進階' };
-  const LV = ['D1', 'D2', 'D3', 'D4'];
+  const LV = U.LV;
   const CODE = { 基礎: 'D1', 中級: 'D2', 進階: 'D3' };
   const BORROW = ['D2', 'D3', 'D1', 'D4'];
   const LEGACY_OK = ['difficulty', 'category', 'type', 'format', 'maxWordCount', 'canYou'];
@@ -266,25 +269,6 @@
   const frozenIds = (state) => Object.keys(state.pk || {}).reduce((a, k) => a.concat(state.pk[k].ids || []), []);
 
   /* ---------- 選題 ---------- */
-  function shuffle(arr, rand) {
-    const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
-    return a;
-  }
-  /* 難度配比 → 各級題數(最大餘數法):先取整數部分,剩下的題照小數部分大的先給,一樣時比例大的先、再來級低的先。
-     allow 有給時只在這幾級分配(比例照它們之間的相對大小);這幾級的比例都是 0 就全部是 0(呼叫的一方再照借題順序補) */
-  function allocate(n, mix, allow) {
-    const lv = allow || LV;
-    const w = {}, exact = {}, out = { D1: 0, D2: 0, D3: 0, D4: 0 };
-    lv.forEach((l) => { w[l] = Math.max(0, Number(mix && mix[l]) || 0); });
-    const sum = lv.reduce((a, l) => a + w[l], 0);
-    if (!(sum > 0) || !(n > 0)) return out;
-    lv.forEach((l) => { exact[l] = n * w[l] / sum; out[l] = Math.floor(exact[l] + 1e-9); });
-    let left = n - lv.reduce((a, l) => a + out[l], 0);
-    lv.filter((l) => w[l] > 0).sort((x, y) => (exact[y] - out[y]) - (exact[x] - out[x]) || w[y] - w[x] || LV.indexOf(x) - LV.indexOf(y))
-      .forEach((l) => { if (left > 0) { out[l]++; left--; } });
-    return out;
-  }
   /* 學習包的 legacyWhere → BANK.pick 的 where;bank.js 篩不了的欄位列在 ignored(不篩,選題結果的 need 會記) */
   function bankWhereOf(sel) {
     const lw = sel.legacyWhere || {}, w = {};
@@ -446,23 +430,6 @@
   const shortOf = (want, r) => r.ids.length < want || r.relaxed || r.reserved > 0;
 
   /* ---------- 小檢核的預留題 ---------- */
-  /* 字串的 32 位元雜湊(FNV-1a)與 mulberry32 亂數:同一個種子在每個瀏覽器排出一樣的順序 */
-  function hash32(str) {
-    let h = 0x811c9dc5;
-    const s = String(str);
-    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
-    return h >>> 0;
-  }
-  function mulberry32(seed) {
-    let a = seed >>> 0;
-    return function () {
-      a = (a + 0x6D2B79F5) >>> 0;
-      let t = a;
-      t = Math.imul(t ^ (t >>> 15), t | 1);
-      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-  }
   /* 第 no 堂之後下一次小檢核的堂號(學習包裡有 checkpoint 段的堂);後面沒有回 null */
   function nextCheckpoint(packs, levels, no) {
     const L = packFor(packs, levels.listening);

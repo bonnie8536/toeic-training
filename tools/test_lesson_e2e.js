@@ -737,7 +737,7 @@ async function tipShots() {
 T['同步:兩台交錯作答第 3 堂同一個區塊,手機中途離線、恢復後開新分頁,已答題都留下'] = async () => {
   const vm = require('vm');
   const PACKS = { entry: JSON.parse(fs.readFileSync(path.join(REPO, 'data/packs/pack_entry.json'), 'utf8')), threshold: JSON.parse(fs.readFileSync(path.join(REPO, 'data/packs/pack_threshold.json'), 'utf8')) };
-  const scripts = ['js/lesson-rules.js', 'js/pack-core.js'].map((f) => new vm.Script(fs.readFileSync(path.join(REPO, f), 'utf8'), { filename: f }));
+  const scripts = ['js/lesson-rules.js', 'js/pack-util.js', 'js/pack-core.js'].map((f) => new vm.Script(fs.readFileSync(path.join(REPO, f), 'utf8'), { filename: f }));
   const core = (dev) => {
     const ctx = dev.pg.ctx;
     if (!ctx.PACK_CORE) { ctx.TextEncoder = TextEncoder; scripts.forEach((s) => s.runInContext(ctx)); }

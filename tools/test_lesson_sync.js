@@ -12,7 +12,7 @@ const { J, tick, makeWorld, makeDevice, signIn, newSession, logout, localOf, clo
 const REPO = path.join(__dirname, '..');
 const read = (f) => fs.readFileSync(path.join(REPO, f), 'utf8');
 const PACKS = { entry: JSON.parse(read('data/packs/pack_entry.json')), threshold: JSON.parse(read('data/packs/pack_threshold.json')) };
-const SCRIPTS = ['js/lesson-rules.js', 'js/pack-core.js'].map((f) => new vm.Script(read(f), { filename: f }));
+const SCRIPTS = ['js/lesson-rules.js', 'js/pack-util.js', 'js/pack-core.js'].map((f) => new vm.Script(read(f), { filename: f }));
 const LV = { listening: 'entry', reading: 'entry' };
 const KEY = 'les_t1_03';
 const HOUR = 3600e3;

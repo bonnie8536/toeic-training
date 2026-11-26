@@ -70,6 +70,11 @@ T['1 試行乙:第 1–4 堂種好(答對約 6 成)→ 第 5–8 堂照頁面上
   assert.deepStrictEqual([calibs(lv0).length, lv0.listening, lv0.reading], [1, 'threshold', 'threshold'], '沒變也記一筆');
   for (const no of [5, 6, 7, 8]) {
     if (no === 7) await advance(DAY_MS);
+    if (no === 5 || no === 8) {
+      await p.go('lesson.html?no=' + no);
+      await p.wait("document.querySelector('.lsn-steps')", '第 ' + no + ' 堂總覽');
+      await shot(p, (no === 5 ? '38' : '39') + '_第' + no + '堂段落總覽');
+    }
     await finishLesson(p, no, false);
   }
   const cp = await p.eval("[...document.querySelectorAll('.lsn-verdicts li')].map((li) => li.textContent.trim())");
@@ -244,11 +249,14 @@ async function press(p, t) {
   assert.ok(ok, '找不到按鈕「' + t + '」');
   await sleep(500);
 }
-/* 檢測頁用 tools/placement_e2e_kit.js 的小幫手作答(五題對三題),做到結果頁 */
+/* 檢測頁用 tools/placement_e2e_kit.js 的小幫手作答(五題對三題),做到結果頁;聽力、閱讀第一題各截一張 */
 async function placementWalk(p) {
+  const shots = { L: '51b_檢測聽力題', R: '51c_檢測閱讀題' };
   for (let i = 0; i < 400; i++) {
     const s = await p.eval(PK.PL_ROBOT + ';window.__pl()');
     if (s.screen === 'result') return;
+    const sec = s.screen === 'quiz' && s.part ? (Number(s.part) <= 4 ? 'L' : 'R') : null;
+    if (sec && shots[sec]) { await shot(p, shots[sec]); shots[sec] = null; }
     if (s.screen === 'between') { await press(p, '開始' + (/閱讀/.test(await p.text('.pl-between')) ? '閱讀' : '聽力')); continue; }
     const did = await p.eval(PK.PL_ROBOT + ';window.__plStep("mix")');
     await sleep(did === 'wait' ? 200 : 80);

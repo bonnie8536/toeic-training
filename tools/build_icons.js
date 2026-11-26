@@ -13,8 +13,9 @@
    算圖用本機的 Chrome 無頭模式(跟 tools/check_layout.js 一樣不用裝套件),所有尺寸畫在同一頁、開一次 Chrome 再切開;
    每個尺寸直接用 Chrome 畫成那個大小,不是大圖縮小(跟瀏覽器分頁畫 SVG 的方式一樣)。Chrome 的使用者資料放在 --tmp 底下,用完就刪。
    用法:
-     node tools/build_icons.js <favicon.svg> [--app <App 圖示.svg>] [--maskable <maskable.svg>] [--bg '#0b72c4'] [--only favicon|app] [--out <資料夾>] [--tmp <資料夾>]
+     node tools/build_icons.js <favicon.svg> [--app <App 圖示.svg>] [--apple <滿版.svg>] [--maskable <maskable.svg>] [--bg '#0b72c4'] [--only favicon|app] [--out <資料夾>] [--tmp <資料夾>]
        --app       apple-touch-icon 與 manifest 另用一張(例如有白底、有速度線的版本);沒給就用 favicon 那張
+       --apple     apple-touch-icon(icon-180)另用一張(要鋪滿、不透明的正方形,例如 logo_full.svg);沒給就跟 --app 同一張
        --maskable  maskable 另用一張(要自己留好安全邊界,程式會檢查);沒給就自動縮
        --bg        App 圖示鋪的底色;沒給就取 App 圖上緣正中間的顏色,那裡透明就用白色
        --only      只產 favicon 系列(favicon.ico、favicon-*.png、favicon.svg)或只產 App 系列(icon-*.png)
@@ -138,8 +139,10 @@ function sourceTag(svgText) {
 }
 /* App 圖示四張(180、192、512、maskable)共用的記號:App 圖、maskable(沒給是自動縮)、底色的組合。
    tools/test_seo.js 用它確認四張是同一次產生的,不是新舊混在一起 */
-function appTag(appSvg, maskSvg, bg) {
-  return 'build_icons app sha256:' + crypto.createHash('sha256').update([lf(appSvg), maskSvg == null ? '(auto)' : lf(maskSvg), bg.join(',')].join('\0')).digest('hex');
+function appTag(appSvg, maskSvg, bg, appleSvg) {
+  const parts = [lf(appSvg), maskSvg == null ? '(auto)' : lf(maskSvg), bg.join(',')];
+  if (appleSvg != null && lf(appleSvg) !== lf(appSvg)) parts.push(lf(appleSvg));   // 沒另給 apple 圖的組合記號跟以前一樣
+  return 'build_icons app sha256:' + crypto.createHash('sha256').update(parts.join('\0')).digest('hex');
 }
 
 /* ---------- ICO(每個尺寸一張 32 位元 BMP,加上 1 位元的透明遮罩) ---------- */
@@ -288,10 +291,10 @@ function render(jobs, tmpRoot) {
 }
 
 /* ---------- 參數與主程式 ---------- */
-const USAGE = "用法:node tools/build_icons.js <favicon.svg> [--app <App 圖示.svg>] [--maskable <maskable.svg>] [--bg '#rrggbb'] [--only favicon|app] [--out <資料夾>] [--tmp <資料夾>]";
+const USAGE = "用法:node tools/build_icons.js <favicon.svg> [--app <App 圖示.svg>] [--apple <滿版.svg>] [--maskable <maskable.svg>] [--bg '#rrggbb'] [--only favicon|app] [--out <資料夾>] [--tmp <資料夾>]";
 function parseArgs(argv) {
-  const o = { svg: null, app: null, maskable: null, bg: null, only: null, out: null, tmp: null };
-  const keys = { '--app': 'app', '--maskable': 'maskable', '--bg': 'bg', '--only': 'only', '--out': 'out', '--tmp': 'tmp' };
+  const o = { svg: null, app: null, apple: null, maskable: null, bg: null, only: null, out: null, tmp: null };
+  const keys = { '--app': 'app', '--apple': 'apple', '--maskable': 'maskable', '--bg': 'bg', '--only': 'only', '--out': 'out', '--tmp': 'tmp' };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (keys[a]) { if (i + 1 >= argv.length) throw new Error(a + ' 後面要接值\n' + USAGE); o[keys[a]] = argv[++i]; }
@@ -316,10 +319,11 @@ function main(argv, deps) {
   const fav = readSvg(o.svg);
   const doFav = o.only !== 'app', doApp = o.only !== 'favicon';
   const app = doApp ? (o.app ? readSvg(o.app) : fav) : null;
+  const apple = doApp && o.apple ? readSvg(o.apple) : app;
   const mask = doApp && o.maskable ? readSvg(o.maskable) : null;
   const jobs = [];
   if (doFav) ICO_SIZES.concat(FAVICON_PNG).forEach((n) => jobs.push({ key: 'f' + n, svg: fav, size: n }));
-  if (doApp) [180, 192, 512].forEach((n) => jobs.push({ key: 'a' + n, svg: app, size: n }));
+  if (doApp) [180, 192, 512].forEach((n) => jobs.push({ key: 'a' + n, svg: n === 180 ? apple : app, size: n }));
   if (mask) jobs.push({ key: 'm512', svg: mask, size: 512 });
   const got = {};
   d.render(jobs, tmp).forEach((im, k) => { got[jobs[k].key] = im; });
@@ -340,7 +344,7 @@ function main(argv, deps) {
     const m = mask ? flatten(got.m512, bg) : maskable(a, bg);
     const bad = safeZoneProblem(m);
     if (bad) throw new Error('maskable 安全區(中間直徑 80% 的圓)外有圖案:' + bad + '。換一張留好邊界的 --maskable,或拿掉 --maskable 讓程式自動縮。沒有寫入任何檔案');
-    const tag = appTag(app, mask, bg);
+    const tag = appTag(app, mask, bg, apple);
     [180, 192, 512].forEach((n) => put('img/icon-' + n + '.png', encodePng(flatten(got['a' + n], bg), { opaque: true, source: tag })));
     put('img/icon-maskable-512.png', encodePng(m, { opaque: true, source: tag }));
   }

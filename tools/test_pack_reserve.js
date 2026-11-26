@@ -13,14 +13,16 @@ const P = E.P, B = E.B, U = E.ctx.PACK_UTIL;
 const POOL = K.POOL.ids;
 const META = new Map(E.ctx.BANK_META.items.map((r) => [r.id, r]));
 const COMBOS = [EE, TT, TE, ET];
-const ACC = 'c7c1d2e3f4a5b4c6d8e9f0a1b2c3d4e5f';
-const ACCOUNTS = [ACC, 'c5a0c1e2d3b4a4c5d8e6f7a8b9c0d1e2f', 'c0f1e2d3c4b5a49698877665544332211'];
-/* 改之前的 reserveFor(第 2 堂 → 第 4 堂那一份):[題數, 題 id 用逗號接起來的 hash32];鍵是「聽讀級別的開頭字母|帳號」 */
+/* 帳號的資料夾名稱是 c 加帳號 id 去掉連字號(雲端帳號) */
+const UIDS = ['7c1d2e3f-4a5b-4c6d-8e9f-0a1b2c3d4e5f', '5a0c1e2d-3b4a-4c5d-8e6f-7a8b9c0d1e2f', '0f1e2d3c-4b5a-4969-8877-665544332211'];
+const ACCOUNTS = UIDS.map((u) => 'c' + u.replace(/-/g, ''));
+const ACC = ACCOUNTS[0];
+/* 改之前的 reserveFor(第 2 堂 → 第 4 堂那一份):[題數, 題 id 用逗號接起來的 hash32];鍵是「聽讀級別的開頭字母|第幾個帳號」 */
 const BEFORE = {
-  'ee|c7c1d2e3f4a5b4c6d8e9f0a1b2c3d4e5f': [20, 3603023490], 'ee|c5a0c1e2d3b4a4c5d8e6f7a8b9c0d1e2f': [20, 111918193], 'ee|c0f1e2d3c4b5a49698877665544332211': [20, 3009219850],
-  'tt|c7c1d2e3f4a5b4c6d8e9f0a1b2c3d4e5f': [25, 3589912264], 'tt|c5a0c1e2d3b4a4c5d8e6f7a8b9c0d1e2f': [25, 1392165023], 'tt|c0f1e2d3c4b5a49698877665544332211': [25, 2114563014],
-  'te|c7c1d2e3f4a5b4c6d8e9f0a1b2c3d4e5f': [20, 2365785647], 'te|c5a0c1e2d3b4a4c5d8e6f7a8b9c0d1e2f': [20, 246229127], 'te|c0f1e2d3c4b5a49698877665544332211': [20, 2863151630],
-  'et|c7c1d2e3f4a5b4c6d8e9f0a1b2c3d4e5f': [25, 1822214015], 'et|c5a0c1e2d3b4a4c5d8e6f7a8b9c0d1e2f': [25, 4233500961], 'et|c0f1e2d3c4b5a49698877665544332211': [25, 2124996082],
+  'ee|0': [20, 3603023490], 'ee|1': [20, 111918193], 'ee|2': [20, 3009219850],
+  'tt|0': [25, 3589912264], 'tt|1': [25, 1392165023], 'tt|2': [25, 2114563014],
+  'te|0': [20, 2365785647], 'te|1': [20, 246229127], 'te|2': [20, 2863151630],
+  'et|0': [25, 1822214015], 'et|1': [25, 4233500961], 'et|2': [25, 2124996082],
 };
 const tag = (lv) => lv.listening[0] + lv.reading[0];
 const print = (ids) => [ids.length, U.hash32(ids.join(','))];
@@ -83,7 +85,7 @@ T['R2 第 4、8、12 堂三份兩兩不重疊、都合乎各自區塊的條件;�
       const r4 = a.near, r8 = a.far, r12 = b.far;
       eq([disjoint(r4, r8), disjoint(r4, r12), disjoint(r8, r12)], [[], [], []], tag(lv) + ' ' + acc);
       fitsBlocks(lv, 4, r4); fitsBlocks(lv, 8, r8); fitsBlocks(lv, 12, r12);
-      eq(print(r4), BEFORE[tag(lv) + '|' + acc], tag(lv) + ' ' + acc + ' 第 4 堂那一份');
+      eq(print(r4), BEFORE[tag(lv) + '|' + ACCOUNTS.indexOf(acc)], tag(lv) + ' 第 ' + (ACCOUNTS.indexOf(acc) + 1) + ' 個帳號第 4 堂那一份');
       n++;
     }
   }
@@ -180,20 +182,20 @@ T['R8 不改傳進來的 ctx 與進度'] = async () => {
 
 T['R9 做過聽力短測的帳號:那 8 題算前測題(小檢核清單扣掉、預留題不挑);沒做過的帳號預留題跟改之前一樣'] = async () => {
   for (const lv of [EE, TT]) {
-    const plainEnv = K.env({ bank: true, user: '5a0c1e2d-3b4a-4c5d-8e6f-7a8b9c0d1e2f', pid: ACCOUNTS[1] });
+    const plainEnv = K.env({ bank: true, user: UIDS[1], pid: ACCOUNTS[1] });
     await plainEnv.D.packs();
     const l3 = plainEnv.lesson(lv, 3), c0 = plainEnv.D.ctx(l3, NOW);
     const r0 = await plainEnv.P.reserved(c0);
-    eq(print(r0.slice(0, BEFORE[tag(lv) + '|' + ACCOUNTS[1]][0])), BEFORE[tag(lv) + '|' + ACCOUNTS[1]], '沒做過短測:第 4 堂那一份不變');
+    eq(print(r0.slice(0, BEFORE[tag(lv) + '|1'][0])), BEFORE[tag(lv) + '|1'], '沒做過短測:第 4 堂那一份不變');
     const short = r0.filter((id) => /^l[12]-/.test(id)).slice(0, 8);
     assert.equal(short.length, 8);
-    const e = K.env({ bank: true, user: '5a0c1e2d-3b4a-4c5d-8e6f-7a8b9c0d1e2f', pid: ACCOUNTS[1] });
+    const e = K.env({ bank: true, user: UIDS[1], pid: ACCOUNTS[1] });
     e.store.set('onboard', { v: 1, step: 'done', listen: { v: 1, mode: 'full', ids: short } });
     await e.D.packs();
     const c = e.D.ctx(e.lesson(lv, 3), NOW), r = await e.P.reserved(c);
     eq([short.filter((id) => e.D.testIds().indexOf(id) < 0), short.filter((id) => c.checkpointPool.indexOf(id) > -1), disjoint(r, short)], [[], [], []], tag(lv));
     assert.ok(short.every((id) => c.seen.indexOf(id) > -1), '算進做過的題');
-    const bad = K.env({ bank: true, user: '5a0c1e2d-3b4a-4c5d-8e6f-7a8b9c0d1e2f', pid: ACCOUNTS[1] });
+    const bad = K.env({ bank: true, user: UIDS[1], pid: ACCOUNTS[1] });
     bad.store.set('onboard', { v: 1, listen: { ids: short.slice(0, 7) } });
     await bad.D.packs();
     eq(print((await bad.P.reserved(bad.D.ctx(bad.lesson(lv, 3), NOW))).slice(0, r0.length)), print(r0), '不是 8 題不算');

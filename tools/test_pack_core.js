@@ -542,7 +542,8 @@ T['C24 難度配比用最大餘數法;引導區塊寫了難度、題不夠時照
 const POOL = JSON.parse(read('data/packs/checkpoint_pool.json')).ids;
 const ACC = 'c' + '7c1d2e3f-4a5b-4c6d-8e9f-0a1b2c3d4e5f'.replace(/-/g, '');   // 雲端帳號的資料夾名稱(c 加帳號 id 去掉連字號)
 const cpBlocks = (l) => l.segments.filter((s) => s.slot === 'checkpoint')[0].blocks.filter((b) => !b.fill);
-const reserveOf = (levels, no, account, ctx) => P.reserveFor(PACKS, levels, no, { account: account === undefined ? ACC : account, pool: POOL, bank: (ctx || CTX).BANK });
+/* 第 no 堂之後下一次小檢核那一份(reserveFor 的 near);之後第二次那一份與補題順序在 tools/test_pack_reserve.js */
+const reserveOf = (levels, no, account, ctx) => P.reserveFor(PACKS, levels, no, { account: account === undefined ? ACC : account, pool: POOL, bank: (ctx || CTX).BANK }).then((r) => r.near);
 /* 第 3 堂的題庫區塊、弱點補練、考點回顧、測驗檢討:除了預留題,同一 Part 的題全部先凍結在一個用不到的區塊,逼它們只能用預留題 */
 async function squeezed(part) {
   const l = P.compose(PACKS, LV, 3), hold = await reserveOf(LV, 3);
@@ -577,7 +578,7 @@ T['C25 預留題:第 1–3 堂是第 4 堂、第 4–7 堂是第 8 堂(照學習
   assert.throws(() => vm.runInContext('Math.random()', other), /不能用/);
   let n = 0;
   for (const lv of COMBOS) {
-    const a = await reserveOf(lv, 2), b = await reserveOf(lv, 3), c = await other.PACK_CORE.reserveFor(PACKS, lv, 1, { account: ACC, pool: POOL, bank: other.BANK });
+    const a = await reserveOf(lv, 2), b = await reserveOf(lv, 3), c = (await other.PACK_CORE.reserveFor(PACKS, lv, 1, { account: ACC, pool: POOL, bank: other.BANK })).near;
     assert.deepEqual([plain(b), plain(c)], [plain(a), plain(a)], '同一個帳號、同一個小檢核每次一樣');
     const l = fitsBlocks(lv, 4, a);
     const p1 = cpBlocks(l).filter((x) => x.module === 'p1')[0];
@@ -637,13 +638,16 @@ T['C27 弱點補練的題數是用剩下的時間換算的:先避開預留題、
   return 'ok';
 };
 
-T['C28 小檢核本身的選題規則不變:給不給預留題選出來都一樣(同一個亂數);預留題被做掉了就選清單裡別的沒做過的題,不夠照樣少出,不用做過的題補'] = async () => {
+T['C28 小檢核先避開之後的預留題:清單內有足夠的非預留題時,檢核題不含預留題;預留題被做掉了就選清單裡別的沒做過的題(不夠時才用預留題),不夠照樣少出,不用做過的題補'] = async () => {
   const l = P.compose(PACKS, LV, 4), hold8 = await reserveOf(LV, 4), hold4 = await reserveOf(LV, 3);
   const base = { checkpointPool: POOL };
   const a = await P.pickFixed(l, P.newState(l, NOW), ctxOf(Object.assign({ random: rng(11) }, base)));
   const b = await P.pickFixed(l, P.newState(l, NOW), ctxOf(Object.assign({ random: rng(11), reserve: hold8 }, base)));
   const c = await P.pickFixed(l, P.newState(l, NOW), ctxOf(Object.assign({ random: rng(11), reserve: hold4 }, base)));
-  cpBlocks(l).forEach((blk) => assert.deepEqual([plain(b.state.pk[blk.idx].ids), plain(c.state.pk[blk.idx].ids)], [plain(a.state.pk[blk.idx].ids), plain(a.state.pk[blk.idx].ids)], blk.blockId));
+  cpBlocks(l).forEach((blk) => {
+    const ok = (r, hold) => r.state.pk[blk.idx].ids.length === a.state.pk[blk.idx].ids.length && r.state.pk[blk.idx].ids.every((id) => hold.indexOf(id) < 0 && POOL.indexOf(id) > -1);
+    assert.ok(ok(b, hold8) && ok(c, hold4), blk.blockId + ' 題數一樣、不含預留題');
+  });
   const p1 = cpBlocks(l).filter((x) => x.module === 'p1')[0];
   const done = {};
   CTX.BANK_META.items.filter((x) => x.part === '1').map((x) => x.id).filter((id) => POOL.indexOf(id) > -1).slice(0, 18).forEach((id) => { done[id] = { ok: true, t: 1 }; });
@@ -651,7 +655,8 @@ T['C28 小檢核本身的選題規則不變:給不給預留題選出來都一樣
   const fresh = POOL.filter((id) => /^l1-/.test(id) && !done[id]);
   const d = await P.pickFixed(l, P.newState(l, NOW), ctxOf(Object.assign({ reserve: hold8, records: { 1: done, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {} } }, base)));
   assert.deepEqual(plain(d.state.pk[p1.idx].ids.slice().sort()), plain(fresh.slice().sort()), '只選清單裡沒做過的');
-  assert.ok(fresh.length < p1.count && d.need.some((x) => x.idx === p1.idx && x.got === fresh.length && !x.reserved), '不夠就少出');
+  const usedHold = fresh.filter((id) => hold8.indexOf(id) > -1).length;
+  assert.ok(fresh.length < p1.count && d.need.some((x) => x.idx === p1.idx && x.got === fresh.length && (x.reserved || 0) === usedHold), '不夠就少出');
   return '照片描述清單剩 ' + fresh.length + ' 題沒做過';
 };
 
@@ -660,7 +665,7 @@ T['C29 清單或題庫少了題時預留題不整份換:少了一題沒被挑中
   for (const lv of COMBOS) {
     for (const acc of [ACC, 'c0' + ACC.slice(2), 'c1' + ACC.slice(2)]) {
       const a = await reserveOf(lv, 2, acc);
-      const less = (gone) => P.reserveFor(PACKS, lv, 2, { account: acc, pool: POOL.filter((id) => id !== gone), bank: CTX.BANK });
+      const less = (gone) => P.reserveFor(PACKS, lv, 2, { account: acc, pool: POOL.filter((id) => id !== gone), bank: CTX.BANK }).then((r) => r.near);
       for (const blk of cpBlocks(P.compose(PACKS, lv, 4))) {
         const part = blk.module.slice(1);
         const out = POOL.filter((id) => META.get(id).part === part && a.indexOf(id) < 0);

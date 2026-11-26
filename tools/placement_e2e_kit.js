@@ -247,6 +247,11 @@ async function practiceRound(p, url, right) {
   throw new Error('刷題走太多步:' + url);
 }
 
+/* 截圖時順便量:Y2(.brand-logo)看得到、作答中、整頁橫捲多少、頁尾上緣在第一屏外、頁尾下緣在整頁底部 */
+const SHOT_CHECK = `(() => { const html = document.documentElement, f = document.querySelector('body > footer'), y = document.querySelector('.topbar .brand-logo');
+  const fr = f && getComputedStyle(f).display !== 'none' ? f.getBoundingClientRect() : null, yr = y ? y.getBoundingClientRect() : null;
+  return { y2: !!yr && yr.width > 0 && yr.height > 0 && getComputedStyle(y).visibility !== 'hidden', quiz: html.classList.contains('is-quiz'), overflowX: html.scrollWidth - html.clientWidth,
+    ih: innerHeight, docH: html.scrollHeight, footTop: fr ? Math.round(fr.top + scrollY) : null, footBottom: fr ? Math.round(fr.bottom + scrollY) : null }; })()`;
 async function shot(p, dir, name) {
   if (!dir) return;
   fs.mkdirSync(dir, { recursive: true });
@@ -254,12 +259,19 @@ async function shot(p, dir, name) {
     await send2(p, w, h, touch);
     await sleep(500);
     await p.eval("(() => { const s = document.createElement('style'); s.id = '__shot'; s.textContent = ':focus-visible, :focus { outline: none !important; }'; document.head.append(s); return true; })()");
-    const full = Math.min(4000, Math.max(h, Number(await p.eval('Math.ceil(document.documentElement.scrollHeight)')) || h));
-    if (full > h) { await send2(p, w, full, touch); await sleep(400); }
     await p.eval('window.scrollTo(0, 0), true');   // 整頁截圖從頂端開始
     await sleep(150);
-    const r = await p.send('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width: w, height: full, scale: 1 } });
+    const full = Math.min(4000, Math.max(h, Number(await p.eval('Math.ceil(document.documentElement.scrollHeight)')) || h));
+    /* 視窗維持 w×h、截到視窗外(captureBeyondViewport):不把視窗拉成整頁高,100vh 的 min-height 才不會跟著變高、把頁尾推到圖外 */
+    const r = await p.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: 0, y: 0, width: w, height: full, scale: 1 } });
     fs.writeFileSync(path.join(dir, name + '_' + w + '.png'), Buffer.from(r.result.data, 'base64'));
+    /* 這一張的檢查紀錄(同資料夾的 shots.json):頂欄 Y2 有沒有畫出來、作答中(is-quiz)、整頁橫捲、第一屏與整頁底部的頁尾 */
+    const chk = await p.eval(SHOT_CHECK);
+    const log = path.join(dir, 'shots.json');
+    let all = {};
+    try { all = JSON.parse(fs.readFileSync(log, 'utf8')); } catch (e) { /* 第一張 */ }
+    all[name + '_' + w] = chk;
+    fs.writeFileSync(log, JSON.stringify(all, null, 1));
     await p.eval("(() => { const s = document.getElementById('__shot'); if (s) s.remove(); return true; })()");
   }
   await send2(p, p.w, p.h, p.touch);

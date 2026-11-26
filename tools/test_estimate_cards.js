@@ -237,16 +237,29 @@ async function tab(u, seed) {
   await p.eval('Object.entries(' + J(ls) + ').forEach(([k, v]) => localStorage.setItem(k, v)); true');
   return p;
 }
+/* 截圖時順便量:Y2(.brand-logo)看得到、作答中、整頁橫捲多少、頁尾上緣在第一屏外、頁尾下緣在整頁底部 */
+const SHOT_CHECK = `(() => { const html = document.documentElement, f = document.querySelector('body > footer'), y = document.querySelector('.topbar .brand-logo');
+  const fr = f && getComputedStyle(f).display !== 'none' ? f.getBoundingClientRect() : null, yr = y ? y.getBoundingClientRect() : null;
+  return { y2: !!yr && yr.width > 0 && yr.height > 0 && getComputedStyle(y).visibility !== 'hidden', quiz: html.classList.contains('is-quiz'), overflowX: html.scrollWidth - html.clientWidth,
+    ih: innerHeight, docH: html.scrollHeight, footTop: fr ? Math.round(fr.top + scrollY) : null, footBottom: fr ? Math.round(fr.bottom + scrollY) : null }; })()`;
 async function shot(p, name) {
   if (!SHOTS) return;
   fs.mkdirSync(SHOTS, { recursive: true });
   for (const [w, h, mobile] of [[375, 812, true], [1280, 900, false]]) {
     await p.metrics(w, h, mobile);
     await sleep(500);
+    await p.eval('window.scrollTo(0, 0), true');
     const full = Math.min(4000, Math.max(h, Number(await p.eval('Math.ceil(document.documentElement.scrollHeight)')) || h));
-    if (full > h) { await p.metrics(w, full, mobile); await sleep(400); }
-    const r = await p.send('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width: w, height: full, scale: 1 } });
+    /* 視窗維持 w×h、截到視窗外(captureBeyondViewport):不把視窗拉成整頁高,100vh 的 min-height 才不會跟著變高、把頁尾推到圖外 */
+    const r = await p.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: 0, y: 0, width: w, height: full, scale: 1 } });
     fs.writeFileSync(path.join(SHOTS, name + '_' + w + '.png'), Buffer.from(r.result.data, 'base64'));
+    /* 這一張的檢查紀錄(同資料夾的 shots.json):頂欄 Y2 有沒有畫出來、作答中(is-quiz)、整頁橫捲、第一屏與整頁底部的頁尾 */
+    const chk = await p.eval(SHOT_CHECK);
+    const log = path.join(SHOTS, 'shots.json');
+    let all = {};
+    try { all = JSON.parse(fs.readFileSync(log, 'utf8')); } catch (e) { /* 第一張 */ }
+    all[name + '_' + w] = chk;
+    fs.writeFileSync(log, JSON.stringify(all, null, 1));
   }
   await p.metrics(1280, 900, false);
 }

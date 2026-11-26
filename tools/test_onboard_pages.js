@@ -245,7 +245,10 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     '-    try { unsure = (await checkCloud(user)).unsure; } catch (e) { unsure = Object.keys(MERGED).filter(k => MERGED[k].reconcile); }',
     "+    try { unsure = (await checkCloud(user)).unsure; } catch (e) { unsure = mergedIn(localNames('tr_u' + pidOf(user) + '_')).filter(k => spec(k).reconcile); }",
   ];
-  eq(changedLines('js/cloud.js').filter((l) => !ok.some((re) => re.test(l)) && COURSE.indexOf(l) < 0), [], 'cloud.js 有不在清單上的改動');
+  /* 後來加的保護(跟起始程度無關):supabase-js 鎖版本與 integrity、網址帶回來的登入錯誤只顯示固定說明、
+     註冊訊息不分辨信箱有沒有註冊過、搬家暫存區讀值時拿掉 __proto__ 鍵;逐行列在 tools/fixtures/cloud_harden_lines.json */
+  const HARDEN = require('./fixtures/cloud_harden_lines.json');
+  eq(changedLines('js/cloud.js').filter((l) => !ok.some((re) => re.test(l)) && COURSE.indexOf(l) < 0 && HARDEN.indexOf(l) < 0), [], 'cloud.js 有不在清單上的改動');
 };
 T['S7b js/classes.js 只改兩處:加入班級的小字補「程度檢測結果」、匯出邀請碼格式檢查'] = () => {
   const changed = changedLines('js/classes.js').map((l) => l.slice(0, 1) + l.slice(1).trim());

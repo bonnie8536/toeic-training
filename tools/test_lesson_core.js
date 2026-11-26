@@ -314,7 +314,7 @@ T['小檢核清單的考點名稱:第 4 堂兩包用到的鍵都在名稱表;表
     const cp = lessonOf(lv)(4).checkpoint;
     cp.listening.concat(cp.reading).forEach((key) => assert.ok(C.POINT_NAME[E.R.legacyKey(key)], key));
   });
-  eq(['P1.photo', 'P2.wh', 'P5.noun_slot', 'P5.adj_slot', 'P5.adv_slot', 'P7.set', 'P5.cat:分詞', 'P6.type:句子插入'].map(C.pointName),
+  eq(['P1.photo', 'P2.wh', 'P5.noun_slot', 'P5.adj_slot', 'P5.adv_slot', 'P7.set', 'P5.cat:未分類', 'P6.type:句子插入'].map(C.pointName),
     ['照片描述', 'WH 問句', '詞性', '詞性', '詞性', 'Part 7 閱讀理解', 'Part 5 單句填空', 'Part 6 段落填空']);
   Object.keys(C.POINT_NAME).forEach((k) => assert.equal(E.R.legacyKey(k), k, '名稱表用舊欄位寫法:' + k));
   eq([C.VERDICT.met.text, C.VERDICT.hold.text, C.VERDICT.weak.text, C.VERDICT.code.m, C.VERDICT.code.h, C.VERDICT.code.w], ['達標', '持平', '弱點', 'met', 'hold', 'weak']);

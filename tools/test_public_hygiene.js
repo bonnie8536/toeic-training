@@ -145,6 +145,12 @@ T['.well-known/security.txt:聯絡信箱跟 tools/domain.json 一致,期限在�
     && /^Preferred-Languages: zh-TW, en\s*$/m.test(s);
 };
 
+T['後台(admin.html)不載第三方的腳本:只載本站的 js'] = () => {
+  const html = fs.readFileSync(path.join(REPO, 'admin.html'), 'utf8');
+  const ext = (html.match(/<script[^>]*\ssrc=["']?[^"' >]+/gi) || []).map((t) => t.replace(/.*\ssrc=["']?/i, '')).filter((u) => /^(https?:)?\/\//i.test(u));
+  return ext.length === 0 || '載了 ' + ext.join(', ');
+};
+
 (async () => {
   let pass = 0;
   const names = Object.keys(T);

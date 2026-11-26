@@ -4,9 +4,13 @@
    (簡短對話至少 1 組;第 1–4 堂避開的是入門那一份,門檻那一份會被前測與前測檢討用掉幾題,選不滿)。
    兩種帳號選到的檢核題都在小檢核清單內、開堂時沒做過、不是前測題;第 5–7 堂固定段每個題庫區塊都選滿。
    選題用真的 js/lesson-data.js 與 js/pack-core.js,作答紀錄與學習記錄照練習引擎的寫法寫回;每小題照固定種子的亂數答對(答錯選正解的下一個選項)。
+   先做檢測的兩種(門檻 6 個、入門升門檻 3 個帳號):第 1 堂前先在程度檢測頁(tools/placement_kit.js,真的 js/placement.js)做完
+   聽力 12 題、閱讀 12 題,檢測做過的題在課程裡算做過。第 4、8 堂每個檢核區塊選到的題不比同一個帳號沒做檢測時少
+   (預留題先扣掉檢測做過的題);門檻的第 8 堂照樣每個區塊選滿。
    答對率 60% 有斷言;40%、85% 只印數字。不開瀏覽器、不連網。用法:node tools/test_lesson_reserve8.js */
 'use strict';
 const K = require('./lesson_kit.js');
+const PK = require('./placement_kit.js');
 const { eq, NOW, DAY, EE, TT } = K;
 
 function rng(seed) {
@@ -17,9 +21,26 @@ const BANK_MOD = /^p([1-7])$/;
 /* 第 1–8 堂的建議日期(距開始日幾天) */
 const DAYS = [0, 3, 7, 10, 14, 17, 21, 24];
 
-/* 一個學生:lvOf(no) 是第 no 堂上課的級別;rate 是每小題答對的機率 */
-function student(uid, seed, lvOf, rate) {
+/* 第 1 堂前兩小時在程度檢測頁做完一次(聽力、閱讀各 12 題),每小題照固定種子的亂數答對 → 那一份 placement_v1 */
+async function placementRun(pid, seed, rate) {
+  const p = PK.env({ pid, now: (NOW - 7200) * 1000 }), right = rng(seed);
+  const mode = (u, qi) => { const a = PK.answerOf(u, qi); return right() < rate ? a : (a + 1) % (Number(u.part) === 2 ? 3 : 4); };
+  PK.clickText(p.box, '開始');
+  await PK.flush();
+  await PK.doSection(p, mode);
+  PK.clickText(p.box, '開始閱讀');
+  await PK.flush();
+  await PK.doSection(p, mode);
+  await PK.flush(40);
+  const v = p.get('placement_v1');
+  if (!v || !v.runs.length || typeof v.runs[0].end !== 'string' || v.runs[0].items.length !== 24) throw new Error('檢測沒有做完');
+  return v;
+}
+
+/* 一個學生:lvOf(no) 是第 no 堂上課的級別;rate 是每小題答對的機率;placement 是第 1 堂前做的檢測(placement_v1,沒有就是沒做) */
+function student(uid, seed, lvOf, rate, placement) {
   const e = K.env({ bank: true, user: uid, pid: 'c' + uid.replace(/-/g, '') });
+  if (placement) e.store.set('placement_v1', placement);
   const C = e.ctx.LESSON_CORE, R = e.R, D = e.D, P = e.P;
   const meta = new Map(e.ctx.BANK_META.items.map((r) => [r.id, r]));
   const random = rng(seed), right = rng(seed * 7 + 3);
@@ -193,11 +214,14 @@ function student(uid, seed, lvOf, rate) {
 const sum = (list, f) => list.reduce((a, x) => a + f(x), 0);
 const ACCOUNTS = ['5a0c1e2d-3b4a-4c5d-8e6f-7a8b9c0d1e2f', 'a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d', '0f1e2d3c-4b5a-4969-8877-665544332211',
   '11111111-2222-4333-8444-555555555555', '9a8b7c6d-5e4f-4a3b-9c2d-1e0f9a8b7c6d', '3c4d5e6f-7a8b-4c9d-8e0f-1a2b3c4d5e6f'];
-const KINDS = { 門檻: { n: 6, lvOf: () => TT }, 入門升門檻: { n: 3, lvOf: (no) => (no <= 4 ? EE : TT) } };
+const KINDS = { 門檻: { n: 6, lvOf: () => TT, full: true }, 入門升門檻: { n: 3, lvOf: (no) => (no <= 4 ? EE : TT) },
+  '門檻(先做檢測)': { n: 6, lvOf: () => TT, full: true, base: '門檻' }, '入門升門檻(先做檢測)': { n: 3, lvOf: (no) => (no <= 4 ? EE : TT), base: '入門升門檻' } };
 
 /* 一個帳號跑第 1–7 堂與第 8 堂開堂 → 第 4、8 堂各區塊題數、第 5–7 堂固定段、弱點補練與違規的檢核題 */
 async function runOne(kind, ai, rate) {
-  const s = student(ACCOUNTS[ai], 2000 + ai, KINDS[kind].lvOf, rate);
+  const pid = 'c' + ACCOUNTS[ai].replace(/-/g, '');
+  const pl = KINDS[kind].base ? await placementRun(pid, 5000 + ai, rate) : null;
+  const s = student(ACCOUNTS[ai], 2000 + ai, KINDS[kind].lvOf, rate, pl);
   await s.e.D.packs();
   const per = {};
   for (let no = 1; no <= 7; no++) per[no] = await s.lesson(no);
@@ -210,6 +234,15 @@ async function runOne(kind, ai, rate) {
   const reserved = [1, 2, 3, 4, 5, 6, 7].reduce((a, no) => a + sum(per[no], (x) => x.reserved || 0), 0);
   return { cp4: per[4].cp, cp8: cp8.blocks, bad, fixed, weak: [sum(weakOf, (x) => x.got), sum(weakOf, (x) => x.want)], relaxed, reserved };
 }
+/* 先做檢測的 r 跟沒做檢測的 base 比:第 4、8 堂哪幾個區塊選到的題比較少 */
+function fewer(base, r) {
+  const out = [];
+  [['cp4', 4], ['cp8', 8]].forEach(([k, no]) => (r[k] || []).forEach((b, i) => {
+    const was = (base[k] || [])[i];
+    if (was && b.ids.length < was.ids.length) out.push('第 ' + no + ' 堂 ' + b.module + ' ' + b.ids.length + '/' + was.ids.length);
+  }));
+  return out;
+}
 const fmt = (blocks) => blocks.map((b) => b.module + ' ' + b.ids.length + '/' + b.want).join('、');
 function line(kind, ai, rate, r) {
   return '  ' + kind + ' 帳號' + (ai + 1) + ' ' + Math.round(rate * 100) + '%:第 4 堂 ' + fmt(r.cp4) + ';第 8 堂 ' + fmt(r.cp8)
@@ -219,14 +252,15 @@ function line(kind, ai, rate, r) {
 
 const T = {};
 Object.keys(KINDS).forEach((kind) => {
-  T[kind + ':答對率 60%,第 8 堂小檢核' + (kind === '門檻' ? '每個檢核區塊選滿' : '每個檢核區塊至少 3 題(簡短對話至少 1 組)') + ';檢核題都合規則;第 5–7 堂固定段選滿'] = async () => {
+  T[kind + ':答對率 60%,第 8 堂小檢核' + (KINDS[kind].full ? '每個檢核區塊選滿' : '每個檢核區塊至少 3 題(簡短對話至少 1 組)') + ';檢核題都合規則;第 5–7 堂固定段選滿' + (KINDS[kind].base ? ';第 4、8 堂各區塊不比沒做檢測時少' : '')] = async () => {
     const bad = [];
     for (let ai = 0; ai < KINDS[kind].n; ai++) {
       const r = await runOne(kind, ai, 0.6);
       console.log(line(kind, ai, 0.6, r));
-      const short = r.cp8.filter((b) => (kind === '門檻' ? b.ids.length < b.want : b.ids.length < Math.min(b.want, b.module === 'p3' ? 1 : 3)));
+      const short = r.cp8.filter((b) => (KINDS[kind].full ? b.ids.length < b.want : b.ids.length < Math.min(b.want, b.module === 'p3' ? 1 : 3)));
       if (short.length) bad.push('帳號' + (ai + 1) + ' 選不滿 ' + fmt(short));
       if (r.bad.length) bad.push('帳號' + (ai + 1) + ' 檢核題不合規則 ' + r.bad.join(','));
+      if (KINDS[kind].base) fewer(await runOne(KINDS[kind].base, ai, 0.6), r).forEach((x) => bad.push('帳號' + (ai + 1) + ' 比沒做檢測少 ' + x));
       r.fixed.forEach((list, i) => list.filter((x) => x.got !== x.want).forEach((x) => bad.push('帳號' + (ai + 1) + ' 第 ' + (5 + i) + ' 堂區塊 ' + x.idx + ' ' + x.got + '/' + x.want)));
     }
     eq(bad, [], kind);

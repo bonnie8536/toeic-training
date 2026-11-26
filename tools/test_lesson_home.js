@@ -340,14 +340,14 @@ function cardView(e) {
 }
 T['卡的狀態:可開始、進行中(實色鈕、每日練習卡的「開始」藏起來、全頁實色鈕 1 顆);右上「{d} / 24 堂」連到課程總覽'] = async () => {
   const st = await open({ seed: pilotSeed() });
-  eq(cardView(st), { kicker: '第 3 堂', h2: titleOf(3), tags: ['約 60 分鐘'], pose: 'read', go: ['btn primary lsn-home-go', '開始第 3 堂', 'lesson.html?no=3'],
+  eq(cardView(st), { kicker: '第 3 堂', h2: titleOf(3), tags: ['約 60 分鐘'], pose: 'gaze', go: ['btn primary lsn-home-go', '開始第 3 堂', 'lesson.html?no=3'],
     buttons: 1, all: ['2 / 24 堂', 'lessons.html', '課程 2 / 24 堂'], grid: 'home-grid has-lesson lesson-go', solid: 1 });
   assert.equal(st.mounts.indexOf(card(st)) > -1, true, '鵜鶘要 UI.mount');
   eq([card(st).getAttribute('aria-labelledby'), card(st).querySelector('h2').getAttribute('id'), card(st).querySelector('canvas').getAttribute('data-size'), card(st).className],
     ['lsn-home-h', 'lsn-home-h', '72', 'daily-card lsn-home']);
   const doing = await open({ seed: pilotSeed({ les_t1_03: lessonState(3, NOW - DAY, ['vocab']) }) });
   const d = cardView(doing);
-  eq([d.kicker, d.tags, d.pose, d.go, d.solid], ['第 3 堂', ['約 60 分鐘', '1 / 6 段'], 'read', ['btn primary lsn-home-go', '繼續第 3 堂', 'lesson.html?no=3'], 1]);
+  eq([d.kicker, d.tags, d.pose, d.go, d.solid], ['第 3 堂', ['約 60 分鐘', '1 / 6 段'], 'gaze', ['btn primary lsn-home-go', '繼續第 3 堂', 'lesson.html?no=3'], 1]);
   const css = K.read('css/style.css');
   assert.ok(/\.home \.home-grid\.lesson-go \.daily-go \{ display: none; \}/.test(css), '藏每日練習卡「開始」的樣式');
   const first = await open({ seed: Object.assign(SEED_DONE(), { levels: LV_EE, plan: PLAN }) });

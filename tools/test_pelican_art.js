@@ -1,4 +1,4 @@
-/* 塗鴉鵜鶘(js/pelican-art.js,version 3:本體、待機,加上開心、尷尬、看書、睡覺四個姿勢)的測試。
+/* 塗鴉鵜鶘(js/pelican-art.js,version 5:本體、待機,加上開心、尷尬、看書、睡覺、白日夢、坐著看書六個姿勢)的測試。
    用法:node tools/test_pelican_art.js
    在 Node 裡跑,用假的 canvas 記下每一個繪圖呼叫(含每個數字的完整值)和每一次設定的顏色、筆粗,檢查:
    - 介面:姿勢清單、格數、holds、靜止格、速度、metrics、version。
@@ -13,10 +13,16 @@
    - version 3:看書改成正面捧書:每一格都有一本書(一大片白色、在身體下半),書沒有任何黃色,嘴袋的黃色跟書頂之間留白縫;
      其他姿勢沒有書;睡覺的 z 和呆毛離畫布上緣至少 8%。
    - 第七版(仍是 version 3):看書(正面)跟其他姿勢互換時淡出淡入(約 150 ms,用 requestAnimationFrame;減少動態時不做),
-     側面姿勢之間互換不淡入淡出。 */
-const POSES = ['idle', 'happy', 'oops', 'read', 'sleep'];
+     側面姿勢之間互換不淡入淡出。
+   - version 4(第八版):姿勢清單最後多了 daydream 白日夢,上面每一條通用規則(格數、holds、速度、畫兩次一樣、不超出畫布、
+     沒有藍色、白色身體有塗白、減少動態只畫靜止格)都照樣檢查它;另外檢查:趴著(身體寬比高多很多、肚子貼地、比站著低)、
+     腳往後伸出屁股、身體上面左中右三本書(一本黃色封面)且各格上下飄而身體不動、跟站著的姿勢互換時淡出淡入。
+   - version 5(第九版):姿勢清單最後多了 gaze 坐著抬眼看書(首頁用),上面每一條通用規則都照樣檢查它;另外檢查:
+     12 格、每格 1 拍、每秒 4 張、靜止格第 0 格;種子編號固定(idle 0 … daydream 5、gaze 6);
+     每一格、64~300 各種大小的點離畫布邊至少一個線寬的一半加 1(墨線不碰畫布邊);只用墨黑、黃、純白;每一格都有書的白色(左上方)。 */
+const POSES = ['idle', 'happy', 'oops', 'read', 'sleep', 'daydream', 'gaze'];
 /* 各姿勢的格數範圍 */
-const FRAMES = { idle: [7, 10], happy: [9, 11], oops: [8, 10], read: [7, 9], sleep: [6, 8] };
+const FRAMES = { idle: [7, 10], happy: [9, 11], oops: [8, 10], read: [7, 9], sleep: [6, 8], daydream: [10, 13], gaze: [12, 12] };
 const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
@@ -136,7 +142,7 @@ const T = {};
 T['姿勢清單、version、metrics、速度'] = () => {
   const d = [];
   if (!eq(ART.poses, POSES)) d.push('poses ' + JSON.stringify(ART.poses));
-  if (ART.version !== 3) d.push('version ' + ART.version);
+  if (ART.version !== 5) d.push('version ' + ART.version);
   if (!eq(ART.metrics, { width: 300, height: 280, ground: 258 })) d.push('metrics ' + JSON.stringify(ART.metrics));
   if (!POSES.every((p) => ART.fps[p] > 0 && ART.fps[p] <= 8)) d.push('fps ' + JSON.stringify(ART.fps));
   // 尷尬比待機慢、看書不比待機快、睡覺最慢
@@ -154,7 +160,7 @@ T['idle 約 8 格,holds 是正整數、一圈 2 到 4 秒;靜止格在範圍內;
   return { ok, detail: JSON.stringify({ n, h, sec, calm: ART.calm }) };
 };
 
-T['四個新姿勢:格數、holds(正整數、1 到 3)、靜止格都在範圍內;一圈的秒數合理(開心 1~3 秒,其他 2~5 秒)'] = () => {
+T['新姿勢:格數、holds(正整數、1 到 3)、靜止格都在範圍內;一圈的秒數合理(開心 1~3 秒,其他 2~5 秒)'] = () => {
   const d = [], info = {};
   POSES.slice(1).forEach((p) => {
     const n = ART.frameCount(p), h = ART.holds(p), c = ART.calm[p];
@@ -410,7 +416,7 @@ T['看書的每一格都有書(下半一大片白色);書裡沒有黃色,嘴袋�
     minGap = Math.min(minGap, b[1] - low);
     if (b[1] - low < 8) d.push('read ' + size + '/' + k + ' 黃色離書頂只有 ' + (b[1] - low).toFixed(1));
   }
-  ['idle', 'happy', 'oops', 'sleep'].forEach((p) => { for (let k = 0; k < ART.frameCount(p); k++) if (bookOf(frameLog(ART, p, k, 0, 180))) d.push(p + ' ' + k + ' 有書'); });
+  ['idle', 'happy', 'oops', 'sleep', 'daydream'].forEach((p) => { for (let k = 0; k < ART.frameCount(p); k++) if (bookOf(frameLog(ART, p, k, 0, 180))) d.push(p + ' ' + k + ' 有書'); });
   return { ok: !d.length, detail: '最小白縫 ' + minGap.toFixed(1) + ';' + d.slice(0, 6).join('、') };
 };
 T['看書時嘴、嘴袋、書、腳整圈不動(各格的黃色範圍和書的位置都一樣)'] = () => {
@@ -455,6 +461,143 @@ T['墨線有輕重(粗細很多種);嘴袋黃色是一束一束方向不一的�
   const ok = inkW.size >= 30 && sweeps.length >= 30 && spread >= 25;
   return { ok, detail: JSON.stringify({ inkWidths: inkW.size, sweeps: sweeps.length, spread: Math.round(spread) }) };
 };
+/* ---------- 第八版:白日夢 ---------- */
+const boxOf = (p) => { const xs = p.map((q) => q[0]), ys = p.map((q) => q[1]); return [Math.min.apply(null, xs), Math.min.apply(null, ys), Math.max.apply(null, xs), Math.max.apply(null, ys)]; };
+/* 某一格的身體(最大一片白色)外框範圍,和身體上面的白色填色(書)的範圍 */
+function dayParts(log) {
+  const white = fills(log).filter((f) => f.color === '#ffffff' && f.path.length > 2).sort((a, b) => area(b.path) - area(a.path));
+  const body = boxOf(white[0].path);
+  const books = white.slice(1).map((f) => boxOf(f.path)).filter((b) => b[3] < body[1] - 2);
+  return { body, books };
+}
+/* 墨線用到的每一個點 */
+function inkPoints(log) {
+  let color = null;
+  const out = [];
+  log.forEach((l) => {
+    if (l.startsWith('strokeStyle=')) color = l.slice(12);
+    else if (color === '#151515' && /^(moveTo|lineTo)\(/.test(l)) out.push(nums(l));
+    else if (color === '#151515' && l.startsWith('quadraticCurveTo(')) { const [a, b, c, e] = nums(l); out.push([a, b], [c, e]); }
+  });
+  return out;
+}
+T['白日夢:趴著(身體寬比高多 1.25 倍以上、肚子貼地、最高點比站著低 35 以上),腳往後伸出屁股'] = () => {
+  const d = [], info = {};
+  const idleTop = boxOf(fills(frameLog(ART, 'idle', 0, 0, 180)).filter((f) => f.color === '#ffffff').sort((a, b) => area(b.path) - area(a.path))[0].path)[1];
+  for (const size of SIZES) for (let k = 0; k < ART.frameCount('daydream'); k++) {
+    const log = frameLog(ART, 'daydream', k, 0, size), { body } = dayParts(log);
+    const [x0, y0, x1, y1] = body, w = x1 - x0, h = y1 - y0;
+    if (!k && size === 180) info.body = body.map(Math.round);
+    if (!(w >= 1.25 * h)) d.push(size + '/' + k + ' 寬 ' + w.toFixed(0) + ' 高 ' + h.toFixed(0));
+    if (Math.abs(y1 - ART.metrics.ground) > 3) d.push(size + '/' + k + ' 肚子離地 ' + (ART.metrics.ground - y1).toFixed(1));
+    if (!(y0 >= idleTop + 35)) d.push(size + '/' + k + ' 最高點 ' + y0.toFixed(0) + '(待機 ' + idleTop.toFixed(0) + ')');
+    const feet = inkPoints(log).filter(([x, y]) => x > x1 + 2 && y > ART.metrics.ground - 12);
+    if (feet.length < 4) d.push(size + '/' + k + ' 屁股後面沒有腳 ' + feet.length);
+  }
+  return { ok: !d.length, detail: JSON.stringify(info) + ' ' + d.slice(0, 6).join('、') };
+};
+T['白日夢:身體上面飄著三本書(左、中、右各一,其中一本封面是黃色),各格之間上下飄、身體不跟著動'] = () => {
+  const d = [], ys = [[], [], []], ref = {};
+  const zone = (b) => { const c = (b[0] + b[2]) / 2; return c < 60 ? 0 : c < 140 ? 1 : 2; };
+  for (const size of SIZES) for (let k = 0; k < ART.frameCount('daydream'); k++) {
+    const log = frameLog(ART, 'daydream', k, 0, size), { body, books } = dayParts(log);
+    const top = [Infinity, Infinity, Infinity];
+    books.forEach((b) => { const z = zone(b); top[z] = Math.min(top[z], b[1]); });
+    if (top.some((t) => t === Infinity)) d.push(size + '/' + k + ' 書不到三本 ' + JSON.stringify(books.map((b) => b.map(Math.round))));
+    if (size === 180) top.forEach((t, z) => ys[z].push(t));
+    const yellowUp = yellowPoints(log).filter(([, y]) => y < body[1] - 2);
+    if (yellowUp.length < 10) d.push(size + '/' + k + ' 書上沒有黃色封面');
+    if (!ref[size]) ref[size] = body;
+    else if (Math.abs(body[0] - ref[size][0]) > 3 || Math.abs(body[3] - ref[size][3]) > 1.5) d.push(size + '/' + k + ' 身體動了 ' + body.map(Math.round));
+  }
+  const swing = ys.map((a) => Math.max.apply(null, a) - Math.min.apply(null, a));
+  if (!swing.every((s) => s >= 6)) d.push('飄的幅度 ' + swing.map((s) => s.toFixed(1)).join(','));
+  return { ok: !d.length, detail: '幅度 ' + swing.map((s) => s.toFixed(1)).join(',') + ' ' + d.slice(0, 6).join('、') };
+};
+T['白日夢(趴著)跟站著的姿勢互換時淡出淡入,白日夢再設一次白日夢不淡;減少動態時不淡'] = () => {
+  const d = [];
+  const alphas = (c, from) => c.log.slice(from).filter((l) => l.startsWith('globalAlpha=')).length;
+  const env = makeEnv({ dpr: 1, raf: true }), c = makeCanvas();
+  const a = env.A.animate(c, { size: 120, pose: 'idle' });
+  [['daydream', true], ['daydream', false], ['read', true], ['daydream', true], ['sleep', true], ['happy', false]].forEach(([p, want]) => {
+    env.flush(400);
+    const mark = c.log.length, from = a.pose;
+    a.setPose(p);
+    const got = alphas(c, mark) > 0;
+    if (got !== want) d.push(from + ' → ' + p + (want ? ' 沒有淡入淡出' : ' 有淡入淡出'));
+  });
+  a.stop();
+  const env2 = makeEnv({ dpr: 1, raf: true, reduce: true }), c2 = makeCanvas();
+  const b = env2.A.animate(c2, { size: 120, pose: 'idle' });
+  b.setPose('daydream'); b.setPose('idle');
+  if (alphas(c2, 0) || env2.flush(16)) d.push('減少動態時還在淡入淡出');
+  return { ok: !d.length, detail: d.join(';') };
+};
+
+/* 結算卡的開心鵜鶘就是用 animate(canvas, { size, pose: 'happy', fps: 8 }) 一直循環播這 10 格:這裡把「會換格、每秒 8 張、停不停」鎖住 */
+T['happy 循環播:基準 fps 8 時每秒 8 張(125 ms 一格)、10 格都輪過、一圈回到第 0 格、畫面每一拍都換;stop 之後不再動'] = () => {
+  const d = [];
+  const { env, a, canvas, ticks } = run({ pose: 'happy', size: 180 }, 41);
+  const n = ART.frameCount('happy'), want = [];
+  ART.holds('happy').forEach((h, k) => { for (let j = 0; j < h; j++) want.push(k); });
+  const got = ticks.map((t) => t.frame);
+  if (ART.fps.happy !== 8) d.push('fps.happy ' + ART.fps.happy);
+  if (n !== 10) d.push('格數 ' + n);
+  if (!eq(env.intervals().map((t) => t.ms), [125])) d.push('間隔 ' + JSON.stringify(env.intervals().map((t) => t.ms)));
+  if (a.fps !== 8) d.push('a.fps ' + a.fps);
+  if (!got.every((k, i) => k === want[i % want.length])) d.push('順序 ' + got.slice(0, 14).join(','));
+  if (new Set(got).size !== n) d.push('沒輪過全部格');
+  const map = bakedMap(env.A, 'happy', 180, 2), kv = painted(canvas).map((x) => map.get(x));
+  if (!(kv.length === 41 && kv.every((x) => x))) d.push('畫的不是烤好的格');
+  const changes = kv.slice(1).filter((x, i) => x[0] !== kv[i][0]).length;
+  if (changes < n * 3) d.push('換格次數太少 ' + changes);
+  a.stop();
+  const before = painted(canvas).length;
+  env.intervals().forEach((t) => t.fn());
+  if (env.intervals().length || painted(canvas).length !== before) d.push('stop 之後還在動');
+  return { ok: !d.length, detail: d.join(';') };
+};
+
+/* ---------- 第九版:gaze 坐著抬眼看書 ---------- */
+T['gaze:12 格、每格 1 拍、每秒 4 張、靜止格第 0 格;種子編號固定(gaze 6,舊的六個照舊)'] = () => {
+  const d = [];
+  if (ART.frameCount('gaze') !== 12) d.push('格數 ' + ART.frameCount('gaze'));
+  if (!eq(ART.holds('gaze'), Array(12).fill(1))) d.push('holds ' + JSON.stringify(ART.holds('gaze')));
+  if (ART.fps.gaze !== 4) d.push('fps ' + ART.fps.gaze);
+  if (ART.calm.gaze !== 0) d.push('靜止格 ' + ART.calm.gaze);
+  const m = /const SEED_NO = (\{[^}]*\});/.exec(SRC);
+  const no = m && Function('return ' + m[1])();
+  if (!eq(no, { idle: 0, happy: 1, oops: 2, read: 3, sleep: 4, daydream: 5, gaze: 6 })) d.push('SEED_NO ' + (m && m[1]));
+  if (!/const poseSeed = \(seed, pose\) => seed \* 1000 \+ SEED_NO\[pose\] \* 97;/.test(SRC)) d.push('poseSeed 沒用 SEED_NO');
+  // 同一個種子,gaze 跟其他姿勢的第 0 格都不一樣
+  POSES.slice(0, 6).forEach((p) => { if (frameLog(ART, p, 0, 0, 180).join('\n') === frameLog(ART, 'gaze', 0, 0, 180).join('\n')) d.push(p + ' 跟 gaze 一樣'); });
+  return { ok: !d.length, detail: d.join(';') };
+};
+T['gaze:每一格、兩種抖動、64~300 的點離畫布邊至少「線寬一半 + 1」;顏色只有墨黑、黃、純白;每格左上方有書的白色'] = () => {
+  const W = ART.metrics.width, H = ART.metrics.height, bad = [], colors = new Set(), noBook = [];
+  for (const size of [64, 96, 100, 120, 140, 160, 220, 300]) for (let k = 0; k < 12; k++) for (const v of [0, 1]) {
+    const log = frameLog(ART, 'gaze', k, v, size);
+    let lw = 0, book = false, fill = '';
+    log.forEach((l) => {
+      if (l.startsWith('lineWidth=')) lw = +l.slice(10);
+      if (/^(fillStyle|strokeStyle)=/.test(l)) colors.add(l.split('=')[1].toLowerCase());
+      if (l.startsWith('fillStyle=')) fill = l.slice(10).toLowerCase();
+      const mm = /^(moveTo|lineTo|bezierCurveTo|quadraticCurveTo)\((.*)\)$/.exec(l);
+      if (!mm) return;
+      const n = mm[2].split(',').map(Number);
+      for (let i = 0; i + 1 < n.length; i += 2) {
+        const [x, y] = [n[i], n[i + 1]], e = lw / 2 + 1;
+        if (!(x >= e && x <= W - e && y >= e && y <= H - e)) bad.push(size + '/' + k + '/' + v + ' ' + x.toFixed(1) + ',' + y.toFixed(1) + ' 線寬 ' + lw.toFixed(1));
+        if (fill === '#ffffff' && x < 130 && y < 120) book = true;
+      }
+    });
+    if (!book) noBook.push(size + '/' + k + '/' + v);
+  }
+  const list = [...colors].sort();
+  const ok = !bad.length && !noBook.length && eq(list, ['#151515', '#ffe100', '#ffffff']);
+  return { ok, detail: JSON.stringify({ bad: bad.length, first: bad.slice(0, 4), colors: list, noBook: noBook.slice(0, 4) }) };
+};
+
 T['畫得小時墨線加粗(52 px 比 180 px 粗),180 px 以上不加粗'] = () => {
   const widths = (size) => frameLog(ART, 'idle', 0, 0, size).filter((l) => l.startsWith('lineWidth=')).map((l) => +l.slice(10));
   const max = (a) => Math.max.apply(null, a);

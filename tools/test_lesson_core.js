@@ -279,6 +279,17 @@ T['firstOf、reconcile:作答紀錄是毫秒、段開始是秒;30 天前的紀�
   assert.equal(C.firstOf({ key: 'l1-06', m: 'l1', rec: records[1]['l1-06'], hist: [], sinceMs: since }), true, '61 天前做過、學習記錄已經沒有:當第一次');
 };
 
+T['firstOf、reconcile 看模擬考作答過的題(mock_seen):交卷時間比段開始早就不是第一次;比段開始晚或沒有照舊'] = () => {
+  const t0 = NOW - 600, since = t0 * 1000, ms = (s) => s * 1000;
+  const records = { 1: { 'l1-03': { c: 1, ok: true, t: ms(NOW - 300) }, 'l1-06': { c: 2, ok: false, t: ms(NOW - 200) } } };
+  const mock = { 'l1-03': ms(t0 - DAY), 'l1-06': ms(NOW - 100) };
+  eq([C.firstOf({ key: 'l1-03', m: 'l1', rec: records[1]['l1-03'], hist: [], sinceMs: since, mock }), C.firstOf({ key: 'l1-06', m: 'l1', rec: records[1]['l1-06'], hist: [], sinceMs: since, mock }),
+    C.firstOf({ key: 'l1-03', m: 'l1', rec: records[1]['l1-03'], hist: [], sinceMs: since })], [false, true, true]);
+  assert.equal(C.firstOf({ key: 'l1-03', snapshot: new Set(), mock }), true, '有快照照快照');
+  const rows = C.reconcile({ blocks: [{ idx: 4, ids: ['l1-03', 'l1-06'] }], items: (id) => META.get(id), records, sinceMs: since, hist: [], mock });
+  eq(rows.map((r) => [r.id, r.f]), [['l1-03', false], ['l1-06', true]]);
+};
+
 /* ---------- 小檢核與補記 ---------- */
 T['judged、verdictsOf:找批次 <進度鍵>:cp;判定存在那一批的 v;rerecord 對照表'] = () => {
   const b = 'les_t1_04:cp';

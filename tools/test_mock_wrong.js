@@ -523,6 +523,36 @@ T['M19 歷次紀錄 size:\'full\' 的 mock_history 合併、不同規模同一�
   const P = BASE.PET_FOOD || BASE.PET_STORE;
   return { ok: !bad.length, detail: bad.join(' | ') || 'ok' };
 };
+/* ================= M20:模擬考作答過的題(mock_seen) ================= */
+/* js/mock.js 的 saveSeen(IIFE 裡面):取出那一段,配假的 store 與真的合併函式跑 */
+function seenSandbox(init, sm) {
+  const m = /\n  function saveSeen\(ans, T\) \{[\s\S]*?\n  \}\n/.exec(read('js/mock.js'));
+  if (!m) return null;
+  const ctx = sandbox(init);
+  if (sm !== false) vm.runInContext(read('js/sync-merge-lesson.js'), ctx, { filename: 'js/sync-merge-lesson.js' });
+  vm.runInContext(m[0] + '\nwindow.saveSeen = saveSeen;', ctx);
+  return ctx;
+}
+T['M20 交卷與補存把作答過的小題寫進 mock_seen(時間跟 mock_history 那一筆同一毫秒);合併函式不在、合併不了不寫也不丟錯;不寫 drill_p*、listen_p*、hist'] = () => {
+  const ctx = seenSandbox({ mock_seen: { 'p5-a': 5000, 'l1-01': 100 } });
+  if (!ctx) return { ok: false, detail: 'js/mock.js 沒有 saveSeen(ans, T)' };
+  const T0 = Date.parse('2026-11-26T02:00:00.000Z');
+  ctx.saveSeen([['p5-a', 1], ['l1-01', 0], ['p6-x:131', 2], ['l3-2:1', 1]], T0);
+  const got = ctx.store.peek('mock_seen');
+  const touched = Object.keys(ctx.store.n.set).filter((k) => k !== 'mock_seen');
+  const old = seenSandbox({ mock_seen: { a: 1 } }, false);
+  let threw = false;
+  try { old.saveSeen([['p5-a', 1]], T0); } catch (e) { threw = true; }
+  const bad = seenSandbox({ mock_seen: ['壞掉'] });
+  bad.saveSeen([['p5-a', 1]], T0);
+  const src = read('js/mock.js');
+  const submit = /WRONGBOOK\.save\(WRONGBOOK\.fromAnswers\(ans, Date\.parse\(rec\.d\)\)\)[^\n]*\n\s*saveSeen\(ans, Date\.parse\(rec\.d\)\);/.test(src);
+  const later = /if \(!wrongOk\) return false;[^\n]*\n\s*mine\.forEach\(x => saveSeen\(x\.ans, Date\.parse\(x\.rec\.d\)\)\);/.test(src);
+  const ok = J(got) === J({ 'l1-01': T0, 'l3-2:1': T0, 'p5-a': T0, 'p6-x:131': T0 }) && !touched.length && !threw && J(old.store.peek('mock_seen')) === J({ a: 1 })
+    && J(bad.store.peek('mock_seen')) === J(['壞掉']) && submit && later && !/store\.set\('(drill_p|listen_p|hist)/.test(src);
+  return { ok, detail: J({ got, touched, threw, old: old.store.peek('mock_seen'), bad: bad.store.peek('mock_seen'), submit, later }) };
+};
+
 
 (async () => {
   let pass = 0;

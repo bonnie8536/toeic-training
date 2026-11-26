@@ -171,9 +171,10 @@
        perWeek 兩份照週(w)聯集,同一週取主要那份的 n,照 w 排序;weeklyAskedAt 取兩份裡較早的非空值。
        lessonsPerWeek 跟著合併後最後一筆 perWeek。兩份都沒有 perWeek、weeklyAskedAt 欄位(舊的 plan)時不加這兩個欄位。 */
   const MOCK_SEEN_MAX = 3000, PLAN_FUTURE_MS = 864e5;
-  function sameFlags(v, a, b) {
+  /* sorted:輸出要照 key 排(mockSeen),跟雲端那份一樣時也回排好的 v,不回雲端那份(key 順序可能不同) */
+  function sameFlags(v, a, b, sorted) {
     const s = canon(v), sameAsLocal = isPlain(a) && s === canon(a), sameAsCloud = isPlain(b) && s === canon(b);
-    return { ok: true, v: sameAsLocal ? a : sameAsCloud ? b : v, sameAsLocal, sameAsCloud };
+    return { ok: true, v: sameAsLocal ? a : sameAsCloud && !sorted ? b : v, sameAsLocal, sameAsCloud };
   }
   function seenWin(x, y) {
     if (isNum(x) !== isNum(y)) return isNum(x) ? x : y;
@@ -193,7 +194,7 @@
     }
     const v = {};
     ks.sort(cmp).forEach(k => { v[k] = out.get(k); });
-    return sameFlags(v, a, b);
+    return sameFlags(v, a, b, true);
   }
   const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
   const weekRows = p => (isArr(p.perWeek) ? p.perWeek.filter(e => isPlain(e) && Number.isInteger(e.w) && e.w >= 1 && e.w <= 12 && (e.n === 1 || e.n === 2)) : []);

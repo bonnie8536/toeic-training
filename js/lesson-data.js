@@ -173,16 +173,36 @@
   }
 
   /* ---------- 選題 ---------- */
-  function practiceRecords() {
-    return {
-      1: store.get('listen_p1', {}) || {}, 2: store.get('listen_p2', {}) || {}, 3: store.get('listen_p3', {}) || {}, 4: store.get('listen_p4', {}) || {},
-      5: store.get('drill_p5', {}) || {}, 6: store.get('drill_p6', {}) || {}, 7: store.get('drill_p7', {}) || {},
-    };
-  }
   const REC = {
     1: () => store.get('listen_p1', {}), 2: () => store.get('listen_p2', {}), 3: () => store.get('listen_p3', {}), 4: () => store.get('listen_p4', {}),
     5: () => store.get('drill_p5', {}), 6: () => store.get('drill_p6', {}), 7: () => store.get('drill_p7', {}),
   };
+  /* 練習引擎寫的作答紀錄(drill_p*、listen_p*):即時回合補回只能看這些(模擬考在別的分頁剛交卷的不算這一回合的作答) */
+  function roundRecords() {
+    const out = {};
+    Object.keys(REC).forEach((p) => { const v = REC[p](); out[p] = isPlain(v) ? v : {}; });
+    return out;
+  }
+  /* 模擬考作答過的題(js/mock.js 交卷時寫):{ 題目 key: 交卷時間(毫秒) } */
+  function mockSeen() {
+    const v = hasStore() ? store.get('mock_seen', null) : null;
+    return isPlain(v) ? v : {};
+  }
+  /* 選題用的作答紀錄(新物件):每個 Part 先放模擬考作答過的題 { ok, t }(mock_wrong 同一題答錯而且時間不比它舊時 ok 是 false),
+     再用練習紀錄蓋上去(兩邊都有取 t 大的)。模擬考做過的題因此在課程裡算做過:小檢核不選、練習排在後面、14 天內做過照放寬規則 */
+  function practiceRecords() {
+    const round = roundRecords(), seen = mockSeen(), wrong = store.get('mock_wrong', null), out = {};
+    Object.keys(round).forEach((p) => { out[p] = {}; });
+    Object.keys(seen).forEach((k) => {
+      const t = Number(seen[k]), p = core().partOfId(k.split(':')[0]), w = isPlain(wrong) ? wrong[k] : null;
+      if (p && out[p] && Number.isFinite(t)) out[p][k] = { ok: !(isPlain(w) && w.ok === false && Number(w.t) >= t), t };
+    });
+    Object.keys(round).forEach((p) => Object.keys(round[p]).forEach((k) => {
+      const r = round[p][k], m = out[p][k];
+      if (!m || !(m.t > Number(r && r.t))) out[p][k] = r;
+    }));
+    return out;
+  }
   /* 引導流程的聽力短測做過的 8 題(onboard.listen.ids 有 8 個字串才算);沒有回 [] */
   function shortIds() {
     const o = hasStore() ? store.get('onboard', null) : null;
@@ -371,11 +391,11 @@
     warnOver(r, no);
     return r.state;
   }
-  /* 回合開始前:這幾題(作答紀錄的鍵)哪些已經有紀錄 */
+  /* 回合開始前:這幾題(作答紀錄的鍵)哪些已經有紀錄(練習紀錄或模擬考作答過) */
   function snapshot(part, keys) {
     const get = REC[String(part).replace(/^[pPlL]/, '')];
-    const rec = get ? get() || {} : {};
-    return new Set((keys || []).filter((k) => !!rec[k]));
+    const rec = get ? get() || {} : {}, seen = mockSeen();
+    return new Set((keys || []).filter((k) => !!rec[k] || seen[k] !== undefined));
   }
   function sync(keys) { return pack().syncPractice(keys); }
 
@@ -487,7 +507,7 @@
 
   root.LESSON_DATA = Object.freeze({
     packs, pilot, pilotNow, plan: readPlan, levels, states, open, start, ctx, testForm, fillFixed, trial, freeze,
-    inputs, reviewOpt, weakOpt, testIds: pretestIds, testParts, record, segment, snapshot, sync, hist,
+    inputs, reviewOpt, weakOpt, testIds: pretestIds, testParts, record, segment, snapshot, sync, hist, roundRecords, mockSeen,
     hits, wrong, passed, reviewed, checkpoint, tests, pretest, planReview, flush, clock,
   });
 })(typeof globalThis !== 'undefined' ? globalThis : this);

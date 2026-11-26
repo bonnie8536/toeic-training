@@ -221,6 +221,36 @@ T['sync:題庫回合的作答紀錄與學習記錄先跟雲端合併;英語耳�
   eq([...e.D.snapshot('p6', ['p6-b1-1:1', 'p6-b1-1:2'])], ['p6-b1-1:2']);
 };
 
+T['模擬考作答過的題(mock_seen):選題的作答紀錄先放模擬考、再用練習紀錄蓋(都有取新的);mock_wrong 比它新的算答錯;即時回合補回只看練習紀錄;快照看得到;不改 store 讀出的值'] = async () => {
+  const e = await ready(), ms = (s) => s * 1000;
+  const seen = { 'l1-03': ms(NOW - 900), 'l1-05': ms(NOW - 900), 'l3-11:1': ms(NOW - 800), 'p5-b1-01': ms(NOW - 700), 'p6-b1-1:131': ms(NOW - 700), 'zz-1': ms(NOW - 1) };
+  e.store.set('mock_seen', seen);
+  e.store.set('mock_wrong', { 'l1-05': { c: 2, ok: false, t: ms(NOW - 900) }, 'p5-b1-01': { c: 1, ok: false, t: ms(NOW - 9000) } });
+  e.store.set('listen_p1', { 'l1-03': { c: 1, ok: false, t: ms(NOW - 100) }, 'l1-07': { c: 0, ok: true, t: ms(NOW - 50) } });
+  e.store.set('drill_p5', { 'p5-b1-01': { c: 1, ok: true, t: ms(NOW - 9999) } });
+  const before = JSON.stringify([e.store.peek('mock_seen'), e.store.peek('listen_p1'), e.store.peek('drill_p5')]);
+  const r = e.D.ctx(e.lesson(EE, 3), NOW).records;
+  eq([r[1]['l1-03'], r[1]['l1-05'], r[1]['l1-07'], r[3]['l3-11:1'], r[5]['p5-b1-01'], r[6]['p6-b1-1:131']],
+    [{ c: 1, ok: false, t: ms(NOW - 100) }, { ok: false, t: ms(NOW - 900) }, { c: 0, ok: true, t: ms(NOW - 50) }, { ok: true, t: ms(NOW - 800) }, { ok: true, t: ms(NOW - 700) }, { ok: true, t: ms(NOW - 700) }]);
+  assert.ok(Object.keys(r).every((p) => !('zz-1' in r[p])), '認不得的題不放');
+  const round = e.D.roundRecords();
+  eq([Object.keys(round[1]).sort(), Object.keys(round[3]), Object.keys(round[5])], [['l1-03', 'l1-07'], [], ['p5-b1-01']], '即時回合補回只看練習紀錄');
+  eq([[...e.D.snapshot('1', ['l1-05', 'l1-08'])], [...e.D.snapshot('p3', ['l3-11:0', 'l3-11:1'])]], [['l1-05'], ['l3-11:1']]);
+  eq(e.D.mockSeen(), seen);
+  eq(JSON.stringify([e.store.peek('mock_seen'), e.store.peek('listen_p1'), e.store.peek('drill_p5')]), before);
+  assert.ok(e.D.ctx(e.lesson(EE, 3), NOW).seen.indexOf('l3-11') > -1, '14 天內做過');
+};
+T['模擬考做過的清單題,小檢核不選'] = async () => {
+  const e = await ready();
+  const l = e.lesson(EE, 4), p1 = l.segments.filter((s) => s.slot === 'checkpoint')[0].blocks.filter((b) => b.module === 'p1')[0];
+  const pool = K.POOL.ids.filter((id) => /^l1-/.test(id));
+  const seen = {};
+  pool.slice(0, pool.length - p1.count).forEach((id) => { seen[id] = NOW * 1000 - 5000; });
+  e.store.set('mock_seen', seen);
+  const r = await e.P.pickFixed(l, e.P.newState(l, NOW), e.D.ctx(l, NOW));
+  eq(r.state.pk[p1.idx].ids.slice().sort(), pool.slice(pool.length - p1.count).sort());
+};
+
 T['ctx:records 是七個 Part 的作答紀錄;seen 是 14 天內做過的題(題組取組 id)加前測的題;小檢核清單扣掉前測的題;字表跟閱讀級'] = async () => {
   const e = await ready();
   const ms = NOW * 1000;

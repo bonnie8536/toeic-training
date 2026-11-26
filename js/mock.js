@@ -87,6 +87,18 @@
     const m = S && typeof S.mock === 'function' ? S.mock(Array.isArray(hist) ? hist : [], recs) : null;   // 同一筆不會變兩筆,照日期排
     store.set('mock_history', (m && m.ok ? m.v : (Array.isArray(hist) ? hist : []).concat(recs)).slice(-30));
   }
+  /* 作答過的小題記進 mock_seen({ 題目 key: 交卷時間 T(毫秒) },js/sync-merge-lesson.js 的 SYNC_MERGE.mockSeen 合併、雲端合併表上),
+     課程頁把這些題當成做過。只記有作答的(ans 是 answered() 的 [key, 選的]);合併函式不在(舊快取)或合併不了就不寫。出錯不影響成績與錯題本 */
+  function saveSeen(ans, T) {
+    try {
+      const S = window.SYNC_MERGE;
+      if (!Array.isArray(ans) || !Number.isFinite(T) || !S || typeof S.mockSeen !== 'function') return;
+      const add = {};
+      ans.forEach(x => { if (Array.isArray(x) && typeof x[0] === 'string' && x[0]) add[x[0]] = T; });
+      const m = S.mockSeen(store.get('mock_seen', null), add);
+      if (m && m.ok && m.v) store.set('mock_seen', m.v);
+    } catch (e) { /* 不影響成績 */ }
+  }
   /* 補存:分數照舊補進 mock_history;那一筆帶著作答(ans)就順便把答錯的題補進錯題本(js/wrongbook.js)。
      對錯在這裡用題庫重算,不信任暫存裡的東西;mock_wrong 同一題已經有比較新的,合併時留新的,重跑結果一樣。
      分數和錯題都確認寫進去了才從暫存拿掉。舊版 mock.js 讀到帶 ans 的暫存只看 rec(分數照補、ans 丟掉) */
@@ -103,6 +115,7 @@
       try { return WRONGBOOK.save(WRONGBOOK.fromAnswers(WRONGBOOK.cleanAns(x.ans), Date.parse(x.rec.d))).ok; } catch (e) { return false; }
     });
     if (!wrongOk) return false;   // 錯題沒寫進去:留著下次再補(分數已經在,同一筆合併時不會變兩筆)
+    mine.forEach(x => saveSeen(x.ans, Date.parse(x.rec.d)));
     setLater(all.filter(x => mine.indexOf(x) < 0));
     return true;
   }
@@ -490,6 +503,7 @@
         store.set('mock_history', hist.slice(-30));
         /* 答錯的題收進錯題本(mock_wrong):t 跟這一筆 mock_history 同一毫秒。出錯不影響成績 */
         if (window.WRONGBOOK) { try { wb = WRONGBOOK.save(WRONGBOOK.fromAnswers(ans, Date.parse(rec.d))); } catch (e) { wb = null; } }
+        saveSeen(ans, Date.parse(rec.d));
       } else {
         /* 存不進去:先放這個分頁,寫明原因(js/common.js accountBlock);放不進 sessionStorage 就只能請他記下分數。
            作答(只有 [題目 key, 選的])一起放,補存時才用題庫算對錯、收進錯題本 */

@@ -369,11 +369,13 @@
     });
   }
   const histMod = (part) => (Number(part) <= 4 ? 'l' : 'p') + part;
-  /* 第一次作答:有回合開始前的快照就看快照;沒有(即時回合中途離開後補回)看作答紀錄與學習記錄有沒有比這一段開始(sinceMs)早的 */
+  /* 第一次作答:有回合開始前的快照就看快照;沒有(即時回合中途離開後補回)看作答紀錄、學習記錄、模擬考作答過的題(mock:{ key: 交卷毫秒 })
+     有沒有比這一段開始(sinceMs)早的 */
   function firstOf(opt) {
     const o = opt || {};
     if (o.snapshot && typeof o.snapshot.has === 'function') return !o.snapshot.has(o.key);
     const since = Number(o.sinceMs) || 0;
+    if (o.mock && Number(o.mock[o.key]) < since) return false;
     if (o.rec && Number(o.rec.t) < since) return false;
     return !(Array.isArray(o.hist) && o.hist.some((h) => h && h.m === o.m && h.id === o.key && Number(h.t) < since));
   }
@@ -383,7 +385,7 @@
     return items ? items[id] : null;
   }
   /* 即時回合補回:凍結的題裡,作答紀錄 t ≥ sinceMs 的小題 → 進度的作答列 [{ b, id, sub, c, ok, f, t }]。
-     blocks:[{ idx, ids 或 list }];items(id) 回題目或小題數;records:{ '1'…'7': 作答紀錄 };錯題重做(80)的 f 一律 false */
+     blocks:[{ idx, ids 或 list }];items(id) 回題目或小題數;records:{ '1'…'7': 作答紀錄 };mock:模擬考作答過的題(給 firstOf);錯題重做(80)的 f 一律 false */
   function reconcile(opt) {
     const o = opt || {};
     const since = Number(o.sinceMs) || 0;
@@ -395,7 +397,7 @@
         itemKeys(part, item, id).forEach((k) => {
           const rec = o.records && o.records[part] ? o.records[part][k.key] : null;
           if (!rec || !(Number(rec.t) >= since)) return;
-          const f = b.idx !== REDO && firstOf({ key: k.key, m: histMod(part), snapshot: o.snapshot, rec, hist: o.hist, sinceMs: since });
+          const f = b.idx !== REDO && firstOf({ key: k.key, m: histMod(part), snapshot: o.snapshot, rec, hist: o.hist, sinceMs: since, mock: o.mock });
           rows.push({ b: b.idx, id, sub: k.sub, c: Number.isInteger(rec.c) ? rec.c : -1, ok: !!rec.ok, f, t: Math.floor(Number(rec.t) / 1000) });
         });
       });

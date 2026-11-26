@@ -34,7 +34,7 @@
   const SUFFIX = '（舊網址）';
   const BANK_KEYS = ['vgame_best', 'vgame_clear', 'vgame_pairs_best', 'vgame_toast_best', 'vgame_done'];
   const LABELS = {
-    hist: '練習紀錄', mock_history: '模擬考紀錄', mock_wrong: '模擬考錯題', pet: '寵物', daily_done: '每日練習', vgame_banks: '自訂單字題庫', sync_del: '自訂題庫的刪除紀錄',
+    hist: '練習紀錄', mock_history: '模擬考紀錄', mock_wrong: '模擬考錯題', mock_seen: '模擬考作答過的題', pet: '寵物', daily_done: '每日練習', vgame_banks: '自訂單字題庫', sync_del: '自訂題庫的刪除紀錄',
     vgame_best: '單字遊戲最佳分數', vgame_toast_best: '單字快問快答最佳', vgame_pairs_best: '翻牌配對最佳', vgame_clear: '單字遊戲通關',
     vgame_done: '單字遊戲出過的字', vgame_miss: '單字錯題', phrase_drill: '片語錯題', verb_quiz: '不規則動詞紀錄',
     grammar_done: '文法完成紀錄', phonics_done: '自然發音完成紀錄', dlg_heard: '對話聽過的句子',
@@ -660,7 +660,7 @@
      不放進 joined(照原本的規則留時間晚的那包),沒選上的那包(兩包不一樣時)放進 lost,由 plan 存進備份。
      回 { joined: Map(鍵 → [鍵, 原字串, 兩包裡比較晚的時間]), lost: [[鍵, 原字串, 時間]] } */
   const SYNC_FN = Object.freeze({ sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong',
-    levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests' });
+    levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests', mock_seen: 'mockSeen', plan: 'plan' });
   const SYNC_FAMILY = Object.freeze([[/^les_t[1-9]\d?_(0[1-9]|1\d|2[0-4])$/, 'lesson']]);
   function syncFnOf(sub) {
     if (own(SYNC_FN, sub)) return SYNC_FN[sub];

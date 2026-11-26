@@ -191,8 +191,8 @@ T['S7 合併函式會收斂:SYNC_MERGE.lesson、pts、rvq、tests 跟參數順�
 
 /* 課程的四個合併函式放在 js/sync-merge-lesson.js(從 js/sync-merge.js 分出來):接在 sync-merge.js 後面載入時把它們加進 SYNC_MERGE,
    原有的函式是同一個、還是凍結的;sync-merge.js 沒載到就什麼都不做(不丟錯、不建 SYNC_MERGE);檔案本身不讀寫儲存、不碰畫面 */
-T['S8 js/sync-merge-lesson.js:接在 sync-merge.js 後面載入,SYNC_MERGE 多 lesson、pts、rvq、tests,原有的函式不變、還是凍結的;單獨載入不做事'] = async () => {
-  const COURSE = ['lesson', 'pts', 'rvq', 'tests'];
+T['S8 js/sync-merge-lesson.js:接在 sync-merge.js 後面載入,SYNC_MERGE 多 lesson、pts、rvq、tests、mockSeen、plan,原有的函式不變、還是凍結的;單獨載入不做事'] = async () => {
+  const COURSE = ['lesson', 'pts', 'rvq', 'tests', 'mockSeen', 'plan'];
   const c = { console };
   c.window = c;
   vm.createContext(c);
@@ -277,6 +277,79 @@ T['S11 登出補傳時另一個分頁連續寫了三次這一堂的進度:補傳
   phone.onRead = null;
   const ok = held && n === 3 && out && phone.confirms.length === 0 && J(answered(cloudOf(w, KEY))) === J(['l1-01'].concat(ids).sort());
   return { ok, detail: J({ held, n, out, confirms: phone.confirms.length, cloud: answered(cloudOf(w, KEY)) }) };
+};
+
+/* ---------- mock_seen(模擬考作答過的題)與 plan(課表設定) ---------- */
+const PLAN0 = { v: 1, source: 'self', classId: 'k1', packs: { listening: 'pack-entry-v1', reading: 'pack-entry-v1' }, packVersions: { listening: '1.0.0', reading: '1.0.0' },
+  startDate: '2026-11-02', lessonsPerWeek: null, mainDay: 1, extDay: null, term: 1, postponedWeeks: 0, previous: null, updatedAt: 1000 };
+const planOf = (extra) => Object.assign({}, PLAN0, extra || {});
+T['S12 SYNC_MERGE.mockSeen:聯集、同一題取大的、不是數字的輸、超過 3,000 筆留新的、key 照字典序;形狀不對 ok:false;跟參數順序無關'] = async () => {
+  const SM = makeWorld(13).SM, f = SM.mockSeen;
+  const r1 = f({ b: 5, a: 9 }, { a: 3, c: 'x', b: 7 });
+  const r2 = f({ c: 1 }, { c: 'x' });
+  const big = {};
+  for (let i = 0; i < 3005; i++) big['k' + String(i).padStart(4, '0')] = i;
+  const r3 = f(big, null);
+  const same = f({ a: 1, b: 2 }, { b: 2, a: 1 });
+  const got = {
+    r1: J(r1.v), keys: Object.keys(r1.v).join(','), r2: r2.v.c, n3: Object.keys(r3.v).length, low: 'k0000' in r3.v || 'k0004' in r3.v, hi: 'k3004' in r3.v,
+    bad: [f([], {}).ok, f({}, 'x').ok, f(null, 3).ok], none: J(f(null, undefined)), same: [same.sameAsLocal, same.sameAsCloud], loc: f({ a: 1 }, null).sameAsLocal,
+    order: J(f({ a: 2, b: 'z' }, { a: 3, b: 'y' }).v) === J(f({ a: 3, b: 'y' }, { a: 2, b: 'z' }).v),
+  };
+  const ok = got.r1 === J({ a: 9, b: 7, c: 'x' }) && got.keys === 'a,b,c' && got.r2 === 1 && got.n3 === 3000 && !got.low && got.hi
+    && J(got.bad) === J([false, false, false]) && got.none === J({ ok: true, v: null, sameAsLocal: true, sameAsCloud: false }) && J(got.same) === J([true, true]) && got.loc && got.order;
+  return { ok, detail: J(got) };
+};
+T['S13 SYNC_MERGE.plan:updatedAt 新的為主;開始日取早的、每週堂數照週聯集(同一週取主要那份)、問過的時間取早的;未來一天以後的時間不算;v 不是 1 不合併;舊 plan 不加新欄位'] = async () => {
+  const SM = makeWorld(14).SM, f = (a, b, now) => SM.plan(a, b, now === undefined ? 5000 : now);
+  const a = planOf({ startDate: '2026-11-09', perWeek: [{ w: 1, n: 2 }, { w: 3, n: 1 }], weeklyAskedAt: '2026-11-10T01:00:00.000Z', lessonsPerWeek: 1, updatedAt: 3000, mainDay: 3 });
+  const b = planOf({ startDate: '2026-11-02', perWeek: [{ w: 3, n: 2 }, { w: 2, n: 1 }], weeklyAskedAt: '2026-11-09T01:00:00.000Z', lessonsPerWeek: 2, updatedAt: 2000, mainDay: 5 });
+  const m = f(a, b).v, m2 = f(b, a).v;
+  const future = f(planOf({ updatedAt: 5000 + 2 * 864e5, mainDay: 6 }), planOf({ updatedAt: 1500, mainDay: 2 })).v;
+  const old = f(planOf({ updatedAt: 1200 }), planOf({ updatedAt: 1100, startDate: '2026-11-01' }));
+  const got = {
+    main: m.mainDay, start: m.startDate, per: J(m.perWeek), asked: m.weeklyAskedAt, lpw: m.lessonsPerWeek, sym: J(m) === J(m2),
+    future: future.mainDay, bad: [f(planOf({ v: 2 }), a).ok, f('x', a).ok, f({ updatedAt: 1 }, a).ok], one: f(a, null).v === a,
+    oldKeys: ['perWeek', 'weeklyAskedAt'].filter((k) => k in old.v), oldStart: old.v.startDate, same: f(a, a).sameAsLocal && f(a, a).sameAsCloud,
+  };
+  const ok = got.main === 3 && got.start === '2026-11-02' && got.per === J([{ w: 1, n: 2 }, { w: 2, n: 1 }, { w: 3, n: 1 }]) && got.asked === '2026-11-09T01:00:00.000Z'
+    && got.lpw === 1 && got.sym && got.future === 2 && J(got.bad) === J([false, false, false]) && got.one && J(got.oldKeys) === '[]' && got.oldStart === '2026-11-01' && got.same;
+  return { ok, detail: J(got) };
+};
+T['S14 A 台選每週 1 堂、B 台還沒拿到就按「之後再選」(B 比較新):合併後每週堂數留 A 的、問過的時間是 A 的'] = async () => {
+  const SM = makeWorld(15).SM;
+  const A = planOf({ perWeek: [{ w: 1, n: 1 }], weeklyAskedAt: '2026-11-03T02:00:00.000Z', lessonsPerWeek: 1, updatedAt: 3000 });
+  const B = planOf({ perWeek: [], weeklyAskedAt: '2026-11-03T05:00:00.000Z', updatedAt: 4000 });
+  const old = planOf({ updatedAt: 2500 });
+  const m = SM.plan(A, B, 5000).v, m2 = SM.plan(old, A, 5000).v;
+  const got = { per: J(m.perWeek), asked: m.weeklyAskedAt, lpw: m.lessonsPerWeek, withOld: J(m2.perWeek), oldAsked: m2.weeklyAskedAt };
+  const ok = got.per === J([{ w: 1, n: 1 }]) && got.asked === '2026-11-03T02:00:00.000Z' && got.lpw === 1 && got.withOld === J([{ w: 1, n: 1 }]) && got.oldAsked === '2026-11-03T02:00:00.000Z';
+  return { ok, detail: J(got) };
+};
+T['S15 兩台用真的 cloud.js:手機改每週堂數、筆電做模擬考;兩邊上傳後雲端與兩台都有兩邊的改動;灌雲端資料時本機與雲端都有就存合併結果'] = async () => {
+  const { w, phone, pc } = await twoDevices(16);
+  const base = planOf({ perWeek: [], weeklyAskedAt: null, updatedAt: now(phone) });
+  storeSet(phone, 'plan', base);
+  storeSet(phone, 'mock_seen', { 'l1-01': now(phone) });
+  await phone.pg.runTimers();
+  await newSession(pc);
+  phone.offline = true;
+  storeSet(phone, 'plan', Object.assign({}, base, { perWeek: [{ w: 1, n: 1 }], weeklyAskedAt: new Date(now(phone)).toISOString(), lessonsPerWeek: 1, updatedAt: now(phone) }));
+  await phone.pg.runTimers();
+  w.clock.t += HOUR;
+  storeSet(pc, 'mock_seen', Object.assign({}, localOf(pc, 'mock_seen'), { 'p5-a': now(pc), 'l2-01': now(pc) }));
+  storeSet(pc, 'plan', Object.assign({}, localOf(pc, 'plan'), { weeklyAskedAt: new Date(now(pc)).toISOString(), updatedAt: now(pc) }));
+  await pc.pg.runTimers();
+  phone.offline = false;
+  await newSession(phone);
+  await phone.pg.runTimers();
+  await newSession(pc);
+  const c = { plan: cloudOf(w, 'plan'), seen: cloudOf(w, 'mock_seen') };
+  const keys = (v) => Object.keys(v || {}).sort().join(',');
+  const got = { per: J((c.plan || {}).perWeek), asked: (c.plan || {}).weeklyAskedAt, seen: keys(c.seen), phone: J(localOf(phone, 'plan')) === J(c.plan) && keys(localOf(phone, 'mock_seen')) === keys(c.seen),
+    pc: J(localOf(pc, 'plan')) === J(c.plan) && keys(localOf(pc, 'mock_seen')) === keys(c.seen) };
+  const ok = got.per === J([{ w: 1, n: 1 }]) && got.seen === 'l1-01,l2-01,p5-a' && got.phone && got.pc && !!got.asked && Date.parse(got.asked) < now(pc) - HOUR / 2;
+  return { ok, detail: J(got) };
 };
 
 (async () => {

@@ -172,7 +172,7 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     "+primary: next || { label: '去刷題', href: 'practice.html' },",
   ]);
   /* cloud.js:引導的三個鍵只准合併表加三列、SYNC_FN 加三個鍵、檔頭說明(下面 ok 的規則);
-     課程進度(les_t、pts、rvq、tests_v1)那一份逐行列在 COURSE:合併表三列、用鍵名規則認的課程進度(MERGED_FAMILIES、mergedIn、localNames)、
+     課程進度(les_t、pts、rvq、tests_v1,之後加的 mock_seen、plan)那一份逐行列在 COURSE:合併表三列、用鍵名規則認的課程進度(MERGED_FAMILIES、mergedIn、localNames)、
      搬家暫存區的 SYNC_FAMILY 與 SYNC_TWO(兩邊的鍵都在,takeSynced 的分支改看 SYNC_TWO)、搬家暫存區補載 js/sync-merge-lesson.js
      (已經載好的判斷 have() 也要看到 SYNC_MERGE.lesson)、檔頭說明 */
   const ok = [
@@ -189,9 +189,13 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     '+       加 reconcile:登出、搬家前對帳時本機有這些鍵才多讀它們(沒有課程資料的帳號請求跟以前一樣)。搬家暫存區(SYNC_FN、SYNC_FAMILY)也合併。',
     '+       部署前就開著的舊版分頁(合併表沒有這些鍵)照舊整份上傳,同已知限制 8;課程頁跟這一版 cloud.js 一起上線,舊分頁沒有課程頁。',
     '+       tools/test_lesson_sync.js。',
+    '+     · mock_seen(模擬考作答過的題,js/mock.js 交卷時寫)、plan(課表設定,課程頁寫):合併函式 SYNC_MERGE.mockSeen、plan(js/sync-merge-lesson.js)。',
+    '+       plan 以前整份上傳:兩台各自改每週堂數會互蓋,現在逐欄合併。加 reconcile;搬家暫存區(SYNC_FN)也合併。舊分頁同已知限制 8。',
     "+    pts: { merge: SMF('pts'), reconcile: true },",
     "+    rvq: { merge: SMF('rvq'), reconcile: true },",
     "+    tests_v1: { merge: SMF('tests'), reconcile: true },",
+    "+    mock_seen: { merge: SMF('mockSeen'), reconcile: true },",
+    "+    plan: { merge: SMF('plan'), reconcile: true },",
     "-  const spec = k => (typeof k === 'string' && Object.prototype.hasOwnProperty.call(MERGED, k) ? MERGED[k] : null);",
     '+  /* 用鍵名規則認的合併表:課程進度一堂一鍵 les_t<期>_<堂>(期 1–99、堂 01–24,跟 js/pack-core.js 的 lessonKey 一樣) */',
     "+  const MERGED_FAMILIES = [{ re: /^les_t[1-9]\\d?_(0[1-9]|1\\d|2[0-4])$/, spec: { merge: SMF('lesson'), reconcile: true } }];",
@@ -232,8 +236,8 @@ T['S7 題目資料、common.js 跟 main 相同;檢測頁只換結算卡的主按
     '+     (規則認的鍵寫在 SYNC_FAMILY)。MERGED 上有、SYNC_FN 沒有的鍵(以後加進合併表卻忘了這裡):暫存那份一律放進備份,',
     '+     不准當成題庫合併、也不准略過(略過的話暫存區照樣刪掉)。',
     "+  const SYNC_FAMILY = [[/^les_t/, 'lesson']];",
-    '+  const SYNC_TWO = { mock: 1, mockWrong: 1, levels: 1, onboard: 1, selfScore: 1, pts: 1, rvq: 1, tests: 1, lesson: 1 };   // 雲端和暫存那份先合、再合本機(不用標記)',
-    "+  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests' };",
+    '+  const SYNC_TWO = { mock: 1, mockWrong: 1, levels: 1, onboard: 1, selfScore: 1, pts: 1, rvq: 1, tests: 1, lesson: 1, mockSeen: 1, plan: 1 };   // 雲端和暫存那份先合、再合本機(不用標記)',
+    "+  const SYNC_FN = { sync_del: 'tombs', vgame_banks: 'banks', mock_history: 'mock', mock_wrong: 'mockWrong', levels: 'levels', onboard: 'onboard', self_score: 'selfScore', pts: 'pts', rvq: 'rvq', tests_v1: 'tests', mock_seen: 'mockSeen', plan: 'plan' };",
     '-    const KEYS = Object.keys(MERGED).filter((k) => !MERGED[k].clock);',
     '+    const KEYS = Object.keys(MERGED).filter((k) => !MERGED[k].clock).concat(mergedIn(syncItems.map((x) => x.k)).filter((k) => !MERGED[k]));',
     '-      const fn = Object.prototype.hasOwnProperty.call(SYNC_FN, k) ? SYNC_FN[k] : null;',

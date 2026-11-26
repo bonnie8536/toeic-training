@@ -1,8 +1,8 @@
-/* 課程進度多台裝置的合併規則:les_t<期>_<堂>、pts、rvq、tests_v1。純計算,不讀寫儲存。
-   從 js/sync-merge.js 分出來的(兩個檔合在一起超過 800 行);載入時把 lesson、pts、rvq、tests 加進 window.SYNC_MERGE
+/* 課程進度多台裝置的合併規則:les_t<期>_<堂>、pts、rvq、tests_v1、mock_seen(模擬考作答過的題)、plan(課表設定)。純計算,不讀寫儲存。
+   從 js/sync-merge.js 分出來的(兩個檔合在一起超過 800 行);載入時把 lesson、pts、rvq、tests、mockSeen、plan 加進 window.SYNC_MERGE
    (換成一份新的凍結物件,原有的函式還是同一個,對外的名稱與行為跟以前在 js/sync-merge.js 裡一樣)。
    每一頁都緊接在 js/sync-merge.js 後面、js/cloud.js 之前載入(tools/test_sync_union.js 檢查)。js/sync-merge.js 沒載到就什麼都不做:
-   js/cloud.js 拿不到這四個合併函式,跟舊快取一樣不上傳、帳本留著。合併函式的約定跟 js/sync-merge.js 一樣。
+   js/cloud.js 拿不到這幾個合併函式,跟舊快取一樣不上傳、帳本留著。合併函式的約定跟 js/sync-merge.js 一樣。
    搬家寄出頁 move-out.html 不載這個檔:它在舊網址,舊網址的 Worker 轉址期只代理固定的檔案清單(tools/move-worker/worker.js 的 KEEP_ASSETS)。
    那一頁的課程進度照上面的規則不上傳、放進搬家包,到新網址登入時再合併(搬家暫存區要用時也會補載這個檔)。 */
 (function (root) {
@@ -163,10 +163,75 @@
     });
     return { v: out };
   }
+  /* ---------- 模擬考作答過的題(mock_seen,js/mock.js 交卷時寫)與課表設定(plan,js/lesson-data.js 寫) ----------
+     · mockSeen:{ 題目 key: 交卷時間(毫秒) }。聯集;同一個 key 取大的;不是有限數字的值輸給是的(都不是取 canon 小的);
+       超過 MOCK_SEEN_MAX 筆留時間新的(一樣時照 key 字典序);輸出 key 照字典序。兩份有一份不是一般物件(也不是 null)回 ok:false。
+     · plan:兩份都要是一般物件、v 是 1(不然 ok:false)。updatedAt(毫秒)大的那份當主要,超過 now 一天以後的當成沒有時間,
+       一樣時取 canon 小的;主要那份的欄位照抄,例外三個:startDate 取兩份裡較早的合法日期(課表不會因為合併往後移);
+       perWeek 兩份照週(w)聯集,同一週取主要那份的 n,照 w 排序;weeklyAskedAt 取兩份裡較早的非空值。
+       lessonsPerWeek 跟著合併後最後一筆 perWeek。兩份都沒有 perWeek、weeklyAskedAt 欄位(舊的 plan)時不加這兩個欄位。 */
+  const MOCK_SEEN_MAX = 3000, PLAN_FUTURE_MS = 864e5;
+  function sameFlags(v, a, b) {
+    const s = canon(v), sameAsLocal = isPlain(a) && s === canon(a), sameAsCloud = isPlain(b) && s === canon(b);
+    return { ok: true, v: sameAsLocal ? a : sameAsCloud ? b : v, sameAsLocal, sameAsCloud };
+  }
+  function seenWin(x, y) {
+    if (isNum(x) !== isNum(y)) return isNum(x) ? x : y;
+    if (isNum(x)) return Math.max(x, y);
+    return canon(x) <= canon(y) ? x : y;
+  }
+  function mockSeen(a, b) {
+    const okShape = x => x === null || x === undefined || isPlain(x);
+    if (!okShape(a) || !okShape(b)) return { ok: false };
+    if (!isPlain(a) && !isPlain(b)) return { ok: true, v: null, sameAsLocal: a === null, sameAsCloud: b === null };
+    const out = new Map();
+    [a || {}, b || {}].forEach(o => keysOf(o).forEach(k => out.set(k, out.has(k) ? seenWin(out.get(k), o[k]) : o[k])));
+    let ks = Array.from(out.keys());
+    if (ks.length > MOCK_SEEN_MAX) {
+      const tOf = k => (isNum(out.get(k)) ? out.get(k) : -Infinity);
+      ks = ks.sort((x, y) => tOf(y) - tOf(x) || cmp(x, y)).slice(0, MOCK_SEEN_MAX);
+    }
+    const v = {};
+    ks.sort(cmp).forEach(k => { v[k] = out.get(k); });
+    return sameFlags(v, a, b);
+  }
+  const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+  const weekRows = p => (isArr(p.perWeek) ? p.perWeek.filter(e => isPlain(e) && Number.isInteger(e.w) && e.w >= 1 && e.w <= 12 && (e.n === 1 || e.n === 2)) : []);
+  function planMain(a, b, lim) {
+    const tOf = p => (isNum(p.updatedAt) && p.updatedAt <= lim ? p.updatedAt : NaN);
+    const ta = tOf(a), tb = tOf(b);
+    if (isFinite(ta) !== isFinite(tb)) return isFinite(ta) ? [a, b] : [b, a];
+    if (isFinite(ta) && ta !== tb) return ta > tb ? [a, b] : [b, a];
+    return canon(a) <= canon(b) ? [a, b] : [b, a];
+  }
+  function plan2(a, b, lim) {
+    const [m, o] = planMain(a, b, lim), v = Object.assign({}, m);
+    const days = [m.startDate, o.startDate].filter(d => typeof d === 'string' && DATE_RE.test(d)).sort();
+    if (days.length) v.startDate = days[0];
+    if (isArr(m.perWeek) || isArr(o.perWeek)) {
+      const by = new Map();
+      weekRows(o).concat(weekRows(m)).forEach(e => by.set(e.w, { w: e.w, n: e.n }));
+      v.perWeek = Array.from(by.values()).sort((x, y) => x.w - y.w);
+      if (v.perWeek.length) v.lessonsPerWeek = v.perWeek[v.perWeek.length - 1].n;
+    }
+    if (own(m, 'weeklyAskedAt') || own(o, 'weeklyAskedAt')) {
+      const asked = [m.weeklyAskedAt, o.weeklyAskedAt].filter(s => typeof s === 'string' && isFinite(Date.parse(s))).sort((x, y) => Date.parse(x) - Date.parse(y) || cmp(x, y));
+      v.weeklyAskedAt = asked.length ? asked[0] : null;
+    }
+    return v;
+  }
+  function plan(a, b, now) {
+    const none = x => x === null || x === undefined;
+    if ([a, b].some(x => !none(x) && (!isPlain(x) || x.v !== 1))) return { ok: false };
+    if (none(a) && none(b)) return { ok: true, v: null, sameAsLocal: a === null, sameAsCloud: b === null };
+    if (none(a) || none(b)) return sameFlags(none(a) ? b : a, a, b);
+    return sameFlags(plan2(a, b, (isNum(now) ? now : Date.now()) + PLAN_FUTURE_MS), a, b);
+  }
+
   const lesson = course(lesson2, lessonShape, null, true);
   const pts = course(pts2, isPlain);
   const rvq = course(rvq2, isArr, (x, y) => setCanon(x) === setCanon(y));
   const tests = course(tests2, isPlain);
 
-  root.SYNC_MERGE = Object.freeze(Object.assign({}, base, { lesson, pts, rvq, tests }));
+  root.SYNC_MERGE = Object.freeze(Object.assign({}, base, { lesson, pts, rvq, tests, mockSeen, plan }));
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -611,6 +611,24 @@ T['暫存區:課程進度(les_t 一堂一鍵、pts、rvq、tests_v1):搬家暫�
     && ups(w).includes('rvq') && ups(w).includes('tests_v1') && !backups(w).length && w.local.getItem(PEND) === null;
   return { ok, detail: J({ local: ids(lv(w, 'les_t1_03')), cloud: ids(cv(w, 'les_t1_03')), pts: b(cv(w, 'pts')), rvq: rq(cv(w, 'rvq')), tests: ts(cv(w, 'tests_v1')), bk: backups(w), ups: ups(w) }) };
 };
+T['暫存區:模擬考作答過的題(mock_seen)與課表設定(plan):暫存、本機、雲端三份合併(題聯集取時間大的;每週堂數照週聯集、開始日取早的),上傳到雲端,不進備份'] = async () => {
+  const w = makeWorld();
+  const plan = (extra) => Object.assign({ v: 1, classId: 'k1', startDate: '2026-11-02', lessonsPerWeek: null, term: 1, updatedAt: T0 - 3 * HOUR }, extra);
+  cloudRow(w, 'mock_seen', { 'l1-01': T0 - 5 * HOUR }, T0 - HOUR);
+  cloudRow(w, 'plan', plan({ perWeek: [{ w: 1, n: 2 }], weeklyAskedAt: '2026-11-02T01:00:00.000Z', updatedAt: T0 - 3 * HOUR }), T0 - HOUR);
+  signedIn(w);
+  w.local.setItem(PREFIX + 'mock_seen', J({ 'l1-01': T0 - 4 * HOUR, 'p5-a': T0 - 4 * HOUR }));
+  w.local.setItem(PREFIX + 'plan', J(plan({ perWeek: [], weeklyAskedAt: null, startDate: '2026-11-03', updatedAt: T0 - 2 * HOUR })));
+  w.local.setItem(LEDGER, J({ mock_seen: T0 - 4 * HOUR, plan: T0 - 4 * HOUR }));
+  w.local.setItem(PEND, J({ items: [['mock_seen', J({ 'l2-09': T0 - 6 * HOUR }), T0 - 2 * HOUR], ['plan', J(plan({ perWeek: [{ w: 2, n: 1 }], weeklyAskedAt: '2026-11-05T01:00:00.000Z', updatedAt: T0 - 7 * HOUR })), T0 - 2 * HOUR]] }));
+  await openLoggedIn(w);
+  const seen = (v) => (v ? Object.keys(v).sort().map((k) => k + '@' + Math.round((T0 - v[k]) / HOUR)) : []);
+  const pl = (v) => (v ? [J(v.perWeek), v.weeklyAskedAt, v.startDate, v.lessonsPerWeek] : null);
+  const want = [J([{ w: 1, n: 2 }, { w: 2, n: 1 }]), '2026-11-02T01:00:00.000Z', '2026-11-02', 1];
+  const ok = J(seen(cv(w, 'mock_seen'))) === J(['l1-01@4', 'l2-09@6', 'p5-a@4']) && J(seen(lv(w, 'mock_seen'))) === J(seen(cv(w, 'mock_seen')))
+    && J(pl(cv(w, 'plan'))) === J(want) && J(pl(lv(w, 'plan'))) === J(want) && !backups(w).length && w.local.getItem(PEND) === null;
+  return { ok, detail: J({ seen: seen(cv(w, 'mock_seen')), plan: pl(cv(w, 'plan')), local: pl(lv(w, 'plan')), bk: backups(w).length, ups: ups(w) }) };
+};
 /* 課程的合併函式在 js/sync-merge-lesson.js:頁面沒先載它(也沒先載搬家程式)時,處理暫存區前跟搬家程式一起補載,課程進度照樣合併;
    補載不到就整個不處理,暫存區留著(跟搬家程式載不到一樣) */
 T['暫存區:頁面沒先載 js/sync-merge-lesson.js 與搬家程式:要用時補載,課程進度照樣三份合併;補載不到暫存區留著'] = async () => {

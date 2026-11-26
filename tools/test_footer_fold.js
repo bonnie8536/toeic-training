@@ -3,7 +3,7 @@
       載入完成後頁尾的上緣在視窗外(footer.top ≥ innerHeight);捲到最底頁尾整個看得到(不被 App 分頁列蓋住)。
    2. App 模式(主畫面開啟,navigator.standalone)抽幾頁查同一件事。
    3. 有專心模式的頁(題庫刷題、聽力訓練、模擬考、每日練習、程度檢測)實際進到作答畫面(本機模式、已選學生):
-      頁尾不顯示、捲到底也沒有;結束專心模式後頁尾又出現在頁面最底、仍不在第一屏。
+      頁尾不顯示、捲到底也沒有,題目短時整頁不能捲;結束專心模式後頁尾又出現在頁面最底、仍不在第一屏。
    用法:node tools/test_footer_fold.js [--port <起始埠,預設 9200,用三個:雲端、本機、Chrome 除錯埠>] [--debug-port <埠>]
         [--tmp <放 Chrome 使用者資料的資料夾>] [--pages index.html,daily.html](只量這幾頁) [--only fold|app|quiz]
    每次一個新的使用者資料夾,跑完刪掉。其他腳本可以 require 這支拿 serve、launch、connect、open。 */
@@ -146,6 +146,11 @@ const MEASURE = `(async () => {
   window.scrollTo(0, 0); await wait();
   const cs = f ? getComputedStyle(f) : null;
   const a = f ? f.getBoundingClientRect() : null;
+  const mn = document.querySelector('body > main');
+  const mr = mn ? mn.getBoundingClientRect() : null;
+  if (mn) mn.style.minHeight = '0px';
+  const mainNat = mn ? mn.getBoundingClientRect().height : 0;
+  if (mn) mn.style.minHeight = '';
   window.scrollTo(0, document.documentElement.scrollHeight); await wait();
   const b = f ? f.getBoundingClientRect() : null;
   const gap = b ? Math.round(document.documentElement.scrollHeight - (window.scrollY + b.bottom)) : null;
@@ -153,7 +158,8 @@ const MEASURE = `(async () => {
   const res = { ih: window.innerHeight, bar, has: !!f, display: cs ? cs.display : null, visible: !!f && cs.display !== 'none' && a.height > 0,
     top: a ? Math.round(a.top) : null, bottomAtEnd: b ? Math.round(b.bottom) : null, topAtEnd: b ? Math.round(b.top) : null,
     docH, gap, padB: Math.round(parseFloat(getComputedStyle(document.body).paddingBottom) || 0), quiz: document.documentElement.classList.contains('is-quiz'), tabbar: document.documentElement.classList.contains('has-tabbar'),
-    shell: document.documentElement.classList.contains('app-shell') };
+    shell: document.documentElement.classList.contains('app-shell'),
+    mainTop: mr ? Math.round(mr.top) : null, footMT: cs ? Math.round(parseFloat(cs.marginTop) || 0) : 0, short: !!mr && mainNat + 1 < mr.height };
   window.scrollTo(0, 0); await wait();
   return res;
 })()`;
@@ -165,6 +171,8 @@ function foldProblems(m) {
   if (!m.has) return ['沒有 footer'];
   if (!m.visible) bad.push('頁尾沒顯示(display ' + m.display + ')');
   if (m.top < m.ih) bad.push('第一屏看得到頁尾(top ' + m.top + ' < ' + m.ih + ')');
+  /* 內容短(main 是被撐高的)時,頁尾就在第一屏下緣外面:main 撐到「視窗高 − 最矮頂欄 53」,只多出頂欄比 53 高的那一截和頁尾的上邊距 */
+  if (m.visible && m.short && m.top > m.ih + Math.max(0, m.mainTop - 53) + m.footMT + 2) bad.push('短頁面頁尾離第一屏下緣太遠(top ' + m.top + ',main 從 ' + m.mainTop + ' 開始)');
   if (m.visible && m.bottomAtEnd > m.ih - m.bar + 1) bad.push('捲到底頁尾被蓋住(bottom ' + m.bottomAtEnd + ' > ' + (m.ih - m.bar) + ')');
   if (m.visible && m.topAtEnd >= m.ih - m.bar) bad.push('捲到底還是看不到頁尾');
   return bad;
@@ -222,6 +230,10 @@ async function runQuiz(B, results) {
     await enterQuiz(s, q);
     const m = await measure(s);
     const bad = quizProblems(m);
+    /* 題目短的時候不能捲:撐高 main 之後的頁面高度不能超過「視窗高」與「main 不撐高時的內容高」兩者較大的那個 */
+    const natural = await s.eval(`(() => { const mn = document.querySelector('body > main'); mn.style.minHeight = '0px';
+      const h = document.documentElement.scrollHeight; mn.style.minHeight = ''; return h; })()`);
+    if (m.docH > Math.max(m.ih, natural)) bad.push('題目短也能捲(頁高 ' + m.docH + ' > 視窗 ' + m.ih + ',內容只要 ' + natural + ')');
     /* 結束專心模式(作答列的關閉鈕會換頁,這裡直接收掉專心模式,看同一頁的頁尾回來);頁尾下面只能剩 body 的底部留白(分頁列、小雞那一條) */
     const left = await s.eval('(() => { const f = window.UI && UI.focus && UI.focus.active; if (f) f.leave(); return !document.documentElement.classList.contains("is-quiz"); })()');
     await sleep(300);

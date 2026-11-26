@@ -555,8 +555,15 @@
     } catch (e) { return null; }
   }
   /* 第 4 堂後校正一次(一期一次)。opt.opening:這次要開的堂號(上課頁開第 5 堂以後時給)。
-     回 { done: 'now'(這次做了)|'before'(這一期做過了)|'wait'(還不到時候)|'skip'(讀不到雲端或沒有資料,下次再試), changed }(changed 見 LESSON_PLAN.calibration) */
-  async function calibrate(now, opt) {
+     回 { done: 'now'(這次做了)|'before'(這一期做過了)|'wait'(還不到時候)|'skip'(讀不到雲端或沒有資料,下次再試), changed }(changed 見 LESSON_PLAN.calibration)。
+     同一頁同時呼叫(開頁一次、雲端合併後又一次)時排隊:前一次跑完才跑下一次,下一次看到做過了回 before */
+  let calibQueue = Promise.resolve();
+  function calibrate(now, opt) {
+    const run = calibQueue.then(() => calibrateOnce(now, opt));
+    calibQueue = run.catch(() => null);
+    return run;
+  }
+  async function calibrateOnce(now, opt) {
     const LP = need('LESSON_PLAN'), O = root.ONBOARD_CORE, plan = readPlan(), local = hasStore() ? store.get('levels', null) : null;
     const skip = { done: 'skip', changed: null };
     if (!isPlain(plan) || !accountId() || !core().courseLevels(local) || !O || typeof O.newLevels !== 'function') return skip;

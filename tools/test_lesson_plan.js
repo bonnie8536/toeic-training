@@ -44,7 +44,9 @@ T['L2 選每週堂數:第一次選當週生效、之後改下週生效(同一週
   const old = L.withWeekly(planOf(), 2, START, 7000);
   eq([old.perWeek, old.lessonsPerWeek], [[{ w: 1, n: 2 }], 2], '舊 plan 沒有欄位也能選');
   const late = planOf({ perWeek: [{ w: 1, n: 2 }] });
-  eq(L.withWeekly(late, 1, '2027-01-18', 9000), late, '第 12 週之後不能改');
+  eq(L.withWeekly(Object.assign({}, late, { weeklyAskedAt: 'x' }), 1, '2027-01-18', 9000), Object.assign({}, late, { weeklyAskedAt: 'x' }), '第 12 週之後不能改');
+  const l13 = L.withWeekly(planOf({ perWeek: [], weeklyAskedAt: null }), 1, '2027-01-25', 9000);
+  eq([L.courseWeek(l13, '2027-01-25'), l13.perWeek, typeof l13.weeklyAskedAt, l13.updatedAt], [13, [], 'string', 9000], '第 13 週選了:堂數不改,記成問過');
   assert.throws(() => L.withWeekly(p0, 3, START, 1), TypeError);
   eq(frozen(p0), keep);
 };
@@ -154,6 +156,16 @@ T['L9 這一期做過沒有(levels.history 有 calibrate、時間在開始日當
   eq([L.calibrated(lv, START), L.calibrated(lv, '2026-11-03'), L.calibrated({ history: h.slice(0, 2) }, START), L.calibrated(null, START)], [true, false, false, false]);
   eq(L.calibration(lv, START), { changed: { listening: ['entry', 'threshold'], reading: null } });
   eq([L.calibration(lv, '2026-11-03'), L.calibration({ history: [h[2]] }, START)], [null, { changed: { listening: null, reading: null } }]);
+};
+
+T['L9b 兩台(或兩個分頁)各記一筆本期的 calibrate、合併成兩筆:變動照第一筆跟它之前那一筆比'] = () => {
+  const at = (d) => new Date(d).toISOString();
+  const legacy = { at: at('2026-11-01T00:00:00'), listening: 'entry', reading: 'entry', reason: 'legacy' };
+  const c1 = { at: at('2026-11-24T10:00:00'), listening: 'threshold', reading: 'threshold', reason: 'calibrate' };
+  const c2 = Object.assign({}, c1, { at: at('2026-11-24T10:00:05') });
+  eq(L.calibration({ history: [legacy, c1, c2] }, START), { changed: { listening: ['entry', 'threshold'], reading: ['entry', 'threshold'] } });
+  const old = { at: at('2026-10-01T00:00:00'), listening: 'entry', reading: 'entry', reason: 'calibrate' };
+  eq(L.calibration({ history: [old, c1, c2] }, START), { changed: { listening: ['entry', 'threshold'], reading: ['entry', 'threshold'] } }, '上一期的那一筆可以當比較的對象');
 };
 
 T['L10 js/lesson-plan.js 載入時不依賴其他檔、不讀寫儲存、不碰畫面'] = () => {

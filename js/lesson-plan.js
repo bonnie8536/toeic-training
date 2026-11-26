@@ -42,18 +42,16 @@
     const hit = rowsOf(plan).filter((e) => e.w <= w).sort((a, b) => a.w - b.w).pop();
     return hit ? hit.n : 2;
   }
-  /* 選每週 n 堂(新的 plan):還沒選過當週生效、選過下週生效(同一週換掉);第 12 週之後不能改(回原本的) */
+  /* 選每週 n 堂(新的 plan):還沒選過當週生效、選過下週生效(同一週換掉);第 12 週之後不能改(堂數不動;還沒問過的只記成問過,問過的回原本的) */
   function withWeekly(plan, n, today, nowMs) {
     if (n !== 1 && n !== 2) throw new TypeError('每週堂數要是 1 或 2');
     if (!isPlain(plan)) throw new TypeError('沒有 plan');
     const cur = courseWeek(plan, today) || 1, rows = rowsOf(plan);
     const w = rows.length ? cur + 1 : cur;
-    if (w > WEEKS) return plan;
+    const stamp = { weeklyAskedAt: plan.weeklyAskedAt || new Date(nowMs).toISOString(), updatedAt: Math.max(nowMs, (Number(plan.updatedAt) || 0) + 1) };
+    if (w > WEEKS) return plan.weeklyAskedAt ? plan : Object.assign({}, plan, stamp);
     const perWeek = rows.filter((e) => e.w !== w).concat([{ w, n }]).map((e) => ({ w: e.w, n: e.n })).sort((a, b) => a.w - b.w);
-    return Object.assign({}, plan, {
-      perWeek, lessonsPerWeek: perWeek[perWeek.length - 1].n, weeklyAskedAt: plan.weeklyAskedAt || new Date(nowMs).toISOString(),
-      updatedAt: Math.max(nowMs, (Number(plan.updatedAt) || 0) + 1),
-    });
+    return Object.assign({}, plan, { perWeek, lessonsPerWeek: perWeek[perWeek.length - 1].n }, stamp);
   }
   /* 第 no 堂是不是課後練習(偶數堂、那一週每週 1 堂) */
   function optionalOf(plan) {
@@ -160,14 +158,15 @@
       changed: { listening: l !== prev.listening ? [prev.listening, l] : null, reading: r !== prev.reading ? [prev.reading, r] : null },
     };
   }
-  /* 這一期的那一筆(history 裡 reason 'calibrate'、時間在開始日當地 00:00 以後的最後一筆)的位置;沒有回 -1 */
+  /* 這一期的那一筆(history 裡 reason 'calibrate'、時間在開始日當地 00:00 以後的第一筆)的位置;沒有回 -1。
+     兩台或兩個分頁各做一次時合併後會有兩筆(history 照時間排):取第一筆,它前一筆就是調整前的級別 */
   function termIndex(levels, startDate) {
     const h = isPlain(levels) && Array.isArray(levels.history) ? levels.history : [], from = startMs(startDate);
-    for (let i = h.length - 1; i >= 0; i--) if (isPlain(h[i]) && h[i].reason === 'calibrate' && Date.parse(h[i].at) >= from) return i;
+    for (let i = 0; i < h.length; i++) if (isPlain(h[i]) && h[i].reason === 'calibrate' && Date.parse(h[i].at) >= from) return i;
     return -1;
   }
   function calibrated(levels, startDate) { return termIndex(levels, startDate) > -1; }
-  /* 畫面用:本期那一筆跟它前一筆比 → { changed };本期沒做過回 null */
+  /* 畫面用:本期第一筆跟它前一筆比 → { changed };本期沒做過回 null */
   function calibration(levels, startDate) {
     const i = termIndex(levels, startDate);
     if (i < 0) return null;

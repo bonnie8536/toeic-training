@@ -32,9 +32,10 @@
   function focusOn(n) { try { n.focus({ preventScroll: true }); if (typeof root.scrollTo === 'function') root.scrollTo(0, 0); } catch (e) { /* 焦點放不上去不影響 */ } }
 
   /* ---------- 每週上幾堂(上課頁、課程總覽) ---------- */
-  /* 還沒問過(沒有欄位或 null 都算,上線前的 plan 沒有這個欄位)、第 1 堂已經上完 */
+  /* 還沒問過(沒有欄位或 null 都算,上線前的 plan 沒有這個欄位)、第 1 堂已經上完、還沒過第 12 週(之後不能改每週堂數) */
   function needWeekly(p, states) {
-    return !!p && typeof p === 'object' && !p.weeklyAskedAt && !!(states && states[1] && states[1].doneAt);
+    const LP = plan(), w = LP && typeof LP.courseWeek === 'function' ? LP.courseWeek(p, today()) : null;
+    return !!p && typeof p === 'object' && !p.weeklyAskedAt && !!(states && states[1] && states[1].doneAt) && !(w > LP.WEEKS);
   }
   /* 畫在 host 裡;選了寫每週堂數、「之後再選」只記問過。回 Promise:寫完 resolve('set' | 'later') */
   function weeklyScreen(host) {

@@ -93,6 +93,10 @@ T['K1 needWeekly:沒有欄位或 null 都算還沒問過;第 1 堂沒上完不�
   eq([e.W.needWeekly(PLAN, done), e.W.needWeekly(Object.assign({}, PLAN, { weeklyAskedAt: null, perWeek: [] }), done), e.W.needWeekly(PLAN, {}),
     e.W.needWeekly(Object.assign({}, PLAN, { weeklyAskedAt: '2026-11-02T00:00:00.000Z' }), done), e.W.needWeekly(null, done)], [true, true, false, false, false]);
 };
+T['K1b needWeekly:第 12 週以後不再問(已經不能改每週堂數)'] = () => {
+  const e = env(), done = { 1: { doneAt: 1 } };
+  eq([e.W.needWeekly(Object.assign({}, PLAN, { startDate: '2026-08-16' }), done), e.W.needWeekly(Object.assign({}, PLAN, { startDate: '2026-08-11' }), done)], [true, false]);
+};
 T['K2 每週上幾堂:標題拿到焦點;兩張單選卡片(不預選)各兩行;選了寫每週堂數、「之後再選」只記問過;按下前先 holdForAccount'] = async () => {
   const e = env(), host = e.doc.createElement('div');
   const p = e.W.weeklyScreen(host);

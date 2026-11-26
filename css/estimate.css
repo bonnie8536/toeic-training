@@ -9,7 +9,8 @@
   padding: 20px 22px 18px;
   margin: 8px 0 20px;
 }
-.est-title { font-size: 18px; margin: 0 0 6px; }
+.est-head { display: flex; align-items: center; gap: 2px; margin: 0 0 6px; }
+.est-title { font-size: 18px; margin: 0; }
 .est-total { margin: 0 0 14px; color: var(--ink-light); font-size: 14px; }
 .est-total .est-num { font-size: 30px; color: var(--primary-dark); margin-right: 2px; }
 .est-num { color: var(--primary-dark); font-weight: 700; }
@@ -22,22 +23,43 @@
   margin: 6px 0;
   font-size: 15px;
 }
-.est-row.is-need { grid-template-columns: 118px 1fr; }
+.est-row.is-need { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+.est-left { color: var(--ink-light); font-weight: 700; }
+.est-practice { font-size: 14px; color: var(--primary); }
 .est-sec { white-space: nowrap; }
 .est-row .est-num { font-size: 17px; }
 .est-range { text-align: right; color: var(--ink-light); font-size: 13.5px; white-space: nowrap; }
 .est-need { margin: 0; font-size: 14px; color: var(--ink-light); }
-.est-need a { color: var(--primary); }
 
 /* 卡片裡的刻度尺:只有軌道與塗色,不放刻度數字 */
 .band-scale.est-scale.is-bare { margin: 0; height: 12px; }
 .band-scale.est-scale.is-bare .bs-track,
 .band-scale.est-scale.is-bare .bs-seg { top: 1px; }
 
-.est-suggest { margin: 2px 0 8px 130px; font-size: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
-.est-meta { margin: 14px 0 0; font-size: 13px; color: var(--ink-light); }
-.est-note { margin: 2px 0 0; font-size: 12.5px; color: var(--ink-soft); }
-.est-card .est-go { display: inline-block; margin-top: 14px; }   /* 主按鈕是連結:行內區塊才吃得到上面的間距,不疊到「本站估計」那一行 */
+.est-suggest { margin: 2px 0 8px 130px; font-size: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; }   /* 字與字之間是全形空白 */
+.est-suggest-k { color: var(--ink-light); }
+.est-suggest-v { color: var(--ink); }
+.est-card .est-go { display: inline-block; margin-top: 14px; }   /* 主按鈕是連結:行內區塊才吃得到上面的間距 */
+
+/* ---------- ⓘ 按鈕與資訊欄 ----------
+   看得到的圖示約 22px,按得到的範圍 44px(負邊距抵掉,不撐高標題那一行) */
+.est-info {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; margin: -11px -11px -11px -6px; padding: 0;
+  border: 0; border-radius: 50%; background: transparent; color: var(--ink-soft);
+  cursor: pointer; vertical-align: middle; flex: none;
+  transition: color .15s, background-color .15s;
+}
+.est-info svg { display: block; }
+.est-info:hover { color: var(--primary-dark); background: var(--bg-soft); }
+.est-card .est-info:hover { background: var(--primary-tint); }
+.est-info:active { transform: scale(.94); }
+.est-info:focus-visible { outline: 2px solid var(--primary); outline-offset: -6px; }
+.est-info[aria-expanded="true"] { color: var(--primary-dark); }
+.result-kicker.est-kicker { display: inline-flex; align-items: center; justify-content: center; gap: 2px; }
+.est-info-p { margin: 0 0 10px; font-size: 15px; line-height: 1.75; color: var(--ink); }
+.est-info-p:last-child { margin-bottom: 0; }
+.est-info-sheet .ui-sheet-body { padding-top: 6px; }
 
 /* ---------- 結果頁(放在 UI.result 的卡片裡) ---------- */
 .est-result { width: 100%; margin: 10px 0 0; text-align: left; }

@@ -148,7 +148,7 @@
     const L = estSec(e.L), R = estSec(e.R);
     if (!L && !R) return null;
     const d = new Date(Date.parse(e.at));
-    return { L, R, day: (d.getMonth() + 1) + ' 月 ' + d.getDate() + ' 日' };
+    return { L, R, at: e.at, day: (d.getMonth() + 1) + ' 月 ' + d.getDate() + ' 日' };
   }
   /* 「150 以下」「450 以上」或數字;範圍只有中間那一段才寫 */
   const estScore = v => (v.est < 150 ? '150 以下' : v.est >= 450 ? '450 以上' : String(v.est));
@@ -158,13 +158,15 @@
   function estCell(e) {
     return EST_SEC.map(([s, name]) => name + ' ' + (e[s] ? estScore(e[s]) : '—')).join('／') + '（預估 · ' + e.day + '）';
   }
+  /* 「根據 N 題」旁的 ⓘ:分數怎麼來的、不是正式成績,跟學生看到的資訊欄同一份(js/estimate-ui.js;沒載到就不畫) */
+  const estInfo = (n, at) => (window.ESTIMATE_UI ? ESTIMATE_UI.infoButton({ kind: 'est', view: { n, at } }) : null);
   /* 展開列:每科的數字與範圍、根據幾題 */
   function estDetail(e) {
     const part = ([s, name]) => name + ' ' + (e[s] ? estScore(e[s]) + (estRange(e[s]) ? '（' + estRange(e[s]) + '）' : '') : '—');
     const n = EST_SEC.reduce((a, [s]) => a + (e[s] && e[s].n !== null ? e[s].n : 0), 0);
     return [
       h('h3', { style: 'font-size:15.5px;margin-bottom:4px' }, '預估分數（' + e.day + '）：' + EST_SEC.map(part).join('／')),
-      h('p', { style: 'font-size:13px;color:var(--ink-light);margin-bottom:10px' }, (n ? '根據 ' + n + ' 題 · ' : '') + '本站估計，不是正式成績。'),
+      h('p', { class: 'adm-est-basis', style: 'font-size:13px;color:var(--ink-light);margin-bottom:10px' }, n ? '根據 ' + n + ' 題' : null, estInfo(n, e.at)),
     ];
   }
 

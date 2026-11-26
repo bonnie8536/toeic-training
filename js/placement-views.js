@@ -4,7 +4,7 @@
    unit = { id, part: '1'–'7', item(題庫的那一題或一組), keys(每一小題的 key) };sel = { 小題位置: 選項 }。
    對外的函式:
    · STR
-   · intro(o) → 節點:開始頁。o = { sec: 'LR' | 'L' | 'R', retest, onboard, note, onStart(), onReadFirst(), onSkip() }
+   · intro(o) → 節點:開始頁。o = { sec: 'LR' | 'L' | 'R', onboard, note, onStart(), onReadFirst(), onSkip() }
    · between(done, o) → 節點:一科做完、接著做另一科。done 是做完的科;o = { onGo(), onLater() }
    · unitView(unit, sel, onPick(qi, c), o) → 節點:一題或一組。o = { player(節點), phase: 'listen' | 'answer' }
      聽力題組(P3、P4)在 listen 時只有播放鈕,播完(answer)三題一起出。
@@ -19,9 +19,7 @@
   const STR = Object.freeze({
     title: '程度檢測',
     tag: Object.freeze({ L: '聽力 12 題', R: '閱讀 12 題', time: '約 15–20 分鐘' }),
-    ruleEar: '戴上耳機。每段音檔只播一次。',
-    ruleNext: '選好答案，按「下一題」。不能回上一題。',
-    retest: '會跟平常練習一起算。',
+    rules: Object.freeze({ L: Object.freeze(['戴上耳機。', '每段音檔只播一次。']), all: Object.freeze(['選好答案後按「下一題」。', '不能回上一題。']) }),
     start: '開始',
     readFirst: '沒有耳機，先做閱讀',
     skipEntry: '先跳過，從入門開始',
@@ -34,7 +32,7 @@
     noPhoto: '照片準備中',
     leave: Object.freeze({ title: '離開檢測？', body: '下次從這一題接著做。', ok: '離開', cancel: '繼續作答' }),
     done: Object.freeze({ L: '聽力完成', R: '閱讀完成' }),
-    then: Object.freeze({ L: '接著做閱讀 12 題。', R: '接著做聽力 12 題。戴上耳機。' }),
+    then: Object.freeze({ L: Object.freeze(['接著做閱讀 12 題。']), R: Object.freeze(['接著做聽力 12 題。', '戴上耳機。']) }),
     go: Object.freeze({ L: '開始閱讀', R: '開始聽力' }),
     later: '之後再做',
     sec: SEC,
@@ -79,7 +77,7 @@
     const sec = o.sec || 'LR';
     const hasL = sec.indexOf('L') > -1, hasR = sec.indexOf('R') > -1;
     const tags = [hasL ? STR.tag.L : null, hasR ? STR.tag.R : null, sec === 'LR' ? STR.tag.time : null].filter(Boolean);
-    const rules = [hasL ? STR.ruleEar : null, STR.ruleNext, o.retest ? STR.retest : null].filter(Boolean);
+    const rules = (hasL ? STR.rules.L : []).concat(STR.rules.all);   // 一行只講一件事
     const more = [sec === 'LR' ? textBtn(STR.readFirst, () => o.onReadFirst()) : null, o.onboard ? textBtn(STR.skipEntry, () => o.onSkip()) : null].filter(Boolean);
     return el('div', { class: 'diag-intro pl-intro' }, [
       el('p', { class: 'mock-tags' }, tags.map((t) => el('span', { class: 'mock-tag' }, [t]))),
@@ -92,11 +90,11 @@
   function between(done, o) {
     return el('div', { class: 'diag-intro pl-intro pl-between' }, [
       el('h2', { class: 'pl-h2', tabindex: '-1' }, [STR.done[done]]),
-      el('p', { class: 'pl-rule' }, [STR.then[done]]),
+    ].concat(STR.then[done].map((t) => el('p', { class: 'pl-rule' }, [t])), [
       on(el('button', { class: 'btn primary pl-go', type: 'button', 'data-gate': '' }, [STR.go[done]]), () => o.onGo()),
       el('div', { class: 'pl-more' }, [textBtn(STR.later, () => o.onLater())]),
       el('p', { class: 'pl-note', role: 'status' }, [o.note || '']),
-    ]);
+    ]));
   }
 
   /* ---------- 題目 ---------- */

@@ -370,18 +370,17 @@
   /* 「開始檢測」:記開始時間,到程度檢測頁直接開考(做哪幾科照 ONBOARD_CORE.testPlan) */
   function startAndGo(msg, el, sec, readFirst) { if (wrote(D.startTest(), msg, el)) location.href = C.placementHref(sec, readFirst); }
   /* 畫面同檢測頁的開始頁:標題左邊的圖示、卡片裡的小標籤、作答方式與實色主按鈕。
-     只有舊檢測的人(閱讀已有作答)只做聽力;做過檢測的人多一行「會跟平常練習一起算。」。舊檢測與它的報告不刪 */
-  const NOTES = ['戴上耳機。每段音檔只播一次。', '選好答案，按「下一題」。不能回上一題。'];
+     只有舊檢測的人(閱讀已有作答)只做聽力,多一行「閱讀沿用上次的檢測。」。舊檢測與它的報告不刪 */
+  const NOTES = ['戴上耳機。', '每段音檔只播一次。', '選好答案後按「下一題」。', '不能回上一題。'];   // 跟檢測頁的開始頁一樣:一行只講一件事
   function screenTest() {
     const diag = D.diag(), pl = D.placement();
     const plan = C.testPlan(diag, pl);
-    const again = !!C.lastDoneRun(pl) || !!(diag && diag.done);
     const msg = msgLine();
     const start = btn(plan === 'L' ? '做聽力檢測' : '開始檢測', (e) => startAndGo(msg, e.currentTarget, plan === 'L' ? 'L' : null));
     const legacy = C.legacyUsable(diag, Date.now()) ? h('button', { class: 'btn-text', type: 'button', onclick: (e) => useLegacy(diag, msg, e.currentTarget) },
       '用上次的閱讀檢測', h('span', { class: 'ob-date' }, C.dayLabel(diag.finishedAt))) : null;
     const tags = plan === 'L' ? ['聽力 12 題'] : ['聽力 12 題', '閱讀 12 題', '約 15–20 分鐘'];
-    const notes = NOTES.concat(plan === 'L' ? ['閱讀沿用上次的檢測。'] : []).concat(again ? ['會跟平常練習一起算。'] : []);
+    const notes = NOTES.concat(plan === 'L' ? ['閱讀沿用上次的檢測。'] : []);
     put(flash ? h('p', { class: 'auth-msg ok', role: 'status' }, flash) : null,
       h('div', { class: 'page-head' }, h('canvas', { class: 'hub-art', 'data-doodle': 'diagnostic', 'data-size': '40', 'aria-hidden': 'true' }),
         h('h1', { id: 'ob-title' }, TITLES.test)),

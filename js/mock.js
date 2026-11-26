@@ -552,11 +552,12 @@
         kicker: '參考總分', big: String(lScore + rScore), unit: '分', ratio: (lRaw + rRaw) / Math.max(1, lTotal + rTotal),
         flag: timeUp ? '時間到' : null,
         stats: [['聽力', String(lScore)], ['閱讀', String(rScore)]],
-        note: '本站估計，不是正式成績。',
         primary: { label: '再做一次', onClick: () => startExam(sizeKey), attrs: { 'data-gate': '' } },   // 沒登入時 js/profile.js 先攔下
         links: [{ label: '看錯題本', href: 'review.html' }, { label: '回模擬考', href: 'mock.html' }],
         earnId: 'mock',
       });
+      /* 「參考總分」旁的 ⓘ:分數怎麼來的、不是正式成績,寫在點開的資訊欄(js/estimate-ui.js;沒載到就不畫) */
+      if (window.ESTIMATE_UI) ESTIMATE_UI.addInfo(card.el, 'mock');
       resultCard = card;
       root.append(card.el);
       const after = [unsaved ? null : wrongNote(wb, skipped || 0), unsavedNote(unsaved)].filter(Boolean);

@@ -317,10 +317,8 @@
   }
   function renderIntro(note) {
     leaveFocus();
-    const runs = isPlain(readStore('placement_v1', null)) ? readStore('placement_v1', null) : null;
-    const done = S().sectionsDone(runs);
     let box = null;
-    box = V().intro({ sec: st.secParam, retest: done.L || done.R || legacyDone(), onboard: st.onboard, note,
+    box = V().intro({ sec: st.secParam, onboard: st.onboard, note,
       onStart: () => begin(st.secParam === 'R' ? ['R'] : st.secParam === 'L' ? ['L'] : ['L', 'R'], box),
       onReadFirst: () => begin(['R', 'L'], box), onSkip: skipEntry });
     paint([pageHead(), box]);
@@ -487,7 +485,6 @@
     if (!C || typeof C.testPlan !== 'function') return 'LR';
     try { return C.testPlan(readStore('diag', null), readStore('placement_v1', null)) === 'L' ? 'L' : 'LR'; } catch (e) { return 'LR'; }
   }
-  function legacyDone() { const d = readStore('diag', null); return isPlain(d) && d.done === true; }
   function boot() {
     const box = doc().getElementById('pl-root');
     if (!box) return;

@@ -195,7 +195,8 @@
   const accCls = r => r < 0.4 ? 'weak' : r < 0.6 ? 'mid' : '';
   root.append(h('div', { class: 'report-head' },
     h('div', { class: 'who' }, '資料來源 ' + rec.sources.join('、')),
-    h('h2', null, estOn ? '閱讀正確率' : '閱讀預測級距'),
+    estOn ? h('h2', null, '閱讀正確率')
+      : h('div', { class: 'est-head' }, h('h2', null, '閱讀預測級距'), window.ESTIMATE_UI ? ESTIMATE_UI.infoButton({ kind: 'est' }) : null),
     est ? bandScale(est.band) : null,
     h('div', { style: est ? 'margin-top:18px' : 'margin-top:10px' },
       bar('整體正確率', overall, Math.round(overall * 100) + '% · ' + rec.total + ' 題', accCls(overall)),
@@ -206,8 +207,7 @@
         ? bar('Part ' + pp, rec.parts[pp].ok / rec.parts[pp].n,
             Math.round(rec.parts[pp].ok / rec.parts[pp].n * 100) + '% · ' + rec.parts[pp].n + ' 題',
             accCls(rec.parts[pp].ok / rec.parts[pp].n))
-        : null)),
-    est ? h('div', { class: 'band-note' }, '本站估計 · 不是正式成績') : null));
+        : null))));
 
   /* 2. 強弱項(長條圖,弱→強) */
   const catRows = Object.entries(rec.cats).filter(([, c]) => c.t >= 3)

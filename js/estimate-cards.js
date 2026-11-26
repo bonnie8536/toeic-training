@@ -3,10 +3,10 @@
    載入順序:js/common.js、js/ui.js、估分的檔(estimate-core、estimate-data、data/item-params.js、estimate-store、estimate-ui)、這個檔,
    再來 js/profile.js、js/analysis.js。補回舊 28 題要 data/diagnostic.js(兩頁都載,兩頁的數字才一樣)。
    · 先用本機資料畫(ESTIMATE_STORE.peek,不寫),雲端準備好後再讀雲端合併、重算(ESTIMATE_STORE.load),畫第二次。
-   · 「再做 N 題」連到練習頁:只有用得到練習頁的人(收費畫面沒開,或使用權沒被鎖)才加連結。
+   · 「還差 N 題」旁邊的「去練習」連到練習頁:只有用得到練習頁的人(收費畫面沒開,或使用權沒被鎖)才加連結。
      聽力連到題庫頁的聽力練習(practice.html#listen,js/listening.js 的 LISTEN,作答會算進預估);
      listening.html 是「聽力訓練」(js/ear.js),不算進預估,不連那裡。
-   · 建議改級(opt.suggest 為真時才有):文字按鈕,有課程進度先確認;按了才改 levels(ONBOARD_DATA.applyEst),來源與理由記 est。
+   · 建議改級(opt.suggest 為真時才有):「建議程度　高分」加文字按鈕,按了先確認(原因寫在確認視窗,有課程進度多說會換學習包);按了才改 levels(ONBOARD_DATA.applyEst),來源與理由記 est。
    · 不刪、不蓋作答紀錄與舊檢測結果:寫入只有 ESTIMATE_STORE 自己補的鍵,和按了改級之後的 levels。
 
    對外的函式:

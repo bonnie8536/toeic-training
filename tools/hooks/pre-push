@@ -1,0 +1,39 @@
+#!/bin/sh
+# 推送前檢查（裝法：node tools/install_hooks.js）。兩件事：
+# 1. 被推的 ref 是備份用的（backup/ 開頭的分支或標籤、refs/original 底下）就拒絕；push --mirror 也會被擋。
+#    刪除遠端 ref 的推送不擋。
+# 2. 跑 node tools/secret_scan.js，有像金鑰的字串就拒絕。掃的是這個工作目錄追蹤的檔案。
+# 找不到 node 或 tools/secret_scan.js 時一律拒絕，避免沒檢查就推出去。
+
+bad=0
+while read -r local_ref local_sha remote_ref remote_sha; do
+  case "$local_sha" in
+    *[!0]*) ;;
+    *) continue ;;
+  esac
+  for ref in "$local_ref" "$remote_ref"; do
+    case "$ref" in
+      refs/original*|refs/heads/backup/*|refs/tags/backup/*|refs/remotes/*/backup/*|backup/*)
+        echo "拒絕推送：$ref 是備份用的 ref，不推到遠端。" >&2
+        bad=1 ;;
+    esac
+  done
+done
+if [ "$bad" -ne 0 ]; then
+  exit 1
+fi
+
+top=$(git rev-parse --show-toplevel) || exit 1
+if ! command -v node >/dev/null 2>&1; then
+  echo "拒絕推送：找不到 node，無法跑祕密掃描。" >&2
+  exit 1
+fi
+if [ ! -f "$top/tools/secret_scan.js" ]; then
+  echo "拒絕推送：這個分支沒有 tools/secret_scan.js，無法跑祕密掃描。" >&2
+  exit 1
+fi
+if ! node "$top/tools/secret_scan.js" >&2; then
+  echo "拒絕推送：祕密掃描有命中。" >&2
+  exit 1
+fi
+exit 0
